@@ -98,6 +98,7 @@ void Catalog::HeaderData::FromString(const wxString& str)
 {
     wxString hdr(str);
     hdr.Replace(_T("\\n"), _T("\n"));
+    hdr.Replace(_T("\\\\"), _T("\\"));
     wxStringTokenizer tkn(hdr, _T("\n"));
     wxString ln;
 
@@ -131,7 +132,9 @@ wxString Catalog::HeaderData::ToString(const wxString& line_delim)
     for (std::vector<Entry>::const_iterator i = m_entries.begin();
          i != m_entries.end(); ++i)
     {
-        hdr << i->Key << _T(": ") << i->Value << _T("\\n") << line_delim;
+        wxString v(i->Value);
+        v.Replace(_T("\\"), _T("\\\\"));
+        hdr << i->Key << _T(": ") << v << _T("\\n") << line_delim;
     }
     return hdr;
 }
