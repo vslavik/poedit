@@ -28,6 +28,23 @@ class CatalogDeletedData;
 WX_DECLARE_OBJARRAY(CatalogData, CatalogDataArray);
 WX_DECLARE_OBJARRAY(CatalogDeletedData, CatalogDeletedDataArray);
     
+/// The possible bookmarks for a given item
+typedef enum
+{
+    NO_BOOKMARK = -1,
+    BOOKMARK_0,
+    BOOKMARK_1,
+    BOOKMARK_2,
+    BOOKMARK_3,
+    BOOKMARK_4,
+    BOOKMARK_5,
+    BOOKMARK_6,
+    BOOKMARK_7,
+    BOOKMARK_8,
+    BOOKMARK_9,
+    BOOKMARK_LAST
+} Bookmark;
+
 /** This class stores all translations, together with filelists, references
     and other additional information. It can read .po files and save both
     .mo and .po files. Furthermore, it provides facilities for updating the
@@ -86,6 +103,7 @@ class Catalog
                      Team, TeamEmail, Charset, SourceCodeCharset;
 
             wxArrayString SearchPaths, Keywords;
+            int Bookmarks[BOOKMARK_LAST];
             wxString BasePath;
 
             wxString Comment;
@@ -201,7 +219,14 @@ class Catalog
 
         /// Removes all obsolete translations from the catalog
         void RemoveDeletedItems();
-
+        
+        /// Sets the given item to have the given bookmark and returns the index 
+        /// of the item that previously had this bookmark (or -1)
+        int SetBookmark(int id, Bookmark bookmark);
+        
+        /// Returns the index of the item that has the given bookmark or -1
+        int GetBookmarkIndex(Bookmark bookmark) {return m_header.Bookmarks[bookmark];}
+        
     protected:
         /** Merges the catalog with reference catalog
             (in the sense of msgmerge -- this catalog is old one with
@@ -237,7 +262,7 @@ class Catalog
         bool m_isOk;
         wxString m_fileName;
         HeaderData m_header;
-
+        
         friend class LoadParser;
 };
 
@@ -289,11 +314,10 @@ class CatalogParser
         wxMBConv   *m_conv;
 };
 
-
 /** This class holds information about one particular string.
     This includes original string and its occurences in source code
     (so-called references), translation and translation's status
-    (fuzzy, non translated, translated and optional comment.
+    (fuzzy, non translated, translated) and optional comment.
     
     This class is mostly internal, used by Catalog to store data.
  */
@@ -312,7 +336,9 @@ class CatalogData : public wxObject
                   m_isModified(false),
                   m_isAutomatic(false),
                   m_validity(Val_Unknown),
-                  m_lineNum(0) {}
+                  m_lineNum(0),
+                  m_listItemId(-1),
+                  m_bookmark(NO_BOOKMARK) {}
 
         CatalogData(const CatalogData& dt)
                 : wxObject(),
@@ -331,7 +357,9 @@ class CatalogData : public wxObject
                   m_comment(dt.m_comment),
                   m_validity(dt.m_validity),
                   m_lineNum(dt.m_lineNum),
-                  m_errorString(dt.m_errorString) {}
+                  m_errorString(dt.m_errorString),
+                  m_listItemId(dt.m_listItemId),
+                  m_bookmark(dt.m_bookmark) {}
 
         /// Returns the original string.
         const wxString& GetString() const { return m_string; }
@@ -464,6 +492,16 @@ class CatalogData : public wxObject
 
         void SetErrorString(const wxString& str) { m_errorString = str; }
         wxString GetErrorString() const { return m_errorString; }
+        
+        /// Sets the list item ID for this catalog entry
+        void SetListItemId(const int listItemId) { m_listItemId = listItemId;}
+        /// Returns the list item ID for this catalog (defaults to -1)
+        int GetListItemId() const { return m_listItemId; };
+        
+        /// Returns the bookmark for the item
+        Bookmark GetBookmark() {return m_bookmark;}
+        /// Returns true if the item has a bookmark
+        bool HasBookmark() {return (GetBookmark() != NO_BOOKMARK);}
 
     private:
         wxString m_string, m_plural;
@@ -478,10 +516,17 @@ class CatalogData : public wxObject
         Validity m_validity;
         unsigned m_lineNum;
         wxString m_errorString;
+        int m_listItemId;
+        Bookmark m_bookmark;
+
+        /// Sets the bookmark
+        void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
+        
+   friend class Catalog;
 };
 
 /** This class holds information about one particular deleted item.
-    This includes delted lines, references, translation's status
+    This includes deleted lines, references, translation's status
     (fuzzy, non translated, translated) and optional comment(s).
     
     This class is mostly internal, used by Catalog to store data.

@@ -262,9 +262,23 @@ void Catalog::HeaderData::UpdateDict()
         SetHeader(_T("X-Poedit-Keywords"), kw);
     }
     
+    int i;
+    bool noBookmarkSet = true;
+    wxString bk;
+    for (i = 0; i < BOOKMARK_LAST ; i++)
+    {
+        noBookmarkSet = noBookmarkSet && (Bookmarks[i] == NO_BOOKMARK);
+        bk += wxString() << Bookmarks[i] << _T(',');
+    }    
+    bk.RemoveLast();
+    if (noBookmarkSet)
+        DeleteHeader(_T("X-Poedit-Bookmarks"));
+    else
+        SetHeader(_T("X-Poedit-Bookmarks"), bk);
+    
     SetHeaderNotEmpty(_T("X-Poedit-Basepath"), BasePath);
 
-    int i = 0;
+    i = 0;
     wxString path;
     while (true)
     {
@@ -343,7 +357,24 @@ void Catalog::HeaderData::ParseDict()
             Keywords.Add(tkn.GetNextToken());
     }
 
-    int i = 0;
+    int i;
+    for(i=0; i<BOOKMARK_LAST;++i)
+      Bookmarks[i] = NO_BOOKMARK;
+    wxString bk = GetHeader(_T("X-Poedit-Bookmarks"));
+    if (!bk.empty())
+    {
+        wxStringTokenizer tkn(bk, _T(","));
+        i=0;
+        long int val;
+        while (tkn.HasMoreTokens() && i<BOOKMARK_LAST)
+        {
+            tkn.GetNextToken().ToLong(&val);
+            Bookmarks[i] = val;
+            ++i;
+        }    
+    }
+
+    i = 0;
     wxString path;
     SearchPaths.Clear();
     while (true)
@@ -793,6 +824,8 @@ Catalog::Catalog()
     m_count = 0;
     m_isOk = true;
     m_header.BasePath = wxEmptyString;
+    for(int i=BOOKMARK_0; i <BOOKMARK_LAST; ++i)
+        m_header.Bookmarks[i] = -1;
 }
 
 
@@ -886,6 +919,12 @@ bool Catalog::Load(const wxString& po_file)
 
     LoadParser parser(this, &f, &encConv);
     parser.Parse();
+    
+    // now that the catalog is loaded, update its items with the bookmarks
+    for(int i = BOOKMARK_0; i < BOOKMARK_LAST; ++i)
+        if (m_header.Bookmarks[i] != -1 && m_header.Bookmarks[i] < m_dataArray.GetCount())
+            m_dataArray[m_header.Bookmarks[i]].SetBookmark(static_cast<Bookmark>(i));
+        
 
     m_isOk = true;
     
@@ -981,6 +1020,28 @@ void Catalog::Clear()
     m_isOk = true;
     m_count = 0;
     m_data = new wxHashTable(wxKEY_STRING);
+    for(int i=BOOKMARK_0; i <BOOKMARK_LAST; ++i)
+        m_header.Bookmarks[i] = -1;
+}
+
+int Catalog::SetBookmark(int id, Bookmark bookmark) 
+{
+    int result = (bookmark==NO_BOOKMARK)?-1:m_header.Bookmarks[bookmark];
+    
+    // unset previous bookmarks, if any
+    Bookmark bk = m_dataArray[id].GetBookmark();
+    if (bk != NO_BOOKMARK)
+        m_header.Bookmarks[bk] = -1;
+    if (result > -1)  
+        m_dataArray[result].SetBookmark(NO_BOOKMARK);
+        
+    // set new bookmark
+    m_dataArray[id].SetBookmark(bookmark);
+    if (bookmark != NO_BOOKMARK)
+        m_header.Bookmarks[bookmark] = id;
+    
+    // return id of previous item for that bookmark
+    return result;
 }
 
 
