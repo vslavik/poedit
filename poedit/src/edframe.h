@@ -99,6 +99,8 @@ class poEditFrame : public wxFrame
     private:
         /// Refreshes controls.
         void RefreshControls();
+        /// Sets controls custom fonts.
+        void SetCustomFonts();
         /// Puts text from textctrls to catalog & listctrl.
         void UpdateFromTextCtrl(int item = -1);
         /// Puts text from catalog & listctrl to textctrls.

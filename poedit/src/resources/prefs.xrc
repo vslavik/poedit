@@ -178,6 +178,61 @@
                   <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
                   <border>5d</border>
                 </object>
+                <object class="sizeritem">
+                  <object class="wxStaticBoxSizer">
+                    <label>Fonts</label>
+                    <orient>wxVERTICAL</orient>
+                    <object class="sizeritem">
+                      <object class="wxCheckBox" name="use_font_list">
+                        <label>Use custom font for translations list</label>
+                      </object>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxBoxSizer">
+                        <object class="sizeritem">
+                          <object class="wxTextCtrl" name="fontname_list">
+                            <style>wxTE_READONLY</style>
+                          </object>
+                          <option>1</option>
+                          <flag>wxRIGHT</flag>
+                          <border>5d</border>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxButton" name="fontpicker_list">
+                            <label>Choose</label>
+                          </object>
+                        </object>
+                      </object>
+                      <flag>wxEXPAND</flag>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxCheckBox" name="use_font_text">
+                        <label>Use custom font for text fields</label>
+                      </object>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxBoxSizer">
+                        <object class="sizeritem">
+                          <object class="wxTextCtrl" name="fontname_text">
+                            <style>wxTE_READONLY</style>
+                          </object>
+                          <option>1</option>
+                          <flag>wxRIGHT</flag>
+                          <border>5d</border>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxButton" name="fontpicker_text">
+                            <label>Choose</label>
+                          </object>
+                        </object>
+                      </object>
+                      <flag>wxEXPAND</flag>
+                    </object>
+                  </object>
+                  <option>0</option>
+                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
+                  <border>5d</border>
+                </object>
               </object>
               <style>wxTAB_TRAVERSAL</style>
             </object>

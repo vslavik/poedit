@@ -26,6 +26,8 @@
 #include <wx/choicdlg.h>
 #include <wx/spinctrl.h>
 #include <wx/notebook.h>
+#include <wx/fontdlg.h>
+#include <wx/fontutil.h>
 #include <wx/xrc/xmlres.h>
 
 #include "prefsdlg.h"
@@ -73,6 +75,15 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 cfg->Read(_T("open_editor_immediately"), (long)false));
     XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("keep_crlf"), true));
+
+    XRCCTRL(*this, "use_font_list", wxCheckBox)->SetValue(
+                (bool)cfg->Read(_T("custom_font_list_use"), (long)false));
+    XRCCTRL(*this, "use_font_text", wxCheckBox)->SetValue(
+                (bool)cfg->Read(_T("custom_font_text_use"), (long)false));
+    XRCCTRL(*this, "fontname_list", wxTextCtrl)->SetValue(
+            cfg->Read(_T("custom_font_list_name"), wxEmptyString));
+    XRCCTRL(*this, "fontname_text", wxTextCtrl)->SetValue(
+            cfg->Read(_T("custom_font_text_name"), wxEmptyString));
 
     wxString format = cfg->Read(_T("crlf_format"), _T("unix"));
     int sel;
@@ -137,6 +148,15 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
     cfg->Write(_T("keep_crlf"), 
                 XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
     
+    cfg->Write(_T("custom_font_list_use"),
+                XRCCTRL(*this, "use_font_list", wxCheckBox)->GetValue());
+    cfg->Write(_T("custom_font_text_use"),
+                XRCCTRL(*this, "use_font_text", wxCheckBox)->GetValue());
+    cfg->Write(_T("custom_font_list_name"),
+                XRCCTRL(*this, "fontname_list", wxTextCtrl)->GetValue());
+    cfg->Write(_T("custom_font_text_name"),
+                XRCCTRL(*this, "fontname_text", wxTextCtrl)->GetValue());
+ 
     static wxChar *formats[] = 
         { _T("unix"), _T("win"), _T("mac"), _T("native") };
     cfg->Write(_T("crlf_format"), formats[
@@ -171,6 +191,8 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
    EVT_BUTTON(XRCID("parser_new"), PreferencesDialog::OnNewParser)
    EVT_BUTTON(XRCID("parser_edit"), PreferencesDialog::OnEditParser)
    EVT_BUTTON(XRCID("parser_delete"), PreferencesDialog::OnDeleteParser)
+   EVT_BUTTON(XRCID("fontpicker_list"), PreferencesDialog::OnChooseListFont)
+   EVT_BUTTON(XRCID("fontpicker_text"), PreferencesDialog::OnChooseTextFont)
 #ifdef USE_TRANSMEM
    EVT_BUTTON(XRCID("tm_addlang"), PreferencesDialog::OnTMAddLang)
    EVT_BUTTON(XRCID("tm_browsedbpath"), PreferencesDialog::OnTMBrowseDbPath)
@@ -293,6 +315,40 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
 	XRCCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
 
     RunTMUpdateWizard(this, dbPath, langs);
+}
+        
+void PreferencesDialog::DoChooseFont(wxTextCtrl *nameField)
+{
+    wxFont font;
+    wxString fontname = nameField->GetValue();
+    if (!fontname.empty())
+    {
+        wxNativeFontInfo fi;
+        fi.FromString(fontname);
+        font.SetNativeFontInfo(fi);
+    }
+    wxFontData data;
+    data.EnableEffects(false);
+    data.SetAllowSymbols(false);
+    data.SetInitialFont(font);
+    wxFontDialog dlg(this, data);
+
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        data = dlg.GetFontData();
+        font = data.GetChosenFont();
+        nameField->SetValue(font.GetNativeFontInfoDesc());
+    }
+}
+        
+void PreferencesDialog::OnChooseListFont(wxCommandEvent& event)
+{
+    DoChooseFont(XRCCTRL(*this, "fontname_list", wxTextCtrl));
+}
+
+void PreferencesDialog::OnChooseTextFont(wxCommandEvent& event)
+{
+    DoChooseFont(XRCCTRL(*this, "fontname_text", wxTextCtrl));
 }
 
 #endif // USE_TRANSMEM

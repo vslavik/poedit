@@ -34,6 +34,7 @@
 #include <wx/button.h>
 #include <wx/statusbr.h>
 #include <wx/splitter.h>
+#include <wx/fontutil.h>
 
 #include "catalog.h"
 #include "edapp.h"
@@ -503,6 +504,8 @@ poEditFrame::poEditFrame() :
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE);
     
+    SetCustomFonts();
+    
     wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
 	leftSizer->Add(m_textOrig, 1, wxEXPAND);
     leftSizer->Add(m_textTrans, 1, wxEXPAND);
@@ -862,6 +865,7 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
         dlg.TransferFrom(wxConfig::Get());
         gs_focusToText = (bool)wxConfig::Get()->Read(_T("focus_to_text"),
                                                      (long)false);
+        SetCustomFonts();
     }
 }
 
@@ -1677,4 +1681,39 @@ void poEditFrame::OnManager(wxCommandEvent&)
 {
     wxFrame *f = ManagerFrame::Create();
     f->Raise();
+}
+
+void poEditFrame::SetCustomFonts()
+{
+    wxConfigBase *cfg = wxConfig::Get();
+    bool useFontList = (bool)cfg->Read(_T("custom_font_list_use"), (long)false);
+    bool useFontText = (bool)cfg->Read(_T("custom_font_text_use"), (long)false);
+
+    if (useFontList)
+    {
+        wxString name = cfg->Read(_T("custom_font_list_name"), wxEmptyString);
+        if (!name.empty())
+        {
+            wxNativeFontInfo fi;
+            fi.FromString(name);
+            wxFont font;
+            font.SetNativeFontInfo(fi);
+            m_list->SetFont(font);
+        }
+    }
+    
+    if (useFontText)
+    {
+        wxString name = cfg->Read(_T("custom_font_text_name"), wxEmptyString);
+        if (!name.empty())
+        {
+            wxNativeFontInfo fi;
+            fi.FromString(name);
+            wxFont font;
+            font.SetNativeFontInfo(fi);
+            m_textComment->SetFont(font);
+            m_textOrig->SetFont(font);
+            m_textTrans->SetFont(font);
+        }
+    }
 }

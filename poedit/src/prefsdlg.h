@@ -61,6 +61,10 @@ class PreferencesDialog : public wxDialog
         void OnDeleteParser(wxCommandEvent& event);
         /// Called to launch dialog for editting parser properties.
         bool EditParser(int num);
+
+        void OnChooseListFont(wxCommandEvent& event);
+        void OnChooseTextFont(wxCommandEvent& event);
+        void DoChooseFont(wxTextCtrl *nameField);
 };
 
 
