@@ -349,20 +349,17 @@ DbKey DbTrans::Write(wxArrayString *strs, DbKey index)
     DBT key, data;
     char *buf;
     size_t bufLen;
-    const wxWX2MBbuf mb_buf;
     size_t i;
     char *ptr;
 
     for (bufLen = 0, i = 0; i < strs->GetCount(); i++)
     {
-        mb_buf = strs->Item(i).mb_str(wxConvUTF8);
-        bufLen += strlen(mb_buf) + 1;
+        bufLen += strlen(strs->Item(i).mb_str(wxConvUTF8)) + 1;
     }
     buf = new char[bufLen];
     for (ptr = buf, i = 0; i < strs->GetCount(); i++)
     {
-        mb_buf = strs->Item(i).mb_str(wxConvUTF8);
-        strcpy(ptr, mb_buf);
+        strcpy(ptr, strs->Item(i).mb_str(wxConvUTF8));
         ptr += strlen(ptr) + 1;
     }
 

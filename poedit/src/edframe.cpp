@@ -48,10 +48,6 @@
 #include "commentdlg.h"
 #include "manager.h"
 
-#if wxUSE_UNICODE
-#error TODO: this file still lacks unicodifications, due to reiserfs crash :(
-#endif
-
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(poEditFramesList);
 poEditFramesList poEditFrame::ms_instances;
@@ -118,7 +114,7 @@ class poEditListCtrl : public wxListCtrl
                       const wxSize &size = wxDefaultSize,
                       long style = wxLC_ICON,
                       const wxValidator& validator = wxDefaultValidator,
-                      const wxString &name = "listctrl")
+                      const wxString &name = _T("listctrl"))
              : wxListCtrl(parent, id, pos, size, style, validator, name)
         {
             CreateColumns();
@@ -374,8 +370,8 @@ END_EVENT_TABLE()
 poEditFrame::poEditFrame(const wxString& catalog) :
     wxFrame(NULL, -1, _("poEdit"), wxDefaultPosition,
                              wxSize(
-                                 wxConfig::Get()->Read("frame_w", 600),
-                                 wxConfig::Get()->Read("frame_h", 400)),
+                                 wxConfig::Get()->Read(_T("frame_w"), 600),
+                                 wxConfig::Get()->Read(_T("frame_h"), 400)),
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
     m_catalog(NULL), 
 #ifdef USE_TRANSMEM
@@ -394,11 +390,11 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     //     are other frames, because they would overlap and nobody could recognize
     //     that there are many of them
     if (ms_instances.GetCount() == 0)
-        Move(cfg->Read("frame_x", -1), cfg->Read("frame_y", -1));
+        Move(cfg->Read(_T("frame_x"), -1), cfg->Read(_T("frame_y"), -1));
  
-    m_displayQuotes = (bool)cfg->Read("display_quotes", (long)false);
+    m_displayQuotes = (bool)cfg->Read(_T("display_quotes"), (long)false);
 
-    gs_focusToText = (bool)cfg->Read("focus_to_text", (long)false);
+    gs_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
 
     SetIcon(wxICON(appicon));
 
@@ -407,7 +403,7 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     m_boldGuiFont.SetWeight(wxFONTWEIGHT_BOLD);
 #endif    
     
-    wxMenuBar *MenuBar = wxTheXmlResource->LoadMenuBar("mainmenu");
+    wxMenuBar *MenuBar = wxTheXmlResource->LoadMenuBar(_T("mainmenu"));
     if (MenuBar)
     {
         m_history.UseMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&File"))));
@@ -417,11 +413,11 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     }
     else
     {
-        wxLogError("Cannot load main menu from resource, something must have went terribly wrong.");
+        wxLogError(_T("Cannot load main menu from resource, something must have went terribly wrong."));
         wxLog::FlushActive();
     }
 
-    SetToolBar(wxTheXmlResource->LoadToolBar(this, "toolbar"));
+    SetToolBar(wxTheXmlResource->LoadToolBar(this, _T("toolbar")));
 
     GetToolBar()->ToggleTool(XMLID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XMLID("menu_quotes"), m_displayQuotes);
@@ -432,10 +428,10 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     m_list = new poEditListCtrl(m_splitter, EDC_LIST, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
     m_list->SetFocus();
 
-    m_textOrig = new UnfocusableTextCtrl(panel, EDC_TEXTORIG, "", 
+    m_textOrig = new UnfocusableTextCtrl(panel, EDC_TEXTORIG, wxEmptyString, 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE | wxTE_READONLY);
-    m_textTrans = new wxTextCtrl(panel, EDC_TEXTTRANS, "", 
+    m_textTrans = new wxTextCtrl(panel, EDC_TEXTTRANS, wxEmptyString, 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE);
     
@@ -447,7 +443,7 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     panel->SetSizer(sizer);
     
     m_splitter->SetMinimumPaneSize(40);
-    m_splitter->SplitHorizontally(m_list, panel, cfg->Read("splitter", 240L));
+    m_splitter->SplitHorizontally(m_list, panel, cfg->Read(_T("splitter"), 240L));
 
     m_textTrans->PushEventHandler(new TextctrlHandler(m_list, &m_sel));
     m_list->PushEventHandler(new ListHandler(m_textTrans, this, 
@@ -465,9 +461,9 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     UpdateMenu();
 
 #if defined(__WXMSW__)
-    m_help.Initialize(wxGetApp().GetAppPath() + "/share/poedit/poedit.chm");
+    m_help.Initialize(wxGetApp().GetAppPath() + _T("/share/poedit/poedit.chm"));
 #elif defined(__UNIX__)
-    m_help.Initialize(wxGetApp().GetAppPath() + "/share/poedit/help.zip");
+    m_help.Initialize(wxGetApp().GetAppPath() + _T("/share/poedit/help.zip"));
 #endif
 
     ms_instances.Append(this);
@@ -485,12 +481,12 @@ poEditFrame::~poEditFrame()
     wxSize sz = GetSize();
     wxPoint pos = GetPosition();
     wxConfigBase *cfg = wxConfig::Get();
-    cfg->Write("frame_w", (long)sz.x);
-    cfg->Write("frame_h", (long)sz.y);
-    cfg->Write("frame_x", (long)pos.x);
-    cfg->Write("frame_y", (long)pos.y);
-    cfg->Write("splitter", (long)m_splitter->GetSashPosition());
-    cfg->Write("display_quotes", m_displayQuotes);
+    cfg->Write(_T("frame_w"), (long)sz.x);
+    cfg->Write(_T("frame_h"), (long)sz.y);
+    cfg->Write(_T("frame_x"), (long)pos.x);
+    cfg->Write(_T("frame_y"), (long)pos.y);
+    cfg->Write(_T("splitter"), (long)m_splitter->GetSashPosition());
+    cfg->Write(_T("display_quotes"), m_displayQuotes);
 
     m_history.Save(*cfg);
 
@@ -512,14 +508,14 @@ TranslationMemory *poEditFrame::GetTransMem()
     else
     {
         wxString lang;
-        wxString dbPath = cfg->Read("TM/database_path", "");
+        wxString dbPath = cfg->Read(_T("TM/database_path"), wxEmptyString);
         
         if (!m_catalog->Header().Language.IsEmpty())
         {
-            const char *lng = m_catalog->Header().Language.c_str();
+            const wxChar *lng = m_catalog->Header().Language.c_str();
             for (size_t i = 0; isoLanguages[i].iso != NULL; i++)
             {
-                if (strcmp(isoLanguages[i].lang, lng) == 0)
+                if (wxStrcmp(isoLanguages[i].lang, lng) == 0)
                 {
                     lang = isoLanguages[i].iso;
                     break;
@@ -530,7 +526,7 @@ TranslationMemory *poEditFrame::GetTransMem()
         {
             wxArrayString lngs;
             int index;
-            wxStringTokenizer tkn(cfg->Read("TM/languages", ""), ":");
+            wxStringTokenizer tkn(cfg->Read(_T("TM/languages"), wxEmptyString), _T(":"));
 
             lngs.Add(_("(none of these)"));
             while (tkn.HasMoreTokens()) lngs.Add(tkn.GetNextToken());
@@ -545,8 +541,8 @@ TranslationMemory *poEditFrame::GetTransMem()
         {
             m_transMem = TranslationMemory::Create(lang, dbPath);
             if (m_transMem)
-                m_transMem->SetParams(cfg->Read("TM/max_delta", 2),
-                                      cfg->Read("TM/max_omitted", 2));
+                m_transMem->SetParams(cfg->Read(_T("TM/max_delta"), 2),
+                                      cfg->Read(_T("TM/max_omitted"), 2));
         }
         else
             m_transMem = NULL;
@@ -585,15 +581,15 @@ void poEditFrame::OnOpen(wxCommandEvent&)
 
     wxString path = wxPathOnly(m_fileName);
     if (path.IsEmpty()) 
-        path = wxConfig::Get()->Read("last_file_path", "");
+        path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
 	
     wxString name = wxFileSelector(_("Open catalog"), 
-                    path, "", "", 
-                    "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*", 
+                    path, wxEmptyString, wxEmptyString, 
+                    _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"), 
                     wxOPEN | wxFILE_MUST_EXIST, this);
     if (!name.IsEmpty())
     {
-        wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
+        wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
         ReadCatalog(name);
     }
 }
@@ -608,7 +604,7 @@ void poEditFrame::OnOpenHist(wxCommandEvent& event)
         WriteCatalog(m_fileName);
 
     wxString f(m_history.GetHistoryFile(event.GetId() - wxID_FILE1));
-    if (f != "" && wxFileExists(f))
+    if (f != wxEmptyString && wxFileExists(f))
         ReadCatalog(f);
     else
         wxLogError(_("File ") + f + _(" doesn't exist!"));
@@ -619,7 +615,8 @@ void poEditFrame::OnOpenHist(wxCommandEvent& event)
 void poEditFrame::OnSave(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
-    if (m_fileName == "") OnSaveAs(event);
+    if (m_fileName.IsEmpty())
+        OnSaveAs(event);
     else
         WriteCatalog(m_fileName);
 }
@@ -632,14 +629,14 @@ void poEditFrame::OnSaveAs(wxCommandEvent&)
 
     wxString name(wxFileNameFromPath(m_fileName));
 
-    if (name == "") name = "default.po";
+    if (name.IsEmpty()) name = _T("default.po");
     
-    name = wxFileSelector(_("Save as..."), wxPathOnly(m_fileName), name, "", 
-                          "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*",
+    name = wxFileSelector(_("Save as..."), wxPathOnly(m_fileName), name, wxEmptyString, 
+                          _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"),
                           wxSAVE | wxOVERWRITE_PROMPT, this);
     if (!name.IsEmpty())
     {
-        wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
+        wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
         WriteCatalog(name);
     }
 }
@@ -662,7 +659,7 @@ void poEditFrame::OnNew(wxCommandEvent& event)
         dlg.TransferFrom(catalog);
         if (m_catalog) delete m_catalog;
         m_catalog = catalog;
-        m_fileName = "";
+        m_fileName = wxEmptyString;
         m_modified = true;
         OnSave(event);
         OnUpdate(event);
@@ -707,7 +704,7 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
     if (dlg.ShowModal() == wxID_OK)
     {
         dlg.TransferFrom(wxConfig::Get());
-        gs_focusToText = (bool)wxConfig::Get()->Read("focus_to_text", (long)false);
+        gs_focusToText = (bool)wxConfig::Get()->Read(_T("focus_to_text"), (long)false);
     }
 }
 
@@ -724,7 +721,7 @@ void poEditFrame::OnUpdate(wxCommandEvent&)
     UpdateCatalog();
  
 #ifdef USE_TRANSMEM
-    if (wxConfig::Get()->Read("use_tm_when_updating", true) &&
+    if (wxConfig::Get()->Read(_T("use_tm_when_updating"), true) &&
         GetTransMem() != NULL)
     {
         TranslationMemory *tm = GetTransMem();
@@ -824,12 +821,12 @@ void poEditFrame::ShowReference(int num)
         if (wxIsAbsolutePath(m_catalog->Header().BasePath))
             path = m_catalog->Header().BasePath;
         else
-            path = wxPathOnly(m_fileName) + wxT("/") + m_catalog->Header().BasePath;
+            path = wxPathOnly(m_fileName) + _T("/") + m_catalog->Header().BasePath;
         
         if (wxIsAbsolutePath(path))
             basepath = path;
         else
-            basepath = cwd + wxT("/") + path;
+            basepath = cwd + _T("/") + path;
     }
     
     wxWindow *w = new FileViewer(this, basepath,
@@ -878,7 +875,7 @@ void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
     if (ind >= (int)m_catalog->GetCount() || ind < 0) return;
 
     wxString quote;
-    if (m_displayQuotes) quote = "\""; else quote = "";
+    if (m_displayQuotes) quote = _T("\""); else quote = wxEmptyString;
 
     m_textTrans->SetValue(quote + (*m_catalog)[ind].GetString() + quote);
 }
@@ -895,14 +892,14 @@ void poEditFrame::OnFullscreen(wxCommandEvent& event)
 
     if (fs)
     {
-        cfg->Write("splitter_fullscreen", (long)m_splitter->GetSashPosition());
-        m_splitter->SetSashPosition(cfg->Read("splitter", 240L));
+        cfg->Write(_T("splitter_fullscreen"), (long)m_splitter->GetSashPosition());
+        m_splitter->SetSashPosition(cfg->Read(_T("splitter"), 240L));
     }
     else
     {
         long oldSash = m_splitter->GetSashPosition();
-        cfg->Write("splitter", oldSash);
-        m_splitter->SetSashPosition(cfg->Read("splitter_fullscreen", oldSash));
+        cfg->Write(_T("splitter"), oldSash);
+        m_splitter->SetSashPosition(cfg->Read(_T("splitter_fullscreen"), oldSash));
     }
 
     ShowFullScreen(!fs, wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION);
@@ -912,7 +909,7 @@ void poEditFrame::OnFullscreen(wxCommandEvent& event)
 
 void poEditFrame::OnFind(wxCommandEvent& event)
 {
-    FindFrame *f = (FindFrame*)FindWindow("find_frame");
+    FindFrame *f = (FindFrame*)FindWindow(_T("find_frame"));
 
     if (!f)
         f = new FindFrame(this, m_list, m_catalog);
@@ -957,11 +954,11 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             newval.RemoveLast();
     }
       
-    if (newval[0u] == '"') newval.Prepend("\\");
+    if (newval[0u] == _T('"')) newval.Prepend(_T("\\"));
     for (unsigned i = 1; i < newval.Len(); i++)
-        if (newval[i] == '"' && newval[i-1] != '\\')
+        if (newval[i] == _T('"') && newval[i-1] != _T('\\'))
         {
-            newval = newval.Mid(0, i) + "\\\"" + newval.Mid(i+1);
+            newval = newval.Mid(0, i) + _T("\\\"") + newval.Mid(i+1);
             i++;
         }
 
@@ -1014,12 +1011,12 @@ void poEditFrame::UpdateToTextCtrl(int item)
 
     wxString quote;
     wxString t_o, t_t;
-    if (m_displayQuotes) quote = "\""; else quote = "";
+    if (m_displayQuotes) quote = _T("\""); else quote = wxEmptyString;
     t_o = quote + (*m_catalog)[ind].GetString() + quote;
-    t_o.Replace("\\n", "\\n\n");
+    t_o.Replace(_T("\\n"), _T("\\n\n"));
     m_textOrig->SetValue(t_o);
     t_t = quote + (*m_catalog)[ind].GetTranslation() + quote;
-    t_t.Replace("\\n", "\\n\n");
+    t_t.Replace(_T("\\n"), _T("\\n\n"));
     
     // Convert from UTF-8 to environment's default charset:
     wxString t_t2(t_t.wc_str(wxConvUTF8), wxConvLocal);
@@ -1116,7 +1113,7 @@ void poEditFrame::RefreshControls()
     if (!m_catalog->IsOk())
     {
         wxLogError(_("Error loading message catalog file '") + m_fileName + _("'."));
-        m_fileName = "";
+        m_fileName = wxEmptyString;
         UpdateMenu();
         UpdateTitle();
         delete m_catalog;
@@ -1127,9 +1124,7 @@ void poEditFrame::RefreshControls()
     wxBusyCursor bcur;
     UpdateMenu();
 
-#if wxCHECK_VERSION(2,3,2)
     m_list->Freeze();
-#endif
     m_list->ClearAll();
     m_list->CreateColumns();
 
@@ -1143,9 +1138,7 @@ void poEditFrame::RefreshControls()
     AddItemsToList(*m_catalog, m_list, pos, 
                    CatFilterRest, g_ItemColourNormal);
 
-#if wxCHECK_VERSION(2,3,2)
     m_list->Thaw();
-#endif
     
     if (m_catalog->GetCount() > 0) 
         m_list->SetItemState(0, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
@@ -1229,8 +1222,8 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
     wxBusyCursor bcur;
 
     Catalog::HeaderData& dt = m_catalog->Header();
-    dt.Translator = wxConfig::Get()->Read("translator_name", dt.Translator);
-    dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", dt.TranslatorEmail);
+    dt.Translator = wxConfig::Get()->Read(_T("translator_name"), dt.Translator);
+    dt.TranslatorEmail = wxConfig::Get()->Read(_T("translator_email"), dt.TranslatorEmail);
 
     m_catalog->Save(catalog);
     m_fileName = catalog;
@@ -1354,7 +1347,7 @@ void poEditFrame::OnAbout(wxCommandEvent&)
 {
     wxBusyCursor busy;
     wxDialog dlg;
-    wxTheXmlResource->LoadDialog(&dlg, this, "about_box");
+    wxTheXmlResource->LoadDialog(&dlg, this, _T("about_box"));
     dlg.Centre();
     dlg.ShowModal();
 }
