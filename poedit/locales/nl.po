@@ -1,9 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.1.x\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-01-25 23:11+0100\n"
-"PO-Revision-Date: 2003-11-29 16:23+0100\n"
+"PO-Revision-Date: 2004-01-26 13:47+0100\n"
 "Last-Translator: Patrick Hubers <phubers@solve-i-t.com>\n"
 "Language-Team: Patrick Hubers <phubers@solve-i-t.com>\n"
 "MIME-Version: 1.0\n"
@@ -18,10 +17,11 @@ msgstr " (veranderd)"
 msgid " files..."
 msgstr " bestanden..."
 
-#: ../src/edframe.cpp:1545 ../src/export_html.cpp:136
-#, fuzzy, c-format
+#: ../src/edframe.cpp:1545
+#: ../src/export_html.cpp:136
+#, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i teksten (%i onzeker, %i niet vertaald)"
+msgstr "%i teksten (%i onzeker, %ongeldige symbolen, %i niet vertaald)"
 
 #: ../src/resources/xrc_strings.h:56
 msgid "&About..."
@@ -47,7 +47,8 @@ msgstr "&Inhoud..."
 msgid "&Edit"
 msgstr "Be&werken"
 
-#: ../src/resources/xrc_strings.h:28 ../src/edframe.cpp:475
+#: ../src/resources/xrc_strings.h:28
+#: ../src/edframe.cpp:475
 msgid "&File"
 msgstr "&Bestand"
 
@@ -149,7 +150,8 @@ msgstr "Toevoegen"
 msgid "Add directory to the list"
 msgstr "Voeg map aan lijst toe"
 
-#: ../src/resources/xrc_strings.h:157 ../src/transmemupd_wizard.cpp:128
+#: ../src/resources/xrc_strings.h:157
+#: ../src/transmemupd_wizard.cpp:128
 msgid "Add files"
 msgstr "Bestanden toevoegen"
 
@@ -170,11 +172,11 @@ msgid "An item in keywords list:"
 msgstr "Een item in de lijst van sleutelwoorden:"
 
 #: ../src/export_html.cpp:175
-#, fuzzy
 msgid "Automatic translation"
-msgstr "Automatische vertalingen:"
+msgstr "Automatische vertaling"
 
-#: ../src/edframe.cpp:1765 ../src/edframe.cpp:1769
+#: ../src/edframe.cpp:1765
+#: ../src/edframe.cpp:1769
 msgid "Automatic translations:"
 msgstr "Automatische vertalingen:"
 
@@ -197,7 +199,7 @@ msgstr "Automatisch vertalen..."
 
 #: ../src/manager.cpp:227
 msgid "Bad Tokens"
-msgstr ""
+msgstr "Ongeldige symbolen"
 
 #: ../src/resources/xrc_strings.h:138
 msgid "Base path:"
@@ -207,8 +209,10 @@ msgstr "Basismap:"
 msgid "Behavior"
 msgstr "Gedrag"
 
-#: ../src/resources/xrc_strings.h:24 ../src/resources/xrc_strings.h:92
-#: ../src/resources/xrc_strings.h:123 ../src/resources/xrc_strings.h:154
+#: ../src/resources/xrc_strings.h:24
+#: ../src/resources/xrc_strings.h:92
+#: ../src/resources/xrc_strings.h:123
+#: ../src/resources/xrc_strings.h:154
 msgid "Browse"
 msgstr "Bladeren"
 
@@ -216,10 +220,14 @@ msgstr "Bladeren"
 msgid "CR/LF conversion"
 msgstr "CR/LF-conversie"
 
-#: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:15
-#: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:107
-#: ../src/resources/xrc_strings.h:122 ../src/resources/xrc_strings.h:126
-#: ../src/resources/xrc_strings.h:128 ../src/resources/xrc_strings.h:143
+#: ../src/resources/xrc_strings.h:6
+#: ../src/resources/xrc_strings.h:15
+#: ../src/resources/xrc_strings.h:27
+#: ../src/resources/xrc_strings.h:107
+#: ../src/resources/xrc_strings.h:122
+#: ../src/resources/xrc_strings.h:126
+#: ../src/resources/xrc_strings.h:128
+#: ../src/resources/xrc_strings.h:143
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -265,8 +273,11 @@ msgstr "Hoofdletter-gevoelig"
 msgid "Catalog"
 msgstr "Catalogus"
 
-#: ../src/edframe.cpp:697 ../src/edframe.cpp:716 ../src/edframe.cpp:748
-#: ../src/edframe.cpp:789 ../src/edframe.cpp:907
+#: ../src/edframe.cpp:697
+#: ../src/edframe.cpp:716
+#: ../src/edframe.cpp:748
+#: ../src/edframe.cpp:789
+#: ../src/edframe.cpp:907
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Catalogus is veranderd. Wilt u de veranderingen bewaren?"
 
@@ -278,11 +289,13 @@ msgstr "Catalogus-beheer"
 msgid "Change UI language"
 msgstr "Verander taal voor gebruikersinterface"
 
-#: ../src/resources/xrc_strings.h:135 ../src/export_html.cpp:122
+#: ../src/resources/xrc_strings.h:135
+#: ../src/export_html.cpp:122
 msgid "Charset:"
 msgstr "Tekenset:"
 
-#: ../src/resources/xrc_strings.h:86 ../src/resources/xrc_strings.h:88
+#: ../src/resources/xrc_strings.h:86
+#: ../src/resources/xrc_strings.h:88
 msgid "Choose"
 msgstr "Kiezen"
 
@@ -296,7 +309,7 @@ msgstr "Opmerking wissen"
 
 #: ../src/resources/xrc_strings.h:71
 msgid "Comment window is editable"
-msgstr ""
+msgstr "Opmerkingen-venster is bewerkbaar"
 
 #: ../src/resources/xrc_strings.h:4
 msgid "Comment:"
@@ -306,15 +319,18 @@ msgstr "Opmerking:"
 msgid "Configuration"
 msgstr "Configuratie"
 
-#: ../src/manager.cpp:382 ../src/manager.cpp:402
+#: ../src/manager.cpp:382
+#: ../src/manager.cpp:402
 msgid "Confirmation"
 msgstr "Bevestiging"
 
-#: ../src/resources/xrc_strings.h:38 ../src/edframe.cpp:1744
+#: ../src/resources/xrc_strings.h:38
+#: ../src/edframe.cpp:1744
 msgid "Copy original to translation field"
 msgstr "Kopieer origineel naar vertaling"
 
-#: ../src/resources/xrc_strings.h:134 ../src/export_html.cpp:112
+#: ../src/resources/xrc_strings.h:134
+#: ../src/export_html.cpp:112
 msgid "Country:"
 msgstr "Land:"
 
@@ -374,9 +390,8 @@ msgid "Don't change format of existing catalogs"
 msgstr "Laat formaat van bestaande catalogi ongemoeid"
 
 #: ../src/resources/xrc_strings.h:34
-#, fuzzy
 msgid "E&xport..."
-msgstr "&Over..."
+msgstr "E&xporteren..."
 
 #: ../src/resources/xrc_strings.h:104
 msgid "Edit"
@@ -386,7 +401,8 @@ msgstr "Bewerken"
 msgid "Edit &comment"
 msgstr "&Opmerkingen bewerken"
 
-#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:163
+#: ../src/resources/xrc_strings.h:3
+#: ../src/resources/xrc_strings.h:163
 msgid "Edit comment"
 msgstr "Opmerkingen bewerken"
 
@@ -433,13 +449,14 @@ msgstr "Fout bij het opslaan van de catalogus"
 
 #: ../src/edframe.cpp:881
 msgid "Export as..."
-msgstr ""
+msgstr "Exporteren als..."
 
 #: ../src/resources/xrc_strings.h:80
 msgid "External editor"
 msgstr "Externe editor"
 
-#: ../src/edframe.cpp:761 ../src/edframe.cpp:800
+#: ../src/edframe.cpp:761
+#: ../src/edframe.cpp:800
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Bestand '%s' bestaat niet."
@@ -478,11 +495,11 @@ msgid "Fuzzy"
 msgstr "Onzeker"
 
 #: ../src/export_html.cpp:181
-#, fuzzy
 msgid "Fuzzy translation"
-msgstr "Vertaling"
+msgstr "Onzekere vertaling"
 
-#: ../src/edframe.cpp:731 ../src/edframe.cpp:847
+#: ../src/edframe.cpp:731
+#: ../src/edframe.cpp:847
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText catalogi (*.po)|*.po|Alle bestanden (*.*)|*.*"
 
@@ -504,7 +521,7 @@ msgstr "Database genereren"
 
 #: ../src/edframe.cpp:883
 msgid "HTML file (*.html)|*.html"
-msgstr ""
+msgstr "HTML-bestand (*.html)|*.html"
 
 #: ../src/resources/xrc_strings.h:165
 msgid "Help"
@@ -516,13 +533,14 @@ msgstr "Identiteit"
 
 #: ../src/resources/xrc_strings.h:72
 msgid "If checked, the comment window will be editable."
-msgstr ""
+msgstr "Indien aangevinkt, is het opmerkingen-venster bewerkbaar."
 
 #: ../src/resources/xrc_strings.h:112
 msgid "Invocation:"
 msgstr "Aanroep:"
 
-#: ../src/resources/xrc_strings.h:141 ../src/settingsdlg.cpp:59
+#: ../src/resources/xrc_strings.h:141
+#: ../src/settingsdlg.cpp:59
 msgid "Keywords"
 msgstr "Zoekwoorden"
 
@@ -530,8 +548,10 @@ msgstr "Zoekwoorden"
 msgid "Language selection"
 msgstr "Taalselectie"
 
-#: ../src/resources/xrc_strings.h:109 ../src/resources/xrc_strings.h:110
-#: ../src/resources/xrc_strings.h:133 ../src/export_html.cpp:109
+#: ../src/resources/xrc_strings.h:109
+#: ../src/resources/xrc_strings.h:110
+#: ../src/resources/xrc_strings.h:133
+#: ../src/export_html.cpp:109
 msgid "Language:"
 msgstr "Taal:"
 
@@ -539,7 +559,8 @@ msgstr "Taal:"
 msgid "Last modified"
 msgstr "Laatst veranderd"
 
-#: ../src/edframe.cpp:159 ../src/fileviewer.cpp:89
+#: ../src/edframe.cpp:159
+#: ../src/fileviewer.cpp:89
 msgid "Line"
 msgstr "Regel"
 
@@ -584,15 +605,8 @@ msgid "My Project"
 msgstr "Mijn Project"
 
 #: ../src/resources/xrc_strings.h:70
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Laat nooit de lijst met vertalingen de focus hebben. Als deze optie "
-"aanstaat, moet uw Ctrl-pijltoetsen gebruiken voor de toetsenbord-navigatie, "
-"maar u kunt wel meteen tekst typen, zonder met Tab de focus te hoeven "
-"veranderen."
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Laat nooit de lijst met vertalingen de focus hebben. Als deze optie aanstaat, moet uw Ctrl-pijltoetsen gebruiken voor de toetsenbord-navigatie, maar u kunt wel meteen tekst typen, zonder met Tab de focus te hoeven veranderen."
 
 #: ../src/resources/xrc_strings.h:103
 msgid "New"
@@ -612,9 +626,7 @@ msgstr "Volgende >"
 
 #: ../src/fileviewer.cpp:128
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr ""
-"Geen editor gespecificeerd. Stel deze a.u.b. in het dialoogvenster "
-"'Voorkeuren' in."
+msgstr "Geen editor gespecificeerd. Stel deze a.u.b. in het dialoogvenster 'Voorkeuren' in."
 
 #: ../src/digger.cpp:127
 msgid "No files found in: "
@@ -625,13 +637,15 @@ msgid "No references to this string found."
 msgstr "Geen referenties naar deze tekst gevonden."
 
 #: ../src/export_html.cpp:153
-#, fuzzy
 msgid "Notes"
-msgstr "Lettertypen"
+msgstr "Aantekeningen"
 
-#: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:106
-#: ../src/resources/xrc_strings.h:121 ../src/resources/xrc_strings.h:142
+#: ../src/resources/xrc_strings.h:2
+#: ../src/resources/xrc_strings.h:5
+#: ../src/resources/xrc_strings.h:26
+#: ../src/resources/xrc_strings.h:106
+#: ../src/resources/xrc_strings.h:121
+#: ../src/resources/xrc_strings.h:142
 #: ../src/resources/xrc_strings.h:150
 msgid "OK"
 msgstr "Ok"
@@ -640,7 +654,8 @@ msgstr "Ok"
 msgid "Obsolete strings"
 msgstr "Verdwenen teksten"
 
-#: ../src/resources/xrc_strings.h:158 ../src/edframe.cpp:729
+#: ../src/resources/xrc_strings.h:158
+#: ../src/edframe.cpp:729
 msgid "Open catalog"
 msgstr "Catalogus openen"
 
@@ -656,7 +671,8 @@ msgstr "Catalogus-manager openen bij starten van poEdit"
 msgid "Open source files in editor, not in file viewer"
 msgstr "Open bestanden in de externe editor, niet de interne viewer"
 
-#: ../src/edframe.cpp:156 ../src/export_html.cpp:146
+#: ../src/edframe.cpp:156
+#: ../src/export_html.cpp:146
 msgid "Original string"
 msgstr "Originele tekst"
 
@@ -680,7 +696,8 @@ msgstr "Lezen "
 msgid "Path to DB:"
 msgstr "Pad naar database:"
 
-#: ../src/resources/xrc_strings.h:139 ../src/settingsdlg.cpp:61
+#: ../src/resources/xrc_strings.h:139
+#: ../src/settingsdlg.cpp:61
 msgid "Paths"
 msgstr "Paden"
 
@@ -694,8 +711,7 @@ msgstr "Kies een taal uit de lijst van bekende talen"
 
 #: ../src/resources/xrc_strings.h:153
 msgid "Please add directories where locale files are stored on your system:"
-msgstr ""
-"Voeg de mappen toe waar de 'locale'-bestanden op uw systeem zijn opgeslagen:"
+msgstr "Voeg de mappen toe waar de 'locale'-bestanden op uw systeem zijn opgeslagen:"
 
 #: ../src/edframe.cpp:1061
 msgid "Please choose the reference you want to show:"
@@ -717,11 +733,13 @@ msgstr "Voorkeuren"
 msgid "Proceed"
 msgstr "Doorgaan"
 
-#: ../src/resources/xrc_strings.h:137 ../src/export_html.cpp:102
+#: ../src/resources/xrc_strings.h:137
+#: ../src/export_html.cpp:102
 msgid "Project info"
 msgstr "Project-informatie"
 
-#: ../src/resources/xrc_strings.h:130 ../src/export_html.cpp:106
+#: ../src/resources/xrc_strings.h:130
+#: ../src/export_html.cpp:106
 msgid "Project name and version:"
 msgstr "Projectnaam/-versie:"
 
@@ -733,15 +751,14 @@ msgstr "Projectnaam:"
 msgid "References"
 msgstr "Referenties"
 
-#: ../src/edframe.cpp:1749 ../src/edframe.cpp:1753
+#: ../src/edframe.cpp:1749
+#: ../src/edframe.cpp:1753
 msgid "References:"
 msgstr "Referenties:"
 
 #: ../src/resources/xrc_strings.h:96
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr ""
-"Hergenereer vertalingen-geheugen m.b.v. de catalogi in de bovengenoemde "
-"paden."
+msgstr "Hergenereer vertalingen-geheugen m.b.v. de catalogi in de bovengenoemde paden."
 
 #: ../src/resources/xrc_strings.h:155
 msgid "Reset to defaults"
@@ -759,8 +776,11 @@ msgstr "Opslaan als..."
 msgid "Save catalog"
 msgstr "Catalogus opslaan"
 
-#: ../src/edframe.cpp:698 ../src/edframe.cpp:717 ../src/edframe.cpp:749
-#: ../src/edframe.cpp:790 ../src/edframe.cpp:908
+#: ../src/edframe.cpp:698
+#: ../src/edframe.cpp:717
+#: ../src/edframe.cpp:749
+#: ../src/edframe.cpp:790
+#: ../src/edframe.cpp:908
 msgid "Save changes"
 msgstr "Veranderingen opslaan"
 
@@ -780,7 +800,8 @@ msgstr "Zoekpaden"
 msgid "Select catalog's language"
 msgstr "Selecteer taal voor de catalogus"
 
-#: ../src/manager.cpp:257 ../src/prefsdlg.cpp:323
+#: ../src/manager.cpp:257
+#: ../src/prefsdlg.cpp:323
 #: ../src/transmemupd_wizard.cpp:102
 msgid "Select directory"
 msgstr "Kies map"
@@ -809,10 +830,10 @@ msgstr "Toon &commentaar-venster"
 msgid "Show summary after catalog update"
 msgstr "Samenvatting tonen na bijwerken catalogus"
 
-#: ../src/resources/xrc_strings.h:119 ../src/resources/xrc_strings.h:136
-#, fuzzy
+#: ../src/resources/xrc_strings.h:119
+#: ../src/resources/xrc_strings.h:136
 msgid "Source code charset:"
-msgstr "Broncode-parsers:"
+msgstr "Broncode-tekenset:"
 
 #: ../src/resources/xrc_strings.h:102
 msgid "Source code parsers:"
@@ -826,11 +847,13 @@ msgstr "Bronbestand"
 msgid "String to find:"
 msgstr "Zoektekst:"
 
-#: ../src/resources/xrc_strings.h:132 ../src/export_html.cpp:119
+#: ../src/resources/xrc_strings.h:132
+#: ../src/export_html.cpp:119
 msgid "Team's email address:"
 msgstr "Email-adres team:"
 
-#: ../src/resources/xrc_strings.h:131 ../src/export_html.cpp:115
+#: ../src/resources/xrc_strings.h:131
+#: ../src/export_html.cpp:115
 msgid "Team:"
 msgstr "Project-team:"
 
@@ -858,8 +881,7 @@ msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
 msgstr ""
-"Deze teksten zijn in de broncode gevonden, maar stonden niet in de "
-"catalogus.\n"
+"Deze teksten zijn in de broncode gevonden, maar stonden niet in de catalogus.\n"
 "poEdit zal ze nu aan de catalogus toevoegen."
 
 #: ../src/edapp.cpp:142
@@ -873,7 +895,6 @@ msgstr ""
 "(Deze informatie wordt alleen gebruikt in de catalogus-headers)"
 
 #: ../src/resources/xrc_strings.h:114
-#, fuzzy
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -882,16 +903,17 @@ msgid ""
 msgstr ""
 "Deze opdracht start de parser. %o wordt vervangen door\n"
 "de naam van het uitvoerbestand, %K door de lijst van zoek-\n"
-"woorden, %F door de lijst van invoerbestanden (zie onder)."
+"woorden, %F door de lijst van invoerbestanden\n"
+"%C door de tekenset-vlag (zie onder)."
 
 #: ../src/resources/xrc_strings.h:120
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "This will be attached to the command line\n"
 "only if source codecharset was given. %c expands to charset value."
 msgstr ""
-"Dit wordt voor elk invoerbestand aan de opdrachtregel\n"
-"toegevoegd. %f wordt vervangen door de bestandsnaam."
+"Dit wordt aan de opdrachtregel toegevoegd als alleen de bron-\n"
+"tekenset was opgegeven. %c wordt vervangen door de tekensetwaarde."
 
 #: ../src/resources/xrc_strings.h:118
 #, c-format
@@ -918,7 +940,8 @@ msgstr "Ingedrukt als de geselecteerde tekst een onzekere vertaling heeft"
 msgid "Total"
 msgstr "Totaal"
 
-#: ../src/edframe.cpp:157 ../src/export_html.cpp:149
+#: ../src/edframe.cpp:157
+#: ../src/export_html.cpp:149
 msgid "Translation"
 msgstr "Vertaling"
 
@@ -1052,11 +1075,10 @@ msgid "poEdit did not find any files in scanned directories."
 msgstr "poEdit heeft geen bestanden gevonden in de doorzochte mappen."
 
 #: ../src/edapp.cpp:54
-msgid ""
-"poEdit installation is broken, cannot find application's home directory."
-msgstr ""
-"Installatie van poEdit is corrupt, kan de map van de applicatie niet vinden."
+msgid "poEdit installation is broken, cannot find application's home directory."
+msgstr "Installatie van poEdit is corrupt, kan de map van de applicatie niet vinden."
 
 #: ../src/edframe.cpp:1804
 msgid "version"
 msgstr "Versie"
+
