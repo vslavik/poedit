@@ -577,10 +577,11 @@ static wxString FormatStringForFile(const wxString& text)
 inline wxString convertUtf8ToCharset(const wxString& s, wxMBConv *conv)
 {
 #if !wxUSE_UNICODE
-    return wxString(s.wc_str(wxConvUTF8), *conv);
-#else
-    return s;
+    if (conv)
+        return wxString(s.wc_str(wxConvUTF8), *conv);
+    else
 #endif
+    return s;
 }
 
 bool Catalog::Save(const wxString& po_file, bool save_mo)
