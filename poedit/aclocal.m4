@@ -139,25 +139,38 @@ dnl ---------------------------------------------------------------------------
 AC_DEFUN(FIND_BERKELEY_DB,
 [
   USE_TRANSMEM=1
-  AC_CHECK_LIB(db-3.1, db_create,
+
+  AC_CHECK_LIB(db-3.3, db_create,
      [
-         DB_LIB=-ldb-3.1
+         DB_LIB=-ldb-3.3
      ],
      [
-         AC_CHECK_LIB(db, db_create,
+      AC_CHECK_LIB(db-3.2, db_create,
          [
-             DB_LIB=-ldb
+             DB_LIB=-ldb-3.2
          ],
          [
-             USE_TRANSMEM=0
-             AC_MSG_WARN([
+          AC_CHECK_LIB(db-3.1, db_create,
+             [
+                 DB_LIB=-ldb-3.1
+             ],
+             [
+                 AC_CHECK_LIB(db, db_create,
+                 [
+                     DB_LIB=-ldb
+                 ],
+                 [
+                     USE_TRANSMEM=0
+                     AC_MSG_WARN([
 
 *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
 
- Cannot find Berkeley DB 3.1, poEdit will build w/o translation memory feature!
+ Cannot find Berkeley DB 3.x, poEdit will build w/o translation memory feature!
 
 *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
 
+                     ])
+                 ])
              ])
          ])
      ])
@@ -175,7 +188,7 @@ AC_DEFUN(FIND_BERKELEY_DB,
 
 *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
 
- Cannot find Berkeley DB 3.1, poEdit will build w/o translation memory feature!
+ Cannot find Berkeley DB 3.x, poEdit will build w/o translation memory feature!
 
 *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
 
