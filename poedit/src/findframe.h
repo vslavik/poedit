@@ -54,6 +54,7 @@ class FindFrame : public wxDialog
         void OnPrev(wxCommandEvent &event);
         void OnNext(wxCommandEvent &event);
         void OnTextChange(wxCommandEvent &event);
+        void OnCheckbox(wxCommandEvent &event);
         bool DoFind(int dir);
         DECLARE_EVENT_TABLE()
     

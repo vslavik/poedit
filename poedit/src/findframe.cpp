@@ -34,6 +34,7 @@ BEGIN_EVENT_TABLE(FindFrame, wxDialog)
    EVT_BUTTON(XMLID("find_prev"), FindFrame::OnPrev)
    EVT_BUTTON(wxID_CANCEL, FindFrame::OnCancel)
    EVT_TEXT(XMLID("string_to_find"), FindFrame::OnTextChange)
+   EVT_CHECKBOX(-1, FindFrame::OnCheckbox)
    EVT_CLOSE(FindFrame::OnCancel)
 END_EVENT_TABLE()
 
@@ -95,6 +96,12 @@ void FindFrame::OnTextChange(wxCommandEvent &event)
 }
 
 
+void FindFrame::OnCheckbox(wxCommandEvent &event)
+{
+    Reset(m_catalog);
+}
+
+
 void FindFrame::OnPrev(wxCommandEvent &event)
 {
     if (!DoFind(-1))
@@ -115,41 +122,63 @@ void FindFrame::OnNext(wxCommandEvent &event)
 
 bool FindFrame::DoFind(int dir)
 {
-    #define CMP_S(s) \
-        ((caseSens && s.Contains(text)) || \
-         (!caseSens && s.Lower().Contains(text)))
-         
-#if wxUSE_UNICODE
-    wxString text = m_text;
-#else
-    wxString text = wxString(m_text.mb_str(wxConvLocal), wxConvUTF8);
-#endif
     int cnt = m_listCtrl->GetItemCount();
     bool inStr = XMLCTRL(*this, "in_orig", wxCheckBox)->GetValue();
     bool inTrans = XMLCTRL(*this, "in_trans", wxCheckBox)->GetValue();
     bool caseSens = XMLCTRL(*this, "case_sensitive", wxCheckBox)->GetValue();
     int posOrig = m_position;
-    
+
+    bool found = false;
+    wxString textc;
+    wxString text(m_text);    
+
     if (!caseSens)
-        text = text.Lower();
+        text.MakeLower();
+        
+    printf("looking for: '%s'\n", text.c_str());
     
     m_position += dir;
     while (m_position >= 0 && m_position < cnt)
     {
         CatalogData &dt = (*m_catalog)[m_listCtrl->GetItemData(m_position)];
-        if ((inStr && CMP_S(dt.GetString())) ||
-            (inTrans && CMP_S(dt.GetTranslation())))
+        
+        if (inStr)
         {
-            m_listCtrl->SetItemState(m_position, 
-                        wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-            m_listCtrl->EnsureVisible(m_position);
-            return true;
+            #if wxUSE_UNICODE
+            textc = dt.GetString();
+            #else
+            textc = wxString(dt.GetString().wc_str(wxConvUTF8), wxConvLocal);
+            #endif
+            if (!caseSens)
+                textc.MakeLower();
+            if (textc.Contains(text)) { found = TRUE; break; }
         }
-        else        
-            m_position += dir;
+        if (inTrans)
+        {
+            #if wxUSE_UNICODE
+            textc = dt.GetTranslation();
+            #else
+            textc = wxString(dt.GetTranslation().wc_str(wxConvUTF8), wxConvLocal);
+            #endif
+            if (!caseSens)
+                textc.MakeLower();
+
+        printf("       is?: '%s'\n", textc.c_str());
+
+            if (textc.Contains(text)) { found = TRUE; break; }
+        }
+
+        m_position += dir;
     }
+
+    if (found)
+    {
+        m_listCtrl->SetItemState(m_position, 
+                    wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        m_listCtrl->EnsureVisible(m_position);
+        return true;
+    }
+    
     m_position = posOrig;
     return false;
-    
-    #undef CMP_S
 }
