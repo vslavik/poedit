@@ -301,7 +301,8 @@ class CatalogData : public wxObject
                   m_moreFlags(dt.m_moreFlags),
                   m_comment(dt.m_comment),
                   m_validity(dt.m_validity),
-                  m_lineNum(dt.m_lineNum) {}
+                  m_lineNum(dt.m_lineNum),
+                  m_errorString(dt.m_errorString) {}
 
         /// Returns the original string.
         const wxString& GetString() const { return m_string; }
@@ -370,7 +371,6 @@ class CatalogData : public wxObject
         void SetComment(const wxString& c)
         {
             m_comment = c;
-            m_validity = Val_Unknown;
         }
 
         /** Sets gettext flags directly in string format. It may be 
@@ -432,7 +432,10 @@ class CatalogData : public wxObject
             Strings that are not c-format are always correct. */
         Validity GetValidity() const { return m_validity; }
         void SetValidity(bool val)
-            { m_validity == val ? Val_Valid : Val_Invalid; }
+            { m_validity = val ? Val_Valid : Val_Invalid; }
+
+        void SetErrorString(const wxString& str) { m_errorString = str; }
+        wxString GetErrorString() const { return m_errorString; }
 
     private:
         wxString m_string, m_plural;
@@ -446,6 +449,7 @@ class CatalogData : public wxObject
         wxString m_comment;
         Validity m_validity;
         unsigned m_lineNum;
+        wxString m_errorString;
 };
 
 #endif // _CATALOG_H_

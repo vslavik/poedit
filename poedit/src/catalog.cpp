@@ -1216,7 +1216,7 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens, int *untransla
         if (all) (*all)++;
         if ((*this)[i].IsFuzzy())
             (*fuzzy)++;
-        if (!(*this)[i].GetValidity() == CatalogData::Val_Unknown)
+        if ((*this)[i].GetValidity() == CatalogData::Val_Invalid)
             (*badtokens)++;
         if (!(*this)[i].IsTranslated())
             (*untranslated)++;

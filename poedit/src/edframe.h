@@ -149,6 +149,7 @@ class poEditFrame : public wxFrame
         void OnUpdate(wxCommandEvent& event);
         void OnListSel(wxListEvent& event);
         void OnListDesel(wxListEvent& event);
+        void OnListActivated(wxListEvent& event);
         void OnCloseWindow(wxCloseEvent& event);
         void OnReference(wxCommandEvent& event);
         void OnReferencesMenu(wxCommandEvent& event);

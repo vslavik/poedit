@@ -219,19 +219,6 @@ class ListHandler : public wxEvtHandler
                  m_frame(frame), m_sel(sel), m_selItem(selitem) {}
 
     private:
-        void OnActivated(wxListEvent& event)
-        {
-            if (gs_focusToText)
-            {
-                if (m_text->IsShown())
-                    m_text->SetFocus();
-                else
-                    (*m_text2)[0]->SetFocus();
-            }
-            else
-                event.Skip();
-        }
-
         void OnListSel(wxListEvent& event)
         {
             *m_sel = event.GetIndex();
@@ -282,7 +269,6 @@ class ListHandler : public wxEvtHandler
 };
 
 BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
-   EVT_LIST_ITEM_ACTIVATED(EDC_LIST, ListHandler::OnActivated)
    EVT_LIST_ITEM_SELECTED(EDC_LIST, ListHandler::OnListSel)
    EVT_RIGHT_DOWN(ListHandler::OnRightClick)
    EVT_SET_FOCUS(ListHandler::OnFocus)
@@ -433,6 +419,8 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
                       (EDC_LIST,       poEditFrame::OnListSel)
    EVT_LIST_ITEM_DESELECTED
                       (EDC_LIST,       poEditFrame::OnListDesel)
+   EVT_LIST_ITEM_ACTIVATED
+                      (EDC_LIST,       poEditFrame::OnListActivated)
    EVT_CLOSE          (                poEditFrame::OnCloseWindow)
    EVT_TEXT           (EDC_TEXTCOMMENT,poEditFrame::OnCommentWindowText)
 #ifdef __WXMSW__
@@ -1154,6 +1142,22 @@ void poEditFrame::OnListDesel(wxListEvent& event)
     event.Skip();
 }
 
+void poEditFrame::OnListActivated(wxListEvent& event)
+{
+    if (m_catalog)
+    {
+        int ind = m_list->GetItemData(event.GetIndex());
+        if (ind >= (int)m_catalog->GetCount()) return;    
+        CatalogData& entry = (*m_catalog)[ind];
+        if (entry.GetValidity() == CatalogData::Val_Invalid)
+        {
+            wxMessageBox(entry.GetErrorString(),
+                         _("Gettext syntax error"),
+                         wxOK | wxICON_ERROR);
+        }
+    }
+}
+
 
 
 void poEditFrame::OnReferencesMenu(wxCommandEvent& event)
@@ -1432,7 +1436,8 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             bool changed = false;
             for (size_t i = 0; i < m_textTransPlural.size(); i++)
             {
-                if (m_textTransPlural[i]->GetValue() != m_edittedTextOrig[i])
+                if (m_edittedTextOrig.empty() ||
+                    m_textTransPlural[i]->GetValue() != m_edittedTextOrig[i])
                 {
                     changed = true;
                     break;
@@ -1443,7 +1448,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
         }
         else
         {
-            if (newval == m_edittedTextOrig[0])
+            if (!m_edittedTextOrig.empty() && newval == m_edittedTextOrig[0])
                 return;
         }
     }
@@ -2210,7 +2215,9 @@ void poEditFrame::OnCommentWindowText(wxCommandEvent&)
     comment = convertFromLocalCharset(
             CommentDialog::AddStartHash(m_textComment->GetValue()));
     CatalogData& data((*m_catalog)[m_selItem]);
-    
+   
+    wxLogTrace(_T("poedit"), _T("   comm:'%s'"), comment.c_str());
+    wxLogTrace(_T("poedit"), _T("datcomm:'%s'"), data.GetComment().c_str());
     if (comment == data.GetComment())
         return;
 
@@ -2300,8 +2307,28 @@ void poEditFrame::EndItemValidation()
         int index = m_list->GetItemData(item);
         CatalogData& dt = (*m_catalog)[index];
        
-        bool ok = m_validationProcess.ExitCode == 0;
+        bool ok = (m_validationProcess.ExitCode == 0);
         dt.SetValidity(ok);
+        
+        if (!ok)
+        {
+            wxString err;
+            for (size_t i = 0; i < m_validationProcess.Stderr.GetCount(); i++)
+            {
+                wxString line(m_validationProcess.Stderr[i]);
+                if (!line.empty())
+                {
+                    err += line;
+                    err += _T('\n');
+                }
+            }
+            err.RemoveLast();
+            err.Replace(m_validationProcess.tmp1, _T(""));
+            if (err[0u] == _T(':'))
+                err = err.Mid(1);
+            err = err.AfterFirst(_T(':'));
+            dt.SetErrorString(err);
+        }
 
         m_itemBeingValidated = -1;
 
