@@ -3,12 +3,14 @@ msgstr ""
 "Project-Id-Version: poEdit 1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-01-21 13:38+0100\n"
-"PO-Revision-Date: 2003-11-28 12:53+0200\n"
+"PO-Revision-Date: 2004-12-23 14:11+0200\n"
 "Last-Translator: Hakki Dogusan <dogusanh@tr.net>\n"
 "Language-Team: Hakki Dogusan <dogusanh@tr.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-9\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-Country: TURKEY\n"
 
 #: ../src/edframe.cpp:1926
 msgid " (modified)"
@@ -21,12 +23,12 @@ msgstr "dosyalar..."
 #: ../src/catalog.cpp:116
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
-msgstr ""
+msgstr "%i satýr, dosya '%s' doðru olarak yüklenemedi."
 
 #: ../src/edframe.cpp:1894 ../src/export_html.cpp:131
-#, fuzzy, c-format
+#, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i dizgi (%i bulanýk, %i çevirilmedi)"
+msgstr "%i dizgi (%i bulanýk, %i kötü öðe, %i çevirilmedi)"
 
 #: ../src/resources/xrc_strings.h:66
 msgid "&About..."
@@ -78,9 +80,8 @@ msgid "&Preferences..."
 msgstr "Te&rcihler..."
 
 #: ../src/resources/xrc_strings.h:55
-#, fuzzy
 msgid "&Purge deleted translations"
-msgstr "&Gölgeli çeviriler listesi"
+msgstr "Silin&miþ çevirileri temizle"
 
 #: ../src/resources/xrc_strings.h:40
 msgid "&Save"
@@ -177,14 +178,12 @@ msgid "An item in keywords list:"
 msgstr "Anahtar sözcükler listesindeki bir öðe:"
 
 #: ../src/resources/xrc_strings.h:83
-#, fuzzy
 msgid "Automatic spellchecking"
-msgstr "Otomatik çeviriler:"
+msgstr "Otomatik yazým denetimi"
 
 #: ../src/export_html.cpp:170
-#, fuzzy
 msgid "Automatic translation"
-msgstr "Otomatik çeviriler:"
+msgstr "Otomatik çeviri"
 
 #: ../src/edframe.cpp:2147 ../src/edframe.cpp:2151
 msgid "Automatic translations:"
@@ -209,7 +208,7 @@ msgstr "Otomatik olarak çeviriliyor..."
 
 #: ../src/manager.cpp:221
 msgid "Bad Tokens"
-msgstr ""
+msgstr "Kötü öðeler"
 
 #: ../src/resources/xrc_strings.h:151
 msgid "Base path:"
@@ -222,11 +221,15 @@ msgstr "Davranýþ"
 #: ../src/catalog.cpp:560
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
+"Bozuk katalog dosyasý: çoðul biçim 'msgstr' 'msgid_plural' olmaksýzýn "
+"kullanýlmýþ"
 
 #: ../src/catalog.cpp:528
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
+"Bozuk katalog dosyasý: tekil biçim 'msgstr', 'msgid_plural' ile birilikte "
+"kullanýlmýþ"
 
 #: ../src/resources/xrc_strings.h:28 ../src/resources/xrc_strings.h:104
 #: ../src/resources/xrc_strings.h:135 ../src/resources/xrc_strings.h:167
@@ -234,9 +237,8 @@ msgid "Browse"
 msgstr "Göz at"
 
 #: ../src/resources/xrc_strings.h:51
-#, fuzzy
 msgid "C&atalog"
-msgstr "Katalog"
+msgstr "K&atalog"
 
 #: ../src/resources/xrc_strings.h:85
 msgid "CR/LF conversion"
@@ -322,7 +324,7 @@ msgstr "Açýklamayý temizle"
 
 #: ../src/resources/xrc_strings.h:81
 msgid "Comment window is editable"
-msgstr ""
+msgstr "Açýklama penceresi düzenlenebilir"
 
 #: ../src/resources/xrc_strings.h:4
 msgid "Comment:"
@@ -400,6 +402,10 @@ msgid ""
 "If you continue with purging, you will have to translate them again if they "
 "are added back in the future."
 msgstr ""
+"Tüm kullanýlmayan çevirileri kataloðdan kaldýrmak istediðinizden emin "
+"misiniz?\n"
+"Eðer temizlemeye devam ederseniz, gelecekte eklendiklerinde bunlarý yeniden "
+"çevirmek zorunda kalacaksýnýz."
 
 #: ../src/manager.cpp:377
 msgid "Do you want to delete the project?"
@@ -410,9 +416,8 @@ msgid "Don't change format of existing catalogs"
 msgstr "Varolan kataloðlarýn biçemini deðiþtirme"
 
 #: ../src/resources/xrc_strings.h:42
-#, fuzzy
 msgid "E&xport..."
-msgstr "&Hakkýnda..."
+msgstr "Ýh&raç..."
 
 #: ../src/resources/xrc_strings.h:116
 msgid "Edit"
@@ -452,7 +457,7 @@ msgstr "Metin düzenleyici:"
 
 #: ../src/resources/xrc_strings.h:84
 msgid "Enables on-the-fly spellchecking"
-msgstr ""
+msgstr "Otomatik yazým denetimini aktifleþtirir"
 
 #: ../src/edframe.cpp:1144
 msgid "Entries in the catalog are probably incorrect."
@@ -461,7 +466,7 @@ msgstr "Kataloðdaki öðeler muhtemelen hatalý."
 #: ../src/edframe.cpp:736
 #, c-format
 msgid "Error initializing spell checking: %s"
-msgstr ""
+msgstr "Yazým denetimi baþlatýlamadý: %s"
 
 #: ../src/edframe.cpp:1817
 msgid "Error loading message catalog file '"
@@ -477,13 +482,13 @@ msgid "Error saving catalog"
 msgstr "Katalog saklama hatasý"
 
 #: ../src/catalog.cpp:64
-#, c-format
+#, fuzzy, c-format
 msgid "Error while loading file '%s': line %u is corrupted."
-msgstr ""
+msgstr "'%s' dosyasý yükleme hatasý: satýr %u bozuk."
 
 #: ../src/edframe.cpp:998
 msgid "Export as..."
-msgstr ""
+msgstr "Farklý ihraç..."
 
 #: ../src/resources/xrc_strings.h:92
 msgid "External editor"
@@ -504,14 +509,12 @@ msgid "Files List"
 msgstr "Dosya listesi"
 
 #: ../src/resources/xrc_strings.h:18
-#, fuzzy
 msgid "Find in automatic comments"
-msgstr "Açýklama pen&ceresini göster"
+msgstr "Otomatik açýklamalarda ara"
 
 #: ../src/resources/xrc_strings.h:17
-#, fuzzy
 msgid "Find in comments"
-msgstr "Açýklamayý düzenle"
+msgstr "Açýklamalarda ara"
 
 #: ../src/resources/xrc_strings.h:15
 msgid "Find in original strings"
@@ -532,12 +535,12 @@ msgstr "Yazý tipleri"
 #: ../src/edframe.cpp:2544
 #, c-format
 msgid "Form %u"
-msgstr ""
+msgstr "Biçim %u"
 
 #: ../src/edframe.cpp:2546
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
-msgstr ""
+msgstr "Biçim %u (ör. \"%u\")"
 
 #: ../src/resources/xrc_strings.h:177
 msgid "Fullscreen view"
@@ -548,9 +551,8 @@ msgid "Fuzzy"
 msgstr "Bulanýk"
 
 #: ../src/export_html.cpp:176
-#, fuzzy
 msgid "Fuzzy translation"
-msgstr "Çeviri"
+msgstr "Bulanýk çeviri"
 
 #: ../src/edframe.cpp:864 ../src/edframe.cpp:975
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
@@ -574,11 +576,11 @@ msgstr "Veritabaný üret"
 
 #: ../src/edframe.cpp:1220
 msgid "Gettext syntax error"
-msgstr ""
+msgstr "Gettext sözdizimi hatasý"
 
 #: ../src/edframe.cpp:1000
 msgid "HTML file (*.html)|*.html"
-msgstr ""
+msgstr "HTML dosyasý (*.html)|*.html"
 
 #: ../src/resources/xrc_strings.h:178
 msgid "Help"
@@ -590,7 +592,7 @@ msgstr "Kimlik"
 
 #: ../src/resources/xrc_strings.h:82
 msgid "If checked, the comment window will be editable."
-msgstr ""
+msgstr "Ýþaretlendiðinde açýklama penceresi düzenlenebilir olacaktýr."
 
 #: ../src/resources/xrc_strings.h:124
 msgid "Invocation:"
@@ -620,7 +622,7 @@ msgstr "Satýr"
 #: ../src/catalog.cpp:129
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
-msgstr ""
+msgstr "Bozuk satýr %u, dosya '%s' (geçerli olmayan %s veri)."
 
 #: ../src/resources/xrc_strings.h:86
 msgid "Line endings format:"
@@ -637,7 +639,7 @@ msgstr "Macintosh"
 #: ../src/catalog.cpp:198
 #, c-format
 msgid "Malformed header: '%s'"
-msgstr ""
+msgstr "Bozuk baþlýk: '%s'"
 
 #: ../src/resources/xrc_strings.h:110
 msgid "Max. # of missing words:"
@@ -682,9 +684,8 @@ msgid "New"
 msgstr "Yeni"
 
 #: ../src/resources/xrc_strings.h:38
-#, fuzzy
 msgid "New catalog from POT file..."
-msgstr "&POT dosyasýndan düzenle..."
+msgstr "&POT dosyasýndan yeni katalog..."
 
 #: ../src/editlbox/editlbox.cpp:162
 msgid "New item"
@@ -713,9 +714,8 @@ msgid "No references to this string found."
 msgstr "Bu dizgiye baþvuru bulunamadý."
 
 #: ../src/export_html.cpp:148
-#, fuzzy
 msgid "Notes"
-msgstr "Yazý tipleri"
+msgstr "Notlar"
 
 #: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
 #: ../src/resources/xrc_strings.h:30 ../src/resources/xrc_strings.h:118
@@ -798,11 +798,11 @@ msgstr "Lütfen dil kodunu seçiniz:"
 
 #: ../src/resources/xrc_strings.h:149
 msgid "Plural Forms:"
-msgstr ""
+msgstr "Çoðul Biçimler:"
 
 #: ../src/edframe.cpp:546
 msgid "Plural:"
-msgstr ""
+msgstr "Çoðul:"
 
 #: ../src/resources/xrc_strings.h:68
 msgid "Preferences"
@@ -825,9 +825,8 @@ msgid "Project name:"
 msgstr "Proje adý:"
 
 #: ../src/edframe.cpp:2049
-#, fuzzy
 msgid "Purge delete translations"
-msgstr "Otomatik çeviriler:"
+msgstr "Silinmiþ çevirileri temizle"
 
 #: ../src/edframe.cpp:1243
 msgid "References"
@@ -905,9 +904,8 @@ msgid "Show &comment window"
 msgstr "Açýklama pen&ceresini göster"
 
 #: ../src/resources/xrc_strings.h:62
-#, fuzzy
 msgid "Show automatic c&omments window"
-msgstr "Açýklama pen&ceresini göster"
+msgstr "Otomatik açýklamalar pen&ceresini göster"
 
 #: ../src/resources/xrc_strings.h:77
 msgid "Show summary after catalog update"
@@ -915,12 +913,11 @@ msgstr "Katalog düzenlendikten sonra özet göster"
 
 #: ../src/edframe.cpp:545
 msgid "Singular:"
-msgstr ""
+msgstr "Tekil:"
 
 #: ../src/resources/xrc_strings.h:131 ../src/resources/xrc_strings.h:148
-#, fuzzy
 msgid "Source code charset:"
-msgstr "Kaynak dosya ayrýþtýrýcýlarý:"
+msgstr "Kaynak kod karakter kümesi:"
 
 #: ../src/resources/xrc_strings.h:114
 msgid "Source code parsers:"
@@ -932,7 +929,7 @@ msgstr "Kaynak dosya"
 
 #: ../src/resources/xrc_strings.h:13
 msgid "Start from the first item"
-msgstr ""
+msgstr "Ýlk öðeden baþla"
 
 #: ../src/resources/xrc_strings.h:11
 msgid "String to find:"
@@ -962,6 +959,8 @@ msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
+"Katalog yüklemede bazý sorunlar oldu. Bazý veriler kaybolabilir veya "
+"bozulabilir. "
 
 #: ../src/resources/xrc_strings.h:160
 msgid ""
@@ -990,7 +989,6 @@ msgstr ""
 "(Bu bilgi sadece katalog baþlýklarýnda kullanýlacaktýr)"
 
 #: ../src/resources/xrc_strings.h:126
-#, fuzzy
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -999,16 +997,18 @@ msgid ""
 msgstr ""
 "Ayrýþtýrýcýyý çalýþtýrmak için kullanýlan komut þöyledir.\n"
 "%o çýktý dosyasý adý, %K anahtar kelimeler listesi,\n"
-"%F girdi dosyalarý listesi (aþaðýya bakýnýz) olur."
+"%F girdi dosyalarý listesi,\n"
+"%C karakter kümesi bayraðý (aþaðýya bakýnýz) olur."
 
 #: ../src/resources/xrc_strings.h:132
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "This will be attached to the command line\n"
 "only if source codecharset was given. %c expands to charset value."
 msgstr ""
-"Her girdi dosyasý için bu komut satýrýna eklenecektir.\n"
-"%f dosya adý olur."
+"Eðer kaynak kodu karakter kümesi verildiyse,\n"
+"bu komut satýrýna eklenecektir.\n"
+"%c karakter kümesi deðeri olur."
 
 #: ../src/resources/xrc_strings.h:130
 #, c-format
@@ -1116,7 +1116,7 @@ msgstr "Yazý alanlarýnda seçilmiþ yazý tipini kullan"
 
 #: ../src/resources/xrc_strings.h:97
 msgid "Use custom font for translations list"
-msgstr "Çeviriler listesisinde seçilmiþ yazý tipini kullan"
+msgstr "Çeviriler listesinde seçilmiþ yazý tipini kullan"
 
 #: ../src/resources/xrc_strings.h:153
 msgid ""
@@ -1151,9 +1151,9 @@ msgid "Your name:"
 msgstr "Adýnýz:"
 
 #: ../src/edframe.cpp:1900
-#, fuzzy, c-format
+#, c-format
 msgid "[checking translations: %i left]"
-msgstr "&Gölgeli çeviriler listesi"
+msgstr "[çeviriler denetleniyor: kalan %i]"
 
 #: ../src/resources/xrc_strings.h:90
 msgid "current platform's default"
@@ -1187,6 +1187,3 @@ msgstr "poEdit kurulumu hatalý, uygulamanýn ev dizini bulunamýyor."
 #: ../src/edframe.cpp:2186
 msgid "version"
 msgstr "sürüm"
-
-#~ msgid "&Catalog"
-#~ msgstr "&Katalog"
