@@ -444,6 +444,12 @@ poEditFrame::poEditFrame() :
     m_sel(0), m_selItem(0),
     m_edittedTextFuzzyChanged(false)
 {
+#ifdef __WXMSW__
+    const int SPLITTER_BORDER = wxSP_NOBORDER;
+#else
+    const int SPLITTER_BORDER = wxSP_3DBORDER;
+#endif
+    
     wxConfigBase *cfg = wxConfig::Get();
     
     // VS: a dirty hack of sort -- if this is the only poEdit frame opened,
@@ -496,14 +502,18 @@ poEditFrame::poEditFrame() :
     GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
     GetMenuBar()->Check(XRCID("menu_shaded"), gs_shadedList);
     
-    m_splitter = new wxSplitterWindow(this, -1);
+	m_splitter = new wxSplitterWindow(this, -1,
+                                      wxDefaultPosition, wxDefaultSize,
+                                      SPLITTER_BORDER);
 
     m_list = new poEditListCtrl(m_splitter, EDC_LIST, 
                                 wxDefaultPosition, wxDefaultSize,
                                 wxLC_REPORT | wxLC_SINGLE_SEL,
                                 m_displayLines);
 
-    m_bottomSplitter = new wxSplitterWindow(m_splitter, -1);    
+    m_bottomSplitter = new wxSplitterWindow(m_splitter, -1,
+                                            wxDefaultPosition, wxDefaultSize,
+                                            SPLITTER_BORDER);    
     m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
 
     m_textComment = NULL;
