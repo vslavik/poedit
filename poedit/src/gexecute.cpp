@@ -111,7 +111,7 @@ class TempLocaleSwitcher
 };
 
 
-bool ExecuteGettext(const wxString& cmdline)
+bool ExecuteGettext(const wxString& cmdline, wxString *stderrOutput)
 {
     TempLocaleSwitcher localeSwitcher(_T("C"));
 
@@ -148,7 +148,10 @@ bool ExecuteGettext(const wxString& cmdline)
             if (dummy.empty() || dummy == _T(" done")) continue;
             //msgmerge outputs *progress* to stderr, damn it!
         }
-        wxLogError(_T("%s"), pdata.Stderr[i].c_str());
+        if (stderrOutput)
+            *stderrOutput += pdata.Stderr[i] + _T("\n");
+        else
+            wxLogError(_T("%s"), pdata.Stderr[i].c_str());
     }
     
     return pdata.ExitCode == 0;

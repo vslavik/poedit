@@ -121,7 +121,7 @@ static wxColour
     g_ItemColourNormal[2] =       LIST_COLOURS(0xFF,0xFF,0xFF), // white
     g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
     g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1), // yellow
-    g_ItemColourBadTokens[2] =    LIST_COLOURS(0xFF,0x20,0x20); // red
+    g_ItemColourInvalid[2] =      LIST_COLOURS(0xFF,0x20,0x20); // red
 
 #include "nothing.xpm"
 #include "modified.xpm"
@@ -1382,8 +1382,8 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             listitem.SetBackgroundColour(g_ItemColourUntranslated[item % 2]);
         else if (data->IsFuzzy())
             listitem.SetBackgroundColour(g_ItemColourFuzzy[item % 2]);
-        else if (data->HasBadTokens())
-            listitem.SetBackgroundColour(g_ItemColourBadTokens[item % 2]);
+        else if (!data->IsValid())
+            listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
         else
             listitem.SetBackgroundColour(g_ItemColourNormal[item % 2]);
     }
@@ -1393,8 +1393,8 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             listitem.SetBackgroundColour(g_ItemColourUntranslated[0]);
         else if (data->IsFuzzy())
             listitem.SetBackgroundColour(g_ItemColourFuzzy[0]);
-        else if (data->HasBadTokens())
-            listitem.SetBackgroundColour(g_ItemColourBadTokens[0]);
+        else if (!data->IsValid())
+            listitem.SetBackgroundColour(g_ItemColourInvalid[0]);
         else
             listitem.SetBackgroundColour(g_ItemColourNormal[0]);
     }
@@ -1537,17 +1537,17 @@ static bool CatFilterUntranslated(const CatalogData& d)
 
 static bool CatFilterFuzzy(const CatalogData& d)
 {
-    return d.IsFuzzy() && !d.HasBadTokens() && d.IsTranslated();
+    return d.IsFuzzy() && d.IsValid() && d.IsTranslated();
 }
 
-static bool CatFilterBadTokens(const CatalogData& d)
+static bool CatFilterInvalid(const CatalogData& d)
 {
-    return d.HasBadTokens() && d.IsTranslated();
+    return !d.IsValid() && d.IsTranslated();
 }
 
 static bool CatFilterRest(const CatalogData& d)
 {
-    return !d.IsFuzzy() && !d.HasBadTokens()  && d.IsTranslated();
+    return !d.IsFuzzy() && d.IsValid()  && d.IsTranslated();
 }
 
 void poEditFrame::RefreshControls()
@@ -1584,7 +1584,7 @@ void poEditFrame::RefreshControls()
     AddItemsToList(*m_catalog, m_list, pos, 
                    CatFilterUntranslated, g_ItemColourUntranslated);
     AddItemsToList(*m_catalog, m_list, pos, 
-                   CatFilterBadTokens, g_ItemColourBadTokens);
+                   CatFilterInvalid, g_ItemColourInvalid);
     AddItemsToList(*m_catalog, m_list, pos, 
                    CatFilterFuzzy, g_ItemColourFuzzy);
     AddItemsToList(*m_catalog, m_list, pos, 
@@ -1721,7 +1721,7 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
         for (size_t i = 0; i < cnt; i++)
         {
             CatalogData& dt = (*m_catalog)[i];
-            if (dt.IsModified() && !dt.IsFuzzy() && !dt.HasBadTokens() &&
+            if (dt.IsModified() && !dt.IsFuzzy() && dt.IsValid() &&
                 !dt.GetTranslation().IsEmpty())
                 tm->Store(dt.GetString(), dt.GetTranslation());
         }

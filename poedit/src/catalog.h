@@ -180,6 +180,9 @@ class Catalog
             the xx[_YY] form, otherwise returns empty string. */
         wxString GetLocaleCode() const;
 
+        /// Adds entry to the catalog (the catalog will take ownership of
+        /// the object).
+        void AddItem(CatalogData *data);
 
     protected:
         /** Merges the catalog with reference catalog
@@ -272,8 +275,24 @@ class CatalogData : public wxObject
                   m_isTranslated(!translation.IsEmpty()),
                   m_isModified(false),
                   m_isAutomatic(false),
-                  m_hasBadTokens(false),
+                  m_validity(Val_Unknown),
                   m_lineNum(0) {}
+
+        CatalogData(const CatalogData& dt)
+                : wxObject(),
+                  m_string(dt.m_string),
+                  m_translation(dt.m_translation), 
+                  m_references(dt.m_references),
+                  m_autocomments(dt.m_autocomments),
+                  m_isFuzzy(dt.m_isFuzzy),
+                  m_isTranslated(dt.m_isTranslated),
+                  m_isModified(dt.m_isModified),
+                  m_isAutomatic(dt.m_isAutomatic),
+                  m_hasBadTokens(dt.m_hasBadTokens),
+                  m_moreFlags(dt.m_moreFlags),
+                  m_comment(dt.m_comment),
+                  m_validity(dt.m_validity),
+                  m_lineNum(dt.m_lineNum) {}
 
         /// Returns the original string.
         const wxString& GetString() const { return m_string; }
@@ -307,7 +326,11 @@ class CatalogData : public wxObject
         }
 
         /// Sets the string.
-        void SetString(const wxString& s) { m_string = s; }
+        void SetString(const wxString& s)
+        {
+            m_string = s;
+            m_validity = Val_Unknown;
+        }
 
         /** Sets the translation. Changes "translated" status to true
             if \a t is not empty.
@@ -315,12 +338,16 @@ class CatalogData : public wxObject
         void SetTranslation(const wxString& t) 
         { 
             m_translation = t; 
-            m_hasBadTokens = !CheckPrintfCorrectness();
             m_isTranslated = !t.IsEmpty();
+            m_validity = Val_Unknown;
         }
 
         /// Sets the comment.
-        void SetComment(const wxString& c) { m_comment = c; }
+        void SetComment(const wxString& c)
+        {
+            m_comment = c;
+            m_validity = Val_Unknown;
+        }
 
         /** Sets gettext flags directly in string format. It may be 
             either empty string or "#, fuzzy", "#, c-format", 
@@ -335,8 +362,6 @@ class CatalogData : public wxObject
         void SetFuzzy(bool fuzzy) { m_isFuzzy = fuzzy; }
         /// Gets value of fuzzy flag.
         bool IsFuzzy() const { return m_isFuzzy; }
-        /// Gets value of badtokens flag.
-        bool HasBadTokens() const { return m_hasBadTokens; }
         /// Sets translated flag.
         void SetTranslated(bool t) { m_isTranslated = t; }
         /// Gets value of translated flag.
@@ -371,22 +396,27 @@ class CatalogData : public wxObject
             m_autocomments.Clear();
         }
 
-            
-    private:
         /** Checks if %i etc. are correct in the translation (true if yes).
             Strings that are not c-format are always correct. */
-        bool CheckPrintfCorrectness();
-        bool ValidateTokensString(const wxString& from, const wxString& to);
+        bool IsValid() const;
 
     private:
-        static wxRegEx ms_tokenExtraction;
 
+        // Validity (syntax-checking) status of the entry:
+        enum Validity
+        {
+            Val_Unknown = -1,
+            Val_Invalid = 0,
+            Val_Valid = 1
+        };  
+        
         wxString m_string, m_translation;
         wxArrayString m_references, m_autocomments;
         bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
         bool m_hasBadTokens;
         wxString m_moreFlags;
         wxString m_comment;
+        Validity m_validity;
         unsigned m_lineNum;
 };
 

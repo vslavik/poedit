@@ -18,9 +18,11 @@
 class wxString;
 
 
-/** Executes command. Logs stderr output with wxLogXXXX classes.
+/** Executes command. Writes stderr output to \a stderrOutput if not NULL,
+    and logs it with wxLogError otherwise.
     \return true if program exited with exit code 0, false otherwise.
  */
-extern bool ExecuteGettext(const wxString& cmdline);
+extern bool ExecuteGettext(const wxString& cmdline,
+                           wxString *stderrOutput = NULL);
 
 #endif // _GEXECUTE_H_
