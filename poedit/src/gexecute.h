@@ -12,11 +12,6 @@
 
 */
 
-
-#if defined(__GNUG__) && !defined(__APPLE__)
-#pragma interface
-#endif
-
 #ifndef _GEXECUTE_H_
 #define _GEXECUTE_H_
 

@@ -12,11 +12,6 @@
 
 */
 
-
-#if defined(__GNUG__) && !defined(__APPLE__)
-#pragma interface
-#endif
-
 #ifndef _EDFRAME_H_
 #define _EDFRAME_H_
 

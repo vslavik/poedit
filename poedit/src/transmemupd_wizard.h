@@ -12,11 +12,6 @@
 
 */
 
-
-#if defined(__GNUG__) && !defined(__APPLE__)
-#pragma interface
-#endif
-
 #ifndef _TRANSMEMUPD_WIZARD_H_
 #define _TRANSMEMUPD_WIZARD_H_
 

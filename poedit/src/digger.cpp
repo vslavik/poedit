@@ -12,11 +12,6 @@
 
 */
 
-
-#ifdef __GNUG__
-#pragma implementation
-#endif
-
 #include <wx/string.h>
 #include <wx/config.h>
 #include <wx/dir.h>

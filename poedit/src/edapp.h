@@ -13,10 +13,6 @@
 */
 
 
-#if defined(__GNUG__) && !defined(__APPLE__)
-#pragma interface
-#endif
-
 #ifndef _EDAPP_H_
 #define _EDAPP_H_
 

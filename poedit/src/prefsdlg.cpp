@@ -12,11 +12,6 @@
 
 */
 
-
-#ifdef __GNUG__
-#pragma implementation
-#endif
-
 #include <wx/wxprec.h>
 #include <wx/gizmos/editlbox.h>
 #include <wx/textctrl.h>

@@ -13,11 +13,6 @@
 
 */
 
-
-#ifdef __GNUG__
-#pragma implementation
-#endif
-
 #include <wx/intl.h>
 #include <wx/colour.h>
 #include <wx/utils.h>

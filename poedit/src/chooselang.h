@@ -12,11 +12,6 @@
 
 */
 
-
-#if defined(__GNUG__) && !defined(__APPLE__)
-#pragma implementation
-#endif
-
 #ifndef _CHOOSELANG_H_
 #define _CHOOSELANG_H_
 
