@@ -549,6 +549,7 @@ poEditFrame::poEditFrame() :
     SetCustomFonts();
     
     wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
+    
     wxFlexGridSizer *gridSizer = new wxFlexGridSizer(2);
     gridSizer->AddGrowableCol(1);
     gridSizer->AddGrowableRow(0);
@@ -2359,10 +2360,28 @@ void poEditFrame::ShowPluralFormUI(bool show)
     if (show && (!m_catalog || m_catalog->GetPluralFormsCount() == 0))
         show = false;
 
-    wxSizer *origSizer = m_textOrigPlural->GetContainingSizer();
-    origSizer->Show(m_textOrigPlural, show);
+    wxSizer *origSizer = m_textOrig->GetContainingSizer();
+#if wxCHECK_VERSION(2,5,0)
     origSizer->Show(m_labelSingular, show);
     origSizer->Show(m_labelPlural, show);
+    origSizer->Show(m_textOrigPlural, show);
+#else
+    // the above code doesn't work well with wx-2.4, so here's a no-so-good
+    // workaround:
+    if (show && m_labelSingular->GetSizer() == NULL)
+    {
+        origSizer->Add(m_labelPlural, 0, wxALIGN_CENTER_VERTICAL | wxALL, 3);
+        origSizer->Add(m_textOrigPlural, 1, wxEXPAND);
+        origSizer->SetItemMinSize(m_textOrigPlural, 1, 1);
+    }
+    else
+    {
+        origSizer->Remove(m_labelPlural);
+        origSizer->Remove(m_textOrigPlural);
+    }
+    m_labelPlural->Show(show);
+    m_textOrigPlural->Show(show);
+#endif
     origSizer->Layout();
 
     wxSizer *textSizer = m_textTrans->GetContainingSizer();
