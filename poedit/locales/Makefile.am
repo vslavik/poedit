@@ -1,5 +1,5 @@
 
-POEDIT_LINGUAS = af_ZA am_ET ast be bg bn br ca cs da de el eo es es_PR et eu fa_IR fr he hi hr hu is it ja ka ko ky lt lv mn nb nl nn pa pl pt_BR pt_PT ro ru sk sl sq_AL sr sv_SE ta tr uk wa zh_CN zh_TW
+POEDIT_LINGUAS = af_ZA am_ET ast be bg bn br ca cs da de el eo es es_PR et eu fa_IR fr gl he hi hr hu is it ja ka ko ky lt lv mn nb nl nn pa pl pt_BR pt_PT ro ru sk sl sq_AL sr sv_SE ta tr uk wa zh_CN zh_TW
 WXWIN_LINGUAS  = af ca cs da de el es eu fr hi hu it ja nb_NO nl pl pt_BR ru sl sv tr uk zh_CN zh_TW
 
 localedir = $(datadir)/locale

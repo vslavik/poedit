@@ -36,6 +36,8 @@ Name: {app}\share\locale\fa_IR; Components: i18n
 Name: {app}\share\locale\fa_IR\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\fr; Components: i18n
 Name: {app}\share\locale\fr\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\gl; Components: i18n
+Name: {app}\share\locale\gl\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\he; Components: i18n
 Name: {app}\share\locale\he\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\hi; Components: i18n
