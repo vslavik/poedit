@@ -81,9 +81,10 @@ Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}
 Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty dontcreatekey
 Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcreatekey
 Root: HKLM; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty; Check: InstallGlobally
-Root: HKLM; Subkey: Software\Vaclav Slavik\poedit; ValueType: string; ValueName: application_path; ValueData: {app}; Flags: uninsdeletevalue; Check: InstallGlobally
+Root: HKLM; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey; Check: InstallGlobally
+Root: HKLM; Subkey: Software\Vaclav Slavik\poedit\{#VERSION}; ValueType: string; ValueName: application_path; ValueData: {app}; Flags: uninsdeletevalue; Check: InstallGlobally
 Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty; Check: InstallLocally
-Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; ValueType: string; ValueName: application_path; ValueData: {app}; Flags: uninsdeletevalue; Check: InstallLocally
+Root: HKCU; Subkey: Software\Vaclav Slavik\poedit\{#VERSION}; ValueType: string; ValueName: application_path; ValueData: {app}; Flags: uninsdeletevalue; Check: InstallLocally
 
 [Icons]
 Name: {group}\poEdit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0

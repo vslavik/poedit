@@ -44,7 +44,9 @@ wxString poEditApp::GetAppPath() const
         home = wxString::FromAscii(POEDIT_PREFIX);
     return home;
 #elif defined(__WXMSW__)
-    wxString path = wxConfigBase::Get()->Read(_T("application_path"), wxEmptyString);
+    wxString regkey;
+    regkey.Printf(_T("%s/application_path"), GetAppVersion().c_str());
+    wxString path = wxConfigBase::Get()->Read(regkey, wxEmptyString);
     if (!path)
     {
         wxLogError(_("poEdit installation is broken, cannot find application's home directory."));
