@@ -577,15 +577,7 @@ TranslationMemory *poEditFrame::GetTransMem()
         
         if (!m_catalog->Header().Language.IsEmpty())
         {
-            const wxChar *lng = m_catalog->Header().Language.c_str();
-            for (size_t i = 0; isoLanguages[i].iso != NULL; i++)
-            {
-                if (wxStrcmp(isoLanguages[i].lang, lng) == 0)
-                {
-                    lang = isoLanguages[i].iso;
-                    break;
-                }
-            }
+            lang = LookupLanguageCode(m_catalog->Header().Language.c_str());
         }
         if (!lang)
         {
@@ -726,7 +718,23 @@ void poEditFrame::OnSaveAs(wxCommandEvent&)
 
     wxString name(wxFileNameFromPath(m_fileName));
 
-    if (name.IsEmpty()) name = _T("default.po");
+    if (name.empty())
+    {
+        if (!m_catalog->Header().Language.empty())
+        {
+            name = LookupLanguageCode(m_catalog->Header().Language);
+            if (!name.empty() && !m_catalog->Header().Country.empty())
+            {
+                wxString code = LookupCountryCode(m_catalog->Header().Country);
+                if (!code.empty())
+                    name += wxString(wxT('_')) + code;
+            }
+        }
+        if (!name.empty())
+            name += _T(".po");
+        else
+            name = _T("default.po");
+    }
     
     name = wxFileSelector(_("Save as..."), wxPathOnly(m_fileName), name, wxEmptyString, 
                           _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"),
