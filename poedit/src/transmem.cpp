@@ -325,10 +325,11 @@ DbBase::~DbBase()
 void DbBase::LogError()
 {
 #ifdef __WINDOWS__
-    wxLogError(_("Database error: %s"), g_db_strerror(m_err));
+    wxString err = wxString::FromAscii(g_db_strerror(m_err));
 #else
-    wxLogError(_("Database error: %s"), db_strerror(m_err));
+    wxString err = wxString::FromAscii(db_strerror(m_err));
 #endif
+    wxLogError(_("Database error: %s"), err.c_str());
     m_err = 0;
 }
 
@@ -846,6 +847,8 @@ bool TranslationMemory::Store(const wxString& string,
     else
     {
         wxArrayString *t = m_dbTrans->Read(key);
+        if (!t)
+            return false;
         if (t->Index(translation) == wxNOT_FOUND)
         {
             t->Add(translation);
