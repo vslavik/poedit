@@ -103,6 +103,7 @@ wxLanguage ChooseLanguage()
         { _T("Polish"), wxLANGUAGE_POLISH },
         { _T("Portuguese"), wxLANGUAGE_PORTUGUESE },
         { _T("Portuguese (Brazilian)"), wxLANGUAGE_PORTUGUESE_BRAZILIAN },
+        { _T("Punjabi"), wxLANGUAGE_PUNJABI },
         { _T("Romanian"), wxLANGUAGE_ROMANIAN },
         { _T("Russian"), wxLANGUAGE_RUSSIAN },
         { _T("Serbian"), wxLANGUAGE_SERBIAN },
