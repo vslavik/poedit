@@ -22,8 +22,7 @@ msgstr "Chaine de caractère originale"
 msgid "Translation"
 msgstr "Traduction"
 
-#: src/edframe.cpp:140
-#: src/fileviewer.cpp:87
+#: src/edframe.cpp:140 src/fileviewer.cpp:87
 msgid "Line"
 msgstr "Ligne"
 
@@ -31,8 +30,7 @@ msgstr "Ligne"
 msgid "poEdit"
 msgstr "poEdit"
 
-#: src/edframe.cpp:429
-#: src/resources/xrc_strings.h:29
+#: src/edframe.cpp:429 src/resources/xrc_strings.h:29
 msgid "&File"
 msgstr "&Fichier"
 
@@ -48,27 +46,21 @@ msgstr "Sélectionner la langue du catalogue"
 msgid "Please select language code:"
 msgstr "Veuillez sélectionner le code de la langue"
 
-#: src/edframe.cpp:593
-#: src/edframe.cpp:604
-#: src/edframe.cpp:628
+#: src/edframe.cpp:593 src/edframe.cpp:604 src/edframe.cpp:628
 #: src/edframe.cpp:675
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Catalogue modifié. Voulez-vous enregistrer les changements ?"
 
-#: src/edframe.cpp:593
-#: src/edframe.cpp:604
-#: src/edframe.cpp:628
+#: src/edframe.cpp:593 src/edframe.cpp:604 src/edframe.cpp:628
 #: src/edframe.cpp:675
 msgid "Save changes"
 msgstr "Enregistrer les changements"
 
-#: src/edframe.cpp:612
-#: src/resources/xrc_strings.h:133
+#: src/edframe.cpp:612 src/resources/xrc_strings.h:133
 msgid "Open catalog"
 msgstr "Ouvrir un catalogue"
 
-#: src/edframe.cpp:614
-#: src/edframe.cpp:661
+#: src/edframe.cpp:614 src/edframe.cpp:661
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Catalogues GNU GetText (*.po)|*.po|Tous les fichiers (*.*)|*.*"
 
@@ -122,13 +114,11 @@ msgstr "%i chaines (%i floues, %i non traduites)"
 msgid " (modified)"
 msgstr " (modifiés)"
 
-#: src/edframe.cpp:1379
-#: src/edframe.cpp:1383
+#: src/edframe.cpp:1379 src/edframe.cpp:1383
 msgid "References:"
 msgstr "Références :"
 
-#: src/edframe.cpp:1393
-#: src/edframe.cpp:1397
+#: src/edframe.cpp:1393 src/edframe.cpp:1397
 msgid "Automatic translations:"
 msgstr "Traduction automatique :"
 
@@ -137,8 +127,11 @@ msgid "none"
 msgstr "aucun"
 
 #: src/edapp.cpp:50
-msgid "poEdit installation is broken, cannot find application's home directory."
-msgstr "L'installation de poEdit est mauvaise, impossible de trouver le répertoire de l'application."
+msgid ""
+"poEdit installation is broken, cannot find application's home directory."
+msgstr ""
+"L'installation de poEdit est mauvaise, impossible de trouver le répertoire "
+"de l'application."
 
 #: src/edapp.cpp:114
 #, c-format
@@ -150,14 +143,17 @@ msgid ""
 msgstr ""
 "Impossible de trouver le fichier '%s'!\n"
 "poEdit à été configuré pour être installé dans '%s'.\n"
-"Vous pouvez essayer de faire pointer la variable d'environement POEDIT_PREFIX\n"
+"Vous pouvez essayer de faire pointer la variable d'environement "
+"POEDIT_PREFIX\n"
 "vers le répertoire où vous avez installé poEdit."
 
 #: src/edapp.cpp:120
 #, c-format
-msgid "Cannot find resources file '%s'!\n"
+msgid ""
+"Cannot find resources file '%s'!\n"
 "Please reinstall poEdit."
-msgstr "Impossible de trouver le fichier '%s'!\n"
+msgstr ""
+"Impossible de trouver le fichier '%s'!\n"
 "Veuillez réinstaller poEdit."
 
 #: src/edapp.cpp:123
@@ -190,21 +186,36 @@ msgstr "Analyse"
 msgid " files..."
 msgstr " fichiers..."
 
-#: src/catalog.cpp:198
+#: src/catalog.cpp:249
 msgid "Corrupted translator record, please correct in Catalog/Settings"
-msgstr "L'enregistrement du traducteur est corrompu, merci de le corriger dans Catalogue/Réglages"
+msgstr ""
+"L'enregistrement du traducteur est corrompu, merci de le corriger dans "
+"Catalogue/Réglages"
 
-#: src/catalog.cpp:206
+#: src/catalog.cpp:257
 msgid "Corrupted team record, please correct in Catalog/Settings"
-msgstr "L'enregistrement de l'équipe est corrompu, merci de le corriger dans Catalogue/Réglages"
+msgstr ""
+"L'enregistrement de l'équipe est corrompu, merci de le corriger dans "
+"Catalogue/Réglages"
 
-#: src/catalog.cpp:606
-#: src/resources/xrc_strings.h:109
+#: src/catalog.cpp:597
+#, c-format
+msgid ""
+"The catalog couldn't be saved in '%s' charset as\n"
+"specified in catalog settings. It was saved in UTF-8 instead\n"
+"and the setting was modified accordingly."
+msgstr ""
+
+#: src/catalog.cpp:598
+#, fuzzy
+msgid "Error saving catalog"
+msgstr "Erreur au chargement du fichier catalogue '"
+
+#: src/catalog.cpp:681 src/resources/xrc_strings.h:109
 msgid "Updating catalog..."
 msgstr "Mise à jour du catalogue..."
 
-#: src/catalog.cpp:629
-#: src/resources/xrc_strings.h:110
+#: src/catalog.cpp:704 src/resources/xrc_strings.h:110
 msgid "Merging differences..."
 msgstr "Ajouter les différences..."
 
@@ -232,9 +243,7 @@ msgstr "Floue"
 msgid "Last modified"
 msgstr "Dernière modification"
 
-#: src/manager.cpp:251
-#: src/prefsdlg.cpp:265
-#: src/prefsdlg.cpp:286
+#: src/manager.cpp:251 src/prefsdlg.cpp:265 src/prefsdlg.cpp:286
 msgid "Select directory"
 msgstr "Choisir un répertoire"
 
@@ -254,15 +263,16 @@ msgstr "<sans_nom>"
 msgid "Do you want to delete the project?"
 msgstr "Voulez-vous effacer ce projet ?"
 
-#: src/manager.cpp:376
-#: src/manager.cpp:396
+#: src/manager.cpp:376 src/manager.cpp:396
 msgid "Confirmation"
 msgstr "Confirmation"
 
 #: src/manager.cpp:395
-msgid "Do you really want to do mass update of\n"
+msgid ""
+"Do you really want to do mass update of\n"
 "all catalogs in this project?"
-msgstr "Voulez-vous vraiment faire une mise à jour massive de\n"
+msgstr ""
+"Voulez-vous vraiment faire une mise à jour massive de\n"
 "tous les catalogues dans ce projet ?"
 
 #: src/transmemupd.cpp:117
@@ -288,7 +298,8 @@ msgstr "Erreur à l'ouverture du fichier %s !"
 
 #: src/fileviewer.cpp:126
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "L'éditeur n'est pas désigné. Veuillez le faire dans la fenêtre Préférences."
+msgstr ""
+"L'éditeur n'est pas désigné. Veuillez le faire dans la fenêtre Préférences."
 
 #: src/prefsdlg.cpp:42
 msgid "My Languages"
@@ -310,8 +321,7 @@ msgstr "Chemins pour le recherche"
 msgid "Updating translation memory"
 msgstr "Mise a jour de la mémoire de traduction"
 
-#: src/transmem.cpp:332
-#: src/transmem.cpp:334
+#: src/transmem.cpp:332 src/transmem.cpp:334
 #, c-format
 msgid "Database error: %s"
 msgstr "Erreur base de donnée : %s"
@@ -324,13 +334,11 @@ msgstr "Impossible de créer le répertoire de la base de donnée !"
 msgid "Cannot execute program: "
 msgstr "Impossible d'executer le programme :"
 
-#: src/settingsdlg.cpp:52
-#: src/resources/xrc_strings.h:122
+#: src/settingsdlg.cpp:52 src/resources/xrc_strings.h:122
 msgid "Keywords"
 msgstr "Mots clé"
 
-#: src/settingsdlg.cpp:54
-#: src/resources/xrc_strings.h:120
+#: src/settingsdlg.cpp:54 src/resources/xrc_strings.h:120
 msgid "Paths"
 msgstr "Chemins"
 
@@ -339,21 +347,17 @@ msgid "About poEdit"
 msgstr "A propos de poEdit"
 
 #: src/resources/xrc_strings.h:2
-msgid "version 1.1.8"
-msgstr "version 1.1.8"
+msgid "version 1.1.9"
+msgstr "version 1.1.9"
 
-#: src/resources/xrc_strings.h:3
-#: src/resources/xrc_strings.h:6
-#: src/resources/xrc_strings.h:27
-#: src/resources/xrc_strings.h:89
-#: src/resources/xrc_strings.h:102
-#: src/resources/xrc_strings.h:123
+#: src/resources/xrc_strings.h:3 src/resources/xrc_strings.h:6
+#: src/resources/xrc_strings.h:27 src/resources/xrc_strings.h:89
+#: src/resources/xrc_strings.h:102 src/resources/xrc_strings.h:123
 #: src/resources/xrc_strings.h:131
 msgid "OK"
 msgstr "OK"
 
-#: src/resources/xrc_strings.h:4
-#: src/resources/xrc_strings.h:42
+#: src/resources/xrc_strings.h:4 src/resources/xrc_strings.h:42
 #: src/resources/xrc_strings.h:138
 msgid "Edit comment"
 msgstr "Editez le commentaire"
@@ -362,14 +366,10 @@ msgstr "Editez le commentaire"
 msgid "Comment:"
 msgstr "Commentaire :"
 
-#: src/resources/xrc_strings.h:7
-#: src/resources/xrc_strings.h:16
-#: src/resources/xrc_strings.h:28
-#: src/resources/xrc_strings.h:90
-#: src/resources/xrc_strings.h:103
-#: src/resources/xrc_strings.h:107
-#: src/resources/xrc_strings.h:111
-#: src/resources/xrc_strings.h:124
+#: src/resources/xrc_strings.h:7 src/resources/xrc_strings.h:16
+#: src/resources/xrc_strings.h:28 src/resources/xrc_strings.h:90
+#: src/resources/xrc_strings.h:103 src/resources/xrc_strings.h:107
+#: src/resources/xrc_strings.h:111 src/resources/xrc_strings.h:124
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -385,8 +385,7 @@ msgstr "Effacer le commentaire"
 msgid "Edit the file in text editor"
 msgstr "Editer le fichier dans un éditeur"
 
-#: src/resources/xrc_strings.h:11
-#: src/resources/xrc_strings.h:40
+#: src/resources/xrc_strings.h:11 src/resources/xrc_strings.h:40
 msgid "Find..."
 msgstr "Trouver..."
 
@@ -438,8 +437,7 @@ msgstr "Modifier le projet"
 msgid "Project name:"
 msgstr "Nom du projet :"
 
-#: src/resources/xrc_strings.h:25
-#: src/resources/xrc_strings.h:74
+#: src/resources/xrc_strings.h:25 src/resources/xrc_strings.h:74
 #: src/resources/xrc_strings.h:104
 msgid "Browse"
 msgstr "Lister"
@@ -569,8 +567,15 @@ msgid "Always change focus to text input field"
 msgstr "Toujours changer le focus vers le champ d'entrée du texte"
 
 #: src/resources/xrc_strings.h:62
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Ne laissez jamais la liste des chaines prendre la main. Si sélectionné, vous devez utiliser Ctrl-flèches pour la navigation au clavier mais vous pouvez aussi taper le test immédiatement, sans avoir à tapez Tab pour changer la main."
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Ne laissez jamais la liste des chaines prendre la main. Si sélectionné, vous "
+"devez utiliser Ctrl-flèches pour la navigation au clavier mais vous pouvez "
+"aussi taper le test immédiatement, sans avoir à tapez Tab pour changer la "
+"main."
 
 #: src/resources/xrc_strings.h:63
 msgid "Shaded translations list"
@@ -630,7 +635,9 @@ msgstr "Générer une base de donnée"
 
 #: src/resources/xrc_strings.h:78
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr "Régénérer la mémoire de traduction à partir des catalogues dans les chemins listez au dessus."
+msgstr ""
+"Régénérer la mémoire de traduction à partir des catalogues dans les chemins "
+"listez au dessus."
 
 #: src/resources/xrc_strings.h:79
 msgid "Configuration"
@@ -676,8 +683,7 @@ msgstr "Analyseurs"
 msgid "Parser setup"
 msgstr "Réglage de l'analyseur"
 
-#: src/resources/xrc_strings.h:92
-#: src/resources/xrc_strings.h:93
+#: src/resources/xrc_strings.h:92 src/resources/xrc_strings.h:93
 #: src/resources/xrc_strings.h:116
 msgid "Language:"
 msgstr "Langage :"
@@ -709,9 +715,11 @@ msgid "An item in keywords list:"
 msgstr "Un élement dans la liste des mots clés :"
 
 #: src/resources/xrc_strings.h:99
-msgid "This will be attached to the command line once\n"
+msgid ""
+"This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr "Ceci sera attaché à la ligne de commande une fois\n"
+msgstr ""
+"Ceci sera attaché à la ligne de commande une fois\n"
 "pour chaque mot clé. %k deviendra le mot clé."
 
 #: src/resources/xrc_strings.h:100
@@ -720,9 +728,11 @@ msgstr "Un élement de la listes des fichiers en entrée :"
 
 #: src/resources/xrc_strings.h:101
 #, c-format
-msgid "This will be attached to the command line once\n"
+msgid ""
+"This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr "Ceci sera attaché à la ligne de commande une fois\n"
+msgstr ""
+"Ceci sera attaché à la ligne de commande une fois\n"
 "pour chaque fichier en entrée. %f deviend le nom du fichier."
 
 #: src/resources/xrc_strings.h:105
@@ -766,9 +776,12 @@ msgid "Base path:"
 msgstr "Chemin de base :"
 
 #: src/resources/xrc_strings.h:121
-msgid "Use these keywords (function names) to recognize translatable strings\n"
+msgid ""
+"Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
-msgstr "Utilisez ces mots clés (noms de fonction) pour reconnaitre les chaines traductibles\n"
+msgstr ""
+"Utilisez ces mots clés (noms de fonction) pour reconnaitre les chaines "
+"traductibles\n"
 "dans les fichiers sources, en plus de celles par défaut."
 
 #: src/resources/xrc_strings.h:125
@@ -776,9 +789,12 @@ msgid "Update summary"
 msgstr "Sommaire de la mise à jour"
 
 #: src/resources/xrc_strings.h:126
-msgid "These strings were found in the sources but were not in the catalog.\n"
+msgid ""
+"These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
-msgstr "Ces chaines ont été trouvées dans les sources mais ne sont pas dans le catalogue.\n"
+msgstr ""
+"Ces chaines ont été trouvées dans les sources mais ne sont pas dans le "
+"catalogue.\n"
 "poEdit va les ajouter au catalogue maintenant."
 
 #: src/resources/xrc_strings.h:127
@@ -786,9 +802,11 @@ msgid "New strings"
 msgstr "Nouvelles chaines"
 
 #: src/resources/xrc_strings.h:128
-msgid "These strings are no longer in the sources.\n"
+msgid ""
+"These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
-msgstr "Ces chaines ne sont plus dans les sources.\n"
+msgstr ""
+"Ces chaines ne sont plus dans les sources.\n"
 "poEdit va les retirer du catalogue maintenant."
 
 #: src/resources/xrc_strings.h:129
@@ -826,4 +844,3 @@ msgstr "Vue pleine écran"
 #: src/resources/xrc_strings.h:140
 msgid "Help"
 msgstr "Aide"
-

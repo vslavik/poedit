@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.1.x\n"
 "POT-Creation-Date: 2000-02-25 21:27+0100\n"
-"PO-Revision-Date: 2002-03-09 16:52+0100\n"
+"PO-Revision-Date: 2002-07-17 00:02+0100\n"
 "Last-Translator: Vaclav Slavik <vaclav.slavik@matfyz.cz>\n"
 "Language-Team: Vaclav Slavik <vaclav.slavik@matfyz.cz>\n"
 "MIME-Version: 1.0\n"
@@ -136,11 +136,11 @@ msgstr "Automatické pøeklady:"
 msgid "none"
 msgstr "¾ádný"
 
-#: src/edapp.cpp:49
+#: src/edapp.cpp:50
 msgid "poEdit installation is broken, cannot find application's home directory."
 msgstr "poEdit je ¹patnì nainstalovaný, nepodaøilo se v registrech najít údaj o domovském adresáøi."
 
-#: src/edapp.cpp:111
+#: src/edapp.cpp:114
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -153,18 +153,18 @@ msgstr ""
 "Mù¾ete také nastavit promnìnou prostøedí POEDIT_PREFIX, aby\n"
 "ukazovala na místo, kam jste poEdit nainstaloval(a)."
 
-#: src/edapp.cpp:117
+#: src/edapp.cpp:120
 #, c-format
 msgid "Cannot find resources file '%s'!\n"
 "Please reinstall poEdit."
 msgstr "Nemohu nalézt soubor se zdroji '%s'!\n"
 "Pøeinstalujte prosím poEdit."
 
-#: src/edapp.cpp:120
+#: src/edapp.cpp:123
 msgid "poEdit Error"
 msgstr "poEdit: chyba"
 
-#: src/edapp.cpp:133
+#: src/edapp.cpp:136
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -174,7 +174,7 @@ msgstr ""
 "Vyplòte prosím va¹e jméno a e-mailovou adresu.\n"
 "(Tyto informace jsou pou¾ity pouze v hlavièkách katalogù.)"
 
-#: src/edapp.cpp:133
+#: src/edapp.cpp:136
 msgid "Setup"
 msgstr "Nastavení"
 
@@ -190,76 +190,91 @@ msgstr "Zpracovávám "
 msgid " files..."
 msgstr " souborù..."
 
-#: src/catalog.cpp:198
+#: src/catalog.cpp:249
 msgid "Corrupted translator record, please correct in Catalog/Settings"
 msgstr "Po¹kozený záznam o pøekladateli, opravte ho prosím v Katalog/Nastavení"
 
-#: src/catalog.cpp:206
+#: src/catalog.cpp:257
 msgid "Corrupted team record, please correct in Catalog/Settings"
 msgstr "Po¹kozený záznam o pøekladatelském týmu, opravte ho prosím v Katalog/Nastavení"
 
-#: src/catalog.cpp:606
+#: src/catalog.cpp:597
+#, c-format
+msgid ""
+"The catalog couldn't be saved in '%s' charset as\n"
+"specified in catalog settings. It was saved in UTF-8 instead\n"
+"and the setting was modified accordingly."
+msgstr ""
+"Katalog nemohl být ulo¾en v znakové sadì '%s' (vybrané\n"
+"v nastaveních katalogu). Místo toho byl ulo¾en jako UTF-8\n"
+"a nastavení bylo pøíslu¹nì pozmìnìno."
+
+#: src/catalog.cpp:598
+msgid "Error saving catalog"
+msgstr "Chyba pøi ukládání katalogu"
+
+#: src/catalog.cpp:681
 #: src/resources/xrc_strings.h:109
 msgid "Updating catalog..."
 msgstr "Aktualizuji katalog..."
 
-#: src/catalog.cpp:629
+#: src/catalog.cpp:704
 #: src/resources/xrc_strings.h:110
 msgid "Merging differences..."
 msgstr "Vkládám rozdíly..."
 
-#: src/manager.cpp:64
+#: src/manager.cpp:65
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - správce katalogù"
 
-#: src/manager.cpp:218
+#: src/manager.cpp:219
 msgid "Catalog"
 msgstr "Katalog"
 
-#: src/manager.cpp:219
+#: src/manager.cpp:220
 msgid "Total"
 msgstr "Celkem"
 
-#: src/manager.cpp:220
+#: src/manager.cpp:221
 msgid "Untrans"
 msgstr "Nepøelo¾"
 
-#: src/manager.cpp:221
+#: src/manager.cpp:222
 msgid "Fuzzy"
 msgstr "Fuzzy"
 
-#: src/manager.cpp:222
+#: src/manager.cpp:223
 msgid "Last modified"
 msgstr "Poslední zmìna"
 
-#: src/manager.cpp:250
+#: src/manager.cpp:251
 #: src/prefsdlg.cpp:265
 #: src/prefsdlg.cpp:286
 msgid "Select directory"
 msgstr "Vyberte adresáø"
 
-#: src/manager.cpp:270
+#: src/manager.cpp:271
 msgid "Directories:"
 msgstr "Adresáøe:"
 
-#: src/manager.cpp:273
+#: src/manager.cpp:274
 msgid "My Project"
 msgstr "Mùj projekt"
 
-#: src/manager.cpp:345
+#: src/manager.cpp:346
 msgid "<unnamed>"
 msgstr "<nepojmenovaný>"
 
-#: src/manager.cpp:374
+#: src/manager.cpp:375
 msgid "Do you want to delete the project?"
 msgstr "Opravdu chcete smazat tento project?"
 
-#: src/manager.cpp:375
-#: src/manager.cpp:395
+#: src/manager.cpp:376
+#: src/manager.cpp:396
 msgid "Confirmation"
 msgstr "Potvrzení"
 
-#: src/manager.cpp:394
+#: src/manager.cpp:395
 msgid "Do you really want to do mass update of\n"
 "all catalogs in this project?"
 msgstr "Opravdu chcete provést hromadný update v¹ech\n"
@@ -273,7 +288,7 @@ msgstr "Hledám soubory..."
 msgid "Scanning file: "
 msgstr "Prohledávám soubor:"
 
-#: src/transmemupd.cpp:182
+#: src/transmemupd.cpp:183
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Nelze extrahovat katalogy z RPM souboru."
 
@@ -316,7 +331,7 @@ msgstr "Aktualizuji translaèní pamì»"
 msgid "Database error: %s"
 msgstr "Databázová chyba: %s"
 
-#: src/transmem.cpp:748
+#: src/transmem.cpp:751
 msgid "Cannot create database directory!"
 msgstr "Nelze vytvoøit adresáø pro databázi!"
 
@@ -324,13 +339,13 @@ msgstr "Nelze vytvoøit adresáø pro databázi!"
 msgid "Cannot execute program: "
 msgstr "Není mo¾né spustit program: "
 
-#: src/resources/xrc_strings.h:122
 #: src/settingsdlg.cpp:52
+#: src/resources/xrc_strings.h:122
 msgid "Keywords"
 msgstr "Klíèová slova"
 
-#: src/resources/xrc_strings.h:120
 #: src/settingsdlg.cpp:54
+#: src/resources/xrc_strings.h:120
 msgid "Paths"
 msgstr "Cesty"
 

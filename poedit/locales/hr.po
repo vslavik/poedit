@@ -22,8 +22,7 @@ msgstr "Izvorni pojam"
 msgid "Translation"
 msgstr "Prijevod"
 
-#: src/edframe.cpp:140
-#: src/fileviewer.cpp:87
+#: src/edframe.cpp:140 src/fileviewer.cpp:87
 msgid "Line"
 msgstr "Crta"
 
@@ -31,8 +30,7 @@ msgstr "Crta"
 msgid "poEdit"
 msgstr "poEdit"
 
-#: src/edframe.cpp:429
-#: src/resources/xrc_strings.h:29
+#: src/edframe.cpp:429 src/resources/xrc_strings.h:29
 msgid "&File"
 msgstr "&Datoteka"
 
@@ -48,27 +46,21 @@ msgstr "Izbor jezika zbirke pojmova"
 msgid "Please select language code:"
 msgstr "Izbor jeziène kratice:"
 
-#: src/edframe.cpp:593
-#: src/edframe.cpp:604
-#: src/edframe.cpp:628
+#: src/edframe.cpp:593 src/edframe.cpp:604 src/edframe.cpp:628
 #: src/edframe.cpp:675
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Zbirka pojmova je izmjenjena. ®elite li saèuvati promjene?"
 
-#: src/edframe.cpp:593
-#: src/edframe.cpp:604
-#: src/edframe.cpp:628
+#: src/edframe.cpp:593 src/edframe.cpp:604 src/edframe.cpp:628
 #: src/edframe.cpp:675
 msgid "Save changes"
 msgstr "Saèuvati promjene"
 
-#: src/edframe.cpp:612
-#: src/resources/xrc_strings.h:133
+#: src/edframe.cpp:612 src/resources/xrc_strings.h:133
 msgid "Open catalog"
 msgstr "Otvorite zbirku pojmova"
 
-#: src/edframe.cpp:614
-#: src/edframe.cpp:661
+#: src/edframe.cpp:614 src/edframe.cpp:661
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText datoteka (*.po)|*.po|Sve (*.*)|*.*"
 
@@ -122,13 +114,11 @@ msgstr "%i pojmovi (%i nezavr¹eni, %i neprevedeni)"
 msgid " (modified)"
 msgstr " (izmjenjen)"
 
-#: src/edframe.cpp:1379
-#: src/edframe.cpp:1383
+#: src/edframe.cpp:1379 src/edframe.cpp:1383
 msgid "References:"
 msgstr "Preporuke:"
 
-#: src/edframe.cpp:1393
-#: src/edframe.cpp:1397
+#: src/edframe.cpp:1393 src/edframe.cpp:1397
 msgid "Automatic translations:"
 msgstr "Samoprijevodi:"
 
@@ -137,7 +127,8 @@ msgid "none"
 msgstr "ni¹ta"
 
 #: src/edapp.cpp:50
-msgid "poEdit installation is broken, cannot find application's home directory."
+msgid ""
+"poEdit installation is broken, cannot find application's home directory."
 msgstr "Instalacija poEdit-a je prekinuta, ne mo¾e se naæi matièni direktorij."
 
 #: src/edapp.cpp:114
@@ -155,9 +146,11 @@ msgstr ""
 
 #: src/edapp.cpp:120
 #, c-format
-msgid "Cannot find resources file '%s'!\n"
+msgid ""
+"Cannot find resources file '%s'!\n"
 "Please reinstall poEdit."
-msgstr "Ne mo¾e se pronaæi izvorna datoteka '%s'!\n"
+msgstr ""
+"Ne mo¾e se pronaæi izvorna datoteka '%s'!\n"
 "Molimo vas da se obnovi instalacija poEdit-a."
 
 #: src/edapp.cpp:123
@@ -190,21 +183,35 @@ msgstr "Pretra¾ivanje"
 msgid " files..."
 msgstr " datoteke..."
 
-#: src/catalog.cpp:198
+#: src/catalog.cpp:249
 msgid "Corrupted translator record, please correct in Catalog/Settings"
-msgstr "O¹teæena prevedena stavka, molimo vas da je ispravite preko izbornika Zbirka/Postave"
+msgstr ""
+"O¹teæena prevedena stavka, molimo vas da je ispravite preko izbornika Zbirka/"
+"Postave"
 
-#: src/catalog.cpp:206
+#: src/catalog.cpp:257
 msgid "Corrupted team record, please correct in Catalog/Settings"
-msgstr "O¹teæena stavka tima, molimo da se ispravi preko izbornika Zbirka/Postave"
+msgstr ""
+"O¹teæena stavka tima, molimo da se ispravi preko izbornika Zbirka/Postave"
 
-#: src/catalog.cpp:606
-#: src/resources/xrc_strings.h:109
+#: src/catalog.cpp:597
+#, c-format
+msgid ""
+"The catalog couldn't be saved in '%s' charset as\n"
+"specified in catalog settings. It was saved in UTF-8 instead\n"
+"and the setting was modified accordingly."
+msgstr ""
+
+#: src/catalog.cpp:598
+#, fuzzy
+msgid "Error saving catalog"
+msgstr "Gre¹ka pri unosu poruka iz zbirke pojmova"
+
+#: src/catalog.cpp:681 src/resources/xrc_strings.h:109
 msgid "Updating catalog..."
 msgstr "Obnovljena zbirka pojmova..."
 
-#: src/catalog.cpp:629
-#: src/resources/xrc_strings.h:110
+#: src/catalog.cpp:704 src/resources/xrc_strings.h:110
 msgid "Merging differences..."
 msgstr "Dodane razlike..."
 
@@ -232,9 +239,7 @@ msgstr "Nedovr¹en"
 msgid "Last modified"
 msgstr "Posljedni ispravak"
 
-#: src/manager.cpp:251
-#: src/prefsdlg.cpp:265
-#: src/prefsdlg.cpp:286
+#: src/manager.cpp:251 src/prefsdlg.cpp:265 src/prefsdlg.cpp:286
 msgid "Select directory"
 msgstr "Izbor direktorija"
 
@@ -254,15 +259,16 @@ msgstr "<neimenovan>"
 msgid "Do you want to delete the project?"
 msgstr "®elite li izbrisati projekt"
 
-#: src/manager.cpp:376
-#: src/manager.cpp:396
+#: src/manager.cpp:376 src/manager.cpp:396
 msgid "Confirmation"
 msgstr "Potvrda"
 
 #: src/manager.cpp:395
-msgid "Do you really want to do mass update of\n"
+msgid ""
+"Do you really want to do mass update of\n"
 "all catalogs in this project?"
-msgstr "®elite li stvarno skupnu obnovu\n"
+msgstr ""
+"®elite li stvarno skupnu obnovu\n"
 "svih zbirki pojmova u projektu?"
 
 #: src/transmemupd.cpp:117
@@ -288,7 +294,9 @@ msgstr "Gre¹ka pri otvaranju datoteke %s!"
 
 #: src/fileviewer.cpp:126
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "Nije odreðen program za pisanje. Molimo vas da ga odredite u prozoru Preporuka."
+msgstr ""
+"Nije odreðen program za pisanje. Molimo vas da ga odredite u prozoru "
+"Preporuka."
 
 #: src/prefsdlg.cpp:42
 msgid "My Languages"
@@ -310,8 +318,7 @@ msgstr "Staza pretra¾ivanja"
 msgid "Updating translation memory"
 msgstr "Obnavljanje spremi¹ta za  prijevode"
 
-#: src/transmem.cpp:332
-#: src/transmem.cpp:334
+#: src/transmem.cpp:332 src/transmem.cpp:334
 #, c-format
 msgid "Database error: %s"
 msgstr "Gre¹ka u bazi podataka: %s"
@@ -324,13 +331,11 @@ msgstr "Ne mo¾e se stvoriti direktorij za bazu podataka!"
 msgid "Cannot execute program: "
 msgstr "Ne mo¾e se pokrenuti program:"
 
-#: src/settingsdlg.cpp:52
-#: src/resources/xrc_strings.h:122
+#: src/settingsdlg.cpp:52 src/resources/xrc_strings.h:122
 msgid "Keywords"
 msgstr "Kljuène rijeèi"
 
-#: src/settingsdlg.cpp:54
-#: src/resources/xrc_strings.h:120
+#: src/settingsdlg.cpp:54 src/resources/xrc_strings.h:120
 msgid "Paths"
 msgstr "Staze"
 
@@ -339,21 +344,17 @@ msgid "About poEdit"
 msgstr "O programu poEdit"
 
 #: src/resources/xrc_strings.h:2
-msgid "version 1.1.8"
-msgstr "inaèica 1.1.8"
+msgid "version 1.1.9"
+msgstr "inaèica 1.1.9"
 
-#: src/resources/xrc_strings.h:3
-#: src/resources/xrc_strings.h:6
-#: src/resources/xrc_strings.h:27
-#: src/resources/xrc_strings.h:89
-#: src/resources/xrc_strings.h:102
-#: src/resources/xrc_strings.h:123
+#: src/resources/xrc_strings.h:3 src/resources/xrc_strings.h:6
+#: src/resources/xrc_strings.h:27 src/resources/xrc_strings.h:89
+#: src/resources/xrc_strings.h:102 src/resources/xrc_strings.h:123
 #: src/resources/xrc_strings.h:131
 msgid "OK"
 msgstr "Prihvaæam"
 
-#: src/resources/xrc_strings.h:4
-#: src/resources/xrc_strings.h:42
+#: src/resources/xrc_strings.h:4 src/resources/xrc_strings.h:42
 #: src/resources/xrc_strings.h:138
 msgid "Edit comment"
 msgstr "Ispravak napomene"
@@ -362,14 +363,10 @@ msgstr "Ispravak napomene"
 msgid "Comment:"
 msgstr "Napomena:"
 
-#: src/resources/xrc_strings.h:7
-#: src/resources/xrc_strings.h:16
-#: src/resources/xrc_strings.h:28
-#: src/resources/xrc_strings.h:90
-#: src/resources/xrc_strings.h:103
-#: src/resources/xrc_strings.h:107
-#: src/resources/xrc_strings.h:111
-#: src/resources/xrc_strings.h:124
+#: src/resources/xrc_strings.h:7 src/resources/xrc_strings.h:16
+#: src/resources/xrc_strings.h:28 src/resources/xrc_strings.h:90
+#: src/resources/xrc_strings.h:103 src/resources/xrc_strings.h:107
+#: src/resources/xrc_strings.h:111 src/resources/xrc_strings.h:124
 msgid "Cancel"
 msgstr "Odustajem"
 
@@ -385,8 +382,7 @@ msgstr "Obri¹ite napomenu"
 msgid "Edit the file in text editor"
 msgstr "Ispravite datoteku u programu za pisanje"
 
-#: src/resources/xrc_strings.h:11
-#: src/resources/xrc_strings.h:40
+#: src/resources/xrc_strings.h:11 src/resources/xrc_strings.h:40
 msgid "Find..."
 msgstr "Pronaðite..."
 
@@ -438,8 +434,7 @@ msgstr "Ispravak projekta"
 msgid "Project name:"
 msgstr "Naziv projekta:"
 
-#: src/resources/xrc_strings.h:25
-#: src/resources/xrc_strings.h:74
+#: src/resources/xrc_strings.h:25 src/resources/xrc_strings.h:74
 #: src/resources/xrc_strings.h:104
 msgid "Browse"
 msgstr "Tra¾enje"
@@ -569,8 +564,14 @@ msgid "Always change focus to text input field"
 msgstr "Fokus postavi uvijek na polje za unos teksta"
 
 #: src/resources/xrc_strings.h:62
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Ne postavljajte nikad fokus na listu pojmova. Ako je ipak postavljen, za promjenu fokusa morate upotrijebiti Ctrl-strelicu s tastature, ili takoðer mo¾ete neposredno ispisivati tekst, bez upotrebe tipke TAB."
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Ne postavljajte nikad fokus na listu pojmova. Ako je ipak postavljen, za "
+"promjenu fokusa morate upotrijebiti Ctrl-strelicu s tastature, ili takoðer "
+"mo¾ete neposredno ispisivati tekst, bez upotrebe tipke TAB."
 
 #: src/resources/xrc_strings.h:63
 msgid "Shaded translations list"
@@ -630,7 +631,8 @@ msgstr "Stvaranje baze podataka"
 
 #: src/resources/xrc_strings.h:78
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr "Obnavlja spremi¹te prijevoda iz zbirke pojmova po stazama iz gornjeg popisa"
+msgstr ""
+"Obnavlja spremi¹te prijevoda iz zbirke pojmova po stazama iz gornjeg popisa"
 
 #: src/resources/xrc_strings.h:79
 msgid "Configuration"
@@ -676,8 +678,7 @@ msgstr "Pretra¾ivaèi:"
 msgid "Parser setup"
 msgstr "Postavka pretra¾ivaèa"
 
-#: src/resources/xrc_strings.h:92
-#: src/resources/xrc_strings.h:93
+#: src/resources/xrc_strings.h:92 src/resources/xrc_strings.h:93
 #: src/resources/xrc_strings.h:116
 msgid "Language:"
 msgstr "Jezik:"
@@ -710,9 +711,11 @@ msgid "An item in keywords list:"
 msgstr "Stavka u popisu kljuènih rijeèi:"
 
 #: src/resources/xrc_strings.h:99
-msgid "This will be attached to the command line once\n"
+msgid ""
+"This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr "Bit æe dodano naredbenoj crti jedamput za\n"
+msgstr ""
+"Bit æe dodano naredbenoj crti jedamput za\n"
 "svaku kljuènu rijeè. %k dodaje se kljuènoj rijeèi."
 
 #: src/resources/xrc_strings.h:100
@@ -721,9 +724,11 @@ msgstr "Stavka popisa u polju za unos:"
 
 #: src/resources/xrc_strings.h:101
 #, c-format
-msgid "This will be attached to the command line once\n"
+msgid ""
+"This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr "Bit æe dodano naredbenoj crti jedamput za svaku\n"
+msgstr ""
+"Bit æe dodano naredbenoj crti jedamput za svaku\n"
 "ulaznu datoteku. %f dodaje se imenu datoteke."
 
 #: src/resources/xrc_strings.h:105
@@ -767,9 +772,11 @@ msgid "Base path:"
 msgstr "Temeljna staza"
 
 #: src/resources/xrc_strings.h:121
-msgid "Use these keywords (function names) to recognize translatable strings\n"
+msgid ""
+"Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
-msgstr "Upotrijebite ove kljuène rijeèi (imena funkcija) da se prepoznaju pojmovi\n"
+msgstr ""
+"Upotrijebite ove kljuène rijeèi (imena funkcija) da se prepoznaju pojmovi\n"
 "za prijevod u izvornim datotekama, kao unaprijed odreðeni dodatci"
 
 #: src/resources/xrc_strings.h:125
@@ -777,9 +784,11 @@ msgid "Update summary"
 msgstr "Zbirna promjena"
 
 #: src/resources/xrc_strings.h:126
-msgid "These strings were found in the sources but were not in the catalog.\n"
+msgid ""
+"These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
-msgstr "Ovi pojmovi su naðeni u izvornim datotekama, ali nisu u zbirci pojmova.\n"
+msgstr ""
+"Ovi pojmovi su naðeni u izvornim datotekama, ali nisu u zbirci pojmova.\n"
 "poEdit æe ih sada njoj dodati."
 
 #: src/resources/xrc_strings.h:127
@@ -787,9 +796,11 @@ msgid "New strings"
 msgstr "Novi pojmovi"
 
 #: src/resources/xrc_strings.h:128
-msgid "These strings are no longer in the sources.\n"
+msgid ""
+"These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
-msgstr "Ovi pojmovi nisu vi¹e u izvornim datotekama.\n"
+msgstr ""
+"Ovi pojmovi nisu vi¹e u izvornim datotekama.\n"
 "poEdit æe ih sada izbrisati iz rijeènika"
 
 #: src/resources/xrc_strings.h:129
@@ -810,7 +821,8 @@ msgstr "Saèuvaj zbirku pojmova"
 
 #: src/resources/xrc_strings.h:135
 msgid "Update catalog - synchronize it with sources"
-msgstr "Obnavljanje zbirke pojmova - njeno sinhroniziranje s izvornim datotekama"
+msgstr ""
+"Obnavljanje zbirke pojmova - njeno sinhroniziranje s izvornim datotekama"
 
 #: src/resources/xrc_strings.h:136
 msgid "Display quotes around the string?"
@@ -827,4 +839,3 @@ msgstr "Cijeli zaslon"
 #: src/resources/xrc_strings.h:140
 msgid "Help"
 msgstr "Pomoæ"
-

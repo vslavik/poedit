@@ -22,8 +22,7 @@ msgstr "Original Zeichenkette"
 msgid "Translation"
 msgstr "Übersetzung"
 
-#: src/edframe.cpp:140
-#: src/fileviewer.cpp:87
+#: src/edframe.cpp:140 src/fileviewer.cpp:87
 msgid "Line"
 msgstr "Zeile"
 
@@ -31,8 +30,7 @@ msgstr "Zeile"
 msgid "poEdit"
 msgstr "poEdit"
 
-#: src/edframe.cpp:429
-#: src/resources/xrc_strings.h:29
+#: src/edframe.cpp:429 src/resources/xrc_strings.h:29
 msgid "&File"
 msgstr "&Datei"
 
@@ -48,27 +46,21 @@ msgstr "Katalogsprache auswählen"
 msgid "Please select language code:"
 msgstr "Bitte Sprachencode auswählen:"
 
-#: src/edframe.cpp:593
-#: src/edframe.cpp:604
-#: src/edframe.cpp:628
+#: src/edframe.cpp:593 src/edframe.cpp:604 src/edframe.cpp:628
 #: src/edframe.cpp:675
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalog geändert. Änderungen speichern?"
 
-#: src/edframe.cpp:593
-#: src/edframe.cpp:604
-#: src/edframe.cpp:628
+#: src/edframe.cpp:593 src/edframe.cpp:604 src/edframe.cpp:628
 #: src/edframe.cpp:675
 msgid "Save changes"
 msgstr "Änderungen speichern"
 
-#: src/edframe.cpp:612
-#: src/resources/xrc_strings.h:133
+#: src/edframe.cpp:612 src/resources/xrc_strings.h:133
 msgid "Open catalog"
 msgstr "Öffne Katalog"
 
-#: src/edframe.cpp:614
-#: src/edframe.cpp:661
+#: src/edframe.cpp:614 src/edframe.cpp:661
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText Kataloge (*.po)|*.po|Alle Dateitypen (*.*)|*.*"
 
@@ -122,13 +114,11 @@ msgstr "%i Zeichenketten (%i fuzzy, %i nicht übersetzt)"
 msgid " (modified)"
 msgstr "(geändert)"
 
-#: src/edframe.cpp:1379
-#: src/edframe.cpp:1383
+#: src/edframe.cpp:1379 src/edframe.cpp:1383
 msgid "References:"
 msgstr "Verweise:"
 
-#: src/edframe.cpp:1393
-#: src/edframe.cpp:1397
+#: src/edframe.cpp:1393 src/edframe.cpp:1397
 msgid "Automatic translations:"
 msgstr "Automatische Übersetzungen:"
 
@@ -137,8 +127,10 @@ msgid "none"
 msgstr "keine"
 
 #: src/edapp.cpp:50
-msgid "poEdit installation is broken, cannot find application's home directory."
-msgstr "poEdit Installation ist beschädigt, kann Anwendungsverzeichnis nicht finden."
+msgid ""
+"poEdit installation is broken, cannot find application's home directory."
+msgstr ""
+"poEdit Installation ist beschädigt, kann Anwendungsverzeichnis nicht finden."
 
 #: src/edapp.cpp:114
 #, c-format
@@ -155,9 +147,11 @@ msgstr ""
 
 #: src/edapp.cpp:120
 #, c-format
-msgid "Cannot find resources file '%s'!\n"
+msgid ""
+"Cannot find resources file '%s'!\n"
 "Please reinstall poEdit."
-msgstr "Kann Ressourcendatei nicht finden '%s'!\n"
+msgstr ""
+"Kann Ressourcendatei nicht finden '%s'!\n"
 "Bitte installieren Sie poEdit neu."
 
 #: src/edapp.cpp:123
@@ -190,21 +184,33 @@ msgstr "Parse"
 msgid " files..."
 msgstr "Dateien..."
 
-#: src/catalog.cpp:198
+#: src/catalog.cpp:249
 msgid "Corrupted translator record, please correct in Catalog/Settings"
-msgstr "Beschädigter Übersetzereintrag, bitte in Katalog/Einstellungen korrigieren"
+msgstr ""
+"Beschädigter Übersetzereintrag, bitte in Katalog/Einstellungen korrigieren"
 
-#: src/catalog.cpp:206
+#: src/catalog.cpp:257
 msgid "Corrupted team record, please correct in Catalog/Settings"
 msgstr "Beschädigter Teameintrag, bitte in Katalog/Einstellungen korrigieren"
 
-#: src/catalog.cpp:606
-#: src/resources/xrc_strings.h:109
+#: src/catalog.cpp:597
+#, c-format
+msgid ""
+"The catalog couldn't be saved in '%s' charset as\n"
+"specified in catalog settings. It was saved in UTF-8 instead\n"
+"and the setting was modified accordingly."
+msgstr ""
+
+#: src/catalog.cpp:598
+#, fuzzy
+msgid "Error saving catalog"
+msgstr "Fehler beim Laden der Katalogdatei '"
+
+#: src/catalog.cpp:681 src/resources/xrc_strings.h:109
 msgid "Updating catalog..."
 msgstr "Aktualisiere Katalog..."
 
-#: src/catalog.cpp:629
-#: src/resources/xrc_strings.h:110
+#: src/catalog.cpp:704 src/resources/xrc_strings.h:110
 msgid "Merging differences..."
 msgstr "Füge Änderungen zusammen..."
 
@@ -232,9 +238,7 @@ msgstr "Fuzzy"
 msgid "Last modified"
 msgstr "Zuletzt geändert"
 
-#: src/manager.cpp:251
-#: src/prefsdlg.cpp:265
-#: src/prefsdlg.cpp:286
+#: src/manager.cpp:251 src/prefsdlg.cpp:265 src/prefsdlg.cpp:286
 msgid "Select directory"
 msgstr "Verzeichnis wählen"
 
@@ -254,15 +258,16 @@ msgstr "<unbenannt>"
 msgid "Do you want to delete the project?"
 msgstr "Soll das Projekt gelöscht werden?"
 
-#: src/manager.cpp:376
-#: src/manager.cpp:396
+#: src/manager.cpp:376 src/manager.cpp:396
 msgid "Confirmation"
 msgstr "Bestätigung"
 
 #: src/manager.cpp:395
-msgid "Do you really want to do mass update of\n"
+msgid ""
+"Do you really want to do mass update of\n"
 "all catalogs in this project?"
-msgstr "Wollen Sie wirklich alle Kataloge dieses\n"
+msgstr ""
+"Wollen Sie wirklich alle Kataloge dieses\n"
 "Projektes aktualisieren?"
 
 #: src/transmemupd.cpp:117
@@ -310,8 +315,7 @@ msgstr "Suchpfade"
 msgid "Updating translation memory"
 msgstr "Aktualisiere Übersetzungsspeicher"
 
-#: src/transmem.cpp:332
-#: src/transmem.cpp:334
+#: src/transmem.cpp:332 src/transmem.cpp:334
 #, c-format
 msgid "Database error: %s"
 msgstr "Datenbankfehler: %s"
@@ -324,13 +328,11 @@ msgstr "Kann Datenbankverzeichnis nicht erstellen!"
 msgid "Cannot execute program: "
 msgstr "Kann Programm nicht ausführen:"
 
-#: src/settingsdlg.cpp:52
-#: src/resources/xrc_strings.h:122
+#: src/settingsdlg.cpp:52 src/resources/xrc_strings.h:122
 msgid "Keywords"
 msgstr "Schlüsselwörter"
 
-#: src/settingsdlg.cpp:54
-#: src/resources/xrc_strings.h:120
+#: src/settingsdlg.cpp:54 src/resources/xrc_strings.h:120
 msgid "Paths"
 msgstr "Pfade"
 
@@ -339,21 +341,18 @@ msgid "About poEdit"
 msgstr "Über poEdit"
 
 #: src/resources/xrc_strings.h:2
-msgid "version 1.1.8"
+#, fuzzy
+msgid "version 1.1.9"
 msgstr "Version 1.1.8"
 
-#: src/resources/xrc_strings.h:3
-#: src/resources/xrc_strings.h:6
-#: src/resources/xrc_strings.h:27
-#: src/resources/xrc_strings.h:89
-#: src/resources/xrc_strings.h:102
-#: src/resources/xrc_strings.h:123
+#: src/resources/xrc_strings.h:3 src/resources/xrc_strings.h:6
+#: src/resources/xrc_strings.h:27 src/resources/xrc_strings.h:89
+#: src/resources/xrc_strings.h:102 src/resources/xrc_strings.h:123
 #: src/resources/xrc_strings.h:131
 msgid "OK"
 msgstr "OK"
 
-#: src/resources/xrc_strings.h:4
-#: src/resources/xrc_strings.h:42
+#: src/resources/xrc_strings.h:4 src/resources/xrc_strings.h:42
 #: src/resources/xrc_strings.h:138
 msgid "Edit comment"
 msgstr "Bearbeite Kommentar"
@@ -362,14 +361,10 @@ msgstr "Bearbeite Kommentar"
 msgid "Comment:"
 msgstr "Kommentar:"
 
-#: src/resources/xrc_strings.h:7
-#: src/resources/xrc_strings.h:16
-#: src/resources/xrc_strings.h:28
-#: src/resources/xrc_strings.h:90
-#: src/resources/xrc_strings.h:103
-#: src/resources/xrc_strings.h:107
-#: src/resources/xrc_strings.h:111
-#: src/resources/xrc_strings.h:124
+#: src/resources/xrc_strings.h:7 src/resources/xrc_strings.h:16
+#: src/resources/xrc_strings.h:28 src/resources/xrc_strings.h:90
+#: src/resources/xrc_strings.h:103 src/resources/xrc_strings.h:107
+#: src/resources/xrc_strings.h:111 src/resources/xrc_strings.h:124
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -385,8 +380,7 @@ msgstr "Den Kommentar löschen"
 msgid "Edit the file in text editor"
 msgstr "Die Datei im Texteditor bearbeiten"
 
-#: src/resources/xrc_strings.h:11
-#: src/resources/xrc_strings.h:40
+#: src/resources/xrc_strings.h:11 src/resources/xrc_strings.h:40
 msgid "Find..."
 msgstr "Suchen..."
 
@@ -438,8 +432,7 @@ msgstr "Projekt bearbeiten"
 msgid "Project name:"
 msgstr "Projektname:"
 
-#: src/resources/xrc_strings.h:25
-#: src/resources/xrc_strings.h:74
+#: src/resources/xrc_strings.h:25 src/resources/xrc_strings.h:74
 #: src/resources/xrc_strings.h:104
 msgid "Browse"
 msgstr "Durchsuchen"
@@ -569,8 +562,14 @@ msgid "Always change focus to text input field"
 msgstr "Immer den Focus zum Eingabefeld wechseln"
 
 #: src/resources/xrc_strings.h:62
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Lasse nie die Zeichenkettenliste den Focus bekommen. Wenn aktiviert müssen Sie Strg-Pfeile zur Tastaturnavigation benutzen. Sie können jedoch auch sofort Text eingeben, ohne vorher Tab zu drücken um den Focus zu wechseln."
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Lasse nie die Zeichenkettenliste den Focus bekommen. Wenn aktiviert müssen "
+"Sie Strg-Pfeile zur Tastaturnavigation benutzen. Sie können jedoch auch "
+"sofort Text eingeben, ohne vorher Tab zu drücken um den Focus zu wechseln."
 
 #: src/resources/xrc_strings.h:63
 msgid "Shaded translations list"
@@ -630,7 +629,9 @@ msgstr "Erstelle Datenbank"
 
 #: src/resources/xrc_strings.h:78
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr "Regeneriere Übersetzungsspeicher aus Katalogen in den oben angegebenen Pfäden."
+msgstr ""
+"Regeneriere Übersetzungsspeicher aus Katalogen in den oben angegebenen "
+"Pfäden."
 
 #: src/resources/xrc_strings.h:79
 msgid "Configuration"
@@ -676,8 +677,7 @@ msgstr "Parser"
 msgid "Parser setup"
 msgstr "Parser Einstellungen"
 
-#: src/resources/xrc_strings.h:92
-#: src/resources/xrc_strings.h:93
+#: src/resources/xrc_strings.h:92 src/resources/xrc_strings.h:93
 #: src/resources/xrc_strings.h:116
 msgid "Language:"
 msgstr "Sprache:"
@@ -709,9 +709,11 @@ msgid "An item in keywords list:"
 msgstr "Ein Eintrag in der Schlüsselwortliste:"
 
 #: src/resources/xrc_strings.h:99
-msgid "This will be attached to the command line once\n"
+msgid ""
+"This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr "Wird für jedes Schlüsselwort einmal an die Kommandozeile\n"
+msgstr ""
+"Wird für jedes Schlüsselwort einmal an die Kommandozeile\n"
 "angehangen. %k expandiert das Schlüsselwort."
 
 #: src/resources/xrc_strings.h:100
@@ -720,9 +722,11 @@ msgstr "Ein Eintrag in der Eingabedatei-Liste:"
 
 #: src/resources/xrc_strings.h:101
 #, c-format
-msgid "This will be attached to the command line once\n"
+msgid ""
+"This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr "Wird einmal an die Kommandozeile für jede\n"
+msgstr ""
+"Wird einmal an die Kommandozeile für jede\n"
 "Eingabedatei angehangen. %f expandiert zum Dateinamen."
 
 #: src/resources/xrc_strings.h:105
@@ -766,9 +770,11 @@ msgid "Base path:"
 msgstr "Basispfad:"
 
 #: src/resources/xrc_strings.h:121
-msgid "Use these keywords (function names) to recognize translatable strings\n"
+msgid ""
+"Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
-msgstr "Benutze diese Schlüsselwörter (Funktionsnamen), um übersetzbare\n"
+msgstr ""
+"Benutze diese Schlüsselwörter (Funktionsnamen), um übersetzbare\n"
 "Zeichenketten in Quelldateien zusätzlich zu den Standardmäßigen zu erkennen."
 
 #: src/resources/xrc_strings.h:125
@@ -776,9 +782,12 @@ msgid "Update summary"
 msgstr "Übersicht aktualisieren"
 
 #: src/resources/xrc_strings.h:126
-msgid "These strings were found in the sources but were not in the catalog.\n"
+msgid ""
+"These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
-msgstr "Diese Zeichenketten wurden in den Quelldateien gefunden, aber nicht im Katalog.\n"
+msgstr ""
+"Diese Zeichenketten wurden in den Quelldateien gefunden, aber nicht im "
+"Katalog.\n"
 "poEdit wird sie jetzt dem Katalog hinzufügen."
 
 #: src/resources/xrc_strings.h:127
@@ -786,9 +795,11 @@ msgid "New strings"
 msgstr "Neue Zeichenketten"
 
 #: src/resources/xrc_strings.h:128
-msgid "These strings are no longer in the sources.\n"
+msgid ""
+"These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
-msgstr "Diese Zeichenketten befinden sich nicht mehr in den Quelldateien.\n"
+msgstr ""
+"Diese Zeichenketten befinden sich nicht mehr in den Quelldateien.\n"
 "poEdit wird sie jetzt aus dem Katalog entfernen."
 
 #: src/resources/xrc_strings.h:129
@@ -826,4 +837,3 @@ msgstr "Ganzer Bildschirm"
 #: src/resources/xrc_strings.h:140
 msgid "Help"
 msgstr "Hilfe"
-
