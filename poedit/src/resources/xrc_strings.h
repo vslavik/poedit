@@ -11,6 +11,7 @@ _("Find...");
 _("String to find:");
 _("Case sensitive");
 _("Start from the first item");
+_("Whole words only");
 _("Find in original strings");
 _("Find in translations");
 _("Find in comments");
