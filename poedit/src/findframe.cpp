@@ -135,8 +135,6 @@ bool FindFrame::DoFind(int dir)
     if (!caseSens)
         text.MakeLower();
         
-    printf("looking for: '%s'\n", text.c_str());
-    
     m_position += dir;
     while (m_position >= 0 && m_position < cnt)
     {
@@ -163,8 +161,6 @@ bool FindFrame::DoFind(int dir)
             if (!caseSens)
                 textc.MakeLower();
 
-        printf("       is?: '%s'\n", textc.c_str());
-
             if (textc.Contains(text)) { found = TRUE; break; }
         }
 
@@ -174,7 +170,7 @@ bool FindFrame::DoFind(int dir)
     if (found)
     {
         m_listCtrl->SetItemState(m_position, 
-                    wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                    wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
         m_listCtrl->EnsureVisible(m_position);
         return true;
     }
