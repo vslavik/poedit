@@ -58,7 +58,7 @@ wxString poEditApp::GetAppPath() const
 
 wxString poEditApp::GetAppVersion() const
 {
-    return _T("1.1.7");
+    return _T("1.1.8");
 }
 
 

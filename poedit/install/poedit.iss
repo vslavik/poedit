@@ -2,9 +2,9 @@
 ; http://www.lerstad.com/istool/
 
 [Setup]
-OutputBaseFilename=poedit117_setup
+OutputBaseFilename=poedit118_setup
 AppName=poEdit
-AppVerName=poEdit 1.1.7
+AppVerName=poEdit 1.1.8
 
 ChangesAssociations=true
 AlwaysShowComponentsList=true

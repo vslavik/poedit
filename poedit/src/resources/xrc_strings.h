@@ -1,5 +1,5 @@
 _("About poEdit")
-_("version 1.1.7")
+_("version 1.1.8")
 _("OK")
 _("Edit comment")
 _("Comment:")
