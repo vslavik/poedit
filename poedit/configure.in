@@ -91,6 +91,8 @@ if $WX_CONFIG_NAME --cxxflags | grep -q WXMSW; then
     RC_WX_INCLUDES=`echo " $WX_CPPFLAGS" | sed -e 's/ -[^I][^ ]*//g' | sed -e 's/ -I\([^ ]*\)/ --include-dir \1/g'`
     changequote([,])
 
+    AM_CONDITIONAL(USE_KDE, test 0 = 1)
+    AM_CONDITIONAL(USE_GNOME, test 0 = 1)
 else
     use_windows=no
     FIND_KDE
