@@ -761,7 +761,14 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
 void poEditFrame::UpdateCatalog()
 {
     UpdateFromTextCtrl();
-    m_modified = m_catalog->Update() || m_modified;
+    bool succ = m_catalog->Update();
+    m_modified = succ || m_modified;
+    if (!succ)
+    {
+        wxLogWarning(_("Entries in the catalog are probably incorrect."));
+        wxLogError(
+           _("Updating the catalog failed. Click on 'More>>' for details."));
+    }
 }
 
 void poEditFrame::OnUpdate(wxCommandEvent&)

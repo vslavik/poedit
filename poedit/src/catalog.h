@@ -136,8 +136,12 @@ class Catalog
         /** Merges the catalog with reference catalog
             (in the sense of msgmerge -- this catalog is old one with
             translations, \a refcat is reference catalog created by Update().)
+
+            \return true if the merge was successfull, false otherwise.
+                    Note that if it returns false, the catalog was
+                    \em not modified!
          */
-        void Merge(Catalog *refcat);
+        bool Merge(Catalog *refcat);
 
         /** Returns list of strings that are new in reference catalog
 	        (compared to this one) and that are not present in \a refcat

@@ -721,6 +721,7 @@ bool Catalog::Update()
 
     if (newcat != NULL) 
     {
+        bool succ = true;
         pinfo.UpdateMessage(_("Merging differences..."));
 
         if (wxConfig::Get()->Read(_T("show_summary"), true))
@@ -730,14 +731,21 @@ bool Catalog::Update()
             MergeSummaryDialog sdlg;
             sdlg.TransferTo(snew, sobsolete);
             if (sdlg.ShowModal() == wxID_OK)
-                Merge(newcat);
+                succ = Merge(newcat);
             else
             {
-                delete newcat; newcat = NULL;
+                delete newcat;
+                newcat = NULL;
             }
         }
         else
-            Merge(newcat);
+            succ = Merge(newcat);
+
+        if (!succ)
+        {
+            delete newcat;
+            newcat = NULL;
+        }
     }
     
     wxSetWorkingDirectory(cwd);
@@ -749,7 +757,7 @@ bool Catalog::Update()
 }
 
 
-void Catalog::Merge(Catalog *refcat)
+bool Catalog::Merge(Catalog *refcat)
 {
     wxString oldname = m_fileName;
     wxString tmp1 = wxGetTempFileName(_T("poedit"));
@@ -759,13 +767,16 @@ void Catalog::Merge(Catalog *refcat)
     refcat->Save(tmp1, false);
     Save(tmp2, false);
     
-    ExecuteGettext(_T("msgmerge --force-po -o \"") + tmp3 + _T("\" \"") + 
-                   tmp2 + _T("\" \"") + tmp1 + _T("\""));
-
-    Catalog *c = new Catalog(tmp3);
-    Clear();
-    Append(*c);
-    delete c;
+    bool succ =
+        ExecuteGettext(_T("msgmerge --force-po -o \"") + tmp3 + _T("\" \"") + 
+                       tmp2 + _T("\" \"") + tmp1 + _T("\""));
+    if (succ)
+    {
+        Catalog *c = new Catalog(tmp3);
+        Clear();
+        Append(*c);
+        delete c;
+    }
 
     wxRemoveFile(tmp1);
     wxRemoveFile(tmp2);
@@ -774,6 +785,8 @@ void Catalog::Merge(Catalog *refcat)
     wxRemoveFile(tmp2 + _T(".poedit"));
     
     m_fileName = oldname;
+
+    return succ;
 }
 
 
