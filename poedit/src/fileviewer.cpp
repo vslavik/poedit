@@ -43,7 +43,6 @@ FileViewer::FileViewer(wxWindow *parent,
           m_references(references)
 {
     m_basePath = basePath;
-    m_basePath << _T('/');
     SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("fileview_toolbar")));
 
     wxPanel *panel = new wxPanel(this, -1);
@@ -66,7 +65,7 @@ FileViewer::FileViewer(wxWindow *parent,
 
 void FileViewer::ShowReference(const wxString& ref)
 {
-    wxString filename = m_basePath + ref.BeforeLast(_T(':'));
+    wxString filename = m_basePath + _T('/') + ref.BeforeLast(_T(':'));
     long linenum;
     if (!ref.AfterLast(_T(':')).ToLong(&linenum))
         linenum = 0;
@@ -127,7 +126,7 @@ FileViewer::~FileViewer()
         wxLogError(_("No editor specified. Please set it in Preferences dialog."));
         return;
     }
-    editor.Replace(_T("%f"), basepath + reference.BeforeLast(_T(':')));
+    editor.Replace(_T("%f"), basepath + _T('/') + reference.BeforeLast(_T(':')));
     editor.Replace(_T("%l"), reference.AfterLast(_T(':')));
     wxExecute(editor);
 }
