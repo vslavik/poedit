@@ -75,12 +75,20 @@ LDFLAGS = @LDFLAGS@
 LN_S = @LN_S@
 MAKEINFO = @MAKEINFO@
 PACKAGE = @PACKAGE@
+POEDIT_WX_LIBS = @POEDIT_WX_LIBS@
 RANLIB = @RANLIB@
 RESCOMP = @RESCOMP@
 VERSION = @VERSION@
 WX_CFLAGS = @WX_CFLAGS@
-WX_CONFIG = @WX_CONFIG@
+WX_CFLAGS_ONLY = @WX_CFLAGS_ONLY@
+WX_CONFIG_NAME = @WX_CONFIG_NAME@
+WX_CONFIG_PATH = @WX_CONFIG_PATH@
+WX_CPPFLAGS = @WX_CPPFLAGS@
+WX_CXXFLAGS = @WX_CXXFLAGS@
+WX_CXXFLAGS_ONLY = @WX_CXXFLAGS_ONLY@
 WX_LIBS = @WX_LIBS@
+WX_LIBS_STATIC = @WX_LIBS_STATIC@
+WX_VERSION = @WX_VERSION@
 
 SUBDIRS = expat
 
@@ -134,7 +142,7 @@ all: all-redirect
 .SUFFIXES:
 .SUFFIXES: .S .c .cpp .o .s
 $(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --foreign extras/wx-contrib/src/xrc/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu extras/wx-contrib/src/xrc/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
@@ -271,7 +279,7 @@ distdir: $(DISTFILES)
 	top_distdir=`cd $(top_distdir) && pwd`; \
 	distdir=`cd $(distdir) && pwd`; \
 	cd $(top_srcdir) \
-	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --foreign extras/wx-contrib/src/xrc/Makefile
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu extras/wx-contrib/src/xrc/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
