@@ -8,7 +8,7 @@
     
       Application class
     
-      (c) Vaclav Slavik, 1999
+      (c) Vaclav Slavik, 1999-2002
 
 */
 

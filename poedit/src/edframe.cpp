@@ -8,7 +8,7 @@
     
       Editor frame
     
-      (c) Vaclav Slavik, 2000
+      (c) Vaclav Slavik, 2000-2002
 
 */
 
