@@ -1,6 +1,6 @@
-# Makefile.in generated automatically by automake 1.4 from Makefile.am
+# Makefile.in generated automatically by automake 1.4-p5 from Makefile.am
 
-# Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
+# Copyright (C) 1994, 1995-8, 1999, 2001 Free Software Foundation, Inc.
 # This Makefile.in is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -128,7 +128,7 @@ distdir: $(DISTFILES)
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
-	    cp -pr $$/$$file $(distdir)/$$file; \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
 	  else \
 	    test -f $(distdir)/$$file \
 	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
@@ -206,10 +206,10 @@ install-data-local: install-gnome install-kde
 @USE_KDE_TRUE@	  install -m 644 $(top_srcdir)/src/appicon.xpm $(KDE_DATA_DIR)/icons/poedit.xpm; \
 @USE_KDE_TRUE@	fi
 @USE_KDE_TRUE@	if test -w $(KDE_DATA_DIR)/mimelnk/application ; then \
-@USE_KDE_TRUE@	  install -m 644 $(srcdir)/x-po.kdelnk $(KDE_DATA_DIR)/mimelnk/application; \
+@USE_KDE_TRUE@	  install -m 644 $(srcdir)/x-po.desktop $(KDE_DATA_DIR)/mimelnk/application; \
 @USE_KDE_TRUE@	fi
 @USE_KDE_TRUE@	if test -w $(KDE_DATA_DIR)/applnk/Development ; then \
-@USE_KDE_TRUE@	  install -m 644 $(srcdir)/poedit.kdelnk $(KDE_DATA_DIR)/applnk/Development; \
+@USE_KDE_TRUE@	  install -m 644 $(srcdir)/poedit.desktop $(KDE_DATA_DIR)/applnk/Development; \
 @USE_KDE_TRUE@	fi
 
 @USE_KDE_FALSE@install-kde:

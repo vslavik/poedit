@@ -1,6 +1,6 @@
-dnl aclocal.m4 generated automatically by aclocal 1.4
+dnl aclocal.m4 generated automatically by aclocal 1.4-p5
 
-dnl Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
+dnl Copyright (C) 1994, 1995-8, 1999, 2001 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -118,7 +118,7 @@ AC_DEFUN(FIND_BERKELEY_DB,
 
 # Define a conditional.
 
-AC_DEFUN(AM_CONDITIONAL,
+AC_DEFUN([AM_CONDITIONAL],
 [AC_SUBST($1_TRUE)
 AC_SUBST($1_FALSE)
 if $2; then
@@ -138,7 +138,7 @@ fi])
 dnl Usage:
 dnl AM_INIT_AUTOMAKE(package,version, [no-define])
 
-AC_DEFUN(AM_INIT_AUTOMAKE,
+AC_DEFUN([AM_INIT_AUTOMAKE],
 [AC_REQUIRE([AC_PROG_INSTALL])
 PACKAGE=[$1]
 AC_SUBST(PACKAGE)
@@ -166,7 +166,7 @@ AC_REQUIRE([AC_PROG_MAKE_SET])])
 # Check to make sure that the build environment is sane.
 #
 
-AC_DEFUN(AM_SANITY_CHECK,
+AC_DEFUN([AM_SANITY_CHECK],
 [AC_MSG_CHECKING([whether build environment is sane])
 # Just in case
 sleep 1
@@ -207,7 +207,7 @@ AC_MSG_RESULT(yes)])
 
 dnl AM_MISSING_PROG(NAME, PROGRAM, DIRECTORY)
 dnl The program must properly implement --version.
-AC_DEFUN(AM_MISSING_PROG,
+AC_DEFUN([AM_MISSING_PROG],
 [AC_MSG_CHECKING(for working $2)
 # Run test in a subshell; some versions of sh will print an error if
 # an executable is not found, even if stderr is redirected.
@@ -262,7 +262,7 @@ AC_DEFUN(AM_OPTIONS_WXCONFIG,
                wx_config_prefix="$withval", wx_config_prefix="")
    AC_ARG_WITH(wx-exec-prefix,[  --with-wx-exec-prefix=PREFIX Exec prefix where wxWindows is installed (optional)],
                wx_config_exec_prefix="$withval", wx_config_exec_prefix="")
-   AC_ARG_WITH(wx-config,[  --with-wx-config=CONFIG   wx-config script to use (optional)],
+   AC_ARG_WITH(wx-exec-prefix,[  --with-wx-config=CONFIG   wx-config script to use (optional)],
                wx_config_name="$withval", wx_config_name="")
 ])
 
@@ -292,20 +292,20 @@ AC_DEFUN(AM_PATH_WXCONFIG,
   dnl deal with optional prefixes
   if test x$wx_config_exec_prefix != x ; then
      wx_config_args="$wx_config_args --exec-prefix=$wx_config_exec_prefix"
-     WX_LOOKUP_PATH="$wx_config_exec_prefix/bin"
+     if test x${WX_CONFIG_NAME+set} != xset ; then
+        WX_CONFIG_PATH=$wx_config_exec_prefix/bin/$WX_CONFIG_NAME
+     fi
   fi
   if test x$wx_config_prefix != x ; then
      wx_config_args="$wx_config_args --prefix=$wx_config_prefix"
-     WX_LOOKUP_PATH="$WX_LOOKUP_PATH:$wx_config_prefix/bin"
+     if test x${WX_CONFIG_NAME+set} != xset ; then
+        WX_CONFIG_PATH=$wx_config_prefix/bin/$WX_CONFIG_NAME
+     fi
   fi
 
-  dnl don't search the PATH if WX_CONFIG_NAME is absolute filename
-  if test -x "$WX_CONFIG_NAME" ; then
-     AC_MSG_CHECKING(for wx-config)
-     WX_CONFIG_PATH="$WX_CONFIG_NAME"
-     AC_MSG_RESULT($WX_CONFIG_PATH)
-  else
-     AC_PATH_PROG(WX_CONFIG_PATH, $WX_CONFIG_NAME, no, "$WX_LOOKUP_PATH:$PATH")
+  dnl don't search the PATH if we already have the full name
+  if test "x$WX_CONFIG_PATH" = "x" ; then
+    AC_PATH_PROG(WX_CONFIG_PATH, $WX_CONFIG_NAME, no)
   fi
 
   if test "$WX_CONFIG_PATH" != "no" ; then
