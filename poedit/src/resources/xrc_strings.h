@@ -141,7 +141,7 @@ _("Update translation memory");
 _("Please add directories where locale files are stored on your system:");
 _("Browse");
 _("Reset to defaults");
-_("Translation memory will be built from the files listed bellow.\nYou can add more files to the list now.");
+_("Translation memory will be built from the files listed below.\nYou can add more files to the list now.");
 _("Add files");
 _("Open catalog");
 _("Save catalog");
