@@ -45,7 +45,7 @@
     
     Table one, DbOrig, contains original strings. Its key is original string
     and stored value is 32bit ID of the string (which is identical to
-    record's index in DbTranse table, see bellow). There's 1-1 correspondence 
+    record's index in DbTranse table, see below). There's 1-1 correspondence 
     between original strings and indexes.
     
     Table two, DbTrans, holds translations of original strings. Unlike DbOrig,

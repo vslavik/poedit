@@ -102,7 +102,7 @@ _("Language:");
 _("List of extensions separated by semicolons (e.g. *.cpp;*.h):");
 _("Invocation:");
 _("Parser command:");
-_("This is the command used to launch the parser.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files (see bellow).");
+_("This is the command used to launch the parser.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files (see below).");
 _("An item in keywords list:");
 _("This will be attached to the command line once\nfor each keyword. %k expands to the keyword.");
 _("An item in input files list:");
