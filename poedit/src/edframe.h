@@ -159,6 +159,8 @@ class poEditFrame : public wxFrame
         void OnManager(wxCommandEvent& event);
 #ifdef USE_TRANSMEM
         void OnAutoTranslate(wxCommandEvent& event);
+        void OnAutoTranslateAll(wxCommandEvent& event);
+        bool AutoTranslateCatalog();
 #endif
         DECLARE_EVENT_TABLE()
 

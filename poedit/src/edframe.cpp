@@ -395,6 +395,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
 #ifdef USE_TRANSMEM
    EVT_MENU_RANGE     (ED_POPUP_TRANS, ED_POPUP_TRANS + 999,
                        poEditFrame::OnAutoTranslate)
+   EVT_MENU           (XRCID("menu_auto_translate"), poEditFrame::OnAutoTranslateAll)
 #endif
    EVT_LIST_ITEM_SELECTED
                       (EDC_LIST,       poEditFrame::OnListSel)
@@ -460,6 +461,9 @@ poEditFrame::poEditFrame() :
         SetMenuBar(MenuBar);
         m_history.AddFilesToMenu();
         m_history.Load(*cfg);
+#ifndef USE_TRANSMEM
+        MenuBar->Enable(XRCID("menu_auto_translate"), false);
+#endif
     }
     else
     {
@@ -905,33 +909,7 @@ void poEditFrame::OnUpdate(wxCommandEvent& event)
     if (wxConfig::Get()->Read(_T("use_tm_when_updating"), true) &&
         GetTransMem() != NULL)
     {
-        TranslationMemory *tm = GetTransMem();
-        size_t cnt = m_catalog->GetCount();
-        size_t matches = 0;
-        wxString msg;
-        
-        ProgressInfo pi;
-        pi.SetTitle(_("Automatically translating..."));
-        pi.SetGaugeMax(cnt);
-        for (size_t i = 0; i < cnt; i++)
-        {
-            CatalogData& dt = (*m_catalog)[i];
-            if (dt.IsFuzzy() || !dt.IsTranslated())
-            {
-                wxArrayString results;
-                int score = tm->Lookup(dt.GetString(), results);
-                if (score > 0)
-                {
-                    m_catalog->Translate(dt.GetString(), results[0]);
-                    dt.SetAutomatic(true);
-                    dt.SetFuzzy(true);
-                    matches++;
-                    msg.Printf(_("Automatically translated %u strings"), matches);
-                    pi.UpdateMessage(msg);
-                }
-            }
-            pi.UpdateGauge();
-        }
+        AutoTranslateCatalog();
     }
 #endif
 
@@ -1557,6 +1535,50 @@ void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
     // VS: This dirty trick ensures proper refresh of everything: 
     m_edittedTextOrig = wxEmptyString;
     UpdateFromTextCtrl();
+}
+
+void poEditFrame::OnAutoTranslateAll(wxCommandEvent& event)
+{
+    AutoTranslateCatalog();
+}
+
+bool poEditFrame::AutoTranslateCatalog()
+{
+    TranslationMemory *tm = GetTransMem();
+
+    if (tm == NULL)
+        return false;
+    
+    size_t cnt = m_catalog->GetCount();
+    size_t matches = 0;
+    wxString msg;
+    
+    ProgressInfo pi;
+    pi.SetTitle(_("Automatically translating..."));
+    pi.SetGaugeMax(cnt);
+    for (size_t i = 0; i < cnt; i++)
+    {
+        CatalogData& dt = (*m_catalog)[i];
+        if (dt.IsFuzzy() || !dt.IsTranslated())
+        {
+            wxArrayString results;
+            int score = tm->Lookup(dt.GetString(), results);
+            if (score > 0)
+            {
+                m_catalog->Translate(dt.GetString(), results[0]);
+                dt.SetAutomatic(true);
+                dt.SetFuzzy(true);
+                matches++;
+                msg.Printf(_("Automatically translated %u strings"), matches);
+                pi.UpdateMessage(msg);
+            }
+        }
+        pi.UpdateGauge();
+    }
+
+    RefreshControls();
+    
+    return true;
 }
 #endif
 
