@@ -88,6 +88,14 @@ class TranslationMemory
             \see See \ref db_desc for details on the algorithm.
          */
         int Lookup(const wxString& string, wxArrayString& results);
+
+        /** Sets parameters of inexact lookup.
+            \param maxOmits number of words on input that can be ignored
+            \param maxDelta look in sentences that are longer than the
+                            sentense by at worst this number of words
+         */
+        void SetParams(size_t maxDelta, size_t maxOmits)
+            { m_maxDelta = maxDelta, m_maxOmits = maxOmits; }
         
     protected:
         /** Tries to find entries matching given criteria. Used by Lookup.
@@ -121,6 +129,7 @@ class TranslationMemory
         DbOrig  *m_dbOrig;
         DbWords *m_dbWords;
         wxString m_lang;
+        size_t m_maxDelta, m_maxOmits;
 };
 
 

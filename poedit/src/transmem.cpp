@@ -650,6 +650,8 @@ TranslationMemory::TranslationMemory(const wxString& language,
     }
     dbPath += '/';
     
+    SetParams(2, 2);
+    
     m_lang = language;
     m_dbTrans = new DbTrans(dbPath);
     m_dbOrig = new DbOrig(dbPath);
@@ -728,21 +730,18 @@ int TranslationMemory::Lookup(const wxString& string, wxArrayString& results)
     // (MAX_OMITS is max permitted number of unmatched words,
     // MAX_DELTA is max difference in sentences lengths).
     // Start with best matches first, continue to worse ones.
-    const unsigned MAX_OMITS = 2;
-    const int      MAX_DELTA = 2;
-
     wxArrayString words;
     StringToWordsArray(string, words);
-    for (unsigned omits = 0; omits <= MAX_OMITS; omits++)
+    for (unsigned omits = 0; omits <= m_maxOmits; omits++)
     {
-        for (int delta = 0; delta <= MAX_DELTA; delta++)
+        for (size_t delta = 0; delta <= m_maxDelta; delta++)
         {
             if (LookupFuzzy(words, results, omits, delta))
             {
                 int score = 
-                    (MAX_OMITS - omits) * 100 / (MAX_OMITS + 1) +
-                    (MAX_DELTA - delta) * 100 / 
-                            ((MAX_DELTA + 1) * (MAX_OMITS + 1));
+                    (m_maxOmits - omits) * 100 / (m_maxOmits + 1) +
+                    (m_maxDelta - delta) * 100 / 
+                            ((m_maxDelta + 1) * (m_maxDelta + 1));
                 return (score == 0) ? 1 : score;
             }
         }
