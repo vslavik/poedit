@@ -137,11 +137,10 @@ class poEditFrame : public wxFrame
         bool m_hasObsoleteItems;
         bool m_displayQuotes;          
         int m_sel, m_selItem;
-        bool m_multiLine;
         wxFileHistory m_history;
         wxString m_edittedTextOrig;
         
-        friend class KeysHandler;
+        friend class ListHandler;
 };
 
 

@@ -43,6 +43,10 @@
 #include "iso639.h"
 #include "progressinfo.h"
 
+#if wxUSE_UNICODE
+#error TODO: this file still lacks unicodifications, due to reiserfs crash :(
+#endif
+
 // Event & controls IDs:
 enum 
 {
@@ -104,6 +108,7 @@ class poEditListCtrl : public wxListCtrl
         void OnSize(wxSizeEvent& event)
         {
             SizeColumns();
+            event.Skip();
         }
 };
 
@@ -113,89 +118,43 @@ END_EVENT_TABLE()
 
 
 // special handling of keyboard in listctrl and textctrl
-class KeysHandler : public wxEvtHandler
+class ListHandler : public wxEvtHandler
 { 
     public:
-        KeysHandler(wxListCtrl *list, wxTextCtrl *text, poEditFrame *frame,
-                    int *sel, int *selitem, bool *multiline) :
-                 wxEvtHandler(), m_list(list), m_text(text),
-                 m_frame(frame), m_sel(sel), m_selItem(selitem),
-                 m_multiLine(multiline) {}
+        ListHandler(wxTextCtrl *text, poEditFrame *frame,
+                    int *sel, int *selitem) :
+                 wxEvtHandler(), m_text(text),
+                 m_frame(frame), m_sel(sel), m_selItem(selitem) {}
 
     private:
-        void OnKeyDown(wxKeyEvent& event)
+        void OnActivated(wxListEvent& event)
         {
-            switch (event.KeyCode())
-            {
-                case WXK_UP:
-                    if (*m_multiLine && !event.ControlDown())
-                        event.Skip();
-                    else if (*m_sel > 0)
-                    {
-                        m_list->SetItemState(*m_sel - 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                        m_list->EnsureVisible(*m_sel - 1);
-                    }
-                    break;
-                case WXK_DOWN:
-                    if (*m_multiLine && !event.ControlDown())
-                        event.Skip();
-                    else if (*m_sel < m_list->GetItemCount() - 1)
-                    {
-                        m_list->SetItemState(*m_sel + 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                        m_list->EnsureVisible(*m_sel + 1);
-                    }
-                    break;
-                case WXK_PRIOR:
-                    {
-                        int newy = *m_sel - 10;
-                        if (newy < 0) newy = 0;
-                        m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                        m_list->EnsureVisible(newy);
-                    }
-                    break;
-                case WXK_NEXT:
-                    {
-                        int newy = *m_sel + 10;
-                        if (newy >= m_list->GetItemCount()) newy = m_list->GetItemCount() - 1;
-                        m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                        m_list->EnsureVisible(newy);
-                    }
-                    break;
-                default:
-                    event.Skip();
-            }
+            m_text->SetFocus();
         }
 
         void OnListSel(wxListEvent& event)
         {
 			*m_sel = event.GetIndex();
-            *m_selItem = m_list->GetItemData(*m_sel);
+            *m_selItem = ((wxListCtrl*)event.GetEventObject())->GetItemData(*m_sel);
             event.Skip();
-        }
-
-        void OnSetFocus(wxListEvent& event)
-        {
-            if (event.GetEventObject() == m_list)
-            {
-                m_text->SetFocus();
-            }                    
-            else event.Skip();                    
         }
 
         void OnRightClick(wxMouseEvent& event)
         {
             long item;
             int flags = wxLIST_HITTEST_ONITEM;
-            item = m_list->HitTest(event.GetPosition(), flags);
+            wxListCtrl *list = (wxListCtrl*)event.GetEventObject();
+
+            item = list->HitTest(event.GetPosition(), flags);
             if (item != -1 && (flags & wxLIST_HITTEST_ONITEM))
-                m_list->SetItemState(item, wxLIST_STATE_SELECTED, 
+                list->SetItemState(item, wxLIST_STATE_SELECTED, 
                                            wxLIST_STATE_SELECTED);
 
             wxMenu *menu = (m_frame) ? 
                            m_frame->GetPopupMenu(*m_selItem) : NULL;
             if (menu)
             {  
-                m_list->PopupMenu(menu, event.GetPosition());
+                list->PopupMenu(menu, event.GetPosition());
                 delete menu;
             }
             else event.Skip();                    
@@ -203,21 +162,95 @@ class KeysHandler : public wxEvtHandler
 
         DECLARE_EVENT_TABLE() 
 
-        wxListCtrl *m_list;
         wxTextCtrl *m_text;
         poEditFrame *m_frame;
         int *m_sel, *m_selItem;
-        bool *m_multiLine;
 };
 
-BEGIN_EVENT_TABLE(KeysHandler, wxEvtHandler)
-   EVT_CHAR(KeysHandler::OnKeyDown)
-   EVT_LIST_ITEM_SELECTED(EDC_LIST, KeysHandler::OnListSel)
-   EVT_SET_FOCUS(KeysHandler::OnSetFocus)
-   EVT_RIGHT_DOWN(KeysHandler::OnRightClick)
+BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
+   EVT_LIST_ITEM_ACTIVATED(EDC_LIST, ListHandler::OnActivated)
+   EVT_LIST_ITEM_SELECTED(EDC_LIST, ListHandler::OnListSel)
+   EVT_RIGHT_DOWN(ListHandler::OnRightClick)
 END_EVENT_TABLE()
 
 
+class TextctrlHandler : public wxEvtHandler
+{ 
+    public:
+        TextctrlHandler(wxListCtrl *list, int *sel) :
+                 wxEvtHandler(), m_list(list), m_sel(sel) {}
+
+    private:
+        void OnKeyDown(wxKeyEvent& event)
+        {
+            if (!event.ControlDown())
+                event.Skip();
+            else 
+            {
+                switch (event.KeyCode())
+                {
+                    case WXK_UP:
+                        if (*m_sel > 0)
+                        {
+                            m_list->SetItemState(*m_sel - 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                            m_list->EnsureVisible(*m_sel - 1);
+                        }
+                        break;
+                    case WXK_DOWN:
+                        if (*m_sel < m_list->GetItemCount() - 1)
+                        {
+                            m_list->SetItemState(*m_sel + 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                            m_list->EnsureVisible(*m_sel + 1);
+                        }
+                        break;
+                    case WXK_PRIOR:
+                        {
+                            int newy = *m_sel - 10;
+                            if (newy < 0) newy = 0;
+                            m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                            m_list->EnsureVisible(newy);
+                        }
+                        break;
+                    case WXK_NEXT:
+                        {
+                            int newy = *m_sel + 10;
+                            if (newy >= m_list->GetItemCount()) 
+                                newy = m_list->GetItemCount() - 1;
+                            m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                            m_list->EnsureVisible(newy);
+                        }
+                        break;
+                    default:
+                        event.Skip();
+                }
+            }
+        }
+
+        DECLARE_EVENT_TABLE() 
+
+        wxListCtrl *m_list;
+        int        *m_sel;
+};
+
+BEGIN_EVENT_TABLE(TextctrlHandler, wxEvtHandler)
+   EVT_KEY_DOWN(TextctrlHandler::OnKeyDown)
+END_EVENT_TABLE()
+
+
+class UnfocusableTextCtrl : public wxTextCtrl
+{
+    public:
+        UnfocusableTextCtrl(wxWindow *parent,
+                            wxWindowID id,
+                            const wxString &value = wxEmptyString,
+                            const wxPoint &pos = wxDefaultPosition,
+                            const wxSize &size = wxDefaultSize,
+                            long style = 0,
+                            const wxValidator& validator = wxDefaultValidator,
+                            const wxString &name = wxTextCtrlNameStr)
+           : wxTextCtrl(parent, id, value, pos, size, style, validator, name) {}
+        virtual bool AcceptsFocus() const { return FALSE; }
+};
 
 
 BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
@@ -277,7 +310,6 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
     wxConfigBase *cfg = wxConfig::Get();
  
     m_displayQuotes = (bool)cfg->Read("display_quotes", (long)false);
-    m_multiLine = cfg->Read("multiline_textctrl", true);
 
     SetIcon(wxICON(appicon));
 
@@ -310,13 +342,13 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
 
     m_list = new poEditListCtrl(m_splitter, EDC_LIST, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
 
-    m_textOrig = new wxTextCtrl(panel, EDC_TEXTORIG, "", 
+    m_textOrig = new UnfocusableTextCtrl(panel, EDC_TEXTORIG, "", 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE | wxTE_READONLY);
     m_textTrans = new wxTextCtrl(panel, EDC_TEXTTRANS, "", 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE);
-    m_textTrans->SetFocus();
+    m_list->SetFocus();
     
     wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
     sizer->Add(m_textOrig, 1, wxEXPAND);
@@ -328,11 +360,9 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
     m_splitter->SetMinimumPaneSize(40);
     m_splitter->SplitHorizontally(m_list, panel, cfg->Read("splitter", 240L));
 
-    KeysHandler *hand = new KeysHandler(m_list, m_textTrans, NULL, 
-                                        &m_sel, &m_selItem, &m_multiLine);
-    m_textTrans->PushEventHandler(hand);
-    m_list->PushEventHandler(new KeysHandler(m_list, m_textTrans, this, 
-                                             &m_sel, &m_selItem, &m_multiLine));
+    m_textTrans->PushEventHandler(new TextctrlHandler(m_list, &m_sel));
+    m_list->PushEventHandler(new ListHandler(m_textTrans, this, 
+                                             &m_sel, &m_selItem));
 
     CreateStatusBar();
 
@@ -574,8 +604,6 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
     if (dlg.ShowModal() == wxID_OK)
     {
         dlg.TransferFrom(wxConfig::Get());
-        m_multiLine = wxConfig::Get()->Read("multiline_textctrl", true);
-            // refresh so that textctrl changes behavior
     }
 }
 
@@ -628,8 +656,7 @@ void poEditFrame::OnUpdate(wxCommandEvent&)
 void poEditFrame::OnListSel(wxListEvent& event)
 {
     UpdateToTextCtrl(event.GetIndex());
-    if (FindFocus() != m_textTrans) 
-        m_textTrans->SetFocus();
+    event.Skip();
 }
 
 
@@ -637,6 +664,7 @@ void poEditFrame::OnListSel(wxListEvent& event)
 void poEditFrame::OnListDesel(wxListEvent& event)
 {
     UpdateFromTextCtrl(event.GetIndex());
+    event.Skip();
 }
 
 
