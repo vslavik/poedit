@@ -51,6 +51,7 @@ class FindFrame : public wxDialog
 
     private:
         void OnCancel(wxCommandEvent &event);
+        void OnClose(wxCloseEvent &event);
         void OnPrev(wxCommandEvent &event);
         void OnNext(wxCommandEvent &event);
         void OnTextChange(wxCommandEvent &event);

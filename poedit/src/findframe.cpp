@@ -35,7 +35,7 @@ BEGIN_EVENT_TABLE(FindFrame, wxDialog)
    EVT_BUTTON(wxID_CANCEL, FindFrame::OnCancel)
    EVT_TEXT(XRCID("string_to_find"), FindFrame::OnTextChange)
    EVT_CHECKBOX(-1, FindFrame::OnCheckbox)
-   EVT_CLOSE(FindFrame::OnCancel)
+   EVT_CLOSE(FindFrame::OnClose)
 END_EVENT_TABLE()
 
 FindFrame::FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c)
@@ -82,6 +82,11 @@ void FindFrame::Reset(Catalog *c)
     m_btnNext->Enable(!!m_text);
 }
 
+
+void FindFrame::OnClose(wxCloseEvent &event)
+{
+    Destroy();
+}
 
 void FindFrame::OnCancel(wxCommandEvent &event)
 {
