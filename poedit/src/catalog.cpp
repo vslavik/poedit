@@ -345,10 +345,12 @@ bool Catalog::Load(const wxString& po_file)
     
     /* Convert loaded data from file's encoding to UTF-8 which is our
        internal representation : */
-    if (wxStricmp(Header().Charset, "utf-8") != 0 &&
-        wxStricmp(Header().Charset, "CHARSET"/*not specified*/) != 0)
+    if (wxStricmp(Header().Charset, "utf-8") != 0)
     {
-        wxCSConv encConv(Header().Charset);
+        wxString charset = Header().Charset;
+        if (!charset || charset == "CHARSET")
+            charset = "iso-8859-1"; // fallback
+        wxCSConv encConv(charset);
         for (size_t i = 0; i < m_dataArray.GetCount(); i++)
             m_dataArray[i].SetTranslation(wxString(
                 m_dataArray[i].GetTranslation().wc_str(encConv),
