@@ -279,7 +279,10 @@ class CatalogParser
                                     const wxArrayString& references,
                                     const wxString& comment,
                                     const wxArrayString& autocomments,
-                                    unsigned lineNumber) {};
+                                    unsigned lineNumber)
+        {
+            return true;
+        }
 
         /// Textfile being parsed.
         wxTextFile *m_textFile;

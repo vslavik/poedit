@@ -1503,8 +1503,11 @@ void poEditFrame::UpdateFromTextCtrl(int item)
         if (entry.HasPlural())
         {
             bool changed = false;
-
-            size_t size = std::min(m_textTransPlural.size(),
+#ifndef __VISUALC__
+    // unbelievably, VC++ doesn't define std::min/max()!
+    #define _cpp_min std::min
+#endif
+            size_t size = _cpp_min(m_textTransPlural.size(),
                                    m_edittedTextOrig.size());
             
             for (size_t i = 0; i < size; i++)
