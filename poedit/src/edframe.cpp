@@ -440,7 +440,13 @@ void poEditFrame::OnNew(wxCommandEvent& event)
     Catalog::HeaderData &dt = catalog->Header();
     
     wxDateTime timenow = wxDateTime::Now();
-    dt.CreationDate = dt.RevisionDate = timenow.Format("%Y-%m-%d %H:%M%z");
+    int offs = wxDateTime::TimeZone(wxDateTime::Local).GetOffset();
+    dt.CreationDate.Printf("%s%s%02i%02i",
+                                 timenow.Format("%Y-%m-%d %H:%M").c_str(),
+                                 (offs > 0) ? "+" : "-",
+                                 offs / 3600, (abs(offs) / 60) % 60);
+    dt.RevisionDate = dt.CreationDate;
+
     dt.Language = "";
     dt.Project = "";
     dt.Team = "";

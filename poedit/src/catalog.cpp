@@ -330,7 +330,11 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     }
   
     wxDateTime timenow = wxDateTime::Now();
-    m_Header.RevisionDate = timenow.Format("%Y-%m-%d %H:%M%z");
+    int offs = wxDateTime::TimeZone(wxDateTime::Local).GetOffset();
+    m_Header.RevisionDate.Printf("%s%s%02i%02i",
+                                 timenow.Format("%Y-%m-%d %H:%M").c_str(),
+                                 (offs > 0) ? "+" : "-",
+                                 offs / 3600, (abs(offs) / 60) % 60);
 
     if (!m_Header.Language.IsEmpty() || 
         !m_Header.BasePath.IsEmpty() || 
@@ -372,7 +376,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
                  "\"Language-Team: " + m_Header.Team + " <" + m_Header.TeamEmail + ">\\n\"\n"
                  "\"MIME-Version: 1.0\\n\"\n"
                  "\"Content-Type: text/plain; charset=" + m_Header.Charset + "\\n\"\n"
-                 "\"Content-Transfer-Encoding: 8-bit\\n\"\n"
+                 "\"Content-Transfer-Encoding: 8bit\\n\"\n"
                  "\n";
     fprintf(f, dummy.c_str());
 
