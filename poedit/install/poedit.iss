@@ -1,7 +1,7 @@
 ; This script was first created by ISTool
 ; http://www.lerstad.com/istool/
 
-#define VERSION          "1.3.1"
+#define VERSION          "1.3.2"
 
 [Setup]
 OutputBaseFilename=poedit-{#VERSION}-setup

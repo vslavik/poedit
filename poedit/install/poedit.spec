@@ -4,9 +4,6 @@
 %{?_with_semistatic: %{expand: %%define semistatic 1}}
 %{?_without_semistatic: %{expand: %%define semistatic 0}}
 
-# version and release
-%define   VERSION     1.3.1
-%define   RELEASE     1
 
 %if %{semistatic}
   %define NAME        poedit-semistatic
@@ -17,8 +14,8 @@
 
 Summary:       Gettext catalogs editor
 Name:          %NAME
-Version:       %VERSION
-Release:       %RELEASE
+Version:       1.3.2
+Release:       1
 License:       MIT
 Group:         Applications/Editors
 Source:        poedit-%{version}.tar.bz2
