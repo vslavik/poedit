@@ -124,10 +124,6 @@ class Catalog
 
             Note that \a po_file refers to .po file, .mo file will have same 
             name & location as .po file except for different extension.
-
-            If the header contains data not covered by the PO format, 
-            additional poEdit-specific file with .po.poedit extension is 
-            created.
          */
         bool Save(const wxString& po_file, bool save_mo = true);
 
