@@ -2,6 +2,11 @@
 Urgent:
 
 - automated translation during update should be marked as fuzzy!
+- make it possible to *read* comments, not only edit them. Mattias suggested that
+  a tooltip popups near the "pen" icon in the list if you hold mouse over it, but
+  this can't be implemented because 1) wxMSW won't let you set listctrl's popup
+  and 2) wxGTK displays the popup _under_ control, i.e. for from the "pen" icon
+
 - use virtual wxListCtrl
 - plural handling (in wxWin, too), see info:/gettext/PO Files
 - remember the exact way msgid/msgstr was stored (where the boundaries between multiple
