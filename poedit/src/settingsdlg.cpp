@@ -144,14 +144,6 @@ void SettingsDialog::TransferFrom(Catalog *cat)
         wxConfig::Get()->Write(_T("used_charsets"), charsets);
     }
    
-    wxString plural = m_pluralForms->GetValue();
-    if (plural.empty())
-    {
-        if (cat->Header().HasHeader(_T("Plural-Forms")))
-            cat->Header().DeleteHeader(_T("Plural-Forms"));
-    }
-    else
-    {
-        cat->Header().SetHeader(_T("Plural-Forms"), plural);
-    }
+    cat->Header().SetHeaderNotEmpty(_T("Plural-Forms"),
+                                    m_pluralForms->GetValue());
 }
