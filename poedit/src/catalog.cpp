@@ -74,6 +74,19 @@ static bool ReadParam(const wxString& input, const wxString& pattern, wxString& 
     output = input.Mid(pattern.Length()).Strip(wxString::trailing);
     return true;
 }
+
+static bool ReadParamIfNotSet(const wxString& input,
+                              const wxString& pattern, wxString& output)
+{
+    wxString dummy;
+    if (ReadParam(input, pattern, dummy))
+    {
+        if (output.empty())
+            output = dummy;
+        return true;
+    }
+    return false;
+}
         
             
 
@@ -144,6 +157,41 @@ void Catalog::HeaderData::UpdateDict()
     SetHeader(_T("MIME-Version"), _T("1.0"));
     SetHeader(_T("Content-Type"), _T("text/plain; charset=") + Charset);
     SetHeader(_T("Content-Transfer-Encoding"), _T("8bit"));
+    
+   
+    // Set extended information:
+
+    SetHeaderNotEmpty(_T("X-Poedit-Language"), Language);
+    SetHeaderNotEmpty(_T("X-Poedit-Country"), Country);
+    SetHeaderNotEmpty(_T("X-Poedit-SourceCharset"), SourceCodeCharset);
+
+    if (!Keywords.empty())
+    {
+        wxString kw;
+        for (size_t i = 0; i < Keywords.size(); i++)
+            kw += Keywords[i] + _T(',');
+        kw.RemoveLast();
+        SetHeader(_T("X-Poedit-Keywords"), kw);
+    }
+    
+    SetHeaderNotEmpty(_T("X-Poedit-Basepath"), BasePath);
+
+    int i = 0;
+    wxString path;
+    while (true)
+    {
+        path.Printf(_T("X-Poedit-SearchPath-%i"), i);
+        if (!HasHeader(path))
+            break;
+        DeleteHeader(path);
+        i++;
+    }
+        
+    for (i = 0; i < SearchPaths.size(); i++)
+    {
+        path.Printf(_T("X-Poedit-SearchPath-%i"), i);
+        SetHeader(path, SearchPaths[i]);
+    }
 }
 
 void Catalog::HeaderData::ParseDict()
@@ -189,6 +237,35 @@ void Catalog::HeaderData::ParseDict()
     wxString ctype = GetHeader(_T("Content-Type"));
     if (!ReadParam(ctype, _T("text/plain; charset="), Charset))
         Charset = _T("iso-8859-1");
+    
+    
+    // Parse extended information:
+
+    Language = GetHeader(_T("X-Poedit-Language"));
+    Country = GetHeader(_T("X-Poedit-Country"));
+    SourceCodeCharset = GetHeader(_T("X-Poedit-SourceCharset"));
+    BasePath = GetHeader(_T("X-Poedit-Basepath"));
+
+    Keywords.Clear();
+    wxString kw = GetHeader(_T("X-Poedit-Keywords"));
+    if (!kw.empty())
+    {
+        wxStringTokenizer tkn(kw, _T(","));
+        while (tkn.HasMoreTokens())
+            Keywords.Add(tkn.GetNextToken());
+    }
+
+    int i = 0;
+    wxString path;
+    SearchPaths.Clear();
+    while (true)
+    {
+        path.Printf(_T("X-Poedit-SearchPath-%i"), i);
+        if (!HasHeader(path))
+            break;
+        SearchPaths.Add(GetHeader(path));
+        i++;
+    }
 }
 
 wxString Catalog::HeaderData::GetHeader(const wxString& key) const
@@ -221,19 +298,31 @@ void Catalog::HeaderData::SetHeader(const wxString& key, const wxString& value)
     }
 }
 
+void Catalog::HeaderData::SetHeaderNotEmpty(const wxString& key,
+                                            const wxString& value)
+{
+    if (value.empty())
+        DeleteHeader(key);
+    else
+        SetHeader(key, value);
+}
+
 void Catalog::HeaderData::DeleteHeader(const wxString& key)
 {
-    Entries enew;
-    
-    size_t size = m_entries.size();
-    for (Entries::const_iterator i = m_entries.begin();
-            i != m_entries.end(); ++i)
+    if (HasHeader(key))
     {
-        if (i->Key != key)
-            enew.push_back(*i);
-    }
+        Entries enew;
+        
+        size_t size = m_entries.size();
+        for (Entries::const_iterator i = m_entries.begin();
+                i != m_entries.end(); ++i)
+        {
+            if (i->Key != key)
+                enew.push_back(*i);
+        }
 
-    m_entries = enew;
+        m_entries = enew;
+    }
 }
 
 const Catalog::HeaderData::Entry *
@@ -642,9 +731,12 @@ bool Catalog::Load(const wxString& po_file)
     
     f.Close();
 
-    /* Load extended information from .po.poedit file, if present: */
+    /* Load extended information from .po.poedit file, if present:
+       (NB: this is deprecated, poedit >= 1.3.0 stores the data in
+            .po file's header as X-Poedit-Foo) */
     
-    if (wxFileExists(po_file + _T(".poedit")) && f.Open(po_file + _T(".poedit")))
+    if (wxFileExists(po_file + _T(".poedit")) &&
+        f.Open(po_file + _T(".poedit")))
     {
         wxString dummy;
         // poedit header (optional, we should be able to read any catalog):
@@ -654,31 +746,43 @@ bool Catalog::Load(const wxString& po_file)
         {
             // not used anymore
         }
-        ReadParam(ReadTextLine(&f, &encConv),
+        ReadParamIfNotSet(ReadTextLine(&f, &encConv),
                   _T("#. Language: "), m_header.Language);
         dummy = ReadTextLine(&f, &encConv);
-        if (ReadParam(dummy, _T("#. Country: "), m_header.Country))
+        if (ReadParamIfNotSet(dummy, _T("#. Country: "), m_header.Country))
             dummy = ReadTextLine(&f, NULL);
-        if (ReadParam(dummy, _T("#. Basepath: "), m_header.BasePath))
+        if (ReadParamIfNotSet(dummy, _T("#. Basepath: "), m_header.BasePath))
             dummy = ReadTextLine(&f, NULL);
-        ReadParam(dummy, _T("#. SourceCodeCharSet: "), m_header.SourceCodeCharset);
+        ReadParamIfNotSet(dummy, _T("#. SourceCodeCharSet: "), m_header.SourceCodeCharset);
 
         if (ReadParam(ReadTextLine(&f, NULL), _T("#. Paths: "), dummy))
         {
+            bool setPaths = m_header.SearchPaths.empty();
             long sz;
             dummy.ToLong(&sz);
             for (; sz > 0; sz--)
-            if (ReadParam(ReadTextLine(&f, NULL), _T("#.     "), dummy))
-                m_header.SearchPaths.Add(dummy);
+            {
+                if (ReadParam(ReadTextLine(&f, NULL), _T("#.     "), dummy))
+                {
+                    if (setPaths)
+                        m_header.SearchPaths.Add(dummy);
+                }
+            }
         }
 
         if (ReadParam(ReadTextLine(&f, NULL), _T("#. Keywords: "), dummy))
         {
+            bool setKeyw = m_header.Keywords.empty();
             long sz;
             dummy.ToLong(&sz);
             for (; sz > 0; sz--)
-            if (ReadParam(ReadTextLine(&f, NULL), _T("#.     "), dummy))
-                m_header.Keywords.Add(dummy);
+            {
+                if (ReadParam(ReadTextLine(&f, NULL), _T("#.     "), dummy))
+                {
+                    if (setKeyw)
+                        m_header.Keywords.Add(dummy);
+                }
+            }
         }
 
         f.Close();
@@ -952,47 +1056,16 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 #endif
     f.Close();
 
-    /* If neccessary, save extended info into .po.poedit file: */
-
-    if (!m_header.Language.IsEmpty() || 
-        !m_header.Country.IsEmpty() || 
-        !m_header.BasePath.IsEmpty() || 
-        m_header.SearchPaths.GetCount() > 0 ||
-        m_header.Keywords.GetCount() > 0)
+    /* poEdit < 1.3.0 used to save additional info in .po.poedit file. It's
+       not used anymore, so delete the file if it exists: */
+    if (wxFileExists(po_file + _T(".poedit")))
     {
-        if (!wxFileExists(po_file + _T(".poedit")) || !f.Open(po_file + _T(".poedit")))
-            if (!f.Create(po_file + _T(".poedit")))
-                return false;
-        for (j = f.GetLineCount() - 1; j >= 0; j--)
-            f.RemoveLine(j);
-
-        f.AddLine(_T("#. This catalog was generated by poedit"));
-        dummy.Printf(_T("#. Number of items: %i"), GetCount());
-        f.AddLine(dummy);
-        f.AddLine(_T("#. Language: ") + 
-                  convertUtf8ToCharset(m_header.Language, encConv));
-        f.AddLine(_T("#. Country: ") + 
-                  convertUtf8ToCharset(m_header.Country, encConv));
-        f.AddLine(_T("#. Basepath: ") + m_header.BasePath);
-        f.AddLine(_T("#. SourceCodeCharSet: ") + m_header.SourceCodeCharset);
-
-        dummy.Printf(_T("#. Paths: %i"), m_header.SearchPaths.GetCount());
-        f.AddLine(dummy);
-        for (i = 0; i < m_header.SearchPaths.GetCount(); i++)
-            f.AddLine(_T("#.     ") + m_header.SearchPaths[i]);
-
-        dummy.Printf(_T("#. Keywords: %i"), m_header.Keywords.GetCount());
-        f.AddLine(dummy);
-        for (i = 0; i < m_header.Keywords.GetCount(); i++)
-            f.AddLine(_T("#.     ") + m_header.Keywords[i]);
-        f.Write(crlf);
-        f.Close();
+        wxRemoveFile(po_file + _T(".poedit"));
     }
-    
     
     delete encConv;    
 
-    /* If user wants it, compile .mo file right now: */
+    /* If the user wants it, compile .mo file right now: */
     
     if (save_mo && wxConfig::Get()->Read(_T("compile_mo"), true))
         ExecuteGettext(_T("msgfmt -c -o \"") + 
