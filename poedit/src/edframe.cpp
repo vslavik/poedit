@@ -40,6 +40,8 @@
     }
 #endif
 
+#include <map>
+
 #include "catalog.h"
 #include "edapp.h"
 #include "edframe.h"
@@ -721,13 +723,25 @@ static void DoInitSpellchecker(wxTextCtrl *text,
 
     if (enable)
     {
-        GError *err = NULL;
-        if (!gtkspell_new_attach(textview, lang.ToAscii(), &err))
-        {
-            wxLogError(_("Error initializing spell checking: %s"),
-                       wxString(err->message, wxConvUTF8).c_str());
-            g_error_free(err);
+        // map of languages we know don't work, so that we don't bother
+        // the user with error messages every time the spell checker
+        // is re-initialized:
+        static std::map<wxString, bool> brokenLangs;
+        
+        if (brokenLangs.find(lang) == brokenLangs.end())
+        {        
+            GError *err = NULL;
+            if (!gtkspell_new_attach(textview, lang.ToAscii(), &err))
+            {
+                wxLogError(_("Error initializing spell checking: %s"),
+                           wxString(err->message, wxConvUTF8).c_str());
+                g_error_free(err);
+                
+                // remember that this language is broken:
+                brokenLangs[lang] = true;
+            }
         }
+        // else silently not use the spellchecker
     }
 }
 #endif // USE_SPELLCHECKING
