@@ -1,11 +1,14 @@
 
-
+GIF_FILES = fileopen.gif filesave.gif fuzzy.gif logo.gif quotes.gif scanning.gif \
+            update.gif fullscreen.gif
+XRC_FILES = about.xrc menus.xrc prefs.xrc progress.xrc settings.xrc summary.xrc \
+            toolbar.xrc
 
 pkgdatadir=$(datadir)/poedit
 
 pkgdata_DATA = resources.zip
 
-resources.zip: about.xrc fileopen.gif filesave.gif fuzzy.gif logo.gif menus.xrc prefs.xrc progress.xrc quotes.gif scanning.gif settings.xrc summary.xrc toolbar.xrc update.gif
+resources.zip: $(XRC_FILES) $(GIF_FILES)
 	if test $(srcdir) != . ; then \
 	  cp -fR $(srcdir)/*.xrc $(srcdir)/*.gif . \
 	  ; fi
