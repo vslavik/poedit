@@ -843,7 +843,7 @@ wxBitmap wxXmlResourceHandler::GetBitmap(const wxString& param,
     wxFSFile *fsfile = GetCurFileSystem().OpenFile(name);
     if (fsfile == NULL)
     {
-        wxLogError(_("XRC resource: Cannot create bitmap from '%s'."), param.c_str());
+        wxLogError(_("XRC resource: Failed to open bitmap file '%s'."), name.c_str());
         return wxNullBitmap;
     }
     wxImage img(*(fsfile->GetStream()));
@@ -854,7 +854,7 @@ wxBitmap wxXmlResourceHandler::GetBitmap(const wxString& param,
 
     if (!img.Ok())
     {
-        wxLogError(_("XRC resource: Cannot create bitmap from '%s'."), param.c_str());
+        wxLogError(_("XRC resource: Cannot create bitmap '%s'."), name.c_str());
         return wxNullBitmap;
     }
     if (!(size == wxDefaultSize)) img.Rescale(size.x, size.y);
