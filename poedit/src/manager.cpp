@@ -42,7 +42,7 @@
 #include "manager.h"
 
 #ifdef __UNIX__
-#include "appicon.xpm"
+#include "icons/poedit.xpm"
 #endif
 
 ManagerFrame *ManagerFrame::ms_instance = NULL;
