@@ -1,3 +1,3 @@
 
-SUBDIRS = gizmos xml
+SUBDIRS = gizmos xrc
 
