@@ -84,6 +84,9 @@ class poEditFrame : public wxFrame
          */
         void UpdateCatalog(const wxString& pot_file = wxEmptyString);
 
+
+        virtual void DoGiveHelp(const wxString& text, bool show);
+
     private:
         /** Ctor.
             \param catalog filename of catalog to open. If empty, starts

@@ -1373,7 +1373,14 @@ void poEditFrame::UpdateStatusBar()
             m_statusGauge->SetValue(0);
     }
 }
-
+        
+void poEditFrame::DoGiveHelp(const wxString& text, bool show)
+{
+    if (show || !text.empty())
+        wxFrame::DoGiveHelp(text, show);
+    else
+        UpdateStatusBar();        
+}
 
 
 void poEditFrame::UpdateTitle()
