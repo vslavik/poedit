@@ -46,9 +46,10 @@ make prefix=${RPM_BUILD_ROOT}%{prefix} \
 rm -Rf ${RPM_BUILD_ROOT}
 
 %files
-%defattr(-, root, root)
+%defattr(-,root,root)
 %doc NEWS LICENSE README
 %prefix/bin/poedit
+%dir %prefix/share/poedit
 %prefix/share/poedit/*
 %prefix/share/mimelnk/application/x-po.kdelnk
 %prefix/share/applnk/Development/poedit.kdelnk
