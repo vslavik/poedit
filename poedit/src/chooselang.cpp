@@ -94,6 +94,7 @@ wxLanguage ChooseLanguage()
         { _T("Italian"), wxLANGUAGE_ITALIAN },
         { _T("Japanese"), wxLANGUAGE_JAPANESE },
         { _T("Latvian"), wxLANGUAGE_LATVIAN },
+        { _T("Lithuanian"), wxLANGUAGE_LITHUANIAN },
         { _T("Norwegian Nynorsk"), wxLANGUAGE_NORWEGIAN_NYNORSK },
         { _T("Norwegian Bokmål"), wxLANGUAGE_NORWEGIAN_BOKMAL },
         { _T("Polish"), wxLANGUAGE_POLISH },
