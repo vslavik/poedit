@@ -4,7 +4,7 @@
 # Creates distribution files
 #
 
-VERSION=1.1.4
+VERSION=1.1.5
 
 #(
 #cd docs_classes
@@ -30,17 +30,14 @@ find_unix_files()
 
 find_win32_files()
 {
-  find src docs extras install -type f | \
-    grep -v '/CVS' | \
-    grep -v 'Makefile' | \
-    grep -v 'appicon.xpm'
   echo \
-"LICENSE
-NEWS
-README
+"docs/poedit.chm
 poedit.dsw
-poedit.dsp
-docs_classes/Doxyfile"
+poedit.dsp"
+ls -1 install/{*.txt,*.rtf,*.iss}
+ls -1 src/*.{ico,rc}
+ls -1 extras/win32-gettext/*.{exe,COPYING}
+ls -1 extras/win32-db3/*.{h,dll}
 }
 
 
@@ -57,5 +54,6 @@ rm -rf /tmp/poedit-$VERSION
 
 mkdir /tmp/poedit-$VERSION
 tar -c `find_win32_files` | (cd /tmp/poedit-$VERSION ; tar -x)
-(cd /tmp ; zip -9r $DIST_DIR/poedit-$VERSION-win32.zip  poedit-$VERSION)
+(cd /tmp ; tar -c poedit-$VERSION | gzip -9 >$DIST_DIR/poedit-$VERSION-win32-addon.tar.gz)
+(cd /tmp ; tar -c poedit-$VERSION | bzip2 -9 >$DIST_DIR/poedit-$VERSION-win32-addon.tar.bz2)
 rm -rf /tmp/poedit-$VERSION
