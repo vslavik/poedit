@@ -37,7 +37,7 @@ static void SaveUILanguage(wxLanguage lang)
 
 wxLanguage GetUILanguage()
 {
-#ifdef __UNIX__
+#if defined(__UNIX__) || !wxCHECK_VERSION(2,5,0)
     return wxLANGUAGE_DEFAULT;
 #else
     wxLanguage lang(wxLANGUAGE_DEFAULT);
