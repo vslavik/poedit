@@ -144,35 +144,6 @@
 
 #include "transmem.h"
 
-#ifdef __WINDOWS__
-
-#include <wx/dynlib.h>
-#include <wx/module.h>
-
-static wxDynamicLibrary *g_libraryDB = NULL;
-static bool g_triedLibraryDB = false;
-typedef int (*db_create_t) __P((DB **, DB_ENV *, u_int32_t));
-typedef char (*db_strerror_t) __P((int));
-static db_create_t g_db_create = NULL;
-static db_strerror_t g_db_strerror = NULL;
-
-class wxDBModule: public wxModule
-{
-DECLARE_DYNAMIC_CLASS(wxDBModule)
-public:
-    wxDBModule() {}
-    bool OnInit() { return true; }
-    void OnExit() 
-    {
-        if (g_libraryDB)
-            delete g_libraryDB;
-    }
-};
-IMPLEMENT_DYNAMIC_CLASS(wxDBModule, wxModule)
-
-#endif
-
-
 
 typedef db_recno_t DbKey;
 const DbKey DBKEY_ILLEGAL = 0;
@@ -292,11 +263,7 @@ class DbWords : public DbBase
 DbBase::DbBase(const wxString& filename, DBTYPE type)
 {
     m_ok = false;
-#ifdef __WINDOWS__
-    m_err = g_db_create(&m_db, NULL, 0);
-#else
     m_err = db_create(&m_db, NULL, 0);
-#endif
     if (m_err != 0)
     {
         LogError();
@@ -323,11 +290,7 @@ DbBase::~DbBase()
 
 void DbBase::LogError()
 {
-#ifdef __WINDOWS__
-    wxString err = wxString::FromAscii(g_db_strerror(m_err));
-#else
     wxString err = wxString::FromAscii(db_strerror(m_err));
-#endif
     wxLogError(_("Database error: %s"), err.c_str());
     m_err = 0;
 }
@@ -759,32 +722,6 @@ TranslationMemoriesList TranslationMemory::ms_instances;
             return mem;
         }
     }
-
-#ifdef __WINDOWS__
-    if (!g_triedLibraryDB)
-    {
-        g_libraryDB = new wxDynamicLibrary(_T("libdb31.dll"));
-        if (!g_libraryDB->IsLoaded()) 
-        {
-            delete g_libraryDB;
-            g_libraryDB = NULL;
-        }
-        else
-        {
-            g_db_create = (db_create_t)
-                    g_libraryDB->GetSymbol(_T("db_create"));
-            g_db_strerror = (db_strerror_t)
-                    g_libraryDB->GetSymbol(_T("db_strerror"));
-            if (!g_db_create || !g_db_strerror)
-            {
-                delete g_libraryDB;
-                g_libraryDB = NULL;
-            }
-        }
-        g_triedLibraryDB = true;
-    }
-    if (!g_libraryDB) return NULL;
-#endif
 
     TranslationMemory *tm = new TranslationMemory(language, dbPath);
     if (!tm->m_dbTrans->IsOk() || !tm->m_dbOrig->IsOk() || 
