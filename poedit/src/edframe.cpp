@@ -383,6 +383,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_fuzzy"),       poEditFrame::OnFuzzyFlag)
    EVT_MENU           (XRCID("menu_quotes"),      poEditFrame::OnQuotesFlag)
    EVT_MENU           (XRCID("menu_lines"),       poEditFrame::OnLinesFlag)
+   EVT_MENU           (XRCID("menu_comment_win"), poEditFrame::OnCommentWinFlag)
    EVT_MENU           (XRCID("menu_shaded"),      poEditFrame::OnShadedListFlag)
    EVT_MENU           (XRCID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
    EVT_MENU           (XRCID("menu_references"),  poEditFrame::OnReferencesMenu)
@@ -439,6 +440,7 @@ poEditFrame::poEditFrame() :
  
     m_displayQuotes = (bool)cfg->Read(_T("display_quotes"), (long)false);
     m_displayLines = (bool)cfg->Read(_T("display_lines"), (long)false);
+    m_displayCommentWin = (bool)cfg->Read(_T("display_comment_win"), (long)false);
     gs_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
     gs_shadedList = (bool)cfg->Read(_T("shaded_list"), (long)true);
 
@@ -470,6 +472,7 @@ poEditFrame::poEditFrame() :
     GetToolBar()->ToggleTool(XRCID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XRCID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XRCID("menu_lines"), m_displayLines);
+    GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
     GetMenuBar()->Check(XRCID("menu_shaded"), gs_shadedList);
     
     m_splitter = new wxSplitterWindow(this, -1);
@@ -480,16 +483,19 @@ poEditFrame::poEditFrame() :
                                 m_displayLines);
 
 	m_bottomSplitter = new wxSplitterWindow(m_splitter, -1);	
-	wxPanel *leftPanel = new wxPanel(m_bottomSplitter);
+	m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
 
-    m_textComment = new UnfocusableTextCtrl(m_bottomSplitter, EDC_TEXTCOMMENT, wxEmptyString, 
+    m_textComment = new UnfocusableTextCtrl(m_bottomSplitter,
+                                EDC_TEXTCOMMENT, wxEmptyString, 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE | wxTE_READONLY);
 
-    m_textOrig = new UnfocusableTextCtrl(leftPanel, EDC_TEXTORIG, wxEmptyString, 
+    m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
+                                EDC_TEXTORIG, wxEmptyString, 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE | wxTE_READONLY);
-    m_textTrans = new wxTextCtrl(leftPanel, EDC_TEXTTRANS, wxEmptyString, 
+    m_textTrans = new wxTextCtrl(m_bottomLeftPanel,
+                                EDC_TEXTTRANS, wxEmptyString, 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE);
     
@@ -497,12 +503,22 @@ poEditFrame::poEditFrame() :
 	leftSizer->Add(m_textOrig, 1, wxEXPAND);
     leftSizer->Add(m_textTrans, 1, wxEXPAND);
 
-    leftPanel->SetAutoLayout(true);
-    leftPanel->SetSizer(leftSizer);
-
+    m_bottomLeftPanel->SetAutoLayout(true);
+    m_bottomLeftPanel->SetSizer(leftSizer);
     
     m_bottomSplitter->SetMinimumPaneSize(40);
-    m_bottomSplitter->SplitVertically(leftPanel, m_textComment, cfg->Read(_T("bottom_splitter"), -200L));
+    if (m_displayCommentWin)
+    {
+        m_bottomSplitter->SplitVertically(m_bottomLeftPanel, m_textComment,
+                                          cfg->Read(_T("bottom_splitter"),
+                                                    -200L));
+    }
+    else
+    {
+        m_textComment->Show(false);
+        m_bottomSplitter->Initialize(m_bottomLeftPanel);
+    }
+
     m_splitter->SetMinimumPaneSize(40);
     m_splitter->SplitHorizontally(m_list, m_bottomSplitter, cfg->Read(_T("splitter"), 240L));
 
@@ -564,10 +580,13 @@ poEditFrame::~poEditFrame()
     cfg->Write(_T("frame_h"), (long)sz.y);
     cfg->Write(_T("frame_x"), (long)pos.x);
     cfg->Write(_T("frame_y"), (long)pos.y);
-    cfg->Write(_T("bottom_splitter"), (long)m_bottomSplitter->GetSashPosition());
+    if (m_displayCommentWin)
+        cfg->Write(_T("bottom_splitter"),
+                   (long)m_bottomSplitter->GetSashPosition());
     cfg->Write(_T("splitter"), (long)m_splitter->GetSashPosition());
     cfg->Write(_T("display_quotes"), m_displayQuotes);
     cfg->Write(_T("display_lines"), m_displayLines);
+    cfg->Write(_T("display_comment_win"), m_displayCommentWin);
     cfg->Write(_T("shaded_list"), gs_shadedList);
 
     m_history.Save(*cfg);
@@ -1045,6 +1064,29 @@ void poEditFrame::OnQuotesFlag(wxCommandEvent& event)
 void poEditFrame::OnLinesFlag(wxCommandEvent& event)
 {
     m_displayLines = GetMenuBar()->IsChecked(XRCID("menu_lines"));
+    m_list->SetDisplayLines(m_displayLines);
+    RefreshControls();
+}
+
+
+
+void poEditFrame::OnCommentWinFlag(wxCommandEvent& event)
+{
+    m_displayCommentWin = GetMenuBar()->IsChecked(XRCID("menu_comment_win"));
+    if (m_displayCommentWin)
+    {
+        m_bottomSplitter->SplitVertically(
+                m_bottomLeftPanel, m_textComment,
+                wxConfig::Get()->Read(_T("bottom_splitter"), -200L));
+        m_textComment->Show(true);
+    }
+    else
+    {
+        wxConfig::Get()->Write(_T("bottom_splitter"),
+                               (long)m_bottomSplitter->GetSashPosition());
+        m_textComment->Show(false);
+        m_bottomSplitter->Unsplit();
+    }
     m_list->SetDisplayLines(m_displayLines);
     RefreshControls();
 }

@@ -150,6 +150,7 @@ class poEditFrame : public wxFrame
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnQuotesFlag(wxCommandEvent& event);
         void OnLinesFlag(wxCommandEvent& event);
+        void OnCommentWinFlag(wxCommandEvent& event);
         void OnShadedListFlag(wxCommandEvent& event);
         void OnInsertOriginal(wxCommandEvent& event);
         void OnFullscreen(wxCommandEvent& event);
@@ -178,6 +179,7 @@ class poEditFrame : public wxFrame
         wxHtmlHelpController m_help;
 #endif
 
+        wxPanel *m_bottomLeftPanel;
         wxSplitterWindow *m_splitter, *m_bottomSplitter;
         poEditListCtrl *m_list;
         wxTextCtrl *m_textOrig, *m_textTrans, *m_textComment;
@@ -190,6 +192,7 @@ class poEditFrame : public wxFrame
         bool m_hasObsoleteItems;
         bool m_displayQuotes;
         bool m_displayLines;
+        bool m_displayCommentWin;
         int m_sel, m_selItem;
         wxFileHistory m_history;
         wxString m_edittedTextOrig;
