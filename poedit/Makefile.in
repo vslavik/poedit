@@ -64,6 +64,7 @@ host_triplet = @host@
 target_alias = @target_alias@
 target_triplet = @target@
 AWK = @AWK@
+CATALOGS_TO_INSTALL = @CATALOGS_TO_INSTALL@
 CC = @CC@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
@@ -91,7 +92,7 @@ WX_LIBS = @WX_LIBS@
 WX_LIBS_STATIC = @WX_LIBS_STATIC@
 WX_VERSION = @WX_VERSION@
 
-SUBDIRS = extras src docs install
+SUBDIRS = extras src docs install locales
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 

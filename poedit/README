@@ -45,7 +45,7 @@ They are distributed under the GNU General Public License.
  Author
 --------
  
-Vaclav Slavik <v.slavik@volny.cz>
+Vaclav Slavik <vaclav.slavik@matfyz.cz>
 
 
  Links

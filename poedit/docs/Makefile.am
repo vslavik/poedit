@@ -1,5 +1,5 @@
 
-
+man_MANS = poedit.1
 
 pkgdatadir=$(datadir)/poedit
 

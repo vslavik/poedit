@@ -20,7 +20,7 @@ crlf -d install/*.txt
 find_unix_files()
 {
   (find . -type f -maxdepth 1 ; \
-  find src docs extras install -type f) | \
+  find locales src docs extras install -type f) | \
     grep -v '/win32-' | \
     grep -v '/CVS' | \
     grep -v '\.\(dsp\|dsw\|chm\|rtf\|iss\|ico\|ncb\|opt\|plg\|rc\)' | \

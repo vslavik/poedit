@@ -1,26 +1,44 @@
 # Purpose:  The .spec file for building poEdit RPM
 
+# set this to 1 if you want to build semistatic rpm
+%define        semistatic    0
+
 # version and release
-%define VERSION 1.1.6
-%define RELEASE 1
+%define        VERSION 1.1.6
+%define        RELEASE 1
 
 # default installation directory
 %define prefix /usr
 
+%if %{semistatic}
+  %define NAME        poedit-semistatic
+  %define semiconfig  --enable-semistatic
+%else
+  %define NAME        poedit
+  %define semiconfig
+%endif
+
 
 Summary:       Gettext catalogs editor
-Name:          poedit
+Name:          %NAME
 Version:       %VERSION
 Release:       %RELEASE
-Copyright:     BSD license
+Copyright:     MIT license
 Group:         Applications/Editors
-Source:        poedit-%{VERSION}.tar.bz2
+Source:        poedit-%{version}.tar.bz2
 URL:           http://poedit.sourceforge.net
 Packager:      Vaclav Slavik <vaclav.slavik@matfyz.cz>
 Prefix:        %prefix
 Requires:      gtk+ >= 1.2.7 gettext
+
+%if %{semistatic}
+BuildRequires: wxGTK >= 2.3.2 wxGTK-devel wxGTK-static
+Provides:      poedit
+%else
 Requires:      wxGTK >= 2.3.2
-BuildRequires: wxGTK-devel wxGTK-static
+BuildRequires: wxGTK-devel
+%endif
+
 BuildRoot: /var/tmp/poedit-%{version}
 
 %description
@@ -32,30 +50,38 @@ and can be used to create new catalogs or update existing catalogs from source
 code by single click.
 
 %prep
-%setup
+%setup -n poedit-%{version}
 
 %build
-KDEDIR=/usr ./configure --prefix=%prefix ${POEDIT_CONFIGURE_FLAGS}
+(
+export KDEDIR=/usr 
+%configure ${POEDIT_CONFIGURE_FLAGS} %{semiconfig}
+)
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
-make prefix=${RPM_BUILD_ROOT}%{prefix} \
-     GNOME_DATA_DIR=$RPM_BUILD_ROOT/usr/share \
-     KDE_DATA_DIR=$RPM_BUILD_ROOT/usr/share \
-     install
+%makeinstall GNOME_DATA_DIR=$RPM_BUILD_ROOT/usr/share \
+             KDE_DATA_DIR=$RPM_BUILD_ROOT/usr/share
+
+%find_lang poedit
+%if %{semistatic}
+%find_lang poedit-wxstd
+cat poedit-wxstd.lang >>poedit.lang
+%endif
 
 %clean
 rm -Rf ${RPM_BUILD_ROOT}
 
-%files
+%files -f poedit.lang
 %defattr(-,root,root)
 %doc NEWS LICENSE README AUTHORS
-%prefix/bin/poedit
-%dir %prefix/share/poedit
-%prefix/share/poedit/*
-%prefix/share/mimelnk/application/x-po.kdelnk
-%prefix/share/applnk/Development/poedit.kdelnk
-%prefix/share/gnome/apps/Development/poedit.desktop
-%prefix/share/mime-info/poedit.*
-%prefix/share/icons/poedit.xpm
-%prefix/share/pixmaps/poedit.xpm
+%{_bindir}/poedit
+%dir %{_datadir}/poedit
+%{_mandir}/*/*
+%{_datadir}/poedit/*
+%{_datadir}/mimelnk/application/x-po.kdelnk
+%{_datadir}/applnk/Development/poedit.kdelnk
+%{_datadir}/gnome/apps/Development/poedit.desktop
+%{_datadir}/mime-info/poedit.*
+%{_datadir}/icons/poedit.xpm
+%{_datadir}/pixmaps/poedit.xpm

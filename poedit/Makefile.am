@@ -1,3 +1,3 @@
 
-SUBDIRS = extras src docs install
+SUBDIRS = extras src docs install locales
 
