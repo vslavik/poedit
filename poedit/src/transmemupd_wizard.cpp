@@ -35,18 +35,18 @@
 #include "transmemupd.h"
 #include "progressinfo.h"
 
-class TMSearchDlg : public wxDialog
+class DirListPage : public wxDialog
 {
     protected:
         DECLARE_EVENT_TABLE()
         void OnBrowse(wxCommandEvent& event);
 };
 
-BEGIN_EVENT_TABLE(TMSearchDlg, wxDialog)
-   EVT_BUTTON(XRCID("tm_adddir"), TMSearchDlg::OnBrowse)
+BEGIN_EVENT_TABLE(DirListPage, wxDialog)
+   EVT_BUTTON(XRCID("tm_adddir"), DirListPage::OnBrowse)
 END_EVENT_TABLE()
 
-void TMSearchDlg::OnBrowse(wxCommandEvent& event)
+void DirListPage::OnBrowse(wxCommandEvent& event)
 {
     wxDirDialog dlg(this, _("Select directory"));
     if (dlg.ShowModal() == wxID_OK)
@@ -62,9 +62,18 @@ void TMSearchDlg::OnBrowse(wxCommandEvent& event)
 void RunTMUpdateWizard(wxWindow *parent,
                        const wxString& dbPath, const wxArrayString& langs)
 {
+#if 0 // doesn't work yet, work in progress!
+    wxWizard *wizard =
+        (wxWizard*) wxXmlResource::Get()->LoadObject(parent,
+                                                     _T("tm_update_wizard"),
+                                                     _T("wxWizard"));
+    wizard->RunWizard(XRCCTRL(*wizard, "tm_update_1", wxWizardPage));
+    wizard->Destroy();
+#endif
+    
     // 1. Get paths list from the user:
     wxConfigBase *cfg = wxConfig::Get();
-    TMSearchDlg dlg;
+    DirListPage dlg;
     wxXmlResource::Get()->LoadDialog(&dlg, parent, _T("dlg_generate_tm"));
 
     wxEditableListBox *dirs = 
