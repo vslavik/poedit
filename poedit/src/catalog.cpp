@@ -137,7 +137,8 @@ void CatalogParser::Parse()
         // comment:
         else if (line[0] == '#')
         {
-            while (!line.IsEmpty() && line[0] == '#')
+            while (!line.IsEmpty() && line[0] == '#' &&
+                   (line.Length() < 2 || (line[1] != ',' && line[1] != ':')))
             {
                 mcomment << line << '\n';
                 line = ReadTextLine(m_TextFile);
