@@ -14,19 +14,46 @@
 (Available through <b>File/Preferences</b> in the menu.)
 <p>
 
-In preferences, you can
+You can set various options that affect poEdit globally and are not 
+related to opened catalog in Preferences. There are three tabs in
+the dialog box, one for each setting group. 
 <p>
 <ul>
 
-<li>Set your name and e-mail address. This is used to fill int
-`Last Translator' record in catalog's header.
-<p>
+<li><b>Editor</b><br>
 
-<li>Affect poEdit's behavior -- enable or disable automatic 
-    .mo files saving and enable or disable showing of update summary.
-<p>
+<ul>
+<li><b>Identity</b><br>
+       Set your name and e-mail address. This is used to fill int
+       `Last Translator' record in catalog's header.
+<li><b>Behavior</b><br>
+ Affects various aspects of poEdit's behavior. <i>Automatically compile .mo file
+ on save</i> will cause poEdit to run the <tt>msgfmt</tt> utility to convert
+ .po files to .mo ones (which is what you have to done before you can use 
+ catalogs in your application). <i>Show summary after catalog update</i>
+ enables small window with information about added and removed translations
+ after doing update. <i>Open catalogs manager on poEdit startup</i> does 
+ exactly what it says - if enabled, poEdit won't start up with its main
+ window opened but will launch the manager instead. <i>Always change focus
+ to text input field</i> affects keyboard navigation and is discussed
+ in the beginning of <a href="ui.html">UI Overview</a> section.
 
-<li>(Warning: for experienced users only!) Most importantly, you can 
+<li><b>CR/LF conversion</b><br>
+Lets you choose prefered text file formatting (catalogs will be saved
+with this formatting). Among supported formats are Windows/DOC, Mac and
+Unix line endings. If you check <i>Don't change format of existing catalogs</i>,
+this option will only affect newly created files. It is recommended to use
+Unix format, since PO files came from Unix environment.
+</ul>
+
+<li><b>Translation Memory</b>
+<br>
+You can setup <a href="tm.html">translation memory's</a> behavior on this tab. Please
+refer to TM section for details.
+
+<li><b>Parsers</b>
+    (Warning: for experienced users only!) <br>
+    Most importantly, you can 
     edit source code parsers in this dialog. Parsers are used when
     updating catalogs in poEdit (see <a href="update.html">Updating Catalog</a>)
     and they take care of extracting strings from source code. By default
@@ -70,7 +97,7 @@ The base path is relative to the directory where .po catalog file resists.
 
 <p>
 "Keywords" let you specify additional keywords understood by the parser.
-See <a href="gettext/intro.html">gettext documentation</a> for the meaning
+See <a href="gettext/index.html">gettext documentation</a> for the meaning
 of keywords. By default, <tt>xgettext</tt> parser understands <tt>_</tt>,
 <tt>gettext</tt> and <tt>gettext_noop</tt> keywords. You may leave this
 page empty.
