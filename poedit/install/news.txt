@@ -1,4 +1,28 @@
 
+Version 1.2.1
+-------------
+
+- [Win32] poEdit window now accepts files dropped on it via drag'n'drop
+
+
+Version 1.2.0
+-------------
+
+- fixed bug in catalog updater: didn't use default keywords if none specified
+- added a warning if no files were found during catalog update
+- fixed "Copy original to translation field" to do exact copy
+- added more translations:
+     Tamil (Prabu Anand)
+     Bulgarian (Dimitar Boyn)
+     Swedish (Simon Bohlin)
+- fixed Turkish translation (wrong catalog included by mistake)
+- [Linux] RPMs are no longer provided in Mandrake and RedHat flavors, they
+  were unified into single RPM (mdk menu support was _not_ lost by this)
+- fixed data loss when updating catalog with invalid entries
+- [Win32] fixed toolbars look on Windows XP
+- [Win32] the installer no longer requires Administrator priviledges
+
+
 Version 1.1.10
 --------------
 
@@ -111,10 +135,10 @@ Version 1.1.2
 Version 1.1.1
 -------------
 
-- added support for semi-automatic translations using translation memory concept.
-  Translation memory is an indexed database of all string-translation pairs found
-  in the system, plus algorithm to retrieve similar strings from the database.
-  poEdit can dig translations from PO, MO and RPM files.
+- added support for semi-automatic translations using translation memory
+  concept. Translation memory is an indexed database of all string-translation
+  pairs found in the system, plus algorithm to retrieve similar strings from
+  the database. poEdit can dig translations from PO, MO and RPM files.
 - implemented search
 - poEdit source code is now documented with Doxygen
 - [Win32] HTML Help documentation now uses CSS and looks much better
@@ -166,5 +190,6 @@ Version 1.0.1
 
 Version 1.0.0
 -------------
+
 - initial release
 
