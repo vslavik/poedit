@@ -348,7 +348,11 @@ class CatalogData : public wxObject
         void SetLineNumber(unsigned line) { m_lineNum = line; }
         /// Get line number of this entry.
         unsigned GetLineNumber() const { return m_lineNum; }
-	
+
+        /** Returns true if the gettext flags line contains "foo-format"
+            flag when called with "foo" as argument. */
+        bool IsInFormat(const wxString& format);
+        
         /// Adds new autocomments (#. )
         void AddAutoComments(const wxString& com)
         {
@@ -364,7 +368,8 @@ class CatalogData : public wxObject
 
             
     private:
-        /// Checks if %i etc. are correct in the translation (true if yes)
+        /** Checks if %i etc. are correct in the translation (true if yes).
+            Strings that are not c-format are always correct. */
         bool CheckPrintfCorrectness();
         bool ValidateTokensString(const wxString& from, const wxString& to);
 

@@ -1107,6 +1107,19 @@ wxString CatalogData::GetFlags() const
     else 
         return wxEmptyString;
 }
+        
+bool CatalogData::IsInFormat(const wxString& format)
+{
+    wxString lookingFor;
+    lookingFor.Printf(_T("%s-format"), format.c_str());
+    wxStringTokenizer tkn(m_moreFlags, _T(" ,"), wxTOKEN_STRTOK);
+    while (tkn.HasMoreTokens())
+    {
+        if (tkn.GetNextToken() == lookingFor)
+            return true;
+    }
+    return false;
+}
 
 // This regex is used by CatalogData to extract the tokens
 // since there is no need to have one object per instance of CatalogData, 
@@ -1117,6 +1130,9 @@ wxRegEx CatalogData::ms_tokenExtraction(
 
 bool CatalogData::CheckPrintfCorrectness()
 {
+    if (!IsInFormat(_T("c")))
+        return true;
+
     // Added by Frédéric Giudicelli (info@newpki.org)
     // To verify the validity of tokens.
 
