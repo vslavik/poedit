@@ -25,7 +25,7 @@
 #include <wx/filedlg.h>
 #include <wx/stattext.h>
 
-#include <wx/gizmos/editlbox.h>
+#include "editlbox/editlbox.h"
 #include <wx/xrc/xmlres.h>
 
 #include "transmem.h"

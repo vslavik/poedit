@@ -17,7 +17,7 @@
 #include <wx/statline.h>
 #include <wx/combobox.h>
 #include <wx/textctrl.h>
-#include <wx/gizmos/editlbox.h>
+#include "editlbox/editlbox.h"
 #include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
 #include <wx/config.h>

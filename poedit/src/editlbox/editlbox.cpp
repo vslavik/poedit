@@ -24,7 +24,7 @@
     #include "wx/wx.h"
 #endif
 
-#include "wx/gizmos/editlbox.h"
+#include "editlbox.h"
 #include "wx/sizer.h"
 #include "wx/listctrl.h"
 

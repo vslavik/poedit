@@ -13,7 +13,7 @@
 */
 
 #include <wx/wxprec.h>
-#include <wx/gizmos/editlbox.h>
+#include "editlbox/editlbox.h"
 #include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/tokenzr.h>

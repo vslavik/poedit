@@ -4,7 +4,10 @@ SUBDIRS = resources
 RESCOMP = @RESCOMP@
 POEDIT_WX_LIBS = @POEDIT_WX_LIBS@
 
-INCLUDES = -I$(top_srcdir)/extras/wx-contrib/include
+if BUILD_XRC
+INCLUDES_XRC = -I$(top_srcdir)/extras/wx-contrib/include
+endif
+INCLUDES = $(INCLUDES_XRC)
 
 if USE_WINDOWS
 RESOURCE_FILES = poedit_resource.o
@@ -29,7 +32,8 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  transmemupd_wizard.cpp transmemupd_wizard.h \
                  manager.h manager.cpp chooselang.cpp chooselang.h \
 				 export_html.cpp icons.h icons.cpp \
-				 pluralforms/pl_evaluate.cpp
+				 pluralforms/pl_evaluate.cpp \
+				 editlbox/editlbox.cpp
 
 poedit_resource.o: poedit.rc
 	$(RESCOMP) -i$(srcdir)/poedit.rc -o poedit_resource.o \

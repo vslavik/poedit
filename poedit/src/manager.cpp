@@ -23,7 +23,7 @@
 #include <wx/intl.h>
 #include <wx/frame.h>
 #include <wx/listbox.h>
-#include <wx/gizmos/editlbox.h>
+#include "editlbox/editlbox.h"
 #include <wx/tokenzr.h>
 #include <wx/msgdlg.h>
 #include <wx/button.h>
