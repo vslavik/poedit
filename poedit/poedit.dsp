@@ -43,11 +43,11 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O1 /Ob2 /I "$(wxwin)/include" /I "$(wxwin)/lib/msw" /I "extras/wx-contrib/src/xrc/expat" /I "extras/wx-contrib/include" /I "extras/win32-db3" /D "NDEBUG" /D "USE_TRANSMEM" /D "WIN32" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /YX"wx/wxprec.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /Ob2 /I "$(wxwin)/include" /I "$(wxwin)/lib/msw" /I "extras/wx-contrib/src/xrc/expat" /I "extras/wx-contrib/include" /I "extras/win32-db3" /D "NDEBUG" /D "USE_TRANSMEM" /D "WIN32" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /D DB_HEADER=\"db.h\" /YX"wx/wxprec.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD BASE RSC /l 0x809 /d "NDEBUG"
-# ADD RSC /l 0x809 /i "../wxWindows/include" /d "NDEBUG"
+# ADD RSC /l 0x809 /i "$(wxwin)/include" /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -69,11 +69,11 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "$(wxwin)/include" /I "$(wxwin)/lib/mswud" /I "extras/wx-contrib/src/xrc/expat" /I "extras/wx-contrib/include" /I "extras/win32-db3" /D "_DEBUG" /D DEBUG=1 /D "__WXDEBUG__" /D "USE_TRANSMEM" /D "WIN32" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /YX"wx/wxprec.h" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "$(wxwin)/include" /I "$(wxwin)/lib/mswud" /I "extras/wx-contrib/src/xrc/expat" /I "extras/wx-contrib/include" /I "extras/win32-db3" /D "_DEBUG" /D DEBUG=1 /D "__WXDEBUG__" /D "USE_TRANSMEM" /D "WIN32" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /D DB_HEADER=\"db.h\" /YX"wx/wxprec.h" /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD BASE RSC /l 0x809 /d "_DEBUG"
-# ADD RSC /l 0x809 /i "../wxWindows/include" /d "_DEBUG"
+# ADD RSC /l 0x809 /i "$(wxwin)/include" /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -243,6 +243,35 @@ SOURCE=.\src\transmemupd.cpp
 SOURCE=.\src\transmemupd.h
 # End Source File
 # End Group
+# Begin Group "Gizmos"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=".\extras\wx-contrib\src\gizmos\editlbox.cpp"
+# ADD CPP /YX"wx/wxprec.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\extras\wx-contrib\include\wx\gizmos\editlbox.h"
+# End Source File
+# End Group
+# Begin Group "Expat"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=".\extras\wx-contrib\src\xrc\expat\xmlparse.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\extras\wx-contrib\src\xrc\expat\xmlrole.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\extras\wx-contrib\src\xrc\expat\xmltok.c"
+# End Source File
+# End Group
 # Begin Group "XML resources"
 
 # PROP Default_Filter ""
@@ -340,6 +369,10 @@ SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_gauge.h"
 # End Source File
 # Begin Source File
 
+SOURCE=".\extras\wx-contrib\src\xrc\xh_gdctl.cpp"
+# End Source File
+# Begin Source File
+
 SOURCE=".\extras\wx-contrib\src\xrc\xh_html.cpp"
 # End Source File
 # Begin Source File
@@ -409,6 +442,10 @@ SOURCE=".\extras\wx-contrib\src\xrc\xh_scrol.cpp"
 # Begin Source File
 
 SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_scrol.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\extras\wx-contrib\src\xrc\xh_scwin.cpp"
 # End Source File
 # Begin Source File
 
@@ -521,35 +558,6 @@ SOURCE=".\extras\wx-contrib\include\wx\xrc\xmlres.h"
 # Begin Source File
 
 SOURCE=".\extras\wx-contrib\src\xrc\xmlrsall.cpp"
-# End Source File
-# End Group
-# Begin Group "Gizmos"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=".\extras\wx-contrib\src\gizmos\editlbox.cpp"
-# ADD CPP /YX"wx/wxprec.h"
-# End Source File
-# Begin Source File
-
-SOURCE=".\extras\wx-contrib\include\wx\gizmos\editlbox.h"
-# End Source File
-# End Group
-# Begin Group "Expat"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=".\extras\wx-contrib\src\xrc\expat\xmlparse.c"
-# End Source File
-# Begin Source File
-
-SOURCE=".\extras\wx-contrib\src\xrc\expat\xmlrole.c"
-# End Source File
-# Begin Source File
-
-SOURCE=".\extras\wx-contrib\src\xrc\expat\xmltok.c"
 # End Source File
 # End Group
 # End Target
