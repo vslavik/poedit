@@ -34,9 +34,7 @@ find_win32_files()
 {
   echo \
 "docs/chm/*.chm
-src/icons/poedit.ico
-poedit.dsw
-poedit.dsp"
+src/icons/appicon/poedit.ico"
 ls -1 install/{*.txt,*.rtf,*.iss}
 ls -1 src/*.rc
 ls -1 extras/win32-gettext/*.{exe,dll,COPYING}
