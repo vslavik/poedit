@@ -94,6 +94,7 @@ bool poEditApp::OnInit()
     wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
     m_locale.Init();
     m_locale.AddCatalog(_T("poedit"));
+    m_locale.AddCatalog(_T("poedit-wxstd")); // for semistatic builds
 
     wxImage::AddHandler(new wxGIFHandler);
     wxFileSystem::AddHandler(new wxZipFSHandler);
