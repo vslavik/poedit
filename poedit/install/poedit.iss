@@ -15,13 +15,11 @@ DefaultDirName={pf}\poEdit
 
 DefaultGroupName=poEdit
 AllowNoIcons=true
-DisableAppendDir=true
 UninstallStyle=modern
-WizardStyle=modern
-LicenseFile=LICENSE
+LicenseFile=COPYING
 OutputDir=.
 InfoAfterFile=
-Compression=bzip
+Compression=lzma
 
 WindowShowCaption=true
 WindowStartMaximized=false
@@ -40,7 +38,7 @@ Source: README; DestDir: {app}\doc; DestName: readme.txt; Components: docs
 Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit; Components: docs
 Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit; Components: docs
 Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit; Components: i18n
-Source: LICENSE; DestDir: {app}\doc; DestName: license.txt; Components: docs
+Source: COPYING; DestDir: {app}\doc; DestName: copying.txt; Components: docs
 Source: NEWS; DestDir: {app}\doc; DestName: news.txt; Components: docs
 Source: BUILD-mingw\src\resources\resources.zip; DestDir: {app}\share\poedit; DestName: resources.zip; Components: core
 Source: extras\win32-gettext\iconv.dll; DestDir: {app}\bin; Components: core
@@ -48,7 +46,6 @@ Source: extras\win32-gettext\xgettext.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgmerge.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgunfmt.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgfmt.exe; DestDir: {app}\bin; Components: core
-Source: extras\win32-db3\libdb31.dll; DestDir: {app}\bin; Components: core; Flags: ignoreversion
 Source: extras\win32-runtime\unicows.dll; DestDir: {app}\bin; MinVersion: 4.0.950,0; Components: core; Flags: ignoreversion
 Source: locales\wxwin\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: poedit.mo
@@ -110,6 +107,7 @@ Source: locales\wa.mo; DestDir: {app}\share\locale\wa\LC_MESSAGES; Components: i
 Source: locales\bn.mo; DestDir: {app}\share\locale\bn\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\eu.mo; DestDir: {app}\share\locale\eu\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\wxwin\eu.mo; DestDir: {app}\share\locale\eu\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
+Source: BUILD-mingw\src\mingwm10.dll; DestDir: {app}\bin; DestName: mingwm10.dll; Components: core
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
@@ -245,3 +243,37 @@ function InstallGlobally : boolean;
 begin
   result := IsAdminLoggedOn;
 end;
+
+function ScriptDlgPages(CurPage: Integer; BackClicked: Boolean): Boolean;
+var
+  Next: Boolean;
+begin
+  if (not UsingWinNT) and (not BackClicked and (CurPage = wpReady)) then begin
+    ScriptDlgPageOpen;
+    ScriptDlgPageSetCaption('Post-Installation Steps');
+    ScriptDlgPageSetSubCaption1('Things that you must do after installation completes');
+    ScriptDlgPageShowBackButton(False);
+    Next := OutputMsgMemo('','Due to Microsoft''s draconian licensing terms for The Microsoft Layer for Unicode on Windows 95/98/ME, poEdit cannot ship with full Unicode support. You have to manually download unicows.exe from http://www.microsoft.com/downloads/details.aspx?FamilyId=73BA7BD7-ED06-4F0D-80A4-2A7EEAEE17E2&displaylang=en and copy unicows.dll into the directory where poedit.exe is after poEdit installation is completed.');
+    ScriptDlgPageClose(not Next);
+    { See NextButtonClick and BackButtonClick: return True if the click should be allowed }
+    if not BackClicked then
+      Result := Next
+    else
+      Result := not Next;
+  end
+  else begin
+    Result := True;
+  end;
+end;
+
+function NextButtonClick(CurPage: Integer): Boolean;
+begin
+  Result := ScriptDlgPages(CurPage, False);
+end;
+
+function BackButtonClick(CurPage: Integer): Boolean;
+begin
+  Result := ScriptDlgPages(CurPage, True);
+end;
+
+
