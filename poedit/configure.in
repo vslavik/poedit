@@ -155,7 +155,32 @@ else
     FIND_KDE
     FIND_GNOME
     if test x$USE_TRANSMEM != xno ; then
-        FIND_BERKELEY_DB
+        AX_BERKELEY_DB(3.1,
+        [
+            AC_DEFINE(USE_TRANSMEM)
+            AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
+            LIBS="$LIBS $DB_LIBS"
+
+            AC_MSG_CHECKING([if db_open requires transaction argument])
+            AC_TRY_COMPILE([#include "$DB_HEADER"],
+                [
+                    DB *db;
+                    DBTYPE type;
+                    db->open(db, "foo", NULL, type, DB_CREATE, 0);
+                ],
+                [
+                    AC_MSG_RESULT(no)
+                ],
+                [
+                    AC_MSG_RESULT(yes)
+                    CXXFLAGS="$CXXFLAGS -DDB_OPEN_WITH_TRANSACTION"
+                ])
+                          
+       ],
+       [
+          USE_TRANSMEM=no
+          AC_MSG_WARN([cannot find Berkeley DB >= 3.1, poEdit will build w/o translation memory feature])
+       ])
     fi
 fi
 AM_CONDITIONAL(USE_WINDOWS, test $use_windows = yes)

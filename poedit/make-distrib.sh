@@ -22,7 +22,7 @@ for i in *.po ; do msgfmt -o `basename $i .po`.mo $i ; done
 find_unix_files()
 {
   (find . -type f -maxdepth 1 ; \
-  find locales src docs extras install -type f) | \
+  find admin locales src docs extras install -type f) | \
     grep -v '/win32-' | \
     grep -v '/CVS' | \
     grep -v '\.\(dsp\|dsw\|chm\|rtf\|iss\|ico\|ncb\|opt\|plg\|rc\)' | \
