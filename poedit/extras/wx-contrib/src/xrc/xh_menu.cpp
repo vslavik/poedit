@@ -66,6 +66,8 @@ wxObject *wxMenuXmlHandler::DoCreateResource()
             p_menu->Break();
         else /*wxMenuItem*/
         {          
+// NB: wxMenuItem changed in 2.3.3 ...
+#if wxCHECK_VERSION(2,3,3)
             int id = GetID();
             wxString label = GetText(wxT("label"));
             wxString accel = GetText(wxT("accel"), FALSE);
@@ -84,6 +86,23 @@ wxObject *wxMenuXmlHandler::DoCreateResource()
 
             wxMenuItem *mitem = new wxMenuItem(p_menu, id, fullLabel,
                                                GetText(wxT("help")), kind);
+            if (HasParam(wxT("bitmap")))
+                mitem->SetBitmap(GetBitmap(wxT("bitmap")));
+            p_menu->Append(mitem);
+            mitem->Enable(GetBool(wxT("enabled"), TRUE));
+            if (kind == wxITEM_CHECK)
+                mitem->Check(GetBool(wxT("checked")));
+#else
+            int id = GetID();
+            bool checkable = GetBool(wxT("checkable"));
+            wxString label = GetText(wxT("label"));
+            wxString accel = GetText(wxT("accel"), FALSE);
+            wxString fullLabel = label;
+            if (!accel.IsEmpty())
+                fullLabel << wxT("\t") << accel;
+
+            wxMenuItem *mitem = new wxMenuItem(p_menu, id, fullLabel,
+                                               GetText(wxT("help")), checkable);
                                                
 #if wxCHECK_VERSION(2,3,0) || defined(__WXMSW__)
                 if (HasParam(wxT("bitmap")))
@@ -91,8 +110,8 @@ wxObject *wxMenuXmlHandler::DoCreateResource()
 #endif
             p_menu->Append(mitem);
             mitem->Enable(GetBool(wxT("enabled"), TRUE));
-            if (kind == wxITEM_CHECK)
-                mitem->Check(GetBool(wxT("checked")));
+            if (checkable) mitem->Check(GetBool(wxT("checked")));
+#endif
         }
         return NULL;
     }
