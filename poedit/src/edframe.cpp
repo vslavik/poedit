@@ -776,7 +776,7 @@ void poEditFrame::OnUpdate(wxCommandEvent&)
                 {
                     m_catalog->Translate(dt.GetString(), results[0]);
                     dt.SetAutomatic(true);
-                    dt.SetFuzzy(score != 100);
+                    dt.SetFuzzy(true);
                     matches++;
                     msg.Printf(_("Automatically translated %u strings"), matches);
                     pi.UpdateMessage(msg);
