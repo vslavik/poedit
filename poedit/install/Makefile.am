@@ -36,6 +36,3 @@ install-gnome:
 
 endif
 
-EXTRA_DIST = license.rtf license.txt news.rtf news.txt poedit.desktop poedit.iss \
-             poedit.kdelnk poedit.keys.in poedit.mime poedit.spec readme.txt \
-             x-po.kdelnk

@@ -61,3 +61,4 @@ http://www.jordanr.dhs.org/isinfo.htm
 http://www.wintax.nl/isx
         - Inno Setup and Inno Setup Extensions, installation
           program used by poEdit under Windows
+

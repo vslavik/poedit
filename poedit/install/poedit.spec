@@ -18,7 +18,7 @@ Source:    poedit-%{VERSION}.tar.gz
 URL:       http://poedit.sourceforge.net
 Packager:  Vaclav Slavik <v.slavik@volny.cz>
 Prefix:    %prefix
-Requires:  gtk+ >= 1.2.6
+Requires:  gtk+ >= 1.2.6 gettext
 BuildRoot: /var/tmp/poedit-%{version}
 
 %description

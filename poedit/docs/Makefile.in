@@ -144,7 +144,6 @@ distdir: $(DISTFILES)
 	    || cp -p $$d/$$file $(distdir)/$$file || :; \
 	  fi; \
 	done
-	$(MAKE) $(AM_MAKEFLAGS) top_distdir="$(top_distdir)" distdir="$(distdir)" dist-hook
 info-am:
 info: info-am
 dvi-am:
@@ -212,14 +211,6 @@ help.zip: basics.html index.html menu.html poedit.hhc poedit.hhp settings.html u
 	  cp -fR $(srcdir)/gettext $(srcdir)/img $(srcdir)/*.html $(srcdir)/*.hhc $(srcdir)/*.hhp . \
 	  ; fi
 	zip -9 -r help.zip gettext img *.html *.hhc *.hhp
-
-dist-hook:
-	mkdir -p $(distdir)/img
-	mkdir -p $(distdir)/gettext
-	cp -p $(srcdir)/img/*.gif $(distdir)/img
-	cp -p $(srcdir)/gettext/*.html $(distdir)/gettext
-	cp -p $(srcdir)/*.html $(srcdir)/poedit.hhp $(srcdir)/poedit.hhc \
-          $(srcdir)/technote.txt $(distdir)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
