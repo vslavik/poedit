@@ -11,7 +11,7 @@
 #ifndef _WX_XMLRES_H_
 #define _WX_XMLRES_H_
 
-#ifdef __GNUG__
+#if defined(__GNUG__) && !defined(__APPLE__)
 #pragma interface "xmlres.h"
 #endif
 
@@ -24,6 +24,7 @@
 #include "wx/filesys.h"
 #include "wx/bitmap.h"
 #include "wx/icon.h"
+#include "wx/artprov.h"
 
 #include "wx/xrc/xml.h"
 
@@ -36,6 +37,9 @@ class WXDLLEXPORT wxFrame;
 class WXDLLEXPORT wxToolBar;
 
 class WXXMLDLLEXPORT wxXmlResourceHandler;
+class WXXMLDLLEXPORT wxXmlSubclassFactory;
+class WXXMLDLLEXPORT wxXmlSubclassFactoriesList;
+class wxXmlResourceModule;
 
 
 // These macros indicate current version of XML resources (this information is
@@ -110,7 +114,7 @@ public:
 
     // Destructor.
     ~wxXmlResource();
-    
+
     // Loads resources from XML files that match given filemask.
     // This method understands VFS (see filesys.h).
     bool Load(const wxString& filemask);
@@ -127,8 +131,16 @@ public:
     // all controls used within the resource.
     void AddHandler(wxXmlResourceHandler *handler);
 
+    // Add a new handler at the begining of the handler list
+    void InsertHandler(wxXmlResourceHandler *handler);
+
     // Removes all handlers
     void ClearHandlers();
+    
+    // Registers subclasses factory for use in XRC. This function is not meant
+    // for public use, please see the comment above wxXmlSubclassFactory
+    // definition.
+    static void AddSubclassFactory(wxXmlSubclassFactory *factory);
 
     // Loads menu from resource. Returns NULL on failure.
     wxMenu *LoadMenu(const wxString& name);
@@ -164,7 +176,19 @@ public:
     bool LoadPanel(wxPanel *panel, wxWindow *parent, const wxString& name);
 
     // Loads a frame.
+    wxFrame *LoadFrame(wxWindow* parent, const wxString& name);
     bool LoadFrame(wxFrame* frame, wxWindow *parent, const wxString& name);
+
+    // Load an object from the resource specifying both the resource name and
+    // the classname.  This lets you load nonstandard container windows.
+    wxObject *LoadObject(wxWindow *parent, const wxString& name,
+                         const wxString& classname);
+
+    // Load an object from the resource specifying both the resource name and
+    // the classname.  This form lets you finish the creation of an existing
+    // instance.
+    bool LoadObject(wxObject *instance, wxWindow *parent, const wxString& name,
+                    const wxString& classname);
 
     // Loads a bitmap resource from a file.
     wxBitmap LoadBitmap(const wxString& name);
@@ -190,14 +214,19 @@ public:
     int CompareVersion(int major, int minor, int release, int revision) const
         { return GetVersion() -
                  (major*256*256*256 + minor*256*256 + release*256 + revision); }
-                 
+
 //// Singleton accessors.
-    
+
     // Gets the global resources object or creates one if none exists.
     static wxXmlResource *Get();
 
     // Sets the global resources object and returns a pointer to the previous one (may be NULL).
     static wxXmlResource *Set(wxXmlResource *res);
+
+    // Returns flags, which may be a bitlist of wxXRC_USE_LOCALE and wxXRC_NO_SUBCLASSING.
+    int GetFlags() const { return m_flags; }
+    // Set flags after construction.
+    void SetFlags(int flags) { m_flags = flags; }
 
 protected:
     // Scans the resources list for unloaded files and loads them. Also reloads
@@ -213,9 +242,6 @@ protected:
     // Creates a resource from information in the given node.
     wxObject *CreateResFromNode(wxXmlNode *node, wxObject *parent, wxObject *instance = NULL);
 
-    // Returns flags, which may be a bitlist of wxXRC_USE_LOCALE and wxXRC_NO_SUBCLASSING.
-    int GetFlags() { return m_flags; }
-
 private:
     long m_version;
 
@@ -228,7 +254,10 @@ private:
 #endif
 
     friend class wxXmlResourceHandler;
-    
+    friend class wxXmlResourceModule;
+
+    static wxXmlSubclassFactoriesList *ms_subclassFactories;
+
     // singleton instance:
     static wxXmlResource *ms_instance;
 };
@@ -374,10 +403,12 @@ protected:
 
     // Gets a bitmap.
     wxBitmap GetBitmap(const wxString& param = wxT("bitmap"),
+                       const wxArtClient& defaultArtClient = wxART_OTHER,
                        wxSize size = wxDefaultSize);
 
     // Gets an icon.
     wxIcon GetIcon(const wxString& param = wxT("icon"),
+                   const wxArtClient& defaultArtClient = wxART_OTHER,
                    wxSize size = wxDefaultSize);
 
     // Gets a font.
@@ -420,7 +451,21 @@ protected:
 void wxXmlInitResourceModule();
 
 
-/* ------------------------------------------------------------------------- 
+// This class is used to create instances of XRC "object" nodes with "subclass"
+// property. It is _not_ supposed to be used by XRC users, you should instead
+// register your subclasses via wxWindows' RTTI mechanism. This class is useful
+// only for language bindings developer who need a way to implement subclassing
+// in wxWindows ports that don't support wxRTTI (e.g. wxPython).
+class WXXMLDLLEXPORT wxXmlSubclassFactory
+{
+public:
+    // Try to create instance of given class and return it, return NULL on failure:
+    virtual wxObject *Create(const wxString& className) = 0;
+    virtual ~wxXmlSubclassFactory() {}
+};
+
+
+/* -------------------------------------------------------------------------
    Backward compatibility macros. Do *NOT* use, they may disappear in future
    versions of the XRC library!
    ------------------------------------------------------------------------- */
@@ -428,6 +473,7 @@ void wxXmlInitResourceModule();
 #define wxTheXmlResource  wxXmlResource::Get()
 #define XMLID             XRCID
 #define XMLCTRL           XRCCTRL
+#define GetXMLID          GetXRCID
 
 
 #endif // _WX_XMLRES_H_

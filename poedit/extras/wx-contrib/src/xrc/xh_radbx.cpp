@@ -21,6 +21,7 @@
 
 #include "wx/xrc/xh_radbx.h"
 #include "wx/radiobox.h"
+#include "wx/intl.h"
 
 #if wxUSE_RADIOBOX
 
@@ -83,7 +84,10 @@ wxObject *wxRadioBoxXmlHandler::DoCreateResource()
         // handle <item selected="boolean">Label</item>
 
         // add to the list
-        strList.Add(GetNodeContent(m_node));
+        wxString str = GetNodeContent(m_node);
+        if (m_resource->GetFlags() & wxXRC_USE_LOCALE)
+            str = wxGetTranslation(str);
+        strList.Add(str);
 
         return NULL;
     }

@@ -68,6 +68,8 @@ wxSizerXmlHandler::wxSizerXmlHandler()
     XRC_ADD_STYLE(wxALIGN_CENTRE_HORIZONTAL);
     XRC_ADD_STYLE(wxALIGN_CENTER_VERTICAL);
     XRC_ADD_STYLE(wxALIGN_CENTRE_VERTICAL);
+    
+    XRC_ADD_STYLE(wxADJUST_MINSIZE);
 }
 
 
@@ -137,9 +139,10 @@ wxObject *wxSizerXmlHandler::DoCreateResource()
 
         wxCHECK_MSG(m_parentSizer != NULL ||
                 ((IsOfClass(parentNode, wxT("wxPanel")) ||
+                  IsOfClass(parentNode, wxT("wxFrame")) ||
                   IsOfClass(parentNode, wxT("wxDialog"))) &&
                  parentNode->GetType() == wxXML_ELEMENT_NODE), NULL,
-                wxT("Incorrect use of sizer: parent is not 'wxDialog' or 'wxPanel'."));
+                wxT("Incorrect use of sizer: parent is not 'wxDialog', 'wxFrame' or 'wxPanel'."));
 
         if (m_class == wxT("wxBoxSizer"))
             sizer = new wxBoxSizer(GetStyle(wxT("orient"), wxHORIZONTAL));

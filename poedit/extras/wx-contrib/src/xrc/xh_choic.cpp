@@ -21,6 +21,7 @@
 
 #include "wx/xrc/xh_choic.h"
 #include "wx/choice.h"
+#include "wx/intl.h"
 
 wxChoiceXmlHandler::wxChoiceXmlHandler() 
 : wxXmlResourceHandler() , m_insideBox(FALSE)
@@ -76,7 +77,10 @@ wxObject *wxChoiceXmlHandler::DoCreateResource()
         // handle <item>Label</item>
         
         // add to the list
-        strList.Add(GetNodeContent(m_node));
+        wxString str = GetNodeContent(m_node);
+        if (m_resource->GetFlags() & wxXRC_USE_LOCALE)
+            str = wxGetTranslation(str);
+        strList.Add(str);
 
         return NULL;
     }

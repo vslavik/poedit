@@ -11,7 +11,7 @@
 #ifndef __WX_EDITLBOX_H__
 #define __WX_EDITLBOX_H__
 
-#ifdef __GNUG__
+#if defined(__GNUG__) && !defined(__APPLE__)
 	#pragma interface "editlbox.h"
 #endif
 
@@ -49,6 +49,13 @@ public:
 
     void SetStrings(const wxArrayString& strings);
     void GetStrings(wxArrayString& strings);
+
+    wxListCtrl* GetListCtrl()       { return m_listCtrl; }
+    wxBitmapButton* GetDelButton()  { return m_bDel; }
+    wxBitmapButton* GetNewButton()  { return m_bNew; }
+    wxBitmapButton* GetUpButton()   { return m_bUp; }
+    wxBitmapButton* GetDownButton() { return m_bDown; }
+    wxBitmapButton* GetEditButton() { return m_bEdit; }
 
 protected:
     wxBitmapButton *m_bDel, *m_bNew, *m_bUp, *m_bDown, *m_bEdit;

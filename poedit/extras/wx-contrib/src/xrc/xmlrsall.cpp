@@ -38,7 +38,9 @@ void wxXmlResource::InitAllHandlers()
     AddHandler(new wxStaticBoxXmlHandler);
     AddHandler(new wxStaticBitmapXmlHandler);
     AddHandler(new wxTreeCtrlXmlHandler);
+#if wxUSE_CALENDARCTRL
     AddHandler(new wxCalendarCtrlXmlHandler);
+#endif
     AddHandler(new wxListCtrlXmlHandler);
 #if wxUSE_CHECKLISTBOX
     AddHandler(new wxCheckListXmlHandler);
@@ -88,5 +90,9 @@ void wxXmlResource::InitAllHandlers()
     AddHandler(new wxStaticLineXmlHandler);
 #endif
     AddHandler(new wxUnknownWidgetXmlHandler);
+#if wxUSE_DIRDLG
+    AddHandler(new wxGenericDirCtrlXmlHandler);
+#endif
     AddHandler(new wxFrameXmlHandler);
+    AddHandler(new wxScrolledWindowXmlHandler);
 }

@@ -1,29 +1,32 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        xh_panel.h
-// Purpose:     XML resource handler for panels
+// Name:        xh_scwin.h
+// Purpose:     XML resource handler for wxScrolledWindow
 // Author:      Vaclav Slavik
-// Created:     2000/03/05
+// Created:     2002/10/18
 // RCS-ID:      $Id$
-// Copyright:   (c) 2000 Vaclav Slavik
+// Copyright:   (c) 2002 Vaclav Slavik
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef _WX_XH_PANEL_H_
-#define _WX_XH_PANEL_H_
+#ifndef _WX_XH_SCWIN_H_
+#define _WX_XH_SCWIN_H_
 
 #if defined(__GNUG__) && !defined(__APPLE__)
-#pragma interface "xh_panel.h"
+#pragma interface "xh_scwin.h"
 #endif
 
 #include "wx/xrc/xmlres.h"
+#include "wx/defs.h"
 
-class WXXMLDLLEXPORT wxPanelXmlHandler : public wxXmlResourceHandler
+
+
+class WXXMLDLLEXPORT wxScrolledWindowXmlHandler : public wxXmlResourceHandler
 {
 public:
-    wxPanelXmlHandler();
+    wxScrolledWindowXmlHandler();
     virtual wxObject *DoCreateResource();
     virtual bool CanHandle(wxXmlNode *node);
 };
 
 
-#endif // _WX_XH_PANEL_H_
+#endif // _WX_XH_SCWIN_H_

@@ -41,7 +41,7 @@ public:
                   const wxSize &size = wxDefaultSize,
                   long style = wxLC_ICON,
                   const wxValidator& validator = wxDefaultValidator,
-                  const wxString &name = "listctrl")
+                  const wxString &name = _T("listctrl"))
          : wxListCtrl(parent, id, pos, size, style, validator, name)
     {
         CreateColumns();
@@ -57,9 +57,9 @@ public:
     {
          int w = GetSize().x;
 #ifdef __WXMSW__
-         w -= wxSystemSettings::GetSystemMetric(wxSYS_VSCROLL_X) + 6;
+         w -= wxSystemSettings::GetMetric(wxSYS_VSCROLL_X) + 6;
 #else
-         w -= 2*wxSystemSettings::GetSystemMetric(wxSYS_VSCROLL_X);
+         w -= 2*wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
 #endif
          SetColumnWidth(0, w);
     }

@@ -21,6 +21,7 @@
 
 #include "wx/xrc/xh_combo.h"
 #include "wx/combobox.h"
+#include "wx/intl.h"
 
 #if wxUSE_COMBOBOX
 
@@ -82,7 +83,10 @@ wxObject *wxComboBoxXmlHandler::DoCreateResource()
         // handle <item>Label</item>
 
         // add to the list
-        strList.Add(GetNodeContent(m_node));
+        wxString str = GetNodeContent(m_node);
+        if (m_resource->GetFlags() & wxXRC_USE_LOCALE)
+            str = wxGetTranslation(str);
+        strList.Add(str);
 
         return NULL;
     }
