@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<!-- $Id$ -->
+
+<makefile>
+
+    <include file="presets/wx.bkl"/>
+
+    <set var="BUILDDIR">build-win32</set>
+
+    <exe id="poedit" template="wx">
+        <app-type>gui</app-type>
+
+        <sources>
+            src/catalog.cpp
+            src/chooselang.cpp
+            src/commentdlg.cpp
+            src/digger.cpp
+            src/edapp.cpp
+            src/edframe.cpp
+            src/export_html.cpp
+            src/fileviewer.cpp
+            src/findframe.cpp
+            src/gexecute.cpp
+            src/icons.cpp
+            src/isocodes.cpp
+            src/manager.cpp
+            src/parser.cpp
+            src/prefsdlg.cpp
+            src/progressinfo.cpp
+            src/settingsdlg.cpp
+            src/summarydlg.cpp
+            src/transmem.cpp
+            src/transmemupd.cpp
+            src/transmemupd_wizard.cpp
+            src/pluralforms/pl_evaluate.cpp
+            src/editlbox/editlbox.cpp
+        </sources>
+
+        <win32-res>src/poedit.rc</win32-res>
+       
+        <debug-info>on</debug-info>
+        <runtime-libs>dynamic</runtime-libs>
+       
+        <wx-lib>xrc</wx-lib>
+        <wx-lib>adv</wx-lib>
+        <wx-lib>html</wx-lib>
+        <wx-lib>core</wx-lib>
+        <wx-lib>xml</wx-lib>
+        <wx-lib>base</wx-lib>
+    </exe>
+
+</makefile>
