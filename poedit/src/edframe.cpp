@@ -708,6 +708,8 @@ void poEditFrame::OnListDesel(wxListEvent& event)
 
 void poEditFrame::OnReferencesMenu(wxCommandEvent& event)
 {
+    if (m_selItem < 0 || m_selItem >= (int)m_catalog->GetCount()) return;
+    
     const wxArrayString& refs = (*m_catalog)[m_selItem].GetReferences();
 
     if (refs.GetCount() == 0)
@@ -800,8 +802,8 @@ void poEditFrame::OnQuotesFlag(wxCommandEvent& event)
 
 void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
 {
-    int ind = m_list->GetItemData(m_sel);
-    if (ind >= (int)m_catalog->GetCount()) return;
+    int ind = m_sel >= m_list->GetItemCount() ? -1 : m_list->GetItemData(m_sel);
+    if (ind >= (int)m_catalog->GetCount() || ind < 0) return;
 
     wxString quote;
     if (m_displayQuotes) quote = "\""; else quote = "";
@@ -1087,7 +1089,10 @@ void poEditFrame::UpdateStatusBar()
         txt.Printf(_("%i strings (%i fuzzy, %i not translated)"), 
                    all, fuzzy, untranslated);
         GetStatusBar()->SetStatusText(txt);
-        m_statusGauge->SetValue(100 * (all-fuzzy-untranslated) / all);
+        if (all > 0)
+            m_statusGauge->SetValue(100 * (all-fuzzy-untranslated) / all);
+        else
+            m_statusGauge->SetValue(0);
     }
 }
 

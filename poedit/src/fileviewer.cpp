@@ -89,7 +89,7 @@ void FileViewer::ShowReference(const wxString& ref)
     wxString linestr;
     for (int i = top; i < bottom; i++)
     {
-        linestr.Printf(_T("%i  "), i);
+        linestr.Printf(_T("%i  "), i+1);
         m_list->InsertItem(i - top, linestr);
         m_list->SetItem(i - top, 1, textf[i]);
     }

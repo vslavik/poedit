@@ -37,10 +37,9 @@ class poEditApp : public wxApp
             resources.zip and help files, both of them can be found
             in {appPath}/share/poedit. Looks in registry under Windows
             and returns value of POEDIT_PREFIX which is supplied at
-            compilation time and equals configure's --prefix argument.
-            
-            \todo Check for \$(POEDIT_HOME) under Unix to allow rellocatable
-                  packages?
+            compilation time and equals configure's --prefix argument
+            (unless $POEDIT_PREFIX environment variable exists, in which
+            case its content is returned).
          */
         wxString GetAppPath() const;
 
