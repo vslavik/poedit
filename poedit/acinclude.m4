@@ -96,5 +96,22 @@ Cannot find Berkeley DB >= 3.1, poEdit will build w/o translation memory feature
           CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM -DDB_HEADER=\\\"$DB_HEADER\\\""
       fi
    fi
+
+   if test x$USE_TRANSMEM != x0 ; then
+      AC_MSG_CHECKING([if db_open requires transaction argument])
+      AC_TRY_COMPILE([#include "$DB_HEADER"],
+        [
+            DB *db;
+            DBTYPE type;
+            db->open(db, "foo", NULL, type, DB_CREATE, 0);
+        ],
+        [
+            AC_MSG_RESULT(no)
+        ],
+        [
+            AC_MSG_RESULT(yes)
+            CXXFLAGS="$CXXFLAGS -DDB_OPEN_WITH_TRANSACTION"
+        ])
+   fi
 ])
 
