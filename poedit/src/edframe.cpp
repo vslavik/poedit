@@ -116,98 +116,98 @@ END_EVENT_TABLE()
 class KeysHandler : public wxEvtHandler
 { 
     public:
-            KeysHandler(wxListCtrl *list, wxTextCtrl *text, poEditFrame *frame,
-                        int *sel, int *selitem, bool *multiline) :
-                     wxEvtHandler(), m_list(list), m_text(text),
-                     m_frame(frame), m_sel(sel), m_selItem(selitem),
-                     m_multiLine(multiline) {}
+        KeysHandler(wxListCtrl *list, wxTextCtrl *text, poEditFrame *frame,
+                    int *sel, int *selitem, bool *multiline) :
+                 wxEvtHandler(), m_list(list), m_text(text),
+                 m_frame(frame), m_sel(sel), m_selItem(selitem),
+                 m_multiLine(multiline) {}
 
     private:
-            void OnKeyDown(wxKeyEvent& event)
+        void OnKeyDown(wxKeyEvent& event)
+        {
+            switch (event.KeyCode())
             {
-                switch (event.KeyCode())
-                {
-                    case WXK_UP:
-                        if (*m_multiLine && !event.ControlDown())
-                            event.Skip();
-                        else if (*m_sel > 0)
-                        {
-                            m_list->SetItemState(*m_sel - 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                            m_list->EnsureVisible(*m_sel - 1);
-                        }
-                        break;
-                    case WXK_DOWN:
-                        if (*m_multiLine && !event.ControlDown())
-                            event.Skip();
-                        else if (*m_sel < m_list->GetItemCount() - 1)
-                        {
-                            m_list->SetItemState(*m_sel + 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                            m_list->EnsureVisible(*m_sel + 1);
-                        }
-                        break;
-                    case WXK_PRIOR:
-                        {
-                            int newy = *m_sel - 10;
-                            if (newy < 0) newy = 0;
-                            m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                            m_list->EnsureVisible(newy);
-                        }
-                        break;
-                    case WXK_NEXT:
-                        {
-                            int newy = *m_sel + 10;
-                            if (newy >= m_list->GetItemCount()) newy = m_list->GetItemCount() - 1;
-                            m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                            m_list->EnsureVisible(newy);
-                        }
-                        break;
-                    default:
+                case WXK_UP:
+                    if (*m_multiLine && !event.ControlDown())
                         event.Skip();
-                }
+                    else if (*m_sel > 0)
+                    {
+                        m_list->SetItemState(*m_sel - 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                        m_list->EnsureVisible(*m_sel - 1);
+                    }
+                    break;
+                case WXK_DOWN:
+                    if (*m_multiLine && !event.ControlDown())
+                        event.Skip();
+                    else if (*m_sel < m_list->GetItemCount() - 1)
+                    {
+                        m_list->SetItemState(*m_sel + 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                        m_list->EnsureVisible(*m_sel + 1);
+                    }
+                    break;
+                case WXK_PRIOR:
+                    {
+                        int newy = *m_sel - 10;
+                        if (newy < 0) newy = 0;
+                        m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                        m_list->EnsureVisible(newy);
+                    }
+                    break;
+                case WXK_NEXT:
+                    {
+                        int newy = *m_sel + 10;
+                        if (newy >= m_list->GetItemCount()) newy = m_list->GetItemCount() - 1;
+                        m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                        m_list->EnsureVisible(newy);
+                    }
+                    break;
+                default:
+                    event.Skip();
             }
+        }
 
-            void OnListSel(wxListEvent& event)
+        void OnListSel(wxListEvent& event)
+        {
+			*m_sel = event.GetIndex();
+            *m_selItem = m_list->GetItemData(*m_sel);
+            event.Skip();
+        }
+
+        void OnSetFocus(wxListEvent& event)
+        {
+            if (event.GetEventObject() == m_list)
             {
-				*m_sel = event.GetIndex();
-                *m_selItem = m_list->GetItemData(*m_sel);
-                event.Skip();
+                m_text->SetFocus();
+            }                    
+            else event.Skip();                    
+        }
+
+        void OnRightClick(wxMouseEvent& event)
+        {
+            long item;
+            int flags = wxLIST_HITTEST_ONITEM;
+            item = m_list->HitTest(event.GetPosition(), flags);
+            if (item != -1 && (flags & wxLIST_HITTEST_ONITEM))
+                m_list->SetItemState(item, wxLIST_STATE_SELECTED, 
+                                           wxLIST_STATE_SELECTED);
+
+            wxMenu *menu = (m_frame) ? 
+                           m_frame->GetPopupMenu(*m_selItem) : NULL;
+            if (menu)
+            {  
+                m_list->PopupMenu(menu, event.GetPosition());
+                delete menu;
             }
+            else event.Skip();                    
+        }
 
-            void OnSetFocus(wxListEvent& event)
-            {
-                if (event.GetEventObject() == m_list)
-                {
-                    m_text->SetFocus();
-                }                    
-                else event.Skip();                    
-            }
+        DECLARE_EVENT_TABLE() 
 
-            void OnRightClick(wxMouseEvent& event)
-            {
-                long item;
-                int flags = wxLIST_HITTEST_ONITEM;
-                item = m_list->HitTest(event.GetPosition(), flags);
-                if (item != -1 && (flags & wxLIST_HITTEST_ONITEM))
-                    m_list->SetItemState(item, wxLIST_STATE_SELECTED, 
-                                               wxLIST_STATE_SELECTED);
-
-                wxMenu *menu = (m_frame) ? 
-                               m_frame->GetPopupMenu(*m_selItem) : NULL;
-                if (menu)
-                {  
-                    m_list->PopupMenu(menu, event.GetPosition());
-                    delete menu;
-                }
-                else event.Skip();                    
-            }
-
-            DECLARE_EVENT_TABLE() 
-            
-            wxListCtrl *m_list;
-            wxTextCtrl *m_text;
-            poEditFrame *m_frame;
-            int *m_sel, *m_selItem;
-            bool *m_multiLine;
+        wxListCtrl *m_list;
+        wxTextCtrl *m_text;
+        poEditFrame *m_frame;
+        int *m_sel, *m_selItem;
+        bool *m_multiLine;
 };
 
 BEGIN_EVENT_TABLE(KeysHandler, wxEvtHandler)
@@ -803,11 +803,11 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     newval.Replace("\n", "");
     if (m_displayQuotes)
     {
-        if (newval[0] == '"') newval.Remove(0, 1);
+        if (newval[0u] == '"') newval.Remove(0, 1);
         if (newval[newval.Length()-1] == '"') newval.RemoveLast();
     }
       
-    if (newval[0] == '"') newval.Prepend("\\");
+    if (newval[0u] == '"') newval.Prepend("\\");
     for (unsigned i = 1; i < newval.Length(); i++)
         if (newval[i] == '"' && newval[i-1] != '\\')
         {
@@ -857,7 +857,7 @@ void poEditFrame::UpdateToTextCtrl(int item)
 {
     if (m_catalog == NULL) return;
     if (item == -1) item = m_sel;
-    if (m_sel == -1 || m_sel >= m_list->GetItemCount()) return;
+    if (item == -1 || item >= m_list->GetItemCount()) return;
     int ind = m_list->GetItemData(item);
     if (ind >= (int)m_catalog->GetCount()) return;
 
@@ -1113,12 +1113,13 @@ void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
 wxMenu *poEditFrame::GetPopupMenu(size_t item)
 {
     if (!m_catalog) return NULL;
+    if (item >= (size_t)m_list->GetItemCount()) return NULL;
     
     const wxArrayString& refs = (*m_catalog)[item].GetReferences();
     wxMenu *menu = new wxMenu;
 
 #ifdef __WXMSW__
-    wxMenuItem *it1 = new wxMenuItem(NULL, ED_POPUP_DUMMY+0, _("References:"));
+    wxMenuItem *it1 = new wxMenuItem(menu, ED_POPUP_DUMMY+0, _("References:"));
     it1->SetFont(m_boldGuiFont);
     menu->Append(it1);
 #else
@@ -1131,7 +1132,7 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
 #ifdef USE_TRANSMEM
     menu->AppendSeparator();
 #ifdef __WXMSW__
-    wxMenuItem *it2 = new wxMenuItem(NULL, ED_POPUP_DUMMY+1, 
+    wxMenuItem *it2 = new wxMenuItem(menu, ED_POPUP_DUMMY+1, 
                                      _("Automatic translations:"));
     it2->SetFont(m_boldGuiFont);
     menu->Append(it2);
