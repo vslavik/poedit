@@ -70,9 +70,9 @@ void SettingsDialog::TransferTo(Catalog *cat)
     SET_VAL(TeamEmail);
     SET_VAL(Project);
     SET_VAL(BasePath);
+    SET_VAL(Language);
+    SET_VAL(Charset);
     #undef SET_VAL
-    m_Language->SetSelection(m_Language->FindString(cat->Header().Language));
-    m_Charset->SetSelection(m_Charset->FindString(cat->Header().Charset));
     
     m_Paths->SetStrings(cat->Header().SearchPaths);
     m_Keywords->SetStrings(cat->Header().Keywords);

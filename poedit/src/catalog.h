@@ -26,7 +26,7 @@
 
 
 
-class wxTextFile;
+class WXDLLEXPORT wxTextFile;
 
 class CatalogData;
 WX_DECLARE_OBJARRAY(CatalogData, CatalogDataArray);
@@ -121,8 +121,6 @@ class Catalog
             unsigned m_Count; // no. of items 
             bool m_IsOk;
             wxString m_FileName;
-            wxFontEncoding m_FileEncoding, m_MemEncoding;
-            
             HeaderData m_Header;
             
             friend class LoadParser;

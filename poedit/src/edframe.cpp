@@ -643,9 +643,15 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     int ind = m_List->GetItemData(item);
     if (ind >= (int)m_Catalog->GetCount()) return;
     
-    bool newfuzzy = GetToolBar()->GetToolState(XMLID("menu_fuzzy"));
     wxString key = (*m_Catalog)[ind].GetString();
     wxString newval = m_TextTrans->GetValue();
+    bool newfuzzy = GetToolBar()->GetToolState(XMLID("menu_fuzzy"));
+
+    // check if anything changed:
+    if (newval == m_edittedTextOrig && 
+        (*m_Catalog)[ind].IsFuzzy() == newfuzzy)
+        return; 
+
     newval.Replace("\n", "");
     if (m_DisplayQuotes)
     {
@@ -653,44 +659,44 @@ void poEditFrame::UpdateFromTextCtrl(int item)
         if (newval[newval.Length()-1] == '"') newval.RemoveLast();
     }
       
-    if (newval != (*m_Catalog)[ind].GetTranslation() ||
-        (*m_Catalog)[ind].IsFuzzy() != newfuzzy)
-    {
-        if (newval[0] == '"') newval.Prepend("\\");
-        for (unsigned i = 1; i < newval.Length(); i++)
-            if (newval[i] == '"' && newval[i-1] != '\\')
-            {
-                newval = newval.Mid(0, i) + "\\\"" + newval.Mid(i+1);
-                i++;
-            }
-        m_Catalog->Translate(key, newval);
-        m_List->SetItem(item, 1, (*m_Catalog)[ind].GetTranslation());
-
-        CatalogData* data = m_Catalog->FindItem(key);
-
-        if (newfuzzy == data->IsFuzzy()) newfuzzy = false;
-        data->SetFuzzy(newfuzzy);
-        GetToolBar()->ToggleTool(XMLID("menu_fuzzy"), newfuzzy);
-
-        wxListItem listitem;
-        data->SetTranslated(!newval.IsEmpty());
-        listitem.SetId(item);
-        m_List->GetItem(listitem);
-        if (!data->IsTranslated())
-            listitem.SetBackgroundColour(g_ItemColourUntranslated);
-        else if (data->IsFuzzy())
-            listitem.SetBackgroundColour(g_ItemColourFuzzy);
-        else
-            listitem.SetBackgroundColour(wxSystemSettings::GetSystemColour(wxSYS_COLOUR_LISTBOX));
-        m_List->SetItem(listitem);
-        if (m_Modified == false)
+    if (newval[0] == '"') newval.Prepend("\\");
+    for (unsigned i = 1; i < newval.Length(); i++)
+        if (newval[i] == '"' && newval[i-1] != '\\')
         {
-            m_Modified = true;
-            UpdateTitle();
+            newval = newval.Mid(0, i) + "\\\"" + newval.Mid(i+1);
+            i++;
         }
-        
-        UpdateStatusBar();
+
+    // convert to UTF-8 using user's environment default charset:
+    wxString newvalUtf8 = wxString(newval.wc_str(wxConvLocal), wxConvUTF8);
+
+    m_Catalog->Translate(key, newvalUtf8);
+    m_List->SetItem(item, 1, newval);
+
+    CatalogData* data = m_Catalog->FindItem(key);
+
+    if (newfuzzy == data->IsFuzzy()) newfuzzy = false;
+    data->SetFuzzy(newfuzzy);
+    GetToolBar()->ToggleTool(XMLID("menu_fuzzy"), newfuzzy);
+
+    wxListItem listitem;
+    data->SetTranslated(!newval.IsEmpty());
+    listitem.SetId(item);
+    m_List->GetItem(listitem);
+    if (!data->IsTranslated())
+        listitem.SetBackgroundColour(g_ItemColourUntranslated);
+    else if (data->IsFuzzy())
+        listitem.SetBackgroundColour(g_ItemColourFuzzy);
+    else
+        listitem.SetBackgroundColour(wxSystemSettings::GetSystemColour(wxSYS_COLOUR_LISTBOX));
+    m_List->SetItem(listitem);
+    if (m_Modified == false)
+    {
+        m_Modified = true;
+        UpdateTitle();
     }
+
+    UpdateStatusBar();
 }
 
 
@@ -711,8 +717,14 @@ void poEditFrame::UpdateToTextCtrl(int item)
     m_TextOrig->SetValue(t_o);
     t_t = quote + (*m_Catalog)[ind].GetTranslation() + quote;
     t_t.Replace("\\n", "\\n\n");
+    
+    // Convert from UTF-8 to environment's default charset:
+    t_t = wxString(t_t.wc_str(wxConvUTF8));
+    
     m_TextTrans->SetValue(t_t);
-    if (m_DisplayQuotes) m_TextTrans->SetInsertionPoint(1);
+    m_edittedTextOrig = t_t;
+    if (m_DisplayQuotes) 
+        m_TextTrans->SetInsertionPoint(1);
     GetToolBar()->ToggleTool(XMLID("menu_fuzzy"), (*m_Catalog)[ind].IsFuzzy());
     GetMenuBar()->Check(XMLID("menu_fuzzy"), (*m_Catalog)[ind].IsFuzzy());
 }
@@ -757,14 +769,19 @@ void poEditFrame::RefreshControls()
     m_List->CreateColumns();
 
     wxListItem listitem;
-
+    wxString trans;
     unsigned i, pos = 0;
     
     for (i = 0; i < m_Catalog->GetCount(); i++)
         if (!(*m_Catalog)[i].IsTranslated())
         {
             m_List->InsertItem(pos, (*m_Catalog)[i].GetString(), -1);
-            m_List->SetItem(pos, 1, (*m_Catalog)[i].GetTranslation());
+            
+            // Convert from UTF-8 to environment's default charset:
+            trans = 
+                wxString((*m_Catalog)[i].GetTranslation().wc_str(wxConvUTF8));
+            
+            m_List->SetItem(pos, 1, trans);
             m_List->SetItemData(pos, i);
             listitem.SetId(pos);
             m_List->GetItem(listitem);
@@ -777,7 +794,12 @@ void poEditFrame::RefreshControls()
         if ((*m_Catalog)[i].IsFuzzy())
         {
             m_List->InsertItem(pos, (*m_Catalog)[i].GetString(), -1);
-            m_List->SetItem(pos, 1, (*m_Catalog)[i].GetTranslation());
+
+            // Convert from UTF-8 to environment's default charset:
+            trans = 
+                wxString((*m_Catalog)[i].GetTranslation().wc_str(wxConvUTF8));
+
+            m_List->SetItem(pos, 1, trans);
             m_List->SetItemData(pos, i);
             listitem.SetId(pos);
             m_List->GetItem(listitem);
@@ -791,7 +813,12 @@ void poEditFrame::RefreshControls()
         if ((*m_Catalog)[i].IsTranslated() && !(*m_Catalog)[i].IsFuzzy())
         {
             m_List->InsertItem(pos, (*m_Catalog)[i].GetString(), -1);
-            m_List->SetItem(pos, 1, (*m_Catalog)[i].GetTranslation());
+
+            // Convert from UTF-8 to environment's default charset:
+            trans = 
+                wxString((*m_Catalog)[i].GetTranslation().wc_str(wxConvUTF8));
+
+            m_List->SetItem(pos, 1, trans);
             m_List->SetItemData(pos, i);
             pos++;
         }

@@ -24,10 +24,9 @@
 #include <wx/log.h>
 #include <wx/intl.h>
 #include <wx/datetime.h>
-#include <wx/encconv.h>
-#include <wx/fontmap.h>
 #include <wx/config.h>
 #include <wx/textfile.h>
+#include <wx/strconv.h>
 
 #include "catalog.h"
 #include "digger.h"
@@ -205,7 +204,8 @@ bool LoadParser::OnEntry(const wxString& msgid,
                 m_Catalog->m_Header.Team = tkn2.GetNextToken().Strip(wxString::trailing);
                 m_Catalog->m_Header.TeamEmail = tkn2.GetNextToken();
             }
-            ReadParam(ln2, "Content-Type: text/plain; charset=", m_Catalog->m_Header.Charset);
+            ReadParam(ln2, "Content-Type: text/plain; charset=", 
+                      m_Catalog->m_Header.Charset);
         }
         m_Catalog->m_Header.Comment = comment;
     }
@@ -238,7 +238,6 @@ Catalog::Catalog()
     m_Count = 0;
     m_IsOk = true;
     m_Header.BasePath = "";
-    m_FileEncoding = m_MemEncoding = wxFONTENCODING_SYSTEM;
 }
 
 
@@ -297,10 +296,10 @@ bool Catalog::Load(const wxString& po_file)
     m_Count = 0;
     m_IsOk = false;
     m_FileName = po_file;
-    m_FileEncoding = m_MemEncoding = wxFONTENCODING_SYSTEM;
-    
     m_Header.BasePath = "";
-   
+
+    /* Load extended information from .po.poedit file, if present: */
+    
     if (wxFileExists(po_file + ".poedit") && f.Open(po_file + ".poedit"))
     {
         wxString dummy;
@@ -341,6 +340,9 @@ bool Catalog::Load(const wxString& po_file)
     else
         m_Data = new wxHashTable(wxKEY_STRING);
 
+
+    /* Load the .po file: */
+
     if (!f.Open(po_file)) return false;
 
     LoadParser parser(this, &f);
@@ -350,26 +352,16 @@ bool Catalog::Load(const wxString& po_file)
     
     f.Close();
     
-    // try to reencode it to platform's encoding
-    wxFontMapper fmap;
-    wxFontEncoding enc_in = fmap.CharsetToEncoding(m_Header.Charset, false);
-    if (enc_in == wxFONTENCODING_SYSTEM) return true;
-    wxFontEncodingArray equi = 
-        wxEncodingConverter::GetPlatformEquivalents(enc_in);
-    if (equi.GetCount() == 0) return true;
-    wxFontEncoding enc_out = equi[0];
-
-    m_MemEncoding = enc_out;
-    m_FileEncoding = enc_in;
-    if (enc_out == enc_in) return true;
-
-    wxEncodingConverter encconv;
-    if (!encconv.Init(enc_in, enc_out)) return true;
-    
-    for (size_t i = 0; i < m_DataArray.GetCount(); i++)
+    /* Convert loaded data from file's encoding to UTF-8 which is our
+       internal representation : */
+    if (wxStricmp(Header().Charset, "utf-8") != 0 &&
+        wxStricmp(Header().Charset, "CHARSET"/*not specified*/) != 0)
     {
-        m_DataArray[i].SetTranslation(
-                 encconv.Convert(m_DataArray[i].GetTranslation()));
+        wxCSConv encConv(Header().Charset);
+        for (size_t i = 0; i < m_DataArray.GetCount(); i++)
+            m_DataArray[i].SetTranslation(wxString(
+                m_DataArray[i].GetTranslation().wc_str(encConv),
+                wxConvUTF8));
     }
     
     return true;
@@ -413,28 +405,12 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     wxString dummy;
     size_t i;
     int j;
-    wxEncodingConverter encconv;
     wxTextFileType crlfOrig, crlf;
     bool crlfPreserve;
     wxTextFile f;
     
     GetCRLFBehaviour(crlfOrig, crlfPreserve);
 
-    /* Find encoding: */
-
-    wxFontMapper fmap;
-    if (m_FileEncoding != wxFONTENCODING_SYSTEM)
-        m_FileEncoding = fmap.CharsetToEncoding(m_Header.Charset, false);
-    if (m_FileEncoding != m_MemEncoding)
-    {
-        if (!encconv.Init(m_MemEncoding, m_FileEncoding))
-        {
-            wxLogError(_("Cannot save in encoding '%s', please change it."),
-                       m_Header.Charset.c_str());
-            return false;
-        }
-    }
-    
     /* Update information about last modification time: */
   
     wxDateTime timenow = wxDateTime::Now();
@@ -448,8 +424,11 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 
     if (crlfPreserve && wxFileExists(po_file) && f.Open(po_file))
     {
+        {
+        wxLogNull null;
         crlf = f.GuessType();
-        if (crlf == wxTextFileType_None)
+        }
+        if (crlf == wxTextFileType_None || crlf == wxTextFile::typeDefault)
             crlf = crlfOrig;
         f.Close();
     }
@@ -464,7 +443,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         m_Header.SearchPaths.GetCount() > 0 ||
         m_Header.Keywords.GetCount() > 0)
     {
-        if (!f.Open(po_file + ".poedit"))
+        if (!wxFileExists(po_file + ".poedit") || !f.Open(po_file + ".poedit"))
             if (!f.Create(po_file + ".poedit"))
                 return false;
         for (j = f.GetLineCount() - 1; j >= 0; j--)
@@ -492,7 +471,11 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 
     /* Save .po file: */
 
-    if (!f.Open(po_file))
+    wxString charset(m_Header.Charset);
+    if (!charset)
+        charset = "utf-8";
+
+    if (!wxFileExists(po_file) || !f.Open(po_file))
         if (!f.Create(po_file))
             return false;
     for (j = f.GetLineCount() - 1; j >= 0; j--)
@@ -509,10 +492,15 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     f.AddLine("\"Language-Team: " + m_Header.Team +
               " <" + m_Header.TeamEmail + ">\\n\"");
     f.AddLine("\"MIME-Version: 1.0\\n\"");
-    f.AddLine("\"Content-Type: text/plain; charset=" + 
-              m_Header.Charset + "\\n\"");
+    f.AddLine("\"Content-Type: text/plain; charset=" + charset + "\\n\"");
     f.AddLine("\"Content-Transfer-Encoding: 8bit\\n\"");
     f.AddLine("");
+    
+    wxCSConv *encConv;
+    if (wxStricmp(Header().Charset, "utf-8") != 0)
+        encConv = new wxCSConv(Header().Charset);
+    else
+        encConv = NULL;
 
     for (i = 0; i < m_DataArray.GetCount(); i++)
     {
@@ -532,13 +520,14 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         if (dummy.Find("\\n") != wxNOT_FOUND)
             dummy = "\"\n\"" + dummy;
         dummy.Replace("\\n", "\\n\"\n\"");
-        if (m_FileEncoding != m_MemEncoding)
-            SaveMultiLines(f, "msgstr \"" + encconv.Convert(dummy) + "\"");
-        else
-            SaveMultiLines(f, "msgstr \"" + dummy + "\"");
+        if (encConv)
+            dummy = wxString(dummy.wc_str(wxConvUTF8), *encConv);
+
+        SaveMultiLines(f, "msgstr \"" + dummy + "\"");
         f.AddLine("");
     }
     
+    delete encConv;    
     f.Write(crlf);
     f.Close();
 
@@ -615,9 +604,9 @@ bool Catalog::Update()
 void Catalog::Merge(Catalog *refcat)
 {
     wxString oldname = m_FileName;
-    wxString tmp1 = wxGetTempFileName("poedit"),
-             tmp2 = wxGetTempFileName("poedit"),
-             tmp3 = wxGetTempFileName("poedit");
+    wxString tmp1 = wxGetTempFileName("poedit");
+    wxString tmp2 = wxGetTempFileName("poedit");
+    wxString tmp3 = wxGetTempFileName("poedit");
 
     refcat->Save(tmp1, false);
     Save(tmp2, false);

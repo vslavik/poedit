@@ -96,9 +96,9 @@ class poEditFrame : public wxFrame
             wxString m_FileName;
 	    
 #ifdef __WXMSW__
-	    wxCHMHelpController m_Help;
+    	    wxCHMHelpController m_Help;
 #else
-	    wxHtmlHelpController m_Help;
+    	    wxHtmlHelpController m_Help;
 #endif
             
             wxString m_Title;
@@ -107,12 +107,10 @@ class poEditFrame : public wxFrame
             wxTextCtrl *m_TextOrig, *m_TextTrans;
             bool m_Modified;
             bool m_HasObsoleteItems;
-            
             bool m_DisplayQuotes;          
-            
             int m_Sel, m_SelItem;
-            
             wxFileHistory m_History;
+            wxString m_edittedTextOrig;
 };
 
 

@@ -39,6 +39,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
     if (all_files == NULL) return NULL;
 
     Catalog *c = new Catalog;
+    c->CreateNewHeader();
         
     for (size_t i = 0; i < pdb.GetCount(); i++)
     {
