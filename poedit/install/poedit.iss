@@ -4,7 +4,7 @@
 [Setup]
 OutputBaseFilename=poedit1110_setup
 AppName=poEdit
-AppVerName=poEdit 1.1.9
+AppVerName=poEdit 1.1.10
 
 ChangesAssociations=true
 AlwaysShowComponentsList=true
@@ -58,8 +58,12 @@ Source: locales\de-wxstd.mo; DestDir: {app}\share\locale\de\LC_MESSAGES; Compone
 Source: locales\de.mo; DestDir: {app}\share\locale\de\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\fr.mo; DestDir: {app}\share\locale\fr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\hr.mo; DestDir: {app}\share\locale\hr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
-Source: locales\po.mo; DestDir: {app}\share\locale\po\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\pl.mo; DestDir: {app}\share\locale\pl\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\nn.mo; DestDir: {app}\share\locale\nn\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\tr.mo; DestDir: {app}\share\locale\tr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\tr-wxstd.mo; DestDir: {app}\share\locale\tr\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
+Source: locales\it-wxstd.mo; DestDir: {app}\share\locale\it\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
+Source: locales\it.mo; DestDir: {app}\share\locale\it\LC_MESSAGES; DestName: poedit.mo; Components: i18n
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey
@@ -109,6 +113,10 @@ Name: {app}\share\locale\po; Components: i18n
 Name: {app}\share\locale\po\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\nn; Components: i18n
 Name: {app}\share\locale\nn\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\tr; Components: i18n
+Name: {app}\share\locale\tr\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\it; Components: i18n
+Name: {app}\share\locale\it\LC_MESSAGES; Components: i18n
 
 [_ISToolPreCompile]
 

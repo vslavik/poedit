@@ -4,18 +4,18 @@
 %define        semistatic      0
 
 # set this to 1 if you want mandrakized RPM (menu entry)
-%{expand:%%define _with_mdk %(if [ -f /etc/mandrake-release ]; then echo 1; else echo 0; fi)}
+%{expand:%%define use_mdk %(if [ -f /etc/mandrake-release ]; then echo 1; else echo 0; fi)}
 
 %{?_with_semistatic: %{expand: %%define semistatic 1}}
 %{?_without_semistatic: %{expand: %%define semistatic 0}}
 
-%{?_with_mdk: %{expand: %%define enable_mdk 1}}
-%{?_without_mdk: %{expand: %%define enable_mdk 0}}
+%{?_with_mdkmenu: %{expand: %%define use_mdk 1}}
+%{?_without_mdkmenu: %{expand: %%define use_mdk 0}}
 
 
 
 # version and release
-%define        VERSION 1.1.9
+%define        VERSION 1.1.10
 %define        RELEASE 1
 
 # default installation directory
@@ -31,7 +31,7 @@
 Summary:       Gettext catalogs editor
 Name:          %NAME
 Version:       %VERSION
-%if !%{enable_mdk}
+%if !%{use_mdk}
 Release:       %RELEASE
 %else
 Release:       %{RELEASE}mdk
@@ -82,7 +82,7 @@ rm -rf ${RPM_BUILD_ROOT}
 %makeinstall GNOME_DATA_DIR=$RPM_BUILD_ROOT/usr/share \
              KDE_DATA_DIR=$RPM_BUILD_ROOT/usr/share
 
-%if %{enable_mdk}
+%if %{use_mdk}
 (cd $RPM_BUILD_ROOT
 mkdir -p ./%{_libdir}/menu
 cat > ./%{_libdir}/menu/poedit <<EOF 
@@ -108,7 +108,7 @@ cat poedit-wxstd.lang >>poedit.lang
 %clean
 rm -Rf ${RPM_BUILD_ROOT}
 
-%if %{enable_mdk}
+%if %{use_mdk}
 %post
 %update_menus
 
@@ -121,7 +121,10 @@ rm -Rf ${RPM_BUILD_ROOT}
 %doc NEWS LICENSE README AUTHORS
 
 %dir %{_datadir}/poedit
-%{_datadir}/poedit/*
+%{_datadir}/poedit/resources.zip
+%{_datadir}/poedit/help.zip
+%{_datadir}/poedit/help-gettext.zip
+%lang(hr) %{_datadir}/poedit/help-hr.zip
 %{_bindir}/poedit
 %{_mandir}/*/*
 %{_datadir}/mimelnk/application/*
@@ -131,6 +134,6 @@ rm -Rf ${RPM_BUILD_ROOT}
 %{_datadir}/icons/*
 %{_datadir}/pixmaps/*
 
-%if %{enable_mdk}
+%if %{use_mdk}
 %{_libdir}/menu/*
 %endif
