@@ -409,7 +409,7 @@ LanguageStruct isoCountries[] =
     {_T("SE"), _T("SWEDEN")},
     {_T("CH"), _T("SWITZERLAND")},
     {_T("SY"), _T("SYRIAN ARAB REPUBLIC")},
-    {_T("TW"), _T("TAIWAN, PROVINCE OF CHINA")},
+    {_T("TW"), _T("TAIWAN")},
     {_T("TJ"), _T("TAJIKISTAN")},
     {_T("TZ"), _T("TANZANIA, UNITED REPUBLIC OF")},
     {_T("TH"), _T("THAILAND")},
