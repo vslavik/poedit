@@ -56,7 +56,11 @@ public:
     void SizeColumns()
     {
          int w = GetSize().x;
+#ifdef __WXMSW__
+         w -= wxSystemSettings::GetSystemMetric(wxSYS_VSCROLL_X) + 6;
+#else
          w -= 2*wxSystemSettings::GetSystemMetric(wxSYS_VSCROLL_X);
+#endif
          SetColumnWidth(0, w);
     }
 
