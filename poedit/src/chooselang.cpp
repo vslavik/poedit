@@ -101,7 +101,7 @@ wxLanguage ChooseLanguage()
         { _T("Lithuanian"), wxLANGUAGE_LITHUANIAN },
         { _T("Mongolian"), wxLANGUAGE_MONGOLIAN },
         { _T("Norwegian Nynorsk"), wxLANGUAGE_NORWEGIAN_NYNORSK },
-        { _T("Norwegian Bokmål"), wxLANGUAGE_NORWEGIAN_BOKMAL },
+        { _T("Norwegian Bokmal"), wxLANGUAGE_NORWEGIAN_BOKMAL },
         { _T("Polish"), wxLANGUAGE_POLISH },
         { _T("Portuguese"), wxLANGUAGE_PORTUGUESE },
         { _T("Portuguese (Brazilian)"), wxLANGUAGE_PORTUGUESE_BRAZILIAN },
