@@ -21,6 +21,7 @@
 
 #include <wx/imaglist.h>
 #include <wx/config.h>
+#include <wx/textctrl.h>
 #include <wx/listctrl.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/settings.h>
