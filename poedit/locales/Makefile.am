@@ -1,5 +1,5 @@
 
-POEDIT_LINGUAS = bg cs de et fr hr it lv nl nn pl sk sv_SE ta tr zh_TW.Big5 \
+POEDIT_LINGUAS = bg cs de et fr hr it lv nl nn pl sk sv_SE ta tr zh_TW \
                  ca ka ro
 WXWIN_LINGUAS  =    cs de    fr    it    nl          sv       tr zh
 
