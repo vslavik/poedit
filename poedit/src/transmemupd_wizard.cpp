@@ -210,27 +210,6 @@ void RunTMUpdateWizard(wxWindow *parent,
     wxConfig::Get()->Write(_T("TM/search_paths"), dirsStr);
     
     wizard.Destroy();
-   
-#if 0
-    ProgressInfo *pi = new ProgressInfo;
-    pi->SetTitle(_("Updating translation memory"));
-    for (size_t i = 0; i < langs.GetCount(); i++)
-    {
-        TranslationMemory *tm = 
-            TranslationMemory::Create(langs[i], dbPath);
-        if (tm)
-        {
-            TranslationMemoryUpdater u(tm, pi);
-            wxArrayString files;
-            if (!u.FindFilesInPaths(dirsArray, files))
-                { tm->Release(); break; }
-            if (!u.Update(files)) 
-                { tm->Release(); break; }
-            tm->Release();
-        }
-    }
-    delete pi;
-#endif
 }
 
 #endif //USE_TRANSMEM
