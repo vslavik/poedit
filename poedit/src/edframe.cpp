@@ -1926,6 +1926,9 @@ void poEditFrame::OnCommentWindowText(wxCommandEvent&)
             CommentDialog::AddStartHash(m_textComment->GetValue()));
     CatalogData& data((*m_catalog)[m_selItem]);
     
+    if (comment == data.GetComment())
+        return;
+
     data.SetComment(comment);
  
     wxListItem listitem;
