@@ -57,6 +57,8 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 cfg->Read(_T("compile_mo"), true));
     XMLCTRL(*this, "show_summary", wxCheckBox)->SetValue(
                 cfg->Read(_T("show_summary"), true));
+    XMLCTRL(*this, "ext_editor", wxComboBox)->SetValue(
+                cfg->Read(_T("ext_editor"), wxEmptyString));
     XMLCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
                 cfg->Read(_T("keep_crlf"), true));
 
@@ -68,7 +70,6 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     else /* _T("unix") */ sel = 0;
 
     XMLCTRL(*this, "crlf_format", wxChoice)->SetSelection(sel);
-
 
     m_parsers.Read(cfg);               
     
@@ -113,6 +114,8 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XMLCTRL(*this, "compile_mo", wxCheckBox)->GetValue());
     cfg->Write(_T("show_summary"), 
                 XMLCTRL(*this, "show_summary", wxCheckBox)->GetValue());
+    cfg->Write(_T("ext_editor"), 
+                XMLCTRL(*this, "ext_editor", wxComboBox)->GetValue());
     cfg->Write(_T("keep_crlf"), 
                 XMLCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
     

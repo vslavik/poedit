@@ -737,7 +737,7 @@ void CatalogData::SetFlags(const wxString& flags)
 }
 
 
-wxString CatalogData::GetFlags()
+wxString CatalogData::GetFlags() const
 {
     wxString f;
     if (m_isFuzzy) f << _T(", fuzzy");

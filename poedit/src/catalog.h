@@ -117,6 +117,9 @@ class Catalog
         /// Gets n-th item in the catalog (read-write access).
         CatalogData& operator[](unsigned n) { return m_dataArray[n]; }
 
+        /// Gets n-th item in the catalog (read-only access).
+        const CatalogData& operator[](unsigned n) const { return m_dataArray[n]; }
+
         /// Gets catalog header (read-write access).
         HeaderData& Header() { return m_header; }
 
@@ -216,6 +219,9 @@ class CatalogData : public wxObject
         /// Returns comment added by the translator to this entry
         const wxString& GetComment() const { return m_comment; }
 
+        /// Convenience function: does this entry has a comment?
+        const bool HasComment() const { return !m_comment.IsEmpty(); }
+
         /// Adds new reference to the entry (used by SourceDigger).
         void AddReference(const wxString& ref)
         {
@@ -251,24 +257,24 @@ class CatalogData : public wxObject
         void SetFlags(const wxString& flags);
 
         /// Gets gettext flags. \see SetFlags
-        wxString GetFlags();
+        wxString GetFlags() const;
 
         /// Sets fuzzy flag.
         void SetFuzzy(bool fuzzy) { m_isFuzzy = fuzzy; }
         /// Gets value of fuzzy flag.
-        bool IsFuzzy() { return m_isFuzzy; }
+        bool IsFuzzy() const { return m_isFuzzy; }
         /// Sets translated flag.
         void SetTranslated(bool t) { m_isTranslated = t; }
         /// Gets value of translated flag.
-        bool IsTranslated() { return m_isTranslated; }
+        bool IsTranslated() const { return m_isTranslated; }
         /// Sets modified flag.
         void SetModified(bool modified) { m_isModified = modified; }
         /// Gets value of modified flag.
-        bool IsModified() { return m_isModified; }
+        bool IsModified() const { return m_isModified; }
         /// Sets automatic translation flag.
         void SetAutomatic(bool automatic) { m_isAutomatic = automatic; }
         /// Gets value of automatic translation flag.
-        bool IsAutomatic() { return m_isAutomatic; }
+        bool IsAutomatic() const { return m_isAutomatic; }
             
     private:
         wxString m_string, m_translation;

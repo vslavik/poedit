@@ -11,7 +11,7 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  settingsdlg.h progressinfo.h \
                  progressinfo.cpp digger.h digger.cpp gexecute.h \
                  gexecute.cpp summarydlg.h summarydlg.cpp \
-                 findframe.cpp findframe.h \
+                 findframe.cpp findframe.h commentdlg.h commentdlg.cpp \
                  transmem.cpp transmem.h transmemupd.cpp transmemupd.h
 
 LDADD = -L../extras/wx-contrib/src/gizmos \

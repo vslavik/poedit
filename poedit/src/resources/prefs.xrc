@@ -107,6 +107,43 @@
                   <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
                   <border>5d</border>
                 </object>
+                <object class="sizeritem">
+                  <object class="wxStaticBoxSizer">
+                    <label>External editor</label>
+                    <orient>wxVERTICAL</orient>
+                    <object class="sizeritem">
+                      <object class="wxBoxSizer">
+                        <object class="sizeritem">
+                          <object class="wxStaticText">
+                            <label>Editor executable:</label>
+                          </object>
+                          <flag>wxRIGHT|wxLEFT|wxALIGN_CENTER_VERTICAL</flag>
+                          <border>2d</border>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxComboBox" name="ext_editor">
+                            <content>
+                              <item platform="unix">nedit -line %l %f</item>
+                              <item platform="win">notepad %f</item>
+                            </content>
+                          </object>
+                          <option>1</option>
+                        </object>
+                      </object>
+                      <flag>wxEXPAND</flag>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxStaticText">
+                        <label>(%f will be substituted with filename, %l with line number)</label>
+                      </object>
+                      <flag>wxLEFT|wxRIGHT|wxTOP|wxBOTTOM|wxALIGN_CENTER_HORIZONTAL</flag>
+                      <border>2d</border>
+                    </object>
+                  </object>
+                  <option>0</option>
+                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
+                  <border>5d</border>
+                </object>
               </object>
               <style>wxTAB_TRAVERSAL</style>
             </object>

@@ -21,11 +21,11 @@
 #define _EDFRAME_H_
 
 #include <wx/frame.h>
-#include <wx/treectrl.h>
-#include <wx/textctrl.h>
-#include <wx/splitter.h>
 #include <wx/docview.h>
-#include <wx/listctrl.h>
+class WXDLLEXPORT wxListCtrl;
+class WXDLLEXPORT wxSpliterWindow;
+class WXDLLEXPORT wxTextCtrl;
+class WXDLLEXPORT wxGauge;
 
 #ifdef __WXMSW__
 #include <wx/msw/helpchm.h>
@@ -104,6 +104,7 @@ class poEditFrame : public wxFrame
         void OnInsertOriginal(wxCommandEvent& event);
         void OnFullscreen(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
+        void OnEditComment(wxCommandEvent& event);
 #ifdef USE_TRANSMEM
         void OnAutoTranslate(wxCommandEvent& event);
 #endif
@@ -129,6 +130,7 @@ class poEditFrame : public wxFrame
         wxSplitterWindow *m_splitter;
         poEditListCtrl *m_list;
         wxTextCtrl *m_textOrig, *m_textTrans;
+        wxGauge *m_statusGauge;
 #ifdef __WXMSW__
         wxFont m_boldGuiFont;
 #endif

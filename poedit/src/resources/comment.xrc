@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource version="2.3.0.1">
+  <object class="wxDialog" name="comment_dlg">
+    <title>Edit comment</title>
+    <style>wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER</style>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          <label>Comment:</label>
+        </object>
+        <border>5d</border>
+        <flag>wxLEFT|wxTOP|wxRIGHT</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxTextCtrl" name="comment">
+          <size>100,-1d</size>
+          <style>wxTE_MULTILINE</style>
+        </object>
+        <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+        <border>5d</border>
+        <option>1</option>
+        <minsize>150,80d</minsize>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_OK">
+              <label>OK</label>
+              <default>1</default>
+            </object>
+            <border>5d</border>
+            <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_CANCEL">
+              <label>Cancel</label>
+            </object>
+            <flag>wxRIGHT|wxBOTTOM</flag>
+            <border>5d</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="clear">
+              <label>Clear</label>
+              <tooltip>Clear the comment</tooltip>
+            </object>
+            <flag>wxRIGHT|wxBOTTOM</flag>
+            <border>5d</border>
+          </object>
+        </object>
+        <flag>wxTOP|wxALIGN_RIGHT</flag>
+        <border>5d</border>
+      </object>
+    </object>
+  </object>
+</resource>
