@@ -3,9 +3,9 @@
 
 [Setup]
 CompressLevel=9
-OutputBaseFilename=poedit114_setup
+OutputBaseFilename=poedit115_setup
 AppName=poEdit
-AppVerName=poEdit 1.1.4
+AppVerName=poEdit 1.1.5
 
 ChangesAssociations=true
 AlwaysShowComponentsList=false
@@ -25,13 +25,13 @@ InfoAfterFile=install\news.rtf
 
 
 [Files]
-Source: objs\release\poedit.exe; DestDir: {app}\bin
+Source: Bmingw\src\poedit; DestDir: {app}\bin; DestName: poedit.exe
 Source: extras\win32-gettext\gnu_gettext.COPYING; DestDir: {app}\doc
 Source: install\readme.txt; DestDir: {app}\doc; DestName: readme.txt
 Source: docs\poedit.chm; DestDir: {app}\share\poedit
 Source: install\license.txt; DestDir: {app}\doc; DestName: license.txt
 Source: install\news.txt; DestDir: {app}\doc; DestName: news.txt
-Source: Build\src\resources\resources.zip; DestDir: {app}\share\poedit; DestName: resources.zip
+Source: Bmingw\src\resources\resources.zip; DestDir: {app}\share\poedit; DestName: resources.zip
 Source: extras\win32-gettext\xgettext.exe; DestDir: {app}\bin
 Source: extras\win32-gettext\msgmerge.exe; DestDir: {app}\bin
 Source: extras\win32-gettext\msgunfmt.exe; DestDir: {app}\bin
