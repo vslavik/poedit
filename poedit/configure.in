@@ -70,18 +70,28 @@ if test "$WXFOUND" != 1; then
     ])
 fi
 
-
-FIND_KDE
-FIND_GNOME
-if test x$USE_TRANSMEM != xno ; then
-    FIND_BERKELEY_DB
+if $WX_CONFIG --cxxflags | grep -q WXMSW; then
+    AM_CONDITIONAL(USE_WINDOWS, test x = x)
+    EXE_SUFFIX=.exe
+    if test x$USE_TRANSMEM != xno ; then
+        CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM -I\$(top_srcdir)/extras/win32-db3"
+    fi
+else
+    FIND_KDE
+    FIND_GNOME
+    if test x$USE_TRANSMEM != xno ; then
+        FIND_BERKELEY_DB
+    fi
 fi
 
 CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS $WX_CFLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 
+AC_SUBST(WX_CONFIG)
 AC_SUBST(WX_LIBS)
 AC_SUBST(LDFLAGS)
 AC_SUBST(CXXFLAGS)
+AC_SUBST(RESCOMP)
+AC_SUBST(EXE_SUFFIX)
 
 
 AC_OUTPUT([

@@ -127,6 +127,7 @@ dnl ---------------------------------------------------------------------------
 AC_DEFUN(FIND_BERKELEY_DB,
 [
   USE_TRANSMEM=1
+
   AC_CHECK_LIB(db-3.1, db_create,
      [
          DB_LIB=-ldb-3.1
@@ -171,7 +172,6 @@ AC_DEFUN(FIND_BERKELEY_DB,
         ])
      ])
 
-         
   if test x$USE_TRANSMEM != x0 ; then
       CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM"
   fi

@@ -68,6 +68,7 @@ CC = @CC@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
 CXXFLAGS = @CXXFLAGS@
+EXE_SUFFIX = @EXE_SUFFIX@
 GNOME_DATA_DIR = @GNOME_DATA_DIR@
 KDE_DATA_DIR = @KDE_DATA_DIR@
 LDFLAGS = @LDFLAGS@
@@ -82,14 +83,18 @@ WX_LIBS = @WX_LIBS@
 
 SUBDIRS = resources
 
+RESCOMP = @RESCOMP@
+
 INCLUDES = -I$(top_srcdir)/extras/wx-contrib/include
 
-bin_PROGRAMS = poedit
+@USE_WINDOWS_TRUE@RESOURCE_FILES = poedit_resource.o
 
-poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp                  edframe.h fileviewer.cpp fileviewer.h parser.cpp parser.h                  iso639.cpp iso639.h prefsdlg.cpp prefsdlg.h settingsdlg.cpp                  settingsdlg.h progressinfo.h                  progressinfo.cpp digger.h digger.cpp gexecute.h                  gexecute.cpp summarydlg.h summarydlg.cpp                  findframe.cpp findframe.h commentdlg.h commentdlg.cpp                  transmem.cpp transmem.h transmemupd.cpp transmemupd.h                  manager.h manager.cpp
+bin_PROGRAMS = poedit.exe
+
+poedit_exe_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp                  edframe.h fileviewer.cpp fileviewer.h parser.cpp parser.h                  iso639.cpp iso639.h prefsdlg.cpp prefsdlg.h settingsdlg.cpp                  settingsdlg.h progressinfo.h                  progressinfo.cpp digger.h digger.cpp gexecute.h                  gexecute.cpp summarydlg.h summarydlg.cpp                  findframe.cpp findframe.h commentdlg.h commentdlg.cpp                  transmem.cpp transmem.h transmemupd.cpp transmemupd.h                  manager.h manager.cpp
 
 
-LDADD = -L../extras/wx-contrib/src/gizmos         -L../extras/wx-contrib/src/xrc         -L../extras/wx-contrib/src/xrc/expat         -lmy_xrc -lmy_gizmos -lmy_expat $(WX_LIBS)
+poedit_exe_LDADD = $(RESOURCE_FILES)                -L../extras/wx-contrib/src/gizmos                -L../extras/wx-contrib/src/xrc                -L../extras/wx-contrib/src/xrc/expat                -lmy_xrc -lmy_gizmos -lmy_expat $(WX_LIBS)
 
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
@@ -99,13 +104,13 @@ PROGRAMS =  $(bin_PROGRAMS)
 DEFS = @DEFS@ -I. -I$(srcdir) 
 CPPFLAGS = @CPPFLAGS@
 LIBS = @LIBS@
-poedit_OBJECTS =  catalog.o edapp.o edframe.o fileviewer.o parser.o \
+poedit_exe_OBJECTS =  catalog.o edapp.o edframe.o fileviewer.o parser.o \
 iso639.o prefsdlg.o settingsdlg.o progressinfo.o digger.o gexecute.o \
 summarydlg.o findframe.o commentdlg.o transmem.o transmemupd.o \
 manager.o
-poedit_LDADD = $(LDADD)
-poedit_DEPENDENCIES = 
-poedit_LDFLAGS = 
+@USE_WINDOWS_FALSE@poedit_exe_DEPENDENCIES = 
+@USE_WINDOWS_TRUE@poedit_exe_DEPENDENCIES =  poedit_resource.o
+poedit_exe_LDFLAGS = 
 CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@
@@ -125,8 +130,8 @@ DEP_FILES =  .deps/catalog.P .deps/commentdlg.P .deps/digger.P \
 .deps/gexecute.P .deps/iso639.P .deps/manager.P .deps/parser.P \
 .deps/prefsdlg.P .deps/progressinfo.P .deps/settingsdlg.P \
 .deps/summarydlg.P .deps/transmem.P .deps/transmemupd.P
-SOURCES = $(poedit_SOURCES)
-OBJECTS = $(poedit_OBJECTS)
+SOURCES = $(poedit_exe_SOURCES)
+OBJECTS = $(poedit_exe_OBJECTS)
 
 all: all-redirect
 .SUFFIXES:
@@ -180,9 +185,9 @@ distclean-compile:
 
 maintainer-clean-compile:
 
-poedit: $(poedit_OBJECTS) $(poedit_DEPENDENCIES)
-	@rm -f poedit
-	$(CXXLINK) $(poedit_LDFLAGS) $(poedit_OBJECTS) $(poedit_LDADD) $(LIBS)
+poedit.exe: $(poedit_exe_OBJECTS) $(poedit_exe_DEPENDENCIES)
+	@rm -f poedit.exe
+	$(CXXLINK) $(poedit_exe_LDFLAGS) $(poedit_exe_OBJECTS) $(poedit_exe_LDADD) $(LIBS)
 .cpp.o:
 	$(CXXCOMPILE) -c $<
 
@@ -435,6 +440,11 @@ all-redirect all-am all installdirs-am installdirs mostlyclean-generic \
 distclean-generic clean-generic maintainer-clean-generic clean \
 mostlyclean distclean maintainer-clean
 
+
+poedit_resource.o: poedit.rc
+	$(RESCOMP) -i$(srcdir)/poedit.rc -o poedit_resource.o \
+        --include-dir $(srcdir) --include-dir `@WX_CONFIG@ --prefix`/include \
+        --define __WIN32__ --define __WIN95__
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
