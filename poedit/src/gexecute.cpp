@@ -50,14 +50,14 @@ class MyPipedProcess : public wxProcess
         
         bool HasInput()
         {
-            bool hasInput = FALSE;
+            bool hasInput = false;
 
             wxInputStream* is = GetInputStream();
             if (is && !is->Eof()) 
             {
                 wxTextInputStream tis(*is);
                 m_data->Stdout.Add(tis.ReadLine());
-                hasInput = TRUE;
+                hasInput = true;
             }
 
             wxInputStream* es = GetErrorStream();
@@ -65,7 +65,7 @@ class MyPipedProcess : public wxProcess
             {
                 wxTextInputStream tis(*es);
                 m_data->Stderr.Add(tis.ReadLine());
-                hasInput = TRUE;
+                hasInput = true;
             }
 
             return hasInput;
@@ -93,7 +93,7 @@ bool ExecuteGettext(const wxString& cmdline)
     MyPipedProcess *process;
 
     process = new MyPipedProcess(&pdata);
-    int pid = wxExecute(cmdline, FALSE, process);
+    int pid = wxExecute(cmdline, false, process);
 
     if (pid == 0)
     {
