@@ -192,7 +192,8 @@ LanguageStruct isoLanguages[] =
     {_T("yo"), _T("Yoruba")},
 
     {_T("za"), _T("Zhuang")},
-    {_T("zh"), _T("Chinese")},
+    {_T("zh_CN"), _T("Simplified Chinese")},
+    {_T("zh_TW"), _T("Traditional Chinese")},
     {_T("zu"), _T("Zulu")},
     
     {NULL, NULL}
