@@ -1130,7 +1130,7 @@ wxRegEx CatalogData::ms_tokenExtraction(
 
 bool CatalogData::CheckPrintfCorrectness()
 {
-    if (!IsInFormat(_T("c")))
+    if (!IsTranslated() || !IsInFormat(_T("c")))
         return true;
 
     // Added by Frédéric Giudicelli (info@newpki.org)
