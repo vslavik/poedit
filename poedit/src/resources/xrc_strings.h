@@ -43,7 +43,7 @@ _("&Show references");
 _("&Find...");
 _("Translation is &fuzzy");
 _("Edit &comment");
-_("&Catalog");
+_("C&atalog");
 _("&Update from sources");
 _("Update from &POT file...");
 _("&Automatically translate using TM");
