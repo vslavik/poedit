@@ -364,13 +364,6 @@ void CatalogParser::Parse()
         while (line == _T("#,") || line == _T("#:") || line == _T("#."))
             line = ReadTextLine(m_textFile, m_conv);
 
-        // auto comments:
-        if (ReadParam(line, _T("#. "), dummy))
-        {
-            mautocomments.Add(dummy);
-            line = ReadTextLine(m_textFile, m_conv);
-        }
- 
         // flags:
         // Can't we have more than one flag, now only the last is kept ...
         if (ReadParam(line, _T("#, "), dummy))
@@ -379,8 +372,15 @@ void CatalogParser::Parse()
             line = ReadTextLine(m_textFile, m_conv);
         }
         
+        // auto comments:
+        else if (ReadParam(line, _T("#. "), dummy))
+        {
+            mautocomments.Add(dummy);
+            line = ReadTextLine(m_textFile, m_conv);
+        }
+ 
         // references:
-        if (ReadParam(line, _T("#: "), dummy))
+        else if (ReadParam(line, _T("#: "), dummy))
         {
             // A line may contain several references, separated by white-space.
             // Each reference is in the form "path_name:line_number"
@@ -519,7 +519,8 @@ void CatalogParser::Parse()
         {
             bool readNewLine = false;
 
-            while (!line.IsEmpty() && line[0u] == _T('#') &&
+            while (!line.IsEmpty() && 
+                    line[0u] == _T('#') &&
                    (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':') && line[1u] != _T('.') )))
             {
                 mcomment << line << _T('\n');
