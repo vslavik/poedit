@@ -83,7 +83,6 @@ fi
 
 case "$USE_DEBUG" in
 yes)	DEBUG_FLAGS="-g -Wall -O0"
-	WX_CONFIG_NAME="wxgtkd-2.3-config"
     ;;    
 esac
 
@@ -134,7 +133,7 @@ fi
 
 
 
-if $WX_CONFIG_NAME --cxxflags | grep -q WXMSW; then
+if $WX_CONFIG_WITH_ARGS --cxxflags | grep -q WXMSW; then
     use_windows=yes
     
     changequote(<<,>>)
