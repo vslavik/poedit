@@ -1148,8 +1148,9 @@ void poEditFrame::OnListSel(wxListEvent& event)
 
 void poEditFrame::OnListDesel(wxListEvent& event)
 {
-    wxMessageBox(wxString("OnListDesel: ")<<event.GetIndex());
-    UpdateFromTextCtrl(event.GetIndex());
+// OnListDesel does not seem to be called for virtual mode lists
+/*    wxMessageBox(wxString(_T("OnListDesel: "))<<event.GetIndex());
+    UpdateFromTextCtrl(event.GetIndex());*/
     event.Skip();
 }
 
