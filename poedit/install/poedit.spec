@@ -4,7 +4,7 @@
 %define        semistatic    0
 
 # version and release
-%define        VERSION 1.1.6
+%define        VERSION 1.1.7
 %define        RELEASE 1
 
 # default installation directory

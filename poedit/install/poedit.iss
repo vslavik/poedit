@@ -2,9 +2,9 @@
 ; http://www.lerstad.com/istool/
 
 [Setup]
-OutputBaseFilename=poedit116_setup
+OutputBaseFilename=poedit117_setup
 AppName=poEdit
-AppVerName=poEdit 1.1.6
+AppVerName=poEdit 1.1.7
 
 ChangesAssociations=true
 AlwaysShowComponentsList=true
@@ -86,3 +86,6 @@ Name: {app}\bin; Components: core
 Name: core; Description: Core files; Flags: fixed; Types: custom compact full
 Name: docs; Description: Documentation; Types: custom compact full
 Name: i18n; Description: Localization files for the UI; Types: full
+
+[Messages]
+BeveledLabel=poEdit
