@@ -41,7 +41,7 @@ wxString poEditApp::GetAppPath() const
 #if defined(__UNIX__)
     wxString home;
     if (!wxGetEnv(_T("POEDIT_PREFIX"), &home))
-        home = POEDIT_PREFIX;
+        home = wxString::FromAscii(POEDIT_PREFIX);
     return home;
 #elif defined(__WXMSW__)
     wxString path = wxConfigBase::Get()->Read(_T("application_path"), wxEmptyString);

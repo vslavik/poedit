@@ -50,9 +50,9 @@ static inline bool IsForLang(const wxString& filename, const wxString& lang,
                              bool variants = true)
 {
 #ifdef __WINDOWS__
-    #define LC_MESSAGES_STR "/lc_messages"
+    #define LC_MESSAGES_STR _T("/lc_messages")
 #else
-    #define LC_MESSAGES_STR "/LC_MESSAGES"
+    #define LC_MESSAGES_STR _T("/LC_MESSAGES")
 #endif
     wxString base, dir;
     wxSplitPath(filename, &dir, &base, NULL);

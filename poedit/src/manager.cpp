@@ -63,11 +63,11 @@ ManagerFrame *ManagerFrame::ms_instance = NULL;
 
 ManagerFrame::ManagerFrame() :
     wxFrame(NULL, -1, _("poEdit - Catalogs manager"), wxPoint(
-                                 wxConfig::Get()->Read("manager_x", -1),
-                                 wxConfig::Get()->Read("manager_y", -1)),
+                                 wxConfig::Get()->Read(_T("manager_x"), -1),
+                                 wxConfig::Get()->Read(_T("manager_y"), -1)),
                              wxSize(
-                                 wxConfig::Get()->Read("manager_w", 400),
-                                 wxConfig::Get()->Read("manager_h", 300)),
+                                 wxConfig::Get()->Read(_T("manager_w"), 400),
+                                 wxConfig::Get()->Read(_T("manager_h"), 300)),
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
 {
     SetIcon(wxICON(appicon));
