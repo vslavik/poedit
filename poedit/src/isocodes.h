@@ -14,3 +14,6 @@ extern LanguageStruct isoCountries[];
 
 extern const wxChar *LookupLanguageCode(const wxChar *language);
 extern const wxChar *LookupCountryCode(const wxChar *country);
+
+extern bool IsKnownLanguageCode(const wxChar *code);
+extern bool IsKnownCountryCode(const wxChar *code);

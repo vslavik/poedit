@@ -448,7 +448,7 @@ LanguageStruct isoCountries[] =
 };
 
 
-static const wxChar *DoLookup(const wxChar *lng, LanguageStruct *a)
+static const wxChar *DoLookupByLang(const wxChar *lng, LanguageStruct *a)
 {
     if (lng == NULL)
         return NULL;
@@ -460,12 +460,34 @@ static const wxChar *DoLookup(const wxChar *lng, LanguageStruct *a)
     return NULL;
 }
 
+static const wxChar *DoLookupByIso(const wxChar *iso, LanguageStruct *a)
+{
+    if (iso == NULL)
+        return NULL;
+    for (size_t i = 0; a[i].iso != NULL; i++)
+    {
+        if (wxStricmp(a[i].iso, iso) == 0)
+            return a[i].lang;
+    }
+    return NULL;
+}
+
 const wxChar *LookupLanguageCode(const wxChar *language)
 {
-    return DoLookup(language, isoLanguages);
+    return DoLookupByLang(language, isoLanguages);
 }
 
 const wxChar *LookupCountryCode(const wxChar *country)
 {
-    return DoLookup(country, isoCountries);
+    return DoLookupByLang(country, isoCountries);
+}
+
+bool IsKnownLanguageCode(const wxChar *code)
+{
+    return DoLookupByIso(code, isoLanguages) != NULL;
+}
+
+bool IsKnownCountryCode(const wxChar *code)
+{
+    return DoLookupByIso(code, isoCountries) != NULL;
 }

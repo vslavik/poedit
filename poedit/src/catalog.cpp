@@ -25,12 +25,14 @@
 #include <wx/textfile.h>
 #include <wx/strconv.h>
 #include <wx/msgdlg.h>
+#include <wx/filename.h>
 
 #include "catalog.h"
 #include "digger.h"
 #include "gexecute.h"
 #include "progressinfo.h"
 #include "summarydlg.h"
+#include "isocodes.h"
 
 
 #include "wx/arrimpl.cpp"
@@ -1226,4 +1228,44 @@ bool CatalogData::ValidateTokensString(const wxString& from,
         return false;
 
     return true;
+}
+        
+
+wxString Catalog::GetLocaleCode() const
+{
+    wxString lang;
+
+    // was the language explicitly specified?
+    if (!m_header.Language.empty())
+    {
+        lang = LookupLanguageCode(m_header.Language.c_str());
+        if (!m_header.Country.empty())
+        {
+            lang += _T('_');
+            lang += LookupCountryCode(m_header.Country.c_str());
+        }
+    }
+
+    // if not, can we deduce it from filename?
+    if (lang.empty() && !m_fileName.empty())
+    {
+        wxString name;
+        wxFileName::SplitPath(m_fileName, NULL, &name, NULL);
+        
+        if (name.length() == 2)
+        {
+            if (IsKnownLanguageCode(name))
+                lang = name;
+        }
+        else if (name.length() == 5 && name[2u] == _T('_'))
+        {
+            if (IsKnownLanguageCode(name.Mid(0, 2)) &&
+                    IsKnownCountryCode(name.Mid(3, 2)))
+                lang = name;
+        }
+    }
+
+    wxLogTrace(_T("poedit"), _T("catalog lang is '%s'"), lang.c_str());
+    
+    return lang;
 }

@@ -175,6 +175,11 @@ class Catalog
         /// Appends content of \cat to this catalog.
         void Append(Catalog& cat);
 
+        /** Returns xx_YY ISO code of catalog's language if either the poEdit
+            extensions headers are present or if filename is known and is in
+            the xx[_YY] form, otherwise returns empty string. */
+        wxString GetLocaleCode() const;
+
 
     protected:
         /** Merges the catalog with reference catalog
@@ -202,7 +207,7 @@ class Catalog
             \return true if the merge was OK'ed by the user, false otherwise
          */
         bool ShowMergeSummary(Catalog *refcat);
-            
+ 
     private:
         wxHashTable *m_data;
         CatalogDataArray m_dataArray;
