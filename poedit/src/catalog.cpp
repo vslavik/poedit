@@ -444,13 +444,16 @@ static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
     size_t cnt = catalog.GetCount();
     for (size_t i = 0; i < cnt; i++)
     {
+        const wxString& orig = catalog[i].GetTranslation();
+        if (orig.IsEmpty())
+            continue;
 #if !wxUSE_UNICODE
         wxString trans = 
-            wxString(catalog[i].GetTranslation().wc_str(wxConvUTF8), conv);
+            wxString(orig.wc_str(wxConvUTF8), conv);
         if (!trans)
             return false;
 #else
-        if (!catalog[i].GetTranslation().mb_str(conv))
+        if (!orig.mb_str(conv))
             return false;
 #endif
         
