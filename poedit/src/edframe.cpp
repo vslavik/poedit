@@ -250,7 +250,7 @@ class ListHandler : public wxEvtHandler
             {
                 if (m_text->IsShown())
                     m_text->SetFocus();
-                else
+                else if (!m_text2->empty())
                     (*m_text2)[0]->SetFocus();
             }
             else
@@ -1126,7 +1126,7 @@ void poEditFrame::OnListSel(wxListEvent& event)
     {
         if (m_textTrans->IsShown())
             m_textTrans->SetFocus();
-        else
+        else if (!m_textTransPlural.empty())
             m_textTransPlural[0]->SetFocus();
     }
 }
@@ -1292,7 +1292,7 @@ void poEditFrame::OnShadedListFlag(wxCommandEvent& event)
 
 void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
 {
-    if (m_textTransPlural.size() > 0)
+    if (!m_textTransPlural.empty())
     {
         wxString orig = m_textOrigPlural->GetValue();
         for (size_t i = 0; i < m_textTransPlural.size(); i++)
@@ -2356,6 +2356,9 @@ void poEditFrame::EndItemValidation()
         
 void poEditFrame::ShowPluralFormUI(bool show)
 {
+    if (show && (!m_catalog || m_catalog->GetPluralFormsCount() == 0))
+        show = false;
+
     wxSizer *origSizer = m_textOrigPlural->GetContainingSizer();
     origSizer->Show(m_textOrigPlural, show);
     origSizer->Show(m_labelSingular, show);
@@ -2371,10 +2374,10 @@ void poEditFrame::ShowPluralFormUI(bool show)
 
 void poEditFrame::RecreatePluralTextCtrls()
 {
-    m_pluralNotebook->DeleteAllPages();
     for (size_t i = 0; i < m_textTransPlural.size(); i++)
         m_textTransPlural[i]->PopEventHandler(true/*delete*/);
     m_textTransPlural.clear();
+    m_pluralNotebook->DeleteAllPages();
 
     if (!m_catalog)
         return;
