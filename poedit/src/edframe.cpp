@@ -986,7 +986,7 @@ void poEditFrame::OnNew(wxCommandEvent& event)
         }
         if (!ok)
         {
-            delete m_catalog;
+            delete catalog;
             return;
         }
     }
