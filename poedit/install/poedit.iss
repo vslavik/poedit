@@ -41,6 +41,7 @@ Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit; Components: i18n
 Source: install\license.txt; DestDir: {app}\doc; DestName: license.txt; Components: docs
 Source: install\news.txt; DestDir: {app}\doc; DestName: news.txt; Components: docs
 Source: BUILD-mingw\src\resources\resources.zip; DestDir: {app}\share\poedit; DestName: resources.zip; Components: core
+Source: extras\win32-gettext\iconv.dll; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\xgettext.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgmerge.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgunfmt.exe; DestDir: {app}\bin; Components: core
