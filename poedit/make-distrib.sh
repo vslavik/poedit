@@ -5,7 +5,7 @@
 # $Id$
 #
 
-VERSION=1.2.2
+VERSION=1.2.3
 
 #(
 #cd docs_classes
@@ -39,6 +39,7 @@ find_win32_files()
 {
   echo \
 "docs/chm/*.chm
+src/icons/poedit.ico
 poedit.dsw
 poedit.dsp"
 ls -1 install/{*.txt,*.rtf,*.iss}
