@@ -49,7 +49,9 @@ enum
     EDC_TEXTORIG,
     EDC_TEXTTRANS,
     
-    ED_POPUP = 2000
+    ED_POPUP_REFS = 2000, 
+    ED_POPUP_TRANS = 3000,
+    ED_POPUP_DUMMY = 4000
 };
 
 // colours used in the list:
@@ -113,9 +115,11 @@ END_EVENT_TABLE()
 class KeysHandler : public wxEvtHandler
 { 
     public:
-            KeysHandler(wxListCtrl *list, wxTextCtrl *text, Catalog **catalog, int *sel, int *selitem) :
+            KeysHandler(wxListCtrl *list, wxTextCtrl *text, poEditFrame *frame,
+                        int *sel, int *selitem, bool *multiline) :
                      wxEvtHandler(), m_list(list), m_text(text),
-                     m_catalog(catalog), m_sel(sel), m_selItem(selitem) {}
+                     m_frame(frame), m_sel(sel), m_selItem(selitem),
+                     m_multiLine(multiline) {}
 
     private:
             void OnKeyDown(wxKeyEvent& event)
@@ -123,14 +127,18 @@ class KeysHandler : public wxEvtHandler
                 switch (event.KeyCode())
                 {
                     case WXK_UP:
-                        if (*m_sel > 0)
+                        if (*m_multiLine && !event.ControlDown())
+                            event.Skip();
+                        else if (*m_sel > 0)
                         {
                             m_list->SetItemState(*m_sel - 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                             m_list->EnsureVisible(*m_sel - 1);
                         }
                         break;
                     case WXK_DOWN:
-                        if (*m_sel < m_list->GetItemCount() - 1)
+                        if (*m_multiLine && !event.ControlDown())
+                            event.Skip();
+                        else if (*m_sel < m_list->GetItemCount() - 1)
                         {
                             m_list->SetItemState(*m_sel + 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                             m_list->EnsureVisible(*m_sel + 1);
@@ -181,22 +189,11 @@ class KeysHandler : public wxEvtHandler
                 if (item != -1 && (flags & wxLIST_HITTEST_ONITEM))
                     m_list->SetItemState(item, wxLIST_STATE_SELECTED, 
                                                wxLIST_STATE_SELECTED);
-            
-                if (m_catalog && *m_catalog)
-                {   
-                    const wxArrayString& refs = (**m_catalog)[*m_selItem].GetReferences();
-                    wxMenu *menu = new wxMenu;
-                    #ifdef __WXGTK__
-                    menu->Append(wxID_OK/*anything*/, _("References"));
-                    menu->Enable(wxID_OK, FALSE);
-                    menu->AppendSeparator();
-                    #else
-                    menu->SetTitle(_("References"));
-                    // not supported by wxGTK :(
-                    #endif
-                    for (unsigned i = 0; i < refs.GetCount(); i++)
-                        menu->Append(ED_POPUP + i, refs[i]);
 
+                wxMenu *menu = (m_frame) ? 
+                               m_frame->GetPopupMenu(*m_selItem) : NULL;
+                if (menu)
+                {  
                     m_list->PopupMenu(menu, event.GetPosition());
                     delete menu;
                 }
@@ -207,8 +204,9 @@ class KeysHandler : public wxEvtHandler
             
             wxListCtrl *m_list;
             wxTextCtrl *m_text;
-            Catalog **m_catalog;
+            poEditFrame *m_frame;
             int *m_sel, *m_selItem;
+            bool *m_multiLine;
 };
 
 BEGIN_EVENT_TABLE(KeysHandler, wxEvtHandler)
@@ -239,7 +237,10 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU                 (XMLID("menu_references"),  poEditFrame::OnReferencesMenu)
    EVT_MENU                 (XMLID("menu_fullscreen"),  poEditFrame::OnFullscreen) 
    EVT_MENU                 (XMLID("menu_find"),        poEditFrame::OnFind)
-   EVT_MENU_RANGE           (ED_POPUP, ED_POPUP + 100, poEditFrame::OnReference)
+   EVT_MENU_RANGE           (ED_POPUP_REFS, ED_POPUP_REFS + 999, poEditFrame::OnReference)
+#ifdef USE_TRANSMEM
+   EVT_MENU_RANGE           (ED_POPUP_TRANS, ED_POPUP_TRANS + 999, poEditFrame::OnAutoTranslate)
+#endif
    EVT_LIST_ITEM_SELECTED   (EDC_LIST,       poEditFrame::OnListSel)
    EVT_LIST_ITEM_DESELECTED (EDC_LIST,       poEditFrame::OnListDesel)
    EVT_CLOSE                (                poEditFrame::OnCloseWindow)
@@ -262,8 +263,10 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
                                  wxConfig::Get()->Read("frame_h", 400)),
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
     m_catalog(NULL), 
+#ifdef USE_TRANSMEM
     m_transMem(NULL),
     m_transMemLoaded(false),
+#endif    
     m_title(title), 
     m_list(NULL),
     m_modified(false),
@@ -273,6 +276,7 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
     wxConfigBase *cfg = wxConfig::Get();
  
     m_displayQuotes = (bool)cfg->Read("display_quotes", (long)false);
+    m_multiLine = cfg->Read("multiline_textctrl", true);
 
     SetIcon(wxICON(appicon));
 
@@ -299,9 +303,13 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
     wxPanel *panel = new wxPanel(m_splitter);
 
     m_list = new poEditListCtrl(m_splitter, EDC_LIST, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
-    
-    m_textOrig = new wxTextCtrl(panel, EDC_TEXTORIG, "", wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY);
-    m_textTrans = new wxTextCtrl(panel, EDC_TEXTTRANS, "", wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+
+    m_textOrig = new wxTextCtrl(panel, EDC_TEXTORIG, "", 
+                                wxDefaultPosition, wxDefaultSize, 
+                                wxTE_MULTILINE | wxTE_READONLY);
+    m_textTrans = new wxTextCtrl(panel, EDC_TEXTTRANS, "", 
+                                wxDefaultPosition, wxDefaultSize, 
+                                wxTE_MULTILINE);
     m_textTrans->SetFocus();
     
     wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
@@ -314,9 +322,11 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
     m_splitter->SetMinimumPaneSize(40);
     m_splitter->SplitHorizontally(m_list, panel, cfg->Read("splitter", 240L));
 
-    KeysHandler *hand = new KeysHandler(m_list, m_textTrans, NULL, &m_sel, &m_selItem);
+    KeysHandler *hand = new KeysHandler(m_list, m_textTrans, NULL, 
+                                        &m_sel, &m_selItem, &m_multiLine);
     m_textTrans->PushEventHandler(hand);
-    m_list->PushEventHandler(new KeysHandler(m_list, m_textTrans, &m_catalog, &m_sel, &m_selItem));
+    m_list->PushEventHandler(new KeysHandler(m_list, m_textTrans, this, 
+                                             &m_sel, &m_selItem, &m_multiLine));
 
     CreateStatusBar();
 
@@ -349,13 +359,15 @@ poEditFrame::~poEditFrame()
     cfg->Write("display_quotes", m_displayQuotes);
 
     m_history.Save(*cfg);
-    
+
+#ifdef USE_TRANSMEM    
     delete m_transMem;
+#endif
     delete m_catalog;
 }
 
 
-
+#ifdef USE_TRANSMEM
 TranslationMemory *poEditFrame::GetTransMem()
 {
     wxConfigBase *cfg = wxConfig::Get();
@@ -406,6 +418,7 @@ TranslationMemory *poEditFrame::GetTransMem()
         return m_transMem;
     }
 }
+#endif
 
 
 
@@ -522,8 +535,10 @@ void poEditFrame::OnNew(wxCommandEvent& event)
     UpdateTitle();
     UpdateStatusBar();
 
+#ifdef USE_TRANSMEM
     delete m_transMem;
     m_transMemLoaded = false;
+#endif    
 }
 
 
@@ -550,7 +565,11 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
     
     dlg.TransferTo(wxConfig::Get());
     if (dlg.ShowModal() == wxID_OK)
+    {
         dlg.TransferFrom(wxConfig::Get());
+        m_multiLine = wxConfig::Get()->Read("multiline_textctrl", true);
+            // refresh so that textctrl changes behavior
+    }
 }
 
 
@@ -560,6 +579,7 @@ void poEditFrame::OnUpdate(wxCommandEvent&)
     UpdateFromTextCtrl();
     m_modified = m_catalog->Update() || m_modified;
 
+#ifdef USE_TRANSMEM
     if (wxConfig::Get()->Read("use_tm_when_updating", true) &&
         GetTransMem() != NULL)
     {
@@ -591,7 +611,8 @@ void poEditFrame::OnUpdate(wxCommandEvent&)
             pi.UpdateGauge();
         }
     }
-    
+#endif
+
     RefreshControls();
 }
 
@@ -600,8 +621,8 @@ void poEditFrame::OnUpdate(wxCommandEvent&)
 void poEditFrame::OnListSel(wxListEvent& event)
 {
     UpdateToTextCtrl(event.GetIndex());
-
-    if (FindFocus() != m_textTrans) m_textTrans->SetFocus();
+    if (FindFocus() != m_textTrans) 
+        m_textTrans->SetFocus();
 }
 
 
@@ -629,7 +650,8 @@ void poEditFrame::OnReferencesMenu(wxCommandEvent& event)
         int result = wxGetSingleChoiceIndex(_("Please choose the reference you want to show:"), _("References"), 
                           refs.GetCount(), table);
         delete[] table;
-        if (result != -1) ShowReference(result);
+        if (result != -1) 
+            ShowReference(result);
     }
 
 }
@@ -637,7 +659,7 @@ void poEditFrame::OnReferencesMenu(wxCommandEvent& event)
 
 void poEditFrame::OnReference(wxCommandEvent& event)
 {
-    ShowReference(event.GetId() - ED_POPUP);
+    ShowReference(event.GetId() - ED_POPUP_REFS);
 }
 
 
@@ -750,7 +772,7 @@ void poEditFrame::OnFind(wxCommandEvent& event)
 
     if (!f)
         f = new FindFrame(this, m_list, m_catalog);
-    f->Show(TRUE);
+    f->Show(true);
 }
 
 
@@ -861,8 +883,10 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     delete m_catalog;
     m_catalog = new Catalog(catalog);
 
+#ifdef USE_TRANSMEM
     delete m_transMem;
     m_transMemLoaded = false;
+#endif
     
     m_fileName = catalog;
     m_modified = false;
@@ -1046,7 +1070,8 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
     m_catalog->Save(catalog);
     m_fileName = catalog;
     m_modified = false;
-    
+
+#ifdef USE_TRANSMEM
     if (GetTransMem())
     {
         TranslationMemory *tm = GetTransMem();
@@ -1059,12 +1084,66 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
                 tm->Store(dt.GetString(), dt.GetTranslation());
         }
     }
+#endif
 
     m_history.AddFileToHistory(m_fileName);
     UpdateTitle();
 }
 
 
+#ifdef USE_TRANSMEM
+void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
+{
+    int ind = event.GetId() - ED_POPUP_TRANS;
+    (*m_catalog)[m_selItem].SetTranslation(m_autoTranslations[ind]);
+    UpdateToTextCtrl();
+}
+#endif
+
+wxMenu *poEditFrame::GetPopupMenu(size_t item)
+{
+    if (!m_catalog) return NULL;
+    
+    const wxArrayString& refs = (*m_catalog)[item].GetReferences();
+    wxMenu *menu = new wxMenu;
+
+    menu->Append(ED_POPUP_DUMMY+0, _("References:"));
+    menu->Enable(ED_POPUP_DUMMY+0, false);
+    menu->AppendSeparator();
+    for (size_t i = 0; i < refs.GetCount(); i++)
+        menu->Append(ED_POPUP_REFS + i, refs[i]);
+
+#ifdef USE_TRANSMEM
+    menu->AppendSeparator();
+    menu->Append(ED_POPUP_DUMMY+1, _("Automatic translations:"));
+    menu->Enable(ED_POPUP_DUMMY+1, false);
+    menu->AppendSeparator();
+    if (GetTransMem())
+    {
+        wxBusyCursor bcur;
+        CatalogData& dt = (*m_catalog)[item];
+        m_autoTranslations.Clear();
+        if (GetTransMem()->Lookup(dt.GetString(), m_autoTranslations) > 0)
+        {
+            for (size_t i = 0; i < m_autoTranslations.GetCount(); i++)
+            {
+                // Convert from UTF-8 to environment's default charset:
+                wxString s(m_autoTranslations[i].wc_str(wxConvUTF8), wxConvLocal);
+                if (!s)
+                    s = m_autoTranslations[i];
+                menu->Append(ED_POPUP_TRANS + i, s);
+            }
+        }
+        else
+        {
+            menu->Append(ED_POPUP_DUMMY+2, _("none"));
+            menu->Enable(ED_POPUP_DUMMY+2, false);
+        }
+    }
+#endif
+
+    return menu;
+}
 
 
 void poEditFrame::OnAbout(wxCommandEvent&)

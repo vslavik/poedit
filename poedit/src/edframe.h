@@ -52,7 +52,7 @@ class poEditFrame : public wxFrame
         poEditFrame(const wxString& title, 
                     const wxString& catalog = wxEmptyString);
         ~poEditFrame();
-            
+
     private:
         /// Reads catalog, refreshes controls.
         void ReadCatalog(const wxString& catalog);
@@ -71,8 +71,14 @@ class poEditFrame : public wxFrame
         void UpdateTitle();
         /// Updates menu -- disables and enables items.
         void UpdateMenu();
+
+        /// Returns popup menu for given catalog entry.
+        wxMenu *GetPopupMenu(size_t item);
+
+#ifdef USE_TRANSMEM
         /// Initializes translation memory, if enabled
         TranslationMemory *GetTransMem();
+#endif
 
         // Message handlers:
         void OnNew(wxCommandEvent& event);
@@ -98,21 +104,26 @@ class poEditFrame : public wxFrame
         void OnInsertOriginal(wxCommandEvent& event);
         void OnFullscreen(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
-
+#ifdef USE_TRANSMEM
+        void OnAutoTranslate(wxCommandEvent& event);
+#endif
         DECLARE_EVENT_TABLE()
 
     private:
         Catalog *m_catalog;
         wxString m_fileName;
         
+#ifdef USE_TRANSMEM
         TranslationMemory *m_transMem;
         bool m_transMemLoaded;
+        wxArrayString m_autoTranslations;
+#endif
 
-        #ifdef __WXMSW__
+#ifdef __WXMSW__
         wxCHMHelpController m_help;
-        #else
+#else
         wxHtmlHelpController m_help;
-        #endif
+#endif
 
         wxString m_title;
         wxSplitterWindow *m_splitter;
@@ -122,8 +133,11 @@ class poEditFrame : public wxFrame
         bool m_hasObsoleteItems;
         bool m_displayQuotes;          
         int m_sel, m_selItem;
+        bool m_multiLine;
         wxFileHistory m_history;
         wxString m_edittedTextOrig;
+        
+        friend class KeysHandler;
 };
 
 
