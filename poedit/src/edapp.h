@@ -54,6 +54,9 @@ class poEditApp : public wxApp
          */
         void SetDefaultCfg(wxConfigBase *cfg);
         
+        void OnInitCmdLine(wxCmdLineParser& parser);
+        bool OnCmdLineParsed(wxCmdLineParser& parser);
+        
     private:
         wxLocale m_locale;
 };

@@ -23,6 +23,7 @@
 #include <wx/config.h>
 #include <wx/fs_zip.h>
 #include <wx/image.h>
+#include <wx/cmdline.h>
 #include <wx/log.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/xrc/xh_all.h>
@@ -57,9 +58,11 @@ wxString poEditApp::GetAppPath() const
 
 wxString poEditApp::GetAppVersion() const
 {
-    return _T("1.1.6");
+    return _T("1.1.7");
 }
 
+
+static wxArrayString gs_filesToOpen;
 
 #ifdef __UNIX__
 #define CFG_FILE (home + _T(".poedit/config"))
@@ -139,10 +142,19 @@ bool poEditApp::OnInit()
             dlg.TransferFrom(wxConfig::Get());
     }
       
-    if (argc <= 1 && wxConfig::Get()->Read(_T("manager_startup"), (long)false))
-        ManagerFrame::Create()->Show(true);
+    if (gs_filesToOpen.GetCount() == 0)
+     
+    {
+        if (wxConfig::Get()->Read(_T("manager_startup"), (long)false))
+            ManagerFrame::Create()->Show(true);
+        else
+            poEditFrame::Create(wxEmptyString);
+    }
     else
-        poEditFrame::Create(argc > 1 ? argv[1] : wxEmptyString);
+    {
+        for (size_t i = 0; i < gs_filesToOpen.GetCount(); i++)
+            poEditFrame::Create(gs_filesToOpen[i]);
+    }
 
     return true;
 }
@@ -194,4 +206,21 @@ void poEditApp::SetDefaultCfg(wxConfigBase *cfg)
     }
 
     cfg->Write(_T("version"), GetAppVersion());
+}
+
+void poEditApp::OnInitCmdLine(wxCmdLineParser& parser)
+{
+    wxApp::OnInitCmdLine(parser);
+    parser.AddParam(_T("catalog.po"), wxCMD_LINE_VAL_STRING, 
+                    wxCMD_LINE_PARAM_OPTIONAL | wxCMD_LINE_PARAM_MULTIPLE);
+}
+
+bool poEditApp::OnCmdLineParsed(wxCmdLineParser& parser)
+{
+    if (!wxApp::OnCmdLineParsed(parser))
+        return FALSE;
+
+    for (size_t i = 0; i < parser.GetParamCount(); i++)
+        gs_filesToOpen.Add(parser.GetParam(i));
+    return TRUE;
 }
