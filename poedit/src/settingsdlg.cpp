@@ -25,6 +25,8 @@
 #include <wx/gizmos/editlbox.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
+#include <wx/config.h>
+#include <wx/tokenzr.h>
 
 #include "iso639.h"
 #include "settingsdlg.h"
@@ -54,8 +56,21 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
 }
 
 
+#define DEFAULT_CHARSETS \
+    _T(":utf-8:iso-8859-1:iso-8859-2:iso-8859-3:iso-8859-4:iso-8859-5"\
+       ":iso-8859-6:iso-8859-7:iso-8859-8:iso-8859-9:iso-8859-10"\
+       ":iso-8859-11:iso-8859-12:iso-8859-13:iso-8859-14:iso-8859-15:"\
+       ":koi8-r:windows-1250:windows-1251:windows-1252:windows-1253:"\
+       ":windows-1254:windows-1255:windows-1256:windows-1257:")
+
 void SettingsDialog::TransferTo(Catalog *cat)
 {
+    wxStringTokenizer tkn(wxConfig::Get()->Read(_T("used_charsets"), 
+                          DEFAULT_CHARSETS), _T(":"), wxTOKEN_STRTOK);
+
+    while (tkn.HasMoreTokens())
+        m_charset->Append(tkn.GetNextToken());
+
     #define SET_VAL(what,what2) m_##what2->SetValue(cat->Header().what)
     SET_VAL(Team, team);
     SET_VAL(TeamEmail, teamEmail);
@@ -102,4 +117,12 @@ void SettingsDialog::TransferFrom(Catalog *cat)
 
     m_keywords->GetStrings(arr);
     cat->Header().Keywords = arr;
+
+    wxString charsets = wxConfig::Get()->Read(_T("used_charsets"), DEFAULT_CHARSETS);
+    wxString charset = m_charset->GetValue().Lower();
+    if (!charsets.Contains(_T(":")+charset+_T(":")))
+    {
+        charsets = _T(":") + charset + charsets;
+        wxConfig::Get()->Write(_T("used_charsets"), charsets);
+    }
 }
