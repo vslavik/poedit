@@ -360,8 +360,9 @@ void CatalogParser::Parse()
 
     while (!line.IsEmpty())
     {
-        // ignore empty special tags:
-        while (line == _T("#,") || line == _T("#:") || line == _T("#."))
+        // ignore empty special tags (except for automatic comments which we
+        // DO want to preserve):
+        while (line == _T("#,") || line == _T("#:"))
             line = ReadTextLine(m_textFile, m_conv);
 
         // flags:
