@@ -12,11 +12,6 @@
 
 */
 
-
-#ifdef __GNUG__
-#pragma implementation
-#endif
-
 #include <wx/wxprec.h>
 
 #include <wx/wx.h>
@@ -286,7 +281,11 @@ class TextctrlHandler : public wxEvtHandler
                 event.Skip();
             else 
             {
+#if wxCHECK_VERSION(2,5,1)
+                switch (event.GetKeyCode())
+#else
                 switch (event.KeyCode())
+#endif
                 {
                     case WXK_UP:
                         if (*m_sel > 0)
@@ -609,10 +608,13 @@ poEditFrame::~poEditFrame()
     wxSize sz = GetSize();
     wxPoint pos = GetPosition();
     wxConfigBase *cfg = wxConfig::Get();
-    cfg->Write(_T("frame_w"), (long)sz.x);
-    cfg->Write(_T("frame_h"), (long)sz.y);
-    cfg->Write(_T("frame_x"), (long)pos.x);
-    cfg->Write(_T("frame_y"), (long)pos.y);
+    if (!IsIconized())
+    {
+        cfg->Write(_T("frame_w"), (long)sz.x);
+        cfg->Write(_T("frame_h"), (long)sz.y);
+        cfg->Write(_T("frame_x"), (long)pos.x);
+        cfg->Write(_T("frame_y"), (long)pos.y);
+    }
     if (m_displayCommentWin)
         cfg->Write(_T("bottom_splitter"),
                    (long)m_bottomSplitter->GetSashPosition());
