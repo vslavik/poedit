@@ -436,28 +436,6 @@ void poEditFrame::OnNew(wxCommandEvent& event)
     SettingsDialog dlg(this);
     Catalog *catalog = new Catalog;
     
-    Catalog::HeaderData &dt = catalog->Header();
-    
-    wxDateTime timenow = wxDateTime::Now();
-    int offs = wxDateTime::TimeZone(wxDateTime::Local).GetOffset();
-    dt.CreationDate.Printf("%s%s%02i%02i",
-                                 timenow.Format("%Y-%m-%d %H:%M").c_str(),
-                                 (offs > 0) ? "+" : "-",
-                                 offs / 3600, (abs(offs) / 60) % 60);
-    dt.RevisionDate = dt.CreationDate;
-
-    dt.Language = "";
-    dt.Project = "";
-    dt.Team = "";
-    dt.TeamEmail = "";
-    dt.Charset = "iso8859-1";
-    dt.Translator = wxConfig::Get()->Read("translator_name", "");
-    dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", "");
-    dt.Keywords.Add("_");
-    dt.Keywords.Add("gettext");
-    dt.Keywords.Add("gettext_noop");
-    dt.BasePath = ".";
-    
     dlg.TransferTo(catalog);
     if (dlg.ShowModal() == wxID_OK)
     {

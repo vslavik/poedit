@@ -54,7 +54,10 @@ class Catalog
             Catalog();
             Catalog(const wxString& po_file);
             ~Catalog();
-                        
+            
+            // Creates new, empty header
+            void CreateNewHeader();
+
             // Clear the catalog, remove all entries
             void Clear();
 

@@ -261,6 +261,33 @@ Catalog::Catalog(const wxString& po_file)
 
 
 
+void Catalog::CreateNewHeader()
+{
+    HeaderData &dt = Header();
+    
+    wxDateTime timenow = wxDateTime::Now();
+    int offs = wxDateTime::TimeZone(wxDateTime::Local).GetOffset();
+    dt.CreationDate.Printf("%s%s%02i%02i",
+                                 timenow.Format("%Y-%m-%d %H:%M").c_str(),
+                                 (offs > 0) ? "+" : "-",
+                                 offs / 3600, (abs(offs) / 60) % 60);
+    dt.RevisionDate = dt.CreationDate;
+
+    dt.Language = "";
+    dt.Project = "";
+    dt.Team = "";
+    dt.TeamEmail = "";
+    dt.Charset = "utf-8";
+    dt.Translator = wxConfig::Get()->Read("translator_name", "");
+    dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", "");
+    dt.Keywords.Add("_");
+    dt.Keywords.Add("gettext");
+    dt.Keywords.Add("gettext_noop");
+    dt.BasePath = ".";
+}
+
+
+
 bool Catalog::Load(const wxString& po_file)
 {
     wxTextFile f;
