@@ -42,7 +42,7 @@ find_win32_files()
 poedit.dsw
 poedit.dsp"
 ls -1 install/{*.txt,*.rtf,*.iss}
-ls -1 src/*.{ico,rc}
+ls -1 src/*.rc
 ls -1 extras/win32-gettext/*.{exe,COPYING}
 ls -1 extras/win32-db3/*.{h,dll}
 }
