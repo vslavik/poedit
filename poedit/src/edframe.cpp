@@ -442,6 +442,7 @@ poEditFrame::poEditFrame() :
                                  wxConfig::Get()->Read(_T("frame_h"), 400)),
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
     m_validityCheckingPosition(-1),
+    m_checkItemValidity(-1),
     m_catalog(NULL), 
 #ifdef USE_TRANSMEM
     m_transMem(NULL),
@@ -1384,7 +1385,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             listitem.SetBackgroundColour(g_ItemColourUntranslated[item % 2]);
         else if (data->IsFuzzy())
             listitem.SetBackgroundColour(g_ItemColourFuzzy[item % 2]);
-        else if (!data->IsValid())
+        else if (!wxGetApp().IsInYield() && !data->IsValid())
             listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
         else
             listitem.SetBackgroundColour(g_ItemColourNormal[item % 2]);
@@ -1395,7 +1396,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             listitem.SetBackgroundColour(g_ItemColourUntranslated[0]);
         else if (data->IsFuzzy())
             listitem.SetBackgroundColour(g_ItemColourFuzzy[0]);
-        else if (!data->IsValid())
+        else if (!wxGetApp().IsInYield() && !data->IsValid())
             listitem.SetBackgroundColour(g_ItemColourInvalid[0]);
         else
             listitem.SetBackgroundColour(g_ItemColourNormal[0]);
@@ -1411,6 +1412,9 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     }
 
     UpdateStatusBar();
+
+    if (wxGetApp().IsInYield())
+        m_checkItemValidity = item;
 }
 
 
@@ -1462,6 +1466,7 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
 {
     // stop checking entries in the background:
     m_validityCheckingPosition = -1;
+    m_checkItemValidity = -1;
     CatalogData::EnableValidityChecking(false);
 
     delete m_catalog;
@@ -2068,6 +2073,13 @@ void poEditFrame::OnIdle(wxIdleEvent& event)
     // avoid reentrancy problems (GettextExecute calling wxYield):
     if (wxGetApp().IsInYield())
         return;
+
+    if (m_checkItemValidity != -1)
+    {
+        CheckItemValidity(m_checkItemValidity);
+        m_checkItemValidity = -1;
+        event.RequestMore();
+    }
     
     if (m_validityCheckingPosition != -1)
     {
@@ -2075,6 +2087,23 @@ void poEditFrame::OnIdle(wxIdleEvent& event)
             event.RequestMore();
     }
     event.Skip();
+}
+
+void poEditFrame::CheckItemValidity(int item)
+{
+    int index = m_list->GetItemData(item);
+    
+    if (!(*m_catalog)[index].IsValid())
+    {
+        wxListItem listitem;
+        listitem.SetId(item);
+        m_list->GetItem(listitem);
+        if (gs_shadedList)
+            listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
+        else
+            listitem.SetBackgroundColour(g_ItemColourInvalid[0]);
+        m_list->SetItem(listitem);
+    }
 }
 
 bool poEditFrame::CheckItemsValidityStep()
@@ -2089,22 +2118,9 @@ bool poEditFrame::CheckItemsValidityStep()
     }
 
     int item = m_validityCheckingPosition++;
-    int index = m_list->GetItemData(item);
-    
+    CheckItemValidity(item);
     if ((item % 10) == 0)
         UpdateStatusBar();
-   
-    if (!(*m_catalog)[index].IsValid())
-    {
-        wxListItem listitem;
-        listitem.SetId(item);
-        m_list->GetItem(listitem);
-        if (gs_shadedList)
-            listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
-        else
-            listitem.SetBackgroundColour(g_ItemColourInvalid[0]);
-        m_list->SetItem(listitem);
-    }
     
     return true;
 }

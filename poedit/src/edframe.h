@@ -171,6 +171,7 @@ class poEditFrame : public wxFrame
         bool ExportCatalog(const wxString& filename);
 
         void OnIdle(wxIdleEvent& event);
+        void CheckItemValidity(int item);
         bool CheckItemsValidityStep();
         
         void UpdateDisplayCommentWin();
@@ -179,7 +180,8 @@ class poEditFrame : public wxFrame
 
     private:
         int m_validityCheckingPosition;
-            
+        int m_checkItemValidity;
+        
         bool m_commentWindowEditable;
         Catalog *m_catalog;
         wxString m_fileName;
