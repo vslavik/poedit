@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-01-25 23:11+0100\n"
-"PO-Revision-Date: 2003-11-30 11:11+0100\n"
+"PO-Revision-Date: 2004-01-28 20:36+0100\n"
 "Last-Translator: Lars Dybdahl <lars@dybdahl.dk>\n"
 "Language-Team: English <da@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,9 +25,9 @@ msgid " files..."
 msgstr " filer..."
 
 #: ../src/edframe.cpp:1545 ../src/export_html.cpp:136
-#, fuzzy, c-format
+#, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i tekster (%i er fuzzy, %i er ikke oversat)"
+msgstr "%i tekster (%i fuzzy, %i dårlige tokens, %i ikke oversat)"
 
 #: ../src/resources/xrc_strings.h:56
 msgid "&About..."
@@ -176,9 +176,8 @@ msgid "An item in keywords list:"
 msgstr "Et element i nøgleordslisten:"
 
 #: ../src/export_html.cpp:175
-#, fuzzy
 msgid "Automatic translation"
-msgstr "Automatiske oversættelser:"
+msgstr "Automatisk oversættelse"
 
 #: ../src/edframe.cpp:1765 ../src/edframe.cpp:1769
 msgid "Automatic translations:"
@@ -203,7 +202,7 @@ msgstr "Oversætter automatisk..."
 
 #: ../src/manager.cpp:227
 msgid "Bad Tokens"
-msgstr ""
+msgstr "Dårlige tokens"
 
 #: ../src/resources/xrc_strings.h:138
 msgid "Base path:"
@@ -302,7 +301,7 @@ msgstr "Ryd kommentaren"
 
 #: ../src/resources/xrc_strings.h:71
 msgid "Comment window is editable"
-msgstr ""
+msgstr "Kommentarvinduet er redigerbart"
 
 #: ../src/resources/xrc_strings.h:4
 msgid "Comment:"
@@ -382,9 +381,8 @@ msgid "Don't change format of existing catalogs"
 msgstr "Undlad at ændre formatet af eksisterende kataloger"
 
 #: ../src/resources/xrc_strings.h:34
-#, fuzzy
 msgid "E&xport..."
-msgstr "&Om programmet..."
+msgstr "E&ksporter..."
 
 #: ../src/resources/xrc_strings.h:104
 msgid "Edit"
@@ -441,7 +439,7 @@ msgstr "Fejl ved gemning af katalog"
 
 #: ../src/edframe.cpp:881
 msgid "Export as..."
-msgstr ""
+msgstr "Eksporter som..."
 
 #: ../src/resources/xrc_strings.h:80
 msgid "External editor"
@@ -486,9 +484,8 @@ msgid "Fuzzy"
 msgstr "Fuzzy"
 
 #: ../src/export_html.cpp:181
-#, fuzzy
 msgid "Fuzzy translation"
-msgstr "Oversættelse"
+msgstr "Fuzzy oversættelse"
 
 #: ../src/edframe.cpp:731 ../src/edframe.cpp:847
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
@@ -512,7 +509,7 @@ msgstr "Generer database"
 
 #: ../src/edframe.cpp:883
 msgid "HTML file (*.html)|*.html"
-msgstr ""
+msgstr "HTML fil (*.html)|*.html"
 
 #: ../src/resources/xrc_strings.h:165
 msgid "Help"
@@ -524,7 +521,7 @@ msgstr "Identitet"
 
 #: ../src/resources/xrc_strings.h:72
 msgid "If checked, the comment window will be editable."
-msgstr ""
+msgstr "Kommentarvinduet er redigerbart hvis denne er afkrydset."
 
 #: ../src/resources/xrc_strings.h:112
 msgid "Invocation:"
@@ -632,9 +629,8 @@ msgid "No references to this string found."
 msgstr "Ingen referencer til denne tekst blev fundet."
 
 #: ../src/export_html.cpp:153
-#, fuzzy
 msgid "Notes"
-msgstr "Skrifttyper"
+msgstr "Noter"
 
 #: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
 #: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:106
@@ -661,8 +657,7 @@ msgstr "Åbn kataloghåndteringen når poEdit startes"
 
 #: ../src/resources/xrc_strings.h:83
 msgid "Open source files in editor, not in file viewer"
-msgstr ""
-"Åbn kildefilder i tekstredigeringsværktøjet i stedet for filfremviseren"
+msgstr "Åbn kildefilder i tekstredigeringsværktøjet i stedet for filfremviseren"
 
 #: ../src/edframe.cpp:156 ../src/export_html.cpp:146
 msgid "Original string"
@@ -817,9 +812,8 @@ msgid "Show summary after catalog update"
 msgstr "Vis resume efter katalogopdatering"
 
 #: ../src/resources/xrc_strings.h:119 ../src/resources/xrc_strings.h:136
-#, fuzzy
 msgid "Source code charset:"
-msgstr "Kildekode parsere:"
+msgstr "Kildekode tegnsæt:"
 
 #: ../src/resources/xrc_strings.h:102
 msgid "Source code parsers:"
@@ -879,7 +873,6 @@ msgstr ""
 "(Disse oplysninger bliver kun brug til oversættelsesfilerne)"
 
 #: ../src/resources/xrc_strings.h:114
-#, fuzzy
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -888,16 +881,17 @@ msgid ""
 msgstr ""
 "Dette er kommandoen for at køre parseren.\n"
 "%o erstattes med filnavnet til uddata, %K med\n"
-"listen af nøgleord, %F med listen af inddata filer (se forneden)."
+"listen af nøgleord, %F med listen af inddata filer,\n"
+"%C med tegnsæt flaget (se forneden)."
 
 #: ../src/resources/xrc_strings.h:120
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "This will be attached to the command line\n"
 "only if source codecharset was given. %c expands to charset value."
 msgstr ""
-"Dette vil blive vedhæftet til kommandolinien en\n"
-"gang for hver inddatafil. %f erstattes med filnavnet."
+"Dette vil blive vedhæftet til kommandolinien, dog kun\n"
+"hvis kildekodens tegnsæt er givet. %c erstattes med tegnsætværdien."
 
 #: ../src/resources/xrc_strings.h:118
 #, c-format
@@ -996,8 +990,7 @@ msgstr "Opdaterer katalog..."
 
 #: ../src/edframe.cpp:993
 msgid "Updating the catalog failed. Click on 'More>>' for details."
-msgstr ""
-"Opdatering af katalog fejlede. Klik på 'Mere>>' for yderligere oplysninger."
+msgstr "Opdatering af katalog fejlede. Klik på 'Mere>>' for yderligere oplysninger."
 
 #: ../src/resources/xrc_strings.h:87
 msgid "Use custom font for text fields"
@@ -1060,8 +1053,7 @@ msgid "poEdit did not find any files in scanned directories."
 msgstr "poEdit fandt ingen filer i de skannede filmapper."
 
 #: ../src/edapp.cpp:54
-msgid ""
-"poEdit installation is broken, cannot find application's home directory."
+msgid "poEdit installation is broken, cannot find application's home directory."
 msgstr ""
 "poEdit installationen er fejlbehæftet, kan ikke finde hjemmemappen for "
 "programmet."
@@ -1081,3 +1073,4 @@ msgstr "version"
 
 #~ msgid "Updating translation memory"
 #~ msgstr "Opdaterer oversættelseshukommelsen"
+
