@@ -57,8 +57,10 @@ void ParsersDB::Read(wxConfigBase *cfg)
 
 void ParsersDB::Write(wxConfigBase *cfg)
 {
+#if 0 // asserts on wxGTK, some bug in wx
     if (cfg->HasGroup("Parsers"))
         cfg->DeleteGroup("Parsers");
+#endif
 
     cfg->SetExpandEnvVars(false);
     
