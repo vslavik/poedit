@@ -1,6 +1,6 @@
 
 POEDIT_LINGUAS = bg cs de et fr hr it lv nl nn pl sk sv_SE ta tr zh_TW zh_CN \
-                 ca ka ro el ja ru no
+                 ca ka ro el ja ru no is
 WXWIN_LINGUAS  =    cs de    fr    it    nl          sv       tr       zh_CN \
                                 ru
 
