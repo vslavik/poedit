@@ -26,6 +26,8 @@
 
 
 
+class wxTextFile;
+
 class CatalogData;
 WX_DECLARE_OBJARRAY(CatalogData, CatalogDataArray);
     
@@ -44,6 +46,8 @@ class Catalog
                          
                 wxArrayString SearchPaths, Keywords;
                 wxString BasePath;
+
+                wxString Comment;
             };
             
 
@@ -102,10 +106,10 @@ class Catalog
             void Merge(Catalog *refcat);
 
             // Returns list of strings that are new in reference catalog
-	    // (compared to this one) and that are not present in refcat
-	    // (i.e. are obsoleted)
-	    void GetMergeSummary(Catalog *refcat, 
-	                         wxArrayString& snew, wxArrayString& sobsolete);
+	        // (compared to this one) and that are not present in refcat
+	        // (i.e. are obsoleted)
+	        void GetMergeSummary(Catalog *refcat, 
+	                             wxArrayString& snew, wxArrayString& sobsolete);
             
     private:
             
@@ -117,7 +121,37 @@ class Catalog
             wxFontEncoding m_FileEncoding, m_MemEncoding;
             
             HeaderData m_Header;
+            
+            friend class LoadParser;
 };
+
+
+
+// Internal class - used for parsing of po files
+
+class CatalogParser
+{
+    public:
+            CatalogParser(wxTextFile *f) : m_TextFile(f) {}
+            virtual ~CatalogParser() {}
+
+            // Parses the entire file, calls OnEntry each time
+            // new msgid/msgstr pair is found
+            void Parse();
+            
+    protected:
+            // Called when new entry was parsed. Parsing continues
+            // if returned value is true and is cancelled if it 
+            // is false
+            virtual bool OnEntry(const wxString& msgid,
+                                 const wxString& msgstr,
+                                 const wxString& flags,
+                                 const wxArrayString& references,
+                                 const wxString& comment) = 0;
+                                 
+            wxTextFile *m_TextFile;
+};
+
 
 
 
@@ -131,12 +165,14 @@ class CatalogData : public wxObject
                     : wxObject(), m_String(str), 
                       m_Translation(translation), 
                       m_References(),
-                      m_IsTranslated(!translation.IsEmpty()),
-                      m_IsFuzzy(false) {}
+                      m_IsFuzzy(false),
+                      m_IsTranslated(!translation.IsEmpty()) {}
     
             const wxString& GetString() const { return m_String; }
             const wxString& GetTranslation() const { return m_Translation; }
             const wxArrayString& GetReferences() const { return m_References; }
+            const wxString& GetComment() const { return m_Comment; }
+            
             
             void AddReference(const wxString& ref)
             {
@@ -155,6 +191,7 @@ class CatalogData : public wxObject
                 m_Translation = t; 
                 m_IsTranslated = !t.IsEmpty();
             }
+            void SetComment(const wxString& c) { m_Comment = c; }
             
             // set/get gettext flags, i.e. empty string or e.g.
             // "#, fuzzy"
@@ -170,10 +207,12 @@ class CatalogData : public wxObject
             
     private:
             wxString m_String, m_Translation;
+            wxArrayString m_References;
             bool m_IsFuzzy, m_IsTranslated;
             wxString m_MoreFlags;
-            wxArrayString m_References;
+            wxString m_Comment;
 };
+
 
 
 
