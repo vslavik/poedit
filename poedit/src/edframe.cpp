@@ -1141,6 +1141,28 @@ static int GetItemIcon(const CatalogData& item)
     return 0;
 }
 
+inline wxString convertToLocalCharset(const wxString& str)
+{
+#if !wxUSE_UNICODE
+    wxString s2(str.wc_str(wxConvUTF8), wxConvLocal);
+    if (s2.empty() /*conversion failed*/)
+        return str;
+    else
+        return s2;
+#else
+    return str;
+#endif
+}
+
+inline wxString convertFromLocalCharset(const wxString& str)
+{
+#if !wxUSE_UNICODE
+    return s2(str.wc_str(wxConvLocal), wxConvUTF8);
+#else
+    return str;
+#endif
+}
+
 void poEditFrame::UpdateFromTextCtrl(int item)
 {
     if (m_catalog == NULL) return;
@@ -1175,11 +1197,12 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             i++;
         }
 
+#if !wxUSE_UNICODE
     // convert to UTF-8 using user's environment default charset:
-    wxString newvalUtf8 = 
-        wxString(newval.wc_str(wxConvLocal), wxConvUTF8);
+    newval = convertFromLocalCharset(newval);
+#endif
 
-    m_catalog->Translate(key, newvalUtf8);
+    m_catalog->Translate(key, newval);
     m_list->SetItem(item, 1, newval.substr(0, m_list->GetMaxColChars()));
 
     CatalogData* data = m_catalog->FindItem(key);
@@ -1227,7 +1250,6 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 }
 
 
-
 void poEditFrame::UpdateToTextCtrl(int item)
 {
     if (m_catalog == NULL) return;
@@ -1248,13 +1270,15 @@ void poEditFrame::UpdateToTextCtrl(int item)
     t_t = quote + (*m_catalog)[ind].GetTranslation() + quote;
     t_t.Replace(_T("\\n"), _T("\\n\n"));
     
+#if !wxUSE_UNICODE
     // Convert from UTF-8 to environment's default charset:
-    wxString t_t2(t_t.wc_str(wxConvUTF8), wxConvLocal);
-    if (!t_t2)
-        t_t2 = t_t;
+    t_o = convertToLocalCharset(t_o);
+    t_t = convertToLocalCharset(t_t);
+    t_c = convertToLocalCharset(t_c);
+#endif
     
-    m_textTrans->SetValue(t_t2);
-    m_edittedTextOrig = t_t2;
+    m_textTrans->SetValue(t_t);
+    m_edittedTextOrig = t_t;
     if (m_displayQuotes) 
         m_textTrans->SetInsertionPoint(1);
     GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), (*m_catalog)[ind].IsFuzzy());
@@ -1304,17 +1328,14 @@ void poEditFrame::AddItemsToList(const Catalog& catalog,
     {
         if (filter(catalog[i]))
         {
+            wxString orig = convertToLocalCharset(catalog[i].GetString());
+                
             list->InsertItem(pos,
-                             catalog[i].GetString().substr(0, maxchars),
+                             orig.substr(0, maxchars),
                              GetItemIcon(catalog[i]));
             
             // Convert from UTF-8 to environment's default charset:
-            wxString trans = 
-                wxString(catalog[i].GetTranslation().wc_str(wxConvUTF8),
-                         wxConvLocal);
-            if (!trans)
-                trans = catalog[i].GetTranslation().substr(0, maxchars);
-            
+            wxString trans = convertToLocalCharset(catalog[i].GetTranslation());
             list->SetItem(pos, 1, trans.substr(0, maxchars));
 
             if (m_displayLines)
@@ -1512,13 +1533,16 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
 void poEditFrame::OnEditComment(wxCommandEvent& event)
 {
     if (m_selItem < 0 || m_selItem >= (int)m_catalog->GetCount()) return;
-    
-    CommentDialog dlg(this, (*m_catalog)[m_selItem].GetComment());
+   
+    wxString comment = convertToLocalCharset(
+                            (*m_catalog)[m_selItem].GetComment());
+    CommentDialog dlg(this, comment);
     if (dlg.ShowModal() == wxID_OK)
     {
         m_modified = true;
         UpdateTitle();
-        (*m_catalog)[m_selItem].SetComment(dlg.GetComment());
+        comment = convertFromLocalCharset(dlg.GetComment());
+        (*m_catalog)[m_selItem].SetComment(comment);
 
         wxListItem listitem;
         listitem.SetId(m_sel);

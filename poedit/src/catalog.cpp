@@ -45,7 +45,11 @@ WX_DEFINE_OBJARRAY(CatalogDataArray)
 // textfile processing utilities:
 
 // Read one line from file, remove all \r and \n characters, ignore empty lines
+#if wxUSE_UNICODE
 static wxString ReadTextLine(wxTextFile* f)
+#else
+static wxString ReadTextLine(wxTextFile* f, wxMBConv *conv)
+#endif
 {
     wxString s;
     
@@ -54,6 +58,9 @@ static wxString ReadTextLine(wxTextFile* f)
         if (f->Eof()) return wxEmptyString;
         s = f->GetNextLine();
     }
+#if !wxUSE_UNICODE
+    s = wxString(s.wc_str(*conv), wxConvUTF8);
+#endif
     return s;
 }
 
@@ -448,19 +455,6 @@ bool Catalog::Load(const wxString& po_file)
     
     f.Close();
     
-#if !wxUSE_UNICODE
-    /* Convert loaded data from file's encoding to UTF-8 which is our
-       internal representation (in Unicode mode, LoadParser
-       converts the file to wide char representation): */
-    if (wxStricmp(Header().Charset, _T("utf-8")) != 0)
-    {
-        for (size_t i = 0; i < m_dataArray.GetCount(); i++)
-            m_dataArray[i].SetTranslation(wxString(
-                m_dataArray[i].GetTranslation().wc_str(encConv),
-                wxConvUTF8));
-    }
-#endif
-    
     return true;
 }
 
@@ -565,6 +559,15 @@ static wxString FormatStringForFile(const wxString& text)
     else
         return s;
 }
+
+inline wxString convertUtf8ToCharset(const wxString& s, wxMBConv *conv)
+{
+#if !wxUSE_UNICODE
+    return wxString(s.wc_str(wxConvUTF8), *conv);
+#else
+    return s;
+}
+#endif
 
 bool Catalog::Save(const wxString& po_file, bool save_mo)
 {
@@ -689,24 +692,19 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     for (i = 0; i < m_dataArray.GetCount(); i++)
     {
         data = &(m_dataArray[i]);
-        SaveMultiLines(f, data->GetComment());
+        SaveMultiLines(f, convertUtf8ToCharset(data->GetComment(), encConv));
         for (unsigned i = 0; i < data->GetReferences().GetCount(); i++)
             f.AddLine(_T("#: ") + data->GetReferences()[i]);
         dummy = data->GetFlags();
         if (!dummy.IsEmpty())
             f.AddLine(dummy);
-        dummy = FormatStringForFile(data->GetString());
-#if !wxUSE_UNICODE
-        if (encConv)
-            dummy = wxString(dummy.wc_str(wxConvUTF8), *encConv);
-#endif
+        dummy = convertUtf8ToCharset(FormatStringForFile(data->GetString()),
+                                     encConv);
         data->SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
-        dummy = FormatStringForFile(data->GetTranslation());
-#if !wxUSE_UNICODE
-        if (encConv)
-            dummy = wxString(dummy.wc_str(wxConvUTF8), *encConv);
-#endif
+        dummy = convertUtf8ToCharset(
+                    FormatStringForFile(data->GetTranslation()),
+                    encConv);
         SaveMultiLines(f, _T("msgstr \"") + dummy + _T("\""));
         f.AddLine(wxEmptyString);
     }
