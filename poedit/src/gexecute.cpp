@@ -8,7 +8,7 @@
     
       Gettext execution code
     
-      (c) Vaclav Slavik, 2000-2003
+      (c) Vaclav Slavik, 2000-2004
  
 */
 
@@ -84,7 +84,6 @@ class MyPipedProcess : public wxProcess
 };
 
 
-#ifdef __UNIX__
 // we have to do this because otherwise xgettext might
 // speak in native language, not English, and we cannot parse
 // it correctly (not yet)
@@ -95,11 +94,13 @@ class TempLocaleSwitcher
         {
             wxGetEnv(_T("LC_ALL"), &m_all);
             wxGetEnv(_T("LC_MESSAGES"), &m_messages);
-            wxGetEnv(_T("LC_LANG"), &m_lang);
+            wxGetEnv(_T("LANG"), &m_lang);
+            wxGetEnv(_T("LANGUAGE"), &m_language);
 
             wxSetEnv(_T("LC_ALL"), locale);
             wxSetEnv(_T("LC_MESSAGES"), locale);
             wxSetEnv(_T("LANG"), locale);
+            wxSetEnv(_T("LANGUAGE"), locale);
         }
         
         ~TempLocaleSwitcher()
@@ -107,19 +108,17 @@ class TempLocaleSwitcher
             wxSetEnv(_T("LC_ALL"), m_all);
             wxSetEnv(_T("LC_MESSAGES"), m_messages);
             wxSetEnv(_T("LANG"), m_lang);
+            wxSetEnv(_T("LANGUAGE"), m_language);
         }
         
     private:
-        wxString m_all, m_messages, m_lang;
+        wxString m_all, m_messages, m_lang, m_language;
 };
-#endif
 
 
 bool ExecuteGettext(const wxString& cmdline)
 {
-#ifdef __UNIX__
     TempLocaleSwitcher localeSwitcher(_T("C"));
-#endif
 
     size_t i;
     MyProcessData pdata;
