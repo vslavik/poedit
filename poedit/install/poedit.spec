@@ -1,7 +1,7 @@
 # Purpose:  The .spec file for building poEdit RPM
 
 # version and release
-%define VERSION 1.1.3
+%define VERSION 1.1.4
 %define RELEASE 1
 
 # default installation directory
@@ -47,7 +47,7 @@ rm -Rf ${RPM_BUILD_ROOT}
 
 %files
 %defattr(-,root,root)
-%doc NEWS LICENSE README
+%doc NEWS LICENSE README AUTHORS
 %prefix/bin/poedit
 %dir %prefix/share/poedit
 %prefix/share/poedit/*

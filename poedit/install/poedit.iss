@@ -3,9 +3,9 @@
 
 [Setup]
 CompressLevel=9
-OutputBaseFilename=poedit113_setup
+OutputBaseFilename=poedit114_setup
 AppName=poEdit
-AppVerName=poEdit 1.1.3
+AppVerName=poEdit 1.1.4
 
 ChangesAssociations=true
 AlwaysShowComponentsList=false
