@@ -32,7 +32,7 @@
 
 SettingsDialog::SettingsDialog(wxWindow *parent)
 {
-    wxTheXmlResource->LoadDialog(this, parent, "settings");
+    wxTheXmlResource->LoadDialog(this, parent, _T("settings"));
 
     m_team = XMLCTRL(*this, "team_name", wxTextCtrl);
     m_teamEmail = XMLCTRL(*this, "team_email", wxTextCtrl);
@@ -42,15 +42,15 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
     m_basePath = XMLCTRL(*this, "basepath", wxTextCtrl);
 
     const LanguageStruct *lang = isoLanguages; /*from iso639.h*/ 
-    m_language->Append("");
+    m_language->Append(wxEmptyString);
     while (lang->lang != NULL)
         m_language->Append((lang++)->lang);
         
     // my custom controls:
     m_keywords = new wxEditableListBox(this, -1, _("Keywords"));
-    wxTheXmlResource->AttachUnknownControl("keywords", m_keywords);
+    wxTheXmlResource->AttachUnknownControl(_T("keywords"), m_keywords);
     m_paths = new wxEditableListBox(this, -1, _("Paths"));
-    wxTheXmlResource->AttachUnknownControl("paths", m_paths);
+    wxTheXmlResource->AttachUnknownControl(_T("paths"), m_paths);
 }
 
 
@@ -92,13 +92,13 @@ void SettingsDialog::TransferFrom(Catalog *cat)
     for (size_t i = 0; i < arr.GetCount(); i++)
     {
         dummy = arr[i];
-        if (dummy[dummy.Length() - 1] == '/' || 
-                dummy[dummy.Length() - 1] == '\\') 
+        if (dummy[dummy.Length() - 1] == _T('/') || 
+                dummy[dummy.Length() - 1] == _T('\\')) 
             dummy.RemoveLast();
         cat->Header().SearchPaths.Add(dummy);
     }
     if (arr.GetCount() > 0 && cat->Header().BasePath.IsEmpty()) 
-        cat->Header().BasePath = ".";
+        cat->Header().BasePath = _T(".");
 
     m_keywords->GetStrings(arr);
     cat->Header().Keywords = arr;

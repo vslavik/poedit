@@ -66,7 +66,7 @@ bool SourceDigger::DigFiles(Catalog *cat, const wxArrayString& files,
                             Parser &parser, const wxArrayString& keywords)
 {
     wxArrayString batchfiles;
-    wxString tempfile = wxGetTempFileName("poedit");
+    wxString tempfile = wxGetTempFileName(_T("poedit"));
     Catalog *ctmp;
     size_t i, last = 0;
 
@@ -132,14 +132,14 @@ bool SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
     cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_FILES);
     while (cont)
     {
-        files.Add(dirname + "/" + filename);
+        files.Add(dirname + _T("/") + filename);
         cont = dir.GetNext(&filename);
     }    
 
     cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_DIRS);
     while (cont)
     {
-        if (!FindInDir(dirname + "/" + filename, files))
+        if (!FindInDir(dirname + _T("/") + filename, files))
             return false;
         cont = dir.GetNext(&filename);
     }

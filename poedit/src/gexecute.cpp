@@ -84,10 +84,43 @@ class MyPipedProcess : public wxProcess
 };
 
 
+#ifdef __UNIX__
+// we have to do this because otherwise xgettext might
+// speak in native language, not English, and we cannot parse
+// it correctly (not yet)
+class TempLocaleSwitcher
+{
+    public:
+        TempLocaleSwitcher(const wxString& locale)
+        {
+            wxGetEnv(_T("LC_ALL"), &m_all);
+            wxGetEnv(_T("LC_MESSAGES"), &m_messages);
+            wxGetEnv(_T("LC_LANG"), &m_lang);
+
+            wxSetEnv(_T("LC_ALL"), locale);
+            wxSetEnv(_T("LC_MESSAGES"), locale);
+            wxSetEnv(_T("LANG"), locale);
+        }
+        
+        ~TempLocaleSwitcher()
+        {
+            wxSetEnv(_T("LC_ALL"), m_all);
+            wxSetEnv(_T("LC_MESSAGES"), m_messages);
+            wxSetEnv(_T("LANG"), m_lang);
+        }
+        
+    private:
+        wxString m_all, m_messages, m_lang;
+};
+#endif
 
 
 bool ExecuteGettext(const wxString& cmdline)
 {
+#ifdef __UNIX__
+    TempLocaleSwitcher localeSwitcher(_T("en"));
+#endif
+
     size_t i;
     MyProcessData pdata;
     MyPipedProcess *process;
@@ -97,7 +130,7 @@ bool ExecuteGettext(const wxString& cmdline)
 
     if (pid == 0)
     {
-        wxLogError(_("Cannot execute program: ") + cmdline.BeforeFirst(' '));
+        wxLogError(_("Cannot execute program: ") + cmdline.BeforeFirst(_T(' ')));
         return false;
     }
 
@@ -108,7 +141,7 @@ bool ExecuteGettext(const wxString& cmdline)
         wxYield();
     }
 
-    bool isMsgmerge = (cmdline.BeforeFirst(' ') == "msgmerge");
+    bool isMsgmerge = (cmdline.BeforeFirst(_T(' ')) == _T("msgmerge"));
     wxString dummy;
     
     for (i = 0; i < pdata.Stderr.GetCount(); i++) 
@@ -116,8 +149,8 @@ bool ExecuteGettext(const wxString& cmdline)
         if (isMsgmerge)
         {
             dummy = pdata.Stderr[i];
-            dummy.Replace(".", "");
-            if (dummy.IsEmpty() || dummy == " done") continue;
+            dummy.Replace(_T("."), wxEmptyString);
+            if (dummy.IsEmpty() || dummy == _T(" done")) continue;
             //msgmerge outputs *progress* to stderr, damn it!
         }
         wxLogError(pdata.Stderr[i]);

@@ -55,9 +55,9 @@ ProgressInfo::ProgressInfo()
 {
     m_cancelled = false;
     m_dlg = new ProgressDlg(&m_cancelled);
-    wxTheXmlResource->LoadDialog(m_dlg, NULL, "parser_progress");
-    wxPoint pos(wxConfig::Get()->Read("progress_pos_x", -1),
-               wxConfig::Get()->Read("progress_pos_y", -1));
+    wxTheXmlResource->LoadDialog(m_dlg, NULL, _T("parser_progress"));
+    wxPoint pos(wxConfig::Get()->Read(_T("progress_pos_x"), -1),
+               wxConfig::Get()->Read(_T("progress_pos_y"), -1));
     if (pos.x != -1 && pos.y != -1) m_dlg->Move(pos);
     m_dlg->Show(true);
     m_disabler = new wxWindowDisabler(m_dlg);
@@ -66,8 +66,8 @@ ProgressInfo::ProgressInfo()
 ProgressInfo::~ProgressInfo()
 {
     delete m_disabler;
-    wxConfig::Get()->Write("progress_pos_x", (long)m_dlg->GetPosition().x);
-    wxConfig::Get()->Write("progress_pos_y", (long)m_dlg->GetPosition().y);
+    wxConfig::Get()->Write(_T("progress_pos_x"), (long)m_dlg->GetPosition().x);
+    wxConfig::Get()->Write(_T("progress_pos_y"), (long)m_dlg->GetPosition().y);
     m_dlg->Destroy();
 }
 

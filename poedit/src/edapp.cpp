@@ -23,6 +23,7 @@
 #include <wx/config.h>
 #include <wx/fs_zip.h>
 #include <wx/image.h>
+#include <wx/log.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/xrc/xh_all.h>
 
@@ -38,11 +39,11 @@ wxString poEditApp::GetAppPath() const
 #if defined(__UNIX__)
     return POEDIT_PREFIX;
 #elif defined(__WXMSW__)
-    wxString path = wxConfigBase::Get()->Read("application_path", "");
+    wxString path = wxConfigBase::Get()->Read(_T("application_path"), wxEmptyString);
     if (!path)
     {
         wxLogError(_("poEdit installation is broken, cannot find application's home directory."));
-        path = ".";
+        path = _T(".");
     }
     return path;
 #else
@@ -52,67 +53,57 @@ wxString poEditApp::GetAppPath() const
 
 wxString poEditApp::GetAppVersion() const
 {
-    return "1.1.2";
+    return _T("1.1.3");
 }
 
 
 #ifdef __UNIX__
-#define CFG_FILE (home + ".poedit/config")
+#define CFG_FILE (home + _T(".poedit/config"))
 #else
-#define CFG_FILE ""
+#define CFG_FILE wxEmptyString
 #endif
 
 bool poEditApp::OnInit()
 {
 #ifdef __UNIX__
-    wxString home = wxGetHomeDir() + "/";
+    wxString home = wxGetHomeDir() + _T("/");
 
     // create poEdit cfg dir, move ~/.poedit to ~/.poedit/config
     // (upgrade from older versions of poEdit which used ~/.poedit file)
-    if (!wxDirExists(home + ".poedit"))
+    if (!wxDirExists(home + _T(".poedit")))
     {
-        if (wxFileExists(home + ".poedit"))
-            wxRenameFile(home + ".poedit", home + ".poedit2");
-        wxMkdir(home + ".poedit");
-        if (wxFileExists(home + ".poedit2"))
-            wxRenameFile(home + ".poedit2", home + ".poedit/config");
+        if (wxFileExists(home + _T(".poedit")))
+            wxRenameFile(home + _T(".poedit"), home + _T(".poedit2"));
+        wxMkdir(home + _T(".poedit"));
+        if (wxFileExists(home + _T(".poedit2")))
+            wxRenameFile(home + _T(".poedit2"), home + _T(".poedit/config"));
     }
 #endif
 
-    SetVendorName("Vaclav Slavik");
-    SetAppName("poedit");
+    SetVendorName(_T("Vaclav Slavik"));
+    SetAppName(_T("poedit"));
     wxConfigBase::Set(
-        new wxConfig("", "", CFG_FILE, "", 
+        new wxConfig(wxEmptyString, wxEmptyString, CFG_FILE, wxEmptyString, 
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
-    
-#ifdef __UNIX__
-    // we have to do this because otherwise xgettext might
-    // speak in native language, not English, and we cannot parse
-    // it correctly (not yet)
-    // FIXME - better parsing of xgettext's stderr output
-    putenv("LC_ALL=en");
-    putenv("LC_MESSAGES=en");
-    putenv("LANG=en");
-#endif
 
     wxImage::AddHandler(new wxGIFHandler);
     wxFileSystem::AddHandler(new wxZipFSHandler);
 
     wxTheXmlResource->InitAllHandlers();
-    wxTheXmlResource->Load(GetAppPath() + "/share/poedit/resources.zip");
+    wxTheXmlResource->Load(GetAppPath() + _T("/share/poedit/resources.zip"));
     
-    poEditFrame *frame = new poEditFrame("poEdit", argc > 1 ? argv[1] : "");
+    poEditFrame *frame = new poEditFrame(_T("poEdit"), argc > 1 ? argv[1] : wxEmptyString);
 
     frame->Show(true);
     SetTopWindow(frame);
     
     SetDefaultCfg(wxConfig::Get());
 
-    if (wxConfig::Get()->Read("translator_name", "nothing") == "nothing")
+    if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
     {
         wxMessageBox(_("This is first time you run poEdit.\n"
                        "Please fill in your name and e-mail address.\n"
-                       "(This information is used only in catalogs headers)"), "Setup",
+                       "(This information is used only in catalogs headers)"), _("Setup"),
                        wxOK | wxICON_INFORMATION);
                        
         PreferencesDialog dlg(frame);
@@ -126,49 +117,49 @@ bool poEditApp::OnInit()
 
 void poEditApp::SetDefaultCfg(wxConfigBase *cfg)
 {
-    if (cfg->Read("version", "") == GetAppVersion()) return;
+    if (cfg->Read(_T("version"), wxEmptyString) == GetAppVersion()) return;
 
-    if (cfg->Read("Parsers/List", "").IsEmpty())
+    if (cfg->Read(_T("Parsers/List"), wxEmptyString).IsEmpty())
     {
-        cfg->Write("Parsers/List", "C/C++");
+        cfg->Write(_T("Parsers/List"), _T("C/C++"));
 
-        cfg->Write("Parsers/C_C++/Extensions", 
-                   "*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx");
-        cfg->Write("Parsers/C_C++/Command", 
-                   "xgettext --force-po -C -o %o %K %F");
-        cfg->Write("Parsers/C_C++/KeywordItem", 
-                   "-k%k");
-        cfg->Write("Parsers/C_C++/FileItem", 
-                   "%f");
+        cfg->Write(_T("Parsers/C_C++/Extensions"), 
+                   _T("*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx"));
+        cfg->Write(_T("Parsers/C_C++/Command"), 
+                   _T("xgettext --force-po -C -o %o %K %F"));
+        cfg->Write(_T("Parsers/C_C++/KeywordItem"), 
+                   _T("-k%k"));
+        cfg->Write(_T("Parsers/C_C++/FileItem"), 
+                   _T("%f"));
     }
 
-    if (cfg->Read("TM/database_path", "").IsEmpty())
+    if (cfg->Read(_T("TM/database_path"), wxEmptyString).IsEmpty())
     {
         wxString dbpath;
 #if defined(__UNIX__)
-        dbpath = wxGetHomeDir() + "/.poedit/tm";
+        dbpath = wxGetHomeDir() + _T("/.poedit/tm");
 #elif defined(__WXMSW__)
         // VS: this distinguishes between NT and Win9X systems -- the former
         //     has users' home directories while on the latter wxGetHomeDir
         //     will return path of the executable
-        if (wxGetHomeDir().IsSameAs(GetAppPath() + "\\bin", false))      
-            dbpath = GetAppPath() + "\\share\\poedit\\tm";
+        if (wxGetHomeDir().IsSameAs(GetAppPath() + _T("\\bin"), false))      
+            dbpath = GetAppPath() + _T("\\share\\poedit\\tm");
         else
-            dbpath = wxGetHomeDir() + "\\poedit_tm";
+            dbpath = wxGetHomeDir() + _T("\\poedit_tm");
 #endif
-        cfg->Write("TM/database_path", dbpath);
+        cfg->Write(_T("TM/database_path"), dbpath);
     }
 
-    if (cfg->Read("TM/search_paths", "").IsEmpty())
+    if (cfg->Read(_T("TM/search_paths"), wxEmptyString).IsEmpty())
     {
         wxString paths;
 #if defined(__UNIX__)
-        paths = wxGetHomeDir() + ":/usr/share/locale:/usr/local/share/locale";
+        paths = wxGetHomeDir() + _T(":/usr/share/locale:/usr/local/share/locale");
 #elif defined(__WXMSW__)
-        paths = "C:";
+        paths = _T("C:");
 #endif
-        cfg->Write("TM/search_paths", paths);
+        cfg->Write(_T("TM/search_paths"), paths);
     }
 
-    cfg->Write("version", GetAppVersion());
+    cfg->Write(_T("version"), GetAppVersion());
 }

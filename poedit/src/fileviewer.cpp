@@ -30,11 +30,11 @@
 FileViewer::FileViewer(wxWindow *parent, const wxString& filename, int linenum)
         : wxFrame(parent, -1, _("Source file: ") + filename,
                             wxPoint(
-                                 wxConfig::Get()->Read("fileviewer/frame_x", -1),
-                                 wxConfig::Get()->Read("fileviewer/frame_y", -1)),
+                                 wxConfig::Get()->Read(_T("fileviewer/frame_x"), -1),
+                                 wxConfig::Get()->Read(_T("fileviewer/frame_y"), -1)),
                              wxSize(
-                                 wxConfig::Get()->Read("fileviewer/frame_w", 600),
-                                 wxConfig::Get()->Read("fileviewer/frame_h", 400)))
+                                 wxConfig::Get()->Read(_T("fileviewer/frame_w"), 600),
+                                 wxConfig::Get()->Read(_T("fileviewer/frame_h"), 400)))
 {
     wxPanel *panel = new wxPanel(this, -1);
 	wxListBox *listbox = 
@@ -68,8 +68,8 @@ FileViewer::~FileViewer()
     wxSize sz = GetSize();
     wxPoint pos = GetPosition();
     wxConfigBase *cfg = wxConfig::Get();
-    cfg->Write("fileviewer/frame_w", (long)sz.x);
-    cfg->Write("fileviewer/frame_h", (long)sz.y);
-    cfg->Write("fileviewer/frame_x", (long)pos.x);
-    cfg->Write("fileviewer/frame_y", (long)pos.y);
+    cfg->Write(_T("fileviewer/frame_w"), (long)sz.x);
+    cfg->Write(_T("fileviewer/frame_h"), (long)sz.y);
+    cfg->Write(_T("fileviewer/frame_x"), (long)pos.x);
+    cfg->Write(_T("fileviewer/frame_y"), (long)pos.y);
 }

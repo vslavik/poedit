@@ -36,9 +36,9 @@
 
 PreferencesDialog::PreferencesDialog(wxWindow *parent)
 {
-    wxTheXmlResource->LoadDialog(this, parent, "preferences");
+    wxTheXmlResource->LoadDialog(this, parent, _T("preferences"));
 #ifdef USE_TRANSMEM
-    wxTheXmlResource->AttachUnknownControl("tm_langs", 
+    wxTheXmlResource->AttachUnknownControl(_T("tm_langs"), 
                 new wxEditableListBox(this, -1, _("My Languages")));
 #else
     // remove "Translation Memory" page if support not compiled-in
@@ -50,24 +50,22 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
 void PreferencesDialog::TransferTo(wxConfigBase *cfg)
 {
     XMLCTRL(*this, "user_name", wxTextCtrl)->SetValue(
-                cfg->Read("translator_name", ""));
+                cfg->Read(_T("translator_name"), wxEmptyString));
     XMLCTRL(*this, "user_email", wxTextCtrl)->SetValue(
-                cfg->Read("translator_email", ""));
+                cfg->Read(_T("translator_email"), wxEmptyString));
     XMLCTRL(*this, "compile_mo", wxCheckBox)->SetValue(
-                cfg->Read("compile_mo", true));
+                cfg->Read(_T("compile_mo"), true));
     XMLCTRL(*this, "show_summary", wxCheckBox)->SetValue(
-                cfg->Read("show_summary", true));
+                cfg->Read(_T("show_summary"), true));
     XMLCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
-                cfg->Read("keep_crlf", true));
-    XMLCTRL(*this, "textctrl_style", wxRadioBox)->SetSelection(
-                cfg->Read("multiline_textctrl", true) ? 0 : 1);
+                cfg->Read(_T("keep_crlf"), true));
 
-    wxString format = cfg->Read("crlf_format", "unix");
+    wxString format = cfg->Read(_T("crlf_format"), _T("unix"));
     int sel;
-    if (format == "win") sel = 1;
-    else if (format == "mac") sel = 2;
-    else if (format == "native") sel = 3;
-    else /* "unix" */ sel = 0;
+    if (format == _T("win")) sel = 1;
+    else if (format == _T("mac")) sel = 2;
+    else if (format == _T("native")) sel = 3;
+    else /* _T("unix") */ sel = 0;
 
     XMLCTRL(*this, "crlf_format", wxChoice)->SetSelection(sel);
 
@@ -88,40 +86,39 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
 
 #ifdef USE_TRANSMEM        
     XMLCTRL(*this, "tm_dbpath", wxTextCtrl)->SetValue(
-                cfg->Read("TM/database_path", ""));
+                cfg->Read(_T("TM/database_path"), wxEmptyString));
 
-    wxStringTokenizer tkn(cfg->Read("TM/languages", ""), ":");
+    wxStringTokenizer tkn(cfg->Read(_T("TM/languages"), wxEmptyString), _T(":"));
     wxArrayString langs;
     while (tkn.HasMoreTokens()) langs.Add(tkn.GetNextToken());
     XMLCTRL(*this, "tm_langs", wxEditableListBox)->SetStrings(langs);
 
     XMLCTRL(*this, "tm_omits", wxSpinCtrl)->SetValue(
-                cfg->Read("TM/max_omitted", 2));
+                cfg->Read(_T("TM/max_omitted"), 2));
     XMLCTRL(*this, "tm_delta", wxSpinCtrl)->SetValue(
-                cfg->Read("TM/max_delta", 2));
+                cfg->Read(_T("TM/max_delta"), 2));
     XMLCTRL(*this, "tm_automatic", wxCheckBox)->SetValue(
-                cfg->Read("use_tm_when_updating", true));
+                cfg->Read(_T("use_tm_when_updating"), true));
 #endif
 }
  
             
 void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
 {
-    cfg->Write("translator_name", 
+    cfg->Write(_T("translator_name"), 
                 XMLCTRL(*this, "user_name", wxTextCtrl)->GetValue());
-    cfg->Write("translator_email", 
+    cfg->Write(_T("translator_email"), 
                 XMLCTRL(*this, "user_email", wxTextCtrl)->GetValue());
-    cfg->Write("compile_mo", 
+    cfg->Write(_T("compile_mo"), 
                 XMLCTRL(*this, "compile_mo", wxCheckBox)->GetValue());
-    cfg->Write("show_summary", 
+    cfg->Write(_T("show_summary"), 
                 XMLCTRL(*this, "show_summary", wxCheckBox)->GetValue());
-    cfg->Write("keep_crlf", 
+    cfg->Write(_T("keep_crlf"), 
                 XMLCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
-    cfg->Write("multiline_textctrl",
-                XMLCTRL(*this, "textctrl_style", wxRadioBox)->GetSelection()==0);
     
-    static char *formats[] = { "unix", "win", "mac", "native" };
-    cfg->Write("crlf_format", formats[
+    static wxChar *formats[] = 
+        { _T("unix"), _T("win"), _T("mac"), _T("native") };
+    cfg->Write(_T("crlf_format"), formats[
                 XMLCTRL(*this, "crlf_format", wxChoice)->GetSelection()]);
                
     m_parsers.Write(cfg);
@@ -132,17 +129,17 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
     wxString languages;
     for (size_t i = 0; i < langs.GetCount(); i++)
     {
-        if (i != 0) languages << ':';
+        if (i != 0) languages << _T(':');
         languages << langs[i];
     }
-    cfg->Write("TM/languages", languages);
-    cfg->Write("TM/database_path",
+    cfg->Write(_T("TM/languages"), languages);
+    cfg->Write(_T("TM/database_path"),
                 XMLCTRL(*this, "tm_dbpath", wxTextCtrl)->GetValue());
-    cfg->Write("TM/max_omitted", 
+    cfg->Write(_T("TM/max_omitted"), 
                 (long)XMLCTRL(*this, "tm_omits", wxSpinCtrl)->GetValue());
-    cfg->Write("TM/max_delta", 
+    cfg->Write(_T("TM/max_delta"), 
                 (long)XMLCTRL(*this, "tm_delta", wxSpinCtrl)->GetValue());
-    cfg->Write("use_tm_when_updating", 
+    cfg->Write(_T("use_tm_when_updating"), 
                 XMLCTRL(*this, "tm_automatic", wxCheckBox)->GetValue());
 #endif
 }
@@ -164,7 +161,7 @@ bool PreferencesDialog::EditParser(int num)
 {
     wxDialog dlg;
     
-    wxTheXmlResource->LoadDialog(&dlg, this, "edit_parser");
+    wxTheXmlResource->LoadDialog(&dlg, this, _T("edit_parser"));
     dlg.Centre();
     
     Parser& nfo = m_parsers[num];
@@ -192,7 +189,7 @@ void PreferencesDialog::OnNewParser(wxCommandEvent& event)
 {
     Parser info;
     m_parsers.Add(info);
-    XMLCTRL(*this, "parsers_list", wxListBox)->Append("");
+    XMLCTRL(*this, "parsers_list", wxListBox)->Append(wxEmptyString);
     size_t index = m_parsers.GetCount()-1;
     if (!EditParser(index))
     {
@@ -231,7 +228,7 @@ void PreferencesDialog::OnTMAddLang(wxCommandEvent& event)
     int index;
     
     for (const LanguageStruct *i = isoLanguages; i->lang != NULL; i++)
-        lngs.Add(wxString(i->iso) + " (" + i->lang + ")");
+        lngs.Add(wxString(i->iso) + _T(" (") + i->lang + _T(")"));
     index = wxGetSingleChoiceIndex(_("Select language"), 
                                    _("Please select language ISO code:"),
                                    lngs, this);
@@ -283,13 +280,13 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
     // 1. Get paths list from the user:
     wxConfigBase *cfg = wxConfig::Get();
     TMSearchDlg dlg;
-    wxTheXmlResource->LoadDialog(&dlg, this, "dlg_generate_tm");
+    wxTheXmlResource->LoadDialog(&dlg, this, _T("dlg_generate_tm"));
 
     wxEditableListBox *dirs = 
         new wxEditableListBox(&dlg, -1, _("Search Paths"));
-    wxTheXmlResource->AttachUnknownControl("tm_dirs", dirs);
+    wxTheXmlResource->AttachUnknownControl(_T("tm_dirs"), dirs);
 
-    wxString dirsStr = cfg->Read("TM/search_paths", "");
+    wxString dirsStr = cfg->Read(_T("TM/search_paths"), wxEmptyString);
     wxArrayString dirsArray;
     wxStringTokenizer tkn(dirsStr, wxPATH_SEP);
 
@@ -299,13 +296,13 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
     if (dlg.ShowModal() == wxID_OK)
     {
         dirs->GetStrings(dirsArray);
-        dirsStr = "";
+        dirsStr = wxEmptyString;
         for (size_t i = 0; i < dirsArray.GetCount(); i++)
         {
             if (i != 0) dirsStr << wxPATH_SEP;
             dirsStr << dirsArray[i];
         }
-        cfg->Write("TM/search_paths", dirsStr);
+        cfg->Write(_T("TM/search_paths"), dirsStr);
     }
     else return;
     
@@ -316,7 +313,7 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
         //     (which happens when the users presses OK) but we still won't
         //     to use the path entered by the user...
 
-    tkn.SetString(cfg->Read("TM/languages", ""), ":");
+    tkn.SetString(cfg->Read(_T("TM/languages"), wxEmptyString), _T(":"));
     wxArrayString langs;
     while (tkn.HasMoreTokens()) langs.Add(tkn.GetNextToken());
 

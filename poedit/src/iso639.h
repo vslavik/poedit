@@ -6,7 +6,7 @@
 
 struct LanguageStruct
 {
-    char *iso, *lang;
+    const wxChar *iso, *lang;
 };
 
-extern const LanguageStruct isoLanguages[];
+extern LanguageStruct isoLanguages[];

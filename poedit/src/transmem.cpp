@@ -118,7 +118,7 @@ class DbBase
 class DbTrans : public DbBase
 {
     public:
-        DbTrans(const wxString& path) : DbBase(path + "translations.db", DB_RECNO) {}
+        DbTrans(const wxString& path) : DbBase(path + _T("translations.db"), DB_RECNO) {}
 
         /** Writes array of translations for entry \a index to DB.
             \param strs   array of UTF-8 encoded strings to save 
@@ -145,7 +145,7 @@ class DbTrans : public DbBase
 class DbOrig : public DbBase
 {
     public:
-        DbOrig(const wxString& path) : DbBase(path + "strings.db", DB_HASH) {}
+        DbOrig(const wxString& path) : DbBase(path + _T("strings.db"), DB_HASH) {}
         
         /** Returns index of string \a str or \c DBKEY_ILLEGAL if not found.
             Returned index can be used with DbTrans::Write and DbTrans::Read
@@ -165,7 +165,7 @@ class DbOrig : public DbBase
 class DbWords : public DbBase
 {
     public:
-        DbWords(const wxString& path) : DbBase(path + "words.db", DB_HASH) {}
+        DbWords(const wxString& path) : DbBase(path + _T("words.db"), DB_HASH) {}
         
         /** Reads list of DbTrans indexes of translations of which
             original strings contained \a word and were \a sentenceSize
@@ -236,18 +236,23 @@ DbKey DbTrans::Write(wxArrayString *strs, DbKey index)
     DBT key, data;
     char *buf;
     size_t bufLen;
-
+    const wxWX2MBbuf mb_buf;
     size_t i;
     char *ptr;
+
     for (bufLen = 0, i = 0; i < strs->GetCount(); i++)
-        bufLen += strs->Item(i).Len() + 1;
+    {
+        mb_buf = strs->Item(i).mb_str(wxConvUTF8);
+        bufLen += strlen(mb_buf) + 1;
+    }
     buf = new char[bufLen];
     for (ptr = buf, i = 0; i < strs->GetCount(); i++)
     {
-        strcpy(ptr, strs->Item(i).c_str());
+        mb_buf = strs->Item(i).mb_str(wxConvUTF8);
+        strcpy(ptr, mb_buf);
         ptr += strlen(ptr) + 1;
     }
-    
+
     memset(&key, 0, sizeof(key));
     memset(&data, 0, sizeof(data));
     data.data = buf;
@@ -264,13 +269,6 @@ DbKey DbTrans::Write(wxArrayString *strs, DbKey index)
         m_err = m_db->put(m_db, NULL, &key, &data, 0);
     }
     delete[] buf;
-
-#ifdef DEBUG_TM
-    fprintf(stderr,"DbTrans write: index=%i data=[", index);
-    for (i = 0; i < strs->GetCount(); i++)
-        fprintf(stderr,"'%s',", strs->Item(i).c_str());
-    fprintf(stderr,"]\n");
-#endif
 
     if (m_err != 0)
     {
@@ -300,16 +298,9 @@ wxArrayString *DbTrans::Read(DbKey index)
     char *ptr = (char*)data.data;
     while (ptr < ((char*)data.data) + data.size)
     {
-        arr->Add(ptr);
+        arr->Add(wxString(ptr, wxConvUTF8));
         ptr += strlen(ptr) + 1;
     }
-
-#ifdef DEBUG_TM
-    fprintf(stderr,"DbTrans read(index=%i): data=[", index);
-    for (size_t i = 0; i < arr->GetCount(); i++)
-        fprintf(stderr,"'%s',", arr->Item(i).c_str());
-    fprintf(stderr,"]\n");
-#endif
 
     return arr;
 }
@@ -318,7 +309,8 @@ wxArrayString *DbTrans::Read(DbKey index)
 
 DbKey DbOrig::Read(const wxString& str)
 {
-    const char *c_str = str.c_str();
+    const wxWX2MBbuf c_str_buf = str.mb_str();
+    const char *c_str = c_str_buf;
     DBT key, data;
 
     memset(&key, 0, sizeof(key));
@@ -335,16 +327,13 @@ DbKey DbOrig::Read(const wxString& str)
         return DBKEY_ILLEGAL;
     }
     
-#ifdef DEBUG_TM
-    fprintf(stderr,"DbOrig read(str=%s): %i\n", c_str, *((DbKey*)data.data));
-#endif
-    
     return *((DbKey*)data.data);
 }
 
 bool DbOrig::Write(const wxString& str, DbKey value)
 {
-    const char *c_str = str.c_str();
+    const wxWX2MBbuf c_str_buf = str.mb_str();
+    const char *c_str = c_str_buf;
     DBT key, data;
 
     memset(&key, 0, sizeof(key));
@@ -361,10 +350,6 @@ bool DbOrig::Write(const wxString& str, DbKey value)
         return false;
     }
 
-#ifdef DEBUG_TM
-    fprintf(stderr,"DbOrig write: str=%s, value=%i\n", c_str, value);
-#endif
-
     return true;
 }
 
@@ -372,13 +357,14 @@ bool DbOrig::Write(const wxString& str, DbKey value)
 
 DbKeys *DbWords::Read(const wxString& word, unsigned sentenceSize)
 {
+    const wxWX2MBbuf word_mb = word.mb_str();
     char *keyBuf;
     size_t keyLen;
     DBT key, data;
 
-    keyLen = word.Len() + sizeof(wxUint32);
+    keyLen = strlen(word_mb) + sizeof(wxUint32);
     keyBuf = new char[keyLen+1];
-    strcpy(keyBuf + sizeof(wxUint32), word.c_str());
+    strcpy(keyBuf + sizeof(wxUint32), word_mb);
     *((wxUint32*)(keyBuf)) = sentenceSize;
     memset(&key, 0, sizeof(key));
     memset(&data, 0, sizeof(data));
@@ -397,12 +383,6 @@ DbKeys *DbWords::Read(const wxString& word, unsigned sentenceSize)
     }    
 
     DbKeys *result = new DbKeys(data);
-#ifdef DEBUG_TM
-    fprintf(stderr,"DbWords read(%s/%i): [", word.c_str(), sentenceSize);
-    for (size_t i = 0; i < result->Count; i++)
-        fprintf(stderr,"%i, ", result->List[i]);
-    fprintf(stderr,"]\n");
-#endif
     
     return result;
 }
@@ -414,14 +394,16 @@ bool DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
     //     append it to the end of list while still keeping the list sorted.
     //     This is important because it allows us to efficiently merge
     //     these lists when looking up inexact translations...
+
+    const wxWX2MBbuf word_mb = word.mb_str();
     DbKey *valueBuf;
     char *keyBuf;
     size_t keyLen;
     DBT key, data;
 
-    keyLen = word.Len() + sizeof(wxUint32);
+    keyLen = strlen(word_mb) + sizeof(wxUint32);
     keyBuf = new char[keyLen+1];
-    strcpy(keyBuf + sizeof(wxUint32), word.c_str());
+    strcpy(keyBuf + sizeof(wxUint32), word_mb);
     *((wxUint32*)(keyBuf)) = sentenceSize;
 
     memset(&key, 0, sizeof(key));
@@ -447,16 +429,6 @@ bool DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
     
     m_err = m_db->put(m_db, NULL, &key, &data, 0);
 
-#ifdef DEBUG_TM
-    if (m_err == 0)
-    {
-    fprintf(stderr,"DbWords write(%s/%i): [", word.c_str(), sentenceSize);
-    for (size_t i = 0; i < data.size / sizeof(DbKey); i++)
-        fprintf(stderr,"%i, ", ((DbKey*)(data.data))[i]);
-    fprintf(stderr,"]\n");
-    }
-#endif
-
     delete[] keyBuf;
     delete[] valueBuf;
 
@@ -474,7 +446,7 @@ bool DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
 
 // ---------------- helper functions ----------------
 
-#define WORD_SEPARATORS " \t\r\n\\~`!@#$%^&*()-_=+|[]{};:'\"<>,./?"
+#define WORD_SEPARATORS _T(" \t\r\n\\~`!@#$%^&*()-_=+|[]{};:'\"<>,./?")
 
 /// Extracts list of words from \a string.
 static void StringToWordsArray(const wxString& str, wxArrayString& array)
@@ -486,26 +458,26 @@ static void StringToWordsArray(const wxString& str, wxArrayString& array)
         // some words are so common in English we would be crazy to put
         // them into index. (The list was taken from ht://Dig.)
         BadWords = new wxSortedArrayString;
-        BadWords->Add("a");
-        //BadWords->Add("all");
-        BadWords->Add("an");
-        //BadWords->Add("are");
-        //BadWords->Add("can");
-        //BadWords->Add("for");
-        //BadWords->Add("from");
-        BadWords->Add("have");
-        //BadWords->Add("it");
-        //BadWords->Add("may");
-        //BadWords->Add("not");
-        BadWords->Add("of");
-        //BadWords->Add("that");
-        BadWords->Add("the");
-        //BadWords->Add("this");
-        //BadWords->Add("was");
-        BadWords->Add("will");
-        //BadWords->Add("with");
-        //BadWords->Add("you");
-        //BadWords->Add("your");
+        BadWords->Add(_T("a"));
+        //BadWords->Add(_T("all"));
+        BadWords->Add(_T("an"));
+        //BadWords->Add(_T("are"));
+        //BadWords->Add(_T("can"));
+        //BadWords->Add(_T("for"));
+        //BadWords->Add(_T("from"));
+        BadWords->Add(_T("have"));
+        //BadWords->Add(_T("it"));
+        //BadWords->Add(_T("may"));
+        //BadWords->Add(_T("not"));
+        BadWords->Add(_T("of"));
+        //BadWords->Add(_T("that"));
+        BadWords->Add(_T("the"));
+        //BadWords->Add(_T("this"));
+        //BadWords->Add(_T("was"));
+        BadWords->Add(_T("will"));
+        //BadWords->Add(_T("with"));
+        //BadWords->Add(_T("you"));
+        //BadWords->Add(_T("your"));
     }
 
     wxString s;
@@ -519,13 +491,6 @@ static void StringToWordsArray(const wxString& str, wxArrayString& array)
         if (BadWords->Index(s) != wxNOT_FOUND) continue;
         array.Add(s);
     }
-
-#ifdef DEBUG_TM
-    fprintf(stderr,"StringToWords(%s): data=[", str.c_str());
-    for (size_t i = 0; i < array.GetCount(); i++)
-        fprintf(stderr,"'%s',", array[i].c_str());
-    fprintf(stderr,"]\n");
-#endif
 }
 
 
@@ -535,18 +500,6 @@ static DbKeys *UnionOfDbKeys(size_t cnt, DbKeys *keys[], bool mask[])
     size_t i, minSize;
     DbKey **heads = new DbKey*[cnt];
     size_t *counters = new size_t[cnt];
-
-#ifdef DEBUG_TM
-    fprintf(stderr,"merging keylists:\n");
-    for (i = 0; i  <cnt;i++)
-    {
-        if (!mask[i]) continue;
-        fprintf(stderr,"    [");
-        for (size_t j = 0; j < keys[i]->Count; j++)
-            fprintf(stderr,"%i,", keys[i]->List[j]);
-        fprintf(stderr,"]\n");
-    }
-#endif
 
     // initialize heads and counters _and_ find size of smallest keys list
     // (union can't be larger than that)
@@ -569,9 +522,6 @@ static DbKeys *UnionOfDbKeys(size_t cnt, DbKeys *keys[], bool mask[])
     {
         delete[] counters;
         delete[] heads;
-#ifdef DEBUG_TM
-        fprintf(stderr,"  = []\n");
-#endif
         return NULL;
     }
 
@@ -640,19 +590,7 @@ static DbKeys *UnionOfDbKeys(size_t cnt, DbKeys *keys[], bool mask[])
     {
         delete result;
         result = NULL;
-#ifdef DEBUG_TM
-        fprintf(stderr," = []\n");
-#endif
     }
-#ifdef DEBUG_TM
-    else
-    {
-        fprintf(stderr," = [");
-        for (i = 0; i < result->Count; i++)
-            fprintf(stderr,"%i,", result->List[i]);
-        fprintf(stderr,"]\n");
-    }
-#endif
 
     return result;
 }
@@ -660,18 +598,18 @@ static DbKeys *UnionOfDbKeys(size_t cnt, DbKeys *keys[], bool mask[])
 
 static inline wxString GetDBPath(const wxString& p, const wxString& l)
 {
-    wxString db = p + "/" + l;
+    wxString db = p + _T("/") + l;
     if (wxDirExists(db)) 
         return db;
     if (l.Len() == 5)
     {
-        db = p + "/" + l.Mid(0,2);
+        db = p + _T("/") + l.Mid(0,2);
         if (wxDirExists(db))
             return db;
     }
     if (l.Len() == 2)
     {
-        wxString l2 = wxFindFirstFile(p + "/" + l + "_??", wxDIR);
+        wxString l2 = wxFindFirstFile(p + _T("/") + l + _T("_??"), wxDIR);
         if (!!l2)
             return l2;
     }
@@ -686,15 +624,15 @@ static inline wxString GetDBPath(const wxString& p, const wxString& l)
     if (!g_triedLibraryDB)
     {
         bool success;
-        g_libraryDB = wxDllLoader::LoadLibrary("libdb31.dll", &success);
+        g_libraryDB = wxDllLoader::LoadLibrary(_T("libdb31.dll"), &success);
         if (!success) 
             g_libraryDB = 0;
         else
         {
             g_db_create = (db_create_t)
-                    wxDllLoader::GetSymbol(g_libraryDB, "db_create");
+                    wxDllLoader::GetSymbol(g_libraryDB, _T("db_create"));
             g_db_strerror = (db_strerror_t)
-                    wxDllLoader::GetSymbol(g_libraryDB, "db_strerror");
+                    wxDllLoader::GetSymbol(g_libraryDB, _T("db_strerror"));
             if (!g_db_create || !g_db_strerror)
             {
                 wxDllLoader::UnloadLibrary(g_libraryDB);
@@ -708,7 +646,7 @@ static inline wxString GetDBPath(const wxString& p, const wxString& l)
 
     wxString dbPath = GetDBPath(path, language);
     if (!dbPath)
-        dbPath = path + "/" + language;
+        dbPath = path + _T("/") + language;
 
     if ((!wxDirExists(path) && !wxMkdir(path)) ||
         (!wxDirExists(dbPath) && !wxMkdir(dbPath)))
@@ -716,7 +654,7 @@ static inline wxString GetDBPath(const wxString& p, const wxString& l)
         wxLogError(_("Cannot create database directory!"));
         return NULL;
     }
-    dbPath += '/';
+    dbPath += _T('/');
     
     TranslationMemory *tm = new TranslationMemory(language, dbPath);
     if (!tm->m_dbTrans->IsOk() || !tm->m_dbOrig->IsOk() || 
@@ -792,9 +730,6 @@ bool TranslationMemory::Store(const wxString& string,
 
 int TranslationMemory::Lookup(const wxString& string, wxArrayString& results)
 {
-#ifdef DEBUG_TM
-    fprintf(stderr,"###### Lookup querry for '%s'\n", string.c_str());
-#endif
     results.Clear();
 
     // First of all, try exact match:
@@ -863,10 +798,6 @@ bool TranslationMemory::LookupFuzzy(const wxArrayString& words,
         return (val); \
         }
         
-#ifdef DEBUG_TM
-    fprintf(stderr,"LookupFuzzy omits=%i delta=%i\n", omits, delta);
-#endif
-
     size_t cnt = words.GetCount();
     size_t cntOrig = cnt;
     
@@ -924,12 +855,6 @@ bool TranslationMemory::LookupFuzzy(const wxArrayString& words,
             for (i = 0; i < cnt; i++) mask[i] = true;
             for (i = 0; i < omits; i++) mask[omitted[i]] = false;
 
-#ifdef DEBUG_TM
-            fprintf(stderr, "trying with mask: [");
-            for (i = 0; i < cnt; i++) fprintf(stderr, "%c ", mask[i] ? ' ' : '+');
-            fprintf(stderr, "]\n");
-#endif
-            
             result = UnionOfDbKeys(cnt, keys, mask);
             if (result != NULL)
             {

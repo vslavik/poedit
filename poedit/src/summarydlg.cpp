@@ -29,11 +29,11 @@
 
 MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
 {
-    wxTheXmlResource->LoadDialog(this, parent, "summary");
-    wxRect r(wxConfig::Get()->Read("summary_pos_x", -1),
-             wxConfig::Get()->Read("summary_pos_y", -1),
-	     wxConfig::Get()->Read("summary_pos_w", -1),
-             wxConfig::Get()->Read("summary_pos_h", -1));
+    wxTheXmlResource->LoadDialog(this, parent, _T("summary"));
+    wxRect r(wxConfig::Get()->Read(_T("summary_pos_x"), -1),
+             wxConfig::Get()->Read(_T("summary_pos_y"), -1),
+	     wxConfig::Get()->Read(_T("summary_pos_w"), -1),
+             wxConfig::Get()->Read(_T("summary_pos_h"), -1));
     if (r.x != -1) SetSize(r);
 }
 
@@ -41,10 +41,10 @@ MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
 
 MergeSummaryDialog::~MergeSummaryDialog()
 {
-    wxConfig::Get()->Write("summary_pos_x", (long)GetPosition().x);
-    wxConfig::Get()->Write("summary_pos_y", (long)GetPosition().y);
-    wxConfig::Get()->Write("summary_pos_w", (long)GetSize().x);
-    wxConfig::Get()->Write("summary_pos_h", (long)GetSize().y);
+    wxConfig::Get()->Write(_T("summary_pos_x"), (long)GetPosition().x);
+    wxConfig::Get()->Write(_T("summary_pos_y"), (long)GetPosition().y);
+    wxConfig::Get()->Write(_T("summary_pos_w"), (long)GetSize().x);
+    wxConfig::Get()->Write(_T("summary_pos_h"), (long)GetSize().y);
 }
 
 
