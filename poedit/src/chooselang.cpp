@@ -99,11 +99,11 @@ wxLanguage ChooseLanguage()
         { _T("Romanian"), wxLANGUAGE_ROMANIAN },
         { _T("Russian"), wxLANGUAGE_RUSSIAN },
         { _T("Slovak"), wxLANGUAGE_SLOVAK },
+        { _T("Spanish"), wxLANGUAGE_SPANISH },
         { _T("Swedish"), wxLANGUAGE_SWEDISH },
         { _T("Turkish"), wxLANGUAGE_TURKISH },
         { _T("Tamil"), wxLANGUAGE_TAMIL },
         { _T("Portuguese (Brazilian)"), wxLANGUAGE_PORTUGUESE_BRAZILIAN },
-        { _T("Spanish"), wxLANGUAGE_SPANISH },
 
         { NULL, wxLANGUAGE_UNKNOWN }
     };
