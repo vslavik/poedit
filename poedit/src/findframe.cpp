@@ -30,10 +30,10 @@
 
 
 BEGIN_EVENT_TABLE(FindFrame, wxDialog)
-   EVT_BUTTON(XMLID("find_next"), FindFrame::OnNext)
-   EVT_BUTTON(XMLID("find_prev"), FindFrame::OnPrev)
+   EVT_BUTTON(XRCID("find_next"), FindFrame::OnNext)
+   EVT_BUTTON(XRCID("find_prev"), FindFrame::OnPrev)
    EVT_BUTTON(wxID_CANCEL, FindFrame::OnCancel)
-   EVT_TEXT(XMLID("string_to_find"), FindFrame::OnTextChange)
+   EVT_TEXT(XRCID("string_to_find"), FindFrame::OnTextChange)
    EVT_CHECKBOX(-1, FindFrame::OnCheckbox)
    EVT_CLOSE(FindFrame::OnCancel)
 END_EVENT_TABLE()
@@ -44,18 +44,18 @@ FindFrame::FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c)
     wxPoint p(wxConfig::Get()->Read(_T("find_pos_x"), -1),
               wxConfig::Get()->Read(_T("find_pos_y"), -1));
 
-    wxTheXmlResource->LoadDialog(this, parent, _T("find_frame"));
+    wxXmlResource::Get()->LoadDialog(this, parent, _T("find_frame"));
     if (p.x != -1) 
         Move(p);
         
-    m_btnNext = XMLCTRL(*this, "find_next", wxButton);
-    m_btnPrev = XMLCTRL(*this, "find_prev", wxButton);
+    m_btnNext = XRCCTRL(*this, "find_next", wxButton);
+    m_btnPrev = XRCCTRL(*this, "find_prev", wxButton);
 
-    XMLCTRL(*this, "in_orig", wxCheckBox)->SetValue(
+    XRCCTRL(*this, "in_orig", wxCheckBox)->SetValue(
         wxConfig::Get()->Read(_T("find_in_orig"), (long)true));
-    XMLCTRL(*this, "in_trans", wxCheckBox)->SetValue(
+    XRCCTRL(*this, "in_trans", wxCheckBox)->SetValue(
         wxConfig::Get()->Read(_T("find_in_trans"), (long)true));
-    XMLCTRL(*this, "case_sensitive", wxCheckBox)->SetValue(
+    XRCCTRL(*this, "case_sensitive", wxCheckBox)->SetValue(
         wxConfig::Get()->Read(_T("find_case_sensitive"), (long)false));
 }
 
@@ -66,11 +66,11 @@ FindFrame::~FindFrame()
     wxConfig::Get()->Write(_T("find_pos_y"), (long)GetPosition().y);
 
     wxConfig::Get()->Write(_T("find_in_orig"),
-            XMLCTRL(*this, "in_orig", wxCheckBox)->GetValue());
+            XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("find_in_trans"),
-                XMLCTRL(*this, "in_trans", wxCheckBox)->GetValue());
+                XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("find_case_sensitive"),
-                XMLCTRL(*this, "case_sensitive", wxCheckBox)->GetValue());
+                XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue());
 }
 
 
@@ -91,7 +91,7 @@ void FindFrame::OnCancel(wxCommandEvent &event)
 
 void FindFrame::OnTextChange(wxCommandEvent &event)
 {
-    m_text = XMLCTRL(*this, "string_to_find", wxTextCtrl)->GetValue();
+    m_text = XRCCTRL(*this, "string_to_find", wxTextCtrl)->GetValue();
     Reset(m_catalog);
 }
 
@@ -123,9 +123,9 @@ void FindFrame::OnNext(wxCommandEvent &event)
 bool FindFrame::DoFind(int dir)
 {
     int cnt = m_listCtrl->GetItemCount();
-    bool inStr = XMLCTRL(*this, "in_orig", wxCheckBox)->GetValue();
-    bool inTrans = XMLCTRL(*this, "in_trans", wxCheckBox)->GetValue();
-    bool caseSens = XMLCTRL(*this, "case_sensitive", wxCheckBox)->GetValue();
+    bool inStr = XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue();
+    bool inTrans = XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue();
+    bool caseSens = XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue();
     int posOrig = m_position;
 
     bool found = false;

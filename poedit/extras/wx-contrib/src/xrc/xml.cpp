@@ -92,8 +92,8 @@ wxXmlNode::~wxXmlNode()
 
 wxXmlNode& wxXmlNode::operator=(const wxXmlNode& node)
 {
-    delete m_properties;
-    delete m_children;
+    wxDELETE(m_properties);
+    wxDELETE(m_children);
     DoCopy(node);
     return *this;
 }
@@ -256,12 +256,14 @@ void wxXmlNode::AddProperty(wxXmlProperty *prop)
 
 bool wxXmlNode::DeleteProperty(const wxString& name)
 {
+    wxXmlProperty *prop;
+
     if (m_properties == NULL)
         return FALSE;
 
     else if (m_properties->GetName() == name)
     {
-        wxXmlProperty *prop = m_properties;
+        prop = m_properties;
         m_properties = prop->GetNext();
         prop->SetNext(NULL);
         delete prop;
@@ -275,7 +277,7 @@ bool wxXmlNode::DeleteProperty(const wxString& name)
         {
             if (p->GetNext()->GetName() == name)
             {
-                wxXmlProperty *prop = p->GetNext();
+                prop = p->GetNext();
                 p->SetNext(prop->GetNext());
                 prop->SetNext(NULL);
                 delete prop;
@@ -303,8 +305,7 @@ wxXmlDocument::wxXmlDocument(const wxString& filename, wxXmlIOType io_type)
 {
     if (!Load(filename, io_type))
     {
-        delete m_root;
-        m_root = NULL;
+        wxDELETE(m_root);
     }
 }
 
@@ -315,8 +316,7 @@ wxXmlDocument::wxXmlDocument(wxInputStream& stream, wxXmlIOType io_type)
 {
     if (!Load(stream, io_type))
     {
-        delete m_root;
-        m_root = NULL;
+        wxDELETE(m_root);
     }
 }
 
@@ -331,7 +331,7 @@ wxXmlDocument::wxXmlDocument(const wxXmlDocument& doc)
 
 wxXmlDocument& wxXmlDocument::operator=(const wxXmlDocument& doc)
 {
-    delete m_root;
+    wxDELETE(m_root);
     DoCopy(doc);
     return *this;
 }
@@ -417,8 +417,7 @@ void wxXmlDocument::AddHandler(wxXmlIOHandler *handler)
 
 void wxXmlDocument::CleanUpHandlers()
 {
-    delete sm_handlers;
-    sm_handlers = NULL;
+    wxDELETE(sm_handlers);
 }
 
 

@@ -44,7 +44,7 @@ FileViewer::FileViewer(wxWindow *parent,
 {
     m_basePath = basePath;
     m_basePath << _T('/');
-    SetToolBar(wxTheXmlResource->LoadToolBar(this, _T("fileview_toolbar")));
+    SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("fileview_toolbar")));
 
     wxPanel *panel = new wxPanel(this, -1);
 	m_list = new wxListCtrl(panel, -1, wxDefaultPosition, wxDefaultSize, 
@@ -56,7 +56,7 @@ FileViewer::FileViewer(wxWindow *parent,
     panel->SetAutoLayout(true);
 	panel->Layout();
     
-    wxChoice *choice = XMLCTRL(*GetToolBar(), "references", wxChoice);
+    wxChoice *choice = XRCCTRL(*GetToolBar(), "references", wxChoice);
     for (size_t i = 0; i < references.Count(); i++)
         choice->Append(references[i]);
     choice->SetSelection(startAt);
@@ -120,8 +120,8 @@ FileViewer::~FileViewer()
 
 
 BEGIN_EVENT_TABLE(FileViewer, wxFrame)
-    EVT_CHOICE(XMLID("references"), FileViewer::OnChoice)
-    EVT_MENU(XMLID("edit_file"), FileViewer::OnEditFile)
+    EVT_CHOICE(XRCID("references"), FileViewer::OnChoice)
+    EVT_MENU(XRCID("edit_file"), FileViewer::OnEditFile)
 END_EVENT_TABLE()
 
 void FileViewer::OnChoice(wxCommandEvent &event)

@@ -91,8 +91,8 @@ bool poEditApp::OnInit()
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
     wxConfigBase::Get()->SetExpandEnvVars(false);
 
-    m_locale.Init();
     wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
+    m_locale.Init();
     m_locale.AddCatalog(_T("poedit"));
 
     wxImage::AddHandler(new wxGIFHandler);
@@ -118,8 +118,8 @@ bool poEditApp::OnInit()
     }
     else
     {
-        wxTheXmlResource->InitAllHandlers();
-        wxTheXmlResource->Load(resPath);
+        wxXmlResource::Get()->InitAllHandlers();
+        wxXmlResource::Get()->Load(resPath);
     }
     
     SetDefaultCfg(wxConfig::Get());

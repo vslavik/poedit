@@ -34,14 +34,14 @@
 
 SettingsDialog::SettingsDialog(wxWindow *parent)
 {
-    wxTheXmlResource->LoadDialog(this, parent, _T("settings"));
+    wxXmlResource::Get()->LoadDialog(this, parent, _T("settings"));
 
-    m_team = XMLCTRL(*this, "team_name", wxTextCtrl);
-    m_teamEmail = XMLCTRL(*this, "team_email", wxTextCtrl);
-    m_project = XMLCTRL(*this, "prj_name", wxTextCtrl);
-    m_language = XMLCTRL(*this, "language", wxComboBox);
-    m_charset = XMLCTRL(*this, "charset", wxComboBox);
-    m_basePath = XMLCTRL(*this, "basepath", wxTextCtrl);
+    m_team = XRCCTRL(*this, "team_name", wxTextCtrl);
+    m_teamEmail = XRCCTRL(*this, "team_email", wxTextCtrl);
+    m_project = XRCCTRL(*this, "prj_name", wxTextCtrl);
+    m_language = XRCCTRL(*this, "language", wxComboBox);
+    m_charset = XRCCTRL(*this, "charset", wxComboBox);
+    m_basePath = XRCCTRL(*this, "basepath", wxTextCtrl);
 
     const LanguageStruct *lang = isoLanguages; /*from iso639.h*/ 
     m_language->Append(wxEmptyString);
@@ -50,9 +50,9 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
         
     // my custom controls:
     m_keywords = new wxEditableListBox(this, -1, _("Keywords"));
-    wxTheXmlResource->AttachUnknownControl(_T("keywords"), m_keywords);
+    wxXmlResource::Get()->AttachUnknownControl(_T("keywords"), m_keywords);
     m_paths = new wxEditableListBox(this, -1, _("Paths"));
-    wxTheXmlResource->AttachUnknownControl(_T("paths"), m_paths);
+    wxXmlResource::Get()->AttachUnknownControl(_T("paths"), m_paths);
 }
 
 

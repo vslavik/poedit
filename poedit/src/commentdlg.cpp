@@ -29,8 +29,8 @@
 
 CommentDialog::CommentDialog(wxWindow *parent, const wxString& comment) : wxDialog()
 {
-    wxTheXmlResource->LoadDialog(this, parent, _T("comment_dlg"));
-    m_text = XMLCTRL(*this, "comment", wxTextCtrl);
+    wxXmlResource::Get()->LoadDialog(this, parent, _T("comment_dlg"));
+    m_text = XRCCTRL(*this, "comment", wxTextCtrl);
     
     wxString txt;
     wxStringTokenizer tkn(comment, _T("\n\r"));
@@ -50,7 +50,7 @@ wxString CommentDialog::GetComment() const
 }
 
 BEGIN_EVENT_TABLE(CommentDialog, wxDialog)
-   EVT_BUTTON(XMLID("clear"), CommentDialog::OnClear)
+   EVT_BUTTON(XRCID("clear"), CommentDialog::OnClear)
 END_EVENT_TABLE()
 
 void CommentDialog::OnClear(wxCommandEvent& event)

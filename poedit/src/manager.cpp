@@ -73,12 +73,12 @@ ManagerFrame::ManagerFrame() :
     
     ms_instance = this;
 
-    SetToolBar(wxTheXmlResource->LoadToolBar(this, _T("manager_toolbar")));
+    SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("manager_toolbar")));
     
-    wxPanel *panel = wxTheXmlResource->LoadPanel(this, _T("manager_panel"));
+    wxPanel *panel = wxXmlResource::Get()->LoadPanel(this, _T("manager_panel"));
     
-    m_listPrj = XMLCTRL(*panel, "prj_list", wxListBox);
-    m_listCat = XMLCTRL(*panel, "prj_files", wxListCtrl);
+    m_listPrj = XRCCTRL(*panel, "prj_list", wxListBox);
+    m_listCat = XRCCTRL(*panel, "prj_files", wxListCtrl);
     
     wxImageList *list = new wxImageList(16, 16);
     list->Add(wxBitmap(cat_no_xpm));
@@ -242,7 +242,7 @@ class ProjectDlg : public wxDialog
 };
 
 BEGIN_EVENT_TABLE(ProjectDlg, wxDialog)
-   EVT_BUTTON(XMLID("adddir"), ProjectDlg::OnBrowse)
+   EVT_BUTTON(XRCID("adddir"), ProjectDlg::OnBrowse)
 END_EVENT_TABLE()
 
 void ProjectDlg::OnBrowse(wxCommandEvent& event)
@@ -251,7 +251,7 @@ void ProjectDlg::OnBrowse(wxCommandEvent& event)
     if (dlg.ShowModal() == wxID_OK)
     {
         wxArrayString a;
-        wxEditableListBox *l = XMLCTRL(*this, "prj_dirs", wxEditableListBox);
+        wxEditableListBox *l = XRCCTRL(*this, "prj_dirs", wxEditableListBox);
         l->GetStrings(a);
         a.Add(dlg.GetPath());
         l->SetStrings(a);
@@ -265,24 +265,24 @@ bool ManagerFrame::EditProject(int id)
     key.Printf(_T("Manager/project_%i/"), id);
     
     ProjectDlg dlg;
-    wxTheXmlResource->LoadDialog(&dlg, this, _T("manager_prj_dlg"));
-    wxTheXmlResource->AttachUnknownControl(_T("prj_dirs"), 
+    wxXmlResource::Get()->LoadDialog(&dlg, this, _T("manager_prj_dlg"));
+    wxXmlResource::Get()->AttachUnknownControl(_T("prj_dirs"), 
                 new wxEditableListBox(this, -1, _("Directories:")));
     
-    XMLCTRL(dlg, "prj_name", wxTextCtrl)->SetValue(
+    XRCCTRL(dlg, "prj_name", wxTextCtrl)->SetValue(
            cfg->Read(key + _T("Name"), _("My Project")));
            
     wxString dirs = cfg->Read(key + _T("Dirs"), wxGetCwd());
     wxArrayString adirs;
     wxStringTokenizer tkn(dirs, wxPATH_SEP);
     while (tkn.HasMoreTokens()) adirs.Add(tkn.GetNextToken());
-    XMLCTRL(*this, "prj_dirs", wxEditableListBox)->SetStrings(adirs);
+    XRCCTRL(*this, "prj_dirs", wxEditableListBox)->SetStrings(adirs);
            
     if (dlg.ShowModal() == wxID_OK)
     {
         cfg->Write(key + _T("Name"), 
-                   XMLCTRL(dlg, "prj_name", wxTextCtrl)->GetValue());
-        XMLCTRL(*this, "prj_dirs", wxEditableListBox)->GetStrings(adirs);
+                   XRCCTRL(dlg, "prj_name", wxTextCtrl)->GetValue());
+        XRCCTRL(*this, "prj_dirs", wxEditableListBox)->GetStrings(adirs);
         if (adirs.GetCount() > 0)
             dirs = adirs[0];
         for (size_t i = 1; i < adirs.GetCount(); i++)
@@ -323,12 +323,12 @@ void ManagerFrame::NotifyFileChanged(const wxString& catalog)
 
 
 BEGIN_EVENT_TABLE(ManagerFrame, wxFrame)
-   EVT_MENU                 (XMLID("prj_new"),    ManagerFrame::OnNewProject)
-   EVT_MENU                 (XMLID("prj_edit"),   ManagerFrame::OnEditProject)
-   EVT_MENU                 (XMLID("prj_delete"), ManagerFrame::OnDeleteProject)
-   EVT_MENU                 (XMLID("prj_update"), ManagerFrame::OnUpdateProject)
-   EVT_LISTBOX              (XMLID("prj_list"),   ManagerFrame::OnSelectProject)
-   EVT_LIST_ITEM_ACTIVATED  (XMLID("prj_files"),  ManagerFrame::OnOpenCatalog)
+   EVT_MENU                 (XRCID("prj_new"),    ManagerFrame::OnNewProject)
+   EVT_MENU                 (XRCID("prj_edit"),   ManagerFrame::OnEditProject)
+   EVT_MENU                 (XRCID("prj_delete"), ManagerFrame::OnDeleteProject)
+   EVT_MENU                 (XRCID("prj_update"), ManagerFrame::OnUpdateProject)
+   EVT_LISTBOX              (XRCID("prj_list"),   ManagerFrame::OnSelectProject)
+   EVT_LIST_ITEM_ACTIVATED  (XRCID("prj_files"),  ManagerFrame::OnOpenCatalog)
 END_EVENT_TABLE()
 
 

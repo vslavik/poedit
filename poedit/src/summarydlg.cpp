@@ -29,7 +29,7 @@
 
 MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
 {
-    wxTheXmlResource->LoadDialog(this, parent, _T("summary"));
+    wxXmlResource::Get()->LoadDialog(this, parent, _T("summary"));
     wxRect r(wxConfig::Get()->Read(_T("summary_pos_x"), -1),
              wxConfig::Get()->Read(_T("summary_pos_y"), -1),
 	     wxConfig::Get()->Read(_T("summary_pos_w"), -1),
@@ -54,16 +54,16 @@ void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayStri
     wxString sum;
     sum.Printf(_("(%i new, %i obsolete)"), 
                snew.GetCount(), sobsolete.GetCount());
-    XMLCTRL(*this, "items_count", wxStaticText)->SetLabel(sum);
+    XRCCTRL(*this, "items_count", wxStaticText)->SetLabel(sum);
 
     wxListBox *listbox;
     size_t i;
     
-    listbox = XMLCTRL(*this, "new_strings", wxListBox);
+    listbox = XRCCTRL(*this, "new_strings", wxListBox);
     for (i = 0; i < snew.GetCount(); i++)
         listbox->Append(snew[i]);
 
-    listbox = XMLCTRL(*this, "obsolete_strings", wxListBox);
+    listbox = XRCCTRL(*this, "obsolete_strings", wxListBox);
     for (i = 0; i < sobsolete.GetCount(); i++)
         listbox->Append(sobsolete[i]);
 }

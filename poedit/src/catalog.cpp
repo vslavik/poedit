@@ -405,6 +405,42 @@ static void SaveMultiLines(wxTextFile &f, const wxString& text)
         f.AddLine(tkn.GetNextToken());
 }
 
+/** Adds \n characters as neccesary for good-looking output
+ */
+static wxString FormatStringForFile(const wxString& text)
+{
+    wxString s;
+    unsigned n_cnt = 0;
+    size_t len = text.length();
+    
+    s.Alloc(len + 16);
+    // Scan the string up to len-2 because we don't want to account for the
+    // very last \n on the line:
+    //       "some\n string \n"
+    //                      ^
+    //                      |
+    //                      \--- = len-2
+    size_t i;
+    for (i = 0; i < len-2; i++)
+    {
+        if (text[i] == _T('\\') && text[i+1] == _T('n'))
+        {
+            n_cnt++;
+            s << _T("\\n\"\n\"");
+            i++;
+        }
+        else
+            s << text[i];
+    }
+    // ...and add not yet processed characters to the string...
+    for (; i < len; i++)
+        s << text[i];
+    
+    if (n_cnt > 1)
+        return _T("\"\n\"") + s;
+    else
+        return s;
+}
 
 bool Catalog::Save(const wxString& po_file, bool save_mo)
 {
@@ -522,15 +558,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         dummy = data->GetFlags();
         if (!dummy.IsEmpty())
             f.AddLine(dummy);
-        dummy = data->GetString();
-        if (dummy.Find(_T("\\n")) != wxNOT_FOUND)
-            dummy = _T("\"\n\"") + dummy;
-        dummy.Replace(_T("\\n"), _T("\\n\"\n\""));
+        dummy = FormatStringForFile(data->GetString());
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
-        dummy = data->GetTranslation();
-        if (dummy.Find(_T("\\n")) != wxNOT_FOUND)
-            dummy = _T("\"\n\"") + dummy;
-        dummy.Replace(_T("\\n"), _T("\\n\"\n\""));
+        dummy = FormatStringForFile(data->GetTranslation());
 #if !wxUSE_UNICODE
         if (encConv)
             dummy = wxString(dummy.wc_str(wxConvUTF8), *encConv);

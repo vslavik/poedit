@@ -2,10 +2,9 @@
 ; http://www.lerstad.com/istool/
 
 [Setup]
-CompressLevel=9
-OutputBaseFilename=poedit115_setup
+OutputBaseFilename=poedit116_setup
 AppName=poEdit
-AppVerName=poEdit 1.1.5
+AppVerName=poEdit 1.1.6
 
 ChangesAssociations=true
 AlwaysShowComponentsList=false
@@ -22,6 +21,10 @@ WizardStyle=modern
 LicenseFile=install\license.rtf
 OutputDir=.
 InfoAfterFile=install\news.rtf
+Compression=bzip
+
+WindowShowCaption=false
+WindowStartMaximized=false
 
 
 [Files]
@@ -37,6 +40,8 @@ Source: extras\win32-gettext\msgmerge.exe; DestDir: {app}\bin
 Source: extras\win32-gettext\msgunfmt.exe; DestDir: {app}\bin
 Source: extras\win32-gettext\msgfmt.exe; DestDir: {app}\bin
 Source: extras\win32-db3\libdb31.dll; DestDir: {app}\bin
+Source: install\poedit.exe.manifest; DestDir: {app}\bin; MinVersion: 0,5.0.2195
+Source: extras\win32-runtime\unicows.dll; DestDir: {app}\bin; MinVersion: 0,0
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey

@@ -332,25 +332,25 @@ class UnfocusableTextCtrl : public wxTextCtrl
 
 
 BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
-   EVT_MENU                 (XMLID("menu_quit"),        poEditFrame::OnQuit)
-   EVT_MENU                 (XMLID("menu_help"),        poEditFrame::OnHelp)
-   EVT_MENU                 (XMLID("menu_about"),       poEditFrame::OnAbout)
-   EVT_MENU                 (XMLID("menu_new"),         poEditFrame::OnNew)
-   EVT_MENU                 (XMLID("menu_open"),        poEditFrame::OnOpen)
-   EVT_MENU                 (XMLID("menu_save"),        poEditFrame::OnSave)
-   EVT_MENU                 (XMLID("menu_saveas"),      poEditFrame::OnSaveAs)
+   EVT_MENU                 (XRCID("menu_quit"),        poEditFrame::OnQuit)
+   EVT_MENU                 (XRCID("menu_help"),        poEditFrame::OnHelp)
+   EVT_MENU                 (XRCID("menu_about"),       poEditFrame::OnAbout)
+   EVT_MENU                 (XRCID("menu_new"),         poEditFrame::OnNew)
+   EVT_MENU                 (XRCID("menu_open"),        poEditFrame::OnOpen)
+   EVT_MENU                 (XRCID("menu_save"),        poEditFrame::OnSave)
+   EVT_MENU                 (XRCID("menu_saveas"),      poEditFrame::OnSaveAs)
    EVT_MENU_RANGE           (wxID_FILE1, wxID_FILE9,    poEditFrame::OnOpenHist)
-   EVT_MENU                 (XMLID("menu_catsettings"), poEditFrame::OnSettings)
-   EVT_MENU                 (XMLID("menu_preferences"), poEditFrame::OnPreferences)
-   EVT_MENU                 (XMLID("menu_update"),      poEditFrame::OnUpdate)
-   EVT_MENU                 (XMLID("menu_fuzzy"),       poEditFrame::OnFuzzyFlag)
-   EVT_MENU                 (XMLID("menu_quotes"),      poEditFrame::OnQuotesFlag)
-   EVT_MENU                 (XMLID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
-   EVT_MENU                 (XMLID("menu_references"),  poEditFrame::OnReferencesMenu)
-   EVT_MENU                 (XMLID("menu_fullscreen"),  poEditFrame::OnFullscreen) 
-   EVT_MENU                 (XMLID("menu_find"),        poEditFrame::OnFind)
-   EVT_MENU                 (XMLID("menu_comment"),     poEditFrame::OnEditComment)
-   EVT_MENU                 (XMLID("menu_manager"),     poEditFrame::OnManager)
+   EVT_MENU                 (XRCID("menu_catsettings"), poEditFrame::OnSettings)
+   EVT_MENU                 (XRCID("menu_preferences"), poEditFrame::OnPreferences)
+   EVT_MENU                 (XRCID("menu_update"),      poEditFrame::OnUpdate)
+   EVT_MENU                 (XRCID("menu_fuzzy"),       poEditFrame::OnFuzzyFlag)
+   EVT_MENU                 (XRCID("menu_quotes"),      poEditFrame::OnQuotesFlag)
+   EVT_MENU                 (XRCID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
+   EVT_MENU                 (XRCID("menu_references"),  poEditFrame::OnReferencesMenu)
+   EVT_MENU                 (XRCID("menu_fullscreen"),  poEditFrame::OnFullscreen) 
+   EVT_MENU                 (XRCID("menu_find"),        poEditFrame::OnFind)
+   EVT_MENU                 (XRCID("menu_comment"),     poEditFrame::OnEditComment)
+   EVT_MENU                 (XRCID("menu_manager"),     poEditFrame::OnManager)
    EVT_MENU_RANGE           (ED_POPUP_REFS, ED_POPUP_REFS + 999, poEditFrame::OnReference)
 #ifdef USE_TRANSMEM
    EVT_MENU_RANGE           (ED_POPUP_TRANS, ED_POPUP_TRANS + 999, poEditFrame::OnAutoTranslate)
@@ -403,7 +403,7 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     m_boldGuiFont.SetWeight(wxFONTWEIGHT_BOLD);
 #endif    
     
-    wxMenuBar *MenuBar = wxTheXmlResource->LoadMenuBar(_T("mainmenu"));
+    wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar(_T("mainmenu"));
     if (MenuBar)
     {
         m_history.UseMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&File"))));
@@ -417,10 +417,10 @@ poEditFrame::poEditFrame(const wxString& catalog) :
         wxLog::FlushActive();
     }
 
-    SetToolBar(wxTheXmlResource->LoadToolBar(this, _T("toolbar")));
+    SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("toolbar")));
 
-    GetToolBar()->ToggleTool(XMLID("menu_quotes"), m_displayQuotes);
-    GetMenuBar()->Check(XMLID("menu_quotes"), m_displayQuotes);
+    GetToolBar()->ToggleTool(XRCID("menu_quotes"), m_displayQuotes);
+    GetMenuBar()->Check(XRCID("menu_quotes"), m_displayQuotes);
     
     m_splitter = new wxSplitterWindow(this, -1);
     wxPanel *panel = new wxPanel(m_splitter);
@@ -841,13 +841,13 @@ void poEditFrame::OnFuzzyFlag(wxCommandEvent& event)
 {
     if (event.GetEventObject() == GetToolBar())
     {
-        GetMenuBar()->Check(XMLID("menu_fuzzy"), 
-                            GetToolBar()->GetToolState(XMLID("menu_fuzzy")));
+        GetMenuBar()->Check(XRCID("menu_fuzzy"), 
+                            GetToolBar()->GetToolState(XRCID("menu_fuzzy")));
     }
     else
     {
-        GetToolBar()->ToggleTool(XMLID("menu_fuzzy"),  
-                                 GetMenuBar()->IsChecked(XMLID("menu_fuzzy")));
+        GetToolBar()->ToggleTool(XRCID("menu_fuzzy"),  
+                                 GetMenuBar()->IsChecked(XRCID("menu_fuzzy")));
     }
     UpdateFromTextCtrl();
 }
@@ -858,12 +858,12 @@ void poEditFrame::OnQuotesFlag(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
     if (event.GetEventObject() == GetToolBar())
-        GetMenuBar()->Check(XMLID("menu_quotes"), 
-                            GetToolBar()->GetToolState(XMLID("menu_quotes")));
+        GetMenuBar()->Check(XRCID("menu_quotes"), 
+                            GetToolBar()->GetToolState(XRCID("menu_quotes")));
     else
-        GetToolBar()->ToggleTool(XMLID("menu_quotes"),  
-                                 GetMenuBar()->IsChecked(XMLID("menu_quotes")));
-    m_displayQuotes = GetToolBar()->GetToolState(XMLID("menu_quotes"));
+        GetToolBar()->ToggleTool(XRCID("menu_quotes"),  
+                                 GetMenuBar()->IsChecked(XRCID("menu_quotes")));
+    m_displayQuotes = GetToolBar()->GetToolState(XRCID("menu_quotes"));
     UpdateToTextCtrl();
 }
 
@@ -887,8 +887,8 @@ void poEditFrame::OnFullscreen(wxCommandEvent& event)
     bool fs = IsFullScreen();
     wxConfigBase *cfg = wxConfigBase::Get();
 
-    GetMenuBar()->Check(XMLID("menu_fullscreen"), !fs);
-    GetToolBar()->ToggleTool(XMLID("menu_fullscreen"), !fs);
+    GetMenuBar()->Check(XRCID("menu_fullscreen"), !fs);
+    GetToolBar()->ToggleTool(XRCID("menu_fullscreen"), !fs);
 
     if (fs)
     {
@@ -938,7 +938,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     
     wxString key = (*m_catalog)[ind].GetString();
     wxString newval = m_textTrans->GetValue();
-    bool newfuzzy = GetToolBar()->GetToolState(XMLID("menu_fuzzy"));
+    bool newfuzzy = GetToolBar()->GetToolState(XRCID("menu_fuzzy"));
 
     // check if anything changed:
     if (newval == m_edittedTextOrig && 
@@ -973,7 +973,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 
     if (newfuzzy == data->IsFuzzy()) newfuzzy = false;
     data->SetFuzzy(newfuzzy);
-    GetToolBar()->ToggleTool(XMLID("menu_fuzzy"), newfuzzy);
+    GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), newfuzzy);
 
     wxListItem listitem;
     data->SetModified(true);
@@ -1027,8 +1027,8 @@ void poEditFrame::UpdateToTextCtrl(int item)
     m_edittedTextOrig = t_t2;
     if (m_displayQuotes) 
         m_textTrans->SetInsertionPoint(1);
-    GetToolBar()->ToggleTool(XMLID("menu_fuzzy"), (*m_catalog)[ind].IsFuzzy());
-    GetMenuBar()->Check(XMLID("menu_fuzzy"), (*m_catalog)[ind].IsFuzzy());
+    GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), (*m_catalog)[ind].IsFuzzy());
+    GetMenuBar()->Check(XRCID("menu_fuzzy"), (*m_catalog)[ind].IsFuzzy());
 }
 
 
@@ -1187,12 +1187,12 @@ void poEditFrame::UpdateMenu()
 {
     if (m_catalog == NULL)
     {
-        GetMenuBar()->Enable(XMLID("menu_save"), false);
-        GetMenuBar()->Enable(XMLID("menu_saveas"), false);
-        GetToolBar()->EnableTool(XMLID("menu_save"), false);
-        GetToolBar()->EnableTool(XMLID("menu_update"), false);
-        GetToolBar()->EnableTool(XMLID("menu_fuzzy"), false);
-        GetToolBar()->EnableTool(XMLID("menu_comment"), false);
+        GetMenuBar()->Enable(XRCID("menu_save"), false);
+        GetMenuBar()->Enable(XRCID("menu_saveas"), false);
+        GetToolBar()->EnableTool(XRCID("menu_save"), false);
+        GetToolBar()->EnableTool(XRCID("menu_update"), false);
+        GetToolBar()->EnableTool(XRCID("menu_fuzzy"), false);
+        GetToolBar()->EnableTool(XRCID("menu_comment"), false);
         GetMenuBar()->EnableTop(1, false);
         GetMenuBar()->EnableTop(2, false);
         m_textTrans->Enable(false);
@@ -1200,18 +1200,18 @@ void poEditFrame::UpdateMenu()
     }
     else
     {
-        GetMenuBar()->Enable(XMLID("menu_save"), true);
-        GetMenuBar()->Enable(XMLID("menu_saveas"), true);
-        GetToolBar()->EnableTool(XMLID("menu_save"), true);
-        GetToolBar()->EnableTool(XMLID("menu_fuzzy"), true);
-        GetToolBar()->EnableTool(XMLID("menu_comment"), true);
+        GetMenuBar()->Enable(XRCID("menu_save"), true);
+        GetMenuBar()->Enable(XRCID("menu_saveas"), true);
+        GetToolBar()->EnableTool(XRCID("menu_save"), true);
+        GetToolBar()->EnableTool(XRCID("menu_fuzzy"), true);
+        GetToolBar()->EnableTool(XRCID("menu_comment"), true);
         GetMenuBar()->EnableTop(1, true);
         GetMenuBar()->EnableTop(2, true);
         m_textTrans->Enable(true);
         m_list->Enable(true);
         bool doupdate = m_catalog->Header().SearchPaths.GetCount() > 0;
-        GetToolBar()->EnableTool(XMLID("menu_update"), doupdate);
-        GetMenuBar()->Enable(XMLID("menu_update"), doupdate);
+        GetToolBar()->EnableTool(XRCID("menu_update"), doupdate);
+        GetMenuBar()->Enable(XRCID("menu_update"), doupdate);
     }
 }
 
@@ -1347,7 +1347,7 @@ void poEditFrame::OnAbout(wxCommandEvent&)
 {
     wxBusyCursor busy;
     wxDialog dlg;
-    wxTheXmlResource->LoadDialog(&dlg, this, _T("about_box"));
+    wxXmlResource::Get()->LoadDialog(&dlg, this, _T("about_box"));
     dlg.Centre();
     dlg.ShowModal();
 }
