@@ -366,7 +366,7 @@ void ManagerFrame::OnEditProject(wxCommandEvent& event)
 {
 	int sel = m_listPrj->GetSelection();
 	if (sel == -1) return;
-    EditProject((int)m_listPrj->GetClientData(sel));
+    EditProject((long)m_listPrj->GetClientData(sel));
 }
 
 
@@ -376,7 +376,7 @@ void ManagerFrame::OnDeleteProject(wxCommandEvent& event)
 	if (sel == -1) return;
     if (wxMessageBox(_("Do you want to delete the project?"),
                _("Confirmation"), wxYES_NO | wxICON_QUESTION, this) == wxYES)
-        DeleteProject((int)m_listPrj->GetClientData(sel));
+        DeleteProject((long)m_listPrj->GetClientData(sel));
 }
 
 
@@ -384,7 +384,7 @@ void ManagerFrame::OnSelectProject(wxCommandEvent& event)
 {
 	int sel = m_listPrj->GetSelection();
 	if (sel == -1) return;
-    m_curPrj = (int)m_listPrj->GetClientData(sel);
+    m_curPrj = (long)m_listPrj->GetClientData(sel);
     UpdateListCat(m_curPrj);
 }
 
