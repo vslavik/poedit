@@ -11,9 +11,9 @@ pkgdata_DATA = resources.zip
 
 resources.zip: $(XRC_FILES) $(GIF_FILES)
 	if test $(srcdir) != . ; then \
-	  cp -fR $(srcdir)/*.xrc $(srcdir)/*.gif . \
+	  cp -fR $(srcdir)/*.xrc $(srcdir)/*.gif $(srcdir)/*.html . \
 	  ; fi
-	zip -9 -r resources.zip *.xrc *.gif
+	zip -9 -r resources.zip *.xrc *.gif *.html
 	if test $(srcdir) != . ; then \
-	  rm -rf *.xrc *.gif \
+	  rm -rf *.xrc *.gif *.html \
 	  ; fi
