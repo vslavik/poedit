@@ -157,6 +157,7 @@ bool TranslationMemoryUpdater::UpdateFromPO(const wxString& filename)
 bool TranslationMemoryUpdater::UpdateFromMO(const wxString& filename)
 {
     wxString tmp;
+    wxLogNull null;
 
     if (!wxGetTempFileName(_T("poedit"), tmp))
         return false;
