@@ -15,7 +15,6 @@
 #include <wx/wxprec.h>
 
 #include <wx/wx.h>
-#include <wx/imaglist.h>
 #include <wx/config.h>
 #include <wx/html/htmlwin.h>
 #include <wx/statline.h>
@@ -23,7 +22,6 @@
 #include <wx/fs_mem.h>
 #include <wx/datetime.h>
 #include <wx/tokenzr.h>
-#include <wx/listctrl.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/settings.h>
 #include <wx/button.h>
@@ -31,7 +29,6 @@
 #include <wx/splitter.h>
 #include <wx/fontutil.h>
 #include <wx/textfile.h>
-#include <wx/artprov.h>
 
 #if USE_SPELLCHECKING
     #include <gtk/gtk.h>
@@ -116,228 +113,170 @@ enum
     ED_POPUP_DUMMY = 4000
 };
 
-// colours used in the list:
-#define g_darkColourFactor 0.95
-#define DARKEN_COLOUR(r,g,b) (wxColour(int((r)*g_darkColourFactor),\
-                                       int((g)*g_darkColourFactor),\
-                                       int((b)*g_darkColourFactor)))
-#define LIST_COLOURS(r,g,b) { wxColour(r,g,b), DARKEN_COLOUR(r,g,b) }
-static wxColour 
-    g_ItemColourNormal[2] =       LIST_COLOURS(0xFF,0xFF,0xFF), // white
-    g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
-    g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1), // yellow
-    g_ItemColourInvalid[2] =      LIST_COLOURS(0xFF,0x20,0x20); // red
-
-
-// list control with both columns equally wide:
-class poEditListCtrl : public wxListView
-{
-    public:
-       poEditListCtrl(wxWindow *parent,
-                      wxWindowID id = -1,
-                      const wxPoint &pos = wxDefaultPosition,
-                      const wxSize &size = wxDefaultSize,
-                      long style = wxLC_ICON,
-                      bool dispLines = false,
-                      const wxValidator& validator = wxDefaultValidator,
-                      const wxString &name = _T("listctrl"))
-             : wxListView(parent, id, pos, size, style, validator, name)
-        {
-            m_displayLines = dispLines;
-            CreateColumns();
-            wxImageList *list = new wxImageList(16, 16);
-            list->Add(wxArtProvider::GetBitmap(_T("poedit-status-nothing")));
-            list->Add(wxArtProvider::GetBitmap(_T("poedit-status-modified")));
-            list->Add(wxArtProvider::GetBitmap(_T("poedit-status-automatic")));
-            list->Add(wxArtProvider::GetBitmap(_T("poedit-status-comment")));
-            list->Add(wxArtProvider::GetBitmap(_T("poedit-status-comment-modif")));
-            AssignImageList(list, wxIMAGE_LIST_SMALL);
-        }
-        
-        void CreateColumns()
-        {
-            InsertColumn(0, _("Original string"));
-            InsertColumn(1, _("Translation"));
-            if (m_displayLines)
-                InsertColumn(2, _("Line"), wxLIST_FORMAT_RIGHT);
-            SizeColumns();
-        }
-
-        void SizeColumns()
-        {
-            const int LINE_COL_SIZE = m_displayLines ? 50 : 0;
-
-            int w = GetSize().x
-                    - wxSystemSettings::GetSystemMetric(wxSYS_VSCROLL_X) - 10
-                    - LINE_COL_SIZE;
-            SetColumnWidth(0, w / 2);
-            SetColumnWidth(1, w - w / 2);
-            if (m_displayLines)
-                SetColumnWidth(2, LINE_COL_SIZE);
-
-            m_colWidth = (w/2) / GetCharWidth();
-        }
-
-        void SetDisplayLines(bool dl) { m_displayLines = dl; }
-
-        // Returns average width of one column in number of characters:
-        size_t GetMaxColChars() const
-        {
-            return m_colWidth * 2/*safety coefficient*/;
-        }
-
-    private:
-        DECLARE_EVENT_TABLE()
-        void OnSize(wxSizeEvent& event)
-        {
-            SizeColumns();
-            event.Skip();
-        }
-
-        bool m_displayLines;
-        unsigned m_colWidth;
-};
-
-BEGIN_EVENT_TABLE(poEditListCtrl, wxListCtrl)
-   EVT_SIZE(poEditListCtrl::OnSize)
-END_EVENT_TABLE()
-
-
-// I don't like this global flag, but all poEditFrame instances should share it :(
-static bool gs_focusToText = false;
-static bool gs_shadedList = false;
-
-// special handling of keyboard in listctrl and textctrl
-class ListHandler : public wxEvtHandler
-{ 
-    public:
-        ListHandler(wxTextCtrl *text, std::vector<wxTextCtrl*> *text2,
-                    poEditFrame *frame,
-                    int *sel, int *selitem) :
-                 wxEvtHandler(), m_text(text), m_text2(text2),
-                 m_frame(frame), m_sel(sel), m_selItem(selitem) {}
-
-    private:
-        void OnListSel(wxListEvent& event)
-        {
-            *m_sel = event.GetIndex();
-            *m_selItem = ((wxListCtrl*)event.GetEventObject())->GetItemData(*m_sel);
-            event.Skip();
-        }
-
-        void OnRightClick(wxMouseEvent& event)
-        {
-            long item;
-            int flags = wxLIST_HITTEST_ONITEM;
-            wxListCtrl *list = (wxListCtrl*)event.GetEventObject();
-
-            item = list->HitTest(event.GetPosition(), flags);
-            if (item != -1 && (flags & wxLIST_HITTEST_ONITEM))
-                list->SetItemState(item, wxLIST_STATE_SELECTED, 
-                                         wxLIST_STATE_SELECTED);
-
-            wxMenu *menu = (m_frame) ? 
-                           m_frame->GetPopupMenu(*m_selItem) : NULL;
-            if (menu)
-            {  
-                list->PopupMenu(menu, event.GetPosition());
-                delete menu;
-            }
-            else event.Skip();                    
-        }
-        
-        void OnFocus(wxFocusEvent& event)
-        {
-            if (gs_focusToText)
-            {
-                if (m_text->IsShown())
-                    m_text->SetFocus();
-                else if (!m_text2->empty())
-                    (*m_text2)[0]->SetFocus();
-            }
-            else
-                event.Skip();
-        }
-
-        DECLARE_EVENT_TABLE() 
-
-        wxTextCtrl *m_text;
-        std::vector<wxTextCtrl*> *m_text2;
-        poEditFrame *m_frame;
-        int *m_sel, *m_selItem;
-};
-
-BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
-   EVT_LIST_ITEM_SELECTED(EDC_LIST, ListHandler::OnListSel)
-   EVT_RIGHT_DOWN(ListHandler::OnRightClick)
-   EVT_SET_FOCUS(ListHandler::OnFocus)
-END_EVENT_TABLE()
-
-
+class ListHandler;
 class TextctrlHandler : public wxEvtHandler
 { 
     public:
-        TextctrlHandler(wxListCtrl *list, int *sel) :
-                 wxEvtHandler(), m_list(list), m_sel(sel) {}
+        TextctrlHandler(poEditFrame* frame) :
+                 wxEvtHandler(), m_frame(frame), m_list(frame->m_list), m_sel(&(frame->m_sel)) {}
+                 
+        void SetCatalog(Catalog* catalog) {m_catalog = catalog;}
 
     private:
         void OnKeyDown(wxKeyEvent& event)
         {
-            if (!event.ControlDown())
-                event.Skip();
-            else 
-            {
 #if wxCHECK_VERSION(2,5,1)
-                switch (event.GetKeyCode())
+            int keyCode = event.GetKeyCode();
 #else
-                switch (event.KeyCode())
+            int keyCode = event.KeyCode();
 #endif
-                {
-                    case WXK_UP:
-                        if (*m_sel > 0)
-                        {
-                            m_list->EnsureVisible(*m_sel - 1);
-                            m_list->SetItemState(*m_sel - 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                        }
-                        break;
-                    case WXK_DOWN:
-                        if (*m_sel < m_list->GetItemCount() - 1)
-                        {
-                            m_list->EnsureVisible(*m_sel + 1);
-                            m_list->SetItemState(*m_sel + 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                        }
-                        break;
-                    case WXK_PRIOR:
-                        {
-                            int newy = *m_sel - 10;
-                            if (newy < 0) newy = 0;
-                            m_list->EnsureVisible(newy);
-                            m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                        }
-                        break;
-                    case WXK_NEXT:
-                        {
-                            int newy = *m_sel + 10;
-                            if (newy >= m_list->GetItemCount()) 
-                                newy = m_list->GetItemCount() - 1;
-                            m_list->EnsureVisible(newy);
-                            m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                        }
-                        break;
-                    default:
+
+            switch (keyCode)
+            {
+                case WXK_UP:
+                    if ((*m_sel > 0) && event.ControlDown())
+                    {
+                        m_list->EnsureVisible(*m_sel - 1);
+                        m_list->SetItemState(*m_sel - 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                    }
+                    else
                         event.Skip();
-                }
+                    break;
+                case WXK_DOWN:
+                    if ((*m_sel < m_list->GetItemCount() - 1) && event.ControlDown())
+                    {
+                        m_list->EnsureVisible(*m_sel + 1);
+                        m_list->SetItemState(*m_sel + 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                    }
+                    else
+                        event.Skip();
+                    break;
+                case WXK_PRIOR:
+                    if (event.ControlDown())
+                    {
+                        int newy = *m_sel - 10;
+                        if (newy < 0) newy = 0;
+                        m_list->EnsureVisible(newy);
+                        m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                    }
+                    else
+                        event.Skip();
+                    break;
+                case WXK_NEXT:
+                    if (event.ControlDown())
+                    {
+                        int newy = *m_sel + 10;
+                        if (newy >= m_list->GetItemCount()) 
+                            newy = m_list->GetItemCount() - 1;
+                        m_list->EnsureVisible(newy);
+                        m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                    }
+                    else
+                        event.Skip();
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    if (m_catalog != NULL)
+                    {
+                        if (event.AltDown())
+                        {
+                            // Set bookmark if different from the current value for the item,
+                            // else unset it
+                            int bkIndex = -1;
+                            int selItemIndex = m_list->GetItemData(*m_sel);
+                            Bookmark bk = static_cast<Bookmark>(keyCode-'0');
+                            if (m_catalog->GetBookmarkIndex(bk) == selItemIndex)
+                                m_catalog->SetBookmark(selItemIndex, NO_BOOKMARK);
+                            else
+                                bkIndex = m_catalog->SetBookmark(selItemIndex, bk);
+                            
+                            // Refresh items
+                            m_list->RefreshItem(*m_sel);
+                            if (bkIndex > -1)
+                                m_list->RefreshItem((*m_catalog)[bkIndex].GetListItemId());
+                                
+                            // Catalog has been modified
+                            m_frame->m_modified = true;
+                            m_frame->UpdateTitle();
+                        }
+                        else if (event.ControlDown())
+                        {
+                            // Go to bookmark, if there is an item for it
+                            Bookmark bk = static_cast<Bookmark>(keyCode-'0');
+                            int bkIndex = m_catalog->GetBookmarkIndex(bk);
+                            if (bkIndex > -1)
+                            {
+                                int listIndex = (*m_catalog)[bkIndex].GetListItemId();
+                                if (listIndex >= 0 && listIndex < m_list->GetItemCount())
+                                {
+                                    m_list->EnsureVisible(listIndex);
+                                    m_list->SetItemState(listIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                                }
+                            }    
+                        }
+                        else
+                            event.Skip();
+                    }           
+                    else
+                        event.Skip();
+                    break;
+                default:
+                    event.Skip();
             }
         }
 
         DECLARE_EVENT_TABLE() 
 
-        wxListCtrl *m_list;
-        int        *m_sel;
+        poEditFrame    *m_frame;
+        poEditListCtrl *m_list;
+        int            *m_sel;
+        Catalog        *m_catalog;
+        
+        friend class ListHandler;
 };
 
 BEGIN_EVENT_TABLE(TextctrlHandler, wxEvtHandler)
    EVT_KEY_DOWN(TextctrlHandler::OnKeyDown)
+END_EVENT_TABLE()
+
+// I don't like this global flag, but all poEditFrame instances should share it :(
+bool gs_focusToText = false;
+
+// special handling of events in listctrl 
+class ListHandler : public wxEvtHandler
+{ 
+    public:
+        ListHandler(poEditFrame *frame) :
+                 wxEvtHandler(), m_frame(frame) {}
+
+    private:
+        void OnSel(wxListEvent& event) { m_frame->OnListSel(event); }
+        void OnDesel(wxListEvent& event) { m_frame->OnListDesel(event); }
+        void OnActivated(wxListEvent& event) { m_frame->OnListActivated(event); }
+        void OnRightClick(wxMouseEvent& event) { m_frame->OnListRightClick(event); }
+        void OnFocus(wxFocusEvent& event) { m_frame->OnListFocus(event); }
+        void OnKeyDown(wxKeyEvent& event) { dynamic_cast<TextctrlHandler*>(m_frame->m_textTrans->GetEventHandler())->OnKeyDown(event); }
+
+        DECLARE_EVENT_TABLE() 
+
+        poEditFrame *m_frame;
+};
+
+BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
+   EVT_LIST_ITEM_SELECTED  (EDC_LIST, ListHandler::OnSel)
+   EVT_LIST_ITEM_DESELECTED(EDC_LIST, ListHandler::OnDesel)
+   EVT_LIST_ITEM_ACTIVATED (EDC_LIST, ListHandler::OnActivated)
+   EVT_RIGHT_DOWN          (          ListHandler::OnRightClick)
+   EVT_SET_FOCUS           (          ListHandler::OnFocus)
+   EVT_KEY_DOWN            (          ListHandler::OnKeyDown)
 END_EVENT_TABLE()
 
 class StatusbarHandler : public wxEvtHandler
@@ -417,12 +356,6 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
                        poEditFrame::OnAutoTranslate)
    EVT_MENU           (XRCID("menu_auto_translate"), poEditFrame::OnAutoTranslateAll)
 #endif
-   EVT_LIST_ITEM_SELECTED
-                      (EDC_LIST,       poEditFrame::OnListSel)
-   EVT_LIST_ITEM_DESELECTED
-                      (EDC_LIST,       poEditFrame::OnListDesel)
-   EVT_LIST_ITEM_ACTIVATED
-                      (EDC_LIST,       poEditFrame::OnListActivated)
    EVT_CLOSE          (                poEditFrame::OnCloseWindow)
    EVT_TEXT           (EDC_TEXTCOMMENT,poEditFrame::OnCommentWindowText)
 #ifdef __WXMSW__
@@ -450,7 +383,7 @@ poEditFrame::poEditFrame() :
     m_list(NULL),
     m_modified(false),
     m_hasObsoleteItems(false),
-    m_sel(0), m_selItem(0),
+    m_sel(-1), //m_selItem(0),
     m_edittedTextFuzzyChanged(false)
 {
 #ifdef __WXMSW__
@@ -522,7 +455,8 @@ poEditFrame::poEditFrame() :
                                       wxDefaultPosition, wxDefaultSize,
                                       SPLITTER_BORDER);
 
-    m_list = new poEditListCtrl(m_splitter, EDC_LIST, 
+    m_list = new poEditListCtrl(m_splitter, 
+                                EDC_LIST, 
                                 wxDefaultPosition, wxDefaultSize,
                                 wxLC_REPORT | wxLC_SINGLE_SEL,
                                 m_displayLines);
@@ -606,10 +540,9 @@ poEditFrame::poEditFrame() :
     m_splitter->SetMinimumPaneSize(40);
     m_splitter->SplitHorizontally(m_list, m_bottomSplitter, cfg->Read(_T("splitter"), 240L));
 
-    m_textTrans->PushEventHandler(new TextctrlHandler(m_list, &m_sel));
-    m_list->PushEventHandler(new ListHandler(m_textTrans, &m_textTransPlural,
-                                             this, 
-                                             &m_sel, &m_selItem));
+    m_list->PushEventHandler(new ListHandler(this));
+    m_textTrans->PushEventHandler(new TextctrlHandler(this));
+    m_textComment->PushEventHandler(new TextctrlHandler(this));
 
     m_list->SetFocus();
 
@@ -1191,11 +1124,15 @@ void poEditFrame::OnUpdate(wxCommandEvent& event)
 
 void poEditFrame::OnListSel(wxListEvent& event)
 {
+    if (m_sel != -1)
+        UpdateFromTextCtrl(m_sel);
+    
     wxWindow *focus = wxWindow::FindFocus();
     bool hasFocus = (focus == m_textTrans) ||
                     (focus && focus->GetParent() == m_pluralNotebook);
-    
-    UpdateToTextCtrl(event.GetIndex());
+
+    m_sel = event.GetIndex();
+    UpdateToTextCtrl(m_sel);
     event.Skip();
     
     if (hasFocus)
@@ -1211,6 +1148,7 @@ void poEditFrame::OnListSel(wxListEvent& event)
 
 void poEditFrame::OnListDesel(wxListEvent& event)
 {
+    wxMessageBox(wxString("OnListDesel: ")<<event.GetIndex());
     UpdateFromTextCtrl(event.GetIndex());
     event.Skip();
 }
@@ -1235,9 +1173,10 @@ void poEditFrame::OnListActivated(wxListEvent& event)
 
 void poEditFrame::OnReferencesMenu(wxCommandEvent& event)
 {
-    if (m_selItem < 0 || m_selItem >= (int)m_catalog->GetCount()) return;
+    int selItem = m_list->GetItemData(m_sel);
+    if (selItem < 0 || selItem >= (int)m_catalog->GetCount()) return;
     
-    const wxArrayString& refs = (*m_catalog)[m_selItem].GetReferences();
+    const wxArrayString& refs = (*m_catalog)[selItem].GetReferences();
 
     if (refs.GetCount() == 0)
         wxMessageBox(_("No references to this string found."));
@@ -1293,12 +1232,12 @@ void poEditFrame::ShowReference(int num)
     if (wxConfig::Get()->Read(_T("open_editor_immediately"), (long)false))
     {
         FileViewer::OpenInEditor(basepath, 
-                                 (*m_catalog)[m_selItem].GetReferences()[num]);
+                                 (*m_catalog)[m_list->GetItemData(m_sel)].GetReferences()[num]);
     }
     else
     {
         FileViewer *w = new FileViewer(this, basepath,
-                                       (*m_catalog)[m_selItem].GetReferences(),
+                                       (*m_catalog)[m_list->GetItemData(m_sel)].GetReferences(),
                                        num);
         if (w->FileOk())
             w->Show(true);
@@ -1421,22 +1360,6 @@ void poEditFrame::OnFind(wxCommandEvent& event)
 }
 
 
-static int GetItemIcon(const CatalogData& item)
-{
-    if (item.HasComment())
-    {
-        if (item.IsModified())
-            return 4;
-        else
-            return 3;
-    }
-    if (item.IsModified()) 
-        return 1;
-    if (item.IsAutomatic())
-        return 2;
-    return 0;
-}
-
 inline wxString convertToLocalCharset(const wxString& str)
 {
 #if !wxUSE_UNICODE
@@ -1539,7 +1462,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 
     newval = TransformNewval(newval, m_displayQuotes);
 
-    m_list->SetItem(item, 1, newval.substr(0, m_list->GetMaxColChars()));
+//    m_list->SetItem(item, 1, newval.substr(0, m_list->GetMaxColChars()));
 
 #if !wxUSE_UNICODE
     // convert to UTF-8 using user's environment default charset (do it
@@ -1576,39 +1499,13 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), newfuzzy);
     GetMenuBar()->Check(XRCID("menu_fuzzy"), newfuzzy);
 
-    wxListItem listitem;
+
     entry.SetModified(true);
     entry.SetAutomatic(false);
     entry.SetTranslated(!newval.IsEmpty());
-    listitem.SetId(item);
-    m_list->GetItem(listitem);
-
-    if (gs_shadedList)
-    {
-        if (!entry.IsTranslated())
-            listitem.SetBackgroundColour(g_ItemColourUntranslated[item % 2]);
-        else if (entry.IsFuzzy())
-            listitem.SetBackgroundColour(g_ItemColourFuzzy[item % 2]);
-        else if (entry.GetValidity() == CatalogData::Val_Invalid)
-            listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
-        else
-            listitem.SetBackgroundColour(g_ItemColourNormal[item % 2]);
-    }
-    else
-    {
-        if (!entry.IsTranslated())
-            listitem.SetBackgroundColour(g_ItemColourUntranslated[0]);
-        else if (entry.IsFuzzy())
-            listitem.SetBackgroundColour(g_ItemColourFuzzy[0]);
-        else if (entry.GetValidity() == CatalogData::Val_Invalid)
-            listitem.SetBackgroundColour(g_ItemColourInvalid[0]);
-        else
-            listitem.SetBackgroundColour(g_ItemColourNormal[0]);
-    }
     
-    int icon = GetItemIcon(entry);
-    m_list->SetItemImage(listitem, icon, icon);
-    m_list->SetItem(listitem);
+    m_list->RefreshItem(item);
+    
     if (m_modified == false)
     {
         m_modified = true;
@@ -1629,7 +1526,7 @@ void poEditFrame::UpdateToTextCtrl(int item)
     if (item == -1 || item >= m_list->GetItemCount()) return;
     int ind = m_list->GetItemData(item);
     if (ind >= (int)m_catalog->GetCount()) return;
-
+    
     const CatalogData& entry = (*m_catalog)[ind];
 
     wxString quote;
@@ -1718,6 +1615,8 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
 
     delete m_catalog;
     m_catalog = new Catalog(catalog);
+    m_list->SetCatalog(m_catalog);
+    dynamic_cast<TextctrlHandler*>(m_textTrans->GetEventHandler())->SetCatalog(m_catalog);
 
 #ifdef USE_TRANSMEM
     if (m_transMem)
@@ -1751,7 +1650,7 @@ void poEditFrame::AddItemsToList(const Catalog& catalog,
                                  bool (*filter)(const CatalogData& d),
                                  const wxColour *clr)
 {
-    int clrPos;
+/*    int clrPos;
     wxListItem listitem;
     size_t cnt = catalog.GetCount();
     size_t maxchars = list->GetMaxColChars();
@@ -1788,7 +1687,7 @@ void poEditFrame::AddItemsToList(const Catalog& catalog,
             }
             pos++;
         }
-    }
+    }*/
 }
 
 static bool CatFilterUntranslated(const CatalogData& d)
@@ -1816,7 +1715,7 @@ static bool CatFilterRest(const CatalogData& d)
 void poEditFrame::RefreshControls()
 {
     if (!m_catalog) return;
-
+    
     m_hasObsoleteItems = false;    
     if (!m_catalog->IsOk())
     {
@@ -1838,21 +1737,12 @@ void poEditFrame::RefreshControls()
         selection = m_list->GetItemText(selection_idx);
     
     m_list->Freeze();
-    m_list->ClearAll();
-    m_list->CreateColumns();
+    m_list->CreateColumns(); // This forces to reread the catalog
+    m_list->Refresh();
 
     wxString trans;
     size_t pos = 0;
    
-    AddItemsToList(*m_catalog, m_list, pos, 
-                   CatFilterUntranslated, g_ItemColourUntranslated);
-    AddItemsToList(*m_catalog, m_list, pos, 
-                   CatFilterInvalid, g_ItemColourInvalid);
-    AddItemsToList(*m_catalog, m_list, pos, 
-                   CatFilterFuzzy, g_ItemColourFuzzy);
-    AddItemsToList(*m_catalog, m_list, pos, 
-                   CatFilterRest, gs_shadedList ? g_ItemColourNormal : NULL);
-
     m_list->Thaw();
     
     if (m_catalog->GetCount() > 0)
@@ -1869,6 +1759,15 @@ void poEditFrame::RefreshControls()
             {
                 if (m_list->GetItemText(i) == selection)
                 {
+                    // This will force to not update the item that now has the 
+                    // position the item that just got modified had before the 
+                    // catalog was saved. If we don't force this to happen,
+                    // that item would get the value of the one that just got
+                    // modified (from the text controls), thus deleting its 
+                    // legitimate value
+                    m_sel = -1; 
+                    
+                    // Now, select the item in the list
                     m_list->Select(i);
                     m_list->Focus(i);
                     break;
@@ -2024,24 +1923,26 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
 
 void poEditFrame::OnEditComment(wxCommandEvent& event)
 {
-    if (m_selItem < 0 || m_selItem >= (int)m_catalog->GetCount()) return;
+    int selItem = m_list->GetItemData(m_sel);
+    if (selItem < 0 || selItem >= (int)m_catalog->GetCount()) return;
    
     wxString comment = convertToLocalCharset(
-                            (*m_catalog)[m_selItem].GetComment());
+                            (*m_catalog)[selItem].GetComment());
     CommentDialog dlg(this, comment);
     if (dlg.ShowModal() == wxID_OK)
     {
         m_modified = true;
         UpdateTitle();
         comment = convertFromLocalCharset(dlg.GetComment());
-        (*m_catalog)[m_selItem].SetComment(comment);
+        (*m_catalog)[selItem].SetComment(comment);
 
-        wxListItem listitem;
+        m_list->RefreshItem(m_sel);
+/*        wxListItem listitem;
         listitem.SetId(m_sel);
         m_list->GetItem(listitem);
         int icon = GetItemIcon((*m_catalog)[m_selItem]);
         m_list->SetItemImage(listitem, icon, icon);
-        m_list->SetItem(listitem);
+        m_list->SetItem(listitem);*/
 
         // update comment window
         m_textComment->SetValue(CommentDialog::RemoveStartHash(comment));
@@ -2067,7 +1968,7 @@ void poEditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
 void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
 {
     int ind = event.GetId() - ED_POPUP_TRANS;
-    (*m_catalog)[m_selItem].SetTranslation(m_autoTranslations[ind]);
+    (*m_catalog)[m_list->GetItemData(m_sel)].SetTranslation(m_autoTranslations[ind]);
     UpdateToTextCtrl();
     // VS: This dirty trick ensures proper refresh of everything: 
     m_edittedTextOrig.clear();
@@ -2333,7 +2234,7 @@ void poEditFrame::OnCommentWindowText(wxCommandEvent&)
     wxString comment;
     comment = convertFromLocalCharset(
             CommentDialog::AddStartHash(m_textComment->GetValue()));
-    CatalogData& data((*m_catalog)[m_selItem]);
+    CatalogData& data((*m_catalog)[m_list->GetItemData(m_sel)]);
    
     wxLogTrace(_T("poedit"), _T("   comm:'%s'"), comment.c_str());
     wxLogTrace(_T("poedit"), _T("datcomm:'%s'"), data.GetComment().c_str());
@@ -2341,14 +2242,9 @@ void poEditFrame::OnCommentWindowText(wxCommandEvent&)
         return;
 
     data.SetComment(comment);
- 
-    wxListItem listitem;
-    listitem.SetId(m_sel);
-    m_list->GetItem(listitem);
-    int icon = GetItemIcon((*m_catalog)[m_selItem]);
-    m_list->SetItemImage(listitem, icon, icon);
-    m_list->SetItem(listitem);
     
+    m_list->RefreshItem(m_sel);
+ 
     if (m_modified == false)
     {
         m_modified = true;
@@ -2476,10 +2372,10 @@ void poEditFrame::EndItemValidation()
             wxListItem listitem;
             listitem.SetId(item);
             m_list->GetItem(listitem);
-            if (gs_shadedList)
+/*            if (gs_shadedList)
                 listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
             else
-                listitem.SetBackgroundColour(g_ItemColourInvalid[0]);
+                listitem.SetBackgroundColour(g_ItemColourInvalid[0]);*/
             m_list->SetItem(listitem);
         }
         
@@ -2571,7 +2467,7 @@ void poEditFrame::RecreatePluralTextCtrls()
                                          wxEmptyString, 
                                          wxDefaultPosition, wxDefaultSize, 
                                          wxTE_MULTILINE);
-        txt->PushEventHandler(new TextctrlHandler(m_list, &m_sel));
+        txt->PushEventHandler(new TextctrlHandler(this));
         m_textTransPlural.push_back(txt);
         m_pluralNotebook->AddPage(txt, desc);
     }
@@ -2582,3 +2478,40 @@ void poEditFrame::RecreatePluralTextCtrls()
     InitSpellchecker();
     UpdateToTextCtrl();
 }
+
+void poEditFrame::OnListRightClick(wxMouseEvent& event)
+{
+    long item;
+    int flags = wxLIST_HITTEST_ONITEM;
+    wxListCtrl *list = (wxListCtrl*)event.GetEventObject();
+
+    item = list->HitTest(event.GetPosition(), flags);
+    if (item != -1 && (flags & wxLIST_HITTEST_ONITEM))
+        list->SetItemState(item, wxLIST_STATE_SELECTED, 
+                                 wxLIST_STATE_SELECTED);
+
+    wxMenu *menu = GetPopupMenu(m_list->GetItemData(m_sel));/*(m_frame) ? 
+                   m_frame->GetPopupMenu(*m_selItem) : NULL;*/
+    if (menu)
+    {  
+        list->PopupMenu(menu, event.GetPosition());
+        delete menu;
+    }
+    else event.Skip();
+}
+
+void poEditFrame::OnListFocus(wxFocusEvent& event)
+{
+    if (gs_focusToText)
+    {
+        if (m_textTrans->IsShown())
+            m_textTrans->SetFocus();
+        else if (!m_textTransPlural.empty())
+            (m_textTransPlural)[0]->SetFocus();
+    }
+    else
+        event.Skip();
+}
+
+
+

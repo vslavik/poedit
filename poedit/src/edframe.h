@@ -23,11 +23,8 @@
 
 #include <wx/frame.h>
 #include <wx/docview.h>
-#include <wx/list.h>
 #include <wx/process.h>
 
-class WXDLLEXPORT wxListCtrl;
-class WXDLLEXPORT wxListEvent;
 class WXDLLEXPORT wxSplitterWindow;
 class WXDLLEXPORT wxTextCtrl;
 class WXDLLEXPORT wxGauge;
@@ -42,8 +39,11 @@ class WXDLLEXPORT wxStaticText;
 
 #include "catalog.h"
 #include "gexecute.h"
+#include "edlistctrl.h"
 
-class poEditListCtrl;
+class ListHandler;   
+class TextctrlHandler;   
+
 class TranslationMemory;
 class poEditFrame;
 
@@ -152,6 +152,8 @@ class poEditFrame : public wxFrame
         void OnListSel(wxListEvent& event);
         void OnListDesel(wxListEvent& event);
         void OnListActivated(wxListEvent& event);
+        void OnListRightClick(wxMouseEvent& event);
+        void OnListFocus(wxFocusEvent& event);
         void OnCloseWindow(wxCloseEvent& event);
         void OnReference(wxCommandEvent& event);
         void OnReferencesMenu(wxCommandEvent& event);
@@ -245,12 +247,13 @@ class poEditFrame : public wxFrame
         bool m_displayLines;
         bool m_displayCommentWin;
         bool m_displayAutoCommentsWin;
-        int m_sel, m_selItem;
+        int m_sel;//, m_selItem;
         wxFileHistory m_history;
         std::vector<wxString> m_edittedTextOrig;
         bool m_edittedTextFuzzyChanged;
         
         friend class ListHandler;
+        friend class TextctrlHandler;
 };
 
 
