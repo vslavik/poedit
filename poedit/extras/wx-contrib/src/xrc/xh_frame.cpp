@@ -21,9 +21,11 @@
 
 #include "wx/xrc/xh_frame.h"
 #include "wx/frame.h"
+#include "wx/dialog.h" // to get wxDEFAULT_DIALOG_STYLE
 #include "wx/log.h"
 #include "wx/intl.h"
 
+IMPLEMENT_DYNAMIC_CLASS(wxFrameXmlHandler, wxXmlResourceHandler)
 
 wxFrameXmlHandler::wxFrameXmlHandler() : wxXmlResourceHandler()
 {
@@ -35,7 +37,10 @@ wxFrameXmlHandler::wxFrameXmlHandler() : wxXmlResourceHandler()
     XRC_ADD_STYLE(wxSYSTEM_MENU);
     XRC_ADD_STYLE(wxRESIZE_BORDER);
     XRC_ADD_STYLE(wxRESIZE_BOX);
+    //XRC_ADD_STYLE(wxCLOSE_BOX);
 
+    XRC_ADD_STYLE(wxFRAME_NO_TASKBAR);
+    XRC_ADD_STYLE(wxFRAME_SHAPED);
     XRC_ADD_STYLE(wxFRAME_TOOL_WINDOW);
     XRC_ADD_STYLE(wxFRAME_FLOAT_ON_PARENT);
     XRC_ADD_STYLE(wxMAXIMIZE_BOX);
