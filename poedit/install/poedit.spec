@@ -1,7 +1,7 @@
 # Purpose:  The .spec file for building poEdit RPM
 
 # version and release
-%define VERSION 1.1.1
+%define VERSION 1.1.3
 %define RELEASE 1
 
 # default installation directory
@@ -14,7 +14,7 @@ Version:   %VERSION
 Release:   %RELEASE
 Copyright: BSD license
 Group:     Applications/Editors
-Source:    poedit-%{VERSION}.tar.gz
+Source:    poedit-%{VERSION}.tar.bz2
 URL:       http://poedit.sourceforge.net
 Packager:  Vaclav Slavik <v.slavik@volny.cz>
 Prefix:    %prefix

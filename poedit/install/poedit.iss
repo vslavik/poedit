@@ -31,7 +31,7 @@ Source: install\readme.txt; DestDir: {app}\doc; DestName: readme.txt
 Source: docs\poedit.chm; DestDir: {app}\share\poedit
 Source: install\license.txt; DestDir: {app}\doc; DestName: license.txt
 Source: install\news.txt; DestDir: {app}\doc; DestName: news.txt
-Source: src\resources\tmp.zip; DestDir: {app}\share\poedit; DestName: resources.zip
+Source: Build\src\resources\resources.zip; DestDir: {app}\share\poedit; DestName: resources.zip
 Source: extras\win32-gettext\xgettext.exe; DestDir: {app}\bin
 Source: extras\win32-gettext\msgmerge.exe; DestDir: {app}\bin
 Source: extras\win32-gettext\msgunfmt.exe; DestDir: {app}\bin
@@ -69,7 +69,4 @@ Name: {app}\bin
 Name: {app}\doc
 
 [_ISToolPreCompile]
-Name: bash; Parameters: "-c ""cd ../src/resources && zip -9 tmp.zip '*.xrc' '*.gif'"""; Flags: abortonerror runminimized
 
-[_ISToolPostCompile]
-Name: bash; Parameters: -c 'cd ../src/resources && rm tmp.zip'; Flags: runminimized
