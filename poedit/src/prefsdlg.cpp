@@ -45,7 +45,25 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
                 new wxEditableListBox(this, -1, _("My Languages")));
 #else
     // remove "Translation Memory" page if support not compiled-in
-    XRCCTRL(*this, "notebook", wxNotebook)->DeletePage(1);
+	// Must first look for the index of the TM page and then delete
+	// it from the notebook.
+	// We must rely on the fact that the TM page has a name from
+	// the XRC resources because it's text may have been localized.
+	wxNotebook* nb = XRCCTRL(*this, "notebook", wxNotebook);
+	wxNotebookPage* tmPage = XRCCTRL(*this, "tm_page", wxWindow);
+	int tmIndex = -1;
+	int i = 0;
+	while (i < nb->GetPageCount() && tmIndex == -1)
+	{
+		if (nb->GetPage(i) == tmPage)
+			tmIndex = i;
+		i++;
+	}
+
+	// this test may be a bit superfluous, but is a safeguard in case 
+	// the page isn't even available from the resources
+	if (tmIndex != -1)	
+		XRCCTRL(*this, "notebook", wxNotebook)->DeletePage(tmIndex);
 #endif
 
 #ifdef __UNIX__
@@ -69,6 +87,8 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 (bool)cfg->Read(_T("manager_startup"), (long)false));
     XRCCTRL(*this, "focus_to_text", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("focus_to_text"), (long)false));
+    XRCCTRL(*this, "comment_window_editable", wxCheckBox)->SetValue(
+                (bool)cfg->Read(_T("comment_window_editable"), (long)false));
     XRCCTRL(*this, "ext_editor", wxComboBox)->SetValue(
                 cfg->Read(_T("ext_editor"), wxEmptyString));
     XRCCTRL(*this, "open_editor_immediately", wxCheckBox)->SetValue(
@@ -141,6 +161,8 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XRCCTRL(*this, "manager_startup", wxCheckBox)->GetValue());
     cfg->Write(_T("focus_to_text"), 
                 XRCCTRL(*this, "focus_to_text", wxCheckBox)->GetValue());
+    cfg->Write(_T("comment_window_editable"), 
+                XRCCTRL(*this, "comment_window_editable", wxCheckBox)->GetValue());
     cfg->Write(_T("ext_editor"), 
                 XRCCTRL(*this, "ext_editor", wxComboBox)->GetValue());
     cfg->Write(_T("open_editor_immediately"), 
@@ -312,7 +334,7 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
         //     to use the path entered by the user...
 
     wxArrayString langs;
-	XRCCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
+    XRCCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
 
     RunTMUpdateWizard(this, dbPath, langs);
 }
