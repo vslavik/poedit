@@ -1296,14 +1296,17 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             newval = newval.Mid(0, i) + _T("\\\"") + newval.Mid(i+1);
             i++;
         }
+    
+    m_list->SetItem(item, 1, newval.substr(0, m_list->GetMaxColChars()));
 
 #if !wxUSE_UNICODE
-    // convert to UTF-8 using user's environment default charset:
+    // convert to UTF-8 using user's environment default charset (do it
+    // after calling m_list->SetItem because SetItem expects string in
+    // local charset, not UTF-8):
     newval = convertFromLocalCharset(newval);
 #endif
 
     m_catalog->Translate(key, newval);
-    m_list->SetItem(item, 1, newval.substr(0, m_list->GetMaxColChars()));
 
     CatalogData* data = m_catalog->FindItem(key);
 
