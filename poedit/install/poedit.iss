@@ -114,7 +114,6 @@ Source: locales\bn.mo; DestDir: {app}\share\locale\bn\LC_MESSAGES; Components: i
 Source: locales\eu.mo; DestDir: {app}\share\locale\eu\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\wxwin\eu.mo; DestDir: {app}\share\locale\eu\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\ko.mo; DestDir: {app}\share\locale\ko\LC_MESSAGES; Components: i18n; DestName: poedit.mo
-Source: locales\wxwin\ko.mo; DestDir: {app}\share\locale\ko\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\he.mo; DestDir: {app}\share\locale\he\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\ky.mo; DestDir: {app}\share\locale\ky\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\uk.mo; DestDir: {app}\share\locale\uk\LC_MESSAGES; Components: i18n; DestName: poedit.mo
