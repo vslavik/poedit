@@ -49,7 +49,7 @@ Source: extras\win32-db3\libdb31.dll; DestDir: {app}\bin; Components: core; Copy
 Source: extras\win32-runtime\unicows.dll; DestDir: {app}\bin; MinVersion: 4.0.950,0; Components: core; CopyMode: alwaysoverwrite
 Source: locales\wxwin\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: poedit.mo
-Source: locales\zh_TW.Big5.mo; DestDir: {app}\share\locale\zh_TW.Big5\LC_MESSAGES; DestName: poedit.mo; Components: i18n
+Source: locales\zh_TW.mo; DestDir: {app}\share\locale\zh_TW\LC_MESSAGES; DestName: poedit.mo; Components: i18n
 Source: locales\wxwin\zh.mo; DestDir: {app}\share\locale\zh\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
 Source: locales\wxwin\nl.mo; DestDir: {app}\share\locale\nl\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
 Source: locales\nl.mo; DestDir: {app}\share\locale\nl\LC_MESSAGES; DestName: poedit.mo; Components: i18n
@@ -108,8 +108,8 @@ Name: {app}\share\locale\cs_CZ; Components: i18n
 Name: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\zh; Components: i18n
 Name: {app}\share\locale\zh\LC_MESSAGES; Components: i18n
-Name: {app}\share\locale\zh_TW.Big5; Components: i18n
-Name: {app}\share\locale\zh_TW.Big5\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\zh_TW; Components: i18n
+Name: {app}\share\locale\zh_TW\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\nl; Components: i18n
 Name: {app}\share\locale\nl\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\et; Components: i18n
