@@ -180,12 +180,8 @@ class Catalog
 class CatalogParser
 {
     public:
-#if wxUSE_UNICODE
-        CatalogParser(wxTextFile *f) : m_textFile(f), m_conv(NULL) {}
-#else
         CatalogParser(wxTextFile *f, wxMBConv *conv)
             : m_textFile(f), m_conv(conv) {}
-#endif
         virtual ~CatalogParser() {}
 
         /** Parses the entire file, calls OnEntry each time
