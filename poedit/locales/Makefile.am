@@ -1,5 +1,5 @@
 
-ALL_LINGUAS = cs zh zh_TW.Big5 nl et
+ALL_LINGUAS = cs zh zh_TW.Big5 nl et de
 
 localedir = $(datadir)/locale
 
