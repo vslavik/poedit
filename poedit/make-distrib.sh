@@ -31,7 +31,7 @@ find_unix_files()
 find_win32_files()
 {
   echo \
-"docs/poedit.chm
+"docs/chm/*.chm
 poedit.dsw
 poedit.dsp"
 ls -1 install/{*.txt,*.rtf,*.iss}
