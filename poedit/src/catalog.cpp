@@ -28,6 +28,7 @@
 #include <wx/config.h>
 #include <wx/textfile.h>
 #include <wx/strconv.h>
+#include <wx/msgdlg.h>
 
 #include "catalog.h"
 #include "digger.h"
@@ -151,10 +152,62 @@ void CatalogParser::Parse()
 }
 
 
+
+class CharsetInfoFinder : public CatalogParser
+{
+    public:
+        CharsetInfoFinder(wxTextFile *f) 
+                : CatalogParser(f), m_charset(_T("iso-8859-1")) {}
+        wxString GetCharset() const { return m_charset; }
+
+    protected:
+        wxString m_charset;
+    
+        virtual bool OnEntry(const wxString& msgid,
+                             const wxString& msgstr,
+                             const wxString& flags,
+                             const wxArrayString& references,
+                             const wxString& comment,
+                             unsigned lineNumber);
+};
+
+bool CharsetInfoFinder::OnEntry(const wxString& msgid,
+                                const wxString& msgstr,
+                                const wxString& flags,
+                                const wxArrayString& references,
+                                const wxString& comment,
+                                unsigned lineNumber)
+{
+    if (msgid.IsEmpty())
+    {
+        // gettext header:
+        wxString mtrans = msgstr;
+        mtrans.Replace(_T("\\n"), _T("\n"));
+        wxStringTokenizer tkn(mtrans, _T("\n"));
+        wxString ln2;
+
+        while (tkn.HasMoreTokens())
+        {
+            ln2 = tkn.GetNextToken();
+            if (ReadParam(ln2, _T("Content-Type: text/plain; charset="), 
+                          m_charset))
+            {
+                if (m_charset == _T("CHARSET"))
+                    m_charset = _T("iso-8859-1");
+                return false; // stop parsing
+            }
+        }
+    }
+    return true;
+}
+
+
+
 class LoadParser : public CatalogParser
 {
     public:
-        LoadParser(Catalog *c, wxTextFile *f) : CatalogParser(f), m_catalog(c) {}
+        LoadParser(Catalog *c, wxTextFile *f)
+              : CatalogParser(f), m_catalog(c) {}
 
     protected:
         Catalog *m_catalog;
@@ -165,8 +218,6 @@ class LoadParser : public CatalogParser
                              const wxArrayString& references,
                              const wxString& comment,
                              unsigned lineNumber);
-        void ChangeFileCharset(const wxString& charset);
-                             
 };
 
 
@@ -207,11 +258,6 @@ bool LoadParser::OnEntry(const wxString& msgid,
                 m_catalog->m_header.Team = tkn2.GetNextToken().Strip(wxString::trailing);
                 m_catalog->m_header.TeamEmail = tkn2.GetNextToken();
             }
-            ReadParam(ln2, _T("Content-Type: text/plain; charset="), 
-                      m_catalog->m_header.Charset);
-			if (m_catalog->m_header.Charset == _T("CHARSET"))
-					m_catalog->m_header.Charset = _T("us-ascii");
-            ChangeFileCharset(m_catalog->m_header.Charset);
         }
         m_catalog->m_header.Comment = comment;
     }
@@ -231,15 +277,6 @@ bool LoadParser::OnEntry(const wxString& msgid,
         m_catalog->m_count++;
     }
     return true;
-}
-
-void LoadParser::ChangeFileCharset(const wxString& charset)
-{
-    wxCSConv conv(!!charset ? charset : wxString(_T("utf-8")));
-    size_t line = m_textFile->GetCurrentLine();
-    m_textFile->Close();
-    m_textFile->Open(conv);
-    m_textFile->GoToLine(line);
 }
 
 
@@ -355,6 +392,14 @@ bool Catalog::Load(const wxString& po_file)
     /* Load the .po file: */
 
     if (!f.Open(po_file)) return false;
+    
+    CharsetInfoFinder charsetFinder(&f);
+    charsetFinder.Parse();
+    m_header.Charset = charsetFinder.GetCharset();
+
+    f.Close();
+    wxCSConv encConv(m_header.Charset);
+    if (!f.Open(po_file, encConv)) return false;
 
     LoadParser parser(this, &f);
     parser.Parse();
@@ -369,10 +414,6 @@ bool Catalog::Load(const wxString& po_file)
        converts the file to wide char representation): */
     if (wxStricmp(Header().Charset, _T("utf-8")) != 0)
     {
-        wxString charset = Header().Charset;
-        if (!charset || charset == _T("CHARSET"))
-            charset = _T("iso-8859-1"); // fallback
-        wxCSConv encConv(charset);
         for (size_t i = 0; i < m_dataArray.GetCount(); i++)
             m_dataArray[i].SetTranslation(wxString(
                 m_dataArray[i].GetTranslation().wc_str(encConv),
@@ -391,6 +432,30 @@ void Catalog::Clear()
     m_isOk = true;
     m_count = 0;
     m_data = new wxHashTable(wxKEY_STRING);
+}
+
+
+static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
+{
+    if (charset == _T("utf-8") || charset == _T("UTF-8"))
+        return true;
+
+    wxCSConv conv(charset);
+    size_t cnt = catalog.GetCount();
+    for (size_t i = 0; i < cnt; i++)
+    {
+#if !wxUSE_UNICODE
+        wxString trans = 
+            wxString(catalog[i].GetTranslation().wc_str(wxConvUTF8), conv);
+        if (!trans)
+            return false;
+#else
+        if (!catalog[i].GetTranslation().mb_str(conv))
+            return false;
+#endif
+        
+    }
+    return true;
 }
 
 
@@ -525,7 +590,17 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     wxString charset(m_header.Charset);
     if (!charset)
         charset = _T("utf-8");
-
+        
+    if (!CanEncodeToCharset(*this, charset))
+    {
+        wxString msg;
+        msg.Printf(_("The catalog couldn't be saved in '%s' charset as\nspecified in catalog settings. It was saved in UTF-8 instead\nand the setting was modified accordingly."), charset.c_str());
+        wxMessageBox(msg, _("Error saving catalog"),
+                     wxOK | wxICON_EXCLAMATION);
+        charset = _T("utf-8");
+        m_header.Charset = charset;
+    }
+   
     if (!wxFileExists(po_file) || !f.Open(po_file))
         if (!f.Create(po_file))
             return false;
