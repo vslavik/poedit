@@ -8,7 +8,7 @@
     
       Database of available parsers
     
-      (c) Vaclav Slavik, 1999
+      (c) Vaclav Slavik, 1999,2004
 
 */
 
@@ -52,6 +52,10 @@ class Parser
          */
         wxString FileItem;
 
+        /** Expansion string for single charset setting. %c expands to
+            charset name. %C in command is replaced with this. */
+        wxString CharsetItem;
+
         /// Returns array of files from 'files' that this parser understands.
         wxArrayString SelectParsable(const wxArrayString& files);
       
@@ -61,10 +65,12 @@ class Parser
             \param files    list of files to parse
             \param keywords list of recognized keywords
             \param output   name of temporary output file
+            \param charset  source code charset (may be empty)
          */
         wxString GetCommand(const wxArrayString& files, 
-                            const wxArrayString& keywords, 
-                            const wxString& output);
+                            const wxArrayString& keywords,
+                            const wxString& output,
+                            const wxString& charset);
 };
 
 WX_DECLARE_OBJARRAY(Parser, ParserArray);

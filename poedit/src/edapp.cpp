@@ -8,7 +8,7 @@
     
       Application class
     
-      (c) Vaclav Slavik, 1999-2003
+      (c) Vaclav Slavik, 1999-2004
 
 */
 
@@ -179,9 +179,10 @@ void poEditApp::SetDefaultParsers(wxConfigBase *cfg)
         Parser p;
         p.Name = _T("C/C++");
         p.Extensions = _T("*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx");
-        p.Command = _T("xgettext --force-po -o %o %K %F");
+        p.Command = _T("xgettext --force-po -o %o %C %K %F");
         p.KeywordItem = _T("-k%k");
         p.FileItem = _T("%f");
+        p.CharsetItem = _T("--from-code=%c");
         pdb.Add(p);
         changed = true;
     }
@@ -200,6 +201,24 @@ void poEditApp::SetDefaultParsers(wxConfigBase *cfg)
         changed = true;
     }
 #endif
+
+    // If upgrading poEdit to 1.2.5, update C++ parser to handle --from-code:
+    if (defaultsVersion == _T("1.2.x") || defaultsVersion == _T("1.2.4"))
+    {
+        for (unsigned i = 0; i < pdb.GetCount(); i++)
+        {
+            if (pdb[i].Name == _T("C/C++"))
+            {
+                if (pdb[i].Command == _T("xgettext --force-po -o %o %K %F"))
+                {
+                    pdb[i].Command = _T("xgettext --force-po -o %o %C %K %F");
+                    pdb[i].CharsetItem = _T("--from-code=%c");
+                    changed = true;
+                }
+                break;
+            }
+        }
+    }
 
     if (changed)
     {

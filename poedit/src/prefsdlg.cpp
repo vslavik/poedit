@@ -245,6 +245,7 @@ bool PreferencesDialog::EditParser(int num)
     XRCCTRL(dlg, "parser_command", wxTextCtrl)->SetValue(nfo.Command);
     XRCCTRL(dlg, "parser_keywords", wxTextCtrl)->SetValue(nfo.KeywordItem);
     XRCCTRL(dlg, "parser_files", wxTextCtrl)->SetValue(nfo.FileItem);
+    XRCCTRL(dlg, "parser_charset", wxTextCtrl)->SetValue(nfo.CharsetItem);
     
     if (dlg.ShowModal() == wxID_OK)
     {
@@ -253,11 +254,12 @@ bool PreferencesDialog::EditParser(int num)
         nfo.Command = XRCCTRL(dlg, "parser_command", wxTextCtrl)->GetValue();
         nfo.KeywordItem = XRCCTRL(dlg, "parser_keywords", wxTextCtrl)->GetValue();
         nfo.FileItem = XRCCTRL(dlg, "parser_files", wxTextCtrl)->GetValue();
+        nfo.CharsetItem = XRCCTRL(dlg, "parser_charset", wxTextCtrl)->GetValue();
         XRCCTRL(*this, "parsers_list", wxListBox)->SetString(num, nfo.Name);
-        
         return true;
     }
-    else return false;
+    else
+        return false;
 }
 
 void PreferencesDialog::OnNewParser(wxCommandEvent& event)

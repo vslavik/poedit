@@ -8,7 +8,7 @@
     
       Database of available parsers
     
-      (c) Vaclav Slavik, 1999
+      (c) Vaclav Slavik, 1999,2004
 
 */
 
@@ -48,6 +48,7 @@ void ParsersDB::Read(wxConfigBase *cfg)
         info.Command = cfg->Read(_T("Command"), wxEmptyString);
         info.KeywordItem = cfg->Read(_T("KeywordItem"), wxEmptyString);
         info.FileItem = cfg->Read(_T("FileItem"), wxEmptyString);
+        info.CharsetItem = cfg->Read(_T("CharsetItem"), wxEmptyString);
         Add(info);
         cfg->SetPath(oldpath);
     }
@@ -83,6 +84,7 @@ void ParsersDB::Write(wxConfigBase *cfg)
         cfg->Write(_T("Command"), Item(i).Command);
         cfg->Write(_T("KeywordItem"), Item(i).KeywordItem);
         cfg->Write(_T("FileItem"), Item(i).FileItem);
+        cfg->Write(_T("CharsetItem"), Item(i).CharsetItem);
         cfg->SetPath(oldpath);
     }
 }
@@ -120,7 +122,8 @@ wxArrayString Parser::SelectParsable(const wxArrayString& files)
 
 wxString Parser::GetCommand(const wxArrayString& files, 
                             const wxArrayString& keywords, 
-                            const wxString& output)
+                            const wxString& output,
+                            const wxString& charset)
 {
     wxString cmdline, kline, fline;
     
@@ -143,9 +146,17 @@ wxString Parser::GetCommand(const wxArrayString& files,
         dummy.Replace(_T("%f"), _T("\"") + files[i] + _T("\""));
         fline << _T(" ") << dummy;
     }
+
+    wxString charsetline;
+    if (!charset.empty())
+    {
+        charsetline = CharsetItem;
+        charsetline.Replace(_T("%c"), charset);
+    }
     
     cmdline.Replace(_T("%K"), kline);
     cmdline.Replace(_T("%F"), fline);
+    cmdline.Replace(_T("%C"), charsetline);
     
     return cmdline;
 }

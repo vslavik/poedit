@@ -8,7 +8,7 @@
     
       Sources digging class (xgettext)
     
-      (c) Vaclav Slavik, 2000
+      (c) Vaclav Slavik, 2000,2004
 
 */
 
@@ -28,7 +28,8 @@
 #include "gexecute.h"
 
 Catalog *SourceDigger::Dig(const wxArrayString& paths, 
-                           const wxArrayString& keywords)
+                           const wxArrayString& keywords,
+                           const wxString& charset)
 {
     ParsersDB pdb;
     pdb.Read(wxConfig::Get());
@@ -44,7 +45,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
     for (size_t i = 0; i < pdb.GetCount(); i++)
     {
         m_progressInfo->UpdateMessage(_("Parsing ")+pdb[i].Name+_(" files..."));
-        if (!DigFiles(c, all_files[i], pdb[i], keywords))
+        if (!DigFiles(c, all_files[i], pdb[i], keywords, charset))
         { 
             delete[] all_files;
             delete c;
@@ -63,7 +64,8 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
 #define BATCH_SIZE  16
 
 bool SourceDigger::DigFiles(Catalog *cat, const wxArrayString& files, 
-                            Parser &parser, const wxArrayString& keywords)
+                            Parser &parser, const wxArrayString& keywords,
+                            const wxString& charset)
 {
     wxArrayString batchfiles;
     wxString tempfile = wxGetTempFileName(_T("poedit"));
@@ -77,8 +79,11 @@ bool SourceDigger::DigFiles(Catalog *cat, const wxArrayString& files,
             batchfiles.Add(files[i]);
         last = i;
         
-        if (!ExecuteGettext(parser.GetCommand(batchfiles, keywords, tempfile)))
-        return false;
+        if (!ExecuteGettext(
+                    parser.GetCommand(batchfiles, keywords, tempfile, charset)))
+        {
+            return false;
+        }
         m_progressInfo->UpdateGauge(batchfiles.GetCount());
         if (m_progressInfo->Cancelled()) return false;
         

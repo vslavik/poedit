@@ -8,7 +8,7 @@
     
       Sources digging class (xgettext)
     
-      (c) Vaclav Slavik, 2000
+      (c) Vaclav Slavik, 2000,2004
 
 */
 
@@ -49,9 +49,11 @@ class SourceDigger
             \param paths    list of directories to look in
             \param keywords list of keywords that are recognized as 
                             prefixes for translatable strings in sources
+            \param charset  source code charset (may be empty)
          */
         Catalog *Dig(const wxArrayString& paths, 
-                     const wxArrayString& keywords);
+                     const wxArrayString& keywords,
+                     const wxString& charset);
 
     private:
         /** Finds all parsable files. Returned value is a new[]-allocated
@@ -71,9 +73,11 @@ class SourceDigger
             \param files    list of files to parse
             \param parser   parser definition
             \param keywords list of keywords that mark translatable strings
+            \param charset  source code charset (may be empty)
          */
         bool DigFiles(Catalog *cat, const wxArrayString& files, 
-                      Parser &parser, const wxArrayString& keywords);
+                      Parser &parser, const wxArrayString& keywords,
+                      const wxString& charset);
 
         ProgressInfo *m_progressInfo;
 };
