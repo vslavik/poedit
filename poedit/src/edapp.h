@@ -37,7 +37,7 @@ class poEditApp : public wxApp
             and returns value of POEDIT_PREFIX which is supplied at
             compilation time and equals configure's --prefix argument.
             
-            \todo Check for $(POEDIT_HOME) under Unix to allow rellocatable
+            \todo Check for \$(POEDIT_HOME) under Unix to allow rellocatable
                   packages?
          */
         wxString GetAppPath() const;
