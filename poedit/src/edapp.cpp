@@ -30,22 +30,6 @@
 #include "prefsdlg.h"
 
 
-
-static void InitParsersCfg(wxConfigBase *cfg)
-{
-    cfg->Write("Parsers/List", "C/C++");
-
-    cfg->Write("Parsers/C_C++/Extensions", 
-               "*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx");
-    cfg->Write("Parsers/C_C++/Command", 
-               "xgettext --force-po -C -o %o %K %F");
-    cfg->Write("Parsers/C_C++/KeywordItem", 
-               "-k%k");
-    cfg->Write("Parsers/C_C++/FileItem", 
-               "%f");
-}
-
-
 IMPLEMENT_APP(poEditApp);
 
 wxString poEditApp::GetAppPath() const
@@ -65,13 +49,39 @@ wxString poEditApp::GetAppPath() const
 #endif
 }
 
+wxString poEditApp::GetAppVersion() const
+{
+    return "1.1.0";
+}
+
+
+#ifdef __UNIX__
+#define CFG_FILE (home + ".poedit/config")
+#else
+#define CFG_FILE ""
+#endif
 
 bool poEditApp::OnInit()
 {
+#ifdef __UNIX__
+    wxString home = wxGetHomeDir() + "/";
+
+    // create poEdit cfg dir, move ~/.poedit to ~/.poedit/config
+    // (upgrade from older versions of poEdit which used ~/.poedit file)
+    if (!wxDirExists(home + ".poedit"))
+    {
+        if (wxFileExists(home + ".poedit"))
+            wxRenameFile(home + ".poedit", home + ".poedit2");
+        wxMkdir(home + ".poedit");
+        if (wxFileExists(home + ".poedit2"))
+            wxRenameFile(home + ".poedit2", home + ".poedit/config");
+    }
+#endif
+
     SetVendorName("Vaclav Slavik");
     SetAppName("poedit");
     wxConfigBase::Set(
-        new wxConfig("", "", "", "", 
+        new wxConfig("", "", CFG_FILE, "", 
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
     
 #ifdef __UNIX__
@@ -95,14 +105,14 @@ bool poEditApp::OnInit()
     frame->Show(true);
     SetTopWindow(frame);
     
+    SetDefaultCfg(wxConfig::Get());
+
     if (wxConfig::Get()->Read("translator_name", "nothing") == "nothing")
     {
         wxMessageBox(_("This is first time you run poEdit.\n"
                        "Please fill in your name and e-mail address.\n"
                        "(This information is used only in catalogs headers)"), "Setup",
                        wxOK | wxICON_INFORMATION);
-                       
-        InitParsersCfg(wxConfig::Get());
                        
         PreferencesDialog dlg(frame);
         dlg.TransferTo(wxConfig::Get());
@@ -111,4 +121,47 @@ bool poEditApp::OnInit()
     }
 
     return true;
+}
+
+void poEditApp::SetDefaultCfg(wxConfigBase *cfg)
+{
+    if (cfg->Read("version", "") == GetAppVersion()) return;
+
+    if (cfg->Read("Parsers/List", "").IsEmpty())
+    {
+        cfg->Write("Parsers/List", "C/C++");
+
+        cfg->Write("Parsers/C_C++/Extensions", 
+                   "*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx");
+        cfg->Write("Parsers/C_C++/Command", 
+                   "xgettext --force-po -C -o %o %K %F");
+        cfg->Write("Parsers/C_C++/KeywordItem", 
+                   "-k%k");
+        cfg->Write("Parsers/C_C++/FileItem", 
+                   "%f");
+    }
+
+    if (cfg->Read("TM/database_path", "").IsEmpty())
+    {
+        wxString dbpath;
+#if defined(__UNIX__)
+        dbpath = wxGetHomeDir() + "/.poedit/tm";
+#elif defined(__WXMSW__)
+        dbpath = wxGetHomeDir() + "/share/poedit/tm";
+#endif
+        cfg->Write("TM/database_path", dbpath);
+    }
+
+    if (cfg->Read("TM/search_paths", "").IsEmpty())
+    {
+        wxString paths;
+#if defined(__UNIX__)
+        paths = wxGetHomeDir() + ":/usr/share/locale:/usr/local/share/locale";
+#elif defined(__WXMSW__)
+        paths = "C:";
+#endif
+        cfg->Write("TM/search_paths", paths);
+    }
+
+    cfg->Write("version", GetAppVersion());
 }

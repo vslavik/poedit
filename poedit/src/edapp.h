@@ -22,6 +22,8 @@
 
 #include <wx/app.h>
 #include <wx/string.h>
+class WXDLLEXPORT wxConfigBase;
+
 
 /// wxApp for use with 
 class poEditApp : public wxApp
@@ -41,6 +43,16 @@ class poEditApp : public wxApp
                   packages?
          */
         wxString GetAppPath() const;
+
+        /// Returns poEdit version string.
+        wxString GetAppVersion() const;
+        
+    protected:
+        /** Sets default values to configuration items that don't
+            have anything set. (This may happen after fresh installation or
+            upgrade to new version.)
+         */
+        void SetDefaultCfg(wxConfigBase *cfg);
 };
 
 DECLARE_APP(poEditApp);
