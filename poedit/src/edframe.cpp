@@ -2391,15 +2391,20 @@ void poEditFrame::RecreatePluralTextCtrls()
     {
         // find example number that would use this plural form:
         unsigned example = 0;
-        for (example = 1; example < 1000; example++)
+        if (calc)
         {
-            if (calc->evaluate(example) == i)
-                break;
+            for (example = 1; example < 1000; example++)
+            {
+                if (calc->evaluate(example) == i)
+                    break;
+            }
+            // we prefer non-zero values, but if this form is for zero only,
+            // use zero:
+            if (example == 1000 && calc->evaluate(0) == i)
+                example = 0;
         }
-        // we prefer non-zero values, but if this form is for zero only,
-        // use zero:
-        if (example == 1000 && calc->evaluate(0) == i)
-            example = 0;
+        else
+            example = 1000;
             
         wxString desc;
         if (example == 1000)
