@@ -30,8 +30,9 @@ WindowResizable=false
 
 
 
+SolidCompression=true
 [Files]
-Source: BUILD-mingw\src\poedit; DestDir: {app}\bin; DestName: poedit.exe; Components: core
+Source: BUILD-mingw\src\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
 Source: install\poedit.exe.manifest; DestDir: {app}\bin; MinVersion: 0,5.01.2600; Components: core
 Source: extras\win32-gettext\gnu_gettext.COPYING; DestDir: {app}\doc; Components: docs
 Source: install\readme.txt; DestDir: {app}\doc; DestName: readme.txt; Components: docs
@@ -46,8 +47,8 @@ Source: extras\win32-gettext\xgettext.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgmerge.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgunfmt.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgfmt.exe; DestDir: {app}\bin; Components: core
-Source: extras\win32-db3\libdb31.dll; DestDir: {app}\bin; Components: core; CopyMode: alwaysoverwrite
-Source: extras\win32-runtime\unicows.dll; DestDir: {app}\bin; MinVersion: 4.0.950,0; Components: core; CopyMode: alwaysoverwrite
+Source: extras\win32-db3\libdb31.dll; DestDir: {app}\bin; Components: core; Flags: ignoreversion
+Source: extras\win32-runtime\unicows.dll; DestDir: {app}\bin; MinVersion: 4.0.950,0; Components: core; Flags: ignoreversion
 Source: locales\wxwin\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\zh_TW.mo; DestDir: {app}\share\locale\zh_TW\LC_MESSAGES; DestName: poedit.mo; Components: i18n
@@ -121,6 +122,7 @@ Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run poEdit now; 
 EnableISX=true
 UseAbsolutePaths=false
 
+Use7zip=false
 [Dirs]
 Name: {app}\doc; Components: docs
 Name: {app}\share; Components: core
