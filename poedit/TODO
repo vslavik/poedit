@@ -1,29 +1,20 @@
 
-Urgent:
-
-- mandrake menu support...
-
-- handle gracefully the situation when output cannot be written because output
-  charset doesn't include all characters of GUI's charset
+High priority:
 
 - make list control font customizable!!
   (ditto text controls)
 
-High priority:
-
 - make it possible to *read* comments, not only edit them. Mattias suggested 
-that
-  a tooltip popups near the "pen" icon in the list if you hold mouse over it, 
-but
-  this can't be implemented because 1) wxMSW won't let you set listctrl's popup
-  and 2) wxGTK displays the popup _under_ control, i.e. for from the "pen" icon
+  that a tooltip popups near the "pen" icon in the list if you hold mouse over 
+  it, but this can't be implemented because 1) wxMSW won't let you set 
+  listctrl's popup and 2) wxGTK displays the popup _under_ control, 
+  i.e. for from the "pen" icon
   update: possible solution would be to use wxPopupWindow
 
 - use virtual wxListCtrl
 - plural handling (in wxWin, too), see info:/gettext/PO Files
 - remember the exact way msgid/msgstr was stored (where the boundaries between 
-multiple
-  lines are) and save it like that unless modified.
+  multiple lines are) and save it like that unless modified.
 
 Lower priority:
 
@@ -33,8 +24,7 @@ Lower priority:
 
 - statistics (# of words, # of characters)
 - Add parsing of msgfmt's error output (e.g. msgid "foo\n" msgstr "foo" will 
-produce
-  fatal error about \n mismatch)
+  produce fatal error about \n mismatch)
 - TM should split input string into sentences before querying db
 - OnResize should move the sash so that its distance from bottom edge stays same
 - shared databases for multiple users?
