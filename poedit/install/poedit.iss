@@ -96,6 +96,7 @@ Source: locales\af_ZA.mo; DestDir: {app}\share\locale\af_ZA\LC_MESSAGES; Compone
 Source: locales\wxwin\af_ZA.mo; DestDir: {app}\share\locale\af_ZA\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\sl.mo; DestDir: {app}\share\locale\sl\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\wxwin\sl.mo; DestDir: {app}\share\locale\sl\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
+Source: locales\pt_PT.mo; DestDir: {app}\share\locale\pt_PT\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
