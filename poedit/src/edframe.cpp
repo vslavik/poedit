@@ -386,6 +386,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_help_gettext"),poEditFrame::OnHelpGettext)
    EVT_MENU           (XRCID("menu_about"),       poEditFrame::OnAbout)
    EVT_MENU           (XRCID("menu_new"),         poEditFrame::OnNew)
+   EVT_MENU           (XRCID("menu_new_from_pot"),poEditFrame::OnNew)
    EVT_MENU           (XRCID("menu_open"),        poEditFrame::OnOpen)
    EVT_MENU           (XRCID("menu_save"),        poEditFrame::OnSave)
    EVT_MENU           (XRCID("menu_saveas"),      poEditFrame::OnSaveAs)
@@ -686,10 +687,7 @@ static GtkTextView *GetTextView(wxTextCtrl *ctrl)
         child = child->next;
     }
 }
-#endif
 
-
-#if USE_SPELLCHECKING
 static void DoInitSpellchecker(wxTextCtrl *text,
                                bool enable, const wxString& lang)
 {
@@ -711,7 +709,7 @@ static void DoInitSpellchecker(wxTextCtrl *text,
         }
     }
 }
-#endif
+#endif // USE_SPELLCHECKING
 
 void poEditFrame::InitSpellchecker()
 {
@@ -930,13 +928,15 @@ void poEditFrame::OnSaveAs(wxCommandEvent&)
     UpdateFromTextCtrl();
 
     wxString name(wxFileNameFromPath(m_fileName));
+    wxString path(wxPathOnly(m_fileName));
 
     if (name.empty())
     {
+        path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
         name = SuggestFileName(m_catalog) + _T(".po");
     }
     
-    name = wxFileSelector(_("Save as..."), wxPathOnly(m_fileName), name, wxEmptyString, 
+    name = wxFileSelector(_("Save as..."), path, name, wxEmptyString, 
                           _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"),
                           wxSAVE | wxOVERWRITE_PROMPT, this);
     if (!name.IsEmpty())
@@ -982,6 +982,8 @@ bool poEditFrame::ExportCatalog(const wxString& filename)
 
 void poEditFrame::OnNew(wxCommandEvent& event)
 {
+    bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
+    
     UpdateFromTextCtrl();
     if (m_catalog && m_modified)
     {
@@ -998,18 +1000,47 @@ void poEditFrame::OnNew(wxCommandEvent& event)
     SettingsDialog dlg(this);
     Catalog *catalog = new Catalog;
     
+    if (isFromPOT)
+    {
+        wxString path = wxPathOnly(m_fileName);
+        if (path.empty())
+            path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
+        wxString pot_file = 
+            wxFileSelector(_("Open catalog template"),
+                 path, wxEmptyString, wxEmptyString,
+                 _("GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"), 
+                 wxOPEN | wxFILE_MUST_EXIST, this);
+        bool ok = false;
+        if (!pot_file.empty())
+        {
+            wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(pot_file));
+            ok = catalog->UpdateFromPOT(pot_file, false/*summary*/);
+        }
+        if (!ok)
+        {
+            delete m_catalog;
+            return;
+        }
+    }
+    
     dlg.TransferTo(catalog);
     if (dlg.ShowModal() == wxID_OK)
     {
         dlg.TransferFrom(catalog);
-        if (m_catalog) delete m_catalog;
+        delete m_catalog;
         m_catalog = catalog;
         m_fileName = wxEmptyString;
         m_modified = true;
         OnSave(event);
-        OnUpdate(event);
+        if (!isFromPOT)
+        {
+            OnUpdate(event);
+        }
     }
-    else delete catalog;
+    else
+    {
+        delete catalog;
+    }
     UpdateTitle();
     UpdateStatusBar();
 
@@ -1097,6 +1128,7 @@ void poEditFrame::OnUpdate(wxCommandEvent& event)
                  wxOPEN | wxFILE_MUST_EXIST, this);
         if (pot_file.empty())
             return;
+        wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(pot_file));
     }
     
     UpdateCatalog(pot_file);
