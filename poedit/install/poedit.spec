@@ -12,10 +12,8 @@
 
 %if %{semistatic}
   %define NAME        poedit-semistatic
-  %define semiconfig  --enable-semistatic
 %else
   %define NAME        poedit
-  %define semiconfig
 %endif
 
 
@@ -55,7 +53,12 @@ code by single click.
 %build
 (
 export KDEDIR=/usr 
-%configure ${POEDIT_CONFIGURE_FLAGS} %{semiconfig}
+
+%if %{semistatic}
+%configure --enable-semistatic
+%else
+%configure
+%endif
 )
 
 %install
