@@ -80,7 +80,7 @@ void FileViewer::ShowReference(const wxString& ref)
         return;
     }
     
-    int top = wxMax(0, linenum - NEIGHBOUR_SIZE),
+    int top    = wxMax(1, linenum - NEIGHBOUR_SIZE),
         bottom = wxMin(linenum + NEIGHBOUR_SIZE, (int)textf.GetLineCount());
 
     m_list->ClearAll();
