@@ -186,7 +186,7 @@ class TextctrlHandler : public wxEvtHandler
                 case '9':
                     if (m_catalog != NULL)
                     {
-                        if (event.AltDown())
+                        if (event.AltDown() && !event.ControlDown())
                         {
                             // Set bookmark if different from the current value for the item,
                             // else unset it
@@ -207,7 +207,7 @@ class TextctrlHandler : public wxEvtHandler
                             m_frame->m_modified = true;
                             m_frame->UpdateTitle();
                         }
-                        else if (event.ControlDown())
+                        else if (event.ControlDown() && !event.AltDown())
                         {
                             // Go to bookmark, if there is an item for it
                             Bookmark bk = static_cast<Bookmark>(keyCode-'0');
