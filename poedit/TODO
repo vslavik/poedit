@@ -1,3 +1,5 @@
+- Add parsing of msgfmt's error output (e.g. msgid "foo\n" msgstr "foo" will produce
+  fatal error about \n mismatch)
 - Regular Unicode build of poEdit (wxUSE_UNICODE=1), ship both poedit_a.exe
   and poedit_u.exe and decide between them at installation time
 - There's a bug in traversing dirs when updating db under win32
@@ -6,7 +8,6 @@
 - shared databases for multiple users?
 - bugfix: new empty catalog. Insert orig. string says "cannot get info from item 0"
   (listctrl), right-click promptly crashes 
-- rename "Insert original string" to something less confusing
 - reading MO files directly
 - comments editing
 - catalogs manager
