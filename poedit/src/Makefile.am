@@ -31,9 +31,10 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  transmem.cpp transmem.h transmemupd.cpp transmemupd.h \
                  transmemupd_wizard.cpp transmemupd_wizard.h \
                  manager.h manager.cpp chooselang.cpp chooselang.h \
-				 export_html.cpp icons.h icons.cpp \
-				 pluralforms/pl_evaluate.cpp \
-				 editlbox/editlbox.cpp
+                 export_html.cpp icons.h icons.cpp \
+                 pluralforms/pl_evaluate.cpp \
+                 editlbox/editlbox.cpp \
+                 edlistctrl.cpp edlistctrl.h digits.h
 
 poedit_resource.o: poedit.rc
 	$(RESCOMP) -i$(srcdir)/poedit.rc -o poedit_resource.o \
