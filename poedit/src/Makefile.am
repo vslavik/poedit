@@ -20,6 +20,7 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  gexecute.cpp summarydlg.h summarydlg.cpp \
                  findframe.cpp findframe.h commentdlg.h commentdlg.cpp \
                  transmem.cpp transmem.h transmemupd.cpp transmemupd.h \
+                 transmemupd_wizard.cpp transmemupd_wizard.h \
                  manager.h manager.cpp
 
 poedit_resource.o: poedit.rc
