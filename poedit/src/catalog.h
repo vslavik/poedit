@@ -412,8 +412,7 @@ class CatalogData : public wxObject
         /// Adds new autocomments (#. )
         void AddAutoComments(const wxString& com)
         {
-            if (m_autocomments.Index(com) == wxNOT_FOUND) 
-                m_autocomments.Add(com);
+            m_autocomments.Add(com);
         }
 
         /// Clears autocomments.
