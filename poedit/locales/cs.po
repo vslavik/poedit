@@ -2,226 +2,252 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.0\n"
 "POT-Creation-Date: 2000-02-25 21:27+0100\n"
-"PO-Revision-Date: 2001-05-07 18:39+0100\n"
+"PO-Revision-Date: 2001-08-25 20:56+0100\n"
 "Last-Translator: Vaclav Slavik <v.slavik@volny.cz>\n"
 "Language-Team: Vaclav Slavik <v.slavik@volny.cz>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso8859-2\n"
+"Content-Type: text/plain; charset=iso-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/catalog.cpp:196
-msgid "Corrupted translator record, please correct in Catalog/Settings"
-msgstr "Po¹kozený záznam o pøekladateli, opravte ho prosím v Katalog/Nastavení"
-
-#: src/catalog.cpp:203
-msgid "Corrupted team record, please correct in Catalog/Settings"
-msgstr "Po¹kozený záznam o týmu, opravte ho prosím v Katalog/Nastavení"
-
-#: src/catalog.cpp:599
+#: src/summarydlg.cpp:55
 #, c-format
-msgid "Cannot save in encoding '%s', please change it."
-msgstr "Nemohu ukládat v kódování '%s', prosím zmìòte ho."
+msgid "(%i new, %i obsolete)"
+msgstr "(%i nových, %i neplatných)"
 
-#: src/catalog.cpp:702
-msgid "Updating catalog..."
-msgstr "Obnovuji katalog..."
+#: src/edframe.cpp:98
+msgid "Original string"
+msgstr "Originální øetìzec"
 
-#: src/catalog.cpp:725
-msgid "Merging differences..."
-msgstr "Spojuji rozdíly..."
+#: src/edframe.cpp:99
+msgid "Translation"
+msgstr "Pøeklad"
 
-#: src/digger.cpp:36
-msgid "Scanning files..."
-msgstr "Hledám soubory..."
+#: src/edframe.cpp:330
+msgid "&File"
+msgstr "&Soubor"
 
-#: src/digger.cpp:45
-msgid "Parsing "
-msgstr "Parsuji"
+#: src/edframe.cpp:442
+msgid "(none of these)"
+msgstr "¾ádný"
 
-#: src/digger.cpp:45
-msgid " files..."
-msgstr " soubory..."
+#: src/edframe.cpp:444
+msgid "Select catalog's language"
+msgstr "Vyberte jazyk katalogu"
 
-#: src/edapp.cpp:105
+#: src/edframe.cpp:445
+msgid "Please select language code:"
+msgstr "Vyberte prosím kód jazyka:"
+
+#: src/edframe.cpp:478
+#: src/edframe.cpp:489
+#: src/edframe.cpp:513
+#: src/edframe.cpp:559
+msgid "Catalog modified. Do you want to save changes?"
+msgstr "Katalog byl modifikován. Chcete ulo¾it zmìny?"
+
+#: src/edframe.cpp:478
+#: src/edframe.cpp:489
+#: src/edframe.cpp:513
+#: src/edframe.cpp:559
+msgid "Save changes"
+msgstr "Ulo¾it zmìny"
+
+#: src/edframe.cpp:497
+msgid "Open catalog"
+msgstr "Otevøít katalog"
+
+#: src/edframe.cpp:521
+msgid "File "
+msgstr "Soubor "
+
+#: src/edframe.cpp:521
+#, fuzzy
+msgid " doesn't exist!"
+msgstr ""
+"Adresáø neexistuje:\n"
+""
+
+#: src/edframe.cpp:544
+msgid "Save as..."
+msgstr "Ulo¾it jako..."
+
+#: src/edframe.cpp:633
+#, fuzzy
+msgid "Automatically translating..."
+msgstr "automatická volba"
+
+#: src/edframe.cpp:648
+#, fuzzy, c-format
+msgid "Automatically translated %u strings"
+msgstr "Ignorovat &fuzzy øetìzce"
+
+#: src/edframe.cpp:683
+msgid "No references to this string found."
+msgstr ""
+
+#: src/edframe.cpp:691
+#, fuzzy
+msgid "Please choose the reference you want to show:"
+msgstr "Prosím vyberte si poskytovatele (ISP), ke kterému se chcete pøipojit"
+
+#: src/edframe.cpp:691
+msgid "References"
+msgstr "Odkazy"
+
+#: src/edframe.cpp:1007
+#, fuzzy
+msgid "Error loading message catalog file '"
+msgstr "Chyba pøi nahrávání souboru s obrázkem motivu."
+
+#: src/edframe.cpp:1007
+msgid "'."
+msgstr ""
+
+#: src/edframe.cpp:1056
+#, c-format
+msgid "%i strings (%i fuzzy, %i not translated)"
+msgstr "%i øetìzcù (%i nepøesných, %i nepøelo¾eno)"
+
+#: src/edframe.cpp:1067
+msgid " (modified)"
+msgstr " (zmìnìno)"
+
+#: src/edframe.cpp:1180
+#: src/edframe.cpp:1184
+msgid "References:"
+msgstr "Odkazy:"
+
+#: src/edframe.cpp:1194
+#: src/edframe.cpp:1198
+#, fuzzy
+msgid "Automatic translations:"
+msgstr "&Hledat pøeklady"
+
+#: src/edframe.cpp:1219
+msgid "none"
+msgstr "¾ádný"
+
+#: src/edapp.cpp:45
+msgid "poEdit installation is broken, cannot find application's home directory."
+msgstr ""
+
+#: src/edapp.cpp:104
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
 
-#: src/edframe.cpp:71
-msgid "Original string"
-msgstr "Pùvodní øetìzec"
+#: src/edapp.cpp:106
+msgid "Setup"
+msgstr "Nastavení"
 
-#: src/edframe.cpp:72
-msgid "Translation"
-msgstr "Pøeklad"
+#: src/digger.cpp:36
+#, fuzzy
+msgid "Scanning files..."
+msgstr "Vyhledávání souborù"
 
-#: src/edframe.cpp:177
-#: src/edframe.cpp:181
-#: src/edframe.cpp:545
-msgid "References"
-msgstr "---Odkazy"
+#: src/digger.cpp:46
+msgid "Parsing "
+msgstr "Zpracovávám "
 
-#: src/edframe.cpp:267
-msgid "&File"
-msgstr "&Soubor"
+#: src/digger.cpp:46
+msgid " files..."
+msgstr " souborù..."
 
-#: src/edframe.cpp:352
-#: src/edframe.cpp:363
-#: src/edframe.cpp:387
-#: src/edframe.cpp:433
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Katalog byl zmìnìn. Chcete ho ulo¾it?"
+#: src/catalog.cpp:193
+msgid "Corrupted translator record, please correct in Catalog/Settings"
+msgstr ""
 
-#: src/edframe.cpp:352
-#: src/edframe.cpp:363
-#: src/edframe.cpp:387
-#: src/edframe.cpp:433
-msgid "Save changes"
-msgstr "Ulo¾it zmìny"
+#: src/catalog.cpp:201
+msgid "Corrupted team record, please correct in Catalog/Settings"
+msgstr ""
 
-#: src/edframe.cpp:371
-msgid "Open catalog"
-msgstr "Otevøe katalog"
+#: src/catalog.cpp:567
+msgid "Updating catalog..."
+msgstr "Aktualizuji katalog..."
 
-#: src/edframe.cpp:395
-msgid "File "
-msgstr "Soubor "
+#: src/catalog.cpp:590
+msgid "Merging differences..."
+msgstr "Vkládám rozdíly..."
 
-#: src/edframe.cpp:395
-msgid " doesn't exist!"
-msgstr " neexistuje!"
+#: src/transmemupd.cpp:117
+#, fuzzy
+msgid "Listing files..."
+msgstr "Nevybrán ¾ádný soubor"
 
-#: src/edframe.cpp:418
-msgid "Save as..."
-msgstr "Ulo¾it jako..."
+#: src/transmemupd.cpp:133
+#, fuzzy
+msgid "Scanning file: "
+msgstr "Analyzuji soubor %1"
 
-#: src/edframe.cpp:537
-msgid "No references to this string found."
-msgstr "Nenalezeny ¾ádné výskyty øetìzce."
+#: src/transmemupd.cpp:181
+#, fuzzy
+msgid "Cannot extract catalogs from RPM file."
+msgstr "%s: Nelze rozbalit -- soubor je pokraèováním jiného svazku"
 
-#: src/edframe.cpp:545
-msgid "Please choose the reference you want to show:"
-msgstr "Vyberte výskyt, který chcete ukázat:"
+#: src/fileviewer.cpp:36
+msgid "Source file"
+msgstr "Zdrojový soubor"
 
-#: src/edframe.cpp:746
-msgid "Error loading message catalog file '"
-msgstr "Chyba pøi ètení katalogu '"
+#: src/fileviewer.cpp:78
+#, fuzzy, c-format
+msgid "Error opening file %s!"
+msgstr "Chyba pøi otevírání souboru, \"%1\": %2"
 
-#: src/edframe.cpp:746
-msgid "'."
-msgstr "'."
+#: src/fileviewer.cpp:136
+msgid "No editor specified. Please set it in Preferences dialog."
+msgstr ""
 
-#: src/edframe.cpp:820
+#: src/prefsdlg.cpp:42
+msgid "My Languages"
+msgstr "Jazyky"
+
+#: src/prefsdlg.cpp:235
+msgid "Select language"
+msgstr "Vyberte jazyk"
+
+#: src/prefsdlg.cpp:236
+msgid "Please select language ISO code:"
+msgstr "Vyberte prosím ISO kód jazyka:"
+
+#: src/prefsdlg.cpp:249
+#: src/prefsdlg.cpp:270
+msgid "Select directory"
+msgstr "Vyberte adresáø"
+
+#: src/prefsdlg.cpp:289
+#, fuzzy
+msgid "Search Paths"
+msgstr "Dal¹í prohledávané cesty"
+
+#: src/prefsdlg.cpp:324
+#, fuzzy
+msgid "Updating translation memory"
+msgstr "Vyprázdnit pa_mì»ovou cache"
+
+#: src/transmem.cpp:218
+#: src/transmem.cpp:220
 #, c-format
-msgid "%i strings (%i fuzzy, %i not translated)"
-msgstr "%i øetìzcù (%i nejasných, %i nepøelo¾ených)"
+msgid "Database error: %s"
+msgstr "Databázová chyba: %s"
 
-#: src/edframe.cpp:831
-msgid " (modified)"
-msgstr " (zmìnìn)"
+#: src/transmem.cpp:654
+#, fuzzy
+msgid "Cannot create database directory!"
+msgstr ""
+" Nelze vytvoøit cílový adresáø \"%s\" \n"
+" %s "
 
-#: src/fileviewer.cpp:28
-msgid "Source file: "
-msgstr "Zdrojový soubor: "
-
-#: src/fileviewer.cpp:43
-msgid "--- Error opening file! ---"
-msgstr "--- Nemohu otevøít soubor! ---"
-
-#: src/gexecute.cpp:98
+#: src/gexecute.cpp:133
 msgid "Cannot execute program: "
-msgstr "Nemohu spustit program:"
+msgstr "Není mo¾né spustit program"
 
-#: src/summarydlg.cpp:53
-#, c-format
-msgid "(%i new, %i obsolete)"
-msgstr ""
+#: src/settingsdlg.cpp:50
+msgid "Keywords"
+msgstr "Klíèová slova"
 
-#: src/wxxml_snapshot/xh_dlg.cpp:51
-msgid "XML resource: Cannot create dialog without instance."
-msgstr ""
-
-#: src/wxxml_snapshot/xh_dlg.cpp:65
-msgid "centered"
-msgstr ""
-
-#: src/wxxml_snapshot/xml.cpp:351
-msgid "Cannot find XML I/O handler capable of loading this format."
-msgstr ""
-
-#: src/wxxml_snapshot/xml.cpp:377
-msgid "Cannot find XML I/O handler capable of saving in this format."
-msgstr ""
-
-#: src/wxxml_snapshot/xmlres.cpp:245
-#, c-format
-msgid "Cannot open file '%s'."
-msgstr ""
-
-#: src/wxxml_snapshot/xmlres.cpp:270
-#, c-format
-msgid "Cannot load resources from file '%s'."
-msgstr ""
-
-#: src/wxxml_snapshot/xmlres.cpp:276
-#, c-format
-msgid "Invalid XML resource '%s': doesn't have root node 'resource'."
-msgstr ""
-
-#: src/wxxml_snapshot/xmlres.cpp:316
-#, c-format
-msgid "XML resource '%s' (type '%s') not found!"
-msgstr ""
-
-#: src/wxxml_snapshot/xmlres.cpp:341
-#, c-format
-msgid "No handler found for XML node '%s'!"
-msgstr ""
-
-#: src/wxxml_snapshot/xmlres.cpp:412
-msgid "Unknown style flag "
-msgstr ""
-
-#: src/wxxml_snapshot/xmlres.cpp:514
-#, c-format
-msgid "XML resource: Incorrect colour specification '%s' for property '%s'."
-msgstr ""
-
-#: src/wxxml_snapshot/xmlres.cpp:534
-#: src/wxxml_snapshot/xmlres.cpp:544
-#, c-format
-msgid "XML resource: Cannot create bitmap from '%s'."
-msgstr ""
-
-#: src/wxxml_snapshot/xmlres.cpp:621
-#, c-format
-msgid "Cannot parse coordinates from '%s'."
-msgstr ""
-
-#: src/wxxml_snapshot/xmlres.cpp:633
-#: src/wxxml_snapshot/xmlres.cpp:674
-msgid "Cannot convert dialog units: dialog unknown."
-msgstr ""
-
-#: src/wxxml_snapshot/xmlres.cpp:662
-#, c-format
-msgid "Cannot parse dimension from '%s'."
-msgstr ""
-
-#: src/catalog.cpp:682
-#, c-format
-msgid "Error writing catalog %s"
-msgstr "Chyba pøi ètení katalogu %s"
-
-#: src/catalog.cpp:648
-#, fuzzy, c-format
-msgid "Error opening catalog %s."
-msgstr "Chyba pøi ètení katalogu %s"
-
-#: src/catalog.cpp:657
-#, fuzzy, c-format
-msgid "Error creating catalog %s."
-msgstr "Chyba pøi ètení katalogu %s"
+#: src/settingsdlg.cpp:52
+msgid "Paths"
+msgstr "Cesty"
 
