@@ -1,6 +1,6 @@
 
 POEDIT_LINGUAS = bg cs de et fr hr it lv nl nn pl sk sv_SE ta tr zh_TW zh_CN \
-                 ca ka ro el ja ru no is pt_BR es da
+                 ca ka ro el ja ru nb is pt_BR es da
 WXWIN_LINGUAS  =    cs de    fr    it    nl          sv       tr       zh_CN \
                  ca             ru             es da
 
@@ -70,7 +70,7 @@ stats:
 		TR=0 FZ=0 UT=0; \
 		eval $$x; \
 		TOTAL=`expr $$TR + $$FZ + $$UT`; \
-		echo "\"$$i\" => \"`expr 100 "*" $$TR / $$TOTAL`\","; \
+		echo "\"$$i\" => \"`expr 100 "*" $$TR / $$TOTAL`\", /* $$TOTAL strings */"; \
 	done
 
 #echo "$$i.po `expr 100 "*" $$TR / $$TOTAL`% of $$TOTAL strings"; 
