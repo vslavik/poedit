@@ -6,7 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
-"POT-Creation-Date: 2003-05-01 16:08+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-11-22 20:05+0100\n"
 "PO-Revision-Date: 2003-09-03 01:18+0100\n"
 "Last-Translator: Abbas Izad <abbasizad@hotmail.com>\n"
 "Language-Team: Persian <abbasizad@hotmail.com>\n"
@@ -14,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1382
+#: ../src/edframe.cpp:1430
 msgid " (modified)"
 msgstr " (تغییریافته)"
 
@@ -22,14 +23,19 @@ msgstr " (تغییریافته)"
 msgid " files..."
 msgstr "پرونده‌ها..."
 
-#: ../src/edframe.cpp:1367
+#: ../src/edframe.cpp:1408
 #, c-format
 msgid "%i strings (%i fuzzy, %i not translated)"
 msgstr "%i رشته (%i نامعلوم، %i ترجمه نشده)"
 
-#: ../src/resources/xrc_strings.h:53
+#: ../src/resources/xrc_strings.h:55
 msgid "&About..."
 msgstr "&درباره..."
+
+#: ../src/resources/xrc_strings.h:45
+#, fuzzy
+msgid "&Automatically translate using TM"
+msgstr "%u رشته‌ها بطور خودکار ترجمه شد"
 
 #: ../src/resources/xrc_strings.h:42
 msgid "&Catalog"
@@ -39,7 +45,7 @@ msgstr "&پوشه"
 msgid "&Close"
 msgstr "&بستن"
 
-#: ../src/resources/xrc_strings.h:51
+#: ../src/resources/xrc_strings.h:53
 msgid "&Contents..."
 msgstr "&محتویات..."
 
@@ -47,8 +53,7 @@ msgstr "&محتویات..."
 msgid "&Edit"
 msgstr "&ویرایش"
 
-#: ../src/resources/xrc_strings.h:28
-#: ../src/edframe.cpp:448
+#: ../src/resources/xrc_strings.h:28 ../src/edframe.cpp:458
 msgid "&File"
 msgstr "&پرونده"
 
@@ -56,11 +61,11 @@ msgstr "&پرونده"
 msgid "&Find..."
 msgstr "&یافتن..."
 
-#: ../src/resources/xrc_strings.h:47
+#: ../src/resources/xrc_strings.h:48
 msgid "&Fullscreen view"
 msgstr "نمای &تمام‌پرده"
 
-#: ../src/resources/xrc_strings.h:54
+#: ../src/resources/xrc_strings.h:56
 msgid "&Help"
 msgstr "&راهنما"
 
@@ -80,11 +85,11 @@ msgstr "&ترجیحات..."
 msgid "&Save"
 msgstr "&ذخیره"
 
-#: ../src/resources/xrc_strings.h:45
+#: ../src/resources/xrc_strings.h:46
 msgid "&Settings..."
 msgstr "&تنظیمات..."
 
-#: ../src/resources/xrc_strings.h:50
+#: ../src/resources/xrc_strings.h:52
 msgid "&Shaded translations list"
 msgstr "لیست ترجمه‌های &سایه شده"
 
@@ -96,20 +101,20 @@ msgstr "&نشان دادن مرجع‌ها"
 msgid "&Update from sources"
 msgstr "بروز&سازی از منابع"
 
-#: ../src/resources/xrc_strings.h:46
+#: ../src/resources/xrc_strings.h:47
 msgid "&View"
 msgstr "&نما"
 
-#: ../src/catalog.cpp:767
+#: ../src/catalog.cpp:787
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' یک پرونده معتبر POT نمی‌باشد."
 
-#: ../src/edframe.cpp:1318
+#: ../src/edframe.cpp:1359
 msgid "'."
 msgstr "'."
 
-#: ../src/resources/xrc_strings.h:77
+#: ../src/resources/xrc_strings.h:79
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f با نام پرونده جایگزین خواهد شد, %l با شماره خط)"
 
@@ -118,7 +123,7 @@ msgstr "(%f با نام پرونده جایگزین خواهد شد, %l با ش�
 msgid "(%i new, %i obsolete)"
 msgstr "(%i جدید, %i کهنه)"
 
-#: ../src/resources/xrc_strings.h:137
+#: ../src/resources/xrc_strings.h:139
 msgid "(0 new, 0 obsolete)"
 msgstr ")۰ جدید, ۰ کهنه)"
 
@@ -126,7 +131,7 @@ msgstr ")۰ جدید, ۰ کهنه)"
 msgid "(Use default language)"
 msgstr "(استفاده از زبان پیش‌فرض)"
 
-#: ../src/edframe.cpp:594
+#: ../src/edframe.cpp:633
 msgid "(none of these)"
 msgstr "(هیچکدام ار اینها)"
 
@@ -142,7 +147,7 @@ msgstr "<بی‌نام>"
 msgid "About poEdit"
 msgstr "درباره poEdit"
 
-#: ../src/resources/xrc_strings.h:83
+#: ../src/resources/xrc_strings.h:85
 msgid "Add"
 msgstr "افزودن"
 
@@ -150,80 +155,72 @@ msgstr "افزودن"
 msgid "Add directory to the list"
 msgstr "افزودن شاخه به لیست"
 
-#: ../src/resources/xrc_strings.h:145
-#: ../src/transmemupd_wizard.cpp:130
+#: ../src/resources/xrc_strings.h:147 ../src/transmemupd_wizard.cpp:128
 msgid "Add files"
 msgstr "افزودن پرونده‌ها"
 
-#: ../src/resources/xrc_strings.h:113
+#: ../src/resources/xrc_strings.h:115
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "افزودن مسیر به لیست شاخه‌ها در جایی که پوشه‌ها قرار دارند."
 
-#: ../src/resources/xrc_strings.h:66
+#: ../src/resources/xrc_strings.h:68
 msgid "Always change focus to text input field"
 msgstr "همیشه تمرکز به محوطه درونداد متن تغییر داده شود"
 
-#: ../src/resources/xrc_strings.h:108
+#: ../src/resources/xrc_strings.h:110
 msgid "An item in input files list:"
 msgstr "یک مورد در لیست پرونده‌های درونداد:"
 
-#: ../src/resources/xrc_strings.h:106
+#: ../src/resources/xrc_strings.h:108
 msgid "An item in keywords list:"
 msgstr "یک مورد در لیست واژه‌های کلیدی:"
 
-#: ../src/edframe.cpp:1518
-#: ../src/edframe.cpp:1522
+#: ../src/edframe.cpp:1610 ../src/edframe.cpp:1614
 msgid "Automatic translations:"
 msgstr "ترجمه خودکار:"
 
-#: ../src/resources/xrc_strings.h:63
+#: ../src/resources/xrc_strings.h:65
 msgid "Automatically compile .mo file on save"
 msgstr "تالیف خودکار پرونده .mo هنگام ذخیره"
 
-#: ../src/resources/xrc_strings.h:90
+#: ../src/resources/xrc_strings.h:92
 msgid "Automatically translate when updating catalog"
 msgstr "ترجمه خودکار هنگام بروزسازی پوشه"
 
-#: ../src/edframe.cpp:894
+#: ../src/edframe.cpp:1572
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "%u رشته‌ها بطور خودکار ترجمه شد"
 
-#: ../src/edframe.cpp:879
+#: ../src/edframe.cpp:1557
 msgid "Automatically translating..."
 msgstr "در حال ترجمه کردن خودکار..."
 
-#: ../src/resources/xrc_strings.h:126
+#: ../src/resources/xrc_strings.h:128
 msgid "Base path:"
 msgstr "مسیر پایه:"
 
-#: ../src/resources/xrc_strings.h:62
+#: ../src/resources/xrc_strings.h:64
 msgid "Behavior"
 msgstr "رفتار"
 
-#: ../src/resources/xrc_strings.h:24
-#: ../src/resources/xrc_strings.h:82
-#: ../src/resources/xrc_strings.h:112
-#: ../src/resources/xrc_strings.h:142
+#: ../src/resources/xrc_strings.h:24 ../src/resources/xrc_strings.h:84
+#: ../src/resources/xrc_strings.h:114 ../src/resources/xrc_strings.h:144
 msgid "Browse"
 msgstr "مرور"
 
-#: ../src/resources/xrc_strings.h:68
+#: ../src/resources/xrc_strings.h:70
 msgid "CR/LF conversion"
 msgstr "تبدیل CR/LF"
 
-#: ../src/resources/xrc_strings.h:6
-#: ../src/resources/xrc_strings.h:15
-#: ../src/resources/xrc_strings.h:27
-#: ../src/resources/xrc_strings.h:98
-#: ../src/resources/xrc_strings.h:111
-#: ../src/resources/xrc_strings.h:115
-#: ../src/resources/xrc_strings.h:117
-#: ../src/resources/xrc_strings.h:131
+#: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:15
+#: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:100
+#: ../src/resources/xrc_strings.h:113 ../src/resources/xrc_strings.h:117
+#: ../src/resources/xrc_strings.h:119 ../src/resources/xrc_strings.h:133
 msgid "Cancel"
 msgstr "لغو"
 
-#: ../src/transmem.cpp:748
+#: ../src/transmem.cpp:752
 msgid "Cannot create database directory!"
 msgstr "نمی‌توان شاخه بانک اطلاعات را ایجاد کرد!"
 
@@ -231,7 +228,7 @@ msgstr "نمی‌توان شاخه بانک اطلاعات را ایجاد کر�
 msgid "Cannot execute program: "
 msgstr "نمی‌توان برنامه را اجرا نمود:"
 
-#: ../src/transmemupd.cpp:188
+#: ../src/transmemupd.cpp:192
 msgid "Cannot extract catalogs from RPM file."
 msgstr "نمی‌توان پوشه‌ها را از پرونده RPM استخراج نمود."
 
@@ -265,11 +262,8 @@ msgstr "کازه"
 msgid "Catalog"
 msgstr "پوشه"
 
-#: ../src/edframe.cpp:636
-#: ../src/edframe.cpp:647
-#: ../src/edframe.cpp:671
-#: ../src/edframe.cpp:704
-#: ../src/edframe.cpp:766
+#: ../src/edframe.cpp:675 ../src/edframe.cpp:686 ../src/edframe.cpp:710
+#: ../src/edframe.cpp:743 ../src/edframe.cpp:805
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "پوشه تغییر کرد. آیا می‌خواهید تغییرات را ذخیره نمایید؟"
 
@@ -277,11 +271,11 @@ msgstr "پوشه تغییر کرد. آیا می‌خواهید تغییرات ر
 msgid "Catalogs &manager"
 msgstr "مدیر &پوشه‌ها"
 
-#: ../src/resources/xrc_strings.h:60
+#: ../src/resources/xrc_strings.h:62
 msgid "Change UI language"
 msgstr "تغییر زیان "
 
-#: ../src/resources/xrc_strings.h:124
+#: ../src/resources/xrc_strings.h:126
 msgid "Charset:"
 msgstr "مجموعه‌نویسه:"
 
@@ -297,12 +291,11 @@ msgstr "پاک کردن توضیح"
 msgid "Comment:"
 msgstr "توضیح:"
 
-#: ../src/resources/xrc_strings.h:87
+#: ../src/resources/xrc_strings.h:89
 msgid "Configuration"
 msgstr "تنظیمات"
 
-#: ../src/manager.cpp:376
-#: ../src/manager.cpp:396
+#: ../src/manager.cpp:376 ../src/manager.cpp:396
 msgid "Confirmation"
 msgstr "تایید"
 
@@ -310,15 +303,7 @@ msgstr "تایید"
 msgid "Copy original to translation field"
 msgstr "کپی اصل به محوطه ترجمه"
 
-#: ../src/catalog.cpp:263
-msgid "Corrupted team record, please correct in Catalog/Settings"
-msgstr "ردیف ضبط تیم خراب شده، لطفاً آن را در پوشه/تنظیمات درست کنید"
-
-#: ../src/catalog.cpp:255
-msgid "Corrupted translator record, please correct in Catalog/Settings"
-msgstr "ردیف ضبط مترجم خراب شده، لطفاً آن را در پوشه/تنظیمات درست کنید"
-
-#: ../src/resources/xrc_strings.h:123
+#: ../src/resources/xrc_strings.h:125
 msgid "Country:"
 msgstr "کشور:"
 
@@ -326,16 +311,16 @@ msgstr "کشور:"
 msgid "Create new translations project"
 msgstr "ایجاد یک پروژه‌ی ترجمه جدید"
 
-#: ../src/resources/xrc_strings.h:80
+#: ../src/resources/xrc_strings.h:82
 msgid "Database"
 msgstr "بانک‌اطلاعات"
 
-#: ../src/transmem.cpp:332
+#: ../src/transmem.cpp:336
 #, c-format
 msgid "Database error: %s"
 msgstr "خطای بانک‌اطلاعات: %s"
 
-#: ../src/resources/xrc_strings.h:95
+#: ../src/resources/xrc_strings.h:97
 msgid "Delete"
 msgstr "حذف"
 
@@ -351,15 +336,15 @@ msgstr "حذف پروژه"
 msgid "Directories:"
 msgstr "شاخه‌ها:"
 
-#: ../src/resources/xrc_strings.h:49
+#: ../src/resources/xrc_strings.h:50
 msgid "Display &line numbers"
 msgstr "نمایش شماره &خط"
 
-#: ../src/resources/xrc_strings.h:48
+#: ../src/resources/xrc_strings.h:49
 msgid "Display &quotes"
 msgstr "نمایش &علامت‌های نقل قول"
 
-#: ../src/resources/xrc_strings.h:149
+#: ../src/resources/xrc_strings.h:151
 msgid "Display quotes around the string?"
 msgstr "نمایش علامت‌های نقل قول در اطراف رشته؟"
 
@@ -375,11 +360,11 @@ msgstr ""
 msgid "Do you want to delete the project?"
 msgstr "آیا می‌خواهید که این پروژه را حذف کنید؟"
 
-#: ../src/resources/xrc_strings.h:74
+#: ../src/resources/xrc_strings.h:76
 msgid "Don't change format of existing catalogs"
 msgstr "قالب پوشه‌های موجود تغییر داده نشود"
 
-#: ../src/resources/xrc_strings.h:94
+#: ../src/resources/xrc_strings.h:96
 msgid "Edit"
 msgstr "ویرایش"
 
@@ -387,8 +372,7 @@ msgstr "ویرایش"
 msgid "Edit &comment"
 msgstr "ویرایش تو&ضیح"
 
-#: ../src/resources/xrc_strings.h:3
-#: ../src/resources/xrc_strings.h:151
+#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:153
 msgid "Edit comment"
 msgstr "ویرایش توضیح"
 
@@ -408,20 +392,19 @@ msgstr "ویرایش پرونده در ویرایشگر متن"
 msgid "Edit the project"
 msgstr "ویرایش پروژه"
 
-#: ../src/resources/xrc_strings.h:61
-#: ../src/resources/xrc_strings.h:79
+#: ../src/resources/xrc_strings.h:63 ../src/resources/xrc_strings.h:81
 msgid "Editor"
 msgstr "ویرایشگر"
 
-#: ../src/resources/xrc_strings.h:76
+#: ../src/resources/xrc_strings.h:78
 msgid "Editor executable:"
 msgstr "اجرا شونده ویرایشگر:"
 
-#: ../src/edframe.cpp:843
+#: ../src/edframe.cpp:882
 msgid "Entries in the catalog are probably incorrect."
 msgstr "ورودی‌های در پوشه احتمالا درست نیست."
 
-#: ../src/edframe.cpp:1318
+#: ../src/edframe.cpp:1359
 msgid "Error loading message catalog file '"
 msgstr "خطا در بارکردن پیغام پرونده پوشه"
 
@@ -430,21 +413,20 @@ msgstr "خطا در بارکردن پیغام پرونده پوشه"
 msgid "Error opening file %s!"
 msgstr "خطا در باز کردن پرونده %s!"
 
-#: ../src/catalog.cpp:618
+#: ../src/catalog.cpp:632
 msgid "Error saving catalog"
 msgstr "خطا در ذخیره کردن پوشه"
 
-#: ../src/resources/xrc_strings.h:75
+#: ../src/resources/xrc_strings.h:77
 msgid "External editor"
 msgstr "ویرایشگر بیرونی"
 
-#: ../src/edframe.cpp:679
-#: ../src/edframe.cpp:710
+#: ../src/edframe.cpp:718 ../src/edframe.cpp:749
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "پرونده '%s' وجود ندارد.."
 
-#: ../src/edframe.cpp:696
+#: ../src/edframe.cpp:735
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "پرونده '%s' پوشه پیغام نمی‌باشد."
@@ -465,7 +447,7 @@ msgstr "یافتن در ترجمه‌ها"
 msgid "Find..."
 msgstr "یافتن..."
 
-#: ../src/resources/xrc_strings.h:152
+#: ../src/resources/xrc_strings.h:154
 msgid "Fullscreen view"
 msgstr "نمای تمام پرده"
 
@@ -473,51 +455,48 @@ msgstr "نمای تمام پرده"
 msgid "Fuzzy"
 msgstr "نامعلوم"
 
-#: ../src/edframe.cpp:657
-#: ../src/edframe.cpp:752
+#: ../src/edframe.cpp:696 ../src/edframe.cpp:791
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "کاتالوگ‌های GNU GetText (*.po)|*.po|همه پرونده‌ها (*.*)|*.*"
 
-#: ../src/edframe.cpp:861
+#: ../src/edframe.cpp:900
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "الگوهای GNU GetText (*.pot)|*.pot|همه پرونده‌ها (*.*)|*.*"
 
-#: ../src/resources/xrc_strings.h:52
+#: ../src/resources/xrc_strings.h:54
 msgid "GNU gettext documentation"
 msgstr "نوشتارهای GNU gettext"
 
-#: ../src/resources/xrc_strings.h:116
+#: ../src/resources/xrc_strings.h:118
 msgid "Generate TM database"
 msgstr "تولید بانک اطلاعات TM"
 
-#: ../src/resources/xrc_strings.h:85
+#: ../src/resources/xrc_strings.h:87
 msgid "Generate database"
 msgstr "تولید بانک اطلاعات"
 
-#: ../src/resources/xrc_strings.h:153
+#: ../src/resources/xrc_strings.h:155
 msgid "Help"
 msgstr "راهنما"
 
-#: ../src/resources/xrc_strings.h:57
+#: ../src/resources/xrc_strings.h:59
 msgid "Identity"
 msgstr "شناسایی"
 
-#: ../src/resources/xrc_strings.h:103
+#: ../src/resources/xrc_strings.h:105
 msgid "Invocation:"
 msgstr "احضاریه:"
 
-#: ../src/resources/xrc_strings.h:129
-#: ../src/settingsdlg.cpp:58
+#: ../src/resources/xrc_strings.h:131 ../src/settingsdlg.cpp:58
 msgid "Keywords"
 msgstr "کلیدواژه‌ها"
 
-#: ../src/chooselang.cpp:116
+#: ../src/chooselang.cpp:124
 msgid "Language selection"
 msgstr "گزینش زبان"
 
-#: ../src/resources/xrc_strings.h:100
-#: ../src/resources/xrc_strings.h:101
-#: ../src/resources/xrc_strings.h:122
+#: ../src/resources/xrc_strings.h:102 ../src/resources/xrc_strings.h:103
+#: ../src/resources/xrc_strings.h:124
 msgid "Language:"
 msgstr "زبان:"
 
@@ -525,32 +504,31 @@ msgstr "زبان:"
 msgid "Last modified"
 msgstr "آخرین تغییر"
 
-#: ../src/edframe.cpp:141
-#: ../src/fileviewer.cpp:87
+#: ../src/edframe.cpp:148 ../src/fileviewer.cpp:87
 msgid "Line"
 msgstr "خط"
 
-#: ../src/resources/xrc_strings.h:69
+#: ../src/resources/xrc_strings.h:71
 msgid "Line endings format:"
 msgstr "قالب پایان خط:"
 
-#: ../src/resources/xrc_strings.h:102
+#: ../src/resources/xrc_strings.h:104
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "لیست دنباله‌های جدا شده توسط سمیکلون (e.g. *.cpp;*.h):"
 
-#: ../src/resources/xrc_strings.h:72
+#: ../src/resources/xrc_strings.h:74
 msgid "Macintosh"
 msgstr "مک‌اینتاش"
 
-#: ../src/resources/xrc_strings.h:88
+#: ../src/resources/xrc_strings.h:90
 msgid "Max. # of missing words:"
 msgstr "حداکثر # واژه‌هایی که وجود ندارند:"
 
-#: ../src/resources/xrc_strings.h:89
+#: ../src/resources/xrc_strings.h:91
 msgid "Max. difference in sentence length:"
 msgstr "حداکثر تفاوت در طول جمله:"
 
-#: ../src/catalog.cpp:739
+#: ../src/catalog.cpp:759
 msgid "Merging differences..."
 msgstr "پیوست تفاوت‌ها..."
 
@@ -570,11 +548,17 @@ msgstr "زبان‌های من"
 msgid "My Project"
 msgstr "پروژه من"
 
-#: ../src/resources/xrc_strings.h:67
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "هرگز اجازه نده که لیست رشته‌ها تمرکز را بگیرد. اگر فعال شده، شما باید از پیکان‌های صفحه‌کلید برای صفحه‌نوردی استفاده کرده ولی همچنین می‌توانید بلافاصله نگارش متن را بدون فشار دادن کلید جهش برای تغییر تمرکز انجام دهید."
+#: ../src/resources/xrc_strings.h:69
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"هرگز اجازه نده که لیست رشته‌ها تمرکز را بگیرد. اگر فعال شده، شما باید از "
+"پیکان‌های صفحه‌کلید برای صفحه‌نوردی استفاده کرده ولی همچنین می‌توانید بلافاصله "
+"نگارش متن را بدون فشار دادن کلید جهش برای تغییر تمرکز انجام دهید."
 
-#: ../src/resources/xrc_strings.h:93
+#: ../src/resources/xrc_strings.h:95
 msgid "New"
 msgstr "جدید"
 
@@ -582,7 +566,7 @@ msgstr "جدید"
 msgid "New item"
 msgstr "مورد جدید"
 
-#: ../src/resources/xrc_strings.h:134
+#: ../src/resources/xrc_strings.h:136
 msgid "New strings"
 msgstr "رشته‌های جدید"
 
@@ -592,60 +576,57 @@ msgstr "بعدی ->"
 
 #: ../src/fileviewer.cpp:126
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "هیچ ویرایشگری مشخص نشده است. لطفاً آن را در گفتگوی ترجیحات تعیین نمایید. "
+msgstr ""
+"هیچ ویرایشگری مشخص نشده است. لطفاً آن را در گفتگوی ترجیحات تعیین نمایید. "
 
 #: ../src/digger.cpp:122
 msgid "No files found in: "
 msgstr "هیچ پرونده‌ای یافت نشد در:"
 
-#: ../src/edframe.cpp:931
+#: ../src/edframe.cpp:944
 msgid "No references to this string found."
 msgstr "هیچ مرجعی برای این رشته یافت نشد."
 
-#: ../src/resources/xrc_strings.h:2
-#: ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:26
-#: ../src/resources/xrc_strings.h:97
-#: ../src/resources/xrc_strings.h:110
-#: ../src/resources/xrc_strings.h:130
-#: ../src/resources/xrc_strings.h:138
+#: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
+#: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:99
+#: ../src/resources/xrc_strings.h:112 ../src/resources/xrc_strings.h:132
+#: ../src/resources/xrc_strings.h:140
 msgid "OK"
 msgstr "تایید"
 
-#: ../src/resources/xrc_strings.h:136
+#: ../src/resources/xrc_strings.h:138
 msgid "Obsolete strings"
 msgstr "رشته‌های کهنه"
 
-#: ../src/resources/xrc_strings.h:146
-#: ../src/edframe.cpp:655
+#: ../src/resources/xrc_strings.h:148 ../src/edframe.cpp:694
 msgid "Open catalog"
 msgstr "باز کردن پوشه"
 
-#: ../src/edframe.cpp:859
+#: ../src/edframe.cpp:898
 msgid "Open catalog template"
 msgstr "باز کردن الگوی پوشه"
 
-#: ../src/resources/xrc_strings.h:65
+#: ../src/resources/xrc_strings.h:67
 msgid "Open catalogs manager on poEdit startup"
 msgstr "باز کردن مدیر پوشه‌ها در شروع poEdit"
 
-#: ../src/resources/xrc_strings.h:78
+#: ../src/resources/xrc_strings.h:80
 msgid "Open source files in editor, not in file viewer"
 msgstr "باز کردن پرونده‌های منبع در ویرایشگر، نه در نماگر پرونده"
 
-#: ../src/edframe.cpp:138
+#: ../src/edframe.cpp:145
 msgid "Original string"
 msgstr "رشته اصلی"
 
-#: ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:106
 msgid "Parser command:"
 msgstr "فرمان تجزیه:"
 
-#: ../src/resources/xrc_strings.h:99
+#: ../src/resources/xrc_strings.h:101
 msgid "Parser setup"
 msgstr "تنظیم تجزیه"
 
-#: ../src/resources/xrc_strings.h:96
+#: ../src/resources/xrc_strings.h:98
 msgid "Parsers"
 msgstr "تجزیه‌گرها"
 
@@ -653,28 +634,29 @@ msgstr "تجزیه‌گرها"
 msgid "Parsing "
 msgstr "تجزیه کردن"
 
-#: ../src/resources/xrc_strings.h:81
+#: ../src/resources/xrc_strings.h:83
 msgid "Path to DB:"
 msgstr "مسیر به بانک اطلاعات:"
 
-#: ../src/resources/xrc_strings.h:127
-#: ../src/settingsdlg.cpp:60
+#: ../src/resources/xrc_strings.h:129 ../src/settingsdlg.cpp:60
 msgid "Paths"
 msgstr "مسیرها"
 
-#: ../src/resources/xrc_strings.h:56
+#: ../src/resources/xrc_strings.h:58
 msgid "Personalize"
 msgstr "شخصی‌سازی"
 
-#: ../src/resources/xrc_strings.h:84
+#: ../src/resources/xrc_strings.h:86
 msgid "Pick language from the list of known languages"
 msgstr "انتخاب زبان از لیست زبان‌های شناخته شده"
 
-#: ../src/resources/xrc_strings.h:141
+#: ../src/resources/xrc_strings.h:143
 msgid "Please add directories where locale files are stored on your system:"
-msgstr "لطفاً شاخه‌هایی را که پرونده‌های منطقه در آن بر سیستم شما انبار شده‌اند را اضافه کنید:"
+msgstr ""
+"لطفاً شاخه‌هایی را که پرونده‌های منطقه در آن بر سیستم شما انبار شده‌اند را اضافه "
+"کنید:"
 
-#: ../src/edframe.cpp:939
+#: ../src/edframe.cpp:952
 msgid "Please choose the reference you want to show:"
 msgstr "لطفاً مرجعی را که می‌خواهید نشان داده شود را انتخاب نمایید:"
 
@@ -682,23 +664,23 @@ msgstr "لطفاً مرجعی را که می‌خواهید نشان داده ش
 msgid "Please select language ISO code:"
 msgstr "لطفاً کد ISO زبان را انتخاب نمایید:"
 
-#: ../src/edframe.cpp:603
+#: ../src/edframe.cpp:642
 msgid "Please select language code:"
 msgstr "لطفاً کد زبان را انتخاب نمایید:"
 
-#: ../src/resources/xrc_strings.h:55
+#: ../src/resources/xrc_strings.h:57
 msgid "Preferences"
 msgstr "ترجیحات"
 
-#: ../src/resources/xrc_strings.h:114
+#: ../src/resources/xrc_strings.h:116
 msgid "Proceed"
 msgstr "پیشروی"
 
-#: ../src/resources/xrc_strings.h:125
+#: ../src/resources/xrc_strings.h:127
 msgid "Project info"
 msgstr "اطلاعات پروژه"
 
-#: ../src/resources/xrc_strings.h:119
+#: ../src/resources/xrc_strings.h:121
 msgid "Project name and version:"
 msgstr "نسخه و نام پروژه:"
 
@@ -706,20 +688,19 @@ msgstr "نسخه و نام پروژه:"
 msgid "Project name:"
 msgstr "نام پروژه:"
 
-#: ../src/edframe.cpp:939
+#: ../src/edframe.cpp:952
 msgid "References"
 msgstr "مرجع‌ها"
 
-#: ../src/edframe.cpp:1502
-#: ../src/edframe.cpp:1506
+#: ../src/edframe.cpp:1594 ../src/edframe.cpp:1598
 msgid "References:"
 msgstr "مرجع‌ها:"
 
-#: ../src/resources/xrc_strings.h:86
+#: ../src/resources/xrc_strings.h:88
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr "تولید مجدد حافظه ترجمه از پوشه‌ها در مسیرهای فهرست شده بالا."
 
-#: ../src/resources/xrc_strings.h:143
+#: ../src/resources/xrc_strings.h:145
 msgid "Reset to defaults"
 msgstr "بازنشانی به پیش‌فرض‌ها"
 
@@ -727,23 +708,20 @@ msgstr "بازنشانی به پیش‌فرض‌ها"
 msgid "Save &as..."
 msgstr "ذخیره با &نام..."
 
-#: ../src/edframe.cpp:751
+#: ../src/edframe.cpp:790
 msgid "Save as..."
 msgstr "ذخیره با نام..."
 
-#: ../src/resources/xrc_strings.h:147
+#: ../src/resources/xrc_strings.h:149
 msgid "Save catalog"
 msgstr "ذخیره پوشه"
 
-#: ../src/edframe.cpp:636
-#: ../src/edframe.cpp:647
-#: ../src/edframe.cpp:671
-#: ../src/edframe.cpp:704
-#: ../src/edframe.cpp:766
+#: ../src/edframe.cpp:675 ../src/edframe.cpp:686 ../src/edframe.cpp:710
+#: ../src/edframe.cpp:743 ../src/edframe.cpp:805
 msgid "Save changes"
 msgstr "ذخیره‌ی تغییرات"
 
-#: ../src/transmemupd.cpp:138
+#: ../src/transmemupd.cpp:142
 msgid "Scanning file: "
 msgstr "پویش کردن پرونده:"
 
@@ -755,13 +733,12 @@ msgstr "در حال پویش پرونده‌ها..."
 msgid "Search Paths"
 msgstr "مسیرهای جستجو"
 
-#: ../src/edframe.cpp:602
+#: ../src/edframe.cpp:641
 msgid "Select catalog's language"
 msgstr "انتخاب زبان پوشه"
 
-#: ../src/manager.cpp:251
-#: ../src/prefsdlg.cpp:272
-#: ../src/transmemupd_wizard.cpp:104
+#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:272
+#: ../src/transmemupd_wizard.cpp:102
 msgid "Select directory"
 msgstr "انتخاب شاخه"
 
@@ -769,11 +746,11 @@ msgstr "انتخاب شاخه"
 msgid "Select language"
 msgstr "انتخاب زبان"
 
-#: ../src/chooselang.cpp:115
+#: ../src/chooselang.cpp:123
 msgid "Select your prefered language"
 msgstr "انتخاب زبان ترجیحی خود"
 
-#: ../src/resources/xrc_strings.h:118
+#: ../src/resources/xrc_strings.h:120
 msgid "Settings"
 msgstr "تنظیمات"
 
@@ -781,11 +758,15 @@ msgstr "تنظیمات"
 msgid "Setup"
 msgstr "برپاسازی"
 
-#: ../src/resources/xrc_strings.h:64
+#: ../src/resources/xrc_strings.h:51
+msgid "Show &comment window"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:66
 msgid "Show summary after catalog update"
 msgstr "نشان دادن خلاصه بعد از بروزسازی پوشه"
 
-#: ../src/resources/xrc_strings.h:92
+#: ../src/resources/xrc_strings.h:94
 msgid "Source code parsers:"
 msgstr "تجزیه‌گرهای کد منبع:"
 
@@ -797,15 +778,15 @@ msgstr "پرونده منبع"
 msgid "String to find:"
 msgstr "رشته‌ای برای یافتن: "
 
-#: ../src/resources/xrc_strings.h:121
+#: ../src/resources/xrc_strings.h:123
 msgid "Team's email address:"
 msgstr "نشانی پست الکترونیکی گروه:"
 
-#: ../src/resources/xrc_strings.h:120
+#: ../src/resources/xrc_strings.h:122
 msgid "Team:"
 msgstr "گروه:"
 
-#: ../src/catalog.cpp:617
+#: ../src/catalog.cpp:631
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -816,7 +797,7 @@ msgstr ""
 "پوشه مشخص شده ذخیره شود. آن در UTF-8 بجایش ذخیره شد \n"
 "و تنظیمات بر اساس آن تغییر یافت."
 
-#: ../src/resources/xrc_strings.h:135
+#: ../src/resources/xrc_strings.h:137
 msgid ""
 "These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
@@ -824,7 +805,7 @@ msgstr ""
 "این رشته‌ها دیگر در منابع نیستند.\n"
 "poEdit آنها از پوشه اکنون برمی‌دارد."
 
-#: ../src/resources/xrc_strings.h:133
+#: ../src/resources/xrc_strings.h:135
 msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
@@ -842,7 +823,7 @@ msgstr ""
 "لطفاً نام و پست الکترونیکی خود را بنویسید.\n"
 "(این اطلاعات فقط در سرآیندهای پوشه استفاده خواهند شد)"
 
-#: ../src/resources/xrc_strings.h:105
+#: ../src/resources/xrc_strings.h:107
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -852,20 +833,24 @@ msgstr ""
 "%o به نام پرونده برونداد گسترش یافته، %K به لیست\n"
 "کلیدواژه‌ها، %F به لیست پرونده‌های درونداد (پایین را ببینید)."
 
-#: ../src/resources/xrc_strings.h:109
+#: ../src/resources/xrc_strings.h:111
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr "این به خط فرمان یکبار برای هر پرونده‌ی درونداد ضمیمه خواهد شد. %f به نام پرونده گسترش می‌یابد."
+msgstr ""
+"این به خط فرمان یکبار برای هر پرونده‌ی درونداد ضمیمه خواهد شد. %f به نام "
+"پرونده گسترش می‌یابد."
 
-#: ../src/resources/xrc_strings.h:107
+#: ../src/resources/xrc_strings.h:109
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr "این به خط فرمان یکبار برای هر پرونده‌ی درونداد ضمیمه خواهد شد. %k به کلیدواژه گسترش می‌یابد."
+msgstr ""
+"این به خط فرمان یکبار برای هر پرونده‌ی درونداد ضمیمه خواهد شد. %k به کلیدواژه "
+"گسترش می‌یابد."
 
-#: ../src/resources/xrc_strings.h:150
+#: ../src/resources/xrc_strings.h:152
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "تعویض اگر رشته انتخاب شده ترجمه نامعلوم دارد"
 
@@ -873,19 +858,19 @@ msgstr "تعویض اگر رشته انتخاب شده ترجمه نامعلوم
 msgid "Total"
 msgstr "جمع کل"
 
-#: ../src/edframe.cpp:139
+#: ../src/edframe.cpp:146
 msgid "Translation"
 msgstr "ترجمه"
 
-#: ../src/resources/xrc_strings.h:91
+#: ../src/resources/xrc_strings.h:93
 msgid "Translation Memory"
 msgstr "حافظه ترجمه"
 
-#: ../src/transmemupd_wizard.cpp:136
+#: ../src/transmemupd_wizard.cpp:134
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 msgstr "پرونده‌های ترجمه (*.po;*.mo)|*.po;*.mo"
 
-#: ../src/transmemupd_wizard.cpp:134
+#: ../src/transmemupd_wizard.cpp:132
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "پرونده‌های ترجمه (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 
@@ -893,22 +878,24 @@ msgstr "پرونده‌های ترجمه (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgid "Translation is &fuzzy"
 msgstr "ترجمه نام&علوم است"
 
-#: ../src/resources/xrc_strings.h:144
+#: ../src/resources/xrc_strings.h:146
 msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
-msgstr "حافظه ترجمه از پرونده‌های فهرست شده زیر ساخته خواهد شد. شما می‌توانید پرونده‌های بیشتری به این فهرست اضافه نمایید."
+msgstr ""
+"حافظه ترجمه از پرونده‌های فهرست شده زیر ساخته خواهد شد. شما می‌توانید "
+"پرونده‌های بیشتری به این فهرست اضافه نمایید."
 
 #: ../src/chooselang.cpp:59
 #, c-format
 msgid "Uknown locale code '%s' in registry."
 msgstr "کد منطقه ناآشنای '%s' در بایگانی."
 
-#: ../src/resources/xrc_strings.h:139
+#: ../src/resources/xrc_strings.h:141
 msgid "Undo"
 msgstr "بازگرد"
 
-#: ../src/resources/xrc_strings.h:70
+#: ../src/resources/xrc_strings.h:72
 msgid "Unix"
 msgstr "یونیکس"
 
@@ -920,7 +907,7 @@ msgstr "ترجمه نشده"
 msgid "Update all catalogs in the project"
 msgstr "بروزسازی همه پوشه‌ها در پروژه"
 
-#: ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:150
 msgid "Update catalog - synchronize it with sources"
 msgstr "پوشه بروزسازی - همزمان سازی آن با منابع"
 
@@ -928,23 +915,23 @@ msgstr "پوشه بروزسازی - همزمان سازی آن با منابع"
 msgid "Update from &POT file..."
 msgstr "بروزسازی از پرونده &POT..."
 
-#: ../src/resources/xrc_strings.h:132
+#: ../src/resources/xrc_strings.h:134
 msgid "Update summary"
 msgstr "خلاصه بروزسازی"
 
-#: ../src/resources/xrc_strings.h:140
+#: ../src/resources/xrc_strings.h:142
 msgid "Update translation memory"
 msgstr "بروزسازی حافظه ترجمه"
 
-#: ../src/catalog.cpp:701
+#: ../src/catalog.cpp:721
 msgid "Updating catalog..."
 msgstr "در حال بروزسازی پوشه..."
 
-#: ../src/edframe.cpp:845
+#: ../src/edframe.cpp:884
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "بروزسازی پوشه شکست خورد. برای جزئیات بر 'بیشتر>>' کلیک کنید."
 
-#: ../src/resources/xrc_strings.h:128
+#: ../src/resources/xrc_strings.h:130
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
@@ -952,35 +939,36 @@ msgstr ""
 "استفاده از این کلیدواژه‌ها (نام‌های تابع) برای شناختن رشته‌های قابل ترجمه در\n"
 "پرونده‌های منبع، بعلاوه آن پیش‌فرض‌ها."
 
-#: ../src/resources/xrc_strings.h:71
+#: ../src/resources/xrc_strings.h:73
 msgid "Windows"
 msgstr "پنجره‌ها"
 
-#: ../src/edframe.cpp:689
+#: ../src/edframe.cpp:728
 msgid "You can't drop more than one file on poEdit window."
 msgstr "شما می‌توانید بیش از یک پرونده را در پنجره poEdit بیاندازید."
 
-#: ../src/chooselang.cpp:130
+#: ../src/chooselang.cpp:138
 msgid "You must restart poEdit for this change to take effect."
-msgstr "شما باید poEdit را برای تأثیر کردن این تغییرات دوباره راه‌اندازی نمایید."
+msgstr ""
+"شما باید poEdit را برای تأثیر کردن این تغییرات دوباره راه‌اندازی نمایید."
 
-#: ../src/resources/xrc_strings.h:59
+#: ../src/resources/xrc_strings.h:61
 msgid "Your e-mail address:"
 msgstr "نشانی پست الکترونیکی شما:"
 
-#: ../src/resources/xrc_strings.h:58
+#: ../src/resources/xrc_strings.h:60
 msgid "Your name:"
 msgstr "نام شما:"
 
-#: ../src/resources/xrc_strings.h:73
+#: ../src/resources/xrc_strings.h:75
 msgid "current platform's default"
 msgstr "پیش‌فرض پایگاه کنونی"
 
-#: ../src/edframe.cpp:1542
+#: ../src/edframe.cpp:1634
 msgid "none"
 msgstr "هیچکدام"
 
-#: ../src/edframe.cpp:409
+#: ../src/edframe.cpp:418
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -997,10 +985,16 @@ msgid "poEdit did not find any files in scanned directories."
 msgstr "poEdit نتوانست هیچ پرونده‌ای را در شاخه‌های پویش شده پیدا کند."
 
 #: ../src/edapp.cpp:53
-msgid "poEdit installation is broken, cannot find application's home directory."
+msgid ""
+"poEdit installation is broken, cannot find application's home directory."
 msgstr "نصب poEdit شکسته است، نمی‌توان شاخه خانه‌ی برنامه را یافت."
 
-#: ../src/edframe.cpp:1557
+#: ../src/edframe.cpp:1649
 msgid "version"
 msgstr "نسخه"
 
+#~ msgid "Corrupted team record, please correct in Catalog/Settings"
+#~ msgstr "ردیف ضبط تیم خراب شده، لطفاً آن را در پوشه/تنظیمات درست کنید"
+
+#~ msgid "Corrupted translator record, please correct in Catalog/Settings"
+#~ msgstr "ردیف ضبط مترجم خراب شده، لطفاً آن را در پوشه/تنظیمات درست کنید"
