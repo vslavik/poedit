@@ -117,11 +117,12 @@ class poEditListCtrl : public wxListCtrl
                       const wxPoint &pos = wxDefaultPosition,
                       const wxSize &size = wxDefaultSize,
                       long style = wxLC_ICON,
+                      bool dispLines = false,
                       const wxValidator& validator = wxDefaultValidator,
                       const wxString &name = _T("listctrl"))
              : wxListCtrl(parent, id, pos, size, style, validator, name)
         {
-            m_displayLines = false;
+            m_displayLines = dispLines;
             CreateColumns();
             wxImageList *list = new wxImageList(16, 16);
             list->Add(wxBitmap(nothing_xpm));
@@ -447,8 +448,10 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     m_splitter = new wxSplitterWindow(this, -1);
     wxPanel *panel = new wxPanel(m_splitter);
 
-    m_list = new poEditListCtrl(m_splitter, EDC_LIST, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
-    m_list->SetDisplayLines(m_displayLines);
+    m_list = new poEditListCtrl(m_splitter, EDC_LIST, 
+                                wxDefaultPosition, wxDefaultSize,
+                                wxLC_REPORT | wxLC_SINGLE_SEL,
+                                m_displayLines);
     m_list->SetFocus();
 
     m_textOrig = new UnfocusableTextCtrl(panel, EDC_TEXTORIG, wxEmptyString, 
