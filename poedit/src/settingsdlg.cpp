@@ -28,7 +28,7 @@
 #include <wx/config.h>
 #include <wx/tokenzr.h>
 
-#include "iso639.h"
+#include "isocodes.h"
 #include "settingsdlg.h"
 
 
@@ -43,7 +43,7 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
     m_charset = XRCCTRL(*this, "charset", wxComboBox);
     m_basePath = XRCCTRL(*this, "basepath", wxTextCtrl);
 
-    const LanguageStruct *lang = isoLanguages; /*from iso639.h*/ 
+    const LanguageStruct *lang = isoLanguages; /*from isocodes.h*/ 
     m_language->Append(wxEmptyString);
     while (lang->lang != NULL)
         m_language->Append((lang++)->lang);

@@ -29,7 +29,7 @@
 #include <wx/xrc/xmlres.h>
 
 #include "prefsdlg.h"
-#include "iso639.h"
+#include "isocodes.h"
 #include "transmem.h"
 #include "transmemupd.h"
 #include "transmemupd_wizard.h"

@@ -43,7 +43,7 @@
 #include "fileviewer.h"
 #include "findframe.h"
 #include "transmem.h"
-#include "iso639.h"
+#include "isocodes.h"
 #include "progressinfo.h"
 #include "commentdlg.h"
 #include "manager.h"
