@@ -8,7 +8,7 @@
     
       Application class
     
-      (c) Vaclav Slavik, 1999-2002
+      (c) Vaclav Slavik, 1999-2003
 
 */
 
@@ -61,7 +61,7 @@ wxString poEditApp::GetAppPath() const
 
 wxString poEditApp::GetAppVersion() const
 {
-    return _T("1.2.2");
+    return _T("1.2.3");
 }
 
 
