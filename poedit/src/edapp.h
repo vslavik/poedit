@@ -56,6 +56,7 @@ class poEditApp : public wxApp
             upgrade to new version.)
          */
         void SetDefaultCfg(wxConfigBase *cfg);
+        void SetDefaultParsers(wxConfigBase *cfg);
         
         void OnInitCmdLine(wxCmdLineParser& parser);
         bool OnCmdLineParsed(wxCmdLineParser& parser);

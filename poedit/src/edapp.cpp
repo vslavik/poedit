@@ -32,6 +32,7 @@
 #include "edframe.h"
 #include "manager.h"
 #include "prefsdlg.h"
+#include "parser.h"
 #include "chooselang.h"
 
 
@@ -163,24 +164,55 @@ bool poEditApp::OnInit()
 
     return true;
 }
+    
+void poEditApp::SetDefaultParsers(wxConfigBase *cfg)
+{
+    ParsersDB pdb;
+    bool changed = false;
+    wxString defaultsVersion = cfg->Read(_T("Parsers/DefaultsVersion"),
+                                         _T("1.2.x"));
+    pdb.Read(cfg);
+
+    // Add C/C++ parser (only if there's isn't any parser already):
+    if (pdb.GetCount() == 0)
+    {
+        Parser p;
+        p.Name = _T("C/C++");
+        p.Extensions = _T("*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx");
+        p.Command = _T("xgettext --force-po -o %o %K %F");
+        p.KeywordItem = _T("-k%k");
+        p.FileItem = _T("%f");
+        pdb.Add(p);
+        changed = true;
+    }
+
+    // If upgrading poEdit to 1.2.4, add dxgettext parser for Delphi:
+#ifdef __WINDOWS__
+    if (defaultsVersion == _T("1.2.x"))
+    {
+        Parser p;
+        p.Name = _T("Delphi (dxgettext)");
+        p.Extensions = _T("*.pas;*.inc;*.rc;*.dpr;*.xfm;*.dfm");
+        p.Command = _T("dxgettext --so %o %F");
+        p.KeywordItem = wxEmptyString;
+        p.FileItem = _T("%f");
+        pdb.Add(p);
+        changed = true;
+    }
+#endif
+
+    if (changed)
+    {
+        pdb.Write(cfg);
+        cfg->Write(_T("Parsers/DefaultsVersion"), GetAppVersion());
+    }
+}
 
 void poEditApp::SetDefaultCfg(wxConfigBase *cfg)
 {
+    SetDefaultParsers(cfg);
+
     if (cfg->Read(_T("version"), wxEmptyString) == GetAppVersion()) return;
-
-    if (cfg->Read(_T("Parsers/List"), wxEmptyString).IsEmpty())
-    {
-        cfg->Write(_T("Parsers/List"), _T("C/C++"));
-
-        cfg->Write(_T("Parsers/C_C++/Extensions"), 
-                   _T("*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx"));
-        cfg->Write(_T("Parsers/C_C++/Command"), 
-                   _T("xgettext --force-po -o %o %K %F"));
-        cfg->Write(_T("Parsers/C_C++/KeywordItem"), 
-                   _T("-k%k"));
-        cfg->Write(_T("Parsers/C_C++/FileItem"), 
-                   _T("%f"));
-    }
 
     if (cfg->Read(_T("TM/database_path"), wxEmptyString).IsEmpty())
     {
