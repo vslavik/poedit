@@ -47,6 +47,8 @@ Source: install\poedit.exe.manifest; DestDir: {app}\bin; MinVersion: 0,5.0.2195;
 Source: extras\win32-runtime\unicows.dll; DestDir: {app}\bin; MinVersion: 4.0.950,0; Components: core
 Source: locales\cs-wxstd.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\zh_TW.Big5.mo; DestDir: {app}\share\locale\zh_TW.Big5\LC_MESSAGES; DestName: poedit.mo; Components: i18n
+Source: locales\zh-wxstd.mo; DestDir: {app}\share\locale\zh\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey
@@ -76,9 +78,13 @@ Name: {app}\doc; Components: docs
 Name: {app}\share; Components: core
 Name: {app}\share\poedit; Components: core
 Name: {app}\share\locale; Components: core
+Name: {app}\bin; Components: core
 Name: {app}\share\locale\cs_CZ; Components: i18n
 Name: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n
-Name: {app}\bin; Components: core
+Name: {app}\share\locale\zh; Components: i18n
+Name: {app}\share\locale\zh\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\zh_TW.Big5; Components: i18n
+Name: {app}\share\locale\zh_TW.Big5\LC_MESSAGES; Components: i18n
 
 [_ISToolPreCompile]
 
