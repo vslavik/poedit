@@ -51,6 +51,7 @@ Provides:      poedit
 Requires:      wxGTK >= 2.3.2
 BuildRequires: wxGTK-devel
 %endif
+BuildRequires: zip
 
 BuildRoot: /var/tmp/poedit-%{version}
 
