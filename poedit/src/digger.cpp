@@ -13,6 +13,7 @@
 */
 
 #include <wx/string.h>
+#include <wx/filefn.h> // workaround for wx-2.5.1 bug
 #include <wx/config.h>
 #include <wx/dir.h>
 
