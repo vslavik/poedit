@@ -8,7 +8,7 @@
     
       Gettext execution code
     
-      (c) Vaclav Slavik, 2000
+      (c) Vaclav Slavik, 2000-2003
  
 */
 
@@ -146,14 +146,15 @@ bool ExecuteGettext(const wxString& cmdline)
     
     for (i = 0; i < pdata.Stderr.GetCount(); i++) 
     {
+        if (pdata.Stderr[i].empty()) continue;
         if (isMsgmerge)
         {
             dummy = pdata.Stderr[i];
             dummy.Replace(_T("."), wxEmptyString);
-            if (dummy.IsEmpty() || dummy == _T(" done")) continue;
+            if (dummy.empty() || dummy == _T(" done")) continue;
             //msgmerge outputs *progress* to stderr, damn it!
         }
-        wxLogError(pdata.Stderr[i]);
+        wxLogError(_T("%s"), pdata.Stderr[i].c_str());
     }
     
     return pdata.ExitCode == 0;
