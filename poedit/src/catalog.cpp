@@ -1089,7 +1089,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         SaveMultiLines(f, convertUtf8ToCharset(data->GetComment(), encConv));
         for (unsigned i = 0; i < data->GetAutoComments().GetCount(); i++)
         {
-            if (data->GetAutoComments()[i] == "")
+            if (data->GetAutoComments()[i].empty())
               f.AddLine(_T("#."));
             else
               f.AddLine(_T("#. ") + data->GetAutoComments()[i]);
