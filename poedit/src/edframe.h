@@ -130,6 +130,7 @@ class poEditFrame : public wxFrame
         void OnRightClick(wxCommandEvent& event);            
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnQuotesFlag(wxCommandEvent& event);
+        void OnLinesFlag(wxCommandEvent& event);
         void OnInsertOriginal(wxCommandEvent& event);
         void OnFullscreen(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
@@ -166,7 +167,8 @@ class poEditFrame : public wxFrame
 
         bool m_modified;
         bool m_hasObsoleteItems;
-        bool m_displayQuotes;          
+        bool m_displayQuotes;
+        bool m_displayLines;
         int m_sel, m_selItem;
         wxFileHistory m_history;
         wxString m_edittedTextOrig;

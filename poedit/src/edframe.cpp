@@ -117,6 +117,7 @@ class poEditListCtrl : public wxListCtrl
                       const wxString &name = _T("listctrl"))
              : wxListCtrl(parent, id, pos, size, style, validator, name)
         {
+            m_displayLines = false;
             CreateColumns();
             wxImageList *list = new wxImageList(16, 16);
             list->Add(wxBitmap(nothing_xpm));
@@ -130,16 +131,25 @@ class poEditListCtrl : public wxListCtrl
         {
             InsertColumn(0, _("Original string"));
             InsertColumn(1, _("Translation"));
+            if (m_displayLines)
+                InsertColumn(2, _("Line"), wxLIST_FORMAT_RIGHT);
             SizeColumns();
         }
 
         void SizeColumns()
         {
-             int w = GetSize().x;
-             w -= wxSystemSettings::GetSystemMetric(wxSYS_VSCROLL_X) + 6;
-             SetColumnWidth(0, w / 2);
-             SetColumnWidth(1, w - w / 2);
+            const int LINE_COL_SIZE = m_displayLines ? 50 : 0;
+
+            int w = GetSize().x
+                    - wxSystemSettings::GetSystemMetric(wxSYS_VSCROLL_X) + 6
+                    - LINE_COL_SIZE;
+            SetColumnWidth(0, w / 2);
+            SetColumnWidth(1, w - w / 2);
+            if (m_displayLines)
+                SetColumnWidth(2, LINE_COL_SIZE);
         }
+
+        void SetDisplayLines(bool dl) { m_displayLines = dl; }
 
     private:
         DECLARE_EVENT_TABLE()
@@ -148,6 +158,8 @@ class poEditListCtrl : public wxListCtrl
             SizeColumns();
             event.Skip();
         }
+
+        bool m_displayLines;
 };
 
 BEGIN_EVENT_TABLE(poEditListCtrl, wxListCtrl)
@@ -345,6 +357,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU                 (XRCID("menu_update"),      poEditFrame::OnUpdate)
    EVT_MENU                 (XRCID("menu_fuzzy"),       poEditFrame::OnFuzzyFlag)
    EVT_MENU                 (XRCID("menu_quotes"),      poEditFrame::OnQuotesFlag)
+   EVT_MENU                 (XRCID("menu_lines"),       poEditFrame::OnLinesFlag)
    EVT_MENU                 (XRCID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
    EVT_MENU                 (XRCID("menu_references"),  poEditFrame::OnReferencesMenu)
    EVT_MENU                 (XRCID("menu_fullscreen"),  poEditFrame::OnFullscreen) 
@@ -393,7 +406,7 @@ poEditFrame::poEditFrame(const wxString& catalog) :
         Move(cfg->Read(_T("frame_x"), -1), cfg->Read(_T("frame_y"), -1));
  
     m_displayQuotes = (bool)cfg->Read(_T("display_quotes"), (long)false);
-
+    m_displayLines = (bool)cfg->Read(_T("display_lines"), (long)false);
     gs_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
 
     SetIcon(wxICON(appicon));
@@ -421,11 +434,13 @@ poEditFrame::poEditFrame(const wxString& catalog) :
 
     GetToolBar()->ToggleTool(XRCID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XRCID("menu_quotes"), m_displayQuotes);
+    GetMenuBar()->Check(XRCID("menu_lines"), m_displayLines);
     
     m_splitter = new wxSplitterWindow(this, -1);
     wxPanel *panel = new wxPanel(m_splitter);
 
     m_list = new poEditListCtrl(m_splitter, EDC_LIST, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
+    m_list->SetDisplayLines(m_displayLines);
     m_list->SetFocus();
 
     m_textOrig = new UnfocusableTextCtrl(panel, EDC_TEXTORIG, wxEmptyString, 
@@ -487,6 +502,7 @@ poEditFrame::~poEditFrame()
     cfg->Write(_T("frame_y"), (long)pos.y);
     cfg->Write(_T("splitter"), (long)m_splitter->GetSashPosition());
     cfg->Write(_T("display_quotes"), m_displayQuotes);
+    cfg->Write(_T("display_lines"), m_displayLines);
 
     m_history.Save(*cfg);
 
@@ -869,6 +885,15 @@ void poEditFrame::OnQuotesFlag(wxCommandEvent& event)
 
 
 
+void poEditFrame::OnLinesFlag(wxCommandEvent& event)
+{
+    m_displayLines = GetMenuBar()->IsChecked(XRCID("menu_lines"));
+    m_list->SetDisplayLines(m_displayLines);
+    RefreshControls();
+}
+
+
+
 void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
 {
     int ind = m_sel >= m_list->GetItemCount() ? -1 : m_list->GetItemData(m_sel);
@@ -1079,6 +1104,12 @@ static void AddItemsToList(const Catalog& catalog, wxListCtrl *list, size_t& pos
                 trans = catalog[i].GetTranslation();
             
             list->SetItem(pos, 1, trans);
+            {
+                wxString linenum;
+                linenum << catalog[i].GetLineNumber();
+                list->SetItem(pos, 2, linenum);
+            }
+
             list->SetItemData(pos, i);
             listitem.SetId(pos);
             if (clr[pos % 2].Ok())
@@ -1109,6 +1140,8 @@ static bool CatFilterRest(const CatalogData& d)
 
 void poEditFrame::RefreshControls()
 {
+    if (!m_catalog) return;
+
     m_hasObsoleteItems = false;    
     if (!m_catalog->IsOk())
     {
@@ -1246,6 +1279,8 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
 
     m_history.AddFileToHistory(m_fileName);
     UpdateTitle();
+    
+    RefreshControls();
     
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(m_fileName);

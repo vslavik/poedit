@@ -80,6 +80,7 @@ void CatalogParser::Parse()
     wxString line, dummy;
     wxString mflags, mstr, mtrans, mcomment;
     wxArrayString mrefs;
+    unsigned mlinenum;
     
     line = m_textFile->GetFirstLine();
     if (line.IsEmpty()) line = ReadTextLine(m_textFile);
@@ -106,6 +107,7 @@ void CatalogParser::Parse()
         else if (ReadParam(line, _T("msgid \""), dummy))
         {
             mstr = dummy.RemoveLast();
+            mlinenum = m_textFile->GetCurrentLine() + 1;
             while (!(line = ReadTextLine(m_textFile)).IsEmpty())
             {
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
@@ -125,7 +127,8 @@ void CatalogParser::Parse()
                 else break;
             }
 
-            if (!OnEntry(mstr, mtrans, mflags, mrefs, mcomment)) return;
+            if (!OnEntry(mstr, mtrans, mflags, mrefs, mcomment, mlinenum))
+                return;
 
             mcomment = mstr = mtrans = mflags = wxEmptyString;
             mrefs.Clear();
@@ -160,7 +163,8 @@ class LoadParser : public CatalogParser
                              const wxString& msgstr,
                              const wxString& flags,
                              const wxArrayString& references,
-                             const wxString& comment);
+                             const wxString& comment,
+                             unsigned lineNumber);
         void ChangeFileCharset(const wxString& charset);
                              
 };
@@ -170,7 +174,8 @@ bool LoadParser::OnEntry(const wxString& msgid,
                          const wxString& msgstr,
                          const wxString& flags,
                          const wxArrayString& references,
-                         const wxString& comment)
+                         const wxString& comment,
+                         unsigned lineNumber)
 {
     if (msgid.IsEmpty())
     {
@@ -215,6 +220,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
         d->SetString(msgid);
         d->SetTranslation(msgstr);
         d->SetComment(comment);
+        d->SetLineNumber(lineNumber);
         for (size_t i = 0; i < references.GetCount(); i++)
             d->AddReference(references[i]);
 
@@ -559,6 +565,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         if (!dummy.IsEmpty())
             f.AddLine(dummy);
         dummy = FormatStringForFile(data->GetString());
+        data->SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
         dummy = FormatStringForFile(data->GetTranslation());
 #if !wxUSE_UNICODE

@@ -179,7 +179,8 @@ class CatalogParser
                              const wxString& msgstr,
                              const wxString& flags,
                              const wxArrayString& references,
-                             const wxString& comment) = 0;
+                             const wxString& comment,
+                             unsigned lineNumber) = 0;
 
         /// Textfile being parsed.
         wxTextFile *m_textFile;
@@ -205,7 +206,8 @@ class CatalogData : public wxObject
                   m_isFuzzy(false),
                   m_isTranslated(!translation.IsEmpty()),
                   m_isModified(false),
-                  m_isAutomatic(false) {}
+                  m_isAutomatic(false),
+                  m_lineNum(0) {}
 
         /// Returns the original string.
         const wxString& GetString() const { return m_string; }
@@ -275,6 +277,10 @@ class CatalogData : public wxObject
         void SetAutomatic(bool automatic) { m_isAutomatic = automatic; }
         /// Gets value of automatic translation flag.
         bool IsAutomatic() const { return m_isAutomatic; }
+        /// Sets the number of the line this entry occurs on.
+        void SetLineNumber(unsigned line) { m_lineNum = line; }
+        /// Get line number of this entry.
+        unsigned GetLineNumber() const { return m_lineNum; }
             
     private:
         wxString m_string, m_translation;
@@ -282,6 +288,7 @@ class CatalogData : public wxObject
         bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
         wxString m_moreFlags;
         wxString m_comment;
+        unsigned m_lineNum;
 };
 
 #endif // _CATALOG_H_
