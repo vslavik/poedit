@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>Menu and Toolbar</title>
+<link rel="stylesheet" type="text/css" href="poedit.css">
+</head>
+<body>
+
+<h1>Menu and Toolbar</h1>
+
+This section briefly describes all menu entries. If the menu entry has
+equivalent toolbar command, its icon is shown near item's name.
+
+
+<h3>File Menu</h3>
+
+<p>
+<b>File/Catalogs manager</b>
+<br>Opens <a href="manager.html">catalogs manager</a>.
+
+<p>
+<b>File/New catalog...</b>
+<br>Creates new catalog. Note that you will have to immediately save the
+file so that poEdit knows catalog's position in directory tree relative to
+source code.
+
+<p>
+<b>File/Open</b> (shortcut: Ctrl-O)
+<br><img src="img/fileopen.gif">
+<br>Opens existing .po catalog. 
+
+<p>
+<b>File/Save</b> (shortcut: Ctrl-S)
+<br><img src="img/filesave.gif">
+<br>Saves the catalog. 
+
+<p>
+<b>File/Save as...</b>
+<br>Saves the catalog under different name. Note that if you save it into
+different directory <i>and</i> you use poEdit's catalog update feature,
+it may stop working because relative path to source files will change.
+
+<p>
+<b>File/Preferences</b>
+<br>Edits catalog-independent settings.
+See <a href="settings.html#prefs">Preferences dialog</a> for details. 
+
+
+<h3>Edit Menu</h3>
+
+<p>
+<b>Edit/Copy original string to translation field</b> (shortcut: Alt-I)
+<br>Inserts original string into "translation" text control. This is useful
+when translation is identical or very similar to original string.
+
+<p>
+<b>Edit/Show references</b> (shortcut: right-click on menu in the list)
+<br>Displays list of all references to the selected string and lets you
+view the relevant part of souce file.
+
+<p>
+<b>Edit/Find...</b>
+<br>Lets you search the catalog for specific words.
+
+<p>
+<b>Edit/Translation is fuzzy</b> (shortcut: Alt-U)
+<br><img src="img/fuzzy.gif">
+<br>Marks/unmarks the selected translation as fuzzy.
+
+<p>
+<b>Edit/Edit comment</b>
+<br><img src="img/comment.gif">
+<br>You can edit (or remove) comments related to the selected translation.
+This is useful e.g. when you cooperate with other translators and the translation
+you choosed requires further explanation. Presence of a comment is indicated by
+a pencil icon to the left of translation line in the list.
+
+
+<h3>Catalog Menu</h3>
+
+<p>
+<b>Catalog/Update catalog</b>
+<br><img src="img/update.gif">
+<br>Update the catalog, i.e. synchronize it with source code.
+See <a href="update.html">Updating Catalog</a> for details. 
+
+<p>
+<b>Catalog/Settings...</b>
+<br>Edits catalog-specific settings.
+See <a href="settings.html#catalog">Catalog settings dialog</a> for details. 
+
+
+<h3>View Menu</h3>
+
+<p>
+<b>View/Fullscreen view</b>
+<br><img src="img/fullscreen.gif">
+<br>Switches poEdit into fullscreen mode to fully utilize screen real estate.
+
+<p>
+<b>View/Display quotes</b>
+<br><img src="img/quotes.gif">
+<br>Enables/disables displaying of quotes in text controls. Quotation marks
+are useful when you need to see if the text ends or begins with spaces, 
+but on the other hand it may be confusing when the text itself contains
+quotes.
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<html>
+<head>
+<title>Translation Memory</title>
+<link rel="stylesheet" type="text/css" href="poedit.css">
+</head>
+<body>
+
+<h1>Spremanje prijevoda</h1>
+
+<p>
+Moguænost
+spremanja prijevoda je široko prihvaæena meðu prevodiocima. Ona se temelji
+na èinjenici da prevodioci troše dosta vremena prevodeæi vrlo slièan tekst,
+tj. èine ponavljajuæe zadaæe, za što je bolje da ih radi raèunalo. To je
+posebno opravdano pri prevoðenju programskih korisnièkih suèelja (što je
+vjerojatno i najèešæa aplikacija za poEdit ). Pri spremanju prijevoda pamte
+se svi stari prijevodi i mogu se koristiti kasnije, kad prevodite nešto <i>slièno</i>.
+To je važno svojstvo baze podataka prijevoda: ona je ustrojena na takav naèin,
+da se mogu brzo izvuèi prijevodi za reèenice koje se meðusobno razlikuju u
+jednoj ili dvije rijeèi.
+
+<h2>Postavke za spremanje prijevoda</h2>
+
+Najvažnija stvar koju morate uèiniti, da
+biste mogli koristiti spremanje prijevoda je postava baze podataka. To se radi
+birajuæi iz&nbsp; izbornika <b>Datoteka/Preporuke</b>, a na kartici <b>Spremanje
+prijevoda</b> otvorenog prozora. 
+
+<p>
+Ovdje postavljate gdje æe biti baza podataka jezika (veæina korisnika ne želi promjeniti predodreðeni imenik)
+na
+koji prevodite (u kontroli pod imenom <i>Moji jezici</i>). Pritisnite
+&quot;Dodavanje&quot; za unašanje novog jezika. Jezici se prepoznaju po svojoj
+dvoslovnoj ISO 639 kratici.<p>
+Sljedeæe, kliknite na tipku
+&quot;Stvaranje baze podataka&quot; i unesite stazu za traženje. To su imenici
+u kojima æe poEdit tražiti postojeæe zbirke i iz njih æe izraditi vlastito
+spremište prijevoda. PoEdit može izvuæi prijevode iz tri skupine datoteka: PO
+datoteka, njihove kompajlirane inaèice MO datoteka i iz RPM paketa (samo u inaèici
+za Unix). Tražit æe se ne samo uneseni imenik, nego i svi podimenici. Najobièniji
+naèin punjenja baze podataka je smještaj datoteka u imenike <tt>/usr/share/locale,</tt>
+i <tt>/usr/local/share/locale. (Windows korisnici: kopirajte te datoteke iz
+Unix-a). Drugim naèinom možete staviti instalacijski CD Linux-a i pretraživati
+RPM pakete u /mnt/cdrom (naravno da se to odnosi na distribucije temeljene na
+RPM paketima).</tt>
+
+<p>Ako odluèite na
+dodavanje vlastitih imenika za traženje, važno je da razumijete kako traženje
+radi. PoEdit gradi jednu bazu podataka za svaki jezik (prema vašem odabiru) i
+mora na neki naèin prepoznavati zbirke. Nema naèina za prepoznavanje jezika na
+temelju PO i MO datoteka, jer gettext traži zbirke na temelju njihovog imena.
+To je ono što i poEdit èini. Osigurajte da sve zbirke odgovaraju jednoj od
+ovih kratica (tu je primjer i zajenite &quot;cs&quot; s ISO 639 kraticom,
+&quot;CZ&quot; s kraticom za zemlju, &quot;po&quot; s &quot;po&quot; ili
+&quot;mo&quot;, &quot;foo&quot; s bilo èime:
+<pre>cs.po
+*/cs.po
+*/cs/LC_MESSAGES/foo.po
+*/cs/foo.po
+*/cs_CZ.po
+*/cs_CZ/LC_MESSAGES/foo.po
+*/cs_CZ/foo.po</pre>
+Budite pripravni na to da æe pretraživanje
+potrajati neko vrijeme.
+
+<p>
+Odjeljak <i>Podešavanje</i> sadrži
+parametre, koji utjeèu na moguænosti spremanja prijevoda. Odrednice <i>Najveæi
+broj nedostajuæih rijeèi</i> i <i>Najveæa razlika u dužini reèenice</i> su
+jasne same po sebi. One su parametri funkcije za izvlaèenje pojmova iz baze
+podataka i što je veæa njihova vrijednost, više stavki se dobija iz baze
+podataka s manje podudarnosti. <i>Samoprevoðenje kad je obnovljena zbirka
+brijevoda</i> kaže poEdit-u da pokuša prevesti sve nove pojmove koji su se
+pojavili pri obnovi zbirke. Takvi samoprevedeni pojmovi se oznaèavaju s ikonom
+sivog raèunala.
+
+<h2>Korištenje spremišta prijevoda</h2>
+
+Ako omoguæite odrednice
+gore spomenute, spremište prijevoda æe se koristiti pri obnovi zbirki. To nije
+uvijek korisno - na pr. odluèili ste da ne koristite uvijek poEdit-ovu
+sposobnost obnove zbirki ili predloženi prijevod je bio krivi i hoæete da
+koristite druge moguænosti (ako toèno podudaranje nije naðeno, iz spremišta
+prijevoda se vraæa više približnih prijevoda iz kojeg onda izabirete). Da biste
+pristupili svim približnim prijevodima za oznaèeni pojam iz popisa (poEdit-ov
+glavni prozor), jednostavno ga kliknite desnom tipkom miša. Iskoèni izbornik
+sadrži sve prijevode dobijene iz spremišta prijevoda. Ne uzbuðujte se ako
+nema prijevoda, to znaèi da baza podataka ne sadrži ništa odgovarajuæe.
+
+<p>
+Kadgod spremate zbirku, sve promjenjene stavke su
+zapamæene u bazi podataka, zajedno s njihovim&nbsp; prijevodom. Sljedeæi puta
+kad ih budete koristili oni æe se izvuæi iz spremišta prijevoda. Ovakav
+pristup osigurava nesmetanu obnovu spremišta prijevoda i prilagoðavanje
+posebnim podruèjima u kojima radite.
+
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>Updating Catalog</title>
+<link rel="stylesheet" type="text/css" href="poedit.css">
+</head>
+<body>
+
+<h1>Obnova zbirke prijevoda</h1>
+
+Kao
+dodatak ispravljanju zbirki prijevoda, poEdit omoguæuje na odgovarajuæi naèin
+obnovu zbirki. <b>Obnova</b> je postupak pretraživanja izvornih datoteka po
+pojmovima za prevoðenje i ukljuèivanje promjena natrag u zbirku, brišuæi
+stavke koje više ne trebaju, a dodajuæi stavke koje se pojavljuju u izvornoj
+datoteci nakon zadnje obnove zbirke. Vanjski pretraživaè (gettext-ov program <i>xgettext</i>) se koristi za to,
+pogledajte <a href="settings.html#Prozor preporuka">Prozor preporuka</a>.&nbsp;
+
+<p>
+Napomenimo, da mnogi razvojni programi (kao
+što je wxWindows) predviða vlastiti naèin obnove zbirki (obièno s
+makefiles), tako da je na takav naèin nepoželjno raditi u poEdit-u.
+
+<p>
+Ova osobina zavisi od postavki u <a href="settings.html#Postavke zbirke prijevoda">Prozoru postavki zbirke
+prijevoda</a> i to je onemoguæeno ukoliko niste popunili karticu
+&quot;Staza&quot;.<p>
+Po obnovi, poEdit
+traži rekurzivno sve odreðene staze, odabiruæi samo poznate tipove datoteka i
+pretražujuæi ih po pojmovima za prevoðenje. Taj postupak može da potraje.
+Kad je gotov, poEdit æe zbirno pokazati nove i stare pojmove (ukoliko nije
+onemoguæeno u Preporukama).
+
+<p>
+Ako je omoguæeno, poEdit æe približno prevesti nove
+stavke u skladu s prijevodima iz svoje baze podataka. Pogledajte odjeljak <a href="tm.html">Spremanje
+prijevoda</a> za pojedinosti.
+
+</body>
+</html>
