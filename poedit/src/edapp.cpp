@@ -184,7 +184,10 @@ void poEditApp::SetDefaultParsers(wxConfigBase *cfg)
         const wxChar *exts;
     } s_gettextLangs[] = {
         { _T("C/C++"),    _T("*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx") },
+#ifndef __WINDOWS__
+        // FIXME: not supported by 0.13.1 shipped with poedit on win32
         { _T("C#"),       _T("*.cs") },
+#endif
         { _T("Java"),     _T("*.java") },
         { _T("Perl"),     _T("*.pl") },
         { _T("PHP"),      _T("*.php") },
