@@ -1055,6 +1055,8 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             listitem.SetBackgroundColour(g_ItemColourUntranslated[0]);
         else if (data->IsFuzzy())
             listitem.SetBackgroundColour(g_ItemColourFuzzy[0]);
+        else
+            listitem.SetBackgroundColour(g_ItemColourNormal[0]);
     }
     
     int icon = GetItemIcon(*data);
