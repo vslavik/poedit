@@ -508,23 +508,7 @@ SOURCE=".\extras\wx-contrib\include\wx\xrc\xml.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xrc\xmlbin.cpp"
-# End Source File
-# Begin Source File
-
-SOURCE=".\extras\wx-contrib\src\xrc\xmlbinz.cpp"
-# End Source File
-# Begin Source File
-
 SOURCE=".\extras\wx-contrib\src\xrc\expat\xmldef.h"
-# End Source File
-# Begin Source File
-
-SOURCE=".\extras\wx-contrib\src\xrc\xmlexpat.cpp"
-# End Source File
-# Begin Source File
-
-SOURCE=".\extras\wx-contrib\include\wx\xrc\xmlio.h"
 # End Source File
 # Begin Source File
 
@@ -537,10 +521,6 @@ SOURCE=".\extras\wx-contrib\include\wx\xrc\xmlres.h"
 # Begin Source File
 
 SOURCE=".\extras\wx-contrib\src\xrc\xmlrsall.cpp"
-# End Source File
-# Begin Source File
-
-SOURCE=".\extras\wx-contrib\src\xrc\xmlwrite.cpp"
 # End Source File
 # End Group
 # Begin Group "Gizmos"
