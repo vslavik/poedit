@@ -17,6 +17,8 @@
 #pragma implementation
 #endif
 
+#include <wx/wxprec.h>
+
 #include <wx/xml/xmlres.h>
 
 #include "prefsdlg.h"

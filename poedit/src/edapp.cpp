@@ -17,12 +17,15 @@
 #pragma implementation
 #endif
 
+#include <wx/wxprec.h>
+
 #include <wx/wx.h>
 #include <wx/fs_zip.h>
 #include <wx/image.h>
 #include <wx/xml/xmlres.h>
 #include <wx/xml/xh_all.h>
 
+#include "edapp.h"
 #include "edframe.h"
 #include "prefsdlg.h"
 
@@ -43,21 +46,33 @@ static void InitParsersCfg(wxConfigBase *cfg)
 }
 
 
+IMPLEMENT_APP(poEditApp);
 
-
-class poEditApp : public wxApp
+wxString poEditApp::GetAppPath() const
 {
-    public:
-        bool OnInit();
-};
-
-IMPLEMENT_APP(poEditApp)
+#if defined(__UNIX__)
+    return POEDIT_PREFIX;
+#elif defined(__WXMSW__)
+    wxString path = wxConfigBase::Get()->Read("application_path", "");
+    if (!path)
+    {
+        wxLogError(_("poEdit installation is broken, cannot find application's home directory."));
+        path = ".";
+    }
+    return path;
+#else
+#error "Unsupported platform!"
+#endif
+}
 
 
 bool poEditApp::OnInit()
 {
     SetVendorName("Vaclav Slavik");
     SetAppName("poedit");
+    wxConfigBase::Set(
+        new wxConfig("", "", "", "", 
+                     wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
     
 #ifdef __UNIX__
     // we have to do this because otherwise xgettext might
@@ -73,7 +88,7 @@ bool poEditApp::OnInit()
     wxFileSystem::AddHandler(new wxZipFSHandler);
 
     wxTheXmlResource->InitAllHandlers();
-    wxTheXmlResource->Load(POEDIT_PREFIX "/share/poedit/resources.zip");
+    wxTheXmlResource->Load(GetAppPath() + "/share/poedit/resources.zip");
     
     poEditFrame *frame = new poEditFrame("poEdit", argc > 1 ? argv[1] : "");
 

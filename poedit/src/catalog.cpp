@@ -17,6 +17,7 @@
 #pragma implementation
 #endif
 
+#include <wx/wxprec.h>
 
 #include <stdio.h>
 #include <wx/utils.h>
@@ -389,7 +390,7 @@ static void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
     else if (format == "native") type = wxTextFile::typeDefault;
     else /* "unix" */ type = wxTextFileType_Unix;
 
-    preserve = wxConfigBase::Get()->Read("keep_crlf", true);
+    preserve = (bool)(wxConfigBase::Get()->Read("keep_crlf", true));
 }
 
 static void SaveMultiLines(wxTextFile &f, const wxString& text)

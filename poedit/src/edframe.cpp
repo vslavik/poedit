@@ -17,6 +17,8 @@
 #pragma implementation
 #endif
 
+#include <wx/wxprec.h>
+
 #include <wx/wx.h>
 #include <wx/config.h>
 #include <wx/html/htmlwin.h>
@@ -30,6 +32,7 @@
 
 
 #include "catalog.h"
+#include "edapp.h"
 #include "edframe.h"
 #include "settingsdlg.h"
 #include "prefsdlg.h"
@@ -309,9 +312,9 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
     UpdateMenu();
 
 #if defined(__WXMSW__)
-    m_Help.Initialize("poedit.chm");
+    m_Help.Initialize(wxGetApp().GetAppPath() + "/share/poedit/poedit.chm");
 #elif defined(__UNIX__)
-    m_Help.Initialize(POEDIT_PREFIX "/share/poedit/help.zip");
+    m_Help.Initialize(wxGetApp().GetAppPath() + "/share/poedit/help.zip");
 #endif
 }
 
@@ -668,7 +671,8 @@ void poEditFrame::UpdateFromTextCtrl(int item)
         }
 
     // convert to UTF-8 using user's environment default charset:
-    wxString newvalUtf8 = wxString(newval.wc_str(wxConvLocal), wxConvUTF8);
+    wxString newvalUtf8 = 
+        wxString(newval.wc_str(wxConvLocal), wxConvUTF8);
 
     m_Catalog->Translate(key, newvalUtf8);
     m_List->SetItem(item, 1, newval);
@@ -719,7 +723,7 @@ void poEditFrame::UpdateToTextCtrl(int item)
     t_t.Replace("\\n", "\\n\n");
     
     // Convert from UTF-8 to environment's default charset:
-    t_t = wxString(t_t.wc_str(wxConvUTF8));
+    t_t = wxString(t_t.wc_str(wxConvUTF8), wxConvLocal);
     
     m_TextTrans->SetValue(t_t);
     m_edittedTextOrig = t_t;
@@ -779,7 +783,7 @@ void poEditFrame::RefreshControls()
             
             // Convert from UTF-8 to environment's default charset:
             trans = 
-                wxString((*m_Catalog)[i].GetTranslation().wc_str(wxConvUTF8));
+                wxString((*m_Catalog)[i].GetTranslation().wc_str(wxConvUTF8), wxConvLocal);
             
             m_List->SetItem(pos, 1, trans);
             m_List->SetItemData(pos, i);
@@ -797,7 +801,7 @@ void poEditFrame::RefreshControls()
 
             // Convert from UTF-8 to environment's default charset:
             trans = 
-                wxString((*m_Catalog)[i].GetTranslation().wc_str(wxConvUTF8));
+                wxString((*m_Catalog)[i].GetTranslation().wc_str(wxConvUTF8), wxConvLocal);
 
             m_List->SetItem(pos, 1, trans);
             m_List->SetItemData(pos, i);
@@ -816,7 +820,7 @@ void poEditFrame::RefreshControls()
 
             // Convert from UTF-8 to environment's default charset:
             trans = 
-                wxString((*m_Catalog)[i].GetTranslation().wc_str(wxConvUTF8));
+                wxString((*m_Catalog)[i].GetTranslation().wc_str(wxConvUTF8), wxConvLocal);
 
             m_List->SetItem(pos, 1, trans);
             m_List->SetItemData(pos, i);

@@ -17,6 +17,8 @@
 #pragma implementation
 #endif
 
+#include <wx/wxprec.h>
+
 #include "fileviewer.h"
 #include <wx/wx.h>
 #include <wx/textfile.h>

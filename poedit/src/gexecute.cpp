@@ -17,6 +17,8 @@
 #pragma implementation
 #endif 
 
+#include <wx/wxprec.h>
+
 #include <wx/utils.h> 
 #include <wx/log.h> 
 #include <wx/process.h>
