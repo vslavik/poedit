@@ -184,7 +184,7 @@ AC_DEFUN(FIND_BERKELEY_DB,
      ])
 
          
-  if test x$USE_TRANSMEM != x ; then
+  if test x$USE_TRANSMEM != x0 ; then
       CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM"
   fi
   LIBS="$LIBS $DB_LIB"
