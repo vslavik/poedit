@@ -24,7 +24,9 @@
 class WXDLLEXPORT wxTextFile;
 
 class CatalogData;
+class CatalogDeletedData;
 WX_DECLARE_OBJARRAY(CatalogData, CatalogDataArray);
+WX_DECLARE_OBJARRAY(CatalogDeletedData, CatalogDeletedDataArray);
     
 /** This class stores all translations, together with filelists, references
     and other additional information. It can read .po files and save both
@@ -190,6 +192,10 @@ class Catalog
         /// the object).
         void AddItem(CatalogData *data);
 
+        /// Adds entry to the catalog (the catalog will take ownership of
+        /// the object).
+        void AddDeletedItem(CatalogDeletedData *data);
+
     protected:
         /** Merges the catalog with reference catalog
             (in the sense of msgmerge -- this catalog is old one with
@@ -220,6 +226,7 @@ class Catalog
     private:
         wxHashTable *m_data;
         CatalogDataArray m_dataArray;
+        CatalogDeletedDataArray m_deletedItemsArray;
         unsigned m_count; // no. of items 
         bool m_isOk;
         wxString m_fileName;
@@ -256,6 +263,17 @@ class CatalogParser
                              const wxString& comment,
                              const wxArrayString& autocomments,
                              unsigned lineNumber) = 0;
+
+        /** Called when new deleted entry was parsed. Parsing continues
+            if returned value is true and is cancelled if it 
+            is false. Defaults to an empty implementation.
+         */
+        virtual bool OnDeletedEntry(const wxArrayString& deletedLines,
+                                    const wxString& flags,
+                                    const wxArrayString& references,
+                                    const wxString& comment,
+                                    const wxArrayString& autocomments,
+                                    unsigned lineNumber) {};
 
         /// Textfile being parsed.
         wxTextFile *m_textFile;
@@ -451,6 +469,105 @@ class CatalogData : public wxObject
         Validity m_validity;
         unsigned m_lineNum;
         wxString m_errorString;
+};
+
+/** This class holds information about one particular deleted item.
+    This includes delted lines, references, translation's status
+    (fuzzy, non translated, translated) and optional comment(s).
+    
+    This class is mostly internal, used by Catalog to store data.
+ */
+class CatalogDeletedData : public wxObject
+{
+    public:
+        /// Ctor. Initializes the object with original string and translation.
+        CatalogDeletedData(const wxArrayString& deletedLines)
+                : wxObject(), 
+                  m_deletedLines(deletedLines),
+                  m_lineNum(0) {}
+
+        CatalogDeletedData(const CatalogDeletedData& dt)
+                : wxObject(),
+                  m_deletedLines(dt.m_deletedLines),
+                  m_references(dt.m_references),
+                  m_autocomments(dt.m_autocomments),
+                  m_flags(dt.m_flags),
+                  m_comment(dt.m_comment),
+                  m_lineNum(dt.m_lineNum) {}
+
+        /// Returns the deleted lines.
+        const wxArrayString& GetDeletedLines() const { return m_deletedLines; }
+
+        /// Returns array of all occurences of this string in source code.
+        const wxArrayString& GetReferences() const { return m_references; }
+
+        /// Returns comment added by the translator to this entry
+        const wxString& GetComment() const { return m_comment; }
+
+        /// Returns array of all auto comments.
+        const wxArrayString& GetAutoComments() const { return m_autocomments; }
+
+        /// Convenience function: does this entry has a comment?
+        const bool HasComment() const { return !m_comment.IsEmpty(); }
+
+        /// Adds new reference to the entry (used by SourceDigger).
+        void AddReference(const wxString& ref)
+        {
+            if (m_references.Index(ref) == wxNOT_FOUND) 
+                m_references.Add(ref);
+        }
+
+        /// Clears references (used by SourceDigger).
+        void ClearReferences()
+        {
+            m_references.Clear();
+        }
+
+        /// Sets the string.
+        void SetDeletedLines(const wxArrayString& a)
+        {
+            m_deletedLines = a;
+        }
+        
+        /// Sets the comment.
+        void SetComment(const wxString& c)
+        {
+            m_comment = c;
+        }
+
+        /** Sets gettext flags directly in string format. It may be 
+            either empty string or "#, fuzzy", "#, c-format", 
+            "#, fuzzy, c-format" or others (not understood by poEdit).
+         */
+        void SetFlags(const wxString& flags) {m_flags = flags;};
+
+        /// Gets gettext flags. \see SetFlags
+        wxString GetFlags() const {return m_flags;};
+
+        /// Sets the number of the line this entry occurs on.
+        void SetLineNumber(unsigned line) { m_lineNum = line; }
+        /// Get line number of this entry.
+        unsigned GetLineNumber() const { return m_lineNum; }
+
+        /// Adds new autocomments (#. )
+        void AddAutoComments(const wxString& com)
+        {
+            m_autocomments.Add(com);
+        }
+
+        /// Clears autocomments.
+        void ClearAutoComments()
+        {
+            m_autocomments.Clear();
+        }
+        
+    private:
+        wxArrayString m_deletedLines;
+       
+        wxArrayString m_references, m_autocomments;
+        wxString m_flags;
+        wxString m_comment;
+        unsigned m_lineNum;
 };
 
 #endif // _CATALOG_H_

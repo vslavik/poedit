@@ -37,7 +37,8 @@
 
 #include "wx/arrimpl.cpp"
 WX_DEFINE_OBJARRAY(CatalogDataArray)
-
+WX_DEFINE_OBJARRAY(CatalogDeletedDataArray)
+        
     
 // ----------------------------------------------------------------------
 // Textfile processing utilities:
@@ -374,7 +375,7 @@ void CatalogParser::Parse()
         }
         
         // auto comments:
-        else if (ReadParam(line, _T("#. "), dummy))
+        if (ReadParam(line, _T("#. "), dummy) || ReadParam(line, _T("#."), dummy)) // second one to account for empty auto comments
         {
             mautocomments.Add(dummy);
             line = ReadTextLine(m_textFile, m_conv);
@@ -514,6 +515,33 @@ void CatalogParser::Parse()
             mautocomments.Clear();
             mtranslations.Clear();
         }
+ 
+        // deleted lines:
+        else if (ReadParam(line, _T("#~ "), dummy))
+        {
+            wxArrayString deletedLines;
+            deletedLines.Add(line);
+            mlinenum = m_textFile->GetCurrentLine() + 1;
+            while (!(line = ReadTextLine(m_textFile, m_conv)).IsEmpty())
+            {
+                // if line does not start with "#~ " anymore, stop reading           
+                if (!ReadParam(line, _T("#~ "), dummy))
+                    break;
+                
+                deletedLines.Add(line);
+            }
+            if (!OnDeletedEntry(deletedLines,
+                                mflags, mrefs, mcomment, mautocomments, mlinenum))
+            {
+                return;
+            }
+
+            mcomment = mstr = msgid_plural = mflags = wxEmptyString;
+            has_plural = false;
+            mrefs.Clear();
+            mautocomments.Clear();
+            mtranslations.Clear();
+        }
         
         // comment:
         else if (line[0u] == _T('#'))
@@ -559,6 +587,7 @@ class CharsetInfoFinder : public CatalogParser
                              const wxString& comment,
                              const wxArrayString& autocomments,
                              unsigned lineNumber);
+
 };
 
 bool CharsetInfoFinder::OnEntry(const wxString& msgid,
@@ -604,6 +633,13 @@ class LoadParser : public CatalogParser
                              const wxString& comment,
                              const wxArrayString& autocomments,
                              unsigned lineNumber);
+
+        virtual bool OnDeletedEntry(const wxArrayString& deletedLines,
+                                    const wxString& flags,
+                                    const wxArrayString& references,
+                                    const wxString& comment,
+                                    const wxArrayString& autocomments,
+                                    unsigned lineNumber);
 };
 
 
@@ -639,6 +675,25 @@ bool LoadParser::OnEntry(const wxString& msgid,
             d->AddAutoComments(autocomments[i]);
         m_catalog->AddItem(d);
     }
+    return true;
+}
+
+bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
+                                const wxString& flags,
+                                const wxArrayString& references,
+                                const wxString& comment,
+                                const wxArrayString& autocomments, 
+                                unsigned lineNumber)
+{
+    CatalogDeletedData *d = new CatalogDeletedData(wxArrayString());
+    if (!flags.IsEmpty()) d->SetFlags(flags);
+    d->SetDeletedLines(deletedLines);
+    d->SetComment(comment);
+    d->SetLineNumber(lineNumber);
+    for (size_t i = 0; i < autocomments.GetCount(); i++)
+      d->AddAutoComments(autocomments[i]);
+    m_catalog->AddDeletedItem(d);
+
     return true;
 }
 
@@ -812,6 +867,11 @@ void Catalog::AddItem(CatalogData *data)
     m_count++;
 }
 
+void Catalog::AddDeletedItem(CatalogDeletedData *data)
+{
+    m_deletedItemsArray.Add(data);
+}
+
 void Catalog::Clear()
 {
     delete m_data; 
@@ -952,6 +1012,7 @@ static inline wxString convertUtf8ToCharset(const wxString& s, wxMBConv *conv)
 bool Catalog::Save(const wxString& po_file, bool save_mo)
 {
     CatalogData *data;
+    CatalogDeletedData *deletedItem;
     wxString dummy;
     size_t i;
     int j;
@@ -1027,7 +1088,12 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         data = &(m_dataArray[i]);
         SaveMultiLines(f, convertUtf8ToCharset(data->GetComment(), encConv));
         for (unsigned i = 0; i < data->GetAutoComments().GetCount(); i++)
-            f.AddLine(_T("#. ") + data->GetAutoComments()[i]);
+        {
+            if (data->GetAutoComments()[i] == "")
+              f.AddLine(_T("#."));
+            else
+              f.AddLine(_T("#. ") + data->GetAutoComments()[i]);
+        }    
         for (unsigned i = 0; i < data->GetReferences().GetCount(); i++)
             f.AddLine(_T("#: ") + data->GetReferences()[i]);
         dummy = data->GetFlags();
@@ -1062,6 +1128,27 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         }
         f.AddLine(wxEmptyString);
     }
+    
+    // Write back deleted items in the file so that they're not lost
+    for (i = 0; i < m_deletedItemsArray.GetCount(); i++)
+    {
+        deletedItem = &(m_deletedItemsArray[i]);
+        SaveMultiLines(f, convertUtf8ToCharset(deletedItem->GetComment(), encConv));
+        for (unsigned i = 0; i < deletedItem->GetAutoComments().GetCount(); i++)
+            f.AddLine(_T("#. ") + deletedItem->GetAutoComments()[i]);
+        for (unsigned i = 0; i < deletedItem->GetReferences().GetCount(); i++)
+            f.AddLine(_T("#: ") + deletedItem->GetReferences()[i]);
+        dummy = deletedItem->GetFlags();
+        if (!dummy.IsEmpty())
+            f.AddLine(dummy);
+        deletedItem->SetLineNumber(f.GetLineCount()+1);
+        
+        for (size_t j = 0; j < deletedItem->GetDeletedLines().GetCount(); j++)
+            f.AddLine(convertUtf8ToCharset(deletedItem->GetDeletedLines()[j], encConv));
+        
+        f.AddLine(wxEmptyString);
+    }
+    
     
 #if wxUSE_UNICODE
     f.Write(crlf, *encConv);
