@@ -130,7 +130,7 @@ bool FindFrame::DoFind(int dir)
 
     bool found = false;
     wxString textc;
-    wxString text(m_text);    
+    wxString text(m_text);
 
     if (!caseSens)
         text.MakeLower();
