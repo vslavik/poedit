@@ -23,6 +23,8 @@
 #include "catalog.h"
 #include "findframe.h"
 
+// The word separators used when doing a "Whole words only" search
+static const wxString SEPARATORS = " \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@";
 
 BEGIN_EVENT_TABLE(FindFrame, wxDialog)
    EVT_BUTTON(XRCID("find_next"), FindFrame::OnNext)
@@ -64,6 +66,8 @@ FindFrame::FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c,
         wxConfig::Get()->Read(_T("find_case_sensitive"), (long)false));
     XRCCTRL(*this, "from_first", wxCheckBox)->SetValue(
         wxConfig::Get()->Read(_T("find_from_first"), (long)true));
+    XRCCTRL(*this, "whole_words", wxCheckBox)->SetValue(
+        wxConfig::Get()->Read(_T("whole_words"), (long)false));
 }
 
 
@@ -84,6 +88,8 @@ FindFrame::~FindFrame()
                 XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("find_from_first"),
                 XRCCTRL(*this, "from_first", wxCheckBox)->GetValue());
+    wxConfig::Get()->Write(_T("whole_words"),
+                XRCCTRL(*this, "whole_words", wxCheckBox)->GetValue());
 }
 
 
@@ -154,6 +160,34 @@ enum FoundState
     Found_InAutoComments
 };
 
+bool TextInString(const wxString& str, const wxString& text, bool wholeWords)
+{
+    int index = str.Find(text);
+    if (index >= 0)
+    {
+        if (wholeWords)
+        {
+            int textLen = text.Length();
+      
+            bool result = true;
+            if (index >0)
+                result = result && SEPARATORS.Contains(str[index-1]);
+            if (index+textLen < str.Length())
+                result = result && SEPARATORS.Contains(str[index+textLen]);
+              
+            return result;
+        }  
+        else
+        {
+            return true;
+        }  
+    }  
+    else
+    {
+        return false;
+    }  
+}  
+
 bool FindFrame::DoFind(int dir)
 {
     int cnt = m_listCtrl->GetItemCount();
@@ -162,6 +196,7 @@ bool FindFrame::DoFind(int dir)
     bool inComments = XRCCTRL(*this, "in_comments", wxCheckBox)->GetValue();
     bool inAutoComments = XRCCTRL(*this, "in_auto_comments", wxCheckBox)->GetValue();
     bool caseSens = XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue();
+    bool wholeWords = XRCCTRL(*this, "whole_words", wxCheckBox)->GetValue();
     int posOrig = m_position;
 
     FoundState found = Found_Not;
@@ -185,7 +220,7 @@ bool FindFrame::DoFind(int dir)
             #endif
             if (!caseSens)
                 textc.MakeLower();
-            if (textc.Contains(text)) { found = Found_InOrig; break; }
+            if (TextInString(textc, text, wholeWords)) { found = Found_InOrig; break; }
         }
         if (inTrans)
         {
@@ -205,7 +240,7 @@ bool FindFrame::DoFind(int dir)
             if (!caseSens)
                 textc.MakeLower();
 
-            if (textc.Contains(text)) { found = Found_InTrans; break; }
+            if (TextInString(textc, text, wholeWords)) { found = Found_InTrans; break; }
         }
         if (inComments)
         {
@@ -217,7 +252,7 @@ bool FindFrame::DoFind(int dir)
             if (!caseSens)
                 textc.MakeLower();
 
-            if (textc.Contains(text)) { found = Found_InComments; break; }
+            if (TextInString(textc, text, wholeWords)) { found = Found_InComments; break; }
         }
         if (inAutoComments)
         {
@@ -234,7 +269,7 @@ bool FindFrame::DoFind(int dir)
             if (!caseSens)
                 textc.MakeLower();
 
-            if (textc.Contains(text)) { found = Found_InAutoComments; break; }
+            if (TextInString(textc, text, wholeWords)) { found = Found_InAutoComments; break; }
         }
 
         m_position += dir;
