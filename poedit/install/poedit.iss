@@ -59,6 +59,7 @@ Source: locales\de.mo; DestDir: {app}\share\locale\de\LC_MESSAGES; Components: i
 Source: locales\fr.mo; DestDir: {app}\share\locale\fr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\hr.mo; DestDir: {app}\share\locale\hr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\po.mo; DestDir: {app}\share\locale\po\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\nn.mo; DestDir: {app}\share\locale\nn\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey
@@ -106,6 +107,8 @@ Name: {app}\share\locale\hr; Components: i18n
 Name: {app}\share\locale\hr\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\po; Components: i18n
 Name: {app}\share\locale\po\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\nn; Components: i18n
+Name: {app}\share\locale\nn\LC_MESSAGES; Components: i18n
 
 [_ISToolPreCompile]
 
