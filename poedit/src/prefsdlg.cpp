@@ -310,7 +310,12 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
     else return;
     
     // 2. Update TM:
-    wxString dbPath = cfg->Read("TM/database_path", "");
+    wxString dbPath = XMLCTRL(*this, "tm_dbpath", wxTextCtrl)->GetValue();
+        // VS: we can't get it from TM/database_path key in wxConfig object
+        //     because it wasn't update yet with information from the dialog
+        //     (which happens when the users presses OK) but we still won't
+        //     to use the path entered by the user...
+
     tkn.SetString(cfg->Read("TM/languages", ""), ":");
     wxArrayString langs;
     while (tkn.HasMoreTokens()) langs.Add(tkn.GetNextToken());

@@ -49,16 +49,22 @@
 static inline bool IsForLang(const wxString& filename, const wxString& lang,
                              bool variants = true)
 {
+#ifdef __WINDOWS__
+    #define LC_MESSAGES_STR "/lc_messages"
+#else
+    #define LC_MESSAGES_STR "/LC_MESSAGES"
+#endif
     wxString base, dir;
     wxSplitPath(filename, &dir, &base, NULL);
     dir.Replace(wxString(wxFILE_SEP_PATH), "/");
     return base.Matches(lang) ||
            dir.Matches("*/" + lang) ||
-           dir.Matches("*/" + lang + "/LC_MESSAGES") ||
+           dir.Matches("*/" + lang + LC_MESSAGES_STR) ||
            (variants && lang.Len() == 5 && lang[2] == '_' && 
                 IsForLang(filename, lang.Mid(0, 2), false)) ||
            (variants && lang.Len() == 2 && 
                 IsForLang(filename, lang + "_??", false));
+    #undef LC_MESSAGES_STR
 }
 
 class TMUDirTraverser : public wxDirTraverser
@@ -70,7 +76,7 @@ class TMUDirTraverser : public wxDirTraverser
             
         virtual wxDirTraverseResult OnFile(const wxString& filename)
         {
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
             wxString f = filename.Lower();
 #else
             wxString f = filename;
