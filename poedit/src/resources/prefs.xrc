@@ -67,6 +67,45 @@
                   <flag>wxEXPAND|wxALL</flag>
                   <border>5d</border>
                 </object>
+                <object class="sizeritem">
+                  <object class="wxStaticBoxSizer">
+                    <label>CR/LF conversion</label>
+                    <orient>wxVERTICAL</orient>
+                    <object class="sizeritem">
+                      <object class="wxBoxSizer">
+                        <object class="sizeritem">
+                          <object class="wxStaticText">
+                            <label>Line endings format:</label>
+                          </object>
+                          <flag>wxRIGHT|wxLEFT|wxALIGN_CENTER_VERTICAL</flag>
+                          <border>2d</border>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxChoice" name="crlf_format">
+                            <content>
+                              <item>Unix</item>
+                              <item>Windows</item>
+                              <item>Macintosh</item>
+                              <item>current platform's default</item>
+                            </content>
+                          </object>
+                          <option>1</option>
+                        </object>
+                      </object>
+                      <flag>wxEXPAND</flag>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxCheckBox" name="keep_crlf">
+                        <checked>1</checked>
+                        <label>Don't change format of existing catalogs</label>
+                      </object>
+                      <option>1</option>
+                    </object>
+                  </object>
+                  <option>0</option>
+                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+                  <border>5d</border>
+                </object>
               </object>
               <style>wxTAB_TRAVERSAL</style>
             </object>

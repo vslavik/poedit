@@ -43,6 +43,17 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                               cfg->Read("compile_mo", true));
     XMLCTRL(*this, "show_summary", wxCheckBox)->SetValue(
                               cfg->Read("show_summary", true));
+    XMLCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
+                              cfg->Read("keep_crlf", true));
+
+    wxString format = cfg->Read("crlf_format", "unix");
+    int sel;
+    if (format == "win") sel = 1;
+    else if (format == "mac") sel = 2;
+    else if (format == "native") sel = 3;
+    else /* "unix" */ sel = 0;
+
+    XMLCTRL(*this, "crlf_format", wxChoice)->SetSelection(sel);
 
 
     m_Parsers.Read(cfg);               
@@ -72,6 +83,12 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                XMLCTRL(*this, "compile_mo", wxCheckBox)->GetValue());
     cfg->Write("show_summary", 
                XMLCTRL(*this, "show_summary", wxCheckBox)->GetValue());
+    cfg->Write("keep_crlf", 
+               XMLCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
+    
+    static char *formats[] = { "unix", "win", "mac", "native" };
+    cfg->Write("crlf_format", formats[
+                XMLCTRL(*this, "crlf_format", wxChoice)->GetSelection()]);
                
     m_Parsers.Write(cfg);
 }
