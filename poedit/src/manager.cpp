@@ -390,10 +390,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
             poEditFrame *fr = poEditFrame::Find(f);
             if (fr)
             {
-                wxString msg;
-                msg.Printf(_("Can't update file '%s' because it is currently being edited by poEdit.\n"
-                             "This file won't be included in mass update."), f.c_str());
-                wxMessageBox(msg, _("Error"), wxOK | wxICON_ERROR, this);
+                fr->UpdateCatalog();
             }
             else
             {

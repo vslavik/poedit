@@ -616,9 +616,39 @@ static inline wxString GetDBPath(const wxString& p, const wxString& l)
     return wxEmptyString;
 }
 
+
+
+
+
+#include <wx/listimpl.cpp>
+WX_DEFINE_LIST(TranslationMemoriesList);
+TranslationMemoriesList TranslationMemory::ms_instances;
+
 /*static*/ TranslationMemory *TranslationMemory::Create(
                       const wxString& language, const wxString& path)
 {
+    wxString dbPath = GetDBPath(path, language);
+    if (!dbPath)
+        dbPath = path + _T("/") + language;
+
+    if ((!wxDirExists(path) && !wxMkdir(path)) ||
+        (!wxDirExists(dbPath) && !wxMkdir(dbPath)))
+    {
+        wxLogError(_("Cannot create database directory!"));
+        return NULL;
+    }
+    dbPath += _T('/');
+    
+    for (TranslationMemoriesList::Node *node = ms_instances.GetFirst(); 
+         node; node = node->GetNext())
+    {
+        TranslationMemory *mem = node->GetData();
+        if (mem->m_lang == language && mem->m_dbPath == dbPath)
+        {
+            mem->m_refCnt++;
+            return mem;
+        }
+    }
 
 #ifdef __WINDOWS__
     if (!g_triedLibraryDB)
@@ -644,18 +674,6 @@ static inline wxString GetDBPath(const wxString& p, const wxString& l)
     if (g_libraryDB == 0) return NULL;
 #endif
 
-    wxString dbPath = GetDBPath(path, language);
-    if (!dbPath)
-        dbPath = path + _T("/") + language;
-
-    if ((!wxDirExists(path) && !wxMkdir(path)) ||
-        (!wxDirExists(dbPath) && !wxMkdir(dbPath)))
-    {
-        wxLogError(_("Cannot create database directory!"));
-        return NULL;
-    }
-    dbPath += _T('/');
-    
     TranslationMemory *tm = new TranslationMemory(language, dbPath);
     if (!tm->m_dbTrans->IsOk() || !tm->m_dbOrig->IsOk() || 
         !tm->m_dbWords->IsOk())
@@ -670,8 +688,10 @@ static inline wxString GetDBPath(const wxString& p, const wxString& l)
 TranslationMemory::TranslationMemory(const wxString& language, 
                                      const wxString& dbPath)
 {
-    SetParams(2, 2);
+    m_dbPath = dbPath;
+    m_refCnt = 1;
     m_lang = language;
+    SetParams(2, 2);
     m_dbTrans = new DbTrans(dbPath);
     m_dbOrig = new DbOrig(dbPath);
     m_dbWords = new DbWords(dbPath);

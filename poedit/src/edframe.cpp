@@ -484,7 +484,7 @@ poEditFrame::~poEditFrame()
     m_history.Save(*cfg);
 
 #ifdef USE_TRANSMEM    
-    delete m_transMem;
+    m_transMem->Release();
 #endif
     delete m_catalog;
 }
@@ -660,7 +660,7 @@ void poEditFrame::OnNew(wxCommandEvent& event)
     UpdateStatusBar();
 
 #ifdef USE_TRANSMEM
-    delete m_transMem;
+    m_transMem->Release();
     m_transMemLoaded = false;
 #endif    
 }
@@ -697,11 +697,16 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
 
 
 
-void poEditFrame::OnUpdate(wxCommandEvent&)
+void poEditFrame::UpdateCatalog()
 {
     UpdateFromTextCtrl();
     m_modified = m_catalog->Update() || m_modified;
+}
 
+void poEditFrame::OnUpdate(wxCommandEvent&)
+{
+    UpdateCatalog();
+ 
 #ifdef USE_TRANSMEM
     if (wxConfig::Get()->Read("use_tm_when_updating", true) &&
         GetTransMem() != NULL)
@@ -1021,7 +1026,7 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     m_catalog = new Catalog(catalog);
 
 #ifdef USE_TRANSMEM
-    delete m_transMem;
+    m_transMem->Release();
     m_transMemLoaded = false;
 #endif
     

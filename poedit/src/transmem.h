@@ -23,7 +23,9 @@
 #ifdef USE_TRANSMEM
 
 class WXDLLEXPORT wxString;
-
+#include <wx/list.h>
+class TranslationMemory;
+WX_DECLARE_LIST(TranslationMemory, TranslationMemoriesList);
 
 class DbTrans;
 class DbOrig;
@@ -60,11 +62,19 @@ class TranslationMemory
                     constructed object otherwise.
 
             \see See IsSupported for rules on language name matching.
+            \remark Don't delete TranslationMemory objects, use Release 
+                    instead! The reason for this is that if you call
+                    Create several times with same arguments, it returns
+                    pointer to the same instance
+                    
          */
         static TranslationMemory *Create(const wxString& language, 
                                          const wxString& path = wxEmptyString);
+
+        void Release() { if (--m_refCnt == 0) delete this; }
+
         ~TranslationMemory();
-        
+
         /// Returns language of the catalog.
         wxString GetLanguage() const { return m_lang; }
 
@@ -138,7 +148,11 @@ class TranslationMemory
         DbOrig  *m_dbOrig;
         DbWords *m_dbWords;
         wxString m_lang;
-        size_t m_maxDelta, m_maxOmits;
+        wxString m_dbPath;
+        size_t   m_maxDelta, m_maxOmits;
+        
+        int      m_refCnt;
+        static TranslationMemoriesList ms_instances;
 };
 
 

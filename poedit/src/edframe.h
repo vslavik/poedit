@@ -73,6 +73,8 @@ class poEditFrame : public wxFrame
         void WriteCatalog(const wxString& catalog);
         /// Did the user modify the catalog?
         bool IsModified() const { return m_modified; }
+        /// Updates catalog and sets m_modified flag
+        void UpdateCatalog();
 
     private:
         /** Ctor.
