@@ -981,7 +981,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     /* Save .po file: */
 
     wxString charset(m_header.Charset);
-    if (!charset)
+    if (!charset || charset == _T("CHARSET"))
         charset = _T("utf-8");
         
     if (!CanEncodeToCharset(*this, charset))
@@ -1159,7 +1159,7 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file)
     if (!m_isOk) return false;
 
     Catalog newcat(pot_file);
-
+        
     if (!newcat.IsOk())
     {
         wxLogError(_("'%s' is not a valid POT file."), pot_file.c_str());
@@ -1176,9 +1176,15 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file)
 bool Catalog::Merge(Catalog *refcat)
 {
     wxString oldname = m_fileName;
-    wxString tmp1 = wxGetTempFileName(_T("poedit"));
-    wxString tmp2 = wxGetTempFileName(_T("poedit"));
-    wxString tmp3 = wxGetTempFileName(_T("poedit"));
+
+    wxString tmpdir = wxGetTempFileName(_T("poedit"));
+    wxRemoveFile(tmpdir);
+    if (!wxMkdir(tmpdir, 0700))
+        return false;
+    
+    wxString tmp1 = tmpdir + wxFILE_SEP_PATH + _T("ref.pot");
+    wxString tmp2 = tmpdir + wxFILE_SEP_PATH + _T("input.po");
+    wxString tmp3 = tmpdir + wxFILE_SEP_PATH + _T("output.po");
 
     refcat->Save(tmp1, false);
     Save(tmp2, false);
@@ -1197,8 +1203,7 @@ bool Catalog::Merge(Catalog *refcat)
     wxRemoveFile(tmp1);
     wxRemoveFile(tmp2);
     wxRemoveFile(tmp3);
-    wxRemoveFile(tmp1 + _T(".poedit"));
-    wxRemoveFile(tmp2 + _T(".poedit"));
+    wxRmdir(tmpdir);
     
     m_fileName = oldname;
 
