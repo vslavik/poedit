@@ -440,7 +440,8 @@ poEditFrame::poEditFrame() :
     m_list(NULL),
     m_modified(false),
     m_hasObsoleteItems(false),
-    m_sel(0), m_selItem(0)
+    m_sel(0), m_selItem(0),
+    m_edittedTextFuzzyChanged(false)
 {
     wxConfigBase *cfg = wxConfig::Get();
     
@@ -1123,6 +1124,7 @@ void poEditFrame::OnFuzzyFlag(wxCommandEvent& event)
         GetToolBar()->ToggleTool(XRCID("menu_fuzzy"),  
                                  GetMenuBar()->IsChecked(XRCID("menu_fuzzy")));
     }
+    m_edittedTextFuzzyChanged = true;
     UpdateFromTextCtrl();
 }
 
@@ -1310,9 +1312,11 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 
     CatalogData* data = m_catalog->FindItem(key);
 
-    if (newfuzzy == data->IsFuzzy()) newfuzzy = false;
+    if (newfuzzy == data->IsFuzzy() && !m_edittedTextFuzzyChanged)
+        newfuzzy = false;
     data->SetFuzzy(newfuzzy);
     GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), newfuzzy);
+    GetMenuBar()->Check(XRCID("menu_fuzzy"), newfuzzy);
 
     wxListItem listitem;
     data->SetModified(true);
@@ -1383,6 +1387,7 @@ void poEditFrame::UpdateToTextCtrl(int item)
     m_textTrans->SetValue(t_t);
 
     m_edittedTextOrig = t_t;
+    m_edittedTextFuzzyChanged = false;
     if (m_displayQuotes) 
         m_textTrans->SetInsertionPoint(1);
     GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), (*m_catalog)[ind].IsFuzzy());
@@ -1668,6 +1673,7 @@ void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
     UpdateToTextCtrl();
     // VS: This dirty trick ensures proper refresh of everything: 
     m_edittedTextOrig = wxEmptyString;
+    m_edittedTextFuzzyChanged = false;
     UpdateFromTextCtrl();
 }
 

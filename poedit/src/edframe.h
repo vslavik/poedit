@@ -204,6 +204,7 @@ class poEditFrame : public wxFrame
         int m_sel, m_selItem;
         wxFileHistory m_history;
         wxString m_edittedTextOrig;
+        bool m_edittedTextFuzzyChanged;
         
         friend class ListHandler;
 };
