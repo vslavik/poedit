@@ -320,11 +320,14 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
     for (size_t i = 0; i < langs.GetCount(); i++)
     {
         TranslationMemory *tm = 
-            new TranslationMemory(langs[i], dbPath);
-        TranslationMemoryUpdater u(tm, pi);
-        if (!u.Update(dirsArray)) 
-            { delete tm; break; }
-        delete tm;
+            TranslationMemory::Create(langs[i], dbPath);
+        if (tm)
+        {
+            TranslationMemoryUpdater u(tm, pi);
+            if (!u.Update(dirsArray)) 
+                { delete tm; break; }
+            delete tm;
+        }
     }
     delete pi;
 }

@@ -55,11 +55,14 @@ class TranslationMemory
             given location. Database files are %1/%2/strings.db, 
             %1/%2/translations.db and %1/%2/words.db where %1 is \a path
             and %2 is \a language, two-letter ISO 639 language code.
+            
+            \return NULL if failed (e.g. cannot load DLL under Windows),
+                    constructed object otherwise.
 
             \see See IsSupported for rules on language name matching.
          */
-        TranslationMemory(const wxString& language, 
-                          const wxString& path = wxEmptyString);
+        static TranslationMemory *Create(const wxString& language, 
+                                         const wxString& path = wxEmptyString);
         ~TranslationMemory();
         
         /// Returns language of the catalog.
@@ -100,6 +103,10 @@ class TranslationMemory
             { m_maxDelta = maxDelta, m_maxOmits = maxOmits; }
         
     protected:
+        /// Real ctor.
+        TranslationMemory(const wxString& language, 
+                          const wxString& dbPath);
+
         /** Tries to find entries matching given criteria. Used by Lookup.
             It takes arguments that specify level of "fuzziness" used during
             the lookup. Specifically, two inexact lookup methods are 

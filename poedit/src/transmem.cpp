@@ -40,6 +40,35 @@
 
 #include "transmem.h"
 
+#ifdef __WINDOWS__
+
+#include <wx/dynlib.h>
+#include <wx/module.h>
+
+static wxDllType g_libraryDB = 0;
+static bool g_triedLibraryDB = false;
+typedef int (*db_create_t) __P((DB **, DB_ENV *, u_int32_t));
+typedef char (*db_strerror_t) __P((int));
+static db_create_t g_db_create = NULL;
+static db_strerror_t g_db_strerror = NULL;
+
+class wxDBModule: public wxModule
+{
+DECLARE_DYNAMIC_CLASS(wxDBModule)
+public:
+    wxDBModule() {}
+    bool OnInit() { return true; }
+    void OnExit() 
+    {
+        if (g_libraryDB != 0) wxDllLoader::UnloadLibrary(g_libraryDB);         
+    }
+};
+IMPLEMENT_DYNAMIC_CLASS(wxDBModule, wxModule)
+
+#endif
+
+
+
 typedef db_recno_t DbKey;
 const DbKey DBKEY_ILLEGAL = 0;
 
@@ -158,7 +187,11 @@ class DbWords : public DbBase
 DbBase::DbBase(const wxString& filename, DBTYPE type)
 {
     m_ok = false;
+#ifdef __WINDOWS__
+    m_err = g_db_create(&m_db, NULL, 0);
+#else
     m_err = db_create(&m_db, NULL, 0);
+#endif
     if (m_err != 0)
     {
         LogError();
@@ -181,7 +214,11 @@ DbBase::~DbBase()
 
 void DbBase::LogError()
 {
+#ifdef __WINDOWS__
+    wxLogError(_("Database error: %s"), g_db_strerror(m_err));
+#else
     wxLogError(_("Database error: %s"), db_strerror(m_err));
+#endif
     m_err = 0;
 }
 
@@ -641,9 +678,34 @@ static inline wxString GetDBPath(const wxString& p, const wxString& l)
     return wxEmptyString;
 }
 
-TranslationMemory::TranslationMemory(const wxString& language, 
-                                     const wxString& path)
+/*static*/ TranslationMemory *TranslationMemory::Create(
+                      const wxString& language, const wxString& path)
 {
+
+#ifdef __WINDOWS__
+    if (!g_triedLibraryDB)
+    {
+        bool success;
+        g_libraryDB = wxDllLoader::LoadLibrary("libdb31.dll", &success);
+        if (!success) 
+            g_libraryDB = 0;
+        else
+        {
+            g_db_create = (db_create_t)
+                    wxDllLoader::GetSymbol(g_libraryDB, "db_create");
+            g_db_strerror = (db_strerror_t)
+                    wxDllLoader::GetSymbol(g_libraryDB, "db_strerror");
+            if (!g_db_create || !g_db_strerror)
+            {
+                wxDllLoader::UnloadLibrary(g_libraryDB);
+                g_libraryDB = 0;
+            }
+        }
+        g_triedLibraryDB = true;
+    }
+    if (g_libraryDB == 0) return NULL;
+#endif
+
     wxString dbPath = GetDBPath(path, language);
     if (!dbPath)
         dbPath = path + "/" + language;
@@ -652,17 +714,30 @@ TranslationMemory::TranslationMemory(const wxString& language,
         (!wxDirExists(dbPath) && !wxMkdir(dbPath)))
     {
         wxLogError(_("Cannot create database directory!"));
-        return;
+        return NULL;
     }
     dbPath += '/';
     
+    TranslationMemory *tm = new TranslationMemory(language, dbPath);
+    if (!tm->m_dbTrans->IsOk() || !tm->m_dbOrig->IsOk() || 
+        !tm->m_dbWords->IsOk())
+    {
+        delete tm;
+        return NULL;
+    }
+    else
+        return tm;
+}
+
+TranslationMemory::TranslationMemory(const wxString& language, 
+                                     const wxString& dbPath)
+{
     SetParams(2, 2);
-    
     m_lang = language;
     m_dbTrans = new DbTrans(dbPath);
     m_dbOrig = new DbOrig(dbPath);
     m_dbWords = new DbWords(dbPath);
-}
+}                                     
 
 TranslationMemory::~TranslationMemory()
 {
