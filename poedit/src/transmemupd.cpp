@@ -18,6 +18,9 @@
 #endif
 
 #include <wx/wxprec.h>
+
+#ifdef USE_TRANSMEM
+
 #include <wx/string.h>
 #include <wx/tokenzr.h>
 #include <wx/log.h>
@@ -166,10 +169,10 @@ bool TranslationMemoryUpdater::UpdateFromRPM(const wxString& filename)
     wxString cmd;
     cmd.Printf("sh -c '(cd %s ; rpm2cpio %s | cpio -i -d --quiet \"*.mo\")'",
                TMP_DIR, filename.c_str());
-    if (wxExecute(cmd, TRUE) != 0)
+    if (wxExecute(cmd, true) != 0)
     {
         wxLogError(_("Cannot extract catalogs from RPM file."));
-        wxExecute("rm -rf " TMP_DIR, TRUE);
+        wxExecute("rm -rf " TMP_DIR, true);
         return false;
     }
 
@@ -187,7 +190,7 @@ bool TranslationMemoryUpdater::UpdateFromRPM(const wxString& filename)
     }
 
     wxLog::FlushActive();
-    wxExecute("rm -rf " TMP_DIR, TRUE);
+    wxExecute("rm -rf " TMP_DIR, true);
     return res;
     #undef TMP_DIR
 }
@@ -210,3 +213,5 @@ bool TranslationMemoryUpdater::UpdateFromCatalog(const wxString& filename)
     }
     return true;
 }
+
+#endif //USE_TRANSMEM

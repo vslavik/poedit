@@ -47,9 +47,11 @@ class PreferencesDialog : public wxDialog
     private:
         DECLARE_EVENT_TABLE()
 
+#ifdef USE_TRANSMEM
         void OnTMAddLang(wxCommandEvent& event);
         void OnTMBrowseDbPath(wxCommandEvent& event);
         void OnTMGenerate(wxCommandEvent& event);
+#endif
 
         void OnNewParser(wxCommandEvent& event);
         void OnEditParser(wxCommandEvent& event);

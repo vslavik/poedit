@@ -23,14 +23,20 @@
  */
 
 #include <wx/wxprec.h>
+
+#ifdef USE_TRANSMEM
+
 #include <wx/string.h>
 #include <wx/tokenzr.h>
 #include <wx/log.h>
 #include <wx/intl.h>
 #include <wx/utils.h>
 
+#ifdef USE_REDHAT_DB3
 #include <db3/db.h>
-// FIXME - use db.h, not db3/db.h
+#else
+#include <db.h>
+#endif
 
 #include "transmem.h"
 
@@ -871,3 +877,5 @@ bool TranslationMemory::LookupFuzzy(const wxArrayString& words,
 
     #undef RETURN_WITH_CLEANUP
 }
+
+#endif // USE_TRANSMEM

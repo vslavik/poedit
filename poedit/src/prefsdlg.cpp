@@ -25,6 +25,7 @@
 #include <wx/config.h>
 #include <wx/choicdlg.h>
 #include <wx/spinctrl.h>
+#include <wx/notebook.h>
 #include <wx/xml/xmlres.h>
 
 #include "prefsdlg.h"
@@ -36,8 +37,13 @@
 PreferencesDialog::PreferencesDialog(wxWindow *parent)
 {
     wxTheXmlResource->LoadDialog(this, parent, "preferences");
+#ifdef USE_TRANSMEM
     wxTheXmlResource->AttachUnknownControl("tm_langs", 
                 new wxEditableListBox(this, -1, _("My Languages")));
+#else
+    // remove "Translation Memory" page if support not compiled-in
+    XMLCTRL(*this, "notebook", wxNotebook)->DeletePage(1);
+#endif                
 }
 
 
@@ -53,6 +59,8 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 cfg->Read("show_summary", true));
     XMLCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
                 cfg->Read("keep_crlf", true));
+    XMLCTRL(*this, "textctrl_style", wxRadioBox)->SetSelection(
+                cfg->Read("multiline_textctrl", true) ? 0 : 1);
 
     wxString format = cfg->Read("crlf_format", "unix");
     int sel;
@@ -77,7 +85,8 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     }
     else
         list->SetSelection(0);
-        
+
+#ifdef USE_TRANSMEM        
     XMLCTRL(*this, "tm_dbpath", wxTextCtrl)->SetValue(
                 cfg->Read("TM/database_path", ""));
 
@@ -92,6 +101,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 cfg->Read("TM/max_delta", 2));
     XMLCTRL(*this, "tm_automatic", wxCheckBox)->SetValue(
                 cfg->Read("use_tm_when_updating", true));
+#endif
 }
  
             
@@ -107,6 +117,8 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XMLCTRL(*this, "show_summary", wxCheckBox)->GetValue());
     cfg->Write("keep_crlf", 
                 XMLCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
+    cfg->Write("multiline_textctrl",
+                XMLCTRL(*this, "textctrl_style", wxRadioBox)->GetSelection()==0);
     
     static char *formats[] = { "unix", "win", "mac", "native" };
     cfg->Write("crlf_format", formats[
@@ -114,6 +126,7 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                
     m_parsers.Write(cfg);
 
+#ifdef USE_TRANSMEM
     wxArrayString langs;
     XMLCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
     wxString languages;
@@ -131,6 +144,7 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 (long)XMLCTRL(*this, "tm_delta", wxSpinCtrl)->GetValue());
     cfg->Write("use_tm_when_updating", 
                 XMLCTRL(*this, "tm_automatic", wxCheckBox)->GetValue());
+#endif
 }
 
 
@@ -139,9 +153,11 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
    EVT_BUTTON(XMLID("parser_new"), PreferencesDialog::OnNewParser)
    EVT_BUTTON(XMLID("parser_edit"), PreferencesDialog::OnEditParser)
    EVT_BUTTON(XMLID("parser_delete"), PreferencesDialog::OnDeleteParser)
+#ifdef USE_TRANSMEM
    EVT_BUTTON(XMLID("tm_addlang"), PreferencesDialog::OnTMAddLang)
    EVT_BUTTON(XMLID("tm_browsedbpath"), PreferencesDialog::OnTMBrowseDbPath)
    EVT_BUTTON(XMLID("tm_generate"), PreferencesDialog::OnTMGenerate)
+#endif
 END_EVENT_TABLE()
 
 bool PreferencesDialog::EditParser(int num)
@@ -206,6 +222,8 @@ void PreferencesDialog::OnDeleteParser(wxCommandEvent& event)
         XMLCTRL(*this, "parser_delete", wxButton)->Enable(false);
     }
 }
+
+#ifdef USE_TRANSMEM
 
 void PreferencesDialog::OnTMAddLang(wxCommandEvent& event)
 {
@@ -310,3 +328,5 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
     }
     delete pi;
 }
+
+#endif // USE_TRANSMEM

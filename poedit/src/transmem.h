@@ -20,6 +20,8 @@
 #ifndef _TRANSMEM_H_
 #define _TRANSMEM_H_
 
+#ifdef USE_TRANSMEM
+
 class WXDLLEXPORT wxString;
 
 
@@ -132,5 +134,7 @@ class TranslationMemory
         size_t m_maxDelta, m_maxOmits;
 };
 
+
+#endif // USE_TRANSMEM
 
 #endif // _TRANSMEM_H_

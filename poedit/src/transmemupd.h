@@ -20,6 +20,8 @@
 #ifndef _TRANSMEMUPD_H_
 #define _TRANSMEMUPD_H_
 
+#ifdef USE_TRANSMEM
+
 class WXDLLEXPORT wxString;
 class WXDLLEXPORT wxArrayString;
 
@@ -59,5 +61,7 @@ class TranslationMemoryUpdater
         ProgressInfo *m_progress;
         TranslationMemory *m_mem;
 };
+
+#endif // USE_TRANSMEM
 
 #endif // _TRANSMEMUPD_H_
