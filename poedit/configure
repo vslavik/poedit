@@ -790,7 +790,7 @@ fi
 
 PACKAGE=poedit
 
-VERSION='1.0.3'
+VERSION='1.1.0'
 
 if test "`cd $srcdir && pwd`" != "`pwd`" && test -f $srcdir/config.status; then
   { echo "configure: error: source directory already configured; run "make distclean" there first" 1>&2; exit 1; }
@@ -1549,7 +1549,7 @@ else
 fi
 
 
-  min_wx_version=2.2.0
+  min_wx_version=2.3.0
   echo $ac_n "checking for wxWindows version >= $min_wx_version""... $ac_c" 1>&6
 echo "configure:1555: checking for wxWindows version >= $min_wx_version" >&5
   no_wx=""
@@ -1583,7 +1583,7 @@ if test "$WXFOUND" != 1; then
         Please check that wx-config is in path, the directory
         where wxWindows libraries are installed (returned by
         'wx-config --libs' command) is in LD_LIBRARY_PATH or
-        equivalent variable and wxWindows is version 2.2.0 or above.
+        equivalent variable and wxWindows is version 2.3.0 or above.
     " 1>&2; exit 1; }
 fi
 
@@ -1755,8 +1755,14 @@ ac_given_INSTALL="$INSTALL"
 
 trap 'rm -fr `echo "
          Makefile
+         extras/Makefile
+         extras/wx-contrib/Makefile
+         extras/wx-contrib/src/Makefile
+         extras/wx-contrib/src/gizmos/Makefile
+         extras/wx-contrib/src/xml/Makefile
+         extras/wx-contrib/src/xml/expat/Makefile
          src/Makefile
-         src/wxxml_snapshot/Makefile
+         src/resources/Makefile
          docs/Makefile
          install/Makefile
          install/poedit.keys
@@ -1875,8 +1881,14 @@ EOF
 cat >> $CONFIG_STATUS <<EOF
 
 CONFIG_FILES=\${CONFIG_FILES-"Makefile
+         extras/Makefile
+         extras/wx-contrib/Makefile
+         extras/wx-contrib/src/Makefile
+         extras/wx-contrib/src/gizmos/Makefile
+         extras/wx-contrib/src/xml/Makefile
+         extras/wx-contrib/src/xml/expat/Makefile
          src/Makefile
-         src/wxxml_snapshot/Makefile
+         src/resources/Makefile
          docs/Makefile
          install/Makefile
          install/poedit.keys

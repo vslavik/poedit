@@ -3,7 +3,7 @@ AC_INIT(aclocal.m4)
 
 AC_CANONICAL_SYSTEM
 
-AM_INIT_AUTOMAKE(poedit, '1.0.3', avoid_defining_package_and_version)
+AM_INIT_AUTOMAKE(poedit, '1.1.0', avoid_defining_package_and_version)
 
 AC_ARG_ENABLE(debug, [  --enable-debug          Enables debugging information],
               USE_DEBUG="1", USE_DEBUG="")
@@ -44,13 +44,13 @@ esac
 
 
 
-WX_PATH_WXCONFIG(2.2.0, WXFOUND=1)
+WX_PATH_WXCONFIG(2.3.0, WXFOUND=1)
 if test "$WXFOUND" != 1; then
     AC_MSG_ERROR([
         Please check that wx-config is in path, the directory
         where wxWindows libraries are installed (returned by
         'wx-config --libs' command) is in LD_LIBRARY_PATH or
-        equivalent variable and wxWindows is version 2.2.0 or above.
+        equivalent variable and wxWindows is version 2.3.0 or above.
     ])
 fi
 
@@ -70,8 +70,14 @@ FIND_GNOME
 
 AC_OUTPUT([
          Makefile
+         extras/Makefile
+         extras/wx-contrib/Makefile
+         extras/wx-contrib/src/Makefile
+         extras/wx-contrib/src/gizmos/Makefile
+         extras/wx-contrib/src/xml/Makefile
+         extras/wx-contrib/src/xml/expat/Makefile
          src/Makefile
-         src/wxxml_snapshot/Makefile
+         src/resources/Makefile
          docs/Makefile
          install/Makefile
          install/poedit.keys

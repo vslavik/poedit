@@ -26,6 +26,7 @@
 
 #include "catalog.h"
 
+class WXDLLEXPORT wxEditableListBox;
 
 // This class provides settings dialog for setting various
 // catalog parameters
@@ -42,21 +43,10 @@ class SettingsDialog : public wxDialog
             void TransferFrom(Catalog *cat);
             
     private:
-            DECLARE_EVENT_TABLE()
-            
-            void OnAddWild(wxCommandEvent& event);
-            void OnRemoveWild(wxCommandEvent& event);
-            void OnAddPath(wxCommandEvent& event);
-            void OnRemovePath(wxCommandEvent& event);
-
-    private:
             wxTextCtrl *m_Team, *m_TeamEmail, *m_Project;            
             wxComboBox *m_Charset, *m_Language;
-            wxTextCtrl *m_OnePath;
             wxTextCtrl *m_BasePath;
-            wxListBox *m_Paths;
-            wxTextCtrl *m_OneWild;
-            wxListBox *m_Keywords;
+            wxEditableListBox *m_Paths, *m_Keywords;
 };
 
 

@@ -26,14 +26,6 @@
 #include "edframe.h"
 #include "prefsdlg.h"
 
-class poEditApp : public wxApp
-{
-    public:
-        bool OnInit();
-};
-
-IMPLEMENT_APP(poEditApp)
-
 
 
 static void InitParsersCfg(wxConfigBase *cfg)
@@ -53,8 +45,14 @@ static void InitParsersCfg(wxConfigBase *cfg)
 
 
 
+class poEditApp : public wxApp
+{
+    public:
+        bool OnInit();
+};
 
-extern void InitXmlResource();
+IMPLEMENT_APP(poEditApp)
+
 
 bool poEditApp::OnInit()
 {
@@ -72,28 +70,10 @@ bool poEditApp::OnInit()
 #endif
 
     wxImage::AddHandler(new wxGIFHandler);
-#ifndef __WXMSW__
     wxFileSystem::AddHandler(new wxZipFSHandler);
-#endif
 
-    //wxTheXmlResource->InitAllHandlers();
-    wxTheXmlResource->AddHandler(new wxMenuXmlHandler);
-    wxTheXmlResource->AddHandler(new wxMenuBarXmlHandler);
-    wxTheXmlResource->AddHandler(new wxDialogXmlHandler);
-    wxTheXmlResource->AddHandler(new wxPanelXmlHandler);
-    wxTheXmlResource->AddHandler(new wxButtonXmlHandler);
-    wxTheXmlResource->AddHandler(new wxGaugeXmlHandler);
-    wxTheXmlResource->AddHandler(new wxCheckBoxXmlHandler);
-    wxTheXmlResource->AddHandler(new wxStaticTextXmlHandler);
-    wxTheXmlResource->AddHandler(new wxStaticBitmapXmlHandler);
-    wxTheXmlResource->AddHandler(new wxComboBoxXmlHandler);
-    wxTheXmlResource->AddHandler(new wxSizerXmlHandler);
-    wxTheXmlResource->AddHandler(new wxNotebookXmlHandler);
-    wxTheXmlResource->AddHandler(new wxTextCtrlXmlHandler);
-    wxTheXmlResource->AddHandler(new wxListBoxXmlHandler);
-    wxTheXmlResource->AddHandler(new wxToolBarXmlHandler);
-    
-    InitXmlResource();
+    wxTheXmlResource->InitAllHandlers();
+    wxTheXmlResource->Load(POEDIT_PREFIX "/share/poedit/resources.zip");
     
     poEditFrame *frame = new poEditFrame("poEdit", argc > 1 ? argv[1] : "");
 

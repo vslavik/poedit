@@ -76,9 +76,9 @@ class poEditListCtrl : public wxListCtrl
         void SizeColumns()
         {
              int w = GetSize().x;
-             #ifdef __WXMSW__
+             //#ifdef __WXMSW__
              w -= wxSystemSettings::GetSystemMetric(wxSYS_VSCROLL_X) + 6;
-             #endif
+             //#endif
              SetColumnWidth(0, w / 2);
              SetColumnWidth(1, w - w / 2);
         }
@@ -235,7 +235,7 @@ END_EVENT_TABLE()
 
 
 #ifdef __UNIX__
-#include "bitmaps/appicon.xpm"
+#include "appicon.xpm"
 #endif
 
 // Frame class:
@@ -312,7 +312,7 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
 #if defined(__WXMSW__)
     m_Help.Initialize("poedit.chm");
 #elif defined(__UNIX__)
-    m_Help.Initialize(wxString(POEDIT_PREFIX) + "/share/poedit/poedit_help.htb");
+    m_Help.Initialize(POEDIT_PREFIX "/share/poedit/help.zip");
 #endif
 }
 
