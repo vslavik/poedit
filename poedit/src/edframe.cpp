@@ -247,7 +247,7 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
                              wxSize(
                                  wxConfig::Get()->Read("frame_w", 600),
                                  wxConfig::Get()->Read("frame_h", 400)),
-                             wxDEFAULT_FRAME_STYLE | wxCLIP_CHILDREN),
+                             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
     m_Catalog(NULL), 
     m_Title(title), 
     m_List(NULL),
