@@ -25,8 +25,6 @@
 #include "wx/log.h"
 #include "wx/intl.h"
 
-IMPLEMENT_DYNAMIC_CLASS(wxFrameXmlHandler, wxXmlResourceHandler)
-
 wxFrameXmlHandler::wxFrameXmlHandler() : wxXmlResourceHandler()
 {
     XRC_ADD_STYLE(wxSTAY_ON_TOP);
