@@ -89,6 +89,7 @@ bool poEditApp::OnInit()
     wxConfigBase::Set(
         new wxConfig(wxEmptyString, wxEmptyString, CFG_FILE, wxEmptyString, 
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
+    wxConfigBase::Get()->SetExpandEnvVars(false);
 
     wxImage::AddHandler(new wxGIFHandler);
     wxFileSystem::AddHandler(new wxZipFSHandler);

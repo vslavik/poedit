@@ -58,9 +58,9 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XMLCTRL(*this, "show_summary", wxCheckBox)->SetValue(
                 cfg->Read(_T("show_summary"), true));
     XMLCTRL(*this, "manager_startup", wxCheckBox)->SetValue(
-                bool)cfg->Read(_T("manager_startup"), (long)false));
+                (bool)cfg->Read(_T("manager_startup"), (long)false));
     XMLCTRL(*this, "focus_to_text", wxCheckBox)->SetValue(
-                bool)cfg->Read(_T("focus_to_text"), (long)false));
+                (bool)cfg->Read(_T("focus_to_text"), (long)false));
     XMLCTRL(*this, "ext_editor", wxComboBox)->SetValue(
                 cfg->Read(_T("ext_editor"), wxEmptyString));
     XMLCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(

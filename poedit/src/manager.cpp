@@ -357,27 +357,36 @@ void ManagerFrame::OnNewProject(wxCommandEvent& event)
 
 void ManagerFrame::OnEditProject(wxCommandEvent& event)
 {
-    EditProject((int)m_listPrj->GetClientData(m_listPrj->GetSelection()));
+	int sel = m_listPrj->GetSelection();
+	if (sel == -1) return;
+    EditProject((int)m_listPrj->GetClientData(sel));
 }
 
 
 void ManagerFrame::OnDeleteProject(wxCommandEvent& event)
 {
+	int sel = m_listPrj->GetSelection();
+	if (sel == -1) return;
     if (wxMessageBox(_("Do you want to delete the project?"),
                _("Confirmation"), wxYES_NO | wxICON_QUESTION, this) == wxYES)
-        DeleteProject((int)m_listPrj->GetClientData(m_listPrj->GetSelection()));
+        DeleteProject((int)m_listPrj->GetClientData(sel));
 }
 
 
 void ManagerFrame::OnSelectProject(wxCommandEvent& event)
 {
-    m_curPrj = (int)m_listPrj->GetClientData(m_listPrj->GetSelection());
+	int sel = m_listPrj->GetSelection();
+	if (sel == -1) return;
+    m_curPrj = (int)m_listPrj->GetClientData(sel);
     UpdateListCat(m_curPrj);
 }
 
 
 void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
 {
+	int sel = m_listPrj->GetSelection();
+	if (sel == -1) return;
+
     if (wxMessageBox(_("Do you really want to do mass update of\n"
                        "all catalogs in this project?"),
                _("Confirmation"), wxYES_NO | wxICON_QUESTION, this) == wxYES)
