@@ -55,6 +55,16 @@
 WX_DEFINE_LIST(poEditFramesList);
 poEditFramesList poEditFrame::ms_instances;
 
+/*static*/ poEditFrame *poEditFrame::Find(const wxString& filename)
+{
+    for (poEditFramesList::Node *n = ms_instances.GetFirst(); n; n = n->GetNext())
+    {
+        if (n->GetData()->m_fileName == filename)
+            return n->GetData();
+    }
+    return NULL;
+}
+
 /*static*/ poEditFrame *poEditFrame::Create(const wxString& filename)
 {
     poEditFrame *f;
@@ -62,12 +72,9 @@ poEditFramesList poEditFrame::ms_instances;
         f = new poEditFrame(_T("poEdit"));
     else
     {
-        for (poEditFramesList::Node *n = ms_instances.GetFirst(); n; n->GetNext())
-        {
-            if (n->GetData()->m_fileName == filename)
-                return n->GetData();
-        }
-        f = new poEditFrame(_T("poEdit"), filename);
+        f = poEditFrame::Find(filename);
+        if (!f)
+            f = new poEditFrame(_T("poEdit"), filename);
     }
     f->Show(true);
     return f;
@@ -903,15 +910,17 @@ void poEditFrame::UpdateFromTextCtrl(int item)
         (*m_catalog)[ind].IsFuzzy() == newfuzzy)
         return; 
 
-    newval.Replace("\n", "");
+    newval.Replace(_T("\n"), _T(""));
     if (m_displayQuotes)
     {
-        if (newval[0u] == '"') newval.Remove(0, 1);
-        if (newval[newval.Length()-1] == '"') newval.RemoveLast();
+        if (newval.Len() > 0 && newval[0u] == _T('"')) 
+            newval.Remove(0, 1);
+        if (newval.Len() > 0 && newval[newval.Length()-1] == _T('"')) 
+            newval.RemoveLast();
     }
       
     if (newval[0u] == '"') newval.Prepend("\\");
-    for (unsigned i = 1; i < newval.Length(); i++)
+    for (unsigned i = 1; i < newval.Len(); i++)
         if (newval[i] == '"' && newval[i-1] != '\\')
         {
             newval = newval.Mid(0, i) + "\\\"" + newval.Mid(i+1);
@@ -1196,6 +1205,9 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
 
     m_history.AddFileToHistory(m_fileName);
     UpdateTitle();
+    
+    if (ManagerFrame::Get())
+        ManagerFrame::Get()->NotifyFileChanged(m_fileName);
 }
 
 

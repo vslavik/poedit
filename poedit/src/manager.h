@@ -36,6 +36,15 @@ class ManagerFrame : public wxFrame
     public:
         /// Creates instance of manager or returns pointer to existing one.
         static ManagerFrame* Create();
+        /** Returns pointer to existing instance or NULL if there's no one. 
+            (I.e. unlike Create, this one doesn't create a new instance.)
+         */
+        static ManagerFrame* Get() { return ms_instance; }
+        
+        /** Used to notify the manager that one of files changed and it
+            has to update the list control.
+         */
+        void NotifyFileChanged(const wxString& catalog);
 
     private:
         ManagerFrame();
@@ -52,7 +61,7 @@ class ManagerFrame : public wxFrame
          */
         void UpdateListPrj(int select = 0);
         /// Updates catalogs list for given project
-        void UpdateListCat(int id);
+        void UpdateListCat(int id = -1);
         
         DECLARE_EVENT_TABLE()
         void OnNewProject(wxCommandEvent& event);
@@ -65,6 +74,7 @@ class ManagerFrame : public wxFrame
         wxListCtrl *m_listCat;
         wxListBox  *m_listPrj;      
         wxArrayString m_catalogs;
+        int m_curPrj;
 
         static ManagerFrame *ms_instance;
 };

@@ -85,6 +85,8 @@ ManagerFrame::ManagerFrame() :
     list->Add(wxBitmap(cat_ok_xpm));
     m_listCat->AssignImageList(list, wxIMAGE_LIST_SMALL);
 
+    m_curPrj = -1;
+
     int last = wxConfig::Get()->Read(_T("manager_last_selected"), (long)0);
     UpdateListPrj(last);
     if (m_listPrj->GetCount() > 0)
@@ -127,6 +129,7 @@ void ManagerFrame::UpdateListPrj(int select)
             if (i == select)
             {
                 m_listPrj->SetSelection(item);
+                m_curPrj = select;
                 select = -1;
             }
             item++;
@@ -190,9 +193,8 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
 void ManagerFrame::UpdateListCat(int id)
 {
     wxBusyCursor bcur;
-#ifdef __WXGTK__
-    wxYield();
-#endif
+    
+    if (id == -1) id = m_curPrj;
 
     wxConfigBase *cfg = wxConfig::Get();
     wxString key;
@@ -298,7 +300,21 @@ void ManagerFrame::DeleteProject(int id)
     key.Printf(_T("Manager/project_%i"), id);
     wxConfig::Get()->DeleteGroup(key);
     UpdateListPrj();
-    m_listCat->ClearAll();
+    
+    if (id == m_curPrj) 
+    {
+        m_listCat->ClearAll();
+        m_curPrj = -1;
+    }
+}
+
+void ManagerFrame::NotifyFileChanged(const wxString& catalog)
+{
+   // VS: We must do full update even if the file 'catalog' is not in
+   //     m_catalogs. The reason is simple: the user might use SaveAs
+   //     function and save new file in one of directories that
+   //     this project matches...
+   UpdateListCat();
 }
 
 
@@ -323,6 +339,7 @@ void ManagerFrame::OnNewProject(wxCommandEvent& event)
         if (cfg->Read(key, wxEmptyString).IsEmpty())
         {
             m_listPrj->Append(_("<unnamed>"), (void*)i);
+            m_curPrj = i;
             if (EditProject(i))
             {
                 if (i == max)
@@ -354,12 +371,41 @@ void ManagerFrame::OnDeleteProject(wxCommandEvent& event)
 
 void ManagerFrame::OnSelectProject(wxCommandEvent& event)
 {
-    UpdateListCat((int)m_listPrj->GetClientData(m_listPrj->GetSelection()));
+    m_curPrj = (int)m_listPrj->GetClientData(m_listPrj->GetSelection());
+    UpdateListCat(m_curPrj);
 }
 
 
 void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
 {
+    if (wxMessageBox(_("Do you really want to do mass update of\n"
+                       "all catalogs in this project?"),
+               _("Confirmation"), wxYES_NO | wxICON_QUESTION, this) == wxYES)
+    {
+        wxBusyCursor bcur;
+
+        for (size_t i = 0; i < m_catalogs.GetCount(); i++)
+        {
+            wxString f = m_catalogs[i];
+            poEditFrame *fr = poEditFrame::Find(f);
+            if (fr && fr->IsModified())
+            {
+                wxString msg;
+                msg.Printf(_("Can't update file '%s' because it is currently being edited by poEdit\n"
+                             "and you haven't saved your changes yet.\n\n"
+                             "This file won't be included in mass update."), f.c_str());
+                wxMessageBox(msg, _("Error"), wxOK | wxICON_ERROR, this);
+            }
+            else
+            {
+                Catalog cat(f);
+                cat.Update();
+                cat.Save(f, false);
+            }
+         }
+        
+        UpdateListCat();
+    }
 }
 
 

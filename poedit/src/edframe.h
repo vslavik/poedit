@@ -49,7 +49,7 @@ class poEditFrame : public wxFrame
 {
     public:
         /** Public constructor functions. Creates and shows frame
-            (and optionally opens \i catalog). If \i catalog is not
+            (and optionally opens \a catalog). If \a catalog is not
             empty and is already opened in another poEdit frame,
             then this function won't create new frame but instead
             return pointer to existing one.
@@ -59,7 +59,20 @@ class poEditFrame : public wxFrame
          */        
         static poEditFrame *Create(const wxString& catalog = wxEmptyString);
         
+        
+        /** Returns pointer to existing instance of poEditFrame that currently
+            exists and edits \a catalog. If no such frame exists, returns NULL.
+         */
+        static poEditFrame *Find(const wxString& catalog);        
+        
         ~poEditFrame();
+
+        /// Reads catalog, refreshes controls.
+        void ReadCatalog(const wxString& catalog);
+        /// Writes catalog.
+        void WriteCatalog(const wxString& catalog);
+        /// Did the user modify the catalog?
+        bool IsModified() const { return m_modified; }
 
     private:
         /** Ctor.
@@ -73,12 +86,8 @@ class poEditFrame : public wxFrame
         static poEditFramesList ms_instances;
 
     private:
-        /// Reads catalog, refreshes controls.
-        void ReadCatalog(const wxString& catalog);
         /// Refreshes controls.
         void RefreshControls();
-        /// Writes catalog.
-        void WriteCatalog(const wxString& catalog);
         /// Puts text from textctrls to catalog & listctrl.
         void UpdateFromTextCtrl(int item = -1);
         /// Puts text from catalog & listctrl to textctrls.
