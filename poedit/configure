@@ -790,7 +790,7 @@ fi
 
 PACKAGE=poedit
 
-VERSION='1.0.1'
+VERSION='1.0.2'
 
 if test "`cd $srcdir && pwd`" != "`pwd`" && test -f $srcdir/config.status; then
   { echo "configure: error: source directory already configured; run "make distclean" there first" 1>&2; exit 1; }
@@ -894,12 +894,13 @@ case "$m_cv_prefix" in /*) ;; *)
 esac
 prefix=$m_cv_prefix
 
+
 for ac_prog in gawk mawk nawk awk
 do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:903: checking for $ac_word" >&5
+echo "configure:904: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_AWK'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -940,7 +941,7 @@ done
 # SVR4 /usr/ucb/install, which tries to use the nonexistent group "staff"
 # ./install, which can be erroneously created by make from ./install.sh.
 echo $ac_n "checking for a BSD compatible install""... $ac_c" 1>&6
-echo "configure:944: checking for a BSD compatible install" >&5
+echo "configure:945: checking for a BSD compatible install" >&5
 if test -z "$INSTALL"; then
 if eval "test \"`echo '$''{'ac_cv_path_install'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
@@ -993,7 +994,7 @@ test -z "$INSTALL_SCRIPT" && INSTALL_SCRIPT='${INSTALL_PROGRAM}'
 test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
 
 echo $ac_n "checking whether ln -s works""... $ac_c" 1>&6
-echo "configure:997: checking whether ln -s works" >&5
+echo "configure:998: checking whether ln -s works" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_LN_S'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1013,10 +1014,40 @@ else
   echo "$ac_t""no" 1>&6
 fi
 
+# Extract the first word of "ranlib", so it can be a program name with args.
+set dummy ranlib; ac_word=$2
+echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+echo "configure:1021: checking for $ac_word" >&5
+if eval "test \"`echo '$''{'ac_cv_prog_RANLIB'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+  if test -n "$RANLIB"; then
+  ac_cv_prog_RANLIB="$RANLIB" # Let the user override the test.
+else
+  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS=":"
+  ac_dummy="$PATH"
+  for ac_dir in $ac_dummy; do
+    test -z "$ac_dir" && ac_dir=.
+    if test -f $ac_dir/$ac_word; then
+      ac_cv_prog_RANLIB="ranlib"
+      break
+    fi
+  done
+  IFS="$ac_save_ifs"
+  test -z "$ac_cv_prog_RANLIB" && ac_cv_prog_RANLIB=":"
+fi
+fi
+RANLIB="$ac_cv_prog_RANLIB"
+if test -n "$RANLIB"; then
+  echo "$ac_t""$RANLIB" 1>&6
+else
+  echo "$ac_t""no" 1>&6
+fi
+
 # Extract the first word of "gcc", so it can be a program name with args.
 set dummy gcc; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:1020: checking for $ac_word" >&5
+echo "configure:1051: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_CC'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1046,7 +1077,7 @@ if test -z "$CC"; then
   # Extract the first word of "cc", so it can be a program name with args.
 set dummy cc; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:1050: checking for $ac_word" >&5
+echo "configure:1081: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_CC'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1097,7 +1128,7 @@ fi
       # Extract the first word of "cl", so it can be a program name with args.
 set dummy cl; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:1101: checking for $ac_word" >&5
+echo "configure:1132: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_CC'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1129,7 +1160,7 @@ fi
 fi
 
 echo $ac_n "checking whether the C compiler ($CC $CFLAGS $LDFLAGS) works""... $ac_c" 1>&6
-echo "configure:1133: checking whether the C compiler ($CC $CFLAGS $LDFLAGS) works" >&5
+echo "configure:1164: checking whether the C compiler ($CC $CFLAGS $LDFLAGS) works" >&5
 
 ac_ext=c
 # CFLAGS is not in ac_cpp because -g, -O, etc. are not valid cpp options.
@@ -1140,12 +1171,12 @@ cross_compiling=$ac_cv_prog_cc_cross
 
 cat > conftest.$ac_ext << EOF
 
-#line 1144 "configure"
+#line 1175 "configure"
 #include "confdefs.h"
 
 main(){return(0);}
 EOF
-if { (eval echo configure:1149: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1180: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   ac_cv_prog_cc_works=yes
   # If we can't run a trivial program, we are probably using a cross compiler.
   if (./conftest; exit) 2>/dev/null; then
@@ -1171,12 +1202,12 @@ if test $ac_cv_prog_cc_works = no; then
   { echo "configure: error: installation or configuration problem: C compiler cannot create executables." 1>&2; exit 1; }
 fi
 echo $ac_n "checking whether the C compiler ($CC $CFLAGS $LDFLAGS) is a cross-compiler""... $ac_c" 1>&6
-echo "configure:1175: checking whether the C compiler ($CC $CFLAGS $LDFLAGS) is a cross-compiler" >&5
+echo "configure:1206: checking whether the C compiler ($CC $CFLAGS $LDFLAGS) is a cross-compiler" >&5
 echo "$ac_t""$ac_cv_prog_cc_cross" 1>&6
 cross_compiling=$ac_cv_prog_cc_cross
 
 echo $ac_n "checking whether we are using GNU C""... $ac_c" 1>&6
-echo "configure:1180: checking whether we are using GNU C" >&5
+echo "configure:1211: checking whether we are using GNU C" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_gcc'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1185,7 +1216,7 @@ else
   yes;
 #endif
 EOF
-if { ac_try='${CC-cc} -E conftest.c'; { (eval echo configure:1189: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }; } | egrep yes >/dev/null 2>&1; then
+if { ac_try='${CC-cc} -E conftest.c'; { (eval echo configure:1220: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }; } | egrep yes >/dev/null 2>&1; then
   ac_cv_prog_gcc=yes
 else
   ac_cv_prog_gcc=no
@@ -1204,7 +1235,7 @@ ac_test_CFLAGS="${CFLAGS+set}"
 ac_save_CFLAGS="$CFLAGS"
 CFLAGS=
 echo $ac_n "checking whether ${CC-cc} accepts -g""... $ac_c" 1>&6
-echo "configure:1208: checking whether ${CC-cc} accepts -g" >&5
+echo "configure:1239: checking whether ${CC-cc} accepts -g" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_cc_g'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1240,7 +1271,7 @@ do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:1244: checking for $ac_word" >&5
+echo "configure:1275: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_CXX'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1272,7 +1303,7 @@ test -n "$CXX" || CXX="gcc"
 
 
 echo $ac_n "checking whether the C++ compiler ($CXX $CXXFLAGS $LDFLAGS) works""... $ac_c" 1>&6
-echo "configure:1276: checking whether the C++ compiler ($CXX $CXXFLAGS $LDFLAGS) works" >&5
+echo "configure:1307: checking whether the C++ compiler ($CXX $CXXFLAGS $LDFLAGS) works" >&5
 
 ac_ext=C
 # CXXFLAGS is not in ac_cpp because -g, -O, etc. are not valid cpp options.
@@ -1283,12 +1314,12 @@ cross_compiling=$ac_cv_prog_cxx_cross
 
 cat > conftest.$ac_ext << EOF
 
-#line 1287 "configure"
+#line 1318 "configure"
 #include "confdefs.h"
 
 int main(){return(0);}
 EOF
-if { (eval echo configure:1292: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1323: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   ac_cv_prog_cxx_works=yes
   # If we can't run a trivial program, we are probably using a cross compiler.
   if (./conftest; exit) 2>/dev/null; then
@@ -1314,12 +1345,12 @@ if test $ac_cv_prog_cxx_works = no; then
   { echo "configure: error: installation or configuration problem: C++ compiler cannot create executables." 1>&2; exit 1; }
 fi
 echo $ac_n "checking whether the C++ compiler ($CXX $CXXFLAGS $LDFLAGS) is a cross-compiler""... $ac_c" 1>&6
-echo "configure:1318: checking whether the C++ compiler ($CXX $CXXFLAGS $LDFLAGS) is a cross-compiler" >&5
+echo "configure:1349: checking whether the C++ compiler ($CXX $CXXFLAGS $LDFLAGS) is a cross-compiler" >&5
 echo "$ac_t""$ac_cv_prog_cxx_cross" 1>&6
 cross_compiling=$ac_cv_prog_cxx_cross
 
 echo $ac_n "checking whether we are using GNU C++""... $ac_c" 1>&6
-echo "configure:1323: checking whether we are using GNU C++" >&5
+echo "configure:1354: checking whether we are using GNU C++" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_gxx'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1328,7 +1359,7 @@ else
   yes;
 #endif
 EOF
-if { ac_try='${CXX-g++} -E conftest.C'; { (eval echo configure:1332: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }; } | egrep yes >/dev/null 2>&1; then
+if { ac_try='${CXX-g++} -E conftest.C'; { (eval echo configure:1363: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }; } | egrep yes >/dev/null 2>&1; then
   ac_cv_prog_gxx=yes
 else
   ac_cv_prog_gxx=no
@@ -1347,7 +1378,7 @@ ac_test_CXXFLAGS="${CXXFLAGS+set}"
 ac_save_CXXFLAGS="$CXXFLAGS"
 CXXFLAGS=
 echo $ac_n "checking whether ${CXX-g++} accepts -g""... $ac_c" 1>&6
-echo "configure:1351: checking whether ${CXX-g++} accepts -g" >&5
+echo "configure:1382: checking whether ${CXX-g++} accepts -g" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_cxx_g'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1379,7 +1410,7 @@ else
 fi
 
 echo $ac_n "checking how to run the C++ preprocessor""... $ac_c" 1>&6
-echo "configure:1383: checking how to run the C++ preprocessor" >&5
+echo "configure:1414: checking how to run the C++ preprocessor" >&5
 if test -z "$CXXCPP"; then
 if eval "test \"`echo '$''{'ac_cv_prog_CXXCPP'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
@@ -1392,12 +1423,12 @@ ac_link='${CXX-g++} -o conftest${ac_exeext} $CXXFLAGS $CPPFLAGS $LDFLAGS conftes
 cross_compiling=$ac_cv_prog_cxx_cross
   CXXCPP="${CXX-g++} -E"
   cat > conftest.$ac_ext <<EOF
-#line 1396 "configure"
+#line 1427 "configure"
 #include "confdefs.h"
 #include <stdlib.h>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1401: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1432: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -1423,9 +1454,11 @@ echo "$ac_t""$CXXCPP" 1>&6
 
 
 
+
+
 case "$USE_DEBUG" in
 1)	DEBUG_FLAGS="-g"
-    WX_CONFIG="wxgtkd-config"
+	WX_CONFIG="wxgtkd-config"
     ;;    
 *)	DEBUG_FLAGS="-O3"
     ;;
@@ -1482,7 +1515,7 @@ fi
   # Extract the first word of "$WX_CONFIG", so it can be a program name with args.
 set dummy $WX_CONFIG; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:1486: checking for $ac_word" >&5
+echo "configure:1519: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_WX_CONFIG'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1518,7 +1551,7 @@ fi
 
   min_wx_version=2.2.0
   echo $ac_n "checking for wxWindows version >= $min_wx_version""... $ac_c" 1>&6
-echo "configure:1522: checking for wxWindows version >= $min_wx_version" >&5
+echo "configure:1555: checking for wxWindows version >= $min_wx_version" >&5
   no_wx=""
   if test "$WX_CONFIG" = "no" ; then
     no_wx=yes
@@ -1557,61 +1590,16 @@ fi
 
 
 
-WXRC_NAME=wxrc
-# FIXME - better check for wxxmlrc
-WXRC=$WXRC_NAME	# Bug in autoconf?
-# Extract the first word of "$WXRC_NAME", so it can be a program name with args.
-set dummy $WXRC_NAME; ac_word=$2
-echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:1567: checking for $ac_word" >&5
-if eval "test \"`echo '$''{'ac_cv_path_WXRC'+set}'`\" = set"; then
-  echo $ac_n "(cached) $ac_c" 1>&6
-else
-  case "$WXRC" in
-  /*)
-  ac_cv_path_WXRC="$WXRC" # Let the user override the test with a path.
-  ;;
-  ?:/*)			 
-  ac_cv_path_WXRC="$WXRC" # Let the user override the test with a dos path.
-  ;;
-  *)
-  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS=":"
-  ac_dummy="$PATH"
-  for ac_dir in $ac_dummy; do 
-    test -z "$ac_dir" && ac_dir=.
-    if test -f $ac_dir/$ac_word; then
-      ac_cv_path_WXRC="$ac_dir/$ac_word"
-      break
-    fi
-  done
-  IFS="$ac_save_ifs"
-  ;;
-esac
-fi
-WXRC="$ac_cv_path_WXRC"
-if test -n "$WXRC"; then
-  echo "$ac_t""$WXRC" 1>&6
-else
-  echo "$ac_t""no" 1>&6
-fi
-
-case "$WXRC" in '')
-	{ echo "configure: error: cannot find $WXRC_NAME program needed for resources
-    compilation.  If it's not in the standard PATH, use the
-	--with-wxrc option to specify it." 1>&2; exit 1; }
-esac
-
-
-
-
 CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS $WX_CFLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 
 LDFLAGS="$LDFLAGS $WX_LIBS"
-LIBS="-lwxxml -lwxxmlrc"
+
+
+
 
 
   echo $ac_n "checking for KDE data directory""... $ac_c" 1>&6
-echo "configure:1615: checking for KDE data directory" >&5
+echo "configure:1603: checking for KDE data directory" >&5
   if test x$KDEDIR = x ; then
      echo "$ac_t""no" 1>&6
      KDE_DATA_DIR=""
@@ -1632,7 +1620,7 @@ fi
 
 
   echo $ac_n "checking for GNOME data directory""... $ac_c" 1>&6
-echo "configure:1636: checking for GNOME data directory" >&5
+echo "configure:1624: checking for GNOME data directory" >&5
   GNOME_DATA_DIR=`gnome-config --datadir 2>/dev/null`
   if test x$GNOME_DATA_DIR = x ; then
      echo "$ac_t""no" 1>&6
@@ -1769,6 +1757,7 @@ ac_given_INSTALL="$INSTALL"
 trap 'rm -fr `echo "
          Makefile
          src/Makefile
+         src/wxxml_snapshot/Makefile
          docs/Makefile
          install/Makefile
          install/poedit.keys
@@ -1832,13 +1821,13 @@ s%@MAKEINFO@%$MAKEINFO%g
 s%@SET_MAKE@%$SET_MAKE%g
 s%@AWK@%$AWK%g
 s%@LN_S@%$LN_S%g
+s%@RANLIB@%$RANLIB%g
 s%@CC@%$CC%g
 s%@CXX@%$CXX%g
 s%@CXXCPP@%$CXXCPP%g
 s%@WX_CONFIG@%$WX_CONFIG%g
 s%@WX_CFLAGS@%$WX_CFLAGS%g
 s%@WX_LIBS@%$WX_LIBS%g
-s%@WXRC@%$WXRC%g
 s%@KDE_DATA_DIR@%$KDE_DATA_DIR%g
 s%@USE_KDE_TRUE@%$USE_KDE_TRUE%g
 s%@USE_KDE_FALSE@%$USE_KDE_FALSE%g
@@ -1888,6 +1877,7 @@ cat >> $CONFIG_STATUS <<EOF
 
 CONFIG_FILES=\${CONFIG_FILES-"Makefile
          src/Makefile
+         src/wxxml_snapshot/Makefile
          docs/Makefile
          install/Makefile
          install/poedit.keys

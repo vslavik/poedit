@@ -3,7 +3,7 @@ AC_INIT(aclocal.m4)
 
 AC_CANONICAL_SYSTEM
 
-AM_INIT_AUTOMAKE(poedit, '1.0.1', avoid_defining_package_and_version)
+AM_INIT_AUTOMAKE(poedit, '1.0.2', avoid_defining_package_and_version)
 
 AC_ARG_ENABLE(debug, [  --enable-debug          Enables debugging information],
               USE_DEBUG="1", USE_DEBUG="")
@@ -21,18 +21,22 @@ case "$m_cv_prefix" in /*) ;; *)
 esac
 prefix=$m_cv_prefix
 
+
 dnl Checks for programs.
 AC_PROG_AWK
 AC_PROG_INSTALL
 AC_PROG_LN_S
+AC_PROG_RANLIB
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_CXXCPP
 
 
+
+
 case "$USE_DEBUG" in
 1)	DEBUG_FLAGS="-g"
-    WX_CONFIG="wxgtkd-config"
+	WX_CONFIG="wxgtkd-config"
     ;;    
 *)	DEBUG_FLAGS="-O3"
     ;;
@@ -53,24 +57,12 @@ fi
 
 
 
-dnl check for wxrc
-WXRC_NAME=wxrc
-# FIXME - better check for wxxmlrc
-WXRC=$WXRC_NAME	# Bug in autoconf?
-AC_PATH_PROG(WXRC,$WXRC_NAME)
-case "$WXRC" in '')
-	AC_MSG_ERROR([cannot find $WXRC_NAME program needed for resources
-    compilation.  If it's not in the standard PATH, use the
-	--with-wxrc option to specify it.])
-esac
-
-AC_SUBST(WXRC)
-
-
 CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS $WX_CFLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 
 LDFLAGS="$LDFLAGS $WX_LIBS"
-LIBS="-lwxxml -lwxxmlrc"
+
+AC_SUBST(LDFLAGS)
+
 
 FIND_KDE
 FIND_GNOME
@@ -80,6 +72,7 @@ FIND_GNOME
 AC_OUTPUT([
          Makefile
          src/Makefile
+         src/wxxml_snapshot/Makefile
          docs/Makefile
          install/Makefile
          install/poedit.keys

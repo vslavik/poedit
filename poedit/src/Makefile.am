@@ -1,4 +1,8 @@
 
+SUBDIRS = wxxml_snapshot
+
+INCLUDES = -I$(srcdir)/wxxml_snapshot/include
+
 bin_PROGRAMS = poedit
 
 poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edframe.cpp \
@@ -7,9 +11,6 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edframe.cpp \
                  settingsdlg.h compiled_resource.cpp progressinfo.h \
                  progressinfo.cpp digger.h digger.cpp gexecute.h \
                  gexecute.cpp summarydlg.h summarydlg.cpp
-poedit_LDADD = -lwxxmlrc -lwxxml
-
-compiled_resource.cpp: resource.xml
-	$(WXRC) -v -c -o compiled_resource.cpp $(srcdir)/resource.xml
+poedit_LDADD = -Lwxxml_snapshot -lwxxml_snapshot $(LDFLAGS)
 
 EXTRA_DIST = resource.xml
