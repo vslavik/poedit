@@ -113,6 +113,7 @@ class poEditFrame : public wxFrame
         void OnNew(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
         void OnHelp(wxCommandEvent& event);
+        void OnHelpGettext(wxCommandEvent& event);
         void OnQuit(wxCommandEvent& event);
         void OnSave(wxCommandEvent& event);
         void OnSaveAs(wxCommandEvent& event);
@@ -153,6 +154,7 @@ class poEditFrame : public wxFrame
 
 #ifdef __WXMSW__
         wxCHMHelpController m_help;
+        wxString m_helpBook;
 #else
         wxHtmlHelpController m_help;
 #endif

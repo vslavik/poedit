@@ -47,6 +47,9 @@ class poEditApp : public wxApp
         /// Returns poEdit version string.
         wxString GetAppVersion() const;
         
+        /// Returns our locale object
+        wxLocale& GetLocale() { return m_locale; }
+        
     protected:
         /** Sets default values to configuration items that don't
             have anything set. (This may happen after fresh installation or

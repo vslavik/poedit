@@ -92,9 +92,9 @@ enum
 
 // colours used in the list:
 #define g_darkColourFactor 0.95
-#define DARKEN_COLOUR(r,g,b) (wxColour((r)*g_darkColourFactor,\
-                                       (g)*g_darkColourFactor,\
-                                       (b)*g_darkColourFactor))
+#define DARKEN_COLOUR(r,g,b) (wxColour(int((r)*g_darkColourFactor),\
+                                       int((g)*g_darkColourFactor),\
+                                       int((b)*g_darkColourFactor)))
 #define LIST_COLOURS(r,g,b) { wxColour(r,g,b), DARKEN_COLOUR(r,g,b) }
 static wxColour 
     g_ItemColourNormal[2] =       LIST_COLOURS(0xFF,0xFF,0xFF), // white
@@ -352,6 +352,7 @@ class UnfocusableTextCtrl : public wxTextCtrl
 BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU                 (XRCID("menu_quit"),        poEditFrame::OnQuit)
    EVT_MENU                 (XRCID("menu_help"),        poEditFrame::OnHelp)
+   EVT_MENU                 (XRCID("menu_help_gettext"),poEditFrame::OnHelpGettext)
    EVT_MENU                 (XRCID("menu_about"),       poEditFrame::OnAbout)
    EVT_MENU                 (XRCID("menu_new"),         poEditFrame::OnNew)
    EVT_MENU                 (XRCID("menu_open"),        poEditFrame::OnOpen)
@@ -485,10 +486,21 @@ poEditFrame::poEditFrame(const wxString& catalog) :
         ReadCatalog(catalog);
     UpdateMenu();
 
+    wxString cannon = wxGetApp().GetLocale().GetCanonicalName().Left(2);
+    wxString datadir = wxGetApp().GetAppPath() + _T("/share/poedit");
+    wxString book;
 #if defined(__WXMSW__)
-    m_help.Initialize(wxGetApp().GetAppPath() + _T("/share/poedit/poedit.chm"));
+    book.Printf(_T("%s/poedit-%s.chm"), datadir.c_str(), cannon.c_str());
+    if (!wxFileExists(book))
+        book.Printf(_T("%s/poedit.chm"), datadir.c_str());
+    m_help.Initialize(book);
+    m_helpBook = book;
 #elif defined(__UNIX__)
-    m_help.Initialize(wxGetApp().GetAppPath() + _T("/share/poedit/help.zip"));
+    book.Printf(_T("%s/help-%s.zip"), datadir.c_str(), cannon.c_str());
+    if (!wxFileExists(book))
+        book.Printf(_T("%s/help.zip"), datadir.c_str());
+    m_help.Initialize(book);
+    m_help.AddBook(datadir + _T("/help-gettext.zip"));    
 #endif
 
     ms_instances.Append(this);
@@ -1439,7 +1451,18 @@ void poEditFrame::OnAbout(wxCommandEvent&)
 
 void poEditFrame::OnHelp(wxCommandEvent&)
 {
+#ifdef __WXMSW__
+    m_help.LoadFile(m_helpBook);
+#endif
     m_help.DisplayContents();
+}
+
+void poEditFrame::OnHelpGettext(wxCommandEvent&)
+{
+#ifdef __WXMSW__
+    m_help.LoadFile(wxGetApp().GetAppPath() + _T("/share/poedit/gettext.chm"));
+    m_help.DisplayContents();
+#endif
 }
 
 
