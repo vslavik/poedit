@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2002-08-31 14:36+0200\n"
 "Last-Translator: Artis Trops <hornet@navigators.lv>\n"
 "Language-Team: Latvian <ll10nt@os.lv>\n"
@@ -17,6 +17,11 @@ msgstr " (modificēts)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr " failus..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, fuzzy, c-format
@@ -106,7 +111,7 @@ msgstr ""
 msgid "&View"
 msgstr "&Skats"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr ""
@@ -221,11 +226,11 @@ msgstr "Bāzes ceļš:"
 msgid "Behavior"
 msgstr "Uzvedība"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -481,10 +486,15 @@ msgstr "Kļūda ielādējot ziņojumu kataloga failu '"
 msgid "Error opening file %s!"
 msgstr "Kļūda atverot failu %s!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 #, fuzzy
 msgid "Error saving catalog"
 msgstr "Kļūda ielādējot ziņojumu kataloga failu '"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -625,6 +635,11 @@ msgstr "Pēdējoreiz mainīts"
 msgid "Line"
 msgstr "Ridiņa"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "Rindiņu beigu formāts:"
@@ -637,7 +652,7 @@ msgstr "Paplašinājumu saraksts, kas atdalīts ar semikoliem (piem., *.cpp;*.h)
 msgid "Macintosh"
 msgstr ""
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr ""
@@ -650,7 +665,7 @@ msgstr "Maks. iztrūkstošo vārdu #:"
 msgid "Max. difference in sentence length:"
 msgstr "Maks. atšķirība teikuma garumos:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "Apvienoju atšķirības..."
 
@@ -948,12 +963,18 @@ msgstr "Komandas e-pasta adrese:"
 msgid "Team:"
 msgstr "Komanda:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
 "specified in catalog settings. It was saved in UTF-8 instead\n"
 "and the setting was modified accordingly."
+msgstr ""
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
@@ -1092,7 +1113,7 @@ msgstr "Atjaunināt kopsavilkumu"
 msgid "Update translation memory"
 msgstr "Atjauninu tulkošanas atmiņu"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "Atjauninu katalogu..."
 

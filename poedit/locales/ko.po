@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-09-20 22:52+0900\n"
 "Last-Translator: Hojin Choi <pynoos@users.kldp.net>\n"
 "Language-Team: Korean Translation <pynoos@users.kldp.net>\n"
@@ -24,6 +24,11 @@ msgstr " (수정됨)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr " 파일..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -108,7 +113,7 @@ msgstr "소스로부터 업데이트(&U)"
 msgid "&View"
 msgstr "보기(&V)"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "%s : 정상적인 POT 파일이 아닙니다."
@@ -219,11 +224,11 @@ msgstr "기본 경로:"
 msgid "Behavior"
 msgstr "동작"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "카탈로그 파일 오류: msgid_plural 없이 복수의 msgstr"
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr "카탈로그 파일 오류: msgid_plural 이면서 msgstr이 하나임"
@@ -470,9 +475,14 @@ msgstr "메시지 파일 로딩 중 오류: '"
 msgid "Error opening file %s!"
 msgstr "파일 열기 오류: %s"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "카탈로그 저장 오류"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -609,6 +619,11 @@ msgstr "최종 편집"
 msgid "Line"
 msgstr "줄"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "개행 서식:"
@@ -621,7 +636,7 @@ msgstr "쌍반점(;)으로 분리된 확장자 목록"
 msgid "Macintosh"
 msgstr "매킨토시"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "잘못된 헤더: '%s'"
@@ -634,7 +649,7 @@ msgstr "누락된 최대 단어 수:"
 msgid "Max. difference in sentence length:"
 msgstr "Max. difference in sentence length:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "차이점 병합"
 
@@ -928,7 +943,7 @@ msgstr "팀 메일 주소:"
 msgid "Team:"
 msgstr "팀:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -938,6 +953,12 @@ msgstr ""
 "본 카탈로그는 카탈로그 설정에 있는 '%s' 문자코드로는\n"
 "저장할 수 없습니다. 대신 UTF-8 으로 저장되었으며\n"
 "설정 값도 그에 맞게 수정되었습니다."
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1076,7 +1097,7 @@ msgstr "업데이트 요약"
 msgid "Update translation memory"
 msgstr "번역본 기억장치(TM)에서 업데이트"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "카탈로그 업데이트 중..."
 

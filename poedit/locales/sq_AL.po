@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-09-07 01:17+0200\n"
 "Last-Translator: Besnik Bleta <besnik@spymac.com>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -22,6 +22,11 @@ msgstr " (ndryshuar)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr "kartela..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -106,7 +111,7 @@ msgstr "&Përditëso prej burimesh"
 msgid "&View"
 msgstr "&Parje"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' nuk është një kartelë POT e vlefshme."
@@ -217,13 +222,13 @@ msgstr "Shteg bazë:"
 msgid "Behavior"
 msgstr "Sjellje"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 "Kartelë katalogu e dëmtuar: vargje mesazhesh në shumës përdorur pa "
 "msgid_plural"
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -472,9 +477,14 @@ msgstr "Gabim në ngarkimin e kartelës katalog mesazhesh '"
 msgid "Error opening file %s!"
 msgstr "Gabim gjatë hapjes së kartelës %s!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "Gabim në ruajtje katalogu"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -611,6 +621,11 @@ msgstr "Ndryshuar së fundmi"
 msgid "Line"
 msgstr "Rresht"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "Format fundesh rreshti:"
@@ -623,7 +638,7 @@ msgstr "Listë e zgjatimeve të ndarë me pikëpresje (p.sh. *.cpp;*.h):"
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Titull i keqformuar: '%s'"
@@ -636,7 +651,7 @@ msgstr "Maks. # fjalësh munguese:"
 msgid "Max. difference in sentence length:"
 msgstr "Maks. ndryshimi në gjatësi fjalish:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "Po përzjej dallime..."
 
@@ -934,7 +949,7 @@ msgstr "Vendndodhje email e ekipit:"
 msgid "Team:"
 msgstr "Ekipi:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -944,6 +959,12 @@ msgstr ""
 "Katalogu nuk mund të ruhej nën gërmat '%s' si\n"
 "tregohet në rregullime katalogu. U ruajt nën UTF-8\n"
 "dhe rregullimi u ndryshua për përputhje."
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1082,7 +1103,7 @@ msgstr "Përditëso përmbledhje"
 msgid "Update translation memory"
 msgstr "Përditëso kujtesë përkthimesh"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "Po përditësoj katalog..."
 

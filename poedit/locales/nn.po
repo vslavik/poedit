@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-02-02 20:05+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -21,6 +21,11 @@ msgstr " (endra)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr "-filer ..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -105,7 +110,7 @@ msgstr "Oppdater frå &kjelder"
 msgid "&View"
 msgstr "&Vis"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "«%s» er ei ugyldig POT-fil."
@@ -217,11 +222,11 @@ msgstr "&Grunnstig:"
 msgid "Behavior"
 msgstr "Åtferd"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -469,9 +474,14 @@ msgstr "Feil ved opning av katalogfila «"
 msgid "Error opening file %s!"
 msgstr "Feil ved opning av fila «%s»."
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "Feil ved lagring av katalog"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -608,6 +618,11 @@ msgstr "Sist endra"
 msgid "Line"
 msgstr "Linje"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "&Linjeskiftformat:"
@@ -620,7 +635,7 @@ msgstr "Liste over etternamn skilde med semikolon (f.eks. «*.cpp; *.h»):"
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr ""
@@ -633,7 +648,7 @@ msgstr "Høgste tal på &manglande ord:"
 msgid "Max. difference in sentence length:"
 msgstr "Høgste forskjell i &setningslengd:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "Slår saman endringar ..."
 
@@ -928,7 +943,7 @@ msgstr "&E-post-adressa til laget:"
 msgid "Team:"
 msgstr "&Lag:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -938,6 +953,12 @@ msgstr ""
 "Klarte ikkje å lagra katalogen med teiknkodinga «%s»,\n"
 "som valt i kataloginnstillingane. Han vart derfor lagra som UTF-8,\n"
 "og innstillinga vart endra."
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1077,7 +1098,7 @@ msgstr "Samandrag"
 msgid "Update translation memory"
 msgstr "Oppdaterer omsetjingsminne"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "Oppdaterer katalog ..."
 

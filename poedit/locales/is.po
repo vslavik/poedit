@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit 1.2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2003-11-28 18:24+0100\n"
 "Last-Translator: Samúel Jón Gunnarsson <sammi@techattack.nu>\n"
 "Language-Team: Icelandic <sammi@techattack.nu>\n"
@@ -22,6 +22,11 @@ msgstr "(breytt)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr "skrár..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, fuzzy, c-format
@@ -106,7 +111,7 @@ msgstr "&Uppfæra frá frumkóða"
 msgid "&View"
 msgstr "Sý&n"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' er ógild POT skrá."
@@ -219,11 +224,11 @@ msgstr "Grunnstígur:"
 msgid "Behavior"
 msgstr "Hegðun"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -472,9 +477,14 @@ msgstr "Villa við hleðslu á safnskrá '"
 msgid "Error opening file %s!"
 msgstr "Villa við opnun á skránni %s!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "Villa við vistun á safnskrá"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -612,6 +622,11 @@ msgstr "Síðast breytt"
 msgid "Line"
 msgstr "Lína"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "Form línuendinga:"
@@ -624,7 +639,7 @@ msgstr "Listi yfir skjalform aðskilið með semikommu (dæmi. *.cpp, *.h):"
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr ""
@@ -637,7 +652,7 @@ msgstr "Hámarksfj. týndra orða:"
 msgid "Max. difference in sentence length:"
 msgstr "Hámarksmismunur í lengd setninga:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "Samfletti mismunum..."
 
@@ -935,7 +950,7 @@ msgstr "Netfang teymis:"
 msgid "Team:"
 msgstr "Teymi:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -945,6 +960,12 @@ msgstr ""
 "Ekki tókst að vista tilgreinda safnskrá í eftirfarandi\n"
 "táknsetti '%s'. Skráin var þess vegna vistuð í UTF-8 formi\n"
 "og stillingum breytti í samræmi við það."
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1084,7 +1105,7 @@ msgstr "Samantekt uppfærslu"
 msgid "Update translation memory"
 msgstr "Uppfæra þýðendaminni"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "Uppfæri safnskrá..."
 

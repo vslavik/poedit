@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.2.2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-01-27 00:14-0000\n"
 "Last-Translator: Lazarus Long <lazarus.long@bigfoot.com>\n"
 "Language-Team: Portuguese (Portugal) <lazarus.long@bigfoot.com>\n"
@@ -22,6 +22,11 @@ msgstr " (modificado)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr " ficheiros..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -106,7 +111,7 @@ msgstr "&Actualizar a partir do código-fonte"
 msgid "&View"
 msgstr "&Ver"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' não é um ficheiro POT válido."
@@ -218,11 +223,11 @@ msgstr "Pasta base:"
 msgid "Behavior"
 msgstr "Comportamento"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -470,9 +475,14 @@ msgstr "Erro a carregar o catálogo de mensagens '"
 msgid "Error opening file %s!"
 msgstr "Erro ao abrir o ficheiro %s!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "Erro a gravar o catálogo"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -609,6 +619,11 @@ msgstr "Última modificação"
 msgid "Line"
 msgstr "Linha"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "Formato de fim de linha:"
@@ -621,7 +636,7 @@ msgstr "Lista de extensões separadas por ponto-e-vírgula (ex. *.cpp;*.h):"
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr ""
@@ -634,7 +649,7 @@ msgstr "Número máximo de palavras em falta:"
 msgid "Max. difference in sentence length:"
 msgstr "Diferença máxima no comprimento da frase:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "A incorporar as diferenças..."
 
@@ -932,7 +947,7 @@ msgstr "Endereço electrónico da equipa:"
 msgid "Team:"
 msgstr "Equipa:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -942,6 +957,12 @@ msgstr ""
 "O catálogo não pôde ser na codificação '%s' como\n"
 "indicado nas preferências do catálogo. Foi antes gravado na\n"
 "codificação 'UTF-8' e o parâmetro foi modificado de acordo."
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1082,7 +1103,7 @@ msgstr "Resumo da actualização"
 msgid "Update translation memory"
 msgstr "Actualizar a memorização de traduções"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "A actualizar o catálogo..."
 

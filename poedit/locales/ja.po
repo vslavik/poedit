@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-01-30 23:30+0900\n"
 "Last-Translator: Masato Kitaji <masapon@dream.com>\n"
 "Language-Team: ja <masapon@dream.com>\n"
@@ -22,6 +22,11 @@ msgstr " (修正済)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr " ファイル..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, fuzzy, c-format
@@ -107,7 +112,7 @@ msgstr "ソースから更新 (&U)"
 msgid "&View"
 msgstr "表示(&V)"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' は有効な POT ファイルではありません。"
@@ -222,11 +227,11 @@ msgstr "ベースのパス:"
 msgid "Behavior"
 msgstr "動作"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -478,9 +483,14 @@ msgstr "メッセージカタログの読み込みエラー"
 msgid "Error opening file %s!"
 msgstr "ファイル %s を開く途中でエラーが発生しました！"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "カタログ保存エラー"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -620,6 +630,11 @@ msgstr "最終更新"
 msgid "Line"
 msgstr "行番号"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "行末のフォーマット:"
@@ -633,7 +648,7 @@ msgstr "セミコロンで分割された拡張子リスト (例. *.cpp;*h):"
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr ""
@@ -647,7 +662,7 @@ msgstr "失った単語における最大の差"
 msgid "Max. difference in sentence length:"
 msgstr "センテンスの長さにおける最大の差"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "差分をマージ中..."
 
@@ -947,7 +962,7 @@ msgstr "翻訳チームのメールアドレス:"
 msgid "Team:"
 msgstr "翻訳チーム:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -957,6 +972,12 @@ msgstr ""
 "カタログは設定の中で指定された '%s' キャラクタセットで保存すること\n"
 "ができませんでした。\n"
 "代わりに UTF-8 へ設定を変更して保存しました。"
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1096,7 +1117,7 @@ msgstr "サマリを更新中..."
 msgid "Update translation memory"
 msgstr "翻訳メモリを更新しています..."
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "カタログを更新中..."
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-01-26 12:00+0200\n"
 "Last-Translator: Velonis Petros <velonis@freemail.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -21,6 +21,11 @@ msgstr " (τροποποιήθηκε)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr " αρχεία..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -156,7 +161,7 @@ msgstr "&Ενημέρωση από τις πηγές"
 msgid "&View"
 msgstr "&Προβολή"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' δεν είναι έγκυρο αρχείο POT."
@@ -270,11 +275,11 @@ msgstr "Μονοπάτι βάσης:"
 msgid "Behavior"
 msgstr "Συμπεριφορά"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -580,9 +585,14 @@ msgstr "Σφάλμα φόρτωσης αρχείου καταλόγου μηνυ
 msgid "Error opening file %s!"
 msgstr "Σφάλμα ανοίγματος αρχείου %s!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "Σφάλμα αποθήκευσης καταλόγου"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -750,6 +760,11 @@ msgstr "Τελευταία τροποποίηση"
 msgid "Line"
 msgstr "Γραμμή"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "Μορφή κλεισίματος γραμμών:"
@@ -762,7 +777,7 @@ msgstr "Η λίστα των επεκτάσεων χωρίζεται από άν
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr ""
@@ -775,7 +790,7 @@ msgstr "Μέγιστος # λέξεων που να λείπουν:"
 msgid "Max. difference in sentence length:"
 msgstr "Μέγιστη διαφορά στο μήκος της πρότασης:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "Συνένωση διαφορών..."
 
@@ -1088,7 +1103,7 @@ msgstr "Ηλεκτρονική διεύθυνση ομάδας:"
 msgid "Team:"
 msgstr "Ομάδα:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -1098,6 +1113,12 @@ msgstr ""
 "Ο κατάλογος δεν μπορούσε να αποθηκευτεί στον κατάλογο χαρακτήρων '%s'\n"
 "όπως προσδιορίστηκε στις ρυθμίσεις καταλόγου. Αποθηκεύτηκε σε UTF-8\n"
 "και η ρύθμιση τροποποιήθηκε αναλόγως."
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1239,7 +1260,7 @@ msgstr "Ενημέρωση περίληψης"
 msgid "Update translation memory"
 msgstr "Ενημέρωση μεταφραστικής μνήμης"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "Ενημέρωση καταλόγου μεταφράσεων..."
 

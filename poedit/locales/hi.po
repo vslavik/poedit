@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit-hi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-04-04 17:00+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: हिन्दी (Hindi) <dysxhi@yahoo.co.in>\n"
@@ -23,6 +23,11 @@ msgstr " (परिवर्तित)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr " फ़ाइलें..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -107,7 +112,7 @@ msgstr "स्रोतों से अपडेट करें (&U)"
 msgid "&View"
 msgstr "अवलोकन (&V)"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' एक वैध पॉट फ़ाइल नहीं है।"
@@ -219,11 +224,11 @@ msgstr "मूल पथ:"
 msgid "Behavior"
 msgstr "व्यवहार"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -471,9 +476,14 @@ msgstr "संदेश सूचीपत्र फ़ाइल को लोड �
 msgid "Error opening file %s!"
 msgstr "%s फ़ाइल को खोलने में त्रुटि!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "सूचीपत्र को सुरक्षित करने में त्रुटि"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -610,6 +620,11 @@ msgstr "अंतिम परिवर्तन तिथि"
 msgid "Line"
 msgstr "पंक्ति"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "पंक्ति समाप्ति प्रारूप:"
@@ -622,7 +637,7 @@ msgstr "सेमीकोलनों द्वारा अलग-अलग �
 msgid "Macintosh"
 msgstr "मैक्नटोश"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr ""
@@ -635,7 +650,7 @@ msgstr "महत्तम # विलुप्त शब्द:"
 msgid "Max. difference in sentence length:"
 msgstr "वाक्य लंबाई में महत्तम अंतर:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "अंतरों को विलय किया जा रहा है..."
 
@@ -929,7 +944,7 @@ msgstr "दल का विपत्र पता:"
 msgid "Team:"
 msgstr "दल:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -939,6 +954,12 @@ msgstr ""
 "सूचीपत्र समायोजनाओं में बताये गये '%s' शब्द-समुच्च्य में इस सूचीपत्र\n"
 "को सुरक्षित नहीं किया जा सका। इसकी बज़ाय इसे यूटीएफ़-८ में सुरक्षित\n"
 "'किया गया और इस समायोजनाओं को तदनुसार परिवर्तित कर दिया गया है।"
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1077,7 +1098,7 @@ msgstr "सारांश को अपडेट करें"
 msgid "Update translation memory"
 msgstr "अनुवाद-स्मॄति को अपडेट करें"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "सूचीपत्र को अपडेट किया जा रहा है..."
 

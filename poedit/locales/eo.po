@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Esperanto versio de poEdit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-10-13 15:32-0000\n"
 "Last-Translator: Tim Morley <t_morley@argonet.co.uk>\n"
 "Language-Team: Tim Morley <t_morley@argonet.co.uk>\n"
@@ -22,6 +22,11 @@ msgstr " (modifita)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr " dosieroj..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -106,7 +111,7 @@ msgstr "Ĝis&fuldatigi el fontoj"
 msgid "&View"
 msgstr "&Vido"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' ne estas valida POT-dosiero."
@@ -217,11 +222,11 @@ msgstr "Baza vojprefikso:"
 msgid "Behavior"
 msgstr "Konduto"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "Nevalida katalogdosiero: plurala formo msgstr uzita sen msgid_plural"
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -469,9 +474,14 @@ msgstr "Eraro dum ŝargo de mesaĝokataloga dosiero '"
 msgid "Error opening file %s!"
 msgstr "Eraro dum malfermo de dosiero %s!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "Eraro dum konservado de katalogo"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -608,6 +618,11 @@ msgstr "Plej laste modifita:"
 msgid "Line"
 msgstr "Linio"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "Formato de liniaj finoj:"
@@ -620,7 +635,7 @@ msgstr "Listo de sufiksoj, apartigitaj de punktokomoj (ekz. *.cpp;*.h):"
 msgid "Macintosh"
 msgstr "Makintoŝo"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Misformita ĉapo: '%s'"
@@ -633,7 +648,7 @@ msgstr "Plej granda nombro da foraj vortoj:"
 msgid "Max. difference in sentence length:"
 msgstr "Plej granda malsameco inter frazlongoj:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "Daŭras kunfandado de malsamaĵoj..."
 
@@ -930,7 +945,7 @@ msgstr "Skipa retadreso:"
 msgid "Team:"
 msgstr "Skipo:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -940,6 +955,12 @@ msgstr ""
 "La katalogo ne povas esti konservita en la '%s' signaro\n"
 "kiel elektita en la kataloga agordaro. Ĝi estis konservita en\n"
 "UTF-8 anstataŭe, kaj la agordaĵo ŝanĝita tiel."
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1079,7 +1100,7 @@ msgstr "Ĝisdatigi resumon"
 msgid "Update translation memory"
 msgstr "Ĝisdatigi tradukmemoron"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "Daŭras la ĝisdatigon de la katalogo..."
 

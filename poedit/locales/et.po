@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.2.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-01-26 13:14+0200\n"
 "Last-Translator: Joosep-Georg Järvemaa <georg@linux.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -17,6 +17,11 @@ msgstr " (muudetud)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr " faile..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -101,7 +106,7 @@ msgstr "&Uuenda lähtetekstidest"
 msgid "&View"
 msgstr "&Vaade"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' pole korrektne POT fail."
@@ -213,11 +218,11 @@ msgstr "Baasrada:"
 msgid "Behavior"
 msgstr "Käitumine"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -465,9 +470,14 @@ msgstr "Tõrge kataloogifaili '"
 msgid "Error opening file %s!"
 msgstr "Tõrge faili %s avamisel!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "Tõrge kataloogi salvestamisel"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -604,6 +614,11 @@ msgstr "Viimati muudetud"
 msgid "Line"
 msgstr "Rida"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "Realõppude vorming:"
@@ -616,7 +631,7 @@ msgstr "Laiendite nimistu, edaldatuna semikoolonitega (näiteks *.cpp;*.h):"
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr ""
@@ -629,7 +644,7 @@ msgstr "Maks. puuduvate sõnade arv:"
 msgid "Max. difference in sentence length:"
 msgstr "Maks. erinevus lausepikkustes:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "Ühendan erinevused..."
 
@@ -926,7 +941,7 @@ msgstr "Meeskonna e-postiaadress:"
 msgid "Team:"
 msgstr "Meeskond:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -936,6 +951,12 @@ msgstr ""
 "Kataloogi polnud võimalik salvestada märgistikus '%s',\n"
 "nagu oli märgitud kataloogi seadeis. See salvestati hoopis UTF-8\n"
 "märgistikus ja muudeti ka vastavat kataloogiseadet."
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1074,7 +1095,7 @@ msgstr "Uuendamise kokkuvõte"
 msgid "Update translation memory"
 msgstr "Uuenda tõlkemälu"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "Uuendan kataloogi..."
 

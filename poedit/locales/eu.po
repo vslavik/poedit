@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-09-16 15:58+0100\n"
 "Last-Translator: 3ARRANO Euskalgintza Taldea <3arrano@euskalerria.org>\n"
 "Language-Team: 3ARRANO Euskalgintza Taldea <3arrano@euskalerria.org>\n"
@@ -23,6 +23,11 @@ msgstr "(eraldatua)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr "fitxategiak..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -107,7 +112,7 @@ msgstr "&Iturburuetatik eguneratu"
 msgid "&View"
 msgstr "&Ikusi"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' ez da balizko POT fitxategia."
@@ -218,11 +223,11 @@ msgstr "Oinarrizko helbidea:"
 msgid "Behavior"
 msgstr "Jokaera"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -470,9 +475,14 @@ msgstr "Akatsa katalogo fitxategia kargatzean '"
 msgid "Error opening file %s!"
 msgstr "Akatsa %s fitxategia irekitzean!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "Akatsa katalogo gordetzean"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -609,6 +619,11 @@ msgstr "Azken eraldaketa"
 msgid "Line"
 msgstr "Lerroa:"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "Lerro amaieren formatua:"
@@ -621,7 +636,7 @@ msgstr "Atzizkien zerrenda puntu-ta-kakotx batez banandua (adb. *.cpp;*.h):"
 msgid "Macintosh"
 msgstr "Mac"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Goiburu akastuna: '%s'"
@@ -634,7 +649,7 @@ msgstr "Ageri ez diren hitzen gehienezko kop:"
 msgid "Max. difference in sentence length:"
 msgstr "Esaldi-luzeeraren gehienezko ezberdintasuna:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "Ezberdintasunak elkarjartzen..."
 
@@ -930,7 +945,7 @@ msgstr "Taldearen eposta helbidea:"
 msgid "Team:"
 msgstr "Taldea:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -940,6 +955,12 @@ msgstr ""
 "Katalogoa ezin izan da '%s'  kodeketarekin gorde\n"
 "honen ezarpenetan zehaztu bezala. UTF-8 kodeketan\n"
 "gorde da eta ezarpenak ere era berean aldatu dira."
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1079,7 +1100,7 @@ msgstr "Laburpena eguneratu"
 msgid "Update translation memory"
 msgstr "Itzulpen memoria eguneratu"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "Katalogoa eguneratzen..."
 

@@ -57,7 +57,15 @@ static wxString ReadTextLine(wxTextFile* f, wxMBConv *conv)
     }
 #if !wxUSE_UNICODE
     if (conv)
-        s = wxString(s.wc_str(*conv), wxConvUTF8);
+    {
+        wxString s2 = wxString(s.wc_str(*conv), wxConvUTF8);
+        if (s2.empty() && !s.empty())
+        {
+            wxLogError(_("Error while loading file '%s': line %u is corruped."),
+                       f->GetName(), f->GetCurrentLine());
+        }
+        return s2;
+    }
 #endif
     return s;
 }
@@ -89,6 +97,44 @@ static bool ReadParamIfNotSet(const wxString& input,
     return false;
 }
         
+
+#if wxUSE_UNICODE
+// Checks if the file was loaded correctly, i.e. that non-empty lines
+// ended up non-empty in memory, after doing charset conversion in
+// wxTextFile. This detects for example files that claim they are in UTF-8
+// while in fact they are not.
+bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
+                       const wxString& charset)
+{
+    wxTextFile f2;
+    
+    if (!f2.Open(filename, wxConvISO8859_1))
+        return false;
+    
+    if (f.GetLineCount() != f2.GetLineCount())
+    {
+        wxLogError(_("%i lines of file '%s' were not loaded correctly."),
+                   (int)f2.GetLineCount() - (int)f.GetLineCount(),
+                   filename.c_str());
+        return false;
+    }
+
+    bool ok = true;
+    size_t cnt = f.GetLineCount();
+    for (size_t i = 0; i < cnt; i++)
+    {
+        if (f[i].empty() && !f2[i].empty()) // wxMBConv conversion failed
+        {
+            wxLogError(
+                _("Line %u of file '%s' is corrupted (not valid %s data)."),
+                i, filename.c_str(), charset.c_str());
+            ok = false;
+        }
+    }
+
+    return ok;
+}
+#endif
             
 
 // ----------------------------------------------------------------------
@@ -792,6 +838,13 @@ bool Catalog::Load(const wxString& po_file)
     f.Close();
     wxCSConv encConv(m_header.Charset);
     if (!f.Open(po_file, encConv)) return false;
+
+#if wxUSE_UNICODE
+    if (!VerifyFileCharset(f, po_file, m_header.Charset))
+    {
+        wxLogError(_("There were errors when loading the catalog. Some data may be missing or corrupted as the result."));
+    }
+#endif
 
     LoadParser parser(this, &f, &encConv);
     parser.Parse();

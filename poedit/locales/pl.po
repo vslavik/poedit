@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-09-07 11:20+0100\n"
 "Last-Translator: Adam Gołębiowski <adamg@pld-linux.org>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -20,6 +20,11 @@ msgstr "(zmodyfikowano)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr "plików..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -104,7 +109,7 @@ msgstr "&Uaktualnij ze źródeł"
 msgid "&View"
 msgstr "&Podgląd"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "\"%s\" nie jest poprawnym plikiem POT."
@@ -215,11 +220,11 @@ msgstr "Ścieżka podstawowa:"
 msgid "Behavior"
 msgstr "Zachowanie"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "Uszkodzony plik katalog: liczba mnoga z msgstr użyta bez msgid_plural"
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -467,9 +472,14 @@ msgstr "Błąd podczas wczytywania pliku katalogu wiadomości '"
 msgid "Error opening file %s!"
 msgstr "Błąd podczas otwierania pliku %s!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "Błąd zapisywania katalogu"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -606,6 +616,11 @@ msgstr "Ostatnio zmodyfikowano"
 msgid "Line"
 msgstr "Wiersz"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "Format zakończeń wierszy:"
@@ -618,7 +633,7 @@ msgstr "Lista rozszerzeń rozdzielonych przecinkami (np. *.cpp;*.h):"
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Zdeformowany nagłówek: '%s'"
@@ -631,7 +646,7 @@ msgstr "Maks. # brakujących słów:"
 msgid "Max. difference in sentence length:"
 msgstr "Maks. różnica w długości napisu:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "Łączenie różnic..."
 
@@ -926,7 +941,7 @@ msgstr "Adres e-mail zespołu:"
 msgid "Team:"
 msgstr "Zespół:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -936,6 +951,12 @@ msgstr ""
 "Ten katalog nie może zostać zapisany z zestawem znaków\n"
 "'%s' z wybranymi ustawieniami. Zamiast tego zostanie\n"
 "zapisany w UTF-8 oraz odpowiednio zmidyfikowany."
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1076,7 +1097,7 @@ msgstr "Uaktualnij zestawienie"
 msgid "Update translation memory"
 msgstr "Uaktualnienie pamięci tłumaczeń"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "Uaktualnianie katalogu..."
 

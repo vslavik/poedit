@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.2.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-09-26 04:09+0400\n"
 "Last-Translator: Aiet Kolkhi <aiet@qartuli.net>\n"
 "Language-Team: Georgian <aiet@qartuli.net>\n"
@@ -17,6 +17,11 @@ msgstr " (შეიცვალა)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr " ფაილები..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -101,7 +106,7 @@ msgstr "განახლება &წყაროდან"
 msgid "&View"
 msgstr "&ხედი"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' არ არის გამართული POT ფაილი."
@@ -212,13 +217,13 @@ msgstr "ძირითადი მდებარეობა:"
 msgid "Behavior"
 msgstr "ქცევა"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 "არასწორი catalog ფაილი: გამოყენებულია msgstr მრავლობითის ფორმა, msgid_plural "
 "-ის მითითების გარეშე"
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -467,9 +472,14 @@ msgstr "შეცდომა კატალოგის ფაილის გ
 msgid "Error opening file %s!"
 msgstr "შეცდომა %s ფაილის გამოძახებისას!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "შეცდომა კატალოგის დამახსოვრებისას"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -607,6 +617,11 @@ msgstr "ბოლო ცვლილება"
 msgid "Line"
 msgstr "სტრიქონი"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "ხაზის დაბოლოების ფორმატი:"
@@ -619,7 +634,7 @@ msgstr "გაფართოებების სია წერტილ-მ
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "შეცვლილი ჰედერი: '%s'"
@@ -632,7 +647,7 @@ msgstr "უცნობი სიტყვათა მაქს. ოდენ�
 msgid "Max. difference in sentence length:"
 msgstr "მაქს. სხვაობა სტრიქონის სიგრძეში:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "მიმდინარეობს ცვლილებების შეთავსება..."
 
@@ -929,7 +944,7 @@ msgstr "ჯგუფის ელფოსტა:"
 msgid "Team:"
 msgstr "ჯგუფი:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -940,6 +955,12 @@ msgstr ""
 "რაც კატალოგის პარამეტრებშია მითითებული. სანაცვლოდ ფაილი UTF-8 კოდირებაში "
 "შევინახე\n"
 "და პარამეტრეიც შესაბამისად იქნა შეცვლილი."
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1079,7 +1100,7 @@ msgstr "შეჯამების განახლება"
 msgid "Update translation memory"
 msgstr "ვანაახლე თარგმანის მეხსიერება"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "მიმდინარეობს კატალოგების განახლება..."
 

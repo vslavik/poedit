@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit zh-CN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 23:53+0100\n"
+"POT-Creation-Date: 2004-12-05 23:59+0100\n"
 "PO-Revision-Date: 2004-08-31 13:24+0800\n"
 "Last-Translator: hutuworm <hutuworm@hutuworm.org>\n"
 "Language-Team: Leo at mis.ccu.edu.tw <leo@mis.ccu.edu.tw>\n"
@@ -22,6 +22,11 @@ msgstr " (已修改)"
 #: ../src/digger.cpp:43
 msgid " files..."
 msgstr " 文件..."
+
+#: ../src/catalog.cpp:116
+#, c-format
+msgid "%i lines of file '%s' were not loaded correctly."
+msgstr ""
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -106,7 +111,7 @@ msgstr "自源更新(&U)"
 msgid "&View"
 msgstr "查看(&V)"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1318
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' 不是一个有效的 POT 文件。"
@@ -217,11 +222,11 @@ msgstr "基本路径:"
 msgid "Behavior"
 msgstr "行为"
 
-#: ../src/catalog.cpp:476
+#: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "类目文件损坏: 使用复数形式的 msgstr 而没有 msgid_plural"
 
-#: ../src/catalog.cpp:444
+#: ../src/catalog.cpp:490
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr "类目文件损坏: 单数形式 msgstr 与 msgid_plural 并用"
@@ -468,9 +473,14 @@ msgstr "加载信息类目文件错误 "
 msgid "Error opening file %s!"
 msgstr "打开文件 '%s' 错误!"
 
-#: ../src/catalog.cpp:1065
+#: ../src/catalog.cpp:1118
 msgid "Error saving catalog"
 msgstr "保存消息目录文件错误"
+
+#: ../src/catalog.cpp:64
+#, c-format
+msgid "Error while loading file '%s': line %u is corruped."
+msgstr ""
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -607,6 +617,11 @@ msgstr "最后修改"
 msgid "Line"
 msgstr "行"
 
+#: ../src/catalog.cpp:129
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
 msgstr "行结尾格式:"
@@ -619,7 +634,7 @@ msgstr "列示扩展名并以逗号分隔 (例如: *.cpp, *.h):"
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:114
+#: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "畸形标头: '%s'"
@@ -632,7 +647,7 @@ msgstr "最多允许遗缺单词个数:"
 msgid "Max. difference in sentence length:"
 msgstr "最长允许单句长度差异:"
 
-#: ../src/catalog.cpp:1237
+#: ../src/catalog.cpp:1290
 msgid "Merging differences..."
 msgstr "合并差异..."
 
@@ -925,7 +940,7 @@ msgstr "团队专用电子邮件:"
 msgid "Team:"
 msgstr "团队:"
 
-#: ../src/catalog.cpp:1064
+#: ../src/catalog.cpp:1117
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -935,6 +950,12 @@ msgstr ""
 "消息目录文档无法以消息目录文档设置中指定的\n"
 " '%s' 字符集保存。文件将会以 UTF-8 \n"
 "格式替换，而且设置将会随着更改。"
+
+#: ../src/catalog.cpp:845
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1073,7 +1094,7 @@ msgstr "更新摘要"
 msgid "Update translation memory"
 msgstr "更新翻译词库"
 
-#: ../src/catalog.cpp:1197
+#: ../src/catalog.cpp:1250
 msgid "Updating catalog..."
 msgstr "更新消息目录文档..."
 
