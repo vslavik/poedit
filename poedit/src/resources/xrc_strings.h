@@ -10,6 +10,7 @@ _("Edit the file in text editor");
 _("Find...");
 _("String to find:");
 _("Case sensitive");
+_("Start from the first item");
 _("Find in original strings");
 _("Find in translations");
 _("Cancel");

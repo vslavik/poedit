@@ -47,6 +47,8 @@ FindFrame::FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c,
         
     m_btnNext = XRCCTRL(*this, "find_next", wxButton);
     m_btnPrev = XRCCTRL(*this, "find_prev", wxButton);
+    
+    Reset(c);
 
     XRCCTRL(*this, "in_orig", wxCheckBox)->SetValue(
         wxConfig::Get()->Read(_T("find_in_orig"), (long)true));
@@ -54,6 +56,8 @@ FindFrame::FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c,
         wxConfig::Get()->Read(_T("find_in_trans"), (long)true));
     XRCCTRL(*this, "case_sensitive", wxCheckBox)->SetValue(
         wxConfig::Get()->Read(_T("find_case_sensitive"), (long)false));
+    XRCCTRL(*this, "from_first", wxCheckBox)->SetValue(
+        wxConfig::Get()->Read(_T("find_from_first"), (long)true));
 }
 
 
@@ -68,13 +72,22 @@ FindFrame::~FindFrame()
                 XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("find_case_sensitive"),
                 XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue());
+    wxConfig::Get()->Write(_T("find_from_first"),
+                XRCCTRL(*this, "from_first", wxCheckBox)->GetValue());
 }
 
 
 void FindFrame::Reset(Catalog *c)
 {
+    bool fromFirst = XRCCTRL(*this, "from_first", wxCheckBox)->GetValue();
+
     m_catalog = c;
     m_position = -1;
+    if (!fromFirst)
+        m_position = m_listCtrl->GetNextItem(-1,
+                                     wxLIST_NEXT_ALL,
+                                     wxLIST_STATE_SELECTED);
+    
     m_btnPrev->Enable(!!m_text);
     m_btnNext->Enable(!!m_text);
 }
