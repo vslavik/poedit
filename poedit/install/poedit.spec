@@ -5,7 +5,7 @@
 %{?_without_semistatic: %{expand: %%define semistatic 0}}
 
 # version and release
-%define   VERSION     1.2.5
+%define   VERSION     1.3.0
 %define   RELEASE     1
 
 %if %{semistatic}
