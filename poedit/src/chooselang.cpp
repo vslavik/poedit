@@ -76,6 +76,7 @@ wxLanguage ChooseLanguage()
         { _("(Use default language)"), wxLANGUAGE_DEFAULT },
 
         { _T("Afrikaans"), wxLANGUAGE_AFRIKAANS },
+        { _T("Albanian"), wxLANGUAGE_ALBANIAN },
         { _T("Bulgarian"), wxLANGUAGE_BULGARIAN },
         { _T("Catalan"), wxLANGUAGE_CATALAN },
         { _T("Chinese (Traditional)"), wxLANGUAGE_CHINESE_TRADITIONAL },
