@@ -118,6 +118,7 @@ wxLanguage ChooseLanguage()
         { _T("Swedish"), wxLANGUAGE_SWEDISH },
         { _T("Turkish"), wxLANGUAGE_TURKISH },
         { _T("Tamil"), wxLANGUAGE_TAMIL },
+        { _T("Ukrainian"), wxLANGUAGE_UKRAINIAN },
 
         { NULL, wxLANGUAGE_UNKNOWN }
     };
