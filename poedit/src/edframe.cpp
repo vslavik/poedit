@@ -90,6 +90,7 @@ enum
     EDC_LIST = 1000,
     EDC_TEXTORIG,
     EDC_TEXTTRANS,
+	EDC_TEXTCOMMENT,
     
     ED_POPUP_REFS = 2000, 
     ED_POPUP_TRANS = 3000,
@@ -472,34 +473,44 @@ poEditFrame::poEditFrame() :
     GetMenuBar()->Check(XRCID("menu_shaded"), gs_shadedList);
     
     m_splitter = new wxSplitterWindow(this, -1);
-    wxPanel *panel = new wxPanel(m_splitter);
 
     m_list = new poEditListCtrl(m_splitter, EDC_LIST, 
                                 wxDefaultPosition, wxDefaultSize,
                                 wxLC_REPORT | wxLC_SINGLE_SEL,
                                 m_displayLines);
-    m_list->SetFocus();
 
-    m_textOrig = new UnfocusableTextCtrl(panel, EDC_TEXTORIG, wxEmptyString, 
+	m_bottomSplitter = new wxSplitterWindow(m_splitter, -1);	
+	wxPanel *leftPanel = new wxPanel(m_bottomSplitter);
+
+    m_textComment = new UnfocusableTextCtrl(m_bottomSplitter, EDC_TEXTCOMMENT, wxEmptyString, 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE | wxTE_READONLY);
-    m_textTrans = new wxTextCtrl(panel, EDC_TEXTTRANS, wxEmptyString, 
+
+    m_textOrig = new UnfocusableTextCtrl(leftPanel, EDC_TEXTORIG, wxEmptyString, 
+                                wxDefaultPosition, wxDefaultSize, 
+                                wxTE_MULTILINE | wxTE_READONLY);
+    m_textTrans = new wxTextCtrl(leftPanel, EDC_TEXTTRANS, wxEmptyString, 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE);
     
-    wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-    sizer->Add(m_textOrig, 1, wxEXPAND);
-    sizer->Add(m_textTrans, 1, wxEXPAND);
+    wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
+	leftSizer->Add(m_textOrig, 1, wxEXPAND);
+    leftSizer->Add(m_textTrans, 1, wxEXPAND);
 
-    panel->SetAutoLayout(true);
-    panel->SetSizer(sizer);
+    leftPanel->SetAutoLayout(true);
+    leftPanel->SetSizer(leftSizer);
+
     
+    m_bottomSplitter->SetMinimumPaneSize(40);
+    m_bottomSplitter->SplitVertically(leftPanel, m_textComment, cfg->Read(_T("bottom_splitter"), -200L));
     m_splitter->SetMinimumPaneSize(40);
-    m_splitter->SplitHorizontally(m_list, panel, cfg->Read(_T("splitter"), 240L));
+    m_splitter->SplitHorizontally(m_list, m_bottomSplitter, cfg->Read(_T("splitter"), 240L));
 
     m_textTrans->PushEventHandler(new TextctrlHandler(m_list, &m_sel));
     m_list->PushEventHandler(new ListHandler(m_textTrans, this, 
                                              &m_sel, &m_selItem));
+
+    m_list->SetFocus();
 
     int widths[] = {-1, 200};
     CreateStatusBar(2, wxST_SIZEGRIP);
@@ -553,6 +564,7 @@ poEditFrame::~poEditFrame()
     cfg->Write(_T("frame_h"), (long)sz.y);
     cfg->Write(_T("frame_x"), (long)pos.x);
     cfg->Write(_T("frame_y"), (long)pos.y);
+    cfg->Write(_T("bottom_splitter"), (long)m_bottomSplitter->GetSashPosition());
     cfg->Write(_T("splitter"), (long)m_splitter->GetSashPosition());
     cfg->Write(_T("display_quotes"), m_displayQuotes);
     cfg->Write(_T("display_lines"), m_displayLines);
@@ -1201,11 +1213,14 @@ void poEditFrame::UpdateToTextCtrl(int item)
     if (ind >= (int)m_catalog->GetCount()) return;
 
     wxString quote;
-    wxString t_o, t_t;
+    wxString t_o, t_t, t_c;
     if (m_displayQuotes) quote = _T("\""); else quote = wxEmptyString;
     t_o = quote + (*m_catalog)[ind].GetString() + quote;
     t_o.Replace(_T("\\n"), _T("\\n\n"));
     m_textOrig->SetValue(t_o);
+    t_c = (*m_catalog)[ind].GetComment();
+    t_c.Replace(_T("\\n"), _T("\\n\n"));
+    m_textComment->SetValue(t_c);
     t_t = quote + (*m_catalog)[ind].GetTranslation() + quote;
     t_t.Replace(_T("\\n"), _T("\\n\n"));
     

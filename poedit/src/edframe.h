@@ -178,9 +178,9 @@ class poEditFrame : public wxFrame
         wxHtmlHelpController m_help;
 #endif
 
-        wxSplitterWindow *m_splitter;
+        wxSplitterWindow *m_splitter, *m_bottomSplitter;
         poEditListCtrl *m_list;
-        wxTextCtrl *m_textOrig, *m_textTrans;
+        wxTextCtrl *m_textOrig, *m_textTrans, *m_textComment;
         wxGauge *m_statusGauge;
 #ifdef CAN_MODIFY_DEFAULT_FONT
         wxFont m_boldGuiFont;
