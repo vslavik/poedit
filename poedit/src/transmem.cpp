@@ -709,6 +709,9 @@ static DbKeys *UnionOfDbKeys(size_t cnt, DbKeys *keys[], bool mask[])
 
 static inline wxString GetDBPath(const wxString& p, const wxString& l)
 {
+    if (!wxDirExists(p))
+        return wxEmptyString;
+
     wxString db = p + _T("/") + l;
     if (wxDirExists(db)) 
         return db;
