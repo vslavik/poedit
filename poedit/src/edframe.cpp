@@ -390,7 +390,7 @@ END_EVENT_TABLE()
 
 
 #ifdef __UNIX__
-#include "appicon.xpm"
+#include "icons/poedit.xpm"
 #endif
 
 // Frame class:
