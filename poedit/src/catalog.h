@@ -8,7 +8,7 @@
     
       Translations catalog
     
-      (c) Vaclav Slavik, 1999
+      (c) Vaclav Slavik, 1999-2003
 
 */
 
@@ -90,9 +90,14 @@ class Catalog
         bool Save(const wxString& po_file, bool save_mo = true);
 
         /** Updates the catalog from sources.
-            \see SourceDigger, Parser.
+            \see SourceDigger, Parser, UpdateFromPOT.
          */
         bool Update();
+
+        /** Updates the catalog from POT file.
+            \see Update
+         */
+        bool UpdateFromPOT(const wxString& pot_file);
 
         /** Adds translation into the catalog. 
             \return true on success or false if such key does
@@ -146,9 +151,18 @@ class Catalog
         /** Returns list of strings that are new in reference catalog
 	        (compared to this one) and that are not present in \a refcat
             (i.e. are obsoleted).
+
+            \see ShowMergeSummary
          */
 	    void GetMergeSummary(Catalog *refcat, 
 	                         wxArrayString& snew, wxArrayString& sobsolete);
+
+        /** Shows a dialog with merge summary.
+            \see GetMergeSummary, Merge
+
+            \return true if the merge was OK'ed by the user, false otherwise
+         */
+        bool ShowMergeSummary(Catalog *refcat);
             
     private:
         wxHashTable *m_data;

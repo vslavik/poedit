@@ -8,7 +8,7 @@
     
       Translations catalog
     
-      (c) Vaclav Slavik, 1999
+      (c) Vaclav Slavik, 1999-2003
 
 */
 
@@ -729,26 +729,11 @@ bool Catalog::Update()
 
     if (newcat != NULL) 
     {
-        bool succ = true;
+        bool succ = false;
         pinfo.UpdateMessage(_("Merging differences..."));
 
-        if (wxConfig::Get()->Read(_T("show_summary"), true))
-        {
-            wxArrayString snew, sobsolete;
-            GetMergeSummary(newcat, snew, sobsolete);
-            MergeSummaryDialog sdlg;
-            sdlg.TransferTo(snew, sobsolete);
-            if (sdlg.ShowModal() == wxID_OK)
-                succ = Merge(newcat);
-            else
-            {
-                delete newcat;
-                newcat = NULL;
-            }
-        }
-        else
+        if (ShowMergeSummary(newcat))
             succ = Merge(newcat);
-
         if (!succ)
         {
             delete newcat;
@@ -762,6 +747,25 @@ bool Catalog::Update()
   
     delete newcat;
     return true;
+}
+
+
+bool Catalog::UpdateFromPOT(const wxString& pot_file)
+{
+    if (!m_isOk) return false;
+
+    Catalog newcat(pot_file);
+
+    if (!newcat.IsOk())
+    {
+        wxLogError(_("'%s' is not a valid POT file."), pot_file.c_str());
+        return false;
+    }
+
+    if (ShowMergeSummary(&newcat))
+        return Merge(&newcat);
+    else
+        return false;
 }
 
 
@@ -812,6 +816,20 @@ void Catalog::GetMergeSummary(Catalog *refcat,
     for (i = 0; i < refcat->GetCount(); i++)
         if (FindItem((*refcat)[i].GetString()) == NULL)
         snew.Add((*refcat)[i].GetString());
+}
+        
+bool Catalog::ShowMergeSummary(Catalog *refcat)
+{    
+    if (wxConfig::Get()->Read(_T("show_summary"), true))
+    {
+        wxArrayString snew, sobsolete;
+        GetMergeSummary(refcat, snew, sobsolete);
+        MergeSummaryDialog sdlg;
+        sdlg.TransferTo(snew, sobsolete);
+        return (sdlg.ShowModal() == wxID_OK);
+    }
+    else
+        return true;
 }
 
 

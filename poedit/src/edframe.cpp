@@ -372,6 +372,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_catsettings"), poEditFrame::OnSettings)
    EVT_MENU           (XRCID("menu_preferences"), poEditFrame::OnPreferences)
    EVT_MENU           (XRCID("menu_update"),      poEditFrame::OnUpdate)
+   EVT_MENU           (XRCID("menu_update_from_pot"),poEditFrame::OnUpdate)
    EVT_MENU           (XRCID("menu_fuzzy"),       poEditFrame::OnFuzzyFlag)
    EVT_MENU           (XRCID("menu_quotes"),      poEditFrame::OnQuotesFlag)
    EVT_MENU           (XRCID("menu_lines"),       poEditFrame::OnLinesFlag)
@@ -642,7 +643,7 @@ void poEditFrame::OnOpen(wxCommandEvent&)
         WriteCatalog(m_fileName);
 
     wxString path = wxPathOnly(m_fileName);
-    if (path.IsEmpty()) 
+    if (path.empty()) 
         path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
 	
     wxString name = wxFileSelector(_("Open catalog"), 
@@ -821,10 +822,15 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
 
 
 
-void poEditFrame::UpdateCatalog()
+void poEditFrame::UpdateCatalog(const wxString& pot_file)
 {
     UpdateFromTextCtrl();
-    bool succ = m_catalog->Update();
+    bool succ;
+    if (pot_file.empty())
+        succ = m_catalog->Update();
+    else
+        succ = m_catalog->UpdateFromPOT(pot_file);
+    
     m_modified = succ || m_modified;
     if (!succ)
     {
@@ -834,9 +840,25 @@ void poEditFrame::UpdateCatalog()
     }
 }
 
-void poEditFrame::OnUpdate(wxCommandEvent&)
+void poEditFrame::OnUpdate(wxCommandEvent& event)
 {
-    UpdateCatalog();
+    wxString pot_file;
+
+    if (event.GetId() == XRCID("menu_update_from_pot"))
+    {
+        wxString path = wxPathOnly(m_fileName);
+        if (path.empty())
+            path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
+        pot_file = 
+            wxFileSelector(_("Open catalog template"), 
+                 path, wxEmptyString, wxEmptyString,
+                 _("GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"), 
+                 wxOPEN | wxFILE_MUST_EXIST, this);
+        if (pot_file.empty())
+            return;
+    }
+    
+    UpdateCatalog(pot_file);
  
 #ifdef USE_TRANSMEM
     if (wxConfig::Get()->Read(_T("use_tm_when_updating"), true) &&
