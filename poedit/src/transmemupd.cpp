@@ -8,7 +8,7 @@
     
       Translation memory database updater
     
-      (c) Vaclav Slavik, 2001
+      (c) Vaclav Slavik, 2001-2003
 
 */
 
@@ -107,27 +107,31 @@ TranslationMemoryUpdater::TranslationMemoryUpdater(TranslationMemory *mem,
 {
 }
 
-bool TranslationMemoryUpdater::Update(const wxArrayString& paths)
+bool TranslationMemoryUpdater::FindFilesInPaths(const wxArrayString& paths,
+                                                wxArrayString& files)
 {
-    size_t i;
-    wxString f;
-    wxArrayString files;
+    files.Clear();
     TMUDirTraverser trav(&files, m_mem->GetLanguage());
 
     m_progress->UpdateMessage(_("Listing files..."));
-    for (i = 0; i < paths.GetCount(); i++)
+    for (size_t i = 0; i < paths.GetCount(); i++)
     {
         wxDir dir(paths[i]);
         if (!dir.IsOpened() || dir.Traverse(trav) == (size_t)-1) 
             return false;
     }
+    return true;
+}
 
+bool TranslationMemoryUpdater::Update(const wxArrayString& files)
+{
     m_progress->SetGaugeMax(files.GetCount());
     m_progress->ResetGauge();
 
     bool res = true;
+    wxString f;
     size_t cnt = files.GetCount();
-    for (i = 0; i < cnt; i++)
+    for (size_t i = 0; i < cnt; i++)
     {
         f = files[i];
         m_progress->UpdateMessage(wxString(_("Scanning file: ")) + 

@@ -8,7 +8,7 @@
     
       Translation memory database updater
     
-      (c) Vaclav Slavik, 2001
+      (c) Vaclav Slavik, 2001-2003
 
 */
 
@@ -40,14 +40,21 @@ class TranslationMemoryUpdater
         /// Ctor.
         TranslationMemoryUpdater(TranslationMemory *mem, ProgressInfo *pi);
         
-        /** Updates TM \a m with data from all catalogs found in 
-            directories listed in \a paths. 
+        /** Finds all files that can be used to update given TM in \a paths.
+            The files are searched based on TM's language and PO, MO and RPM
+            files are currently returned. Found files are stored in \a files.
+            \return  false if an error occured, true otherwise
+         */
+        bool FindFilesInPaths(const wxArrayString& paths,
+                              wxArrayString& files);
+        
+        /** Updates TM \a m with data from all catalogs listed in \a files.
             \return  false if an error occured, true otherwise
             \remarks This method currently scans all PO, MO and RPM files.
                      It uses msgunfmt to convert MOs to POs and rpm2cpio
                      and cpio to extract catalogs from RPM packages.
          */
-        bool Update(const wxArrayString& paths);
+        bool Update(const wxArrayString& files);
 
     protected:
         bool UpdateFromPO(const wxString& filename);
