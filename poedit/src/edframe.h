@@ -129,6 +129,10 @@ class poEditFrame : public wxFrame
         wxSplitterWindow *m_splitter;
         poEditListCtrl *m_list;
         wxTextCtrl *m_textOrig, *m_textTrans;
+#ifdef __WXMSW__
+        wxFont m_boldGuiFont;
+#endif
+
         bool m_modified;
         bool m_hasObsoleteItems;
         bool m_displayQuotes;          

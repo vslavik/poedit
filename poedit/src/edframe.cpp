@@ -20,6 +20,7 @@
 #include <wx/wxprec.h>
 
 #include <wx/wx.h>
+#include <wx/imaglist.h>
 #include <wx/config.h>
 #include <wx/html/htmlwin.h>
 #include <wx/statline.h>
@@ -280,6 +281,11 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
 
     SetIcon(wxICON(appicon));
 
+#ifdef __WXMSW__
+    m_boldGuiFont = wxSystemSettings::GetSystemFont(wxSYS_DEFAULT_GUI_FONT);
+    m_boldGuiFont.SetWeight(wxFONTWEIGHT_BOLD);
+#endif    
+    
     wxMenuBar *MenuBar = wxTheXmlResource->LoadMenuBar("mainmenu");
     if (MenuBar)
     {
@@ -408,9 +414,10 @@ TranslationMemory *poEditFrame::GetTransMem()
 
         if (!lang.IsEmpty() && TranslationMemory::IsSupported(lang, dbPath))
         {
-            m_transMem = new TranslationMemory(lang, dbPath);
-            m_transMem->SetParams(cfg->Read("TM/max_delta", 2),
-                                  cfg->Read("TM/max_omitted", 2));
+            m_transMem = TranslationMemory::Create(lang, dbPath);
+            if (m_transMem)
+                m_transMem->SetParams(cfg->Read("TM/max_delta", 2),
+                                      cfg->Read("TM/max_omitted", 2));
         }
         else
             m_transMem = NULL;
@@ -1097,6 +1104,9 @@ void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
     int ind = event.GetId() - ED_POPUP_TRANS;
     (*m_catalog)[m_selItem].SetTranslation(m_autoTranslations[ind]);
     UpdateToTextCtrl();
+    // VS: This dirty trick ensures proper refresh of everything: 
+    m_edittedTextOrig = wxEmptyString;
+    UpdateFromTextCtrl();
 }
 #endif
 
@@ -1107,16 +1117,27 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
     const wxArrayString& refs = (*m_catalog)[item].GetReferences();
     wxMenu *menu = new wxMenu;
 
+#ifdef __WXMSW__
+    wxMenuItem *it1 = new wxMenuItem(NULL, ED_POPUP_DUMMY+0, _("References:"));
+    it1->SetFont(m_boldGuiFont);
+    menu->Append(it1);
+#else
     menu->Append(ED_POPUP_DUMMY+0, _("References:"));
-    menu->Enable(ED_POPUP_DUMMY+0, false);
+#endif    
     menu->AppendSeparator();
     for (size_t i = 0; i < refs.GetCount(); i++)
         menu->Append(ED_POPUP_REFS + i, refs[i]);
 
 #ifdef USE_TRANSMEM
     menu->AppendSeparator();
+#ifdef __WXMSW__
+    wxMenuItem *it2 = new wxMenuItem(NULL, ED_POPUP_DUMMY+1, 
+                                     _("Automatic translations:"));
+    it2->SetFont(m_boldGuiFont);
+    menu->Append(it2);
+#else
     menu->Append(ED_POPUP_DUMMY+1, _("Automatic translations:"));
-    menu->Enable(ED_POPUP_DUMMY+1, false);
+#endif    
     menu->AppendSeparator();
     if (GetTransMem())
     {
