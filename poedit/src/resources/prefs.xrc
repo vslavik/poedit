@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource version="2.3.0.1">
+  <object class="wxDialog" name="preferences">
+    <title>Preferences</title>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxNotebook">
+          <usenotebooksizer>1</usenotebooksizer>
+          <object class="notebookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxStaticBoxSizer">
+                    <label>Identity</label>
+                    <orient>wxVERTICAL</orient>
+                    <object class="sizeritem">
+                      <object class="wxStaticText">
+                        <label>Your name:</label>
+                      </object>
+                      <border>5d</border>
+                      <flag>wxLEFT|wxTOP</flag>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxTextCtrl" name="user_name"/>
+                      <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
+                      <border>5d</border>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxStaticText">
+                        <label>Your e-mail address:</label>
+                      </object>
+                      <flag>wxLEFT|wxTOP</flag>
+                      <border>5d</border>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxTextCtrl" name="user_email"/>
+                      <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+                      <border>5d</border>
+                    </object>
+                  </object>
+                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
+                  <option>0</option>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticBoxSizer">
+                    <label>Behaviour</label>
+                    <orient>wxVERTICAL</orient>
+                    <object class="sizeritem">
+                      <object class="wxCheckBox" name="compile_mo">
+                        <label>Automatically compile .mo file on save</label>
+                        <checked>1</checked>
+                      </object>
+                      <option>1</option>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxCheckBox" name="show_summary">
+                        <checked>1</checked>
+                        <label>Show summary after catalog update</label>
+                      </object>
+                      <option>1</option>
+                    </object>
+                  </object>
+                  <option>0</option>
+                  <flag>wxEXPAND|wxALL</flag>
+                  <border>5d</border>
+                </object>
+              </object>
+              <style>wxTAB_TRAVERSAL</style>
+            </object>
+            <label>Editor</label>
+          </object>
+          <object class="notebookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>Source code parsers:</label>
+                  </object>
+                  <flag>wxALL</flag>
+                  <border>5d</border>
+                  <option>0</option>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxBoxSizer">
+                    <object class="sizeritem">
+                      <object class="wxListBox" name="parsers_list"/>
+                      <option>1</option>
+                      <flag>wxEXPAND</flag>
+                      <minsize>130,-1d</minsize>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxBoxSizer">
+                        <orient>wxVERTICAL</orient>
+                        <object class="sizeritem">
+                          <object class="wxButton" name="parser_new">
+                            <label>New</label>
+                          </object>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxButton" name="parser_edit">
+                            <label>Edit</label>
+                          </object>
+                          <flag>wxTOP|wxBOTTOM</flag>
+                          <border>2d</border>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxButton" name="parser_delete">
+                            <label>Delete</label>
+                          </object>
+                        </object>
+                      </object>
+                      <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_TOP</flag>
+                      <border>5d</border>
+                    </object>
+                    <orient>wxHORIZONTAL</orient>
+                  </object>
+                  <border>5d</border>
+                  <flag>wxEXPAND|wxLEFT|wxBOTTOM</flag>
+                  <option>1</option>
+                </object>
+              </object>
+              <style>wxTAB_TRAVERSAL</style>
+            </object>
+            <label>Parser</label>
+          </object>
+        </object>
+        <option>1</option>
+        <flag>wxEXPAND|wxALL</flag>
+        <border>5d</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_OK">
+              <label>OK</label>
+              <default>1</default>
+            </object>
+            <border>5d</border>
+            <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_CANCEL">
+              <label>Cancel</label>
+            </object>
+            <flag>wxRIGHT|wxBOTTOM</flag>
+            <border>5d</border>
+          </object>
+        </object>
+        <flag>wxALIGN_RIGHT</flag>
+      </object>
+    </object>
+  </object>
+  <object class="wxDialog" name="edit_parser">
+    <title>Parser setup</title>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxStaticBoxSizer">
+          <label>Language:</label>
+          <orient>wxVERTICAL</orient>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              <label>Language:</label>
+            </object>
+            <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
+            <border>5d</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxTextCtrl" name="parser_language"/>
+            <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
+            <border>5d</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              <label>List of extensions separated by semicolons (e.g. *.cpp, *.h):</label>
+            </object>
+            <border>5d</border>
+            <flag>wxLEFT|wxRIGHT|wxTOP</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxTextCtrl" name="parser_extensions"/>
+            <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+            <border>5d</border>
+          </object>
+        </object>
+        <border>5d</border>
+        <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticBoxSizer">
+          <label>Invocation:</label>
+          <orient>wxVERTICAL</orient>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              <label>Parser command:</label>
+            </object>
+            <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
+            <border>5d</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxTextCtrl" name="parser_command"/>
+            <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
+            <border>5d</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              <label>This is the command used to launch the parser.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files (see bellow).</label>
+            </object>
+            <flag>wxRIGHT|wxTOP|wxALIGN_RIGHT</flag>
+            <border>5d</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              <label>An item in keywords list:</label>
+            </object>
+            <border>5d</border>
+            <flag>wxLEFT|wxRIGHT|wxTOP</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxTextCtrl" name="parser_keywords"/>
+            <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+            <border>5d</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              <label>This will be attached to the command line once\nfor each keyword. %k expands to the keyword.</label>
+            </object>
+            <flag>wxRIGHT|wxALIGN_RIGHT</flag>
+            <border>5d</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              <label>An item in input files list:</label>
+            </object>
+            <border>5d</border>
+            <flag>wxLEFT|wxRIGHT|wxTOP</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxTextCtrl" name="parser_files"/>
+            <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+            <border>5d</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              <label>This will be attached to the command line once\nfor each input file. %f expands to the filename.</label>
+            </object>
+            <flag>wxRIGHT|wxBOTTOM|wxALIGN_RIGHT</flag>
+            <border>5d</border>
+          </object>
+        </object>
+        <border>5d</border>
+        <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_OK">
+              <label>OK</label>
+              <default>1</default>
+            </object>
+            <border>5d</border>
+            <flag>wxALL</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_CANCEL">
+              <label>Cancel</label>
+            </object>
+            <flag>wxRIGHT|wxTOP|wxBOTTOM</flag>
+            <border>5d</border>
+          </object>
+        </object>
+        <flag>wxALIGN_RIGHT</flag>
+      </object>
+    </object>
+  </object>
+</resource>

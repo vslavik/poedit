@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource version="2.3.0.1">
+  <object class="wxDialog" name="settings">
+    <title>Preferences</title>
+    <centered>1</centered>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxNotebook">
+          <usenotebooksizer>1</usenotebooksizer>
+          <object class="notebookpage">
+            <object class="wxPanel">
+              <style>wxTAB_TRAVERSAL</style>
+              <object class="wxFlexGridSizer">
+                <cols>2</cols>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>Project name and version:</label>
+                  </object>
+                  <flag>wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="prj_name">
+                    <size>100,-1d</size>
+                  </object>
+                  <border>5d</border>
+                  <flag>wxEXPAND|wxRIGHT|wxTOP|wxBOTTOM</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>Team:</label>
+                  </object>
+                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="team_name">
+                    <size>100,-1d</size>
+                  </object>
+                  <border>5d</border>
+                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>Team's email address:</label>
+                  </object>
+                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="team_email">
+                    <size>100,-1d</size>
+                  </object>
+                  <border>5d</border>
+                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>Language:</label>
+                  </object>
+                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxComboBox" name="language"/>
+                  <border>5d</border>
+                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>Charset:</label>
+                  </object>
+                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxComboBox" name="charset">
+                    <style>wxCB_READONLY</style>
+                    <content>
+                      <item>utf-8</item>
+                      <item>iso8859-1</item>
+                      <item>iso8859-2</item>
+                      <item>iso8859-3</item>
+                      <item>iso8859-4</item>
+                      <item>iso8859-5</item>
+                      <item>iso8859-6</item>
+                      <item>iso8859-7</item>
+                      <item>iso8859-8</item>
+                      <item>iso8859-9</item>
+                      <item>iso8859-10</item>
+                      <item>iso8859-11</item>
+                      <item>iso8859-12</item>
+                      <item>iso8859-13</item>
+                      <item>iso8859-14</item>
+                      <item>iso8859-15</item>
+                      <item>koi8-r</item>
+                      <item>windows-1250</item>
+                      <item>windows-1251</item>
+                      <item>windows-1252</item>
+                      <item>windows-1253</item>
+                      <item>windows-1254</item>
+                      <item>windows-1255</item>
+                      <item>windows-1256</item>
+                      <item>windows-1257</item>
+                    </content>
+                  </object>
+                  <border>5d</border>
+                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
+                </object>
+              </object>
+            </object>
+            <label>Project info</label>
+          </object>
+          <object class="notebookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxBoxSizer">
+                    <object class="sizeritem">
+                      <object class="wxStaticText">
+                        <label>Base path:</label>
+                      </object>
+                      <border>5d</border>
+                      <flag>wxLEFT|wxTOP|wxALIGN_CENTER_VERTICAL</flag>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxTextCtrl" name="basepath"/>
+                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
+                      <border>5d</border>
+                      <option>1</option>
+                    </object>
+                  </object>
+                  <flag>wxEXPAND</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxPanel" name="paths_list_panel"/>
+                  <option>1</option>
+                  <flag>wxEXPAND|wxALL</flag>
+                  <border>5d</border>
+                </object>
+              </object>
+            </object>
+            <label>Paths</label>
+          </object>
+          <object class="notebookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>Use these keywords (function names) to recognize translatable strings\nin source files, in addition to default ones.</label>
+                  </object>
+                  <flag>wxLEFT|wxRIGHT|wxTOP</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxPanel" name="keywords_list_panel"/>
+                  <option>1</option>
+                  <flag>wxALL|wxEXPAND</flag>
+                  <border>5d</border>
+                </object>
+              </object>
+            </object>
+            <label>Keywords</label>
+          </object>
+        </object>
+        <option>1</option>
+        <flag>wxEXPAND|wxALL</flag>
+        <border>5d</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_OK">
+              <label>OK</label>
+              <default>1</default>
+            </object>
+            <border>5d</border>
+            <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_CANCEL">
+              <label>Cancel</label>
+            </object>
+            <flag>wxRIGHT|wxBOTTOM</flag>
+            <border>5d</border>
+          </object>
+        </object>
+        <flag>wxALIGN_RIGHT</flag>
+      </object>
+    </object>
+  </object>
+</resource>

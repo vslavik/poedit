@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource version="2.3.0.1">
+  <object class="wxDialog" name="about_box">
+    <title>About poEdit</title>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxStaticText" name="about_poedit">
+          <label>poEdit version 1.1.0</label>
+          <font>
+            <face>Verdana,Arial,helvetica</face>
+            <bold>1</bold>
+            <size>14</size>
+          </font>
+        </object>
+        <flag>wxALL</flag>
+        <border>5d</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          <label>Copyright (c) 2000,2001 Vaclav Slavik &lt;v.slavik@volny.cz&gt;</label>
+        </object>
+        <flag>wxALL|wxRIGHT</flag>
+        <border>5d</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxTextCtrl">
+          <style>wxTE_MULTILINE|wxTE_READONLY</style>
+          <value>Permission to use, copy, modify, distribute, and sell this 
+software and its documentation  for any purpose is hereby 
+granted without fee, provided that the above copyright notices 
+and this permission notice appear in all copies of the software 
+and related documentation.
+
+THE SOFTWARE IS PROVIDED "AS-IS" AND 
+WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR 
+OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY
+WARRANTY OF MERCHANTABILITY OR FITNESS FOR A 
+PARTICULAR PURPOSE.
+          </value>
+        </object>
+        <option>1</option>
+        <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
+        <border>5d</border>
+        <minsize>200,100d</minsize>
+      </object>
+      <object class="sizeritem">
+        <object class="wxButton" name="wxID_OK">
+          <label>OK</label>
+          <default>1</default>
+        </object>
+        <flag>wxALL|wxALIGN_RIGHT</flag>
+        <border>5d</border>
+      </object>
+    </object>
+  </object>
+</resource>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource version="2.3.0.1">
+  <object class="wxMenuBar" name="mainmenu">
+    <object class="wxMenu" name="menu_file">
+      <label>_File</label>
+      <style>wxMENU_TEAROFF</style>
+      <object class="wxMenuItem" name="menu_new">
+        <label>_New catalog...</label>
+      </object>
+      <object class="wxMenuItem" name="menu_open">
+        <label>_Open</label>
+        <accel>Ctrl-O</accel>
+      </object>
+      <object class="wxMenuItem" name="menu_save">
+        <label>_Save</label>
+        <accel>Ctrl-S</accel>
+      </object>
+      <object class="wxMenuItem" name="menu_saveas">
+        <label>Save _as...</label>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="menu_preferences">
+        <label>Preferences...</label>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="menu_quit">
+        <label>E_xit</label>
+        <accel>Alt-X</accel>
+      </object>
+    </object>
+    <object class="wxMenu" name="menu_edit">
+      <label>_Edit</label>
+      <object class="wxMenuItem" name="menu_insert_orig">
+        <label>Insert original string</label>
+        <accel>Alt-I</accel>
+      </object>
+      <object class="wxMenuItem" name="menu_references">
+        <label>_Show references</label>
+      </object>
+      <object class="wxMenuItem" name="menu_quotes">
+        <label>Display _quotes</label>
+        <checkable>1</checkable>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="menu_fuzzy">
+        <label>Translation is _fuzzy</label>
+        <accel>Alt-U</accel>
+        <checkable>1</checkable>
+      </object>
+      <style>wxMENU_TEAROFF</style>
+    </object>
+    <object class="wxMenu" name="menu_catalog">
+      <label>_Catalog</label>
+      <style>wxMENU_TEAROFF</style>
+      <object class="wxMenuItem" name="menu_update">
+        <label>_Update catalog</label>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="menu_catsettings">
+        <label>_Settings...</label>
+      </object>
+    </object>
+    <object class="wxMenu" name="menu_help2">
+      <object class="wxMenuItem" name="menu_help">
+        <label>Contents...</label>
+        <accel>F1</accel>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="menu_about">
+        <label>_About...</label>
+      </object>
+      <label>_Help</label>
+      <style>wxMENU_TEAROFF</style>
+    </object>
+    <style>wxMB_DOCKABLE</style>
+  </object>
+</resource>

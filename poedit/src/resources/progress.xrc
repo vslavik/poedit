@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource version="2.3.0.1">
+  <object class="wxDialog" name="parser_progress">
+    <title>Updating catalog...</title>
+    <object class="wxBoxSizer">
+      <orient>wxHORIZONTAL</orient>
+      <object class="sizeritem">
+        <object class="wxStaticBitmap">
+          <bitmap>scanning.gif</bitmap>
+        </object>
+        <border>5d</border>
+        <flag>wxALL</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <orient>wxVERTICAL</orient>
+          <object class="sizeritem">
+            <object class="wxStaticText" name="info">
+              <label>Merging differences...</label>
+            </object>
+            <border>5d</border>
+            <flag>wxTOP</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxGauge" name="progress">
+              <size>130,-1d</size>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_CANCEL">
+              <label>Cancel</label>
+            </object>
+            <border>5d</border>
+            <flag>wxLEFT|wxTOP|wxBOTTOM|wxALIGN_RIGHT</flag>
+          </object>
+        </object>
+        <border>5d</border>
+        <flag>wxLEFT|wxRIGHT</flag>
+      </object>
+    </object>
+  </object>
+</resource>

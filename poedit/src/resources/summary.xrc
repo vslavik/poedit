@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource version="2.3.0.1">
+  <object class="wxDialog" name="summary">
+    <title>Update summary</title>
+    <style>wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER</style>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxNotebook">
+          <usenotebooksizer>1</usenotebooksizer>
+          <object class="notebookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>These strings were found in the sources but were not in the catalog.\npoEdit will add them to the catalog now.</label>
+                  </object>
+                  <border>5d</border>
+                  <flag>wxALL</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxListBox" name="new_strings"/>
+                  <border>5d</border>
+                  <option>1</option>
+                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+                </object>
+              </object>
+            </object>
+            <label>New strings</label>
+          </object>
+          <object class="notebookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>These strings are no longer in the sources.\npoEdit will remove them from the catalog now.</label>
+                  </object>
+                  <border>5d</border>
+                  <flag>wxALL</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxListBox" name="obsolete_strings"/>
+                  <border>5d</border>
+                  <option>1</option>
+                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+                </object>
+              </object>
+            </object>
+            <label>Obsolete strings</label>
+          </object>
+        </object>
+        <option>1</option>
+        <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
+        <border>5d</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <orient>wxHORIZONTAL</orient>
+          <object class="sizeritem">
+            <object class="wxStaticText" name="items_count">
+              <label>(0 new, 0 obsolete)</label>
+            </object>
+            <flag>wxALL</flag>
+            <border>5d</border>
+            <option>1</option>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_OK">
+              <label>OK</label>
+              <default>1</default>
+            </object>
+            <border>5d</border>
+            <flag>wxTOP|wxLEFT|wxBOTTOM</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_CANCEL">
+              <label>Undo</label>
+            </object>
+            <border>5d</border>
+            <flag>wxALL</flag>
+          </object>
+        </object>
+        <flag>wxEXPAND</flag>
+      </object>
+    </object>
+  </object>
+</resource>
