@@ -22,7 +22,7 @@ class reference.
 ------------
 
 poEdit is built on top of wxWindows toolkit, so it requires it at 
-compilation time (version 2.2.1 or newer, see http://www.wxwindows.org).
+compilation time (version 2.3.0 or newer, see http://www.wxwindows.org).
 
 Under Unix, do "./configure && make && make install" as usual.
 
@@ -34,7 +34,7 @@ yourself, you're on your own.
  License
 ---------
 
-poEdit is released under BSD style license and you're free to do 
+poEdit is released under the MIT license and you're free to do 
 whatever you want with it and its source code (well, almost :-).
 See LICENSE file for details.
 
@@ -51,7 +51,7 @@ Vaclav Slavik <v.slavik@volny.cz>
  Links
 -------
 
-http://www.volny.cz/v.slavik/poEdit
+http://poedit.sourceforge.net
         - poEdit homepage
 http://www.wxwindows.org
         - wxWindows toolkit homepage
@@ -61,4 +61,3 @@ http://www.jordanr.dhs.org/isinfo.htm
 http://www.wintax.nl/isx
         - Inno Setup and Inno Setup Extensions, installation
           program used by poEdit under Windows
-

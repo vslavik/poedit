@@ -3,9 +3,9 @@
 
 [Setup]
 CompressLevel=9
-OutputBaseFilename=poedit110_setup
+OutputBaseFilename=poedit111_setup
 AppName=poEdit
-AppVerName=poEdit 1.1.0
+AppVerName=poEdit 1.1.1
 
 ChangesAssociations=true
 AlwaysShowComponentsList=false
@@ -25,16 +25,18 @@ InfoAfterFile=install\news.rtf
 
 
 [Files]
-Source: gettext-win32\msgfmt.exe; DestDir: {app}\bin
-Source: gettext-win32\xgettext.exe; DestDir: {app}\bin
-Source: Release\poedit.exe; DestDir: {app}\bin
-Source: gettext-win32\msgmerge.exe; DestDir: {app}\bin
-Source: gettext-win32\gnu_gettext.COPYING; DestDir: {app}\doc
+Source: objs\release\poedit.exe; DestDir: {app}\bin
+Source: extras\win32-gettext\gnu_gettext.COPYING; DestDir: {app}\doc
 Source: install\readme.txt; DestDir: {app}\doc; DestName: readme.txt
 Source: docs\poedit.chm; DestDir: {app}\share\poedit
 Source: install\license.txt; DestDir: {app}\doc; DestName: license.txt
 Source: install\news.txt; DestDir: {app}\doc; DestName: news.txt
 Source: src\resources\tmp.zip; DestDir: {app}\share\poedit; DestName: resources.zip
+Source: extras\win32-gettext\xgettext.exe; DestDir: {app}\bin
+Source: extras\win32-gettext\msgmerge.exe; DestDir: {app}\bin
+Source: extras\win32-gettext\msgunfmt.exe; DestDir: {app}\bin
+Source: extras\win32-gettext\msgfmt.exe; DestDir: {app}\bin
+Source: extras\win32-db3\libdb31.dll; DestDir: {app}\bin
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey
