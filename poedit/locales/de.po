@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: poEdit 1.1.x\n"
+"Project-Id-Version: poEdit 1..2.x\n"
 "POT-Creation-Date: 2004-01-25 23:11+0100\n"
-"PO-Revision-Date: 2004-02-18 11:43+0100\n"
-"Last-Translator: Sabine Cretella <s.cretella@wordsandmore.it>\n"
-"Language-Team: Bernd Böckmann <bboeckmann@gmx.de>\n"
+"PO-Revision-Date: 2004-04-27 09:48+0100\n"
+"Last-Translator: Lübbe Onken <l.onken@rac.de>\n"
+"Language-Team: Lübbe Onken <l.onken@rac.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,12 +17,11 @@ msgstr "(geändert)"
 msgid " files..."
 msgstr "Dateien..."
 
-# is there an explanation for token?
 #: ../src/edframe.cpp:1545
 #: ../src/export_html.cpp:136
-#, fuzzy, c-format
+#, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i Zeichenketten (%i unklar, %i nicht übersetzt)"
+msgstr "%i Zeichenketten (%i unklar, %i ungültig, %i nicht übersetzt)"
 
 #: ../src/resources/xrc_strings.h:56
 msgid "&About..."
@@ -199,9 +198,7 @@ msgstr "%u Zeichenketten automatisch übersetzt"
 msgid "Automatically translating..."
 msgstr "Automatische Übersetzung..."
 
-# Token - please give an example
 #: ../src/manager.cpp:227
-#, fuzzy
 msgid "Bad Tokens"
 msgstr "Ungültige Zeichenketten"
 
@@ -901,7 +898,6 @@ msgstr ""
 "Bitte geben Sie ihren Namen und ihre e-mail Adresse an.\n"
 "(Diese Information wird ausschließlich in Katalogköpfen benutzt)"
 
-# charset flag - is not clear but Eingabedateien seems to be wrong - the English for Eingabedateien is "input files"
 #: ../src/resources/xrc_strings.h:114
 msgid ""
 "This is the command used to launch the parser.\n"
@@ -909,19 +905,19 @@ msgid ""
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
 msgstr ""
-"Mit diesem Kommando wir der Parser gestartet.\n"
+"Mit diesem Kommando wird der Parser gestartet.\n"
 "%o erweitert zum Namen der Ausgabedatei, %k zur Liste\n"
-"der Schlüsselwörter, %F zur Liste der Eingabedateien (siehe unten)."
+"der Schlüsselwörter, %F zur Liste der Eingabedateien,\n"
+"%C zum Zeichensatz Flag (siehe unten)."
 
-# expands is not clear can you please give an example?
 #: ../src/resources/xrc_strings.h:120
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
 "only if source codecharset was given. %c expands to charset value."
 msgstr ""
-"Wird nur dann an die Kommandozeile \n"
-"angefügt, wenn das Charset des Quelltextes vorhanden war. %f expandiert zum Dateinamen."
+"Wird nur dann an die Kommandozeile angefügt, wenn das\n"
+"Zeichensatz Flag des Quelltextes übergeben wurde. %c erweitert zum Zeichensatz Flag."
 
 #: ../src/resources/xrc_strings.h:118
 #, c-format
