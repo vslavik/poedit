@@ -51,6 +51,7 @@
 #include "progressinfo.h"
 #include "commentdlg.h"
 #include "manager.h"
+#include "pluralforms/pl_evaluate.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(poEditFramesList);
@@ -2371,6 +2372,7 @@ void poEditFrame::ShowPluralFormUI(bool show)
     textSizer->Layout();
 }
 
+
 void poEditFrame::RecreatePluralTextCtrls()
 {
     m_pluralNotebook->DeleteAllPages();
@@ -2380,19 +2382,42 @@ void poEditFrame::RecreatePluralTextCtrls()
 
     if (!m_catalog)
         return;
+        
+    PluralFormsCalculator *calc = PluralFormsCalculator::make(
+                m_catalog->Header().GetHeader(_T("Plural-Forms")).ToAscii());
 
     unsigned cnt = m_catalog->GetPluralFormsCount();
     for (unsigned i = 0; i < cnt; i++)
     {
-        wxTextCtrl *txt =  new wxTextCtrl(m_pluralNotebook, -1,
-                                          wxEmptyString, 
-                                          wxDefaultPosition, wxDefaultSize, 
-                                          wxTE_MULTILINE);
+        // find example number that would use this plural form:
+        unsigned example = 0;
+        for (example = 1; example < 1000; example++)
+        {
+            if (calc->evaluate(example) == i)
+                break;
+        }
+        // we prefer non-zero values, but if this form is for zero only,
+        // use zero:
+        if (example == 1000 && calc->evaluate(0) == i)
+            example = 0;
+            
+        wxString desc;
+        if (example == 1000)
+            desc.Printf(_("Form %u"), i);
+        else
+            desc.Printf(_("Form %u (e.g. \"%u\")"), i, example);
+
+        // create text control and notebook page for it:
+        wxTextCtrl *txt = new wxTextCtrl(m_pluralNotebook, -1,
+                                         wxEmptyString, 
+                                         wxDefaultPosition, wxDefaultSize, 
+                                         wxTE_MULTILINE);
         txt->PushEventHandler(new TextctrlHandler(m_list, &m_sel));
         m_textTransPlural.push_back(txt);
-        m_pluralNotebook->AddPage(txt,
-                                  wxString::Format(_("Form %u"), i));
+        m_pluralNotebook->AddPage(txt, desc);
     }
+
+    delete calc;
 
     SetCustomFonts();
     InitSpellchecker();
