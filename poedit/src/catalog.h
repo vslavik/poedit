@@ -337,7 +337,6 @@ class CatalogData : public wxObject
                   m_isAutomatic(false),
                   m_validity(Val_Unknown),
                   m_lineNum(0),
-                  m_listItemId(-1),
                   m_bookmark(NO_BOOKMARK) {}
 
         CatalogData(const CatalogData& dt)
@@ -358,7 +357,6 @@ class CatalogData : public wxObject
                   m_validity(dt.m_validity),
                   m_lineNum(dt.m_lineNum),
                   m_errorString(dt.m_errorString),
-                  m_listItemId(dt.m_listItemId),
                   m_bookmark(dt.m_bookmark) {}
 
         /// Returns the original string.
