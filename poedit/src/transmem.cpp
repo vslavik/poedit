@@ -8,7 +8,7 @@
     
       Translation memory database
     
-      (c) Vaclav Slavik, 2001
+      (c) Vaclav Slavik, 2001-2003
 
 */
 
@@ -127,12 +127,12 @@
       DB accesses are constant-time (which is not true; Berkeley DB access is
       mostly O(log n) and we do lots of string processing that doesn't exceed
       O(size of query)), then the worst case scenario involves 
-      O(max_words_diff*max_length_delta*words_in_string) unifications and lookups,
-      where union operation depends on sum of lengths of ID lists. A sample
-      DB created from full RedHat 6.1 installation CD had lists smaller than
-      300 IDs. 
-    - Real-life execution speed is more than satisfying - lookup takes hardly any
-      time on an average Celeron 400MHz system.
+      O(max_words_diff*max_length_delta*words_in_string) unifications and
+      lookups, where union operation depends on sum of lengths of ID lists. A
+      sample DB created from full RedHat 6.1 installation CD had lists smaller
+      than 300 IDs. 
+    - Real-life execution speed is more than satisfying - lookup takes hardly
+      any time on an average Celeron 400MHz system.
     
  */
 
@@ -872,9 +872,12 @@ int TranslationMemory::Lookup(const wxString& string, wxArrayString& results)
     if (key != DBKEY_ILLEGAL)
     {
         wxArrayString *a = m_dbTrans->Read(key);
-        WX_APPEND_ARRAY(results, (*a));
-        delete a;
-        return 100;
+        if (a)
+        {
+            WX_APPEND_ARRAY(results, (*a));
+            delete a;
+            return 100;
+        }
     }
     
     // Then, try to find inexact one within defined limits
@@ -973,8 +976,11 @@ bool TranslationMemory::LookupFuzzy(const wxArrayString& words,
             for (i = 0; i < result->Count; i++)
             {
                 a = m_dbTrans->Read(result->List[i]);
-                WX_APPEND_ARRAY(results, (*a));
-                delete a;
+                if (a)
+                {
+                    WX_APPEND_ARRAY(results, (*a));
+                    delete a;
+                }
             }
             delete result;
             RETURN_WITH_CLEANUP(true)
