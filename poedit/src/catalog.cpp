@@ -1085,9 +1085,12 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens, int *untransla
     for (size_t i = 0; i < GetCount(); i++)
     {
         if (all) (*all)++;
-        if ((*this)[i].IsFuzzy()) (*fuzzy)++;
-        if (!(*this)[i].IsValid()) (*badtokens)++;
-        if (!(*this)[i].IsTranslated()) (*untranslated)++;
+        if ((*this)[i].IsFuzzy())
+            (*fuzzy)++;
+        if (!(*this)[i].GetValidity() == CatalogData::Val_Unknown)
+            (*badtokens)++;
+        if (!(*this)[i].IsTranslated())
+            (*untranslated)++;
     }
 }
 
@@ -1133,44 +1136,6 @@ bool CatalogData::IsInFormat(const wxString& format)
     return false;
 }
         
-
-bool CatalogData::ms_validate = true;
-
-/*static*/ void CatalogData::EnableValidityChecking(bool enable)
-{
-    ms_validate = enable;
-}
-
-bool CatalogData::IsValid() const
-{
-    if (!IsTranslated())
-        return true;
-
-    if (m_validity != Val_Unknown)
-        return m_validity == Val_Valid;
-
-    if (!ms_validate)
-        return true;
-
-    // run this entry through msgfmt (in a single-entry catalog) to check if
-    // it is correct:
-    Catalog cat;
-    cat.AddItem(new CatalogData(*this));
-    
-    wxString tmp1 = wxGetTempFileName(_T("poedit"));
-    wxString tmp2 = wxGetTempFileName(_T("poedit"));
-    cat.Save(tmp1, false);
-    wxString errors;
-    bool ok = ExecuteGettext(_T("msgfmt -c -f -o \"") + tmp2 +
-                             _T("\" \"") + tmp1 + _T("\""),
-                             &errors);
-
-    wxRemoveFile(tmp1);
-    wxRemoveFile(tmp2);
-    
-    ((CatalogData*)this)->m_validity = ok ? Val_Valid : Val_Invalid;
-    return ok;
-}
 
 wxString Catalog::GetLocaleCode() const
 {

@@ -21,21 +21,13 @@
 #include <wx/string.h> 
 #include <wx/intl.h>
 
+#include "gexecute.h"
 
-struct MyProcessData
-{
-        bool Running;
-        int ExitCode;
-        wxArrayString Stderr;
-        wxArrayString Stdout;
-};
-
-
-
-class MyPipedProcess : public wxProcess
+class GettextProcess : public wxProcess
 {
     public:
-        MyPipedProcess(MyProcessData *data) : wxProcess(), m_data(data)
+        GettextProcess(GettextProcessData *data, wxEvtHandler *parent) 
+            : wxProcess(parent), m_data(data)
         {
             m_data->Running = true;
             m_data->Stderr.Empty();
@@ -75,7 +67,7 @@ class MyPipedProcess : public wxProcess
         }
 
     private:
-        MyProcessData *m_data;
+        GettextProcessData *m_data;
 };
 
 
@@ -116,10 +108,10 @@ bool ExecuteGettext(const wxString& cmdline, wxString *stderrOutput)
     TempLocaleSwitcher localeSwitcher(_T("C"));
 
     size_t i;
-    MyProcessData pdata;
-    MyPipedProcess *process;
+    GettextProcessData pdata;
+    GettextProcess *process;
 
-    process = new MyPipedProcess(&pdata);
+    process = new GettextProcess(&pdata, NULL);
     int pid = wxExecute(cmdline, false, process);
 
     if (pid == 0)
@@ -157,3 +149,23 @@ bool ExecuteGettext(const wxString& cmdline, wxString *stderrOutput)
     return pdata.ExitCode == 0;
 }
 
+
+bool ExecuteGettextNonblocking(const wxString& cmdline,
+                               GettextProcessData *data,
+                               wxEvtHandler *parent)
+{
+    TempLocaleSwitcher localeSwitcher(_T("C"));
+
+    GettextProcess *process;
+
+    process = new GettextProcess(data, parent);
+    int pid = wxExecute(cmdline, false, process);
+
+    if (pid == 0)
+    {
+        wxLogError(_("Cannot execute program: ") + cmdline.BeforeFirst(_T(' ')));
+        return false;
+    }
+
+    return true;
+}

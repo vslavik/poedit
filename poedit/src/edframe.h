@@ -19,10 +19,13 @@
   #define CAN_MODIFY_DEFAULT_FONT
 #endif
 
+#include <list>
 
 #include <wx/frame.h>
 #include <wx/docview.h>
 #include <wx/list.h>
+#include <wx/process.h>
+
 class WXDLLEXPORT wxListCtrl;
 class WXDLLEXPORT wxListEvent;
 class WXDLLEXPORT wxSplitterWindow;
@@ -36,6 +39,7 @@ class WXDLLEXPORT wxGauge;
 #endif
 
 #include "catalog.h"
+#include "gexecute.h"
 
 class poEditListCtrl;
 class TranslationMemory;
@@ -171,16 +175,24 @@ class poEditFrame : public wxFrame
         bool ExportCatalog(const wxString& filename);
 
         void OnIdle(wxIdleEvent& event);
-        void CheckItemValidity(int item);
-        bool CheckItemsValidityStep();
+        void OnEndProcess(wxProcessEvent& event);
+
+        void BeginItemValidation();
+        void EndItemValidation();
         
         void UpdateDisplayCommentWin();
     
         DECLARE_EVENT_TABLE()
 
     private:
-        int m_validityCheckingPosition;
-        int m_checkItemValidity;
+        struct ValidationProcessData : public GettextProcessData
+        {
+            wxString tmp1, tmp2;
+        };
+            
+        int m_itemBeingValidated;
+        std::list<int> m_itemsToValidate;
+        ValidationProcessData m_validationProcess;
         
         bool m_commentWindowEditable;
         Catalog *m_catalog;

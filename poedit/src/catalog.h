@@ -395,17 +395,7 @@ class CatalogData : public wxObject
         {
             m_autocomments.Clear();
         }
-
-        /** Checks if %i etc. are correct in the translation (true if yes).
-            Strings that are not c-format are always correct. */
-        bool IsValid() const;
-
-        /// Enables/disables IsValid. If disabled, IsValid always returns true
-        static void EnableValidityChecking(bool enable);
-
-    private:
-        static bool ms_validate;
-
+        
         // Validity (syntax-checking) status of the entry:
         enum Validity
         {
@@ -413,7 +403,14 @@ class CatalogData : public wxObject
             Val_Invalid = 0,
             Val_Valid = 1
         };  
-        
+
+        /** Checks if %i etc. are correct in the translation (true if yes).
+            Strings that are not c-format are always correct. */
+        Validity GetValidity() const { return m_validity; }
+        void SetValidity(bool val)
+            { m_validity == val ? Val_Valid : Val_Invalid; }
+
+    private:
         wxString m_string, m_translation;
         wxArrayString m_references, m_autocomments;
         bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;

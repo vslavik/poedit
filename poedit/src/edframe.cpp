@@ -426,6 +426,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_DROP_FILES     (poEditFrame::OnFileDrop)
 #endif
    EVT_IDLE           (poEditFrame::OnIdle)
+   EVT_END_PROCESS    (-1, poEditFrame::OnEndProcess)
 END_EVENT_TABLE()
 
 
@@ -441,8 +442,7 @@ poEditFrame::poEditFrame() :
                                  wxConfig::Get()->Read(_T("frame_w"), 600),
                                  wxConfig::Get()->Read(_T("frame_h"), 400)),
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
-    m_validityCheckingPosition(-1),
-    m_checkItemValidity(-1),
+    m_itemBeingValidated(-1),
     m_catalog(NULL), 
 #ifdef USE_TRANSMEM
     m_transMem(NULL),
@@ -1385,7 +1385,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             listitem.SetBackgroundColour(g_ItemColourUntranslated[item % 2]);
         else if (data->IsFuzzy())
             listitem.SetBackgroundColour(g_ItemColourFuzzy[item % 2]);
-        else if (!wxGetApp().IsInYield() && !data->IsValid())
+        else if (data->GetValidity() == CatalogData::Val_Invalid)
             listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
         else
             listitem.SetBackgroundColour(g_ItemColourNormal[item % 2]);
@@ -1396,7 +1396,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             listitem.SetBackgroundColour(g_ItemColourUntranslated[0]);
         else if (data->IsFuzzy())
             listitem.SetBackgroundColour(g_ItemColourFuzzy[0]);
-        else if (!wxGetApp().IsInYield() && !data->IsValid())
+        else if (data->GetValidity() == CatalogData::Val_Invalid)
             listitem.SetBackgroundColour(g_ItemColourInvalid[0]);
         else
             listitem.SetBackgroundColour(g_ItemColourNormal[0]);
@@ -1413,8 +1413,8 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 
     UpdateStatusBar();
 
-    if (wxGetApp().IsInYield())
-        m_checkItemValidity = item;
+    // check validity of this item:
+    m_itemsToValidate.push_front(item);
 }
 
 
@@ -1465,9 +1465,8 @@ void poEditFrame::UpdateToTextCtrl(int item)
 void poEditFrame::ReadCatalog(const wxString& catalog)
 {
     // stop checking entries in the background:
-    m_validityCheckingPosition = -1;
-    m_checkItemValidity = -1;
-    CatalogData::EnableValidityChecking(false);
+    m_itemsToValidate.clear();
+    m_itemBeingValidated = -1;
 
     delete m_catalog;
     m_catalog = new Catalog(catalog);
@@ -1494,8 +1493,9 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     InitSpellchecker();
     
     // start checking catalog's entries in the background:
-    m_validityCheckingPosition = 0;
-    CatalogData::EnableValidityChecking(true);
+    int cnt = m_list->GetItemCount();
+    for (int i = 0; i < cnt; i++)
+        m_itemsToValidate.push_back(i);
 }
 
 
@@ -1552,17 +1552,19 @@ static bool CatFilterUntranslated(const CatalogData& d)
 
 static bool CatFilterFuzzy(const CatalogData& d)
 {
-    return d.IsFuzzy() && d.IsValid() && d.IsTranslated();
+    return d.IsFuzzy() &&
+           d.GetValidity() != CatalogData::Val_Invalid && d.IsTranslated();
 }
 
 static bool CatFilterInvalid(const CatalogData& d)
 {
-    return !d.IsValid() && d.IsTranslated();
+    return d.GetValidity() == CatalogData::Val_Invalid && d.IsTranslated();
 }
 
 static bool CatFilterRest(const CatalogData& d)
 {
-    return !d.IsFuzzy() && d.IsValid()  && d.IsTranslated();
+    return !d.IsFuzzy() &&
+           d.GetValidity() != CatalogData::Val_Invalid && d.IsTranslated();
 }
 
 void poEditFrame::RefreshControls()
@@ -1647,18 +1649,16 @@ void poEditFrame::UpdateStatusBar()
     {
         wxString txt;
         
-        CatalogData::EnableValidityChecking(false);
         m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
-        CatalogData::EnableValidityChecking(true);
         
         txt.Printf(_("%i strings (%i fuzzy, %i bad tokens, %i not translated)"), 
                    all, fuzzy, badtokens, untranslated);
 
-        if (m_validityCheckingPosition != -1)
+        if (!m_itemsToValidate.empty())
         {
             wxString progress;
-            progress.Printf(_("[checking translations: %i %%]"),
-                    100 * m_validityCheckingPosition / m_list->GetItemCount());
+            progress.Printf(_("[checking translations: %i left]"),
+                            m_itemsToValidate.size());
             txt += _T("    ");
             txt += progress;
         }
@@ -1750,9 +1750,12 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
         for (size_t i = 0; i < cnt; i++)
         {
             CatalogData& dt = (*m_catalog)[i];
-            if (dt.IsModified() && !dt.IsFuzzy() && dt.IsValid() &&
+            if (dt.IsModified() && !dt.IsFuzzy() &&
+                dt.GetValidity() == CatalogData::Val_Valid &&
                 !dt.GetTranslation().IsEmpty())
+            {
                 tm->Store(dt.GetString(), dt.GetTranslation());
+            }
         }
     }
 #endif
@@ -2070,57 +2073,92 @@ void poEditFrame::OnCommentWindowText(wxCommandEvent&)
 
 void poEditFrame::OnIdle(wxIdleEvent& event)
 {
-    // avoid reentrancy problems (GettextExecute calling wxYield):
-    if (wxGetApp().IsInYield())
-        return;
-
-    if (m_checkItemValidity != -1)
-    {
-        CheckItemValidity(m_checkItemValidity);
-        m_checkItemValidity = -1;
-        event.RequestMore();
-    }
-    
-    if (m_validityCheckingPosition != -1)
-    {
-        if (CheckItemsValidityStep())
-            event.RequestMore();
-    }
+    if (!m_itemsToValidate.empty() && m_itemBeingValidated == -1)
+        BeginItemValidation();
     event.Skip();
 }
 
-void poEditFrame::CheckItemValidity(int item)
+void poEditFrame::OnEndProcess(wxProcessEvent& event)
 {
+    event.Skip(); // deletes wxProcess object
+    EndItemValidation();
+    wxWakeUpIdle();
+}
+
+void poEditFrame::BeginItemValidation()
+{
+    int item = m_itemsToValidate.front();
     int index = m_list->GetItemData(item);
+    CatalogData& dt = (*m_catalog)[index];
+
+    if (!dt.IsTranslated())
+        return;
+
+    if (dt.GetValidity() != CatalogData::Val_Unknown)
+        return;
+
+    // run this entry through msgfmt (in a single-entry catalog) to check if
+    // it is correct:
+    Catalog cat;
+    cat.AddItem(new CatalogData(dt));
     
-    if (!(*m_catalog)[index].IsValid())
+    wxString tmp1 = wxGetTempFileName(_T("poedit"));
+    wxString tmp2 = wxGetTempFileName(_T("poedit"));
+    cat.Save(tmp1, false);
+    wxString cmdline = _T("msgfmt -c -f -o \"") + tmp2 +
+                       _T("\" \"") + tmp1 + _T("\"");
+
+    m_validationProcess.tmp1 = tmp1;
+    m_validationProcess.tmp2 = tmp2;
+    
+    if (ExecuteGettextNonblocking(cmdline, &m_validationProcess, this))
     {
-        wxListItem listitem;
-        listitem.SetId(item);
-        m_list->GetItem(listitem);
-        if (gs_shadedList)
-            listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
-        else
-            listitem.SetBackgroundColour(g_ItemColourInvalid[0]);
-        m_list->SetItem(listitem);
+        m_itemBeingValidated = item;
+        m_itemsToValidate.pop_front();
+    }
+    else
+    {
+        EndItemValidation();
     }
 }
 
-bool poEditFrame::CheckItemsValidityStep()
-{
-    if (m_validityCheckingPosition >= m_list->GetItemCount())
-    {
-        m_validityCheckingPosition = -1;
-        UpdateStatusBar();
-        wxLogTrace(_T("poedit"),
-                   _T("finished checking validity in background"));
-        return false;
-    }
+void poEditFrame::EndItemValidation()
+{ 
+    wxRemoveFile(m_validationProcess.tmp1);
+    wxRemoveFile(m_validationProcess.tmp2);
 
-    int item = m_validityCheckingPosition++;
-    CheckItemValidity(item);
-    if ((item % 10) == 0)
-        UpdateStatusBar();
-    
-    return true;
+    if (m_itemBeingValidated != -1)
+    {
+        int item = m_itemBeingValidated;
+        int index = m_list->GetItemData(item);
+        CatalogData& dt = (*m_catalog)[index];
+       
+        bool ok = m_validationProcess.ExitCode == 0;
+        dt.SetValidity(ok);
+
+        m_itemBeingValidated = -1;
+
+        if ((m_itemsToValidate.size() % 10) == 0)
+        {
+            UpdateStatusBar();
+        }
+       
+        if (!ok)
+        {
+            wxListItem listitem;
+            listitem.SetId(item);
+            m_list->GetItem(listitem);
+            if (gs_shadedList)
+                listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
+            else
+                listitem.SetBackgroundColour(g_ItemColourInvalid[0]);
+            m_list->SetItem(listitem);
+        }
+        
+        if (m_itemsToValidate.empty())
+        {
+            wxLogTrace(_T("poedit"),
+                       _T("finished checking validity in background"));
+        }
+    }
 }
