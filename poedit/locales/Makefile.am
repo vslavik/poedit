@@ -4,7 +4,7 @@ POEDIT_LINGUAS = bg cs de et fr hr it lv nl nn pl sk sv_SE ta tr zh_TW zh_CN \
                  af_ZA sl mn pa    sq_AL am_ET hi eo be br wa bn eu ko he \
 				 ky
 WXWIN_LINGUAS  =    cs de    fr    it    nl          sv       tr       zh_CN \
-                 ca             ru             es da \
+                 ca             ru nb          es da \
 				 af_ZA sl                                        eu
 
 localedir = $(datadir)/locale
