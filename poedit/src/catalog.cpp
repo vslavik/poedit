@@ -1005,7 +1005,7 @@ wxString CatalogData::GetFlags() const
 // since there is no need to have one object per instance of CatalogData, 
 // we declare it static
 wxRegEx CatalogData::ms_tokenExtraction(
-        _T(".*(%[-+0 #]?[0-9]?[.[0-9]*]?([cCdiouxXeEfgGpsS]|ld)).*"),
+        _T(".*(%[-\\+0 #]?[0-9]?[\\.[0-9]*]?([cCdiouxXeEfgGpsS]|ld)).*"),
         wxRE_EXTENDED | wxRE_NEWLINE);
 
 bool CatalogData::CheckPrintfCorrectness()
@@ -1071,6 +1071,9 @@ bool CatalogData::ValidateTokensString(const wxString& from,
 		// Remove then newly extracted token from the string
         subString = subString.Left(startOff);
         
+        currMatch.Replace(_T("."), _T("\\."));
+        currMatch.Replace(_T("+"), _T("\\+"));
+
         // Append the new token to the regexp pattern
         currMatch += _T(".*");
         currMatch += newPattern;
