@@ -22,7 +22,7 @@ class reference.
 ------------
 
 poEdit is built on top of wxWindows toolkit, so it requires it at 
-compilation time (version 2.3.0 or newer, see http://www.wxwindows.org).
+compilation time (version 2.3.2 or newer, see http://www.wxwindows.org).
 
 Under Unix, do "./configure && make && make install" as usual.
 

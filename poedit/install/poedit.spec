@@ -8,17 +8,19 @@
 %define prefix /usr
 
 
-Summary:   Gettext catalogs editor
-Name:      poedit
-Version:   %VERSION
-Release:   %RELEASE
-Copyright: BSD license
-Group:     Applications/Editors
-Source:    poedit-%{VERSION}.tar.bz2
-URL:       http://poedit.sourceforge.net
-Packager:  Vaclav Slavik <v.slavik@volny.cz>
-Prefix:    %prefix
-Requires:  gtk+ >= 1.2.6 gettext
+Summary:       Gettext catalogs editor
+Name:          poedit
+Version:       %VERSION
+Release:       %RELEASE
+Copyright:     BSD license
+Group:         Applications/Editors
+Source:        poedit-%{VERSION}.tar.bz2
+URL:           http://poedit.sourceforge.net
+Packager:      Vaclav Slavik <vaclav.slavik@matfyz.cz>
+Prefix:        %prefix
+Requires:      gtk+ >= 1.2.7 gettext
+Requires:      wxGTK >= 2.3.2
+BuildRequires: wxGTK-devel wxGTK-static
 BuildRoot: /var/tmp/poedit-%{version}
 
 %description
