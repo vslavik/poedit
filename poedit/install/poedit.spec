@@ -61,8 +61,7 @@ export KDEDIR=/usr
 
 %install
 rm -rf %{buildroot}
-%makeinstall GNOME_DATA_DIR=$RPM_BUILD_ROOT/usr/share \
-             KDE_DATA_DIR=$RPM_BUILD_ROOT/usr/share
+%makeinstall GNOME_DATA_DIR=/usr/share KDE_DATA_DIR=/usr/share
 
 (cd $RPM_BUILD_ROOT
 mkdir -p ./%{_libdir}/menu
