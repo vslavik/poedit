@@ -167,16 +167,16 @@ END_EVENT_TABLE()
 void RunTMUpdateWizard(wxWindow *parent,
                        const wxString& dbPath, const wxArrayString& langs)
 {
-    UpdateWizard wizard;
-
-    wxXmlResource::Get()->LoadObject(&wizard, parent,
-                                     _T("tm_update_wizard"), _T("wxWizard"));
-    wizard.Setup();
-
-    size_t i; // VC++ is broken compiler
-    for (i = 0; i < langs.GetCount(); i++)
+    for (size_t i = 0; i < langs.GetCount(); i++)
     {
-        wizard.SetLang(langs[0]);
+        UpdateWizard wizard;
+
+        wxXmlResource::Get()->LoadObject(&wizard, parent,
+                                         _T("tm_update_wizard"),
+                                         _T("wxWizard"));
+        wizard.Setup();
+
+        wizard.SetLang(langs[i]);
         if (!wizard.RunWizard(XRCCTRL(wizard, "tm_update_1", wxWizardPage)))
         {
             wizard.Destroy();
@@ -196,20 +196,20 @@ void RunTMUpdateWizard(wxWindow *parent,
             tm->Release();
             delete pi;
         }
-    }
 
-    // Save the directories:
-    wxArrayString dirsArray;
-    wizard.GetSearchPaths(dirsArray);
-    wxString dirsStr;
-    for (i = 0; i < dirsArray.GetCount(); i++)
-    {
-        if (i != 0) dirsStr << wxPATH_SEP;
-        dirsStr << dirsArray[i];
+        // Save the directories:
+        wxArrayString dirsArray;
+        wizard.GetSearchPaths(dirsArray);
+        wxString dirsStr;
+        for (size_t j = 0; j < dirsArray.GetCount(); j++)
+        {
+            if (j != 0) dirsStr << wxPATH_SEP;
+            dirsStr << dirsArray[j];
+        }
+        wxConfig::Get()->Write(_T("TM/search_paths"), dirsStr);
+        
+        wizard.Destroy();
     }
-    wxConfig::Get()->Write(_T("TM/search_paths"), dirsStr);
-    
-    wizard.Destroy();
 }
 
 #endif //USE_TRANSMEM
