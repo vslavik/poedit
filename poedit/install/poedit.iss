@@ -31,6 +31,7 @@ WindowResizable=false
 SolidCompression=true
 ShowLanguageDialog=yes
 [Files]
+Source: extras\win32-runtime\isxdl.dll; Flags: dontcopy
 Source: BUILD-mingw\src\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
 Source: install\poedit.exe.manifest; DestDir: {app}\bin; MinVersion: 0,5.01.2600; Components: core
 Source: extras\win32-gettext\gnu_gettext.COPYING; DestDir: {app}\doc; Components: docs
@@ -46,7 +47,6 @@ Source: extras\win32-gettext\xgettext.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgmerge.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgunfmt.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgfmt.exe; DestDir: {app}\bin; Components: core
-Source: extras\win32-runtime\unicows.dll; DestDir: {app}\bin; MinVersion: 4.0.950,0; Components: core; Flags: ignoreversion
 Source: locales\wxwin\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\zh_TW.mo; DestDir: {app}\share\locale\zh_TW\LC_MESSAGES; DestName: poedit.mo; Components: i18n
@@ -108,6 +108,7 @@ Source: locales\bn.mo; DestDir: {app}\share\locale\bn\LC_MESSAGES; Components: i
 Source: locales\eu.mo; DestDir: {app}\share\locale\eu\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\wxwin\eu.mo; DestDir: {app}\share\locale\eu\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: BUILD-mingw\src\mingwm10.dll; DestDir: {app}\bin; DestName: mingwm10.dll; Components: core
+DestDir: {app}\bin; Source: {tmp}\unicows.exe; Flags: deleteafterinstall external skipifsourcedoesntexist; Tasks: unicows
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
@@ -129,6 +130,7 @@ Name: {group}\Readme; Filename: {app}\doc\readme.txt; IconIndex: 0
 [Run]
 Filename: {app}\doc\readme.txt; Description: View readme.txt; Flags: shellexec postinstall unchecked; Components: docs
 Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run poEdit now; Flags: postinstall unchecked nowait
+Filename: {app}\bin\unicows.exe; Tasks: unicows; Flags: skipifdoesntexist; Parameters: "/T:""{app}\bin"""; StatusMsg: Installing MSLU...
 
 [_ISTool]
 EnableISX=true
@@ -223,6 +225,14 @@ Name: {app}\share\locale\bn; Components: i18n
 Name: {app}\share\locale\bn\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\eu; Components: i18n
 Name: {app}\share\locale\eu\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\da; Components: i18n
+Name: {app}\share\locale\da\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\pl; Components: i18n
+Name: {app}\share\locale\pl\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\pt_PT; Components: i18n
+Name: {app}\share\locale\pt_PT\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\mn; Components: i18n
+Name: {app}\share\locale\mn\LC_MESSAGES; Components: i18n
 
 [_ISToolPreCompile]
 
@@ -233,7 +243,51 @@ Name: i18n; Description: Localization files for the UI; Types: full
 
 [Messages]
 BeveledLabel=poEdit
+[Tasks]
+Name: unicows; Description: Download and install MSLU; Flags: unchecked; Components: core; GroupDescription: Due to Microsoft's draconian licensing terms for The Microsoft Layer for Unicode on Windows 95/98/ME, poEdit cannot ship with working Unicode support, additional DLL files must be obtained from Microsoft. The installer can download them from Microsoft's site for you and run the installer.; MinVersion: 4.0.950,0; OnlyBelowVersion: 0,0
+[UninstallDelete]
+Name: {app}\bin\License.Txt; Type: files; Tasks: unicows
+Name: {app}\bin\redist.txt; Type: files; Tasks: unicows
+Name: {app}\bin\unicows.*; Type: files; Tasks: unicows
 [Code]
+{ ------------------------------------------------------------------ }
+{  Download of unicows.dll from Microsoft site:                      }
+{ ------------------------------------------------------------------ }
+
+const
+  UNICOWS_URL =
+      'http://download.microsoft.com/download/b/7/5/b75eace3-00e2-4aa0-9a6f-0b6882c71642/unicows.exe';
+
+procedure isxdl_AddFile(URL, Filename: PChar);
+  external 'isxdl_AddFile@files:isxdl.dll stdcall';
+
+function isxdl_DownloadFiles(hWnd: Integer): Integer;
+  external 'isxdl_DownloadFiles@files:isxdl.dll stdcall';
+
+function isxdl_SetOption(Option, Value: PChar): Integer;
+  external 'isxdl_SetOption@files:isxdl.dll stdcall';
+
+
+function DownloadFiles: Boolean;
+var
+  hWnd: Integer;
+begin
+  isxdl_SetOption('label', 'Downloading MSLU');
+  isxdl_SetOption('description', 'Please wait while Setup is downloading MSLU files to your computer.');
+
+  isxdl_AddFile(UNICOWS_URL, ExpandConstant('{tmp}\unicows.exe'));
+
+  if isxdl_DownloadFiles(hWnd) = 0 then
+    MsgBox('Error while downloading. Setup will now continue installing normally.', mbError, mb_Ok);
+
+  Result := True;
+end;
+
+
+{ ------------------------------------------------------------------ }
+{ Helper functions:                                                  }
+{ ------------------------------------------------------------------ }
+
 function InstallLocally : boolean;
 begin
   result := not IsAdminLoggedOn;
@@ -244,22 +298,15 @@ begin
   result := IsAdminLoggedOn;
 end;
 
+{ ------------------------------------------------------------------ }
+{ UI scripting:                                                      }
+{ ------------------------------------------------------------------ }
+
 function ScriptDlgPages(CurPage: Integer; BackClicked: Boolean): Boolean;
-var
-  Next: Boolean;
 begin
-  if (not UsingWinNT) and (not BackClicked and (CurPage = wpReady)) then begin
-    ScriptDlgPageOpen;
-    ScriptDlgPageSetCaption('Post-Installation Steps');
-    ScriptDlgPageSetSubCaption1('Things that you must do after installation completes');
-    ScriptDlgPageShowBackButton(False);
-    Next := OutputMsgMemo('','Due to Microsoft''s draconian licensing terms for The Microsoft Layer for Unicode on Windows 95/98/ME, poEdit cannot ship with full Unicode support. You have to manually download unicows.exe from http://www.microsoft.com/downloads/details.aspx?FamilyId=73BA7BD7-ED06-4F0D-80A4-2A7EEAEE17E2&displaylang=en and copy unicows.dll into the directory where poedit.exe is after poEdit installation is completed.');
-    ScriptDlgPageClose(not Next);
-    { See NextButtonClick and BackButtonClick: return True if the click should be allowed }
-    if not BackClicked then
-      Result := Next
-    else
-      Result := not Next;
+  if not BackClicked and (CurPage = wpReady) and
+     (ShouldProcessEntry('core', 'unicows') = srYes) then begin
+    Result := DownloadFiles;
   end
   else begin
     Result := True;
