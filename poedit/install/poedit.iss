@@ -62,7 +62,7 @@ Source: locales\wxwin\fr.mo; DestDir: {app}\share\locale\fr\LC_MESSAGES; Compone
 Source: locales\hr.mo; DestDir: {app}\share\locale\hr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\pl.mo; DestDir: {app}\share\locale\pl\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\nn.mo; DestDir: {app}\share\locale\nn\LC_MESSAGES; Components: i18n; DestName: poedit.mo
-Source: locales\no.mo; DestDir: {app}\share\locale\no\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\nb.mo; DestDir: {app}\share\locale\nb\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\tr.mo; DestDir: {app}\share\locale\tr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\wxwin\tr.mo; DestDir: {app}\share\locale\tr\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\wxwin\it.mo; DestDir: {app}\share\locale\it\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
@@ -138,8 +138,8 @@ Name: {app}\share\locale\po; Components: i18n
 Name: {app}\share\locale\po\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\nn; Components: i18n
 Name: {app}\share\locale\nn\LC_MESSAGES; Components: i18n
-Name: {app}\share\locale\no; Components: i18n
-Name: {app}\share\locale\no\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\nb; Components: i18n
+Name: {app}\share\locale\nb\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\tr; Components: i18n
 Name: {app}\share\locale\tr\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\it; Components: i18n
