@@ -40,6 +40,4 @@ poedit_resource.o: poedit.rc
         --include-dir $(srcdir) @RC_WX_INCLUDES@ \
         --define __WIN32__ --define __WIN95__ --define __GNUWIN32__
 
-poedit_LDADD = $(RESOURCE_FILES) \
-               -L../extras/wx-contrib/src/gizmos \
-               -lmy_gizmos $(XRC_LDADD) $(POEDIT_WX_LIBS)
+poedit_LDADD = $(RESOURCE_FILES) $(XRC_LDADD) $(POEDIT_WX_LIBS)
