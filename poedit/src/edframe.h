@@ -8,7 +8,7 @@
     
       Editor frame
     
-      (c) Vaclav Slavik, 2000
+      (c) Vaclav Slavik, 2000-2004
 
 */
 
@@ -119,6 +119,9 @@ class poEditFrame : public wxFrame
         TranslationMemory *GetTransMem();
 #endif
 
+        // (Re)initializes spellchecker, if needed
+        void InitSpellchecker();
+        
         void AddItemsToList(const Catalog& catalog,
                             poEditListCtrl *list, size_t& pos,
                             bool (*filter)(const CatalogData& d),

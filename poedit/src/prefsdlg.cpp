@@ -61,6 +61,12 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
 		XRCCTRL(*this, "notebook", wxNotebook)->DeletePage(tmIndex);
 #endif
 
+#if !USE_SPELLCHECKING
+    // remove "Automatic spellchecking" checkbox:
+    wxWindow *spellcheck = XRCCTRL(*this, "enable_spellchecking", wxCheckBox);
+    spellcheck->GetContainingSizer()->Show(spellcheck, false);
+#endif
+
 #ifdef __UNIX__
     // remove (defunct on Unix) "Change UI language" button:
     XRCCTRL(*this, "ui_language", wxButton)->Show(false);
@@ -90,7 +96,11 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 cfg->Read(_T("open_editor_immediately"), (long)false));
     XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("keep_crlf"), true));
-
+#if USE_SPELLCHECKING
+    XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->SetValue(
+                (bool)cfg->Read(_T("enable_spellchecking"), true));
+#endif
+    
     XRCCTRL(*this, "use_font_list", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("custom_font_list_use"), (long)false));
     XRCCTRL(*this, "use_font_text", wxCheckBox)->SetValue(
@@ -164,6 +174,10 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XRCCTRL(*this, "open_editor_immediately", wxCheckBox)->GetValue());
     cfg->Write(_T("keep_crlf"), 
                 XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
+#if USE_SPELLCHECKING
+    cfg->Write(_T("enable_spellchecking"), 
+                XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->GetValue());
+#endif
     
     cfg->Write(_T("custom_font_list_use"),
                 XRCCTRL(*this, "use_font_list", wxCheckBox)->GetValue());

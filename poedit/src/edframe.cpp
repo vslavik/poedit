@@ -32,6 +32,13 @@
 #include <wx/fontutil.h>
 #include <wx/textfile.h>
 
+#if USE_SPELLCHECKING
+    #include <gtk/gtk.h>
+    extern "C" {
+    #include <gtkspell/gtkspell.h>
+    }
+#endif
+
 #include "catalog.h"
 #include "edapp.h"
 #include "edframe.h"
@@ -48,6 +55,7 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(poEditFramesList);
 poEditFramesList poEditFrame::ms_instances;
+
 
 
 #ifdef __VISUALC__
@@ -527,7 +535,7 @@ poEditFrame::poEditFrame() :
                                 EDC_TEXTTRANS, wxEmptyString, 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE);
-    
+
     SetCustomFonts();
     
     wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
@@ -631,7 +639,61 @@ poEditFrame::~poEditFrame()
         m_transMem->Release();
 #endif
     delete m_catalog;
+
+    m_catalog = NULL;
+
+    // shutdown the spellchecker:
+    InitSpellchecker();
 }
+
+#if USE_SPELLCHECKING
+// helper functions that finds GtkTextView of wxTextCtrl:
+static GtkTextView *GetTextView(wxTextCtrl *ctrl)
+{
+    GtkWidget *parent = ctrl->m_widget;
+    GList *child = gtk_container_get_children(GTK_CONTAINER(parent));
+    while (child)
+    {
+        if (GTK_IS_TEXT_VIEW(child->data))
+        {
+            return GTK_TEXT_VIEW(child->data);
+        }
+        child = child->next;
+    }
+}
+#endif
+
+
+void poEditFrame::InitSpellchecker()
+{
+#if USE_SPELLCHECKING
+    GtkTextView *textview = GetTextView(m_textTrans);
+    wxASSERT_MSG( textview, _T("wxTextCtrl is supposed to use GtkTextView") );
+    GtkSpell *spell = gtkspell_get_from_text_view(textview);
+
+    if (spell)        
+        gtkspell_detach(spell);
+    
+    bool enabled = wxConfig::Get()->Read(_T("enable_spellchecking"),
+                                         (long)true);
+
+    if (m_catalog && enabled)
+    {
+        wxString lang = m_catalog->GetLocaleCode();
+        if (!lang.empty())
+        {
+            GError *err = NULL;
+            if (!gtkspell_new_attach(textview, lang.ToAscii(), &err))
+            {
+                wxLogError(_("Error initializing spell checking: %s"),
+                           wxString(err->message, wxConvUTF8).c_str());
+                g_error_free(err);
+            }
+        }
+    }
+#endif
+}
+    
 
 
 #ifdef USE_TRANSMEM
@@ -645,16 +707,8 @@ TranslationMemory *poEditFrame::GetTransMem()
     {
         wxString lang;
         wxString dbPath = cfg->Read(_T("TM/database_path"), wxEmptyString);
-        
-        if (!m_catalog->Header().Language.empty())
-        {
-            lang = LookupLanguageCode(m_catalog->Header().Language.c_str());
-            if (!m_catalog->Header().Country.empty())
-            {
-                lang += _T('_');
-                lang += LookupCountryCode(m_catalog->Header().Country.c_str());
-            }
-        }
+       
+        lang = m_catalog->GetLocaleCode();
         if (!lang)
         {
             wxArrayString lngs;
@@ -825,19 +879,12 @@ void poEditFrame::OnSave(wxCommandEvent& event)
 }
 
 
-static wxString SuggestFileName(const Catalog::HeaderData& header)
+static wxString SuggestFileName(const Catalog *catalog)
 {
-    wxString name;
-    if (!header.Language.empty())
-    {
-        name = LookupLanguageCode(header.Language);
-        if (!name.empty() && !header.Country.empty())
-        {
-            wxString code = LookupCountryCode(header.Country);
-            if (!code.empty())
-                name += wxString(_T('_')) + code;
-        }
-    }
+    wxString name;    
+    if (catalog)
+        name = catalog->GetLocaleCode();
+
     if (name.empty())
         return _T("default");
     else
@@ -852,7 +899,7 @@ void poEditFrame::OnSaveAs(wxCommandEvent&)
 
     if (name.empty())
     {
-        name = SuggestFileName(m_catalog->Header()) + _T(".po");
+        name = SuggestFileName(m_catalog) + _T(".po");
     }
     
     name = wxFileSelector(_("Save as..."), wxPathOnly(m_fileName), name, wxEmptyString, 
@@ -874,18 +921,7 @@ void poEditFrame::OnExport(wxCommandEvent&)
 
     if (name.empty())
     {
-        name = SuggestFileName(m_catalog->Header()) + _T(".html");
-
-        if (!m_catalog->Header().Language.empty())
-        {
-            name = LookupLanguageCode(m_catalog->Header().Language);
-            if (!name.empty() && !m_catalog->Header().Country.empty())
-            {
-                wxString code = LookupCountryCode(m_catalog->Header().Country);
-                if (!code.empty())
-                    name += wxString(wxT('_')) + code;
-            }
-        }
+        name = SuggestFileName(m_catalog) + _T(".html");
     }
     else
 		name += _T(".html");        
@@ -950,7 +986,9 @@ void poEditFrame::OnNew(wxCommandEvent& event)
         m_transMem = NULL;
     }
     m_transMemLoaded = false;
-#endif    
+#endif
+
+    InitSpellchecker();
 }
 
 
@@ -966,6 +1004,7 @@ void poEditFrame::OnSettings(wxCommandEvent&)
         m_modified = true;
         UpdateTitle();
         UpdateMenu();
+        InitSpellchecker();
     }
 }
 
@@ -983,6 +1022,7 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
                                                      (long)false);
         SetCustomFonts();
         UpdateCommentWindowEditable();
+        InitSpellchecker();
     }
 }
 
@@ -1431,6 +1471,8 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     wxFileName fn(m_fileName);
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
     m_history.AddFileToHistory(fn.GetFullPath());
+
+    InitSpellchecker();
 }
 
 
