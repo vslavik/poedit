@@ -399,6 +399,27 @@ bool Catalog::Load(const wxString& po_file)
     m_isOk = false;
     m_fileName = po_file;
     m_header.BasePath = wxEmptyString;
+    
+    /* Load the .po file: */
+        
+    m_data = new wxHashTable(wxKEY_STRING);
+
+    if (!f.Open(po_file)) return false;
+    
+    CharsetInfoFinder charsetFinder(&f, &wxConvISO8859_1);
+    charsetFinder.Parse();
+    m_header.Charset = charsetFinder.GetCharset();
+
+    f.Close();
+    wxCSConv encConv(m_header.Charset);
+    if (!f.Open(po_file, encConv)) return false;
+
+    LoadParser parser(this, &f, &encConv);
+    parser.Parse();
+
+    m_isOk = true;
+    
+    f.Close();
 
     /* Load extended information from .po.poedit file, if present: */
     
@@ -410,16 +431,11 @@ bool Catalog::Load(const wxString& po_file)
         if (ReadParam(ReadTextLine(&f, NULL),
                       _T("#. Number of items: "), dummy))
         {
-            long sz;
-            dummy.ToLong(&sz);
-            if (sz == 0) sz = 500;
-            m_data = new wxHashTable(wxKEY_STRING, 2 * sz /*optimal hash table size*/);
+            // not used anymore
         }
-        else
-            m_data = new wxHashTable(wxKEY_STRING);
-        ReadParam(ReadTextLine(&f, NULL),
+        ReadParam(ReadTextLine(&f, &encConv),
                   _T("#. Language: "), m_header.Language);
-        dummy = ReadTextLine(&f, NULL);
+        dummy = ReadTextLine(&f, &encConv);
         if (ReadParam(dummy, _T("#. Country: "), m_header.Country))
             dummy = ReadTextLine(&f, NULL);
         if (ReadParam(dummy, _T("#. Basepath: "), m_header.BasePath))
@@ -446,28 +462,6 @@ bool Catalog::Load(const wxString& po_file)
 
         f.Close();
     }
-    else
-        m_data = new wxHashTable(wxKEY_STRING);
-
-
-    /* Load the .po file: */
-
-    if (!f.Open(po_file)) return false;
-    
-    CharsetInfoFinder charsetFinder(&f, &wxConvISO8859_1);
-    charsetFinder.Parse();
-    m_header.Charset = charsetFinder.GetCharset();
-
-    f.Close();
-    wxCSConv encConv(m_header.Charset);
-    if (!f.Open(po_file, encConv)) return false;
-
-    LoadParser parser(this, &f, &encConv);
-    parser.Parse();
-
-    m_isOk = true;
-    
-    f.Close();
     
     return true;
 }
@@ -492,12 +486,12 @@ static bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
     if (!trans)
         return false;
     #ifdef __WINDOWS__
-    // NB: there's an inconsistency in wxWindows: wxMBConv conversion rountines
-    //     return NULL (i.e. empty wxString) in case of failure on Unix (iconv)
-    //     but return lossy/inexact conversion if exact conversion cannot
-    //     be done on Windows. So we have to do roundtrip conversion and
-    //     compare the result with original to see if the conversion was
-    //     successful or not:
+    // NB: there's an inconsistency in wxWindows (fixed in wx-2.5.2):
+    //     wxMBConv conversion rountines return NULL (i.e. empty wxString) in
+    //     case of failure on Unix (iconv) but return lossy/inexact conversion
+    //     if exact conversion cannot be done on Windows. So we have to do
+    //     roundtrip conversion and compare the result with original to see if
+    //     the conversion was successful or not:
     wxString roundtrip(trans.wc_str(conv), wxConvUTF8);
     if (roundtrip != s)
         return false;
@@ -518,8 +512,21 @@ static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
 {
     if (charset == _T("utf-8") || charset == _T("UTF-8"))
         return true;
-
+    
     wxCSConv conv(charset);
+
+    const Catalog::HeaderData& hdr(catalog.Header());
+        
+    if (!CanEncodeStringToCharset(hdr.Project, conv) ||
+        !CanEncodeStringToCharset(hdr.Translator, conv) ||
+        !CanEncodeStringToCharset(hdr.Team, conv) ||
+        !CanEncodeStringToCharset(hdr.Language, conv) ||
+        !CanEncodeStringToCharset(hdr.Country, conv) ||
+        !CanEncodeStringToCharset(hdr.Comment, conv))
+    {
+        return false;
+    }
+    
     size_t cnt = catalog.GetCount();
     for (size_t i = 0; i < cnt; i++)
     {
@@ -589,7 +596,7 @@ static wxString FormatStringForFile(const wxString& text)
         return s;
 }
 
-inline wxString convertUtf8ToCharset(const wxString& s, wxMBConv *conv)
+static inline wxString convertUtf8ToCharset(const wxString& s, wxMBConv *conv)
 {
 #if !wxUSE_UNICODE
     if (conv)
@@ -629,43 +636,6 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     }
     else
         crlf = crlfOrig;
-        
-
-    /* If neccessary, save extended info into .po.poedit file: */
-
-    if (!m_header.Language.IsEmpty() || 
-        !m_header.Country.IsEmpty() || 
-        !m_header.BasePath.IsEmpty() || 
-        m_header.SearchPaths.GetCount() > 0 ||
-        m_header.Keywords.GetCount() > 0)
-    {
-        if (!wxFileExists(po_file + _T(".poedit")) || !f.Open(po_file + _T(".poedit")))
-            if (!f.Create(po_file + _T(".poedit")))
-                return false;
-        for (j = f.GetLineCount() - 1; j >= 0; j--)
-            f.RemoveLine(j);
-
-        f.AddLine(_T("#. This catalog was generated by poedit"));
-        dummy.Printf(_T("#. Number of items: %i"), GetCount());
-        f.AddLine(dummy);
-        f.AddLine(_T("#. Language: ") + m_header.Language);
-        f.AddLine(_T("#. Country: ") + m_header.Country);
-        f.AddLine(_T("#. Basepath: ") + m_header.BasePath);
-        f.AddLine(_T("#. SourceCodeCharSet: ") + m_header.SourceCodeCharset);
-
-        dummy.Printf(_T("#. Paths: %i"), m_header.SearchPaths.GetCount());
-        f.AddLine(dummy);
-        for (i = 0; i < m_header.SearchPaths.GetCount(); i++)
-            f.AddLine(_T("#.     ") + m_header.SearchPaths[i]);
-
-        dummy.Printf(_T("#. Keywords: %i"), m_header.Keywords.GetCount());
-        f.AddLine(dummy);
-        for (i = 0; i < m_header.Keywords.GetCount(); i++)
-            f.AddLine(_T("#.     ") + m_header.Keywords[i]);
-        f.Write(crlf);
-        f.Close();
-    }
-
 
     /* Save .po file: */
 
@@ -688,28 +658,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
             return false;
     for (j = f.GetLineCount() - 1; j >= 0; j--)
         f.RemoveLine(j);
+   
 
-    SaveMultiLines(f, m_header.Comment);
-    f.AddLine(_T("msgid \"\""));
-    f.AddLine(_T("msgstr \"\""));
-    f.AddLine(_T("\"Project-Id-Version: ") + m_header.Project + _T("\\n\""));
-    f.AddLine(_T("\"POT-Creation-Date: ") + m_header.CreationDate + _T("\\n\""));
-    f.AddLine(_T("\"PO-Revision-Date: ") + m_header.RevisionDate + _T("\\n\""));
-    if (m_header.TranslatorEmail.empty())
-        f.AddLine(_T("\"Last-Translator: ") +m_header.Translator + _T("\\n\""));
-    else
-        f.AddLine(_T("\"Last-Translator: ") + m_header.Translator + 
-                  _T(" <") + m_header.TranslatorEmail + _T(">\\n\""));
-    if (m_header.TeamEmail.empty())
-        f.AddLine(_T("\"Language-Team: ") + m_header.Team + _T("\\n\""));
-    else
-        f.AddLine(_T("\"Language-Team: ") + m_header.Team +
-                  _T(" <") + m_header.TeamEmail + _T(">\\n\""));
-    f.AddLine(_T("\"MIME-Version: 1.0\\n\""));
-    f.AddLine(_T("\"Content-Type: text/plain; charset=") + charset + _T("\\n\""));
-    f.AddLine(_T("\"Content-Transfer-Encoding: 8bit\\n\""));
-    f.AddLine(wxEmptyString);
-    
     wxCSConv *encConv;
 #if wxUSE_UNICODE
     encConv = new wxCSConv(charset);
@@ -720,11 +670,38 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         encConv = NULL;
 #endif
 
+    SaveMultiLines(f, convertUtf8ToCharset(m_header.Comment, encConv));
+    f.AddLine(_T("msgid \"\""));
+    f.AddLine(_T("msgstr \"\""));
+    f.AddLine(_T("\"Project-Id-Version: ") + 
+              convertUtf8ToCharset(m_header.Project, encConv) + _T("\\n\""));
+    f.AddLine(_T("\"POT-Creation-Date: ") + m_header.CreationDate + _T("\\n\""));
+    f.AddLine(_T("\"PO-Revision-Date: ") + m_header.RevisionDate + _T("\\n\""));
+    if (m_header.TranslatorEmail.empty())
+        f.AddLine(_T("\"Last-Translator: ") +
+                  convertUtf8ToCharset(m_header.Translator, encConv) +
+                  _T("\\n\""));
+    else
+        f.AddLine(_T("\"Last-Translator: ") +
+                  convertUtf8ToCharset(m_header.Translator, encConv) + 
+                  _T(" <") + m_header.TranslatorEmail + _T(">\\n\""));
+    if (m_header.TeamEmail.empty())
+        f.AddLine(_T("\"Language-Team: ") + 
+                  convertUtf8ToCharset(m_header.Team, encConv) + _T("\\n\""));
+    else
+        f.AddLine(_T("\"Language-Team: ") + 
+                  convertUtf8ToCharset(m_header.Team, encConv) +
+                  _T(" <") + m_header.TeamEmail + _T(">\\n\""));
+    f.AddLine(_T("\"MIME-Version: 1.0\\n\""));
+    f.AddLine(_T("\"Content-Type: text/plain; charset=") + charset + _T("\\n\""));
+    f.AddLine(_T("\"Content-Transfer-Encoding: 8bit\\n\""));
+    f.AddLine(wxEmptyString);
+
     for (i = 0; i < m_dataArray.GetCount(); i++)
     {
         data = &(m_dataArray[i]);
         SaveMultiLines(f, convertUtf8ToCharset(data->GetComment(), encConv));
-	for (unsigned i = 0; i < data->GetAutoComments().GetCount(); i++)
+        for (unsigned i = 0; i < data->GetAutoComments().GetCount(); i++)
             f.AddLine(_T("#. ") + data->GetAutoComments()[i]);
         for (unsigned i = 0; i < data->GetReferences().GetCount(); i++)
             f.AddLine(_T("#: ") + data->GetReferences()[i]);
@@ -748,6 +725,45 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     f.Write(crlf);
 #endif
     f.Close();
+
+    /* If neccessary, save extended info into .po.poedit file: */
+
+    if (!m_header.Language.IsEmpty() || 
+        !m_header.Country.IsEmpty() || 
+        !m_header.BasePath.IsEmpty() || 
+        m_header.SearchPaths.GetCount() > 0 ||
+        m_header.Keywords.GetCount() > 0)
+    {
+        if (!wxFileExists(po_file + _T(".poedit")) || !f.Open(po_file + _T(".poedit")))
+            if (!f.Create(po_file + _T(".poedit")))
+                return false;
+        for (j = f.GetLineCount() - 1; j >= 0; j--)
+            f.RemoveLine(j);
+
+        f.AddLine(_T("#. This catalog was generated by poedit"));
+        dummy.Printf(_T("#. Number of items: %i"), GetCount());
+        f.AddLine(dummy);
+        f.AddLine(_T("#. Language: ") + 
+                  convertUtf8ToCharset(m_header.Language, encConv));
+        f.AddLine(_T("#. Country: ") + 
+                  convertUtf8ToCharset(m_header.Country, encConv));
+        f.AddLine(_T("#. Basepath: ") + m_header.BasePath);
+        f.AddLine(_T("#. SourceCodeCharSet: ") + m_header.SourceCodeCharset);
+
+        dummy.Printf(_T("#. Paths: %i"), m_header.SearchPaths.GetCount());
+        f.AddLine(dummy);
+        for (i = 0; i < m_header.SearchPaths.GetCount(); i++)
+            f.AddLine(_T("#.     ") + m_header.SearchPaths[i]);
+
+        dummy.Printf(_T("#. Keywords: %i"), m_header.Keywords.GetCount());
+        f.AddLine(dummy);
+        for (i = 0; i < m_header.Keywords.GetCount(); i++)
+            f.AddLine(_T("#.     ") + m_header.Keywords[i]);
+        f.Write(crlf);
+        f.Close();
+    }
+    
+    
     delete encConv;    
 
     /* If user wants it, compile .mo file right now: */
