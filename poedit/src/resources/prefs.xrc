@@ -71,19 +71,23 @@
                         <label>Automatically compile .mo file on save</label>
                         <checked>1</checked>
                       </object>
-                      <option>1</option>
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
                     </object>
                     <object class="sizeritem">
                       <object class="wxCheckBox" name="show_summary">
                         <checked>1</checked>
                         <label>Show summary after catalog update</label>
                       </object>
-                      <option>1</option>
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT</flag>
                     </object>
                     <object class="sizeritem">
                       <object class="wxCheckBox" name="manager_startup">
                         <label>Open catalogs manager on poEdit startup</label>
                       </object>
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT</flag>
                     </object>
                     <object class="sizeritem">
                       <object class="wxCheckBox" name="focus_to_text">
@@ -91,18 +95,24 @@
                         <checked>1</checked>
                         <tooltip>Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus.</tooltip>
                       </object>
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT</flag>
                     </object>
                     <object class="sizeritem">
                       <object class="wxCheckBox" name="comment_window_editable">
                         <label>Comment window is editable</label>
                         <tooltip>If checked, the comment window will be editable.</tooltip>
                       </object>
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT</flag>
                     </object>
                     <object class="sizeritem">
                       <object class="wxCheckBox" name="enable_spellchecking">
                         <label>Automatic spellchecking</label>
                         <tooltip>Enables on-the-fly spellchecking</tooltip>
                       </object>
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
                     </object>
                   </object>
                   <option>0</option>
@@ -114,6 +124,8 @@
                     <label>CR/LF conversion</label>
                     <orient>wxVERTICAL</orient>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxTOP|wxEXPAND</flag>
                       <object class="wxBoxSizer">
                         <object class="sizeritem">
                           <object class="wxStaticText">
@@ -134,9 +146,10 @@
                           <option>1</option>
                         </object>
                       </object>
-                      <flag>wxEXPAND</flag>
                     </object>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
                       <object class="wxCheckBox" name="keep_crlf">
                         <checked>1</checked>
                         <label>Don't change format of existing catalogs</label>
@@ -153,6 +166,8 @@
                     <label>External editor</label>
                     <orient>wxVERTICAL</orient>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxTOP|wxEXPAND</flag>
                       <object class="wxBoxSizer">
                         <object class="sizeritem">
                           <object class="wxStaticText">
@@ -172,9 +187,10 @@
                           <option>1</option>
                         </object>
                       </object>
-                      <flag>wxEXPAND</flag>
                     </object>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
                       <object class="wxStaticText">
                         <label>(%f will be substituted with filename, %l with line number)</label>
                       </object>
@@ -182,6 +198,8 @@
                       <border>2d</border>
                     </object>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND</flag>
                       <object class="wxCheckBox" name="open_editor_immediately">
                         <label>Open source files in editor, not in file viewer</label>
                       </object>
@@ -196,11 +214,15 @@
                     <label>Fonts</label>
                     <orient>wxVERTICAL</orient>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
                       <object class="wxCheckBox" name="use_font_list">
                         <label>Use custom font for translations list</label>
                       </object>
                     </object>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
                       <object class="wxBoxSizer">
                         <object class="sizeritem">
                           <object class="wxTextCtrl" name="fontname_list">
@@ -216,14 +238,17 @@
                           </object>
                         </object>
                       </object>
-                      <flag>wxEXPAND</flag>
                     </object>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT</flag>
                       <object class="wxCheckBox" name="use_font_text">
                         <label>Use custom font for text fields</label>
                       </object>
                     </object>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
                       <object class="wxBoxSizer">
                         <object class="sizeritem">
                           <object class="wxTextCtrl" name="fontname_text">
@@ -239,11 +264,10 @@
                           </object>
                         </object>
                       </object>
-                      <flag>wxEXPAND</flag>
                     </object>
                   </object>
                   <option>0</option>
-                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
+                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
                   <border>5d</border>
                 </object>
               </object>
@@ -316,6 +340,8 @@
                     <orient>wxVERTICAL</orient>
                     <label>Configuration</label>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxTOP|wxEXPAND</flag>
                       <object class="wxBoxSizer">
                         <orient>wxHORIZONTAL</orient>
                         <object class="sizeritem">
@@ -334,10 +360,10 @@
                           </object>
                         </object>
                       </object>
-                      <flag>wxEXPAND</flag>
-                      <border>5d</border>
                     </object>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
                       <object class="wxBoxSizer">
                         <orient>wxHORIZONTAL</orient>
                         <object class="sizeritem">
@@ -356,9 +382,10 @@
                           </object>
                         </object>
                       </object>
-                      <flag>wxEXPAND</flag>
                     </object>
                     <object class="sizeritem">
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT|wxBOTTOM||wxEXPAND</flag>
                       <object class="wxCheckBox" name="tm_automatic">
                         <checked>1</checked>
                         <label>Automatically translate when updating catalog</label>

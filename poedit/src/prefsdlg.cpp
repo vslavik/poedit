@@ -8,7 +8,7 @@
     
       Preferences dialog
     
-      (c) Vaclav Slavik, 2000-2003
+      (c) Vaclav Slavik, 2000-2004
 
 */
 
@@ -65,6 +65,8 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
     // remove "Automatic spellchecking" checkbox:
     wxWindow *spellcheck = XRCCTRL(*this, "enable_spellchecking", wxCheckBox);
     spellcheck->GetContainingSizer()->Show(spellcheck, false);
+    // re-layout the dialog:
+    GetSizer()->Fit(this);
 #endif
 
 #ifdef __UNIX__
