@@ -1,10 +1,12 @@
 ; This script was first created by ISTool
 ; http://www.lerstad.com/istool/
 
+#define VERSION          "1.2.0"
+
 [Setup]
-OutputBaseFilename=poedit-1.1.10-setup
+OutputBaseFilename=poedit-{#VERSION}-setup
 AppName=poEdit
-AppVerName=poEdit 1.1.10
+AppVerName=poEdit {#VERSION}
 
 ChangesAssociations=true
 AlwaysShowComponentsList=true
@@ -12,9 +14,7 @@ SourceDir=..
 DefaultDirName={pf}\poEdit
 
 DefaultGroupName=poEdit
-UninstallIconName=Uninstall poEdit
 AllowNoIcons=true
-AlwaysCreateUninstallIcon=true
 DisableAppendDir=true
 UninstallStyle=modern
 WizardStyle=modern
@@ -32,6 +32,7 @@ WindowResizable=false
 
 [Files]
 Source: Bmingw\src\poedit; DestDir: {app}\bin; DestName: poedit.exe; Components: core
+Source: install\poedit.exe.manifest; DestDir: {app}\bin; MinVersion: 0,5.01.2600; Components: core
 Source: extras\win32-gettext\gnu_gettext.COPYING; DestDir: {app}\doc; Components: docs
 Source: install\readme.txt; DestDir: {app}\doc; DestName: readme.txt; Components: docs
 Source: docs\poedit.chm; DestDir: {app}\share\poedit; Components: docs
@@ -45,7 +46,6 @@ Source: extras\win32-gettext\msgmerge.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgunfmt.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgfmt.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-db3\libdb31.dll; DestDir: {app}\bin; Components: core
-Source: install\poedit.exe.manifest; DestDir: {app}\bin; MinVersion: 0,5.0.2195; Components: core
 Source: extras\win32-runtime\unicows.dll; DestDir: {app}\bin; MinVersion: 4.0.950,0; Components: core
 Source: locales\cs-wxstd.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: poedit.mo
@@ -75,10 +75,12 @@ Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: unins
 Root: HKCR; SubKey: GettextFile; ValueType: string; ValueData: Gettext message catalog; Flags: uninsdeletekey
 Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData: """{app}\bin\poedit.exe"" ""%1"""; Flags: uninsdeletevalue
 Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\bin\poedit.exe,0; Flags: uninsdeletekey
-Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty
-Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey
-Root: HKLM; Subkey: Software\Vaclav Slavik\poedit; ValueType: string; ValueName: application_path; ValueData: {app}; Flags: uninsdeletevalue
-Root: HKLM; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty
+Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty dontcreatekey
+Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcreatekey
+Root: HKLM; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty; Check: InstallGlobally
+Root: HKLM; Subkey: Software\Vaclav Slavik\poedit; ValueType: string; ValueName: application_path; ValueData: {app}; Flags: uninsdeletevalue; Check: InstallGlobally
+Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty; Check: InstallLocally
+Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; ValueType: string; ValueName: application_path; ValueData: {app}; Flags: uninsdeletevalue; Check: InstallLocally
 
 [Icons]
 Name: {group}\poEdit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0
@@ -140,3 +142,14 @@ Name: i18n; Description: Localization files for the UI; Types: full
 
 [Messages]
 BeveledLabel=poEdit
+[Code]
+function InstallLocally : boolean;
+begin
+  result := not IsAdminLoggedOn;
+end;
+
+function InstallGlobally : boolean;
+begin
+  result := IsAdminLoggedOn;
+end;
+
