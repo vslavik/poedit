@@ -470,6 +470,9 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     m_statusGauge = new wxGauge(bar, -1, 100, wxDefaultPosition, wxDefaultSize, wxGA_SMOOTH);
     bar->SetStatusWidths(2, widths);
     bar->PushEventHandler(new StatusbarHandler(bar, m_statusGauge));
+#ifdef __WXMSW__	
+	bar->SetSize(-1,-1,-1,-1);
+#endif
 
     if (!catalog.IsEmpty())
         ReadCatalog(catalog);
@@ -839,16 +842,27 @@ void poEditFrame::ShowReference(int num)
         else
             path = wxPathOnly(m_fileName) + _T("/") + m_catalog->Header().BasePath;
         
+		if (path.Last() == _T('/') || path.Last() == _T('\\'))
+			path.RemoveLast();
+
         if (wxIsAbsolutePath(path))
             basepath = path;
         else
             basepath = cwd + _T("/") + path;
     }
     
-    wxWindow *w = new FileViewer(this, basepath,
-                                 (*m_catalog)[m_selItem].GetReferences(),
-                                 num);
-    w->Show(true);
+    if (wxConfig::Get()->Read(_T("open_editor_immediately"), (long)false))
+    {
+        FileViewer::OpenInEditor(basepath, 
+                                 (*m_catalog)[m_selItem].GetReferences()[num]);
+    }
+    else
+    {
+        wxWindow *w = new FileViewer(this, basepath,
+                                     (*m_catalog)[m_selItem].GetReferences(),
+                                     num);
+        w->Show(true);
+    }
 }
 
 

@@ -63,6 +63,8 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 (bool)cfg->Read(_T("focus_to_text"), (long)false));
     XRCCTRL(*this, "ext_editor", wxComboBox)->SetValue(
                 cfg->Read(_T("ext_editor"), wxEmptyString));
+    XRCCTRL(*this, "open_editor_immediately", wxCheckBox)->SetValue(
+                cfg->Read(_T("open_editor_immediately"), (long)false));
     XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("keep_crlf"), true));
 
@@ -124,6 +126,8 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XRCCTRL(*this, "focus_to_text", wxCheckBox)->GetValue());
     cfg->Write(_T("ext_editor"), 
                 XRCCTRL(*this, "ext_editor", wxComboBox)->GetValue());
+    cfg->Write(_T("open_editor_immediately"), 
+                XRCCTRL(*this, "open_editor_immediately", wxCheckBox)->GetValue());
     cfg->Write(_T("keep_crlf"), 
                 XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
     

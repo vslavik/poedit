@@ -118,6 +118,20 @@ FileViewer::~FileViewer()
     cfg->Write(_T("fileviewer/frame_y"), (long)pos.y);
 }
 
+/*static*/ void FileViewer::OpenInEditor(const wxString& basepath, 
+                                         const wxString& reference)
+{
+    wxString editor = wxConfig::Get()->Read(_T("ext_editor"), wxEmptyString);
+    if (!editor)
+    {
+        wxLogError(_("No editor specified. Please set it in Preferences dialog."));
+        return;
+    }
+    editor.Replace(_T("%f"), basepath + reference.BeforeLast(_T(':')));
+    editor.Replace(_T("%l"), reference.AfterLast(_T(':')));
+    wxExecute(editor);
+}
+
 
 BEGIN_EVENT_TABLE(FileViewer, wxFrame)
     EVT_CHOICE(XRCID("references"), FileViewer::OnChoice)
@@ -131,13 +145,5 @@ void FileViewer::OnChoice(wxCommandEvent &event)
 
 void FileViewer::OnEditFile(wxCommandEvent &event)
 {
-    wxString editor = wxConfig::Get()->Read(_T("ext_editor"), wxEmptyString);
-    if (!editor)
-    {
-        wxLogError(_("No editor specified. Please set it in Preferences dialog."));
-        return;
-    }
-    editor.Replace(_T("%f"), m_basePath + m_current.BeforeLast(_T(':')));
-    editor.Replace(_T("%l"), m_current.AfterLast(_T(':')));
-    wxExecute(editor);
+    OpenInEditor(m_basePath, m_current);
 }

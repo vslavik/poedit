@@ -45,6 +45,10 @@ class FileViewer : public wxFrame
         /// Shows given reference, i.e. loads the file
         void ShowReference(const wxString& ref);
         
+        /// Open file in an editor
+        static void OpenInEditor(const wxString& basepath, 
+                                 const wxString& reference);
+        
     private:
         wxString m_basePath;
         wxArrayString m_references;

@@ -209,6 +209,8 @@ bool LoadParser::OnEntry(const wxString& msgid,
             }
             ReadParam(ln2, _T("Content-Type: text/plain; charset="), 
                       m_catalog->m_header.Charset);
+			if (m_catalog->m_header.Charset == _T("CHARSET"))
+					m_catalog->m_header.Charset = _T("us-ascii");
             ChangeFileCharset(m_catalog->m_header.Charset);
         }
         m_catalog->m_header.Comment = comment;
@@ -417,7 +419,7 @@ static wxString FormatStringForFile(const wxString& text)
 {
     wxString s;
     unsigned n_cnt = 0;
-    size_t len = text.length();
+    int len = text.length();
     
     s.Alloc(len + 16);
     // Scan the string up to len-2 because we don't want to account for the
@@ -426,7 +428,7 @@ static wxString FormatStringForFile(const wxString& text)
     //                      ^
     //                      |
     //                      \--- = len-2
-    size_t i;
+    int i;
     for (i = 0; i < len-2; i++)
     {
         if (text[i] == _T('\\') && text[i+1] == _T('n'))
