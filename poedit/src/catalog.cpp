@@ -1,14 +1,14 @@
- 
+
 /*
 
     poedit, a wxWindows i18n catalogs editor
 
     ---------------
       catalog.cpp
-    
+
       Translations catalog
-    
-      (c) Vaclav Slavik, 1999-2004
+
+      (c) Vaclav Slavik, 1999-2005
 
 */
 
@@ -195,7 +195,7 @@ void Catalog::HeaderData::FromString(const wxString& str)
     while (tkn.HasMoreTokens())
     {
         ln = tkn.GetNextToken();
-        size_t pos = ln.find(_T(": "));
+        size_t pos = ln.find(_T(':'));
         if (pos == wxString::npos)
         {
             wxLogError(_("Malformed header: '%s'"), ln.c_str());
@@ -203,9 +203,11 @@ void Catalog::HeaderData::FromString(const wxString& str)
         else
         {
             Entry en;
-            en.Key = ln.substr(0, pos);
-            en.Value = ln.substr(pos + 2);
+            en.Key = wxString(ln.substr(0, pos)).Strip(wxString::both);
+            en.Value = wxString(ln.substr(pos + 1)).Strip(wxString::both);
             m_entries.push_back(en);
+            wxLogTrace(_T("header"),
+                       _T("%s='%s'"), en.Key.c_str(), en.Value.c_str());
         }
     }
 
