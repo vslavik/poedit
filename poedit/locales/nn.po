@@ -1,141 +1,62 @@
 # Norwegian Nynorsk localisation of poEdit
+#
+# Original localisation by
+# Karl Ove Hufthammer <karl@huftis.org>, 2002
 msgid ""
 msgstr ""
 "Project-Id-Version: poEdit\n"
 "POT-Creation-Date: 2002-08-25 12:03+0100\n"
-"PO-Revision-Date: 2002-08-25 20:19+0100\n"
+"PO-Revision-Date: 2002-09-21 16:28+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/summarydlg.cpp:55
+#: src/catalog.cpp:249
+msgid "Corrupted translator record, please correct in Catalog/Settings"
+msgstr "Øydelagd omsetjingsoppføring. Rett dette opp i «Katalog | Innstillingar»."
+
+#: src/catalog.cpp:257
+msgid "Corrupted team record, please correct in Catalog/Settings"
+msgstr "Øydelagd lagoppføring. Rett ho opp i «Katalog | Innstillingar»."
+
+#: src/catalog.cpp:600
 #, c-format
-msgid "(%i new, %i obsolete)"
-msgstr "(%i nye, %i utgåtte)"
+msgid ""
+"The catalog couldn't be saved in '%s' charset as\n"
+"specified in catalog settings. It was saved in UTF-8 instead\n"
+"and the setting was modified accordingly."
+msgstr ""
+"Klarte ikkje å lagra katalogen med teiknkodinga «%s»,\n"
+"som valt i kataloginnstillingane. Han vart derfor lagra som UTF-8,\n"
+"og innstillinga vart endra."
 
-#: src/edframe.cpp:137
-msgid "Original string"
-msgstr "Opphavleg tekst"
+#: src/catalog.cpp:601
+msgid "Error saving catalog"
+msgstr "Feil ved lagring av katalog"
 
-#: src/edframe.cpp:138
-msgid "Translation"
-msgstr "Omsetjing"
+#: src/catalog.cpp:684
+#: src/resources/xrc_strings.h:109
+msgid "Updating catalog..."
+msgstr "Oppdaterer katalog ..."
 
-#: src/edframe.cpp:140
-#: src/fileviewer.cpp:87
-msgid "Line"
-msgstr "Linje"
+#: src/catalog.cpp:707
+#: src/resources/xrc_strings.h:110
+msgid "Merging differences..."
+msgstr "Slår saman endringar ..."
 
-#: src/edframe.cpp:390
-msgid "poEdit"
-msgstr "poEdit"
+#: src/digger.cpp:36
+msgid "Scanning files..."
+msgstr "Skanner filer ..."
 
-#: src/edframe.cpp:429
-#: src/resources/xrc_strings.h:29
-msgid "&File"
-msgstr "&Fil"
+#: src/digger.cpp:46
+msgid "Parsing "
+msgstr "Tolkar "
 
-#: src/edframe.cpp:557
-msgid "(none of these)"
-msgstr "(ingen av desse)"
-
-#: src/edframe.cpp:559
-msgid "Select catalog's language"
-msgstr "Vel katalogspråk"
-
-#: src/edframe.cpp:560
-msgid "Please select language code:"
-msgstr "Vel språkkode:"
-
-#: src/edframe.cpp:593
-#: src/edframe.cpp:604
-#: src/edframe.cpp:628
-#: src/edframe.cpp:675
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Katalogen er endra. Vil du lagra endringane?"
-
-#: src/edframe.cpp:593
-#: src/edframe.cpp:604
-#: src/edframe.cpp:628
-#: src/edframe.cpp:675
-msgid "Save changes"
-msgstr "Lagra endringar"
-
-#: src/edframe.cpp:612
-#: src/resources/xrc_strings.h:133
-msgid "Open catalog"
-msgstr "Opna katalog"
-
-#: src/edframe.cpp:614
-#: src/edframe.cpp:661
-msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
-msgstr "GNU GetText-katalogar (*.po)|*.po|Alle filef (*.*)|*.*"
-
-#: src/edframe.cpp:636
-msgid "File "
-msgstr "Fila "
-
-#: src/edframe.cpp:636
-msgid " doesn't exist!"
-msgstr "finst ikkje."
-
-#: src/edframe.cpp:660
-msgid "Save as..."
-msgstr "Lagra som ..."
-
-#: src/edframe.cpp:766
-msgid "Automatically translating..."
-msgstr "Set om automatisk ..."
-
-#: src/edframe.cpp:781
-#, c-format
-msgid "Automatically translated %u strings"
-msgstr "Har omsett %u tekstar automatisk"
-
-#: src/edframe.cpp:818
-msgid "No references to this string found."
-msgstr "Fann ingen referanse til teksten."
-
-#: src/edframe.cpp:826
-msgid "Please choose the reference you want to show:"
-msgstr "Vel referansen du vil visa:"
-
-#: src/edframe.cpp:826
-msgid "References"
-msgstr "Referansar"
-
-#: src/edframe.cpp:1195
-msgid "Error loading message catalog file '"
-msgstr "Feil ved opning av katalogfila «"
-
-#: src/edframe.cpp:1195
-msgid "'."
-msgstr "»."
-
-#: src/edframe.cpp:1244
-#, c-format
-msgid "%i strings (%i fuzzy, %i not translated)"
-msgstr "%i tekstar (%i uklare, %i ikkje omsett)"
-
-#: src/edframe.cpp:1259
-msgid " (modified)"
-msgstr " (endra)"
-
-#: src/edframe.cpp:1379
-#: src/edframe.cpp:1383
-msgid "References:"
-msgstr "References:"
-
-#: src/edframe.cpp:1393
-#: src/edframe.cpp:1397
-msgid "Automatic translations:"
-msgstr "Automatiske omsetjingar:"
-
-#: src/edframe.cpp:1418
-msgid "none"
-msgstr "none"
+#: src/digger.cpp:46
+msgid " files..."
+msgstr "-filer ..."
 
 #: src/edapp.cpp:50
 msgid "poEdit installation is broken, cannot find application's home directory."
@@ -179,50 +100,144 @@ msgstr ""
 msgid "Setup"
 msgstr "Oppsett"
 
-#: src/digger.cpp:36
-msgid "Scanning files..."
-msgstr "Skanner filer ..."
+#: src/edframe.cpp:137
+msgid "Original string"
+msgstr "Opphavleg tekst"
 
-#: src/digger.cpp:46
-msgid "Parsing "
-msgstr "Tolkar"
+#: src/edframe.cpp:138
+msgid "Translation"
+msgstr "Omsetjing"
 
-#: src/digger.cpp:46
-msgid " files..."
-msgstr " filer ..."
+#: src/edframe.cpp:140
+#: src/fileviewer.cpp:87
+msgid "Line"
+msgstr "Linje"
 
-#: src/catalog.cpp:249
-msgid "Corrupted translator record, please correct in Catalog/Settings"
-msgstr "Øydelagd omsetjingsoppføring. Rett dette opp i «Katalog | Innstillingar»."
+#: src/edframe.cpp:391
+msgid "poEdit"
+msgstr "poEdit"
 
-#: src/catalog.cpp:257
-msgid "Corrupted team record, please correct in Catalog/Settings"
-msgstr "Øydelagd lagoppføring. Rett ho opp i «Katalog | Innstillingar»."
+#: src/edframe.cpp:430
+#: src/resources/xrc_strings.h:29
+msgid "&File"
+msgstr "&Fil"
 
-#: src/catalog.cpp:597
+#: src/edframe.cpp:569
+msgid "(none of these)"
+msgstr "(ingen av desse)"
+
+#: src/edframe.cpp:571
+msgid "Select catalog's language"
+msgstr "Vel katalogspråk"
+
+#: src/edframe.cpp:572
+msgid "Please select language code:"
+msgstr "Vel språkkode:"
+
+#: src/edframe.cpp:605
+#: src/edframe.cpp:616
+#: src/edframe.cpp:640
+#: src/edframe.cpp:687
+msgid "Catalog modified. Do you want to save changes?"
+msgstr "Katalogen er endra. Vil du lagra endringane?"
+
+#: src/edframe.cpp:605
+#: src/edframe.cpp:616
+#: src/edframe.cpp:640
+#: src/edframe.cpp:687
+msgid "Save changes"
+msgstr "Lagra endringar"
+
+#: src/edframe.cpp:624
+#: src/resources/xrc_strings.h:133
+msgid "Open catalog"
+msgstr "Opna katalog"
+
+#: src/edframe.cpp:626
+#: src/edframe.cpp:673
+msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
+msgstr "GNU GetText-katalogar (*.po)|*.po|Alle filer (*.*)|*.*"
+
+#: src/edframe.cpp:648
+msgid "File "
+msgstr "Fila "
+
+#: src/edframe.cpp:648
+msgid " doesn't exist!"
+msgstr "finst ikkje."
+
+#: src/edframe.cpp:672
+msgid "Save as..."
+msgstr "Lagra som ..."
+
+#: src/edframe.cpp:778
+msgid "Automatically translating..."
+msgstr "Set om automatisk ..."
+
+#: src/edframe.cpp:793
 #, c-format
-msgid ""
-"The catalog couldn't be saved in '%s' charset as\n"
-"specified in catalog settings. It was saved in UTF-8 instead\n"
-"and the setting was modified accordingly."
-msgstr ""
-"Klarte ikkje å lagra katalogen med teiknkodinga «%s»,\n"
-"som valt i kataloginnstillingane. Han vart derfor lagra som UTF-8,\n"
-"og innstillinga vart endra."
+msgid "Automatically translated %u strings"
+msgstr "Set om tekst %u automatisk"
 
-#: src/catalog.cpp:598
-msgid "Error saving catalog"
-msgstr "Feil ved lagring av katalog"
+#: src/edframe.cpp:830
+msgid "No references to this string found."
+msgstr "Fann ingen referanse til teksten."
 
-#: src/catalog.cpp:681
-#: src/resources/xrc_strings.h:109
-msgid "Updating catalog..."
-msgstr "Oppdaterer katalog ..."
+#: src/edframe.cpp:838
+msgid "Please choose the reference you want to show:"
+msgstr "Vel referansen du vil visa:"
 
-#: src/catalog.cpp:704
-#: src/resources/xrc_strings.h:110
-msgid "Merging differences..."
-msgstr "Slår saman endringar ..."
+#: src/edframe.cpp:838
+msgid "References"
+msgstr "Referansar"
+
+#: src/edframe.cpp:1209
+msgid "Error loading message catalog file '"
+msgstr "Feil ved opning av katalogfila «"
+
+#: src/edframe.cpp:1209
+msgid "'."
+msgstr "»."
+
+#: src/edframe.cpp:1258
+#, c-format
+msgid "%i strings (%i fuzzy, %i not translated)"
+msgstr "%i tekstar (%i uklare, %i ikkje omsett)"
+
+#: src/edframe.cpp:1273
+msgid " (modified)"
+msgstr " (endra)"
+
+#: src/edframe.cpp:1393
+#: src/edframe.cpp:1397
+msgid "References:"
+msgstr "References:"
+
+#: src/edframe.cpp:1407
+#: src/edframe.cpp:1411
+msgid "Automatic translations:"
+msgstr "Automatiske omsetjingar:"
+
+#: src/edframe.cpp:1432
+msgid "none"
+msgstr "none"
+
+#: src/fileviewer.cpp:36
+msgid "Source file"
+msgstr "Kjeldefil"
+
+#: src/fileviewer.cpp:78
+#, c-format
+msgid "Error opening file %s!"
+msgstr "Feil ved opning av fila «%s»."
+
+#: src/fileviewer.cpp:126
+msgid "No editor specified. Please set it in Preferences dialog."
+msgstr "Det er ikkje valt noko skriveprogram. Rett opp dette i «Innstillingar»-dialogen."
+
+#: src/gexecute.cpp:133
+msgid "Cannot execute program: "
+msgstr "Klarte ikkje å kjøra programmet:"
 
 #: src/manager.cpp:65
 msgid "poEdit - Catalogs manager"
@@ -281,31 +296,6 @@ msgid "Do you really want to do mass update of\n"
 msgstr "Vil du verkeleg gjera masseoppdatering av\n"
 "alle katalogane i prosjektet?"
 
-#: src/transmemupd.cpp:117
-msgid "Listing files..."
-msgstr "Lagar filoversikt ..."
-
-#: src/transmemupd.cpp:133
-msgid "Scanning file: "
-msgstr "Les gjennom fila: "
-
-#: src/transmemupd.cpp:183
-msgid "Cannot extract catalogs from RPM file."
-msgstr "Klarte ikkje å henta ut katalogar frå RPM-fila."
-
-#: src/fileviewer.cpp:36
-msgid "Source file"
-msgstr "Kjeldefil"
-
-#: src/fileviewer.cpp:78
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Feil ved opning av fila «%s»."
-
-#: src/fileviewer.cpp:126
-msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "Det er ikkje valt noko skriveprogram. Rett opp dette i «Innstillingar»-dialogen."
-
 #: src/prefsdlg.cpp:42
 msgid "My Languages"
 msgstr "Brukte språkkodar"
@@ -326,20 +316,6 @@ msgstr "Søkestigar"
 msgid "Updating translation memory"
 msgstr "Oppdaterer omsetjingsminne ..."
 
-#: src/transmem.cpp:332
-#: src/transmem.cpp:334
-#, c-format
-msgid "Database error: %s"
-msgstr "Databasefeil: %s"
-
-#: src/transmem.cpp:751
-msgid "Cannot create database directory!"
-msgstr "Klate ikkje å laga databasekatalog."
-
-#: src/gexecute.cpp:133
-msgid "Cannot execute program: "
-msgstr "Klarte ikkje å kjøra programmet:"
-
 #: src/resources/xrc_strings.h:122
 #: src/settingsdlg.cpp:52
 msgid "Keywords"
@@ -350,13 +326,40 @@ msgstr "Nøkkelord"
 msgid "Paths"
 msgstr "Stigar"
 
+#: src/summarydlg.cpp:55
+#, c-format
+msgid "(%i new, %i obsolete)"
+msgstr "(%i nye, %i utgåtte)"
+
+#: src/transmem.cpp:328
+#: src/transmem.cpp:330
+#, c-format
+msgid "Database error: %s"
+msgstr "Databasefeil: %s"
+
+#: src/transmem.cpp:747
+msgid "Cannot create database directory!"
+msgstr "Klate ikkje å laga databasekatalog."
+
+#: src/transmemupd.cpp:117
+msgid "Listing files..."
+msgstr "Lagar filoversikt ..."
+
+#: src/transmemupd.cpp:133
+msgid "Scanning file: "
+msgstr "Les gjennom fila: "
+
+#: src/transmemupd.cpp:183
+msgid "Cannot extract catalogs from RPM file."
+msgstr "Klarte ikkje å henta ut katalogar frå RPM-fila."
+
 #: src/resources/xrc_strings.h:1
 msgid "About poEdit"
 msgstr "Om poEdit"
 
 #: src/resources/xrc_strings.h:2
 msgid "version 1.1.10"
-msgstr "version 1.1.10"
+msgstr "versjon 1.1.10"
 
 #: src/resources/xrc_strings.h:3
 #: src/resources/xrc_strings.h:6
@@ -372,11 +375,11 @@ msgstr "&OK"
 #: src/resources/xrc_strings.h:42
 #: src/resources/xrc_strings.h:138
 msgid "Edit comment"
-msgstr "&Rediger kommentar"
+msgstr "Rediger merknad"
 
 #: src/resources/xrc_strings.h:5
 msgid "Comment:"
-msgstr "Kommentar:"
+msgstr "Merknad:"
 
 #: src/resources/xrc_strings.h:7
 #: src/resources/xrc_strings.h:16
@@ -395,7 +398,7 @@ msgstr "&Tøm"
 
 #: src/resources/xrc_strings.h:9
 msgid "Clear the comment"
-msgstr "Fjern kommentaren"
+msgstr "Fjern merknaded"
 
 #: src/resources/xrc_strings.h:10
 msgid "Edit the file in text editor"
@@ -420,7 +423,7 @@ msgstr "Søk i &originalteksten"
 
 #: src/resources/xrc_strings.h:15
 msgid "Find in translations"
-msgstr "Finn i &omsetjinga"
+msgstr "Finn i o&msetjinga"
 
 #: src/resources/xrc_strings.h:17
 msgid "< Previous"
@@ -590,7 +593,7 @@ msgstr "La aldri tekstlista få fokus. Du må bruka «Ctrl + piltast» for å fl
 
 #: src/resources/xrc_strings.h:63
 msgid "Shaded translations list"
-msgstr "&Skyggelegg omsetjingsliste"
+msgstr "&Skyggelegg omsetjingslista"
 
 #: src/resources/xrc_strings.h:64
 msgid "CR/LF conversion"
@@ -794,8 +797,8 @@ msgstr "Samandrag"
 #: src/resources/xrc_strings.h:126
 msgid "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
-msgstr "Fann desse tekstane i kjeldene, men ikkje i katalogen.\n"
-"Dei blir no lagt til katalogen."
+msgstr "Desse tekstane finst i kjeldefilene, men ikkje i katalogen.\n"
+"Dei blir derfor lagt til katalogen."
 
 #: src/resources/xrc_strings.h:127
 msgid "New strings"
@@ -804,7 +807,7 @@ msgstr "Nye tekstar"
 #: src/resources/xrc_strings.h:128
 msgid "These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
-msgstr "Desse strengane finst ikkje lenger i kjeldene.\n"
+msgstr "Desse tekstane finst ikkje lenger i kjeldefilene.\n"
 "Dei blir derfor fjerna frå katalogen."
 
 #: src/resources/xrc_strings.h:129
@@ -825,7 +828,7 @@ msgstr "Lagra katalog"
 
 #: src/resources/xrc_strings.h:135
 msgid "Update catalog - synchronize it with sources"
-msgstr "Oppdater katalog."
+msgstr "Oppdater katalog"
 
 #: src/resources/xrc_strings.h:136
 msgid "Display quotes around the string?"
