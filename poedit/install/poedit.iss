@@ -50,16 +50,19 @@ Source: extras\win32-runtime\unicows.dll; DestDir: {app}\bin; MinVersion: 4.0.95
 Source: locales\wxwin\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\zh_TW.mo; DestDir: {app}\share\locale\zh_TW\LC_MESSAGES; DestName: poedit.mo; Components: i18n
-Source: locales\wxwin\zh.mo; DestDir: {app}\share\locale\zh\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
+Source: locales\wxwin\zh_CN.mo; DestDir: {app}\share\locale\zh_CN\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
+Source: locales\zh_CN.mo; DestDir: {app}\share\locale\zh_CN\LC_MESSAGES; DestName: poedit.mo; Components: i18n
 Source: locales\wxwin\nl.mo; DestDir: {app}\share\locale\nl\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
 Source: locales\nl.mo; DestDir: {app}\share\locale\nl\LC_MESSAGES; DestName: poedit.mo; Components: i18n
 Source: locales\et.mo; DestDir: {app}\share\locale\et\LC_MESSAGES; DestName: poedit.mo; Components: i18n
 Source: locales\wxwin\de.mo; DestDir: {app}\share\locale\de\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\de.mo; DestDir: {app}\share\locale\de\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\fr.mo; DestDir: {app}\share\locale\fr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\wxwin\fr.mo; DestDir: {app}\share\locale\fr\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\hr.mo; DestDir: {app}\share\locale\hr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\pl.mo; DestDir: {app}\share\locale\pl\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\nn.mo; DestDir: {app}\share\locale\nn\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\no.mo; DestDir: {app}\share\locale\no\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\tr.mo; DestDir: {app}\share\locale\tr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\wxwin\tr.mo; DestDir: {app}\share\locale\tr\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\wxwin\it.mo; DestDir: {app}\share\locale\it\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
@@ -73,6 +76,9 @@ Source: locales\ca.mo; DestDir: {app}\share\locale\ca\LC_MESSAGES; Components: i
 Source: locales\ka.mo; DestDir: {app}\share\locale\ka\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\ro.mo; DestDir: {app}\share\locale\ro\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\el.mo; DestDir: {app}\share\locale\el\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\ja.mo; DestDir: {app}\share\locale\el\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\ru.mo; DestDir: {app}\share\locale\ru\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\wxwin\ru.mo; DestDir: {app}\share\locale\ru\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
@@ -107,8 +113,8 @@ Name: {app}\share\locale; Components: core
 Name: {app}\bin; Components: core
 Name: {app}\share\locale\cs_CZ; Components: i18n
 Name: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n
-Name: {app}\share\locale\zh; Components: i18n
-Name: {app}\share\locale\zh\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\zh_CN; Components: i18n
+Name: {app}\share\locale\zh_CN\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\zh_TW; Components: i18n
 Name: {app}\share\locale\zh_TW\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\nl; Components: i18n
@@ -125,6 +131,8 @@ Name: {app}\share\locale\po; Components: i18n
 Name: {app}\share\locale\po\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\nn; Components: i18n
 Name: {app}\share\locale\nn\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\no; Components: i18n
+Name: {app}\share\locale\no\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\tr; Components: i18n
 Name: {app}\share\locale\tr\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\it; Components: i18n
@@ -145,6 +153,10 @@ Name: {app}\share\locale\ro; Components: i18n
 Name: {app}\share\locale\ro\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\el; Components: i18n
 Name: {app}\share\locale\el\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\ja; Components: i18n
+Name: {app}\share\locale\ja\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\ru; Components: i18n
+Name: {app}\share\locale\ru\LC_MESSAGES; Components: i18n
 
 [_ISToolPreCompile]
 
