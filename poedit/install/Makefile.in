@@ -79,6 +79,9 @@ VERSION = @VERSION@
 WX_CFLAGS = @WX_CFLAGS@
 WX_CONFIG = @WX_CONFIG@
 WX_LIBS = @WX_LIBS@
+
+EXTRA_DIST = license.rtf license.txt news.rtf news.txt poedit.desktop poedit.iss poedit.kdelnk              poedit.keys.in poedit.mime poedit.spec readme.txt x-po.kdelnk
+
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =  poedit.keys
 DIST_COMMON =  Makefile.am Makefile.in poedit.keys.in
@@ -123,7 +126,6 @@ distdir: $(DISTFILES)
 	    || cp -p $$d/$$file $(distdir)/$$file || :; \
 	  fi; \
 	done
-	$(MAKE) $(AM_MAKEFLAGS) top_distdir="$(top_distdir)" distdir="$(distdir)" dist-hook
 info-am:
 info: info-am
 dvi-am:
@@ -207,10 +209,6 @@ install-data-local: install-gnome install-kde
 @USE_GNOME_TRUE@	install -m 644 poedit.keys $(GNOME_DATA_DIR)/mime-info
 
 @USE_GNOME_FALSE@install-gnome:
-
-dist-hook:
-	cp -fp $(srcdir)/poedit.* $(srcdir)/*.kdelnk $(srcdir)/license.txt \
-          $(distdir)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -36,6 +36,5 @@ install-gnome:
 
 endif
 
-dist-hook:
-	cp -fp $(srcdir)/poedit.* $(srcdir)/*.kdelnk $(srcdir)/license.txt \
-          $(distdir)
+EXTRA_DIST = license.rtf license.txt news.rtf news.txt poedit.desktop poedit.iss poedit.kdelnk \
+             poedit.keys.in poedit.mime poedit.spec readme.txt x-po.kdelnk
