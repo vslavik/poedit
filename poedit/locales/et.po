@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.1.x\n"
 "POT-Creation-Date: 2000-02-25 21:27+0100\n"
-"PO-Revision-Date: 2002-04-09 10:57+0200\n"
+"PO-Revision-Date: 2002-10-14 08:37+0200\n"
 "Last-Translator: Joosep-Georg Järvemaa <georg@linux.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12,17 +12,18 @@ msgstr ""
 #: src/summarydlg.cpp:55
 #, c-format
 msgid "(%i new, %i obsolete)"
-msgstr "(uusi %1, iganenuid %i)"
+msgstr "(uusi %i, iganenuid %i)"
 
 #: src/edframe.cpp:137
 msgid "Original string"
-msgstr "Originaalstring"
+msgstr "Algupärane string"
 
 #: src/edframe.cpp:138
 msgid "Translation"
 msgstr "Tõlge"
 
-#: src/edframe.cpp:140 src/fileviewer.cpp:87
+#: src/edframe.cpp:140
+#: src/fileviewer.cpp:87
 msgid "Line"
 msgstr "Rida"
 
@@ -30,7 +31,8 @@ msgstr "Rida"
 msgid "poEdit"
 msgstr "poEdit"
 
-#: src/edframe.cpp:429 src/resources/xrc_strings.h:29
+#: src/edframe.cpp:429
+#: src/resources/xrc_strings.h:29
 msgid "&File"
 msgstr "&Fail"
 
@@ -46,21 +48,27 @@ msgstr "Vali kataloogi keel"
 msgid "Please select language code:"
 msgstr "Palun vali keelekood:"
 
-#: src/edframe.cpp:593 src/edframe.cpp:604 src/edframe.cpp:628
+#: src/edframe.cpp:593
+#: src/edframe.cpp:604
+#: src/edframe.cpp:628
 #: src/edframe.cpp:675
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Kataloogi on muudetud. Kas soovid muudatused salvestada?"
 
-#: src/edframe.cpp:593 src/edframe.cpp:604 src/edframe.cpp:628
+#: src/edframe.cpp:593
+#: src/edframe.cpp:604
+#: src/edframe.cpp:628
 #: src/edframe.cpp:675
 msgid "Save changes"
 msgstr "Salvesta muudatused"
 
-#: src/edframe.cpp:612 src/resources/xrc_strings.h:133
+#: src/edframe.cpp:612
+#: src/resources/xrc_strings.h:133
 msgid "Open catalog"
 msgstr "Ava kataloog"
 
-#: src/edframe.cpp:614 src/edframe.cpp:661
+#: src/edframe.cpp:614
+#: src/edframe.cpp:661
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText kataloogid (*.po)|*.po|Kõik failid (*.*)|*.*"
 
@@ -70,7 +78,7 @@ msgstr "Fail"
 
 #: src/edframe.cpp:636
 msgid " doesn't exist!"
-msgstr " ei eksisteeri!"
+msgstr " ei ole olemas!"
 
 #: src/edframe.cpp:660
 msgid "Save as..."
@@ -108,27 +116,28 @@ msgstr "' laadimisel."
 #: src/edframe.cpp:1244
 #, c-format
 msgid "%i strings (%i fuzzy, %i not translated)"
-msgstr "Stringe %i (segaseid %i, tõlkimata %i)"
+msgstr "Stringe %i (kahtlaseid %i, tõlkimata %i)"
 
 #: src/edframe.cpp:1259
 msgid " (modified)"
 msgstr " (muudetud)"
 
-#: src/edframe.cpp:1379 src/edframe.cpp:1383
+#: src/edframe.cpp:1379
+#: src/edframe.cpp:1383
 msgid "References:"
 msgstr "Viited:"
 
-#: src/edframe.cpp:1393 src/edframe.cpp:1397
+#: src/edframe.cpp:1393
+#: src/edframe.cpp:1397
 msgid "Automatic translations:"
 msgstr "Automaatsed tõlked:"
 
 #: src/edframe.cpp:1418
 msgid "none"
-msgstr "ükski"
+msgstr "pole"
 
 #: src/edapp.cpp:50
-msgid ""
-"poEdit installation is broken, cannot find application's home directory."
+msgid "poEdit installation is broken, cannot find application's home directory."
 msgstr "poEdit paigaldus on katki, ei leia rakenduse kodukataloogi."
 
 #: src/edapp.cpp:114
@@ -141,21 +150,19 @@ msgid ""
 msgstr ""
 "Ei leia ressursifaili '%s'!\n"
 "poEdit on seadistatud paiknema kataloogi '%s'.\n"
-"Võid proovida seada POEDIT_PREFIX keskkonnamuutuja viitama\n"
+"Võid proovida seada keskkonnamuutuja POEDIT_PREFIX viitama\n"
 "asukohale, kuhu paigaldasid poEdit'i."
 
 #: src/edapp.cpp:120
 #, c-format
-msgid ""
-"Cannot find resources file '%s'!\n"
+msgid "Cannot find resources file '%s'!\n"
 "Please reinstall poEdit."
-msgstr ""
-"Ei leia ressursifaili '%s'!\n"
+msgstr "Ei leia ressursifaili '%s'!\n"
 "Palun paigalda poEdit uuesti."
 
 #: src/edapp.cpp:123
 msgid "poEdit Error"
-msgstr "poEdit Tõrge"
+msgstr "poEdit tõrge"
 
 #: src/edapp.cpp:136
 msgid ""
@@ -173,7 +180,7 @@ msgstr "Paigaldus"
 
 #: src/digger.cpp:36
 msgid "Scanning files..."
-msgstr "Skännin faile..."
+msgstr "Skaneerin faile..."
 
 #: src/digger.cpp:46
 msgid "Parsing "
@@ -183,39 +190,27 @@ msgstr "Parsin"
 msgid " files..."
 msgstr " faile..."
 
-#: src/catalog.cpp:249
+#: src/catalog.cpp:198
 msgid "Corrupted translator record, please correct in Catalog/Settings"
 msgstr "Riknenud tõlkekirje, palun paranda menüüvaliku Kataloog/Seaded kaudu"
 
-#: src/catalog.cpp:257
+#: src/catalog.cpp:206
 msgid "Corrupted team record, please correct in Catalog/Settings"
-msgstr ""
-"Riknenud meeskonnakirje, palun paranda menüüvaliku Kataloog/Seaded kaudu"
+msgstr "Riknenud meeskonnakirje, palun paranda menüüvaliku Kataloog/Seaded kaudu"
 
-#: src/catalog.cpp:597
-#, c-format
-msgid ""
-"The catalog couldn't be saved in '%s' charset as\n"
-"specified in catalog settings. It was saved in UTF-8 instead\n"
-"and the setting was modified accordingly."
-msgstr ""
-
-#: src/catalog.cpp:598
-#, fuzzy
-msgid "Error saving catalog"
-msgstr "Tõrge kataloogifaili '"
-
-#: src/catalog.cpp:681 src/resources/xrc_strings.h:109
+#: src/catalog.cpp:606
+#: src/resources/xrc_strings.h:109
 msgid "Updating catalog..."
 msgstr "Uuendan kataloogi..."
 
-#: src/catalog.cpp:704 src/resources/xrc_strings.h:110
+#: src/catalog.cpp:629
+#: src/resources/xrc_strings.h:110
 msgid "Merging differences..."
 msgstr "Ühendan erinevused..."
 
 #: src/manager.cpp:65
 msgid "poEdit - Catalogs manager"
-msgstr "poEdit - Kataloogitoimeti"
+msgstr "poEdit - Kataloogihaldur"
 
 #: src/manager.cpp:219
 msgid "Catalog"
@@ -231,13 +226,15 @@ msgstr "Tõlkimata"
 
 #: src/manager.cpp:222
 msgid "Fuzzy"
-msgstr "Segane"
+msgstr "Kahtlane"
 
 #: src/manager.cpp:223
 msgid "Last modified"
 msgstr "Viimati muudetud"
 
-#: src/manager.cpp:251 src/prefsdlg.cpp:265 src/prefsdlg.cpp:286
+#: src/manager.cpp:251
+#: src/prefsdlg.cpp:265
+#: src/prefsdlg.cpp:286
 msgid "Select directory"
 msgstr "Vali kataloog"
 
@@ -257,25 +254,24 @@ msgstr "<nimetu>"
 msgid "Do you want to delete the project?"
 msgstr "Soovid sa selle projekti kustutada?"
 
-#: src/manager.cpp:376 src/manager.cpp:396
+#: src/manager.cpp:376
+#: src/manager.cpp:396
 msgid "Confirmation"
 msgstr "Kinnitus"
 
 #: src/manager.cpp:395
-msgid ""
-"Do you really want to do mass update of\n"
+msgid "Do you really want to do mass update of\n"
 "all catalogs in this project?"
-msgstr ""
-"Soovid sa tõesti massuuendada\n"
+msgstr "Soovid sa tõesti massuuendada\n"
 "kõiki katalooge selles projektis?"
 
 #: src/transmemupd.cpp:117
 msgid "Listing files..."
-msgstr "Loetlen failid..."
+msgstr "Otsin faile..."
 
 #: src/transmemupd.cpp:133
 msgid "Scanning file: "
-msgstr "Skännin faili:"
+msgstr "Skaneerin faili:"
 
 #: src/transmemupd.cpp:183
 msgid "Cannot extract catalogs from RPM file."
@@ -292,8 +288,7 @@ msgstr "Tõrge faili %s avamisel!"
 
 #: src/fileviewer.cpp:126
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr ""
-"Tekstitoimeti pole määratud. Palun seadista see Eelistused dialoogi kaudu."
+msgstr "Tekstitoimeti pole määratud. Palun seadista see Eelistused dialoogi kaudu."
 
 #: src/prefsdlg.cpp:42
 msgid "My Languages"
@@ -315,7 +310,8 @@ msgstr "Otsingurajad"
 msgid "Updating translation memory"
 msgstr "Uuendan tõlkemälu"
 
-#: src/transmem.cpp:332 src/transmem.cpp:334
+#: src/transmem.cpp:332
+#: src/transmem.cpp:334
 #, c-format
 msgid "Database error: %s"
 msgstr "Andmebaasi tõrge: %s"
@@ -328,11 +324,13 @@ msgstr "Ei saa luua andmebaasikataloogi!"
 msgid "Cannot execute program: "
 msgstr "Ei saa käivitada programmi:"
 
-#: src/settingsdlg.cpp:52 src/resources/xrc_strings.h:122
+#: src/settingsdlg.cpp:52
+#: src/resources/xrc_strings.h:122
 msgid "Keywords"
 msgstr "Võtmesõnad"
 
-#: src/settingsdlg.cpp:54 src/resources/xrc_strings.h:120
+#: src/settingsdlg.cpp:54
+#: src/resources/xrc_strings.h:120
 msgid "Paths"
 msgstr "Rajad"
 
@@ -344,26 +342,34 @@ msgstr "Programmist poEdit"
 msgid "version 1.1.10"
 msgstr "versioon 1.1.10"
 
-#: src/resources/xrc_strings.h:3 src/resources/xrc_strings.h:6
-#: src/resources/xrc_strings.h:27 src/resources/xrc_strings.h:89
-#: src/resources/xrc_strings.h:102 src/resources/xrc_strings.h:123
+#: src/resources/xrc_strings.h:3
+#: src/resources/xrc_strings.h:6
+#: src/resources/xrc_strings.h:27
+#: src/resources/xrc_strings.h:89
+#: src/resources/xrc_strings.h:102
+#: src/resources/xrc_strings.h:123
 #: src/resources/xrc_strings.h:131
 msgid "OK"
 msgstr "OK"
 
-#: src/resources/xrc_strings.h:4 src/resources/xrc_strings.h:42
+#: src/resources/xrc_strings.h:4
+#: src/resources/xrc_strings.h:42
 #: src/resources/xrc_strings.h:138
 msgid "Edit comment"
-msgstr "Redigeeri kommentaari"
+msgstr "Muuda kommentaari"
 
 #: src/resources/xrc_strings.h:5
 msgid "Comment:"
 msgstr "Kommentaar:"
 
-#: src/resources/xrc_strings.h:7 src/resources/xrc_strings.h:16
-#: src/resources/xrc_strings.h:28 src/resources/xrc_strings.h:90
-#: src/resources/xrc_strings.h:103 src/resources/xrc_strings.h:107
-#: src/resources/xrc_strings.h:111 src/resources/xrc_strings.h:124
+#: src/resources/xrc_strings.h:7
+#: src/resources/xrc_strings.h:16
+#: src/resources/xrc_strings.h:28
+#: src/resources/xrc_strings.h:90
+#: src/resources/xrc_strings.h:103
+#: src/resources/xrc_strings.h:107
+#: src/resources/xrc_strings.h:111
+#: src/resources/xrc_strings.h:124
 msgid "Cancel"
 msgstr "Katkesta"
 
@@ -379,7 +385,8 @@ msgstr "Tühjenda kommentaar"
 msgid "Edit the file in text editor"
 msgstr "Redigeeri faili tekstitoimetis"
 
-#: src/resources/xrc_strings.h:11 src/resources/xrc_strings.h:40
+#: src/resources/xrc_strings.h:11
+#: src/resources/xrc_strings.h:40
 msgid "Find..."
 msgstr "Leia..."
 
@@ -431,7 +438,8 @@ msgstr "Redigeeri projekti"
 msgid "Project name:"
 msgstr "Projekti nimetus:"
 
-#: src/resources/xrc_strings.h:25 src/resources/xrc_strings.h:74
+#: src/resources/xrc_strings.h:25
+#: src/resources/xrc_strings.h:74
 #: src/resources/xrc_strings.h:104
 msgid "Browse"
 msgstr "Lehitse"
@@ -442,7 +450,7 @@ msgstr "Lisa kataloog nimistusse"
 
 #: src/resources/xrc_strings.h:30
 msgid "Catalogs manager"
-msgstr "Kataloogitoimeti"
+msgstr "Kataloogihaldur"
 
 #: src/resources/xrc_strings.h:31
 msgid "&New catalog..."
@@ -466,15 +474,15 @@ msgstr "Eelistused..."
 
 #: src/resources/xrc_strings.h:36
 msgid "&Close"
-msgstr "Su&lge..."
+msgstr "Su&lge"
 
 #: src/resources/xrc_strings.h:37
 msgid "&Edit"
-msgstr "&Redigeeri"
+msgstr "&Redigeerimine"
 
 #: src/resources/xrc_strings.h:38
 msgid "Copy original to translation field"
-msgstr "Kopeeri originaal tõlkeväljale"
+msgstr "Kopeeri algupärane tõlkeväljale"
 
 #: src/resources/xrc_strings.h:39
 msgid "&Show references"
@@ -482,7 +490,7 @@ msgstr "&Näita viiteid"
 
 #: src/resources/xrc_strings.h:41
 msgid "Translation is &fuzzy"
-msgstr "Tõlge on &segane"
+msgstr "Tõlge on &kahtlane"
 
 #: src/resources/xrc_strings.h:43
 msgid "&Catalog"
@@ -514,7 +522,7 @@ msgstr "Näita &reanumbreid"
 
 #: src/resources/xrc_strings.h:50
 msgid "Contents..."
-msgstr "Sisu..."
+msgstr "Sisukord..."
 
 #: src/resources/xrc_strings.h:51
 msgid "&About..."
@@ -554,21 +562,15 @@ msgstr "Näita kokkuvõtet peale kataloogi uuendamist"
 
 #: src/resources/xrc_strings.h:60
 msgid "Open catalogs manager on poEdit startup"
-msgstr "Ava kataloogitoimeti poEdit käivitumisel"
+msgstr "Ava kataloogihaldur poEdit käivitumisel"
 
 #: src/resources/xrc_strings.h:61
 msgid "Always change focus to text input field"
 msgstr "Alati vii fookus tekstisisestusväljale"
 
 #: src/resources/xrc_strings.h:62
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Ära luba stringinimistul fookust saavutada. Kui sisse lülitatud, pead "
-"kasutama klaviatuuriga navigeerimiseks Ctrl-nooli, kuid võid ka teksti "
-"sisestada ka vahetult, ilma Tab-klahviga fookust vahetamata."
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Ära luba stringinimistul fookust saavutada. Kui sisse lülitatud, pead kasutama klaviatuuriga navigeerimiseks Ctrl-nooli, kuid võid teksti sisestada ka vahetult, ilma Tab-klahviga fookust vahetamata."
 
 #: src/resources/xrc_strings.h:63
 msgid "Shaded translations list"
@@ -580,11 +582,11 @@ msgstr "CR/LF muundamine"
 
 #: src/resources/xrc_strings.h:65
 msgid "Line endings format:"
-msgstr "Realõppude formaat:"
+msgstr "Realõppude vorming:"
 
 #: src/resources/xrc_strings.h:66
 msgid "Don't change format of existing catalogs"
-msgstr "Ära muuda olemasolevate kataloogide formaati"
+msgstr "Ära muuda olemasolevate kataloogide vormingut"
 
 #: src/resources/xrc_strings.h:67
 msgid "External editor"
@@ -612,7 +614,7 @@ msgstr "Andmebaas"
 
 #: src/resources/xrc_strings.h:73
 msgid "Path to DB:"
-msgstr "Andmebaasifaili asukoht:"
+msgstr "Andmebaasi asukoht:"
 
 #: src/resources/xrc_strings.h:75
 msgid "Add"
@@ -628,9 +630,7 @@ msgstr "Genereeri andmebaas"
 
 #: src/resources/xrc_strings.h:78
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr ""
-"Genereeri tõlgete mälu uuesti, lähtudes kataloogidest, mis asuvad alltoodud "
-"radadel."
+msgstr "Genereeri tõlgete mälu uuesti, lähtudes kataloogidest, mis asuvad alltoodud radadel."
 
 #: src/resources/xrc_strings.h:79
 msgid "Configuration"
@@ -662,7 +662,7 @@ msgstr "Uus"
 
 #: src/resources/xrc_strings.h:86
 msgid "Edit"
-msgstr "Redigeeri"
+msgstr "Muuda"
 
 #: src/resources/xrc_strings.h:87
 msgid "Delete"
@@ -676,7 +676,8 @@ msgstr "Parserid"
 msgid "Parser setup"
 msgstr "Parseri seadistus"
 
-#: src/resources/xrc_strings.h:92 src/resources/xrc_strings.h:93
+#: src/resources/xrc_strings.h:92
+#: src/resources/xrc_strings.h:93
 #: src/resources/xrc_strings.h:116
 msgid "Language:"
 msgstr "Keel:"
@@ -708,11 +709,9 @@ msgid "An item in keywords list:"
 msgstr "Liige võtmesõnade nimistus:"
 
 #: src/resources/xrc_strings.h:99
-msgid ""
-"This will be attached to the command line once\n"
+msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr ""
-"See lisatakse käsureale üks kord iga võtmesõna\n"
+msgstr "See lisatakse käsureale üks kord iga võtmesõna\n"
 "kohta. %k asendatakse võtmesõnaga."
 
 #: src/resources/xrc_strings.h:100
@@ -721,11 +720,9 @@ msgstr "Liige sisendfailide nimistus:"
 
 #: src/resources/xrc_strings.h:101
 #, c-format
-msgid ""
-"This will be attached to the command line once\n"
+msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr ""
-"See lisatakse käsureale üks kord iga sisendfaili\n"
+msgstr "See lisatakse käsureale üks kord iga sisendfaili\n"
 "kohta. %f asendatakse sisendfaili nimega."
 
 #: src/resources/xrc_strings.h:105
@@ -769,11 +766,9 @@ msgid "Base path:"
 msgstr "Baasrada:"
 
 #: src/resources/xrc_strings.h:121
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
+msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
-msgstr ""
-"Kasuta lisaks vaikimisi kasutatavatele täiendavalt neid võtmesõnu\n"
+msgstr "Kasuta lisaks vaikimisi kasutatavatele täiendavalt neid võtmesõnu\n"
 "(funktsioonide nimesid) leidmaks lähtefailidest tõlgitavaid stringe."
 
 #: src/resources/xrc_strings.h:125
@@ -781,11 +776,9 @@ msgid "Update summary"
 msgstr "Uuendamise kokkuvõte"
 
 #: src/resources/xrc_strings.h:126
-msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
+msgid "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
-msgstr ""
-"Need stringid leiti lähtetekstidest kuid ei ole kataloogis.\n"
+msgstr "Need stringid leiti lähtetekstidest kuid ei ole kataloogis.\n"
 "poEdit lisab need nüüd kataloogi."
 
 #: src/resources/xrc_strings.h:127
@@ -793,11 +786,9 @@ msgid "New strings"
 msgstr "Uued stringid"
 
 #: src/resources/xrc_strings.h:128
-msgid ""
-"These strings are no longer in the sources.\n"
+msgid "These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
-msgstr ""
-"Need stringid pole enam lähtetekstides.\n"
+msgstr "Need stringid pole enam lähtetekstides.\n"
 "poEdit eemaldab need nüüd kataloogist."
 
 #: src/resources/xrc_strings.h:129
@@ -826,7 +817,7 @@ msgstr "Näita jutumärke stringide ümber?"
 
 #: src/resources/xrc_strings.h:137
 msgid "Toggled if selected string has fuzzy translation"
-msgstr "Märgitud, kui valitud string sisaldab segast tõlget"
+msgstr "Märgitud, kui valitud string sisaldab kahtlast tõlget"
 
 #: src/resources/xrc_strings.h:139
 msgid "Fullscreen view"
@@ -835,3 +826,4 @@ msgstr "Täisekraanvaade"
 #: src/resources/xrc_strings.h:140
 msgid "Help"
 msgstr "Abi"
+
