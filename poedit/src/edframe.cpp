@@ -153,9 +153,17 @@ class poEditListCtrl : public wxListCtrl
             SetColumnWidth(1, w - w / 2);
             if (m_displayLines)
                 SetColumnWidth(2, LINE_COL_SIZE);
+
+            m_colWidth = (w/2) / GetCharWidth();
         }
 
         void SetDisplayLines(bool dl) { m_displayLines = dl; }
+
+        // Returns average width of one column in number of characters:
+        size_t GetMaxColChars() const
+        {
+            return m_colWidth * 2/*safety coefficient*/;
+        }
 
     private:
         DECLARE_EVENT_TABLE()
@@ -166,6 +174,7 @@ class poEditListCtrl : public wxListCtrl
         }
 
         bool m_displayLines;
+        unsigned m_colWidth;
 };
 
 BEGIN_EVENT_TABLE(poEditListCtrl, wxListCtrl)
@@ -1090,7 +1099,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
         wxString(newval.wc_str(wxConvLocal), wxConvUTF8);
 
     m_catalog->Translate(key, newvalUtf8);
-    m_list->SetItem(item, 1, newval);
+    m_list->SetItem(item, 1, newval.substr(0, m_list->GetMaxColChars()));
 
     CatalogData* data = m_catalog->FindItem(key);
 
@@ -1195,28 +1204,32 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
 
 
 
-static void AddItemsToList(const Catalog& catalog, wxListCtrl *list, size_t& pos,
+static void AddItemsToList(const Catalog& catalog,
+                           poEditListCtrl *list, size_t& pos,
                            bool (*filter)(const CatalogData& d),
                            const wxColour *clr)
 {
     int clrPos;
     wxListItem listitem;
     size_t cnt = catalog.GetCount();
+    size_t maxchars = list->GetMaxColChars();
 
     for (size_t i = 0; i < cnt; i++)
     {
         if (filter(catalog[i]))
         {
-            list->InsertItem(pos, catalog[i].GetString(), GetItemIcon(catalog[i]));
+            list->InsertItem(pos,
+                             catalog[i].GetString().substr(0, maxchars),
+                             GetItemIcon(catalog[i]));
             
             // Convert from UTF-8 to environment's default charset:
             wxString trans = 
-                wxString(catalog[i].GetTranslation().wc_str(wxConvUTF8), 
+                wxString(catalog[i].GetTranslation().wc_str(wxConvUTF8),
                          wxConvLocal);
             if (!trans)
-                trans = catalog[i].GetTranslation();
+                trans = catalog[i].GetTranslation().substr(0, maxchars);
             
-            list->SetItem(pos, 1, trans);
+            list->SetItem(pos, 1, trans.substr(0, maxchars));
             {
                 wxString linenum;
                 linenum << catalog[i].GetLineNumber();
