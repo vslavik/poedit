@@ -69,12 +69,12 @@ poEditFramesList poEditFrame::ms_instances;
 {
     poEditFrame *f;
     if (!filename)
-        f = new poEditFrame(_T("poEdit"));
+        f = new poEditFrame;
     else
     {
         f = poEditFrame::Find(filename);
         if (!f)
-            f = new poEditFrame(_T("poEdit"), filename);
+            f = new poEditFrame(filename);
     }
     f->Show(true);
     return f;
@@ -153,6 +153,9 @@ BEGIN_EVENT_TABLE(poEditListCtrl, wxListCtrl)
 END_EVENT_TABLE()
 
 
+// I don't like this global flag, but all poEditFrame instances should share it :(
+static bool gs_focusToText = false;
+
 // special handling of keyboard in listctrl and textctrl
 class ListHandler : public wxEvtHandler
 { 
@@ -184,7 +187,7 @@ class ListHandler : public wxEvtHandler
             item = list->HitTest(event.GetPosition(), flags);
             if (item != -1 && (flags & wxLIST_HITTEST_ONITEM))
                 list->SetItemState(item, wxLIST_STATE_SELECTED, 
-                                           wxLIST_STATE_SELECTED);
+                                         wxLIST_STATE_SELECTED);
 
             wxMenu *menu = (m_frame) ? 
                            m_frame->GetPopupMenu(*m_selItem) : NULL;
@@ -194,6 +197,12 @@ class ListHandler : public wxEvtHandler
                 delete menu;
             }
             else event.Skip();                    
+        }
+        
+        void OnFocus(wxFocusEvent& event)
+        {
+            if (gs_focusToText)
+                m_text->SetFocus();
         }
 
         DECLARE_EVENT_TABLE() 
@@ -207,6 +216,7 @@ BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
    EVT_LIST_ITEM_ACTIVATED(EDC_LIST, ListHandler::OnActivated)
    EVT_LIST_ITEM_SELECTED(EDC_LIST, ListHandler::OnListSel)
    EVT_RIGHT_DOWN(ListHandler::OnRightClick)
+   EVT_SET_FOCUS(ListHandler::OnFocus)
 END_EVENT_TABLE()
 
 
@@ -350,10 +360,8 @@ END_EVENT_TABLE()
 
 // Frame class:
 
-poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
-    wxFrame(NULL, -1, title, wxPoint(
-                                 wxConfig::Get()->Read("frame_x", -1),
-                                 wxConfig::Get()->Read("frame_y", -1)),
+poEditFrame::poEditFrame(const wxString& catalog) :
+    wxFrame(NULL, -1, _("poEdit"), wxDefaultPosition,
                              wxSize(
                                  wxConfig::Get()->Read("frame_w", 600),
                                  wxConfig::Get()->Read("frame_h", 400)),
@@ -363,15 +371,23 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
     m_transMem(NULL),
     m_transMemLoaded(false),
 #endif    
-    m_title(title), 
     m_list(NULL),
     m_modified(false),
     m_hasObsoleteItems(false),
     m_sel(0), m_selItem(0)
 {
     wxConfigBase *cfg = wxConfig::Get();
+    
+    // VS: a dirty hack of sort -- if this is the only poEdit frame opened,
+    //     place it at remembered position, but don't do that if there already
+    //     are other frames, because they would overlap and nobody could recognize
+    //     that there are many of them
+    if (ms_instances.GetCount() == 0)
+        Move(cfg->Read("frame_x", -1), cfg->Read("frame_y", -1));
  
     m_displayQuotes = (bool)cfg->Read("display_quotes", (long)false);
+
+    gs_focusToText = cfg->Read("focus_to_text", false);
 
     SetIcon(wxICON(appicon));
 
@@ -675,6 +691,7 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
     if (dlg.ShowModal() == wxID_OK)
     {
         dlg.TransferFrom(wxConfig::Get());
+        gs_focusToText = wxConfig::Get()->Read("focus_to_text", false);
     }
 }
 
@@ -1137,9 +1154,9 @@ void poEditFrame::UpdateStatusBar()
 void poEditFrame::UpdateTitle()
 {
     if (m_modified)
-        SetTitle(m_title + wxT(" : ") + m_fileName + _(" (modified)"));
+        SetTitle(_T("poEdit : ") + m_fileName + _(" (modified)"));
     else
-        SetTitle(m_title + wxT(" : ") + m_fileName);
+        SetTitle(_T("poEdit : ") + m_fileName);
 }
 
 

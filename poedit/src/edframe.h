@@ -76,12 +76,10 @@ class poEditFrame : public wxFrame
 
     private:
         /** Ctor.
-            \param title   frame's title
             \param catalog filename of catalog to open. If empty, starts
                            w/o opened file.
          */
-        poEditFrame(const wxString& title, 
-                    const wxString& catalog = wxEmptyString);
+        poEditFrame(const wxString& catalog = wxEmptyString);
         
         static poEditFramesList ms_instances;
 
@@ -155,7 +153,6 @@ class poEditFrame : public wxFrame
         wxHtmlHelpController m_help;
 #endif
 
-        wxString m_title;
         wxSplitterWindow *m_splitter;
         poEditListCtrl *m_list;
         wxTextCtrl *m_textOrig, *m_textTrans;
