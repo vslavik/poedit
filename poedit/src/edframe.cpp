@@ -418,7 +418,7 @@ void poEditFrame::OnSaveAs(wxCommandEvent&)
     name = wxFileSelector(_("Save as..."), wxPathOnly(m_FileName), name, "", 
                           "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*",
                           wxSAVE | wxOVERWRITE_PROMPT, this);
-    if (name)
+    if (!name.IsEmpty())
     {
         wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
         WriteCatalog(name);
@@ -487,7 +487,7 @@ void poEditFrame::OnSettings(wxCommandEvent&)
         dlg.TransferFrom(m_Catalog);
         m_Modified = true;
         UpdateTitle();
-	UpdateMenu();
+        UpdateMenu();
     }
 }
 
