@@ -230,11 +230,7 @@ void LoadParser::ChangeFileCharset(const wxString& charset)
     wxCSConv conv(!!charset ? charset : wxString(_T("utf-8")));
     size_t line = m_textFile->GetCurrentLine();
     m_textFile->Close();
-#if wxUSE_UNICODE || wxCHECK_VERSION(2,3,2)
     m_textFile->Open(conv);
-#else
-    m_textFile->Open();
-#endif
     m_textFile->GoToLine(line);
 }
 

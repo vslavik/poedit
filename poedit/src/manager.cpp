@@ -212,9 +212,7 @@ void ManagerFrame::UpdateListCat(int id)
         wxDir::GetAllFiles(tkn.GetNextToken(), &m_catalogs, 
                            _T("*.po"), wxDIR_FILES);
 
-#if wxCHECK_VERSION(2,3,2)
     m_listCat->Freeze();
-#endif
 
     m_listCat->ClearAll();
     m_listCat->InsertColumn(0, _("Catalog"));
@@ -232,9 +230,7 @@ void ManagerFrame::UpdateListCat(int id)
     m_listCat->SetColumnWidth(3, wxLIST_AUTOSIZE_USEHEADER);
     m_listCat->SetColumnWidth(4, wxLIST_AUTOSIZE);
     
-#if wxCHECK_VERSION(2,3,2)
     m_listCat->Thaw();
-#endif
 }
 
 
@@ -395,8 +391,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
 	int sel = m_listPrj->GetSelection();
 	if (sel == -1) return;
 
-    if (wxMessageBox(_("Do you really want to do mass update of\n"
-                       "all catalogs in this project?"),
+    if (wxMessageBox(_("Do you really want to do mass update of\nall catalogs in this project?"),
                _("Confirmation"), wxYES_NO | wxICON_QUESTION, this) == wxYES)
     {
         wxBusyCursor bcur;
