@@ -382,9 +382,20 @@ void CatalogParser::Parse()
         // references:
         if (ReadParam(line, _T("#: "), dummy))
         {
-            wxStringTokenizer tkn(dummy, _T("\t\r\n "));
-            while (tkn.HasMoreTokens())
-                mrefs.Add(tkn.GetNextToken());
+            // A line may contain several references, separated by white-space.
+            // Each reference is in the form "path_name:line_number"
+            // (path_name may contain spaces)
+            dummy = dummy.Strip(wxString::both);
+            while (!dummy.empty())
+            {
+                size_t i = 0;
+                while (i < dummy.length() && dummy[i] != _T(':')) { i++; }
+                while (i < dummy.length() && !wxIsspace(dummy[i])) { i++; }
+
+                mrefs.Add(dummy.Left(i));
+                dummy = dummy.Mid(i).Strip(wxString::both);
+            }
+
             line = ReadTextLine(m_textFile, m_conv);
         }
         
