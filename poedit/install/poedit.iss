@@ -107,6 +107,7 @@ Source: locales\wa.mo; DestDir: {app}\share\locale\wa\LC_MESSAGES; Components: i
 Source: locales\bn.mo; DestDir: {app}\share\locale\bn\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\eu.mo; DestDir: {app}\share\locale\eu\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\wxwin\eu.mo; DestDir: {app}\share\locale\eu\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
+Source: locales\wxwin\ko.mo; DestDir: {app}\share\locale\ko\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: BUILD-mingw\src\mingwm10.dll; DestDir: {app}\bin; DestName: mingwm10.dll; Components: core
 DestDir: {app}\bin; Source: {tmp}\unicows.exe; Flags: deleteafterinstall external skipifsourcedoesntexist; Tasks: unicows
 
@@ -233,6 +234,8 @@ Name: {app}\share\locale\pt_PT; Components: i18n
 Name: {app}\share\locale\pt_PT\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\mn; Components: i18n
 Name: {app}\share\locale\mn\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\ko; Components: i18n
+Name: {app}\share\locale\ko\LC_MESSAGES; Components: i18n
 
 [_ISToolPreCompile]
 
