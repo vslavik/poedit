@@ -1,17 +1,40 @@
 
-[ CAUTION!! THESE TWO ITEMS NEED TESTING!! ]
+*** version 1.0.2 ***
+
 - eliminated flicker when resizing poEdit window under (Windows)
+
 - fixed problem with localized versions of gettext (Unix)
+
+- fixed Content-Transfer-Encoding header (was "8-bit" instead of "8bit")
+
+- fixed POT-Creation-Date and PO-Revision-Date date writing
+
+- better handling of \n: strings with \n in them are now both
+  displayed and saved to .po file as multiline records
+
+- saving catalog is now incremental: it only rewrites these
+  parts of the original catalog that were changed. Effects:
+  comments are preserved, file type (Unix/Dos/Mac) is preserved
+
+
 
 *** version 1.0.1 ***
 
 - fixed loading of catalogs with multiline msgid records
+
 - fixed assertion failure in parsers info saving if ~/.poedit
   did not exist [harmless, in debug builds only]
+
 - right-clicking list control now selects the item under cursor
+
 - fixed docs/Makefile.am to cd correctly (Unix)
+
 - configure change: better check for wxWindows (Unix)
+
 - fixed RPM spec file (Unix)
+
 - added integration with KDE and GNOME desktops (Unix)
+
+
 
 *** version 1.0 ***
