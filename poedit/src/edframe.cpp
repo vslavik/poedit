@@ -1379,7 +1379,8 @@ void poEditFrame::UpdateToTextCtrl(int item)
 #endif
     
     m_textOrig->SetValue(t_o);
-    m_textComment->SetValue(t_c);
+    if (m_displayCommentWin)
+        m_textComment->SetValue(t_c);
     m_textTrans->SetValue(t_t);
 
     m_edittedTextOrig = t_t;
@@ -1921,6 +1922,9 @@ void poEditFrame::UpdateDisplayCommentWin()
 
 void poEditFrame::OnCommentWindowText(wxCommandEvent&)
 {
+    if (!m_commentWindowEditable)
+        return;
+
     wxString comment;
     comment = convertFromLocalCharset(
             CommentDialog::AddStartHash(m_textComment->GetValue()));

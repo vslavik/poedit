@@ -95,7 +95,7 @@ void CatalogParser::Parse()
         while (line == _T("#,") || line == _T("#:"))
             line = ReadTextLine(m_textFile, m_conv);
         
-        // flags:        
+        // flags:
         if (ReadParam(line, _T("#, "), dummy))
         {
             mflags = _T("#, ") + dummy;
