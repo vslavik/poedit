@@ -4,13 +4,13 @@
 # Creates distribution files
 #
 
-VERSION=1.1.3
+VERSION=1.1.4
 
-(
-cd docs_classes
-rm -f *.html *gif
-doxygen
-)
+#(
+#cd docs_classes
+#rm -f *.html *gif
+#doxygen
+#)
 
 cp NEWS install/news.txt
 cp README install/readme.txt
@@ -20,16 +20,17 @@ crlf -d install/*.txt
 find_unix_files()
 {
   (find . -type f -maxdepth 1 ; \
-  find src docs docs_classes extras install -type f) | \
+  find src docs extras install -type f) | \
     grep -v '/win32-' | \
     grep -v '/CVS' | \
     grep -v '\.\(dsp\|dsw\|chm\|rtf\|iss\|ico\|ncb\|opt\|plg\|rc\)' | \
     grep -v 'install/.*\.txt'
+  echo 'docs_classes/Doxyfile'
 }
 
 find_win32_files()
 {
-  find src docs docs_classes extras install -type f | \
+  find src docs extras install -type f | \
     grep -v '/CVS' | \
     grep -v 'Makefile' | \
     grep -v 'appicon.xpm'
@@ -38,7 +39,8 @@ find_win32_files()
 NEWS
 README
 poedit.dsw
-poedit.dsp"
+poedit.dsp
+docs_classes/Doxyfile"
 }
 
 
