@@ -7,7 +7,7 @@
     
       Find frame
     
-      (c) Vaclav Slavik, 2001
+      (c) Vaclav Slavik, 2001-2005
 
 */
 
@@ -189,11 +189,19 @@ bool FindFrame::DoFind(int dir)
         }
         if (inTrans)
         {
-            #if wxUSE_UNICODE
-            textc = dt.GetTranslation();
-            #else
-            textc = wxString(dt.GetTranslation().wc_str(wxConvUTF8), wxConvLocal);
-            #endif
+            // concatenate all translations:
+            size_t cnt = dt.GetNumberOfTranslations();
+            textc = wxEmptyString;
+            for (size_t i = 0; i < cnt; i++)
+            {
+                #if wxUSE_UNICODE
+                textc += dt.GetTranslation(i);
+                #else
+                textc += wxString(dt.GetTranslation(i).wc_str(wxConvUTF8),
+                                  wxConvLocal);
+                #endif
+            }
+            // and search for the substring in them:
             if (!caseSens)
                 textc.MakeLower();
 
@@ -215,7 +223,7 @@ bool FindFrame::DoFind(int dir)
         {
             wxArrayString autoComments = dt.GetAutoComments();
             textc = wxEmptyString;
-            for (unsigned i=0; i < autoComments.GetCount(); i++)
+            for (unsigned i = 0; i < autoComments.GetCount(); i++)
                 textc += autoComments[i];
             
             #if wxUSE_UNICODE
