@@ -130,7 +130,7 @@ static wxColour
 #include "comment_modif.xpm"
 
 // list control with both columns equally wide:
-class poEditListCtrl : public wxListCtrl
+class poEditListCtrl : public wxListView
 {
     public:
        poEditListCtrl(wxWindow *parent,
@@ -141,7 +141,7 @@ class poEditListCtrl : public wxListCtrl
                       bool dispLines = false,
                       const wxValidator& validator = wxDefaultValidator,
                       const wxString &name = _T("listctrl"))
-             : wxListCtrl(parent, id, pos, size, style, validator, name)
+             : wxListView(parent, id, pos, size, style, validator, name)
         {
             m_displayLines = dispLines;
             CreateColumns();
@@ -1561,6 +1561,11 @@ void poEditFrame::RefreshControls()
     wxBusyCursor bcur;
     UpdateMenu();
 
+    long selection_idx = m_list->GetFirstSelected();
+    wxString selection;
+    if (selection_idx != -1)
+        selection = m_list->GetItemText(selection_idx);
+    
     m_list->Freeze();
     m_list->ClearAll();
     m_list->CreateColumns();
@@ -1579,8 +1584,27 @@ void poEditFrame::RefreshControls()
 
     m_list->Thaw();
     
-    if (m_catalog->GetCount() > 0) 
-        m_list->SetItemState(0, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+    if (m_catalog->GetCount() > 0)
+    {
+        if (selection.empty())
+        {
+            m_list->Select(0);
+            m_list->Focus(0);
+        }
+        else
+        {
+            size_t cnt = m_catalog->GetCount();
+            for (size_t i = 0; i < cnt; i++)
+            {
+                if (m_list->GetItemText(i) == selection)
+                {
+                    m_list->Select(i);
+                    m_list->Focus(i);
+                    break;
+                }
+            }
+        }
+    }
 	
     FindFrame *f = (FindFrame*)FindWindow(_T("find_frame"));
     if (f)
