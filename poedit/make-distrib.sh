@@ -4,7 +4,7 @@
 # Creates distribution files
 #
 
-VERSION=1.1.5
+VERSION=1.1.6
 
 #(
 #cd docs_classes
