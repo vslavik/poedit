@@ -8,7 +8,7 @@
     
       Language chooser
     
-      (c) Vaclav Slavik, 2003
+      (c) Vaclav Slavik, 2003, 2004
 
 */
 
@@ -97,6 +97,7 @@ wxLanguage ChooseLanguage()
         { _T("Japanese"), wxLANGUAGE_JAPANESE },
         { _T("Latvian"), wxLANGUAGE_LATVIAN },
         { _T("Lithuanian"), wxLANGUAGE_LITHUANIAN },
+        { _T("Mongolian"), wxLANGUAGE_MONGOLIAN },
         { _T("Norwegian Nynorsk"), wxLANGUAGE_NORWEGIAN_NYNORSK },
         { _T("Norwegian Bokmål"), wxLANGUAGE_NORWEGIAN_BOKMAL },
         { _T("Polish"), wxLANGUAGE_POLISH },
