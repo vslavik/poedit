@@ -72,6 +72,7 @@ Source: locales\wxwin\sv.mo; DestDir: {app}\share\locale\sv_SE\LC_MESSAGES; Comp
 Source: locales\ca.mo; DestDir: {app}\share\locale\ca\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\ka.mo; DestDir: {app}\share\locale\ka\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\ro.mo; DestDir: {app}\share\locale\ro\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\el.mo; DestDir: {app}\share\locale\el\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
@@ -142,6 +143,8 @@ Name: {app}\share\locale\ka; Components: i18n
 Name: {app}\share\locale\ka\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\ro; Components: i18n
 Name: {app}\share\locale\ro\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\el; Components: i18n
+Name: {app}\share\locale\el\LC_MESSAGES; Components: i18n
 
 [_ISToolPreCompile]
 
