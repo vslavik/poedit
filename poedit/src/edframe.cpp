@@ -117,8 +117,8 @@ enum
 static wxColour 
     g_ItemColourNormal[2] =       LIST_COLOURS(0xFF,0xFF,0xFF), // white
     g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
-    g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1); // yellow
-
+    g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1), // yellow
+    g_ItemColourBadTokens[2] =    LIST_COLOURS(0xFF,0x20,0x20); // red
 
 #include "nothing.xpm"
 #include "modified.xpm"
@@ -1319,6 +1319,8 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             listitem.SetBackgroundColour(g_ItemColourUntranslated[item % 2]);
         else if (data->IsFuzzy())
             listitem.SetBackgroundColour(g_ItemColourFuzzy[item % 2]);
+        else if (data->HasBadTokens())
+            listitem.SetBackgroundColour(g_ItemColourBadTokens[item % 2]);
         else
             listitem.SetBackgroundColour(g_ItemColourNormal[item % 2]);
     }
@@ -1328,6 +1330,8 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             listitem.SetBackgroundColour(g_ItemColourUntranslated[0]);
         else if (data->IsFuzzy())
             listitem.SetBackgroundColour(g_ItemColourFuzzy[0]);
+        else if (data->HasBadTokens())
+            listitem.SetBackgroundColour(g_ItemColourBadTokens[0]);
         else
             listitem.SetBackgroundColour(g_ItemColourNormal[0]);
     }
@@ -1467,12 +1471,17 @@ static bool CatFilterUntranslated(const CatalogData& d)
 
 static bool CatFilterFuzzy(const CatalogData& d)
 {
-    return d.IsFuzzy() && d.IsTranslated();
+    return d.IsFuzzy() && !d.HasBadTokens() && d.IsTranslated();
+}
+
+static bool CatFilterBadTokens(const CatalogData& d)
+{
+    return d.HasBadTokens() && d.IsTranslated();
 }
 
 static bool CatFilterRest(const CatalogData& d)
 {
-    return !d.IsFuzzy() && d.IsTranslated();
+    return !d.IsFuzzy() && !d.HasBadTokens()  && d.IsTranslated();
 }
 
 void poEditFrame::RefreshControls()
@@ -1504,6 +1513,8 @@ void poEditFrame::RefreshControls()
     AddItemsToList(*m_catalog, m_list, pos, 
                    CatFilterUntranslated, g_ItemColourUntranslated);
     AddItemsToList(*m_catalog, m_list, pos, 
+                   CatFilterBadTokens, g_ItemColourBadTokens);
+    AddItemsToList(*m_catalog, m_list, pos, 
                    CatFilterFuzzy, g_ItemColourFuzzy);
     AddItemsToList(*m_catalog, m_list, pos, 
                    CatFilterRest, gs_shadedList ? g_ItemColourNormal : NULL);
@@ -1512,7 +1523,7 @@ void poEditFrame::RefreshControls()
     
     if (m_catalog->GetCount() > 0) 
         m_list->SetItemState(0, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-
+	
     FindFrame *f = (FindFrame*)FindWindow(_T("find_frame"));
     if (f)
         f->Reset(m_catalog);
@@ -1526,16 +1537,16 @@ void poEditFrame::RefreshControls()
 
 void poEditFrame::UpdateStatusBar()
 {
-    int all, fuzzy, untranslated;
+    int all, fuzzy, untranslated, badtokens;
     if (m_catalog)
     {
         wxString txt;
-        m_catalog->GetStatistics(&all, &fuzzy, &untranslated);
-        txt.Printf(_("%i strings (%i fuzzy, %i not translated)"), 
-                   all, fuzzy, untranslated);
+        m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
+        txt.Printf(_("%i strings (%i fuzzy, %i bad tokens, %i not translated)"), 
+                   all, fuzzy, badtokens, untranslated);
         GetStatusBar()->SetStatusText(txt);
         if (all > 0)
-            m_statusGauge->SetValue(100 * (all-fuzzy-untranslated) / all);
+            m_statusGauge->SetValue(100 * (all-fuzzy-badtokens-untranslated) / all);
         else
             m_statusGauge->SetValue(0);
     }
@@ -1620,7 +1631,7 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
         for (size_t i = 0; i < cnt; i++)
         {
             CatalogData& dt = (*m_catalog)[i];
-            if (dt.IsModified() && !dt.IsFuzzy() &&
+            if (dt.IsModified() && !dt.IsFuzzy() && !dt.HasBadTokens() &&
                 !dt.GetTranslation().IsEmpty())
                 tm->Store(dt.GetString(), dt.GetTranslation());
         }

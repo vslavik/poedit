@@ -1,4 +1,4 @@
-
+ 
 /*
 
     poedit, a wxWindows i18n catalogs editor
@@ -8,7 +8,7 @@
     
       Translations catalog
     
-      (c) Vaclav Slavik, 1999-2003
+      (c) Vaclav Slavik, 1999-2004
 
 */
 
@@ -40,7 +40,6 @@
 
 #include "wx/arrimpl.cpp"
 WX_DEFINE_OBJARRAY(CatalogDataArray)
-
 
 // textfile processing utilities:
 
@@ -937,15 +936,17 @@ void Catalog::Append(Catalog& cat)
 }
 
 
-void Catalog::GetStatistics(int *all, int *fuzzy, int *untranslated)
+void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens, int *untranslated)
 {
     if (all) *all = 0;
     if (fuzzy) *fuzzy = 0;
+    if (badtokens) *badtokens = 0;
     if (untranslated) *untranslated = 0;
     for (size_t i = 0; i < GetCount(); i++)
     {
         if (all) (*all)++;
         if ((*this)[i].IsFuzzy()) (*fuzzy)++;
+        if ((*this)[i].HasBadTokens()) (*badtokens)++;
         if (!(*this)[i].IsTranslated()) (*untranslated)++;
     }
 }
@@ -977,4 +978,105 @@ wxString CatalogData::GetFlags() const
         return _T("#") + f;
     else 
         return wxEmptyString;
+}
+
+// This regex is used by CatalogData to extract the tokens
+// since there is no need to have one object per instance of CatalogData, 
+// we declare it static
+wxRegEx CatalogData::ms_tokenExtraction(
+        _T(".*(%[-+0 #]?[0-9]?[.[0-9]*]?([cCdiouxXeEfgGpsS]|ld)).*"),
+        wxRE_EXTENDED | wxRE_NEWLINE);
+
+bool CatalogData::CheckPrintfCorrectness()
+{
+    // Added by Frédéric Giudicelli (info@newpki.org)
+    // To verify the validity of tokens.
+
+#if wxUSE_UNICODE && !wxCHECK_VERSION(2,5,1)
+    #warning "validity checking disabled due to broken wxRegEx"
+#else    
+    // - We use m_tokenExtraction the extract the tokens 
+    //   from a string. 
+    // - With the extracted token we generate a regexp.    
+    // - Using the generated regexp we validate the string.
+    
+    wxASSERT_MSG( ms_tokenExtraction.IsValid(),
+                  _T("error in validity checking regex") );
+
+    // We make sure that the translated string has all the tokens
+    // the original string declared
+    if (!ValidateTokensString(m_string, m_translation))
+        return false;
+
+    // We make sure that the translated string doesn't have more
+    // tokens than the original string
+    if (!ValidateTokensString(m_translation, m_string))
+        return false;
+#endif
+
+    return true;
+}
+
+bool CatalogData::ValidateTokensString(const wxString& from,
+                                       const wxString& to)
+{
+    wxString subString;
+    wxString newPattern;
+    size_t startOff;
+    size_t tokenLen;
+    wxString currMatch;
+    wxRegEx translationValidation;
+    int tokenCount;
+
+    subString = from;
+    // Remove the double %, we don't need them
+    subString.Replace(_T("%%"), wxEmptyString);
+
+    tokenCount = 0;
+    
+    // We first extact all the tokens declarations
+    // regexp allways returns the last occurence, so we start
+    // from the end
+    while (subString.Length() && ms_tokenExtraction.Matches(subString))
+    {
+        if (!ms_tokenExtraction.GetMatch(&startOff, &tokenLen, 1))
+            return false;
+
+		// Get the token declaration
+        currMatch = subString.SubString(startOff, startOff+tokenLen-1);
+        if (currMatch.IsEmpty())
+            return false;
+
+		// Remove then newly extracted token from the string
+        subString = subString.Left(startOff);
+        
+        // Append the new token to the regexp pattern
+        currMatch += _T(".*");
+        currMatch += newPattern;
+
+        newPattern = currMatch;
+        tokenCount++;
+    }
+
+	// We didn't find any token, no need to validate
+    if (!tokenCount)
+        return true;
+
+    currMatch = _T(".*");
+    currMatch += newPattern;
+
+    // We now validate the destination string using the generated regexp
+    // pattern.  We compile the generated regexp pattern.
+    if (!translationValidation.Compile(currMatch, wxRE_EXTENDED | wxRE_NOSUB))
+    {
+        return false;
+    }
+
+    subString = to;
+    // Remove the double %, we don't need them
+    subString.Replace(_T("%%"), wxEmptyString);
+    if(!translationValidation.Matches(subString))
+        return false;
+
+    return true;
 }

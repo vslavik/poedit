@@ -145,7 +145,7 @@ void ManagerFrame::UpdateListPrj(int select)
 static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& file)
 {
     wxConfigBase *cfg = wxConfig::Get();
-    int all = 0, fuzzy = 0, untranslated = 0;
+    int all = 0, fuzzy = 0, untranslated = 0, badtokens = 0;
     wxString lastmodified;
     time_t modtime;
     wxString key;
@@ -160,6 +160,7 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     {
         all = cfg->Read(key + _T("all"), (long)0);
         fuzzy = cfg->Read(key + _T("fuzzy"), (long)0);
+        badtokens = cfg->Read(key + _T("badtokens"), (long)0);
         untranslated = cfg->Read(key + _T("untranslated"), (long)0);
         lastmodified = cfg->Read(key + _T("lastmodified"), _T("?"));
     }
@@ -169,19 +170,20 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
         wxLogNull nullLog;
         
         Catalog cat(file);
-        cat.GetStatistics(&all, &fuzzy, &untranslated);
+        cat.GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
         modtime = wxFileModificationTime(file);
         lastmodified = cat.Header().RevisionDate;
         cfg->Write(key + _T("timestamp"), (long)modtime);
         cfg->Write(key + _T("all"), (long)all);
         cfg->Write(key + _T("fuzzy"), (long)fuzzy);
+        cfg->Write(key + _T("badtokens"), (long)badtokens);
         cfg->Write(key + _T("untranslated"), (long)untranslated);
         cfg->Write(key + _T("lastmodified"), lastmodified);
     }
     
     int icon;
-    if (fuzzy+untranslated == 0) icon = 2;
-    else if ((double)all / (fuzzy+untranslated) <= 3) icon = 0;
+    if (fuzzy+untranslated+badtokens == 0) icon = 2;
+    else if ((double)all / (fuzzy+untranslated+badtokens) <= 3) icon = 0;
     else icon = 1;
     
     wxString tmp;
@@ -192,7 +194,9 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     list->SetItem(i, 2, tmp);
     tmp.Printf(_T("%i"), fuzzy);    
     list->SetItem(i, 3, tmp);
-    list->SetItem(i, 4, lastmodified);
+    tmp.Printf(_T("%i"), badtokens);
+    list->SetItem(i, 4, tmp);
+    list->SetItem(i, 5, lastmodified);
 }
 
 void ManagerFrame::UpdateListCat(int id)
@@ -220,7 +224,8 @@ void ManagerFrame::UpdateListCat(int id)
     m_listCat->InsertColumn(1, _("Total"));
     m_listCat->InsertColumn(2, _("Untrans"));
     m_listCat->InsertColumn(3, _("Fuzzy"));
-    m_listCat->InsertColumn(4, _("Last modified"));
+    m_listCat->InsertColumn(4, _("Bad Tokens"));
+    m_listCat->InsertColumn(5, _("Last modified"));
     
     for (size_t i = 0; i < m_catalogs.GetCount(); i++)
         AddCatalogToList(m_listCat, i, id, m_catalogs[i]);
@@ -229,7 +234,8 @@ void ManagerFrame::UpdateListCat(int id)
     m_listCat->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
     m_listCat->SetColumnWidth(2, wxLIST_AUTOSIZE_USEHEADER);
     m_listCat->SetColumnWidth(3, wxLIST_AUTOSIZE_USEHEADER);
-    m_listCat->SetColumnWidth(4, wxLIST_AUTOSIZE);
+    m_listCat->SetColumnWidth(4, wxLIST_AUTOSIZE_USEHEADER);
+    m_listCat->SetColumnWidth(5, wxLIST_AUTOSIZE);
     
     m_listCat->Thaw();
 }

@@ -8,7 +8,7 @@
     
       Translations catalog
     
-      (c) Vaclav Slavik, 1999-2003
+      (c) Vaclav Slavik, 1999-2004
 
 */
 
@@ -23,7 +23,7 @@
 #include <wx/hash.h>
 #include <wx/dynarray.h>
 #include <wx/encconv.h>
-
+#include <wx/regex.h>
 
 
 class WXDLLEXPORT wxTextFile;
@@ -116,11 +116,11 @@ class Catalog
         /// Returns the number of strings/translations in the catalog.
         size_t GetCount() const { return m_count; }
 
-        /** Returns number of all, fuzzy and untranslated items.
+        /** Returns number of all, fuzzy, badtokens and untranslated items.
             Any argument may be NULL if the caller is not interested in
             given statistic value.
          */
-        void GetStatistics(int *all, int *fuzzy, int *untranslated);
+        void GetStatistics(int *all, int *fuzzy, int *badtokens, int *untranslated);
 
         /// Gets n-th item in the catalog (read-write access).
         CatalogData& operator[](unsigned n) { return m_dataArray[n]; }
@@ -227,6 +227,7 @@ class CatalogData : public wxObject
                   m_translation(translation), 
                   m_references(),
                   m_isFuzzy(false),
+                  m_hasBadTokens(false),
                   m_isTranslated(!translation.IsEmpty()),
                   m_isModified(false),
                   m_isAutomatic(false),
@@ -269,6 +270,7 @@ class CatalogData : public wxObject
         void SetTranslation(const wxString& t) 
         { 
             m_translation = t; 
+            m_hasBadTokens = !CheckPrintfCorrectness();
             m_isTranslated = !t.IsEmpty();
         }
 
@@ -288,6 +290,8 @@ class CatalogData : public wxObject
         void SetFuzzy(bool fuzzy) { m_isFuzzy = fuzzy; }
         /// Gets value of fuzzy flag.
         bool IsFuzzy() const { return m_isFuzzy; }
+        /// Gets value of badtokens flag.
+        bool HasBadTokens() const { return m_hasBadTokens; }
         /// Sets translated flag.
         void SetTranslated(bool t) { m_isTranslated = t; }
         /// Gets value of translated flag.
@@ -306,9 +310,17 @@ class CatalogData : public wxObject
         unsigned GetLineNumber() const { return m_lineNum; }
             
     private:
+        /// Checks if %i etc. are correct in the translation (true if yes)
+        bool CheckPrintfCorrectness();
+        bool ValidateTokensString(const wxString& from, const wxString& to);
+
+    private:
+        static wxRegEx ms_tokenExtraction;
+
         wxString m_string, m_translation;
         wxArrayString m_references;
         bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
+        bool m_hasBadTokens;
         wxString m_moreFlags;
         wxString m_comment;
         unsigned m_lineNum;
