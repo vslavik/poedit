@@ -2369,16 +2369,7 @@ void poEditFrame::EndItemValidation()
         }
        
         if (!ok)
-        {
-            wxListItem listitem;
-            listitem.SetId(item);
-            m_list->GetItem(listitem);
-/*            if (gs_shadedList)
-                listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
-            else
-                listitem.SetBackgroundColour(g_ItemColourInvalid[0]);*/
-            m_list->SetItem(listitem);
-        }
+            m_list->Refresh(item);  // Force refresh
         
         if (m_itemsToValidate.empty())
         {
