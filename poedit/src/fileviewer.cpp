@@ -65,17 +65,19 @@ FileViewer::FileViewer(wxWindow *parent,
 
 void FileViewer::ShowReference(const wxString& ref)
 {
-    wxString filename = m_basePath + _T('/') + ref.BeforeLast(_T(':'));
+    wxFileName filename(ref.BeforeLast(_T(':')));
+    filename.MakeAbsolute(m_basePath);
+    
     long linenum;
     if (!ref.AfterLast(_T(':')).ToLong(&linenum))
         linenum = 0;
 
-    wxTextFile textf(filename);
+    wxTextFile textf(filename.GetFullPath());
 
     textf.Open();
     if (!textf.IsOpened())
     {
-        wxLogError(_("Error opening file %s!"), filename.c_str());
+        wxLogError(_("Error opening file %s!"), filename.GetFullPath().c_str());
         return;
     }
     
@@ -126,7 +128,9 @@ FileViewer::~FileViewer()
         wxLogError(_("No editor specified. Please set it in Preferences dialog."));
         return;
     }
-    editor.Replace(_T("%f"), basepath + _T('/') + reference.BeforeLast(_T(':')));
+    wxFileName fn(reference.BeforeLast(_T(':')));
+    fn.MakeAbsolute(basepath);
+    editor.Replace(_T("%f"), fn.GetFullPath());
     editor.Replace(_T("%l"), reference.AfterLast(_T(':')));
     wxExecute(editor);
 }
