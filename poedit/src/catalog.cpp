@@ -700,7 +700,20 @@ bool Catalog::Update()
     }
     
     SourceDigger dig(&pinfo);
-    Catalog *newcat = dig.Dig(m_header.SearchPaths, m_header.Keywords);
+    
+    wxArrayString keywords;
+    if (m_header.Keywords.IsEmpty())
+    {
+        keywords.Add(_T("_"));
+        keywords.Add(_T("gettext"));
+        keywords.Add(_T("gettext_noop"));
+    }
+    else
+    {
+        WX_APPEND_ARRAY(keywords, m_header.Keywords);
+    }
+    
+    Catalog *newcat = dig.Dig(m_header.SearchPaths, keywords);
 
     if (newcat != NULL) 
     {

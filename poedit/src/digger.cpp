@@ -115,6 +115,13 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
         filescnt += p_files[i].GetCount();
     }
     m_progressInfo->SetGaugeMax(filescnt);
+    
+    if (filescnt == 0)
+    {
+        for (i = 0; i < paths.GetCount(); i++)
+            wxLogWarning(_("No files found in: ") + paths[i]);
+        wxLogError(_("poEdit did not find any files in scanned directories."));
+    }
 
     return p_files;
 }
