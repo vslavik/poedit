@@ -322,12 +322,18 @@ void CatalogParser::Parse()
         // comment:
         else if (line[0u] == _T('#'))
         {
+            bool readNewLine = false;
+
             while (!line.IsEmpty() && line[0u] == _T('#') &&
                    (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':') && line[1u] != _T('.') )))
             {
                 mcomment << line << _T('\n');
+                readNewLine = true;
                 line = ReadTextLine(m_textFile, m_conv);
             }
+
+            if (!readNewLine)
+                line = ReadTextLine(m_textFile, m_conv);
         }
         
         else
