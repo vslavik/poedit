@@ -512,8 +512,6 @@ void CatalogParser::Parse()
             mrefs.Clear();
             mautocomments.Clear();
             mtranslations.Clear();
-            
-            line = ReadTextLine(m_textFile, m_conv);
         }
         
         // comment:
