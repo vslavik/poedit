@@ -24,7 +24,8 @@
 #include <wx/docview.h>
 #include <wx/list.h>
 class WXDLLEXPORT wxListCtrl;
-class WXDLLEXPORT wxSpliterWindow;
+class WXDLLEXPORT wxListEvent;
+class WXDLLEXPORT wxSplitterWindow;
 class WXDLLEXPORT wxTextCtrl;
 class WXDLLEXPORT wxGauge;
 

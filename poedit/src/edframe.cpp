@@ -33,6 +33,7 @@
 #include <wx/settings.h>
 #include <wx/button.h>
 #include <wx/statusbr.h>
+#include <wx/splitter.h>
 
 #include "catalog.h"
 #include "edapp.h"
@@ -387,7 +388,7 @@ poEditFrame::poEditFrame(const wxString& catalog) :
  
     m_displayQuotes = (bool)cfg->Read("display_quotes", (long)false);
 
-    gs_focusToText = cfg->Read("focus_to_text", false);
+    gs_focusToText = (bool)cfg->Read("focus_to_text", (long)false);
 
     SetIcon(wxICON(appicon));
 
@@ -484,7 +485,8 @@ poEditFrame::~poEditFrame()
     m_history.Save(*cfg);
 
 #ifdef USE_TRANSMEM    
-    m_transMem->Release();
+    if (m_transMem)
+        m_transMem->Release();
 #endif
     delete m_catalog;
 }
@@ -660,7 +662,11 @@ void poEditFrame::OnNew(wxCommandEvent& event)
     UpdateStatusBar();
 
 #ifdef USE_TRANSMEM
-    m_transMem->Release();
+    if (m_transMem)
+    {
+        m_transMem->Release();
+        m_transMem = NULL;
+    }
     m_transMemLoaded = false;
 #endif    
 }
@@ -691,7 +697,7 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
     if (dlg.ShowModal() == wxID_OK)
     {
         dlg.TransferFrom(wxConfig::Get());
-        gs_focusToText = wxConfig::Get()->Read("focus_to_text", false);
+        gs_focusToText = (bool)wxConfig::Get()->Read("focus_to_text", (long)false);
     }
 }
 
@@ -1026,7 +1032,11 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     m_catalog = new Catalog(catalog);
 
 #ifdef USE_TRANSMEM
-    m_transMem->Release();
+    if (m_transMem)
+    {
+        m_transMem->Release();
+        m_transMem = NULL;
+    }
     m_transMemLoaded = false;
 #endif
     
@@ -1064,7 +1074,7 @@ static void AddItemsToList(const Catalog& catalog, wxListCtrl *list, size_t& pos
             list->SetItem(pos, 1, trans);
             list->SetItemData(pos, i);
             listitem.SetId(pos);
-            if (!clr.IsNull())
+            if (clr.Ok())
             {
                 list->GetItem(listitem);
                 listitem.SetBackgroundColour(clr);

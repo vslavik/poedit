@@ -58,13 +58,13 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XMLCTRL(*this, "show_summary", wxCheckBox)->SetValue(
                 cfg->Read(_T("show_summary"), true));
     XMLCTRL(*this, "manager_startup", wxCheckBox)->SetValue(
-                cfg->Read(_T("manager_startup"), false));
+                bool)cfg->Read(_T("manager_startup"), (long)false));
     XMLCTRL(*this, "focus_to_text", wxCheckBox)->SetValue(
-                cfg->Read(_T("focus_to_text"), false));
+                bool)cfg->Read(_T("focus_to_text"), (long)false));
     XMLCTRL(*this, "ext_editor", wxComboBox)->SetValue(
                 cfg->Read(_T("ext_editor"), wxEmptyString));
     XMLCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
-                cfg->Read(_T("keep_crlf"), true));
+                (bool)cfg->Read(_T("keep_crlf"), true));
 
     wxString format = cfg->Read(_T("crlf_format"), _T("unix"));
     int sel;
@@ -324,9 +324,8 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
         //     (which happens when the users presses OK) but we still won't
         //     to use the path entered by the user...
 
-    tkn.SetString(cfg->Read(_T("TM/languages"), wxEmptyString), _T(":"));
     wxArrayString langs;
-    while (tkn.HasMoreTokens()) langs.Add(tkn.GetNextToken());
+	XMLCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
 
     ProgressInfo *pi = new ProgressInfo;
     pi->SetTitle(_("Updating translation memory"));
@@ -338,8 +337,8 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
         {
             TranslationMemoryUpdater u(tm, pi);
             if (!u.Update(dirsArray)) 
-                { delete tm; break; }
-            delete tm;
+                { tm->Release(); break; }
+            tm->Release();
         }
     }
     delete pi;

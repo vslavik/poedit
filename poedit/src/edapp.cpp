@@ -111,7 +111,7 @@ bool poEditApp::OnInit()
             dlg.TransferFrom(wxConfig::Get());
     }
       
-    if (argc <= 1 && wxConfig::Get()->Read(_T("manager_startup"), false))
+    if (argc <= 1 && wxConfig::Get()->Read(_T("manager_startup"), (long)false))
         ManagerFrame::Create()->Show(true);
     else
         poEditFrame::Create(argc > 1 ? argv[1] : wxEmptyString);
