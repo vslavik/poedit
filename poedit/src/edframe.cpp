@@ -577,6 +577,7 @@ poEditFrame::~poEditFrame()
 {
     ms_instances.DeleteObject(this);
 
+    GetStatusBar()->PopEventHandler(true/*delete*/);
     m_textTrans->PopEventHandler(true/*delete*/);
     m_list->PopEventHandler(true/*delete*/);
 
