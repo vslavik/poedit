@@ -61,7 +61,7 @@ static wxString ReadTextLine(wxTextFile* f, wxMBConv *conv)
         wxString s2 = wxString(s.wc_str(*conv), wxConvUTF8);
         if (s2.empty() && !s.empty())
         {
-            wxLogError(_("Error while loading file '%s': line %u is corruped."),
+            wxLogError(_("Error while loading file '%s': line %u is corrupted."),
                        f->GetName(), f->GetCurrentLine());
         }
         return s2;
