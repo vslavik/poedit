@@ -328,9 +328,12 @@ void Catalog::CreateNewHeader()
     dt.Charset = _T("utf-8");
     dt.Translator = wxConfig::Get()->Read(_T("translator_name"), wxEmptyString);
     dt.TranslatorEmail = wxConfig::Get()->Read(_T("translator_email"), wxEmptyString);
+
+    // NB: keep in sync with Catalog::Update!
     dt.Keywords.Add(_T("_"));
     dt.Keywords.Add(_T("gettext"));
     dt.Keywords.Add(_T("gettext_noop"));
+
     dt.BasePath = _T(".");
 }
 
@@ -704,6 +707,7 @@ bool Catalog::Update()
     wxArrayString keywords;
     if (m_header.Keywords.IsEmpty())
     {
+        // NB: keep in sync with Catalog::CreateNewHeader!
         keywords.Add(_T("_"));
         keywords.Add(_T("gettext"));
         keywords.Add(_T("gettext_noop"));
