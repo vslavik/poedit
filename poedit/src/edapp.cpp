@@ -32,6 +32,7 @@
 #include "edframe.h"
 #include "manager.h"
 #include "prefsdlg.h"
+#include "chooselang.h"
 
 
 IMPLEMENT_APP(poEditApp);
@@ -100,7 +101,9 @@ bool poEditApp::OnInit()
     wxConfigBase::Get()->SetExpandEnvVars(false);
 
     wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
-    m_locale.Init();
+
+    m_locale.Init(GetUILanguage());
+    
     m_locale.AddCatalog(_T("poedit"));
     m_locale.AddCatalog(_T("poedit-wxstd")); // for semistatic builds
 

@@ -21,7 +21,7 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  findframe.cpp findframe.h commentdlg.h commentdlg.cpp \
                  transmem.cpp transmem.h transmemupd.cpp transmemupd.h \
                  transmemupd_wizard.cpp transmemupd_wizard.h \
-                 manager.h manager.cpp
+                 manager.h manager.cpp chooselang.cpp chooselang.h
 
 poedit_resource.o: poedit.rc
 	$(RESCOMP) -i$(srcdir)/poedit.rc -o poedit_resource.o \

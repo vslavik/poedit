@@ -53,6 +53,9 @@ class PreferencesDialog : public wxDialog
         void OnTMGenerate(wxCommandEvent& event);
 #endif
 
+#ifndef __UNIX__
+        void OnUILanguage(wxCommandEvent& event);
+#endif
         void OnNewParser(wxCommandEvent& event);
         void OnEditParser(wxCommandEvent& event);
         void OnDeleteParser(wxCommandEvent& event);

@@ -33,6 +33,7 @@
 #include "transmem.h"
 #include "transmemupd.h"
 #include "transmemupd_wizard.h"
+#include "chooselang.h"
 
 PreferencesDialog::PreferencesDialog(wxWindow *parent)
 {
@@ -170,7 +171,17 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
    EVT_BUTTON(XRCID("tm_browsedbpath"), PreferencesDialog::OnTMBrowseDbPath)
    EVT_BUTTON(XRCID("tm_generate"), PreferencesDialog::OnTMGenerate)
 #endif
+#ifndef __UNIX__
+   EVT_BUTTON(XRCID("ui_language"), PreferencesDialog::OnUILanguage)
+#endif
 END_EVENT_TABLE()
+    
+#ifndef __UNIX__
+void PreferencesDialog::OnUILanguage(wxCommandEvent& event)
+{
+    ChangeUILanguage();
+}
+#endif
 
 bool PreferencesDialog::EditParser(int num)
 {

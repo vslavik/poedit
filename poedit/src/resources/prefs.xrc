@@ -9,6 +9,7 @@
         <object class="wxNotebook" name="notebook">
           <usenotebooksizer>1</usenotebooksizer>
           <object class="notebookpage">
+            <label>Personalize</label>
             <object class="wxPanel">
               <object class="wxBoxSizer">
                 <orient>wxVERTICAL</orient>
@@ -45,6 +46,22 @@
                   <option>0</option>
                   <border>5d</border>
                 </object>
+                <object class="sizeritem">
+                    <flag>wxALL|wxALIGN_RIGHT</flag>
+                    <border>5d</border>
+                    <object class="wxButton" name="ui_language">
+                    <label>Change UI language</label>
+                  </object>
+                </object>
+              </object>
+              <style>wxTAB_TRAVERSAL</style>
+            </object>
+            <label>Editor</label>
+          </object>
+          <object class="notebookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
                 <object class="sizeritem">
                   <object class="wxStaticBoxSizer">
                     <label>Behavior</label>
