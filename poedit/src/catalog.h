@@ -242,11 +242,13 @@ class CatalogParser
             is false.
          */
         virtual bool OnEntry(const wxString& msgid,
-                             const wxString& msgstr,
+                             const wxString& msgid_plural,
+                             bool has_plural,
+                             const wxArrayString& mtranslations,
                              const wxString& flags,
                              const wxArrayString& references,
                              const wxString& comment,
-			     const wxArrayString& autocomments,
+                             const wxArrayString& autocomments,
                              unsigned lineNumber) = 0;
 
         /// Textfile being parsed.
@@ -266,13 +268,14 @@ class CatalogData : public wxObject
 {
     public:
         /// Ctor. Initializes the object with original string and translation.
-        CatalogData(const wxString& str, const wxString& translation) 
+        CatalogData(const wxString& str, const wxString& str_plural)
                 : wxObject(), 
-                  m_string(str), 
-                  m_translation(translation), 
+                  m_string(str),
+                  m_plural(str_plural),
+                  m_hasPlural(false),
                   m_references(),
                   m_isFuzzy(false),
-                  m_isTranslated(!translation.IsEmpty()),
+                  m_isTranslated(false),
                   m_isModified(false),
                   m_isAutomatic(false),
                   m_validity(Val_Unknown),
@@ -281,7 +284,9 @@ class CatalogData : public wxObject
         CatalogData(const CatalogData& dt)
                 : wxObject(),
                   m_string(dt.m_string),
-                  m_translation(dt.m_translation), 
+                  m_plural(dt.m_plural),
+                  m_hasPlural(dt.m_hasPlural),
+                  m_translations(dt.m_translations),
                   m_references(dt.m_references),
                   m_autocomments(dt.m_autocomments),
                   m_isFuzzy(dt.m_isFuzzy),
@@ -297,8 +302,18 @@ class CatalogData : public wxObject
         /// Returns the original string.
         const wxString& GetString() const { return m_string; }
 
-        /// Returns the translation.
-        const wxString& GetTranslation() const { return m_translation; }
+        /// Does this entry have a msgid_plural?
+        const bool HasPlural() const { return m_hasPlural; }
+
+        /// Returns the plural string.
+        const wxString& GetPluralString() const { return m_plural; }
+
+        /// How many translations (plural forms) do we have?
+        size_t GetNumberOfTranslations() const
+            { return m_translations.GetCount(); }
+ 
+        /// Returns the nth-translation.
+        wxString GetTranslation(unsigned n = 0) const;
 
         /// Returns array of all occurences of this string in source code.
         const wxArrayString& GetReferences() const { return m_references; }
@@ -331,16 +346,21 @@ class CatalogData : public wxObject
             m_string = s;
             m_validity = Val_Unknown;
         }
+        
+        /// Sets the plural form (if applicable).
+        void SetPluralString(const wxString& p) 
+        { 
+            m_plural = p;
+            m_hasPlural = true;
+        }
 
         /** Sets the translation. Changes "translated" status to true
             if \a t is not empty.
          */
-        void SetTranslation(const wxString& t) 
-        { 
-            m_translation = t; 
-            m_isTranslated = !t.IsEmpty();
-            m_validity = Val_Unknown;
-        }
+        void SetTranslation(const wxString& t, unsigned index = 0); 
+
+        /// Sets all translations.
+        void SetTranslations(const wxArrayString& t);
 
         /// Sets the comment.
         void SetComment(const wxString& c)
@@ -411,7 +431,10 @@ class CatalogData : public wxObject
             { m_validity == val ? Val_Valid : Val_Invalid; }
 
     private:
-        wxString m_string, m_translation;
+        wxString m_string, m_plural;
+        bool m_hasPlural;
+        wxArrayString m_translations;
+        
         wxArrayString m_references, m_autocomments;
         bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
         bool m_hasBadTokens;

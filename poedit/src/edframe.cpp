@@ -2101,6 +2101,13 @@ void poEditFrame::BeginItemValidation()
     // it is correct:
     Catalog cat;
     cat.AddItem(new CatalogData(dt));
+
+    if (m_catalog->Header().HasHeader(_T("Plural-Forms")))
+    {
+        cat.Header().SetHeader(
+                _T("Plural-Forms"),
+                m_catalog->Header().GetHeader(_T("Plural-Forms")));
+    }
     
     wxString tmp1 = wxGetTempFileName(_T("poedit"));
     wxString tmp2 = wxGetTempFileName(_T("poedit"));

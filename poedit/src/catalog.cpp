@@ -243,8 +243,9 @@ void CatalogParser::Parse()
     if (m_textFile->GetLineCount() == 0) return;
 
     wxString line, dummy;
-    wxString mflags, mstr, mtrans, mcomment;
-    wxArrayString mrefs,mautocomments;
+    wxString mflags, mstr, msgid_plural, mcomment;
+    wxArrayString mrefs, mautocomments, mtranslations;
+    bool has_plural = false;
     unsigned mlinenum;
     
     line = m_textFile->GetFirstLine();
@@ -255,16 +256,16 @@ void CatalogParser::Parse()
         // ignore empty special tags:
         while (line == _T("#,") || line == _T("#:") || line == _T("#."))
             line = ReadTextLine(m_textFile, m_conv);
-        
-	// auto comments:
-	if (ReadParam(line, _T("#. "), dummy))
+
+        // auto comments:
+        if (ReadParam(line, _T("#. "), dummy))
         {
             mautocomments.Add(dummy);
             line = ReadTextLine(m_textFile, m_conv);
         }
  
         // flags:
-	// Can't we have more than one flag, now only the last is kept ...
+        // Can't we have more than one flag, now only the last is kept ...
         if (ReadParam(line, _T("#, "), dummy))
         {
             mflags = _T("#, ") + dummy;
@@ -297,26 +298,105 @@ void CatalogParser::Parse()
             }
         }
 
-        // msgstr:
-        else if (ReadParam(line, _T("msgstr \""), dummy) ||
-                 ReadParam(line, _T("msgstr\t\""), dummy))
+        // msgid_plural:
+        else if (ReadParam(line, _T("msgid_plural \""), dummy) ||
+                 ReadParam(line, _T("msgid_plural\t\""), dummy))
         {
-            mtrans = dummy.RemoveLast();
+            msgid_plural = dummy.RemoveLast();
+            has_plural = true;
+            mlinenum = m_textFile->GetCurrentLine() + 1;
             while (!(line = ReadTextLine(m_textFile, m_conv)).IsEmpty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
-                    mtrans += line.Mid(1, line.Length() - 2);
+                    msgid_plural += line.Mid(1, line.Length() - 2);
                 else
                     break;
             }
+        }
 
-            if (!OnEntry(mstr, mtrans, mflags, mrefs, mcomment, mautocomments, mlinenum))
+        // msgstr:
+        else if (ReadParam(line, _T("msgstr \""), dummy) ||
+                 ReadParam(line, _T("msgstr\t\""), dummy))
+        {
+            if (has_plural)
+                wxLogError(_("Broken catalog file: singular form msgstr used together with msgid_plural"));
+            
+            wxString str = dummy.RemoveLast();
+            while (!(line = ReadTextLine(m_textFile, m_conv)).IsEmpty())
+            {
+                if (line[0u] == _T('\t'))
+                    line.Remove(0, 1);
+                if (line[0u] == _T('"') && line.Last() == _T('"'))
+                    str += line.Mid(1, line.Length() - 2);
+                else
+                    break;
+            }
+            mtranslations.Add(str);
+
+            if (!OnEntry(mstr, wxEmptyString, false,
+                         mtranslations,
+                         mflags, mrefs, mcomment, mautocomments, mlinenum))
+            {
                 return;
+            }
 
-            mcomment = mstr = mtrans = mflags = wxEmptyString;
-            mrefs.Clear(); mautocomments.Clear();
+            mcomment = mstr = msgid_plural = mflags = wxEmptyString;
+            has_plural = false;
+            mrefs.Clear();
+            mautocomments.Clear();
+            mtranslations.Clear();
+        }
+
+        // msgstr[i]:
+        else if (ReadParam(line, _T("msgstr["), dummy))
+        {
+            if (!has_plural)
+                wxLogError(_("Broken catalog file: plural form msgstr used without msgid_plural"));
+            
+            wxString idx = dummy.BeforeFirst(_T(']'));
+            wxString label = _T("msgstr[") + idx + _T("]");
+        
+            while (ReadParam(line, label + _T(" \""), dummy) ||
+                   ReadParam(line, label + _T("\t\""), dummy))
+            {
+                wxString str = dummy.RemoveLast();
+                
+                while (!(line=ReadTextLine(m_textFile, m_conv)).IsEmpty())
+                {
+                    if (line[0u] == _T('\t'))
+                        line.Remove(0, 1);
+                    if (line[0u] == _T('"') && line.Last() == _T('"'))
+                        str += line.Mid(1, line.Length() - 2);
+                    else
+                    {
+                        if (ReadParam(line, _T("msgstr["), dummy))
+                        {
+                            idx = dummy.BeforeFirst(_T(']'));
+                            label = _T("msgstr[") + idx + _T("]");
+                        }
+                        break;
+                    }
+                }
+                wxLogTrace(_T("poedit"), _T("add '%s'"), str.c_str());
+                mtranslations.Add(str);
+            }
+
+            if (!OnEntry(mstr, msgid_plural, true,
+                         mtranslations,
+                         mflags, mrefs, mcomment, mautocomments, mlinenum))
+            {
+                return;
+            }
+
+            mcomment = mstr = msgid_plural = mflags = wxEmptyString;
+            has_plural = false;
+            mrefs.Clear();
+            mautocomments.Clear();
+            mtranslations.Clear();
+            
+            line = ReadTextLine(m_textFile, m_conv);
         }
         
         // comment:
@@ -354,7 +434,9 @@ class CharsetInfoFinder : public CatalogParser
         wxString m_charset;
     
         virtual bool OnEntry(const wxString& msgid,
-                             const wxString& msgstr,
+                             const wxString& msgid_plural,
+                             bool has_plural,
+                             const wxArrayString& mtranslations,
                              const wxString& flags,
                              const wxArrayString& references,
                              const wxString& comment,
@@ -363,7 +445,9 @@ class CharsetInfoFinder : public CatalogParser
 };
 
 bool CharsetInfoFinder::OnEntry(const wxString& msgid,
-                                const wxString& msgstr,
+                                const wxString& msgid_plural,
+                                bool has_plural,
+                                const wxArrayString& mtranslations,
                                 const wxString& flags,
                                 const wxArrayString& references,
                                 const wxString& comment,
@@ -374,7 +458,7 @@ bool CharsetInfoFinder::OnEntry(const wxString& msgid,
     {
         // gettext header:
         Catalog::HeaderData hdr;
-        hdr.FromString(msgstr);
+        hdr.FromString(mtranslations[0]);
         m_charset = hdr.Charset;
         if (m_charset == _T("CHARSET"))
             m_charset = _T("iso-8859-1");
@@ -395,7 +479,9 @@ class LoadParser : public CatalogParser
         Catalog *m_catalog;
     
         virtual bool OnEntry(const wxString& msgid,
-                             const wxString& msgstr,
+                             const wxString& msgid_plural,
+                             bool has_plural,
+                             const wxArrayString& mtranslations,
                              const wxString& flags,
                              const wxArrayString& references,
                              const wxString& comment,
@@ -405,17 +491,19 @@ class LoadParser : public CatalogParser
 
 
 bool LoadParser::OnEntry(const wxString& msgid,
-                         const wxString& msgstr,
+                         const wxString& msgid_plural,
+                         bool has_plural,
+                         const wxArrayString& mtranslations,
                          const wxString& flags,
                          const wxArrayString& references,
                          const wxString& comment,
-                         const wxArrayString& autocomments,
+                         const wxArrayString& autocomments, 
                          unsigned lineNumber)
 {
     if (msgid.IsEmpty())
     {
         // gettext header:
-        m_catalog->m_header.FromString(msgstr);
+        m_catalog->m_header.FromString(mtranslations[0]);
         m_catalog->m_header.Comment = comment;
     }
     else
@@ -423,7 +511,9 @@ bool LoadParser::OnEntry(const wxString& msgid,
         CatalogData *d = new CatalogData(wxEmptyString, wxEmptyString);
         if (!flags.IsEmpty()) d->SetFlags(flags);
         d->SetString(msgid);
-        d->SetTranslation(msgstr);
+        if (has_plural)
+            d->SetPluralString(msgid_plural);
+        d->SetTranslations(mtranslations);
         d->SetComment(comment);
         d->SetLineNumber(lineNumber);
         for (size_t i = 0; i < references.GetCount(); i++)
@@ -815,10 +905,29 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
                                      encConv);
         data->SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
-        dummy = convertUtf8ToCharset(
-                    FormatStringForFile(data->GetTranslation()),
-                    encConv);
-        SaveMultiLines(f, _T("msgstr \"") + dummy + _T("\""));
+        if (data->HasPlural())
+        {
+            dummy = convertUtf8ToCharset(
+                        FormatStringForFile(data->GetPluralString()),
+                        encConv);
+            SaveMultiLines(f, _T("msgid_plural \"") + dummy + _T("\""));
+
+            for (size_t i = 0; i < data->GetNumberOfTranslations(); i++)
+            {
+                dummy = convertUtf8ToCharset(
+                            FormatStringForFile(data->GetTranslation(i)), 
+                            encConv);
+                wxString hdr = wxString::Format(_T("msgstr[%u] \""), i);
+                SaveMultiLines(f, hdr + dummy + _T("\""));
+            }
+        }
+        else
+        {
+            dummy = convertUtf8ToCharset(
+                        FormatStringForFile(data->GetTranslation()),
+                        encConv);
+            SaveMultiLines(f, _T("msgstr \"") + dummy + _T("\""));
+        }
         f.AddLine(wxEmptyString);
     }
     
@@ -1135,7 +1244,39 @@ bool CatalogData::IsInFormat(const wxString& format)
     }
     return false;
 }
-        
+
+wxString CatalogData::GetTranslation(unsigned idx) const
+{
+    if (idx >= GetNumberOfTranslations()) 
+        return wxEmptyString;
+    else
+        return m_translations[idx];
+}
+
+void CatalogData::SetTranslation(const wxString &t, unsigned idx)
+{
+    while (idx >= m_translations.GetCount())
+        m_translations.Add(wxEmptyString);
+    m_translations[idx] = t;
+    
+    m_validity = Val_Unknown;
+    m_isTranslated = false;
+    for (size_t i = 0; i < m_translations.GetCount(); i++)
+        if (!m_translations[i].empty())
+            m_isTranslated = true;
+}
+
+void CatalogData::SetTranslations(const wxArrayString &t)
+{
+    m_translations = t;
+    
+    m_validity = Val_Unknown;
+    m_isTranslated = false;
+    for (size_t i = 0; i < m_translations.GetCount(); i++)
+        if (!m_translations[i].empty())
+            m_isTranslated = true;
+}
+       
 
 wxString Catalog::GetLocaleCode() const
 {
