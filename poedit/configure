@@ -899,9 +899,9 @@ else
   wx_config_exec_prefix=""
 fi
 
-   # Check whether --with-wx-exec-prefix or --without-wx-exec-prefix was given.
-if test "${with_wx_exec_prefix+set}" = set; then
-  withval="$with_wx_exec_prefix"
+   # Check whether --with-wx-config or --without-wx-config was given.
+if test "${with_wx_config+set}" = set; then
+  withval="$with_wx_config"
   wx_config_name="$withval"
 else
   wx_config_name=""
@@ -1533,22 +1533,23 @@ esac
 
     if test x$wx_config_exec_prefix != x ; then
      wx_config_args="$wx_config_args --exec-prefix=$wx_config_exec_prefix"
-     if test x${WX_CONFIG_NAME+set} != xset ; then
-        WX_CONFIG_PATH=$wx_config_exec_prefix/bin/$WX_CONFIG_NAME
-     fi
+     WX_LOOKUP_PATH="$wx_config_exec_prefix/bin"
   fi
   if test x$wx_config_prefix != x ; then
      wx_config_args="$wx_config_args --prefix=$wx_config_prefix"
-     if test x${WX_CONFIG_NAME+set} != xset ; then
-        WX_CONFIG_PATH=$wx_config_prefix/bin/$WX_CONFIG_NAME
-     fi
+     WX_LOOKUP_PATH="$WX_LOOKUP_PATH:$wx_config_prefix/bin"
   fi
 
-    if test "x$WX_CONFIG_PATH" = "x" ; then
-    # Extract the first word of "$WX_CONFIG_NAME", so it can be a program name with args.
+    if test -x "$WX_CONFIG_NAME" ; then
+     echo $ac_n "checking for wx-config""... $ac_c" 1>&6
+echo "configure:1546: checking for wx-config" >&5
+     WX_CONFIG_PATH="$WX_CONFIG_NAME"
+     echo "$ac_t""$WX_CONFIG_PATH" 1>&6
+  else
+     # Extract the first word of "$WX_CONFIG_NAME", so it can be a program name with args.
 set dummy $WX_CONFIG_NAME; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:1552: checking for $ac_word" >&5
+echo "configure:1553: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_WX_CONFIG_PATH'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1561,7 +1562,7 @@ else
   ;;
   *)
   IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS=":"
-  ac_dummy="$PATH"
+  ac_dummy=""$WX_LOOKUP_PATH:$PATH""
   for ac_dir in $ac_dummy; do 
     test -z "$ac_dir" && ac_dir=.
     if test -f $ac_dir/$ac_word; then
@@ -1589,7 +1590,7 @@ fi
 
     min_wx_version=2.3.2
     echo $ac_n "checking for wxWindows version >= $min_wx_version""... $ac_c" 1>&6
-echo "configure:1593: checking for wxWindows version >= $min_wx_version" >&5
+echo "configure:1594: checking for wxWindows version >= $min_wx_version" >&5
 
     WX_CONFIG_WITH_ARGS="$WX_CONFIG_PATH $wx_config_args"
 
@@ -1719,7 +1720,7 @@ else
   # Extract the first word of "kde-config", so it can be a program name with args.
 set dummy kde-config; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:1723: checking for $ac_word" >&5
+echo "configure:1724: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_KDE_CONFIG'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1753,7 +1754,7 @@ fi
 
   if test x$KDE_CONFIG = x ; then
       echo $ac_n "checking for KDEDIR""... $ac_c" 1>&6
-echo "configure:1757: checking for KDEDIR" >&5
+echo "configure:1758: checking for KDEDIR" >&5
       if test x$KDEDIR = x ; then
           echo "$ac_t""no" 1>&6
           KDE_DATA_DIR=""
@@ -1778,7 +1779,7 @@ fi
 
     
   echo $ac_n "checking for GNOME data directory""... $ac_c" 1>&6
-echo "configure:1782: checking for GNOME data directory" >&5
+echo "configure:1783: checking for GNOME data directory" >&5
   GNOME_DATA_DIR=`gnome-config --datadir 2>/dev/null`
   if test x$GNOME_DATA_DIR = x ; then
      echo "$ac_t""no" 1>&6
@@ -1798,7 +1799,7 @@ fi
 
     if test x$USE_TRANSMEM != xno ; then
         echo $ac_n "checking how to run the C preprocessor""... $ac_c" 1>&6
-echo "configure:1802: checking how to run the C preprocessor" >&5
+echo "configure:1803: checking how to run the C preprocessor" >&5
 # On Suns, sometimes $CPP names a directory.
 if test -n "$CPP" && test -d "$CPP"; then
   CPP=
@@ -1813,13 +1814,13 @@ else
   # On the NeXT, cc -E runs the code through the compiler's parser,
   # not just through cpp.
   cat > conftest.$ac_ext <<EOF
-#line 1817 "configure"
+#line 1818 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1823: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1824: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -1830,13 +1831,13 @@ else
   rm -rf conftest*
   CPP="${CC-cc} -E -traditional-cpp"
   cat > conftest.$ac_ext <<EOF
-#line 1834 "configure"
+#line 1835 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1840: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1841: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -1847,13 +1848,13 @@ else
   rm -rf conftest*
   CPP="${CC-cc} -nologo -E"
   cat > conftest.$ac_ext <<EOF
-#line 1851 "configure"
+#line 1852 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1857: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1858: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -1882,17 +1883,17 @@ echo "$ac_t""$CPP" 1>&6
 
   ac_safe=`echo "db3/db.h" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for db3/db.h""... $ac_c" 1>&6
-echo "configure:1886: checking for db3/db.h" >&5
+echo "configure:1887: checking for db3/db.h" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1891 "configure"
+#line 1892 "configure"
 #include "confdefs.h"
 #include <db3/db.h>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1896: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1897: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -1917,17 +1918,17 @@ else
 
         ac_safe=`echo "db.h" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for db.h""... $ac_c" 1>&6
-echo "configure:1921: checking for db.h" >&5
+echo "configure:1922: checking for db.h" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1926 "configure"
+#line 1927 "configure"
 #include "confdefs.h"
 #include <db.h>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1931: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1932: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -1969,14 +1970,14 @@ fi
   
   
 echo $ac_n "checking for library containing db_create""... $ac_c" 1>&6
-echo "configure:1973: checking for library containing db_create" >&5
+echo "configure:1974: checking for library containing db_create" >&5
 if eval "test \"`echo '$''{'ac_cv_search_db_create'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   ac_func_search_save_LIBS="$LIBS"
 ac_cv_search_db_create="no"
 cat > conftest.$ac_ext <<EOF
-#line 1980 "configure"
+#line 1981 "configure"
 #include "confdefs.h"
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
@@ -1987,7 +1988,7 @@ int main() {
 db_create()
 ; return 0; }
 EOF
-if { (eval echo configure:1991: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1992: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   ac_cv_search_db_create="none required"
 else
@@ -1998,7 +1999,7 @@ rm -f conftest*
 test "$ac_cv_search_db_create" = "no" && for i in db-3.6 db-3.5 db-3.4 db-3.3 db-3.2 db-3.1 db; do
 LIBS="-l$i  $ac_func_search_save_LIBS"
 cat > conftest.$ac_ext <<EOF
-#line 2002 "configure"
+#line 2003 "configure"
 #include "confdefs.h"
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
@@ -2009,7 +2010,7 @@ int main() {
 db_create()
 ; return 0; }
 EOF
-if { (eval echo configure:2013: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:2014: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   ac_cv_search_db_create="-l$i"
 break

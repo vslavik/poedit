@@ -4,7 +4,7 @@
 %define        semistatic      0
 
 # set this to 1 if you want mandrakized RPM (menu entry)
-%{expand:%%define enable_mdk %(A=$(if [ -f /etc/mandrake-release ]; then echo 1; else echo 0; fi)}
+%{expand:%%define _with_mdk %(if [ -f /etc/mandrake-release ]; then echo 1; else echo 0; fi)}
 
 %{?_with_semistatic: %{expand: %%define semistatic 1}}
 %{?_without_semistatic: %{expand: %%define semistatic 0}}
@@ -31,7 +31,7 @@
 Summary:       Gettext catalogs editor
 Name:          %NAME
 Version:       %VERSION
-%if %{enable_mdk}
+%if !%{enable_mdk}
 Release:       %RELEASE
 %else
 Release:       %{RELEASE}mdk
@@ -107,20 +107,28 @@ cat poedit-wxstd.lang >>poedit.lang
 %clean
 rm -Rf ${RPM_BUILD_ROOT}
 
+%if %{enable_mdk}
+%post
+%update_menus
+
+%postun
+%clean_menus
+%endif
+
 %files -f poedit.lang
 %defattr(-,root,root)
 %doc NEWS LICENSE README AUTHORS
 
-%{_bindir}/poedit
 %dir %{_datadir}/poedit
-%{_mandir}/*/*
 %{_datadir}/poedit/*
-%{_datadir}/mimelnk/application/x-po.kdelnk
-%{_datadir}/applnk/Development/poedit.kdelnk
-%{_datadir}/gnome/apps/Development/poedit.desktop
+%{_bindir}/poedit
+%{_mandir}/*/*
+%{_datadir}/mimelnk/application/*
+%{_datadir}/applnk/Development/*
+%{_datadir}/gnome/apps/Development/*
 %{_datadir}/mime-info/poedit.*
-%{_datadir}/icons/poedit.xpm
-%{_datadir}/pixmaps/poedit.xpm
+%{_datadir}/icons/*
+%{_datadir}/pixmaps/*
 
 %if %{enable_mdk}
 %{_libdir}/menu/*
