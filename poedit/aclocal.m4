@@ -233,6 +233,9 @@ dnl
 dnl 	AC_ARG_ENABLE(...)
 dnl 	AC_ARG_WITH(...)
 dnl	...
+dnl	AM_OPTIONS_WXCONFIG
+dnl	...
+dnl	...
 dnl	AM_PATH_WXCONFIG(2.3.2, wxWin=1)
 dnl     if test "$wxWin" != 1; then
 dnl        AC_MSG_ERROR([
@@ -253,6 +256,23 @@ dnl     LDFLAGS="$LDFLAGS $WX_LIBS"
 dnl ---------------------------------------------------------------------------
 
 dnl ---------------------------------------------------------------------------
+dnl AM_OPTIONS_WXCONFIG
+dnl
+dnl adds support for --wx-prefix, --wx-exec-prefix and --wx-config 
+dnl command line options
+dnl ---------------------------------------------------------------------------
+
+AC_DEFUN(AM_OPTIONS_WXCONFIG,
+[
+   AC_ARG_WITH(wx-prefix, [  --with-wx-prefix=PREFIX   Prefix where wxWindows is installed (optional)],
+               wx_config_prefix="$withval", wx_config_prefix="")
+   AC_ARG_WITH(wx-exec-prefix,[  --with-wx-exec-prefix=PREFIX Exec prefix where wxWindows is installed (optional)],
+               wx_config_exec_prefix="$withval", wx_config_exec_prefix="")
+   AC_ARG_WITH(wx-config,[  --with-wx-config=CONFIG   wx-config script to use (optional)],
+               wx_config_name="$withval", wx_config_name="")
+])
+
+dnl ---------------------------------------------------------------------------
 dnl AM_PATH_WXCONFIG(VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
 dnl
 dnl Test for wxWindows, and define WX_C*FLAGS, WX_LIBS and WX_LIBS_STATIC
@@ -260,9 +280,6 @@ dnl (the latter is for static linking against wxWindows). Set WX_CONFIG_NAME
 dnl environment variable to override the default name of the wx-config script
 dnl to use. Set WX_CONFIG_PATH to specify the full path to wx-config - in this
 dnl case the macro won't even waste time on tests for its existence.
-dnl
-dnl This macro also adds support for --wx-prefix and --wx-exec-prefix command 
-dnl line options
 dnl ---------------------------------------------------------------------------
 
 dnl
@@ -270,39 +287,31 @@ dnl Get the cflags and libraries from the wx-config script
 dnl
 AC_DEFUN(AM_PATH_WXCONFIG,
 [
-  AC_ARG_WITH(wx-prefix, [  --with-wx-prefix=PREFIX   Prefix where wxWindows is installed (optional)],
-              wx_config_prefix="$withval", wx_config_prefix="")
-  AC_ARG_WITH(wx-exec-prefix,[  --with-wx-exec-prefix=PREFIX Exec prefix where wxWindows is installed (optional)],
-              wx_config_exec_prefix="$withval", wx_config_exec_prefix="")
-  AC_ARG_WITH(wx-config, [  --with-wx-config=CONFIG Name of wx-config script to use (optional)],
-              wx_config="$withval", wx_config="")
-
-
   dnl do we have wx-config name: it can be wx-config or wxd-config or ...
   if test x${WX_CONFIG_NAME+set} != xset ; then
      WX_CONFIG_NAME=wx-config
   fi
-  if test "x$wx_config" != x ; then
-     WX_CONFIG_NAME="$wx_config"
+  if test "x$wx_config_name" != x ; then
+     WX_CONFIG_NAME="$wx_config_name"
   fi
 
   dnl deal with optional prefixes
   if test x$wx_config_exec_prefix != x ; then
      wx_config_args="$wx_config_args --exec-prefix=$wx_config_exec_prefix"
-     if test x${WX_CONFIG_NAME+set} != xset ; then
-        WX_CONFIG_PATH=$wx_config_exec_prefix/bin/$WX_CONFIG_NAME
-     fi
+     WX_LOOKUP_PATH="$wx_config_exec_prefix/bin"
   fi
   if test x$wx_config_prefix != x ; then
      wx_config_args="$wx_config_args --prefix=$wx_config_prefix"
-     if test x${WX_CONFIG_NAME+set} != xset ; then
-        WX_CONFIG_PATH=$wx_config_prefix/bin/$WX_CONFIG_NAME
-     fi
+     WX_LOOKUP_PATH="$WX_LOOKUP_PATH:$wx_config_prefix/bin"
   fi
 
-  dnl don't search the PATH if we already have the full name
-  if test "x$WX_CONFIG_PATH" = "x" ; then
-    AC_PATH_PROG(WX_CONFIG_PATH, $WX_CONFIG_NAME, no)
+  dnl don't search the PATH if WX_CONFIG_NAME is absolute filename
+  if test -x "$WX_CONFIG_NAME" ; then
+     AC_MSG_CHECKING(for wx-config)
+     WX_CONFIG_PATH="$WX_CONFIG_NAME"
+     AC_MSG_RESULT($WX_CONFIG_PATH)
+  else
+     AC_PATH_PROG(WX_CONFIG_PATH, $WX_CONFIG_NAME, no, "$WX_LOOKUP_PATH:$PATH")
   fi
 
   if test "$WX_CONFIG_PATH" != "no" ; then
