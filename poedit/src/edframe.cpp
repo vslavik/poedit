@@ -101,7 +101,7 @@ enum
     EDC_LIST = 1000,
     EDC_TEXTORIG,
     EDC_TEXTTRANS,
-	EDC_TEXTCOMMENT,
+    EDC_TEXTCOMMENT,
     
     ED_POPUP_REFS = 2000, 
     ED_POPUP_TRANS = 3000,
@@ -217,14 +217,14 @@ class ListHandler : public wxEvtHandler
         void OnActivated(wxListEvent& event)
         {
             if (gs_focusToText)
-			    m_text->SetFocus();
-			else
-				event.Skip();
+                m_text->SetFocus();
+            else
+                event.Skip();
         }
 
         void OnListSel(wxListEvent& event)
         {
-			*m_sel = event.GetIndex();
+            *m_sel = event.GetIndex();
             *m_selItem = ((wxListCtrl*)event.GetEventObject())->GetItemData(*m_sel);
             event.Skip();
         }
@@ -254,8 +254,8 @@ class ListHandler : public wxEvtHandler
         {
             if (gs_focusToText)
                 m_text->SetFocus();
-			else
-				event.Skip();
+            else
+                event.Skip();
         }
 
         DECLARE_EVENT_TABLE() 
@@ -414,6 +414,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_LIST_ITEM_DESELECTED
                       (EDC_LIST,       poEditFrame::OnListDesel)
    EVT_CLOSE          (                poEditFrame::OnCloseWindow)
+   EVT_TEXT           (EDC_TEXTCOMMENT,poEditFrame::OnCommentWindowText)
 #ifdef __WXMSW__
    EVT_DROP_FILES     (poEditFrame::OnFileDrop)
 #endif
@@ -454,7 +455,10 @@ poEditFrame::poEditFrame() :
  
     m_displayQuotes = (bool)cfg->Read(_T("display_quotes"), (long)false);
     m_displayLines = (bool)cfg->Read(_T("display_lines"), (long)false);
-    m_displayCommentWin = (bool)cfg->Read(_T("display_comment_win"), (long)false);
+    m_displayCommentWin = 
+        (bool)cfg->Read(_T("display_comment_win"), (long)true);
+    m_commentWindowEditable = 
+        (bool)cfg->Read(_T("comment_window_editable"), (long)false);
     gs_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
     gs_shadedList = (bool)cfg->Read(_T("shaded_list"), (long)true);
 
@@ -499,13 +503,12 @@ poEditFrame::poEditFrame() :
                                 wxLC_REPORT | wxLC_SINGLE_SEL,
                                 m_displayLines);
 
-	m_bottomSplitter = new wxSplitterWindow(m_splitter, -1);	
-	m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
+    m_bottomSplitter = new wxSplitterWindow(m_splitter, -1);    
+    m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
 
-    m_textComment = new UnfocusableTextCtrl(m_bottomSplitter,
-                                EDC_TEXTCOMMENT, wxEmptyString, 
-                                wxDefaultPosition, wxDefaultSize, 
-                                wxTE_MULTILINE | wxTE_READONLY);
+    m_textComment = NULL;
+    // create the control:
+    UpdateCommentWindowEditable();
 
     m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
                                 EDC_TEXTORIG, wxEmptyString, 
@@ -519,7 +522,7 @@ poEditFrame::poEditFrame() :
     SetCustomFonts();
     
     wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
-	leftSizer->Add(m_textOrig, 1, wxEXPAND);
+    leftSizer->Add(m_textOrig, 1, wxEXPAND);
     leftSizer->Add(m_textTrans, 1, wxEXPAND);
 
     m_bottomLeftPanel->SetAutoLayout(true);
@@ -553,8 +556,8 @@ poEditFrame::poEditFrame() :
     m_statusGauge = new wxGauge(bar, -1, 100, wxDefaultPosition, wxDefaultSize, wxGA_SMOOTH);
     bar->SetStatusWidths(2, widths);
     bar->PushEventHandler(new StatusbarHandler(bar, m_statusGauge));
-#ifdef __WXMSW__	
-	bar->SetSize(-1,-1,-1,-1);
+#ifdef __WXMSW__    
+    bar->SetSize(-1,-1,-1,-1);
 #endif
 
     UpdateMenu();
@@ -722,7 +725,7 @@ void poEditFrame::OnOpen(wxCommandEvent&)
     wxString path = wxPathOnly(m_fileName);
     if (path.empty()) 
         path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
-	
+    
     wxString name = wxFileSelector(_("Open catalog"), 
                     path, wxEmptyString, wxEmptyString, 
                     _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"), 
@@ -967,6 +970,7 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
         gs_focusToText = (bool)wxConfig::Get()->Read(_T("focus_to_text"),
                                                      (long)false);
         SetCustomFonts();
+        UpdateCommentWindowEditable();
     }
 }
 
@@ -1087,8 +1091,8 @@ void poEditFrame::ShowReference(int num)
         else
             path = wxPathOnly(m_fileName) + _T("/") + m_catalog->Header().BasePath;
         
-		if (path.Last() == _T('/') || path.Last() == _T('\\'))
-			path.RemoveLast();
+        if (path.Last() == _T('/') || path.Last() == _T('\\'))
+            path.RemoveLast();
 
         if (wxIsAbsolutePath(path))
             basepath = path;
@@ -1156,23 +1160,7 @@ void poEditFrame::OnLinesFlag(wxCommandEvent& event)
 
 void poEditFrame::OnCommentWinFlag(wxCommandEvent& event)
 {
-    m_displayCommentWin = GetMenuBar()->IsChecked(XRCID("menu_comment_win"));
-    if (m_displayCommentWin)
-    {
-        m_bottomSplitter->SplitVertically(
-                m_bottomLeftPanel, m_textComment,
-                wxConfig::Get()->Read(_T("bottom_splitter"), -200L));
-        m_textComment->Show(true);
-    }
-    else
-    {
-        wxConfig::Get()->Write(_T("bottom_splitter"),
-                               (long)m_bottomSplitter->GetSashPosition());
-        m_textComment->Show(false);
-        m_bottomSplitter->Unsplit();
-    }
-    m_list->SetDisplayLines(m_displayLines);
-    RefreshControls();
+    UpdateDisplayCommentWin();
 }
 
 
@@ -1374,7 +1362,11 @@ void poEditFrame::UpdateToTextCtrl(int item)
     t_c.Replace(_T("\\n"), _T("\\n\n"));
     t_t = quote + (*m_catalog)[ind].GetTranslation() + quote;
     t_t.Replace(_T("\\n"), _T("\\n\n"));
-    
+
+    // remove "# " in front of every comment line
+    t_c = CommentDialog::RemoveStartHash(t_c);
+
+
 #if !wxUSE_UNICODE
     // Convert from UTF-8 to environment's default charset:
     t_o = convertToLocalCharset(t_o);
@@ -1582,6 +1574,8 @@ void poEditFrame::UpdateMenu()
         GetMenuBar()->EnableTop(1, false);
         GetMenuBar()->EnableTop(2, false);
         m_textTrans->Enable(false);
+        m_textOrig->Enable(false);
+        m_textComment->Enable(false);
         m_list->Enable(false);
     }
     else
@@ -1595,6 +1589,8 @@ void poEditFrame::UpdateMenu()
         GetMenuBar()->EnableTop(1, true);
         GetMenuBar()->EnableTop(2, true);
         m_textTrans->Enable(true);
+        m_textOrig->Enable(true);
+        m_textComment->Enable(true);
         m_list->Enable(true);
         bool doupdate = m_catalog->Header().SearchPaths.GetCount() > 0;
         GetToolBar()->EnableTool(XRCID("menu_update"), doupdate);
@@ -1661,6 +1657,9 @@ void poEditFrame::OnEditComment(wxCommandEvent& event)
         int icon = GetItemIcon((*m_catalog)[m_selItem]);
         m_list->SetItemImage(listitem, icon, icon);
         m_list->SetItem(listitem);
+
+        // update comment window
+        m_textComment->SetValue(CommentDialog::RemoveStartHash(comment));
     }
 }
 
@@ -1856,5 +1855,78 @@ void poEditFrame::SetCustomFonts()
             m_textOrig->SetFont(font);
             m_textTrans->SetFont(font);
         }
+    }
+}
+
+void poEditFrame::UpdateCommentWindowEditable()
+{
+    wxConfigBase *cfg = wxConfig::Get();
+    bool commentWindowEditable = 
+        (bool)cfg->Read(_T("comment_window_editable"), (long)false);
+    if (m_textComment == NULL ||
+        commentWindowEditable != m_commentWindowEditable)
+    {
+        m_commentWindowEditable = commentWindowEditable;
+        m_bottomSplitter->Unsplit();
+        delete m_textComment;
+        if (m_commentWindowEditable)
+        {
+            m_textComment = new wxTextCtrl(m_bottomSplitter,
+                                        EDC_TEXTCOMMENT, wxEmptyString, 
+                                        wxDefaultPosition, wxDefaultSize, 
+                                        wxTE_MULTILINE);
+        }
+        else
+        {
+            m_textComment = new UnfocusableTextCtrl(m_bottomSplitter,
+                                        EDC_TEXTCOMMENT, wxEmptyString, 
+                                        wxDefaultPosition, wxDefaultSize, 
+                                        wxTE_MULTILINE | wxTE_READONLY);
+        }
+        UpdateDisplayCommentWin();
+    }
+}
+
+void poEditFrame::UpdateDisplayCommentWin()
+{
+    m_displayCommentWin = GetMenuBar()->IsChecked(XRCID("menu_comment_win"));
+    if (m_displayCommentWin)
+    {
+        m_bottomSplitter->SplitVertically(
+                m_bottomLeftPanel, m_textComment,
+                wxConfig::Get()->Read(_T("bottom_splitter"), -200L));
+        m_textComment->Show(true);
+    }
+    else
+    {
+        wxConfig::Get()->Write(_T("bottom_splitter"),
+                               (long)m_bottomSplitter->GetSashPosition());
+        m_textComment->Show(false);
+        m_bottomSplitter->Unsplit();
+    }
+    m_list->SetDisplayLines(m_displayLines);
+    RefreshControls();
+}
+
+void poEditFrame::OnCommentWindowText(wxCommandEvent&)
+{
+    wxString comment;
+    comment = convertFromLocalCharset(
+            CommentDialog::AddStartHash(m_textComment->GetValue()));
+    CatalogData& data((*m_catalog)[m_selItem]);
+    
+    data.SetComment(comment);
+ 
+    wxListItem listitem;
+    listitem.SetId(m_sel);
+    m_list->GetItem(listitem);
+    int icon = GetItemIcon((*m_catalog)[m_selItem]);
+    m_list->SetItemImage(listitem, icon, icon);
+    m_list->SetItem(listitem);
+    
+    if (m_modified == false)
+    {
+        m_modified = true;
+        UpdateTitle();
     }
 }

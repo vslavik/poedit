@@ -113,6 +113,9 @@ class poEditFrame : public wxFrame
         /// Updates menu -- disables and enables items.
         void UpdateMenu();
 
+        /// Updates the editable nature of the comment window
+        void UpdateCommentWindowEditable();
+
         /// Returns popup menu for given catalog entry.
         wxMenu *GetPopupMenu(size_t item);
 
@@ -159,6 +162,7 @@ class poEditFrame : public wxFrame
         void OnFind(wxCommandEvent& event);
         void OnEditComment(wxCommandEvent& event);
         void OnManager(wxCommandEvent& event);
+        void OnCommentWindowText(wxCommandEvent& event);
 #ifdef USE_TRANSMEM
         void OnAutoTranslate(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
@@ -167,10 +171,13 @@ class poEditFrame : public wxFrame
         
         void OnExport(wxCommandEvent& event);
         bool ExportCatalog(const wxString& filename);
+        
+        void UpdateDisplayCommentWin();
     
         DECLARE_EVENT_TABLE()
 
     private:
+        bool m_commentWindowEditable;
         Catalog *m_catalog;
         wxString m_fileName;
         
