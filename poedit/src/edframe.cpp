@@ -1593,6 +1593,11 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
     
     const wxArrayString& refs = (*m_catalog)[item].GetReferences();
     wxMenu *menu = new wxMenu;
+    
+    menu->Append(XRCID("menu_insert_orig"),
+                 wxString(_("Copy original to translation field")) 
+                   + _T("\tAlt-C"));
+    menu->AppendSeparator();
 
 #ifdef CAN_MODIFY_DEFAULT_FONT
     wxMenuItem *it1 = new wxMenuItem(menu, ED_POPUP_DUMMY+0, _("References:"));
