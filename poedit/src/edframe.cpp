@@ -201,7 +201,7 @@ class TextctrlHandler : public wxEvtHandler
                             // Refresh items
                             m_list->RefreshItem(*m_sel);
                             if (bkIndex > -1)
-                                m_list->RefreshItem((*m_catalog)[bkIndex].GetListItemId());
+                                m_list->RefreshItem(m_list->GetItemIndex(bkIndex));
                                 
                             // Catalog has been modified
                             m_frame->m_modified = true;
@@ -214,7 +214,7 @@ class TextctrlHandler : public wxEvtHandler
                             int bkIndex = m_catalog->GetBookmarkIndex(bk);
                             if (bkIndex > -1)
                             {
-                                int listIndex = (*m_catalog)[bkIndex].GetListItemId();
+                                int listIndex = m_list->GetItemIndex(bkIndex);
                                 if (listIndex >= 0 && listIndex < m_list->GetItemCount())
                                 {
                                     m_list->EnsureVisible(listIndex);
