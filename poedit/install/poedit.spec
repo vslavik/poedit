@@ -27,10 +27,10 @@ Packager:      Vaclav Slavik <vaclav.slavik@matfyz.cz>
 Requires:      gtk+ >= 1.2.7 gettext
 
 %if %{semistatic}
-BuildRequires: wxGTK >= 2.3.4 wxGTK-devel wxGTK-static
+BuildRequires: wxGTK >= 2.4.0 wxGTK-devel wxGTK-static
 Provides:      poedit
 %else
-Requires:      wxGTK >= 2.3.4
+Requires:      wxGTK >= 2.4.0
 BuildRequires: wxGTK-devel
 %endif
 BuildRequires: zip
