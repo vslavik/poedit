@@ -2,31 +2,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.0\n"
 "POT-Creation-Date: 2000-02-25 21:27+0100\n"
-"PO-Revision-Date: 2000-09-04 13:06+0200\n"
+"PO-Revision-Date: 2000-12-20 11:08+0100\n"
 "Last-Translator: Vaclav Slavik <v.slavik@volny.cz>\n"
 "Language-Team: Vaclav Slavik <v.slavik@volny.cz>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso8859-2\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: src/catalog.cpp:234
+#: src/catalog.cpp:196
 msgid "Corrupted translator record, please correct in Catalog/Settings"
 msgstr "Po¹kozený záznam o pøekladateli, opravte ho prosím v Katalog/Nastavení"
 
-#: src/catalog.cpp:241
+#: src/catalog.cpp:203
 msgid "Corrupted team record, please correct in Catalog/Settings"
 msgstr "Po¹kozený záznam o týmu, opravte ho prosím v Katalog/Nastavení"
 
-#: src/catalog.cpp:326
+#: src/catalog.cpp:599
 #, c-format
 msgid "Cannot save in encoding '%s', please change it."
 msgstr "Nemohu ukládat v kódování '%s', prosím zmìòte ho."
 
-#: src/catalog.cpp:415
+#: src/catalog.cpp:702
 msgid "Updating catalog..."
 msgstr "Obnovuji katalog..."
 
-#: src/catalog.cpp:438
+#: src/catalog.cpp:725
 msgid "Merging differences..."
 msgstr "Spojuji rozdíly..."
 
@@ -35,89 +35,92 @@ msgid "Scanning files..."
 msgstr "Hledám soubory..."
 
 #: src/digger.cpp:45
-msgid "?Parsing\n towthree"
-msgstr "Parsuji\n"
-"two"
+msgid "Parsing "
+msgstr "Parsuji"
 
 #: src/digger.cpp:45
 msgid " files..."
 msgstr " soubory..."
 
-#: src/edframe.cpp:70
+#: src/edapp.cpp:105
+msgid ""
+"This is first time you run poEdit.\n"
+"Please fill in your name and e-mail address.\n"
+"(This information is used only in catalogs headers)"
+msgstr ""
+
+#: src/edframe.cpp:71
 msgid "Original string"
 msgstr "Pùvodní øetìzec"
 
-#: src/edframe.cpp:71
+#: src/edframe.cpp:72
 msgid "Translation"
 msgstr "Pøeklad"
 
-#: src/edframe.cpp:168
-#: src/edframe.cpp:518
+#: src/edframe.cpp:177
+#: src/edframe.cpp:181
+#: src/edframe.cpp:545
 msgid "References"
-msgstr "Odkazy"
+msgstr "---Odkazy"
 
-#: src/edframe.cpp:252
+#: src/edframe.cpp:267
 msgid "&File"
 msgstr "&Soubor"
 
-#: src/edframe.cpp:331
-#: src/edframe.cpp:342
-#: src/edframe.cpp:366
-#: src/edframe.cpp:412
+#: src/edframe.cpp:352
+#: src/edframe.cpp:363
+#: src/edframe.cpp:387
+#: src/edframe.cpp:433
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalog byl zmìnìn. Chcete ho ulo¾it?"
 
-#: src/edframe.cpp:331
-#: src/edframe.cpp:342
-#: src/edframe.cpp:366
-#: src/edframe.cpp:412
+#: src/edframe.cpp:352
+#: src/edframe.cpp:363
+#: src/edframe.cpp:387
+#: src/edframe.cpp:433
 msgid "Save changes"
 msgstr "Ulo¾it zmìny"
 
-#: src/edframe.cpp:350
+#: src/edframe.cpp:371
 msgid "Open catalog"
 msgstr "Otevøe katalog"
 
-#: src/edframe.cpp:374
+#: src/edframe.cpp:395
 msgid "File "
 msgstr "Soubor "
 
-#: src/edframe.cpp:374
+#: src/edframe.cpp:395
 msgid " doesn't exist!"
 msgstr " neexistuje!"
 
-#: src/edframe.cpp:397
+#: src/edframe.cpp:418
 msgid "Save as..."
 msgstr "Ulo¾it jako..."
 
-#: src/edframe.cpp:510
+#: src/edframe.cpp:537
 msgid "No references to this string found."
 msgstr "Nenalezeny ¾ádné výskyty øetìzce."
 
-#: src/edframe.cpp:518
+#: src/edframe.cpp:545
 msgid "Please choose the reference you want to show:"
 msgstr "Vyberte výskyt, který chcete ukázat:"
 
-#: src/edframe.cpp:714
+#: src/edframe.cpp:746
 msgid "Error loading message catalog file '"
 msgstr "Chyba pøi ètení katalogu '"
 
-#: src/edframe.cpp:714
+#: src/edframe.cpp:746
 msgid "'."
 msgstr "'."
 
-#: src/edframe.cpp:788
+#: src/edframe.cpp:820
 #, c-format
 msgid "%i strings (%i fuzzy, %i not translated)"
 msgstr "%i øetìzcù (%i nejasných, %i nepøelo¾ených)"
 
-#: src/edframe.cpp:799
+#: src/edframe.cpp:831
 msgid " (modified)"
 msgstr " (zmìnìn)"
-
-#: src/gexecute.cpp:98
-msgid "Cannot execute program: "
-msgstr "Nemohu spustit program:"
 
 #: src/fileviewer.cpp:28
 msgid "Source file: "
@@ -127,8 +130,104 @@ msgstr "Zdrojový soubor: "
 msgid "--- Error opening file! ---"
 msgstr "--- Nemohu otevøít soubor! ---"
 
+#: src/gexecute.cpp:98
+msgid "Cannot execute program: "
+msgstr "Nemohu spustit program:"
+
 #: src/summarydlg.cpp:53
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr ""
+
+#: src/wxxml_snapshot/xh_dlg.cpp:51
+msgid "XML resource: Cannot create dialog without instance."
+msgstr ""
+
+#: src/wxxml_snapshot/xh_dlg.cpp:65
+msgid "centered"
+msgstr ""
+
+#: src/wxxml_snapshot/xml.cpp:351
+msgid "Cannot find XML I/O handler capable of loading this format."
+msgstr ""
+
+#: src/wxxml_snapshot/xml.cpp:377
+msgid "Cannot find XML I/O handler capable of saving in this format."
+msgstr ""
+
+#: src/wxxml_snapshot/xmlres.cpp:245
+#, c-format
+msgid "Cannot open file '%s'."
+msgstr ""
+
+#: src/wxxml_snapshot/xmlres.cpp:270
+#, c-format
+msgid "Cannot load resources from file '%s'."
+msgstr ""
+
+#: src/wxxml_snapshot/xmlres.cpp:276
+#, c-format
+msgid "Invalid XML resource '%s': doesn't have root node 'resource'."
+msgstr ""
+
+#: src/wxxml_snapshot/xmlres.cpp:316
+#, c-format
+msgid "XML resource '%s' (type '%s') not found!"
+msgstr ""
+
+#: src/wxxml_snapshot/xmlres.cpp:341
+#, c-format
+msgid "No handler found for XML node '%s'!"
+msgstr ""
+
+#: src/wxxml_snapshot/xmlres.cpp:412
+msgid "Unknown style flag "
+msgstr ""
+
+#: src/wxxml_snapshot/xmlres.cpp:514
+#, c-format
+msgid "XML resource: Incorrect colour specification '%s' for property '%s'."
+msgstr ""
+
+#: src/wxxml_snapshot/xmlres.cpp:534
+#: src/wxxml_snapshot/xmlres.cpp:544
+#, c-format
+msgid "XML resource: Cannot create bitmap from '%s'."
+msgstr ""
+
+#: src/wxxml_snapshot/xmlres.cpp:621
+#, c-format
+msgid "Cannot parse coordinates from '%s'."
+msgstr ""
+
+#: src/wxxml_snapshot/xmlres.cpp:633
+#: src/wxxml_snapshot/xmlres.cpp:674
+msgid "Cannot convert dialog units: dialog unknown."
+msgstr ""
+
+#: src/wxxml_snapshot/xmlres.cpp:662
+#, c-format
+msgid "Cannot parse dimension from '%s'."
+msgstr ""
+
+#: src/catalog.cpp:682
+#, c-format
+msgid "Error writing catalog %s"
+msgstr "Chyba pøi ètení katalogu %s"
+
+#: src/catalog.cpp:648
+#, fuzzy, c-format
+msgid "Error opening catalog %s."
+msgstr "Chyba pøi ètení katalogu %s"
+
+#: src/catalog.cpp:657
+#, fuzzy, c-format
+msgid "Error creating catalog %s."
+msgstr "Chyba pøi ètení katalogu %s"
+
+
+
+
+
+
 
