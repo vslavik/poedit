@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_listc.cpp
-// Purpose:     XML resource for wxListCtrl
+// Purpose:     XRC resource for wxListCtrl
 // Author:      Brian Gavin
 // Created:     2000/09/09
 // RCS-ID:      $Id$
@@ -27,39 +27,39 @@
 wxListCtrlXmlHandler::wxListCtrlXmlHandler() 
 : wxXmlResourceHandler() 
 {
-    ADD_STYLE(wxLC_LIST);
-    ADD_STYLE(wxLC_REPORT);
-    ADD_STYLE(wxLC_ICON);
-    ADD_STYLE(wxLC_SMALL_ICON);
-    ADD_STYLE(wxLC_ALIGN_TOP);
-    ADD_STYLE(wxLC_ALIGN_LEFT);
-    ADD_STYLE(wxLC_AUTOARRANGE);
-    ADD_STYLE(wxLC_USER_TEXT);
-    ADD_STYLE(wxLC_EDIT_LABELS);
-    ADD_STYLE(wxLC_NO_HEADER);
-    ADD_STYLE(wxLC_SINGLE_SEL);
-    ADD_STYLE(wxLC_SORT_ASCENDING);
-    ADD_STYLE(wxLC_SORT_DESCENDING);
+    XRC_ADD_STYLE(wxLC_LIST);
+    XRC_ADD_STYLE(wxLC_REPORT);
+    XRC_ADD_STYLE(wxLC_ICON);
+    XRC_ADD_STYLE(wxLC_SMALL_ICON);
+    XRC_ADD_STYLE(wxLC_ALIGN_TOP);
+    XRC_ADD_STYLE(wxLC_ALIGN_LEFT);
+    XRC_ADD_STYLE(wxLC_AUTOARRANGE);
+    XRC_ADD_STYLE(wxLC_USER_TEXT);
+    XRC_ADD_STYLE(wxLC_EDIT_LABELS);
+    XRC_ADD_STYLE(wxLC_NO_HEADER);
+    XRC_ADD_STYLE(wxLC_SINGLE_SEL);
+    XRC_ADD_STYLE(wxLC_SORT_ASCENDING);
+    XRC_ADD_STYLE(wxLC_SORT_DESCENDING);
     AddWindowStyles();
 }
 
-
 wxObject *wxListCtrlXmlHandler::DoCreateResource()
 { 
-    wxListCtrl *list = new wxListCtrl(m_parentAsWindow,
-                                    GetID(),
-                                    GetPosition(), GetSize(),
-                                    GetStyle(),
-                                    wxDefaultValidator,
-                                    GetName());
-    /* TODO: columns definition */
+    XRC_MAKE_INSTANCE(list, wxListCtrl)
+
+    list->Create(m_parentAsWindow,
+                 GetID(),
+                 GetPosition(), GetSize(),
+                 GetStyle(),
+                 wxDefaultValidator,
+                 GetName());
+
+    // FIXME: add columns definition
     
     SetupWindow(list);
     
     return list;
 }
-
-
 
 bool wxListCtrlXmlHandler::CanHandle(wxXmlNode *node)
 {

@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_toolb.cpp
-// Purpose:     XML resource for wxBoxSizer
+// Purpose:     XRC resource for wxBoxSizer
 // Author:      Vaclav Slavik
 // Created:     2000/08/11
 // RCS-ID:      $Id$
@@ -21,26 +21,24 @@
 
 #include "wx/xrc/xh_toolb.h"
 #include "wx/toolbar.h"
-
+#include "wx/frame.h"
 
 #if wxUSE_TOOLBAR
 
 wxToolBarXmlHandler::wxToolBarXmlHandler() 
 : wxXmlResourceHandler(), m_isInside(FALSE), m_toolbar(NULL)
 {
-    ADD_STYLE(wxTB_FLAT);
-    ADD_STYLE(wxTB_DOCKABLE);
-    ADD_STYLE(wxTB_VERTICAL);
-    ADD_STYLE(wxTB_HORIZONTAL);
+    XRC_ADD_STYLE(wxTB_FLAT);
+    XRC_ADD_STYLE(wxTB_DOCKABLE);
+    XRC_ADD_STYLE(wxTB_VERTICAL);
+    XRC_ADD_STYLE(wxTB_HORIZONTAL);
 }
-
-
 
 wxObject *wxToolBarXmlHandler::DoCreateResource()
 { 
     if (m_class == wxT("tool"))
     {
-        wxCHECK_MSG(m_toolbar, NULL, wxT("Incorrect syntax of XML resource: tool not within a toolbar!"));
+        wxCHECK_MSG(m_toolbar, NULL, wxT("Incorrect syntax of XRC resource: tool not within a toolbar!"));
         m_toolbar->AddTool(GetID(),
                            GetBitmap(wxT("bitmap")),
                            GetBitmap(wxT("bitmap2")),
@@ -55,7 +53,7 @@ wxObject *wxToolBarXmlHandler::DoCreateResource()
     
     else if (m_class == wxT("separator"))
     {
-        wxCHECK_MSG(m_toolbar, NULL, wxT("Incorrect syntax of XML resource: separator not within a toolbar!"));
+        wxCHECK_MSG(m_toolbar, NULL, wxT("Incorrect syntax of XRC resource: separator not within a toolbar!"));
         m_toolbar->AddSeparator();
         return m_toolbar; // must return non-NULL
     }
@@ -66,12 +64,15 @@ wxObject *wxToolBarXmlHandler::DoCreateResource()
 #ifdef __WXMSW__
         if (!(style & wxNO_BORDER)) style |= wxNO_BORDER;
 #endif
-        wxToolBar *toolbar = new wxToolBar(m_parentAsWindow,
-                                    GetID(),
-                                    GetPosition(),
-                                    GetSize(),
-                                    style,
-                                    GetName());
+
+        XRC_MAKE_INSTANCE(toolbar, wxToolBar)
+ 
+        toolbar->Create(m_parentAsWindow,
+                         GetID(),
+                         GetPosition(),
+                         GetSize(),
+                         style,
+                         GetName());
 
         wxSize bmpsize = GetSize(wxT("bitmapsize"));
         if (!(bmpsize == wxDefaultSize))
@@ -87,6 +88,9 @@ wxObject *wxToolBarXmlHandler::DoCreateResource()
             toolbar->SetToolSeparation(separation);
 
         wxXmlNode *children_node = GetParamNode(wxT("object"));
+        if (!children_node)
+           children_node = GetParamNode(wxT("object_ref"));
+
         if (children_node == NULL) return toolbar;
 
         m_isInside = TRUE;
@@ -96,8 +100,8 @@ wxObject *wxToolBarXmlHandler::DoCreateResource()
 
         while (n)
         {
-            if (n->GetType() == wxXML_ELEMENT_NODE && 
-                n->GetName() == wxT("object"))
+            if ((n->GetType() == wxXML_ELEMENT_NODE) && 
+                (n->GetName() == wxT("object") || n->GetName() == wxT("object_ref")))
             {
                 wxObject *created = CreateResFromNode(n, toolbar, NULL);
                 wxControl *control = wxDynamicCast(created, wxControl);
@@ -113,11 +117,18 @@ wxObject *wxToolBarXmlHandler::DoCreateResource()
         m_toolbar = NULL;
 
         toolbar->Realize();
+
+        // FIXME: how can I create a toolbar without immediately setting it to the frame?
+        if (m_parentAsWindow)
+        {
+            wxFrame *parentFrame = wxDynamicCast(m_parent, wxFrame);
+            if (parentFrame)
+                parentFrame->SetToolBar(toolbar);
+        }
+
         return toolbar;
     }
 }
-
-
 
 bool wxToolBarXmlHandler::CanHandle(wxXmlNode *node)
 {

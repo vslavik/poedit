@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_slidr.cpp
-// Purpose:     XML resource for wxSlider
+// Purpose:     XRC resource for wxSlider
 // Author:      Bob Mitchell
 // Created:     2000/03/21
 // RCS-ID:      $Id$
@@ -27,55 +27,56 @@
 wxSliderXmlHandler::wxSliderXmlHandler() 
 : wxXmlResourceHandler() 
 {
-    ADD_STYLE( wxSL_HORIZONTAL );
-    ADD_STYLE( wxSL_VERTICAL );
-    ADD_STYLE( wxSL_AUTOTICKS );
-    ADD_STYLE( wxSL_LABELS );
-    ADD_STYLE( wxSL_LEFT );
-    ADD_STYLE( wxSL_TOP );
-    ADD_STYLE( wxSL_RIGHT );
-    ADD_STYLE( wxSL_BOTTOM );
-    ADD_STYLE( wxSL_BOTH );
-    ADD_STYLE( wxSL_SELRANGE );
+    XRC_ADD_STYLE(wxSL_HORIZONTAL);
+    XRC_ADD_STYLE(wxSL_VERTICAL);
+    XRC_ADD_STYLE(wxSL_AUTOTICKS);
+    XRC_ADD_STYLE(wxSL_LABELS);
+    XRC_ADD_STYLE(wxSL_LEFT);
+    XRC_ADD_STYLE(wxSL_TOP);
+    XRC_ADD_STYLE(wxSL_RIGHT);
+    XRC_ADD_STYLE(wxSL_BOTTOM);
+    XRC_ADD_STYLE(wxSL_BOTH);
+    XRC_ADD_STYLE(wxSL_SELRANGE);
     AddWindowStyles();
 }
 
 wxObject *wxSliderXmlHandler::DoCreateResource()
 { 
-    wxSlider *control = new wxSlider(m_parentAsWindow,
-                                    GetID(),
-                                    GetLong( wxT("value"), wxSL_DEFAULT_VALUE), 
-                                    GetLong( wxT("min"), wxSL_DEFAULT_MIN),
-                                    GetLong( wxT("max"), wxSL_DEFAULT_MAX),
-                                    GetPosition(), GetSize(),
-                                    GetStyle(),
-                                    wxDefaultValidator,
-                                    GetName()
-                                    );
+    XRC_MAKE_INSTANCE(control, wxSlider)
 
-    if( HasParam( wxT("tickfreq") ))
+    control->Create(m_parentAsWindow,
+                    GetID(),
+                    GetLong(wxT("value"), wxSL_DEFAULT_VALUE), 
+                    GetLong(wxT("min"), wxSL_DEFAULT_MIN),
+                    GetLong(wxT("max"), wxSL_DEFAULT_MAX),
+                    GetPosition(), GetSize(),
+                    GetStyle(),
+                    wxDefaultValidator,
+                    GetName());
+
+    if( HasParam(wxT("tickfreq")))
     {
-        control->SetTickFreq( GetLong( wxT("tickfreq") ), 0 );
+        control->SetTickFreq(GetLong(wxT("tickfreq")), 0);
     }
-    if( HasParam( wxT("pagesize") ))
+    if( HasParam(wxT("pagesize")))
     {
-        control->SetPageSize( GetLong( wxT("pagesize") ) );
+        control->SetPageSize(GetLong(wxT("pagesize")));
     }
-    if( HasParam( wxT("linesize") ))
+    if( HasParam(wxT("linesize")))
     {
-        control->SetLineSize( GetLong( wxT("linesize") ));
+        control->SetLineSize(GetLong(wxT("linesize")));
     }
-    if( HasParam( wxT("thumb") ))
+    if( HasParam(wxT("thumb")))
     {
-        control->SetThumbLength( GetLong( wxT("thumb") ));
+        control->SetThumbLength(GetLong(wxT("thumb")));
     }
-    if( HasParam( wxT("tick") ))
+    if( HasParam(wxT("tick")))
     {
-        control->SetTick( GetLong( wxT("tick") ));
+        control->SetTick(GetLong(wxT("tick")));
     }
-    if( HasParam( wxT("selmin") ) && HasParam( wxT("selmax")) )
+    if( HasParam(wxT("selmin")) && HasParam(wxT("selmax")))
     {
-        control->SetSelection( GetLong( wxT("selmin") ), GetLong( wxT("selmax")) );
+        control->SetSelection(GetLong(wxT("selmin")), GetLong(wxT("selmax")));
     }
 
     SetupWindow(control);
@@ -83,12 +84,9 @@ wxObject *wxSliderXmlHandler::DoCreateResource()
     return control;
 }
 
-
-
 bool wxSliderXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, wxT("wxSlider"));
 }
-
 
 #endif

@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_stbox.cpp
-// Purpose:     XML resource for wxStaticBox
+// Purpose:     XRC resource for wxStaticBox
 // Author:      Brian Gavin
 // Created:     2000/09/09
 // RCS-ID:      $Id$
@@ -30,23 +30,21 @@ wxStaticBoxXmlHandler::wxStaticBoxXmlHandler()
 
 wxObject *wxStaticBoxXmlHandler::DoCreateResource()
 { 
-    wxStaticBox *box = new wxStaticBox(m_parentAsWindow,
-                                    GetID(),
-                                    GetText(wxT("label")),
-                                    GetPosition(), GetSize(),
-                                    GetStyle(),
-                                    GetName()
-                                    );
+    XRC_MAKE_INSTANCE(box, wxStaticBox)
+
+    box->Create(m_parentAsWindow,
+                GetID(),
+                GetText(wxT("label")),
+                GetPosition(), GetSize(),
+                GetStyle(),
+                GetName());
+
     SetupWindow(box);
     
     return box;
 }
 
-
-
 bool wxStaticBoxXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, wxT("wxStaticBox"));
 }
-
-

@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_cald.cpp
-// Purpose:     XML resource for wxCalendarCtrl
+// Purpose:     XRC resource for wxCalendarCtrl
 // Author:      Brian Gavin
 // Created:     2000/09/09
 // RCS-ID:      $Id$
@@ -27,35 +27,33 @@
 wxCalendarCtrlXmlHandler::wxCalendarCtrlXmlHandler() 
 : wxXmlResourceHandler() 
 {
-    ADD_STYLE(wxCAL_SUNDAY_FIRST);
-    ADD_STYLE(wxCAL_MONDAY_FIRST);
-    ADD_STYLE(wxCAL_SHOW_HOLIDAYS);
-    ADD_STYLE(wxCAL_NO_YEAR_CHANGE);
-    ADD_STYLE(wxCAL_NO_MONTH_CHANGE);
+    XRC_ADD_STYLE(wxCAL_SUNDAY_FIRST);
+    XRC_ADD_STYLE(wxCAL_MONDAY_FIRST);
+    XRC_ADD_STYLE(wxCAL_SHOW_HOLIDAYS);
+    XRC_ADD_STYLE(wxCAL_NO_YEAR_CHANGE);
+    XRC_ADD_STYLE(wxCAL_NO_MONTH_CHANGE);
     AddWindowStyles();
 }
 
 
 wxObject *wxCalendarCtrlXmlHandler::DoCreateResource()
 { 
-    wxCalendarCtrl *calendar = new wxCalendarCtrl(m_parentAsWindow,
-                                    GetID(),
-                                    wxDefaultDateTime,
-                                    /*TODO: take it from resource*/
-                                    GetPosition(), GetSize(),
-                                    GetStyle(),
-                                    GetName());
+    XRC_MAKE_INSTANCE(calendar, wxCalendarCtrl);
+
+    calendar->Create(m_parentAsWindow,
+                     GetID(),
+                     wxDefaultDateTime,
+                     /*TODO: take it from resource*/
+                     GetPosition(), GetSize(),
+                     GetStyle(),
+                     GetName());
     
     SetupWindow(calendar);
     
     return calendar;
 }
 
-
-
 bool wxCalendarCtrlXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, wxT("wxCalendarCtrl"));
 }
-
-

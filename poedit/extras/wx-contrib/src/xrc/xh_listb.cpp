@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_listb.cpp
-// Purpose:     XML resource for wxListBox
+// Purpose:     XRC resource for wxListBox
 // Author:      Bob Mitchell & Vaclav Slavik
 // Created:     2000/07/29
 // RCS-ID:      $Id$
@@ -25,13 +25,13 @@
 wxListBoxXmlHandler::wxListBoxXmlHandler() 
 : wxXmlResourceHandler() , m_insideBox(FALSE)
 {
-    ADD_STYLE(wxLB_SINGLE);
-    ADD_STYLE(wxLB_MULTIPLE);
-    ADD_STYLE(wxLB_EXTENDED);
-    ADD_STYLE(wxLB_HSCROLL);
-    ADD_STYLE(wxLB_ALWAYS_SB);
-    ADD_STYLE(wxLB_NEEDED_SB);
-    ADD_STYLE(wxLB_SORT);
+    XRC_ADD_STYLE(wxLB_SINGLE);
+    XRC_ADD_STYLE(wxLB_MULTIPLE);
+    XRC_ADD_STYLE(wxLB_EXTENDED);
+    XRC_ADD_STYLE(wxLB_HSCROLL);
+    XRC_ADD_STYLE(wxLB_ALWAYS_SB);
+    XRC_ADD_STYLE(wxLB_NEEDED_SB);
+    XRC_ADD_STYLE(wxLB_SORT);
     AddWindowStyles();
 }
 
@@ -40,38 +40,38 @@ wxObject *wxListBoxXmlHandler::DoCreateResource()
     if( m_class == wxT("wxListBox"))
     {
         // find the selection
-        long selection = GetLong( wxT("selection"), -1 );
+        long selection = GetLong(wxT("selection"), -1);
 
         // need to build the list of strings from children
         m_insideBox = TRUE;
-        CreateChildrenPrivately( NULL, GetParamNode(wxT("content")));
+        CreateChildrenPrivately(NULL, GetParamNode(wxT("content")));
         wxString *strings = (wxString *) NULL;
-        if( strList.GetCount() > 0 )
+        if (strList.GetCount() > 0)
         {
             strings = new wxString[strList.GetCount()];
             int count = strList.GetCount();
-            for( int i = 0; i < count; i++ )
+            for (int i = 0; i < count; i++)
                 strings[i]=strList[i];
         }
 
+        XRC_MAKE_INSTANCE(control, wxListBox)
 
-        wxListBox *control = new wxListBox(m_parentAsWindow,
-                                    GetID(),
-                                    GetPosition(), GetSize(),
-                                    strList.GetCount(),
-                                    strings,
-                                    GetStyle(),
-                                    wxDefaultValidator,
-                                    GetName()
-                                    );
+        control->Create(m_parentAsWindow,
+                        GetID(),
+                        GetPosition(), GetSize(),
+                        strList.GetCount(),
+                        strings,
+                        GetStyle(),
+                        wxDefaultValidator,
+                        GetName());
 
-        if( selection != -1 )
-            control->SetSelection( selection );
+        if (selection != -1)
+            control->SetSelection(selection);
 
         SetupWindow(control);
 
-        if( strings != NULL )
-            delete [] strings;
+        if (strings != NULL)
+            delete[] strings;
         strList.Clear();    // dump the strings   
 
         return control;
@@ -82,20 +82,14 @@ wxObject *wxListBoxXmlHandler::DoCreateResource()
         // handle <item>Label</item>
         
         // add to the list
-        strList.Add( GetNodeContent(m_node) );
+        strList.Add(GetNodeContent(m_node));
 
         return NULL;
     }
-
 }
-
-
 
 bool wxListBoxXmlHandler::CanHandle(wxXmlNode *node)
 {
     return (IsOfClass(node, wxT("wxListBox")) ||
-           (m_insideBox && node->GetName() == wxT("item"))
-           );
+           (m_insideBox && node->GetName() == wxT("item")));
 }
-
-

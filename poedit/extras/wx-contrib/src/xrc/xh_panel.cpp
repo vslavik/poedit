@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_panel.cpp
-// Purpose:     XML resource for panels
+// Purpose:     XRC resource for panels
 // Author:      Vaclav Slavik
 // Created:     2000/03/05
 // RCS-ID:      $Id$
@@ -25,37 +25,28 @@
 
 wxPanelXmlHandler::wxPanelXmlHandler() : wxXmlResourceHandler()
 {
-    ADD_STYLE(wxNO_3D);
-    ADD_STYLE(wxTAB_TRAVERSAL);
-    ADD_STYLE(wxWS_EX_VALIDATE_RECURSIVELY);
-    ADD_STYLE(wxCLIP_CHILDREN);
+    XRC_ADD_STYLE(wxNO_3D);
+    XRC_ADD_STYLE(wxTAB_TRAVERSAL);
+    XRC_ADD_STYLE(wxWS_EX_VALIDATE_RECURSIVELY);
+    XRC_ADD_STYLE(wxCLIP_CHILDREN);
     AddWindowStyles();
 }
 
-
-
 wxObject *wxPanelXmlHandler::DoCreateResource()
 { 
-    wxPanel *panel = wxDynamicCast(m_instance, wxPanel);
+    XRC_MAKE_INSTANCE(panel, wxPanel)
 
-    if (panel == NULL)
-        panel = new wxPanel(m_parentAsWindow,
-                                 GetID(),
-                                 GetPosition(), GetSize(),
-                                 GetStyle(wxT("style"), wxTAB_TRAVERSAL),
-                                 GetName());
-    else
-        panel->Create(m_parentAsWindow,
-                                 GetID(),
-                                 GetPosition(), GetSize(),
-                                 GetStyle(wxT("style"), wxTAB_TRAVERSAL),
-                                 GetName());
+    panel->Create(m_parentAsWindow,
+                  GetID(),
+                  GetPosition(), GetSize(),
+                  GetStyle(wxT("style"), wxTAB_TRAVERSAL),
+                  GetName());
+
     SetupWindow(panel);
     CreateChildren(panel);
     
     return panel;
 }
-
 
 bool wxPanelXmlHandler::CanHandle(wxXmlNode *node)
 {

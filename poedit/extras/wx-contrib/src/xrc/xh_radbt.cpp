@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_radbt.cpp
-// Purpose:     XML resource for wxRadioButton
+// Purpose:     XRC resource for wxRadioButton
 // Author:      Bob Mitchell
 // Created:     2000/03/21
 // RCS-ID:      $Id$
@@ -27,7 +27,7 @@
 wxRadioButtonXmlHandler::wxRadioButtonXmlHandler() 
 : wxXmlResourceHandler() 
 {
-    ADD_STYLE( wxRB_GROUP );
+    XRC_ADD_STYLE(wxRB_GROUP);
     AddWindowStyles();
 }
 
@@ -40,27 +40,25 @@ wxObject *wxRadioButtonXmlHandler::DoCreateResource()
      * normal radio button.
      */ 
 
-    wxRadioButton *control = new wxRadioButton(m_parentAsWindow,
-                                    GetID(),
-                                    GetText(wxT("label")),
-                                    GetPosition(), GetSize(),
-                                    GetStyle(),
-                                    wxDefaultValidator,
-                                    GetName()
-                                    );
+    XRC_MAKE_INSTANCE(control, wxRadioButton)
 
-    control->SetValue( GetBool(wxT("value"), 0));
+    control->Create(m_parentAsWindow,
+                    GetID(),
+                    GetText(wxT("label")),
+                    GetPosition(), GetSize(),
+                    GetStyle(),
+                    wxDefaultValidator,
+                    GetName());
+
+    control->SetValue(GetBool(wxT("value"), 0));
     SetupWindow(control);
     
     return control;
 }
 
-
-
 bool wxRadioButtonXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, wxT("wxRadioButton"));
 }
-
 
 #endif

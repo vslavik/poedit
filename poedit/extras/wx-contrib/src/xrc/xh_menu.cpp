@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_menu.cpp
-// Purpose:     XML resource for menus and menubars
+// Purpose:     XRC resource for menus and menubars
 // Author:      Vaclav Slavik
 // Created:     2000/03/05
 // RCS-ID:      $Id$
@@ -21,15 +21,14 @@
 
 #include "wx/xrc/xh_menu.h"
 #include "wx/menu.h"
+#include "wx/frame.h"
 
 
 wxMenuXmlHandler::wxMenuXmlHandler() : 
         wxXmlResourceHandler(), m_insideMenu(FALSE)
 {
-    ADD_STYLE(wxMENU_TEAROFF);
+    XRC_ADD_STYLE(wxMENU_TEAROFF);
 }
-
-
 
 wxObject *wxMenuXmlHandler::DoCreateResource()
 {
@@ -102,27 +101,23 @@ bool wxMenuXmlHandler::CanHandle(wxXmlNode *node)
            );
 }
 
-
-
-
-
-
-
-
-
-
-
 wxMenuBarXmlHandler::wxMenuBarXmlHandler() : wxXmlResourceHandler()
 {
-    ADD_STYLE(wxMB_DOCKABLE);
+    XRC_ADD_STYLE(wxMB_DOCKABLE);
 }
-
-
 
 wxObject *wxMenuBarXmlHandler::DoCreateResource()
 {
     wxMenuBar *menubar = new wxMenuBar(GetStyle());
     CreateChildren(menubar);
+
+    if (m_parentAsWindow)
+    {
+        wxFrame *parentFrame = wxDynamicCast(m_parent, wxFrame);
+        if (parentFrame)
+            parentFrame->SetMenuBar(menubar);
+    }
+
     return menubar;
 }
 
@@ -132,4 +127,3 @@ bool wxMenuBarXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, wxT("wxMenuBar"));
 }
-

@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_stbmp.cpp
-// Purpose:     XML resource for wxStaticBitmap
+// Purpose:     XRC resource for wxStaticBitmap
 // Author:      Vaclav Slavik
 // Created:     2000/04/22
 // RCS-ID:      $Id$
@@ -30,23 +30,21 @@ wxStaticBitmapXmlHandler::wxStaticBitmapXmlHandler()
 
 wxObject *wxStaticBitmapXmlHandler::DoCreateResource()
 { 
-    wxStaticBitmap *bmp = new wxStaticBitmap(m_parentAsWindow,
-                                    GetID(),
-                                    GetBitmap(wxT("bitmap"), GetSize()),
-                                    GetPosition(), GetSize(),
-                                    GetStyle(),
-                                    GetName()
-                                    );
+    XRC_MAKE_INSTANCE(bmp, wxStaticBitmap)
+
+    bmp->Create(m_parentAsWindow,
+                GetID(),
+                GetBitmap(wxT("bitmap"), GetSize()),
+                GetPosition(), GetSize(),
+                GetStyle(),
+                GetName());
+
     SetupWindow(bmp);
     
     return bmp;
 }
 
-
-
 bool wxStaticBitmapXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, wxT("wxStaticBitmap"));
 }
-
-

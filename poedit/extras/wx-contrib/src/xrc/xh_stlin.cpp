@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_stbox.cpp
-// Purpose:     XML resource for wxStaticLine
+// Purpose:     XRC resource for wxStaticLine
 // Author:      Brian Gavin
 // Created:     2000/09/09
 // RCS-ID:      $Id$
@@ -27,25 +27,25 @@
 wxStaticLineXmlHandler::wxStaticLineXmlHandler() 
 : wxXmlResourceHandler() 
 {
-    ADD_STYLE(wxLI_HORIZONTAL);
-    ADD_STYLE(wxLI_VERTICAL);
+    XRC_ADD_STYLE(wxLI_HORIZONTAL);
+    XRC_ADD_STYLE(wxLI_VERTICAL);
     AddWindowStyles();
 }
 
 wxObject *wxStaticLineXmlHandler::DoCreateResource()
 { 
-    wxStaticLine *line = new wxStaticLine(m_parentAsWindow,
-                                    GetID(),
-                                    GetPosition(), GetSize(),
-                                    GetStyle(wxT("style"), wxLI_HORIZONTAL),
-                                    GetName()
-                                    );
+    XRC_MAKE_INSTANCE(line, wxStaticLine)
+
+    line->Create(m_parentAsWindow,
+                GetID(),
+                GetPosition(), GetSize(),
+                GetStyle(wxT("style"), wxLI_HORIZONTAL),
+                GetName());
+
     SetupWindow(line);
     
     return line;
 }
-
-
 
 bool wxStaticLineXmlHandler::CanHandle(wxXmlNode *node)
 {

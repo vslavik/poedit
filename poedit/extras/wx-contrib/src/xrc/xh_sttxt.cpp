@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_sttxt.cpp
-// Purpose:     XML resource for wxStaticText
+// Purpose:     XRC resource for wxStaticText
 // Author:      Bob Mitchell
 // Created:     2000/03/21
 // RCS-ID:      $Id$
@@ -25,32 +25,30 @@
 wxStaticTextXmlHandler::wxStaticTextXmlHandler() 
 : wxXmlResourceHandler() 
 {
-    ADD_STYLE(wxST_NO_AUTORESIZE);
-    ADD_STYLE(wxALIGN_LEFT);
-    ADD_STYLE(wxALIGN_RIGHT);
-    ADD_STYLE(wxALIGN_CENTRE);
+    XRC_ADD_STYLE(wxST_NO_AUTORESIZE);
+    XRC_ADD_STYLE(wxALIGN_LEFT);
+    XRC_ADD_STYLE(wxALIGN_RIGHT);
+    XRC_ADD_STYLE(wxALIGN_CENTRE);
     AddWindowStyles();
 }
 
 wxObject *wxStaticTextXmlHandler::DoCreateResource()
 { 
-    wxStaticText *text = new wxStaticText(m_parentAsWindow,
-                                    GetID(),
-                                    GetText(wxT("label")),
-                                    GetPosition(), GetSize(),
-                                    GetStyle(),
-                                    GetName()
-                                    );
+    XRC_MAKE_INSTANCE(text, wxStaticText)
+
+    text->Create(m_parentAsWindow,
+                    GetID(),
+                    GetText(wxT("label")),
+                    GetPosition(), GetSize(),
+                    GetStyle(),
+                    GetName());
+
     SetupWindow(text);
     
     return text;
 }
 
-
-
 bool wxStaticTextXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, wxT("wxStaticText"));
 }
-
-

@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_sizer.cpp
-// Purpose:     XML resource for wxBoxSizer
+// Purpose:     XRC resource for wxBoxSizer
 // Author:      Vaclav Slavik
 // Created:     2000/03/21
 // RCS-ID:      $Id$
@@ -39,35 +39,35 @@ bool wxSizerXmlHandler::IsSizerNode(wxXmlNode *node)
 wxSizerXmlHandler::wxSizerXmlHandler() 
 : wxXmlResourceHandler(), m_isInside(FALSE), m_parentSizer(NULL)
 {
-    ADD_STYLE(wxHORIZONTAL);
-    ADD_STYLE(wxVERTICAL);
+    XRC_ADD_STYLE(wxHORIZONTAL);
+    XRC_ADD_STYLE(wxVERTICAL);
 
     // and flags
-    ADD_STYLE(wxLEFT);
-    ADD_STYLE(wxRIGHT);
-    ADD_STYLE(wxTOP);
-    ADD_STYLE(wxBOTTOM);
-    ADD_STYLE(wxNORTH);
-    ADD_STYLE(wxSOUTH);
-    ADD_STYLE(wxEAST);
-    ADD_STYLE(wxWEST);
-    ADD_STYLE(wxALL);
+    XRC_ADD_STYLE(wxLEFT);
+    XRC_ADD_STYLE(wxRIGHT);
+    XRC_ADD_STYLE(wxTOP);
+    XRC_ADD_STYLE(wxBOTTOM);
+    XRC_ADD_STYLE(wxNORTH);
+    XRC_ADD_STYLE(wxSOUTH);
+    XRC_ADD_STYLE(wxEAST);
+    XRC_ADD_STYLE(wxWEST);
+    XRC_ADD_STYLE(wxALL);
 
-    ADD_STYLE(wxGROW);
-    ADD_STYLE(wxEXPAND);
-    ADD_STYLE(wxSHAPED);
-    ADD_STYLE(wxSTRETCH_NOT);
+    XRC_ADD_STYLE(wxGROW);
+    XRC_ADD_STYLE(wxEXPAND);
+    XRC_ADD_STYLE(wxSHAPED);
+    XRC_ADD_STYLE(wxSTRETCH_NOT);
 
-    ADD_STYLE(wxALIGN_CENTER);
-    ADD_STYLE(wxALIGN_CENTRE);
-    ADD_STYLE(wxALIGN_LEFT);
-    ADD_STYLE(wxALIGN_TOP);
-    ADD_STYLE(wxALIGN_RIGHT);
-    ADD_STYLE(wxALIGN_BOTTOM);
-    ADD_STYLE(wxALIGN_CENTER_HORIZONTAL);
-    ADD_STYLE(wxALIGN_CENTRE_HORIZONTAL);
-    ADD_STYLE(wxALIGN_CENTER_VERTICAL);
-    ADD_STYLE(wxALIGN_CENTRE_VERTICAL);
+    XRC_ADD_STYLE(wxALIGN_CENTER);
+    XRC_ADD_STYLE(wxALIGN_CENTRE);
+    XRC_ADD_STYLE(wxALIGN_LEFT);
+    XRC_ADD_STYLE(wxALIGN_TOP);
+    XRC_ADD_STYLE(wxALIGN_RIGHT);
+    XRC_ADD_STYLE(wxALIGN_BOTTOM);
+    XRC_ADD_STYLE(wxALIGN_CENTER_HORIZONTAL);
+    XRC_ADD_STYLE(wxALIGN_CENTRE_HORIZONTAL);
+    XRC_ADD_STYLE(wxALIGN_CENTER_VERTICAL);
+    XRC_ADD_STYLE(wxALIGN_CENTRE_VERTICAL);
 }
 
 
@@ -77,6 +77,9 @@ wxObject *wxSizerXmlHandler::DoCreateResource()
     if (m_class == wxT("sizeritem"))
     {
         wxXmlNode *n = GetParamNode(wxT("object"));
+
+       if ( !n )
+           n = GetParamNode(wxT("object_ref"));
 
         if (n)
         {
@@ -119,7 +122,7 @@ wxObject *wxSizerXmlHandler::DoCreateResource()
     
     else if (m_class == wxT("spacer"))
     {
-        wxCHECK_MSG(m_parentSizer, NULL, wxT("Incorrect syntax of XML resource: spacer not within sizer!"));
+        wxCHECK_MSG(m_parentSizer, NULL, wxT("Incorrect syntax of XRC resource: spacer not within sizer!"));
         wxSize sz = GetSize();
         m_parentSizer->Add(sz.x, sz.y,
             GetLong(wxT("option")), GetStyle(wxT("flag")), GetDimension(wxT("border")));

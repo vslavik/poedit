@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_notbk.cpp
-// Purpose:     XML resource for wxNotebook
+// Purpose:     XRC resource for wxNotebook
 // Author:      Vaclav Slavik
 // Created:     2000/03/21
 // RCS-ID:      $Id$
@@ -30,20 +30,21 @@
 wxNotebookXmlHandler::wxNotebookXmlHandler() 
 : wxXmlResourceHandler(), m_isInside(FALSE), m_notebook(NULL)
 {
-    ADD_STYLE(wxNB_FIXEDWIDTH);
-    ADD_STYLE(wxNB_LEFT);
-    ADD_STYLE(wxNB_RIGHT);
-    ADD_STYLE(wxNB_BOTTOM);
+    XRC_ADD_STYLE(wxNB_FIXEDWIDTH);
+    XRC_ADD_STYLE(wxNB_LEFT);
+    XRC_ADD_STYLE(wxNB_RIGHT);
+    XRC_ADD_STYLE(wxNB_BOTTOM);
     AddWindowStyles();
 }
-
-
 
 wxObject *wxNotebookXmlHandler::DoCreateResource()
 { 
     if (m_class == wxT("notebookpage"))
     {
         wxXmlNode *n = GetParamNode(wxT("object"));
+
+        if ( !n )
+            n = GetParamNode(wxT("object_ref"));
 
         if (n)
         {
@@ -67,13 +68,16 @@ wxObject *wxNotebookXmlHandler::DoCreateResource()
         }
     }
     
-    else {
-        wxNotebook *nb = new wxNotebook(m_parentAsWindow, 
-                                        GetID(),
-                                        GetPosition(), GetSize(),
-                                        GetStyle( wxT("style" )),
-                                        GetName());
-    
+    else 
+    {
+        XRC_MAKE_INSTANCE(nb, wxNotebook)
+
+        nb->Create(m_parentAsWindow, 
+                   GetID(),
+                   GetPosition(), GetSize(),
+                   GetStyle(wxT("style")),
+                   GetName());
+
         wxNotebook *old_par = m_notebook;
         m_notebook = nb;
         bool old_ins = m_isInside;
@@ -88,8 +92,6 @@ wxObject *wxNotebookXmlHandler::DoCreateResource()
             return nb;
     }
 }
-
-
 
 bool wxNotebookXmlHandler::CanHandle(wxXmlNode *node)
 {

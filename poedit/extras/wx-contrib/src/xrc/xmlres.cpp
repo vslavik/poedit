@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xmlres.cpp
-// Purpose:     XML resources
+// Purpose:     XRC resources
 // Author:      Vaclav Slavik
 // Created:     2000/03/05
 // RCS-ID:      $Id$
@@ -40,16 +40,16 @@
 WX_DEFINE_OBJARRAY(wxXmlResourceDataRecords);
 
 
-wxXmlResource::wxXmlResource(bool use_locale)
+wxXmlResource::wxXmlResource(int flags)
 {
     m_handlers.DeleteContents(TRUE);
-    m_useLocale = use_locale;
+    m_flags = flags;
     m_version = -1;
 }
 
-wxXmlResource::wxXmlResource(const wxString& filemask, bool use_locale)
+wxXmlResource::wxXmlResource(const wxString& filemask, int flags)
 {
-    m_useLocale = use_locale;
+    m_flags = flags;
     m_version = -1;
     m_handlers.DeleteContents(TRUE);
     Load(filemask);
@@ -310,7 +310,7 @@ void wxXmlResource::UpdateResources()
             }
             else if (m_data[i].Doc->GetRoot()->GetName() != wxT("resource"))
             {
-                wxLogError(_("Invalid XML resource '%s': doesn't have root node 'resource'."), m_data[i].File.c_str());
+                wxLogError(_("Invalid XRC resource '%s': doesn't have root node 'resource'."), m_data[i].File.c_str());
                 wxDELETE(m_data[i].Doc);
             }
             else
@@ -368,7 +368,7 @@ wxXmlNode *wxXmlResource::FindResource(const wxString& name, const wxString& cla
             }
     }
 
-    wxLogError(_("XML resource '%s' (class '%s') not found!"),
+    wxLogError(_("XRC resource '%s' (class '%s') not found!"),
                name.c_str(), classname.c_str());
     return NULL;
 }
@@ -421,10 +421,28 @@ wxObject *wxXmlResourceHandler::CreateResource(wxXmlNode *node, wxObject *parent
     wxObject *myParent = m_parent, *myInstance = m_instance;
     wxWindow *myParentAW = m_parentAsWindow, *myInstanceAW = m_instanceAsWindow;
 
+    m_instance = instance;
+    if (!m_instance && node->HasProp(wxT("subclass")) && 
+        !(m_resource->GetFlags() & wxXRC_NO_SUBCLASSING))
+    {
+        wxString subclass = node->GetPropVal(wxT("subclass"), wxEmptyString);
+        wxClassInfo* classInfo = wxClassInfo::FindClass(subclass);
+
+        if (classInfo)
+            m_instance = classInfo->CreateObject();
+        
+        if (!m_instance)
+        {
+            wxLogError(_("Subclass '%s' not found for resource '%s', not subclassing!"),
+                       subclass.c_str(), node->GetPropVal(wxT("name"), wxEmptyString).c_str());
+        }
+
+        m_instance = classInfo->CreateObject();
+    }
+
     m_node = node;
     m_class = node->GetPropVal(wxT("class"), wxEmptyString);
     m_parent = parent;
-    m_instance = instance;
     m_parentAsWindow = wxDynamicCast(m_parent, wxWindow);
     m_instanceAsWindow = wxDynamicCast(m_instance, wxWindow);
 
@@ -449,15 +467,15 @@ void wxXmlResourceHandler::AddStyle(const wxString& name, int value)
 
 void wxXmlResourceHandler::AddWindowStyles()
 {
-    ADD_STYLE(wxSIMPLE_BORDER);
-    ADD_STYLE(wxSUNKEN_BORDER);
-    ADD_STYLE(wxDOUBLE_BORDER);
-    ADD_STYLE(wxRAISED_BORDER);
-    ADD_STYLE(wxSTATIC_BORDER);
-    ADD_STYLE(wxNO_BORDER);
-    ADD_STYLE(wxTRANSPARENT_WINDOW);
-    ADD_STYLE(wxWANTS_CHARS);
-    ADD_STYLE(wxNO_FULL_REPAINT_ON_RESIZE);
+    XRC_ADD_STYLE(wxSIMPLE_BORDER);
+    XRC_ADD_STYLE(wxSUNKEN_BORDER);
+    XRC_ADD_STYLE(wxDOUBLE_BORDER);
+    XRC_ADD_STYLE(wxRAISED_BORDER);
+    XRC_ADD_STYLE(wxSTATIC_BORDER);
+    XRC_ADD_STYLE(wxNO_BORDER);
+    XRC_ADD_STYLE(wxTRANSPARENT_WINDOW);
+    XRC_ADD_STYLE(wxWANTS_CHARS);
+    XRC_ADD_STYLE(wxNO_FULL_REPAINT_ON_RESIZE);
 }
 
 
@@ -494,12 +512,17 @@ int wxXmlResourceHandler::GetStyle(const wxString& param, int defaults)
 
 wxString wxXmlResourceHandler::GetText(const wxString& param)
 {
-    wxString str1 = GetParamValue(param);
+    wxString str1;
     wxString str2;
     const wxChar *dt;
     wxChar amp_char;
 
-    // VS: First version of XML resources used $ instead of & (which is illegal in XML),
+    if (m_resource->GetFlags() & wxXRC_USE_LOCALE)
+        str1 = wxGetTranslation(GetParamValue(param));
+    else
+        str1 = GetParamValue(param);
+
+    // VS: First version of XRC resources used $ instead of & (which is illegal in XML),
     //     but later I realized that '_' fits this purpose much better (because
     //     &File means "File with F underlined").
     if (m_resource->CompareVersion(2,3,0,1) < 0)
@@ -529,11 +552,8 @@ wxString wxXmlResourceHandler::GetText(const wxString& param)
             }
         else str2 << *dt;
     }
-
-    if (m_resource->GetUseLocale())
-        return wxGetTranslation(str2);
-    else
-        return str2;
+    
+    return str2;
 }
 
 
@@ -601,7 +621,7 @@ wxColour wxXmlResourceHandler::GetColour(const wxString& param)
     if (v.Length() != 7 || v[0u] != wxT('#') ||
         wxSscanf(v.c_str(), wxT("#%lX"), &tmp) != 1)
     {
-        wxLogError(_("XML resource: Incorrect colour specification '%s' for property '%s'."),
+        wxLogError(_("XRC resource: Incorrect colour specification '%s' for property '%s'."),
                    v.c_str(), param.c_str());
         return wxNullColour;
     }
@@ -621,7 +641,7 @@ wxBitmap wxXmlResourceHandler::GetBitmap(const wxString& param, wxSize size)
     wxFSFile *fsfile = GetCurFileSystem().OpenFile(name);
     if (fsfile == NULL)
     {
-        wxLogError(_("XML resource: Cannot create bitmap from '%s'."), param.c_str());
+        wxLogError(_("XRC resource: Cannot create bitmap from '%s'."), param.c_str());
         return wxNullBitmap;
     }
     wxImage img(*(fsfile->GetStream()));
@@ -631,7 +651,7 @@ wxBitmap wxXmlResourceHandler::GetBitmap(const wxString& param, wxSize size)
 #endif
     if (!img.Ok())
     {
-        wxLogError(_("XML resource: Cannot create bitmap from '%s'."), param.c_str());
+        wxLogError(_("XRC resource: Cannot create bitmap from '%s'."), param.c_str());
         return wxNullBitmap;
     }
     if (!(size == wxDefaultSize)) img.Rescale(size.x, size.y);
@@ -808,8 +828,10 @@ wxFont wxXmlResourceHandler::GetFont(const wxString& param)
     wxString encoding = GetParamValue(wxT("encoding"));
     wxFontMapper mapper;
     wxFontEncoding enc = wxFONTENCODING_DEFAULT;
-    if (!encoding.IsEmpty()) enc = mapper.CharsetToEncoding(encoding);
-    if (enc == wxFONTENCODING_SYSTEM) enc = wxFONTENCODING_SYSTEM;
+    if (!encoding.IsEmpty())
+        enc = mapper.CharsetToEncoding(encoding);
+    if (enc == wxFONTENCODING_SYSTEM)
+        enc = wxFONTENCODING_DEFAULT;
 
     wxString faces = GetParamValue(wxT("face"));
     wxString facename = wxEmptyString;

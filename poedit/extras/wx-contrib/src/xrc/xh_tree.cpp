@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_tree.cpp
-// Purpose:     XML resource for wxTreeCtrl
+// Purpose:     XRC resource for wxTreeCtrl
 // Author:      Brian Gavin
 // Created:     2000/09/09
 // RCS-ID:      $Id$
@@ -26,32 +26,29 @@
 wxTreeCtrlXmlHandler::wxTreeCtrlXmlHandler() 
 : wxXmlResourceHandler() 
 {
-    ADD_STYLE(wxTR_HAS_BUTTONS);
-    ADD_STYLE(wxTR_EDIT_LABELS);
-    ADD_STYLE(wxTR_MULTIPLE);
+    XRC_ADD_STYLE(wxTR_HAS_BUTTONS);
+    XRC_ADD_STYLE(wxTR_EDIT_LABELS);
+    XRC_ADD_STYLE(wxTR_MULTIPLE);
     AddWindowStyles();
 }
 
-
 wxObject *wxTreeCtrlXmlHandler::DoCreateResource()
 { 
-    wxTreeCtrl *tree = new wxTreeCtrl(m_parentAsWindow,
-                                    GetID(),
-                                    GetPosition(), GetSize(),
-                                    GetStyle(),
-                                    wxDefaultValidator,
-                                    GetName());
-    
+    XRC_MAKE_INSTANCE(tree, wxTreeCtrl)
+
+    tree->Create(m_parentAsWindow,
+                GetID(),
+                GetPosition(), GetSize(),
+                GetStyle(),
+                wxDefaultValidator,
+                GetName());
+
     SetupWindow(tree);
     
     return tree;
 }
 
-
-
 bool wxTreeCtrlXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, wxT("wxTreeCtrl"));
 }
-
-

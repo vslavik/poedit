@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_scrol.cpp
-// Purpose:     XML resource for wxScrollBar
+// Purpose:     XRC resource for wxScrollBar
 // Author:      Brian Gavin
 // Created:     2000/09/09
 // RCS-ID:      $Id$
@@ -26,38 +26,33 @@
 wxScrollBarXmlHandler::wxScrollBarXmlHandler() 
 : wxXmlResourceHandler() 
 {
-    ADD_STYLE( wxSB_HORIZONTAL );
-    ADD_STYLE( wxSB_VERTICAL );
+    XRC_ADD_STYLE(wxSB_HORIZONTAL);
+    XRC_ADD_STYLE(wxSB_VERTICAL);
     AddWindowStyles();
 }
 
 wxObject *wxScrollBarXmlHandler::DoCreateResource()
 { 
-    wxScrollBar *control = new wxScrollBar(m_parentAsWindow,
-                                    GetID(),
-                                    GetPosition(), GetSize(),
-                                    GetStyle(),
-                                    wxDefaultValidator,
-                                    GetName()
-                                    );
+    XRC_MAKE_INSTANCE(control, wxScrollBar)
+
+    control->Create(m_parentAsWindow,
+                    GetID(),
+                    GetPosition(), GetSize(),
+                    GetStyle(),
+                    wxDefaultValidator,
+                    GetName());
+
     control->SetScrollbar(GetLong( wxT("value"), 0), 
                           GetLong( wxT("thumbsize"),1),
                           GetLong( wxT("range"), 10),
-                          GetLong( wxT("pagesize"),1)
-                          );
-                          
-    
+                          GetLong( wxT("pagesize"),1));
+
     SetupWindow(control);
     
     return control;
 }
 
-
-
 bool wxScrollBarXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, wxT("wxScrollBar"));
 }
-
-
-

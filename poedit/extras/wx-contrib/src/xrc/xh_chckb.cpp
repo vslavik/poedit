@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_chckb.cpp
-// Purpose:     XML resource for wxCheckBox
+// Purpose:     XRC resource for wxCheckBox
 // Author:      Bob Mitchell
 // Created:     2000/03/21
 // RCS-ID:      $Id$
@@ -32,22 +32,21 @@ wxCheckBoxXmlHandler::wxCheckBoxXmlHandler()
 
 wxObject *wxCheckBoxXmlHandler::DoCreateResource()
 { 
-    wxCheckBox *control = new wxCheckBox(m_parentAsWindow,
-                                    GetID(),
-                                    GetText(wxT("label")),
-                                    GetPosition(), GetSize(),
-                                    GetStyle(),
-                                    wxDefaultValidator,
-                                    GetName()
-                                    );
+    XRC_MAKE_INSTANCE(control, wxCheckBox)
 
-    control->SetValue( GetBool( wxT("checked")));
+    control->Create(m_parentAsWindow,
+                    GetID(),
+                    GetText(wxT("label")),
+                    GetPosition(), GetSize(),
+                    GetStyle(),
+                    wxDefaultValidator,
+                    GetName());
+
+    control->SetValue(GetBool( wxT("checked")));
     SetupWindow(control);
     
     return control;
 }
-
-
 
 bool wxCheckBoxXmlHandler::CanHandle(wxXmlNode *node)
 {

@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_bmp.cpp
-// Purpose:     XML resource for wxBitmap and wxIcon
+// Purpose:     XRC resource for wxBitmap and wxIcon
 // Author:      Vaclav Slavik
 // Created:     2000/09/09
 // RCS-ID:      $Id$
@@ -33,13 +33,10 @@ wxObject *wxBitmapXmlHandler::DoCreateResource()
     return new wxBitmap(GetBitmap(wxT("")));
 }
 
-
-
 bool wxBitmapXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, wxT("wxBitmap"));
 }
-
 
 wxIconXmlHandler::wxIconXmlHandler() 
 : wxXmlResourceHandler() 
@@ -51,10 +48,7 @@ wxObject *wxIconXmlHandler::DoCreateResource()
     return new wxIcon(GetIcon(wxT("")));
 }
 
-
-
 bool wxIconXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, wxT("wxIcon"));
 }
-
