@@ -3,9 +3,9 @@
 
 [Setup]
 CompressLevel=9
-OutputBaseFilename=poedit_setup
+OutputBaseFilename=poedit103_setup
 AppName=poEdit
-AppVerName=poEdit 1.0.2
+AppVerName=poEdit 1.0.3
 
 ChangesAssociations=true
 AlwaysShowComponentsList=false
@@ -19,8 +19,9 @@ AlwaysCreateUninstallIcon=true
 DisableAppendDir=true
 UninstallStyle=modern
 WizardStyle=modern
-LicenseFile=install\license.txt
+LicenseFile=install\license.rtf
 OutputDir=.
+InfoAfterFile=install\news.rtf
 
 [Files]
 Source: gettext-win32\msgfmt.exe; DestDir: {app}
@@ -28,10 +29,10 @@ Source: gettext-win32\xgettext.exe; DestDir: {app}
 Source: Release\poedit.exe; DestDir: {app}
 Source: gettext-win32\msgmerge.exe; DestDir: {app}
 Source: gettext-win32\gnu_gettext.COPYING; DestDir: {app}
-Source: README; DestDir: {app}; DestName: readme.txt
+Source: install\readme.txt; DestDir: {app}; DestName: readme.txt
 Source: docs\poedit.chm; DestDir: {app}
-Source: LICENSE; DestDir: {app}
-Source: ChangeLog; DestDir: {app}; DestName: ChangeLog.txt
+Source: install\license.txt; DestDir: {app}; DestName: license.txt
+Source: install\news.txt; DestDir: {app}; DestName: news.txt
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey
@@ -48,9 +49,9 @@ Name: {group}\poEdit Help; Filename: {app}\poedit.chm; IconIndex: 0
 
 [Run]
 Filename: {app}\readme.txt; Description: View readme.txt; Flags: shellexec postinstall
-Filename: {app}\ChangeLog.txt; WorkingDir: {app}; Description: View changes since previous version; Flags: postinstall unchecked shellexec
+Filename: {app}\NEWS.txt; WorkingDir: {app}; Description: View changes since previous version; Flags: postinstall unchecked shellexec
 Filename: {app}\poedit.exe; WorkingDir: {app}; Description: Run poEdit now; Flags: postinstall unchecked
 
 [_ISTool]
 EnableISX=true
-UseAbsolutePaths=true
+UseAbsolutePaths=false
