@@ -17,12 +17,125 @@
 #pragma implementation
 #endif
 
+#include <wx/wxprec.h>
+
+
 /** \page db_desc Translation Memory Algorithms
 
-    \todo Describe how the algorithm works!!!
+    \section tm_def TM Definition
+    
+    For the purposes of algorithm description, let's say that TM is a 
+    database that stores original string-translation pairs (where both 
+    original string and translation are strings consisting of words 
+    delimined by spaces and/or interpunction) and supports inexact 
+    retrieval with original string as primary key. Inexact retrieval means
+    that TM will return non-empty response even though there's no record
+    with given key. In such case, TM will return \e similar records, that is
+    records whose key differs in no more than N words from searched key
+    and is at worst M words longer.
+    
+    \section tm_store Storage
+    
+    Data are stored in three tables implemented as Berkeley DB databases
+    (they have a feature important for TM: all data are stored as 
+    string_key:value pairs and B-tree or hash table is used for very fast
+    access to records; records are variable-length).
+    
+    All strings are encoded in UTF-8.
+    
+    Table one, DbOrig, contains original strings. Its key is original string
+    and stored value is 32bit ID of the string (which is identical to
+    record's index in DbTranse table, see bellow). There's 1-1 correspondence 
+    between original strings and indexes.
+    
+    Table two, DbTrans, holds translations of original strings. Unlike DbOrig,
+    this one is indexed with IDs, which gives us fastest possible access to
+    this table. Record's value in DbTrans is UTF-8 encoded string buffer that
+    contains one or more NULL-terminated strings. (Number of translations in
+    record is trivially equal to number of zeros in the buffer; this approach
+    makes adding translations to existing record very simple.)
+    
+    These two tables fully describe TM's content, but they only allow exact
+    retrieval. 
+    
+    The last table, DbWords, is the core of inexact lookup feature. It is 
+    indexed with a tuple of word (converted to lowercase) and sentence length.
+    The value is a list of IDs of original strings of given length that 
+    contain given word. These lists are relatively small even in large 
+    databases; this is thanks to fragmentation caused by sentence length part
+    of the key. An important property of ID lists is that they are always 
+    sorted - we'll need this later.
+    
+    
+    \section tm_ops Operations
+    
+    TM supports two operations: 
+    - Store(original_string, translation)
+    - Lookup(string, max_words_diff, max_length_delta). This operation returns
+      array of results and integer value indicating exactness of result
+      (0=worst, 100=exact). All returned strings are of same exactness.
+
+
+    \subsection tm_write Writing to TM
+
+    First, TM tries to find \a original_string in DbOrig. This is a trivial
+    case - if TM finds it, it reads the record with obtained ID from DbTrans,
+    checks if the list already contains \a translation and if not, adds 
+    \a translation to the list and writes it back to DbTrans. DBs are 
+    consistent at this point and operation finished successfully.
+    
+    If DbOrig doesn't contain \a original_string, however, the situation is
+    more complicated. TM writes \a translation to DbTrans and obtains ID
+    (which equals new record's index in DbTrans).
+    It then writes \a original_string and this ID to DbOrig. Last, TM converts
+    \a original_string to an array of words (by splitting it with usual
+    word separators, converting to lowercase and removing bad words that
+    are too common, such as "a", "the" or "will"). Number of words is used
+    as sentence length and the ID is added to (word,length) records in 
+    DbWords for all words in the sentence (adding new records as neccessary).
+    (IDs are added to the end of list; this ensures, together with ID=index
+    property, that IDs in DbWords are always sorted.)
+    
+    
+    \subsection tm_lookup TM Lookup
+    
+    As a first attempt, exact match is tried, that is, TM tries to retrieve
+    \a string from DbOrig. If an ID is found, matching translations are
+    retrieved from DbTrans and returned together with exactness value of 100
+    (highest possible).
+    
+    This happens only rarely, though. In more common scenario, TM tries
+    to find similar entries. TM loops over i=0..max_words_diff and 
+    j=0..max_length_delta ranges (the 2nd one is in inner loop) and attempts
+    to find records with \e exactly i words missing in \e exactly j words
+    longer sentences.
+    
+    To accomplish this, TM must find all possible combinations of \a i 
+    omitted words among the total of N words. The algorithm then gets lists of
+    IDs for non-omitted words for each such combination and computes 
+    union of all ID lists. ID lists are sorted, so we can do this by merging 
+    lists in O(n) time. If the union is not empty, the algorithm returns 
+    translations identified by IDs in the union, together with success value 
+    computed from i,j values as percentage of i,j-space that was already 
+    processed.
+    
+    If all unions for all combinations and for all possible i,j values are
+    empty, the algorithm fails.
+    
+    \remark
+    - Time complexity of this algorithm is hard to determine; if we assume
+      DB accesses are constant-time (which is not true; Berkeley DB access is
+      mostly O(log n) and we do lots of string processing that doesn't exceed
+      O(size of query)), then the worst case scenario involves 
+      O(max_words_diff*max_length_delta*words_in_string) unifications and lookups,
+      where union operation depends on sum of lengths of ID lists. A sample
+      DB created from full RedHat 6.1 installation CD had lists smaller than
+      300 IDs. 
+    - Real-life execution speed is more than satisfying - lookup takes hardly any
+      time on an average Celeron 400MHz system.
+    
  */
 
-#include <wx/wxprec.h>
 
 #ifdef USE_TRANSMEM
 
@@ -899,3 +1012,4 @@ bool TranslationMemory::LookupFuzzy(const wxArrayString& words,
 }
 
 #endif // USE_TRANSMEM
+
