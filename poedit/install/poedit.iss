@@ -2,9 +2,9 @@
 ; http://www.lerstad.com/istool/
 
 [Setup]
-OutputBaseFilename=poedit118_setup
+OutputBaseFilename=poedit119_setup
 AppName=poEdit
-AppVerName=poEdit 1.1.8
+AppVerName=poEdit 1.1.9
 
 ChangesAssociations=true
 AlwaysShowComponentsList=true
@@ -49,6 +49,8 @@ Source: locales\cs-wxstd.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Comp
 Source: locales\cs.mo; DestDir: {app}\share\locale\cs_CZ\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\zh_TW.Big5.mo; DestDir: {app}\share\locale\zh_TW.Big5\LC_MESSAGES; DestName: poedit.mo; Components: i18n
 Source: locales\zh-wxstd.mo; DestDir: {app}\share\locale\zh\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
+Source: locales\nl-wxstd.mo; DestDir: {app}\share\locale\nl\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
+Source: locales\nl.mo; DestDir: {app}\share\locale\nl\LC_MESSAGES; DestName: poedit.mo; Components: i18n
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey
@@ -67,7 +69,7 @@ Name: {group}\poEdit Help; Filename: {app}\share\poedit\poedit.chm; IconIndex: 0
 
 [Run]
 Filename: {app}\doc\readme.txt; Description: View readme.txt; Flags: shellexec postinstall unchecked; Components: docs
-Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run poEdit now; Flags: postinstall unchecked
+Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run poEdit now; Flags: postinstall unchecked nowait
 
 [_ISTool]
 EnableISX=true
@@ -85,6 +87,8 @@ Name: {app}\share\locale\zh; Components: i18n
 Name: {app}\share\locale\zh\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\zh_TW.Big5; Components: i18n
 Name: {app}\share\locale\zh_TW.Big5\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\nl; Components: i18n
+Name: {app}\share\locale\nl\LC_MESSAGES; Components: i18n
 
 [_ISToolPreCompile]
 
