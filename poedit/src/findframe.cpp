@@ -24,7 +24,7 @@
 #include "findframe.h"
 
 // The word separators used when doing a "Whole words only" search
-static const wxString SEPARATORS = " \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@";
+static const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
 
 BEGIN_EVENT_TABLE(FindFrame, wxDialog)
    EVT_BUTTON(XRCID("find_next"), FindFrame::OnNext)
