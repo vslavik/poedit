@@ -420,10 +420,10 @@ poEditFrame::poEditFrame(const wxString& catalog) :
 
     SetIcon(wxICON(appicon));
 
-#ifdef __WXMSW__
+#ifdef CAN_MODIFY_DEFAULT_FONT
     m_boldGuiFont = wxSystemSettings::GetSystemFont(wxSYS_DEFAULT_GUI_FONT);
     m_boldGuiFont.SetWeight(wxFONTWEIGHT_BOLD);
-#endif    
+#endif   
     
     wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar(_T("mainmenu"));
     if (MenuBar)
@@ -1386,7 +1386,7 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
     const wxArrayString& refs = (*m_catalog)[item].GetReferences();
     wxMenu *menu = new wxMenu;
 
-#ifdef __WXMSW__
+#ifdef CAN_MODIFY_DEFAULT_FONT
     wxMenuItem *it1 = new wxMenuItem(menu, ED_POPUP_DUMMY+0, _("References:"));
     it1->SetFont(m_boldGuiFont);
     menu->Append(it1);
@@ -1399,7 +1399,7 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
 
 #ifdef USE_TRANSMEM
     menu->AppendSeparator();
-#ifdef __WXMSW__
+#ifdef CAN_MODIFY_DEFAULT_FONT
     wxMenuItem *it2 = new wxMenuItem(menu, ED_POPUP_DUMMY+1, 
                                      _("Automatic translations:"));
     it2->SetFont(m_boldGuiFont);

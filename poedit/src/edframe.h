@@ -20,6 +20,11 @@
 #ifndef _EDFRAME_H_
 #define _EDFRAME_H_
 
+#if defined(__WXMSW__)
+  #define CAN_MODIFY_DEFAULT_FONT
+#endif
+
+
 #include <wx/frame.h>
 #include <wx/docview.h>
 #include <wx/list.h>
@@ -163,7 +168,7 @@ class poEditFrame : public wxFrame
         poEditListCtrl *m_list;
         wxTextCtrl *m_textOrig, *m_textTrans;
         wxGauge *m_statusGauge;
-#ifdef __WXMSW__
+#ifdef CAN_MODIFY_DEFAULT_FONT
         wxFont m_boldGuiFont;
 #endif
 
