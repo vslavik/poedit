@@ -76,7 +76,7 @@ typedef unsigned short u_short;
 typedef unsigned int u_int;
 typedef unsigned long u_long;
 #endif
-typedef int ssize_t;
+typedef int db_ssize_t;
 
 #define	DB_VERSION_MAJOR	3
 #define	DB_VERSION_MINOR	1
@@ -869,7 +869,7 @@ int   db_env_set_func_ioinfo __P((int (*)(const char *,
 int   db_env_set_func_malloc __P((void *(*)(size_t)));
 int   db_env_set_func_map __P((int (*)(char *, size_t, int, int, void **)));
 int   db_env_set_func_open __P((int (*)(const char *, int, ...)));
-int   db_env_set_func_read __P((ssize_t (*)(int, void *, size_t)));
+int   db_env_set_func_read __P((db_ssize_t (*)(int, void *, size_t)));
 int   db_env_set_func_realloc __P((void *(*)(void *, size_t)));
 int   db_env_set_func_rename __P((int (*)(const char *, const char *)));
 int   db_env_set_func_seek
@@ -877,7 +877,7 @@ int   db_env_set_func_seek
 int   db_env_set_func_sleep __P((int (*)(u_long, u_long)));
 int   db_env_set_func_unlink __P((int (*)(const char *)));
 int   db_env_set_func_unmap __P((int (*)(void *, size_t)));
-int   db_env_set_func_write __P((ssize_t (*)(int, const void *, size_t)));
+int   db_env_set_func_write __P((db_ssize_t (*)(int, const void *, size_t)));
 int   db_env_set_func_yield __P((int (*)(void)));
 int   db_env_set_mutexlocks __P((int));
 int   db_env_set_pageyield __P((int));
