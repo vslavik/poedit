@@ -141,7 +141,7 @@ class poEditListCtrl : public wxListCtrl
             const int LINE_COL_SIZE = m_displayLines ? 50 : 0;
 
             int w = GetSize().x
-                    - wxSystemSettings::GetSystemMetric(wxSYS_VSCROLL_X) + 6
+                    - wxSystemSettings::GetMetric(wxSYS_VSCROLL_X) - 10
                     - LINE_COL_SIZE;
             SetColumnWidth(0, w / 2);
             SetColumnWidth(1, w - w / 2);
