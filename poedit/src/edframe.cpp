@@ -8,7 +8,7 @@
     
       Editor frame
     
-      (c) Vaclav Slavik, 2000-2003
+      (c) Vaclav Slavik, 2000-2004
 
 */
 
@@ -687,9 +687,17 @@ void poEditFrame::OnQuit(wxCommandEvent&)
 void poEditFrame::OnCloseWindow(wxCloseEvent&)
 {
     UpdateFromTextCtrl();
-    if (m_catalog && m_modified && wxMessageBox(_("Catalog modified. Do you want to save changes?"), _("Save changes"), 
-                            wxYES_NO | wxCENTRE | wxICON_QUESTION) == wxYES)
-        WriteCatalog(m_fileName);
+    if (m_catalog && m_modified)
+    {
+        int r =
+            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
+                         _("Save changes"), 
+                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
+        if (r == wxYES)
+            WriteCatalog(m_fileName);
+        else if (r == wxCANCEL)
+            return;
+    }
     Destroy();
 }
 
@@ -698,9 +706,17 @@ void poEditFrame::OnCloseWindow(wxCloseEvent&)
 void poEditFrame::OnOpen(wxCommandEvent&)
 {
     UpdateFromTextCtrl();
-    if (m_catalog && m_modified && wxMessageBox(_("Catalog modified. Do you want to save changes?"), _("Save changes"), 
-                            wxYES_NO | wxCENTRE | wxICON_QUESTION) == wxYES)
-        WriteCatalog(m_fileName);
+    if (m_catalog && m_modified)
+    {
+        int r = 
+            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
+                         _("Save changes"), 
+                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
+        if (r == wxYES)
+            WriteCatalog(m_fileName);
+        else if (r == wxCANCEL)
+            return;
+    }
 
     wxString path = wxPathOnly(m_fileName);
     if (path.empty()) 
@@ -722,9 +738,17 @@ void poEditFrame::OnOpen(wxCommandEvent&)
 void poEditFrame::OnOpenHist(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
-    if (m_catalog && m_modified && wxMessageBox(_("Catalog modified. Do you want to save changes?"), _("Save changes"), 
-                            wxYES_NO | wxCENTRE | wxICON_QUESTION) == wxYES)
-        WriteCatalog(m_fileName);
+    if (m_catalog && m_modified)
+    {
+        int r = 
+            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
+                         _("Save changes"), 
+                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
+        if (r == wxYES)
+            WriteCatalog(m_fileName);
+        else if (r == wxCANCEL)
+            return;
+    }
 
     wxString f(m_history.GetHistoryFile(event.GetId() - wxID_FILE1));
     if (f != wxEmptyString && wxFileExists(f))
@@ -755,9 +779,17 @@ void poEditFrame::OnFileDrop(wxDropFilesEvent& event)
     if (f.FileExists())
     {
         UpdateFromTextCtrl();
-        if (m_catalog && m_modified && wxMessageBox(_("Catalog modified. Do you want to save changes?"), _("Save changes"), 
-                            wxYES_NO | wxCENTRE | wxICON_QUESTION) == wxYES)
-            WriteCatalog(m_fileName);
+        if (m_catalog && m_modified)
+        {
+            int r =
+              wxMessageBox(_("Catalog modified. Do you want to save changes?"),
+                           _("Save changes"), 
+                           wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
+            if (r == wxYES)
+                WriteCatalog(m_fileName);
+            else if (r == wxCANCEL)
+                return;
+        }
         ReadCatalog(f.GetFullPath());
     }
     else
@@ -865,9 +897,17 @@ bool poEditFrame::ExportCatalog(const wxString& filename)
 void poEditFrame::OnNew(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
-    if (m_catalog && m_modified && wxMessageBox(_("Catalog modified. Do you want to save changes?"), _("Save changes"), 
-                            wxYES_NO | wxCENTRE | wxICON_QUESTION) == wxYES)
-        WriteCatalog(m_fileName);
+    if (m_catalog && m_modified)
+    {
+        int r =
+            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
+                         _("Save changes"), 
+                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
+        if (r == wxYES)
+            WriteCatalog(m_fileName);
+        else if (r == wxCANCEL)
+            return;
+    }
 
     SettingsDialog dlg(this);
     Catalog *catalog = new Catalog;
