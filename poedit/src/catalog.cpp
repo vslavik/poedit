@@ -251,18 +251,32 @@ bool LoadParser::OnEntry(const wxString& msgid,
             if (ReadParam(ln2, _T("Last-Translator: "), dummy2))
             {
                 wxStringTokenizer tkn2(dummy2, _T("<>"));
-                if (tkn2.CountTokens() != 2) 
-                    wxLogWarning(_("Corrupted translator record, please correct in Catalog/Settings"));
-                m_catalog->m_header.Translator = tkn2.GetNextToken().Strip(wxString::trailing);
-                m_catalog->m_header.TranslatorEmail = tkn2.GetNextToken();
+                if (tkn2.CountTokens() != 2)
+                {
+                    m_catalog->m_header.Translator = dummy2;
+                    m_catalog->m_header.TranslatorEmail = wxEmptyString;
+                }
+                else
+                {
+                    m_catalog->m_header.Translator = 
+                        tkn2.GetNextToken().Strip(wxString::trailing);
+                    m_catalog->m_header.TranslatorEmail = tkn2.GetNextToken();
+                }
             }
             if (ReadParam(ln2, _T("Language-Team: "), dummy2))
             {
                 wxStringTokenizer tkn2(dummy2, _T("<>"));
                 if (tkn2.CountTokens() != 2) 
-                    wxLogWarning(_("Corrupted team record, please correct in Catalog/Settings"));
-                m_catalog->m_header.Team = tkn2.GetNextToken().Strip(wxString::trailing);
-                m_catalog->m_header.TeamEmail = tkn2.GetNextToken();
+                {
+                    m_catalog->m_header.Team = dummy2;
+                    m_catalog->m_header.TeamEmail = wxEmptyString;
+                }
+                else
+                {
+                    m_catalog->m_header.Team = 
+                        tkn2.GetNextToken().Strip(wxString::trailing);
+                    m_catalog->m_header.TeamEmail = tkn2.GetNextToken();
+                }
             }
         }
         m_catalog->m_header.Comment = comment;
@@ -633,10 +647,16 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     f.AddLine(_T("\"Project-Id-Version: ") + m_header.Project + _T("\\n\""));
     f.AddLine(_T("\"POT-Creation-Date: ") + m_header.CreationDate + _T("\\n\""));
     f.AddLine(_T("\"PO-Revision-Date: ") + m_header.RevisionDate + _T("\\n\""));
-    f.AddLine(_T("\"Last-Translator: ") + m_header.Translator + 
-              _T(" <") + m_header.TranslatorEmail + _T(">\\n\""));
-    f.AddLine(_T("\"Language-Team: ") + m_header.Team +
-              _T(" <") + m_header.TeamEmail + _T(">\\n\""));
+    if (m_header.TranslatorEmail.empty())
+        f.AddLine(_T("\"Last-Translator: ") +m_header.Translator + _T("\\n\""));
+    else
+        f.AddLine(_T("\"Last-Translator: ") + m_header.Translator + 
+                  _T(" <") + m_header.TranslatorEmail + _T(">\\n\""));
+    if (m_header.TeamEmail.empty())
+        f.AddLine(_T("\"Language-Team: ") + m_header.Team + _T("\\n\""));
+    else
+        f.AddLine(_T("\"Language-Team: ") + m_header.Team +
+                  _T(" <") + m_header.TeamEmail + _T(">\\n\""));
     f.AddLine(_T("\"MIME-Version: 1.0\\n\""));
     f.AddLine(_T("\"Content-Type: text/plain; charset=") + charset + _T("\\n\""));
     f.AddLine(_T("\"Content-Transfer-Encoding: 8bit\\n\""));
