@@ -58,38 +58,63 @@ AC_DEFUN(FIND_BERKELEY_DB,
 [
   USE_TRANSMEM=yes
 
-  DB_VERSION=0
   dnl NB: can't look for db_create function because some builds of db-4.x
   dnl     have safe function names such as db_create_4000
-  AC_SEARCH_LIBS(db_create, db db-4.5 db-4.4 db-4.3 db-4.2 db-4.1 db-4.0 db-3.6 db-3.5 db-3.4 db-3.3 db-3.2 db-3.1,
-         [
-             if echo $LIBS | grep -q '\-ldb-4\.' ; then
-                 DB_HEADER_DIR="db4/"
-             elif echo $LIBS | grep -q '\-ldb-3\.' ; then
-                 DB_HEADER_DIR="db3/"
-             fi
-         ],
-         [
-             USE_TRANSMEM=no
-             AC_MSG_WARN([cannot find Berkeley DB >= 3.1, poEdit will build w/o translation memory feature])
-         ])
 
+  old_LIBS="$LIBS"
+                
+  DB_HEADER=""
+  DB_LIBS=""
+
+  AC_MSG_CHECKING([for Berkeley DB])
+
+  for version in "" 5.0 4.9 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1 4.0 3.6 3.5 3.4 3.3 3.2 3.1 ; do
+
+    if test -z $version ; then
+        db_lib="-ldb"
+        try_headers="db.h"
+    else
+        db_lib="-ldb-$version"
+        try_headers="db$version/db.h db`echo $version | sed -e 's,\..*,,g'`/db.h"
+    fi
+        
+    LIBS="$old_LIBS $db_lib"
+ 
+    for db_hdr in $try_headers ; do
+        if test -z $DB_HEADER ; then
+            AC_LINK_IFELSE(
+                [AC_LANG_PROGRAM(
+                    [
+                        #include <${db_hdr}>
+                    ],
+                    [
+                        DB *db;
+                        db_create(&db, NULL, 0);
+                    ])],
+                [
+                    DB_HEADER="$db_hdr"
+                    DB_LIBS="$db_lib"
+                    AC_MSG_RESULT([header $DB_HEADER, library $DB_LIBS])
+                ])
+        fi
+    done
+  done
+
+  LIBS="$old_LIBS"
+
+  if test -z $DB_HEADER ; then
+    AC_MSG_RESULT([not found])
+    
+    USE_TRANSMEM=no
+    AC_MSG_WARN([cannot find Berkeley DB >= 3.1, poEdit will build w/o translation memory feature])
+  fi
+  
   if test x$USE_TRANSMEM != xno ; then
-      AC_CHECK_HEADER(${DB_HEADER_DIR}db.h,
-            [DB_HEADER="${DB_HEADER_DIR}db.h"],
-            [
-              AC_CHECK_HEADER(db.h, [DB_HEADER=db.h],
-              [
-                  USE_TRANSMEM=no
-                  AC_MSG_RESULT(not found)
-                  AC_MSG_WARN([cannot find Berkeley DB >= 3.1, poEdit will build w/o translation memory feature])
-              ])
-            ])
-
-      if test x$USE_TRANSMEM != xno ; then
-          CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM -DDB_HEADER=\\\"$DB_HEADER\\\""
-      fi
-   fi
+      #CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM -DDB_HEADER=\\\"$DB_HEADER\\\""
+      AC_DEFINE(USE_TRANSMEM)
+      AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
+      LIBS="$LIBS $DB_LIBS"
+  fi
 
    if test x$USE_TRANSMEM != xno ; then
       AC_MSG_CHECKING([if db_open requires transaction argument])

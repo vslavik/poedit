@@ -139,7 +139,8 @@ if $WX_CONFIG_NAME --cxxflags | grep -q WXMSW; then
     use_windows=yes
     if test x$USE_TRANSMEM != xno ; then
         AC_DEFINE(USE_TRANSMEM)
-        CXXFLAGS="$CXXFLAGS -DDB_HEADER=\\\"db.h\\\" -I\$(top_srcdir)/extras/win32-db3"
+        AC_DEFINE_UNQUOTED(DB_HEADER, ["db.h"])
+        CXXFLAGS="$CXXFLAGS -I\$(top_srcdir)/extras/win32-db3"
     fi
     
     changequote(<<,>>)
