@@ -158,3 +158,4 @@ _("Toggled if selected string has fuzzy translation");
 _("Edit comment");
 _("Fullscreen view");
 _("Help");
+_("E&xport...");

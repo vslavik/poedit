@@ -164,6 +164,10 @@ class poEditFrame : public wxFrame
         void OnAutoTranslateAll(wxCommandEvent& event);
         bool AutoTranslateCatalog();
 #endif
+        
+        void OnExport(wxCommandEvent& event);
+        bool ExportCatalog(const wxString& filename);
+    
         DECLARE_EVENT_TABLE()
 
     private:

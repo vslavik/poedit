@@ -35,6 +35,7 @@
 #include <wx/statusbr.h>
 #include <wx/splitter.h>
 #include <wx/fontutil.h>
+#include <wx/textfile.h>
 
 #include "catalog.h"
 #include "edapp.h"
@@ -52,6 +53,15 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(poEditFramesList);
 poEditFramesList poEditFrame::ms_instances;
+
+
+#ifdef __VISUALC__
+// Disabling the useless and annoying MSVC++'s
+// warning C4800: 'long' : forcing value to bool 'true' or 'false'
+// (performance warning):
+#pragma warning ( disable : 4800 )
+#endif
+
 
 /*static*/ poEditFrame *poEditFrame::Find(const wxString& filename)
 {
@@ -376,6 +386,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_open"),        poEditFrame::OnOpen)
    EVT_MENU           (XRCID("menu_save"),        poEditFrame::OnSave)
    EVT_MENU           (XRCID("menu_saveas"),      poEditFrame::OnSaveAs)
+   EVT_MENU           (XRCID("menu_export"),      poEditFrame::OnExport)
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    poEditFrame::OnOpenHist)
    EVT_MENU           (XRCID("menu_catsettings"), poEditFrame::OnSettings)
    EVT_MENU           (XRCID("menu_preferences"), poEditFrame::OnPreferences)
@@ -766,6 +777,24 @@ void poEditFrame::OnSave(wxCommandEvent& event)
 }
 
 
+static wxString SuggestFileName(const Catalog::HeaderData& header)
+{
+    wxString name;
+    if (!header.Language.empty())
+    {
+        name = LookupLanguageCode(header.Language);
+        if (!name.empty() && !header.Country.empty())
+        {
+            wxString code = LookupCountryCode(header.Country);
+            if (!code.empty())
+                name += wxString(_T('_')) + code;
+        }
+    }
+    if (name.empty())
+        return _T("default");
+    else
+        return name;
+}
 
 void poEditFrame::OnSaveAs(wxCommandEvent&)
 {
@@ -775,20 +804,7 @@ void poEditFrame::OnSaveAs(wxCommandEvent&)
 
     if (name.empty())
     {
-        if (!m_catalog->Header().Language.empty())
-        {
-            name = LookupLanguageCode(m_catalog->Header().Language);
-            if (!name.empty() && !m_catalog->Header().Country.empty())
-            {
-                wxString code = LookupCountryCode(m_catalog->Header().Country);
-                if (!code.empty())
-                    name += wxString(wxT('_')) + code;
-            }
-        }
-        if (!name.empty())
-            name += _T(".po");
-        else
-            name = _T("default.po");
+        name = SuggestFileName(m_catalog->Header()) + _T(".po");
     }
     
     name = wxFileSelector(_("Save as..."), wxPathOnly(m_fileName), name, wxEmptyString, 
@@ -799,6 +815,49 @@ void poEditFrame::OnSaveAs(wxCommandEvent&)
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
         WriteCatalog(name);
     }
+}
+
+
+void poEditFrame::OnExport(wxCommandEvent&)
+{
+    UpdateFromTextCtrl();
+
+    wxString name(wxFileNameFromPath(m_fileName));
+
+    if (name.empty())
+    {
+        name = SuggestFileName(m_catalog->Header()) + _T(".html");
+
+        if (!m_catalog->Header().Language.empty())
+        {
+            name = LookupLanguageCode(m_catalog->Header().Language);
+            if (!name.empty() && !m_catalog->Header().Country.empty())
+            {
+                wxString code = LookupCountryCode(m_catalog->Header().Country);
+                if (!code.empty())
+                    name += wxString(wxT('_')) + code;
+            }
+        }
+    }
+    else
+		name += _T(".html");        
+
+    name = wxFileSelector(_("Export as..."),
+                          wxPathOnly(m_fileName), name, wxEmptyString, 
+                          _("HTML file (*.html)|*.html"),
+                          wxSAVE | wxOVERWRITE_PROMPT, this);
+    if (!name.IsEmpty())
+    {
+        wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
+        ExportCatalog(name);
+    }
+}
+
+bool poEditFrame::ExportCatalog(const wxString& filename)
+{
+    wxBusyCursor bcur;
+    bool ok = m_catalog->ExportToHTML(filename);
+	return ok;
 }
 
 
@@ -1467,6 +1526,7 @@ void poEditFrame::UpdateMenu()
     {
         GetMenuBar()->Enable(XRCID("menu_save"), false);
         GetMenuBar()->Enable(XRCID("menu_saveas"), false);
+        GetMenuBar()->Enable(XRCID("menu_export"), false);
         GetToolBar()->EnableTool(XRCID("menu_save"), false);
         GetToolBar()->EnableTool(XRCID("menu_update"), false);
         GetToolBar()->EnableTool(XRCID("menu_fuzzy"), false);
@@ -1480,6 +1540,7 @@ void poEditFrame::UpdateMenu()
     {
         GetMenuBar()->Enable(XRCID("menu_save"), true);
         GetMenuBar()->Enable(XRCID("menu_saveas"), true);
+        GetMenuBar()->Enable(XRCID("menu_export"), true);
         GetToolBar()->EnableTool(XRCID("menu_save"), true);
         GetToolBar()->EnableTool(XRCID("menu_fuzzy"), true);
         GetToolBar()->EnableTool(XRCID("menu_comment"), true);

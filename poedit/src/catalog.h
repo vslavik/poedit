@@ -89,6 +89,9 @@ class Catalog
          */
         bool Save(const wxString& po_file, bool save_mo = true);
 
+        /// Exports the catalog to HTML format
+        bool ExportToHTML(const wxString& filename);
+
         /** Updates the catalog from sources.
             \see SourceDigger, Parser, UpdateFromPOT.
          */

@@ -137,6 +137,10 @@ SOURCE=.\src\edframe.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\export_html.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\fileviewer.cpp
 # ADD CPP /YX"wx/wxprec.h"
 # End Source File
