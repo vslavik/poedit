@@ -15,8 +15,8 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  transmem.cpp transmem.h transmemupd.cpp transmemupd.h
 
 LDADD = -L../extras/wx-contrib/src/gizmos \
-        -L../extras/wx-contrib/src/xml \
-        -L../extras/wx-contrib/src/xml/expat \
+        -L../extras/wx-contrib/src/xrc \
+        -L../extras/wx-contrib/src/xrc/expat \
         -lmy_xrc -lmy_gizmos -lmy_expat $(WX_LIBS)
 
 EXTRA_DIST = appicon.ico appicon.xpm
