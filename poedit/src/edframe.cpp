@@ -663,7 +663,7 @@ void poEditFrame::OnOpenHist(wxCommandEvent& event)
     if (f != wxEmptyString && wxFileExists(f))
         ReadCatalog(f);
     else
-        wxLogError(_("File '%s' doesn't exist!"), f.c_str());
+        wxLogError(_("File '%s' doesn't exist."), f.c_str());
 }
         
 
