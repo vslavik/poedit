@@ -280,7 +280,7 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
     GetToolBar()->ToggleTool(XMLID("menu_quotes"), m_DisplayQuotes);
     GetMenuBar()->Check(XMLID("menu_quotes"), m_DisplayQuotes);
     
-    m_Splitter = new wxSplitterWindow(this, -1);
+    m_Splitter = new wxSplitterWindow(this, -1, );
     wxPanel *panel = new wxPanel(m_Splitter);
 
     m_List = new poEditListCtrl(m_Splitter, EDC_LIST, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
@@ -740,8 +740,6 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
 
 void poEditFrame::RefreshControls()
 {
-    wxMenuBar *MenuBar = GetMenuBar();
-
     m_HasObsoleteItems = false;    
     if (!m_Catalog->IsOk())
     {
