@@ -806,7 +806,7 @@ fi
 
 PACKAGE=poedit
 
-VERSION='1.1.9'
+VERSION='1.1.10'
 
 if test "`cd $srcdir && pwd`" != "`pwd`" && test -f $srcdir/config.status; then
   { echo "configure: error: source directory already configured; run "make distclean" there first" 1>&2; exit 1; }
@@ -2206,6 +2206,8 @@ trap 'rm -fr `echo "
          src/resources/Makefile
          locales/Makefile
          docs/Makefile
+         docs/en/Makefile
+         docs/hr/Makefile
          install/Makefile
          install/poedit.keys
          " | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
@@ -2348,6 +2350,8 @@ CONFIG_FILES=\${CONFIG_FILES-"Makefile
          src/resources/Makefile
          locales/Makefile
          docs/Makefile
+         docs/en/Makefile
+         docs/hr/Makefile
          install/Makefile
          install/poedit.keys
          "}

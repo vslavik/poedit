@@ -17,7 +17,7 @@ if test "$build" != "$host" ; then
     STRIP=$host_alias-strip
 fi
 
-AM_INIT_AUTOMAKE(poedit, '1.1.9', avoid_defining_package_and_version)
+AM_INIT_AUTOMAKE(poedit, '1.1.10', avoid_defining_package_and_version)
 
 AM_OPTIONS_WXCONFIG
 
@@ -135,6 +135,8 @@ AC_OUTPUT([
          src/resources/Makefile
          locales/Makefile
          docs/Makefile
+         docs/en/Makefile
+         docs/hr/Makefile
          install/Makefile
          install/poedit.keys
          ])
