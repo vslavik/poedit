@@ -340,7 +340,9 @@ void PreferencesDialog::DoChooseFont(wxTextCtrl *nameField)
         nameField->SetValue(font.GetNativeFontInfoDesc());
     }
 }
-        
+
+#endif // USE_TRANSMEM
+
 void PreferencesDialog::OnChooseListFont(wxCommandEvent& event)
 {
     DoChooseFont(XRCCTRL(*this, "fontname_list", wxTextCtrl));
@@ -350,5 +352,3 @@ void PreferencesDialog::OnChooseTextFont(wxCommandEvent& event)
 {
     DoChooseFont(XRCCTRL(*this, "fontname_text", wxTextCtrl));
 }
-
-#endif // USE_TRANSMEM
