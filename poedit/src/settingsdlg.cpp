@@ -20,8 +20,11 @@
 
 #include <wx/sizer.h>
 #include <wx/statline.h>
+#include <wx/combobox.h>
+#include <wx/textctrl.h>
 #include <wx/gizmos/editlbox.h>
 #include <wx/xml/xmlres.h>
+#include <wx/intl.h>
 
 #include "iso639.h"
 #include "settingsdlg.h"
@@ -44,24 +47,10 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
         m_language->Append((lang++)->lang);
         
     // my custom controls:
-    wxPanel *panel;
-    wxSizer *sizer;
-    
-    panel = XMLCTRL(*this, "keywords_list_panel", wxPanel);
-    sizer = new wxBoxSizer(wxHORIZONTAL);
-    m_keywords = new wxEditableListBox(panel, -1, _("Keywords"));
-    sizer->Add(m_keywords, 1, wxEXPAND);
-    panel->SetSizer(sizer);
-    panel->SetAutoLayout(TRUE);
-    panel->Layout();
-
-    panel = XMLCTRL(*this, "paths_list_panel", wxPanel);
-    sizer = new wxBoxSizer(wxHORIZONTAL);
-    m_paths = new wxEditableListBox(panel, -1, _("Paths"));
-    sizer->Add(m_paths, 1, wxEXPAND);
-    panel->SetSizer(sizer);
-    panel->SetAutoLayout(TRUE);
-    panel->Layout();
+    m_keywords = new wxEditableListBox(this, -1, _("Keywords"));
+    wxTheXmlResource->AttachUnknownControl("keywords", m_keywords);
+    m_paths = new wxEditableListBox(this, -1, _("Paths"));
+    wxTheXmlResource->AttachUnknownControl("paths", m_paths);
 }
 
 

@@ -20,13 +20,14 @@
 #ifndef _SETTINGSDLG_H_
 #define _SETTINGSDLG_H_
 
-#include <wx/wx.h>
 #include <wx/dialog.h>
 #include <wx/notebook.h>
 
 #include "catalog.h"
 
 class WXDLLEXPORT wxEditableListBox;
+class WXDLLEXPORT wxTextCtrl;
+class WXDLLEXPORT wxComboBox;
 
 /// Dialog setting various catalog parameters.
 class SettingsDialog : public wxDialog
