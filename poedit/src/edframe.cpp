@@ -936,13 +936,7 @@ void poEditFrame::OnLinesFlag(wxCommandEvent& event)
 
 void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
 {
-    int ind = m_sel >= m_list->GetItemCount() ? -1 : m_list->GetItemData(m_sel);
-    if (ind >= (int)m_catalog->GetCount() || ind < 0) return;
-
-    wxString quote;
-    if (m_displayQuotes) quote = _T("\""); else quote = wxEmptyString;
-
-    m_textTrans->SetValue(quote + (*m_catalog)[ind].GetString() + quote);
+    m_textTrans->SetValue(m_textOrig->GetValue());
 }
 
 
