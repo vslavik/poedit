@@ -309,16 +309,23 @@ Catalog::Catalog(const wxString& po_file)
 }
 
 
+static wxString GetCurrentTimeRFC822()
+{
+    wxDateTime timenow = wxDateTime::Now();
+    int offs = wxDateTime::TimeZone(wxDateTime::Local).GetOffset();
+    wxString s;
+    s.Printf(_T("%s%s%02i%02i"),
+             timenow.Format(_T("%Y-%m-%d %H:%M")).c_str(),
+             (offs > 0) ? _T("+") : _T("-"),
+             abs(offs) / 3600, (abs(offs) / 60) % 60);
+    return s;
+}
+
 void Catalog::CreateNewHeader()
 {
     HeaderData &dt = Header();
     
-    wxDateTime timenow = wxDateTime::Now();
-    int offs = wxDateTime::TimeZone(wxDateTime::Local).GetOffset();
-    dt.CreationDate.Printf(_T("%s%s%02i%02i"),
-                                 timenow.Format(_T("%Y-%m-%d %H:%M")).c_str(),
-                                 (offs > 0) ? _T("+") : _T("-"),
-                                 offs / 3600, (abs(offs) / 60) % 60);
+    dt.CreationDate = GetCurrentTimeRFC822();
     dt.RevisionDate = dt.CreationDate;
 
     dt.Language = wxEmptyString;
@@ -534,13 +541,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     GetCRLFBehaviour(crlfOrig, crlfPreserve);
 
     /* Update information about last modification time: */
-  
-    wxDateTime timenow = wxDateTime::Now();
-    int offs = wxDateTime::TimeZone(wxDateTime::Local).GetOffset();
-    m_header.RevisionDate.Printf(_T("%s%s%02i%02i"),
-                                 timenow.Format(_T("%Y-%m-%d %H:%M")).c_str(),
-                                 (offs > 0) ? _T("+") : _T("-"),
-                                 offs / 3600, (abs(offs) / 60) % 60);
+ 
+    m_header.RevisionDate = GetCurrentTimeRFC822();
 
     /* Detect CRLF format: */
 
