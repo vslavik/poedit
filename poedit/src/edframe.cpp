@@ -575,9 +575,15 @@ TranslationMemory *poEditFrame::GetTransMem()
         wxString lang;
         wxString dbPath = cfg->Read(_T("TM/database_path"), wxEmptyString);
         
-        if (!m_catalog->Header().Language.IsEmpty())
+        if (!m_catalog->Header().Language.empty())
         {
             lang = LookupLanguageCode(m_catalog->Header().Language.c_str());
+            if (!m_catalog->Header().Country.empty())
+            {
+                lang += _T('_');
+                lang += LookupCountryCode(m_catalog->Header().Country.c_str());
+            }
+            wxMessageBox(lang);
         }
         if (!lang)
         {
