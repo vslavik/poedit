@@ -31,6 +31,8 @@ class WXDLLEXPORT wxListEvent;
 class WXDLLEXPORT wxSplitterWindow;
 class WXDLLEXPORT wxTextCtrl;
 class WXDLLEXPORT wxGauge;
+class WXDLLEXPORT wxNotebook;
+class WXDLLEXPORT wxStaticText;
 
 #ifdef __WXMSW__
 #include <wx/msw/helpchm.h>
