@@ -18,9 +18,9 @@ AllowNoIcons=true
 DisableAppendDir=true
 UninstallStyle=modern
 WizardStyle=modern
-LicenseFile=install\license.rtf
+LicenseFile=E:\softlabs\poedit\code\LICENSE
 OutputDir=.
-InfoAfterFile=install\news.rtf
+InfoAfterFile=
 Compression=bzip
 
 WindowShowCaption=true
@@ -31,16 +31,17 @@ WindowResizable=false
 
 
 SolidCompression=true
+ShowLanguageDialog=yes
 [Files]
 Source: BUILD-mingw\src\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
 Source: install\poedit.exe.manifest; DestDir: {app}\bin; MinVersion: 0,5.01.2600; Components: core
 Source: extras\win32-gettext\gnu_gettext.COPYING; DestDir: {app}\doc; Components: docs
-Source: install\readme.txt; DestDir: {app}\doc; DestName: readme.txt; Components: docs
+Source: README; DestDir: {app}\doc; DestName: readme.txt; Components: docs
 Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit; Components: docs
 Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit; Components: docs
 Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit; Components: i18n
-Source: install\license.txt; DestDir: {app}\doc; DestName: license.txt; Components: docs
-Source: install\news.txt; DestDir: {app}\doc; DestName: news.txt; Components: docs
+Source: LICENSE; DestDir: {app}\doc; DestName: license.txt; Components: docs
+Source: NEWS; DestDir: {app}\doc; DestName: news.txt; Components: docs
 Source: BUILD-mingw\src\resources\resources.zip; DestDir: {app}\share\poedit; DestName: resources.zip; Components: core
 Source: extras\win32-gettext\iconv.dll; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\xgettext.exe; DestDir: {app}\bin; Components: core
@@ -213,4 +214,3 @@ function InstallGlobally : boolean;
 begin
   result := IsAdminLoggedOn;
 end;
-

@@ -19,11 +19,6 @@ for i in *.po ; do msgfmt -o `basename $i .po`.mo $i ; done
 )
 
 
-cp NEWS install/news.txt
-cp README install/readme.txt
-cp LICENSE install/license.txt
-crlf -d install/*.txt
-
 find_unix_files()
 {
   (find . -type f -maxdepth 1 ; \
