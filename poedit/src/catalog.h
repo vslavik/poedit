@@ -269,10 +269,10 @@ class CatalogData : public wxObject
                   m_translation(translation), 
                   m_references(),
                   m_isFuzzy(false),
-                  m_hasBadTokens(false),
                   m_isTranslated(!translation.IsEmpty()),
                   m_isModified(false),
                   m_isAutomatic(false),
+                  m_hasBadTokens(false),
                   m_lineNum(0) {}
 
         /// Returns the original string.
