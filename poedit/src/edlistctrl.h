@@ -26,8 +26,6 @@ class WXDLLEXPORT wxListEvent;
 
 extern bool gs_shadedList;
 
-WX_DEFINE_ARRAY(int, IntArray); 
-
 // list control with both columns equally wide:
 class poEditListCtrl : public wxListView
 {
@@ -74,7 +72,7 @@ class poEditListCtrl : public wxListView
         
         Catalog* m_catalog;
         
-        IntArray m_itemIndexToCatalogIndexArray;
+        wxArrayInt m_itemIndexToCatalogIndexArray;
 };
 
 #endif // _ED_LIST_CTRL_H_
