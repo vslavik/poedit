@@ -4,7 +4,7 @@
     poedit, a wxWindows i18n catalogs editor
 
     ---------------
-      fileviewer.h
+      fileviewer.cpp
     
       Shows part of file around specified line
     
@@ -23,6 +23,7 @@
 #include <wx/wx.h>
 #include <wx/textfile.h>
 #include <wx/config.h>
+#include <wx/sizer.h>
 
 #define NEIGHBOUR_SIZE  40
 
@@ -35,7 +36,14 @@ FileViewer::FileViewer(wxWindow *parent, const wxString& filename, int linenum)
                                  wxConfig::Get()->Read("fileviewer/frame_w", 600),
                                  wxConfig::Get()->Read("fileviewer/frame_h", 400)))
 {
-	wxListBox *listbox = new wxListBox(this, -1, wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE | wxLB_HSCROLL);
+    wxPanel *panel = new wxPanel(this, -1);
+	wxListBox *listbox = 
+        new wxListBox(panel, -1, wxDefaultPosition, wxDefaultSize, 0, NULL, 
+                      wxLB_SINGLE | wxLB_HSCROLL);
+    wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    sizer->Add(listbox, 1, wxEXPAND);
+    panel->SetSizer(sizer);
+    panel->SetAutoLayout(true);
 
     wxTextFile textf(filename);
     
