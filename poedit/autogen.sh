@@ -1,6 +1,6 @@
 #!/bin/sh
 
-aclocal
-automake --foreign -a -c
+aclocal -I admin
+automake --foreign -a -c -f
 autoconf
 
