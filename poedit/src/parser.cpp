@@ -84,7 +84,16 @@ void ParsersDB::Write(wxConfigBase *cfg)
         cfg->SetPath(oldpath);
     }
 }
-
+    
+int ParsersDB::FindParser(const wxString& name)
+{
+    for (size_t i = 0; i < GetCount(); i++)
+    {
+        if ((*this)[i].Name == name)
+            return int(i);
+    }
+    return -1;
+}
 
 
 wxArrayString Parser::SelectParsable(const wxArrayString& files)
@@ -156,4 +165,3 @@ wxString Parser::GetCommand(const wxArrayString& files,
     
     return cmdline;
 }
-

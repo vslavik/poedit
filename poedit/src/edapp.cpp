@@ -8,7 +8,7 @@
     
       Application class
     
-      (c) Vaclav Slavik, 1999-2004
+      (c) Vaclav Slavik, 1999-2005
 
 */
 
@@ -175,12 +175,33 @@ void poEditApp::SetDefaultParsers(wxConfigBase *cfg)
                                          _T("1.2.x"));
     pdb.Read(cfg);
 
-    // Add C/C++ parser (only if there's isn't any parser already):
-    if (pdb.GetCount() == 0)
+    // Add parsers for languages supported by gettext itself (but only if the
+    // user didn't already add language with this name himself):
+    static struct
     {
+        const wxChar *name;
+        const wxChar *exts;
+    } s_gettextLangs[] = {
+        { _T("C/C++"),    _T("*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx") },
+        { _T("C#"),       _T("*.cs") },
+        { _T("Java"),     _T("*.java") },
+        { _T("Perl"),     _T("*.pl") },
+        { _T("PHP"),      _T("*.php") },
+        { _T("Python"),   _T("*.py") },
+        { _T("TCL"),      _T("*.tcl") },
+        { NULL, NULL }
+    };
+   
+    for (size_t i = 0; s_gettextLangs[i].name != NULL; i++)
+    {
+        // if this lang is already registered, don't overwrite it:
+        if (pdb.FindParser(s_gettextLangs[i].name) != -1)
+            continue;
+
+        // otherwise add new parser:
         Parser p;
-        p.Name = _T("C/C++");
-        p.Extensions = _T("*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx");
+        p.Name = s_gettextLangs[i].name;
+        p.Extensions = s_gettextLangs[i].exts;
         p.Command = _T("xgettext --force-po -o %o %C %K %F");
         p.KeywordItem = _T("-k%k");
         p.FileItem = _T("%f");
@@ -207,17 +228,14 @@ void poEditApp::SetDefaultParsers(wxConfigBase *cfg)
     // If upgrading poEdit to 1.2.5, update C++ parser to handle --from-code:
     if (defaultsVersion == _T("1.2.x") || defaultsVersion == _T("1.2.4"))
     {
-        for (unsigned i = 0; i < pdb.GetCount(); i++)
+        int cpp = pdb.FindParser(_T("C/C++"));
+        if (cpp != -1)
         {
-            if (pdb[i].Name == _T("C/C++"))
+            if (pdb[cpp].Command == _T("xgettext --force-po -o %o %K %F"))
             {
-                if (pdb[i].Command == _T("xgettext --force-po -o %o %K %F"))
-                {
-                    pdb[i].Command = _T("xgettext --force-po -o %o %C %K %F");
-                    pdb[i].CharsetItem = _T("--from-code=%c");
-                    changed = true;
-                }
-                break;
+                pdb[cpp].Command = _T("xgettext --force-po -o %o %C %K %F");
+                pdb[cpp].CharsetItem = _T("--from-code=%c");
+                changed = true;
             }
         }
     }

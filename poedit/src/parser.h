@@ -78,12 +78,15 @@ class WXDLLEXPORT wxConfigBase;
  */
 class ParsersDB : public ParserArray
 {
-    public:
-        /// Reads DB from registry/dotfile.
-        void Read(wxConfigBase *cfg);
-        
-        /// Write DB to registry/dotfile.
-        void Write(wxConfigBase *cfg);
+public:
+    /// Reads DB from registry/dotfile.
+    void Read(wxConfigBase *cfg);
+    
+    /// Write DB to registry/dotfile.
+    void Write(wxConfigBase *cfg);
+
+    /// Returns index of parser with given name or -1 if it can't be found:
+    int FindParser(const wxString& name);
 };
 
 #endif // _PARSER_H_
