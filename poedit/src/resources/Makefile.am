@@ -16,3 +16,5 @@ resources.zip: $(XRC_FILES) $(GIF_FILES)
 	if test $(srcdir) != . ; then \
 	  rm -rf *.xrc *.gif \
 	  ; fi
+
+EXTRA_DIST = $(XRC_FILES) $(GIF_FILES)

@@ -86,6 +86,8 @@ XRC_FILES = about.xrc menus.xrc prefs.xrc progress.xrc settings.xrc summary.xrc 
 pkgdatadir = $(datadir)/poedit
 
 pkgdata_DATA = resources.zip
+
+EXTRA_DIST = $(XRC_FILES) $(GIF_FILES)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
 DATA =  $(pkgdata_DATA)
