@@ -31,16 +31,16 @@ WindowResizable=false
 
 
 [Files]
-Source: Bmingw\src\poedit; DestDir: {app}\bin; DestName: poedit.exe; Components: core
+Source: BUILD-mingw\src\poedit; DestDir: {app}\bin; DestName: poedit.exe; Components: core
 Source: install\poedit.exe.manifest; DestDir: {app}\bin; MinVersion: 0,5.01.2600; Components: core
 Source: extras\win32-gettext\gnu_gettext.COPYING; DestDir: {app}\doc; Components: docs
 Source: install\readme.txt; DestDir: {app}\doc; DestName: readme.txt; Components: docs
-Source: docs\poedit.chm; DestDir: {app}\share\poedit; Components: docs
-Source: docs\gettext.chm; DestDir: {app}\share\poedit; Components: docs
-Source: docs\poedit-hr.chm; DestDir: {app}\share\poedit; Components: i18n
+Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit; Components: docs
+Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit; Components: docs
+Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit; Components: i18n
 Source: install\license.txt; DestDir: {app}\doc; DestName: license.txt; Components: docs
 Source: install\news.txt; DestDir: {app}\doc; DestName: news.txt; Components: docs
-Source: Bmingw\src\resources\resources.zip; DestDir: {app}\share\poedit; DestName: resources.zip; Components: core
+Source: BUILD-mingw\src\resources\resources.zip; DestDir: {app}\share\poedit; DestName: resources.zip; Components: core
 Source: extras\win32-gettext\xgettext.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgmerge.exe; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\msgunfmt.exe; DestDir: {app}\bin; Components: core
@@ -71,10 +71,10 @@ Source: locales\sv_SE.mo; DestDir: {app}\share\locale\sv_SE\LC_MESSAGES; Compone
 Source: locales\sv-wxstd.mo; DestDir: {app}\share\locale\sv_SE\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 
 [Registry]
-Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey
-Root: HKCR; SubKey: GettextFile; ValueType: string; ValueData: Gettext message catalog; Flags: uninsdeletekey
-Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData: """{app}\bin\poedit.exe"" ""%1"""; Flags: uninsdeletevalue
-Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\bin\poedit.exe,0; Flags: uninsdeletekey
+Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
+Root: HKCR; SubKey: GettextFile; ValueType: string; ValueData: Gettext message catalog; Flags: uninsdeletekey noerror
+Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData: """{app}\bin\poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
+Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\bin\poedit.exe,0; Flags: uninsdeletekey noerror
 Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty dontcreatekey
 Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcreatekey
 Root: HKLM; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty; Check: InstallGlobally
