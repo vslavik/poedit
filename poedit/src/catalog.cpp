@@ -469,6 +469,22 @@ void Catalog::Clear()
 }
 
 
+static bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
+{
+    if (s.empty())
+        return true;
+#if !wxUSE_UNICODE
+    wxString trans = 
+        wxString(s.wc_str(wxConvUTF8), conv);
+    if (!trans)
+        return false;
+#else
+    if (!s.mb_str(conv))
+        return false;
+#endif
+    return true;
+}
+
 static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
 {
     if (charset == _T("utf-8") || charset == _T("UTF-8"))
@@ -478,19 +494,11 @@ static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
     size_t cnt = catalog.GetCount();
     for (size_t i = 0; i < cnt; i++)
     {
-        const wxString& orig = catalog[i].GetTranslation();
-        if (orig.IsEmpty())
-            continue;
-#if !wxUSE_UNICODE
-        wxString trans = 
-            wxString(orig.wc_str(wxConvUTF8), conv);
-        if (!trans)
+        if (!CanEncodeStringToCharset(catalog[i].GetTranslation(), conv) ||
+            !CanEncodeStringToCharset(catalog[i].GetString(), conv))
+        {
             return false;
-#else
-        if (!orig.mb_str(conv))
-            return false;
-#endif
-        
+        }
     }
     return true;
 }
