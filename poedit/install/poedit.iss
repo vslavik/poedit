@@ -91,6 +91,7 @@ Source: locales\wxwin\hu.mo; DestDir: {app}\share\locale\hu\LC_MESSAGES; Compone
 Source: locales\lt.mo; DestDir: {app}\share\locale\lt\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\fa_IR.mo; DestDir: {app}\share\locale\fa_IR\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\af_ZA.mo; DestDir: {app}\share\locale\af_ZA\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\wxwin\af_ZA.mo; DestDir: {app}\share\locale\af_ZA\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\sl.mo; DestDir: {app}\share\locale\sl\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\wxwin\sl.mo; DestDir: {app}\share\locale\sl\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 
