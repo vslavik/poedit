@@ -69,6 +69,9 @@ wxString poEditApp::GetAppVersion() const
 
 bool poEditApp::OnInit()
 {
+    if (!wxApp::OnInit())
+        return false;
+
 	#ifdef __UNIX__
     wxString home = wxGetHomeDir() + _T("/");
 
