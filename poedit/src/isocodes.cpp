@@ -54,7 +54,7 @@ LanguageStruct isoLanguages[] =
 
     {_T("ga"), _T("Irish")},
     {_T("gd"), _T("Gaelic")},
-    {_T("gl"), _T("Gallegan")},
+    {_T("gl"), _T("Galician")},
     {_T("gn"), _T("Guarani")},
     {_T("gu"), _T("Gujarati")},
 
