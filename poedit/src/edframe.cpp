@@ -1157,7 +1157,7 @@ inline wxString convertToLocalCharset(const wxString& str)
 inline wxString convertFromLocalCharset(const wxString& str)
 {
 #if !wxUSE_UNICODE
-    return s2(str.wc_str(wxConvLocal), wxConvUTF8);
+    return wxString(str.wc_str(wxConvLocal), wxConvUTF8);
 #else
     return str;
 #endif
@@ -1263,10 +1263,8 @@ void poEditFrame::UpdateToTextCtrl(int item)
     if (m_displayQuotes) quote = _T("\""); else quote = wxEmptyString;
     t_o = quote + (*m_catalog)[ind].GetString() + quote;
     t_o.Replace(_T("\\n"), _T("\\n\n"));
-    m_textOrig->SetValue(t_o);
     t_c = (*m_catalog)[ind].GetComment();
     t_c.Replace(_T("\\n"), _T("\\n\n"));
-    m_textComment->SetValue(t_c);
     t_t = quote + (*m_catalog)[ind].GetTranslation() + quote;
     t_t.Replace(_T("\\n"), _T("\\n\n"));
     
@@ -1277,7 +1275,10 @@ void poEditFrame::UpdateToTextCtrl(int item)
     t_c = convertToLocalCharset(t_c);
 #endif
     
+    m_textOrig->SetValue(t_o);
+    m_textComment->SetValue(t_c);
     m_textTrans->SetValue(t_t);
+
     m_edittedTextOrig = t_t;
     if (m_displayQuotes) 
         m_textTrans->SetInsertionPoint(1);

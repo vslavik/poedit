@@ -45,11 +45,7 @@ WX_DEFINE_OBJARRAY(CatalogDataArray)
 // textfile processing utilities:
 
 // Read one line from file, remove all \r and \n characters, ignore empty lines
-#if wxUSE_UNICODE
-static wxString ReadTextLine(wxTextFile* f)
-#else
 static wxString ReadTextLine(wxTextFile* f, wxMBConv *conv)
-#endif
 {
     wxString s;
     
@@ -59,7 +55,8 @@ static wxString ReadTextLine(wxTextFile* f, wxMBConv *conv)
         s = f->GetNextLine();
     }
 #if !wxUSE_UNICODE
-    s = wxString(s.wc_str(*conv), wxConvUTF8);
+    if (conv)
+        s = wxString(s.wc_str(*conv), wxConvUTF8);
 #endif
     return s;
 }
@@ -91,19 +88,19 @@ void CatalogParser::Parse()
     unsigned mlinenum;
     
     line = m_textFile->GetFirstLine();
-    if (line.IsEmpty()) line = ReadTextLine(m_textFile);
+    if (line.IsEmpty()) line = ReadTextLine(m_textFile, m_conv);
 
     while (!line.IsEmpty())
     {
         // ignore empty special tags:
         while (line == _T("#,") || line == _T("#:"))
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine(m_textFile, m_conv);
         
         // flags:        
         if (ReadParam(line, _T("#, "), dummy))
         {
             mflags = _T("#, ") + dummy;
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine(m_textFile, m_conv);
         }
         
         // references:
@@ -112,7 +109,7 @@ void CatalogParser::Parse()
             wxStringTokenizer tkn(dummy, _T("\t\r\n "));
             while (tkn.HasMoreTokens())
                 mrefs.Add(tkn.GetNextToken());
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine(m_textFile, m_conv);
         }
         
         // msgid:
@@ -121,7 +118,7 @@ void CatalogParser::Parse()
         {
             mstr = dummy.RemoveLast();
             mlinenum = m_textFile->GetCurrentLine() + 1;
-            while (!(line = ReadTextLine(m_textFile)).IsEmpty())
+            while (!(line = ReadTextLine(m_textFile, m_conv)).IsEmpty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
@@ -137,7 +134,7 @@ void CatalogParser::Parse()
                  ReadParam(line, _T("msgstr\t\""), dummy))
         {
             mtrans = dummy.RemoveLast();
-            while (!(line = ReadTextLine(m_textFile)).IsEmpty())
+            while (!(line = ReadTextLine(m_textFile, m_conv)).IsEmpty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
@@ -161,12 +158,12 @@ void CatalogParser::Parse()
                    (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':'))))
             {
                 mcomment << line << _T('\n');
-                line = ReadTextLine(m_textFile);
+                line = ReadTextLine(m_textFile, m_conv);
             }
         }
         
         else
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine(m_textFile, m_conv);
     }
 }
 
@@ -175,8 +172,8 @@ void CatalogParser::Parse()
 class CharsetInfoFinder : public CatalogParser
 {
     public:
-        CharsetInfoFinder(wxTextFile *f) 
-                : CatalogParser(f), m_charset(_T("iso-8859-1")) {}
+        CharsetInfoFinder(wxTextFile *f, wxMBConv *conv) 
+                : CatalogParser(f, conv), m_charset(_T("iso-8859-1")) {}
         wxString GetCharset() const { return m_charset; }
 
     protected:
@@ -225,8 +222,8 @@ bool CharsetInfoFinder::OnEntry(const wxString& msgid,
 class LoadParser : public CatalogParser
 {
     public:
-        LoadParser(Catalog *c, wxTextFile *f)
-              : CatalogParser(f), m_catalog(c) {}
+        LoadParser(Catalog *c, wxTextFile *f, wxMBConv *conv)
+              : CatalogParser(f, conv), m_catalog(c) {}
 
     protected:
         Catalog *m_catalog;
@@ -397,7 +394,8 @@ bool Catalog::Load(const wxString& po_file)
         wxString dummy;
         // poedit header (optional, we should be able to read any catalog):
         f.GetFirstLine();
-        if (ReadParam(ReadTextLine(&f), _T("#. Number of items: "), dummy))
+        if (ReadParam(ReadTextLine(&f, NULL),
+                      _T("#. Number of items: "), dummy))
         {
             long sz;
             dummy.ToLong(&sz);
@@ -406,27 +404,28 @@ bool Catalog::Load(const wxString& po_file)
         }
         else
             m_data = new wxHashTable(wxKEY_STRING);
-        ReadParam(ReadTextLine(&f), _T("#. Language: "), m_header.Language);
-        dummy = ReadTextLine(&f);
+        ReadParam(ReadTextLine(&f, NULL),
+                  _T("#. Language: "), m_header.Language);
+        dummy = ReadTextLine(&f, NULL);
         if (ReadParam(dummy, _T("#. Country: "), m_header.Country))
-            dummy = ReadTextLine(&f);
+            dummy = ReadTextLine(&f, NULL);
         ReadParam(dummy, _T("#. Basepath: "), m_header.BasePath);
 
-        if (ReadParam(ReadTextLine(&f), _T("#. Paths: "), dummy))
+        if (ReadParam(ReadTextLine(&f, NULL), _T("#. Paths: "), dummy))
         {
             long sz;
             dummy.ToLong(&sz);
             for (; sz > 0; sz--)
-            if (ReadParam(ReadTextLine(&f), _T("#.     "), dummy))
+            if (ReadParam(ReadTextLine(&f, NULL), _T("#.     "), dummy))
                 m_header.SearchPaths.Add(dummy);
         }
 
-        if (ReadParam(ReadTextLine(&f), _T("#. Keywords: "), dummy))
+        if (ReadParam(ReadTextLine(&f, NULL), _T("#. Keywords: "), dummy))
         {
             long sz;
             dummy.ToLong(&sz);
             for (; sz > 0; sz--)
-            if (ReadParam(ReadTextLine(&f), _T("#.     "), dummy))
+            if (ReadParam(ReadTextLine(&f, NULL), _T("#.     "), dummy))
                 m_header.Keywords.Add(dummy);
         }
 
@@ -440,7 +439,7 @@ bool Catalog::Load(const wxString& po_file)
 
     if (!f.Open(po_file)) return false;
     
-    CharsetInfoFinder charsetFinder(&f);
+    CharsetInfoFinder charsetFinder(&f, &wxConvISO8859_1);
     charsetFinder.Parse();
     m_header.Charset = charsetFinder.GetCharset();
 
@@ -448,7 +447,7 @@ bool Catalog::Load(const wxString& po_file)
     wxCSConv encConv(m_header.Charset);
     if (!f.Open(po_file, encConv)) return false;
 
-    LoadParser parser(this, &f);
+    LoadParser parser(this, &f, &encConv);
     parser.Parse();
 
     m_isOk = true;
@@ -566,8 +565,8 @@ inline wxString convertUtf8ToCharset(const wxString& s, wxMBConv *conv)
     return wxString(s.wc_str(wxConvUTF8), *conv);
 #else
     return s;
-}
 #endif
+}
 
 bool Catalog::Save(const wxString& po_file, bool save_mo)
 {

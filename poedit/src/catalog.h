@@ -181,7 +181,7 @@ class CatalogParser
 {
     public:
 #if wxUSE_UNICODE
-        CatalogParser(wxTextFile *f) : m_textFile(f) {}
+        CatalogParser(wxTextFile *f) : m_textFile(f), m_conv(NULL) {}
 #else
         CatalogParser(wxTextFile *f, wxMBConv *conv)
             : m_textFile(f), m_conv(conv) {}
@@ -207,9 +207,7 @@ class CatalogParser
 
         /// Textfile being parsed.
         wxTextFile *m_textFile;
-#if !wxUSE_UNICODE
         wxMBConv   *m_conv;
-#endif
 };
 
 
