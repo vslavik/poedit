@@ -89,6 +89,7 @@ wxLanguage ChooseLanguage()
         { _T("Georgian"), wxLANGUAGE_GEORGIAN },
         { _T("German"), wxLANGUAGE_GERMAN },
         { _T("Greek"), wxLANGUAGE_GREEK },
+        { _T("Hungarian"), wxLANGUAGE_HUNGARIAN },
         { _T("Icelandic"), wxLANGUAGE_ICELANDIC },
         { _T("Italian"), wxLANGUAGE_ITALIAN },
         { _T("Japanese"), wxLANGUAGE_JAPANESE },
@@ -96,14 +97,16 @@ wxLanguage ChooseLanguage()
         { _T("Norwegian Nynorsk"), wxLANGUAGE_NORWEGIAN_NYNORSK },
         { _T("Norwegian Bokmål"), wxLANGUAGE_NORWEGIAN_BOKMAL },
         { _T("Polish"), wxLANGUAGE_POLISH },
+        { _T("Portuguese"), wxLANGUAGE_PORTUGUESE },
+        { _T("Portuguese (Brazilian)"), wxLANGUAGE_PORTUGUESE_BRAZILIAN },
         { _T("Romanian"), wxLANGUAGE_ROMANIAN },
         { _T("Russian"), wxLANGUAGE_RUSSIAN },
+        { _T("Serbian"), wxLANGUAGE_SERBIAN },
         { _T("Slovak"), wxLANGUAGE_SLOVAK },
         { _T("Spanish"), wxLANGUAGE_SPANISH },
         { _T("Swedish"), wxLANGUAGE_SWEDISH },
         { _T("Turkish"), wxLANGUAGE_TURKISH },
         { _T("Tamil"), wxLANGUAGE_TAMIL },
-        { _T("Portuguese (Brazilian)"), wxLANGUAGE_PORTUGUESE_BRAZILIAN },
 
         { NULL, wxLANGUAGE_UNKNOWN }
     };
