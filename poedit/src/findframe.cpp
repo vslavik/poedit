@@ -34,9 +34,11 @@ BEGIN_EVENT_TABLE(FindFrame, wxDialog)
 END_EVENT_TABLE()
 
 FindFrame::FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c,
-                     wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans)
+                     wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans,
+                  wxTextCtrl *textCtrlComments, wxTextCtrl *textCtrlAutoComments)
         : m_listCtrl(list), m_catalog(c), m_position(-1),
-          m_textCtrlOrig(textCtrlOrig), m_textCtrlTrans(textCtrlTrans)
+          m_textCtrlOrig(textCtrlOrig), m_textCtrlTrans(textCtrlTrans),
+          m_textCtrlComments(textCtrlComments), m_textCtrlAutoComments(textCtrlAutoComments)
 {
     wxPoint p(wxConfig::Get()->Read(_T("find_pos_x"), -1),
               wxConfig::Get()->Read(_T("find_pos_y"), -1));
@@ -54,6 +56,10 @@ FindFrame::FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c,
         wxConfig::Get()->Read(_T("find_in_orig"), (long)true));
     XRCCTRL(*this, "in_trans", wxCheckBox)->SetValue(
         wxConfig::Get()->Read(_T("find_in_trans"), (long)true));
+    XRCCTRL(*this, "in_comments", wxCheckBox)->SetValue(
+        wxConfig::Get()->Read(_T("find_in_comments"), (long)true));
+    XRCCTRL(*this, "in_auto_comments", wxCheckBox)->SetValue(
+        wxConfig::Get()->Read(_T("find_in_auto_comments"), (long)true));
     XRCCTRL(*this, "case_sensitive", wxCheckBox)->SetValue(
         wxConfig::Get()->Read(_T("find_case_sensitive"), (long)false));
     XRCCTRL(*this, "from_first", wxCheckBox)->SetValue(
@@ -70,6 +76,10 @@ FindFrame::~FindFrame()
             XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("find_in_trans"),
                 XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue());
+    wxConfig::Get()->Write(_T("find_in_comments"),
+                XRCCTRL(*this, "in_comments", wxCheckBox)->GetValue());
+    wxConfig::Get()->Write(_T("find_in_auto_comments"),
+                XRCCTRL(*this, "in_auto_comments", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("find_case_sensitive"),
                 XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("find_from_first"),
@@ -139,7 +149,9 @@ enum FoundState
 {
     Found_Not = 0,
     Found_InOrig,
-    Found_InTrans
+    Found_InTrans,
+    Found_InComments,
+    Found_InAutoComments
 };
 
 bool FindFrame::DoFind(int dir)
@@ -147,6 +159,8 @@ bool FindFrame::DoFind(int dir)
     int cnt = m_listCtrl->GetItemCount();
     bool inStr = XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue();
     bool inTrans = XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue();
+    bool inComments = XRCCTRL(*this, "in_comments", wxCheckBox)->GetValue();
+    bool inAutoComments = XRCCTRL(*this, "in_auto_comments", wxCheckBox)->GetValue();
     bool caseSens = XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue();
     int posOrig = m_position;
 
@@ -185,6 +199,35 @@ bool FindFrame::DoFind(int dir)
 
             if (textc.Contains(text)) { found = Found_InTrans; break; }
         }
+        if (inComments)
+        {
+            #if wxUSE_UNICODE
+            textc = dt.GetComment();
+            #else
+            textc = wxString(dt.GetComment().wc_str(wxConvUTF8), wxConvLocal);
+            #endif
+            if (!caseSens)
+                textc.MakeLower();
+
+            if (textc.Contains(text)) { found = Found_InComments; break; }
+        }
+        if (inAutoComments)
+        {
+            wxArrayString autoComments = dt.GetAutoComments();
+            textc = wxEmptyString;
+            for (unsigned i=0; i < autoComments.GetCount(); i++)
+                textc += autoComments[i];
+            
+            #if wxUSE_UNICODE
+            //textc = dt.GetComments();
+            #else
+            textc = wxString(textc.wc_str(wxConvUTF8), wxConvLocal);
+            #endif
+            if (!caseSens)
+                textc.MakeLower();
+
+            if (textc.Contains(text)) { found = Found_InAutoComments; break; }
+        }
 
         m_position += dir;
     }
@@ -199,8 +242,22 @@ bool FindFrame::DoFind(int dir)
 
         // find the text on the control and select it:
 
-        wxTextCtrl *txt =
-            (found == Found_InOrig) ? m_textCtrlOrig : m_textCtrlTrans;
+        wxTextCtrl* txt;
+        switch (found)
+        {
+            case Found_InOrig: 
+              txt = m_textCtrlOrig; 
+              break;
+            case Found_InTrans:
+              txt = m_textCtrlTrans;
+              break;
+            case Found_InComments:
+              txt = m_textCtrlComments;
+              break;
+            case Found_InAutoComments:
+              txt = m_textCtrlAutoComments;
+              break;
+        }
 
         textc = txt->GetValue();
         if (!caseSens)

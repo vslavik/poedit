@@ -13,6 +13,8 @@ _("Case sensitive");
 _("Start from the first item");
 _("Find in original strings");
 _("Find in translations");
+_("Find in comments");
+_("Find in automatic comments");
 _("Cancel");
 _("< Previous");
 _("Next >");
