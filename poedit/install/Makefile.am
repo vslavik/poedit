@@ -35,3 +35,7 @@ install-gnome:
 	
 
 endif
+
+dist-hook:
+	cp -fp $(srcdir)/poedit.* $(srcdir)/*.kdelnk $(srcdir)/license.txt \
+          $(distdir)

@@ -122,6 +122,7 @@ distdir: $(DISTFILES)
 	    || cp -p $$d/$$file $(distdir)/$$file || :; \
 	  fi; \
 	done
+	$(MAKE) $(AM_MAKEFLAGS) top_distdir="$(top_distdir)" distdir="$(distdir)" dist-hook
 info-am:
 info: info-am
 dvi-am:
@@ -205,6 +206,10 @@ install-data-local: install-gnome install-kde
 @USE_GNOME_TRUE@	install -m 644 poedit.keys $(GNOME_DATA_DIR)/mime-info
 
 @USE_GNOME_FALSE@install-gnome:
+
+dist-hook:
+	cp -fp $(srcdir)/poedit.* $(srcdir)/*.kdelnk $(srcdir)/license.txt \
+          $(distdir)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

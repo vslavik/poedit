@@ -14,3 +14,8 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edframe.cpp \
 poedit_LDADD = -Lwxxml_snapshot -lwxxml_snapshot $(LDFLAGS)
 
 EXTRA_DIST = resource.xml
+
+dist-hook:
+	mkdir $(distdir)/bitmaps
+	cp -p $(srcdir)/bitmaps/*.xpm $(srcdir)/bitmaps/*.ico \
+          $(srcdir)/bitmaps/*.gif $(distdir)/bitmaps

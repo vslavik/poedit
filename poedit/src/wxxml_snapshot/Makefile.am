@@ -12,3 +12,6 @@ libwxxml_snapshot_a_SOURCES = \
                        xh_sizer.cpp xh_slidr.cpp xh_spin.cpp xh_stbmp.cpp \
                        xh_sttxt.cpp xh_text.cpp xh_toolb.cpp
 
+dist-hook:
+	mkdir -p $(distdir)/include/wx/xml
+	cp -p $(srcdir)/include/wx/xml/*.h $(distdir)/include/wx/xml
