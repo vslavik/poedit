@@ -51,7 +51,6 @@ BEGIN_EVENT_TABLE(ProgressDlg, wxDialog)
    EVT_BUTTON(wxID_CANCEL, ProgressDlg::OnCancel)
 END_EVENT_TABLE()
 
-
 ProgressInfo::ProgressInfo()
 {
     m_cancelled = false;
@@ -64,8 +63,6 @@ ProgressInfo::ProgressInfo()
     m_disabler = new wxWindowDisabler(m_dlg);
 }
 
-
-
 ProgressInfo::~ProgressInfo()
 {
     delete m_disabler;
@@ -74,22 +71,16 @@ ProgressInfo::~ProgressInfo()
     m_dlg->Destroy();
 }
 
-
-
 void ProgressInfo::SetTitle(const wxString& text)
 {
     m_dlg->SetTitle(text);
     wxYield();
 }
-
-
-            
+           
 void ProgressInfo::SetGaugeMax(int limit)
 {
     XMLCTRL(*m_dlg, "progress", wxGauge)->SetRange(limit);
 }
-
-
 
 void ProgressInfo::UpdateGauge(int increment)
 {
@@ -97,7 +88,10 @@ void ProgressInfo::UpdateGauge(int increment)
     g->SetValue(g->GetValue() + increment);
 }
 
-
+void ProgressInfo::ResetGauge(int value)
+{
+    XMLCTRL(*m_dlg, "progress", wxGauge)->SetValue(value);
+}
 
 void ProgressInfo::UpdateMessage(const wxString& text)
 {
@@ -105,4 +99,3 @@ void ProgressInfo::UpdateMessage(const wxString& text)
     m_dlg->Refresh();
     wxYield();
 }
-            

@@ -20,9 +20,9 @@
 #ifndef _PROGRESSINFO_H_
 #define _PROGRESSINFO_H_
 
-class wxString;
-class wxDialog;
-class wxWindowDisabler;
+class WXDLLEXPORT wxString;
+class WXDLLEXPORT wxDialog;
+class WXDLLEXPORT wxWindowDisabler;
 
 /// This class displays fancy progress dialog.
 class ProgressInfo
@@ -41,7 +41,10 @@ class ProgressInfo
                 \param increment the delta
                 \return false if user cancelled operation, true otherwise
              */
-            void UpdateGauge(int increment);
+            void UpdateGauge(int increment = +1);
+
+            /// Resets the gauge to given \a value.
+            void ResetGauge(int value = 0);
 
             /// Updates informative message.
             void UpdateMessage(const wxString& text);
