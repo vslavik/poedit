@@ -6,7 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: poEdit\n"
-"POT-Creation-Date: 2004-07-13 19:16+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-11-24 00:16+0100\n"
 "PO-Revision-Date: 2004-09-16 15:58+0100\n"
 "Last-Translator: 3ARRANO Euskalgintza Taldea <3arrano@euskalerria.org>\n"
 "Language-Team: 3ARRANO Euskalgintza Taldea <3arrano@euskalerria.org>\n"
@@ -15,21 +16,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Basque\n"
 
-#: ../src/edframe.cpp:1625
+#: ../src/edframe.cpp:1907
 msgid " (modified)"
 msgstr "(eraldatua)"
 
-#: ../src/digger.cpp:42
+#: ../src/digger.cpp:43
 msgid " files..."
 msgstr "fitxategiak..."
 
-#: ../src/edframe.cpp:1603
-#: ../src/export_html.cpp:131
+#: ../src/edframe.cpp:1875 ../src/export_html.cpp:131
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i esaldi (%i nahasi, %i oker, %i itzuli gabe)"
 
-#: ../src/resources/xrc_strings.h:59
+#: ../src/resources/xrc_strings.h:60
 msgid "&About..."
 msgstr "&Honen inguruan..."
 
@@ -37,16 +37,11 @@ msgstr "&Honen inguruan..."
 msgid "&Automatically translate using TM"
 msgstr "&TM erabiliz bere kasa itzuli"
 
-#: ../src/resources/xrc_strings.h:46
-msgid "&Catalog"
-msgstr "&Katalogoa"
-
-#: ../src/resources/xrc_strings.h:30
-#: ../src/resources/xrc_strings.h:39
+#: ../src/resources/xrc_strings.h:30 ../src/resources/xrc_strings.h:39
 msgid "&Close"
 msgstr "&Itxi"
 
-#: ../src/resources/xrc_strings.h:57
+#: ../src/resources/xrc_strings.h:58
 msgid "&Contents..."
 msgstr "&Edukiak..."
 
@@ -54,9 +49,8 @@ msgstr "&Edukiak..."
 msgid "&Edit"
 msgstr "&Ekintzak"
 
-#: ../src/resources/xrc_strings.h:28
-#: ../src/resources/xrc_strings.h:31
-#: ../src/edframe.cpp:488
+#: ../src/resources/xrc_strings.h:28 ../src/resources/xrc_strings.h:31
+#: ../src/edframe.cpp:493
 msgid "&File"
 msgstr "&Fitxategia"
 
@@ -68,7 +62,7 @@ msgstr "&Bilatu..."
 msgid "&Fullscreen view"
 msgstr "&Osoko ikuskera"
 
-#: ../src/resources/xrc_strings.h:60
+#: ../src/resources/xrc_strings.h:61
 msgid "&Help"
 msgstr "&Laguntza"
 
@@ -80,8 +74,7 @@ msgstr "&Katalogo berria..."
 msgid "&Open"
 msgstr "&Ireki"
 
-#: ../src/resources/xrc_strings.h:29
-#: ../src/resources/xrc_strings.h:38
+#: ../src/resources/xrc_strings.h:29 ../src/resources/xrc_strings.h:38
 msgid "&Preferences..."
 msgstr "&Hobespenak..."
 
@@ -93,7 +86,7 @@ msgstr "&Gorde"
 msgid "&Settings..."
 msgstr "&Ezarpenak..."
 
-#: ../src/resources/xrc_strings.h:56
+#: ../src/resources/xrc_strings.h:57
 msgid "&Shaded translations list"
 msgstr "&Itzalak itzulpen zerrendan"
 
@@ -109,16 +102,16 @@ msgstr "&Iturburuetatik eguneratu"
 msgid "&View"
 msgstr "&Ikusi"
 
-#: ../src/catalog.cpp:947
+#: ../src/catalog.cpp:1165
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' ez da balizko POT fitxategia."
 
-#: ../src/edframe.cpp:1552
+#: ../src/edframe.cpp:1798
 msgid "'."
 msgstr "'."
 
-#: ../src/resources/xrc_strings.h:87
+#: ../src/resources/xrc_strings.h:88
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f fitxategi izenarekin ordeztuko da eta %l lerro zenbakiarekin)"
 
@@ -127,7 +120,7 @@ msgstr "(%f fitxategi izenarekin ordeztuko da eta %l lerro zenbakiarekin)"
 msgid "(%i new, %i obsolete)"
 msgstr "(%i berri, %i zahar)"
 
-#: ../src/resources/xrc_strings.h:154
+#: ../src/resources/xrc_strings.h:156
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 berri, 0 zahar)"
 
@@ -135,7 +128,7 @@ msgstr "(0 berri, 0 zahar)"
 msgid "(Use default language)"
 msgstr "(Berezko hizkuntza erabili)"
 
-#: ../src/edframe.cpp:718
+#: ../src/edframe.cpp:770
 msgid "(none of these)"
 msgstr "(bat ere ez)"
 
@@ -143,7 +136,7 @@ msgstr "(bat ere ez)"
 msgid "< Previous"
 msgstr "< Atzera"
 
-#: ../src/manager.cpp:351
+#: ../src/manager.cpp:348
 msgid "<unnamed>"
 msgstr "<izengabea>"
 
@@ -151,7 +144,7 @@ msgstr "<izengabea>"
 msgid "About poEdit"
 msgstr "poEditen inguruan"
 
-#: ../src/resources/xrc_strings.h:98
+#: ../src/resources/xrc_strings.h:99
 msgid "Add"
 msgstr "Gehitu"
 
@@ -159,28 +152,27 @@ msgstr "Gehitu"
 msgid "Add directory to the list"
 msgstr "Zerrendara helbidetegia gehitu"
 
-#: ../src/resources/xrc_strings.h:162
-#: ../src/transmemupd_wizard.cpp:123
+#: ../src/resources/xrc_strings.h:164 ../src/transmemupd_wizard.cpp:123
 msgid "Add files"
 msgstr "Fitxategiak gehitu"
 
-#: ../src/resources/xrc_strings.h:129
+#: ../src/resources/xrc_strings.h:130
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Katalogoak dauden helbidetegien zerrendara helbidea gehitu."
 
-#: ../src/resources/xrc_strings.h:72
+#: ../src/resources/xrc_strings.h:73
 msgid "Always change focus to text input field"
 msgstr "Beti enfokatu esaldia itzultzeko gunea"
 
-#: ../src/resources/xrc_strings.h:122
+#: ../src/resources/xrc_strings.h:123
 msgid "An item in input files list:"
 msgstr "Sarreren zerrendako itema:"
 
-#: ../src/resources/xrc_strings.h:120
+#: ../src/resources/xrc_strings.h:121
 msgid "An item in keywords list:"
 msgstr "Hitz garrantzitsuen zerrendako itema:"
 
-#: ../src/resources/xrc_strings.h:76
+#: ../src/resources/xrc_strings.h:77
 msgid "Automatic spellchecking"
 msgstr "Berezko ortografia azterketa"
 
@@ -188,67 +180,74 @@ msgstr "Berezko ortografia azterketa"
 msgid "Automatic translation"
 msgstr "Berezko itzulpena"
 
-#: ../src/edframe.cpp:1823
-#: ../src/edframe.cpp:1827
+#: ../src/edframe.cpp:2112 ../src/edframe.cpp:2116
 msgid "Automatic translations:"
 msgstr "Berezko itzulpenak:"
 
-#: ../src/resources/xrc_strings.h:69
+#: ../src/resources/xrc_strings.h:70
 msgid "Automatically compile .mo file on save"
 msgstr "Gordetzean .mo fitxategira bildu"
 
-#: ../src/resources/xrc_strings.h:105
+#: ../src/resources/xrc_strings.h:106
 msgid "Automatically translate when updating catalog"
 msgstr "Katalogoa eguneratzean berez itzuli"
 
-#: ../src/edframe.cpp:1780
+#: ../src/edframe.cpp:2069
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "%u esaldi berez itzuli dira"
 
-#: ../src/edframe.cpp:1765
+#: ../src/edframe.cpp:2054
 msgid "Automatically translating..."
 msgstr "Bere kasa itzultzen..."
 
-#: ../src/manager.cpp:224
+#: ../src/manager.cpp:221
 msgid "Bad Tokens"
 msgstr "Okerrak"
 
-#: ../src/resources/xrc_strings.h:143
+#: ../src/resources/xrc_strings.h:145
 msgid "Base path:"
 msgstr "Oinarrizko helbidea:"
 
-#: ../src/resources/xrc_strings.h:68
+#: ../src/resources/xrc_strings.h:69
 msgid "Behavior"
 msgstr "Jokaera"
 
-#: ../src/resources/xrc_strings.h:24
-#: ../src/resources/xrc_strings.h:97
-#: ../src/resources/xrc_strings.h:128
-#: ../src/resources/xrc_strings.h:159
+#: ../src/catalog.cpp:474
+msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgstr ""
+
+#: ../src/catalog.cpp:442
+msgid ""
+"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:24 ../src/resources/xrc_strings.h:98
+#: ../src/resources/xrc_strings.h:129 ../src/resources/xrc_strings.h:161
 msgid "Browse"
 msgstr "Arakatu"
 
-#: ../src/resources/xrc_strings.h:78
+#: ../src/resources/xrc_strings.h:46
+#, fuzzy
+msgid "C&atalog"
+msgstr "Katalogoa"
+
+#: ../src/resources/xrc_strings.h:79
 msgid "CR/LF conversion"
 msgstr "CR/LF bihurketa"
 
-#: ../src/resources/xrc_strings.h:6
-#: ../src/resources/xrc_strings.h:15
-#: ../src/resources/xrc_strings.h:27
-#: ../src/resources/xrc_strings.h:112
-#: ../src/resources/xrc_strings.h:127
-#: ../src/resources/xrc_strings.h:131
-#: ../src/resources/xrc_strings.h:133
-#: ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:15
+#: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:113
+#: ../src/resources/xrc_strings.h:128 ../src/resources/xrc_strings.h:132
+#: ../src/resources/xrc_strings.h:134 ../src/resources/xrc_strings.h:150
 msgid "Cancel"
 msgstr "Utzi"
 
-#: ../src/transmem.cpp:747
+#: ../src/transmem.cpp:710
 msgid "Cannot create database directory!"
 msgstr "Ezin izan da datu baseen helbidetegia sortu!"
 
-#: ../src/gexecute.cpp:127
+#: ../src/gexecute.cpp:119 ../src/gexecute.cpp:166
 msgid "Cannot execute program: "
 msgstr "Ezin izan da programa abiarazi:"
 
@@ -256,7 +255,7 @@ msgstr "Ezin izan da programa abiarazi:"
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Ezin izan dira RPM fitxategitik katalogoak atera."
 
-#: ../src/edapp.cpp:122
+#: ../src/edapp.cpp:123
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -265,7 +264,7 @@ msgstr ""
 "Ezin izan da '%s' baliabideen fitxategia aurkitu!\n"
 "Instala ezazu poEdit berriro."
 
-#: ../src/edapp.cpp:116
+#: ../src/edapp.cpp:117
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -282,15 +281,12 @@ msgstr ""
 msgid "Case sensitive"
 msgstr "Larriak/Txikiak bereizi"
 
-#: ../src/manager.cpp:220
+#: ../src/manager.cpp:217
 msgid "Catalog"
 msgstr "Katalogoa"
 
-#: ../src/edframe.cpp:763
-#: ../src/edframe.cpp:782
-#: ../src/edframe.cpp:814
-#: ../src/edframe.cpp:855
-#: ../src/edframe.cpp:955
+#: ../src/edframe.cpp:815 ../src/edframe.cpp:834 ../src/edframe.cpp:866
+#: ../src/edframe.cpp:907 ../src/edframe.cpp:1011
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalogoa aldatu egin da. Aldaketak gordetzerik nahi?"
 
@@ -298,17 +294,15 @@ msgstr "Katalogoa aldatu egin da. Aldaketak gordetzerik nahi?"
 msgid "Catalogs &manager"
 msgstr "Katalogo &kudeatzailea"
 
-#: ../src/resources/xrc_strings.h:66
+#: ../src/resources/xrc_strings.h:67
 msgid "Change UI language"
 msgstr "UI hizkuntza aldatu"
 
-#: ../src/resources/xrc_strings.h:140
-#: ../src/export_html.cpp:117
+#: ../src/resources/xrc_strings.h:141 ../src/export_html.cpp:117
 msgid "Charset:"
 msgstr "Kodeketa:"
 
-#: ../src/resources/xrc_strings.h:91
-#: ../src/resources/xrc_strings.h:93
+#: ../src/resources/xrc_strings.h:92 ../src/resources/xrc_strings.h:94
 msgid "Choose"
 msgstr "Hautatu"
 
@@ -320,7 +314,7 @@ msgstr "Ezabatu"
 msgid "Clear the comment"
 msgstr "Iruzkina ezabatu"
 
-#: ../src/resources/xrc_strings.h:74
+#: ../src/resources/xrc_strings.h:75
 msgid "Comment window is editable"
 msgstr "Iruzkinen leihoa edita daiteke"
 
@@ -328,22 +322,19 @@ msgstr "Iruzkinen leihoa edita daiteke"
 msgid "Comment:"
 msgstr "Iruzkina:"
 
-#: ../src/resources/xrc_strings.h:102
+#: ../src/resources/xrc_strings.h:103
 msgid "Configuration"
 msgstr "Ezaugarriak"
 
-#: ../src/manager.cpp:381
-#: ../src/manager.cpp:401
+#: ../src/manager.cpp:378 ../src/manager.cpp:398
 msgid "Confirmation"
 msgstr "Baieztaketa"
 
-#: ../src/resources/xrc_strings.h:41
-#: ../src/edframe.cpp:1802
+#: ../src/resources/xrc_strings.h:41 ../src/edframe.cpp:2091
 msgid "Copy original to translation field"
 msgstr "Jatorrizkoa itzulketaren gunean kopiatu"
 
-#: ../src/resources/xrc_strings.h:139
-#: ../src/export_html.cpp:107
+#: ../src/resources/xrc_strings.h:140 ../src/export_html.cpp:107
 msgid "Country:"
 msgstr "Herria:"
 
@@ -351,16 +342,16 @@ msgstr "Herria:"
 msgid "Create new translations project"
 msgstr "Itzulketa egitasmo berria sortu"
 
-#: ../src/resources/xrc_strings.h:95
+#: ../src/resources/xrc_strings.h:96
 msgid "Database"
 msgstr "Datu basea"
 
-#: ../src/transmem.cpp:331
+#: ../src/transmem.cpp:294
 #, c-format
 msgid "Database error: %s"
 msgstr "Datu baseko akatsa: %s"
 
-#: ../src/resources/xrc_strings.h:110
+#: ../src/resources/xrc_strings.h:111
 msgid "Delete"
 msgstr "Ezabatu"
 
@@ -372,7 +363,7 @@ msgstr "Itema ezabatu"
 msgid "Delete the project"
 msgstr "Egitasmoa ezabatu"
 
-#: ../src/manager.cpp:274
+#: ../src/manager.cpp:271
 msgid "Directories:"
 msgstr "Helbidetegiak:"
 
@@ -384,11 +375,11 @@ msgstr "Erakutsi &lerro zenbakiak"
 msgid "Display &quotes"
 msgstr "&Kakotxak erakutsi"
 
-#: ../src/resources/xrc_strings.h:166
+#: ../src/resources/xrc_strings.h:168
 msgid "Display quotes around the string?"
 msgstr "Esaldia kakotx artean erakustea nahi duzu?"
 
-#: ../src/manager.cpp:400
+#: ../src/manager.cpp:397
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -396,11 +387,11 @@ msgstr ""
 "Benetan eguneratu nahi al dituzu egitasmo\n"
 "honetako katalogo guztiak?"
 
-#: ../src/manager.cpp:380
+#: ../src/manager.cpp:377
 msgid "Do you want to delete the project?"
 msgstr "Egitasmoa ezabatu nahi al duzu?"
 
-#: ../src/resources/xrc_strings.h:84
+#: ../src/resources/xrc_strings.h:85
 msgid "Don't change format of existing catalogs"
 msgstr "Dauden katalogoak ez aldatu formatuz"
 
@@ -408,7 +399,7 @@ msgstr "Dauden katalogoak ez aldatu formatuz"
 msgid "E&xport..."
 msgstr "&Igorri..."
 
-#: ../src/resources/xrc_strings.h:109
+#: ../src/resources/xrc_strings.h:110
 msgid "Edit"
 msgstr "Aldatu"
 
@@ -416,8 +407,7 @@ msgstr "Aldatu"
 msgid "Edit &comment"
 msgstr "&Iruzkina editatu"
 
-#: ../src/resources/xrc_strings.h:3
-#: ../src/resources/xrc_strings.h:168
+#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:170
 msgid "Edit comment"
 msgstr "Iruzkina editatu"
 
@@ -437,28 +427,28 @@ msgstr "Fitxategia idaztresna batekin editatu"
 msgid "Edit the project"
 msgstr "Egitasmoa editatu"
 
-#: ../src/resources/xrc_strings.h:67
+#: ../src/resources/xrc_strings.h:68
 msgid "Editor"
 msgstr "Editagailua"
 
-#: ../src/resources/xrc_strings.h:86
+#: ../src/resources/xrc_strings.h:87
 msgid "Editor executable:"
 msgstr "Editorearen abiarazlea:"
 
-#: ../src/resources/xrc_strings.h:77
+#: ../src/resources/xrc_strings.h:78
 msgid "Enables on-the-fly spellchecking"
 msgstr "Ortografiaren gainbegiraketa gaitzen du."
 
-#: ../src/edframe.cpp:1043
+#: ../src/edframe.cpp:1129
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Katalogoko sarrerak ziurrenik oker egongo dira."
 
-#: ../src/edframe.cpp:688
+#: ../src/edframe.cpp:726
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "Akatsa ortografia aztertzean: %s"
 
-#: ../src/edframe.cpp:1552
+#: ../src/edframe.cpp:1798
 msgid "Error loading message catalog file '"
 msgstr "Akatsa katalogo fitxategia kargatzean '"
 
@@ -467,25 +457,24 @@ msgstr "Akatsa katalogo fitxategia kargatzean '"
 msgid "Error opening file %s!"
 msgstr "Akatsa %s fitxategia irekitzean!"
 
-#: ../src/catalog.cpp:761
+#: ../src/catalog.cpp:991
 msgid "Error saving catalog"
 msgstr "Akatsa katalogo gordetzean"
 
-#: ../src/edframe.cpp:929
+#: ../src/edframe.cpp:983
 msgid "Export as..."
 msgstr "Igorri honela..."
 
-#: ../src/resources/xrc_strings.h:85
+#: ../src/resources/xrc_strings.h:86
 msgid "External editor"
 msgstr "Kanpoko editorea"
 
-#: ../src/edframe.cpp:827
-#: ../src/edframe.cpp:866
+#: ../src/edframe.cpp:879 ../src/edframe.cpp:918
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Ez dago '%s' izeneko fitxategirik."
 
-#: ../src/edframe.cpp:844
+#: ../src/edframe.cpp:896
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "'%s' ez da esaldien katalogoa."
@@ -506,15 +495,25 @@ msgstr "Itzulpenetan bilatu"
 msgid "Find..."
 msgstr "Bilatu..."
 
-#: ../src/resources/xrc_strings.h:89
+#: ../src/resources/xrc_strings.h:90
 msgid "Fonts"
 msgstr "Hizki-motak"
 
-#: ../src/resources/xrc_strings.h:169
+#: ../src/edframe.cpp:2509
+#, c-format
+msgid "Form %u"
+msgstr ""
+
+#: ../src/edframe.cpp:2511
+#, c-format
+msgid "Form %u (e.g. \"%u\")"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:171
 msgid "Fullscreen view"
 msgstr "Osoko ikuskera"
 
-#: ../src/manager.cpp:223
+#: ../src/manager.cpp:220
 msgid "Fuzzy"
 msgstr "Nahasia"
 
@@ -522,98 +521,97 @@ msgstr "Nahasia"
 msgid "Fuzzy translation"
 msgstr "Itzulpen nahasia"
 
-#: ../src/edframe.cpp:797
-#: ../src/edframe.cpp:906
+#: ../src/edframe.cpp:849 ../src/edframe.cpp:960
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText katalogoak (*.po)|*.po|Fitxategi guztiak (*.*)|*.*"
 
-#: ../src/edframe.cpp:1061
+#: ../src/edframe.cpp:1031 ../src/edframe.cpp:1147
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU GetText txantiloiak (*.pot)|*.pot|Fitxategi guztiak (*.*)|*.*"
 
-#: ../src/resources/xrc_strings.h:58
+#: ../src/resources/xrc_strings.h:59
 msgid "GNU gettext documentation"
 msgstr "GNU GetText eskuliburua"
 
-#: ../src/resources/xrc_strings.h:132
+#: ../src/resources/xrc_strings.h:133
 msgid "Generate TM database"
 msgstr "TM datu basea sortu"
 
-#: ../src/resources/xrc_strings.h:100
+#: ../src/resources/xrc_strings.h:101
 msgid "Generate database"
 msgstr "Datu basea sortu"
 
-#: ../src/edframe.cpp:931
+#: ../src/edframe.cpp:1205
+msgid "Gettext syntax error"
+msgstr ""
+
+#: ../src/edframe.cpp:985
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML fitxategia (*.html)|*.html"
 
-#: ../src/resources/xrc_strings.h:170
+#: ../src/resources/xrc_strings.h:172
 msgid "Help"
 msgstr "Laguntza"
 
-#: ../src/resources/xrc_strings.h:63
+#: ../src/resources/xrc_strings.h:64
 msgid "Identity"
 msgstr "Nortasuna"
 
-#: ../src/resources/xrc_strings.h:75
+#: ../src/resources/xrc_strings.h:76
 msgid "If checked, the comment window will be editable."
 msgstr "Hautatuta badago, iruzkinen leihoa editagarria izango da."
 
-#: ../src/resources/xrc_strings.h:117
+#: ../src/resources/xrc_strings.h:118
 msgid "Invocation:"
 msgstr "Deiak:"
 
-#: ../src/resources/xrc_strings.h:146
-#: ../src/settingsdlg.cpp:54
+#: ../src/resources/xrc_strings.h:148 ../src/settingsdlg.cpp:55
 msgid "Keywords"
 msgstr "Oinarrizko hitzak"
 
-#: ../src/chooselang.cpp:128
+#: ../src/chooselang.cpp:130
 msgid "Language selection"
 msgstr "Hizkuntza aukeraketa"
 
-#: ../src/resources/xrc_strings.h:114
-#: ../src/resources/xrc_strings.h:115
-#: ../src/resources/xrc_strings.h:138
-#: ../src/export_html.cpp:104
+#: ../src/resources/xrc_strings.h:115 ../src/resources/xrc_strings.h:116
+#: ../src/resources/xrc_strings.h:139 ../src/export_html.cpp:104
 msgid "Language:"
 msgstr "Hizkuntza:"
 
-#: ../src/manager.cpp:225
+#: ../src/manager.cpp:222
 msgid "Last modified"
 msgstr "Azken eraldaketa"
 
-#: ../src/edframe.cpp:162
-#: ../src/fileviewer.cpp:84
+#: ../src/edframe.cpp:160 ../src/fileviewer.cpp:84
 msgid "Line"
 msgstr "Lerroa:"
 
-#: ../src/resources/xrc_strings.h:79
+#: ../src/resources/xrc_strings.h:80
 msgid "Line endings format:"
 msgstr "Lerro amaieren formatua:"
 
-#: ../src/resources/xrc_strings.h:116
+#: ../src/resources/xrc_strings.h:117
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Atzizkien zerrenda puntu-ta-kakotx batez banandua (adb. *.cpp;*.h):"
 
-#: ../src/resources/xrc_strings.h:82
+#: ../src/resources/xrc_strings.h:83
 msgid "Macintosh"
 msgstr "Mac"
 
-#: ../src/catalog.cpp:99
+#: ../src/catalog.cpp:113
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Goiburu akastuna: '%s'"
 
-#: ../src/resources/xrc_strings.h:103
+#: ../src/resources/xrc_strings.h:104
 msgid "Max. # of missing words:"
 msgstr "Ageri ez diren hitzen gehienezko kop:"
 
-#: ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:105
 msgid "Max. difference in sentence length:"
 msgstr "Esaldi-luzeeraren gehienezko ezberdintasuna:"
 
-#: ../src/catalog.cpp:919
+#: ../src/catalog.cpp:1137
 msgid "Merging differences..."
 msgstr "Ezberdintasunak elkarjartzen..."
 
@@ -629,15 +627,22 @@ msgstr "Gora"
 msgid "My Languages"
 msgstr "Nire Hizkuntzak"
 
-#: ../src/manager.cpp:277
+#: ../src/manager.cpp:274
 msgid "My Project"
 msgstr "Nire Egitasmoa"
 
-#: ../src/resources/xrc_strings.h:73
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Esaldien zerrendetara enfokatzea galarazten du. Aukera hau gaituta/n badago, Ktrl+norantza geziak erabili beharra dago zerrendan zehar/nhigitzeko baina zuzenean idazteko aukera duzu honela, enfokea/naldatzeko TAB sakatu beharrik gabe."
+#: ../src/resources/xrc_strings.h:74
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Esaldien zerrendetara enfokatzea galarazten du. Aukera hau gaituta/n badago, "
+"Ktrl+norantza geziak erabili beharra dago zerrendan zehar/nhigitzeko baina "
+"zuzenean idazteko aukera duzu honela, enfokea/naldatzeko TAB sakatu beharrik "
+"gabe."
 
-#: ../src/resources/xrc_strings.h:108
+#: ../src/resources/xrc_strings.h:109
 msgid "New"
 msgstr "Berria"
 
@@ -645,7 +650,7 @@ msgstr "Berria"
 msgid "New item"
 msgstr "Item berria"
 
-#: ../src/resources/xrc_strings.h:151
+#: ../src/resources/xrc_strings.h:153
 msgid "New strings"
 msgstr "Esaldi berriak"
 
@@ -657,11 +662,11 @@ msgstr "Aurrera >"
 msgid "No editor specified. Please set it in Preferences dialog."
 msgstr "Ez duzu editorerik hautatu. Hobespenetan zehatz ezazu."
 
-#: ../src/digger.cpp:122
+#: ../src/digger.cpp:123
 msgid "No files found in: "
 msgstr "Ez da fitxategirik aurkitu hemen:"
 
-#: ../src/edframe.cpp:1105
+#: ../src/edframe.cpp:1220
 msgid "No references to this string found."
 msgstr "Ez da esaldi honekiko erreferentziarik aurkitu."
 
@@ -669,106 +674,106 @@ msgstr "Ez da esaldi honekiko erreferentziarik aurkitu."
 msgid "Notes"
 msgstr "Oharrak"
 
-#: ../src/resources/xrc_strings.h:2
-#: ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:26
-#: ../src/resources/xrc_strings.h:111
-#: ../src/resources/xrc_strings.h:126
-#: ../src/resources/xrc_strings.h:147
-#: ../src/resources/xrc_strings.h:155
+#: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
+#: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:112
+#: ../src/resources/xrc_strings.h:127 ../src/resources/xrc_strings.h:149
+#: ../src/resources/xrc_strings.h:157
 msgid "OK"
 msgstr "Ados"
 
-#: ../src/resources/xrc_strings.h:153
+#: ../src/resources/xrc_strings.h:155
 msgid "Obsolete strings"
 msgstr "Esaldi zaharrak"
 
-#: ../src/resources/xrc_strings.h:163
-#: ../src/edframe.cpp:795
+#: ../src/resources/xrc_strings.h:165 ../src/edframe.cpp:847
 msgid "Open catalog"
 msgstr "Katalogoa ireki"
 
-#: ../src/edframe.cpp:1059
+#: ../src/edframe.cpp:1029 ../src/edframe.cpp:1145
 msgid "Open catalog template"
 msgstr "Katalogo txantiloia ireki"
 
-#: ../src/resources/xrc_strings.h:71
+#: ../src/resources/xrc_strings.h:72
 msgid "Open catalogs manager on poEdit startup"
 msgstr "Ireki katalogo kudeatzailea poEdit abiaraztean"
 
-#: ../src/resources/xrc_strings.h:88
+#: ../src/resources/xrc_strings.h:89
 msgid "Open source files in editor, not in file viewer"
 msgstr "Iturburuak editorean ireki, ez fitxategi ikusgailuan"
 
-#: ../src/edframe.cpp:159
-#: ../src/export_html.cpp:141
+#: ../src/edframe.cpp:157 ../src/export_html.cpp:141
 msgid "Original string"
 msgstr "Jatorrizko esaldia"
 
-#: ../src/resources/xrc_strings.h:118
+#: ../src/resources/xrc_strings.h:119
 msgid "Parser command:"
 msgstr "Sintaksi azterlerako agindua:"
 
-#: ../src/resources/xrc_strings.h:113
+#: ../src/resources/xrc_strings.h:114
 msgid "Parser setup"
 msgstr "Sintaksi azterlearen instalaketa"
 
-#: ../src/resources/xrc_strings.h:106
+#: ../src/resources/xrc_strings.h:107
 msgid "Parsers"
 msgstr "Sintaksi azterleak"
 
-#: ../src/digger.cpp:42
+#: ../src/digger.cpp:43
 msgid "Parsing "
 msgstr "Sintaksia aztertzen"
 
-#: ../src/resources/xrc_strings.h:96
+#: ../src/resources/xrc_strings.h:97
 msgid "Path to DB:"
 msgstr "Datu Baserako helbidea"
 
-#: ../src/resources/xrc_strings.h:144
-#: ../src/settingsdlg.cpp:56
+#: ../src/resources/xrc_strings.h:146 ../src/settingsdlg.cpp:57
 msgid "Paths"
 msgstr "Helbideak"
 
-#: ../src/resources/xrc_strings.h:62
+#: ../src/resources/xrc_strings.h:63
 msgid "Personalize"
 msgstr "Egokitu"
 
-#: ../src/resources/xrc_strings.h:99
+#: ../src/resources/xrc_strings.h:100
 msgid "Pick language from the list of known languages"
 msgstr "Hizkuntza ezagunetatik hizkuntza aukeratu"
 
-#: ../src/resources/xrc_strings.h:158
+#: ../src/resources/xrc_strings.h:160
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "Gehitu hizkuntzen fitxategiak gordeta dauden helbidetegiak:"
 
-#: ../src/edframe.cpp:1113
+#: ../src/edframe.cpp:1228
 msgid "Please choose the reference you want to show:"
 msgstr "Hautatu ager dadin nahi duzun erreferentzia:"
 
-#: ../src/prefsdlg.cpp:319
+#: ../src/prefsdlg.cpp:321
 msgid "Please select language ISO code:"
 msgstr "Hautatu hizkuntzaren ISO kodea:"
 
-#: ../src/edframe.cpp:727
+#: ../src/edframe.cpp:779
 msgid "Please select language code:"
 msgstr "Hautatu hizkuntzaren kodea:"
 
-#: ../src/resources/xrc_strings.h:61
+#: ../src/resources/xrc_strings.h:143
+msgid "Plural Forms:"
+msgstr ""
+
+#: ../src/edframe.cpp:543
+msgid "Plural:"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:62
 msgid "Preferences"
 msgstr "Hobespenak"
 
-#: ../src/resources/xrc_strings.h:130
+#: ../src/resources/xrc_strings.h:131
 msgid "Proceed"
 msgstr "Ekin"
 
-#: ../src/resources/xrc_strings.h:142
-#: ../src/export_html.cpp:97
+#: ../src/resources/xrc_strings.h:144 ../src/export_html.cpp:97
 msgid "Project info"
 msgstr "Egitasmoaren inguruan"
 
-#: ../src/resources/xrc_strings.h:135
-#: ../src/export_html.cpp:101
+#: ../src/resources/xrc_strings.h:136 ../src/export_html.cpp:101
 msgid "Project name and version:"
 msgstr "Egitasmoaren izena eta bertsioa:"
 
@@ -776,20 +781,20 @@ msgstr "Egitasmoaren izena eta bertsioa:"
 msgid "Project name:"
 msgstr "Egitasmoaren izena:"
 
-#: ../src/edframe.cpp:1113
+#: ../src/edframe.cpp:1228
 msgid "References"
 msgstr "Erreferentziak"
 
-#: ../src/edframe.cpp:1807
-#: ../src/edframe.cpp:1811
+#: ../src/edframe.cpp:2096 ../src/edframe.cpp:2100
 msgid "References:"
 msgstr "Erreferentziak:"
 
-#: ../src/resources/xrc_strings.h:101
+#: ../src/resources/xrc_strings.h:102
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr "Goian zerrendaturiko bideetako katalogoentzat itzulketa memoria birsortu."
+msgstr ""
+"Goian zerrendaturiko bideetako katalogoentzat itzulketa memoria birsortu."
 
-#: ../src/resources/xrc_strings.h:160
+#: ../src/resources/xrc_strings.h:162
 msgid "Reset to defaults"
 msgstr "Ohiko aukerak berrezarri"
 
@@ -797,19 +802,16 @@ msgstr "Ohiko aukerak berrezarri"
 msgid "Save &as..."
 msgstr "Gorde &honela..."
 
-#: ../src/edframe.cpp:905
+#: ../src/edframe.cpp:959
 msgid "Save as..."
 msgstr "Gorde honela..."
 
-#: ../src/resources/xrc_strings.h:164
+#: ../src/resources/xrc_strings.h:166
 msgid "Save catalog"
 msgstr "Katalogoa gorde"
 
-#: ../src/edframe.cpp:764
-#: ../src/edframe.cpp:783
-#: ../src/edframe.cpp:815
-#: ../src/edframe.cpp:856
-#: ../src/edframe.cpp:956
+#: ../src/edframe.cpp:816 ../src/edframe.cpp:835 ../src/edframe.cpp:867
+#: ../src/edframe.cpp:908 ../src/edframe.cpp:1012
 msgid "Save changes"
 msgstr "Aldaketak gorde"
 
@@ -817,7 +819,7 @@ msgstr "Aldaketak gorde"
 msgid "Scanning file: "
 msgstr "Fitxategia arakatzen:"
 
-#: ../src/digger.cpp:32
+#: ../src/digger.cpp:33
 msgid "Scanning files..."
 msgstr "Fitxategiak arakatzen..."
 
@@ -825,29 +827,28 @@ msgstr "Fitxategiak arakatzen..."
 msgid "Search Paths"
 msgstr "Bideak bilatu"
 
-#: ../src/edframe.cpp:726
+#: ../src/edframe.cpp:778
 msgid "Select catalog's language"
 msgstr "Katalogoaren hizkuntza hautatu"
 
-#: ../src/manager.cpp:254
-#: ../src/prefsdlg.cpp:332
+#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:334
 #: ../src/transmemupd_wizard.cpp:97
 msgid "Select directory"
 msgstr "Helbidetegia hautatu"
 
-#: ../src/prefsdlg.cpp:318
+#: ../src/prefsdlg.cpp:320
 msgid "Select language"
 msgstr "Hizkuntza hautatu"
 
-#: ../src/chooselang.cpp:127
+#: ../src/chooselang.cpp:129
 msgid "Select your prefered language"
 msgstr "Gogoko hizkuntza hautatu"
 
-#: ../src/resources/xrc_strings.h:134
+#: ../src/resources/xrc_strings.h:135
 msgid "Settings"
 msgstr "Ezarpenak"
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:144
 msgid "Setup"
 msgstr "Instalaketa"
 
@@ -855,16 +856,24 @@ msgstr "Instalaketa"
 msgid "Show &comment window"
 msgstr "&Iruzkinen leihoa erakutsi"
 
-#: ../src/resources/xrc_strings.h:70
+#: ../src/resources/xrc_strings.h:56
+#, fuzzy
+msgid "Show automatic c&omments window"
+msgstr "&Iruzkinen leihoa erakutsi"
+
+#: ../src/resources/xrc_strings.h:71
 msgid "Show summary after catalog update"
 msgstr "Katalogoa eguneratu ondoren laburpena erakutsi."
 
-#: ../src/resources/xrc_strings.h:124
-#: ../src/resources/xrc_strings.h:141
+#: ../src/edframe.cpp:542
+msgid "Singular:"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:125 ../src/resources/xrc_strings.h:142
 msgid "Source code charset:"
 msgstr "Iturburuaren kodeketa:"
 
-#: ../src/resources/xrc_strings.h:107
+#: ../src/resources/xrc_strings.h:108
 msgid "Source code parsers:"
 msgstr "Iturburuaren sintaksi azterleak:"
 
@@ -876,17 +885,15 @@ msgstr "Iturburua"
 msgid "String to find:"
 msgstr "Bilatu beharreko esaldia:"
 
-#: ../src/resources/xrc_strings.h:137
-#: ../src/export_html.cpp:114
+#: ../src/resources/xrc_strings.h:138 ../src/export_html.cpp:114
 msgid "Team's email address:"
 msgstr "Taldearen eposta helbidea:"
 
-#: ../src/resources/xrc_strings.h:136
-#: ../src/export_html.cpp:110
+#: ../src/resources/xrc_strings.h:137 ../src/export_html.cpp:110
 msgid "Team:"
 msgstr "Taldea:"
 
-#: ../src/catalog.cpp:760
+#: ../src/catalog.cpp:990
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -897,7 +904,7 @@ msgstr ""
 "honen ezarpenetan zehaztu bezala. UTF-8 kodeketan\n"
 "gorde da eta ezarpenak ere era berean aldatu dira."
 
-#: ../src/resources/xrc_strings.h:152
+#: ../src/resources/xrc_strings.h:154
 msgid ""
 "These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
@@ -905,7 +912,7 @@ msgstr ""
 "Esaldi hauek jada ez daude iturburuetan.\n"
 "poEditek katalogotik ezabatuko ditu orain."
 
-#: ../src/resources/xrc_strings.h:150
+#: ../src/resources/xrc_strings.h:152
 msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
@@ -913,7 +920,7 @@ msgstr ""
 "Esaldi hauek iturburuan aurkitu dira, baina katalogoetan ez.\n"
 "poEditek orain katalogoetara gehituko ditu."
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:144
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -923,7 +930,7 @@ msgstr ""
 "Idatzi zure izena eta e-posta helbidea.\n"
 "(Datu hauek katalogoen goiburuetan erabiltzeko soilik dira)"
 
-#: ../src/resources/xrc_strings.h:119
+#: ../src/resources/xrc_strings.h:120
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -935,7 +942,7 @@ msgstr ""
 "garrantzitsuen zerredara, %F-k sarrerako fitxategietara,\n"
 "%C-k karaktere-kodeketara (ikusi behekoa)."
 
-#: ../src/resources/xrc_strings.h:125
+#: ../src/resources/xrc_strings.h:126
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -945,7 +952,7 @@ msgstr ""
 "moten kodea ematen bada bertan. %c-k\n"
 "karaktere moten balioa darama."
 
-#: ../src/resources/xrc_strings.h:123
+#: ../src/resources/xrc_strings.h:124
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -954,7 +961,7 @@ msgstr ""
 "Sarrera fitxategi bakoitzerako behin agindu\n"
 "lerrora gehituko da. %f fitxategi izena da."
 
-#: ../src/resources/xrc_strings.h:121
+#: ../src/resources/xrc_strings.h:122
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -962,20 +969,19 @@ msgstr ""
 "Hitz garrantzitsu bakoitzerako behin agindu\n"
 "lerrora gehituko da. %k hitz garrantzitsua da."
 
-#: ../src/resources/xrc_strings.h:167
+#: ../src/resources/xrc_strings.h:169
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Zapalduta hautaturiko esaldiaren itzulpena nahasia bada"
 
-#: ../src/manager.cpp:221
+#: ../src/manager.cpp:218
 msgid "Total"
 msgstr "Guztira"
 
-#: ../src/edframe.cpp:160
-#: ../src/export_html.cpp:144
+#: ../src/edframe.cpp:158 ../src/export_html.cpp:144
 msgid "Translation"
 msgstr "Itzulpena"
 
-#: ../src/resources/xrc_strings.h:94
+#: ../src/resources/xrc_strings.h:95
 msgid "Translation Memory"
 msgstr "Itzulpen memoria"
 
@@ -991,7 +997,7 @@ msgstr "Itzulpen fitxategiak (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgid "Translation is &fuzzy"
 msgstr "Itzulpena &nahasia da"
 
-#: ../src/resources/xrc_strings.h:161
+#: ../src/resources/xrc_strings.h:163
 msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
@@ -1004,15 +1010,15 @@ msgstr ""
 msgid "Uknown locale code '%s' in registry."
 msgstr "Errejistroko '%s' toki kodea ezezaguna da."
 
-#: ../src/resources/xrc_strings.h:156
+#: ../src/resources/xrc_strings.h:158
 msgid "Undo"
 msgstr "Desegin"
 
-#: ../src/resources/xrc_strings.h:80
+#: ../src/resources/xrc_strings.h:81
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:222
+#: ../src/manager.cpp:219
 msgid "Untrans"
 msgstr "Itzulpena ezeztatu"
 
@@ -1020,7 +1026,7 @@ msgstr "Itzulpena ezeztatu"
 msgid "Update all catalogs in the project"
 msgstr "Egitasmoko katalogo guztiak eguneratu"
 
-#: ../src/resources/xrc_strings.h:165
+#: ../src/resources/xrc_strings.h:167
 msgid "Update catalog - synchronize it with sources"
 msgstr "Katalogoa eguneratu - iturburuekin berdindu"
 
@@ -1028,31 +1034,32 @@ msgstr "Katalogoa eguneratu - iturburuekin berdindu"
 msgid "Update from &POT file..."
 msgstr "&POT fitxategitik eguneratu..."
 
-#: ../src/resources/xrc_strings.h:149
+#: ../src/resources/xrc_strings.h:151
 msgid "Update summary"
 msgstr "Laburpena eguneratu"
 
-#: ../src/resources/xrc_strings.h:157
+#: ../src/resources/xrc_strings.h:159
 msgid "Update translation memory"
 msgstr "Itzulpen memoria eguneratu"
 
-#: ../src/catalog.cpp:879
+#: ../src/catalog.cpp:1097
 msgid "Updating catalog..."
 msgstr "Katalogoa eguneratzen..."
 
-#: ../src/edframe.cpp:1045
+#: ../src/edframe.cpp:1131
 msgid "Updating the catalog failed. Click on 'More>>' for details."
-msgstr "Akatsa katalogoa eguneratzean. Sakatu 'Gehiago>>' xehetasunak ikusteko."
+msgstr ""
+"Akatsa katalogoa eguneratzean. Sakatu 'Gehiago>>' xehetasunak ikusteko."
 
-#: ../src/resources/xrc_strings.h:92
+#: ../src/resources/xrc_strings.h:93
 msgid "Use custom font for text fields"
 msgstr "Zehazturiko hizki mota erabili testuetan"
 
-#: ../src/resources/xrc_strings.h:90
+#: ../src/resources/xrc_strings.h:91
 msgid "Use custom font for translations list"
 msgstr "Zehazturiko hizki mota erabili itzulketen zerrendan"
 
-#: ../src/resources/xrc_strings.h:145
+#: ../src/resources/xrc_strings.h:147
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
@@ -1060,56 +1067,65 @@ msgstr ""
 "Oinarrizko hitzak (funtzio-izenak) erabili iturburuetako esaldi\n"
 "itzulgarriak bereizteko, berezkoez gain."
 
-#: ../src/resources/xrc_strings.h:81
+#: ../src/resources/xrc_strings.h:82
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:837
+#: ../src/edframe.cpp:889
 msgid "You can't drop more than one file on poEdit window."
 msgstr "Ezin dezakezu poEditen leihora fitxategi batetik gora eraman."
 
-#: ../src/chooselang.cpp:142
+#: ../src/chooselang.cpp:144
 msgid "You must restart poEdit for this change to take effect."
 msgstr "Aldaketak eragina izateko poEdit berrabiarazi behar duzu."
 
-#: ../src/resources/xrc_strings.h:65
+#: ../src/resources/xrc_strings.h:66
 msgid "Your e-mail address:"
 msgstr "Zure eposta helbidea:"
 
-#: ../src/resources/xrc_strings.h:64
+#: ../src/resources/xrc_strings.h:65
 msgid "Your name:"
 msgstr "Zure izena:"
 
-#: ../src/resources/xrc_strings.h:83
+#: ../src/edframe.cpp:1881
+#, fuzzy, c-format
+msgid "[checking translations: %i left]"
+msgstr "&Itzalak itzulpen zerrendan"
+
+#: ../src/resources/xrc_strings.h:84
 msgid "current platform's default"
 msgstr "Uneko eragilearena"
 
-#: ../src/edframe.cpp:1847
+#: ../src/edframe.cpp:2136
 msgid "none"
 msgstr "bat ere ez"
 
-#: ../src/edframe.cpp:438
+#: ../src/edframe.cpp:436
 msgid "poEdit"
 msgstr "poEdit"
 
-#: ../src/manager.cpp:61
+#: ../src/manager.cpp:54
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - Katalogo kudeatzailea"
 
-#: ../src/edapp.cpp:125
+#: ../src/edapp.cpp:126
 msgid "poEdit Error"
 msgstr "poEdit Akatsa"
 
-#: ../src/digger.cpp:123
+#: ../src/digger.cpp:124
 msgid "poEdit did not find any files in scanned directories."
 msgstr "poEditek ez du fitxategirik aurkitu arakatutako helbidetegietan."
 
-#: ../src/edapp.cpp:50
-msgid "poEdit installation is broken, cannot find application's home directory."
-msgstr "poEditen instalaketa hondatuta dago, ezin da programaren oinarrizko helbidetegia aurkitu."
+#: ../src/edapp.cpp:51
+msgid ""
+"poEdit installation is broken, cannot find application's home directory."
+msgstr ""
+"poEditen instalaketa hondatuta dago, ezin da programaren oinarrizko "
+"helbidetegia aurkitu."
 
-#: ../src/edframe.cpp:1862
+#: ../src/edframe.cpp:2151
 msgid "version"
 msgstr "Bertsioa:"
 
-
+#~ msgid "&Catalog"
+#~ msgstr "&Katalogoa"
