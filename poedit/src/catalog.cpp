@@ -365,6 +365,7 @@ void Catalog::CreateNewHeader()
     dt.Charset = _T("utf-8");
     dt.Translator = wxConfig::Get()->Read(_T("translator_name"), wxEmptyString);
     dt.TranslatorEmail = wxConfig::Get()->Read(_T("translator_email"), wxEmptyString);
+    dt.SourceCodeCharset = wxEmptyString;
 
     // NB: keep in sync with Catalog::Update!
     dt.Keywords.Add(_T("_"));
@@ -408,7 +409,9 @@ bool Catalog::Load(const wxString& po_file)
         dummy = ReadTextLine(&f, NULL);
         if (ReadParam(dummy, _T("#. Country: "), m_header.Country))
             dummy = ReadTextLine(&f, NULL);
-        ReadParam(dummy, _T("#. Basepath: "), m_header.BasePath);
+        if (ReadParam(dummy, _T("#. Basepath: "), m_header.BasePath))
+            dummy = ReadTextLine(&f, NULL);
+        ReadParam(dummy, _T("#. SourceCodeCharSet: "), m_header.SourceCodeCharset);
 
         if (ReadParam(ReadTextLine(&f, NULL), _T("#. Paths: "), dummy))
         {
@@ -635,6 +638,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         f.AddLine(_T("#. Language: ") + m_header.Language);
         f.AddLine(_T("#. Country: ") + m_header.Country);
         f.AddLine(_T("#. Basepath: ") + m_header.BasePath);
+        f.AddLine(_T("#. SourceCodeCharSet: ") + m_header.SourceCodeCharset);
 
         dummy.Printf(_T("#. Paths: %i"), m_header.SearchPaths.GetCount());
         f.AddLine(dummy);
@@ -781,7 +785,9 @@ bool Catalog::Update()
         WX_APPEND_ARRAY(keywords, m_header.Keywords);
     }
     
-    Catalog *newcat = dig.Dig(m_header.SearchPaths, keywords);
+    Catalog *newcat = dig.Dig(m_header.SearchPaths,
+                              keywords,
+                              m_header.SourceCodeCharset);
 
     if (newcat != NULL) 
     {

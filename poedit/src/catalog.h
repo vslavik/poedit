@@ -44,7 +44,7 @@ class Catalog
         {
             wxString Language, Country, Project, CreationDate, 
                      RevisionDate, Translator, TranslatorEmail,
-                     Team, TeamEmail, Charset;
+                     Team, TeamEmail, Charset, SourceCodeCharset;
 
             wxArrayString SearchPaths, Keywords;
             wxString BasePath;

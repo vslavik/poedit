@@ -43,6 +43,7 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
     m_country = XRCCTRL(*this, "country", wxComboBox);
     m_charset = XRCCTRL(*this, "charset", wxComboBox);
     m_basePath = XRCCTRL(*this, "basepath", wxTextCtrl);
+    m_sourceCodeCharset = XRCCTRL(*this, "source_code_charset", wxComboBox);
 
     const LanguageStruct *lang = isoLanguages; /*from isocodes.h*/ 
     m_language->Append(wxEmptyString);
@@ -75,7 +76,15 @@ void SettingsDialog::TransferTo(Catalog *cat)
                           DEFAULT_CHARSETS), _T(":"), wxTOKEN_STRTOK);
 
     while (tkn.HasMoreTokens())
-        m_charset->Append(tkn.GetNextToken());
+    {
+        wxString strToken = tkn.GetNextToken();
+        m_charset->Append(strToken);
+
+        // check if the charset is supported by iconv()
+        if(strToken.compare(0, 3, _T("utf")) == 0 ||
+                           strToken.compare(0, 3, _T("iso")) == 0)
+            m_sourceCodeCharset->Append(strToken);
+    }
 
     #define SET_VAL(what,what2) m_##what2->SetValue(cat->Header().what)
     SET_VAL(Team, team);
@@ -85,6 +94,7 @@ void SettingsDialog::TransferTo(Catalog *cat)
     SET_VAL(Language, language);
     SET_VAL(Country, country);
     SET_VAL(Charset, charset);
+    SET_VAL(SourceCodeCharset, sourceCodeCharset);
     #undef SET_VAL
     
     m_paths->SetStrings(cat->Header().SearchPaths);
@@ -103,6 +113,7 @@ void SettingsDialog::TransferFrom(Catalog *cat)
     GET_VAL(TeamEmail, teamEmail);
     GET_VAL(Project, project);
     GET_VAL(BasePath, basePath);
+    GET_VAL(SourceCodeCharset, sourceCodeCharset);
     #undef GET_VAL
 
     wxString dummy;
