@@ -171,7 +171,7 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
         cat.GetStatistics(&all, &fuzzy, &untranslated);
         modtime = wxFileModificationTime(file);
         lastmodified = cat.Header().RevisionDate;
-        cfg->Write(key + _T("timestamp"), modtime);
+        cfg->Write(key + _T("timestamp"), (long)modtime);
         cfg->Write(key + _T("all"), (long)all);
         cfg->Write(key + _T("fuzzy"), (long)fuzzy);
         cfg->Write(key + _T("untranslated"), (long)untranslated);
