@@ -8,7 +8,7 @@
     
       Editor frame
     
-      (c) Vaclav Slavik, 2000-2002
+      (c) Vaclav Slavik, 2000-2003
 
 */
 
@@ -593,6 +593,12 @@ TranslationMemory *poEditFrame::GetTransMem()
 
             lngs.Add(_("(none of these)"));
             while (tkn.HasMoreTokens()) lngs.Add(tkn.GetNextToken());
+            if (lngs.GetCount() == 1)
+            {
+                m_transMemLoaded = true;
+                m_transMem = NULL;
+                return m_transMem;
+            }
             index = wxGetSingleChoiceIndex(_("Select catalog's language"), 
                                            _("Please select language code:"),
                                            lngs, this);
@@ -1504,18 +1510,19 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
         menu->Append(ED_POPUP_REFS + i, _T("   ") + refs[i]);
 
 #ifdef USE_TRANSMEM
-    menu->AppendSeparator();
-#ifdef CAN_MODIFY_DEFAULT_FONT
-    wxMenuItem *it2 = new wxMenuItem(menu, ED_POPUP_DUMMY+1, 
-                                     _("Automatic translations:"));
-    it2->SetFont(m_boldGuiFont);
-    menu->Append(it2);
-#else
-    menu->Append(ED_POPUP_DUMMY+1, _("Automatic translations:"));
-#endif    
-    menu->AppendSeparator();
     if (GetTransMem())
     {
+        menu->AppendSeparator();
+#ifdef CAN_MODIFY_DEFAULT_FONT
+        wxMenuItem *it2 = new wxMenuItem(menu, ED_POPUP_DUMMY+1, 
+                                         _("Automatic translations:"));
+        it2->SetFont(m_boldGuiFont);
+        menu->Append(it2);
+#else
+        menu->Append(ED_POPUP_DUMMY+1, _("Automatic translations:"));
+#endif    
+        menu->AppendSeparator();
+
         wxBusyCursor bcur;
         CatalogData& dt = (*m_catalog)[item];
         m_autoTranslations.Clear();
