@@ -108,7 +108,7 @@ void CatalogParser::Parse()
             mstr = dummy.RemoveLast();
             while (!(line = ReadTextLine(m_textFile)).IsEmpty())
             {
-                if (line[0] == '"' && line.Last() == '"')
+                if (line[0u] == '"' && line.Last() == '"')
                     mstr += line.Mid(1, line.Length() - 2);
                 else break;
             }
@@ -120,7 +120,7 @@ void CatalogParser::Parse()
             mtrans = dummy.RemoveLast();
             while (!(line = ReadTextLine(m_textFile)).IsEmpty())
             {
-                if (line[0] == '"' && line.Last() == '"')
+                if (line[0u] == '"' && line.Last() == '"')
                     mtrans += line.Mid(1, line.Length() - 2);
                 else break;
             }
@@ -132,10 +132,10 @@ void CatalogParser::Parse()
         }
         
         // comment:
-        else if (line[0] == '#')
+        else if (line[0u] == '#')
         {
-            while (!line.IsEmpty() && line[0] == '#' &&
-                   (line.Length() < 2 || (line[1] != ',' && line[1] != ':')))
+            while (!line.IsEmpty() && line[0u] == '#' &&
+                   (line.Length() < 2 || (line[1u] != ',' && line[1u] != ':')))
             {
                 mcomment << line << '\n';
                 line = ReadTextLine(m_textFile);
