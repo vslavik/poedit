@@ -118,7 +118,7 @@ class TempLocaleSwitcher
 bool ExecuteGettext(const wxString& cmdline)
 {
 #ifdef __UNIX__
-    TempLocaleSwitcher localeSwitcher(_T("en"));
+    TempLocaleSwitcher localeSwitcher(_T("C"));
 #endif
 
     size_t i;
