@@ -10,6 +10,12 @@ if USE_WINDOWS
 RESOURCE_FILES = poedit_resource.o
 endif
 
+if BUILD_XRC
+XRC_LDADD = -L../extras/wx-contrib/src/xrc \
+            -L../extras/wx-contrib/src/xrc/expat \
+            -lmy_xrc -lmy_expat
+endif
+
 bin_PROGRAMS = poedit
 
 poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
@@ -32,6 +38,4 @@ poedit_resource.o: poedit.rc
 
 poedit_LDADD = $(RESOURCE_FILES) \
                -L../extras/wx-contrib/src/gizmos \
-               -L../extras/wx-contrib/src/xrc \
-               -L../extras/wx-contrib/src/xrc/expat \
-               -lmy_xrc -lmy_gizmos -lmy_expat $(POEDIT_WX_LIBS)
+               -lmy_gizmos $(XRC_LDADD) $(POEDIT_WX_LIBS)

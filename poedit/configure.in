@@ -86,7 +86,6 @@ yes)	DEBUG_FLAGS="-g -Wall -O0"
     ;;    
 esac
 
-
 AM_PATH_WXCONFIG(2.4.1, WXFOUND=1)
 
 if test "$WXFOUND" != 1; then
@@ -97,6 +96,27 @@ if test "$WXFOUND" != 1; then
         equivalent variable and wxWindows is version 2.4.1 or above.
     ])
 fi
+
+dnl Check if wxWidgets includes XRC library and if it does, don't build it
+dnl ourselves:
+AC_MSG_CHECKING([if wxWidgets includes XRC])
+saved_CXXFLAGS="$CXXFLAGS"
+CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS"
+AC_TRY_COMPILE([#include <wx/defs.h>],
+               [
+                #if !wxCHECK_VERSION(2,5,3)
+                    #error "wxWidgets too old, XRC not included in the core"
+                #endif
+                #if !wxUSE_XRC
+                    #error "XRC not compiled in"
+                #endif
+               ],
+               [includes_xrc=yes],
+               [includes_xrc=no])
+AC_MSG_RESULT($includes_xrc)
+AM_CONDITIONAL([BUILD_XRC], [test $includes_xrc = no])
+CXXFLAGS="$saved_CXXFLAGS"
+
 
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS"
 
