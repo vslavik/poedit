@@ -61,8 +61,6 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 (bool)cfg->Read(_T("manager_startup"), (long)false));
     XRCCTRL(*this, "focus_to_text", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("focus_to_text"), (long)false));
-    XRCCTRL(*this, "shaded_list", wxCheckBox)->SetValue(
-                (bool)cfg->Read(_T("shaded_list"), true));
     XRCCTRL(*this, "ext_editor", wxComboBox)->SetValue(
                 cfg->Read(_T("ext_editor"), wxEmptyString));
     XRCCTRL(*this, "open_editor_immediately", wxCheckBox)->SetValue(
@@ -126,8 +124,6 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XRCCTRL(*this, "manager_startup", wxCheckBox)->GetValue());
     cfg->Write(_T("focus_to_text"), 
                 XRCCTRL(*this, "focus_to_text", wxCheckBox)->GetValue());
-    cfg->Write(_T("shaded_list"), 
-                XRCCTRL(*this, "shaded_list", wxCheckBox)->GetValue());
     cfg->Write(_T("ext_editor"), 
                 XRCCTRL(*this, "ext_editor", wxComboBox)->GetValue());
     cfg->Write(_T("open_editor_immediately"), 

@@ -351,36 +351,40 @@ class UnfocusableTextCtrl : public wxTextCtrl
 
 
 BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
-   EVT_MENU                 (XRCID("menu_quit"),        poEditFrame::OnQuit)
-   EVT_MENU                 (XRCID("menu_help"),        poEditFrame::OnHelp)
-   EVT_MENU                 (XRCID("menu_help_gettext"),poEditFrame::OnHelpGettext)
-   EVT_MENU                 (XRCID("menu_about"),       poEditFrame::OnAbout)
-   EVT_MENU                 (XRCID("menu_new"),         poEditFrame::OnNew)
-   EVT_MENU                 (XRCID("menu_open"),        poEditFrame::OnOpen)
-   EVT_MENU                 (XRCID("menu_save"),        poEditFrame::OnSave)
-   EVT_MENU                 (XRCID("menu_saveas"),      poEditFrame::OnSaveAs)
-   EVT_MENU_RANGE           (wxID_FILE1, wxID_FILE9,    poEditFrame::OnOpenHist)
-   EVT_MENU                 (XRCID("menu_catsettings"), poEditFrame::OnSettings)
-   EVT_MENU                 (XRCID("menu_preferences"), poEditFrame::OnPreferences)
-   EVT_MENU                 (XRCID("menu_update"),      poEditFrame::OnUpdate)
-   EVT_MENU                 (XRCID("menu_fuzzy"),       poEditFrame::OnFuzzyFlag)
-   EVT_MENU                 (XRCID("menu_quotes"),      poEditFrame::OnQuotesFlag)
-   EVT_MENU                 (XRCID("menu_lines"),       poEditFrame::OnLinesFlag)
-   EVT_MENU                 (XRCID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
-   EVT_MENU                 (XRCID("menu_references"),  poEditFrame::OnReferencesMenu)
-   EVT_MENU                 (XRCID("menu_fullscreen"),  poEditFrame::OnFullscreen) 
-   EVT_MENU                 (XRCID("menu_find"),        poEditFrame::OnFind)
-   EVT_MENU                 (XRCID("menu_comment"),     poEditFrame::OnEditComment)
-   EVT_MENU                 (XRCID("menu_manager"),     poEditFrame::OnManager)
-   EVT_MENU_RANGE           (ED_POPUP_REFS, ED_POPUP_REFS + 999, poEditFrame::OnReference)
+   EVT_MENU           (XRCID("menu_quit"),        poEditFrame::OnQuit)
+   EVT_MENU           (XRCID("menu_help"),        poEditFrame::OnHelp)
+   EVT_MENU           (XRCID("menu_help_gettext"),poEditFrame::OnHelpGettext)
+   EVT_MENU           (XRCID("menu_about"),       poEditFrame::OnAbout)
+   EVT_MENU           (XRCID("menu_new"),         poEditFrame::OnNew)
+   EVT_MENU           (XRCID("menu_open"),        poEditFrame::OnOpen)
+   EVT_MENU           (XRCID("menu_save"),        poEditFrame::OnSave)
+   EVT_MENU           (XRCID("menu_saveas"),      poEditFrame::OnSaveAs)
+   EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    poEditFrame::OnOpenHist)
+   EVT_MENU           (XRCID("menu_catsettings"), poEditFrame::OnSettings)
+   EVT_MENU           (XRCID("menu_preferences"), poEditFrame::OnPreferences)
+   EVT_MENU           (XRCID("menu_update"),      poEditFrame::OnUpdate)
+   EVT_MENU           (XRCID("menu_fuzzy"),       poEditFrame::OnFuzzyFlag)
+   EVT_MENU           (XRCID("menu_quotes"),      poEditFrame::OnQuotesFlag)
+   EVT_MENU           (XRCID("menu_lines"),       poEditFrame::OnLinesFlag)
+   EVT_MENU           (XRCID("menu_shaded"),      poEditFrame::OnShadedListFlag)
+   EVT_MENU           (XRCID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
+   EVT_MENU           (XRCID("menu_references"),  poEditFrame::OnReferencesMenu)
+   EVT_MENU           (XRCID("menu_fullscreen"),  poEditFrame::OnFullscreen) 
+   EVT_MENU           (XRCID("menu_find"),        poEditFrame::OnFind)
+   EVT_MENU           (XRCID("menu_comment"),     poEditFrame::OnEditComment)
+   EVT_MENU           (XRCID("menu_manager"),     poEditFrame::OnManager)
+   EVT_MENU_RANGE     (ED_POPUP_REFS, ED_POPUP_REFS + 999, poEditFrame::OnReference)
 #ifdef USE_TRANSMEM
-   EVT_MENU_RANGE           (ED_POPUP_TRANS, ED_POPUP_TRANS + 999, poEditFrame::OnAutoTranslate)
+   EVT_MENU_RANGE     (ED_POPUP_TRANS, ED_POPUP_TRANS + 999,
+                       poEditFrame::OnAutoTranslate)
 #endif
-   EVT_LIST_ITEM_SELECTED   (EDC_LIST,       poEditFrame::OnListSel)
-   EVT_LIST_ITEM_DESELECTED (EDC_LIST,       poEditFrame::OnListDesel)
-   EVT_CLOSE                (                poEditFrame::OnCloseWindow)
+   EVT_LIST_ITEM_SELECTED
+                      (EDC_LIST,       poEditFrame::OnListSel)
+   EVT_LIST_ITEM_DESELECTED
+                      (EDC_LIST,       poEditFrame::OnListDesel)
+   EVT_CLOSE          (                poEditFrame::OnCloseWindow)
 #ifdef __WXMSW__
-   EVT_DROP_FILES           (poEditFrame::OnFileDrop)
+   EVT_DROP_FILES     (poEditFrame::OnFileDrop)
 #endif
 END_EVENT_TABLE()
 
@@ -449,6 +453,7 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     GetToolBar()->ToggleTool(XRCID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XRCID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XRCID("menu_lines"), m_displayLines);
+    GetMenuBar()->Check(XRCID("menu_shaded"), gs_shadedList);
     
     m_splitter = new wxSplitterWindow(this, -1);
     wxPanel *panel = new wxPanel(m_splitter);
@@ -537,6 +542,7 @@ poEditFrame::~poEditFrame()
     cfg->Write(_T("splitter"), (long)m_splitter->GetSashPosition());
     cfg->Write(_T("display_quotes"), m_displayQuotes);
     cfg->Write(_T("display_lines"), m_displayLines);
+    cfg->Write(_T("shaded_list"), gs_shadedList);
 
     m_history.Save(*cfg);
 
@@ -786,14 +792,8 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
     if (dlg.ShowModal() == wxID_OK)
     {
         dlg.TransferFrom(wxConfig::Get());
-        gs_focusToText = (bool)wxConfig::Get()->Read(_T("focus_to_text"), (long)false);
-        
-        bool shaded = (bool)wxConfig::Get()->Read(_T("shaded_list"), (long)true);
-        if (shaded != gs_shadedList)
-        {
-            gs_shadedList = shaded;
-            RefreshControls();
-        }
+        gs_focusToText = (bool)wxConfig::Get()->Read(_T("focus_to_text"),
+                                                     (long)false);
     }
 }
 
@@ -980,6 +980,14 @@ void poEditFrame::OnLinesFlag(wxCommandEvent& event)
 {
     m_displayLines = GetMenuBar()->IsChecked(XRCID("menu_lines"));
     m_list->SetDisplayLines(m_displayLines);
+    RefreshControls();
+}
+
+
+
+void poEditFrame::OnShadedListFlag(wxCommandEvent& event)
+{
+    gs_shadedList = GetMenuBar()->IsChecked(XRCID("menu_shaded"));
     RefreshControls();
 }
 

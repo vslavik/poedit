@@ -140,6 +140,7 @@ class poEditFrame : public wxFrame
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnQuotesFlag(wxCommandEvent& event);
         void OnLinesFlag(wxCommandEvent& event);
+        void OnShadedListFlag(wxCommandEvent& event);
         void OnInsertOriginal(wxCommandEvent& event);
         void OnFullscreen(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
