@@ -109,25 +109,31 @@ void CatalogParser::Parse()
         }
         
         // msgid:
-        else if (ReadParam(line, _T("msgid \""), dummy))
+        else if (ReadParam(line, _T("msgid \""), dummy) ||
+                 ReadParam(line, _T("msgid\t\""), dummy))
         {
             mstr = dummy.RemoveLast();
             mlinenum = m_textFile->GetCurrentLine() + 1;
             while (!(line = ReadTextLine(m_textFile)).IsEmpty())
             {
+                if (line[0u] == _T('\t'))
+                    line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
                     mstr += line.Mid(1, line.Length() - 2);
                 else
                     break;
             }
         }
-        
+
         // msgstr:
-        else if (ReadParam(line, _T("msgstr \""), dummy))
+        else if (ReadParam(line, _T("msgstr \""), dummy) ||
+                 ReadParam(line, _T("msgstr\t\""), dummy))
         {
             mtrans = dummy.RemoveLast();
             while (!(line = ReadTextLine(m_textFile)).IsEmpty())
             {
+                if (line[0u] == _T('\t'))
+                    line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
                     mtrans += line.Mid(1, line.Length() - 2);
                 else
