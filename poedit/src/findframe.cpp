@@ -18,7 +18,7 @@
 
 #include <wx/wxprec.h>
 
-#include <wx/xml/xmlres.h>
+#include <wx/xrc/xmlres.h>
 #include <wx/config.h>
 #include <wx/button.h>
 #include <wx/listctrl.h>

@@ -26,7 +26,7 @@
 #include <wx/choicdlg.h>
 #include <wx/spinctrl.h>
 #include <wx/notebook.h>
-#include <wx/xml/xmlres.h>
+#include <wx/xrc/xmlres.h>
 
 #include "prefsdlg.h"
 #include "iso639.h"

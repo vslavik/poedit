@@ -23,7 +23,7 @@
 #include <wx/combobox.h>
 #include <wx/textctrl.h>
 #include <wx/gizmos/editlbox.h>
-#include <wx/xml/xmlres.h>
+#include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
 
 #include "iso639.h"

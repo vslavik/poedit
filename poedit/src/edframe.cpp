@@ -27,7 +27,7 @@
 #include <wx/fs_mem.h>
 #include <wx/datetime.h>
 #include <wx/tokenzr.h>
-#include <wx/xml/xmlres.h>
+#include <wx/xrc/xmlres.h>
 #include <wx/settings.h>
 
 

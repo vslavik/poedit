@@ -22,8 +22,8 @@
 #include <wx/wx.h>
 #include <wx/fs_zip.h>
 #include <wx/image.h>
-#include <wx/xml/xmlres.h>
-#include <wx/xml/xh_all.h>
+#include <wx/xrc/xmlres.h>
+#include <wx/xrc/xh_all.h>
 
 #include "edapp.h"
 #include "edframe.h"

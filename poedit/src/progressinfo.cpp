@@ -23,7 +23,7 @@
 
 #include <wx/dialog.h>
 #include <wx/log.h>
-#include <wx/xml/xmlres.h>
+#include <wx/xrc/xmlres.h>
 #include <wx/gauge.h>
 #include <wx/stattext.h>
 #include <wx/dialog.h>
