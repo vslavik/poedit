@@ -493,11 +493,6 @@ class CatalogData : public wxObject
         void SetErrorString(const wxString& str) { m_errorString = str; }
         wxString GetErrorString() const { return m_errorString; }
         
-        /// Sets the list item ID for this catalog entry
-        void SetListItemId(const int listItemId) { m_listItemId = listItemId;}
-        /// Returns the list item ID for this catalog (defaults to -1)
-        int GetListItemId() const { return m_listItemId; };
-        
         /// Returns the bookmark for the item
         Bookmark GetBookmark() {return m_bookmark;}
         /// Returns true if the item has a bookmark
@@ -516,7 +511,6 @@ class CatalogData : public wxObject
         Validity m_validity;
         unsigned m_lineNum;
         wxString m_errorString;
-        int m_listItemId;
         Bookmark m_bookmark;
 
         /// Sets the bookmark
