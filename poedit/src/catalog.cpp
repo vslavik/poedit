@@ -379,7 +379,6 @@ void CatalogParser::Parse()
                         break;
                     }
                 }
-                wxLogTrace(_T("poedit"), _T("add '%s'"), str.c_str());
                 mtranslations.Add(str);
             }
 
@@ -1141,6 +1140,27 @@ bool Catalog::ShowMergeSummary(Catalog *refcat)
 CatalogData* Catalog::FindItem(const wxString& key) const
 {
     return (CatalogData*) m_data->Get(key);
+}
+
+
+unsigned Catalog::GetPluralFormsCount() const
+{
+    if (m_header.HasHeader(_T("Plural-Forms")))
+    {
+        // e.g. "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ?
+        //       0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+        wxString form = m_header.GetHeader(_T("Plural-Forms"));
+        form = form.BeforeFirst(_T(';'));
+        if (form.BeforeFirst(_T('=')) == _T("nplurals"))
+        {
+            long val;
+            if (form.AfterFirst(_T('=')).ToLong(&val))
+                return val;
+        }
+    }
+    
+    return 0;
 }
 
 

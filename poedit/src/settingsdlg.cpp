@@ -39,6 +39,7 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
     m_charset = XRCCTRL(*this, "charset", wxComboBox);
     m_basePath = XRCCTRL(*this, "basepath", wxTextCtrl);
     m_sourceCodeCharset = XRCCTRL(*this, "source_code_charset", wxComboBox);
+    m_pluralForms = XRCCTRL(*this, "plural_forms", wxTextCtrl);
 
     const LanguageStruct *lang = isoLanguages; /*from isocodes.h*/ 
     m_language->Append(wxEmptyString);
@@ -91,6 +92,9 @@ void SettingsDialog::TransferTo(Catalog *cat)
     SET_VAL(Charset, charset);
     SET_VAL(SourceCodeCharset, sourceCodeCharset);
     #undef SET_VAL
+
+    if (cat->Header().HasHeader(_T("Plural-Forms")))
+        m_pluralForms->SetValue(cat->Header().GetHeader(_T("Plural-Forms")));
     
     m_paths->SetStrings(cat->Header().SearchPaths);
     m_keywords->SetStrings(cat->Header().Keywords);
@@ -139,4 +143,7 @@ void SettingsDialog::TransferFrom(Catalog *cat)
         charsets = _T(":") + charset + charsets;
         wxConfig::Get()->Write(_T("used_charsets"), charsets);
     }
+    
+    if (cat->Header().HasHeader(_T("Plural-Forms")))
+        cat->Header().SetHeader(_T("Plural-Forms"), m_pluralForms->GetValue());
 }

@@ -167,6 +167,10 @@ class Catalog
         /// Gets catalog header (read-write access).
         HeaderData& Header() { return m_header; }
 
+        /// Returns plural forms count: taken from Plural-Forms header if
+        /// present, 0 otherwise
+        unsigned GetPluralFormsCount() const;
+
         /** Returns status of catalog object: true if ok, false if damaged
             (i.e. constructor or Load failed).
          */

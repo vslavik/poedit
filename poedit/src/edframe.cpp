@@ -103,6 +103,7 @@ enum
 {
     EDC_LIST = 1000,
     EDC_TEXTORIG,
+    EDC_TEXTORIGPLURAL,
     EDC_TEXTTRANS,
     EDC_TEXTCOMMENT,
     
@@ -211,16 +212,22 @@ static bool gs_shadedList = false;
 class ListHandler : public wxEvtHandler
 { 
     public:
-        ListHandler(wxTextCtrl *text, poEditFrame *frame,
+        ListHandler(wxTextCtrl *text, std::vector<wxTextCtrl*> *text2,
+                    poEditFrame *frame,
                     int *sel, int *selitem) :
-                 wxEvtHandler(), m_text(text),
+                 wxEvtHandler(), m_text(text), m_text2(text2),
                  m_frame(frame), m_sel(sel), m_selItem(selitem) {}
 
     private:
         void OnActivated(wxListEvent& event)
         {
             if (gs_focusToText)
-                m_text->SetFocus();
+            {
+                if (m_text->IsShown())
+                    m_text->SetFocus();
+                else
+                    (*m_text2)[0]->SetFocus();
+            }
             else
                 event.Skip();
         }
@@ -256,7 +263,12 @@ class ListHandler : public wxEvtHandler
         void OnFocus(wxFocusEvent& event)
         {
             if (gs_focusToText)
-                m_text->SetFocus();
+            {
+                if (m_text->IsShown())
+                    m_text->SetFocus();
+                else
+                    (*m_text2)[0]->SetFocus();
+            }
             else
                 event.Skip();
         }
@@ -264,6 +276,7 @@ class ListHandler : public wxEvtHandler
         DECLARE_EVENT_TABLE() 
 
         wxTextCtrl *m_text;
+        std::vector<wxTextCtrl*> *m_text2;
         poEditFrame *m_frame;
         int *m_sel, *m_selItem;
 };
@@ -530,20 +543,40 @@ poEditFrame::poEditFrame() :
     // create the control:
     UpdateCommentWindowEditable();
 
+    m_labelSingular = new wxStaticText(m_bottomLeftPanel, -1, _("Singular:"));
+    m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
     m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
                                 EDC_TEXTORIG, wxEmptyString, 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE | wxTE_READONLY);
+    m_textOrigPlural = new UnfocusableTextCtrl(m_bottomLeftPanel,
+                                EDC_TEXTORIGPLURAL, wxEmptyString, 
+                                wxDefaultPosition, wxDefaultSize, 
+                                wxTE_MULTILINE | wxTE_READONLY);
+    
     m_textTrans = new wxTextCtrl(m_bottomLeftPanel,
                                 EDC_TEXTTRANS, wxEmptyString, 
                                 wxDefaultPosition, wxDefaultSize, 
                                 wxTE_MULTILINE);
 
+    m_pluralNotebook = new wxNotebook(m_bottomLeftPanel, -1);
+
     SetCustomFonts();
     
     wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
-    leftSizer->Add(m_textOrig, 1, wxEXPAND);
+    wxFlexGridSizer *gridSizer = new wxFlexGridSizer(2);
+    gridSizer->AddGrowableCol(1);
+    gridSizer->AddGrowableRow(0);
+    gridSizer->AddGrowableRow(1);
+    gridSizer->Add(m_labelSingular, 0, wxALIGN_CENTER_VERTICAL | wxALL, 3);
+    gridSizer->Add(m_textOrig, 1, wxEXPAND);
+    gridSizer->Add(m_labelPlural, 0, wxALIGN_CENTER_VERTICAL | wxALL, 3);
+    gridSizer->Add(m_textOrigPlural, 1, wxEXPAND);
+    gridSizer->SetItemMinSize(m_textOrig, 1, 1);
+    gridSizer->SetItemMinSize(m_textOrigPlural, 1, 1);
+    leftSizer->Add(gridSizer, 1, wxEXPAND);
     leftSizer->Add(m_textTrans, 1, wxEXPAND);
+    leftSizer->Add(m_pluralNotebook, 1, wxEXPAND);
 
     m_bottomLeftPanel->SetAutoLayout(true);
     m_bottomLeftPanel->SetSizer(leftSizer);
@@ -565,7 +598,8 @@ poEditFrame::poEditFrame() :
     m_splitter->SplitHorizontally(m_list, m_bottomSplitter, cfg->Read(_T("splitter"), 240L));
 
     m_textTrans->PushEventHandler(new TextctrlHandler(m_list, &m_sel));
-    m_list->PushEventHandler(new ListHandler(m_textTrans, this, 
+    m_list->PushEventHandler(new ListHandler(m_textTrans, &m_textTransPlural,
+                                             this, 
                                              &m_sel, &m_selItem));
 
     m_list->SetFocus();
@@ -579,6 +613,8 @@ poEditFrame::poEditFrame() :
 #ifdef __WXMSW__    
     bar->SetSize(-1,-1,-1,-1);
 #endif
+
+    ShowPluralFormUI(false);
 
     UpdateMenu();
 
@@ -667,33 +703,42 @@ static GtkTextView *GetTextView(wxTextCtrl *ctrl)
 #endif
 
 
-void poEditFrame::InitSpellchecker()
-{
 #if USE_SPELLCHECKING
-    GtkTextView *textview = GetTextView(m_textTrans);
+static void DoInitSpellchecker(wxTextCtrl *text,
+                               bool enable, const wxString& lang)
+{
+    GtkTextView *textview = GetTextView(text);
     wxASSERT_MSG( textview, _T("wxTextCtrl is supposed to use GtkTextView") );
     GtkSpell *spell = gtkspell_get_from_text_view(textview);
 
     if (spell)        
         gtkspell_detach(spell);
-    
-    bool enabled = wxConfig::Get()->Read(_T("enable_spellchecking"),
-                                         (long)true);
 
-    if (m_catalog && enabled)
+    if (enable)
     {
-        wxString lang = m_catalog->GetLocaleCode();
-        if (!lang.empty())
+        GError *err = NULL;
+        if (!gtkspell_new_attach(textview, lang.ToAscii(), &err))
         {
-            GError *err = NULL;
-            if (!gtkspell_new_attach(textview, lang.ToAscii(), &err))
-            {
-                wxLogError(_("Error initializing spell checking: %s"),
-                           wxString(err->message, wxConvUTF8).c_str());
-                g_error_free(err);
-            }
+            wxLogError(_("Error initializing spell checking: %s"),
+                       wxString(err->message, wxConvUTF8).c_str());
+            g_error_free(err);
         }
     }
+}
+#endif
+
+void poEditFrame::InitSpellchecker()
+{
+#if USE_SPELLCHECKING
+    wxString lang;
+    if (m_catalog) lang = m_catalog->GetLocaleCode();
+    bool enabled = m_catalog && !lang.empty() &&
+                   wxConfig::Get()->Read(_T("enable_spellchecking"),
+                                         (long)true);
+
+    DoInitSpellchecker(m_textTrans, enabled, lang);
+    for (size_t i = 0; i < m_textTransPlural.size(); i++)
+        DoInitSpellchecker(m_textTransPlural[i], enabled, lang);
 #endif
 }
     
@@ -1005,6 +1050,7 @@ void poEditFrame::OnSettings(wxCommandEvent&)
     {
         dlg.TransferFrom(m_catalog);
         m_modified = true;
+        RecreatePluralTextCtrls();
         UpdateTitle();
         UpdateMenu();
         InitSpellchecker();
@@ -1084,8 +1130,20 @@ void poEditFrame::OnUpdate(wxCommandEvent& event)
 
 void poEditFrame::OnListSel(wxListEvent& event)
 {
+    wxWindow *focus = wxWindow::FindFocus();
+    bool hasFocus = (focus == m_textTrans) ||
+                    (focus && focus->GetParent() == m_pluralNotebook);
+    
     UpdateToTextCtrl(event.GetIndex());
     event.Skip();
+    
+    if (hasFocus)
+    {
+        if (m_textTrans->IsShown())
+            m_textTrans->SetFocus();
+        else
+            m_textTransPlural[0]->SetFocus();
+    }
 }
 
 
@@ -1233,7 +1291,16 @@ void poEditFrame::OnShadedListFlag(wxCommandEvent& event)
 
 void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
 {
-    m_textTrans->SetValue(m_textOrig->GetValue());
+    if (m_textTransPlural.size() > 0)
+    {
+        wxString orig = m_textOrigPlural->GetValue();
+        for (size_t i = 0; i < m_textTransPlural.size(); i++)
+            m_textTransPlural[i]->SetValue(orig);
+    }
+    else
+    {
+        m_textTrans->SetValue(m_textOrig->GetValue());
+    }
 }
 
 
@@ -1311,25 +1378,12 @@ inline wxString convertFromLocalCharset(const wxString& str)
 #endif
 }
 
-void poEditFrame::UpdateFromTextCtrl(int item)
+static wxString TransformNewval(const wxString& val, bool displayQuotes)
 {
-    if (m_catalog == NULL) return;
-    if (item == -1) item = m_sel;
-    if (m_sel == -1 || m_sel >= m_list->GetItemCount()) return;
-    int ind = m_list->GetItemData(item);
-    if (ind >= (int)m_catalog->GetCount()) return;
+    wxString newval(val);
     
-    wxString key = (*m_catalog)[ind].GetString();
-    wxString newval = m_textTrans->GetValue();
-    bool newfuzzy = GetToolBar()->GetToolState(XRCID("menu_fuzzy"));
-
-    // check if anything changed:
-    if (newval == m_edittedTextOrig && 
-        (*m_catalog)[ind].IsFuzzy() == newfuzzy)
-        return; 
-
     newval.Replace(_T("\n"), _T(""));
-    if (m_displayQuotes)
+    if (displayQuotes)
     {
         if (newval.Len() > 0 && newval[0u] == _T('"')) 
             newval.Remove(0, 1);
@@ -1353,6 +1407,49 @@ void poEditFrame::UpdateFromTextCtrl(int item)
         newval.RemoveLast();
     }
 
+    return newval;
+}
+
+void poEditFrame::UpdateFromTextCtrl(int item)
+{
+    if (m_catalog == NULL) return;
+    if (item == -1) item = m_sel;
+    if (m_sel == -1 || m_sel >= m_list->GetItemCount()) return;
+    int ind = m_list->GetItemData(item);
+    if (ind >= (int)m_catalog->GetCount()) return;
+    
+    CatalogData& entry = (*m_catalog)[ind];
+    
+    wxString key = entry.GetString();
+    wxString newval = m_textTrans->GetValue();
+    bool newfuzzy = GetToolBar()->GetToolState(XRCID("menu_fuzzy"));
+    
+    // check if anything changed:
+    if (entry.IsFuzzy() == newfuzzy)
+    {
+        if (entry.HasPlural())
+        {
+            bool changed = false;
+            for (size_t i = 0; i < m_textTransPlural.size(); i++)
+            {
+                if (m_textTransPlural[i]->GetValue() != m_edittedTextOrig[i])
+                {
+                    changed = true;
+                    break;
+                }
+            }
+            if (!changed)
+                return;
+        }
+        else
+        {
+            if (newval == m_edittedTextOrig[0])
+                return;
+        }
+    }
+
+    newval = TransformNewval(newval, m_displayQuotes);
+
     m_list->SetItem(item, 1, newval.substr(0, m_list->GetMaxColChars()));
 
 #if !wxUSE_UNICODE
@@ -1362,47 +1459,65 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     newval = convertFromLocalCharset(newval);
 #endif
 
-    m_catalog->Translate(key, newval);
+    if (entry.HasPlural())
+    {
+        wxArrayString str;
+        for (unsigned i = 0; i < m_textTransPlural.size(); i++)
+        {
+            wxString val = TransformNewval(m_textTransPlural[i]->GetValue(),
+                                           m_displayQuotes);
+#if !wxUSE_UNICODE
+            // convert to UTF-8 using user's environment default charset (do it
+            // after calling m_list->SetItem because SetItem expects string in
+            // local charset, not UTF-8):
+            val = convertFromLocalCharset(val);
+#endif
+            str.Add(val);
+        }
+        entry.SetTranslations(str);
+    }
+    else
+    {
+        entry.SetTranslation(newval);
+    }
 
-    CatalogData* data = m_catalog->FindItem(key);
-
-    if (newfuzzy == data->IsFuzzy() && !m_edittedTextFuzzyChanged)
+    if (newfuzzy == entry.IsFuzzy() && !m_edittedTextFuzzyChanged)
         newfuzzy = false;
-    data->SetFuzzy(newfuzzy);
+    entry.SetFuzzy(newfuzzy);
     GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), newfuzzy);
     GetMenuBar()->Check(XRCID("menu_fuzzy"), newfuzzy);
 
     wxListItem listitem;
-    data->SetModified(true);
-    data->SetAutomatic(false);
-    data->SetTranslated(!newval.IsEmpty());
+    entry.SetModified(true);
+    entry.SetAutomatic(false);
+    entry.SetTranslated(!newval.IsEmpty());
     listitem.SetId(item);
     m_list->GetItem(listitem);
 
     if (gs_shadedList)
     {
-        if (!data->IsTranslated())
+        if (!entry.IsTranslated())
             listitem.SetBackgroundColour(g_ItemColourUntranslated[item % 2]);
-        else if (data->IsFuzzy())
+        else if (entry.IsFuzzy())
             listitem.SetBackgroundColour(g_ItemColourFuzzy[item % 2]);
-        else if (data->GetValidity() == CatalogData::Val_Invalid)
+        else if (entry.GetValidity() == CatalogData::Val_Invalid)
             listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
         else
             listitem.SetBackgroundColour(g_ItemColourNormal[item % 2]);
     }
     else
     {
-        if (!data->IsTranslated())
+        if (!entry.IsTranslated())
             listitem.SetBackgroundColour(g_ItemColourUntranslated[0]);
-        else if (data->IsFuzzy())
+        else if (entry.IsFuzzy())
             listitem.SetBackgroundColour(g_ItemColourFuzzy[0]);
-        else if (data->GetValidity() == CatalogData::Val_Invalid)
+        else if (entry.GetValidity() == CatalogData::Val_Invalid)
             listitem.SetBackgroundColour(g_ItemColourInvalid[0]);
         else
             listitem.SetBackgroundColour(g_ItemColourNormal[0]);
     }
     
-    int icon = GetItemIcon(*data);
+    int icon = GetItemIcon(entry);
     m_list->SetItemImage(listitem, icon, icon);
     m_list->SetItem(listitem);
     if (m_modified == false)
@@ -1426,38 +1541,77 @@ void poEditFrame::UpdateToTextCtrl(int item)
     int ind = m_list->GetItemData(item);
     if (ind >= (int)m_catalog->GetCount()) return;
 
+    const CatalogData& entry = (*m_catalog)[ind];
+
     wxString quote;
     wxString t_o, t_t, t_c;
     if (m_displayQuotes) quote = _T("\""); else quote = wxEmptyString;
-    t_o = quote + (*m_catalog)[ind].GetString() + quote;
+    t_o = quote + entry.GetString() + quote;
     t_o.Replace(_T("\\n"), _T("\\n\n"));
-    t_c = (*m_catalog)[ind].GetComment();
+    t_c = entry.GetComment();
     t_c.Replace(_T("\\n"), _T("\\n\n"));
-    t_t = quote + (*m_catalog)[ind].GetTranslation() + quote;
-    t_t.Replace(_T("\\n"), _T("\\n\n"));
 
     // remove "# " in front of every comment line
     t_c = CommentDialog::RemoveStartHash(t_c);
 
-
 #if !wxUSE_UNICODE
     // Convert from UTF-8 to environment's default charset:
     t_o = convertToLocalCharset(t_o);
-    t_t = convertToLocalCharset(t_t);
     t_c = convertToLocalCharset(t_c);
 #endif
     
     m_textOrig->SetValue(t_o);
+
+    m_edittedTextOrig.clear();
+
+    if (entry.HasPlural())
+    {
+        wxString t_op = quote + entry.GetPluralString() + quote;
+        t_op.Replace(_T("\\n"), _T("\\n\n"));
+#if !wxUSE_UNICODE
+        t_op = convertToLocalCharset(t_op);
+#endif
+        m_textOrigPlural->SetValue(t_op);
+
+        size_t formsCnt = m_textTransPlural.size();
+        for (size_t i = 0; i < formsCnt; i++)
+            m_textTransPlural[i]->SetValue(wxEmptyString);
+
+        for (size_t i = 0; 
+                i < wxMin(formsCnt, entry.GetNumberOfTranslations()); i++)
+        {
+            t_t = quote + entry.GetTranslation(i) + quote;
+            t_t.Replace(_T("\\n"), _T("\\n\n"));
+#if !wxUSE_UNICODE
+            t_t = convertToLocalCharset(t_t);
+#endif
+            m_textTransPlural[i]->SetValue(t_t);
+            if (m_displayQuotes) 
+                m_textTransPlural[i]->SetInsertionPoint(1);
+            m_edittedTextOrig.push_back(t_t);
+        }
+    }
+    else
+    {
+        t_t = quote + entry.GetTranslation() + quote;
+        t_t.Replace(_T("\\n"), _T("\\n\n"));
+#if !wxUSE_UNICODE
+        t_t = convertToLocalCharset(t_t);
+#endif
+        m_textTrans->SetValue(t_t);
+        if (m_displayQuotes) 
+            m_textTrans->SetInsertionPoint(1);
+        m_edittedTextOrig.push_back(t_t);
+    }
+    
     if (m_displayCommentWin)
         m_textComment->SetValue(t_c);
-    m_textTrans->SetValue(t_t);
 
-    m_edittedTextOrig = t_t;
     m_edittedTextFuzzyChanged = false;
-    if (m_displayQuotes) 
-        m_textTrans->SetInsertionPoint(1);
-    GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), (*m_catalog)[ind].IsFuzzy());
-    GetMenuBar()->Check(XRCID("menu_fuzzy"), (*m_catalog)[ind].IsFuzzy());
+    GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), entry.IsFuzzy());
+    GetMenuBar()->Check(XRCID("menu_fuzzy"), entry.IsFuzzy());
+    
+    ShowPluralFormUI(entry.HasPlural());
 }
 
 
@@ -1483,6 +1637,7 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     m_fileName = catalog;
     m_modified = false;
 
+    RecreatePluralTextCtrls();
     RefreshControls();
     UpdateTitle();
    
@@ -1705,6 +1860,7 @@ void poEditFrame::UpdateMenu()
         GetMenuBar()->EnableTop(2, false);
         m_textTrans->Enable(false);
         m_textOrig->Enable(false);
+        m_textOrigPlural->Enable(false);
         m_textComment->Enable(false);
         m_list->Enable(false);
     }
@@ -1720,6 +1876,7 @@ void poEditFrame::UpdateMenu()
         GetMenuBar()->EnableTop(2, true);
         m_textTrans->Enable(true);
         m_textOrig->Enable(true);
+        m_textOrigPlural->Enable(true);
         m_textComment->Enable(true);
         m_list->Enable(true);
         bool doupdate = m_catalog->Header().SearchPaths.GetCount() > 0;
@@ -1804,7 +1961,7 @@ void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
     (*m_catalog)[m_selItem].SetTranslation(m_autoTranslations[ind]);
     UpdateToTextCtrl();
     // VS: This dirty trick ensures proper refresh of everything: 
-    m_edittedTextOrig = wxEmptyString;
+    m_edittedTextOrig.clear();
     m_edittedTextFuzzyChanged = false;
     UpdateFromTextCtrl();
 }
@@ -1986,7 +2143,10 @@ void poEditFrame::SetCustomFonts()
             font.SetNativeFontInfo(fi);
             m_textComment->SetFont(font);
             m_textOrig->SetFont(font);
+            m_textOrigPlural->SetFont(font);
             m_textTrans->SetFont(font);
+            for (size_t i = 0; i < m_textTransPlural.size(); i++)
+                m_textTransPlural[i]->SetFont(font);
         }
     }
 }
@@ -2168,4 +2328,46 @@ void poEditFrame::EndItemValidation()
                        _T("finished checking validity in background"));
         }
     }
+}
+        
+void poEditFrame::ShowPluralFormUI(bool show)
+{
+    wxSizer *origSizer = m_textOrigPlural->GetContainingSizer();
+    origSizer->Show(m_textOrigPlural, show);
+    origSizer->Show(m_labelSingular, show);
+    origSizer->Show(m_labelPlural, show);
+    origSizer->Layout();
+
+    wxSizer *textSizer = m_textTrans->GetContainingSizer();
+    textSizer->Show(m_textTrans, !show);
+    textSizer->Show(m_pluralNotebook, show);
+    textSizer->Layout();
+}
+
+void poEditFrame::RecreatePluralTextCtrls()
+{
+    m_pluralNotebook->DeleteAllPages();
+    for (size_t i = 0; i < m_textTransPlural.size(); i++)
+        m_textTransPlural[i]->PopEventHandler(true/*delete*/);
+    m_textTransPlural.clear();
+
+    if (!m_catalog)
+        return;
+
+    unsigned cnt = m_catalog->GetPluralFormsCount();
+    for (unsigned i = 0; i < cnt; i++)
+    {
+        wxTextCtrl *txt =  new wxTextCtrl(m_pluralNotebook, -1,
+                                          wxEmptyString, 
+                                          wxDefaultPosition, wxDefaultSize, 
+                                          wxTE_MULTILINE);
+        txt->PushEventHandler(new TextctrlHandler(m_list, &m_sel));
+        m_textTransPlural.push_back(txt);
+        m_pluralNotebook->AddPage(txt,
+                                  wxString::Format(_("Form %u"), i));
+    }
+
+    SetCustomFonts();
+    InitSpellchecker();
+    UpdateToTextCtrl();
 }

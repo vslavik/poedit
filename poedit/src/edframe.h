@@ -181,6 +181,10 @@ class poEditFrame : public wxFrame
         void EndItemValidation();
         
         void UpdateDisplayCommentWin();
+
+        void ShowPluralFormUI(bool show = true);
+
+        void RecreatePluralTextCtrls();
     
         DECLARE_EVENT_TABLE()
 
@@ -214,8 +218,11 @@ class poEditFrame : public wxFrame
         wxPanel *m_bottomLeftPanel;
         wxSplitterWindow *m_splitter, *m_bottomSplitter;
         poEditListCtrl *m_list;
-        wxTextCtrl *m_textOrig, *m_textTrans, *m_textComment;
+        wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textTrans, *m_textComment;
+        std::vector<wxTextCtrl*> m_textTransPlural;
+        wxNotebook *m_pluralNotebook;
         wxGauge *m_statusGauge;
+        wxStaticText *m_labelSingular, *m_labelPlural;
 #ifdef CAN_MODIFY_DEFAULT_FONT
         wxFont m_boldGuiFont;
 #endif
@@ -227,7 +234,7 @@ class poEditFrame : public wxFrame
         bool m_displayCommentWin;
         int m_sel, m_selItem;
         wxFileHistory m_history;
-        wxString m_edittedTextOrig;
+        std::vector<wxString> m_edittedTextOrig;
         bool m_edittedTextFuzzyChanged;
         
         friend class ListHandler;
