@@ -70,7 +70,9 @@ stats:
 		TR=0 FZ=0 UT=0; \
 		eval $$x; \
 		TOTAL=`expr $$TR + $$FZ + $$UT`; \
-		echo "$$i.po `expr 100 "*" $$TR / $$TOTAL`% of $$TOTAL strings"; \
+		echo "\"$$i\" => \"`expr 100 "*" $$TR / $$TOTAL`\","; \
 	done
+
+#echo "$$i.po `expr 100 "*" $$TR / $$TOTAL`% of $$TOTAL strings"; 
 
 .PHONY: allpo allmo force-update stats FORCE
