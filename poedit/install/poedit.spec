@@ -1,7 +1,18 @@
 # Purpose:  The .spec file for building poEdit RPM
 
 # set this to 1 if you want to build semistatic rpm
-%define        semistatic    0
+%define        semistatic      0
+
+# set this to 1 if you want mandrakized RPM (menu entry)
+%{expand:%%define enable_mdk %(A=$(if [ -f /etc/mandrake-release ]; then echo 1; else echo 0; fi)}
+
+%{?_with_semistatic: %{expand: %%define semistatic 1}}
+%{?_without_semistatic: %{expand: %%define semistatic 0}}
+
+%{?_with_mdk: %{expand: %%define enable_mdk 1}}
+%{?_without_mdk: %{expand: %%define enable_mdk 0}}
+
+
 
 # version and release
 %define        VERSION 1.1.9
@@ -20,7 +31,11 @@
 Summary:       Gettext catalogs editor
 Name:          %NAME
 Version:       %VERSION
+%if %{enable_mdk}
 Release:       %RELEASE
+%else
+Release:       %{RELEASE}mdk
+%endif
 Copyright:     MIT license
 Group:         Applications/Editors
 Source:        poedit-%{version}.tar.bz2
@@ -66,6 +81,23 @@ rm -rf ${RPM_BUILD_ROOT}
 %makeinstall GNOME_DATA_DIR=$RPM_BUILD_ROOT/usr/share \
              KDE_DATA_DIR=$RPM_BUILD_ROOT/usr/share
 
+%if %{enable_mdk}
+(cd $RPM_BUILD_ROOT
+mkdir -p ./%{_libdir}/menu
+cat > ./%{_libdir}/menu/poedit <<EOF 
+?package(%{name}): \
+	command="%{_bindir}/poedit"\\
+	needs="X11"\\
+	section="Applications/Development/Tools"\\
+	icon="poedit.xpm"\\
+	mimetypes="application/x-po;application/x-gettext"\\
+	title="poEdit"\\
+	longtitle="poEdit Gettext Catalogs Editor"
+EOF
+)
+%endif
+
+
 %find_lang poedit
 %if %{semistatic}
 %find_lang poedit-wxstd
@@ -78,6 +110,7 @@ rm -Rf ${RPM_BUILD_ROOT}
 %files -f poedit.lang
 %defattr(-,root,root)
 %doc NEWS LICENSE README AUTHORS
+
 %{_bindir}/poedit
 %dir %{_datadir}/poedit
 %{_mandir}/*/*
@@ -88,3 +121,7 @@ rm -Rf ${RPM_BUILD_ROOT}
 %{_datadir}/mime-info/poedit.*
 %{_datadir}/icons/poedit.xpm
 %{_datadir}/pixmaps/poedit.xpm
+
+%if %{enable_mdk}
+%{_libdir}/menu/*
+%endif
