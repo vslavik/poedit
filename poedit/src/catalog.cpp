@@ -696,6 +696,10 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         if (!dummy.IsEmpty())
             f.AddLine(dummy);
         dummy = FormatStringForFile(data->GetString());
+#if !wxUSE_UNICODE
+        if (encConv)
+            dummy = wxString(dummy.wc_str(wxConvUTF8), *encConv);
+#endif
         data->SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
         dummy = FormatStringForFile(data->GetTranslation());
