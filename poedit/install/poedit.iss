@@ -3,9 +3,9 @@
 
 [Setup]
 CompressLevel=9
-OutputBaseFilename=poedit112_setup
+OutputBaseFilename=poedit113_setup
 AppName=poEdit
-AppVerName=poEdit 1.1.2
+AppVerName=poEdit 1.1.3
 
 ChangesAssociations=true
 AlwaysShowComponentsList=false
@@ -41,8 +41,8 @@ Source: extras\win32-db3\libdb31.dll; DestDir: {app}\bin
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey
 Root: HKCR; SubKey: GettextFile; ValueType: string; ValueData: Gettext message catalog; Flags: uninsdeletekey
-Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData: "{app}\poedit.exe ""%1"""; Flags: uninsdeletevalue
-Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\poedit.exe,0; Flags: uninsdeletekey
+Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData: "{app}\bin\poedit.exe ""%1"""; Flags: uninsdeletevalue
+Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\bin\poedit.exe,0; Flags: uninsdeletekey
 Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty
 Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey
 Root: HKLM; Subkey: Software\Vaclav Slavik\poedit; ValueType: string; ValueName: application_path; ValueData: {app}; Flags: uninsdeletevalue
@@ -54,7 +54,7 @@ Name: {group}\Readme; Filename: {app}\doc\readme.txt; IconIndex: 0
 Name: {group}\poEdit Help; Filename: {app}\share\poedit\poedit.chm; IconIndex: 0
 
 [Run]
-Filename: {app}\doc\readme.txt; Description: View readme.txt; Flags: shellexec postinstall
+Filename: {app}\doc\readme.txt; Description: View readme.txt; Flags: shellexec postinstall unchecked
 Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run poEdit now; Flags: postinstall unchecked
 
 [_ISTool]
