@@ -35,10 +35,11 @@ DisableProgramGroupPage=true
 DisableFinishedPage=false
 DisableReadyMemo=false
 DisableReadyPage=true
+AdminPrivilegesRequired=true
 
 
 [Files]
-Source: c:\windows\system\msvcrt.dll; DestDir: {sys}; CopyMode: alwaysskipifsameorolder; Flags: sharedfile
+Source: extras\win32-runtime\msvcrt.dll; DestDir: {sys}; CopyMode: alwaysskipifsameorolder; Flags: restartreplace uninsneveruninstall
 Source: extras\win32-runtime\50comupd.exe; DestDir: {tmp}; Flags: deleteafterinstall
 Source: extras\win32-runtime\hhupd.exe; DestDir: {tmp}; Flags: deleteafterinstall
 
