@@ -50,11 +50,11 @@ FindFrame::FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c)
     m_btnPrev = XMLCTRL(*this, "find_prev", wxButton);
 
     XMLCTRL(*this, "in_orig", wxCheckBox)->SetValue(
-        wxConfig::Get()->Read("find_in_orig", true));
+        wxConfig::Get()->Read("find_in_orig", (long)true));
     XMLCTRL(*this, "in_trans", wxCheckBox)->SetValue(
-        wxConfig::Get()->Read("find_in_trans", true));
+        wxConfig::Get()->Read("find_in_trans", (long)true));
     XMLCTRL(*this, "case_sensitive", wxCheckBox)->SetValue(
-        wxConfig::Get()->Read("find_case_sensitive", false));
+        wxConfig::Get()->Read("find_case_sensitive", (long)false));
 }
 
 

@@ -20,6 +20,7 @@
 #include <wx/wxprec.h>
 
 #include <wx/wx.h>
+#include <wx/config.h>
 #include <wx/fs_zip.h>
 #include <wx/image.h>
 #include <wx/xrc/xmlres.h>

@@ -38,12 +38,12 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
+# PROP Output_Dir "objs/release"
+# PROP Intermediate_Dir "objs/release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O1 /Ob2 /I "../wxwindows/include" /I "extras/wx-contrib/include" /I "extras/wx-contrib/src/xml/expat" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /Ob2 /I "extras/wx-contrib/src/xrc/expat" /I "../wxwindows/include" /I "extras/wx-contrib/include" /I "extras/win32-db3" /D "NDEBUG" /D "USE_TRANSMEM" /D "WIN32" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD BASE RSC /l 0x809 /d "NDEBUG"
@@ -64,12 +64,12 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Debug"
-# PROP Intermediate_Dir "Debug"
+# PROP Output_Dir "objs/debug"
+# PROP Intermediate_Dir "objs/debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "extras/wx-contrib/src/xml/expat" /I "../wxwindows/include" /I "extras/wx-contrib/include" /D "_DEBUG" /D DEBUG=1 /D "__WXDEBUG__" /D "WIN32" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "extras/wx-contrib/src/xrc/expat" /I "../wxwindows/include" /I "extras/wx-contrib/include" /I "extras/win32-db3" /D "_DEBUG" /D DEBUG=1 /D "__WXDEBUG__" /D "USE_TRANSMEM" /D "WIN32" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD BASE RSC /l 0x809 /d "_DEBUG"
@@ -137,12 +137,24 @@ SOURCE=.\src\fileviewer.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\findframe.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\findframe.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\gexecute.cpp
 # ADD CPP /YX"wx/wxprec.h"
 # End Source File
 # Begin Source File
 
 SOURCE=.\src\gexecute.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\iso639.cpp
 # End Source File
 # Begin Source File
 
@@ -172,15 +184,6 @@ SOURCE=.\src\prefsdlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\finddlg.cpp
-# ADD CPP /YX"wx/wxprec.h"
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\finddlg.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\progressinfo.cpp
 # ADD CPP /YX"wx/wxprec.h"
 # End Source File
@@ -206,351 +209,321 @@ SOURCE=.\src\summarydlg.cpp
 
 SOURCE=.\src\summarydlg.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\src\transmem.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\transmem.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\transmemupd.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\transmemupd.h
+# End Source File
 # End Group
 # Begin Group "XML resources"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_all.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_all.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_bmp.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_bmp.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_bmp.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_bmp.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_bmpbt.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_bmpbt.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_bmpbt.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_bmpbt.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_bttn.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_bttn.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_bttn.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_bttn.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_cald.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_cald.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_cald.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_cald.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_chckb.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_chckb.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_chckb.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_chckb.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_chckl.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_chckl.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_chckl.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_chckl.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_choic.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_choic.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_choic.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_choic.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_combo.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_combo.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_combo.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_combo.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_dlg.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_dlg.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_dlg.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_dlg.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_frame.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_frame.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_frame.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_frame.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_gauge.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_gauge.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_gauge.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_gauge.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_html.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_html.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_html.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_html.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_listb.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_listb.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_listb.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_listb.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_listc.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_listc.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_listc.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_listc.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_menu.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_menu.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_menu.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_menu.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_notbk.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_notbk.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_notbk.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_notbk.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_panel.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_panel.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_panel.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_panel.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_radbt.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_radbt.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_radbt.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_radbt.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_radbx.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_radbx.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_radbx.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_radbx.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_scrol.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_scrol.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_scrol.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_scrol.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_sizer.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_sizer.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_sizer.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_sizer.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_slidr.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_slidr.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_slidr.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_slidr.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_spin.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_spin.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_spin.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_spin.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_stbmp.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_stbmp.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_stbmp.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_stbmp.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_stbox.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_stbox.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_stbox.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_stbox.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_stlin.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_stlin.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_stlin.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_stlin.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_sttxt.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_sttxt.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_sttxt.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_sttxt.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_text.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_text.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_text.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_text.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_toolb.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_toolb.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_toolb.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_toolb.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_tree.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_tree.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_tree.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_tree.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xh_unkwn.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xh_unkwn.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xh_unkwn.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_unkwn.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xml.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xml.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xml.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xml.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xmlbin.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xmlbin.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xmlbinz.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xmlbinz.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xmlexpat.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\expat\xmldef.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xmlio.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xmlexpat.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\expat\xmlparse.c"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xmlio.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xmlres.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xmlres.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\include\wx\xml\xmlres.h"
+SOURCE=".\extras\wx-contrib\include\wx\xrc\xmlres.h"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\expat\xmlrole.c"
+SOURCE=".\extras\wx-contrib\src\xrc\xmlrsall.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=".\extras\wx-contrib\src\xml\xmlrsall.cpp"
-# ADD CPP /YX"wx/wxprec.h"
-# End Source File
-# Begin Source File
-
-SOURCE=".\extras\wx-contrib\src\xml\expat\xmltok.c"
-# End Source File
-# Begin Source File
-
-SOURCE=".\extras\wx-contrib\src\xml\xmlwrite.cpp"
-# ADD CPP /YX"wx/wxprec.h"
+SOURCE=".\extras\wx-contrib\src\xrc\xmlwrite.cpp"
 # End Source File
 # End Group
 # Begin Group "Gizmos"
@@ -564,6 +537,22 @@ SOURCE=".\extras\wx-contrib\src\gizmos\editlbox.cpp"
 # Begin Source File
 
 SOURCE=".\extras\wx-contrib\include\wx\gizmos\editlbox.h"
+# End Source File
+# End Group
+# Begin Group "Expat"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=".\extras\wx-contrib\src\xrc\expat\xmlparse.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\extras\wx-contrib\src\xrc\expat\xmlrole.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\extras\wx-contrib\src\xrc\expat\xmltok.c"
 # End Source File
 # End Group
 # End Target

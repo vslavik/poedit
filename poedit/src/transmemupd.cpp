@@ -78,8 +78,9 @@ class TMUDirTraverser : public wxDirTraverser
             if ((f.Matches("*.mo") && IsForLang(f, m_lang)) || 
                 (f.Matches("*.po") && IsForLang(f, m_lang)) 
 #ifdef __UNIX__
-                || f.Matches("*.rpm"))
+                || f.Matches("*.rpm")
 #endif
+                )
             {
                 m_files->Add(f);
             }
