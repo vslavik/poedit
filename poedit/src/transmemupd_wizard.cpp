@@ -172,7 +172,9 @@ void RunTMUpdateWizard(wxWindow *parent,
     wxXmlResource::Get()->LoadObject(&wizard, parent,
                                      _T("tm_update_wizard"), _T("wxWizard"));
     wizard.Setup();
-    for (size_t i = 0; i < langs.GetCount(); i++)
+
+    size_t i; // VC++ is broken compiler
+    for (i = 0; i < langs.GetCount(); i++)
     {
         wizard.SetLang(langs[0]);
         if (!wizard.RunWizard(XRCCTRL(wizard, "tm_update_1", wxWizardPage)))
@@ -200,7 +202,7 @@ void RunTMUpdateWizard(wxWindow *parent,
     wxArrayString dirsArray;
     wizard.GetSearchPaths(dirsArray);
     wxString dirsStr;
-    for (size_t i = 0; i < dirsArray.GetCount(); i++)
+    for (i = 0; i < dirsArray.GetCount(); i++)
     {
         if (i != 0) dirsStr << wxPATH_SEP;
         dirsStr << dirsArray[i];
