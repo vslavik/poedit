@@ -66,9 +66,9 @@ bool poEditApp::OnInit()
     // speak in native language, not English, and we cannot parse
     // it correctly (not yet)
     // FIXME - better parsing of xgettext's stderr output
-    unsetenv("LC_ALL");
-    unsetenv("LC_MESSAGES");
-    unsetenv("LANG");
+    putenv("LC_ALL=en");
+    putenv("LC_MESSAGES=en");
+    putenv("LANG=en");
 #endif
 
     wxImage::AddHandler(new wxGIFHandler);
