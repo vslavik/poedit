@@ -270,9 +270,9 @@ DbBase::DbBase(const wxString& filename, DBTYPE type)
         return;
     }
 #ifdef DB_OPEN_WITH_TRANSACTION
-    m_err = m_db->open(m_db, NULL, filename.fn_str(), NULL, type, DB_CREATE, 0);
+    m_err = m_db->open(m_db, NULL, filename.mb_str(), NULL, type, DB_CREATE, 0);
 #else    
-    m_err = m_db->open(m_db, filename.fn_str(), NULL, type, DB_CREATE, 0);
+    m_err = m_db->open(m_db, filename.mb_str(), NULL, type, DB_CREATE, 0);
 #endif
     if (m_err != 0)
     {
