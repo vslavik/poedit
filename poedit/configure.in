@@ -82,7 +82,7 @@ if $WX_CONFIG_NAME --cxxflags | grep -q WXMSW; then
     fi
     
     changequote(<<,>>)
-    RC_WX_INCLUDES=`echo "$WX_CFLAGS" | sed -e 's/-[^I][^ ]*//g' | sed -e 's/-I\([^ ]*\)/--include-dir \1/g'`
+    RC_WX_INCLUDES=`echo " $WX_CPPFLAGS" | sed -e 's/ -[^I][^ ]*//g' | sed -e 's/ -I\([^ ]*\)/ --include-dir \1/g'`
     changequote([,])
 
 else
