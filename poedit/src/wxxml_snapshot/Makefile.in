@@ -67,6 +67,7 @@ AWK = @AWK@
 CC = @CC@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
+CXXFLAGS = @CXXFLAGS@
 GNOME_DATA_DIR = @GNOME_DATA_DIR@
 KDE_DATA_DIR = @KDE_DATA_DIR@
 LDFLAGS = @LDFLAGS@
@@ -100,7 +101,6 @@ xh_dlg.o xh_gauge.o xh_html.o xh_listb.o xh_menu.o xh_notbk.o \
 xh_panel.o xh_radbt.o xh_radbx.o xh_sizer.o xh_slidr.o xh_spin.o \
 xh_stbmp.o xh_sttxt.o xh_text.o xh_toolb.o
 AR = ar
-CXXFLAGS = @CXXFLAGS@
 CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@
