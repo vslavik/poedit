@@ -48,7 +48,7 @@ AC_ARG_WITH(wx-config, [  --with-wx-config=CONFIG Name of wx-config script to us
   if test "$WX_CONFIG" = "no" ; then
     no_wx=yes
   else
-    WX_CFLAGS=`$WX_CONFIG $wx_config_args --cflags`
+    WX_CFLAGS=`$WX_CONFIG $wx_config_args --cxxflags`
     WX_LIBS=`$WX_CONFIG $wx_config_args --libs`
     wx_config_major_version=`$WX_CONFIG $wx_config_args --version | \
            sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
