@@ -176,10 +176,6 @@ protected:
     // Creates resource from info in given node:
     wxObject *CreateResFromNode(wxXmlNode *node, wxObject *parent, wxObject *instance = NULL);
 
-    // Remove nodes with property "platform" that does not
-    // match current platform
-    void ProcessPlatformProperty(wxXmlNode *node);
-
     bool GetUseLocale() { return m_useLocale; }
 
 private:
@@ -347,7 +343,9 @@ protected:
         { return m_resource->CreateResFromNode(node, parent, instance); }
 
     // helper
+#if wxUSE_FILESYSTEM
     wxFileSystem& GetCurFileSystem() { return m_resource->GetCurFileSystem(); }
+#endif
 };
 
 #define ADD_STYLE(style) AddStyle(wxT(#style), style)
