@@ -200,7 +200,9 @@ class CatalogData : public wxObject
                   m_translation(translation), 
                   m_references(),
                   m_isFuzzy(false),
-                  m_isTranslated(!translation.IsEmpty()) {}
+                  m_isTranslated(!translation.IsEmpty()),
+                  m_isModified(false),
+                  m_isAutomatic(false) {}
 
         /// Returns the original string.
         const wxString& GetString() const { return m_string; }
@@ -253,20 +255,25 @@ class CatalogData : public wxObject
 
         /// Sets fuzzy flag.
         void SetFuzzy(bool fuzzy) { m_isFuzzy = fuzzy; }
-
         /// Gets value of fuzzy flag.
         bool IsFuzzy() { return m_isFuzzy; }
-        
         /// Sets translated flag.
         void SetTranslated(bool t) { m_isTranslated = t; }
-        
         /// Gets value of translated flag.
         bool IsTranslated() { return m_isTranslated; }
+        /// Sets modified flag.
+        void SetModified(bool modified) { m_isModified = modified; }
+        /// Gets value of modified flag.
+        bool IsModified() { return m_isModified; }
+        /// Sets automatic translation flag.
+        void SetAutomatic(bool automatic) { m_isAutomatic = automatic; }
+        /// Gets value of automatic translation flag.
+        bool IsAutomatic() { return m_isAutomatic; }
             
     private:
         wxString m_string, m_translation;
         wxArrayString m_references;
-        bool m_isFuzzy, m_isTranslated;
+        bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
         wxString m_moreFlags;
         wxString m_comment;
 };

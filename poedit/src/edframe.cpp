@@ -56,6 +56,9 @@ enum
 static wxColour g_ItemColourUntranslated(0xA5, 0xEA, 0xEF)/*blue*/, 
                 g_ItemColourFuzzy(0xF4, 0xF1, 0xC1)/*yellow*/;
 
+#include "nothing.xpm"
+#include "modified.xpm"
+#include "automatic.xpm"
 
 // list control with both columns equally wide:
 class poEditListCtrl : public wxListCtrl
@@ -71,6 +74,11 @@ class poEditListCtrl : public wxListCtrl
              : wxListCtrl(parent, id, pos, size, style, validator, name)
         {
             CreateColumns();
+            wxImageList *list = new wxImageList(16, 16);
+            list->Add(wxBitmap(nothing_xpm));
+            list->Add(wxBitmap(modified_xpm));
+            list->Add(wxBitmap(automatic_xpm));
+            AssignImageList(list, wxIMAGE_LIST_SMALL);
         }
         
         void CreateColumns()
@@ -83,9 +91,7 @@ class poEditListCtrl : public wxListCtrl
         void SizeColumns()
         {
              int w = GetSize().x;
-             //#ifdef __WXMSW__
              w -= wxSystemSettings::GetSystemMetric(wxSYS_VSCROLL_X) + 6;
-             //#endif
              SetColumnWidth(0, w / 2);
              SetColumnWidth(1, w - w / 2);
         }
@@ -352,12 +358,14 @@ poEditFrame::~poEditFrame()
 
 TranslationMemory *poEditFrame::GetTransMem()
 {
+    wxConfigBase *cfg = wxConfig::Get();
+
     if (m_transMemLoaded)
         return m_transMem;
     else
     {
         wxString lang;
-        wxString dbPath = wxConfig::Get()->Read("TM/database_path", "");
+        wxString dbPath = cfg->Read("TM/database_path", "");
         
         if (!m_catalog->Header().Language.IsEmpty())
         {
@@ -375,7 +383,7 @@ TranslationMemory *poEditFrame::GetTransMem()
         {
             wxArrayString lngs;
             int index;
-            wxStringTokenizer tkn(wxConfig::Get()->Read("TM/languages", ""), ":");
+            wxStringTokenizer tkn(cfg->Read("TM/languages", ""), ":");
 
             lngs.Add(_("(none of these)"));
             while (tkn.HasMoreTokens()) lngs.Add(tkn.GetNextToken());
@@ -387,7 +395,11 @@ TranslationMemory *poEditFrame::GetTransMem()
         }
 
         if (!lang.IsEmpty() && TranslationMemory::IsSupported(lang, dbPath))
+        {
             m_transMem = new TranslationMemory(lang, dbPath);
+            m_transMem->SetParams(cfg->Read("TM/max_delta", 2),
+                                  cfg->Read("TM/max_omitted", 2));
+        }
         else
             m_transMem = NULL;
         m_transMemLoaded = true;
@@ -569,9 +581,10 @@ void poEditFrame::OnUpdate(wxCommandEvent&)
                 if (score > 0)
                 {
                     m_catalog->Translate(dt.GetString(), results[0]);
+                    dt.SetAutomatic(true);
                     dt.SetFuzzy(score != 100);
                     matches++;
-                    msg.Printf(_("%u matches"), matches);
+                    msg.Printf(_("Automatically translated %u strings"), matches);
                     pi.UpdateMessage(msg);
                 }
             }
@@ -787,6 +800,8 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     GetToolBar()->ToggleTool(XMLID("menu_fuzzy"), newfuzzy);
 
     wxListItem listitem;
+    data->SetModified(true);
+    data->SetAutomatic(false);
     data->SetTranslated(!newval.IsEmpty());
     listitem.SetId(item);
     m_list->GetItem(listitem);
@@ -796,6 +811,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
         listitem.SetBackgroundColour(g_ItemColourFuzzy);
     else
         listitem.SetBackgroundColour(wxSystemSettings::GetSystemColour(wxSYS_COLOUR_LISTBOX));
+    m_list->SetItemImage(listitem, 1, 1);
     m_list->SetItem(listitem);
     if (m_modified == false)
     {
@@ -882,12 +898,13 @@ void poEditFrame::RefreshControls()
 
     wxListItem listitem;
     wxString trans;
-    unsigned i, pos = 0;
+    size_t i, pos = 0;
+    size_t cnt = m_catalog->GetCount();
     
-    for (i = 0; i < m_catalog->GetCount(); i++)
+    for (i = 0; i < cnt; i++)
         if (!(*m_catalog)[i].IsTranslated())
         {
-            m_list->InsertItem(pos, (*m_catalog)[i].GetString(), -1);
+            m_list->InsertItem(pos, (*m_catalog)[i].GetString(), 0);
             
             // Convert from UTF-8 to environment's default charset:
             trans = 
@@ -905,10 +922,11 @@ void poEditFrame::RefreshControls()
             pos++;
         }
 
-    for (i = 0; i < m_catalog->GetCount(); i++)
+    for (i = 0; i < cnt; i++)
         if ((*m_catalog)[i].IsFuzzy())
         {
-            m_list->InsertItem(pos, (*m_catalog)[i].GetString(), -1);
+            m_list->InsertItem(pos, (*m_catalog)[i].GetString(),
+                               (*m_catalog)[i].IsAutomatic() ? 2 : 0);
 
             // Convert from UTF-8 to environment's default charset:
             trans = 
@@ -927,10 +945,11 @@ void poEditFrame::RefreshControls()
             pos++;
         }
 
-    for (i = 0; i < m_catalog->GetCount(); i++)
+    for (i = 0; i < cnt; i++)
         if ((*m_catalog)[i].IsTranslated() && !(*m_catalog)[i].IsFuzzy())
         {
-            m_list->InsertItem(pos, (*m_catalog)[i].GetString(), -1);
+            m_list->InsertItem(pos, (*m_catalog)[i].GetString(),
+                               (*m_catalog)[i].IsAutomatic() ? 2 : 0);
 
             // Convert from UTF-8 to environment's default charset:
             trans = 
@@ -945,7 +964,7 @@ void poEditFrame::RefreshControls()
         }
 
     m_list->Show();
-    if (m_catalog->GetCount() > 0) 
+    if (cnt > 0) 
         m_list->SetItemState(0, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 
     FindFrame *f = (FindFrame*)FindWindow("find_frame");
@@ -1008,9 +1027,9 @@ void poEditFrame::UpdateMenu()
         GetMenuBar()->EnableTop(2, true);
         m_textTrans->Enable(true);
         m_list->Enable(true);
-	bool doupdate = m_catalog->Header().SearchPaths.GetCount() > 0;
-	GetToolBar()->EnableTool(XMLID("menu_update"), doupdate);
-	GetMenuBar()->Enable(XMLID("menu_update"), doupdate);
+        bool doupdate = m_catalog->Header().SearchPaths.GetCount() > 0;
+        GetToolBar()->EnableTool(XMLID("menu_update"), doupdate);
+        GetMenuBar()->Enable(XMLID("menu_update"), doupdate);
     }
 }
 
@@ -1027,6 +1046,19 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
     m_catalog->Save(catalog);
     m_fileName = catalog;
     m_modified = false;
+    
+    if (GetTransMem())
+    {
+        TranslationMemory *tm = GetTransMem();
+        size_t cnt = m_catalog->GetCount();
+        for (size_t i = 0; i < cnt; i++)
+        {
+            CatalogData& dt = (*m_catalog)[i];
+            if (dt.IsModified() && !dt.IsFuzzy() &&
+                !dt.GetTranslation().IsEmpty())
+                tm->Store(dt.GetString(), dt.GetTranslation());
+        }
+    }
 
     m_history.AddFileToHistory(m_fileName);
     UpdateTitle();
