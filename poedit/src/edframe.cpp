@@ -38,6 +38,9 @@
 #include "prefsdlg.h"
 #include "fileviewer.h"
 #include "findframe.h"
+#include "transmem.h"
+#include "iso639.h"
+#include "progressinfo.h"
 
 // Event & controls IDs:
 enum 
@@ -253,6 +256,8 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
                                  wxConfig::Get()->Read("frame_h", 400)),
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
     m_catalog(NULL), 
+    m_transMem(NULL),
+    m_transMemLoaded(false),
     m_title(title), 
     m_list(NULL),
     m_modified(false),
@@ -339,8 +344,57 @@ poEditFrame::~poEditFrame()
 
     m_history.Save(*cfg);
     
+    delete m_transMem;
     delete m_catalog;
 }
+
+
+
+TranslationMemory *poEditFrame::GetTransMem()
+{
+    if (m_transMemLoaded)
+        return m_transMem;
+    else
+    {
+        wxString lang;
+        wxString dbPath = wxConfig::Get()->Read("TM/database_path", "");
+        
+        if (!m_catalog->Header().Language.IsEmpty())
+        {
+            const char *lng = m_catalog->Header().Language.c_str();
+            for (size_t i = 0; isoLanguages[i].iso != NULL; i++)
+            {
+                if (strcmp(isoLanguages[i].lang, lng) == 0)
+                {
+                    lang = isoLanguages[i].iso;
+                    break;
+                }
+            }
+        }
+        if (!lang)
+        {
+            wxArrayString lngs;
+            int index;
+            wxStringTokenizer tkn(wxConfig::Get()->Read("TM/languages", ""), ":");
+
+            lngs.Add(_("(none of these)"));
+            while (tkn.HasMoreTokens()) lngs.Add(tkn.GetNextToken());
+            index = wxGetSingleChoiceIndex(_("Select catalog's language"), 
+                                           _("Please select language code:"),
+                                           lngs, this);
+            if (index > 0)
+                lang = lngs[index];
+        }
+
+        if (!lang.IsEmpty() && TranslationMemory::IsSupported(lang, dbPath))
+            m_transMem = new TranslationMemory(lang, dbPath);
+        else
+            m_transMem = NULL;
+        m_transMemLoaded = true;
+        return m_transMem;
+    }
+}
+
 
 
 void poEditFrame::OnQuit(wxCommandEvent&)
@@ -455,6 +509,9 @@ void poEditFrame::OnNew(wxCommandEvent& event)
     else delete catalog;
     UpdateTitle();
     UpdateStatusBar();
+
+    delete m_transMem;
+    m_transMemLoaded = false;
 }
 
 
@@ -490,6 +547,38 @@ void poEditFrame::OnUpdate(wxCommandEvent&)
 {
     UpdateFromTextCtrl();
     m_modified = m_catalog->Update() || m_modified;
+
+    if (wxConfig::Get()->Read("use_tm_when_updating", true) &&
+        GetTransMem() != NULL)
+    {
+        TranslationMemory *tm = GetTransMem();
+        size_t cnt = m_catalog->GetCount();
+        size_t matches = 0;
+        wxString msg;
+        
+        ProgressInfo pi;
+        pi.SetTitle(_("Automatically translating..."));
+        pi.SetGaugeMax(cnt);
+        for (size_t i = 0; i < cnt; i++)
+        {
+            CatalogData& dt = (*m_catalog)[i];
+            if (dt.IsFuzzy() || !dt.IsTranslated())
+            {
+                wxArrayString results;
+                int score = tm->Lookup(dt.GetString(), results);
+                if (score > 0)
+                {
+                    m_catalog->Translate(dt.GetString(), results[0]);
+                    dt.SetFuzzy(score != 100);
+                    matches++;
+                    msg.Printf(_("%u matches"), matches);
+                    pi.UpdateMessage(msg);
+                }
+            }
+            pi.UpdateGauge();
+        }
+    }
+    
     RefreshControls();
 }
 
@@ -737,10 +826,12 @@ void poEditFrame::UpdateToTextCtrl(int item)
     t_t.Replace("\\n", "\\n\n");
     
     // Convert from UTF-8 to environment's default charset:
-    t_t = wxString(t_t.wc_str(wxConvUTF8), wxConvLocal);
+    wxString t_t2(t_t.wc_str(wxConvUTF8), wxConvLocal);
+    if (!t_t2)
+        t_t2 = t_t;
     
-    m_textTrans->SetValue(t_t);
-    m_edittedTextOrig = t_t;
+    m_textTrans->SetValue(t_t2);
+    m_edittedTextOrig = t_t2;
     if (m_displayQuotes) 
         m_textTrans->SetInsertionPoint(1);
     GetToolBar()->ToggleTool(XMLID("menu_fuzzy"), (*m_catalog)[ind].IsFuzzy());
@@ -751,8 +842,11 @@ void poEditFrame::UpdateToTextCtrl(int item)
 
 void poEditFrame::ReadCatalog(const wxString& catalog)
 {
-    if (m_catalog) delete m_catalog;
+    delete m_catalog;
     m_catalog = new Catalog(catalog);
+
+    delete m_transMem;
+    m_transMemLoaded = false;
     
     m_fileName = catalog;
     m_modified = false;
@@ -797,7 +891,10 @@ void poEditFrame::RefreshControls()
             
             // Convert from UTF-8 to environment's default charset:
             trans = 
-                wxString((*m_catalog)[i].GetTranslation().wc_str(wxConvUTF8), wxConvLocal);
+                wxString((*m_catalog)[i].GetTranslation().wc_str(wxConvUTF8), 
+                         wxConvLocal);
+            if (!trans)
+                trans = (*m_catalog)[i].GetTranslation();
             
             m_list->SetItem(pos, 1, trans);
             m_list->SetItemData(pos, i);
@@ -815,7 +912,10 @@ void poEditFrame::RefreshControls()
 
             // Convert from UTF-8 to environment's default charset:
             trans = 
-                wxString((*m_catalog)[i].GetTranslation().wc_str(wxConvUTF8), wxConvLocal);
+                wxString((*m_catalog)[i].GetTranslation().wc_str(wxConvUTF8), 
+                         wxConvLocal);
+            if (!trans)
+                trans = (*m_catalog)[i].GetTranslation();
 
             m_list->SetItem(pos, 1, trans);
             m_list->SetItemData(pos, i);
@@ -834,7 +934,10 @@ void poEditFrame::RefreshControls()
 
             // Convert from UTF-8 to environment's default charset:
             trans = 
-                wxString((*m_catalog)[i].GetTranslation().wc_str(wxConvUTF8), wxConvLocal);
+                wxString((*m_catalog)[i].GetTranslation().wc_str(wxConvUTF8), 
+                         wxConvLocal);
+            if (!trans)
+                trans = (*m_catalog)[i].GetTranslation();
 
             m_list->SetItem(pos, 1, trans);
             m_list->SetItemData(pos, i);
@@ -848,7 +951,6 @@ void poEditFrame::RefreshControls()
     FindFrame *f = (FindFrame*)FindWindow("find_frame");
     if (f)
         f->Reset(m_catalog);
-
     
     UpdateTitle();
     UpdateStatusBar();

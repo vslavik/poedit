@@ -18,35 +18,41 @@
 #endif
 
 #include <wx/wxprec.h>
-
+#include <wx/gizmos/editlbox.h>
+#include <wx/textctrl.h>
+#include <wx/button.h>
+#include <wx/tokenzr.h>
+#include <wx/config.h>
+#include <wx/choicdlg.h>
+#include <wx/spinctrl.h>
 #include <wx/xml/xmlres.h>
 
 #include "prefsdlg.h"
-
-
-    
-
+#include "iso639.h"
+#include "transmemupd.h"
+#include "transmem.h"
+#include "progressinfo.h"
 
 PreferencesDialog::PreferencesDialog(wxWindow *parent)
 {
     wxTheXmlResource->LoadDialog(this, parent, "preferences");
-    Centre();    
+    wxTheXmlResource->AttachUnknownControl("tm_langs", 
+                new wxEditableListBox(this, -1, _("My Languages")));
 }
-
 
 
 void PreferencesDialog::TransferTo(wxConfigBase *cfg)
 {
     XMLCTRL(*this, "user_name", wxTextCtrl)->SetValue(
-                              cfg->Read("translator_name", ""));
+                cfg->Read("translator_name", ""));
     XMLCTRL(*this, "user_email", wxTextCtrl)->SetValue(
-                              cfg->Read("translator_email", ""));
+                cfg->Read("translator_email", ""));
     XMLCTRL(*this, "compile_mo", wxCheckBox)->SetValue(
-                              cfg->Read("compile_mo", true));
+                cfg->Read("compile_mo", true));
     XMLCTRL(*this, "show_summary", wxCheckBox)->SetValue(
-                              cfg->Read("show_summary", true));
+                cfg->Read("show_summary", true));
     XMLCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
-                              cfg->Read("keep_crlf", true));
+                cfg->Read("keep_crlf", true));
 
     wxString format = cfg->Read("crlf_format", "unix");
     int sel;
@@ -71,28 +77,60 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     }
     else
         list->SetSelection(0);
-}
+        
+    XMLCTRL(*this, "tm_dbpath", wxTextCtrl)->SetValue(
+                cfg->Read("TM/database_path", ""));
 
+    wxStringTokenizer tkn(cfg->Read("TM/languages", ""), ":");
+    wxArrayString langs;
+    while (tkn.HasMoreTokens()) langs.Add(tkn.GetNextToken());
+    XMLCTRL(*this, "tm_langs", wxEditableListBox)->SetStrings(langs);
+
+    XMLCTRL(*this, "tm_omits", wxSpinCtrl)->SetValue(
+                cfg->Read("TM/max_omitted", 2));
+    XMLCTRL(*this, "tm_delta", wxSpinCtrl)->SetValue(
+                cfg->Read("TM/max_delta", 2));
+    XMLCTRL(*this, "tm_automatic", wxCheckBox)->SetValue(
+                cfg->Read("use_tm_when_updating", true));
+}
  
             
 void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
 {
     cfg->Write("translator_name", 
-               XMLCTRL(*this, "user_name", wxTextCtrl)->GetValue());
+                XMLCTRL(*this, "user_name", wxTextCtrl)->GetValue());
     cfg->Write("translator_email", 
-               XMLCTRL(*this, "user_email", wxTextCtrl)->GetValue());
+                XMLCTRL(*this, "user_email", wxTextCtrl)->GetValue());
     cfg->Write("compile_mo", 
-               XMLCTRL(*this, "compile_mo", wxCheckBox)->GetValue());
+                XMLCTRL(*this, "compile_mo", wxCheckBox)->GetValue());
     cfg->Write("show_summary", 
-               XMLCTRL(*this, "show_summary", wxCheckBox)->GetValue());
+                XMLCTRL(*this, "show_summary", wxCheckBox)->GetValue());
     cfg->Write("keep_crlf", 
-               XMLCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
+                XMLCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
     
     static char *formats[] = { "unix", "win", "mac", "native" };
     cfg->Write("crlf_format", formats[
                 XMLCTRL(*this, "crlf_format", wxChoice)->GetSelection()]);
                
     m_parsers.Write(cfg);
+
+    wxArrayString langs;
+    XMLCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
+    wxString languages;
+    for (size_t i = 0; i < langs.GetCount(); i++)
+    {
+        if (i != 0) languages << ':';
+        languages << langs[i];
+    }
+    cfg->Write("TM/languages", languages);
+    cfg->Write("TM/database_path",
+                XMLCTRL(*this, "tm_dbpath", wxTextCtrl)->GetValue());
+    cfg->Write("TM/max_omitted", 
+                (long)XMLCTRL(*this, "tm_omits", wxSpinCtrl)->GetValue());
+    cfg->Write("TM/max_delta", 
+                (long)XMLCTRL(*this, "tm_delta", wxSpinCtrl)->GetValue());
+    cfg->Write("use_tm_when_updating", 
+                XMLCTRL(*this, "tm_automatic", wxCheckBox)->GetValue());
 }
 
 
@@ -101,8 +139,10 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
    EVT_BUTTON(XMLID("parser_new"), PreferencesDialog::OnNewParser)
    EVT_BUTTON(XMLID("parser_edit"), PreferencesDialog::OnEditParser)
    EVT_BUTTON(XMLID("parser_delete"), PreferencesDialog::OnDeleteParser)
+   EVT_BUTTON(XMLID("tm_addlang"), PreferencesDialog::OnTMAddLang)
+   EVT_BUTTON(XMLID("tm_browsedbpath"), PreferencesDialog::OnTMBrowseDbPath)
+   EVT_BUTTON(XMLID("tm_generate"), PreferencesDialog::OnTMGenerate)
 END_EVENT_TABLE()
-
 
 bool PreferencesDialog::EditParser(int num)
 {
@@ -132,8 +172,6 @@ bool PreferencesDialog::EditParser(int num)
     else return false;
 }
 
-
-
 void PreferencesDialog::OnNewParser(wxCommandEvent& event)
 {
     Parser info;
@@ -152,14 +190,10 @@ void PreferencesDialog::OnNewParser(wxCommandEvent& event)
     }
 }
 
-
-
 void PreferencesDialog::OnEditParser(wxCommandEvent& event)
 {
     EditParser(XMLCTRL(*this, "parsers_list", wxListBox)->GetSelection());
 }
-
-
 
 void PreferencesDialog::OnDeleteParser(wxCommandEvent& event)
 {
@@ -171,4 +205,108 @@ void PreferencesDialog::OnDeleteParser(wxCommandEvent& event)
         XMLCTRL(*this, "parser_edit", wxButton)->Enable(false);
         XMLCTRL(*this, "parser_delete", wxButton)->Enable(false);
     }
+}
+
+void PreferencesDialog::OnTMAddLang(wxCommandEvent& event)
+{
+    wxArrayString lngs;
+    int index;
+    
+    for (const LanguageStruct *i = isoLanguages; i->lang != NULL; i++)
+        lngs.Add(wxString(i->iso) + " (" + i->lang + ")");
+    index = wxGetSingleChoiceIndex(_("Select language"), 
+                                   _("Please select language ISO code:"),
+                                   lngs, this);
+    if (index != -1)
+    {
+        wxArrayString a;
+        XMLCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(a);
+        a.Add(isoLanguages[index].iso);
+        XMLCTRL(*this, "tm_langs", wxEditableListBox)->SetStrings(a);
+    }
+}
+
+void PreferencesDialog::OnTMBrowseDbPath(wxCommandEvent& event)
+{
+    wxDirDialog dlg(this, _("Select directory"), 
+                    XMLCTRL(*this, "tm_dbpath", wxTextCtrl)->GetValue());
+    if (dlg.ShowModal() == wxID_OK)
+        XMLCTRL(*this, "tm_dbpath", wxTextCtrl)->SetValue(dlg.GetPath());
+}
+
+
+
+class TMSearchDlg : public wxDialog
+{
+    protected:
+        DECLARE_EVENT_TABLE()
+        void OnBrowse(wxCommandEvent& event);
+};
+
+BEGIN_EVENT_TABLE(TMSearchDlg, wxDialog)
+   EVT_BUTTON(XMLID("tm_adddir"), TMSearchDlg::OnBrowse)
+END_EVENT_TABLE()
+
+void TMSearchDlg::OnBrowse(wxCommandEvent& event)
+{
+    wxDirDialog dlg(this, _("Select directory"));
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        wxArrayString a;
+        wxEditableListBox *l = XMLCTRL(*this, "tm_dirs", wxEditableListBox);
+        l->GetStrings(a);
+        a.Add(dlg.GetPath());
+        l->SetStrings(a);
+    }
+}
+
+void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
+{
+    // 1. Get paths list from the user:
+    wxConfigBase *cfg = wxConfig::Get();
+    TMSearchDlg dlg;
+    wxTheXmlResource->LoadDialog(&dlg, this, "dlg_generate_tm");
+
+    wxEditableListBox *dirs = 
+        new wxEditableListBox(&dlg, -1, _("Search Paths"));
+    wxTheXmlResource->AttachUnknownControl("tm_dirs", dirs);
+
+    wxString dirsStr = cfg->Read("TM/search_paths", "");
+    wxArrayString dirsArray;
+    wxStringTokenizer tkn(dirsStr, wxPATH_SEP);
+
+    while (tkn.HasMoreTokens()) dirsArray.Add(tkn.GetNextToken());
+    dirs->SetStrings(dirsArray);
+
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        dirs->GetStrings(dirsArray);
+        dirsStr = "";
+        for (size_t i = 0; i < dirsArray.GetCount(); i++)
+        {
+            if (i != 0) dirsStr << wxPATH_SEP;
+            dirsStr << dirsArray[i];
+        }
+        cfg->Write("TM/search_paths", dirsStr);
+    }
+    else return;
+    
+    // 2. Update TM:
+    wxString dbPath = cfg->Read("TM/database_path", "");
+    tkn.SetString(cfg->Read("TM/languages", ""), ":");
+    wxArrayString langs;
+    while (tkn.HasMoreTokens()) langs.Add(tkn.GetNextToken());
+
+    ProgressInfo *pi = new ProgressInfo;
+    pi->SetTitle(_("Updating translation memory"));
+    for (size_t i = 0; i < langs.GetCount(); i++)
+    {
+        TranslationMemory *tm = 
+            new TranslationMemory(langs[i], dbPath);
+        TranslationMemoryUpdater u(tm, pi);
+        if (!u.Update(dirsArray)) 
+            { delete tm; break; }
+        delete tm;
+    }
+    delete pi;
 }

@@ -1,0 +1,212 @@
+
+/*
+
+    poedit, a wxWindows i18n catalogs editor
+
+    ---------------
+      transmemupd.cpp
+    
+      Translation memory database updater
+    
+      (c) Vaclav Slavik, 2001
+
+*/
+
+
+#ifdef __GNUG__
+#pragma implementation
+#endif
+
+#include <wx/wxprec.h>
+#include <wx/string.h>
+#include <wx/tokenzr.h>
+#include <wx/log.h>
+#include <wx/intl.h>
+#include <wx/utils.h>
+#include <wx/dir.h>
+
+#include "catalog.h"
+#include "transmem.h"
+#include "transmemupd.h"
+#include "gexecute.h"
+#include "progressinfo.h"
+
+/** Does given file contain catalogs in given language?
+    Handles these cases:
+      - foo/bar/lang.mo
+      - foo/lang/bar.mo
+      - foo/lang/LC_MESSAGES/bar.mo
+    Futhermore, if \a lang is 2-letter code (e.g. "cs"), handles these:
+      - foo/bar/lang_??.mo
+      - foo/lang_??/bar.mo
+      - foo/lang_??/LC_MESSAGES/bar.mo
+    and if \a lang is five-letter code (e.g. "cs_CZ"), tries to match its
+    first two letters (i.e. country-neutral variant of the language).
+ */
+static inline bool IsForLang(const wxString& filename, const wxString& lang,
+                             bool variants = true)
+{
+    wxString base, dir;
+    wxSplitPath(filename, &dir, &base, NULL);
+    dir.Replace(wxString(wxFILE_SEP_PATH), "/");
+    return base.Matches(lang) ||
+           dir.Matches("*/" + lang) ||
+           dir.Matches("*/" + lang + "/LC_MESSAGES") ||
+           (variants && lang.Len() == 5 && lang[2] == '_' && 
+                IsForLang(filename, lang.Mid(0, 2), false)) ||
+           (variants && lang.Len() == 2 && 
+                IsForLang(filename, lang + "_??", false));
+}
+
+class TMUDirTraverser : public wxDirTraverser
+{
+    public:
+        TMUDirTraverser(wxArrayString *files, const wxString& lang)
+            : m_files(files), m_lang(lang) {}
+        virtual ~TMUDirTraverser() {}
+            
+        virtual wxDirTraverseResult OnFile(const wxString& filename)
+        {
+#ifdef __WXMSW__
+            wxString f = filename.Lower();
+#else
+            wxString f = filename;
+#endif
+            if ((f.Matches("*.mo") && IsForLang(f, m_lang)) || 
+                (f.Matches("*.po") && IsForLang(f, m_lang)) 
+#ifdef __UNIX__
+                || f.Matches("*.rpm"))
+#endif
+            {
+                m_files->Add(f);
+            }
+            return wxDIR_CONTINUE;
+        }
+        
+        virtual wxDirTraverseResult OnDir(const wxString& dirname)
+            { return wxDIR_CONTINUE; }
+        
+    private:
+        wxArrayString *m_files;
+        wxString m_lang;
+};
+
+TranslationMemoryUpdater::TranslationMemoryUpdater(TranslationMemory *mem, 
+                                                   ProgressInfo *pi)
+    : m_progress(pi), m_mem(mem)
+{
+}
+
+bool TranslationMemoryUpdater::Update(const wxArrayString& paths)
+{
+    size_t i;
+    wxString f;
+    wxArrayString files;
+    TMUDirTraverser trav(&files, m_mem->GetLanguage());
+
+    m_progress->UpdateMessage(_("Listing files..."));
+    for (i = 0; i < paths.GetCount(); i++)
+    {
+        wxDir dir(paths[i]);
+        if (!dir.IsOpened() || dir.Traverse(trav) == (size_t)-1) 
+            return false;
+    }
+
+    m_progress->SetGaugeMax(files.GetCount());
+    m_progress->ResetGauge();
+
+    bool res = true;
+    size_t cnt = files.GetCount();
+    for (i = 0; i < cnt; i++)
+    {
+        f = files[i];
+        m_progress->UpdateMessage(wxString(_("Scanning file: ")) + 
+                                  wxFileNameFromPath(f));
+        
+        if (f.Matches("*.po"))
+            res = UpdateFromPO(f);
+        else if (f.Matches("*.mo"))
+            res = UpdateFromMO(f);
+#ifdef __UNIX__
+        else if (f.Matches("*.rpm"))
+            res = UpdateFromRPM(f);
+#endif
+            
+        m_progress->UpdateGauge();
+        wxYield();
+        if (m_progress->Cancelled()) return false;
+    }
+    return res;
+}
+
+bool TranslationMemoryUpdater::UpdateFromPO(const wxString& filename)
+{
+    return UpdateFromCatalog(filename);
+}
+
+bool TranslationMemoryUpdater::UpdateFromMO(const wxString& filename)
+{
+    wxString tmp;
+
+    if (!wxGetTempFileName("poedit", tmp))
+        return false;
+    if (!ExecuteGettext("msgunfmt --force-po -o " + tmp + " " + filename))
+        return false;
+    bool rt = UpdateFromCatalog(tmp);
+    wxRemoveFile(tmp);
+    return rt;
+}
+
+#ifdef __UNIX__
+bool TranslationMemoryUpdater::UpdateFromRPM(const wxString& filename)
+{
+    #define TMP_DIR "/tmp/poedit-rpm-tpm"
+    if (!wxMkdir(TMP_DIR)) return false;
+    
+    wxString cmd;
+    cmd.Printf("sh -c '(cd %s ; rpm2cpio %s | cpio -i -d --quiet \"*.mo\")'",
+               TMP_DIR, filename.c_str());
+    if (wxExecute(cmd, TRUE) != 0)
+    {
+        wxLogError(_("Cannot extract catalogs from RPM file."));
+        wxExecute("rm -rf " TMP_DIR, TRUE);
+        return false;
+    }
+
+    bool res = true;
+    wxArrayString files;
+    if (wxDir::GetAllFiles(TMP_DIR, &files, "*.mo") != (size_t)-1)
+    {
+        size_t cnt = files.GetCount();
+        for (size_t i = 0; res && i < cnt; i++)
+        {
+            if (!IsForLang(files[i], m_mem->GetLanguage())) continue;
+            if (!UpdateFromMO(files[i])) 
+                res = false;
+        }
+    }
+
+    wxLog::FlushActive();
+    wxExecute("rm -rf " TMP_DIR, TRUE);
+    return res;
+    #undef TMP_DIR
+}
+#endif
+
+bool TranslationMemoryUpdater::UpdateFromCatalog(const wxString& filename)
+{
+    wxLogNull null;
+    Catalog cat(filename);
+    
+    if (!cat.IsOk()) return true; // ignore
+
+    size_t cnt = cat.GetCount();
+    for (size_t i = 0; i < cnt; i++)
+    {
+        CatalogData &dt = cat[i];
+        if (!dt.IsTranslated() || dt.IsFuzzy()) continue;
+        if (!m_mem->Store(dt.GetString(), dt.GetTranslation())) 
+            return false;
+    }
+    return true;
+}

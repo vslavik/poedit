@@ -36,6 +36,7 @@
 #include "catalog.h"
 
 class poEditListCtrl;
+class TranslationMemory;
 
 /** This class provides main editing frame. It handles user's input 
     and provides frontend to catalog editing engine. Nothing fancy.
@@ -70,6 +71,8 @@ class poEditFrame : public wxFrame
         void UpdateTitle();
         /// Updates menu -- disables and enables items.
         void UpdateMenu();
+        /// Initializes translation memory, if enabled
+        TranslationMemory *GetTransMem();
 
         // Message handlers:
         void OnNew(wxCommandEvent& event);
@@ -101,6 +104,9 @@ class poEditFrame : public wxFrame
     private:
         Catalog *m_catalog;
         wxString m_fileName;
+        
+        TranslationMemory *m_transMem;
+        bool m_transMemLoaded;
 
         #ifdef __WXMSW__
         wxCHMHelpController m_help;

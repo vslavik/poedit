@@ -20,13 +20,11 @@
 #ifndef _PREFSDLG_H_
 #define _PREFSDLG_H_
 
-#include <wx/wx.h>
 #include <wx/dialog.h>
-#include <wx/notebook.h>
-#include <wx/config.h>
 
 #include "parser.h"
 
+class WXDLLEXPORT wxConfigBase;
 
 /** Preferences dialog for setting user's identity, parsers and other
     global, catalog-independent settings.
@@ -48,10 +46,14 @@ class PreferencesDialog : public wxDialog
 
     private:
         DECLARE_EVENT_TABLE()
+
+        void OnTMAddLang(wxCommandEvent& event);
+        void OnTMBrowseDbPath(wxCommandEvent& event);
+        void OnTMGenerate(wxCommandEvent& event);
+
         void OnNewParser(wxCommandEvent& event);
         void OnEditParser(wxCommandEvent& event);
         void OnDeleteParser(wxCommandEvent& event);
-        
         /// Called to launch dialog for editting parser properties.
         bool EditParser(int num);
 };

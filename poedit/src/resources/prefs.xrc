@@ -116,6 +116,127 @@
               <object class="wxBoxSizer">
                 <orient>wxVERTICAL</orient>
                 <object class="sizeritem">
+                  <object class="wxStaticBoxSizer">
+                    <orient>wxVERTICAL</orient>
+                    <label>Database</label>
+                    <object class="sizeritem">
+                      <object class="wxStaticText">
+                        <label>Path to DB:</label>
+                      </object>
+                      <flag>wxTOP|wxLEFT|wxALIGN_CENTER_VERTICAL</flag>
+                      <border>5d</border>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxBoxSizer">
+                        <orient>wxHORIZONTAL</orient>
+                        <object class="sizeritem">
+                          <object class="wxTextCtrl" name="tm_dbpath"/>
+                          <option>1</option>
+                          <border>5d</border>
+                          <flag>wxRIGHT</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxButton" name="tm_browsedbpath">
+                            <label>Browse</label>
+                          </object>
+                        </object>
+                      </object>
+                      <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
+                      <border>5d</border>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="unknown" name="tm_langs"/>
+                      <option>1</option>
+                      <flag>wxEXPAND|wxALL</flag>
+                      <border>5d</border>
+                      <minsize>-1,60d</minsize>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxButton" name="tm_addlang">
+                        <label>Add</label>
+                        <tooltip>Pick language from the list of known languages</tooltip>
+                      </object>
+                      <flag>wxRIGHT|wxALIGN_RIGHT</flag>
+                      <border>5d</border>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxButton" name="tm_generate">
+                        <label>Generate database</label>
+                        <tooltip>Regenerate translation memory from catalogs in paths listed above.</tooltip>
+                      </object>
+                      <flag>wxEXPAND|wxALL</flag>
+                      <border>5d</border>
+                    </object>
+                  </object>
+                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticBoxSizer">
+                    <orient>wxVERTICAL</orient>
+                    <label>Configuration</label>
+                    <object class="sizeritem">
+                      <object class="wxBoxSizer">
+                        <orient>wxHORIZONTAL</orient>
+                        <object class="sizeritem">
+                          <object class="wxStaticText">
+                            <label>Max. # of missing words:</label>
+                          </object>
+                          <option>1</option>
+                          <flag>wxLEFT|wxALIGN_CENTER_VERTICAL</flag>
+                          <border>2d</border>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxSpinCtrl" name="tm_omits">
+                            <value>2</value>
+                            <min>0</min>
+                            <max>6</max>
+                          </object>
+                        </object>
+                      </object>
+                      <flag>wxEXPAND</flag>
+                      <border>5d</border>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxBoxSizer">
+                        <orient>wxHORIZONTAL</orient>
+                        <object class="sizeritem">
+                          <object class="wxStaticText">
+                            <label>Max. difference in sentence length:</label>
+                          </object>
+                          <option>1</option>
+                          <flag>wxLEFT|wxALIGN_CENTER_VERTICAL</flag>
+                          <border>2d</border>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxSpinCtrl" name="tm_delta">
+                            <value>2</value>
+                            <min>0</min>
+                            <max>6</max>
+                          </object>
+                        </object>
+                      </object>
+                      <flag>wxEXPAND</flag>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxCheckBox" name="tm_automatic">
+                        <checked>1</checked>
+                        <label>Automatically translate when updating catalog</label>
+                      </object>
+                    </object>
+                  </object>
+                  <flag>wxEXPAND|wxALL</flag>
+                  <border>5d</border>
+                </object>
+              </object>
+            </object>
+            <label>Translation Memory</label>
+          </object>
+          <object class="notebookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
                   <object class="wxStaticText">
                     <label>Source code parsers:</label>
                   </object>
@@ -164,7 +285,7 @@
               </object>
               <style>wxTAB_TRAVERSAL</style>
             </object>
-            <label>Parser</label>
+            <label>Parsers</label>
           </object>
         </object>
         <option>1</option>
@@ -315,5 +436,52 @@
         <flag>wxALIGN_RIGHT</flag>
       </object>
     </object>
+  </object>
+  <object class="wxDialog" name="dlg_generate_tm">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="unknown" name="tm_dirs"/>
+        <option>1</option>
+        <flag>wxEXPAND|wxALL</flag>
+        <border>5d</border>
+        <minsize>140,100d</minsize>
+      </object>
+      <object class="sizeritem">
+        <object class="wxButton" name="tm_adddir">
+          <label>Browse</label>
+          <tooltip>Add path to the list of directories where catalogs lie.</tooltip>
+        </object>
+        <flag>wxRIGHT|wxALIGN_RIGHT</flag>
+        <border>5d</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticLine"/>
+        <flag>wxALL|wxEXPAND</flag>
+        <border>5d</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_OK">
+              <label>Proceed</label>
+              <default>1</default>
+            </object>
+            <border>5d</border>
+            <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_CANCEL">
+              <label>Cancel</label>
+            </object>
+            <flag>wxRIGHT|wxBOTTOM</flag>
+            <border>5d</border>
+          </object>
+        </object>
+        <flag>wxALIGN_RIGHT</flag>
+      </object>
+    </object>
+    <centered>1</centered>
+    <title>Generate TM database</title>
   </object>
 </resource>
