@@ -33,7 +33,7 @@ code by single click.
 %setup
 
 %build
-./configure --prefix=%prefix ${POEDIT_CONFIGURE_FLAGS}
+KDEDIR=/usr ./configure --prefix=%prefix ${POEDIT_CONFIGURE_FLAGS}
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
