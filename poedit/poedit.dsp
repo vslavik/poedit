@@ -163,11 +163,27 @@ SOURCE=.\src\gexecute.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\iso639.cpp
+SOURCE=.\src\isocodes.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\iso639.h
+SOURCE=.\src\isocodes.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\chooselang.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\chooselang.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\transmemupd_wizard.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\transmemupd_wizard.h
 # End Source File
 # Begin Source File
 
@@ -530,6 +546,10 @@ SOURCE=".\extras\wx-contrib\include\wx\xrc\xh_tree.h"
 # Begin Source File
 
 SOURCE=".\extras\wx-contrib\src\xrc\xh_unkwn.cpp"
+# End Source File
+# Begin Source File
+
+SOURCE=".\extras\wx-contrib\src\xrc\xh_wizrd.cpp"
 # End Source File
 # Begin Source File
 
