@@ -1089,7 +1089,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 }
 
 
-bool Catalog::Update()
+bool Catalog::Update(bool summary)
 {
     if (!m_isOk) return false;
 
@@ -1136,7 +1136,7 @@ bool Catalog::Update()
         bool succ = false;
         pinfo.UpdateMessage(_("Merging differences..."));
 
-        if (ShowMergeSummary(newcat))
+        if (!summary || ShowMergeSummary(newcat))
             succ = Merge(newcat);
         if (!succ)
         {
@@ -1154,7 +1154,7 @@ bool Catalog::Update()
 }
 
 
-bool Catalog::UpdateFromPOT(const wxString& pot_file)
+bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary)
 {
     if (!m_isOk) return false;
 
@@ -1166,7 +1166,7 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file)
         return false;
     }
 
-    if (ShowMergeSummary(&newcat))
+    if (!summary || ShowMergeSummary(&newcat))
         return Merge(&newcat);
     else
         return false;

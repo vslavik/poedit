@@ -133,12 +133,12 @@ class Catalog
         /** Updates the catalog from sources.
             \see SourceDigger, Parser, UpdateFromPOT.
          */
-        bool Update();
+        bool Update(bool summary = true);
 
         /** Updates the catalog from POT file.
             \see Update
          */
-        bool UpdateFromPOT(const wxString& pot_file);
+        bool UpdateFromPOT(const wxString& pot_file, bool summary = true);
 
         /** Adds translation into the catalog. 
             \return true on success or false if such key does
