@@ -17,9 +17,10 @@
 
 #include <wx/artprov.h>
 
-#if defined(__WXGTK20__) && defined(wxCHECK_VERSION_FULL) && \
-                            wxCHECK_VERSION_FULL(2,5,2,8)
-    #define HAS_THEMES_SUPPORT
+#ifdef wxCHECK_VERSION_FULL
+    #if defined(__WXGTK20__) && wxCHECK_VERSION_FULL(2,5,2,8)
+        #define HAS_THEMES_SUPPORT
+    #endif
 #endif
 
 class wxPoeditStdArtProvider : public wxArtProvider

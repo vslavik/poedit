@@ -165,10 +165,10 @@ void Catalog::HeaderData::UpdateDict()
     SetHeaderNotEmpty(_T("X-Poedit-Country"), Country);
     SetHeaderNotEmpty(_T("X-Poedit-SourceCharset"), SourceCodeCharset);
 
-    if (!Keywords.empty())
+    if (!Keywords.IsEmpty())
     {
         wxString kw;
-        for (size_t i = 0; i < Keywords.size(); i++)
+        for (size_t i = 0; i < Keywords.GetCount(); i++)
             kw += Keywords[i] + _T(',');
         kw.RemoveLast();
         SetHeader(_T("X-Poedit-Keywords"), kw);
@@ -187,7 +187,7 @@ void Catalog::HeaderData::UpdateDict()
         i++;
     }
         
-    for (i = 0; i < SearchPaths.size(); i++)
+    for (i = 0; i < SearchPaths.GetCount(); i++)
     {
         path.Printf(_T("X-Poedit-SearchPath-%i"), i);
         SetHeader(path, SearchPaths[i]);
@@ -757,7 +757,7 @@ bool Catalog::Load(const wxString& po_file)
 
         if (ReadParam(ReadTextLine(&f, NULL), _T("#. Paths: "), dummy))
         {
-            bool setPaths = m_header.SearchPaths.empty();
+            bool setPaths = m_header.SearchPaths.IsEmpty();
             long sz;
             dummy.ToLong(&sz);
             for (; sz > 0; sz--)
@@ -772,7 +772,7 @@ bool Catalog::Load(const wxString& po_file)
 
         if (ReadParam(ReadTextLine(&f, NULL), _T("#. Keywords: "), dummy))
         {
-            bool setKeyw = m_header.Keywords.empty();
+            bool setKeyw = m_header.Keywords.IsEmpty();
             long sz;
             dummy.ToLong(&sz);
             for (; sz > 0; sz--)
@@ -810,7 +810,7 @@ void Catalog::Clear()
 
 static bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
 {
-    if (s.empty())
+    if (s.IsEmpty())
         return true;
 #if !wxUSE_UNICODE
     wxString trans(s.wc_str(wxConvUTF8), conv);
@@ -1370,7 +1370,7 @@ void CatalogData::SetTranslation(const wxString &t, unsigned idx)
     m_validity = Val_Unknown;
     m_isTranslated = false;
     for (size_t i = 0; i < m_translations.GetCount(); i++)
-        if (!m_translations[i].empty())
+        if (!m_translations[i].IsEmpty())
             m_isTranslated = true;
 }
 
@@ -1381,7 +1381,7 @@ void CatalogData::SetTranslations(const wxArrayString &t)
     m_validity = Val_Unknown;
     m_isTranslated = false;
     for (size_t i = 0; i < m_translations.GetCount(); i++)
-        if (!m_translations[i].empty())
+        if (!m_translations[i].IsEmpty())
             m_isTranslated = true;
 }
        
@@ -1391,10 +1391,10 @@ wxString Catalog::GetLocaleCode() const
     wxString lang;
 
     // was the language explicitly specified?
-    if (!m_header.Language.empty())
+    if (!m_header.Language.IsEmpty())
     {
         lang = LookupLanguageCode(m_header.Language.c_str());
-        if (!m_header.Country.empty())
+        if (!m_header.Country.IsEmpty())
         {
             lang += _T('_');
             lang += LookupCountryCode(m_header.Country.c_str());
