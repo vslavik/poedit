@@ -1,4 +1,4 @@
-# Makefile.in generated automatically by automake 1.4 from Makefile.am
+# Makefile.in generated automatically by automake 1.4-p2 from Makefile.am
 
 # Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
 # This Makefile.in is free software; the Free Software Foundation
@@ -89,7 +89,7 @@ bin_PROGRAMS = poedit
 poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp                  edframe.h fileviewer.cpp fileviewer.h parser.cpp parser.h                  iso639.cpp iso639.h prefsdlg.cpp prefsdlg.h settingsdlg.cpp                  settingsdlg.h progressinfo.h                  progressinfo.cpp digger.h digger.cpp gexecute.h                  gexecute.cpp summarydlg.h summarydlg.cpp                  findframe.cpp findframe.h                  transmem.cpp transmem.h transmemupd.cpp transmemupd.h
 
 
-LDADD = -L../extras/wx-contrib/src/gizmos         -L../extras/wx-contrib/src/xml         -L../extras/wx-contrib/src/xml/expat         -lmy_xrc -lmy_gizmos -lmy_expat $(WX_LIBS)
+LDADD = -L../extras/wx-contrib/src/gizmos         -L../extras/wx-contrib/src/xrc         -L../extras/wx-contrib/src/xrc/expat         -lmy_xrc -lmy_gizmos -lmy_expat $(WX_LIBS)
 
 
 EXTRA_DIST = appicon.ico appicon.xpm
@@ -289,7 +289,7 @@ distdir: $(DISTFILES)
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
-	    cp -pr $$/$$file $(distdir)/$$file; \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
 	  else \
 	    test -f $(distdir)/$$file \
 	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
