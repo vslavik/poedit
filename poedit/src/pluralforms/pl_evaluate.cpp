@@ -12,8 +12,6 @@
 
 #include <ctype.h>
 
-#include <wx/ptr_scpd.h>
-
 #include "pl_evaluate.h"
 
 // ----------------------------------------------------------------------------
@@ -236,8 +234,6 @@ PluralFormsNode::evaluate(PluralFormsToken::Number n) const
     }
 }
 
-
-wxDEFINE_SCOPED_PTR_TYPE(PluralFormsCalculator);
 
 void PluralFormsCalculator::init(PluralFormsToken::Number nplurals,
                                    PluralFormsNode* plural)
@@ -583,15 +579,16 @@ PluralFormsNode* PluralFormsParser::pmExpression()
 
 PluralFormsCalculator* PluralFormsCalculator::make(const char* s)
 {
-    PluralFormsCalculatorPtr calculator(new PluralFormsCalculator);
+    PluralFormsCalculator* calculator = new PluralFormsCalculator;
     if (s != NULL)
     {
         PluralFormsScanner scanner(s);
         PluralFormsParser p(scanner);
         if (!p.parse(*calculator))
         {
+            delete calculator;
             return NULL;
         }
     }
-    return calculator.release();
+    return calculator;
 }
