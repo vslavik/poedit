@@ -2,15 +2,19 @@
 Version 1.1.10
 --------------
 
-- fix to 'fixes to catalog charset handling' from 1.1.9
-- 
+- fix to "fixes to catalog charset handling" from 1.1.9
+- [Unix] configure now checks for db4 in addition to db and db3
+- [Win32] fixed launching poEdit via associations when long filenames 
+  were involved
+- added Polish translation (Arkadiusz Lipiec)
+
 
 
 Version 1.1.9
 -------------
 
 - fixes to catalog charset handling
-- added Mandrake RPM packages (Linux)
+- [Linux] added Mandrake RPM packages
 - added translations to more languages: 
      Estonian (Joosep-Georg Jarvemaa)
      Dutch (Patrick Hubers)
@@ -51,18 +55,18 @@ Version 1.1.6
 - fixed crash when browsing certain source files
 - added ability to open refered source files directly in the editor of
   choice instead of in built-in files viewer
-- fixed wrong placement of progress indicator in the status bar (Win32)
-- man page is now installed (Unix)
-- poEdit now links with libdb-3.x for x > 1, too (Unix)
-- RPM package now comes in two favors: poedit and poedit-semistatic
-  (the latter is statically linked against wxGTK and libdb) (Unix)
+- [Win32] fixed wrong placement of progress indicator in the status bar
+- [Unix] man page is now installed
+- [Unix] poEdit now links with libdb-3.x for x > 1, too
+- [Linux] RPM package now comes in two favors: poedit and poedit-semistatic
+  (the latter is statically linked against wxGTK and libdb)
 
 
 Version 1.1.5
 -------------
 
 - upgraded to link against any of libdb-3.{1,2,3}
-- fixed bug when editing entries in editable listbox control (Win32)
+- [Win32] fixed bug when editing entries in editable listbox control
 - updated ISO 639-1 table
 - visually improved listbox
 - Win32 binary package is now cross-compiled with Mingw32
@@ -97,7 +101,7 @@ Version 1.1.2
 - fixed assertion failures with empty catalog files when right-clicking 
   the list control
 - changed default TM DB path to something more sane under Windows
-- fixed directories traversal during TM update under Windows 
+- [Win32] fixed directories traversal during TM update under Windows 
 
 
 Version 1.1.1
@@ -109,7 +113,7 @@ Version 1.1.1
   poEdit can dig translations from PO, MO and RPM files.
 - implemented search
 - poEdit source code is now documented with Doxygen
-- HTML Help documentation now uses CSS and looks much better (Win32)
+- [Win32] HTML Help documentation now uses CSS and looks much better
 - better keyboard navigation
 
 
@@ -128,19 +132,19 @@ Version 1.0.3
 -------------
 
 - fixed comments parsing bug (reported by Mattias Dahlberg)
-- fixed ugly blinking when resizing poEdit window (Win32)
+- [Win32] fixed ugly blinking when resizing poEdit window
 
 
 Version 1.0.2
 -------------
 
-- fixed problem with localized versions of gettext (Unix)
+- [Unix] fixed problem with localized versions of gettext
 - fixed Content-Transfer-Encoding header (was "8-bit" instead of "8bit")
 - fixed POT-Creation-Date and PO-Revision-Date date writing
 - better handling of \n: strings with \n in them are now both
   displayed and saved to .po file as multiline records
 - saving catalog now preserves comments
-- fixed dist makefile target (Unix)
+- [Unix] fixed dist makefile target
 
 
 Version 1.0.1
@@ -150,10 +154,10 @@ Version 1.0.1
 - fixed assertion failure in parsers info saving if ~/.poedit
   did not exist [harmless, in debug builds only]
 - right-clicking list control now selects the item under cursor
-- fixed docs/Makefile.am to cd correctly (Unix)
-- configure change: better check for wxWindows (Unix)
-- fixed RPM spec file (Unix)
-- added integration with KDE and GNOME desktops (Unix)
+- [Unix] fixed docs/Makefile.am to cd correctly
+- [Unix] configure change: better check for wxWindows
+- [Linux] fixed RPM spec file
+- [Unix] added integration with KDE and GNOME desktops
 
 
 Version 1.0.0
