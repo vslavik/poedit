@@ -175,7 +175,7 @@ void poEditApp::SetDefaultCfg(wxConfigBase *cfg)
         cfg->Write(_T("Parsers/C_C++/Extensions"), 
                    _T("*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx"));
         cfg->Write(_T("Parsers/C_C++/Command"), 
-                   _T("xgettext --force-po -C -o %o %K %F"));
+                   _T("xgettext --force-po -o %o %K %F"));
         cfg->Write(_T("Parsers/C_C++/KeywordItem"), 
                    _T("-k%k"));
         cfg->Write(_T("Parsers/C_C++/FileItem"), 
