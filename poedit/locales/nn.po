@@ -1,18 +1,20 @@
+# Translation of nn to Norwegian Nynorsk
 # Norwegian Nynorsk localisation of poEdit
 #
 # Original localisation by
-# Karl Ove Hufthammer <karl@huftis.org>, 2002
+# Karl Ove Hufthammer <karl@huftis.org>, 2002, 2005.
 msgid ""
 msgstr ""
-"Project-Id-Version: poEdit\n"
+"Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-12-05 23:59+0100\n"
-"PO-Revision-Date: 2004-02-02 20:05+0100\n"
+"PO-Revision-Date: 2005-01-16 16:06+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
 
 #: ../src/edframe.cpp:1908
 msgid " (modified)"
@@ -25,7 +27,7 @@ msgstr "-filer ..."
 #: ../src/catalog.cpp:116
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
-msgstr ""
+msgstr "%i linjer i fila «%s» vart ikkje lest rett."
 
 #: ../src/edframe.cpp:1876 ../src/export_html.cpp:131
 #, c-format
@@ -82,9 +84,8 @@ msgid "&Preferences..."
 msgstr "&Innstillingar ..."
 
 #: ../src/resources/xrc_strings.h:54
-#, fuzzy
 msgid "&Purge deleted translations"
-msgstr "&Skyggelegg omsetjingslista"
+msgstr "&Fjern sletta omsetjingar"
 
 #: ../src/resources/xrc_strings.h:39
 msgid "&Save"
@@ -181,9 +182,8 @@ msgid "An item in keywords list:"
 msgstr "Eit punkt i lista over nøkkelord:"
 
 #: ../src/resources/xrc_strings.h:82
-#, fuzzy
 msgid "Automatic spellchecking"
-msgstr "Automatisk omsetjing"
+msgstr "Automatisk stavekontroll"
 
 #: ../src/export_html.cpp:170
 msgid "Automatic translation"
@@ -224,12 +224,11 @@ msgstr "Åtferd"
 
 #: ../src/catalog.cpp:522
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr ""
+msgstr "Øydelagd katalogfil: Fleirtalsformer brukt i «msgstr» utan «msgid_plural»."
 
 #: ../src/catalog.cpp:490
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr ""
+msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr "Øydelagd katalogfil: Eintalsformer brukt i «msgstr» saman med «msgid_plural»."
 
 #: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:103
 #: ../src/resources/xrc_strings.h:134 ../src/resources/xrc_strings.h:166
@@ -237,9 +236,8 @@ msgid "Browse"
 msgstr "Bla &gjennom"
 
 #: ../src/resources/xrc_strings.h:50
-#, fuzzy
 msgid "C&atalog"
-msgstr "Katalog"
+msgstr "&Katalog"
 
 #: ../src/resources/xrc_strings.h:84
 msgid "CR/LF conversion"
@@ -403,6 +401,8 @@ msgid ""
 "If you continue with purging, you will have to translate them again if they "
 "are added back in the future."
 msgstr ""
+"Er du sikker på at du vil fjerna alle omsetjingane som ikkje lenger er brukt i katalogen?\n"
+"Du må då setja dei om på nytt om dei skulle dukka opp att seinare."
 
 #: ../src/manager.cpp:377
 msgid "Do you want to delete the project?"
@@ -454,7 +454,7 @@ msgstr "Filnamn for sk&riveprogram"
 
 #: ../src/resources/xrc_strings.h:83
 msgid "Enables on-the-fly spellchecking"
-msgstr ""
+msgstr "Slår på automatisk stavekontroll"
 
 #: ../src/edframe.cpp:1130
 msgid "Entries in the catalog are probably incorrect."
@@ -463,7 +463,7 @@ msgstr "Oppføringane i katalogen er sannsynligvis ikkje i orden."
 #: ../src/edframe.cpp:727
 #, c-format
 msgid "Error initializing spell checking: %s"
-msgstr ""
+msgstr "Feil ved oppstart av stavekontroll: %s"
 
 #: ../src/edframe.cpp:1799
 msgid "Error loading message catalog file '"
@@ -481,7 +481,7 @@ msgstr "Feil ved lagring av katalog"
 #: ../src/catalog.cpp:64
 #, c-format
 msgid "Error while loading file '%s': line %u is corruped."
-msgstr ""
+msgstr "Feil ved opning av fila «%s»: Linje %u er ugyldig."
 
 #: ../src/edframe.cpp:984
 msgid "Export as..."
@@ -506,22 +506,20 @@ msgid "Files List"
 msgstr "Filliste"
 
 #: ../src/resources/xrc_strings.h:17
-#, fuzzy
 msgid "Find in automatic comments"
-msgstr "Vis &merknadsvindauge"
+msgstr "Søk i automatiske merknader"
 
 #: ../src/resources/xrc_strings.h:16
-#, fuzzy
 msgid "Find in comments"
-msgstr "Rediger merknad"
+msgstr "Søk i merknader"
 
 #: ../src/resources/xrc_strings.h:14
 msgid "Find in original strings"
-msgstr "Søk i &originalteksten"
+msgstr "Søk i originaltekstar"
 
 #: ../src/resources/xrc_strings.h:15
 msgid "Find in translations"
-msgstr "Finn i o&msetjinga"
+msgstr "Søk i omsetjingar"
 
 #: ../src/resources/xrc_strings.h:10
 msgid "Find..."
@@ -534,12 +532,12 @@ msgstr "Skrifter"
 #: ../src/edframe.cpp:2526
 #, c-format
 msgid "Form %u"
-msgstr ""
+msgstr "Form %u"
 
 #: ../src/edframe.cpp:2528
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
-msgstr ""
+msgstr "Form %u (eks.: «%u»)"
 
 #: ../src/resources/xrc_strings.h:176
 msgid "Fullscreen view"
@@ -575,7 +573,7 @@ msgstr "Lag &database"
 
 #: ../src/edframe.cpp:1206
 msgid "Gettext syntax error"
-msgstr ""
+msgstr "Gettext-syntaksfeil"
 
 #: ../src/edframe.cpp:986
 msgid "HTML file (*.html)|*.html"
@@ -621,7 +619,7 @@ msgstr "Linje"
 #: ../src/catalog.cpp:129
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
-msgstr ""
+msgstr "Linje %u i fila «%s» er ugyldig (ikkje gyldig %s-data)."
 
 #: ../src/resources/xrc_strings.h:85
 msgid "Line endings format:"
@@ -638,7 +636,7 @@ msgstr "Macintosh"
 #: ../src/catalog.cpp:160
 #, c-format
 msgid "Malformed header: '%s'"
-msgstr ""
+msgstr "Ugyldig filhovud: «%s»"
 
 #: ../src/resources/xrc_strings.h:109
 msgid "Max. # of missing words:"
@@ -682,9 +680,8 @@ msgid "New"
 msgstr "&Ny"
 
 #: ../src/resources/xrc_strings.h:37
-#, fuzzy
 msgid "New catalog from POT file..."
-msgstr "Oppdater frå &POT-fil ..."
+msgstr "Ny katalog frå POT-fil ..."
 
 #: ../extras/wx-contrib/src/gizmos/editlbox.cpp:162
 msgid "New item"
@@ -797,11 +794,11 @@ msgstr "Vel språkkode:"
 
 #: ../src/resources/xrc_strings.h:148
 msgid "Plural Forms:"
-msgstr ""
+msgstr "Fleirtalsformer:"
 
 #: ../src/edframe.cpp:544
 msgid "Plural:"
-msgstr ""
+msgstr "Fleirtal:"
 
 #: ../src/resources/xrc_strings.h:67
 msgid "Preferences"
@@ -824,9 +821,8 @@ msgid "Project name:"
 msgstr "Prosjektnamn:"
 
 #: ../src/edframe.cpp:2031
-#, fuzzy
 msgid "Purge delete translations"
-msgstr "Automatiske omsetjingar:"
+msgstr "Fjern sletta omsetjingar"
 
 #: ../src/edframe.cpp:1229
 msgid "References"
@@ -903,9 +899,8 @@ msgid "Show &comment window"
 msgstr "Vis &merknadsvindauge"
 
 #: ../src/resources/xrc_strings.h:61
-#, fuzzy
 msgid "Show automatic c&omments window"
-msgstr "Vis &merknadsvindauge"
+msgstr "Vis automatisk &merknadsvindauget"
 
 #: ../src/resources/xrc_strings.h:76
 msgid "Show summary after catalog update"
@@ -913,7 +908,7 @@ msgstr "&Vis samandrag etter katalogoppdatering"
 
 #: ../src/edframe.cpp:543
 msgid "Singular:"
-msgstr ""
+msgstr "Eintal:"
 
 #: ../src/resources/xrc_strings.h:130 ../src/resources/xrc_strings.h:147
 msgid "Source code charset:"
@@ -929,7 +924,7 @@ msgstr "Kjeldefil"
 
 #: ../src/resources/xrc_strings.h:13
 msgid "Start from the first item"
-msgstr ""
+msgstr "Start frå første element"
 
 #: ../src/resources/xrc_strings.h:11
 msgid "String to find:"
@@ -958,7 +953,7 @@ msgstr ""
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
-msgstr ""
+msgstr "Det oppstod feil ved opninga av katalogen. Nokre data kan derfor mangla, eller vera feil."
 
 #: ../src/resources/xrc_strings.h:159
 msgid ""
@@ -1143,9 +1138,9 @@ msgid "Your name:"
 msgstr "&Namn:"
 
 #: ../src/edframe.cpp:1882
-#, fuzzy, c-format
+#, c-format
 msgid "[checking translations: %i left]"
-msgstr "&Skyggelegg omsetjingslista"
+msgstr "[kontrollerer omsetjingar: %i igjen]"
 
 #: ../src/resources/xrc_strings.h:89
 msgid "current platform's default"
@@ -1172,8 +1167,7 @@ msgid "poEdit did not find any files in scanned directories."
 msgstr "poEdit fann ingen filer i katalogane."
 
 #: ../src/edapp.cpp:51
-msgid ""
-"poEdit installation is broken, cannot find application's home directory."
+msgid "poEdit installation is broken, cannot find application's home directory."
 msgstr ""
 "poEdit-installasjonen er øydelagd. Klarte ikkje å finna heimekatalogen til "
 "programmet."
@@ -1182,5 +1176,3 @@ msgstr ""
 msgid "version"
 msgstr "versjon"
 
-#~ msgid "&Catalog"
-#~ msgstr "&Katalog"
