@@ -161,7 +161,8 @@ bool TranslationMemoryUpdater::UpdateFromMO(const wxString& filename)
 
     if (!wxGetTempFileName(_T("poedit"), tmp))
         return false;
-    if (!ExecuteGettext(_T("msgunfmt --force-po -o ") + tmp + _T(" ") + filename))
+    if (!ExecuteGettext(_T("msgunfmt --force-po -o \"") + tmp + _T("\" \"") + 
+                        filename + _T("\"")))
         return false;
     bool rt = UpdateFromCatalog(tmp);
     wxRemoveFile(tmp);

@@ -125,7 +125,7 @@ wxString Parser::GetCommand(const wxArrayString& files,
     wxString cmdline, kline, fline;
     
     cmdline = Command;
-    cmdline.Replace(_T("%o"), output);
+    cmdline.Replace(_T("%o"), _T("\"") + output + _T("\""));
     
     wxString dummy;
     size_t i;
@@ -140,7 +140,7 @@ wxString Parser::GetCommand(const wxArrayString& files,
     for (i = 0; i < files.GetCount(); i++)
     {
         dummy = FileItem;
-        dummy.Replace(_T("%f"), files[i]);
+        dummy.Replace(_T("%f"), _T("\"") + files[i] + _T("\""));
         fline << _T(" ") << dummy;
     }
     

@@ -589,8 +589,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     /* If user wants it, compile .mo file right now: */
     
     if (save_mo && wxConfig::Get()->Read(_T("compile_mo"), true))
-        ExecuteGettext(_T("msgfmt -o ") + 
-                       po_file.BeforeLast(_T('.')) + _T(".mo ") + po_file);
+        ExecuteGettext(_T("msgfmt -o \"") + 
+                       po_file.BeforeLast(_T('.')) + _T(".mo\" \"") + po_file + _T("\""));
 
     m_fileName = po_file;
     
@@ -664,7 +664,8 @@ void Catalog::Merge(Catalog *refcat)
     refcat->Save(tmp1, false);
     Save(tmp2, false);
     
-    ExecuteGettext(_T("msgmerge --force-po -o ") + tmp3 + _T(" ") + tmp2 + _T(" ") + tmp1);
+    ExecuteGettext(_T("msgmerge --force-po -o \"") + tmp3 + _T("\" \"") + 
+                   tmp2 + _T("\" \"") + tmp1 + _T("\""));
 
     Catalog *c = new Catalog(tmp3);
     Clear();
