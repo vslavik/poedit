@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-02-11 21:09+0100\n"
+"POT-Creation-Date: 2003-04-21 15:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1326
+#: ../src/edframe.cpp:1376
 msgid " (modified)"
 msgstr ""
 
@@ -23,12 +23,12 @@ msgstr ""
 msgid " files..."
 msgstr ""
 
-#: ../src/edframe.cpp:1311
+#: ../src/edframe.cpp:1361
 #, c-format
 msgid "%i strings (%i fuzzy, %i not translated)"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:52
+#: ../src/resources/xrc_strings.h:53
 msgid "&About..."
 msgstr ""
 
@@ -40,7 +40,7 @@ msgstr ""
 msgid "&Close"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:50
+#: ../src/resources/xrc_strings.h:51
 msgid "&Contents..."
 msgstr ""
 
@@ -48,7 +48,7 @@ msgstr ""
 msgid "&Edit"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:28 ../src/edframe.cpp:438
+#: ../src/resources/xrc_strings.h:28 ../src/edframe.cpp:448
 msgid "&File"
 msgstr ""
 
@@ -56,11 +56,11 @@ msgstr ""
 msgid "&Find..."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:46
+#: ../src/resources/xrc_strings.h:47
 msgid "&Fullscreen view"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:53
+#: ../src/resources/xrc_strings.h:54
 msgid "&Help"
 msgstr ""
 
@@ -80,11 +80,11 @@ msgstr ""
 msgid "&Save"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:44
+#: ../src/resources/xrc_strings.h:45
 msgid "&Settings..."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:49
+#: ../src/resources/xrc_strings.h:50
 msgid "&Shaded translations list"
 msgstr ""
 
@@ -93,18 +93,23 @@ msgid "&Show references"
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:43
-msgid "&Update catalog"
+msgid "&Update from sources"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:45
+#: ../src/resources/xrc_strings.h:46
 msgid "&View"
 msgstr ""
 
-#: ../src/edframe.cpp:1262
+#: ../src/catalog.cpp:761
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr ""
+
+#: ../src/edframe.cpp:1312
 msgid "'."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:75
+#: ../src/resources/xrc_strings.h:77
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr ""
 
@@ -113,11 +118,15 @@ msgstr ""
 msgid "(%i new, %i obsolete)"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:136
+#: ../src/resources/xrc_strings.h:137
 msgid "(0 new, 0 obsolete)"
 msgstr ""
 
-#: ../src/edframe.cpp:587
+#: ../src/chooselang.cpp:76
+msgid "(Use default language)"
+msgstr ""
+
+#: ../src/edframe.cpp:594
 msgid "(none of these)"
 msgstr ""
 
@@ -133,7 +142,7 @@ msgstr ""
 msgid "About poEdit"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:81
+#: ../src/resources/xrc_strings.h:83
 msgid "Add"
 msgstr ""
 
@@ -141,73 +150,72 @@ msgstr ""
 msgid "Add directory to the list"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:111
+#: ../src/resources/xrc_strings.h:145 ../src/transmemupd_wizard.cpp:130
+msgid "Add files"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:113
 msgid "Add path to the list of directories where catalogs lie."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:62
+#: ../src/resources/xrc_strings.h:66
 msgid "Always change focus to text input field"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:106
+#: ../src/resources/xrc_strings.h:108
 msgid "An item in input files list:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:106
 msgid "An item in keywords list:"
 msgstr ""
 
-#: ../src/edframe.cpp:1460 ../src/edframe.cpp:1464
+#: ../src/edframe.cpp:1510 ../src/edframe.cpp:1514
 msgid "Automatic translations:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:59
+#: ../src/resources/xrc_strings.h:63
 msgid "Automatically compile .mo file on save"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:88
+#: ../src/resources/xrc_strings.h:90
 msgid "Automatically translate when updating catalog"
 msgstr ""
 
-#: ../src/edframe.cpp:844
+#: ../src/edframe.cpp:888
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr ""
 
-#: ../src/edframe.cpp:829
+#: ../src/edframe.cpp:873
 msgid "Automatically translating..."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:125
+#: ../src/resources/xrc_strings.h:126
 msgid "Base path:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:58
+#: ../src/resources/xrc_strings.h:62
 msgid "Behavior"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:24 ../src/resources/xrc_strings.h:80
-#: ../src/resources/xrc_strings.h:110
+#: ../src/resources/xrc_strings.h:24 ../src/resources/xrc_strings.h:82
+#: ../src/resources/xrc_strings.h:112 ../src/resources/xrc_strings.h:142
 msgid "Browse"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:64
+#: ../src/resources/xrc_strings.h:68
 msgid "CR/LF conversion"
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:15
-#: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:96
-#: ../src/resources/xrc_strings.h:109 ../src/resources/xrc_strings.h:113
-#: ../src/resources/xrc_strings.h:117 ../src/resources/xrc_strings.h:130
+#: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:98
+#: ../src/resources/xrc_strings.h:111 ../src/resources/xrc_strings.h:115
+#: ../src/resources/xrc_strings.h:117 ../src/resources/xrc_strings.h:131
 msgid "Cancel"
 msgstr ""
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:954
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:995
-msgid "Cannot convert dialog units: dialog unknown."
-msgstr ""
-
-#: ../src/transmem.cpp:747
+#: ../src/transmem.cpp:748
 msgid "Cannot create database directory!"
 msgstr ""
 
@@ -215,54 +223,24 @@ msgstr ""
 msgid "Cannot execute program: "
 msgstr ""
 
-#: ../src/transmemupd.cpp:183
+#: ../src/transmemupd.cpp:188
 msgid "Cannot extract catalogs from RPM file."
 msgstr ""
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:243
-#, c-format
-msgid "Cannot find container for unknown control '%s'."
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:1009
-#, c-format
-msgid "Cannot find font node '%s'."
-msgstr ""
-
-#: ../src/edapp.cpp:122
+#: ../src/edapp.cpp:125
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
 "Please reinstall poEdit."
 msgstr ""
 
-#: ../src/edapp.cpp:116
+#: ../src/edapp.cpp:119
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
 "poEdit was configured to be installed in '%s'.\n"
 "You may try to set POEDIT_PREFIX environment variable to point\n"
 "to the location where you installed poEdit."
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:356
-#, c-format
-msgid "Cannot load resources from file '%s'."
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:330
-#, c-format
-msgid "Cannot open file '%s'."
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:942
-#, c-format
-msgid "Cannot parse coordinates from '%s'."
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:983
-#, c-format
-msgid "Cannot parse dimension from '%s'."
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:12
@@ -273,8 +251,8 @@ msgstr ""
 msgid "Catalog"
 msgstr ""
 
-#: ../src/edframe.cpp:623 ../src/edframe.cpp:634 ../src/edframe.cpp:658
-#: ../src/edframe.cpp:691 ../src/edframe.cpp:737
+#: ../src/edframe.cpp:630 ../src/edframe.cpp:641 ../src/edframe.cpp:665
+#: ../src/edframe.cpp:698 ../src/edframe.cpp:760
 msgid "Catalog modified. Do you want to save changes?"
 msgstr ""
 
@@ -282,7 +260,11 @@ msgstr ""
 msgid "Catalogs &manager"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:123
+#: ../src/resources/xrc_strings.h:60
+msgid "Change UI language"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:124
 msgid "Charset:"
 msgstr ""
 
@@ -298,7 +280,7 @@ msgstr ""
 msgid "Comment:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:85
+#: ../src/resources/xrc_strings.h:87
 msgid "Configuration"
 msgstr ""
 
@@ -318,21 +300,29 @@ msgstr ""
 msgid "Corrupted translator record, please correct in Catalog/Settings"
 msgstr ""
 
+#: ../src/resources/xrc_strings.h:123
+msgid "Country:"
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:18
 msgid "Create new translations project"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:78
+#: ../src/resources/xrc_strings.h:80
 msgid "Database"
 msgstr ""
 
-#: ../src/transmem.cpp:328 ../src/transmem.cpp:330
+#: ../src/transmem.cpp:332
 #, c-format
 msgid "Database error: %s"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:93
+#: ../src/resources/xrc_strings.h:95
 msgid "Delete"
+msgstr ""
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:163
+msgid "Delete item"
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:20
@@ -343,15 +333,15 @@ msgstr ""
 msgid "Directories:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:48
+#: ../src/resources/xrc_strings.h:49
 msgid "Display &line numbers"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:47
+#: ../src/resources/xrc_strings.h:48
 msgid "Display &quotes"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:142
+#: ../src/resources/xrc_strings.h:149
 msgid "Display quotes around the string?"
 msgstr ""
 
@@ -365,11 +355,11 @@ msgstr ""
 msgid "Do you want to delete the project?"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:70
+#: ../src/resources/xrc_strings.h:74
 msgid "Don't change format of existing catalogs"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:92
+#: ../src/resources/xrc_strings.h:94
 msgid "Edit"
 msgstr ""
 
@@ -377,8 +367,12 @@ msgstr ""
 msgid "Edit &comment"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:144
+#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:151
 msgid "Edit comment"
+msgstr ""
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:161
+msgid "Edit item"
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:22
@@ -393,19 +387,19 @@ msgstr ""
 msgid "Edit the project"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:77
+#: ../src/resources/xrc_strings.h:61 ../src/resources/xrc_strings.h:79
 msgid "Editor"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:72
+#: ../src/resources/xrc_strings.h:76
 msgid "Editor executable:"
 msgstr ""
 
-#: ../src/edframe.cpp:809
+#: ../src/edframe.cpp:837
 msgid "Entries in the catalog are probably incorrect."
 msgstr ""
 
-#: ../src/edframe.cpp:1262
+#: ../src/edframe.cpp:1312
 msgid "Error loading message catalog file '"
 msgstr ""
 
@@ -414,27 +408,26 @@ msgstr ""
 msgid "Error opening file %s!"
 msgstr ""
 
-#: ../src/catalog.cpp:604
+#: ../src/catalog.cpp:612
 msgid "Error saving catalog"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:71
+#: ../src/resources/xrc_strings.h:75
 msgid "External editor"
 msgstr ""
 
-#: ../src/edframe.cpp:666
-#, c-format
-msgid "File '%s' doesn't exist!"
-msgstr ""
-
-#: ../src/edframe.cpp:697
+#: ../src/edframe.cpp:673 ../src/edframe.cpp:704
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr ""
 
-#: ../src/edframe.cpp:683
+#: ../src/edframe.cpp:690
 #, c-format
 msgid "File '%s' is not message catalog."
+msgstr ""
+
+#: ../src/transmemupd_wizard.cpp:53
+msgid "Files List"
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:13
@@ -449,7 +442,7 @@ msgstr ""
 msgid "Find..."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:145
+#: ../src/resources/xrc_strings.h:152
 msgid "Fullscreen view"
 msgstr ""
 
@@ -457,44 +450,47 @@ msgstr ""
 msgid "Fuzzy"
 msgstr ""
 
-#: ../src/edframe.cpp:644 ../src/edframe.cpp:723
+#: ../src/edframe.cpp:651 ../src/edframe.cpp:746
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:51
+#: ../src/edframe.cpp:855
+msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:52
 msgid "GNU gettext documentation"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:114
+#: ../src/resources/xrc_strings.h:116
 msgid "Generate TM database"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:83
+#: ../src/resources/xrc_strings.h:85
 msgid "Generate database"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:146
+#: ../src/resources/xrc_strings.h:153
 msgid "Help"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:55
+#: ../src/resources/xrc_strings.h:57
 msgid "Identity"
 msgstr ""
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:362
-#, c-format
-msgid "Invalid XRC resource '%s': doesn't have root node 'resource'."
-msgstr ""
-
-#: ../src/resources/xrc_strings.h:101
+#: ../src/resources/xrc_strings.h:103
 msgid "Invocation:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:128 ../src/settingsdlg.cpp:52
+#: ../src/resources/xrc_strings.h:129 ../src/settingsdlg.cpp:58
 msgid "Keywords"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:98 ../src/resources/xrc_strings.h:99
+#: ../src/chooselang.cpp:116
+msgid "Language selection"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:100 ../src/resources/xrc_strings.h:101
 #: ../src/resources/xrc_strings.h:122
 msgid "Language:"
 msgstr ""
@@ -507,35 +503,39 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:65
+#: ../src/resources/xrc_strings.h:69
 msgid "Line endings format:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:100
+#: ../src/resources/xrc_strings.h:102
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr ""
 
-#: ../src/transmemupd.cpp:117
-msgid "Listing files..."
-msgstr ""
-
-#: ../src/resources/xrc_strings.h:68
+#: ../src/resources/xrc_strings.h:72
 msgid "Macintosh"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:86
+#: ../src/resources/xrc_strings.h:88
 msgid "Max. # of missing words:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:87
+#: ../src/resources/xrc_strings.h:89
 msgid "Max. difference in sentence length:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:116 ../src/catalog.cpp:725
+#: ../src/catalog.cpp:733
 msgid "Merging differences..."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:42
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:165
+msgid "Move down"
+msgstr ""
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:164
+msgid "Move up"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:43
 msgid "My Languages"
 msgstr ""
 
@@ -543,18 +543,22 @@ msgstr ""
 msgid "My Project"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:63
+#: ../src/resources/xrc_strings.h:67
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
 "without having to press Tab to change focus."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:91
+#: ../src/resources/xrc_strings.h:93
 msgid "New"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:133
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:162
+msgid "New item"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:134
 msgid "New strings"
 msgstr ""
 
@@ -570,35 +574,34 @@ msgstr ""
 msgid "No files found in: "
 msgstr ""
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:542
-#, c-format
-msgid "No handler found for XML node '%s', class '%s'!"
-msgstr ""
-
-#: ../src/edframe.cpp:881
+#: ../src/edframe.cpp:925
 msgid "No references to this string found."
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:95
-#: ../src/resources/xrc_strings.h:108 ../src/resources/xrc_strings.h:129
-#: ../src/resources/xrc_strings.h:137
+#: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:97
+#: ../src/resources/xrc_strings.h:110 ../src/resources/xrc_strings.h:130
+#: ../src/resources/xrc_strings.h:138
 msgid "OK"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:135
+#: ../src/resources/xrc_strings.h:136
 msgid "Obsolete strings"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:139 ../src/edframe.cpp:642
+#: ../src/resources/xrc_strings.h:146 ../src/edframe.cpp:649
 msgid "Open catalog"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:61
+#: ../src/edframe.cpp:853
+msgid "Open catalog template"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:65
 msgid "Open catalogs manager on poEdit startup"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:76
+#: ../src/resources/xrc_strings.h:78
 msgid "Open source files in editor, not in file viewer"
 msgstr ""
 
@@ -606,15 +609,15 @@ msgstr ""
 msgid "Original string"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:102
+#: ../src/resources/xrc_strings.h:104
 msgid "Parser command:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:97
+#: ../src/resources/xrc_strings.h:99
 msgid "Parser setup"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:94
+#: ../src/resources/xrc_strings.h:96
 msgid "Parsers"
 msgstr ""
 
@@ -622,39 +625,47 @@ msgstr ""
 msgid "Parsing "
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:79
+#: ../src/resources/xrc_strings.h:81
 msgid "Path to DB:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:126 ../src/settingsdlg.cpp:54
+#: ../src/resources/xrc_strings.h:127 ../src/settingsdlg.cpp:60
 msgid "Paths"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:82
+#: ../src/resources/xrc_strings.h:56
+msgid "Personalize"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:84
 msgid "Pick language from the list of known languages"
 msgstr ""
 
-#: ../src/edframe.cpp:889
+#: ../src/resources/xrc_strings.h:141
+msgid "Please add directories where locale files are stored on your system:"
+msgstr ""
+
+#: ../src/edframe.cpp:933
 msgid "Please choose the reference you want to show:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:248
+#: ../src/prefsdlg.cpp:259
 msgid "Please select language ISO code:"
 msgstr ""
 
-#: ../src/edframe.cpp:590
+#: ../src/edframe.cpp:597
 msgid "Please select language code:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:54
+#: ../src/resources/xrc_strings.h:55
 msgid "Preferences"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:112
+#: ../src/resources/xrc_strings.h:114
 msgid "Proceed"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:124
+#: ../src/resources/xrc_strings.h:125
 msgid "Project info"
 msgstr ""
 
@@ -666,45 +677,40 @@ msgstr ""
 msgid "Project name:"
 msgstr ""
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:517
-#, c-format
-msgid "Referenced object node with ref=\"%s\" not found!"
-msgstr ""
-
-#: ../src/edframe.cpp:889
+#: ../src/edframe.cpp:933
 msgid "References"
 msgstr ""
 
-#: ../src/edframe.cpp:1446 ../src/edframe.cpp:1450
+#: ../src/edframe.cpp:1496 ../src/edframe.cpp:1500
 msgid "References:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:84
+#: ../src/resources/xrc_strings.h:86
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr ""
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:379
-msgid "Resource files must have same version number!"
+#: ../src/resources/xrc_strings.h:143
+msgid "Reset to defaults"
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:33
 msgid "Save &as..."
 msgstr ""
 
-#: ../src/edframe.cpp:722
+#: ../src/edframe.cpp:745
 msgid "Save as..."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:140
+#: ../src/resources/xrc_strings.h:147
 msgid "Save catalog"
 msgstr ""
 
-#: ../src/edframe.cpp:623 ../src/edframe.cpp:634 ../src/edframe.cpp:658
-#: ../src/edframe.cpp:691 ../src/edframe.cpp:737
+#: ../src/edframe.cpp:630 ../src/edframe.cpp:641 ../src/edframe.cpp:665
+#: ../src/edframe.cpp:698 ../src/edframe.cpp:760
 msgid "Save changes"
 msgstr ""
 
-#: ../src/transmemupd.cpp:133
+#: ../src/transmemupd.cpp:138
 msgid "Scanning file: "
 msgstr ""
 
@@ -712,35 +718,40 @@ msgstr ""
 msgid "Scanning files..."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:301
+#: ../src/transmemupd_wizard.cpp:49
 msgid "Search Paths"
 msgstr ""
 
-#: ../src/edframe.cpp:589
+#: ../src/edframe.cpp:596
 msgid "Select catalog's language"
 msgstr ""
 
-#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:261 ../src/prefsdlg.cpp:282
+#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:272
+#: ../src/transmemupd_wizard.cpp:104
 msgid "Select directory"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:247
+#: ../src/prefsdlg.cpp:258
 msgid "Select language"
+msgstr ""
+
+#: ../src/chooselang.cpp:115
+msgid "Select your prefered language"
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:118
 msgid "Settings"
 msgstr ""
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:141
 msgid "Setup"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:60
+#: ../src/resources/xrc_strings.h:64
 msgid "Show summary after catalog update"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:90
+#: ../src/resources/xrc_strings.h:92
 msgid "Source code parsers:"
 msgstr ""
 
@@ -752,11 +763,6 @@ msgstr ""
 msgid "String to find:"
 msgstr ""
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:617
-#, c-format
-msgid "Subclass '%s' not found for resource '%s', not subclassing!"
-msgstr ""
-
 #: ../src/resources/xrc_strings.h:121
 msgid "Team's email address:"
 msgstr ""
@@ -765,7 +771,7 @@ msgstr ""
 msgid "Team:"
 msgstr ""
 
-#: ../src/catalog.cpp:603
+#: ../src/catalog.cpp:611
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -773,46 +779,46 @@ msgid ""
 "and the setting was modified accordingly."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:134
+#: ../src/resources/xrc_strings.h:135
 msgid ""
 "These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:132
+#: ../src/resources/xrc_strings.h:133
 msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
 msgstr ""
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:141
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:103
+#: ../src/resources/xrc_strings.h:105
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files (see bellow)."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:107
+#: ../src/resources/xrc_strings.h:109
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:105
+#: ../src/resources/xrc_strings.h:107
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:143
+#: ../src/resources/xrc_strings.h:150
 msgid "Toggled if selected string has fuzzy translation"
 msgstr ""
 
@@ -824,24 +830,39 @@ msgstr ""
 msgid "Translation"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:89
+#: ../src/resources/xrc_strings.h:91
 msgid "Translation Memory"
+msgstr ""
+
+#: ../src/transmemupd_wizard.cpp:136
+msgid "Translation files (*.po;*.mo)|*.po;*.mo"
+msgstr ""
+
+#: ../src/transmemupd_wizard.cpp:134
+msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:40
 msgid "Translation is &fuzzy"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:138
+#: ../src/resources/xrc_strings.h:144
+msgid ""
+"Translation memory will be built from the files listed bellow.\n"
+"You can add more files to the list now."
+msgstr ""
+
+#: ../src/chooselang.cpp:59
+#, c-format
+msgid "Uknown locale code '%s' in registry."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:139
 msgid "Undo"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:66
+#: ../src/resources/xrc_strings.h:70
 msgid "Unix"
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:686
-msgid "Unknown style flag "
 msgstr ""
 
 #: ../src/manager.cpp:221
@@ -852,91 +873,69 @@ msgstr ""
 msgid "Update all catalogs in the project"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:141
+#: ../src/resources/xrc_strings.h:148
 msgid "Update catalog - synchronize it with sources"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:131
+#: ../src/resources/xrc_strings.h:44
+msgid "Update from &POT file..."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:132
 msgid "Update summary"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:115 ../src/catalog.cpp:687
+#: ../src/resources/xrc_strings.h:140
+msgid "Update translation memory"
+msgstr ""
+
+#: ../src/catalog.cpp:695
 msgid "Updating catalog..."
 msgstr ""
 
-#: ../src/edframe.cpp:811
+#: ../src/edframe.cpp:839
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:335
+#: ../src/transmemupd_wizard.cpp:216
 msgid "Updating translation memory"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:127
+#: ../src/resources/xrc_strings.h:128
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:67
+#: ../src/resources/xrc_strings.h:71
 msgid "Windows"
 msgstr ""
 
-#: ../extras/wx-contrib/src/xrc/xml.cpp:530
-#, c-format
-msgid "XML parsing error: '%s' at line %d"
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:455
-#, c-format
-msgid "XRC resource '%s' (class '%s') not found!"
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:857
-#, c-format
-msgid "XRC resource: Cannot create bitmap '%s'."
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:846
-#, c-format
-msgid "XRC resource: Failed to open bitmap file '%s'."
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:806
-#, c-format
-msgid "XRC resource: Incorrect colour specification '%s' for property '%s'."
-msgstr ""
-
-#: ../src/edframe.cpp:676
+#: ../src/edframe.cpp:683
 msgid "You can't drop more than one file on poEdit window."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:57
+#: ../src/chooselang.cpp:130
+msgid "You must restart poEdit for this change to take effect."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:59
 msgid "Your e-mail address:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:56
+#: ../src/resources/xrc_strings.h:58
 msgid "Your name:"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:69
+#: ../src/resources/xrc_strings.h:73
 msgid "current platform's default"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:73
-msgid "nedit -line %l %f"
-msgstr ""
-
-#: ../src/edframe.cpp:1485
+#: ../src/edframe.cpp:1535
 msgid "none"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:74
-#, c-format
-msgid "notepad %f"
-msgstr ""
-
-#: ../src/edframe.cpp:399
+#: ../src/edframe.cpp:409
 msgid "poEdit"
 msgstr ""
 
@@ -944,7 +943,7 @@ msgstr ""
 msgid "poEdit - Catalogs manager"
 msgstr ""
 
-#: ../src/edapp.cpp:125
+#: ../src/edapp.cpp:128
 msgid "poEdit Error"
 msgstr ""
 
@@ -952,11 +951,11 @@ msgstr ""
 msgid "poEdit did not find any files in scanned directories."
 msgstr ""
 
-#: ../src/edapp.cpp:52
+#: ../src/edapp.cpp:53
 msgid ""
 "poEdit installation is broken, cannot find application's home directory."
 msgstr ""
 
-#: ../src/edframe.cpp:1500
+#: ../src/edframe.cpp:1550
 msgid "version"
 msgstr ""

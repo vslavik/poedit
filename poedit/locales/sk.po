@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.1.x\n"
-"POT-Creation-Date: 2003-02-11 21:09+0100\n"
+"POT-Creation-Date: 2003-04-21 15:52+0200\n"
 "PO-Revision-Date: 2003-02-12 22:03+0100\n"
 "Last-Translator: Pavol Cvengros <orpheus@hq.alert.sk>\n"
 "Language-Team: Slovak <i18n@hq.alert.sk>\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1326
+#: ../src/edframe.cpp:1376
 msgid " (modified)"
 msgstr " (zmenené)"
 
@@ -17,12 +17,12 @@ msgstr " (zmenené)"
 msgid " files..."
 msgstr " súbory..."
 
-#: ../src/edframe.cpp:1311
+#: ../src/edframe.cpp:1361
 #, c-format
 msgid "%i strings (%i fuzzy, %i not translated)"
 msgstr "%i reťazcov (%i fuzzy, %i nepreložených)"
 
-#: ../src/resources/xrc_strings.h:52
+#: ../src/resources/xrc_strings.h:53
 msgid "&About..."
 msgstr "&O..."
 
@@ -34,7 +34,7 @@ msgstr "&Katalóg"
 msgid "&Close"
 msgstr "&Zatvoriť"
 
-#: ../src/resources/xrc_strings.h:50
+#: ../src/resources/xrc_strings.h:51
 msgid "&Contents..."
 msgstr "O&bsah..."
 
@@ -42,8 +42,7 @@ msgstr "O&bsah..."
 msgid "&Edit"
 msgstr "&Zmeniť"
 
-#: ../src/resources/xrc_strings.h:28
-#: ../src/edframe.cpp:438
+#: ../src/resources/xrc_strings.h:28 ../src/edframe.cpp:448
 msgid "&File"
 msgstr "&Súbor"
 
@@ -51,11 +50,11 @@ msgstr "&Súbor"
 msgid "&Find..."
 msgstr "&Hľadať..."
 
-#: ../src/resources/xrc_strings.h:46
+#: ../src/resources/xrc_strings.h:47
 msgid "&Fullscreen view"
 msgstr "&Celá obrazovka"
 
-#: ../src/resources/xrc_strings.h:53
+#: ../src/resources/xrc_strings.h:54
 msgid "&Help"
 msgstr "&Pomoc"
 
@@ -75,11 +74,11 @@ msgstr "&Nastavenia..."
 msgid "&Save"
 msgstr "&Uložiť"
 
-#: ../src/resources/xrc_strings.h:44
+#: ../src/resources/xrc_strings.h:45
 msgid "&Settings..."
 msgstr "&Nastavenia..."
 
-#: ../src/resources/xrc_strings.h:49
+#: ../src/resources/xrc_strings.h:50
 msgid "&Shaded translations list"
 msgstr "&Zatienený zoznam prekladov"
 
@@ -88,18 +87,23 @@ msgid "&Show references"
 msgstr "&Ukázať odkazy"
 
 #: ../src/resources/xrc_strings.h:43
-msgid "&Update catalog"
-msgstr "&Aktualizovať katalóg"
+msgid "&Update from sources"
+msgstr ""
 
-#: ../src/resources/xrc_strings.h:45
+#: ../src/resources/xrc_strings.h:46
 msgid "&View"
 msgstr "&Zobrazenie"
 
-#: ../src/edframe.cpp:1262
+#: ../src/catalog.cpp:761
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr ""
+
+#: ../src/edframe.cpp:1312
 msgid "'."
 msgstr "'."
 
-#: ../src/resources/xrc_strings.h:75
+#: ../src/resources/xrc_strings.h:77
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f bude nahradené menom súboru, %l s číslom riadku)"
 
@@ -108,11 +112,16 @@ msgstr "(%f bude nahradené menom súboru, %l s číslom riadku)"
 msgid "(%i new, %i obsolete)"
 msgstr "(%i nových, %i nepotrebných)"
 
-#: ../src/resources/xrc_strings.h:136
+#: ../src/resources/xrc_strings.h:137
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 nové, 0 nepotrebné)"
 
-#: ../src/edframe.cpp:587
+#: ../src/chooselang.cpp:76
+#, fuzzy
+msgid "(Use default language)"
+msgstr "Vyberte si jazyk"
+
+#: ../src/edframe.cpp:594
 msgid "(none of these)"
 msgstr "(žiaden z týchto)"
 
@@ -128,7 +137,7 @@ msgstr "<nepomenované>"
 msgid "About poEdit"
 msgstr "O poEdit"
 
-#: ../src/resources/xrc_strings.h:81
+#: ../src/resources/xrc_strings.h:83
 msgid "Add"
 msgstr "Pridať"
 
@@ -136,79 +145,73 @@ msgstr "Pridať"
 msgid "Add directory to the list"
 msgstr "Pridať priečinok do zoznamu"
 
-#: ../src/resources/xrc_strings.h:111
+#: ../src/resources/xrc_strings.h:145 ../src/transmemupd_wizard.cpp:130
+#, fuzzy
+msgid "Add files"
+msgstr " súbory..."
+
+#: ../src/resources/xrc_strings.h:113
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Zadajte cestu k zoznamu priečinkov kde sa nachádzaju katalógy."
 
-#: ../src/resources/xrc_strings.h:62
+#: ../src/resources/xrc_strings.h:66
 msgid "Always change focus to text input field"
 msgstr "Vždy zmeniť fokus na políčko pre zadávanie textu"
 
-#: ../src/resources/xrc_strings.h:106
+#: ../src/resources/xrc_strings.h:108
 msgid "An item in input files list:"
 msgstr "Položka v zozname vstupnych súborov:"
 
-#: ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:106
 msgid "An item in keywords list:"
 msgstr "Položka v zozname kľúčových slov:"
 
-#: ../src/edframe.cpp:1460
-#: ../src/edframe.cpp:1464
+#: ../src/edframe.cpp:1510 ../src/edframe.cpp:1514
 msgid "Automatic translations:"
 msgstr "Automatické preklady:"
 
-#: ../src/resources/xrc_strings.h:59
+#: ../src/resources/xrc_strings.h:63
 msgid "Automatically compile .mo file on save"
 msgstr "Automaticky vytvoriť .mo súbor pri ukladaní"
 
-#: ../src/resources/xrc_strings.h:88
+#: ../src/resources/xrc_strings.h:90
 msgid "Automatically translate when updating catalog"
 msgstr "Automatický preklad pri aktualizácii katalógov"
 
-#: ../src/edframe.cpp:844
+#: ../src/edframe.cpp:888
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Automaticky preložené %u reťazce"
 
-#: ../src/edframe.cpp:829
+#: ../src/edframe.cpp:873
 msgid "Automatically translating..."
 msgstr "Automatický preklad..."
 
-#: ../src/resources/xrc_strings.h:125
+#: ../src/resources/xrc_strings.h:126
 msgid "Base path:"
 msgstr "Základna cesta:"
 
-#: ../src/resources/xrc_strings.h:58
+#: ../src/resources/xrc_strings.h:62
 msgid "Behavior"
 msgstr "Chovanie"
 
-#: ../src/resources/xrc_strings.h:24
-#: ../src/resources/xrc_strings.h:80
-#: ../src/resources/xrc_strings.h:110
+#: ../src/resources/xrc_strings.h:24 ../src/resources/xrc_strings.h:82
+#: ../src/resources/xrc_strings.h:112 ../src/resources/xrc_strings.h:142
 msgid "Browse"
 msgstr "Prehliadať"
 
-#: ../src/resources/xrc_strings.h:64
+#: ../src/resources/xrc_strings.h:68
 msgid "CR/LF conversion"
 msgstr "CR/LF konverzia"
 
-#: ../src/resources/xrc_strings.h:6
-#: ../src/resources/xrc_strings.h:15
-#: ../src/resources/xrc_strings.h:27
-#: ../src/resources/xrc_strings.h:96
-#: ../src/resources/xrc_strings.h:109
-#: ../src/resources/xrc_strings.h:113
-#: ../src/resources/xrc_strings.h:117
-#: ../src/resources/xrc_strings.h:130
+#: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:15
+#: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:98
+#: ../src/resources/xrc_strings.h:111 ../src/resources/xrc_strings.h:115
+#: ../src/resources/xrc_strings.h:117 ../src/resources/xrc_strings.h:131
 msgid "Cancel"
 msgstr "Zrušiť"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:954
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:995
-msgid "Cannot convert dialog units: dialog unknown."
-msgstr "Nemôžem skonvertovať rozmery dialogu: neznámy dialog."
-
-#: ../src/transmem.cpp:747
+#: ../src/transmem.cpp:748
 msgid "Cannot create database directory!"
 msgstr "Nemôžem vytvoriť priečinok pre databázu!"
 
@@ -216,28 +219,20 @@ msgstr "Nemôžem vytvoriť priečinok pre databázu!"
 msgid "Cannot execute program: "
 msgstr "Nemôžem spustiť program:"
 
-#: ../src/transmemupd.cpp:183
+#: ../src/transmemupd.cpp:188
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Nemôžem extrahovať katalógy z RPM súboru."
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:243
+#: ../src/edapp.cpp:125
 #, c-format
-msgid "Cannot find container for unknown control '%s'."
-msgstr "Nemôžem nájsť kontajnér pre neznámy ovládač '%s'."
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:1009
-#, c-format
-msgid "Cannot find font node '%s'."
-msgstr "Nemôžem nájsť uzol písma '%s'."
-
-#: ../src/edapp.cpp:122
-#, c-format
-msgid "Cannot find resources file '%s'!\n"
+msgid ""
+"Cannot find resources file '%s'!\n"
 "Please reinstall poEdit."
-msgstr "Nemôžem nájsť súbor zdrojov '%s'!\n"
+msgstr ""
+"Nemôžem nájsť súbor zdrojov '%s'!\n"
 "Prosím preinštalujte poEdit."
 
-#: ../src/edapp.cpp:116
+#: ../src/edapp.cpp:119
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -250,26 +245,6 @@ msgstr ""
 "Skúste nastaviť  POEDIT_PREFIX premennú v prostredí\n"
 "na umiestnenie kde je poEdit nainštalovaný."
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:356
-#, c-format
-msgid "Cannot load resources from file '%s'."
-msgstr "Nemôžem nahrať súbor zdrojov z '%s'."
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:330
-#, c-format
-msgid "Cannot open file '%s'."
-msgstr "Chyba pri otváraní súboru '%s'."
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:942
-#, c-format
-msgid "Cannot parse coordinates from '%s'."
-msgstr "Nemôžem sparsovať koordináty z '%s'."
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:983
-#, c-format
-msgid "Cannot parse dimension from '%s'."
-msgstr "Nemôžem sparsovať rozmery z '%s'."
-
 #: ../src/resources/xrc_strings.h:12
 msgid "Case sensitive"
 msgstr "Rozlíšenie veľkosti písma"
@@ -278,11 +253,8 @@ msgstr "Rozlíšenie veľkosti písma"
 msgid "Catalog"
 msgstr "Katalog"
 
-#: ../src/edframe.cpp:623
-#: ../src/edframe.cpp:634
-#: ../src/edframe.cpp:658
-#: ../src/edframe.cpp:691
-#: ../src/edframe.cpp:737
+#: ../src/edframe.cpp:630 ../src/edframe.cpp:641 ../src/edframe.cpp:665
+#: ../src/edframe.cpp:698 ../src/edframe.cpp:760
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalog bol modifikovaný. Chcete uložiť zmeny?"
 
@@ -290,7 +262,12 @@ msgstr "Katalog bol modifikovaný. Chcete uložiť zmeny?"
 msgid "Catalogs &manager"
 msgstr "&Manažér katalógov"
 
-#: ../src/resources/xrc_strings.h:123
+#: ../src/resources/xrc_strings.h:60
+#, fuzzy
+msgid "Change UI language"
+msgstr "Vyberte si jazyk"
+
+#: ../src/resources/xrc_strings.h:124
 msgid "Charset:"
 msgstr "Znaková sada:"
 
@@ -306,12 +283,11 @@ msgstr "Vyčistiť komentár"
 msgid "Comment:"
 msgstr "Komentár:"
 
-#: ../src/resources/xrc_strings.h:85
+#: ../src/resources/xrc_strings.h:87
 msgid "Configuration"
 msgstr "Konfigurácia"
 
-#: ../src/manager.cpp:376
-#: ../src/manager.cpp:396
+#: ../src/manager.cpp:376 ../src/manager.cpp:396
 msgid "Confirmation"
 msgstr "Potvrdenie"
 
@@ -327,22 +303,31 @@ msgstr "Poškodený záznam týmu, prosím opravte ho v Katalóg/Nastavenia"
 msgid "Corrupted translator record, please correct in Catalog/Settings"
 msgstr "Poškodený záznam prekladateľa, prosím opravte ho v Katalóg/Nastavenia"
 
+#: ../src/resources/xrc_strings.h:123
+#, fuzzy
+msgid "Country:"
+msgstr "Komentár:"
+
 #: ../src/resources/xrc_strings.h:18
 msgid "Create new translations project"
 msgstr "Vytvoriť nový prekladový projekt"
 
-#: ../src/resources/xrc_strings.h:78
+#: ../src/resources/xrc_strings.h:80
 msgid "Database"
 msgstr "Databáza"
 
-#: ../src/transmem.cpp:328
-#: ../src/transmem.cpp:330
+#: ../src/transmem.cpp:332
 #, c-format
 msgid "Database error: %s"
 msgstr "Chyba databázy: %s"
 
-#: ../src/resources/xrc_strings.h:93
+#: ../src/resources/xrc_strings.h:95
 msgid "Delete"
+msgstr "Odstrániť"
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:163
+#, fuzzy
+msgid "Delete item"
 msgstr "Odstrániť"
 
 #: ../src/resources/xrc_strings.h:20
@@ -353,33 +338,35 @@ msgstr "Odstrániť projekt"
 msgid "Directories:"
 msgstr "Priečinky:"
 
-#: ../src/resources/xrc_strings.h:48
+#: ../src/resources/xrc_strings.h:49
 msgid "Display &line numbers"
 msgstr "Zobraziť čís&la riadkov"
 
-#: ../src/resources/xrc_strings.h:47
+#: ../src/resources/xrc_strings.h:48
 msgid "Display &quotes"
 msgstr "Zobraziť ú&vodzovky"
 
-#: ../src/resources/xrc_strings.h:142
+#: ../src/resources/xrc_strings.h:149
 msgid "Display quotes around the string?"
 msgstr "Zobraziť reťazec v úvodzovkach?"
 
 #: ../src/manager.cpp:395
-msgid "Do you really want to do mass update of\n"
+msgid ""
+"Do you really want to do mass update of\n"
 "all catalogs in this project?"
-msgstr "Naozaj chcete urobiť masívnu aktualizáciu\n"
+msgstr ""
+"Naozaj chcete urobiť masívnu aktualizáciu\n"
 "všetkých katalógov v tomto projekte?"
 
 #: ../src/manager.cpp:375
 msgid "Do you want to delete the project?"
 msgstr "Chcete odstrániť tento projekt?"
 
-#: ../src/resources/xrc_strings.h:70
+#: ../src/resources/xrc_strings.h:74
 msgid "Don't change format of existing catalogs"
 msgstr "Nemeniť format existujúcich katalógov"
 
-#: ../src/resources/xrc_strings.h:92
+#: ../src/resources/xrc_strings.h:94
 msgid "Edit"
 msgstr "Zmeniť"
 
@@ -387,10 +374,14 @@ msgstr "Zmeniť"
 msgid "Edit &comment"
 msgstr "&Zmeniť komentár"
 
-#: ../src/resources/xrc_strings.h:3
-#: ../src/resources/xrc_strings.h:144
+#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:151
 msgid "Edit comment"
 msgstr "Zmeniť komentár"
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:161
+#, fuzzy
+msgid "Edit item"
+msgstr "Zmeniť"
 
 #: ../src/resources/xrc_strings.h:22
 msgid "Edit project"
@@ -404,19 +395,19 @@ msgstr "Editovať súbor v textovom editore"
 msgid "Edit the project"
 msgstr "Zmeniť projekt"
 
-#: ../src/resources/xrc_strings.h:77
+#: ../src/resources/xrc_strings.h:61 ../src/resources/xrc_strings.h:79
 msgid "Editor"
 msgstr "Editor"
 
-#: ../src/resources/xrc_strings.h:72
+#: ../src/resources/xrc_strings.h:76
 msgid "Editor executable:"
 msgstr "Spustiteľný súbor editora:"
 
-#: ../src/edframe.cpp:809
+#: ../src/edframe.cpp:837
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Položky v katalógu sú pravdepodobne nesprávne."
 
-#: ../src/edframe.cpp:1262
+#: ../src/edframe.cpp:1312
 msgid "Error loading message catalog file '"
 msgstr "Chyba pri nahrávani katalogového súboru '"
 
@@ -425,28 +416,27 @@ msgstr "Chyba pri nahrávani katalogového súboru '"
 msgid "Error opening file %s!"
 msgstr "Chyba otvorenie súboru %s!"
 
-#: ../src/catalog.cpp:604
+#: ../src/catalog.cpp:612
 msgid "Error saving catalog"
 msgstr "Chyba pri ukladaní katalógu"
 
-#: ../src/resources/xrc_strings.h:71
+#: ../src/resources/xrc_strings.h:75
 msgid "External editor"
 msgstr "Externý editor"
 
-#: ../src/edframe.cpp:666
-#, c-format
-msgid "File '%s' doesn't exist!"
-msgstr "Súbor '%s' neexistuje!"
-
-#: ../src/edframe.cpp:697
+#: ../src/edframe.cpp:673 ../src/edframe.cpp:704
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Súbor '%s' neexistuje."
 
-#: ../src/edframe.cpp:683
+#: ../src/edframe.cpp:690
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Súbor '%s' nieje katalóg správ."
+
+#: ../src/transmemupd_wizard.cpp:53
+msgid "Files List"
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:13
 msgid "Find in original strings"
@@ -460,7 +450,7 @@ msgstr "Hľadať v prekladoch"
 msgid "Find..."
 msgstr "Hľadať..."
 
-#: ../src/resources/xrc_strings.h:145
+#: ../src/resources/xrc_strings.h:152
 msgid "Fullscreen view"
 msgstr "Na celu obrazovku"
 
@@ -468,47 +458,49 @@ msgstr "Na celu obrazovku"
 msgid "Fuzzy"
 msgstr "Fuzzy"
 
-#: ../src/edframe.cpp:644
-#: ../src/edframe.cpp:723
+#: ../src/edframe.cpp:651 ../src/edframe.cpp:746
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText katalógy (*.po)|*.po|Všetky súbory (*.*)|*.*"
 
-#: ../src/resources/xrc_strings.h:51
+#: ../src/edframe.cpp:855
+#, fuzzy
+msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
+msgstr "GNU GetText katalógy (*.po)|*.po|Všetky súbory (*.*)|*.*"
+
+#: ../src/resources/xrc_strings.h:52
 msgid "GNU gettext documentation"
 msgstr "Dokumentacia GNU gettext"
 
-#: ../src/resources/xrc_strings.h:114
+#: ../src/resources/xrc_strings.h:116
 msgid "Generate TM database"
 msgstr "Generovať TM databázu"
 
-#: ../src/resources/xrc_strings.h:83
+#: ../src/resources/xrc_strings.h:85
 msgid "Generate database"
 msgstr "Generovať databázu"
 
-#: ../src/resources/xrc_strings.h:146
+#: ../src/resources/xrc_strings.h:153
 msgid "Help"
 msgstr "Pomoc"
 
-#: ../src/resources/xrc_strings.h:55
+#: ../src/resources/xrc_strings.h:57
 msgid "Identity"
 msgstr "Identita"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:362
-#, c-format
-msgid "Invalid XRC resource '%s': doesn't have root node 'resource'."
-msgstr "Neplatný XRC zdroj '%s': nemá hlavný uzol 'resource'."
-
-#: ../src/resources/xrc_strings.h:101
+#: ../src/resources/xrc_strings.h:103
 msgid "Invocation:"
 msgstr "Vyvolanie:"
 
-#: ../src/resources/xrc_strings.h:128
-#: ../src/settingsdlg.cpp:52
+#: ../src/resources/xrc_strings.h:129 ../src/settingsdlg.cpp:58
 msgid "Keywords"
 msgstr "Kľúčove slová"
 
-#: ../src/resources/xrc_strings.h:98
-#: ../src/resources/xrc_strings.h:99
+#: ../src/chooselang.cpp:116
+#, fuzzy
+msgid "Language selection"
+msgstr "Moje jazyky"
+
+#: ../src/resources/xrc_strings.h:100 ../src/resources/xrc_strings.h:101
 #: ../src/resources/xrc_strings.h:122
 msgid "Language:"
 msgstr "Jazyk:"
@@ -517,41 +509,43 @@ msgstr "Jazyk:"
 msgid "Last modified"
 msgstr "Posledná modifikácia"
 
-#: ../src/edframe.cpp:141
-#: ../src/fileviewer.cpp:87
+#: ../src/edframe.cpp:141 ../src/fileviewer.cpp:87
 msgid "Line"
 msgstr "Riadok"
 
-#: ../src/resources/xrc_strings.h:65
+#: ../src/resources/xrc_strings.h:69
 msgid "Line endings format:"
 msgstr "Formát ukončovania riadkov:"
 
-#: ../src/resources/xrc_strings.h:100
+#: ../src/resources/xrc_strings.h:102
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Zoznam prípon oddelených bodkočiarkou (t.j. *.cpp;*.h):"
 
-#: ../src/transmemupd.cpp:117
-msgid "Listing files..."
-msgstr "Výpis súborov..."
-
-#: ../src/resources/xrc_strings.h:68
+#: ../src/resources/xrc_strings.h:72
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/resources/xrc_strings.h:86
+#: ../src/resources/xrc_strings.h:88
 msgid "Max. # of missing words:"
 msgstr "Max. # chýbajúcich slov:"
 
-#: ../src/resources/xrc_strings.h:87
+#: ../src/resources/xrc_strings.h:89
 msgid "Max. difference in sentence length:"
 msgstr "Max. rozdiel v dĺžke slova:"
 
-#: ../src/resources/xrc_strings.h:116
-#: ../src/catalog.cpp:725
+#: ../src/catalog.cpp:733
 msgid "Merging differences..."
 msgstr "Zlučovanie rozdielov..."
 
-#: ../src/prefsdlg.cpp:42
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:165
+msgid "Move down"
+msgstr ""
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:164
+msgid "Move up"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:43
 msgid "My Languages"
 msgstr "Moje jazyky"
 
@@ -559,15 +553,25 @@ msgstr "Moje jazyky"
 msgid "My Project"
 msgstr "Môj projekt"
 
-#: ../src/resources/xrc_strings.h:63
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Nikdy nepovoľ aby zoznam reťazcov dostal fokus. Ak je to povolené, musíte použiť Ctrl-šípky na klávesnici pre navigáciu ale môžete priamo začať písať text bez nutnosti stlačiť Tab pre zmenu fokusu."
+#: ../src/resources/xrc_strings.h:67
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Nikdy nepovoľ aby zoznam reťazcov dostal fokus. Ak je to povolené, musíte "
+"použiť Ctrl-šípky na klávesnici pre navigáciu ale môžete priamo začať písať "
+"text bez nutnosti stlačiť Tab pre zmenu fokusu."
 
-#: ../src/resources/xrc_strings.h:91
+#: ../src/resources/xrc_strings.h:93
 msgid "New"
 msgstr "Nový"
 
-#: ../src/resources/xrc_strings.h:133
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:162
+msgid "New item"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:134
 msgid "New strings"
 msgstr "Nové reťazce"
 
@@ -577,45 +581,42 @@ msgstr "Následujúci >"
 
 #: ../src/fileviewer.cpp:126
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "Žiaden editor nieje definovaný. Prosím nastavte ho v dialogu Nastavenia."
+msgstr ""
+"Žiaden editor nieje definovaný. Prosím nastavte ho v dialogu Nastavenia."
 
 #: ../src/digger.cpp:122
 msgid "No files found in: "
 msgstr "Žiadné súbory neboli nájdené v: "
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:542
-#, c-format
-msgid "No handler found for XML node '%s', class '%s'!"
-msgstr "Nebol nájdený ovládač pre XML uzol '%s', trieda '%s'!"
-
-#: ../src/edframe.cpp:881
+#: ../src/edframe.cpp:925
 msgid "No references to this string found."
 msgstr "Žiadné odkazy k reťazcu neboli nájdené."
 
-#: ../src/resources/xrc_strings.h:2
-#: ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:26
-#: ../src/resources/xrc_strings.h:95
-#: ../src/resources/xrc_strings.h:108
-#: ../src/resources/xrc_strings.h:129
-#: ../src/resources/xrc_strings.h:137
+#: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
+#: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:97
+#: ../src/resources/xrc_strings.h:110 ../src/resources/xrc_strings.h:130
+#: ../src/resources/xrc_strings.h:138
 msgid "OK"
 msgstr "OK"
 
-#: ../src/resources/xrc_strings.h:135
+#: ../src/resources/xrc_strings.h:136
 msgid "Obsolete strings"
 msgstr "Nepotrebné reťazce"
 
-#: ../src/resources/xrc_strings.h:139
-#: ../src/edframe.cpp:642
+#: ../src/resources/xrc_strings.h:146 ../src/edframe.cpp:649
 msgid "Open catalog"
 msgstr "Otvoriť katalog"
 
-#: ../src/resources/xrc_strings.h:61
+#: ../src/edframe.cpp:853
+#, fuzzy
+msgid "Open catalog template"
+msgstr "Otvoriť katalog"
+
+#: ../src/resources/xrc_strings.h:65
 msgid "Open catalogs manager on poEdit startup"
 msgstr "Otvoriť manažer katalógov pri štarte poEdit"
 
-#: ../src/resources/xrc_strings.h:76
+#: ../src/resources/xrc_strings.h:78
 msgid "Open source files in editor, not in file viewer"
 msgstr "Otvárať zdrojové súbory v editore, nie v prehliadači"
 
@@ -623,15 +624,15 @@ msgstr "Otvárať zdrojové súbory v editore, nie v prehliadači"
 msgid "Original string"
 msgstr "Originálny reťazec"
 
-#: ../src/resources/xrc_strings.h:102
+#: ../src/resources/xrc_strings.h:104
 msgid "Parser command:"
 msgstr "Príkaz parsera:"
 
-#: ../src/resources/xrc_strings.h:97
+#: ../src/resources/xrc_strings.h:99
 msgid "Parser setup"
 msgstr "Nastavenie parsera"
 
-#: ../src/resources/xrc_strings.h:94
+#: ../src/resources/xrc_strings.h:96
 msgid "Parsers"
 msgstr "Parsery"
 
@@ -639,40 +640,47 @@ msgstr "Parsery"
 msgid "Parsing "
 msgstr "Parsovanie"
 
-#: ../src/resources/xrc_strings.h:79
+#: ../src/resources/xrc_strings.h:81
 msgid "Path to DB:"
 msgstr "Cesta k DB:"
 
-#: ../src/resources/xrc_strings.h:126
-#: ../src/settingsdlg.cpp:54
+#: ../src/resources/xrc_strings.h:127 ../src/settingsdlg.cpp:60
 msgid "Paths"
 msgstr "Cesty"
 
-#: ../src/resources/xrc_strings.h:82
+#: ../src/resources/xrc_strings.h:56
+msgid "Personalize"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:84
 msgid "Pick language from the list of known languages"
 msgstr "Vyberte si jazyk zo zonamu známych jazykov"
 
-#: ../src/edframe.cpp:889
+#: ../src/resources/xrc_strings.h:141
+msgid "Please add directories where locale files are stored on your system:"
+msgstr ""
+
+#: ../src/edframe.cpp:933
 msgid "Please choose the reference you want to show:"
 msgstr "Prosím vyberte si odkaz ktorý chcete zobraziť:"
 
-#: ../src/prefsdlg.cpp:248
+#: ../src/prefsdlg.cpp:259
 msgid "Please select language ISO code:"
 msgstr "Prosím vyberte ISO kód jazyka:"
 
-#: ../src/edframe.cpp:590
+#: ../src/edframe.cpp:597
 msgid "Please select language code:"
 msgstr "Prosím vyberte si kód jazyka:"
 
-#: ../src/resources/xrc_strings.h:54
+#: ../src/resources/xrc_strings.h:55
 msgid "Preferences"
 msgstr "Nastavenia"
 
-#: ../src/resources/xrc_strings.h:112
+#: ../src/resources/xrc_strings.h:114
 msgid "Proceed"
 msgstr "Pokračovať"
 
-#: ../src/resources/xrc_strings.h:124
+#: ../src/resources/xrc_strings.h:125
 msgid "Project info"
 msgstr "Informácie o projekte"
 
@@ -684,49 +692,41 @@ msgstr "Meno projektu a verzia:"
 msgid "Project name:"
 msgstr "Meno projektu:"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:517
-#, c-format
-msgid "Referenced object node with ref=\"%s\" not found!"
-msgstr "Odkazovaný uzol objektu s ref=\"%s\" nebol nájdený!"
-
-#: ../src/edframe.cpp:889
+#: ../src/edframe.cpp:933
 msgid "References"
 msgstr "Odkazy"
 
-#: ../src/edframe.cpp:1446
-#: ../src/edframe.cpp:1450
+#: ../src/edframe.cpp:1496 ../src/edframe.cpp:1500
 msgid "References:"
 msgstr "Odkazy:"
 
-#: ../src/resources/xrc_strings.h:84
+#: ../src/resources/xrc_strings.h:86
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr "Vygenerovať prekladovú pamäť z katalógov v ceste zadanej hore."
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:379
-msgid "Resource files must have same version number!"
-msgstr "Súbor zdrojov musí mať rovnaké číslo verzie!"
+#: ../src/resources/xrc_strings.h:143
+#, fuzzy
+msgid "Reset to defaults"
+msgstr "štandard aktuálnej platformy"
 
 #: ../src/resources/xrc_strings.h:33
 msgid "Save &as..."
 msgstr "Uložiť &ako..."
 
-#: ../src/edframe.cpp:722
+#: ../src/edframe.cpp:745
 msgid "Save as..."
 msgstr "Uložiť ako..."
 
-#: ../src/resources/xrc_strings.h:140
+#: ../src/resources/xrc_strings.h:147
 msgid "Save catalog"
 msgstr "Uložiť katalog"
 
-#: ../src/edframe.cpp:623
-#: ../src/edframe.cpp:634
-#: ../src/edframe.cpp:658
-#: ../src/edframe.cpp:691
-#: ../src/edframe.cpp:737
+#: ../src/edframe.cpp:630 ../src/edframe.cpp:641 ../src/edframe.cpp:665
+#: ../src/edframe.cpp:698 ../src/edframe.cpp:760
 msgid "Save changes"
 msgstr "Uložiť zmeny"
 
-#: ../src/transmemupd.cpp:133
+#: ../src/transmemupd.cpp:138
 msgid "Scanning file: "
 msgstr "Prehľadávanie súboru:"
 
@@ -734,37 +734,41 @@ msgstr "Prehľadávanie súboru:"
 msgid "Scanning files..."
 msgstr "Prehľadávanie súborov..."
 
-#: ../src/prefsdlg.cpp:301
+#: ../src/transmemupd_wizard.cpp:49
 msgid "Search Paths"
 msgstr "Cesty"
 
-#: ../src/edframe.cpp:589
+#: ../src/edframe.cpp:596
 msgid "Select catalog's language"
 msgstr "Vyberte si jazyk katalógu"
 
-#: ../src/manager.cpp:251
-#: ../src/prefsdlg.cpp:261
-#: ../src/prefsdlg.cpp:282
+#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:272
+#: ../src/transmemupd_wizard.cpp:104
 msgid "Select directory"
 msgstr "Vyberte priečinok"
 
-#: ../src/prefsdlg.cpp:247
+#: ../src/prefsdlg.cpp:258
 msgid "Select language"
+msgstr "Vyberte si jazyk"
+
+#: ../src/chooselang.cpp:115
+#, fuzzy
+msgid "Select your prefered language"
 msgstr "Vyberte si jazyk"
 
 #: ../src/resources/xrc_strings.h:118
 msgid "Settings"
 msgstr "Nastavenia"
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:141
 msgid "Setup"
 msgstr "Nastavenie"
 
-#: ../src/resources/xrc_strings.h:60
+#: ../src/resources/xrc_strings.h:64
 msgid "Show summary after catalog update"
 msgstr "Ukázať sumarizáciu po aktualizácii katalógu"
 
-#: ../src/resources/xrc_strings.h:90
+#: ../src/resources/xrc_strings.h:92
 msgid "Source code parsers:"
 msgstr "Parsery zdrojových kódov:"
 
@@ -776,11 +780,6 @@ msgstr "Zdrojový súbor"
 msgid "String to find:"
 msgstr "Vyhľadávany reťazec:"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:617
-#, c-format
-msgid "Subclass '%s' not found for resource '%s', not subclassing!"
-msgstr "Podtrieda '%s' nebola nájdená pre zdroj '%s', nieje podtrieda!"
-
 #: ../src/resources/xrc_strings.h:121
 msgid "Team's email address:"
 msgstr "Emailova adresa týmu:"
@@ -789,7 +788,7 @@ msgstr "Emailova adresa týmu:"
 msgid "Team:"
 msgstr "Tým:"
 
-#: ../src/catalog.cpp:603
+#: ../src/catalog.cpp:611
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -800,19 +799,24 @@ msgstr ""
 "ako je uvedené v nastaveni katalogu. Namiesto toho bol uložený\n"
 "v UTF-8 a dané nastavenie bolo príslušne modifikované."
 
-#: ../src/resources/xrc_strings.h:134
-msgid "These strings are no longer in the sources.\n"
+#: ../src/resources/xrc_strings.h:135
+msgid ""
+"These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
-msgstr "Tieto reťazce sa už nenachádzaju v zdrojových kódoch.\n"
+msgstr ""
+"Tieto reťazce sa už nenachádzaju v zdrojových kódoch.\n"
 "poEdit ich teraz odstráni z katalógu."
 
-#: ../src/resources/xrc_strings.h:132
-msgid "These strings were found in the sources but were not in the catalog.\n"
+#: ../src/resources/xrc_strings.h:133
+msgid ""
+"These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
-msgstr "Tieto reťazce boli nájdené v zdrojových kódoch avšak nenachádzaju sa v katalógu.\n"
+msgstr ""
+"Tieto reťazce boli nájdené v zdrojových kódoch avšak nenachádzaju sa v "
+"katalógu.\n"
 "poEdit ich teraz pridá do katalógu."
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:141
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -822,7 +826,7 @@ msgstr ""
 "Prosím vyplnte vaše meno a emailovu adresu.\n"
 "(Tieto informácie sa použijú hlavičkách katalógov)"
 
-#: ../src/resources/xrc_strings.h:103
+#: ../src/resources/xrc_strings.h:105
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -832,20 +836,24 @@ msgstr ""
 "%o sa zamení za meno výstupného súboru, %K na\n"
 "zoznam kľúčovych slov, %F na zoznam vstupných súborov."
 
-#: ../src/resources/xrc_strings.h:107
+#: ../src/resources/xrc_strings.h:109
 #, c-format
-msgid "This will be attached to the command line once\n"
+msgid ""
+"This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr "Toto bude pripojené k príkazu raz pre každý\n"
+msgstr ""
+"Toto bude pripojené k príkazu raz pre každý\n"
 "vstupný súbor. %f rozširuje meno súboru."
 
-#: ../src/resources/xrc_strings.h:105
-msgid "This will be attached to the command line once\n"
+#: ../src/resources/xrc_strings.h:107
+msgid ""
+"This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr "Toto bude pripojené k príkazovemu riadku raz\n"
+msgstr ""
+"Toto bude pripojené k príkazovemu riadku raz\n"
 "pre každé kľúčove slovo. %k sa zamení sa kľúčove slovo."
 
-#: ../src/resources/xrc_strings.h:143
+#: ../src/resources/xrc_strings.h:150
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Zapnuté ak je vybraný reťazec fuzzy preklad"
 
@@ -857,25 +865,40 @@ msgstr "Celkovo"
 msgid "Translation"
 msgstr "Preklad"
 
-#: ../src/resources/xrc_strings.h:89
+#: ../src/resources/xrc_strings.h:91
 msgid "Translation Memory"
 msgstr "Prekladová pamäť"
+
+#: ../src/transmemupd_wizard.cpp:136
+msgid "Translation files (*.po;*.mo)|*.po;*.mo"
+msgstr ""
+
+#: ../src/transmemupd_wizard.cpp:134
+msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:40
 msgid "Translation is &fuzzy"
 msgstr "Preklad je &fuzzy"
 
-#: ../src/resources/xrc_strings.h:138
+#: ../src/resources/xrc_strings.h:144
+msgid ""
+"Translation memory will be built from the files listed bellow.\n"
+"You can add more files to the list now."
+msgstr ""
+
+#: ../src/chooselang.cpp:59
+#, c-format
+msgid "Uknown locale code '%s' in registry."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:139
 msgid "Undo"
 msgstr "Späť"
 
-#: ../src/resources/xrc_strings.h:66
+#: ../src/resources/xrc_strings.h:70
 msgid "Unix"
 msgstr "Unix"
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:686
-msgid "Unknown style flag "
-msgstr "Neznámy príznak štýlu"
 
 #: ../src/manager.cpp:221
 msgid "Untrans"
@@ -885,92 +908,72 @@ msgstr "Nepreložene"
 msgid "Update all catalogs in the project"
 msgstr "Aktualizovať všetky katalógy v projekte"
 
-#: ../src/resources/xrc_strings.h:141
+#: ../src/resources/xrc_strings.h:148
 msgid "Update catalog - synchronize it with sources"
 msgstr "Aktualizovať katalog - synchronizácia so zdrojovým kódom"
 
-#: ../src/resources/xrc_strings.h:131
+#: ../src/resources/xrc_strings.h:44
+msgid "Update from &POT file..."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:132
 msgid "Update summary"
 msgstr "Súhrn aktualizácie"
 
-#: ../src/resources/xrc_strings.h:115
-#: ../src/catalog.cpp:687
+#: ../src/resources/xrc_strings.h:140
+#, fuzzy
+msgid "Update translation memory"
+msgstr "Aktualizácia prekladovej pamäte"
+
+#: ../src/catalog.cpp:695
 msgid "Updating catalog..."
 msgstr "Aktualizácia katologu..."
 
-#: ../src/edframe.cpp:811
+#: ../src/edframe.cpp:839
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "Aktualizácia katalógu zlýhala. Kliknite na 'Viac>>' pre detaily."
 
-#: ../src/prefsdlg.cpp:335
+#: ../src/transmemupd_wizard.cpp:216
 msgid "Updating translation memory"
 msgstr "Aktualizácia prekladovej pamäte"
 
-#: ../src/resources/xrc_strings.h:127
-msgid "Use these keywords (function names) to recognize translatable strings\n"
+#: ../src/resources/xrc_strings.h:128
+msgid ""
+"Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
-msgstr "Použiť tieto kľúčové slová (názvy funkcii) pre rozlýšenie preložiteľných\n"
+msgstr ""
+"Použiť tieto kľúčové slová (názvy funkcii) pre rozlýšenie preložiteľných\n"
 "reťazcov v zdrojových súboroch, okrem štandardných."
 
-#: ../src/resources/xrc_strings.h:67
+#: ../src/resources/xrc_strings.h:71
 msgid "Windows"
 msgstr "Windows"
 
-#: ../extras/wx-contrib/src/xrc/xml.cpp:530
-#, c-format
-msgid "XML parsing error: '%s' at line %d"
-msgstr "Chyba parsovania XML: '%s' na riadku %d"
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:455
-#, c-format
-msgid "XRC resource '%s' (class '%s') not found!"
-msgstr "XRC zdroj '%s' (trieda '%s') nebol nájdený!"
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:857
-#, c-format
-msgid "XRC resource: Cannot create bitmap '%s'."
-msgstr "XRC zdroj: Nemôžem vytvoriť bitovú mapu '%s'."
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:846
-#, c-format
-msgid "XRC resource: Failed to open bitmap file '%s'."
-msgstr "XRC zdroj: Nemôžem otvoriť bitovú mapu zo súboru '%s'."
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:806
-#, c-format
-msgid "XRC resource: Incorrect colour specification '%s' for property '%s'."
-msgstr "XRC zdroj: Nesprávna špecifikácia farby '%s' pre vlastnosť '%s'."
-
-#: ../src/edframe.cpp:676
+#: ../src/edframe.cpp:683
 msgid "You can't drop more than one file on poEdit window."
 msgstr "Nemôžete zmazať viac ako jeden súbor naraz v okne poEditu."
 
-#: ../src/resources/xrc_strings.h:57
+#: ../src/chooselang.cpp:130
+msgid "You must restart poEdit for this change to take effect."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:59
 msgid "Your e-mail address:"
 msgstr "Vaša emailova adresa:"
 
-#: ../src/resources/xrc_strings.h:56
+#: ../src/resources/xrc_strings.h:58
 msgid "Your name:"
 msgstr "Vaše meno:"
 
-#: ../src/resources/xrc_strings.h:69
+#: ../src/resources/xrc_strings.h:73
 msgid "current platform's default"
 msgstr "štandard aktuálnej platformy"
 
-#: ../src/resources/xrc_strings.h:73
-msgid "nedit -line %l %f"
-msgstr "nedit -line %l %f"
-
-#: ../src/edframe.cpp:1485
+#: ../src/edframe.cpp:1535
 msgid "none"
 msgstr "žiaden"
 
-#: ../src/resources/xrc_strings.h:74
-#, c-format
-msgid "notepad %f"
-msgstr "notepad %f"
-
-#: ../src/edframe.cpp:399
+#: ../src/edframe.cpp:409
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -978,7 +981,7 @@ msgstr "poEdit"
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - manažer katalogov"
 
-#: ../src/edapp.cpp:125
+#: ../src/edapp.cpp:128
 msgid "poEdit Error"
 msgstr "poEdit chyba"
 
@@ -986,11 +989,81 @@ msgstr "poEdit chyba"
 msgid "poEdit did not find any files in scanned directories."
 msgstr "poEdit nenašiel žiadne súbory v prehľadávaných priečinkoch."
 
-#: ../src/edapp.cpp:52
-msgid "poEdit installation is broken, cannot find application's home directory."
-msgstr "poEdit inštalácia je poškodená, nemôžem nájsť domovský priečinok aplikácie."
+#: ../src/edapp.cpp:53
+msgid ""
+"poEdit installation is broken, cannot find application's home directory."
+msgstr ""
+"poEdit inštalácia je poškodená, nemôžem nájsť domovský priečinok aplikácie."
 
-#: ../src/edframe.cpp:1500
+#: ../src/edframe.cpp:1550
 msgid "version"
 msgstr "verzia"
 
+#~ msgid "Cannot convert dialog units: dialog unknown."
+#~ msgstr "Nemôžem skonvertovať rozmery dialogu: neznámy dialog."
+
+#~ msgid "Cannot find container for unknown control '%s'."
+#~ msgstr "Nemôžem nájsť kontajnér pre neznámy ovládač '%s'."
+
+#~ msgid "Cannot find font node '%s'."
+#~ msgstr "Nemôžem nájsť uzol písma '%s'."
+
+#~ msgid "Cannot load resources from file '%s'."
+#~ msgstr "Nemôžem nahrať súbor zdrojov z '%s'."
+
+#~ msgid "Cannot open file '%s'."
+#~ msgstr "Chyba pri otváraní súboru '%s'."
+
+#~ msgid "Cannot parse coordinates from '%s'."
+#~ msgstr "Nemôžem sparsovať koordináty z '%s'."
+
+#~ msgid "Cannot parse dimension from '%s'."
+#~ msgstr "Nemôžem sparsovať rozmery z '%s'."
+
+#~ msgid "Invalid XRC resource '%s': doesn't have root node 'resource'."
+#~ msgstr "Neplatný XRC zdroj '%s': nemá hlavný uzol 'resource'."
+
+#~ msgid "No handler found for XML node '%s', class '%s'!"
+#~ msgstr "Nebol nájdený ovládač pre XML uzol '%s', trieda '%s'!"
+
+#~ msgid "Referenced object node with ref=\"%s\" not found!"
+#~ msgstr "Odkazovaný uzol objektu s ref=\"%s\" nebol nájdený!"
+
+#~ msgid "Resource files must have same version number!"
+#~ msgstr "Súbor zdrojov musí mať rovnaké číslo verzie!"
+
+#~ msgid "Subclass '%s' not found for resource '%s', not subclassing!"
+#~ msgstr "Podtrieda '%s' nebola nájdená pre zdroj '%s', nieje podtrieda!"
+
+#~ msgid "Unknown style flag "
+#~ msgstr "Neznámy príznak štýlu"
+
+#~ msgid "XML parsing error: '%s' at line %d"
+#~ msgstr "Chyba parsovania XML: '%s' na riadku %d"
+
+#~ msgid "XRC resource '%s' (class '%s') not found!"
+#~ msgstr "XRC zdroj '%s' (trieda '%s') nebol nájdený!"
+
+#~ msgid "XRC resource: Cannot create bitmap '%s'."
+#~ msgstr "XRC zdroj: Nemôžem vytvoriť bitovú mapu '%s'."
+
+#~ msgid "XRC resource: Failed to open bitmap file '%s'."
+#~ msgstr "XRC zdroj: Nemôžem otvoriť bitovú mapu zo súboru '%s'."
+
+#~ msgid "XRC resource: Incorrect colour specification '%s' for property '%s'."
+#~ msgstr "XRC zdroj: Nesprávna špecifikácia farby '%s' pre vlastnosť '%s'."
+
+#~ msgid "&Update catalog"
+#~ msgstr "&Aktualizovať katalóg"
+
+#~ msgid "File '%s' doesn't exist!"
+#~ msgstr "Súbor '%s' neexistuje!"
+
+#~ msgid "Listing files..."
+#~ msgstr "Výpis súborov..."
+
+#~ msgid "nedit -line %l %f"
+#~ msgstr "nedit -line %l %f"
+
+#~ msgid "notepad %f"
+#~ msgstr "notepad %f"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.1.10\n"
-"POT-Creation-Date: 2003-02-11 21:09+0100\n"
+"POT-Creation-Date: 2003-04-21 15:52+0200\n"
 "PO-Revision-Date: 2002-08-31 14:36+0200\n"
 "Last-Translator: Artis Trops <hornet@navigators.lv>\n"
 "Language-Team: Latvian <ll10nt@os.lv>\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1326
+#: ../src/edframe.cpp:1376
 msgid " (modified)"
 msgstr " (modificēts)"
 
@@ -17,12 +17,12 @@ msgstr " (modificēts)"
 msgid " files..."
 msgstr " failus..."
 
-#: ../src/edframe.cpp:1311
+#: ../src/edframe.cpp:1361
 #, c-format
 msgid "%i strings (%i fuzzy, %i not translated)"
 msgstr "%i virknes (%i nepilnīgas, %i neiztulkotas)"
 
-#: ../src/resources/xrc_strings.h:52
+#: ../src/resources/xrc_strings.h:53
 msgid "&About..."
 msgstr "&Par..."
 
@@ -34,7 +34,7 @@ msgstr "&Katalogs"
 msgid "&Close"
 msgstr "&Aizvērt"
 
-#: ../src/resources/xrc_strings.h:50
+#: ../src/resources/xrc_strings.h:51
 #, fuzzy
 msgid "&Contents..."
 msgstr "Saturs..."
@@ -43,7 +43,7 @@ msgstr "Saturs..."
 msgid "&Edit"
 msgstr "&Rediģēt"
 
-#: ../src/resources/xrc_strings.h:28 ../src/edframe.cpp:438
+#: ../src/resources/xrc_strings.h:28 ../src/edframe.cpp:448
 msgid "&File"
 msgstr "&Fails"
 
@@ -52,11 +52,11 @@ msgstr "&Fails"
 msgid "&Find..."
 msgstr "Atrast..."
 
-#: ../src/resources/xrc_strings.h:46
+#: ../src/resources/xrc_strings.h:47
 msgid "&Fullscreen view"
 msgstr "&Pilnekrāna skats"
 
-#: ../src/resources/xrc_strings.h:53
+#: ../src/resources/xrc_strings.h:54
 msgid "&Help"
 msgstr "&Palīdzība"
 
@@ -77,11 +77,11 @@ msgstr "Preferences..."
 msgid "&Save"
 msgstr "&Saglabāt"
 
-#: ../src/resources/xrc_strings.h:44
+#: ../src/resources/xrc_strings.h:45
 msgid "&Settings..."
 msgstr "&Uzstādījumi..."
 
-#: ../src/resources/xrc_strings.h:49
+#: ../src/resources/xrc_strings.h:50
 #, fuzzy
 msgid "&Shaded translations list"
 msgstr "Ēnoto tulkojumu saraksts"
@@ -91,18 +91,23 @@ msgid "&Show references"
 msgstr "&Parādīt references"
 
 #: ../src/resources/xrc_strings.h:43
-msgid "&Update catalog"
-msgstr "&Atjaunināt katalogu"
+msgid "&Update from sources"
+msgstr ""
 
-#: ../src/resources/xrc_strings.h:45
+#: ../src/resources/xrc_strings.h:46
 msgid "&View"
 msgstr "&Skats"
 
-#: ../src/edframe.cpp:1262
+#: ../src/catalog.cpp:761
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr ""
+
+#: ../src/edframe.cpp:1312
 msgid "'."
 msgstr "'."
 
-#: ../src/resources/xrc_strings.h:75
+#: ../src/resources/xrc_strings.h:77
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f tiks aizvietots ar faila nosaukumu, %l ar rindiņas numuru)"
 
@@ -111,11 +116,16 @@ msgstr "(%f tiks aizvietots ar faila nosaukumu, %l ar rindiņas numuru)"
 msgid "(%i new, %i obsolete)"
 msgstr "(%i jaunas, %i novecojušas)"
 
-#: ../src/resources/xrc_strings.h:136
+#: ../src/resources/xrc_strings.h:137
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 jaunas, 0 novecojušas)"
 
-#: ../src/edframe.cpp:587
+#: ../src/chooselang.cpp:76
+#, fuzzy
+msgid "(Use default language)"
+msgstr "Izvēlieties valodu"
+
+#: ../src/edframe.cpp:594
 msgid "(none of these)"
 msgstr "(neviena no šīm)"
 
@@ -131,7 +141,7 @@ msgstr "<nenosaukts>"
 msgid "About poEdit"
 msgstr "Par poEdit"
 
-#: ../src/resources/xrc_strings.h:81
+#: ../src/resources/xrc_strings.h:83
 msgid "Add"
 msgstr "Pievienot"
 
@@ -139,73 +149,73 @@ msgstr "Pievienot"
 msgid "Add directory to the list"
 msgstr "Pievienot direktoriju sarakstam"
 
-#: ../src/resources/xrc_strings.h:111
+#: ../src/resources/xrc_strings.h:145 ../src/transmemupd_wizard.cpp:130
+#, fuzzy
+msgid "Add files"
+msgstr " failus..."
+
+#: ../src/resources/xrc_strings.h:113
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Pievienot ceļu direktoriju sarakstam, kur atrodas katalogi."
 
-#: ../src/resources/xrc_strings.h:62
+#: ../src/resources/xrc_strings.h:66
 msgid "Always change focus to text input field"
 msgstr "Vienmēr fokusēties uz teksta ievades lauku"
 
-#: ../src/resources/xrc_strings.h:106
+#: ../src/resources/xrc_strings.h:108
 msgid "An item in input files list:"
 msgstr "Priekšmets ievades failu sarakstā:"
 
-#: ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:106
 msgid "An item in keywords list:"
 msgstr "Priekšmets atslēgvārdu sarakstā:"
 
-#: ../src/edframe.cpp:1460 ../src/edframe.cpp:1464
+#: ../src/edframe.cpp:1510 ../src/edframe.cpp:1514
 msgid "Automatic translations:"
 msgstr "Automātiskie tulkojumi:"
 
-#: ../src/resources/xrc_strings.h:59
+#: ../src/resources/xrc_strings.h:63
 msgid "Automatically compile .mo file on save"
 msgstr "Automātiski kompilēt .mo failu pie saglabāšanas"
 
-#: ../src/resources/xrc_strings.h:88
+#: ../src/resources/xrc_strings.h:90
 msgid "Automatically translate when updating catalog"
 msgstr "Automātiski tulkot, kad atjaunina katalogu"
 
-#: ../src/edframe.cpp:844
+#: ../src/edframe.cpp:888
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Automātiski iztulkotas %u virknes"
 
-#: ../src/edframe.cpp:829
+#: ../src/edframe.cpp:873
 msgid "Automatically translating..."
 msgstr "Automātiski tulkoju..."
 
-#: ../src/resources/xrc_strings.h:125
+#: ../src/resources/xrc_strings.h:126
 msgid "Base path:"
 msgstr "Bāzes ceļš:"
 
-#: ../src/resources/xrc_strings.h:58
+#: ../src/resources/xrc_strings.h:62
 msgid "Behavior"
 msgstr "Uzvedība"
 
-#: ../src/resources/xrc_strings.h:24 ../src/resources/xrc_strings.h:80
-#: ../src/resources/xrc_strings.h:110
+#: ../src/resources/xrc_strings.h:24 ../src/resources/xrc_strings.h:82
+#: ../src/resources/xrc_strings.h:112 ../src/resources/xrc_strings.h:142
 msgid "Browse"
 msgstr "Lūkoties"
 
-#: ../src/resources/xrc_strings.h:64
+#: ../src/resources/xrc_strings.h:68
 msgid "CR/LF conversion"
 msgstr "CR/LF konversija"
 
 #: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:15
-#: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:96
-#: ../src/resources/xrc_strings.h:109 ../src/resources/xrc_strings.h:113
-#: ../src/resources/xrc_strings.h:117 ../src/resources/xrc_strings.h:130
+#: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:98
+#: ../src/resources/xrc_strings.h:111 ../src/resources/xrc_strings.h:115
+#: ../src/resources/xrc_strings.h:117 ../src/resources/xrc_strings.h:131
 msgid "Cancel"
 msgstr "Atsaukt"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:954
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:995
-msgid "Cannot convert dialog units: dialog unknown."
-msgstr ""
-
-#: ../src/transmem.cpp:747
+#: ../src/transmem.cpp:748
 msgid "Cannot create database directory!"
 msgstr "Nevaru izveidot datu bāzes direktoriju!"
 
@@ -213,21 +223,11 @@ msgstr "Nevaru izveidot datu bāzes direktoriju!"
 msgid "Cannot execute program: "
 msgstr "Nevaru izpildīt programmu: "
 
-#: ../src/transmemupd.cpp:183
+#: ../src/transmemupd.cpp:188
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Nevaru izdabūt katalogus no RPM faila."
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:243
-#, c-format
-msgid "Cannot find container for unknown control '%s'."
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:1009
-#, c-format
-msgid "Cannot find font node '%s'."
-msgstr ""
-
-#: ../src/edapp.cpp:122
+#: ../src/edapp.cpp:125
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -236,7 +236,7 @@ msgstr ""
 "Nevaru atrast resursu failu '%s'!\n"
 "Lūdzu pārinstalējiet poEdit."
 
-#: ../src/edapp.cpp:116
+#: ../src/edapp.cpp:119
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -249,28 +249,6 @@ msgstr ""
 "Jūs varētu mēģināt iestādīt POEDIT_PREFIX vides mainīgo, lai\n"
 "norādītu uz lokāciju, kurā instalējāt poEdit."
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:356
-#, fuzzy, c-format
-msgid "Cannot load resources from file '%s'."
-msgstr ""
-"Nevaru atrast resursu failu '%s'!\n"
-"Lūdzu pārinstalējiet poEdit."
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:330
-#, fuzzy, c-format
-msgid "Cannot open file '%s'."
-msgstr "Kļūda atverot failu %s!"
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:942
-#, c-format
-msgid "Cannot parse coordinates from '%s'."
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:983
-#, c-format
-msgid "Cannot parse dimension from '%s'."
-msgstr ""
-
 #: ../src/resources/xrc_strings.h:12
 msgid "Case sensitive"
 msgstr "Reģistrjūtīgs"
@@ -279,8 +257,8 @@ msgstr "Reģistrjūtīgs"
 msgid "Catalog"
 msgstr "Katalogs"
 
-#: ../src/edframe.cpp:623 ../src/edframe.cpp:634 ../src/edframe.cpp:658
-#: ../src/edframe.cpp:691 ../src/edframe.cpp:737
+#: ../src/edframe.cpp:630 ../src/edframe.cpp:641 ../src/edframe.cpp:665
+#: ../src/edframe.cpp:698 ../src/edframe.cpp:760
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalogs modificēts. Vēlaties saglabāt izmaiņas?"
 
@@ -289,7 +267,12 @@ msgstr "Katalogs modificēts. Vēlaties saglabāt izmaiņas?"
 msgid "Catalogs &manager"
 msgstr "Katalogu pārvaldnieks"
 
-#: ../src/resources/xrc_strings.h:123
+#: ../src/resources/xrc_strings.h:60
+#, fuzzy
+msgid "Change UI language"
+msgstr "Izvēlieties valodu"
+
+#: ../src/resources/xrc_strings.h:124
 msgid "Charset:"
 msgstr "Rakstzīmjkopa:"
 
@@ -305,7 +288,7 @@ msgstr "Attīrīt komentāru"
 msgid "Comment:"
 msgstr "Komentārs:"
 
-#: ../src/resources/xrc_strings.h:85
+#: ../src/resources/xrc_strings.h:87
 msgid "Configuration"
 msgstr "Konfigurācija"
 
@@ -326,21 +309,31 @@ msgid "Corrupted translator record, please correct in Catalog/Settings"
 msgstr ""
 "Sabojāts tulkotāja ieraksts, lūdzu izlabojiet iekš Katalogs/Uzstādījumi"
 
+#: ../src/resources/xrc_strings.h:123
+#, fuzzy
+msgid "Country:"
+msgstr "Komentārs:"
+
 #: ../src/resources/xrc_strings.h:18
 msgid "Create new translations project"
 msgstr "Izveidot jaunu tulkošanas projektu"
 
-#: ../src/resources/xrc_strings.h:78
+#: ../src/resources/xrc_strings.h:80
 msgid "Database"
 msgstr "Datu bāze"
 
-#: ../src/transmem.cpp:328 ../src/transmem.cpp:330
+#: ../src/transmem.cpp:332
 #, c-format
 msgid "Database error: %s"
 msgstr "Datu bāzes kļūda: %s"
 
-#: ../src/resources/xrc_strings.h:93
+#: ../src/resources/xrc_strings.h:95
 msgid "Delete"
+msgstr "Dzēst"
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:163
+#, fuzzy
+msgid "Delete item"
 msgstr "Dzēst"
 
 #: ../src/resources/xrc_strings.h:20
@@ -351,15 +344,15 @@ msgstr "Dzēst projektu"
 msgid "Directories:"
 msgstr "Direktorijas:"
 
-#: ../src/resources/xrc_strings.h:48
+#: ../src/resources/xrc_strings.h:49
 msgid "Display &line numbers"
 msgstr "Parādīt &rindiņu numurus"
 
-#: ../src/resources/xrc_strings.h:47
+#: ../src/resources/xrc_strings.h:48
 msgid "Display &quotes"
 msgstr "Parādīt &pēdiņas"
 
-#: ../src/resources/xrc_strings.h:142
+#: ../src/resources/xrc_strings.h:149
 msgid "Display quotes around the string?"
 msgstr "Parādīt pēdiņas virkņu galos?"
 
@@ -375,11 +368,11 @@ msgstr ""
 msgid "Do you want to delete the project?"
 msgstr "Vai vēlaties dzēst projektu?"
 
-#: ../src/resources/xrc_strings.h:70
+#: ../src/resources/xrc_strings.h:74
 msgid "Don't change format of existing catalogs"
 msgstr "Nemainīt katalogu esošo formātu"
 
-#: ../src/resources/xrc_strings.h:92
+#: ../src/resources/xrc_strings.h:94
 msgid "Edit"
 msgstr "Rediģēt"
 
@@ -388,9 +381,14 @@ msgstr "Rediģēt"
 msgid "Edit &comment"
 msgstr "Rediģēt komenāru"
 
-#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:144
+#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:151
 msgid "Edit comment"
 msgstr "Rediģēt komenāru"
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:161
+#, fuzzy
+msgid "Edit item"
+msgstr "Rediģēt"
 
 #: ../src/resources/xrc_strings.h:22
 msgid "Edit project"
@@ -404,19 +402,19 @@ msgstr "Rediģēt failu teksta redaktorā"
 msgid "Edit the project"
 msgstr "Rediģēt projeku"
 
-#: ../src/resources/xrc_strings.h:77
+#: ../src/resources/xrc_strings.h:61 ../src/resources/xrc_strings.h:79
 msgid "Editor"
 msgstr "Redaktors"
 
-#: ../src/resources/xrc_strings.h:72
+#: ../src/resources/xrc_strings.h:76
 msgid "Editor executable:"
 msgstr "Redaktora izpildāmfails:"
 
-#: ../src/edframe.cpp:809
+#: ../src/edframe.cpp:837
 msgid "Entries in the catalog are probably incorrect."
 msgstr ""
 
-#: ../src/edframe.cpp:1262
+#: ../src/edframe.cpp:1312
 msgid "Error loading message catalog file '"
 msgstr "Kļūda ielādējot ziņojumu kataloga failu '"
 
@@ -425,29 +423,29 @@ msgstr "Kļūda ielādējot ziņojumu kataloga failu '"
 msgid "Error opening file %s!"
 msgstr "Kļūda atverot failu %s!"
 
-#: ../src/catalog.cpp:604
+#: ../src/catalog.cpp:612
 #, fuzzy
 msgid "Error saving catalog"
 msgstr "Kļūda ielādējot ziņojumu kataloga failu '"
 
-#: ../src/resources/xrc_strings.h:71
+#: ../src/resources/xrc_strings.h:75
 msgid "External editor"
 msgstr "Ārējais redaktors"
 
-#: ../src/edframe.cpp:666
-#, fuzzy, c-format
-msgid "File '%s' doesn't exist!"
-msgstr " neeksistē!"
-
-#: ../src/edframe.cpp:697
+#: ../src/edframe.cpp:673 ../src/edframe.cpp:704
 #, fuzzy, c-format
 msgid "File '%s' doesn't exist."
 msgstr " neeksistē!"
 
-#: ../src/edframe.cpp:683
+#: ../src/edframe.cpp:690
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr ""
+
+#: ../src/transmemupd_wizard.cpp:53
+#, fuzzy
+msgid "Files List"
+msgstr "Fails"
 
 #: ../src/resources/xrc_strings.h:13
 msgid "Find in original strings"
@@ -461,7 +459,7 @@ msgstr "Meklēt tulkojumos"
 msgid "Find..."
 msgstr "Atrast..."
 
-#: ../src/resources/xrc_strings.h:145
+#: ../src/resources/xrc_strings.h:152
 msgid "Fullscreen view"
 msgstr "Pilnekrāna skats"
 
@@ -469,44 +467,49 @@ msgstr "Pilnekrāna skats"
 msgid "Fuzzy"
 msgstr "Nepilnīgi"
 
-#: ../src/edframe.cpp:644 ../src/edframe.cpp:723
+#: ../src/edframe.cpp:651 ../src/edframe.cpp:746
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText katalogi (*.po)|*.po|Visi faili (*.*)|*.*"
 
-#: ../src/resources/xrc_strings.h:51
+#: ../src/edframe.cpp:855
+#, fuzzy
+msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
+msgstr "GNU GetText katalogi (*.po)|*.po|Visi faili (*.*)|*.*"
+
+#: ../src/resources/xrc_strings.h:52
 msgid "GNU gettext documentation"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:114
+#: ../src/resources/xrc_strings.h:116
 msgid "Generate TM database"
 msgstr "Ģenerēt TA datu bāzi"
 
-#: ../src/resources/xrc_strings.h:83
+#: ../src/resources/xrc_strings.h:85
 msgid "Generate database"
 msgstr "Ģenerēt datu bāzi"
 
-#: ../src/resources/xrc_strings.h:146
+#: ../src/resources/xrc_strings.h:153
 msgid "Help"
 msgstr "Palīdzība"
 
-#: ../src/resources/xrc_strings.h:55
+#: ../src/resources/xrc_strings.h:57
 msgid "Identity"
 msgstr "Identitāte"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:362
-#, c-format
-msgid "Invalid XRC resource '%s': doesn't have root node 'resource'."
-msgstr ""
-
-#: ../src/resources/xrc_strings.h:101
+#: ../src/resources/xrc_strings.h:103
 msgid "Invocation:"
 msgstr "Izsaukšana:"
 
-#: ../src/resources/xrc_strings.h:128 ../src/settingsdlg.cpp:52
+#: ../src/resources/xrc_strings.h:129 ../src/settingsdlg.cpp:58
 msgid "Keywords"
 msgstr "Atslēgvārdi"
 
-#: ../src/resources/xrc_strings.h:98 ../src/resources/xrc_strings.h:99
+#: ../src/chooselang.cpp:116
+#, fuzzy
+msgid "Language selection"
+msgstr "Manas Valodas"
+
+#: ../src/resources/xrc_strings.h:100 ../src/resources/xrc_strings.h:101
 #: ../src/resources/xrc_strings.h:122
 msgid "Language:"
 msgstr "Valoda:"
@@ -519,36 +522,39 @@ msgstr "Pēdējoreiz mainīts"
 msgid "Line"
 msgstr "Ridiņa"
 
-#: ../src/resources/xrc_strings.h:65
+#: ../src/resources/xrc_strings.h:69
 msgid "Line endings format:"
 msgstr "Rindiņu beigu formāts:"
 
-#: ../src/resources/xrc_strings.h:100
+#: ../src/resources/xrc_strings.h:102
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr ""
-"Paplašinājumu saraksts, kas atdalīts ar semikoliem (piem., *.cpp;*.h):"
+msgstr "Paplašinājumu saraksts, kas atdalīts ar semikoliem (piem., *.cpp;*.h):"
 
-#: ../src/transmemupd.cpp:117
-msgid "Listing files..."
-msgstr "Sastādu failu sarakstu..."
-
-#: ../src/resources/xrc_strings.h:68
+#: ../src/resources/xrc_strings.h:72
 msgid "Macintosh"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:86
+#: ../src/resources/xrc_strings.h:88
 msgid "Max. # of missing words:"
 msgstr "Maks. iztrūkstošo vārdu #:"
 
-#: ../src/resources/xrc_strings.h:87
+#: ../src/resources/xrc_strings.h:89
 msgid "Max. difference in sentence length:"
 msgstr "Maks. atšķirība teikuma garumos:"
 
-#: ../src/resources/xrc_strings.h:116 ../src/catalog.cpp:725
+#: ../src/catalog.cpp:733
 msgid "Merging differences..."
 msgstr "Apvienoju atšķirības..."
 
-#: ../src/prefsdlg.cpp:42
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:165
+msgid "Move down"
+msgstr ""
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:164
+msgid "Move up"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:43
 msgid "My Languages"
 msgstr "Manas Valodas"
 
@@ -556,7 +562,7 @@ msgstr "Manas Valodas"
 msgid "My Project"
 msgstr "Mans Projekts"
 
-#: ../src/resources/xrc_strings.h:63
+#: ../src/resources/xrc_strings.h:67
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -566,11 +572,15 @@ msgstr ""
 "Ctrl-bultiņas tastatūras navigācijai, bet jūs varat arī rakstīt tekstu "
 "nekavējoties bez Tab nospiešanas, lai mainītu fokusu."
 
-#: ../src/resources/xrc_strings.h:91
+#: ../src/resources/xrc_strings.h:93
 msgid "New"
 msgstr "Jauns"
 
-#: ../src/resources/xrc_strings.h:133
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:162
+msgid "New item"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:134
 msgid "New strings"
 msgstr "Jaunas virknes"
 
@@ -586,35 +596,35 @@ msgstr "Neviens redaktors nav noreikts. Lūdzu iestādiet to Preferenču dialog�
 msgid "No files found in: "
 msgstr ""
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:542
-#, c-format
-msgid "No handler found for XML node '%s', class '%s'!"
-msgstr ""
-
-#: ../src/edframe.cpp:881
+#: ../src/edframe.cpp:925
 msgid "No references to this string found."
 msgstr "Atsauces šai virknei nav atrastas"
 
 #: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:95
-#: ../src/resources/xrc_strings.h:108 ../src/resources/xrc_strings.h:129
-#: ../src/resources/xrc_strings.h:137
+#: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:97
+#: ../src/resources/xrc_strings.h:110 ../src/resources/xrc_strings.h:130
+#: ../src/resources/xrc_strings.h:138
 msgid "OK"
 msgstr "Labi"
 
-#: ../src/resources/xrc_strings.h:135
+#: ../src/resources/xrc_strings.h:136
 msgid "Obsolete strings"
 msgstr "Novecojušās virknes"
 
-#: ../src/resources/xrc_strings.h:139 ../src/edframe.cpp:642
+#: ../src/resources/xrc_strings.h:146 ../src/edframe.cpp:649
 msgid "Open catalog"
 msgstr "Atvērt katalogu"
 
-#: ../src/resources/xrc_strings.h:61
+#: ../src/edframe.cpp:853
+#, fuzzy
+msgid "Open catalog template"
+msgstr "Atvērt katalogu"
+
+#: ../src/resources/xrc_strings.h:65
 msgid "Open catalogs manager on poEdit startup"
 msgstr "Atvērt katalogu pārvaldnieku pie poEdit sāknēšanas"
 
-#: ../src/resources/xrc_strings.h:76
+#: ../src/resources/xrc_strings.h:78
 msgid "Open source files in editor, not in file viewer"
 msgstr "Atvērt avota failus redaktorā nevis failu skatītājā"
 
@@ -622,15 +632,15 @@ msgstr "Atvērt avota failus redaktorā nevis failu skatītājā"
 msgid "Original string"
 msgstr "Oriģinālā virkne"
 
-#: ../src/resources/xrc_strings.h:102
+#: ../src/resources/xrc_strings.h:104
 msgid "Parser command:"
 msgstr "Parsera komanda:"
 
-#: ../src/resources/xrc_strings.h:97
+#: ../src/resources/xrc_strings.h:99
 msgid "Parser setup"
 msgstr "Parsera uzstādīšana"
 
-#: ../src/resources/xrc_strings.h:94
+#: ../src/resources/xrc_strings.h:96
 msgid "Parsers"
 msgstr "Parseri"
 
@@ -638,39 +648,47 @@ msgstr "Parseri"
 msgid "Parsing "
 msgstr "Parsēju"
 
-#: ../src/resources/xrc_strings.h:79
+#: ../src/resources/xrc_strings.h:81
 msgid "Path to DB:"
 msgstr "Ceļš uz DB:"
 
-#: ../src/resources/xrc_strings.h:126 ../src/settingsdlg.cpp:54
+#: ../src/resources/xrc_strings.h:127 ../src/settingsdlg.cpp:60
 msgid "Paths"
 msgstr "Ceļi"
 
-#: ../src/resources/xrc_strings.h:82
+#: ../src/resources/xrc_strings.h:56
+msgid "Personalize"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:84
 msgid "Pick language from the list of known languages"
 msgstr "Izvēlies valodu no zināmo valodu saraksta"
 
-#: ../src/edframe.cpp:889
+#: ../src/resources/xrc_strings.h:141
+msgid "Please add directories where locale files are stored on your system:"
+msgstr ""
+
+#: ../src/edframe.cpp:933
 msgid "Please choose the reference you want to show:"
 msgstr "Lūdzu izvēlieties atsauci, kuru vēlaties, lai parāda:"
 
-#: ../src/prefsdlg.cpp:248
+#: ../src/prefsdlg.cpp:259
 msgid "Please select language ISO code:"
 msgstr "Ludzu izvēlieties valodas ISO kodu:"
 
-#: ../src/edframe.cpp:590
+#: ../src/edframe.cpp:597
 msgid "Please select language code:"
 msgstr "Lūdzu izvēlieties valodas kodu:"
 
-#: ../src/resources/xrc_strings.h:54
+#: ../src/resources/xrc_strings.h:55
 msgid "Preferences"
 msgstr "Preferences"
 
-#: ../src/resources/xrc_strings.h:112
+#: ../src/resources/xrc_strings.h:114
 msgid "Proceed"
 msgstr "Rīkoties"
 
-#: ../src/resources/xrc_strings.h:124
+#: ../src/resources/xrc_strings.h:125
 msgid "Project info"
 msgstr "Projekta info"
 
@@ -682,47 +700,42 @@ msgstr "Projekta nosaukums un versija:"
 msgid "Project name:"
 msgstr "Projekta nosaukums:"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:517
-#, c-format
-msgid "Referenced object node with ref=\"%s\" not found!"
-msgstr ""
-
-#: ../src/edframe.cpp:889
+#: ../src/edframe.cpp:933
 msgid "References"
 msgstr "Atsauces"
 
-#: ../src/edframe.cpp:1446 ../src/edframe.cpp:1450
+#: ../src/edframe.cpp:1496 ../src/edframe.cpp:1500
 msgid "References:"
 msgstr "Atsauces:"
 
-#: ../src/resources/xrc_strings.h:84
+#: ../src/resources/xrc_strings.h:86
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr ""
 "Reģenerēt tulkojumu atmiņu no katalogiem ceļos, kas atrodami augstākesošajā "
 "sarakstā"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:379
-msgid "Resource files must have same version number!"
+#: ../src/resources/xrc_strings.h:143
+msgid "Reset to defaults"
 msgstr ""
 
 #: ../src/resources/xrc_strings.h:33
 msgid "Save &as..."
 msgstr "Saglabāt &kā..."
 
-#: ../src/edframe.cpp:722
+#: ../src/edframe.cpp:745
 msgid "Save as..."
 msgstr "Saglabāt kā..."
 
-#: ../src/resources/xrc_strings.h:140
+#: ../src/resources/xrc_strings.h:147
 msgid "Save catalog"
 msgstr "Saglabāt katalogu"
 
-#: ../src/edframe.cpp:623 ../src/edframe.cpp:634 ../src/edframe.cpp:658
-#: ../src/edframe.cpp:691 ../src/edframe.cpp:737
+#: ../src/edframe.cpp:630 ../src/edframe.cpp:641 ../src/edframe.cpp:665
+#: ../src/edframe.cpp:698 ../src/edframe.cpp:760
 msgid "Save changes"
 msgstr "Saglabāt izmaiņas"
 
-#: ../src/transmemupd.cpp:133
+#: ../src/transmemupd.cpp:138
 msgid "Scanning file: "
 msgstr "Skanēju failu: "
 
@@ -730,35 +743,41 @@ msgstr "Skanēju failu: "
 msgid "Scanning files..."
 msgstr "Skanēju failus..."
 
-#: ../src/prefsdlg.cpp:301
+#: ../src/transmemupd_wizard.cpp:49
 msgid "Search Paths"
 msgstr "Izvēlieties Ceļus"
 
-#: ../src/edframe.cpp:589
+#: ../src/edframe.cpp:596
 msgid "Select catalog's language"
 msgstr "Izvēlies kataloga valodu"
 
-#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:261 ../src/prefsdlg.cpp:282
+#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:272
+#: ../src/transmemupd_wizard.cpp:104
 msgid "Select directory"
 msgstr "Izvēlies direktoriju"
 
-#: ../src/prefsdlg.cpp:247
+#: ../src/prefsdlg.cpp:258
 msgid "Select language"
+msgstr "Izvēlieties valodu"
+
+#: ../src/chooselang.cpp:115
+#, fuzzy
+msgid "Select your prefered language"
 msgstr "Izvēlieties valodu"
 
 #: ../src/resources/xrc_strings.h:118
 msgid "Settings"
 msgstr "Uzstādījumi"
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:141
 msgid "Setup"
 msgstr "Uzstādīt"
 
-#: ../src/resources/xrc_strings.h:60
+#: ../src/resources/xrc_strings.h:64
 msgid "Show summary after catalog update"
 msgstr "Parādīt kopsavilkumu pēc kataloga atjaunināšanas"
 
-#: ../src/resources/xrc_strings.h:90
+#: ../src/resources/xrc_strings.h:92
 msgid "Source code parsers:"
 msgstr "Avota koda parseri:"
 
@@ -770,11 +789,6 @@ msgstr "Avota fails"
 msgid "String to find:"
 msgstr "Virkne, kuru atrast:"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:617
-#, c-format
-msgid "Subclass '%s' not found for resource '%s', not subclassing!"
-msgstr ""
-
 #: ../src/resources/xrc_strings.h:121
 msgid "Team's email address:"
 msgstr "Komandas e-pasta adrese:"
@@ -783,7 +797,7 @@ msgstr "Komandas e-pasta adrese:"
 msgid "Team:"
 msgstr "Komanda:"
 
-#: ../src/catalog.cpp:603
+#: ../src/catalog.cpp:611
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -791,7 +805,7 @@ msgid ""
 "and the setting was modified accordingly."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:134
+#: ../src/resources/xrc_strings.h:135
 msgid ""
 "These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
@@ -799,7 +813,7 @@ msgstr ""
 "Šīs virknes vair nav avotos.\n"
 "poEdit tūlīt pat tās izņems no kataloga."
 
-#: ../src/resources/xrc_strings.h:132
+#: ../src/resources/xrc_strings.h:133
 msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
@@ -807,7 +821,7 @@ msgstr ""
 "Šīs virknes tika atrastas avotos, bet nebija katalogā.\n"
 "poEdit tūlīt pat pievienos tās katalogam."
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:141
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -817,7 +831,7 @@ msgstr ""
 "Lūdzu ierakstiet savu vārdu un e-pasta adresi.\n"
 "(Šī informācija tiek lietota tikai katalogu galvenēs)"
 
-#: ../src/resources/xrc_strings.h:103
+#: ../src/resources/xrc_strings.h:105
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -827,7 +841,7 @@ msgstr ""
 "%o atbilst izvades faila nosaukumam, %K\n"
 "atslēgvārdu sarakstam, %F ievades failiem (skatīt zemāk)."
 
-#: ../src/resources/xrc_strings.h:107
+#: ../src/resources/xrc_strings.h:109
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -836,7 +850,7 @@ msgstr ""
 "Šis tiks pievienots komandrindai vienreiz katram\n"
 "ievades failam. %f atbilst faila nosaukumam."
 
-#: ../src/resources/xrc_strings.h:105
+#: ../src/resources/xrc_strings.h:107
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -844,7 +858,7 @@ msgstr ""
 "Šis tiks pievienots komandrindai vienreiz katram\n"
 "atslēgvārdam. %k atbilst atslēgvārdam."
 
-#: ../src/resources/xrc_strings.h:143
+#: ../src/resources/xrc_strings.h:150
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Slēgt, ja izvēlētajai virknei ir nepilnīgs tulkojums"
 
@@ -856,24 +870,39 @@ msgstr "Kopā"
 msgid "Translation"
 msgstr "Tulkojums"
 
-#: ../src/resources/xrc_strings.h:89
+#: ../src/resources/xrc_strings.h:91
 msgid "Translation Memory"
 msgstr "Tulkojumu Atmiņa"
+
+#: ../src/transmemupd_wizard.cpp:136
+msgid "Translation files (*.po;*.mo)|*.po;*.mo"
+msgstr ""
+
+#: ../src/transmemupd_wizard.cpp:134
+msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:40
 msgid "Translation is &fuzzy"
 msgstr "Tulkojums ir &nepilnīgs"
 
-#: ../src/resources/xrc_strings.h:138
+#: ../src/resources/xrc_strings.h:144
+msgid ""
+"Translation memory will be built from the files listed bellow.\n"
+"You can add more files to the list now."
+msgstr ""
+
+#: ../src/chooselang.cpp:59
+#, c-format
+msgid "Uknown locale code '%s' in registry."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:139
 msgid "Undo"
 msgstr "Atcelt"
 
-#: ../src/resources/xrc_strings.h:66
+#: ../src/resources/xrc_strings.h:70
 msgid "Unix"
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:686
-msgid "Unknown style flag "
 msgstr ""
 
 #: ../src/manager.cpp:221
@@ -884,27 +913,36 @@ msgstr "Neiztulk"
 msgid "Update all catalogs in the project"
 msgstr "Atjaunināt visus katalogus šajā projektā"
 
-#: ../src/resources/xrc_strings.h:141
+#: ../src/resources/xrc_strings.h:148
 msgid "Update catalog - synchronize it with sources"
 msgstr "Atjaunināt katalogu - sinhronizēt to ar avotiem"
 
-#: ../src/resources/xrc_strings.h:131
+#: ../src/resources/xrc_strings.h:44
+msgid "Update from &POT file..."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:132
 msgid "Update summary"
 msgstr "Atjaunināt kopsavilkumu"
 
-#: ../src/resources/xrc_strings.h:115 ../src/catalog.cpp:687
+#: ../src/resources/xrc_strings.h:140
+#, fuzzy
+msgid "Update translation memory"
+msgstr "Atjauninu tulkošanas atmiņu"
+
+#: ../src/catalog.cpp:695
 msgid "Updating catalog..."
 msgstr "Atjauninu katalogu..."
 
-#: ../src/edframe.cpp:811
+#: ../src/edframe.cpp:839
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:335
+#: ../src/transmemupd_wizard.cpp:216
 msgid "Updating translation memory"
 msgstr "Atjauninu tulkošanas atmiņu"
 
-#: ../src/resources/xrc_strings.h:127
+#: ../src/resources/xrc_strings.h:128
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
@@ -913,65 +951,35 @@ msgstr ""
 "virknes\n"
 "avota failos papildus noklusētajām."
 
-#: ../src/resources/xrc_strings.h:67
+#: ../src/resources/xrc_strings.h:71
 msgid "Windows"
 msgstr ""
 
-#: ../extras/wx-contrib/src/xrc/xml.cpp:530
-#, c-format
-msgid "XML parsing error: '%s' at line %d"
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:455
-#, c-format
-msgid "XRC resource '%s' (class '%s') not found!"
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:857
-#, c-format
-msgid "XRC resource: Cannot create bitmap '%s'."
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:846
-#, c-format
-msgid "XRC resource: Failed to open bitmap file '%s'."
-msgstr ""
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:806
-#, c-format
-msgid "XRC resource: Incorrect colour specification '%s' for property '%s'."
-msgstr ""
-
-#: ../src/edframe.cpp:676
+#: ../src/edframe.cpp:683
 msgid "You can't drop more than one file on poEdit window."
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:57
+#: ../src/chooselang.cpp:130
+msgid "You must restart poEdit for this change to take effect."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:59
 msgid "Your e-mail address:"
 msgstr "Jūsu e-pasta adrese:"
 
-#: ../src/resources/xrc_strings.h:56
+#: ../src/resources/xrc_strings.h:58
 msgid "Your name:"
 msgstr "Jūsu vārds:"
 
-#: ../src/resources/xrc_strings.h:69
+#: ../src/resources/xrc_strings.h:73
 msgid "current platform's default"
 msgstr ""
 
-#: ../src/resources/xrc_strings.h:73
-msgid "nedit -line %l %f"
-msgstr ""
-
-#: ../src/edframe.cpp:1485
+#: ../src/edframe.cpp:1535
 msgid "none"
 msgstr "nekas"
 
-#: ../src/resources/xrc_strings.h:74
-#, c-format
-msgid "notepad %f"
-msgstr ""
-
-#: ../src/edframe.cpp:399
+#: ../src/edframe.cpp:409
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -979,7 +987,7 @@ msgstr "poEdit"
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - Katalogu pārvaldnieks"
 
-#: ../src/edapp.cpp:125
+#: ../src/edapp.cpp:128
 msgid "poEdit Error"
 msgstr "poEdit Kļūda"
 
@@ -987,15 +995,32 @@ msgstr "poEdit Kļūda"
 msgid "poEdit did not find any files in scanned directories."
 msgstr ""
 
-#: ../src/edapp.cpp:52
+#: ../src/edapp.cpp:53
 msgid ""
 "poEdit installation is broken, cannot find application's home directory."
 msgstr ""
 "poEdit instalācija ir sabeigta, nevaru atrast aplikācijas mājas direktoriju."
 
-#: ../src/edframe.cpp:1500
+#: ../src/edframe.cpp:1550
 msgid "version"
 msgstr "versija"
 
-#~ msgid "File "
-#~ msgstr "Fails"
+#, fuzzy
+#~ msgid "Cannot load resources from file '%s'."
+#~ msgstr ""
+#~ "Nevaru atrast resursu failu '%s'!\n"
+#~ "Lūdzu pārinstalējiet poEdit."
+
+#, fuzzy
+#~ msgid "Cannot open file '%s'."
+#~ msgstr "Kļūda atverot failu %s!"
+
+#~ msgid "&Update catalog"
+#~ msgstr "&Atjaunināt katalogu"
+
+#, fuzzy
+#~ msgid "File '%s' doesn't exist!"
+#~ msgstr " neeksistē!"
+
+#~ msgid "Listing files..."
+#~ msgstr "Sastādu failu sarakstu..."

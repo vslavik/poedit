@@ -2,11 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.2.1\n"
-"POT-Creation-Date: 2003-02-11 21:09+0100\n"
+"POT-Creation-Date: 2003-04-21 15:52+0200\n"
 "PO-Revision-Date: 2003-03-06 22:39+0900\n"
 "Last-Translator: Masapon <masapon@cronos.ne.jp>\n"
 "Language-Team: ja <masapon@dream.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1326
+#: ../src/edframe.cpp:1376
 msgid " (modified)"
 msgstr " (修正済)"
 
@@ -22,12 +22,12 @@ msgstr " (修正済)"
 msgid " files..."
 msgstr " ファイル..."
 
-#: ../src/edframe.cpp:1311
+#: ../src/edframe.cpp:1361
 #, c-format
 msgid "%i strings (%i fuzzy, %i not translated)"
 msgstr "%i の文字列 (%i ファジー, %i 未翻訳)"
 
-#: ../src/resources/xrc_strings.h:52
+#: ../src/resources/xrc_strings.h:53
 msgid "&About..."
 msgstr "このプログラムについて(&A)..."
 
@@ -39,7 +39,7 @@ msgstr "カタログ(&C)"
 msgid "&Close"
 msgstr "閉じる(&C)"
 
-#: ../src/resources/xrc_strings.h:50
+#: ../src/resources/xrc_strings.h:51
 msgid "&Contents..."
 msgstr "目次(&C)..."
 
@@ -47,8 +47,7 @@ msgstr "目次(&C)..."
 msgid "&Edit"
 msgstr "編集(&E)"
 
-#: ../src/resources/xrc_strings.h:28
-#: ../src/edframe.cpp:438
+#: ../src/resources/xrc_strings.h:28 ../src/edframe.cpp:448
 msgid "&File"
 msgstr "ファイル(&F)"
 
@@ -56,11 +55,11 @@ msgstr "ファイル(&F)"
 msgid "&Find..."
 msgstr "検索(&F)..."
 
-#: ../src/resources/xrc_strings.h:46
+#: ../src/resources/xrc_strings.h:47
 msgid "&Fullscreen view"
 msgstr "フルスクリーン表示(&F)"
 
-#: ../src/resources/xrc_strings.h:53
+#: ../src/resources/xrc_strings.h:54
 msgid "&Help"
 msgstr "ヘルプ(&H)"
 
@@ -80,11 +79,11 @@ msgstr "設定(&P)..."
 msgid "&Save"
 msgstr "保存(&S)"
 
-#: ../src/resources/xrc_strings.h:44
+#: ../src/resources/xrc_strings.h:45
 msgid "&Settings..."
 msgstr "設定(&S)..."
 
-#: ../src/resources/xrc_strings.h:49
+#: ../src/resources/xrc_strings.h:50
 msgid "&Shaded translations list"
 msgstr "表示リストに陰を付ける(&S)"
 
@@ -93,18 +92,23 @@ msgid "&Show references"
 msgstr "参照画面の表示 (&S)"
 
 #: ../src/resources/xrc_strings.h:43
-msgid "&Update catalog"
-msgstr "カタログの更新(&U)"
+msgid "&Update from sources"
+msgstr ""
 
-#: ../src/resources/xrc_strings.h:45
+#: ../src/resources/xrc_strings.h:46
 msgid "&View"
 msgstr "表示(&V)"
 
-#: ../src/edframe.cpp:1262
+#: ../src/catalog.cpp:761
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr ""
+
+#: ../src/edframe.cpp:1312
 msgid "'."
 msgstr "'."
 
-#: ../src/resources/xrc_strings.h:75
+#: ../src/resources/xrc_strings.h:77
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f はファイル名, %l は行番号として展開されます)"
 
@@ -113,11 +117,16 @@ msgstr "(%f はファイル名, %l は行番号として展開されます)"
 msgid "(%i new, %i obsolete)"
 msgstr "(%i 新規, %i 使用しないように変更)"
 
-#: ../src/resources/xrc_strings.h:136
+#: ../src/resources/xrc_strings.h:137
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 新規, 0 使用しないように変更)"
 
-#: ../src/edframe.cpp:587
+#: ../src/chooselang.cpp:76
+#, fuzzy
+msgid "(Use default language)"
+msgstr "言語の選択"
+
+#: ../src/edframe.cpp:594
 msgid "(none of these)"
 msgstr "(なし)"
 
@@ -133,7 +142,7 @@ msgstr "<unnamed>"
 msgid "About poEdit"
 msgstr "poEdit について"
 
-#: ../src/resources/xrc_strings.h:81
+#: ../src/resources/xrc_strings.h:83
 msgid "Add"
 msgstr "追加"
 
@@ -141,79 +150,73 @@ msgstr "追加"
 msgid "Add directory to the list"
 msgstr "ディレクトリをリストに追加"
 
-#: ../src/resources/xrc_strings.h:111
+#: ../src/resources/xrc_strings.h:145 ../src/transmemupd_wizard.cpp:130
+#, fuzzy
+msgid "Add files"
+msgstr " ファイル..."
+
+#: ../src/resources/xrc_strings.h:113
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "カタログが位置するパスをディレクトリのリストに追加します。"
 
-#: ../src/resources/xrc_strings.h:62
+#: ../src/resources/xrc_strings.h:66
 msgid "Always change focus to text input field"
 msgstr "いつでもテキストフィールドにフォーカスを設定する"
 
-#: ../src/resources/xrc_strings.h:106
+#: ../src/resources/xrc_strings.h:108
 msgid "An item in input files list:"
 msgstr "入力ファイルリスト中の要素:"
 
-#: ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:106
 msgid "An item in keywords list:"
 msgstr "キーワードリスト中の要素:"
 
-#: ../src/edframe.cpp:1460
-#: ../src/edframe.cpp:1464
+#: ../src/edframe.cpp:1510 ../src/edframe.cpp:1514
 msgid "Automatic translations:"
 msgstr "自動翻訳:"
 
-#: ../src/resources/xrc_strings.h:59
+#: ../src/resources/xrc_strings.h:63
 msgid "Automatically compile .mo file on save"
 msgstr "保存時に .mo ファイルを自動生成する"
 
-#: ../src/resources/xrc_strings.h:88
+#: ../src/resources/xrc_strings.h:90
 msgid "Automatically translate when updating catalog"
 msgstr "カタログ更新時に自動的に翻訳しなおす"
 
-#: ../src/edframe.cpp:844
+#: ../src/edframe.cpp:888
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "文字列を自動翻訳 - %u"
 
-#: ../src/edframe.cpp:829
+#: ../src/edframe.cpp:873
 msgid "Automatically translating..."
 msgstr "自動翻訳中..."
 
-#: ../src/resources/xrc_strings.h:125
+#: ../src/resources/xrc_strings.h:126
 msgid "Base path:"
 msgstr "ベースのパス:"
 
-#: ../src/resources/xrc_strings.h:58
+#: ../src/resources/xrc_strings.h:62
 msgid "Behavior"
 msgstr "動作"
 
-#: ../src/resources/xrc_strings.h:24
-#: ../src/resources/xrc_strings.h:80
-#: ../src/resources/xrc_strings.h:110
+#: ../src/resources/xrc_strings.h:24 ../src/resources/xrc_strings.h:82
+#: ../src/resources/xrc_strings.h:112 ../src/resources/xrc_strings.h:142
 msgid "Browse"
 msgstr "参照"
 
-#: ../src/resources/xrc_strings.h:64
+#: ../src/resources/xrc_strings.h:68
 msgid "CR/LF conversion"
 msgstr "CR/LF 変換"
 
-#: ../src/resources/xrc_strings.h:6
-#: ../src/resources/xrc_strings.h:15
-#: ../src/resources/xrc_strings.h:27
-#: ../src/resources/xrc_strings.h:96
-#: ../src/resources/xrc_strings.h:109
-#: ../src/resources/xrc_strings.h:113
-#: ../src/resources/xrc_strings.h:117
-#: ../src/resources/xrc_strings.h:130
+#: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:15
+#: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:98
+#: ../src/resources/xrc_strings.h:111 ../src/resources/xrc_strings.h:115
+#: ../src/resources/xrc_strings.h:117 ../src/resources/xrc_strings.h:131
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:954
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:995
-msgid "Cannot convert dialog units: dialog unknown."
-msgstr "ダイアログユニットを変換できません: 未知のダイアログ。"
-
-#: ../src/transmem.cpp:747
+#: ../src/transmem.cpp:748
 msgid "Cannot create database directory!"
 msgstr "データベースのディレクトリを作成できません！"
 
@@ -221,28 +224,20 @@ msgstr "データベースのディレクトリを作成できません！"
 msgid "Cannot execute program: "
 msgstr "プログラムを実行できません:"
 
-#: ../src/transmemupd.cpp:183
+#: ../src/transmemupd.cpp:188
 msgid "Cannot extract catalogs from RPM file."
 msgstr "RPM ファイルからカタログを抽出できません。"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:243
+#: ../src/edapp.cpp:125
 #, c-format
-msgid "Cannot find container for unknown control '%s'."
-msgstr "未知のコントロール '%s' のコンテナが見つかりません。"
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:1009
-#, c-format
-msgid "Cannot find font node '%s'."
-msgstr "フォントノード '%s' が見つかりません。"
-
-#: ../src/edapp.cpp:122
-#, c-format
-msgid "Cannot find resources file '%s'!\n"
+msgid ""
+"Cannot find resources file '%s'!\n"
 "Please reinstall poEdit."
-msgstr "リソースファイル '%s' が見つかりません！\n"
+msgstr ""
+"リソースファイル '%s' が見つかりません！\n"
 "poEdit を再インストールしてください。."
 
-#: ../src/edapp.cpp:116
+#: ../src/edapp.cpp:119
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -255,26 +250,6 @@ msgstr ""
 "修正のためには環境変数 POEDIT_PREFIX が\n"
 "poEdit のインスールパスを指定するように設定してください。"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:356
-#, c-format
-msgid "Cannot load resources from file '%s'."
-msgstr "ファイル '%s' からリソースを読み込めません。."
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:330
-#, c-format
-msgid "Cannot open file '%s'."
-msgstr "ファイル '%s' を開けません。"
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:942
-#, c-format
-msgid "Cannot parse coordinates from '%s'."
-msgstr "'%s' からの座標を解析できません。."
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:983
-#, c-format
-msgid "Cannot parse dimension from '%s'."
-msgstr "'%s' からの範囲を読み込めません。"
-
 #: ../src/resources/xrc_strings.h:12
 msgid "Case sensitive"
 msgstr "あいまい検索"
@@ -283,11 +258,8 @@ msgstr "あいまい検索"
 msgid "Catalog"
 msgstr "カタログ"
 
-#: ../src/edframe.cpp:623
-#: ../src/edframe.cpp:634
-#: ../src/edframe.cpp:658
-#: ../src/edframe.cpp:691
-#: ../src/edframe.cpp:737
+#: ../src/edframe.cpp:630 ../src/edframe.cpp:641 ../src/edframe.cpp:665
+#: ../src/edframe.cpp:698 ../src/edframe.cpp:760
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "カタログは修正されています。変更を保存しますか？"
 
@@ -295,7 +267,12 @@ msgstr "カタログは修正されています。変更を保存しますか？
 msgid "Catalogs &manager"
 msgstr "カタログマネージャ(&M)"
 
-#: ../src/resources/xrc_strings.h:123
+#: ../src/resources/xrc_strings.h:60
+#, fuzzy
+msgid "Change UI language"
+msgstr "言語の選択"
+
+#: ../src/resources/xrc_strings.h:124
 msgid "Charset:"
 msgstr "キャラクタセット:"
 
@@ -311,12 +288,11 @@ msgstr "コメントのクリア"
 msgid "Comment:"
 msgstr "コメント:"
 
-#: ../src/resources/xrc_strings.h:85
+#: ../src/resources/xrc_strings.h:87
 msgid "Configuration"
 msgstr "設定"
 
-#: ../src/manager.cpp:376
-#: ../src/manager.cpp:396
+#: ../src/manager.cpp:376 ../src/manager.cpp:396
 msgid "Confirmation"
 msgstr "確認"
 
@@ -332,22 +308,31 @@ msgstr "チームの設定が正しくありません。 設定を修正して�
 msgid "Corrupted translator record, please correct in Catalog/Settings"
 msgstr "翻訳者の設定が正しくありません。設定を修正してください。"
 
+#: ../src/resources/xrc_strings.h:123
+#, fuzzy
+msgid "Country:"
+msgstr "コメント:"
+
 #: ../src/resources/xrc_strings.h:18
 msgid "Create new translations project"
 msgstr "翻訳プロジェクトを作成する"
 
-#: ../src/resources/xrc_strings.h:78
+#: ../src/resources/xrc_strings.h:80
 msgid "Database"
 msgstr "データベース"
 
-#: ../src/transmem.cpp:328
-#: ../src/transmem.cpp:330
+#: ../src/transmem.cpp:332
 #, c-format
 msgid "Database error: %s"
 msgstr "データベースエラー: %s"
 
-#: ../src/resources/xrc_strings.h:93
+#: ../src/resources/xrc_strings.h:95
 msgid "Delete"
+msgstr "削除"
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:163
+#, fuzzy
+msgid "Delete item"
 msgstr "削除"
 
 #: ../src/resources/xrc_strings.h:20
@@ -358,20 +343,21 @@ msgstr "翻訳プロジェクトを削除する"
 msgid "Directories:"
 msgstr "ディレクトリ:"
 
-#: ../src/resources/xrc_strings.h:48
+#: ../src/resources/xrc_strings.h:49
 msgid "Display &line numbers"
 msgstr "行番号を表示"
 
-#: ../src/resources/xrc_strings.h:47
+#: ../src/resources/xrc_strings.h:48
 msgid "Display &quotes"
 msgstr "クォートを表示(Q)"
 
-#: ../src/resources/xrc_strings.h:142
+#: ../src/resources/xrc_strings.h:149
 msgid "Display quotes around the string?"
 msgstr "文字列端にクォートを表示"
 
 #: ../src/manager.cpp:395
-msgid "Do you really want to do mass update of\n"
+msgid ""
+"Do you really want to do mass update of\n"
 "all catalogs in this project?"
 msgstr "このプロジェクトのすべてのカタログを更新してもよろしいですか？"
 
@@ -379,11 +365,11 @@ msgstr "このプロジェクトのすべてのカタログを更新してもよ
 msgid "Do you want to delete the project?"
 msgstr "プロジェクトを削除してよろしいですか？"
 
-#: ../src/resources/xrc_strings.h:70
+#: ../src/resources/xrc_strings.h:74
 msgid "Don't change format of existing catalogs"
 msgstr "既存のカタログのフォーマットは変更しない"
 
-#: ../src/resources/xrc_strings.h:92
+#: ../src/resources/xrc_strings.h:94
 msgid "Edit"
 msgstr "編集"
 
@@ -391,10 +377,14 @@ msgstr "編集"
 msgid "Edit &comment"
 msgstr "コメントの編集(&C)"
 
-#: ../src/resources/xrc_strings.h:3
-#: ../src/resources/xrc_strings.h:144
+#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:151
 msgid "Edit comment"
 msgstr "コメントの編集"
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:161
+#, fuzzy
+msgid "Edit item"
+msgstr "編集"
 
 #: ../src/resources/xrc_strings.h:22
 msgid "Edit project"
@@ -408,19 +398,19 @@ msgstr "ファイルをテキストエディタで編集する"
 msgid "Edit the project"
 msgstr "翻訳プロジェクトを編集する"
 
-#: ../src/resources/xrc_strings.h:77
+#: ../src/resources/xrc_strings.h:61 ../src/resources/xrc_strings.h:79
 msgid "Editor"
 msgstr "編集"
 
-#: ../src/resources/xrc_strings.h:72
+#: ../src/resources/xrc_strings.h:76
 msgid "Editor executable:"
 msgstr "実行するエディタ:"
 
-#: ../src/edframe.cpp:809
+#: ../src/edframe.cpp:837
 msgid "Entries in the catalog are probably incorrect."
 msgstr "カタログ中のエントリ記述は恐らく正しくありません。"
 
-#: ../src/edframe.cpp:1262
+#: ../src/edframe.cpp:1312
 msgid "Error loading message catalog file '"
 msgstr "メッセージカタログの読み込みエラー"
 
@@ -429,28 +419,27 @@ msgstr "メッセージカタログの読み込みエラー"
 msgid "Error opening file %s!"
 msgstr "ファイル %s を開く途中でエラーが発生しました！"
 
-#: ../src/catalog.cpp:604
+#: ../src/catalog.cpp:612
 msgid "Error saving catalog"
 msgstr "カタログ保存エラー"
 
-#: ../src/resources/xrc_strings.h:71
+#: ../src/resources/xrc_strings.h:75
 msgid "External editor"
 msgstr "外部エディタ"
 
-#: ../src/edframe.cpp:666
-#, c-format
-msgid "File '%s' doesn't exist!"
-msgstr "ファイル '%s' は存在しません！"
-
-#: ../src/edframe.cpp:697
+#: ../src/edframe.cpp:673 ../src/edframe.cpp:704
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "ファイル '%s' は存在しません！"
 
-#: ../src/edframe.cpp:683
+#: ../src/edframe.cpp:690
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "ファイル '%s' はメッセージカタログではありません。"
+
+#: ../src/transmemupd_wizard.cpp:53
+msgid "Files List"
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:13
 msgid "Find in original strings"
@@ -464,7 +453,7 @@ msgstr "翻訳された文字列を検索対象に含める"
 msgid "Find..."
 msgstr "検索..."
 
-#: ../src/resources/xrc_strings.h:145
+#: ../src/resources/xrc_strings.h:152
 msgid "Fullscreen view"
 msgstr "フルスクリーン表示"
 
@@ -472,47 +461,49 @@ msgstr "フルスクリーン表示"
 msgid "Fuzzy"
 msgstr "ファジー"
 
-#: ../src/edframe.cpp:644
-#: ../src/edframe.cpp:723
+#: ../src/edframe.cpp:651 ../src/edframe.cpp:746
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU gettext カタログ (*.po)|*.po|All files (*.*)|*.*"
 
-#: ../src/resources/xrc_strings.h:51
+#: ../src/edframe.cpp:855
+#, fuzzy
+msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
+msgstr "GNU gettext カタログ (*.po)|*.po|All files (*.*)|*.*"
+
+#: ../src/resources/xrc_strings.h:52
 msgid "GNU gettext documentation"
 msgstr "GNU gettext ドキュメント"
 
-#: ../src/resources/xrc_strings.h:114
+#: ../src/resources/xrc_strings.h:116
 msgid "Generate TM database"
 msgstr "翻訳履歴データベースの作成"
 
-#: ../src/resources/xrc_strings.h:83
+#: ../src/resources/xrc_strings.h:85
 msgid "Generate database"
 msgstr "データベースの作成"
 
-#: ../src/resources/xrc_strings.h:146
+#: ../src/resources/xrc_strings.h:153
 msgid "Help"
 msgstr "ヘルプ"
 
-#: ../src/resources/xrc_strings.h:55
+#: ../src/resources/xrc_strings.h:57
 msgid "Identity"
 msgstr "自分の署名"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:362
-#, c-format
-msgid "Invalid XRC resource '%s': doesn't have root node 'resource'."
-msgstr "無効な XRC リソース '%s': ルートノード 'resource' がありません。"
-
-#: ../src/resources/xrc_strings.h:101
+#: ../src/resources/xrc_strings.h:103
 msgid "Invocation:"
 msgstr "実行オプション:"
 
-#: ../src/resources/xrc_strings.h:128
-#: ../src/settingsdlg.cpp:52
+#: ../src/resources/xrc_strings.h:129 ../src/settingsdlg.cpp:58
 msgid "Keywords"
 msgstr "キーワード"
 
-#: ../src/resources/xrc_strings.h:98
-#: ../src/resources/xrc_strings.h:99
+#: ../src/chooselang.cpp:116
+#, fuzzy
+msgid "Language selection"
+msgstr "利用できる言語"
+
+#: ../src/resources/xrc_strings.h:100 ../src/resources/xrc_strings.h:101
 #: ../src/resources/xrc_strings.h:122
 msgid "Language:"
 msgstr "言語:"
@@ -521,42 +512,45 @@ msgstr "言語:"
 msgid "Last modified"
 msgstr "最終更新"
 
-#: ../src/edframe.cpp:141
-#: ../src/fileviewer.cpp:87
+#: ../src/edframe.cpp:141 ../src/fileviewer.cpp:87
 msgid "Line"
 msgstr "行番号"
 
-#: ../src/resources/xrc_strings.h:65
+#: ../src/resources/xrc_strings.h:69
 msgid "Line endings format:"
 msgstr "行末のフォーマット:"
 
-#: ../src/resources/xrc_strings.h:100
-msgid "List of extensions separated by semicolons (e.g. *.cpp, *.h):"
+#: ../src/resources/xrc_strings.h:102
+#, fuzzy
+msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "セミコロンで分割された拡張子リスト (例. *.cpp;*h):"
 
-#: ../src/transmemupd.cpp:117
-msgid "Listing files..."
-msgstr "ファイルを編成中..."
-
-#: ../src/resources/xrc_strings.h:68
+#: ../src/resources/xrc_strings.h:72
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/resources/xrc_strings.h:86
+#: ../src/resources/xrc_strings.h:88
 msgid "Max. # of missing words:"
 msgstr "失った単語における最大の差"
 
 # 意味がよくわからへん…
-#: ../src/resources/xrc_strings.h:87
+#: ../src/resources/xrc_strings.h:89
 msgid "Max. difference in sentence length:"
 msgstr "センテンスの長さにおける最大の差"
 
-#: ../src/resources/xrc_strings.h:116
-#: ../src/catalog.cpp:725
+#: ../src/catalog.cpp:733
 msgid "Merging differences..."
 msgstr "差分をマージ中..."
 
-#: ../src/prefsdlg.cpp:42
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:165
+msgid "Move down"
+msgstr ""
+
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:164
+msgid "Move up"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:43
 msgid "My Languages"
 msgstr "利用できる言語"
 
@@ -564,15 +558,25 @@ msgstr "利用できる言語"
 msgid "My Project"
 msgstr "My Project"
 
-#: ../src/resources/xrc_strings.h:63
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "文字列のリストにフォーカスをとらせません。有効にした場合、キーボード操作のためにCtrl-arrowsを使用しなければなりませんが、フォーカスを変更するためにタブを押す必要はなく、テキストを入力することができます。"
+#: ../src/resources/xrc_strings.h:67
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"文字列のリストにフォーカスをとらせません。有効にした場合、キーボード操作のた"
+"めにCtrl-arrowsを使用しなければなりませんが、フォーカスを変更するためにタブを"
+"押す必要はなく、テキストを入力することができます。"
 
-#: ../src/resources/xrc_strings.h:91
+#: ../src/resources/xrc_strings.h:93
 msgid "New"
 msgstr "新規"
 
-#: ../src/resources/xrc_strings.h:133
+#: ../extras/wx-contrib/src/gizmos/editlbox.cpp:162
+msgid "New item"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:134
 msgid "New strings"
 msgstr "新規文字列"
 
@@ -582,45 +586,42 @@ msgstr "次へ >"
 
 #: ../src/fileviewer.cpp:126
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "エディタは指定されていません。設定ダイアログで指定しておく必要があります。"
+msgstr ""
+"エディタは指定されていません。設定ダイアログで指定しておく必要があります。"
 
 #: ../src/digger.cpp:122
 msgid "No files found in: "
 msgstr "ファイルが見つかりません:"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:542
-#, c-format
-msgid "No handler found for XML node '%s', class '%s'!"
-msgstr "XML ノード '%s', クラス '%s' の為のハンドラが見つかりません！!"
-
-#: ../src/edframe.cpp:881
+#: ../src/edframe.cpp:925
 msgid "No references to this string found."
 msgstr "この文字列への参照は見つかりませんでした。"
 
-#: ../src/resources/xrc_strings.h:2
-#: ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:26
-#: ../src/resources/xrc_strings.h:95
-#: ../src/resources/xrc_strings.h:108
-#: ../src/resources/xrc_strings.h:129
-#: ../src/resources/xrc_strings.h:137
+#: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
+#: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:97
+#: ../src/resources/xrc_strings.h:110 ../src/resources/xrc_strings.h:130
+#: ../src/resources/xrc_strings.h:138
 msgid "OK"
 msgstr "OK"
 
-#: ../src/resources/xrc_strings.h:135
+#: ../src/resources/xrc_strings.h:136
 msgid "Obsolete strings"
 msgstr "もう使われていない文字列"
 
-#: ../src/resources/xrc_strings.h:139
-#: ../src/edframe.cpp:642
+#: ../src/resources/xrc_strings.h:146 ../src/edframe.cpp:649
 msgid "Open catalog"
 msgstr "カタログを開く"
 
-#: ../src/resources/xrc_strings.h:61
+#: ../src/edframe.cpp:853
+#, fuzzy
+msgid "Open catalog template"
+msgstr "カタログを開く"
+
+#: ../src/resources/xrc_strings.h:65
 msgid "Open catalogs manager on poEdit startup"
 msgstr "poEdit 起動時にカタログマネージャを開く"
 
-#: ../src/resources/xrc_strings.h:76
+#: ../src/resources/xrc_strings.h:78
 msgid "Open source files in editor, not in file viewer"
 msgstr "ソースファイルをエディタで開く"
 
@@ -628,15 +629,15 @@ msgstr "ソースファイルをエディタで開く"
 msgid "Original string"
 msgstr "オリジナルの文字列"
 
-#: ../src/resources/xrc_strings.h:102
+#: ../src/resources/xrc_strings.h:104
 msgid "Parser command:"
 msgstr "パーサのコマンド:"
 
-#: ../src/resources/xrc_strings.h:97
+#: ../src/resources/xrc_strings.h:99
 msgid "Parser setup"
 msgstr "パーサ準備中"
 
-#: ../src/resources/xrc_strings.h:94
+#: ../src/resources/xrc_strings.h:96
 msgid "Parsers"
 msgstr "パーサ"
 
@@ -644,40 +645,47 @@ msgstr "パーサ"
 msgid "Parsing "
 msgstr "パーシング中"
 
-#: ../src/resources/xrc_strings.h:79
+#: ../src/resources/xrc_strings.h:81
 msgid "Path to DB:"
 msgstr "データベースへのパス:"
 
-#: ../src/resources/xrc_strings.h:126
-#: ../src/settingsdlg.cpp:54
+#: ../src/resources/xrc_strings.h:127 ../src/settingsdlg.cpp:60
 msgid "Paths"
 msgstr "パス"
 
-#: ../src/resources/xrc_strings.h:82
+#: ../src/resources/xrc_strings.h:56
+msgid "Personalize"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:84
 msgid "Pick language from the list of known languages"
 msgstr "既知の言語リストから言語を選択してください"
 
-#: ../src/edframe.cpp:889
+#: ../src/resources/xrc_strings.h:141
+msgid "Please add directories where locale files are stored on your system:"
+msgstr ""
+
+#: ../src/edframe.cpp:933
 msgid "Please choose the reference you want to show:"
 msgstr "表示したい参照を選択してください:"
 
-#: ../src/prefsdlg.cpp:248
+#: ../src/prefsdlg.cpp:259
 msgid "Please select language ISO code:"
 msgstr "言語の ISO コードを選択してください:"
 
-#: ../src/edframe.cpp:590
+#: ../src/edframe.cpp:597
 msgid "Please select language code:"
 msgstr "言語のコードを選択してください:"
 
-#: ../src/resources/xrc_strings.h:54
+#: ../src/resources/xrc_strings.h:55
 msgid "Preferences"
 msgstr "設定"
 
-#: ../src/resources/xrc_strings.h:112
+#: ../src/resources/xrc_strings.h:114
 msgid "Proceed"
 msgstr "続行"
 
-#: ../src/resources/xrc_strings.h:124
+#: ../src/resources/xrc_strings.h:125
 msgid "Project info"
 msgstr "情報"
 
@@ -689,49 +697,41 @@ msgstr "プロジェクトの名前とバージョン:"
 msgid "Project name:"
 msgstr "プロジェクト名:"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:517
-#, c-format
-msgid "Referenced object node with ref=\"%s\" not found!"
-msgstr "ref=\"%s\" と共に参照されたオブジェクトノードが見つかりません！"
-
-#: ../src/edframe.cpp:889
+#: ../src/edframe.cpp:933
 msgid "References"
 msgstr "参照"
 
-#: ../src/edframe.cpp:1446
-#: ../src/edframe.cpp:1450
+#: ../src/edframe.cpp:1496 ../src/edframe.cpp:1500
 msgid "References:"
 msgstr "参照位置:"
 
-#: ../src/resources/xrc_strings.h:84
+#: ../src/resources/xrc_strings.h:86
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr "表示されたパスにあるカタログから翻訳の記憶を再生成してください。"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:379
-msgid "Resource files must have same version number!"
-msgstr "リソースファイルはバージョン番号を持っていなければなりません！"
+#: ../src/resources/xrc_strings.h:143
+#, fuzzy
+msgid "Reset to defaults"
+msgstr "現在のプラットフォームのデフォルト値"
 
 #: ../src/resources/xrc_strings.h:33
 msgid "Save &as..."
 msgstr "名前を付けて保存 (&A)"
 
-#: ../src/edframe.cpp:722
+#: ../src/edframe.cpp:745
 msgid "Save as..."
 msgstr "名前を付けて保存..."
 
-#: ../src/resources/xrc_strings.h:140
+#: ../src/resources/xrc_strings.h:147
 msgid "Save catalog"
 msgstr "カタログの保存"
 
-#: ../src/edframe.cpp:623
-#: ../src/edframe.cpp:634
-#: ../src/edframe.cpp:658
-#: ../src/edframe.cpp:691
-#: ../src/edframe.cpp:737
+#: ../src/edframe.cpp:630 ../src/edframe.cpp:641 ../src/edframe.cpp:665
+#: ../src/edframe.cpp:698 ../src/edframe.cpp:760
 msgid "Save changes"
 msgstr "変更を保存"
 
-#: ../src/transmemupd.cpp:133
+#: ../src/transmemupd.cpp:138
 msgid "Scanning file: "
 msgstr "ファイルの検索:"
 
@@ -739,37 +739,41 @@ msgstr "ファイルの検索:"
 msgid "Scanning files..."
 msgstr "ファイルを検索中..."
 
-#: ../src/prefsdlg.cpp:301
+#: ../src/transmemupd_wizard.cpp:49
 msgid "Search Paths"
 msgstr "検索パス"
 
-#: ../src/edframe.cpp:589
+#: ../src/edframe.cpp:596
 msgid "Select catalog's language"
 msgstr "カタログの言語を選択"
 
-#: ../src/manager.cpp:251
-#: ../src/prefsdlg.cpp:261
-#: ../src/prefsdlg.cpp:282
+#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:272
+#: ../src/transmemupd_wizard.cpp:104
 msgid "Select directory"
 msgstr "ディレクトリの選択"
 
-#: ../src/prefsdlg.cpp:247
+#: ../src/prefsdlg.cpp:258
 msgid "Select language"
+msgstr "言語の選択"
+
+#: ../src/chooselang.cpp:115
+#, fuzzy
+msgid "Select your prefered language"
 msgstr "言語の選択"
 
 #: ../src/resources/xrc_strings.h:118
 msgid "Settings"
 msgstr "プロジェクトの設定"
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:141
 msgid "Setup"
 msgstr "セットアップ"
 
-#: ../src/resources/xrc_strings.h:60
+#: ../src/resources/xrc_strings.h:64
 msgid "Show summary after catalog update"
 msgstr "カタログ更新の後でサマリを表示する"
 
-#: ../src/resources/xrc_strings.h:90
+#: ../src/resources/xrc_strings.h:92
 msgid "Source code parsers:"
 msgstr "ソースコードのパーサ:"
 
@@ -781,11 +785,6 @@ msgstr "ソースファイル"
 msgid "String to find:"
 msgstr "検索する文字列:"
 
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:617
-#, c-format
-msgid "Subclass '%s' not found for resource '%s', not subclassing!"
-msgstr "サブクラス '%s' がリソース '%s' に見つかりません。"
-
 #: ../src/resources/xrc_strings.h:121
 msgid "Team's email address:"
 msgstr "翻訳チームのメールアドレス:"
@@ -794,7 +793,7 @@ msgstr "翻訳チームのメールアドレス:"
 msgid "Team:"
 msgstr "翻訳チーム:"
 
-#: ../src/catalog.cpp:603
+#: ../src/catalog.cpp:611
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -805,18 +804,24 @@ msgstr ""
 "ができませんでした。\n"
 "代わりに UTF-8 へ設定を変更して保存しました。"
 
-#: ../src/resources/xrc_strings.h:134
-msgid "These strings are no longer in the sources.\n"
+#: ../src/resources/xrc_strings.h:135
+msgid ""
+"These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
-msgstr "これらの文字列はソースファイル中に存在しませんでした。poEdit はカタログからそれらの文字列を取り除きます。"
+msgstr ""
+"これらの文字列はソースファイル中に存在しませんでした。poEdit はカタログからそ"
+"れらの文字列を取り除きます。"
 
-#: ../src/resources/xrc_strings.h:132
-msgid "These strings were found in the sources but were not in the catalog.\n"
+#: ../src/resources/xrc_strings.h:133
+msgid ""
+"These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
-msgstr "これらの文字列はソースファイル中に存在しますが、カタログにありませんでした。\n"
+msgstr ""
+"これらの文字列はソースファイル中に存在しますが、カタログにありませんでし"
+"た。\n"
 "poEdit はカタログにそれらの文字列を加えます。"
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:141
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -826,7 +831,7 @@ msgstr ""
 "名前とメールアドレスを設定してください。\n"
 "(これらの情報はカタログファイルのヘッダとしてのみ利用されます)"
 
-#: ../src/resources/xrc_strings.h:103
+#: ../src/resources/xrc_strings.h:105
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -836,20 +841,24 @@ msgstr ""
 "出力ファイルの名前はキーワードのリストと\n"
 "入力ファイルのリストに展開されます。 (以下を見てください)"
 
-#: ../src/resources/xrc_strings.h:107
+#: ../src/resources/xrc_strings.h:109
 #, c-format
-msgid "This will be attached to the command line once\n"
+msgid ""
+"This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
-msgstr "これは各入力ファイル用にコマンドラインが利用します。\n"
+msgstr ""
+"これは各入力ファイル用にコマンドラインが利用します。\n"
 "%f はファイル名に展開されます。"
 
-#: ../src/resources/xrc_strings.h:105
-msgid "This will be attached to the command line once\n"
+#: ../src/resources/xrc_strings.h:107
+msgid ""
+"This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
-msgstr "これは各キーワード用にコマンドラインが利用します。\n"
+msgstr ""
+"これは各キーワード用にコマンドラインが利用します。\n"
 "%k はキーワードに展開されます。"
 
-#: ../src/resources/xrc_strings.h:143
+#: ../src/resources/xrc_strings.h:150
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "選択した文字列をファジー翻訳に設定"
 
@@ -861,25 +870,40 @@ msgstr "トータル"
 msgid "Translation"
 msgstr "翻訳された文字列"
 
-#: ../src/resources/xrc_strings.h:89
+#: ../src/resources/xrc_strings.h:91
 msgid "Translation Memory"
 msgstr "翻訳の記憶"
+
+#: ../src/transmemupd_wizard.cpp:136
+msgid "Translation files (*.po;*.mo)|*.po;*.mo"
+msgstr ""
+
+#: ../src/transmemupd_wizard.cpp:134
+msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:40
 msgid "Translation is &fuzzy"
 msgstr "ファジー翻訳 (&F)"
 
-#: ../src/resources/xrc_strings.h:138
+#: ../src/resources/xrc_strings.h:144
+msgid ""
+"Translation memory will be built from the files listed bellow.\n"
+"You can add more files to the list now."
+msgstr ""
+
+#: ../src/chooselang.cpp:59
+#, c-format
+msgid "Uknown locale code '%s' in registry."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:139
 msgid "Undo"
 msgstr "アンドゥ"
 
-#: ../src/resources/xrc_strings.h:66
+#: ../src/resources/xrc_strings.h:70
 msgid "Unix"
 msgstr "Unix"
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:686
-msgid "Unknown style flag "
-msgstr "未知の形式のフラグ"
 
 #: ../src/manager.cpp:221
 msgid "Untrans"
@@ -889,92 +913,74 @@ msgstr "翻訳できない"
 msgid "Update all catalogs in the project"
 msgstr "プロジェクトのすべてのカタログを更新する"
 
-#: ../src/resources/xrc_strings.h:141
+#: ../src/resources/xrc_strings.h:148
 msgid "Update catalog - synchronize it with sources"
 msgstr "カタログの更新 - ソースと同期させる"
 
-#: ../src/resources/xrc_strings.h:131
+#: ../src/resources/xrc_strings.h:44
+msgid "Update from &POT file..."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:132
 msgid "Update summary"
 msgstr "サマリを更新中..."
 
-#: ../src/resources/xrc_strings.h:115
-#: ../src/catalog.cpp:687
+#: ../src/resources/xrc_strings.h:140
+#, fuzzy
+msgid "Update translation memory"
+msgstr "翻訳の記憶を更新しています..."
+
+#: ../src/catalog.cpp:695
 msgid "Updating catalog..."
 msgstr "カタログを更新中..."
 
-#: ../src/edframe.cpp:811
+#: ../src/edframe.cpp:839
 msgid "Updating the catalog failed. Click on 'More>>' for details."
-msgstr "カタログの更新に失敗しました。詳細を見るには 'More>>' をクリックしてください。"
+msgstr ""
+"カタログの更新に失敗しました。詳細を見るには 'More>>' をクリックしてくださ"
+"い。"
 
-#: ../src/prefsdlg.cpp:335
+#: ../src/transmemupd_wizard.cpp:216
 msgid "Updating translation memory"
 msgstr "翻訳の記憶を更新しています..."
 
-#: ../src/resources/xrc_strings.h:127
-msgid "Use these keywords (function names) to recognize translatable strings\n"
+#: ../src/resources/xrc_strings.h:128
+msgid ""
+"Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
-msgstr "ソースファイル中の翻訳可能な文字列を認識するために\n"
+msgstr ""
+"ソースファイル中の翻訳可能な文字列を認識するために\n"
 "デフォルトものに加えて、これらのキーワード(関数名)を使用してください。"
 
-#: ../src/resources/xrc_strings.h:67
+#: ../src/resources/xrc_strings.h:71
 msgid "Windows"
 msgstr "Windows"
 
-#: ../extras/wx-contrib/src/xrc/xml.cpp:530
-#, c-format
-msgid "XML parsing error: '%s' at line %d"
-msgstr "XML 解析エラー: '%s' の行番号 %d"
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:455
-#, c-format
-msgid "XRC resource '%s' (class '%s') not found!"
-msgstr "XRC リソース '%s' (class '%s') が見つかりません！"
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:857
-#, c-format
-msgid "XRC resource: Cannot create bitmap '%s'."
-msgstr "XRC リソース: ビットマップファイル '%s' を作成できません。"
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:846
-#, c-format
-msgid "XRC resource: Failed to open bitmap file '%s'."
-msgstr "XRC リソース: ビットマップファイル '%s' を開けません。."
-
-#: ../extras/wx-contrib/src/xrc/xmlres.cpp:806
-#, c-format
-msgid "XRC resource: Incorrect colour specification '%s' for property '%s'."
-msgstr "XRC リソース: '%s' のプロパティ '%s' は間違った設定です。"
-
-#: ../src/edframe.cpp:676
+#: ../src/edframe.cpp:683
 msgid "You can't drop more than one file on poEdit window."
 msgstr "これ以上 poEdit にファイルをドロップできません。"
 
-#: ../src/resources/xrc_strings.h:57
+#: ../src/chooselang.cpp:130
+msgid "You must restart poEdit for this change to take effect."
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:59
 msgid "Your e-mail address:"
 msgstr "メールアドレス:"
 
-#: ../src/resources/xrc_strings.h:56
+#: ../src/resources/xrc_strings.h:58
 msgid "Your name:"
 msgstr "名前:"
 
-#: ../src/resources/xrc_strings.h:69
+#: ../src/resources/xrc_strings.h:73
 msgid "current platform's default"
 msgstr "現在のプラットフォームのデフォルト値"
 
-#: ../src/resources/xrc_strings.h:73
-msgid "nedit -line %l %f"
-msgstr "nedit -line %l %f"
-
-#: ../src/edframe.cpp:1485
+#: ../src/edframe.cpp:1535
 msgid "none"
 msgstr "なし"
 
-#: ../src/resources/xrc_strings.h:74
-#, c-format
-msgid "notepad %f"
-msgstr "notepad %f"
-
-#: ../src/edframe.cpp:399
+#: ../src/edframe.cpp:409
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -982,19 +988,91 @@ msgstr "poEdit"
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - カタログマネージャ"
 
-#: ../src/edapp.cpp:125
+#: ../src/edapp.cpp:128
 msgid "poEdit Error"
 msgstr "poEdit エラー"
 
 #: ../src/digger.cpp:123
 msgid "poEdit did not find any files in scanned directories."
-msgstr "poEdit は検索対象ディレクトリにおいてファイルを見つけられませんでした。"
+msgstr ""
+"poEdit は検索対象ディレクトリにおいてファイルを見つけられませんでした。"
 
-#: ../src/edapp.cpp:52
-msgid "poEdit installation is broken, cannot find application's home directory."
-msgstr "poEdit のインストールが破損しています。アプリケーションのホームディレクトリが見つかりません。"
+#: ../src/edapp.cpp:53
+msgid ""
+"poEdit installation is broken, cannot find application's home directory."
+msgstr ""
+"poEdit のインストールが破損しています。アプリケーションのホームディレクトリが"
+"見つかりません。"
 
-#: ../src/edframe.cpp:1500
+#: ../src/edframe.cpp:1550
 msgid "version"
 msgstr "バージョン"
 
+#~ msgid "Cannot convert dialog units: dialog unknown."
+#~ msgstr "ダイアログユニットを変換できません: 未知のダイアログ。"
+
+#~ msgid "Cannot find container for unknown control '%s'."
+#~ msgstr "未知のコントロール '%s' のコンテナが見つかりません。"
+
+#~ msgid "Cannot find font node '%s'."
+#~ msgstr "フォントノード '%s' が見つかりません。"
+
+#~ msgid "Cannot load resources from file '%s'."
+#~ msgstr "ファイル '%s' からリソースを読み込めません。."
+
+#~ msgid "Cannot open file '%s'."
+#~ msgstr "ファイル '%s' を開けません。"
+
+#~ msgid "Cannot parse coordinates from '%s'."
+#~ msgstr "'%s' からの座標を解析できません。."
+
+#~ msgid "Cannot parse dimension from '%s'."
+#~ msgstr "'%s' からの範囲を読み込めません。"
+
+#~ msgid "Invalid XRC resource '%s': doesn't have root node 'resource'."
+#~ msgstr "無効な XRC リソース '%s': ルートノード 'resource' がありません。"
+
+#~ msgid "No handler found for XML node '%s', class '%s'!"
+#~ msgstr "XML ノード '%s', クラス '%s' の為のハンドラが見つかりません！!"
+
+#~ msgid "Referenced object node with ref=\"%s\" not found!"
+#~ msgstr "ref=\"%s\" と共に参照されたオブジェクトノードが見つかりません！"
+
+#~ msgid "Resource files must have same version number!"
+#~ msgstr "リソースファイルはバージョン番号を持っていなければなりません！"
+
+#~ msgid "Subclass '%s' not found for resource '%s', not subclassing!"
+#~ msgstr "サブクラス '%s' がリソース '%s' に見つかりません。"
+
+#~ msgid "Unknown style flag "
+#~ msgstr "未知の形式のフラグ"
+
+#~ msgid "XML parsing error: '%s' at line %d"
+#~ msgstr "XML 解析エラー: '%s' の行番号 %d"
+
+#~ msgid "XRC resource '%s' (class '%s') not found!"
+#~ msgstr "XRC リソース '%s' (class '%s') が見つかりません！"
+
+#~ msgid "XRC resource: Cannot create bitmap '%s'."
+#~ msgstr "XRC リソース: ビットマップファイル '%s' を作成できません。"
+
+#~ msgid "XRC resource: Failed to open bitmap file '%s'."
+#~ msgstr "XRC リソース: ビットマップファイル '%s' を開けません。."
+
+#~ msgid "XRC resource: Incorrect colour specification '%s' for property '%s'."
+#~ msgstr "XRC リソース: '%s' のプロパティ '%s' は間違った設定です。"
+
+#~ msgid "&Update catalog"
+#~ msgstr "カタログの更新(&U)"
+
+#~ msgid "File '%s' doesn't exist!"
+#~ msgstr "ファイル '%s' は存在しません！"
+
+#~ msgid "Listing files..."
+#~ msgstr "ファイルを編成中..."
+
+#~ msgid "nedit -line %l %f"
+#~ msgstr "nedit -line %l %f"
+
+#~ msgid "notepad %f"
+#~ msgstr "notepad %f"
