@@ -1,0 +1,608 @@
+
+/*
+
+    poedit, a wxWindows i18n catalogs editor
+
+    ---------------
+      catalog.cpp
+    
+      Translations catalog
+    
+      (c) Vaclav Slavik, 1999
+
+*/
+
+
+#ifdef __GNUG__
+#pragma implementation
+#endif
+
+
+#include <stdio.h>
+#include <wx/utils.h>
+#include <wx/tokenzr.h>
+#include <wx/log.h>
+#include <wx/intl.h>
+#include <wx/datetime.h>
+#include <wx/encconv.h>
+#include <wx/fontmap.h>
+#include <wx/config.h>
+
+#include "catalog.h"
+#include "digger.h"
+#include "gexecute.h"
+#include "progressinfo.h"
+#include "summarydlg.h"
+
+// textfile processing utilities:
+
+
+// Read one line from file, remove all \r and \n characters, ignore empty lines
+static wxString ReadTextLine(FILE *f)
+{
+    int c;
+    wxString s;
+    
+    while ((c = fgetc(f)) != EOF)
+    {
+        if (c == '\r' || c == '\n')
+        {
+            if (!s.IsEmpty()) break;
+        }
+        else s << (char) c;
+    }
+    return s;
+}
+
+
+
+// If input begins with pattern, fill output with end of input (without pattern; strips trailing spaces) 
+// and return true.
+// Return false otherwise and don't touch output
+static bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
+{
+    if (input.Length() < pattern.Length()) return false;
+    
+    for (unsigned i = 0; i < pattern.Length(); i++)
+        if (input[i] != pattern[i]) return false;
+    output = input.Mid(pattern.Length()).Strip(wxString::trailing);
+    return true;
+}
+
+
+
+
+
+// Catalog class:
+
+#include "wx/arrimpl.cpp"
+WX_DEFINE_OBJARRAY(CatalogDataArray)
+        
+        
+
+Catalog::Catalog()
+{
+    m_Data = new wxHashTable(wxKEY_STRING);
+    m_Count = 0;
+    m_IsOk = true;
+    m_Header.BasePath = "";
+    m_FileEncoding = m_MemEncoding = wxFONTENCODING_SYSTEM;
+}
+
+
+
+Catalog::~Catalog() 
+{
+    Clear();
+    delete m_Data;
+}
+
+
+
+Catalog::Catalog(const wxString& po_file)
+{
+    m_Data = NULL;
+    m_Count = 0;
+    m_IsOk = false;
+    Load(po_file);
+}
+
+
+
+bool Catalog::Load(const wxString& po_file)
+{
+    FILE *f;
+    wxString line, dummy;
+    CatalogData *d = NULL;
+    wxString mstr, mtrans, mflags;
+
+    Clear();
+    delete m_Data; m_Data = NULL;    
+    m_Count = 0;
+    m_IsOk = false;
+    m_FileName = po_file;
+    m_FileEncoding = m_MemEncoding = wxFONTENCODING_SYSTEM;
+    
+    m_Header.BasePath = "";
+
+    f = fopen((po_file + ".poedit").c_str(), "rt");
+    
+    if (f != NULL)
+    {
+        // poedit header (optional, we should be able to read any catalog):
+        ReadTextLine(f);
+        if (ReadParam(ReadTextLine(f), "#. Number of items: ", dummy))
+        {
+            long sz;
+            dummy.ToLong(&sz);
+            if (sz == 0) sz = 500;
+            m_Data = new wxHashTable(wxKEY_STRING, 2 * sz /*optimal hash table size*/);
+        }
+        else
+            m_Data = new wxHashTable(wxKEY_STRING);
+        ReadParam(ReadTextLine(f), "#. Language: ", m_Header.Language);
+        ReadParam(ReadTextLine(f), "#. Basepath: ", m_Header.BasePath);
+
+        if (ReadParam(ReadTextLine(f), "#. Paths: ", dummy))
+        {
+            long sz;
+            dummy.ToLong(&sz);
+            for (; sz > 0; sz--)
+            if (ReadParam(ReadTextLine(f), "#.     ", dummy))
+                m_Header.SearchPaths.Add(dummy);
+        }
+
+        if (ReadParam(ReadTextLine(f), "#. Keywords: ", dummy))
+        {
+            long sz;
+            dummy.ToLong(&sz);
+            for (; sz > 0; sz--)
+            if (ReadParam(ReadTextLine(f), "#.     ", dummy))
+                m_Header.Keywords.Add(dummy);
+        }
+
+        fclose(f);
+    }
+    else
+        m_Data = new wxHashTable(wxKEY_STRING);
+
+    f = fopen(po_file.c_str(), "rt");
+    if (f == NULL) return false;
+
+    d = new CatalogData("", "");
+       
+    // data - msgid/msgstr couples    
+    line = ReadTextLine(f);
+    while (!line.IsEmpty())
+    {
+        // flags:
+        if (ReadParam(line, "#, ", dummy))
+        {
+            mflags = "#, " + dummy;
+            line = ReadTextLine(f);
+        }
+        
+        // references:
+        if (ReadParam(line, "#: ", dummy))
+        {
+            wxStringTokenizer tkn(dummy, "\t\r\n ");
+            
+            while (tkn.HasMoreTokens())
+                d->AddReference(tkn.GetNextToken());
+            line = ReadTextLine(f);
+        }
+        
+        // msgid:
+        else if (ReadParam(line, "msgid \"", dummy))
+        {
+            mstr = dummy.RemoveLast();
+            while (!(line = ReadTextLine(f)).IsEmpty())
+            {
+                if (line[0] == '"' && line.Last() == '"')
+                    mstr += line.Mid(1, line.Length() - 2);
+                else break;
+            }
+        }
+        
+        // msgstr:
+        else if (ReadParam(line, "msgstr \"", dummy))
+        {
+            mtrans = dummy.RemoveLast();
+            while (!(line = ReadTextLine(f)).IsEmpty())
+            {
+                if (line[0] == '"' && line.Last() == '"')
+                    mtrans += line.Mid(1, line.Length() - 2);
+                else break;
+            }
+
+            if (mstr.IsEmpty())
+            {
+                // gettext header:
+                mtrans.Replace("\\n", "\n");
+                wxStringTokenizer tkn(mtrans, "\n");
+                wxString dummy2, ln2;
+                
+                while (tkn.HasMoreTokens())
+                {
+                    ln2 = tkn.GetNextToken();
+                    ReadParam(ln2, "Project-Id-Version: ", m_Header.Project);
+                    ReadParam(ln2, "POT-Creation-Date: ", m_Header.CreationDate);
+                    ReadParam(ln2, "PO-Revision-Date: ", m_Header.RevisionDate);
+                    if (ReadParam(ln2, "Last-Translator: ", dummy2))
+                    {
+                        wxStringTokenizer tkn2(dummy2, "<>");
+                        if (tkn2.CountTokens() != 2) wxLogWarning(_("Corrupted translator record, please correct in Catalog/Settings"));
+                        m_Header.Translator = tkn2.GetNextToken().Strip(wxString::trailing);
+                        m_Header.TranslatorEmail = tkn2.GetNextToken();
+                    }
+                    if (ReadParam(ln2, "Language-Team: ", dummy2))
+                    {
+                        wxStringTokenizer tkn2(dummy2, "<>");
+                        if (tkn2.CountTokens() != 2) wxLogWarning(_("Corrupted team record, please correct in Catalog/Settings"));
+                        m_Header.Team = tkn2.GetNextToken().Strip(wxString::trailing);
+                        m_Header.TeamEmail = tkn2.GetNextToken();
+                    }
+                    ReadParam(ln2, "Content-Type: text/plain; charset=", m_Header.Charset);
+                } 
+
+                delete d;
+                d = new CatalogData("", "");
+            }
+            else
+            {
+                if (!mflags.IsEmpty()) d->SetFlags(mflags);
+                d->SetString(mstr);
+                d->SetTranslation(mtrans);
+                m_Data->Put(mstr, d);
+                m_DataArray.Add(d);
+                m_Count++;
+                d = new CatalogData("", "");
+                mstr = mtrans = mflags = wxEmptyString;
+            }
+        }
+        
+        else
+            line = ReadTextLine(f);
+    }
+    
+    if (d) delete d;
+    m_IsOk = true;
+    
+    fclose(f);
+    
+    // try to reencode it to platform's encoding
+    wxFontMapper fmap;
+    wxFontEncoding enc_in = fmap.CharsetToEncoding(m_Header.Charset, false);
+    if (enc_in == wxFONTENCODING_SYSTEM) return true;
+    wxFontEncodingArray equi = 
+        wxEncodingConverter::GetPlatformEquivalents(enc_in);
+    if (equi.GetCount() == 0) return true;
+    wxFontEncoding enc_out = equi[0];
+
+    m_MemEncoding = enc_out;
+    m_FileEncoding = enc_in;
+    if (enc_out == enc_in) return true;
+
+    wxEncodingConverter encconv;
+    if (!encconv.Init(enc_in, enc_out)) return true;
+    
+    for (size_t i = 0; i < m_DataArray.GetCount(); i++)
+    {
+        m_DataArray[i].SetTranslation(
+                 encconv.Convert(m_DataArray[i].GetTranslation()));
+    }
+    
+    return true;
+}
+
+
+
+void Catalog::Clear()
+{
+    delete m_Data; 
+    m_DataArray.Empty();
+    m_IsOk = true;
+    m_Count = 0;
+    m_Data = new wxHashTable(wxKEY_STRING);
+}
+
+
+
+bool Catalog::Save(const wxString& po_file, bool save_mo)
+{
+    CatalogData *data;
+    wxString dummy;
+    unsigned i;
+    FILE *f;
+    wxEncodingConverter encconv;
+
+    wxFontMapper fmap;
+    if (m_FileEncoding != wxFONTENCODING_SYSTEM)
+        m_FileEncoding = fmap.CharsetToEncoding(m_Header.Charset, false);
+    if (m_FileEncoding != m_MemEncoding)
+    {
+        if (!encconv.Init(m_MemEncoding, m_FileEncoding))
+        {
+            wxLogError(_("Cannot save in encoding '%s', please change it."),
+                       m_Header.Charset.c_str());
+            return false;
+        }
+    }
+  
+    wxDateTime timenow = wxDateTime::Now();
+    m_Header.RevisionDate = timenow.Format("%Y-%m-%d %H:%M%z");
+
+    if (!m_Header.Language.IsEmpty() || 
+        !m_Header.BasePath.IsEmpty() || 
+        m_Header.SearchPaths.GetCount() > 0 ||
+        m_Header.Keywords.GetCount() > 0)
+    // save extended info only when really used:
+    {    
+        f = fopen((po_file + ".poedit").c_str(), "wt");
+        if (f == NULL) return false;
+
+        dummy.Printf("#. This catalog was generated by poedit\n"
+                     "#. Number of items: %i\n"
+                     "#. Language: " + m_Header.Language + "\n"
+                     "#. Basepath: " + m_Header.BasePath + "\n"
+                     "#. Paths: %i\n", 
+                     GetCount(), 
+                     m_Header.SearchPaths.GetCount());
+        fprintf(f, dummy.c_str());
+        for (i = 0; i < m_Header.SearchPaths.GetCount(); i++)
+            fprintf(f, "#.     %s\n", m_Header.SearchPaths[i].c_str());
+
+        dummy.Printf("#. Keywords: %i\n", m_Header.Keywords.GetCount());
+        fprintf(f, dummy.c_str());
+        for (i = 0; i < m_Header.Keywords.GetCount(); i++)
+            fprintf(f, "#.     %s\n", m_Header.Keywords[i].c_str());
+        fclose(f);
+    }
+
+    f = fopen(po_file.c_str(), "wt");
+    if (f == NULL) return false;
+
+    dummy =      
+                 "msgid \"\"\n"
+                 "msgstr \"\"\n"
+                 "\"Project-Id-Version: " + m_Header.Project + "\\n\"\n"
+                 "\"POT-Creation-Date: " + m_Header.CreationDate + "\\n\"\n"
+                 "\"PO-Revision-Date: " + m_Header.RevisionDate + "\\n\"\n"
+                 "\"Last-Translator: " + m_Header.Translator + " <" + m_Header.TranslatorEmail + ">\\n\"\n"
+                 "\"Language-Team: " + m_Header.Team + " <" + m_Header.TeamEmail + ">\\n\"\n"
+                 "\"MIME-Version: 1.0\\n\"\n"
+                 "\"Content-Type: text/plain; charset=" + m_Header.Charset + "\\n\"\n"
+                 "\"Content-Transfer-Encoding: 8-bit\\n\"\n"
+                 "\n";
+    fprintf(f, dummy.c_str());
+
+    for (i = 0; i < m_DataArray.GetCount(); i++)
+    {
+        data = &(m_DataArray[i]);
+        for (unsigned i = 0; i < data->GetReferences().GetCount(); i++)
+            fprintf(f, "#: %s\n", data->GetReferences()[i].c_str());
+        dummy = data->GetFlags();
+        if (!dummy.IsEmpty())
+            fprintf(f, "%s\n", dummy.c_str());
+        dummy = data->GetString();
+        dummy.Replace("\n", "\"\n\"");
+        fprintf(f, "msgid \"%s\"\n", dummy.c_str());
+        dummy = data->GetTranslation();
+        dummy.Replace("\n", "\"\n\"");
+        if (m_FileEncoding != m_MemEncoding)
+            fprintf(f, "msgstr \"%s\"\n\n", encconv.Convert(dummy).c_str());
+        else
+            fprintf(f, "msgstr \"%s\"\n\n", dummy.c_str());
+    }
+    
+    fclose(f);
+    
+    if (save_mo && wxConfig::Get()->Read("compile_mo", true))
+        ExecuteGettext("msgfmt -o " + po_file.BeforeLast('.') + ".mo " + po_file);
+
+    m_FileName = po_file;
+    
+    return true;
+}
+
+
+
+bool Catalog::Update()
+{
+    if (!m_IsOk) return false;
+
+    ProgressInfo pinfo;
+    pinfo.SetTitle(_("Updating catalog..."));
+
+    wxString cwd = wxGetCwd();
+    if (m_FileName != "") 
+    {
+        wxString path;
+        
+        if (wxIsAbsolutePath(m_Header.BasePath))
+            path = m_Header.BasePath;
+        else
+            path = wxPathOnly(m_FileName) + "/" + m_Header.BasePath;
+        
+        if (wxIsAbsolutePath(path))
+            wxSetWorkingDirectory(path);
+        else
+            wxSetWorkingDirectory(cwd + "/" + path);
+    }
+    
+    SourceDigger dig(&pinfo);
+    Catalog *newcat = dig.Dig(m_Header.SearchPaths, m_Header.Keywords);
+
+    if (newcat != NULL) 
+    {
+        pinfo.UpdateMessage(_("Merging differences..."));
+
+        if (wxConfig::Get()->Read("show_summary", true))
+	{
+	    wxArrayString snew, sobsolete;
+	    GetMergeSummary(newcat, snew, sobsolete);
+	    MergeSummaryDialog sdlg;
+	    sdlg.TransferTo(snew, sobsolete);
+	    if (sdlg.ShowModal() == wxID_OK)
+                Merge(newcat);
+	    else
+	    {
+	        delete newcat; newcat = NULL;
+	    }
+	}
+	else
+            Merge(newcat);
+    }
+    
+    wxSetWorkingDirectory(cwd);
+    
+    if (newcat == NULL) return false;
+  
+    delete newcat;
+    return true;
+}
+
+
+
+void Catalog::Merge(Catalog *refcat)
+{
+    wxString oldname = m_FileName;
+    wxString tmp1 = wxGetTempFileName("poedit"),
+             tmp2 = wxGetTempFileName("poedit"),
+             tmp3 = wxGetTempFileName("poedit");
+
+    refcat->Save(tmp1, false);
+    Save(tmp2, false);
+    
+    ExecuteGettext("msgmerge --force-po -o " + tmp3 + " " + tmp2 + " " + tmp1);
+
+    Catalog *c = new Catalog(tmp3);
+    Clear();
+    Append(*c);
+    delete c;
+
+    wxRemoveFile(tmp1);
+    wxRemoveFile(tmp2);
+    wxRemoveFile(tmp3);
+    wxRemoveFile(tmp1 + ".poedit");
+    wxRemoveFile(tmp2 + ".poedit");
+    
+    m_FileName = oldname;
+}
+
+
+
+void Catalog::GetMergeSummary(Catalog *refcat, 
+	                      wxArrayString& snew, wxArrayString& sobsolete)
+{
+    snew.Empty();
+    sobsolete.Empty();
+    unsigned i;
+    
+    for (i = 0; i < GetCount(); i++)
+        if (refcat->FindItem((*this)[i].GetString()) == NULL)
+	    sobsolete.Add((*this)[i].GetString());
+
+    for (i = 0; i < refcat->GetCount(); i++)
+        if (FindItem((*refcat)[i].GetString()) == NULL)
+	    snew.Add((*refcat)[i].GetString());
+}
+
+
+
+CatalogData* Catalog::FindItem(const wxString& key)
+{
+    return (CatalogData*) m_Data->Get(key);
+}
+
+
+
+bool Catalog::Translate(const wxString& key, const wxString& translation)
+{
+    CatalogData *d = FindItem(key);
+    
+    if (d == NULL) 
+        return false;
+    else
+    {
+        d->SetTranslation(translation);
+        return true;
+    }
+}
+
+
+
+void Catalog::Append(Catalog& cat)
+{
+    CatalogData *dt, *mydt;
+    
+    for (unsigned i = 0; i < cat.GetCount(); i++)
+    {
+        dt = &(cat[i]);
+        mydt = FindItem(dt->GetString());
+        if (mydt == NULL)
+        {
+            mydt = new CatalogData(*dt);
+            m_Data->Put(dt->GetString(), mydt);
+            m_DataArray.Add(mydt);
+            m_Count++;
+        }
+        else
+        {
+            for (unsigned j = 0; j < dt->GetReferences().GetCount(); j++)
+                mydt->AddReference(dt->GetReferences()[j]);
+            if (!dt->GetTranslation().IsEmpty())
+                mydt->SetTranslation(dt->GetTranslation());
+            if (dt->IsFuzzy()) mydt->SetFuzzy(true);
+        }
+    }
+}
+
+
+
+void Catalog::GetStatistics(int *all, int *fuzzy, int *untranslated)
+{
+    if (all) *all = 0;
+    if (fuzzy) *fuzzy = 0;
+    if (untranslated) *untranslated = 0;
+    for (size_t i = 0; i < GetCount(); i++)
+    {
+        if (all) (*all)++;
+        if ((*this)[i].IsFuzzy()) (*fuzzy)++;
+        if (!(*this)[i].IsTranslated()) (*untranslated)++;
+    }
+}
+
+
+
+
+
+
+void CatalogData::SetFlags(const wxString& flags)
+{
+    m_IsFuzzy = false;
+    m_MoreFlags.Empty();
+    
+    if (flags.IsEmpty()) return;
+    wxStringTokenizer tkn(flags.Mid(1), " ,", wxTOKEN_STRTOK);
+    wxString s;
+    while (tkn.HasMoreTokens())
+    {
+        s = tkn.GetNextToken();
+        if (s == "fuzzy") m_IsFuzzy = true;
+        else m_MoreFlags << ", " << s;
+    }
+}
+
+
+
+wxString CatalogData::GetFlags()
+{
+    wxString f;
+    if (m_IsFuzzy) f << ", fuzzy";
+    f << m_MoreFlags;
+    if (!f.IsEmpty()) 
+        return "#" + f;
+    else 
+        return wxEmptyString;
+}

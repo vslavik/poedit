@@ -1,0 +1,23 @@
+
+- progress bar (percentage of translated messgaes)
+
+- add a sample .po file
+
+- when writing date into po file, do not use %z, it is gnu
+  only. Instead, use wxDateTime and zone info to write it.
+
+- \n handling: when saving msgid and msgstr, replace \\n by \\n\n
+  and do the same thing when displaying it
+
+- "Search" dialog (with a checkbox "search in translated or
+  untranslated strings").
+
+- line numbers in the source file viewer. 
+
+- An entry to edit the file (with a configurable editor
+  as, apparently, not everybody likes vi ;-) would be nice
+  
+- [idea] incremental I/O:
+  when saving a catalog, do not overwrite the file but instead
+  _replace_ things in it, leaving things it doesn't understand 
+  (such as comments) untouched

@@ -1,0 +1,95 @@
+
+This file contains a brief description of poEdit's architecture.
+
+As for GUI part, wxWindows 2.2 is used, together with XML resources
+that describe dialogs, menu and toolbar.
+
+
+
+- Settings -
+
+Global preferences are saved in registry (win32) or ~/.poedit (unix).
+Catalog specific information is put into .po file (if it is part of
+standard gettext header, e.g. translator's name) or into .po.poedit file
+which is created only if there is a need to store additional information
+(the language used, directories & keywords lists needed for update 
+feature).
+
+
+
+- Data storage -
+
+The core class is Catalog. It stores all catalog data including header
+information and provides interface to save/load the catalog, retrieve
+and modify strings and their respective translations. It also keeps
+track of all references to given string in source code. The most important
+feature of this class is it's ability to parse (and save) gettext .po 
+catalog files.
+
+The Catalog class provides Update method that merges currently loaded
+catalog with source code (i.e. add new strings and remove obsolete 
+translations). For this, it uses SourceDigger class. 
+
+
+
+- Parsing source code -
+
+SourceDigger class searches given paths for all files poEdit can parse
+and runs parser(s) on them. As the result, SourceDigger returns new
+catalog with empty translations (so it contains only strings and 
+source code references). This catalog is merged with currently edited
+one by Catalog::Update (which is the only method that uses SourceDigger)
+-- it executes msgmerge program from gettext package to accomplish that.
+
+The digger has ability of executing different parsers based on file's
+extension, as specified in File/Preferences. Source digging works as
+follows:
+
+  1) list of all files is built
+  2) for each parser, list of files matching file types supported 
+     by given parser is built
+  3) for each parser, do:
+     i) divide files list into chunks of no more than 16 files
+        (because of OS' command line length limitation). For each
+	chunk, do
+	a) create command line based on File/Preferences/Parsers:
+	   Expand %f, %k, %F, %K as described in parser setting
+	   dialog
+        b) execute the command which will produce `mini' catalog
+	c) append returned `mini' catalog to these produced by
+	   previous iterations of i)
+
+
+
+- Executing programs -
+
+poEdit uses external programs to do `the real work', namely
+msgmerge, msgfmt and xgettext. gexecute.cpp contains process execution 
+routine that captures child process' stdout and stderr. (It takes big
+advantage of wxWindow's wxProcess class.) stderr output (if any) is
+then displayed in errors dialog. 
+
+
+
+- User interface -
+
+EditorFrame class. Uses Catalog class for all processing (loading, saving,
+updating). The only significant thing is it's special way of handling 
+list control: when an item is selected, focus is given to `translation'
+text control. The effect is that the user can use up/down arrows to 
+navigate in the list and immediately type in translations without need
+to press Tab or use mouse. List's content is updated when selection
+changes or when command event such as save or open is fired. Technically,
+KeysHandler event handler is plugged both into the list control and 
+text control so that it can make them cooperate (in list, it handles
+typing text, in textctrl it takes care of up/down/pgup/pgdown keys).
+
+
+- Settings dialogs -
+
+Both catalog settings and preferences dialogs use same technique:
+data are transfered to it from catalog or wxConfig immediately upon 
+creation (i.e. before showing the dialog) transfered from it if the 
+user presses "Ok". If the dialog is cancelled, no data need to be restored 
+to its original state.
+

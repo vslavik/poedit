@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>Preferences and Catalog Settings</title>
+</head>
+<body>
+
+<h1>Preferences and Catalog Settings</h1>
+
+
+<a name="prefs">
+<h3>Preferences Dialog</h3>
+
+(Available through <b>File/Preferences</b> in the menu.)
+<p>
+
+In preferences, you can
+<p>
+<ul>
+
+<li>Set your name and e-mail address. This is used to fill int
+`Last Translator' record in catalog's header.
+<p>
+
+<li>Affect poEdit's behavior -- enable or disable automatic 
+    .mo files saving and enable or disable showing of update summary.
+<p>
+
+<li>(Warning: for experienced users only!) Most importantly, you can 
+    edit source code parsers in this dialog. Parsers are used when
+    updating catalogs in poEdit (see <a href="update.html">Updating Catalog</a>)
+    and they take care of extracting strings from source code. By default
+    only C and C++ programming languages are supported (through
+    gettext <tt>xgettext</tt> utility). The dialog for editing parsers explains
+    in detail how to fill in required information -- if in doubt, refer to
+    C/C++ parser which may serve as a complex example of parser definition.
+
+</ul>
+
+
+
+<a name="catalog">
+<h3>Catalog Settings</h3>
+
+(Available through <b>Catalog/Settings</b> in the menu.)
+
+<p>
+This dialog lets you edit catalog specific settings. "Project info"
+page contains information from catalog's header and the only really
+important information here is the charset. 
+
+<p>
+"Paths" and "Keywords" pages are meaningful only if you are going to
+use the <a href="update.html">catalog update feature</a>. "Paths" page lets
+you specify in what directories should parsers look for source file. Note
+that the paths in list box are relative to the base path, so if you set 
+basepath to <tt>../../poEdit</tt> and add these two paths into the list box:
+<pre>
+src
+include
+</pre>
+
+it will recursively search for source files in following directories:
+<pre>
+../../poEdit/src
+../../poEdit/include
+</pre>
+
+The base path is relative to the directory where .po catalog file resists.
+
+<p>
+"Keywords" let you specify additional keywords understood by the parser.
+See <a href="gettext/intro.html">gettext documentation</a> for the meaning
+of keywords. By default, <tt>xgettext</tt> parser understands <tt>_</tt>,
+<tt>gettext</tt> and <tt>gettext_noop</tt> keywords. You may leave this
+page empty.
+
+<p>
+Note that specifying language or editing anything at "Paths" or "Keywords"
+panels will cause poEdit to save .po.poedit file.
+
+</body>
+</html>

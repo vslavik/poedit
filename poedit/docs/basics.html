@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>poEdit and Gettext Basics</title>
+</head>
+<body>
+
+<h1>poEdit and Gettext Basics</h1>
+
+
+<h3>gettext</h3>
+
+This introduction is meant for novice users who knows nothing about
+GNU gettext. For more details, see <a href="gettext/index.html">GNU gettext 
+documentation</a> (note that it refers to Emacs text editor in many
+places so parts of it do not apply to poEdit).
+
+The following summary explains terminology:
+
+<dl>
+
+<dt><b>Catalogs</b></dt>
+                <dd>
+                Translations are stored in catalogs (files with .po extension).
+                A catalog contains header (you can fill header information
+                in <a href="settings.html#catalog">settings dialog</a>)
+                and translations. Translations consists of two strings:
+                original text (usually in English) and matching translation.
+                </dd>
+
+<dt><b>.mo files</b></dt>
+                <dd>
+                .mo file is compiled version of text-based .po catalog.
+                poEdit creates it by default (you can disable this in
+                <a href="settings.html#prefs">preferences dialog</a>).
+                </dd>
+
+<dt><b>References</b></dt>
+                <dd>
+                Reference is a place in source code where original string
+                appears. Sometimes it is neccessary to consult the meaning
+                of original text with the source file.
+                </dd>
+
+<dt><b>Fuzzy translation</b></dt>
+                <dd>
+                Fuzzy translation is incomplete, inaccurate translation.
+                There are two ways how a translation may become fuzzy:
+                either you mark it as such (for example because you are
+                unsure about its correctness) or the gettext utility
+                <tt>msgmerge</tt> marks it when 
+                <a href="update.html">updating the catalog</a>.
+                </dd>
+</dl>
+
+
+<h3>poEdit</h3>
+
+poEdit serves as a front-end to gettext. It allows you to edit 
+catalog files in comfortable way. 
+
+<p>
+In addition to .po file, poEdit saves .po.poedit file with additional
+information needed for updating. This file is not created if you did
+not edit language, keywords or paths in 
+<a href="settings.html#catalog">catalog settings dialog</a>).
+
+
+</body>
+</html>

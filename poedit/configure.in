@@ -1,0 +1,86 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(aclocal.m4)
+
+AC_CANONICAL_SYSTEM
+
+AM_INIT_AUTOMAKE(poedit, '1.0.1', avoid_defining_package_and_version)
+
+AC_ARG_ENABLE(debug, [  --enable-debug          Enables debugging information],
+              USE_DEBUG="1", USE_DEBUG="")
+
+
+AC_MSG_CHECKING(for install location)
+case "$prefix" in
+NONE)	AC_CACHE_VAL(m_cv_prefix,m_cv_prefix=$ac_default_prefix);;
+*)	m_cv_prefix=$prefix ;;
+esac
+AC_MSG_RESULT($m_cv_prefix)
+case "$m_cv_prefix" in /*) ;; *)
+	AC_MSG_WARN([--prefix=$prefix must be an absolute path name, using $ac_default_prefix])
+	m_cv_prefix=$ac_default_prefix
+esac
+prefix=$m_cv_prefix
+
+dnl Checks for programs.
+AC_PROG_AWK
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_CXXCPP
+
+
+case "$USE_DEBUG" in
+1)	DEBUG_FLAGS="-g"
+    WX_CONFIG="wxgtkd-config"
+    ;;    
+*)	DEBUG_FLAGS="-O3"
+    ;;
+esac
+
+
+
+WX_PATH_WXCONFIG(2.2.0, WXFOUND=1)
+if test "$WXFOUND" != 1; then
+    AC_MSG_ERROR([
+        Please check that wx-config is in path, the directory
+        where wxWindows libraries are installed (returned by
+        'wx-config --libs' command) is in LD_LIBRARY_PATH or
+        equivalent variable and wxWindows is version 2.2.0 or above.
+    ])
+fi
+
+
+
+
+dnl check for wxrc
+WXRC_NAME=wxrc
+# FIXME - better check for wxxmlrc
+WXRC=$WXRC_NAME	# Bug in autoconf?
+AC_PATH_PROG(WXRC,$WXRC_NAME)
+case "$WXRC" in '')
+	AC_MSG_ERROR([cannot find $WXRC_NAME program needed for resources
+    compilation.  If it's not in the standard PATH, use the
+	--with-wxrc option to specify it.])
+esac
+
+AC_SUBST(WXRC)
+
+
+CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS $WX_CFLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
+
+LDFLAGS="$LDFLAGS $WX_LIBS"
+LIBS="-lwxxml -lwxxmlrc"
+
+FIND_KDE
+FIND_GNOME
+
+
+
+AC_OUTPUT([
+         Makefile
+         src/Makefile
+         docs/Makefile
+         install/Makefile
+         install/poedit.keys
+         ])
