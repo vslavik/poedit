@@ -135,7 +135,46 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
     return ok;
 }
 #endif
-            
+
+
+// converts \n into newline character and \\ into \:
+static wxString UnescapeCEscapes(const wxString& str)
+{
+    wxString out;
+    size_t len = str.size();
+    size_t i;
+    
+    for (i = 0; i < len-1; i++)
+    {
+        if (str[i] == _T('\\'))
+        {
+            switch (str[i+1])
+            {
+                case _T('n'):
+                    out << _T('\n');
+                    i++;
+                    break;
+                case _T('\\'):
+                    out << _T('\\');
+                    i++;
+                    break;
+                default:
+                    out << _T('\\');
+            }
+        }
+        else
+        {
+            out << str[i];
+        }
+    }
+
+    // last character:
+    if (i < len)
+        out << str[i];
+
+    return out;
+}
+
 
 // ----------------------------------------------------------------------
 // Catalog::HeaderData
@@ -144,8 +183,7 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
 void Catalog::HeaderData::FromString(const wxString& str)
 {
     wxString hdr(str);
-    hdr.Replace(_T("\\n"), _T("\n"));
-    hdr.Replace(_T("\\\\"), _T("\\"));
+    hdr = UnescapeCEscapes(hdr);
     wxStringTokenizer tkn(hdr, _T("\n"));
     wxString ln;
 
