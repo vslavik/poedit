@@ -2,6 +2,7 @@
 <resource version="2.3.0.1">
   <object class="wxDialog" name="about_box">
     <title>About poEdit</title>
+    <style>wxRESIZE_BORDER</style>
     <object class="wxBoxSizer">
       <orient>wxVERTICAL</orient>
       <object class="sizeritem">
@@ -22,8 +23,8 @@
         <border>5d</border>
       </object>
       <object class="sizeritem">
-        <object class="wxStaticText" name="about_poedit">
-          <label>version 1.1.10</label>
+        <object class="wxStaticText" name="version">
+          <style>wxALIGN_RIGHT</style>
           <font>
             <face>arial,helvetica</face>
             <size platform="unix">11</size>
@@ -31,7 +32,7 @@
             <weight>bold</weight>
           </font>
         </object>
-        <flag>wxRIGHT|wxALIGN_RIGHT</flag>
+        <flag>wxEXPAND|wxRIGHT|wxLEFT</flag>
         <border>5d</border>
       </object>
       <object class="sizeritem">

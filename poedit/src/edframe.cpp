@@ -1438,6 +1438,11 @@ void poEditFrame::OnAbout(wxCommandEvent&)
     wxBusyCursor busy;
     wxDialog dlg;
     wxXmlResource::Get()->LoadDialog(&dlg, this, _T("about_box"));
+    wxString version = wxString(_("version")) + _T(" ") + wxGetApp().GetAppVersion();
+    XRCCTRL(dlg, "version", wxStaticText)->SetLabel(version);
+                       
+    dlg.GetSizer()->RecalcSizes();
+    dlg.Layout();
     dlg.Centre();
     dlg.ShowModal();
 }
