@@ -649,6 +649,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     bool newfuzzy = GetToolBar()->GetToolState(XMLID("menu_fuzzy"));
     wxString key = (*m_Catalog)[ind].GetString();
     wxString newval = m_TextTrans->GetValue();
+    newval.Replace("\n", "");
     if (m_DisplayQuotes)
     {
         if (newval[0] == '"') newval.Remove(0, 1);
@@ -706,9 +707,14 @@ void poEditFrame::UpdateToTextCtrl(int item)
     if (ind >= (int)m_Catalog->GetCount()) return;
 
     wxString quote;
+    wxString t_o, t_t;
     if (m_DisplayQuotes) quote = "\""; else quote = "";
-    m_TextOrig->SetValue(quote + (*m_Catalog)[ind].GetString() + quote);
-    m_TextTrans->SetValue(quote + (*m_Catalog)[ind].GetTranslation() + quote);  
+    t_o = quote + (*m_Catalog)[ind].GetString() + quote;
+    t_o.Replace("\\n", "\\n\n");
+    m_TextOrig->SetValue(t_o);
+    t_t = quote + (*m_Catalog)[ind].GetTranslation() + quote;
+    t_t.Replace("\\n", "\\n\n");
+    m_TextTrans->SetValue(t_t);
     if (m_DisplayQuotes) m_TextTrans->SetInsertionPoint(1);
     GetToolBar()->ToggleTool(XMLID("menu_fuzzy"), (*m_Catalog)[ind].IsFuzzy());
     GetMenuBar()->Check(XMLID("menu_fuzzy"), (*m_Catalog)[ind].IsFuzzy());

@@ -389,10 +389,14 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         if (!dummy.IsEmpty())
             fprintf(f, "%s\n", dummy.c_str());
         dummy = data->GetString();
-        dummy.Replace("\n", "\"\n\"");
+        if (dummy.Find("\\n") != wxNOT_FOUND)
+            dummy = "\"\n\"" + dummy;
+        dummy.Replace("\\n", "\\n\"\n\"");
         fprintf(f, "msgid \"%s\"\n", dummy.c_str());
         dummy = data->GetTranslation();
-        dummy.Replace("\n", "\"\n\"");
+        if (dummy.Find("\\n") != wxNOT_FOUND)
+            dummy = "\"\n\"" + dummy;
+        dummy.Replace("\\n", "\\n\"\n\"");
         if (m_FileEncoding != m_MemEncoding)
             fprintf(f, "msgstr \"%s\"\n\n", encconv.Convert(dummy).c_str());
         else
