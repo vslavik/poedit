@@ -90,7 +90,7 @@ LanguageStruct isoLanguages[] =
     {_T("ku"), _T("Kurdish")},
     {_T("kv"), _T("Komi")},
     {_T("kw"), _T("Cornish")},
-    {_T("ky"), _T("Kirghiz")},
+    {_T("ky"), _T("Kyrgyz")},
 
     {_T("la"), _T("Latin")},
     {_T("lb"), _T("Letzeburgesch")},

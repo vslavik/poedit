@@ -99,6 +99,7 @@ wxLanguage ChooseLanguage()
         { _T("Italian"), wxLANGUAGE_ITALIAN },
         { _T("Japanese"), wxLANGUAGE_JAPANESE },
         { _T("Korean"), wxLANGUAGE_KOREAN },
+        { _T("Kyrgyz"), wxLANGUAGE_KIRGHIZ },
         { _T("Latvian"), wxLANGUAGE_LATVIAN },
         { _T("Lithuanian"), wxLANGUAGE_LITHUANIAN },
         { _T("Mongolian"), wxLANGUAGE_MONGOLIAN },
