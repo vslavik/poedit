@@ -8,7 +8,7 @@
     
       Shows part of file around specified line
     
-      (c) Vaclav Slavik, 2000
+      (c) Vaclav Slavik, 2000, 2004
 
 */
 
@@ -48,6 +48,8 @@ class FileViewer : public wxFrame
         /// Open file in an editor
         static void OpenInEditor(const wxString& basepath, 
                                  const wxString& reference);
+
+        bool FileOk() { return !m_current.empty(); }
         
     private:
         wxString m_basePath;

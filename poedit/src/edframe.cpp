@@ -1117,10 +1117,13 @@ void poEditFrame::ShowReference(int num)
     }
     else
     {
-        wxWindow *w = new FileViewer(this, basepath,
-                                     (*m_catalog)[m_selItem].GetReferences(),
-                                     num);
-        w->Show(true);
+        FileViewer *w = new FileViewer(this, basepath,
+                                       (*m_catalog)[m_selItem].GetReferences(),
+                                       num);
+        if (w->FileOk())
+            w->Show(true);
+        else
+            w->Close();
     }
 }
 

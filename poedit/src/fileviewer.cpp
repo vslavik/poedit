@@ -8,7 +8,7 @@
     
       Shows part of file around specified line
     
-      (c) Vaclav Slavik, 2000
+      (c) Vaclav Slavik, 2000, 2004
 
 */
 
