@@ -1,8 +1,6 @@
 
 *** version 1.0.2 ***
 
-- eliminated flicker when resizing poEdit window under (Windows)
-
 - fixed problem with localized versions of gettext (Unix)
 
 - fixed Content-Transfer-Encoding header (was "8-bit" instead of "8bit")
@@ -12,9 +10,9 @@
 - better handling of \n: strings with \n in them are now both
   displayed and saved to .po file as multiline records
 
-- saving catalog is now incremental: it only rewrites these
-  parts of the original catalog that were changed. Effects:
-  comments are preserved, file type (Unix/Dos/Mac) is preserved
+- saving catalog now preserves comments
+
+- fixed dist makefile target (Unix)
 
 
 

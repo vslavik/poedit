@@ -1,7 +1,7 @@
 # Purpose:  The .spec file for building poEdit RPM
 
 # version and release
-%define VERSION 1.0.1
+%define VERSION 1.0.2
 %define RELEASE 1
 
 

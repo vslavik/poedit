@@ -35,7 +35,7 @@ AC_PROG_CXXCPP
 
 
 case "$USE_DEBUG" in
-1)	DEBUG_FLAGS="-g"
+1)	DEBUG_FLAGS="-g -Wall"
 	WX_CONFIG="wxgtkd-config"
     ;;    
 *)	DEBUG_FLAGS="-O3"
