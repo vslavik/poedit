@@ -583,7 +583,6 @@ TranslationMemory *poEditFrame::GetTransMem()
                 lang += _T('_');
                 lang += LookupCountryCode(m_catalog->Header().Country.c_str());
             }
-            wxMessageBox(lang);
         }
         if (!lang)
         {
@@ -1212,8 +1211,10 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     
     RefreshControls();
     UpdateTitle();
-    
-    m_history.AddFileToHistory(m_fileName);
+   
+    wxFileName fn(m_fileName);
+    fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+    m_history.AddFileToHistory(fn.GetFullPath());
 }
 
 
