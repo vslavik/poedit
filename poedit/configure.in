@@ -22,6 +22,8 @@ if test "$build" != "$host" ; then
     LD=$host_alias-ld
     NM=$host_alias-nm
     STRIP=$host_alias-strip
+else
+    RESCOMP=windres
 fi
 
 AM_INIT_AUTOMAKE
