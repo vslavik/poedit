@@ -73,6 +73,7 @@ Source: locales\sk.mo; DestDir: {app}\share\locale\sk\LC_MESSAGES; Components: i
 Source: locales\sv_SE.mo; DestDir: {app}\share\locale\sv_SE\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\wxwin\sv.mo; DestDir: {app}\share\locale\sv_SE\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\ca.mo; DestDir: {app}\share\locale\ca\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\wxwin\ca.mo; DestDir: {app}\share\locale\ca\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\ka.mo; DestDir: {app}\share\locale\ka\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\ro.mo; DestDir: {app}\share\locale\ro\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\el.mo; DestDir: {app}\share\locale\el\LC_MESSAGES; Components: i18n; DestName: poedit.mo
