@@ -246,26 +246,28 @@ void poEditListCtrl::ReadCatalog()
         // property in the catalog entry to be able to go back and forth
         // from one numbering system to the other
         m_itemIndexToCatalogIndexArray.Alloc(m_catalog->GetCount());
+        m_catalogIndexToItemIndexArray.SetCount(m_catalog->GetCount());
         int listItemId = 0;
         for(i = 0; i < untranslatedIds.Count(); ++i)
         {
             m_itemIndexToCatalogIndexArray.Add(untranslatedIds[i]);
-            (*m_catalog)[untranslatedIds[i]].SetListItemId(listItemId++);
+            m_catalogIndexToItemIndexArray[untranslatedIds[i]] = listItemId++;
         }    
         for(i = 0; i < invalidIds.Count(); ++i)
         {
             m_itemIndexToCatalogIndexArray.Add(invalidIds[i]);
-            (*m_catalog)[invalidIds[i]].SetListItemId(listItemId++);
+            m_catalogIndexToItemIndexArray[invalidIds[i]] = listItemId++;
         }    
         for(i = 0; i < fuzzyIds.Count(); ++i)
         {
             m_itemIndexToCatalogIndexArray.Add(fuzzyIds[i]);
-            (*m_catalog)[fuzzyIds[i]].SetListItemId(listItemId++);
+            m_catalogIndexToItemIndexArray[fuzzyIds[i]] = listItemId++;
         }    
         for(i = 0; i < restIds.Count(); ++i)
         {
             m_itemIndexToCatalogIndexArray.Add(restIds[i]);
-            (*m_catalog)[restIds[i]].SetListItemId(listItemId++);
+            m_catalogIndexToItemIndexArray[restIds[i]] = listItemId++;
+//            (*m_catalog)[restIds[i]].SetListItemId(listItemId++);
         }    
     }    
 }    
@@ -362,5 +364,14 @@ long poEditListCtrl::GetItemData(long item) const
     else
         return -1;
 }    
+
+int poEditListCtrl::GetItemIndex(int catalogIndex) const
+{
+    if (catalogIndex < m_catalogIndexToItemIndexArray.Count())
+        return m_catalogIndexToItemIndexArray[catalogIndex];
+    else
+        return -1;
+}
+
 
 

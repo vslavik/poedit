@@ -59,7 +59,12 @@ class poEditListCtrl : public wxListView
         virtual wxListItemAttr * OnGetItemAttr(long item) const;
         virtual int OnGetItemImage(long item) const;
         
+        /// Overriden GetItemData that returns the catalog index
+        /// for the given item.
         long GetItemData(long item) const;
+        
+        /// Returns the list item index for the given catalog index
+        int GetItemIndex(int catalogIndex) const;
         
     private:
         DECLARE_EVENT_TABLE()
@@ -73,6 +78,7 @@ class poEditListCtrl : public wxListView
         Catalog* m_catalog;
         
         wxArrayInt m_itemIndexToCatalogIndexArray;
+        wxArrayInt m_catalogIndexToItemIndexArray;
 };
 
 #endif // _ED_LIST_CTRL_H_
