@@ -53,7 +53,7 @@ class MyPipedProcess : public wxProcess
             bool hasInput = false;
 
             wxInputStream* is = GetInputStream();
-            if (is && !is->Eof()) 
+            if (is && is->CanRead() && !is->Eof()) 
             {
                 wxTextInputStream tis(*is);
                 m_data->Stdout.Add(tis.ReadLine());
@@ -61,7 +61,7 @@ class MyPipedProcess : public wxProcess
             }
 
             wxInputStream* es = GetErrorStream();
-            if (es && !es->Eof()) 
+            if (es && es->CanRead() && !es->Eof()) 
             {
                 wxTextInputStream tis(*es);
                 m_data->Stderr.Add(tis.ReadLine());
