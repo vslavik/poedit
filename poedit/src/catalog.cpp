@@ -526,7 +526,7 @@ static wxString FormatStringForFile(const wxString& text)
     for (; i < len; i++)
         s << text[i];
     
-    if (n_cnt > 1)
+    if (n_cnt >= 1)
         return _T("\"\n\"") + s;
     else
         return s;
