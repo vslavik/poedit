@@ -124,6 +124,9 @@ class poEditFrame : public wxFrame
         void OnSaveAs(wxCommandEvent& event);
         void OnOpen(wxCommandEvent& event);
         void OnOpenHist(wxCommandEvent& event);
+#ifdef __WXMSW__
+        void OnFileDrop(wxDropFilesEvent& event);
+#endif
         void OnSettings(wxCommandEvent& event);
         void OnPreferences(wxCommandEvent& event);
         void OnUpdate(wxCommandEvent& event);

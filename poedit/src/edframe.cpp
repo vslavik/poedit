@@ -379,6 +379,9 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_LIST_ITEM_SELECTED   (EDC_LIST,       poEditFrame::OnListSel)
    EVT_LIST_ITEM_DESELECTED (EDC_LIST,       poEditFrame::OnListDesel)
    EVT_CLOSE                (                poEditFrame::OnCloseWindow)
+#ifdef __WXMSW__
+   EVT_DROP_FILES           (poEditFrame::OnFileDrop)
+#endif
 END_EVENT_TABLE()
 
 
@@ -509,6 +512,10 @@ poEditFrame::poEditFrame(const wxString& catalog) :
 #endif
 
     ms_instances.Append(this);
+
+#ifdef __WXMSW__
+    DragAcceptFiles(true);
+#endif
 }
 
 
@@ -650,8 +657,40 @@ void poEditFrame::OnOpenHist(wxCommandEvent& event)
     if (f != wxEmptyString && wxFileExists(f))
         ReadCatalog(f);
     else
-        wxLogError(_("File ") + f + _(" doesn't exist!"));
+        wxLogError(_("File '%s' doesn't exist!"), f.c_str());
 }
+        
+
+
+#ifdef __WXMSW__
+void poEditFrame::OnFileDrop(wxDropFilesEvent& event)
+{
+    if (event.GetNumberOfFiles() != 1)
+    {
+        wxLogError(_("You can't drop more than one file on poEdit window."));
+        return;
+    }
+    
+    wxFileName f(event.GetFiles()[0]);
+    if (f.GetExt().Lower() != _T("po"))
+    {
+        wxLogError(_("File '%s' is not message catalog."),
+                   f.GetFullPath().c_str());
+        return; 
+    }
+    
+    if (f.FileExists())
+    {
+        UpdateFromTextCtrl();
+        if (m_catalog && m_modified && wxMessageBox(_("Catalog modified. Do you want to save changes?"), _("Save changes"), 
+                            wxYES_NO | wxCENTRE | wxICON_QUESTION) == wxYES)
+            WriteCatalog(m_fileName);
+        ReadCatalog(f.GetFullPath());
+    }
+    else
+        wxLogError(_("File '%s' doesn't exist."), f.GetFullPath().c_str());
+}
+#endif
 
 
 
