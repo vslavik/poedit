@@ -31,15 +31,12 @@
 #include <wx/imaglist.h>
 #include <wx/dirdlg.h>
 #include <wx/log.h>
+#include <wx/artprov.h>
 
 #include "catalog.h"
 #include "edframe.h"
 #include "manager.h"
 #include "prefsdlg.h"
-
-#ifdef __UNIX__
-#include "icons/poedit.xpm"
-#endif
 
 ManagerFrame *ManagerFrame::ms_instance = NULL;
 
@@ -53,10 +50,6 @@ ManagerFrame *ManagerFrame::ms_instance = NULL;
     return ms_instance;
 }
 
-#include "cat_ok.xpm"
-#include "cat_mid.xpm"
-#include "cat_no.xpm"
-
 ManagerFrame::ManagerFrame() :
     wxFrame(NULL, -1, _("poEdit - Catalogs manager"), wxPoint(
                                  wxConfig::Get()->Read(_T("manager_x"), -1),
@@ -66,7 +59,11 @@ ManagerFrame::ManagerFrame() :
                                  wxConfig::Get()->Read(_T("manager_h"), 300)),
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
 {
+#ifdef __UNIX__
+    SetIcon(wxArtProvider::GetIcon(_T("poedit-appicon")));
+#else
     SetIcon(wxICON(appicon));
+#endif
     
     ms_instance = this;
 
@@ -79,9 +76,9 @@ ManagerFrame::ManagerFrame() :
     m_listCat = XRCCTRL(*panel, "prj_files", wxListCtrl);
     
     wxImageList *list = new wxImageList(16, 16);
-    list->Add(wxBitmap(cat_no_xpm));
-    list->Add(wxBitmap(cat_mid_xpm));
-    list->Add(wxBitmap(cat_ok_xpm));
+    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-cat-no")));
+    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-cat-mid")));
+    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-cat-ok")));
     m_listCat->AssignImageList(list, wxIMAGE_LIST_SMALL);
 
     m_curPrj = -1;

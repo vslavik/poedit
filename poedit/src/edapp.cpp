@@ -30,6 +30,7 @@
 #include "prefsdlg.h"
 #include "parser.h"
 #include "chooselang.h"
+#include "icons.h"
 
 
 IMPLEMENT_APP(poEditApp);
@@ -132,6 +133,11 @@ bool poEditApp::OnInit()
     }
     
     SetDefaultCfg(wxConfig::Get());
+
+    wxArtProvider::PushProvider(new wxPoeditStdArtProvider);
+#ifdef HAS_THEMES_SUPPORT
+    wxArtProvider::PushProvider(new wxPoeditThemeArtProvider);
+#endif
 
     if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
     {

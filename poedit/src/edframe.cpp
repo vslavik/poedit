@@ -31,6 +31,7 @@
 #include <wx/splitter.h>
 #include <wx/fontutil.h>
 #include <wx/textfile.h>
+#include <wx/artprov.h>
 
 #if USE_SPELLCHECKING
     #include <gtk/gtk.h>
@@ -125,11 +126,6 @@ static wxColour
     g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1), // yellow
     g_ItemColourInvalid[2] =      LIST_COLOURS(0xFF,0x20,0x20); // red
 
-#include "nothing.xpm"
-#include "modified.xpm"
-#include "automatic.xpm"
-#include "comment.xpm"
-#include "comment_modif.xpm"
 
 // list control with both columns equally wide:
 class poEditListCtrl : public wxListView
@@ -148,11 +144,11 @@ class poEditListCtrl : public wxListView
             m_displayLines = dispLines;
             CreateColumns();
             wxImageList *list = new wxImageList(16, 16);
-            list->Add(wxBitmap(nothing_xpm));
-            list->Add(wxBitmap(modified_xpm));
-            list->Add(wxBitmap(automatic_xpm));
-            list->Add(wxBitmap(comment_xpm));
-            list->Add(wxBitmap(comment_modif_xpm));
+            list->Add(wxArtProvider::GetBitmap(_T("poedit-status-nothing")));
+            list->Add(wxArtProvider::GetBitmap(_T("poedit-status-modified")));
+            list->Add(wxArtProvider::GetBitmap(_T("poedit-status-automatic")));
+            list->Add(wxArtProvider::GetBitmap(_T("poedit-status-comment")));
+            list->Add(wxArtProvider::GetBitmap(_T("poedit-status-comment-modif")));
             AssignImageList(list, wxIMAGE_LIST_SMALL);
         }
         
@@ -432,10 +428,6 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
 END_EVENT_TABLE()
 
 
-#ifdef __UNIX__
-#include "icons/poedit.xpm"
-#endif
-
 // Frame class:
 
 poEditFrame::poEditFrame() :
@@ -466,8 +458,8 @@ poEditFrame::poEditFrame() :
     
     // VS: a dirty hack of sort -- if this is the only poEdit frame opened,
     //     place it at remembered position, but don't do that if there already
-    //     are other frames, because they would overlap and nobody could recognize
-    //     that there are many of them
+    //     are other frames, because they would overlap and nobody could
+    //     recognize that there are many of them
     if (ms_instances.GetCount() == 0)
         Move(cfg->Read(_T("frame_x"), -1), cfg->Read(_T("frame_y"), -1));
  
@@ -480,7 +472,11 @@ poEditFrame::poEditFrame() :
     gs_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
     gs_shadedList = (bool)cfg->Read(_T("shaded_list"), (long)true);
 
+#ifdef __UNIX__
+    SetIcon(wxArtProvider::GetIcon(_T("poedit-appicon")));
+#else
     SetIcon(wxICON(appicon));
+#endif
 
 #ifdef CAN_MODIFY_DEFAULT_FONT
     m_boldGuiFont = wxSystemSettings::GetSystemFont(wxSYS_DEFAULT_GUI_FONT);
