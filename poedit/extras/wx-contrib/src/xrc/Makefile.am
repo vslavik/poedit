@@ -12,4 +12,5 @@ libmy_xrc_a_SOURCES = \
     xh_notbk.cpp xh_panel.cpp xh_radbt.cpp xh_radbx.cpp xh_scrol.cpp \
     xh_sizer.cpp xh_slidr.cpp xh_spin.cpp xh_stbmp.cpp xh_stbox.cpp \
     xh_stlin.cpp xh_sttxt.cpp xh_text.cpp xh_toolb.cpp xh_tree.cpp \
-    xh_unkwn.cpp xml.cpp xmlres.cpp xmlrsall.cpp xh_gdctl.cpp xh_scwin.cpp
+    xh_unkwn.cpp xml.cpp xmlres.cpp xmlrsall.cpp xh_gdctl.cpp xh_scwin.cpp \
+    xh_wizrd.cpp
