@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-21 13:38+0100\n"
+"POT-Creation-Date: 2005-02-20 11:41+0100\n"
 "PO-Revision-Date: 2004-01-28 19:01+0200\n"
 "Last-Translator: Ovidiu Constantin <ovidiu.constantin@gmx.net>\n"
 "Language-Team: Romanian Translators for Free Software <rtfs-project@lists."
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1926
+#: ../src/edframe.cpp:1832
 msgid " (modified)"
 msgstr " (modificat)"
 
@@ -26,7 +26,7 @@ msgstr " fiºiere..."
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr ""
 
-#: ../src/edframe.cpp:1894 ../src/export_html.cpp:131
+#: ../src/edframe.cpp:1800 ../src/export_html.cpp:131
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i ºiruri (%i aproximative, %i simboluri invalide, %i netraduse)"
@@ -52,7 +52,7 @@ msgid "&Edit"
 msgstr "&Editeazã"
 
 #: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:496
+#: ../src/edframe.cpp:429
 msgid "&File"
 msgstr "&Fiºier"
 
@@ -109,12 +109,12 @@ msgstr "Actualizeazã din surse"
 msgid "&View"
 msgstr "&Vizualizare"
 
-#: ../src/catalog.cpp:1356
+#: ../src/catalog.cpp:1417
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' nu este un fiºier POT valid."
 
-#: ../src/edframe.cpp:1817
+#: ../src/edframe.cpp:1723
 msgid "'."
 msgstr "'."
 
@@ -135,7 +135,7 @@ msgstr "(0 noi, 0 vechi)"
 msgid "(Use default language)"
 msgstr "(Foloseºte limba implicitã)"
 
-#: ../src/edframe.cpp:785
+#: ../src/edframe.cpp:718
 msgid "(none of these)"
 msgstr "(nici una din acestea)"
 
@@ -188,7 +188,7 @@ msgstr "Traducere automatã"
 msgid "Automatic translation"
 msgstr "Traducere automatã"
 
-#: ../src/edframe.cpp:2147 ../src/edframe.cpp:2151
+#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
 msgid "Automatic translations:"
 msgstr "Traduceri automate:"
 
@@ -200,12 +200,12 @@ msgstr "Compileazã automat fiºierul .mo la salvare"
 msgid "Automatically translate when updating catalog"
 msgstr "Tradu automat la actualizarea catalogului"
 
-#: ../src/edframe.cpp:2104
+#: ../src/edframe.cpp:2012
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Am tradus automat %u ºiruri"
 
-#: ../src/edframe.cpp:2089
+#: ../src/edframe.cpp:1997
 msgid "Automatically translating..."
 msgstr "Traduc automat..."
 
@@ -221,11 +221,11 @@ msgstr "Cale de bazã:"
 msgid "Behavior"
 msgstr "Comportament"
 
-#: ../src/catalog.cpp:560
+#: ../src/catalog.cpp:591
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:528
+#: ../src/catalog.cpp:559
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -263,7 +263,7 @@ msgstr "Nu pot executa programul: "
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Nu pot extrage cataloagele din fiºierul RPM."
 
-#: ../src/edapp.cpp:123
+#: ../src/edapp.cpp:124
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -272,7 +272,7 @@ msgstr ""
 "Nu pot gãsi fiºierul de resurse '%s'!\n"
 "Vã rog reinstalaþi poEdit."
 
-#: ../src/edapp.cpp:117
+#: ../src/edapp.cpp:118
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -293,8 +293,8 @@ msgstr "Cu majuscule semnificative"
 msgid "Catalog"
 msgstr "Catalog"
 
-#: ../src/edframe.cpp:830 ../src/edframe.cpp:849 ../src/edframe.cpp:881
-#: ../src/edframe.cpp:922 ../src/edframe.cpp:1026
+#: ../src/edframe.cpp:763 ../src/edframe.cpp:782 ../src/edframe.cpp:814
+#: ../src/edframe.cpp:855 ../src/edframe.cpp:959
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Catalogul a fost modificat. Doriþi sã salvaþi schimbãrile?"
 
@@ -338,7 +338,7 @@ msgstr "Configuraþie"
 msgid "Confirmation"
 msgstr "Confirmare"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2126
+#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2034
 msgid "Copy original to translation field"
 msgstr "Copiazã originalul în câmpul traducere"
 
@@ -395,7 +395,7 @@ msgstr ""
 "Doriþi sã actualizaþi în masã toate\n"
 "cataloagele din acest proiect?"
 
-#: ../src/edframe.cpp:2048
+#: ../src/edframe.cpp:1956
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -455,16 +455,16 @@ msgstr "Executabil editor:"
 msgid "Enables on-the-fly spellchecking"
 msgstr ""
 
-#: ../src/edframe.cpp:1144
+#: ../src/edframe.cpp:1085
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Intrãrile din catalog sunt probabil incorecte."
 
-#: ../src/edframe.cpp:736
+#: ../src/edframe.cpp:669
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr ""
 
-#: ../src/edframe.cpp:1817
+#: ../src/edframe.cpp:1723
 msgid "Error loading message catalog file '"
 msgstr "Eroare la încãrcarea fiºierului catalog mesaje '"
 
@@ -473,7 +473,7 @@ msgstr "Eroare la încãrcarea fiºierului catalog mesaje '"
 msgid "Error opening file %s!"
 msgstr "Eroare la deschiderea fiºierului %s!"
 
-#: ../src/catalog.cpp:1156
+#: ../src/catalog.cpp:1217
 msgid "Error saving catalog"
 msgstr "Eroare la salvarea catalogului"
 
@@ -482,7 +482,7 @@ msgstr "Eroare la salvarea catalogului"
 msgid "Error while loading file '%s': line %u is corrupted."
 msgstr ""
 
-#: ../src/edframe.cpp:998
+#: ../src/edframe.cpp:931
 msgid "Export as..."
 msgstr "Exportã ca..."
 
@@ -490,12 +490,12 @@ msgstr "Exportã ca..."
 msgid "External editor"
 msgstr "Editor extern"
 
-#: ../src/edframe.cpp:894 ../src/edframe.cpp:933
+#: ../src/edframe.cpp:827 ../src/edframe.cpp:866
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Fiºierul '%s' nu existã."
 
-#: ../src/edframe.cpp:911
+#: ../src/edframe.cpp:844
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Fiºierul '%s' nu este un catalog de mesaje."
@@ -530,12 +530,12 @@ msgstr "Cautã..."
 msgid "Fonts"
 msgstr "Fonturi"
 
-#: ../src/edframe.cpp:2544
+#: ../src/edframe.cpp:2453
 #, c-format
 msgid "Form %u"
 msgstr ""
 
-#: ../src/edframe.cpp:2546
+#: ../src/edframe.cpp:2455
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr ""
@@ -552,11 +552,11 @@ msgstr "Aproximativ"
 msgid "Fuzzy translation"
 msgstr "Traducere aproximativã"
 
-#: ../src/edframe.cpp:864 ../src/edframe.cpp:975
+#: ../src/edframe.cpp:797 ../src/edframe.cpp:908
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Cataloage GNU GetText (*.po)|*.po|Toate fiºierele (*.*)|*.*"
 
-#: ../src/edframe.cpp:1046 ../src/edframe.cpp:1162
+#: ../src/edframe.cpp:979 ../src/edframe.cpp:1103
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "ªabloane GNU GetText (*.po)|*.po|Toate fiºierele (*.*)|*.*"
 
@@ -572,11 +572,11 @@ msgstr "Genereazã baza de date MT"
 msgid "Generate database"
 msgstr "Genereazã baza de date"
 
-#: ../src/edframe.cpp:1220
+#: ../src/edframe.cpp:1167
 msgid "Gettext syntax error"
 msgstr ""
 
-#: ../src/edframe.cpp:1000
+#: ../src/edframe.cpp:933
 msgid "HTML file (*.html)|*.html"
 msgstr "Fiºier HTML (*.html)|*.html"
 
@@ -600,7 +600,7 @@ msgstr "Apelare:"
 msgid "Keywords"
 msgstr "Cuvinte cheie"
 
-#: ../src/chooselang.cpp:133
+#: ../src/chooselang.cpp:134
 msgid "Language selection"
 msgstr "Selectare limbã"
 
@@ -613,7 +613,7 @@ msgstr "Limbã:"
 msgid "Last modified"
 msgstr "Ultima modificare"
 
-#: ../src/edframe.cpp:162 ../src/fileviewer.cpp:84
+#: ../src/fileviewer.cpp:84 ../src/edlistctrl.cpp:187
 msgid "Line"
 msgstr "Linie"
 
@@ -647,7 +647,7 @@ msgstr "Numãr maxim de cuvinte lipsã:"
 msgid "Max. difference in sentence length:"
 msgstr "Numãr maxim de diferenþe în lungimea propoziþiei:"
 
-#: ../src/catalog.cpp:1328
+#: ../src/catalog.cpp:1389
 msgid "Merging differences..."
 msgstr "Adaug diferenþele..."
 
@@ -708,7 +708,7 @@ msgstr ""
 msgid "No files found in: "
 msgstr "Nici un fiºier gãsit în: "
 
-#: ../src/edframe.cpp:1235
+#: ../src/edframe.cpp:1183
 msgid "No references to this string found."
 msgstr "Nu a fost gãsitã nici o referinþã la acest ºir."
 
@@ -727,11 +727,11 @@ msgstr "OK"
 msgid "Obsolete strings"
 msgstr "ªiruri vechi"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:862
+#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:795
 msgid "Open catalog"
 msgstr "Deschide catalog"
 
-#: ../src/edframe.cpp:1044 ../src/edframe.cpp:1160
+#: ../src/edframe.cpp:977 ../src/edframe.cpp:1101
 msgid "Open catalog template"
 msgstr "Deschide ºablon catalog"
 
@@ -743,7 +743,7 @@ msgstr "Deschide managerul de cataloage la pornirea poEdit"
 msgid "Open source files in editor, not in file viewer"
 msgstr "Deschide fiºierele sursã în editor, nu în vizualizatorul de fiºiere"
 
-#: ../src/edframe.cpp:159 ../src/export_html.cpp:141
+#: ../src/edlistctrl.cpp:184 ../src/export_html.cpp:141
 msgid "Original string"
 msgstr "ªir original"
 
@@ -785,7 +785,7 @@ msgstr ""
 "Vã rugãm sã adãugaþi directoarele unde sunt stocate fiºierele locale pe "
 "sistemul dumneavoastã:"
 
-#: ../src/edframe.cpp:1243
+#: ../src/edframe.cpp:1191
 msgid "Please choose the reference you want to show:"
 msgstr "Vã rog alegeþi referinþa pe care doriþi sã o vedeþi:"
 
@@ -793,7 +793,7 @@ msgstr "Vã rog alegeþi referinþa pe care doriþi sã o vedeþi:"
 msgid "Please select language ISO code:"
 msgstr "Vã rog selectaþi codul ISO al limbii:"
 
-#: ../src/edframe.cpp:794
+#: ../src/edframe.cpp:727
 msgid "Please select language code:"
 msgstr "Vã rog selectaþi codul limbii:"
 
@@ -801,7 +801,7 @@ msgstr "Vã rog selectaþi codul limbii:"
 msgid "Plural Forms:"
 msgstr ""
 
-#: ../src/edframe.cpp:546
+#: ../src/edframe.cpp:480
 msgid "Plural:"
 msgstr ""
 
@@ -825,16 +825,16 @@ msgstr "Numele proiectului ºi versiunea:"
 msgid "Project name:"
 msgstr "Nume proiect:"
 
-#: ../src/edframe.cpp:2049
+#: ../src/edframe.cpp:1957
 #, fuzzy
 msgid "Purge delete translations"
 msgstr "Traduceri automate:"
 
-#: ../src/edframe.cpp:1243
+#: ../src/edframe.cpp:1191
 msgid "References"
 msgstr "Referinþe"
 
-#: ../src/edframe.cpp:2131 ../src/edframe.cpp:2135
+#: ../src/edframe.cpp:2039 ../src/edframe.cpp:2043
 msgid "References:"
 msgstr "Referinþe:"
 
@@ -851,7 +851,7 @@ msgstr "Reseteazã la valorile implicite"
 msgid "Save &as..."
 msgstr "Salveazã &ca..."
 
-#: ../src/edframe.cpp:974
+#: ../src/edframe.cpp:907
 msgid "Save as..."
 msgstr "Salveazã ca..."
 
@@ -859,8 +859,8 @@ msgstr "Salveazã ca..."
 msgid "Save catalog"
 msgstr "Salveazã catalogul"
 
-#: ../src/edframe.cpp:831 ../src/edframe.cpp:850 ../src/edframe.cpp:882
-#: ../src/edframe.cpp:923 ../src/edframe.cpp:1027
+#: ../src/edframe.cpp:764 ../src/edframe.cpp:783 ../src/edframe.cpp:815
+#: ../src/edframe.cpp:856 ../src/edframe.cpp:960
 msgid "Save changes"
 msgstr "Salveazã schimbãrile"
 
@@ -876,7 +876,7 @@ msgstr "Scanez fiºierele..."
 msgid "Search Paths"
 msgstr "Cãi de cãutare"
 
-#: ../src/edframe.cpp:793
+#: ../src/edframe.cpp:726
 msgid "Select catalog's language"
 msgstr "Selectaþi limba catalogului"
 
@@ -889,7 +889,7 @@ msgstr "Selectaþi directorul"
 msgid "Select language"
 msgstr "Selectaþi limba"
 
-#: ../src/chooselang.cpp:132
+#: ../src/chooselang.cpp:133
 msgid "Select your prefered language"
 msgstr "Selectaþi limba preferatã"
 
@@ -897,7 +897,7 @@ msgstr "Selectaþi limba preferatã"
 msgid "Settings"
 msgstr "Opþiuni"
 
-#: ../src/edapp.cpp:144
+#: ../src/edapp.cpp:145
 msgid "Setup"
 msgstr "Configurare"
 
@@ -914,7 +914,7 @@ msgstr "Aratã fereastra de &comentarii"
 msgid "Show summary after catalog update"
 msgstr "Aratã sumarul dupã actualizarea catalogului"
 
-#: ../src/edframe.cpp:545
+#: ../src/edframe.cpp:479
 msgid "Singular:"
 msgstr ""
 
@@ -946,7 +946,7 @@ msgstr "Adresa de email a echipei:"
 msgid "Team:"
 msgstr "Echipa:"
 
-#: ../src/catalog.cpp:1155
+#: ../src/catalog.cpp:1216
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -957,7 +957,7 @@ msgstr ""
 "aºa cum este specificat în setãrile catalogului. A fost salvat\n"
 "în loc în UTF-8 ºi setarea a fost modificatã corespunzãtor."
 
-#: ../src/catalog.cpp:883
+#: ../src/catalog.cpp:916
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -979,7 +979,7 @@ msgstr ""
 "Aceste siruri au fost gãsite în surse dar nu erau în catalog.\n"
 "poEdit le va adãuga la catalog acum."
 
-#: ../src/edapp.cpp:144
+#: ../src/edapp.cpp:145
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1035,7 +1035,7 @@ msgstr "Comutat dacã ºirul selectat are traducere aproximativã"
 msgid "Total"
 msgstr "Total"
 
-#: ../src/edframe.cpp:160 ../src/export_html.cpp:144
+#: ../src/edlistctrl.cpp:185 ../src/export_html.cpp:144
 msgid "Translation"
 msgstr "Traducere"
 
@@ -1100,11 +1100,11 @@ msgstr "Sumar actualizare"
 msgid "Update translation memory"
 msgstr "Actualizez memoria de traduceri"
 
-#: ../src/catalog.cpp:1288
+#: ../src/catalog.cpp:1349
 msgid "Updating catalog..."
 msgstr "Actualizez catalogul..."
 
-#: ../src/edframe.cpp:1146
+#: ../src/edframe.cpp:1087
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr ""
 "Actualizarea catalogului a eºuat. Apãsaþi pe 'Mai mult>>' pentru detalii."
@@ -1133,11 +1133,11 @@ msgstr ""
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:904
+#: ../src/edframe.cpp:837
 msgid "You can't drop more than one file on poEdit window."
 msgstr "Nu puteþi sã trageþi mai mult de un fiºier în fereastra poEdit."
 
-#: ../src/chooselang.cpp:147
+#: ../src/chooselang.cpp:148
 msgid "You must restart poEdit for this change to take effect."
 msgstr "Trebuie sã reporniþi poEdit pentru ca aceastã schimbare sã aibã efect."
 
@@ -1149,7 +1149,7 @@ msgstr "Adresa de email:"
 msgid "Your name:"
 msgstr "Numele dumneavoastrã:"
 
-#: ../src/edframe.cpp:1900
+#: ../src/edframe.cpp:1806
 #, fuzzy, c-format
 msgid "[checking translations: %i left]"
 msgstr "Listã traduceri &umbritã"
@@ -1158,11 +1158,11 @@ msgstr "Listã traduceri &umbritã"
 msgid "current platform's default"
 msgstr "implicit pentru platforma curentã"
 
-#: ../src/edframe.cpp:2171
+#: ../src/edframe.cpp:2079
 msgid "none"
 msgstr "nici una"
 
-#: ../src/edframe.cpp:439
+#: ../src/edframe.cpp:372
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -1170,7 +1170,7 @@ msgstr "poEdit"
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - Manager cataloage"
 
-#: ../src/edapp.cpp:126
+#: ../src/edapp.cpp:127
 msgid "poEdit Error"
 msgstr "Eroare poEdit"
 
@@ -1185,7 +1185,7 @@ msgstr ""
 "Instalarea poEdit este coruptã, nu pot gãsi directorul personal al "
 "aplicaþiei."
 
-#: ../src/edframe.cpp:2186
+#: ../src/edframe.cpp:2094
 msgid "version"
 msgstr "versiunea"
 

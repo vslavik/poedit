@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-21 13:38+0100\n"
+"POT-Creation-Date: 2005-02-20 11:41+0100\n"
 "PO-Revision-Date: 2004-09-20 22:52+0900\n"
 "Last-Translator: Hojin Choi <pynoos@users.kldp.net>\n"
 "Language-Team: Korean Translation <pynoos@users.kldp.net>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-Language: Korean\n"
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
 
-#: ../src/edframe.cpp:1926
+#: ../src/edframe.cpp:1832
 msgid " (modified)"
 msgstr " (수정됨)"
 
@@ -30,7 +30,7 @@ msgstr " 파일..."
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr ""
 
-#: ../src/edframe.cpp:1894 ../src/export_html.cpp:131
+#: ../src/edframe.cpp:1800 ../src/export_html.cpp:131
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "문자열 %i (퍼지 %i, 오류 %i, 미번역 %i)"
@@ -56,7 +56,7 @@ msgid "&Edit"
 msgstr "편집(&E)"
 
 #: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:496
+#: ../src/edframe.cpp:429
 msgid "&File"
 msgstr "파일(&F)"
 
@@ -113,12 +113,12 @@ msgstr "소스로부터 업데이트(&U)"
 msgid "&View"
 msgstr "보기(&V)"
 
-#: ../src/catalog.cpp:1356
+#: ../src/catalog.cpp:1417
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "%s : 정상적인 POT 파일이 아닙니다."
 
-#: ../src/edframe.cpp:1817
+#: ../src/edframe.cpp:1723
 msgid "'."
 msgstr "'."
 
@@ -139,7 +139,7 @@ msgstr "(신규개수 0, 제거개수 0)"
 msgid "(Use default language)"
 msgstr "(기본 언어 사용)"
 
-#: ../src/edframe.cpp:785
+#: ../src/edframe.cpp:718
 msgid "(none of these)"
 msgstr "(이들 중에 없음)"
 
@@ -191,7 +191,7 @@ msgstr "자동 구문확인"
 msgid "Automatic translation"
 msgstr "자동 번역"
 
-#: ../src/edframe.cpp:2147 ../src/edframe.cpp:2151
+#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
 msgid "Automatic translations:"
 msgstr "자동 번역:"
 
@@ -203,12 +203,12 @@ msgstr "저장할 때, .mo 파일 자동 생성"
 msgid "Automatically translate when updating catalog"
 msgstr "카탈로그 업데이트할 때, 자동 번역"
 
-#: ../src/edframe.cpp:2104
+#: ../src/edframe.cpp:2012
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "%u 개의 문자열 자동 번역됨"
 
-#: ../src/edframe.cpp:2089
+#: ../src/edframe.cpp:1997
 msgid "Automatically translating..."
 msgstr "자동 번역 중..."
 
@@ -224,11 +224,11 @@ msgstr "기본 경로:"
 msgid "Behavior"
 msgstr "동작"
 
-#: ../src/catalog.cpp:560
+#: ../src/catalog.cpp:591
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "카탈로그 파일 오류: msgid_plural 없이 복수의 msgstr"
 
-#: ../src/catalog.cpp:528
+#: ../src/catalog.cpp:559
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr "카탈로그 파일 오류: msgid_plural 이면서 msgstr이 하나임"
@@ -265,7 +265,7 @@ msgstr "프로그램을 실행할 수 없습니다:"
 msgid "Cannot extract catalogs from RPM file."
 msgstr "RPM 파일로부터 카탈로그를 추출할 수 없습니다."
 
-#: ../src/edapp.cpp:123
+#: ../src/edapp.cpp:124
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -274,7 +274,7 @@ msgstr ""
 "리스스 파일 (%s)을 찾을 수 없습니다!\n"
 "poEdit를 재설치 하십시오"
 
-#: ../src/edapp.cpp:117
+#: ../src/edapp.cpp:118
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -295,8 +295,8 @@ msgstr "대소문자 구별"
 msgid "Catalog"
 msgstr "카탈로그"
 
-#: ../src/edframe.cpp:830 ../src/edframe.cpp:849 ../src/edframe.cpp:881
-#: ../src/edframe.cpp:922 ../src/edframe.cpp:1026
+#: ../src/edframe.cpp:763 ../src/edframe.cpp:782 ../src/edframe.cpp:814
+#: ../src/edframe.cpp:855 ../src/edframe.cpp:959
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "카탈로그가 수정되었습니다. 바뀐 내용을 저장하시겠습니까?"
 
@@ -340,7 +340,7 @@ msgstr "설정"
 msgid "Confirmation"
 msgstr "확인"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2126
+#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2034
 msgid "Copy original to translation field"
 msgstr "원본을 번역창으로 복사"
 
@@ -397,7 +397,7 @@ msgstr ""
 "본 프로젝트의 모든 카탈로그에 대한\n"
 "대량 업데이트를 하시겠습니까?"
 
-#: ../src/edframe.cpp:2048
+#: ../src/edframe.cpp:1956
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -457,16 +457,16 @@ msgstr "편집기 실행파일:"
 msgid "Enables on-the-fly spellchecking"
 msgstr "저장하지 않고 철자교정"
 
-#: ../src/edframe.cpp:1144
+#: ../src/edframe.cpp:1085
 msgid "Entries in the catalog are probably incorrect."
 msgstr "카탈로그의 항목하나가 잘못된것 같습니다."
 
-#: ../src/edframe.cpp:736
+#: ../src/edframe.cpp:669
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "철자 검사 초기화 오류: %s"
 
-#: ../src/edframe.cpp:1817
+#: ../src/edframe.cpp:1723
 msgid "Error loading message catalog file '"
 msgstr "메시지 파일 로딩 중 오류: '"
 
@@ -475,7 +475,7 @@ msgstr "메시지 파일 로딩 중 오류: '"
 msgid "Error opening file %s!"
 msgstr "파일 열기 오류: %s"
 
-#: ../src/catalog.cpp:1156
+#: ../src/catalog.cpp:1217
 msgid "Error saving catalog"
 msgstr "카탈로그 저장 오류"
 
@@ -484,7 +484,7 @@ msgstr "카탈로그 저장 오류"
 msgid "Error while loading file '%s': line %u is corrupted."
 msgstr ""
 
-#: ../src/edframe.cpp:998
+#: ../src/edframe.cpp:931
 msgid "Export as..."
 msgstr "다른이름으로 익스포트..."
 
@@ -492,12 +492,12 @@ msgstr "다른이름으로 익스포트..."
 msgid "External editor"
 msgstr "외부 편집기"
 
-#: ../src/edframe.cpp:894 ../src/edframe.cpp:933
+#: ../src/edframe.cpp:827 ../src/edframe.cpp:866
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "파일(%s)이 존재하지 않습니다."
 
-#: ../src/edframe.cpp:911
+#: ../src/edframe.cpp:844
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "파일(%s)은 메시지 카탈로그가 아닙니다."
@@ -532,12 +532,12 @@ msgstr "찾기..."
 msgid "Fonts"
 msgstr "글꼴"
 
-#: ../src/edframe.cpp:2544
+#: ../src/edframe.cpp:2453
 #, c-format
 msgid "Form %u"
 msgstr "Form %u"
 
-#: ../src/edframe.cpp:2546
+#: ../src/edframe.cpp:2455
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr "Form %u (예, \"%u\")"
@@ -554,11 +554,11 @@ msgstr "퍼지"
 msgid "Fuzzy translation"
 msgstr "퍼지 번역"
 
-#: ../src/edframe.cpp:864 ../src/edframe.cpp:975
+#: ../src/edframe.cpp:797 ../src/edframe.cpp:908
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText 카탈로그 (*.po)|*.po|모든 파일 (*.*)|*.*"
 
-#: ../src/edframe.cpp:1046 ../src/edframe.cpp:1162
+#: ../src/edframe.cpp:979 ../src/edframe.cpp:1103
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU GetText 템플릿 (*.pot)|*.pot|모든 파일 (*.*)|*.*"
 
@@ -574,11 +574,11 @@ msgstr "번역본 기억장치(TM) 생성"
 msgid "Generate database"
 msgstr "데이터베이스 생성"
 
-#: ../src/edframe.cpp:1220
+#: ../src/edframe.cpp:1167
 msgid "Gettext syntax error"
 msgstr "Gettext 구문오류"
 
-#: ../src/edframe.cpp:1000
+#: ../src/edframe.cpp:933
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML 파일 (*.html)|*.html"
 
@@ -602,7 +602,7 @@ msgstr "실행:"
 msgid "Keywords"
 msgstr "키워드"
 
-#: ../src/chooselang.cpp:133
+#: ../src/chooselang.cpp:134
 msgid "Language selection"
 msgstr "언어 선택"
 
@@ -615,7 +615,7 @@ msgstr "언어"
 msgid "Last modified"
 msgstr "최종 편집"
 
-#: ../src/edframe.cpp:162 ../src/fileviewer.cpp:84
+#: ../src/fileviewer.cpp:84 ../src/edlistctrl.cpp:187
 msgid "Line"
 msgstr "줄"
 
@@ -649,7 +649,7 @@ msgstr "누락된 최대 단어 수:"
 msgid "Max. difference in sentence length:"
 msgstr "Max. difference in sentence length:"
 
-#: ../src/catalog.cpp:1328
+#: ../src/catalog.cpp:1389
 msgid "Merging differences..."
 msgstr "차이점 병합"
 
@@ -708,7 +708,7 @@ msgstr "에디터가 지정되지 않았습니다. 선택사항 대화상자에�
 msgid "No files found in: "
 msgstr "파일이 없습니다. :"
 
-#: ../src/edframe.cpp:1235
+#: ../src/edframe.cpp:1183
 msgid "No references to this string found."
 msgstr "이 문자열이 어느 곳에서도 참조되지 않습니다."
 
@@ -727,11 +727,11 @@ msgstr "확인"
 msgid "Obsolete strings"
 msgstr "제거된 문자열"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:862
+#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:795
 msgid "Open catalog"
 msgstr "카탈로그 열기"
 
-#: ../src/edframe.cpp:1044 ../src/edframe.cpp:1160
+#: ../src/edframe.cpp:977 ../src/edframe.cpp:1101
 msgid "Open catalog template"
 msgstr "카탈로그 템플릿 열기"
 
@@ -743,7 +743,7 @@ msgstr "poEdit 시작시에 카탈로그 관리자 열기"
 msgid "Open source files in editor, not in file viewer"
 msgstr "파일 뷰어에서 열지 않고, 편집기에서 소스 파일 열기"
 
-#: ../src/edframe.cpp:159 ../src/export_html.cpp:141
+#: ../src/edlistctrl.cpp:184 ../src/export_html.cpp:141
 msgid "Original string"
 msgstr "원문"
 
@@ -783,7 +783,7 @@ msgstr "다음 언어들 중 하나를 선택하세요"
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "로켈파일이 저장될 디렉토리를 추가하세요:"
 
-#: ../src/edframe.cpp:1243
+#: ../src/edframe.cpp:1191
 msgid "Please choose the reference you want to show:"
 msgstr "보기 원하는 참조를 선택하세요:"
 
@@ -791,7 +791,7 @@ msgstr "보기 원하는 참조를 선택하세요:"
 msgid "Please select language ISO code:"
 msgstr "언어의 ISO 코드를 선택하세요:"
 
-#: ../src/edframe.cpp:794
+#: ../src/edframe.cpp:727
 msgid "Please select language code:"
 msgstr "언어 코드를 선택하세요:"
 
@@ -799,7 +799,7 @@ msgstr "언어 코드를 선택하세요:"
 msgid "Plural Forms:"
 msgstr "복수 포맷:"
 
-#: ../src/edframe.cpp:546
+#: ../src/edframe.cpp:480
 msgid "Plural:"
 msgstr "복수:"
 
@@ -823,16 +823,16 @@ msgstr "프로젝트 이름과 버전:"
 msgid "Project name:"
 msgstr "프로젝트 이름:"
 
-#: ../src/edframe.cpp:2049
+#: ../src/edframe.cpp:1957
 #, fuzzy
 msgid "Purge delete translations"
 msgstr "자동 번역:"
 
-#: ../src/edframe.cpp:1243
+#: ../src/edframe.cpp:1191
 msgid "References"
 msgstr "참조"
 
-#: ../src/edframe.cpp:2131 ../src/edframe.cpp:2135
+#: ../src/edframe.cpp:2039 ../src/edframe.cpp:2043
 msgid "References:"
 msgstr "참조"
 
@@ -848,7 +848,7 @@ msgstr "기본 설정사항으로 초기화"
 msgid "Save &as..."
 msgstr "다른 이름으로 저장(&A)..."
 
-#: ../src/edframe.cpp:974
+#: ../src/edframe.cpp:907
 msgid "Save as..."
 msgstr "다른 이름으로 저장..."
 
@@ -856,8 +856,8 @@ msgstr "다른 이름으로 저장..."
 msgid "Save catalog"
 msgstr "카탈로그 저장"
 
-#: ../src/edframe.cpp:831 ../src/edframe.cpp:850 ../src/edframe.cpp:882
-#: ../src/edframe.cpp:923 ../src/edframe.cpp:1027
+#: ../src/edframe.cpp:764 ../src/edframe.cpp:783 ../src/edframe.cpp:815
+#: ../src/edframe.cpp:856 ../src/edframe.cpp:960
 msgid "Save changes"
 msgstr "변경 내역 저장"
 
@@ -873,7 +873,7 @@ msgstr "검사중인 파일..."
 msgid "Search Paths"
 msgstr "검색 경로"
 
-#: ../src/edframe.cpp:793
+#: ../src/edframe.cpp:726
 msgid "Select catalog's language"
 msgstr "카탈로그의 언어 선택"
 
@@ -886,7 +886,7 @@ msgstr "디렉토리 선택"
 msgid "Select language"
 msgstr "언어 선택"
 
-#: ../src/chooselang.cpp:132
+#: ../src/chooselang.cpp:133
 msgid "Select your prefered language"
 msgstr "선호하는 언어 선택"
 
@@ -894,7 +894,7 @@ msgstr "선호하는 언어 선택"
 msgid "Settings"
 msgstr "설정"
 
-#: ../src/edapp.cpp:144
+#: ../src/edapp.cpp:145
 msgid "Setup"
 msgstr "설치"
 
@@ -911,7 +911,7 @@ msgstr "주석 창 보이기(&C)"
 msgid "Show summary after catalog update"
 msgstr "카탈로그 업데이트 후 요약 정보 보기"
 
-#: ../src/edframe.cpp:545
+#: ../src/edframe.cpp:479
 msgid "Singular:"
 msgstr "단수:"
 
@@ -943,7 +943,7 @@ msgstr "팀 메일 주소:"
 msgid "Team:"
 msgstr "팀:"
 
-#: ../src/catalog.cpp:1155
+#: ../src/catalog.cpp:1216
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -954,7 +954,7 @@ msgstr ""
 "저장할 수 없습니다. 대신 UTF-8 으로 저장되었으며\n"
 "설정 값도 그에 맞게 수정되었습니다."
 
-#: ../src/catalog.cpp:883
+#: ../src/catalog.cpp:916
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -976,7 +976,7 @@ msgstr ""
 "이 문자열들은 소스에 있지만, 카탈로그에 없습니다.\n"
 "따라서 카탈로그에 추가합니다."
 
-#: ../src/edapp.cpp:144
+#: ../src/edapp.cpp:145
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1032,7 +1032,7 @@ msgstr "선택된 문자열이 모호한 번역상태일 때, 전환됩니다."
 msgid "Total"
 msgstr "전체"
 
-#: ../src/edframe.cpp:160 ../src/export_html.cpp:144
+#: ../src/edlistctrl.cpp:185 ../src/export_html.cpp:144
 msgid "Translation"
 msgstr "번역"
 
@@ -1097,11 +1097,11 @@ msgstr "업데이트 요약"
 msgid "Update translation memory"
 msgstr "번역본 기억장치(TM)에서 업데이트"
 
-#: ../src/catalog.cpp:1288
+#: ../src/catalog.cpp:1349
 msgid "Updating catalog..."
 msgstr "카탈로그 업데이트 중..."
 
-#: ../src/edframe.cpp:1146
+#: ../src/edframe.cpp:1087
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "카탈로그 업데이트 오류. 자세히 보려면 \"More>>\" 를 누르세요."
 
@@ -1129,11 +1129,11 @@ msgstr ""
 msgid "Windows"
 msgstr "MS 윈도우즈"
 
-#: ../src/edframe.cpp:904
+#: ../src/edframe.cpp:837
 msgid "You can't drop more than one file on poEdit window."
 msgstr "poEdit 창에는 하나의 파일만 떨어뜨릴 수 있습니다."
 
-#: ../src/chooselang.cpp:147
+#: ../src/chooselang.cpp:148
 msgid "You must restart poEdit for this change to take effect."
 msgstr "poEdit를 재시작하면 설정된 내용이 반영됩니다."
 
@@ -1145,7 +1145,7 @@ msgstr "당신의 이메일:"
 msgid "Your name:"
 msgstr "당신의 이름:"
 
-#: ../src/edframe.cpp:1900
+#: ../src/edframe.cpp:1806
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[번역 상태 확인: %i 개 남음]"
@@ -1154,11 +1154,11 @@ msgstr "[번역 상태 확인: %i 개 남음]"
 msgid "current platform's default"
 msgstr "현재 플랫폼 기본사항"
 
-#: ../src/edframe.cpp:2171
+#: ../src/edframe.cpp:2079
 msgid "none"
 msgstr "없음"
 
-#: ../src/edframe.cpp:439
+#: ../src/edframe.cpp:372
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -1166,7 +1166,7 @@ msgstr "poEdit"
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - 카탈로그 관리자"
 
-#: ../src/edapp.cpp:126
+#: ../src/edapp.cpp:127
 msgid "poEdit Error"
 msgstr "poEdit 오류"
 
@@ -1179,6 +1179,6 @@ msgid ""
 "poEdit installation is broken, cannot find application's home directory."
 msgstr "poEdit 설치가 불완전합니다. 프로그램의 홈디렉토리를 찾을 수 없습니다."
 
-#: ../src/edframe.cpp:2186
+#: ../src/edframe.cpp:2094
 msgid "version"
 msgstr "버전"

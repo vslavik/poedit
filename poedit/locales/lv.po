@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-21 13:38+0100\n"
+"POT-Creation-Date: 2005-02-20 11:41+0100\n"
 "PO-Revision-Date: 2002-08-31 14:36+0200\n"
 "Last-Translator: Artis Trops <hornet@navigators.lv>\n"
 "Language-Team: Latvian <ll10nt@os.lv>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1926
+#: ../src/edframe.cpp:1832
 msgid " (modified)"
 msgstr " (modificēts)"
 
@@ -23,7 +23,7 @@ msgstr " failus..."
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr ""
 
-#: ../src/edframe.cpp:1894 ../src/export_html.cpp:131
+#: ../src/edframe.cpp:1800 ../src/export_html.cpp:131
 #, fuzzy, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i virknes (%i nepilnīgas, %i neiztulkotas)"
@@ -51,7 +51,7 @@ msgid "&Edit"
 msgstr "&Rediģēt"
 
 #: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:496
+#: ../src/edframe.cpp:429
 msgid "&File"
 msgstr "&Fails"
 
@@ -111,12 +111,12 @@ msgstr ""
 msgid "&View"
 msgstr "&Skats"
 
-#: ../src/catalog.cpp:1356
+#: ../src/catalog.cpp:1417
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr ""
 
-#: ../src/edframe.cpp:1817
+#: ../src/edframe.cpp:1723
 msgid "'."
 msgstr "'."
 
@@ -138,7 +138,7 @@ msgstr "(0 jaunas, 0 novecojušas)"
 msgid "(Use default language)"
 msgstr "Izvēlieties valodu"
 
-#: ../src/edframe.cpp:785
+#: ../src/edframe.cpp:718
 msgid "(none of these)"
 msgstr "(neviena no šīm)"
 
@@ -193,7 +193,7 @@ msgstr "Automātiskie tulkojumi:"
 msgid "Automatic translation"
 msgstr "Automātiskie tulkojumi:"
 
-#: ../src/edframe.cpp:2147 ../src/edframe.cpp:2151
+#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
 msgid "Automatic translations:"
 msgstr "Automātiskie tulkojumi:"
 
@@ -205,12 +205,12 @@ msgstr "Automātiski kompilēt .mo failu pie saglabāšanas"
 msgid "Automatically translate when updating catalog"
 msgstr "Automātiski tulkot, kad atjaunina katalogu"
 
-#: ../src/edframe.cpp:2104
+#: ../src/edframe.cpp:2012
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Automātiski iztulkotas %u virknes"
 
-#: ../src/edframe.cpp:2089
+#: ../src/edframe.cpp:1997
 msgid "Automatically translating..."
 msgstr "Automātiski tulkoju..."
 
@@ -226,11 +226,11 @@ msgstr "Bāzes ceļš:"
 msgid "Behavior"
 msgstr "Uzvedība"
 
-#: ../src/catalog.cpp:560
+#: ../src/catalog.cpp:591
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:528
+#: ../src/catalog.cpp:559
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -268,7 +268,7 @@ msgstr "Nevaru izpildīt programmu: "
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Nevaru izdabūt katalogus no RPM faila."
 
-#: ../src/edapp.cpp:123
+#: ../src/edapp.cpp:124
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -277,7 +277,7 @@ msgstr ""
 "Nevaru atrast resursu failu '%s'!\n"
 "Lūdzu pārinstalējiet poEdit."
 
-#: ../src/edapp.cpp:117
+#: ../src/edapp.cpp:118
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -298,8 +298,8 @@ msgstr "Reģistrjūtīgs"
 msgid "Catalog"
 msgstr "Katalogs"
 
-#: ../src/edframe.cpp:830 ../src/edframe.cpp:849 ../src/edframe.cpp:881
-#: ../src/edframe.cpp:922 ../src/edframe.cpp:1026
+#: ../src/edframe.cpp:763 ../src/edframe.cpp:782 ../src/edframe.cpp:814
+#: ../src/edframe.cpp:855 ../src/edframe.cpp:959
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalogs modificēts. Vēlaties saglabāt izmaiņas?"
 
@@ -346,7 +346,7 @@ msgstr "Konfigurācija"
 msgid "Confirmation"
 msgstr "Apstiprinājums"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2126
+#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2034
 msgid "Copy original to translation field"
 msgstr "Kopēt oriģinālu uz tulkojamo lauku"
 
@@ -405,7 +405,7 @@ msgstr ""
 "Vai patiesi vēlaties vaikt masveida atjaunināšanu\n"
 "visiem katalogiem šajā projektā?"
 
-#: ../src/edframe.cpp:2048
+#: ../src/edframe.cpp:1956
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -468,16 +468,16 @@ msgstr "Redaktora izpildāmfails:"
 msgid "Enables on-the-fly spellchecking"
 msgstr ""
 
-#: ../src/edframe.cpp:1144
+#: ../src/edframe.cpp:1085
 msgid "Entries in the catalog are probably incorrect."
 msgstr ""
 
-#: ../src/edframe.cpp:736
+#: ../src/edframe.cpp:669
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr ""
 
-#: ../src/edframe.cpp:1817
+#: ../src/edframe.cpp:1723
 msgid "Error loading message catalog file '"
 msgstr "Kļūda ielādējot ziņojumu kataloga failu '"
 
@@ -486,7 +486,7 @@ msgstr "Kļūda ielādējot ziņojumu kataloga failu '"
 msgid "Error opening file %s!"
 msgstr "Kļūda atverot failu %s!"
 
-#: ../src/catalog.cpp:1156
+#: ../src/catalog.cpp:1217
 #, fuzzy
 msgid "Error saving catalog"
 msgstr "Kļūda ielādējot ziņojumu kataloga failu '"
@@ -496,7 +496,7 @@ msgstr "Kļūda ielādējot ziņojumu kataloga failu '"
 msgid "Error while loading file '%s': line %u is corrupted."
 msgstr ""
 
-#: ../src/edframe.cpp:998
+#: ../src/edframe.cpp:931
 msgid "Export as..."
 msgstr ""
 
@@ -504,12 +504,12 @@ msgstr ""
 msgid "External editor"
 msgstr "Ārējais redaktors"
 
-#: ../src/edframe.cpp:894 ../src/edframe.cpp:933
+#: ../src/edframe.cpp:827 ../src/edframe.cpp:866
 #, fuzzy, c-format
 msgid "File '%s' doesn't exist."
 msgstr " neeksistē!"
 
-#: ../src/edframe.cpp:911
+#: ../src/edframe.cpp:844
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr ""
@@ -545,12 +545,12 @@ msgstr "Atrast..."
 msgid "Fonts"
 msgstr ""
 
-#: ../src/edframe.cpp:2544
+#: ../src/edframe.cpp:2453
 #, c-format
 msgid "Form %u"
 msgstr ""
 
-#: ../src/edframe.cpp:2546
+#: ../src/edframe.cpp:2455
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr ""
@@ -568,11 +568,11 @@ msgstr "Nepilnīgi"
 msgid "Fuzzy translation"
 msgstr "Tulkojums"
 
-#: ../src/edframe.cpp:864 ../src/edframe.cpp:975
+#: ../src/edframe.cpp:797 ../src/edframe.cpp:908
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText katalogi (*.po)|*.po|Visi faili (*.*)|*.*"
 
-#: ../src/edframe.cpp:1046 ../src/edframe.cpp:1162
+#: ../src/edframe.cpp:979 ../src/edframe.cpp:1103
 #, fuzzy
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU GetText katalogi (*.po)|*.po|Visi faili (*.*)|*.*"
@@ -589,11 +589,11 @@ msgstr "Ģenerēt TA datu bāzi"
 msgid "Generate database"
 msgstr "Ģenerēt datu bāzi"
 
-#: ../src/edframe.cpp:1220
+#: ../src/edframe.cpp:1167
 msgid "Gettext syntax error"
 msgstr ""
 
-#: ../src/edframe.cpp:1000
+#: ../src/edframe.cpp:933
 msgid "HTML file (*.html)|*.html"
 msgstr ""
 
@@ -617,7 +617,7 @@ msgstr "Izsaukšana:"
 msgid "Keywords"
 msgstr "Atslēgvārdi"
 
-#: ../src/chooselang.cpp:133
+#: ../src/chooselang.cpp:134
 #, fuzzy
 msgid "Language selection"
 msgstr "Manas Valodas"
@@ -631,7 +631,7 @@ msgstr "Valoda:"
 msgid "Last modified"
 msgstr "Pēdējoreiz mainīts"
 
-#: ../src/edframe.cpp:162 ../src/fileviewer.cpp:84
+#: ../src/fileviewer.cpp:84 ../src/edlistctrl.cpp:187
 msgid "Line"
 msgstr "Ridiņa"
 
@@ -665,7 +665,7 @@ msgstr "Maks. iztrūkstošo vārdu #:"
 msgid "Max. difference in sentence length:"
 msgstr "Maks. atšķirība teikuma garumos:"
 
-#: ../src/catalog.cpp:1328
+#: ../src/catalog.cpp:1389
 msgid "Merging differences..."
 msgstr "Apvienoju atšķirības..."
 
@@ -724,7 +724,7 @@ msgstr "Neviens redaktors nav noreikts. Lūdzu iestādiet to Preferenču dialog�
 msgid "No files found in: "
 msgstr ""
 
-#: ../src/edframe.cpp:1235
+#: ../src/edframe.cpp:1183
 msgid "No references to this string found."
 msgstr "Atsauces šai virknei nav atrastas"
 
@@ -743,11 +743,11 @@ msgstr "Labi"
 msgid "Obsolete strings"
 msgstr "Novecojušās virknes"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:862
+#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:795
 msgid "Open catalog"
 msgstr "Atvērt katalogu"
 
-#: ../src/edframe.cpp:1044 ../src/edframe.cpp:1160
+#: ../src/edframe.cpp:977 ../src/edframe.cpp:1101
 #, fuzzy
 msgid "Open catalog template"
 msgstr "Atvērt katalogu"
@@ -760,7 +760,7 @@ msgstr "Atvērt katalogu pārvaldnieku pie poEdit sāknēšanas"
 msgid "Open source files in editor, not in file viewer"
 msgstr "Atvērt avota failus redaktorā nevis failu skatītājā"
 
-#: ../src/edframe.cpp:159 ../src/export_html.cpp:141
+#: ../src/edlistctrl.cpp:184 ../src/export_html.cpp:141
 msgid "Original string"
 msgstr "Oriģinālā virkne"
 
@@ -800,7 +800,7 @@ msgstr "Izvēlies valodu no zināmo valodu saraksta"
 msgid "Please add directories where locale files are stored on your system:"
 msgstr ""
 
-#: ../src/edframe.cpp:1243
+#: ../src/edframe.cpp:1191
 msgid "Please choose the reference you want to show:"
 msgstr "Lūdzu izvēlieties atsauci, kuru vēlaties, lai parāda:"
 
@@ -808,7 +808,7 @@ msgstr "Lūdzu izvēlieties atsauci, kuru vēlaties, lai parāda:"
 msgid "Please select language ISO code:"
 msgstr "Ludzu izvēlieties valodas ISO kodu:"
 
-#: ../src/edframe.cpp:794
+#: ../src/edframe.cpp:727
 msgid "Please select language code:"
 msgstr "Lūdzu izvēlieties valodas kodu:"
 
@@ -816,7 +816,7 @@ msgstr "Lūdzu izvēlieties valodas kodu:"
 msgid "Plural Forms:"
 msgstr ""
 
-#: ../src/edframe.cpp:546
+#: ../src/edframe.cpp:480
 msgid "Plural:"
 msgstr ""
 
@@ -840,16 +840,16 @@ msgstr "Projekta nosaukums un versija:"
 msgid "Project name:"
 msgstr "Projekta nosaukums:"
 
-#: ../src/edframe.cpp:2049
+#: ../src/edframe.cpp:1957
 #, fuzzy
 msgid "Purge delete translations"
 msgstr "Automātiskie tulkojumi:"
 
-#: ../src/edframe.cpp:1243
+#: ../src/edframe.cpp:1191
 msgid "References"
 msgstr "Atsauces"
 
-#: ../src/edframe.cpp:2131 ../src/edframe.cpp:2135
+#: ../src/edframe.cpp:2039 ../src/edframe.cpp:2043
 msgid "References:"
 msgstr "Atsauces:"
 
@@ -867,7 +867,7 @@ msgstr ""
 msgid "Save &as..."
 msgstr "Saglabāt &kā..."
 
-#: ../src/edframe.cpp:974
+#: ../src/edframe.cpp:907
 msgid "Save as..."
 msgstr "Saglabāt kā..."
 
@@ -875,8 +875,8 @@ msgstr "Saglabāt kā..."
 msgid "Save catalog"
 msgstr "Saglabāt katalogu"
 
-#: ../src/edframe.cpp:831 ../src/edframe.cpp:850 ../src/edframe.cpp:882
-#: ../src/edframe.cpp:923 ../src/edframe.cpp:1027
+#: ../src/edframe.cpp:764 ../src/edframe.cpp:783 ../src/edframe.cpp:815
+#: ../src/edframe.cpp:856 ../src/edframe.cpp:960
 msgid "Save changes"
 msgstr "Saglabāt izmaiņas"
 
@@ -892,7 +892,7 @@ msgstr "Skanēju failus..."
 msgid "Search Paths"
 msgstr "Izvēlieties Ceļus"
 
-#: ../src/edframe.cpp:793
+#: ../src/edframe.cpp:726
 msgid "Select catalog's language"
 msgstr "Izvēlies kataloga valodu"
 
@@ -905,7 +905,7 @@ msgstr "Izvēlies direktoriju"
 msgid "Select language"
 msgstr "Izvēlieties valodu"
 
-#: ../src/chooselang.cpp:132
+#: ../src/chooselang.cpp:133
 #, fuzzy
 msgid "Select your prefered language"
 msgstr "Izvēlieties valodu"
@@ -914,7 +914,7 @@ msgstr "Izvēlieties valodu"
 msgid "Settings"
 msgstr "Uzstādījumi"
 
-#: ../src/edapp.cpp:144
+#: ../src/edapp.cpp:145
 msgid "Setup"
 msgstr "Uzstādīt"
 
@@ -930,7 +930,7 @@ msgstr ""
 msgid "Show summary after catalog update"
 msgstr "Parādīt kopsavilkumu pēc kataloga atjaunināšanas"
 
-#: ../src/edframe.cpp:545
+#: ../src/edframe.cpp:479
 msgid "Singular:"
 msgstr ""
 
@@ -963,7 +963,7 @@ msgstr "Komandas e-pasta adrese:"
 msgid "Team:"
 msgstr "Komanda:"
 
-#: ../src/catalog.cpp:1155
+#: ../src/catalog.cpp:1216
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -971,7 +971,7 @@ msgid ""
 "and the setting was modified accordingly."
 msgstr ""
 
-#: ../src/catalog.cpp:883
+#: ../src/catalog.cpp:916
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -993,7 +993,7 @@ msgstr ""
 "Šīs virknes tika atrastas avotos, bet nebija katalogā.\n"
 "poEdit tūlīt pat pievienos tās katalogam."
 
-#: ../src/edapp.cpp:144
+#: ../src/edapp.cpp:145
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1049,7 +1049,7 @@ msgstr "Slēgt, ja izvēlētajai virknei ir nepilnīgs tulkojums"
 msgid "Total"
 msgstr "Kopā"
 
-#: ../src/edframe.cpp:160 ../src/export_html.cpp:144
+#: ../src/edlistctrl.cpp:185 ../src/export_html.cpp:144
 msgid "Translation"
 msgstr "Tulkojums"
 
@@ -1113,11 +1113,11 @@ msgstr "Atjaunināt kopsavilkumu"
 msgid "Update translation memory"
 msgstr "Atjauninu tulkošanas atmiņu"
 
-#: ../src/catalog.cpp:1288
+#: ../src/catalog.cpp:1349
 msgid "Updating catalog..."
 msgstr "Atjauninu katalogu..."
 
-#: ../src/edframe.cpp:1146
+#: ../src/edframe.cpp:1087
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr ""
 
@@ -1147,11 +1147,11 @@ msgstr ""
 msgid "Windows"
 msgstr ""
 
-#: ../src/edframe.cpp:904
+#: ../src/edframe.cpp:837
 msgid "You can't drop more than one file on poEdit window."
 msgstr ""
 
-#: ../src/chooselang.cpp:147
+#: ../src/chooselang.cpp:148
 msgid "You must restart poEdit for this change to take effect."
 msgstr ""
 
@@ -1163,7 +1163,7 @@ msgstr "Jūsu e-pasta adrese:"
 msgid "Your name:"
 msgstr "Jūsu vārds:"
 
-#: ../src/edframe.cpp:1900
+#: ../src/edframe.cpp:1806
 #, fuzzy, c-format
 msgid "[checking translations: %i left]"
 msgstr "Ēnoto tulkojumu saraksts"
@@ -1172,11 +1172,11 @@ msgstr "Ēnoto tulkojumu saraksts"
 msgid "current platform's default"
 msgstr ""
 
-#: ../src/edframe.cpp:2171
+#: ../src/edframe.cpp:2079
 msgid "none"
 msgstr "nekas"
 
-#: ../src/edframe.cpp:439
+#: ../src/edframe.cpp:372
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -1184,7 +1184,7 @@ msgstr "poEdit"
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - Katalogu pārvaldnieks"
 
-#: ../src/edapp.cpp:126
+#: ../src/edapp.cpp:127
 msgid "poEdit Error"
 msgstr "poEdit Kļūda"
 
@@ -1198,7 +1198,7 @@ msgid ""
 msgstr ""
 "poEdit instalācija ir sabeigta, nevaru atrast aplikācijas mājas direktoriju."
 
-#: ../src/edframe.cpp:2186
+#: ../src/edframe.cpp:2094
 msgid "version"
 msgstr "versija"
 

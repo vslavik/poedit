@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-21 13:38+0100\n"
+"POT-Creation-Date: 2005-02-20 11:41+0100\n"
 "PO-Revision-Date: 2004-09-07 01:17+0200\n"
 "Last-Translator: Besnik Bleta <besnik@spymac.com>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1926
+#: ../src/edframe.cpp:1832
 msgid " (modified)"
 msgstr " (ndryshuar)"
 
@@ -28,7 +28,7 @@ msgstr "kartela..."
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr ""
 
-#: ../src/edframe.cpp:1894 ../src/export_html.cpp:131
+#: ../src/edframe.cpp:1800 ../src/export_html.cpp:131
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i vargje (%i të turbullt, %i objekte të gabuar, %i të papërkthyer)"
@@ -54,7 +54,7 @@ msgid "&Edit"
 msgstr "&Përpuno"
 
 #: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:496
+#: ../src/edframe.cpp:429
 msgid "&File"
 msgstr "&Kartelë"
 
@@ -111,12 +111,12 @@ msgstr "&Përditëso prej burimesh"
 msgid "&View"
 msgstr "&Parje"
 
-#: ../src/catalog.cpp:1356
+#: ../src/catalog.cpp:1417
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' nuk është një kartelë POT e vlefshme."
 
-#: ../src/edframe.cpp:1817
+#: ../src/edframe.cpp:1723
 msgid "'."
 msgstr "'."
 
@@ -137,7 +137,7 @@ msgstr "(0 të rinj, 0 të vjetëruar)"
 msgid "(Use default language)"
 msgstr "(Përdor gjuhë parazgjedhje)"
 
-#: ../src/edframe.cpp:785
+#: ../src/edframe.cpp:718
 msgid "(none of these)"
 msgstr "(asnjë prej këtyre)"
 
@@ -189,7 +189,7 @@ msgstr "Kontroll drejtshkrimi vetvetiu"
 msgid "Automatic translation"
 msgstr "Përkthim vetvetiu"
 
-#: ../src/edframe.cpp:2147 ../src/edframe.cpp:2151
+#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
 msgid "Automatic translations:"
 msgstr "Përkthime vetvetiu:"
 
@@ -201,12 +201,12 @@ msgstr "Gjatë daljes përpilo vetvetiu kartelë .mo"
 msgid "Automatically translate when updating catalog"
 msgstr "Përkthe automatikisht kur përditësohet katalog"
 
-#: ../src/edframe.cpp:2104
+#: ../src/edframe.cpp:2012
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "U përkthyen vetvetiu %u vargje"
 
-#: ../src/edframe.cpp:2089
+#: ../src/edframe.cpp:1997
 msgid "Automatically translating..."
 msgstr "Po përkthej automatikisht"
 
@@ -222,13 +222,13 @@ msgstr "Shteg bazë:"
 msgid "Behavior"
 msgstr "Sjellje"
 
-#: ../src/catalog.cpp:560
+#: ../src/catalog.cpp:591
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 "Kartelë katalogu e dëmtuar: vargje mesazhesh në shumës përdorur pa "
 "msgid_plural"
 
-#: ../src/catalog.cpp:528
+#: ../src/catalog.cpp:559
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -267,7 +267,7 @@ msgstr "Nuk mund të përmbush program:"
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Nuk mund të nxjerr katalogë nga kartelë RPM."
 
-#: ../src/edapp.cpp:123
+#: ../src/edapp.cpp:124
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -276,7 +276,7 @@ msgstr ""
 "Nuk mund të gjej kartelë resursesh '%s'!\n"
 "Ju lutem riinstaloni poEdit."
 
-#: ../src/edapp.cpp:117
+#: ../src/edapp.cpp:118
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -297,8 +297,8 @@ msgstr "Siç është shkruajtur"
 msgid "Catalog"
 msgstr "Katalog"
 
-#: ../src/edframe.cpp:830 ../src/edframe.cpp:849 ../src/edframe.cpp:881
-#: ../src/edframe.cpp:922 ../src/edframe.cpp:1026
+#: ../src/edframe.cpp:763 ../src/edframe.cpp:782 ../src/edframe.cpp:814
+#: ../src/edframe.cpp:855 ../src/edframe.cpp:959
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalogu u ndryshua. Doni të ruani ndryshimet?"
 
@@ -342,7 +342,7 @@ msgstr "Formësim"
 msgid "Confirmation"
 msgstr "Ripohim"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2126
+#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2034
 msgid "Copy original to translation field"
 msgstr "Kopjo te vendi i përkthimit origjinalin"
 
@@ -399,7 +399,7 @@ msgstr ""
 "Vërtet doni të bëni përditësim masiv të\n"
 "tërë katalogëve në këtë projekt?"
 
-#: ../src/edframe.cpp:2048
+#: ../src/edframe.cpp:1956
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -459,16 +459,16 @@ msgstr "I ekzekutueshëm përpunuesi:"
 msgid "Enables on-the-fly spellchecking"
 msgstr "Mundëson kontroll-drejtshkrimi fluturimthi"
 
-#: ../src/edframe.cpp:1144
+#: ../src/edframe.cpp:1085
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Mbase ka zëra të pasaktë në katalog."
 
-#: ../src/edframe.cpp:736
+#: ../src/edframe.cpp:669
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "Gabim gatitjeje kontrolli drejtshkrimi: %s"
 
-#: ../src/edframe.cpp:1817
+#: ../src/edframe.cpp:1723
 msgid "Error loading message catalog file '"
 msgstr "Gabim në ngarkimin e kartelës katalog mesazhesh '"
 
@@ -477,7 +477,7 @@ msgstr "Gabim në ngarkimin e kartelës katalog mesazhesh '"
 msgid "Error opening file %s!"
 msgstr "Gabim gjatë hapjes së kartelës %s!"
 
-#: ../src/catalog.cpp:1156
+#: ../src/catalog.cpp:1217
 msgid "Error saving catalog"
 msgstr "Gabim në ruajtje katalogu"
 
@@ -486,7 +486,7 @@ msgstr "Gabim në ruajtje katalogu"
 msgid "Error while loading file '%s': line %u is corrupted."
 msgstr ""
 
-#: ../src/edframe.cpp:998
+#: ../src/edframe.cpp:931
 msgid "Export as..."
 msgstr "Eksporto si..."
 
@@ -494,12 +494,12 @@ msgstr "Eksporto si..."
 msgid "External editor"
 msgstr "Përpunues i jashtëm"
 
-#: ../src/edframe.cpp:894 ../src/edframe.cpp:933
+#: ../src/edframe.cpp:827 ../src/edframe.cpp:866
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Kartela '%s' nuk ekziston"
 
-#: ../src/edframe.cpp:911
+#: ../src/edframe.cpp:844
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Kartela '%s' nuk është një katalog mesazhesh"
@@ -534,12 +534,12 @@ msgstr "Gjej..."
 msgid "Fonts"
 msgstr "Gërma"
 
-#: ../src/edframe.cpp:2544
+#: ../src/edframe.cpp:2453
 #, c-format
 msgid "Form %u"
 msgstr "Formular %u"
 
-#: ../src/edframe.cpp:2546
+#: ../src/edframe.cpp:2455
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr "Formular %u (p.sh. \"%u\")"
@@ -556,11 +556,11 @@ msgstr "I turbullt"
 msgid "Fuzzy translation"
 msgstr "Përkthim i turbullt"
 
-#: ../src/edframe.cpp:864 ../src/edframe.cpp:975
+#: ../src/edframe.cpp:797 ../src/edframe.cpp:908
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Katalogë GNU GetText (*.po)|*.po|Tërë kartelat (*.*)|*.*"
 
-#: ../src/edframe.cpp:1046 ../src/edframe.cpp:1162
+#: ../src/edframe.cpp:979 ../src/edframe.cpp:1103
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "Stampa GNU GetText (*.pot)|*.pot|Tërë kartelat (*.*)|*.*"
 
@@ -576,11 +576,11 @@ msgstr "Prodho bazë të dhënash TM"
 msgid "Generate database"
 msgstr "Prodho bazë të dhënash"
 
-#: ../src/edframe.cpp:1220
+#: ../src/edframe.cpp:1167
 msgid "Gettext syntax error"
 msgstr "Gabim sintakse gettext"
 
-#: ../src/edframe.cpp:1000
+#: ../src/edframe.cpp:933
 msgid "HTML file (*.html)|*.html"
 msgstr "Kartelë HTML (*.html) | *.html"
 
@@ -604,7 +604,7 @@ msgstr "Thirrje:"
 msgid "Keywords"
 msgstr "Fjalëkyçe"
 
-#: ../src/chooselang.cpp:133
+#: ../src/chooselang.cpp:134
 msgid "Language selection"
 msgstr "Zgjedhje gjuhe"
 
@@ -617,7 +617,7 @@ msgstr "Gjuhë:"
 msgid "Last modified"
 msgstr "Ndryshuar së fundmi"
 
-#: ../src/edframe.cpp:162 ../src/fileviewer.cpp:84
+#: ../src/fileviewer.cpp:84 ../src/edlistctrl.cpp:187
 msgid "Line"
 msgstr "Rresht"
 
@@ -651,7 +651,7 @@ msgstr "Maks. # fjalësh munguese:"
 msgid "Max. difference in sentence length:"
 msgstr "Maks. ndryshimi në gjatësi fjalish:"
 
-#: ../src/catalog.cpp:1328
+#: ../src/catalog.cpp:1389
 msgid "Merging differences..."
 msgstr "Po përzjej dallime..."
 
@@ -712,7 +712,7 @@ msgstr ""
 msgid "No files found in: "
 msgstr "S'u gjetën kartela në:"
 
-#: ../src/edframe.cpp:1235
+#: ../src/edframe.cpp:1183
 msgid "No references to this string found."
 msgstr "Nuk u gjet referencë tek ky varg."
 
@@ -731,11 +731,11 @@ msgstr "OK"
 msgid "Obsolete strings"
 msgstr "Vargje të vjetëruar"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:862
+#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:795
 msgid "Open catalog"
 msgstr "Hap katalog:"
 
-#: ../src/edframe.cpp:1044 ../src/edframe.cpp:1160
+#: ../src/edframe.cpp:977 ../src/edframe.cpp:1101
 msgid "Open catalog template"
 msgstr "Hap stampë katalogu"
 
@@ -747,7 +747,7 @@ msgstr "Hap përgjegjës katalogësh gjatë nisjes së poEdit-it"
 msgid "Open source files in editor, not in file viewer"
 msgstr "Hap kartela burim në përpunues, jo në parës kartele"
 
-#: ../src/edframe.cpp:159 ../src/export_html.cpp:141
+#: ../src/edlistctrl.cpp:184 ../src/export_html.cpp:141
 msgid "Original string"
 msgstr "Varg origjinal"
 
@@ -788,7 +788,7 @@ msgid "Please add directories where locale files are stored on your system:"
 msgstr ""
 "Ju lutem shtoni drejtoritë ku janë ruajtur kartela vendore në sistemin tuaj: "
 
-#: ../src/edframe.cpp:1243
+#: ../src/edframe.cpp:1191
 msgid "Please choose the reference you want to show:"
 msgstr "Ju lutem zgjidhni referencën që doni të shfaqni:"
 
@@ -796,7 +796,7 @@ msgstr "Ju lutem zgjidhni referencën që doni të shfaqni:"
 msgid "Please select language ISO code:"
 msgstr "Ju lutem zgjidhni kod ISO gjuhe:"
 
-#: ../src/edframe.cpp:794
+#: ../src/edframe.cpp:727
 msgid "Please select language code:"
 msgstr "Ju lutem zgjidhni kod gjuhe:"
 
@@ -804,7 +804,7 @@ msgstr "Ju lutem zgjidhni kod gjuhe:"
 msgid "Plural Forms:"
 msgstr "Forma Shumësi:"
 
-#: ../src/edframe.cpp:546
+#: ../src/edframe.cpp:480
 msgid "Plural:"
 msgstr "Shumës:"
 
@@ -828,16 +828,16 @@ msgstr "Emër dhe version projekti:"
 msgid "Project name:"
 msgstr "Emër projekti:"
 
-#: ../src/edframe.cpp:2049
+#: ../src/edframe.cpp:1957
 #, fuzzy
 msgid "Purge delete translations"
 msgstr "Përkthime vetvetiu:"
 
-#: ../src/edframe.cpp:1243
+#: ../src/edframe.cpp:1191
 msgid "References"
 msgstr "Referenca"
 
-#: ../src/edframe.cpp:2131 ../src/edframe.cpp:2135
+#: ../src/edframe.cpp:2039 ../src/edframe.cpp:2043
 msgid "References:"
 msgstr "Referenca:"
 
@@ -854,7 +854,7 @@ msgstr "&Riktheje te parazgjedhjet"
 msgid "Save &as..."
 msgstr "Ruaj  &si..."
 
-#: ../src/edframe.cpp:974
+#: ../src/edframe.cpp:907
 msgid "Save as..."
 msgstr "Ruaj  si"
 
@@ -862,8 +862,8 @@ msgstr "Ruaj  si"
 msgid "Save catalog"
 msgstr "Ruaj katalog:"
 
-#: ../src/edframe.cpp:831 ../src/edframe.cpp:850 ../src/edframe.cpp:882
-#: ../src/edframe.cpp:923 ../src/edframe.cpp:1027
+#: ../src/edframe.cpp:764 ../src/edframe.cpp:783 ../src/edframe.cpp:815
+#: ../src/edframe.cpp:856 ../src/edframe.cpp:960
 msgid "Save changes"
 msgstr "Ruaj ndryshime"
 
@@ -879,7 +879,7 @@ msgstr "Po skanoj kartela..."
 msgid "Search Paths"
 msgstr "Kërko në shtigje"
 
-#: ../src/edframe.cpp:793
+#: ../src/edframe.cpp:726
 msgid "Select catalog's language"
 msgstr "Përzgjidh gjuhë katalogu"
 
@@ -892,7 +892,7 @@ msgstr "Përzgjidhni drejtori"
 msgid "Select language"
 msgstr "Përzgjidhni gjuhë"
 
-#: ../src/chooselang.cpp:132
+#: ../src/chooselang.cpp:133
 msgid "Select your prefered language"
 msgstr "Zgjidhni gjuhën tuaj të parapëlqyer"
 
@@ -900,7 +900,7 @@ msgstr "Zgjidhni gjuhën tuaj të parapëlqyer"
 msgid "Settings"
 msgstr "Rregullime"
 
-#: ../src/edapp.cpp:144
+#: ../src/edapp.cpp:145
 msgid "Setup"
 msgstr "Rregullim"
 
@@ -917,7 +917,7 @@ msgstr "Shfaq dritare &komentesh"
 msgid "Show summary after catalog update"
 msgstr "Shfaq përmbledhje pas përditësimi katalogësh"
 
-#: ../src/edframe.cpp:545
+#: ../src/edframe.cpp:479
 msgid "Singular:"
 msgstr "Njëjës:"
 
@@ -949,7 +949,7 @@ msgstr "Vendndodhje email e ekipit:"
 msgid "Team:"
 msgstr "Ekipi:"
 
-#: ../src/catalog.cpp:1155
+#: ../src/catalog.cpp:1216
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -960,7 +960,7 @@ msgstr ""
 "tregohet në rregullime katalogu. U ruajt nën UTF-8\n"
 "dhe rregullimi u ndryshua për përputhje."
 
-#: ../src/catalog.cpp:883
+#: ../src/catalog.cpp:916
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -982,7 +982,7 @@ msgstr ""
 "Këta vargje u gjetën në burime por nuk qenë te katalogu.\n"
 "poEdit do t'i shtojë te katalogu tani."
 
-#: ../src/edapp.cpp:144
+#: ../src/edapp.cpp:145
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1038,7 +1038,7 @@ msgstr "I shtypur nëse vargu i përzgjedhur ka përkthim të turbullt"
 msgid "Total"
 msgstr "Githsej:"
 
-#: ../src/edframe.cpp:160 ../src/export_html.cpp:144
+#: ../src/edlistctrl.cpp:185 ../src/export_html.cpp:144
 msgid "Translation"
 msgstr "Përkthim"
 
@@ -1103,11 +1103,11 @@ msgstr "Përditëso përmbledhje"
 msgid "Update translation memory"
 msgstr "Përditëso kujtesë përkthimesh"
 
-#: ../src/catalog.cpp:1288
+#: ../src/catalog.cpp:1349
 msgid "Updating catalog..."
 msgstr "Po përditësoj katalog..."
 
-#: ../src/edframe.cpp:1146
+#: ../src/edframe.cpp:1087
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "Përditësimi i katalogut dështoi. Për hollësi Klikoni te 'Më tepër>'."
 
@@ -1136,11 +1136,11 @@ msgstr ""
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:904
+#: ../src/edframe.cpp:837
 msgid "You can't drop more than one file on poEdit window."
 msgstr "Nuk mund të jepni më tepër se një kartelë te dritarja poEdit. "
 
-#: ../src/chooselang.cpp:147
+#: ../src/chooselang.cpp:148
 msgid "You must restart poEdit for this change to take effect."
 msgstr "uhet të rinisni poEdit që të jenë veprues ndryshimet."
 
@@ -1152,7 +1152,7 @@ msgstr "Vendndodhja juaj e-mail:"
 msgid "Your name:"
 msgstr "Emri juaj:"
 
-#: ../src/edframe.cpp:1900
+#: ../src/edframe.cpp:1806
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[po kontrolloj përkthime: mbetur %i]"
@@ -1161,11 +1161,11 @@ msgstr "[po kontrolloj përkthime: mbetur %i]"
 msgid "current platform's default"
 msgstr "Parazgjedhje platforme të çastit"
 
-#: ../src/edframe.cpp:2171
+#: ../src/edframe.cpp:2079
 msgid "none"
 msgstr "asnjë"
 
-#: ../src/edframe.cpp:439
+#: ../src/edframe.cpp:372
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -1173,7 +1173,7 @@ msgstr "poEdit"
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - Përgjegjës katalogësh"
 
-#: ../src/edapp.cpp:126
+#: ../src/edapp.cpp:127
 msgid "poEdit Error"
 msgstr "Gabim i poEdit"
 
@@ -1187,6 +1187,6 @@ msgid ""
 msgstr ""
 "Instalimi i poEdit u këput, nuk mund të gjej drejtorinë bazë të zbatimit."
 
-#: ../src/edframe.cpp:2186
+#: ../src/edframe.cpp:2094
 msgid "version"
 msgstr "version"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-21 13:38+0100\n"
+"POT-Creation-Date: 2005-02-20 11:41+0100\n"
 "PO-Revision-Date: 2005-01-23 21:04+0600\n"
 "Last-Translator: Omi Azad <omi@ekushey.org>\n"
 "Language-Team: Ekushey <bangla@ekushey.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-Country: BANGLADESH\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../src/edframe.cpp:1926
+#: ../src/edframe.cpp:1832
 msgid " (modified)"
 msgstr "(পরিবর্তিত)"
 
@@ -28,8 +28,7 @@ msgstr "ফাইলসমূহ..."
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "'%2$s' ফাইলের %1$i লাইনগুলি ঠিকমত লোড হয়নি।"
 
-#: ../src/edframe.cpp:1894
-#: ../src/export_html.cpp:131
+#: ../src/edframe.cpp:1800 ../src/export_html.cpp:131
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i টি বাক্য (অস্পষ্ট %i টি, ফালতু টোকেন %i টি, অনুবাদ করা হয়নি %i টি)"
@@ -42,8 +41,7 @@ msgstr "&পরিচিতি"
 msgid "&Automatically translate using TM"
 msgstr "&TM ব্যবহার করে সয়ংক্রিয়ভাবে অনুবাদ করো"
 
-#: ../src/resources/xrc_strings.h:34
-#: ../src/resources/xrc_strings.h:44
+#: ../src/resources/xrc_strings.h:34 ../src/resources/xrc_strings.h:44
 msgid "&Close"
 msgstr "&বন্ধ"
 
@@ -55,9 +53,8 @@ msgstr "&সূচীসমূহ..."
 msgid "&Edit"
 msgstr "&সম্পাদন"
 
-#: ../src/resources/xrc_strings.h:32
-#: ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:496
+#: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
+#: ../src/edframe.cpp:429
 msgid "&File"
 msgstr "&ফাইল"
 
@@ -81,8 +78,7 @@ msgstr "&নতুন তালিকা..."
 msgid "&Open"
 msgstr "&খুলো"
 
-#: ../src/resources/xrc_strings.h:33
-#: ../src/resources/xrc_strings.h:43
+#: ../src/resources/xrc_strings.h:33 ../src/resources/xrc_strings.h:43
 msgid "&Preferences..."
 msgstr "&পছন্দনীয়..."
 
@@ -114,12 +110,12 @@ msgstr "&সোর্স থেকে আপডেট করো"
 msgid "&View"
 msgstr "&দেখাও"
 
-#: ../src/catalog.cpp:1356
+#: ../src/catalog.cpp:1417
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' কোন সঠিক POT ফাইল নয়।"
 
-#: ../src/edframe.cpp:1817
+#: ../src/edframe.cpp:1723
 msgid "'."
 msgstr "'."
 
@@ -140,7 +136,7 @@ msgstr "(নতুন ০, অপ্রচলিত ০)"
 msgid "(Use default language)"
 msgstr "(স্বাভাবিক ভাষা ব্যবহার করো)"
 
-#: ../src/edframe.cpp:785
+#: ../src/edframe.cpp:718
 msgid "(none of these)"
 msgstr "(এগুলির মধ্যে একটাওনা)"
 
@@ -164,8 +160,7 @@ msgstr "যোগ"
 msgid "Add directory to the list"
 msgstr "এই লিস্টে ডিরেক্টরি যোগ করো"
 
-#: ../src/resources/xrc_strings.h:170
-#: ../src/transmemupd_wizard.cpp:123
+#: ../src/resources/xrc_strings.h:170 ../src/transmemupd_wizard.cpp:123
 msgid "Add files"
 msgstr "ফাইলসমূহ যোগ করো"
 
@@ -193,8 +188,7 @@ msgstr "সয়ংক্রিয়ভাবে বানান সংশোধন 
 msgid "Automatic translation"
 msgstr "সয়ংক্রিয় অনুবাদ"
 
-#: ../src/edframe.cpp:2147
-#: ../src/edframe.cpp:2151
+#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
 msgid "Automatic translations:"
 msgstr "সয়ংক্রিয় অনুবাদসমূহ:"
 
@@ -206,12 +200,12 @@ msgstr "সংরক্ষণ করার সাথেই .mo ফাইল স�
 msgid "Automatically translate when updating catalog"
 msgstr "তালিকা আপডেট করার সময় সয়ংক্রিয়ভাবে অনুবাদ করো"
 
-#: ../src/edframe.cpp:2104
+#: ../src/edframe.cpp:2012
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "%u বাক্যগুলো সয়ংক্রিয়ভাবে অনুবাদ করা হয়েছে"
 
-#: ../src/edframe.cpp:2089
+#: ../src/edframe.cpp:1997
 msgid "Automatically translating..."
 msgstr "সয়ংক্রিয়ভাবে অনুবাদ করা হচ্ছে..."
 
@@ -228,18 +222,17 @@ msgstr "বেইজ পাথ:"
 msgid "Behavior"
 msgstr "ব্যবহার"
 
-#: ../src/catalog.cpp:560
+#: ../src/catalog.cpp:591
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "ত্রুটিপূর্ন তালিকা ফাইল: msgstr বহবচন আকার msgid_plural ছাড়াই ব্যবহৃত হয়েছে"
 
-#: ../src/catalog.cpp:528
-msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
+#: ../src/catalog.cpp:559
+msgid ""
+"Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr "ত্রুটিপূর্ন তালিকা ফাইল: msgstr একবচন আকার msgid_plural সহ ব্যবহৃত হয়েছে"
 
-#: ../src/resources/xrc_strings.h:28
-#: ../src/resources/xrc_strings.h:104
-#: ../src/resources/xrc_strings.h:135
-#: ../src/resources/xrc_strings.h:167
+#: ../src/resources/xrc_strings.h:28 ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:135 ../src/resources/xrc_strings.h:167
 msgid "Browse"
 msgstr "ব্রাউজ"
 
@@ -251,14 +244,10 @@ msgstr "তালি&কা"
 msgid "CR/LF conversion"
 msgstr "CR/LF পরিবর্তন"
 
-#: ../src/resources/xrc_strings.h:6
-#: ../src/resources/xrc_strings.h:19
-#: ../src/resources/xrc_strings.h:31
-#: ../src/resources/xrc_strings.h:119
-#: ../src/resources/xrc_strings.h:134
-#: ../src/resources/xrc_strings.h:138
-#: ../src/resources/xrc_strings.h:140
-#: ../src/resources/xrc_strings.h:156
+#: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:19
+#: ../src/resources/xrc_strings.h:31 ../src/resources/xrc_strings.h:119
+#: ../src/resources/xrc_strings.h:134 ../src/resources/xrc_strings.h:138
+#: ../src/resources/xrc_strings.h:140 ../src/resources/xrc_strings.h:156
 msgid "Cancel"
 msgstr "বাতিল"
 
@@ -266,8 +255,7 @@ msgstr "বাতিল"
 msgid "Cannot create database directory!"
 msgstr "ডাটাবেজ ডিরেক্টরি তৈরী করা সম্ভব হলোনা!"
 
-#: ../src/gexecute.cpp:119
-#: ../src/gexecute.cpp:166
+#: ../src/gexecute.cpp:119 ../src/gexecute.cpp:166
 msgid "Cannot execute program: "
 msgstr "প্রোগ্রাম চালানো সম্ভব হলোনা:"
 
@@ -275,7 +263,7 @@ msgstr "প্রোগ্রাম চালানো সম্ভব হলো
 msgid "Cannot extract catalogs from RPM file."
 msgstr "RPM ফাইল থেকে এক্সট্রাক্ট করা গেলোনা।"
 
-#: ../src/edapp.cpp:123
+#: ../src/edapp.cpp:124
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -284,7 +272,7 @@ msgstr ""
 "রিসোর্স ফাইল '%s' পাওয়া যায়নি!\n"
 " অনুগ্রহ করে আবার poEdit ইনস্টল করুন।"
 
-#: ../src/edapp.cpp:117
+#: ../src/edapp.cpp:118
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -305,11 +293,8 @@ msgstr "অক্ষর সুবেদী"
 msgid "Catalog"
 msgstr "তালিকা"
 
-#: ../src/edframe.cpp:830
-#: ../src/edframe.cpp:849
-#: ../src/edframe.cpp:881
-#: ../src/edframe.cpp:922
-#: ../src/edframe.cpp:1026
+#: ../src/edframe.cpp:763 ../src/edframe.cpp:782 ../src/edframe.cpp:814
+#: ../src/edframe.cpp:855 ../src/edframe.cpp:959
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "তালিকার পরিবর্তন সাধিত হয়েছে। আপনি কি পরিবর্তনগুলো সংরক্ষণ করবেন?"
 
@@ -321,13 +306,11 @@ msgstr "তালিকা &ব্যবস্থাপক"
 msgid "Change UI language"
 msgstr "UI ভাষা পরিবর্তন করো"
 
-#: ../src/resources/xrc_strings.h:147
-#: ../src/export_html.cpp:117
+#: ../src/resources/xrc_strings.h:147 ../src/export_html.cpp:117
 msgid "Charset:"
 msgstr "Charset:"
 
-#: ../src/resources/xrc_strings.h:98
-#: ../src/resources/xrc_strings.h:100
+#: ../src/resources/xrc_strings.h:98 ../src/resources/xrc_strings.h:100
 msgid "Choose"
 msgstr "বাছাই"
 
@@ -351,18 +334,15 @@ msgstr "মন্তব্য:"
 msgid "Configuration"
 msgstr "কনফিগারেশন"
 
-#: ../src/manager.cpp:378
-#: ../src/manager.cpp:398
+#: ../src/manager.cpp:378 ../src/manager.cpp:398
 msgid "Confirmation"
 msgstr "নিশ্চয়তা"
 
-#: ../src/resources/xrc_strings.h:46
-#: ../src/edframe.cpp:2126
+#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2034
 msgid "Copy original to translation field"
 msgstr "অনুবাদ ফিল্ডে মূল উত্‍‌স কপি করো"
 
-#: ../src/resources/xrc_strings.h:146
-#: ../src/export_html.cpp:107
+#: ../src/resources/xrc_strings.h:146 ../src/export_html.cpp:107
 msgid "Country:"
 msgstr "দেশ:"
 
@@ -415,13 +395,16 @@ msgstr ""
 "আপনি কি আসলেই এই প্রজেক্টের সব তালিকাগুলির\n"
 "বিশাল আপডেট করতে চান?"
 
-#: ../src/edframe.cpp:2048
+#: ../src/edframe.cpp:1956
 msgid ""
-"Do you really want to remove all translations that are no longer used from the catalog?\n"
-"If you continue with purging, you will have to translate them again if they are added back in the future."
+"Do you really want to remove all translations that are no longer used from "
+"the catalog?\n"
+"If you continue with purging, you will have to translate them again if they "
+"are added back in the future."
 msgstr ""
 "আপনি কি সত্যই সমস্থ অনুবাদ মুছে ফেলতে চান যা এই তালিকায় আর ব্যবহৃত হচ্ছেনা?\n"
-"আপনি যদি এগুলি পরিস্কার করেন, তাহলে ভবিষ্যতে এগুলি যোগ হলে আবার আপনাকে অনুবাদ করতে হতে পারে।"
+"আপনি যদি এগুলি পরিস্কার করেন, তাহলে ভবিষ্যতে এগুলি যোগ হলে আবার আপনাকে অনুবাদ "
+"করতে হতে পারে।"
 
 #: ../src/manager.cpp:377
 msgid "Do you want to delete the project?"
@@ -443,8 +426,7 @@ msgstr "সম্পাদন"
 msgid "Edit &comment"
 msgstr "&মন্তব্য সম্পাদন করো"
 
-#: ../src/resources/xrc_strings.h:3
-#: ../src/resources/xrc_strings.h:176
+#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:176
 msgid "Edit comment"
 msgstr "মন্তব্য সম্পাদন করো"
 
@@ -476,16 +458,16 @@ msgstr "চালানোর মত সম্পাদক:"
 msgid "Enables on-the-fly spellchecking"
 msgstr "চালন্ত-অবস্থায় বানান নিরীক্ষন সক্রিয় করে"
 
-#: ../src/edframe.cpp:1144
+#: ../src/edframe.cpp:1085
 msgid "Entries in the catalog are probably incorrect."
 msgstr "এই তালিকার এন্ট্রিগুলি সম্ভবত সঠিক না।"
 
-#: ../src/edframe.cpp:736
+#: ../src/edframe.cpp:669
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "বানান নিরীক্ষণ শুরু করা যায়নি: %s"
 
-#: ../src/edframe.cpp:1817
+#: ../src/edframe.cpp:1723
 msgid "Error loading message catalog file '"
 msgstr "ম্যাসেজের তালিকা ফাইল লোড করতে সমস্যা হয়েছে '"
 
@@ -494,16 +476,16 @@ msgstr "ম্যাসেজের তালিকা ফাইল লোড �
 msgid "Error opening file %s!"
 msgstr "%s ফাইল খুলতে সমস্যা হয়েছে!"
 
-#: ../src/catalog.cpp:1156
+#: ../src/catalog.cpp:1217
 msgid "Error saving catalog"
 msgstr "তালিকা সেভ করতে সমস্যা হয়েছে"
 
 #: ../src/catalog.cpp:64
-#, c-format
-msgid "Error while loading file '%s': line %u is corruped."
+#, fuzzy, c-format
+msgid "Error while loading file '%s': line %u is corrupted."
 msgstr "'%s' ফাইল লোড করা গেলোনা: %u লাইনে সমস্যা আছে।"
 
-#: ../src/edframe.cpp:998
+#: ../src/edframe.cpp:931
 msgid "Export as..."
 msgstr "...এর মত এক্সপোর্ট করো"
 
@@ -511,13 +493,12 @@ msgstr "...এর মত এক্সপোর্ট করো"
 msgid "External editor"
 msgstr "বাহিরের সম্পাদক"
 
-#: ../src/edframe.cpp:894
-#: ../src/edframe.cpp:933
+#: ../src/edframe.cpp:827 ../src/edframe.cpp:866
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "'%s' ফাইলের কোন অস্তিত্ব নেই।"
 
-#: ../src/edframe.cpp:911
+#: ../src/edframe.cpp:844
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "'%s' ফাইল কোন ম্যাসেজ তালিকা নয়।"
@@ -550,12 +531,12 @@ msgstr "খোঁজ..."
 msgid "Fonts"
 msgstr "ফন্টসমূহ"
 
-#: ../src/edframe.cpp:2544
+#: ../src/edframe.cpp:2453
 #, c-format
 msgid "Form %u"
 msgstr "আকার %u"
 
-#: ../src/edframe.cpp:2546
+#: ../src/edframe.cpp:2455
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr "আকার %u (যেমন \"%u\")"
@@ -572,13 +553,11 @@ msgstr "অস্পষ্ট"
 msgid "Fuzzy translation"
 msgstr "অস্পষ্ট অনুবাদ"
 
-#: ../src/edframe.cpp:864
-#: ../src/edframe.cpp:975
+#: ../src/edframe.cpp:797 ../src/edframe.cpp:908
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText তালিকা (*.po)|*.po|সকল ফাইলসমূহ (*.*)|*.*"
 
-#: ../src/edframe.cpp:1046
-#: ../src/edframe.cpp:1162
+#: ../src/edframe.cpp:979 ../src/edframe.cpp:1103
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU GetText নমুনা (*.po)|*.po|সকল ফাইলসমূহ (*.*)|*.*"
 
@@ -594,11 +573,11 @@ msgstr "TM ডাটাবেইস উত্‍‌পন্ন করো"
 msgid "Generate database"
 msgstr "ডাটাবেইস উত্‍‌পন্ন করো"
 
-#: ../src/edframe.cpp:1220
+#: ../src/edframe.cpp:1167
 msgid "Gettext syntax error"
 msgstr "Gettext বাক্যগঠনে সমস্যা"
 
-#: ../src/edframe.cpp:1000
+#: ../src/edframe.cpp:933
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML ফাইল (*.html)|*.html"
 
@@ -618,19 +597,16 @@ msgstr "চেক্‌ করলে, মন্তব্যের উইন্�
 msgid "Invocation:"
 msgstr "প্রার্থনা:"
 
-#: ../src/resources/xrc_strings.h:154
-#: ../src/settingsdlg.cpp:55
+#: ../src/resources/xrc_strings.h:154 ../src/settingsdlg.cpp:55
 msgid "Keywords"
 msgstr "কী-ওয়ার্ড"
 
-#: ../src/chooselang.cpp:133
+#: ../src/chooselang.cpp:134
 msgid "Language selection"
 msgstr "ভাষা নির্বাচন"
 
-#: ../src/resources/xrc_strings.h:121
-#: ../src/resources/xrc_strings.h:122
-#: ../src/resources/xrc_strings.h:145
-#: ../src/export_html.cpp:104
+#: ../src/resources/xrc_strings.h:121 ../src/resources/xrc_strings.h:122
+#: ../src/resources/xrc_strings.h:145 ../src/export_html.cpp:104
 msgid "Language:"
 msgstr "ভাষা:"
 
@@ -638,8 +614,7 @@ msgstr "ভাষা:"
 msgid "Last modified"
 msgstr "শেষ পরিবর্তিত হয়েছে"
 
-#: ../src/edframe.cpp:162
-#: ../src/fileviewer.cpp:84
+#: ../src/fileviewer.cpp:84 ../src/edlistctrl.cpp:187
 msgid "Line"
 msgstr "লাইন"
 
@@ -673,7 +648,7 @@ msgstr "সর্বোচ্চ সংখ্যক হারানো শব্
 msgid "Max. difference in sentence length:"
 msgstr "বাক্যের ব্যাপ্তি অনুযায়ী সর্বোচ্চ পার্থক্য:"
 
-#: ../src/catalog.cpp:1328
+#: ../src/catalog.cpp:1389
 msgid "Merging differences..."
 msgstr "পার্থক্যগুলি মেলানো হচ্ছে..."
 
@@ -694,8 +669,14 @@ msgid "My Project"
 msgstr "আমার প্রজেক্ট"
 
 #: ../src/resources/xrc_strings.h:80
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "এই বাক্যের লিস্টকে ফোকাস হতে দেবেননা। যদি এনেবল হয়ে থাকে, তাহলে আপনাকে Tab চাপে ফোকাস বদলানো ছাড়া কি-বোর্ডের Ctrl-এ্যরো ব্যাবহার লেখার মধ্যে ভ্রমন করতে হবে এবং তাত্‍‌খনিকভাবে টেক্সট টাইপ করতে হবে।"
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"এই বাক্যের লিস্টকে ফোকাস হতে দেবেননা। যদি এনেবল হয়ে থাকে, তাহলে আপনাকে Tab "
+"চাপে ফোকাস বদলানো ছাড়া কি-বোর্ডের Ctrl-এ্যরো ব্যাবহার লেখার মধ্যে ভ্রমন করতে হবে "
+"এবং তাত্‍‌খনিকভাবে টেক্সট টাইপ করতে হবে।"
 
 #: ../src/resources/xrc_strings.h:115
 msgid "New"
@@ -725,7 +706,7 @@ msgstr "কোন সম্পাদক নির্ধারণ করা ন�
 msgid "No files found in: "
 msgstr "কোন ফাইল পাওয়া যায়নি এখানে:"
 
-#: ../src/edframe.cpp:1235
+#: ../src/edframe.cpp:1183
 msgid "No references to this string found."
 msgstr "এই বাক্যের প্রতি কোন নির্দেশ পাওয়া যায়নি।"
 
@@ -733,12 +714,9 @@ msgstr "এই বাক্যের প্রতি কোন নির্দ�
 msgid "Notes"
 msgstr "দ্রষ্টব্য"
 
-#: ../src/resources/xrc_strings.h:2
-#: ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:30
-#: ../src/resources/xrc_strings.h:118
-#: ../src/resources/xrc_strings.h:133
-#: ../src/resources/xrc_strings.h:155
+#: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
+#: ../src/resources/xrc_strings.h:30 ../src/resources/xrc_strings.h:118
+#: ../src/resources/xrc_strings.h:133 ../src/resources/xrc_strings.h:155
 #: ../src/resources/xrc_strings.h:163
 msgid "OK"
 msgstr "ঠিক আছে"
@@ -747,13 +725,11 @@ msgstr "ঠিক আছে"
 msgid "Obsolete strings"
 msgstr "অপ্রচলিত বাক্য"
 
-#: ../src/resources/xrc_strings.h:171
-#: ../src/edframe.cpp:862
+#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:795
 msgid "Open catalog"
 msgstr "তালিকা খুলো"
 
-#: ../src/edframe.cpp:1044
-#: ../src/edframe.cpp:1160
+#: ../src/edframe.cpp:977 ../src/edframe.cpp:1101
 msgid "Open catalog template"
 msgstr "নমুনা তালিকা খুলো"
 
@@ -765,8 +741,7 @@ msgstr "poEdit শুরু হতেই তালিকা ম্যানে�
 msgid "Open source files in editor, not in file viewer"
 msgstr "মূল ফাইলকে ফাইল ভিউয়ারে না খুলে, সম্পাদকে খুলো"
 
-#: ../src/edframe.cpp:159
-#: ../src/export_html.cpp:141
+#: ../src/edlistctrl.cpp:184 ../src/export_html.cpp:141
 msgid "Original string"
 msgstr "মূল বাক্য"
 
@@ -790,8 +765,7 @@ msgstr "শব্দবিশ্লেষণ"
 msgid "Path to DB:"
 msgstr "DB-এর পাথ:"
 
-#: ../src/resources/xrc_strings.h:152
-#: ../src/settingsdlg.cpp:57
+#: ../src/resources/xrc_strings.h:152 ../src/settingsdlg.cpp:57
 msgid "Paths"
 msgstr "পাথ"
 
@@ -805,9 +779,10 @@ msgstr "জানা ভাষার তালিকা থেকে ভাষ�
 
 #: ../src/resources/xrc_strings.h:166
 msgid "Please add directories where locale files are stored on your system:"
-msgstr "আপনার সিষ্টেমের যেখানে লোকেল ফাইলগুলি আছে, অনুগ্রহ করে তার ডিরেক্টরি যোগ করে দিন:"
+msgstr ""
+"আপনার সিষ্টেমের যেখানে লোকেল ফাইলগুলি আছে, অনুগ্রহ করে তার ডিরেক্টরি যোগ করে দিন:"
 
-#: ../src/edframe.cpp:1243
+#: ../src/edframe.cpp:1191
 msgid "Please choose the reference you want to show:"
 msgstr "অনুগ্রহকরে যে নির্দেশটি আপনি দেখতে চাইছেন তা বাছাই করুন:"
 
@@ -815,7 +790,7 @@ msgstr "অনুগ্রহকরে যে নির্দেশটি আপ
 msgid "Please select language ISO code:"
 msgstr "অনুগ্রহ করে ভাষার ISO কোড নির্ধারণ করুন:"
 
-#: ../src/edframe.cpp:794
+#: ../src/edframe.cpp:727
 msgid "Please select language code:"
 msgstr "অনুগ্রহ করে ভাষার কোড নির্ধারণ করুন:"
 
@@ -823,7 +798,7 @@ msgstr "অনুগ্রহ করে ভাষার কোড নির্�
 msgid "Plural Forms:"
 msgstr "বহুবচন আকারসমূহ:"
 
-#: ../src/edframe.cpp:546
+#: ../src/edframe.cpp:480
 msgid "Plural:"
 msgstr "বহুবচন:"
 
@@ -835,13 +810,11 @@ msgstr "পছন্দনীয়"
 msgid "Proceed"
 msgstr "প্রোসেস করা হয়েছে"
 
-#: ../src/resources/xrc_strings.h:150
-#: ../src/export_html.cpp:97
+#: ../src/resources/xrc_strings.h:150 ../src/export_html.cpp:97
 msgid "Project info"
 msgstr "প্রজেক্টের তথ্য"
 
-#: ../src/resources/xrc_strings.h:142
-#: ../src/export_html.cpp:101
+#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:101
 msgid "Project name and version:"
 msgstr "প্রজেক্টের নাম এবং ভার্সন:"
 
@@ -849,16 +822,15 @@ msgstr "প্রজেক্টের নাম এবং ভার্সন:"
 msgid "Project name:"
 msgstr "প্রজেক্টের নাম:"
 
-#: ../src/edframe.cpp:2049
+#: ../src/edframe.cpp:1957
 msgid "Purge delete translations"
 msgstr "মুছে ফেলা অনুবাদসমূহ পরিস্কার করো"
 
-#: ../src/edframe.cpp:1243
+#: ../src/edframe.cpp:1191
 msgid "References"
 msgstr "নির্দেশাবলী"
 
-#: ../src/edframe.cpp:2131
-#: ../src/edframe.cpp:2135
+#: ../src/edframe.cpp:2039 ../src/edframe.cpp:2043
 msgid "References:"
 msgstr "নির্দেশাবলী:"
 
@@ -874,7 +846,7 @@ msgstr "ডিফল্টে পুনঃস্থাপন করো"
 msgid "Save &as..."
 msgstr "...এর &মত সংরক্ষণ করো"
 
-#: ../src/edframe.cpp:974
+#: ../src/edframe.cpp:907
 msgid "Save as..."
 msgstr "...এর মত সংরক্ষণ করো"
 
@@ -882,11 +854,8 @@ msgstr "...এর মত সংরক্ষণ করো"
 msgid "Save catalog"
 msgstr "তালিকা সংরক্ষণ করো"
 
-#: ../src/edframe.cpp:831
-#: ../src/edframe.cpp:850
-#: ../src/edframe.cpp:882
-#: ../src/edframe.cpp:923
-#: ../src/edframe.cpp:1027
+#: ../src/edframe.cpp:764 ../src/edframe.cpp:783 ../src/edframe.cpp:815
+#: ../src/edframe.cpp:856 ../src/edframe.cpp:960
 msgid "Save changes"
 msgstr "পরিবর্তন সংরক্ষণ করো"
 
@@ -902,12 +871,11 @@ msgstr "ফাইলসমূহ পরীক্ষা করা হচ্ছে
 msgid "Search Paths"
 msgstr "পাথ খোঁজ করো"
 
-#: ../src/edframe.cpp:793
+#: ../src/edframe.cpp:726
 msgid "Select catalog's language"
 msgstr "তালিকার ভাষা নির্বাচন করুন"
 
-#: ../src/manager.cpp:251
-#: ../src/prefsdlg.cpp:334
+#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:334
 #: ../src/transmemupd_wizard.cpp:97
 msgid "Select directory"
 msgstr "ডিরেক্টরি নির্বাচন করুন"
@@ -916,7 +884,7 @@ msgstr "ডিরেক্টরি নির্বাচন করুন"
 msgid "Select language"
 msgstr "ভাষা পছন্দ করুন"
 
-#: ../src/chooselang.cpp:132
+#: ../src/chooselang.cpp:133
 msgid "Select your prefered language"
 msgstr "আপনার পছন্দের ভাষাটি পছন্দ করুন"
 
@@ -924,7 +892,7 @@ msgstr "আপনার পছন্দের ভাষাটি পছন্দ
 msgid "Settings"
 msgstr "সেটিংস"
 
-#: ../src/edapp.cpp:144
+#: ../src/edapp.cpp:145
 msgid "Setup"
 msgstr "শুরুতে"
 
@@ -940,12 +908,11 @@ msgstr "&মন্তব্য উইন্ডো দেখাও"
 msgid "Show summary after catalog update"
 msgstr "তালিকা আপডেটের পরে সারমর্ম দেখাও"
 
-#: ../src/edframe.cpp:545
+#: ../src/edframe.cpp:479
 msgid "Singular:"
 msgstr "একবচন:"
 
-#: ../src/resources/xrc_strings.h:131
-#: ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:131 ../src/resources/xrc_strings.h:148
 msgid "Source code charset:"
 msgstr "মূল কোডের charset:"
 
@@ -965,17 +932,15 @@ msgstr "প্রথম উপাদান থেকে শুরু করো"
 msgid "String to find:"
 msgstr "খোঁজ করার জন্য বাক্য:"
 
-#: ../src/resources/xrc_strings.h:144
-#: ../src/export_html.cpp:114
+#: ../src/resources/xrc_strings.h:144 ../src/export_html.cpp:114
 msgid "Team's email address:"
 msgstr "দলের ই-মেইল ঠিকানা:"
 
-#: ../src/resources/xrc_strings.h:143
-#: ../src/export_html.cpp:110
+#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:110
 msgid "Team:"
 msgstr "দল:"
 
-#: ../src/catalog.cpp:1155
+#: ../src/catalog.cpp:1216
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -986,8 +951,10 @@ msgstr ""
 "সংরক্ষণ করা সম্ভব হলোনা। এটাকে সফলভাবে UTF-8\n"
 "হিসেবে সংরক্ষণ করা হলো এবং সে অনুযায়ী সেটিংস বদল করা হয়েছে।"
 
-#: ../src/catalog.cpp:883
-msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
+#: ../src/catalog.cpp:916
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
 msgstr "তালিকা লোড করতে কিছু সমস্যা হয়েছে। কিছু ডাটা নেই বা নষ্ট।"
 
 #: ../src/resources/xrc_strings.h:160
@@ -1006,7 +973,7 @@ msgstr ""
 "এই বাক্যগুলো উত্‍‌সের মধ্যে পাওয়া গেলেও তালিকায় পাওয়া যায়নি।\n"
 "poEdit সেগুলিকে এখন তালিকাভুক্ত করবে।"
 
-#: ../src/edapp.cpp:144
+#: ../src/edapp.cpp:145
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1061,8 +1028,7 @@ msgstr "নির্বাচিত বাক্যে অস্পষ্ট অ
 msgid "Total"
 msgstr "সর্বমোট"
 
-#: ../src/edframe.cpp:160
-#: ../src/export_html.cpp:144
+#: ../src/edlistctrl.cpp:185 ../src/export_html.cpp:144
 msgid "Translation"
 msgstr "অনুবাদ"
 
@@ -1127,11 +1093,11 @@ msgstr "সারাংশ আপডেট করো"
 msgid "Update translation memory"
 msgstr "অনুবাদের মেমরী আপডেট করো"
 
-#: ../src/catalog.cpp:1288
+#: ../src/catalog.cpp:1349
 msgid "Updating catalog..."
 msgstr "তালিকা আপডেট করছি..."
 
-#: ../src/edframe.cpp:1146
+#: ../src/edframe.cpp:1087
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "তালিকার আপডেট অকৃতকার্য হয়েছে। বিস্তারিত দেখতে 'More>>'-এ ক্লিক করুন।"
 
@@ -1159,11 +1125,11 @@ msgstr "শুধুমাত্র সম্পুর্ন শব্দ"
 msgid "Windows"
 msgstr "উইন্ডোজ"
 
-#: ../src/edframe.cpp:904
+#: ../src/edframe.cpp:837
 msgid "You can't drop more than one file on poEdit window."
 msgstr "poEdit উইন্ডোতে আপনি একটির বেশী ফাইল এনে ফেলতে পারবেন না।"
 
-#: ../src/chooselang.cpp:147
+#: ../src/chooselang.cpp:148
 msgid "You must restart poEdit for this change to take effect."
 msgstr "এই পরিবর্তনকে ব্যবহার করতে হলে আপনাকে অবশ্যই poEdit পুনরায় চালাতে হবে।"
 
@@ -1175,7 +1141,7 @@ msgstr "আপনার ই-মেইল ঠিকানা:"
 msgid "Your name:"
 msgstr "আপনার নাম:"
 
-#: ../src/edframe.cpp:1900
+#: ../src/edframe.cpp:1806
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[ট্রান্সলেশনসমূহ নিরীক্ষা করছি : %i গুলি বাকী আছে]"
@@ -1184,11 +1150,11 @@ msgstr "[ট্রান্সলেশনসমূহ নিরীক্ষা 
 msgid "current platform's default"
 msgstr "বর্তমান প্লাটফর্মের ডিফল্ট"
 
-#: ../src/edframe.cpp:2171
+#: ../src/edframe.cpp:2079
 msgid "none"
 msgstr "একটাওনা"
 
-#: ../src/edframe.cpp:439
+#: ../src/edframe.cpp:372
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -1196,7 +1162,7 @@ msgstr "poEdit"
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - শ্রেণী ব্যবস্থাপক"
 
-#: ../src/edapp.cpp:126
+#: ../src/edapp.cpp:127
 msgid "poEdit Error"
 msgstr "poEdit-এর ত্রুটি"
 
@@ -1205,10 +1171,10 @@ msgid "poEdit did not find any files in scanned directories."
 msgstr "খোঁজকৃত ডিরেক্টরিগুলিতে poEdit কেন ফাইল পায়নি।"
 
 #: ../src/edapp.cpp:51
-msgid "poEdit installation is broken, cannot find application's home directory."
+msgid ""
+"poEdit installation is broken, cannot find application's home directory."
 msgstr "poEdit-এর ইনষ্টলেশন ত্রুটিপূর্ণ, হোম ডিরেক্টরি পাওয়া যায়নি।"
 
-#: ../src/edframe.cpp:2186
+#: ../src/edframe.cpp:2094
 msgid "version"
 msgstr "ভার্সন"
-
