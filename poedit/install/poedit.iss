@@ -51,6 +51,7 @@ Source: locales\zh_TW.Big5.mo; DestDir: {app}\share\locale\zh_TW.Big5\LC_MESSAGE
 Source: locales\zh-wxstd.mo; DestDir: {app}\share\locale\zh\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
 Source: locales\nl-wxstd.mo; DestDir: {app}\share\locale\nl\LC_MESSAGES; DestName: wxstd.mo; Components: i18n
 Source: locales\nl.mo; DestDir: {app}\share\locale\nl\LC_MESSAGES; DestName: poedit.mo; Components: i18n
+Source: locales\et.mo; DestDir: {app}\share\locale\et\LC_MESSAGES; DestName: poedit.mo; Components: i18n
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey
@@ -89,6 +90,8 @@ Name: {app}\share\locale\zh_TW.Big5; Components: i18n
 Name: {app}\share\locale\zh_TW.Big5\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\nl; Components: i18n
 Name: {app}\share\locale\nl\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\et; Components: i18n
+Name: {app}\share\locale\et\LC_MESSAGES; Components: i18n
 
 [_ISToolPreCompile]
 
