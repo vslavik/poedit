@@ -2,9 +2,10 @@
 
 #
 # Creates distribution files
+# $Id$
 #
 
-VERSION=1.1.10
+VERSION=1.2.0
 
 #(
 #cd docs_classes

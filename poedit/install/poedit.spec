@@ -8,7 +8,7 @@
 
 
 # version and release
-%define        VERSION 1.1.10
+%define        VERSION 1.2.0
 %define        RELEASE 1
 
 # default installation directory
