@@ -104,8 +104,10 @@ ManagerFrame::~ManagerFrame()
     cfg->Write(_T("manager_h"), (long)sz.y);
     cfg->Write(_T("manager_x"), (long)pos.x);
     cfg->Write(_T("manager_y"), (long)pos.y);
-    cfg->Write(_T("manager_last_selected"), 
-               (long)m_listPrj->GetClientData(m_listPrj->GetSelection()));
+	
+	int sel = m_listPrj->GetSelection();
+	if (sel != -1)
+        cfg->Write(_T("manager_last_selected"), (long)m_listPrj->GetClientData(sel));
     
     ms_instance = NULL;
 }
@@ -147,6 +149,7 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     wxString key;
     wxString file2(file);
     file2.Replace(_T("/"), _T("_"));
+    file2.Replace(_T("\\"), _T("_"));
     key.Printf(_T("Manager/project_%i/FilesCache/%s/"), id, file2.c_str());
 
     modtime = cfg->Read(key + _T("timestamp"), (long)0);
@@ -201,7 +204,7 @@ void ManagerFrame::UpdateListCat(int id)
     key.Printf(_T("Manager/project_%i/"), id);
 
     wxString dirs = cfg->Read(key + _T("Dirs"), wxEmptyString);
-    wxStringTokenizer tkn(dirs, _T(":"));
+    wxStringTokenizer tkn(dirs, wxPATH_SEP);
     
     m_catalogs.Clear();
     while (tkn.HasMoreTokens())
@@ -270,7 +273,7 @@ bool ManagerFrame::EditProject(int id)
            
     wxString dirs = cfg->Read(key + _T("Dirs"), wxGetCwd());
     wxArrayString adirs;
-    wxStringTokenizer tkn(dirs, _T(":"));
+    wxStringTokenizer tkn(dirs, wxPATH_SEP);
     while (tkn.HasMoreTokens()) adirs.Add(tkn.GetNextToken());
     XMLCTRL(*this, "prj_dirs", wxEditableListBox)->SetStrings(adirs);
            
@@ -282,10 +285,10 @@ bool ManagerFrame::EditProject(int id)
         if (adirs.GetCount() > 0)
             dirs = adirs[0];
         for (size_t i = 1; i < adirs.GetCount(); i++)
-            dirs << _T(":") << adirs[i];
+            dirs << wxPATH_SEP << adirs[i];
         cfg->Write(key + _T("Dirs"), dirs);
 
-        UpdateListPrj(id);        
+        UpdateListPrj(id);
         UpdateListCat(id);
         return true;
     }

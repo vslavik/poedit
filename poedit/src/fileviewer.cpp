@@ -54,6 +54,7 @@ FileViewer::FileViewer(wxWindow *parent,
     sizer->Add(m_list, 1, wxEXPAND);
     panel->SetSizer(sizer);
     panel->SetAutoLayout(true);
+	panel->Layout();
     
     wxChoice *choice = XMLCTRL(*GetToolBar(), "references", wxChoice);
     for (size_t i = 0; i < references.Count(); i++)
@@ -83,8 +84,8 @@ void FileViewer::ShowReference(const wxString& ref)
         bottom = wxMin(linenum + NEIGHBOUR_SIZE, (int)textf.GetLineCount());
 
     m_list->ClearAll();
-    m_list->InsertColumn(0, wxEmptyString, wxLIST_FORMAT_RIGHT);
-    m_list->InsertColumn(1, wxEmptyString);
+    m_list->InsertColumn(0, _T("#"), wxLIST_FORMAT_RIGHT);
+    m_list->InsertColumn(1, _("Line"));
 
     wxString linestr;
     for (int i = top; i < bottom; i++)

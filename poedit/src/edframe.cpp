@@ -169,7 +169,10 @@ class ListHandler : public wxEvtHandler
     private:
         void OnActivated(wxListEvent& event)
         {
-            m_text->SetFocus();
+            if (gs_focusToText)
+			    m_text->SetFocus();
+			else
+				event.Skip();
         }
 
         void OnListSel(wxListEvent& event)
@@ -204,6 +207,8 @@ class ListHandler : public wxEvtHandler
         {
             if (gs_focusToText)
                 m_text->SetFocus();
+			else
+				event.Skip();
         }
 
         DECLARE_EVENT_TABLE() 
@@ -446,7 +451,7 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     int widths[] = {-1, 200};
     CreateStatusBar(2, wxST_SIZEGRIP);
     wxStatusBar *bar = GetStatusBar();
-    m_statusGauge = new wxGauge(bar, -1, 100);
+    m_statusGauge = new wxGauge(bar, -1, 100, wxDefaultPosition, wxDefaultSize, wxGA_SMOOTH);
     bar->SetStatusWidths(2, widths);
     bar->PushEventHandler(new StatusbarHandler(bar, m_statusGauge));
 
@@ -1185,6 +1190,7 @@ void poEditFrame::UpdateMenu()
         GetToolBar()->EnableTool(XMLID("menu_save"), false);
         GetToolBar()->EnableTool(XMLID("menu_update"), false);
         GetToolBar()->EnableTool(XMLID("menu_fuzzy"), false);
+        GetToolBar()->EnableTool(XMLID("menu_comment"), false);
         GetMenuBar()->EnableTop(1, false);
         GetMenuBar()->EnableTop(2, false);
         m_textTrans->Enable(false);
@@ -1196,6 +1202,7 @@ void poEditFrame::UpdateMenu()
         GetMenuBar()->Enable(XMLID("menu_saveas"), true);
         GetToolBar()->EnableTool(XMLID("menu_save"), true);
         GetToolBar()->EnableTool(XMLID("menu_fuzzy"), true);
+        GetToolBar()->EnableTool(XMLID("menu_comment"), true);
         GetMenuBar()->EnableTop(1, true);
         GetMenuBar()->EnableTop(2, true);
         m_textTrans->Enable(true);
