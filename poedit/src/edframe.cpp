@@ -425,6 +425,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
 #ifdef __WXMSW__
    EVT_DROP_FILES     (poEditFrame::OnFileDrop)
 #endif
+   EVT_IDLE           (poEditFrame::OnIdle)
 END_EVENT_TABLE()
 
 
@@ -440,6 +441,7 @@ poEditFrame::poEditFrame() :
                                  wxConfig::Get()->Read(_T("frame_w"), 600),
                                  wxConfig::Get()->Read(_T("frame_h"), 400)),
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
+    m_validityCheckingPosition(-1),
     m_catalog(NULL), 
 #ifdef USE_TRANSMEM
     m_transMem(NULL),
@@ -1458,6 +1460,10 @@ void poEditFrame::UpdateToTextCtrl(int item)
 
 void poEditFrame::ReadCatalog(const wxString& catalog)
 {
+    // stop checking entries in the background:
+    m_validityCheckingPosition = -1;
+    CatalogData::EnableValidityChecking(false);
+
     delete m_catalog;
     m_catalog = new Catalog(catalog);
 
@@ -1472,7 +1478,7 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     
     m_fileName = catalog;
     m_modified = false;
-    
+
     RefreshControls();
     UpdateTitle();
    
@@ -1481,6 +1487,10 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     m_history.AddFileToHistory(fn.GetFullPath());
 
     InitSpellchecker();
+    
+    // start checking catalog's entries in the background:
+    m_validityCheckingPosition = 0;
+    CatalogData::EnableValidityChecking(true);
 }
 
 
@@ -1580,7 +1590,7 @@ void poEditFrame::RefreshControls()
 
     wxString trans;
     size_t pos = 0;
-    
+   
     AddItemsToList(*m_catalog, m_list, pos, 
                    CatFilterUntranslated, g_ItemColourUntranslated);
     AddItemsToList(*m_catalog, m_list, pos, 
@@ -1631,9 +1641,23 @@ void poEditFrame::UpdateStatusBar()
     if (m_catalog)
     {
         wxString txt;
+        
+        CatalogData::EnableValidityChecking(false);
         m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
+        CatalogData::EnableValidityChecking(true);
+        
         txt.Printf(_("%i strings (%i fuzzy, %i bad tokens, %i not translated)"), 
                    all, fuzzy, badtokens, untranslated);
+
+        if (m_validityCheckingPosition != -1)
+        {
+            wxString progress;
+            progress.Printf(_("[checking translations: %i %%]"),
+                    100 * m_validityCheckingPosition / m_list->GetItemCount());
+            txt += _T("    ");
+            txt += progress;
+        }
+        
         GetStatusBar()->SetStatusText(txt);
         if (all > 0)
             m_statusGauge->SetValue(100 * (all-fuzzy-badtokens-untranslated) / all);
@@ -2036,4 +2060,51 @@ void poEditFrame::OnCommentWindowText(wxCommandEvent&)
         m_modified = true;
         UpdateTitle();
     }
+}
+
+
+void poEditFrame::OnIdle(wxIdleEvent& event)
+{
+    // avoid reentrancy problems (GettextExecute calling wxYield):
+    if (wxGetApp().IsInYield())
+        return;
+    
+    if (m_validityCheckingPosition != -1)
+    {
+        if (CheckItemsValidityStep())
+            event.RequestMore();
+    }
+    event.Skip();
+}
+
+bool poEditFrame::CheckItemsValidityStep()
+{
+    if (m_validityCheckingPosition >= m_list->GetItemCount())
+    {
+        m_validityCheckingPosition = -1;
+        UpdateStatusBar();
+        wxLogTrace(_T("poedit"),
+                   _T("finished checking validity in background"));
+        return false;
+    }
+
+    int item = m_validityCheckingPosition++;
+    int index = m_list->GetItemData(item);
+    
+    if ((item % 10) == 0)
+        UpdateStatusBar();
+   
+    if (!(*m_catalog)[index].IsValid())
+    {
+        wxListItem listitem;
+        listitem.SetId(item);
+        m_list->GetItem(listitem);
+        if (gs_shadedList)
+            listitem.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
+        else
+            listitem.SetBackgroundColour(g_ItemColourInvalid[0]);
+        m_list->SetItem(listitem);
+    }
+    
+    return true;
 }

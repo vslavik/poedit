@@ -400,7 +400,11 @@ class CatalogData : public wxObject
             Strings that are not c-format are always correct. */
         bool IsValid() const;
 
+        /// Enables/disables IsValid. If disabled, IsValid always returns true
+        static void EnableValidityChecking(bool enable);
+
     private:
+        static bool ms_validate;
 
         // Validity (syntax-checking) status of the entry:
         enum Validity

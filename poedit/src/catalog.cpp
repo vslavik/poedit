@@ -1086,7 +1086,7 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens, int *untransla
     {
         if (all) (*all)++;
         if ((*this)[i].IsFuzzy()) (*fuzzy)++;
-        if ((*this)[i].IsValid()) (*badtokens)++;
+        if (!(*this)[i].IsValid()) (*badtokens)++;
         if (!(*this)[i].IsTranslated()) (*untranslated)++;
     }
 }
@@ -1132,6 +1132,14 @@ bool CatalogData::IsInFormat(const wxString& format)
     }
     return false;
 }
+        
+
+bool CatalogData::ms_validate = true;
+
+/*static*/ void CatalogData::EnableValidityChecking(bool enable)
+{
+    ms_validate = enable;
+}
 
 bool CatalogData::IsValid() const
 {
@@ -1140,6 +1148,9 @@ bool CatalogData::IsValid() const
 
     if (m_validity != Val_Unknown)
         return m_validity == Val_Valid;
+
+    if (!ms_validate)
+        return true;
 
     // run this entry through msgfmt (in a single-entry catalog) to check if
     // it is correct:

@@ -276,3 +276,12 @@ bool poEditApp::OnCmdLineParsed(wxCmdLineParser& parser)
         gs_filesToOpen.Add(parser.GetParam(i));
     return TRUE;
 }
+        
+bool poEditApp::Yield(bool onlyIfNeeded)
+{
+    bool old = m_isInYield;
+    m_isInYield = true;
+    bool ret = wxApp::Yield(onlyIfNeeded);
+    m_isInYield = old;
+    return ret;
+}

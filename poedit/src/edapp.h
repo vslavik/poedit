@@ -26,10 +26,13 @@ class WXDLLEXPORT wxLocale;
 class poEditApp : public wxApp
 {
     public:
+        poEditApp() : wxApp(), m_isInYield(false) {}
+
         /** wxWin initalization hook. Shows poEditFrame and initializes
             configuration entries to default values if they were missing.
          */
         bool OnInit();
+
         /** Gets application's path. This path is used when looking for 
             resources.zip and help files, both of them can be found
             in {appPath}/share/poedit. Looks in registry under Windows
@@ -46,6 +49,10 @@ class poEditApp : public wxApp
         /// Returns our locale object
         wxLocale& GetLocale() { return m_locale; }
 
+        virtual bool Yield(bool onlyIfNeeded);
+
+        bool IsInYield() const { return m_isInYield; }
+
     protected:
         /** Sets default values to configuration items that don't
             have anything set. (This may happen after fresh installation or
@@ -59,6 +66,7 @@ class poEditApp : public wxApp
         
     private:
         wxLocale m_locale;
+        bool     m_isInYield;
 };
 
 DECLARE_APP(poEditApp);
