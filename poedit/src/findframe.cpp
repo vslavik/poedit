@@ -171,6 +171,8 @@ bool FindFrame::DoFind(int dir)
     {
         m_listCtrl->SetItemState(m_position, 
                     wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        m_listCtrl->SetItemState(m_position, 
+                    wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
         m_listCtrl->EnsureVisible(m_position);
         return true;
     }
