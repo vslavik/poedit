@@ -112,12 +112,11 @@ LanguageStruct isoLanguages[] =
     {_T("my"), _T("Burmese")},
 
     {_T("na"), _T("Nauru")},
-    {_T("nb"), _T("Norwegian Bokmål")},
     {_T("ne"), _T("Nepali")},
     {_T("ng"), _T("Ndonga")},
     {_T("nl"), _T("Dutch")},
     {_T("nn"), _T("Norwegian Nynorsk")},
-    {_T("no"), _T("Norwegian")},
+    {_T("no"), _T("Norwegian Bokmål")},
     {_T("nr"), _T("Ndebele, South")},
     {_T("nv"), _T("Navajo")},
     {_T("ny"), _T("Chichewa; Nyanja")},
