@@ -95,8 +95,13 @@ enum
 };
 
 // colours used in the list:
-static wxColour g_ItemColourUntranslated(0xA5, 0xEA, 0xEF)/*blue*/, 
-                g_ItemColourFuzzy(0xF4, 0xF1, 0xC1)/*yellow*/;
+static wxColour 
+    g_ItemColourNormal[2] =
+            { wxColour(0xFF,0xFF,0xFF), wxColour(0xE5,0xE5,0xE5) },
+    g_ItemColourUntranslated[2] =
+            { wxColour(0xA5,0xEA,0xEF), wxColour(0x94,0xCF,0xD3) /*blue*/ },
+    g_ItemColourFuzzy[2] = 
+            { wxColour(0xF4,0xF1,0xC1), wxColour(0xD8, 0xD5, 0xAD) /*yellow*/ };
 
 #include "nothing.xpm"
 #include "modified.xpm"
@@ -980,11 +985,11 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     listitem.SetId(item);
     m_list->GetItem(listitem);
     if (!data->IsTranslated())
-        listitem.SetBackgroundColour(g_ItemColourUntranslated);
+        listitem.SetBackgroundColour(g_ItemColourUntranslated[item % 2]);
     else if (data->IsFuzzy())
-        listitem.SetBackgroundColour(g_ItemColourFuzzy);
+        listitem.SetBackgroundColour(g_ItemColourFuzzy[item % 2]);
     else
-        listitem.SetBackgroundColour(wxSystemSettings::GetSystemColour(wxSYS_COLOUR_LISTBOX));
+        listitem.SetBackgroundColour(g_ItemColourNormal[item % 2]);
     int icon = GetItemIcon(*data);
     m_list->SetItemImage(listitem, icon, icon);
     m_list->SetItem(listitem);
@@ -1058,7 +1063,7 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
 
 static void AddItemsToList(const Catalog& catalog, wxListCtrl *list, size_t& pos,
                            bool (*filter)(const CatalogData& d),
-                           const wxColour& clr)
+                           const wxColour *clr)
 {
     wxListItem listitem;
     size_t cnt = catalog.GetCount();
@@ -1079,10 +1084,10 @@ static void AddItemsToList(const Catalog& catalog, wxListCtrl *list, size_t& pos
             list->SetItem(pos, 1, trans);
             list->SetItemData(pos, i);
             listitem.SetId(pos);
-            if (clr.Ok())
+            if (clr[pos % 2].Ok())
             {
                 list->GetItem(listitem);
-                listitem.SetBackgroundColour(clr);
+                listitem.SetBackgroundColour(clr[pos % 2]);
                 list->SetItem(listitem);
             }
             pos++;
@@ -1134,7 +1139,7 @@ void poEditFrame::RefreshControls()
     AddItemsToList(*m_catalog, m_list, pos, 
                    CatFilterFuzzy, g_ItemColourFuzzy);
     AddItemsToList(*m_catalog, m_list, pos, 
-                   CatFilterRest, wxNullColour);
+                   CatFilterRest, g_ItemColourNormal);
 
     m_list->Thaw();
     
