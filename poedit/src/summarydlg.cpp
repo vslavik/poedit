@@ -61,9 +61,21 @@ void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayStri
     
     listbox = XRCCTRL(*this, "new_strings", wxListBox);
     for (i = 0; i < snew.GetCount(); i++)
+    {
+#if wxUSE_UNICODE
         listbox->Append(snew[i]);
+#else
+        listbox->Append(wxString(snew[i].mb_str(wxConvUTF8), wxConvLocal));
+#endif
+    }
 
     listbox = XRCCTRL(*this, "obsolete_strings", wxListBox);
     for (i = 0; i < sobsolete.GetCount(); i++)
+    {
+#if wxUSE_UNICODE
         listbox->Append(sobsolete[i]);
+#else
+        listbox->Append(wxString(sobsolete[i].mb_str(wxConvUTF8), wxConvLocal));
+#endif
+    }
 }
