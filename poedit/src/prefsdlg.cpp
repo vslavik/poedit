@@ -44,7 +44,12 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
 #else
     // remove "Translation Memory" page if support not compiled-in
     XRCCTRL(*this, "notebook", wxNotebook)->DeletePage(1);
-#endif                
+#endif
+
+#ifdef __UNIX__
+    // remove (defunct on Unix) "Change UI language" button:
+    XRCCTRL(*this, "ui_language", wxButton)->Show(false);
+#endif    
 }
 
 
