@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resource version="2.3.0.1">
   <object class="wxDialog" name="parser_progress">
-    <title>Updating catalog...</title>
     <object class="wxBoxSizer">
       <orient>wxHORIZONTAL</orient>
       <object class="sizeritem">
@@ -15,9 +14,7 @@
         <object class="wxBoxSizer">
           <orient>wxVERTICAL</orient>
           <object class="sizeritem">
-            <object class="wxStaticText" name="info">
-              <label>Merging differences...</label>
-            </object>
+            <object class="wxStaticText" name="info"/>
             <border>5d</border>
             <flag>wxTOP</flag>
           </object>
@@ -25,7 +22,7 @@
             <flag>wxTOP</flag>
             <border>5d</border>
             <object class="wxGauge" name="progress">
-              <size>130,10d</size>
+              <size>130,-1d</size>
               <style>wxGA_SMOOTH</style>
             </object>
           </object>
