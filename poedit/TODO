@@ -1,13 +1,15 @@
 Urgent:
 
-- remove wxCHECK_VERSION(2,3,2) code when 2.3.2 is out
 - add i18n support to poEdit *itself*
-- use virtual wxListCtrl
 - regular Unicode build of poEdit (wxUSE_UNICODE=1), using unicows.dll
+- automated translation during update should be marked as fuzzy!
+- use virtual wxListCtrl
+- plural handling (in wxWin, too), see info:/gettext/PO Files
 
 
 Lower priority:
 
+- statistics (# of words, # of characters)
 - Add parsing of msgfmt's error output (e.g. msgid "foo\n" msgstr "foo" will produce
   fatal error about \n mismatch)
 - TM should split input string into sentences before querying db
