@@ -52,7 +52,7 @@ wxString poEditApp::GetAppPath() const
 
 wxString poEditApp::GetAppVersion() const
 {
-    return "1.1.1";
+    return "1.1.2";
 }
 
 
@@ -148,7 +148,13 @@ void poEditApp::SetDefaultCfg(wxConfigBase *cfg)
 #if defined(__UNIX__)
         dbpath = wxGetHomeDir() + "/.poedit/tm";
 #elif defined(__WXMSW__)
-        dbpath = wxGetHomeDir() + "/share/poedit/tm";
+        // VS: this distinguishes between NT and Win9X systems -- the former
+        //     has users' home directories while on the latter wxGetHomeDir
+        //     will return path of the executable
+        if (wxGetHomeDir().IsSameAs(GetAppPath() + "\\bin", false))      
+            dbpath = GetAppPath() + "\\share\\poedit\\tm";
+        else
+            dbpath = wxGetHomeDir() + "\\poedit_tm";
 #endif
         cfg->Write("TM/database_path", dbpath);
     }
