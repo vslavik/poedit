@@ -83,7 +83,7 @@ wxBitmap AddDigit(char digit, int x, int y, const wxBitmap& bmp)
     wxBitmap tmpBmp(width, height);
     dc.SelectObject(tmpBmp);
     dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(g_TranspColour));
+    dc.SetBrush(wxBrush(g_TranspColour, wxSOLID));
     dc.DrawRectangle(0, 0, width, height);
     
     dc.DrawBitmap(bmp, 0,0,true);
@@ -108,7 +108,7 @@ wxBitmap MergeBitmaps(const wxBitmap& bmp1, const wxBitmap& bmp2)
     
     dc.SelectObject(tmpBmp);
     dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(g_TranspColour));
+    dc.SetBrush(wxBrush(g_TranspColour, wxSOLID));
     dc.DrawRectangle(0, 0, bmp1.GetWidth(), bmp1.GetHeight());
     dc.DrawBitmap(bmp1, 0, 0, true);
     dc.DrawBitmap(bmp2, 0, 0, true);
@@ -126,7 +126,7 @@ wxBitmap BitmapFromList(wxImageList* list, int index)
     wxBitmap bmp(width, height);  // Don't forget the size to have a valid bitmap
     dc.SelectObject(bmp);
     dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(g_TranspColour));
+    dc.SetBrush(wxBrush(g_TranspColour, wxSOLID));
     dc.DrawRectangle(0, 0, width, height);
     
     list->Draw(index, dc, 0, 0, wxIMAGELIST_DRAW_TRANSPARENT);
@@ -223,10 +223,10 @@ void poEditListCtrl::ReadCatalog()
         // unstranslated, invalid, fuzzy and the rest
         m_itemIndexToCatalogIndexArray.Clear();
         
-        IntArray untranslatedIds;
-        IntArray invalidIds;
-        IntArray fuzzyIds;
-        IntArray restIds;
+        wxArrayInt untranslatedIds;
+        wxArrayInt invalidIds;
+        wxArrayInt fuzzyIds;
+        wxArrayInt restIds;
         int i;
         
         for(i = 0; i < m_catalog->GetCount(); ++i)
