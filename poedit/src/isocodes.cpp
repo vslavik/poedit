@@ -16,7 +16,7 @@ LanguageStruct isoLanguages[] =
     {_T("az"), _T("Azerbaijani")},
 
     {_T("ba"), _T("Bashkir")},
-    {_T("be"), _T("Byelorussian")},
+    {_T("be"), _T("Belarusian")},
     {_T("bg"), _T("Bulgarian")},
     {_T("bh"), _T("Bihari")},
     {_T("bi"), _T("Bislama")},
