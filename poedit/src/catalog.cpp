@@ -143,7 +143,10 @@ static wxString UnescapeCEscapes(const wxString& str)
     wxString out;
     size_t len = str.size();
     size_t i;
-    
+
+    if ( len == 0 )
+        return str;
+
     for (i = 0; i < len-1; i++)
     {
         if (str[i] == _T('\\'))
