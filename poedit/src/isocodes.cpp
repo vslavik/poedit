@@ -183,6 +183,7 @@ LanguageStruct isoLanguages[] =
     {_T("vi"), _T("Vietnamese")},
     {_T("vo"), _T("Volapuk")},
 
+    {_T("wa"), _T("Walloon")},
     {_T("wo"), _T("Wolof")},
 
     {_T("xh"), _T("Xhosa")},
