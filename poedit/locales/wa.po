@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-23 12:26+0200\n"
+"POT-Creation-Date: 2004-08-29 20:23+0200\n"
 "PO-Revision-Date: 2004-05-25 22:52+0200\n"
 "Last-Translator: Pablo Saratxaga <pablo@walon.org>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1681
+#: ../src/edframe.cpp:1847
 msgid " (modified)"
 msgstr " (candjî)"
 
@@ -21,7 +21,7 @@ msgstr " (candjî)"
 msgid " files..."
 msgstr " fitchîs..."
 
-#: ../src/edframe.cpp:1649 ../src/export_html.cpp:131
+#: ../src/edframe.cpp:1815 ../src/export_html.cpp:131
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i tchinnes (%i «fuzzy», %i avou des arokes, %i nén ratournés)"
@@ -47,7 +47,7 @@ msgid "&Edit"
 msgstr "&Candjî"
 
 #: ../src/resources/xrc_strings.h:28 ../src/resources/xrc_strings.h:31
-#: ../src/edframe.cpp:490
+#: ../src/edframe.cpp:493
 msgid "&File"
 msgstr "&Fitchî"
 
@@ -99,12 +99,12 @@ msgstr "&Mete a djoû a pårti do côde sourdant"
 msgid "&View"
 msgstr "&Vey"
 
-#: ../src/catalog.cpp:957
+#: ../src/catalog.cpp:1065
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "«%s» n' est nén on fitchî POT valide."
 
-#: ../src/edframe.cpp:1570
+#: ../src/edframe.cpp:1738
 msgid "'."
 msgstr "»."
 
@@ -117,7 +117,7 @@ msgstr "(%f serè replaecî pa on no d' fitchî, %l pa on limero d' roye)"
 msgid "(%i new, %i obsolete)"
 msgstr "(%i novea(s), %i obsolete(s))"
 
-#: ../src/resources/xrc_strings.h:154
+#: ../src/resources/xrc_strings.h:155
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 novea, 0 obsolete)"
 
@@ -125,7 +125,7 @@ msgstr "(0 novea, 0 obsolete)"
 msgid "(Use default language)"
 msgstr "(Eployî l' prémetou lingaedje)"
 
-#: ../src/edframe.cpp:720
+#: ../src/edframe.cpp:755
 msgid "(none of these)"
 msgstr "(nouk di ces la)"
 
@@ -149,7 +149,7 @@ msgstr "Radjouter"
 msgid "Add directory to the list"
 msgstr "Radjouter l' ridant al djivêye"
 
-#: ../src/resources/xrc_strings.h:162 ../src/transmemupd_wizard.cpp:123
+#: ../src/resources/xrc_strings.h:163 ../src/transmemupd_wizard.cpp:123
 msgid "Add files"
 msgstr "Radjouter des fitchîs"
 
@@ -178,7 +178,7 @@ msgstr "Ratournaedje otomatike"
 msgid "Automatic translation"
 msgstr "Ratournaedje otomatike"
 
-#: ../src/edframe.cpp:1879 ../src/edframe.cpp:1883
+#: ../src/edframe.cpp:2050 ../src/edframe.cpp:2054
 msgid "Automatic translations:"
 msgstr "Ratournaedjes otomatikes:"
 
@@ -190,12 +190,12 @@ msgstr "Copiler otomaticmint en on fitchî .mo tot schapant"
 msgid "Automatically translate when updating catalog"
 msgstr "Ratourner otomaticmint tot metant a djoû l' catalogue"
 
-#: ../src/edframe.cpp:1836
+#: ../src/edframe.cpp:2007
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "%u tchinnes di ratournêyes otomaticmint"
 
-#: ../src/edframe.cpp:1821
+#: ../src/edframe.cpp:1992
 msgid "Automatically translating..."
 msgstr "Ratournaedje otomatike en alaedje..."
 
@@ -203,7 +203,7 @@ msgstr "Ratournaedje otomatike en alaedje..."
 msgid "Bad Tokens"
 msgstr "Måvas cayets"
 
-#: ../src/resources/xrc_strings.h:143
+#: ../src/resources/xrc_strings.h:144
 msgid "Base path:"
 msgstr "Tchimin d' båze:"
 
@@ -211,8 +211,17 @@ msgstr "Tchimin d' båze:"
 msgid "Behavior"
 msgstr "Dujhance"
 
+#: ../src/catalog.cpp:356
+msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgstr ""
+
+#: ../src/catalog.cpp:324
+msgid ""
+"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:24 ../src/resources/xrc_strings.h:97
-#: ../src/resources/xrc_strings.h:128 ../src/resources/xrc_strings.h:159
+#: ../src/resources/xrc_strings.h:128 ../src/resources/xrc_strings.h:160
 msgid "Browse"
 msgstr "Foyter"
 
@@ -228,7 +237,7 @@ msgstr "Kiviersaedje di fén d' roye (CR/LF)"
 #: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:15
 #: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:112
 #: ../src/resources/xrc_strings.h:127 ../src/resources/xrc_strings.h:131
-#: ../src/resources/xrc_strings.h:133 ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:133 ../src/resources/xrc_strings.h:149
 msgid "Cancel"
 msgstr "Rinoncî"
 
@@ -236,7 +245,7 @@ msgstr "Rinoncî"
 msgid "Cannot create database directory!"
 msgstr "Dji n' a savou fé l' ridant del båze di dnêyes!"
 
-#: ../src/gexecute.cpp:127
+#: ../src/gexecute.cpp:119 ../src/gexecute.cpp:166
 msgid "Cannot execute program: "
 msgstr "Dji n' sai enonder l' programe: "
 
@@ -274,8 +283,8 @@ msgstr "Diferince po ptitès et grandès letes"
 msgid "Catalog"
 msgstr "Catalogue"
 
-#: ../src/edframe.cpp:765 ../src/edframe.cpp:784 ../src/edframe.cpp:816
-#: ../src/edframe.cpp:857 ../src/edframe.cpp:957
+#: ../src/edframe.cpp:800 ../src/edframe.cpp:819 ../src/edframe.cpp:851
+#: ../src/edframe.cpp:892 ../src/edframe.cpp:992
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Li catalogue a candjî. Voloz vs schaper les candjmints?"
 
@@ -319,7 +328,7 @@ msgstr "Apontiaedje"
 msgid "Confirmation"
 msgstr "Racertinaedje"
 
-#: ../src/resources/xrc_strings.h:41 ../src/edframe.cpp:1858
+#: ../src/resources/xrc_strings.h:41 ../src/edframe.cpp:2029
 msgid "Copy original to translation field"
 msgstr "Copyî l' oridjinå e tchamp d' ratournaedje"
 
@@ -364,7 +373,7 @@ msgstr "Håyner les &limeros des royes"
 msgid "Display &quotes"
 msgstr "Håyner les wi&yemets"
 
-#: ../src/resources/xrc_strings.h:166
+#: ../src/resources/xrc_strings.h:167
 msgid "Display quotes around the string?"
 msgstr "Håyner les wiyemets åtoû des tchinnes?"
 
@@ -396,7 +405,7 @@ msgstr "Candjî"
 msgid "Edit &comment"
 msgstr "Candjî l' ra&wete"
 
-#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:168
+#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:169
 msgid "Edit comment"
 msgstr "Candjî l' rawete"
 
@@ -428,16 +437,16 @@ msgstr "Programe aspougneu d' tecse:"
 msgid "Enables on-the-fly spellchecking"
 msgstr ""
 
-#: ../src/edframe.cpp:1045
+#: ../src/edframe.cpp:1081
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Les intrêyes do catalogue sont motoit bén incorekes."
 
-#: ../src/edframe.cpp:690
+#: ../src/edframe.cpp:711
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr ""
 
-#: ../src/edframe.cpp:1570
+#: ../src/edframe.cpp:1738
 msgid "Error loading message catalog file '"
 msgstr "Åk n' a nén stî tot tcherdjant l' fitchî catalogue «"
 
@@ -446,11 +455,11 @@ msgstr "Åk n' a nén stî tot tcherdjant l' fitchî catalogue «"
 msgid "Error opening file %s!"
 msgstr "Åk n' a nén stî tot drovant l' fitchî «%s»!"
 
-#: ../src/catalog.cpp:771
+#: ../src/catalog.cpp:860
 msgid "Error saving catalog"
 msgstr "Åk n' a nén stî tot schapant l' catalogue"
 
-#: ../src/edframe.cpp:931
+#: ../src/edframe.cpp:966
 msgid "Export as..."
 msgstr "Abaguer come..."
 
@@ -458,12 +467,12 @@ msgstr "Abaguer come..."
 msgid "External editor"
 msgstr "Difoûtrin aspougneu d' tecse"
 
-#: ../src/edframe.cpp:829 ../src/edframe.cpp:868
+#: ../src/edframe.cpp:864 ../src/edframe.cpp:903
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Li fitchî «%s» n' egzistêye nén."
 
-#: ../src/edframe.cpp:846
+#: ../src/edframe.cpp:881
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Li fitchî «%s» n' est nén on catalogue di messaedjes."
@@ -488,7 +497,17 @@ msgstr "Trover..."
 msgid "Fonts"
 msgstr "Fontes"
 
-#: ../src/resources/xrc_strings.h:169
+#: ../src/edframe.cpp:2406
+#, c-format
+msgid "Form %u"
+msgstr ""
+
+#: ../src/edframe.cpp:2408
+#, c-format
+msgid "Form %u (e.g. \"%u\")"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:170
 msgid "Fullscreen view"
 msgstr "Forrimpli l' waitroûle"
 
@@ -500,12 +519,12 @@ msgstr "Fuzzy"
 msgid "Fuzzy translation"
 msgstr "Ratournaedje «fuzzy»"
 
-#: ../src/edframe.cpp:799 ../src/edframe.cpp:908
+#: ../src/edframe.cpp:834 ../src/edframe.cpp:943
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr ""
 "Catalogues di ratournaedje GNU gettext (*.po)|*.po|Tos les fitchîs (*.*)|*.*"
 
-#: ../src/edframe.cpp:1063
+#: ../src/edframe.cpp:1099
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr ""
 "Modeles di ratournaedje GNU gettext (*.pot)|*.pot|Tos les fitchîs (*.*)|*.*"
@@ -522,11 +541,15 @@ msgstr "Askepyî li båze di dnêyes del memwere di ratournaedje"
 msgid "Generate database"
 msgstr "Askepyî l' båze di dnêyes"
 
-#: ../src/edframe.cpp:933
+#: ../src/edframe.cpp:1156
+msgid "Gettext syntax error"
+msgstr ""
+
+#: ../src/edframe.cpp:968
 msgid "HTML file (*.html)|*.html"
 msgstr "Fitchî HTML (*.html)|*.html"
 
-#: ../src/resources/xrc_strings.h:170
+#: ../src/resources/xrc_strings.h:171
 msgid "Help"
 msgstr "Aidance"
 
@@ -542,7 +565,7 @@ msgstr "Si metou, vos ploz scrire dins l' purnea des rawetes di tecse."
 msgid "Invocation:"
 msgstr "Invocåcion:"
 
-#: ../src/resources/xrc_strings.h:146 ../src/settingsdlg.cpp:54
+#: ../src/resources/xrc_strings.h:147 ../src/settingsdlg.cpp:55
 msgid "Keywords"
 msgstr "Mots clés"
 
@@ -559,7 +582,7 @@ msgstr "Lingaedje:"
 msgid "Last modified"
 msgstr "Candjî pol dierin côp"
 
-#: ../src/edframe.cpp:162 ../src/fileviewer.cpp:84
+#: ../src/edframe.cpp:164 ../src/fileviewer.cpp:84
 msgid "Line"
 msgstr "Roye"
 
@@ -588,7 +611,7 @@ msgstr "Nombe macs. di mots mancants:"
 msgid "Max. difference in sentence length:"
 msgstr "Diferince macs. dins l' longueu del fråze:"
 
-#: ../src/catalog.cpp:929
+#: ../src/catalog.cpp:1037
 msgid "Merging differences..."
 msgstr "Maxhaedje des diferinces..."
 
@@ -626,7 +649,7 @@ msgstr "Novea"
 msgid "New item"
 msgstr "Novea cayet"
 
-#: ../src/resources/xrc_strings.h:151
+#: ../src/resources/xrc_strings.h:152
 msgid "New strings"
 msgstr "Novelès tchinnes"
 
@@ -644,7 +667,7 @@ msgstr ""
 msgid "No files found in: "
 msgstr "Nou fitchî d' trové e: "
 
-#: ../src/edframe.cpp:1107
+#: ../src/edframe.cpp:1171
 msgid "No references to this string found."
 msgstr "Nole referince di trovêye po cisse tchinne ci."
 
@@ -654,20 +677,20 @@ msgstr "Notes"
 
 #: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
 #: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:111
-#: ../src/resources/xrc_strings.h:126 ../src/resources/xrc_strings.h:147
-#: ../src/resources/xrc_strings.h:155
+#: ../src/resources/xrc_strings.h:126 ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:156
 msgid "OK"
 msgstr "'l est bon"
 
-#: ../src/resources/xrc_strings.h:153
+#: ../src/resources/xrc_strings.h:154
 msgid "Obsolete strings"
 msgstr "Tchinnes obsoletes"
 
-#: ../src/resources/xrc_strings.h:163 ../src/edframe.cpp:797
+#: ../src/resources/xrc_strings.h:164 ../src/edframe.cpp:832
 msgid "Open catalog"
 msgstr "Drovi catalogue"
 
-#: ../src/edframe.cpp:1061
+#: ../src/edframe.cpp:1097
 msgid "Open catalog template"
 msgstr "Drovi modele di catalogue"
 
@@ -680,7 +703,7 @@ msgid "Open source files in editor, not in file viewer"
 msgstr ""
 "Drovi les fitchîs sourdant en èn aspougneu, nén dins l' håyneu d' fitchîs"
 
-#: ../src/edframe.cpp:159 ../src/export_html.cpp:141
+#: ../src/edframe.cpp:161 ../src/export_html.cpp:141
 msgid "Original string"
 msgstr "Tchinne d' oridjinne"
 
@@ -704,7 +727,7 @@ msgstr "Lijhant "
 msgid "Path to DB:"
 msgstr "Tchimin del båze di dnêyes:"
 
-#: ../src/resources/xrc_strings.h:144 ../src/settingsdlg.cpp:56
+#: ../src/resources/xrc_strings.h:145 ../src/settingsdlg.cpp:57
 msgid "Paths"
 msgstr "Tchimins"
 
@@ -716,12 +739,12 @@ msgstr "A vosse môde"
 msgid "Pick language from the list of known languages"
 msgstr "Tchoezixhoz l' lingaedje del djivêye des cnoxhous lingaedjes"
 
-#: ../src/resources/xrc_strings.h:158
+#: ../src/resources/xrc_strings.h:159
 msgid "Please add directories where locale files are stored on your system:"
 msgstr ""
 "Radjoutez des ridants ki les fitchîs locås s' î trovèt so vosse sistinme:"
 
-#: ../src/edframe.cpp:1115
+#: ../src/edframe.cpp:1179
 msgid "Please choose the reference you want to show:"
 msgstr "Tchoezixhoz l' referince ki vos vloz vey:"
 
@@ -729,9 +752,17 @@ msgstr "Tchoezixhoz l' referince ki vos vloz vey:"
 msgid "Please select language ISO code:"
 msgstr "Tchoezixhoz l' côde ISO do lingaedje:"
 
-#: ../src/edframe.cpp:729
+#: ../src/edframe.cpp:764
 msgid "Please select language code:"
 msgstr "Tchoezixhoz l' côde do lingaedje:"
+
+#: ../src/resources/xrc_strings.h:142
+msgid "Plural Forms:"
+msgstr ""
+
+#: ../src/edframe.cpp:536
+msgid "Plural:"
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:61
 msgid "Preferences"
@@ -741,7 +772,7 @@ msgstr "Preferinces"
 msgid "Proceed"
 msgstr "El fé"
 
-#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:97
+#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:97
 msgid "Project info"
 msgstr "Informåcions do pordjet"
 
@@ -753,11 +784,11 @@ msgstr "No eyet modêye do pordjet:"
 msgid "Project name:"
 msgstr "No do pordjet:"
 
-#: ../src/edframe.cpp:1115
+#: ../src/edframe.cpp:1179
 msgid "References"
 msgstr "Referinces"
 
-#: ../src/edframe.cpp:1863 ../src/edframe.cpp:1867
+#: ../src/edframe.cpp:2034 ../src/edframe.cpp:2038
 msgid "References:"
 msgstr "Referinces:"
 
@@ -767,7 +798,7 @@ msgstr ""
 "Rifé li memwere di ratournaedje a pårti des catalogues ki sont dins les "
 "tchimins chal å dzeu."
 
-#: ../src/resources/xrc_strings.h:160
+#: ../src/resources/xrc_strings.h:161
 msgid "Reset to defaults"
 msgstr "Rimete les prémetowès valixhances"
 
@@ -775,16 +806,16 @@ msgstr "Rimete les prémetowès valixhances"
 msgid "Save &as..."
 msgstr "Schaper eyet r&lomer..."
 
-#: ../src/edframe.cpp:907
+#: ../src/edframe.cpp:942
 msgid "Save as..."
 msgstr "Schaper eyet rlomer..."
 
-#: ../src/resources/xrc_strings.h:164
+#: ../src/resources/xrc_strings.h:165
 msgid "Save catalog"
 msgstr "Schaper l' catalogue"
 
-#: ../src/edframe.cpp:766 ../src/edframe.cpp:785 ../src/edframe.cpp:817
-#: ../src/edframe.cpp:858 ../src/edframe.cpp:958
+#: ../src/edframe.cpp:801 ../src/edframe.cpp:820 ../src/edframe.cpp:852
+#: ../src/edframe.cpp:893 ../src/edframe.cpp:993
 msgid "Save changes"
 msgstr "Schaper les candjmints"
 
@@ -800,7 +831,7 @@ msgstr "Riloucant ezès fitchîs..."
 msgid "Search Paths"
 msgstr "Tchimins di cweraedje"
 
-#: ../src/edframe.cpp:728
+#: ../src/edframe.cpp:763
 msgid "Select catalog's language"
 msgstr "Tchoezixhoz l' lingaedje des catalogues"
 
@@ -833,6 +864,10 @@ msgstr "Håyner l' purnea des ra&wetes di tecse"
 msgid "Show summary after catalog update"
 msgstr "Håyner l' rascourti après l' metaedje a djoû"
 
+#: ../src/edframe.cpp:535
+msgid "Singular:"
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:124 ../src/resources/xrc_strings.h:141
 msgid "Source code charset:"
 msgstr "Ecôdaedje do côde sourdant:"
@@ -857,7 +892,7 @@ msgstr "Adresse emile di l' ekipe:"
 msgid "Team:"
 msgstr "Ekipe:"
 
-#: ../src/catalog.cpp:770
+#: ../src/catalog.cpp:859
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -868,7 +903,7 @@ msgstr ""
 "come metou dins les apontiaedjes do catalogue. Il a stî schapé\n"
 "en UTF-8 el plaece eyet si apontiaedje candjî po rifleter çoula."
 
-#: ../src/resources/xrc_strings.h:152
+#: ../src/resources/xrc_strings.h:153
 msgid ""
 "These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
@@ -876,7 +911,7 @@ msgstr ""
 "Ces tchinnes la èn sont pus dins l' côde sourdant.\n"
 "poEdit elzès oistêyrè do catalogue do côp."
 
-#: ../src/resources/xrc_strings.h:150
+#: ../src/resources/xrc_strings.h:151
 msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
@@ -933,7 +968,7 @@ msgstr ""
 "Çouci srè aclapé al comande on côp po tchaeke\n"
 "mot clé. %k serè replaecî avou l' mot clé."
 
-#: ../src/resources/xrc_strings.h:167
+#: ../src/resources/xrc_strings.h:168
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Metou si l' tchinne di tchoezeye a-st on ratournaedje «fuzzy»"
 
@@ -941,7 +976,7 @@ msgstr "Metou si l' tchinne di tchoezeye a-st on ratournaedje «fuzzy»"
 msgid "Total"
 msgstr "Totå"
 
-#: ../src/edframe.cpp:160 ../src/export_html.cpp:144
+#: ../src/edframe.cpp:162 ../src/export_html.cpp:144
 msgid "Translation"
 msgstr "Ratournaedje"
 
@@ -961,7 +996,7 @@ msgstr "Fitchîs di ratournaedje (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgid "Translation is &fuzzy"
 msgstr "Li ratournaedje est «&fuzzy»"
 
-#: ../src/resources/xrc_strings.h:161
+#: ../src/resources/xrc_strings.h:162
 msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
@@ -974,7 +1009,7 @@ msgstr ""
 msgid "Uknown locale code '%s' in registry."
 msgstr "Côde di locåle «%s» nén cnoxhou e redjîsse."
 
-#: ../src/resources/xrc_strings.h:156
+#: ../src/resources/xrc_strings.h:157
 msgid "Undo"
 msgstr "Disfé"
 
@@ -990,7 +1025,7 @@ msgstr "Disratourner"
 msgid "Update all catalogs in the project"
 msgstr "Mete a djoû tos les catalogues do pordjet"
 
-#: ../src/resources/xrc_strings.h:165
+#: ../src/resources/xrc_strings.h:166
 msgid "Update catalog - synchronize it with sources"
 msgstr "Mete a djoû l' catalogue - sincronijhî avou l' côde sourdant"
 
@@ -998,19 +1033,19 @@ msgstr "Mete a djoû l' catalogue - sincronijhî avou l' côde sourdant"
 msgid "Update from &POT file..."
 msgstr "Mete a djoû a pårti d' on fitchî &POT..."
 
-#: ../src/resources/xrc_strings.h:149
+#: ../src/resources/xrc_strings.h:150
 msgid "Update summary"
 msgstr "Mete a djoû l' rascourti"
 
-#: ../src/resources/xrc_strings.h:157
+#: ../src/resources/xrc_strings.h:158
 msgid "Update translation memory"
 msgstr "Mete a djoû l' memwere di ratournaedje"
 
-#: ../src/catalog.cpp:889
+#: ../src/catalog.cpp:997
 msgid "Updating catalog..."
 msgstr "Metant a djoû l' catalogue..."
 
-#: ../src/edframe.cpp:1047
+#: ../src/edframe.cpp:1083
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr ""
 "Li metaedje a djoû do catalogue a fwait berwete. Clitchîz so «Di pus>>» po "
@@ -1024,7 +1059,7 @@ msgstr "Eployî ene fonte da vosse po les tchamps d' tecse"
 msgid "Use custom font for translations list"
 msgstr "Eployî ene fonte da vosse po les djivêyes di ratournaedje"
 
-#: ../src/resources/xrc_strings.h:145
+#: ../src/resources/xrc_strings.h:146
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
@@ -1037,7 +1072,7 @@ msgstr ""
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:839
+#: ../src/edframe.cpp:874
 msgid "You can't drop more than one file on poEdit window."
 msgstr ""
 "Vos n' poloz nén saetchî et bodjî sol purnea di poEdit pus d' on fitchî pa "
@@ -1055,20 +1090,20 @@ msgstr "Voste adresse emile:"
 msgid "Your name:"
 msgstr "Vosse no:"
 
-#: ../src/edframe.cpp:1655
+#: ../src/edframe.cpp:1821
 #, fuzzy, c-format
-msgid "[checking translations: %i %%]"
+msgid "[checking translations: %i left]"
 msgstr "Djivêye di ratournaedje &dismetowe"
 
 #: ../src/resources/xrc_strings.h:83
 msgid "current platform's default"
 msgstr "prémetowe valixhance pol platfôme do moumint"
 
-#: ../src/edframe.cpp:1903
+#: ../src/edframe.cpp:2074
 msgid "none"
 msgstr "nouk"
 
-#: ../src/edframe.cpp:439
+#: ../src/edframe.cpp:442
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -1091,7 +1126,7 @@ msgstr ""
 "L' astalåcion di poEdit est crombe, dji n' sai trover l' ridant måjhon do "
 "programe."
 
-#: ../src/edframe.cpp:1918
+#: ../src/edframe.cpp:2089
 msgid "version"
 msgstr "modêye"
 

@@ -139,6 +139,7 @@ _("Language:");
 _("Country:");
 _("Charset:");
 _("Source code charset:");
+_("Plural Forms:");
 _("Project info");
 _("Base path:");
 _("Paths");

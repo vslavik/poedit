@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-23 12:26+0200\n"
+"POT-Creation-Date: 2004-08-29 20:23+0200\n"
 "PO-Revision-Date: 2004-07-24 21:47+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team:  <luka.marinko@voljatel.si>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1681
+#: ../src/edframe.cpp:1847
 msgid " (modified)"
 msgstr "(spremenjen)"
 
@@ -23,7 +23,7 @@ msgstr "(spremenjen)"
 msgid " files..."
 msgstr "datoteke..."
 
-#: ../src/edframe.cpp:1649 ../src/export_html.cpp:131
+#: ../src/edframe.cpp:1815 ../src/export_html.cpp:131
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i vnosov (%i nejasnih, %i slabih, %i neprevedenih)"
@@ -49,7 +49,7 @@ msgid "&Edit"
 msgstr "&Urejaj"
 
 #: ../src/resources/xrc_strings.h:28 ../src/resources/xrc_strings.h:31
-#: ../src/edframe.cpp:490
+#: ../src/edframe.cpp:493
 msgid "&File"
 msgstr "&Datoteka"
 
@@ -101,12 +101,12 @@ msgstr "&Osveži iz izvorne kode"
 msgid "&View"
 msgstr "&Pogled"
 
-#: ../src/catalog.cpp:957
+#: ../src/catalog.cpp:1065
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' ni veljavna datoteka POT."
 
-#: ../src/edframe.cpp:1570
+#: ../src/edframe.cpp:1738
 msgid "'."
 msgstr "'."
 
@@ -119,7 +119,7 @@ msgstr "(%f bo nadomeščena z imenom datoteke, %l s številko vrstice)"
 msgid "(%i new, %i obsolete)"
 msgstr "(%i novih, %i zastarelih)"
 
-#: ../src/resources/xrc_strings.h:154
+#: ../src/resources/xrc_strings.h:155
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 novih, 0 zastarelih)"
 
@@ -127,7 +127,7 @@ msgstr "(0 novih, 0 zastarelih)"
 msgid "(Use default language)"
 msgstr "(Uporabi privzeti jezik)"
 
-#: ../src/edframe.cpp:720
+#: ../src/edframe.cpp:755
 msgid "(none of these)"
 msgstr "(nič od teh)"
 
@@ -151,7 +151,7 @@ msgstr "Dodaj"
 msgid "Add directory to the list"
 msgstr "Dodaj mapo na seznam"
 
-#: ../src/resources/xrc_strings.h:162 ../src/transmemupd_wizard.cpp:123
+#: ../src/resources/xrc_strings.h:163 ../src/transmemupd_wizard.cpp:123
 msgid "Add files"
 msgstr "Dodaj datoteke"
 
@@ -179,7 +179,7 @@ msgstr "Samodejno preverjanje črkovanja"
 msgid "Automatic translation"
 msgstr "Samodejno prevajanje"
 
-#: ../src/edframe.cpp:1879 ../src/edframe.cpp:1883
+#: ../src/edframe.cpp:2050 ../src/edframe.cpp:2054
 msgid "Automatic translations:"
 msgstr "Samodejni prevodi:"
 
@@ -191,12 +191,12 @@ msgstr "Samodejno prevedi .mo datoteko ob shranitvi"
 msgid "Automatically translate when updating catalog"
 msgstr "Samodejno prevedi ob osvežitvi kataloga"
 
-#: ../src/edframe.cpp:1836
+#: ../src/edframe.cpp:2007
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Samodejno prevedeni %u nizi"
 
-#: ../src/edframe.cpp:1821
+#: ../src/edframe.cpp:1992
 msgid "Automatically translating..."
 msgstr "Samodejno prevejanje..."
 
@@ -204,7 +204,7 @@ msgstr "Samodejno prevejanje..."
 msgid "Bad Tokens"
 msgstr "Slabi sklici na reference"
 
-#: ../src/resources/xrc_strings.h:143
+#: ../src/resources/xrc_strings.h:144
 msgid "Base path:"
 msgstr "Osnovna pot:"
 
@@ -212,8 +212,17 @@ msgstr "Osnovna pot:"
 msgid "Behavior"
 msgstr "Obnašanje"
 
+#: ../src/catalog.cpp:356
+msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgstr ""
+
+#: ../src/catalog.cpp:324
+msgid ""
+"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:24 ../src/resources/xrc_strings.h:97
-#: ../src/resources/xrc_strings.h:128 ../src/resources/xrc_strings.h:159
+#: ../src/resources/xrc_strings.h:128 ../src/resources/xrc_strings.h:160
 msgid "Browse"
 msgstr "Prebrskaj"
 
@@ -228,7 +237,7 @@ msgstr "Pretvorba CR/LF"
 #: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:15
 #: ../src/resources/xrc_strings.h:27 ../src/resources/xrc_strings.h:112
 #: ../src/resources/xrc_strings.h:127 ../src/resources/xrc_strings.h:131
-#: ../src/resources/xrc_strings.h:133 ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:133 ../src/resources/xrc_strings.h:149
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -236,7 +245,7 @@ msgstr "Prekliči"
 msgid "Cannot create database directory!"
 msgstr "Mape za zborko podatkov ni mogoče ustvariti!"
 
-#: ../src/gexecute.cpp:127
+#: ../src/gexecute.cpp:119 ../src/gexecute.cpp:166
 msgid "Cannot execute program: "
 msgstr "Zagon programa ni mogoč:"
 
@@ -274,8 +283,8 @@ msgstr "Razlikovanje malih/velikih črk"
 msgid "Catalog"
 msgstr "Katalog"
 
-#: ../src/edframe.cpp:765 ../src/edframe.cpp:784 ../src/edframe.cpp:816
-#: ../src/edframe.cpp:857 ../src/edframe.cpp:957
+#: ../src/edframe.cpp:800 ../src/edframe.cpp:819 ../src/edframe.cpp:851
+#: ../src/edframe.cpp:892 ../src/edframe.cpp:992
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalog je spremenjen. Želite shraniti spremembe?"
 
@@ -319,7 +328,7 @@ msgstr "Konfiguracija"
 msgid "Confirmation"
 msgstr "Potrdilo"
 
-#: ../src/resources/xrc_strings.h:41 ../src/edframe.cpp:1858
+#: ../src/resources/xrc_strings.h:41 ../src/edframe.cpp:2029
 msgid "Copy original to translation field"
 msgstr "Preslikaj izvorni vnos v prevedenega"
 
@@ -364,7 +373,7 @@ msgstr "Prikaži številko &vrstice"
 msgid "Display &quotes"
 msgstr "Prikaži z &narekovaji"
 
-#: ../src/resources/xrc_strings.h:166
+#: ../src/resources/xrc_strings.h:167
 msgid "Display quotes around the string?"
 msgstr "Prikažem narekovaje okoli tega vnosa?"
 
@@ -396,7 +405,7 @@ msgstr "Uredi"
 msgid "Edit &comment"
 msgstr "Uredi &komentar"
 
-#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:168
+#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:169
 msgid "Edit comment"
 msgstr "Uredi komentar"
 
@@ -428,16 +437,16 @@ msgstr "Zagonska datoteka urejevalnika:"
 msgid "Enables on-the-fly spellchecking"
 msgstr "Omogoča sprotno preverjanje črkovanja"
 
-#: ../src/edframe.cpp:1045
+#: ../src/edframe.cpp:1081
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Vnosi v katalogu so najbrž napačni."
 
-#: ../src/edframe.cpp:690
+#: ../src/edframe.cpp:711
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "Napaka pri inicializaciji preverjanja črkovanja: %s"
 
-#: ../src/edframe.cpp:1570
+#: ../src/edframe.cpp:1738
 msgid "Error loading message catalog file '"
 msgstr "Napaka pri nalaganju datoteke s katalogom sporočil '"
 
@@ -446,11 +455,11 @@ msgstr "Napaka pri nalaganju datoteke s katalogom sporočil '"
 msgid "Error opening file %s!"
 msgstr "Napaka pri odpiranju datoteke %s!"
 
-#: ../src/catalog.cpp:771
+#: ../src/catalog.cpp:860
 msgid "Error saving catalog"
 msgstr "Napaka pri sharanjevanju kataloga"
 
-#: ../src/edframe.cpp:931
+#: ../src/edframe.cpp:966
 msgid "Export as..."
 msgstr "Izvozi kot ..."
 
@@ -458,12 +467,12 @@ msgstr "Izvozi kot ..."
 msgid "External editor"
 msgstr "Zunanji urejevalnik"
 
-#: ../src/edframe.cpp:829 ../src/edframe.cpp:868
+#: ../src/edframe.cpp:864 ../src/edframe.cpp:903
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Datoteka '%s' ne obstaja"
 
-#: ../src/edframe.cpp:846
+#: ../src/edframe.cpp:881
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Datoteka '%s' ni katalog sporočil."
@@ -488,7 +497,17 @@ msgstr "Najdi..."
 msgid "Fonts"
 msgstr "Pisave"
 
-#: ../src/resources/xrc_strings.h:169
+#: ../src/edframe.cpp:2406
+#, c-format
+msgid "Form %u"
+msgstr ""
+
+#: ../src/edframe.cpp:2408
+#, c-format
+msgid "Form %u (e.g. \"%u\")"
+msgstr ""
+
+#: ../src/resources/xrc_strings.h:170
 msgid "Fullscreen view"
 msgstr "Celozaslonski pogled"
 
@@ -500,11 +519,11 @@ msgstr "Nejasno"
 msgid "Fuzzy translation"
 msgstr "Nejasen prevod"
 
-#: ../src/edframe.cpp:799 ../src/edframe.cpp:908
+#: ../src/edframe.cpp:834 ../src/edframe.cpp:943
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Katalogi GNU GetText (*.po)|*.po|Vse Datoteke (*.*)|*.*"
 
-#: ../src/edframe.cpp:1063
+#: ../src/edframe.cpp:1099
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "Predloge GNU GetText (*.pot)|*,pot|Vse datoteke (*.*)|*.*"
 
@@ -520,11 +539,15 @@ msgstr "Ustvari zbirko podatkov TM"
 msgid "Generate database"
 msgstr "Ustvari zbirko podatkov"
 
-#: ../src/edframe.cpp:933
+#: ../src/edframe.cpp:1156
+msgid "Gettext syntax error"
+msgstr ""
+
+#: ../src/edframe.cpp:968
 msgid "HTML file (*.html)|*.html"
 msgstr "Datoteka HTML (*.html)|*.html"
 
-#: ../src/resources/xrc_strings.h:170
+#: ../src/resources/xrc_strings.h:171
 msgid "Help"
 msgstr "Pomoč"
 
@@ -540,7 +563,7 @@ msgstr "Če je označeno, bo okno s komentarji moč urejati."
 msgid "Invocation:"
 msgstr "Zagon:"
 
-#: ../src/resources/xrc_strings.h:146 ../src/settingsdlg.cpp:54
+#: ../src/resources/xrc_strings.h:147 ../src/settingsdlg.cpp:55
 msgid "Keywords"
 msgstr "Ključne besede"
 
@@ -557,7 +580,7 @@ msgstr "Jezik:"
 msgid "Last modified"
 msgstr "Nazadnje spremenjeno"
 
-#: ../src/edframe.cpp:162 ../src/fileviewer.cpp:84
+#: ../src/edframe.cpp:164 ../src/fileviewer.cpp:84
 msgid "Line"
 msgstr "Vrstica"
 
@@ -586,7 +609,7 @@ msgstr "Največje število mankajočih besed:"
 msgid "Max. difference in sentence length:"
 msgstr "Največja razlika v dolžini stavkov:"
 
-#: ../src/catalog.cpp:929
+#: ../src/catalog.cpp:1037
 msgid "Merging differences..."
 msgstr "Združitev razlik..."
 
@@ -624,7 +647,7 @@ msgstr "Nov"
 msgid "New item"
 msgstr "Nov predmet"
 
-#: ../src/resources/xrc_strings.h:151
+#: ../src/resources/xrc_strings.h:152
 msgid "New strings"
 msgstr "Nov znakovni niz"
 
@@ -640,7 +663,7 @@ msgstr "Noben urejevalnik ni določen. Nastavite ga v pogovornem oknu Možnosti.
 msgid "No files found in: "
 msgstr "Nobenih datotek v:"
 
-#: ../src/edframe.cpp:1107
+#: ../src/edframe.cpp:1171
 msgid "No references to this string found."
 msgstr "Ni nobenih referenc na ta znakovni niz."
 
@@ -650,20 +673,20 @@ msgstr "Opombe"
 
 #: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
 #: ../src/resources/xrc_strings.h:26 ../src/resources/xrc_strings.h:111
-#: ../src/resources/xrc_strings.h:126 ../src/resources/xrc_strings.h:147
-#: ../src/resources/xrc_strings.h:155
+#: ../src/resources/xrc_strings.h:126 ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:156
 msgid "OK"
 msgstr "V redu"
 
-#: ../src/resources/xrc_strings.h:153
+#: ../src/resources/xrc_strings.h:154
 msgid "Obsolete strings"
 msgstr "Zastarel znakovni niz"
 
-#: ../src/resources/xrc_strings.h:163 ../src/edframe.cpp:797
+#: ../src/resources/xrc_strings.h:164 ../src/edframe.cpp:832
 msgid "Open catalog"
 msgstr "Odpri katalog"
 
-#: ../src/edframe.cpp:1061
+#: ../src/edframe.cpp:1097
 msgid "Open catalog template"
 msgstr "Odpri predlogo kataloga"
 
@@ -675,7 +698,7 @@ msgstr "Ob zagonu poEdit-a odpri upravljalca katalogov"
 msgid "Open source files in editor, not in file viewer"
 msgstr "Odpri izvorne datoteke v urejevalniku, ne v pregledovalniku"
 
-#: ../src/edframe.cpp:159 ../src/export_html.cpp:141
+#: ../src/edframe.cpp:161 ../src/export_html.cpp:141
 msgid "Original string"
 msgstr "Izvorni niz znakov"
 
@@ -699,7 +722,7 @@ msgstr "Parsanje"
 msgid "Path to DB:"
 msgstr "Pot do zbirke podatkov:"
 
-#: ../src/resources/xrc_strings.h:144 ../src/settingsdlg.cpp:56
+#: ../src/resources/xrc_strings.h:145 ../src/settingsdlg.cpp:57
 msgid "Paths"
 msgstr "Poti"
 
@@ -711,11 +734,11 @@ msgstr "Priredi"
 msgid "Pick language from the list of known languages"
 msgstr "Izberi jezik s seznama znanih jezikov"
 
-#: ../src/resources/xrc_strings.h:158
+#: ../src/resources/xrc_strings.h:159
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "Dodajte mape, kjer so shranjene datoteke 'LOCALE' na vašem sistemu:"
 
-#: ../src/edframe.cpp:1115
+#: ../src/edframe.cpp:1179
 msgid "Please choose the reference you want to show:"
 msgstr "Izberite sklic, ki ga želite prikazati:"
 
@@ -723,9 +746,17 @@ msgstr "Izberite sklic, ki ga želite prikazati:"
 msgid "Please select language ISO code:"
 msgstr "Izberite kodo jezika ISO:"
 
-#: ../src/edframe.cpp:729
+#: ../src/edframe.cpp:764
 msgid "Please select language code:"
 msgstr "Izberite kodo jezika:"
+
+#: ../src/resources/xrc_strings.h:142
+msgid "Plural Forms:"
+msgstr ""
+
+#: ../src/edframe.cpp:536
+msgid "Plural:"
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:61
 msgid "Preferences"
@@ -735,7 +766,7 @@ msgstr "Možnosti"
 msgid "Proceed"
 msgstr "Nadaljuj"
 
-#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:97
+#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:97
 msgid "Project info"
 msgstr "Podatki o projektu"
 
@@ -747,11 +778,11 @@ msgstr "Ime in različica projekta:"
 msgid "Project name:"
 msgstr "Ime projekta:"
 
-#: ../src/edframe.cpp:1115
+#: ../src/edframe.cpp:1179
 msgid "References"
 msgstr "Sklici"
 
-#: ../src/edframe.cpp:1863 ../src/edframe.cpp:1867
+#: ../src/edframe.cpp:2034 ../src/edframe.cpp:2038
 msgid "References:"
 msgstr "Sklici:"
 
@@ -759,7 +790,7 @@ msgstr "Sklici:"
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr "Posodobi spomin prevajanja iz katalogov v zgoraj naštetih poteh."
 
-#: ../src/resources/xrc_strings.h:160
+#: ../src/resources/xrc_strings.h:161
 msgid "Reset to defaults"
 msgstr "Nastavi privzete "
 
@@ -767,16 +798,16 @@ msgstr "Nastavi privzete "
 msgid "Save &as..."
 msgstr "Shrani &kot ..."
 
-#: ../src/edframe.cpp:907
+#: ../src/edframe.cpp:942
 msgid "Save as..."
 msgstr "Shrani kot ..."
 
-#: ../src/resources/xrc_strings.h:164
+#: ../src/resources/xrc_strings.h:165
 msgid "Save catalog"
 msgstr "Shrani katalog"
 
-#: ../src/edframe.cpp:766 ../src/edframe.cpp:785 ../src/edframe.cpp:817
-#: ../src/edframe.cpp:858 ../src/edframe.cpp:958
+#: ../src/edframe.cpp:801 ../src/edframe.cpp:820 ../src/edframe.cpp:852
+#: ../src/edframe.cpp:893 ../src/edframe.cpp:993
 msgid "Save changes"
 msgstr "Shrani spremembe"
 
@@ -792,7 +823,7 @@ msgstr "Pregled datotek..."
 msgid "Search Paths"
 msgstr "Išči po poteh"
 
-#: ../src/edframe.cpp:728
+#: ../src/edframe.cpp:763
 msgid "Select catalog's language"
 msgstr "Izberi jezik kataloga"
 
@@ -825,6 +856,10 @@ msgstr "Prikaži okno &komentarja"
 msgid "Show summary after catalog update"
 msgstr "Prikaži povzetek po osvežitvi kataloga"
 
+#: ../src/edframe.cpp:535
+msgid "Singular:"
+msgstr ""
+
 #: ../src/resources/xrc_strings.h:124 ../src/resources/xrc_strings.h:141
 msgid "Source code charset:"
 msgstr "Kodni nabor izvorne kode:"
@@ -849,7 +884,7 @@ msgstr "E-poštni naslov ekipe:"
 msgid "Team:"
 msgstr "Ekipa:"
 
-#: ../src/catalog.cpp:770
+#: ../src/catalog.cpp:859
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -860,7 +895,7 @@ msgstr ""
 "naveden v nastavitvah kataloga. Shranjen je bil v UTF-8\n"
 "in nastavitev je bila temu primerno spremenjena. "
 
-#: ../src/resources/xrc_strings.h:152
+#: ../src/resources/xrc_strings.h:153
 msgid ""
 "These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
@@ -868,7 +903,7 @@ msgstr ""
 "Ti nizi znakov se ne nahajajo več v izvornih\n"
 "datotekah. poEdit jih bo sedaj odstranil iz kataloga."
 
-#: ../src/resources/xrc_strings.h:150
+#: ../src/resources/xrc_strings.h:151
 msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
@@ -924,7 +959,7 @@ msgstr ""
 "To bo pripeto ukazni vrstici za vsako ključno\n"
 "besedo. %k razširi v ključno besedo."
 
-#: ../src/resources/xrc_strings.h:167
+#: ../src/resources/xrc_strings.h:168
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Označeno, če je niz preveden nejasno."
 
@@ -932,7 +967,7 @@ msgstr "Označeno, če je niz preveden nejasno."
 msgid "Total"
 msgstr "Skupaj"
 
-#: ../src/edframe.cpp:160 ../src/export_html.cpp:144
+#: ../src/edframe.cpp:162 ../src/export_html.cpp:144
 msgid "Translation"
 msgstr "Prevod"
 
@@ -952,7 +987,7 @@ msgstr "Prevajalske datoteke (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgid "Translation is &fuzzy"
 msgstr "Prevod je nejasen"
 
-#: ../src/resources/xrc_strings.h:161
+#: ../src/resources/xrc_strings.h:162
 msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
@@ -965,7 +1000,7 @@ msgstr ""
 msgid "Uknown locale code '%s' in registry."
 msgstr "Neznana lokalna koda '%s' v registru"
 
-#: ../src/resources/xrc_strings.h:156
+#: ../src/resources/xrc_strings.h:157
 msgid "Undo"
 msgstr "Razveljavi"
 
@@ -981,7 +1016,7 @@ msgstr "Neprevedenih"
 msgid "Update all catalogs in the project"
 msgstr "Osveži vse kataloge v tem projektu"
 
-#: ../src/resources/xrc_strings.h:165
+#: ../src/resources/xrc_strings.h:166
 msgid "Update catalog - synchronize it with sources"
 msgstr "Osveži katalog - sinhroniziraj iz izvorne kode"
 
@@ -989,19 +1024,19 @@ msgstr "Osveži katalog - sinhroniziraj iz izvorne kode"
 msgid "Update from &POT file..."
 msgstr "Osveži iz datoteke &POT ..."
 
-#: ../src/resources/xrc_strings.h:149
+#: ../src/resources/xrc_strings.h:150
 msgid "Update summary"
 msgstr "Osveži povzetek"
 
-#: ../src/resources/xrc_strings.h:157
+#: ../src/resources/xrc_strings.h:158
 msgid "Update translation memory"
 msgstr "Osveži spomin prevoda"
 
-#: ../src/catalog.cpp:889
+#: ../src/catalog.cpp:997
 msgid "Updating catalog..."
 msgstr "Osveži katalog ..."
 
-#: ../src/edframe.cpp:1047
+#: ../src/edframe.cpp:1083
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "Osvežitev kataloga ni uspela. Klikni na 'Več>>' za podrobnosti."
 
@@ -1013,7 +1048,7 @@ msgstr "Uporabi posebno pisavo za polja z besedilom"
 msgid "Use custom font for translations list"
 msgstr "Uporabi posebno pisavo za seznam prevodov"
 
-#: ../src/resources/xrc_strings.h:145
+#: ../src/resources/xrc_strings.h:146
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
@@ -1025,7 +1060,7 @@ msgstr ""
 msgid "Windows"
 msgstr "Okna"
 
-#: ../src/edframe.cpp:839
+#: ../src/edframe.cpp:874
 msgid "You can't drop more than one file on poEdit window."
 msgstr "Ne morete povleči/spustiti več kot ene datoteke na okno poEdit."
 
@@ -1041,20 +1076,20 @@ msgstr "Vaš e-poštni naslov:"
 msgid "Your name:"
 msgstr "Vaše ime:"
 
-#: ../src/edframe.cpp:1655
+#: ../src/edframe.cpp:1821
 #, fuzzy, c-format
-msgid "[checking translations: %i %%]"
+msgid "[checking translations: %i left]"
 msgstr "&Zatemnjena lista prevodov"
 
 #: ../src/resources/xrc_strings.h:83
 msgid "current platform's default"
 msgstr "trenutni privzete vrednosti platforme"
 
-#: ../src/edframe.cpp:1903
+#: ../src/edframe.cpp:2074
 msgid "none"
 msgstr "brez"
 
-#: ../src/edframe.cpp:439
+#: ../src/edframe.cpp:442
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -1075,6 +1110,6 @@ msgid ""
 "poEdit installation is broken, cannot find application's home directory."
 msgstr "Namestitev poEdit je pokvarjena, ne najdem poEdit-ove domače mape."
 
-#: ../src/edframe.cpp:1918
+#: ../src/edframe.cpp:2089
 msgid "version"
 msgstr "različica"
