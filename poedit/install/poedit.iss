@@ -30,6 +30,7 @@ WindowResizable=false
 
 SolidCompression=true
 ShowLanguageDialog=yes
+AllowUNCPath=false
 [Files]
 Source: extras\win32-runtime\isxdl.dll; Flags: dontcopy
 Source: BUILD-mingw\src\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
