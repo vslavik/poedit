@@ -5,13 +5,19 @@
 # $Id$
 #
 
-VERSION=1.2.0
+VERSION=1.2.1
 
 #(
 #cd docs_classes
 #rm -f *.html *gif
 #doxygen
 #)
+
+(
+cd locales
+for i in *.po ; do msgfmt -o `basename $i .po`.mo $i ; done
+)
+
 
 cp NEWS install/news.txt
 cp README install/readme.txt
