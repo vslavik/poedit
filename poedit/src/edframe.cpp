@@ -106,6 +106,7 @@ static wxColour
 #include "modified.xpm"
 #include "automatic.xpm"
 #include "comment.xpm"
+#include "comment_modif.xpm"
 
 // list control with both columns equally wide:
 class poEditListCtrl : public wxListCtrl
@@ -127,6 +128,7 @@ class poEditListCtrl : public wxListCtrl
             list->Add(wxBitmap(modified_xpm));
             list->Add(wxBitmap(automatic_xpm));
             list->Add(wxBitmap(comment_xpm));
+            list->Add(wxBitmap(comment_modif_xpm));
             AssignImageList(list, wxIMAGE_LIST_SMALL);
         }
         
@@ -971,7 +973,12 @@ void poEditFrame::OnFind(wxCommandEvent& event)
 static int GetItemIcon(const CatalogData& item)
 {
     if (item.HasComment())
-        return 3;
+    {
+        if (item.IsModified())
+            return 4;
+        else
+            return 3;
+    }
     if (item.IsModified()) 
         return 1;
     if (item.IsAutomatic())
