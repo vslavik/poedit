@@ -1127,7 +1127,9 @@ void poEditFrame::RefreshControls()
     wxBusyCursor bcur;
     UpdateMenu();
 
+#if wxCHECK_VERSION(2,3,2)
     m_list->Freeze();
+#endif
     m_list->ClearAll();
     m_list->CreateColumns();
 
@@ -1141,7 +1143,9 @@ void poEditFrame::RefreshControls()
     AddItemsToList(*m_catalog, m_list, pos, 
                    CatFilterRest, g_ItemColourNormal);
 
+#if wxCHECK_VERSION(2,3,2)
     m_list->Thaw();
+#endif
     
     if (m_catalog->GetCount() > 0) 
         m_list->SetItemState(0, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
