@@ -11,7 +11,8 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edframe.cpp \
                  settingsdlg.h compiled_resource.cpp progressinfo.h \
                  progressinfo.cpp digger.h digger.cpp gexecute.h \
                  gexecute.cpp summarydlg.h summarydlg.cpp
-poedit_LDADD = -Lwxxml_snapshot -lwxxml_snapshot $(LDFLAGS)
+
+LDADD = -Lwxxml_snapshot -lwxxml_snapshot $(WX_LIBS)
 
 EXTRA_DIST = resource.xml
 

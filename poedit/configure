@@ -1592,14 +1592,13 @@ fi
 
 CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS $WX_CFLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 
-LDFLAGS="$LDFLAGS $WX_LIBS"
 
 
 
 
 
   echo $ac_n "checking for KDE data directory""... $ac_c" 1>&6
-echo "configure:1603: checking for KDE data directory" >&5
+echo "configure:1602: checking for KDE data directory" >&5
   if test x$KDEDIR = x ; then
      echo "$ac_t""no" 1>&6
      KDE_DATA_DIR=""
@@ -1620,7 +1619,7 @@ fi
 
 
   echo $ac_n "checking for GNOME data directory""... $ac_c" 1>&6
-echo "configure:1624: checking for GNOME data directory" >&5
+echo "configure:1623: checking for GNOME data directory" >&5
   GNOME_DATA_DIR=`gnome-config --datadir 2>/dev/null`
   if test x$GNOME_DATA_DIR = x ; then
      echo "$ac_t""no" 1>&6

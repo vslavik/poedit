@@ -67,6 +67,7 @@ AWK = @AWK@
 CC = @CC@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
+CXXFLAGS = @CXXFLAGS@
 GNOME_DATA_DIR = @GNOME_DATA_DIR@
 KDE_DATA_DIR = @KDE_DATA_DIR@
 LDFLAGS = @LDFLAGS@
@@ -87,7 +88,8 @@ bin_PROGRAMS = poedit
 
 poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edframe.cpp                  edframe.h fileviewer.cpp fileviewer.h parser.cpp parser.h                  iso639.h prefsdlg.cpp prefsdlg.h settingsdlg.cpp                  settingsdlg.h compiled_resource.cpp progressinfo.h                  progressinfo.cpp digger.h digger.cpp gexecute.h                  gexecute.cpp summarydlg.h summarydlg.cpp
 
-poedit_LDADD = -Lwxxml_snapshot -lwxxml_snapshot $(LDFLAGS)
+
+LDADD = -Lwxxml_snapshot -lwxxml_snapshot $(WX_LIBS)
 
 EXTRA_DIST = resource.xml
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -101,9 +103,9 @@ LIBS = @LIBS@
 poedit_OBJECTS =  catalog.o edapp.o edframe.o fileviewer.o parser.o \
 prefsdlg.o settingsdlg.o compiled_resource.o progressinfo.o digger.o \
 gexecute.o summarydlg.o
+poedit_LDADD = $(LDADD)
 poedit_DEPENDENCIES = 
 poedit_LDFLAGS = 
-CXXFLAGS = @CXXFLAGS@
 CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@
