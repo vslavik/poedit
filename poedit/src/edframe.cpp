@@ -428,7 +428,7 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar(_T("mainmenu"));
     if (MenuBar)
     {
-        m_history.UseMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&File"))));
+        m_history.UseMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("File"))));
         SetMenuBar(MenuBar);
         m_history.AddFilesToMenu();
         m_history.Load(*cfg);
