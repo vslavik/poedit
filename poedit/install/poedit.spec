@@ -3,15 +3,8 @@
 # set this to 1 if you want to build semistatic rpm
 %define        semistatic      0
 
-# set this to 1 if you want mandrakized RPM (menu entry)
-%{expand:%%define use_mdk %(if [ -f /etc/mandrake-release ]; then echo 1; else echo 0; fi)}
-
 %{?_with_semistatic: %{expand: %%define semistatic 1}}
 %{?_without_semistatic: %{expand: %%define semistatic 0}}
-
-%{?_with_mdkmenu: %{expand: %%define use_mdk 1}}
-%{?_without_mdkmenu: %{expand: %%define use_mdk 0}}
-
 
 
 # version and release
@@ -31,11 +24,7 @@
 Summary:       Gettext catalogs editor
 Name:          %NAME
 Version:       %VERSION
-%if !%{use_mdk}
 Release:       %RELEASE
-%else
-Release:       %{RELEASE}mdk
-%endif
 Copyright:     MIT license
 Group:         Applications/Editors
 Source:        poedit-%{version}.tar.bz2
@@ -82,7 +71,6 @@ rm -rf ${RPM_BUILD_ROOT}
 %makeinstall GNOME_DATA_DIR=$RPM_BUILD_ROOT/usr/share \
              KDE_DATA_DIR=$RPM_BUILD_ROOT/usr/share
 
-%if %{use_mdk}
 (cd $RPM_BUILD_ROOT
 mkdir -p ./%{_libdir}/menu
 cat > ./%{_libdir}/menu/poedit <<EOF 
@@ -96,7 +84,6 @@ cat > ./%{_libdir}/menu/poedit <<EOF
 	longtitle="poEdit Gettext Catalogs Editor"
 EOF
 )
-%endif
 
 
 %find_lang poedit
@@ -108,13 +95,14 @@ cat poedit-wxstd.lang >>poedit.lang
 %clean
 rm -Rf ${RPM_BUILD_ROOT}
 
-%if %{use_mdk}
 %post
-%update_menus
+# This is done on Mandrake to update its menus:
+if [ -x /usr/bin/update-menus ]; then /usr/bin/update-menus || true ; fi
 
 %postun
-%clean_menus
-%endif
+# This is done on Mandrake to update its menus:
+if [ "$1" = "0" -a -x /usr/bin/update-menus ]; then /usr/bin/update-menus || true ; fi
+
 
 %files -f poedit.lang
 %defattr(-,root,root)
@@ -133,7 +121,4 @@ rm -Rf ${RPM_BUILD_ROOT}
 %{_datadir}/mime-info/poedit.*
 %{_datadir}/icons/*
 %{_datadir}/pixmaps/*
-
-%if %{use_mdk}
 %{_libdir}/menu/*
-%endif
