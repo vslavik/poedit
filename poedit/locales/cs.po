@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: poEdit 1.1.6\n"
+"Project-Id-Version: poEdit 1.1.x\n"
 "POT-Creation-Date: 2000-02-25 21:27+0100\n"
-"PO-Revision-Date: 2002-02-17 23:36+0100\n"
+"PO-Revision-Date: 2002-03-09 16:52+0100\n"
 "Last-Translator: Vaclav Slavik <vaclav.slavik@matfyz.cz>\n"
 "Language-Team: Vaclav Slavik <vaclav.slavik@matfyz.cz>\n"
 "MIME-Version: 1.0\n"
@@ -14,119 +14,125 @@ msgstr ""
 msgid "(%i new, %i obsolete)"
 msgstr "(%i nových, %i neplatných)"
 
-#: src/edframe.cpp:131
+#: src/edframe.cpp:137
 msgid "Original string"
 msgstr "Originální øetìzec"
 
-#: src/edframe.cpp:132
+#: src/edframe.cpp:138
 msgid "Translation"
 msgstr "Pøeklad"
 
-#: src/edframe.cpp:371
+#: src/edframe.cpp:140
+#: src/fileviewer.cpp:87
+msgid "Line"
+msgstr "Øádka"
+
+#: src/edframe.cpp:390
 msgid "poEdit"
 msgstr "poEdit"
 
-#: src/edframe.cpp:409
+#: src/edframe.cpp:429
+#: src/resources/xrc_strings.h:29
 msgid "&File"
 msgstr "&Soubor"
 
-#: src/edframe.cpp:531
+#: src/edframe.cpp:557
 msgid "(none of these)"
 msgstr "(¾ádný)"
 
-#: src/edframe.cpp:533
+#: src/edframe.cpp:559
 msgid "Select catalog's language"
 msgstr "Vyberte jazyk katalogu"
 
-#: src/edframe.cpp:534
+#: src/edframe.cpp:560
 msgid "Please select language code:"
 msgstr "Vyberte prosím kód jazyka:"
 
-#: src/edframe.cpp:567
-#: src/edframe.cpp:578
-#: src/edframe.cpp:602
-#: src/edframe.cpp:649
+#: src/edframe.cpp:593
+#: src/edframe.cpp:604
+#: src/edframe.cpp:628
+#: src/edframe.cpp:675
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalog byl modifikován. Chcete ulo¾it zmìny?"
 
-#: src/edframe.cpp:567
-#: src/edframe.cpp:578
-#: src/edframe.cpp:602
-#: src/edframe.cpp:649
+#: src/edframe.cpp:593
+#: src/edframe.cpp:604
+#: src/edframe.cpp:628
+#: src/edframe.cpp:675
 msgid "Save changes"
 msgstr "Ulo¾it zmìny"
 
-#: src/edframe.cpp:586
-#: src/resources/xrc_strings.h:130
+#: src/edframe.cpp:612
+#: src/resources/xrc_strings.h:133
 msgid "Open catalog"
 msgstr "Otevøít katalog"
 
-#: src/edframe.cpp:588
-#: src/edframe.cpp:635
+#: src/edframe.cpp:614
+#: src/edframe.cpp:661
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Katalogy GNU GetText (*.po)|*.po|V¹echny soubory (*.*)|*.*"
 
-#: src/edframe.cpp:610
+#: src/edframe.cpp:636
 msgid "File "
 msgstr "Soubor "
 
-#: src/edframe.cpp:610
+#: src/edframe.cpp:636
 msgid " doesn't exist!"
 msgstr " neexistuje!"
 
-#: src/edframe.cpp:634
+#: src/edframe.cpp:660
 msgid "Save as..."
 msgstr "Ulo¾it jako..."
 
-#: src/edframe.cpp:733
+#: src/edframe.cpp:766
 msgid "Automatically translating..."
 msgstr "Automaticky pøekládám..."
 
-#: src/edframe.cpp:748
+#: src/edframe.cpp:781
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Automaticky pøelo¾eno %u øetìzcù"
 
-#: src/edframe.cpp:785
+#: src/edframe.cpp:818
 msgid "No references to this string found."
 msgstr "Nenalezen ¾ádný odkaz na tento øetìzec."
 
-#: src/edframe.cpp:793
+#: src/edframe.cpp:826
 msgid "Please choose the reference you want to show:"
 msgstr "Prosím vyberte odkaz, který chcete zobrazi"
 
-#: src/edframe.cpp:793
+#: src/edframe.cpp:826
 msgid "References"
 msgstr "Odkazy"
 
-#: src/edframe.cpp:1115
+#: src/edframe.cpp:1195
 msgid "Error loading message catalog file '"
 msgstr "Chyba pøi nahrávání katalogu."
 
-#: src/edframe.cpp:1115
+#: src/edframe.cpp:1195
 msgid "'."
 msgstr "'."
 
-#: src/edframe.cpp:1164
+#: src/edframe.cpp:1244
 #, c-format
 msgid "%i strings (%i fuzzy, %i not translated)"
 msgstr "%i øetìzcù (%i nepøesných, %i nepøelo¾eno)"
 
-#: src/edframe.cpp:1179
+#: src/edframe.cpp:1259
 msgid " (modified)"
 msgstr " (zmìnìn)"
 
-#: src/edframe.cpp:1297
-#: src/edframe.cpp:1301
+#: src/edframe.cpp:1379
+#: src/edframe.cpp:1383
 msgid "References:"
 msgstr "Odkazy:"
 
-#: src/edframe.cpp:1311
-#: src/edframe.cpp:1315
+#: src/edframe.cpp:1393
+#: src/edframe.cpp:1397
 msgid "Automatic translations:"
 msgstr "Automatické pøeklady:"
 
-#: src/edframe.cpp:1336
+#: src/edframe.cpp:1418
 msgid "none"
 msgstr "¾ádný"
 
@@ -134,7 +140,7 @@ msgstr "¾ádný"
 msgid "poEdit installation is broken, cannot find application's home directory."
 msgstr "poEdit je ¹patnì nainstalovaný, nepodaøilo se v registrech najít údaj o domovském adresáøi."
 
-#: src/edapp.cpp:103
+#: src/edapp.cpp:111
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -147,18 +153,18 @@ msgstr ""
 "Mù¾ete také nastavit promnìnou prostøedí POEDIT_PREFIX, aby\n"
 "ukazovala na místo, kam jste poEdit nainstaloval(a)."
 
-#: src/edapp.cpp:109
+#: src/edapp.cpp:117
 #, c-format
 msgid "Cannot find resources file '%s'!\n"
 "Please reinstall poEdit."
 msgstr "Nemohu nalézt soubor se zdroji '%s'!\n"
 "Pøeinstalujte prosím poEdit."
 
-#: src/edapp.cpp:113
+#: src/edapp.cpp:120
 msgid "poEdit Error"
 msgstr "poEdit: chyba"
 
-#: src/edapp.cpp:126
+#: src/edapp.cpp:133
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -168,7 +174,7 @@ msgstr ""
 "Vyplòte prosím va¹e jméno a e-mailovou adresu.\n"
 "(Tyto informace jsou pou¾ity pouze v hlavièkách katalogù.)"
 
-#: src/edapp.cpp:128
+#: src/edapp.cpp:133
 msgid "Setup"
 msgstr "Nastavení"
 
@@ -184,21 +190,21 @@ msgstr "Zpracovávám "
 msgid " files..."
 msgstr " souborù..."
 
-#: src/catalog.cpp:193
+#: src/catalog.cpp:198
 msgid "Corrupted translator record, please correct in Catalog/Settings"
 msgstr "Po¹kozený záznam o pøekladateli, opravte ho prosím v Katalog/Nastavení"
 
-#: src/catalog.cpp:201
+#: src/catalog.cpp:206
 msgid "Corrupted team record, please correct in Catalog/Settings"
 msgstr "Po¹kozený záznam o pøekladatelském týmu, opravte ho prosím v Katalog/Nastavení"
 
-#: src/catalog.cpp:567
-#: src/resources/xrc_strings.h:106
+#: src/catalog.cpp:606
+#: src/resources/xrc_strings.h:109
 msgid "Updating catalog..."
 msgstr "Aktualizuji katalog..."
 
-#: src/catalog.cpp:590
-#: src/resources/xrc_strings.h:107
+#: src/catalog.cpp:629
+#: src/resources/xrc_strings.h:110
 msgid "Merging differences..."
 msgstr "Vkládám rozdíly..."
 
@@ -227,8 +233,8 @@ msgid "Last modified"
 msgstr "Poslední zmìna"
 
 #: src/manager.cpp:250
-#: src/prefsdlg.cpp:257
-#: src/prefsdlg.cpp:278
+#: src/prefsdlg.cpp:265
+#: src/prefsdlg.cpp:286
 msgid "Select directory"
 msgstr "Vyberte adresáø"
 
@@ -249,7 +255,7 @@ msgid "Do you want to delete the project?"
 msgstr "Opravdu chcete smazat tento project?"
 
 #: src/manager.cpp:375
-#: src/manager.cpp:396
+#: src/manager.cpp:395
 msgid "Confirmation"
 msgstr "Potvrzení"
 
@@ -275,16 +281,12 @@ msgstr "Nelze extrahovat katalogy z RPM souboru."
 msgid "Source file"
 msgstr "Zdrojový soubor"
 
-#: src/fileviewer.cpp:79
+#: src/fileviewer.cpp:78
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Chyba pøi otevírání souboru %s!"
 
-#: src/fileviewer.cpp:88
-msgid "Line"
-msgstr "Øádka"
-
-#: src/fileviewer.cpp:137
+#: src/fileviewer.cpp:126
 msgid "No editor specified. Please set it in Preferences dialog."
 msgstr "Nastavte prosím editor v menu Nastavení"
 
@@ -292,29 +294,29 @@ msgstr "Nastavte prosím editor v menu Nastavení"
 msgid "My Languages"
 msgstr "Jazyky"
 
-#: src/prefsdlg.cpp:243
+#: src/prefsdlg.cpp:251
 msgid "Select language"
 msgstr "Vyberte jazyk"
 
-#: src/prefsdlg.cpp:244
+#: src/prefsdlg.cpp:252
 msgid "Please select language ISO code:"
 msgstr "Vyberte prosím ISO kód jazyka:"
 
-#: src/prefsdlg.cpp:297
+#: src/prefsdlg.cpp:305
 msgid "Search Paths"
 msgstr "Prohledávané cesty"
 
-#: src/prefsdlg.cpp:331
+#: src/prefsdlg.cpp:339
 msgid "Updating translation memory"
 msgstr "Aktualizuji translaèní pamì»"
 
-#: src/transmem.cpp:331
-#: src/transmem.cpp:333
+#: src/transmem.cpp:332
+#: src/transmem.cpp:334
 #, c-format
 msgid "Database error: %s"
 msgstr "Databázová chyba: %s"
 
-#: src/transmem.cpp:749
+#: src/transmem.cpp:748
 msgid "Cannot create database directory!"
 msgstr "Nelze vytvoøit adresáø pro databázi!"
 
@@ -322,12 +324,12 @@ msgstr "Nelze vytvoøit adresáø pro databázi!"
 msgid "Cannot execute program: "
 msgstr "Není mo¾né spustit program: "
 
-#: src/resources/xrc_strings.h:119
+#: src/resources/xrc_strings.h:122
 #: src/settingsdlg.cpp:52
 msgid "Keywords"
 msgstr "Klíèová slova"
 
-#: src/resources/xrc_strings.h:117
+#: src/resources/xrc_strings.h:120
 #: src/settingsdlg.cpp:54
 msgid "Paths"
 msgstr "Cesty"
@@ -337,22 +339,22 @@ msgid "About poEdit"
 msgstr "O programu poEdit"
 
 #: src/resources/xrc_strings.h:2
-msgid "version 1.1.6"
-msgstr "verze 1.1.6"
+msgid "version 1.1.7"
+msgstr "verze 1.1.7"
 
 #: src/resources/xrc_strings.h:3
 #: src/resources/xrc_strings.h:6
 #: src/resources/xrc_strings.h:27
-#: src/resources/xrc_strings.h:86
-#: src/resources/xrc_strings.h:99
-#: src/resources/xrc_strings.h:120
-#: src/resources/xrc_strings.h:128
+#: src/resources/xrc_strings.h:89
+#: src/resources/xrc_strings.h:102
+#: src/resources/xrc_strings.h:123
+#: src/resources/xrc_strings.h:131
 msgid "OK"
 msgstr "Ok"
 
 #: src/resources/xrc_strings.h:4
 #: src/resources/xrc_strings.h:42
-#: src/resources/xrc_strings.h:135
+#: src/resources/xrc_strings.h:138
 msgid "Edit comment"
 msgstr "Editovat komentáø"
 
@@ -363,11 +365,11 @@ msgstr "Poznámka:"
 #: src/resources/xrc_strings.h:7
 #: src/resources/xrc_strings.h:16
 #: src/resources/xrc_strings.h:28
-#: src/resources/xrc_strings.h:87
-#: src/resources/xrc_strings.h:100
-#: src/resources/xrc_strings.h:104
-#: src/resources/xrc_strings.h:108
-#: src/resources/xrc_strings.h:121
+#: src/resources/xrc_strings.h:90
+#: src/resources/xrc_strings.h:103
+#: src/resources/xrc_strings.h:107
+#: src/resources/xrc_strings.h:111
+#: src/resources/xrc_strings.h:124
 msgid "Cancel"
 msgstr "Zru¹it"
 
@@ -437,8 +439,8 @@ msgid "Project name:"
 msgstr "Jméno projektu:"
 
 #: src/resources/xrc_strings.h:25
-#: src/resources/xrc_strings.h:71
-#: src/resources/xrc_strings.h:101
+#: src/resources/xrc_strings.h:74
+#: src/resources/xrc_strings.h:104
 msgid "Browse"
 msgstr "Procházet"
 
@@ -446,245 +448,253 @@ msgstr "Procházet"
 msgid "Add directory to the list"
 msgstr "Pøidat adresáø do seznamu"
 
-#: src/resources/xrc_strings.h:29
-msgid "_File"
-msgstr "_Soubor"
-
 #: src/resources/xrc_strings.h:30
 msgid "Catalogs manager"
 msgstr "Správce katalogù"
 
 #: src/resources/xrc_strings.h:31
-msgid "_New catalog..."
-msgstr "_Nový katalog..."
+msgid "&New catalog..."
+msgstr "&Nový katalog"
 
 #: src/resources/xrc_strings.h:32
-msgid "_Open"
-msgstr "_Otevøít"
+msgid "&Open"
+msgstr "&Otevøít"
 
 #: src/resources/xrc_strings.h:33
-msgid "_Save"
-msgstr "_Ulo¾it"
+msgid "&Save"
+msgstr "&Ulo¾it"
 
 #: src/resources/xrc_strings.h:34
-msgid "Save _as..."
-msgstr "Ulo¾it _jako..."
+msgid "Save &as..."
+msgstr "Ulo¾it &jako..."
 
 #: src/resources/xrc_strings.h:35
 msgid "Preferences..."
 msgstr "Konfigurace..."
 
 #: src/resources/xrc_strings.h:36
-msgid "_Close"
-msgstr "_Zavøít"
+msgid "&Close"
+msgstr "&Zavøít"
 
 #: src/resources/xrc_strings.h:37
-msgid "_Edit"
-msgstr "Úp_ravy"
+msgid "&Edit"
+msgstr "&Editovat"
 
 #: src/resources/xrc_strings.h:38
 msgid "Copy original to translation field"
 msgstr "Zkopírovat originál do polo¾ky s pøekladem"
 
 #: src/resources/xrc_strings.h:39
-msgid "_Show references"
-msgstr "_Zobrazit odkazy"
+msgid "&Show references"
+msgstr "&Zobrazit odkazy"
 
 #: src/resources/xrc_strings.h:41
-msgid "Translation is _fuzzy"
-msgstr "Pøeklad je _nepøesný"
+msgid "Translation is &fuzzy"
+msgstr "Pøeklad je &nepøesný"
 
 #: src/resources/xrc_strings.h:43
-msgid "_Catalog"
-msgstr "_Katalog"
+msgid "&Catalog"
+msgstr "&Katalog"
 
 #: src/resources/xrc_strings.h:44
-msgid "_Update catalog"
-msgstr "_Aktualizovat katalog"
+msgid "&Update catalog"
+msgstr "&Aktualizovat katalog"
 
 #: src/resources/xrc_strings.h:45
-msgid "_Settings..."
-msgstr "Na_stavení..."
+msgid "&Settings..."
+msgstr "Na&stavení"
 
 #: src/resources/xrc_strings.h:46
-msgid "_View"
-msgstr "_Zobrazení"
+msgid "&View"
+msgstr "&Pohled"
 
 #: src/resources/xrc_strings.h:47
-msgid "_Fullscreen view"
-msgstr "_Zvìt¹it na celou obrazovku"
+msgid "&Fullscreen view"
+msgstr "Zvìt¹it na celou obrazovku"
 
 #: src/resources/xrc_strings.h:48
-msgid "Display _quotes"
-msgstr "Dát polo¾ky do _uvozovek"
+msgid "Display &quotes"
+msgstr "Dát polo¾ky do &uvozovek"
 
 #: src/resources/xrc_strings.h:49
+msgid "Display &line numbers"
+msgstr "Zobrazit èísla øádek"
+
+#: src/resources/xrc_strings.h:50
 msgid "Contents..."
 msgstr "Obsah..."
 
-#: src/resources/xrc_strings.h:50
-msgid "_About..."
-msgstr "O _programu..."
-
 #: src/resources/xrc_strings.h:51
-msgid "_Help"
-msgstr "_Nápovìda"
+msgid "&About..."
+msgstr "&O programu"
 
 #: src/resources/xrc_strings.h:52
+msgid "&Help"
+msgstr "&Nápovìda"
+
+#: src/resources/xrc_strings.h:53
 msgid "Preferences"
 msgstr "Konfigurace"
 
-#: src/resources/xrc_strings.h:53
+#: src/resources/xrc_strings.h:54
 msgid "Identity"
 msgstr "Identita"
 
-#: src/resources/xrc_strings.h:54
+#: src/resources/xrc_strings.h:55
 msgid "Your name:"
 msgstr "Va¹e jméno:"
 
-#: src/resources/xrc_strings.h:55
+#: src/resources/xrc_strings.h:56
 msgid "Your e-mail address:"
 msgstr "Va¹e e-mailová adresa:"
 
-#: src/resources/xrc_strings.h:56
+#: src/resources/xrc_strings.h:57
 msgid "Behavior"
 msgstr "Chování"
 
-#: src/resources/xrc_strings.h:57
+#: src/resources/xrc_strings.h:58
 msgid "Automatically compile .mo file on save"
 msgstr "Automaticky zkompilovat .mo soubor pøi ulo¾ení"
 
-#: src/resources/xrc_strings.h:58
+#: src/resources/xrc_strings.h:59
 msgid "Show summary after catalog update"
 msgstr "Po aktualizaci katalogu zobrazit pøehled zmìn"
 
-#: src/resources/xrc_strings.h:59
+#: src/resources/xrc_strings.h:60
 msgid "Open catalogs manager on poEdit startup"
 msgstr "Otevøít správce katalogù hned po startu"
 
-#: src/resources/xrc_strings.h:60
+#: src/resources/xrc_strings.h:61
 msgid "Always change focus to text input field"
 msgstr "V¾dy zamìøovat vstupní pole pro pøeklad"
 
-#: src/resources/xrc_strings.h:61
+#: src/resources/xrc_strings.h:62
 msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
 msgstr "Nikdy nezamìøí seznam s øetìzci. Pokud je tato volba zapnutá, musíte k navigování v seznamu pomocí klávesnice pou¾ít Ctrl-¹ipky. Na druhou stranu vám to umo¾ní rovnou zaèít psát text, bez nutnosti maèkat Tab."
 
-#: src/resources/xrc_strings.h:62
+#: src/resources/xrc_strings.h:63
+msgid "Shaded translations list"
+msgstr "Stínovat polo¾ky seznamu"
+
+#: src/resources/xrc_strings.h:64
 msgid "CR/LF conversion"
 msgstr "Konverze CR/LF"
 
-#: src/resources/xrc_strings.h:63
+#: src/resources/xrc_strings.h:65
 msgid "Line endings format:"
 msgstr "Formát koncù øádek:"
 
-#: src/resources/xrc_strings.h:64
+#: src/resources/xrc_strings.h:66
 msgid "Don't change format of existing catalogs"
 msgstr "Nemìnit formát existujících katalogù"
 
-#: src/resources/xrc_strings.h:65
+#: src/resources/xrc_strings.h:67
 msgid "External editor"
 msgstr "Externí editor"
 
-#: src/resources/xrc_strings.h:66
+#: src/resources/xrc_strings.h:68
 msgid "Editor executable:"
 msgstr "Pøíkaz ke spu¹tìní editoru:"
 
-#: src/resources/xrc_strings.h:67
+#: src/resources/xrc_strings.h:69
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f se nahradí jménem souboru, %l èíslem øádku)"
 
-#: src/resources/xrc_strings.h:68
+#: src/resources/xrc_strings.h:70
+msgid "Open source files in editor, not in file viewer"
+msgstr "Otevírat zdrojové soubory pøímo v editoru "
+
+#: src/resources/xrc_strings.h:71
 msgid "Editor"
 msgstr "Editor"
 
-#: src/resources/xrc_strings.h:69
+#: src/resources/xrc_strings.h:72
 msgid "Database"
 msgstr "Databáze"
 
-#: src/resources/xrc_strings.h:70
+#: src/resources/xrc_strings.h:73
 msgid "Path to DB:"
 msgstr "Cesta k databázi:"
 
-#: src/resources/xrc_strings.h:72
+#: src/resources/xrc_strings.h:75
 msgid "Add"
 msgstr "Pøidat"
 
-#: src/resources/xrc_strings.h:73
+#: src/resources/xrc_strings.h:76
 msgid "Pick language from the list of known languages"
 msgstr "Vyberte jazyk ze seznamu podporovaných jazykù"
 
-#: src/resources/xrc_strings.h:74
+#: src/resources/xrc_strings.h:77
 msgid "Generate database"
 msgstr "Vygenerovat databázi"
 
-#: src/resources/xrc_strings.h:75
+#: src/resources/xrc_strings.h:78
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr "Regeneruje pøekladovou pamì» z katalogù v adresáøích vypsaných vý¹e."
 
-#: src/resources/xrc_strings.h:76
+#: src/resources/xrc_strings.h:79
 msgid "Configuration"
 msgstr "Nastavení"
 
-#: src/resources/xrc_strings.h:77
+#: src/resources/xrc_strings.h:80
 msgid "Max. # of missing words:"
 msgstr "Max. poèet chybìjících slov:"
 
-#: src/resources/xrc_strings.h:78
+#: src/resources/xrc_strings.h:81
 msgid "Max. difference in sentence length:"
 msgstr "Max. rozdíl v délce vìty:"
 
-#: src/resources/xrc_strings.h:79
+#: src/resources/xrc_strings.h:82
 msgid "Automatically translate when updating catalog"
 msgstr "Automaticky pøekládat pøi aktualizaci katalogu"
 
-#: src/resources/xrc_strings.h:80
+#: src/resources/xrc_strings.h:83
 msgid "Translation Memory"
 msgstr "Pøekladová pamì»"
 
-#: src/resources/xrc_strings.h:81
+#: src/resources/xrc_strings.h:84
 msgid "Source code parsers:"
 msgstr "Parsery zdrojákù:"
 
-#: src/resources/xrc_strings.h:82
+#: src/resources/xrc_strings.h:85
 msgid "New"
 msgstr "Nový"
 
-#: src/resources/xrc_strings.h:83
+#: src/resources/xrc_strings.h:86
 msgid "Edit"
 msgstr "Úp_ravy"
 
-#: src/resources/xrc_strings.h:84
+#: src/resources/xrc_strings.h:87
 msgid "Delete"
 msgstr "Zru¹it"
 
-#: src/resources/xrc_strings.h:85
+#: src/resources/xrc_strings.h:88
 msgid "Parsers"
 msgstr "Parsery"
 
-#: src/resources/xrc_strings.h:88
+#: src/resources/xrc_strings.h:91
 msgid "Parser setup"
 msgstr "Nastavení parseru:"
 
-#: src/resources/xrc_strings.h:89
-#: src/resources/xrc_strings.h:90
-#: src/resources/xrc_strings.h:113
+#: src/resources/xrc_strings.h:92
+#: src/resources/xrc_strings.h:93
+#: src/resources/xrc_strings.h:116
 msgid "Language:"
 msgstr "Jazyk:"
 
-#: src/resources/xrc_strings.h:91
+#: src/resources/xrc_strings.h:94
 msgid "List of extensions separated by semicolons (e.g. *.cpp, *.h):"
 msgstr "Seznam koncovek oddìlených støedníky (napø. *.cpp,*.h):"
 
-#: src/resources/xrc_strings.h:92
+#: src/resources/xrc_strings.h:95
 msgid "Invocation:"
 msgstr "Spu¹tìní:"
 
-#: src/resources/xrc_strings.h:93
+#: src/resources/xrc_strings.h:96
 msgid "Parser command:"
 msgstr "Pøíkaz ke spu¹tìní parseru:"
 
-#: src/resources/xrc_strings.h:94
+#: src/resources/xrc_strings.h:97
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -695,126 +705,126 @@ msgstr ""
 ",%K seznamem klíèových slov, %F seznamem\n"
 "vstupních souborù (viz. ní¾e)."
 
-#: src/resources/xrc_strings.h:95
+#: src/resources/xrc_strings.h:98
 msgid "An item in keywords list:"
 msgstr "Polo¾ka v seznamu klíèových slov:"
 
-#: src/resources/xrc_strings.h:96
+#: src/resources/xrc_strings.h:99
 msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
 msgstr "Toto se na pøíkazovou øádku pøidá jednou pro\n"
 "ka¾dé klíèové slovo. %k se nahradí klíèovým slovem."
 
-#: src/resources/xrc_strings.h:97
+#: src/resources/xrc_strings.h:100
 msgid "An item in input files list:"
 msgstr "Polo¾ka v seznamu vstupních souborù:"
 
-#: src/resources/xrc_strings.h:98
+#: src/resources/xrc_strings.h:101
 #, c-format
 msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
 msgstr "Toto se na pøíkazovou øádku pøidá jednou pro\n"
 "ka¾dý vstupní soubor. %f se nahradí jménem souboru."
 
-#: src/resources/xrc_strings.h:102
+#: src/resources/xrc_strings.h:105
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Pøidá cestu do seznamu adresáøù s katalogy."
 
-#: src/resources/xrc_strings.h:103
+#: src/resources/xrc_strings.h:106
 msgid "Proceed"
 msgstr "Provést"
 
-#: src/resources/xrc_strings.h:105
+#: src/resources/xrc_strings.h:108
 msgid "Generate TM database"
 msgstr "Vygenerovat pøekladovou pamì»"
 
-#: src/resources/xrc_strings.h:109
+#: src/resources/xrc_strings.h:112
 msgid "Settings"
 msgstr "Nastavení"
 
-#: src/resources/xrc_strings.h:110
+#: src/resources/xrc_strings.h:113
 msgid "Project name and version:"
 msgstr "Jméno a verze projektu:"
 
-#: src/resources/xrc_strings.h:111
+#: src/resources/xrc_strings.h:114
 msgid "Team:"
 msgstr "Tým:"
 
-#: src/resources/xrc_strings.h:112
+#: src/resources/xrc_strings.h:115
 msgid "Team's email address:"
 msgstr "Emailová adresa týmu:"
 
-#: src/resources/xrc_strings.h:114
+#: src/resources/xrc_strings.h:117
 msgid "Charset:"
 msgstr "Znaková sada:"
 
-#: src/resources/xrc_strings.h:115
+#: src/resources/xrc_strings.h:118
 msgid "Project info"
 msgstr "Informace o projektu"
 
-#: src/resources/xrc_strings.h:116
+#: src/resources/xrc_strings.h:119
 msgid "Base path:"
 msgstr "Základní cesta:"
 
-#: src/resources/xrc_strings.h:118
+#: src/resources/xrc_strings.h:121
 msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
 msgstr "Tato klíèová slova (jména funkcí) se pou¾ití k rozeznání pøelo¾itelných\n"
 "øetìzcù ve zdrojovém kódu (navíc ke standardním slovùm)."
 
-#: src/resources/xrc_strings.h:122
+#: src/resources/xrc_strings.h:125
 msgid "Update summary"
 msgstr "Pøehled aktualizace"
 
-#: src/resources/xrc_strings.h:123
+#: src/resources/xrc_strings.h:126
 msgid "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
 msgstr "Tyto øetìzce se vyskytují ve zdrojácích, ale nejsou v katalogu.\n"
 "poEdit je nyní pøidá do katalogu."
 
-#: src/resources/xrc_strings.h:124
+#: src/resources/xrc_strings.h:127
 msgid "New strings"
 msgstr "Nové øetìzce"
 
-#: src/resources/xrc_strings.h:125
+#: src/resources/xrc_strings.h:128
 msgid "These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
 msgstr "Tyto øetìzce ji¾ nejsou ve zdrojácích.\n"
 "poEdit je nyní odstraní z katalogu."
 
-#: src/resources/xrc_strings.h:126
+#: src/resources/xrc_strings.h:129
 msgid "Obsolete strings"
 msgstr "Odstranìné øetìzce"
 
-#: src/resources/xrc_strings.h:127
+#: src/resources/xrc_strings.h:130
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 nových, 0 odstranìných)"
 
-#: src/resources/xrc_strings.h:129
+#: src/resources/xrc_strings.h:132
 msgid "Undo"
 msgstr "Vrátit"
 
-#: src/resources/xrc_strings.h:131
+#: src/resources/xrc_strings.h:134
 msgid "Save catalog"
 msgstr "Ulo¾it katalog"
 
-#: src/resources/xrc_strings.h:132
+#: src/resources/xrc_strings.h:135
 msgid "Update catalog - synchronize it with sources"
 msgstr "Aktualizuje katalog - synchronizuje jej se zdrojovými kódy"
 
-#: src/resources/xrc_strings.h:133
+#: src/resources/xrc_strings.h:136
 msgid "Display quotes around the string?"
 msgstr "Dát polo¾ky do uvozovek?"
 
-#: src/resources/xrc_strings.h:134
+#: src/resources/xrc_strings.h:137
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Stisknuto, pokud má vybraný øetìzec nepøesný pøeklad"
 
-#: src/resources/xrc_strings.h:136
+#: src/resources/xrc_strings.h:139
 msgid "Fullscreen view"
 msgstr "Zvìt¹it na celou obrazovku"
 
-#: src/resources/xrc_strings.h:137
+#: src/resources/xrc_strings.h:140
 msgid "Help"
 msgstr "Nápovìda"
 
