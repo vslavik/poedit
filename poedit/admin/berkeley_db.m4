@@ -13,7 +13,7 @@ dnl in your C/C++ code. DB_LIBS is set to linker flags needed to link against
 dnl the library (e.g. -ldb3.1) and AC_SUBST is called on it.
 dnl
 dnl @version $Id$
-dnl @author Vaclav Slavik <vaclav.slavik@matfyz.cz>
+dnl @author Vaclav Slavik <vslavik@fastmail.fm>
 dnl
 AC_DEFUN([AX_BERKELEY_DB],
 [

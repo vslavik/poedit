@@ -23,7 +23,7 @@ License:       MIT
 Group:         Applications/Editors
 Source:        poedit-%{version}.tar.bz2
 URL:           http://poedit.sourceforge.net
-Packager:      Vaclav Slavik <vaclav.slavik@matfyz.cz>
+Packager:      Vaclav Slavik <vslavik@fastmail.fm>
 Requires:      gtk+ >= 1.2.7 gettext
 
 %if %{semistatic}
