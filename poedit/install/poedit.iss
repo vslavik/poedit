@@ -1,7 +1,7 @@
 ; This script was first created by ISTool
 ; http://www.lerstad.com/istool/
 
-#define VERSION          "1.2.0"
+#define VERSION          "1.2.1"
 
 [Setup]
 OutputBaseFilename=poedit-{#VERSION}-setup
@@ -69,6 +69,9 @@ Source: locales\bg.mo; DestDir: {app}\share\locale\bg\LC_MESSAGES; Components: i
 Source: locales\sk.mo; DestDir: {app}\share\locale\sk\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\sv_SE.mo; DestDir: {app}\share\locale\sv_SE\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\wxwin\sv.mo; DestDir: {app}\share\locale\sv_SE\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\ca.mo; DestDir: {app}\share\locale\ca\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\ka.mo; DestDir: {app}\share\locale\ka\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\ro.mo; DestDir: {app}\share\locale\ro\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
@@ -132,6 +135,12 @@ Name: {app}\share\locale\sk; Components: i18n
 Name: {app}\share\locale\sk\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\sv_SE; Components: i18n
 Name: {app}\share\locale\sv_SE\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\ca; Components: i18n
+Name: {app}\share\locale\ca\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\ka; Components: i18n
+Name: {app}\share\locale\ka\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\ro; Components: i18n
+Name: {app}\share\locale\ro\LC_MESSAGES; Components: i18n
 
 [_ISToolPreCompile]
 
