@@ -8,7 +8,7 @@
     
       Catalogs manager
     
-      (c) Vaclav Slavik, 2001
+      (c) Vaclav Slavik, 2001,2004
 
 */
 
@@ -40,6 +40,7 @@
 #include "catalog.h"
 #include "edframe.h"
 #include "manager.h"
+#include "prefsdlg.h"
 
 #ifdef __UNIX__
 #include "icons/poedit.xpm"
@@ -75,6 +76,7 @@ ManagerFrame::ManagerFrame() :
     ms_instance = this;
 
     SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("manager_toolbar")));
+    SetMenuBar(wxXmlResource::Get()->LoadMenuBar(_T("manager_menu")));
     
     wxPanel *panel = wxXmlResource::Get()->LoadPanel(this, _T("manager_panel"));
     
@@ -336,6 +338,8 @@ BEGIN_EVENT_TABLE(ManagerFrame, wxFrame)
    EVT_MENU                 (XRCID("prj_update"), ManagerFrame::OnUpdateProject)
    EVT_LISTBOX              (XRCID("prj_list"),   ManagerFrame::OnSelectProject)
    EVT_LIST_ITEM_ACTIVATED  (XRCID("prj_files"),  ManagerFrame::OnOpenCatalog)
+   EVT_MENU                 (XRCID("menu_quit"),  ManagerFrame::OnQuit)
+   EVT_MENU                 (XRCID("menu_preferences"), ManagerFrame::OnPreferences)
 END_EVENT_TABLE()
 
 
@@ -427,4 +431,21 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
 void ManagerFrame::OnOpenCatalog(wxListEvent& event)
 {
     poEditFrame::Create(m_catalogs[event.GetIndex()])->Raise();
+}
+
+
+void ManagerFrame::OnPreferences(wxCommandEvent&)
+{
+    PreferencesDialog dlg(this);
+    
+    dlg.TransferTo(wxConfig::Get());
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        dlg.TransferFrom(wxConfig::Get());
+    }
+}
+
+void ManagerFrame::OnQuit(wxCommandEvent&)
+{
+    Close(true);
 }

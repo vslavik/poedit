@@ -8,7 +8,7 @@
     
       Catalogs manager frame
     
-      (c) Vaclav Slavik, 2001
+      (c) Vaclav Slavik, 2001,2004
 
 */
 
@@ -70,6 +70,8 @@ class ManagerFrame : public wxFrame
         void OnUpdateProject(wxCommandEvent& event);
         void OnSelectProject(wxCommandEvent& event);
         void OnOpenCatalog(wxListEvent& event);
+        void OnPreferences(wxCommandEvent& event);
+        void OnQuit(wxCommandEvent& event);
 
         wxListCtrl *m_listCat;
         wxListBox  *m_listPrj;      
