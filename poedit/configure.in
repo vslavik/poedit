@@ -76,7 +76,7 @@ fi
 if $WX_CONFIG_NAME --cxxflags | grep -q WXMSW; then
     use_windows=yes
     if test x$USE_TRANSMEM != xno ; then
-        CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM -I\$(top_srcdir)/extras/win32-db3"
+        CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM -DDB_HEADER=\\\"db.h\\\" -I\$(top_srcdir)/extras/win32-db3"
     fi
     
     changequote(<<,>>)
@@ -115,6 +115,7 @@ fi
 CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS $WX_CXXFLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 
 AC_SUBST(LDFLAGS)
+AC_SUBST(CFLAGS)
 AC_SUBST(CXXFLAGS)
 AC_SUBST(RESCOMP)
 AC_SUBST(WX_CONFIG_NAME)

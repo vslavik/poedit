@@ -145,11 +145,7 @@
 #include <wx/intl.h>
 #include <wx/utils.h>
 
-#ifdef USE_REDHAT_DB3
-#include <db3/db.h>
-#else
-#include <db.h>
-#endif
+#include DB_HEADER
 
 #include "transmem.h"
 

@@ -58,48 +58,43 @@ AC_DEFUN(FIND_BERKELEY_DB,
 [
   USE_TRANSMEM=1
 
-  AC_CHECK_HEADER(db3/db.h,
-     [
-        CXXFLAGS="$CXXFLAGS -DUSE_REDHAT_DB3"
-        DB3HEADER="db3/db.h"
-     ],
-     [
-        AC_CHECK_HEADER(db.h, [],
-        [
-           USE_TRANSMEM=0
-           DB3HEADER="db.h"
-           AC_MSG_RESULT(not found)
-           AC_MSG_WARN([
-
+  DB_VERSION=0
+  AC_SEARCH_LIBS(db_create, db db-4.5 db-4.4 db-4.3 db-4.2 db-4.1 db-4.0 db-3.6 db-3.5 db-3.4 db-3.3 db-3.2 db-3.1,
+         [
+             if echo $LIBS | grep -q '\-ldb-4\.' ; then
+                 DB_HEADER_DIR="db4/"
+             elif echo $LIBS | grep -q '\-ldb-3\.' ; then
+                 DB_HEADER_DIR="db3/"
+             fi
+         ],
+         [
+             USE_TRANSMEM=0
+             AC_MSG_WARN([
 *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
-
- Cannot find Berkeley DB 3.x, poEdit will build w/o translation memory feature!
-
+Cannot find Berkeley DB >= 3.1, poEdit will build w/o translation memory feature!
 *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
-
-           ])
-        ])
-     ])
-     
-  
-  AC_SEARCH_LIBS(db_create, db-3.6 db-3.5 db-3.4 db-3.3 db-3.2 db-3.1 db,
-     [],
-     [
-         USE_TRANSMEM=0
-         AC_MSG_WARN([
-
-*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
-
- Cannot find Berkeley DB 3.x, poEdit will build w/o translation memory feature!
-
-*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
-
+             ])
          ])
-     ])
 
   if test x$USE_TRANSMEM != x0 ; then
-      CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM"
-  fi
-  CXXFLAGS="$CXXFLAGS $DB_INCLUDE"
+      AC_CHECK_HEADER(${DB_HEADER_DIR}db.h,
+            [DB_HEADER="${DB_HEADER_DIR}db.h"],
+            [
+              AC_CHECK_HEADER(db.h, [DB_HEADER=db.h],
+              [
+                  USE_TRANSMEM=0
+                  AC_MSG_RESULT(not found)
+                  AC_MSG_WARN([
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
+Cannot find Berkeley DB >= 3.1, poEdit will build w/o translation memory feature!
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
+                  ])
+              ])
+            ])
+
+      if test x$USE_TRANSMEM != x0 ; then
+          CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM -DDB_HEADER=\\\"$DB_HEADER\\\""
+      fi
+   fi
 ])
 

@@ -1707,7 +1707,7 @@ fi
 if $WX_CONFIG_NAME --cxxflags | grep -q WXMSW; then
     use_windows=yes
     if test x$USE_TRANSMEM != xno ; then
-        CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM -I\$(top_srcdir)/extras/win32-db3"
+        CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM -DDB_HEADER=\\\"db.h\\\" -I\$(top_srcdir)/extras/win32-db3"
     fi
     
     
@@ -1881,103 +1881,17 @@ echo "$ac_t""$CPP" 1>&6
 
   USE_TRANSMEM=1
 
-  ac_safe=`echo "db3/db.h" | sed 'y%./+-%__p_%'`
-echo $ac_n "checking for db3/db.h""... $ac_c" 1>&6
-echo "configure:1887: checking for db3/db.h" >&5
-if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
-  echo $ac_n "(cached) $ac_c" 1>&6
-else
-  cat > conftest.$ac_ext <<EOF
-#line 1892 "configure"
-#include "confdefs.h"
-#include <db3/db.h>
-EOF
-ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1897: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
-ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
-if test -z "$ac_err"; then
-  rm -rf conftest*
-  eval "ac_cv_header_$ac_safe=yes"
-else
-  echo "$ac_err" >&5
-  echo "configure: failed program was:" >&5
-  cat conftest.$ac_ext >&5
-  rm -rf conftest*
-  eval "ac_cv_header_$ac_safe=no"
-fi
-rm -f conftest*
-fi
-if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
-  echo "$ac_t""yes" 1>&6
-  
-        CXXFLAGS="$CXXFLAGS -DUSE_REDHAT_DB3"
-        DB3HEADER="db3/db.h"
-     
-else
-  echo "$ac_t""no" 1>&6
-
-        ac_safe=`echo "db.h" | sed 'y%./+-%__p_%'`
-echo $ac_n "checking for db.h""... $ac_c" 1>&6
-echo "configure:1922: checking for db.h" >&5
-if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
-  echo $ac_n "(cached) $ac_c" 1>&6
-else
-  cat > conftest.$ac_ext <<EOF
-#line 1927 "configure"
-#include "confdefs.h"
-#include <db.h>
-EOF
-ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1932: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
-ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
-if test -z "$ac_err"; then
-  rm -rf conftest*
-  eval "ac_cv_header_$ac_safe=yes"
-else
-  echo "$ac_err" >&5
-  echo "configure: failed program was:" >&5
-  cat conftest.$ac_ext >&5
-  rm -rf conftest*
-  eval "ac_cv_header_$ac_safe=no"
-fi
-rm -f conftest*
-fi
-if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
-  echo "$ac_t""yes" 1>&6
-  :
-else
-  echo "$ac_t""no" 1>&6
-
-           USE_TRANSMEM=0
-           DB3HEADER="db.h"
-           echo "$ac_t""not found" 1>&6
-           echo "configure: warning: 
-
-*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
-
- Cannot find Berkeley DB 3.x, poEdit will build w/o translation memory feature!
-
-*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
-
-           " 1>&2
-        
-fi
-
-     
-fi
-
-     
-  
+  DB_VERSION=0
   
 echo $ac_n "checking for library containing db_create""... $ac_c" 1>&6
-echo "configure:1974: checking for library containing db_create" >&5
+echo "configure:1888: checking for library containing db_create" >&5
 if eval "test \"`echo '$''{'ac_cv_search_db_create'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   ac_func_search_save_LIBS="$LIBS"
 ac_cv_search_db_create="no"
 cat > conftest.$ac_ext <<EOF
-#line 1981 "configure"
+#line 1895 "configure"
 #include "confdefs.h"
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
@@ -1988,7 +1902,7 @@ int main() {
 db_create()
 ; return 0; }
 EOF
-if { (eval echo configure:1992: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1906: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   ac_cv_search_db_create="none required"
 else
@@ -1996,10 +1910,10 @@ else
   cat conftest.$ac_ext >&5
 fi
 rm -f conftest*
-test "$ac_cv_search_db_create" = "no" && for i in db-3.6 db-3.5 db-3.4 db-3.3 db-3.2 db-3.1 db; do
+test "$ac_cv_search_db_create" = "no" && for i in db db-4.5 db-4.4 db-4.3 db-4.2 db-4.1 db-4.0 db-3.6 db-3.5 db-3.4 db-3.3 db-3.2 db-3.1; do
 LIBS="-l$i  $ac_func_search_save_LIBS"
 cat > conftest.$ac_ext <<EOF
-#line 2003 "configure"
+#line 1917 "configure"
 #include "confdefs.h"
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
@@ -2010,7 +1924,7 @@ int main() {
 db_create()
 ; return 0; }
 EOF
-if { (eval echo configure:2014: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1928: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   ac_cv_search_db_create="-l$i"
 break
@@ -2027,25 +1941,106 @@ echo "$ac_t""$ac_cv_search_db_create" 1>&6
 if test "$ac_cv_search_db_create" != "no"; then
   test "$ac_cv_search_db_create" = "none required" || LIBS="$ac_cv_search_db_create $LIBS"
   
+             if echo $LIBS | grep -q '\-ldb-4\.' ; then
+                 DB_HEADER_DIR="db4/"
+             elif echo $LIBS | grep -q '\-ldb-3\.' ; then
+                 DB_HEADER_DIR="db3/"
+             fi
+         
 else :
   
-         USE_TRANSMEM=0
-         echo "configure: warning: 
-
+             USE_TRANSMEM=0
+             echo "configure: warning: 
 *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
-
- Cannot find Berkeley DB 3.x, poEdit will build w/o translation memory feature!
-
+Cannot find Berkeley DB >= 3.1, poEdit will build w/o translation memory feature!
 *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
-
-         " 1>&2
-     
+             " 1>&2
+         
 fi
 
   if test x$USE_TRANSMEM != x0 ; then
-      CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM"
-  fi
-  CXXFLAGS="$CXXFLAGS $DB_INCLUDE"
+      ac_safe=`echo "${DB_HEADER_DIR}db.h" | sed 'y%./+-%__p_%'`
+echo $ac_n "checking for ${DB_HEADER_DIR}db.h""... $ac_c" 1>&6
+echo "configure:1965: checking for ${DB_HEADER_DIR}db.h" >&5
+if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+  cat > conftest.$ac_ext <<EOF
+#line 1970 "configure"
+#include "confdefs.h"
+#include <${DB_HEADER_DIR}db.h>
+EOF
+ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+{ (eval echo configure:1975: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+if test -z "$ac_err"; then
+  rm -rf conftest*
+  eval "ac_cv_header_$ac_safe=yes"
+else
+  echo "$ac_err" >&5
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -rf conftest*
+  eval "ac_cv_header_$ac_safe=no"
+fi
+rm -f conftest*
+fi
+if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
+  echo "$ac_t""yes" 1>&6
+  DB_HEADER="${DB_HEADER_DIR}db.h"
+else
+  echo "$ac_t""no" 1>&6
+
+              ac_safe=`echo "db.h" | sed 'y%./+-%__p_%'`
+echo $ac_n "checking for db.h""... $ac_c" 1>&6
+echo "configure:1997: checking for db.h" >&5
+if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+  cat > conftest.$ac_ext <<EOF
+#line 2002 "configure"
+#include "confdefs.h"
+#include <db.h>
+EOF
+ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+{ (eval echo configure:2007: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+if test -z "$ac_err"; then
+  rm -rf conftest*
+  eval "ac_cv_header_$ac_safe=yes"
+else
+  echo "$ac_err" >&5
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -rf conftest*
+  eval "ac_cv_header_$ac_safe=no"
+fi
+rm -f conftest*
+fi
+if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
+  echo "$ac_t""yes" 1>&6
+  DB_HEADER=db.h
+else
+  echo "$ac_t""no" 1>&6
+
+                  USE_TRANSMEM=0
+                  echo "$ac_t""not found" 1>&6
+                  echo "configure: warning: 
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
+Cannot find Berkeley DB >= 3.1, poEdit will build w/o translation memory feature!
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** 
+                  " 1>&2
+              
+fi
+
+            
+fi
+
+
+      if test x$USE_TRANSMEM != x0 ; then
+          CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM -DDB_HEADER=\\\"$DB_HEADER\\\""
+      fi
+   fi
 
     fi
 fi
@@ -2076,6 +2071,7 @@ else
 fi
 
 CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS $WX_CXXFLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
+
 
 
 
