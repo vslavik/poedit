@@ -91,13 +91,16 @@ enum
 };
 
 // colours used in the list:
+#define g_darkColourFactor 0.95
+#define DARKEN_COLOUR(r,g,b) (wxColour((r)*g_darkColourFactor,\
+                                       (g)*g_darkColourFactor,\
+                                       (b)*g_darkColourFactor))
+#define LIST_COLOURS(r,g,b) { wxColour(r,g,b), DARKEN_COLOUR(r,g,b) }
 static wxColour 
-    g_ItemColourNormal[2] =
-            { wxColour(0xFF,0xFF,0xFF), wxColour(0xE5,0xE5,0xE5) },
-    g_ItemColourUntranslated[2] =
-            { wxColour(0xA5,0xEA,0xEF), wxColour(0x94,0xCF,0xD3) /*blue*/ },
-    g_ItemColourFuzzy[2] = 
-            { wxColour(0xF4,0xF1,0xC1), wxColour(0xD8, 0xD5, 0xAD) /*yellow*/ };
+    g_ItemColourNormal[2] =       LIST_COLOURS(0xFF,0xFF,0xFF), // white
+    g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
+    g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1); // yellow
+
 
 #include "nothing.xpm"
 #include "modified.xpm"
@@ -169,6 +172,7 @@ END_EVENT_TABLE()
 
 // I don't like this global flag, but all poEditFrame instances should share it :(
 static bool gs_focusToText = false;
+static bool gs_shadedList = false;
 
 // special handling of keyboard in listctrl and textctrl
 class ListHandler : public wxEvtHandler
@@ -408,6 +412,7 @@ poEditFrame::poEditFrame(const wxString& catalog) :
     m_displayQuotes = (bool)cfg->Read(_T("display_quotes"), (long)false);
     m_displayLines = (bool)cfg->Read(_T("display_lines"), (long)false);
     gs_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
+    gs_shadedList = (bool)cfg->Read(_T("shaded_list"), (long)true);
 
     SetIcon(wxICON(appicon));
 
@@ -724,6 +729,13 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
     {
         dlg.TransferFrom(wxConfig::Get());
         gs_focusToText = (bool)wxConfig::Get()->Read(_T("focus_to_text"), (long)false);
+        
+        bool shaded = (bool)wxConfig::Get()->Read(_T("shaded_list"), (long)true);
+        if (shaded != gs_shadedList)
+        {
+            gs_shadedList = shaded;
+            RefreshControls();
+        }
     }
 }
 
@@ -1020,12 +1032,24 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     data->SetTranslated(!newval.IsEmpty());
     listitem.SetId(item);
     m_list->GetItem(listitem);
-    if (!data->IsTranslated())
-        listitem.SetBackgroundColour(g_ItemColourUntranslated[item % 2]);
-    else if (data->IsFuzzy())
-        listitem.SetBackgroundColour(g_ItemColourFuzzy[item % 2]);
+
+    if (gs_shadedList)
+    {
+        if (!data->IsTranslated())
+            listitem.SetBackgroundColour(g_ItemColourUntranslated[item % 2]);
+        else if (data->IsFuzzy())
+            listitem.SetBackgroundColour(g_ItemColourFuzzy[item % 2]);
+        else
+            listitem.SetBackgroundColour(g_ItemColourNormal[item % 2]);
+    }
     else
-        listitem.SetBackgroundColour(g_ItemColourNormal[item % 2]);
+    {
+        if (!data->IsTranslated())
+            listitem.SetBackgroundColour(g_ItemColourUntranslated[0]);
+        else if (data->IsFuzzy())
+            listitem.SetBackgroundColour(g_ItemColourFuzzy[0]);
+    }
+    
     int icon = GetItemIcon(*data);
     m_list->SetItemImage(listitem, icon, icon);
     m_list->SetItem(listitem);
@@ -1101,6 +1125,7 @@ static void AddItemsToList(const Catalog& catalog, wxListCtrl *list, size_t& pos
                            bool (*filter)(const CatalogData& d),
                            const wxColour *clr)
 {
+    int clrPos;
     wxListItem listitem;
     size_t cnt = catalog.GetCount();
 
@@ -1126,10 +1151,11 @@ static void AddItemsToList(const Catalog& catalog, wxListCtrl *list, size_t& pos
 
             list->SetItemData(pos, i);
             listitem.SetId(pos);
-            if (clr[pos % 2].Ok())
+            clrPos = gs_shadedList ? (pos % 2) : 0;
+            if (clr && clr[clrPos].Ok())
             {
                 list->GetItem(listitem);
-                listitem.SetBackgroundColour(clr[pos % 2]);
+                listitem.SetBackgroundColour(clr[clrPos]);
                 list->SetItem(listitem);
             }
             pos++;
@@ -1183,7 +1209,7 @@ void poEditFrame::RefreshControls()
     AddItemsToList(*m_catalog, m_list, pos, 
                    CatFilterFuzzy, g_ItemColourFuzzy);
     AddItemsToList(*m_catalog, m_list, pos, 
-                   CatFilterRest, g_ItemColourNormal);
+                   CatFilterRest, gs_shadedList ? g_ItemColourNormal : NULL);
 
     m_list->Thaw();
     
