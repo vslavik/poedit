@@ -1503,7 +1503,11 @@ void poEditFrame::UpdateFromTextCtrl(int item)
         if (entry.HasPlural())
         {
             bool changed = false;
-            for (size_t i = 0; i < m_textTransPlural.size(); i++)
+
+            size_t size = std::min(m_textTransPlural.size(),
+                                   m_edittedTextOrig.size());
+            
+            for (size_t i = 0; i < size; i++)
             {
                 if (m_edittedTextOrig.empty() ||
                     m_textTransPlural[i]->GetValue() != m_edittedTextOrig[i])
