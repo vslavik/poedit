@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O1 /Ob2 /I "../wxWindows/include" /I "../wxWindows/contrib/include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /Ob2 /I "../wxWindows/include" /I "../wxWindows/contrib/include" /I "src/wxxml_snapshot/include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /FD /c
 # SUBTRACT CPP /YX /Yc /Yu
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib winmm.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 wx.lib xpm.lib png.lib zlib.lib jpeg.lib tiff.lib wxxml.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib wsock32.lib winmm.lib hhctrl.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"libc.lib" /nodefaultlib:"libci.lib" /nodefaultlib:"msvcrtd.lib" /libpath:"../wxWindows/lib" /libpath:"../wxWindows/contrib/lib"
+# ADD LINK32 wx.lib xpm.lib png.lib zlib.lib jpeg.lib tiff.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib wsock32.lib winmm.lib hhctrl.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"libc.lib" /nodefaultlib:"libci.lib" /nodefaultlib:"msvcrtd.lib" /libpath:"../wxWindows/lib" /libpath:"../wxWindows/contrib/lib"
 
 !ELSEIF  "$(CFG)" == "poedit - Win32 Debug"
 
@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "../wxWindows/include" /I "../wxWindows/contrib/include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D DEBUG=1 /D "__WXDEBUG__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "../wxWindows/include" /I "../wxWindows/contrib/include" /I "src/wxxml_snapshot/include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "__WINDOWS__" /D "__WXMSW__" /D DEBUG=1 /D "__WXDEBUG__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /FD /c
 # SUBTRACT CPP /YX /Yc /Yu
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib winmm.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 wxd.lib xpmd.lib pngd.lib zlibd.lib jpegd.lib tiffd.lib wxxmld.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib wsock32.lib winmm.lib hhctrl.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib:"libcd.lib" /nodefaultlib:"libcid.lib" /nodefaultlib:"msvcrt.lib" /pdbtype:sept /libpath:"../wxWindows/lib" /libpath:"../wxWindows/contrib/lib"
+# ADD LINK32 wxd.lib xpmd.lib zlibd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib wsock32.lib winmm.lib hhctrl.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib:"libcd.lib" /nodefaultlib:"libcid.lib" /nodefaultlib:"msvcrt.lib" /pdbtype:sept /libpath:"../wxWindows/lib" /libpath:"../wxWindows/contrib/lib"
 
 !ENDIF 
 
@@ -89,6 +89,114 @@ LINK32=link.exe
 
 # Name "poedit - Win32 Release"
 # Name "poedit - Win32 Debug"
+# Begin Group "wxxml_snapshot"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_bttn.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_chckb.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_chckl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_choic.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_combo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_dlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_gauge.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_html.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_listb.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_menu.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_notbk.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_panel.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_radbt.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_radbx.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_sizer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_slidr.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_spin.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_stbmp.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_sttxt.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_text.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xh_toolb.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xml.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xmlbin.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xmlbinz.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xmlres.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wxxml_snapshot\xmlrsall.cpp
+# End Source File
+# End Group
 # Begin Source File
 
 SOURCE=.\src\catalog.cpp
