@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit\n"
 "POT-Creation-Date: 2002-08-25 12:03+0100\n"
-"PO-Revision-Date: 2002-09-21 16:28+0100\n"
+"PO-Revision-Date: 2002-11-07 17:55+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr "Øydelagd omsetjingsoppføring. Rett dette opp i «Katalog | Innstilling
 msgid "Corrupted team record, please correct in Catalog/Settings"
 msgstr "Øydelagd lagoppføring. Rett ho opp i «Katalog | Innstillingar»."
 
-#: src/catalog.cpp:600
+#: src/catalog.cpp:603
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -32,17 +32,17 @@ msgstr ""
 "som valt i kataloginnstillingane. Han vart derfor lagra som UTF-8,\n"
 "og innstillinga vart endra."
 
-#: src/catalog.cpp:601
+#: src/catalog.cpp:604
 msgid "Error saving catalog"
 msgstr "Feil ved lagring av katalog"
 
-#: src/catalog.cpp:684
-#: src/resources/xrc_strings.h:109
+#: src/catalog.cpp:687
+#: src/resources/xrc_strings.h:108
 msgid "Updating catalog..."
 msgstr "Oppdaterer katalog ..."
 
-#: src/catalog.cpp:707
-#: src/resources/xrc_strings.h:110
+#: src/catalog.cpp:724
+#: src/resources/xrc_strings.h:109
 msgid "Merging differences..."
 msgstr "Slår saman endringar ..."
 
@@ -57,6 +57,14 @@ msgstr "Tolkar "
 #: src/digger.cpp:46
 msgid " files..."
 msgstr "-filer ..."
+
+#: src/digger.cpp:122
+msgid "No files found in: "
+msgstr "Fann ingen filer i: "
+
+#: src/digger.cpp:123
+msgid "poEdit did not find any files in scanned directories."
+msgstr "poEdit fann ingen filer i katalogane."
 
 #: src/edapp.cpp:50
 msgid "poEdit installation is broken, cannot find application's home directory."
@@ -118,7 +126,7 @@ msgid "poEdit"
 msgstr "poEdit"
 
 #: src/edframe.cpp:430
-#: src/resources/xrc_strings.h:29
+#: src/resources/xrc_strings.h:28
 msgid "&File"
 msgstr "&Fil"
 
@@ -149,7 +157,7 @@ msgid "Save changes"
 msgstr "Lagra endringar"
 
 #: src/edframe.cpp:624
-#: src/resources/xrc_strings.h:133
+#: src/resources/xrc_strings.h:132
 msgid "Open catalog"
 msgstr "Opna katalog"
 
@@ -191,36 +199,40 @@ msgstr "Vel referansen du vil visa:"
 msgid "References"
 msgstr "Referansar"
 
-#: src/edframe.cpp:1209
+#: src/edframe.cpp:1203
 msgid "Error loading message catalog file '"
 msgstr "Feil ved opning av katalogfila «"
 
-#: src/edframe.cpp:1209
+#: src/edframe.cpp:1203
 msgid "'."
 msgstr "»."
 
-#: src/edframe.cpp:1258
+#: src/edframe.cpp:1252
 #, c-format
 msgid "%i strings (%i fuzzy, %i not translated)"
 msgstr "%i tekstar (%i uklare, %i ikkje omsett)"
 
-#: src/edframe.cpp:1273
+#: src/edframe.cpp:1267
 msgid " (modified)"
 msgstr " (endra)"
 
-#: src/edframe.cpp:1393
-#: src/edframe.cpp:1397
+#: src/edframe.cpp:1387
+#: src/edframe.cpp:1391
 msgid "References:"
 msgstr "References:"
 
-#: src/edframe.cpp:1407
-#: src/edframe.cpp:1411
+#: src/edframe.cpp:1401
+#: src/edframe.cpp:1405
 msgid "Automatic translations:"
 msgstr "Automatiske omsetjingar:"
 
-#: src/edframe.cpp:1432
+#: src/edframe.cpp:1426
 msgid "none"
 msgstr "none"
+
+#: src/edframe.cpp:1441
+msgid "version"
+msgstr "versjon"
 
 #: src/fileviewer.cpp:36
 msgid "Source file"
@@ -316,12 +328,12 @@ msgstr "Søkestigar"
 msgid "Updating translation memory"
 msgstr "Oppdaterer omsetjingsminne ..."
 
-#: src/resources/xrc_strings.h:122
+#: src/resources/xrc_strings.h:121
 #: src/settingsdlg.cpp:52
 msgid "Keywords"
 msgstr "Nøkkelord"
 
-#: src/resources/xrc_strings.h:120
+#: src/resources/xrc_strings.h:119
 #: src/settingsdlg.cpp:54
 msgid "Paths"
 msgstr "Stigar"
@@ -358,362 +370,358 @@ msgid "About poEdit"
 msgstr "Om poEdit"
 
 #: src/resources/xrc_strings.h:2
-msgid "version"
-msgstr "versjon"
-
-#: src/resources/xrc_strings.h:3
-#: src/resources/xrc_strings.h:6
-#: src/resources/xrc_strings.h:27
-#: src/resources/xrc_strings.h:89
-#: src/resources/xrc_strings.h:102
-#: src/resources/xrc_strings.h:123
-#: src/resources/xrc_strings.h:131
+#: src/resources/xrc_strings.h:5
+#: src/resources/xrc_strings.h:26
+#: src/resources/xrc_strings.h:88
+#: src/resources/xrc_strings.h:101
+#: src/resources/xrc_strings.h:122
+#: src/resources/xrc_strings.h:130
 msgid "OK"
 msgstr "&OK"
 
-#: src/resources/xrc_strings.h:4
-#: src/resources/xrc_strings.h:42
-#: src/resources/xrc_strings.h:138
+#: src/resources/xrc_strings.h:3
+#: src/resources/xrc_strings.h:41
+#: src/resources/xrc_strings.h:137
 msgid "Edit comment"
 msgstr "Rediger merknad"
 
-#: src/resources/xrc_strings.h:5
+#: src/resources/xrc_strings.h:4
 msgid "Comment:"
 msgstr "Merknad:"
 
-#: src/resources/xrc_strings.h:7
-#: src/resources/xrc_strings.h:16
-#: src/resources/xrc_strings.h:28
-#: src/resources/xrc_strings.h:90
-#: src/resources/xrc_strings.h:103
-#: src/resources/xrc_strings.h:107
-#: src/resources/xrc_strings.h:111
-#: src/resources/xrc_strings.h:124
+#: src/resources/xrc_strings.h:6
+#: src/resources/xrc_strings.h:15
+#: src/resources/xrc_strings.h:27
+#: src/resources/xrc_strings.h:89
+#: src/resources/xrc_strings.h:102
+#: src/resources/xrc_strings.h:106
+#: src/resources/xrc_strings.h:110
+#: src/resources/xrc_strings.h:123
 msgid "Cancel"
 msgstr "&Avbryt"
 
-#: src/resources/xrc_strings.h:8
+#: src/resources/xrc_strings.h:7
 msgid "Clear"
 msgstr "&Tøm"
 
-#: src/resources/xrc_strings.h:9
+#: src/resources/xrc_strings.h:8
 msgid "Clear the comment"
 msgstr "Fjern merknaded"
 
-#: src/resources/xrc_strings.h:10
+#: src/resources/xrc_strings.h:9
 msgid "Edit the file in text editor"
 msgstr "Rediger fila i eit skriveprogram"
 
-#: src/resources/xrc_strings.h:11
-#: src/resources/xrc_strings.h:40
+#: src/resources/xrc_strings.h:10
+#: src/resources/xrc_strings.h:39
 msgid "Find..."
 msgstr "Søk etter ..."
 
-#: src/resources/xrc_strings.h:12
+#: src/resources/xrc_strings.h:11
 msgid "String to find:"
 msgstr "Sø&k etter:"
 
-#: src/resources/xrc_strings.h:13
+#: src/resources/xrc_strings.h:12
 msgid "Case sensitive"
 msgstr "Skil mellom store og små &bokstavar"
 
-#: src/resources/xrc_strings.h:14
+#: src/resources/xrc_strings.h:13
 msgid "Find in original strings"
 msgstr "Søk i &originalteksten"
 
-#: src/resources/xrc_strings.h:15
+#: src/resources/xrc_strings.h:14
 msgid "Find in translations"
 msgstr "Finn i o&msetjinga"
 
-#: src/resources/xrc_strings.h:17
+#: src/resources/xrc_strings.h:16
 msgid "< Previous"
 msgstr "< &Førre"
 
-#: src/resources/xrc_strings.h:18
+#: src/resources/xrc_strings.h:17
 msgid "Next >"
 msgstr "&Neste >"
 
-#: src/resources/xrc_strings.h:19
+#: src/resources/xrc_strings.h:18
 msgid "Create new translations project"
 msgstr "Lag nytt prosjekt"
 
-#: src/resources/xrc_strings.h:20
+#: src/resources/xrc_strings.h:19
 msgid "Edit the project"
 msgstr "Rediger prosjekt"
 
-#: src/resources/xrc_strings.h:21
+#: src/resources/xrc_strings.h:20
 msgid "Delete the project"
 msgstr "Slett prosjekt"
 
-#: src/resources/xrc_strings.h:22
+#: src/resources/xrc_strings.h:21
 msgid "Update all catalogs in the project"
 msgstr "Oppdater alle katalogane i prosjektet"
 
-#: src/resources/xrc_strings.h:23
+#: src/resources/xrc_strings.h:22
 msgid "Edit project"
 msgstr "Rediger prosjekt"
 
-#: src/resources/xrc_strings.h:24
+#: src/resources/xrc_strings.h:23
 msgid "Project name:"
 msgstr "Prosjektnamn:"
 
-#: src/resources/xrc_strings.h:25
-#: src/resources/xrc_strings.h:74
-#: src/resources/xrc_strings.h:104
+#: src/resources/xrc_strings.h:24
+#: src/resources/xrc_strings.h:73
+#: src/resources/xrc_strings.h:103
 msgid "Browse"
 msgstr "Bla &gjennom"
 
-#: src/resources/xrc_strings.h:26
+#: src/resources/xrc_strings.h:25
 msgid "Add directory to the list"
 msgstr "Legg katalog til lista"
 
-#: src/resources/xrc_strings.h:30
+#: src/resources/xrc_strings.h:29
 msgid "Catalogs manager"
 msgstr "&Katalogar"
 
-#: src/resources/xrc_strings.h:31
+#: src/resources/xrc_strings.h:30
 msgid "&New catalog..."
 msgstr "&Ny katalog ..."
 
-#: src/resources/xrc_strings.h:32
+#: src/resources/xrc_strings.h:31
 msgid "&Open"
 msgstr "&Opna"
 
-#: src/resources/xrc_strings.h:33
+#: src/resources/xrc_strings.h:32
 msgid "&Save"
 msgstr "La&gra"
 
-#: src/resources/xrc_strings.h:34
+#: src/resources/xrc_strings.h:33
 msgid "Save &as..."
 msgstr "Lagra &som ..."
 
-#: src/resources/xrc_strings.h:35
+#: src/resources/xrc_strings.h:34
 msgid "Preferences..."
 msgstr "&Innstillingar ..."
 
-#: src/resources/xrc_strings.h:36
+#: src/resources/xrc_strings.h:35
 msgid "&Close"
 msgstr "&Avslutt"
 
-#: src/resources/xrc_strings.h:37
+#: src/resources/xrc_strings.h:36
 msgid "&Edit"
 msgstr "&Rediger"
 
-#: src/resources/xrc_strings.h:38
+#: src/resources/xrc_strings.h:37
 msgid "Copy original to translation field"
 msgstr "&Bruk originaltekst som omsetjing"
 
-#: src/resources/xrc_strings.h:39
+#: src/resources/xrc_strings.h:38
 msgid "&Show references"
 msgstr "&Vis referansar"
 
-#: src/resources/xrc_strings.h:41
+#: src/resources/xrc_strings.h:40
 msgid "Translation is &fuzzy"
 msgstr "&Uklar omsetjing"
 
-#: src/resources/xrc_strings.h:43
+#: src/resources/xrc_strings.h:42
 msgid "&Catalog"
 msgstr "&Katalog"
 
-#: src/resources/xrc_strings.h:44
+#: src/resources/xrc_strings.h:43
 msgid "&Update catalog"
 msgstr "&Oppdater katalog"
 
-#: src/resources/xrc_strings.h:45
+#: src/resources/xrc_strings.h:44
 msgid "&Settings..."
 msgstr "&Innstillingar ..."
 
-#: src/resources/xrc_strings.h:46
+#: src/resources/xrc_strings.h:45
 msgid "&View"
 msgstr "&Vis"
 
-#: src/resources/xrc_strings.h:47
+#: src/resources/xrc_strings.h:46
 msgid "&Fullscreen view"
 msgstr "&Fullskjerm"
 
-#: src/resources/xrc_strings.h:48
+#: src/resources/xrc_strings.h:47
 msgid "Display &quotes"
 msgstr "&Hermeteikn"
 
-#: src/resources/xrc_strings.h:49
+#: src/resources/xrc_strings.h:48
 msgid "Display &line numbers"
 msgstr "&Linjenummer"
 
-#: src/resources/xrc_strings.h:50
+#: src/resources/xrc_strings.h:49
 msgid "Contents..."
 msgstr "Inn&hald i hjelp ..."
 
-#: src/resources/xrc_strings.h:51
+#: src/resources/xrc_strings.h:50
 msgid "&About..."
 msgstr "&Om ..."
 
-#: src/resources/xrc_strings.h:52
+#: src/resources/xrc_strings.h:51
 msgid "&Help"
 msgstr "&Hjelp"
 
-#: src/resources/xrc_strings.h:53
+#: src/resources/xrc_strings.h:52
 msgid "Preferences"
 msgstr "Innstillingar"
 
-#: src/resources/xrc_strings.h:54
+#: src/resources/xrc_strings.h:53
 msgid "Identity"
 msgstr "Identitet"
 
-#: src/resources/xrc_strings.h:55
+#: src/resources/xrc_strings.h:54
 msgid "Your name:"
 msgstr "&Namn:"
 
-#: src/resources/xrc_strings.h:56
+#: src/resources/xrc_strings.h:55
 msgid "Your e-mail address:"
 msgstr "&E-postadresse:"
 
-#: src/resources/xrc_strings.h:57
+#: src/resources/xrc_strings.h:56
 msgid "Behavior"
 msgstr "Åtferd"
 
-#: src/resources/xrc_strings.h:58
+#: src/resources/xrc_strings.h:57
 msgid "Automatically compile .mo file on save"
 msgstr "Lag &automatisk .mo-fil ved lagring"
 
-#: src/resources/xrc_strings.h:59
+#: src/resources/xrc_strings.h:58
 msgid "Show summary after catalog update"
 msgstr "&Vis samandrag etter katalogoppdatering"
 
-#: src/resources/xrc_strings.h:60
+#: src/resources/xrc_strings.h:59
 msgid "Open catalogs manager on poEdit startup"
 msgstr "O&pna katalogdialogen ved oppstart"
 
-#: src/resources/xrc_strings.h:61
+#: src/resources/xrc_strings.h:60
 msgid "Always change focus to text input field"
 msgstr "&Fokuser automatisk på omsetjingsfeltet"
 
-#: src/resources/xrc_strings.h:62
+#: src/resources/xrc_strings.h:61
 msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
 msgstr "La aldri tekstlista få fokus. Du må bruka «Ctrl + piltast» for å flytta mellom tekstane, men kan skriva direkte, utan å måtta trykkja på «Tab» først."
 
-#: src/resources/xrc_strings.h:63
+#: src/resources/xrc_strings.h:62
 msgid "Shaded translations list"
 msgstr "&Skyggelegg omsetjingslista"
 
-#: src/resources/xrc_strings.h:64
+#: src/resources/xrc_strings.h:63
 msgid "CR/LF conversion"
 msgstr "Linjeskift"
 
-#: src/resources/xrc_strings.h:65
+#: src/resources/xrc_strings.h:64
 msgid "Line endings format:"
 msgstr "&Linjeskiftformat:"
 
-#: src/resources/xrc_strings.h:66
+#: src/resources/xrc_strings.h:65
 msgid "Don't change format of existing catalogs"
 msgstr "&Ikkje endra formatet på gamle katalogar"
 
-#: src/resources/xrc_strings.h:67
+#: src/resources/xrc_strings.h:66
 msgid "External editor"
 msgstr "Anna skriveprogram"
 
-#: src/resources/xrc_strings.h:68
+#: src/resources/xrc_strings.h:67
 msgid "Editor executable:"
 msgstr "Filnamn for sk&riveprogram"
 
-#: src/resources/xrc_strings.h:69
+#: src/resources/xrc_strings.h:68
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f blir erstatta med filnamnet og %l med linjenummeret)"
 
-#: src/resources/xrc_strings.h:70
+#: src/resources/xrc_strings.h:69
 msgid "Open source files in editor, not in file viewer"
 msgstr "Opna &kjeldefiler i skriveprogrammet"
 
-#: src/resources/xrc_strings.h:71
+#: src/resources/xrc_strings.h:70
 msgid "Editor"
 msgstr "Redigering"
 
-#: src/resources/xrc_strings.h:72
+#: src/resources/xrc_strings.h:71
 msgid "Database"
 msgstr "Database"
 
-#: src/resources/xrc_strings.h:73
+#: src/resources/xrc_strings.h:72
 msgid "Path to DB:"
 msgstr "Database&stig:"
 
-#: src/resources/xrc_strings.h:75
+#: src/resources/xrc_strings.h:74
 msgid "Add"
 msgstr "&Legg til"
 
-#: src/resources/xrc_strings.h:76
+#: src/resources/xrc_strings.h:75
 msgid "Pick language from the list of known languages"
 msgstr "Vel språket frå lista over språk"
 
-#: src/resources/xrc_strings.h:77
+#: src/resources/xrc_strings.h:76
 msgid "Generate database"
 msgstr "Lag &database"
 
-#: src/resources/xrc_strings.h:78
+#: src/resources/xrc_strings.h:77
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr "Byggjer omsetjingsminnet på nytt frå katalogane i stigane ovanfor."
 
-#: src/resources/xrc_strings.h:79
+#: src/resources/xrc_strings.h:78
 msgid "Configuration"
 msgstr "Oppsett"
 
-#: src/resources/xrc_strings.h:80
+#: src/resources/xrc_strings.h:79
 msgid "Max. # of missing words:"
 msgstr "Høgste tal på &manglande ord:"
 
-#: src/resources/xrc_strings.h:81
+#: src/resources/xrc_strings.h:80
 msgid "Max. difference in sentence length:"
 msgstr "Høgste forskjell i &setningslengd:"
 
-#: src/resources/xrc_strings.h:82
+#: src/resources/xrc_strings.h:81
 msgid "Automatically translate when updating catalog"
 msgstr "Set &automatisk om ved katalogoppdatering"
 
-#: src/resources/xrc_strings.h:83
+#: src/resources/xrc_strings.h:82
 msgid "Translation Memory"
 msgstr "Omsetjingsminne"
 
-#: src/resources/xrc_strings.h:84
+#: src/resources/xrc_strings.h:83
 msgid "Source code parsers:"
 msgstr "Kjeldekodetolkarar:"
 
-#: src/resources/xrc_strings.h:85
+#: src/resources/xrc_strings.h:84
 msgid "New"
 msgstr "&Ny"
 
-#: src/resources/xrc_strings.h:86
+#: src/resources/xrc_strings.h:85
 msgid "Edit"
 msgstr "&Rediger"
 
-#: src/resources/xrc_strings.h:87
+#: src/resources/xrc_strings.h:86
 msgid "Delete"
 msgstr "&Slett"
 
-#: src/resources/xrc_strings.h:88
+#: src/resources/xrc_strings.h:87
 msgid "Parsers"
 msgstr "Tolkarar"
 
-#: src/resources/xrc_strings.h:91
+#: src/resources/xrc_strings.h:90
 msgid "Parser setup"
 msgstr "Oppsett av tolkar"
 
+#: src/resources/xrc_strings.h:91
 #: src/resources/xrc_strings.h:92
-#: src/resources/xrc_strings.h:93
-#: src/resources/xrc_strings.h:116
+#: src/resources/xrc_strings.h:115
 msgid "Language:"
 msgstr "&Språk:"
 
-#: src/resources/xrc_strings.h:94
+#: src/resources/xrc_strings.h:93
 msgid "List of extensions separated by semicolons (e.g. *.cpp, *.h):"
 msgstr "Liste over etternamn skilde med semikolon (f.eks. «*.cpp; *.h»):"
 
-#: src/resources/xrc_strings.h:95
+#: src/resources/xrc_strings.h:94
 msgid "Invocation:"
 msgstr "Start: "
 
-#: src/resources/xrc_strings.h:96
+#: src/resources/xrc_strings.h:95
 msgid "Parser command:"
 msgstr "Tolkarkommando:"
 
-#: src/resources/xrc_strings.h:97
+#: src/resources/xrc_strings.h:96
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -723,126 +731,126 @@ msgstr ""
 "%o blir erstatta med namnet til udatafila, %K med\n"
 "lista over nøkkelord, og %F med lista over inndatafiler (sjå nedanfor)."
 
-#: src/resources/xrc_strings.h:98
+#: src/resources/xrc_strings.h:97
 msgid "An item in keywords list:"
 msgstr "Eit punkt i lista over nøkkelord:"
 
-#: src/resources/xrc_strings.h:99
+#: src/resources/xrc_strings.h:98
 msgid "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
 msgstr "Dette blir lagt til kommandolinja ein gong\n"
 "for kvart nøkkelord. %k blir utvida til nøkkelorda."
 
-#: src/resources/xrc_strings.h:100
+#: src/resources/xrc_strings.h:99
 msgid "An item in input files list:"
 msgstr "Eit punkt i lista over inndatafiler:"
 
-#: src/resources/xrc_strings.h:101
+#: src/resources/xrc_strings.h:100
 #, c-format
 msgid "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
 msgstr "Dette blir lagt til kommandolinja ein gong\n"
 "for kvar inndatafil. %f blir utvida til filnamnet."
 
-#: src/resources/xrc_strings.h:105
+#: src/resources/xrc_strings.h:104
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Legg til stig i oversikta over katalogar."
 
-#: src/resources/xrc_strings.h:106
+#: src/resources/xrc_strings.h:105
 msgid "Proceed"
 msgstr "&Hald fram"
 
-#: src/resources/xrc_strings.h:108
+#: src/resources/xrc_strings.h:107
 msgid "Generate TM database"
 msgstr "Lag database"
 
-#: src/resources/xrc_strings.h:112
+#: src/resources/xrc_strings.h:111
 msgid "Settings"
 msgstr "Innstillingar"
 
-#: src/resources/xrc_strings.h:113
+#: src/resources/xrc_strings.h:112
 msgid "Project name and version:"
 msgstr "&Prosjektnamn og -versjon:"
 
-#: src/resources/xrc_strings.h:114
+#: src/resources/xrc_strings.h:113
 msgid "Team:"
 msgstr "&Lag:"
 
-#: src/resources/xrc_strings.h:115
+#: src/resources/xrc_strings.h:114
 msgid "Team's email address:"
 msgstr "&E-post-adressa til laget:"
 
-#: src/resources/xrc_strings.h:117
+#: src/resources/xrc_strings.h:116
 msgid "Charset:"
 msgstr "&Teiknkoding:"
 
-#: src/resources/xrc_strings.h:118
+#: src/resources/xrc_strings.h:117
 msgid "Project info"
 msgstr "Prosjektinfo"
 
-#: src/resources/xrc_strings.h:119
+#: src/resources/xrc_strings.h:118
 msgid "Base path:"
 msgstr "&Grunnstig:"
 
-#: src/resources/xrc_strings.h:121
+#: src/resources/xrc_strings.h:120
 msgid "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
 msgstr "Bruk desse nøkkelorda (funksjonsnamna) for å kjenna igjen\n"
 "omsetbare tekstar i kjeldefiler (i tillegg til standardnøkkelorda)."
 
-#: src/resources/xrc_strings.h:125
+#: src/resources/xrc_strings.h:124
 msgid "Update summary"
 msgstr "Samandrag"
 
-#: src/resources/xrc_strings.h:126
+#: src/resources/xrc_strings.h:125
 msgid "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
 msgstr "Desse tekstane finst i kjeldefilene, men ikkje i katalogen.\n"
 "Dei blir derfor lagt til katalogen."
 
-#: src/resources/xrc_strings.h:127
+#: src/resources/xrc_strings.h:126
 msgid "New strings"
 msgstr "Nye tekstar"
 
-#: src/resources/xrc_strings.h:128
+#: src/resources/xrc_strings.h:127
 msgid "These strings are no longer in the sources.\n"
 "poEdit will remove them from the catalog now."
 msgstr "Desse tekstane finst ikkje lenger i kjeldefilene.\n"
 "Dei blir derfor fjerna frå katalogen."
 
-#: src/resources/xrc_strings.h:129
+#: src/resources/xrc_strings.h:128
 msgid "Obsolete strings"
 msgstr "Utgåtte strengar"
 
-#: src/resources/xrc_strings.h:130
+#: src/resources/xrc_strings.h:129
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 nye, 0 utgåtte)"
 
-#: src/resources/xrc_strings.h:132
+#: src/resources/xrc_strings.h:131
 msgid "Undo"
 msgstr "Angra"
 
-#: src/resources/xrc_strings.h:134
+#: src/resources/xrc_strings.h:133
 msgid "Save catalog"
 msgstr "Lagra katalog"
 
-#: src/resources/xrc_strings.h:135
+#: src/resources/xrc_strings.h:134
 msgid "Update catalog - synchronize it with sources"
 msgstr "Oppdater katalog"
 
-#: src/resources/xrc_strings.h:136
+#: src/resources/xrc_strings.h:135
 msgid "Display quotes around the string?"
 msgstr "Vis hermeteikn rundt teksten"
 
-#: src/resources/xrc_strings.h:137
+#: src/resources/xrc_strings.h:136
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Uklar omsetjing"
 
-#: src/resources/xrc_strings.h:139
+#: src/resources/xrc_strings.h:138
 msgid "Fullscreen view"
 msgstr "Fullskjerm"
 
-#: src/resources/xrc_strings.h:140
+#: src/resources/xrc_strings.h:139
 msgid "Help"
 msgstr "Hjelp"
 
