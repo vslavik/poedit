@@ -224,9 +224,8 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU                 (XMLID("menu_quotes"),      poEditFrame::OnQuotesFlag)
    EVT_MENU                 (XMLID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
    EVT_MENU                 (XMLID("menu_references"),  poEditFrame::OnReferencesMenu)
-   
+   EVT_MENU                 (XMLID("menu_fullscreen"),  poEditFrame::OnFullscreen) 
    EVT_MENU_RANGE           (ED_POPUP, ED_POPUP + 100, poEditFrame::OnReference)
-
    EVT_LIST_ITEM_SELECTED   (EDC_LIST,       poEditFrame::OnListSel)
    EVT_LIST_ITEM_DESELECTED (EDC_LIST,       poEditFrame::OnListDesel)
    EVT_CLOSE                (                poEditFrame::OnCloseWindow)
@@ -635,6 +634,26 @@ void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
 
 
 
+void poEditFrame::OnFullscreen(wxCommandEvent& event)
+{
+    bool fs = IsFullScreen();
+    wxConfigBase *cfg = wxConfigBase::Get();
+
+    if (fs)
+    {
+        cfg->Write("splitter_fullscreen", (long)m_Splitter->GetSashPosition());
+        m_Splitter->SetSashPosition(cfg->Read("splitter", 240L));
+    }
+    else
+    {
+        long oldSash = m_Splitter->GetSashPosition();
+        cfg->Write("splitter", oldSash);
+        m_Splitter->SetSashPosition(cfg->Read("splitter_fullscreen", oldSash));
+    }
+
+
+    ShowFullScreen(!fs, wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION);
+}
 
 
 
@@ -888,6 +907,7 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
 
 void poEditFrame::OnAbout(wxCommandEvent&)
 {
+    wxBusyCursor busy;
     wxDialog dlg;
     wxTheXmlResource->LoadDialog(&dlg, this, "about_box");
     dlg.Centre();
