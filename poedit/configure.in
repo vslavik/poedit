@@ -61,6 +61,12 @@ AC_PROG_CXX
 AC_PROG_CXXCPP
 
 
+AC_ARG_VAR(ZIP, Path to zip executable)
+AC_PATH_PROG(ZIP, zip, [])
+if test x$ZIP = x ; then
+    AC_MSG_ERROR([ZIP archiver is needed to compile poEdit.])
+fi
+
 
 
 case "$USE_DEBUG" in
