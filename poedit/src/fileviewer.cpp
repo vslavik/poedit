@@ -89,19 +89,19 @@ void FileViewer::ShowReference(const wxString& ref)
     wxString linestr;
     for (int i = top; i < bottom; i++)
     {
-        linestr.Printf(_T("%i  "), i+1);
+        linestr.Printf(_T("%i  "), i);
         m_list->InsertItem(i - top, linestr);
-        m_list->SetItem(i - top, 1, textf[i]);
+        m_list->SetItem(i - top, 1, textf[i-1]);
     }
 
     m_list->SetColumnWidth(0, wxLIST_AUTOSIZE);
     m_list->SetColumnWidth(1, wxLIST_AUTOSIZE);
 
-    m_list->SetItemState(linenum-1 - top,
+    m_list->SetItemState(linenum - top,
                          wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-    m_list->EnsureVisible(wxMax(0, linenum-1 - top - 5));
-    m_list->EnsureVisible(wxMin(linenum-1 - top + 5, bottom - top - 1));
-    m_list->EnsureVisible(linenum-1 - top);
+    m_list->EnsureVisible(wxMax(0, linenum - top - 5));
+    m_list->EnsureVisible(wxMin(linenum - top + 5, bottom - top - 1));
+    m_list->EnsureVisible(linenum - top);
 
     m_current = ref;
 }

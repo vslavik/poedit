@@ -29,6 +29,7 @@
 
 #include "edapp.h"
 #include "edframe.h"
+#include "manager.h"
 #include "prefsdlg.h"
 
 
@@ -95,11 +96,6 @@ bool poEditApp::OnInit()
     wxTheXmlResource->InitAllHandlers();
     wxTheXmlResource->Load(GetAppPath() + _T("/share/poedit/resources.zip"));
     
-    poEditFrame *frame = new poEditFrame(_T("poEdit"), argc > 1 ? argv[1] : wxEmptyString);
-
-    frame->Show(true);
-    SetTopWindow(frame);
-    
     SetDefaultCfg(wxConfig::Get());
 
     if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
@@ -109,11 +105,16 @@ bool poEditApp::OnInit()
                        "(This information is used only in catalogs headers)"), _("Setup"),
                        wxOK | wxICON_INFORMATION);
                        
-        PreferencesDialog dlg(frame);
+        PreferencesDialog dlg;
         dlg.TransferTo(wxConfig::Get());
         if (dlg.ShowModal() == wxID_OK)
             dlg.TransferFrom(wxConfig::Get());
     }
+      
+    if (argc <= 1 && wxConfig::Get()->Read(_T("manager_startup"), false))
+        ManagerFrame::Create()->Show(true);
+    else
+        poEditFrame::Create(argc > 1 ? argv[1] : wxEmptyString);
 
     return true;
 }

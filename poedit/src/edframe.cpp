@@ -31,7 +31,6 @@
 #include <wx/listctrl.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/settings.h>
-#include <wx/tglbtn.h>
 #include <wx/button.h>
 #include <wx/statusbr.h>
 
@@ -46,10 +45,34 @@
 #include "iso639.h"
 #include "progressinfo.h"
 #include "commentdlg.h"
+#include "manager.h"
 
 #if wxUSE_UNICODE
 #error TODO: this file still lacks unicodifications, due to reiserfs crash :(
 #endif
+
+#include <wx/listimpl.cpp>
+WX_DEFINE_LIST(poEditFramesList);
+poEditFramesList poEditFrame::ms_instances;
+
+/*static*/ poEditFrame *poEditFrame::Create(const wxString& filename)
+{
+    poEditFrame *f;
+    if (!filename)
+        f = new poEditFrame(_T("poEdit"));
+    else
+    {
+        for (poEditFramesList::Node *n = ms_instances.GetFirst(); n; n->GetNext())
+        {
+            if (n->GetData()->m_fileName == filename)
+                return n->GetData();
+        }
+        f = new poEditFrame(_T("poEdit"), filename);
+    }
+    f->Show(true);
+    return f;
+}
+
 
 // Event & controls IDs:
 enum 
@@ -303,6 +326,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU                 (XMLID("menu_fullscreen"),  poEditFrame::OnFullscreen) 
    EVT_MENU                 (XMLID("menu_find"),        poEditFrame::OnFind)
    EVT_MENU                 (XMLID("menu_comment"),     poEditFrame::OnEditComment)
+   EVT_MENU                 (XMLID("menu_manager"),     poEditFrame::OnManager)
    EVT_MENU_RANGE           (ED_POPUP_REFS, ED_POPUP_REFS + 999, poEditFrame::OnReference)
 #ifdef USE_TRANSMEM
    EVT_MENU_RANGE           (ED_POPUP_TRANS, ED_POPUP_TRANS + 999, poEditFrame::OnAutoTranslate)
@@ -311,7 +335,6 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_LIST_ITEM_DESELECTED (EDC_LIST,       poEditFrame::OnListDesel)
    EVT_CLOSE                (                poEditFrame::OnCloseWindow)
 END_EVENT_TABLE()
-
 
 
 #ifdef __UNIX__
@@ -412,12 +435,16 @@ poEditFrame::poEditFrame(const wxString& title, const wxString& catalog) :
 #elif defined(__UNIX__)
     m_help.Initialize(wxGetApp().GetAppPath() + "/share/poedit/help.zip");
 #endif
+
+    ms_instances.Append(this);
 }
 
 
 
 poEditFrame::~poEditFrame()
 {
+    ms_instances.DeleteObject(this);
+
     m_textTrans->PopEventHandler(true/*delete*/);
     m_list->PopEventHandler(true/*delete*/);
 
@@ -1273,9 +1300,14 @@ void poEditFrame::OnAbout(wxCommandEvent&)
 }
 
 
-
 void poEditFrame::OnHelp(wxCommandEvent&)
 {
     m_help.DisplayContents();
 }
 
+
+void poEditFrame::OnManager(wxCommandEvent&)
+{
+    wxFrame *f = ManagerFrame::Create();
+    f->Raise();
+}

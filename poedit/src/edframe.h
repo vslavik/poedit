@@ -22,6 +22,7 @@
 
 #include <wx/frame.h>
 #include <wx/docview.h>
+#include <wx/list.h>
 class WXDLLEXPORT wxListCtrl;
 class WXDLLEXPORT wxSpliterWindow;
 class WXDLLEXPORT wxTextCtrl;
@@ -37,6 +38,9 @@ class WXDLLEXPORT wxGauge;
 
 class poEditListCtrl;
 class TranslationMemory;
+class poEditFrame;
+
+WX_DECLARE_LIST(poEditFrame, poEditFramesList);
 
 /** This class provides main editing frame. It handles user's input 
     and provides frontend to catalog editing engine. Nothing fancy.
@@ -44,6 +48,20 @@ class TranslationMemory;
 class poEditFrame : public wxFrame
 {
     public:
+        /** Public constructor functions. Creates and shows frame
+            (and optionally opens \i catalog). If \i catalog is not
+            empty and is already opened in another poEdit frame,
+            then this function won't create new frame but instead
+            return pointer to existing one.
+            
+            \param catalog filename of catalog to open. If empty, starts
+                           w/o opened file.
+         */        
+        static poEditFrame *Create(const wxString& catalog = wxEmptyString);
+        
+        ~poEditFrame();
+
+    private:
         /** Ctor.
             \param title   frame's title
             \param catalog filename of catalog to open. If empty, starts
@@ -51,7 +69,8 @@ class poEditFrame : public wxFrame
          */
         poEditFrame(const wxString& title, 
                     const wxString& catalog = wxEmptyString);
-        ~poEditFrame();
+        
+        static poEditFramesList ms_instances;
 
     private:
         /// Reads catalog, refreshes controls.
@@ -105,6 +124,7 @@ class poEditFrame : public wxFrame
         void OnFullscreen(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
         void OnEditComment(wxCommandEvent& event);
+        void OnManager(wxCommandEvent& event);
 #ifdef USE_TRANSMEM
         void OnAutoTranslate(wxCommandEvent& event);
 #endif
