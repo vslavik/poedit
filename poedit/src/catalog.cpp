@@ -83,7 +83,7 @@ void CatalogParser::Parse()
 
     wxString line, dummy;
     wxString mflags, mstr, mtrans, mcomment;
-    wxArrayString mrefs;
+    wxArrayString mrefs,mautocomments;
     unsigned mlinenum;
     
     line = m_textFile->GetFirstLine();
@@ -92,10 +92,18 @@ void CatalogParser::Parse()
     while (!line.IsEmpty())
     {
         // ignore empty special tags:
-        while (line == _T("#,") || line == _T("#:"))
+        while (line == _T("#,") || line == _T("#:") || line == _T("#."))
             line = ReadTextLine(m_textFile, m_conv);
         
+	// auto comments:
+	if (ReadParam(line, _T("#. "), dummy))
+        {
+            mautocomments.Add(dummy);
+            line = ReadTextLine(m_textFile, m_conv);
+        }
+ 
         // flags:
+	// Can't we have more than one flag, now only the last is kept ...
         if (ReadParam(line, _T("#, "), dummy))
         {
             mflags = _T("#, ") + dummy;
@@ -143,18 +151,18 @@ void CatalogParser::Parse()
                     break;
             }
 
-            if (!OnEntry(mstr, mtrans, mflags, mrefs, mcomment, mlinenum))
+            if (!OnEntry(mstr, mtrans, mflags, mrefs, mcomment, mautocomments, mlinenum))
                 return;
 
             mcomment = mstr = mtrans = mflags = wxEmptyString;
-            mrefs.Clear();
+            mrefs.Clear(); mautocomments.Clear();
         }
         
         // comment:
         else if (line[0u] == _T('#'))
         {
             while (!line.IsEmpty() && line[0u] == _T('#') &&
-                   (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':'))))
+                   (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':') && line[1u] != _T('.') )))
             {
                 mcomment << line << _T('\n');
                 line = ReadTextLine(m_textFile, m_conv);
@@ -183,6 +191,7 @@ class CharsetInfoFinder : public CatalogParser
                              const wxString& flags,
                              const wxArrayString& references,
                              const wxString& comment,
+                             const wxArrayString& autocomments,
                              unsigned lineNumber);
 };
 
@@ -191,6 +200,7 @@ bool CharsetInfoFinder::OnEntry(const wxString& msgid,
                                 const wxString& flags,
                                 const wxArrayString& references,
                                 const wxString& comment,
+                                const wxArrayString& autocomments, 
                                 unsigned lineNumber)
 {
     if (msgid.IsEmpty())
@@ -232,6 +242,7 @@ class LoadParser : public CatalogParser
                              const wxString& flags,
                              const wxArrayString& references,
                              const wxString& comment,
+                             const wxArrayString& autocomments,
                              unsigned lineNumber);
 };
 
@@ -241,6 +252,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
                          const wxString& flags,
                          const wxArrayString& references,
                          const wxString& comment,
+                         const wxArrayString& autocomments,
                          unsigned lineNumber)
 {
     if (msgid.IsEmpty())
@@ -300,7 +312,8 @@ bool LoadParser::OnEntry(const wxString& msgid,
         d->SetLineNumber(lineNumber);
         for (size_t i = 0; i < references.GetCount(); i++)
             d->AddReference(references[i]);
-
+	for (size_t i = 0; i < autocomments.GetCount(); i++)
+            d->AddAutoComments(autocomments[i]);
         m_catalog->m_data->Put(msgid, d);
         m_catalog->m_dataArray.Add(d);
         m_catalog->m_count++;
@@ -711,6 +724,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     {
         data = &(m_dataArray[i]);
         SaveMultiLines(f, convertUtf8ToCharset(data->GetComment(), encConv));
+	for (unsigned i = 0; i < data->GetAutoComments().GetCount(); i++)
+            f.AddLine(_T("#. ") + data->GetAutoComments()[i]);
         for (unsigned i = 0; i < data->GetReferences().GetCount(); i++)
             f.AddLine(_T("#: ") + data->GetReferences()[i]);
         dummy = data->GetFlags();

@@ -202,6 +202,7 @@ class CatalogParser
                              const wxString& flags,
                              const wxArrayString& references,
                              const wxString& comment,
+			     const wxArrayString& autocomments,
                              unsigned lineNumber) = 0;
 
         /// Textfile being parsed.
@@ -244,6 +245,9 @@ class CatalogData : public wxObject
 
         /// Returns comment added by the translator to this entry
         const wxString& GetComment() const { return m_comment; }
+
+        /// Returns array of all auto comments.
+        const wxArrayString& GetAutoComments() const { return m_autocomments; }
 
         /// Convenience function: does this entry has a comment?
         const bool HasComment() const { return !m_comment.IsEmpty(); }
@@ -308,6 +312,20 @@ class CatalogData : public wxObject
         void SetLineNumber(unsigned line) { m_lineNum = line; }
         /// Get line number of this entry.
         unsigned GetLineNumber() const { return m_lineNum; }
+	
+        /// Adds new autocomments (#. )
+        void AddAutoComments(const wxString& com)
+        {
+            if (m_autocomments.Index(com) == wxNOT_FOUND) 
+                m_autocomments.Add(com);
+        }
+
+        /// Clears autocomments.
+        void ClearAutoComments()
+        {
+            m_autocomments.Clear();
+        }
+
             
     private:
         /// Checks if %i etc. are correct in the translation (true if yes)
@@ -318,7 +336,7 @@ class CatalogData : public wxObject
         static wxRegEx ms_tokenExtraction;
 
         wxString m_string, m_translation;
-        wxArrayString m_references;
+        wxArrayString m_references, m_autocomments;
         bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
         bool m_hasBadTokens;
         wxString m_moreFlags;
