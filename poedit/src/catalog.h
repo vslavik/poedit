@@ -62,6 +62,9 @@ class Catalog
             /** Sets header to given value. Overwrites old value if present,
                 appends to the end of header values otherwise. */
             void SetHeader(const wxString& key, const wxString& value);
+
+            /// Removes given header entry
+            void DeleteHeader(const wxString& key);
     
             struct Entry
             {

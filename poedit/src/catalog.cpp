@@ -221,6 +221,21 @@ void Catalog::HeaderData::SetHeader(const wxString& key, const wxString& value)
     }
 }
 
+void Catalog::HeaderData::DeleteHeader(const wxString& key)
+{
+    Entries enew;
+    
+    size_t size = m_entries.size();
+    for (Entries::const_iterator i = m_entries.begin();
+            i != m_entries.end(); ++i)
+    {
+        if (i->Key != key)
+            enew.push_back(*i);
+    }
+
+    m_entries = enew;
+}
+
 const Catalog::HeaderData::Entry *
 Catalog::HeaderData::Find(const wxString& key) const
 {
