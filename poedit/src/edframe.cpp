@@ -400,6 +400,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_quotes"),      poEditFrame::OnQuotesFlag)
    EVT_MENU           (XRCID("menu_lines"),       poEditFrame::OnLinesFlag)
    EVT_MENU           (XRCID("menu_comment_win"), poEditFrame::OnCommentWinFlag)
+   EVT_MENU           (XRCID("menu_auto_comments_win"), poEditFrame::OnAutoCommentsWinFlag)
    EVT_MENU           (XRCID("menu_shaded"),      poEditFrame::OnShadedListFlag)
    EVT_MENU           (XRCID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
    EVT_MENU           (XRCID("menu_references"),  poEditFrame::OnReferencesMenu)
@@ -468,6 +469,8 @@ poEditFrame::poEditFrame() :
     m_displayLines = (bool)cfg->Read(_T("display_lines"), (long)false);
     m_displayCommentWin = 
         (bool)cfg->Read(_T("display_comment_win"), (long)true);
+    m_displayAutoCommentsWin = 
+        (bool)cfg->Read(_T("display_auto_comments_win"), (long)true);
     m_commentWindowEditable = 
         (bool)cfg->Read(_T("comment_window_editable"), (long)false);
     gs_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
@@ -509,6 +512,7 @@ poEditFrame::poEditFrame() :
     GetMenuBar()->Check(XRCID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XRCID("menu_lines"), m_displayLines);
     GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
+    GetMenuBar()->Check(XRCID("menu_auto_comments_win"), m_displayAutoCommentsWin);
     GetMenuBar()->Check(XRCID("menu_shaded"), gs_shadedList);
     
 	m_splitter = new wxSplitterWindow(this, -1,
@@ -524,11 +528,17 @@ poEditFrame::poEditFrame() :
                                             wxDefaultPosition, wxDefaultSize,
                                             SPLITTER_BORDER);    
     m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
+    m_bottomRightPanel = new wxPanel(m_bottomSplitter);
 
     m_textComment = NULL;
-    // create the control:
+    m_textAutoComments = new UnfocusableTextCtrl(m_bottomRightPanel,
+                                EDC_TEXTORIG, wxEmptyString, 
+                                wxDefaultPosition, wxDefaultSize, 
+                                wxTE_MULTILINE | wxTE_READONLY);
+    // This call will force the creation of the right kind of control
+    // for the m_textComment member
     UpdateCommentWindowEditable();
-
+    
     m_labelSingular = new wxStaticText(m_bottomLeftPanel, -1, _("Singular:"));
     m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
     m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
@@ -550,6 +560,7 @@ poEditFrame::poEditFrame() :
     SetCustomFonts();
     
     wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
+    wxSizer *rightSizer = new wxBoxSizer(wxVERTICAL);
     
     wxFlexGridSizer *gridSizer = new wxFlexGridSizer(2);
     gridSizer->AddGrowableCol(1);
@@ -564,20 +575,28 @@ poEditFrame::poEditFrame() :
     leftSizer->Add(gridSizer, 1, wxEXPAND);
     leftSizer->Add(m_textTrans, 1, wxEXPAND);
     leftSizer->Add(m_pluralNotebook, 1, wxEXPAND);
+    rightSizer->Add(m_textAutoComments, 1, wxEXPAND);
+    rightSizer->Add(m_textComment, 1, wxEXPAND);
 
     m_bottomLeftPanel->SetAutoLayout(true);
     m_bottomLeftPanel->SetSizer(leftSizer);
+
+    m_bottomRightPanel->SetAutoLayout(true);
+    m_bottomRightPanel->SetSizer(rightSizer);
     
     m_bottomSplitter->SetMinimumPaneSize(40);
-    if (m_displayCommentWin)
+    if (m_displayCommentWin || m_displayAutoCommentsWin)
     {
-        m_bottomSplitter->SplitVertically(m_bottomLeftPanel, m_textComment,
+        m_bottomSplitter->SplitVertically(m_bottomLeftPanel, m_bottomRightPanel,
                                           cfg->Read(_T("bottom_splitter"),
                                                     -200L));
+        m_bottomLeftPanel->GetSizer()->Show(m_textComment, m_displayCommentWin);
+        m_bottomLeftPanel->GetSizer()->Show(m_textAutoComments, m_displayAutoCommentsWin);
+        m_bottomLeftPanel->GetSizer()->Layout();
     }
     else
     {
-        m_textComment->Show(false);
+        m_bottomRightPanel->Show(false);
         m_bottomSplitter->Initialize(m_bottomLeftPanel);
     }
 
@@ -656,6 +675,7 @@ poEditFrame::~poEditFrame()
     cfg->Write(_T("display_quotes"), m_displayQuotes);
     cfg->Write(_T("display_lines"), m_displayLines);
     cfg->Write(_T("display_comment_win"), m_displayCommentWin);
+    cfg->Write(_T("display_auto_comments_win"), m_displayAutoCommentsWin);
     cfg->Write(_T("shaded_list"), gs_shadedList);
 
     m_history.Save(*cfg);
@@ -1313,6 +1333,10 @@ void poEditFrame::OnCommentWinFlag(wxCommandEvent& event)
     UpdateDisplayCommentWin();
 }
 
+void poEditFrame::OnAutoCommentsWinFlag(wxCommandEvent& event)
+{
+    UpdateDisplayCommentWin();
+}
 
 
 void poEditFrame::OnShadedListFlag(wxCommandEvent& event)
@@ -1579,12 +1603,16 @@ void poEditFrame::UpdateToTextCtrl(int item)
     const CatalogData& entry = (*m_catalog)[ind];
 
     wxString quote;
-    wxString t_o, t_t, t_c;
+    wxString t_o, t_t, t_c, t_ac;
     if (m_displayQuotes) quote = _T("\""); else quote = wxEmptyString;
     t_o = quote + entry.GetString() + quote;
     t_o.Replace(_T("\\n"), _T("\\n\n"));
     t_c = entry.GetComment();
     t_c.Replace(_T("\\n"), _T("\\n\n"));
+
+    for (unsigned i=0; i < entry.GetAutoComments().GetCount(); i++)
+      t_ac += entry.GetAutoComments()[i] + _T("\n");
+    t_ac.Replace(_T("\\n"), _T("\\n\n"));
 
     // remove "# " in front of every comment line
     t_c = CommentDialog::RemoveStartHash(t_c);
@@ -1641,6 +1669,9 @@ void poEditFrame::UpdateToTextCtrl(int item)
     
     if (m_displayCommentWin)
         m_textComment->SetValue(t_c);
+        
+    if (m_displayAutoCommentsWin)
+        m_textAutoComments->SetValue(t_ac);
 
     m_edittedTextFuzzyChanged = false;
     GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), entry.IsFuzzy());
@@ -1897,6 +1928,7 @@ void poEditFrame::UpdateMenu()
         m_textOrig->Enable(false);
         m_textOrigPlural->Enable(false);
         m_textComment->Enable(false);
+        m_textAutoComments->Enable(false);
         m_list->Enable(false);
     }
     else
@@ -1913,6 +1945,7 @@ void poEditFrame::UpdateMenu()
         m_textOrig->Enable(true);
         m_textOrigPlural->Enable(true);
         m_textComment->Enable(true);
+        m_textAutoComments->Enable(true);
         m_list->Enable(true);
         bool doupdate = m_catalog->Header().SearchPaths.GetCount() > 0;
         GetToolBar()->EnableTool(XRCID("menu_update"), doupdate);
@@ -2177,6 +2210,7 @@ void poEditFrame::SetCustomFonts()
             wxFont font;
             font.SetNativeFontInfo(fi);
             m_textComment->SetFont(font);
+            m_textAutoComments->SetFont(font);
             m_textOrig->SetFont(font);
             m_textOrigPlural->SetFont(font);
             m_textTrans->SetFont(font);
@@ -2199,14 +2233,14 @@ void poEditFrame::UpdateCommentWindowEditable()
         delete m_textComment;
         if (m_commentWindowEditable)
         {
-            m_textComment = new wxTextCtrl(m_bottomSplitter,
+            m_textComment = new wxTextCtrl(m_bottomRightPanel,
                                         EDC_TEXTCOMMENT, wxEmptyString, 
                                         wxDefaultPosition, wxDefaultSize, 
                                         wxTE_MULTILINE);
         }
         else
         {
-            m_textComment = new UnfocusableTextCtrl(m_bottomSplitter,
+            m_textComment = new UnfocusableTextCtrl(m_bottomRightPanel,
                                         EDC_TEXTCOMMENT, wxEmptyString, 
                                         wxDefaultPosition, wxDefaultSize, 
                                         wxTE_MULTILINE | wxTE_READONLY);
@@ -2218,18 +2252,32 @@ void poEditFrame::UpdateCommentWindowEditable()
 void poEditFrame::UpdateDisplayCommentWin()
 {
     m_displayCommentWin = GetMenuBar()->IsChecked(XRCID("menu_comment_win"));
-    if (m_displayCommentWin)
+    m_displayAutoCommentsWin = GetMenuBar()->IsChecked(XRCID("menu_auto_comments_win"));
+    if (m_displayCommentWin || m_displayAutoCommentsWin)
     {
         m_bottomSplitter->SplitVertically(
-                m_bottomLeftPanel, m_textComment,
+                m_bottomLeftPanel, m_bottomRightPanel,
                 wxConfig::Get()->Read(_T("bottom_splitter"), -200L));
-        m_textComment->Show(true);
+        m_bottomRightPanel->Show(true);
+        
+        // force recalculation of layout of panel so that text boxes take up
+        // all the space they can
+        if (m_bottomRightPanel->GetSizer() != NULL) // sizer may be NULL on first call
+        {
+            m_bottomRightPanel->GetSizer()->Remove(m_textAutoComments);  // need to remove and add again to ensure accurate resizing
+            m_bottomRightPanel->GetSizer()->Remove(m_textComment);
+            m_bottomRightPanel->GetSizer()->Add(m_textAutoComments, 1, wxEXPAND);
+            m_bottomRightPanel->GetSizer()->Add(m_textComment, 1, wxEXPAND);
+            m_bottomRightPanel->GetSizer()->Show(m_textComment, m_displayCommentWin);
+            m_bottomRightPanel->GetSizer()->Show(m_textAutoComments, m_displayAutoCommentsWin);
+            m_bottomRightPanel->GetSizer()->Layout();
+        }
     }
     else
     {
         wxConfig::Get()->Write(_T("bottom_splitter"),
                                (long)m_bottomSplitter->GetSashPosition());
-        m_textComment->Show(false);
+        m_bottomRightPanel->Show(false);
         m_bottomSplitter->Unsplit();
     }
     m_list->SetDisplayLines(m_displayLines);

@@ -53,6 +53,7 @@ _("&Fullscreen view");
 _("Display &quotes");
 _("Display &line numbers");
 _("Show &comment window");
+_("Show automatic c&omments window");
 _("&Shaded translations list");
 _("&Contents...");
 _("GNU gettext documentation");
