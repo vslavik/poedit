@@ -8,7 +8,7 @@
     
       Translation memory database
     
-      (c) Vaclav Slavik, 2001-2003
+      (c) Vaclav Slavik, 2001-2004
 
 */
 
@@ -270,9 +270,9 @@ DbBase::DbBase(const wxString& filename, DBTYPE type)
         return;
     }
 #ifdef DB_OPEN_WITH_TRANSACTION
-    m_err = m_db->open(m_db, NULL, filename.mb_str(), NULL, type, DB_CREATE, 0);
+    m_err = m_db->open(m_db, NULL, filename.fn_str(), NULL, type, DB_CREATE, 0);
 #else    
-    m_err = m_db->open(m_db, filename.mb_str(), NULL, type, DB_CREATE, 0);
+    m_err = m_db->open(m_db, filename.fn_str(), NULL, type, DB_CREATE, 0);
 #endif
     if (m_err != 0)
     {
@@ -379,7 +379,7 @@ wxArrayString *DbTrans::Read(DbKey index)
 
 DbKey DbOrig::Read(const wxString& str)
 {
-    const wxWX2MBbuf c_str_buf = str.mb_str();
+    const wxWX2MBbuf c_str_buf = str.mb_str(wxConvUTF8);
     const char *c_str = c_str_buf;
     DBT key, data;
 
@@ -402,7 +402,7 @@ DbKey DbOrig::Read(const wxString& str)
 
 bool DbOrig::Write(const wxString& str, DbKey value)
 {
-    const wxWX2MBbuf c_str_buf = str.mb_str();
+    const wxWX2MBbuf c_str_buf = str.mb_str(wxConvUTF8);
     const char *c_str = c_str_buf;
     DBT key, data;
 
@@ -427,7 +427,7 @@ bool DbOrig::Write(const wxString& str, DbKey value)
 
 DbKeys *DbWords::Read(const wxString& word, unsigned sentenceSize)
 {
-    const wxWX2MBbuf word_mb = word.mb_str();
+    const wxWX2MBbuf word_mb = word.mb_str(wxConvUTF8);
     char *keyBuf;
     size_t keyLen;
     DBT key, data;
@@ -465,7 +465,7 @@ bool DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
     //     This is important because it allows us to efficiently merge
     //     these lists when looking up inexact translations...
 
-    const wxWX2MBbuf word_mb = word.mb_str();
+    const wxWX2MBbuf word_mb = word.mb_str(wxConvUTF8);
     DbKey *valueBuf;
     char *keyBuf;
     size_t keyLen;
