@@ -161,6 +161,7 @@ class poEditFrame : public wxFrame
         void OnQuotesFlag(wxCommandEvent& event);
         void OnLinesFlag(wxCommandEvent& event);
         void OnCommentWinFlag(wxCommandEvent& event);
+        void OnAutoCommentsWinFlag(wxCommandEvent& event);
         void OnShadedListFlag(wxCommandEvent& event);
         void OnInsertOriginal(wxCommandEvent& event);
         void OnFullscreen(wxCommandEvent& event);
@@ -183,6 +184,7 @@ class poEditFrame : public wxFrame
         void BeginItemValidation();
         void EndItemValidation();
         
+        // updates the status of both comment windows: Automatic and Translator's
         void UpdateDisplayCommentWin();
 
         void ShowPluralFormUI(bool show = true);
@@ -219,9 +221,10 @@ class poEditFrame : public wxFrame
 #endif
 
         wxPanel *m_bottomLeftPanel;
+        wxPanel *m_bottomRightPanel;
         wxSplitterWindow *m_splitter, *m_bottomSplitter;
         poEditListCtrl *m_list;
-        wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textTrans, *m_textComment;
+        wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textTrans, *m_textComment, *m_textAutoComments;
         std::vector<wxTextCtrl*> m_textTransPlural;
         wxNotebook *m_pluralNotebook;
         wxGauge *m_statusGauge;
@@ -235,6 +238,7 @@ class poEditFrame : public wxFrame
         bool m_displayQuotes;
         bool m_displayLines;
         bool m_displayCommentWin;
+        bool m_displayAutoCommentsWin;
         int m_sel, m_selItem;
         wxFileHistory m_history;
         std::vector<wxString> m_edittedTextOrig;
