@@ -27,6 +27,8 @@
 #include <wx/intl.h>
 #include <wx/wizard.h>
 #include <wx/dirdlg.h>
+#include <wx/filedlg.h>
+#include <wx/stattext.h>
 
 #include <wx/gizmos/editlbox.h>
 #include <wx/xrc/xmlres.h>
@@ -35,73 +37,181 @@
 #include "transmemupd.h"
 #include "progressinfo.h"
 
-class DirListPage : public wxDialog
+class UpdateWizard : public wxWizard
 {
-    protected:
-        DECLARE_EVENT_TABLE()
-        void OnBrowse(wxCommandEvent& event);
-};
+public:
+    UpdateWizard() {}
 
-BEGIN_EVENT_TABLE(DirListPage, wxDialog)
-   EVT_BUTTON(XRCID("tm_adddir"), DirListPage::OnBrowse)
-END_EVENT_TABLE()
+    void Setup()
+    {
+        m_paths = new wxEditableListBox(
+                XRCCTRL(*this, "tm_update_1", wxWizardPage),
+                -1, _("Search Paths"));
+        wxXmlResource::Get()->AttachUnknownControl(_T("search_paths"), m_paths);
+        m_files = new wxEditableListBox(
+                XRCCTRL(*this, "tm_update_2", wxWizardPage),
+                -1, _("Files List"));
+        wxXmlResource::Get()->AttachUnknownControl(_T("files_list"), m_files);
 
-void DirListPage::OnBrowse(wxCommandEvent& event)
-{
-    wxDirDialog dlg(this, _("Select directory"));
-    if (dlg.ShowModal() == wxID_OK)
+        FitToPage(XRCCTRL(*this, "tm_update_2", wxWizardPage));
+    
+        // Setup search paths:
+        wxString dirsStr = 
+            wxConfig::Get()->Read(_T("TM/search_paths"), wxEmptyString);
+        wxArrayString dirsArray;
+        wxStringTokenizer tkn(dirsStr, wxPATH_SEP);
+
+        while (tkn.HasMoreTokens()) dirsArray.Add(tkn.GetNextToken());
+        m_paths->SetStrings(dirsArray);
+    }
+
+    void SetLang(const wxString& lang)
+    {
+        m_lang = lang;
+        XRCCTRL(*this, "language1", wxStaticText)->SetLabel(lang);
+        XRCCTRL(*this, "language2", wxStaticText)->SetLabel(lang);
+    }
+
+    void GetSearchPaths(wxArrayString& arr) const
+        { m_paths->GetStrings(arr); }
+    void GetFiles(wxArrayString& arr) const
+        { m_files->GetStrings(arr); }
+
+private:
+    void OnPageChange(wxWizardEvent& event)
+    {
+        if (event.GetDirection() == true/*fwd*/ &&
+            event.GetPage() == XRCCTRL(*this, "tm_update_1", wxWizardPage))
+        {
+            wxBusyCursor bcur;
+            
+            wxArrayString dirsArray;
+            GetSearchPaths(dirsArray);
+            wxArrayString files;
+            
+            if (TranslationMemoryUpdater::FindFilesInPaths(dirsArray, files,
+                                                           m_lang))
+            {
+                m_files->SetStrings(files);
+            }
+        }
+        else
+            event.Skip();
+    }
+    
+    void OnBrowse(wxCommandEvent& event)
+    {
+        wxDirDialog dlg(this, _("Select directory"));
+        if (dlg.ShowModal() == wxID_OK)
+        {
+            wxArrayString a;
+            m_paths->GetStrings(a);
+            a.Add(dlg.GetPath());
+            m_paths->SetStrings(a);
+        }
+    }
+
+    void OnDefaults(wxCommandEvent& event)
     {
         wxArrayString a;
-        wxEditableListBox *l = XRCCTRL(*this, "tm_dirs", wxEditableListBox);
-        l->GetStrings(a);
-        a.Add(dlg.GetPath());
-        l->SetStrings(a);
+#if defined(__UNIX__)
+        a.Add(wxGetHomeDir());
+        a.Add(_T("/usr/share/locale"));
+        a.Add(_T("/usr/local/share/locale"));
+#elif defined(__WXMSW__)
+        a.Add(_T("C:"));
+#endif
+        m_paths->SetStrings(a);
     }
-}
+    
+    void OnAddFiles(wxCommandEvent& event)
+    {
+        wxFileDialog dlg(this,
+                         _("Add files"),
+                         m_defaultDir,
+                         wxEmptyString,
+#ifdef __UNIX__
+                   _("Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"), 
+#else
+                   _("Translation files (*.po;*.mo)|*.po;*.mo"), 
+#endif
+                         wxOPEN | wxMULTIPLE);
+        if (dlg.ShowModal() == wxID_OK)
+        {
+            wxArrayString f, f2;
+
+            dlg.GetPaths(f);
+            
+            m_files->GetStrings(f2);
+            WX_APPEND_ARRAY(f2, f);
+            m_files->SetStrings(f2);
+
+            m_defaultDir = dlg.GetDirectory();            
+        }
+    }
+
+    wxString m_defaultDir;
+    wxString m_lang;
+    wxEditableListBox *m_paths, *m_files;
+
+    DECLARE_EVENT_TABLE()
+};
+
+BEGIN_EVENT_TABLE(UpdateWizard, wxWizard)
+    EVT_WIZARD_PAGE_CHANGING(-1, UpdateWizard::OnPageChange)
+    EVT_BUTTON(XRCID("browse"), UpdateWizard::OnBrowse)
+    EVT_BUTTON(XRCID("reset"), UpdateWizard::OnDefaults)
+    EVT_BUTTON(XRCID("add_files"), UpdateWizard::OnAddFiles)
+END_EVENT_TABLE()
+
+
 
 void RunTMUpdateWizard(wxWindow *parent,
                        const wxString& dbPath, const wxArrayString& langs)
 {
-#if 0 // doesn't work yet, work in progress!
-    wxWizard *wizard =
-        (wxWizard*) wxXmlResource::Get()->LoadObject(parent,
-                                                     _T("tm_update_wizard"),
-                                                     _T("wxWizard"));
-    wizard->RunWizard(XRCCTRL(*wizard, "tm_update_1", wxWizardPage));
-    wizard->Destroy();
-#endif
-    
-    // 1. Get paths list from the user:
-    wxConfigBase *cfg = wxConfig::Get();
-    DirListPage dlg;
-    wxXmlResource::Get()->LoadDialog(&dlg, parent, _T("dlg_generate_tm"));
+    UpdateWizard wizard;
 
-    wxEditableListBox *dirs = 
-        new wxEditableListBox(&dlg, -1, _("Search Paths"));
-    wxXmlResource::Get()->AttachUnknownControl(_T("tm_dirs"), dirs);
-
-    wxString dirsStr = cfg->Read(_T("TM/search_paths"), wxEmptyString);
-    wxArrayString dirsArray;
-    wxStringTokenizer tkn(dirsStr, wxPATH_SEP);
-
-    while (tkn.HasMoreTokens()) dirsArray.Add(tkn.GetNextToken());
-    dirs->SetStrings(dirsArray);
-
-    if (dlg.ShowModal() == wxID_OK)
+    wxXmlResource::Get()->LoadObject(&wizard, parent,
+                                     _T("tm_update_wizard"), _T("wxWizard"));
+    wizard.Setup();
+    for (size_t i = 0; i < langs.GetCount(); i++)
     {
-        dirs->GetStrings(dirsArray);
-        dirsStr = wxEmptyString;
-        for (size_t i = 0; i < dirsArray.GetCount(); i++)
+        wizard.SetLang(langs[0]);
+        if (!wizard.RunWizard(XRCCTRL(wizard, "tm_update_1", wxWizardPage)))
         {
-            if (i != 0) dirsStr << wxPATH_SEP;
-            dirsStr << dirsArray[i];
+            wizard.Destroy();
+            return;
         }
-        cfg->Write(_T("TM/search_paths"), dirsStr);
+        
+        TranslationMemory *tm = 
+            TranslationMemory::Create(langs[i], dbPath);
+        if (tm)
+        {
+            ProgressInfo *pi = new ProgressInfo;
+            TranslationMemoryUpdater u(tm, pi);
+            wxArrayString files;
+            wizard.GetFiles(files);
+            if (!u.Update(files)) 
+                { tm->Release(); break; }
+            tm->Release();
+            delete pi;
+        }
     }
-    else return;
+
+    // Save the directories:
+    wxArrayString dirsArray;
+    wizard.GetSearchPaths(dirsArray);
+    wxString dirsStr;
+    for (size_t i = 0; i < dirsArray.GetCount(); i++)
+    {
+        if (i != 0) dirsStr << wxPATH_SEP;
+        dirsStr << dirsArray[i];
+    }
+    wxConfig::Get()->Write(_T("TM/search_paths"), dirsStr);
     
-    
-    
+    wizard.Destroy();
+   
+#if 0
     ProgressInfo *pi = new ProgressInfo;
     pi->SetTitle(_("Updating translation memory"));
     for (size_t i = 0; i < langs.GetCount(); i++)
@@ -120,6 +230,7 @@ void RunTMUpdateWizard(wxWindow *parent,
         }
     }
     delete pi;
+#endif
 }
 
 #endif //USE_TRANSMEM

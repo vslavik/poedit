@@ -107,13 +107,14 @@ TranslationMemoryUpdater::TranslationMemoryUpdater(TranslationMemory *mem,
 {
 }
 
+/*static*/
 bool TranslationMemoryUpdater::FindFilesInPaths(const wxArrayString& paths,
-                                                wxArrayString& files)
+                                                wxArrayString& files,
+                                                const wxString& lang)
 {
     files.Clear();
-    TMUDirTraverser trav(&files, m_mem->GetLanguage());
+    TMUDirTraverser trav(&files, lang);
 
-    m_progress->UpdateMessage(_("Listing files..."));
     for (size_t i = 0; i < paths.GetCount(); i++)
     {
         wxDir dir(paths[i]);

@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<resource version="2.3.0.1">
+  <object class="wxWizard" name="tm_update_wizard">
+    <title>Update translation memory</title>
+    <bitmap>tm_update.gif</bitmap>
+    <object class="wxWizardPageSimple" name="tm_update_1">
+      <object class="wxBoxSizer">
+        <orient>wxVERTICAL</orient>
+        <object class="sizeritem">
+          <object class="wxStaticText" name="language1">
+            <font>
+              <size>18</size>
+              <weight>bold</weight>
+            </font>
+          </object>
+          <flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
+          <border>5d</border>
+        </object>
+        <object class="sizeritem">
+          <object class="wxStaticText">
+            <label>Please add directories where locale files are stored on your system:</label>
+          </object>
+          <flag>wxTOP|wxLEFT|wxRIGHT</flag>
+          <border>5d</border>
+        </object>
+        <object class="sizeritem">
+          <object class="unknown" name="search_paths"/>
+          <option>1</option>
+          <flag>wxALL|wxEXPAND</flag>
+          <border>5d</border>
+        </object>
+        <object class="sizeritem">
+          <object class="wxBoxSizer">
+            <orient>wxHORIZONTAL</orient>
+            <object class="sizeritem">
+              <object class="wxButton" name="browse">
+                <label>Browse</label>
+              </object>
+            </object>
+            <object class="sizeritem">
+              <object class="wxButton" name="reset">
+                <label>Reset to defaults</label>
+              </object>
+              <flag>wxLEFT</flag>
+              <border>5d</border>
+            </object>
+          </object>
+          <flag>wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_RIGHT</flag>
+          <border>5d</border>
+        </object>
+      </object>
+    </object>
+    <object class="wxWizardPageSimple" name="tm_update_2">
+      <object class="wxBoxSizer">
+        <orient>wxVERTICAL</orient>
+        <object class="sizeritem">
+          <object class="wxStaticText" name="language2">
+            <font>
+              <size>18</size>
+              <weight>bold</weight>
+            </font>
+          </object>
+          <flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
+          <border>5d</border>
+        </object>
+        <object class="sizeritem">
+          <object class="wxStaticText">
+            <label>Translation memory will be built from the files listed bellow.\nYou can add more files to the list now.</label>
+          </object>
+          <flag>wxTOP|wxLEFT|wxRIGHT</flag>
+          <border>5d</border>
+        </object>
+        <object class="sizeritem">
+          <minsize>200,100d</minsize>
+          <object class="unknown" name="files_list"/>
+          <option>1</option>
+          <flag>wxALL|wxEXPAND</flag>
+          <border>5d</border>
+        </object>
+        <object class="sizeritem">
+          <object class="wxBoxSizer">
+            <orient>wxHORIZONTAL</orient>
+            <object class="sizeritem">
+              <object class="wxButton" name="add_files">
+                <label>Add files</label>
+              </object>
+            </object>
+          </object>
+          <flag>wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_RIGHT</flag>
+          <border>5d</border>
+        </object>
+      </object>
+    </object>
+  </object>
+</resource>

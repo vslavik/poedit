@@ -45,8 +45,9 @@ class TranslationMemoryUpdater
             files are currently returned. Found files are stored in \a files.
             \return  false if an error occured, true otherwise
          */
-        bool FindFilesInPaths(const wxArrayString& paths,
-                              wxArrayString& files);
+        static bool FindFilesInPaths(const wxArrayString& paths,
+                                     wxArrayString& files,
+                                     const wxString& lang);
         
         /** Updates TM \a m with data from all catalogs listed in \a files.
             \return  false if an error occured, true otherwise
