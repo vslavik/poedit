@@ -96,7 +96,7 @@ INCLUDES = -I$(srcdir)/../../include -I$(srcdir)/expat
 
 noinst_LIBRARIES = libmy_xrc.a
 
-libmy_xrc_a_SOURCES =      xh_bmp.cpp xh_bmpbt.cpp xh_bttn.cpp xh_cald.cpp xh_chckb.cpp     xh_chckl.cpp xh_choic.cpp xh_combo.cpp xh_dlg.cpp xh_frame.cpp     xh_gauge.cpp xh_html.cpp xh_listb.cpp xh_listc.cpp xh_menu.cpp     xh_notbk.cpp xh_panel.cpp xh_radbt.cpp xh_radbx.cpp xh_scrol.cpp     xh_sizer.cpp xh_slidr.cpp xh_spin.cpp xh_stbmp.cpp xh_stbox.cpp     xh_stlin.cpp xh_sttxt.cpp xh_text.cpp xh_toolb.cpp xh_tree.cpp     xh_unkwn.cpp xml.cpp xmlbin.cpp xmlbinz.cpp xmlexpat.cpp xmlres.cpp     xmlrsall.cpp xmlwrite.cpp
+libmy_xrc_a_SOURCES =      xh_bmp.cpp xh_bmpbt.cpp xh_bttn.cpp xh_cald.cpp xh_chckb.cpp     xh_chckl.cpp xh_choic.cpp xh_combo.cpp xh_dlg.cpp xh_frame.cpp     xh_gauge.cpp xh_html.cpp xh_listb.cpp xh_listc.cpp xh_menu.cpp     xh_notbk.cpp xh_panel.cpp xh_radbt.cpp xh_radbx.cpp xh_scrol.cpp     xh_sizer.cpp xh_slidr.cpp xh_spin.cpp xh_stbmp.cpp xh_stbox.cpp     xh_stlin.cpp xh_sttxt.cpp xh_text.cpp xh_toolb.cpp xh_tree.cpp     xh_unkwn.cpp xml.cpp xmlres.cpp xmlrsall.cpp 
 
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
@@ -112,8 +112,7 @@ xh_chckb.o xh_chckl.o xh_choic.o xh_combo.o xh_dlg.o xh_frame.o \
 xh_gauge.o xh_html.o xh_listb.o xh_listc.o xh_menu.o xh_notbk.o \
 xh_panel.o xh_radbt.o xh_radbx.o xh_scrol.o xh_sizer.o xh_slidr.o \
 xh_spin.o xh_stbmp.o xh_stbox.o xh_stlin.o xh_sttxt.o xh_text.o \
-xh_toolb.o xh_tree.o xh_unkwn.o xml.o xmlbin.o xmlbinz.o xmlexpat.o \
-xmlres.o xmlrsall.o xmlwrite.o
+xh_toolb.o xh_tree.o xh_unkwn.o xml.o xmlres.o xmlrsall.o
 AR = ar
 CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -133,8 +132,7 @@ DEP_FILES =  .deps/xh_bmp.P .deps/xh_bmpbt.P .deps/xh_bttn.P \
 .deps/xh_scrol.P .deps/xh_sizer.P .deps/xh_slidr.P .deps/xh_spin.P \
 .deps/xh_stbmp.P .deps/xh_stbox.P .deps/xh_stlin.P .deps/xh_sttxt.P \
 .deps/xh_text.P .deps/xh_toolb.P .deps/xh_tree.P .deps/xh_unkwn.P \
-.deps/xml.P .deps/xmlbin.P .deps/xmlbinz.P .deps/xmlexpat.P \
-.deps/xmlres.P .deps/xmlrsall.P .deps/xmlwrite.P
+.deps/xml.P .deps/xmlres.P .deps/xmlrsall.P
 SOURCES = $(libmy_xrc_a_SOURCES)
 OBJECTS = $(libmy_xrc_a_OBJECTS)
 
@@ -142,7 +140,7 @@ all: all-redirect
 .SUFFIXES:
 .SUFFIXES: .S .c .cpp .o .s
 $(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu extras/wx-contrib/src/xrc/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --foreign extras/wx-contrib/src/xrc/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
@@ -279,7 +277,7 @@ distdir: $(DISTFILES)
 	top_distdir=`cd $(top_distdir) && pwd`; \
 	distdir=`cd $(distdir) && pwd`; \
 	cd $(top_srcdir) \
-	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu extras/wx-contrib/src/xrc/Makefile
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --foreign extras/wx-contrib/src/xrc/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \

@@ -345,6 +345,7 @@ inline static wxString CharToString(wxMBConv *conv,
     (void)conv;
     return wxString(s, wxConvUTF8, len);
 #else
+#if wxCHECK_VERSION(2,3,3)
     if ( conv )
     {
         size_t nLen = (len != wxSTRING_MAXLEN) ? len :
@@ -357,6 +358,7 @@ inline static wxString CharToString(wxMBConv *conv,
         delete[] buf;
     }
     else
+#endif
         return wxString(s, len);
 #endif
 }

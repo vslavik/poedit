@@ -88,8 +88,5 @@ void wxXmlResource::InitAllHandlers()
     AddHandler(new wxStaticLineXmlHandler);
 #endif
     AddHandler(new wxUnknownWidgetXmlHandler);
-#if wxUSE_DIRDLG
-    AddHandler(new wxGenericDirCtrlXmlHandler);
-#endif
     AddHandler(new wxFrameXmlHandler);
 }
