@@ -24,7 +24,7 @@
 #include <wx/dynarray.h>
 #include <wx/encconv.h>
 #include <wx/regex.h>
-
+#include <vector>
 
 class WXDLLEXPORT wxTextFile;
 
@@ -40,8 +40,44 @@ class Catalog
 {
     public:
         /// PO file header information.
-        struct HeaderData
+        class HeaderData
         {
+        public:
+            HeaderData() {}
+            
+            /** Initializes the headers from string that is in msgid "" format
+                (i.e. list of key:value\n entries). */
+            void FromString(const wxString& str);
+
+            /** Converts the header into string representation that can be
+                directly written to .po file as msgid "". */
+            wxString ToString(const wxString& line_delim = wxEmptyString);
+            
+            /// Updates headers list from parsed values entries below
+            void UpdateDict();
+            /// Reverse operation to UpdateDict
+            void ParseDict();
+            
+            /// Returns value of header or empty string if missing.
+            wxString GetHeader(const wxString& key) const;
+
+            /// Returns true if given key is present in the header.
+            bool HasHeader(const wxString& key) const;
+
+            /** Sets header to given value. Overwrites old value if present,
+                appends to the end of header values otherwise. */
+            void SetHeader(const wxString& key, const wxString& value);
+    
+            struct Entry
+            {
+                wxString Key, Value;
+            };
+            typedef std::vector<Entry> Entries;
+            
+            const Entries& GetAllHeaders() const { return m_entries; }
+
+            // Parsed values:
+            
             wxString Language, Country, Project, CreationDate, 
                      RevisionDate, Translator, TranslatorEmail,
                      Team, TeamEmail, Charset, SourceCodeCharset;
@@ -50,6 +86,11 @@ class Catalog
             wxString BasePath;
 
             wxString Comment;
+
+        protected:
+            Entries m_entries;
+
+            const Entry *Find(const wxString& key) const;
         };
 
         /// Default ctor. Creates empty catalog, you have to call Load.

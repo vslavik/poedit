@@ -37,11 +37,14 @@
 #include "summarydlg.h"
 
 
-
 #include "wx/arrimpl.cpp"
 WX_DEFINE_OBJARRAY(CatalogDataArray)
 
-// textfile processing utilities:
+    
+// ----------------------------------------------------------------------
+// Textfile processing utilities:
+// ----------------------------------------------------------------------
+
 
 // Read one line from file, remove all \r and \n characters, ignore empty lines
 static wxString ReadTextLine(wxTextFile* f, wxMBConv *conv)
@@ -74,9 +77,169 @@ static bool ReadParam(const wxString& input, const wxString& pattern, wxString& 
     return true;
 }
         
-        
-// parsers:
+            
 
+// ----------------------------------------------------------------------
+// Catalog::HeaderData
+// ----------------------------------------------------------------------
+
+void Catalog::HeaderData::FromString(const wxString& str)
+{
+    wxString hdr(str);
+    hdr.Replace(_T("\\n"), _T("\n"));
+    wxStringTokenizer tkn(hdr, _T("\n"));
+    wxString ln;
+
+    m_entries.clear();
+
+    while (tkn.HasMoreTokens())
+    {
+        ln = tkn.GetNextToken();
+        size_t pos = ln.find(_T(": "));
+        if (pos == wxString::npos)
+        {
+            wxLogError(_("Malformed header: '%s'"), ln.c_str());
+        }
+        else
+        {
+            Entry en;
+            en.Key = ln.substr(0, pos);
+            en.Value = ln.substr(pos + 2);
+            m_entries.push_back(en);
+        }
+    }
+
+    ParseDict();
+}
+
+wxString Catalog::HeaderData::ToString(const wxString& line_delim)
+{
+    UpdateDict();
+
+    wxString hdr;
+    for (std::vector<Entry>::const_iterator i = m_entries.begin();
+         i != m_entries.end(); ++i)
+    {
+        hdr << i->Key << _T(": ") << i->Value << _T("\\n") << line_delim;
+    }
+    return hdr;
+}
+            
+void Catalog::HeaderData::UpdateDict()
+{
+    SetHeader(_T("Project-Id-Version"), Project);
+    SetHeader(_T("POT-Creation-Date"), CreationDate);
+    SetHeader(_T("PO-Revision-Date"), RevisionDate);
+    
+    if (TranslatorEmail.empty())
+        SetHeader(_T("Last-Translator"), Translator);
+    else
+        SetHeader(_T("Last-Translator"),
+                  Translator + _T(" <") + TranslatorEmail + _T(">"));
+    
+    if (TeamEmail.empty())
+        SetHeader(_T("Language-Team"), Team);
+    else
+        SetHeader(_T("Language-Team"),
+                  Team + _T(" <") + TeamEmail + _T(">"));
+    
+    SetHeader(_T("MIME-Version"), _T("1.0"));
+    SetHeader(_T("Content-Type"), _T("text/plain; charset=") + Charset);
+    SetHeader(_T("Content-Transfer-Encoding"), _T("8bit"));
+}
+
+void Catalog::HeaderData::ParseDict()
+{
+    wxString dummy;
+    
+    Project = GetHeader(_T("Project-Id-Version"));
+    CreationDate = GetHeader(_T("POT-Creation-Date"));
+    RevisionDate = GetHeader(_T("PO-Revision-Date"));
+           
+    dummy = GetHeader(_T("Last-Translator"));
+    if (!dummy.empty())
+    {
+        wxStringTokenizer tkn(dummy, _T("<>"));
+        if (tkn.CountTokens() != 2)
+        {
+            Translator = dummy;
+            TranslatorEmail = wxEmptyString;
+        }
+        else
+        {
+            Translator = tkn.GetNextToken().Strip(wxString::trailing);
+            TranslatorEmail = tkn.GetNextToken();
+        }
+    }
+
+    dummy = GetHeader(_T("Language-Team"));
+    if (!dummy.empty())
+    {
+        wxStringTokenizer tkn(dummy, _T("<>"));
+        if (tkn.CountTokens() != 2) 
+        {
+            Team = dummy;
+            TeamEmail = wxEmptyString;
+        }
+        else
+        {
+            Team = tkn.GetNextToken().Strip(wxString::trailing);
+            TeamEmail = tkn.GetNextToken();
+        }
+    }
+        
+    wxString ctype = GetHeader(_T("Content-Type"));
+    if (!ReadParam(ctype, _T("text/plain; charset="), Charset))
+        Charset = _T("iso-8859-1");
+}
+
+wxString Catalog::HeaderData::GetHeader(const wxString& key) const
+{
+    const Entry *e = Find(key);
+    if (e)
+        return e->Value;
+    else
+        return wxEmptyString;
+}
+
+bool Catalog::HeaderData::HasHeader(const wxString& key) const
+{
+    return Find(key) != NULL;
+}
+
+void Catalog::HeaderData::SetHeader(const wxString& key, const wxString& value)
+{
+    Entry *e = (Entry*) Find(key);
+    if (e)
+    {
+        e->Value = value;
+    }
+    else
+    {
+        Entry en;
+        en.Key = key;
+        en.Value = value;
+        m_entries.push_back(en);
+    }
+}
+
+const Catalog::HeaderData::Entry *
+Catalog::HeaderData::Find(const wxString& key) const
+{
+    size_t size = m_entries.size();
+    for (size_t i = 0; i < size; i++)
+    {
+        if (m_entries[i].Key == key)
+            return &(m_entries[i]);
+    }
+    return NULL;
+}
+
+
+// ----------------------------------------------------------------------
+// Parsers
+// ----------------------------------------------------------------------
+        
 void CatalogParser::Parse()
 {
     if (m_textFile->GetLineCount() == 0) return;
@@ -206,22 +369,12 @@ bool CharsetInfoFinder::OnEntry(const wxString& msgid,
     if (msgid.IsEmpty())
     {
         // gettext header:
-        wxString mtrans = msgstr;
-        mtrans.Replace(_T("\\n"), _T("\n"));
-        wxStringTokenizer tkn(mtrans, _T("\n"));
-        wxString ln2;
-
-        while (tkn.HasMoreTokens())
-        {
-            ln2 = tkn.GetNextToken();
-            if (ReadParam(ln2, _T("Content-Type: text/plain; charset="), 
-                          m_charset))
-            {
-                if (m_charset == _T("CHARSET"))
-                    m_charset = _T("iso-8859-1");
-                return false; // stop parsing
-            }
-        }
+        Catalog::HeaderData hdr;
+        hdr.FromString(msgstr);
+        m_charset = hdr.Charset;
+        if (m_charset == _T("CHARSET"))
+            m_charset = _T("iso-8859-1");
+        return false; // stop parsing
     }
     return true;
 }
@@ -258,48 +411,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
     if (msgid.IsEmpty())
     {
         // gettext header:
-        wxString mtrans = msgstr;
-        mtrans.Replace(_T("\\n"), _T("\n"));
-        wxStringTokenizer tkn(mtrans, _T("\n"));
-        wxString dummy2, ln2;
-
-        while (tkn.HasMoreTokens())
-        {
-            ln2 = tkn.GetNextToken();
-            ReadParam(ln2, _T("Project-Id-Version: "), m_catalog->m_header.Project);
-            ReadParam(ln2, _T("POT-Creation-Date: "), m_catalog->m_header.CreationDate);
-            ReadParam(ln2, _T("PO-Revision-Date: "), m_catalog->m_header.RevisionDate);
-            if (ReadParam(ln2, _T("Last-Translator: "), dummy2))
-            {
-                wxStringTokenizer tkn2(dummy2, _T("<>"));
-                if (tkn2.CountTokens() != 2)
-                {
-                    m_catalog->m_header.Translator = dummy2;
-                    m_catalog->m_header.TranslatorEmail = wxEmptyString;
-                }
-                else
-                {
-                    m_catalog->m_header.Translator = 
-                        tkn2.GetNextToken().Strip(wxString::trailing);
-                    m_catalog->m_header.TranslatorEmail = tkn2.GetNextToken();
-                }
-            }
-            if (ReadParam(ln2, _T("Language-Team: "), dummy2))
-            {
-                wxStringTokenizer tkn2(dummy2, _T("<>"));
-                if (tkn2.CountTokens() != 2) 
-                {
-                    m_catalog->m_header.Team = dummy2;
-                    m_catalog->m_header.TeamEmail = wxEmptyString;
-                }
-                else
-                {
-                    m_catalog->m_header.Team = 
-                        tkn2.GetNextToken().Strip(wxString::trailing);
-                    m_catalog->m_header.TeamEmail = tkn2.GetNextToken();
-                }
-            }
-        }
+        m_catalog->m_header.FromString(msgstr);
         m_catalog->m_header.Comment = comment;
     }
     else
@@ -312,7 +424,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
         d->SetLineNumber(lineNumber);
         for (size_t i = 0; i < references.GetCount(); i++)
             d->AddReference(references[i]);
-	for (size_t i = 0; i < autocomments.GetCount(); i++)
+        for (size_t i = 0; i < autocomments.GetCount(); i++)
             d->AddAutoComments(autocomments[i]);
         m_catalog->m_data->Put(msgid, d);
         m_catalog->m_dataArray.Add(d);
@@ -323,8 +435,9 @@ bool LoadParser::OnEntry(const wxString& msgid,
 
 
 
-
-// catalog class:
+// ----------------------------------------------------------------------
+// Catalog class
+// ----------------------------------------------------------------------
 
 Catalog::Catalog()
 {
@@ -386,6 +499,8 @@ void Catalog::CreateNewHeader()
     dt.Keywords.Add(_T("gettext_noop"));
 
     dt.BasePath = _T(".");
+
+    dt.UpdateDict();
 }
 
 
@@ -515,16 +630,14 @@ static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
     
     wxCSConv conv(charset);
 
-    const Catalog::HeaderData& hdr(catalog.Header());
-        
-    if (!CanEncodeStringToCharset(hdr.Project, conv) ||
-        !CanEncodeStringToCharset(hdr.Translator, conv) ||
-        !CanEncodeStringToCharset(hdr.Team, conv) ||
-        !CanEncodeStringToCharset(hdr.Language, conv) ||
-        !CanEncodeStringToCharset(hdr.Country, conv) ||
-        !CanEncodeStringToCharset(hdr.Comment, conv))
+    catalog.Header().UpdateDict();
+    const Catalog::HeaderData::Entries& hdr(catalog.Header().GetAllHeaders());
+    
+    for (Catalog::HeaderData::Entries::const_iterator i = hdr.begin();
+            i != hdr.end(); ++i)
     {
-        return false;
+        if (!CanEncodeStringToCharset(i->Value, conv))
+            return false;
     }
     
     size_t cnt = catalog.GetCount();
@@ -650,8 +763,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         wxMessageBox(msg, _("Error saving catalog"),
                      wxOK | wxICON_EXCLAMATION);
         charset = _T("utf-8");
-        m_header.Charset = charset;
     }
+    m_header.Charset = charset;
    
     if (!wxFileExists(po_file) || !f.Open(po_file))
         if (!f.Create(po_file))
@@ -673,28 +786,10 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     SaveMultiLines(f, convertUtf8ToCharset(m_header.Comment, encConv));
     f.AddLine(_T("msgid \"\""));
     f.AddLine(_T("msgstr \"\""));
-    f.AddLine(_T("\"Project-Id-Version: ") + 
-              convertUtf8ToCharset(m_header.Project, encConv) + _T("\\n\""));
-    f.AddLine(_T("\"POT-Creation-Date: ") + m_header.CreationDate + _T("\\n\""));
-    f.AddLine(_T("\"PO-Revision-Date: ") + m_header.RevisionDate + _T("\\n\""));
-    if (m_header.TranslatorEmail.empty())
-        f.AddLine(_T("\"Last-Translator: ") +
-                  convertUtf8ToCharset(m_header.Translator, encConv) +
-                  _T("\\n\""));
-    else
-        f.AddLine(_T("\"Last-Translator: ") +
-                  convertUtf8ToCharset(m_header.Translator, encConv) + 
-                  _T(" <") + m_header.TranslatorEmail + _T(">\\n\""));
-    if (m_header.TeamEmail.empty())
-        f.AddLine(_T("\"Language-Team: ") + 
-                  convertUtf8ToCharset(m_header.Team, encConv) + _T("\\n\""));
-    else
-        f.AddLine(_T("\"Language-Team: ") + 
-                  convertUtf8ToCharset(m_header.Team, encConv) +
-                  _T(" <") + m_header.TeamEmail + _T(">\\n\""));
-    f.AddLine(_T("\"MIME-Version: 1.0\\n\""));
-    f.AddLine(_T("\"Content-Type: text/plain; charset=") + charset + _T("\\n\""));
-    f.AddLine(_T("\"Content-Transfer-Encoding: 8bit\\n\""));
+    wxString pohdr = wxString(_T("\"")) +
+               convertUtf8ToCharset(m_header.ToString(_T("\"\n\"")), encConv);
+    pohdr.RemoveLast();
+    SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
 
     for (i = 0; i < m_dataArray.GetCount(); i++)
