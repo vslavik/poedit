@@ -1,18 +1,12 @@
-# Purpose:  The .spec file for building poEdit RPM
-
 # set this to 1 if you want to build semistatic rpm
 %define        semistatic      0
 
 %{?_with_semistatic: %{expand: %%define semistatic 1}}
 %{?_without_semistatic: %{expand: %%define semistatic 0}}
 
-
 # version and release
-%define        VERSION 1.2.1
-%define        RELEASE 1
-
-# default installation directory
-%define prefix /usr
+%define   VERSION     1.2.1
+%define   RELEASE     1
 
 %if %{semistatic}
   %define NAME        poedit-semistatic
@@ -25,12 +19,11 @@ Summary:       Gettext catalogs editor
 Name:          %NAME
 Version:       %VERSION
 Release:       %RELEASE
-Copyright:     MIT license
+License:       MIT
 Group:         Applications/Editors
 Source:        poedit-%{version}.tar.bz2
 URL:           http://poedit.sourceforge.net
 Packager:      Vaclav Slavik <vaclav.slavik@matfyz.cz>
-Prefix:        %prefix
 Requires:      gtk+ >= 1.2.7 gettext
 
 %if %{semistatic}
@@ -42,15 +35,15 @@ BuildRequires: wxGTK-devel
 %endif
 BuildRequires: zip
 
-BuildRoot: /var/tmp/poedit-%{version}
+BuildRoot:     %{_tmppath}/%{name}-%{version}
 
 %description
 poEdit is cross-platform gettext catalogs (.po files) editor. It is built with
-wxWindows toolkit and can run on Unix or Windows. It aims to provide convenient 
-way of editing gettext catalogs. It features UTF-8 support, fuzzy and untranslated 
-records highlighting, whitespaces highlighting, references browser, headers editing
-and can be used to create new catalogs or update existing catalogs from source
-code by single click.
+wxWindows toolkit and can run on Unix or Windows. It aims to provide convenient
+way of editing gettext catalogs. It features UTF-8 support, fuzzy and
+untranslated records highlighting, whitespaces highlighting, references
+browser, headers editing and can be used to create new catalogs or update
+existing catalogs from source code by single click.
 
 %prep
 %setup -n poedit-%{version}
@@ -67,7 +60,7 @@ export KDEDIR=/usr
 )
 
 %install
-rm -rf ${RPM_BUILD_ROOT}
+rm -rf %{buildroot}
 %makeinstall GNOME_DATA_DIR=$RPM_BUILD_ROOT/usr/share \
              KDE_DATA_DIR=$RPM_BUILD_ROOT/usr/share
 
@@ -93,7 +86,7 @@ cat poedit-wxstd.lang >>poedit.lang
 %endif
 
 %clean
-rm -Rf ${RPM_BUILD_ROOT}
+rm -Rf %{buildroot}
 
 %post
 # This is done on Mandrake to update its menus:
