@@ -871,11 +871,22 @@ void Catalog::AddDeletedItem(CatalogDeletedData *data)
 {
     m_deletedItemsArray.Add(data);
 }
+        
+bool Catalog::HasDeletedItems()
+{
+    return !m_deletedItemsArray.IsEmpty();
+}
+        
+void Catalog::RemoveDeletedItems()
+{
+    m_deletedItemsArray.Empty();
+}
 
 void Catalog::Clear()
 {
     delete m_data; 
     m_dataArray.Empty();
+    m_deletedItemsArray.Empty();
     m_isOk = true;
     m_count = 0;
     m_data = new wxHashTable(wxKEY_STRING);

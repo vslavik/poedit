@@ -196,6 +196,12 @@ class Catalog
         /// the object).
         void AddDeletedItem(CatalogDeletedData *data);
 
+        /// Returns true if the catalog contains obsolete entries (~.*)
+        bool HasDeletedItems();
+
+        /// Removes all obsolete translations from the catalog
+        void RemoveDeletedItems();
+
     protected:
         /** Merges the catalog with reference catalog
             (in the sense of msgmerge -- this catalog is old one with

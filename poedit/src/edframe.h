@@ -174,6 +174,7 @@ class poEditFrame : public wxFrame
         void OnAutoTranslateAll(wxCommandEvent& event);
         bool AutoTranslateCatalog();
 #endif
+        void OnPurgeDeleted(wxCommandEvent& event);
         
         void OnExport(wxCommandEvent& event);
         bool ExportCatalog(const wxString& filename);

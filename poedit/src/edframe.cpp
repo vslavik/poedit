@@ -396,6 +396,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_preferences"), poEditFrame::OnPreferences)
    EVT_MENU           (XRCID("menu_update"),      poEditFrame::OnUpdate)
    EVT_MENU           (XRCID("menu_update_from_pot"),poEditFrame::OnUpdate)
+   EVT_MENU           (XRCID("menu_purge_deleted"), poEditFrame::OnPurgeDeleted)
    EVT_MENU           (XRCID("menu_fuzzy"),       poEditFrame::OnFuzzyFlag)
    EVT_MENU           (XRCID("menu_quotes"),      poEditFrame::OnQuotesFlag)
    EVT_MENU           (XRCID("menu_lines"),       poEditFrame::OnLinesFlag)
@@ -1950,6 +1951,8 @@ void poEditFrame::UpdateMenu()
         bool doupdate = m_catalog->Header().SearchPaths.GetCount() > 0;
         GetToolBar()->EnableTool(XRCID("menu_update"), doupdate);
         GetMenuBar()->Enable(XRCID("menu_update"), doupdate);
+        GetMenuBar()->Enable(XRCID("menu_purge_deleted"),
+                             m_catalog->HasDeletedItems());
     }
 }
 
@@ -2018,6 +2021,20 @@ void poEditFrame::OnEditComment(wxCommandEvent& event)
 
         // update comment window
         m_textComment->SetValue(CommentDialog::RemoveStartHash(comment));
+    }
+}
+        
+void poEditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
+{
+    wxMessageDialog dlg(this,
+                        _("Do you really want to remove all translations that are no longer used from the catalog?\nIf you continue with purging, you will have to translate them again if they are added back in the future."),
+                        _("Purge delete translations"), 
+                        wxYES_NO | wxICON_QUESTION);
+
+    if (dlg.ShowModal() == wxID_YES)
+    {
+        m_catalog->RemoveDeletedItems();
+        UpdateMenu();
     }
 }
 
