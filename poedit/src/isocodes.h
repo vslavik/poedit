@@ -11,3 +11,6 @@ struct LanguageStruct
 
 extern LanguageStruct isoLanguages[];
 extern LanguageStruct isoCountries[];
+
+extern const wxChar *LookupLanguageCode(const wxChar *language);
+extern const wxChar *LookupCountryCode(const wxChar *country);

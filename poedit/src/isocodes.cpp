@@ -446,3 +446,26 @@ LanguageStruct isoCountries[] =
     
     {NULL, NULL}
 };
+
+
+static const wxChar *DoLookup(const wxChar *lng, LanguageStruct *a)
+{
+    if (lng == NULL)
+        return NULL;
+    for (size_t i = 0; a[i].iso != NULL; i++)
+    {
+        if (wxStricmp(a[i].lang, lng) == 0)
+            return a[i].iso;
+    }
+    return NULL;
+}
+
+const wxChar *LookupLanguageCode(const wxChar *language)
+{
+    return DoLookup(language, isoLanguages);
+}
+
+const wxChar *LookupCountryCode(const wxChar *country)
+{
+    return DoLookup(country, isoCountries);
+}
