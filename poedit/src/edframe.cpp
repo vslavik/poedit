@@ -8,7 +8,7 @@
     
       Editor frame
     
-      (c) Vaclav Slavik, 2000-2004
+      (c) Vaclav Slavik, 2000-2005
 
 */
 
@@ -1061,6 +1061,8 @@ void poEditFrame::OnNew(wxCommandEvent& event)
     dlg.TransferTo(catalog);
     if (dlg.ShowModal() == wxID_OK)
     {
+        CancelItemsValidation();
+        
         dlg.TransferFrom(catalog);
         delete m_catalog;
         m_catalog = catalog;
@@ -1071,6 +1073,8 @@ void poEditFrame::OnNew(wxCommandEvent& event)
         {
             OnUpdate(event);
         }
+
+        RestartItemsValidation();
     }
     else
     {
@@ -1131,12 +1135,16 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
 
 void poEditFrame::UpdateCatalog(const wxString& pot_file)
 {
+    CancelItemsValidation();
+    
     UpdateFromTextCtrl();
     bool succ;
     if (pot_file.empty())
         succ = m_catalog->Update();
     else
         succ = m_catalog->UpdateFromPOT(pot_file);
+
+    RestartItemsValidation();
     
     m_modified = succ || m_modified;
     if (!succ)
@@ -1706,9 +1714,7 @@ void poEditFrame::UpdateToTextCtrl(int item)
 
 void poEditFrame::ReadCatalog(const wxString& catalog)
 {
-    // stop checking entries in the background:
-    m_itemsToValidate.clear();
-    m_itemBeingValidated = -1;
+    CancelItemsValidation();
 
     delete m_catalog;
     m_catalog = new Catalog(catalog);
@@ -1734,11 +1740,8 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     m_history.AddFileToHistory(fn.GetFullPath());
 
     InitSpellchecker();
-    
-    // start checking catalog's entries in the background:
-    int cnt = m_list->GetItemCount();
-    for (int i = 0; i < cnt; i++)
-        m_itemsToValidate.push_back(i);
+   
+    RestartItemsValidation();
 }
 
 
@@ -2366,6 +2369,21 @@ void poEditFrame::OnEndProcess(wxProcessEvent& event)
     event.Skip(); // deletes wxProcess object
     EndItemValidation();
     wxWakeUpIdle();
+}
+        
+void poEditFrame::CancelItemsValidation()
+{
+    // stop checking entries in the background:
+    m_itemsToValidate.clear();
+    m_itemBeingValidated = -1;
+}
+        
+void poEditFrame::RestartItemsValidation()
+{
+    // start checking catalog's entries in the background:
+    int cnt = m_list->GetItemCount();
+    for (int i = 0; i < cnt; i++)
+        m_itemsToValidate.push_back(i);
 }
 
 void poEditFrame::BeginItemValidation()

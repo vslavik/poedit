@@ -8,7 +8,7 @@
     
       Editor frame
     
-      (c) Vaclav Slavik, 2000-2004
+      (c) Vaclav Slavik, 2000-2005
 
 */
 
@@ -184,6 +184,11 @@ class poEditFrame : public wxFrame
 
         void BeginItemValidation();
         void EndItemValidation();
+
+        // stops validation
+        void CancelItemsValidation();
+        // starts validation from scratch
+        void RestartItemsValidation();
         
         // updates the status of both comment windows: Automatic and Translator's
         void UpdateDisplayCommentWin();
