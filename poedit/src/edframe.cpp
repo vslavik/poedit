@@ -66,12 +66,18 @@ poEditFramesList poEditFrame::ms_instances;
 {
     poEditFrame *f;
     if (!filename)
+    {
         f = new poEditFrame;
+    }
     else
     {
         f = poEditFrame::Find(filename);
         if (!f)
-            f = new poEditFrame(filename);
+        {
+            f = new poEditFrame();
+            f->Show(true);
+            f->ReadCatalog(filename);
+        }
     }
     f->Show(true);
     return f;
@@ -405,7 +411,7 @@ END_EVENT_TABLE()
 
 // Frame class:
 
-poEditFrame::poEditFrame(const wxString& catalog) :
+poEditFrame::poEditFrame() :
     wxFrame(NULL, -1, _("poEdit"), wxDefaultPosition,
                              wxSize(
                                  wxConfig::Get()->Read(_T("frame_w"), 600),
@@ -505,8 +511,6 @@ poEditFrame::poEditFrame(const wxString& catalog) :
 	bar->SetSize(-1,-1,-1,-1);
 #endif
 
-    if (!catalog.IsEmpty())
-        ReadCatalog(catalog);
     UpdateMenu();
 
     wxString cannon = wxGetApp().GetLocale().GetCanonicalName().Left(2);
@@ -1247,10 +1251,10 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
 
 
 
-static void AddItemsToList(const Catalog& catalog,
-                           poEditListCtrl *list, size_t& pos,
-                           bool (*filter)(const CatalogData& d),
-                           const wxColour *clr)
+void poEditFrame::AddItemsToList(const Catalog& catalog,
+                                 poEditListCtrl *list, size_t& pos,
+                                 bool (*filter)(const CatalogData& d),
+                                 const wxColour *clr)
 {
     int clrPos;
     wxListItem listitem;
@@ -1273,6 +1277,8 @@ static void AddItemsToList(const Catalog& catalog,
                 trans = catalog[i].GetTranslation().substr(0, maxchars);
             
             list->SetItem(pos, 1, trans.substr(0, maxchars));
+
+            if (m_displayLines)
             {
                 wxString linenum;
                 linenum << catalog[i].GetLineNumber();

@@ -92,7 +92,7 @@ class poEditFrame : public wxFrame
             \param catalog filename of catalog to open. If empty, starts
                            w/o opened file.
          */
-        poEditFrame(const wxString& catalog = wxEmptyString);
+        poEditFrame();
         
         static poEditFramesList ms_instances;
 
@@ -118,6 +118,11 @@ class poEditFrame : public wxFrame
         /// Initializes translation memory, if enabled
         TranslationMemory *GetTransMem();
 #endif
+
+        void AddItemsToList(const Catalog& catalog,
+                            poEditListCtrl *list, size_t& pos,
+                            bool (*filter)(const CatalogData& d),
+                            const wxColour *clr);
 
         // Message handlers:
         void OnNew(wxCommandEvent& event);
