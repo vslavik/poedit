@@ -81,6 +81,7 @@ wxLanguage ChooseLanguage()
         { _T("Chinese (Simplified)"), wxLANGUAGE_CHINESE_SIMPLIFIED },
         { _T("Croatian"), wxLANGUAGE_CROATIAN },
         { _T("Czech"), wxLANGUAGE_CZECH },
+        { _T("Danish"), wxLANGUAGE_DANISH },
         { _T("Dutch"), wxLANGUAGE_DUTCH },
         { _T("English"), wxLANGUAGE_ENGLISH },
         { _T("Estonian"), wxLANGUAGE_ESTONIAN },
