@@ -35,7 +35,8 @@ class FindFrame : public wxDialog
             \param list    List control to search in
             \param catalog Catalog to search in
          */
-        FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c);
+        FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c,
+                  wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans);
         ~FindFrame();
         
         /** Resets the search to starting position and changes
@@ -59,6 +60,7 @@ class FindFrame : public wxDialog
         int m_position;
         wxString m_text;
         wxButton *m_btnPrev, *m_btnNext;
+        wxTextCtrl *m_textCtrlOrig, *m_textCtrlTrans;
 };
 
 

@@ -33,8 +33,10 @@ BEGIN_EVENT_TABLE(FindFrame, wxDialog)
    EVT_CLOSE(FindFrame::OnClose)
 END_EVENT_TABLE()
 
-FindFrame::FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c)
-        : m_listCtrl(list), m_catalog(c), m_position(-1)
+FindFrame::FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c,
+                     wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans)
+        : m_listCtrl(list), m_catalog(c), m_position(-1),
+          m_textCtrlOrig(textCtrlOrig), m_textCtrlTrans(textCtrlTrans)
 {
     wxPoint p(wxConfig::Get()->Read(_T("find_pos_x"), -1),
               wxConfig::Get()->Read(_T("find_pos_y"), -1));
@@ -120,6 +122,13 @@ void FindFrame::OnNext(wxCommandEvent &event)
 }
 
 
+enum FoundState
+{
+    Found_Not = 0,
+    Found_InOrig,
+    Found_InTrans
+};
+
 bool FindFrame::DoFind(int dir)
 {
     int cnt = m_listCtrl->GetItemCount();
@@ -128,7 +137,7 @@ bool FindFrame::DoFind(int dir)
     bool caseSens = XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue();
     int posOrig = m_position;
 
-    bool found = false;
+    FoundState found = Found_Not;
     wxString textc;
     wxString text(m_text);
 
@@ -149,7 +158,7 @@ bool FindFrame::DoFind(int dir)
             #endif
             if (!caseSens)
                 textc.MakeLower();
-            if (textc.Contains(text)) { found = TRUE; break; }
+            if (textc.Contains(text)) { found = Found_InOrig; break; }
         }
         if (inTrans)
         {
@@ -161,19 +170,32 @@ bool FindFrame::DoFind(int dir)
             if (!caseSens)
                 textc.MakeLower();
 
-            if (textc.Contains(text)) { found = TRUE; break; }
+            if (textc.Contains(text)) { found = Found_InTrans; break; }
         }
 
         m_position += dir;
     }
 
-    if (found)
+    if (found != Found_Not)
     {
         m_listCtrl->SetItemState(m_position, 
                     wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
         m_listCtrl->SetItemState(m_position, 
                     wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
         m_listCtrl->EnsureVisible(m_position);
+
+        // find the text on the control and select it:
+
+        wxTextCtrl *txt =
+            (found == Found_InOrig) ? m_textCtrlOrig : m_textCtrlTrans;
+
+        textc = txt->GetValue();
+        if (!caseSens)
+            textc.MakeLower();
+        int pos = textc.Find(text);
+        if (pos != wxNOT_FOUND)
+            txt->SetSelection(pos, pos + text.length());
+        
         return true;
     }
     

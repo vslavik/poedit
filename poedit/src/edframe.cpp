@@ -1265,7 +1265,7 @@ void poEditFrame::OnFind(wxCommandEvent& event)
     FindFrame *f = (FindFrame*)FindWindow(_T("find_frame"));
 
     if (!f)
-        f = new FindFrame(this, m_list, m_catalog);
+        f = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans);
     f->Show(true);
 }
 
