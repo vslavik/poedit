@@ -58,9 +58,9 @@ static wxString ReadTextLine(wxTextFile* f)
 }
 
 
-// If input begins with pattern, fill output with end of input (without pattern; strips trailing spaces) 
-// and return true.
-// Return false otherwise and don't touch output
+// If input begins with pattern, fill output with end of input (without
+// pattern; strips trailing spaces) and return true.  Return false otherwise
+// and don't touch output
 static bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
 {
     if (input.Length() < pattern.Length()) return false;
@@ -329,6 +329,7 @@ void Catalog::CreateNewHeader()
     dt.RevisionDate = dt.CreationDate;
 
     dt.Language = wxEmptyString;
+    dt.Country = wxEmptyString;
     dt.Project = wxEmptyString;
     dt.Team = wxEmptyString;
     dt.TeamEmail = wxEmptyString;
@@ -373,7 +374,10 @@ bool Catalog::Load(const wxString& po_file)
         else
             m_data = new wxHashTable(wxKEY_STRING);
         ReadParam(ReadTextLine(&f), _T("#. Language: "), m_header.Language);
-        ReadParam(ReadTextLine(&f), _T("#. Basepath: "), m_header.BasePath);
+        dummy = ReadTextLine(&f);
+        if (ReadParam(dummy, _T("#. Country: "), m_header.Country))
+            dummy = ReadTextLine(&f);
+        ReadParam(dummy, _T("#. Basepath: "), m_header.BasePath);
 
         if (ReadParam(ReadTextLine(&f), _T("#. Paths: "), dummy))
         {
@@ -563,6 +567,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     /* If neccessary, save extended info into .po.poedit file: */
 
     if (!m_header.Language.IsEmpty() || 
+        !m_header.Country.IsEmpty() || 
         !m_header.BasePath.IsEmpty() || 
         m_header.SearchPaths.GetCount() > 0 ||
         m_header.Keywords.GetCount() > 0)
@@ -577,6 +582,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         dummy.Printf(_T("#. Number of items: %i"), GetCount());
         f.AddLine(dummy);
         f.AddLine(_T("#. Language: ") + m_header.Language);
+        f.AddLine(_T("#. Country: ") + m_header.Country);
         f.AddLine(_T("#. Basepath: ") + m_header.BasePath);
 
         dummy.Printf(_T("#. Paths: %i"), m_header.SearchPaths.GetCount());

@@ -40,6 +40,7 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
     m_teamEmail = XRCCTRL(*this, "team_email", wxTextCtrl);
     m_project = XRCCTRL(*this, "prj_name", wxTextCtrl);
     m_language = XRCCTRL(*this, "language", wxComboBox);
+    m_country = XRCCTRL(*this, "country", wxComboBox);
     m_charset = XRCCTRL(*this, "charset", wxComboBox);
     m_basePath = XRCCTRL(*this, "basepath", wxTextCtrl);
 
@@ -47,6 +48,11 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
     m_language->Append(wxEmptyString);
     while (lang->lang != NULL)
         m_language->Append((lang++)->lang);
+    
+    lang = isoCountries;
+    m_country->Append(wxEmptyString);
+    while (lang->lang != NULL)
+        m_country->Append((lang++)->lang);
         
     // my custom controls:
     m_keywords = new wxEditableListBox(this, -1, _("Keywords"));
@@ -77,6 +83,7 @@ void SettingsDialog::TransferTo(Catalog *cat)
     SET_VAL(Project, project);
     SET_VAL(BasePath, basePath);
     SET_VAL(Language, language);
+    SET_VAL(Country, country);
     SET_VAL(Charset, charset);
     #undef SET_VAL
     
@@ -90,6 +97,7 @@ void SettingsDialog::TransferFrom(Catalog *cat)
 {
     #define GET_VAL(what,what2) cat->Header().what = m_##what2->GetValue()
     GET_VAL(Language, language);
+    GET_VAL(Country, country);
     GET_VAL(Charset, charset);
     GET_VAL(Team, team);
     GET_VAL(TeamEmail, teamEmail);

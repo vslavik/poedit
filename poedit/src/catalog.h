@@ -42,7 +42,7 @@ class Catalog
         /// PO file header information.
         struct HeaderData
         {
-            wxString Language, Project, CreationDate, 
+            wxString Language, Country, Project, CreationDate, 
                      RevisionDate, Translator, TranslatorEmail,
                      Team, TeamEmail, Charset;
 
