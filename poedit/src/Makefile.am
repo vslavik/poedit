@@ -24,7 +24,7 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
 
 poedit_resource.o: poedit.rc
 	$(RESCOMP) -i$(srcdir)/poedit.rc -o poedit_resource.o \
-        --include-dir $(srcdir) --include-dir `@WX_CONFIG_NAME@ --prefix`/include \
+        --include-dir $(srcdir) @RC_WX_INCLUDES@ \
         --define __WIN32__ --define __WIN95__ --define __GNUWIN32__
 
 poedit_LDADD = $(RESOURCE_FILES) \
