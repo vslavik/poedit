@@ -24,34 +24,35 @@ class wxString;
 class wxDialog;
 class wxWindowDisabler;
 
-// This class shows progress dialog
-
+/// This class displays fancy progress dialog.
 class ProgressInfo
 {
     public:
             ProgressInfo();
             ~ProgressInfo();
  
-            // Sets task's title, i.e. dialog's caption
+            /// Sets task's title, i.e. dialog's caption.
             void SetTitle(const wxString& text);
 
-            // Sets gauge's values interval to <0..limit)
+            /// Sets gauge's values interval to <0..limit).
             void SetGaugeMax(int limit);
 
-            // Updates the gauge (increments it) and returns false
-            // if user cancelled operation, true otherwise
+            /** Updates the gauge: increments it by specified delta.
+                \param increment the delta
+                \return false if user cancelled operation, true otherwise
+             */
             void UpdateGauge(int increment);
 
-            // Updates informative message.
+            /// Updates informative message.
             void UpdateMessage(const wxString& text);
             
-            // Returns whether the user cancelled operation
-            bool Cancelled() { return m_Cancelled; }
+            /// Returns whether the user cancelled operation.
+            bool Cancelled() const { return m_cancelled; }
             
     private:
-            wxDialog *m_Dlg;
-            bool m_Cancelled;
-            wxWindowDisabler *m_Disabler;
+            wxDialog *m_dlg;
+            bool m_cancelled;
+            wxWindowDisabler *m_disabler;
 };
 
 

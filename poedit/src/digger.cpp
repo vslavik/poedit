@@ -33,7 +33,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
     ParsersDB pdb;
     pdb.Read(wxConfig::Get());
 
-    m_ProgressInfo->UpdateMessage(_("Scanning files..."));
+    m_progressInfo->UpdateMessage(_("Scanning files..."));
 
     wxArrayString *all_files = FindFiles(paths, pdb);
     if (all_files == NULL) return NULL;
@@ -43,7 +43,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
         
     for (size_t i = 0; i < pdb.GetCount(); i++)
     {
-        m_ProgressInfo->UpdateMessage(_("Parsing ")+pdb[i].Name+_(" files..."));
+        m_progressInfo->UpdateMessage(_("Parsing ")+pdb[i].Name+_(" files..."));
         if (!DigFiles(c, all_files[i], pdb[i], keywords))
         { 
             delete[] all_files;
@@ -58,8 +58,9 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
 
 
 
+// cmdline's length is limited by OS/shell, this is maximal number
+// of files we'll pass to the parser at one run:
 #define BATCH_SIZE  16
-  // cmdline's length is limited by OS/shell
 
 bool SourceDigger::DigFiles(Catalog *cat, const wxArrayString& files, 
                             Parser &parser, const wxArrayString& keywords)
@@ -77,9 +78,9 @@ bool SourceDigger::DigFiles(Catalog *cat, const wxArrayString& files,
         last = i;
         
         if (!ExecuteGettext(parser.GetCommand(batchfiles, keywords, tempfile)))
-	    return false;
-        m_ProgressInfo->UpdateGauge(batchfiles.GetCount());
-        if (m_ProgressInfo->Cancelled()) return false;
+        return false;
+        m_progressInfo->UpdateGauge(batchfiles.GetCount());
+        if (m_progressInfo->Cancelled()) return false;
         
         ctmp = new Catalog(tempfile);
         cat->Append(*ctmp);
@@ -102,10 +103,10 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
     
     for (i = 0; i < paths.GetCount(); i++)
         if (!FindInDir(paths[i], files))
-	{
-	    delete[] p_files;
-	    return NULL;
-	}
+    {
+        delete[] p_files;
+        return NULL;
+    }
 
     size_t filescnt = 0;
     for (i = 0; i < pdb.GetCount(); i++)
@@ -113,7 +114,7 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
         p_files[i] = pdb[i].SelectParsable(files);
         filescnt += p_files[i].GetCount();
     }
-    m_ProgressInfo->SetGaugeMax(filescnt);
+    m_progressInfo->SetGaugeMax(filescnt);
 
     return p_files;
 }
@@ -123,7 +124,8 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
 bool SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
 {
     wxDir dir(dirname);
-    if (!dir.IsOpened()) return false;
+    if (!dir.IsOpened()) 
+        return false;
     bool cont;
     wxString filename;
     
@@ -138,7 +140,7 @@ bool SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
     while (cont)
     {
         if (!FindInDir(dirname + "/" + filename, files))
-	    return false;
+            return false;
         cont = dir.GetNext(&filename);
     }
     return true;

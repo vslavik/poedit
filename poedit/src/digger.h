@@ -30,26 +30,52 @@ class ParsersDB;
 class Parser;
 class ProgressInfo;
     
-// This class extracts translatable strings from sources
-
+/** This class extracts translatable strings from sources.
+    It uses ParsersDB to get information about external programs to
+    call in order to dig information from single file.
+ */
 class SourceDigger
 {
     public:
-            SourceDigger(ProgressInfo *pi) : m_ProgressInfo(pi) {}
-                        
-            // Save catalog into file. Creates both .po (text) and .mo (binary) version of file.
-            // The argument refers to .po file! .mo file will have same name & location as .po
-            // file except for different extension.
-            Catalog *Dig(const wxArrayString& paths, 
-                         const wxArrayString& keywords);
+        /// Ctor. \a pi is used to display the progress of parsing.
+        SourceDigger(ProgressInfo *pi) : m_progressInfo(pi) {}
+
+        /** Scans files for translatable strings and returns Catalog
+            instance containing them. All files in input \a paths that 
+            match file extensions in a definition of parser in ParsersDB
+            instance passed to the ctor are proceed by external parser 
+            program (typically, gettext) according to parser definition.
+
+            \param paths    list of directories to look in
+            \param keywords list of keywords that are recognized as 
+                            prefixes for translatable strings in sources
+         */
+        Catalog *Dig(const wxArrayString& paths, 
+                     const wxArrayString& keywords);
 
     private:
-            wxArrayString *FindFiles(const wxArrayString& paths, ParsersDB& pdb);
-            bool FindInDir(const wxString& dirname, wxArrayString& files);
-            bool DigFiles(Catalog *cat, const wxArrayString& files, 
-                          Parser &parser, const wxArrayString& keywords);
-                          
-            ProgressInfo *m_ProgressInfo;
+        /** Finds all parsable files. Returned value is a new[]-allocated
+            array of wxArrayString objects. n-th string array in returned
+            array holds list of files that can be parsed by n-th parser
+            in \a pdb database.
+         */
+        wxArrayString *FindFiles(const wxArrayString& paths, ParsersDB& pdb);
+
+        /** Finds all files in given directory.
+            \return false if an error occured.
+         */
+        bool FindInDir(const wxString& dirname, wxArrayString& files);
+
+        /** Digs translatable strings from given files.
+            \param cat      the catalog to store found strings to
+            \param files    list of files to parse
+            \param parser   parser definition
+            \param keywords list of keywords that mark translatable strings
+         */
+        bool DigFiles(Catalog *cat, const wxArrayString& files, 
+                      Parser &parser, const wxArrayString& keywords);
+
+        ProgressInfo *m_progressInfo;
 };
 
 

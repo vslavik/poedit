@@ -37,83 +37,88 @@
 
 class poEditListCtrl;
 
-// This class is main editing frame. It handles user's input 
-// and provides fronted to catalog editing engine
-
+/** This class provides main editing frame. It handles user's input 
+    and provides frontend to catalog editing engine. Nothing fancy.
+ */
 class poEditFrame : public wxFrame
 {
     public:
-            poEditFrame(const wxString& title, const wxString& catalog = wxEmptyString);
-            ~poEditFrame();
+        /** Ctor.
+            \param title   frame's title
+            \param catalog filename of catalog to open. If empty, starts
+                           w/o opened file.
+         */
+        poEditFrame(const wxString& title, 
+                    const wxString& catalog = wxEmptyString);
+        ~poEditFrame();
             
     private:
-            // Reads catalog, refreshes controls
-            void ReadCatalog(const wxString& catalog);
-            // Refreshes controls
-            void RefreshControls();
-            // Writes catalog
-            void WriteCatalog(const wxString& catalog);
-            // Puts text from textctrls to catalog & listctrl
-            void UpdateFromTextCtrl(int item = -1);
-            // ...and the other way around
-            void UpdateToTextCtrl(int item = -1);
-            
-            // Updates statistics in statusbar
-            void UpdateStatusBar();
-            // Updates title
-            void UpdateTitle();
-            // Updates menu -- disables and enables items
-            void UpdateMenu();
+        /// Reads catalog, refreshes controls.
+        void ReadCatalog(const wxString& catalog);
+        /// Refreshes controls.
+        void RefreshControls();
+        /// Writes catalog.
+        void WriteCatalog(const wxString& catalog);
+        /// Puts text from textctrls to catalog & listctrl.
+        void UpdateFromTextCtrl(int item = -1);
+        /// Puts text from catalog & listctrl to textctrls.
+        void UpdateToTextCtrl(int item = -1);
 
-            // Message handlers:
-            void OnNew(wxCommandEvent& event);
-            void OnAbout(wxCommandEvent& event);
-            void OnHelp(wxCommandEvent& event);
-            void OnQuit(wxCommandEvent& event);
-            void OnSave(wxCommandEvent& event);
-            void OnSaveAs(wxCommandEvent& event);
-            void OnOpen(wxCommandEvent& event);
-            void OnOpenHist(wxCommandEvent& event);
-            void OnSettings(wxCommandEvent& event);
-            void OnPreferences(wxCommandEvent& event);
-            void OnUpdate(wxCommandEvent& event);
-            void OnListSel(wxListEvent& event);
-            void OnListDesel(wxListEvent& event);
-            void OnCloseWindow(wxCloseEvent& event);
-            void OnReference(wxCommandEvent& event);
-            void OnReferencesMenu(wxCommandEvent& event);
-            void ShowReference(int num);
-            void OnRightClick(wxCommandEvent& event);            
-            void OnFuzzyFlag(wxCommandEvent& event);
-            void OnQuotesFlag(wxCommandEvent& event);
-            void OnInsertOriginal(wxCommandEvent& event);
-            void OnFullscreen(wxCommandEvent& event);
-            void OnFind(wxCommandEvent& event);
-    
-            DECLARE_EVENT_TABLE()
+        /// Updates statistics in statusbar.
+        void UpdateStatusBar();
+        /// Updates frame title.
+        void UpdateTitle();
+        /// Updates menu -- disables and enables items.
+        void UpdateMenu();
+
+        // Message handlers:
+        void OnNew(wxCommandEvent& event);
+        void OnAbout(wxCommandEvent& event);
+        void OnHelp(wxCommandEvent& event);
+        void OnQuit(wxCommandEvent& event);
+        void OnSave(wxCommandEvent& event);
+        void OnSaveAs(wxCommandEvent& event);
+        void OnOpen(wxCommandEvent& event);
+        void OnOpenHist(wxCommandEvent& event);
+        void OnSettings(wxCommandEvent& event);
+        void OnPreferences(wxCommandEvent& event);
+        void OnUpdate(wxCommandEvent& event);
+        void OnListSel(wxListEvent& event);
+        void OnListDesel(wxListEvent& event);
+        void OnCloseWindow(wxCloseEvent& event);
+        void OnReference(wxCommandEvent& event);
+        void OnReferencesMenu(wxCommandEvent& event);
+        void ShowReference(int num);
+        void OnRightClick(wxCommandEvent& event);            
+        void OnFuzzyFlag(wxCommandEvent& event);
+        void OnQuotesFlag(wxCommandEvent& event);
+        void OnInsertOriginal(wxCommandEvent& event);
+        void OnFullscreen(wxCommandEvent& event);
+        void OnFind(wxCommandEvent& event);
+
+        DECLARE_EVENT_TABLE()
 
     private:
-            Catalog *m_Catalog;
-            wxString m_FileName;
-	    
-#ifdef __WXMSW__
-    	    wxCHMHelpController m_Help;
-#else
-    	    wxHtmlHelpController m_Help;
-#endif
-            
-            wxString m_Title;
-            wxSplitterWindow *m_Splitter;
-            poEditListCtrl *m_List;
-            wxTextCtrl *m_TextOrig, *m_TextTrans;
-            bool m_Modified;
-            bool m_HasObsoleteItems;
-            bool m_DisplayQuotes;          
-            int m_Sel, m_SelItem;
-            wxFileHistory m_History;
-            wxString m_edittedTextOrig;
+        Catalog *m_catalog;
+        wxString m_fileName;
+
+        #ifdef __WXMSW__
+        wxCHMHelpController m_help;
+        #else
+        wxHtmlHelpController m_help;
+        #endif
+
+        wxString m_title;
+        wxSplitterWindow *m_splitter;
+        poEditListCtrl *m_list;
+        wxTextCtrl *m_textOrig, *m_textTrans;
+        bool m_modified;
+        bool m_hasObsoleteItems;
+        bool m_displayQuotes;          
+        int m_sel, m_selItem;
+        wxFileHistory m_history;
+        wxString m_edittedTextOrig;
 };
-
 
 
 #endif // _EDFRAME_H_

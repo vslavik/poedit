@@ -33,17 +33,17 @@
 class ProgressDlg : public wxDialog
 {
     public:
-        ProgressDlg(bool *cancel) : wxDialog(), m_CancelFlag(cancel) {}
+        ProgressDlg(bool *cancel) : wxDialog(), m_cancelFlag(cancel) {}
         
     private:
-        bool *m_CancelFlag;
+        bool *m_cancelFlag;
     
         DECLARE_EVENT_TABLE()
 
         void OnCancel(wxCommandEvent& event)
         {
             ((wxButton*)FindWindow(wxID_CANCEL))->Enable(false);
-            *m_CancelFlag = true;
+            *m_cancelFlag = true;
         }
 };
 
@@ -54,31 +54,31 @@ END_EVENT_TABLE()
 
 ProgressInfo::ProgressInfo()
 {
-    m_Cancelled = false;
-    m_Dlg = new ProgressDlg(&m_Cancelled);
-    wxTheXmlResource->LoadDialog(m_Dlg, NULL, "parser_progress");
+    m_cancelled = false;
+    m_dlg = new ProgressDlg(&m_cancelled);
+    wxTheXmlResource->LoadDialog(m_dlg, NULL, "parser_progress");
     wxPoint pos(wxConfig::Get()->Read("progress_pos_x", -1),
                wxConfig::Get()->Read("progress_pos_y", -1));
-    if (pos.x != -1 && pos.y != -1) m_Dlg->Move(pos);
-    m_Dlg->Show(true);
-    m_Disabler = new wxWindowDisabler(m_Dlg);
+    if (pos.x != -1 && pos.y != -1) m_dlg->Move(pos);
+    m_dlg->Show(true);
+    m_disabler = new wxWindowDisabler(m_dlg);
 }
 
 
 
 ProgressInfo::~ProgressInfo()
 {
-    delete m_Disabler;
-    wxConfig::Get()->Write("progress_pos_x", (long)m_Dlg->GetPosition().x);
-    wxConfig::Get()->Write("progress_pos_y", (long)m_Dlg->GetPosition().y);
-    m_Dlg->Destroy();
+    delete m_disabler;
+    wxConfig::Get()->Write("progress_pos_x", (long)m_dlg->GetPosition().x);
+    wxConfig::Get()->Write("progress_pos_y", (long)m_dlg->GetPosition().y);
+    m_dlg->Destroy();
 }
 
 
 
 void ProgressInfo::SetTitle(const wxString& text)
 {
-    m_Dlg->SetTitle(text);
+    m_dlg->SetTitle(text);
     wxYield();
 }
 
@@ -86,14 +86,14 @@ void ProgressInfo::SetTitle(const wxString& text)
             
 void ProgressInfo::SetGaugeMax(int limit)
 {
-    XMLCTRL(*m_Dlg, "progress", wxGauge)->SetRange(limit);
+    XMLCTRL(*m_dlg, "progress", wxGauge)->SetRange(limit);
 }
 
 
 
 void ProgressInfo::UpdateGauge(int increment)
 {
-    wxGauge *g = XMLCTRL(*m_Dlg, "progress", wxGauge);
+    wxGauge *g = XMLCTRL(*m_dlg, "progress", wxGauge);
     g->SetValue(g->GetValue() + increment);
 }
 
@@ -101,8 +101,8 @@ void ProgressInfo::UpdateGauge(int increment)
 
 void ProgressInfo::UpdateMessage(const wxString& text)
 {
-    XMLCTRL(*m_Dlg, "info", wxStaticText)->SetLabel(text);
-    m_Dlg->Refresh();
+    XMLCTRL(*m_dlg, "info", wxStaticText)->SetLabel(text);
+    m_dlg->Refresh();
     wxYield();
 }
             

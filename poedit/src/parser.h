@@ -25,22 +25,43 @@
 #include <wx/string.h>
 
 
-// Information about available parsers:
-
+/** This class holds information about an external parser. It does
+    \b not do any parsing. The only functionality it provides
+ */
 class Parser
 {
     public:
-        wxString Name, 
-                 Extensions,
-                 Command, 
-                 KeywordItem, 
-                 FileItem;
+        /// User-oriented name of the parser (e.g. "C/C++").
+        wxString Name;
+        /** Semicolon-separated list of wildcards. The parser is capable
+            of parsing files matching these wildcards. Example: "*.cpp;*.h"
+         */
+        wxString Extensions;
+        /** Command used to execute the parser. %o expands to output file,
+            %K to list of keywords and %F to list of files.
+         */
+        wxString Command;
+        /** Expansion string for single keyword. %k expands to keyword. 
+            %K in Command is replaced by n expansions of KeywordItem where
+            n is the number of keywords.
+         */
+        wxString KeywordItem;
+        /** Expansion string for single filename. %f expands to filename. 
+            %F in Command is replaced by n expansions of FileItem where
+            n is the number of filenames.
+         */
+        wxString FileItem;
 
-        // returns array of files from 'files' that this
-        // parser understands
+        /// Returns array of files from 'files' that this parser understands.
         wxArrayString SelectParsable(const wxArrayString& files);
       
-        // returns command line used to launch the parser
+        /** Returns command line used to launch the parser with specified
+            input. This expands all veriables in Command property of the
+            parser and returns string that be directly passed to wxExecute.
+            \param files    list of files to parse
+            \param keywords list of recognized keywords
+            \param output   name of temporary output file
+         */
         wxString GetCommand(const wxArrayString& files, 
                             const wxArrayString& keywords, 
                             const wxString& output);
@@ -48,17 +69,19 @@ class Parser
 
 WX_DECLARE_OBJARRAY(Parser, ParserArray);
 
-class wxConfigBase;
+class WXDLLEXPORT wxConfigBase;
 
-// Database of all available parsers.
-
+/** Database of all available parsers. This class is regular pseudo-template
+    dynamic wxArray with additional methods for storing its content to
+    wxConfig object and retrieving it.
+ */
 class ParsersDB : public ParserArray
 {
     public:
-        // Read DB from registry
+        /// Reads DB from registry/dotfile.
         void Read(wxConfigBase *cfg);
         
-        // Write DB to registry
+        /// Write DB to registry/dotfile.
         void Write(wxConfigBase *cfg);
 };
 

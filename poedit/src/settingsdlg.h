@@ -28,25 +28,23 @@
 
 class WXDLLEXPORT wxEditableListBox;
 
-// This class provides settings dialog for setting various
-// catalog parameters
-
+/// Dialog setting various catalog parameters.
 class SettingsDialog : public wxDialog
 {
     public:
-            SettingsDialog(wxWindow *parent = NULL);
-            
-            // Reads data from catalog and fill dialog's controls
-            void TransferTo(Catalog *cat);
-            
-            // Save data from dialog to catalog
-            void TransferFrom(Catalog *cat);
+        SettingsDialog(wxWindow *parent = NULL);
+
+        /// Reads data from the catalog and fill dialog's controls.
+        void TransferTo(Catalog *cat);
+
+        /// Saves data from the dialog to the catalog.
+        void TransferFrom(Catalog *cat);
             
     private:
-            wxTextCtrl *m_Team, *m_TeamEmail, *m_Project;            
-            wxComboBox *m_Charset, *m_Language;
-            wxTextCtrl *m_BasePath;
-            wxEditableListBox *m_Paths, *m_Keywords;
+        wxTextCtrl *m_team, *m_teamEmail, *m_project;            
+        wxComboBox *m_charset, *m_language;
+        wxTextCtrl *m_basePath;
+        wxEditableListBox *m_paths, *m_keywords;
 };
 
 

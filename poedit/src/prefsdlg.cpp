@@ -58,13 +58,13 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XMLCTRL(*this, "crlf_format", wxChoice)->SetSelection(sel);
 
 
-    m_Parsers.Read(cfg);               
+    m_parsers.Read(cfg);               
     
     wxListBox *list = XMLCTRL(*this, "parsers_list", wxListBox);
-    for (unsigned i = 0; i < m_Parsers.GetCount(); i++)
-        list->Append(m_Parsers[i].Name);
+    for (unsigned i = 0; i < m_parsers.GetCount(); i++)
+        list->Append(m_parsers[i].Name);
     
-    if (m_Parsers.GetCount() == 0)
+    if (m_parsers.GetCount() == 0)
     {
         XMLCTRL(*this, "parser_edit", wxButton)->Enable(false);
         XMLCTRL(*this, "parser_delete", wxButton)->Enable(false);
@@ -92,7 +92,7 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
     cfg->Write("crlf_format", formats[
                 XMLCTRL(*this, "crlf_format", wxChoice)->GetSelection()]);
                
-    m_Parsers.Write(cfg);
+    m_parsers.Write(cfg);
 }
 
 
@@ -111,7 +111,7 @@ bool PreferencesDialog::EditParser(int num)
     wxTheXmlResource->LoadDialog(&dlg, this, "edit_parser");
     dlg.Centre();
     
-    Parser& nfo = m_Parsers[num];
+    Parser& nfo = m_parsers[num];
     XMLCTRL(dlg, "parser_language", wxTextCtrl)->SetValue(nfo.Name);
     XMLCTRL(dlg, "parser_extensions", wxTextCtrl)->SetValue(nfo.Extensions);
     XMLCTRL(dlg, "parser_command", wxTextCtrl)->SetValue(nfo.Command);
@@ -137,13 +137,13 @@ bool PreferencesDialog::EditParser(int num)
 void PreferencesDialog::OnNewParser(wxCommandEvent& event)
 {
     Parser info;
-    m_Parsers.Add(info);
+    m_parsers.Add(info);
     XMLCTRL(*this, "parsers_list", wxListBox)->Append("");
-    size_t index = m_Parsers.GetCount()-1;
+    size_t index = m_parsers.GetCount()-1;
     if (!EditParser(index))
     {
         XMLCTRL(*this, "parsers_list", wxListBox)->Delete(index);
-        m_Parsers.RemoveAt(index);
+        m_parsers.RemoveAt(index);
     }
     else
     {
@@ -164,9 +164,9 @@ void PreferencesDialog::OnEditParser(wxCommandEvent& event)
 void PreferencesDialog::OnDeleteParser(wxCommandEvent& event)
 {
     size_t index = XMLCTRL(*this, "parsers_list", wxListBox)->GetSelection();
-    m_Parsers.RemoveAt(index);
+    m_parsers.RemoveAt(index);
     XMLCTRL(*this, "parsers_list", wxListBox)->Delete(index);
-    if (m_Parsers.GetCount() == 0)
+    if (m_parsers.GetCount() == 0)
     {
         XMLCTRL(*this, "parser_edit", wxButton)->Enable(false);
         XMLCTRL(*this, "parser_delete", wxButton)->Enable(false);

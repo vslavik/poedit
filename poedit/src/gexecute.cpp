@@ -40,11 +40,11 @@ struct MyProcessData
 class MyPipedProcess : public wxProcess
 {
     public:
-        MyPipedProcess(MyProcessData *data) : wxProcess(), m_Data(data)
+        MyPipedProcess(MyProcessData *data) : wxProcess(), m_data(data)
         {
-            m_Data->Running = true;
-            m_Data->Stderr.Empty();
-            m_Data->Stdout.Empty();
+            m_data->Running = true;
+            m_data->Stderr.Empty();
+            m_data->Stdout.Empty();
             Redirect();
         }
         
@@ -56,7 +56,7 @@ class MyPipedProcess : public wxProcess
             if (is && !is->Eof()) 
             {
                 wxTextInputStream tis(*is);
-                m_Data->Stdout.Add(tis.ReadLine());
+                m_data->Stdout.Add(tis.ReadLine());
                 hasInput = TRUE;
             }
 
@@ -64,7 +64,7 @@ class MyPipedProcess : public wxProcess
             if (es && !es->Eof()) 
             {
                 wxTextInputStream tis(*es);
-                m_Data->Stderr.Add(tis.ReadLine());
+                m_data->Stderr.Add(tis.ReadLine());
                 hasInput = TRUE;
             }
 
@@ -74,13 +74,13 @@ class MyPipedProcess : public wxProcess
         void OnTerminate(int pid, int status)
         {
             while (HasInput()) {}
-            m_Data->Running = false;
-            m_Data->ExitCode = status;
+            m_data->Running = false;
+            m_data->ExitCode = status;
             wxProcess::OnTerminate(pid, status);
         }
 
     private:
-        MyProcessData *m_Data;
+        MyProcessData *m_data;
 };
 
 

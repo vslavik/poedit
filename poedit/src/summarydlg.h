@@ -24,17 +24,23 @@
 #include <wx/dialog.h>
 
 
-// This class provides simple dialog that displays list
-// of changes in catalog
-
+/** This class provides simple dialog that displays list
+  * of changes made in the catalog.
+  */
 class MergeSummaryDialog : public wxDialog
 {
     public:
-            MergeSummaryDialog(wxWindow *parent = NULL);
-	    ~MergeSummaryDialog();
-            
-            // Reads data from catalog and fill dialog's controls
-            void TransferTo(const wxArrayString& snew, const wxArrayString& sobsolete);
+        MergeSummaryDialog(wxWindow *parent = NULL);
+        ~MergeSummaryDialog();
+
+        /** Reads data from catalog and fill dialog's controls.
+            \param snew      list of strings that are new to the catalog
+            \param sobsolete list of strings that no longer appear in the
+                             catalog (as compared to catalog's state before
+                             parsing sources).
+         */
+        void TransferTo(const wxArrayString& snew, 
+                        const wxArrayString& sobsolete);
 };
 
 

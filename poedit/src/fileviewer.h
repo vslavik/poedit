@@ -23,14 +23,14 @@
 #include <wx/frame.h>
 
 
-// This class shows part of file (40 lines each way) around
-// specified line
-
+/** This class implements frame that shows part of file (40 lines each way) 
+    surrounding specified line.
+ */
 class FileViewer : public wxFrame
 {
     public:
-            FileViewer(wxWindow *parent, const wxString& filename, int linenum);
-            ~FileViewer();
+        FileViewer(wxWindow *parent, const wxString& filename, int linenum);
+        ~FileViewer();
 };
 
 

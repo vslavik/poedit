@@ -31,17 +31,17 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
 {
     wxTheXmlResource->LoadDialog(this, parent, "settings");
 
-    m_Team = XMLCTRL(*this, "team_name", wxTextCtrl);
-    m_TeamEmail = XMLCTRL(*this, "team_email", wxTextCtrl);
-    m_Project = XMLCTRL(*this, "prj_name", wxTextCtrl);
-    m_Language = XMLCTRL(*this, "language", wxComboBox);
-    m_Charset = XMLCTRL(*this, "charset", wxComboBox);
-    m_BasePath = XMLCTRL(*this, "basepath", wxTextCtrl);
+    m_team = XMLCTRL(*this, "team_name", wxTextCtrl);
+    m_teamEmail = XMLCTRL(*this, "team_email", wxTextCtrl);
+    m_project = XMLCTRL(*this, "prj_name", wxTextCtrl);
+    m_language = XMLCTRL(*this, "language", wxComboBox);
+    m_charset = XMLCTRL(*this, "charset", wxComboBox);
+    m_basePath = XMLCTRL(*this, "basepath", wxTextCtrl);
 
     const LanguageStruct *lang = isoLanguages; /*from iso639.h*/ 
-    m_Language->Append("");
+    m_language->Append("");
     while (lang->lang != NULL)
-        m_Language->Append((lang++)->lang);
+        m_language->Append((lang++)->lang);
         
     // my custom controls:
     wxPanel *panel;
@@ -49,16 +49,16 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
     
     panel = XMLCTRL(*this, "keywords_list_panel", wxPanel);
     sizer = new wxBoxSizer(wxHORIZONTAL);
-    m_Keywords = new wxEditableListBox(panel, -1, _("Keywords"));
-    sizer->Add(m_Keywords, 1, wxEXPAND);
+    m_keywords = new wxEditableListBox(panel, -1, _("Keywords"));
+    sizer->Add(m_keywords, 1, wxEXPAND);
     panel->SetSizer(sizer);
     panel->SetAutoLayout(TRUE);
     panel->Layout();
 
     panel = XMLCTRL(*this, "paths_list_panel", wxPanel);
     sizer = new wxBoxSizer(wxHORIZONTAL);
-    m_Paths = new wxEditableListBox(panel, -1, _("Paths"));
-    sizer->Add(m_Paths, 1, wxEXPAND);
+    m_paths = new wxEditableListBox(panel, -1, _("Paths"));
+    sizer->Add(m_paths, 1, wxEXPAND);
     panel->SetSizer(sizer);
     panel->SetAutoLayout(TRUE);
     panel->Layout();
@@ -67,30 +67,30 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
 
 void SettingsDialog::TransferTo(Catalog *cat)
 {
-    #define SET_VAL(what) m_##what->SetValue(cat->Header().what)
-    SET_VAL(Team);
-    SET_VAL(TeamEmail);
-    SET_VAL(Project);
-    SET_VAL(BasePath);
-    SET_VAL(Language);
-    SET_VAL(Charset);
+    #define SET_VAL(what,what2) m_##what2->SetValue(cat->Header().what)
+    SET_VAL(Team, team);
+    SET_VAL(TeamEmail, teamEmail);
+    SET_VAL(Project, project);
+    SET_VAL(BasePath, basePath);
+    SET_VAL(Language, language);
+    SET_VAL(Charset, charset);
     #undef SET_VAL
     
-    m_Paths->SetStrings(cat->Header().SearchPaths);
-    m_Keywords->SetStrings(cat->Header().Keywords);
+    m_paths->SetStrings(cat->Header().SearchPaths);
+    m_keywords->SetStrings(cat->Header().Keywords);
 }
 
  
             
 void SettingsDialog::TransferFrom(Catalog *cat)
 {
-    #define GET_VAL(what) cat->Header().what = m_##what->GetValue()
-    GET_VAL(Language);
-    GET_VAL(Charset);
-    GET_VAL(Team);
-    GET_VAL(TeamEmail);
-    GET_VAL(Project);
-    GET_VAL(BasePath);
+    #define GET_VAL(what,what2) cat->Header().what = m_##what2->GetValue()
+    GET_VAL(Language, language);
+    GET_VAL(Charset, charset);
+    GET_VAL(Team, team);
+    GET_VAL(TeamEmail, teamEmail);
+    GET_VAL(Project, project);
+    GET_VAL(BasePath, basePath);
     #undef GET_VAL
 
     wxString dummy;
@@ -99,7 +99,7 @@ void SettingsDialog::TransferFrom(Catalog *cat)
     cat->Header().SearchPaths.Clear();
     cat->Header().Keywords.Clear();
 
-    m_Paths->GetStrings(arr);
+    m_paths->GetStrings(arr);
     for (size_t i = 0; i < arr.GetCount(); i++)
     {
         dummy = arr[i];
@@ -111,6 +111,6 @@ void SettingsDialog::TransferFrom(Catalog *cat)
     if (arr.GetCount() > 0 && cat->Header().BasePath.IsEmpty()) 
         cat->Header().BasePath = ".";
 
-    m_Keywords->GetStrings(arr);
+    m_keywords->GetStrings(arr);
     cat->Header().Keywords = arr;
 }
