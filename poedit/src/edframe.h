@@ -88,6 +88,7 @@ class poEditFrame : public wxFrame
             void OnQuotesFlag(wxCommandEvent& event);
             void OnInsertOriginal(wxCommandEvent& event);
             void OnFullscreen(wxCommandEvent& event);
+            void OnFind(wxCommandEvent& event);
     
             DECLARE_EVENT_TABLE()
 

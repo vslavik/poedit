@@ -37,9 +37,8 @@
       <object class="wxMenuItem" name="menu_references">
         <label>_Show references</label>
       </object>
-      <object class="wxMenuItem" name="menu_quotes">
-        <label>Display _quotes</label>
-        <checkable>1</checkable>
+      <object class="wxMenuItem" name="menu_find">
+        <label>Find...</label>
       </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="menu_fuzzy">
@@ -59,6 +58,18 @@
       <object class="wxMenuItem" name="menu_catsettings">
         <label>_Settings...</label>
       </object>
+    </object>
+    <object class="wxMenu" name="menu_view">
+      <label>_View</label>
+      <object class="wxMenuItem" name="menu_fullscreen">
+        <label>_Fullscreen view</label>
+        <checkable>1</checkable>
+      </object>
+      <object class="wxMenuItem" name="menu_quotes">
+        <label>Display _quotes</label>
+        <checkable>1</checkable>
+      </object>
+      <style>wxMENU_TEAROFF</style>
     </object>
     <object class="wxMenu" name="menu_help2">
       <object class="wxMenuItem" name="menu_help">

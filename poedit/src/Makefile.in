@@ -86,7 +86,7 @@ INCLUDES = -I$(top_srcdir)/extras/wx-contrib/include
 
 bin_PROGRAMS = poedit
 
-poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp                  edframe.h fileviewer.cpp fileviewer.h parser.cpp parser.h                  iso639.h prefsdlg.cpp prefsdlg.h settingsdlg.cpp                  settingsdlg.h progressinfo.h                  progressinfo.cpp digger.h digger.cpp gexecute.h                  gexecute.cpp summarydlg.h summarydlg.cpp
+poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp                  edframe.h fileviewer.cpp fileviewer.h parser.cpp parser.h                  iso639.h prefsdlg.cpp prefsdlg.h settingsdlg.cpp                  settingsdlg.h progressinfo.h                  progressinfo.cpp digger.h digger.cpp gexecute.h                  gexecute.cpp summarydlg.h summarydlg.cpp                  findframe.cpp findframe.h
 
 
 LDADD = -L../extras/wx-contrib/src/gizmos         -L../extras/wx-contrib/src/xml         -L../extras/wx-contrib/src/xml/expat         -lmy_xrc -lmy_gizmos -lmy_expat $(WX_LIBS)
@@ -103,7 +103,7 @@ CPPFLAGS = @CPPFLAGS@
 LIBS = @LIBS@
 poedit_OBJECTS =  catalog.o edapp.o edframe.o fileviewer.o parser.o \
 prefsdlg.o settingsdlg.o progressinfo.o digger.o gexecute.o \
-summarydlg.o
+summarydlg.o findframe.o
 poedit_LDADD = $(LDADD)
 poedit_DEPENDENCIES = 
 poedit_LDFLAGS = 
@@ -122,9 +122,9 @@ DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 TAR = gtar
 GZIP_ENV = --best
 DEP_FILES =  .deps/catalog.P .deps/digger.P .deps/edapp.P \
-.deps/edframe.P .deps/fileviewer.P .deps/gexecute.P .deps/parser.P \
-.deps/prefsdlg.P .deps/progressinfo.P .deps/settingsdlg.P \
-.deps/summarydlg.P
+.deps/edframe.P .deps/fileviewer.P .deps/findframe.P .deps/gexecute.P \
+.deps/parser.P .deps/prefsdlg.P .deps/progressinfo.P \
+.deps/settingsdlg.P .deps/summarydlg.P
 SOURCES = $(poedit_SOURCES)
 OBJECTS = $(poedit_OBJECTS)
 

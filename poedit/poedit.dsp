@@ -172,6 +172,15 @@ SOURCE=.\src\prefsdlg.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\finddlg.cpp
+# ADD CPP /YX"wx/wxprec.h"
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\finddlg.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\progressinfo.cpp
 # ADD CPP /YX"wx/wxprec.h"
 # End Source File

@@ -2,7 +2,7 @@
 GIF_FILES = fileopen.gif filesave.gif fuzzy.gif logo.gif quotes.gif scanning.gif \
             update.gif fullscreen.gif
 XRC_FILES = about.xrc menus.xrc prefs.xrc progress.xrc settings.xrc summary.xrc \
-            toolbar.xrc
+            toolbar.xrc find.xrc
 
 pkgdatadir=$(datadir)/poedit
 

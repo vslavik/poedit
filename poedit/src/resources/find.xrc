@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource version="2.3.0.1">
+  <object class="wxDialog" name="find_frame">
+    <title>Find...</title>
+    <style>wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP</style>
+      <object class="wxBoxSizer">
+        <orient>wxVERTICAL</orient>
+        <object class="sizeritem">
+          <object class="wxStaticText">
+            <label>String to find:</label>
+          </object>
+          <border>5d</border>
+          <flag>wxLEFT|wxTOP|wxRIGHT</flag>
+        </object>
+        <object class="sizeritem">
+          <object class="wxTextCtrl" name="string_to_find">
+            <size>100,-1d</size>
+          </object>
+          <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+          <border>5d</border>
+        </object>
+        <object class="sizeritem">
+          <object class="wxCheckBox" name="case_sensitive">
+            <label>Case sensitive</label>
+          </object>
+          <border>5d</border>
+          <flag>wxLEFT|wxRIGHT</flag>
+        </object>
+        <object class="sizeritem">
+          <object class="wxCheckBox" name="in_orig">
+            <label>Find in original strings</label>
+          </object>
+          <border>5d</border>
+          <flag>wxLEFT|wxRIGHT</flag>
+        </object>
+        <object class="sizeritem">
+          <object class="wxCheckBox" name="in_trans">
+            <label>Find in translations</label>
+          </object>
+          <border>5d</border>
+          <flag>wxLEFT|wxRIGHT</flag>
+        </object>
+        <object class="sizeritem">
+          <object class="wxBoxSizer">
+            <object class="sizeritem">
+              <object class="wxButton" name="wxID_CANCEL">
+                <label>Cancel</label>
+              </object>
+              <border>5d</border>
+              <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
+            </object>
+            <object class="sizeritem">
+              <object class="wxButton" name="find_prev">
+                <label>&lt; Previous</label>
+                <enabled>0</enabled>
+              </object>
+              <flag>wxRIGHT|wxBOTTOM</flag>
+              <border>5d</border>
+            </object>
+            <object class="sizeritem">
+              <object class="wxButton" name="find_next">
+                <label>Next &gt;</label>
+                <default>1</default>
+                <enabled>0</enabled>
+              </object>
+              <flag>wxRIGHT|wxBOTTOM</flag>
+              <border>5d</border>
+            </object>
+          </object>
+          <flag>wxTOP|wxALIGN_RIGHT</flag>
+          <border>5d</border>
+        </object>
+      </object>
+  </object>
+</resource>

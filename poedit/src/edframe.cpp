@@ -37,6 +37,7 @@
 #include "settingsdlg.h"
 #include "prefsdlg.h"
 #include "fileviewer.h"
+#include "findframe.h"
 
 // Event & controls IDs:
 enum 
@@ -213,7 +214,7 @@ END_EVENT_TABLE()
 
 BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU                 (XMLID("menu_quit"),        poEditFrame::OnQuit)
-   EVT_MENU                 (XMLID("menu_help"),       poEditFrame::OnHelp)
+   EVT_MENU                 (XMLID("menu_help"),        poEditFrame::OnHelp)
    EVT_MENU                 (XMLID("menu_about"),       poEditFrame::OnAbout)
    EVT_MENU                 (XMLID("menu_new"),         poEditFrame::OnNew)
    EVT_MENU                 (XMLID("menu_open"),        poEditFrame::OnOpen)
@@ -228,6 +229,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU                 (XMLID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
    EVT_MENU                 (XMLID("menu_references"),  poEditFrame::OnReferencesMenu)
    EVT_MENU                 (XMLID("menu_fullscreen"),  poEditFrame::OnFullscreen) 
+   EVT_MENU                 (XMLID("menu_find"),        poEditFrame::OnFind)
    EVT_MENU_RANGE           (ED_POPUP, ED_POPUP + 100, poEditFrame::OnReference)
    EVT_LIST_ITEM_SELECTED   (EDC_LIST,       poEditFrame::OnListSel)
    EVT_LIST_ITEM_DESELECTED (EDC_LIST,       poEditFrame::OnListDesel)
@@ -620,6 +622,9 @@ void poEditFrame::OnFullscreen(wxCommandEvent& event)
     bool fs = IsFullScreen();
     wxConfigBase *cfg = wxConfigBase::Get();
 
+    GetMenuBar()->Check(XMLID("menu_fullscreen"), !fs);
+    GetToolBar()->ToggleTool(XMLID("menu_fullscreen"), !fs);
+
     if (fs)
     {
         cfg->Write("splitter_fullscreen", (long)m_Splitter->GetSashPosition());
@@ -632,10 +637,19 @@ void poEditFrame::OnFullscreen(wxCommandEvent& event)
         m_Splitter->SetSashPosition(cfg->Read("splitter_fullscreen", oldSash));
     }
 
-
     ShowFullScreen(!fs, wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION);
 }
 
+
+
+void poEditFrame::OnFind(wxCommandEvent& event)
+{
+    FindFrame *f = (FindFrame*)FindWindow("find_frame");
+
+    if (!f)
+        f = new FindFrame(this, m_List, m_Catalog);
+    f->Show(TRUE);
+}
 
 
 void poEditFrame::UpdateFromTextCtrl(int item)
@@ -830,6 +844,11 @@ void poEditFrame::RefreshControls()
     m_List->Show();
     if (m_Catalog->GetCount() > 0) 
         m_List->SetItemState(0, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+
+    FindFrame *f = (FindFrame*)FindWindow("find_frame");
+    if (f)
+        f->Reset(m_Catalog);
+
     
     UpdateTitle();
     UpdateStatusBar();

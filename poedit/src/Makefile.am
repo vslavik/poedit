@@ -10,7 +10,8 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  iso639.h prefsdlg.cpp prefsdlg.h settingsdlg.cpp \
                  settingsdlg.h progressinfo.h \
                  progressinfo.cpp digger.h digger.cpp gexecute.h \
-                 gexecute.cpp summarydlg.h summarydlg.cpp
+                 gexecute.cpp summarydlg.h summarydlg.cpp \
+                 findframe.cpp findframe.h
 
 LDADD = -L../extras/wx-contrib/src/gizmos \
         -L../extras/wx-contrib/src/xml \
