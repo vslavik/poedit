@@ -8,7 +8,7 @@
     
       Preferences dialog
     
-      (c) Vaclav Slavik, 2000
+      (c) Vaclav Slavik, 2000-2003
 
 */
 
@@ -30,9 +30,9 @@
 
 #include "prefsdlg.h"
 #include "iso639.h"
-#include "transmemupd.h"
 #include "transmem.h"
-#include "progressinfo.h"
+#include "transmemupd.h"
+#include "transmemupd_wizard.h"
 
 PreferencesDialog::PreferencesDialog(wxWindow *parent)
 {
@@ -265,63 +265,8 @@ void PreferencesDialog::OnTMBrowseDbPath(wxCommandEvent& event)
 }
 
 
-
-class TMSearchDlg : public wxDialog
-{
-    protected:
-        DECLARE_EVENT_TABLE()
-        void OnBrowse(wxCommandEvent& event);
-};
-
-BEGIN_EVENT_TABLE(TMSearchDlg, wxDialog)
-   EVT_BUTTON(XRCID("tm_adddir"), TMSearchDlg::OnBrowse)
-END_EVENT_TABLE()
-
-void TMSearchDlg::OnBrowse(wxCommandEvent& event)
-{
-    wxDirDialog dlg(this, _("Select directory"));
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        wxArrayString a;
-        wxEditableListBox *l = XRCCTRL(*this, "tm_dirs", wxEditableListBox);
-        l->GetStrings(a);
-        a.Add(dlg.GetPath());
-        l->SetStrings(a);
-    }
-}
-
 void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
 {
-    // 1. Get paths list from the user:
-    wxConfigBase *cfg = wxConfig::Get();
-    TMSearchDlg dlg;
-    wxXmlResource::Get()->LoadDialog(&dlg, this, _T("dlg_generate_tm"));
-
-    wxEditableListBox *dirs = 
-        new wxEditableListBox(&dlg, -1, _("Search Paths"));
-    wxXmlResource::Get()->AttachUnknownControl(_T("tm_dirs"), dirs);
-
-    wxString dirsStr = cfg->Read(_T("TM/search_paths"), wxEmptyString);
-    wxArrayString dirsArray;
-    wxStringTokenizer tkn(dirsStr, wxPATH_SEP);
-
-    while (tkn.HasMoreTokens()) dirsArray.Add(tkn.GetNextToken());
-    dirs->SetStrings(dirsArray);
-
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        dirs->GetStrings(dirsArray);
-        dirsStr = wxEmptyString;
-        for (size_t i = 0; i < dirsArray.GetCount(); i++)
-        {
-            if (i != 0) dirsStr << wxPATH_SEP;
-            dirsStr << dirsArray[i];
-        }
-        cfg->Write(_T("TM/search_paths"), dirsStr);
-    }
-    else return;
-    
-    // 2. Update TM:
     wxString dbPath = XRCCTRL(*this, "tm_dbpath", wxTextCtrl)->GetValue();
         // VS: we can't get it from TM/database_path key in wxConfig object
         //     because it wasn't update yet with information from the dialog
@@ -331,21 +276,7 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
     wxArrayString langs;
 	XRCCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
 
-    ProgressInfo *pi = new ProgressInfo;
-    pi->SetTitle(_("Updating translation memory"));
-    for (size_t i = 0; i < langs.GetCount(); i++)
-    {
-        TranslationMemory *tm = 
-            TranslationMemory::Create(langs[i], dbPath);
-        if (tm)
-        {
-            TranslationMemoryUpdater u(tm, pi);
-            if (!u.Update(dirsArray)) 
-                { tm->Release(); break; }
-            tm->Release();
-        }
-    }
-    delete pi;
+    RunTMUpdateWizard(this, dbPath, langs);
 }
 
 #endif // USE_TRANSMEM
