@@ -11,10 +11,10 @@ install-kde:
 	  install -m 644 $(top_srcdir)/src/appicon.xpm $(KDE_DATA_DIR)/icons/poedit.xpm; \
 	fi
 	if test -w $(KDE_DATA_DIR)/mimelnk/application ; then \
-	  install -m 644 $(srcdir)/x-po.kdelnk $(KDE_DATA_DIR)/mimelnk/application; \
+	  install -m 644 $(srcdir)/x-po.desktop $(KDE_DATA_DIR)/mimelnk/application; \
 	fi
 	if test -w $(KDE_DATA_DIR)/applnk/Development ; then \
-	  install -m 644 $(srcdir)/poedit.kdelnk $(KDE_DATA_DIR)/applnk/Development; \
+	  install -m 644 $(srcdir)/poedit.desktop $(KDE_DATA_DIR)/applnk/Development; \
 	fi
 
 else
