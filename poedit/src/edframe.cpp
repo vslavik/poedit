@@ -1341,7 +1341,15 @@ void poEditFrame::UpdateFromTextCtrl(int item)
             newval = newval.Mid(0, i) + _T("\\\"") + newval.Mid(i+1);
             i++;
         }
-    
+
+    // string ending with [^\]\ is invalid:
+    if (newval.length() > 1 &&
+        newval[newval.length()-1] == _T('\\') &&
+        newval[newval.length()-2] != _T('\\'))
+    {
+        newval.RemoveLast();
+    }
+
     m_list->SetItem(item, 1, newval.substr(0, m_list->GetMaxColChars()));
 
 #if !wxUSE_UNICODE
