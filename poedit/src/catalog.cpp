@@ -88,7 +88,11 @@ void CatalogParser::Parse()
 
     while (!line.IsEmpty())
     {
-        // flags:
+        // ignore empty special tags:
+        while (line == _T("#,") || line == _T("#:"))
+            line = ReadTextLine(m_textFile);
+        
+        // flags:        
         if (ReadParam(line, _T("#, "), dummy))
         {
             mflags = _T("#, ") + dummy;
@@ -113,7 +117,8 @@ void CatalogParser::Parse()
             {
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
                     mstr += line.Mid(1, line.Length() - 2);
-                else break;
+                else
+                    break;
             }
         }
         
@@ -125,7 +130,8 @@ void CatalogParser::Parse()
             {
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
                     mtrans += line.Mid(1, line.Length() - 2);
-                else break;
+                else
+                    break;
             }
 
             if (!OnEntry(mstr, mtrans, mflags, mrefs, mcomment, mlinenum))
