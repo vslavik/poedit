@@ -100,9 +100,9 @@ bool wxXmlResource::Load(const wxString& filemask)
     {
 #if wxUSE_FILESYSTEM
         if (filemask.Lower().Matches(wxT("*.zip")) ||
-            filemask.Lower().Matches(wxT("*.rsc")))
+            filemask.Lower().Matches(wxT("*.xrs")))
         {
-            rt = rt && Load(fnd + wxT("#zip:*.xmb"));
+            rt = rt && Load(fnd + wxT("#zip:*.xmlbin"));
             rt = rt && Load(fnd + wxT("#zip:*.xrc"));
         }
         else
@@ -286,6 +286,17 @@ void wxXmlResource::UpdateResources()
     wxFileSystem fsys;
 #   endif
 
+    wxString encoding(wxT("UTF-8"));
+#if !wxUSE_UNICODE && wxUSE_INTL
+    if ( (GetFlags() & wxXRC_USE_LOCALE) == 0 )
+    {
+        // In case we are not using wxLocale to translate strings, convert the strings
+        // GUI's charset. This must not be done when wxXRC_USE_LOCALE is on, because
+        // it could break wxGetTranslation lookup.
+        encoding = wxLocale::GetSystemEncodingName();
+    }
+#endif
+
     for (size_t i = 0; i < m_data.GetCount(); i++)
     {
         modif = (m_data[i].Doc == NULL);
@@ -305,7 +316,7 @@ void wxXmlResource::UpdateResources()
 
         if (modif)
         {
-			wxInputStream *stream = NULL;
+            wxInputStream *stream = NULL;
 
 #           if wxUSE_FILESYSTEM
             file = fsys.OpenFile(m_data[i].File);
@@ -320,9 +331,10 @@ void wxXmlResource::UpdateResources()
                 delete m_data[i].Doc;
                 m_data[i].Doc = new wxXmlDocument;
             }
-            if (!stream || !m_data[i].Doc->Load(*stream))
+            if (!stream || !m_data[i].Doc->Load(*stream, encoding))
             {
-                wxLogError(_("Cannot load resources from file '%s'."), m_data[i].File.c_str());
+                wxLogError(_("Cannot load resources from file '%s'."),
+                           m_data[i].File.c_str());
                 wxDELETE(m_data[i].Doc);
             }
             else if (m_data[i].Doc->GetRoot()->GetName() != wxT("resource"))
@@ -701,7 +713,7 @@ int wxXmlResourceHandler::GetID()
     stdID(wxID_DEFAULT); stdID(wxID_MORE); stdID(wxID_SETUP);
     stdID(wxID_RESET); stdID(wxID_HELP_CONTEXT);
 #undef stdID
-    else return wxXmlResource::GetXMLID(sid);
+    else return wxXmlResource::GetXRCID(sid);
 }
 
 
@@ -1030,32 +1042,32 @@ void wxXmlResourceHandler::CreateChildrenPrivately(wxObject *parent, wxXmlNode *
 
 
 
-// --------------- XMLID implementation -----------------------------
+// --------------- XRCID implementation -----------------------------
 
-#define XMLID_TABLE_SIZE     1024
+#define XRCID_TABLE_SIZE     1024
 
 
-struct XMLID_record
+struct XRCID_record
 {
     int id;
     wxChar *key;
-    XMLID_record *next;
+    XRCID_record *next;
 };
 
-static XMLID_record *XMLID_Records[XMLID_TABLE_SIZE] = {NULL};
+static XRCID_record *XRCID_Records[XRCID_TABLE_SIZE] = {NULL};
 
-/*static*/ int wxXmlResource::GetXMLID(const wxChar *str_id)
+/*static*/ int wxXmlResource::GetXRCID(const wxChar *str_id)
 {
-    static int XMLID_LastID = wxID_HIGHEST;
+    static int XRCID_LastID = wxID_HIGHEST;
 
     int index = 0;
 
     for (const wxChar *c = str_id; *c != wxT('\0'); c++) index += (int)*c;
-    index %= XMLID_TABLE_SIZE;
+    index %= XRCID_TABLE_SIZE;
 
-    XMLID_record *oldrec = NULL;
+    XRCID_record *oldrec = NULL;
     int matchcnt = 0;
-    for (XMLID_record *rec = XMLID_Records[index]; rec; rec = rec->next)
+    for (XRCID_record *rec = XRCID_Records[index]; rec; rec = rec->next)
     {
         if (wxStrcmp(rec->key, str_id) == 0)
         {
@@ -1065,10 +1077,10 @@ static XMLID_record *XMLID_Records[XMLID_TABLE_SIZE] = {NULL};
         oldrec = rec;
     }
 
-    XMLID_record **rec_var = (oldrec == NULL) ?
-                              &XMLID_Records[index] : &oldrec->next;
-    *rec_var = new XMLID_record;
-    (*rec_var)->id = ++XMLID_LastID;
+    XRCID_record **rec_var = (oldrec == NULL) ?
+                              &XRCID_Records[index] : &oldrec->next;
+    *rec_var = new XRCID_record;
+    (*rec_var)->id = ++XRCID_LastID;
     (*rec_var)->key = wxStrdup(str_id);
     (*rec_var)->next = NULL;
 
@@ -1076,20 +1088,20 @@ static XMLID_record *XMLID_Records[XMLID_TABLE_SIZE] = {NULL};
 }
 
 
-static void CleanXMLID_Record(XMLID_record *rec)
+static void CleanXRCID_Record(XRCID_record *rec)
 {
     if (rec)
     {
-        CleanXMLID_Record(rec->next);
+        CleanXRCID_Record(rec->next);
         free(rec->key);
         delete rec;
     }
 }
 
-static void CleanXMLID_Records()
+static void CleanXRCID_Records()
 {
-    for (int i = 0; i < XMLID_TABLE_SIZE; i++)
-        CleanXMLID_Record(XMLID_Records[i]);
+    for (int i = 0; i < XRCID_TABLE_SIZE; i++)
+        CleanXRCID_Record(XRCID_Records[i]);
 }
 
 
@@ -1112,8 +1124,8 @@ public:
     }
     void OnExit()
     {
-        delete wxXmlResource::Get();
-        CleanXMLID_Records();
+        delete wxXmlResource::Set(NULL);
+        CleanXRCID_Records();
     }
 };
 
