@@ -1,7 +1,7 @@
 # Purpose:  The .spec file for building poEdit RPM
 
 # version and release
-%define VERSION 1.0.3
+%define VERSION 1.1.0
 %define RELEASE 1
 
 # default installation directory
@@ -15,7 +15,7 @@ Release:   %RELEASE
 Copyright: BSD license
 Group:     Applications/Editors
 Source:    poedit-%{VERSION}.tar.gz
-URL:       http://www.volny.cz/v.slavik/poedit/
+URL:       http://poedit.sourceforge.net
 Packager:  Vaclav Slavik <v.slavik@volny.cz>
 Prefix:    %prefix
 Requires:  gtk+ >= 1.2.6
@@ -24,8 +24,8 @@ BuildRoot: /var/tmp/poedit-%{version}
 %description
 poEdit is cross-platform gettext catalogs (.po files) editor. It is built with
 wxWindows toolkit and can run on Unix or Windows. It aims to provide convenient 
-way of editing gettext catalogs. It features fuzzy and untranslated records
-highlighting, whitespaces highlighting, references browser, headers editing
+way of editing gettext catalogs. It features UTF-8 support, fuzzy and untranslated 
+records highlighting, whitespaces highlighting, references browser, headers editing
 and can be used to create new catalogs or update existing catalogs from source
 code by single click.
 
@@ -49,7 +49,7 @@ rm -Rf ${RPM_BUILD_ROOT}
 %defattr(-, root, root)
 %doc NEWS LICENSE README
 %prefix/bin/poedit
-%prefix/share/poedit/poedit_help.htb
+%prefix/share/poedit/*
 %prefix/share/mimelnk/application/x-po.kdelnk
 %prefix/share/applnk/Development/poedit.kdelnk
 %prefix/share/gnome/apps/Development/poedit.desktop
