@@ -138,6 +138,11 @@ public:
     // Loads bitmap or icon resource from file:
     wxBitmap LoadBitmap(const wxString& name);
     wxIcon LoadIcon(const wxString& name);
+    
+    // Attaches unknown control into given panel/window/dialog:
+    // (unknown controls are used in conjunction with <object class="unknown">)
+    bool AttachUnknownControl(const wxString& name, wxWindow *control,
+                              wxWindow *parent = NULL);
 
     // Returns numeric ID that is equivalent to string id used in XML
     // resource. To be used in event tables
@@ -211,9 +216,13 @@ extern wxXmlResource *wxTheXmlResource;
 //    wxTheXmlResource->LoadDialog(&dlg, mainFrame, "my_dialog");
 //    XMLCTRL(dlg, "my_textctrl", wxTextCtrl)->SetValue(wxT("default value"));
 
+#ifdef __WXDEBUG__
+#define XMLCTRL(window, id, type) \
+    (wxDynamicCast((window).FindWindow(XMLID(id)), type))
+#else
 #define XMLCTRL(window, id, type) \
     ((type*)((window).FindWindow(XMLID(id))))
-
+#endif
 
 
 class WXDLLEXPORT wxXmlResourceHandler : public wxObject
