@@ -68,8 +68,8 @@ CC = @CC@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
 CXXFLAGS = @CXXFLAGS@
-EXE_SUFFIX = @EXE_SUFFIX@
 GNOME_DATA_DIR = @GNOME_DATA_DIR@
+KDE_CONFIG = @KDE_CONFIG@
 KDE_DATA_DIR = @KDE_DATA_DIR@
 LDFLAGS = @LDFLAGS@
 LN_S = @LN_S@
@@ -190,22 +190,34 @@ install-data-local: install-gnome install-kde
 
 @USE_KDE_TRUE@install-kde:
 @USE_KDE_TRUE@	mkdir -p $(KDE_DATA_DIR)/icons
-@USE_KDE_TRUE@	install -m 644 $(top_srcdir)/src/appicon.xpm $(KDE_DATA_DIR)/icons/poedit.xpm
 @USE_KDE_TRUE@	mkdir -p $(KDE_DATA_DIR)/mimelnk/application
-@USE_KDE_TRUE@	install -m 644 $(srcdir)/x-po.kdelnk $(KDE_DATA_DIR)/mimelnk/application
 @USE_KDE_TRUE@	mkdir -p $(KDE_DATA_DIR)/applnk/Development
-@USE_KDE_TRUE@	install -m 644 $(srcdir)/poedit.kdelnk $(KDE_DATA_DIR)/applnk/Development
+@USE_KDE_TRUE@	if test -w $(KDE_DATA_DIR)/icons ; then \
+@USE_KDE_TRUE@	  install -m 644 $(top_srcdir)/src/appicon.xpm $(KDE_DATA_DIR)/icons/poedit.xpm; \
+@USE_KDE_TRUE@	fi
+@USE_KDE_TRUE@	if test -w $(KDE_DATA_DIR)/mimelnk/application ; then \
+@USE_KDE_TRUE@	  install -m 644 $(srcdir)/x-po.kdelnk $(KDE_DATA_DIR)/mimelnk/application; \
+@USE_KDE_TRUE@	fi
+@USE_KDE_TRUE@	if test -w $(KDE_DATA_DIR)/applnk/Development ; then \
+@USE_KDE_TRUE@	  install -m 644 $(srcdir)/poedit.kdelnk $(KDE_DATA_DIR)/applnk/Development; \
+@USE_KDE_TRUE@	fi
 
 @USE_KDE_FALSE@install-kde:
 
 @USE_GNOME_TRUE@install-gnome:
 @USE_GNOME_TRUE@	mkdir -p $(GNOME_DATA_DIR)/pixmaps
-@USE_GNOME_TRUE@	install -m 644 $(top_srcdir)/src/appicon.xpm $(GNOME_DATA_DIR)/pixmaps/poedit.xpm
 @USE_GNOME_TRUE@	mkdir -p $(GNOME_DATA_DIR)/gnome/apps/Development
-@USE_GNOME_TRUE@	install -m 644 $(srcdir)/poedit.desktop $(GNOME_DATA_DIR)/gnome/apps/Development
 @USE_GNOME_TRUE@	mkdir -p $(GNOME_DATA_DIR)/mime-info
-@USE_GNOME_TRUE@	install -m 644 $(srcdir)/poedit.mime $(GNOME_DATA_DIR)/mime-info
-@USE_GNOME_TRUE@	install -m 644 poedit.keys $(GNOME_DATA_DIR)/mime-info
+@USE_GNOME_TRUE@	if test -w $(GNOME_DATA_DIR)/pixmaps ; then \
+@USE_GNOME_TRUE@	  install -m 644 $(top_srcdir)/src/appicon.xpm $(GNOME_DATA_DIR)/pixmaps/poedit.xpm; \
+@USE_GNOME_TRUE@	fi
+@USE_GNOME_TRUE@	if test -w $(GNOME_DATA_DIR)/gnome/apps/Development ; then \
+@USE_GNOME_TRUE@	  install -m 644 $(srcdir)/poedit.desktop $(GNOME_DATA_DIR)/gnome/apps/Development; \
+@USE_GNOME_TRUE@	fi
+@USE_GNOME_TRUE@	if test -w $(GNOME_DATA_DIR)/mime-info ; then \
+@USE_GNOME_TRUE@	  install -m 644 $(srcdir)/poedit.mime $(GNOME_DATA_DIR)/mime-info; \
+@USE_GNOME_TRUE@	  install -m 644 poedit.keys $(GNOME_DATA_DIR)/mime-info; \
+@USE_GNOME_TRUE@	fi
 
 @USE_GNOME_FALSE@install-gnome:
 

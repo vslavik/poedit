@@ -804,7 +804,7 @@ fi
 
 PACKAGE=poedit
 
-VERSION='1.1.4'
+VERSION='1.1.5'
 
 if test "`cd $srcdir && pwd`" != "`pwd`" && test -f $srcdir/config.status; then
   { echo "configure: error: source directory already configured; run "make distclean" there first" 1>&2; exit 1; }
@@ -1480,7 +1480,7 @@ echo "$ac_t""$CXXCPP" 1>&6
 
 case "$USE_DEBUG" in
 yes)	DEBUG_FLAGS="-g -Wall"
-	WX_CONFIG="wxgtkd-config"
+	WX_CONFIG="wxgtkd-2.3-config"
     ;;    
 *)	DEBUG_FLAGS="-O3"
     ;;
@@ -1609,31 +1609,66 @@ if test "$WXFOUND" != 1; then
     " 1>&2; exit 1; }
 fi
 
-if $WX_CONFIG --cxxflags | grep -q WXMSW; then
-    
+GCC_FLAGS="-fno-rtti -fno-exceptions"
 
-if test x = x; then
-  USE_WINDOWS_TRUE=
-  USE_WINDOWS_FALSE='#'
-else
-  USE_WINDOWS_TRUE='#'
-  USE_WINDOWS_FALSE=
-fi
-    EXE_SUFFIX=.exe
+if $WX_CONFIG --cxxflags | grep -q WXMSW; then
+    use_windows=yes
+    GCC_FLAGS="$GCC_FLAGS -fvtable-thunks"
     if test x$USE_TRANSMEM != xno ; then
         CXXFLAGS="$CXXFLAGS -DUSE_TRANSMEM -I\$(top_srcdir)/extras/win32-db3"
     fi
 else
+    use_windows=no
     
-  echo $ac_n "checking for KDE data directory""... $ac_c" 1>&6
-echo "configure:1630: checking for KDE data directory" >&5
-  if test x$KDEDIR = x ; then
-     echo "$ac_t""no" 1>&6
-     KDE_DATA_DIR=""
+  # Extract the first word of "kde-config", so it can be a program name with args.
+set dummy kde-config; ac_word=$2
+echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+echo "configure:1627: checking for $ac_word" >&5
+if eval "test \"`echo '$''{'ac_cv_path_KDE_CONFIG'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+  case "$KDE_CONFIG" in
+  /*)
+  ac_cv_path_KDE_CONFIG="$KDE_CONFIG" # Let the user override the test with a path.
+  ;;
+  ?:/*)			 
+  ac_cv_path_KDE_CONFIG="$KDE_CONFIG" # Let the user override the test with a dos path.
+  ;;
+  *)
+  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS=":"
+  ac_dummy="$PATH"
+  for ac_dir in $ac_dummy; do 
+    test -z "$ac_dir" && ac_dir=.
+    if test -f $ac_dir/$ac_word; then
+      ac_cv_path_KDE_CONFIG="$ac_dir/$ac_word"
+      break
+    fi
+  done
+  IFS="$ac_save_ifs"
+  ;;
+esac
+fi
+KDE_CONFIG="$ac_cv_path_KDE_CONFIG"
+if test -n "$KDE_CONFIG"; then
+  echo "$ac_t""$KDE_CONFIG" 1>&6
+else
+  echo "$ac_t""no" 1>&6
+fi
+
+  if test x$KDE_CONFIG = x ; then
+      echo $ac_n "checking for KDEDIR""... $ac_c" 1>&6
+echo "configure:1661: checking for KDEDIR" >&5
+      if test x$KDEDIR = x ; then
+          echo "$ac_t""no" 1>&6
+          KDE_DATA_DIR=""
+      else
+          KDE_DATA_DIR=$KDEDIR/share
+          echo "$ac_t""$KDE_DATA_DIR" 1>&6
+      fi
   else
-     KDE_DATA_DIR=$KDEDIR/share
-     echo "$ac_t""$KDE_DATA_DIR" 1>&6
+      KDE_DATA_DIR=`kde-config --prefix`/share
   fi
+
   
   
 
@@ -1647,7 +1682,7 @@ fi
 
     
   echo $ac_n "checking for GNOME data directory""... $ac_c" 1>&6
-echo "configure:1651: checking for GNOME data directory" >&5
+echo "configure:1686: checking for GNOME data directory" >&5
   GNOME_DATA_DIR=`gnome-config --datadir 2>/dev/null`
   if test x$GNOME_DATA_DIR = x ; then
      echo "$ac_t""no" 1>&6
@@ -1667,7 +1702,7 @@ fi
 
     if test x$USE_TRANSMEM != xno ; then
         echo $ac_n "checking how to run the C preprocessor""... $ac_c" 1>&6
-echo "configure:1671: checking how to run the C preprocessor" >&5
+echo "configure:1706: checking how to run the C preprocessor" >&5
 # On Suns, sometimes $CPP names a directory.
 if test -n "$CPP" && test -d "$CPP"; then
   CPP=
@@ -1682,13 +1717,13 @@ else
   # On the NeXT, cc -E runs the code through the compiler's parser,
   # not just through cpp.
   cat > conftest.$ac_ext <<EOF
-#line 1686 "configure"
+#line 1721 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1692: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1727: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -1699,13 +1734,13 @@ else
   rm -rf conftest*
   CPP="${CC-cc} -E -traditional-cpp"
   cat > conftest.$ac_ext <<EOF
-#line 1703 "configure"
+#line 1738 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1709: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1744: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -1716,13 +1751,13 @@ else
   rm -rf conftest*
   CPP="${CC-cc} -nologo -E"
   cat > conftest.$ac_ext <<EOF
-#line 1720 "configure"
+#line 1755 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1726: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1761: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -1750,7 +1785,7 @@ echo "$ac_t""$CPP" 1>&6
   USE_TRANSMEM=1
 
   echo $ac_n "checking for db_create in -ldb-3.1""... $ac_c" 1>&6
-echo "configure:1754: checking for db_create in -ldb-3.1" >&5
+echo "configure:1789: checking for db_create in -ldb-3.1" >&5
 ac_lib_var=`echo db-3.1'_'db_create | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
@@ -1758,7 +1793,7 @@ else
   ac_save_LIBS="$LIBS"
 LIBS="-ldb-3.1  $LIBS"
 cat > conftest.$ac_ext <<EOF
-#line 1762 "configure"
+#line 1797 "configure"
 #include "confdefs.h"
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
@@ -1769,7 +1804,7 @@ int main() {
 db_create()
 ; return 0; }
 EOF
-if { (eval echo configure:1773: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1808: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_lib_$ac_lib_var=yes"
 else
@@ -1791,7 +1826,7 @@ else
   echo "$ac_t""no" 1>&6
 
          echo $ac_n "checking for db_create in -ldb""... $ac_c" 1>&6
-echo "configure:1795: checking for db_create in -ldb" >&5
+echo "configure:1830: checking for db_create in -ldb" >&5
 ac_lib_var=`echo db'_'db_create | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
@@ -1799,7 +1834,7 @@ else
   ac_save_LIBS="$LIBS"
 LIBS="-ldb  $LIBS"
 cat > conftest.$ac_ext <<EOF
-#line 1803 "configure"
+#line 1838 "configure"
 #include "confdefs.h"
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
@@ -1810,7 +1845,7 @@ int main() {
 db_create()
 ; return 0; }
 EOF
-if { (eval echo configure:1814: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1849: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_lib_$ac_lib_var=yes"
 else
@@ -1850,17 +1885,17 @@ fi
 
   ac_safe=`echo "db3/db.h" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for db3/db.h""... $ac_c" 1>&6
-echo "configure:1854: checking for db3/db.h" >&5
+echo "configure:1889: checking for db3/db.h" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1859 "configure"
+#line 1894 "configure"
 #include "confdefs.h"
 #include <db3/db.h>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1864: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1899: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -1884,17 +1919,17 @@ else
 
         ac_safe=`echo "db.h" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for db.h""... $ac_c" 1>&6
-echo "configure:1888: checking for db.h" >&5
+echo "configure:1923: checking for db.h" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1893 "configure"
+#line 1928 "configure"
 #include "confdefs.h"
 #include <db.h>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1898: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1933: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -1941,8 +1976,16 @@ fi
     fi
 fi
 
-CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS $WX_CFLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 
+if test $use_windows = yes; then
+  USE_WINDOWS_TRUE=
+  USE_WINDOWS_FALSE='#'
+else
+  USE_WINDOWS_TRUE='#'
+  USE_WINDOWS_FALSE=
+fi
+
+CXXFLAGS="$CXXFLAGS $GCC_FLAGS $DEBUG_FLAGS $WX_CFLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 
 
 
@@ -2144,8 +2187,7 @@ s%@CXXCPP@%$CXXCPP%g
 s%@WX_CONFIG@%$WX_CONFIG%g
 s%@WX_CFLAGS@%$WX_CFLAGS%g
 s%@WX_LIBS@%$WX_LIBS%g
-s%@USE_WINDOWS_TRUE@%$USE_WINDOWS_TRUE%g
-s%@USE_WINDOWS_FALSE@%$USE_WINDOWS_FALSE%g
+s%@KDE_CONFIG@%$KDE_CONFIG%g
 s%@KDE_DATA_DIR@%$KDE_DATA_DIR%g
 s%@USE_KDE_TRUE@%$USE_KDE_TRUE%g
 s%@USE_KDE_FALSE@%$USE_KDE_FALSE%g
@@ -2153,8 +2195,9 @@ s%@GNOME_DATA_DIR@%$GNOME_DATA_DIR%g
 s%@USE_GNOME_TRUE@%$USE_GNOME_TRUE%g
 s%@USE_GNOME_FALSE@%$USE_GNOME_FALSE%g
 s%@CPP@%$CPP%g
+s%@USE_WINDOWS_TRUE@%$USE_WINDOWS_TRUE%g
+s%@USE_WINDOWS_FALSE@%$USE_WINDOWS_FALSE%g
 s%@RESCOMP@%$RESCOMP%g
-s%@EXE_SUFFIX@%$EXE_SUFFIX%g
 
 CEOF
 EOF

@@ -116,14 +116,20 @@ dnl ---------------------------------------------------------------------------
 
 AC_DEFUN(FIND_KDE,
 [
-  AC_MSG_CHECKING(for KDE data directory)
-  if test x$KDEDIR = x ; then
-     AC_MSG_RESULT(no)
-     KDE_DATA_DIR=""
+  AC_PATH_PROG(KDE_CONFIG, kde-config)
+  if test x$KDE_CONFIG = x ; then
+      AC_MSG_CHECKING(for KDEDIR)
+      if test x$KDEDIR = x ; then
+          AC_MSG_RESULT(no)
+          KDE_DATA_DIR=""
+      else
+          KDE_DATA_DIR=$KDEDIR/share
+          AC_MSG_RESULT($KDE_DATA_DIR)
+      fi
   else
-     KDE_DATA_DIR=$KDEDIR/share
-     AC_MSG_RESULT($KDE_DATA_DIR)
+      KDE_DATA_DIR=`kde-config --prefix`/share
   fi
+
   AC_SUBST(KDE_DATA_DIR)
   AM_CONDITIONAL(USE_KDE, test x$KDEDIR != x)
 ])
