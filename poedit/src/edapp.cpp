@@ -57,7 +57,7 @@ wxString poEditApp::GetAppPath() const
 
 wxString poEditApp::GetAppVersion() const
 {
-    return _T("1.1.5");
+    return _T("1.1.6");
 }
 
 
@@ -69,7 +69,7 @@ wxString poEditApp::GetAppVersion() const
 
 bool poEditApp::OnInit()
 {
-#ifdef __UNIX__
+	#ifdef __UNIX__
     wxString home = wxGetHomeDir() + _T("/");
 
     // create poEdit cfg dir, move ~/.poedit to ~/.poedit/config
@@ -91,9 +91,13 @@ bool poEditApp::OnInit()
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
     wxConfigBase::Get()->SetExpandEnvVars(false);
 
+    m_locale.Init();
+    wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
+    m_locale.AddCatalog(_T("poedit"));
+
     wxImage::AddHandler(new wxGIFHandler);
     wxFileSystem::AddHandler(new wxZipFSHandler);
-
+    
     wxString resPath = GetAppPath() + _T("/share/poedit/resources.zip");
     if (!wxFileExists(resPath))
     {
@@ -106,8 +110,7 @@ bool poEditApp::OnInit()
                      "to the location where you installed poEdit."), 
                      resPath.c_str(), GetAppPath().c_str());
 #else
-        msg.Printf(_("Cannot find resources file '%s'!\n"
-                     "Please reinstall poEdit."), 
+        msg.Printf(_("Cannot find resources file '%s'!\nPlease reinstall poEdit."), 
                      resPath.c_str());
 #endif
         wxMessageBox(msg, _("poEdit Error"), wxOK | wxICON_ERROR);
@@ -123,9 +126,7 @@ bool poEditApp::OnInit()
 
     if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
     {
-        wxMessageBox(_("This is first time you run poEdit.\n"
-                       "Please fill in your name and e-mail address.\n"
-                       "(This information is used only in catalogs headers)"), _("Setup"),
+        wxMessageBox(_("This is first time you run poEdit.\nPlease fill in your name and e-mail address.\n(This information is used only in catalogs headers)"), _("Setup"),
                        wxOK | wxICON_INFORMATION);
                        
         PreferencesDialog dlg;

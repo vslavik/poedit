@@ -23,6 +23,7 @@
 #include <wx/app.h>
 #include <wx/string.h>
 class WXDLLEXPORT wxConfigBase;
+class WXDLLEXPORT wxLocale;
 
 
 /// wxApp for use with 
@@ -52,6 +53,9 @@ class poEditApp : public wxApp
             upgrade to new version.)
          */
         void SetDefaultCfg(wxConfigBase *cfg);
+        
+    private:
+        wxLocale m_locale;
 };
 
 DECLARE_APP(poEditApp);
