@@ -112,6 +112,8 @@ bool TranslationMemoryUpdater::FindFilesInPaths(const wxArrayString& paths,
                                                 wxArrayString& files,
                                                 const wxString& lang)
 {
+    bool rv = true;
+    
     files.Clear();
     TMUDirTraverser trav(&files, lang);
 
@@ -119,9 +121,11 @@ bool TranslationMemoryUpdater::FindFilesInPaths(const wxArrayString& paths,
     {
         wxDir dir(paths[i]);
         if (!dir.IsOpened() || dir.Traverse(trav) == (size_t)-1) 
-            return false;
+            // return false, but don't terminate, try other directories
+            // first:
+            rv = false;
     }
-    return true;
+    return rv;
 }
 
 bool TranslationMemoryUpdater::Update(const wxArrayString& files)

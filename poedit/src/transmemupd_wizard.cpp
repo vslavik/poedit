@@ -89,11 +89,9 @@ private:
             GetSearchPaths(dirsArray);
             wxArrayString files;
             
-            if (TranslationMemoryUpdater::FindFilesInPaths(dirsArray, files,
-                                                           m_lang))
-            {
-                m_files->SetStrings(files);
-            }
+            TranslationMemoryUpdater::FindFilesInPaths(dirsArray, files,
+                                                       m_lang);
+            m_files->SetStrings(files);
         }
         else
             event.Skip();
