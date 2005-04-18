@@ -50,6 +50,7 @@ LanguageStruct isoLanguages[] =
     {_T("fj"), _T("Fijian")},
     {_T("fo"), _T("Faroese")},
     {_T("fr"), _T("French")},
+    {_T("fur"), _T("Friulian")},
     {_T("fy"), _T("Frisian")},
 
     {_T("ga"), _T("Irish")},

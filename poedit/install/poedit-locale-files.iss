@@ -17,11 +17,13 @@ Source: locales\et.mo; DestDir: {app}\share\locale\et\LC_MESSAGES; Components: i
 Source: locales\eu.mo; DestDir: {app}\share\locale\eu\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\fa_IR.mo; DestDir: {app}\share\locale\fa_IR\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\fr.mo; DestDir: {app}\share\locale\fr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\fur.mo; DestDir: {app}\share\locale\fur\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\gl.mo; DestDir: {app}\share\locale\gl\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\he.mo; DestDir: {app}\share\locale\he\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\hi.mo; DestDir: {app}\share\locale\hi\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\hr.mo; DestDir: {app}\share\locale\hr\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\hu.mo; DestDir: {app}\share\locale\hu\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\id.mo; DestDir: {app}\share\locale\id\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\is.mo; DestDir: {app}\share\locale\is\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\it.mo; DestDir: {app}\share\locale\it\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\ja.mo; DestDir: {app}\share\locale\ja\LC_MESSAGES; Components: i18n; DestName: poedit.mo
@@ -62,6 +64,7 @@ Source: locales\wxwin\eu.mo; DestDir: {app}\share\locale\eu\LC_MESSAGES; Compone
 Source: locales\wxwin\fr.mo; DestDir: {app}\share\locale\fr\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\wxwin\hi.mo; DestDir: {app}\share\locale\hi\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\wxwin\hu.mo; DestDir: {app}\share\locale\hu\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
+Source: locales\wxwin\id.mo; DestDir: {app}\share\locale\id\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\wxwin\it.mo; DestDir: {app}\share\locale\it\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\wxwin\ja.mo; DestDir: {app}\share\locale\ja\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
 Source: locales\wxwin\nb_NO.mo; DestDir: {app}\share\locale\nb_NO\LC_MESSAGES; Components: i18n; DestName: wxstd.mo
