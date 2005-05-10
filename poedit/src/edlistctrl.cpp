@@ -89,10 +89,14 @@ wxBitmap AddDigit(char digit, int x, int y, const wxBitmap& bmp)
     dc.DrawBitmap(bmp, 0,0,true);
     
     dc.SetPen(*wxBLACK_PEN);
-    for(int i=0; i<5; ++i)
-        for(int j=0; j<3; ++j)
+    for(int i = 0; i < 5; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
             if (g_digits[digit][i][j] == 1)
                 dc.DrawPoint(x+j, y+i);
+        }
+    }
     
     dc.SelectObject(wxNullBitmap);
     tmpBmp.SetMask(new wxMask(tmpBmp, g_TranspColour));
@@ -159,12 +163,15 @@ poEditListCtrl::poEditListCtrl(wxWindow *parent,
     list->Add(MergeBitmaps(wxArtProvider::GetBitmap(_T("poedit-status-automatic")), 
                            wxArtProvider::GetBitmap(_T("poedit-status-comment"))));  // IMG_AUTOMATIC | IMG_COMMENT
     list->Add(wxArtProvider::GetBitmap(_T("poedit-status-modified")));               // IMG_MODIFIED 
-    for(i=1; i<IMG_MODIFIED; ++i)                                                    // IMG_MODIFIED variations
+    for(i = 1; i < IMG_MODIFIED; i++)                                                // IMG_MODIFIED variations
+    {
         list->Add(MergeBitmaps(BitmapFromList(list, i),
                                wxArtProvider::GetBitmap(_T("poedit-status-modified"))));
-    for(int bk=0; bk < 10; ++bk)                                                     // BK_XX variations
+    }
+    
+    for(int bk = 0; bk < 10; bk++)                                                   // BK_XX variations
     {
-        for(i=0; i<=(IMG_AUTOMATIC|IMG_COMMENT|IMG_MODIFIED); ++i)                       
+        for(i = 0; i <= (IMG_AUTOMATIC|IMG_COMMENT|IMG_MODIFIED); i++)                       
         {
             wxBitmap bmp = BitmapFromList(list, i);
             list->Add(AddDigit(bk, 0, 0, bmp));
@@ -229,7 +236,7 @@ void poEditListCtrl::ReadCatalog()
         wxArrayInt restIds;
         int i;
         
-        for(i = 0; i < m_catalog->GetCount(); ++i)
+        for(i = 0; i < m_catalog->GetCount(); i++)
         {
             CatalogData& d = (*m_catalog)[i];
             if (!d.IsTranslated())
@@ -248,22 +255,22 @@ void poEditListCtrl::ReadCatalog()
         m_itemIndexToCatalogIndexArray.Alloc(m_catalog->GetCount());
         m_catalogIndexToItemIndexArray.SetCount(m_catalog->GetCount());
         int listItemId = 0;
-        for(i = 0; i < untranslatedIds.Count(); ++i)
+        for(i = 0; i < untranslatedIds.Count(); i++)
         {
             m_itemIndexToCatalogIndexArray.Add(untranslatedIds[i]);
             m_catalogIndexToItemIndexArray[untranslatedIds[i]] = listItemId++;
         }    
-        for(i = 0; i < invalidIds.Count(); ++i)
+        for(i = 0; i < invalidIds.Count(); i++)
         {
             m_itemIndexToCatalogIndexArray.Add(invalidIds[i]);
             m_catalogIndexToItemIndexArray[invalidIds[i]] = listItemId++;
         }    
-        for(i = 0; i < fuzzyIds.Count(); ++i)
+        for(i = 0; i < fuzzyIds.Count(); i++)
         {
             m_itemIndexToCatalogIndexArray.Add(fuzzyIds[i]);
             m_catalogIndexToItemIndexArray[fuzzyIds[i]] = listItemId++;
         }    
-        for(i = 0; i < restIds.Count(); ++i)
+        for(i = 0; i < restIds.Count(); i++)
         {
             m_itemIndexToCatalogIndexArray.Add(restIds[i]);
             m_catalogIndexToItemIndexArray[restIds[i]] = listItemId++;

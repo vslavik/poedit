@@ -220,7 +220,7 @@ wxString Catalog::HeaderData::ToString(const wxString& line_delim)
 
     wxString hdr;
     for (std::vector<Entry>::const_iterator i = m_entries.begin();
-         i != m_entries.end(); ++i)
+         i != m_entries.end(); i++)
     {
         wxString v(i->Value);
         v.Replace(_T("\\"), _T("\\\\"));
@@ -363,8 +363,10 @@ void Catalog::HeaderData::ParseDict()
     }
 
     int i;
-    for(i=0; i<BOOKMARK_LAST;++i)
+    for(i = 0; i < BOOKMARK_LAST; i++)
+    {
       Bookmarks[i] = NO_BOOKMARK;
+    }
     wxString bk = GetHeader(_T("X-Poedit-Bookmarks"));
     if (!bk.empty())
     {
@@ -375,7 +377,7 @@ void Catalog::HeaderData::ParseDict()
         {
             tkn.GetNextToken().ToLong(&val);
             Bookmarks[i] = val;
-            ++i;
+            i++;
         }    
     }
 
@@ -439,7 +441,7 @@ void Catalog::HeaderData::DeleteHeader(const wxString& key)
         
         size_t size = m_entries.size();
         for (Entries::const_iterator i = m_entries.begin();
-                i != m_entries.end(); ++i)
+                i != m_entries.end(); i++)
         {
             if (i->Key != key)
                 enew.push_back(*i);
@@ -829,8 +831,10 @@ Catalog::Catalog()
     m_count = 0;
     m_isOk = true;
     m_header.BasePath = wxEmptyString;
-    for(int i=BOOKMARK_0; i <BOOKMARK_LAST; ++i)
+    for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
+    {
         m_header.Bookmarks[i] = -1;
+    }
 }
 
 
@@ -926,9 +930,11 @@ bool Catalog::Load(const wxString& po_file)
     parser.Parse();
     
     // now that the catalog is loaded, update its items with the bookmarks
-    for(int i = BOOKMARK_0; i < BOOKMARK_LAST; ++i)
+    for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
+    {
         if (m_header.Bookmarks[i] != -1 && m_header.Bookmarks[i] < m_dataArray.GetCount())
             m_dataArray[m_header.Bookmarks[i]].SetBookmark(static_cast<Bookmark>(i));
+    }
         
 
     m_isOk = true;
@@ -1025,8 +1031,10 @@ void Catalog::Clear()
     m_isOk = true;
     m_count = 0;
     m_data = new wxHashTable(wxKEY_STRING);
-    for(int i=BOOKMARK_0; i <BOOKMARK_LAST; ++i)
+    for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
+    {
         m_header.Bookmarks[i] = -1;
+    }
 }
 
 int Catalog::SetBookmark(int id, Bookmark bookmark) 
@@ -1092,7 +1100,7 @@ static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
     const Catalog::HeaderData::Entries& hdr(catalog.Header().GetAllHeaders());
     
     for (Catalog::HeaderData::Entries::const_iterator i = hdr.begin();
-            i != hdr.end(); ++i)
+            i != hdr.end(); i++)
     {
         if (!CanEncodeStringToCharset(i->Value, conv))
             return false;
