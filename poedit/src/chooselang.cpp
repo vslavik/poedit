@@ -89,6 +89,7 @@ wxLanguage ChooseLanguage()
         { _T("Estonian"), wxLANGUAGE_ESTONIAN },
         { _T("Esperanto"), wxLANGUAGE_ESPERANTO },
         { _T("Farsi"), wxLANGUAGE_FARSI },
+        { _T("Finnish"), wxLANGUAGE_FINNISH },
         { _T("French"), wxLANGUAGE_FRENCH },
         { _T("Galician"), wxLANGUAGE_GALICIAN },
         { _T("Georgian"), wxLANGUAGE_GEORGIAN },
