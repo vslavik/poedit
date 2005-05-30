@@ -262,9 +262,9 @@ void Catalog::HeaderData::UpdateDict()
     {
         wxString kw;
         for (size_t i = 0; i < Keywords.GetCount(); i++)
-            kw += Keywords[i] + _T(',');
+            kw += Keywords[i] + _T(';');
         kw.RemoveLast();
-        SetHeader(_T("X-Poedit-Keywords"), kw);
+        SetHeader(_T("X-Poedit-KeywordsList"), kw);
     }
     
     int i;
@@ -354,12 +354,29 @@ void Catalog::HeaderData::ParseDict()
     BasePath = GetHeader(_T("X-Poedit-Basepath"));
 
     Keywords.Clear();
-    wxString kw = GetHeader(_T("X-Poedit-Keywords"));
+    wxString kw = GetHeader(_T("X-Poedit-KeywordsList"));
     if (!kw.empty())
     {
-        wxStringTokenizer tkn(kw, _T(","));
+        wxStringTokenizer tkn(kw, _T(";"));
         while (tkn.HasMoreTokens())
             Keywords.Add(tkn.GetNextToken());
+    }
+    else
+    {
+        // try backward-compatibility version X-Poedit-Keywords. The difference
+        // is the separator used, see
+        // http://sourceforge.net/tracker/index.php?func=detail&aid=1206579&group_id=27043&atid=389153
+
+        wxString kw = GetHeader(_T("X-Poedit-Keywords"));
+        if (!kw.empty())
+        {
+            wxStringTokenizer tkn(kw, _T(","));
+            while (tkn.HasMoreTokens())
+                Keywords.Add(tkn.GetNextToken());
+
+            // and remove it, it's not for newer versions:
+            DeleteHeader(_("X-Poedit-Keywords"));
+        }
     }
 
     int i;
