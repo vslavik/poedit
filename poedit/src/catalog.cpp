@@ -375,7 +375,7 @@ void Catalog::HeaderData::ParseDict()
                 Keywords.Add(tkn.GetNextToken());
 
             // and remove it, it's not for newer versions:
-            DeleteHeader(_("X-Poedit-Keywords"));
+            DeleteHeader(_T("X-Poedit-Keywords"));
         }
     }
 
