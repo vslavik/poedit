@@ -77,7 +77,7 @@ class poEditFrame : public wxFrame
         /// Reads catalog, refreshes controls.
         void ReadCatalog(const wxString& catalog);
         /// Writes catalog.
-        void WriteCatalog(const wxString& catalog);
+        bool WriteCatalog(const wxString& catalog);
         /// Did the user modify the catalog?
         bool IsModified() const { return m_modified; }
         /** Updates catalog and sets m_modified flag. Updates from POT

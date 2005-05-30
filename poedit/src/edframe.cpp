@@ -764,9 +764,14 @@ void poEditFrame::OnCloseWindow(wxCloseEvent&)
                          _("Save changes"), 
                          wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
         if (r == wxYES)
-            WriteCatalog(m_fileName);
+        {
+            if ( !WriteCatalog(m_fileName) )
+                return;
+        }
         else if (r == wxCANCEL)
+        {
             return;
+        }
     }
     Destroy();
 }
@@ -783,9 +788,14 @@ void poEditFrame::OnOpen(wxCommandEvent&)
                          _("Save changes"), 
                          wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
         if (r == wxYES)
-            WriteCatalog(m_fileName);
+        {
+            if ( !WriteCatalog(m_fileName) )
+                return;
+        }
         else if (r == wxCANCEL)
+        {
             return;
+        }
     }
 
     wxString path = wxPathOnly(m_fileName);
@@ -815,9 +825,14 @@ void poEditFrame::OnOpenHist(wxCommandEvent& event)
                          _("Save changes"), 
                          wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
         if (r == wxYES)
-            WriteCatalog(m_fileName);
+        {
+            if ( !WriteCatalog(m_fileName) )
+                return;
+        }
         else if (r == wxCANCEL)
+        {
             return;
+        }
     }
 
     wxString f(m_history.GetHistoryFile(event.GetId() - wxID_FILE1));
@@ -826,7 +841,7 @@ void poEditFrame::OnOpenHist(wxCommandEvent& event)
     else
         wxLogError(_("File '%s' doesn't exist."), f.c_str());
 }
-        
+
 
 
 #ifdef __WXMSW__
@@ -856,9 +871,14 @@ void poEditFrame::OnFileDrop(wxDropFilesEvent& event)
                            _("Save changes"), 
                            wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
             if (r == wxYES)
-                WriteCatalog(m_fileName);
+            {
+                if ( !WriteCatalog(m_fileName) )
+                    return;
+            }
             else if (r == wxCANCEL)
+            {
                 return;
+            }
         }
         ReadCatalog(f.GetFullPath());
     }
@@ -960,9 +980,14 @@ void poEditFrame::OnNew(wxCommandEvent& event)
                          _("Save changes"), 
                          wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
         if (r == wxYES)
-            WriteCatalog(m_fileName);
+        {
+            if ( !WriteCatalog(m_fileName) )
+                return;
+        }
         else if (r == wxCANCEL)
+        {
             return;
+        }
     }
 
     SettingsDialog dlg(this);
@@ -1882,7 +1907,7 @@ void poEditFrame::UpdateMenu()
 
 
 
-void poEditFrame::WriteCatalog(const wxString& catalog)
+bool poEditFrame::WriteCatalog(const wxString& catalog)
 {
     wxBusyCursor bcur;
 
@@ -1890,7 +1915,9 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
     dt.Translator = wxConfig::Get()->Read(_T("translator_name"), dt.Translator);
     dt.TranslatorEmail = wxConfig::Get()->Read(_T("translator_email"), dt.TranslatorEmail);
 
-    m_catalog->Save(catalog);
+    if ( !m_catalog->Save(catalog) )
+        return false;
+
     m_fileName = catalog;
     m_modified = false;
 
@@ -1919,6 +1946,8 @@ void poEditFrame::WriteCatalog(const wxString& catalog)
     
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(m_fileName);
+
+    return true;
 }
 
 
