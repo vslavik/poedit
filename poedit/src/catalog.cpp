@@ -1195,7 +1195,14 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     wxTextFileType crlfOrig, crlf;
     bool crlfPreserve;
     wxTextFile f;
-    
+
+    if ( wxFileExists(po_file) && !wxFile::Access(po_file, wxFile::write) )
+    {
+        wxLogError(_("File '%s' is read-only and cannot be saved.\nPlease save it under different name."),
+                   po_file.c_str());
+        return false;
+    }
+
     GetCRLFBehaviour(crlfOrig, crlfPreserve);
 
     /* Update information about last modification time: */
