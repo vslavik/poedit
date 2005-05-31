@@ -105,6 +105,8 @@ class TempLocaleSwitcher
 
 bool ExecuteGettext(const wxString& cmdline, wxString *stderrOutput)
 {
+    wxLogTrace(_T("poedit.execute"), _T("executing '%s'"), cmdline.c_str());
+
     TempLocaleSwitcher localeSwitcher(_T("C"));
 
     size_t i;
@@ -154,6 +156,8 @@ bool ExecuteGettextNonblocking(const wxString& cmdline,
                                GettextProcessData *data,
                                wxEvtHandler *parent)
 {
+    wxLogTrace(_T("poedit.execute"), _T("executing '%s'"), cmdline.c_str());
+
     TempLocaleSwitcher localeSwitcher(_T("C"));
 
     GettextProcess *process;
