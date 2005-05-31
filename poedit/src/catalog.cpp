@@ -206,7 +206,7 @@ void Catalog::HeaderData::FromString(const wxString& str)
             en.Key = wxString(ln.substr(0, pos)).Strip(wxString::both);
             en.Value = wxString(ln.substr(pos + 1)).Strip(wxString::both);
             m_entries.push_back(en);
-            wxLogTrace(_T("header"),
+            wxLogTrace(_T("poedit.header"),
                        _T("%s='%s'"), en.Key.c_str(), en.Value.c_str());
         }
     }
