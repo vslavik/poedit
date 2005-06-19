@@ -212,7 +212,7 @@ void poEditListCtrl::SizeColumns()
 }
 
 
-void poEditListCtrl::SetCatalog(Catalog* catalog)
+void poEditListCtrl::CatalogChanged(Catalog* catalog)
 {
     m_catalog = catalog;
     ReadCatalog();

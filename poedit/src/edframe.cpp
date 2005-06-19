@@ -1024,6 +1024,7 @@ void poEditFrame::OnNew(wxCommandEvent& event)
         dlg.TransferFrom(catalog);
         delete m_catalog;
         m_catalog = catalog;
+        m_list->CatalogChanged(m_catalog);
         m_fileName = wxEmptyString;
         m_modified = true;
         OnSave(event);
@@ -1101,6 +1102,7 @@ void poEditFrame::UpdateCatalog(const wxString& pot_file)
         succ = m_catalog->Update();
     else
         succ = m_catalog->UpdateFromPOT(pot_file);
+    m_list->CatalogChanged(m_catalog);
 
     RestartItemsValidation();
     
@@ -1641,7 +1643,7 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
 
     delete m_catalog;
     m_catalog = new Catalog(catalog);
-    m_list->SetCatalog(m_catalog);
+    m_list->CatalogChanged(m_catalog);
     dynamic_cast<TextctrlHandler*>(m_textTrans->GetEventHandler())->SetCatalog(m_catalog);
 
 #ifdef USE_TRANSMEM
@@ -1751,6 +1753,7 @@ void poEditFrame::RefreshControls()
         UpdateTitle();
         delete m_catalog;
         m_catalog = NULL;
+        m_list->CatalogChanged(NULL);
         return;
     }
     

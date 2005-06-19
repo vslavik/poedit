@@ -53,7 +53,7 @@ class poEditListCtrl : public wxListView
             return m_colWidth * 2/*safety coefficient*/;
         }
         
-        void SetCatalog(Catalog* catalog);
+        void CatalogChanged(Catalog* catalog);
         
         virtual wxString OnGetItemText(long item, long column) const;
         virtual wxListItemAttr * OnGetItemAttr(long item) const;
