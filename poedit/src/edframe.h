@@ -5,9 +5,9 @@
 
     ---------------
       edframe.h
-    
+
       Editor frame
-    
+
       (c) Vaclav Slavik, 2000-2005
 
 */
@@ -41,15 +41,15 @@ class WXDLLEXPORT wxStaticText;
 #include "gexecute.h"
 #include "edlistctrl.h"
 
-class ListHandler;   
-class TextctrlHandler;   
+class ListHandler;
+class TextctrlHandler;
 
 class TranslationMemory;
 class poEditFrame;
 
 WX_DECLARE_LIST(poEditFrame, poEditFramesList);
 
-/** This class provides main editing frame. It handles user's input 
+/** This class provides main editing frame. It handles user's input
     and provides frontend to catalog editing engine. Nothing fancy.
  */
 class poEditFrame : public wxFrame
@@ -60,18 +60,18 @@ class poEditFrame : public wxFrame
             empty and is already opened in another poEdit frame,
             then this function won't create new frame but instead
             return pointer to existing one.
-            
+
             \param catalog filename of catalog to open. If empty, starts
                            w/o opened file.
-         */        
+         */
         static poEditFrame *Create(const wxString& catalog = wxEmptyString);
-        
-        
+
+
         /** Returns pointer to existing instance of poEditFrame that currently
             exists and edits \a catalog. If no such frame exists, returns NULL.
          */
-        static poEditFrame *Find(const wxString& catalog);        
-        
+        static poEditFrame *Find(const wxString& catalog);
+
         ~poEditFrame();
 
         /// Reads catalog, refreshes controls.
@@ -94,7 +94,7 @@ class poEditFrame : public wxFrame
                            w/o opened file.
          */
         poEditFrame();
-        
+
         static poEditFramesList ms_instances;
 
     private:
@@ -127,7 +127,7 @@ class poEditFrame : public wxFrame
 
         // (Re)initializes spellchecker, if needed
         void InitSpellchecker();
-        
+
         // Message handlers:
         void OnNew(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
@@ -153,7 +153,7 @@ class poEditFrame : public wxFrame
         void OnReference(wxCommandEvent& event);
         void OnReferencesMenu(wxCommandEvent& event);
         void ShowReference(int num);
-        void OnRightClick(wxCommandEvent& event);            
+        void OnRightClick(wxCommandEvent& event);
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnQuotesFlag(wxCommandEvent& event);
         void OnLinesFlag(wxCommandEvent& event);
@@ -172,7 +172,7 @@ class poEditFrame : public wxFrame
         bool AutoTranslateCatalog();
 #endif
         void OnPurgeDeleted(wxCommandEvent& event);
-        
+
         void OnExport(wxCommandEvent& event);
         bool ExportCatalog(const wxString& filename);
 
@@ -186,14 +186,14 @@ class poEditFrame : public wxFrame
         void CancelItemsValidation();
         // starts validation from scratch
         void RestartItemsValidation();
-        
+
         // updates the status of both comment windows: Automatic and Translator's
         void UpdateDisplayCommentWin();
 
         void ShowPluralFormUI(bool show = true);
 
         void RecreatePluralTextCtrls();
-    
+
         DECLARE_EVENT_TABLE()
 
     private:
@@ -201,15 +201,15 @@ class poEditFrame : public wxFrame
         {
             wxString tmp1, tmp2;
         };
-            
+
         int m_itemBeingValidated;
         std::list<int> m_itemsToValidate;
         ValidationProcessData m_validationProcess;
-        
+
         bool m_commentWindowEditable;
         Catalog *m_catalog;
         wxString m_fileName;
-        
+
 #ifdef USE_TRANSMEM
         TranslationMemory *m_transMem;
         bool m_transMemLoaded;
@@ -246,7 +246,7 @@ class poEditFrame : public wxFrame
         wxFileHistory m_history;
         std::vector<wxString> m_edittedTextOrig;
         bool m_edittedTextFuzzyChanged;
-        
+
         friend class ListHandler;
         friend class TextctrlHandler;
 };

@@ -5,9 +5,9 @@
 
     ---------------
       edlistctrl.cpp
-    
+
       List view control
-    
+
       (c) Vaclav Slavik, 1999-2004
       (c) Olivier Sannier, 2005
 
@@ -31,14 +31,14 @@ bool gs_shadedList = false;
                                        int((g)*g_darkColourFactor),\
                                        int((b)*g_darkColourFactor)))
 #define LIST_COLOURS(r,g,b) { wxColour(r,g,b), DARKEN_COLOUR(r,g,b) }
-static const wxColour 
+static const wxColour
     g_ItemColourNormal[2] =       LIST_COLOURS(0xFF,0xFF,0xFF), // white
     g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
     g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1), // yellow
     g_ItemColourInvalid[2] =      LIST_COLOURS(0xFF,0x20,0x20); // red
-    
+
 static const wxColour g_TranspColour(254, 0, 253);
-    
+
 enum
 {
     IMG_NOTHING   = 0x00,
@@ -55,8 +55,8 @@ enum
     IMG_BK7       =  8 << 3,
     IMG_BK8       =  9 << 3,
     IMG_BK9       = 10 << 3
-};    
-    
+};
+
 BEGIN_EVENT_TABLE(poEditListCtrl, wxListCtrl)
    EVT_SIZE(poEditListCtrl::OnSize)
 END_EVENT_TABLE()
@@ -85,9 +85,9 @@ wxBitmap AddDigit(char digit, int x, int y, const wxBitmap& bmp)
     dc.SetPen(*wxTRANSPARENT_PEN);
     dc.SetBrush(wxBrush(g_TranspColour, wxSOLID));
     dc.DrawRectangle(0, 0, width, height);
-    
+
     dc.DrawBitmap(bmp, 0,0,true);
-    
+
     dc.SetPen(*wxBLACK_PEN);
     for(int i = 0; i < 5; i++)
     {
@@ -97,17 +97,17 @@ wxBitmap AddDigit(char digit, int x, int y, const wxBitmap& bmp)
                 dc.DrawPoint(x+j, y+i);
         }
     }
-    
+
     dc.SelectObject(wxNullBitmap);
     tmpBmp.SetMask(new wxMask(tmpBmp, g_TranspColour));
     return tmpBmp;
-}    
+}
 
 wxBitmap MergeBitmaps(const wxBitmap& bmp1, const wxBitmap& bmp2)
 {
     wxMemoryDC dc;
     wxBitmap tmpBmp(bmp1.GetWidth(), bmp1.GetHeight());
-    
+
     dc.SelectObject(tmpBmp);
     dc.SetPen(*wxTRANSPARENT_PEN);
     dc.SetBrush(wxBrush(g_TranspColour, wxSOLID));
@@ -115,7 +115,7 @@ wxBitmap MergeBitmaps(const wxBitmap& bmp1, const wxBitmap& bmp2)
     dc.DrawBitmap(bmp1, 0, 0, true);
     dc.DrawBitmap(bmp2, 0, 0, true);
     dc.SelectObject(wxNullBitmap);
-    
+
     tmpBmp.SetMask(new wxMask(tmpBmp, g_TranspColour));
     return tmpBmp;
 }
@@ -130,13 +130,13 @@ wxBitmap BitmapFromList(wxImageList* list, int index)
     dc.SetPen(*wxTRANSPARENT_PEN);
     dc.SetBrush(wxBrush(g_TranspColour, wxSOLID));
     dc.DrawRectangle(0, 0, width, height);
-    
+
     list->Draw(index, dc, 0, 0, wxIMAGELIST_DRAW_TRANSPARENT);
-    
+
     dc.SelectObject(wxNullBitmap);
     bmp.SetMask(new wxMask(bmp, g_TranspColour));
     return bmp;
-}    
+}
 
 poEditListCtrl::poEditListCtrl(wxWindow *parent,
                wxWindowID id,
@@ -151,48 +151,48 @@ poEditListCtrl::poEditListCtrl(wxWindow *parent,
     m_catalog = NULL;
     m_displayLines = dispLines;
     CreateColumns();
-    
+
     int i;
     wxImageList *list = new wxImageList(16, 16);
-    
+
     // IMG_NOTHING:
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-nothing")));   
-    
+    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-nothing")));
+
     // IMG_AUTOMATIC:
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-automatic")));              
+    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-automatic")));
     // IMG_COMMENT:
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-comment")));                
+    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-comment")));
     // IMG_AUTOMATIC | IMG_COMMENT:
-    list->Add(MergeBitmaps(wxArtProvider::GetBitmap(_T("poedit-status-automatic")), 
-                           wxArtProvider::GetBitmap(_T("poedit-status-comment"))));  
-    
-    // IMG_MODIFIED 
+    list->Add(MergeBitmaps(wxArtProvider::GetBitmap(_T("poedit-status-automatic")),
+                           wxArtProvider::GetBitmap(_T("poedit-status-comment"))));
+
+    // IMG_MODIFIED
     list->Add(wxArtProvider::GetBitmap(_T("poedit-status-modified")));
-    
+
     // IMG_MODIFIED variations:
     for (i = 1; i < IMG_MODIFIED; i++)
     {
         list->Add(MergeBitmaps(BitmapFromList(list, i),
                                wxArtProvider::GetBitmap(_T("poedit-status-modified"))));
     }
-    
+
     // BK_XX variations:
     for (int bk = 0; bk < 10; bk++)
     {
-        for(i = 0; i <= (IMG_AUTOMATIC|IMG_COMMENT|IMG_MODIFIED); i++)                       
+        for(i = 0; i <= (IMG_AUTOMATIC|IMG_COMMENT|IMG_MODIFIED); i++)
         {
             wxBitmap bmp = BitmapFromList(list, i);
             list->Add(AddDigit(bk, 0, 0, bmp));
-        }    
-    }    
+        }
+    }
 
     AssignImageList(list, wxIMAGE_LIST_SMALL);
 }
 
 poEditListCtrl::~poEditListCtrl()
 {
-}    
-        
+}
+
 void poEditListCtrl::CreateColumns()
 {
     ClearAll();
@@ -232,18 +232,18 @@ void poEditListCtrl::ReadCatalog()
     {
         // set the item count
         SetItemCount(m_catalog->GetCount());
-        
+
         // create the lookup arrays of Ids by first splitting it upon
         // four categories of items:
         // unstranslated, invalid, fuzzy and the rest
         m_itemIndexToCatalogIndexArray.Clear();
-        
+
         wxArrayInt untranslatedIds;
         wxArrayInt invalidIds;
         wxArrayInt fuzzyIds;
         wxArrayInt restIds;
         int i;
-        
+
         for(i = 0; i < m_catalog->GetCount(); i++)
         {
             CatalogData& d = (*m_catalog)[i];
@@ -255,8 +255,8 @@ void poEditListCtrl::ReadCatalog()
               fuzzyIds.Add(i);
             else
               restIds.Add(i);
-        }    
-        
+        }
+
         // Now fill the lookup array, not forgetting to set the appropriate
         // property in the catalog entry to be able to go back and forth
         // from one numbering system to the other
@@ -267,59 +267,59 @@ void poEditListCtrl::ReadCatalog()
         {
             m_itemIndexToCatalogIndexArray.Add(untranslatedIds[i]);
             m_catalogIndexToItemIndexArray[untranslatedIds[i]] = listItemId++;
-        }    
+        }
         for(i = 0; i < invalidIds.Count(); i++)
         {
             m_itemIndexToCatalogIndexArray.Add(invalidIds[i]);
             m_catalogIndexToItemIndexArray[invalidIds[i]] = listItemId++;
-        }    
+        }
         for(i = 0; i < fuzzyIds.Count(); i++)
         {
             m_itemIndexToCatalogIndexArray.Add(fuzzyIds[i]);
             m_catalogIndexToItemIndexArray[fuzzyIds[i]] = listItemId++;
-        }    
+        }
         for(i = 0; i < restIds.Count(); i++)
         {
             m_itemIndexToCatalogIndexArray.Add(restIds[i]);
             m_catalogIndexToItemIndexArray[restIds[i]] = listItemId++;
-        }    
-    }    
-}    
+        }
+    }
+}
 
 wxString poEditListCtrl::OnGetItemText(long item, long column) const
 {
     if (m_catalog == NULL)
         return wxEmptyString;
-    
+
     CatalogData& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
     switch (column)
     {
-        case 0: 
+        case 0:
         {
             wxString orig = convertToLocalCharset(d.GetString());
-            return orig.substr(0,GetMaxColChars()); 
+            return orig.substr(0,GetMaxColChars());
             break;
-        }    
-        case 1: 
+        }
+        case 1:
         {
             wxString trans = convertToLocalCharset(d.GetTranslation());
-            return trans; 
+            return trans;
             break;
-        }    
-        case 2: 
+        }
+        case 2:
         {
-            return wxString() << d.GetLineNumber(); 
+            return wxString() << d.GetLineNumber();
             break;
-        }    
-        default: 
-            return wxEmptyString; 
+        }
+        default:
+            return wxEmptyString;
             break;
-    } 
-}  
+    }
+}
 
 // this variable can't be a member of the class as the OnGetItemAttr function
 // is const
-static wxListItemAttr g_attr;  
+static wxListItemAttr g_attr;
 wxListItemAttr * poEditListCtrl::OnGetItemAttr(long item) const
 {
     CatalogData& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
@@ -345,27 +345,27 @@ wxListItemAttr * poEditListCtrl::OnGetItemAttr(long item) const
         else
             g_attr.SetBackgroundColour(g_ItemColourNormal[0]);
     }
-    
+
     return &g_attr;
-}    
+}
 
 int poEditListCtrl::OnGetItemImage(long item) const
 {
     CatalogData& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
     int index = IMG_NOTHING;
-    
+
     if (d.IsAutomatic())
         index |= IMG_AUTOMATIC;
     if (d.HasComment())
         index |= IMG_COMMENT;
     if (d.IsModified())
         index |= IMG_MODIFIED;
-    
+
     index |= (static_cast<int>(d.GetBookmark())+1) << 3;
-        
+
     return index;
 }
-    
+
 void poEditListCtrl::OnSize(wxSizeEvent& event)
 {
     SizeColumns();
@@ -378,7 +378,7 @@ long poEditListCtrl::GetItemData(long item) const
         return m_itemIndexToCatalogIndexArray[item];
     else
         return -1;
-}    
+}
 
 int poEditListCtrl::GetItemIndex(int catalogIndex) const
 {

@@ -5,9 +5,9 @@
 
     ---------------
       edframe.cpp
-    
+
       Editor frame
-    
+
       (c) Vaclav Slavik, 2000-2005
 
 */
@@ -100,26 +100,26 @@ poEditFramesList poEditFrame::ms_instances;
 
 
 // Event & controls IDs:
-enum 
+enum
 {
     EDC_LIST = 1000,
     EDC_TEXTORIG,
     EDC_TEXTORIGPLURAL,
     EDC_TEXTTRANS,
     EDC_TEXTCOMMENT,
-    
-    ED_POPUP_REFS = 2000, 
+
+    ED_POPUP_REFS = 2000,
     ED_POPUP_TRANS = 3000,
     ED_POPUP_DUMMY = 4000
 };
 
 class ListHandler;
 class TextctrlHandler : public wxEvtHandler
-{ 
+{
     public:
         TextctrlHandler(poEditFrame* frame) :
                  wxEvtHandler(), m_frame(frame), m_list(frame->m_list), m_sel(&(frame->m_sel)) {}
-                 
+
         void SetCatalog(Catalog* catalog) {m_catalog = catalog;}
 
     private:
@@ -166,7 +166,7 @@ class TextctrlHandler : public wxEvtHandler
                     if (event.ControlDown())
                     {
                         int newy = *m_sel + 10;
-                        if (newy >= m_list->GetItemCount()) 
+                        if (newy >= m_list->GetItemCount())
                             newy = m_list->GetItemCount() - 1;
                         m_list->EnsureVisible(newy);
                         m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
@@ -197,12 +197,12 @@ class TextctrlHandler : public wxEvtHandler
                                 m_catalog->SetBookmark(selItemIndex, NO_BOOKMARK);
                             else
                                 bkIndex = m_catalog->SetBookmark(selItemIndex, bk);
-                            
+
                             // Refresh items
                             m_list->RefreshItem(*m_sel);
                             if (bkIndex > -1)
                                 m_list->RefreshItem(m_list->GetItemIndex(bkIndex));
-                                
+
                             // Catalog has been modified
                             m_frame->m_modified = true;
                             m_frame->UpdateTitle();
@@ -220,11 +220,11 @@ class TextctrlHandler : public wxEvtHandler
                                     m_list->EnsureVisible(listIndex);
                                     m_list->SetItemState(listIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                                 }
-                            }    
+                            }
                         }
                         else
                             event.Skip();
-                    }           
+                    }
                     else
                         event.Skip();
                     break;
@@ -233,13 +233,13 @@ class TextctrlHandler : public wxEvtHandler
             }
         }
 
-        DECLARE_EVENT_TABLE() 
+        DECLARE_EVENT_TABLE()
 
         poEditFrame    *m_frame;
         poEditListCtrl *m_list;
         int            *m_sel;
         Catalog        *m_catalog;
-        
+
         friend class ListHandler;
 };
 
@@ -251,9 +251,9 @@ END_EVENT_TABLE()
 // :(
 bool gs_focusToText = false;
 
-// special handling of events in listctrl 
+// special handling of events in listctrl
 class ListHandler : public wxEvtHandler
-{ 
+{
     public:
         ListHandler(poEditFrame *frame) :
                  wxEvtHandler(), m_frame(frame) {}
@@ -266,7 +266,7 @@ class ListHandler : public wxEvtHandler
         void OnFocus(wxFocusEvent& event) { m_frame->OnListFocus(event); }
         void OnKeyDown(wxKeyEvent& event) { dynamic_cast<TextctrlHandler*>(m_frame->m_textTrans->GetEventHandler())->OnKeyDown(event); }
 
-        DECLARE_EVENT_TABLE() 
+        DECLARE_EVENT_TABLE()
 
         poEditFrame *m_frame;
 };
@@ -281,7 +281,7 @@ BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
 END_EVENT_TABLE()
 
 class StatusbarHandler : public wxEvtHandler
-{ 
+{
     public:
         StatusbarHandler(wxStatusBar *bar, wxGauge *gauge) :
                  m_bar(bar), m_gauge(gauge) {}
@@ -295,7 +295,7 @@ class StatusbarHandler : public wxEvtHandler
             event.Skip();
         }
 
-        DECLARE_EVENT_TABLE() 
+        DECLARE_EVENT_TABLE()
 
         wxStatusBar *m_bar;
         wxGauge     *m_gauge;
@@ -347,7 +347,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_shaded"),      poEditFrame::OnShadedListFlag)
    EVT_MENU           (XRCID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
    EVT_MENU           (XRCID("menu_references"),  poEditFrame::OnReferencesMenu)
-   EVT_MENU           (XRCID("menu_fullscreen"),  poEditFrame::OnFullscreen) 
+   EVT_MENU           (XRCID("menu_fullscreen"),  poEditFrame::OnFullscreen)
    EVT_MENU           (XRCID("menu_find"),        poEditFrame::OnFind)
    EVT_MENU           (XRCID("menu_comment"),     poEditFrame::OnEditComment)
    EVT_MENU           (XRCID("menu_manager"),     poEditFrame::OnManager)
@@ -376,11 +376,11 @@ poEditFrame::poEditFrame() :
                                  wxConfig::Get()->Read(_T("frame_h"), 400)),
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
     m_itemBeingValidated(-1),
-    m_catalog(NULL), 
+    m_catalog(NULL),
 #ifdef USE_TRANSMEM
     m_transMem(NULL),
     m_transMemLoaded(false),
-#endif    
+#endif
     m_list(NULL),
     m_modified(false),
     m_hasObsoleteItems(false),
@@ -392,23 +392,23 @@ poEditFrame::poEditFrame() :
 #else
     const int SPLITTER_BORDER = wxSP_3DBORDER;
 #endif
-    
+
     wxConfigBase *cfg = wxConfig::Get();
-    
+
     // VS: a dirty hack of sort -- if this is the only poEdit frame opened,
     //     place it at remembered position, but don't do that if there already
     //     are other frames, because they would overlap and nobody could
     //     recognize that there are many of them
     if (ms_instances.GetCount() == 0)
         Move(cfg->Read(_T("frame_x"), -1), cfg->Read(_T("frame_y"), -1));
- 
+
     m_displayQuotes = (bool)cfg->Read(_T("display_quotes"), (long)false);
     m_displayLines = (bool)cfg->Read(_T("display_lines"), (long)false);
-    m_displayCommentWin = 
+    m_displayCommentWin =
         (bool)cfg->Read(_T("display_comment_win"), (long)true);
-    m_displayAutoCommentsWin = 
+    m_displayAutoCommentsWin =
         (bool)cfg->Read(_T("display_auto_comments_win"), (long)true);
-    m_commentWindowEditable = 
+    m_commentWindowEditable =
         (bool)cfg->Read(_T("comment_window_editable"), (long)false);
     gs_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
     gs_shadedList = (bool)cfg->Read(_T("shaded_list"), (long)true);
@@ -422,8 +422,8 @@ poEditFrame::poEditFrame() :
 #ifdef CAN_MODIFY_DEFAULT_FONT
     m_boldGuiFont = wxSystemSettings::GetSystemFont(wxSYS_DEFAULT_GUI_FONT);
     m_boldGuiFont.SetWeight(wxFONTWEIGHT_BOLD);
-#endif   
-    
+#endif
+
     wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar(_T("mainmenu"));
     if (MenuBar)
     {
@@ -451,55 +451,55 @@ poEditFrame::poEditFrame() :
     GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
     GetMenuBar()->Check(XRCID("menu_auto_comments_win"), m_displayAutoCommentsWin);
     GetMenuBar()->Check(XRCID("menu_shaded"), gs_shadedList);
-    
+
 	m_splitter = new wxSplitterWindow(this, -1,
                                       wxDefaultPosition, wxDefaultSize,
                                       SPLITTER_BORDER);
 
-    m_list = new poEditListCtrl(m_splitter, 
-                                EDC_LIST, 
+    m_list = new poEditListCtrl(m_splitter,
+                                EDC_LIST,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxLC_REPORT | wxLC_SINGLE_SEL,
                                 m_displayLines);
 
     m_bottomSplitter = new wxSplitterWindow(m_splitter, -1,
                                             wxDefaultPosition, wxDefaultSize,
-                                            SPLITTER_BORDER);    
+                                            SPLITTER_BORDER);
     m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
     m_bottomRightPanel = new wxPanel(m_bottomSplitter);
 
     m_textComment = NULL;
     m_textAutoComments = new UnfocusableTextCtrl(m_bottomRightPanel,
-                                EDC_TEXTORIG, wxEmptyString, 
-                                wxDefaultPosition, wxDefaultSize, 
+                                EDC_TEXTORIG, wxEmptyString,
+                                wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE | wxTE_READONLY);
     // This call will force the creation of the right kind of control
     // for the m_textComment member
     UpdateCommentWindowEditable();
-    
+
     m_labelSingular = new wxStaticText(m_bottomLeftPanel, -1, _("Singular:"));
     m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
     m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
-                                EDC_TEXTORIG, wxEmptyString, 
-                                wxDefaultPosition, wxDefaultSize, 
+                                EDC_TEXTORIG, wxEmptyString,
+                                wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE | wxTE_READONLY);
     m_textOrigPlural = new UnfocusableTextCtrl(m_bottomLeftPanel,
-                                EDC_TEXTORIGPLURAL, wxEmptyString, 
-                                wxDefaultPosition, wxDefaultSize, 
+                                EDC_TEXTORIGPLURAL, wxEmptyString,
+                                wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE | wxTE_READONLY);
-    
+
     m_textTrans = new wxTextCtrl(m_bottomLeftPanel,
-                                EDC_TEXTTRANS, wxEmptyString, 
-                                wxDefaultPosition, wxDefaultSize, 
+                                EDC_TEXTTRANS, wxEmptyString,
+                                wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE);
 
     m_pluralNotebook = new wxNotebook(m_bottomLeftPanel, -1);
 
     SetCustomFonts();
-    
+
     wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
     wxSizer *rightSizer = new wxBoxSizer(wxVERTICAL);
-    
+
     wxFlexGridSizer *gridSizer = new wxFlexGridSizer(2);
     gridSizer->AddGrowableCol(1);
     gridSizer->AddGrowableRow(0);
@@ -521,7 +521,7 @@ poEditFrame::poEditFrame() :
 
     m_bottomRightPanel->SetAutoLayout(true);
     m_bottomRightPanel->SetSizer(rightSizer);
-    
+
     m_bottomSplitter->SetMinimumPaneSize(40);
     if (m_displayCommentWin || m_displayAutoCommentsWin)
     {
@@ -553,7 +553,7 @@ poEditFrame::poEditFrame() :
     m_statusGauge = new wxGauge(bar, -1, 100, wxDefaultPosition, wxDefaultSize, wxGA_SMOOTH);
     bar->SetStatusWidths(2, widths);
     bar->PushEventHandler(new StatusbarHandler(bar, m_statusGauge));
-#ifdef __WXMSW__    
+#ifdef __WXMSW__
     bar->SetSize(-1,-1,-1,-1);
 #endif
 
@@ -575,7 +575,7 @@ poEditFrame::poEditFrame() :
     if (!wxFileExists(book))
         book.Printf(_T("%s/help.zip"), datadir.c_str());
     m_help.Initialize(book);
-    m_help.AddBook(datadir + _T("/help-gettext.zip"));    
+    m_help.AddBook(datadir + _T("/help-gettext.zip"));
 #endif
 
     ms_instances.Append(this);
@@ -617,7 +617,7 @@ poEditFrame::~poEditFrame()
 
     m_history.Save(*cfg);
 
-#ifdef USE_TRANSMEM    
+#ifdef USE_TRANSMEM
     if (m_transMem)
         m_transMem->Release();
 #endif
@@ -652,7 +652,7 @@ static void DoInitSpellchecker(wxTextCtrl *text,
     wxASSERT_MSG( textview, _T("wxTextCtrl is supposed to use GtkTextView") );
     GtkSpell *spell = gtkspell_get_from_text_view(textview);
 
-    if (spell)        
+    if (spell)
         gtkspell_detach(spell);
 
     if (enable)
@@ -661,16 +661,16 @@ static void DoInitSpellchecker(wxTextCtrl *text,
         // the user with error messages every time the spell checker
         // is re-initialized:
         static std::map<wxString, bool> brokenLangs;
-        
+
         if (brokenLangs.find(lang) == brokenLangs.end())
-        {        
+        {
             GError *err = NULL;
             if (!gtkspell_new_attach(textview, lang.ToAscii(), &err))
             {
                 wxLogError(_("Error initializing spell checking: %s"),
                            wxString(err->message, wxConvUTF8).c_str());
                 g_error_free(err);
-                
+
                 // remember that this language is broken:
                 brokenLangs[lang] = true;
             }
@@ -694,7 +694,7 @@ void poEditFrame::InitSpellchecker()
         DoInitSpellchecker(m_textTransPlural[i], enabled, lang);
 #endif
 }
-    
+
 
 
 #ifdef USE_TRANSMEM
@@ -708,7 +708,7 @@ TranslationMemory *poEditFrame::GetTransMem()
     {
         wxString lang;
         wxString dbPath = cfg->Read(_T("TM/database_path"), wxEmptyString);
-       
+
         lang = m_catalog->GetLocaleCode();
         if (!lang)
         {
@@ -724,7 +724,7 @@ TranslationMemory *poEditFrame::GetTransMem()
                 m_transMem = NULL;
                 return m_transMem;
             }
-            index = wxGetSingleChoiceIndex(_("Select catalog's language"), 
+            index = wxGetSingleChoiceIndex(_("Select catalog's language"),
                                            _("Please select language code:"),
                                            lngs, this);
             if (index > 0)
@@ -762,7 +762,7 @@ void poEditFrame::OnCloseWindow(wxCloseEvent&)
     {
         int r =
             wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"), 
+                         _("Save changes"),
                          wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
         if (r == wxYES)
         {
@@ -784,9 +784,9 @@ void poEditFrame::OnOpen(wxCommandEvent&)
     UpdateFromTextCtrl();
     if (m_catalog && m_modified)
     {
-        int r = 
+        int r =
             wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"), 
+                         _("Save changes"),
                          wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
         if (r == wxYES)
         {
@@ -800,12 +800,12 @@ void poEditFrame::OnOpen(wxCommandEvent&)
     }
 
     wxString path = wxPathOnly(m_fileName);
-    if (path.empty()) 
+    if (path.empty())
         path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
-    
-    wxString name = wxFileSelector(_("Open catalog"), 
-                    path, wxEmptyString, wxEmptyString, 
-                    _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"), 
+
+    wxString name = wxFileSelector(_("Open catalog"),
+                    path, wxEmptyString, wxEmptyString,
+                    _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"),
                     wxOPEN | wxFILE_MUST_EXIST, this);
     if (!name.IsEmpty())
     {
@@ -821,9 +821,9 @@ void poEditFrame::OnOpenHist(wxCommandEvent& event)
     UpdateFromTextCtrl();
     if (m_catalog && m_modified)
     {
-        int r = 
+        int r =
             wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"), 
+                         _("Save changes"),
                          wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
         if (r == wxYES)
         {
@@ -853,15 +853,15 @@ void poEditFrame::OnFileDrop(wxDropFilesEvent& event)
         wxLogError(_("You can't drop more than one file on poEdit window."));
         return;
     }
-    
+
     wxFileName f(event.GetFiles()[0]);
     if (f.GetExt().Lower() != _T("po"))
     {
         wxLogError(_("File '%s' is not message catalog."),
                    f.GetFullPath().c_str());
-        return; 
+        return;
     }
-    
+
     if (f.FileExists())
     {
         UpdateFromTextCtrl();
@@ -869,7 +869,7 @@ void poEditFrame::OnFileDrop(wxDropFilesEvent& event)
         {
             int r =
               wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                           _("Save changes"), 
+                           _("Save changes"),
                            wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
             if (r == wxYES)
             {
@@ -902,7 +902,7 @@ void poEditFrame::OnSave(wxCommandEvent& event)
 
 static wxString SuggestFileName(const Catalog *catalog)
 {
-    wxString name;    
+    wxString name;
     if (catalog)
         name = catalog->GetLocaleCode();
 
@@ -924,8 +924,8 @@ void poEditFrame::OnSaveAs(wxCommandEvent&)
         path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
         name = SuggestFileName(m_catalog) + _T(".po");
     }
-    
-    name = wxFileSelector(_("Save as..."), path, name, wxEmptyString, 
+
+    name = wxFileSelector(_("Save as..."), path, name, wxEmptyString,
                           _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"),
                           wxSAVE | wxOVERWRITE_PROMPT, this);
     if (!name.IsEmpty())
@@ -947,10 +947,10 @@ void poEditFrame::OnExport(wxCommandEvent&)
         name = SuggestFileName(m_catalog) + _T(".html");
     }
     else
-		name += _T(".html");        
+		name += _T(".html");
 
     name = wxFileSelector(_("Export as..."),
-                          wxPathOnly(m_fileName), name, wxEmptyString, 
+                          wxPathOnly(m_fileName), name, wxEmptyString,
                           _("HTML file (*.html)|*.html"),
                           wxSAVE | wxOVERWRITE_PROMPT, this);
     if (!name.IsEmpty())
@@ -972,13 +972,13 @@ bool poEditFrame::ExportCatalog(const wxString& filename)
 void poEditFrame::OnNew(wxCommandEvent& event)
 {
     bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
-    
+
     UpdateFromTextCtrl();
     if (m_catalog && m_modified)
     {
         int r =
             wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"), 
+                         _("Save changes"),
                          wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
         if (r == wxYES)
         {
@@ -993,16 +993,16 @@ void poEditFrame::OnNew(wxCommandEvent& event)
 
     SettingsDialog dlg(this);
     Catalog *catalog = new Catalog;
-    
+
     if (isFromPOT)
     {
         wxString path = wxPathOnly(m_fileName);
         if (path.empty())
             path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
-        wxString pot_file = 
+        wxString pot_file =
             wxFileSelector(_("Open catalog template"),
                  path, wxEmptyString, wxEmptyString,
-                 _("GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"), 
+                 _("GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"),
                  wxOPEN | wxFILE_MUST_EXIST, this);
         bool ok = false;
         if (!pot_file.empty())
@@ -1016,12 +1016,12 @@ void poEditFrame::OnNew(wxCommandEvent& event)
             return;
         }
     }
-    
+
     dlg.TransferTo(catalog);
     if (dlg.ShowModal() == wxID_OK)
     {
         CancelItemsValidation();
-        
+
         dlg.TransferFrom(catalog);
         delete m_catalog;
         m_catalog = catalog;
@@ -1060,7 +1060,7 @@ void poEditFrame::OnNew(wxCommandEvent& event)
 void poEditFrame::OnSettings(wxCommandEvent&)
 {
     SettingsDialog dlg(this);
-    
+
     dlg.TransferTo(m_catalog);
     if (dlg.ShowModal() == wxID_OK)
     {
@@ -1078,7 +1078,7 @@ void poEditFrame::OnSettings(wxCommandEvent&)
 void poEditFrame::OnPreferences(wxCommandEvent&)
 {
     PreferencesDialog dlg(this);
-    
+
     dlg.TransferTo(wxConfig::Get());
     if (dlg.ShowModal() == wxID_OK)
     {
@@ -1096,7 +1096,7 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
 void poEditFrame::UpdateCatalog(const wxString& pot_file)
 {
     CancelItemsValidation();
-    
+
     UpdateFromTextCtrl();
     bool succ;
     if (pot_file.empty())
@@ -1106,7 +1106,7 @@ void poEditFrame::UpdateCatalog(const wxString& pot_file)
     m_list->CatalogChanged(m_catalog);
 
     RestartItemsValidation();
-    
+
     m_modified = succ || m_modified;
     if (!succ)
     {
@@ -1125,18 +1125,18 @@ void poEditFrame::OnUpdate(wxCommandEvent& event)
         wxString path = wxPathOnly(m_fileName);
         if (path.empty())
             path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
-        pot_file = 
-            wxFileSelector(_("Open catalog template"), 
+        pot_file =
+            wxFileSelector(_("Open catalog template"),
                  path, wxEmptyString, wxEmptyString,
-                 _("GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"), 
+                 _("GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"),
                  wxOPEN | wxFILE_MUST_EXIST, this);
         if (pot_file.empty())
             return;
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(pot_file));
     }
-    
+
     UpdateCatalog(pot_file);
- 
+
 #ifdef USE_TRANSMEM
     if (wxConfig::Get()->Read(_T("use_tm_when_updating"), true) &&
         GetTransMem() != NULL)
@@ -1154,7 +1154,7 @@ void poEditFrame::OnListSel(wxListEvent& event)
 {
     if (m_sel != -1)
         UpdateFromTextCtrl(m_sel);
-    
+
     wxWindow *focus = wxWindow::FindFocus();
     bool hasFocus = (focus == m_textTrans) ||
                     (focus && focus->GetParent() == m_pluralNotebook);
@@ -1162,7 +1162,7 @@ void poEditFrame::OnListSel(wxListEvent& event)
     m_sel = event.GetIndex();
     UpdateToTextCtrl(m_sel);
     event.Skip();
-    
+
     if (hasFocus)
     {
         if (m_textTrans->IsShown())
@@ -1187,7 +1187,7 @@ void poEditFrame::OnListActivated(wxListEvent& event)
     if (m_catalog)
     {
         int ind = m_list->GetItemData(event.GetIndex());
-        if (ind >= (int)m_catalog->GetCount()) return;    
+        if (ind >= (int)m_catalog->GetCount()) return;
         CatalogData& entry = (*m_catalog)[ind];
         if (entry.GetValidity() == CatalogData::Val_Invalid)
         {
@@ -1204,7 +1204,7 @@ void poEditFrame::OnReferencesMenu(wxCommandEvent& event)
 {
     int selItem = m_list->GetItemData(m_sel);
     if (selItem < 0 || selItem >= (int)m_catalog->GetCount()) return;
-    
+
     const wxArrayString& refs = (*m_catalog)[selItem].GetReferences();
 
     if (refs.GetCount() == 0)
@@ -1216,10 +1216,10 @@ void poEditFrame::OnReferencesMenu(wxCommandEvent& event)
         wxString *table = new wxString[refs.GetCount()];
         for (unsigned i = 0; i < refs.GetCount(); i++)
             table[i] = refs[i];
-        int result = wxGetSingleChoiceIndex(_("Please choose the reference you want to show:"), _("References"), 
+        int result = wxGetSingleChoiceIndex(_("Please choose the reference you want to show:"), _("References"),
                           refs.GetCount(), table);
         delete[] table;
-        if (result != -1) 
+        if (result != -1)
             ShowReference(result);
     }
 
@@ -1240,15 +1240,15 @@ void poEditFrame::ShowReference(int num)
     wxString basepath;
     wxString cwd = wxGetCwd();
 
-    if (!!m_fileName) 
+    if (!!m_fileName)
     {
         wxString path;
-        
+
         if (wxIsAbsolutePath(m_catalog->Header().BasePath))
             path = m_catalog->Header().BasePath;
         else
             path = wxPathOnly(m_fileName) + _T("/") + m_catalog->Header().BasePath;
-        
+
         if (path.Last() == _T('/') || path.Last() == _T('\\'))
             path.RemoveLast();
 
@@ -1257,10 +1257,10 @@ void poEditFrame::ShowReference(int num)
         else
             basepath = cwd + _T("/") + path;
     }
-    
+
     if (wxConfig::Get()->Read(_T("open_editor_immediately"), (long)false))
     {
-        FileViewer::OpenInEditor(basepath, 
+        FileViewer::OpenInEditor(basepath,
                                  (*m_catalog)[m_list->GetItemData(m_sel)].GetReferences()[num]);
     }
     else
@@ -1281,12 +1281,12 @@ void poEditFrame::OnFuzzyFlag(wxCommandEvent& event)
 {
     if (event.GetEventObject() == GetToolBar())
     {
-        GetMenuBar()->Check(XRCID("menu_fuzzy"), 
+        GetMenuBar()->Check(XRCID("menu_fuzzy"),
                             GetToolBar()->GetToolState(XRCID("menu_fuzzy")));
     }
     else
     {
-        GetToolBar()->ToggleTool(XRCID("menu_fuzzy"),  
+        GetToolBar()->ToggleTool(XRCID("menu_fuzzy"),
                                  GetMenuBar()->IsChecked(XRCID("menu_fuzzy")));
     }
     m_edittedTextFuzzyChanged = true;
@@ -1299,10 +1299,10 @@ void poEditFrame::OnQuotesFlag(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
     if (event.GetEventObject() == GetToolBar())
-        GetMenuBar()->Check(XRCID("menu_quotes"), 
+        GetMenuBar()->Check(XRCID("menu_quotes"),
                             GetToolBar()->GetToolState(XRCID("menu_quotes")));
     else
-        GetToolBar()->ToggleTool(XRCID("menu_quotes"),  
+        GetToolBar()->ToggleTool(XRCID("menu_quotes"),
                                  GetMenuBar()->IsChecked(XRCID("menu_quotes")));
     m_displayQuotes = GetToolBar()->GetToolState(XRCID("menu_quotes"));
     UpdateToTextCtrl();
@@ -1414,16 +1414,16 @@ inline wxString convertFromLocalCharset(const wxString& str)
 static wxString TransformNewval(const wxString& val, bool displayQuotes)
 {
     wxString newval(val);
-    
+
     newval.Replace(_T("\n"), _T(""));
     if (displayQuotes)
     {
-        if (newval.Len() > 0 && newval[0u] == _T('"')) 
+        if (newval.Len() > 0 && newval[0u] == _T('"'))
             newval.Remove(0, 1);
-        if (newval.Len() > 0 && newval[newval.Length()-1] == _T('"')) 
+        if (newval.Len() > 0 && newval[newval.Length()-1] == _T('"'))
             newval.RemoveLast();
     }
-      
+
     if (newval[0u] == _T('"')) newval.Prepend(_T("\\"));
     for (unsigned i = 1; i < newval.Len(); i++)
         if (newval[i] == _T('"') && newval[i-1] != _T('\\'))
@@ -1450,13 +1450,13 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     if (m_sel == -1 || m_sel >= m_list->GetItemCount()) return;
     int ind = m_list->GetItemData(item);
     if (ind >= (int)m_catalog->GetCount()) return;
-    
+
     CatalogData& entry = (*m_catalog)[ind];
-    
+
     wxString key = entry.GetString();
     wxString newval = m_textTrans->GetValue();
     bool newfuzzy = GetToolBar()->GetToolState(XRCID("menu_fuzzy"));
-    
+
     // check if anything changed:
     if (entry.IsFuzzy() == newfuzzy)
     {
@@ -1469,7 +1469,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 #endif
             size_t size = _cpp_min(m_textTransPlural.size(),
                                    m_edittedTextOrig.size());
-            
+
             for (size_t i = 0; i < size; i++)
             {
                 if (m_edittedTextOrig.empty() ||
@@ -1530,9 +1530,9 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     entry.SetModified(true);
     entry.SetAutomatic(false);
     entry.SetTranslated(!newval.IsEmpty());
-    
+
     m_list->RefreshItem(item);
-    
+
     if (m_modified == false)
     {
         m_modified = true;
@@ -1553,7 +1553,7 @@ void poEditFrame::UpdateToTextCtrl(int item)
     if (item == -1 || item >= m_list->GetItemCount()) return;
     int ind = m_list->GetItemData(item);
     if (ind >= (int)m_catalog->GetCount()) return;
-    
+
     const CatalogData& entry = (*m_catalog)[ind];
 
     wxString quote;
@@ -1576,7 +1576,7 @@ void poEditFrame::UpdateToTextCtrl(int item)
     t_o = convertToLocalCharset(t_o);
     t_c = convertToLocalCharset(t_c);
 #endif
-    
+
     m_textOrig->SetValue(t_o);
 
     m_edittedTextOrig.clear();
@@ -1594,7 +1594,7 @@ void poEditFrame::UpdateToTextCtrl(int item)
         for (size_t i = 0; i < formsCnt; i++)
             m_textTransPlural[i]->SetValue(wxEmptyString);
 
-        for (size_t i = 0; 
+        for (size_t i = 0;
                 i < wxMin(formsCnt, entry.GetNumberOfTranslations()); i++)
         {
             t_t = quote + entry.GetTranslation(i) + quote;
@@ -1603,7 +1603,7 @@ void poEditFrame::UpdateToTextCtrl(int item)
             t_t = convertToLocalCharset(t_t);
 #endif
             m_textTransPlural[i]->SetValue(t_t);
-            if (m_displayQuotes) 
+            if (m_displayQuotes)
                 m_textTransPlural[i]->SetInsertionPoint(1);
             m_edittedTextOrig.push_back(t_t);
         }
@@ -1616,21 +1616,21 @@ void poEditFrame::UpdateToTextCtrl(int item)
         t_t = convertToLocalCharset(t_t);
 #endif
         m_textTrans->SetValue(t_t);
-        if (m_displayQuotes) 
+        if (m_displayQuotes)
             m_textTrans->SetInsertionPoint(1);
         m_edittedTextOrig.push_back(t_t);
     }
-    
+
     if (m_displayCommentWin)
         m_textComment->SetValue(t_c);
-        
+
     if (m_displayAutoCommentsWin)
         m_textAutoComments->SetValue(t_ac);
 
     m_edittedTextFuzzyChanged = false;
     GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), entry.IsFuzzy());
     GetMenuBar()->Check(XRCID("menu_fuzzy"), entry.IsFuzzy());
-    
+
     ShowPluralFormUI(entry.HasPlural());
 }
 
@@ -1653,20 +1653,20 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     }
     m_transMemLoaded = false;
 #endif
-    
+
     m_fileName = catalog;
     m_modified = false;
 
     RecreatePluralTextCtrls();
     RefreshControls();
     UpdateTitle();
-   
+
     wxFileName fn(m_fileName);
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
     m_history.AddFileToHistory(fn.GetFullPath());
 
     InitSpellchecker();
-   
+
     RestartItemsValidation();
 }
 
@@ -1674,8 +1674,8 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
 void poEditFrame::RefreshControls()
 {
     if (!m_catalog) return;
-    
-    m_hasObsoleteItems = false;    
+
+    m_hasObsoleteItems = false;
     if (!m_catalog->IsOk())
     {
         wxLogError(_("Error loading message catalog file '") + m_fileName + _("'."));
@@ -1687,7 +1687,7 @@ void poEditFrame::RefreshControls()
         m_list->CatalogChanged(NULL);
         return;
     }
-    
+
     wxBusyCursor bcur;
     UpdateMenu();
 
@@ -1695,16 +1695,16 @@ void poEditFrame::RefreshControls()
     wxString selection;
     if (selection_idx != -1)
         selection = m_list->GetItemText(selection_idx);
-    
+
     m_list->Freeze();
     m_list->CreateColumns(); // This forces to reread the catalog
     m_list->Refresh();
 
     wxString trans;
     size_t pos = 0;
-   
+
     m_list->Thaw();
-    
+
     if (m_catalog->GetCount() > 0)
     {
         if (selection.empty())
@@ -1719,14 +1719,14 @@ void poEditFrame::RefreshControls()
             {
                 if (m_list->GetItemText(i) == selection)
                 {
-                    // This will force to not update the item that now has the 
-                    // position the item that just got modified had before the 
+                    // This will force to not update the item that now has the
+                    // position the item that just got modified had before the
                     // catalog was saved. If we don't force this to happen,
                     // that item would get the value of the one that just got
-                    // modified (from the text controls), thus deleting its 
+                    // modified (from the text controls), thus deleting its
                     // legitimate value
-                    m_sel = -1; 
-                    
+                    m_sel = -1;
+
                     // Now, select the item in the list
                     m_list->Select(i);
                     m_list->Focus(i);
@@ -1739,7 +1739,7 @@ void poEditFrame::RefreshControls()
     FindFrame *f = (FindFrame*)FindWindow(_T("find_frame"));
     if (f)
         f->Reset(m_catalog);
-    
+
     UpdateTitle();
     UpdateStatusBar();
     Refresh();
@@ -1753,10 +1753,10 @@ void poEditFrame::UpdateStatusBar()
     if (m_catalog)
     {
         wxString txt;
-        
+
         m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
-        
-        txt.Printf(_("%i strings (%i fuzzy, %i bad tokens, %i not translated)"), 
+
+        txt.Printf(_("%i strings (%i fuzzy, %i bad tokens, %i not translated)"),
                    all, fuzzy, badtokens, untranslated);
 
         if (!m_itemsToValidate.empty())
@@ -1767,7 +1767,7 @@ void poEditFrame::UpdateStatusBar()
             txt += _T("    ");
             txt += progress;
         }
-        
+
         GetStatusBar()->SetStatusText(txt);
         if (all > 0)
             m_statusGauge->SetValue(100 * (all-fuzzy-badtokens-untranslated) / all);
@@ -1775,13 +1775,13 @@ void poEditFrame::UpdateStatusBar()
             m_statusGauge->SetValue(0);
     }
 }
-        
+
 void poEditFrame::DoGiveHelp(const wxString& text, bool show)
 {
     if (show || !text.empty())
         wxFrame::DoGiveHelp(text, show);
     else
-        UpdateStatusBar();        
+        UpdateStatusBar();
 }
 
 
@@ -1875,9 +1875,9 @@ bool poEditFrame::WriteCatalog(const wxString& catalog)
 
     m_history.AddFileToHistory(m_fileName);
     UpdateTitle();
-    
+
     RefreshControls();
-    
+
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(m_fileName);
 
@@ -1889,7 +1889,7 @@ void poEditFrame::OnEditComment(wxCommandEvent& event)
 {
     int selItem = m_list->GetItemData(m_sel);
     if (selItem < 0 || selItem >= (int)m_catalog->GetCount()) return;
-   
+
     wxString comment = convertToLocalCharset(
                             (*m_catalog)[selItem].GetComment());
     CommentDialog dlg(this, comment);
@@ -1906,12 +1906,12 @@ void poEditFrame::OnEditComment(wxCommandEvent& event)
         m_textComment->SetValue(CommentDialog::RemoveStartHash(comment));
     }
 }
-        
+
 void poEditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
 {
     wxMessageDialog dlg(this,
                         _("Do you really want to remove all translations that are no longer used from the catalog?\nIf you continue with purging, you will have to translate them again if they are added back in the future."),
-                        _("Purge delete translations"), 
+                        _("Purge delete translations"),
                         wxYES_NO | wxICON_QUESTION);
 
     if (dlg.ShowModal() == wxID_YES)
@@ -1928,7 +1928,7 @@ void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
     int ind = event.GetId() - ED_POPUP_TRANS;
     (*m_catalog)[m_list->GetItemData(m_sel)].SetTranslation(m_autoTranslations[ind]);
     UpdateToTextCtrl();
-    // VS: This dirty trick ensures proper refresh of everything: 
+    // VS: This dirty trick ensures proper refresh of everything:
     m_edittedTextOrig.clear();
     m_edittedTextFuzzyChanged = false;
     UpdateFromTextCtrl();
@@ -1945,11 +1945,11 @@ bool poEditFrame::AutoTranslateCatalog()
 
     if (tm == NULL)
         return false;
-    
+
     size_t cnt = m_catalog->GetCount();
     size_t matches = 0;
     wxString msg;
-    
+
     ProgressInfo pi;
     pi.SetTitle(_("Automatically translating..."));
     pi.SetGaugeMax(cnt);
@@ -1974,7 +1974,7 @@ bool poEditFrame::AutoTranslateCatalog()
     }
 
     RefreshControls();
-    
+
     return true;
 }
 #endif
@@ -1983,12 +1983,12 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
 {
     if (!m_catalog) return NULL;
     if (item >= (size_t)m_list->GetItemCount()) return NULL;
-    
+
     const wxArrayString& refs = (*m_catalog)[item].GetReferences();
     wxMenu *menu = new wxMenu;
-    
+
     menu->Append(XRCID("menu_insert_orig"),
-                 wxString(_("Copy original to translation field")) 
+                 wxString(_("Copy original to translation field"))
                    + _T("\tAlt-C"));
     menu->AppendSeparator();
 
@@ -1998,7 +1998,7 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
     menu->Append(it1);
 #else
     menu->Append(ED_POPUP_DUMMY+0, _("References:"));
-#endif    
+#endif
     menu->AppendSeparator();
     for (size_t i = 0; i < refs.GetCount(); i++)
         menu->Append(ED_POPUP_REFS + i, _T("   ") + refs[i]);
@@ -2008,13 +2008,13 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
     {
         menu->AppendSeparator();
 #ifdef CAN_MODIFY_DEFAULT_FONT
-        wxMenuItem *it2 = new wxMenuItem(menu, ED_POPUP_DUMMY+1, 
+        wxMenuItem *it2 = new wxMenuItem(menu, ED_POPUP_DUMMY+1,
                                          _("Automatic translations:"));
         it2->SetFont(m_boldGuiFont);
         menu->Append(it2);
 #else
         menu->Append(ED_POPUP_DUMMY+1, _("Automatic translations:"));
-#endif    
+#endif
         menu->AppendSeparator();
 
         wxBusyCursor bcur;
@@ -2050,7 +2050,7 @@ void poEditFrame::OnAbout(wxCommandEvent&)
     wxXmlResource::Get()->LoadDialog(&dlg, this, _T("about_box"));
     wxString version = wxString(_("version")) + _T(" ") + wxGetApp().GetAppVersion();
     XRCCTRL(dlg, "version", wxStaticText)->SetLabel(version);
-                       
+
     dlg.GetSizer()->RecalcSizes();
     dlg.Layout();
     dlg.Centre();
@@ -2147,7 +2147,7 @@ void poEditFrame::SetCustomFonts()
 void poEditFrame::UpdateCommentWindowEditable()
 {
     wxConfigBase *cfg = wxConfig::Get();
-    bool commentWindowEditable = 
+    bool commentWindowEditable =
         (bool)cfg->Read(_T("comment_window_editable"), (long)false);
     if (m_textComment == NULL ||
         commentWindowEditable != m_commentWindowEditable)
@@ -2158,15 +2158,15 @@ void poEditFrame::UpdateCommentWindowEditable()
         if (m_commentWindowEditable)
         {
             m_textComment = new wxTextCtrl(m_bottomRightPanel,
-                                        EDC_TEXTCOMMENT, wxEmptyString, 
-                                        wxDefaultPosition, wxDefaultSize, 
+                                        EDC_TEXTCOMMENT, wxEmptyString,
+                                        wxDefaultPosition, wxDefaultSize,
                                         wxTE_MULTILINE);
         }
         else
         {
             m_textComment = new UnfocusableTextCtrl(m_bottomRightPanel,
-                                        EDC_TEXTCOMMENT, wxEmptyString, 
-                                        wxDefaultPosition, wxDefaultSize, 
+                                        EDC_TEXTCOMMENT, wxEmptyString,
+                                        wxDefaultPosition, wxDefaultSize,
                                         wxTE_MULTILINE | wxTE_READONLY);
         }
         UpdateDisplayCommentWin();
@@ -2186,7 +2186,7 @@ void poEditFrame::UpdateDisplayCommentWin()
                 m_bottomLeftPanel, m_bottomRightPanel,
                 wxConfig::Get()->Read(_T("bottom_splitter"), -200L));
         m_bottomRightPanel->Show(true);
-        
+
         // force recalculation of layout of panel so that text boxes take up
         // all the space they can
         // (sizer may be NULL on first call)
@@ -2225,16 +2225,16 @@ void poEditFrame::OnCommentWindowText(wxCommandEvent&)
     comment = convertFromLocalCharset(
             CommentDialog::AddStartHash(m_textComment->GetValue()));
     CatalogData& data((*m_catalog)[m_list->GetItemData(m_sel)]);
-   
+
     wxLogTrace(_T("poedit"), _T("   comm:'%s'"), comment.c_str());
     wxLogTrace(_T("poedit"), _T("datcomm:'%s'"), data.GetComment().c_str());
     if (comment == data.GetComment())
         return;
 
     data.SetComment(comment);
-    
+
     m_list->RefreshItem(m_sel);
- 
+
     if (m_modified == false)
     {
         m_modified = true;
@@ -2256,14 +2256,14 @@ void poEditFrame::OnEndProcess(wxProcessEvent& event)
     EndItemValidation();
     wxWakeUpIdle();
 }
-        
+
 void poEditFrame::CancelItemsValidation()
 {
     // stop checking entries in the background:
     m_itemsToValidate.clear();
     m_itemBeingValidated = -1;
 }
-        
+
 void poEditFrame::RestartItemsValidation()
 {
     // start checking catalog's entries in the background:
@@ -2295,7 +2295,7 @@ void poEditFrame::BeginItemValidation()
                 _T("Plural-Forms"),
                 m_catalog->Header().GetHeader(_T("Plural-Forms")));
     }
-    
+
     wxString tmp1 = wxGetTempFileName(_T("poedit"));
     wxString tmp2 = wxGetTempFileName(_T("poedit"));
     cat.Save(tmp1, false);
@@ -2304,7 +2304,7 @@ void poEditFrame::BeginItemValidation()
 
     m_validationProcess.tmp1 = tmp1;
     m_validationProcess.tmp2 = tmp2;
-    
+
     if (ExecuteGettextNonblocking(cmdline, &m_validationProcess, this))
     {
         m_itemBeingValidated = item;
@@ -2317,7 +2317,7 @@ void poEditFrame::BeginItemValidation()
 }
 
 void poEditFrame::EndItemValidation()
-{ 
+{
     wxRemoveFile(m_validationProcess.tmp1);
     wxRemoveFile(m_validationProcess.tmp2);
 
@@ -2326,10 +2326,10 @@ void poEditFrame::EndItemValidation()
         int item = m_itemBeingValidated;
         int index = m_list->GetItemData(item);
         CatalogData& dt = (*m_catalog)[index];
-       
+
         bool ok = (m_validationProcess.ExitCode == 0);
         dt.SetValidity(ok);
-        
+
         if (!ok)
         {
             wxString err;
@@ -2356,10 +2356,10 @@ void poEditFrame::EndItemValidation()
         {
             UpdateStatusBar();
         }
-       
+
         if (!ok)
             m_list->Refresh(item);  // Force refresh
-        
+
         if (m_itemsToValidate.empty())
         {
             wxLogTrace(_T("poedit"),
@@ -2367,7 +2367,7 @@ void poEditFrame::EndItemValidation()
         }
     }
 }
-        
+
 void poEditFrame::ShowPluralFormUI(bool show)
 {
     if (show && (!m_catalog || m_catalog->GetPluralFormsCount() == 0))
@@ -2413,7 +2413,7 @@ void poEditFrame::RecreatePluralTextCtrls()
 
     if (!m_catalog)
         return;
-        
+
     PluralFormsCalculator *calc = PluralFormsCalculator::make(
                 m_catalog->Header().GetHeader(_T("Plural-Forms")).ToAscii());
 
@@ -2436,7 +2436,7 @@ void poEditFrame::RecreatePluralTextCtrls()
         }
         else
             example = 1000;
-            
+
         wxString desc;
         if (example == 1000)
             desc.Printf(_("Form %u"), i);
@@ -2445,8 +2445,8 @@ void poEditFrame::RecreatePluralTextCtrls()
 
         // create text control and notebook page for it:
         wxTextCtrl *txt = new wxTextCtrl(m_pluralNotebook, -1,
-                                         wxEmptyString, 
-                                         wxDefaultPosition, wxDefaultSize, 
+                                         wxEmptyString,
+                                         wxDefaultPosition, wxDefaultSize,
                                          wxTE_MULTILINE);
         txt->PushEventHandler(new TextctrlHandler(this));
         m_textTransPlural.push_back(txt);
@@ -2468,12 +2468,12 @@ void poEditFrame::OnListRightClick(wxMouseEvent& event)
 
     item = list->HitTest(event.GetPosition(), flags);
     if (item != -1 && (flags & wxLIST_HITTEST_ONITEM))
-        list->SetItemState(item, wxLIST_STATE_SELECTED, 
+        list->SetItemState(item, wxLIST_STATE_SELECTED,
                                  wxLIST_STATE_SELECTED);
 
     wxMenu *menu = GetPopupMenu(m_list->GetItemData(m_sel));
     if (menu)
-    {  
+    {
         list->PopupMenu(menu, event.GetPosition());
         delete menu;
     }

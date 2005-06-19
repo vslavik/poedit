@@ -5,9 +5,9 @@
 
     ---------------
       edlistctrl.h
-    
+
       List view control
-    
+
       (c) Vaclav Slavik, 1999-2004
       (c) Olivier Sannier, 2005
 
@@ -38,9 +38,9 @@ class poEditListCtrl : public wxListView
                        bool dispLines = false,
                        const wxValidator& validator = wxDefaultValidator,
                        const wxString &name = _T("listctrl"));
-                      
+
         virtual ~poEditListCtrl();
-        
+
         void CreateColumns();
 
         void SizeColumns();
@@ -52,31 +52,31 @@ class poEditListCtrl : public wxListView
         {
             return m_colWidth * 2/*safety coefficient*/;
         }
-        
+
         void CatalogChanged(Catalog* catalog);
-        
+
         virtual wxString OnGetItemText(long item, long column) const;
         virtual wxListItemAttr * OnGetItemAttr(long item) const;
         virtual int OnGetItemImage(long item) const;
-        
+
         /// Overriden GetItemData that returns the catalog index
         /// for the given item.
         long GetItemData(long item) const;
-        
+
         /// Returns the list item index for the given catalog index
         int GetItemIndex(int catalogIndex) const;
-        
+
     private:
         DECLARE_EVENT_TABLE()
         void OnSize(wxSizeEvent& event);
-        
+
         void ReadCatalog();
 
         bool m_displayLines;
         unsigned m_colWidth;
-        
+
         Catalog* m_catalog;
-        
+
         wxArrayInt m_itemIndexToCatalogIndexArray;
         wxArrayInt m_catalogIndexToItemIndexArray;
 };
