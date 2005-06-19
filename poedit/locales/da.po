@@ -5,31 +5,30 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: POEDIT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-19 18:27+0200\n"
-"PO-Revision-Date: 2004-01-28 20:36+0100\n"
-"Last-Translator: Lars Dybdahl <lars@dybdahl.dk>\n"
-"Language-Team: English <da@li.org>\n"
+"POT-Creation-Date: 2005-05-30 23:57+0200\n"
+"PO-Revision-Date: 2005-06-19 19:33+0100\n"
+"Last-Translator: Lars B. Dybdahl <lars@dybdahl.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 0.9.6\n"
 
-#: ../src/edframe.cpp:1760
+#: ../src/edframe.cpp:1857
 msgid " (modified)"
 msgstr " (ændret)"
 
-#: ../src/digger.cpp:58
+#: ../src/digger.cpp:43
 msgid " files..."
 msgstr " filer..."
 
-#: ../src/catalog.cpp:130
+#: ../src/catalog.cpp:116
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
-msgstr ""
+msgstr "%i linier fra filen '%s' blev ikke indlæst korrekt."
 
-#: ../src/edframe.cpp:1728 ../src/export_html.cpp:145
+#: ../src/edframe.cpp:1825
+#: ../src/export_html.cpp:131
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i tekster (%i fuzzy, %i dårlige tokens, %i ikke oversat)"
@@ -40,13 +39,10 @@ msgstr "&Om programmet..."
 
 #: ../src/resources/xrc_strings.h:54
 msgid "&Automatically translate using TM"
-msgstr "&Automatisk oversæt med oversættelseshukommelsen"
+msgstr "Oversæt automatisk vha. oversættelseshukommelsen"
 
-#: ../src/edframe.cpp:2494
-msgid "&Bookmarks"
-msgstr ""
-
-#: ../src/resources/xrc_strings.h:34 ../src/resources/xrc_strings.h:44
+#: ../src/resources/xrc_strings.h:34
+#: ../src/resources/xrc_strings.h:44
 msgid "&Close"
 msgstr "&Luk"
 
@@ -58,8 +54,9 @@ msgstr "&Indhold..."
 msgid "&Edit"
 msgstr "&Rediger"
 
-#: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:398
+#: ../src/resources/xrc_strings.h:32
+#: ../src/resources/xrc_strings.h:35
+#: ../src/edframe.cpp:429
 msgid "&File"
 msgstr "&Filer"
 
@@ -83,14 +80,14 @@ msgstr "&Nyt katalog..."
 msgid "&Open"
 msgstr "&Åbn"
 
-#: ../src/resources/xrc_strings.h:33 ../src/resources/xrc_strings.h:43
+#: ../src/resources/xrc_strings.h:33
+#: ../src/resources/xrc_strings.h:43
 msgid "&Preferences..."
 msgstr "&Valgmuligheder..."
 
 #: ../src/resources/xrc_strings.h:55
-#, fuzzy
 msgid "&Purge deleted translations"
-msgstr "&Skygget oversættelsesliste"
+msgstr "&Fjern slettede oversættelser"
 
 #: ../src/resources/xrc_strings.h:40
 msgid "&Save"
@@ -116,12 +113,12 @@ msgstr "&Opdater fra kildekode"
 msgid "&View"
 msgstr "&Vis"
 
-#: ../src/catalog.cpp:1468
+#: ../src/catalog.cpp:1454
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' er ikke en gyldig POT fil."
 
-#: ../src/edframe.cpp:1650
+#: ../src/edframe.cpp:1748
 msgid "'."
 msgstr "'."
 
@@ -129,7 +126,7 @@ msgstr "'."
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f vil bliver erstattet med filnavn, %l med linienummer)"
 
-#: ../src/summarydlg.cpp:66
+#: ../src/summarydlg.cpp:50
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i nye, %i overflødige)"
@@ -138,11 +135,11 @@ msgstr "(%i nye, %i overflødige)"
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 nye, 0 overflødige)"
 
-#: ../src/chooselang.cpp:86
+#: ../src/chooselang.cpp:71
 msgid "(Use default language)"
 msgstr "(Vælg standardsprog)"
 
-#: ../src/edframe.cpp:688
+#: ../src/edframe.cpp:718
 msgid "(none of these)"
 msgstr "(ingen af disse)"
 
@@ -150,7 +147,7 @@ msgstr "(ingen af disse)"
 msgid "< Previous"
 msgstr "< Forrige"
 
-#: ../src/manager.cpp:363
+#: ../src/manager.cpp:348
 msgid "<unnamed>"
 msgstr "<unavngivet>"
 
@@ -166,7 +163,8 @@ msgstr "Tilføj"
 msgid "Add directory to the list"
 msgstr "Tilføj filmappe til listen"
 
-#: ../src/resources/xrc_strings.h:170 ../src/transmemupd_wizard.cpp:138
+#: ../src/resources/xrc_strings.h:170
+#: ../src/transmemupd_wizard.cpp:123
 msgid "Add files"
 msgstr "Tilføj filer"
 
@@ -187,15 +185,15 @@ msgid "An item in keywords list:"
 msgstr "Et element i nøgleordslisten:"
 
 #: ../src/resources/xrc_strings.h:83
-#, fuzzy
 msgid "Automatic spellchecking"
-msgstr "Automatisk oversættelse"
+msgstr "Automatisk stavekontrol"
 
-#: ../src/export_html.cpp:184
+#: ../src/export_html.cpp:170
 msgid "Automatic translation"
 msgstr "Automatisk oversættelse"
 
-#: ../src/edframe.cpp:1993 ../src/edframe.cpp:1997
+#: ../src/edframe.cpp:2084
+#: ../src/edframe.cpp:2088
 msgid "Automatic translations:"
 msgstr "Automatiske oversættelser:"
 
@@ -207,16 +205,16 @@ msgstr "Automatisk generering af .mo fil ved gemning"
 msgid "Automatically translate when updating catalog"
 msgstr "Automatisk oversæt ved opdatering af katalog"
 
-#: ../src/edframe.cpp:1950
+#: ../src/edframe.cpp:2041
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Automatisk oversat %u tekster"
 
-#: ../src/edframe.cpp:1935
+#: ../src/edframe.cpp:2026
 msgid "Automatically translating..."
 msgstr "Oversætter automatisk..."
 
-#: ../src/manager.cpp:236
+#: ../src/manager.cpp:221
 msgid "Bad Tokens"
 msgstr "Dårlige tokens"
 
@@ -228,49 +226,54 @@ msgstr "Basissti:"
 msgid "Behavior"
 msgstr "Opførsel"
 
-#: ../src/catalog.cpp:629
+#: ../src/catalog.cpp:615
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr ""
+msgstr "Fejl i katalogfil: flertalsform msgstr anvendt uden msgid_plural"
 
-#: ../src/catalog.cpp:597
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr ""
+#: ../src/catalog.cpp:583
+msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr "Fejl i katalogfil: entalsform msgstr msgstr anvendt sammen med msgid_plural"
 
-#: ../src/resources/xrc_strings.h:28 ../src/resources/xrc_strings.h:104
-#: ../src/resources/xrc_strings.h:135 ../src/resources/xrc_strings.h:167
+#: ../src/resources/xrc_strings.h:28
+#: ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:135
+#: ../src/resources/xrc_strings.h:167
 msgid "Browse"
 msgstr "Gennemse"
 
 #: ../src/resources/xrc_strings.h:51
-#, fuzzy
 msgid "C&atalog"
-msgstr "Katalog"
+msgstr "K&atalog"
 
 #: ../src/resources/xrc_strings.h:85
 msgid "CR/LF conversion"
 msgstr "CR/LF konvertering"
 
-#: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:19
-#: ../src/resources/xrc_strings.h:31 ../src/resources/xrc_strings.h:119
-#: ../src/resources/xrc_strings.h:134 ../src/resources/xrc_strings.h:138
-#: ../src/resources/xrc_strings.h:140 ../src/resources/xrc_strings.h:156
+#: ../src/resources/xrc_strings.h:6
+#: ../src/resources/xrc_strings.h:19
+#: ../src/resources/xrc_strings.h:31
+#: ../src/resources/xrc_strings.h:119
+#: ../src/resources/xrc_strings.h:134
+#: ../src/resources/xrc_strings.h:138
+#: ../src/resources/xrc_strings.h:140
+#: ../src/resources/xrc_strings.h:156
 msgid "Cancel"
 msgstr "Annuller"
 
-#: ../src/transmem.cpp:725
+#: ../src/transmem.cpp:710
 msgid "Cannot create database directory!"
 msgstr "Kan ikke oprette filmappe til database!"
 
-#: ../src/gexecute.cpp:136 ../src/gexecute.cpp:185
+#: ../src/gexecute.cpp:119
+#: ../src/gexecute.cpp:166
 msgid "Cannot execute program: "
 msgstr "Kan ikke udføre program: "
 
-#: ../src/transmemupd.cpp:202
+#: ../src/transmemupd.cpp:187
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Kan ikke hente kataloger ud af RPM fil."
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:124
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -279,7 +282,7 @@ msgstr ""
 "Kan ikke finde ressourcefil '%s'!\n"
 "Geninstaller venligst poEdit."
 
-#: ../src/edapp.cpp:132
+#: ../src/edapp.cpp:118
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -296,12 +299,15 @@ msgstr ""
 msgid "Case sensitive"
 msgstr "Store/små bogstaver forskellige"
 
-#: ../src/manager.cpp:232
+#: ../src/manager.cpp:217
 msgid "Catalog"
 msgstr "Katalog"
 
-#: ../src/edframe.cpp:733 ../src/edframe.cpp:757 ../src/edframe.cpp:794
-#: ../src/edframe.cpp:840 ../src/edframe.cpp:949
+#: ../src/edframe.cpp:763
+#: ../src/edframe.cpp:787
+#: ../src/edframe.cpp:824
+#: ../src/edframe.cpp:870
+#: ../src/edframe.cpp:979
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalog ændret. Vil du gemme ændringerne?"
 
@@ -313,11 +319,13 @@ msgstr "&Kataloghåndtering"
 msgid "Change UI language"
 msgstr "Skift brugerfladens sprog"
 
-#: ../src/resources/xrc_strings.h:147 ../src/export_html.cpp:131
+#: ../src/resources/xrc_strings.h:147
+#: ../src/export_html.cpp:117
 msgid "Charset:"
 msgstr "Tegnsæt:"
 
-#: ../src/resources/xrc_strings.h:98 ../src/resources/xrc_strings.h:100
+#: ../src/resources/xrc_strings.h:98
+#: ../src/resources/xrc_strings.h:100
 msgid "Choose"
 msgstr "&Vælg"
 
@@ -341,15 +349,18 @@ msgstr "Kommentar:"
 msgid "Configuration"
 msgstr "Opsætning"
 
-#: ../src/manager.cpp:393 ../src/manager.cpp:413
+#: ../src/manager.cpp:378
+#: ../src/manager.cpp:398
 msgid "Confirmation"
 msgstr "Bekræftelse"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:1972
+#: ../src/resources/xrc_strings.h:46
+#: ../src/edframe.cpp:2063
 msgid "Copy original to translation field"
 msgstr "Kopier original til oversættelsesfelt"
 
-#: ../src/resources/xrc_strings.h:146 ../src/export_html.cpp:121
+#: ../src/resources/xrc_strings.h:146
+#: ../src/export_html.cpp:107
 msgid "Country:"
 msgstr "Land:"
 
@@ -361,7 +372,7 @@ msgstr "Opret nyt oversættelsesprojekt"
 msgid "Database"
 msgstr "Database"
 
-#: ../src/transmem.cpp:309
+#: ../src/transmem.cpp:294
 #, c-format
 msgid "Database error: %s"
 msgstr "Databasefejl: %s"
@@ -378,7 +389,7 @@ msgstr "Slet element"
 msgid "Delete the project"
 msgstr "Slet projektet"
 
-#: ../src/manager.cpp:286
+#: ../src/manager.cpp:271
 msgid "Directories:"
 msgstr "Filmapper:"
 
@@ -394,7 +405,7 @@ msgstr "Vis &anførselstegn"
 msgid "Display quotes around the string?"
 msgstr "Vis anførselstegn omkring teksterne?"
 
-#: ../src/manager.cpp:412
+#: ../src/manager.cpp:397
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -402,15 +413,15 @@ msgstr ""
 "Vil du virkelig masseopdatere alle\n"
 "kataloger i dette projekt?"
 
-#: ../src/edframe.cpp:1894
+#: ../src/edframe.cpp:1985
 msgid ""
-"Do you really want to remove all translations that are no longer used from "
-"the catalog?\n"
-"If you continue with purging, you will have to translate them again if they "
-"are added back in the future."
+"Do you really want to remove all translations that are no longer used from the catalog?\n"
+"If you continue with purging, you will have to translate them again if they are added back in the future."
 msgstr ""
+"Ønsker du at fjerne alle oversættelser fra kataloget, som ikke længere er i brug?\n"
+"Hvis ja, så skal du oversætte igen, hvis teksterne tilføjes igen senere."
 
-#: ../src/manager.cpp:392
+#: ../src/manager.cpp:377
 msgid "Do you want to delete the project?"
 msgstr "Vil du virkelig slette projektet?"
 
@@ -430,7 +441,8 @@ msgstr "Rediger"
 msgid "Edit &comment"
 msgstr "Rediger &kommentar"
 
-#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:176
+#: ../src/resources/xrc_strings.h:3
+#: ../src/resources/xrc_strings.h:176
 msgid "Edit comment"
 msgstr "Rediger kommentar"
 
@@ -460,36 +472,36 @@ msgstr "Programfil for redigeringsværktøj:"
 
 #: ../src/resources/xrc_strings.h:84
 msgid "Enables on-the-fly spellchecking"
-msgstr ""
+msgstr "Slår løbende stavekontrol til"
 
-#: ../src/edframe.cpp:1082
+#: ../src/edframe.cpp:1110
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Dele af kataloget er sandsynligvis ukorrekt."
 
-#: ../src/edframe.cpp:639
+#: ../src/edframe.cpp:669
 #, c-format
 msgid "Error initializing spell checking: %s"
-msgstr ""
+msgstr "Fejl ved opstart af stavekontrol: %s"
 
-#: ../src/edframe.cpp:1650
+#: ../src/edframe.cpp:1748
 msgid "Error loading message catalog file '"
 msgstr "Fejl ved indlæsning af meddelelseskatalogfilen '"
 
-#: ../src/fileviewer.cpp:90
+#: ../src/fileviewer.cpp:75
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Fejl ved åbning af filen %s!"
 
-#: ../src/catalog.cpp:1268
+#: ../src/catalog.cpp:1254
 msgid "Error saving catalog"
 msgstr "Fejl ved gemning af katalog"
 
-#: ../src/catalog.cpp:78
+#: ../src/catalog.cpp:64
 #, c-format
 msgid "Error while loading file '%s': line %u is corrupted."
-msgstr ""
+msgstr "Fejl ved indlæsning af filen '%s': linie %u er ødelagt."
 
-#: ../src/edframe.cpp:921
+#: ../src/edframe.cpp:951
 msgid "Export as..."
 msgstr "Eksporter som..."
 
@@ -497,36 +509,37 @@ msgstr "Eksporter som..."
 msgid "External editor"
 msgstr "Eksternt redigeringsværktøj"
 
-#: ../src/edframe.cpp:812 ../src/edframe.cpp:856
+#: ../src/edframe.cpp:842
+#: ../src/edframe.cpp:886
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Filen '%s' findes ikke."
 
-#: ../src/edframe.cpp:829
+#: ../src/edframe.cpp:859
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Filen '%s' er ikke det meddelelseskatalog."
 
-#: ../src/catalog.cpp:1232
+#: ../src/catalog.cpp:1218
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
+"Filen '%s' er skrivebeskyttet og kan ikke overskrives.\n"
+"Gem venligst under et andet filnavn."
 
-#: ../src/transmemupd_wizard.cpp:63
+#: ../src/transmemupd_wizard.cpp:48
 msgid "Files List"
 msgstr "Filliste"
 
 #: ../src/resources/xrc_strings.h:18
-#, fuzzy
 msgid "Find in automatic comments"
-msgstr "Vis &kommentarvindue"
+msgstr "Søg i automatiske kommentarer"
 
 #: ../src/resources/xrc_strings.h:17
-#, fuzzy
 msgid "Find in comments"
-msgstr "Rediger kommentar"
+msgstr "Find i kommentarer"
 
 #: ../src/resources/xrc_strings.h:15
 msgid "Find in original strings"
@@ -544,33 +557,35 @@ msgstr "Find..."
 msgid "Fonts"
 msgstr "Skrifttyper"
 
-#: ../src/edframe.cpp:2423
+#: ../src/edframe.cpp:2482
 #, c-format
 msgid "Form %u"
-msgstr ""
+msgstr "Form %u"
 
-#: ../src/edframe.cpp:2425
+#: ../src/edframe.cpp:2484
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
-msgstr ""
+msgstr "Form %u (f.eks. \"%u\")"
 
 #: ../src/resources/xrc_strings.h:177
 msgid "Fullscreen view"
 msgstr "Fuldskærmsvisning"
 
-#: ../src/manager.cpp:235
+#: ../src/manager.cpp:220
 msgid "Fuzzy"
 msgstr "Fuzzy"
 
-#: ../src/export_html.cpp:190
+#: ../src/export_html.cpp:176
 msgid "Fuzzy translation"
 msgstr "Fuzzy oversættelse"
 
-#: ../src/edframe.cpp:777 ../src/edframe.cpp:898
+#: ../src/edframe.cpp:807
+#: ../src/edframe.cpp:928
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText kataloger (*.po)|*.po|Alle filer (*.*)|*.*"
 
-#: ../src/edframe.cpp:974 ../src/edframe.cpp:1100
+#: ../src/edframe.cpp:1004
+#: ../src/edframe.cpp:1128
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU GetText skabeloner (*.pot)|*.pot|Alle filer (*.*)|*.*"
 
@@ -586,16 +601,11 @@ msgstr "Generer TM database"
 msgid "Generate database"
 msgstr "Generer database"
 
-#: ../src/edframe.cpp:1164
+#: ../src/edframe.cpp:1192
 msgid "Gettext syntax error"
-msgstr ""
+msgstr "Gettext syntaksfejl"
 
-#: ../src/edframe.cpp:2490
-#, c-format
-msgid "Go to bookmark %i\tCtrl-%i"
-msgstr ""
-
-#: ../src/edframe.cpp:923
+#: ../src/edframe.cpp:953
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML fil (*.html)|*.html"
 
@@ -615,31 +625,35 @@ msgstr "Kommentarvinduet er redigerbart hvis denne er afkrydset."
 msgid "Invocation:"
 msgstr "Udførsel:"
 
-#: ../src/resources/xrc_strings.h:154 ../src/settingsdlg.cpp:71
+#: ../src/resources/xrc_strings.h:154
+#: ../src/settingsdlg.cpp:55
 msgid "Keywords"
 msgstr "Nøgleord"
 
-#: ../src/chooselang.cpp:152
+#: ../src/chooselang.cpp:137
 msgid "Language selection"
 msgstr "Sprogvalg"
 
-#: ../src/resources/xrc_strings.h:121 ../src/resources/xrc_strings.h:122
-#: ../src/resources/xrc_strings.h:145 ../src/export_html.cpp:118
+#: ../src/resources/xrc_strings.h:121
+#: ../src/resources/xrc_strings.h:122
+#: ../src/resources/xrc_strings.h:145
+#: ../src/export_html.cpp:104
 msgid "Language:"
 msgstr "Sprog:"
 
-#: ../src/manager.cpp:237
+#: ../src/manager.cpp:222
 msgid "Last modified"
 msgstr "Sidst ændret"
 
-#: ../src/fileviewer.cpp:99 ../src/edlistctrl.cpp:227
+#: ../src/fileviewer.cpp:84
+#: ../src/edlistctrl.cpp:194
 msgid "Line"
 msgstr "Linie"
 
-#: ../src/catalog.cpp:143
+#: ../src/catalog.cpp:129
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
-msgstr ""
+msgstr "Linie %u i filen '%s' indeholder ugyldige %s data."
 
 #: ../src/resources/xrc_strings.h:86
 msgid "Line endings format:"
@@ -653,10 +667,10 @@ msgstr "List af filendelser, adskilt med semikolon (f.eks. *.cpp;*.h):"
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:215
+#: ../src/catalog.cpp:201
 #, c-format
 msgid "Malformed header: '%s'"
-msgstr ""
+msgstr "Header er forkert udformet:'%s'"
 
 #: ../src/resources/xrc_strings.h:110
 msgid "Max. # of missing words:"
@@ -666,7 +680,7 @@ msgstr "Maks. antal manglende ord:"
 msgid "Max. difference in sentence length:"
 msgstr "Maks. forskel i længden af sætninger:"
 
-#: ../src/catalog.cpp:1440
+#: ../src/catalog.cpp:1426
 msgid "Merging differences..."
 msgstr "Blander forskelle..."
 
@@ -678,32 +692,25 @@ msgstr "Flyt ned"
 msgid "Move up"
 msgstr "Flyt op"
 
-#: ../src/prefsdlg.cpp:55
+#: ../src/prefsdlg.cpp:40
 msgid "My Languages"
 msgstr "Mine Sprog"
 
-#: ../src/manager.cpp:289
+#: ../src/manager.cpp:274
 msgid "My Project"
 msgstr "Mit Projekt"
 
 #: ../src/resources/xrc_strings.h:80
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Aldrig fokuser på tekstlisten. Hvis det er slået til, skal du bruge ctrl-"
-"piletaster for at navigere med tastaturet, men du kan til gengæld indtaste "
-"tekst uden at skulle bruge tabulator tasten for at flytte fokus."
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Aldrig fokuser på tekstlisten. Hvis det er slået til, skal du bruge ctrl-piletaster for at navigere med tastaturet, men du kan til gengæld indtaste tekst uden at skulle bruge tabulator tasten for at flytte fokus."
 
 #: ../src/resources/xrc_strings.h:115
 msgid "New"
 msgstr "Ny"
 
 #: ../src/resources/xrc_strings.h:38
-#, fuzzy
 msgid "New catalog from POT file..."
-msgstr "Opdater fra &POT fil..."
+msgstr "Nyt katalog fra POT fil..."
 
 #: ../src/editlbox/editlbox.cpp:162
 msgid "New item"
@@ -717,27 +724,28 @@ msgstr "Nye tekster"
 msgid "Next >"
 msgstr "Næste >"
 
-#: ../src/fileviewer.cpp:138
+#: ../src/fileviewer.cpp:123
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr ""
-"Intet tekstredigeringsværktøj angivet. Angiv venligst et i valgmuligheder-"
-"vinduet."
+msgstr "Intet tekstredigeringsværktøj angivet. Angiv venligst et i valgmuligheder-vinduet."
 
-#: ../src/digger.cpp:138
+#: ../src/digger.cpp:123
 msgid "No files found in: "
 msgstr "Ingen filer fundet i: "
 
-#: ../src/edframe.cpp:1180
+#: ../src/edframe.cpp:1208
 msgid "No references to this string found."
 msgstr "Ingen referencer til denne tekst blev fundet."
 
-#: ../src/export_html.cpp:162
+#: ../src/export_html.cpp:148
 msgid "Notes"
 msgstr "Noter"
 
-#: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:30 ../src/resources/xrc_strings.h:118
-#: ../src/resources/xrc_strings.h:133 ../src/resources/xrc_strings.h:155
+#: ../src/resources/xrc_strings.h:2
+#: ../src/resources/xrc_strings.h:5
+#: ../src/resources/xrc_strings.h:30
+#: ../src/resources/xrc_strings.h:118
+#: ../src/resources/xrc_strings.h:133
+#: ../src/resources/xrc_strings.h:155
 #: ../src/resources/xrc_strings.h:163
 msgid "OK"
 msgstr "O.k."
@@ -746,11 +754,13 @@ msgstr "O.k."
 msgid "Obsolete strings"
 msgstr "Overflødige tekster"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:775
+#: ../src/resources/xrc_strings.h:171
+#: ../src/edframe.cpp:805
 msgid "Open catalog"
 msgstr "Åbn katalog"
 
-#: ../src/edframe.cpp:972 ../src/edframe.cpp:1098
+#: ../src/edframe.cpp:1002
+#: ../src/edframe.cpp:1126
 msgid "Open catalog template"
 msgstr "Åbn katalogskabelon"
 
@@ -760,10 +770,10 @@ msgstr "Åbn kataloghåndteringen når poEdit startes"
 
 #: ../src/resources/xrc_strings.h:95
 msgid "Open source files in editor, not in file viewer"
-msgstr ""
-"Åbn kildefilder i tekstredigeringsværktøjet i stedet for filfremviseren"
+msgstr "Åbn kildefilder i tekstredigeringsværktøjet i stedet for filfremviseren"
 
-#: ../src/edlistctrl.cpp:224 ../src/export_html.cpp:155
+#: ../src/edlistctrl.cpp:191
+#: ../src/export_html.cpp:141
 msgid "Original string"
 msgstr "Originalteksten"
 
@@ -779,7 +789,7 @@ msgstr "Parser opsætning"
 msgid "Parsers"
 msgstr "Parsere"
 
-#: ../src/digger.cpp:58
+#: ../src/digger.cpp:43
 msgid "Parsing "
 msgstr "Parsing "
 
@@ -787,7 +797,8 @@ msgstr "Parsing "
 msgid "Path to DB:"
 msgstr "Sti til database:"
 
-#: ../src/resources/xrc_strings.h:152 ../src/settingsdlg.cpp:73
+#: ../src/resources/xrc_strings.h:152
+#: ../src/settingsdlg.cpp:57
 msgid "Paths"
 msgstr "Stier"
 
@@ -803,25 +814,25 @@ msgstr "Vælg sprog fra listen af kendte sprog"
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "Tilføj venligst placeringerne, hvor sprogfiler gemmes på dit system:"
 
-#: ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1216
 msgid "Please choose the reference you want to show:"
 msgstr "Vælg venligst den reference, du vil have fremvist:"
 
-#: ../src/prefsdlg.cpp:336
+#: ../src/prefsdlg.cpp:321
 msgid "Please select language ISO code:"
 msgstr "Vælg venligst ISO sprogkoden:"
 
-#: ../src/edframe.cpp:697
+#: ../src/edframe.cpp:727
 msgid "Please select language code:"
 msgstr "Vælg venligst sprogkoden:"
 
 #: ../src/resources/xrc_strings.h:149
 msgid "Plural Forms:"
-msgstr ""
+msgstr "Flertalsformer:"
 
-#: ../src/edframe.cpp:450
+#: ../src/edframe.cpp:480
 msgid "Plural:"
-msgstr ""
+msgstr "Flertal:"
 
 #: ../src/resources/xrc_strings.h:68
 msgid "Preferences"
@@ -831,11 +842,13 @@ msgstr "Valgmuligheder"
 msgid "Proceed"
 msgstr "Fortsæt"
 
-#: ../src/resources/xrc_strings.h:150 ../src/export_html.cpp:111
+#: ../src/resources/xrc_strings.h:150
+#: ../src/export_html.cpp:97
 msgid "Project info"
 msgstr "Projektinformation"
 
-#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:115
+#: ../src/resources/xrc_strings.h:142
+#: ../src/export_html.cpp:101
 msgid "Project name and version:"
 msgstr "Projektnavn og version:"
 
@@ -843,24 +856,22 @@ msgstr "Projektnavn og version:"
 msgid "Project name:"
 msgstr "Projektnavn"
 
-#: ../src/edframe.cpp:1895
-#, fuzzy
+#: ../src/edframe.cpp:1986
 msgid "Purge delete translations"
-msgstr "Automatiske oversættelser:"
+msgstr "Fjern slettede oversættelser"
 
-#: ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1216
 msgid "References"
 msgstr "Referencer"
 
-#: ../src/edframe.cpp:1977 ../src/edframe.cpp:1981
+#: ../src/edframe.cpp:2068
+#: ../src/edframe.cpp:2072
 msgid "References:"
 msgstr "Referencer:"
 
 #: ../src/resources/xrc_strings.h:108
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr ""
-"Generer oversættelseshukommelsen igen fra kataloger i stierne i listen "
-"foroven."
+msgstr "Generer oversættelseshukommelsen igen fra kataloger i stierne i listen foroven."
 
 #: ../src/resources/xrc_strings.h:168
 msgid "Reset to defaults"
@@ -870,7 +881,7 @@ msgstr "Nulstil til standardværdier"
 msgid "Save &as..."
 msgstr "Gem &som..."
 
-#: ../src/edframe.cpp:897
+#: ../src/edframe.cpp:927
 msgid "Save as..."
 msgstr "Gem som...7"
 
@@ -878,50 +889,49 @@ msgstr "Gem som...7"
 msgid "Save catalog"
 msgstr "Gem katalog"
 
-#: ../src/edframe.cpp:734 ../src/edframe.cpp:758 ../src/edframe.cpp:795
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:950
+#: ../src/edframe.cpp:764
+#: ../src/edframe.cpp:788
+#: ../src/edframe.cpp:825
+#: ../src/edframe.cpp:871
+#: ../src/edframe.cpp:980
 msgid "Save changes"
 msgstr "Gem ændringer"
 
-#: ../src/transmemupd.cpp:152
+#: ../src/transmemupd.cpp:137
 msgid "Scanning file: "
 msgstr "Skanner fil: "
 
-#: ../src/digger.cpp:48
+#: ../src/digger.cpp:33
 msgid "Scanning files..."
 msgstr "Skanner filer..."
 
-#: ../src/transmemupd_wizard.cpp:59
+#: ../src/transmemupd_wizard.cpp:44
 msgid "Search Paths"
 msgstr "Søgestier"
 
-#: ../src/edframe.cpp:696
+#: ../src/edframe.cpp:726
 msgid "Select catalog's language"
 msgstr "Vælg sprog for kataloget"
 
-#: ../src/manager.cpp:266 ../src/prefsdlg.cpp:349
-#: ../src/transmemupd_wizard.cpp:112
+#: ../src/manager.cpp:251
+#: ../src/prefsdlg.cpp:334
+#: ../src/transmemupd_wizard.cpp:97
 msgid "Select directory"
 msgstr "Vælg filmappe"
 
-#: ../src/prefsdlg.cpp:335
+#: ../src/prefsdlg.cpp:320
 msgid "Select language"
 msgstr "Vælg sprog"
 
-#: ../src/chooselang.cpp:151
+#: ../src/chooselang.cpp:136
 msgid "Select your prefered language"
 msgstr "Vælg dit foretrukne sprog"
-
-#: ../src/edframe.cpp:2484
-#, c-format
-msgid "Set bookmark %i\tAlt-%i"
-msgstr ""
 
 #: ../src/resources/xrc_strings.h:141
 msgid "Settings"
 msgstr "Indstillinger"
 
-#: ../src/edapp.cpp:159
+#: ../src/edapp.cpp:145
 msgid "Setup"
 msgstr "Opsætning"
 
@@ -930,19 +940,19 @@ msgid "Show &comment window"
 msgstr "Vis &kommentarvindue"
 
 #: ../src/resources/xrc_strings.h:62
-#, fuzzy
 msgid "Show automatic c&omments window"
-msgstr "Vis &kommentarvindue"
+msgstr "Vis vindue for automatiske kommentarer"
 
 #: ../src/resources/xrc_strings.h:77
 msgid "Show summary after catalog update"
 msgstr "Vis resume efter katalogopdatering"
 
-#: ../src/edframe.cpp:449
+#: ../src/edframe.cpp:479
 msgid "Singular:"
-msgstr ""
+msgstr "Ental:"
 
-#: ../src/resources/xrc_strings.h:131 ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:131
+#: ../src/resources/xrc_strings.h:148
 msgid "Source code charset:"
 msgstr "Kildekode tegnsæt:"
 
@@ -950,27 +960,29 @@ msgstr "Kildekode tegnsæt:"
 msgid "Source code parsers:"
 msgstr "Kildekode parsere:"
 
-#: ../src/fileviewer.cpp:46
+#: ../src/fileviewer.cpp:31
 msgid "Source file"
 msgstr "Kildefil"
 
 #: ../src/resources/xrc_strings.h:13
 msgid "Start from the first item"
-msgstr ""
+msgstr "Begynd fra det første element"
 
 #: ../src/resources/xrc_strings.h:11
 msgid "String to find:"
 msgstr "Find denne tekst:"
 
-#: ../src/resources/xrc_strings.h:144 ../src/export_html.cpp:128
+#: ../src/resources/xrc_strings.h:144
+#: ../src/export_html.cpp:114
 msgid "Team's email address:"
 msgstr "E-mail adressen for holdet:"
 
-#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:124
+#: ../src/resources/xrc_strings.h:143
+#: ../src/export_html.cpp:110
 msgid "Team:"
 msgstr "Hold:"
 
-#: ../src/catalog.cpp:1267
+#: ../src/catalog.cpp:1253
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -981,11 +993,9 @@ msgstr ""
 "er angivet i katalogindstillingerne. Det blev gemt med UTF-8 i\n"
 "stedet og indstillingen blev ændret tilsvarende."
 
-#: ../src/catalog.cpp:956
-msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
+#: ../src/catalog.cpp:942
+msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
+msgstr "Der var fejl ved indlæsning af kataloget. Som følge heraf kan nogle data mangle eller være forkerte."
 
 #: ../src/resources/xrc_strings.h:160
 msgid ""
@@ -1003,7 +1013,7 @@ msgstr ""
 "Disse tekster blev fundet i kilderne, men er ikke i kataloget.\n"
 "poEdit vil nu tilføje dem til kataloget."
 
-#: ../src/edapp.cpp:159
+#: ../src/edapp.cpp:145
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1055,11 +1065,12 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Skifter hvis den valgte tekst har en fuzzy oversættelse"
 
-#: ../src/manager.cpp:233
+#: ../src/manager.cpp:218
 msgid "Total"
 msgstr "Total"
 
-#: ../src/edlistctrl.cpp:225 ../src/export_html.cpp:158
+#: ../src/edlistctrl.cpp:192
+#: ../src/export_html.cpp:144
 msgid "Translation"
 msgstr "Oversættelse"
 
@@ -1067,11 +1078,11 @@ msgstr "Oversættelse"
 msgid "Translation Memory"
 msgstr "Oversættelseshukommelse"
 
-#: ../src/transmemupd_wizard.cpp:144
+#: ../src/transmemupd_wizard.cpp:129
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 msgstr "Oversættelsesfiler (*.po;*.mo)|*.po;*.mo"
 
-#: ../src/transmemupd_wizard.cpp:142
+#: ../src/transmemupd_wizard.cpp:127
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "Oversættelsesfiler (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 
@@ -1084,11 +1095,10 @@ msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
 msgstr ""
-"Oversættelseshukommelsen vil blive genereret fra filerne i nedenstående "
-"liste.\n"
+"Oversættelseshukommelsen vil blive genereret fra filerne i nedenstående liste.\n"
 "Du kan tilføje flere filer til listen nu."
 
-#: ../src/chooselang.cpp:69
+#: ../src/chooselang.cpp:54
 #, c-format
 msgid "Uknown locale code '%s' in registry."
 msgstr "Ukendt sprogkode '%s' i registreringsdatabasen."
@@ -1101,7 +1111,7 @@ msgstr "Fortryd"
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:234
+#: ../src/manager.cpp:219
 msgid "Untrans"
 msgstr "Untrans"
 
@@ -1125,14 +1135,13 @@ msgstr "Opdater resume"
 msgid "Update translation memory"
 msgstr "Opdaterer oversættelseshukommelsen"
 
-#: ../src/catalog.cpp:1400
+#: ../src/catalog.cpp:1386
 msgid "Updating catalog..."
 msgstr "Opdaterer katalog..."
 
-#: ../src/edframe.cpp:1084
+#: ../src/edframe.cpp:1112
 msgid "Updating the catalog failed. Click on 'More>>' for details."
-msgstr ""
-"Opdatering af katalog fejlede. Klik på 'Mere>>' for yderligere oplysninger."
+msgstr "Opdatering af katalog fejlede. Klik på 'Mere>>' for yderligere oplysninger."
 
 #: ../src/resources/xrc_strings.h:99
 msgid "Use custom font for text fields"
@@ -1152,17 +1161,17 @@ msgstr ""
 
 #: ../src/resources/xrc_strings.h:14
 msgid "Whole words only"
-msgstr ""
+msgstr "Kun hele ord"
 
 #: ../src/resources/xrc_strings.h:88
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:822
+#: ../src/edframe.cpp:852
 msgid "You can't drop more than one file on poEdit window."
 msgstr "Du kan ikke slippe mere end en fil på et poEdit vindue."
 
-#: ../src/chooselang.cpp:166
+#: ../src/chooselang.cpp:151
 msgid "You must restart poEdit for this change to take effect."
 msgstr "Du skal genstarte poEdit før denne ændring træder i kraft."
 
@@ -1174,61 +1183,55 @@ msgstr "Din e-mail adresse:"
 msgid "Your name:"
 msgstr "Dit navn:"
 
-#: ../src/edframe.cpp:1734
-#, fuzzy, c-format
+#: ../src/edframe.cpp:1831
+#, c-format
 msgid "[checking translations: %i left]"
-msgstr "&Skygget oversættelsesliste"
+msgstr "[kontrollerer oversættelser: %i tilbage]"
 
 #: ../src/resources/xrc_strings.h:90
 msgid "current platform's default"
 msgstr "standard for denne platform"
 
-#: ../src/edframe.cpp:2017
+#: ../src/edframe.cpp:2108
 msgid "none"
 msgstr "ingen"
 
-#: ../src/edframe.cpp:341
+#: ../src/edframe.cpp:372
 msgid "poEdit"
 msgstr "poEdit"
 
-#: ../src/manager.cpp:69
+#: ../src/manager.cpp:54
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - Kataloghåndtering"
 
-#: ../src/edapp.cpp:141
+#: ../src/edapp.cpp:127
 msgid "poEdit Error"
 msgstr "poEdit Fejl"
 
-#: ../src/digger.cpp:139
+#: ../src/digger.cpp:124
 msgid "poEdit did not find any files in scanned directories."
 msgstr "poEdit fandt ingen filer i de skannede filmapper."
 
-#: ../src/edapp.cpp:65
-msgid ""
-"poEdit installation is broken, cannot find application's home directory."
-msgstr ""
-"poEdit installationen er fejlbehæftet, kan ikke finde hjemmemappen for "
-"programmet."
+#: ../src/edapp.cpp:51
+msgid "poEdit installation is broken, cannot find application's home directory."
+msgstr "poEdit installationen er fejlbehæftet, kan ikke finde hjemmemappen for programmet."
 
-#: ../src/edframe.cpp:2032
+#: ../src/edframe.cpp:2123
 msgid "version"
 msgstr "version"
 
 #, fuzzy
 #~ msgid "X-Poedit-Keywords"
 #~ msgstr "Nøgleord"
-
 #~ msgid "&Catalog"
 #~ msgstr "&Katalog"
-
 #~ msgid "Corrupted team record, please correct in Catalog/Settings"
 #~ msgstr ""
 #~ "Ukorrekte holdoplysninger, ret venligst disse i Katalog/Indstillinger"
-
 #~ msgid "Corrupted translator record, please correct in Catalog/Settings"
 #~ msgstr ""
 #~ "Ukorrekte oversætteroplysninger, ret venligst disse i Katalog/"
 #~ "Indstillinger"
-
 #~ msgid "Updating translation memory"
 #~ msgstr "Opdaterer oversættelseshukommelsen"
+
