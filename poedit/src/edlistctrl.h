@@ -79,6 +79,11 @@ class poEditListCtrl : public wxListView
 
         wxArrayInt m_itemIndexToCatalogIndexArray;
         wxArrayInt m_catalogIndexToItemIndexArray;
+
+        wxListItemAttr m_attrNormal[2];
+        wxListItemAttr m_attrUntranslated[2];
+        wxListItemAttr m_attrFuzzy[2];
+        wxListItemAttr m_attrInvalid[2];
 };
 
 #endif // _ED_LIST_CTRL_H_

@@ -187,6 +187,16 @@ poEditListCtrl::poEditListCtrl(wxWindow *parent,
     }
 
     AssignImageList(list, wxIMAGE_LIST_SMALL);
+
+    // configure items colors:
+    m_attrNormal[0].SetBackgroundColour(g_ItemColourNormal[0]);
+    m_attrNormal[1].SetBackgroundColour(g_ItemColourNormal[1]);
+    m_attrUntranslated[0].SetBackgroundColour(g_ItemColourUntranslated[0]);
+    m_attrUntranslated[1].SetBackgroundColour(g_ItemColourUntranslated[1]);
+    m_attrFuzzy[0].SetBackgroundColour(g_ItemColourFuzzy[0]);
+    m_attrFuzzy[1].SetBackgroundColour(g_ItemColourFuzzy[1]);
+    m_attrInvalid[0].SetBackgroundColour(g_ItemColourInvalid[0]);
+    m_attrInvalid[1].SetBackgroundColour(g_ItemColourInvalid[1]);
 }
 
 poEditListCtrl::~poEditListCtrl()
@@ -317,36 +327,20 @@ wxString poEditListCtrl::OnGetItemText(long item, long column) const
     }
 }
 
-// this variable can't be a member of the class as the OnGetItemAttr function
-// is const
-static wxListItemAttr g_attr;
-wxListItemAttr * poEditListCtrl::OnGetItemAttr(long item) const
+wxListItemAttr *poEditListCtrl::OnGetItemAttr(long item) const
 {
     CatalogData& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
-    if (gs_shadedList)
-    {
-        if (!d.IsTranslated())
-            g_attr.SetBackgroundColour(g_ItemColourUntranslated[item % 2]);
-        else if (d.IsFuzzy())
-            g_attr.SetBackgroundColour(g_ItemColourFuzzy[item % 2]);
-        else if (d.GetValidity() == CatalogData::Val_Invalid)
-            g_attr.SetBackgroundColour(g_ItemColourInvalid[item % 2]);
-        else
-            g_attr.SetBackgroundColour(g_ItemColourNormal[item % 2]);
-    }
-    else
-    {
-        if (!d.IsTranslated())
-            g_attr.SetBackgroundColour(g_ItemColourUntranslated[0]);
-        else if (d.IsFuzzy())
-            g_attr.SetBackgroundColour(g_ItemColourFuzzy[0]);
-        else if (d.GetValidity() == CatalogData::Val_Invalid)
-            g_attr.SetBackgroundColour(g_ItemColourInvalid[0]);
-        else
-            g_attr.SetBackgroundColour(g_ItemColourNormal[0]);
-    }
 
-    return &g_attr;
+    size_t idx = gs_shadedList ? size_t(item % 2) : 0;
+
+    if (!d.IsTranslated())
+        return (wxListItemAttr*)&m_attrUntranslated[idx];
+    else if (d.IsFuzzy())
+        return (wxListItemAttr*)&m_attrFuzzy[idx];
+    else if (d.GetValidity() == CatalogData::Val_Invalid)
+        return (wxListItemAttr*)&m_attrInvalid[idx];
+    else
+        return (wxListItemAttr*)&m_attrNormal[idx];
 }
 
 int poEditListCtrl::OnGetItemImage(long item) const
