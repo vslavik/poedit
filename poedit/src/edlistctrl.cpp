@@ -66,7 +66,7 @@ static inline wxString convertToLocalCharset(const wxString& str)
 {
 #if !wxUSE_UNICODE
     wxString s2(str.wc_str(wxConvUTF8), wxConvLocal);
-    if (s2.empty() /*conversion failed*/)
+    if (s2.empty())
         return str;
     else
         return s2;
@@ -106,8 +106,6 @@ wxBitmap AddDigit(char digit, int x, int y, const wxBitmap& bmp)
 wxBitmap MergeBitmaps(const wxBitmap& bmp1, const wxBitmap& bmp2)
 {
     wxMemoryDC dc;
-/*    wxBitmap tmpBmp(bmp1);  // can't simply remove the mask as there is now way
-    tmpBmp.SetMask(NULL);*/   // to predict which background color will be used
     wxBitmap tmpBmp(bmp1.GetWidth(), bmp1.GetHeight());
     
     dc.SelectObject(tmpBmp);
@@ -116,7 +114,7 @@ wxBitmap MergeBitmaps(const wxBitmap& bmp1, const wxBitmap& bmp2)
     dc.DrawRectangle(0, 0, bmp1.GetWidth(), bmp1.GetHeight());
     dc.DrawBitmap(bmp1, 0, 0, true);
     dc.DrawBitmap(bmp2, 0, 0, true);
-    dc.SelectObject(wxNullBitmap);  // detach tmpBmp
+    dc.SelectObject(wxNullBitmap);
     
     tmpBmp.SetMask(new wxMask(tmpBmp, g_TranspColour));
     return tmpBmp;
@@ -127,7 +125,7 @@ wxBitmap BitmapFromList(wxImageList* list, int index)
     int width, height;
     list->GetSize(index, width, height);
     wxMemoryDC dc;
-    wxBitmap bmp(width, height);  // Don't forget the size to have a valid bitmap
+    wxBitmap bmp(width, height);
     dc.SelectObject(bmp);
     dc.SetPen(*wxTRANSPARENT_PEN);
     dc.SetBrush(wxBrush(g_TranspColour, wxSOLID));
@@ -135,7 +133,7 @@ wxBitmap BitmapFromList(wxImageList* list, int index)
     
     list->Draw(index, dc, 0, 0, wxIMAGELIST_DRAW_TRANSPARENT);
     
-    dc.SelectObject(wxNullBitmap);  // detach bmp
+    dc.SelectObject(wxNullBitmap);
     bmp.SetMask(new wxMask(bmp, g_TranspColour));
     return bmp;
 }    
@@ -156,20 +154,30 @@ poEditListCtrl::poEditListCtrl(wxWindow *parent,
     
     int i;
     wxImageList *list = new wxImageList(16, 16);
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-nothing")));                // IMG_NOTHING
     
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-automatic")));              // IMG_AUTOMATIC
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-comment")));                // IMG_COMMENT
+    // IMG_NOTHING:
+    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-nothing")));   
+    
+    // IMG_AUTOMATIC:
+    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-automatic")));              
+    // IMG_COMMENT:
+    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-comment")));                
+    // IMG_AUTOMATIC | IMG_COMMENT:
     list->Add(MergeBitmaps(wxArtProvider::GetBitmap(_T("poedit-status-automatic")), 
-                           wxArtProvider::GetBitmap(_T("poedit-status-comment"))));  // IMG_AUTOMATIC | IMG_COMMENT
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-modified")));               // IMG_MODIFIED 
-    for(i = 1; i < IMG_MODIFIED; i++)                                                // IMG_MODIFIED variations
+                           wxArtProvider::GetBitmap(_T("poedit-status-comment"))));  
+    
+    // IMG_MODIFIED 
+    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-modified")));
+    
+    // IMG_MODIFIED variations:
+    for (i = 1; i < IMG_MODIFIED; i++)
     {
         list->Add(MergeBitmaps(BitmapFromList(list, i),
                                wxArtProvider::GetBitmap(_T("poedit-status-modified"))));
     }
     
-    for(int bk = 0; bk < 10; bk++)                                                   // BK_XX variations
+    // BK_XX variations:
+    for (int bk = 0; bk < 10; bk++)
     {
         for(i = 0; i <= (IMG_AUTOMATIC|IMG_COMMENT|IMG_MODIFIED); i++)                       
         {
@@ -274,7 +282,6 @@ void poEditListCtrl::ReadCatalog()
         {
             m_itemIndexToCatalogIndexArray.Add(restIds[i]);
             m_catalogIndexToItemIndexArray[restIds[i]] = listItemId++;
-//            (*m_catalog)[restIds[i]].SetListItemId(listItemId++);
         }    
     }    
 }    
@@ -310,7 +317,8 @@ wxString poEditListCtrl::OnGetItemText(long item, long column) const
     } 
 }  
 
-// this variable can't be a member of the class as the OnGetItemAttr function is const
+// this variable can't be a member of the class as the OnGetItemAttr function
+// is const
 static wxListItemAttr g_attr;  
 wxListItemAttr * poEditListCtrl::OnGetItemAttr(long item) const
 {
@@ -379,6 +387,3 @@ int poEditListCtrl::GetItemIndex(int catalogIndex) const
     else
         return -1;
 }
-
-
-

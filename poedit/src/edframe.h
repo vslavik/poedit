@@ -128,11 +128,6 @@ class poEditFrame : public wxFrame
         // (Re)initializes spellchecker, if needed
         void InitSpellchecker();
         
-        void AddItemsToList(const Catalog& catalog,
-                            poEditListCtrl *list, size_t& pos,
-                            bool (*filter)(const CatalogData& d),
-                            const wxColour *clr);
-
         // Message handlers:
         void OnNew(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);

@@ -247,7 +247,8 @@ BEGIN_EVENT_TABLE(TextctrlHandler, wxEvtHandler)
    EVT_KEY_DOWN(TextctrlHandler::OnKeyDown)
 END_EVENT_TABLE()
 
-// I don't like this global flag, but all poEditFrame instances should share it :(
+// I don't like this global flag, but all poEditFrame instances should share it
+// :(
 bool gs_focusToText = false;
 
 // special handling of events in listctrl 
@@ -1490,8 +1491,6 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 
     newval = TransformNewval(newval, m_displayQuotes);
 
-//    m_list->SetItem(item, 1, newval.substr(0, m_list->GetMaxColChars()));
-
 #if !wxUSE_UNICODE
     // convert to UTF-8 using user's environment default charset (do it
     // after calling m_list->SetItem because SetItem expects string in
@@ -1671,74 +1670,6 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
     RestartItemsValidation();
 }
 
-
-
-void poEditFrame::AddItemsToList(const Catalog& catalog,
-                                 poEditListCtrl *list, size_t& pos,
-                                 bool (*filter)(const CatalogData& d),
-                                 const wxColour *clr)
-{
-/*    int clrPos;
-    wxListItem listitem;
-    size_t cnt = catalog.GetCount();
-    size_t maxchars = list->GetMaxColChars();
-
-    for (size_t i = 0; i < cnt; i++)
-    {
-        if (filter(catalog[i]))
-        {
-            wxString orig = convertToLocalCharset(catalog[i].GetString());
-                
-            list->InsertItem(pos,
-                             orig.substr(0, maxchars),
-                             GetItemIcon(catalog[i]));
-            
-            // Convert from UTF-8 to environment's default charset:
-            wxString trans = convertToLocalCharset(catalog[i].GetTranslation());
-            list->SetItem(pos, 1, trans.substr(0, maxchars));
-
-            if (m_displayLines)
-            {
-                wxString linenum;
-                linenum << catalog[i].GetLineNumber();
-                list->SetItem(pos, 2, linenum);
-            }
-
-            list->SetItemData(pos, i);
-            listitem.SetId(pos);
-            clrPos = gs_shadedList ? (pos % 2) : 0;
-            if (clr && clr[clrPos].Ok())
-            {
-                list->GetItem(listitem);
-                listitem.SetBackgroundColour(clr[clrPos]);
-                list->SetItem(listitem);
-            }
-            pos++;
-        }
-    }*/
-}
-
-static bool CatFilterUntranslated(const CatalogData& d)
-{
-    return !d.IsTranslated();
-}
-
-static bool CatFilterFuzzy(const CatalogData& d)
-{
-    return d.IsFuzzy() &&
-           d.GetValidity() != CatalogData::Val_Invalid && d.IsTranslated();
-}
-
-static bool CatFilterInvalid(const CatalogData& d)
-{
-    return d.GetValidity() == CatalogData::Val_Invalid && d.IsTranslated();
-}
-
-static bool CatFilterRest(const CatalogData& d)
-{
-    return !d.IsFuzzy() &&
-           d.GetValidity() != CatalogData::Val_Invalid && d.IsTranslated();
-}
 
 void poEditFrame::RefreshControls()
 {
@@ -1970,12 +1901,6 @@ void poEditFrame::OnEditComment(wxCommandEvent& event)
         (*m_catalog)[selItem].SetComment(comment);
 
         m_list->RefreshItem(m_sel);
-/*        wxListItem listitem;
-        listitem.SetId(m_sel);
-        m_list->GetItem(listitem);
-        int icon = GetItemIcon((*m_catalog)[m_selItem]);
-        m_list->SetItemImage(listitem, icon, icon);
-        m_list->SetItem(listitem);*/
 
         // update comment window
         m_textComment->SetValue(CommentDialog::RemoveStartHash(comment));
@@ -2250,8 +2175,11 @@ void poEditFrame::UpdateCommentWindowEditable()
 
 void poEditFrame::UpdateDisplayCommentWin()
 {
-    m_displayCommentWin = GetMenuBar()->IsChecked(XRCID("menu_comment_win"));
-    m_displayAutoCommentsWin = GetMenuBar()->IsChecked(XRCID("menu_auto_comments_win"));
+    m_displayCommentWin =
+        GetMenuBar()->IsChecked(XRCID("menu_comment_win"));
+    m_displayAutoCommentsWin =
+        GetMenuBar()->IsChecked(XRCID("menu_auto_comments_win"));
+
     if (m_displayCommentWin || m_displayAutoCommentsWin)
     {
         m_bottomSplitter->SplitVertically(
@@ -2261,14 +2189,19 @@ void poEditFrame::UpdateDisplayCommentWin()
         
         // force recalculation of layout of panel so that text boxes take up
         // all the space they can
-        if (m_bottomRightPanel->GetSizer() != NULL) // sizer may be NULL on first call
+        // (sizer may be NULL on first call)
+        if (m_bottomRightPanel->GetSizer() != NULL)
         {
-            m_bottomRightPanel->GetSizer()->Remove(m_textAutoComments);  // need to remove and add again to ensure accurate resizing
+            // need to remove and add again to ensure accurate resizing:
+            m_bottomRightPanel->GetSizer()->Remove(m_textAutoComments);
+
             m_bottomRightPanel->GetSizer()->Remove(m_textComment);
             m_bottomRightPanel->GetSizer()->Add(m_textAutoComments, 1, wxEXPAND);
             m_bottomRightPanel->GetSizer()->Add(m_textComment, 1, wxEXPAND);
-            m_bottomRightPanel->GetSizer()->Show(m_textComment, m_displayCommentWin);
-            m_bottomRightPanel->GetSizer()->Show(m_textAutoComments, m_displayAutoCommentsWin);
+            m_bottomRightPanel->GetSizer()->Show(m_textComment,
+                                                 m_displayCommentWin);
+            m_bottomRightPanel->GetSizer()->Show(m_textAutoComments,
+                                                 m_displayAutoCommentsWin);
             m_bottomRightPanel->GetSizer()->Layout();
         }
     }
@@ -2538,8 +2471,7 @@ void poEditFrame::OnListRightClick(wxMouseEvent& event)
         list->SetItemState(item, wxLIST_STATE_SELECTED, 
                                  wxLIST_STATE_SELECTED);
 
-    wxMenu *menu = GetPopupMenu(m_list->GetItemData(m_sel));/*(m_frame) ? 
-                   m_frame->GetPopupMenu(*m_selItem) : NULL;*/
+    wxMenu *menu = GetPopupMenu(m_list->GetItemData(m_sel));
     if (menu)
     {  
         list->PopupMenu(menu, event.GetPosition());
@@ -2560,6 +2492,3 @@ void poEditFrame::OnListFocus(wxFocusEvent& event)
     else
         event.Skip();
 }
-
-
-
