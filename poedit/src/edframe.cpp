@@ -2156,6 +2156,10 @@ void poEditFrame::OnManager(wxCommandEvent&)
 void poEditFrame::SetCustomFonts()
 {
     wxConfigBase *cfg = wxConfig::Get();
+
+    static bool prevUseFontList = false;
+    static bool prevUseFontText = false;
+
     bool useFontList = (bool)cfg->Read(_T("custom_font_list_use"), (long)false);
     bool useFontText = (bool)cfg->Read(_T("custom_font_text_use"), (long)false);
 
@@ -2169,9 +2173,16 @@ void poEditFrame::SetCustomFonts()
             wxFont font;
             font.SetNativeFontInfo(fi);
             m_list->SetFont(font);
+            prevUseFontList = true;
         }
     }
-    
+    else if (prevUseFontList)
+    {
+        m_list->SetFont(
+                wxSystemSettings::GetSystemFont(wxSYS_DEFAULT_GUI_FONT));
+        prevUseFontList = false;
+    }
+
     if (useFontText)
     {
         wxString name = cfg->Read(_T("custom_font_text_name"), wxEmptyString);
@@ -2188,7 +2199,20 @@ void poEditFrame::SetCustomFonts()
             m_textTrans->SetFont(font);
             for (size_t i = 0; i < m_textTransPlural.size(); i++)
                 m_textTransPlural[i]->SetFont(font);
+            prevUseFontText = true;
         }
+    }
+    else if (prevUseFontText)
+    {
+        wxFont font(wxSystemSettings::GetSystemFont(wxSYS_DEFAULT_GUI_FONT));
+        m_textComment->SetFont(font);
+        m_textAutoComments->SetFont(font);
+        m_textOrig->SetFont(font);
+        m_textOrigPlural->SetFont(font);
+        m_textTrans->SetFont(font);
+        for (size_t i = 0; i < m_textTransPlural.size(); i++)
+            m_textTransPlural[i]->SetFont(font);
+        prevUseFontText = false;
     }
 }
 
