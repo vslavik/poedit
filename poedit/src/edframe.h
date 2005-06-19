@@ -173,6 +173,11 @@ class poEditFrame : public wxFrame
 #endif
         void OnPurgeDeleted(wxCommandEvent& event);
 
+        void OnGoToBookmark(wxCommandEvent& event);
+        void OnSetBookmark(wxCommandEvent& event);
+
+        void AddBookmarksMenu();
+
         void OnExport(wxCommandEvent& event);
         bool ExportCatalog(const wxString& filename);
 

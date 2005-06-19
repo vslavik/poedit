@@ -102,15 +102,18 @@ poEditFramesList poEditFrame::ms_instances;
 // Event & controls IDs:
 enum
 {
-    EDC_LIST = 1000,
+    EDC_LIST        = 1000,
     EDC_TEXTORIG,
     EDC_TEXTORIGPLURAL,
     EDC_TEXTTRANS,
     EDC_TEXTCOMMENT,
 
-    ED_POPUP_REFS = 2000,
-    ED_POPUP_TRANS = 3000,
-    ED_POPUP_DUMMY = 4000
+    ED_POPUP_REFS   = 2000,
+    ED_POPUP_TRANS  = 3000,
+    ED_POPUP_DUMMY  = 4000,
+
+    ED_BOOKMARK_GO  = 5000,
+    ED_BOOKMARK_SET = 5020
 };
 
 class ListHandler;
@@ -170,60 +173,6 @@ class TextctrlHandler : public wxEvtHandler
                             newy = m_list->GetItemCount() - 1;
                         m_list->EnsureVisible(newy);
                         m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                    }
-                    else
-                        event.Skip();
-                    break;
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                    if (m_catalog != NULL)
-                    {
-                        if (event.AltDown() && !event.ControlDown())
-                        {
-                            // Set bookmark if different from the current value for the item,
-                            // else unset it
-                            int bkIndex = -1;
-                            int selItemIndex = m_list->GetItemData(*m_sel);
-                            Bookmark bk = static_cast<Bookmark>(keyCode-'0');
-                            if (m_catalog->GetBookmarkIndex(bk) == selItemIndex)
-                                m_catalog->SetBookmark(selItemIndex, NO_BOOKMARK);
-                            else
-                                bkIndex = m_catalog->SetBookmark(selItemIndex, bk);
-
-                            // Refresh items
-                            m_list->RefreshItem(*m_sel);
-                            if (bkIndex > -1)
-                                m_list->RefreshItem(m_list->GetItemIndex(bkIndex));
-
-                            // Catalog has been modified
-                            m_frame->m_modified = true;
-                            m_frame->UpdateTitle();
-                        }
-                        else if (event.ControlDown() && !event.AltDown())
-                        {
-                            // Go to bookmark, if there is an item for it
-                            Bookmark bk = static_cast<Bookmark>(keyCode-'0');
-                            int bkIndex = m_catalog->GetBookmarkIndex(bk);
-                            if (bkIndex > -1)
-                            {
-                                int listIndex = m_list->GetItemIndex(bkIndex);
-                                if (listIndex >= 0 && listIndex < m_list->GetItemCount())
-                                {
-                                    m_list->EnsureVisible(listIndex);
-                                    m_list->SetItemState(listIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                                }
-                            }
-                        }
-                        else
-                            event.Skip();
                     }
                     else
                         event.Skip();
@@ -357,6 +306,10 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
                        poEditFrame::OnAutoTranslate)
    EVT_MENU           (XRCID("menu_auto_translate"), poEditFrame::OnAutoTranslateAll)
 #endif
+   EVT_MENU_RANGE     (ED_BOOKMARK_GO, ED_BOOKMARK_GO + 9,
+                       poEditFrame::OnGoToBookmark)
+   EVT_MENU_RANGE     (ED_BOOKMARK_SET, ED_BOOKMARK_SET + 9,
+                       poEditFrame::OnSetBookmark)
    EVT_CLOSE          (                poEditFrame::OnCloseWindow)
    EVT_TEXT           (EDC_TEXTCOMMENT,poEditFrame::OnCommentWindowText)
 #ifdef __WXMSW__
@@ -436,6 +389,7 @@ poEditFrame::poEditFrame() :
 #ifndef USE_TRANSMEM
         MenuBar->Enable(XRCID("menu_auto_translate"), false);
 #endif
+        AddBookmarksMenu();
     }
     else
     {
@@ -452,7 +406,7 @@ poEditFrame::poEditFrame() :
     GetMenuBar()->Check(XRCID("menu_auto_comments_win"), m_displayAutoCommentsWin);
     GetMenuBar()->Check(XRCID("menu_shaded"), gs_shadedList);
 
-	m_splitter = new wxSplitterWindow(this, -1,
+    m_splitter = new wxSplitterWindow(this, -1,
                                       wxDefaultPosition, wxDefaultSize,
                                       SPLITTER_BORDER);
 
@@ -1797,17 +1751,20 @@ void poEditFrame::UpdateTitle()
 
 void poEditFrame::UpdateMenu()
 {
+    wxMenuBar *menubar = GetMenuBar();
+    wxToolBar *toolbar = GetToolBar();
+
     if (m_catalog == NULL)
     {
-        GetMenuBar()->Enable(XRCID("menu_save"), false);
-        GetMenuBar()->Enable(XRCID("menu_saveas"), false);
-        GetMenuBar()->Enable(XRCID("menu_export"), false);
-        GetToolBar()->EnableTool(XRCID("menu_save"), false);
-        GetToolBar()->EnableTool(XRCID("menu_update"), false);
-        GetToolBar()->EnableTool(XRCID("menu_fuzzy"), false);
-        GetToolBar()->EnableTool(XRCID("menu_comment"), false);
-        GetMenuBar()->EnableTop(1, false);
-        GetMenuBar()->EnableTop(2, false);
+        menubar->Enable(XRCID("menu_save"), false);
+        menubar->Enable(XRCID("menu_saveas"), false);
+        menubar->Enable(XRCID("menu_export"), false);
+        toolbar->EnableTool(XRCID("menu_save"), false);
+        toolbar->EnableTool(XRCID("menu_update"), false);
+        toolbar->EnableTool(XRCID("menu_fuzzy"), false);
+        toolbar->EnableTool(XRCID("menu_comment"), false);
+        menubar->EnableTop(1, false);
+        menubar->EnableTop(2, false);
         m_textTrans->Enable(false);
         m_textOrig->Enable(false);
         m_textOrigPlural->Enable(false);
@@ -1817,14 +1774,14 @@ void poEditFrame::UpdateMenu()
     }
     else
     {
-        GetMenuBar()->Enable(XRCID("menu_save"), true);
-        GetMenuBar()->Enable(XRCID("menu_saveas"), true);
-        GetMenuBar()->Enable(XRCID("menu_export"), true);
-        GetToolBar()->EnableTool(XRCID("menu_save"), true);
-        GetToolBar()->EnableTool(XRCID("menu_fuzzy"), true);
-        GetToolBar()->EnableTool(XRCID("menu_comment"), true);
-        GetMenuBar()->EnableTop(1, true);
-        GetMenuBar()->EnableTop(2, true);
+        menubar->Enable(XRCID("menu_save"), true);
+        menubar->Enable(XRCID("menu_saveas"), true);
+        menubar->Enable(XRCID("menu_export"), true);
+        toolbar->EnableTool(XRCID("menu_save"), true);
+        toolbar->EnableTool(XRCID("menu_fuzzy"), true);
+        toolbar->EnableTool(XRCID("menu_comment"), true);
+        menubar->EnableTop(1, true);
+        menubar->EnableTop(2, true);
         m_textTrans->Enable(true);
         m_textOrig->Enable(true);
         m_textOrigPlural->Enable(true);
@@ -1832,10 +1789,19 @@ void poEditFrame::UpdateMenu()
         m_textAutoComments->Enable(true);
         m_list->Enable(true);
         bool doupdate = m_catalog->Header().SearchPaths.GetCount() > 0;
-        GetToolBar()->EnableTool(XRCID("menu_update"), doupdate);
-        GetMenuBar()->Enable(XRCID("menu_update"), doupdate);
-        GetMenuBar()->Enable(XRCID("menu_purge_deleted"),
+        toolbar->EnableTool(XRCID("menu_update"), doupdate);
+        menubar->Enable(XRCID("menu_update"), doupdate);
+        menubar->Enable(XRCID("menu_purge_deleted"),
                              m_catalog->HasDeletedItems());
+    }
+
+    menubar->EnableTop(4, m_catalog != NULL);
+    for (int i = 0; i < 10; i++)
+    {
+        menubar->Enable(ED_BOOKMARK_SET + i, m_catalog != NULL);
+        menubar->Enable(ED_BOOKMARK_GO + i,
+                        m_catalog != NULL &&
+                        m_catalog->GetBookmarkIndex(Bookmark(i)) != -1);
     }
 }
 
@@ -2491,4 +2457,69 @@ void poEditFrame::OnListFocus(wxFocusEvent& event)
     }
     else
         event.Skip();
+}
+
+void poEditFrame::AddBookmarksMenu()
+{
+    wxMenu *menu = new wxMenu();
+
+    for (int i = 0; i < 10; i++)
+    {
+        menu->Append(ED_BOOKMARK_SET + i,
+                     wxString::Format(_("Set bookmark %i\tAlt-%i"), i, i));
+    }
+    menu->AppendSeparator();
+    for (int i = 0; i < 10; i++)
+    {
+        menu->Append(ED_BOOKMARK_GO + i,
+                     wxString::Format(_("Go to bookmark %i\tCtrl-%i"), i, i));
+    }
+
+    wxMenuBar *bar = GetMenuBar();
+    bar->Insert(bar->GetMenuCount() - 1, menu, _("&Bookmarks"));
+}
+
+void poEditFrame::OnGoToBookmark(wxCommandEvent& event)
+{
+    // Go to bookmark, if there is an item for it
+    Bookmark bk = static_cast<Bookmark>(event.GetId() - ED_BOOKMARK_GO);
+    int bkIndex = m_catalog->GetBookmarkIndex(bk);
+    if (bkIndex != -1)
+    {
+        int listIndex = m_list->GetItemIndex(bkIndex);
+        if (listIndex >= 0 && listIndex < m_list->GetItemCount())
+        {
+            m_list->EnsureVisible(listIndex);
+            m_list->SetItemState(listIndex,
+                                 wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        }
+    }
+}
+
+void poEditFrame::OnSetBookmark(wxCommandEvent& event)
+{
+    // Set bookmark if different from the current value for the item,
+    // else unset it
+    int bkIndex = -1;
+    int selItemIndex = m_list->GetItemData(m_sel);
+
+    Bookmark bk = static_cast<Bookmark>(event.GetId() - ED_BOOKMARK_SET);
+    if (m_catalog->GetBookmarkIndex(bk) == selItemIndex)
+    {
+        m_catalog->SetBookmark(selItemIndex, NO_BOOKMARK);
+    }
+    else
+    {
+        bkIndex = m_catalog->SetBookmark(selItemIndex, bk);
+    }
+
+    // Refresh items
+    m_list->RefreshItem(m_sel);
+    if (bkIndex != -1)
+        m_list->RefreshItem(m_list->GetItemIndex(bkIndex));
+
+    // Catalog has been modified
+    m_modified = true;
+    UpdateTitle();
+    UpdateMenu();
 }
