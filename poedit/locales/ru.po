@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit-1.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-30 23:57+0200\n"
+"POT-Creation-Date: 2005-06-19 18:27+0200\n"
 "PO-Revision-Date: 2005-06-03 15:19+0300\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Russian <docteam@lafox.net>\n"
@@ -16,20 +16,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: ../src/edframe.cpp:1857
+#: ../src/edframe.cpp:1760
 msgid " (modified)"
 msgstr " (изменён)"
 
-#: ../src/digger.cpp:43
+#: ../src/digger.cpp:58
 msgid " files..."
 msgstr " файлы..."
 
-#: ../src/catalog.cpp:116
+#: ../src/catalog.cpp:130
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i строк файла '%s' не были загружены корректно."
 
-#: ../src/edframe.cpp:1825 ../src/export_html.cpp:131
+#: ../src/edframe.cpp:1728 ../src/export_html.cpp:145
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i строк (%i неточно, %i неверные символы, %i не переведено)"
@@ -41,6 +41,10 @@ msgstr "&О программе..."
 #: ../src/resources/xrc_strings.h:54
 msgid "&Automatically translate using TM"
 msgstr "Перевести &автоматически, используя TM"
+
+#: ../src/edframe.cpp:2494
+msgid "&Bookmarks"
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:34 ../src/resources/xrc_strings.h:44
 msgid "&Close"
@@ -55,7 +59,7 @@ msgid "&Edit"
 msgstr "&Правка"
 
 #: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:429
+#: ../src/edframe.cpp:398
 msgid "&File"
 msgstr "&Файл"
 
@@ -111,12 +115,12 @@ msgstr "&Обновить из исходного кода"
 msgid "&View"
 msgstr "&Вид"
 
-#: ../src/catalog.cpp:1454
+#: ../src/catalog.cpp:1468
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' не является верным POT-файлом."
 
-#: ../src/edframe.cpp:1748
+#: ../src/edframe.cpp:1650
 msgid "'."
 msgstr "'."
 
@@ -124,7 +128,7 @@ msgstr "'."
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f будет заменен именем файла, %l - номером строки)"
 
-#: ../src/summarydlg.cpp:50
+#: ../src/summarydlg.cpp:66
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i новых, %i всего)"
@@ -133,11 +137,11 @@ msgstr "(%i новых, %i всего)"
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 новых, 0 всего)"
 
-#: ../src/chooselang.cpp:71
+#: ../src/chooselang.cpp:86
 msgid "(Use default language)"
 msgstr "(Использовать язык по умолчанию)"
 
-#: ../src/edframe.cpp:718
+#: ../src/edframe.cpp:688
 msgid "(none of these)"
 msgstr "(ни один из этих)"
 
@@ -145,7 +149,7 @@ msgstr "(ни один из этих)"
 msgid "< Previous"
 msgstr "< Назад"
 
-#: ../src/manager.cpp:348
+#: ../src/manager.cpp:363
 msgid "<unnamed>"
 msgstr "<без имени>"
 
@@ -161,7 +165,7 @@ msgstr "Добавить"
 msgid "Add directory to the list"
 msgstr "Добавить папку в список"
 
-#: ../src/resources/xrc_strings.h:170 ../src/transmemupd_wizard.cpp:123
+#: ../src/resources/xrc_strings.h:170 ../src/transmemupd_wizard.cpp:138
 msgid "Add files"
 msgstr "Добавить файлы"
 
@@ -185,11 +189,11 @@ msgstr "Пункт в списке ключевых слов:"
 msgid "Automatic spellchecking"
 msgstr "Автоматическая проверка орфографии"
 
-#: ../src/export_html.cpp:170
+#: ../src/export_html.cpp:184
 msgid "Automatic translation"
 msgstr "Автоматический перевод"
 
-#: ../src/edframe.cpp:2084 ../src/edframe.cpp:2088
+#: ../src/edframe.cpp:1993 ../src/edframe.cpp:1997
 msgid "Automatic translations:"
 msgstr "Автоматические переводы:"
 
@@ -201,16 +205,16 @@ msgstr "При сохранении автоматически компилир�
 msgid "Automatically translate when updating catalog"
 msgstr "Автоматически переводить при обновлении каталога"
 
-#: ../src/edframe.cpp:2041
+#: ../src/edframe.cpp:1950
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Автоматически переведено %u строк"
 
-#: ../src/edframe.cpp:2026
+#: ../src/edframe.cpp:1935
 msgid "Automatically translating..."
 msgstr "Автоматический перевод..."
 
-#: ../src/manager.cpp:221
+#: ../src/manager.cpp:236
 msgid "Bad Tokens"
 msgstr "Неверные символы"
 
@@ -222,13 +226,16 @@ msgstr "Путь к базе:"
 msgid "Behavior"
 msgstr "События"
 
-#: ../src/catalog.cpp:615
+#: ../src/catalog.cpp:629
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "Битый файл каталога: множественная форма msgstr использована без msgid_plural"
+msgstr ""
+"Битый файл каталога: множественная форма msgstr использована без msgid_plural"
 
-#: ../src/catalog.cpp:583
-msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr "Битый файл каталога: единичная форма msgstr использована без msgid_plural"
+#: ../src/catalog.cpp:597
+msgid ""
+"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr ""
+"Битый файл каталога: единичная форма msgstr использована без msgid_plural"
 
 #: ../src/resources/xrc_strings.h:28 ../src/resources/xrc_strings.h:104
 #: ../src/resources/xrc_strings.h:135 ../src/resources/xrc_strings.h:167
@@ -250,19 +257,19 @@ msgstr "Преобразование CR/LF"
 msgid "Cancel"
 msgstr "Отмена"
 
-#: ../src/transmem.cpp:710
+#: ../src/transmem.cpp:725
 msgid "Cannot create database directory!"
 msgstr "Невозможно создать папку базы данных!"
 
-#: ../src/gexecute.cpp:119 ../src/gexecute.cpp:166
+#: ../src/gexecute.cpp:136 ../src/gexecute.cpp:185
 msgid "Cannot execute program: "
 msgstr "Невозможно выполнить программу:"
 
-#: ../src/transmemupd.cpp:187
+#: ../src/transmemupd.cpp:202
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Невозможно извлечь каталоги из файла RPM."
 
-#: ../src/edapp.cpp:124
+#: ../src/edapp.cpp:138
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -271,7 +278,7 @@ msgstr ""
 "Невозможно найти файл ресурсов '%s'!\n"
 "Пожалуйста, переустановите poEdit."
 
-#: ../src/edapp.cpp:118
+#: ../src/edapp.cpp:132
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -288,12 +295,12 @@ msgstr ""
 msgid "Case sensitive"
 msgstr "С учетом регистра"
 
-#: ../src/manager.cpp:217
+#: ../src/manager.cpp:232
 msgid "Catalog"
 msgstr "Каталог"
 
-#: ../src/edframe.cpp:763 ../src/edframe.cpp:787 ../src/edframe.cpp:824
-#: ../src/edframe.cpp:870 ../src/edframe.cpp:979
+#: ../src/edframe.cpp:733 ../src/edframe.cpp:757 ../src/edframe.cpp:794
+#: ../src/edframe.cpp:840 ../src/edframe.cpp:949
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Каталог был изменен. Хотите сохранить изменения?"
 
@@ -305,7 +312,7 @@ msgstr "&Менеджер каталогов"
 msgid "Change UI language"
 msgstr "Выбрать языка интерфейса"
 
-#: ../src/resources/xrc_strings.h:147 ../src/export_html.cpp:117
+#: ../src/resources/xrc_strings.h:147 ../src/export_html.cpp:131
 msgid "Charset:"
 msgstr "Кодировка:"
 
@@ -333,15 +340,15 @@ msgstr "Комментарий:"
 msgid "Configuration"
 msgstr "Конфигурация"
 
-#: ../src/manager.cpp:378 ../src/manager.cpp:398
+#: ../src/manager.cpp:393 ../src/manager.cpp:413
 msgid "Confirmation"
 msgstr "Подтверждение"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2063
+#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:1972
 msgid "Copy original to translation field"
 msgstr "Скопировать исходный текст в поле перевода"
 
-#: ../src/resources/xrc_strings.h:146 ../src/export_html.cpp:107
+#: ../src/resources/xrc_strings.h:146 ../src/export_html.cpp:121
 msgid "Country:"
 msgstr "Страна:"
 
@@ -353,7 +360,7 @@ msgstr "Создать новый проект переводов"
 msgid "Database"
 msgstr "База данных"
 
-#: ../src/transmem.cpp:294
+#: ../src/transmem.cpp:309
 #, c-format
 msgid "Database error: %s"
 msgstr "Ошибка базы данных: %s"
@@ -370,7 +377,7 @@ msgstr "Удалить пункт"
 msgid "Delete the project"
 msgstr "Удалить проект"
 
-#: ../src/manager.cpp:271
+#: ../src/manager.cpp:286
 msgid "Directories:"
 msgstr "Папки:"
 
@@ -386,7 +393,7 @@ msgstr "Показать &кавычки"
 msgid "Display quotes around the string?"
 msgstr "Показывать кавычки вокруг строки?"
 
-#: ../src/manager.cpp:397
+#: ../src/manager.cpp:412
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -394,7 +401,7 @@ msgstr ""
 "Вы действительно хотите обновить все\n"
 "каталоги в этом проекте?"
 
-#: ../src/edframe.cpp:1985
+#: ../src/edframe.cpp:1894
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -405,7 +412,7 @@ msgstr ""
 "Если вы продолжите уничтожение, вам придётся снова переводить их, если они "
 "будут снова добавлены в будущем."
 
-#: ../src/manager.cpp:377
+#: ../src/manager.cpp:392
 msgid "Do you want to delete the project?"
 msgstr "Вы действительно хотите удалить проект?"
 
@@ -457,34 +464,34 @@ msgstr "Исполняемый файл редактора:"
 msgid "Enables on-the-fly spellchecking"
 msgstr "Включает динамическую проверку орфографии"
 
-#: ../src/edframe.cpp:1110
+#: ../src/edframe.cpp:1082
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Пункты каталога возможно неверны."
 
-#: ../src/edframe.cpp:669
+#: ../src/edframe.cpp:639
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "Ошибка инициализации проверки орфографии: %s"
 
-#: ../src/edframe.cpp:1748
+#: ../src/edframe.cpp:1650
 msgid "Error loading message catalog file '"
 msgstr "Ошибка загрузки файла каталога сообщений"
 
-#: ../src/fileviewer.cpp:75
+#: ../src/fileviewer.cpp:90
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Ошибка открытия файла %s!"
 
-#: ../src/catalog.cpp:1254
+#: ../src/catalog.cpp:1268
 msgid "Error saving catalog"
 msgstr "Ошибка сохранения каталога"
 
-#: ../src/catalog.cpp:64
+#: ../src/catalog.cpp:78
 #, c-format
 msgid "Error while loading file '%s': line %u is corrupted."
 msgstr "Ошибка загрузки файла '%s': повреждена строка %u."
 
-#: ../src/edframe.cpp:951
+#: ../src/edframe.cpp:921
 msgid "Export as..."
 msgstr "Экспортировать как..."
 
@@ -492,17 +499,17 @@ msgstr "Экспортировать как..."
 msgid "External editor"
 msgstr "Внешний редактор"
 
-#: ../src/edframe.cpp:842 ../src/edframe.cpp:886
+#: ../src/edframe.cpp:812 ../src/edframe.cpp:856
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Файл '%s' не существует."
 
-#: ../src/edframe.cpp:859
+#: ../src/edframe.cpp:829
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Файл '%s' не является каталогом сообщений."
 
-#: ../src/catalog.cpp:1218
+#: ../src/catalog.cpp:1232
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -511,7 +518,7 @@ msgstr ""
 "Файл '%s' доступен только для чтения и не может быть сохранён.\n"
 "Пожалуйста, сохраните его с другим именем."
 
-#: ../src/transmemupd_wizard.cpp:48
+#: ../src/transmemupd_wizard.cpp:63
 msgid "Files List"
 msgstr "Список файлов"
 
@@ -539,12 +546,12 @@ msgstr "Поиск..."
 msgid "Fonts"
 msgstr "Шрифты"
 
-#: ../src/edframe.cpp:2482
+#: ../src/edframe.cpp:2423
 #, c-format
 msgid "Form %u"
 msgstr "Форма %u"
 
-#: ../src/edframe.cpp:2484
+#: ../src/edframe.cpp:2425
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr "Форма %u (например, \"%u\")"
@@ -553,19 +560,19 @@ msgstr "Форма %u (например, \"%u\")"
 msgid "Fullscreen view"
 msgstr "На весь экран"
 
-#: ../src/manager.cpp:220
+#: ../src/manager.cpp:235
 msgid "Fuzzy"
 msgstr "Неточно"
 
-#: ../src/export_html.cpp:176
+#: ../src/export_html.cpp:190
 msgid "Fuzzy translation"
 msgstr "Неточный перевод"
 
-#: ../src/edframe.cpp:807 ../src/edframe.cpp:928
+#: ../src/edframe.cpp:777 ../src/edframe.cpp:898
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Каталоги GNU GetText (*.po)|*.po|Все файлы (*.*)|*.*"
 
-#: ../src/edframe.cpp:1004 ../src/edframe.cpp:1128
+#: ../src/edframe.cpp:974 ../src/edframe.cpp:1100
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "Шаблоны GNU GetText (*.pot)|*.pot|Все файлы (*.*)|*.*"
 
@@ -581,11 +588,16 @@ msgstr "Сгенерировать базу данных TM"
 msgid "Generate database"
 msgstr "Сгенерировать базу данных"
 
-#: ../src/edframe.cpp:1192
+#: ../src/edframe.cpp:1164
 msgid "Gettext syntax error"
 msgstr "Ошибка синтаксиса gettext"
 
-#: ../src/edframe.cpp:953
+#: ../src/edframe.cpp:2490
+#, c-format
+msgid "Go to bookmark %i\tCtrl-%i"
+msgstr ""
+
+#: ../src/edframe.cpp:923
 msgid "HTML file (*.html)|*.html"
 msgstr "Файл HTML (*.html)|*.html"
 
@@ -605,28 +617,28 @@ msgstr "Если выбран, окно комментария будет ред
 msgid "Invocation:"
 msgstr "Вызов:"
 
-#: ../src/resources/xrc_strings.h:154 ../src/settingsdlg.cpp:55
+#: ../src/resources/xrc_strings.h:154 ../src/settingsdlg.cpp:71
 msgid "Keywords"
 msgstr "Ключевые слова"
 
-#: ../src/chooselang.cpp:137
+#: ../src/chooselang.cpp:152
 msgid "Language selection"
 msgstr "Выбор языка"
 
 #: ../src/resources/xrc_strings.h:121 ../src/resources/xrc_strings.h:122
-#: ../src/resources/xrc_strings.h:145 ../src/export_html.cpp:104
+#: ../src/resources/xrc_strings.h:145 ../src/export_html.cpp:118
 msgid "Language:"
 msgstr "Язык:"
 
-#: ../src/manager.cpp:222
+#: ../src/manager.cpp:237
 msgid "Last modified"
 msgstr "Последнее изменение"
 
-#: ../src/fileviewer.cpp:84 ../src/edlistctrl.cpp:194
+#: ../src/fileviewer.cpp:99 ../src/edlistctrl.cpp:227
 msgid "Line"
 msgstr "Строка"
 
-#: ../src/catalog.cpp:129
+#: ../src/catalog.cpp:143
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "Строка %u файла '%s' повреждена (неверные данные %s)."
@@ -643,7 +655,7 @@ msgstr "Список расширений, разделенных точкой �
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:201
+#: ../src/catalog.cpp:215
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Неверно сформированный заголовок: '%s'"
@@ -656,7 +668,7 @@ msgstr "Макс. # отсутствующих слов:"
 msgid "Max. difference in sentence length:"
 msgstr "Макс. разница в длине предложения:"
 
-#: ../src/catalog.cpp:1426
+#: ../src/catalog.cpp:1440
 msgid "Merging differences..."
 msgstr "Объединяются различия..."
 
@@ -668,11 +680,11 @@ msgstr "Переместить вниз"
 msgid "Move up"
 msgstr "Переместить вверх"
 
-#: ../src/prefsdlg.cpp:40
+#: ../src/prefsdlg.cpp:55
 msgid "My Languages"
 msgstr "Мои языки"
 
-#: ../src/manager.cpp:274
+#: ../src/manager.cpp:289
 msgid "My Project"
 msgstr "Мой проект"
 
@@ -707,19 +719,20 @@ msgstr "Новые строки"
 msgid "Next >"
 msgstr "Далее >"
 
-#: ../src/fileviewer.cpp:123
+#: ../src/fileviewer.cpp:138
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "Не указан редактор. Пожалуйста, выберите его в диалоговом окне Настройки."
+msgstr ""
+"Не указан редактор. Пожалуйста, выберите его в диалоговом окне Настройки."
 
-#: ../src/digger.cpp:123
+#: ../src/digger.cpp:138
 msgid "No files found in: "
 msgstr "Файлы не найдены в:"
 
-#: ../src/edframe.cpp:1208
+#: ../src/edframe.cpp:1180
 msgid "No references to this string found."
 msgstr "Не найдены связи для этой строки."
 
-#: ../src/export_html.cpp:148
+#: ../src/export_html.cpp:162
 msgid "Notes"
 msgstr "Примечания"
 
@@ -734,11 +747,11 @@ msgstr "OK"
 msgid "Obsolete strings"
 msgstr "Всего строк"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:805
+#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:775
 msgid "Open catalog"
 msgstr "Открыть каталог"
 
-#: ../src/edframe.cpp:1002 ../src/edframe.cpp:1126
+#: ../src/edframe.cpp:972 ../src/edframe.cpp:1098
 msgid "Open catalog template"
 msgstr "Открыть шаблон каталога"
 
@@ -750,7 +763,7 @@ msgstr "Открывать менеджер каталогов при запус
 msgid "Open source files in editor, not in file viewer"
 msgstr "Открывать исходные файлы в редакторе, а не в программе просмотра"
 
-#: ../src/edlistctrl.cpp:191 ../src/export_html.cpp:141
+#: ../src/edlistctrl.cpp:224 ../src/export_html.cpp:155
 msgid "Original string"
 msgstr "Исходная строка"
 
@@ -766,7 +779,7 @@ msgstr "Настройка парсера"
 msgid "Parsers"
 msgstr "Парсеры"
 
-#: ../src/digger.cpp:43
+#: ../src/digger.cpp:58
 msgid "Parsing "
 msgstr "Парсинг"
 
@@ -774,7 +787,7 @@ msgstr "Парсинг"
 msgid "Path to DB:"
 msgstr "Путь к БД:"
 
-#: ../src/resources/xrc_strings.h:152 ../src/settingsdlg.cpp:57
+#: ../src/resources/xrc_strings.h:152 ../src/settingsdlg.cpp:73
 msgid "Paths"
 msgstr "Пути"
 
@@ -788,17 +801,18 @@ msgstr "Выберите язык из списка известных язык�
 
 #: ../src/resources/xrc_strings.h:166
 msgid "Please add directories where locale files are stored on your system:"
-msgstr "Пожалуйста, добавьте папки, в которых хранятся файлы региональных настроек:"
+msgstr ""
+"Пожалуйста, добавьте папки, в которых хранятся файлы региональных настроек:"
 
-#: ../src/edframe.cpp:1216
+#: ../src/edframe.cpp:1188
 msgid "Please choose the reference you want to show:"
 msgstr "Пожалуйста, выберите связь, которую вы хотите показать:"
 
-#: ../src/prefsdlg.cpp:321
+#: ../src/prefsdlg.cpp:336
 msgid "Please select language ISO code:"
 msgstr "Выберите ISO-код языка:"
 
-#: ../src/edframe.cpp:727
+#: ../src/edframe.cpp:697
 msgid "Please select language code:"
 msgstr "Выберите код языка:"
 
@@ -806,7 +820,7 @@ msgstr "Выберите код языка:"
 msgid "Plural Forms:"
 msgstr "Формы множественного числа:"
 
-#: ../src/edframe.cpp:480
+#: ../src/edframe.cpp:450
 msgid "Plural:"
 msgstr "Множественная:"
 
@@ -818,11 +832,11 @@ msgstr "Параметры"
 msgid "Proceed"
 msgstr "Продолжить"
 
-#: ../src/resources/xrc_strings.h:150 ../src/export_html.cpp:97
+#: ../src/resources/xrc_strings.h:150 ../src/export_html.cpp:111
 msgid "Project info"
 msgstr "Информация о проекте"
 
-#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:101
+#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:115
 msgid "Project name and version:"
 msgstr "Название проекта и версия:"
 
@@ -830,15 +844,15 @@ msgstr "Название проекта и версия:"
 msgid "Project name:"
 msgstr "Название проекта:"
 
-#: ../src/edframe.cpp:1986
+#: ../src/edframe.cpp:1895
 msgid "Purge delete translations"
 msgstr "Полное удаление переводов"
 
-#: ../src/edframe.cpp:1216
+#: ../src/edframe.cpp:1188
 msgid "References"
 msgstr "Связи"
 
-#: ../src/edframe.cpp:2068 ../src/edframe.cpp:2072
+#: ../src/edframe.cpp:1977 ../src/edframe.cpp:1981
 msgid "References:"
 msgstr "Связи:"
 
@@ -854,7 +868,7 @@ msgstr "Сбросить на значения по умолчанию"
 msgid "Save &as..."
 msgstr "Сохранить &как..."
 
-#: ../src/edframe.cpp:927
+#: ../src/edframe.cpp:897
 msgid "Save as..."
 msgstr "Сохранить как..."
 
@@ -862,45 +876,50 @@ msgstr "Сохранить как..."
 msgid "Save catalog"
 msgstr "Сохранить каталог"
 
-#: ../src/edframe.cpp:764 ../src/edframe.cpp:788 ../src/edframe.cpp:825
-#: ../src/edframe.cpp:871 ../src/edframe.cpp:980
+#: ../src/edframe.cpp:734 ../src/edframe.cpp:758 ../src/edframe.cpp:795
+#: ../src/edframe.cpp:841 ../src/edframe.cpp:950
 msgid "Save changes"
 msgstr "Сохранить изменения:"
 
-#: ../src/transmemupd.cpp:137
+#: ../src/transmemupd.cpp:152
 msgid "Scanning file: "
 msgstr "Сканируется файл:"
 
-#: ../src/digger.cpp:33
+#: ../src/digger.cpp:48
 msgid "Scanning files..."
 msgstr "Сканируются файлы..."
 
-#: ../src/transmemupd_wizard.cpp:44
+#: ../src/transmemupd_wizard.cpp:59
 msgid "Search Paths"
 msgstr "Пути поиска"
 
-#: ../src/edframe.cpp:726
+#: ../src/edframe.cpp:696
 msgid "Select catalog's language"
 msgstr "Выбор языка каталога"
 
-#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:334
-#: ../src/transmemupd_wizard.cpp:97
+#: ../src/manager.cpp:266 ../src/prefsdlg.cpp:349
+#: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "Выбрать папку"
 
-#: ../src/prefsdlg.cpp:320
+#: ../src/prefsdlg.cpp:335
 msgid "Select language"
 msgstr "Выбор языка"
 
-#: ../src/chooselang.cpp:136
+#: ../src/chooselang.cpp:151
 msgid "Select your prefered language"
 msgstr "Выбор предпочитаемого языка"
+
+#: ../src/edframe.cpp:2484
+#, c-format
+msgid "Set bookmark %i\tAlt-%i"
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:141
 msgid "Settings"
 msgstr "Настройки"
 
-#: ../src/edapp.cpp:145
+#: ../src/edapp.cpp:159
 msgid "Setup"
 msgstr "Настройка"
 
@@ -916,7 +935,7 @@ msgstr "Показать окно автоматических ко&ммента
 msgid "Show summary after catalog update"
 msgstr "Показывать сводку после обновления каталога"
 
-#: ../src/edframe.cpp:479
+#: ../src/edframe.cpp:449
 msgid "Singular:"
 msgstr "Единичная:"
 
@@ -928,7 +947,7 @@ msgstr "Кодировка исходного кода:"
 msgid "Source code parsers:"
 msgstr "Парсеры исходного кода:"
 
-#: ../src/fileviewer.cpp:31
+#: ../src/fileviewer.cpp:46
 msgid "Source file"
 msgstr "Исходный файл"
 
@@ -940,15 +959,15 @@ msgstr "Начать с первого пункта"
 msgid "String to find:"
 msgstr "Найти строку:"
 
-#: ../src/resources/xrc_strings.h:144 ../src/export_html.cpp:114
+#: ../src/resources/xrc_strings.h:144 ../src/export_html.cpp:128
 msgid "Team's email address:"
 msgstr "E-mail команды:"
 
-#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:110
+#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:124
 msgid "Team:"
 msgstr "Команда:"
 
-#: ../src/catalog.cpp:1253
+#: ../src/catalog.cpp:1267
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -960,7 +979,7 @@ msgstr ""
 "был сохранен в UTF-8 и был изменен соответствующий\n"
 "параметр."
 
-#: ../src/catalog.cpp:942
+#: ../src/catalog.cpp:956
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -984,7 +1003,7 @@ msgstr ""
 "Эти строки были найдены в ресурсах, но не в каталоге.\n"
 "poEdit сейчас добавит их в каталог."
 
-#: ../src/edapp.cpp:145
+#: ../src/edapp.cpp:159
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1038,11 +1057,11 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Включено, если выбранная строка содержит неточный перевод"
 
-#: ../src/manager.cpp:218
+#: ../src/manager.cpp:233
 msgid "Total"
 msgstr "Всего"
 
-#: ../src/edlistctrl.cpp:192 ../src/export_html.cpp:144
+#: ../src/edlistctrl.cpp:225 ../src/export_html.cpp:158
 msgid "Translation"
 msgstr "Перевод"
 
@@ -1050,11 +1069,11 @@ msgstr "Перевод"
 msgid "Translation Memory"
 msgstr "Буфер перевода"
 
-#: ../src/transmemupd_wizard.cpp:129
+#: ../src/transmemupd_wizard.cpp:144
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 msgstr "Файлы переводов (*.po;*.mo)|*.po;*.mo"
 
-#: ../src/transmemupd_wizard.cpp:127
+#: ../src/transmemupd_wizard.cpp:142
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "Файлы переводов (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 
@@ -1070,7 +1089,7 @@ msgstr ""
 "Буфер перевода будет создан из файлов, перечисленных ниже.\n"
 "Сейчас вы можете добавить в список дополнительные файлы."
 
-#: ../src/chooselang.cpp:54
+#: ../src/chooselang.cpp:69
 #, c-format
 msgid "Uknown locale code '%s' in registry."
 msgstr "Неизвестный код региона '%s' в реестре."
@@ -1083,7 +1102,7 @@ msgstr "Возврат"
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:219
+#: ../src/manager.cpp:234
 msgid "Untrans"
 msgstr "Не переведено"
 
@@ -1107,11 +1126,11 @@ msgstr "Сводка об обновлении"
 msgid "Update translation memory"
 msgstr "Обновляется буфер перевода"
 
-#: ../src/catalog.cpp:1386
+#: ../src/catalog.cpp:1400
 msgid "Updating catalog..."
 msgstr "Обновляется каталог..."
 
-#: ../src/edframe.cpp:1112
+#: ../src/edframe.cpp:1084
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr ""
 "Обновление каталога завершилось неудачей. Для получения дополнительной "
@@ -1142,11 +1161,11 @@ msgstr "Только полные слова"
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:852
+#: ../src/edframe.cpp:822
 msgid "You can't drop more than one file on poEdit window."
 msgstr "Вы не можете перетащить в окно poEdit более одного файла."
 
-#: ../src/chooselang.cpp:151
+#: ../src/chooselang.cpp:166
 msgid "You must restart poEdit for this change to take effect."
 msgstr "Вы должны перезапустить poEdit, чтобы эти изменения вступили в силу."
 
@@ -1158,7 +1177,7 @@ msgstr "Ваш e-mail:"
 msgid "Your name:"
 msgstr "Ваше имя:"
 
-#: ../src/edframe.cpp:1831
+#: ../src/edframe.cpp:1734
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[проверка переводов: осталось %i]"
@@ -1167,31 +1186,31 @@ msgstr "[проверка переводов: осталось %i]"
 msgid "current platform's default"
 msgstr "текущей платформы по умолчанию"
 
-#: ../src/edframe.cpp:2108
+#: ../src/edframe.cpp:2017
 msgid "none"
 msgstr "нет"
 
-#: ../src/edframe.cpp:372
+#: ../src/edframe.cpp:341
 msgid "poEdit"
 msgstr "poEdit"
 
-#: ../src/manager.cpp:54
+#: ../src/manager.cpp:69
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - Менеджер каталогов"
 
-#: ../src/edapp.cpp:127
+#: ../src/edapp.cpp:141
 msgid "poEdit Error"
 msgstr "Ошибка poEdit"
 
-#: ../src/digger.cpp:124
+#: ../src/digger.cpp:139
 msgid "poEdit did not find any files in scanned directories."
 msgstr "poEdit не нашел никаких файлов в просканированных папках."
 
-#: ../src/edapp.cpp:51
-msgid "poEdit installation is broken, cannot find application's home directory."
+#: ../src/edapp.cpp:65
+msgid ""
+"poEdit installation is broken, cannot find application's home directory."
 msgstr "Установка poEdit прервана, невозможно найти домашнюю папку приложения."
 
-#: ../src/edframe.cpp:2123
+#: ../src/edframe.cpp:2032
 msgid "version"
 msgstr "версия"
-

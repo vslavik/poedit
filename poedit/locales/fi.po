@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PoEdit Suomeksi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-30 23:57+0200\n"
+"POT-Creation-Date: 2005-06-19 18:27+0200\n"
 "PO-Revision-Date: 2005-05-06 15:48+0200\n"
 "Last-Translator: Heikki Suopanki <firstname.lastname@mail.ru>\n"
 "Language-Team: finnish\n"
@@ -12,20 +12,20 @@ msgstr ""
 "X-Poedit-Language: Finnish\n"
 "X-Poedit-Country: FINLAND\n"
 
-#: ../src/edframe.cpp:1857
+#: ../src/edframe.cpp:1760
 msgid " (modified)"
 msgstr " (muokattu)"
 
-#: ../src/digger.cpp:43
+#: ../src/digger.cpp:58
 msgid " files..."
 msgstr " tiedostoa..."
 
-#: ../src/catalog.cpp:116
+#: ../src/catalog.cpp:130
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i riviä tiedostosta '%s' ladattiin oikein."
 
-#: ../src/edframe.cpp:1825 ../src/export_html.cpp:131
+#: ../src/edframe.cpp:1728 ../src/export_html.cpp:145
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i merkkijonoa (%i epätarkkaa, %i huonoa merkkiä, %i kääntämättä)"
@@ -37,6 +37,10 @@ msgstr "&Tietoja..."
 #: ../src/resources/xrc_strings.h:54
 msgid "&Automatically translate using TM"
 msgstr "&Käännä automaattisesti käyttäen TM"
+
+#: ../src/edframe.cpp:2494
+msgid "&Bookmarks"
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:34 ../src/resources/xrc_strings.h:44
 msgid "&Close"
@@ -51,7 +55,7 @@ msgid "&Edit"
 msgstr "&Muokkaa"
 
 #: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:429
+#: ../src/edframe.cpp:398
 msgid "&File"
 msgstr "&Tiedosto"
 
@@ -107,12 +111,12 @@ msgstr "P&äivitä lähteestä"
 msgid "&View"
 msgstr "&Näytä"
 
-#: ../src/catalog.cpp:1454
+#: ../src/catalog.cpp:1468
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' ei ole pätevä POT tiedosto."
 
-#: ../src/edframe.cpp:1748
+#: ../src/edframe.cpp:1650
 msgid "'."
 msgstr "'."
 
@@ -120,7 +124,7 @@ msgstr "'."
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f korvataan tiedostonimellä, %l rivin numerolla)"
 
-#: ../src/summarydlg.cpp:50
+#: ../src/summarydlg.cpp:66
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i uusi, %i vanhentunut)"
@@ -129,11 +133,11 @@ msgstr "(%i uusi, %i vanhentunut)"
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 uutta, 0 vanhentunutta)"
 
-#: ../src/chooselang.cpp:71
+#: ../src/chooselang.cpp:86
 msgid "(Use default language)"
 msgstr "(Käytä oletuskieltä)"
 
-#: ../src/edframe.cpp:718
+#: ../src/edframe.cpp:688
 msgid "(none of these)"
 msgstr "(ei mikään näistä)"
 
@@ -141,7 +145,7 @@ msgstr "(ei mikään näistä)"
 msgid "< Previous"
 msgstr "< Edellinen"
 
-#: ../src/manager.cpp:348
+#: ../src/manager.cpp:363
 msgid "<unnamed>"
 msgstr "<nimetön>"
 
@@ -157,7 +161,7 @@ msgstr "Lisää"
 msgid "Add directory to the list"
 msgstr "Lisää hakemisto listaan"
 
-#: ../src/resources/xrc_strings.h:170 ../src/transmemupd_wizard.cpp:123
+#: ../src/resources/xrc_strings.h:170 ../src/transmemupd_wizard.cpp:138
 msgid "Add files"
 msgstr "Lisää tiedostoja"
 
@@ -181,11 +185,11 @@ msgstr "Kohde avainsanalistassa:"
 msgid "Automatic spellchecking"
 msgstr "Automaattinen oikeinkirjoitus"
 
-#: ../src/export_html.cpp:170
+#: ../src/export_html.cpp:184
 msgid "Automatic translation"
 msgstr "Automaattinen käännös"
 
-#: ../src/edframe.cpp:2084 ../src/edframe.cpp:2088
+#: ../src/edframe.cpp:1993 ../src/edframe.cpp:1997
 msgid "Automatic translations:"
 msgstr "Automaattiset käännökset:"
 
@@ -197,16 +201,16 @@ msgstr "Käännä .mo tiedosto automaattisesti tallennuksen yhteydessä"
 msgid "Automatically translate when updating catalog"
 msgstr "Automaattisesti käännä kun päivitetään katalogia"
 
-#: ../src/edframe.cpp:2041
+#: ../src/edframe.cpp:1950
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Automaattisesti käännetyt %u merkkijonot"
 
-#: ../src/edframe.cpp:2026
+#: ../src/edframe.cpp:1935
 msgid "Automatically translating..."
 msgstr "Automaattinen käännös..."
 
-#: ../src/manager.cpp:221
+#: ../src/manager.cpp:236
 msgid "Bad Tokens"
 msgstr "Huonot Merkit"
 
@@ -218,13 +222,13 @@ msgstr "Kantapolku:"
 msgid "Behavior"
 msgstr "Käyttäytyminen"
 
-#: ../src/catalog.cpp:615
+#: ../src/catalog.cpp:629
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 "Rikkinäinen katalogitiedosto: monimuotoista msgstr käytetty ilman "
 "msgid_plural"
 
-#: ../src/catalog.cpp:583
+#: ../src/catalog.cpp:597
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -251,19 +255,19 @@ msgstr "CR/LF muunnos"
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: ../src/transmem.cpp:710
+#: ../src/transmem.cpp:725
 msgid "Cannot create database directory!"
 msgstr "Tietokantahakemistoa ei voitu luoda!"
 
-#: ../src/gexecute.cpp:119 ../src/gexecute.cpp:166
+#: ../src/gexecute.cpp:136 ../src/gexecute.cpp:185
 msgid "Cannot execute program: "
 msgstr "Ei voi suorittaa ohjelmaa:"
 
-#: ../src/transmemupd.cpp:187
+#: ../src/transmemupd.cpp:202
 msgid "Cannot extract catalogs from RPM file."
 msgstr "RPM tiedostosta ei voitu tuoda katalogia."
 
-#: ../src/edapp.cpp:124
+#: ../src/edapp.cpp:138
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -272,7 +276,7 @@ msgstr ""
 "Resurssitiedostoa '%s'! ei löydy\n"
 "Asenna poEdit uudestaan."
 
-#: ../src/edapp.cpp:118
+#: ../src/edapp.cpp:132
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -289,12 +293,12 @@ msgstr ""
 msgid "Case sensitive"
 msgstr "Kirjasinkoko vaikuttaa"
 
-#: ../src/manager.cpp:217
+#: ../src/manager.cpp:232
 msgid "Catalog"
 msgstr "Katalogi"
 
-#: ../src/edframe.cpp:763 ../src/edframe.cpp:787 ../src/edframe.cpp:824
-#: ../src/edframe.cpp:870 ../src/edframe.cpp:979
+#: ../src/edframe.cpp:733 ../src/edframe.cpp:757 ../src/edframe.cpp:794
+#: ../src/edframe.cpp:840 ../src/edframe.cpp:949
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalogi muokattu. Haluatko tallentaa muutokset?"
 
@@ -306,7 +310,7 @@ msgstr "Katalo&gin järjestäjä"
 msgid "Change UI language"
 msgstr "Vaihda Käyttökieli"
 
-#: ../src/resources/xrc_strings.h:147 ../src/export_html.cpp:117
+#: ../src/resources/xrc_strings.h:147 ../src/export_html.cpp:131
 msgid "Charset:"
 msgstr "Merkistö:"
 
@@ -334,15 +338,15 @@ msgstr "Kommentti:"
 msgid "Configuration"
 msgstr "Kokoonpano"
 
-#: ../src/manager.cpp:378 ../src/manager.cpp:398
+#: ../src/manager.cpp:393 ../src/manager.cpp:413
 msgid "Confirmation"
 msgstr "Vahvistus"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2063
+#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:1972
 msgid "Copy original to translation field"
 msgstr "Kopioi alkuperäinen käännöskenttään"
 
-#: ../src/resources/xrc_strings.h:146 ../src/export_html.cpp:107
+#: ../src/resources/xrc_strings.h:146 ../src/export_html.cpp:121
 msgid "Country:"
 msgstr "Maa:"
 
@@ -354,7 +358,7 @@ msgstr "Luo uusi käännösprojekti"
 msgid "Database"
 msgstr "Tietokanta"
 
-#: ../src/transmem.cpp:294
+#: ../src/transmem.cpp:309
 #, c-format
 msgid "Database error: %s"
 msgstr "Tietokantavirhe: %s"
@@ -371,7 +375,7 @@ msgstr "Poista kohde"
 msgid "Delete the project"
 msgstr "Poista projekti"
 
-#: ../src/manager.cpp:271
+#: ../src/manager.cpp:286
 msgid "Directories:"
 msgstr "Hakemistot:"
 
@@ -387,7 +391,7 @@ msgstr "Näytä &lainausmerkit"
 msgid "Display quotes around the string?"
 msgstr "Näytä lainausmerkit merkkijonon ympärillä?"
 
-#: ../src/manager.cpp:397
+#: ../src/manager.cpp:412
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -395,7 +399,7 @@ msgstr ""
 "Haluatko todella massapäivittää\n"
 "tämän projektin kaikki katalogit?"
 
-#: ../src/edframe.cpp:1985
+#: ../src/edframe.cpp:1894
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -407,7 +411,7 @@ msgstr ""
 "Jos jatkat puhdistamista, sinun täytyy kääntää ne uudestaan, mikäli ne "
 "lisätään takaisin tulevaisuudessa."
 
-#: ../src/manager.cpp:377
+#: ../src/manager.cpp:392
 msgid "Do you want to delete the project?"
 msgstr "Haluatko todella poistaa projektin?"
 
@@ -459,34 +463,34 @@ msgstr "Editori suoritettava:"
 msgid "Enables on-the-fly spellchecking"
 msgstr "Ottaa käyttöön jatkuvan oikeinkirjoituksen tarkastamisen"
 
-#: ../src/edframe.cpp:1110
+#: ../src/edframe.cpp:1082
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Katalogin kirjaukset ovat todennäköisesti virheelliset."
 
-#: ../src/edframe.cpp:669
+#: ../src/edframe.cpp:639
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "Virhe oikoluvun käynnistyksessä: %s"
 
-#: ../src/edframe.cpp:1748
+#: ../src/edframe.cpp:1650
 msgid "Error loading message catalog file '"
 msgstr "Virhe ladattaessa viestikatalogitiedostoa '"
 
-#: ../src/fileviewer.cpp:75
+#: ../src/fileviewer.cpp:90
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Virhe tiedostoa %s avattaessa!"
 
-#: ../src/catalog.cpp:1254
+#: ../src/catalog.cpp:1268
 msgid "Error saving catalog"
 msgstr "Virhe katalogia tallennettaessa"
 
-#: ../src/catalog.cpp:64
+#: ../src/catalog.cpp:78
 #, c-format
 msgid "Error while loading file '%s': line %u is corrupted."
 msgstr "Virhe ladattaessa tiedostoa '%s': rivi %u on turmeltunut."
 
-#: ../src/edframe.cpp:951
+#: ../src/edframe.cpp:921
 msgid "Export as..."
 msgstr "Vie tiedosto..."
 
@@ -494,24 +498,24 @@ msgstr "Vie tiedosto..."
 msgid "External editor"
 msgstr "Ulkoinen editori"
 
-#: ../src/edframe.cpp:842 ../src/edframe.cpp:886
+#: ../src/edframe.cpp:812 ../src/edframe.cpp:856
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Tiedostoa '%s' ei ole."
 
-#: ../src/edframe.cpp:859
+#: ../src/edframe.cpp:829
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Tiedosto '%s' ei ole viestikatalogi."
 
-#: ../src/catalog.cpp:1218
+#: ../src/catalog.cpp:1232
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
 
-#: ../src/transmemupd_wizard.cpp:48
+#: ../src/transmemupd_wizard.cpp:63
 msgid "Files List"
 msgstr "Tiedostojen lista"
 
@@ -539,12 +543,12 @@ msgstr "Etsi..."
 msgid "Fonts"
 msgstr "Kirjasimet"
 
-#: ../src/edframe.cpp:2482
+#: ../src/edframe.cpp:2423
 #, c-format
 msgid "Form %u"
 msgstr "Muodosta %u"
 
-#: ../src/edframe.cpp:2484
+#: ../src/edframe.cpp:2425
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr "Muodosta %u (t.s. \"%u\")"
@@ -553,19 +557,19 @@ msgstr "Muodosta %u (t.s. \"%u\")"
 msgid "Fullscreen view"
 msgstr "Koko näytön kuva"
 
-#: ../src/manager.cpp:220
+#: ../src/manager.cpp:235
 msgid "Fuzzy"
 msgstr "Epätarkka"
 
-#: ../src/export_html.cpp:176
+#: ../src/export_html.cpp:190
 msgid "Fuzzy translation"
 msgstr "Epätarkka käännös"
 
-#: ../src/edframe.cpp:807 ../src/edframe.cpp:928
+#: ../src/edframe.cpp:777 ../src/edframe.cpp:898
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText katalogin (*.po)|*.po|Kaikki tiedostot (*.*)|*.*"
 
-#: ../src/edframe.cpp:1004 ../src/edframe.cpp:1128
+#: ../src/edframe.cpp:974 ../src/edframe.cpp:1100
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU GetText mallipohjat (*.pot)|*.pot|Kaikki tiedostot (*.*)|*.*"
 
@@ -581,11 +585,16 @@ msgstr "Luo TM tietokanta"
 msgid "Generate database"
 msgstr "Luo tietokanta"
 
-#: ../src/edframe.cpp:1192
+#: ../src/edframe.cpp:1164
 msgid "Gettext syntax error"
 msgstr "Gettext syntaksivirhe"
 
-#: ../src/edframe.cpp:953
+#: ../src/edframe.cpp:2490
+#, c-format
+msgid "Go to bookmark %i\tCtrl-%i"
+msgstr ""
+
+#: ../src/edframe.cpp:923
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML tiedosto (*.html)|*.html"
 
@@ -605,28 +614,28 @@ msgstr "Jos valittu, kommentti-ikkuna on muokattavissa."
 msgid "Invocation:"
 msgstr "Toivomus:"
 
-#: ../src/resources/xrc_strings.h:154 ../src/settingsdlg.cpp:55
+#: ../src/resources/xrc_strings.h:154 ../src/settingsdlg.cpp:71
 msgid "Keywords"
 msgstr "Avainsanat"
 
-#: ../src/chooselang.cpp:137
+#: ../src/chooselang.cpp:152
 msgid "Language selection"
 msgstr "Kielen valinta"
 
 #: ../src/resources/xrc_strings.h:121 ../src/resources/xrc_strings.h:122
-#: ../src/resources/xrc_strings.h:145 ../src/export_html.cpp:104
+#: ../src/resources/xrc_strings.h:145 ../src/export_html.cpp:118
 msgid "Language:"
 msgstr "Kieli:"
 
-#: ../src/manager.cpp:222
+#: ../src/manager.cpp:237
 msgid "Last modified"
 msgstr "Muokattu viimeksi"
 
-#: ../src/fileviewer.cpp:84 ../src/edlistctrl.cpp:194
+#: ../src/fileviewer.cpp:99 ../src/edlistctrl.cpp:227
 msgid "Line"
 msgstr "Jono"
 
-#: ../src/catalog.cpp:129
+#: ../src/catalog.cpp:143
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "Jono %u tiedostosta '%s' on turmeltunut (ei pätevä %s data)."
@@ -643,7 +652,7 @@ msgstr "Lista tiedostopäätteistä eroteltuna puolipisteellä (e.g. *.cpp;*.h):
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:201
+#: ../src/catalog.cpp:215
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Väärin muodostettu otsikko: '%s'"
@@ -656,7 +665,7 @@ msgstr "Max. # puutuvia sanoja:"
 msgid "Max. difference in sentence length:"
 msgstr "Max. ero lauseen pituudessa:"
 
-#: ../src/catalog.cpp:1426
+#: ../src/catalog.cpp:1440
 msgid "Merging differences..."
 msgstr "Sulautetaan eroavaisuuksia..."
 
@@ -668,11 +677,11 @@ msgstr "Siirrä alas"
 msgid "Move up"
 msgstr "Siirrä ylös"
 
-#: ../src/prefsdlg.cpp:40
+#: ../src/prefsdlg.cpp:55
 msgid "My Languages"
 msgstr "Kieleni"
 
-#: ../src/manager.cpp:274
+#: ../src/manager.cpp:289
 msgid "My Project"
 msgstr "Projektini"
 
@@ -707,19 +716,19 @@ msgstr "Uudet merkkijonot"
 msgid "Next >"
 msgstr "Seuraava > "
 
-#: ../src/fileviewer.cpp:123
+#: ../src/fileviewer.cpp:138
 msgid "No editor specified. Please set it in Preferences dialog."
 msgstr "Editoria ei ole täsmennetty. Aseta se Valinnat valikossa."
 
-#: ../src/digger.cpp:123
+#: ../src/digger.cpp:138
 msgid "No files found in: "
 msgstr "Tiedostoja ei löytynyt täältä:"
 
-#: ../src/edframe.cpp:1208
+#: ../src/edframe.cpp:1180
 msgid "No references to this string found."
 msgstr "Viittauksia tähän merkkijonoon ei löytynyt."
 
-#: ../src/export_html.cpp:148
+#: ../src/export_html.cpp:162
 msgid "Notes"
 msgstr "Muistiinpanot"
 
@@ -734,11 +743,11 @@ msgstr "OK"
 msgid "Obsolete strings"
 msgstr "Vanhentunut merkkijono"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:805
+#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:775
 msgid "Open catalog"
 msgstr "Avaa katalogi"
 
-#: ../src/edframe.cpp:1002 ../src/edframe.cpp:1126
+#: ../src/edframe.cpp:972 ../src/edframe.cpp:1098
 msgid "Open catalog template"
 msgstr "Avaa katalogimallipohja"
 
@@ -750,7 +759,7 @@ msgstr "Avaa katalogin järjestäjä poEdit käynnistyksessä"
 msgid "Open source files in editor, not in file viewer"
 msgstr "Avaa lähdetiedosto editorissa, ei tiedostonkatselussa"
 
-#: ../src/edlistctrl.cpp:191 ../src/export_html.cpp:141
+#: ../src/edlistctrl.cpp:224 ../src/export_html.cpp:155
 msgid "Original string"
 msgstr "Alkuperäinen merkkijono"
 
@@ -766,7 +775,7 @@ msgstr "Jäsennys asetukset"
 msgid "Parsers"
 msgstr "Jäsennykset"
 
-#: ../src/digger.cpp:43
+#: ../src/digger.cpp:58
 msgid "Parsing "
 msgstr "Jäsennys"
 
@@ -774,7 +783,7 @@ msgstr "Jäsennys"
 msgid "Path to DB:"
 msgstr "Polku Tietokantaan:"
 
-#: ../src/resources/xrc_strings.h:152 ../src/settingsdlg.cpp:57
+#: ../src/resources/xrc_strings.h:152 ../src/settingsdlg.cpp:73
 msgid "Paths"
 msgstr "Polut"
 
@@ -792,15 +801,15 @@ msgstr ""
 "Lisää hakemisto johon paikalliset tiedostot on tallennettu sinun "
 "järjestelmässäsi:"
 
-#: ../src/edframe.cpp:1216
+#: ../src/edframe.cpp:1188
 msgid "Please choose the reference you want to show:"
 msgstr "Näytä viite, jonka haluat näyttää:"
 
-#: ../src/prefsdlg.cpp:321
+#: ../src/prefsdlg.cpp:336
 msgid "Please select language ISO code:"
 msgstr "Valitse kielen ISO koodi:"
 
-#: ../src/edframe.cpp:727
+#: ../src/edframe.cpp:697
 msgid "Please select language code:"
 msgstr "Valitse kielen koodi:"
 
@@ -808,7 +817,7 @@ msgstr "Valitse kielen koodi:"
 msgid "Plural Forms:"
 msgstr "Monikko Lomake:"
 
-#: ../src/edframe.cpp:480
+#: ../src/edframe.cpp:450
 msgid "Plural:"
 msgstr "Monikko:"
 
@@ -820,11 +829,11 @@ msgstr "Etuoikeudet"
 msgid "Proceed"
 msgstr "Jatka"
 
-#: ../src/resources/xrc_strings.h:150 ../src/export_html.cpp:97
+#: ../src/resources/xrc_strings.h:150 ../src/export_html.cpp:111
 msgid "Project info"
 msgstr "Projektin tiedot"
 
-#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:101
+#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:115
 msgid "Project name and version:"
 msgstr "Projektin nimi ja versio:"
 
@@ -832,15 +841,15 @@ msgstr "Projektin nimi ja versio:"
 msgid "Project name:"
 msgstr "Projektin nimi:"
 
-#: ../src/edframe.cpp:1986
+#: ../src/edframe.cpp:1895
 msgid "Purge delete translations"
 msgstr "Puhdista poista käännökset"
 
-#: ../src/edframe.cpp:1216
+#: ../src/edframe.cpp:1188
 msgid "References"
 msgstr "Viitteet"
 
-#: ../src/edframe.cpp:2068 ../src/edframe.cpp:2072
+#: ../src/edframe.cpp:1977 ../src/edframe.cpp:1981
 msgid "References:"
 msgstr "Viitteet:"
 
@@ -856,7 +865,7 @@ msgstr "Palauta oletukset"
 msgid "Save &as..."
 msgstr "Tallenna &nimellä..."
 
-#: ../src/edframe.cpp:927
+#: ../src/edframe.cpp:897
 msgid "Save as..."
 msgstr "Tallenna nimellä..."
 
@@ -864,45 +873,50 @@ msgstr "Tallenna nimellä..."
 msgid "Save catalog"
 msgstr "Tallenna katalogi"
 
-#: ../src/edframe.cpp:764 ../src/edframe.cpp:788 ../src/edframe.cpp:825
-#: ../src/edframe.cpp:871 ../src/edframe.cpp:980
+#: ../src/edframe.cpp:734 ../src/edframe.cpp:758 ../src/edframe.cpp:795
+#: ../src/edframe.cpp:841 ../src/edframe.cpp:950
 msgid "Save changes"
 msgstr "Tallenna muutokset"
 
-#: ../src/transmemupd.cpp:137
+#: ../src/transmemupd.cpp:152
 msgid "Scanning file: "
 msgstr "Selataan tiedosto:"
 
-#: ../src/digger.cpp:33
+#: ../src/digger.cpp:48
 msgid "Scanning files..."
 msgstr "Selataan tiedostot..."
 
-#: ../src/transmemupd_wizard.cpp:44
+#: ../src/transmemupd_wizard.cpp:59
 msgid "Search Paths"
 msgstr "Etsi Polut"
 
-#: ../src/edframe.cpp:726
+#: ../src/edframe.cpp:696
 msgid "Select catalog's language"
 msgstr "Valitse katalogin kieli"
 
-#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:334
-#: ../src/transmemupd_wizard.cpp:97
+#: ../src/manager.cpp:266 ../src/prefsdlg.cpp:349
+#: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "Valitse hakemisto"
 
-#: ../src/prefsdlg.cpp:320
+#: ../src/prefsdlg.cpp:335
 msgid "Select language"
 msgstr "Valitse kieli"
 
-#: ../src/chooselang.cpp:136
+#: ../src/chooselang.cpp:151
 msgid "Select your prefered language"
 msgstr "Valitse ensisijainen kieli"
+
+#: ../src/edframe.cpp:2484
+#, c-format
+msgid "Set bookmark %i\tAlt-%i"
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:141
 msgid "Settings"
 msgstr "Asetukset"
 
-#: ../src/edapp.cpp:145
+#: ../src/edapp.cpp:159
 msgid "Setup"
 msgstr "Kokoonpano"
 
@@ -918,7 +932,7 @@ msgstr "Näytä au&tomaattinen kommentti-ikkuna"
 msgid "Show summary after catalog update"
 msgstr "Näytä yhteenveto katalogin päivityksen jälkeen"
 
-#: ../src/edframe.cpp:479
+#: ../src/edframe.cpp:449
 msgid "Singular:"
 msgstr "Yksikkö:"
 
@@ -930,7 +944,7 @@ msgstr "Lähdekoodin merkistö:"
 msgid "Source code parsers:"
 msgstr "Lähdekoodin jäsennykset:"
 
-#: ../src/fileviewer.cpp:31
+#: ../src/fileviewer.cpp:46
 msgid "Source file"
 msgstr "Lähdetiedosto"
 
@@ -942,15 +956,15 @@ msgstr "Aloita ensimmäisestä kohteesta"
 msgid "String to find:"
 msgstr "Haettava merkkijono:"
 
-#: ../src/resources/xrc_strings.h:144 ../src/export_html.cpp:114
+#: ../src/resources/xrc_strings.h:144 ../src/export_html.cpp:128
 msgid "Team's email address:"
 msgstr "Tiimin email osoite:"
 
-#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:110
+#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:124
 msgid "Team:"
 msgstr "Tiimi:"
 
-#: ../src/catalog.cpp:1253
+#: ../src/catalog.cpp:1267
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -961,7 +975,7 @@ msgstr ""
 "katelogiasetuksissa määritelty. Se tallennettiin UTF-8 muodossa\n"
 "ja asetuksia muutettiin vastaavasti."
 
-#: ../src/catalog.cpp:942
+#: ../src/catalog.cpp:956
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -985,7 +999,7 @@ msgstr ""
 "Nämä merkkijonot löytyivät lähteestä mutta ei katalogista.\n"
 "poEdit yrittää lisätä ne katalogiin nyt."
 
-#: ../src/edapp.cpp:145
+#: ../src/edapp.cpp:159
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1037,11 +1051,11 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Kytketty jos valitussa merkkijonossa on epätarkkoja käännöksiä"
 
-#: ../src/manager.cpp:218
+#: ../src/manager.cpp:233
 msgid "Total"
 msgstr "Yhteensä"
 
-#: ../src/edlistctrl.cpp:192 ../src/export_html.cpp:144
+#: ../src/edlistctrl.cpp:225 ../src/export_html.cpp:158
 msgid "Translation"
 msgstr "Käännös"
 
@@ -1049,11 +1063,11 @@ msgstr "Käännös"
 msgid "Translation Memory"
 msgstr "Käännösmuisti (TM)"
 
-#: ../src/transmemupd_wizard.cpp:129
+#: ../src/transmemupd_wizard.cpp:144
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 msgstr "Käännöstiedostot (*.po;*.mo)|*.po;*.mo"
 
-#: ../src/transmemupd_wizard.cpp:127
+#: ../src/transmemupd_wizard.cpp:142
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "Käännöstiedostot (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 
@@ -1069,7 +1083,7 @@ msgstr ""
 "Käännösmuisti rakennetaan alla listatuista tiedostoista.\n"
 "Voit lisätä enemmän tiedostoja listaan nyt."
 
-#: ../src/chooselang.cpp:54
+#: ../src/chooselang.cpp:69
 #, c-format
 msgid "Uknown locale code '%s' in registry."
 msgstr "Tuntematon paikallinen koodi '%s' rekisterissä."
@@ -1082,7 +1096,7 @@ msgstr "Peru"
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:219
+#: ../src/manager.cpp:234
 msgid "Untrans"
 msgstr "Ei käänn"
 
@@ -1106,11 +1120,11 @@ msgstr "Päivitetään yhteenveto"
 msgid "Update translation memory"
 msgstr "Päivitä käännösmuisti"
 
-#: ../src/catalog.cpp:1386
+#: ../src/catalog.cpp:1400
 msgid "Updating catalog..."
 msgstr "Päivitetään katalogi..."
 
-#: ../src/edframe.cpp:1112
+#: ../src/edframe.cpp:1084
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr ""
 "Katalogin päivitys epäonnistui. Valitse 'Lisää>>' saadaksesi lisätietoja."
@@ -1139,11 +1153,11 @@ msgstr "Vain koko sanat"
 msgid "Windows"
 msgstr "Ikkuna"
 
-#: ../src/edframe.cpp:852
+#: ../src/edframe.cpp:822
 msgid "You can't drop more than one file on poEdit window."
 msgstr "Et voi tipauttaa enempää kuin yhden tiedoston poEdit ikkunaan."
 
-#: ../src/chooselang.cpp:151
+#: ../src/chooselang.cpp:166
 msgid "You must restart poEdit for this change to take effect."
 msgstr ""
 "Sinun täytyy käynnistää poEdit uudestaan muutoksien käyttöönottamiseksi."
@@ -1156,7 +1170,7 @@ msgstr "e-mail osoite:"
 msgid "Your name:"
 msgstr "Nimesi:"
 
-#: ../src/edframe.cpp:1831
+#: ../src/edframe.cpp:1734
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[käännöstä tarkistetaan: %i jäljellä]"
@@ -1165,32 +1179,32 @@ msgstr "[käännöstä tarkistetaan: %i jäljellä]"
 msgid "current platform's default"
 msgstr "nykyisen järjestelmän oletus"
 
-#: ../src/edframe.cpp:2108
+#: ../src/edframe.cpp:2017
 msgid "none"
 msgstr "ei mitään"
 
-#: ../src/edframe.cpp:372
+#: ../src/edframe.cpp:341
 msgid "poEdit"
 msgstr "poEdit"
 
-#: ../src/manager.cpp:54
+#: ../src/manager.cpp:69
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - Katalogien järjestäjä"
 
-#: ../src/edapp.cpp:127
+#: ../src/edapp.cpp:141
 msgid "poEdit Error"
 msgstr "poEdit Virhe"
 
-#: ../src/digger.cpp:124
+#: ../src/digger.cpp:139
 msgid "poEdit did not find any files in scanned directories."
 msgstr "poEdit ei löytänyt tiedostoja selatuista hakemistoista. "
 
-#: ../src/edapp.cpp:51
+#: ../src/edapp.cpp:65
 msgid ""
 "poEdit installation is broken, cannot find application's home directory."
 msgstr "poEdit asennus keskeytyi. Sovelluksen kotihakemistoa ei löydy."
 
-#: ../src/edframe.cpp:2123
+#: ../src/edframe.cpp:2032
 msgid "version"
 msgstr "versio"
 

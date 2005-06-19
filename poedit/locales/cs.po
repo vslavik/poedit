@@ -2,28 +2,29 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-30 23:57+0200\n"
-"PO-Revision-Date: 2005-05-30 23:39+0100\n"
+"POT-Creation-Date: 2005-06-19 18:27+0200\n"
+"PO-Revision-Date: 2005-06-19 18:28+0100\n"
 "Last-Translator: Václav Slavík <vslavik@fastmail.fm>\n"
 "Language-Team: Vaclav Slavik <vslavik@fastmail.fm>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1857
+#: ../src/edframe.cpp:1760
 msgid " (modified)"
 msgstr " (změněn)"
 
-#: ../src/digger.cpp:43
+#: ../src/digger.cpp:58
 msgid " files..."
 msgstr " souborů..."
 
-#: ../src/catalog.cpp:116
+#: ../src/catalog.cpp:130
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i řádků souboru '%s' se nenačetlo v pořádku."
 
-#: ../src/edframe.cpp:1825 ../src/export_html.cpp:131
+#: ../src/edframe.cpp:1728
+#: ../src/export_html.cpp:145
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i řetězců (%i nepřesných, %i špatných, %i nepřeloženo)"
@@ -36,7 +37,12 @@ msgstr "&O programu"
 msgid "&Automatically translate using TM"
 msgstr "&Automaticky přeložit pomocí TM"
 
-#: ../src/resources/xrc_strings.h:34 ../src/resources/xrc_strings.h:44
+#: ../src/edframe.cpp:2494
+msgid "&Bookmarks"
+msgstr "&Záložky"
+
+#: ../src/resources/xrc_strings.h:34
+#: ../src/resources/xrc_strings.h:44
 msgid "&Close"
 msgstr "&Zavřít"
 
@@ -48,8 +54,9 @@ msgstr "&Obsah..."
 msgid "&Edit"
 msgstr "&Editovat"
 
-#: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:429
+#: ../src/resources/xrc_strings.h:32
+#: ../src/resources/xrc_strings.h:35
+#: ../src/edframe.cpp:398
 msgid "&File"
 msgstr "&Soubor"
 
@@ -73,7 +80,8 @@ msgstr "&Nový katalog"
 msgid "&Open"
 msgstr "&Otevřít"
 
-#: ../src/resources/xrc_strings.h:33 ../src/resources/xrc_strings.h:43
+#: ../src/resources/xrc_strings.h:33
+#: ../src/resources/xrc_strings.h:43
 msgid "&Preferences..."
 msgstr "&Konfigurace..."
 
@@ -105,12 +113,12 @@ msgstr "&Aktualizovat ze zdrojového kódu"
 msgid "&View"
 msgstr "&Pohled"
 
-#: ../src/catalog.cpp:1454
+#: ../src/catalog.cpp:1468
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "POT soubor '%s' je poškozený."
 
-#: ../src/edframe.cpp:1748
+#: ../src/edframe.cpp:1650
 msgid "'."
 msgstr "'."
 
@@ -118,7 +126,7 @@ msgstr "'."
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f se nahradí jménem souboru, %l číslem řádku)"
 
-#: ../src/summarydlg.cpp:50
+#: ../src/summarydlg.cpp:66
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i nových, %i neplatných)"
@@ -127,11 +135,11 @@ msgstr "(%i nových, %i neplatných)"
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 nových, 0 odstraněných)"
 
-#: ../src/chooselang.cpp:71
+#: ../src/chooselang.cpp:86
 msgid "(Use default language)"
 msgstr "(výchozí nastavení)"
 
-#: ../src/edframe.cpp:718
+#: ../src/edframe.cpp:688
 msgid "(none of these)"
 msgstr "(žádný)"
 
@@ -139,7 +147,7 @@ msgstr "(žádný)"
 msgid "< Previous"
 msgstr "< Předchozí"
 
-#: ../src/manager.cpp:348
+#: ../src/manager.cpp:363
 msgid "<unnamed>"
 msgstr "<nepojmenovaný>"
 
@@ -155,7 +163,8 @@ msgstr "Přidat"
 msgid "Add directory to the list"
 msgstr "Přidat adresář do seznamu"
 
-#: ../src/resources/xrc_strings.h:170 ../src/transmemupd_wizard.cpp:123
+#: ../src/resources/xrc_strings.h:170
+#: ../src/transmemupd_wizard.cpp:138
 msgid "Add files"
 msgstr "Přidat soubory"
 
@@ -179,11 +188,12 @@ msgstr "Položka v seznamu klíčových slov:"
 msgid "Automatic spellchecking"
 msgstr "Automatická kontrola pravopisu"
 
-#: ../src/export_html.cpp:170
+#: ../src/export_html.cpp:184
 msgid "Automatic translation"
 msgstr "Automatický překlad"
 
-#: ../src/edframe.cpp:2084 ../src/edframe.cpp:2088
+#: ../src/edframe.cpp:1993
+#: ../src/edframe.cpp:1997
 msgid "Automatic translations:"
 msgstr "Automatické překlady:"
 
@@ -195,16 +205,16 @@ msgstr "Automaticky zkompilovat .mo soubor při uložení"
 msgid "Automatically translate when updating catalog"
 msgstr "Automaticky překládat při aktualizaci katalogu"
 
-#: ../src/edframe.cpp:2041
+#: ../src/edframe.cpp:1950
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Automaticky přeloženo %u řetězců"
 
-#: ../src/edframe.cpp:2026
+#: ../src/edframe.cpp:1935
 msgid "Automatically translating..."
 msgstr "Automaticky překládám..."
 
-#: ../src/manager.cpp:221
+#: ../src/manager.cpp:236
 msgid "Bad Tokens"
 msgstr "Chybné překlady"
 
@@ -216,17 +226,18 @@ msgstr "Základní cesta:"
 msgid "Behavior"
 msgstr "Chování"
 
-#: ../src/catalog.cpp:615
+#: ../src/catalog.cpp:629
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "Špatný katalog: verze msgstr pro plurál použita bez msgid_plural"
 
-#: ../src/catalog.cpp:583
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+#: ../src/catalog.cpp:597
+msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr "Špatný katalog: verze msgstr pro singulár použita spolu s msgid_plural"
 
-#: ../src/resources/xrc_strings.h:28 ../src/resources/xrc_strings.h:104
-#: ../src/resources/xrc_strings.h:135 ../src/resources/xrc_strings.h:167
+#: ../src/resources/xrc_strings.h:28
+#: ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:135
+#: ../src/resources/xrc_strings.h:167
 msgid "Browse"
 msgstr "Procházet"
 
@@ -238,26 +249,31 @@ msgstr "&Katalog"
 msgid "CR/LF conversion"
 msgstr "Konverze CR/LF"
 
-#: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:19
-#: ../src/resources/xrc_strings.h:31 ../src/resources/xrc_strings.h:119
-#: ../src/resources/xrc_strings.h:134 ../src/resources/xrc_strings.h:138
-#: ../src/resources/xrc_strings.h:140 ../src/resources/xrc_strings.h:156
+#: ../src/resources/xrc_strings.h:6
+#: ../src/resources/xrc_strings.h:19
+#: ../src/resources/xrc_strings.h:31
+#: ../src/resources/xrc_strings.h:119
+#: ../src/resources/xrc_strings.h:134
+#: ../src/resources/xrc_strings.h:138
+#: ../src/resources/xrc_strings.h:140
+#: ../src/resources/xrc_strings.h:156
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: ../src/transmem.cpp:710
+#: ../src/transmem.cpp:725
 msgid "Cannot create database directory!"
 msgstr "Nelze vytvořit adresář pro databázi!"
 
-#: ../src/gexecute.cpp:119 ../src/gexecute.cpp:166
+#: ../src/gexecute.cpp:136
+#: ../src/gexecute.cpp:185
 msgid "Cannot execute program: "
 msgstr "Není možné spustit program: "
 
-#: ../src/transmemupd.cpp:187
+#: ../src/transmemupd.cpp:202
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Nelze extrahovat katalogy z RPM souboru."
 
-#: ../src/edapp.cpp:124
+#: ../src/edapp.cpp:138
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -266,7 +282,7 @@ msgstr ""
 "Nemohu nalézt soubor se zdroji '%s'!\n"
 "Přeinstalujte prosím poEdit."
 
-#: ../src/edapp.cpp:118
+#: ../src/edapp.cpp:132
 #, c-format
 msgid ""
 "Cannot find resources file '%s'!\n"
@@ -283,12 +299,15 @@ msgstr ""
 msgid "Case sensitive"
 msgstr "Rozlišovat velká a malá písmena"
 
-#: ../src/manager.cpp:217
+#: ../src/manager.cpp:232
 msgid "Catalog"
 msgstr "Katalog"
 
-#: ../src/edframe.cpp:763 ../src/edframe.cpp:787 ../src/edframe.cpp:824
-#: ../src/edframe.cpp:870 ../src/edframe.cpp:979
+#: ../src/edframe.cpp:733
+#: ../src/edframe.cpp:757
+#: ../src/edframe.cpp:794
+#: ../src/edframe.cpp:840
+#: ../src/edframe.cpp:949
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalog byl modifikován. Chcete uložit změny?"
 
@@ -300,11 +319,13 @@ msgstr "Správce &katalogů"
 msgid "Change UI language"
 msgstr "Změnit jazyk"
 
-#: ../src/resources/xrc_strings.h:147 ../src/export_html.cpp:117
+#: ../src/resources/xrc_strings.h:147
+#: ../src/export_html.cpp:131
 msgid "Charset:"
 msgstr "Znaková sada:"
 
-#: ../src/resources/xrc_strings.h:98 ../src/resources/xrc_strings.h:100
+#: ../src/resources/xrc_strings.h:98
+#: ../src/resources/xrc_strings.h:100
 msgid "Choose"
 msgstr "Vybrat"
 
@@ -328,15 +349,18 @@ msgstr "Poznámka:"
 msgid "Configuration"
 msgstr "Nastavení"
 
-#: ../src/manager.cpp:378 ../src/manager.cpp:398
+#: ../src/manager.cpp:393
+#: ../src/manager.cpp:413
 msgid "Confirmation"
 msgstr "Potvrzení"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2063
+#: ../src/resources/xrc_strings.h:46
+#: ../src/edframe.cpp:1972
 msgid "Copy original to translation field"
 msgstr "Zkopírovat originál do položky s překladem"
 
-#: ../src/resources/xrc_strings.h:146 ../src/export_html.cpp:107
+#: ../src/resources/xrc_strings.h:146
+#: ../src/export_html.cpp:121
 msgid "Country:"
 msgstr "Země:"
 
@@ -348,7 +372,7 @@ msgstr "Vytvořit nový překladový projekt"
 msgid "Database"
 msgstr "Databáze"
 
-#: ../src/transmem.cpp:294
+#: ../src/transmem.cpp:309
 #, c-format
 msgid "Database error: %s"
 msgstr "Databázová chyba: %s"
@@ -365,7 +389,7 @@ msgstr "Smazat"
 msgid "Delete the project"
 msgstr "Smazat projekt"
 
-#: ../src/manager.cpp:271
+#: ../src/manager.cpp:286
 msgid "Directories:"
 msgstr "Adresáře:"
 
@@ -381,7 +405,7 @@ msgstr "Dát položky do &uvozovek"
 msgid "Display quotes around the string?"
 msgstr "Dát položky do uvozovek?"
 
-#: ../src/manager.cpp:397
+#: ../src/manager.cpp:412
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -389,18 +413,15 @@ msgstr ""
 "Opravdu chcete provést hromadný update všech\n"
 "katalogů v tomto projektu?"
 
-#: ../src/edframe.cpp:1985
+#: ../src/edframe.cpp:1894
 msgid ""
-"Do you really want to remove all translations that are no longer used from "
-"the catalog?\n"
-"If you continue with purging, you will have to translate them again if they "
-"are added back in the future."
+"Do you really want to remove all translations that are no longer used from the catalog?\n"
+"If you continue with purging, you will have to translate them again if they are added back in the future."
 msgstr ""
 "Opravdu chcete odstranit všechny staré, již nepoužívané překlady?\n"
-"Pokud to uděláte a příslušné řetězce budou později přidány zpět, tak je "
-"budete muset přeložit znovu."
+"Pokud to uděláte a příslušné řetězce budou později přidány zpět, tak je budete muset přeložit znovu."
 
-#: ../src/manager.cpp:377
+#: ../src/manager.cpp:392
 msgid "Do you want to delete the project?"
 msgstr "Opravdu chcete smazat tento project?"
 
@@ -420,7 +441,8 @@ msgstr "Editovat"
 msgid "Edit &comment"
 msgstr "Editovat &komentář"
 
-#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:176
+#: ../src/resources/xrc_strings.h:3
+#: ../src/resources/xrc_strings.h:176
 msgid "Edit comment"
 msgstr "Editovat komentář"
 
@@ -452,34 +474,34 @@ msgstr "Příkaz ke spuštění editoru:"
 msgid "Enables on-the-fly spellchecking"
 msgstr "Zapne kontrolu pravopisu během psaní"
 
-#: ../src/edframe.cpp:1110
+#: ../src/edframe.cpp:1082
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Položky katalogu jsou zřejmě špatné."
 
-#: ../src/edframe.cpp:669
+#: ../src/edframe.cpp:639
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "Nepodařilo se inicializovat kontrolu pravopisu: %s"
 
-#: ../src/edframe.cpp:1748
+#: ../src/edframe.cpp:1650
 msgid "Error loading message catalog file '"
 msgstr "Chyba při nahrávání katalogu."
 
-#: ../src/fileviewer.cpp:75
+#: ../src/fileviewer.cpp:90
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Chyba při otevírání souboru %s!"
 
-#: ../src/catalog.cpp:1254
+#: ../src/catalog.cpp:1268
 msgid "Error saving catalog"
 msgstr "Chyba při ukládání katalogu"
 
-#: ../src/catalog.cpp:64
+#: ../src/catalog.cpp:78
 #, c-format
 msgid "Error while loading file '%s': line %u is corrupted."
 msgstr "Chyba při načítání souboru '%s': řádek %u je poškozený."
 
-#: ../src/edframe.cpp:951
+#: ../src/edframe.cpp:921
 msgid "Export as..."
 msgstr "Exportovat jako..."
 
@@ -487,17 +509,18 @@ msgstr "Exportovat jako..."
 msgid "External editor"
 msgstr "Externí editor"
 
-#: ../src/edframe.cpp:842 ../src/edframe.cpp:886
+#: ../src/edframe.cpp:812
+#: ../src/edframe.cpp:856
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Soubor '%s' neexistuje."
 
-#: ../src/edframe.cpp:859
+#: ../src/edframe.cpp:829
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Soubor '%s' není katalog překladů."
 
-#: ../src/catalog.cpp:1218
+#: ../src/catalog.cpp:1232
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -506,7 +529,7 @@ msgstr ""
 "Soubor '%s' je pouze pro čtení a není možné jej přepsat.\n"
 "Uložte prosím katalog pod jiným jménem."
 
-#: ../src/transmemupd_wizard.cpp:48
+#: ../src/transmemupd_wizard.cpp:63
 msgid "Files List"
 msgstr "Seznam souborů"
 
@@ -534,12 +557,12 @@ msgstr "Najít..."
 msgid "Fonts"
 msgstr "Fonty"
 
-#: ../src/edframe.cpp:2482
+#: ../src/edframe.cpp:2423
 #, c-format
 msgid "Form %u"
 msgstr "Forma %u"
 
-#: ../src/edframe.cpp:2484
+#: ../src/edframe.cpp:2425
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr "Forma %u (např. \"%u\")"
@@ -548,19 +571,21 @@ msgstr "Forma %u (např. \"%u\")"
 msgid "Fullscreen view"
 msgstr "Zvětšit na celou obrazovku"
 
-#: ../src/manager.cpp:220
+#: ../src/manager.cpp:235
 msgid "Fuzzy"
 msgstr "Fuzzy"
 
-#: ../src/export_html.cpp:176
+#: ../src/export_html.cpp:190
 msgid "Fuzzy translation"
 msgstr "Nepřesný překlad"
 
-#: ../src/edframe.cpp:807 ../src/edframe.cpp:928
+#: ../src/edframe.cpp:777
+#: ../src/edframe.cpp:898
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Katalogy GNU GetText (*.po)|*.po|Všechny soubory (*.*)|*.*"
 
-#: ../src/edframe.cpp:1004 ../src/edframe.cpp:1128
+#: ../src/edframe.cpp:974
+#: ../src/edframe.cpp:1100
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "Šablony GNU GetTextu (*.pot)|*.pot|All files (*.*)|*.*"
 
@@ -576,11 +601,16 @@ msgstr "Vygenerovat překladovou paměť"
 msgid "Generate database"
 msgstr "Vygenerovat databázi"
 
-#: ../src/edframe.cpp:1192
+#: ../src/edframe.cpp:1164
 msgid "Gettext syntax error"
 msgstr "Chyba syntaxe Gettextu"
 
-#: ../src/edframe.cpp:953
+#: ../src/edframe.cpp:2490
+#, c-format
+msgid "Go to bookmark %i\tCtrl-%i"
+msgstr "Přejít na záložku %i\tCtrl-%i"
+
+#: ../src/edframe.cpp:923
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML soubor (*.html)|*.html"
 
@@ -594,36 +624,38 @@ msgstr "Identita"
 
 #: ../src/resources/xrc_strings.h:82
 msgid "If checked, the comment window will be editable."
-msgstr ""
-"Pokud je tato položka zaškrtnutá, je možné komentáře editovat přímo v "
-"hlavním okně."
+msgstr "Pokud je tato položka zaškrtnutá, je možné komentáře editovat přímo v hlavním okně."
 
 #: ../src/resources/xrc_strings.h:124
 msgid "Invocation:"
 msgstr "Spuštění:"
 
-#: ../src/resources/xrc_strings.h:154 ../src/settingsdlg.cpp:55
+#: ../src/resources/xrc_strings.h:154
+#: ../src/settingsdlg.cpp:71
 msgid "Keywords"
 msgstr "Klíčová slova"
 
-#: ../src/chooselang.cpp:137
+#: ../src/chooselang.cpp:152
 msgid "Language selection"
 msgstr "Výběr jazyka"
 
-#: ../src/resources/xrc_strings.h:121 ../src/resources/xrc_strings.h:122
-#: ../src/resources/xrc_strings.h:145 ../src/export_html.cpp:104
+#: ../src/resources/xrc_strings.h:121
+#: ../src/resources/xrc_strings.h:122
+#: ../src/resources/xrc_strings.h:145
+#: ../src/export_html.cpp:118
 msgid "Language:"
 msgstr "Jazyk:"
 
-#: ../src/manager.cpp:222
+#: ../src/manager.cpp:237
 msgid "Last modified"
 msgstr "Poslední změna"
 
-#: ../src/fileviewer.cpp:84 ../src/edlistctrl.cpp:194
+#: ../src/fileviewer.cpp:99
+#: ../src/edlistctrl.cpp:227
 msgid "Line"
 msgstr "Řádka"
 
-#: ../src/catalog.cpp:129
+#: ../src/catalog.cpp:143
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "Řádek %u souboru '%s' je poškozený (neplatná data v %s)"
@@ -640,7 +672,7 @@ msgstr "Seznam koncovek oddělených středníky (např. *.cpp,*.h):"
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:201
+#: ../src/catalog.cpp:215
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Špatná hlavička: '%s'"
@@ -653,7 +685,7 @@ msgstr "Max. počet chybějících slov:"
 msgid "Max. difference in sentence length:"
 msgstr "Max. rozdíl v délce věty:"
 
-#: ../src/catalog.cpp:1426
+#: ../src/catalog.cpp:1440
 msgid "Merging differences..."
 msgstr "Vkládám rozdíly..."
 
@@ -665,23 +697,17 @@ msgstr "Nahoru"
 msgid "Move up"
 msgstr "Dolu"
 
-#: ../src/prefsdlg.cpp:40
+#: ../src/prefsdlg.cpp:55
 msgid "My Languages"
 msgstr "Jazyky"
 
-#: ../src/manager.cpp:274
+#: ../src/manager.cpp:289
 msgid "My Project"
 msgstr "Můj projekt"
 
 #: ../src/resources/xrc_strings.h:80
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Nikdy nezaměří seznam s řetězci. Pokud je tato volba zapnutá, musíte k "
-"navigování v seznamu pomocí klávesnice použít Ctrl-šipky. Na druhou stranu "
-"vám to umožní rovnou začít psát text, bez nutnosti mačkat Tab."
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Nikdy nezaměří seznam s řetězci. Pokud je tato volba zapnutá, musíte k navigování v seznamu pomocí klávesnice použít Ctrl-šipky. Na druhou stranu vám to umožní rovnou začít psát text, bez nutnosti mačkat Tab."
 
 #: ../src/resources/xrc_strings.h:115
 msgid "New"
@@ -703,25 +729,28 @@ msgstr "Nové řetězce"
 msgid "Next >"
 msgstr "Další >"
 
-#: ../src/fileviewer.cpp:123
+#: ../src/fileviewer.cpp:138
 msgid "No editor specified. Please set it in Preferences dialog."
 msgstr "Nastavte prosím editor v menu Nastavení"
 
-#: ../src/digger.cpp:123
+#: ../src/digger.cpp:138
 msgid "No files found in: "
 msgstr "Nenalezeny žádné soubory: "
 
-#: ../src/edframe.cpp:1208
+#: ../src/edframe.cpp:1180
 msgid "No references to this string found."
 msgstr "Nenalezen žádný odkaz na tento řetězec."
 
-#: ../src/export_html.cpp:148
+#: ../src/export_html.cpp:162
 msgid "Notes"
 msgstr "Poznámky"
 
-#: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:30 ../src/resources/xrc_strings.h:118
-#: ../src/resources/xrc_strings.h:133 ../src/resources/xrc_strings.h:155
+#: ../src/resources/xrc_strings.h:2
+#: ../src/resources/xrc_strings.h:5
+#: ../src/resources/xrc_strings.h:30
+#: ../src/resources/xrc_strings.h:118
+#: ../src/resources/xrc_strings.h:133
+#: ../src/resources/xrc_strings.h:155
 #: ../src/resources/xrc_strings.h:163
 msgid "OK"
 msgstr "Ok"
@@ -730,11 +759,13 @@ msgstr "Ok"
 msgid "Obsolete strings"
 msgstr "Odstraněné řetězce"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:805
+#: ../src/resources/xrc_strings.h:171
+#: ../src/edframe.cpp:775
 msgid "Open catalog"
 msgstr "Otevřít katalog"
 
-#: ../src/edframe.cpp:1002 ../src/edframe.cpp:1126
+#: ../src/edframe.cpp:972
+#: ../src/edframe.cpp:1098
 msgid "Open catalog template"
 msgstr "Otevřít šablonu katalogů"
 
@@ -746,7 +777,8 @@ msgstr "Otevřít správce katalogů hned po startu"
 msgid "Open source files in editor, not in file viewer"
 msgstr "Otevírat zdrojové soubory přímo v editoru "
 
-#: ../src/edlistctrl.cpp:191 ../src/export_html.cpp:141
+#: ../src/edlistctrl.cpp:224
+#: ../src/export_html.cpp:155
 msgid "Original string"
 msgstr "Originální řetězec"
 
@@ -762,7 +794,7 @@ msgstr "Nastavení parseru:"
 msgid "Parsers"
 msgstr "Parsery"
 
-#: ../src/digger.cpp:43
+#: ../src/digger.cpp:58
 msgid "Parsing "
 msgstr "Zpracovávám "
 
@@ -770,7 +802,8 @@ msgstr "Zpracovávám "
 msgid "Path to DB:"
 msgstr "Cesta k databázi:"
 
-#: ../src/resources/xrc_strings.h:152 ../src/settingsdlg.cpp:57
+#: ../src/resources/xrc_strings.h:152
+#: ../src/settingsdlg.cpp:73
 msgid "Paths"
 msgstr "Cesty"
 
@@ -786,15 +819,15 @@ msgstr "Vyberte jazyk ze seznamu podporovaných jazyků"
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "Přidejte prosím adresáře s katalogy:"
 
-#: ../src/edframe.cpp:1216
+#: ../src/edframe.cpp:1188
 msgid "Please choose the reference you want to show:"
 msgstr "Prosím vyberte odkaz, který chcete zobrazi"
 
-#: ../src/prefsdlg.cpp:321
+#: ../src/prefsdlg.cpp:336
 msgid "Please select language ISO code:"
 msgstr "Vyberte prosím ISO kód jazyka:"
 
-#: ../src/edframe.cpp:727
+#: ../src/edframe.cpp:697
 msgid "Please select language code:"
 msgstr "Vyberte prosím kód jazyka:"
 
@@ -802,7 +835,7 @@ msgstr "Vyberte prosím kód jazyka:"
 msgid "Plural Forms:"
 msgstr "Forma plurálů:"
 
-#: ../src/edframe.cpp:480
+#: ../src/edframe.cpp:450
 msgid "Plural:"
 msgstr "Plurál:"
 
@@ -814,11 +847,13 @@ msgstr "Konfigurace"
 msgid "Proceed"
 msgstr "Provést"
 
-#: ../src/resources/xrc_strings.h:150 ../src/export_html.cpp:97
+#: ../src/resources/xrc_strings.h:150
+#: ../src/export_html.cpp:111
 msgid "Project info"
 msgstr "Informace o projektu"
 
-#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:101
+#: ../src/resources/xrc_strings.h:142
+#: ../src/export_html.cpp:115
 msgid "Project name and version:"
 msgstr "Jméno a verze projektu:"
 
@@ -826,15 +861,16 @@ msgstr "Jméno a verze projektu:"
 msgid "Project name:"
 msgstr "Jméno projektu:"
 
-#: ../src/edframe.cpp:1986
+#: ../src/edframe.cpp:1895
 msgid "Purge delete translations"
 msgstr "Smazat staré překlady"
 
-#: ../src/edframe.cpp:1216
+#: ../src/edframe.cpp:1188
 msgid "References"
 msgstr "Odkazy"
 
-#: ../src/edframe.cpp:2068 ../src/edframe.cpp:2072
+#: ../src/edframe.cpp:1977
+#: ../src/edframe.cpp:1981
 msgid "References:"
 msgstr "Odkazy:"
 
@@ -850,7 +886,7 @@ msgstr "Nastavit na výchozí"
 msgid "Save &as..."
 msgstr "Uložit &jako..."
 
-#: ../src/edframe.cpp:927
+#: ../src/edframe.cpp:897
 msgid "Save as..."
 msgstr "Uložit jako..."
 
@@ -858,45 +894,54 @@ msgstr "Uložit jako..."
 msgid "Save catalog"
 msgstr "Uložit katalog"
 
-#: ../src/edframe.cpp:764 ../src/edframe.cpp:788 ../src/edframe.cpp:825
-#: ../src/edframe.cpp:871 ../src/edframe.cpp:980
+#: ../src/edframe.cpp:734
+#: ../src/edframe.cpp:758
+#: ../src/edframe.cpp:795
+#: ../src/edframe.cpp:841
+#: ../src/edframe.cpp:950
 msgid "Save changes"
 msgstr "Uložit změny"
 
-#: ../src/transmemupd.cpp:137
+#: ../src/transmemupd.cpp:152
 msgid "Scanning file: "
 msgstr "Prohledávám soubor:"
 
-#: ../src/digger.cpp:33
+#: ../src/digger.cpp:48
 msgid "Scanning files..."
 msgstr "Prohledávám soubory..."
 
-#: ../src/transmemupd_wizard.cpp:44
+#: ../src/transmemupd_wizard.cpp:59
 msgid "Search Paths"
 msgstr "Prohledávané cesty"
 
-#: ../src/edframe.cpp:726
+#: ../src/edframe.cpp:696
 msgid "Select catalog's language"
 msgstr "Vyberte jazyk katalogu"
 
-#: ../src/manager.cpp:251 ../src/prefsdlg.cpp:334
-#: ../src/transmemupd_wizard.cpp:97
+#: ../src/manager.cpp:266
+#: ../src/prefsdlg.cpp:349
+#: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "Vyberte adresář"
 
-#: ../src/prefsdlg.cpp:320
+#: ../src/prefsdlg.cpp:335
 msgid "Select language"
 msgstr "Vyberte jazyk"
 
-#: ../src/chooselang.cpp:136
+#: ../src/chooselang.cpp:151
 msgid "Select your prefered language"
 msgstr "Vyberte preferovaný jazyk"
+
+#: ../src/edframe.cpp:2484
+#, c-format
+msgid "Set bookmark %i\tAlt-%i"
+msgstr "Nastavit záložku %i\tAlt-%i"
 
 #: ../src/resources/xrc_strings.h:141
 msgid "Settings"
 msgstr "Nastavení"
 
-#: ../src/edapp.cpp:145
+#: ../src/edapp.cpp:159
 msgid "Setup"
 msgstr "Nastavení"
 
@@ -912,11 +957,12 @@ msgstr "Zobrazit okno s automatickým k&omenářem"
 msgid "Show summary after catalog update"
 msgstr "Po aktualizaci katalogu zobrazit přehled změn"
 
-#: ../src/edframe.cpp:479
+#: ../src/edframe.cpp:449
 msgid "Singular:"
 msgstr "Singulár:"
 
-#: ../src/resources/xrc_strings.h:131 ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:131
+#: ../src/resources/xrc_strings.h:148
 msgid "Source code charset:"
 msgstr "Znaková sada zdrojáků:"
 
@@ -924,7 +970,7 @@ msgstr "Znaková sada zdrojáků:"
 msgid "Source code parsers:"
 msgstr "Parsery zdrojáků:"
 
-#: ../src/fileviewer.cpp:31
+#: ../src/fileviewer.cpp:46
 msgid "Source file"
 msgstr "Zdrojový soubor"
 
@@ -936,15 +982,17 @@ msgstr "Hledat od začátku katalogu"
 msgid "String to find:"
 msgstr "Hledaný řetězec:"
 
-#: ../src/resources/xrc_strings.h:144 ../src/export_html.cpp:114
+#: ../src/resources/xrc_strings.h:144
+#: ../src/export_html.cpp:128
 msgid "Team's email address:"
 msgstr "Emailová adresa týmu:"
 
-#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:110
+#: ../src/resources/xrc_strings.h:143
+#: ../src/export_html.cpp:124
 msgid "Team:"
 msgstr "Tým:"
 
-#: ../src/catalog.cpp:1253
+#: ../src/catalog.cpp:1267
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -955,13 +1003,9 @@ msgstr ""
 "v nastaveních katalogu). Místo toho byl uložen jako UTF-8\n"
 "a nastavení bylo příslušně pozměněno."
 
-#: ../src/catalog.cpp:942
-msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"Při načítání katalogu došlo k chybě. Některé překlady mohou chybět nebo být "
-"poškozené."
+#: ../src/catalog.cpp:956
+msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
+msgstr "Při načítání katalogu došlo k chybě. Některé překlady mohou chybět nebo být poškozené."
 
 #: ../src/resources/xrc_strings.h:160
 msgid ""
@@ -979,7 +1023,7 @@ msgstr ""
 "Tyto řetězce se vyskytují ve zdrojácích, ale nejsou v katalogu.\n"
 "poEdit je nyní přidá do katalogu."
 
-#: ../src/edapp.cpp:145
+#: ../src/edapp.cpp:159
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1031,11 +1075,12 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Stisknuto, pokud má vybraný řetězec nepřesný překlad"
 
-#: ../src/manager.cpp:218
+#: ../src/manager.cpp:233
 msgid "Total"
 msgstr "Celkem"
 
-#: ../src/edlistctrl.cpp:192 ../src/export_html.cpp:144
+#: ../src/edlistctrl.cpp:225
+#: ../src/export_html.cpp:158
 msgid "Translation"
 msgstr "Překlad"
 
@@ -1043,11 +1088,11 @@ msgstr "Překlad"
 msgid "Translation Memory"
 msgstr "Překladová paměť"
 
-#: ../src/transmemupd_wizard.cpp:129
+#: ../src/transmemupd_wizard.cpp:144
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 msgstr "Soubory s překlady (*.po;*.mo)|*.po;*.mo"
 
-#: ../src/transmemupd_wizard.cpp:127
+#: ../src/transmemupd_wizard.cpp:142
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "Soubory s překlady (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 
@@ -1063,7 +1108,7 @@ msgstr ""
 "Translační pamět se vytvoří z níže uvedených souborů.\n"
 "Nyní do seznamu můžete přidat další položky."
 
-#: ../src/chooselang.cpp:54
+#: ../src/chooselang.cpp:69
 #, c-format
 msgid "Uknown locale code '%s' in registry."
 msgstr "Neznámý kód jazyka '%s' v registrech."
@@ -1076,7 +1121,7 @@ msgstr "Vrátit"
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:219
+#: ../src/manager.cpp:234
 msgid "Untrans"
 msgstr "Nepřelož"
 
@@ -1100,14 +1145,13 @@ msgstr "Přehled aktualizace"
 msgid "Update translation memory"
 msgstr "Aktualizovat translační paměť"
 
-#: ../src/catalog.cpp:1386
+#: ../src/catalog.cpp:1400
 msgid "Updating catalog..."
 msgstr "Aktualizuji katalog..."
 
-#: ../src/edframe.cpp:1112
+#: ../src/edframe.cpp:1084
 msgid "Updating the catalog failed. Click on 'More>>' for details."
-msgstr ""
-"Aktualizace katalogu selhala. Po kliknutí na \"Více>>\" získáte detaily."
+msgstr "Aktualizace katalogu selhala. Po kliknutí na \"Více>>\" získáte detaily."
 
 #: ../src/resources/xrc_strings.h:99
 msgid "Use custom font for text fields"
@@ -1133,11 +1177,11 @@ msgstr "Jen celá slova"
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:852
+#: ../src/edframe.cpp:822
 msgid "You can't drop more than one file on poEdit window."
 msgstr "Na okno poEditu nelze přetáhnou více než jeden soubor."
 
-#: ../src/chooselang.cpp:151
+#: ../src/chooselang.cpp:166
 msgid "You must restart poEdit for this change to take effect."
 msgstr "Tato změna se projeví až po opětovném spuštění poEditu."
 
@@ -1149,7 +1193,7 @@ msgstr "Vaše e-mailová adresa:"
 msgid "Your name:"
 msgstr "Vaše jméno:"
 
-#: ../src/edframe.cpp:1831
+#: ../src/edframe.cpp:1734
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[kontroluji překlady: zbývá %i]"
@@ -1158,37 +1202,35 @@ msgstr "[kontroluji překlady: zbývá %i]"
 msgid "current platform's default"
 msgstr "to,co je běžné na této platformě"
 
-#: ../src/edframe.cpp:2108
+#: ../src/edframe.cpp:2017
 msgid "none"
 msgstr "žádný"
 
-#: ../src/edframe.cpp:372
+#: ../src/edframe.cpp:341
 msgid "poEdit"
 msgstr "poEdit"
 
-#: ../src/manager.cpp:54
+#: ../src/manager.cpp:69
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - správce katalogů"
 
-#: ../src/edapp.cpp:127
+#: ../src/edapp.cpp:141
 msgid "poEdit Error"
 msgstr "poEdit: chyba"
 
-#: ../src/digger.cpp:124
+#: ../src/digger.cpp:139
 msgid "poEdit did not find any files in scanned directories."
 msgstr "poEdit v prohledávaných adresářích nenalezl žádné soubory."
 
-#: ../src/edapp.cpp:51
-msgid ""
-"poEdit installation is broken, cannot find application's home directory."
-msgstr ""
-"poEdit je špatně nainstalovaný, nepodařilo se v registrech najít údaj o "
-"domovském adresáři."
+#: ../src/edapp.cpp:65
+msgid "poEdit installation is broken, cannot find application's home directory."
+msgstr "poEdit je špatně nainstalovaný, nepodařilo se v registrech najít údaj o domovském adresáři."
 
-#: ../src/edframe.cpp:2123
+#: ../src/edframe.cpp:2032
 msgid "version"
 msgstr "verze"
 
 #, fuzzy
 #~ msgid "X-Poedit-Keywords"
 #~ msgstr "Klíčová slova"
+
