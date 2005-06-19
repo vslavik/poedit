@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http: *www.poedit.org)
+ *  This file is part of poEdit (http://www.poedit.org)
  *
  *  Copyright (C) 2003 Christophe Hermier
  *

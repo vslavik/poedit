@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http: *www.poedit.org)
+ *  This file is part of poEdit (http://www.poedit.org)
  *
  *  Copyright (C) 1999-2005 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
