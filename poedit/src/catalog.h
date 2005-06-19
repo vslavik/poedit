@@ -5,9 +5,9 @@
 
     ---------------
       catalog.h
-    
+
       Translations catalog
-    
+
       (c) Vaclav Slavik, 1999-2004
 
 */
@@ -27,7 +27,7 @@ class CatalogData;
 class CatalogDeletedData;
 WX_DECLARE_OBJARRAY(CatalogData, CatalogDataArray);
 WX_DECLARE_OBJARRAY(CatalogDeletedData, CatalogDeletedDataArray);
-    
+
 /// The possible bookmarks for a given item
 typedef enum
 {
@@ -58,7 +58,7 @@ class Catalog
         {
         public:
             HeaderData() {}
-            
+
             /** Initializes the headers from string that is in msgid "" format
                 (i.e. list of key:value\n entries). */
             void FromString(const wxString& str);
@@ -66,12 +66,12 @@ class Catalog
             /** Converts the header into string representation that can be
                 directly written to .po file as msgid "". */
             wxString ToString(const wxString& line_delim = wxEmptyString);
-            
+
             /// Updates headers list from parsed values entries below
             void UpdateDict();
             /// Reverse operation to UpdateDict
             void ParseDict();
-            
+
             /// Returns value of header or empty string if missing.
             wxString GetHeader(const wxString& key) const;
 
@@ -81,24 +81,24 @@ class Catalog
             /** Sets header to given value. Overwrites old value if present,
                 appends to the end of header values otherwise. */
             void SetHeader(const wxString& key, const wxString& value);
-            
+
             /// Like SetHeader, but deletes the header if value is empty
             void SetHeaderNotEmpty(const wxString& key, const wxString& value);
 
             /// Removes given header entry
             void DeleteHeader(const wxString& key);
-    
+
             struct Entry
             {
                 wxString Key, Value;
             };
             typedef std::vector<Entry> Entries;
-            
+
             const Entries& GetAllHeaders() const { return m_entries; }
 
             // Parsed values:
-            
-            wxString Language, Country, Project, CreationDate, 
+
+            wxString Language, Country, Project, CreationDate,
                      RevisionDate, Translator, TranslatorEmail,
                      Team, TeamEmail, Charset, SourceCodeCharset;
 
@@ -131,18 +131,18 @@ class Catalog
         /** Loads catalog from .po file.
             If file named po_file ".poedit" (e.g. "cs.po.poedit") exists,
             this function loads additional information from it. .po.poedit
-            file contains parts of catalog header data that are not part 
+            file contains parts of catalog header data that are not part
             of standard .po format, namely SearchPaths, Keywords, BasePath
             and Language.
          */
         bool Load(const wxString& po_file);
 
-        /** Saves catalog to file. Creates both .po (text) and .mo (binary) 
-            version of the catalog (unless the latter was disabled in 
+        /** Saves catalog to file. Creates both .po (text) and .mo (binary)
+            version of the catalog (unless the latter was disabled in
             preferences). Calls external xmsgfmt program to generate the .mo
-            file. 
+            file.
 
-            Note that \a po_file refers to .po file, .mo file will have same 
+            Note that \a po_file refers to .po file, .mo file will have same
             name & location as .po file except for different extension.
          */
         bool Save(const wxString& po_file, bool save_mo = true);
@@ -160,13 +160,13 @@ class Catalog
          */
         bool UpdateFromPOT(const wxString& pot_file, bool summary = true);
 
-        /** Adds translation into the catalog. 
+        /** Adds translation into the catalog.
             \return true on success or false if such key does
                      not exist in the catalog
          */
         bool Translate(const wxString& key, const wxString& translation);
 
-        /** Returns pointer to catalog item with key \a key or NULL if 
+        /** Returns pointer to catalog item with key \a key or NULL if
             such key is not available.
          */
         CatalogData* FindItem(const wxString& key) const;
@@ -219,14 +219,17 @@ class Catalog
 
         /// Removes all obsolete translations from the catalog
         void RemoveDeletedItems();
-        
-        /// Sets the given item to have the given bookmark and returns the index 
+
+        /// Sets the given item to have the given bookmark and returns the index
         /// of the item that previously had this bookmark (or -1)
         int SetBookmark(int id, Bookmark bookmark);
-        
+
         /// Returns the index of the item that has the given bookmark or -1
-        int GetBookmarkIndex(Bookmark bookmark) {return m_header.Bookmarks[bookmark];}
-        
+        int GetBookmarkIndex(Bookmark bookmark) const
+        {
+            return m_header.Bookmarks[bookmark];
+        }
+
     protected:
         /** Merges the catalog with reference catalog
             (in the sense of msgmerge -- this catalog is old one with
@@ -239,13 +242,13 @@ class Catalog
         bool Merge(Catalog *refcat);
 
         /** Returns list of strings that are new in reference catalog
-	        (compared to this one) and that are not present in \a refcat
+            (compared to this one) and that are not present in \a refcat
             (i.e. are obsoleted).
 
             \see ShowMergeSummary
          */
-	    void GetMergeSummary(Catalog *refcat, 
-	                         wxArrayString& snew, wxArrayString& sobsolete);
+        void GetMergeSummary(Catalog *refcat,
+                             wxArrayString& snew, wxArrayString& sobsolete);
 
         /** Shows a dialog with merge summary.
             \see GetMergeSummary, Merge
@@ -253,16 +256,16 @@ class Catalog
             \return true if the merge was OK'ed by the user, false otherwise
          */
         bool ShowMergeSummary(Catalog *refcat);
- 
+
     private:
         wxHashTable *m_data;
         CatalogDataArray m_dataArray;
         CatalogDeletedDataArray m_deletedItemsArray;
-        unsigned m_count; // no. of items 
+        unsigned m_count; // no. of items
         bool m_isOk;
         wxString m_fileName;
         HeaderData m_header;
-        
+
         friend class LoadParser;
 };
 
@@ -279,10 +282,10 @@ class CatalogParser
             new msgid/msgstr pair is found.
          */
         void Parse();
-            
+
     protected:
         /** Called when new entry was parsed. Parsing continues
-            if returned value is true and is cancelled if it 
+            if returned value is true and is cancelled if it
             is false.
          */
         virtual bool OnEntry(const wxString& msgid,
@@ -296,7 +299,7 @@ class CatalogParser
                              unsigned lineNumber) = 0;
 
         /** Called when new deleted entry was parsed. Parsing continues
-            if returned value is true and is cancelled if it 
+            if returned value is true and is cancelled if it
             is false. Defaults to an empty implementation.
          */
         virtual bool OnDeletedEntry(const wxArrayString& deletedLines,
@@ -318,7 +321,7 @@ class CatalogParser
     This includes original string and its occurences in source code
     (so-called references), translation and translation's status
     (fuzzy, non translated, translated) and optional comment.
-    
+
     This class is mostly internal, used by Catalog to store data.
  */
 class CatalogData : public wxObject
@@ -326,7 +329,7 @@ class CatalogData : public wxObject
     public:
         /// Ctor. Initializes the object with original string and translation.
         CatalogData(const wxString& str, const wxString& str_plural)
-                : wxObject(), 
+                : wxObject(),
                   m_string(str),
                   m_plural(str_plural),
                   m_hasPlural(false),
@@ -371,7 +374,7 @@ class CatalogData : public wxObject
         /// How many translations (plural forms) do we have?
         size_t GetNumberOfTranslations() const
             { return m_translations.GetCount(); }
- 
+
         /// Returns the nth-translation.
         wxString GetTranslation(unsigned n = 0) const;
 
@@ -390,7 +393,7 @@ class CatalogData : public wxObject
         /// Adds new reference to the entry (used by SourceDigger).
         void AddReference(const wxString& ref)
         {
-            if (m_references.Index(ref) == wxNOT_FOUND) 
+            if (m_references.Index(ref) == wxNOT_FOUND)
                 m_references.Add(ref);
         }
 
@@ -406,10 +409,10 @@ class CatalogData : public wxObject
             m_string = s;
             m_validity = Val_Unknown;
         }
-        
+
         /// Sets the plural form (if applicable).
-        void SetPluralString(const wxString& p) 
-        { 
+        void SetPluralString(const wxString& p)
+        {
             m_plural = p;
             m_hasPlural = true;
         }
@@ -417,7 +420,7 @@ class CatalogData : public wxObject
         /** Sets the translation. Changes "translated" status to true
             if \a t is not empty.
          */
-        void SetTranslation(const wxString& t, unsigned index = 0); 
+        void SetTranslation(const wxString& t, unsigned index = 0);
 
         /// Sets all translations.
         void SetTranslations(const wxArrayString& t);
@@ -428,8 +431,8 @@ class CatalogData : public wxObject
             m_comment = c;
         }
 
-        /** Sets gettext flags directly in string format. It may be 
-            either empty string or "#, fuzzy", "#, c-format", 
+        /** Sets gettext flags directly in string format. It may be
+            either empty string or "#, fuzzy", "#, c-format",
             "#, fuzzy, c-format" or others (not understood by poEdit).
          */
         void SetFlags(const wxString& flags);
@@ -461,7 +464,7 @@ class CatalogData : public wxObject
         /** Returns true if the gettext flags line contains "foo-format"
             flag when called with "foo" as argument. */
         bool IsInFormat(const wxString& format);
-        
+
         /// Adds new autocomments (#. )
         void AddAutoComments(const wxString& com)
         {
@@ -473,14 +476,14 @@ class CatalogData : public wxObject
         {
             m_autocomments.Clear();
         }
-        
+
         // Validity (syntax-checking) status of the entry:
         enum Validity
         {
             Val_Unknown = -1,
             Val_Invalid = 0,
             Val_Valid = 1
-        };  
+        };
 
         /** Checks if %i etc. are correct in the translation (true if yes).
             Strings that are not c-format are always correct. */
@@ -490,7 +493,7 @@ class CatalogData : public wxObject
 
         void SetErrorString(const wxString& str) { m_errorString = str; }
         wxString GetErrorString() const { return m_errorString; }
-        
+
         /// Returns the bookmark for the item
         Bookmark GetBookmark() {return m_bookmark;}
         /// Returns true if the item has a bookmark
@@ -500,7 +503,7 @@ class CatalogData : public wxObject
         wxString m_string, m_plural;
         bool m_hasPlural;
         wxArrayString m_translations;
-        
+
         wxArrayString m_references, m_autocomments;
         bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
         bool m_hasBadTokens;
@@ -513,14 +516,14 @@ class CatalogData : public wxObject
 
         /// Sets the bookmark
         void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
-        
+
    friend class Catalog;
 };
 
 /** This class holds information about one particular deleted item.
     This includes deleted lines, references, translation's status
     (fuzzy, non translated, translated) and optional comment(s).
-    
+
     This class is mostly internal, used by Catalog to store data.
  */
 class CatalogDeletedData : public wxObject
@@ -528,7 +531,7 @@ class CatalogDeletedData : public wxObject
     public:
         /// Ctor. Initializes the object with original string and translation.
         CatalogDeletedData(const wxArrayString& deletedLines)
-                : wxObject(), 
+                : wxObject(),
                   m_deletedLines(deletedLines),
                   m_lineNum(0) {}
 
@@ -559,7 +562,7 @@ class CatalogDeletedData : public wxObject
         /// Adds new reference to the entry (used by SourceDigger).
         void AddReference(const wxString& ref)
         {
-            if (m_references.Index(ref) == wxNOT_FOUND) 
+            if (m_references.Index(ref) == wxNOT_FOUND)
                 m_references.Add(ref);
         }
 
@@ -574,15 +577,15 @@ class CatalogDeletedData : public wxObject
         {
             m_deletedLines = a;
         }
-        
+
         /// Sets the comment.
         void SetComment(const wxString& c)
         {
             m_comment = c;
         }
 
-        /** Sets gettext flags directly in string format. It may be 
-            either empty string or "#, fuzzy", "#, c-format", 
+        /** Sets gettext flags directly in string format. It may be
+            either empty string or "#, fuzzy", "#, c-format",
             "#, fuzzy, c-format" or others (not understood by poEdit).
          */
         void SetFlags(const wxString& flags) {m_flags = flags;};
@@ -606,10 +609,10 @@ class CatalogDeletedData : public wxObject
         {
             m_autocomments.Clear();
         }
-        
+
     private:
         wxArrayString m_deletedLines;
-       
+
         wxArrayString m_references, m_autocomments;
         wxString m_flags;
         wxString m_comment;
