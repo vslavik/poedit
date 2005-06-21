@@ -261,51 +261,49 @@ void poEditListCtrl::ReadCatalog()
         // create the lookup arrays of Ids by first splitting it upon
         // four categories of items:
         // unstranslated, invalid, fuzzy and the rest
-        m_itemIndexToCatalogIndexArray.Clear();
+        m_itemIndexToCatalogIndexArray.clear();
 
-        wxArrayInt untranslatedIds;
-        wxArrayInt invalidIds;
-        wxArrayInt fuzzyIds;
-        wxArrayInt restIds;
-        int i;
+        std::vector<int> untranslatedIds;
+        std::vector<int> invalidIds;
+        std::vector<int> fuzzyIds;
+        std::vector<int> restIds;
 
-        for(i = 0; i < m_catalog->GetCount(); i++)
+        for (size_t i = 0; i < m_catalog->GetCount(); i++)
         {
             CatalogData& d = (*m_catalog)[i];
             if (!d.IsTranslated())
-              untranslatedIds.Add(i);
+              untranslatedIds.push_back(i);
             else if (d.GetValidity() == CatalogData::Val_Invalid)
-              invalidIds.Add(i);
+              invalidIds.push_back(i);
             else if (d.IsFuzzy())
-              fuzzyIds.Add(i);
+              fuzzyIds.push_back(i);
             else
-              restIds.Add(i);
+              restIds.push_back(i);
         }
 
         // Now fill the lookup array, not forgetting to set the appropriate
         // property in the catalog entry to be able to go back and forth
         // from one numbering system to the other
-        m_itemIndexToCatalogIndexArray.Alloc(m_catalog->GetCount());
-        m_catalogIndexToItemIndexArray.SetCount(m_catalog->GetCount());
+        m_catalogIndexToItemIndexArray.resize(m_catalog->GetCount());
         int listItemId = 0;
-        for(i = 0; i < untranslatedIds.Count(); i++)
+        for (size_t i = 0; i < untranslatedIds.size(); i++)
         {
-            m_itemIndexToCatalogIndexArray.Add(untranslatedIds[i]);
+            m_itemIndexToCatalogIndexArray.push_back(untranslatedIds[i]);
             m_catalogIndexToItemIndexArray[untranslatedIds[i]] = listItemId++;
         }
-        for(i = 0; i < invalidIds.Count(); i++)
+        for (size_t i = 0; i < invalidIds.size(); i++)
         {
-            m_itemIndexToCatalogIndexArray.Add(invalidIds[i]);
+            m_itemIndexToCatalogIndexArray.push_back(invalidIds[i]);
             m_catalogIndexToItemIndexArray[invalidIds[i]] = listItemId++;
         }
-        for(i = 0; i < fuzzyIds.Count(); i++)
+        for (size_t i = 0; i < fuzzyIds.size(); i++)
         {
-            m_itemIndexToCatalogIndexArray.Add(fuzzyIds[i]);
+            m_itemIndexToCatalogIndexArray.push_back(fuzzyIds[i]);
             m_catalogIndexToItemIndexArray[fuzzyIds[i]] = listItemId++;
         }
-        for(i = 0; i < restIds.Count(); i++)
+        for (size_t i = 0; i < restIds.size(); i++)
         {
-            m_itemIndexToCatalogIndexArray.Add(restIds[i]);
+            m_itemIndexToCatalogIndexArray.push_back(restIds[i]);
             m_catalogIndexToItemIndexArray[restIds[i]] = listItemId++;
         }
     }
@@ -383,7 +381,7 @@ void poEditListCtrl::OnSize(wxSizeEvent& event)
 
 long poEditListCtrl::GetItemData(long item) const
 {
-    if (item < m_itemIndexToCatalogIndexArray.Count())
+    if (item < m_itemIndexToCatalogIndexArray.size())
         return m_itemIndexToCatalogIndexArray[item];
     else
         return -1;
@@ -391,7 +389,7 @@ long poEditListCtrl::GetItemData(long item) const
 
 int poEditListCtrl::GetItemIndex(int catalogIndex) const
 {
-    if (catalogIndex < m_catalogIndexToItemIndexArray.Count())
+    if (catalogIndex < m_catalogIndexToItemIndexArray.size())
         return m_catalogIndexToItemIndexArray[catalogIndex];
     else
         return -1;

@@ -34,6 +34,8 @@
 #include <wx/listctrl.h>
 #include <wx/frame.h>
 
+#include <vector>
+
 class WXDLLEXPORT wxListCtrl;
 class WXDLLEXPORT wxListEvent;
 
@@ -82,7 +84,6 @@ class poEditListCtrl : public wxListView
         int GetItemIndex(int catalogIndex) const;
 
     private:
-        DECLARE_EVENT_TABLE()
         void OnSize(wxSizeEvent& event);
 
         void ReadCatalog();
@@ -92,13 +93,15 @@ class poEditListCtrl : public wxListView
 
         Catalog* m_catalog;
 
-        wxArrayInt m_itemIndexToCatalogIndexArray;
-        wxArrayInt m_catalogIndexToItemIndexArray;
+        std::vector<int> m_itemIndexToCatalogIndexArray;
+        std::vector<int> m_catalogIndexToItemIndexArray;
 
         wxListItemAttr m_attrNormal[2];
         wxListItemAttr m_attrUntranslated[2];
         wxListItemAttr m_attrFuzzy[2];
         wxListItemAttr m_attrInvalid[2];
+
+        DECLARE_EVENT_TABLE()
 };
 
 #endif // _ED_LIST_CTRL_H_
