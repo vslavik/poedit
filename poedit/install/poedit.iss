@@ -1,7 +1,7 @@
 ; This script was first created by ISTool
 ; http://www.lerstad.com/istool/
 
-#define VERSION          "1.3.2"
+#define VERSION          "1.3.3"
 
 [Setup]
 OutputBaseFilename=poedit-{#VERSION}-setup
@@ -19,7 +19,7 @@ UninstallStyle=modern
 LicenseFile=COPYING
 OutputDir=.
 InfoAfterFile=
-Compression=lzma
+Compression=lzma/ultra
 
 WindowShowCaption=true
 WindowStartMaximized=false
@@ -31,6 +31,7 @@ WindowResizable=false
 SolidCompression=true
 ShowLanguageDialog=yes
 AllowUNCPath=false
+InternalCompressLevel=ultra
 [Files]
 Source: extras\win32-runtime\isxdl.dll; Flags: dontcopy
 Source: BUILD-mingw\src\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
