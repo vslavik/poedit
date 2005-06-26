@@ -742,6 +742,8 @@ void poEditFrame::OnCloseWindow(wxCloseEvent&)
         {
             return;
         }
+
+        CancelItemsValidation();
     }
     Destroy();
 }
@@ -916,7 +918,7 @@ void poEditFrame::OnExport(wxCommandEvent&)
         name = SuggestFileName(m_catalog) + _T(".html");
     }
     else
-		name += _T(".html");
+        name += _T(".html");
 
     name = wxFileSelector(_("Export as..."),
                           wxPathOnly(m_fileName), name, wxEmptyString,
@@ -933,7 +935,7 @@ bool poEditFrame::ExportCatalog(const wxString& filename)
 {
     wxBusyCursor bcur;
     bool ok = m_catalog->ExportToHTML(filename);
-	return ok;
+    return ok;
 }
 
 
@@ -1145,9 +1147,7 @@ void poEditFrame::OnListSel(wxListEvent& event)
 
 void poEditFrame::OnListDesel(wxListEvent& event)
 {
-// OnListDesel does not seem to be called for virtual mode lists
-/*    wxMessageBox(wxString(_T("OnListDesel: "))<<event.GetIndex());
-    UpdateFromTextCtrl(event.GetIndex());*/
+    UpdateFromTextCtrl(event.GetIndex());
     event.Skip();
 }
 
