@@ -369,6 +369,11 @@ poEditFrame::poEditFrame() :
     //     recognize that there are many of them
     if (ms_instances.GetCount() == 0)
         Move(cfg->Read(_T("frame_x"), -1), cfg->Read(_T("frame_y"), -1));
+#if !defined(__WXGTK12__) || defined(__WXGTK20__)
+    // GTK+ 1.2 doesn't support this
+    if (cfg->Read(_T("frame_maximized"), long(0)))
+        Maximize();
+#endif
 
     m_displayQuotes = (bool)cfg->Read(_T("display_quotes"), (long)false);
     m_displayLines = (bool)cfg->Read(_T("display_lines"), (long)false);
@@ -567,13 +572,19 @@ poEditFrame::~poEditFrame()
     wxSize sz = GetSize();
     wxPoint pos = GetPosition();
     wxConfigBase *cfg = wxConfig::Get();
-    if (!IsIconized())
+    if (!IsIconized() && !IsFullScreen())
     {
-        cfg->Write(_T("frame_w"), (long)sz.x);
-        cfg->Write(_T("frame_h"), (long)sz.y);
-        cfg->Write(_T("frame_x"), (long)pos.x);
-        cfg->Write(_T("frame_y"), (long)pos.y);
+        if (!IsMaximized())
+        {
+            cfg->Write(_T("frame_w"), (long)sz.x);
+            cfg->Write(_T("frame_h"), (long)sz.y);
+            cfg->Write(_T("frame_x"), (long)pos.x);
+            cfg->Write(_T("frame_y"), (long)pos.y);
+        }
+
+        cfg->Write(_T("frame_maximized"), (long)IsMaximized());
     }
+
     if (m_displayCommentWin)
         cfg->Write(_T("bottom_splitter"),
                    (long)m_bottomSplitter->GetSashPosition());
