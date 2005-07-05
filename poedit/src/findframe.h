@@ -31,30 +31,30 @@
 #define _FINDFRAME_H_
 
 #include <wx/dialog.h>
-class WXDLLEXPORT wxListCtrl;
+class poEditListCtrl;
 class WXDLLEXPORT wxButton;
 class Catalog;
 
 /** FindFrame is small dialog frame that contains controls for searching
     in content of EditorFrame's wxListCtrl object and associated Catalog
     instance.
-    
+
     This class assumes that list control's user data contains index
     into the catalog.
  */
 class FindFrame : public wxDialog
 {
     public:
-        /** Ctor. 
+        /** Ctor.
             \param parent  Parent frame, FindFrame will float on it
             \param list    List control to search in
             \param catalog Catalog to search in
          */
-        FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c,
+        FindFrame(wxWindow *parent, poEditListCtrl *list, Catalog *c,
                   wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans,
                   wxTextCtrl *textCtrlComments, wxTextCtrl *textCtrlAutoComments);
         ~FindFrame();
-        
+
         /** Resets the search to starting position and changes
             the catalog in use. Called by EditorFrame when the user
             reloads catalog.
@@ -70,8 +70,8 @@ class FindFrame : public wxDialog
         void OnCheckbox(wxCommandEvent &event);
         bool DoFind(int dir);
         DECLARE_EVENT_TABLE()
-    
-        wxListCtrl *m_listCtrl;
+
+        poEditListCtrl *m_listCtrl;
         Catalog *m_catalog;
         int m_position;
         wxString m_text;

@@ -1155,7 +1155,7 @@ void poEditFrame::OnListActivated(wxListEvent& event)
 {
     if (m_catalog)
     {
-        int ind = m_list->GetItemData(event.GetIndex());
+        int ind = m_list->GetIndexInCatalog(event.GetIndex());
         if (ind >= (int)m_catalog->GetCount()) return;
         CatalogData& entry = (*m_catalog)[ind];
         if (entry.GetValidity() == CatalogData::Val_Invalid)
@@ -1171,7 +1171,7 @@ void poEditFrame::OnListActivated(wxListEvent& event)
 
 void poEditFrame::OnReferencesMenu(wxCommandEvent& event)
 {
-    int selItem = m_list->GetItemData(m_sel);
+    int selItem = m_list->GetIndexInCatalog(m_sel);
     if (selItem < 0 || selItem >= (int)m_catalog->GetCount()) return;
 
     const wxArrayString& refs = (*m_catalog)[selItem].GetReferences();
@@ -1230,12 +1230,12 @@ void poEditFrame::ShowReference(int num)
     if (wxConfig::Get()->Read(_T("open_editor_immediately"), (long)false))
     {
         FileViewer::OpenInEditor(basepath,
-                                 (*m_catalog)[m_list->GetItemData(m_sel)].GetReferences()[num]);
+                                 (*m_catalog)[m_list->GetIndexInCatalog(m_sel)].GetReferences()[num]);
     }
     else
     {
         FileViewer *w = new FileViewer(this, basepath,
-                                       (*m_catalog)[m_list->GetItemData(m_sel)].GetReferences(),
+                                       (*m_catalog)[m_list->GetIndexInCatalog(m_sel)].GetReferences(),
                                        num);
         if (w->FileOk())
             w->Show(true);
@@ -1417,7 +1417,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     if (m_catalog == NULL) return;
     if (item == -1) item = m_sel;
     if (m_sel == -1 || m_sel >= m_list->GetItemCount()) return;
-    int ind = m_list->GetItemData(item);
+    int ind = m_list->GetIndexInCatalog(item);
     if (ind >= (int)m_catalog->GetCount()) return;
 
     CatalogData& entry = (*m_catalog)[ind];
@@ -1520,7 +1520,7 @@ void poEditFrame::UpdateToTextCtrl(int item)
     if (m_catalog == NULL) return;
     if (item == -1) item = m_sel;
     if (item == -1 || item >= m_list->GetItemCount()) return;
-    int ind = m_list->GetItemData(item);
+    int ind = m_list->GetIndexInCatalog(item);
     if (ind >= (int)m_catalog->GetCount()) return;
 
     const CatalogData& entry = (*m_catalog)[ind];
@@ -1868,7 +1868,7 @@ bool poEditFrame::WriteCatalog(const wxString& catalog)
 
 void poEditFrame::OnEditComment(wxCommandEvent& event)
 {
-    int selItem = m_list->GetItemData(m_sel);
+    int selItem = m_list->GetIndexInCatalog(m_sel);
     if (selItem < 0 || selItem >= (int)m_catalog->GetCount()) return;
 
     wxString comment = convertToLocalCharset(
@@ -1907,7 +1907,7 @@ void poEditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
 void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
 {
     int ind = event.GetId() - ED_POPUP_TRANS;
-    (*m_catalog)[m_list->GetItemData(m_sel)].SetTranslation(m_autoTranslations[ind]);
+    (*m_catalog)[m_list->GetIndexInCatalog(m_sel)].SetTranslation(m_autoTranslations[ind]);
     UpdateToTextCtrl();
     // VS: This dirty trick ensures proper refresh of everything:
     m_edittedTextOrig.clear();
@@ -2205,7 +2205,7 @@ void poEditFrame::OnCommentWindowText(wxCommandEvent&)
     wxString comment;
     comment = convertFromLocalCharset(
             CommentDialog::AddStartHash(m_textComment->GetValue()));
-    CatalogData& data((*m_catalog)[m_list->GetItemData(m_sel)]);
+    CatalogData& data((*m_catalog)[m_list->GetIndexInCatalog(m_sel)]);
 
     wxLogTrace(_T("poedit"), _T("   comm:'%s'"), comment.c_str());
     wxLogTrace(_T("poedit"), _T("datcomm:'%s'"), data.GetComment().c_str());
@@ -2256,7 +2256,7 @@ void poEditFrame::RestartItemsValidation()
 void poEditFrame::BeginItemValidation()
 {
     int item = m_itemsToValidate.front();
-    int index = m_list->GetItemData(item);
+    int index = m_list->GetIndexInCatalog(item);
     CatalogData& dt = (*m_catalog)[index];
 
     if (!dt.IsTranslated())
@@ -2307,7 +2307,7 @@ void poEditFrame::EndItemValidation()
     if (m_itemBeingValidated != -1)
     {
         int item = m_itemBeingValidated;
-        int index = m_list->GetItemData(item);
+        int index = m_list->GetIndexInCatalog(item);
         CatalogData& dt = (*m_catalog)[index];
 
         bool ok = (m_validationProcess.ExitCode == 0);
@@ -2454,7 +2454,7 @@ void poEditFrame::OnListRightClick(wxMouseEvent& event)
         list->SetItemState(item, wxLIST_STATE_SELECTED,
                                  wxLIST_STATE_SELECTED);
 
-    wxMenu *menu = GetPopupMenu(m_list->GetItemData(m_sel));
+    wxMenu *menu = GetPopupMenu(m_list->GetIndexInCatalog(m_sel));
     if (menu)
     {
         list->PopupMenu(menu, event.GetPosition());
@@ -2518,7 +2518,7 @@ void poEditFrame::OnSetBookmark(wxCommandEvent& event)
     // Set bookmark if different from the current value for the item,
     // else unset it
     int bkIndex = -1;
-    int selItemIndex = m_list->GetItemData(m_sel);
+    int selItemIndex = m_list->GetIndexInCatalog(m_sel);
 
     Bookmark bk = static_cast<Bookmark>(event.GetId() - ED_BOOKMARK_SET);
     if (m_catalog->GetBookmarkIndex(bk) == selItemIndex)

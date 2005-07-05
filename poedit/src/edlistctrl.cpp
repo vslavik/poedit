@@ -379,7 +379,7 @@ void poEditListCtrl::OnSize(wxSizeEvent& event)
     event.Skip();
 }
 
-long poEditListCtrl::GetItemData(long item) const
+long poEditListCtrl::GetIndexInCatalog(long item) const
 {
     if (item < m_itemIndexToCatalogIndexArray.size())
         return m_itemIndexToCatalogIndexArray[item];

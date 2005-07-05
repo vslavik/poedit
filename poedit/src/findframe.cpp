@@ -33,11 +33,11 @@
 #include <wx/config.h>
 #include <wx/button.h>
 #include <wx/textctrl.h>
-#include <wx/listctrl.h>
 #include <wx/checkbox.h>
 
 #include "catalog.h"
 #include "findframe.h"
+#include "edlistctrl.h"
 
 // The word separators used when doing a "Whole words only" search
 static const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
@@ -51,23 +51,31 @@ BEGIN_EVENT_TABLE(FindFrame, wxDialog)
    EVT_CLOSE(FindFrame::OnClose)
 END_EVENT_TABLE()
 
-FindFrame::FindFrame(wxWindow *parent, wxListCtrl *list, Catalog *c,
-                     wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans,
-                  wxTextCtrl *textCtrlComments, wxTextCtrl *textCtrlAutoComments)
-        : m_listCtrl(list), m_catalog(c), m_position(-1),
-          m_textCtrlOrig(textCtrlOrig), m_textCtrlTrans(textCtrlTrans),
-          m_textCtrlComments(textCtrlComments), m_textCtrlAutoComments(textCtrlAutoComments)
+FindFrame::FindFrame(wxWindow *parent,
+                     poEditListCtrl *list,
+                     Catalog *c,
+                     wxTextCtrl *textCtrlOrig,
+                     wxTextCtrl *textCtrlTrans,
+                     wxTextCtrl *textCtrlComments,
+                     wxTextCtrl *textCtrlAutoComments)
+        : m_listCtrl(list),
+          m_catalog(c),
+          m_position(-1),
+          m_textCtrlOrig(textCtrlOrig),
+          m_textCtrlTrans(textCtrlTrans),
+          m_textCtrlComments(textCtrlComments),
+          m_textCtrlAutoComments(textCtrlAutoComments)
 {
     wxPoint p(wxConfig::Get()->Read(_T("find_pos_x"), -1),
               wxConfig::Get()->Read(_T("find_pos_y"), -1));
 
     wxXmlResource::Get()->LoadDialog(this, parent, _T("find_frame"));
-    if (p.x != -1) 
+    if (p.x != -1)
         Move(p);
-        
+
     m_btnNext = XRCCTRL(*this, "find_next", wxButton);
     m_btnPrev = XRCCTRL(*this, "find_prev", wxButton);
-    
+
     Reset(c);
 
     XRCCTRL(*this, "in_orig", wxCheckBox)->SetValue(
@@ -117,9 +125,9 @@ void FindFrame::Reset(Catalog *c)
     m_position = -1;
     if (!fromFirst)
         m_position = m_listCtrl->GetNextItem(-1,
-                                     wxLIST_NEXT_ALL,
-                                     wxLIST_STATE_SELECTED);
-    
+                                             wxLIST_NEXT_ALL,
+                                             wxLIST_STATE_SELECTED);
+
     m_btnPrev->Enable(!!m_text);
     m_btnNext->Enable(!!m_text);
 }
@@ -184,25 +192,25 @@ bool TextInString(const wxString& str, const wxString& text, bool wholeWords)
         if (wholeWords)
         {
             int textLen = text.Length();
-      
+
             bool result = true;
             if (index >0)
                 result = result && SEPARATORS.Contains(str[index-1]);
             if (index+textLen < str.Length())
                 result = result && SEPARATORS.Contains(str[index+textLen]);
-              
+
             return result;
-        }  
+        }
         else
         {
             return true;
-        }  
-    }  
+        }
+    }
     else
     {
         return false;
-    }  
-}  
+    }
+}
 
 bool FindFrame::DoFind(int dir)
 {
@@ -221,12 +229,12 @@ bool FindFrame::DoFind(int dir)
 
     if (!caseSens)
         text.MakeLower();
-        
+
     m_position += dir;
     while (m_position >= 0 && m_position < cnt)
     {
-        CatalogData &dt = (*m_catalog)[m_listCtrl->GetItemData(m_position)];
-        
+        CatalogData &dt = (*m_catalog)[m_listCtrl->GetIndexInCatalog(m_position)];
+
         if (inStr)
         {
             #if wxUSE_UNICODE
@@ -236,7 +244,11 @@ bool FindFrame::DoFind(int dir)
             #endif
             if (!caseSens)
                 textc.MakeLower();
-            if (TextInString(textc, text, wholeWords)) { found = Found_InOrig; break; }
+            if (TextInString(textc, text, wholeWords))
+            {
+                found = Found_InOrig;
+                break;
+            }
         }
         if (inTrans)
         {
@@ -276,7 +288,7 @@ bool FindFrame::DoFind(int dir)
             textc = wxEmptyString;
             for (unsigned i = 0; i < autoComments.GetCount(); i++)
                 textc += autoComments[i];
-            
+
             #if wxUSE_UNICODE
             //textc = dt.GetComments();
             #else
@@ -293,9 +305,9 @@ bool FindFrame::DoFind(int dir)
 
     if (found != Found_Not)
     {
-        m_listCtrl->SetItemState(m_position, 
+        m_listCtrl->SetItemState(m_position,
                     wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-        m_listCtrl->SetItemState(m_position, 
+        m_listCtrl->SetItemState(m_position,
                     wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
         m_listCtrl->EnsureVisible(m_position);
 
@@ -304,8 +316,8 @@ bool FindFrame::DoFind(int dir)
         wxTextCtrl* txt;
         switch (found)
         {
-            case Found_InOrig: 
-              txt = m_textCtrlOrig; 
+            case Found_InOrig:
+              txt = m_textCtrlOrig;
               break;
             case Found_InTrans:
               txt = m_textCtrlTrans;
@@ -324,10 +336,10 @@ bool FindFrame::DoFind(int dir)
         int pos = textc.Find(text);
         if (pos != wxNOT_FOUND)
             txt->SetSelection(pos, pos + text.length());
-        
+
         return true;
     }
-    
+
     m_position = posOrig;
     return false;
 }

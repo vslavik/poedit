@@ -76,9 +76,8 @@ class poEditListCtrl : public wxListView
         virtual wxListItemAttr * OnGetItemAttr(long item) const;
         virtual int OnGetItemImage(long item) const;
 
-        /// Overriden GetItemData that returns the catalog index
-        /// for the given item.
-        long GetItemData(long item) const;
+        /// Returns item's index in the catalog
+        long GetIndexInCatalog(long item) const;
 
         /// Returns the list item index for the given catalog index
         int GetItemIndex(int catalogIndex) const;
