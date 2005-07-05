@@ -742,9 +742,9 @@ void poEditFrame::OnCloseWindow(wxCloseEvent&)
         {
             return;
         }
-
-        CancelItemsValidation();
     }
+
+    CancelItemsValidation();
     Destroy();
 }
 
@@ -2299,6 +2299,8 @@ void poEditFrame::BeginItemValidation()
 
 void poEditFrame::EndItemValidation()
 {
+    wxASSERT( m_catalog );
+
     wxRemoveFile(m_validationProcess.tmp1);
     wxRemoveFile(m_validationProcess.tmp2);
 
