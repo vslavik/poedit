@@ -51,8 +51,8 @@ extern bool ExecuteGettext(const wxString& cmdline,
 
 /** Nonblocking version of the above -- upon termination, EVT_END_PROCESS
     event is delivered to \a parent and \a data are filled. */
-extern bool ExecuteGettextNonblocking(const wxString& cmdline,
-                                      GettextProcessData *data,
-                                      wxEvtHandler *parent);
+extern wxProcess *ExecuteGettextNonblocking(const wxString& cmdline,
+                                            GettextProcessData *data,
+                                            wxEvtHandler *parent);
 
 #endif // _GEXECUTE_H_

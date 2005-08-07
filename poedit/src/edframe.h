@@ -222,6 +222,7 @@ class poEditFrame : public wxFrame
             wxString tmp1, tmp2;
         };
 
+        wxProcess *m_gettextProcess;
         int m_itemBeingValidated;
         std::list<int> m_itemsToValidate;
         ValidationProcessData m_validationProcess;

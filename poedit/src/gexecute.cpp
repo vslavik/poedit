@@ -49,7 +49,7 @@ class GettextProcess : public wxProcess
             m_data->Stdout.Empty();
             Redirect();
         }
-        
+
         bool HasInput()
         {
             bool hasInput = false;
@@ -104,7 +104,7 @@ class TempLocaleSwitcher
             wxSetEnv(_T("LANG"), locale);
             wxSetEnv(_T("LANGUAGE"), locale);
         }
-        
+
         ~TempLocaleSwitcher()
         {
             wxSetEnv(_T("LC_ALL"), m_all);
@@ -112,7 +112,7 @@ class TempLocaleSwitcher
             wxSetEnv(_T("LANG"), m_lang);
             wxSetEnv(_T("LANGUAGE"), m_language);
         }
-        
+
     private:
         wxString m_all, m_messages, m_lang, m_language;
 };
@@ -146,7 +146,7 @@ bool ExecuteGettext(const wxString& cmdline, wxString *stderrOutput)
 
     bool isMsgmerge = (cmdline.BeforeFirst(_T(' ')) == _T("msgmerge"));
     wxString dummy;
-    
+
     for (i = 0; i < pdata.Stderr.GetCount(); i++) 
     {
         if (pdata.Stderr[i].empty()) continue;
@@ -162,14 +162,14 @@ bool ExecuteGettext(const wxString& cmdline, wxString *stderrOutput)
         else
             wxLogError(_T("%s"), pdata.Stderr[i].c_str());
     }
-    
+
     return pdata.ExitCode == 0;
 }
 
 
-bool ExecuteGettextNonblocking(const wxString& cmdline,
-                               GettextProcessData *data,
-                               wxEvtHandler *parent)
+wxProcess *ExecuteGettextNonblocking(const wxString& cmdline,
+                                     GettextProcessData *data,
+                                     wxEvtHandler *parent)
 {
     wxLogTrace(_T("poedit.execute"), _T("executing '%s'"), cmdline.c_str());
 
@@ -183,8 +183,8 @@ bool ExecuteGettextNonblocking(const wxString& cmdline,
     if (pid == 0)
     {
         wxLogError(_("Cannot execute program: ") + cmdline.BeforeFirst(_T(' ')));
-        return false;
+        return NULL;
     }
 
-    return true;
+    return process;
 }

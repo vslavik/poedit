@@ -343,7 +343,7 @@ poEditFrame::poEditFrame() :
                                  wxConfig::Get()->Read(_T("frame_w"), 600),
                                  wxConfig::Get()->Read(_T("frame_h"), 400)),
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
-    m_itemBeingValidated(-1),
+    m_itemBeingValidated(-1), m_gettextProcess(NULL),
     m_catalog(NULL),
 #ifdef USE_TRANSMEM
     m_transMem(NULL),
@@ -563,6 +563,9 @@ poEditFrame::poEditFrame() :
 
 poEditFrame::~poEditFrame()
 {
+    if (m_gettextProcess)
+        m_gettextProcess->Detach();
+
     ms_instances.DeleteObject(this);
 
     GetStatusBar()->PopEventHandler(true/*delete*/);
@@ -2244,6 +2247,7 @@ void poEditFrame::OnIdle(wxIdleEvent& event)
 
 void poEditFrame::OnEndProcess(wxProcessEvent& event)
 {
+    m_gettextProcess = NULL;
     event.Skip(); // deletes wxProcess object
     EndItemValidation();
     wxWakeUpIdle();
@@ -2297,8 +2301,11 @@ void poEditFrame::BeginItemValidation()
     m_validationProcess.tmp1 = tmp1;
     m_validationProcess.tmp2 = tmp2;
 
-    if (ExecuteGettextNonblocking(cmdline, &m_validationProcess, this))
+    wxProcess *process =
+        ExecuteGettextNonblocking(cmdline, &m_validationProcess, this);
+    if (process)
     {
+        m_gettextProcess = process;
         m_itemBeingValidated = item;
         m_itemsToValidate.pop_front();
     }
