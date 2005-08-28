@@ -67,7 +67,9 @@ static wxString ReadTextLine(wxTextFile* f, wxMBConv *conv)
     while (s.IsEmpty())
     {
         if (f->Eof()) return wxEmptyString;
-        s = f->GetNextLine();
+
+        // read next line and strip insignificant whitespace from it:
+        s = f->GetNextLine().Strip(wxString::both);
     }
 #if !wxUSE_UNICODE
     if (conv)
