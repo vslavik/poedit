@@ -151,6 +151,8 @@ class poEditFrame : public wxFrame
         void OnQuit(wxCommandEvent& event);
         void OnSave(wxCommandEvent& event);
         void OnSaveAs(wxCommandEvent& event);
+        wxString GetSaveAsFilename(Catalog *cat, const wxString& current);
+        void DoSaveAs(const wxString& filename);
         void OnOpen(wxCommandEvent& event);
         void OnOpenHist(wxCommandEvent& event);
 #ifdef __WXMSW__

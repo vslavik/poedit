@@ -897,27 +897,42 @@ static wxString SuggestFileName(const Catalog *catalog)
         return name;
 }
 
-void poEditFrame::OnSaveAs(wxCommandEvent&)
+wxString poEditFrame::GetSaveAsFilename(Catalog *cat, const wxString& current)
 {
-    UpdateFromTextCtrl();
-
-    wxString name(wxFileNameFromPath(m_fileName));
-    wxString path(wxPathOnly(m_fileName));
+    wxString name(wxFileNameFromPath(current));
+    wxString path(wxPathOnly(current));
 
     if (name.empty())
     {
         path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
-        name = SuggestFileName(m_catalog) + _T(".po");
+        name = SuggestFileName(cat) + _T(".po");
     }
 
     name = wxFileSelector(_("Save as..."), path, name, wxEmptyString,
                           _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"),
                           wxSAVE | wxOVERWRITE_PROMPT, this);
-    if (!name.IsEmpty())
+    if (!name.empty())
     {
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
-        WriteCatalog(name);
     }
+
+    return name;
+}
+
+void poEditFrame::DoSaveAs(const wxString& filename)
+{
+    if (filename.empty())
+        return;
+
+    UpdateFromTextCtrl();
+
+    m_fileName = filename;
+    WriteCatalog(filename);
+}
+
+void poEditFrame::OnSaveAs(wxCommandEvent&)
+{
+    DoSaveAs(GetSaveAsFilename(m_catalog, m_fileName));
 }
 
 
@@ -1005,15 +1020,21 @@ void poEditFrame::OnNew(wxCommandEvent& event)
     dlg.TransferTo(catalog);
     if (dlg.ShowModal() == wxID_OK)
     {
+        wxString file = GetSaveAsFilename(catalog, wxEmptyString);
+        if (file.empty())
+        {
+            delete catalog;
+            return;
+        }
+
         CancelItemsValidation();
 
         dlg.TransferFrom(catalog);
         delete m_catalog;
         m_catalog = catalog;
         m_list->CatalogChanged(m_catalog);
-        m_fileName = wxEmptyString;
         m_modified = true;
-        OnSave(event);
+        DoSaveAs(file);
         if (!isFromPOT)
         {
             OnUpdate(event);
