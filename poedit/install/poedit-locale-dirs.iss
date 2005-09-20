@@ -62,6 +62,8 @@ Name: {app}\share\locale\ka; Components: i18n
 Name: {app}\share\locale\ka\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\ko; Components: i18n
 Name: {app}\share\locale\ko\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\ku; Components: i18n
+Name: {app}\share\locale\ku\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\ky; Components: i18n
 Name: {app}\share\locale\ky\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\lt; Components: i18n
