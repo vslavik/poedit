@@ -137,8 +137,9 @@ wxLanguage ChooseLanguage()
         { _T("Spanish"), wxLANGUAGE_SPANISH },
         { _T("Spanish (Puerto Rico)"), wxLANGUAGE_SPANISH_PUERTO_RICO },
         { _T("Swedish"), wxLANGUAGE_SWEDISH },
-        { _T("Turkish"), wxLANGUAGE_TURKISH },
         { _T("Tamil"), wxLANGUAGE_TAMIL },
+        { _T("Tatarish"), wxLANGUAGE_TATARISH },
+        { _T("Turkish"), wxLANGUAGE_TURKISH },
         { _T("Ukrainian"), wxLANGUAGE_UKRAINIAN },
 
         { NULL, wxLANGUAGE_UNKNOWN }
