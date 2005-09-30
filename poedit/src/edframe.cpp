@@ -467,6 +467,9 @@ poEditFrame::poEditFrame() :
                                 wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE);
 
+    // in case of plurals form, this is the control for n=1:
+    m_textTransSingularForm = NULL;
+
     m_pluralNotebook = new wxNotebook(m_bottomLeftPanel, -1);
 
     SetCustomFonts();
@@ -1349,6 +1352,9 @@ void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
         wxString orig = m_textOrigPlural->GetValue();
         for (size_t i = 0; i < m_textTransPlural.size(); i++)
             m_textTransPlural[i]->SetValue(orig);
+
+        if (m_textTransSingularForm)
+            m_textTransSingularForm->SetValue(m_textOrig->GetValue());
     }
     else
     {
@@ -2432,6 +2438,7 @@ void poEditFrame::RecreatePluralTextCtrls()
         m_textTransPlural[i]->PopEventHandler(true/*delete*/);
     m_textTransPlural.clear();
     m_pluralNotebook->DeleteAllPages();
+    m_textTransSingularForm = NULL;
 
     if (!m_catalog)
         return;
@@ -2473,6 +2480,9 @@ void poEditFrame::RecreatePluralTextCtrls()
         txt->PushEventHandler(new TextctrlHandler(this));
         m_textTransPlural.push_back(txt);
         m_pluralNotebook->AddPage(txt, desc);
+
+        if (example == 1)
+            m_textTransSingularForm = txt;
     }
 
     delete calc;

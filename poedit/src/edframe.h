@@ -252,6 +252,7 @@ class poEditFrame : public wxFrame
         poEditListCtrl *m_list;
         wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textTrans, *m_textComment, *m_textAutoComments;
         std::vector<wxTextCtrl*> m_textTransPlural;
+        wxTextCtrl *m_textTransSingularForm;
         wxNotebook *m_pluralNotebook;
         wxGauge *m_statusGauge;
         wxStaticText *m_labelSingular, *m_labelPlural;
