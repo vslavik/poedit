@@ -1347,8 +1347,9 @@ void poEditFrame::OnShadedListFlag(wxCommandEvent& event)
 
 void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
 {
-    if (!m_textTransPlural.empty())
+    if (!m_textTrans->IsShown())
     {
+        // plural form entry:
         wxString orig = m_textOrigPlural->GetValue();
         for (size_t i = 0; i < m_textTransPlural.size(); i++)
             m_textTransPlural[i]->SetValue(orig);
@@ -1358,6 +1359,7 @@ void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
     }
     else
     {
+        // singular form entry:
         m_textTrans->SetValue(m_textOrig->GetValue());
     }
 }
