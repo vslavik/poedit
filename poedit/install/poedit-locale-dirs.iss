@@ -1,7 +1,7 @@
 Name: {app}\share\locale\af_ZA; Components: i18n
 Name: {app}\share\locale\af_ZA\LC_MESSAGES; Components: i18n
-Name: {app}\share\locale\am_ET; Components: i18n
-Name: {app}\share\locale\am_ET\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\am; Components: i18n
+Name: {app}\share\locale\am\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\ast; Components: i18n
 Name: {app}\share\locale\ast\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\be; Components: i18n
@@ -98,8 +98,8 @@ Name: {app}\share\locale\sq_AL; Components: i18n
 Name: {app}\share\locale\sq_AL\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\sr; Components: i18n
 Name: {app}\share\locale\sr\LC_MESSAGES; Components: i18n
-Name: {app}\share\locale\sv_SE; Components: i18n
-Name: {app}\share\locale\sv_SE\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\sv; Components: i18n
+Name: {app}\share\locale\sv\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\ta; Components: i18n
 Name: {app}\share\locale\ta\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\tr; Components: i18n
@@ -118,5 +118,3 @@ Name: {app}\share\locale\af; Components: i18n
 Name: {app}\share\locale\af\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\nb_NO; Components: i18n
 Name: {app}\share\locale\nb_NO\LC_MESSAGES; Components: i18n
-Name: {app}\share\locale\sv; Components: i18n
-Name: {app}\share\locale\sv\LC_MESSAGES; Components: i18n
