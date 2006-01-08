@@ -358,8 +358,17 @@ void Catalog::HeaderData::ParseDict()
     }
 
     wxString ctype = GetHeader(_T("Content-Type"));
-    if (!ReadParam(ctype, _T("text/plain; charset="), Charset))
+    int charsetPos = ctype.Find(_("; charset="));
+    if (charsetPos != -1)
+    {
+        Charset =
+            ctype.Mid(charsetPos + strlen("; charset=")).Strip(wxString::both);
+    }
+    else
+    {
         Charset = _T("iso-8859-1");
+    }
+    if (!ReadParam(ctype, _T("text/plain; charset="), Charset))
 
 
     // Parse extended information:
