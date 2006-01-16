@@ -6,7 +6,7 @@ dnl
 dnl Finds GNOME (if present) and fills in GNOME_DATA_DIR and USE_GNOME conditional
 dnl ---------------------------------------------------------------------------
 
-AC_DEFUN(FIND_GNOME,
+AC_DEFUN([FIND_GNOME],
 [
   AC_MSG_CHECKING(for GNOME data directory)
   GNOME_DATA_DIR=`gnome-config --datadir 2>/dev/null`
@@ -26,7 +26,7 @@ dnl
 dnl Finds KDE (if present) and fills in KDE_DATA_DIR and USE_KDE conditional
 dnl ---------------------------------------------------------------------------
 
-AC_DEFUN(FIND_KDE,
+AC_DEFUN([FIND_KDE],
 [
   AC_PATH_PROG(KDE_CONFIG, kde-config)
   if test x$KDE_CONFIG = x ; then
