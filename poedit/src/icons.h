@@ -32,10 +32,8 @@
 
 #include <wx/artprov.h>
 
-#ifdef wxCHECK_VERSION_FULL
-    #if defined(__WXGTK20__) && wxCHECK_VERSION_FULL(2,5,2,8)
-        #define HAS_THEMES_SUPPORT
-    #endif
+#if defined(__WXGTK20__)
+    #define HAS_THEMES_SUPPORT
 #endif
 
 class wxPoeditStdArtProvider : public wxArtProvider

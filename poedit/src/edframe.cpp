@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.org)
  *
- *  Copyright (C) 1999-2005 Vaclav Slavik
+ *  Copyright (C) 1999-2006 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -143,11 +143,7 @@ class TextctrlHandler : public wxEvtHandler
     private:
         void OnKeyDown(wxKeyEvent& event)
         {
-#if wxCHECK_VERSION(2,5,1)
             int keyCode = event.GetKeyCode();
-#else
-            int keyCode = event.KeyCode();
-#endif
 
             switch (keyCode)
             {
@@ -2130,8 +2126,7 @@ void poEditFrame::SetCustomFonts()
     }
     else if (prevUseFontList)
     {
-        m_list->SetFont(
-                wxSystemSettings::GetSystemFont(wxSYS_DEFAULT_GUI_FONT));
+        m_list->SetFont(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT));
         prevUseFontList = false;
     }
 
@@ -2156,7 +2151,7 @@ void poEditFrame::SetCustomFonts()
     }
     else if (prevUseFontText)
     {
-        wxFont font(wxSystemSettings::GetSystemFont(wxSYS_DEFAULT_GUI_FONT));
+        wxFont font(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT));
         m_textComment->SetFont(font);
         m_textAutoComments->SetFont(font);
         m_textOrig->SetFont(font);
@@ -2404,27 +2399,9 @@ void poEditFrame::ShowPluralFormUI(bool show)
         show = false;
 
     wxSizer *origSizer = m_textOrig->GetContainingSizer();
-#if wxCHECK_VERSION(2,5,0)
     origSizer->Show(m_labelSingular, show);
     origSizer->Show(m_labelPlural, show);
     origSizer->Show(m_textOrigPlural, show);
-#else
-    // the above code doesn't work well with wx-2.4, so here's a no-so-good
-    // workaround:
-    if (show && m_labelSingular->GetSizer() == NULL)
-    {
-        origSizer->Add(m_labelPlural, 0, wxALIGN_CENTER_VERTICAL | wxALL, 3);
-        origSizer->Add(m_textOrigPlural, 1, wxEXPAND);
-        origSizer->SetItemMinSize(m_textOrigPlural, 1, 1);
-    }
-    else
-    {
-        origSizer->Remove(m_labelPlural);
-        origSizer->Remove(m_textOrigPlural);
-    }
-    m_labelPlural->Show(show);
-    m_textOrigPlural->Show(show);
-#endif
     origSizer->Layout();
 
     wxSizer *textSizer = m_textTrans->GetContainingSizer();

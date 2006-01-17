@@ -4,19 +4,8 @@ SUBDIRS = resources
 RESCOMP = @RESCOMP@
 POEDIT_WX_LIBS = @POEDIT_WX_LIBS@
 
-if BUILD_XRC
-INCLUDES_XRC = -I$(top_srcdir)/extras/wx-contrib/include
-endif
-INCLUDES = $(INCLUDES_XRC)
-
 if USE_WINDOWS
 RESOURCE_FILES = poedit_resource.o
-endif
-
-if BUILD_XRC
-XRC_LDADD = -L../extras/wx-contrib/src/xrc \
-            -L../extras/wx-contrib/src/xrc/expat \
-            -lmy_xrc -lmy_expat
 endif
 
 bin_PROGRAMS = poedit

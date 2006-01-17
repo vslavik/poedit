@@ -140,7 +140,7 @@ bool ExecuteGettext(const wxString& cmdline, wxString *stderrOutput)
     while (pdata.Running)
     {
         process->HasInput();
-        wxUsleep(50);
+        wxMilliSleep(50);
         wxYield();
     }
 

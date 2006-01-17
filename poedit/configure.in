@@ -86,14 +86,16 @@ yes)	DEBUG_FLAGS="-g -Wall -O0"
     ;;    
 esac
 
-AM_PATH_WXCONFIG(2.4.1, WXFOUND=1)
+AM_PATH_WXCONFIG([2.6.0],
+                 [WXFOUND=1], [WXFOUND=0],
+                 [xrc,html,core], [--unicode])
 
 if test "$WXFOUND" != 1; then
     AC_MSG_ERROR([
         Please check that wx-config is in path, the directory
         where wxWindows libraries are installed (returned by
         'wx-config --libs' command) is in LD_LIBRARY_PATH or
-        equivalent variable and wxWindows is version 2.4.1 or above.
+        equivalent variable and wxWindows is version 2.6.0 or above.
     ])
 fi
 
@@ -104,17 +106,17 @@ saved_CXXFLAGS="$CXXFLAGS"
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS"
 AC_TRY_COMPILE([#include <wx/defs.h>],
                [
-                #if !wxCHECK_VERSION(2,5,3)
-                    #error "wxWidgets too old, XRC not included in the core"
-                #endif
-                #if !wxUSE_XRC
+                #if !defined(wxUSE_XRC) || !wxUSE_XRC
                     #error "XRC not compiled in"
                 #endif
                ],
-               [includes_xrc=yes],
-               [includes_xrc=no])
-AC_MSG_RESULT($includes_xrc)
-AM_CONDITIONAL([BUILD_XRC], [test $includes_xrc = no])
+               [
+                AC_MSG_RESULT([yes])
+               ],
+               [
+                AC_MSG_RESULT([no])
+                AC_MSG_ERROR([XRC is required to build poedit!])
+               ])
 CXXFLAGS="$saved_CXXFLAGS"
 
 
@@ -233,11 +235,6 @@ AC_SUBST(CATALOGS_TO_INSTALL)
 
 AC_CONFIG_FILES([
          Makefile
-         extras/Makefile
-         extras/wx-contrib/Makefile
-         extras/wx-contrib/src/Makefile
-         extras/wx-contrib/src/xrc/Makefile
-         extras/wx-contrib/src/xrc/expat/Makefile
          src/Makefile
          src/resources/Makefile
          locales/Makefile

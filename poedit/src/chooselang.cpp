@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.org)
  *
- *  Copyright (C) 2003-2005 Vaclav Slavik
+ *  Copyright (C) 2003-2006 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -47,7 +47,7 @@ static void SaveUILanguage(wxLanguage lang)
 
 wxLanguage GetUILanguage()
 {
-#if defined(__UNIX__) || !wxCHECK_VERSION(2,5,0)
+#if defined(__UNIX__)
     return wxLANGUAGE_DEFAULT;
 #else
     wxLanguage lang(wxLANGUAGE_DEFAULT);
