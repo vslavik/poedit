@@ -69,14 +69,6 @@ AC_PROG_CXXCPP
 AC_LANG_CPLUSPLUS
 
 
-AC_ARG_VAR(ZIP, Path to zip executable)
-AC_PATH_PROG(ZIP, zip, [])
-if test x$ZIP = x ; then
-    AC_MSG_ERROR([ZIP archiver is needed to compile poEdit.])
-fi
-
-
-
 case "$USE_DEBUG" in
 yes)	DEBUG_FLAGS="-g -Wall -O0"
     ;;    
@@ -84,7 +76,7 @@ esac
 
 AM_PATH_WXCONFIG([2.6.0],
                  [WXFOUND=1], [WXFOUND=0],
-                 [xrc,html,core], [--unicode])
+                 [xrc,html,xml,adv,core], [--unicode])
 
 if test "$WXFOUND" != 1; then
     AC_MSG_ERROR([
@@ -115,8 +107,20 @@ AC_TRY_COMPILE([#include <wx/defs.h>],
                ])
 CXXFLAGS="$saved_CXXFLAGS"
 
-
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS"
+
+
+AC_ARG_VAR(WXRC, Path to wxrc resource compiler)
+
+AC_MSG_CHECKING([for wxrc])
+if test "x$WXRC" = x ; then
+    WXRC=`$WX_CONFIG_WITH_ARGS --utility=wxrc`
+    if test "x$WXRC" = x ; then
+        AC_MSG_RESULT([not found])
+        AC_MSG_ERROR([wxrc is needed to compile poEdit.])
+    fi
+fi
+AC_MSG_RESULT([$WXRC])
 
 
 if test "$USE_SPELLCHECKING" != "no" ; then
@@ -215,7 +219,6 @@ AC_SUBST(CATALOGS_TO_INSTALL)
 AC_CONFIG_FILES([
          Makefile
          src/Makefile
-         src/resources/Makefile
          locales/Makefile
          docs/Makefile
          docs/en/Makefile
