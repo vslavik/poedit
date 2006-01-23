@@ -389,7 +389,7 @@ poEditFrame::poEditFrame() :
 #endif
 
 #ifdef CAN_MODIFY_DEFAULT_FONT
-    m_boldGuiFont = wxSystemSettings::GetSystemFont(wxSYS_DEFAULT_GUI_FONT);
+    m_boldGuiFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     m_boldGuiFont.SetWeight(wxFONTWEIGHT_BOLD);
 #endif
 
