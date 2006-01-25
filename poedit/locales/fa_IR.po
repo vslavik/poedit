@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-19 18:27+0200\n"
+"POT-Creation-Date: 2006-01-25 11:31+0100\n"
 "PO-Revision-Date: 2003-09-03 01:18+0100\n"
 "Last-Translator: Abbas Izad <abbasizad@hotmail.com>\n"
 "Language-Team: Persian <abbasizad@hotmail.com>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1760
+#: ../src/edframe.cpp:1799
 msgid " (modified)"
 msgstr " (تغییریافته)"
 
@@ -23,12 +23,12 @@ msgstr " (تغییریافته)"
 msgid " files..."
 msgstr "پرونده‌ها..."
 
-#: ../src/catalog.cpp:130
+#: ../src/catalog.cpp:132
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr ""
 
-#: ../src/edframe.cpp:1728 ../src/export_html.cpp:145
+#: ../src/edframe.cpp:1767 ../src/export_html.cpp:145
 #, fuzzy, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i رشته (%i نامعلوم، %i ترجمه نشده)"
@@ -42,7 +42,7 @@ msgstr "&درباره..."
 msgid "&Automatically translate using TM"
 msgstr "%u رشته‌ها بطور خودکار ترجمه شد"
 
-#: ../src/edframe.cpp:2494
+#: ../src/edframe.cpp:2524
 msgid "&Bookmarks"
 msgstr ""
 
@@ -59,7 +59,7 @@ msgid "&Edit"
 msgstr "&ویرایش"
 
 #: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:398
+#: ../src/edframe.cpp:399
 msgid "&File"
 msgstr "&پرونده"
 
@@ -116,12 +116,12 @@ msgstr "بروز&سازی از منابع"
 msgid "&View"
 msgstr "&نما"
 
-#: ../src/catalog.cpp:1468
+#: ../src/catalog.cpp:1479
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' یک پرونده معتبر POT نمی‌باشد."
 
-#: ../src/edframe.cpp:1650
+#: ../src/edframe.cpp:1689
 msgid "'."
 msgstr "'."
 
@@ -142,7 +142,7 @@ msgstr ")۰ جدید, ۰ کهنه)"
 msgid "(Use default language)"
 msgstr "(استفاده از زبان پیش‌فرض)"
 
-#: ../src/edframe.cpp:688
+#: ../src/edframe.cpp:701
 msgid "(none of these)"
 msgstr "(هیچکدام ار اینها)"
 
@@ -150,7 +150,7 @@ msgstr "(هیچکدام ار اینها)"
 msgid "< Previous"
 msgstr "< قبلی"
 
-#: ../src/manager.cpp:363
+#: ../src/manager.cpp:381
 msgid "<unnamed>"
 msgstr "<بی‌نام>"
 
@@ -196,7 +196,7 @@ msgstr "ترجمه خودکار:"
 msgid "Automatic translation"
 msgstr "ترجمه خودکار:"
 
-#: ../src/edframe.cpp:1993 ../src/edframe.cpp:1997
+#: ../src/edframe.cpp:2032 ../src/edframe.cpp:2036
 msgid "Automatic translations:"
 msgstr "ترجمه خودکار:"
 
@@ -208,16 +208,16 @@ msgstr "تالیف خودکار پرونده .mo هنگام ذخیره"
 msgid "Automatically translate when updating catalog"
 msgstr "ترجمه خودکار هنگام بروزسازی پوشه"
 
-#: ../src/edframe.cpp:1950
+#: ../src/edframe.cpp:1989
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "%u رشته‌ها بطور خودکار ترجمه شد"
 
-#: ../src/edframe.cpp:1935
+#: ../src/edframe.cpp:1974
 msgid "Automatically translating..."
 msgstr "در حال ترجمه کردن خودکار..."
 
-#: ../src/manager.cpp:236
+#: ../src/manager.cpp:254
 msgid "Bad Tokens"
 msgstr ""
 
@@ -229,11 +229,11 @@ msgstr "مسیر پایه:"
 msgid "Behavior"
 msgstr "رفتار"
 
-#: ../src/catalog.cpp:629
+#: ../src/catalog.cpp:640
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:597
+#: ../src/catalog.cpp:608
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -271,38 +271,16 @@ msgstr "نمی‌توان برنامه را اجرا نمود:"
 msgid "Cannot extract catalogs from RPM file."
 msgstr "نمی‌توان پوشه‌ها را از پرونده RPM استخراج نمود."
 
-#: ../src/edapp.cpp:138
-#, c-format
-msgid ""
-"Cannot find resources file '%s'!\n"
-"Please reinstall poEdit."
-msgstr ""
-"نمی‌توان پرونده منابع '%s' را یافت!\n"
-"لطفاً poEdit را دوباره نصب نمایید."
-
-#: ../src/edapp.cpp:132
-#, c-format
-msgid ""
-"Cannot find resources file '%s'!\n"
-"poEdit was configured to be installed in '%s'.\n"
-"You may try to set POEDIT_PREFIX environment variable to point\n"
-"to the location where you installed poEdit."
-msgstr ""
-"نمی‌توان پرونده منابع '%s' را یافت!\n"
-"poEdit برای نصب در '%s' تنظیم شده است.\n"
-"شما می‌توانید متغیر محیط POEDIT_PREFIX را برای اشاره کردن به محلی که\n"
-"شما poEdit را در آن نصب کرده‌اید تنظیم نمایید."
-
 #: ../src/resources/xrc_strings.h:12
 msgid "Case sensitive"
 msgstr "کازه"
 
-#: ../src/manager.cpp:232
+#: ../src/manager.cpp:250
 msgid "Catalog"
 msgstr "پوشه"
 
-#: ../src/edframe.cpp:733 ../src/edframe.cpp:757 ../src/edframe.cpp:794
-#: ../src/edframe.cpp:840 ../src/edframe.cpp:949
+#: ../src/edframe.cpp:746 ../src/edframe.cpp:772 ../src/edframe.cpp:809
+#: ../src/edframe.cpp:855 ../src/edframe.cpp:979
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "پوشه تغییر کرد. آیا می‌خواهید تغییرات را ذخیره نمایید؟"
 
@@ -343,11 +321,11 @@ msgstr "توضیح:"
 msgid "Configuration"
 msgstr "تنظیمات"
 
-#: ../src/manager.cpp:393 ../src/manager.cpp:413
+#: ../src/manager.cpp:411 ../src/manager.cpp:431
 msgid "Confirmation"
 msgstr "تایید"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:1972
+#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2011
 msgid "Copy original to translation field"
 msgstr "کپی اصل به محوطه ترجمه"
 
@@ -380,7 +358,7 @@ msgstr "حذف مورد"
 msgid "Delete the project"
 msgstr "حذف پروژه"
 
-#: ../src/manager.cpp:286
+#: ../src/manager.cpp:304
 msgid "Directories:"
 msgstr "شاخه‌ها:"
 
@@ -396,7 +374,7 @@ msgstr "نمایش &علامت‌های نقل قول"
 msgid "Display quotes around the string?"
 msgstr "نمایش علامت‌های نقل قول در اطراف رشته؟"
 
-#: ../src/manager.cpp:412
+#: ../src/manager.cpp:430
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -404,7 +382,7 @@ msgstr ""
 "آیا واقعاً می‌خواهید همه پوشه‌ها در این\n"
 "پروژه بروزسازی نمایید؟"
 
-#: ../src/edframe.cpp:1894
+#: ../src/edframe.cpp:1933
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -412,7 +390,7 @@ msgid ""
 "are added back in the future."
 msgstr ""
 
-#: ../src/manager.cpp:392
+#: ../src/manager.cpp:410
 msgid "Do you want to delete the project?"
 msgstr "آیا می‌خواهید که این پروژه را حذف کنید؟"
 
@@ -465,16 +443,16 @@ msgstr "اجرا شونده ویرایشگر:"
 msgid "Enables on-the-fly spellchecking"
 msgstr ""
 
-#: ../src/edframe.cpp:1082
+#: ../src/edframe.cpp:1118
 msgid "Entries in the catalog are probably incorrect."
 msgstr "ورودی‌های در پوشه احتمالا درست نیست."
 
-#: ../src/edframe.cpp:639
+#: ../src/edframe.cpp:652
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr ""
 
-#: ../src/edframe.cpp:1650
+#: ../src/edframe.cpp:1689
 msgid "Error loading message catalog file '"
 msgstr "خطا در بارکردن پیغام پرونده پوشه"
 
@@ -483,16 +461,16 @@ msgstr "خطا در بارکردن پیغام پرونده پوشه"
 msgid "Error opening file %s!"
 msgstr "خطا در باز کردن پرونده %s!"
 
-#: ../src/catalog.cpp:1268
+#: ../src/catalog.cpp:1279
 msgid "Error saving catalog"
 msgstr "خطا در ذخیره کردن پوشه"
 
-#: ../src/catalog.cpp:78
+#: ../src/catalog.cpp:80
 #, c-format
 msgid "Error while loading file '%s': line %u is corrupted."
 msgstr ""
 
-#: ../src/edframe.cpp:921
+#: ../src/edframe.cpp:951
 msgid "Export as..."
 msgstr ""
 
@@ -500,17 +478,17 @@ msgstr ""
 msgid "External editor"
 msgstr "ویرایشگر بیرونی"
 
-#: ../src/edframe.cpp:812 ../src/edframe.cpp:856
+#: ../src/edframe.cpp:827 ../src/edframe.cpp:871
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "پرونده '%s' وجود ندارد.."
 
-#: ../src/edframe.cpp:829
+#: ../src/edframe.cpp:844
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "پرونده '%s' پوشه پیغام نمی‌باشد."
 
-#: ../src/catalog.cpp:1232
+#: ../src/catalog.cpp:1243
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -547,12 +525,12 @@ msgstr "یافتن..."
 msgid "Fonts"
 msgstr ""
 
-#: ../src/edframe.cpp:2423
+#: ../src/edframe.cpp:2450
 #, c-format
 msgid "Form %u"
 msgstr ""
 
-#: ../src/edframe.cpp:2425
+#: ../src/edframe.cpp:2452
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr ""
@@ -561,7 +539,7 @@ msgstr ""
 msgid "Fullscreen view"
 msgstr "نمای تمام پرده"
 
-#: ../src/manager.cpp:235
+#: ../src/manager.cpp:253
 msgid "Fuzzy"
 msgstr "نامعلوم"
 
@@ -570,11 +548,11 @@ msgstr "نامعلوم"
 msgid "Fuzzy translation"
 msgstr "ترجمه"
 
-#: ../src/edframe.cpp:777 ../src/edframe.cpp:898
+#: ../src/edframe.cpp:792 ../src/edframe.cpp:911
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "کاتالوگ‌های GNU GetText (*.po)|*.po|همه پرونده‌ها (*.*)|*.*"
 
-#: ../src/edframe.cpp:974 ../src/edframe.cpp:1100
+#: ../src/edframe.cpp:1004 ../src/edframe.cpp:1136
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "الگوهای GNU GetText (*.pot)|*.pot|همه پرونده‌ها (*.*)|*.*"
 
@@ -590,16 +568,16 @@ msgstr "تولید بانک اطلاعات TM"
 msgid "Generate database"
 msgstr "تولید بانک اطلاعات"
 
-#: ../src/edframe.cpp:1164
+#: ../src/edframe.cpp:1198
 msgid "Gettext syntax error"
 msgstr ""
 
-#: ../src/edframe.cpp:2490
+#: ../src/edframe.cpp:2520
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
 msgstr ""
 
-#: ../src/edframe.cpp:923
+#: ../src/edframe.cpp:953
 msgid "HTML file (*.html)|*.html"
 msgstr ""
 
@@ -623,7 +601,7 @@ msgstr "احضاریه:"
 msgid "Keywords"
 msgstr "کلیدواژه‌ها"
 
-#: ../src/chooselang.cpp:152
+#: ../src/chooselang.cpp:154
 msgid "Language selection"
 msgstr "گزینش زبان"
 
@@ -632,7 +610,7 @@ msgstr "گزینش زبان"
 msgid "Language:"
 msgstr "زبان:"
 
-#: ../src/manager.cpp:237
+#: ../src/manager.cpp:255
 msgid "Last modified"
 msgstr "آخرین تغییر"
 
@@ -640,7 +618,7 @@ msgstr "آخرین تغییر"
 msgid "Line"
 msgstr "خط"
 
-#: ../src/catalog.cpp:143
+#: ../src/catalog.cpp:145
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr ""
@@ -657,7 +635,7 @@ msgstr "لیست دنباله‌های جدا شده توسط سمیکلون (e.
 msgid "Macintosh"
 msgstr "مک‌اینتاش"
 
-#: ../src/catalog.cpp:215
+#: ../src/catalog.cpp:217
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr ""
@@ -670,7 +648,7 @@ msgstr "حداکثر # واژه‌هایی که وجود ندارند:"
 msgid "Max. difference in sentence length:"
 msgstr "حداکثر تفاوت در طول جمله:"
 
-#: ../src/catalog.cpp:1440
+#: ../src/catalog.cpp:1451
 msgid "Merging differences..."
 msgstr "پیوست تفاوت‌ها..."
 
@@ -686,7 +664,7 @@ msgstr "حرکت به بالا"
 msgid "My Languages"
 msgstr "زبان‌های من"
 
-#: ../src/manager.cpp:289
+#: ../src/manager.cpp:307
 msgid "My Project"
 msgstr "پروژه من"
 
@@ -730,7 +708,7 @@ msgstr ""
 msgid "No files found in: "
 msgstr "هیچ پرونده‌ای یافت نشد در:"
 
-#: ../src/edframe.cpp:1180
+#: ../src/edframe.cpp:1214
 msgid "No references to this string found."
 msgstr "هیچ مرجعی برای این رشته یافت نشد."
 
@@ -749,11 +727,11 @@ msgstr "تایید"
 msgid "Obsolete strings"
 msgstr "رشته‌های کهنه"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:775
+#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:790
 msgid "Open catalog"
 msgstr "باز کردن پوشه"
 
-#: ../src/edframe.cpp:972 ../src/edframe.cpp:1098
+#: ../src/edframe.cpp:1002 ../src/edframe.cpp:1134
 msgid "Open catalog template"
 msgstr "باز کردن الگوی پوشه"
 
@@ -807,7 +785,7 @@ msgstr ""
 "لطفاً شاخه‌هایی را که پرونده‌های منطقه در آن بر سیستم شما انبار شده‌اند را اضافه "
 "کنید:"
 
-#: ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1222
 msgid "Please choose the reference you want to show:"
 msgstr "لطفاً مرجعی را که می‌خواهید نشان داده شود را انتخاب نمایید:"
 
@@ -815,7 +793,7 @@ msgstr "لطفاً مرجعی را که می‌خواهید نشان داده ش
 msgid "Please select language ISO code:"
 msgstr "لطفاً کد ISO زبان را انتخاب نمایید:"
 
-#: ../src/edframe.cpp:697
+#: ../src/edframe.cpp:710
 msgid "Please select language code:"
 msgstr "لطفاً کد زبان را انتخاب نمایید:"
 
@@ -823,7 +801,7 @@ msgstr "لطفاً کد زبان را انتخاب نمایید:"
 msgid "Plural Forms:"
 msgstr ""
 
-#: ../src/edframe.cpp:450
+#: ../src/edframe.cpp:451
 msgid "Plural:"
 msgstr ""
 
@@ -847,16 +825,16 @@ msgstr "نسخه و نام پروژه:"
 msgid "Project name:"
 msgstr "نام پروژه:"
 
-#: ../src/edframe.cpp:1895
+#: ../src/edframe.cpp:1934
 #, fuzzy
 msgid "Purge delete translations"
 msgstr "ترجمه خودکار:"
 
-#: ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1222
 msgid "References"
 msgstr "مرجع‌ها"
 
-#: ../src/edframe.cpp:1977 ../src/edframe.cpp:1981
+#: ../src/edframe.cpp:2016 ../src/edframe.cpp:2020
 msgid "References:"
 msgstr "مرجع‌ها:"
 
@@ -872,7 +850,7 @@ msgstr "بازنشانی به پیش‌فرض‌ها"
 msgid "Save &as..."
 msgstr "ذخیره با &نام..."
 
-#: ../src/edframe.cpp:897
+#: ../src/edframe.cpp:910
 msgid "Save as..."
 msgstr "ذخیره با نام..."
 
@@ -880,8 +858,8 @@ msgstr "ذخیره با نام..."
 msgid "Save catalog"
 msgstr "ذخیره پوشه"
 
-#: ../src/edframe.cpp:734 ../src/edframe.cpp:758 ../src/edframe.cpp:795
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:950
+#: ../src/edframe.cpp:747 ../src/edframe.cpp:773 ../src/edframe.cpp:810
+#: ../src/edframe.cpp:856 ../src/edframe.cpp:980
 msgid "Save changes"
 msgstr "ذخیره‌ی تغییرات"
 
@@ -897,11 +875,11 @@ msgstr "در حال پویش پرونده‌ها..."
 msgid "Search Paths"
 msgstr "مسیرهای جستجو"
 
-#: ../src/edframe.cpp:696
+#: ../src/edframe.cpp:709
 msgid "Select catalog's language"
 msgstr "انتخاب زبان پوشه"
 
-#: ../src/manager.cpp:266 ../src/prefsdlg.cpp:349
+#: ../src/manager.cpp:284 ../src/prefsdlg.cpp:349
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "انتخاب شاخه"
@@ -910,11 +888,11 @@ msgstr "انتخاب شاخه"
 msgid "Select language"
 msgstr "انتخاب زبان"
 
-#: ../src/chooselang.cpp:151
+#: ../src/chooselang.cpp:153
 msgid "Select your prefered language"
 msgstr "انتخاب زبان ترجیحی خود"
 
-#: ../src/edframe.cpp:2484
+#: ../src/edframe.cpp:2514
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr ""
@@ -923,7 +901,7 @@ msgstr ""
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: ../src/edapp.cpp:159
+#: ../src/edapp.cpp:138
 msgid "Setup"
 msgstr "برپاسازی"
 
@@ -939,7 +917,7 @@ msgstr ""
 msgid "Show summary after catalog update"
 msgstr "نشان دادن خلاصه بعد از بروزسازی پوشه"
 
-#: ../src/edframe.cpp:449
+#: ../src/edframe.cpp:450
 msgid "Singular:"
 msgstr ""
 
@@ -972,7 +950,7 @@ msgstr "نشانی پست الکترونیکی گروه:"
 msgid "Team:"
 msgstr "گروه:"
 
-#: ../src/catalog.cpp:1267
+#: ../src/catalog.cpp:1278
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -983,7 +961,7 @@ msgstr ""
 "پوشه مشخص شده ذخیره شود. آن در UTF-8 بجایش ذخیره شد \n"
 "و تنظیمات بر اساس آن تغییر یافت."
 
-#: ../src/catalog.cpp:956
+#: ../src/catalog.cpp:967
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -1005,7 +983,7 @@ msgstr ""
 "این رشته‌ها در منابع یافت شد ولی در پوشه وجود نداشتند.\n"
 "poEdit آنها را به پوشه اکنون اضافه می‌کند."
 
-#: ../src/edapp.cpp:159
+#: ../src/edapp.cpp:138
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1057,7 +1035,7 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "تعویض اگر رشته انتخاب شده ترجمه نامعلوم دارد"
 
-#: ../src/manager.cpp:233
+#: ../src/manager.cpp:251
 msgid "Total"
 msgstr "جمع کل"
 
@@ -1102,7 +1080,7 @@ msgstr "بازگرد"
 msgid "Unix"
 msgstr "یونیکس"
 
-#: ../src/manager.cpp:234
+#: ../src/manager.cpp:252
 msgid "Untrans"
 msgstr "ترجمه نشده"
 
@@ -1126,11 +1104,11 @@ msgstr "خلاصه بروزسازی"
 msgid "Update translation memory"
 msgstr "بروزسازی حافظه ترجمه"
 
-#: ../src/catalog.cpp:1400
+#: ../src/catalog.cpp:1411
 msgid "Updating catalog..."
 msgstr "در حال بروزسازی پوشه..."
 
-#: ../src/edframe.cpp:1084
+#: ../src/edframe.cpp:1120
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "بروزسازی پوشه شکست خورد. برای جزئیات بر 'بیشتر>>' کلیک کنید."
 
@@ -1159,11 +1137,11 @@ msgstr ""
 msgid "Windows"
 msgstr "پنجره‌ها"
 
-#: ../src/edframe.cpp:822
+#: ../src/edframe.cpp:837
 msgid "You can't drop more than one file on poEdit window."
 msgstr "شما می‌توانید بیش از یک پرونده را در پنجره poEdit بیاندازید."
 
-#: ../src/chooselang.cpp:166
+#: ../src/chooselang.cpp:168
 msgid "You must restart poEdit for this change to take effect."
 msgstr ""
 "شما باید poEdit را برای تأثیر کردن این تغییرات دوباره راه‌اندازی نمایید."
@@ -1176,7 +1154,7 @@ msgstr "نشانی پست الکترونیکی شما:"
 msgid "Your name:"
 msgstr "نام شما:"
 
-#: ../src/edframe.cpp:1734
+#: ../src/edframe.cpp:1773
 #, fuzzy, c-format
 msgid "[checking translations: %i left]"
 msgstr "لیست ترجمه‌های &سایه شده"
@@ -1185,21 +1163,17 @@ msgstr "لیست ترجمه‌های &سایه شده"
 msgid "current platform's default"
 msgstr "پیش‌فرض پایگاه کنونی"
 
-#: ../src/edframe.cpp:2017
+#: ../src/edframe.cpp:2056
 msgid "none"
 msgstr "هیچکدام"
 
-#: ../src/edframe.cpp:341
+#: ../src/edframe.cpp:337
 msgid "poEdit"
 msgstr "poEdit"
 
 #: ../src/manager.cpp:69
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - مدیر پوشه"
-
-#: ../src/edapp.cpp:141
-msgid "poEdit Error"
-msgstr "خطای poEdit"
 
 #: ../src/digger.cpp:139
 msgid "poEdit did not find any files in scanned directories."
@@ -1210,9 +1184,34 @@ msgid ""
 "poEdit installation is broken, cannot find application's home directory."
 msgstr "نصب poEdit شکسته است، نمی‌توان شاخه خانه‌ی برنامه را یافت."
 
-#: ../src/edframe.cpp:2032
+#: ../src/edframe.cpp:2071
 msgid "version"
 msgstr "نسخه"
+
+#, fuzzy
+#~ msgid "; charset="
+#~ msgstr "مجموعه‌نویسه:"
+
+#~ msgid ""
+#~ "Cannot find resources file '%s'!\n"
+#~ "Please reinstall poEdit."
+#~ msgstr ""
+#~ "نمی‌توان پرونده منابع '%s' را یافت!\n"
+#~ "لطفاً poEdit را دوباره نصب نمایید."
+
+#~ msgid ""
+#~ "Cannot find resources file '%s'!\n"
+#~ "poEdit was configured to be installed in '%s'.\n"
+#~ "You may try to set POEDIT_PREFIX environment variable to point\n"
+#~ "to the location where you installed poEdit."
+#~ msgstr ""
+#~ "نمی‌توان پرونده منابع '%s' را یافت!\n"
+#~ "poEdit برای نصب در '%s' تنظیم شده است.\n"
+#~ "شما می‌توانید متغیر محیط POEDIT_PREFIX را برای اشاره کردن به محلی که\n"
+#~ "شما poEdit را در آن نصب کرده‌اید تنظیم نمایید."
+
+#~ msgid "poEdit Error"
+#~ msgstr "خطای poEdit"
 
 #, fuzzy
 #~ msgid "X-Poedit-Keywords"

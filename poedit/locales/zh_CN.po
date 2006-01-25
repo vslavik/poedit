@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit zh-CN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-19 18:27+0200\n"
+"POT-Creation-Date: 2006-01-25 11:31+0100\n"
 "PO-Revision-Date: 2005-02-26 20:53+0800\n"
 "Last-Translator: hutuworm <hutuworm@gmail.com>\n"
 "Language-Team: Leo at mis.ccu.edu.tw <leo@mis.ccu.edu.tw>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1760
+#: ../src/edframe.cpp:1799
 msgid " (modified)"
 msgstr " (已修改)"
 
@@ -23,12 +23,12 @@ msgstr " (已修改)"
 msgid " files..."
 msgstr " 文件..."
 
-#: ../src/catalog.cpp:130
+#: ../src/catalog.cpp:132
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i 行在文件 '%s' 中无法正确导入。"
 
-#: ../src/edframe.cpp:1728 ../src/export_html.cpp:145
+#: ../src/edframe.cpp:1767 ../src/export_html.cpp:145
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i 项字符串 ( %i 项是模糊翻译, %i 项是错误标记, %i 项尚未翻译)"
@@ -41,7 +41,7 @@ msgstr "关于(&A)..."
 msgid "&Automatically translate using TM"
 msgstr "使用 TM 自动翻译 (&A)"
 
-#: ../src/edframe.cpp:2494
+#: ../src/edframe.cpp:2524
 msgid "&Bookmarks"
 msgstr ""
 
@@ -58,7 +58,7 @@ msgid "&Edit"
 msgstr "编辑(&E)"
 
 #: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:398
+#: ../src/edframe.cpp:399
 msgid "&File"
 msgstr "文件(&F)"
 
@@ -114,12 +114,12 @@ msgstr "自源更新(&U)"
 msgid "&View"
 msgstr "查看(&V)"
 
-#: ../src/catalog.cpp:1468
+#: ../src/catalog.cpp:1479
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' 不是一个有效的 POT 文件。"
 
-#: ../src/edframe.cpp:1650
+#: ../src/edframe.cpp:1689
 msgid "'."
 msgstr "'."
 
@@ -140,7 +140,7 @@ msgstr "(0 新建, 0 过时)"
 msgid "(Use default language)"
 msgstr "(使用默认语言)"
 
-#: ../src/edframe.cpp:688
+#: ../src/edframe.cpp:701
 msgid "(none of these)"
 msgstr "(这些均不是)"
 
@@ -148,7 +148,7 @@ msgstr "(这些均不是)"
 msgid "< Previous"
 msgstr "< 上一个"
 
-#: ../src/manager.cpp:363
+#: ../src/manager.cpp:381
 msgid "<unnamed>"
 msgstr "<未命名>"
 
@@ -192,7 +192,7 @@ msgstr "自动拼写检查"
 msgid "Automatic translation"
 msgstr "自动翻译"
 
-#: ../src/edframe.cpp:1993 ../src/edframe.cpp:1997
+#: ../src/edframe.cpp:2032 ../src/edframe.cpp:2036
 msgid "Automatic translations:"
 msgstr "自动翻译:"
 
@@ -204,16 +204,16 @@ msgstr "保存时自动编译 .mo 文件"
 msgid "Automatically translate when updating catalog"
 msgstr "更新消息目录文档时自动翻译"
 
-#: ../src/edframe.cpp:1950
+#: ../src/edframe.cpp:1989
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "已经自动翻译 %u 项字符串"
 
-#: ../src/edframe.cpp:1935
+#: ../src/edframe.cpp:1974
 msgid "Automatically translating..."
 msgstr "正在自动翻译..."
 
-#: ../src/manager.cpp:236
+#: ../src/manager.cpp:254
 msgid "Bad Tokens"
 msgstr "错误标记"
 
@@ -225,11 +225,11 @@ msgstr "基本路径:"
 msgid "Behavior"
 msgstr "行为"
 
-#: ../src/catalog.cpp:629
+#: ../src/catalog.cpp:640
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "类目文件损坏: 使用复数形式的 msgstr 而没有 msgid_plural"
 
-#: ../src/catalog.cpp:597
+#: ../src/catalog.cpp:608
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr "类目文件损坏: 单数形式 msgstr 与 msgid_plural 并用"
@@ -266,38 +266,16 @@ msgstr "无法运行程序:"
 msgid "Cannot extract catalogs from RPM file."
 msgstr "无法从 RPM 文件中取出消息目录文档。"
 
-#: ../src/edapp.cpp:138
-#, c-format
-msgid ""
-"Cannot find resources file '%s'!\n"
-"Please reinstall poEdit."
-msgstr ""
-"无法找到资源文件 '%s'!\n"
-"请重新安装 poEdit。"
-
-#: ../src/edapp.cpp:132
-#, c-format
-msgid ""
-"Cannot find resources file '%s'!\n"
-"poEdit was configured to be installed in '%s'.\n"
-"You may try to set POEDIT_PREFIX environment variable to point\n"
-"to the location where you installed poEdit."
-msgstr ""
-"无法找到资源文件 '%s'!\n"
-"poEdit 配置安装于 '%s'。\n"
-"您可以尝试设置 POEDIT_PREFIX 环境变量\n"
-"指向到您真正安装 poEdit 的位置。"
-
 #: ../src/resources/xrc_strings.h:12
 msgid "Case sensitive"
 msgstr "区分大小写"
 
-#: ../src/manager.cpp:232
+#: ../src/manager.cpp:250
 msgid "Catalog"
 msgstr "消息目录文档"
 
-#: ../src/edframe.cpp:733 ../src/edframe.cpp:757 ../src/edframe.cpp:794
-#: ../src/edframe.cpp:840 ../src/edframe.cpp:949
+#: ../src/edframe.cpp:746 ../src/edframe.cpp:772 ../src/edframe.cpp:809
+#: ../src/edframe.cpp:855 ../src/edframe.cpp:979
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "消息目录文档已经修改。是否要保存更改?"
 
@@ -337,11 +315,11 @@ msgstr "注释:"
 msgid "Configuration"
 msgstr "配置"
 
-#: ../src/manager.cpp:393 ../src/manager.cpp:413
+#: ../src/manager.cpp:411 ../src/manager.cpp:431
 msgid "Confirmation"
 msgstr "确认"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:1972
+#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2011
 msgid "Copy original to translation field"
 msgstr "复制原文到中文字段"
 
@@ -374,7 +352,7 @@ msgstr "删除项目"
 msgid "Delete the project"
 msgstr "删除项目"
 
-#: ../src/manager.cpp:286
+#: ../src/manager.cpp:304
 msgid "Directories:"
 msgstr "目录:"
 
@@ -390,7 +368,7 @@ msgstr "显示引号 (&Q)"
 msgid "Display quotes around the string?"
 msgstr "要显示围住字符串的引号?"
 
-#: ../src/manager.cpp:412
+#: ../src/manager.cpp:430
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -398,7 +376,7 @@ msgstr ""
 "您确实要集体更新在这个\n"
 "项目中的所有消息目录文档?"
 
-#: ../src/edframe.cpp:1894
+#: ../src/edframe.cpp:1933
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -408,7 +386,7 @@ msgstr ""
 "您是否真想从该类目中删除所有不再有用的翻译？\n"
 "如果您继续销毁动作，一旦今后它们再次加入，您将被迫重新翻译。"
 
-#: ../src/manager.cpp:392
+#: ../src/manager.cpp:410
 msgid "Do you want to delete the project?"
 msgstr "是否要删除项目?"
 
@@ -460,16 +438,16 @@ msgstr "编辑器运行文件:"
 msgid "Enables on-the-fly spellchecking"
 msgstr "启用快速拼写检查"
 
-#: ../src/edframe.cpp:1082
+#: ../src/edframe.cpp:1118
 msgid "Entries in the catalog are probably incorrect."
 msgstr "在消息目录文档中的项目可能是错误的。"
 
-#: ../src/edframe.cpp:639
+#: ../src/edframe.cpp:652
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "错误初始化拼写检查: %s"
 
-#: ../src/edframe.cpp:1650
+#: ../src/edframe.cpp:1689
 msgid "Error loading message catalog file '"
 msgstr "加载信息类目文件错误 "
 
@@ -478,16 +456,16 @@ msgstr "加载信息类目文件错误 "
 msgid "Error opening file %s!"
 msgstr "打开文件 '%s' 错误!"
 
-#: ../src/catalog.cpp:1268
+#: ../src/catalog.cpp:1279
 msgid "Error saving catalog"
 msgstr "保存消息目录文件错误"
 
-#: ../src/catalog.cpp:78
+#: ../src/catalog.cpp:80
 #, c-format
 msgid "Error while loading file '%s': line %u is corrupted."
 msgstr "当导入文件 '%s'时发生错误： 第 %u 行损坏。"
 
-#: ../src/edframe.cpp:921
+#: ../src/edframe.cpp:951
 msgid "Export as..."
 msgstr "导出为..."
 
@@ -495,17 +473,17 @@ msgstr "导出为..."
 msgid "External editor"
 msgstr "外部编辑器"
 
-#: ../src/edframe.cpp:812 ../src/edframe.cpp:856
+#: ../src/edframe.cpp:827 ../src/edframe.cpp:871
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "文件 '%s' 不存在。"
 
-#: ../src/edframe.cpp:829
+#: ../src/edframe.cpp:844
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "文件 '%s' 不是信息目录文件。"
 
-#: ../src/catalog.cpp:1232
+#: ../src/catalog.cpp:1243
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -540,12 +518,12 @@ msgstr "查找..."
 msgid "Fonts"
 msgstr "字体"
 
-#: ../src/edframe.cpp:2423
+#: ../src/edframe.cpp:2450
 #, c-format
 msgid "Form %u"
 msgstr "形式 %u"
 
-#: ../src/edframe.cpp:2425
+#: ../src/edframe.cpp:2452
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr "形式 %u (e.g. \"%u\")"
@@ -554,7 +532,7 @@ msgstr "形式 %u (e.g. \"%u\")"
 msgid "Fullscreen view"
 msgstr "全屏查看"
 
-#: ../src/manager.cpp:235
+#: ../src/manager.cpp:253
 msgid "Fuzzy"
 msgstr "模糊翻译"
 
@@ -562,11 +540,11 @@ msgstr "模糊翻译"
 msgid "Fuzzy translation"
 msgstr "模糊翻译"
 
-#: ../src/edframe.cpp:777 ../src/edframe.cpp:898
+#: ../src/edframe.cpp:792 ../src/edframe.cpp:911
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText 目录文件 (*.po)|*.po|全部文件 (*.*)|*.*"
 
-#: ../src/edframe.cpp:974 ../src/edframe.cpp:1100
+#: ../src/edframe.cpp:1004 ../src/edframe.cpp:1136
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU GetText 模板文件 (*.pot)|*.pot|全部文件 (*.*)|*.*"
 
@@ -582,16 +560,16 @@ msgstr "产生 TM 数据库"
 msgid "Generate database"
 msgstr "产生数据库"
 
-#: ../src/edframe.cpp:1164
+#: ../src/edframe.cpp:1198
 msgid "Gettext syntax error"
 msgstr "Gettext 语法错误"
 
-#: ../src/edframe.cpp:2490
+#: ../src/edframe.cpp:2520
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
 msgstr ""
 
-#: ../src/edframe.cpp:923
+#: ../src/edframe.cpp:953
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML 文件 (*.html)|*.html"
 
@@ -615,7 +593,7 @@ msgstr "调用过程:"
 msgid "Keywords"
 msgstr "关键字"
 
-#: ../src/chooselang.cpp:152
+#: ../src/chooselang.cpp:154
 msgid "Language selection"
 msgstr "语言选择"
 
@@ -624,7 +602,7 @@ msgstr "语言选择"
 msgid "Language:"
 msgstr "语言:"
 
-#: ../src/manager.cpp:237
+#: ../src/manager.cpp:255
 msgid "Last modified"
 msgstr "最后修改"
 
@@ -632,7 +610,7 @@ msgstr "最后修改"
 msgid "Line"
 msgstr "行"
 
-#: ../src/catalog.cpp:143
+#: ../src/catalog.cpp:145
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "第 %u 行在文件 '%s' 中已损坏 (不可用的 %s 数据)。"
@@ -649,7 +627,7 @@ msgstr "列示扩展名并以逗号分隔 (例如: *.cpp, *.h):"
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:215
+#: ../src/catalog.cpp:217
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "畸形标头: '%s'"
@@ -662,7 +640,7 @@ msgstr "最多允许遗缺单词个数:"
 msgid "Max. difference in sentence length:"
 msgstr "最长允许单句长度差异:"
 
-#: ../src/catalog.cpp:1440
+#: ../src/catalog.cpp:1451
 msgid "Merging differences..."
 msgstr "合并差异..."
 
@@ -678,7 +656,7 @@ msgstr "上移"
 msgid "My Languages"
 msgstr "我的语言"
 
-#: ../src/manager.cpp:289
+#: ../src/manager.cpp:307
 msgid "My Project"
 msgstr "我的项目"
 
@@ -719,7 +697,7 @@ msgstr "尚未指定编辑器。请在“首选”对话框中设置。"
 msgid "No files found in: "
 msgstr "在下列位置没有找到文件:"
 
-#: ../src/edframe.cpp:1180
+#: ../src/edframe.cpp:1214
 msgid "No references to this string found."
 msgstr "没有找到这个字符串的参考。"
 
@@ -738,11 +716,11 @@ msgstr "确定"
 msgid "Obsolete strings"
 msgstr "过时字符串"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:775
+#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:790
 msgid "Open catalog"
 msgstr "打开消息目录文档"
 
-#: ../src/edframe.cpp:972 ../src/edframe.cpp:1098
+#: ../src/edframe.cpp:1002 ../src/edframe.cpp:1134
 msgid "Open catalog template"
 msgstr "打开目录档模板"
 
@@ -794,7 +772,7 @@ msgstr "从已知语言列表中选择一个语言"
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "请添加语言文件在您的系统中所在的目录:"
 
-#: ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1222
 msgid "Please choose the reference you want to show:"
 msgstr "请选择您要显示的参考:"
 
@@ -802,7 +780,7 @@ msgstr "请选择您要显示的参考:"
 msgid "Please select language ISO code:"
 msgstr "请选择语言 ISO 码:"
 
-#: ../src/edframe.cpp:697
+#: ../src/edframe.cpp:710
 msgid "Please select language code:"
 msgstr "请选择语言代码:"
 
@@ -810,7 +788,7 @@ msgstr "请选择语言代码:"
 msgid "Plural Forms:"
 msgstr "复数形式:"
 
-#: ../src/edframe.cpp:450
+#: ../src/edframe.cpp:451
 msgid "Plural:"
 msgstr "复数:"
 
@@ -834,15 +812,15 @@ msgstr "项目名称以及版本:"
 msgid "Project name:"
 msgstr "项目名称:"
 
-#: ../src/edframe.cpp:1895
+#: ../src/edframe.cpp:1934
 msgid "Purge delete translations"
 msgstr "完全删除翻译"
 
-#: ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1222
 msgid "References"
 msgstr "参考"
 
-#: ../src/edframe.cpp:1977 ../src/edframe.cpp:1981
+#: ../src/edframe.cpp:2016 ../src/edframe.cpp:2020
 msgid "References:"
 msgstr "参考:"
 
@@ -858,7 +836,7 @@ msgstr "重置到默认"
 msgid "Save &as..."
 msgstr "另存为 (&A)..."
 
-#: ../src/edframe.cpp:897
+#: ../src/edframe.cpp:910
 msgid "Save as..."
 msgstr "另存为..."
 
@@ -866,8 +844,8 @@ msgstr "另存为..."
 msgid "Save catalog"
 msgstr "保存消息目录文档"
 
-#: ../src/edframe.cpp:734 ../src/edframe.cpp:758 ../src/edframe.cpp:795
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:950
+#: ../src/edframe.cpp:747 ../src/edframe.cpp:773 ../src/edframe.cpp:810
+#: ../src/edframe.cpp:856 ../src/edframe.cpp:980
 msgid "Save changes"
 msgstr "保存更改"
 
@@ -883,11 +861,11 @@ msgstr "正在扫描文件..."
 msgid "Search Paths"
 msgstr "查找路径"
 
-#: ../src/edframe.cpp:696
+#: ../src/edframe.cpp:709
 msgid "Select catalog's language"
 msgstr "选择消息目录文档语言"
 
-#: ../src/manager.cpp:266 ../src/prefsdlg.cpp:349
+#: ../src/manager.cpp:284 ../src/prefsdlg.cpp:349
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "选择目录"
@@ -896,11 +874,11 @@ msgstr "选择目录"
 msgid "Select language"
 msgstr "选择语言"
 
-#: ../src/chooselang.cpp:151
+#: ../src/chooselang.cpp:153
 msgid "Select your prefered language"
 msgstr "选择您喜好的语言"
 
-#: ../src/edframe.cpp:2484
+#: ../src/edframe.cpp:2514
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr ""
@@ -909,7 +887,7 @@ msgstr ""
 msgid "Settings"
 msgstr "设置"
 
-#: ../src/edapp.cpp:159
+#: ../src/edapp.cpp:138
 msgid "Setup"
 msgstr "创建"
 
@@ -925,7 +903,7 @@ msgstr "显示自动注释窗口 (&o)"
 msgid "Show summary after catalog update"
 msgstr "消息目录文档更新后显示摘要"
 
-#: ../src/edframe.cpp:449
+#: ../src/edframe.cpp:450
 msgid "Singular:"
 msgstr "单数:"
 
@@ -957,7 +935,7 @@ msgstr "团队专用电子邮件:"
 msgid "Team:"
 msgstr "团队:"
 
-#: ../src/catalog.cpp:1267
+#: ../src/catalog.cpp:1278
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -968,7 +946,7 @@ msgstr ""
 " '%s' 字符集保存。文件将会以 UTF-8 \n"
 "格式替换，而且设置将会随着更改。"
 
-#: ../src/catalog.cpp:956
+#: ../src/catalog.cpp:967
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -990,7 +968,7 @@ msgstr ""
 "这些字符串发现在源文件中，但是不在消息目录文档中。\n"
 "poEdit 会将它们添加到消息目录文档中。"
 
-#: ../src/edapp.cpp:159
+#: ../src/edapp.cpp:138
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1042,7 +1020,7 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "切换选定的字符串是否包含模糊翻译"
 
-#: ../src/manager.cpp:233
+#: ../src/manager.cpp:251
 msgid "Total"
 msgstr "全部"
 
@@ -1087,7 +1065,7 @@ msgstr "回复"
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:234
+#: ../src/manager.cpp:252
 msgid "Untrans"
 msgstr "未翻"
 
@@ -1111,11 +1089,11 @@ msgstr "更新摘要"
 msgid "Update translation memory"
 msgstr "更新翻译词库"
 
-#: ../src/catalog.cpp:1400
+#: ../src/catalog.cpp:1411
 msgid "Updating catalog..."
 msgstr "更新消息目录文档..."
 
-#: ../src/edframe.cpp:1084
+#: ../src/edframe.cpp:1120
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "更新消息目录文档失败。单击“更多 >>”取得详细信息。"
 
@@ -1143,11 +1121,11 @@ msgstr "仅全部单词"
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:822
+#: ../src/edframe.cpp:837
 msgid "You can't drop more than one file on poEdit window."
 msgstr "您不可以在 poEdit 窗口中放置一个以上文件。"
 
-#: ../src/chooselang.cpp:166
+#: ../src/chooselang.cpp:168
 msgid "You must restart poEdit for this change to take effect."
 msgstr "您必须重新启动 poEdit 更改才会生效。"
 
@@ -1159,7 +1137,7 @@ msgstr "您的电子邮件地址:"
 msgid "Your name:"
 msgstr "您的姓名:"
 
-#: ../src/edframe.cpp:1734
+#: ../src/edframe.cpp:1773
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[检查翻译: %i 剩余]"
@@ -1168,21 +1146,17 @@ msgstr "[检查翻译: %i 剩余]"
 msgid "current platform's default"
 msgstr "当前现有平台默认"
 
-#: ../src/edframe.cpp:2017
+#: ../src/edframe.cpp:2056
 msgid "none"
 msgstr "无"
 
-#: ../src/edframe.cpp:341
+#: ../src/edframe.cpp:337
 msgid "poEdit"
 msgstr "poEdit"
 
 #: ../src/manager.cpp:69
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - 消息目录文档管理员"
-
-#: ../src/edapp.cpp:141
-msgid "poEdit Error"
-msgstr "poEdit 错误"
 
 #: ../src/digger.cpp:139
 msgid "poEdit did not find any files in scanned directories."
@@ -1193,9 +1167,34 @@ msgid ""
 "poEdit installation is broken, cannot find application's home directory."
 msgstr "poEdit 安装过程断开，无法找到应用程序的安装目录。"
 
-#: ../src/edframe.cpp:2032
+#: ../src/edframe.cpp:2071
 msgid "version"
 msgstr "版本"
+
+#, fuzzy
+#~ msgid "; charset="
+#~ msgstr "字符集:"
+
+#~ msgid ""
+#~ "Cannot find resources file '%s'!\n"
+#~ "Please reinstall poEdit."
+#~ msgstr ""
+#~ "无法找到资源文件 '%s'!\n"
+#~ "请重新安装 poEdit。"
+
+#~ msgid ""
+#~ "Cannot find resources file '%s'!\n"
+#~ "poEdit was configured to be installed in '%s'.\n"
+#~ "You may try to set POEDIT_PREFIX environment variable to point\n"
+#~ "to the location where you installed poEdit."
+#~ msgstr ""
+#~ "无法找到资源文件 '%s'!\n"
+#~ "poEdit 配置安装于 '%s'。\n"
+#~ "您可以尝试设置 POEDIT_PREFIX 环境变量\n"
+#~ "指向到您真正安装 poEdit 的位置。"
+
+#~ msgid "poEdit Error"
+#~ msgstr "poEdit 错误"
 
 #, fuzzy
 #~ msgid "X-Poedit-Keywords"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ky\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-19 18:27+0200\n"
+"POT-Creation-Date: 2006-01-25 11:31+0100\n"
 "PO-Revision-Date: 2005-10-05 17:34+0500\n"
 "Last-Translator: Ilyas Bakirov <just_ilyas@yahoo.com>\n"
 "Language-Team: kyrgyz\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3\n"
 
-#: ../src/edframe.cpp:1760
+#: ../src/edframe.cpp:1799
 msgid " (modified)"
 msgstr " (өзгөрдүү)"
 
@@ -24,13 +24,12 @@ msgstr " (өзгөрдүү)"
 msgid " files..."
 msgstr " файлдар..."
 
-#: ../src/catalog.cpp:130
+#: ../src/catalog.cpp:132
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i саптар берилген файлдан '%s' туура эмес жүктөлдүү."
 
-#: ../src/edframe.cpp:1728
-#: ../src/export_html.cpp:145
+#: ../src/edframe.cpp:1767 ../src/export_html.cpp:145
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i сап (%i так эмес, %i туура эмес симводор, %i которулган жок)"
@@ -43,12 +42,11 @@ msgstr "&Программа жөнүндө..."
 msgid "&Automatically translate using TM"
 msgstr "TM'ди колдонуп &автоматтык түрдө которуу"
 
-#: ../src/edframe.cpp:2494
+#: ../src/edframe.cpp:2524
 msgid "&Bookmarks"
 msgstr "&Эсбелгилер"
 
-#: ../src/resources/xrc_strings.h:34
-#: ../src/resources/xrc_strings.h:44
+#: ../src/resources/xrc_strings.h:34 ../src/resources/xrc_strings.h:44
 msgid "&Close"
 msgstr "Ж&абуу"
 
@@ -60,9 +58,8 @@ msgstr "&Мазмууну..."
 msgid "&Edit"
 msgstr "&Ондоо"
 
-#: ../src/resources/xrc_strings.h:32
-#: ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:398
+#: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
+#: ../src/edframe.cpp:399
 msgid "&File"
 msgstr "&Файл"
 
@@ -86,8 +83,7 @@ msgstr "&Жаңы каталог..."
 msgid "&Open"
 msgstr "&Ачуу"
 
-#: ../src/resources/xrc_strings.h:33
-#: ../src/resources/xrc_strings.h:43
+#: ../src/resources/xrc_strings.h:33 ../src/resources/xrc_strings.h:43
 msgid "&Preferences..."
 msgstr "&Параметрлер..."
 
@@ -119,12 +115,12 @@ msgstr "&Башаттардан жаңылоо"
 msgid "&View"
 msgstr "&Көрүнүш"
 
-#: ../src/catalog.cpp:1468
+#: ../src/catalog.cpp:1479
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' жараксыз POT файл."
 
-#: ../src/edframe.cpp:1650
+#: ../src/edframe.cpp:1689
 msgid "'."
 msgstr "'."
 
@@ -145,7 +141,7 @@ msgstr "(0 жаңы, 0 баары)"
 msgid "(Use default language)"
 msgstr "(Алдынала тилди колдонуу)"
 
-#: ../src/edframe.cpp:688
+#: ../src/edframe.cpp:701
 msgid "(none of these)"
 msgstr "(булардан эч бириси)"
 
@@ -153,7 +149,7 @@ msgstr "(булардан эч бириси)"
 msgid "< Previous"
 msgstr "< Артка"
 
-#: ../src/manager.cpp:363
+#: ../src/manager.cpp:381
 msgid "<unnamed>"
 msgstr "<атсыз>"
 
@@ -169,8 +165,7 @@ msgstr "Кошуу"
 msgid "Add directory to the list"
 msgstr "Тизмеге каталог кошуу"
 
-#: ../src/resources/xrc_strings.h:170
-#: ../src/transmemupd_wizard.cpp:138
+#: ../src/resources/xrc_strings.h:170 ../src/transmemupd_wizard.cpp:138
 msgid "Add files"
 msgstr "Файлдарды кошуу"
 
@@ -198,8 +193,7 @@ msgstr "Автоматтык орфографикалык текшерүү"
 msgid "Automatic translation"
 msgstr "Автоматтык которуу"
 
-#: ../src/edframe.cpp:1993
-#: ../src/edframe.cpp:1997
+#: ../src/edframe.cpp:2032 ../src/edframe.cpp:2036
 msgid "Automatic translations:"
 msgstr "Автоматтык которуулар:"
 
@@ -211,16 +205,16 @@ msgstr "Сактоодо автоматтык түрдө .mo файлга кот
 msgid "Automatically translate when updating catalog"
 msgstr "Каталогдун жаңыртылышында автоматтык түрдө которуу"
 
-#: ../src/edframe.cpp:1950
+#: ../src/edframe.cpp:1989
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Автоматтык түрдө %u сап которулду"
 
-#: ../src/edframe.cpp:1935
+#: ../src/edframe.cpp:1974
 msgid "Automatically translating..."
 msgstr "Автоматтык которуу..."
 
-#: ../src/manager.cpp:236
+#: ../src/manager.cpp:254
 msgid "Bad Tokens"
 msgstr "Туура эмес символдор"
 
@@ -232,18 +226,20 @@ msgstr "Базага жол:"
 msgid "Behavior"
 msgstr "Аракет"
 
-#: ../src/catalog.cpp:629
+#: ../src/catalog.cpp:640
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "Каталогдун сынык файлы: көптүк msgstr формалар msgid_plural'сыз колдонулган"
+msgstr ""
+"Каталогдун сынык файлы: көптүк msgstr формалар msgid_plural'сыз колдонулган"
 
-#: ../src/catalog.cpp:597
-msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr "Каталогдун сынык файлы: бирдиктүү msgstr форма msgid_plural менен бирге колдонулган"
+#: ../src/catalog.cpp:608
+msgid ""
+"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr ""
+"Каталогдун сынык файлы: бирдиктүү msgstr форма msgid_plural менен бирге "
+"колдонулган"
 
-#: ../src/resources/xrc_strings.h:28
-#: ../src/resources/xrc_strings.h:104
-#: ../src/resources/xrc_strings.h:135
-#: ../src/resources/xrc_strings.h:167
+#: ../src/resources/xrc_strings.h:28 ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:135 ../src/resources/xrc_strings.h:167
 msgid "Browse"
 msgstr "Арала"
 
@@ -255,14 +251,10 @@ msgstr "К&аталог"
 msgid "CR/LF conversion"
 msgstr "CR/LF алмашуусу"
 
-#: ../src/resources/xrc_strings.h:6
-#: ../src/resources/xrc_strings.h:19
-#: ../src/resources/xrc_strings.h:31
-#: ../src/resources/xrc_strings.h:119
-#: ../src/resources/xrc_strings.h:134
-#: ../src/resources/xrc_strings.h:138
-#: ../src/resources/xrc_strings.h:140
-#: ../src/resources/xrc_strings.h:156
+#: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:19
+#: ../src/resources/xrc_strings.h:31 ../src/resources/xrc_strings.h:119
+#: ../src/resources/xrc_strings.h:134 ../src/resources/xrc_strings.h:138
+#: ../src/resources/xrc_strings.h:140 ../src/resources/xrc_strings.h:156
 msgid "Cancel"
 msgstr "Айнуу"
 
@@ -270,8 +262,7 @@ msgstr "Айнуу"
 msgid "Cannot create database directory!"
 msgstr "Берилиштер базасынын каталогу түзүлө алынбай жатат!"
 
-#: ../src/gexecute.cpp:136
-#: ../src/gexecute.cpp:185
+#: ../src/gexecute.cpp:136 ../src/gexecute.cpp:185
 msgid "Cannot execute program: "
 msgstr "Программа аткарылбай жатат:"
 
@@ -279,41 +270,16 @@ msgstr "Программа аткарылбай жатат:"
 msgid "Cannot extract catalogs from RPM file."
 msgstr "RPM файлдан каталогдор алынбай жатат."
 
-#: ../src/edapp.cpp:138
-#, c-format
-msgid ""
-"Cannot find resources file '%s'!\n"
-"Please reinstall poEdit."
-msgstr ""
-"'%s' ресурстар файлы табылган жок!\n"
-"poEdit'ти кайра жүктөңүз ."
-
-#: ../src/edapp.cpp:132
-#, c-format
-msgid ""
-"Cannot find resources file '%s'!\n"
-"poEdit was configured to be installed in '%s'.\n"
-"You may try to set POEDIT_PREFIX environment variable to point\n"
-"to the location where you installed poEdit."
-msgstr ""
-"'%s' ресурстар файлы табылган жок!\n"
-"poEdit '%s' жүктөөгө орнотулган.\n"
-"Сиз POEDIT_PREFIX чөйрө өзгөрмөсүнө poEdit жүктөлгөн\n"
-"жерин көрсөтө аласыз."
-
 #: ../src/resources/xrc_strings.h:12
 msgid "Case sensitive"
 msgstr "Регистрди эсепке алуу"
 
-#: ../src/manager.cpp:232
+#: ../src/manager.cpp:250
 msgid "Catalog"
 msgstr "Каталог"
 
-#: ../src/edframe.cpp:733
-#: ../src/edframe.cpp:757
-#: ../src/edframe.cpp:794
-#: ../src/edframe.cpp:840
-#: ../src/edframe.cpp:949
+#: ../src/edframe.cpp:746 ../src/edframe.cpp:772 ../src/edframe.cpp:809
+#: ../src/edframe.cpp:855 ../src/edframe.cpp:979
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Каталог өзгөрдү. Өзгөрүүлөрдүн сакталышын калайсызбы?"
 
@@ -325,13 +291,11 @@ msgstr "Каталогдор &менеджери"
 msgid "Change UI language"
 msgstr "Интерфейс тилин тандаңыз"
 
-#: ../src/resources/xrc_strings.h:147
-#: ../src/export_html.cpp:131
+#: ../src/resources/xrc_strings.h:147 ../src/export_html.cpp:131
 msgid "Charset:"
 msgstr "Кодировка:"
 
-#: ../src/resources/xrc_strings.h:98
-#: ../src/resources/xrc_strings.h:100
+#: ../src/resources/xrc_strings.h:98 ../src/resources/xrc_strings.h:100
 msgid "Choose"
 msgstr "Тандоо"
 
@@ -355,18 +319,15 @@ msgstr "Комментарий:"
 msgid "Configuration"
 msgstr "Ырастоолор"
 
-#: ../src/manager.cpp:393
-#: ../src/manager.cpp:413
+#: ../src/manager.cpp:411 ../src/manager.cpp:431
 msgid "Confirmation"
 msgstr "Аныктоо"
 
-#: ../src/resources/xrc_strings.h:46
-#: ../src/edframe.cpp:1972
+#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2011
 msgid "Copy original to translation field"
 msgstr "Башат тексти которуу талаасына көчүрүү"
 
-#: ../src/resources/xrc_strings.h:146
-#: ../src/export_html.cpp:121
+#: ../src/resources/xrc_strings.h:146 ../src/export_html.cpp:121
 msgid "Country:"
 msgstr "Өлкө:"
 
@@ -395,7 +356,7 @@ msgstr "Мүчөнү өчүрүү"
 msgid "Delete the project"
 msgstr "Проектти өчүрүү"
 
-#: ../src/manager.cpp:286
+#: ../src/manager.cpp:304
 msgid "Directories:"
 msgstr "Каталогдор:"
 
@@ -411,21 +372,25 @@ msgstr "Тырмакчаларды &көрсөтүү"
 msgid "Display quotes around the string?"
 msgstr "Саптын башында жана аягында тырмакчалар көрсөтүлсүнбү?"
 
-#: ../src/manager.cpp:412
+#: ../src/manager.cpp:430
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
 msgstr "Бул проектте баардык каталогдорду жаңыртууну чындап калайсызбы?"
 
-#: ../src/edframe.cpp:1894
+#: ../src/edframe.cpp:1933
 msgid ""
-"Do you really want to remove all translations that are no longer used from the catalog?\n"
-"If you continue with purging, you will have to translate them again if they are added back in the future."
+"Do you really want to remove all translations that are no longer used from "
+"the catalog?\n"
+"If you continue with purging, you will have to translate them again if they "
+"are added back in the future."
 msgstr ""
-"Сиз каталогдо көптөн бери колдонулбаган баардык которулуштарды чындап өчүүрүнү калайсызбы?\n"
-"Эгерде тазалоону улантсаңыз, анда келечекте кайра кошулгандарды кайра которуу керек. "
+"Сиз каталогдо көптөн бери колдонулбаган баардык которулуштарды чындап "
+"өчүүрүнү калайсызбы?\n"
+"Эгерде тазалоону улантсаңыз, анда келечекте кайра кошулгандарды кайра "
+"которуу керек. "
 
-#: ../src/manager.cpp:392
+#: ../src/manager.cpp:410
 msgid "Do you want to delete the project?"
 msgstr "Проекти өчүрүүнү чындап калайсызбы?"
 
@@ -445,8 +410,7 @@ msgstr "Ондоо"
 msgid "Edit &comment"
 msgstr "&Комментарийлерди редакторлоо"
 
-#: ../src/resources/xrc_strings.h:3
-#: ../src/resources/xrc_strings.h:176
+#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:176
 msgid "Edit comment"
 msgstr "Комментарийди ондоо"
 
@@ -478,16 +442,16 @@ msgstr "Редактордун аткарылуучу файлы:"
 msgid "Enables on-the-fly spellchecking"
 msgstr "Динамикалык орфографикалык текшерүүнү жандырат"
 
-#: ../src/edframe.cpp:1082
+#: ../src/edframe.cpp:1118
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Каталог кириштери туура эмес."
 
-#: ../src/edframe.cpp:639
+#: ../src/edframe.cpp:652
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "Орфографикалык текшерүү инициализациясында ката: %s"
 
-#: ../src/edframe.cpp:1650
+#: ../src/edframe.cpp:1689
 msgid "Error loading message catalog file '"
 msgstr "Билдирүүлөр каталог файлыдын жүктөлүшүндө ката"
 
@@ -496,16 +460,16 @@ msgstr "Билдирүүлөр каталог файлыдын жүктөлүш�
 msgid "Error opening file %s!"
 msgstr "%s ачууда ката!"
 
-#: ../src/catalog.cpp:1268
+#: ../src/catalog.cpp:1279
 msgid "Error saving catalog"
 msgstr "Каталогду сактоодо ката"
 
-#: ../src/catalog.cpp:78
+#: ../src/catalog.cpp:80
 #, c-format
 msgid "Error while loading file '%s': line %u is corrupted."
 msgstr "'%s' файлын жүктөөдө ката: %u сабы жаракатталган."
 
-#: ../src/edframe.cpp:921
+#: ../src/edframe.cpp:951
 msgid "Export as..."
 msgstr "Жаңыча экспортто..."
 
@@ -513,18 +477,17 @@ msgstr "Жаңыча экспортто..."
 msgid "External editor"
 msgstr "Тышкы редактор"
 
-#: ../src/edframe.cpp:812
-#: ../src/edframe.cpp:856
+#: ../src/edframe.cpp:827 ../src/edframe.cpp:871
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "'%s' файлы жок."
 
-#: ../src/edframe.cpp:829
+#: ../src/edframe.cpp:844
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "'%s' файлы билдирүүлөр каталогу эмес."
 
-#: ../src/catalog.cpp:1232
+#: ../src/catalog.cpp:1243
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -561,12 +524,12 @@ msgstr "Издөө..."
 msgid "Fonts"
 msgstr "Шрифттер"
 
-#: ../src/edframe.cpp:2423
+#: ../src/edframe.cpp:2450
 #, c-format
 msgid "Form %u"
 msgstr "%u формасы"
 
-#: ../src/edframe.cpp:2425
+#: ../src/edframe.cpp:2452
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr "%u формасы(мисалы, \"%u\")"
@@ -575,7 +538,7 @@ msgstr "%u формасы(мисалы, \"%u\")"
 msgid "Fullscreen view"
 msgstr "Толук экранга"
 
-#: ../src/manager.cpp:235
+#: ../src/manager.cpp:253
 msgid "Fuzzy"
 msgstr "Так эмес"
 
@@ -583,13 +546,11 @@ msgstr "Так эмес"
 msgid "Fuzzy translation"
 msgstr "Так эмес которулушу"
 
-#: ../src/edframe.cpp:777
-#: ../src/edframe.cpp:898
+#: ../src/edframe.cpp:792 ../src/edframe.cpp:911
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText каталогдор (*.po)|*.po|Бардык файлдар (*.*)|*.*"
 
-#: ../src/edframe.cpp:974
-#: ../src/edframe.cpp:1100
+#: ../src/edframe.cpp:1004 ../src/edframe.cpp:1136
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU GetText шаблондору(*.pot)|*.pot|Бардык файлдар (*.*)|*.*"
 
@@ -605,16 +566,16 @@ msgstr "TM берилиштер базасын генерациялоо"
 msgid "Generate database"
 msgstr "Берилиштер базасын генерациялоо"
 
-#: ../src/edframe.cpp:1164
+#: ../src/edframe.cpp:1198
 msgid "Gettext syntax error"
 msgstr "gettext синтаксис катасы "
 
-#: ../src/edframe.cpp:2490
+#: ../src/edframe.cpp:2520
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
 msgstr "%i\tCtrl-%i эсбелгиге өтүү"
 
-#: ../src/edframe.cpp:923
+#: ../src/edframe.cpp:953
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML файлы(*.html)|*.html"
 
@@ -628,41 +589,39 @@ msgstr "Жеке маалымат"
 
 #: ../src/resources/xrc_strings.h:82
 msgid "If checked, the comment window will be editable."
-msgstr "Эгерде тандалган болсо, анда комментарийлер терезеси редакттоого мүмкүн."
+msgstr ""
+"Эгерде тандалган болсо, анда комментарийлер терезеси редакттоого мүмкүн."
 
 #: ../src/resources/xrc_strings.h:124
 msgid "Invocation:"
 msgstr "Чакыруу:"
 
-#: ../src/resources/xrc_strings.h:154
-#: ../src/settingsdlg.cpp:71
+#: ../src/resources/xrc_strings.h:154 ../src/settingsdlg.cpp:71
 msgid "Keywords"
 msgstr "Ачкыч сөздөр"
 
-#: ../src/chooselang.cpp:152
+#: ../src/chooselang.cpp:154
 msgid "Language selection"
 msgstr "Тилди тандоо"
 
-#: ../src/resources/xrc_strings.h:121
-#: ../src/resources/xrc_strings.h:122
-#: ../src/resources/xrc_strings.h:145
-#: ../src/export_html.cpp:118
+#: ../src/resources/xrc_strings.h:121 ../src/resources/xrc_strings.h:122
+#: ../src/resources/xrc_strings.h:145 ../src/export_html.cpp:118
 msgid "Language:"
 msgstr "Тил:"
 
-#: ../src/manager.cpp:237
+#: ../src/manager.cpp:255
 msgid "Last modified"
 msgstr "Акыркы өзгөртүлгөн"
 
-#: ../src/fileviewer.cpp:99
-#: ../src/edlistctrl.cpp:227
+#: ../src/fileviewer.cpp:99 ../src/edlistctrl.cpp:227
 msgid "Line"
 msgstr "Сап"
 
-#: ../src/catalog.cpp:143
+#: ../src/catalog.cpp:145
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
-msgstr "Берилген %u саптар, '%s' файлында жаракатталган (%s жараксыз маалымат)."
+msgstr ""
+"Берилген %u саптар, '%s' файлында жаракатталган (%s жараксыз маалымат)."
 
 #: ../src/resources/xrc_strings.h:86
 msgid "Line endings format:"
@@ -670,13 +629,14 @@ msgstr "Саптарды аяктоо форматы:"
 
 #: ../src/resources/xrc_strings.h:123
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "Чекит үтүр менен ажыратылган кеңейтилиштер тизмеси, (мисалы., *.cpp, *.h):"
+msgstr ""
+"Чекит үтүр менен ажыратылган кеңейтилиштер тизмеси, (мисалы., *.cpp, *.h):"
 
 #: ../src/resources/xrc_strings.h:89
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:215
+#: ../src/catalog.cpp:217
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Баш сөз туура эмес түзүлгөн: '%s'"
@@ -689,7 +649,7 @@ msgstr "Макс. #'суз сөздөр:"
 msgid "Max. difference in sentence length:"
 msgstr "Макс. cүйлөмдүн узундугундагы айырма:"
 
-#: ../src/catalog.cpp:1440
+#: ../src/catalog.cpp:1451
 msgid "Merging differences..."
 msgstr "Айырмалар кошулууда..."
 
@@ -705,13 +665,19 @@ msgstr "Жогоруга жылдыруу "
 msgid "My Languages"
 msgstr "Тилдерим"
 
-#: ../src/manager.cpp:289
+#: ../src/manager.cpp:307
 msgid "My Project"
 msgstr "Менин проекттерим"
 
 #: ../src/resources/xrc_strings.h:80
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Тизмелердин саптарына эч качан фокусту алып салышына тыю салуу. Эгерде жанык болсо, анда сиз Ctrl-багыт баскычтар менен клавиатурадан башкара аласыз, бирок ал менен текстти Tab баскычын менен фокусту өзгөртпөй киргизе аласыз."
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Тизмелердин саптарына эч качан фокусту алып салышына тыю салуу. Эгерде жанык "
+"болсо, анда сиз Ctrl-багыт баскычтар менен клавиатурадан башкара аласыз, "
+"бирок ал менен текстти Tab баскычын менен фокусту өзгөртпөй киргизе аласыз."
 
 #: ../src/resources/xrc_strings.h:115
 msgid "New"
@@ -735,13 +701,14 @@ msgstr "Кийинки >"
 
 #: ../src/fileviewer.cpp:138
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "Редактор көрсөтүлгөн жок. Ырастоолор диалог терезесинден аны тандап алыңыз."
+msgstr ""
+"Редактор көрсөтүлгөн жок. Ырастоолор диалог терезесинден аны тандап алыңыз."
 
 #: ../src/digger.cpp:138
 msgid "No files found in: "
 msgstr "Берилгендерден файлдар табылган жок:"
 
-#: ../src/edframe.cpp:1180
+#: ../src/edframe.cpp:1214
 msgid "No references to this string found."
 msgstr "Бул сап үчүн байланыштар табылган жок."
 
@@ -749,12 +716,9 @@ msgstr "Бул сап үчүн байланыштар табылган жок."
 msgid "Notes"
 msgstr "Кыскача түшүндүрмөлөр"
 
-#: ../src/resources/xrc_strings.h:2
-#: ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:30
-#: ../src/resources/xrc_strings.h:118
-#: ../src/resources/xrc_strings.h:133
-#: ../src/resources/xrc_strings.h:155
+#: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
+#: ../src/resources/xrc_strings.h:30 ../src/resources/xrc_strings.h:118
+#: ../src/resources/xrc_strings.h:133 ../src/resources/xrc_strings.h:155
 #: ../src/resources/xrc_strings.h:163
 msgid "OK"
 msgstr "OK"
@@ -763,13 +727,11 @@ msgstr "OK"
 msgid "Obsolete strings"
 msgstr "Бардык саптар"
 
-#: ../src/resources/xrc_strings.h:171
-#: ../src/edframe.cpp:775
+#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:790
 msgid "Open catalog"
 msgstr "Каталог ачуу"
 
-#: ../src/edframe.cpp:972
-#: ../src/edframe.cpp:1098
+#: ../src/edframe.cpp:1002 ../src/edframe.cpp:1134
 msgid "Open catalog template"
 msgstr "Каталог шаблонун ачуу"
 
@@ -781,8 +743,7 @@ msgstr "poEdit башталганда каталогдор менеджерин 
 msgid "Open source files in editor, not in file viewer"
 msgstr "Башат файлдарды көрүү программасында эмес редактордо ачуу"
 
-#: ../src/edlistctrl.cpp:224
-#: ../src/export_html.cpp:155
+#: ../src/edlistctrl.cpp:224 ../src/export_html.cpp:155
 msgid "Original string"
 msgstr "Башат сап"
 
@@ -806,8 +767,7 @@ msgstr "Парсинг"
 msgid "Path to DB:"
 msgstr "ББ'на жол:"
 
-#: ../src/resources/xrc_strings.h:152
-#: ../src/settingsdlg.cpp:73
+#: ../src/resources/xrc_strings.h:152 ../src/settingsdlg.cpp:73
 msgid "Paths"
 msgstr "Жолдор"
 
@@ -823,7 +783,7 @@ msgstr "Белгилүү тилдердин тизмесинден тилди т
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "Регионалдуу ырастоолор файлдарын камтыган каталогдорду кошуңуз:"
 
-#: ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1222
 msgid "Please choose the reference you want to show:"
 msgstr "Калаган байланышты тандап алыңыз:"
 
@@ -831,7 +791,7 @@ msgstr "Калаган байланышты тандап алыңыз:"
 msgid "Please select language ISO code:"
 msgstr "Тилдин ISO-кодун тандаңыз:"
 
-#: ../src/edframe.cpp:697
+#: ../src/edframe.cpp:710
 msgid "Please select language code:"
 msgstr "Тилдин кодун тандаңыз:"
 
@@ -839,7 +799,7 @@ msgstr "Тилдин кодун тандаңыз:"
 msgid "Plural Forms:"
 msgstr "Көп мүчөлүү формалар:"
 
-#: ../src/edframe.cpp:450
+#: ../src/edframe.cpp:451
 msgid "Plural:"
 msgstr "Көптүк:"
 
@@ -851,13 +811,11 @@ msgstr "Параметрлер"
 msgid "Proceed"
 msgstr "Улантуу"
 
-#: ../src/resources/xrc_strings.h:150
-#: ../src/export_html.cpp:111
+#: ../src/resources/xrc_strings.h:150 ../src/export_html.cpp:111
 msgid "Project info"
 msgstr "Проект жөнүндө маалымат"
 
-#: ../src/resources/xrc_strings.h:142
-#: ../src/export_html.cpp:115
+#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:115
 msgid "Project name and version:"
 msgstr "Проекттин аты жана версиясы:"
 
@@ -865,22 +823,22 @@ msgstr "Проекттин аты жана версиясы:"
 msgid "Project name:"
 msgstr "Проекттин аты:"
 
-#: ../src/edframe.cpp:1895
+#: ../src/edframe.cpp:1934
 msgid "Purge delete translations"
 msgstr "Өчүрүлгөн которулуштарды тазалоо"
 
-#: ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1222
 msgid "References"
 msgstr "Байланыштар"
 
-#: ../src/edframe.cpp:1977
-#: ../src/edframe.cpp:1981
+#: ../src/edframe.cpp:2016 ../src/edframe.cpp:2020
 msgid "References:"
 msgstr "Байланыштар:"
 
 #: ../src/resources/xrc_strings.h:108
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr "Жогоруда көрсөтүлгөн каталогдор жолдорундан которуу буферин регенирациялоо."
+msgstr ""
+"Жогоруда көрсөтүлгөн каталогдор жолдорундан которуу буферин регенирациялоо."
 
 #: ../src/resources/xrc_strings.h:168
 msgid "Reset to defaults"
@@ -890,7 +848,7 @@ msgstr "Алдынала маанилерди жүктөө "
 msgid "Save &as..."
 msgstr "Жаңыча с&актоо..."
 
-#: ../src/edframe.cpp:897
+#: ../src/edframe.cpp:910
 msgid "Save as..."
 msgstr "Жаңыча сактоо..."
 
@@ -898,11 +856,8 @@ msgstr "Жаңыча сактоо..."
 msgid "Save catalog"
 msgstr "Каталогду сактоо"
 
-#: ../src/edframe.cpp:734
-#: ../src/edframe.cpp:758
-#: ../src/edframe.cpp:795
-#: ../src/edframe.cpp:841
-#: ../src/edframe.cpp:950
+#: ../src/edframe.cpp:747 ../src/edframe.cpp:773 ../src/edframe.cpp:810
+#: ../src/edframe.cpp:856 ../src/edframe.cpp:980
 msgid "Save changes"
 msgstr "Өзгөрүүлөрдү сактоо"
 
@@ -918,12 +873,11 @@ msgstr "Файлдар анализдөөдө"
 msgid "Search Paths"
 msgstr "Издөө жолдору"
 
-#: ../src/edframe.cpp:696
+#: ../src/edframe.cpp:709
 msgid "Select catalog's language"
 msgstr "Каталогдун тилин тандаңыз"
 
-#: ../src/manager.cpp:266
-#: ../src/prefsdlg.cpp:349
+#: ../src/manager.cpp:284 ../src/prefsdlg.cpp:349
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "Каталогду тандаңыз"
@@ -932,11 +886,11 @@ msgstr "Каталогду тандаңыз"
 msgid "Select language"
 msgstr "Тилди тандаңыз"
 
-#: ../src/chooselang.cpp:151
+#: ../src/chooselang.cpp:153
 msgid "Select your prefered language"
 msgstr "Жактырган тилди тандаңыз"
 
-#: ../src/edframe.cpp:2484
+#: ../src/edframe.cpp:2514
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr "%i\tAlt-%i эсбелгини орнотуу"
@@ -945,7 +899,7 @@ msgstr "%i\tAlt-%i эсбелгини орнотуу"
 msgid "Settings"
 msgstr "Ырастоолор"
 
-#: ../src/edapp.cpp:159
+#: ../src/edapp.cpp:138
 msgid "Setup"
 msgstr "Ырастоо"
 
@@ -961,12 +915,11 @@ msgstr "К&омментарий терезесин автоматтык түрд
 msgid "Show summary after catalog update"
 msgstr "Каталогдун жаңыртылгандан кийин маалыматты көрсөтүү "
 
-#: ../src/edframe.cpp:449
+#: ../src/edframe.cpp:450
 msgid "Singular:"
 msgstr "Бирдиктүү:"
 
-#: ../src/resources/xrc_strings.h:131
-#: ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:131 ../src/resources/xrc_strings.h:148
 msgid "Source code charset:"
 msgstr "Башат коддун кодировкасы:"
 
@@ -986,17 +939,15 @@ msgstr "Биринчиден баштоо"
 msgid "String to find:"
 msgstr "Сапты табуу:"
 
-#: ../src/resources/xrc_strings.h:144
-#: ../src/export_html.cpp:128
+#: ../src/resources/xrc_strings.h:144 ../src/export_html.cpp:128
 msgid "Team's email address:"
 msgstr "Команданын э-почтасы:"
 
-#: ../src/resources/xrc_strings.h:143
-#: ../src/export_html.cpp:124
+#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:124
 msgid "Team:"
 msgstr "Команда:"
 
-#: ../src/catalog.cpp:1267
+#: ../src/catalog.cpp:1278
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -1007,8 +958,10 @@ msgstr ""
 "каталогдун ырастоолорунда көрсөтүлгөндөй. Анын ордуна\n"
 "ал UTF-8 менен сакталган жана керектүү параметр өзгөртүлгөн."
 
-#: ../src/catalog.cpp:956
-msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
+#: ../src/catalog.cpp:967
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
 msgstr "Каталогду жүктөөдө ката. Кээ бир маалыматтар жок же жаракат алган."
 
 #: ../src/resources/xrc_strings.h:160
@@ -1027,7 +980,7 @@ msgstr ""
 "Бул саптар ресурстарда табылды, каталогдо эмес.\n"
 "Азыр poEdit аларды каталогко кошот."
 
-#: ../src/edapp.cpp:159
+#: ../src/edapp.cpp:138
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1080,12 +1033,11 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Жанык, эгерде тандалган сап так эмес которулушту камтыса"
 
-#: ../src/manager.cpp:233
+#: ../src/manager.cpp:251
 msgid "Total"
 msgstr "Баары"
 
-#: ../src/edlistctrl.cpp:225
-#: ../src/export_html.cpp:158
+#: ../src/edlistctrl.cpp:225 ../src/export_html.cpp:158
 msgid "Translation"
 msgstr "Которулушу"
 
@@ -1126,7 +1078,7 @@ msgstr "Артка"
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:234
+#: ../src/manager.cpp:252
 msgid "Untrans"
 msgstr "Которулган жок"
 
@@ -1150,13 +1102,15 @@ msgstr "Жаңыртуу маалыматы"
 msgid "Update translation memory"
 msgstr "Которуу эсин жаңыртуу"
 
-#: ../src/catalog.cpp:1400
+#: ../src/catalog.cpp:1411
 msgid "Updating catalog..."
 msgstr "Каталогду жаңыртуу..."
 
-#: ../src/edframe.cpp:1084
+#: ../src/edframe.cpp:1120
 msgid "Updating the catalog failed. Click on 'More>>' for details."
-msgstr "Каталогдун жаңыртуусу ийгиликсиз аяктады. Кошумча маалымат алуу үчүн Кошумча >>'ны басыңыз."
+msgstr ""
+"Каталогдун жаңыртуусу ийгиликсиз аяктады. Кошумча маалымат алуу үчүн Кошумча "
+">>'ны басыңыз."
 
 #: ../src/resources/xrc_strings.h:99
 msgid "Use custom font for text fields"
@@ -1182,11 +1136,11 @@ msgstr "Бүтүн сөздөр гана"
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:822
+#: ../src/edframe.cpp:837
 msgid "You can't drop more than one file on poEdit window."
 msgstr "poEdit терезесине бирден көп файл ташууга мүмкүн эмес."
 
-#: ../src/chooselang.cpp:166
+#: ../src/chooselang.cpp:168
 msgid "You must restart poEdit for this change to take effect."
 msgstr "Өзгөрүлөр ишке ашуусу үчүн poEdit'ти кайра баштатышыңыз керек."
 
@@ -1198,7 +1152,7 @@ msgstr "Сиздин э-почта:"
 msgid "Your name:"
 msgstr "Сиздин атыңыз:"
 
-#: ../src/edframe.cpp:1734
+#: ../src/edframe.cpp:1773
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[которулуш текшерилүүдө: %i калды]"
@@ -1207,11 +1161,11 @@ msgstr "[которулуш текшерилүүдө: %i калды]"
 msgid "current platform's default"
 msgstr "учурдагы платформанын алдыналасы"
 
-#: ../src/edframe.cpp:2017
+#: ../src/edframe.cpp:2056
 msgid "none"
 msgstr "жок"
 
-#: ../src/edframe.cpp:341
+#: ../src/edframe.cpp:337
 msgid "poEdit"
 msgstr "poEdit"
 
@@ -1219,23 +1173,45 @@ msgstr "poEdit"
 msgid "poEdit - Catalogs manager"
 msgstr "poEdit - Каталогдор менеджери"
 
-#: ../src/edapp.cpp:141
-msgid "poEdit Error"
-msgstr "poEdit Катасы"
-
 #: ../src/digger.cpp:139
 msgid "poEdit did not find any files in scanned directories."
 msgstr "poEdit издеген каталогдордо эч кандай файл тапкан жок."
 
 #: ../src/edapp.cpp:65
-msgid "poEdit installation is broken, cannot find application's home directory."
-msgstr "poEdit жүктөөлүшү токтоду, программалык жабдуунун баш каталогу табылган жок."
+msgid ""
+"poEdit installation is broken, cannot find application's home directory."
+msgstr ""
+"poEdit жүктөөлүшү токтоду, программалык жабдуунун баш каталогу табылган жок."
 
-#: ../src/edframe.cpp:2032
+#: ../src/edframe.cpp:2071
 msgid "version"
 msgstr "версиясы"
 
 #, fuzzy
+#~ msgid "; charset="
+#~ msgstr "Кодировка:"
+
+#~ msgid ""
+#~ "Cannot find resources file '%s'!\n"
+#~ "Please reinstall poEdit."
+#~ msgstr ""
+#~ "'%s' ресурстар файлы табылган жок!\n"
+#~ "poEdit'ти кайра жүктөңүз ."
+
+#~ msgid ""
+#~ "Cannot find resources file '%s'!\n"
+#~ "poEdit was configured to be installed in '%s'.\n"
+#~ "You may try to set POEDIT_PREFIX environment variable to point\n"
+#~ "to the location where you installed poEdit."
+#~ msgstr ""
+#~ "'%s' ресурстар файлы табылган жок!\n"
+#~ "poEdit '%s' жүктөөгө орнотулган.\n"
+#~ "Сиз POEDIT_PREFIX чөйрө өзгөрмөсүнө poEdit жүктөлгөн\n"
+#~ "жерин көрсөтө аласыз."
+
+#~ msgid "poEdit Error"
+#~ msgstr "poEdit Катасы"
+
+#, fuzzy
 #~ msgid "X-Poedit-Keywords"
 #~ msgstr "Ачкыч сөздөр"
-
