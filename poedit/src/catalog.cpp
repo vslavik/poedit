@@ -358,7 +358,7 @@ void Catalog::HeaderData::ParseDict()
     }
 
     wxString ctype = GetHeader(_T("Content-Type"));
-    int charsetPos = ctype.Find(_("; charset="));
+    int charsetPos = ctype.Find(_T("; charset="));
     if (charsetPos != -1)
     {
         Charset =
