@@ -34,6 +34,7 @@ Source: locales\ku.mo; DestDir: {app}\share\locale\ku\LC_MESSAGES; Components: i
 Source: locales\ky.mo; DestDir: {app}\share\locale\ky\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\lt.mo; DestDir: {app}\share\locale\lt\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\lv.mo; DestDir: {app}\share\locale\lv\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\mk.mo; DestDir: {app}\share\locale\mk\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\mn.mo; DestDir: {app}\share\locale\mn\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\nb.mo; DestDir: {app}\share\locale\nb\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\nl.mo; DestDir: {app}\share\locale\nl\LC_MESSAGES; Components: i18n; DestName: poedit.mo

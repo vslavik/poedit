@@ -70,6 +70,8 @@ Name: {app}\share\locale\lt; Components: i18n
 Name: {app}\share\locale\lt\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\lv; Components: i18n
 Name: {app}\share\locale\lv\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\mk; Components: i18n
+Name: {app}\share\locale\mk\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\mn; Components: i18n
 Name: {app}\share\locale\mn\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\nb; Components: i18n
