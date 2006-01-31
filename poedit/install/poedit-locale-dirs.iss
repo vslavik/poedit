@@ -2,6 +2,8 @@ Name: {app}\share\locale\af_ZA; Components: i18n
 Name: {app}\share\locale\af_ZA\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\am; Components: i18n
 Name: {app}\share\locale\am\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\ar; Components: i18n
+Name: {app}\share\locale\ar\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\ast; Components: i18n
 Name: {app}\share\locale\ast\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\be; Components: i18n

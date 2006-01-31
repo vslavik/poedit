@@ -1,5 +1,6 @@
 Source: locales\af_ZA.mo; DestDir: {app}\share\locale\af_ZA\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\am.mo; DestDir: {app}\share\locale\am\LC_MESSAGES; Components: i18n; DestName: poedit.mo
+Source: locales\ar.mo; DestDir: {app}\share\locale\ar\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\ast.mo; DestDir: {app}\share\locale\ast\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\be.mo; DestDir: {app}\share\locale\be\LC_MESSAGES; Components: i18n; DestName: poedit.mo
 Source: locales\bg.mo; DestDir: {app}\share\locale\bg\LC_MESSAGES; Components: i18n; DestName: poedit.mo
