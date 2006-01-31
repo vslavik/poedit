@@ -1,6 +1,4 @@
 
-SUBDIRS = resources
-
 RESCOMP = @RESCOMP@
 WX_LIBS = @WX_LIBS@
 
