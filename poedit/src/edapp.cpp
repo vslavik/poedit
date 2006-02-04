@@ -86,6 +86,8 @@ static wxArrayString gs_filesToOpen;
 #define CFG_FILE wxEmptyString
 #endif
 
+extern void InitXmlResource();
+
 bool poEditApp::OnInit()
 {
     if (!wxApp::OnInit())
@@ -121,32 +123,9 @@ bool poEditApp::OnInit()
     m_locale.AddCatalog(_T("poedit-wxstd")); // for semistatic builds
 
     wxImage::AddHandler(new wxGIFHandler);
-    wxFileSystem::AddHandler(new wxZipFSHandler);
-    
-    wxString resPath = GetAppPath() + _T("/share/poedit/resources.zip");
-    if (!wxFileExists(resPath))
-    {
-        wxString msg;
-        
-#ifdef __UNIX__
-        msg.Printf(_("Cannot find resources file '%s'!\n"
-                     "poEdit was configured to be installed in '%s'.\n"
-                     "You may try to set POEDIT_PREFIX environment variable to point\n"
-                     "to the location where you installed poEdit."), 
-                     resPath.c_str(), GetAppPath().c_str());
-#else
-        msg.Printf(_("Cannot find resources file '%s'!\nPlease reinstall poEdit."), 
-                     resPath.c_str());
-#endif
-        wxMessageBox(msg, _("poEdit Error"), wxOK | wxICON_ERROR);
-        return false;
-    }
-    else
-    {
-        wxXmlResource::Get()->InitAllHandlers();
-        wxXmlResource::Get()->Load(resPath);
-    }
-    
+    wxXmlResource::Get()->InitAllHandlers();
+    InitXmlResource();
+
     SetDefaultCfg(wxConfig::Get());
 
     wxArtProvider::PushProvider(new wxPoeditStdArtProvider);
