@@ -496,20 +496,8 @@ poEditFrame::poEditFrame() :
     m_bottomRightPanel->SetSizer(rightSizer);
 
     m_bottomSplitter->SetMinimumPaneSize(40);
-    if (m_displayCommentWin || m_displayAutoCommentsWin)
-    {
-        m_bottomSplitter->SplitVertically(m_bottomLeftPanel, m_bottomRightPanel,
-                                          cfg->Read(_T("bottom_splitter"),
-                                                    -200L));
-        m_bottomLeftPanel->GetSizer()->Show(m_textComment, m_displayCommentWin);
-        m_bottomLeftPanel->GetSizer()->Show(m_textAutoComments, m_displayAutoCommentsWin);
-        m_bottomLeftPanel->GetSizer()->Layout();
-    }
-    else
-    {
-        m_bottomRightPanel->Show(false);
-        m_bottomSplitter->Initialize(m_bottomLeftPanel);
-    }
+    m_bottomRightPanel->Show(false);
+    m_bottomSplitter->Initialize(m_bottomLeftPanel);
 
     m_splitter->SetMinimumPaneSize(40);
     m_splitter->SplitHorizontally(m_list, m_bottomSplitter, cfg->Read(_T("splitter"), 240L));
@@ -533,6 +521,7 @@ poEditFrame::poEditFrame() :
     ShowPluralFormUI(false);
 
     UpdateMenu();
+    UpdateDisplayCommentWin();
 
     wxString cannon = wxGetApp().GetLocale().GetCanonicalName().Left(2);
     wxString datadir = wxGetApp().GetAppPath() + _T("/share/poedit");
@@ -573,7 +562,10 @@ poEditFrame::~poEditFrame()
 
     wxSize sz = GetSize();
     wxPoint pos = GetPosition();
+
     wxConfigBase *cfg = wxConfig::Get();
+    cfg->SetPath(_("/"));
+
     if (!IsIconized() && !IsFullScreen())
     {
         if (!IsMaximized())
@@ -587,9 +579,11 @@ poEditFrame::~poEditFrame()
         cfg->Write(_T("frame_maximized"), (long)IsMaximized());
     }
 
-    if (m_displayCommentWin)
+    if (m_displayCommentWin || m_displayAutoCommentsWin)
+    {
         cfg->Write(_T("bottom_splitter"),
                    (long)m_bottomSplitter->GetSashPosition());
+    }
     cfg->Write(_T("splitter"), (long)m_splitter->GetSashPosition());
     cfg->Write(_T("display_quotes"), m_displayQuotes);
     cfg->Write(_T("display_lines"), m_displayLines);
@@ -598,6 +592,9 @@ poEditFrame::~poEditFrame()
     cfg->Write(_T("shaded_list"), gs_shadedList);
 
     m_history.Save(*cfg);
+
+    // write all changes:
+    cfg->Flush();
 
 #ifdef USE_TRANSMEM
     if (m_transMem)
@@ -2222,12 +2219,16 @@ void poEditFrame::UpdateDisplayCommentWin()
             m_bottomRightPanel->GetSizer()->Show(m_textAutoComments,
                                                  m_displayAutoCommentsWin);
             m_bottomRightPanel->GetSizer()->Layout();
+            m_bottomRightPanel->Layout();
         }
     }
     else
     {
-        wxConfig::Get()->Write(_T("bottom_splitter"),
-                               (long)m_bottomSplitter->GetSashPosition());
+        if ( m_bottomSplitter->IsSplit() )
+        {
+            wxConfig::Get()->Write(_T("bottom_splitter"),
+                                   (long)m_bottomSplitter->GetSashPosition());
+        }
         m_bottomRightPanel->Show(false);
         m_bottomSplitter->Unsplit();
     }
