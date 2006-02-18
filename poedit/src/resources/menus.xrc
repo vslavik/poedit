@@ -29,11 +29,11 @@
         <label>E_xport...</label>
       </object>
       <object class="separator"/>
-      <object class="wxMenuItem" name="menu_preferences">
+      <object class="wxMenuItem" name="wxID_PREFERENCES">
         <label>_Preferences...</label>
       </object>
       <object class="separator"/>
-      <object class="wxMenuItem" name="menu_quit">
+      <object class="wxMenuItem" name="wxID_EXIT">
         <label>_Close</label>
         <accel platform="unix">Ctrl-W</accel>
         <accel platform="win">Alt-F4</accel>
@@ -119,8 +119,9 @@
       <object class="wxMenuItem" name="menu_help_gettext" platform="win">
         <label>GNU gettext documentation</label>
       </object>
-      <object class="separator"/>
-      <object class="wxMenuItem" name="menu_about">
+      <object platform="unix" class="separator"/>
+      <object platform="win" class="separator"/>
+      <object class="wxMenuItem" name="wxID_ABOUT">
         <label>_About...</label>
       </object>
       <label>_Help</label>

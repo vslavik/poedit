@@ -283,10 +283,10 @@ class UnfocusableTextCtrl : public wxTextCtrl
 
 
 BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
-   EVT_MENU           (XRCID("menu_quit"),        poEditFrame::OnQuit)
+   EVT_MENU           (wxID_EXIT,                 poEditFrame::OnQuit)
    EVT_MENU           (XRCID("menu_help"),        poEditFrame::OnHelp)
    EVT_MENU           (XRCID("menu_help_gettext"),poEditFrame::OnHelpGettext)
-   EVT_MENU           (XRCID("menu_about"),       poEditFrame::OnAbout)
+   EVT_MENU           (wxID_ABOUT,                poEditFrame::OnAbout)
    EVT_MENU           (XRCID("menu_new"),         poEditFrame::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),poEditFrame::OnNew)
    EVT_MENU           (XRCID("menu_open"),        poEditFrame::OnOpen)
@@ -295,7 +295,7 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_export"),      poEditFrame::OnExport)
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    poEditFrame::OnOpenHist)
    EVT_MENU           (XRCID("menu_catsettings"), poEditFrame::OnSettings)
-   EVT_MENU           (XRCID("menu_preferences"), poEditFrame::OnPreferences)
+   EVT_MENU           (wxID_PREFERENCES,          poEditFrame::OnPreferences)
    EVT_MENU           (XRCID("menu_update"),      poEditFrame::OnUpdate)
    EVT_MENU           (XRCID("menu_update_from_pot"),poEditFrame::OnUpdate)
    EVT_MENU           (XRCID("menu_purge_deleted"), poEditFrame::OnPurgeDeleted)
@@ -545,6 +545,10 @@ poEditFrame::poEditFrame() :
 #ifdef __WXMSW__
     DragAcceptFiles(true);
 #endif
+
+    // For some reason, doing this explicitly is required on Mac, otherwise
+    // the "Quit poedit" menu item would be disabled:
+    MenuBar->Enable(wxID_EXIT, true);
 }
 
 
