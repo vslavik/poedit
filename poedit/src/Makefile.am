@@ -65,6 +65,6 @@ bundle: poedit
 	mkdir -p poedit.app/Contents/Resources
 	cp poedit poedit.app/Contents/MacOS/poedit
 	strip poedit.app/Contents/MacOS/poedit
-	`$(WX_CONFIG_WITH_ARGS) --rescomp` poedit.app/Contents/MacOS/poedit
+	`$(WX_CONFIG_WITH_ARGS) --rezflags` poedit.app/Contents/MacOS/poedit
 	cp $(top_builddir)/macosx/Info.plist poedit.app/Contents
 	cp $(top_srcdir)/macosx/poedit.icns poedit.app/Contents/Resources
