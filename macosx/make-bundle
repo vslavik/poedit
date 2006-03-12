@@ -1,0 +1,39 @@
+#!/bin/sh
+
+#
+# Creates Mac OS X bundle file. Must be run from $(builddir)/src
+#
+# Usage: make-bundle <bundleName.app> <rez> <top_builddir> <top_srcdir>
+# 
+# $Id$
+#
+
+bundle="$1"
+rez="$2"
+top_builddir="$3"
+top_srcdir="$4"
+
+rm -rf $bundle
+mkdir -p $bundle/Contents/MacOS
+mkdir -p $bundle/Contents/Resources
+
+# executable:
+cp poedit $bundle/Contents/MacOS/poedit
+strip $bundle/Contents/MacOS/poedit
+$rez $bundle/Contents/MacOS/poedit
+
+# metadata:
+cp $top_builddir/macosx/Info.plist $bundle/Contents
+cp $top_srcdir/macosx/poedit.icns $bundle/Contents/Resources
+
+# gettext catalogs:
+for i in $top_srcdir/locales/*.mo ; do
+    lang=`basename $i .mo`
+    mkdir -p $bundle/Contents/SharedSupport/locale/$lang/LC_MESSAGES
+    cp $i $bundle/Contents/SharedSupport/locale/$lang/LC_MESSAGES/poedit.mo
+done
+for i in $top_srcdir/locales/wxwin/*.mo ; do
+    lang=`basename $i .mo`
+    mkdir -p $bundle/Contents/SharedSupport/locale/$lang/LC_MESSAGES
+    cp $i $bundle/Contents/SharedSupport/locale/$lang/LC_MESSAGES/poedit-wxstd.mo
+done

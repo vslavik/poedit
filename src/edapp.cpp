@@ -37,6 +37,7 @@
 #include <wx/log.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/xrc/xh_all.h>
+#include <wx/stdpaths.h>
 
 #include "edapp.h"
 #include "edframe.h"
@@ -115,7 +116,12 @@ bool poEditApp::OnInit()
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
     wxConfigBase::Get()->SetExpandEnvVars(false);
 
+#ifdef __WXMAC__
+    wxLocale::AddCatalogLookupPathPrefix(
+        wxStandardPaths::Get().GetDataDir() + _T("/locale"));
+#else
     wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
+#endif
 
     m_locale.Init(GetUILanguage());
     
