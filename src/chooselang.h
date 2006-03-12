@@ -33,7 +33,13 @@
 #include <wx/string.h>
 #include <wx/intl.h>
 
-#ifndef __UNIX__
+#if defined(__UNIX__) && !defined(__WXMAC__)
+    #define NEED_CHOOSELANG_UI 0
+#else
+    #define NEED_CHOOSELANG_UI 1
+#endif
+
+#if NEED_CHOOSELANG_UI
 /// Let the user select language
 wxLanguage ChooseLanguage();
 
@@ -43,6 +49,5 @@ void ChangeUILanguage();
 
 /** Return currently choosen language. Calls  ChooseLanguage if neccessary. */
 wxLanguage GetUILanguage();
-        
 
 #endif

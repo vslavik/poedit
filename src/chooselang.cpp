@@ -47,7 +47,7 @@ static void SaveUILanguage(wxLanguage lang)
 
 wxLanguage GetUILanguage()
 {
-#if defined(__UNIX__)
+#if !NEED_CHOOSELANG_UI
     return wxLANGUAGE_DEFAULT;
 #else
     wxLanguage lang(wxLANGUAGE_DEFAULT);
@@ -72,7 +72,7 @@ wxLanguage GetUILanguage()
 #endif
 }
 
-#ifndef __UNIX__
+#if NEED_CHOOSELANG_UI
 wxLanguage ChooseLanguage()
 {
     struct LangInfo
@@ -81,7 +81,7 @@ wxLanguage ChooseLanguage()
         wxLanguage code;
     };
 
-    LangInfo langs[] = 
+    LangInfo langs[] =
     {
         { _("(Use default language)"), wxLANGUAGE_DEFAULT },
 
@@ -172,4 +172,4 @@ void ChangeUILanguage()
                  wxOK | wxCENTRE | wxICON_INFORMATION);
 }
 
-#endif
+#endif // NEED_CHOOSELANG_UI

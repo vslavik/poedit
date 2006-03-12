@@ -33,6 +33,7 @@
 #include <wx/dialog.h>
 
 #include "parser.h"
+#include "chooselang.h"
 
 class WXDLLEXPORT wxConfigBase;
 
@@ -63,7 +64,7 @@ class PreferencesDialog : public wxDialog
         void OnTMGenerate(wxCommandEvent& event);
 #endif
 
-#ifndef __UNIX__
+#if NEED_CHOOSELANG_UI
         void OnUILanguage(wxCommandEvent& event);
 #endif
         void OnNewParser(wxCommandEvent& event);
