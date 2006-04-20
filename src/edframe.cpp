@@ -568,7 +568,7 @@ poEditFrame::~poEditFrame()
     wxPoint pos = GetPosition();
 
     wxConfigBase *cfg = wxConfig::Get();
-    cfg->SetPath(_("/"));
+    cfg->SetPath(_T("/"));
 
     if (!IsIconized() && !IsFullScreen())
     {
