@@ -295,8 +295,10 @@ class CatalogParser
 
         /** Parses the entire file, calls OnEntry each time
             new msgid/msgstr pair is found.
+
+            @return false if parsing failed, true otherwise
          */
-        void Parse();
+        bool Parse();
 
     protected:
         /** Called when new entry was parsed. Parsing continues

@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.org)
  *
- *  Copyright (C) 1999-2005 Vaclav Slavik
+ *  Copyright (C) 1999-2006 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -510,9 +510,10 @@ Catalog::HeaderData::Find(const wxString& key) const
 // Parsers
 // ----------------------------------------------------------------------
 
-void CatalogParser::Parse()
+bool CatalogParser::Parse()
 {
-    if (m_textFile->GetLineCount() == 0) return;
+    if (m_textFile->GetLineCount() == 0)
+        return false;
 
     wxString line, dummy;
     wxString mflags, mstr, msgid_plural, mcomment;
@@ -605,7 +606,10 @@ void CatalogParser::Parse()
                  ReadParam(line, _T("msgstr\t\""), dummy))
         {
             if (has_plural)
+            {
                 wxLogError(_("Broken catalog file: singular form msgstr used together with msgid_plural"));
+                return false;
+            }
 
             wxString str = dummy.RemoveLast();
             while (!(line = ReadTextLine(m_textFile, m_conv)).IsEmpty())
@@ -623,7 +627,7 @@ void CatalogParser::Parse()
                          mtranslations,
                          mflags, mrefs, mcomment, mautocomments, mlinenum))
             {
-                return;
+                return false;
             }
 
             mcomment = mstr = msgid_plural = mflags = wxEmptyString;
@@ -637,7 +641,10 @@ void CatalogParser::Parse()
         else if (ReadParam(line, _T("msgstr["), dummy))
         {
             if (!has_plural)
+            {
                 wxLogError(_("Broken catalog file: plural form msgstr used without msgid_plural"));
+                return false;
+            }
 
             wxString idx = dummy.BeforeFirst(_T(']'));
             wxString label = _T("msgstr[") + idx + _T("]");
@@ -670,7 +677,7 @@ void CatalogParser::Parse()
                          mtranslations,
                          mflags, mrefs, mcomment, mautocomments, mlinenum))
             {
-                return;
+                return false;
             }
 
             mcomment = mstr = msgid_plural = mflags = wxEmptyString;
@@ -697,7 +704,7 @@ void CatalogParser::Parse()
             if (!OnDeletedEntry(deletedLines,
                                 mflags, mrefs, mcomment, mautocomments, mlinenum))
             {
-                return;
+                return false;
             }
 
             mcomment = mstr = msgid_plural = mflags = wxEmptyString;
@@ -891,8 +898,7 @@ Catalog::Catalog(const wxString& po_file)
 {
     m_data = NULL;
     m_count = 0;
-    m_isOk = false;
-    Load(po_file);
+    m_isOk = Load(po_file);
 }
 
 
@@ -969,7 +975,14 @@ bool Catalog::Load(const wxString& po_file)
 #endif
 
     LoadParser parser(this, &f, &encConv);
-    parser.Parse();
+    if (!parser.Parse())
+    {
+        wxLogError(
+            wxString::Format(
+                _("Couldn't load file %s, it is probably corrupted."),
+                po_file.c_str()));
+        return false;
+    }
 
     // now that the catalog is loaded, update its items with the bookmarks
     for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)

@@ -1649,8 +1649,13 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
 {
     CancelItemsValidation();
 
+    Catalog *cat = new Catalog(catalog);
+    if (!cat->IsOk())
+        return;
+
     delete m_catalog;
-    m_catalog = new Catalog(catalog);
+    m_catalog = cat;
+
     m_list->CatalogChanged(m_catalog);
     dynamic_cast<TextctrlHandler*>(m_textTrans->GetEventHandler())->SetCatalog(m_catalog);
 
