@@ -1,33 +1,38 @@
-# Greek translation of poEdit.
 # Copyright (C) 2003 Free Software Foundation
+# This file is distributed under the GNU General Public License (GPL).
 # Simos Xenitellis (58%) <simos74@gmx.net>, 2003.
 # Petros Velonis (42%) <velonis@freemail.gr>, 2003.
+# nikos papadopoulos (5% (105% total) )<231036448@in.gr>, 2006.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: poEdit 1.2.2\n"
+"Project-Id-Version: poEdit 1.3.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-31 11:39+0100\n"
-"PO-Revision-Date: 2004-01-26 12:00+0200\n"
-"Last-Translator: Velonis Petros <velonis@freemail.gr>\n"
+"POT-Creation-Date: 2005-02-20 11:41+0100\n"
+"PO-Revision-Date: 2006-06-01 08:36+0200\n"
+"Last-Translator: nikos papadopoulos <231036448@in.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
 
-#: ../src/edframe.cpp:1799
+#: ../src/edframe.cpp:1832
 msgid " (modified)"
 msgstr " (τροποποιήθηκε)"
 
-#: ../src/digger.cpp:58
+#: ../src/digger.cpp:43
 msgid " files..."
 msgstr " αρχεία..."
 
-#: ../src/catalog.cpp:132
+#: ../src/catalog.cpp:116
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
-msgstr ""
+msgstr "%i σειρές του αρχείου '%s' δεν φορτώθηκαν σωστά."
 
-#: ../src/edframe.cpp:1767 ../src/export_html.cpp:145
+#: ../src/edframe.cpp:1800
+#: ../src/export_html.cpp:131
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i αλφαριθμητικά (%i ασαφή, %i άσχημα κουπόνια, %i μη μεταφρασμένα)"
@@ -40,13 +45,10 @@ msgstr "&Περί..."
 msgid "&Automatically translate using TM"
 msgstr "&Αυτόματη μετάφραση με χρήση της Μ.Μνήμης"
 
-#: ../src/edframe.cpp:2524
-msgid "&Bookmarks"
-msgstr ""
-
 # #-#-#-#-#  eog.HEAD.el.po (eog 0.2)  #-#-#-#-#
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-##
-#: ../src/resources/xrc_strings.h:34 ../src/resources/xrc_strings.h:44
+#: ../src/resources/xrc_strings.h:34
+#: ../src/resources/xrc_strings.h:44
 msgid "&Close"
 msgstr "&Κλείσιμο"
 
@@ -82,8 +84,9 @@ msgstr "&Επεξεργασία"
 # #-#-#-#-#  gaim-el.po (gaim 0.48)  #-#-#-#-##
 # #-#-#-#-#  gimp-print-el.po (gimp-print 1.0)  #-#-#-#-##
 # #-#-#-#-#  screem-el.po (screem 1.0)  #-#-#-#-##
-#: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
-#: ../src/edframe.cpp:399
+#: ../src/resources/xrc_strings.h:32
+#: ../src/resources/xrc_strings.h:35
+#: ../src/edframe.cpp:429
 msgid "&File"
 msgstr "&Αρχείο"
 
@@ -123,14 +126,15 @@ msgstr "&Νέος κατάλογος..."
 msgid "&Open"
 msgstr "&Άνοιγμα"
 
-#: ../src/resources/xrc_strings.h:33 ../src/resources/xrc_strings.h:43
+#: ../src/resources/xrc_strings.h:33
+#: ../src/resources/xrc_strings.h:43
 msgid "&Preferences..."
 msgstr "&Προτιμήσεις..."
 
 #: ../src/resources/xrc_strings.h:55
 #, fuzzy
 msgid "&Purge deleted translations"
-msgstr "&Σκιασμένη λίστα μεταφράσεων"
+msgstr "[έλεγχος μεταφράσεων: %i απέμεινε]"
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
 #: ../src/resources/xrc_strings.h:40
@@ -165,20 +169,20 @@ msgstr "&Ενημέρωση από τις πηγές"
 msgid "&View"
 msgstr "&Προβολή"
 
-#: ../src/catalog.cpp:1479
+#: ../src/catalog.cpp:1417
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' δεν είναι έγκυρο αρχείο POT."
 
-#: ../src/edframe.cpp:1689
+#: ../src/edframe.cpp:1723
 msgid "'."
 msgstr "'."
 
 #: ../src/resources/xrc_strings.h:94
 msgid "(%f will be substituted with filename, %l with line number)"
-msgstr "(το %f αντικαθίσταται με το όνομα αρχείου, %l με τον αριθμό γραμμής)"
+msgstr "(το %f θα αντικατασταθεί με το όνομα αρχείου, το %l με τον αριθμό γραμμής)"
 
-#: ../src/summarydlg.cpp:66
+#: ../src/summarydlg.cpp:50
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i νέα, %i εκτός χρήσης)"
@@ -187,11 +191,11 @@ msgstr "(%i νέα, %i εκτός χρήσης)"
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 νέο, 0 εκτός χρήσης)"
 
-#: ../src/chooselang.cpp:86
+#: ../src/chooselang.cpp:71
 msgid "(Use default language)"
 msgstr "(Χρήση εξ ορισμού γλώσσας)"
 
-#: ../src/edframe.cpp:701
+#: ../src/edframe.cpp:718
 msgid "(none of these)"
 msgstr "(κανένα από αυτά)"
 
@@ -200,7 +204,7 @@ msgstr "(κανένα από αυτά)"
 msgid "< Previous"
 msgstr "< Προηγούμενο"
 
-#: ../src/manager.cpp:381
+#: ../src/manager.cpp:348
 msgid "<unnamed>"
 msgstr "<δίχως όνομα>"
 
@@ -216,14 +220,14 @@ msgstr "Προσθήκη"
 msgid "Add directory to the list"
 msgstr "Προσθήκη καταλόγου αρχείων στη λίστα"
 
-#: ../src/resources/xrc_strings.h:170 ../src/transmemupd_wizard.cpp:138
+#: ../src/resources/xrc_strings.h:170
+#: ../src/transmemupd_wizard.cpp:123
 msgid "Add files"
 msgstr "Προσθήκη αρχείων"
 
 #: ../src/resources/xrc_strings.h:136
 msgid "Add path to the list of directories where catalogs lie."
-msgstr ""
-"Προσθήκη μονοπατιού στη λίστα καταλόγων αρχείων με καταλόγους μεταφράσεων."
+msgstr "Προσθήκη διαδρομής στη λίστα των φακέλων με τους κατάλογους."
 
 #: ../src/resources/xrc_strings.h:79
 msgid "Always change focus to text input field"
@@ -238,36 +242,36 @@ msgid "An item in keywords list:"
 msgstr "Ένα αντικείμενο στη λίστα των λέξεων κλειδιών:"
 
 #: ../src/resources/xrc_strings.h:83
-#, fuzzy
 msgid "Automatic spellchecking"
-msgstr "Αυτόματη μετάφραση"
+msgstr "Αυτόματος ορθογραφικός έλεγχος"
 
-#: ../src/export_html.cpp:184
+#: ../src/export_html.cpp:170
 msgid "Automatic translation"
 msgstr "Αυτόματη μετάφραση"
 
-#: ../src/edframe.cpp:2032 ../src/edframe.cpp:2036
+#: ../src/edframe.cpp:2055
+#: ../src/edframe.cpp:2059
 msgid "Automatic translations:"
 msgstr "Αυτόματες μεταφράσεις:"
 
 #: ../src/resources/xrc_strings.h:76
 msgid "Automatically compile .mo file on save"
-msgstr "Αυτόματη μεταγλώττιση αρχείου .mo κατά την αποθήκευση"
+msgstr "Αυτόματη σύνταξη αρχείου .mo κατά την αποθήκευση"
 
 #: ../src/resources/xrc_strings.h:112
 msgid "Automatically translate when updating catalog"
 msgstr "Αυτόματη μετάφραση όταν ανανεώνεται ο κατάλογος"
 
-#: ../src/edframe.cpp:1989
+#: ../src/edframe.cpp:2012
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Μεταφράστηκαν αυτόματα %u αλφαριθμητικά"
 
-#: ../src/edframe.cpp:1974
+#: ../src/edframe.cpp:1997
 msgid "Automatically translating..."
 msgstr "Αυτόματη μετάφραση..."
 
-#: ../src/manager.cpp:254
+#: ../src/manager.cpp:221
 msgid "Bad Tokens"
 msgstr "Άσχημα Κουπόνια"
 
@@ -279,76 +283,101 @@ msgstr "Μονοπάτι βάσης:"
 msgid "Behavior"
 msgstr "Συμπεριφορά"
 
-#: ../src/catalog.cpp:640
+#: ../src/catalog.cpp:591
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:608
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+#: ../src/catalog.cpp:559
+msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
 
 # #-#-#-#-#  libgnomeui.HEAD.el.po (libgnomeui 2.0.4)  #-#-#-#-#
 # #-#-#-#-#  memory.el.po (abiword 1.0)  #-#-#-#-#
 # #-#-#-#-#  gabber-el.po (gabber 1.0)  #-#-#-#-#
-#
 # #-#-#-#-#  gnome-db-el.po (gnome-db 0.0.91)  #-#-#-#-#
-#
 # #-#-#-#-#  gaim-el.po (gaim 0.48)  #-#-#-#-#
-#
 # #-#-#-#-#  gimp-print-el.po (gimp-print 1.0)  #-#-#-#-#
-#
 # #-#-#-#-#  screem-el.po (screem 1.0)  #-#-#-#-#
-#
-#: ../src/resources/xrc_strings.h:28 ../src/resources/xrc_strings.h:104
-#: ../src/resources/xrc_strings.h:135 ../src/resources/xrc_strings.h:167
+#: ../src/resources/xrc_strings.h:28
+#: ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:135
+#: ../src/resources/xrc_strings.h:167
 msgid "Browse"
 msgstr "Εξερεύνηση"
 
 #: ../src/resources/xrc_strings.h:51
-#, fuzzy
 msgid "C&atalog"
-msgstr "Κατάλογος μεταφράσεων"
+msgstr "Κ&ατάλογος"
 
 #: ../src/resources/xrc_strings.h:85
 msgid "CR/LF conversion"
 msgstr "μετατροπή CR/LF"
 
-#: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:19
-#: ../src/resources/xrc_strings.h:31 ../src/resources/xrc_strings.h:119
-#: ../src/resources/xrc_strings.h:134 ../src/resources/xrc_strings.h:138
-#: ../src/resources/xrc_strings.h:140 ../src/resources/xrc_strings.h:156
+#: ../src/resources/xrc_strings.h:6
+#: ../src/resources/xrc_strings.h:19
+#: ../src/resources/xrc_strings.h:31
+#: ../src/resources/xrc_strings.h:119
+#: ../src/resources/xrc_strings.h:134
+#: ../src/resources/xrc_strings.h:138
+#: ../src/resources/xrc_strings.h:140
+#: ../src/resources/xrc_strings.h:156
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: ../src/transmem.cpp:725
+#: ../src/transmem.cpp:710
 msgid "Cannot create database directory!"
 msgstr "Αδύνατη η δημιουργία του καταλόγου της βάσης δεδομένων!"
 
-#: ../src/gexecute.cpp:136 ../src/gexecute.cpp:185
+#: ../src/gexecute.cpp:119
+#: ../src/gexecute.cpp:166
 msgid "Cannot execute program: "
 msgstr "Αδύνατη η εκτέλεση του προγράμματος:"
 
-#: ../src/transmemupd.cpp:202
+#: ../src/transmemupd.cpp:187
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Αδύνατη η εξαγωγή καταλόγων από το αρχείο RPM."
+
+#: ../src/edapp.cpp:124
+#, c-format
+msgid ""
+"Cannot find resources file '%s'!\n"
+"Please reinstall poEdit."
+msgstr ""
+"Αδύνατο να βρεθεί το αρχείο πόρων '%s'!\n"
+"Παρακαλώ να γίνει επανεγκατάσταση του poEdit."
+
+#: ../src/edapp.cpp:118
+#, c-format
+msgid ""
+"Cannot find resources file '%s'!\n"
+"poEdit was configured to be installed in '%s'.\n"
+"You may try to set POEDIT_PREFIX environment variable to point\n"
+"to the location where you installed poEdit."
+msgstr ""
+"Αδύνατο να βρεθεί το αρχείο πόρων '%s'!\n"
+"Το poEdit είχε ρυθμιστεί για να εγκατασταθεί στο '%s'.\n"
+"Μπορείτε να ρυθμίσετε τη μεταβλητή περιβάλλοντος POEDIT_PREFIX ώστε να δείχνει\n"
+"στην τοποθεσία όπου εγκαταστήσατε το poEdit."
 
 #: ../src/resources/xrc_strings.h:12
 msgid "Case sensitive"
 msgstr "Ταίριασμα πεζών-κεφαλαίων"
 
-#: ../src/manager.cpp:250
+#: ../src/manager.cpp:217
 msgid "Catalog"
-msgstr "Κατάλογος μεταφράσεων"
+msgstr "Κατάλογος"
 
-#: ../src/edframe.cpp:746 ../src/edframe.cpp:772 ../src/edframe.cpp:809
-#: ../src/edframe.cpp:855 ../src/edframe.cpp:979
+#: ../src/edframe.cpp:763
+#: ../src/edframe.cpp:782
+#: ../src/edframe.cpp:814
+#: ../src/edframe.cpp:855
+#: ../src/edframe.cpp:959
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Ο κατάλογος τροποποιήθηκε. Θέλετε να γίνει αποθήκευση των αλλαγών;"
 
 #: ../src/resources/xrc_strings.h:36
 msgid "Catalogs &manager"
-msgstr "Διαχειριστής Μηνυμάτων &Μεταφράσεων"
+msgstr "&Διαχειριστής Καταλόγων"
 
 #: ../src/resources/xrc_strings.h:73
 msgid "Change UI language"
@@ -359,13 +388,15 @@ msgstr "Επιλογή γλώσσας UI"
 #
 # #-#-#-#-#  screem-el.po (screem 1.0)  #-#-#-#-#
 #
-#: ../src/resources/xrc_strings.h:147 ../src/export_html.cpp:131
+#: ../src/resources/xrc_strings.h:147
+#: ../src/export_html.cpp:117
 msgid "Charset:"
 msgstr "Σύνολο Χαρακτήρων:"
 
 # #-#-#-#-#  eog.HEAD.el.po (eog 0.2)  #-#-#-#-#
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-##
-#: ../src/resources/xrc_strings.h:98 ../src/resources/xrc_strings.h:100
+#: ../src/resources/xrc_strings.h:98
+#: ../src/resources/xrc_strings.h:100
 msgid "Choose"
 msgstr "Επιλογή"
 
@@ -379,7 +410,7 @@ msgstr "Καθαρισμός σχολίου"
 
 #: ../src/resources/xrc_strings.h:81
 msgid "Comment window is editable"
-msgstr "Το παράθυρο σχολίων δέχεται επεξεργασία"
+msgstr "Το παράθυρο σχολίων επιδέχεται επεξεργασία"
 
 # #-#-#-#-#  libgnomeprintui.gnome-2-2.el.po (libgnomeprintui 1.116.0)  #-#-#-#-#
 #
@@ -391,29 +422,32 @@ msgstr "Σχόλιο:"
 msgid "Configuration"
 msgstr "Ρυθμίσεις"
 
-#: ../src/manager.cpp:411 ../src/manager.cpp:431
+#: ../src/manager.cpp:378
+#: ../src/manager.cpp:398
 msgid "Confirmation"
 msgstr "Επιβεβαίωση"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2011
+#: ../src/resources/xrc_strings.h:46
+#: ../src/edframe.cpp:2034
 msgid "Copy original to translation field"
 msgstr "Αντιγραφή του πρωτότυπου στο πεδίο μετάφρασης"
 
 # #-#-#-#-#  libgnomeprintui.gnome-2-2.el.po (libgnomeprintui 1.116.0)  #-#-#-#-#
 #
-#: ../src/resources/xrc_strings.h:146 ../src/export_html.cpp:121
+#: ../src/resources/xrc_strings.h:146
+#: ../src/export_html.cpp:107
 msgid "Country:"
 msgstr "Χώρα:"
 
 #: ../src/resources/xrc_strings.h:22
 msgid "Create new translations project"
-msgstr "Δημιουργία νέου έργου μετάφρασης"
+msgstr "Δημιουργία νέας εργασίας μετάφρασης"
 
 #: ../src/resources/xrc_strings.h:102
 msgid "Database"
 msgstr "Βάση Δεδομένων"
 
-#: ../src/transmem.cpp:309
+#: ../src/transmem.cpp:294
 #, c-format
 msgid "Database error: %s"
 msgstr "Σφάλμα Βάσης Δεδομένων: %s"
@@ -432,9 +466,9 @@ msgstr "Διαγραφή αντικειμένου"
 
 #: ../src/resources/xrc_strings.h:24
 msgid "Delete the project"
-msgstr "Διαγραφή έργου"
+msgstr "Διαγραφή εργασίας"
 
-#: ../src/manager.cpp:304
+#: ../src/manager.cpp:271
 msgid "Directories:"
 msgstr "Κατάλογοι αρχείων:"
 
@@ -450,25 +484,23 @@ msgstr "Εμφάνιση &εισαγωγικών"
 msgid "Display quotes around the string?"
 msgstr "Να εμφανίζονται τα εισαγωγικά γύρω από το αλφαριθμητικό;"
 
-#: ../src/manager.cpp:430
+#: ../src/manager.cpp:397
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
 msgstr ""
-"Θέλετε πραγματικά να γίνει μαζική ενημέρωση\n"
-"σε όλους τους καταλόγους αυτού του έργου;"
+"Θέλεις πραγματικά να κάνεις μαζική ενημέρωση\n"
+"σε όλους τους καταλόγους αυτής της εργασίας;"
 
-#: ../src/edframe.cpp:1933
+#: ../src/edframe.cpp:1956
 msgid ""
-"Do you really want to remove all translations that are no longer used from "
-"the catalog?\n"
-"If you continue with purging, you will have to translate them again if they "
-"are added back in the future."
+"Do you really want to remove all translations that are no longer used from the catalog?\n"
+"If you continue with purging, you will have to translate them again if they are added back in the future."
 msgstr ""
 
-#: ../src/manager.cpp:410
+#: ../src/manager.cpp:377
 msgid "Do you want to delete the project?"
-msgstr "Επιθυμείτε να διαγράψετε το έργο;"
+msgstr "Επιθυμείς να διαγράψεις την εργασία;"
 
 #: ../src/resources/xrc_strings.h:91
 msgid "Don't change format of existing catalogs"
@@ -501,7 +533,8 @@ msgstr "Επεξεργασία"
 msgid "Edit &comment"
 msgstr "Επεξεργασία &σχολίου"
 
-#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:176
+#: ../src/resources/xrc_strings.h:3
+#: ../src/resources/xrc_strings.h:176
 msgid "Edit comment"
 msgstr "Επεξεργασία σχολίου"
 
@@ -526,7 +559,7 @@ msgstr "Επεξεργασία αντικειμένου"
 
 #: ../src/resources/xrc_strings.h:26
 msgid "Edit project"
-msgstr "Επεξεργασία έργου"
+msgstr "Επεξεργασία εργασίας"
 
 #: ../src/resources/xrc_strings.h:9
 msgid "Edit the file in text editor"
@@ -534,7 +567,7 @@ msgstr "Επεξεργασία του αρχείου στον επεξεργασ
 
 #: ../src/resources/xrc_strings.h:23
 msgid "Edit the project"
-msgstr "Επεξεργασία έργου"
+msgstr "Επεξεργασία εργασίας"
 
 #: ../src/resources/xrc_strings.h:74
 msgid "Editor"
@@ -546,36 +579,36 @@ msgstr "Εκτελέσιμο αρχείο επεξεργαστή:"
 
 #: ../src/resources/xrc_strings.h:84
 msgid "Enables on-the-fly spellchecking"
-msgstr ""
+msgstr "Ενεργοποιεί συνεχή ορθογραφικό έλεγχο"
 
-#: ../src/edframe.cpp:1118
+#: ../src/edframe.cpp:1085
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Οι καταχωρήσεις στον κατάλογο είναι μάλλον λανθασμένες."
 
-#: ../src/edframe.cpp:652
+#: ../src/edframe.cpp:669
 #, c-format
 msgid "Error initializing spell checking: %s"
-msgstr ""
+msgstr "Σφάλμα στην εκκίνηση του ορθογραφικού ελέγχου: %s"
 
-#: ../src/edframe.cpp:1689
+#: ../src/edframe.cpp:1723
 msgid "Error loading message catalog file '"
 msgstr "Σφάλμα φόρτωσης αρχείου καταλόγου μηνυμάτων '"
 
-#: ../src/fileviewer.cpp:90
+#: ../src/fileviewer.cpp:75
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Σφάλμα ανοίγματος αρχείου %s!"
 
-#: ../src/catalog.cpp:1279
+#: ../src/catalog.cpp:1217
 msgid "Error saving catalog"
 msgstr "Σφάλμα αποθήκευσης καταλόγου"
 
-#: ../src/catalog.cpp:80
+#: ../src/catalog.cpp:64
 #, c-format
 msgid "Error while loading file '%s': line %u is corrupted."
-msgstr ""
+msgstr "Σφάλμα στο φόρτωμα του φακέλου '%s': η σειρά %u είναι αλλοιωμένη."
 
-#: ../src/edframe.cpp:951
+#: ../src/edframe.cpp:931
 msgid "Export as..."
 msgstr "Εξαγωγή ως..."
 
@@ -584,7 +617,8 @@ msgid "External editor"
 msgstr "Εξωτερικός επεξεργαστής κειμένου"
 
 #
-#: ../src/edframe.cpp:827 ../src/edframe.cpp:871
+#: ../src/edframe.cpp:827
+#: ../src/edframe.cpp:866
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Το αρχείο '%s' δεν υπάρχει."
@@ -594,26 +628,17 @@ msgstr "Το αρχείο '%s' δεν υπάρχει."
 msgid "File '%s' is not message catalog."
 msgstr "Το αρχείο '%s' δεν είναι κατάλογος μηνυμάτων."
 
-#: ../src/catalog.cpp:1243
-#, c-format
-msgid ""
-"File '%s' is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-
-#: ../src/transmemupd_wizard.cpp:63
+#: ../src/transmemupd_wizard.cpp:48
 msgid "Files List"
 msgstr "Λίστα Αρχείων"
 
 #: ../src/resources/xrc_strings.h:18
-#, fuzzy
 msgid "Find in automatic comments"
-msgstr "Εμ&φάνιση παραθύρου σχολίων"
+msgstr "Ανεύρεση στα αυτόματα σχόλια"
 
 #: ../src/resources/xrc_strings.h:17
-#, fuzzy
 msgid "Find in comments"
-msgstr "Επεξεργασία σχολίου"
+msgstr "Ανεύρεση στα σχόλια"
 
 #: ../src/resources/xrc_strings.h:15
 msgid "Find in original strings"
@@ -635,33 +660,35 @@ msgstr "Εύρεση..."
 msgid "Fonts"
 msgstr "Γραμματοσειρές"
 
-#: ../src/edframe.cpp:2450
+#: ../src/edframe.cpp:2453
 #, c-format
 msgid "Form %u"
-msgstr ""
+msgstr "Μορφή %u"
 
-#: ../src/edframe.cpp:2452
+#: ../src/edframe.cpp:2455
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
-msgstr ""
+msgstr "Μορφή %u (πχ \"%u\")"
 
 #: ../src/resources/xrc_strings.h:177
 msgid "Fullscreen view"
 msgstr "Προβολή πλήρους οθόνης"
 
-#: ../src/manager.cpp:253
+#: ../src/manager.cpp:220
 msgid "Fuzzy"
 msgstr "Ασαφές"
 
-#: ../src/export_html.cpp:190
+#: ../src/export_html.cpp:176
 msgid "Fuzzy translation"
 msgstr "Ασαφής μετάφραση"
 
-#: ../src/edframe.cpp:792 ../src/edframe.cpp:911
+#: ../src/edframe.cpp:797
+#: ../src/edframe.cpp:908
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Κατάλογοι GNU GetText (*.po)|*.po|Όλα τα αρχεία (*.*)|*.*"
 
-#: ../src/edframe.cpp:1004 ../src/edframe.cpp:1136
+#: ../src/edframe.cpp:979
+#: ../src/edframe.cpp:1103
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "Πρότυπα GNU GetText (*.pot)|*.pot|Όλα τα αρχεία (*.*)|*.*"
 
@@ -677,38 +704,24 @@ msgstr "Δημιουργία Βάσης Δεδομένων Μ.Μνήμης"
 msgid "Generate database"
 msgstr "Δημιουργία Βάσης Δεδομένων"
 
-#: ../src/edframe.cpp:1198
+#: ../src/edframe.cpp:1167
 msgid "Gettext syntax error"
-msgstr ""
+msgstr "Σφάλμα σύνταξης Gettext"
 
-#: ../src/edframe.cpp:2520
-#, c-format
-msgid "Go to bookmark %i\tCtrl-%i"
-msgstr ""
-
-#: ../src/edframe.cpp:953
+#: ../src/edframe.cpp:933
 msgid "HTML file (*.html)|*.html"
 msgstr "αρχείο HTML(*.html)|*.html"
 
 # #-#-#-#-#  gnome-terminal.gnome-2-2.el.po (gnome-terminal 2.0.1)  #-#-#-#-#
 # #-#-#-#-#  galeon-el.po (galeon 1.0)  #-#-#-#-#
-#
 # #-#-#-#-#  glimmer-el.po (glimmer 1.0)  #-#-#-#-#
-#
 # #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
-#
 # #-#-#-#-#  gnucash-el.po (abiword 1.0)  #-#-#-#-#
-#
 # #-#-#-#-#  mrproject-el.po (mrproject 0.5)  #-#-#-#-#
-#
 # #-#-#-#-#  sodipodi-el.po (sodipodi 0.25)  #-#-#-#-#
-#
 # #-#-#-#-#  gnomemeeting-el.po (gnomemeeting 0.12.2)  #-#-#-#-#
-#
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
-#
 # #-#-#-#-#  yelp.HEAD.el.po (yelp 1.0.3)  #-#-#-#-#
-#
 #: ../src/resources/xrc_strings.h:178
 msgid "Help"
 msgstr "Βοήθεια"
@@ -724,7 +737,7 @@ msgstr "Ταυτότητα"
 
 #: ../src/resources/xrc_strings.h:82
 msgid "If checked, the comment window will be editable."
-msgstr "Αν έγινε έλεγχος, το παράθυρο σχολίων θα δέχεται επεξεργασία."
+msgstr "Αν τσεκαριστεί, το παράθυρο σχολίων θα επιδέχεται επεξεργασία."
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
 #: ../src/resources/xrc_strings.h:124
@@ -732,31 +745,35 @@ msgid "Invocation:"
 msgstr "Κλήση:"
 
 #
-#: ../src/resources/xrc_strings.h:154 ../src/settingsdlg.cpp:71
+#: ../src/resources/xrc_strings.h:154
+#: ../src/settingsdlg.cpp:55
 msgid "Keywords"
 msgstr "Λέξεις κλειδιά"
 
-#: ../src/chooselang.cpp:156
+#: ../src/chooselang.cpp:134
 msgid "Language selection"
 msgstr "Επιλογή Γλώσσας"
 
-#: ../src/resources/xrc_strings.h:121 ../src/resources/xrc_strings.h:122
-#: ../src/resources/xrc_strings.h:145 ../src/export_html.cpp:118
+#: ../src/resources/xrc_strings.h:121
+#: ../src/resources/xrc_strings.h:122
+#: ../src/resources/xrc_strings.h:145
+#: ../src/export_html.cpp:104
 msgid "Language:"
 msgstr "Γλώσσα:"
 
-#: ../src/manager.cpp:255
+#: ../src/manager.cpp:222
 msgid "Last modified"
 msgstr "Τελευταία τροποποίηση"
 
-#: ../src/fileviewer.cpp:99 ../src/edlistctrl.cpp:227
+#: ../src/fileviewer.cpp:84
+#: ../src/edlistctrl.cpp:187
 msgid "Line"
 msgstr "Γραμμή"
 
-#: ../src/catalog.cpp:145
+#: ../src/catalog.cpp:129
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
-msgstr ""
+msgstr "Η σειρά %u του αρχείου '%s'είναι αλλοιωμένη (μη έγκυρα %s δεδομένα)."
 
 #: ../src/resources/xrc_strings.h:86
 msgid "Line endings format:"
@@ -764,16 +781,16 @@ msgstr "Μορφή κλεισίματος γραμμών:"
 
 #: ../src/resources/xrc_strings.h:123
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "Η λίστα των επεκτάσεων χωρίζεται από άνω τελείες (π.χ. *.cpp · *.h):"
+msgstr "Η λίστα των επεκτάσεων χωρίζεται από άνω τελείες (πχ *.cpp · *.h):"
 
 #: ../src/resources/xrc_strings.h:89
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: ../src/catalog.cpp:217
+#: ../src/catalog.cpp:198
 #, c-format
 msgid "Malformed header: '%s'"
-msgstr ""
+msgstr "Παραμορφωμένη κεφαλίδα: '%s'"
 
 #: ../src/resources/xrc_strings.h:110
 msgid "Max. # of missing words:"
@@ -783,7 +800,7 @@ msgstr "Μέγιστος # λέξεων που να λείπουν:"
 msgid "Max. difference in sentence length:"
 msgstr "Μέγιστη διαφορά στο μήκος της πρότασης:"
 
-#: ../src/catalog.cpp:1451
+#: ../src/catalog.cpp:1389
 msgid "Merging differences..."
 msgstr "Συνένωση διαφορών..."
 
@@ -795,24 +812,17 @@ msgstr "Μετακίνηση κάτω"
 msgid "Move up"
 msgstr "Μετακίνηση πάνω"
 
-#: ../src/prefsdlg.cpp:55
+#: ../src/prefsdlg.cpp:40
 msgid "My Languages"
 msgstr "Οι Γλώσσες μου"
 
-#: ../src/manager.cpp:307
+#: ../src/manager.cpp:274
 msgid "My Project"
-msgstr "Το Έργο μου"
+msgstr "Η Εργασία  μου"
 
 #: ../src/resources/xrc_strings.h:80
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Ποτέ μην αφήνετε τη λίστα των αλφαριθμητικών να εστιαστεί. Αν ενεργοποιηθεί, "
-"πρέπει να χρησιμοποιήσετε το Ctrl-βελάκια για πλοήγηση μέσω πληκτρολογίου "
-"αλλά μπορείτε επίσης να πληκτρολογήσετε κείμενο αμέσως, χωρίς να χρειαστεί "
-"να πατήσετε το πλήκτρο Tab για αλλαγή εστίασης."
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Ποτέ μην αφήνετε τη λίστα των αλφαριθμητικών να εστιαστεί. Αν ενεργοποιηθεί, πρέπει να χρησιμοποιήσετε το Ctrl-βελάκια για πλοήγηση μέσω πληκτρολογίου αλλά μπορείτε επίσης να πληκτρολογήσετε κείμενο αμέσως, χωρίς να χρειαστεί να πατήσετε το πλήκτρο Tab για αλλαγή εστίασης."
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
 #
@@ -821,9 +831,8 @@ msgid "New"
 msgstr "Νέο"
 
 #: ../src/resources/xrc_strings.h:38
-#, fuzzy
 msgid "New catalog from POT file..."
-msgstr "Ενημέρωση από το αρχείο &POT..."
+msgstr "Νέος κατάλογος από αρχείο POT..."
 
 #: ../src/editlbox/editlbox.cpp:162
 msgid "New item"
@@ -838,28 +847,29 @@ msgstr "Νέα αλφαριθμητικά"
 msgid "Next >"
 msgstr "Επόμενο >"
 
-#: ../src/fileviewer.cpp:138
+#: ../src/fileviewer.cpp:123
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr ""
-"Δεν καθορίστηκε επεξεργαστής. Παρακαλώ να γίνει ρύθμιση στο διάλογο "
-"Προτιμήσεις"
+msgstr "Δεν καθορίστηκε επεξεργαστής. Παρακαλώ να γίνει ρύθμιση στην καρτέλα Προτιμήσεις"
 
-#: ../src/digger.cpp:138
+#: ../src/digger.cpp:123
 msgid "No files found in: "
 msgstr "Δε βρέθηκαν αρχεία στο: "
 
-#: ../src/edframe.cpp:1214
+#: ../src/edframe.cpp:1183
 msgid "No references to this string found."
 msgstr "Καμία αναφορά στο αλφαριθμητικό που βρέθηκε."
 
-#: ../src/export_html.cpp:162
+#: ../src/export_html.cpp:148
 msgid "Notes"
 msgstr "Σημειώσεις"
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
-#: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:30 ../src/resources/xrc_strings.h:118
-#: ../src/resources/xrc_strings.h:133 ../src/resources/xrc_strings.h:155
+#: ../src/resources/xrc_strings.h:2
+#: ../src/resources/xrc_strings.h:5
+#: ../src/resources/xrc_strings.h:30
+#: ../src/resources/xrc_strings.h:118
+#: ../src/resources/xrc_strings.h:133
+#: ../src/resources/xrc_strings.h:155
 #: ../src/resources/xrc_strings.h:163
 msgid "OK"
 msgstr "Εντάξει"
@@ -868,23 +878,26 @@ msgstr "Εντάξει"
 msgid "Obsolete strings"
 msgstr "Αλφαριθμητικά εκτός χρήσης"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:790
+#: ../src/resources/xrc_strings.h:171
+#: ../src/edframe.cpp:795
 msgid "Open catalog"
 msgstr "Άνοιγμα καταλόγου"
 
-#: ../src/edframe.cpp:1002 ../src/edframe.cpp:1134
+#: ../src/edframe.cpp:977
+#: ../src/edframe.cpp:1101
 msgid "Open catalog template"
-msgstr "Άνοιγμα προτύπου του καταλόγου"
+msgstr "Άνοιγμα προτύπου καταλόγου"
 
 #: ../src/resources/xrc_strings.h:78
 msgid "Open catalogs manager on poEdit startup"
-msgstr "Άνοιγμα του διαχειριστή καταλόγων μεταφράσεων στην εκκίνηση του poEdit"
+msgstr "Άνοιγμα του διαχειριστή καταλόγων στην εκκίνηση του poEdit"
 
 #: ../src/resources/xrc_strings.h:95
 msgid "Open source files in editor, not in file viewer"
 msgstr "Άνοιγμα πηγαίων αρχείων στον επεξεργαστή, όχι στον παρατηρητή αρχείων"
 
-#: ../src/edlistctrl.cpp:224 ../src/export_html.cpp:155
+#: ../src/edlistctrl.cpp:184
+#: ../src/export_html.cpp:141
 msgid "Original string"
 msgstr "Πρωτότυπα αλφαριθμητικά"
 
@@ -901,7 +914,7 @@ msgid "Parsers"
 msgstr "Αναλυτές"
 
 #
-#: ../src/digger.cpp:58
+#: ../src/digger.cpp:43
 msgid "Parsing "
 msgstr "Ανάλυση"
 
@@ -909,7 +922,8 @@ msgstr "Ανάλυση"
 msgid "Path to DB:"
 msgstr "Διαδρομή στη βάση δεδομένων:"
 
-#: ../src/resources/xrc_strings.h:152 ../src/settingsdlg.cpp:73
+#: ../src/resources/xrc_strings.h:152
+#: ../src/settingsdlg.cpp:57
 msgid "Paths"
 msgstr "Διαδρομές"
 
@@ -923,30 +937,28 @@ msgstr "Επιλογή γλώσσας από τη λίστα των γνωστώ
 
 #: ../src/resources/xrc_strings.h:166
 msgid "Please add directories where locale files are stored on your system:"
-msgstr ""
-"Παρακαλώ προσθέστε καταλόγους όπου αρχεία τοπικοποίησης είναι αποθηκευμένα "
-"στο σύστημά σας:"
+msgstr "Παρακαλώ προσθέστε καταλόγους όπου αρχεία τοπικοποίησης είναι αποθηκευμένα στο σύστημά σας:"
 
 #
-#: ../src/edframe.cpp:1222
+#: ../src/edframe.cpp:1191
 msgid "Please choose the reference you want to show:"
 msgstr "Παρακαλώ επιλέξτε την αναφορά που θέλετε να εμφανίσετε:"
 
-#: ../src/prefsdlg.cpp:336
+#: ../src/prefsdlg.cpp:321
 msgid "Please select language ISO code:"
 msgstr "Παρακαλώ επιλέξτε κωδικό γλώσσας ISO:"
 
-#: ../src/edframe.cpp:710
+#: ../src/edframe.cpp:727
 msgid "Please select language code:"
 msgstr "Παρακαλώ επιλέξτε κωδικό γλώσσας:"
 
 #: ../src/resources/xrc_strings.h:149
 msgid "Plural Forms:"
-msgstr ""
+msgstr "Μορφές Πληθυντικού"
 
-#: ../src/edframe.cpp:451
+#: ../src/edframe.cpp:480
 msgid "Plural:"
-msgstr ""
+msgstr "Πληθυντικός "
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
 #: ../src/resources/xrc_strings.h:68
@@ -957,38 +969,39 @@ msgstr "Προτιμήσεις"
 msgid "Proceed"
 msgstr "Συνέχιση"
 
-#: ../src/resources/xrc_strings.h:150 ../src/export_html.cpp:111
+#: ../src/resources/xrc_strings.h:150
+#: ../src/export_html.cpp:97
 msgid "Project info"
-msgstr "Πληροφορίες έργου"
+msgstr "Πληροφορίες εργασίας"
 
-#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:115
+#: ../src/resources/xrc_strings.h:142
+#: ../src/export_html.cpp:101
 msgid "Project name and version:"
-msgstr "Όνομα έργου και έκδοση:"
+msgstr "Όνομα εργασίας και έκδοση:"
 
 #: ../src/resources/xrc_strings.h:27
 msgid "Project name:"
-msgstr "Όνομα έργου:"
+msgstr "Όνομα εργασίας:"
 
-#: ../src/edframe.cpp:1934
+#: ../src/edframe.cpp:1957
 #, fuzzy
 msgid "Purge delete translations"
-msgstr "Αυτόματες μεταφράσεις:"
+msgstr "[έλεγχος μεταφράσεων: %i απέμεινε]"
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
-#: ../src/edframe.cpp:1222
+#: ../src/edframe.cpp:1191
 msgid "References"
 msgstr "Αναφορές"
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
-#: ../src/edframe.cpp:2016 ../src/edframe.cpp:2020
+#: ../src/edframe.cpp:2039
+#: ../src/edframe.cpp:2043
 msgid "References:"
 msgstr "Αναφορές:"
 
 #: ../src/resources/xrc_strings.h:108
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr ""
-"Ανανέωση της μεταφραστικής μνήμης από καταλόγους στα μονοπάτια που "
-"εμφανίζονται παραπάνω."
+msgstr "Ανανέωση της μεταφραστικής μνήμης χρησιμοποιώντας τους καταλόγους από τις διαδρομές που εμφανίζονται παραπάνω."
 
 #: ../src/resources/xrc_strings.h:168
 msgid "Reset to defaults"
@@ -998,7 +1011,7 @@ msgstr "Επαναφορά στις εξ ορισμού ρυθμίσεις"
 msgid "Save &as..."
 msgstr "Αποθήκευση &ως..."
 
-#: ../src/edframe.cpp:910
+#: ../src/edframe.cpp:907
 msgid "Save as..."
 msgstr "Αποθήκευση ως..."
 
@@ -1007,50 +1020,49 @@ msgstr "Αποθήκευση ως..."
 msgid "Save catalog"
 msgstr "Αποθήκευση καταλόγου"
 
-#: ../src/edframe.cpp:747 ../src/edframe.cpp:773 ../src/edframe.cpp:810
-#: ../src/edframe.cpp:856 ../src/edframe.cpp:980
+#: ../src/edframe.cpp:764
+#: ../src/edframe.cpp:783
+#: ../src/edframe.cpp:815
+#: ../src/edframe.cpp:856
+#: ../src/edframe.cpp:960
 msgid "Save changes"
 msgstr "Αποθήκευση αλλαγών"
 
-#: ../src/transmemupd.cpp:152
+#: ../src/transmemupd.cpp:137
 msgid "Scanning file: "
 msgstr "Ανίχνευση αρχείου:"
 
-#: ../src/digger.cpp:48
+#: ../src/digger.cpp:33
 msgid "Scanning files..."
 msgstr "Ανίχνευση αρχείων..."
 
-#: ../src/transmemupd_wizard.cpp:59
+#: ../src/transmemupd_wizard.cpp:44
 msgid "Search Paths"
 msgstr "Αναζήτηση Μονοπατιών"
 
-#: ../src/edframe.cpp:709
+#: ../src/edframe.cpp:726
 msgid "Select catalog's language"
-msgstr "Επιλογή γλώσσας καταλόγου μεταφράσεων"
+msgstr "Επιλογή γλώσσας καταλόγου"
 
-#: ../src/manager.cpp:284 ../src/prefsdlg.cpp:349
-#: ../src/transmemupd_wizard.cpp:112
+#: ../src/manager.cpp:251
+#: ../src/prefsdlg.cpp:334
+#: ../src/transmemupd_wizard.cpp:97
 msgid "Select directory"
 msgstr "Επιλογή καταλόγου αρχείων"
 
-#: ../src/prefsdlg.cpp:335
+#: ../src/prefsdlg.cpp:320
 msgid "Select language"
 msgstr "Επιλογή γλώσσας"
 
-#: ../src/chooselang.cpp:155
+#: ../src/chooselang.cpp:133
 msgid "Select your prefered language"
 msgstr "Επιλογή της γλώσσας προτίμησης"
-
-#: ../src/edframe.cpp:2514
-#, c-format
-msgid "Set bookmark %i\tAlt-%i"
-msgstr ""
 
 #: ../src/resources/xrc_strings.h:141
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:145
 msgid "Setup"
 msgstr "Ρύθμιση"
 
@@ -1059,19 +1071,19 @@ msgid "Show &comment window"
 msgstr "Εμ&φάνιση παραθύρου σχολίων"
 
 #: ../src/resources/xrc_strings.h:62
-#, fuzzy
 msgid "Show automatic c&omments window"
-msgstr "Εμ&φάνιση παραθύρου σχολίων"
+msgstr "Εμφάνιση παραθύρου αυτόματων σχολίων"
 
 #: ../src/resources/xrc_strings.h:77
 msgid "Show summary after catalog update"
 msgstr "Εμφάνιση περίληψης μετά την ενημέρωση του καταλόγου"
 
-#: ../src/edframe.cpp:450
+#: ../src/edframe.cpp:479
 msgid "Singular:"
-msgstr ""
+msgstr "Ενικός "
 
-#: ../src/resources/xrc_strings.h:131 ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:131
+#: ../src/resources/xrc_strings.h:148
 msgid "Source code charset:"
 msgstr "Σύνολο χαρακτήρων πηγαίου κώδικα:"
 
@@ -1080,28 +1092,30 @@ msgid "Source code parsers:"
 msgstr "Αναλυτές κώδικα πηγαίου αρχείου:"
 
 #
-#: ../src/fileviewer.cpp:46
+#: ../src/fileviewer.cpp:31
 msgid "Source file"
 msgstr "Αρχείο πηγαίου κώδικα"
 
 #: ../src/resources/xrc_strings.h:13
 msgid "Start from the first item"
-msgstr ""
+msgstr "Ξεκίνημα από το πρώτο αντικείμενο"
 
 #: ../src/resources/xrc_strings.h:11
 msgid "String to find:"
 msgstr "Αλφαριθμητικό προς εύρεση:"
 
 #
-#: ../src/resources/xrc_strings.h:144 ../src/export_html.cpp:128
+#: ../src/resources/xrc_strings.h:144
+#: ../src/export_html.cpp:114
 msgid "Team's email address:"
 msgstr "Ηλεκτρονική διεύθυνση ομάδας:"
 
-#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:124
+#: ../src/resources/xrc_strings.h:143
+#: ../src/export_html.cpp:110
 msgid "Team:"
 msgstr "Ομάδα:"
 
-#: ../src/catalog.cpp:1278
+#: ../src/catalog.cpp:1216
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -1112,11 +1126,9 @@ msgstr ""
 "όπως προσδιορίστηκε στις ρυθμίσεις καταλόγου. Αποθηκεύτηκε σε UTF-8\n"
 "και η ρύθμιση τροποποιήθηκε αναλόγως."
 
-#: ../src/catalog.cpp:967
-msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
+#: ../src/catalog.cpp:916
+msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
+msgstr "Υπήρξαν λάθη κατά το φόρτωμα του καταλόγου. Κατά συνέπεια κάποια δεδομένα μπορεί να λείπουν ή να είναι αλλοιωμένα."
 
 #: ../src/resources/xrc_strings.h:160
 msgid ""
@@ -1131,18 +1143,17 @@ msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "poEdit will add them to the catalog now."
 msgstr ""
-"Αυτά τα αλφαριθμητικά βρέθηκαν στα πηγαία αρχεία αλλά δεν ήταν στον "
-"κατάλογο.\n"
+"Αυτά τα αλφαριθμητικά βρέθηκαν στα πηγαία αρχεία αλλά δεν ήταν στον κατάλογο.\n"
 "Το poEdit θα τα προσθέσει στον κατάλογο τώρα."
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:145
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
 "Αυτή είναι η πρώτη φορά που εκτελείτε το poEdit.\n"
-"Παρακαλώ συμπληρώστε το όνομα σας και την ηλεκ.διεύθυνση σας.\n"
+"Παρακαλώ συμπληρώστε το όνομα σας και την ηλεκ. διεύθυνσή σας.\n"
 "(Αυτές οι πληροφορίες θα χρησιμοποιηθούν μόνο στις κεφαλές των καταλόγων)"
 
 #: ../src/resources/xrc_strings.h:126
@@ -1164,8 +1175,7 @@ msgid ""
 "only if source codecharset was given. %c expands to charset value."
 msgstr ""
 "Αυτό θα προσαρτηθεί στη γραμμή εντολών μόνο αν δοθεί\n"
-"το σύνολο χαρακτήρων πηγαίου κώδικα. Το %c αναπτύσσει την τιμή του συνόλου "
-"χαρακτήρων."
+"το σύνολο χαρακτήρων πηγαίου κώδικα. Το %c αναπτύσσει την τιμή του συνόλου χαρακτήρων."
 
 #: ../src/resources/xrc_strings.h:130
 #, c-format
@@ -1188,11 +1198,12 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Ενεργοποιημένο αν το επιλεγμένο αλφαριθμητικό έχει ασαφή μετάφραση"
 
-#: ../src/manager.cpp:251
+#: ../src/manager.cpp:218
 msgid "Total"
 msgstr "Συνολικά"
 
-#: ../src/edlistctrl.cpp:225 ../src/export_html.cpp:158
+#: ../src/edlistctrl.cpp:185
+#: ../src/export_html.cpp:144
 msgid "Translation"
 msgstr "Μετάφραση"
 
@@ -1201,11 +1212,11 @@ msgstr "Μετάφραση"
 msgid "Translation Memory"
 msgstr "Μεταφραστική Μνήμη"
 
-#: ../src/transmemupd_wizard.cpp:144
+#: ../src/transmemupd_wizard.cpp:129
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 msgstr "Αρχεία μετάφρασης (*.po · *.mo)|*.po·*.mo"
 
-#: ../src/transmemupd_wizard.cpp:142
+#: ../src/transmemupd_wizard.cpp:127
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "Αρχεία μετάφρασης (*.po · *.mo · *.rpm)|*.po · *.mo · *.rpm"
 
@@ -1221,7 +1232,7 @@ msgstr ""
 "Η μεταφραστική μνήμη θα δομηθεί από τα αρχεία που εμφανίζονται παρακάτω.\n"
 "Μπορείτε τώρα να προσθέσετε περισσότερα αρχεία στη λίστα."
 
-#: ../src/chooselang.cpp:69
+#: ../src/chooselang.cpp:54
 #, c-format
 msgid "Uknown locale code '%s' in registry."
 msgstr "Άγνωστος τοπικός κώδικας '%s' στο μητρώο."
@@ -1234,17 +1245,17 @@ msgstr "Αναίρεση"
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:252
+#: ../src/manager.cpp:219
 msgid "Untrans"
 msgstr "Μη μεταφρασμένο"
 
 #: ../src/resources/xrc_strings.h:25
 msgid "Update all catalogs in the project"
-msgstr "Ενημέρωση όλων των καταλόγων μεταφράσεων στο έργο"
+msgstr "Ενημέρωση όλων των καταλόγων στην εργασία"
 
 #: ../src/resources/xrc_strings.h:173
 msgid "Update catalog - synchronize it with sources"
-msgstr "Ενημέρωση καταλόγου μεταφράσεων - συγχρονισμός με τον πηγαίο κώδικα"
+msgstr "Ενημέρωση καταλόγου - συγχρονισμός με τον πηγαίο κώδικα"
 
 #: ../src/resources/xrc_strings.h:53
 msgid "Update from &POT file..."
@@ -1258,15 +1269,13 @@ msgstr "Ενημέρωση περίληψης"
 msgid "Update translation memory"
 msgstr "Ενημέρωση μεταφραστικής μνήμης"
 
-#: ../src/catalog.cpp:1411
+#: ../src/catalog.cpp:1349
 msgid "Updating catalog..."
-msgstr "Ενημέρωση καταλόγου μεταφράσεων..."
+msgstr "Ενημέρωση καταλόγου..."
 
-#: ../src/edframe.cpp:1120
+#: ../src/edframe.cpp:1087
 msgid "Updating the catalog failed. Click on 'More>>' for details."
-msgstr ""
-"Η ενημέρωση του καταλόγου απέτυχε. Κάντε κλικ στο 'Περισσότερα>>' για "
-"λεπτομέρειες."
+msgstr "Η ενημέρωση του καταλόγου απέτυχε. Κάντε κλικ στο 'Περισσότερα>>' για λεπτομέρειες."
 
 #: ../src/resources/xrc_strings.h:99
 msgid "Use custom font for text fields"
@@ -1281,27 +1290,24 @@ msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
 msgstr ""
-"Χρήση αυτών των λέξεων κλειδιών (ονόματα συναρτήσεων) προς αναγνώριση "
-"μεταφράσιμων αλφαριθμητικών\n"
+"Χρήση αυτών των λέξεων κλειδιών (ονόματα συναρτήσεων) προς αναγνώριση μεταφράσιμων αλφαριθμητικών\n"
 "στα πηγαία αρχεία, μαζί με τα εξ ορισμού."
 
 #: ../src/resources/xrc_strings.h:14
 msgid "Whole words only"
-msgstr ""
+msgstr "Πλήρης λέξεις μόνο"
 
 #: ../src/resources/xrc_strings.h:88
 msgid "Windows"
-msgstr "Παράθυρα"
+msgstr "Windows"
 
 #: ../src/edframe.cpp:837
 msgid "You can't drop more than one file on poEdit window."
-msgstr ""
-"Δε μπορείτε να σύρετε περισσότερα από ένα αρχείο πάνω σε ένα παράθυρο poEdit."
+msgstr "Δε μπορείτε να σύρετε περισσότερα από ένα αρχείο πάνω σε ένα παράθυρο poEdit."
 
-#: ../src/chooselang.cpp:170
+#: ../src/chooselang.cpp:148
 msgid "You must restart poEdit for this change to take effect."
-msgstr ""
-"Πρέπει να γίνει επανεκκίνηση του poEdit ώστε αυτή η αλλαγή να έχει επίδραση."
+msgstr "Πρέπει να γίνει επανεκκίνηση του poEdit ώστε αυτή η αλλαγή να έχει επίδραση."
 
 #: ../src/resources/xrc_strings.h:72
 msgid "Your e-mail address:"
@@ -1311,17 +1317,17 @@ msgstr "Η ηλεκ. διεύθυνσή σας:"
 msgid "Your name:"
 msgstr "Το όνομά σας:"
 
-#: ../src/edframe.cpp:1773
-#, fuzzy, c-format
+#: ../src/edframe.cpp:1806
+#, c-format
 msgid "[checking translations: %i left]"
-msgstr "&Σκιασμένη λίστα μεταφράσεων"
+msgstr "[έλεγχος μεταφράσεων: %i απέμεινε]"
 
 #: ../src/resources/xrc_strings.h:90
 msgid "current platform's default"
 msgstr "εξ ορισμού επιλογές πλατφόρμας"
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
-#: ../src/edframe.cpp:2056
+#: ../src/edframe.cpp:2079
 msgid "none"
 msgstr "κανένα"
 
@@ -1340,65 +1346,28 @@ msgstr "κανένα"
 # #-#-#-#-#  gaim-el.po (gaim 0.48)  #-#-#-#-##
 # #-#-#-#-#  screem-el.po (screem 1.0)  #-#-#-#-##
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-##
-#: ../src/edframe.cpp:337
+#: ../src/edframe.cpp:372
 msgid "poEdit"
 msgstr "poEdit"
 
-#: ../src/manager.cpp:69
+#: ../src/manager.cpp:54
 msgid "poEdit - Catalogs manager"
-msgstr "poEdit - Διαχειριστής καταλόγων μεταφράσεων"
+msgstr "poEdit - Διαχειριστής καταλόγων"
 
-#: ../src/digger.cpp:139
+#: ../src/edapp.cpp:127
+msgid "poEdit Error"
+msgstr "Σφάλμα poEdit"
+
+#: ../src/digger.cpp:124
 msgid "poEdit did not find any files in scanned directories."
-msgstr "Το poEdit δε βρήκε κανένα αρχείο στους ανιχνευόμενους καταλόγους ."
+msgstr "Το poEdit δε βρήκε κανένα αρχείο στους ανιχνεύσιμους καταλόγους ."
 
-#: ../src/edapp.cpp:65
-msgid ""
-"poEdit installation is broken, cannot find application's home directory."
-msgstr ""
-"Η εγκατάσταση του poEdit είναι ατελής, αδυναμία εύρεσης του αρχικού "
-"καταλόγου της εφαρμογής."
+#: ../src/edapp.cpp:51
+msgid "poEdit installation is broken, cannot find application's home directory."
+msgstr "Η εγκατάσταση του poEdit είναι ατελής, αδυναμία εύρεσης του αρχικού καταλόγου της εφαρμογής."
 
 #
-#: ../src/edframe.cpp:2071
+#: ../src/edframe.cpp:2094
 msgid "version"
 msgstr "έκδοση"
 
-# #-#-#-#-#  memory.el.po (abiword 1.0)  #-#-#-#-#
-# #-#-#-#-#  gtk+-el.po (gtk+ 1.2.9)  #-#-#-#-#
-#
-# #-#-#-#-#  screem-el.po (screem 1.0)  #-#-#-#-#
-#
-#, fuzzy
-#~ msgid "; charset="
-#~ msgstr "Σύνολο Χαρακτήρων:"
-
-#~ msgid ""
-#~ "Cannot find resources file '%s'!\n"
-#~ "Please reinstall poEdit."
-#~ msgstr ""
-#~ "Αδύνατο να βρεθεί το αρχείο πόρων '%s'!\n"
-#~ "Παρακαλώ να γίνει επανεγκατάσταση του poEdit."
-
-#~ msgid ""
-#~ "Cannot find resources file '%s'!\n"
-#~ "poEdit was configured to be installed in '%s'.\n"
-#~ "You may try to set POEDIT_PREFIX environment variable to point\n"
-#~ "to the location where you installed poEdit."
-#~ msgstr ""
-#~ "Αδύνατο να βρεθεί το αρχείο πόρων '%s'!\n"
-#~ "Το poEdit είχε ρυθμιστεί για να εγκατασταθεί στο '%s'.\n"
-#~ "Μπορείτε να ρυθμίσετε τη μεταβλητή περιβάλλοντος POEDIT_PREFIX ώστε να "
-#~ "δείχνει\n"
-#~ "στην τοποθεσία όπου εγκαταστήσατε το poEdit."
-
-#~ msgid "poEdit Error"
-#~ msgstr "Σφάλμα poEdit"
-
-#
-#, fuzzy
-#~ msgid "X-Poedit-Keywords"
-#~ msgstr "Λέξεις κλειδιά"
-
-#~ msgid "&Catalog"
-#~ msgstr "&Κατάλογος"
