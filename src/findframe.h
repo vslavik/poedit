@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.org)
  *
- *  Copyright (C) 2001-2005 Vaclav Slavik
+ *  Copyright (C) 2001-2006 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -30,7 +30,8 @@
 #ifndef _FINDFRAME_H_
 #define _FINDFRAME_H_
 
-#include <wx/dialog.h>
+#include <wx/frame.h>
+
 class poEditListCtrl;
 class WXDLLEXPORT wxButton;
 class Catalog;
@@ -42,7 +43,7 @@ class Catalog;
     This class assumes that list control's user data contains index
     into the catalog.
  */
-class FindFrame : public wxDialog
+class FindFrame : public wxFrame
 {
     public:
         /** Ctor.

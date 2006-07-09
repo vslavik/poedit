@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.org)
  *
- *  Copyright (C) 2001-2005 Vaclav Slavik
+ *  Copyright (C) 2001-2006 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -42,7 +42,7 @@
 // The word separators used when doing a "Whole words only" search
 static const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
 
-BEGIN_EVENT_TABLE(FindFrame, wxDialog)
+BEGIN_EVENT_TABLE(FindFrame, wxFrame)
    EVT_BUTTON(XRCID("find_next"), FindFrame::OnNext)
    EVT_BUTTON(XRCID("find_prev"), FindFrame::OnPrev)
    EVT_BUTTON(wxID_CANCEL, FindFrame::OnCancel)
@@ -69,7 +69,7 @@ FindFrame::FindFrame(wxWindow *parent,
     wxPoint p(wxConfig::Get()->Read(_T("find_pos_x"), -1),
               wxConfig::Get()->Read(_T("find_pos_y"), -1));
 
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("find_frame"));
+    wxXmlResource::Get()->LoadFrame(this, parent, _T("find_frame"));
     if (p.x != -1)
         Move(p);
 
