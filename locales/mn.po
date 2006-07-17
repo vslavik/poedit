@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poEdit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-31 11:39+0100\n"
+"POT-Creation-Date: 2006-07-17 10:55+0200\n"
 "PO-Revision-Date: 2004-12-03 23:56+0100\n"
 "Last-Translator: Khurelbaatar Lkhagvasuren <hujii@openmn.org>\n"
 "Language-Team: \n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1799
+#: ../src/edframe.cpp:1805
 msgid " (modified)"
 msgstr "(өөрчлөгдсөн)"
 
@@ -28,7 +28,7 @@ msgstr "файлууд..."
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr ""
 
-#: ../src/edframe.cpp:1767 ../src/export_html.cpp:145
+#: ../src/edframe.cpp:1773 ../src/export_html.cpp:145
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr ""
@@ -42,7 +42,7 @@ msgstr "&Тухай"
 msgid "&Automatically translate using TM"
 msgstr "&ОС ашиглан автоматаар орчуул"
 
-#: ../src/edframe.cpp:2524
+#: ../src/edframe.cpp:2534
 msgid "&Bookmarks"
 msgstr ""
 
@@ -116,12 +116,12 @@ msgstr "&Эхнүүдээс шинэчлэх"
 msgid "&View"
 msgstr "&Харагдац"
 
-#: ../src/catalog.cpp:1479
+#: ../src/catalog.cpp:1492
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' нь зөв РОТ файл биш байна."
 
-#: ../src/edframe.cpp:1689
+#: ../src/edframe.cpp:1695
 msgid "'."
 msgstr "'."
 
@@ -142,7 +142,7 @@ msgstr "(0 шинэ, 0 хуучирсан)"
 msgid "(Use default language)"
 msgstr "(Үндсэн хэлийг хэрэглэ)"
 
-#: ../src/edframe.cpp:701
+#: ../src/edframe.cpp:702
 msgid "(none of these)"
 msgstr "(эндээс биш)"
 
@@ -195,7 +195,7 @@ msgstr "Автомат орчуулга:"
 msgid "Automatic translation"
 msgstr "Автомат орчуулга:"
 
-#: ../src/edframe.cpp:2032 ../src/edframe.cpp:2036
+#: ../src/edframe.cpp:2038 ../src/edframe.cpp:2042
 msgid "Automatic translations:"
 msgstr "Автомат орчуулгууд:"
 
@@ -207,12 +207,12 @@ msgstr "Хадгалахдаа автоматаар .mo файл болгон э
 msgid "Automatically translate when updating catalog"
 msgstr "Каталог шинэчлэж байхад автоматаар орчуул"
 
-#: ../src/edframe.cpp:1989
+#: ../src/edframe.cpp:1995
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Автоматаар орчуулагдсан %u тэмдэгт мөрнүүд"
 
-#: ../src/edframe.cpp:1974
+#: ../src/edframe.cpp:1980
 msgid "Automatically translating..."
 msgstr "Автоматаар орчуулаж байна..."
 
@@ -228,11 +228,11 @@ msgstr "Үндсэн зам:"
 msgid "Behavior"
 msgstr "Ажиллах горим"
 
-#: ../src/catalog.cpp:640
+#: ../src/catalog.cpp:645
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 
-#: ../src/catalog.cpp:608
+#: ../src/catalog.cpp:610
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -278,8 +278,8 @@ msgstr "Том жижиг үсэг ялгана"
 msgid "Catalog"
 msgstr "Каталог"
 
-#: ../src/edframe.cpp:746 ../src/edframe.cpp:772 ../src/edframe.cpp:809
-#: ../src/edframe.cpp:855 ../src/edframe.cpp:979
+#: ../src/edframe.cpp:747 ../src/edframe.cpp:773 ../src/edframe.cpp:810
+#: ../src/edframe.cpp:856 ../src/edframe.cpp:980
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Каталог өөрчлөгдлөө. Та өөрчлөлтийг хадгалахыг хүсч байна уу?"
 
@@ -323,9 +323,14 @@ msgstr "Тохируулга"
 msgid "Confirmation"
 msgstr "Баталгаажуулалт"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2011
+#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2017
 msgid "Copy original to translation field"
 msgstr "Эх хувилбарыг орчуулгын талбарт хуулах"
+
+#: ../src/catalog.cpp:982
+#, c-format
+msgid "Couldn't load file %s, it is probably corrupted."
+msgstr ""
 
 #: ../src/resources/xrc_strings.h:146 ../src/export_html.cpp:121
 msgid "Country:"
@@ -380,7 +385,7 @@ msgstr ""
 "Та үнэхээр энэ төсөл дэх каталогуудын хувьд\n"
 "хүчтэй шинэчлэлт хийхийг хүсэж байна уу?"
 
-#: ../src/edframe.cpp:1933
+#: ../src/edframe.cpp:1939
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -440,16 +445,16 @@ msgstr "Ачаалагдах засварлагч:"
 msgid "Enables on-the-fly spellchecking"
 msgstr ""
 
-#: ../src/edframe.cpp:1118
+#: ../src/edframe.cpp:1119
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Каталогт оруулсан зүйлс магадгүй буруу байна."
 
-#: ../src/edframe.cpp:652
+#: ../src/edframe.cpp:653
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr ""
 
-#: ../src/edframe.cpp:1689
+#: ../src/edframe.cpp:1695
 msgid "Error loading message catalog file '"
 msgstr "Каталогын мессеж уншихад алдаатай '"
 
@@ -458,7 +463,7 @@ msgstr "Каталогын мессеж уншихад алдаатай '"
 msgid "Error opening file %s!"
 msgstr "%s файлыг нээхэд алдаатай!"
 
-#: ../src/catalog.cpp:1279
+#: ../src/catalog.cpp:1292
 msgid "Error saving catalog"
 msgstr "Каталог хадгалахад алдаатай"
 
@@ -467,7 +472,7 @@ msgstr "Каталог хадгалахад алдаатай"
 msgid "Error while loading file '%s': line %u is corrupted."
 msgstr ""
 
-#: ../src/edframe.cpp:951
+#: ../src/edframe.cpp:952
 msgid "Export as..."
 msgstr "Экспортлох..."
 
@@ -475,17 +480,17 @@ msgstr "Экспортлох..."
 msgid "External editor"
 msgstr "Гадаад засварлагч"
 
-#: ../src/edframe.cpp:827 ../src/edframe.cpp:871
+#: ../src/edframe.cpp:828 ../src/edframe.cpp:872
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Файл  '%s' байхгүй байна."
 
-#: ../src/edframe.cpp:844
+#: ../src/edframe.cpp:845
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Файл '%s' бол мессежийн каталог биш байна"
 
-#: ../src/catalog.cpp:1243
+#: ../src/catalog.cpp:1256
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -522,12 +527,12 @@ msgstr "Хайх..."
 msgid "Fonts"
 msgstr "Фонтууд"
 
-#: ../src/edframe.cpp:2450
+#: ../src/edframe.cpp:2460
 #, c-format
 msgid "Form %u"
 msgstr ""
 
-#: ../src/edframe.cpp:2452
+#: ../src/edframe.cpp:2462
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
 msgstr ""
@@ -544,11 +549,11 @@ msgstr "Бүдэг"
 msgid "Fuzzy translation"
 msgstr "Бүдэг орчуулга"
 
-#: ../src/edframe.cpp:792 ../src/edframe.cpp:911
+#: ../src/edframe.cpp:793 ../src/edframe.cpp:912
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU GetText каталогууд (*.po)|*.po|Бүх файлууд (*.*)|*.*"
 
-#: ../src/edframe.cpp:1004 ../src/edframe.cpp:1136
+#: ../src/edframe.cpp:1005 ../src/edframe.cpp:1137
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU GetText бэлэн загварууд (*.pot)|*.pot|Бүх файлууд (*.*)|*.*"
 
@@ -564,16 +569,16 @@ msgstr "TM өгөгдлийн бааз үүсгэх"
 msgid "Generate database"
 msgstr "Өгөгдлийн бааз гаргах"
 
-#: ../src/edframe.cpp:1198
+#: ../src/edframe.cpp:1199
 msgid "Gettext syntax error"
 msgstr ""
 
-#: ../src/edframe.cpp:2520
+#: ../src/edframe.cpp:2530
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
 msgstr ""
 
-#: ../src/edframe.cpp:953
+#: ../src/edframe.cpp:954
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML файл (*.html)|*.html"
 
@@ -597,7 +602,7 @@ msgstr "Залбирал:"
 msgid "Keywords"
 msgstr "Түлхүүр үгнүүд"
 
-#: ../src/chooselang.cpp:156
+#: ../src/chooselang.cpp:157
 msgid "Language selection"
 msgstr "Хэл сонголт"
 
@@ -644,7 +649,7 @@ msgstr "Байхгүй үгний хамгийн их тоо:"
 msgid "Max. difference in sentence length:"
 msgstr "Өгүүлбэрийн урт дахь хамгийн их ялгаа:"
 
-#: ../src/catalog.cpp:1451
+#: ../src/catalog.cpp:1464
 msgid "Merging differences..."
 msgstr "Ялгааг нийлүүлж байна..."
 
@@ -702,7 +707,7 @@ msgstr "Засварлагч сонгогдоогүй байна. Үүнийг �
 msgid "No files found in: "
 msgstr "Файл олдсонгүй:"
 
-#: ../src/edframe.cpp:1214
+#: ../src/edframe.cpp:1215
 msgid "No references to this string found."
 msgstr "Энэ тэмдэгт мөрд хамаарах лавламж олдмонгүй."
 
@@ -721,11 +726,11 @@ msgstr "ОК"
 msgid "Obsolete strings"
 msgstr "Хуучирсан тэмдэгт мөрнүүд"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:790
+#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:791
 msgid "Open catalog"
 msgstr "Каталог нээх"
 
-#: ../src/edframe.cpp:1002 ../src/edframe.cpp:1134
+#: ../src/edframe.cpp:1003 ../src/edframe.cpp:1135
 msgid "Open catalog template"
 msgstr "Бэлэн каталог загвар нээх"
 
@@ -777,7 +782,7 @@ msgstr "Мэдэгдэж байгаа хэлнүүдээс хэлийг сонг
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "Системд локал файлууд хаана байгаа хавтасыг нэмэх:"
 
-#: ../src/edframe.cpp:1222
+#: ../src/edframe.cpp:1223
 msgid "Please choose the reference you want to show:"
 msgstr "Үзүүлэх лавламжийг сонгоно уу:"
 
@@ -785,7 +790,7 @@ msgstr "Үзүүлэх лавламжийг сонгоно уу:"
 msgid "Please select language ISO code:"
 msgstr "Хэлнийхээ ISO кодыг сонгоно уу:"
 
-#: ../src/edframe.cpp:710
+#: ../src/edframe.cpp:711
 msgid "Please select language code:"
 msgstr "Хэлнийхээ кодыг сонгоно уу:"
 
@@ -817,16 +822,16 @@ msgstr "Төслийн нэр ба хувилбар:"
 msgid "Project name:"
 msgstr "Төслийн нэр:"
 
-#: ../src/edframe.cpp:1934
+#: ../src/edframe.cpp:1940
 #, fuzzy
 msgid "Purge delete translations"
 msgstr "Автомат орчуулгууд:"
 
-#: ../src/edframe.cpp:1222
+#: ../src/edframe.cpp:1223
 msgid "References"
 msgstr "Лавламжууд"
 
-#: ../src/edframe.cpp:2016 ../src/edframe.cpp:2020
+#: ../src/edframe.cpp:2022 ../src/edframe.cpp:2026
 msgid "References:"
 msgstr "Лавламжууд:"
 
@@ -844,7 +849,7 @@ msgstr "Үндсэн хэлбэр лүү хувиргах"
 msgid "Save &as..."
 msgstr "Хадгалахдаа..."
 
-#: ../src/edframe.cpp:910
+#: ../src/edframe.cpp:911
 msgid "Save as..."
 msgstr "Хадгалахдаа..."
 
@@ -852,8 +857,8 @@ msgstr "Хадгалахдаа..."
 msgid "Save catalog"
 msgstr "Каталог хадгалах"
 
-#: ../src/edframe.cpp:747 ../src/edframe.cpp:773 ../src/edframe.cpp:810
-#: ../src/edframe.cpp:856 ../src/edframe.cpp:980
+#: ../src/edframe.cpp:748 ../src/edframe.cpp:774 ../src/edframe.cpp:811
+#: ../src/edframe.cpp:857 ../src/edframe.cpp:981
 msgid "Save changes"
 msgstr "Өөрчлөлтүүдийг хадгалах"
 
@@ -869,7 +874,7 @@ msgstr "Файлуудыг шалгаж байна..."
 msgid "Search Paths"
 msgstr "Хайх замууд"
 
-#: ../src/edframe.cpp:709
+#: ../src/edframe.cpp:710
 msgid "Select catalog's language"
 msgstr "Каталогын хэлийг сонгоно уу"
 
@@ -882,11 +887,11 @@ msgstr "Хавтас сонгох"
 msgid "Select language"
 msgstr "Хэл сонгох"
 
-#: ../src/chooselang.cpp:155
+#: ../src/chooselang.cpp:156
 msgid "Select your prefered language"
 msgstr "Төлөвлөсөн хэлээ сонгох"
 
-#: ../src/edframe.cpp:2514
+#: ../src/edframe.cpp:2524
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr ""
@@ -895,7 +900,7 @@ msgstr ""
 msgid "Settings"
 msgstr "Тохиргоонууд"
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:144
 msgid "Setup"
 msgstr "Тохиргоо"
 
@@ -944,7 +949,7 @@ msgstr "Багийн э-захианы хаяг:"
 msgid "Team:"
 msgstr "Баг:"
 
-#: ../src/catalog.cpp:1278
+#: ../src/catalog.cpp:1291
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -955,7 +960,7 @@ msgstr ""
 "каталогийг хадгалж чадсангүй. Тиймээс каталогийг\n"
 "шууд UTF-8 хэлбэрээр хадгаллаа."
 
-#: ../src/catalog.cpp:967
+#: ../src/catalog.cpp:973
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -977,7 +982,7 @@ msgstr ""
 "Эдгээр тэмдэгт мөрүүд эх сурвалжид олдсон боловч каталогид\n"
 "байсангүй. poEdit одоо тэднийг каталог руу нэмэх болно."
 
-#: ../src/edapp.cpp:138
+#: ../src/edapp.cpp:144
 msgid ""
 "This is first time you run poEdit.\n"
 "Please fill in your name and e-mail address.\n"
@@ -1098,11 +1103,11 @@ msgstr "Шинэчлэлийн хураангуй"
 msgid "Update translation memory"
 msgstr "Орчуулгын санамжыг шинэчлэх"
 
-#: ../src/catalog.cpp:1411
+#: ../src/catalog.cpp:1424
 msgid "Updating catalog..."
 msgstr "Каталог шинэчлэлт..."
 
-#: ../src/edframe.cpp:1120
+#: ../src/edframe.cpp:1121
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "Каталог шинэчлэлт бүтсэнгүй. 'Цааш>>' дээр даран нарийвчлан үзнэ үү."
 
@@ -1130,11 +1135,11 @@ msgstr ""
 msgid "Windows"
 msgstr "Цонхнууд"
 
-#: ../src/edframe.cpp:837
+#: ../src/edframe.cpp:838
 msgid "You can't drop more than one file on poEdit window."
 msgstr "Та poEdit цонх руу нэгээс их файл чирч оруулж чадахгүй."
 
-#: ../src/chooselang.cpp:170
+#: ../src/chooselang.cpp:171
 msgid "You must restart poEdit for this change to take effect."
 msgstr "Та  энэ өөрчлөлтийг идвэхжүүлэхийн тулд poEdit-ийг дахин ачаална уу!"
 
@@ -1146,7 +1151,7 @@ msgstr "Таны Э-Захианы хаяг:"
 msgid "Your name:"
 msgstr "Таны нэр:"
 
-#: ../src/edframe.cpp:1773
+#: ../src/edframe.cpp:1779
 #, fuzzy, c-format
 msgid "[checking translations: %i left]"
 msgstr "&Сүүдэрлүүлсэн орчуулгын жагсаалт"
@@ -1155,7 +1160,7 @@ msgstr "&Сүүдэрлүүлсэн орчуулгын жагсаалт"
 msgid "current platform's default"
 msgstr "одоогийн платформын үндсэн"
 
-#: ../src/edframe.cpp:2056
+#: ../src/edframe.cpp:2062
 msgid "none"
 msgstr "байхгүй"
 
@@ -1171,12 +1176,12 @@ msgstr "роEdit - Каталогийн менежер "
 msgid "poEdit did not find any files in scanned directories."
 msgstr "poEdit шалгасан хавтасаас ямарч файл олдсонгүй. "
 
-#: ../src/edapp.cpp:65
+#: ../src/edapp.cpp:66
 msgid ""
 "poEdit installation is broken, cannot find application's home directory."
 msgstr "poEdit суулгац эвдэрхий байна. Программын гэр хавтас олдохгүй байна."
 
-#: ../src/edframe.cpp:2071
+#: ../src/edframe.cpp:2077
 msgid "version"
 msgstr "хувилбар"
 
