@@ -1,18 +1,19 @@
-# SOME DESCRIPTIVE TITLE.
+# poedit
 # Copyright (C) 2002, 2003 Mantas Kriaučiūnas & Liudas Dmitrijevas
 # This file is distributed under the same license as the poEdit package.
 # Mantas Kriaučiūnas <mantas@akl.lt>, 2002-2003
 # Liudas Dmitrijevas <liudacka@xxx.lt>, 2002-2003
 # Kestutis Snieška <sniekest@pit.ktu.lt>, 2003
 # Ramūnas Lukaševičius <Ramunas.Lukasevicius@mail.lt>, 2003
+# Gintautas Miliauskas <gintas@akl.lt>, 2006
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: poEdit 1.2.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-17 10:55+0200\n"
-"PO-Revision-Date: 2004-06-28 16:36+0200\n"
-"Last-Translator: Gintaris <gintaris@pirtyje.lt>\n"
+"PO-Revision-Date: 2006-08-08 23:53+0300\n"
+"Last-Translator: Gintautas Miliauskas <gintas@akl.lt>\n"
 "Language-Team: lt <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -24,14 +25,15 @@ msgstr " (pakeisti)"
 
 #: ../src/digger.cpp:58
 msgid " files..."
-msgstr " bylos..."
+msgstr " failai..."
 
 #: ../src/catalog.cpp:132
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
-msgstr ""
+msgstr "Nepavyko perskaityti %i eilučių iš failo '%s'."
 
-#: ../src/edframe.cpp:1773 ../src/export_html.cpp:145
+#: ../src/edframe.cpp:1773
+#: ../src/export_html.cpp:145
 #, c-format
 msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i eilučių (%i neaiškios, %i blogi skirtukai, %i neišverstos)"
@@ -41,15 +43,15 @@ msgid "&About..."
 msgstr "&Apie..."
 
 #: ../src/resources/xrc_strings.h:54
-#, fuzzy
 msgid "&Automatically translate using TM"
-msgstr "Automatinis vertimas naudojant VA"
+msgstr "&Automatiškai versti naudojant VA"
 
 #: ../src/edframe.cpp:2534
 msgid "&Bookmarks"
-msgstr ""
+msgstr "Ž&ymelės"
 
-#: ../src/resources/xrc_strings.h:34 ../src/resources/xrc_strings.h:44
+#: ../src/resources/xrc_strings.h:34
+#: ../src/resources/xrc_strings.h:44
 msgid "&Close"
 msgstr "&Uždaryti"
 
@@ -61,10 +63,11 @@ msgstr "&Turinys..."
 msgid "&Edit"
 msgstr "&Keisti"
 
-#: ../src/resources/xrc_strings.h:32 ../src/resources/xrc_strings.h:35
+#: ../src/resources/xrc_strings.h:32
+#: ../src/resources/xrc_strings.h:35
 #: ../src/edframe.cpp:399
 msgid "&File"
-msgstr "&Byla"
+msgstr "&Failas"
 
 #: ../src/resources/xrc_strings.h:48
 msgid "&Find..."
@@ -86,14 +89,14 @@ msgstr "&Naujas katalogas..."
 msgid "&Open"
 msgstr "&Atverti"
 
-#: ../src/resources/xrc_strings.h:33 ../src/resources/xrc_strings.h:43
+#: ../src/resources/xrc_strings.h:33
+#: ../src/resources/xrc_strings.h:43
 msgid "&Preferences..."
-msgstr "&Nuostatos..."
+msgstr "&Nustatymai..."
 
 #: ../src/resources/xrc_strings.h:55
-#, fuzzy
 msgid "&Purge deleted translations"
-msgstr "&Vertimų sąrašą su šešėliais"
+msgstr "&Pašalinti ištrintus vertimus"
 
 #: ../src/resources/xrc_strings.h:40
 msgid "&Save"
@@ -101,7 +104,7 @@ msgstr "&Išsaugoti"
 
 #: ../src/resources/xrc_strings.h:56
 msgid "&Settings..."
-msgstr "&Nuostatos..."
+msgstr "&Nustatymai..."
 
 #: ../src/resources/xrc_strings.h:63
 msgid "&Shaded translations list"
@@ -122,7 +125,7 @@ msgstr "&Rodyti"
 #: ../src/catalog.cpp:1492
 #, c-format
 msgid "'%s' is not a valid POT file."
-msgstr "'%s' nėra tinkama POT byla."
+msgstr "'%s' nėra tinkamas POT failas."
 
 #: ../src/edframe.cpp:1695
 msgid "'."
@@ -130,7 +133,7 @@ msgstr "'."
 
 #: ../src/resources/xrc_strings.h:94
 msgid "(%f will be substituted with filename, %l with line number)"
-msgstr "(%f bus pakeista bylos pavadinimu, %l - eilutės numeriu)"
+msgstr "(%f bus pakeista failo pavadinimu, %l - eilutės numeriu)"
 
 #: ../src/summarydlg.cpp:66
 #, c-format
@@ -169,13 +172,14 @@ msgstr "Įtraukti"
 msgid "Add directory to the list"
 msgstr "%Įtraukti aplanką į sąrašą"
 
-#: ../src/resources/xrc_strings.h:170 ../src/transmemupd_wizard.cpp:138
+#: ../src/resources/xrc_strings.h:170
+#: ../src/transmemupd_wizard.cpp:138
 msgid "Add files"
-msgstr "Įtraukti bylas"
+msgstr "Įtraukti failus"
 
 #: ../src/resources/xrc_strings.h:136
 msgid "Add path to the list of directories where catalogs lie."
-msgstr "Įtraukti kelią į aplankų su vertimo bylomis sąrašą."
+msgstr "Įtraukti kelią į aplankų su vertimo failais sąrašą."
 
 #: ../src/resources/xrc_strings.h:79
 msgid "Always change focus to text input field"
@@ -183,29 +187,28 @@ msgstr "Visada aktyvuoti teksto įvedimo lauką"
 
 #: ../src/resources/xrc_strings.h:129
 msgid "An item in input files list:"
-msgstr "Elementas įvedimo bylų sąraše:"
+msgstr "Elementas įvedimo failų sąraše:"
 
 #: ../src/resources/xrc_strings.h:127
 msgid "An item in keywords list:"
 msgstr "Elementas raktažodžių sąraše:"
 
 #: ../src/resources/xrc_strings.h:83
-#, fuzzy
 msgid "Automatic spellchecking"
-msgstr "Automatiniai vertimai:"
+msgstr "Automatinis rašybos tikrinimas"
 
 #: ../src/export_html.cpp:184
-#, fuzzy
 msgid "Automatic translation"
-msgstr "Automatiniai vertimai:"
+msgstr "Automatinis vertimas"
 
-#: ../src/edframe.cpp:2038 ../src/edframe.cpp:2042
+#: ../src/edframe.cpp:2038
+#: ../src/edframe.cpp:2042
 msgid "Automatic translations:"
 msgstr "Automatiniai vertimai:"
 
 #: ../src/resources/xrc_strings.h:76
 msgid "Automatically compile .mo file on save"
-msgstr "Išsaugojimo metu sukompiliuoti .mo bylą"
+msgstr "Išsaugojimo metu sukompiliuoti .mo failą"
 
 #: ../src/resources/xrc_strings.h:112
 msgid "Automatically translate when updating catalog"
@@ -221,9 +224,8 @@ msgid "Automatically translating..."
 msgstr "Verčiama automatiškai..."
 
 #: ../src/manager.cpp:254
-#, fuzzy
 msgid "Bad Tokens"
-msgstr "Blogi skirtukai"
+msgstr "Netaisyklingi skirtukai"
 
 #: ../src/resources/xrc_strings.h:151
 msgid "Base path:"
@@ -235,31 +237,35 @@ msgstr "Elgsena"
 
 #: ../src/catalog.cpp:645
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr ""
+msgstr "Sugadintas katalogo failas: pavartota daugiskaitinė msgstr forma, bet nenurodytas msgid_plural"
 
 #: ../src/catalog.cpp:610
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr ""
+msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr "Sugadintas katalogo failas: pavartota vienaskaitinė msgstr forma, tačiau nurodytas msgid_plural"
 
-#: ../src/resources/xrc_strings.h:28 ../src/resources/xrc_strings.h:104
-#: ../src/resources/xrc_strings.h:135 ../src/resources/xrc_strings.h:167
+#: ../src/resources/xrc_strings.h:28
+#: ../src/resources/xrc_strings.h:104
+#: ../src/resources/xrc_strings.h:135
+#: ../src/resources/xrc_strings.h:167
 msgid "Browse"
 msgstr "Naršyti"
 
 #: ../src/resources/xrc_strings.h:51
-#, fuzzy
 msgid "C&atalog"
-msgstr "Katalogas"
+msgstr "K&atalogas"
 
 #: ../src/resources/xrc_strings.h:85
 msgid "CR/LF conversion"
 msgstr "CR/LF keitimas"
 
-#: ../src/resources/xrc_strings.h:6 ../src/resources/xrc_strings.h:19
-#: ../src/resources/xrc_strings.h:31 ../src/resources/xrc_strings.h:119
-#: ../src/resources/xrc_strings.h:134 ../src/resources/xrc_strings.h:138
-#: ../src/resources/xrc_strings.h:140 ../src/resources/xrc_strings.h:156
+#: ../src/resources/xrc_strings.h:6
+#: ../src/resources/xrc_strings.h:19
+#: ../src/resources/xrc_strings.h:31
+#: ../src/resources/xrc_strings.h:119
+#: ../src/resources/xrc_strings.h:134
+#: ../src/resources/xrc_strings.h:138
+#: ../src/resources/xrc_strings.h:140
+#: ../src/resources/xrc_strings.h:156
 msgid "Cancel"
 msgstr "Atšaukti"
 
@@ -267,13 +273,14 @@ msgstr "Atšaukti"
 msgid "Cannot create database directory!"
 msgstr "Negalima sukurti duomenų bazės aplanko!"
 
-#: ../src/gexecute.cpp:136 ../src/gexecute.cpp:185
+#: ../src/gexecute.cpp:136
+#: ../src/gexecute.cpp:185
 msgid "Cannot execute program: "
 msgstr "Negalima įvykdyti programos: "
 
 #: ../src/transmemupd.cpp:202
 msgid "Cannot extract catalogs from RPM file."
-msgstr "Negalima išskirti katalogų iš RPM bylos."
+msgstr "Negalima išskirti katalogų iš RPM failo."
 
 #: ../src/resources/xrc_strings.h:12
 msgid "Case sensitive"
@@ -283,8 +290,11 @@ msgstr "Skirti raidžių dydį"
 msgid "Catalog"
 msgstr "Katalogas"
 
-#: ../src/edframe.cpp:747 ../src/edframe.cpp:773 ../src/edframe.cpp:810
-#: ../src/edframe.cpp:856 ../src/edframe.cpp:980
+#: ../src/edframe.cpp:747
+#: ../src/edframe.cpp:773
+#: ../src/edframe.cpp:810
+#: ../src/edframe.cpp:856
+#: ../src/edframe.cpp:980
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalogas pakeistas. Ar norite išsaugoti pakeitimus?"
 
@@ -296,11 +306,13 @@ msgstr "&Katalogų tvarkyklė"
 msgid "Change UI language"
 msgstr "Pakeisti programos kalbą"
 
-#: ../src/resources/xrc_strings.h:147 ../src/export_html.cpp:131
+#: ../src/resources/xrc_strings.h:147
+#: ../src/export_html.cpp:131
 msgid "Charset:"
 msgstr "Koduotė:"
 
-#: ../src/resources/xrc_strings.h:98 ../src/resources/xrc_strings.h:100
+#: ../src/resources/xrc_strings.h:98
+#: ../src/resources/xrc_strings.h:100
 msgid "Choose"
 msgstr "Pasirinkite"
 
@@ -313,7 +325,6 @@ msgid "Clear the comment"
 msgstr "Išvalyti komentarą"
 
 #: ../src/resources/xrc_strings.h:81
-#, fuzzy
 msgid "Comment window is editable"
 msgstr "Komentarų langą galima redaguoti"
 
@@ -325,20 +336,23 @@ msgstr "Komentaras:"
 msgid "Configuration"
 msgstr "Parinktys"
 
-#: ../src/manager.cpp:411 ../src/manager.cpp:431
+#: ../src/manager.cpp:411
+#: ../src/manager.cpp:431
 msgid "Confirmation"
 msgstr "Patvirtinimas"
 
-#: ../src/resources/xrc_strings.h:46 ../src/edframe.cpp:2017
+#: ../src/resources/xrc_strings.h:46
+#: ../src/edframe.cpp:2017
 msgid "Copy original to translation field"
 msgstr "Kopijuoti originalą į vertimo lauką"
 
 #: ../src/catalog.cpp:982
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
-msgstr ""
+msgstr "Nepavyko įkrauti failo %s, jis greičiausiai sugadinta."
 
-#: ../src/resources/xrc_strings.h:146 ../src/export_html.cpp:121
+#: ../src/resources/xrc_strings.h:146
+#: ../src/export_html.cpp:121
 msgid "Country:"
 msgstr "Šalis:"
 
@@ -393,11 +407,11 @@ msgstr ""
 
 #: ../src/edframe.cpp:1939
 msgid ""
-"Do you really want to remove all translations that are no longer used from "
-"the catalog?\n"
-"If you continue with purging, you will have to translate them again if they "
-"are added back in the future."
+"Do you really want to remove all translations that are no longer used from the catalog?\n"
+"If you continue with purging, you will have to translate them again if they are added back in the future."
 msgstr ""
+"Ar tikrai norite išmesti visus vertimus iš katalogo, kurie nebenaudojami?\n"
+"Jei nuspręsite tęsti, teks išversti iš naujo, jei tie patys vertimai bus vėl pridėti vėliau."
 
 #: ../src/manager.cpp:410
 msgid "Do you want to delete the project?"
@@ -419,7 +433,8 @@ msgstr "Keisti"
 msgid "Edit &comment"
 msgstr "&Keisti komentarą"
 
-#: ../src/resources/xrc_strings.h:3 ../src/resources/xrc_strings.h:176
+#: ../src/resources/xrc_strings.h:3
+#: ../src/resources/xrc_strings.h:176
 msgid "Edit comment"
 msgstr "Keisti komentarą"
 
@@ -433,7 +448,7 @@ msgstr "Keisti projektą"
 
 #: ../src/resources/xrc_strings.h:9
 msgid "Edit the file in text editor"
-msgstr "Keisti bylą tekstų redaktoriumi"
+msgstr "Redaguoti failą tekstų redaktoriumi"
 
 #: ../src/resources/xrc_strings.h:23
 msgid "Edit the project"
@@ -449,7 +464,7 @@ msgstr "Redaktoriaus programa:"
 
 #: ../src/resources/xrc_strings.h:84
 msgid "Enables on-the-fly spellchecking"
-msgstr ""
+msgstr "Įjungia rašybos tikrintuvą"
 
 #: ../src/edframe.cpp:1119
 msgid "Entries in the catalog are probably incorrect."
@@ -458,16 +473,16 @@ msgstr "Katalogo įrašai gali būti neteisingi."
 #: ../src/edframe.cpp:653
 #, c-format
 msgid "Error initializing spell checking: %s"
-msgstr ""
+msgstr "Nepavyko inicializuoti rašybos tikrintuvo: %s"
 
 #: ../src/edframe.cpp:1695
 msgid "Error loading message catalog file '"
-msgstr "Klaida įkraunant pranešimų katalogo bylą '"
+msgstr "Klaida įkraunant pranešimų katalogo failą '"
 
 #: ../src/fileviewer.cpp:90
 #, c-format
 msgid "Error opening file %s!"
-msgstr "Klaida atveriant bylą %s!"
+msgstr "Klaida atveriant failą %s!"
 
 #: ../src/catalog.cpp:1292
 msgid "Error saving catalog"
@@ -476,7 +491,7 @@ msgstr "Klaida išsaugant katalogą"
 #: ../src/catalog.cpp:80
 #, c-format
 msgid "Error while loading file '%s': line %u is corrupted."
-msgstr ""
+msgstr "Klaida atveriant failą '%s': eilutė %u sugadinta."
 
 #: ../src/edframe.cpp:952
 msgid "Export as..."
@@ -486,15 +501,16 @@ msgstr "Išsaugot &kaip..."
 msgid "External editor"
 msgstr "Išorinis redaktorius"
 
-#: ../src/edframe.cpp:828 ../src/edframe.cpp:872
+#: ../src/edframe.cpp:828
+#: ../src/edframe.cpp:872
 #, c-format
 msgid "File '%s' doesn't exist."
-msgstr "Bylos '%s' nėra."
+msgstr "Failo '%s' nėra."
 
 #: ../src/edframe.cpp:845
 #, c-format
 msgid "File '%s' is not message catalog."
-msgstr "Byla '%s' nėra pranešimų katalogas."
+msgstr "'%s' nėra pranešimų katalogo failas."
 
 #: ../src/catalog.cpp:1256
 #, c-format
@@ -502,20 +518,20 @@ msgid ""
 "File '%s' is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
+"Failas '%s' skirtas tik skaitymui ir negali būti išsaugotas.\n"
+"Išsaugokite duomenis kitu vardu."
 
 #: ../src/transmemupd_wizard.cpp:63
 msgid "Files List"
-msgstr "Bylų sąrašas"
+msgstr "Failų sąrašas"
 
 #: ../src/resources/xrc_strings.h:18
-#, fuzzy
 msgid "Find in automatic comments"
-msgstr "Rodyti &komentarų langą"
+msgstr "Ieškoti automatiniuose komentaruose"
 
 #: ../src/resources/xrc_strings.h:17
-#, fuzzy
 msgid "Find in comments"
-msgstr "Keisti komentarą"
+msgstr "Ieškoti komentaruose"
 
 #: ../src/resources/xrc_strings.h:15
 msgid "Find in original strings"
@@ -536,12 +552,12 @@ msgstr "Šriftai"
 #: ../src/edframe.cpp:2460
 #, c-format
 msgid "Form %u"
-msgstr ""
+msgstr "Forma %u"
 
 #: ../src/edframe.cpp:2462
 #, c-format
 msgid "Form %u (e.g. \"%u\")"
-msgstr ""
+msgstr "Forma %u (pvz., \"%u\")"
 
 #: ../src/resources/xrc_strings.h:177
 msgid "Fullscreen view"
@@ -555,13 +571,15 @@ msgstr "Neaiškus"
 msgid "Fuzzy translation"
 msgstr "&Neaiškus vertimas"
 
-#: ../src/edframe.cpp:793 ../src/edframe.cpp:912
+#: ../src/edframe.cpp:793
+#: ../src/edframe.cpp:912
 msgid "GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"
-msgstr "GNU GetText katalogai (*.po)|*.po|Visos bylos (*.*)|*.*"
+msgstr "GNU GetText katalogai (*.po)|*.po|Visi failai (*.*)|*.*"
 
-#: ../src/edframe.cpp:1005 ../src/edframe.cpp:1137
+#: ../src/edframe.cpp:1005
+#: ../src/edframe.cpp:1137
 msgid "GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"
-msgstr "GNU GetText šablonai (*.pot)|*.pot|Visos bylos (*.*)|*.*"
+msgstr "GNU GetText šablonai (*.pot)|*.pot|Visi failai (*.*)|*.*"
 
 #: ../src/resources/xrc_strings.h:65
 msgid "GNU gettext documentation"
@@ -577,17 +595,16 @@ msgstr "Formuoti duomenų bazę"
 
 #: ../src/edframe.cpp:1199
 msgid "Gettext syntax error"
-msgstr ""
+msgstr "Gettext sintaksės klaida"
 
 #: ../src/edframe.cpp:2530
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
-msgstr ""
+msgstr "Eiti į žymelę %i\tVald-%i"
 
 #: ../src/edframe.cpp:954
-#, fuzzy
 msgid "HTML file (*.html)|*.html"
-msgstr "HTML byla (*.html)|*.html"
+msgstr "HTML failas (*.html)|*.html"
 
 #: ../src/resources/xrc_strings.h:178
 msgid "Help"
@@ -598,15 +615,15 @@ msgid "Identity"
 msgstr "Tapatumas"
 
 #: ../src/resources/xrc_strings.h:82
-#, fuzzy
 msgid "If checked, the comment window will be editable."
-msgstr "Komentarų langą galima redaguoti, jeigu pažymėta."
+msgstr "Jeigu pažymėta, galima redaguoti komentarų langą."
 
 #: ../src/resources/xrc_strings.h:124
 msgid "Invocation:"
 msgstr "Iškvietimas:"
 
-#: ../src/resources/xrc_strings.h:154 ../src/settingsdlg.cpp:71
+#: ../src/resources/xrc_strings.h:154
+#: ../src/settingsdlg.cpp:71
 msgid "Keywords"
 msgstr "Raktažodžiai"
 
@@ -614,8 +631,10 @@ msgstr "Raktažodžiai"
 msgid "Language selection"
 msgstr "Kalbos pasirinkimas"
 
-#: ../src/resources/xrc_strings.h:121 ../src/resources/xrc_strings.h:122
-#: ../src/resources/xrc_strings.h:145 ../src/export_html.cpp:118
+#: ../src/resources/xrc_strings.h:121
+#: ../src/resources/xrc_strings.h:122
+#: ../src/resources/xrc_strings.h:145
+#: ../src/export_html.cpp:118
 msgid "Language:"
 msgstr "Kalba:"
 
@@ -623,14 +642,15 @@ msgstr "Kalba:"
 msgid "Last modified"
 msgstr "Paskutinis pakeitimas"
 
-#: ../src/fileviewer.cpp:99 ../src/edlistctrl.cpp:227
+#: ../src/fileviewer.cpp:99
+#: ../src/edlistctrl.cpp:227
 msgid "Line"
 msgstr "Eilutė"
 
 #: ../src/catalog.cpp:145
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
-msgstr ""
+msgstr "Eilutė %u iš failo '%s' sugadinta (netaisyklingi %s duomenys)."
 
 #: ../src/resources/xrc_strings.h:86
 msgid "Line endings format:"
@@ -647,7 +667,7 @@ msgstr "Macintosh"
 #: ../src/catalog.cpp:217
 #, c-format
 msgid "Malformed header: '%s'"
-msgstr ""
+msgstr "Netaisyklinga antraštė: '%s'"
 
 #: ../src/resources/xrc_strings.h:110
 msgid "Max. # of missing words:"
@@ -678,23 +698,16 @@ msgid "My Project"
 msgstr "Mano projektas"
 
 #: ../src/resources/xrc_strings.h:80
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Niekada nefokusuoti eilučių sąrašo. Jei įjungta, turėsite naudoti Ctrl"
-"+rodyklės klaviatūros navigacijai, taip pat galėsite įvedinėti tekstą iš "
-"karto be TAB paspaudimo nekeičiant fokuso."
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Niekada nefokusuoti eilučių sąrašo. Jei įjungta, turėsite naudoti Ctrl+rodyklės klaviatūros navigacijai, taip pat galėsite įvedinėti tekstą iš karto be TAB paspaudimo nekeičiant fokuso."
 
 #: ../src/resources/xrc_strings.h:115
 msgid "New"
 msgstr "Naujas"
 
 #: ../src/resources/xrc_strings.h:38
-#, fuzzy
 msgid "New catalog from POT file..."
-msgstr "Atnaujinti iš &POT bylos..."
+msgstr "Naujas katalogas iš POT failo."
 
 #: ../src/editlbox/editlbox.cpp:162
 msgid "New item"
@@ -710,24 +723,26 @@ msgstr "Kitas >"
 
 #: ../src/fileviewer.cpp:138
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "Nenurodytas redaktorius. Prašome nurodyti jį Nuostatų dialoge."
+msgstr "Nenurodytas redaktorius. Prašome nurodyti jį nustatymų dialoge."
 
 #: ../src/digger.cpp:138
 msgid "No files found in: "
-msgstr "Nėra bylų: "
+msgstr "Nėra failų: "
 
 #: ../src/edframe.cpp:1215
 msgid "No references to this string found."
 msgstr "Nėra nuorodų į šias eilutes."
 
 #: ../src/export_html.cpp:162
-#, fuzzy
 msgid "Notes"
 msgstr "Pastabos"
 
-#: ../src/resources/xrc_strings.h:2 ../src/resources/xrc_strings.h:5
-#: ../src/resources/xrc_strings.h:30 ../src/resources/xrc_strings.h:118
-#: ../src/resources/xrc_strings.h:133 ../src/resources/xrc_strings.h:155
+#: ../src/resources/xrc_strings.h:2
+#: ../src/resources/xrc_strings.h:5
+#: ../src/resources/xrc_strings.h:30
+#: ../src/resources/xrc_strings.h:118
+#: ../src/resources/xrc_strings.h:133
+#: ../src/resources/xrc_strings.h:155
 #: ../src/resources/xrc_strings.h:163
 msgid "OK"
 msgstr "Gerai"
@@ -736,11 +751,13 @@ msgstr "Gerai"
 msgid "Obsolete strings"
 msgstr "Seni žodžiai"
 
-#: ../src/resources/xrc_strings.h:171 ../src/edframe.cpp:791
+#: ../src/resources/xrc_strings.h:171
+#: ../src/edframe.cpp:791
 msgid "Open catalog"
 msgstr "Atverti katalogą"
 
-#: ../src/edframe.cpp:1003 ../src/edframe.cpp:1135
+#: ../src/edframe.cpp:1003
+#: ../src/edframe.cpp:1135
 msgid "Open catalog template"
 msgstr "Atverti katalogo šabloną"
 
@@ -750,9 +767,10 @@ msgstr "Startuojant poEdit, atverti katalogų tvarkyklę"
 
 #: ../src/resources/xrc_strings.h:95
 msgid "Open source files in editor, not in file viewer"
-msgstr "Atverti išeities bylas redaktoriumi, o ne peržiūros programa"
+msgstr "Atverti išeities failus redaktoriumi, o ne peržiūros programa"
 
-#: ../src/edlistctrl.cpp:224 ../src/export_html.cpp:155
+#: ../src/edlistctrl.cpp:224
+#: ../src/export_html.cpp:155
 msgid "Original string"
 msgstr "Orginalo eilutė"
 
@@ -776,7 +794,8 @@ msgstr "Analizuoti sintaksę"
 msgid "Path to DB:"
 msgstr "Kelias iki duomenų bazės:"
 
-#: ../src/resources/xrc_strings.h:152 ../src/settingsdlg.cpp:73
+#: ../src/resources/xrc_strings.h:152
+#: ../src/settingsdlg.cpp:73
 msgid "Paths"
 msgstr "Keliai"
 
@@ -790,7 +809,7 @@ msgstr "Pasirinkite kalbą iš žinomų kalbų sąrašo"
 
 #: ../src/resources/xrc_strings.h:166
 msgid "Please add directories where locale files are stored on your system:"
-msgstr "Įtraukite aplankus, kuriuose yra laikomos Jūsų sistemos bylos:"
+msgstr "Įtraukite aplankus, kuriuose yra laikomi vertimų failai:"
 
 #: ../src/edframe.cpp:1223
 msgid "Please choose the reference you want to show:"
@@ -806,25 +825,27 @@ msgstr "Pasirinkite kalbos kodą:"
 
 #: ../src/resources/xrc_strings.h:149
 msgid "Plural Forms:"
-msgstr ""
+msgstr "Daugiskaitos formos:"
 
 #: ../src/edframe.cpp:451
 msgid "Plural:"
-msgstr ""
+msgstr "Daugiskaita:"
 
 #: ../src/resources/xrc_strings.h:68
 msgid "Preferences"
-msgstr "Nuostatos"
+msgstr "Nustatymai"
 
 #: ../src/resources/xrc_strings.h:137
 msgid "Proceed"
 msgstr "Tęsti"
 
-#: ../src/resources/xrc_strings.h:150 ../src/export_html.cpp:111
+#: ../src/resources/xrc_strings.h:150
+#: ../src/export_html.cpp:111
 msgid "Project info"
 msgstr "Projekto informacija"
 
-#: ../src/resources/xrc_strings.h:142 ../src/export_html.cpp:115
+#: ../src/resources/xrc_strings.h:142
+#: ../src/export_html.cpp:115
 msgid "Project name and version:"
 msgstr "Projekto pavadinimas ir versija:"
 
@@ -833,23 +854,21 @@ msgid "Project name:"
 msgstr "Projekto pavadinimas:"
 
 #: ../src/edframe.cpp:1940
-#, fuzzy
 msgid "Purge delete translations"
-msgstr "Automatiniai vertimai:"
+msgstr "Pašalinti ištrintus vertimus"
 
 #: ../src/edframe.cpp:1223
 msgid "References"
 msgstr "Nuorodos"
 
-#: ../src/edframe.cpp:2022 ../src/edframe.cpp:2026
+#: ../src/edframe.cpp:2022
+#: ../src/edframe.cpp:2026
 msgid "References:"
 msgstr "Nuorodos:"
 
 #: ../src/resources/xrc_strings.h:108
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr ""
-"Performuoti vertimo atmintį iš katalogų, esančių aukščiau išvardintuose "
-"aplankuose."
+msgstr "Performuoti vertimo atmintį iš katalogų, esančių aukščiau išvardintuose aplankuose."
 
 #: ../src/resources/xrc_strings.h:168
 msgid "Reset to defaults"
@@ -867,18 +886,21 @@ msgstr "Išsaugoti kaip..."
 msgid "Save catalog"
 msgstr "Išsaugoti katalogą"
 
-#: ../src/edframe.cpp:748 ../src/edframe.cpp:774 ../src/edframe.cpp:811
-#: ../src/edframe.cpp:857 ../src/edframe.cpp:981
+#: ../src/edframe.cpp:748
+#: ../src/edframe.cpp:774
+#: ../src/edframe.cpp:811
+#: ../src/edframe.cpp:857
+#: ../src/edframe.cpp:981
 msgid "Save changes"
 msgstr "Išsaugoti pakeitimus"
 
 #: ../src/transmemupd.cpp:152
 msgid "Scanning file: "
-msgstr "Peržiūrima byla: "
+msgstr "Peržiūrimas failas: "
 
 #: ../src/digger.cpp:48
 msgid "Scanning files..."
-msgstr "Peržiūrimos bylos..."
+msgstr "Peržiūrimi failai..."
 
 #: ../src/transmemupd_wizard.cpp:59
 msgid "Search Paths"
@@ -888,7 +910,8 @@ msgstr "Paieškos keliai"
 msgid "Select catalog's language"
 msgstr "Pasirinkite katalogo kalbą"
 
-#: ../src/manager.cpp:284 ../src/prefsdlg.cpp:349
+#: ../src/manager.cpp:284
+#: ../src/prefsdlg.cpp:349
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "Pasirinkite aplanką"
@@ -905,10 +928,12 @@ msgstr "Pasirinkite pagrindinę kalbą"
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr ""
+"Nustatyti žymelę %i\n"
+"Lyg2-%i"
 
 #: ../src/resources/xrc_strings.h:141
 msgid "Settings"
-msgstr "Nuostatos"
+msgstr "Nustatymai"
 
 #: ../src/edapp.cpp:144
 msgid "Setup"
@@ -919,9 +944,8 @@ msgid "Show &comment window"
 msgstr "Rodyti &komentarų langą"
 
 #: ../src/resources/xrc_strings.h:62
-#, fuzzy
 msgid "Show automatic c&omments window"
-msgstr "Rodyti &komentarų langą"
+msgstr "Rodyti automatinių &komentarų langą"
 
 #: ../src/resources/xrc_strings.h:77
 msgid "Show summary after catalog update"
@@ -929,9 +953,10 @@ msgstr "Atnaujinus katalogą, rodyti suvestinę"
 
 #: ../src/edframe.cpp:450
 msgid "Singular:"
-msgstr ""
+msgstr "Vienaskaita:"
 
-#: ../src/resources/xrc_strings.h:131 ../src/resources/xrc_strings.h:148
+#: ../src/resources/xrc_strings.h:131
+#: ../src/resources/xrc_strings.h:148
 msgid "Source code charset:"
 msgstr "Išeities tekstų koduotė:"
 
@@ -941,21 +966,23 @@ msgstr "Išeities tekstų sintaksiniai analizatoriai:"
 
 #: ../src/fileviewer.cpp:46
 msgid "Source file"
-msgstr "Išeities byla"
+msgstr "Išeities failas"
 
 #: ../src/resources/xrc_strings.h:13
 msgid "Start from the first item"
-msgstr ""
+msgstr "Pradėti nuo pirmo įrašo"
 
 #: ../src/resources/xrc_strings.h:11
 msgid "String to find:"
 msgstr "Ieškoma eilutė:"
 
-#: ../src/resources/xrc_strings.h:144 ../src/export_html.cpp:128
+#: ../src/resources/xrc_strings.h:144
+#: ../src/export_html.cpp:128
 msgid "Team's email address:"
 msgstr "Komandos el. paštas:"
 
-#: ../src/resources/xrc_strings.h:143 ../src/export_html.cpp:124
+#: ../src/resources/xrc_strings.h:143
+#: ../src/export_html.cpp:124
 msgid "Team:"
 msgstr "Komanda:"
 
@@ -971,10 +998,8 @@ msgstr ""
 "ir atitinkamai pakeisti nustatymai."
 
 #: ../src/catalog.cpp:973
-msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
+msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
+msgstr "Skaitant katalogą įvyko klaidų. Kai kurių įrašų gali trūkti arba jie gali būti sugadinti."
 
 #: ../src/resources/xrc_strings.h:160
 msgid ""
@@ -998,9 +1023,9 @@ msgid ""
 "Please fill in your name and e-mail address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
-"Jūs pirmą kartą paleidote poEdit programą.\n"
-"Užpildykite savo vardą ir el. paštą.\n"
-"(Ši informacija bus naudojama tik katalogų antraštėse)"
+"Pirmą kartą paleidote poEdit programą.\n"
+"Įrašykite savo vardą ir el. paštą.\n"
+"(Ši informacija bus naudojama tik katalogų antraštėse.)"
 
 #: ../src/resources/xrc_strings.h:126
 msgid ""
@@ -1010,7 +1035,7 @@ msgid ""
 "%C to charset flag (see below)."
 msgstr ""
 "Tai yra komanda, paleidžianti sintaksinį analizatorių.\n"
-"%o bus pakeistas išvedimo bylos pavadinimu, %K raktažodžių\n"
+"%o bus pakeistas išvedimo failo pavadinimu, %K raktažodžių\n"
 "sąrašu, %F įvedimo bylų sąrašu, \n"
 "%C koduotės žymomis (žiūrėti aukščiau)."
 
@@ -1021,7 +1046,7 @@ msgid ""
 "only if source codecharset was given. %c expands to charset value."
 msgstr ""
 "Tai bus pridėta komandinėje eilutėje po kartą\n"
-"kiekvienai duomenų bylai. %c išplės į bylos pavadinimą."
+"kiekvienam duomenų failui. %c išplės į failo pavadinimą."
 
 #: ../src/resources/xrc_strings.h:130
 #, c-format
@@ -1030,7 +1055,7 @@ msgid ""
 "for each input file. %f expands to the filename."
 msgstr ""
 "Tai bus pridėta komandinėje eilutėje po kartą\n"
-"kiekvienai duomenų bylai. %f išplės į bylos pavadinimą."
+"kiekvienam duomenų failui. %f išplės į failo pavadinimą."
 
 #: ../src/resources/xrc_strings.h:128
 msgid ""
@@ -1048,21 +1073,22 @@ msgstr "Įjungtas, jei pasirinktos eilutės vertimas yra neaiškus"
 msgid "Total"
 msgstr "Iš viso"
 
-#: ../src/edlistctrl.cpp:225 ../src/export_html.cpp:158
+#: ../src/edlistctrl.cpp:225
+#: ../src/export_html.cpp:158
 msgid "Translation"
 msgstr "Vertimas"
 
 #: ../src/resources/xrc_strings.h:101
 msgid "Translation Memory"
-msgstr "Vertimo Atmintis"
+msgstr "Vertimo atmintis"
 
 #: ../src/transmemupd_wizard.cpp:144
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
-msgstr "Vertimo bylos (*.po;*.mo)|*.po;*.mo"
+msgstr "Vertimų failai (*.po;*.mo)|*.po;*.mo"
 
 #: ../src/transmemupd_wizard.cpp:142
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
-msgstr "Vertimo bylos (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
+msgstr "Vertimų failai (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 
 #: ../src/resources/xrc_strings.h:49
 msgid "Translation is &fuzzy"
@@ -1073,8 +1099,8 @@ msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
 msgstr ""
-"Vertimų atmintis bus sudaryta iš žemiau esančių bylų.\n"
-"Jūs galite dabar į šį sąrašą įtraukti daugiau bylų."
+"Vertimų atmintis bus sudaryta iš žemiau esančių failų.\n"
+"Galite dabar į šį sąrašą įtraukti daugiau bylų."
 
 #: ../src/chooselang.cpp:69
 #, c-format
@@ -1103,7 +1129,7 @@ msgstr "Atnaujinti katalogą - sinchronizuoti jį su išeities tekstais"
 
 #: ../src/resources/xrc_strings.h:53
 msgid "Update from &POT file..."
-msgstr "Atnaujinti iš &POT bylos..."
+msgstr "Atnaujinti iš &POT failo..."
 
 #: ../src/resources/xrc_strings.h:157
 msgid "Update summary"
@@ -1119,19 +1145,15 @@ msgstr "Atnaujinamas katalogas..."
 
 #: ../src/edframe.cpp:1121
 msgid "Updating the catalog failed. Click on 'More>>' for details."
-msgstr ""
-"Katalogo atnaujinimas nepavyko. Norėdami sužinoti daugiau, spausk 'Daugiau "
-">>'."
+msgstr "Katalogo atnaujinimas nepavyko. Norėdami sužinoti daugiau, spausk 'Daugiau >>'."
 
 #: ../src/resources/xrc_strings.h:99
-#, fuzzy
 msgid "Use custom font for text fields"
-msgstr "Teksto laukams naudokite skirtingus šriftus"
+msgstr "Naudoti nurodytą šriftą teksto laukams"
 
 #: ../src/resources/xrc_strings.h:97
-#, fuzzy
 msgid "Use custom font for translations list"
-msgstr "&Vertimų sąrašą su šešėliais"
+msgstr "Naudoti nurodytą šriftą vertimų sąrašui"
 
 #: ../src/resources/xrc_strings.h:153
 msgid ""
@@ -1143,7 +1165,7 @@ msgstr ""
 
 #: ../src/resources/xrc_strings.h:14
 msgid "Whole words only"
-msgstr ""
+msgstr "Tik pilnus žodžius"
 
 #: ../src/resources/xrc_strings.h:88
 msgid "Windows"
@@ -1151,7 +1173,7 @@ msgstr "Windows"
 
 #: ../src/edframe.cpp:838
 msgid "You can't drop more than one file on poEdit window."
-msgstr "Negalite užvilkti daugiau nei vienos bylos ant poEdit lango."
+msgstr "Negalite užvilkti daugiau nei vienos failo ant poEdit lango."
 
 #: ../src/chooselang.cpp:171
 msgid "You must restart poEdit for this change to take effect."
@@ -1159,16 +1181,16 @@ msgstr "Kad pakeitimai pradėtų veikti, turite iš naujo paleisti poEdit."
 
 #: ../src/resources/xrc_strings.h:72
 msgid "Your e-mail address:"
-msgstr "Jūsų el. pašto adresas:"
+msgstr "El. pašto adresas:"
 
 #: ../src/resources/xrc_strings.h:71
 msgid "Your name:"
-msgstr "Jūsų vardas:"
+msgstr "Vardas, pavardė:"
 
 #: ../src/edframe.cpp:1779
-#, fuzzy, c-format
+#, c-format
 msgid "[checking translations: %i left]"
-msgstr "&Vertimų sąrašą su šešėliais"
+msgstr "[tikrinami vertimai: liko %i]"
 
 #: ../src/resources/xrc_strings.h:90
 msgid "current platform's default"
@@ -1188,45 +1210,13 @@ msgstr "poEdit - katalogų tvarkyklė"
 
 #: ../src/digger.cpp:139
 msgid "poEdit did not find any files in scanned directories."
-msgstr "Tikrintuose aplankuose poEdit nerado jokių bylų."
+msgstr "Tikrintuose aplankuose poEdit nerado jokių failų."
 
 #: ../src/edapp.cpp:66
-msgid ""
-"poEdit installation is broken, cannot find application's home directory."
+msgid "poEdit installation is broken, cannot find application's home directory."
 msgstr "poEdit įdiegimas sugadintas - nerandamas programos namų aplankas."
 
 #: ../src/edframe.cpp:2077
 msgid "version"
 msgstr "versija"
 
-#, fuzzy
-#~ msgid "; charset="
-#~ msgstr "Koduotė:"
-
-#~ msgid ""
-#~ "Cannot find resources file '%s'!\n"
-#~ "Please reinstall poEdit."
-#~ msgstr ""
-#~ "Nėra išteklių bylos '%s'!\n"
-#~ "Įdiekite poEdit iš naujo."
-
-#~ msgid ""
-#~ "Cannot find resources file '%s'!\n"
-#~ "poEdit was configured to be installed in '%s'.\n"
-#~ "You may try to set POEDIT_PREFIX environment variable to point\n"
-#~ "to the location where you installed poEdit."
-#~ msgstr ""
-#~ "Nėra išteklių bylos '%s'!\n"
-#~ "Nustatyta poEdit įdiegti į '%s'.\n"
-#~ "Jūs galite nustatyti aplinkos kintamąjam POEDIT_PREFIX\n"
-#~ "kelią, kur bus įdiegtas poEdit."
-
-#~ msgid "poEdit Error"
-#~ msgstr "poEdit klaida"
-
-#, fuzzy
-#~ msgid "X-Poedit-Keywords"
-#~ msgstr "Raktažodžiai"
-
-#~ msgid "&Catalog"
-#~ msgstr "&Katalogas"
