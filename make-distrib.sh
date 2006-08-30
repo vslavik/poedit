@@ -24,7 +24,7 @@ find_unix_files()
   (find . -type f -maxdepth 1 ; \
   find admin locales src docs extras install -type f) | \
     grep -v '/win32-' | \
-    grep -v '/CVS' | \
+    grep -v '/\.svn' | \
     grep -v '\.#' | \
     grep -v '\.\(dsp\|dsw\|chm\|rtf\|iss\|ico\|ncb\|opt\|plg\|rc\)' | \
     grep -v 'install/.*\.txt'
