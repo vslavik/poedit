@@ -38,9 +38,9 @@ Source: BUILD-mingw\src\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Co
 Source: install\poedit.exe.manifest; DestDir: {app}\bin; MinVersion: 0,5.01.2600; Components: core
 Source: extras\win32-gettext\gnu_gettext.COPYING; DestDir: {app}\doc; Components: docs
 Source: README; DestDir: {app}\doc; DestName: readme.txt; Components: docs
-Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit; Components: docs
-Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit; Components: docs
-Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit; Components: i18n
+Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit\help\en\poedit.chm; Components: docs
+Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit\help\en\gettext\gettext.chm; Components: docs
+Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit\help\hr\poedit.chm; Components: i18n
 Source: COPYING; DestDir: {app}\doc; DestName: copying.txt; Components: docs
 Source: NEWS; DestDir: {app}\doc; DestName: news.txt; Components: docs
 Source: BUILD-mingw\src\resources\resources.zip; DestDir: {app}\share\poedit; DestName: resources.zip; Components: core
@@ -84,11 +84,15 @@ UseAbsolutePaths=false
 
 Use7zip=false
 [Dirs]
+Name: {app}\bin; Components: core
 Name: {app}\doc; Components: docs
 Name: {app}\share; Components: core
-Name: {app}\share\poedit; Components: core
 Name: {app}\share\locale; Components: core
-Name: {app}\bin; Components: core
+Name: {app}\share\poedit; Components: core
+Name: {app}\share\poedit\help; Components: docs
+Name: {app}\share\poedit\help\en; Components: docs
+Name: {app}\share\poedit\help\en\gettext; Components: docs
+Name: {app}\share\poedit\help\hr; Components: docs
 #include "poedit-locale-dirs.iss"
 
 [_ISToolPreCompile]

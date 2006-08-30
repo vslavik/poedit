@@ -1,5 +1,5 @@
 
-SUBDIRS = en hr
+SUBDIRS = en hr common
 
 man_MANS = poedit.1
 

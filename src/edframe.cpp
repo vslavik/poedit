@@ -523,22 +523,8 @@ poEditFrame::poEditFrame() :
     UpdateMenu();
     UpdateDisplayCommentWin();
 
-    wxString cannon = wxGetApp().GetLocale().GetCanonicalName().Left(2);
-    wxString datadir = wxGetApp().GetAppPath() + _T("/share/poedit");
-    wxString book;
-#if defined(__WXMSW__)
-    book.Printf(_T("%s/poedit-%s.chm"), datadir.c_str(), cannon.c_str());
-    if (!wxFileExists(book))
-        book.Printf(_T("%s/poedit.chm"), datadir.c_str());
-    m_help.Initialize(book);
-    m_helpBook = book;
-#elif defined(__UNIX__)
-    book.Printf(_T("%s/help-%s.zip"), datadir.c_str(), cannon.c_str());
-    if (!wxFileExists(book))
-        book.Printf(_T("%s/help.zip"), datadir.c_str());
-    m_help.Initialize(book);
-    m_help.AddBook(datadir + _T("/help-gettext.zip"));
-#endif
+    m_helpBook = LoadHelpBook(_T("poedit"));
+    m_helpBookGettext = LoadHelpBook(_T("gettext/gettext"));
 
     ms_instances.Append(this);
 
@@ -610,6 +596,48 @@ poEditFrame::~poEditFrame()
 
     // shutdown the spellchecker:
     InitSpellchecker();
+}
+
+wxString poEditFrame::LoadHelpBook(const wxString& name)
+{
+    wxString lng = wxGetApp().GetLocale().GetCanonicalName().Left(2);
+    wxString helpdir = wxGetApp().GetAppPath() + _T("/share/poedit/help");
+
+#ifdef __WXMSW__
+    #define HLPEXT _T("chm")
+#else
+    #define HLPEXT _T("hhp")
+#endif
+
+    wxLogTrace(_T("poedit.help"),
+               _T("looking for help book '%s' under %s"),
+               name.c_str(), helpdir.c_str());
+
+    wxString file;
+    file.Printf(_T("%s/%s/%s.%s"),
+                helpdir.c_str(), lng.c_str(), name.c_str(), HLPEXT);
+    wxLogTrace(_T("poedit.help"), _T("trying %s"), file.c_str());
+
+    if (!wxFileExists(file))
+    {
+        file.Printf(_T("%s/en/%s.%s"),
+                    helpdir.c_str(), name.c_str(), HLPEXT);
+        wxLogTrace(_T("poedit.help"), _T("trying %s"), file.c_str());
+    }
+
+    if (!wxFileExists(file))
+    {
+        wxLogTrace(_T("poedit.help"), _T("not found"));
+        return wxEmptyString;
+    }
+
+    wxLogTrace(_T("poedit.help"), _T("using help file %s"), file.c_str());
+    m_help.Initialize(file);
+#ifndef __WXMSW__
+    m_help.AddBook(file);
+#endif
+
+    return file;
 }
 
 #if USE_SPELLCHECKING

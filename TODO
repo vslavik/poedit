@@ -1,9 +1,17 @@
 Mac OS X todo:
+ - !!bundle msgfmt & friends!!
  - detect UI language correctly (wx fix?)
  - don't use ~/.poedit - split into ~/Library/Preferences and
    ~/Library/##SOMETHING##
  - make it runnable "in tray", don't exit if last file closed
  - native help viewer(?)
+   1. It doesn't seem to like other charsets than UTF-8 (which is fine, all  
+   our message catalogs are in that format anyway)
+
+   2. Probably a wx bug, but: if you have the file selection dialog open in a  
+   folder, and switch to the Finder and remove one of the files in the  
+   directory that poEdit is currently displaying, it crashes.
+
 
 - integrate gettext lint tools (http://mega.ist.utl.pt/~pmmm/gettext-lint/)
 

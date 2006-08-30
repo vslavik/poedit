@@ -216,6 +216,8 @@ class poEditFrame : public wxFrame
 
         void RecreatePluralTextCtrls();
 
+        wxString LoadHelpBook(const wxString& name);
+
         DECLARE_EVENT_TABLE()
 
     private:
@@ -241,10 +243,10 @@ class poEditFrame : public wxFrame
 
 #ifdef __WXMSW__
         wxCHMHelpController m_help;
-        wxString m_helpBook;
 #else
         wxHtmlHelpController m_help;
 #endif
+        wxString m_helpBook, m_helpBookGettext;
 
         wxPanel *m_bottomLeftPanel;
         wxPanel *m_bottomRightPanel;

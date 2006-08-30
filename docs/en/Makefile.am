@@ -1,18 +1,34 @@
 
-pkgdatadir=$(datadir)/poedit
+helpdir=$(datadir)/poedit/help
+poedithelpdir=$(helpdir)/en
+gettexthelpdir=$(helpdir)/en/gettext
 
-pkgdata_DATA = help.zip help-gettext.zip
+poedithelp_DATA =    poedit.hhc \
+                     poedit.hhp \
+					 basics.html \
+					 index.html \
+					 manager.html \
+					 menu.html \
+                     settings.html \
+	 				 tm.html \
+	 				 ui.html \
+					 update.html
 
-help.zip: basics.html index.html menu.html poedit.hhc poedit.hhp settings.html ui.html update.html
-	if test $(srcdir) != . ; then \
-	  cp -fR $(srcdir)/img $(srcdir)/*.html $(srcdir)/*.hhc $(srcdir)/*.hhp . \
-	  ; fi
-	zip -9 -r help.zip img *.html poedit.hhc poedit.hhp
-
-
-help-gettext.zip:
-	if test $(srcdir) != . ; then \
-	  cp -fR $(srcdir)/gettext $(srcdir)/gettext.hhc $(srcdir)/gettext.hhp . \
-	  ; fi
-	zip -9 -r help-gettext.zip gettext gettext.hhc gettext.hhp
-
+gettexthelp_DATA = \
+				   	gettext/gettext.hhc \
+					gettext/gettext.hhp \
+					gettext/gettext_10.html \
+					gettext/gettext_11.html \
+					gettext/gettext_12.html \
+					gettext/gettext_1.html \
+					gettext/gettext_2.html \
+					gettext/gettext_3.html \
+					gettext/gettext_4.html \
+					gettext/gettext_5.html \
+					gettext/gettext_6.html \
+					gettext/gettext_7.html \
+					gettext/gettext_8.html \
+					gettext/gettext_9.html \
+					gettext/gettext_foot.html \
+					gettext/gettext_toc.html \
+					gettext/index.html
