@@ -161,13 +161,8 @@ if $WX_CONFIG_WITH_ARGS --cxxflags | grep -q WXMSW; then
     changequote(<<,>>)
     RC_WX_INCLUDES=`echo " $WX_CPPFLAGS" | sed -e 's/ -[^I][^ ]*//g' | sed -e 's/ -I\([^ ]*\)/ --include-dir \1/g'`
     changequote([,])
-
-    AM_CONDITIONAL(USE_KDE, test 0 = 1)
-    AM_CONDITIONAL(USE_GNOME, test 0 = 1)
 else
     use_windows=no
-    FIND_KDE
-    FIND_GNOME
 fi
 
 AM_CONDITIONAL(USE_WINDOWS, test $use_windows = yes)
@@ -219,13 +214,13 @@ AC_SUBST(CATALOGS_TO_INSTALL)
 AC_CONFIG_FILES([
          Makefile
          src/Makefile
+         src/icons/Makefile
          locales/Makefile
          docs/Makefile
          docs/common/Makefile
          docs/en/Makefile
          docs/hr/Makefile
          install/Makefile
-         install/poedit.keys
          macosx/Info.plist
          ])
 
