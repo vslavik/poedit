@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.org)
  *
- *  Copyright (C) 2004-2005 Vaclav Slavik
+ *  Copyright (C) 2004-2006 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -36,23 +36,17 @@
     #define HAS_THEMES_SUPPORT
 #endif
 
-class wxPoeditStdArtProvider : public wxArtProvider
-{
-protected:
-    virtual wxBitmap CreateBitmap(const wxArtID& id,
-                                  const wxArtClient& client,
-                                  const wxSize& size);
-};
-
-
-#ifdef HAS_THEMES_SUPPORT
-class wxPoeditThemeArtProvider : public wxArtProvider
-{
-protected:
-    virtual wxBitmap CreateBitmap(const wxArtID& id,
-                                  const wxArtClient& client,
-                                  const wxSize& size);
-};
+// see icons.cpp for explanation
+#if wxCHECK_VERSION(2,7,1)
+    #define HAS_INSERT_PROVIDER
 #endif
+
+class PoeditArtProvider : public wxArtProvider
+{
+protected:
+    virtual wxBitmap CreateBitmap(const wxArtID& id,
+                                  const wxArtClient& client,
+                                  const wxSize& size);
+};
 
 #endif // _ICONS_H_

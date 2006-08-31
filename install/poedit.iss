@@ -43,7 +43,7 @@ Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit\help\en\gettext\gettex
 Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit\help\hr\poedit.chm; Components: i18n
 Source: COPYING; DestDir: {app}\doc; DestName: copying.txt; Components: docs
 Source: NEWS; DestDir: {app}\doc; DestName: news.txt; Components: docs
-Source: BUILD-mingw\src\resources\resources.zip; DestDir: {app}\share\poedit; DestName: resources.zip; Components: core
+Source: src\icons\*.png; DestDir: {app}\share\poedit\icons; Components: core
 Source: extras\win32-gettext\iconv.dll; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\intl.dll; DestDir: {app}\bin; Components: core
 Source: extras\win32-gettext\gettextsrc.dll; DestDir: {app}\bin; Components: core
@@ -89,6 +89,7 @@ Name: {app}\doc; Components: docs
 Name: {app}\share; Components: core
 Name: {app}\share\locale; Components: core
 Name: {app}\share\poedit; Components: core
+Name: {app}\share\poedit\icons; Components: core
 Name: {app}\share\poedit\help; Components: docs
 Name: {app}\share\poedit\help\en; Components: docs
 Name: {app}\share\poedit\help\en\gettext; Components: docs

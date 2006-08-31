@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.org)
  *
- *  Copyright (C) 2004-2005 Vaclav Slavik
+ *  Copyright (C) 2004-2006 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -30,96 +30,97 @@
 #include <wx/log.h>
 
 #include "icons.h"
+#include "edapp.h"
 
 #ifdef __UNIX__
 #include "icons/appicon/poedit.xpm"
 #endif
 
-#include "icons/poedit-comment.xpm"
-#include "icons/poedit-fileopen.xpm"
-#include "icons/poedit-filesave.xpm"
-#include "icons/poedit-fullscreen.xpm"
-#include "icons/poedit-fuzzy.xpm"
-#include "icons/poedit-help.xpm"
-#include "icons/poedit-prj-delete.xpm"
-#include "icons/poedit-prj-edit.xpm"
-#include "icons/poedit-prj-new.xpm"
-#include "icons/poedit-quotes.xpm"
-#include "icons/poedit-update.xpm"
-
-#include "icons/poedit-status-automatic.xpm"
-#include "icons/poedit-status-cat-mid.xpm"
-#include "icons/poedit-status-cat-no.xpm"
-#include "icons/poedit-status-cat-ok.xpm"
-#include "icons/poedit-status-comment-modif.xpm"
-#include "icons/poedit-status-comment.xpm"
-#include "icons/poedit-status-modified.xpm"
-#include "icons/poedit-status-nothing.xpm"
-
-
-wxBitmap wxPoeditStdArtProvider::CreateBitmap(const wxArtID& id,
-                                              const wxArtClient& client,
-                                              const wxSize& size)
+#ifdef __WXGTK20__
+// translates poedit item id or Tango stock item id to "legacy" GNOME id:
+static wxString GetGnomeStockId(const wxString& id)
 {
+    #define MAP(poedit, gnome) if ( id == _T(poedit) ) return _T(gnome)
+
+    MAP("document-open",        "gtk-open");
+    MAP("document-save",        "gtk-save");
+    MAP("view-fullscreen",      "stock_fullscreen");
+    MAP("help-browser",         "gtk-help");
+
+    MAP("document-new",         "gtk-new");
+    MAP("document-properties",  "stock_edit");
+    MAP("edit-delete",          "gtk-delete");
+
+    #undef MAP
+
+    return wxEmptyString; // no match found
+}
+#endif // __WXGTK20__
+
+
+// wxWidgets prior to 2.7.1 didn't have wxArtProvider::InsertProvider() and
+// so it wasn't possibly to add a provider that would be used as the last
+// resort. Unfortunately that's exactly what we need: use the stock (GTK2)
+// provider to try to look up poedit icons in the theme (so that themes
+// may override them) and only if that fails, use the Tango icons shipped
+// with poedit. So we use a hack instead: temporarily disable this provider
+// and re-run the lookup from its CreateBitmap, thus getting the bitmap from
+// providers lower on the stack:
+#if defined(HAS_THEMES_SUPPORT) && !defined(HAS_INSERT_PROVIDER)
+    #define USE_THEME_HACK
+#endif
+
+#ifdef USE_THEME_HACK
+static bool gs_disablePoeditProvider = false;
+#endif
+
+
+wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
+                                         const wxArtClient& client,
+                                         const wxSize& size)
+{
+#ifdef USE_THEME_HACK
+    if ( gs_disablePoeditProvider )
+        return wxNullBitmap;
+
+    // try to get the icon from theme provider:
+    gs_disablePoeditProvider = true;
+    wxBitmap hackbmp = wxArtProvider::GetBitmap(id, client, size);
+    gs_disablePoeditProvider = false;
+    if ( hackbmp.Ok() )
+        return hackbmp;
+#endif // USE_THEME_HACK
+
+    wxLogTrace(_T("poedit.icons"), _T("getting icon '%s'"), id.c_str());
+
 #ifdef __UNIX__
-    if (id == _T("poedit-appicon"))
+    if (id == _T("poedit"))
         return wxBitmap(appicon_xpm);
 #endif
 
-    #define ICON(name, data) if (id == _T(name)) return wxBitmap(data);
+#ifdef __WXGTK20__
+    // try legacy GNOME icons:
+    wxString gnomeId = GetGnomeStockId(id);
+    if ( !gnomeId.empty() )
+    {
+        wxLogTrace(_T("poedit.icons"), _T("-> legacy '%s'"), gnomeId.c_str());
+        wxBitmap gbmp(wxArtProvider::GetBitmap(gnomeId, client, size));
+        if ( gbmp.Ok() )
+            return gbmp;
+    }
+#endif // __WXGTK20__
 
-    ICON("poedit-comment",               poedit_comment_xpm)
-    ICON("poedit-fileopen",              poedit_fileopen_xpm)
-    ICON("poedit-filesave",              poedit_filesave_xpm)
-    ICON("poedit-fullscreen",            poedit_fullscreen_xpm)
-    ICON("poedit-fuzzy",                 poedit_fuzzy_xpm)
-    ICON("poedit-help",                  poedit_help_xpm)
-    ICON("poedit-quotes",                poedit_quotes_xpm)
-    ICON("poedit-update",                poedit_update_xpm)
-    ICON("poedit-prj-delete",            poedit_prj_delete_xpm)
-    ICON("poedit-prj-edit",              poedit_prj_edit_xpm)
-    ICON("poedit-prj-new",               poedit_prj_new_xpm)
-    
-    ICON("poedit-status-automatic",      poedit_status_automatic_xpm)
-    ICON("poedit-status-comment",        poedit_status_comment_xpm)
-    ICON("poedit-status-comment-modif",  poedit_status_comment_modif_xpm)
-    ICON("poedit-status-modified",       poedit_status_modified_xpm)
-    ICON("poedit-status-nothing",        poedit_status_nothing_xpm)
-    ICON("poedit-status-cat-mid",        poedit_status_cat_mid_xpm)
-    ICON("poedit-status-cat-no",         poedit_status_cat_no_xpm)
-    ICON("poedit-status-cat-ok",         poedit_status_cat_ok_xpm)
-    
-    #undef ICON
- 
-    return wxNullBitmap;
+    wxString iconsdir = wxGetApp().GetAppPath() + _T("/share/poedit/icons");
+    if ( !wxDirExists(iconsdir) )
+        return wxNullBitmap;
+
+    wxString icon;
+    icon.Printf(_T("%s/%s.png"), iconsdir.c_str(), id.c_str());
+    if ( !wxFileExists(icon) )
+        return wxNullBitmap;
+
+    wxLogTrace(_T("poedit.icons"), _T("loading from %s"), icon.c_str());
+    wxBitmap bmp;
+    bmp.LoadFile(icon, wxBITMAP_TYPE_ANY);
+    return bmp;
 }
-
-
-#ifdef HAS_THEMES_SUPPORT
-wxBitmap wxPoeditThemeArtProvider::CreateBitmap(const wxArtID& id,
-                                                const wxArtClient& client,
-                                                const wxSize& size)
-{
-    wxLogTrace(_T("poedit"), _T("icon '%s' cli '%s'"),
-            id.c_str(), client.c_str());
-    #define ICON(poedit, theme) \
-        if (id == _T(poedit)) \
-            return wxArtProvider::GetBitmap(theme, client, size);
-
-    ICON("poedit-appicon",         _T("poedit"))
-    ICON("poedit-update",          _T("stock_update-data"))
-    ICON("poedit-fullscreen",      _T("stock_fullscreen"))
-    ICON("poedit-fileopen",        wxART_FILE_OPEN)
-    ICON("poedit-filesave",        _T("gtk-save"))
-    ICON("poedit-help",            wxART_HELP)
-    ICON("poedit-comment",         _T("stock_notes"))
-    ICON("poedit-fuzzy",           _T("stock_unknown"))
-    ICON("poedit-quotes",          _T("stock_nonprinting-chars"))
-    ICON("poedit-prj-new",         _T("gtk-new"))
-    ICON("poedit-prj-edit",        _T("stock_edit"))
-    ICON("poedit-prj-delete",      _T("gtk-delete"))
-
-    #undef ICON
-    return wxNullBitmap;
-}
-#endif // HAS_THEMES_SUPPORT

@@ -75,7 +75,7 @@ ManagerFrame::ManagerFrame() :
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
 {
 #ifdef __UNIX__
-    SetIcon(wxArtProvider::GetIcon(_T("poedit-appicon")));
+    SetIcon(wxArtProvider::GetIcon(_T("poedit")));
 #else
     SetIcon(wxICON(appicon));
 #endif

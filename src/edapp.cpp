@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.org)
  *
- *  Copyright (C) 1999-2005 Vaclav Slavik
+ *  Copyright (C) 1999-2006 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -129,14 +129,16 @@ bool poEditApp::OnInit()
     m_locale.AddCatalog(_T("poedit-wxstd")); // for semistatic builds
 
     wxImage::AddHandler(new wxGIFHandler);
+    wxImage::AddHandler(new wxPNGHandler);
     wxXmlResource::Get()->InitAllHandlers();
     InitXmlResource();
 
     SetDefaultCfg(wxConfig::Get());
 
-    wxArtProvider::PushProvider(new wxPoeditStdArtProvider);
-#ifdef HAS_THEMES_SUPPORT
-    wxArtProvider::PushProvider(new wxPoeditThemeArtProvider);
+#ifdef HAS_INSERT_PROVIDER
+    wxArtProvider::InsertProvider(new PoeditArtProvider);
+#else
+    wxArtProvider::PushProvider(new PoeditArtProvider);
 #endif
 
     if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))

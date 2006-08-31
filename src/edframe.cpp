@@ -383,7 +383,7 @@ poEditFrame::poEditFrame() :
     gs_shadedList = (bool)cfg->Read(_T("shaded_list"), (long)true);
 
 #ifdef __UNIX__
-    SetIcon(wxArtProvider::GetIcon(_T("poedit-appicon")));
+    SetIcon(wxArtProvider::GetIcon(_T("poedit")));
 #else
     SetIcon(wxICON(appicon));
 #endif
