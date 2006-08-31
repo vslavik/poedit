@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.org)
  *
- *  Copyright (C) 1999-2005 Vaclav Slavik
+ *  Copyright (C) 1999-2006 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -33,8 +33,9 @@
 
 #include <wx/app.h>
 #include <wx/string.h>
+#include <wx/intl.h>
+
 class WXDLLEXPORT wxConfigBase;
-class WXDLLEXPORT wxLocale;
 
 
 /// wxApp for use with 
