@@ -339,7 +339,9 @@ poEditFrame::poEditFrame() :
                                  wxConfig::Get()->Read(_T("frame_w"), 600),
                                  wxConfig::Get()->Read(_T("frame_h"), 400)),
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
+#if USE_GETTEXT_VALIDATION
     m_itemBeingValidated(-1), m_gettextProcess(NULL),
+#endif
     m_catalog(NULL),
 #ifdef USE_TRANSMEM
     m_transMem(NULL),
@@ -541,8 +543,10 @@ poEditFrame::poEditFrame() :
 
 poEditFrame::~poEditFrame()
 {
+#if USE_GETTEXT_VALIDATION
     if (m_gettextProcess)
         m_gettextProcess->Detach();
+#endif
 
     ms_instances.DeleteObject(this);
 
@@ -1578,8 +1582,10 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 
     UpdateStatusBar();
 
+#if USE_GETTEXT_VALIDATION
     // check validity of this item:
     m_itemsToValidate.push_front(item);
+#endif
 }
 
 
@@ -1801,6 +1807,7 @@ void poEditFrame::UpdateStatusBar()
         txt.Printf(_("%i strings (%i fuzzy, %i bad tokens, %i not translated)"),
                    all, fuzzy, badtokens, untranslated);
 
+#if USE_GETTEXT_VALIDATION
         if (!m_itemsToValidate.empty())
         {
             wxString progress;
@@ -1809,6 +1816,7 @@ void poEditFrame::UpdateStatusBar()
             txt += _T("    ");
             txt += progress;
         }
+#endif
 
         GetStatusBar()->SetStatusText(txt);
         if (all > 0)
@@ -2302,36 +2310,45 @@ void poEditFrame::OnCommentWindowText(wxCommandEvent&)
 
 void poEditFrame::OnIdle(wxIdleEvent& event)
 {
+#if USE_GETTEXT_VALIDATION
     if (!m_itemsToValidate.empty() && m_itemBeingValidated == -1)
         BeginItemValidation();
+#endif
     event.Skip();
 }
 
 void poEditFrame::OnEndProcess(wxProcessEvent& event)
 {
+#if USE_GETTEXT_VALIDATION
     m_gettextProcess = NULL;
     event.Skip(); // deletes wxProcess object
     EndItemValidation();
     wxWakeUpIdle();
+#endif
 }
 
 void poEditFrame::CancelItemsValidation()
 {
+#if USE_GETTEXT_VALIDATION
     // stop checking entries in the background:
     m_itemsToValidate.clear();
     m_itemBeingValidated = -1;
+#endif
 }
 
 void poEditFrame::RestartItemsValidation()
 {
+#if USE_GETTEXT_VALIDATION
     // start checking catalog's entries in the background:
     int cnt = m_list->GetItemCount();
     for (int i = 0; i < cnt; i++)
         m_itemsToValidate.push_back(i);
+#endif
 }
 
 void poEditFrame::BeginItemValidation()
 {
+#if USE_GETTEXT_VALIDATION
     int item = m_itemsToValidate.front();
     int index = m_list->GetIndexInCatalog(item);
     CatalogData& dt = (*m_catalog)[index];
@@ -2375,10 +2392,12 @@ void poEditFrame::BeginItemValidation()
     {
         EndItemValidation();
     }
+#endif
 }
 
 void poEditFrame::EndItemValidation()
 {
+#if USE_GETTEXT_VALIDATION
     wxASSERT( m_catalog );
 
     wxRemoveFile(m_validationProcess.tmp1);
@@ -2429,6 +2448,7 @@ void poEditFrame::EndItemValidation()
                        _T("finished checking validity in background"));
         }
     }
+#endif
 }
 
 void poEditFrame::ShowPluralFormUI(bool show)

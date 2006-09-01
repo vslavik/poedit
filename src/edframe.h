@@ -34,6 +34,10 @@
   #define CAN_MODIFY_DEFAULT_FONT
 #endif
 
+// disable on-the-fly gettext validation, launching so many xmsgfmt
+// processes doesn't work well:
+#define USE_GETTEXT_VALIDATION 0
+
 #include <list>
 
 #include <wx/frame.h>
@@ -221,6 +225,7 @@ class poEditFrame : public wxFrame
         DECLARE_EVENT_TABLE()
 
     private:
+#if USE_GETTEXT_VALIDATION
         struct ValidationProcessData : public GettextProcessData
         {
             wxString tmp1, tmp2;
@@ -230,6 +235,7 @@ class poEditFrame : public wxFrame
         int m_itemBeingValidated;
         std::list<int> m_itemsToValidate;
         ValidationProcessData m_validationProcess;
+#endif
 
         bool m_commentWindowEditable;
         Catalog *m_catalog;
