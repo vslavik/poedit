@@ -28,6 +28,7 @@
  */
 
 #include <wx/log.h>
+#include <wx/stdpaths.h>
 
 #include "icons.h"
 #include "edapp.h"
@@ -110,9 +111,18 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
     }
 #endif // __WXGTK20__
 
-    wxString iconsdir = wxGetApp().GetAppPath() + _T("/share/poedit/icons");
+    wxString iconsdir =
+#ifdef __WXMAC__
+        wxStandardPaths::Get().GetDataDir() + _T("/icons");
+#else
+        wxGetApp().GetAppPath() + _T("/share/poedit/icons");
+#endif
     if ( !wxDirExists(iconsdir) )
+    {
+        wxLogTrace(_T("poedit.icons"),
+                   _T("icons dir %s not found"), iconsdir.c_str());
         return wxNullBitmap;
+    }
 
     wxString icon;
     icon.Printf(_T("%s/%s.png"), iconsdir.c_str(), id.c_str());

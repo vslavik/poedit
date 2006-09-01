@@ -37,3 +37,8 @@ for i in $top_srcdir/locales/wxwin/*.mo ; do
     mkdir -p $bundle/Contents/SharedSupport/locale/$lang/LC_MESSAGES
     cp $i $bundle/Contents/SharedSupport/locale/$lang/LC_MESSAGES/poedit-wxstd.mo
 done
+
+# icons:
+iconsdir="$bundle/Contents/SharedSupport/icons"
+mkdir -p $iconsdir
+cp $top_srcdir/src/icons/*.png $iconsdir
