@@ -50,9 +50,6 @@ XRC_RESOURCES = \
 
 XRC_MORE_FILES = \
 		$(srcdir)/resources/about.html \
-		$(srcdir)/resources/wxwin.gif \
-		$(srcdir)/resources/sleepycat.gif \
-		$(srcdir)/resources/sourceforge.gif \
         $(srcdir)/resources/tm_update.gif
 
 compiled_xrc.cpp: $(XRC_RESOURCES) $(XRC_MORE_FILES)
