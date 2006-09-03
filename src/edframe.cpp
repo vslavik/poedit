@@ -594,9 +594,10 @@ poEditFrame::~poEditFrame()
     if (m_transMem)
         m_transMem->Release();
 #endif
-    delete m_catalog;
 
+    delete m_catalog;
     m_catalog = NULL;
+    m_list->CatalogChanged(NULL);
 
     // shutdown the spellchecker:
     InitSpellchecker();

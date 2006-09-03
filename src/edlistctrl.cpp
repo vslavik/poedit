@@ -253,59 +253,62 @@ void poEditListCtrl::CatalogChanged(Catalog* catalog)
 
 void poEditListCtrl::ReadCatalog()
 {
-    if (m_catalog != NULL)
+    if (m_catalog == NULL)
     {
-        // set the item count
-        SetItemCount(m_catalog->GetCount());
+        SetItemCount(0);
+        return;
+    }
 
-        // create the lookup arrays of Ids by first splitting it upon
-        // four categories of items:
-        // unstranslated, invalid, fuzzy and the rest
-        m_itemIndexToCatalogIndexArray.clear();
+    // set the item count
+    SetItemCount(m_catalog->GetCount());
 
-        std::vector<int> untranslatedIds;
-        std::vector<int> invalidIds;
-        std::vector<int> fuzzyIds;
-        std::vector<int> restIds;
+    // create the lookup arrays of Ids by first splitting it upon
+    // four categories of items:
+    // unstranslated, invalid, fuzzy and the rest
+    m_itemIndexToCatalogIndexArray.clear();
 
-        for (size_t i = 0; i < m_catalog->GetCount(); i++)
-        {
-            CatalogData& d = (*m_catalog)[i];
-            if (!d.IsTranslated())
-              untranslatedIds.push_back(i);
-            else if (d.GetValidity() == CatalogData::Val_Invalid)
-              invalidIds.push_back(i);
-            else if (d.IsFuzzy())
-              fuzzyIds.push_back(i);
-            else
-              restIds.push_back(i);
-        }
+    std::vector<int> untranslatedIds;
+    std::vector<int> invalidIds;
+    std::vector<int> fuzzyIds;
+    std::vector<int> restIds;
 
-        // Now fill the lookup array, not forgetting to set the appropriate
-        // property in the catalog entry to be able to go back and forth
-        // from one numbering system to the other
-        m_catalogIndexToItemIndexArray.resize(m_catalog->GetCount());
-        int listItemId = 0;
-        for (size_t i = 0; i < untranslatedIds.size(); i++)
-        {
-            m_itemIndexToCatalogIndexArray.push_back(untranslatedIds[i]);
-            m_catalogIndexToItemIndexArray[untranslatedIds[i]] = listItemId++;
-        }
-        for (size_t i = 0; i < invalidIds.size(); i++)
-        {
-            m_itemIndexToCatalogIndexArray.push_back(invalidIds[i]);
-            m_catalogIndexToItemIndexArray[invalidIds[i]] = listItemId++;
-        }
-        for (size_t i = 0; i < fuzzyIds.size(); i++)
-        {
-            m_itemIndexToCatalogIndexArray.push_back(fuzzyIds[i]);
-            m_catalogIndexToItemIndexArray[fuzzyIds[i]] = listItemId++;
-        }
-        for (size_t i = 0; i < restIds.size(); i++)
-        {
-            m_itemIndexToCatalogIndexArray.push_back(restIds[i]);
-            m_catalogIndexToItemIndexArray[restIds[i]] = listItemId++;
-        }
+    for (size_t i = 0; i < m_catalog->GetCount(); i++)
+    {
+        CatalogData& d = (*m_catalog)[i];
+        if (!d.IsTranslated())
+          untranslatedIds.push_back(i);
+        else if (d.GetValidity() == CatalogData::Val_Invalid)
+          invalidIds.push_back(i);
+        else if (d.IsFuzzy())
+          fuzzyIds.push_back(i);
+        else
+          restIds.push_back(i);
+    }
+
+    // Now fill the lookup array, not forgetting to set the appropriate
+    // property in the catalog entry to be able to go back and forth
+    // from one numbering system to the other
+    m_catalogIndexToItemIndexArray.resize(m_catalog->GetCount());
+    int listItemId = 0;
+    for (size_t i = 0; i < untranslatedIds.size(); i++)
+    {
+        m_itemIndexToCatalogIndexArray.push_back(untranslatedIds[i]);
+        m_catalogIndexToItemIndexArray[untranslatedIds[i]] = listItemId++;
+    }
+    for (size_t i = 0; i < invalidIds.size(); i++)
+    {
+        m_itemIndexToCatalogIndexArray.push_back(invalidIds[i]);
+        m_catalogIndexToItemIndexArray[invalidIds[i]] = listItemId++;
+    }
+    for (size_t i = 0; i < fuzzyIds.size(); i++)
+    {
+        m_itemIndexToCatalogIndexArray.push_back(fuzzyIds[i]);
+        m_catalogIndexToItemIndexArray[fuzzyIds[i]] = listItemId++;
+    }
+    for (size_t i = 0; i < restIds.size(); i++)
+    {
+        m_itemIndexToCatalogIndexArray.push_back(restIds[i]);
+        m_catalogIndexToItemIndexArray[restIds[i]] = listItemId++;
     }
 }
 
