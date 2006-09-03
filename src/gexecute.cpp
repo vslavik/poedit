@@ -33,8 +33,13 @@
 #include <wx/log.h> 
 #include <wx/process.h>
 #include <wx/txtstrm.h>
-#include <wx/string.h> 
+#include <wx/string.h>
 #include <wx/intl.h>
+
+#ifdef __WXMAC__
+#include <wx/mac/corefoundation/cfstring.h>
+#include <CoreFoundation/CFBundle.h>
+#endif
 
 #include "gexecute.h"
 
@@ -117,9 +122,42 @@ class TempLocaleSwitcher
         wxString m_all, m_messages, m_lang, m_language;
 };
 
-
-bool ExecuteGettext(const wxString& cmdline, wxString *stderrOutput)
+#ifdef __WXMAC__
+static wxString MacGetPathToBinary(const wxString& program)
 {
+    wxMacUniCharBuffer programbuf(program);
+    wxMacCFStringHolder programstr(
+        CFStringCreateWithCharacters(NULL,
+                                     programbuf.GetBuffer(),
+                                     programbuf.GetChars()));
+
+    CFBundleRef bundle = CFBundleGetMainBundle();
+    CFURLRef urlRel = CFBundleCopyAuxiliaryExecutableURL(bundle, programstr);
+
+    if ( urlRel == NULL )
+        return program;
+
+    CFURLRef urlAbs = CFURLCopyAbsoluteURL(urlRel);
+
+    wxMacCFStringHolder path(
+            CFURLCopyFileSystemPath(urlAbs, kCFURLPOSIXPathStyle));
+
+    CFRelease(urlRel);
+    CFRelease(urlAbs);
+
+    return path.AsString(wxLocale::GetSystemEncoding());
+}
+#endif // __WXMAC__
+
+bool ExecuteGettext(const wxString& cmdline_, wxString *stderrOutput)
+{
+    wxString cmdline(cmdline_);
+
+#ifdef __WXMAC__
+    wxString binary = cmdline.BeforeFirst(_T(' '));
+    cmdline = MacGetPathToBinary(binary) + cmdline.Mid(binary.length());
+#endif // __WXMAC__
+
     wxLogTrace(_T("poedit.execute"), _T("executing '%s'"), cmdline.c_str());
 
     TempLocaleSwitcher localeSwitcher(_T("C"));

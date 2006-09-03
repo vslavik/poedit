@@ -17,9 +17,10 @@ rm -rf $bundle
 mkdir -p $bundle/Contents/MacOS
 mkdir -p $bundle/Contents/Resources
 
-# executable:
+# executables:
 cp poedit $bundle/Contents/MacOS/poedit
-strip $bundle/Contents/MacOS/poedit
+cp $top_srcdir/extras/osx-gettext/* $bundle/Contents/MacOS
+strip $bundle/Contents/MacOS/*
 $rez $bundle/Contents/MacOS/poedit
 
 # metadata:
