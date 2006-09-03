@@ -81,12 +81,6 @@ wxString poEditApp::GetAppVersion() const
 
 static wxArrayString gs_filesToOpen;
 
-#ifdef __UNIX__
-#define CFG_FILE (home + _T(".poedit/config"))
-#else
-#define CFG_FILE wxEmptyString
-#endif
-
 extern void InitXmlResource();
 
 bool poEditApp::OnInit()
@@ -94,7 +88,7 @@ bool poEditApp::OnInit()
     if (!wxApp::OnInit())
         return false;
 
-#ifdef __UNIX__
+#if defined(__UNIX__) && !defined(__WXMAC__)
     wxString home = wxGetHomeDir() + _T("/");
 
     // create poEdit cfg dir, move ~/.poedit to ~/.poedit/config
@@ -111,6 +105,15 @@ bool poEditApp::OnInit()
 
     SetVendorName(_T("Vaclav Slavik"));
     SetAppName(_T("poedit"));
+
+    #if defined(__WXMAC__)
+    #define CFG_FILE (wxStandardPaths::Get().GetUserConfigDir() + _T("/poedit.cfg"))
+    #elif defined(__UNIX__)
+    #define CFG_FILE (home + _T(".poedit/config"))
+    #else
+    #define CFG_FILE wxEmptyString
+    #endif
+
     wxConfigBase::Set(
         new wxConfig(wxEmptyString, wxEmptyString, CFG_FILE, wxEmptyString, 
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
@@ -261,7 +264,9 @@ void poEditApp::SetDefaultCfg(wxConfigBase *cfg)
     if (cfg->Read(_T("TM/database_path"), wxEmptyString).IsEmpty())
     {
         wxString dbpath;
-#if defined(__UNIX__)
+#if defined(__WXMAC__)
+        dbpath = wxStandardPaths::Get().GetUserDataDir() + _T("/tm");
+#elif defined(__UNIX__)
         dbpath = wxGetHomeDir() + _T("/.poedit/tm");
 #elif defined(__WXMSW__)
         // VS: this distinguishes between NT and Win9X systems -- the former
