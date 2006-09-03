@@ -38,6 +38,12 @@ class WXDLLEXPORT wxArrayString;
 class TranslationMemory;
 class ProgressInfo;
 
+#if defined(__UNIX__) && !defined(__WXMAC__)
+    #define HAVE_RPM 1
+#else
+    #define HAVE_RPM 0
+#endif
+
 /** TranslationMemoryUpdater is a worker object that fills given
     translation memory object with all existing translations found in
     the system (in specified paths, to be exact).
@@ -70,11 +76,11 @@ class TranslationMemoryUpdater
     protected:
         bool UpdateFromPO(const wxString& filename);
         bool UpdateFromMO(const wxString& filename);
-#ifdef __UNIX__
+#if HAVE_RPM
         bool UpdateFromRPM(const wxString& filename);
-#endif        
+#endif
         bool UpdateFromCatalog(const wxString& filename);
-        
+
     private:
         ProgressInfo *m_progress;
         TranslationMemory *m_mem;

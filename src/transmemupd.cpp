@@ -93,7 +93,7 @@ class TMUDirTraverser : public wxDirTraverser
 #endif
             if ((f.Matches(_T("*.mo")) && IsForLang(f, m_lang)) || 
                 (f.Matches(_T("*.po")) && IsForLang(f, m_lang)) 
-#ifdef __UNIX__
+#if HAVE_RPM
                 || f.Matches(_T("*.rpm"))
 #endif
                 )
@@ -156,11 +156,11 @@ bool TranslationMemoryUpdater::Update(const wxArrayString& files)
             res = UpdateFromPO(f);
         else if (f.Matches(_T("*.mo")))
             res = UpdateFromMO(f);
-#ifdef __UNIX__
+#if HAVE_RPM
         else if (f.Matches(_T("*.rpm")))
             res = UpdateFromRPM(f);
 #endif
-            
+
         m_progress->UpdateGauge();
         wxYield();
         if (m_progress->Cancelled()) return false;
@@ -188,7 +188,7 @@ bool TranslationMemoryUpdater::UpdateFromMO(const wxString& filename)
     return rt;
 }
 
-#ifdef __UNIX__
+#if HAVE_RPM
 bool TranslationMemoryUpdater::UpdateFromRPM(const wxString& filename)
 {
     #define TMP_DIR _T("/tmp/poedit-rpm-tpm")
