@@ -118,7 +118,7 @@ bool poEditApp::OnInit()
 
 #ifdef __WXMAC__
     wxLocale::AddCatalogLookupPathPrefix(
-        wxStandardPaths::Get().GetDataDir() + _T("/locale"));
+        wxStandardPaths::Get().GetResourcesDir() + _T("/locale"));
 #else
     wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
 #endif

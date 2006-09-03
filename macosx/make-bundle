@@ -29,16 +29,16 @@ cp $top_srcdir/macosx/poedit.icns $bundle/Contents/Resources
 # gettext catalogs:
 for i in $top_srcdir/locales/*.mo ; do
     lang=`basename $i .mo`
-    mkdir -p $bundle/Contents/SharedSupport/locale/$lang/LC_MESSAGES
-    cp $i $bundle/Contents/SharedSupport/locale/$lang/LC_MESSAGES/poedit.mo
+    mkdir -p $bundle/Contents/Resources/locale/$lang/LC_MESSAGES
+    cp $i $bundle/Contents/Resources/locale/$lang/LC_MESSAGES/poedit.mo
 done
 for i in $top_srcdir/locales/wxwin/*.mo ; do
     lang=`basename $i .mo`
-    mkdir -p $bundle/Contents/SharedSupport/locale/$lang/LC_MESSAGES
-    cp $i $bundle/Contents/SharedSupport/locale/$lang/LC_MESSAGES/poedit-wxstd.mo
+    mkdir -p $bundle/Contents/Resources/locale/$lang/LC_MESSAGES
+    cp $i $bundle/Contents/Resources/locale/$lang/LC_MESSAGES/poedit-wxstd.mo
 done
 
 # icons:
-iconsdir="$bundle/Contents/SharedSupport/icons"
+iconsdir="$bundle/Contents/Resources/icons"
 mkdir -p $iconsdir
 cp $top_srcdir/src/icons/*.png $iconsdir
