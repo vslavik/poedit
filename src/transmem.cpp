@@ -154,6 +154,7 @@
 #include <wx/log.h>
 #include <wx/intl.h>
 #include <wx/utils.h>
+#include <wx/filename.h>
 
 #include DB_HEADER
 
@@ -719,8 +720,7 @@ TranslationMemoriesList TranslationMemory::ms_instances;
     if (!dbPath)
         dbPath = path + _T("/") + language;
 
-    if ((!wxDirExists(path) && !wxMkdir(path)) ||
-        (!wxDirExists(dbPath) && !wxMkdir(dbPath)))
+    if ( !wxFileName::Mkdir(dbPath, 0777, wxPATH_MKDIR_FULL) )
     {
         wxLogError(_("Cannot create database directory!"));
         return NULL;
