@@ -73,6 +73,26 @@ WX_DEFINE_LIST(poEditFramesList);
 poEditFramesList poEditFrame::ms_instances;
 
 
+// this should be high enough to not conflict with any wxNewId-allocated value,
+// but there's a check for this in the poEditFrame ctor, too
+const wxWindowID ID_POEDIT_FIRST = wxID_HIGHEST + 10000;
+const unsigned   ID_POEDIT_STEP  = 1000;
+
+const wxWindowID ID_POPUP_REFS   = ID_POEDIT_FIRST + 1*ID_POEDIT_STEP;
+const wxWindowID ID_POPUP_TRANS  = ID_POEDIT_FIRST + 2*ID_POEDIT_STEP;
+const wxWindowID ID_POPUP_DUMMY  = ID_POEDIT_FIRST + 3*ID_POEDIT_STEP;
+const wxWindowID ID_BOOKMARK_GO  = ID_POEDIT_FIRST + 4*ID_POEDIT_STEP;
+const wxWindowID ID_BOOKMARK_SET = ID_POEDIT_FIRST + 5*ID_POEDIT_STEP;
+
+const wxWindowID ID_POEDIT_LAST  = ID_POEDIT_FIRST + 6*ID_POEDIT_STEP;
+
+const wxWindowID ID_LIST = wxNewId();
+const wxWindowID ID_TEXTORIG = wxNewId();
+const wxWindowID ID_TEXTORIGPLURAL = wxNewId();
+const wxWindowID ID_TEXTTRANS = wxNewId();
+const wxWindowID ID_TEXTCOMMENT = wxNewId();
+
+
 
 #ifdef __VISUALC__
 // Disabling the useless and annoying MSVC++'s
@@ -113,23 +133,6 @@ poEditFramesList poEditFrame::ms_instances;
     return f;
 }
 
-
-// Event & controls IDs:
-enum
-{
-    EDC_LIST        = 1000,
-    EDC_TEXTORIG,
-    EDC_TEXTORIGPLURAL,
-    EDC_TEXTTRANS,
-    EDC_TEXTCOMMENT,
-
-    ED_POPUP_REFS   = 2000,
-    ED_POPUP_TRANS  = 3000,
-    ED_POPUP_DUMMY  = 4000,
-
-    ED_BOOKMARK_GO  = 5000,
-    ED_BOOKMARK_SET = 5020
-};
 
 class ListHandler;
 class TextctrlHandler : public wxEvtHandler
@@ -232,9 +235,9 @@ class ListHandler : public wxEvtHandler
 };
 
 BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
-   EVT_LIST_ITEM_SELECTED  (EDC_LIST, ListHandler::OnSel)
-   EVT_LIST_ITEM_DESELECTED(EDC_LIST, ListHandler::OnDesel)
-   EVT_LIST_ITEM_ACTIVATED (EDC_LIST, ListHandler::OnActivated)
+   EVT_LIST_ITEM_SELECTED  (ID_LIST, ListHandler::OnSel)
+   EVT_LIST_ITEM_DESELECTED(ID_LIST, ListHandler::OnDesel)
+   EVT_LIST_ITEM_ACTIVATED (ID_LIST, ListHandler::OnActivated)
    EVT_RIGHT_DOWN          (          ListHandler::OnRightClick)
    EVT_SET_FOCUS           (          ListHandler::OnFocus)
    EVT_KEY_DOWN            (          ListHandler::OnKeyDown)
@@ -311,18 +314,18 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_find"),        poEditFrame::OnFind)
    EVT_MENU           (XRCID("menu_comment"),     poEditFrame::OnEditComment)
    EVT_MENU           (XRCID("menu_manager"),     poEditFrame::OnManager)
-   EVT_MENU_RANGE     (ED_POPUP_REFS, ED_POPUP_REFS + 999, poEditFrame::OnReference)
+   EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, poEditFrame::OnReference)
 #ifdef USE_TRANSMEM
-   EVT_MENU_RANGE     (ED_POPUP_TRANS, ED_POPUP_TRANS + 999,
+   EVT_MENU_RANGE     (ID_POPUP_TRANS, ID_POPUP_TRANS + 999,
                        poEditFrame::OnAutoTranslate)
    EVT_MENU           (XRCID("menu_auto_translate"), poEditFrame::OnAutoTranslateAll)
 #endif
-   EVT_MENU_RANGE     (ED_BOOKMARK_GO, ED_BOOKMARK_GO + 9,
+   EVT_MENU_RANGE     (ID_BOOKMARK_GO, ID_BOOKMARK_GO + 9,
                        poEditFrame::OnGoToBookmark)
-   EVT_MENU_RANGE     (ED_BOOKMARK_SET, ED_BOOKMARK_SET + 9,
+   EVT_MENU_RANGE     (ID_BOOKMARK_SET, ID_BOOKMARK_SET + 9,
                        poEditFrame::OnSetBookmark)
    EVT_CLOSE          (                poEditFrame::OnCloseWindow)
-   EVT_TEXT           (EDC_TEXTCOMMENT,poEditFrame::OnCommentWindowText)
+   EVT_TEXT           (ID_TEXTCOMMENT,poEditFrame::OnCommentWindowText)
 #ifdef __WXMSW__
    EVT_DROP_FILES     (poEditFrame::OnFileDrop)
 #endif
@@ -353,6 +356,12 @@ poEditFrame::poEditFrame() :
     m_sel(-1), //m_selItem(0),
     m_edittedTextFuzzyChanged(false)
 {
+    // make sure that the [ID_POEDIT_FIRST,ID_POEDIT_LAST] range of IDs is not
+    // used for anything else:
+    wxASSERT_MSG( wxGetCurrentId() < ID_POEDIT_FIRST,
+                  _("detected ID values conflict!") );
+    wxRegisterId(ID_POEDIT_LAST);
+
 #ifdef __WXMSW__
     const int SPLITTER_BORDER = wxSP_NOBORDER;
 #else
@@ -429,7 +438,7 @@ poEditFrame::poEditFrame() :
                                       SPLITTER_BORDER);
 
     m_list = new poEditListCtrl(m_splitter,
-                                EDC_LIST,
+                                ID_LIST,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxLC_REPORT | wxLC_SINGLE_SEL,
                                 m_displayLines);
@@ -442,7 +451,7 @@ poEditFrame::poEditFrame() :
 
     m_textComment = NULL;
     m_textAutoComments = new UnfocusableTextCtrl(m_bottomRightPanel,
-                                EDC_TEXTORIG, wxEmptyString,
+                                ID_TEXTORIG, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE | wxTE_READONLY);
     // This call will force the creation of the right kind of control
@@ -452,16 +461,16 @@ poEditFrame::poEditFrame() :
     m_labelSingular = new wxStaticText(m_bottomLeftPanel, -1, _("Singular:"));
     m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
     m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
-                                EDC_TEXTORIG, wxEmptyString,
+                                ID_TEXTORIG, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE | wxTE_READONLY);
     m_textOrigPlural = new UnfocusableTextCtrl(m_bottomLeftPanel,
-                                EDC_TEXTORIGPLURAL, wxEmptyString,
+                                ID_TEXTORIGPLURAL, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE | wxTE_READONLY);
 
     m_textTrans = new wxTextCtrl(m_bottomLeftPanel,
-                                EDC_TEXTTRANS, wxEmptyString,
+                                ID_TEXTTRANS, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE);
 
@@ -533,10 +542,6 @@ poEditFrame::poEditFrame() :
 #ifdef __WXMSW__
     DragAcceptFiles(true);
 #endif
-
-    // For some reason, doing this explicitly is required on Mac, otherwise
-    // the "Quit poedit" menu item would be disabled:
-    MenuBar->Enable(wxID_EXIT, true);
 }
 
 
@@ -1265,7 +1270,7 @@ void poEditFrame::OnReferencesMenu(wxCommandEvent& event)
 
 void poEditFrame::OnReference(wxCommandEvent& event)
 {
-    ShowReference(event.GetId() - ED_POPUP_REFS);
+    ShowReference(event.GetId() - ID_POPUP_REFS);
 }
 
 
@@ -1895,8 +1900,8 @@ void poEditFrame::UpdateMenu()
     menubar->EnableTop(4, m_catalog != NULL);
     for (int i = 0; i < 10; i++)
     {
-        menubar->Enable(ED_BOOKMARK_SET + i, m_catalog != NULL);
-        menubar->Enable(ED_BOOKMARK_GO + i,
+        menubar->Enable(ID_BOOKMARK_SET + i, m_catalog != NULL);
+        menubar->Enable(ID_BOOKMARK_GO + i,
                         m_catalog != NULL &&
                         m_catalog->GetBookmarkIndex(Bookmark(i)) != -1);
     }
@@ -1988,7 +1993,7 @@ void poEditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
 #ifdef USE_TRANSMEM
 void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
 {
-    int ind = event.GetId() - ED_POPUP_TRANS;
+    int ind = event.GetId() - ID_POPUP_TRANS;
     (*m_catalog)[m_list->GetIndexInCatalog(m_sel)].SetTranslation(m_autoTranslations[ind]);
     UpdateToTextCtrl();
     // VS: This dirty trick ensures proper refresh of everything:
@@ -2056,27 +2061,27 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
     menu->AppendSeparator();
 
 #ifdef CAN_MODIFY_DEFAULT_FONT
-    wxMenuItem *it1 = new wxMenuItem(menu, ED_POPUP_DUMMY+0, _("References:"));
+    wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
     it1->SetFont(m_boldGuiFont);
     menu->Append(it1);
 #else
-    menu->Append(ED_POPUP_DUMMY+0, _("References:"));
+    menu->Append(ID_POPUP_DUMMY+0, _("References:"));
 #endif
     menu->AppendSeparator();
     for (size_t i = 0; i < refs.GetCount(); i++)
-        menu->Append(ED_POPUP_REFS + i, _T("   ") + refs[i]);
+        menu->Append(ID_POPUP_REFS + i, _T("   ") + refs[i]);
 
 #ifdef USE_TRANSMEM
     if (GetTransMem())
     {
         menu->AppendSeparator();
 #ifdef CAN_MODIFY_DEFAULT_FONT
-        wxMenuItem *it2 = new wxMenuItem(menu, ED_POPUP_DUMMY+1,
+        wxMenuItem *it2 = new wxMenuItem(menu, ID_POPUP_DUMMY+1,
                                          _("Automatic translations:"));
         it2->SetFont(m_boldGuiFont);
         menu->Append(it2);
 #else
-        menu->Append(ED_POPUP_DUMMY+1, _("Automatic translations:"));
+        menu->Append(ID_POPUP_DUMMY+1, _("Automatic translations:"));
 #endif
         menu->AppendSeparator();
 
@@ -2091,13 +2096,13 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
                 wxString s(m_autoTranslations[i].wc_str(wxConvUTF8), wxConvLocal);
                 if (!s)
                     s = m_autoTranslations[i];
-                menu->Append(ED_POPUP_TRANS + i, _T("   ") + s);
+                menu->Append(ID_POPUP_TRANS + i, _T("   ") + s);
             }
         }
         else
         {
-            menu->Append(ED_POPUP_DUMMY+2, _("none"));
-            menu->Enable(ED_POPUP_DUMMY+2, false);
+            menu->Append(ID_POPUP_DUMMY+2, _("none"));
+            menu->Enable(ID_POPUP_DUMMY+2, false);
         }
     }
 #endif
@@ -2220,14 +2225,14 @@ void poEditFrame::UpdateCommentWindowEditable()
         if (m_commentWindowEditable)
         {
             m_textComment = new wxTextCtrl(m_bottomRightPanel,
-                                        EDC_TEXTCOMMENT, wxEmptyString,
+                                        ID_TEXTCOMMENT, wxEmptyString,
                                         wxDefaultPosition, wxDefaultSize,
                                         wxTE_MULTILINE);
         }
         else
         {
             m_textComment = new UnfocusableTextCtrl(m_bottomRightPanel,
-                                        EDC_TEXTCOMMENT, wxEmptyString,
+                                        ID_TEXTCOMMENT, wxEmptyString,
                                         wxDefaultPosition, wxDefaultSize,
                                         wxTE_MULTILINE | wxTE_READONLY);
         }
@@ -2569,13 +2574,13 @@ void poEditFrame::AddBookmarksMenu()
 
     for (int i = 0; i < 10; i++)
     {
-        menu->Append(ED_BOOKMARK_SET + i,
+        menu->Append(ID_BOOKMARK_SET + i,
                      wxString::Format(_("Set bookmark %i\tAlt-%i"), i, i));
     }
     menu->AppendSeparator();
     for (int i = 0; i < 10; i++)
     {
-        menu->Append(ED_BOOKMARK_GO + i,
+        menu->Append(ID_BOOKMARK_GO + i,
                      wxString::Format(_("Go to bookmark %i\tCtrl-%i"), i, i));
     }
 
@@ -2586,7 +2591,7 @@ void poEditFrame::AddBookmarksMenu()
 void poEditFrame::OnGoToBookmark(wxCommandEvent& event)
 {
     // Go to bookmark, if there is an item for it
-    Bookmark bk = static_cast<Bookmark>(event.GetId() - ED_BOOKMARK_GO);
+    Bookmark bk = static_cast<Bookmark>(event.GetId() - ID_BOOKMARK_GO);
     int bkIndex = m_catalog->GetBookmarkIndex(bk);
     if (bkIndex != -1)
     {
@@ -2607,7 +2612,7 @@ void poEditFrame::OnSetBookmark(wxCommandEvent& event)
     int bkIndex = -1;
     int selItemIndex = m_list->GetIndexInCatalog(m_sel);
 
-    Bookmark bk = static_cast<Bookmark>(event.GetId() - ED_BOOKMARK_SET);
+    Bookmark bk = static_cast<Bookmark>(event.GetId() - ID_BOOKMARK_SET);
     if (m_catalog->GetBookmarkIndex(bk) == selItemIndex)
     {
         m_catalog->SetBookmark(selItemIndex, NO_BOOKMARK);
