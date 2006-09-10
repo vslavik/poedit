@@ -21,14 +21,13 @@ for i in *.po ; do msgfmt -o `basename $i .po`.mo $i ; done
 
 find_unix_files()
 {
-  (find . -type f -maxdepth 1 ; \
-  find admin locales src docs extras install -type f) | \
+  (find . -maxdepth 1 -type f ; \
+  find admin locales src docs extras install macosx -type f) | \
     grep -v '/win32-' | \
     grep -v '/\.svn' | \
     grep -v '\.#' | \
     grep -v '\.\(dsp\|dsw\|chm\|rtf\|iss\|ico\|ncb\|opt\|plg\|rc\)' | \
     grep -v 'install/.*\.txt'
-  echo 'docs_classes/Doxyfile'
 }
 
 find_win32_files()
