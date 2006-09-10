@@ -38,9 +38,9 @@ Source: BUILD-mingw\src\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Co
 Source: install\poedit.exe.manifest; DestDir: {app}\bin; MinVersion: 0,5.01.2600; Components: core
 Source: extras\win32-gettext\gnu_gettext.COPYING; DestDir: {app}\doc; Components: docs
 Source: README; DestDir: {app}\doc; DestName: readme.txt; Components: docs
-Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit\help\en\poedit.chm; Components: docs
-Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit\help\en\gettext\gettext.chm; Components: docs
-Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit\help\hr\poedit.chm; Components: i18n
+Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit\help\en; Components: docs
+Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit\help\en\gettext; Components: docs
+Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit\help\hr; Components: i18n
 Source: COPYING; DestDir: {app}\doc; DestName: copying.txt; Components: docs
 Source: NEWS; DestDir: {app}\doc; DestName: news.txt; Components: docs
 Source: src\icons\*.png; DestDir: {app}\share\poedit\icons; Components: core
