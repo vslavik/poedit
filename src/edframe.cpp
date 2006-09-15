@@ -2137,7 +2137,7 @@ void poEditFrame::OnHelp(wxCommandEvent&)
 void poEditFrame::OnHelpGettext(wxCommandEvent&)
 {
 #ifdef __WXMSW__
-    m_help.LoadFile(wxGetApp().GetAppPath() + _T("/share/poedit/gettext.chm"));
+    m_help.LoadFile(m_helpBookGettext);
     m_help.DisplayContents();
 #endif
 }
