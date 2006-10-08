@@ -664,6 +664,9 @@ static GtkTextView *GetTextView(wxTextCtrl *ctrl)
         }
         child = child->next;
     }
+
+    wxFAIL_MSG( _T("couldn't find GtkTextView for text control") );
+    return NULL;
 }
 
 static void DoInitSpellchecker(wxTextCtrl *text,
@@ -1755,7 +1758,6 @@ void poEditFrame::RefreshControls()
     m_list->Refresh();
 
     wxString trans;
-    size_t pos = 0;
 
     m_list->Thaw();
 
@@ -2489,8 +2491,8 @@ void poEditFrame::RecreatePluralTextCtrls()
     PluralFormsCalculator *calc = PluralFormsCalculator::make(
                 m_catalog->Header().GetHeader(_T("Plural-Forms")).ToAscii());
 
-    unsigned cnt = m_catalog->GetPluralFormsCount();
-    for (unsigned i = 0; i < cnt; i++)
+    int cnt = m_catalog->GetPluralFormsCount();
+    for (int i = 0; i < cnt; i++)
     {
         // find example number that would use this plural form:
         unsigned example = 0;
@@ -2511,9 +2513,9 @@ void poEditFrame::RecreatePluralTextCtrls()
 
         wxString desc;
         if (example == 1000)
-            desc.Printf(_("Form %u"), i);
+            desc.Printf(_("Form %i"), i);
         else
-            desc.Printf(_("Form %u (e.g. \"%u\")"), i, example);
+            desc.Printf(_("Form %i (e.g. \"%u\")"), i, example);
 
         // create text control and notebook page for it:
         wxTextCtrl *txt = new wxTextCtrl(m_pluralNotebook, -1,

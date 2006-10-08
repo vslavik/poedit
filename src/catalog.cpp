@@ -283,7 +283,7 @@ void Catalog::HeaderData::UpdateDict()
         SetHeader(_T("X-Poedit-KeywordsList"), kw);
     }
 
-    int i;
+    unsigned i;
     bool noBookmarkSet = true;
     wxString bk;
     for (i = 0; i < BOOKMARK_LAST ; i++)
@@ -481,7 +481,6 @@ void Catalog::HeaderData::DeleteHeader(const wxString& key)
     {
         Entries enew;
 
-        size_t size = m_entries.size();
         for (Entries::const_iterator i = m_entries.begin();
                 i != m_entries.end(); i++)
         {
@@ -987,10 +986,14 @@ bool Catalog::Load(const wxString& po_file)
     }
 
     // now that the catalog is loaded, update its items with the bookmarks
-    for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
+    for (unsigned i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
     {
-        if (m_header.Bookmarks[i] != -1 && m_header.Bookmarks[i] < m_dataArray.GetCount())
-            m_dataArray[m_header.Bookmarks[i]].SetBookmark(static_cast<Bookmark>(i));
+        if (m_header.Bookmarks[i] != -1 &&
+            m_header.Bookmarks[i] < (int)m_dataArray.GetCount())
+        {
+            m_dataArray[m_header.Bookmarks[i]].SetBookmark(
+                    static_cast<Bookmark>(i));
+        }
     }
 
 

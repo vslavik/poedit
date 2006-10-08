@@ -191,7 +191,7 @@ bool TextInString(const wxString& str, const wxString& text, bool wholeWords)
     {
         if (wholeWords)
         {
-            int textLen = text.Length();
+            unsigned textLen = text.Length();
 
             bool result = true;
             if (index >0)
@@ -327,6 +327,8 @@ bool FindFrame::DoFind(int dir)
               break;
             case Found_InAutoComments:
               txt = m_textCtrlAutoComments;
+              break;
+            case Found_Not: // silence compiler warning, can't get here
               break;
         }
 

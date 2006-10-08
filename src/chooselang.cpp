@@ -34,6 +34,7 @@
 
 #include "chooselang.h"
 
+#if NEED_CHOOSELANG_UI
 static void SaveUILanguage(wxLanguage lang)
 {
     if (lang == wxLANGUAGE_UNKNOWN)
@@ -44,6 +45,7 @@ static void SaveUILanguage(wxLanguage lang)
         wxConfig::Get()->Write(_T("ui_language"),
                                wxLocale::GetLanguageInfo(lang)->CanonicalName);
 }
+#endif // NEED_CHOOSELANG_UI
 
 wxLanguage GetUILanguage()
 {
@@ -69,7 +71,7 @@ wxLanguage GetUILanguage()
             wxLogError(_("Uknown locale code '%s' in registry."), lng.c_str());
     }
     return lang;
-#endif
+#endif // NEED_CHOOSELANG_UI
 }
 
 #if NEED_CHOOSELANG_UI

@@ -90,7 +90,7 @@ static inline wxString convertToLocalCharset(const wxString& str)
 #endif
 }
 
-wxBitmap AddDigit(char digit, int x, int y, const wxBitmap& bmp)
+static wxBitmap AddDigit(int digit, int x, int y, const wxBitmap& bmp)
 {
     wxMemoryDC dc;
     int width = bmp.GetWidth();
@@ -324,22 +324,17 @@ wxString poEditListCtrl::OnGetItemText(long item, long column) const
         {
             wxString orig = convertToLocalCharset(d.GetString());
             return orig.substr(0,GetMaxColChars());
-            break;
         }
         case 1:
         {
             wxString trans = convertToLocalCharset(d.GetTranslation());
             return trans;
-            break;
         }
         case 2:
-        {
             return wxString() << d.GetLineNumber();
-            break;
-        }
+
         default:
             return wxEmptyString;
-            break;
     }
 }
 
@@ -384,7 +379,7 @@ void poEditListCtrl::OnSize(wxSizeEvent& event)
 
 long poEditListCtrl::GetIndexInCatalog(long item) const
 {
-    if (item < m_itemIndexToCatalogIndexArray.size())
+    if (item < (long)m_itemIndexToCatalogIndexArray.size())
         return m_itemIndexToCatalogIndexArray[item];
     else
         return -1;
@@ -392,7 +387,7 @@ long poEditListCtrl::GetIndexInCatalog(long item) const
 
 int poEditListCtrl::GetItemIndex(int catalogIndex) const
 {
-    if (catalogIndex < m_catalogIndexToItemIndexArray.size())
+    if (catalogIndex < (int)m_catalogIndexToItemIndexArray.size())
         return m_catalogIndexToItemIndexArray[catalogIndex];
     else
         return -1;
