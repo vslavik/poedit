@@ -735,6 +735,8 @@ bool CatalogParser::Parse()
         else
             line = ReadTextLine(m_textFile, m_conv);
     }
+
+    return true;
 }
 
 
