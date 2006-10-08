@@ -368,7 +368,6 @@ void Catalog::HeaderData::ParseDict()
     {
         Charset = _T("iso-8859-1");
     }
-    if (!ReadParam(ctype, _T("text/plain; charset="), Charset))
 
 
     // Parse extended information:
