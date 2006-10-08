@@ -957,7 +957,8 @@ bool Catalog::Load(const wxString& po_file)
 
     m_data = new wxHashTable(wxKEY_STRING);
 
-    if (!f.Open(po_file)) return false;
+    if (!f.Open(po_file, wxConvISO8859_1))
+        return false;
 
     CharsetInfoFinder charsetFinder(&f, &wxConvISO8859_1);
     charsetFinder.Parse();
@@ -965,7 +966,8 @@ bool Catalog::Load(const wxString& po_file)
 
     f.Close();
     wxCSConv encConv(m_header.Charset);
-    if (!f.Open(po_file, encConv)) return false;
+    if (!f.Open(po_file, encConv))
+        return false;
 
 #if wxUSE_UNICODE
     if (!VerifyFileCharset(f, po_file, m_header.Charset))
