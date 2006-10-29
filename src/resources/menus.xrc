@@ -24,9 +24,11 @@
       </object>
       <object class="wxMenuItem" name="menu_saveas">
         <label>Save _as...</label>
+        <accel platform="mac">Shift-Ctrl-S</accel>
       </object>
       <object class="wxMenuItem" name="menu_export">
         <label>E_xport...</label>
+        <accel platform="mac">Shift-Ctrl-E</accel>
       </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="wxID_PREFERENCES">
@@ -43,7 +45,10 @@
       <label>_Edit</label>
       <object class="wxMenuItem" name="menu_insert_orig">
         <label>Copy original to translation field</label>
-        <accel>Alt-C</accel>
+        <accel platform="win">Alt-C</accel>
+        <accel platform="unix">Alt-C</accel>
+        <!-- Alt-something interferes with normal typing on Mac: -->
+        <accel platform="mac">Ctrl-Alt-C</accel>
       </object>
       <object class="wxMenuItem" name="menu_references">
         <label>_Show references</label>
@@ -55,7 +60,10 @@
       <object class="separator"/>
       <object class="wxMenuItem" name="menu_fuzzy">
         <label>Translation is _fuzzy</label>
-        <accel>Alt-U</accel>
+        <accel platform="unix">Alt-U</accel>
+        <accel platform="win">Alt-U</accel>
+        <!-- Alt-something interferes with normal typing on Mac: -->
+        <accel platform="mac">Ctrl-U</accel>
         <checkable>1</checkable>
       </object>
       <object class="wxMenuItem" name="menu_comment">
@@ -114,7 +122,9 @@
     <object class="wxMenu" name="menu_help2">
       <object class="wxMenuItem" name="menu_help">
         <label>_Contents...</label>
-        <accel>F1</accel>
+        <accel platform="win">F1</accel>
+        <accel platform="unix">F1</accel>
+        <accel platform="mac">Ctrl+?</accel>
       </object>
       <object class="wxMenuItem" name="menu_help_gettext" platform="win">
         <label>GNU gettext documentation</label>

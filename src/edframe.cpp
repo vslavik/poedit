@@ -2574,16 +2574,26 @@ void poEditFrame::AddBookmarksMenu()
 {
     wxMenu *menu = new wxMenu();
 
+#ifdef __WXMAC__
+    // on Mac, Alt+something is used during normal typing, so we shouldn't
+    // use it as shortcuts:
+    #define LABEL_BOOKMARK_SET   _("Set bookmark %i\tCtrl-%i")
+    #define LABEL_BOOKMARK_GO    _("Go to bookmark %i\tCtrl-Alt-%i")
+#else
+    #define LABEL_BOOKMARK_SET   _("Set bookmark %i\tAlt-%i")
+    #define LABEL_BOOKMARK_GO    _("Go to bookmark %i\tCtrl-%i")
+#endif
+
     for (int i = 0; i < 10; i++)
     {
         menu->Append(ID_BOOKMARK_SET + i,
-                     wxString::Format(_("Set bookmark %i\tAlt-%i"), i, i));
+                     wxString::Format(LABEL_BOOKMARK_SET, i, i));
     }
     menu->AppendSeparator();
     for (int i = 0; i < 10; i++)
     {
         menu->Append(ID_BOOKMARK_GO + i,
-                     wxString::Format(_("Go to bookmark %i\tCtrl-%i"), i, i));
+                     wxString::Format(LABEL_BOOKMARK_GO, i, i));
     }
 
     wxMenuBar *bar = GetMenuBar();
