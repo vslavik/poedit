@@ -364,7 +364,7 @@ BEGIN_EVENT_TABLE(ManagerFrame, wxFrame)
    EVT_LISTBOX              (XRCID("prj_list"),   ManagerFrame::OnSelectProject)
    EVT_LIST_ITEM_ACTIVATED  (XRCID("prj_files"),  ManagerFrame::OnOpenCatalog)
    EVT_MENU                 (wxID_EXIT,           ManagerFrame::OnQuit)
-   EVT_MENU                 (XRCID("menu_preferences"), ManagerFrame::OnPreferences)
+   EVT_MENU                 (wxID_PREFERENCES,    ManagerFrame::OnPreferences)
 END_EVENT_TABLE()
 
 
