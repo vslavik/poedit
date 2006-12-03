@@ -70,7 +70,11 @@ FileViewer::FileViewer(wxWindow *parent,
         choice->Append(references[i]);
     choice->SetSelection(startAt);
 
-    ShowReference(m_references[startAt]);
+    wxString ref(m_references[startAt]);
+    // translate windows-style paths to Unix ones, which
+    // are accepted on all platforms:
+    ref.Replace(wxT("\\"), wxT("/"));
+    ShowReference(ref);
 }
 
 void FileViewer::ShowReference(const wxString& ref)
