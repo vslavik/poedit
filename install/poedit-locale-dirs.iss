@@ -116,6 +116,8 @@ Name: {app}\share\locale\tt; Components: i18n
 Name: {app}\share\locale\tt\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\uk; Components: i18n
 Name: {app}\share\locale\uk\LC_MESSAGES; Components: i18n
+Name: {app}\share\locale\ur; Components: i18n
+Name: {app}\share\locale\ur\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\wa; Components: i18n
 Name: {app}\share\locale\wa\LC_MESSAGES; Components: i18n
 Name: {app}\share\locale\zh_CN; Components: i18n

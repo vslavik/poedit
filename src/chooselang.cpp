@@ -147,6 +147,7 @@ wxLanguage ChooseLanguage()
         { _T("Thai"), wxLANGUAGE_THAI },
         { _T("Turkish"), wxLANGUAGE_TURKISH },
         { _T("Ukrainian"), wxLANGUAGE_UKRAINIAN },
+        { _T("Urdu"), wxLANGUAGE_URDU },
 
         { NULL, wxLANGUAGE_UNKNOWN }
     };
