@@ -19,7 +19,7 @@ Release:       1
 License:       MIT
 Group:         Applications/Editors
 Source:        poedit-%{version}.tar.bz2
-URL:           http://www.poedit.org
+URL:           http://www.poedit.net
 Packager:      Vaclav Slavik <vslavik@fastmail.fm>
 Requires:      gtk+ >= 1.2.7 gettext
 
