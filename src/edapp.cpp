@@ -139,7 +139,7 @@ bool poEditApp::OnInit()
     SetDefaultCfg(wxConfig::Get());
 
 #ifdef HAS_INSERT_PROVIDER
-    wxArtProvider::InsertProvider(new PoeditArtProvider);
+    wxArtProvider::Insert(new PoeditArtProvider);
 #else
     wxArtProvider::PushProvider(new PoeditArtProvider);
 #endif

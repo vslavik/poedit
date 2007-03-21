@@ -167,7 +167,7 @@ static wxString UnescapeCEscapes(const wxString& str)
     {
         if (str[i] == _T('\\'))
         {
-            switch (str[i+1])
+            switch ((wxChar)str[i+1])
             {
                 case _T('n'):
                     out << _T('\n');

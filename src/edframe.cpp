@@ -45,6 +45,13 @@
 #include <wx/fontutil.h>
 #include <wx/textfile.h>
 
+#if !wxCHECK_VERSION(2,8,0)
+    #define wxFD_OPEN              wxOPEN
+    #define wxFD_SAVE              wxSAVE
+    #define wxFD_OVERWRITE_PROMPT  wxOVERWRITE_PROMPT
+    #define wxFD_FILE_MUST_EXIST   wxFILE_MUST_EXIST
+#endif
+
 #if USE_SPELLCHECKING
     #include <gtk/gtk.h>
     extern "C" {
@@ -168,7 +175,7 @@ class TextctrlHandler : public wxEvtHandler
                     else
                         event.Skip();
                     break;
-                case WXK_PRIOR:
+                case WXK_PAGEUP:
                     if (event.ControlDown())
                     {
                         int newy = *m_sel - 10;
@@ -179,7 +186,7 @@ class TextctrlHandler : public wxEvtHandler
                     else
                         event.Skip();
                     break;
-                case WXK_NEXT:
+                case WXK_PAGEDOWN:
                     if (event.ControlDown())
                     {
                         int newy = *m_sel + 10;
@@ -832,7 +839,7 @@ void poEditFrame::OnOpen(wxCommandEvent&)
     wxString name = wxFileSelector(_("Open catalog"),
                     path, wxEmptyString, wxEmptyString,
                     _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"),
-                    wxOPEN | wxFILE_MUST_EXIST, this);
+                    wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
     if (!name.IsEmpty())
     {
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
@@ -951,7 +958,7 @@ wxString poEditFrame::GetSaveAsFilename(Catalog *cat, const wxString& current)
 
     name = wxFileSelector(_("Save as..."), path, name, wxEmptyString,
                           _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"),
-                          wxSAVE | wxOVERWRITE_PROMPT, this);
+                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
     if (!name.empty())
     {
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
@@ -993,7 +1000,7 @@ void poEditFrame::OnExport(wxCommandEvent&)
     name = wxFileSelector(_("Export as..."),
                           wxPathOnly(m_fileName), name, wxEmptyString,
                           _("HTML file (*.html)|*.html"),
-                          wxSAVE | wxOVERWRITE_PROMPT, this);
+                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
     if (!name.IsEmpty())
     {
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
@@ -1044,7 +1051,7 @@ void poEditFrame::OnNew(wxCommandEvent& event)
             wxFileSelector(_("Open catalog template"),
                  path, wxEmptyString, wxEmptyString,
                  _("GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"),
-                 wxOPEN | wxFILE_MUST_EXIST, this);
+                 wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
         bool ok = false;
         if (!pot_file.empty())
         {
@@ -1176,7 +1183,7 @@ void poEditFrame::OnUpdate(wxCommandEvent& event)
             wxFileSelector(_("Open catalog template"),
                  path, wxEmptyString, wxEmptyString,
                  _("GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"),
-                 wxOPEN | wxFILE_MUST_EXIST, this);
+                 wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
         if (pot_file.empty())
             return;
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(pot_file));
@@ -2266,9 +2273,9 @@ void poEditFrame::UpdateDisplayCommentWin()
         if (m_bottomRightPanel->GetSizer() != NULL)
         {
             // need to remove and add again to ensure accurate resizing:
-            m_bottomRightPanel->GetSizer()->Remove(m_textAutoComments);
+            m_bottomRightPanel->GetSizer()->Detach(m_textAutoComments);
 
-            m_bottomRightPanel->GetSizer()->Remove(m_textComment);
+            m_bottomRightPanel->GetSizer()->Detach(m_textComment);
             m_bottomRightPanel->GetSizer()->Add(m_textAutoComments, 1, wxEXPAND);
             m_bottomRightPanel->GetSizer()->Add(m_textComment, 1, wxEXPAND);
             m_bottomRightPanel->GetSizer()->Show(m_textComment,

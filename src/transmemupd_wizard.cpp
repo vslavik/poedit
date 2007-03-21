@@ -131,7 +131,7 @@ private:
 #endif
         m_paths->SetStrings(a);
     }
-    
+
     void OnAddFiles(wxCommandEvent& event)
     {
         wxFileDialog dlg(this,
@@ -139,22 +139,26 @@ private:
                          m_defaultDir,
                          wxEmptyString,
 #ifdef __UNIX__
-                   _("Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"), 
+                   _("Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"),
 #else
                    _("Translation files (*.po;*.mo)|*.po;*.mo"), 
 #endif
+#if wxCHECK_VERSION(2,8,0)
+                         wxFD_OPEN | wxFD_MULTIPLE);
+#else
                          wxOPEN | wxMULTIPLE);
+#endif
         if (dlg.ShowModal() == wxID_OK)
         {
             wxArrayString f, f2;
 
             dlg.GetPaths(f);
-            
+
             m_files->GetStrings(f2);
             WX_APPEND_ARRAY(f2, f);
             m_files->SetStrings(f2);
 
-            m_defaultDir = dlg.GetDirectory();            
+            m_defaultDir = dlg.GetDirectory();
         }
     }
 
