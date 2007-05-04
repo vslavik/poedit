@@ -22,7 +22,7 @@ install-wxstd-catalogs:
 
 # ----------------------------------------------------------------------------
 # Logic for catalogs updating follows
-# (shamelessly stolen from wxWindows makefile):
+# (shamelessly stolen from wxWidgets makefile):
 # ----------------------------------------------------------------------------
 
 
