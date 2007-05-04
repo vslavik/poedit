@@ -1127,25 +1127,9 @@ static bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
     wxString trans(s.wc_str(wxConvUTF8), conv);
     if (!trans)
         return false;
-    #ifdef __WINDOWS__
-    // NB: there's an inconsistency in wxWindows (fixed in wx-2.5.2):
-    //     wxMBConv conversion rountines return NULL (i.e. empty wxString) in
-    //     case of failure on Unix (iconv) but return lossy/inexact conversion
-    //     if exact conversion cannot be done on Windows. So we have to do
-    //     roundtrip conversion and compare the result with original to see if
-    //     the conversion was successful or not:
-    wxString roundtrip(trans.wc_str(conv), wxConvUTF8);
-    if (roundtrip != s)
-        return false;
-    #endif
 #else
     if (!s.mb_str(conv))
         return false;
-    #ifdef __WINDOWS__
-    wxString roundtrip(s.mb_str(conv), conv);
-    if (roundtrip != s)
-        return false;
-    #endif
 #endif
     return true;
 }
