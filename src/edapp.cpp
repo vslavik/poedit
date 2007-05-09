@@ -106,13 +106,22 @@ bool poEditApp::OnInit()
     SetVendorName(_T("Vaclav Slavik"));
     SetAppName(_T("poedit"));
 
-    #if defined(__WXMAC__)
-    #define CFG_FILE (wxStandardPaths::Get().GetUserConfigDir() + _T("/poedit.cfg"))
-    #elif defined(__UNIX__)
+#if defined(__WXMAC__)
+    #define CFG_FILE (wxStandardPaths::Get().GetUserConfigDir() + _T("/net.poedit.Poedit.cfg"))
+#elif defined(__UNIX__)
     #define CFG_FILE (home + _T(".poedit/config"))
-    #else
+#else
     #define CFG_FILE wxEmptyString
-    #endif
+#endif
+
+#ifdef __WXMAC__
+    // upgrade from the old location of config file:
+    wxString oldcfgfile = wxStandardPaths::Get().GetUserConfigDir() + _T("/poedit.cfg");
+    if (wxFileExists(oldcfgfile) && !wxFileExists(CFG_FILE))
+    {
+        wxRenameFile(oldcfgfile, CFG_FILE);
+    }
+#endif
 
     wxConfigBase::Set(
         new wxConfig(wxEmptyString, wxEmptyString, CFG_FILE, wxEmptyString, 
