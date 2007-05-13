@@ -41,9 +41,7 @@ ls -1 extras/win32-gettext/*.{exe,dll,COPYING}
 }
 
 
-DIST_DIR=`pwd`/distrib
-
-rm -f $DIST_DIR/poedit-$VERSION*
+DIST_DIR=`pwd`
 
 rm -rf /tmp/poedit-$VERSION
 mkdir /tmp/poedit-$VERSION
