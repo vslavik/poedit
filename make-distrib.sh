@@ -49,11 +49,9 @@ rm -rf /tmp/poedit-$VERSION
 mkdir /tmp/poedit-$VERSION
 tar -c `find_unix_files` | (cd /tmp/poedit-$VERSION ; tar -x)
 (cd /tmp ; tar -c poedit-$VERSION | gzip -9 >$DIST_DIR/poedit-$VERSION.tar.gz)
-(cd /tmp ; tar -c poedit-$VERSION | bzip2 -9 >$DIST_DIR/poedit-$VERSION.tar.bz2)
 rm -rf /tmp/poedit-$VERSION
 
 mkdir /tmp/poedit-$VERSION
 tar -c `find_win32_files` | (cd /tmp/poedit-$VERSION ; tar -x)
 (cd /tmp ; tar -c poedit-$VERSION | gzip -9 >$DIST_DIR/poedit-$VERSION-win32-addon.tar.gz)
-(cd /tmp ; tar -c poedit-$VERSION | bzip2 -9 >$DIST_DIR/poedit-$VERSION-win32-addon.tar.bz2)
 rm -rf /tmp/poedit-$VERSION
