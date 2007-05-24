@@ -340,9 +340,12 @@ wxString poEditListCtrl::OnGetItemText(long item, long column) const
 
 wxListItemAttr *poEditListCtrl::OnGetItemAttr(long item) const
 {
-    CatalogData& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
-
     size_t idx = gs_shadedList ? size_t(item % 2) : 0;
+
+    if (m_catalog == NULL)
+        return (wxListItemAttr*)&m_attrNormal[idx];
+
+    CatalogData& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
 
     if (!d.IsTranslated())
         return (wxListItemAttr*)&m_attrUntranslated[idx];
@@ -356,6 +359,9 @@ wxListItemAttr *poEditListCtrl::OnGetItemAttr(long item) const
 
 int poEditListCtrl::OnGetItemImage(long item) const
 {
+    if (m_catalog == NULL)
+        return IMG_NOTHING;
+
     CatalogData& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
     int index = IMG_NOTHING;
 
