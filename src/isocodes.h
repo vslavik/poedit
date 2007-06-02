@@ -28,6 +28,8 @@
  *
  */
 
+#include <wx/string.h>
+
 struct LanguageStruct
 {
     const wxChar *iso, *lang;
@@ -36,8 +38,8 @@ struct LanguageStruct
 extern LanguageStruct isoLanguages[];
 extern LanguageStruct isoCountries[];
 
-extern const wxChar *LookupLanguageCode(const wxChar *language);
-extern const wxChar *LookupCountryCode(const wxChar *country);
+extern const wxChar *LookupLanguageCode(const wxString& language);
+extern const wxChar *LookupCountryCode(const wxString& country);
 
-extern bool IsKnownLanguageCode(const wxChar *code);
-extern bool IsKnownCountryCode(const wxChar *code);
+extern bool IsKnownLanguageCode(const wxString& code);
+extern bool IsKnownCountryCode(const wxString& code);

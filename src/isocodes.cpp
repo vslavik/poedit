@@ -503,22 +503,22 @@ static const wxChar *DoLookupByIso(const wxChar *iso, LanguageStruct *a)
     return NULL;
 }
 
-const wxChar *LookupLanguageCode(const wxChar *language)
+const wxChar *LookupLanguageCode(const wxString& language)
 {
-    return DoLookupByLang(language, isoLanguages);
+    return DoLookupByLang(language.c_str(), isoLanguages);
 }
 
-const wxChar *LookupCountryCode(const wxChar *country)
+const wxChar *LookupCountryCode(const wxString& country)
 {
-    return DoLookupByLang(country, isoCountries);
+    return DoLookupByLang(country.c_str(), isoCountries);
 }
 
-bool IsKnownLanguageCode(const wxChar *code)
+bool IsKnownLanguageCode(const wxString& code)
 {
-    return DoLookupByIso(code, isoLanguages) != NULL;
+    return DoLookupByIso(code.c_str(), isoLanguages) != NULL;
 }
 
-bool IsKnownCountryCode(const wxChar *code)
+bool IsKnownCountryCode(const wxString& code)
 {
-    return DoLookupByIso(code, isoCountries) != NULL;
+    return DoLookupByIso(code.c_str(), isoCountries) != NULL;
 }

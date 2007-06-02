@@ -726,11 +726,11 @@ TranslationMemoriesList TranslationMemory::ms_instances;
         return NULL;
     }
     dbPath += _T('/');
-    
-    for (TranslationMemoriesList::Node *node = ms_instances.GetFirst(); 
-         node; node = node->GetNext())
+
+    for (TranslationMemoriesList::const_iterator i = ms_instances.begin();
+         i != ms_instances.end(); ++i)
     {
-        TranslationMemory *mem = node->GetData();
+        TranslationMemory *mem = *i;
         if (mem->m_lang == language && mem->m_dbPath == dbPath)
         {
             mem->m_refCnt++;
