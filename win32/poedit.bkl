@@ -1,0 +1,106 @@
+<?xml version="1.0" ?>
+<!-- $Id$ -->
+
+<makefile>
+    <include file="presets/simple.bkl"/>
+    <include file="presets/wx.bkl"/>
+
+    <set-srcdir>..</set-srcdir>
+
+    <option name="WXRC">
+        <default-value>wxrc</default-value>
+        <description>Path to wxrc tool</description>
+    </option>
+
+    <!--
+      FIXME: this currently conflicts with XRC compilation
+    <if cond="FORMAT=='msvc'">
+        <set var="OBJS" make_var="1">
+            $(substituteFromDict(DEBUG, {'1':'Debug','0':'Release'}))
+        </set>
+        <set var="BUILDDIR">$(OBJS)</set>
+    </if>
+    -->
+
+
+    <exe id="poedit" template="simple,wx">
+        <app-type>gui</app-type>
+
+        <sources>
+            src/catalog.cpp
+            src/chooselang.cpp
+            src/commentdlg.cpp
+            src/digger.cpp
+            src/edapp.cpp
+            src/edframe.cpp
+            src/edlistctrl.cpp
+            src/export_html.cpp
+            src/fileviewer.cpp
+            src/findframe.cpp
+            src/gexecute.cpp
+            src/icons.cpp
+            src/isocodes.cpp
+            src/manager.cpp
+            src/parser.cpp
+            src/prefsdlg.cpp
+            src/progressinfo.cpp
+            src/settingsdlg.cpp
+            src/summarydlg.cpp
+            src/transmem.cpp
+            src/transmemupd.cpp
+            src/transmemupd_wizard.cpp
+            src/pluralforms/pl_evaluate.cpp
+            src/editlbox/editlbox.cpp
+            <!-- FIXME: handle this in a better way: -->
+            win32/$(BUILDDIR)/compiled_xrc.cpp
+        </sources>
+
+        <win32-res>src/poedit.rc</win32-res>
+           
+        <runtime-libs>dynamic</runtime-libs>
+
+        <!-- always include debug information in PDB file: -->
+        <debug-info>on</debug-info>
+        <debug-runtime-libs>
+            $(substituteFromDict(DEBUG, {'1':'on','0':'off'}))
+        </debug-runtime-libs>
+       
+        <wx-lib>xrc</wx-lib>
+        <wx-lib>adv</wx-lib>
+        <wx-lib>html</wx-lib>
+        <wx-lib>core</wx-lib>
+        <wx-lib>xml</wx-lib>
+        <wx-lib>base</wx-lib>
+
+        <!-- This works with VS2005+ only: -->
+        <if cond="FORMAT=='msvc'">
+        <postlink-command>
+            mt -manifest $(__targetname).manifest -outputresource:$(__targetname);1
+        </postlink-command>
+        </if>
+    </exe>
+
+    <set var="XRC_FILES" hints="files" make_var="1">
+        ../src/resources/about.xrc
+        ../src/resources/comment.xrc
+        ../src/resources/fileview.xrc
+        ../src/resources/find.xrc
+        ../src/resources/manager.xrc
+        ../src/resources/menus.xrc
+        ../src/resources/prefs.xrc
+        ../src/resources/progress.xrc
+        ../src/resources/settings.xrc
+        ../src/resources/summary.xrc
+        ../src/resources/tm_update.xrc
+        ../src/resources/toolbar.xrc
+    </set>
+
+    <set var="VARS_DONT_ELIMINATE" cond="FORMAT=='msvc'" append="1">
+        XRC_FILES WXRC
+    </set>
+    <fragment format="msvc">
+..\win32\.\compiled_xrc.cpp: $(XRC_FILES)
+    $(WXRC) -v -c -o $@ $(XRC_FILES)
+    </fragment>
+
+</makefile>

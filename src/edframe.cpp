@@ -111,10 +111,11 @@ const wxWindowID ID_TEXTCOMMENT = wxNewId();
 
 /*static*/ poEditFrame *poEditFrame::Find(const wxString& filename)
 {
-    for (poEditFramesList::Node *n = ms_instances.GetFirst(); n; n = n->GetNext())
+    for (poEditFramesList::const_iterator n = ms_instances.begin();
+         n != ms_instances.end(); ++n)
     {
-        if (n->GetData()->m_fileName == filename)
-            return n->GetData();
+        if ((*n)->m_fileName == filename)
+            return *n;
     }
     return NULL;
 }
@@ -1524,11 +1525,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
         if (entry.HasPlural())
         {
             bool changed = false;
-#ifndef __VISUALC__
-    // unbelievably, VC++ doesn't define std::min/max()!
-    #define _cpp_min std::min
-#endif
-            size_t size = _cpp_min(m_textTransPlural.size(),
+            size_t size = std::min(m_textTransPlural.size(),
                                    m_edittedTextOrig.size());
 
             for (size_t i = 0; i < size; i++)

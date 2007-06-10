@@ -22,7 +22,7 @@ for i in *.po ; do msgfmt -o `basename $i .po`.mo $i ; done
 find_unix_files()
 {
   (find . -maxdepth 1 -type f ; \
-  find admin locales src docs extras install macosx -type f) | \
+  find admin locales src docs extras install macosx win32 -type f) | \
     grep -v '/win32-' | \
     grep -v '/\.svn' | \
     grep -v '\.#' | \
