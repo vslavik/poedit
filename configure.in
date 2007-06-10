@@ -11,22 +11,6 @@ AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
-dnl cross-compiling support: we're cross compiling if the build system is
-dnl different from the target one (assume host and target be always the same)
-if test "$build" != "$host" ; then
-    CC=$host_alias-gcc
-    CXX=$host_alias-c++
-    AR=$host_alias-ar
-    RANLIB=$host_alias-ranlib
-    DLLTOOL=$host_alias-dlltool
-    RESCOMP=$host_alias-windres
-    LD=$host_alias-ld
-    NM=$host_alias-nm
-    STRIP=$host_alias-strip
-else
-    RESCOMP=windres
-fi
-
 AM_INIT_AUTOMAKE(1.6)
 AM_MAINTAINER_MODE
 
@@ -161,6 +145,8 @@ if $WX_CONFIG_WITH_ARGS --cxxflags | grep -q WXMSW; then
     changequote(<<,>>)
     RC_WX_INCLUDES=`echo " $WX_CPPFLAGS" | sed -e 's/ -[^I][^ ]*//g' | sed -e 's/ -I\([^ ]*\)/ --include-dir \1/g'`
     changequote([,])
+
+    AC_CHECK_TOOL(WINDRES, windres)
 else
     use_windows=no
 fi
@@ -205,7 +191,7 @@ CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 AC_SUBST(LDFLAGS)
 AC_SUBST(CFLAGS)
 AC_SUBST(CXXFLAGS)
-AC_SUBST(RESCOMP)
+AC_SUBST(WINDRES)
 AC_SUBST(WX_CONFIG_WITH_ARGS)
 AC_SUBST(WX_LIBS)
 AC_SUBST(RC_WX_INCLUDES)

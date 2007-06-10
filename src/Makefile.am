@@ -1,7 +1,7 @@
 
 SUBDIRS = icons
 
-RESCOMP = @RESCOMP@
+WINDRES = @WINDRES@
 WX_LIBS = @WX_LIBS@
 RC_WX_INCLUDES = @RC_WX_INCLUDES@
 
@@ -30,7 +30,7 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS)
 
 poedit_resource.o: poedit.rc
-	$(RESCOMP) -i$(srcdir)/poedit.rc -o poedit_resource.o \
+	$(WINDRES) -i$(srcdir)/poedit.rc -o poedit_resource.o \
         --include-dir $(srcdir) $(RC_WX_INCLUDES) \
         --define __WIN32__ --define __WIN95__ --define __GNUWIN32__
 
