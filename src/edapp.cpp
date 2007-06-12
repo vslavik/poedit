@@ -330,12 +330,12 @@ void poEditApp::OnInitCmdLine(wxCmdLineParser& parser)
 bool poEditApp::OnCmdLineParsed(wxCmdLineParser& parser)
 {
     if (!wxApp::OnCmdLineParsed(parser))
-        return FALSE;
+        return false;
 
 #ifndef __WXMAC__
     for (size_t i = 0; i < parser.GetParamCount(); i++)
         gs_filesToOpen.Add(parser.GetParam(i));
 #endif
 
-    return TRUE;
+    return true;
 }

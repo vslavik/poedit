@@ -289,7 +289,7 @@ class UnfocusableTextCtrl : public wxTextCtrl
                             const wxValidator& validator = wxDefaultValidator,
                             const wxString &name = wxTextCtrlNameStr)
            : wxTextCtrl(parent, id, value, pos, size, style, validator, name) {}
-        virtual bool AcceptsFocus() const { return FALSE; }
+        virtual bool AcceptsFocus() const { return false; }
 };
 
 
