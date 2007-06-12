@@ -1989,7 +1989,7 @@ void poEditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
 {
     wxMessageDialog dlg(this,
                         _("Do you really want to remove all translations that are no longer used from the catalog?\nIf you continue with purging, you will have to translate them again if they are added back in the future."),
-                        _("Purge delete translations"),
+                        _("Purge deleted translations"),
                         wxYES_NO | wxICON_QUESTION);
 
     if (dlg.ShowModal() == wxID_YES)
