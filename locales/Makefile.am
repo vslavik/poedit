@@ -47,7 +47,7 @@ $(srcdir)/poedit.pot:
 	touch $@
 	(cd $(srcdir) ; find ../src -name "*.h" | $(XARGS) $(XGETTEXT) $(XGETTEXT_ARGS) -o poedit.pot)
 	(cd $(srcdir) ; find ../src -name "*.cpp" | $(XARGS) $(XGETTEXT) $(XGETTEXT_ARGS) -o poedit.pot)
-	(cd $(srcdir) ; find ../extras/wx-contrib/src/gizmos -name "*.cpp" | $(XARGS) $(XGETTEXT) $(XGETTEXT_ARGS) -o poedit.pot)
+	(cd $(srcdir) ; $(WXRC) --gettext ../src/resources/*.xrc | $(XGETTEXT) $(XGETTEXT_ARGS) -o poedit.pot -)
 
 allpo: force-update
 	@-for t in $(POEDIT_LINGUAS); do $(MAKE) $(srcdir)/$$t.po; done
