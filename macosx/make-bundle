@@ -19,8 +19,16 @@ mkdir -p $bundle/Contents/Resources
 
 # executables:
 cp poedit $bundle/Contents/MacOS/poedit
-cp $top_srcdir/extras/osx-gettext/* $bundle/Contents/MacOS
 $rez $bundle/Contents/MacOS/poedit
+
+if [ -n "GETTEXT_BINARIES" ] ; then
+    for f in msgfmt msgmerge msgunfmt xgettext ; do
+        cp -pPf $GETTEXT_BINARIES/$f $bundle/Contents/MacOS
+    done
+else
+    echo "WARNING: not copying gettext binaries, point GETTEXT_BINARIES" >&2
+    echo "         environment variable to a directory that contains them" >&2
+fi
 
 # extract (DWARF) debug information into separate dSYM files and pack them into
 # an archive:

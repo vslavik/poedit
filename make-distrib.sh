@@ -22,9 +22,10 @@ for i in *.po ; do msgfmt -o `basename $i .po`.mo $i ; done
 find_unix_files()
 {
   (find . -maxdepth 1 -type f ; \
-  find admin locales src docs extras install macosx win32 -type f) | \
+  find admin locales src docs install macosx win32 -type f) | \
     grep -v '/win32-' | \
     grep -v '/\.svn' | \
+    grep -v '/\.bakefile_gen.state' | \
     grep -v '\.#' | \
     grep -v '\.\(dsp\|dsw\|chm\|rtf\|iss\|ico\|ncb\|opt\|plg\|rc\)' | \
     grep -v 'install/.*\.txt'
@@ -37,7 +38,6 @@ find_win32_files()
 src/icons/appicon/poedit.ico"
 ls -1 install/*.iss
 ls -1 src/*.rc
-ls -1 extras/win32-gettext/*.{exe,dll,COPYING}
 }
 
 
