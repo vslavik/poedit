@@ -367,7 +367,7 @@ poEditFrame::poEditFrame() :
     // make sure that the [ID_POEDIT_FIRST,ID_POEDIT_LAST] range of IDs is not
     // used for anything else:
     wxASSERT_MSG( wxGetCurrentId() < ID_POEDIT_FIRST,
-                  _("detected ID values conflict!") );
+                  _T("detected ID values conflict!") );
     wxRegisterId(ID_POEDIT_LAST);
 
 #ifdef __WXMSW__
