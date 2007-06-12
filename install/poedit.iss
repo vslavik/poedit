@@ -1,7 +1,39 @@
-; This script was first created by ISTool
-; http://www.lerstad.com/istool/
+;
+;   This file is part of poEdit (http://www.poedit.net)
+;
+;   Copyright (C) 1999-2007 Vaclav Slavik
+;
+;   Permission is hereby granted, free of charge, to any person obtaining a
+;   copy of this software and associated documentation files (the "Software"),
+;   to deal in the Software without restriction, including without limitation
+;   the rights to use, copy, modify, merge, publish, distribute, sublicense,
+;   and/or sell copies of the Software, and to permit persons to whom the
+;   Software is furnished to do so, subject to the following conditions:
+;
+;   The above copyright notice and this permission notice shall be included in
+;   all copies or substantial portions of the Software.
+;
+;   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+;   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+;   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+;   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+;   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+;   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+;   DEALINGS IN THE SOFTWARE.
+;
+;   $Id$
+;
+;   Inno Setup installer script
+;
 
 #define VERSION          "1.3.6"
+
+; FIXME: extract this from manifest file somehow?
+#define CRT_VERSION      "8.0.50727.762"
+#define CRT_HASH1        "1fc8b3b9a1e18e3b"
+#define CRT_HASH2        "6b128700"
+#define ASSEMBLY         "x86_Microsoft.VC80.CRT_" + CRT_HASH1 + "_" + CRT_VERSION + "_x-ww_" + CRT_HASH2
+#define WINDIR           GetEnv("WINDIR")
 
 [Setup]
 OutputBaseFilename=poedit-{#VERSION}-setup
@@ -15,7 +47,6 @@ DefaultDirName={pf}\poEdit
 
 DefaultGroupName=poEdit
 AllowNoIcons=true
-UninstallStyle=modern
 LicenseFile=COPYING
 OutputDir=.
 InfoAfterFile=
@@ -24,19 +55,23 @@ Compression=lzma/ultra
 WindowShowCaption=true
 WindowStartMaximized=false
 FlatComponentsList=true
-WindowResizable=false
+WindowResizable=true
 
 
 
 SolidCompression=true
-ShowLanguageDialog=yes
-AllowUNCPath=false
+ShowLanguageDialog=no
+AllowUNCPath=true
 InternalCompressLevel=ultra
+AppID={{68EB2C37-083A-4303-B5D8-41FA67E50B8F}
+
 [Files]
-Source: extras\win32-runtime\isxdl.dll; Flags: dontcopy
-Source: BUILD-mingw\src\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
-Source: install\poedit.exe.manifest; DestDir: {app}\bin; MinVersion: 0,5.01.2600; Components: core
-Source: extras\win32-gettext\gnu_gettext.COPYING; DestDir: {app}\doc; Components: docs
+Source: win32\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
+Source: deps\gettext\COPYING; DestDir: {app}\doc; Components: docs; DestName: GNU_Gettext_COPYING.txt
+Source: deps\gettext\xgettext.exe; DestDir: {app}\bin; Components: core
+Source: deps\gettext\msgmerge.exe; DestDir: {app}\bin; Components: core
+Source: deps\gettext\msgunfmt.exe; DestDir: {app}\bin; Components: core
+Source: deps\gettext\msgfmt.exe; DestDir: {app}\bin; Components: core
 Source: README; DestDir: {app}\doc; DestName: readme.txt; Components: docs
 Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit\help\en; Components: docs
 Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit\help\en\gettext; Components: docs
@@ -44,17 +79,19 @@ Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit\help\hr; Components:
 Source: COPYING; DestDir: {app}\doc; DestName: copying.txt; Components: docs
 Source: NEWS; DestDir: {app}\doc; DestName: news.txt; Components: docs
 Source: src\icons\*.png; DestDir: {app}\share\poedit\icons; Components: core
-Source: extras\win32-gettext\iconv.dll; DestDir: {app}\bin; Components: core
-Source: extras\win32-gettext\intl.dll; DestDir: {app}\bin; Components: core
-Source: extras\win32-gettext\gettextsrc.dll; DestDir: {app}\bin; Components: core
-Source: extras\win32-gettext\gettextlib.dll; DestDir: {app}\bin; Components: core
-Source: extras\win32-gettext\xgettext.exe; DestDir: {app}\bin; Components: core
-Source: extras\win32-gettext\msgmerge.exe; DestDir: {app}\bin; Components: core
-Source: extras\win32-gettext\msgunfmt.exe; DestDir: {app}\bin; Components: core
-Source: extras\win32-gettext\msgfmt.exe; DestDir: {app}\bin; Components: core
-Source: BUILD-mingw\src\mingwm10.dll; DestDir: {app}\bin; DestName: mingwm10.dll; Components: core
-DestDir: {app}\bin; Source: {tmp}\unicows.exe; Flags: deleteafterinstall external skipifsourcedoesntexist; Tasks: unicows
+Source: {#WINDIR}\WinSxS\Manifests\{#ASSEMBLY}.manifest; DestDir: {app}\bin; Components: core; DestName: Microsoft.VC80.CRT.manifest
+Source: {#WINDIR}\WinSxS\{#ASSEMBLY}\*.dll; DestDir: {app}\bin; Components: core
 #include "poedit-locale-files.iss"
+
+[InstallDelete]
+; delete files from previous versions that are no longer needed (and in case of
+; poedit.exe.manifest, actually harmful):
+Name: {app}\bin\poedit.exe.manifest; Type: files; Components: core
+Name: {app}\bin\gettextlib.dll; Type: files; Components: core
+Name: {app}\bin\gettextsrc.dll; Type: files; Components: core
+Name: {app}\bin\iconv.dll; Type: files; Components: core
+Name: {app}\bin\intl.dll; Type: files; Components: core
+Name: {app}\bin\mingwm10.dll; Type: files; Components: core
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
@@ -76,13 +113,10 @@ Name: {group}\Readme; Filename: {app}\doc\readme.txt; IconIndex: 0
 [Run]
 Filename: {app}\doc\readme.txt; Description: View readme.txt; Flags: shellexec postinstall unchecked; Components: docs
 Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run poEdit now; Flags: postinstall unchecked nowait
-Filename: {app}\bin\unicows.exe; Tasks: unicows; Flags: skipifdoesntexist; Parameters: "/T:""{app}\bin"""; StatusMsg: Installing MSLU...
 
 [_ISTool]
-EnableISX=true
 UseAbsolutePaths=false
 
-Use7zip=false
 [Dirs]
 Name: {app}\bin; Components: core
 Name: {app}\doc; Components: docs
@@ -96,8 +130,6 @@ Name: {app}\share\poedit\help\en\gettext; Components: docs
 Name: {app}\share\poedit\help\hr; Components: docs
 #include "poedit-locale-dirs.iss"
 
-[_ISToolPreCompile]
-
 [Components]
 Name: core; Description: Core files; Flags: fixed; Types: custom compact full
 Name: docs; Description: Documentation; Types: custom compact full
@@ -105,46 +137,8 @@ Name: i18n; Description: Localization files for the UI; Types: full
 
 [Messages]
 BeveledLabel=poEdit
-[Tasks]
-Name: unicows; Description: Download and install MSLU; Flags: unchecked; Components: core; GroupDescription: Due to Microsoft's draconian licensing terms for The Microsoft Layer for Unicode on Windows 95/98/ME, poEdit cannot ship with working Unicode support, additional DLL files must be obtained from Microsoft. The installer can download them from Microsoft's site for you and run the installer.; MinVersion: 4.0.950,0; OnlyBelowVersion: 0,0
-[UninstallDelete]
-Name: {app}\bin\License.Txt; Type: files; Tasks: unicows
-Name: {app}\bin\redist.txt; Type: files; Tasks: unicows
-Name: {app}\bin\unicows.*; Type: files; Tasks: unicows
+
 [Code]
-{ ------------------------------------------------------------------ }
-{  Download of unicows.dll from Microsoft site:                      }
-{ ------------------------------------------------------------------ }
-
-const
-  UNICOWS_URL =
-      'http://download.microsoft.com/download/b/7/5/b75eace3-00e2-4aa0-9a6f-0b6882c71642/unicows.exe';
-
-procedure isxdl_AddFile(URL, Filename: PChar);
-  external 'isxdl_AddFile@files:isxdl.dll stdcall';
-
-function isxdl_DownloadFiles(hWnd: Integer): Integer;
-  external 'isxdl_DownloadFiles@files:isxdl.dll stdcall';
-
-function isxdl_SetOption(Option, Value: PChar): Integer;
-  external 'isxdl_SetOption@files:isxdl.dll stdcall';
-
-
-function DownloadFiles: Boolean;
-var
-  hWnd: Integer;
-begin
-  isxdl_SetOption('label', 'Downloading MSLU');
-  isxdl_SetOption('description', 'Please wait while Setup is downloading MSLU files to your computer.');
-
-  isxdl_AddFile(UNICOWS_URL, ExpandConstant('{tmp}\unicows.exe'));
-
-  if isxdl_DownloadFiles(hWnd) = 0 then
-    MsgBox('Error while downloading. Setup will now continue installing normally.', mbError, mb_Ok);
-
-  Result := True;
-end;
-
 
 { ------------------------------------------------------------------ }
 { Helper functions:                                                  }
@@ -159,30 +153,3 @@ function InstallGlobally : boolean;
 begin
   result := IsAdminLoggedOn;
 end;
-
-{ ------------------------------------------------------------------ }
-{ UI scripting:                                                      }
-{ ------------------------------------------------------------------ }
-
-function ScriptDlgPages(CurPage: Integer; BackClicked: Boolean): Boolean;
-begin
-  if not BackClicked and (CurPage = wpReady) and
-     (ShouldProcessEntry('core', 'unicows') = srYes) then begin
-    Result := DownloadFiles;
-  end
-  else begin
-    Result := True;
-  end;
-end;
-
-function NextButtonClick(CurPage: Integer): Boolean;
-begin
-  Result := ScriptDlgPages(CurPage, False);
-end;
-
-function BackButtonClick(CurPage: Integer): Boolean;
-begin
-  Result := ScriptDlgPages(CurPage, True);
-end;
-
-
