@@ -7,17 +7,33 @@
 
     <set-srcdir>..</set-srcdir>
 
+    <set var="BUILDDIR_PART">
+        $(substituteFromDict(DEBUG, {'1':'Debug','0':'Release'}))
+    </set>
+
     <option name="WXRC">
         <default-value>wxrc</default-value>
         <description>Path to wxrc tool</description>
     </option>
 
+    <option name="DB_PATH" category="path">
+        <default-value>./db</default-value>
+        <description>Path to Berkeley DB tree</description>
+    </option>
+
+    <option name="DB_VERSION">
+        <default-value>45</default-value>
+        <description>Version of Berkeley DB used</description>
+    </option>
+
+    <set var="DB_INCLUDE_PATH">$(DB_PATH)/build_windows</set>
+    <set var="DB_LIB_PATH">$(DB_PATH)/build_windows/$(BUILDDIR_PART)</set>
+    <set var="DB_LIB">libdb$(DB_VERSION)s</set>
+
     <!--
       FIXME: this currently conflicts with XRC compilation
     <if cond="FORMAT=='msvc'">
-        <set var="OBJS" make_var="1">
-            $(substituteFromDict(DEBUG, {'1':'Debug','0':'Release'}))
-        </set>
+        <set var="OBJS" make_var="1">$(BUILDDIR_PART)</set>
         <set var="BUILDDIR">$(OBJS)</set>
     </if>
     -->
@@ -25,6 +41,12 @@
 
     <exe id="poedit" template="simple,wx">
         <app-type>gui</app-type>
+
+        <define>USE_TRANSMEM</define>
+        <define>DB_HEADER="db.h"</define>
+        <include>$(DB_INCLUDE_PATH)</include>
+        <lib-path>$(DB_LIB_PATH)</lib-path>
+        <sys-lib>$(DB_LIB)</sys-lib>
 
         <sources>
             src/catalog.cpp
