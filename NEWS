@@ -1,9 +1,9 @@
 
-- [Win32] Windows 95/98 is no longer supported by the official binary
+- Windows: Windows 95/98 is no longer supported by the official binary
 - fixed the Preferences menu entry in catalogs manager
 - fixed to handle file references with Windows paths on Unix
 - fixed the "failed to convert to unicode" bug when saving (#1589744)
-- [OS X] fixed clicking on PO files in Finder (#1583967)
+- OS X: fixed clicking on PO files in Finder (#1583967)
 - added more translations:
      Urdu (Muhammad Shakir Aziz)
 
@@ -86,7 +86,7 @@ Version 1.3.2
 - fixed Find to search in all plural forms instead of only the first one
 - added "whole words only" option to Find tool (Olivier Sannier)
 - added default parsers for more programming languages supported by xgettext
-- [Win32] fixed list control corruption when updated catalog had fewer items
+- Windows: fixed list control corruption when updated catalog had fewer items
   than before the update
 - added more translations:
      Korean (Hojin Choi)
@@ -113,7 +113,7 @@ Version 1.3.0
 
 - plural forms support (based on patch by Christophe Hermier and Guido Flohr)
 - fixed catalog I/O to correctly handle automatic comments (Tim Dijkstra)
-- [Win32] visual improvements to main window (Tim Kosse)
+- Windows: visual improvements to main window (Tim Kosse)
 - usability improvements
 - fixed storing of non-ASCII catalog headers
 - poEdit now preserves non-standard entries in PO file header
@@ -123,8 +123,8 @@ Version 1.3.0
 - "Find" tool now selects matches in text controls (Sergio Talens-Oliag)
 - use msgfmt for tokens validation
 - double-clicking on invalid entry now pops up error description
-- [Unix] use GNOME theme icons if they are installed on the system
-- [Unix] use GtkSpell for spell checking (GTK+ 2 only)
+- Unix: use GNOME theme icons if they are installed on the system
+- Unix: use GtkSpell for spell checking (GTK+ 2 only)
 - poEdit no longer saves .po.poedit file, the headers were moved into
   custom X-Poedit-* fields in .po file header
 - added more translations:
@@ -163,10 +163,10 @@ Version 1.2.4
 - added optional comment window to the bottom of main screen
   (based on patch by Olivier Sannier, still not fully functional)
 - added "Automatically translate using TM" operation to the Catalog menu
-- [Win32] upgraded bundled gettext to 0.12.1
+- Windows: upgraded bundled gettext to 0.12.1
 - fixed .po files parser to read files created by xgettext -i
 - added ability to customize fonts
-- [Win32] added support for Delphi via dxgettext (http://dybdahl.dk/dxgettext/)
+- Windows: added support for Delphi via dxgettext (http://dybdahl.dk/dxgettext/)
 - translation memory wizard fixes for multiple languages case
 - comments and msgid strings are stored using catalog's charset and are
   not limited to US-ASCII anymore (based on patch by Stefan Kowski)
@@ -195,9 +195,9 @@ Version 1.2.2
 - poEdit now correctly differentiates between Traditional and Simplified
   Chinese
 - optimizations for better handling of catalogs with very large entries
-- [Mac] compilation fixes for buggy gcc 3.1 snapshot used by MacOS X
+- Mac: compilation fixes for buggy gcc 3.1 snapshot used by MacOS X
 - added country metadata into catalog settings dialog
-- [Win32] it is now possible to change UI language directly in poEdit
+- Windows: it is now possible to change UI language directly in poEdit
 - added catalog updating from POT files
 - more intuitive UI for translation memory creation
 - added more translations:
@@ -215,7 +215,7 @@ Version 1.2.2
 Version 1.2.1
 -------------
 
-- [Win32] poEdit window now accepts files dropped on it via drag'n'drop
+- Windows: poEdit window now accepts files dropped on it via drag'n'drop
 - added more translations:
      Georgian (Aiet Kolkhi)
      Romanian (Ovidiu Constantin)
@@ -223,7 +223,7 @@ Version 1.2.1
 - reworked Traditional Chinese translation (Leo Liaw)
 - fixed bug when empty error text was shown if msgfmt reported error
 - moved "Shaded translations list" from preferences into the View menu
-- [Win32] allow coexistence of multiple poEdit versions on same system
+- Windows: allow coexistence of multiple poEdit versions on same system
 
 
 Version 1.2.0
@@ -238,19 +238,19 @@ Version 1.2.0
      Swedish (Simon Bohlin)
      Slovak (Pavol Cvengros)
 - fixed Turkish translation (wrong catalog included by mistake)
-- [Linux] RPMs are no longer provided in Mandrake and RedHat flavors, they
+- Linux: RPMs are no longer provided in Mandrake and RedHat flavors, they
   were unified into single RPM (mdk menu support was _not_ lost by this)
 - fixed data loss when updating catalog with invalid entries
-- [Win32] fixed toolbars look on Windows XP
-- [Win32] the installer no longer requires Administrator priviledges
+- Windows: fixed toolbars look on Windows XP
+- Windows: the installer no longer requires Administrator priviledges
 
 
 Version 1.1.10
 --------------
 
 - fix to "fixes to catalog charset handling" from 1.1.9
-- [Unix] configure now checks for db4 in addition to db and db3
-- [Win32] fixed launching poEdit via associations when long filenames 
+- Unix: configure now checks for db4 in addition to db and db3
+- Windows: fixed launching poEdit via associations when long filenames 
   were involved
 - added more translations:
      Polish (Arkadiusz Lipiec)
@@ -264,7 +264,7 @@ Version 1.1.9
 -------------
 
 - fixes to catalog charset handling
-- [Linux] added Mandrake RPM packages
+- Linux: added Mandrake RPM packages
 - added translations to more languages: 
      Estonian (Joosep-Georg Jarvemaa)
      Dutch (Patrick Hubers)
@@ -305,10 +305,10 @@ Version 1.1.6
 - fixed crash when browsing certain source files
 - added ability to open refered source files directly in the editor of
   choice instead of in built-in files viewer
-- [Win32] fixed wrong placement of progress indicator in the status bar
-- [Unix] man page is now installed
-- [Unix] poEdit now links with libdb-3.x for x > 1, too
-- [Linux] RPM package now comes in two favors: poedit and poedit-semistatic
+- Windows: fixed wrong placement of progress indicator in the status bar
+- Unix: man page is now installed
+- Unix: poEdit now links with libdb-3.x for x > 1, too
+- Linux: RPM package now comes in two favors: poedit and poedit-semistatic
   (the latter is statically linked against wxGTK and libdb)
 
 
@@ -316,7 +316,7 @@ Version 1.1.5
 -------------
 
 - upgraded to link against any of libdb-3.{1,2,3}
-- [Win32] fixed bug when editing entries in editable listbox control
+- Windows: fixed bug when editing entries in editable listbox control
 - updated ISO 639-1 table
 - visually improved listbox
 - Win32 binary package is now cross-compiled with Mingw32
@@ -351,7 +351,7 @@ Version 1.1.2
 - fixed assertion failures with empty catalog files when right-clicking 
   the list control
 - changed default TM DB path to something more sane under Windows
-- [Win32] fixed directories traversal during TM update under Windows 
+- Windows: fixed directories traversal during TM update under Windows 
 
 
 Version 1.1.1
@@ -363,7 +363,7 @@ Version 1.1.1
   the database. poEdit can dig translations from PO, MO and RPM files.
 - implemented search
 - poEdit source code is now documented with Doxygen
-- [Win32] HTML Help documentation now uses CSS and looks much better
+- Windows: HTML Help documentation now uses CSS and looks much better
 - better keyboard navigation
 
 
@@ -382,19 +382,19 @@ Version 1.0.3
 -------------
 
 - fixed comments parsing bug (reported by Mattias Dahlberg)
-- [Win32] fixed ugly blinking when resizing poEdit window
+- Windows: fixed ugly blinking when resizing poEdit window
 
 
 Version 1.0.2
 -------------
 
-- [Unix] fixed problem with localized versions of gettext
+- Unix: fixed problem with localized versions of gettext
 - fixed Content-Transfer-Encoding header (was "8-bit" instead of "8bit")
 - fixed POT-Creation-Date and PO-Revision-Date date writing
 - better handling of \n: strings with \n in them are now both
   displayed and saved to .po file as multiline records
 - saving catalog now preserves comments
-- [Unix] fixed dist makefile target
+- Unix: fixed dist makefile target
 
 
 Version 1.0.1
@@ -404,10 +404,10 @@ Version 1.0.1
 - fixed assertion failure in parsers info saving if ~/.poedit
   did not exist [harmless, in debug builds only]
 - right-clicking list control now selects the item under cursor
-- [Unix] fixed docs/Makefile.am to cd correctly
-- [Unix] configure change: better check for wxWidgets
-- [Linux] fixed RPM spec file
-- [Unix] added integration with KDE and GNOME desktops
+- Unix: fixed docs/Makefile.am to cd correctly
+- Unix: configure change: better check for wxWidgets
+- Linux: fixed RPM spec file
+- Unix: added integration with KDE and GNOME desktops
 
 
 Version 1.0.0
