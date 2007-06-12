@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2005 Vaclav Slavik
+ *  Copyright (C) 2001-2007 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -286,10 +286,22 @@ DbBase::DbBase(const wxString& filename, DBTYPE type)
         return;
     }
 #ifdef DB_OPEN_WITH_TRANSACTION
-    m_err = m_db->open(m_db, NULL, filename.mb_str(), NULL, type, DB_CREATE, 0);
-#else    
-    m_err = m_db->open(m_db, filename.mb_str(), NULL, type, DB_CREATE, 0);
+    m_err = m_db->open(m_db,
+                       NULL,
+                       filename.mb_str(wxConvUTF8),
+                       NULL,
+                       type,
+                       DB_CREATE,
+                       0);
+#else
+    m_err = m_db->open(m_db,
+                       filename.mb_str(wxConvUTF8),
+                       NULL,
+                       type,
+                       DB_CREATE,
+                       0);
 #endif
+
     if (m_err != 0)
     {
         LogError();
