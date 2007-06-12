@@ -1007,7 +1007,7 @@ bool Catalog::Load(const wxString& po_file)
             .po file's header as X-Poedit-Foo) */
 
     if (wxFileExists(po_file + _T(".poedit")) &&
-        f.Open(po_file + _T(".poedit")))
+        f.Open(po_file + _T(".poedit"), wxConvISO8859_1))
     {
         wxString dummy;
         // poedit header (optional, we should be able to read any catalog):
@@ -1256,7 +1256,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 
     /* Detect CRLF format: */
 
-    if (crlfPreserve && wxFileExists(po_file) && f.Open(po_file))
+    if ( crlfPreserve && wxFileExists(po_file) &&
+         f.Open(po_file, wxConvISO8859_1) )
     {
         {
         wxLogNull null;
@@ -1285,7 +1286,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     }
     m_header.Charset = charset;
 
-    if (!wxFileExists(po_file) || !f.Open(po_file))
+    if (!wxFileExists(po_file) || !f.Open(po_file, wxConvISO8859_1))
         if (!f.Create(po_file))
             return false;
     for (j = f.GetLineCount() - 1; j >= 0; j--)
