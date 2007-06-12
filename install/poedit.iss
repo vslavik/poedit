@@ -26,7 +26,7 @@
 ;   Inno Setup installer script
 ;
 
-#define VERSION          "1.3.6"
+#define VERSION          "1.3.7"
 
 ; FIXME: extract this from manifest file somehow?
 #define CRT_VERSION      "8.0.50727.762"

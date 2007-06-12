@@ -14,7 +14,7 @@
 
 Summary:       Gettext catalogs editor
 Name:          %NAME
-Version:       1.3.6
+Version:       1.3.7
 Release:       1
 License:       MIT
 Group:         Applications/Editors
