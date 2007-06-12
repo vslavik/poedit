@@ -64,6 +64,19 @@ ShowLanguageDialog=no
 AllowUNCPath=true
 InternalCompressLevel=ultra
 AppID={{68EB2C37-083A-4303-B5D8-41FA67E50B8F}
+VersionInfoTextVersion={#VERSION}
+VersionInfoCopyright=© 1999-2007 Vaclav Slavik
+VersionInfoVersion={#VERSION}
+VersionInfoCompany=Vaclav Slavik
+VersionInfoDescription=Installer for poEdit
+AppCopyright=© 1999-2007 Vaclav Slavik
+AppPublisher=Vaclav Slavik
+AppSupportURL=http://www.poedit.net/support.php
+AppUpdatesURL=http://www.poedit.net/download.php
+AppVersion={#VERSION}
+AppContact=poedit-users@lists.sourceforge.net
+UninstallDisplayIcon={app}\bin\poedit.exe
+UninstallDisplayName=poEdit
 
 [Files]
 Source: win32\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
@@ -136,7 +149,7 @@ Name: docs; Description: Documentation; Types: custom compact full
 Name: i18n; Description: Localization files for the UI; Types: full
 
 [Messages]
-BeveledLabel=poEdit
+BeveledLabel=http://www.poedit.net
 
 [Code]
 
