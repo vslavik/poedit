@@ -158,6 +158,10 @@
 
 #include DB_HEADER
 
+#if (DB_VERSION_MAJOR > 4) || (DB_VERSION_MAJOR == 4 && DB_VERSION_MINOR >= 1)
+    #define DB_OPEN_WITH_TRANSACTION
+#endif
+
 #include "transmem.h"
 
 
