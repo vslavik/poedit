@@ -79,7 +79,9 @@ wxString poEditApp::GetAppVersion() const
 }
 
 
+#ifndef __WXMAC__
 static wxArrayString gs_filesToOpen;
+#endif
 
 extern void InitXmlResource();
 
@@ -157,30 +159,45 @@ bool poEditApp::OnInit()
     {
         wxMessageBox(_("This is first time you run poEdit.\nPlease fill in your name and e-mail address.\n(This information is used only in catalogs headers)"), _("Setup"),
                        wxOK | wxICON_INFORMATION);
-                       
+
         PreferencesDialog dlg;
         dlg.TransferTo(wxConfig::Get());
         if (dlg.ShowModal() == wxID_OK)
             dlg.TransferFrom(wxConfig::Get());
     }
-      
+
+    // opening files or creating empty window is handled differently on Macs,
+    // using MacOpenFile() and MacNewFile(), so don't do it here:
+#ifndef __WXMAC__
     if (gs_filesToOpen.GetCount() == 0)
-     
     {
-        if (wxConfig::Get()->Read(_T("manager_startup"), (long)false))
-            ManagerFrame::Create()->Show(true);
-        else
-            poEditFrame::Create(wxEmptyString);
+        OpenNewFile();
     }
     else
     {
         for (size_t i = 0; i < gs_filesToOpen.GetCount(); i++)
-            poEditFrame::Create(gs_filesToOpen[i]);
+            OpenFile(gs_filesToOpen[i]);
+        gs_filesToOpen.clear();
     }
+#endif // !__WXMAC__
 
     return true;
 }
-    
+
+
+void poEditApp::OpenNewFile()
+{
+    if (wxConfig::Get()->Read(_T("manager_startup"), (long)false))
+        ManagerFrame::Create()->Show(true);
+    else
+        poEditFrame::Create(wxEmptyString);
+}
+
+void poEditApp::OpenFile(const wxString& name)
+{
+    poEditFrame::Create(name);
+}
+
 void poEditApp::SetDefaultParsers(wxConfigBase *cfg)
 {
     ParsersDB pdb;
@@ -315,7 +332,10 @@ bool poEditApp::OnCmdLineParsed(wxCmdLineParser& parser)
     if (!wxApp::OnCmdLineParsed(parser))
         return FALSE;
 
+#ifndef __WXMAC__
     for (size_t i = 0; i < parser.GetParamCount(); i++)
         gs_filesToOpen.Add(parser.GetParam(i));
+#endif
+
     return TRUE;
 }

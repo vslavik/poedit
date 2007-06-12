@@ -59,9 +59,19 @@ class poEditApp : public wxApp
 
         /// Returns poEdit version string.
         wxString GetAppVersion() const;
-        
+
         /// Returns our locale object
         wxLocale& GetLocale() { return m_locale; }
+
+        // opens a file in new frame
+        void OpenFile(const wxString& name);
+        // opens empty frame or catalogs manager
+        void OpenNewFile();
+
+#ifdef __WXMAC__
+        virtual void MacOpenFile(const wxString& name) { OpenFile(name); }
+        virtual void MacNewFile() { OpenNewFile(); }
+#endif
 
     protected:
         /** Sets default values to configuration items that don't
