@@ -77,7 +77,7 @@ AppVersion={#VERSION}
 AppContact=poedit-users@lists.sourceforge.net
 UninstallDisplayIcon={app}\bin\poedit.exe
 UninstallDisplayName=poEdit
-MinVersion=0,
+MinVersion=0,4.0.1381
 
 [Files]
 Source: win32\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
