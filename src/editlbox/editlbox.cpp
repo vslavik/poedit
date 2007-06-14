@@ -18,6 +18,9 @@
     #pragma hdrstop
 #endif
 
+#include "wx/version.h"
+#if !wxCHECK_VERSION(2,9,0)
+
 // for all others, include the necessary headers (this file is usually all you
 // need because it includes almost all "standard" wxWindows headers)
 #ifndef WX_PRECOMP
@@ -271,3 +274,5 @@ void wxEditableListBox::OnDownItem(wxCommandEvent& event)
     m_listCtrl->SetItemState(m_selection + 1,
                              wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 }
+
+#endif // wxWidgets <= 2.8
