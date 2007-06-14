@@ -40,7 +40,7 @@
 #include <wx/filedlg.h>
 #include <wx/stattext.h>
 
-#include "editlbox/editlbox.h"
+#include "wxeditablelistbox.h"
 #include <wx/xrc/xmlres.h>
 
 #include "transmem.h"

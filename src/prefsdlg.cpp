@@ -28,7 +28,7 @@
  */
 
 #include <wx/wxprec.h>
-#include "editlbox/editlbox.h"
+#include "wxeditablelistbox.h"
 #include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/tokenzr.h>

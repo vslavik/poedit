@@ -23,9 +23,9 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  manager.h manager.cpp chooselang.cpp chooselang.h \
                  export_html.cpp icons.h icons.cpp \
                  pluralforms/pl_evaluate.cpp \
-                 editlbox/editlbox.cpp \
+                 wxeditablelistbox.h editlbox/editlbox.cpp \
                  edlistctrl.cpp edlistctrl.h digits.h \
-				 compiled_xrc.cpp
+                 compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS)
 
