@@ -64,7 +64,7 @@ static wxString ReadTextLine(wxTextFile* f)
 {
     wxString s;
 
-    while (s.IsEmpty())
+    while (s.empty())
     {
         if (f->Eof()) return wxEmptyString;
 
@@ -261,7 +261,7 @@ void Catalog::HeaderData::UpdateDict()
     SetHeaderNotEmpty(_T("X-Poedit-Country"), Country);
     SetHeaderNotEmpty(_T("X-Poedit-SourceCharset"), SourceCodeCharset);
 
-    if (!Keywords.IsEmpty())
+    if (!Keywords.empty())
     {
         wxString kw;
         for (size_t i = 0; i < Keywords.GetCount(); i++)
@@ -507,9 +507,9 @@ bool CatalogParser::Parse()
     unsigned mlinenum;
 
     line = m_textFile->GetFirstLine();
-    if (line.IsEmpty()) line = ReadTextLine(m_textFile);
+    if (line.empty()) line = ReadTextLine(m_textFile);
 
-    while (!line.IsEmpty())
+    while (!line.empty())
     {
         // ignore empty special tags (except for automatic comments which we
         // DO want to preserve):
@@ -704,7 +704,7 @@ bool CatalogParser::Parse()
         {
             bool readNewLine = false;
 
-            while (!line.IsEmpty() &&
+            while (!line.empty() &&
                     line[0u] == _T('#') &&
                    (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':') && line[1u] != _T('.') )))
             {
@@ -758,7 +758,7 @@ bool CharsetInfoFinder::OnEntry(const wxString& msgid,
                                 const wxArrayString& autocomments,
                                 unsigned lineNumber)
 {
-    if (msgid.IsEmpty())
+    if (msgid.empty())
     {
         // gettext header:
         Catalog::HeaderData hdr;
@@ -811,7 +811,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
                          const wxArrayString& autocomments,
                          unsigned lineNumber)
 {
-    if (msgid.IsEmpty())
+    if (msgid.empty())
     {
         // gettext header:
         m_catalog->m_header.FromString(mtranslations[0]);
@@ -820,7 +820,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
     else
     {
         CatalogData *d = new CatalogData(wxEmptyString, wxEmptyString);
-        if (!flags.IsEmpty()) d->SetFlags(flags);
+        if (!flags.empty()) d->SetFlags(flags);
         d->SetString(msgid);
         if (has_plural)
             d->SetPluralString(msgid_plural);
@@ -844,7 +844,7 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
                                 unsigned lineNumber)
 {
     CatalogDeletedData *d = new CatalogDeletedData(wxArrayString());
-    if (!flags.IsEmpty()) d->SetFlags(flags);
+    if (!flags.empty()) d->SetFlags(flags);
     d->SetDeletedLines(deletedLines);
     d->SetComment(comment);
     d->SetLineNumber(lineNumber);
@@ -1013,7 +1013,7 @@ bool Catalog::Load(const wxString& po_file)
 
         if (ReadParam(ReadTextLine(&f), _T("#. Paths: "), dummy))
         {
-            bool setPaths = m_header.SearchPaths.IsEmpty();
+            bool setPaths = m_header.SearchPaths.empty();
             long sz;
             dummy.ToLong(&sz);
             for (; sz > 0; sz--)
@@ -1028,7 +1028,7 @@ bool Catalog::Load(const wxString& po_file)
 
         if (ReadParam(ReadTextLine(&f), _T("#. Keywords: "), dummy))
         {
-            bool setKeyw = m_header.Keywords.IsEmpty();
+            bool setKeyw = m_header.Keywords.empty();
             long sz;
             dummy.ToLong(&sz);
             for (; sz > 0; sz--)
@@ -1061,7 +1061,7 @@ void Catalog::AddDeletedItem(CatalogDeletedData *data)
 
 bool Catalog::HasDeletedItems()
 {
-    return !m_deletedItemsArray.IsEmpty();
+    return !m_deletedItemsArray.empty();
 }
 
 void Catalog::RemoveDeletedItems()
@@ -1286,7 +1286,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         for (unsigned i = 0; i < data->GetReferences().GetCount(); i++)
             f.AddLine(_T("#: ") + data->GetReferences()[i]);
         dummy = data->GetFlags();
-        if (!dummy.IsEmpty())
+        if (!dummy.empty())
             f.AddLine(dummy);
         dummy = FormatStringForFile(data->GetString());
         data->SetLineNumber(f.GetLineCount()+1);
@@ -1321,7 +1321,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         for (unsigned i = 0; i < deletedItem->GetReferences().GetCount(); i++)
             f.AddLine(_T("#: ") + deletedItem->GetReferences()[i]);
         dummy = deletedItem->GetFlags();
-        if (!dummy.IsEmpty())
+        if (!dummy.empty())
             f.AddLine(dummy);
         deletedItem->SetLineNumber(f.GetLineCount()+1);
 
@@ -1380,7 +1380,7 @@ bool Catalog::Update(bool summary)
     SourceDigger dig(&pinfo);
 
     wxArrayString keywords;
-    if (m_header.Keywords.IsEmpty())
+    if (m_header.Keywords.empty())
     {
         // NB: keep in sync with Catalog::CreateNewHeader!
         keywords.Add(_T("_"));
@@ -1567,7 +1567,7 @@ void Catalog::Append(Catalog& cat)
         {
             for (unsigned j = 0; j < dt->GetReferences().GetCount(); j++)
                 mydt->AddReference(dt->GetReferences()[j]);
-            if (!dt->GetTranslation().IsEmpty())
+            if (!dt->GetTranslation().empty())
                 mydt->SetTranslation(dt->GetTranslation());
             if (dt->IsFuzzy()) mydt->SetFuzzy(true);
         }
@@ -1599,7 +1599,7 @@ void CatalogData::SetFlags(const wxString& flags)
     m_isFuzzy = false;
     m_moreFlags.Empty();
 
-    if (flags.IsEmpty()) return;
+    if (flags.empty()) return;
     wxStringTokenizer tkn(flags.Mid(1), _T(" ,"), wxTOKEN_STRTOK);
     wxString s;
     while (tkn.HasMoreTokens())
@@ -1616,7 +1616,7 @@ wxString CatalogData::GetFlags() const
     wxString f;
     if (m_isFuzzy) f << _T(", fuzzy");
     f << m_moreFlags;
-    if (!f.IsEmpty())
+    if (!f.empty())
         return _T("#") + f;
     else
         return wxEmptyString;
@@ -1652,7 +1652,7 @@ void CatalogData::SetTranslation(const wxString &t, unsigned idx)
     m_validity = Val_Unknown;
     m_isTranslated = false;
     for (size_t i = 0; i < m_translations.GetCount(); i++)
-        if (!m_translations[i].IsEmpty())
+        if (!m_translations[i].empty())
             m_isTranslated = true;
 }
 
@@ -1663,7 +1663,7 @@ void CatalogData::SetTranslations(const wxArrayString &t)
     m_validity = Val_Unknown;
     m_isTranslated = false;
     for (size_t i = 0; i < m_translations.GetCount(); i++)
-        if (!m_translations[i].IsEmpty())
+        if (!m_translations[i].empty())
             m_isTranslated = true;
 }
 
@@ -1673,10 +1673,10 @@ wxString Catalog::GetLocaleCode() const
     wxString lang;
 
     // was the language explicitly specified?
-    if (!m_header.Language.IsEmpty())
+    if (!m_header.Language.empty())
     {
         lang = LookupLanguageCode(m_header.Language.c_str());
-        if (!m_header.Country.IsEmpty())
+        if (!m_header.Country.empty())
         {
             lang += _T('_');
             lang += LookupCountryCode(m_header.Country.c_str());

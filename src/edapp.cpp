@@ -291,7 +291,7 @@ void poEditApp::SetDefaultCfg(wxConfigBase *cfg)
 
     if (cfg->Read(_T("version"), wxEmptyString) == GetAppVersion()) return;
 
-    if (cfg->Read(_T("TM/database_path"), wxEmptyString).IsEmpty())
+    if (cfg->Read(_T("TM/database_path"), wxEmptyString).empty())
     {
         wxString dbpath;
 #if defined(__WXMAC__)
@@ -310,7 +310,7 @@ void poEditApp::SetDefaultCfg(wxConfigBase *cfg)
         cfg->Write(_T("TM/database_path"), dbpath);
     }
 
-    if (cfg->Read(_T("TM/search_paths"), wxEmptyString).IsEmpty())
+    if (cfg->Read(_T("TM/search_paths"), wxEmptyString).empty())
     {
         wxString paths;
 #if defined(__UNIX__)

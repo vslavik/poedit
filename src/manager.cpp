@@ -154,7 +154,7 @@ void ManagerFrame::UpdateListPrj(int select)
     {
         key.Printf(_T("Manager/project_%i/Name"), i);
         name = cfg->Read(key, wxEmptyString);
-        if (!name.IsEmpty())
+        if (!name.empty())
         {
             m_listPrj->Append(name, (void*)i);
             if (i == select)
@@ -376,7 +376,7 @@ void ManagerFrame::OnNewProject(wxCommandEvent& event)
     for (int i = 0; i <= max; i++)
     {
         key.Printf(_T("Manager/project_%i/Name"), i);
-        if (cfg->Read(key, wxEmptyString).IsEmpty())
+        if (cfg->Read(key, wxEmptyString).empty())
         {
             m_listPrj->Append(_("<unnamed>"), (void*)i);
             m_curPrj = i;

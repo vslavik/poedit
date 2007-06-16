@@ -146,7 +146,7 @@ void SettingsDialog::TransferFrom(Catalog *cat)
             dummy.RemoveLast();
         cat->Header().SearchPaths.Add(dummy);
     }
-    if (arr.GetCount() > 0 && cat->Header().BasePath.IsEmpty()) 
+    if (arr.GetCount() > 0 && cat->Header().BasePath.empty()) 
         cat->Header().BasePath = _T(".");
 
     m_keywords->GetStrings(arr);

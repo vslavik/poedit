@@ -403,7 +403,7 @@ class CatalogData : public wxObject
         const wxArrayString& GetAutoComments() const { return m_autocomments; }
 
         /// Convenience function: does this entry has a comment?
-        const bool HasComment() const { return !m_comment.IsEmpty(); }
+        const bool HasComment() const { return !m_comment.empty(); }
 
         /// Adds new reference to the entry (used by SourceDigger).
         void AddReference(const wxString& ref)
@@ -572,7 +572,7 @@ class CatalogDeletedData : public wxObject
         const wxArrayString& GetAutoComments() const { return m_autocomments; }
 
         /// Convenience function: does this entry has a comment?
-        const bool HasComment() const { return !m_comment.IsEmpty(); }
+        const bool HasComment() const { return !m_comment.empty(); }
 
         /// Adds new reference to the entry (used by SourceDigger).
         void AddReference(const wxString& ref)

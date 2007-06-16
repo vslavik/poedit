@@ -161,7 +161,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
 		wxString original_string = data.GetString();
 
 		wxString translation = data.GetTranslation();
-		if (translation.IsEmpty())
+		if (translation.empty())
 		{
 			translation = _T("&nbsp;");
 			bgcolor = g_ItemColourUntranslated[i % 2];
@@ -180,7 +180,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
 			flags += _("Fuzzy translation");
 			flags += _T("<BR>");
 		}
-		if (flags.IsEmpty())
+		if (flags.empty())
 		{
 			flags = _T("&nbsp;");
 		}

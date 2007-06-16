@@ -763,7 +763,7 @@ TranslationMemory *poEditFrame::GetTransMem()
                 lang = lngs[index];
         }
 
-        if (!lang.IsEmpty() && TranslationMemory::IsSupported(lang, dbPath))
+        if (!lang.empty() && TranslationMemory::IsSupported(lang, dbPath))
         {
             m_transMem = TranslationMemory::Create(lang, dbPath);
             if (m_transMem)
@@ -841,7 +841,7 @@ void poEditFrame::OnOpen(wxCommandEvent&)
                     path, wxEmptyString, wxEmptyString,
                     _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"),
                     wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
-    if (!name.IsEmpty())
+    if (!name.empty())
     {
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
         ReadCatalog(name);
@@ -927,7 +927,7 @@ void poEditFrame::OnFileDrop(wxDropFilesEvent& event)
 void poEditFrame::OnSave(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
-    if (m_fileName.IsEmpty())
+    if (m_fileName.empty())
         OnSaveAs(event);
     else
         WriteCatalog(m_fileName);
@@ -1002,7 +1002,7 @@ void poEditFrame::OnExport(wxCommandEvent&)
                           wxPathOnly(m_fileName), name, wxEmptyString,
                           _("HTML file (*.html)|*.html"),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
-    if (!name.IsEmpty())
+    if (!name.empty())
     {
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
         ExportCatalog(name);
@@ -1551,7 +1551,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 
     entry.SetModified(true);
     entry.SetAutomatic(false);
-    entry.SetTranslated(!newval.IsEmpty());
+    entry.SetTranslated(!newval.empty());
 
     m_list->RefreshItem(item);
 
@@ -1892,7 +1892,7 @@ bool poEditFrame::WriteCatalog(const wxString& catalog)
             CatalogData& dt = (*m_catalog)[i];
             if (dt.IsModified() && !dt.IsFuzzy() &&
                 dt.GetValidity() == CatalogData::Val_Valid &&
-                !dt.GetTranslation().IsEmpty())
+                !dt.GetTranslation().empty())
             {
                 tm->Store(dt.GetString(), dt.GetTranslation());
             }
