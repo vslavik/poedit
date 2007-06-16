@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2006 Vaclav Slavik
+ *  Copyright (C) 1999-2007 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -38,6 +38,10 @@
 #include <wx/xrc/xmlres.h>
 #include <wx/xrc/xh_all.h>
 #include <wx/stdpaths.h>
+
+#if !wxUSE_UNICODE
+    #error "Unicode build of wxWidgets is required by poEdit"
+#endif
 
 #include "edapp.h"
 #include "edframe.h"

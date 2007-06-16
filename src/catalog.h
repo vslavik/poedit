@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2005 Vaclav Slavik
+ *  Copyright (C) 1999-2007 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -289,8 +289,7 @@ class Catalog
 class CatalogParser
 {
     public:
-        CatalogParser(wxTextFile *f, wxMBConv *conv)
-            : m_textFile(f), m_conv(conv) {}
+        CatalogParser(wxTextFile *f) : m_textFile(f) {}
         virtual ~CatalogParser() {}
 
         /** Parses the entire file, calls OnEntry each time
@@ -331,7 +330,6 @@ class CatalogParser
 
         /// Textfile being parsed.
         wxTextFile *m_textFile;
-        wxMBConv   *m_conv;
 };
 
 /** This class holds information about one particular string.

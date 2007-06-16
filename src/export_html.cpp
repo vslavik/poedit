@@ -44,25 +44,16 @@
                                        int((g)*g_darkColourFactor),\
                                        int((b)*g_darkColourFactor)))
 #define LIST_COLOURS(r,g,b) { wxColour(r,g,b), DARKEN_COLOUR(r,g,b) }
-static wxColour 
+static wxColour
     g_ItemColourNormal[2] =       LIST_COLOURS(0xFF,0xFF,0xFF), // white
     g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
     g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1); // yellow
 
 
-static wxString trans2utf(const wxString& s)
-{
-#if wxUSE_UNICODE
-    return s;
-#else
-    return wxString(s.wc_str(wxConvLocal), wxConvUTF8);
-#endif
-}
-
 
 bool Catalog::ExportToHTML(const wxString& filename)
 {
-	size_t i;    	
+	size_t i;
 	wxTextFile f;
 
 	if ( wxFileExists(filename) )
@@ -108,27 +99,27 @@ bool Catalog::ExportToHTML(const wxString& filename)
 	f.AddLine(_T("<table align=center border=1 cellspacing=2 cellpadding=4>"));
 
 	line.Printf(_T("<tr><th colspan=2>%s</th></tr>"),
-                trans2utf(_("Project info")).c_str());
+                _("Project info"));
 	f.AddLine(line);
 	wxString line_format = _T("<tr><td>%s</td><td>%s</td></tr>");
 	line.Printf(line_format,
-                trans2utf(_("Project name and version:")).c_str(),
+                _("Project name and version:"),
                 m_header.Project.c_str());
 	f.AddLine(line);
-	line.Printf(line_format, trans2utf(_("Language:")).c_str(),
+	line.Printf(line_format, _("Language:"),
                 m_header.Language.c_str());
 	f.AddLine(line);
-	line.Printf(line_format, trans2utf(_("Country:")).c_str(),
+	line.Printf(line_format, _("Country:"),
                 m_header.Country.c_str());
 	f.AddLine(line);
-    line.Printf(line_format, trans2utf(_("Team:")).c_str(),
+    line.Printf(line_format, _("Team:"),
                 m_header.Team.c_str());
 	f.AddLine(line);
 	line.Printf(_T("<tr><td>%s</td><td><a href=\"mailto:%s\">%s</a></td></tr>"),
-                trans2utf(_("Team's email address:")).c_str(),
+                _("Team's email address:"),
                 m_header.TeamEmail.c_str(), m_header.TeamEmail.c_str());
 	f.AddLine(line);
-	line.Printf(line_format, trans2utf(_("Charset:")).c_str(),
+	line.Printf(line_format, _("Charset:"),
                 m_header.Charset.c_str());
 	f.AddLine(line);
 
@@ -141,8 +132,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
     int broken = 0;
     GetStatistics(&all, &fuzzy, &broken, &untranslated);
 	line.Printf(
-            trans2utf(_(
-            "%i strings (%i fuzzy, %i bad tokens, %i not translated)")).c_str(),
+            _("%i strings (%i fuzzy, %i bad tokens, %i not translated)"),
             all, fuzzy, broken, untranslated);
 	f.AddLine(line);
 
@@ -152,14 +142,14 @@ bool Catalog::ExportToHTML(const wxString& filename)
 
 	f.AddLine(_T("<tr>"));
 	f.AddLine(_T("<th>"));
-	f.AddLine(trans2utf(_("Original string")).c_str());
-	f.AddLine(_T("</th>"));        
-	f.AddLine(_T("<th>"));		
-	f.AddLine(trans2utf(_("Translation")).c_str());
+	f.AddLine(_("Original string"));
 	f.AddLine(_T("</th>"));
-	f.AddLine(_T("</th>"));        
 	f.AddLine(_T("<th>"));
-	f.AddLine(trans2utf(_("Notes")).c_str());
+	f.AddLine(_("Translation"));
+	f.AddLine(_T("</th>"));
+	f.AddLine(_T("</th>"));
+	f.AddLine(_T("<th>"));
+	f.AddLine(_("Notes"));
 	f.AddLine(_T("</th>"));
 	f.AddLine(_T("</tr>"));
 	
@@ -181,13 +171,13 @@ bool Catalog::ExportToHTML(const wxString& filename)
 
 		if (data.IsAutomatic())
 		{
-			flags += trans2utf(_("Automatic translation"));
+			flags += _("Automatic translation");
 			flags += _T("<BR>");
 		}
 		if (data.IsFuzzy())
 		{
 			bgcolor = g_ItemColourFuzzy[i % 2];
-			flags += trans2utf(_("Fuzzy translation"));
+			flags += _("Fuzzy translation");
 			flags += _T("<BR>");
 		}
 		if (flags.IsEmpty())

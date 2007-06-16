@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2006 Vaclav Slavik
+ *  Copyright (C) 2001-2007 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -237,11 +237,7 @@ bool FindFrame::DoFind(int dir)
 
         if (inStr)
         {
-            #if wxUSE_UNICODE
             textc = dt.GetString();
-            #else
-            textc = wxString(dt.GetString().wc_str(wxConvUTF8), wxConvLocal);
-            #endif
             if (!caseSens)
                 textc.MakeLower();
             if (TextInString(textc, text, wholeWords))
@@ -257,12 +253,7 @@ bool FindFrame::DoFind(int dir)
             textc = wxEmptyString;
             for (size_t i = 0; i < cnt; i++)
             {
-                #if wxUSE_UNICODE
                 textc += dt.GetTranslation(i);
-                #else
-                textc += wxString(dt.GetTranslation(i).wc_str(wxConvUTF8),
-                                  wxConvLocal);
-                #endif
             }
             // and search for the substring in them:
             if (!caseSens)
@@ -272,11 +263,7 @@ bool FindFrame::DoFind(int dir)
         }
         if (inComments)
         {
-            #if wxUSE_UNICODE
             textc = dt.GetComment();
-            #else
-            textc = wxString(dt.GetComment().wc_str(wxConvUTF8), wxConvLocal);
-            #endif
             if (!caseSens)
                 textc.MakeLower();
 
@@ -289,11 +276,6 @@ bool FindFrame::DoFind(int dir)
             for (unsigned i = 0; i < autoComments.GetCount(); i++)
                 textc += autoComments[i];
 
-            #if wxUSE_UNICODE
-            //textc = dt.GetComments();
-            #else
-            textc = wxString(textc.wc_str(wxConvUTF8), wxConvLocal);
-            #endif
             if (!caseSens)
                 textc.MakeLower();
 

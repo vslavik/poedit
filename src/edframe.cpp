@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2006 Vaclav Slavik
+ *  Copyright (C) 1999-2007 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -1450,29 +1450,6 @@ void poEditFrame::OnFind(wxCommandEvent& event)
     f->Show(true);
 }
 
-
-inline wxString convertToLocalCharset(const wxString& str)
-{
-#if !wxUSE_UNICODE
-    wxString s2(str.wc_str(wxConvUTF8), wxConvLocal);
-    if (s2.empty() /*conversion failed*/)
-        return str;
-    else
-        return s2;
-#else
-    return str;
-#endif
-}
-
-inline wxString convertFromLocalCharset(const wxString& str)
-{
-#if !wxUSE_UNICODE
-    return wxString(str.wc_str(wxConvLocal), wxConvUTF8);
-#else
-    return str;
-#endif
-}
-
 static wxString TransformNewval(const wxString& val, bool displayQuotes)
 {
     wxString newval(val);
@@ -1549,13 +1526,6 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 
     newval = TransformNewval(newval, m_displayQuotes);
 
-#if !wxUSE_UNICODE
-    // convert to UTF-8 using user's environment default charset (do it
-    // after calling m_list->SetItem because SetItem expects string in
-    // local charset, not UTF-8):
-    newval = convertFromLocalCharset(newval);
-#endif
-
     if (entry.HasPlural())
     {
         wxArrayString str;
@@ -1563,12 +1533,6 @@ void poEditFrame::UpdateFromTextCtrl(int item)
         {
             wxString val = TransformNewval(m_textTransPlural[i]->GetValue(),
                                            m_displayQuotes);
-#if !wxUSE_UNICODE
-            // convert to UTF-8 using user's environment default charset (do it
-            // after calling m_list->SetItem because SetItem expects string in
-            // local charset, not UTF-8):
-            val = convertFromLocalCharset(val);
-#endif
             str.Add(val);
         }
         entry.SetTranslations(str);
@@ -1631,12 +1595,6 @@ void poEditFrame::UpdateToTextCtrl(int item)
     // remove "# " in front of every comment line
     t_c = CommentDialog::RemoveStartHash(t_c);
 
-#if !wxUSE_UNICODE
-    // Convert from UTF-8 to environment's default charset:
-    t_o = convertToLocalCharset(t_o);
-    t_c = convertToLocalCharset(t_c);
-#endif
-
     m_textOrig->SetValue(t_o);
 
     m_edittedTextOrig.clear();
@@ -1645,9 +1603,6 @@ void poEditFrame::UpdateToTextCtrl(int item)
     {
         wxString t_op = quote + entry.GetPluralString() + quote;
         t_op.Replace(_T("\\n"), _T("\\n\n"));
-#if !wxUSE_UNICODE
-        t_op = convertToLocalCharset(t_op);
-#endif
         m_textOrigPlural->SetValue(t_op);
 
         size_t formsCnt = m_textTransPlural.size();
@@ -1659,9 +1614,6 @@ void poEditFrame::UpdateToTextCtrl(int item)
         {
             t_t = quote + entry.GetTranslation(i) + quote;
             t_t.Replace(_T("\\n"), _T("\\n\n"));
-#if !wxUSE_UNICODE
-            t_t = convertToLocalCharset(t_t);
-#endif
             m_textTransPlural[i]->SetValue(t_t);
             if (m_displayQuotes)
                 m_textTransPlural[i]->SetInsertionPoint(1);
@@ -1672,9 +1624,6 @@ void poEditFrame::UpdateToTextCtrl(int item)
     {
         t_t = quote + entry.GetTranslation() + quote;
         t_t.Replace(_T("\\n"), _T("\\n\n"));
-#if !wxUSE_UNICODE
-        t_t = convertToLocalCharset(t_t);
-#endif
         m_textTrans->SetValue(t_t);
         if (m_displayQuotes)
             m_textTrans->SetInsertionPoint(1);
@@ -1968,14 +1917,13 @@ void poEditFrame::OnEditComment(wxCommandEvent& event)
     int selItem = m_list->GetIndexInCatalog(m_sel);
     if (selItem < 0 || selItem >= (int)m_catalog->GetCount()) return;
 
-    wxString comment = convertToLocalCharset(
-                            (*m_catalog)[selItem].GetComment());
+    wxString comment = (*m_catalog)[selItem].GetComment();
     CommentDialog dlg(this, comment);
     if (dlg.ShowModal() == wxID_OK)
     {
         m_modified = true;
         UpdateTitle();
-        comment = convertFromLocalCharset(dlg.GetComment());
+        comment = dlg.GetComment();
         (*m_catalog)[selItem].SetComment(comment);
 
         m_list->RefreshItem(m_sel);
@@ -2303,8 +2251,7 @@ void poEditFrame::OnCommentWindowText(wxCommandEvent&)
         return;
 
     wxString comment;
-    comment = convertFromLocalCharset(
-            CommentDialog::AddStartHash(m_textComment->GetValue()));
+    comment = CommentDialog::AddStartHash(m_textComment->GetValue());
     CatalogData& data((*m_catalog)[m_list->GetIndexInCatalog(m_sel)]);
 
     wxLogTrace(_T("poedit"), _T("   comm:'%s'"), comment.c_str());

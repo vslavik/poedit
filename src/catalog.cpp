@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2006 Vaclav Slavik
+ *  Copyright (C) 1999-2007 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -60,7 +60,7 @@ WX_DEFINE_OBJARRAY(CatalogDeletedDataArray)
 
 
 // Read one line from file, remove all \r and \n characters, ignore empty lines
-static wxString ReadTextLine(wxTextFile* f, wxMBConv *conv)
+static wxString ReadTextLine(wxTextFile* f)
 {
     wxString s;
 
@@ -71,18 +71,7 @@ static wxString ReadTextLine(wxTextFile* f, wxMBConv *conv)
         // read next line and strip insignificant whitespace from it:
         s = f->GetNextLine().Strip(wxString::both);
     }
-#if !wxUSE_UNICODE
-    if (conv)
-    {
-        wxString s2 = wxString(s.wc_str(*conv), wxConvUTF8);
-        if (s2.empty() && !s.empty())
-        {
-            wxLogError(_("Error while loading file '%s': line %u is corrupted."),
-                       f->GetName(), f->GetCurrentLine());
-        }
-        return s2;
-    }
-#endif
+
     return s;
 }
 
@@ -114,7 +103,6 @@ static bool ReadParamIfNotSet(const wxString& input,
 }
 
 
-#if wxUSE_UNICODE
 // Checks if the file was loaded correctly, i.e. that non-empty lines
 // ended up non-empty in memory, after doing charset conversion in
 // wxTextFile. This detects for example files that claim they are in UTF-8
@@ -150,7 +138,6 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
 
     return ok;
 }
-#endif
 
 
 // converts \n into newline character and \\ into \:
@@ -520,28 +507,28 @@ bool CatalogParser::Parse()
     unsigned mlinenum;
 
     line = m_textFile->GetFirstLine();
-    if (line.IsEmpty()) line = ReadTextLine(m_textFile, m_conv);
+    if (line.IsEmpty()) line = ReadTextLine(m_textFile);
 
     while (!line.IsEmpty())
     {
         // ignore empty special tags (except for automatic comments which we
         // DO want to preserve):
         while (line == _T("#,") || line == _T("#:"))
-            line = ReadTextLine(m_textFile, m_conv);
+            line = ReadTextLine(m_textFile);
 
         // flags:
         // Can't we have more than one flag, now only the last is kept ...
         if (ReadParam(line, _T("#, "), dummy))
         {
             mflags = _T("#, ") + dummy;
-            line = ReadTextLine(m_textFile, m_conv);
+            line = ReadTextLine(m_textFile);
         }
 
         // auto comments:
         if (ReadParam(line, _T("#. "), dummy) || ReadParam(line, _T("#."), dummy)) // second one to account for empty auto comments
         {
             mautocomments.Add(dummy);
-            line = ReadTextLine(m_textFile, m_conv);
+            line = ReadTextLine(m_textFile);
         }
 
         // references:
@@ -561,7 +548,7 @@ bool CatalogParser::Parse()
                 dummy = dummy.Mid(i).Strip(wxString::both);
             }
 
-            line = ReadTextLine(m_textFile, m_conv);
+            line = ReadTextLine(m_textFile);
         }
 
         // msgid:
@@ -570,7 +557,7 @@ bool CatalogParser::Parse()
         {
             mstr = dummy.RemoveLast();
             mlinenum = m_textFile->GetCurrentLine() + 1;
-            while (!(line = ReadTextLine(m_textFile, m_conv)).IsEmpty())
+            while (!(line = ReadTextLine(m_textFile)).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
@@ -588,7 +575,7 @@ bool CatalogParser::Parse()
             msgid_plural = dummy.RemoveLast();
             has_plural = true;
             mlinenum = m_textFile->GetCurrentLine() + 1;
-            while (!(line = ReadTextLine(m_textFile, m_conv)).IsEmpty())
+            while (!(line = ReadTextLine(m_textFile)).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
@@ -610,7 +597,7 @@ bool CatalogParser::Parse()
             }
 
             wxString str = dummy.RemoveLast();
-            while (!(line = ReadTextLine(m_textFile, m_conv)).IsEmpty())
+            while (!(line = ReadTextLine(m_textFile)).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
@@ -652,7 +639,7 @@ bool CatalogParser::Parse()
             {
                 wxString str = dummy.RemoveLast();
 
-                while (!(line=ReadTextLine(m_textFile, m_conv)).IsEmpty())
+                while (!(line=ReadTextLine(m_textFile)).empty())
                 {
                     if (line[0u] == _T('\t'))
                         line.Remove(0, 1);
@@ -691,7 +678,7 @@ bool CatalogParser::Parse()
             wxArrayString deletedLines;
             deletedLines.Add(line);
             mlinenum = m_textFile->GetCurrentLine() + 1;
-            while (!(line = ReadTextLine(m_textFile, m_conv)).IsEmpty())
+            while (!(line = ReadTextLine(m_textFile)).empty())
             {
                 // if line does not start with "#~ " anymore, stop reading
                 if (!ReadParam(line, _T("#~ "), dummy))
@@ -723,15 +710,15 @@ bool CatalogParser::Parse()
             {
                 mcomment << line << _T('\n');
                 readNewLine = true;
-                line = ReadTextLine(m_textFile, m_conv);
+                line = ReadTextLine(m_textFile);
             }
 
             if (!readNewLine)
-                line = ReadTextLine(m_textFile, m_conv);
+                line = ReadTextLine(m_textFile);
         }
 
         else
-            line = ReadTextLine(m_textFile, m_conv);
+            line = ReadTextLine(m_textFile);
     }
 
     return true;
@@ -742,8 +729,8 @@ bool CatalogParser::Parse()
 class CharsetInfoFinder : public CatalogParser
 {
     public:
-        CharsetInfoFinder(wxTextFile *f, wxMBConv *conv)
-                : CatalogParser(f, conv), m_charset(_T("iso-8859-1")) {}
+        CharsetInfoFinder(wxTextFile *f)
+                : CatalogParser(f), m_charset(_T("iso-8859-1")) {}
         wxString GetCharset() const { return m_charset; }
 
     protected:
@@ -789,8 +776,8 @@ bool CharsetInfoFinder::OnEntry(const wxString& msgid,
 class LoadParser : public CatalogParser
 {
     public:
-        LoadParser(Catalog *c, wxTextFile *f, wxMBConv *conv)
-              : CatalogParser(f, conv), m_catalog(c) {}
+        LoadParser(Catalog *c, wxTextFile *f)
+              : CatalogParser(f), m_catalog(c) {}
 
     protected:
         Catalog *m_catalog;
@@ -960,7 +947,7 @@ bool Catalog::Load(const wxString& po_file)
     if (!f.Open(po_file, wxConvISO8859_1))
         return false;
 
-    CharsetInfoFinder charsetFinder(&f, &wxConvISO8859_1);
+    CharsetInfoFinder charsetFinder(&f);
     charsetFinder.Parse();
     m_header.Charset = charsetFinder.GetCharset();
 
@@ -969,14 +956,12 @@ bool Catalog::Load(const wxString& po_file)
     if (!f.Open(po_file, encConv))
         return false;
 
-#if wxUSE_UNICODE
     if (!VerifyFileCharset(f, po_file, m_header.Charset))
     {
         wxLogError(_("There were errors when loading the catalog. Some data may be missing or corrupted as the result."));
     }
-#endif
 
-    LoadParser parser(this, &f, &encConv);
+    LoadParser parser(this, &f);
     if (!parser.Parse())
     {
         wxLogError(
@@ -1012,28 +997,28 @@ bool Catalog::Load(const wxString& po_file)
         wxString dummy;
         // poedit header (optional, we should be able to read any catalog):
         f.GetFirstLine();
-        if (ReadParam(ReadTextLine(&f, NULL),
+        if (ReadParam(ReadTextLine(&f),
                       _T("#. Number of items: "), dummy))
         {
             // not used anymore
         }
-        ReadParamIfNotSet(ReadTextLine(&f, &encConv),
+        ReadParamIfNotSet(ReadTextLine(&f),
                   _T("#. Language: "), m_header.Language);
-        dummy = ReadTextLine(&f, &encConv);
+        dummy = ReadTextLine(&f);
         if (ReadParamIfNotSet(dummy, _T("#. Country: "), m_header.Country))
-            dummy = ReadTextLine(&f, NULL);
+            dummy = ReadTextLine(&f);
         if (ReadParamIfNotSet(dummy, _T("#. Basepath: "), m_header.BasePath))
-            dummy = ReadTextLine(&f, NULL);
+            dummy = ReadTextLine(&f);
         ReadParamIfNotSet(dummy, _T("#. SourceCodeCharSet: "), m_header.SourceCodeCharset);
 
-        if (ReadParam(ReadTextLine(&f, NULL), _T("#. Paths: "), dummy))
+        if (ReadParam(ReadTextLine(&f), _T("#. Paths: "), dummy))
         {
             bool setPaths = m_header.SearchPaths.IsEmpty();
             long sz;
             dummy.ToLong(&sz);
             for (; sz > 0; sz--)
             {
-                if (ReadParam(ReadTextLine(&f, NULL), _T("#.     "), dummy))
+                if (ReadParam(ReadTextLine(&f), _T("#.     "), dummy))
                 {
                     if (setPaths)
                         m_header.SearchPaths.Add(dummy);
@@ -1041,14 +1026,14 @@ bool Catalog::Load(const wxString& po_file)
             }
         }
 
-        if (ReadParam(ReadTextLine(&f, NULL), _T("#. Keywords: "), dummy))
+        if (ReadParam(ReadTextLine(&f), _T("#. Keywords: "), dummy))
         {
             bool setKeyw = m_header.Keywords.IsEmpty();
             long sz;
             dummy.ToLong(&sz);
             for (; sz > 0; sz--)
             {
-                if (ReadParam(ReadTextLine(&f, NULL), _T("#.     "), dummy))
+                if (ReadParam(ReadTextLine(&f), _T("#.     "), dummy))
                 {
                     if (setKeyw)
                         m_header.Keywords.Add(dummy);
@@ -1121,16 +1106,10 @@ int Catalog::SetBookmark(int id, Bookmark bookmark)
 
 static bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
 {
-    if (s.IsEmpty())
+    if (s.empty())
         return true;
-#if !wxUSE_UNICODE
-    wxString trans(s.wc_str(wxConvUTF8), conv);
-    if (!trans)
-        return false;
-#else
     if (!s.mb_str(conv))
         return false;
-#endif
     return true;
 }
 
@@ -1220,16 +1199,6 @@ static wxString FormatStringForFile(const wxString& text)
         return s;
 }
 
-static inline wxString convertUtf8ToCharset(const wxString& s, wxMBConv *conv)
-{
-#if !wxUSE_UNICODE
-    if (conv)
-        return wxString(s.wc_str(wxConvUTF8), *conv);
-    else
-#endif
-    return s;
-}
-
 bool Catalog::Save(const wxString& po_file, bool save_mo)
 {
     CatalogData *data;
@@ -1293,21 +1262,12 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         f.RemoveLine(j);
 
 
-    wxCSConv *encConv;
-#if wxUSE_UNICODE
-    encConv = new wxCSConv(charset);
-#else
-    if (wxStricmp(charset, _T("utf-8")) != 0)
-        encConv = new wxCSConv(charset);
-    else
-        encConv = NULL;
-#endif
+    wxCSConv encConv(charset);
 
-    SaveMultiLines(f, convertUtf8ToCharset(m_header.Comment, encConv));
+    SaveMultiLines(f, m_header.Comment);
     f.AddLine(_T("msgid \"\""));
     f.AddLine(_T("msgstr \"\""));
-    wxString pohdr = wxString(_T("\"")) +
-               convertUtf8ToCharset(m_header.ToString(_T("\"\n\"")), encConv);
+    wxString pohdr = wxString(_T("\"")) + m_header.ToString(_T("\"\n\""));
     pohdr.RemoveLast();
     SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
@@ -1315,7 +1275,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     for (i = 0; i < m_dataArray.GetCount(); i++)
     {
         data = &(m_dataArray[i]);
-        SaveMultiLines(f, convertUtf8ToCharset(data->GetComment(), encConv));
+        SaveMultiLines(f, data->GetComment());
         for (unsigned i = 0; i < data->GetAutoComments().GetCount(); i++)
         {
             if (data->GetAutoComments()[i].empty())
@@ -1328,31 +1288,24 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         dummy = data->GetFlags();
         if (!dummy.IsEmpty())
             f.AddLine(dummy);
-        dummy = convertUtf8ToCharset(FormatStringForFile(data->GetString()),
-                                     encConv);
+        dummy = FormatStringForFile(data->GetString());
         data->SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
         if (data->HasPlural())
         {
-            dummy = convertUtf8ToCharset(
-                        FormatStringForFile(data->GetPluralString()),
-                        encConv);
+            dummy = FormatStringForFile(data->GetPluralString());
             SaveMultiLines(f, _T("msgid_plural \"") + dummy + _T("\""));
 
             for (size_t i = 0; i < data->GetNumberOfTranslations(); i++)
             {
-                dummy = convertUtf8ToCharset(
-                            FormatStringForFile(data->GetTranslation(i)),
-                            encConv);
+                dummy = FormatStringForFile(data->GetTranslation(i));
                 wxString hdr = wxString::Format(_T("msgstr[%u] \""), i);
                 SaveMultiLines(f, hdr + dummy + _T("\""));
             }
         }
         else
         {
-            dummy = convertUtf8ToCharset(
-                        FormatStringForFile(data->GetTranslation()),
-                        encConv);
+            dummy = FormatStringForFile(data->GetTranslation());
             SaveMultiLines(f, _T("msgstr \"") + dummy + _T("\""));
         }
         f.AddLine(wxEmptyString);
@@ -1362,7 +1315,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     for (i = 0; i < m_deletedItemsArray.GetCount(); i++)
     {
         deletedItem = &(m_deletedItemsArray[i]);
-        SaveMultiLines(f, convertUtf8ToCharset(deletedItem->GetComment(), encConv));
+        SaveMultiLines(f, deletedItem->GetComment());
         for (unsigned i = 0; i < deletedItem->GetAutoComments().GetCount(); i++)
             f.AddLine(_T("#. ") + deletedItem->GetAutoComments()[i]);
         for (unsigned i = 0; i < deletedItem->GetReferences().GetCount(); i++)
@@ -1373,17 +1326,13 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         deletedItem->SetLineNumber(f.GetLineCount()+1);
 
         for (size_t j = 0; j < deletedItem->GetDeletedLines().GetCount(); j++)
-            f.AddLine(convertUtf8ToCharset(deletedItem->GetDeletedLines()[j], encConv));
+            f.AddLine(deletedItem->GetDeletedLines()[j]);
 
         f.AddLine(wxEmptyString);
     }
 
 
-#if wxUSE_UNICODE
-    f.Write(crlf, *encConv);
-#else
-    f.Write(crlf);
-#endif
+    f.Write(crlf, encConv);
     f.Close();
 
     /* poEdit < 1.3.0 used to save additional info in .po.poedit file. It's
@@ -1392,8 +1341,6 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     {
         wxRemoveFile(po_file + _T(".poedit"));
     }
-
-    delete encConv;
 
     /* If the user wants it, compile .mo file right now: */
 

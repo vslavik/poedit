@@ -1,7 +1,7 @@
 /*
  *  This file is part of poEdit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2005 Vaclav Slavik
+ *  Copyright (C) 1999-2007 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
@@ -76,19 +76,6 @@ BEGIN_EVENT_TABLE(poEditListCtrl, wxListCtrl)
    EVT_SIZE(poEditListCtrl::OnSize)
 END_EVENT_TABLE()
 
-
-static inline wxString convertToLocalCharset(const wxString& str)
-{
-#if !wxUSE_UNICODE
-    wxString s2(str.wc_str(wxConvUTF8), wxConvLocal);
-    if (s2.empty())
-        return str;
-    else
-        return s2;
-#else
-    return str;
-#endif
-}
 
 static wxBitmap AddDigit(int digit, int x, int y, const wxBitmap& bmp)
 {
@@ -322,12 +309,12 @@ wxString poEditListCtrl::OnGetItemText(long item, long column) const
     {
         case 0:
         {
-            wxString orig = convertToLocalCharset(d.GetString());
+            wxString orig = d.GetString();
             return orig.substr(0,GetMaxColChars());
         }
         case 1:
         {
-            wxString trans = convertToLocalCharset(d.GetTranslation());
+            wxString trans = d.GetTranslation();
             return trans;
         }
         case 2:
