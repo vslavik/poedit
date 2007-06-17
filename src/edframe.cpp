@@ -300,9 +300,9 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU           (wxID_ABOUT,                poEditFrame::OnAbout)
    EVT_MENU           (XRCID("menu_new"),         poEditFrame::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),poEditFrame::OnNew)
-   EVT_MENU           (XRCID("menu_open"),        poEditFrame::OnOpen)
-   EVT_MENU           (XRCID("menu_save"),        poEditFrame::OnSave)
-   EVT_MENU           (XRCID("menu_saveas"),      poEditFrame::OnSaveAs)
+   EVT_MENU           (wxID_OPEN,                 poEditFrame::OnOpen)
+   EVT_MENU           (wxID_SAVE,                 poEditFrame::OnSave)
+   EVT_MENU           (wxID_SAVEAS,               poEditFrame::OnSaveAs)
    EVT_MENU           (XRCID("menu_export"),      poEditFrame::OnExport)
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    poEditFrame::OnOpenHist)
    EVT_MENU           (XRCID("menu_catsettings"), poEditFrame::OnSettings)
@@ -1817,10 +1817,10 @@ void poEditFrame::UpdateMenu()
 
     if (m_catalog == NULL)
     {
-        menubar->Enable(XRCID("menu_save"), false);
-        menubar->Enable(XRCID("menu_saveas"), false);
+        menubar->Enable(wxID_SAVE, false);
+        menubar->Enable(wxID_SAVEAS, false);
         menubar->Enable(XRCID("menu_export"), false);
-        toolbar->EnableTool(XRCID("menu_save"), false);
+        toolbar->EnableTool(wxID_SAVE, false);
         toolbar->EnableTool(XRCID("menu_update"), false);
         toolbar->EnableTool(XRCID("menu_fuzzy"), false);
         toolbar->EnableTool(XRCID("menu_comment"), false);
@@ -1835,10 +1835,10 @@ void poEditFrame::UpdateMenu()
     }
     else
     {
-        menubar->Enable(XRCID("menu_save"), true);
-        menubar->Enable(XRCID("menu_saveas"), true);
+        menubar->Enable(wxID_SAVE, true);
+        menubar->Enable(wxID_SAVEAS, true);
         menubar->Enable(XRCID("menu_export"), true);
-        toolbar->EnableTool(XRCID("menu_save"), true);
+        toolbar->EnableTool(wxID_SAVE, true);
         toolbar->EnableTool(XRCID("menu_fuzzy"), true);
         toolbar->EnableTool(XRCID("menu_comment"), true);
         menubar->EnableTop(1, true);
