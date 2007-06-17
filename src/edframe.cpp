@@ -358,6 +358,7 @@ poEditFrame::poEditFrame() :
     m_transMem(NULL),
     m_transMemLoaded(false),
 #endif
+    m_helpInitialized(false),
     m_list(NULL),
     m_modified(false),
     m_hasObsoleteItems(false),
@@ -542,9 +543,6 @@ poEditFrame::poEditFrame() :
     UpdateMenu();
     UpdateDisplayCommentWin();
 
-    m_helpBook = LoadHelpBook(_T("poedit"));
-    m_helpBookGettext = LoadHelpBook(_T("gettext/gettext"));
-
     ms_instances.Append(this);
 
 #ifdef __WXMSW__
@@ -614,6 +612,16 @@ poEditFrame::~poEditFrame()
 
     // shutdown the spellchecker:
     InitSpellchecker();
+}
+
+void poEditFrame::InitHelp()
+{
+    if ( !m_helpInitialized )
+    {
+        m_helpBook = LoadHelpBook(_T("poedit"));
+        m_helpBookGettext = LoadHelpBook(_T("gettext/gettext"));
+        m_helpInitialized = true;
+    }
 }
 
 wxString poEditFrame::LoadHelpBook(const wxString& name)
@@ -2093,6 +2101,7 @@ void poEditFrame::OnAbout(wxCommandEvent&)
 
 void poEditFrame::OnHelp(wxCommandEvent&)
 {
+    InitHelp();
 #ifdef __WXMSW__
     m_help.LoadFile(m_helpBook);
 #endif
@@ -2101,6 +2110,7 @@ void poEditFrame::OnHelp(wxCommandEvent&)
 
 void poEditFrame::OnHelpGettext(wxCommandEvent&)
 {
+    InitHelp();
 #ifdef __WXMSW__
     m_help.LoadFile(m_helpBookGettext);
     m_help.DisplayContents();

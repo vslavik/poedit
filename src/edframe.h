@@ -220,6 +220,7 @@ class poEditFrame : public wxFrame
 
         void RecreatePluralTextCtrls();
 
+        void InitHelp();
         wxString LoadHelpBook(const wxString& name);
 
         DECLARE_EVENT_TABLE()
@@ -247,6 +248,7 @@ class poEditFrame : public wxFrame
         wxArrayString m_autoTranslations;
 #endif
 
+        bool m_helpInitialized;
 #ifdef __WXMSW__
         wxCHMHelpController m_help;
 #else
