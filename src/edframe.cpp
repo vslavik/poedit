@@ -1854,6 +1854,13 @@ void poEditFrame::UpdateMenu()
         menubar->Enable(XRCID("menu_update"), doupdate);
         menubar->Enable(XRCID("menu_purge_deleted"),
                              m_catalog->HasDeletedItems());
+
+#ifdef __WXGTK__
+        // work around a wxGTK bug: enabling wxTextCtrl makes it editable too
+        // in wxGTK <= 2.8:
+        m_textOrig->SetEditable(false);
+        m_textOrigPlural->SetEditable(false);
+#endif
     }
 
     menubar->EnableTop(4, m_catalog != NULL);
