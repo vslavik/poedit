@@ -24,7 +24,6 @@ poediticons_DATA = \
 		edit-delete.png \
 		document-properties.png \
 		document-new.png \
-		poedit-quotes.png \
 		poedit-status-automatic.png \
 		poedit-status-cat-mid.png \
 		poedit-status-cat-no.png \
