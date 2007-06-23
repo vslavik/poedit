@@ -293,7 +293,9 @@ BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_shaded"),      poEditFrame::OnShadedListFlag)
    EVT_MENU           (XRCID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
    EVT_MENU           (XRCID("menu_references"),  poEditFrame::OnReferencesMenu)
+#ifndef __WXMAC__
    EVT_MENU           (XRCID("menu_fullscreen"),  poEditFrame::OnFullscreen)
+#endif
    EVT_MENU           (XRCID("menu_find"),        poEditFrame::OnFind)
    EVT_MENU           (XRCID("menu_comment"),     poEditFrame::OnEditComment)
    EVT_MENU           (XRCID("menu_manager"),     poEditFrame::OnManager)
@@ -1397,6 +1399,7 @@ void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
 
 
 
+#ifndef __WXMAC__
 void poEditFrame::OnFullscreen(wxCommandEvent& event)
 {
     bool fs = IsFullScreen();
@@ -1419,6 +1422,7 @@ void poEditFrame::OnFullscreen(wxCommandEvent& event)
 
     ShowFullScreen(!fs, wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION);
 }
+#endif // !__WXMAC__
 
 
 
