@@ -93,9 +93,12 @@
     </object>
     <object class="wxMenu" name="menu_view">
       <label>_View</label>
-      <object class="wxMenuItem" name="menu_fullscreen">
-        <label platform="win">_Fullscreen view</label>
-        <label platform="unix">_Fullscreen view</label>
+      <object class="wxMenuItem" name="menu_fullscreen" platform="win">
+        <label>_Fullscreen view</label>
+        <checkable>1</checkable>
+      </object>
+      <object class="wxMenuItem" name="menu_fullscreen" platform="unix">
+        <label>_Fullscreen view</label>
         <checkable>1</checkable>
       </object>
       <object class="wxMenuItem" name="menu_quotes">

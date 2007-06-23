@@ -34,7 +34,12 @@
       <tooltip>Edit comment</tooltip>
     </object>
     <object class="separator"/>
-    <object class="tool" name="menu_fullscreen">
+    <object class="tool" name="menu_fullscreen" platform="win">
+      <bitmap stock_id="view-fullscreen"/>
+      <tooltip>Fullscreen view</tooltip>
+      <toggle>1</toggle>
+    </object>
+    <object class="tool" name="menu_fullscreen" platform="unix">
       <bitmap stock_id="view-fullscreen"/>
       <tooltip>Fullscreen view</tooltip>
       <toggle>1</toggle>
