@@ -156,11 +156,20 @@ class TextctrlHandler : public wxEvtHandler
         {
             int keyCode = event.GetKeyCode();
 
+            if (!event.ControlDown())
+            {
+                event.Skip();
+                return;
+            }
+
             switch (keyCode)
             {
                 case WXK_UP:
-                    if ((*m_sel > 0) && event.ControlDown())
+                    if ((*m_sel > 0))
                     {
+#ifdef __WXMAC__
+                        m_list->SetItemState(*m_sel, 0, wxLIST_STATE_SELECTED);
+#endif
                         m_list->EnsureVisible(*m_sel - 1);
                         m_list->SetItemState(*m_sel - 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                     }
@@ -168,8 +177,11 @@ class TextctrlHandler : public wxEvtHandler
                         event.Skip();
                     break;
                 case WXK_DOWN:
-                    if ((*m_sel < m_list->GetItemCount() - 1) && event.ControlDown())
+                    if ((*m_sel < m_list->GetItemCount() - 1))
                     {
+#ifdef __WXMAC__
+                        m_list->SetItemState(*m_sel, 0, wxLIST_STATE_SELECTED);
+#endif
                         m_list->EnsureVisible(*m_sel + 1);
                         m_list->SetItemState(*m_sel + 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                     }
@@ -177,28 +189,28 @@ class TextctrlHandler : public wxEvtHandler
                         event.Skip();
                     break;
                 case WXK_PAGEUP:
-                    if (event.ControlDown())
-                    {
-                        int newy = *m_sel - 10;
-                        if (newy < 0) newy = 0;
-                        m_list->EnsureVisible(newy);
-                        m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                    }
-                    else
-                        event.Skip();
+                {
+#ifdef __WXMAC__
+                    m_list->SetItemState(*m_sel, 0, wxLIST_STATE_SELECTED);
+#endif
+                    int newy = *m_sel - 10;
+                    if (newy < 0) newy = 0;
+                    m_list->EnsureVisible(newy);
+                    m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                     break;
+                }
                 case WXK_PAGEDOWN:
-                    if (event.ControlDown())
-                    {
-                        int newy = *m_sel + 10;
-                        if (newy >= m_list->GetItemCount())
-                            newy = m_list->GetItemCount() - 1;
-                        m_list->EnsureVisible(newy);
-                        m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                    }
-                    else
-                        event.Skip();
+                {
+#ifdef __WXMAC__
+                    m_list->SetItemState(*m_sel, 0, wxLIST_STATE_SELECTED);
+#endif
+                    int newy = *m_sel + 10;
+                    if (newy >= m_list->GetItemCount())
+                        newy = m_list->GetItemCount() - 1;
+                    m_list->EnsureVisible(newy);
+                    m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                     break;
+                }
                 default:
                     event.Skip();
             }
@@ -504,8 +516,6 @@ poEditFrame::poEditFrame() :
     m_textTrans->PushEventHandler(new TextctrlHandler(this));
     m_textComment->PushEventHandler(new TextctrlHandler(this));
 
-    m_list->SetFocus();
-
     CreateStatusBar(1, wxST_SIZEGRIP);
 
     ShowPluralFormUI(false);
@@ -518,6 +528,11 @@ poEditFrame::poEditFrame() :
 #ifdef __WXMSW__
     DragAcceptFiles(true);
 #endif
+
+    if (gs_focusToText)
+        m_textTrans->SetFocus();
+    else
+        m_list->SetFocus();
 }
 
 
