@@ -1148,6 +1148,8 @@ void poEditFrame::UpdateCatalog(const wxString& pot_file)
 
 void poEditFrame::OnUpdate(wxCommandEvent& event)
 {
+    UpdateFromTextCtrl();
+
     wxString pot_file;
 
     if (event.GetId() == XRCID("menu_update_from_pot"))
@@ -1344,6 +1346,7 @@ void poEditFrame::OnQuotesFlag(wxCommandEvent& event)
 
 void poEditFrame::OnLinesFlag(wxCommandEvent& event)
 {
+    UpdateFromTextCtrl();
     m_displayLines = GetMenuBar()->IsChecked(XRCID("menu_lines"));
     m_list->SetDisplayLines(m_displayLines);
     RefreshControls();
@@ -1353,17 +1356,20 @@ void poEditFrame::OnLinesFlag(wxCommandEvent& event)
 
 void poEditFrame::OnCommentWinFlag(wxCommandEvent& event)
 {
+    UpdateFromTextCtrl();
     UpdateDisplayCommentWin();
 }
 
 void poEditFrame::OnAutoCommentsWinFlag(wxCommandEvent& event)
 {
+    UpdateFromTextCtrl();
     UpdateDisplayCommentWin();
 }
 
 
 void poEditFrame::OnShadedListFlag(wxCommandEvent& event)
 {
+    UpdateFromTextCtrl();
     gs_shadedList = GetMenuBar()->IsChecked(XRCID("menu_shaded"));
     RefreshControls();
 }
