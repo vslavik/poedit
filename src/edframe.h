@@ -264,7 +264,6 @@ class poEditFrame : public wxFrame
         std::vector<wxTextCtrl*> m_textTransPlural;
         wxTextCtrl *m_textTransSingularForm;
         wxNotebook *m_pluralNotebook;
-        wxGauge *m_statusGauge;
         wxStaticText *m_labelSingular, *m_labelPlural;
 #ifdef CAN_MODIFY_DEFAULT_FONT
         wxFont m_boldGuiFont;

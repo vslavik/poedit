@@ -251,31 +251,6 @@ BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
    EVT_KEY_DOWN            (          ListHandler::OnKeyDown)
 END_EVENT_TABLE()
 
-class StatusbarHandler : public wxEvtHandler
-{
-    public:
-        StatusbarHandler(wxStatusBar *bar, wxGauge *gauge) :
-                 m_bar(bar), m_gauge(gauge) {}
-
-    private:
-        void OnSize(wxSizeEvent& event)
-        {
-            wxRect rect;
-            m_bar->GetFieldRect(1, rect);
-            m_gauge->SetSize(rect.x+2, rect.y+2, rect.width-4, rect.height-4);
-            event.Skip();
-        }
-
-        DECLARE_EVENT_TABLE()
-
-        wxStatusBar *m_bar;
-        wxGauge     *m_gauge;
-};
-
-BEGIN_EVENT_TABLE(StatusbarHandler, wxEvtHandler)
-   EVT_SIZE(StatusbarHandler::OnSize)
-END_EVENT_TABLE()
-
 
 class UnfocusableTextCtrl : public wxTextCtrl
 {
@@ -529,15 +504,7 @@ poEditFrame::poEditFrame() :
 
     m_list->SetFocus();
 
-    int widths[] = {-1, 200};
-    CreateStatusBar(2, wxST_SIZEGRIP);
-    wxStatusBar *bar = GetStatusBar();
-    m_statusGauge = new wxGauge(bar, -1, 100, wxDefaultPosition, wxDefaultSize, wxGA_SMOOTH);
-    bar->SetStatusWidths(2, widths);
-    bar->PushEventHandler(new StatusbarHandler(bar, m_statusGauge));
-#ifdef __WXMSW__
-    bar->SetSize(-1,-1,-1,-1);
-#endif
+    CreateStatusBar(1, wxST_SIZEGRIP);
 
     ShowPluralFormUI(false);
 
@@ -562,7 +529,6 @@ poEditFrame::~poEditFrame()
 
     ms_instances.DeleteObject(this);
 
-    GetStatusBar()->PopEventHandler(true/*delete*/);
     m_textTrans->PopEventHandler(true/*delete*/);
     m_list->PopEventHandler(true/*delete*/);
 
@@ -1780,6 +1746,13 @@ void poEditFrame::UpdateStatusBar()
 
         txt.Printf(_("%i strings (%i fuzzy, %i bad tokens, %i not translated)"),
                    all, fuzzy, badtokens, untranslated);
+        // FIXME - add percentage to the status bar string
+#if 0
+        if (all > 0)
+            m_statusGauge->SetValue(100 * (all-fuzzy-badtokens-untranslated) / all);
+        else
+            m_statusGauge->SetValue(0);
+#endif
 
 #if USE_GETTEXT_VALIDATION
         if (!m_itemsToValidate.empty())
@@ -1793,10 +1766,6 @@ void poEditFrame::UpdateStatusBar()
 #endif
 
         GetStatusBar()->SetStatusText(txt);
-        if (all > 0)
-            m_statusGauge->SetValue(100 * (all-fuzzy-badtokens-untranslated) / all);
-        else
-            m_statusGauge->SetValue(0);
     }
 }
 
