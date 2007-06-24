@@ -32,27 +32,33 @@
     </object>
   </object>
   <object class="wxToolBar" name="manager_toolbar">
+    <style platform="mac">wxTB_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
+    <style platform="win">wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
+    <style platform="unix">wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
     <margins platform="win">2,2</margins>
     <bitmapsize platform="win">22,22</bitmapsize>
     <bitmapsize platform="mac">32,32</bitmapsize>
     <object class="tool" name="prj_new">
       <bitmap stock_id="document-new"/>
+      <label>New</label>
       <tooltip>Create new translations project</tooltip>
     </object>
     <object class="tool" name="prj_edit">
       <bitmap stock_id="document-properties"/>
+      <label>Edit</label>
       <tooltip>Edit the project</tooltip>
     </object>
     <object class="tool" name="prj_delete">
       <bitmap stock_id="edit-delete"/>
+      <label>Delete</label>
       <tooltip>Delete the project</tooltip>
     </object>
     <object class="separator"/>
     <object class="tool" name="prj_update">
       <bitmap stock_id="poedit-update"/>
+      <label>Update all</label>
       <tooltip>Update all catalogs in the project</tooltip>
     </object>
-    <style>wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
   </object>
   <object class="wxDialog" name="manager_prj_dlg">
     <title>Edit project</title>
