@@ -334,10 +334,7 @@ END_EVENT_TABLE()
 // Frame class:
 
 poEditFrame::poEditFrame() :
-    wxFrame(NULL, -1, _("poEdit"), wxDefaultPosition,
-                             wxSize(
-                                 wxConfig::Get()->Read(_T("frame_w"), 600),
-                                 wxConfig::Get()->Read(_T("frame_h"), 400)),
+    wxFrame(NULL, -1, _("poEdit"), wxDefaultPosition, wxDefaultSize,
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
 #if USE_GETTEXT_VALIDATION
     m_itemBeingValidated(-1), m_gettextProcess(NULL),
@@ -368,18 +365,6 @@ poEditFrame::poEditFrame() :
 #endif
 
     wxConfigBase *cfg = wxConfig::Get();
-
-    // VS: a dirty hack of sort -- if this is the only poEdit frame opened,
-    //     place it at remembered position, but don't do that if there already
-    //     are other frames, because they would overlap and nobody could
-    //     recognize that there are many of them
-    if (ms_instances.GetCount() == 0)
-        Move(cfg->Read(_T("frame_x"), -1), cfg->Read(_T("frame_y"), -1));
-#if !defined(__WXGTK12__) || defined(__WXGTK20__)
-    // GTK+ 1.2 doesn't support this
-    if (cfg->Read(_T("frame_maximized"), long(0)))
-        Maximize();
-#endif
 
     m_displayQuotes = (bool)cfg->Read(_T("display_quotes"), (long)false);
     m_displayLines = (bool)cfg->Read(_T("display_lines"), (long)false);
@@ -533,6 +518,25 @@ poEditFrame::poEditFrame() :
         m_textTrans->SetFocus();
     else
         m_list->SetFocus();
+
+
+    // NB: setting the position & size has to be the last thing done, otherwise
+    //     it's not done correctly on wxMac:
+    int posx = cfg->Read(_T("frame_x"), -1);
+    int posy = cfg->Read(_T("frame_y"), -1);
+    int width = cfg->Read(_T("frame_w"), 600);
+    int height = cfg->Read(_T("frame_h"), 400);
+
+    // NB: if this is the only poEdit frame opened, place it at remembered
+    //     position, but don't do that if there already are other frames,
+    //     because they would overlap and nobody could recognize that there are
+    //     many of them
+    if (ms_instances.GetCount() == 1)
+        SetSize(posx, posy, width, height);
+    else
+        SetSize(-1, -1, width, height);
+    if (cfg->Read(_T("frame_maximized"), long(0)))
+        Maximize();
 }
 
 
@@ -549,9 +553,6 @@ poEditFrame::~poEditFrame()
     m_textTrans->PopEventHandler(true/*delete*/);
     m_list->PopEventHandler(true/*delete*/);
 
-    wxSize sz = GetSize();
-    wxPoint pos = GetPosition();
-
     wxConfigBase *cfg = wxConfig::Get();
     cfg->SetPath(_T("/"));
 
@@ -559,6 +560,9 @@ poEditFrame::~poEditFrame()
     {
         if (!IsMaximized())
         {
+            wxPoint pos = GetPosition();
+            wxSize sz = GetSize();
+
             cfg->Write(_T("frame_w"), (long)sz.x);
             cfg->Write(_T("frame_h"), (long)sz.y);
             cfg->Write(_T("frame_x"), (long)pos.x);
