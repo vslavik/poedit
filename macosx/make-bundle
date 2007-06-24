@@ -21,7 +21,7 @@ mkdir -p $bundle/Contents/Resources
 cp poedit $bundle/Contents/MacOS/poedit
 $rez $bundle/Contents/MacOS/poedit
 
-if [ -n "GETTEXT_BINARIES" ] ; then
+if [ -n "$GETTEXT_BINARIES" ] ; then
     for f in msgfmt msgmerge msgunfmt xgettext ; do
         cp -pPf $GETTEXT_BINARIES/$f $bundle/Contents/MacOS
     done
