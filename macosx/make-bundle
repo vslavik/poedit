@@ -47,7 +47,7 @@ strip $bundle/Contents/MacOS/*
 
 # metadata:
 cp $top_builddir/macosx/Info.plist $bundle/Contents
-cp $top_srcdir/macosx/poedit.icns $bundle/Contents/Resources
+cp $top_srcdir/macosx/*.icns $bundle/Contents/Resources
 
 # gettext catalogs:
 for i in $top_srcdir/locales/*.mo ; do
