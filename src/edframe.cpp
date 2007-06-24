@@ -420,6 +420,27 @@ poEditFrame::poEditFrame() :
     GetMenuBar()->Check(XRCID("menu_auto_comments_win"), m_displayAutoCommentsWin);
     GetMenuBar()->Check(XRCID("menu_shaded"), gs_shadedList);
 
+    CreateStatusBar(1, wxST_SIZEGRIP);
+
+    // NB: setting the position & size has to be the last thing done, otherwise
+    //     it's not done correctly on wxMac:
+    int posx = cfg->Read(_T("frame_x"), -1);
+    int posy = cfg->Read(_T("frame_y"), -1);
+    int width = cfg->Read(_T("frame_w"), 600);
+    int height = cfg->Read(_T("frame_h"), 400);
+
+    // NB: if this is the only poEdit frame opened, place it at remembered
+    //     position, but don't do that if there already are other frames,
+    //     because they would overlap and nobody could recognize that there are
+    //     many of them
+    if (ms_instances.GetCount() == 0)
+        SetSize(posx, posy, width, height);
+    else
+        SetSize(-1, -1, width, height);
+    if (cfg->Read(_T("frame_maximized"), long(0)))
+        Maximize();
+
+
     m_splitter = new wxSplitterWindow(this, -1,
                                       wxDefaultPosition, wxDefaultSize,
                                       SPLITTER_FLAGS);
@@ -504,8 +525,6 @@ poEditFrame::poEditFrame() :
     m_textTrans->PushEventHandler(new TextctrlHandler(this));
     m_textComment->PushEventHandler(new TextctrlHandler(this));
 
-    CreateStatusBar(1, wxST_SIZEGRIP);
-
     ShowPluralFormUI(false);
 
     UpdateMenu();
@@ -521,25 +540,6 @@ poEditFrame::poEditFrame() :
         m_textTrans->SetFocus();
     else
         m_list->SetFocus();
-
-
-    // NB: setting the position & size has to be the last thing done, otherwise
-    //     it's not done correctly on wxMac:
-    int posx = cfg->Read(_T("frame_x"), -1);
-    int posy = cfg->Read(_T("frame_y"), -1);
-    int width = cfg->Read(_T("frame_w"), 600);
-    int height = cfg->Read(_T("frame_h"), 400);
-
-    // NB: if this is the only poEdit frame opened, place it at remembered
-    //     position, but don't do that if there already are other frames,
-    //     because they would overlap and nobody could recognize that there are
-    //     many of them
-    if (ms_instances.GetCount() == 1)
-        SetSize(posx, posy, width, height);
-    else
-        SetSize(-1, -1, width, height);
-    if (cfg->Read(_T("frame_maximized"), long(0)))
-        Maximize();
 }
 
 
