@@ -72,6 +72,11 @@ SettingsDialog::SettingsDialog(wxWindow *parent)
     wxXmlResource::Get()->AttachUnknownControl(_T("keywords"), m_keywords);
     m_paths = new wxEditableListBox(this, -1, _("Paths"));
     wxXmlResource::Get()->AttachUnknownControl(_T("paths"), m_paths);
+
+#if defined(__WXMSW__) || defined(__WXMAC__)
+    // FIXME
+    SetSize(GetSize().x+1,GetSize().y+1);
+#endif
 }
 
 

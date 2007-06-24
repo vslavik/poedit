@@ -88,6 +88,11 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
     // remove (defunct on Unix) "Change UI language" button:
     XRCCTRL(*this, "ui_language", wxButton)->Show(false);
 #endif
+
+#if defined(__WXMSW__) || defined(__WXMAC__)
+    // FIXME
+    SetSize(GetSize().x+1,GetSize().y+1);
+#endif
 }
 
 
