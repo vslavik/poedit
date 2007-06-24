@@ -358,10 +358,13 @@ poEditFrame::poEditFrame() :
                   _T("detected ID values conflict!") );
     wxRegisterId(ID_POEDIT_LAST);
 
-#ifdef __WXMSW__
-    const int SPLITTER_BORDER = wxSP_NOBORDER;
+#if defined(__WXMSW__)
+    const int SPLITTER_FLAGS = wxSP_NOBORDER;
+#elif defined(__WXMAC__)
+    // wxMac doesn't show XORed line:
+    const int SPLITTER_FLAGS = wxSP_LIVE_UPDATE;
 #else
-    const int SPLITTER_BORDER = wxSP_3DBORDER;
+    const int SPLITTER_FLAGS = wxSP_3DBORDER;
 #endif
 
     wxConfigBase *cfg = wxConfig::Get();
@@ -419,7 +422,7 @@ poEditFrame::poEditFrame() :
 
     m_splitter = new wxSplitterWindow(this, -1,
                                       wxDefaultPosition, wxDefaultSize,
-                                      SPLITTER_BORDER);
+                                      SPLITTER_FLAGS);
 
     m_list = new poEditListCtrl(m_splitter,
                                 ID_LIST,
@@ -429,7 +432,7 @@ poEditFrame::poEditFrame() :
 
     m_bottomSplitter = new wxSplitterWindow(m_splitter, -1,
                                             wxDefaultPosition, wxDefaultSize,
-                                            SPLITTER_BORDER);
+                                            SPLITTER_FLAGS);
     m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
     m_bottomRightPanel = new wxPanel(m_bottomSplitter);
 
