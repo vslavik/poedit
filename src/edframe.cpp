@@ -838,7 +838,7 @@ void poEditFrame::OnOpen(wxCommandEvent&)
 
     wxString name = wxFileSelector(_("Open catalog"),
                     path, wxEmptyString, wxEmptyString,
-                    _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"),
+                    _("GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
                     wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
     if (!name.empty())
     {
@@ -957,7 +957,7 @@ wxString poEditFrame::GetSaveAsFilename(Catalog *cat, const wxString& current)
     }
 
     name = wxFileSelector(_("Save as..."), path, name, wxEmptyString,
-                          _("GNU GetText catalogs (*.po)|*.po|All files (*.*)|*.*"),
+                          _("GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
     if (!name.empty())
     {
@@ -1050,7 +1050,7 @@ void poEditFrame::OnNew(wxCommandEvent& event)
         wxString pot_file =
             wxFileSelector(_("Open catalog template"),
                  path, wxEmptyString, wxEmptyString,
-                 _("GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"),
+                 _("GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
                  wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
         bool ok = false;
         if (!pot_file.empty())
@@ -1184,7 +1184,7 @@ void poEditFrame::OnUpdate(wxCommandEvent& event)
         pot_file =
             wxFileSelector(_("Open catalog template"),
                  path, wxEmptyString, wxEmptyString,
-                 _("GNU GetText templates (*.pot)|*.pot|All files (*.*)|*.*"),
+                 _("GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
                  wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
         if (pot_file.empty())
             return;
