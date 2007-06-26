@@ -133,7 +133,7 @@ FileViewer::~FileViewer()
     cfg->Write(_T("fileviewer/frame_y"), (long)pos.y);
 }
 
-/*static*/ void FileViewer::OpenInEditor(const wxString& basepath, 
+/*static*/ void FileViewer::OpenInEditor(const wxString& basepath,
                                          const wxString& reference)
 {
     wxString editor = wxConfig::Get()->Read(_T("ext_editor"), wxEmptyString);
@@ -144,8 +144,10 @@ FileViewer::~FileViewer()
     }
     wxFileName fn(reference.BeforeLast(_T(':')));
     fn.MakeAbsolute(basepath);
-    editor.Replace(_T("%f"), fn.GetFullPath());
-    editor.Replace(_T("%l"), reference.AfterLast(_T(':')));
+    editor.Replace(_T("%f"),
+                   wxString::Format(_T("\"%s\""), fn.GetFullPath().c_str()));
+    editor.Replace(_T("%l"),
+                   reference.AfterLast(_T(':')));
     wxExecute(editor);
 }
 
