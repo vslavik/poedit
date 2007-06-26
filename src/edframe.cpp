@@ -1120,6 +1120,7 @@ void poEditFrame::OnSettings(wxCommandEvent&)
     {
         dlg.TransferFrom(m_catalog);
         m_modified = true;
+        UpdateFromTextCtrl();
         RecreatePluralTextCtrls();
         UpdateTitle();
         UpdateMenu();
