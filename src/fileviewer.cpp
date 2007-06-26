@@ -102,12 +102,14 @@ void FileViewer::ShowReference(const wxString& ref)
     m_list->InsertColumn(0, _T("#"), wxLIST_FORMAT_RIGHT);
     m_list->InsertColumn(1, _("Line"));
 
-    wxString linestr;
     for (int i = top; i < bottom; i++)
     {
-        linestr.Printf(_T("%i  "), i);
-        m_list->InsertItem(i - top, linestr);
-        m_list->SetItem(i - top, 1, textf[i-1]);
+        wxString linenum(wxString::Format(_T("%i  "), i));
+        wxString linetxt = textf[i-1];
+        // FIXME: this is not correct
+        linetxt.Replace(_T("\t"), _T("    "));
+        m_list->InsertItem(i - top, linenum);
+        m_list->SetItem(i - top, 1, linetxt);
     }
 
     m_list->SetColumnWidth(0, wxLIST_AUTOSIZE);
