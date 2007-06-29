@@ -1150,6 +1150,8 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
 
 void poEditFrame::UpdateCatalog(const wxString& pot_file)
 {
+    wxBusyCursor bcur;
+
     CancelItemsValidation();
 
     UpdateFromTextCtrl();
@@ -1655,6 +1657,8 @@ void poEditFrame::UpdateToTextCtrl(int item)
 
 void poEditFrame::ReadCatalog(const wxString& catalog)
 {
+    wxBusyCursor bcur;
+
     CancelItemsValidation();
 
     Catalog *cat = new Catalog(catalog);
@@ -1985,6 +1989,8 @@ void poEditFrame::OnAutoTranslateAll(wxCommandEvent& event)
 
 bool poEditFrame::AutoTranslateCatalog()
 {
+    wxBusyCursor bcur;
+
     TranslationMemory *tm = GetTransMem();
 
     if (tm == NULL)
