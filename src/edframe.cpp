@@ -2049,9 +2049,8 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
 #else
     menu->Append(ID_POPUP_DUMMY+0, _("References:"));
 #endif
-    menu->AppendSeparator();
     for (size_t i = 0; i < refs.GetCount(); i++)
-        menu->Append(ID_POPUP_REFS + i, _T("   ") + refs[i]);
+        menu->Append(ID_POPUP_REFS + i, _T("    ") + refs[i]);
 
 #ifdef USE_TRANSMEM
     if (GetTransMem())
@@ -2065,7 +2064,6 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
 #else
         menu->Append(ID_POPUP_DUMMY+1, _("Automatic translations:"));
 #endif
-        menu->AppendSeparator();
 
         wxBusyCursor bcur;
         CatalogData& dt = (*m_catalog)[item];
@@ -2078,7 +2076,7 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
                 wxString s(m_autoTranslations[i].wc_str(wxConvUTF8), wxConvLocal);
                 if (!s)
                     s = m_autoTranslations[i];
-                menu->Append(ID_POPUP_TRANS + i, _T("   ") + s);
+                menu->Append(ID_POPUP_TRANS + i, _T("    ") + s);
             }
         }
         else
