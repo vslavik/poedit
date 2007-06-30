@@ -27,17 +27,13 @@ find_unix_files()
     grep -v '/\.svn' | \
     grep -v '/\.bakefile_gen.state' | \
     grep -v '\.#' | \
-    grep -v '\.\(dsp\|dsw\|chm\|rtf\|iss\|ico\|ncb\|opt\|plg\|rc\)' | \
+    grep -v '\.\(dsp\|dsw\|chm\|rtf\|ncb\|opt\|plg\)' | \
     grep -v 'install/.*\.txt'
 }
 
 find_win32_files()
 {
-  echo \
-"docs/chm/*.chm
-src/icons/appicon/poedit.ico"
-ls -1 install/*.iss
-ls -1 src/*.rc
+  echo "docs/chm/*.chm"
 }
 
 
