@@ -205,10 +205,17 @@ bool ExecuteGettext(const wxString& cmdline_, wxString *stderrOutput)
 }
 
 
-wxProcess *ExecuteGettextNonblocking(const wxString& cmdline,
+wxProcess *ExecuteGettextNonblocking(const wxString& cmdline_,
                                      GettextProcessData *data,
                                      wxEvtHandler *parent)
 {
+    wxString cmdline(cmdline_);
+
+#ifdef __WXMAC__
+    wxString binary = cmdline.BeforeFirst(_T(' '));
+    cmdline = MacGetPathToBinary(binary) + cmdline.Mid(binary.length());
+#endif // __WXMAC__
+
     wxLogTrace(_T("poedit.execute"), _T("executing '%s'"), cmdline.c_str());
 
     TempLocaleSwitcher localeSwitcher(_T("C"));
