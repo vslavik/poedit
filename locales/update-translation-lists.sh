@@ -45,8 +45,8 @@ update_makefile_am()
 
 update_poedit_iss()
 {
-    f_dirs=../install/poedit-locale-dirs.iss
-    f_files=../install/poedit-locale-files.iss
+    f_dirs=../win32/poedit-locale-dirs.iss
+    f_files=../win32/poedit-locale-files.iss
    
     echo updating $f_dirs...
     rm -f $f_dirs
