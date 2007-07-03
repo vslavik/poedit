@@ -1781,15 +1781,10 @@ void poEditFrame::UpdateStatusBar()
 
         m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
 
-        txt.Printf(_("%i strings (%i fuzzy, %i bad tokens, %i not translated)"),
-                   all, fuzzy, badtokens, untranslated);
-        // FIXME - add percentage to the status bar string
-#if 0
-        if (all > 0)
-            m_statusGauge->SetValue(100 * (all-fuzzy-badtokens-untranslated) / all);
-        else
-            m_statusGauge->SetValue(0);
-#endif
+        int percent = (all == 0 ) ? 0 :
+                      (100 * (all-fuzzy-badtokens-untranslated) / all);
+        txt.Printf(_("%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"),
+                   percent, all, fuzzy, badtokens, untranslated);
 
 #if USE_GETTEXT_VALIDATION
         if (!m_itemsToValidate.empty())
