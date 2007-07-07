@@ -80,11 +80,16 @@ BEGIN_EVENT_TABLE(CleverListCtrl, wxListCtrl)
    EVT_SIZE(CleverListCtrl::OnSize)
 END_EVENT_TABLE()
 
+// XPM hack: make the arrays const
+#define static static const
+
 #include "eldel.xpm"
 #include "eldown.xpm"
 #include "eledit.xpm"
 #include "elnew.xpm"
 #include "elup.xpm"
+
+#undef static
 
 IMPLEMENT_CLASS(wxEditableListBox, wxPanel)
 
