@@ -134,18 +134,6 @@ bool poEditApp::OnInit()
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
     wxConfigBase::Get()->SetExpandEnvVars(false);
 
-#ifdef __WXMAC__
-    wxLocale::AddCatalogLookupPathPrefix(
-        wxStandardPaths::Get().GetResourcesDir() + _T("/locale"));
-#else
-    wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
-#endif
-
-    m_locale.Init(GetUILanguage());
-    
-    m_locale.AddCatalog(_T("poedit"));
-    m_locale.AddCatalog(_T("poedit-wxstd")); // for semistatic builds
-
     wxImage::AddHandler(new wxGIFHandler);
     wxImage::AddHandler(new wxPNGHandler);
     wxXmlResource::Get()->InitAllHandlers();
@@ -158,6 +146,18 @@ bool poEditApp::OnInit()
 #else
     wxArtProvider::PushProvider(new PoeditArtProvider);
 #endif
+
+#ifdef __WXMAC__
+    wxLocale::AddCatalogLookupPathPrefix(
+        wxStandardPaths::Get().GetResourcesDir() + _T("/locale"));
+#else
+    wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
+#endif
+
+    m_locale.Init(GetUILanguage());
+    
+    m_locale.AddCatalog(_T("poedit"));
+    m_locale.AddCatalog(_T("poedit-wxstd")); // for semistatic builds
 
     if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
     {
