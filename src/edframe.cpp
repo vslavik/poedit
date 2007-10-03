@@ -1503,38 +1503,41 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     CatalogData& entry = (*m_catalog)[ind];
 
     wxString key = entry.GetString();
-    wxString newval = m_textTrans->GetValue();
     bool newfuzzy = GetToolBar()->GetToolState(XRCID("menu_fuzzy"));
 
-    // check if anything changed:
-    if (entry.IsFuzzy() == newfuzzy)
-    {
-        if (entry.HasPlural())
-        {
-            bool changed = false;
-            size_t size = std::min(m_textTransPlural.size(),
-                                   m_edittedTextOrig.size());
+    bool allTranslated = true; // will be updated later
+    bool anyTransChanged = false; // ditto
 
-            for (size_t i = 0; i < size; i++)
-            {
-                if (m_edittedTextOrig.empty() ||
-                    m_textTransPlural[i]->GetValue() != m_edittedTextOrig[i])
-                {
-                    changed = true;
-                    break;
-                }
-            }
-            if (!changed)
-                return;
-        }
-        else
+    // check if anything changed:
+    if (entry.HasPlural())
+    {
+        wxASSERT( m_textTransPlural.size() == m_edittedTextOrig.size() );
+        size_t size = m_textTransPlural.size();
+
+        for (size_t i = 0; i < size; i++)
         {
-            if (!m_edittedTextOrig.empty() && newval == m_edittedTextOrig[0])
-                return;
+            wxString newval = m_textTransPlural[i]->GetValue();
+            if (m_edittedTextOrig.empty() ||
+                newval != m_edittedTextOrig[i])
+            {
+                anyTransChanged = true;
+            }
+            if ( newval.empty() )
+            {
+                allTranslated = false;
+            }
         }
     }
+    else
+    {
+        wxString newval = m_textTrans->GetValue();
+        anyTransChanged =
+            m_edittedTextOrig.empty() || newval != m_edittedTextOrig[0];
+        allTranslated = !newval.empty();
+    }
 
-    newval = TransformNewval(newval, m_displayQuotes);
+    if (entry.IsFuzzy() == newfuzzy && !anyTransChanged)
+        return; // not even fuzzy status changed, so return
 
     if (entry.HasPlural())
     {
@@ -1549,6 +1552,8 @@ void poEditFrame::UpdateFromTextCtrl(int item)
     }
     else
     {
+        wxString newval =
+            TransformNewval(m_textTrans->GetValue(), m_displayQuotes);
         entry.SetTranslation(newval);
     }
 
@@ -1561,7 +1566,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 
     entry.SetModified(true);
     entry.SetAutomatic(false);
-    entry.SetTranslated(!newval.empty());
+    entry.SetTranslated(allTranslated);
 
     m_list->RefreshItem(item);
 
@@ -1616,11 +1621,11 @@ void poEditFrame::UpdateToTextCtrl(int item)
         m_textOrigPlural->SetValue(t_op);
 
         size_t formsCnt = m_textTransPlural.size();
-        for (size_t i = 0; i < formsCnt; i++)
-            m_textTransPlural[i]->SetValue(wxEmptyString);
+        for (size_t j = 0; j < formsCnt; j++)
+            m_textTransPlural[j]->SetValue(wxEmptyString);
 
-        for (size_t i = 0;
-                i < wxMin(formsCnt, entry.GetNumberOfTranslations()); i++)
+        size_t i = 0;
+        for (i = 0; i < std::min(formsCnt, entry.GetNumberOfTranslations()); i++)
         {
             t_t = quote + entry.GetTranslation(i) + quote;
             t_t.Replace(_T("\\n"), _T("\\n\n"));
@@ -1629,6 +1634,9 @@ void poEditFrame::UpdateToTextCtrl(int item)
                 m_textTransPlural[i]->SetInsertionPoint(1);
             m_edittedTextOrig.push_back(t_t);
         }
+        // fill in remaining unset values:
+        for (; i < formsCnt; i++)
+            m_edittedTextOrig.push_back(_T(""));
     }
     else
     {
