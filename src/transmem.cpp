@@ -29,6 +29,7 @@
 
 #include <wx/wxprec.h>
 
+#include <set>
 
 /** \page db_desc Translation Memory Algorithms
 
@@ -724,8 +725,13 @@ static inline wxString GetDBPath(const wxString& p, const wxString& l)
 
 
 
+namespace
+{
 
-static TranslationMemories ms_instances;
+typedef std::set<TranslationMemory*> TranslationMemories;
+TranslationMemories ms_instances;
+
+} // anonymous namespace
 
 /*static*/ TranslationMemory *TranslationMemory::Create(
                       const wxString& language, const wxString& path)
@@ -759,8 +765,18 @@ static TranslationMemories ms_instances;
         delete tm;
         return NULL;
     }
-    else
-        return tm;
+
+    ms_instances.insert(tm);
+    return tm;
+}
+
+void TranslationMemory::Release()
+{
+    if (--m_refCnt == 0)
+    {
+        ms_instances.erase(this);
+        delete this;
+    }
 }
 
 TranslationMemory::TranslationMemory(const wxString& language, 

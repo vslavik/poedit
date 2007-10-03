@@ -32,8 +32,6 @@
 
 #ifdef USE_TRANSMEM
 
-#include <vector>
-
 class WXDLLEXPORT wxString;
 
 class DbTrans;
@@ -80,7 +78,7 @@ class TranslationMemory
         static TranslationMemory *Create(const wxString& language, 
                                          const wxString& path = wxEmptyString);
 
-        void Release() { if (--m_refCnt == 0) delete this; }
+        void Release();
 
         ~TranslationMemory();
 
@@ -162,8 +160,6 @@ class TranslationMemory
         
         int      m_refCnt;
 };
-
-typedef std::vector<TranslationMemory*> TranslationMemories;
 
 
 #endif // USE_TRANSMEM
