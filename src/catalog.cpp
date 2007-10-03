@@ -499,6 +499,7 @@ bool CatalogParser::Parse()
     wxString line, dummy;
     wxString mflags, mstr, msgid_plural, mcomment;
     wxArrayString mrefs, mautocomments, mtranslations;
+    wxArrayString msgid_old;
     bool has_plural = false;
     unsigned mlinenum;
 
@@ -509,7 +510,7 @@ bool CatalogParser::Parse()
     {
         // ignore empty special tags (except for automatic comments which we
         // DO want to preserve):
-        while (line == _T("#,") || line == _T("#:"))
+        while (line == _T("#,") || line == _T("#:") || line == _T("#|"))
             line = ReadTextLine(m_textFile);
 
         // flags:
@@ -544,6 +545,13 @@ bool CatalogParser::Parse()
                 dummy = dummy.Mid(i).Strip(wxString::both);
             }
 
+            line = ReadTextLine(m_textFile);
+        }
+
+        // previous msgid value:
+        else if (ReadParam(line, _T("#| "), dummy))
+        {
+            msgid_old.Add(dummy);
             line = ReadTextLine(m_textFile);
         }
 
@@ -606,7 +614,8 @@ bool CatalogParser::Parse()
 
             if (!OnEntry(mstr, wxEmptyString, false,
                          mtranslations,
-                         mflags, mrefs, mcomment, mautocomments, mlinenum))
+                         mflags, mrefs, mcomment, mautocomments, msgid_old,
+                         mlinenum))
             {
                 return false;
             }
@@ -616,6 +625,7 @@ bool CatalogParser::Parse()
             mrefs.Clear();
             mautocomments.Clear();
             mtranslations.Clear();
+            msgid_old.Clear();
         }
 
         // msgstr[i]:
@@ -656,7 +666,8 @@ bool CatalogParser::Parse()
 
             if (!OnEntry(mstr, msgid_plural, true,
                          mtranslations,
-                         mflags, mrefs, mcomment, mautocomments, mlinenum))
+                         mflags, mrefs, mcomment, mautocomments, msgid_old,
+                         mlinenum))
             {
                 return false;
             }
@@ -666,6 +677,7 @@ bool CatalogParser::Parse()
             mrefs.Clear();
             mautocomments.Clear();
             mtranslations.Clear();
+            msgid_old.Clear();
         }
 
         // deleted lines:
@@ -693,6 +705,7 @@ bool CatalogParser::Parse()
             mrefs.Clear();
             mautocomments.Clear();
             mtranslations.Clear();
+            msgid_old.Clear();
         }
 
         // comment:
@@ -740,6 +753,7 @@ class CharsetInfoFinder : public CatalogParser
                              const wxArrayString& references,
                              const wxString& comment,
                              const wxArrayString& autocomments,
+                             const wxArrayString& msgid_old,
                              unsigned lineNumber);
 
 };
@@ -752,6 +766,7 @@ bool CharsetInfoFinder::OnEntry(const wxString& msgid,
                                 const wxArrayString& references,
                                 const wxString& comment,
                                 const wxArrayString& autocomments,
+                                const wxArrayString& msgid_old,
                                 unsigned lineNumber)
 {
     if (msgid.empty())
@@ -786,6 +801,7 @@ class LoadParser : public CatalogParser
                              const wxArrayString& references,
                              const wxString& comment,
                              const wxArrayString& autocomments,
+                             const wxArrayString& msgid_old,
                              unsigned lineNumber);
 
         virtual bool OnDeletedEntry(const wxArrayString& deletedLines,
@@ -805,6 +821,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
                          const wxArrayString& references,
                          const wxString& comment,
                          const wxArrayString& autocomments,
+                         const wxArrayString& msgid_old,
                          unsigned lineNumber)
 {
     if (msgid.empty())
@@ -827,6 +844,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
             d.AddReference(references[i]);
         for (size_t i = 0; i < autocomments.GetCount(); i++)
             d.AddAutoComments(autocomments[i]);
+        d.SetOldMsgid(msgid_old);
         m_catalog->AddItem(d);
     }
     return true;
@@ -1273,6 +1291,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         wxString dummy = data.GetFlags();
         if (!dummy.empty())
             f.AddLine(dummy);
+        for (unsigned i = 0; i < data.GetOldMsgid().GetCount(); i++)
+            f.AddLine(_T("#| ") + data.GetOldMsgid()[i]);
         dummy = FormatStringForFile(data.GetString());
         data.SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));

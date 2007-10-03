@@ -87,6 +87,7 @@ class CatalogData
                   m_translations(dt.m_translations),
                   m_references(dt.m_references),
                   m_autocomments(dt.m_autocomments),
+                  m_oldMsgid(dt.m_oldMsgid),
                   m_isFuzzy(dt.m_isFuzzy),
                   m_isTranslated(dt.m_isTranslated),
                   m_isModified(dt.m_isModified),
@@ -214,6 +215,9 @@ class CatalogData
             m_autocomments.Clear();
         }
 
+        void SetOldMsgid(const wxArrayString& data) { m_oldMsgid = data; }
+        const wxArrayString& GetOldMsgid() const { return m_oldMsgid; }
+
         // Validity (syntax-checking) status of the entry:
         enum Validity
         {
@@ -244,6 +248,7 @@ class CatalogData
         wxArrayString m_translations;
 
         wxArrayString m_references, m_autocomments;
+        wxArrayString m_oldMsgid;
         bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
         bool m_hasBadTokens;
         wxString m_moreFlags;
@@ -260,6 +265,7 @@ class CatalogData
 
     This class is mostly internal, used by Catalog to store data.
  */
+// FIXME: derive this from CatalogData (or CatalogDataBase)
 class CatalogDeletedData
 {
     public:
@@ -612,6 +618,7 @@ class CatalogParser
                              const wxArrayString& references,
                              const wxString& comment,
                              const wxArrayString& autocomments,
+                             const wxArrayString& msgid_old,
                              unsigned lineNumber) = 0;
 
         /** Called when new deleted entry was parsed. Parsing continues
