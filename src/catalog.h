@@ -30,18 +30,13 @@
 #ifndef _CATALOG_H_
 #define _CATALOG_H_
 
-#include <wx/hash.h>
-#include <wx/dynarray.h>
 #include <wx/encconv.h>
 #include <wx/regex.h>
+
 #include <vector>
+#include <map>
 
 class WXDLLEXPORT wxTextFile;
-
-class CatalogData;
-class CatalogDeletedData;
-WX_DECLARE_OBJARRAY(CatalogData, CatalogDataArray);
-WX_DECLARE_OBJARRAY(CatalogDeletedData, CatalogDeletedDataArray);
 
 /// The possible bookmarks for a given item
 typedef enum
@@ -60,278 +55,6 @@ typedef enum
     BOOKMARK_LAST
 } Bookmark;
 
-/** This class stores all translations, together with filelists, references
-    and other additional information. It can read .po files and save both
-    .mo and .po files. Furthermore, it provides facilities for updating the
-    catalog from source files.
- */
-class Catalog
-{
-    public:
-        /// PO file header information.
-        class HeaderData
-        {
-        public:
-            HeaderData() {}
-
-            /** Initializes the headers from string that is in msgid "" format
-                (i.e. list of key:value\n entries). */
-            void FromString(const wxString& str);
-
-            /** Converts the header into string representation that can be
-                directly written to .po file as msgid "". */
-            wxString ToString(const wxString& line_delim = wxEmptyString);
-
-            /// Updates headers list from parsed values entries below
-            void UpdateDict();
-            /// Reverse operation to UpdateDict
-            void ParseDict();
-
-            /// Returns value of header or empty string if missing.
-            wxString GetHeader(const wxString& key) const;
-
-            /// Returns true if given key is present in the header.
-            bool HasHeader(const wxString& key) const;
-
-            /** Sets header to given value. Overwrites old value if present,
-                appends to the end of header values otherwise. */
-            void SetHeader(const wxString& key, const wxString& value);
-
-            /// Like SetHeader, but deletes the header if value is empty
-            void SetHeaderNotEmpty(const wxString& key, const wxString& value);
-
-            /// Removes given header entry
-            void DeleteHeader(const wxString& key);
-
-            struct Entry
-            {
-                wxString Key, Value;
-            };
-            typedef std::vector<Entry> Entries;
-
-            const Entries& GetAllHeaders() const { return m_entries; }
-
-            // Parsed values:
-
-            wxString Language, Country, Project, CreationDate,
-                     RevisionDate, Translator, TranslatorEmail,
-                     Team, TeamEmail, Charset, SourceCodeCharset;
-
-            wxArrayString SearchPaths, Keywords;
-            int Bookmarks[BOOKMARK_LAST];
-            wxString BasePath;
-
-            wxString Comment;
-
-        protected:
-            Entries m_entries;
-
-            const Entry *Find(const wxString& key) const;
-        };
-
-        /// Default ctor. Creates empty catalog, you have to call Load.
-        Catalog();
-        /// Ctor that loads the catalog from \a po_file with Load.
-        Catalog(const wxString& po_file);
-        ~Catalog();
-
-        /** Creates new, empty header. Sets Charset to something meaningful
-            ("UTF-8", currently).
-         */
-        void CreateNewHeader();
-
-        /// Clears the catalog, removes all entries from it.
-        void Clear();
-
-        /** Loads catalog from .po file.
-            If file named po_file ".poedit" (e.g. "cs.po.poedit") exists,
-            this function loads additional information from it. .po.poedit
-            file contains parts of catalog header data that are not part
-            of standard .po format, namely SearchPaths, Keywords, BasePath
-            and Language.
-         */
-        bool Load(const wxString& po_file);
-
-        /** Saves catalog to file. Creates both .po (text) and .mo (binary)
-            version of the catalog (unless the latter was disabled in
-            preferences). Calls external xmsgfmt program to generate the .mo
-            file.
-
-            Note that \a po_file refers to .po file, .mo file will have same
-            name & location as .po file except for different extension.
-         */
-        bool Save(const wxString& po_file, bool save_mo = true);
-
-        /// Exports the catalog to HTML format
-        bool ExportToHTML(const wxString& filename);
-
-        /** Updates the catalog from sources.
-            \see SourceDigger, Parser, UpdateFromPOT.
-         */
-        bool Update(bool summary = true);
-
-        /** Updates the catalog from POT file.
-            \see Update
-         */
-        bool UpdateFromPOT(const wxString& pot_file, bool summary = true);
-
-        /** Adds translation into the catalog.
-            \return true on success or false if such key does
-                     not exist in the catalog
-         */
-        bool Translate(const wxString& key, const wxString& translation);
-
-        /** Returns pointer to catalog item with key \a key or NULL if
-            such key is not available.
-         */
-        CatalogData* FindItem(const wxString& key) const;
-
-        /// Returns the number of strings/translations in the catalog.
-        size_t GetCount() const { return m_count; }
-
-        /** Returns number of all, fuzzy, badtokens and untranslated items.
-            Any argument may be NULL if the caller is not interested in
-            given statistic value.
-         */
-        void GetStatistics(int *all, int *fuzzy, int *badtokens, int *untranslated);
-
-        /// Gets n-th item in the catalog (read-write access).
-        CatalogData& operator[](unsigned n) { return m_dataArray[n]; }
-
-        /// Gets n-th item in the catalog (read-only access).
-        const CatalogData& operator[](unsigned n) const { return m_dataArray[n]; }
-
-        /// Gets catalog header (read-write access).
-        HeaderData& Header() { return m_header; }
-
-        /// Returns plural forms count: taken from Plural-Forms header if
-        /// present, 0 otherwise
-        unsigned GetPluralFormsCount() const;
-
-        /** Returns status of catalog object: true if ok, false if damaged
-            (i.e. constructor or Load failed).
-         */
-        bool IsOk() const { return m_isOk; }
-
-        /// Appends content of \cat to this catalog.
-        void Append(Catalog& cat);
-
-        /** Returns xx_YY ISO code of catalog's language if either the Poedit
-            extensions headers are present or if filename is known and is in
-            the xx[_YY] form, otherwise returns empty string. */
-        wxString GetLocaleCode() const;
-
-        /// Adds entry to the catalog (the catalog will take ownership of
-        /// the object).
-        void AddItem(CatalogData *data);
-
-        /// Adds entry to the catalog (the catalog will take ownership of
-        /// the object).
-        void AddDeletedItem(CatalogDeletedData *data);
-
-        /// Returns true if the catalog contains obsolete entries (~.*)
-        bool HasDeletedItems();
-
-        /// Removes all obsolete translations from the catalog
-        void RemoveDeletedItems();
-
-        /// Sets the given item to have the given bookmark and returns the index
-        /// of the item that previously had this bookmark (or -1)
-        int SetBookmark(int id, Bookmark bookmark);
-
-        /// Returns the index of the item that has the given bookmark or -1
-        int GetBookmarkIndex(Bookmark bookmark) const
-        {
-            return m_header.Bookmarks[bookmark];
-        }
-
-    protected:
-        /** Merges the catalog with reference catalog
-            (in the sense of msgmerge -- this catalog is old one with
-            translations, \a refcat is reference catalog created by Update().)
-
-            \return true if the merge was successfull, false otherwise.
-                    Note that if it returns false, the catalog was
-                    \em not modified!
-         */
-        bool Merge(Catalog *refcat);
-
-        /** Returns list of strings that are new in reference catalog
-            (compared to this one) and that are not present in \a refcat
-            (i.e. are obsoleted).
-
-            \see ShowMergeSummary
-         */
-        void GetMergeSummary(Catalog *refcat,
-                             wxArrayString& snew, wxArrayString& sobsolete);
-
-        /** Shows a dialog with merge summary.
-            \see GetMergeSummary, Merge
-
-            \return true if the merge was OK'ed by the user, false otherwise
-         */
-        bool ShowMergeSummary(Catalog *refcat);
-
-    private:
-        wxHashTable *m_data;
-        CatalogDataArray m_dataArray;
-        CatalogDeletedDataArray m_deletedItemsArray;
-        unsigned m_count; // no. of items
-        bool m_isOk;
-        wxString m_fileName;
-        HeaderData m_header;
-
-        friend class LoadParser;
-};
-
-
-/// Internal class - used for parsing of po files.
-class CatalogParser
-{
-    public:
-        CatalogParser(wxTextFile *f) : m_textFile(f) {}
-        virtual ~CatalogParser() {}
-
-        /** Parses the entire file, calls OnEntry each time
-            new msgid/msgstr pair is found.
-
-            @return false if parsing failed, true otherwise
-         */
-        bool Parse();
-
-    protected:
-        /** Called when new entry was parsed. Parsing continues
-            if returned value is true and is cancelled if it
-            is false.
-         */
-        virtual bool OnEntry(const wxString& msgid,
-                             const wxString& msgid_plural,
-                             bool has_plural,
-                             const wxArrayString& mtranslations,
-                             const wxString& flags,
-                             const wxArrayString& references,
-                             const wxString& comment,
-                             const wxArrayString& autocomments,
-                             unsigned lineNumber) = 0;
-
-        /** Called when new deleted entry was parsed. Parsing continues
-            if returned value is true and is cancelled if it
-            is false. Defaults to an empty implementation.
-         */
-        virtual bool OnDeletedEntry(const wxArrayString& deletedLines,
-                                    const wxString& flags,
-                                    const wxArrayString& references,
-                                    const wxString& comment,
-                                    const wxArrayString& autocomments,
-                                    unsigned lineNumber)
-        {
-            return true;
-        }
-
-        /// Textfile being parsed.
-        wxTextFile *m_textFile;
-};
-
 /** This class holds information about one particular string.
     This includes original string and its occurences in source code
     (so-called references), translation and translation's status
@@ -339,13 +62,13 @@ class CatalogParser
 
     This class is mostly internal, used by Catalog to store data.
  */
-class CatalogData : public wxObject
+class CatalogData
 {
     public:
         /// Ctor. Initializes the object with original string and translation.
-        CatalogData(const wxString& str, const wxString& str_plural)
-                : wxObject(),
-                  m_string(str),
+        CatalogData(const wxString& str = wxEmptyString,
+                    const wxString& str_plural = wxEmptyString)
+                : m_string(str),
                   m_plural(str_plural),
                   m_hasPlural(false),
                   m_references(),
@@ -358,8 +81,7 @@ class CatalogData : public wxObject
                   m_bookmark(NO_BOOKMARK) {}
 
         CatalogData(const CatalogData& dt)
-                : wxObject(),
-                  m_string(dt.m_string),
+                : m_string(dt.m_string),
                   m_plural(dt.m_plural),
                   m_hasPlural(dt.m_hasPlural),
                   m_translations(dt.m_translations),
@@ -513,6 +235,8 @@ class CatalogData : public wxObject
         Bookmark GetBookmark() {return m_bookmark;}
         /// Returns true if the item has a bookmark
         bool HasBookmark() {return (GetBookmark() != NO_BOOKMARK);}
+        /// Sets the bookmark
+        void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
 
     private:
         wxString m_string, m_plural;
@@ -528,11 +252,6 @@ class CatalogData : public wxObject
         unsigned m_lineNum;
         wxString m_errorString;
         Bookmark m_bookmark;
-
-        /// Sets the bookmark
-        void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
-
-   friend class Catalog;
 };
 
 /** This class holds information about one particular deleted item.
@@ -541,18 +260,18 @@ class CatalogData : public wxObject
 
     This class is mostly internal, used by Catalog to store data.
  */
-class CatalogDeletedData : public wxObject
+class CatalogDeletedData
 {
     public:
-        /// Ctor. Initializes the object with original string and translation.
+        /// Ctor.
+        CatalogDeletedData()
+                : m_lineNum(0) {}
         CatalogDeletedData(const wxArrayString& deletedLines)
-                : wxObject(),
-                  m_deletedLines(deletedLines),
+                : m_deletedLines(deletedLines),
                   m_lineNum(0) {}
 
         CatalogDeletedData(const CatalogDeletedData& dt)
-                : wxObject(),
-                  m_deletedLines(dt.m_deletedLines),
+                : m_deletedLines(dt.m_deletedLines),
                   m_references(dt.m_references),
                   m_autocomments(dt.m_autocomments),
                   m_flags(dt.m_flags),
@@ -632,6 +351,285 @@ class CatalogDeletedData : public wxObject
         wxString m_flags;
         wxString m_comment;
         unsigned m_lineNum;
+};
+
+
+typedef std::vector<CatalogData> CatalogDataArray;
+typedef std::vector<CatalogDeletedData> CatalogDeletedDataArray;
+typedef std::map<wxString, unsigned> CatalogDataIndex;
+
+/** This class stores all translations, together with filelists, references
+    and other additional information. It can read .po files and save both
+    .mo and .po files. Furthermore, it provides facilities for updating the
+    catalog from source files.
+ */
+class Catalog
+{
+    public:
+        /// PO file header information.
+        class HeaderData
+        {
+        public:
+            HeaderData() {}
+
+            /** Initializes the headers from string that is in msgid "" format
+                (i.e. list of key:value\n entries). */
+            void FromString(const wxString& str);
+
+            /** Converts the header into string representation that can be
+                directly written to .po file as msgid "". */
+            wxString ToString(const wxString& line_delim = wxEmptyString);
+
+            /// Updates headers list from parsed values entries below
+            void UpdateDict();
+            /// Reverse operation to UpdateDict
+            void ParseDict();
+
+            /// Returns value of header or empty string if missing.
+            wxString GetHeader(const wxString& key) const;
+
+            /// Returns true if given key is present in the header.
+            bool HasHeader(const wxString& key) const;
+
+            /** Sets header to given value. Overwrites old value if present,
+                appends to the end of header values otherwise. */
+            void SetHeader(const wxString& key, const wxString& value);
+
+            /// Like SetHeader, but deletes the header if value is empty
+            void SetHeaderNotEmpty(const wxString& key, const wxString& value);
+
+            /// Removes given header entry
+            void DeleteHeader(const wxString& key);
+
+            struct Entry
+            {
+                wxString Key, Value;
+            };
+            typedef std::vector<Entry> Entries;
+
+            const Entries& GetAllHeaders() const { return m_entries; }
+
+            // Parsed values:
+
+            wxString Language, Country, Project, CreationDate,
+                     RevisionDate, Translator, TranslatorEmail,
+                     Team, TeamEmail, Charset, SourceCodeCharset;
+
+            wxArrayString SearchPaths, Keywords;
+            int Bookmarks[BOOKMARK_LAST];
+            wxString BasePath;
+
+            wxString Comment;
+
+        protected:
+            Entries m_entries;
+
+            const Entry *Find(const wxString& key) const;
+        };
+
+        /// Default ctor. Creates empty catalog, you have to call Load.
+        Catalog();
+        /// Ctor that loads the catalog from \a po_file with Load.
+        Catalog(const wxString& po_file);
+        ~Catalog();
+
+        /** Creates new, empty header. Sets Charset to something meaningful
+            ("UTF-8", currently).
+         */
+        void CreateNewHeader();
+
+        /// Clears the catalog, removes all entries from it.
+        void Clear();
+
+        /** Loads catalog from .po file.
+            If file named po_file ".poedit" (e.g. "cs.po.poedit") exists,
+            this function loads additional information from it. .po.poedit
+            file contains parts of catalog header data that are not part
+            of standard .po format, namely SearchPaths, Keywords, BasePath
+            and Language.
+         */
+        bool Load(const wxString& po_file);
+
+        /** Saves catalog to file. Creates both .po (text) and .mo (binary)
+            version of the catalog (unless the latter was disabled in
+            preferences). Calls external xmsgfmt program to generate the .mo
+            file.
+
+            Note that \a po_file refers to .po file, .mo file will have same
+            name & location as .po file except for different extension.
+         */
+        bool Save(const wxString& po_file, bool save_mo = true);
+
+        /// Exports the catalog to HTML format
+        bool ExportToHTML(const wxString& filename);
+
+        /** Updates the catalog from sources.
+            \see SourceDigger, Parser, UpdateFromPOT.
+         */
+        bool Update(bool summary = true);
+
+        /** Updates the catalog from POT file.
+            \see Update
+         */
+        bool UpdateFromPOT(const wxString& pot_file, bool summary = true);
+
+        /** Adds translation into the catalog.
+            \return true on success or false if such key does
+                     not exist in the catalog
+         */
+        bool Translate(const wxString& key, const wxString& translation);
+
+        /** Returns pointer to catalog item with key \a key or NULL if
+            such key is not available.
+         */
+        CatalogData* FindItem(const wxString& key);
+
+        /// Returns the number of strings/translations in the catalog.
+        size_t GetCount() const { return m_count; }
+
+        /** Returns number of all, fuzzy, badtokens and untranslated items.
+            Any argument may be NULL if the caller is not interested in
+            given statistic value.
+         */
+        void GetStatistics(int *all, int *fuzzy, int *badtokens, int *untranslated);
+
+        /// Gets n-th item in the catalog (read-write access).
+        CatalogData& operator[](unsigned n) { return m_dataArray[n]; }
+
+        /// Gets n-th item in the catalog (read-only access).
+        const CatalogData& operator[](unsigned n) const { return m_dataArray[n]; }
+
+        /// Gets catalog header (read-write access).
+        HeaderData& Header() { return m_header; }
+
+        /// Returns plural forms count: taken from Plural-Forms header if
+        /// present, 0 otherwise
+        unsigned GetPluralFormsCount() const;
+
+        /** Returns status of catalog object: true if ok, false if damaged
+            (i.e. constructor or Load failed).
+         */
+        bool IsOk() const { return m_isOk; }
+
+        /// Appends content of \cat to this catalog.
+        void Append(Catalog& cat);
+
+        /** Returns xx_YY ISO code of catalog's language if either the Poedit
+            extensions headers are present or if filename is known and is in
+            the xx[_YY] form, otherwise returns empty string. */
+        wxString GetLocaleCode() const;
+
+        /// Adds entry to the catalog (the catalog will take ownership of
+        /// the object).
+        void AddItem(const CatalogData& data);
+
+        /// Adds entry to the catalog (the catalog will take ownership of
+        /// the object).
+        void AddDeletedItem(const CatalogDeletedData& data);
+
+        /// Returns true if the catalog contains obsolete entries (~.*)
+        bool HasDeletedItems();
+
+        /// Removes all obsolete translations from the catalog
+        void RemoveDeletedItems();
+
+        /// Sets the given item to have the given bookmark and returns the index
+        /// of the item that previously had this bookmark (or -1)
+        int SetBookmark(int id, Bookmark bookmark);
+
+        /// Returns the index of the item that has the given bookmark or -1
+        int GetBookmarkIndex(Bookmark bookmark) const
+        {
+            return m_header.Bookmarks[bookmark];
+        }
+
+    protected:
+        /** Merges the catalog with reference catalog
+            (in the sense of msgmerge -- this catalog is old one with
+            translations, \a refcat is reference catalog created by Update().)
+
+            \return true if the merge was successfull, false otherwise.
+                    Note that if it returns false, the catalog was
+                    \em not modified!
+         */
+        bool Merge(Catalog *refcat);
+
+        /** Returns list of strings that are new in reference catalog
+            (compared to this one) and that are not present in \a refcat
+            (i.e. are obsoleted).
+
+            \see ShowMergeSummary
+         */
+        void GetMergeSummary(Catalog *refcat,
+                             wxArrayString& snew, wxArrayString& sobsolete);
+
+        /** Shows a dialog with merge summary.
+            \see GetMergeSummary, Merge
+
+            \return true if the merge was OK'ed by the user, false otherwise
+         */
+        bool ShowMergeSummary(Catalog *refcat);
+
+    private:
+        CatalogDataArray m_dataArray;
+        CatalogDeletedDataArray m_deletedItemsArray;
+        // index into m_dataArray
+        CatalogDataIndex m_dataIndex;
+
+        unsigned m_count; // no. of items
+        bool m_isOk;
+        wxString m_fileName;
+        HeaderData m_header;
+
+        friend class LoadParser;
+};
+
+
+/// Internal class - used for parsing of po files.
+class CatalogParser
+{
+    public:
+        CatalogParser(wxTextFile *f) : m_textFile(f) {}
+        virtual ~CatalogParser() {}
+
+        /** Parses the entire file, calls OnEntry each time
+            new msgid/msgstr pair is found.
+
+            @return false if parsing failed, true otherwise
+         */
+        bool Parse();
+
+    protected:
+        /** Called when new entry was parsed. Parsing continues
+            if returned value is true and is cancelled if it
+            is false.
+         */
+        virtual bool OnEntry(const wxString& msgid,
+                             const wxString& msgid_plural,
+                             bool has_plural,
+                             const wxArrayString& mtranslations,
+                             const wxString& flags,
+                             const wxArrayString& references,
+                             const wxString& comment,
+                             const wxArrayString& autocomments,
+                             unsigned lineNumber) = 0;
+
+        /** Called when new deleted entry was parsed. Parsing continues
+            if returned value is true and is cancelled if it
+            is false. Defaults to an empty implementation.
+         */
+        virtual bool OnDeletedEntry(const wxArrayString& deletedLines,
+                                    const wxString& flags,
+                                    const wxArrayString& references,
+                                    const wxString& comment,
+                                    const wxArrayString& autocomments,
+                                    unsigned lineNumber)
+        {
+            return true;
+        }
+
+        /// Textfile being parsed.
+        wxTextFile *m_textFile;
 };
 
 #endif // _CATALOG_H_

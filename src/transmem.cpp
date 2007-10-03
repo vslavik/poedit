@@ -725,9 +725,7 @@ static inline wxString GetDBPath(const wxString& p, const wxString& l)
 
 
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(TranslationMemoriesList);
-TranslationMemoriesList TranslationMemory::ms_instances;
+static TranslationMemories ms_instances;
 
 /*static*/ TranslationMemory *TranslationMemory::Create(
                       const wxString& language, const wxString& path)
@@ -743,7 +741,7 @@ TranslationMemoriesList TranslationMemory::ms_instances;
     }
     dbPath += _T('/');
 
-    for (TranslationMemoriesList::const_iterator i = ms_instances.begin();
+    for (TranslationMemories::const_iterator i = ms_instances.begin();
          i != ms_instances.end(); ++i)
     {
         TranslationMemory *mem = *i;

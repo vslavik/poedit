@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2005 Vaclav Slavik
+ *  Copyright (C) 2001-2007 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -32,10 +32,9 @@
 
 #ifdef USE_TRANSMEM
 
+#include <vector>
+
 class WXDLLEXPORT wxString;
-#include <wx/list.h>
-class TranslationMemory;
-WX_DECLARE_LIST(TranslationMemory, TranslationMemoriesList);
 
 class DbTrans;
 class DbOrig;
@@ -162,8 +161,9 @@ class TranslationMemory
         size_t   m_maxDelta, m_maxOmits;
         
         int      m_refCnt;
-        static TranslationMemoriesList ms_instances;
 };
+
+typedef std::vector<TranslationMemory*> TranslationMemories;
 
 
 #endif // USE_TRANSMEM

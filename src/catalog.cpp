@@ -49,10 +49,6 @@
 #include "isocodes.h"
 
 
-#include "wx/arrimpl.cpp"
-WX_DEFINE_OBJARRAY(CatalogDataArray)
-WX_DEFINE_OBJARRAY(CatalogDeletedDataArray)
-
 
 // ----------------------------------------------------------------------
 // Textfile processing utilities:
@@ -819,18 +815,18 @@ bool LoadParser::OnEntry(const wxString& msgid,
     }
     else
     {
-        CatalogData *d = new CatalogData(wxEmptyString, wxEmptyString);
-        if (!flags.empty()) d->SetFlags(flags);
-        d->SetString(msgid);
+        CatalogData d;
+        if (!flags.empty()) d.SetFlags(flags);
+        d.SetString(msgid);
         if (has_plural)
-            d->SetPluralString(msgid_plural);
-        d->SetTranslations(mtranslations);
-        d->SetComment(comment);
-        d->SetLineNumber(lineNumber);
+            d.SetPluralString(msgid_plural);
+        d.SetTranslations(mtranslations);
+        d.SetComment(comment);
+        d.SetLineNumber(lineNumber);
         for (size_t i = 0; i < references.GetCount(); i++)
-            d->AddReference(references[i]);
+            d.AddReference(references[i]);
         for (size_t i = 0; i < autocomments.GetCount(); i++)
-            d->AddAutoComments(autocomments[i]);
+            d.AddAutoComments(autocomments[i]);
         m_catalog->AddItem(d);
     }
     return true;
@@ -843,13 +839,13 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
                                 const wxArrayString& autocomments,
                                 unsigned lineNumber)
 {
-    CatalogDeletedData *d = new CatalogDeletedData(wxArrayString());
-    if (!flags.empty()) d->SetFlags(flags);
-    d->SetDeletedLines(deletedLines);
-    d->SetComment(comment);
-    d->SetLineNumber(lineNumber);
+    CatalogDeletedData d;
+    if (!flags.empty()) d.SetFlags(flags);
+    d.SetDeletedLines(deletedLines);
+    d.SetComment(comment);
+    d.SetLineNumber(lineNumber);
     for (size_t i = 0; i < autocomments.GetCount(); i++)
-      d->AddAutoComments(autocomments[i]);
+      d.AddAutoComments(autocomments[i]);
     m_catalog->AddDeletedItem(d);
 
     return true;
@@ -863,7 +859,6 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 
 Catalog::Catalog()
 {
-    m_data = new wxHashTable(wxKEY_STRING);
     m_count = 0;
     m_isOk = true;
     m_header.BasePath = wxEmptyString;
@@ -877,13 +872,11 @@ Catalog::Catalog()
 Catalog::~Catalog()
 {
     Clear();
-    delete m_data;
 }
 
 
 Catalog::Catalog(const wxString& po_file)
 {
-    m_data = NULL;
     m_count = 0;
     m_isOk = Load(po_file);
 }
@@ -934,15 +927,13 @@ bool Catalog::Load(const wxString& po_file)
     wxTextFile f;
 
     Clear();
-    delete m_data; m_data = NULL;
+    m_dataIndex.clear();
     m_count = 0;
     m_isOk = false;
     m_fileName = po_file;
     m_header.BasePath = wxEmptyString;
 
     /* Load the .po file: */
-
-    m_data = new wxHashTable(wxKEY_STRING);
 
     if (!f.Open(po_file, wxConvISO8859_1))
         return false;
@@ -975,7 +966,7 @@ bool Catalog::Load(const wxString& po_file)
     for (unsigned i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
     {
         if (m_header.Bookmarks[i] != -1 &&
-            m_header.Bookmarks[i] < (int)m_dataArray.GetCount())
+            m_header.Bookmarks[i] < (int)m_dataArray.size())
         {
             m_dataArray[m_header.Bookmarks[i]].SetBookmark(
                     static_cast<Bookmark>(i));
@@ -1047,16 +1038,16 @@ bool Catalog::Load(const wxString& po_file)
     return true;
 }
 
-void Catalog::AddItem(CatalogData *data)
+void Catalog::AddItem(const CatalogData& data)
 {
-    m_data->Put(data->GetString(), data);
-    m_dataArray.Add(data);
+    m_dataIndex[data.GetString()] = m_count;
+    m_dataArray.push_back(data);
     m_count++;
 }
 
-void Catalog::AddDeletedItem(CatalogDeletedData *data)
+void Catalog::AddDeletedItem(const CatalogDeletedData& data)
 {
-    m_deletedItemsArray.Add(data);
+    m_deletedItemsArray.push_back(data);
 }
 
 bool Catalog::HasDeletedItems()
@@ -1066,17 +1057,16 @@ bool Catalog::HasDeletedItems()
 
 void Catalog::RemoveDeletedItems()
 {
-    m_deletedItemsArray.Empty();
+    m_deletedItemsArray.clear();
 }
 
 void Catalog::Clear()
 {
-    delete m_data;
-    m_dataArray.Empty();
-    m_deletedItemsArray.Empty();
+    m_dataIndex.clear();
+    m_dataArray.clear();
+    m_deletedItemsArray.clear();
     m_isOk = true;
     m_count = 0;
-    m_data = new wxHashTable(wxKEY_STRING);
     for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
     {
         m_header.Bookmarks[i] = -1;
@@ -1201,11 +1191,6 @@ static wxString FormatStringForFile(const wxString& text)
 
 bool Catalog::Save(const wxString& po_file, bool save_mo)
 {
-    CatalogData *data;
-    CatalogDeletedData *deletedItem;
-    wxString dummy;
-    size_t i;
-    int j;
     wxTextFileType crlfOrig, crlf;
     bool crlfPreserve;
     wxTextFile f;
@@ -1258,7 +1243,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     if (!wxFileExists(po_file) || !f.Open(po_file, wxConvISO8859_1))
         if (!f.Create(po_file))
             return false;
-    for (j = f.GetLineCount() - 1; j >= 0; j--)
+    for (int j = f.GetLineCount() - 1; j >= 0; j--)
         f.RemoveLine(j);
 
 
@@ -1272,61 +1257,61 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
 
-    for (i = 0; i < m_dataArray.GetCount(); i++)
+    for (unsigned i = 0; i < m_dataArray.size(); i++)
     {
-        data = &(m_dataArray[i]);
-        SaveMultiLines(f, data->GetComment());
-        for (unsigned i = 0; i < data->GetAutoComments().GetCount(); i++)
+        CatalogData& data = m_dataArray[i];
+        SaveMultiLines(f, data.GetComment());
+        for (unsigned i = 0; i < data.GetAutoComments().GetCount(); i++)
         {
-            if (data->GetAutoComments()[i].empty())
+            if (data.GetAutoComments()[i].empty())
               f.AddLine(_T("#."));
             else
-              f.AddLine(_T("#. ") + data->GetAutoComments()[i]);
+              f.AddLine(_T("#. ") + data.GetAutoComments()[i]);
         }
-        for (unsigned i = 0; i < data->GetReferences().GetCount(); i++)
-            f.AddLine(_T("#: ") + data->GetReferences()[i]);
-        dummy = data->GetFlags();
+        for (unsigned i = 0; i < data.GetReferences().GetCount(); i++)
+            f.AddLine(_T("#: ") + data.GetReferences()[i]);
+        wxString dummy = data.GetFlags();
         if (!dummy.empty())
             f.AddLine(dummy);
-        dummy = FormatStringForFile(data->GetString());
-        data->SetLineNumber(f.GetLineCount()+1);
+        dummy = FormatStringForFile(data.GetString());
+        data.SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
-        if (data->HasPlural())
+        if (data.HasPlural())
         {
-            dummy = FormatStringForFile(data->GetPluralString());
+            dummy = FormatStringForFile(data.GetPluralString());
             SaveMultiLines(f, _T("msgid_plural \"") + dummy + _T("\""));
 
-            for (size_t i = 0; i < data->GetNumberOfTranslations(); i++)
+            for (size_t i = 0; i < data.GetNumberOfTranslations(); i++)
             {
-                dummy = FormatStringForFile(data->GetTranslation(i));
+                dummy = FormatStringForFile(data.GetTranslation(i));
                 wxString hdr = wxString::Format(_T("msgstr[%u] \""), i);
                 SaveMultiLines(f, hdr + dummy + _T("\""));
             }
         }
         else
         {
-            dummy = FormatStringForFile(data->GetTranslation());
+            dummy = FormatStringForFile(data.GetTranslation());
             SaveMultiLines(f, _T("msgstr \"") + dummy + _T("\""));
         }
         f.AddLine(wxEmptyString);
     }
 
     // Write back deleted items in the file so that they're not lost
-    for (i = 0; i < m_deletedItemsArray.GetCount(); i++)
+    for (unsigned i = 0; i < m_deletedItemsArray.size(); i++)
     {
-        deletedItem = &(m_deletedItemsArray[i]);
-        SaveMultiLines(f, deletedItem->GetComment());
-        for (unsigned i = 0; i < deletedItem->GetAutoComments().GetCount(); i++)
-            f.AddLine(_T("#. ") + deletedItem->GetAutoComments()[i]);
-        for (unsigned i = 0; i < deletedItem->GetReferences().GetCount(); i++)
-            f.AddLine(_T("#: ") + deletedItem->GetReferences()[i]);
-        dummy = deletedItem->GetFlags();
+        CatalogDeletedData& deletedItem = m_deletedItemsArray[i];
+        SaveMultiLines(f, deletedItem.GetComment());
+        for (unsigned i = 0; i < deletedItem.GetAutoComments().GetCount(); i++)
+            f.AddLine(_T("#. ") + deletedItem.GetAutoComments()[i]);
+        for (unsigned i = 0; i < deletedItem.GetReferences().GetCount(); i++)
+            f.AddLine(_T("#: ") + deletedItem.GetReferences()[i]);
+        wxString dummy = deletedItem.GetFlags();
         if (!dummy.empty())
             f.AddLine(dummy);
-        deletedItem->SetLineNumber(f.GetLineCount()+1);
+        deletedItem.SetLineNumber(f.GetLineCount()+1);
 
-        for (size_t j = 0; j < deletedItem->GetDeletedLines().GetCount(); j++)
-            f.AddLine(deletedItem->GetDeletedLines()[j]);
+        for (size_t j = 0; j < deletedItem.GetDeletedLines().GetCount(); j++)
+            f.AddLine(deletedItem.GetDeletedLines()[j]);
 
         f.AddLine(wxEmptyString);
     }
@@ -1507,9 +1492,12 @@ bool Catalog::ShowMergeSummary(Catalog *refcat)
 }
 
 
-CatalogData* Catalog::FindItem(const wxString& key) const
+CatalogData* Catalog::FindItem(const wxString& key)
 {
-    return (CatalogData*) m_data->Get(key);
+    CatalogDataIndex::const_iterator i = m_dataIndex.find(key);
+    if (i == m_dataIndex.end())
+        return NULL;
+    return &m_dataArray[i->second];
 }
 
 
@@ -1559,8 +1547,8 @@ void Catalog::Append(Catalog& cat)
         if (mydt == NULL)
         {
             mydt = new CatalogData(*dt);
-            m_data->Put(dt->GetString(), mydt);
-            m_dataArray.Add(mydt);
+            m_dataIndex[dt->GetString()] = m_count;
+            m_dataArray.push_back(*mydt);
             m_count++;
         }
         else
