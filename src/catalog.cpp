@@ -1464,10 +1464,7 @@ bool Catalog::Merge(Catalog *refcat)
                        tmp2 + _T("\" \"") + tmp1 + _T("\""));
     if (succ)
     {
-        Catalog *c = new Catalog(tmp3);
-        Clear();
-        Append(*c);
-        delete c;
+        Load(tmp3);
     }
 
     wxRemoveFile(tmp1);
