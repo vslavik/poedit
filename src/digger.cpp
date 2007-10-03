@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 2000-2005 Vaclav Slavik
  *
@@ -136,7 +136,7 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
     {
         for (i = 0; i < paths.GetCount(); i++)
             wxLogWarning(_("No files found in: ") + paths[i]);
-        wxLogError(_("poEdit did not find any files in scanned directories."));
+        wxLogError(_("Poedit did not find any files in scanned directories."));
     }
 
     return p_files;

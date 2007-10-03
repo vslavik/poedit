@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 2001-2005 Vaclav Slavik
  *
@@ -66,7 +66,7 @@ ManagerFrame *ManagerFrame::ms_instance = NULL;
 }
 
 ManagerFrame::ManagerFrame() :
-    wxFrame(NULL, -1, _("poEdit - Catalogs manager"), wxPoint(
+    wxFrame(NULL, -1, _("Poedit - Catalogs manager"), wxPoint(
                                  wxConfig::Get()->Read(_T("manager_x"), -1),
                                  wxConfig::Get()->Read(_T("manager_y"), -1)),
                              wxSize(
@@ -435,7 +435,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
         for (size_t i = 0; i < m_catalogs.GetCount(); i++)
         {
             wxString f = m_catalogs[i];
-            poEditFrame *fr = poEditFrame::Find(f);
+            PoeditFrame *fr = PoeditFrame::Find(f);
             if (fr)
             {
                 fr->UpdateCatalog();
@@ -455,7 +455,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
 
 void ManagerFrame::OnOpenCatalog(wxListEvent& event)
 {
-    poEditFrame::Create(m_catalogs[event.GetIndex()])->Raise();
+    PoeditFrame::Create(m_catalogs[event.GetIndex()])->Raise();
 }
 
 

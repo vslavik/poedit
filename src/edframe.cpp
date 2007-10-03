@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 1999-2007 Vaclav Slavik
  *
@@ -76,12 +76,12 @@
 #include "pluralforms/pl_evaluate.h"
 
 #include <wx/listimpl.cpp>
-WX_DEFINE_LIST(poEditFramesList);
-poEditFramesList poEditFrame::ms_instances;
+WX_DEFINE_LIST(PoeditFramesList);
+PoeditFramesList PoeditFrame::ms_instances;
 
 
 // this should be high enough to not conflict with any wxNewId-allocated value,
-// but there's a check for this in the poEditFrame ctor, too
+// but there's a check for this in the PoeditFrame ctor, too
 const wxWindowID ID_POEDIT_FIRST = wxID_HIGHEST + 10000;
 const unsigned   ID_POEDIT_STEP  = 1000;
 
@@ -109,9 +109,9 @@ const wxWindowID ID_TEXTCOMMENT = wxNewId();
 #endif
 
 
-/*static*/ poEditFrame *poEditFrame::Find(const wxString& filename)
+/*static*/ PoeditFrame *PoeditFrame::Find(const wxString& filename)
 {
-    for (poEditFramesList::const_iterator n = ms_instances.begin();
+    for (PoeditFramesList::const_iterator n = ms_instances.begin();
          n != ms_instances.end(); ++n)
     {
         if ((*n)->m_fileName == filename)
@@ -120,19 +120,19 @@ const wxWindowID ID_TEXTCOMMENT = wxNewId();
     return NULL;
 }
 
-/*static*/ poEditFrame *poEditFrame::Create(const wxString& filename)
+/*static*/ PoeditFrame *PoeditFrame::Create(const wxString& filename)
 {
-    poEditFrame *f;
+    PoeditFrame *f;
     if (!filename)
     {
-        f = new poEditFrame;
+        f = new PoeditFrame;
     }
     else
     {
-        f = poEditFrame::Find(filename);
+        f = PoeditFrame::Find(filename);
         if (!f)
         {
-            f = new poEditFrame();
+            f = new PoeditFrame();
             f->Show(true);
             f->ReadCatalog(filename);
         }
@@ -146,7 +146,7 @@ class ListHandler;
 class TextctrlHandler : public wxEvtHandler
 {
     public:
-        TextctrlHandler(poEditFrame* frame) :
+        TextctrlHandler(PoeditFrame* frame) :
                  wxEvtHandler(), m_frame(frame), m_list(frame->m_list), m_sel(&(frame->m_sel)) {}
 
         void SetCatalog(Catalog* catalog) {m_catalog = catalog;}
@@ -218,8 +218,8 @@ class TextctrlHandler : public wxEvtHandler
 
         DECLARE_EVENT_TABLE()
 
-        poEditFrame    *m_frame;
-        poEditListCtrl *m_list;
+        PoeditFrame    *m_frame;
+        PoeditListCtrl *m_list;
         int            *m_sel;
         Catalog        *m_catalog;
 
@@ -230,7 +230,7 @@ BEGIN_EVENT_TABLE(TextctrlHandler, wxEvtHandler)
    EVT_KEY_DOWN(TextctrlHandler::OnKeyDown)
 END_EVENT_TABLE()
 
-// I don't like this global flag, but all poEditFrame instances should share it
+// I don't like this global flag, but all PoeditFrame instances should share it
 // :(
 bool gs_focusToText = false;
 
@@ -238,7 +238,7 @@ bool gs_focusToText = false;
 class ListHandler : public wxEvtHandler
 {
     public:
-        ListHandler(poEditFrame *frame) :
+        ListHandler(PoeditFrame *frame) :
                  wxEvtHandler(), m_frame(frame) {}
 
     private:
@@ -251,7 +251,7 @@ class ListHandler : public wxEvtHandler
 
         DECLARE_EVENT_TABLE()
 
-        poEditFrame *m_frame;
+        PoeditFrame *m_frame;
 };
 
 BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
@@ -280,61 +280,61 @@ class UnfocusableTextCtrl : public wxTextCtrl
 };
 
 
-BEGIN_EVENT_TABLE(poEditFrame, wxFrame)
-   EVT_MENU           (wxID_EXIT,                 poEditFrame::OnQuit)
-   EVT_MENU           (XRCID("menu_help"),        poEditFrame::OnHelp)
-   EVT_MENU           (XRCID("menu_help_gettext"),poEditFrame::OnHelpGettext)
-   EVT_MENU           (wxID_ABOUT,                poEditFrame::OnAbout)
-   EVT_MENU           (XRCID("menu_new"),         poEditFrame::OnNew)
-   EVT_MENU           (XRCID("menu_new_from_pot"),poEditFrame::OnNew)
-   EVT_MENU           (wxID_OPEN,                 poEditFrame::OnOpen)
-   EVT_MENU           (wxID_SAVE,                 poEditFrame::OnSave)
-   EVT_MENU           (wxID_SAVEAS,               poEditFrame::OnSaveAs)
-   EVT_MENU           (XRCID("menu_export"),      poEditFrame::OnExport)
-   EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    poEditFrame::OnOpenHist)
-   EVT_MENU           (XRCID("menu_catsettings"), poEditFrame::OnSettings)
-   EVT_MENU           (wxID_PREFERENCES,          poEditFrame::OnPreferences)
-   EVT_MENU           (XRCID("menu_update"),      poEditFrame::OnUpdate)
-   EVT_MENU           (XRCID("menu_update_from_pot"),poEditFrame::OnUpdate)
-   EVT_MENU           (XRCID("menu_purge_deleted"), poEditFrame::OnPurgeDeleted)
-   EVT_MENU           (XRCID("menu_fuzzy"),       poEditFrame::OnFuzzyFlag)
-   EVT_MENU           (XRCID("menu_quotes"),      poEditFrame::OnQuotesFlag)
-   EVT_MENU           (XRCID("menu_lines"),       poEditFrame::OnLinesFlag)
-   EVT_MENU           (XRCID("menu_comment_win"), poEditFrame::OnCommentWinFlag)
-   EVT_MENU           (XRCID("menu_auto_comments_win"), poEditFrame::OnAutoCommentsWinFlag)
-   EVT_MENU           (XRCID("menu_shaded"),      poEditFrame::OnShadedListFlag)
-   EVT_MENU           (XRCID("menu_insert_orig"), poEditFrame::OnInsertOriginal)
-   EVT_MENU           (XRCID("menu_references"),  poEditFrame::OnReferencesMenu)
+BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
+   EVT_MENU           (wxID_EXIT,                 PoeditFrame::OnQuit)
+   EVT_MENU           (XRCID("menu_help"),        PoeditFrame::OnHelp)
+   EVT_MENU           (XRCID("menu_help_gettext"),PoeditFrame::OnHelpGettext)
+   EVT_MENU           (wxID_ABOUT,                PoeditFrame::OnAbout)
+   EVT_MENU           (XRCID("menu_new"),         PoeditFrame::OnNew)
+   EVT_MENU           (XRCID("menu_new_from_pot"),PoeditFrame::OnNew)
+   EVT_MENU           (wxID_OPEN,                 PoeditFrame::OnOpen)
+   EVT_MENU           (wxID_SAVE,                 PoeditFrame::OnSave)
+   EVT_MENU           (wxID_SAVEAS,               PoeditFrame::OnSaveAs)
+   EVT_MENU           (XRCID("menu_export"),      PoeditFrame::OnExport)
+   EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
+   EVT_MENU           (XRCID("menu_catsettings"), PoeditFrame::OnSettings)
+   EVT_MENU           (wxID_PREFERENCES,          PoeditFrame::OnPreferences)
+   EVT_MENU           (XRCID("menu_update"),      PoeditFrame::OnUpdate)
+   EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdate)
+   EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
+   EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
+   EVT_MENU           (XRCID("menu_quotes"),      PoeditFrame::OnQuotesFlag)
+   EVT_MENU           (XRCID("menu_lines"),       PoeditFrame::OnLinesFlag)
+   EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
+   EVT_MENU           (XRCID("menu_auto_comments_win"), PoeditFrame::OnAutoCommentsWinFlag)
+   EVT_MENU           (XRCID("menu_shaded"),      PoeditFrame::OnShadedListFlag)
+   EVT_MENU           (XRCID("menu_insert_orig"), PoeditFrame::OnInsertOriginal)
+   EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
 #ifndef __WXMAC__
-   EVT_MENU           (XRCID("menu_fullscreen"),  poEditFrame::OnFullscreen)
+   EVT_MENU           (XRCID("menu_fullscreen"),  PoeditFrame::OnFullscreen)
 #endif
-   EVT_MENU           (XRCID("menu_find"),        poEditFrame::OnFind)
-   EVT_MENU           (XRCID("menu_comment"),     poEditFrame::OnEditComment)
-   EVT_MENU           (XRCID("menu_manager"),     poEditFrame::OnManager)
-   EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, poEditFrame::OnReference)
+   EVT_MENU           (XRCID("menu_find"),        PoeditFrame::OnFind)
+   EVT_MENU           (XRCID("menu_comment"),     PoeditFrame::OnEditComment)
+   EVT_MENU           (XRCID("menu_manager"),     PoeditFrame::OnManager)
+   EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
 #ifdef USE_TRANSMEM
    EVT_MENU_RANGE     (ID_POPUP_TRANS, ID_POPUP_TRANS + 999,
-                       poEditFrame::OnAutoTranslate)
-   EVT_MENU           (XRCID("menu_auto_translate"), poEditFrame::OnAutoTranslateAll)
+                       PoeditFrame::OnAutoTranslate)
+   EVT_MENU           (XRCID("menu_auto_translate"), PoeditFrame::OnAutoTranslateAll)
 #endif
    EVT_MENU_RANGE     (ID_BOOKMARK_GO, ID_BOOKMARK_GO + 9,
-                       poEditFrame::OnGoToBookmark)
+                       PoeditFrame::OnGoToBookmark)
    EVT_MENU_RANGE     (ID_BOOKMARK_SET, ID_BOOKMARK_SET + 9,
-                       poEditFrame::OnSetBookmark)
-   EVT_CLOSE          (                poEditFrame::OnCloseWindow)
-   EVT_TEXT           (ID_TEXTCOMMENT,poEditFrame::OnCommentWindowText)
+                       PoeditFrame::OnSetBookmark)
+   EVT_CLOSE          (                PoeditFrame::OnCloseWindow)
+   EVT_TEXT           (ID_TEXTCOMMENT,PoeditFrame::OnCommentWindowText)
 #ifdef __WXMSW__
-   EVT_DROP_FILES     (poEditFrame::OnFileDrop)
+   EVT_DROP_FILES     (PoeditFrame::OnFileDrop)
 #endif
-   EVT_IDLE           (poEditFrame::OnIdle)
-   EVT_END_PROCESS    (-1, poEditFrame::OnEndProcess)
+   EVT_IDLE           (PoeditFrame::OnIdle)
+   EVT_END_PROCESS    (-1, PoeditFrame::OnEndProcess)
 END_EVENT_TABLE()
 
 
 // Frame class:
 
-poEditFrame::poEditFrame() :
-    wxFrame(NULL, -1, _("poEdit"), wxDefaultPosition, wxDefaultSize,
+PoeditFrame::PoeditFrame() :
+    wxFrame(NULL, -1, _("Poedit"), wxDefaultPosition, wxDefaultSize,
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
 #if USE_GETTEXT_VALIDATION
     m_itemBeingValidated(-1), m_gettextProcess(NULL),
@@ -429,7 +429,7 @@ poEditFrame::poEditFrame() :
     int width = cfg->Read(_T("frame_w"), 600);
     int height = cfg->Read(_T("frame_h"), 400);
 
-    // NB: if this is the only poEdit frame opened, place it at remembered
+    // NB: if this is the only Poedit frame opened, place it at remembered
     //     position, but don't do that if there already are other frames,
     //     because they would overlap and nobody could recognize that there are
     //     many of them
@@ -445,7 +445,7 @@ poEditFrame::poEditFrame() :
                                       wxDefaultPosition, wxDefaultSize,
                                       SPLITTER_FLAGS);
 
-    m_list = new poEditListCtrl(m_splitter,
+    m_list = new PoeditListCtrl(m_splitter,
                                 ID_LIST,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxLC_REPORT | wxLC_SINGLE_SEL,
@@ -544,7 +544,7 @@ poEditFrame::poEditFrame() :
 
 
 
-poEditFrame::~poEditFrame()
+PoeditFrame::~PoeditFrame()
 {
 #if USE_GETTEXT_VALIDATION
     if (m_gettextProcess)
@@ -605,7 +605,7 @@ poEditFrame::~poEditFrame()
     InitSpellchecker();
 }
 
-void poEditFrame::InitHelp()
+void PoeditFrame::InitHelp()
 {
     if ( !m_helpInitialized )
     {
@@ -615,7 +615,7 @@ void poEditFrame::InitHelp()
     }
 }
 
-wxString poEditFrame::LoadHelpBook(const wxString& name)
+wxString PoeditFrame::LoadHelpBook(const wxString& name)
 {
     wxString lng = wxGetApp().GetLocale().GetCanonicalName().Left(2);
     wxString helpdir = wxGetApp().GetAppPath() + _T("/share/poedit/help");
@@ -711,7 +711,7 @@ static void DoInitSpellchecker(wxTextCtrl *text,
 }
 #endif // USE_SPELLCHECKING
 
-void poEditFrame::InitSpellchecker()
+void PoeditFrame::InitSpellchecker()
 {
 #if USE_SPELLCHECKING
     wxString lang;
@@ -729,7 +729,7 @@ void poEditFrame::InitSpellchecker()
 
 
 #ifdef USE_TRANSMEM
-TranslationMemory *poEditFrame::GetTransMem()
+TranslationMemory *PoeditFrame::GetTransMem()
 {
     wxConfigBase *cfg = wxConfig::Get();
 
@@ -779,14 +779,14 @@ TranslationMemory *poEditFrame::GetTransMem()
 
 
 
-void poEditFrame::OnQuit(wxCommandEvent&)
+void PoeditFrame::OnQuit(wxCommandEvent&)
 {
     Close(true);
 }
 
 
 
-void poEditFrame::OnCloseWindow(wxCloseEvent&)
+void PoeditFrame::OnCloseWindow(wxCloseEvent&)
 {
     UpdateFromTextCtrl();
     if (m_catalog && m_modified)
@@ -812,7 +812,7 @@ void poEditFrame::OnCloseWindow(wxCloseEvent&)
 
 
 
-void poEditFrame::OnOpen(wxCommandEvent&)
+void PoeditFrame::OnOpen(wxCommandEvent&)
 {
     UpdateFromTextCtrl();
     if (m_catalog && m_modified)
@@ -849,7 +849,7 @@ void poEditFrame::OnOpen(wxCommandEvent&)
 
 
 
-void poEditFrame::OnOpenHist(wxCommandEvent& event)
+void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
     if (m_catalog && m_modified)
@@ -879,11 +879,11 @@ void poEditFrame::OnOpenHist(wxCommandEvent& event)
 
 
 #ifdef __WXMSW__
-void poEditFrame::OnFileDrop(wxDropFilesEvent& event)
+void PoeditFrame::OnFileDrop(wxDropFilesEvent& event)
 {
     if (event.GetNumberOfFiles() != 1)
     {
-        wxLogError(_("You can't drop more than one file on poEdit window."));
+        wxLogError(_("You can't drop more than one file on Poedit window."));
         return;
     }
 
@@ -923,7 +923,7 @@ void poEditFrame::OnFileDrop(wxDropFilesEvent& event)
 
 
 
-void poEditFrame::OnSave(wxCommandEvent& event)
+void PoeditFrame::OnSave(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
     if (m_fileName.empty())
@@ -945,7 +945,7 @@ static wxString SuggestFileName(const Catalog *catalog)
         return name;
 }
 
-wxString poEditFrame::GetSaveAsFilename(Catalog *cat, const wxString& current)
+wxString PoeditFrame::GetSaveAsFilename(Catalog *cat, const wxString& current)
 {
     wxString name(wxFileNameFromPath(current));
     wxString path(wxPathOnly(current));
@@ -967,7 +967,7 @@ wxString poEditFrame::GetSaveAsFilename(Catalog *cat, const wxString& current)
     return name;
 }
 
-void poEditFrame::DoSaveAs(const wxString& filename)
+void PoeditFrame::DoSaveAs(const wxString& filename)
 {
     if (filename.empty())
         return;
@@ -978,13 +978,13 @@ void poEditFrame::DoSaveAs(const wxString& filename)
     WriteCatalog(filename);
 }
 
-void poEditFrame::OnSaveAs(wxCommandEvent&)
+void PoeditFrame::OnSaveAs(wxCommandEvent&)
 {
     DoSaveAs(GetSaveAsFilename(m_catalog, m_fileName));
 }
 
 
-void poEditFrame::OnExport(wxCommandEvent&)
+void PoeditFrame::OnExport(wxCommandEvent&)
 {
     UpdateFromTextCtrl();
 
@@ -1008,7 +1008,7 @@ void poEditFrame::OnExport(wxCommandEvent&)
     }
 }
 
-bool poEditFrame::ExportCatalog(const wxString& filename)
+bool PoeditFrame::ExportCatalog(const wxString& filename)
 {
     wxBusyCursor bcur;
     bool ok = m_catalog->ExportToHTML(filename);
@@ -1017,7 +1017,7 @@ bool poEditFrame::ExportCatalog(const wxString& filename)
 
 
 
-void poEditFrame::OnNew(wxCommandEvent& event)
+void PoeditFrame::OnNew(wxCommandEvent& event)
 {
     bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
 
@@ -1111,7 +1111,7 @@ void poEditFrame::OnNew(wxCommandEvent& event)
 
 
 
-void poEditFrame::OnSettings(wxCommandEvent&)
+void PoeditFrame::OnSettings(wxCommandEvent&)
 {
     SettingsDialog dlg(this);
 
@@ -1130,7 +1130,7 @@ void poEditFrame::OnSettings(wxCommandEvent&)
 
 
 
-void poEditFrame::OnPreferences(wxCommandEvent&)
+void PoeditFrame::OnPreferences(wxCommandEvent&)
 {
     PreferencesDialog dlg(this);
 
@@ -1148,7 +1148,7 @@ void poEditFrame::OnPreferences(wxCommandEvent&)
 
 
 
-void poEditFrame::UpdateCatalog(const wxString& pot_file)
+void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 {
     wxBusyCursor bcur;
 
@@ -1173,7 +1173,7 @@ void poEditFrame::UpdateCatalog(const wxString& pot_file)
     }
 }
 
-void poEditFrame::OnUpdate(wxCommandEvent& event)
+void PoeditFrame::OnUpdate(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
 
@@ -1209,7 +1209,7 @@ void poEditFrame::OnUpdate(wxCommandEvent& event)
 
 
 
-void poEditFrame::OnListSel(wxListEvent& event)
+void PoeditFrame::OnListSel(wxListEvent& event)
 {
     if (m_sel != -1)
         UpdateFromTextCtrl(m_sel);
@@ -1233,13 +1233,13 @@ void poEditFrame::OnListSel(wxListEvent& event)
 
 
 
-void poEditFrame::OnListDesel(wxListEvent& event)
+void PoeditFrame::OnListDesel(wxListEvent& event)
 {
     UpdateFromTextCtrl(event.GetIndex());
     event.Skip();
 }
 
-void poEditFrame::OnListActivated(wxListEvent& event)
+void PoeditFrame::OnListActivated(wxListEvent& event)
 {
     if (m_catalog)
     {
@@ -1257,7 +1257,7 @@ void poEditFrame::OnListActivated(wxListEvent& event)
 
 
 
-void poEditFrame::OnReferencesMenu(wxCommandEvent& event)
+void PoeditFrame::OnReferencesMenu(wxCommandEvent& event)
 {
     int selItem = m_list->GetIndexInCatalog(m_sel);
     if (selItem < 0 || selItem >= (int)m_catalog->GetCount()) return;
@@ -1283,14 +1283,14 @@ void poEditFrame::OnReferencesMenu(wxCommandEvent& event)
 }
 
 
-void poEditFrame::OnReference(wxCommandEvent& event)
+void PoeditFrame::OnReference(wxCommandEvent& event)
 {
     ShowReference(event.GetId() - ID_POPUP_REFS);
 }
 
 
 
-void poEditFrame::ShowReference(int num)
+void PoeditFrame::ShowReference(int num)
 {
     wxBusyCursor bcur;
 
@@ -1338,7 +1338,7 @@ void poEditFrame::ShowReference(int num)
 
 
 
-void poEditFrame::OnFuzzyFlag(wxCommandEvent& event)
+void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
 {
     if (event.GetEventObject() == GetToolBar())
     {
@@ -1356,7 +1356,7 @@ void poEditFrame::OnFuzzyFlag(wxCommandEvent& event)
 
 
 
-void poEditFrame::OnQuotesFlag(wxCommandEvent& event)
+void PoeditFrame::OnQuotesFlag(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
     if (event.GetEventObject() == GetToolBar())
@@ -1371,7 +1371,7 @@ void poEditFrame::OnQuotesFlag(wxCommandEvent& event)
 
 
 
-void poEditFrame::OnLinesFlag(wxCommandEvent& event)
+void PoeditFrame::OnLinesFlag(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
     m_displayLines = GetMenuBar()->IsChecked(XRCID("menu_lines"));
@@ -1381,20 +1381,20 @@ void poEditFrame::OnLinesFlag(wxCommandEvent& event)
 
 
 
-void poEditFrame::OnCommentWinFlag(wxCommandEvent& event)
+void PoeditFrame::OnCommentWinFlag(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
     UpdateDisplayCommentWin();
 }
 
-void poEditFrame::OnAutoCommentsWinFlag(wxCommandEvent& event)
+void PoeditFrame::OnAutoCommentsWinFlag(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
     UpdateDisplayCommentWin();
 }
 
 
-void poEditFrame::OnShadedListFlag(wxCommandEvent& event)
+void PoeditFrame::OnShadedListFlag(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
     gs_shadedList = GetMenuBar()->IsChecked(XRCID("menu_shaded"));
@@ -1403,7 +1403,7 @@ void poEditFrame::OnShadedListFlag(wxCommandEvent& event)
 
 
 
-void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
+void PoeditFrame::OnInsertOriginal(wxCommandEvent& event)
 {
     if (!m_textTrans->IsShown())
     {
@@ -1425,7 +1425,7 @@ void poEditFrame::OnInsertOriginal(wxCommandEvent& event)
 
 
 #ifndef __WXMAC__
-void poEditFrame::OnFullscreen(wxCommandEvent& event)
+void PoeditFrame::OnFullscreen(wxCommandEvent& event)
 {
     bool fs = IsFullScreen();
     wxConfigBase *cfg = wxConfigBase::Get();
@@ -1451,7 +1451,7 @@ void poEditFrame::OnFullscreen(wxCommandEvent& event)
 
 
 
-void poEditFrame::OnFind(wxCommandEvent& event)
+void PoeditFrame::OnFind(wxCommandEvent& event)
 {
     FindFrame *f = (FindFrame*)FindWindow(_T("find_frame"));
 
@@ -1492,7 +1492,7 @@ static wxString TransformNewval(const wxString& val, bool displayQuotes)
     return newval;
 }
 
-void poEditFrame::UpdateFromTextCtrl(int item)
+void PoeditFrame::UpdateFromTextCtrl(int item)
 {
     if (m_catalog == NULL) return;
     if (item == -1) item = m_sel;
@@ -1585,7 +1585,7 @@ void poEditFrame::UpdateFromTextCtrl(int item)
 }
 
 
-void poEditFrame::UpdateToTextCtrl(int item)
+void PoeditFrame::UpdateToTextCtrl(int item)
 {
     if (m_catalog == NULL) return;
     if (item == -1) item = m_sel;
@@ -1663,7 +1663,7 @@ void poEditFrame::UpdateToTextCtrl(int item)
 
 
 
-void poEditFrame::ReadCatalog(const wxString& catalog)
+void PoeditFrame::ReadCatalog(const wxString& catalog)
 {
     wxBusyCursor bcur;
 
@@ -1705,7 +1705,7 @@ void poEditFrame::ReadCatalog(const wxString& catalog)
 }
 
 
-void poEditFrame::RefreshControls()
+void PoeditFrame::RefreshControls()
 {
     if (!m_catalog) return;
 
@@ -1780,7 +1780,7 @@ void poEditFrame::RefreshControls()
 
 
 
-void poEditFrame::UpdateStatusBar()
+void PoeditFrame::UpdateStatusBar()
 {
     int all, fuzzy, untranslated, badtokens;
     if (m_catalog)
@@ -1809,7 +1809,7 @@ void poEditFrame::UpdateStatusBar()
     }
 }
 
-void poEditFrame::DoGiveHelp(const wxString& text, bool show)
+void PoeditFrame::DoGiveHelp(const wxString& text, bool show)
 {
     if (show || !text.empty())
         wxFrame::DoGiveHelp(text, show);
@@ -1818,17 +1818,17 @@ void poEditFrame::DoGiveHelp(const wxString& text, bool show)
 }
 
 
-void poEditFrame::UpdateTitle()
+void PoeditFrame::UpdateTitle()
 {
     if (m_modified)
-        SetTitle(_T("poEdit : ") + m_fileName + _(" (modified)"));
+        SetTitle(_T("Poedit : ") + m_fileName + _(" (modified)"));
     else
-        SetTitle(_T("poEdit : ") + m_fileName);
+        SetTitle(_T("Poedit : ") + m_fileName);
 }
 
 
 
-void poEditFrame::UpdateMenu()
+void PoeditFrame::UpdateMenu()
 {
     wxMenuBar *menubar = GetMenuBar();
     wxToolBar *toolbar = GetToolBar();
@@ -1893,7 +1893,7 @@ void poEditFrame::UpdateMenu()
 
 
 
-bool poEditFrame::WriteCatalog(const wxString& catalog)
+bool PoeditFrame::WriteCatalog(const wxString& catalog)
 {
     wxBusyCursor bcur;
 
@@ -1937,7 +1937,7 @@ bool poEditFrame::WriteCatalog(const wxString& catalog)
 }
 
 
-void poEditFrame::OnEditComment(wxCommandEvent& event)
+void PoeditFrame::OnEditComment(wxCommandEvent& event)
 {
     int selItem = m_list->GetIndexInCatalog(m_sel);
     if (selItem < 0 || selItem >= (int)m_catalog->GetCount()) return;
@@ -1958,7 +1958,7 @@ void poEditFrame::OnEditComment(wxCommandEvent& event)
     }
 }
 
-void poEditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
+void PoeditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
 {
     wxMessageDialog dlg(this,
                         _("Do you really want to remove all translations that are no longer used from the catalog?\nIf you continue with purging, you will have to translate them again if they are added back in the future."),
@@ -1974,7 +1974,7 @@ void poEditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
 
 
 #ifdef USE_TRANSMEM
-void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
+void PoeditFrame::OnAutoTranslate(wxCommandEvent& event)
 {
     int ind = event.GetId() - ID_POPUP_TRANS;
     (*m_catalog)[m_list->GetIndexInCatalog(m_sel)].SetTranslation(m_autoTranslations[ind]);
@@ -1985,12 +1985,12 @@ void poEditFrame::OnAutoTranslate(wxCommandEvent& event)
     UpdateFromTextCtrl();
 }
 
-void poEditFrame::OnAutoTranslateAll(wxCommandEvent& event)
+void PoeditFrame::OnAutoTranslateAll(wxCommandEvent& event)
 {
     AutoTranslateCatalog();
 }
 
-bool poEditFrame::AutoTranslateCatalog()
+bool PoeditFrame::AutoTranslateCatalog()
 {
     wxBusyCursor bcur;
 
@@ -2032,7 +2032,7 @@ bool poEditFrame::AutoTranslateCatalog()
 }
 #endif
 
-wxMenu *poEditFrame::GetPopupMenu(size_t item)
+wxMenu *PoeditFrame::GetPopupMenu(size_t item)
 {
     if (!m_catalog) return NULL;
     if (item >= (size_t)m_list->GetItemCount()) return NULL;
@@ -2094,7 +2094,7 @@ wxMenu *poEditFrame::GetPopupMenu(size_t item)
 }
 
 
-void poEditFrame::OnAbout(wxCommandEvent&)
+void PoeditFrame::OnAbout(wxCommandEvent&)
 {
     wxBusyCursor busy;
     wxDialog dlg;
@@ -2109,7 +2109,7 @@ void poEditFrame::OnAbout(wxCommandEvent&)
 }
 
 
-void poEditFrame::OnHelp(wxCommandEvent&)
+void PoeditFrame::OnHelp(wxCommandEvent&)
 {
     InitHelp();
 #ifdef __WXMSW__
@@ -2118,7 +2118,7 @@ void poEditFrame::OnHelp(wxCommandEvent&)
     m_help.DisplayContents();
 }
 
-void poEditFrame::OnHelpGettext(wxCommandEvent&)
+void PoeditFrame::OnHelpGettext(wxCommandEvent&)
 {
     InitHelp();
 #ifdef __WXMSW__
@@ -2128,13 +2128,13 @@ void poEditFrame::OnHelpGettext(wxCommandEvent&)
 }
 
 
-void poEditFrame::OnManager(wxCommandEvent&)
+void PoeditFrame::OnManager(wxCommandEvent&)
 {
     wxFrame *f = ManagerFrame::Create();
     f->Raise();
 }
 
-void poEditFrame::SetCustomFonts()
+void PoeditFrame::SetCustomFonts()
 {
     wxConfigBase *cfg = wxConfig::Get();
 
@@ -2196,7 +2196,7 @@ void poEditFrame::SetCustomFonts()
     }
 }
 
-void poEditFrame::UpdateCommentWindowEditable()
+void PoeditFrame::UpdateCommentWindowEditable()
 {
     wxConfigBase *cfg = wxConfig::Get();
     bool commentWindowEditable =
@@ -2225,7 +2225,7 @@ void poEditFrame::UpdateCommentWindowEditable()
     }
 }
 
-void poEditFrame::UpdateDisplayCommentWin()
+void PoeditFrame::UpdateDisplayCommentWin()
 {
     m_displayCommentWin =
         GetMenuBar()->IsChecked(XRCID("menu_comment_win"));
@@ -2272,7 +2272,7 @@ void poEditFrame::UpdateDisplayCommentWin()
     RefreshControls();
 }
 
-void poEditFrame::OnCommentWindowText(wxCommandEvent&)
+void PoeditFrame::OnCommentWindowText(wxCommandEvent&)
 {
     if (!m_commentWindowEditable)
         return;
@@ -2298,7 +2298,7 @@ void poEditFrame::OnCommentWindowText(wxCommandEvent&)
 }
 
 
-void poEditFrame::OnIdle(wxIdleEvent& event)
+void PoeditFrame::OnIdle(wxIdleEvent& event)
 {
 #if USE_GETTEXT_VALIDATION
     if (!m_itemsToValidate.empty() && m_itemBeingValidated == -1)
@@ -2307,7 +2307,7 @@ void poEditFrame::OnIdle(wxIdleEvent& event)
     event.Skip();
 }
 
-void poEditFrame::OnEndProcess(wxProcessEvent& event)
+void PoeditFrame::OnEndProcess(wxProcessEvent& event)
 {
 #if USE_GETTEXT_VALIDATION
     m_gettextProcess = NULL;
@@ -2317,7 +2317,7 @@ void poEditFrame::OnEndProcess(wxProcessEvent& event)
 #endif
 }
 
-void poEditFrame::CancelItemsValidation()
+void PoeditFrame::CancelItemsValidation()
 {
 #if USE_GETTEXT_VALIDATION
     // stop checking entries in the background:
@@ -2326,7 +2326,7 @@ void poEditFrame::CancelItemsValidation()
 #endif
 }
 
-void poEditFrame::RestartItemsValidation()
+void PoeditFrame::RestartItemsValidation()
 {
 #if USE_GETTEXT_VALIDATION
     // start checking catalog's entries in the background:
@@ -2336,7 +2336,7 @@ void poEditFrame::RestartItemsValidation()
 #endif
 }
 
-void poEditFrame::BeginItemValidation()
+void PoeditFrame::BeginItemValidation()
 {
 #if USE_GETTEXT_VALIDATION
     int item = m_itemsToValidate.front();
@@ -2385,7 +2385,7 @@ void poEditFrame::BeginItemValidation()
 #endif
 }
 
-void poEditFrame::EndItemValidation()
+void PoeditFrame::EndItemValidation()
 {
 #if USE_GETTEXT_VALIDATION
     wxASSERT( m_catalog );
@@ -2441,7 +2441,7 @@ void poEditFrame::EndItemValidation()
 #endif
 }
 
-void poEditFrame::ShowPluralFormUI(bool show)
+void PoeditFrame::ShowPluralFormUI(bool show)
 {
     if (show && (!m_catalog || m_catalog->GetPluralFormsCount() == 0))
         show = false;
@@ -2459,7 +2459,7 @@ void poEditFrame::ShowPluralFormUI(bool show)
 }
 
 
-void poEditFrame::RecreatePluralTextCtrls()
+void PoeditFrame::RecreatePluralTextCtrls()
 {
     for (size_t i = 0; i < m_textTransPlural.size(); i++)
         m_textTransPlural[i]->PopEventHandler(true/*delete*/);
@@ -2519,7 +2519,7 @@ void poEditFrame::RecreatePluralTextCtrls()
     UpdateToTextCtrl();
 }
 
-void poEditFrame::OnListRightClick(wxMouseEvent& event)
+void PoeditFrame::OnListRightClick(wxMouseEvent& event)
 {
     long item;
     int flags = wxLIST_HITTEST_ONITEM;
@@ -2539,7 +2539,7 @@ void poEditFrame::OnListRightClick(wxMouseEvent& event)
     else event.Skip();
 }
 
-void poEditFrame::OnListFocus(wxFocusEvent& event)
+void PoeditFrame::OnListFocus(wxFocusEvent& event)
 {
     if (gs_focusToText)
     {
@@ -2552,7 +2552,7 @@ void poEditFrame::OnListFocus(wxFocusEvent& event)
         event.Skip();
 }
 
-void poEditFrame::AddBookmarksMenu()
+void PoeditFrame::AddBookmarksMenu()
 {
     wxMenu *menu = new wxMenu();
 
@@ -2582,7 +2582,7 @@ void poEditFrame::AddBookmarksMenu()
     bar->Insert(bar->GetMenuCount() - 1, menu, _("&Bookmarks"));
 }
 
-void poEditFrame::OnGoToBookmark(wxCommandEvent& event)
+void PoeditFrame::OnGoToBookmark(wxCommandEvent& event)
 {
     // Go to bookmark, if there is an item for it
     Bookmark bk = static_cast<Bookmark>(event.GetId() - ID_BOOKMARK_GO);
@@ -2599,7 +2599,7 @@ void poEditFrame::OnGoToBookmark(wxCommandEvent& event)
     }
 }
 
-void poEditFrame::OnSetBookmark(wxCommandEvent& event)
+void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
 {
     // Set bookmark if different from the current value for the item,
     // else unset it

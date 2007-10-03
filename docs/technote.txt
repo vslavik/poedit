@@ -1,5 +1,5 @@
 
-This file contains a brief description of poEdit's architecture.
+This file contains a brief description of Poedit's architecture.
 
 As for GUI part, wxWidgets 2.2 is used, together with XML resources
 that describe dialogs, menu and toolbar.
@@ -34,7 +34,7 @@ translations). For this, it uses SourceDigger class.
 
 - Parsing source code -
 
-SourceDigger class searches given paths for all files poEdit can parse
+SourceDigger class searches given paths for all files Poedit can parse
 and runs parser(s) on them. As the result, SourceDigger returns new
 catalog with empty translations (so it contains only strings and 
 source code references). This catalog is merged with currently edited
@@ -63,7 +63,7 @@ follows:
 
 - Executing programs -
 
-poEdit uses external programs to do `the real work', namely
+Poedit uses external programs to do `the real work', namely
 msgmerge, msgfmt and xgettext. gexecute.cpp contains process execution 
 routine that captures child process' stdout and stderr. (It takes big
 advantage of wxWindow's wxProcess class.) stderr output (if any) is

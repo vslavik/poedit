@@ -101,7 +101,7 @@ if test "x$WXRC" = x ; then
     WXRC=`$WX_CONFIG_WITH_ARGS --utility=wxrc`
     if test "x$WXRC" = x ; then
         AC_MSG_RESULT([not found])
-        AC_MSG_ERROR([wxrc is needed to compile poEdit.])
+        AC_MSG_ERROR([wxrc is needed to compile Poedit.])
     fi
 fi
 AC_MSG_RESULT([$WXRC])
@@ -162,7 +162,7 @@ if test x$USE_TRANSMEM != xno ; then
    ],
    [
       USE_TRANSMEM=no
-      AC_MSG_WARN([cannot find Berkeley DB >= 3.1, poEdit will build w/o translation memory feature])
+      AC_MSG_WARN([cannot find Berkeley DB >= 3.1, Poedit will build w/o translation memory feature])
    ])
 fi
 

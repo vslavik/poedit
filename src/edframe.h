@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 1999-2005 Vaclav Slavik
  *
@@ -64,34 +64,34 @@ class ListHandler;
 class TextctrlHandler;
 
 class TranslationMemory;
-class poEditFrame;
+class PoeditFrame;
 
-WX_DECLARE_LIST(poEditFrame, poEditFramesList);
+WX_DECLARE_LIST(PoeditFrame, PoeditFramesList);
 
 /** This class provides main editing frame. It handles user's input
     and provides frontend to catalog editing engine. Nothing fancy.
  */
-class poEditFrame : public wxFrame
+class PoeditFrame : public wxFrame
 {
     public:
         /** Public constructor functions. Creates and shows frame
             (and optionally opens \a catalog). If \a catalog is not
-            empty and is already opened in another poEdit frame,
+            empty and is already opened in another Poedit frame,
             then this function won't create new frame but instead
             return pointer to existing one.
 
             \param catalog filename of catalog to open. If empty, starts
                            w/o opened file.
          */
-        static poEditFrame *Create(const wxString& catalog = wxEmptyString);
+        static PoeditFrame *Create(const wxString& catalog = wxEmptyString);
 
 
-        /** Returns pointer to existing instance of poEditFrame that currently
+        /** Returns pointer to existing instance of PoeditFrame that currently
             exists and edits \a catalog. If no such frame exists, returns NULL.
          */
-        static poEditFrame *Find(const wxString& catalog);
+        static PoeditFrame *Find(const wxString& catalog);
 
-        ~poEditFrame();
+        ~PoeditFrame();
 
         /// Reads catalog, refreshes controls.
         void ReadCatalog(const wxString& catalog);
@@ -112,9 +112,9 @@ class poEditFrame : public wxFrame
             \param catalog filename of catalog to open. If empty, starts
                            w/o opened file.
          */
-        poEditFrame();
+        PoeditFrame();
 
-        static poEditFramesList ms_instances;
+        static PoeditFramesList ms_instances;
 
     private:
         /// Refreshes controls.
@@ -261,7 +261,7 @@ class poEditFrame : public wxFrame
         wxPanel *m_bottomLeftPanel;
         wxPanel *m_bottomRightPanel;
         wxSplitterWindow *m_splitter, *m_bottomSplitter;
-        poEditListCtrl *m_list;
+        PoeditListCtrl *m_list;
         wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textTrans, *m_textComment, *m_textAutoComments;
         std::vector<wxTextCtrl*> m_textTransPlural;
         wxTextCtrl *m_textTransSingularForm;

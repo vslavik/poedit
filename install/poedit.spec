@@ -35,7 +35,7 @@ BuildRequires: zip
 BuildRoot:     %{_tmppath}/%{name}-%{version}
 
 %description
-poEdit is cross-platform gettext catalogs (.po files) editor. It is built with
+Poedit is cross-platform gettext catalogs (.po files) editor. It is built with
 wxWindows toolkit and can run on Unix or Windows. It aims to provide convenient
 way of editing gettext catalogs. It features UTF-8 support, fuzzy and
 untranslated records highlighting, whitespaces highlighting, references
@@ -69,8 +69,8 @@ cat > ./%{_libdir}/menu/poedit <<EOF
 	section="Applications/Development/Tools"\\
 	icon="poedit.xpm"\\
 	mimetypes="application/x-po;application/x-gettext"\\
-	title="poEdit"\\
-	longtitle="poEdit Gettext Catalogs Editor"
+	title="Poedit"\\
+	longtitle="Poedit Gettext Catalogs Editor"
 EOF
 )
 

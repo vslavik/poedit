@@ -1,5 +1,5 @@
 ;
-;   This file is part of poEdit (http://www.poedit.net)
+;   This file is part of Poedit (http://www.poedit.net)
 ;
 ;   Copyright (C) 1999-2007 Vaclav Slavik
 ;
@@ -37,15 +37,15 @@
 
 [Setup]
 OutputBaseFilename=poedit-{#VERSION}-setup
-AppName=poEdit
-AppVerName=poEdit {#VERSION}
+AppName=Poedit
+AppVerName=Poedit {#VERSION}
 
 ChangesAssociations=true
 AlwaysShowComponentsList=true
 SourceDir=..
-DefaultDirName={pf}\poEdit
+DefaultDirName={pf}\Poedit
 
-DefaultGroupName=poEdit
+DefaultGroupName=Poedit
 AllowNoIcons=true
 LicenseFile=COPYING
 OutputDir=.
@@ -68,7 +68,7 @@ VersionInfoTextVersion={#VERSION}
 VersionInfoCopyright=© 1999-2007 Vaclav Slavik
 VersionInfoVersion={#VERSION}
 VersionInfoCompany=Vaclav Slavik
-VersionInfoDescription=Installer for poEdit
+VersionInfoDescription=Installer for Poedit
 AppCopyright=© 1999-2007 Vaclav Slavik
 AppPublisher=Vaclav Slavik
 AppSupportURL=http://www.poedit.net/support.php
@@ -76,7 +76,7 @@ AppUpdatesURL=http://www.poedit.net/download.php
 AppVersion={#VERSION}
 AppContact=poedit-users@lists.sourceforge.net
 UninstallDisplayIcon={app}\bin\poedit.exe
-UninstallDisplayName=poEdit
+UninstallDisplayName=Poedit
 MinVersion=0,4.0.1381
 
 [Files]
@@ -121,12 +121,12 @@ Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty; Check:
 Root: HKCU; Subkey: Software\Vaclav Slavik\poedit\{#VERSION}; ValueType: string; ValueName: application_path; ValueData: {app}; Flags: uninsdeletevalue; Check: InstallLocally
 
 [Icons]
-Name: {group}\poEdit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0
+Name: {group}\Poedit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0
 Name: {group}\Readme; Filename: {app}\doc\readme.txt; IconIndex: 0
 
 [Run]
 Filename: {app}\doc\readme.txt; Description: View readme.txt; Flags: shellexec postinstall unchecked; Components: docs
-Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run poEdit now; Flags: postinstall unchecked nowait
+Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run Poedit now; Flags: postinstall unchecked nowait
 
 [_ISTool]
 UseAbsolutePaths=false

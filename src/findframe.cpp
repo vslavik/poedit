@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 2001-2007 Vaclav Slavik
  *
@@ -52,7 +52,7 @@ BEGIN_EVENT_TABLE(FindFrame, wxFrame)
 END_EVENT_TABLE()
 
 FindFrame::FindFrame(wxWindow *parent,
-                     poEditListCtrl *list,
+                     PoeditListCtrl *list,
                      Catalog *c,
                      wxTextCtrl *textCtrlOrig,
                      wxTextCtrl *textCtrlTrans,

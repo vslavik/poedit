@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 1999-2005 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
@@ -44,10 +44,10 @@ class WXDLLEXPORT wxListEvent;
 extern bool gs_shadedList;
 
 // list control with both columns equally wide:
-class poEditListCtrl : public wxListView
+class PoeditListCtrl : public wxListView
 {
     public:
-        poEditListCtrl(wxWindow *parent,
+        PoeditListCtrl(wxWindow *parent,
                        wxWindowID id = -1,
                        const wxPoint &pos = wxDefaultPosition,
                        const wxSize &size = wxDefaultSize,
@@ -56,7 +56,7 @@ class poEditListCtrl : public wxListView
                        const wxValidator& validator = wxDefaultValidator,
                        const wxString &name = _T("listctrl"));
 
-        virtual ~poEditListCtrl();
+        virtual ~PoeditListCtrl();
 
         void CreateColumns();
 

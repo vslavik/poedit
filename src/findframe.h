@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 2001-2006 Vaclav Slavik
  *
@@ -32,7 +32,7 @@
 
 #include <wx/frame.h>
 
-class poEditListCtrl;
+class PoeditListCtrl;
 class WXDLLEXPORT wxButton;
 class Catalog;
 
@@ -51,7 +51,7 @@ class FindFrame : public wxFrame
             \param list    List control to search in
             \param catalog Catalog to search in
          */
-        FindFrame(wxWindow *parent, poEditListCtrl *list, Catalog *c,
+        FindFrame(wxWindow *parent, PoeditListCtrl *list, Catalog *c,
                   wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans,
                   wxTextCtrl *textCtrlComments, wxTextCtrl *textCtrlAutoComments);
         ~FindFrame();
@@ -72,7 +72,7 @@ class FindFrame : public wxFrame
         bool DoFind(int dir);
         DECLARE_EVENT_TABLE()
 
-        poEditListCtrl *m_listCtrl;
+        PoeditListCtrl *m_listCtrl;
         Catalog *m_catalog;
         int m_position;
         wxString m_text;

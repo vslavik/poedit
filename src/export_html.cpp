@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 2003 Christophe Hermier
  *
@@ -75,7 +75,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
     f.AddLine(_T("<html>"));
 
     f.AddLine(_T("<head>"));
-	line.Printf(_T("<title> %s - %s / %s - poEdit Export </title>"),
+	line.Printf(_T("<title> %s - %s / %s - Poedit Export </title>"),
                 m_header.Project.c_str(),
                 m_header.Language.c_str(),
                 m_header.Country.c_str());

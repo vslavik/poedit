@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 1999-2007 Vaclav Slavik
  *
@@ -40,7 +40,7 @@
 #include <wx/stdpaths.h>
 
 #if !wxUSE_UNICODE
-    #error "Unicode build of wxWidgets is required by poEdit"
+    #error "Unicode build of wxWidgets is required by Poedit"
 #endif
 
 #include "edapp.h"
@@ -52,9 +52,9 @@
 #include "icons.h"
 
 
-IMPLEMENT_APP(poEditApp);
+IMPLEMENT_APP(PoeditApp);
 
-wxString poEditApp::GetAppPath() const
+wxString PoeditApp::GetAppPath() const
 {
 #if defined(__UNIX__)
     wxString home;
@@ -67,7 +67,7 @@ wxString poEditApp::GetAppPath() const
     wxString path = wxConfigBase::Get()->Read(regkey, wxEmptyString);
     if (!path)
     {
-        wxLogError(_("poEdit installation is broken, cannot find application's home directory."));
+        wxLogError(_("Poedit installation is broken, cannot find application's home directory."));
         path = _T(".");
     }
     return path;
@@ -76,7 +76,7 @@ wxString poEditApp::GetAppPath() const
 #endif
 }
 
-wxString poEditApp::GetAppVersion() const
+wxString PoeditApp::GetAppVersion() const
 {
     wxString version(_T("1.3.7"));
     return version;
@@ -89,7 +89,7 @@ static wxArrayString gs_filesToOpen;
 
 extern void InitXmlResource();
 
-bool poEditApp::OnInit()
+bool PoeditApp::OnInit()
 {
     if (!wxApp::OnInit())
         return false;
@@ -97,8 +97,8 @@ bool poEditApp::OnInit()
 #if defined(__UNIX__) && !defined(__WXMAC__)
     wxString home = wxGetHomeDir() + _T("/");
 
-    // create poEdit cfg dir, move ~/.poedit to ~/.poedit/config
-    // (upgrade from older versions of poEdit which used ~/.poedit file)
+    // create Poedit cfg dir, move ~/.poedit to ~/.poedit/config
+    // (upgrade from older versions of Poedit which used ~/.poedit file)
     if (!wxDirExists(home + _T(".poedit")))
     {
         if (wxFileExists(home + _T(".poedit")))
@@ -110,7 +110,7 @@ bool poEditApp::OnInit()
 #endif
 
     SetVendorName(_T("Vaclav Slavik"));
-    SetAppName(_T("poedit"));
+    SetAppName(_T("Poedit"));
 
 #if defined(__WXMAC__)
     #define CFG_FILE (wxStandardPaths::Get().GetUserConfigDir() + _T("/net.poedit.Poedit.cfg"))
@@ -161,7 +161,7 @@ bool poEditApp::OnInit()
 
     if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
     {
-        wxMessageBox(_("This is first time you run poEdit.\nPlease fill in your name and e-mail address.\n(This information is used only in catalogs headers)"), _("Setup"),
+        wxMessageBox(_("This is first time you run Poedit.\nPlease fill in your name and e-mail address.\n(This information is used only in catalogs headers)"), _("Setup"),
                        wxOK | wxICON_INFORMATION);
 
         PreferencesDialog dlg;
@@ -189,20 +189,20 @@ bool poEditApp::OnInit()
 }
 
 
-void poEditApp::OpenNewFile()
+void PoeditApp::OpenNewFile()
 {
     if (wxConfig::Get()->Read(_T("manager_startup"), (long)false))
         ManagerFrame::Create()->Show(true);
     else
-        poEditFrame::Create(wxEmptyString);
+        PoeditFrame::Create(wxEmptyString);
 }
 
-void poEditApp::OpenFile(const wxString& name)
+void PoeditApp::OpenFile(const wxString& name)
 {
-    poEditFrame::Create(name);
+    PoeditFrame::Create(name);
 }
 
-void poEditApp::SetDefaultParsers(wxConfigBase *cfg)
+void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
 {
     ParsersDB pdb;
     bool changed = false;
@@ -248,7 +248,7 @@ void poEditApp::SetDefaultParsers(wxConfigBase *cfg)
         changed = true;
     }
 
-    // If upgrading poEdit to 1.2.4, add dxgettext parser for Delphi:
+    // If upgrading Poedit to 1.2.4, add dxgettext parser for Delphi:
 #ifdef __WINDOWS__
     if (defaultsVersion == _T("1.2.x"))
     {
@@ -263,7 +263,7 @@ void poEditApp::SetDefaultParsers(wxConfigBase *cfg)
     }
 #endif
 
-    // If upgrading poEdit to 1.2.5, update C++ parser to handle --from-code:
+    // If upgrading Poedit to 1.2.5, update C++ parser to handle --from-code:
     if (defaultsVersion == _T("1.2.x") || defaultsVersion == _T("1.2.4"))
     {
         int cpp = pdb.FindParser(_T("C/C++"));
@@ -285,7 +285,7 @@ void poEditApp::SetDefaultParsers(wxConfigBase *cfg)
     }
 }
 
-void poEditApp::SetDefaultCfg(wxConfigBase *cfg)
+void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
 {
     SetDefaultParsers(cfg);
 
@@ -324,14 +324,14 @@ void poEditApp::SetDefaultCfg(wxConfigBase *cfg)
     cfg->Write(_T("version"), GetAppVersion());
 }
 
-void poEditApp::OnInitCmdLine(wxCmdLineParser& parser)
+void PoeditApp::OnInitCmdLine(wxCmdLineParser& parser)
 {
     wxApp::OnInitCmdLine(parser);
     parser.AddParam(_T("catalog.po"), wxCMD_LINE_VAL_STRING, 
                     wxCMD_LINE_PARAM_OPTIONAL | wxCMD_LINE_PARAM_MULTIPLE);
 }
 
-bool poEditApp::OnCmdLineParsed(wxCmdLineParser& parser)
+bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
 {
     if (!wxApp::OnCmdLineParsed(parser))
         return false;

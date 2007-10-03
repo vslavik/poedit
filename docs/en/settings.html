@@ -14,7 +14,7 @@
 (Available through <b>File/Preferences</b> in the menu.)
 <p>
 
-You can set various options that affect poEdit globally and are not 
+You can set various options that affect Poedit globally and are not 
 related to opened catalog in Preferences. There are three tabs in
 the dialog box, one for each setting group. 
 <p>
@@ -27,13 +27,13 @@ the dialog box, one for each setting group.
        Set your name and e-mail address. This is used to fill int
        `Last Translator' record in catalog's header.
 <li><b>Behavior</b><br>
- Affects various aspects of poEdit's behavior. <i>Automatically compile .mo file
- on save</i> will cause poEdit to run the <tt>msgfmt</tt> utility to convert
+ Affects various aspects of Poedit's behavior. <i>Automatically compile .mo file
+ on save</i> will cause Poedit to run the <tt>msgfmt</tt> utility to convert
  .po files to .mo ones (which is what you have to done before you can use 
  catalogs in your application). <i>Show summary after catalog update</i>
  enables small window with information about added and removed translations
- after doing update. <i>Open catalogs manager on poEdit startup</i> does 
- exactly what it says - if enabled, poEdit won't start up with its main
+ after doing update. <i>Open catalogs manager on Poedit startup</i> does 
+ exactly what it says - if enabled, Poedit won't start up with its main
  window opened but will launch the manager instead. <i>Always change focus
  to text input field</i> affects keyboard navigation and is discussed
  in the beginning of <a href="ui.html">UI Overview</a> section.
@@ -55,7 +55,7 @@ refer to TM section for details.
     (Warning: for experienced users only!) <br>
     Most importantly, you can 
     edit source code parsers in this dialog. Parsers are used when
-    updating catalogs in poEdit (see <a href="update.html">Updating Catalog</a>)
+    updating catalogs in Poedit (see <a href="update.html">Updating Catalog</a>)
     and they take care of extracting strings from source code. By default
     only C and C++ programming languages are supported (through
     gettext <tt>xgettext</tt> utility). The dialog for editing parsers explains
@@ -81,7 +81,7 @@ important information here is the charset.
 use the <a href="update.html">catalog update feature</a>. "Paths" page lets
 you specify in what directories should parsers look for source file. Note
 that the paths in list box are relative to the base path, so if you set 
-basepath to <tt>../../poEdit</tt> and add these two paths into the list box:
+basepath to <tt>../../Poedit</tt> and add these two paths into the list box:
 <pre>
 src
 include
@@ -89,8 +89,8 @@ include
 
 it will recursively search for source files in following directories:
 <pre>
-../../poEdit/src
-../../poEdit/include
+../../Poedit/src
+../../Poedit/include
 </pre>
 
 The base path is relative to the directory where .po catalog file resists.
@@ -104,7 +104,7 @@ page empty.
 
 <p>
 Note that specifying language or editing anything at "Paths" or "Keywords"
-panels will cause poEdit to save .po.poedit file.
+panels will cause Poedit to save .po.poedit file.
 
 </body>
 </html>

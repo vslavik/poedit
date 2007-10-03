@@ -60,6 +60,6 @@ compiled_xrc.cpp: $(XRC_RESOURCES) $(XRC_MORE_FILES)
 bundle: poedit
 	$(MAKE) -C ../locales allmo
 	$(top_srcdir)/macosx/make-bundle \
-	     "poedit.app" \
+	     "Poedit.app" \
 		 "`$(WX_CONFIG_WITH_ARGS) --rezflags`" \
 		 "$(top_builddir)" "$(top_srcdir)"

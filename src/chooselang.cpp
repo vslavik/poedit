@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 2003-2006 Vaclav Slavik
  *
@@ -172,8 +172,8 @@ void ChangeUILanguage()
     if (lang == wxLANGUAGE_UNKNOWN)
         return;
     SaveUILanguage(lang);
-    wxMessageBox(_("You must restart poEdit for this change to take effect."),
-                 _T("poEdit"),
+    wxMessageBox(_("You must restart Poedit for this change to take effect."),
+                 _T("Poedit"),
                  wxOK | wxCENTRE | wxICON_INFORMATION);
 }
 

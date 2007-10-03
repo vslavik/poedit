@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 1999-2007 Vaclav Slavik
  *
@@ -216,7 +216,7 @@ class Catalog
         /// Appends content of \cat to this catalog.
         void Append(Catalog& cat);
 
-        /** Returns xx_YY ISO code of catalog's language if either the poEdit
+        /** Returns xx_YY ISO code of catalog's language if either the Poedit
             extensions headers are present or if filename is known and is in
             the xx[_YY] form, otherwise returns empty string. */
         wxString GetLocaleCode() const;
@@ -448,7 +448,7 @@ class CatalogData : public wxObject
 
         /** Sets gettext flags directly in string format. It may be
             either empty string or "#, fuzzy", "#, c-format",
-            "#, fuzzy, c-format" or others (not understood by poEdit).
+            "#, fuzzy, c-format" or others (not understood by Poedit).
          */
         void SetFlags(const wxString& flags);
 
@@ -601,7 +601,7 @@ class CatalogDeletedData : public wxObject
 
         /** Sets gettext flags directly in string format. It may be
             either empty string or "#, fuzzy", "#, c-format",
-            "#, fuzzy, c-format" or others (not understood by poEdit).
+            "#, fuzzy, c-format" or others (not understood by Poedit).
          */
         void SetFlags(const wxString& flags) {m_flags = flags;};
 

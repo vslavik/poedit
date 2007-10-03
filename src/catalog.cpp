@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 1999-2007 Vaclav Slavik
  *
@@ -1335,7 +1335,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     f.Write(crlf, encConv);
     f.Close();
 
-    /* poEdit < 1.3.0 used to save additional info in .po.poedit file. It's
+    /* Poedit < 1.3.0 used to save additional info in .po.poedit file. It's
        not used anymore, so delete the file if it exists: */
     if (wxFileExists(po_file + _T(".poedit")))
     {

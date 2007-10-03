@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 1999-2006 Vaclav Slavik
  *
@@ -39,10 +39,10 @@ class WXDLLEXPORT wxConfigBase;
 
 
 /// wxApp for use with 
-class poEditApp : public wxApp
+class PoeditApp : public wxApp
 {
     public:
-        /** wxWin initalization hook. Shows poEditFrame and initializes
+        /** wxWin initalization hook. Shows PoeditFrame and initializes
             configuration entries to default values if they were missing.
          */
         bool OnInit();
@@ -57,7 +57,7 @@ class poEditApp : public wxApp
          */
         wxString GetAppPath() const;
 
-        /// Returns poEdit version string.
+        /// Returns Poedit version string.
         wxString GetAppVersion() const;
 
         /// Returns our locale object
@@ -88,7 +88,7 @@ class poEditApp : public wxApp
         wxLocale m_locale;
 };
 
-DECLARE_APP(poEditApp);
+DECLARE_APP(PoeditApp);
 
 
 #endif // _EDAPP_H_

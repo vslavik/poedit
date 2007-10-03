@@ -1,5 +1,5 @@
 /*
- *  This file is part of poEdit (http://www.poedit.net)
+ *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 1999-2007 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
@@ -37,7 +37,7 @@
 #include "edlistctrl.h"
 #include "digits.h"
 
-// I don't like this global flag, but all poEditFrame instances should share it :(
+// I don't like this global flag, but all PoeditFrame instances should share it :(
 bool gs_shadedList = false;
 
 // colours used in the list:
@@ -72,8 +72,8 @@ enum
     IMG_BK9       = 10 << 3
 };
 
-BEGIN_EVENT_TABLE(poEditListCtrl, wxListCtrl)
-   EVT_SIZE(poEditListCtrl::OnSize)
+BEGIN_EVENT_TABLE(PoeditListCtrl, wxListCtrl)
+   EVT_SIZE(PoeditListCtrl::OnSize)
 END_EVENT_TABLE()
 
 
@@ -140,7 +140,7 @@ wxBitmap BitmapFromList(wxImageList* list, int index)
     return bmp;
 }
 
-poEditListCtrl::poEditListCtrl(wxWindow *parent,
+PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
                wxWindowID id,
                const wxPoint &pos,
                const wxSize &size,
@@ -201,11 +201,11 @@ poEditListCtrl::poEditListCtrl(wxWindow *parent,
     m_attrInvalid[1].SetBackgroundColour(g_ItemColourInvalid[1]);
 }
 
-poEditListCtrl::~poEditListCtrl()
+PoeditListCtrl::~PoeditListCtrl()
 {
 }
 
-void poEditListCtrl::CreateColumns()
+void PoeditListCtrl::CreateColumns()
 {
     ClearAll();
     InsertColumn(0, _("Original string"));
@@ -216,7 +216,7 @@ void poEditListCtrl::CreateColumns()
     SizeColumns();
 }
 
-void poEditListCtrl::SizeColumns()
+void PoeditListCtrl::SizeColumns()
 {
     const int LINE_COL_SIZE = m_displayLines ? 50 : 0;
 
@@ -232,13 +232,13 @@ void poEditListCtrl::SizeColumns()
 }
 
 
-void poEditListCtrl::CatalogChanged(Catalog* catalog)
+void PoeditListCtrl::CatalogChanged(Catalog* catalog)
 {
     m_catalog = catalog;
     ReadCatalog();
 }
 
-void poEditListCtrl::ReadCatalog()
+void PoeditListCtrl::ReadCatalog()
 {
     if (m_catalog == NULL)
     {
@@ -299,7 +299,7 @@ void poEditListCtrl::ReadCatalog()
     }
 }
 
-wxString poEditListCtrl::OnGetItemText(long item, long column) const
+wxString PoeditListCtrl::OnGetItemText(long item, long column) const
 {
     if (m_catalog == NULL)
         return wxEmptyString;
@@ -325,7 +325,7 @@ wxString poEditListCtrl::OnGetItemText(long item, long column) const
     }
 }
 
-wxListItemAttr *poEditListCtrl::OnGetItemAttr(long item) const
+wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
 {
     size_t idx = gs_shadedList ? size_t(item % 2) : 0;
 
@@ -344,7 +344,7 @@ wxListItemAttr *poEditListCtrl::OnGetItemAttr(long item) const
         return (wxListItemAttr*)&m_attrNormal[idx];
 }
 
-int poEditListCtrl::OnGetItemImage(long item) const
+int PoeditListCtrl::OnGetItemImage(long item) const
 {
     if (m_catalog == NULL)
         return IMG_NOTHING;
@@ -364,13 +364,13 @@ int poEditListCtrl::OnGetItemImage(long item) const
     return index;
 }
 
-void poEditListCtrl::OnSize(wxSizeEvent& event)
+void PoeditListCtrl::OnSize(wxSizeEvent& event)
 {
     SizeColumns();
     event.Skip();
 }
 
-long poEditListCtrl::GetIndexInCatalog(long item) const
+long PoeditListCtrl::GetIndexInCatalog(long item) const
 {
     if (item < (long)m_itemIndexToCatalogIndexArray.size())
         return m_itemIndexToCatalogIndexArray[item];
@@ -378,7 +378,7 @@ long poEditListCtrl::GetIndexInCatalog(long item) const
         return -1;
 }
 
-int poEditListCtrl::GetItemIndex(int catalogIndex) const
+int PoeditListCtrl::GetItemIndex(int catalogIndex) const
 {
     if (catalogIndex < (int)m_catalogIndexToItemIndexArray.size())
         return m_catalogIndexToItemIndexArray[catalogIndex];

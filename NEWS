@@ -2,12 +2,13 @@
 - OS X: fixed startup on computers that didn't have Poedit installed before
 - fixed translation status color indicator to work correctly in case
   of plural entries
+- changed the official spelling from "poEdit" to "Poedit"
 
 Version 1.3.7
 -------------
 
 - Windows: Windows 95/98 is no longer supported by the official binary
-- OS X: poEdit is now built as Universal binary
+- OS X: Poedit is now built as Universal binary
 - fixed the Preferences menu entry in catalogs manager
 - fixed to handle file references with Windows paths on Unix
 - fixed the "failed to convert to unicode" bug when saving (#1589744)
@@ -90,7 +91,7 @@ Version 1.3.2
   duplicate lines and to not ignore every second automatic comment
   (Olivier Sannier)
 - added ability to search comments (Olivier Sannier)
-- poEdit now preserves obsolete translations (Olivier Sannier)
+- Poedit now preserves obsolete translations (Olivier Sannier)
 - added checking of input files' correctness
 - fixed parsing of "\\n" substrings in catalog headers
 - fixed compilation with wxWidgets >= 2.5.3
@@ -127,8 +128,8 @@ Version 1.3.0
 - Windows: visual improvements to main window (Tim Kosse)
 - usability improvements
 - fixed storing of non-ASCII catalog headers
-- poEdit now preserves non-standard entries in PO file header
-- poEdit now respects c-format and no-c-format when checking tokens correctness
+- Poedit now preserves non-standard entries in PO file header
+- Poedit now respects c-format and no-c-format when checking tokens correctness
 - position in translations list is no longer lost when saving the file
 - configure now correctly detects libdb4 with versioned symbols
 - "Find" tool now selects matches in text controls (Sergio Talens-Oliag)
@@ -136,7 +137,7 @@ Version 1.3.0
 - double-clicking on invalid entry now pops up error description
 - Unix: use GNOME theme icons if they are installed on the system
 - Unix: use GtkSpell for spell checking (GTK+ 2 only)
-- poEdit no longer saves .po.poedit file, the headers were moved into
+- Poedit no longer saves .po.poedit file, the headers were moved into
   custom X-Poedit-* fields in .po file header
 - added more translations:
      Punjabi (Amanpreet Singh Alam)
@@ -157,7 +158,7 @@ Version 1.2.5
 - added catalog export to HTML (Christophe Hermier)
 - fixed bug in displaying list entries in ANSI build introduced in 1.2.4
 - fixed opening of source files specified using absolute path
-- poEdit now preserves fuzzy status if set after partially editing an entry
+- Poedit now preserves fuzzy status if set after partially editing an entry
 - many fixes to comment window (Olivier Sannier)
 - comment window is now (optionally) editable (Olivier Sannier)
 - fixed preferences dialog if translation memory is not used (Olivier Sannier)
@@ -203,12 +204,12 @@ Version 1.2.3
 Version 1.2.2
 -------------
 
-- poEdit now correctly differentiates between Traditional and Simplified
+- Poedit now correctly differentiates between Traditional and Simplified
   Chinese
 - optimizations for better handling of catalogs with very large entries
 - Mac: compilation fixes for buggy gcc 3.1 snapshot used by MacOS X
 - added country metadata into catalog settings dialog
-- Windows: it is now possible to change UI language directly in poEdit
+- Windows: it is now possible to change UI language directly in Poedit
 - added catalog updating from POT files
 - more intuitive UI for translation memory creation
 - added more translations:
@@ -226,7 +227,7 @@ Version 1.2.2
 Version 1.2.1
 -------------
 
-- Windows: poEdit window now accepts files dropped on it via drag'n'drop
+- Windows: Poedit window now accepts files dropped on it via drag'n'drop
 - added more translations:
      Georgian (Aiet Kolkhi)
      Romanian (Ovidiu Constantin)
@@ -234,7 +235,7 @@ Version 1.2.1
 - reworked Traditional Chinese translation (Leo Liaw)
 - fixed bug when empty error text was shown if msgfmt reported error
 - moved "Shaded translations list" from preferences into the View menu
-- Windows: allow coexistence of multiple poEdit versions on same system
+- Windows: allow coexistence of multiple Poedit versions on same system
 
 
 Version 1.2.0
@@ -261,7 +262,7 @@ Version 1.1.10
 
 - fix to "fixes to catalog charset handling" from 1.1.9
 - Unix: configure now checks for db4 in addition to db and db3
-- Windows: fixed launching poEdit via associations when long filenames 
+- Windows: fixed launching Poedit via associations when long filenames 
   were involved
 - added more translations:
      Polish (Arkadiusz Lipiec)
@@ -295,13 +296,13 @@ Version 1.1.7
 
 - fixed a bug that prevented direct opening of files in editor from working
 - fixed Find dialog (didn't select found entries in the list)
-- poEdit 1.1.6 package contained out-of-date resources.zip by mistake,
+- Poedit 1.1.6 package contained out-of-date resources.zip by mistake,
   this is fixed now
 - added an option to disable list rows shading
 - minor UI tweaks
 - added Chinese (zh_TW) translation (Ying-Chieh Liao)
 - several fixes related to handling of directory names with spaces
-- fixed lauching poEdit with filename as the argument
+- fixed lauching Poedit with filename as the argument
 
 
 Version 1.1.6
@@ -318,7 +319,7 @@ Version 1.1.6
   choice instead of in built-in files viewer
 - Windows: fixed wrong placement of progress indicator in the status bar
 - Unix: man page is now installed
-- Unix: poEdit now links with libdb-3.x for x > 1, too
+- Unix: Poedit now links with libdb-3.x for x > 1, too
 - Linux: RPM package now comes in two favors: poedit and poedit-semistatic
   (the latter is statically linked against wxGTK and libdb)
 
@@ -371,9 +372,9 @@ Version 1.1.1
 - added support for semi-automatic translations using translation memory
   concept. Translation memory is an indexed database of all string-translation
   pairs found in the system, plus algorithm to retrieve similar strings from
-  the database. poEdit can dig translations from PO, MO and RPM files.
+  the database. Poedit can dig translations from PO, MO and RPM files.
 - implemented search
-- poEdit source code is now documented with Doxygen
+- Poedit source code is now documented with Doxygen
 - Windows: HTML Help documentation now uses CSS and looks much better
 - better keyboard navigation
 
@@ -382,7 +383,7 @@ Version 1.1.0
 -------------
 
 - support for UTF-8
-- changes to make poEdit work correctly with gettext 0.10.37
+- changes to make Poedit work correctly with gettext 0.10.37
 - fixed default ISO charset names to be iso-8859-n instead of iso8859-n
 - new ability to save catalogs in all common CR/LF formats, plus
   an option to preserve file's format (default values: Unix and preserve)
@@ -393,7 +394,7 @@ Version 1.0.3
 -------------
 
 - fixed comments parsing bug (reported by Mattias Dahlberg)
-- Windows: fixed ugly blinking when resizing poEdit window
+- Windows: fixed ugly blinking when resizing Poedit window
 
 
 Version 1.0.2
