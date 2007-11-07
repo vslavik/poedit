@@ -2015,7 +2015,7 @@ bool PoeditFrame::AutoTranslateCatalog()
             int score = tm->Lookup(dt.GetString(), results);
             if (score > 0)
             {
-                m_catalog->Translate(dt.GetString(), results[0]);
+                dt.SetTranslation(results[0]);
                 dt.SetAutomatic(true);
                 dt.SetFuzzy(true);
                 matches++;

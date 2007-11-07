@@ -41,6 +41,8 @@
 #include <wx/msgdlg.h>
 #include <wx/filename.h>
 
+#include <set>
+
 #include "catalog.h"
 #include "digger.h"
 #include "gexecute.h"
@@ -877,7 +879,6 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 
 Catalog::Catalog()
 {
-    m_count = 0;
     m_isOk = true;
     m_header.BasePath = wxEmptyString;
     for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
@@ -895,7 +896,6 @@ Catalog::~Catalog()
 
 Catalog::Catalog(const wxString& po_file)
 {
-    m_count = 0;
     m_isOk = Load(po_file);
 }
 
@@ -945,8 +945,6 @@ bool Catalog::Load(const wxString& po_file)
     wxTextFile f;
 
     Clear();
-    m_dataIndex.clear();
-    m_count = 0;
     m_isOk = false;
     m_fileName = po_file;
     m_header.BasePath = wxEmptyString;
@@ -984,9 +982,9 @@ bool Catalog::Load(const wxString& po_file)
     for (unsigned i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
     {
         if (m_header.Bookmarks[i] != -1 &&
-            m_header.Bookmarks[i] < (int)m_dataArray.size())
+            m_header.Bookmarks[i] < (int)m_items.size())
         {
-            m_dataArray[m_header.Bookmarks[i]].SetBookmark(
+            m_items[m_header.Bookmarks[i]].SetBookmark(
                     static_cast<Bookmark>(i));
         }
     }
@@ -1058,33 +1056,29 @@ bool Catalog::Load(const wxString& po_file)
 
 void Catalog::AddItem(const CatalogData& data)
 {
-    m_dataIndex[data.GetString()] = m_count;
-    m_dataArray.push_back(data);
-    m_count++;
+    m_items.push_back(data);
 }
 
 void Catalog::AddDeletedItem(const CatalogDeletedData& data)
 {
-    m_deletedItemsArray.push_back(data);
+    m_deletedItems.push_back(data);
 }
 
 bool Catalog::HasDeletedItems()
 {
-    return !m_deletedItemsArray.empty();
+    return !m_deletedItems.empty();
 }
 
 void Catalog::RemoveDeletedItems()
 {
-    m_deletedItemsArray.clear();
+    m_deletedItems.clear();
 }
 
 void Catalog::Clear()
 {
-    m_dataIndex.clear();
-    m_dataArray.clear();
-    m_deletedItemsArray.clear();
+    m_items.clear();
+    m_deletedItems.clear();
     m_isOk = true;
-    m_count = 0;
     for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
     {
         m_header.Bookmarks[i] = -1;
@@ -1096,14 +1090,14 @@ int Catalog::SetBookmark(int id, Bookmark bookmark)
     int result = (bookmark==NO_BOOKMARK)?-1:m_header.Bookmarks[bookmark];
 
     // unset previous bookmarks, if any
-    Bookmark bk = m_dataArray[id].GetBookmark();
+    Bookmark bk = m_items[id].GetBookmark();
     if (bk != NO_BOOKMARK)
         m_header.Bookmarks[bk] = -1;
     if (result > -1)
-        m_dataArray[result].SetBookmark(NO_BOOKMARK);
+        m_items[result].SetBookmark(NO_BOOKMARK);
 
     // set new bookmark
-    m_dataArray[id].SetBookmark(bookmark);
+    m_items[id].SetBookmark(bookmark);
     if (bookmark != NO_BOOKMARK)
         m_header.Bookmarks[bookmark] = id;
 
@@ -1275,9 +1269,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
 
-    for (unsigned i = 0; i < m_dataArray.size(); i++)
+    for (unsigned i = 0; i < m_items.size(); i++)
     {
-        CatalogData& data = m_dataArray[i];
+        CatalogData& data = m_items[i];
         SaveMultiLines(f, data.GetComment());
         for (unsigned i = 0; i < data.GetAutoComments().GetCount(); i++)
         {
@@ -1317,9 +1311,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     }
 
     // Write back deleted items in the file so that they're not lost
-    for (unsigned i = 0; i < m_deletedItemsArray.size(); i++)
+    for (unsigned i = 0; i < m_deletedItems.size(); i++)
     {
-        CatalogDeletedData& deletedItem = m_deletedItemsArray[i];
+        CatalogDeletedData& deletedItem = m_deletedItems[i];
         SaveMultiLines(f, deletedItem.GetComment());
         for (unsigned i = 0; i < deletedItem.GetAutoComments().GetCount(); i++)
             f.AddLine(_T("#. ") + deletedItem.GetAutoComments()[i]);
@@ -1479,19 +1473,31 @@ bool Catalog::Merge(Catalog *refcat)
 
 
 void Catalog::GetMergeSummary(Catalog *refcat,
-                          wxArrayString& snew, wxArrayString& sobsolete)
+                              wxArrayString& snew, wxArrayString& sobsolete)
 {
-    snew.Empty();
-    sobsolete.Empty();
+    wxASSERT( snew.empty() );
+    wxASSERT( sbsolete.empty() );
+
+    std::set<wxString> strsThis, strsRef;
+
+    for ( unsigned i = 0; i < GetCount(); i++ )
+        strsThis.insert((*this)[i].GetString());
+    for ( unsigned i = 0; i < refcat->GetCount(); i++ )
+        strsRef.insert((*refcat)[i].GetString());
+
     unsigned i;
 
     for (i = 0; i < GetCount(); i++)
-        if (refcat->FindItem((*this)[i].GetString()) == NULL)
-        sobsolete.Add((*this)[i].GetString());
+    {
+        if (strsRef.find((*this)[i].GetString()) == strsRef.end())
+            sobsolete.Add((*this)[i].GetString());
+    }
 
     for (i = 0; i < refcat->GetCount(); i++)
-        if (FindItem((*refcat)[i].GetString()) == NULL)
-        snew.Add((*refcat)[i].GetString());
+    {
+        if (strsThis.find((*refcat)[i].GetString()) == strsThis.end())
+            snew.Add((*refcat)[i].GetString());
+    }
 }
 
 bool Catalog::ShowMergeSummary(Catalog *refcat)
@@ -1506,15 +1512,6 @@ bool Catalog::ShowMergeSummary(Catalog *refcat)
     }
     else
         return true;
-}
-
-
-CatalogData* Catalog::FindItem(const wxString& key)
-{
-    CatalogDataIndex::const_iterator i = m_dataIndex.find(key);
-    if (i == m_dataIndex.end())
-        return NULL;
-    return &m_dataArray[i->second];
 }
 
 
@@ -1536,20 +1533,6 @@ unsigned Catalog::GetPluralFormsCount() const
     }
 
     return 0;
-}
-
-
-bool Catalog::Translate(const wxString& key, const wxString& translation)
-{
-    CatalogData *d = FindItem(key);
-
-    if (d == NULL)
-        return false;
-    else
-    {
-        d->SetTranslation(translation);
-        return true;
-    }
 }
 
 

@@ -479,19 +479,8 @@ class Catalog
          */
         bool UpdateFromPOT(const wxString& pot_file, bool summary = true);
 
-        /** Adds translation into the catalog.
-            \return true on success or false if such key does
-                     not exist in the catalog
-         */
-        bool Translate(const wxString& key, const wxString& translation);
-
-        /** Returns pointer to catalog item with key \a key or NULL if
-            such key is not available.
-         */
-        CatalogData* FindItem(const wxString& key);
-
         /// Returns the number of strings/translations in the catalog.
-        size_t GetCount() const { return m_count; }
+        size_t GetCount() const { return m_items.size(); }
 
         /** Returns number of all, fuzzy, badtokens and untranslated items.
             Any argument may be NULL if the caller is not interested in
@@ -500,10 +489,10 @@ class Catalog
         void GetStatistics(int *all, int *fuzzy, int *badtokens, int *untranslated);
 
         /// Gets n-th item in the catalog (read-write access).
-        CatalogData& operator[](unsigned n) { return m_dataArray[n]; }
+        CatalogData& operator[](unsigned n) { return m_items[n]; }
 
         /// Gets n-th item in the catalog (read-only access).
-        const CatalogData& operator[](unsigned n) const { return m_dataArray[n]; }
+        const CatalogData& operator[](unsigned n) const { return m_items[n]; }
 
         /// Gets catalog header (read-write access).
         HeaderData& Header() { return m_header; }
@@ -574,12 +563,9 @@ class Catalog
         bool ShowMergeSummary(Catalog *refcat);
 
     private:
-        CatalogDataArray m_dataArray;
-        CatalogDeletedDataArray m_deletedItemsArray;
-        // index into m_dataArray
-        CatalogDataIndex m_dataIndex;
+        CatalogDataArray m_items;
+        CatalogDeletedDataArray m_deletedItems;
 
-        unsigned m_count; // no. of items
         bool m_isOk;
         wxString m_fileName;
         HeaderData m_header;
