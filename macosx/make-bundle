@@ -22,7 +22,7 @@ cp poedit $bundle/Contents/MacOS/poedit
 $rez $bundle/Contents/MacOS/poedit
 
 if [ -n "$GETTEXT_BINARIES" ] ; then
-    for f in msgfmt msgmerge msgunfmt xgettext ; do
+    for f in msgfmt msgmerge msgunfmt msgcat xgettext ; do
         cp -pPf $GETTEXT_BINARIES/$f $bundle/Contents/MacOS
     done
 else

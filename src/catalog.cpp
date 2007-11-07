@@ -1553,33 +1553,6 @@ bool Catalog::Translate(const wxString& key, const wxString& translation)
 }
 
 
-void Catalog::Append(Catalog& cat)
-{
-    CatalogData *dt, *mydt;
-
-    for (unsigned i = 0; i < cat.GetCount(); i++)
-    {
-        dt = &(cat[i]);
-        mydt = FindItem(dt->GetString());
-        if (mydt == NULL)
-        {
-            mydt = new CatalogData(*dt);
-            m_dataIndex[dt->GetString()] = m_count;
-            m_dataArray.push_back(*mydt);
-            m_count++;
-        }
-        else
-        {
-            for (unsigned j = 0; j < dt->GetReferences().GetCount(); j++)
-                mydt->AddReference(dt->GetReferences()[j]);
-            if (!dt->GetTranslation().empty())
-                mydt->SetTranslation(dt->GetTranslation());
-            if (dt->IsFuzzy()) mydt->SetFuzzy(true);
-        }
-    }
-}
-
-
 void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens, int *untranslated)
 {
     if (all) *all = 0;

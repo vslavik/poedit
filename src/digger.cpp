@@ -28,9 +28,9 @@
  */
 
 #include <wx/string.h>
-#include <wx/filefn.h> // workaround for wx-2.5.1 bug
 #include <wx/config.h>
 #include <wx/dir.h>
+#include <wx/ffile.h>
 
 #include "digger.h"
 #include "parser.h"
@@ -38,7 +38,80 @@
 #include "progressinfo.h"
 #include "gexecute.h"
 
-Catalog *SourceDigger::Dig(const wxArrayString& paths, 
+namespace
+{
+
+// concatenates catalogs using msgcat, returns name of newly created
+// temporary file with the results
+wxString ConcatCatalogs(const wxArrayString& files)
+{
+    wxString tempfile = wxGetTempFileName(_T("poedit"));
+
+    wxString list;
+    for ( wxArrayString::const_iterator i = files.begin();
+          i != files.end(); ++i )
+    {
+        list += wxString::Format(_T(" \"%s\""), i->c_str());
+    }
+
+    wxString cmd =
+        wxString::Format(_T("msgcat --force-po -o \"%s\" %s"),
+                         tempfile.c_str(),
+                         list.c_str());
+    bool succ = ExecuteGettext(cmd);
+
+    if ( !succ )
+    {
+        wxLogError(_("Failed command: %s"), cmd.c_str());
+        wxLogError(_("Failed to merge gettext catalogs."));
+        wxRemoveFile(tempfile);
+        return wxEmptyString;
+    }
+
+    return tempfile;
+}
+
+void RemoveTempFiles(const wxArrayString& files)
+{
+    for ( wxArrayString::const_iterator i = files.begin();
+          i != files.end(); ++i )
+    {
+        wxRemoveFile(*i);
+    }
+}
+
+// fixes gettext header by replacing "CHARSET" with "iso-8859-1" -- msgcat
+// doesn't like CHARSET value
+bool FixCharsetInfo(const wxString& filename)
+{
+    wxFFile file;
+    wxString data;
+
+    if ( !file.Open(filename) ||
+         !file.ReadAll(&data, wxConvISO8859_1) ||
+         !file.Close() )
+    {
+        wxLogError(_("Failed to read extracted catalog."));
+        return false;
+    }
+
+    data.Replace(_T("CHARSET"),
+                 _T("iso-8859-1"));
+
+    if ( !file.Open(filename, _T("w")) ||
+         !file.Write(data, wxConvISO8859_1) ||
+         !file.Close() )
+    {
+        wxLogError(_("Failed to read extracted catalog."));
+        return false;
+    }
+
+    return true;
+}
+
+} // anonymous namespace
+
+Catalog *SourceDigger::Dig(const wxArrayString& paths,
                            const wxArrayString& keywords,
                            const wxString& charset)
 {
@@ -48,23 +121,49 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
     m_progressInfo->UpdateMessage(_("Scanning files..."));
 
     wxArrayString *all_files = FindFiles(paths, pdb);
-    if (all_files == NULL) return NULL;
+    if (all_files == NULL)
+        return NULL;
 
-    Catalog *c = new Catalog;
-    c->CreateNewHeader();
-        
+    wxArrayString partials;
+
     for (size_t i = 0; i < pdb.GetCount(); i++)
     {
-        m_progressInfo->UpdateMessage(_("Parsing ")+pdb[i].Name+_(" files..."));
-        if (!DigFiles(c, all_files[i], pdb[i], keywords, charset))
-        { 
+        if ( all_files[i].empty() )
+            continue; // no files of this kind
+
+        m_progressInfo->UpdateMessage(
+            wxString::Format(_("Parsing %s files..."), pdb[i].Name.c_str()));
+        if (!DigFiles(partials, all_files[i], pdb[i], keywords, charset))
+        {
             delete[] all_files;
-            delete c;
+            RemoveTempFiles(partials);
             return NULL;
         }
     }
-    
+
     delete[] all_files;
+
+    if ( partials.empty() )
+        return NULL; // couldn't parse any source files
+
+    wxString mergedFile = ConcatCatalogs(partials);
+    RemoveTempFiles(partials);
+
+    if ( mergedFile.empty() )
+        return NULL;
+
+    Catalog *c = new Catalog(mergedFile);
+    wxRemoveFile(mergedFile);
+
+    if ( !c->IsOk() )
+    {
+        wxLogError(_("Failed to load extracted catalog."));
+        delete c;
+        return NULL;
+    }
+
+    c->CreateNewHeader();
+
     return c;
 }
 
@@ -74,36 +173,49 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
 // of files we'll pass to the parser at one run:
 #define BATCH_SIZE  16
 
-bool SourceDigger::DigFiles(Catalog *cat, const wxArrayString& files, 
+bool SourceDigger::DigFiles(wxArrayString& outFiles,
+                            const wxArrayString& files,
                             Parser &parser, const wxArrayString& keywords,
                             const wxString& charset)
 {
     wxArrayString batchfiles;
-    wxString tempfile = wxGetTempFileName(_T("poedit"));
-    Catalog *ctmp;
+    wxArrayString tempfiles;
     size_t i, last = 0;
 
     while (last < files.GetCount())
     {
-        batchfiles.Empty();
-        for (i = last; i < last + BATCH_SIZE && i < files.GetCount(); i++)
+        batchfiles.clear();
+        for (i = last; i < last + BATCH_SIZE && i < files.size(); i++)
             batchfiles.Add(files[i]);
         last = i;
-        
+
+        wxString tempfile = wxGetTempFileName(_T("poedit"));
         if (!ExecuteGettext(
                     parser.GetCommand(batchfiles, keywords, tempfile, charset)))
         {
             return false;
         }
+
+        if ( !FixCharsetInfo(tempfile) )
+            return false;
+
+        tempfiles.push_back(tempfile);
+
         m_progressInfo->UpdateGauge(batchfiles.GetCount());
-        if (m_progressInfo->Cancelled()) return false;
-        
-        ctmp = new Catalog(tempfile);
-        cat->Append(*ctmp);
-        delete ctmp;
-        wxRemoveFile(tempfile);
+
+        if (m_progressInfo->Cancelled())
+            return false;
     }
 
+    if ( tempfiles.empty() )
+        return false; // failed to parse any source files
+
+    wxString outfile = ConcatCatalogs(tempfiles);
+    RemoveTempFiles(tempfiles);
+    if ( outfile.empty() )
+        return false;
+
+    outFiles.push_back(outfile);
     return true;
 }
 

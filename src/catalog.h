@@ -517,9 +517,6 @@ class Catalog
          */
         bool IsOk() const { return m_isOk; }
 
-        /// Appends content of \cat to this catalog.
-        void Append(Catalog& cat);
-
         /** Returns xx_YY ISO code of catalog's language if either the Poedit
             extensions headers are present or if filename is known and is in
             the xx[_YY] form, otherwise returns empty string. */

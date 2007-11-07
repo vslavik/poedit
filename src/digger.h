@@ -79,13 +79,15 @@ class SourceDigger
         bool FindInDir(const wxString& dirname, wxArrayString& files);
 
         /** Digs translatable strings from given files.
-            \param cat      the catalog to store found strings to
+            \param outfiles list to which (temporary) file name of extracted
+                            catalog will be appended
             \param files    list of files to parse
             \param parser   parser definition
             \param keywords list of keywords that mark translatable strings
             \param charset  source code charset (may be empty)
          */
-        bool DigFiles(Catalog *cat, const wxArrayString& files, 
+        bool DigFiles(wxArrayString& outFiles,
+                      const wxArrayString& files,
                       Parser &parser, const wxArrayString& keywords,
                       const wxString& charset);
 
