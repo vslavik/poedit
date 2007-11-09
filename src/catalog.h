@@ -71,6 +71,7 @@ class CatalogData
                 : m_string(str),
                   m_plural(str_plural),
                   m_hasPlural(false),
+                  m_hasContext(false),
                   m_references(),
                   m_isFuzzy(false),
                   m_isTranslated(false),
@@ -84,6 +85,8 @@ class CatalogData
                 : m_string(dt.m_string),
                   m_plural(dt.m_plural),
                   m_hasPlural(dt.m_hasPlural),
+                  m_hasContext(dt.m_hasContext),
+                  m_context(dt.m_context),
                   m_translations(dt.m_translations),
                   m_references(dt.m_references),
                   m_autocomments(dt.m_autocomments),
@@ -108,6 +111,13 @@ class CatalogData
 
         /// Returns the plural string.
         const wxString& GetPluralString() const { return m_plural; }
+
+        /// Does this entry have a msgctxt?
+        const bool HasContext() const { return m_hasContext; }
+
+        /// Returns context string (can only be called if HasContext() returns
+        /// true and empty string is accepted value).
+        const wxString& GetContext() const { return m_context; }
 
         /// How many translations (plural forms) do we have?
         size_t GetNumberOfTranslations() const
@@ -153,6 +163,13 @@ class CatalogData
         {
             m_plural = p;
             m_hasPlural = true;
+        }
+
+        /// Sets the context (msgctxt0
+        void SetContext(const wxString& context)
+        {
+            m_hasContext = true;
+            m_context = context;
         }
 
         /** Sets the translation. Changes "translated" status to true
@@ -245,6 +262,10 @@ class CatalogData
     private:
         wxString m_string, m_plural;
         bool m_hasPlural;
+
+        bool m_hasContext;
+        wxString m_context;
+
         wxArrayString m_translations;
 
         wxArrayString m_references, m_autocomments;
@@ -596,6 +617,8 @@ class CatalogParser
         virtual bool OnEntry(const wxString& msgid,
                              const wxString& msgid_plural,
                              bool has_plural,
+                             bool has_context,
+                             const wxString& context,
                              const wxArrayString& mtranslations,
                              const wxString& flags,
                              const wxArrayString& references,
