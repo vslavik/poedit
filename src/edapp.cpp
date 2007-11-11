@@ -299,13 +299,7 @@ void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
 #elif defined(__UNIX__)
         dbpath = wxGetHomeDir() + _T("/.poedit/tm");
 #elif defined(__WXMSW__)
-        // VS: this distinguishes between NT and Win9X systems -- the former
-        //     has users' home directories while on the latter wxGetHomeDir
-        //     will return path of the executable
-        if (wxGetHomeDir().IsSameAs(GetAppPath() + _T("\\bin"), false))      
-            dbpath = GetAppPath() + _T("\\share\\poedit\\tm");
-        else
-            dbpath = wxGetHomeDir() + _T("\\poedit_tm");
+        dbpath = wxGetHomeDir() + _T("\\poedit_tm");
 #endif
         cfg->Write(_T("TM/database_path"), dbpath);
     }
