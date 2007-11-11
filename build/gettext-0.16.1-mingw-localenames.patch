@@ -1,0 +1,90 @@
+--- gettext-0.16.1/gettext-runtime/intl/localename.c.orig	2007-05-27 19:57:02.000000000 +0200
++++ gettext-0.16.1/gettext-runtime/intl/localename.c	2007-05-27 20:04:12.000000000 +0200
+@@ -494,10 +494,10 @@
+ # define SUBLANG_AZERI_CYRILLIC 0x02
+ # endif
+ # ifndef SUBLANG_BENGALI_INDIA
+-# define SUBLANG_BENGALI_INDIA 0x00
++# define SUBLANG_BENGALI_INDIA 0x01
+ # endif
+ # ifndef SUBLANG_BENGALI_BANGLADESH
+-# define SUBLANG_BENGALI_BANGLADESH 0x01
++# define SUBLANG_BENGALI_BANGLADESH 0x02
+ # endif
+ # ifndef SUBLANG_CHINESE_MACAU
+ # define SUBLANG_CHINESE_MACAU 0x05
+@@ -590,16 +590,16 @@
+ # define SUBLANG_NEPALI_INDIA 0x02
+ # endif
+ # ifndef SUBLANG_PUNJABI_INDIA
+-# define SUBLANG_PUNJABI_INDIA 0x00
++# define SUBLANG_PUNJABI_INDIA 0x01
+ # endif
+ # ifndef SUBLANG_PUNJABI_PAKISTAN
+-# define SUBLANG_PUNJABI_PAKISTAN 0x01
++# define SUBLANG_PUNJABI_PAKISTAN 0x02
+ # endif
+ # ifndef SUBLANG_ROMANIAN_ROMANIA
+-# define SUBLANG_ROMANIAN_ROMANIA 0x00
++# define SUBLANG_ROMANIAN_ROMANIA 0x01
+ # endif
+ # ifndef SUBLANG_ROMANIAN_MOLDOVA
+-# define SUBLANG_ROMANIAN_MOLDOVA 0x01
++# define SUBLANG_ROMANIAN_MOLDOVA 0x02
+ # endif
+ # ifndef SUBLANG_SERBIAN_LATIN
+ # define SUBLANG_SERBIAN_LATIN 0x02
+@@ -607,12 +607,12 @@
+ # ifndef SUBLANG_SERBIAN_CYRILLIC
+ # define SUBLANG_SERBIAN_CYRILLIC 0x03
+ # endif
+-# ifndef SUBLANG_SINDHI_INDIA
+-# define SUBLANG_SINDHI_INDIA 0x00
+-# endif
+ # ifndef SUBLANG_SINDHI_PAKISTAN
+ # define SUBLANG_SINDHI_PAKISTAN 0x01
+ # endif
++# ifndef SUBLANG_SINDHI_AFGHANISTAN
++# define SUBLANG_SINDHI_AFGHANISTAN 0x02
++# endif
+ # ifndef SUBLANG_SPANISH_GUATEMALA
+ # define SUBLANG_SPANISH_GUATEMALA 0x04
+ # endif
+@@ -670,14 +670,14 @@
+ # ifndef SUBLANG_TAMAZIGHT_ARABIC
+ # define SUBLANG_TAMAZIGHT_ARABIC 0x01
+ # endif
+-# ifndef SUBLANG_TAMAZIGHT_LATIN
+-# define SUBLANG_TAMAZIGHT_LATIN 0x02
++# ifndef SUBLANG_TAMAZIGHT_ALGERIA_LATIN
++# define SUBLANG_TAMAZIGHT_ALGERIA_LATIN 0x02
+ # endif
+ # ifndef SUBLANG_TIGRINYA_ETHIOPIA
+-# define SUBLANG_TIGRINYA_ETHIOPIA 0x00
++# define SUBLANG_TIGRINYA_ETHIOPIA 0x01
+ # endif
+ # ifndef SUBLANG_TIGRINYA_ERITREA
+-# define SUBLANG_TIGRINYA_ERITREA 0x01
++# define SUBLANG_TIGRINYA_ERITREA 0x02
+ # endif
+ # ifndef SUBLANG_URDU_PAKISTAN
+ # define SUBLANG_URDU_PAKISTAN 0x01
+@@ -1378,8 +1378,8 @@
+       case LANG_SINDHI:
+ 	switch (sub)
+ 	  {
+-	  case SUBLANG_SINDHI_INDIA: return "sd_IN";
+ 	  case SUBLANG_SINDHI_PAKISTAN: return "sd_PK";
++	  case SUBLANG_SINDHI_AFGHANISTAN: return "sd_AF";
+ 	  }
+ 	return "sd";
+       case LANG_SINHALESE: return "si_LK";
+@@ -1432,7 +1432,7 @@
+ 	  {
+ 	  /* FIXME: Adjust this when Tamazight locales appear on Unix.  */
+ 	  case SUBLANG_TAMAZIGHT_ARABIC: return "ber_MA@arabic";
+-	  case SUBLANG_TAMAZIGHT_LATIN: return "ber_MA@latin";
++	  case SUBLANG_TAMAZIGHT_ALGERIA_LATIN: return "ber_MA@latin";
+ 	  }
+ 	return "ber_MA";
+       case LANG_TAMIL:

@@ -1,0 +1,46 @@
+diff -ru wxWidgets-2.8.6.orig/src/mac/carbon/dialog.cpp wxWidgets-2.8.6/src/mac/carbon/dialog.cpp
+--- wxWidgets-2.8.6.orig/src/mac/carbon/dialog.cpp	2007-09-25 10:52:46.000000000 +0200
++++ wxWidgets-2.8.6/src/mac/carbon/dialog.cpp	2007-10-10 09:46:34.000000000 +0200
+@@ -145,16 +145,16 @@
+ 
+     SetFocus() ;
+ 
+-#if TARGET_CARBON
+     WindowRef windowRef = (WindowRef) MacGetWindowRef();
+-    WindowGroupRef formerGroup = GetWindowGroup(windowRef) ;
+-    SetWindowGroup( windowRef, GetWindowGroupOfClass( kMovableModalWindowClass ));
++    WindowGroupRef windowGroup;
++    WindowGroupRef formerParentGroup;
++    if ( GetParent() == NULL )
++    {
++        windowGroup = GetWindowGroup(windowRef) ;
++        formerParentGroup = GetWindowGroupParent( windowGroup );
++        SetWindowGroupParent( windowGroup, GetWindowGroupOfClass( kMovableModalWindowClass ) );
++    }
+     BeginAppModalStateForWindow(windowRef) ;
+-#else
+-    // TODO : test whether parent gets disabled
+-    bool formerModal = s_macIsInModalLoop ;
+-    s_macIsInModalLoop = true ;
+-#endif
+ 
+     while ( IsModalShowing() )
+     {
+@@ -162,13 +162,11 @@
+         // calls process idle itself
+     }
+ 
+-#if TARGET_CARBON
+     EndAppModalStateForWindow(windowRef) ;
+-    SetWindowGroup( windowRef, formerGroup );
+-#else
+-    // TODO probably reenable the parent window if any
+-    s_macIsInModalLoop = formerModal ;
+-#endif
++    if ( GetParent() == NULL )
++    {
++        SetWindowGroupParent( windowGroup , formerParentGroup );
++    }
+ }
+ 
+ 

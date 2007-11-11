@@ -1,0 +1,26 @@
+
+What is this?
+-------------
+
+This directory contains build script to build complete binary distribution of
+Poedit for all platforms. It uses Rlsbot (http://rlsbot.bakefile.org) to do
+all the work.
+
+
+Instructions
+------------
+
+1) Install Rlsbot master and agents on Unix, OS X and Windows machines.
+
+2) Configure ~/.rlsbot/agents.conf so that it sets same tags and environment
+   variables as in the agents.conf.example file. In particular, one of the
+   machines must have working MinGW install (may be cross-compiler) and
+   the Windows machine must have Visual Studio 2005 with Platform SDK installed
+   (may be the free edition). OS X machine must have 10.4u SDK installed.
+
+   MINGW_HOST variable must be set on the host with MinGW and it must contain
+   compiler name prefix (e.g. "i586-mingw32"). On the VS2005 machine, MSVS_PATH
+   variable must be set and point to Visual Studio directory. PSDK_PATH must
+   be set as well and point to Platform SDK installation directory.
+
+3) Run rlsbot-scons with its 1st argument SConstruct file in this directory.
