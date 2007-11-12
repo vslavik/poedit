@@ -2021,6 +2021,12 @@ bool PoeditFrame::AutoTranslateCatalog()
                 matches++;
                 msg.Printf(_("Automatically translated %u strings"), matches);
                 pi.UpdateMessage(msg);
+
+                if (m_modified == false)
+                {
+                    m_modified = true;
+                    UpdateTitle();
+                }
             }
         }
         pi.UpdateGauge();
