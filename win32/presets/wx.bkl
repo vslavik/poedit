@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!-- $Id: wx.bkl,v 1.15 2007/04/08 21:45:11 VZ Exp $ -->
+<!-- $Id: wx.bkl 49352 2007-10-23 13:40:27Z VZ $ -->
 
 <!--
     Presets for building wxWidgets applications.
@@ -89,9 +89,7 @@
         <wx-lib>aui</wx-lib>
         <wx-lib>stc</wx-lib>
         <wx-lib>qa</wx-lib>
-        <wx-lib>dbgrid</wx-lib>
         <wx-lib>gl</wx-lib>
-        <wx-lib>odbc</wx-lib>
         <wx-lib>xrc</wx-lib>
         <wx-lib>html</wx-lib>
         <wx-lib>media</wx-lib>
@@ -119,7 +117,7 @@
                          tag definitions.
     -->
     <set var="WX_LIB_LIST">
-        base core net xml odbc xrc html adv media gl dbgrid qa aui richtext stc
+        base core net xml xrc html adv media gl qa aui richtext stc
     </set>
 
     <!-- if you define this variable to 0 before including wx presets, the
@@ -223,7 +221,7 @@
     </if>
 
     <if cond="not isdefined('WX_VERSION')">
-        <set var="WX_VERSION_DEFAULT" overwrite="0">28</set>
+        <set var="WX_VERSION_DEFAULT" overwrite="0">29</set>
         <option name="WX_VERSION">
             <default-value>$(WX_VERSION_DEFAULT)</default-value>
             <description>
@@ -247,7 +245,7 @@
     <!-- The directory where wxWidgets is installed: -->
     <if cond="not isdefined('WX_DIR')">
         <set var="WX_DIR_DEFAULT" overwrite="0">$(DOLLAR)($(ENV_VAR)WXWIN)</set>
-        <option name="WX_DIR" category="path">
+        <option name="WX_DIR" category="path" never_empty="1">
             <default-value>$(WX_DIR_DEFAULT)</default-value>
             <description>
                 The directory where wxWidgets library is installed
