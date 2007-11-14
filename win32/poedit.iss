@@ -35,6 +35,8 @@
 #define ASSEMBLY         "x86_Microsoft.VC80.CRT_" + CRT_HASH1 + "_" + CRT_VERSION + "_x-ww_" + CRT_HASH2
 #define WINDIR           GetEnv("WINDIR")
 
+#include "poedit-locale-files.iss"
+
 [Setup]
 OutputBaseFilename=poedit-{#VERSION}-setup
 AppName=Poedit
@@ -96,7 +98,7 @@ Source: NEWS; DestDir: {app}\doc; DestName: news.txt; Components: docs
 Source: src\icons\*.png; DestDir: {app}\share\poedit\icons; Components: core
 Source: {#WINDIR}\WinSxS\Manifests\{#ASSEMBLY}.manifest; DestDir: {app}\bin; Components: core; DestName: Microsoft.VC80.CRT.manifest
 Source: {#WINDIR}\WinSxS\{#ASSEMBLY}\*.dll; DestDir: {app}\bin; Components: core
-#include "poedit-locale-files.iss"
+#emit LocaleFiles
 
 [InstallDelete]
 ; delete files from previous versions that are no longer needed (and in case of
@@ -136,14 +138,13 @@ UseAbsolutePaths=false
 Name: {app}\bin; Components: core
 Name: {app}\doc; Components: docs
 Name: {app}\share; Components: core
-Name: {app}\share\locale; Components: core
+Name: {app}\share\locale; Components: i18n
 Name: {app}\share\poedit; Components: core
 Name: {app}\share\poedit\icons; Components: core
 Name: {app}\share\poedit\help; Components: docs
 Name: {app}\share\poedit\help\en; Components: docs
 Name: {app}\share\poedit\help\en\gettext; Components: docs
 Name: {app}\share\poedit\help\hr; Components: docs
-#include "poedit-locale-dirs.iss"
 
 [Components]
 Name: core; Description: Core files; Flags: fixed; Types: custom compact full

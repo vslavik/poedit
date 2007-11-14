@@ -55,11 +55,17 @@ for i in $top_srcdir/locales/*.mo ; do
     mkdir -p $bundle/Contents/Resources/locale/$lang/LC_MESSAGES
     cp $i $bundle/Contents/Resources/locale/$lang/LC_MESSAGES/poedit.mo
 done
-for i in $top_srcdir/locales/wxwin/*.mo ; do
-    lang=`basename $i .mo`
-    mkdir -p $bundle/Contents/Resources/locale/$lang/LC_MESSAGES
-    cp $i $bundle/Contents/Resources/locale/$lang/LC_MESSAGES/poedit-wxstd.mo
-done
+
+if [ -n "$WX_ROOT" ] ; then
+    (cd $WX_ROOT/share ; tar -c locale) | \
+        (cd $bundle/Contents/Resources ; tar -x)
+else
+    echo "WARNING: not copying wxWidgets message catalogs, point WX_ROOT" >&2
+    echo "         environment variable to a directory with installed wx" >&2
+fi
+
+echo "Installed message catalogs:"
+find $bundle/Contents/Resources/locale -type f
 
 # icons:
 iconsdir="$bundle/Contents/Resources/icons"

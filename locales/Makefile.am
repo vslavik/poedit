@@ -1,6 +1,5 @@
 
 POEDIT_LINGUAS = af_ZA am ar ast be bg bn br ca cs da de el eo es es_PR et eu fa_IR fi fr fur gl he hi hr hu id is it ja ka ko ku ky lt lv mk mn ms nb nl nn pa pl pt_BR pt_PT ro ru sk sl sq_AL sr sv ta th tr tt uk ur wa zh_CN zh_TW
-WXWIN_LINGUAS  = af ca cs da de el es eu fi fr hi hu id it ja nb_NO nl pl pt_BR ru sl sv tr uk zh_CN zh_TW
 
 localedir = $(datadir)/locale
 
@@ -10,12 +9,6 @@ install-poedit-catalogs:
 	for i in $(POEDIT_LINGUAS) ; do \
 	    $(mkinstalldirs) $(DESTDIR)$(localedir)/$$i/LC_MESSAGES ; \
 	    $(INSTALL_DATA) $(srcdir)/$$i.mo $(DESTDIR)$(localedir)/$$i/LC_MESSAGES/poedit.mo ; \
-	done
-
-install-wxstd-catalogs:
-	for i in $(WXWIN_LINGUAS) ; do \
-	    $(mkinstalldirs) $(DESTDIR)$(localedir)/$$i/LC_MESSAGES ; \
-	    $(INSTALL_DATA) $(srcdir)/wxwin/$$i.mo $(DESTDIR)$(localedir)/$$i/LC_MESSAGES/poedit-wxstd.mo ; \
 	done
 
 
@@ -39,7 +32,7 @@ XGETTEXT_ARGS=-C -k_ -kwxGetTranslation -kwxTRANSLATE -s -j
 %.mo: %.po
 	$(MSGFMT) -o $@ $<
 
-# a PO file must be updated from wxstd.po to include new translations
+# a PO file must be updated from  poedit.pot include new translations
 %.po: $(srcdir)/poedit.pot
 	if [ -f $@ ]; then $(MSGMERGE) $@ $(srcdir)/poedit.pot > $@.new && mv $@.new $@; else cp $(srcdir)/poedit.pot $@; fi
 

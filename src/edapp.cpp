@@ -157,7 +157,6 @@ bool PoeditApp::OnInit()
     m_locale.Init(GetUILanguage());
     
     m_locale.AddCatalog(_T("poedit"));
-    m_locale.AddCatalog(_T("poedit-wxstd")); // for semistatic builds
 
     if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
     {

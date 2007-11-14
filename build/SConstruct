@@ -338,7 +338,7 @@ poedit_osx = env.BuildComponent(
             'mv src/poedit src/poedit-x86',
             'lipo -arch ppc ../ppc/src/poedit -arch i386 src/poedit-x86 -create -output src/poedit',
             # finally, create the bundle:
-            'make dist-osx GETTEXT_BINARIES=`pwd`/../deps/gettext',
+            'GETTEXT_BINARIES="`pwd`/../deps/gettext" WX_ROOT="`pwd`/deps" make dist-osx',
             ],
         environment=OSX_ENVIRONMENT_COMMON,
         outputs=['x86/poedit-*.dmg', 'x86/src/*dSYM*'])
