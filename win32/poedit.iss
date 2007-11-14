@@ -169,3 +169,4 @@ function InstallGlobally : boolean;
 begin
   result := IsAdminLoggedOn;
 end;
+

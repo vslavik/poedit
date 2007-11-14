@@ -31,3 +31,4 @@
   #expr DestName = "wxmsw.mo"
   #emit DoLocaleFiles
 #endsub
+
