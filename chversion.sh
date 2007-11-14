@@ -12,8 +12,6 @@ q
 
 VER=$1
 
-replace_ver install/poedit.spec \
-            '\(Version: *\).*' "\1$VER"
 replace_ver win32/poedit.iss \
             '\(#define VERSION *"\).*\("\)' "\1$VER\2"
 replace_ver configure.in \
