@@ -118,7 +118,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 cfg->Read(_T("open_editor_immediately"), (long)false));
     XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("keep_crlf"), true));
-#if USE_SPELLCHECKING
+#ifdef USE_SPELLCHECKING
     XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("enable_spellchecking"), true));
 #endif
@@ -196,7 +196,7 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XRCCTRL(*this, "open_editor_immediately", wxCheckBox)->GetValue());
     cfg->Write(_T("keep_crlf"), 
                 XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
-#if USE_SPELLCHECKING
+#ifdef USE_SPELLCHECKING
     cfg->Write(_T("enable_spellchecking"), 
                 XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->GetValue());
 #endif

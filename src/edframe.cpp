@@ -52,7 +52,7 @@
     #define wxFD_FILE_MUST_EXIST   wxFILE_MUST_EXIST
 #endif
 
-#if USE_SPELLCHECKING
+#ifdef USE_SPELLCHECKING
     #include <gtk/gtk.h>
     extern "C" {
     #include <gtkspell/gtkspell.h>
@@ -657,7 +657,7 @@ wxString PoeditFrame::LoadHelpBook(const wxString& name)
     return file;
 }
 
-#if USE_SPELLCHECKING
+#ifdef USE_SPELLCHECKING
 // helper functions that finds GtkTextView of wxTextCtrl:
 static GtkTextView *GetTextView(wxTextCtrl *ctrl)
 {
@@ -713,7 +713,7 @@ static void DoInitSpellchecker(wxTextCtrl *text,
 
 void PoeditFrame::InitSpellchecker()
 {
-#if USE_SPELLCHECKING
+#ifdef USE_SPELLCHECKING
     wxString lang;
     if (m_catalog) lang = m_catalog->GetLocaleCode();
     bool enabled = m_catalog && !lang.empty() &&
