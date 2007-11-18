@@ -117,11 +117,6 @@ Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData
 Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\bin\poedit.exe,0; Flags: uninsdeletekey noerror
 Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty dontcreatekey
 Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcreatekey
-Root: HKLM; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty; Check: InstallGlobally
-Root: HKLM; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey; Check: InstallGlobally
-Root: HKLM; Subkey: Software\Vaclav Slavik\poedit\{#VERSION}; ValueType: string; ValueName: application_path; ValueData: {app}; Flags: uninsdeletevalue; Check: InstallGlobally
-Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty; Check: InstallLocally
-Root: HKCU; Subkey: Software\Vaclav Slavik\poedit\{#VERSION}; ValueType: string; ValueName: application_path; ValueData: {app}; Flags: uninsdeletevalue; Check: InstallLocally
 
 [Icons]
 Name: {group}\Poedit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0
@@ -153,20 +148,4 @@ Name: i18n; Description: Localization files for the UI; Types: full
 
 [Messages]
 BeveledLabel=http://www.poedit.net
-
-[Code]
-
-{ ------------------------------------------------------------------ }
-{ Helper functions:                                                  }
-{ ------------------------------------------------------------------ }
-
-function InstallLocally : boolean;
-begin
-  result := not IsAdminLoggedOn;
-end;
-
-function InstallGlobally : boolean;
-begin
-  result := IsAdminLoggedOn;
-end;
 

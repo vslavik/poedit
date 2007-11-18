@@ -67,15 +67,12 @@ wxString PoeditApp::GetAppPath() const
         home = wxString::FromAscii(POEDIT_PREFIX);
     return home;
 #elif defined(__WXMSW__)
-    wxString regkey;
-    regkey.Printf(_T("%s/application_path"), GetAppVersion().c_str());
-    wxString path = wxConfigBase::Get()->Read(regkey, wxEmptyString);
-    if (!path)
-    {
-        wxLogError(_("Poedit installation is broken, cannot find application's home directory."));
-        path = _T(".");
-    }
-    return path;
+    wxString exedir;
+    wxFileName::SplitPath(wxStandardPaths::Get().GetExecutablePath(),
+                          &exedir, NULL, NULL);
+    wxFileName fn = wxFileName::DirName(exedir);
+    fn.RemoveLastDir();
+    return fn.GetFullPath();
 #else
 #error "Unsupported platform!"
 #endif
