@@ -47,6 +47,10 @@
 #include "transmemupd_wizard.h"
 #include "chooselang.h"
 
+#ifdef USE_SPARKLE
+#include "osx/userdefaults.h"
+#endif // USE_SPARKLE
+
 PreferencesDialog::PreferencesDialog(wxWindow *parent)
 {
     wxXmlResource::Get()->LoadDialog(this, parent, _T("preferences"));
@@ -171,6 +175,11 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XRCCTRL(*this, "tm_automatic", wxCheckBox)->SetValue(
                 cfg->Read(_T("use_tm_when_updating"), true));
 #endif
+
+#ifdef USE_SPARKLE
+    XRCCTRL(*this, "auto_updates", wxCheckBox)->SetValue(
+                UserDefaults::GetBoolValue("SUCheckAtStartup"));
+#endif // USE_SPARKLE
 }
  
             
@@ -236,6 +245,11 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
     cfg->Write(_T("use_tm_when_updating"), 
                 XRCCTRL(*this, "tm_automatic", wxCheckBox)->GetValue());
 #endif
+
+#ifdef USE_SPARKLE
+    UserDefaults::SetBoolValue("SUCheckAtStartup",
+                XRCCTRL(*this, "auto_updates", wxCheckBox)->GetValue());
+#endif // USE_SPARKLE
 }
 
 

@@ -64,6 +64,15 @@ else
     echo "         environment variable to a directory with installed wx" >&2
 fi
 
+# 3rd party frameworks:
+if [ -n "$SPARKLE_FRAMEWORK" ] ; then
+    mkdir -p $bundle/Contents/Frameworks
+    cp -R $SPARKLE_FRAMEWORK $bundle/Contents/Frameworks
+else
+    echo "WARNING: not copying Sparkle framework, point SPARKLE_FRAMEWORK" >&2
+    echo "         environment variable to it" >&2
+fi
+
 echo "Installed message catalogs:"
 find $bundle/Contents/Resources/locale -type f
 

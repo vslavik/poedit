@@ -27,6 +27,9 @@ WX_PATCHES = ['wx-2.8.6-mac-dialog-fix.patch']
 WX_CONFIGURE = '--disable-shared --enable-unicode --disable-tga'
 WX_WINFLAGS = 'SHARED=0 BUILD=release DEBUG_INFO=1 UNICODE=1 USE_MEDIA=0 USE_AUI=0 USE_RICHTEXT=0 USE_STC=0 USE_QA=1'
 
+SPARKLE_VERSION = '1.1'
+SPARKLE_URL = 'http://www.andymatuschak.org/files/Sparkle-%s.zip' % SPARKLE_VERSION
+SPARKLE_PATCHES = ['sparkle-1.1-carbon.patch']
 
 
 from rlsbot import BuildEnvironment
@@ -230,6 +233,28 @@ gettext_win32 = env.BuildComponent(
 
 
 # -----------------------------------------------------------------
+# Sparkle
+# -----------------------------------------------------------------
+
+src_sparkle = env.ComponentSources(
+        name='sparkle',
+        source=SPARKLE_URL,
+        patches=SPARKLE_PATCHES)
+
+
+sparkle = env.BuildComponent(
+        name='sparkle',
+        agent='osx',
+        sources=src_sparkle,
+        deps=None,
+        commands=[
+            'cd Extras/Source',
+            'xcodebuild -project Sparkle.xcodeproj -target Sparkle -configuration Release',
+            ],
+        environment=OSX_ENVIRONMENT_COMMON,
+        outputs=['Extras/Source/build/Release/*'])
+
+# -----------------------------------------------------------------
 # wxWidgets
 # -----------------------------------------------------------------
 
@@ -309,6 +334,7 @@ poedit_osx = env.BuildComponent(
               (db_osx_ppc, 'ppc/deps'),
               (db_osx_x86, 'x86/deps'),
               (gettext_osx, 'deps/gettext'),
+              (sparkle, 'deps/sparkle'),
               ],
         commands=[
             # build PPC binary:
@@ -316,6 +342,7 @@ poedit_osx = env.BuildComponent(
             '../configure'
             '  --host=$OSX_HOST_PPC'
             '  --with-wx-config=`pwd`/deps/bin/wx-config --with-wx-prefix=`pwd`/deps'
+            '  --with-sparkle=`pwd`/../deps/sparkle'
             '  CFLAGS="$OSX_CFLAGS_PPC"'
             '  CXXFLAGS="$OSX_CXXFLAGS_PPC"'
             '  CPPFLAGS="-I`pwd`/deps/include"'
@@ -328,6 +355,7 @@ poedit_osx = env.BuildComponent(
             '../configure'
             '  --host=$OSX_HOST_X86'
             '  --with-wx-config=`pwd`/deps/bin/wx-config --with-wx-prefix=`pwd`/deps'
+            '  --with-sparkle=`pwd`/../deps/sparkle'
             '  CFLAGS="$OSX_CFLAGS_X86"'
             '  CXXFLAGS="$OSX_CXXFLAGS_X86"'
             '  CPPFLAGS="-I`pwd`/deps/include"'

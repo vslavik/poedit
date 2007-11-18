@@ -38,6 +38,11 @@
 #include <wx/xrc/xmlres.h>
 #include <wx/xrc/xh_all.h>
 #include <wx/stdpaths.h>
+#include <wx/filename.h>
+
+#ifdef USE_SPARKLE
+#include <Sparkle/SUCarbonAPI.h>
+#endif // USE_SPARKLE
 
 #if !wxUSE_UNICODE
     #error "Unicode build of wxWidgets is required by Poedit"
@@ -183,6 +188,10 @@ bool PoeditApp::OnInit()
         gs_filesToOpen.clear();
     }
 #endif // !__WXMAC__
+
+#ifdef USE_SPARKLE
+    SUSparkleInitializeForCarbon();
+#endif // USE_SPARKLE
 
     return true;
 }

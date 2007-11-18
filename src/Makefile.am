@@ -9,6 +9,12 @@ if USE_WINDOWS
 RESOURCE_FILES = poedit_resource.o
 endif
 
+if USE_OSX
+OSX_SOURCES = osx/userdefaults.h osx/userdefaults.m
+endif
+
+SPARKLE_FRAMEWORK = @SPARKLE_FRAMEWORK@
+
 bin_PROGRAMS = poedit
 
 poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
@@ -25,6 +31,7 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  pluralforms/pl_evaluate.cpp \
                  wxeditablelistbox.h editlbox/editlbox.cpp \
                  edlistctrl.cpp edlistctrl.h digits.h \
+				 $(OSX_SOURCES) \
                  compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS)
@@ -59,7 +66,8 @@ compiled_xrc.cpp: $(XRC_RESOURCES) $(XRC_MORE_FILES)
 # Mac OS X bundle:
 bundle: poedit
 	$(MAKE) -C ../locales allmo
-	$(top_srcdir)/macosx/make-bundle \
-	     "Poedit.app" \
-		 "`$(WX_CONFIG_WITH_ARGS) --rezflags`" \
-		 "$(top_builddir)" "$(top_srcdir)"
+	SPARKLE_FRAMEWORK=$(SPARKLE_FRAMEWORK) \
+		$(top_srcdir)/macosx/make-bundle \
+			"Poedit.app" \
+			"`$(WX_CONFIG_WITH_ARGS) --rezflags`" \
+			"$(top_builddir)" "$(top_srcdir)"
