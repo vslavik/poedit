@@ -18,8 +18,8 @@ mkdir -p $bundle/Contents/MacOS
 mkdir -p $bundle/Contents/Resources
 
 # executables:
-cp poedit $bundle/Contents/MacOS/poedit
-$rez $bundle/Contents/MacOS/poedit
+cp poedit $bundle/Contents/MacOS/Poedit
+$rez $bundle/Contents/MacOS/Poedit
 
 if [ -n "$GETTEXT_BINARIES" ] ; then
     for f in msgfmt msgmerge msgunfmt msgcat xgettext ; do
