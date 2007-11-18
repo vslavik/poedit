@@ -39,17 +39,21 @@ env = BuildEnvironment()
 env['OSX_SDKROOT'] = '/Developer/SDKs/MacOSX10.4u.sdk'
 env['OSX_CFLAGS'] = '-isysroot $OSX_SDKROOT -O2 -ggdb3'
 env['OSX_CXXFLAGS'] = '-isysroot $OSX_SDKROOT -O2 -ggdb3'
+env['OSX_OBJCFLAGS'] = '-isysroot $OSX_SDKROOT -O2 -ggdb3'
 env['OSX_LDFLAGS'] = '-Wl,-syslibroot,$OSX_SDKROOT -ggdb3' # -feliminate-dwarf2-dups'
 env['OSX_CFLAGS_PPC'] = '$OSX_CFLAGS -arch ppc'
 env['OSX_CXXFLAGS_PPC'] = '$OSX_CXXFLAGS -arch ppc'
+env['OSX_OBJCFLAGS_PPC'] = '$OSX_OBJCFLAGS -arch ppc'
 env['OSX_LDFLAGS_PPC'] = '$OSX_LDFLAGS -arch ppc'
 env['OSX_CFLAGS_X86'] = '$OSX_CFLAGS -arch i386'
 env['OSX_CXXFLAGS_X86'] = '$OSX_CXXFLAGS -arch i386'
+env['OSX_OBJCFLAGS_X86'] = '$OSX_OBJCFLAGS -arch i386'
 env['OSX_LDFLAGS_X86'] = '$OSX_LDFLAGS -arch i386'
 env['OSX_HOST_PPC'] = 'powerpc-apple-darwin8'
 env['OSX_HOST_X86'] = 'i686-apple-darwin8'
 
-env['MINGW_HOST'] = 'i586-mingw32'
+# FIXME: this should be per-agent configuration
+env['MINGW_HOST'] = 'i686-pc-mingw32'
 
 # FIXME: this should be per-agent configuration
 # FIXME: have some directives on specifying what is required from the agent
@@ -63,6 +67,7 @@ OSX_ENVIRONMENT_COMMON = {
 OSX_ENVIRONMENT_PPC = {
         'CFLAGS'   : '$OSX_CFLAGS_PPC',
         'CXXFLAGS' : '$OSX_CXXFLAGS_PPC',
+        'OBJCFLAGS' : '$OSX_OBJCFLAGS_PPC',
         'LDFLAGS'  : '$OSX_LDFLAGS_PPC',
     }
 OSX_ENVIRONMENT_PPC.update(OSX_ENVIRONMENT_COMMON)
@@ -70,6 +75,7 @@ OSX_ENVIRONMENT_PPC.update(OSX_ENVIRONMENT_COMMON)
 OSX_ENVIRONMENT_X86 = {
         'CFLAGS'   : '$OSX_CFLAGS_X86',
         'CXXFLAGS' : '$OSX_CXXFLAGS_X86',
+        'OBJCFLAGS' : '$OSX_OBJCFLAGS_X86',
         'LDFLAGS'  : '$OSX_LDFLAGS_X86',
     }
 OSX_ENVIRONMENT_X86.update(OSX_ENVIRONMENT_COMMON)
@@ -345,6 +351,7 @@ poedit_osx = env.BuildComponent(
             '  --with-sparkle=`pwd`/../deps/sparkle'
             '  CFLAGS="$OSX_CFLAGS_PPC"'
             '  CXXFLAGS="$OSX_CXXFLAGS_PPC"'
+            '  OBJCFLAGS="$OSX_OBJCFLAGS_PPC"'
             '  CPPFLAGS="-I`pwd`/deps/include"'
             '  LDFLAGS="$OSX_LDFLAGS_PPC -L`pwd`/deps/lib"'
             '  WXRC="`pwd`/../$OSX_NATIVE/deps/bin/wxrc"',
@@ -358,6 +365,7 @@ poedit_osx = env.BuildComponent(
             '  --with-sparkle=`pwd`/../deps/sparkle'
             '  CFLAGS="$OSX_CFLAGS_X86"'
             '  CXXFLAGS="$OSX_CXXFLAGS_X86"'
+            '  OBJCFLAGS="$OSX_OBJCFLAGS_X86"'
             '  CPPFLAGS="-I`pwd`/deps/include"'
             '  LDFLAGS="$OSX_LDFLAGS_X86 -L`pwd`/deps/lib"'
             '  WXRC="`pwd`/../$OSX_NATIVE/deps/bin/wxrc"',
