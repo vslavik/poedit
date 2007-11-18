@@ -124,7 +124,7 @@ db_osx_x86 = env.BuildComponent(
             '(cd build_unix; make install DESTDIR=`pwd`/../D)',
             'rm -rf D/usr/local/docs'
             ],
-        environment=OSX_ENVIRONMENT_PPC,
+        environment=OSX_ENVIRONMENT_X86,
         outputs=['D/usr/local/*'])
 
 db_osx = env.Alias('build-db-osx', [db_osx_ppc, db_osx_x86])
