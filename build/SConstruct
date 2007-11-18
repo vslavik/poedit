@@ -394,8 +394,7 @@ poedit_win32 = env.BuildComponent(
             'set WXWIN=..\\deps\\wx',
             'set WXRC="%WXWIN%\\wxrc.exe"',
             'nmake -f makefile.vc WX_DEBUG=0 WXRC=%WXRC% DB_PATH=..\\deps\\db',
-            'cd ..',
-            '"%INNOSETUP%\\iscc" win32\\poedit.iss',
+            '"%INNOSETUP%\\iscc" poedit.iss',
             ],
         environment=VS2005_ENVIRONMENT,
         outputs=['poedit-*-setup.exe', 'win32/poedit.pdb'])
