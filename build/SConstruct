@@ -31,6 +31,10 @@ SPARKLE_VERSION = '1.1'
 SPARKLE_URL = 'http://www.andymatuschak.org/files/Sparkle-%s.zip' % SPARKLE_VERSION
 SPARKLE_PATCHES = ['sparkle-1.1-carbon.patch']
 
+INNOSETUP_VERSION = '5.2.2'
+INNOSETUP_URL = 'http://files.jrsoftware.org/ispack/ispack-%s.exe' % INNOSETUP_VERSION
+INNOUNP_URL = 'http://innounp.sf.net/test020.rar'
+
 
 from rlsbot import BuildEnvironment
 env = BuildEnvironment()
@@ -91,8 +95,6 @@ MINGW_ENVIRONMENT = {
 VS2005_ENVIRONMENT = {
         'MSVS_PATH' : 'C:\\Program Files\\Microsoft Visual Studio 8',
         'PSDK_PATH' : 'C:\\Program Files\\Microsoft Platform SDK',
-        # FIXME: treat this as dependency -> compile and install
-        'INNOSETUP' : 'C:\\Program Files\\Inno Setup 5',
     }
 
 
@@ -314,6 +316,33 @@ wx_win32 = env.BuildComponent(
 
 
 # -----------------------------------------------------------------
+# innosetup
+# -----------------------------------------------------------------
+
+src_innounp = env.ComponentSources(
+        name='innounp',
+        source=INNOUNP_URL)
+
+src_innosetup = env.ComponentSources(
+        name='innosetup',
+        source=INNOSETUP_URL)
+
+innosetup = env.BuildComponent(
+        name='innosetup',
+        agent='win32',
+        sources=src_innosetup,
+        deps=[src_innounp],
+        commands=[
+            'innounp -x ispack-5.2.2.exe',
+            'move {app}\\ISCC?2.exe {app}\\ISCC.exe',
+            'del {app}\\ISCC?1.exe',
+            'move {app}\\ISCmplr?2.dll {app}\\ISCmplr.dll',
+            'move {app}\\ISCmplr?1.dll {app}\\ISCmplr.dls',
+        ],
+        outputs=['{app}/*'])
+
+
+# -----------------------------------------------------------------
 # poedit
 # -----------------------------------------------------------------
 
@@ -387,6 +416,7 @@ poedit_win32 = env.BuildComponent(
               (wx_win32, 'deps/wx'),
               (gettext_win32, 'deps/gettext'),
               (db_win32, 'deps/db'),
+              (innosetup, 'deps/inno'),
               ],
         toolchain=env.VisualStudioToolchain,
         commands=[
@@ -394,7 +424,7 @@ poedit_win32 = env.BuildComponent(
             'set WXWIN=..\\deps\\wx',
             'set WXRC="%WXWIN%\\wxrc.exe"',
             'nmake -f makefile.vc WX_DEBUG=0 WXRC=%WXRC% DB_PATH=..\\deps\\db',
-            '"%INNOSETUP%\\iscc" poedit.iss',
+            '..\\deps\\inno\\iscc poedit.iss',
             ],
         environment=VS2005_ENVIRONMENT,
         outputs=['poedit-*-setup.exe', 'win32/poedit.pdb'])
