@@ -234,8 +234,18 @@ void PoeditListCtrl::SizeColumns()
 
 void PoeditListCtrl::CatalogChanged(Catalog* catalog)
 {
+    Freeze();
+
+    // this is to prevent crashes (wxMac at least) when shortening virtual
+    // listctrl when its scrolled to the bottom:
+    m_catalog = NULL;
+    SetItemCount(0);
+
+    // now read the new catalog:
     m_catalog = catalog;
     ReadCatalog();
+
+    Thaw();
 }
 
 void PoeditListCtrl::ReadCatalog()
@@ -245,9 +255,6 @@ void PoeditListCtrl::ReadCatalog()
         SetItemCount(0);
         return;
     }
-
-    // set the item count
-    SetItemCount(m_catalog->GetCount());
 
     // create the lookup arrays of Ids by first splitting it upon
     // four categories of items:
@@ -297,6 +304,14 @@ void PoeditListCtrl::ReadCatalog()
         m_itemIndexToCatalogIndexArray.push_back(restIds[i]);
         m_catalogIndexToItemIndexArray[restIds[i]] = listItemId++;
     }
+
+
+    // now that everything is prepared, we may set the item count
+    SetItemCount(m_catalog->GetCount());
+
+    // scroll to the top and refresh everything:
+    Select(0);
+    RefreshItems(0, m_catalog->GetCount());
 }
 
 wxString PoeditListCtrl::OnGetItemText(long item, long column) const
