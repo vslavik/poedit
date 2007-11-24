@@ -26,7 +26,8 @@
 ;   Inno Setup installer script
 ;
 
-#define VERSION          "1.3.8pre1"
+#define VERSION          "1.3.8"
+#define VERSION_FULL     "1.3.8pre1"
 
 ; FIXME: extract this from manifest file somehow?
 #define CRT_VERSION      "8.0.50727.762"
@@ -38,9 +39,9 @@
 #include "poedit-locale-files.iss"
 
 [Setup]
-OutputBaseFilename=poedit-{#VERSION}-setup
+OutputBaseFilename=poedit-{#VERSION_FULL}-setup
 AppName=Poedit
-AppVerName=Poedit {#VERSION}
+AppVerName=Poedit {#VERSION_FULL}
 
 ChangesAssociations=true
 AlwaysShowComponentsList=true
@@ -66,7 +67,7 @@ ShowLanguageDialog=no
 AllowUNCPath=true
 InternalCompressLevel=ultra
 AppID={{68EB2C37-083A-4303-B5D8-41FA67E50B8F}
-VersionInfoTextVersion={#VERSION}
+VersionInfoTextVersion={#VERSION_FULL}
 VersionInfoCopyright=© 1999-2007 Vaclav Slavik
 VersionInfoVersion={#VERSION}
 VersionInfoCompany=Vaclav Slavik
@@ -75,7 +76,7 @@ AppCopyright=© 1999-2007 Vaclav Slavik
 AppPublisher=Vaclav Slavik
 AppSupportURL=http://www.poedit.net/support.php
 AppUpdatesURL=http://www.poedit.net/download.php
-AppVersion={#VERSION}
+AppVersion={#VERSION_FULL}
 AppContact=poedit-users@lists.sourceforge.net
 UninstallDisplayIcon={app}\bin\poedit.exe
 UninstallDisplayName=Poedit

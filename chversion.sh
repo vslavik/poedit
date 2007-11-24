@@ -14,7 +14,9 @@ VER_FULL=$1
 VER_SHORT=`echo $VER_FULL | sed -e 's/pre[0-9]//g'`
 
 replace_ver win32/poedit.iss \
-            '\(#define VERSION *"\).*\("\)' "\1$VER_FULL\2"
+            '\(#define VERSION_FULL *"\).*\("\)' "\1$VER_FULL\2"
+replace_ver win32/poedit.iss \
+            '\(#define VERSION *"\).*\("\)' "\1$VER_SHORT\2"
 replace_ver configure.in \
             '\(AC_INIT(\[poedit\], \[\)[^]]*\(\],.*\)' "\1$VER_FULL\2"
 replace_ver make-distrib.sh \
