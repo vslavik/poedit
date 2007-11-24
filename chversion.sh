@@ -1,5 +1,10 @@
 #!/bin/sh
 
+if [ -z "$1" ] ; then
+    echo "Usage: $0 \"version\"" >&2
+    exit 1
+fi
+
 replace_ver()
 {
     echo "replacing in $1..."
