@@ -10,7 +10,10 @@ RESOURCE_FILES = poedit_resource.o
 endif
 
 if USE_OSX
-OSX_SOURCES = osx/userdefaults.h osx/userdefaults.m
+OSX_SOURCES =    osx/userdefaults.h \
+				 osx/userdefaults.m \
+				 osx/spellchecker.h \
+				 osx/spellchecker.m
 endif
 
 SPARKLE_FRAMEWORK = @SPARKLE_FRAMEWORK@

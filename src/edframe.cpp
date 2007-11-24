@@ -53,11 +53,15 @@
 #endif
 
 #ifdef USE_SPELLCHECKING
+
+#ifdef __WXGTK__
     #include <gtk/gtk.h>
     extern "C" {
     #include <gtkspell/gtkspell.h>
     }
-#endif
+#endif // __WXGTK__
+
+#endif // USE_SPELLCHECKING
 
 #include <map>
 
@@ -658,6 +662,8 @@ wxString PoeditFrame::LoadHelpBook(const wxString& name)
 }
 
 #ifdef USE_SPELLCHECKING
+
+#ifdef __WXGTK__
 // helper functions that finds GtkTextView of wxTextCtrl:
 static GtkTextView *GetTextView(wxTextCtrl *ctrl)
 {
@@ -675,7 +681,13 @@ static GtkTextView *GetTextView(wxTextCtrl *ctrl)
     wxFAIL_MSG( _T("couldn't find GtkTextView for text control") );
     return NULL;
 }
+#endif // __WXGTK__
 
+#ifdef __WXOSX__
+#include "osx/spellchecker.h"
+#endif // __WXOSX__
+
+#ifdef __WXGTK__
 static void DoInitSpellchecker(wxTextCtrl *text,
                                bool enable, const wxString& lang)
 {
@@ -688,27 +700,40 @@ static void DoInitSpellchecker(wxTextCtrl *text,
 
     if (enable)
     {
-        // map of languages we know don't work, so that we don't bother
-        // the user with error messages every time the spell checker
-        // is re-initialized:
-        static std::map<wxString, bool> brokenLangs;
-
-        if (brokenLangs.find(lang) == brokenLangs.end())
+        GError *err = NULL;
+        if (!gtkspell_new_attach(textview, lang.ToAscii(), &err))
         {
-            GError *err = NULL;
-            if (!gtkspell_new_attach(textview, lang.ToAscii(), &err))
-            {
-                wxLogError(_("Error initializing spell checking: %s"),
-                           wxString(err->message, wxConvUTF8).c_str());
-                g_error_free(err);
-
-                // remember that this language is broken:
-                brokenLangs[lang] = true;
-            }
+#if 0
+            // FIXME: report the failure in some less intrusive way than the
+            //        code that was used here; say for which language, too
+            wxLogError(_("Error initializing spell checking: %s"),
+                       wxString(err->message, wxConvUTF8).c_str());
+#endif
+            g_error_free(err);
         }
-        // else silently not use the spellchecker
     }
 }
+#endif // __WXGTK__
+
+#ifdef __WXOSX__
+
+#include "osx/spellchecker.h"
+
+static bool SetSpellcheckerLang(const wxString& lang)
+{
+    // FIXME: if this fails, report an error in some unobtrusive way,
+    //        tell the user to install cocoaSpell from
+    //        http://people.ict.usc.edu/~leuski/cocoaspell/
+    return SpellChecker_SetLang(lang.mb_str(wxConvUTF8));
+}
+
+static void DoInitSpellchecker(wxTextCtrl *text,
+                               bool enable, const wxString& /*lang*/)
+{
+    text->MacCheckSpelling(enable);
+}
+#endif // __WXOSX__
+
 #endif // USE_SPELLCHECKING
 
 void PoeditFrame::InitSpellchecker()
@@ -720,10 +745,15 @@ void PoeditFrame::InitSpellchecker()
                    wxConfig::Get()->Read(_T("enable_spellchecking"),
                                          (long)true);
 
+#ifdef __WXOSX__
+    if (enabled)
+        enabled = SetSpellcheckerLang(lang);
+#endif
+
     DoInitSpellchecker(m_textTrans, enabled, lang);
     for (size_t i = 0; i < m_textTransPlural.size(); i++)
         DoInitSpellchecker(m_textTransPlural[i], enabled, lang);
-#endif
+#endif // USE_SPELLCHECKING
 }
 
 

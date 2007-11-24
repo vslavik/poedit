@@ -39,6 +39,7 @@
 #include <wx/xrc/xh_all.h>
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
+#include <wx/sysopt.h>
 
 #ifdef USE_SPARKLE
 #include <Sparkle/SUCarbonAPI.h>
@@ -95,6 +96,10 @@ bool PoeditApp::OnInit()
 {
     if (!wxApp::OnInit())
         return false;
+
+#ifdef __WXMAC__
+    wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
+#endif
 
 #if defined(__UNIX__) && !defined(__WXMAC__)
     wxString home = wxGetHomeDir() + _T("/");

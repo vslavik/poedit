@@ -118,66 +118,6 @@ fi
 AC_MSG_RESULT([$WXRC])
 
 
-if test "$USE_SPELLCHECKING" != "no" ; then
-    dnl we need GtkSpell and GTK+ 2.x for this, check if we're compatible
-    PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0],
-        [
-            AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 2])
-            AC_TRY_COMPILE([#include <wx/defs.h>],
-                [
-                    #ifndef __WXGTK20__
-                        #error "not GTK+ 2"
-                    #endif
-                ],
-                [
-                    AC_MSG_RESULT([yes])
-                    CXXFLAGS="$CXXFLAGS $GTKSPELL_CFLAGS"
-                    LIBS="$LIBS $GTKSPELL_LIBS"
-                    AC_DEFINE(USE_SPELLCHECKING)
-                ],
-                [
-                
-                    AC_MSG_RESULT([no])
-                    USE_SPELLCHECKING="no"
-                    AC_MSG_WARN([disabling spellchecking because GTK+ 2 is required by it])
-                ])
-        ],
-        [
-            USE_SPELLCHECKING="no"
-            AC_MSG_WARN([disabling spellchecking because GtkSpell is missing])
-        ])
-fi
-
-
-
-if $WX_CONFIG_WITH_ARGS --cxxflags | grep -q WXMSW; then
-    use_windows=yes
-    
-    changequote(<<,>>)
-    RC_WX_INCLUDES=`echo " $WX_CPPFLAGS" | sed -e 's/ -[^I][^ ]*//g' | sed -e 's/ -I\([^ ]*\)/ --include-dir \1/g'`
-    changequote([,])
-
-    AC_CHECK_TOOL(WINDRES, windres)
-else
-    use_windows=no
-fi
-
-AM_CONDITIONAL(USE_WINDOWS, test $use_windows = yes)
-
-if test x$USE_TRANSMEM != xno ; then
-    AX_BERKELEY_DB(3.1,
-    [
-        AC_DEFINE(USE_TRANSMEM)
-        AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
-        LIBS="$LIBS $DB_LIBS"
-   ],
-   [
-      USE_TRANSMEM=no
-      AC_MSG_WARN([cannot find Berkeley DB >= 3.1, Poedit will build w/o translation memory feature])
-   ])
-fi
-
-
 use_osx=no
 case "${host}" in
     *-*-darwin* )
@@ -213,6 +153,71 @@ case "${host}" in
 esac
 
 AM_CONDITIONAL(USE_OSX, test $use_osx = yes)
+
+
+if test "$USE_SPELLCHECKING" != "no" ; then
+    if test "$use_osx" = yes ; then
+        dnl spellchecker is always available on OS X
+        AC_DEFINE(USE_SPELLCHECKING)
+    else
+        dnl we need GtkSpell and GTK+ 2.x for this, check if we're compatible
+        PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0],
+            [
+                AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 2])
+                AC_TRY_COMPILE([#include <wx/defs.h>],
+                    [
+                        #ifndef __WXGTK20__
+                            #error "not GTK+ 2"
+                        #endif
+                    ],
+                    [
+                        AC_MSG_RESULT([yes])
+                        CXXFLAGS="$CXXFLAGS $GTKSPELL_CFLAGS"
+                        LIBS="$LIBS $GTKSPELL_LIBS"
+                        AC_DEFINE(USE_SPELLCHECKING)
+                    ],
+                    [
+                    
+                        AC_MSG_RESULT([no])
+                        USE_SPELLCHECKING="no"
+                        AC_MSG_WARN([disabling spellchecking because GTK+ 2 is required by it])
+                    ])
+            ],
+            [
+                USE_SPELLCHECKING="no"
+                AC_MSG_WARN([disabling spellchecking because GtkSpell is missing])
+            ])
+    fi
+fi
+
+
+
+if $WX_CONFIG_WITH_ARGS --cxxflags | grep -q WXMSW; then
+    use_windows=yes
+    
+    changequote(<<,>>)
+    RC_WX_INCLUDES=`echo " $WX_CPPFLAGS" | sed -e 's/ -[^I][^ ]*//g' | sed -e 's/ -I\([^ ]*\)/ --include-dir \1/g'`
+    changequote([,])
+
+    AC_CHECK_TOOL(WINDRES, windres)
+else
+    use_windows=no
+fi
+
+AM_CONDITIONAL(USE_WINDOWS, test $use_windows = yes)
+
+if test x$USE_TRANSMEM != xno ; then
+    AX_BERKELEY_DB(3.1,
+    [
+        AC_DEFINE(USE_TRANSMEM)
+        AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
+        LIBS="$LIBS $DB_LIBS"
+   ],
+   [
+      USE_TRANSMEM=no
+      AC_MSG_WARN([cannot find Berkeley DB >= 3.1, Poedit will build w/o translation memory feature])
+   ])
+fi
 
 
 CATALOGS_TO_INSTALL="install-poedit-catalogs"
