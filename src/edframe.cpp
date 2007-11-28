@@ -417,7 +417,6 @@ PoeditFrame::PoeditFrame() :
 
     SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("toolbar")));
 
-    GetToolBar()->ToggleTool(XRCID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XRCID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XRCID("menu_lines"), m_displayLines);
     GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
@@ -1389,13 +1388,7 @@ void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
 void PoeditFrame::OnQuotesFlag(wxCommandEvent& event)
 {
     UpdateFromTextCtrl();
-    if (event.GetEventObject() == GetToolBar())
-        GetMenuBar()->Check(XRCID("menu_quotes"),
-                            GetToolBar()->GetToolState(XRCID("menu_quotes")));
-    else
-        GetToolBar()->ToggleTool(XRCID("menu_quotes"),
-                                 GetMenuBar()->IsChecked(XRCID("menu_quotes")));
-    m_displayQuotes = GetToolBar()->GetToolState(XRCID("menu_quotes"));
+    m_displayQuotes = GetMenuBar()->IsChecked(XRCID("menu_quotes"));
     UpdateToTextCtrl();
 }
 
