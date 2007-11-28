@@ -7,14 +7,13 @@ msgstr ""
 "Project-Id-Version: Poedit 1.3.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-11-15 10:08+0100\n"
-"PO-Revision-Date: 2007-06-15 11:10+0100\n"
+"PO-Revision-Date: 2007-11-26 16:16+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <users@sl.openoffice.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Poedit-Language: Slovenian\n"
@@ -24,15 +23,14 @@ msgid " (modified)"
 msgstr " (spremenjeno)"
 
 #: ../src/edframe.cpp:1794
-#, fuzzy, c-format
-msgid ""
-"%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i vnosov (%i nejasnih, %i slabih, %i neprevedenih)"
+#, c-format
+msgid "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
+msgstr "%i %% prevedenih, %i vnosov(%i nejasnih, %i slabih, %i neprevedenih)"
 
 #: ../src/catalog.cpp:118
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
-msgstr "%i vrstic datoteke '%s' se ni pravilno naložilo."
+msgstr "%i vrstic datoteke '%s' ni pravilno naloženih."
 
 #: ../src/export_html.cpp:135
 #, c-format
@@ -51,7 +49,8 @@ msgstr "&Samodejno prevedi nize s TM"
 msgid "&Bookmarks"
 msgstr "&Zaznamki"
 
-#: ../src/resources/manager.xrc:130 ../src/resources/menus.xrc:39
+#: ../src/resources/manager.xrc:130
+#: ../src/resources/menus.xrc:39
 msgid "&Close"
 msgstr "&Zapri"
 
@@ -63,7 +62,8 @@ msgstr "&Vsebina ..."
 msgid "&Edit"
 msgstr "&Uredi"
 
-#: ../src/edframe.cpp:397 ../src/resources/manager.xrc:123
+#: ../src/edframe.cpp:397
+#: ../src/resources/manager.xrc:123
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&Datoteka"
@@ -72,7 +72,8 @@ msgstr "&Datoteka"
 msgid "&Find..."
 msgstr "&Najdi ..."
 
-#: ../src/resources/menus.xrc:97 ../src/resources/menus.xrc:101
+#: ../src/resources/menus.xrc:97
+#: ../src/resources/menus.xrc:101
 msgid "&Fullscreen view"
 msgstr "&Celozaslonski pogled"
 
@@ -88,13 +89,14 @@ msgstr "&Nov katalog ..."
 msgid "&Open..."
 msgstr "&Odpri ..."
 
-#: ../src/resources/manager.xrc:126 ../src/resources/menus.xrc:35
+#: ../src/resources/manager.xrc:126
+#: ../src/resources/menus.xrc:35
 msgid "&Preferences..."
 msgstr "&Možnosti ..."
 
 #: ../src/resources/menus.xrc:87
 msgid "&Purge deleted translations"
-msgstr "&Odstrani zbrisane prevode"
+msgstr "&Odstrani izbrisane prevode"
 
 #: ../src/resources/menus.xrc:22
 msgid "&Save"
@@ -110,11 +112,11 @@ msgstr "&Zasenčen seznam prevodov"
 
 #: ../src/resources/menus.xrc:54
 msgid "&Show references"
-msgstr "&Prikaži sklice"
+msgstr "&Pokaži sklice"
 
 #: ../src/resources/menus.xrc:78
 msgid "&Update from sources"
-msgstr "&Osveži iz izvorne kode"
+msgstr "&Posodobi iz izvorne kode"
 
 #: ../src/resources/menus.xrc:95
 msgid "&View"
@@ -170,7 +172,8 @@ msgstr "Dodaj"
 msgid "Add directory to the list"
 msgstr "Dodaj mapo na seznam"
 
-#: ../src/transmemupd_wizard.cpp:138 ../src/resources/tm_update.xrc:85
+#: ../src/transmemupd_wizard.cpp:138
+#: ../src/resources/tm_update.xrc:85
 msgid "Add files"
 msgstr "Dodaj datoteke"
 
@@ -180,7 +183,7 @@ msgstr "Dodaj pot do seznama map, kjer se nahajajo katalogi."
 
 #: ../src/resources/prefs.xrc:101
 msgid "Always change focus to text input field"
-msgstr "Vedno spremeni fokus na polje za vnos besedila"
+msgstr "Vedno usmeri pozornost na polje za vnos besedila"
 
 #: ../src/resources/prefs.xrc:571
 msgid "An item in input files list:"
@@ -198,14 +201,14 @@ msgstr "Samodejno preverjanje črkovanja"
 msgid "Automatic translation"
 msgstr "Samodejno prevajanje"
 
-#: ../src/edframe.cpp:2070 ../src/edframe.cpp:2074
+#: ../src/edframe.cpp:2070
+#: ../src/edframe.cpp:2074
 msgid "Automatic translations:"
 msgstr "Samodejni prevodi:"
 
 #: ../src/resources/prefs.xrc:60
-#, fuzzy
 msgid "Automatically check for new version of Poedit"
-msgstr "Ob shranjevanju samodejno prevedi datoteko .mo"
+msgstr "Samodejno preveri obstoj nove različice Poedita"
 
 #: ../src/resources/prefs.xrc:78
 msgid "Automatically compile .mo file on save"
@@ -238,19 +241,16 @@ msgstr "Vedenje"
 
 #: ../src/catalog.cpp:658
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr ""
-"Poškodovana datoteka kataloga: množinska oblika msgstr uporabljena brez "
-"msgid_plural"
+msgstr "Poškodovana datoteka kataloga: množinska oblika msgstr uporabljena brez msgid_plural"
 
 #: ../src/catalog.cpp:620
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr ""
-"Poškodovana datoteka kataloga: edninska oblika msgstr uporabljena skupaj z "
-"msgid_plural"
+msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr "Poškodovana datoteka kataloga: edninska oblika msgstr uporabljena skupaj z msgid_plural"
 
-#: ../src/resources/manager.xrc:88 ../src/resources/prefs.xrc:311
-#: ../src/resources/prefs.xrc:645 ../src/resources/tm_update.xrc:37
+#: ../src/resources/manager.xrc:88
+#: ../src/resources/prefs.xrc:311
+#: ../src/resources/prefs.xrc:645
+#: ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "Prebrskaj"
 
@@ -262,10 +262,14 @@ msgstr "K&atalog"
 msgid "CR/LF conversion"
 msgstr "Pretvorba CR/LF"
 
-#: ../src/resources/comment.xrc:37 ../src/resources/find.xrc:87
-#: ../src/resources/manager.xrc:111 ../src/resources/prefs.xrc:481
-#: ../src/resources/prefs.xrc:623 ../src/resources/prefs.xrc:668
-#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:193
+#: ../src/resources/comment.xrc:37
+#: ../src/resources/find.xrc:87
+#: ../src/resources/manager.xrc:111
+#: ../src/resources/prefs.xrc:481
+#: ../src/resources/prefs.xrc:623
+#: ../src/resources/prefs.xrc:668
+#: ../src/resources/progress.xrc:31
+#: ../src/resources/settings.xrc:193
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -273,7 +277,8 @@ msgstr "Prekliči"
 msgid "Cannot create database directory!"
 msgstr "Mape za zbirko podatkov ni mogoče ustvariti!"
 
-#: ../src/gexecute.cpp:174 ../src/gexecute.cpp:230
+#: ../src/gexecute.cpp:174
+#: ../src/gexecute.cpp:230
 msgid "Cannot execute program: "
 msgstr "Zagon programa ni mogoč:"
 
@@ -289,8 +294,11 @@ msgstr "Razlikovanje malih/velikih črk"
 msgid "Catalog"
 msgstr "Katalog"
 
-#: ../src/edframe.cpp:795 ../src/edframe.cpp:821 ../src/edframe.cpp:858
-#: ../src/edframe.cpp:904 ../src/edframe.cpp:1028
+#: ../src/edframe.cpp:795
+#: ../src/edframe.cpp:821
+#: ../src/edframe.cpp:858
+#: ../src/edframe.cpp:904
+#: ../src/edframe.cpp:1028
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalog je spremenjen. Želite shraniti spremembe?"
 
@@ -302,26 +310,27 @@ msgstr "&Upravljalec katalogov"
 msgid "Change UI language"
 msgstr "Spremeni jezik uporabniškega vmesnika"
 
-#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:85
+#: ../src/export_html.cpp:122
+#: ../src/resources/settings.xrc:85
 msgid "Charset:"
 msgstr "Nabor znakov:"
 
-#: ../src/resources/prefs.xrc:244 ../src/resources/prefs.xrc:270
+#: ../src/resources/prefs.xrc:244
+#: ../src/resources/prefs.xrc:270
 msgid "Choose"
 msgstr "Izberi"
 
 #: ../src/resources/comment.xrc:44
 msgid "Clear"
-msgstr "Izprazni"
+msgstr "Počisti"
 
 #: ../src/resources/comment.xrc:45
 msgid "Clear the comment"
-msgstr "Zbriši komentar"
+msgstr "Počisti komentar"
 
 #: ../src/resources/toolbar.xrc:34
-#, fuzzy
 msgid "Comment"
-msgstr "Komentar:"
+msgstr "Komentar"
 
 #: ../src/resources/prefs.xrc:110
 msgid "Comment window is editable"
@@ -335,20 +344,23 @@ msgstr "Komentar:"
 msgid "Configuration"
 msgstr "Konfiguracija"
 
-#: ../src/manager.cpp:411 ../src/manager.cpp:431
+#: ../src/manager.cpp:411
+#: ../src/manager.cpp:431
 msgid "Confirmation"
 msgstr "Potrditev"
 
-#: ../src/edframe.cpp:2050 ../src/resources/menus.xrc:47
+#: ../src/edframe.cpp:2050
+#: ../src/resources/menus.xrc:47
 msgid "Copy original to translation field"
-msgstr "Preslikaj izvorni vnos v prevedenega"
+msgstr "Kopiraj izvirnik v polje prevoda"
 
 #: ../src/catalog.cpp:993
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "Datoteke '%s' ni mogoče naložiti, najverjetneje je okvarjena."
 
-#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:73
+#: ../src/export_html.cpp:112
+#: ../src/resources/settings.xrc:73
 msgid "Country:"
 msgstr "Država:"
 
@@ -365,7 +377,8 @@ msgstr "Zbirka podatkov"
 msgid "Database error: %s"
 msgstr "Napaka v zbirki podatkov: %s"
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:447
+#: ../src/resources/manager.xrc:53
+#: ../src/resources/prefs.xrc:447
 msgid "Delete"
 msgstr "Izbriši"
 
@@ -394,19 +407,16 @@ msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
 msgstr ""
-"Res želite vceloti osvežiti vse\n"
+"Res želite naenkrat osvežiti vse\n"
 "kataloge v tem projektu?"
 
 #: ../src/edframe.cpp:1964
 msgid ""
-"Do you really want to remove all translations that are no longer used from "
-"the catalog?\n"
-"If you continue with purging, you will have to translate them again if they "
-"are added back in the future."
+"Do you really want to remove all translations that are no longer used from the catalog?\n"
+"If you continue with purging, you will have to translate them again if they are added back in the future."
 msgstr ""
 "Resnično želite odstraniti vse prevode, ki niso več v uporabi v katalogu?\n"
-"Če nadaljujete z odstranjevanjem, jih boste morali ponovno prevesti, če se v "
-"prihodnje znova pojavijo."
+"Če nadaljujete z odstranjevanjem, jih boste morali ponovno prevesti, če se v prihodnje znova pojavijo."
 
 #: ../src/manager.cpp:410
 msgid "Do you want to delete the project?"
@@ -420,7 +430,8 @@ msgstr "Ne spreminjaj formata obstoječih katalogov"
 msgid "E&xport..."
 msgstr "&Izvozi ..."
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:440
+#: ../src/resources/manager.xrc:48
+#: ../src/resources/prefs.xrc:440
 msgid "Edit"
 msgstr "Uredi"
 
@@ -428,7 +439,8 @@ msgstr "Uredi"
 msgid "Edit &comment"
 msgstr "Uredi &komentar"
 
-#: ../src/resources/comment.xrc:4 ../src/resources/toolbar.xrc:35
+#: ../src/resources/comment.xrc:4
+#: ../src/resources/toolbar.xrc:35
 msgid "Edit comment"
 msgstr "Uredi komentar"
 
@@ -491,25 +503,25 @@ msgid "External editor"
 msgstr "Zunanji urejevalnik"
 
 #: ../src/digger.cpp:65
-#, fuzzy, c-format
+#, c-format
 msgid "Failed command: %s"
-msgstr "Ukaz za razčlenjevalnik:"
+msgstr "Ukaz ni uspel: %s"
 
 #: ../src/digger.cpp:160
-#, fuzzy
 msgid "Failed to load extracted catalog."
-msgstr "Datoteka '%s' ni katalog sporočil."
+msgstr "Izluščenega kataloga ni mogoče naložiti."
 
 #: ../src/digger.cpp:66
-#, fuzzy
 msgid "Failed to merge gettext catalogs."
-msgstr "Datoteka '%s' ni katalog sporočil."
+msgstr "Kataloga sporočil gettext nista bila uspešno spojena."
 
-#: ../src/digger.cpp:94 ../src/digger.cpp:105
+#: ../src/digger.cpp:94
+#: ../src/digger.cpp:105
 msgid "Failed to read extracted catalog."
-msgstr ""
+msgstr "Izluščenega kataloga ni mogoče brati."
 
-#: ../src/edframe.cpp:876 ../src/edframe.cpp:920
+#: ../src/edframe.cpp:876
+#: ../src/edframe.cpp:920
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Datoteka '%s' ne obstaja."
@@ -566,11 +578,13 @@ msgstr "Oblika %i"
 msgid "Form %i (e.g. \"%u\")"
 msgstr "Oblika %i (npr. \"%u\")"
 
-#: ../src/resources/toolbar.xrc:40 ../src/resources/toolbar.xrc:46
+#: ../src/resources/toolbar.xrc:40
+#: ../src/resources/toolbar.xrc:46
 msgid "Fullscreen view"
 msgstr "Celozaslonski pogled"
 
-#: ../src/manager.cpp:253 ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:253
+#: ../src/resources/toolbar.xrc:28
 msgid "Fuzzy"
 msgstr "Nejasno"
 
@@ -578,11 +592,13 @@ msgstr "Nejasno"
 msgid "Fuzzy translation"
 msgstr "Nejasen prevod"
 
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:960
+#: ../src/edframe.cpp:841
+#: ../src/edframe.cpp:960
 msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Katalogi GNU Gettext (*.po)|*.po|Vse datoteke (*.*)|*.*"
 
-#: ../src/edframe.cpp:1053 ../src/edframe.cpp:1190
+#: ../src/edframe.cpp:1053
+#: ../src/edframe.cpp:1190
 msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "Predloge GNU Gettext (*.pot)|*.pot|Vse datoteke (*.*)|*.*"
 
@@ -626,9 +642,10 @@ msgstr "Če je označeno, bo okno s komentarji moč urejati."
 
 #: ../src/resources/prefs.xrc:529
 msgid "Invocation:"
-msgstr "Poziv:"
+msgstr "Priklic:"
 
-#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:174
+#: ../src/settingsdlg.cpp:71
+#: ../src/resources/settings.xrc:174
 msgid "Keywords"
 msgstr "Ključne besede"
 
@@ -636,8 +653,10 @@ msgstr "Ključne besede"
 msgid "Language selection"
 msgstr "Izbor jezika"
 
-#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:497
-#: ../src/resources/prefs.xrc:501 ../src/resources/settings.xrc:61
+#: ../src/export_html.cpp:109
+#: ../src/resources/prefs.xrc:497
+#: ../src/resources/prefs.xrc:501
+#: ../src/resources/settings.xrc:61
 msgid "Language:"
 msgstr "Jezik:"
 
@@ -645,7 +664,8 @@ msgstr "Jezik:"
 msgid "Last modified"
 msgstr "Zadnjič spremenjeno"
 
-#: ../src/edlistctrl.cpp:214 ../src/fileviewer.cpp:103
+#: ../src/edlistctrl.cpp:214
+#: ../src/fileviewer.cpp:103
 msgid "Line"
 msgstr "Vrstica"
 
@@ -700,16 +720,11 @@ msgid "My Project"
 msgstr "Moj projekt"
 
 #: ../src/resources/prefs.xrc:103
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Nikoli ne dovoli seznamu nizov prevzeti fokusa. Če je omogočeno, morate "
-"uporabljati Ctrl-puščice za navigacijo s tipkovnico, vendar lahko začnete "
-"vnašati besedilo brez uporabe tipke Tab za spremembo fokusa."
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Nikoli ne dovoli seznamu nizov prevzeti pozornosti. Če je vključeno, morate uporabljati Ctrl-puščice za krmarjenje s tipkovnico, vendar lahko začnete vnašati besedilo brez uporabe tipke Tabulator za spremembo pozornosti."
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:435
+#: ../src/resources/manager.xrc:43
+#: ../src/resources/prefs.xrc:435
 msgid "New"
 msgstr "Nov"
 
@@ -723,7 +738,7 @@ msgstr "Nov predmet"
 
 #: ../src/resources/summary.xrc:30
 msgid "New strings"
-msgstr "Nov znakovni niz"
+msgstr "Novi znakovni nizi"
 
 #: ../src/resources/find.xrc:102
 msgid "Next >"
@@ -731,7 +746,7 @@ msgstr "Naslednji  >"
 
 #: ../src/fileviewer.cpp:144
 msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "Noben urejevalnik ni določen. Nastavite ga v pogovornem oknu Možnosti."
+msgstr "Določen ni noben urejevalnik. Nastavite ga v pogovornem oknu Možnosti."
 
 #: ../src/digger.cpp:250
 msgid "No files found in: "
@@ -745,9 +760,12 @@ msgstr "Ni nobenih sklicev na ta znakovni niz."
 msgid "Notes"
 msgstr "Opombe"
 
-#: ../src/resources/about.xrc:50 ../src/resources/comment.xrc:29
-#: ../src/resources/manager.xrc:103 ../src/resources/prefs.xrc:473
-#: ../src/resources/prefs.xrc:615 ../src/resources/settings.xrc:185
+#: ../src/resources/about.xrc:50
+#: ../src/resources/comment.xrc:29
+#: ../src/resources/manager.xrc:103
+#: ../src/resources/prefs.xrc:473
+#: ../src/resources/prefs.xrc:615
+#: ../src/resources/settings.xrc:185
 #: ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "V redu"
@@ -757,27 +775,29 @@ msgid "Obsolete strings"
 msgstr "Zastareli znakovni nizi"
 
 #: ../src/resources/toolbar.xrc:12
-#, fuzzy
 msgid "Open"
-msgstr "&Odpri ..."
+msgstr "Odpri"
 
-#: ../src/edframe.cpp:839 ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:839
+#: ../src/resources/toolbar.xrc:13
 msgid "Open catalog"
 msgstr "Odpri katalog"
 
-#: ../src/edframe.cpp:1051 ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1051
+#: ../src/edframe.cpp:1188
 msgid "Open catalog template"
 msgstr "Odpri predlogo kataloga"
 
 #: ../src/resources/prefs.xrc:94
 msgid "Open catalogs manager on Poedit startup"
-msgstr "Ob zagonu Poedit-a odpri upravljalca katalogov"
+msgstr "Ob zagonu Poedita odpri upravljalca katalogov"
 
 #: ../src/resources/prefs.xrc:211
 msgid "Open source files in editor, not in file viewer"
 msgstr "Odpri izvorne datoteke v urejevalniku, ne v pregledovalniku"
 
-#: ../src/export_html.cpp:145 ../src/edlistctrl.cpp:211
+#: ../src/export_html.cpp:145
+#: ../src/edlistctrl.cpp:211
 msgid "Original string"
 msgstr "Izvorni niz znakov"
 
@@ -794,15 +814,16 @@ msgid "Parsers"
 msgstr "Razčlenjevalniki"
 
 #: ../src/digger.cpp:135
-#, fuzzy, c-format
+#, c-format
 msgid "Parsing %s files..."
-msgstr "Pregled datotek ..."
+msgstr "Razčlenjevanje %s datotek ..."
 
 #: ../src/resources/prefs.xrc:295
 msgid "Path to DB:"
 msgstr "Pot do zbirke podatkov:"
 
-#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:153
+#: ../src/settingsdlg.cpp:73
+#: ../src/resources/settings.xrc:153
 msgid "Paths"
 msgstr "Poti"
 
@@ -858,11 +879,13 @@ msgstr "Možnosti"
 msgid "Proceed"
 msgstr "Nadaljuj"
 
-#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:121
+#: ../src/export_html.cpp:102
+#: ../src/resources/settings.xrc:121
 msgid "Project info"
 msgstr "Podatki o projektu"
 
-#: ../src/export_html.cpp:106 ../src/resources/settings.xrc:19
+#: ../src/export_html.cpp:106
+#: ../src/resources/settings.xrc:19
 msgid "Project name and version:"
 msgstr "Ime in različica projekta:"
 
@@ -872,13 +895,14 @@ msgstr "Ime projekta:"
 
 #: ../src/edframe.cpp:1965
 msgid "Purge deleted translations"
-msgstr "Odstrani zbrisane prevode"
+msgstr "Odstrani izbrisane prevode"
 
 #: ../src/edframe.cpp:1276
 msgid "References"
 msgstr "Sklici"
 
-#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
+#: ../src/edframe.cpp:2055
+#: ../src/edframe.cpp:2059
 msgid "References:"
 msgstr "Sklici:"
 
@@ -888,12 +912,11 @@ msgstr "Posodobi spomin prevajanja iz katalogov v zgoraj naštetih poteh."
 
 #: ../src/resources/tm_update.xrc:42
 msgid "Reset to defaults"
-msgstr "Ponastavi privzeto"
+msgstr "Ponastavi na privzeto"
 
 #: ../src/resources/toolbar.xrc:17
-#, fuzzy
 msgid "Save"
-msgstr "&Shrani"
+msgstr "Shrani"
 
 #: ../src/resources/menus.xrc:26
 msgid "Save &as..."
@@ -907,8 +930,11 @@ msgstr "Shrani kot ..."
 msgid "Save catalog"
 msgstr "Shrani katalog"
 
-#: ../src/edframe.cpp:796 ../src/edframe.cpp:822 ../src/edframe.cpp:859
-#: ../src/edframe.cpp:905 ../src/edframe.cpp:1029
+#: ../src/edframe.cpp:796
+#: ../src/edframe.cpp:822
+#: ../src/edframe.cpp:859
+#: ../src/edframe.cpp:905
+#: ../src/edframe.cpp:1029
 msgid "Save changes"
 msgstr "Shrani spremembe"
 
@@ -918,7 +944,7 @@ msgstr "Pregledovanje datoteke:"
 
 #: ../src/digger.cpp:121
 msgid "Scanning files..."
-msgstr "Pregled datotek ..."
+msgstr "Pregledovanje datotek ..."
 
 #: ../src/transmemupd_wizard.cpp:59
 msgid "Search Paths"
@@ -928,7 +954,8 @@ msgstr "Išči po poteh"
 msgid "Select catalog's language"
 msgstr "Izberite jezik kataloga"
 
-#: ../src/prefsdlg.cpp:354 ../src/manager.cpp:284
+#: ../src/prefsdlg.cpp:354
+#: ../src/manager.cpp:284
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "Izberite mapo"
@@ -961,27 +988,28 @@ msgstr "Namestitev"
 
 #: ../src/resources/menus.xrc:113
 msgid "Show &comment window"
-msgstr "Prikaži okno &komentarja"
+msgstr "Pokaži okno &komentarja"
 
 #: ../src/resources/menus.xrc:117
 msgid "Show automatic c&omments window"
-msgstr "Prikaži okno samodejnih &komentarjev"
+msgstr "Pokaži okno samodejnih &komentarjev"
 
 #: ../src/resources/prefs.xrc:87
 msgid "Show summary after catalog update"
-msgstr "Prikaži povzetek po osvežitvi kataloga"
+msgstr "Pokaži povzetek po posodobitvi kataloga"
 
 #: ../src/edframe.cpp:469
 msgid "Singular:"
 msgstr "Ednina:"
 
-#: ../src/resources/prefs.xrc:590 ../src/resources/settings.xrc:97
+#: ../src/resources/prefs.xrc:590
+#: ../src/resources/settings.xrc:97
 msgid "Source code charset:"
 msgstr "Kodni nabor izvorne kode:"
 
 #: ../src/resources/prefs.xrc:416
 msgid "Source code parsers:"
-msgstr "Razčlenjevalnik izvorne kode:"
+msgstr "Razčlenjevalniki izvorne kode:"
 
 #: ../src/fileviewer.cpp:46
 msgid "Source file"
@@ -995,11 +1023,13 @@ msgstr "Začni s prvim elementom"
 msgid "String to find:"
 msgstr "Iskalni niz:"
 
-#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:47
+#: ../src/export_html.cpp:119
+#: ../src/resources/settings.xrc:47
 msgid "Team's email address:"
 msgstr "E-poštni naslov ekipe:"
 
-#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:33
+#: ../src/export_html.cpp:115
+#: ../src/resources/settings.xrc:33
 msgid "Team:"
 msgstr "Ekipa:"
 
@@ -1015,12 +1045,8 @@ msgstr ""
 "in nastavitev je bila temu primerno spremenjena. "
 
 #: ../src/catalog.cpp:985
-msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"Pri nalaganju kataloga je prišlo do napak. Del podatkov morda manjka ali pa "
-"so kot rezultat nepravilni."
+msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
+msgstr "Pri nalaganju kataloga je prišlo do napak. Del podatkov morda manjka ali pa so kot rezultat nepravilni."
 
 #: ../src/resources/summary.xrc:38
 msgid ""
@@ -1044,8 +1070,8 @@ msgid ""
 "Please fill in your name and e-mail address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
-"To je prvi zagon Poedit-a.\n"
-"Prosimo vpišite vaše ime ter vaš e-poštni naslov\n"
+"To je prvi zagon Poedita.\n"
+"Prosim, vpišite svoje ime ter e-poštni naslov\n"
 "(Ta informacija se uporabi samo v glavah katalogov)"
 
 #: ../src/resources/prefs.xrc:545
@@ -1055,10 +1081,10 @@ msgid ""
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
 msgstr ""
-"To je ukaz za zagon parserja.\n"
+"To je ukaz za zagon razčlenjevalnika.\n"
 "%o razširi v ime izhodne datoteke, %K v seznam\n"
-"ključnih besed, %F v seznam vhodnih datotek\n"
-"%C v zastavico znakovnega nabora (glej spodaj)."
+"ključnih besed, %F v seznam vhodnih datotek,\n"
+"%C pa v zastavico nabora znakov (glej spodaj)."
 
 #: ../src/resources/prefs.xrc:602
 #, c-format
@@ -1067,7 +1093,7 @@ msgid ""
 "only if source codecharset was given. %c expands to charset value."
 msgstr ""
 "To bo pripeto ukazni vrstici le,\n"
-"če je navedena izvorna kodni nabor. %c razširi v vrednost kodnega nabora."
+"če je naveden izvorni nabor znakov. %c razširi v vrednost nabora znakov."
 
 #: ../src/resources/prefs.xrc:583
 #, c-format
@@ -1094,7 +1120,8 @@ msgstr "Označeno, če je niz preveden nejasno."
 msgid "Total"
 msgstr "Skupaj"
 
-#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:212
+#: ../src/export_html.cpp:148
+#: ../src/edlistctrl.cpp:212
 msgid "Translation"
 msgstr "Prevod"
 
@@ -1140,38 +1167,36 @@ msgid "Untrans"
 msgstr "Neprevedenih"
 
 #: ../src/resources/toolbar.xrc:22
-#, fuzzy
 msgid "Update"
-msgstr "Osveži povzetek"
+msgstr "Posodobi"
 
 #: ../src/resources/manager.xrc:59
-#, fuzzy
 msgid "Update all"
-msgstr "Osveži povzetek"
+msgstr "Posodobi vse"
 
 #: ../src/resources/manager.xrc:60
 msgid "Update all catalogs in the project"
-msgstr "Osveži vse kataloge v tem projektu"
+msgstr "Posodobi vse kataloge v tem projektu"
 
 #: ../src/resources/toolbar.xrc:23
 msgid "Update catalog - synchronize it with sources"
-msgstr "Osveži katalog - sinhroniziraj z izvorno kodo"
+msgstr "Posodobi katalog - sinhroniziraj z izvorno kodo"
 
 #: ../src/resources/menus.xrc:81
 msgid "Update from &POT file..."
-msgstr "Osveži iz datoteke &POT ..."
+msgstr "Posodobi iz datoteke &POT ..."
 
 #: ../src/resources/summary.xrc:4
 msgid "Update summary"
-msgstr "Osveži povzetek"
+msgstr "Posodobi povzetek"
 
 #: ../src/resources/tm_update.xrc:4
 msgid "Update translation memory"
-msgstr "Osveži spomin prevoda"
+msgstr "Posodobi prevodni spomin"
 
 #: ../src/catalog.cpp:1382
 msgid "Updating catalog..."
-msgstr "Osveži katalog ..."
+msgstr "Posodabljanje kataloga je v teku ..."
 
 #: ../src/edframe.cpp:1172
 msgid "Updating the catalog failed. Click on 'More>>' for details."
@@ -1191,7 +1216,7 @@ msgid ""
 "in source files, in addition to default ones."
 msgstr ""
 "Uporabi te ključne besede (imena funkcij) za prepoznavo prevedljivih nizov\n"
-"znakov v izvornih datotekah, poleg že privzetih."
+"v izvornih datotekah, poleg že privzetih."
 
 #: ../src/resources/find.xrc:50
 msgid "Whole words only"
@@ -1207,7 +1232,7 @@ msgstr "Ne morete povleči/spustiti več kot ene datoteke na okno Poedit."
 
 #: ../src/chooselang.cpp:175
 msgid "You must restart Poedit for this change to take effect."
-msgstr "Ponono morate zagnati Poedit, da se ta spremeba uveljavi."
+msgstr "Ponovno morate zagnati Poedit, da ta spremeba prične veljati."
 
 #: ../src/resources/prefs.xrc:34
 msgid "Your e-mail address:"
@@ -1236,38 +1261,30 @@ msgstr "različica"
 
 #~ msgid " files..."
 #~ msgstr "datotek ..."
-
 #~ msgid "Display quotes around the string?"
 #~ msgstr "Želite prikazati narekovaje okoli tega vnosa?"
-
 #~ msgid "Error while loading file '%s': line %u is corrupted."
 #~ msgstr "Napaka pri nalaganju datoteke '%s': vrstica %u ima napako."
-
 #~ msgid "Help"
 #~ msgstr "Pomoč"
-
 #~ msgid "Parsing "
 #~ msgstr "Razčlenjevanje"
-
 #~ msgid ""
 #~ "Poedit installation is broken, cannot find application's home directory."
 #~ msgstr ""
 #~ "Namestitev Poedit je pokvarjena, domače mape aplikacije ni mogoče najti."
-
 #~ msgid "Purge delete translations"
 #~ msgstr "Odstrani zbrisane prevode"
 
 #, fuzzy
 #~ msgid "; charset="
 #~ msgstr "Nabor znakov:"
-
 #~ msgid ""
 #~ "Cannot find resources file '%s'!\n"
 #~ "Please reinstall Poedit."
 #~ msgstr ""
 #~ "Datoteke z viri '%s' ni mogoče najti!\n"
 #~ "Ponovno namestite Poedit."
-
 #~ msgid ""
 #~ "Cannot find resources file '%s'!\n"
 #~ "Poedit was configured to be installed in '%s'.\n"
@@ -1278,6 +1295,6 @@ msgstr "različica"
 #~ "Poedit je bil nastavljen za namestitev v '%s'.\n"
 #~ "Prosimo nastavite spremenljivko POEDIT_PREFIX, da bo kazala na\n"
 #~ "mesto, kamor ste namestili Poedit."
-
 #~ msgid "Poedit Error"
 #~ msgstr "Napaka Poedit"
+
