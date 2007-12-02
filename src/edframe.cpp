@@ -2310,8 +2310,6 @@ void PoeditFrame::OnCommentWindowText(wxCommandEvent&)
     comment = CommentDialog::AddStartHash(m_textComment->GetValue());
     CatalogData& data((*m_catalog)[m_list->GetIndexInCatalog(m_sel)]);
 
-    wxLogTrace(_T("poedit"), _T("   comm:'%s'"), comment.c_str());
-    wxLogTrace(_T("poedit"), _T("datcomm:'%s'"), data.GetComment().c_str());
     if (comment == data.GetComment())
         return;
 
