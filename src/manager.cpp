@@ -105,6 +105,8 @@ ManagerFrame::ManagerFrame() :
     m_curPrj = -1;
 
     int last = wxConfig::Get()->Read(_T("manager_last_selected"), (long)0);
+
+    // FIXME: do this in background (here and elsewhere)
     UpdateListPrj(last);
     if (m_listPrj->GetCount() > 0)
         UpdateListCat(last);
@@ -179,6 +181,7 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     wxString file2(file);
     file2.Replace(_T("/"), _T("_"));
     file2.Replace(_T("\\"), _T("_"));
+    // FIXME: move cache to cache file and out of *config* file!
     key.Printf(_T("Manager/project_%i/FilesCache/%s/"), id, file2.c_str());
 
     modtime = cfg->Read(key + _T("timestamp"), (long)0);
@@ -194,8 +197,11 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     else
     {
         // supress error messages, we don't mind if the catalog is corrupted
+        // FIXME: *do* indicate error somehow
         wxLogNull nullLog;
 
+        // FIXME: don't re-load the catalog if it's already loaded in the
+        //        editor, reuse loaded instance
         Catalog cat(file);
         cat.GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
         modtime = wxFileModificationTime(file);
@@ -214,6 +220,8 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     else icon = 1;
 
     wxString tmp;
+    // FIXME: don't put full filename there, remove common prefix (of all
+    //        directories in project's settings)
     list->InsertItem(i, file, icon);
     tmp.Printf(_T("%i"), all);
     list->SetItem(i, 1, tmp);
@@ -254,6 +262,8 @@ void ManagerFrame::UpdateListCat(int id)
     m_listCat->InsertColumn(4, _("Bad Tokens"));
     m_listCat->InsertColumn(5, _("Last modified"));
 
+    // FIXME: this is time-consuming, it should be done in parallel on
+    //        multi-core/SMP systems
     for (size_t i = 0; i < m_catalogs.GetCount(); i++)
         AddCatalogToList(m_listCat, i, id, m_catalogs[i]);
 
