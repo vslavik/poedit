@@ -58,8 +58,6 @@ class PoeditListCtrl : public wxListView
 
         virtual ~PoeditListCtrl();
 
-        void CreateColumns();
-
         void SizeColumns();
 
         void SetDisplayLines(bool dl) { m_displayLines = dl; }
@@ -82,8 +80,12 @@ class PoeditListCtrl : public wxListView
         /// Returns the list item index for the given catalog index
         int GetItemIndex(int catalogIndex) const;
 
+        int GetSelection() const { return GetFirstSelected(); }
+
     private:
         void OnSize(wxSizeEvent& event);
+
+        void CreateColumns();
 
         void ReadCatalog();
 

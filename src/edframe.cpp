@@ -1111,6 +1111,7 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
         delete m_catalog;
         m_catalog = catalog;
         m_list->CatalogChanged(m_catalog);
+        m_sel = m_list->GetSelection();
         m_modified = true;
         DoSaveAs(file);
         if (!isFromPOT)
@@ -1197,6 +1198,7 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
     else
         succ = m_catalog->UpdateFromPOT(pot_file);
     m_list->CatalogChanged(m_catalog);
+    m_sel = m_list->GetSelection();
 
     RestartItemsValidation();
 
@@ -1707,6 +1709,7 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     m_catalog = cat;
 
     m_list->CatalogChanged(m_catalog);
+    m_sel = m_list->GetSelection();
     dynamic_cast<TextctrlHandler*>(m_textTrans->GetEventHandler())->SetCatalog(m_catalog);
 
 #ifdef USE_TRANSMEM
@@ -1749,6 +1752,7 @@ void PoeditFrame::RefreshControls()
         delete m_catalog;
         m_catalog = NULL;
         m_list->CatalogChanged(NULL);
+        m_sel = -1;
         return;
     }
 
@@ -1760,13 +1764,10 @@ void PoeditFrame::RefreshControls()
     if (selection_idx != -1)
         selection = m_list->GetItemText(selection_idx);
 
-    m_list->Freeze();
-    m_list->CreateColumns(); // This forces to reread the catalog
-    m_list->Refresh();
+    m_list->CatalogChanged(m_catalog);
+    m_sel = m_list->GetSelection();
 
     wxString trans;
-
-    m_list->Thaw();
 
     if (m_catalog->GetCount() > 0)
     {
@@ -1774,6 +1775,7 @@ void PoeditFrame::RefreshControls()
         {
             m_list->Select(0);
             m_list->Focus(0);
+            m_sel = -1;
         }
         else
         {
@@ -1793,6 +1795,7 @@ void PoeditFrame::RefreshControls()
                     // Now, select the item in the list
                     m_list->Select(i);
                     m_list->Focus(i);
+                    m_sel = m_list->GetSelection();
                     break;
                 }
             }
