@@ -44,6 +44,7 @@
 #include <wx/splitter.h>
 #include <wx/fontutil.h>
 #include <wx/textfile.h>
+#include <wx/wupdlock.h>
 
 #if !wxCHECK_VERSION(2,8,0)
     #define wxFD_OPEN              wxOPEN
@@ -1184,6 +1185,12 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
     CancelItemsValidation();
 
     UpdateFromTextCtrl();
+
+    // This ensures that the list control won't be redrawn during Update()
+    // call when a dialog box is hidden; another alternative would be to call
+    // m_list->CatalogChanged(NULL) here
+    wxWindowUpdateLocker locker(m_list);
+
     bool succ;
     if (pot_file.empty())
         succ = m_catalog->Update();
