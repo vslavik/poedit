@@ -387,7 +387,9 @@ void PoeditListCtrl::OnSize(wxSizeEvent& event)
 
 long PoeditListCtrl::GetIndexInCatalog(long item) const
 {
-    if (item < (long)m_itemIndexToCatalogIndexArray.size())
+    if (item == -1)
+        return -1;
+    else if (item < (long)m_itemIndexToCatalogIndexArray.size())
         return m_itemIndexToCatalogIndexArray[item];
     else
         return -1;
@@ -395,7 +397,9 @@ long PoeditListCtrl::GetIndexInCatalog(long item) const
 
 int PoeditListCtrl::GetItemIndex(int catalogIndex) const
 {
-    if (catalogIndex < (int)m_catalogIndexToItemIndexArray.size())
+    if (catalogIndex == -1)
+        return -1;
+    else if (catalogIndex < (int)m_catalogIndexToItemIndexArray.size())
         return m_catalogIndexToItemIndexArray[catalogIndex];
     else
         return -1;

@@ -80,7 +80,20 @@ class PoeditListCtrl : public wxListView
         /// Returns the list item index for the given catalog index
         int GetItemIndex(int catalogIndex) const;
 
+        /// Returns current list selection (as list item index)
         int GetSelection() const { return GetFirstSelected(); }
+
+        /// Returns index of selected catalog item
+        int GetSelectedCatalogItem() const
+        {
+            return GetIndexInCatalog(GetSelection());
+        }
+
+        /// Selects given catalog item
+        void SelectCatalogItem(int catalogIndex)
+        {
+            Select(GetItemIndex(catalogIndex));
+        }
 
     private:
         void OnSize(wxSizeEvent& event);

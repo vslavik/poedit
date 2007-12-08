@@ -1759,52 +1759,23 @@ void PoeditFrame::RefreshControls()
     wxBusyCursor bcur;
     UpdateMenu();
 
-    // FIXME: all this code is broken, don't base it on item text (which
-    //        won't be unique anymore
-    long selection_idx = m_list->GetFirstSelected();
-    wxString selection;
-    if (selection_idx != -1)
-        selection = m_list->GetItemText(selection_idx);
+    // remember currently selected item:
+    int selectedItem = m_list->GetSelectedCatalogItem();
+    // NB: This will force Poedit to not update to/from text controls when
+    //     selected item in list control changes in the code bellow, but the
+    //     _catalog item_ selected is still the same:
+    m_sel = -1;
 
+    // update catalog view, this may involve reordering the items...
     m_list->CatalogChanged(m_catalog);
 
-    wxString trans;
-
-    if (m_catalog->GetCount() > 0)
+    // ...and so we need to restore selection now:
+    if ( selectedItem != -1 )
     {
-        if (selection.empty())
-        {
-            m_list->Select(0);
-            m_list->Focus(0);
-        }
-        else
-        {
-            size_t cnt = m_catalog->GetCount();
-            for (size_t i = 0; i < cnt; i++)
-            {
-                if (m_list->GetItemText(i) == selection)
-                {
-                    // This will force to not update the item that now has the
-                    // position the item that just got modified had before the
-                    // catalog was saved. If we don't force this to happen,
-                    // that item would get the value of the one that just got
-                    // modified (from the text controls), thus deleting its
-                    // legitimate value
-                    int ss = m_sel;
-                    m_sel = -1;
-
-                    // Now, select the item in the list
-                    m_list->Select(i);
-                    m_list->Focus(i);
-
-                    m_sel = ss;
-
-                    break;
-                }
-            }
-        }
+        m_list->SelectCatalogItem(selectedItem);
+        m_sel = m_list->GetSelection();
     }
-	
+
     FindFrame *f = (FindFrame*)FindWindow(_T("find_frame"));
     if (f)
         f->Reset(m_catalog);
