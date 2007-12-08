@@ -1111,7 +1111,6 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
         delete m_catalog;
         m_catalog = catalog;
         m_list->CatalogChanged(m_catalog);
-        m_sel = m_list->GetSelection();
         m_modified = true;
         DoSaveAs(file);
         if (!isFromPOT)
@@ -1198,7 +1197,6 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
     else
         succ = m_catalog->UpdateFromPOT(pot_file);
     m_list->CatalogChanged(m_catalog);
-    m_sel = m_list->GetSelection();
 
     RestartItemsValidation();
 
@@ -1256,9 +1254,13 @@ void PoeditFrame::OnListSel(wxListEvent& event)
     bool hasFocus = (focus == m_textTrans) ||
                     (focus && focus->GetParent() == m_pluralNotebook);
 
-    m_sel = event.GetIndex();
-    UpdateToTextCtrl(m_sel);
     event.Skip();
+
+    m_sel = event.GetIndex();
+    if ( !m_catalog || m_sel > (int)m_catalog->GetCount() )
+        m_sel = -1;
+
+    UpdateToTextCtrl(m_sel);
 
     if (hasFocus)
     {
@@ -1709,7 +1711,6 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     m_catalog = cat;
 
     m_list->CatalogChanged(m_catalog);
-    m_sel = m_list->GetSelection();
     dynamic_cast<TextctrlHandler*>(m_textTrans->GetEventHandler())->SetCatalog(m_catalog);
 
 #ifdef USE_TRANSMEM
@@ -1752,20 +1753,20 @@ void PoeditFrame::RefreshControls()
         delete m_catalog;
         m_catalog = NULL;
         m_list->CatalogChanged(NULL);
-        m_sel = -1;
         return;
     }
 
     wxBusyCursor bcur;
     UpdateMenu();
 
+    // FIXME: all this code is broken, don't base it on item text (which
+    //        won't be unique anymore
     long selection_idx = m_list->GetFirstSelected();
     wxString selection;
     if (selection_idx != -1)
         selection = m_list->GetItemText(selection_idx);
 
     m_list->CatalogChanged(m_catalog);
-    m_sel = m_list->GetSelection();
 
     wxString trans;
 
@@ -1775,7 +1776,6 @@ void PoeditFrame::RefreshControls()
         {
             m_list->Select(0);
             m_list->Focus(0);
-            m_sel = -1;
         }
         else
         {
@@ -1790,12 +1790,15 @@ void PoeditFrame::RefreshControls()
                     // that item would get the value of the one that just got
                     // modified (from the text controls), thus deleting its
                     // legitimate value
+                    int ss = m_sel;
                     m_sel = -1;
 
                     // Now, select the item in the list
                     m_list->Select(i);
                     m_list->Focus(i);
-                    m_sel = m_list->GetSelection();
+
+                    m_sel = ss;
+
                     break;
                 }
             }
