@@ -114,6 +114,9 @@ const wxWindowID ID_TEXTCOMMENT = wxNewId();
 #endif
 
 
+// I don't like this global flag, but all PoeditFrame instances must share it
+bool gs_focusToText = false;
+
 /*static*/ PoeditFrame *PoeditFrame::Find(const wxString& filename)
 {
     for (PoeditFramesList::const_iterator n = ms_instances.begin();
@@ -143,6 +146,12 @@ const wxWindowID ID_TEXTCOMMENT = wxNewId();
         }
     }
     f->Show(true);
+
+    if (gs_focusToText)
+        f->m_textTrans->SetFocus();
+    else
+        f->m_list->SetFocus();
+
     return f;
 }
 
@@ -234,10 +243,6 @@ class TextctrlHandler : public wxEvtHandler
 BEGIN_EVENT_TABLE(TextctrlHandler, wxEvtHandler)
    EVT_KEY_DOWN(TextctrlHandler::OnKeyDown)
 END_EVENT_TABLE()
-
-// I don't like this global flag, but all PoeditFrame instances should share it
-// :(
-bool gs_focusToText = false;
 
 // special handling of events in listctrl
 class ListHandler : public wxEvtHandler
@@ -539,11 +544,6 @@ PoeditFrame::PoeditFrame() :
 #ifdef __WXMSW__
     DragAcceptFiles(true);
 #endif
-
-    if (gs_focusToText)
-        m_textTrans->SetFocus();
-    else
-        m_list->SetFocus();
 }
 
 
