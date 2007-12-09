@@ -60,7 +60,7 @@ class PoeditListCtrl : public wxListView
 
         void SizeColumns();
 
-        void SetDisplayLines(bool dl) { m_displayLines = dl; }
+        void SetDisplayLines(bool dl);
 
         // Returns average width of one column in number of characters:
         size_t GetMaxColChars() const

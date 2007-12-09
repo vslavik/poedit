@@ -205,14 +205,19 @@ PoeditListCtrl::~PoeditListCtrl()
 {
 }
 
+void PoeditListCtrl::SetDisplayLines(bool dl)
+{
+    m_displayLines = dl;
+    CreateColumns();
+}
+
 void PoeditListCtrl::CreateColumns()
 {
-    ClearAll();
+    DeleteAllColumns();
     InsertColumn(0, _("Original string"));
     InsertColumn(1, _("Translation"));
     if (m_displayLines)
         InsertColumn(2, _("Line"), wxLIST_FORMAT_RIGHT);
-    ReadCatalog();
     SizeColumns();
 }
 

@@ -1407,10 +1407,8 @@ void PoeditFrame::OnQuotesFlag(wxCommandEvent& event)
 
 void PoeditFrame::OnLinesFlag(wxCommandEvent& event)
 {
-    UpdateFromTextCtrl();
     m_displayLines = GetMenuBar()->IsChecked(XRCID("menu_lines"));
     m_list->SetDisplayLines(m_displayLines);
-    RefreshControls();
 }
 
 
