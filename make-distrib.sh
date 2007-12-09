@@ -5,7 +5,7 @@
 # $Id$
 #
 
-VERSION=1.3.8pre1
+VERSION=1.3.8
 
 #(
 #cd docs_classes
