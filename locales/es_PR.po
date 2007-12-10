@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Poedit 1.3.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-11-15 10:08+0100\n"
-"PO-Revision-Date: 2007-06-19 23:34-0600\n"
+"PO-Revision-Date: 2007-12-10 13:39-0600\n"
 "Last-Translator: Fernando Ortiz <eratos2000@gmail.com>\n"
 "Language-Team: Español <eratos2000@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -16,18 +16,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: PUERTO RICO\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: D:\\translations\\poeditsrc\n"
 
 #: ../src/edframe.cpp:1824
 msgid " (modified)"
 msgstr " (modificado)"
 
 #: ../src/edframe.cpp:1794
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i textos (%i borrosa, %i con malas fichas, %i sin traducir)"
+msgstr ""
+"%i %% tradusidos, %i textos (%i provisional, %i con tokens erroneos, %i sin "
+"traducir)"
 
 #: ../src/catalog.cpp:118
 #, c-format
@@ -48,7 +48,6 @@ msgstr ""
 msgid "&Automatically translate using TM"
 msgstr "Traducidos automaticamente %u textos"
 
-# F:\poeditsrc\Poedit/src/edframe.cpp:2494
 #: ../src/edframe.cpp:2588
 msgid "&Bookmarks"
 msgstr "Marca Li&bros"
@@ -309,7 +308,7 @@ msgstr ""
 #: ../src/resources/menus.xrc:8
 #, fuzzy
 msgid "Catalogs &manager"
-msgstr "Poedit - Director de catálogos"
+msgstr "Poedit - Manejador de catálogos"
 
 #: ../src/resources/prefs.xrc:53
 #, fuzzy
@@ -514,21 +513,19 @@ msgstr ""
 #: ../src/digger.cpp:65
 #, c-format
 msgid "Failed command: %s"
-msgstr ""
+msgstr "Fallo del comando: '%s'"
 
 #: ../src/digger.cpp:160
-#, fuzzy
 msgid "Failed to load extracted catalog."
-msgstr "Archivo '%s' no es un catálogo."
+msgstr "El catálogo extraido falló en cargar."
 
 #: ../src/digger.cpp:66
-#, fuzzy
 msgid "Failed to merge gettext catalogs."
-msgstr "Archivo '%s' no es un catálogo."
+msgstr "La combinación de catálogos gettext a fallado."
 
 #: ../src/digger.cpp:94 ../src/digger.cpp:105
 msgid "Failed to read extracted catalog."
-msgstr ""
+msgstr "El catálogo extraido a fallado de leer."
 
 #: ../src/edframe.cpp:876 ../src/edframe.cpp:920
 #, c-format
@@ -540,7 +537,6 @@ msgstr "Archivo '%s' no existe."
 msgid "File '%s' is not message catalog."
 msgstr "Archivo '%s' no es un catálogo."
 
-# F:\poeditsrc\Poedit/src/catalog.cpp:1232
 #: ../src/catalog.cpp:1229
 #, c-format
 msgid ""
@@ -548,7 +544,7 @@ msgid ""
 "Please save it under different name."
 msgstr ""
 "Archivo '%s' es solo para leer y no se puede grabar.\n"
-"Por favor grabelo bajo otro nombre."
+"Por favor grábelo bajo otro nombre."
 
 #: ../src/transmemupd_wizard.cpp:63
 msgid "Files List"
@@ -605,11 +601,11 @@ msgstr "Traducción borrosa"
 
 #: ../src/edframe.cpp:841 ../src/edframe.cpp:960
 msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
-msgstr "Catálogos de GNU Gettext (*.po)|*.po|Todos los archivos (*.*)|*.*"
+msgstr "Catálogos de GNU GetText (*.po)|*.po|Todos los archivos (*.*)|*.*"
 
 #: ../src/edframe.cpp:1053 ../src/edframe.cpp:1190
 msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
-msgstr "Plantillas de GNU Gettext (*.pot)|*.pot|Todos los archivos (*.*)|*.*"
+msgstr "Plantillas de GNU GetText (*.pot)|*.pot|Todos los archivos (*.*)|*.*"
 
 #: ../src/resources/menus.xrc:134
 msgid "GNU gettext documentation"
@@ -627,13 +623,11 @@ msgstr ""
 msgid "Gettext syntax error"
 msgstr "Error sintáctico de gettext"
 
-# F:\poeditsrc\Poedit/src/edframe.cpp:2490
 #: ../src/edframe.cpp:2572
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
 msgstr "Ir al marca libro %i\tCtrl-%i"
 
-# F:\poeditsrc\Poedit/src/edframe.cpp:2490
 #: ../src/edframe.cpp:2569
 #, c-format
 msgid "Go to bookmark %i\tCtrl-Alt-%i"
@@ -710,12 +704,10 @@ msgstr ""
 msgid "Merging differences..."
 msgstr "Uniendo diferencias..."
 
-# F:\Poedit_src\poedit\src/editlbox/editlbox.cpp:165
 #: ../src/editlbox/editlbox.cpp:173
 msgid "Move down"
 msgstr "Mover hacia abajo"
 
-# F:\Poedit_src\poedit\src/editlbox/editlbox.cpp:164
 #: ../src/editlbox/editlbox.cpp:172
 msgid "Move up"
 msgstr "Mover hacia arriba"
@@ -744,7 +736,6 @@ msgstr ""
 msgid "New catalog from POT file..."
 msgstr "No puede extraer catálogos de archivo RPM."
 
-# F:\Poedit_src\poedit\src/editlbox/editlbox.cpp:162
 #: ../src/editlbox/editlbox.cpp:170
 msgid "New item"
 msgstr "Nuevo artículo"
@@ -809,8 +800,9 @@ msgid "Original string"
 msgstr "Texto original"
 
 #: ../src/resources/prefs.xrc:533
+#, fuzzy
 msgid "Parser command:"
-msgstr ""
+msgstr "Fallo del comando: '%s'"
 
 #: ../src/resources/prefs.xrc:492
 msgid "Parser setup"
@@ -821,9 +813,9 @@ msgid "Parsers"
 msgstr ""
 
 #: ../src/digger.cpp:135
-#, fuzzy, c-format
+#, c-format
 msgid "Parsing %s files..."
-msgstr "Explorando archivos..."
+msgstr "Parsing %s archivos..."
 
 #: ../src/resources/prefs.xrc:295
 msgid "Path to DB:"
@@ -872,11 +864,11 @@ msgstr "Poedit"
 
 #: ../src/manager.cpp:69
 msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Director de catálogos"
+msgstr "Poedit - Manejador de catálogos"
 
 #: ../src/digger.cpp:251
 msgid "Poedit did not find any files in scanned directories."
-msgstr "Poedit no encontro ningún archivo en los directorios explorados."
+msgstr "Poedit no encontro ningún archivo en las carpetas buscadas."
 
 #: ../src/resources/prefs.xrc:4
 #, fuzzy
@@ -973,13 +965,11 @@ msgstr "Seleccionar lenguaje"
 msgid "Select your prefered language"
 msgstr "Escoge tu idioma preferido"
 
-# F:\poeditsrc\Poedit/src/edframe.cpp:2484
 #: ../src/edframe.cpp:2571
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr "Fijar marca libro %i\tAlt-%i"
 
-# F:\poeditsrc\Poedit/src/edframe.cpp:2484
 #: ../src/edframe.cpp:2568
 #, c-format
 msgid "Set bookmark %i\tCtrl-%i"
@@ -1072,9 +1062,9 @@ msgid ""
 "Please fill in your name and e-mail address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
-"Esta es la primera vez que ejecutas Poedit.\n"
+"Esta es la primera vez que ejecuta Poedit.\n"
 "Por favor introduzca su nombre y dirección de correo.\n"
-"(Esta información solo se usará para las cabeceras de los catálogos)"
+"(Esta información sólo se usará para las cabeceras de los catálogos)"
 
 #: ../src/resources/prefs.xrc:545
 msgid ""
@@ -1227,7 +1217,7 @@ msgstr "No se puede soltar mas de un archivo en la ventana de Poedit."
 
 #: ../src/chooselang.cpp:175
 msgid "You must restart Poedit for this change to take effect."
-msgstr "Debe reiniciar Poedit para que este cambio tenga efecto."
+msgstr "Debe reiniciar Poedit para que los cambios tengan efecto."
 
 #: ../src/resources/prefs.xrc:34
 #, fuzzy
@@ -1254,15 +1244,3 @@ msgstr "nada"
 #: ../src/edframe.cpp:2108
 msgid "version"
 msgstr "versión"
-
-#~ msgid "Parsing "
-#~ msgstr "Procesando"
-
-#~ msgid " files..."
-#~ msgstr "archivos..."
-
-#~ msgid ""
-#~ "Poedit installation is broken, cannot find application's home directory."
-#~ msgstr ""
-#~ "La instalación de Poedit está roto, no puede encontrar el directorio "
-#~ "principal de la aplicación."
