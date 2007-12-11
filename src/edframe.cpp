@@ -1708,7 +1708,9 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     delete m_catalog;
     m_catalog = cat;
 
-    m_list->CatalogChanged(m_catalog);
+    // don't call this, it's called from RefreshControls below:
+    //m_list->CatalogChanged(m_catalog);
+
     dynamic_cast<TextctrlHandler*>(m_textTrans->GetEventHandler())->SetCatalog(m_catalog);
 
 #ifdef USE_TRANSMEM
