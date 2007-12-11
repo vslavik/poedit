@@ -874,6 +874,11 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
     {
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
         ReadCatalog(name);
+
+        if (gs_focusToText)
+            m_textTrans->SetFocus();
+        else
+            m_list->SetFocus();
     }
 }
 
@@ -901,7 +906,14 @@ void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 
     wxString f(m_history.GetHistoryFile(event.GetId() - wxID_FILE1));
     if (f != wxEmptyString && wxFileExists(f))
+    {
         ReadCatalog(f);
+
+        if (gs_focusToText)
+            m_textTrans->SetFocus();
+        else
+            m_list->SetFocus();
+    }
     else
         wxLogError(_("File '%s' doesn't exist."), f.c_str());
 }
