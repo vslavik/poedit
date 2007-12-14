@@ -20,7 +20,7 @@ install-poedit-catalogs:
 
 
 # the programs we use (TODO: use configure to detect them)
-MSGFMT=msgfmt --verbose
+MSGFMT=msgfmt --verbose --check
 MSGMERGE=msgmerge
 XGETTEXT=xgettext
 XARGS=xargs
