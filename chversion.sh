@@ -29,7 +29,7 @@ replace_ver make-distrib.sh \
 replace_ver src/edapp.cpp \
             '\(wxString version(_T("\).*\("));\)' "\1$VER_SHORT\2"
 
-for i in locales/*.po ; do
+for i in locales/*.po locales/*.pot ; do
     replace_ver $i \
                 '\(Project-Id-Version:\)[^\\]*' "\1 Poedit $VER_SHORT"
 done
