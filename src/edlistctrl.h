@@ -95,6 +95,14 @@ class PoeditListCtrl : public wxListView
             Select(GetItemIndex(catalogIndex));
         }
 
+        void Select(long n, bool on = true)
+        {
+#ifdef __WXMAC__
+            SetItemState(GetSelection(), 0, wxLIST_STATE_SELECTED);
+#endif
+            wxListView::Select(n, on);
+        }
+
     private:
         void OnSize(wxSizeEvent& event);
 
