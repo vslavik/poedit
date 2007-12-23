@@ -1497,7 +1497,7 @@ void Catalog::GetMergeSummary(Catalog *refcat,
                               wxArrayString& snew, wxArrayString& sobsolete)
 {
     wxASSERT( snew.empty() );
-    wxASSERT( sbsolete.empty() );
+    wxASSERT( sobsolete.empty() );
 
     std::set<wxString> strsThis, strsRef;
 
