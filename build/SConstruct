@@ -8,13 +8,12 @@ DB_FILES = ['db_static.vcproj', 'db_static_dbginfo.vsprops']
 DB_CONFIGURE = '--disable-cryptography --disable-replication ' + \
                '--disable-statistics --disable-shared --enable-static'
 
-LIBICONV_VERSION = '1.11'
+LIBICONV_VERSION = '1.12'
 LIBICONV_URL = 'ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-%s.tar.gz' % LIBICONV_VERSION
 LIBICONV_CONFIGURE = '--disable-shared'
 
-GETTEXT_VERSION = '0.16.1'
+GETTEXT_VERSION = '0.17'
 GETTEXT_URL = 'ftp://ftp.gnu.org/pub/gnu/gettext/gettext-%s.tar.gz' % GETTEXT_VERSION
-GETTEXT_PATCHES = ['gettext-0.16.1-mingw-localenames.patch']
 GETTEXT_CONFIGURE = '--disable-java ' + \
                     '--disable-rpath --disable-openmp ' + \
                     '--disable-shared '
@@ -184,8 +183,7 @@ libiconv_win32 = env.BuildComponent(
 
 src_gettext = env.ComponentSources(
         name='gettext',
-        source=GETTEXT_URL,
-        patches=GETTEXT_PATCHES)
+        source=GETTEXT_URL)
 
 gettext_osx_ppc = env.BuildComponent(
         name='gettext-osx-ppc',
