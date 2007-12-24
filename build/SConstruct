@@ -14,8 +14,7 @@ LIBICONV_CONFIGURE = '--disable-shared'
 
 GETTEXT_VERSION = '0.17'
 GETTEXT_URL = 'ftp://ftp.gnu.org/pub/gnu/gettext/gettext-%s.tar.gz' % GETTEXT_VERSION
-GETTEXT_CONFIGURE = '--disable-java ' + \
-                    '--disable-rpath --disable-openmp ' + \
+GETTEXT_CONFIGURE = '--disable-java --disable-rpath ' + \
                     '--disable-shared '
 GETTEXT_BINARIES = ['msgfmt', 'msgmerge', 'msgunfmt', 'xgettext', 'msgcat']
 
