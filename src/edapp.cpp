@@ -97,7 +97,7 @@ bool PoeditApp::OnInit()
     if (!wxApp::OnInit())
         return false;
 
-#ifdef __WXMAC__
+#if defined(__WXMAC__) && wxCHECK_VERSION(2,8,5)
     wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
 #endif
 
