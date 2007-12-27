@@ -13,37 +13,75 @@ rez="$2"
 top_builddir="$3"
 top_srcdir="$4"
 
+
+# this function returns *non-system* shared libs a binary depends on
+get_private_shared_deps()
+{
+    # ignore any shared libs in /usr/lib* or /System
+    otool -X -L $1 | cut -d" " -f1 | cut -c2- | grep -v '^\(/usr/lib\|/System\)'
+}
+
+prepend_path()
+{
+    path=$1
+    shift
+    for f in $* ; do echo $path/$f; done
+}
+
+
 rm -rf $bundle
 mkdir -p $bundle/Contents/MacOS
 mkdir -p $bundle/Contents/Resources
 
-# executables:
-cp poedit $bundle/Contents/MacOS/Poedit
-$rez $bundle/Contents/MacOS/Poedit
+bindir="$bundle/Contents/MacOS"
 
-if [ -n "$GETTEXT_BINARIES" ] ; then
-    for f in msgfmt msgmerge msgunfmt msgcat xgettext ; do
-        cp -pPf $GETTEXT_BINARIES/$f $bundle/Contents/MacOS
+# executables:
+cp poedit $bindir/Poedit
+$rez $bindir/Poedit
+
+if [ -n "$GETTEXT_PREFIX" ] ; then
+    gettext_apps="msgfmt msgmerge msgunfmt msgcat xgettext"
+
+    all_dylibs=""
+
+    # copy gettext binaries over:
+    for f in $gettext_apps ; do
+        cp -pPf $GETTEXT_PREFIX/bin/$f $bindir
+
+        # now copy any gettext shared libs they need and update their install paths
+        # so that they are usable from the bundle:
+        for dylib_full in `get_private_shared_deps $bindir/$f` ; do
+            all_dylibs="$all_dylibs $dylib_full"
+            dylib=`basename $dylib_full`
+            if [ ! -f $bindir/$dylib -a -f $GETTEXT_PREFIX/lib/$dylib ] ; then
+                cp -pPf $GETTEXT_PREFIX/lib/$dylib $bindir
+                install_name_tool -id $dylib $bindir/$dylib
+            fi
+        done
+    done
+    
+    # now update shared libs references to point to bundle's location so that they
+    # are correctly resolved at runtime:
+    for dylib in $all_dylibs ; do
+        for f in `prepend_path $bindir $gettext_apps` $bindir/*.dylib ; do
+            install_name_tool -change $dylib "@executable_path/`basename $dylib`" $f
+        done
     done
 else
-    echo "WARNING: not copying gettext binaries, point GETTEXT_BINARIES" >&2
+    echo "WARNING: not copying gettext binaries, point GETTEXT_PREFIX" >&2
     echo "         environment variable to a directory that contains them" >&2
 fi
 
 # extract (DWARF) debug information into separate dSYM files and pack them into
 # an archive:
 if [ -f /usr/bin/dsymutil ] ; then
-    for f in $bundle/Contents/MacOS/* ; do
-        dsymutil $f
-    done
-    tar -cjf $bundle.dSYM.tar.bz2 $bundle/Contents/MacOS/*.dSYM
-    rm -rf $bundle/Contents/MacOS/*.dSYM
+    dsymutil $bindir/Poedit
+    tar -cjf $bundle.dSYM.tar.bz2 $bundle/Contents/MacOS/Poedit.dSYM
+    rm -rf $bundle/Contents/MacOS/Poedit.dSYM
+    strip -u -r $bindir/Poedit
 else
     echo "WARNING: Xcode 2.4+ is needed to extract debug information" >&2
 fi
-
-# we can strip the binaries now:
-strip $bundle/Contents/MacOS/*
 
 # metadata:
 cp $top_builddir/macosx/Info.plist $bundle/Contents

@@ -10,12 +10,12 @@ DB_CONFIGURE = '--disable-cryptography --disable-replication ' + \
 
 LIBICONV_VERSION = '1.12'
 LIBICONV_URL = 'ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-%s.tar.gz' % LIBICONV_VERSION
-LIBICONV_CONFIGURE = '--disable-shared'
+LIBICONV_CONFIGURE = '--disable-static'
 
 GETTEXT_VERSION = '0.17'
 GETTEXT_URL = 'ftp://ftp.gnu.org/pub/gnu/gettext/gettext-%s.tar.gz' % GETTEXT_VERSION
 GETTEXT_CONFIGURE = '--disable-java --disable-rpath ' + \
-                    '--disable-shared '
+                    '--disable-static '
 GETTEXT_BINARIES = ['msgfmt', 'msgmerge', 'msgunfmt', 'xgettext', 'msgcat']
 
 WX_VERSION = '2.8.6'
@@ -172,6 +172,7 @@ libiconv_win32 = env.BuildComponent(
             './configure --host=$MINGW_HOST %s' % LIBICONV_CONFIGURE,
             'make',
             'make install DESTDIR=`pwd`/D',
+            '$MINGW_HOST-strip -x D/usr/local/bin/*.dll', # FIXME
             ],
         environment=MINGW_ENVIRONMENT,
         outputs=['D/usr/local/*'])
@@ -195,7 +196,7 @@ gettext_osx_ppc = env.BuildComponent(
             'make install DESTDIR=`pwd`/D',
             ],
         environment=OSX_ENVIRONMENT_PPC,
-        outputs=['D/usr/local/bin/*'])
+        outputs=['D/usr/local/*'])
 
 gettext_osx_x86 = env.BuildComponent(
         name='gettext-osx-x86',
@@ -208,7 +209,7 @@ gettext_osx_x86 = env.BuildComponent(
             'make install DESTDIR=`pwd`/D',
             ],
         environment=OSX_ENVIRONMENT_X86,
-        outputs=['D/usr/local/bin/*'])
+        outputs=['D/usr/local/*'])
 
 gettext_osx = env.BuildComponent(
         name='gettext-osx',
@@ -216,8 +217,12 @@ gettext_osx = env.BuildComponent(
         sources=[],
         deps=[(gettext_osx_ppc, 'ppc'), (gettext_osx_x86, 'x86')],
         commands=[
-            'mkdir univ',
-            'for i in %s ; do lipo -arch ppc ppc/$$i -arch i386 x86/$$i -create -output univ/$$i; done' % ' '.join(GETTEXT_BINARIES)
+            'mkdir -p univ/bin univ/lib',
+            'for i in %s ; do lipo -arch ppc ppc/bin/$$i -arch i386 x86/bin/$$i -create -output univ/bin/$$i; done' % ' '.join(GETTEXT_BINARIES),
+            'for i in ppc/lib/*.dylib ; do lipo -arch ppc ppc/lib/`basename $$i` -arch i386 x86/lib/`basename $$i` -create -output univ/lib/`basename $$i`; done',
+            # FIXME: save dSYM info?
+            'strip -u -r univ/bin/*',
+            'strip -x univ/lib/*.dylib',
             ],
         environment=OSX_ENVIRONMENT_COMMON,
         outputs=['univ/*'])
@@ -231,6 +236,8 @@ gettext_win32 = env.BuildComponent(
             './configure --host=$MINGW_HOST --with-libiconv-prefix=`pwd`/libiconv %s' % GETTEXT_CONFIGURE,
             'make',
             'make install-strip DESTDIR=`pwd`/D',
+            'cp libiconv/bin/*.dll D/usr/local/bin',
+            '$MINGW_HOST-strip -x D/usr/local/bin/*.dll', # FIXME
             'cp COPYING `pwd`/D/usr/local/bin',
             ],
         environment=MINGW_ENVIRONMENT,
@@ -400,7 +407,7 @@ poedit_osx = env.BuildComponent(
             'mv src/poedit src/poedit-x86',
             'lipo -arch ppc ../ppc/src/poedit -arch i386 src/poedit-x86 -create -output src/poedit',
             # finally, create the bundle:
-            'GETTEXT_BINARIES="`pwd`/../deps/gettext" WX_ROOT="`pwd`/deps" make dist-osx',
+            'GETTEXT_PREFIX="`pwd`/../deps/gettext" WX_ROOT="`pwd`/deps" make dist-osx',
             ],
         environment=OSX_ENVIRONMENT_COMMON,
         outputs=['x86/poedit-*.dmg', 'x86/src/*dSYM*'])

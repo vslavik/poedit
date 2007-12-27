@@ -90,6 +90,11 @@ Source: deps\gettext\msgmerge.exe; DestDir: {app}\bin; Components: core
 Source: deps\gettext\msgunfmt.exe; DestDir: {app}\bin; Components: core
 Source: deps\gettext\msgfmt.exe; DestDir: {app}\bin; Components: core
 Source: deps\gettext\msgcat.exe; DestDir: {app}\bin; Components: core
+Source: deps\gettext\libintl-*.dll; DestDir: {app}\bin; Components: core
+Source: deps\gettext\libgettextlib-*.dll; DestDir: {app}\bin; Components: core
+Source: deps\gettext\libgettextsrc-*.dll; DestDir: {app}\bin; Components: core
+Source: deps\gettext\libcharset-*.dll; DestDir: {app}\bin; Components: core
+Source: deps\gettext\libiconv-*.dll; DestDir: {app}\bin; Components: core
 Source: README; DestDir: {app}\doc; DestName: readme.txt; Components: docs
 Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit\help\en; Components: docs
 Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit\help\en\gettext; Components: docs
