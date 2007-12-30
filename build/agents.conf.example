@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+
+<!--
+ 
+  Example ~/.rlsbot/agents.conf file that has everything needed to build
+  Poedit binaries.
+
+  -->
+
+<rlsbot-agents>
+
+    <agent>
+        <name>YourLinuxHost</name>
+        <address>YourLinuxHost</address>
+        <tags>
+            <tag>unix</tag>
+            <tag>mingw</tag>
+        </tags>
+        <env>
+            <var name="MINGW_HOST">i686-pc-mingw32</var>
+        </env>
+    </agent>
+
+    <agent>
+        <name>Windows</name>
+        <address>YourWindowsHost</address>
+        <tags>
+            <tag>win32</tag>
+            <tag>vs2005</tag>
+        </tags>
+        <env>
+            <var name="MSVS_PATH">C:\Program Files\Microsoft Visual Studio 8</var>
+            <var name="PSDK_PATH">C:\Program Files\Microsoft Platform SDK</var>
+        </env>
+    </agent>
+    
+    <agent>
+        <name>Mac OS X 10.4</name>
+        <address>YourOSXHost</address>
+        <tags>
+            <tag>unix</tag>
+            <tag>osx</tag>
+        </tags>
+    </agent>
+
+</rlsbot-agents>
