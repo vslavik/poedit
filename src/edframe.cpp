@@ -46,13 +46,6 @@
 #include <wx/textfile.h>
 #include <wx/wupdlock.h>
 
-#if !wxCHECK_VERSION(2,8,0)
-    #define wxFD_OPEN              wxOPEN
-    #define wxFD_SAVE              wxSAVE
-    #define wxFD_OVERWRITE_PROMPT  wxOVERWRITE_PROMPT
-    #define wxFD_FILE_MUST_EXIST   wxFILE_MUST_EXIST
-#endif
-
 #ifdef USE_SPELLCHECKING
 
 #ifdef __WXGTK__

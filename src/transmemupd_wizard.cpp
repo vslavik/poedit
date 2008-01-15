@@ -143,11 +143,7 @@ private:
 #else
                    _("Translation files (*.po;*.mo)|*.po;*.mo"), 
 #endif
-#if wxCHECK_VERSION(2,8,0)
                          wxFD_OPEN | wxFD_MULTIPLE);
-#else
-                         wxOPEN | wxMULTIPLE);
-#endif
         if (dlg.ShowModal() == wxID_OK)
         {
             wxArrayString f, f2;

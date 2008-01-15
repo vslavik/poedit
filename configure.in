@@ -69,7 +69,7 @@ yes)	DEBUG_FLAGS="-g -Wall -O0"
     ;;    
 esac
 
-AM_PATH_WXCONFIG([2.6.0],
+AM_PATH_WXCONFIG([2.8.0],
                  [WXFOUND=1], [WXFOUND=0],
                  [xrc,html,xml,adv,core], [--unicode])
 
@@ -78,7 +78,7 @@ if test "$WXFOUND" != 1; then
         Please check that wx-config is in path, the directory
         where wxWidgets libraries are installed (returned by
         'wx-config --libs' command) is in LD_LIBRARY_PATH or
-        equivalent variable and wxWidgets is version 2.6.0 or above.
+        equivalent variable and wxWidgets is version 2.8.0 or above.
     ])
 fi
 
