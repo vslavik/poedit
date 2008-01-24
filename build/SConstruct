@@ -18,9 +18,9 @@ GETTEXT_CONFIGURE = '--disable-java --disable-rpath ' + \
                     '--disable-static '
 GETTEXT_BINARIES = ['msgfmt', 'msgmerge', 'msgunfmt', 'xgettext', 'msgcat']
 
-WX_VERSION = '2.8.6'
+WX_VERSION = '2.8.7'
 WX_URL = 'ftp://ftp.wxwidgets.org/pub/%s/wxWidgets-%s.tar.bz2' % (WX_VERSION, WX_VERSION)
-WX_PATCHES = ['wx-2.8.6-mac-dialog-fix.patch']
+WX_PATCHES = None
 # NB: don't use --enable-debug_info, it forces -O0!
 WX_CONFIGURE = '--disable-shared --enable-unicode --disable-tga'
 WX_WINFLAGS = 'SHARED=0 BUILD=release DEBUG_INFO=1 UNICODE=1 USE_MEDIA=0 USE_AUI=0 USE_RICHTEXT=0 USE_STC=0 USE_QA=1'
