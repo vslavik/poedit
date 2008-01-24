@@ -264,7 +264,7 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
     {
         Parser p;
         p.Name = _T("Delphi (dxgettext)");
-        p.Extensions = _T("*.pas;*.inc;*.dpr;*.xfm;*.dfm");
+        p.Extensions = _T("*.pas;*.dpr;*.xfm;*.dfm");
         p.Command = _T("dxgettext --so %o %F");
         p.KeywordItem = wxEmptyString;
         p.FileItem = _T("%f");
