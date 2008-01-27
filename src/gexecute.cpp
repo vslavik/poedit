@@ -125,11 +125,10 @@ class TempLocaleSwitcher
 #ifdef __WXMAC__
 static wxString MacGetPathToBinary(const wxString& program)
 {
-    wxMacUniCharBuffer programbuf(program);
-    wxMacCFStringHolder programstr(
-        CFStringCreateWithCharacters(NULL,
-                                     programbuf.GetBuffer(),
-                                     programbuf.GetChars()));
+#if !wxCHECK_VERSION(2,9,0)
+    #define wxCFStringRef wxMacCFStringHolder
+#endif
+    wxCFStringRef programstr(program);
 
     CFBundleRef bundle = CFBundleGetMainBundle();
     CFURLRef urlRel = CFBundleCopyAuxiliaryExecutableURL(bundle, programstr);
@@ -139,8 +138,7 @@ static wxString MacGetPathToBinary(const wxString& program)
 
     CFURLRef urlAbs = CFURLCopyAbsoluteURL(urlRel);
 
-    wxMacCFStringHolder path(
-            CFURLCopyFileSystemPath(urlAbs, kCFURLPOSIXPathStyle));
+    wxCFStringRef path(CFURLCopyFileSystemPath(urlAbs, kCFURLPOSIXPathStyle));
 
     CFRelease(urlRel);
     CFRelease(urlAbs);
