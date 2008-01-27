@@ -45,7 +45,6 @@ poedit_resource.o: poedit.rc
         --define __WIN32__ --define __WIN95__ --define __GNUWIN32__
 
 XRC_RESOURCES = \
-		$(srcdir)/resources/about.xrc \
 		$(srcdir)/resources/menus.xrc \
 		$(srcdir)/resources/prefs.xrc \
 		$(srcdir)/resources/progress.xrc \
@@ -59,7 +58,6 @@ XRC_RESOURCES = \
 		$(srcdir)/resources/tm_update.xrc
 
 XRC_MORE_FILES = \
-		$(srcdir)/resources/about.html \
         $(srcdir)/resources/tm_update.gif
 
 compiled_xrc.cpp: $(XRC_RESOURCES) $(XRC_MORE_FILES)

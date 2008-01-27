@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2007 Vaclav Slavik
+ *  Copyright (C) 1999-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -45,6 +45,7 @@
 #include <wx/fontutil.h>
 #include <wx/textfile.h>
 #include <wx/wupdlock.h>
+#include <wx/aboutdlg.h>
 
 #ifdef USE_SPELLCHECKING
 
@@ -2114,16 +2115,17 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
 
 void PoeditFrame::OnAbout(wxCommandEvent&)
 {
-    wxBusyCursor busy;
-    wxDialog dlg;
-    wxXmlResource::Get()->LoadDialog(&dlg, this, _T("about_box"));
-    wxString version = wxString(_("version")) + _T(" ") + wxGetApp().GetAppVersion();
-    XRCCTRL(dlg, "version", wxStaticText)->SetLabel(version);
+    wxAboutDialogInfo about;
 
-    dlg.GetSizer()->RecalcSizes();
-    dlg.Layout();
-    dlg.Centre();
-    dlg.ShowModal();
+    about.SetName(_T("Poedit"));
+    about.SetVersion(wxGetApp().GetAppVersion());
+    about.SetDescription(_("translations editor"));
+    about.SetCopyright(_T("Copyright \u00a9 1999-2008 Vaclav Slavik"));
+#ifdef __WXGTK__ // other ports would show non-native about dlg
+    about.SetWebSite(_T("http://www.poedit.net"));
+#endif
+
+    wxAboutBox(about);
 }
 
 
