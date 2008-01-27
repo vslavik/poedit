@@ -79,7 +79,7 @@ wxLanguage ChooseLanguage()
 {
     struct LangInfo
     {
-        const wxChar *name;
+        wxString name;
         wxLanguage code;
     };
 
@@ -150,11 +150,11 @@ wxLanguage ChooseLanguage()
         { _T("Ukrainian"), wxLANGUAGE_UKRAINIAN },
         { _T("Urdu"), wxLANGUAGE_URDU },
 
-        { NULL, wxLANGUAGE_UNKNOWN }
+        { _T(""), wxLANGUAGE_UNKNOWN }
     };
 
     wxArrayString arr;
-    for (int i = 0; langs[i].name; i++)
+    for (int i = 0; !langs[i].name.empty(); i++)
         arr.Add(langs[i].name);
 
     int choice = wxGetSingleChoiceIndex(
