@@ -376,9 +376,9 @@ PoeditFrame::PoeditFrame() :
     m_displayQuotes = (bool)cfg->Read(_T("display_quotes"), (long)false);
     m_displayLines = (bool)cfg->Read(_T("display_lines"), (long)false);
     m_displayCommentWin =
-        (bool)cfg->Read(_T("display_comment_win"), (long)true);
+        (bool)cfg->Read(_T("display_comment_win"), (long)false);
     m_displayAutoCommentsWin =
-        (bool)cfg->Read(_T("display_auto_comments_win"), (long)true);
+        (bool)cfg->Read(_T("display_auto_comments_win"), (long)false);
     m_commentWindowEditable =
         (bool)cfg->Read(_T("comment_window_editable"), (long)false);
     gs_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
