@@ -1846,60 +1846,56 @@ void PoeditFrame::UpdateMenu()
     wxMenuBar *menubar = GetMenuBar();
     wxToolBar *toolbar = GetToolBar();
 
-    if (m_catalog == NULL)
-    {
-        menubar->Enable(wxID_SAVE, false);
-        menubar->Enable(wxID_SAVEAS, false);
-        menubar->Enable(XRCID("menu_export"), false);
-        toolbar->EnableTool(wxID_SAVE, false);
-        toolbar->EnableTool(XRCID("menu_update"), false);
-        toolbar->EnableTool(XRCID("menu_fuzzy"), false);
-        toolbar->EnableTool(XRCID("menu_comment"), false);
-        menubar->EnableTop(1, false);
-        menubar->EnableTop(2, false);
-        m_textTrans->Enable(false);
-        m_textOrig->Enable(false);
-        m_textOrigPlural->Enable(false);
-        m_textComment->Enable(false);
-        m_textAutoComments->Enable(false);
-        m_list->Enable(false);
-    }
-    else
-    {
-        menubar->Enable(wxID_SAVE, true);
-        menubar->Enable(wxID_SAVEAS, true);
-        menubar->Enable(XRCID("menu_export"), true);
-        toolbar->EnableTool(wxID_SAVE, true);
-        toolbar->EnableTool(XRCID("menu_fuzzy"), true);
-        toolbar->EnableTool(XRCID("menu_comment"), true);
-        menubar->EnableTop(1, true);
-        menubar->EnableTop(2, true);
-        m_textTrans->Enable(true);
-        m_textOrig->Enable(true);
-        m_textOrigPlural->Enable(true);
-        m_textComment->Enable(true);
-        m_textAutoComments->Enable(true);
-        m_list->Enable(true);
-        bool doupdate = m_catalog->Header().SearchPaths.GetCount() > 0;
-        toolbar->EnableTool(XRCID("menu_update"), doupdate);
-        menubar->Enable(XRCID("menu_update"), doupdate);
-        menubar->Enable(XRCID("menu_purge_deleted"),
-                             m_catalog->HasDeletedItems());
+    const bool editable = (m_catalog != NULL);
+
+    menubar->Enable(wxID_SAVE, editable);
+    menubar->Enable(wxID_SAVEAS, editable);
+    menubar->Enable(XRCID("menu_export"), editable);
+    toolbar->EnableTool(wxID_SAVE, editable);
+    toolbar->EnableTool(XRCID("menu_update"), editable);
+    toolbar->EnableTool(XRCID("menu_fuzzy"), editable);
+    toolbar->EnableTool(XRCID("menu_comment"), editable);
+
+    menubar->Enable(XRCID("menu_update"), editable);
+    menubar->Enable(XRCID("menu_fuzzy"), editable);
+    menubar->Enable(XRCID("menu_comment"), editable);
+    menubar->Enable(XRCID("menu_insert_orig"), editable);
+    menubar->Enable(XRCID("menu_references"), editable);
+    menubar->Enable(XRCID("menu_find"), editable);
+
+    menubar->EnableTop(2, editable);
+
+    m_textTrans->Enable(editable);
+    m_textOrig->Enable(editable);
+    m_textOrigPlural->Enable(editable);
+    m_textComment->Enable(editable);
+    m_textAutoComments->Enable(editable);
+    m_list->Enable(editable);
+
+    menubar->Enable(XRCID("menu_purge_deleted"),
+                    editable && m_catalog->HasDeletedItems());
+
+    const bool doupdate = editable &&
+                          m_catalog->Header().SearchPaths.GetCount() > 0;
+    toolbar->EnableTool(XRCID("menu_update"), doupdate);
+    menubar->Enable(XRCID("menu_update"), doupdate);
 
 #ifdef __WXGTK__
+    if (!editable)
+    {
         // work around a wxGTK bug: enabling wxTextCtrl makes it editable too
         // in wxGTK <= 2.8:
         m_textOrig->SetEditable(false);
         m_textOrigPlural->SetEditable(false);
-#endif
     }
+#endif
 
-    menubar->EnableTop(4, m_catalog != NULL);
+    menubar->EnableTop(4, editable);
     for (int i = 0; i < 10; i++)
     {
-        menubar->Enable(ID_BOOKMARK_SET + i, m_catalog != NULL);
+        menubar->Enable(ID_BOOKMARK_SET + i, editable);
         menubar->Enable(ID_BOOKMARK_GO + i,
-                        m_catalog != NULL &&
+                        editable &&
                         m_catalog->GetBookmarkIndex(Bookmark(i)) != -1);
     }
 }

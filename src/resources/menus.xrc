@@ -30,8 +30,8 @@
         <label>E_xport...</label>
         <accel platform="mac">Shift-Ctrl-E</accel>
       </object>
-      <object class="separator"/>
-      <object class="wxMenuItem" name="wxID_PREFERENCES">
+      <object class="separator" platform="win|mac"/>
+      <object class="wxMenuItem" name="wxID_PREFERENCES" platform="win|mac">
         <label>_Preferences...</label>
       </object>
       <object class="separator"/>
@@ -68,6 +68,10 @@
       </object>
       <object class="wxMenuItem" name="menu_comment">
         <label>Edit _comment</label>
+      </object>
+      <object class="separator" platform="unix"/>
+      <object class="wxMenuItem" name="wxID_PREFERENCES" platform="unix">
+        <label>_Preferences</label>
       </object>
       <style>wxMENU_TEAROFF</style>
     </object>
