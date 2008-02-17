@@ -164,7 +164,7 @@ class TextctrlHandler : public wxEvtHandler
         {
             int keyCode = event.GetKeyCode();
 
-            if (!event.ControlDown())
+            if (!(event.ControlDown() || event.CmdDown()))
             {
                 event.Skip();
                 return;
