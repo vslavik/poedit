@@ -1752,7 +1752,7 @@ void PoeditFrame::RefreshControls()
     m_hasObsoleteItems = false;
     if (!m_catalog->IsOk())
     {
-        wxLogError(_("Error loading message catalog file '") + m_fileName + _("'."));
+        wxLogError(_("Error loading message catalog file '%s'."), m_fileName.c_str());
         m_fileName = wxEmptyString;
         UpdateMenu();
         UpdateTitle();
