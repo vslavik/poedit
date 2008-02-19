@@ -12,6 +12,11 @@ LIBICONV_VERSION = '1.12'
 LIBICONV_URL = 'ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-%s.tar.gz' % LIBICONV_VERSION
 LIBICONV_CONFIGURE = '--disable-static'
 
+LIBGOMP_URL = 'http://www.opensource.apple.com/darwinsource/tarballs/other/gcc_42-5531.tar.gz'
+LIBGOMP_CONFIGURE = '--disable-multilib --disable-shared --with-pic'
+LIBGOMP_PATCHES = ['libgomp-sysconf-failure-fix.patch',
+                   'libgomp-osx-10.4-fix.patch']
+
 GETTEXT_VERSION = '0.17'
 GETTEXT_URL = 'ftp://ftp.gnu.org/pub/gnu/gettext/gettext-%s.tar.gz' % GETTEXT_VERSION
 GETTEXT_CONFIGURE = '--disable-java --disable-rpath ' + \
@@ -55,9 +60,6 @@ env['OSX_HOST_PPC'] = 'powerpc-apple-darwin8'
 env['OSX_HOST_X86'] = 'i686-apple-darwin8'
 
 # FIXME: this should be per-agent configuration
-env['MINGW_HOST'] = 'i686-pc-mingw32'
-
-# FIXME: this should be per-agent configuration
 # FIXME: have some directives on specifying what is required from the agent
 # native type of the agent we're executing on
 env['OSX_NATIVE'] = 'ppc' # 'ppc' or 'x86'
@@ -82,13 +84,6 @@ OSX_ENVIRONMENT_X86 = {
     }
 OSX_ENVIRONMENT_X86.update(OSX_ENVIRONMENT_COMMON)
 
-
-# FIXME: these two should be in agent-specific (SCons) environment rather
-#        that agent/target execution (OS) environment
-MINGW_ENVIRONMENT = {
-        'CC'        : '$MINGW_HOST-gcc',
-        'CXX'       : '$MINGW_HOST-g++',
-    }
 
 VS2005_ENVIRONMENT = {
         'MSVS_PATH' : 'C:\\Program Files\\Microsoft Visual Studio 8',
@@ -169,13 +164,74 @@ libiconv_win32 = env.BuildComponent(
         sources=src_libiconv,
         deps=None,
         commands=[
-            './configure --host=$MINGW_HOST %s' % LIBICONV_CONFIGURE,
+            './configure --host=$$MINGW_HOST %s' % LIBICONV_CONFIGURE,
             'make',
             'make install DESTDIR=`pwd`/D',
-            '$MINGW_HOST-strip -x D/usr/local/bin/*.dll', # FIXME
+            '$$MINGW_HOST-strip -x D/usr/local/bin/*.dll', # FIXME
             ],
-        environment=MINGW_ENVIRONMENT,
         outputs=['D/usr/local/*'])
+
+# -----------------------------------------------------------------
+# libgomp (needed by gettext's msgmerge on OS X)
+# -----------------------------------------------------------------
+
+# Apple's GCC 4.2 Preview 1 has broken OpenMP installation:
+#   1) omp.h header is not installed in SDKs
+#   2) libgomp.a included in 10.4u SDK is built for 10.5 and depends on
+#      newly added symbols
+# Because of this, we have to build our own copy if GOMP if we want to
+# take advantage of OpenMP on OSX 10.4.
+
+src_libgomp = env.ComponentSources(
+        name='libgomp',
+        source=LIBGOMP_URL,
+        patches=LIBGOMP_PATCHES,
+        post_commands=[
+            'mkdir .junk',
+            'mv * .junk',
+            'mkdir -p gcc/doc',
+            'mv .junk/gcc/doc/include gcc/doc',
+            'mv .junk/libgomp .',
+            'mv `find .junk -maxdepth 1 -type f` .',
+            'rm -rf .junk',
+        ])
+
+libgomp_osx_ppc = env.BuildComponent(
+        name='libgomp-osx-ppc',
+        agent='osx10.5',
+        sources=src_libgomp,
+        deps=None,
+        commands=[
+            'mkdir libgomp/build',
+            'cd libgomp/build',
+            '../configure --host=$OSX_HOST_PPC CC=$$OSX_CC_42 --prefix=/usr/local %s' % LIBGOMP_CONFIGURE,
+            'make',
+            'make install DESTDIR=`pwd`/../../D',
+            'mkdir ../../D/usr/local/include',
+            'cp omp.h ../../D/usr/local/include',
+            ],
+        environment=OSX_ENVIRONMENT_PPC,
+        outputs=['D/usr/local/*'])
+
+libgomp_osx_x86 = env.BuildComponent(
+        name='libgomp-osx-x86',
+        agent='osx10.5',
+        sources=src_libgomp,
+        deps=None,
+        commands=[
+            'mkdir libgomp/build',
+            'cd libgomp/build',
+            '../configure --host=$OSX_HOST_X86 CC=$$OSX_CC_42 --prefix=/usr/local %s' % LIBGOMP_CONFIGURE,
+            'make',
+            'make install DESTDIR=`pwd`/../../D',
+            'mkdir ../../D/usr/local/include',
+            'cp omp.h ../../D/usr/local/include',
+            ],
+        environment=OSX_ENVIRONMENT_X86,
+        outputs=['D/usr/local/*'])
+
+libgomp_osx = env.Alias('build-libgomp-osx', [libgomp_osx_ppc, libgomp_osx_x86])
+
 
 # -----------------------------------------------------------------
 # GNU gettext
@@ -187,26 +243,34 @@ src_gettext = env.ComponentSources(
 
 gettext_osx_ppc = env.BuildComponent(
         name='gettext-osx-ppc',
-        agent='osx',
+        agent='osx10.5',
         sources=src_gettext,
-        deps=None,
+        deps=[(libgomp_osx_ppc, 'libgomp')],
         commands=[
-            './configure --host=$OSX_HOST_PPC --with-libiconv-prefix=$OSX_SDKROOT/usr %s' % GETTEXT_CONFIGURE,
+            './configure --host=$OSX_HOST_PPC'
+            '       --with-libiconv-prefix=$OSX_SDKROOT/usr %s'
+            '       CC=$$OSX_CC_42 CXX=$$OSX_CXX_42'
+            '       CPPFLAGS="-I`pwd`/libgomp/include $$CPPFLAGS"'
+            '       LDFLAGS="-L`pwd`/libgomp/lib $$LDFLAGS"' % GETTEXT_CONFIGURE,
             'make',
-            'make install DESTDIR=`pwd`/D',
+            'make install DESTDIR=`pwd`/D -j1',
             ],
         environment=OSX_ENVIRONMENT_PPC,
         outputs=['D/usr/local/*'])
 
 gettext_osx_x86 = env.BuildComponent(
         name='gettext-osx-x86',
-        agent='osx',
+        agent='osx10.5',
         sources=src_gettext,
-        deps=None,
+        deps=[(libgomp_osx_x86, 'libgomp')],
         commands=[
-            './configure --host=$OSX_HOST_X86 --with-libiconv-prefix=$OSX_SDKROOT/usr %s' % GETTEXT_CONFIGURE,
+            './configure --host=$OSX_HOST_X86'
+            '       --with-libiconv-prefix=$OSX_SDKROOT/usr %s'
+            '       CC=$$OSX_CC_42 CXX=$$OSX_CXX_42'
+            '       CPPFLAGS="-I`pwd`/libgomp/include $$CPPFLAGS"'
+            '       LDFLAGS="-L`pwd`/libgomp/lib $$LDFLAGS"' % GETTEXT_CONFIGURE,
             'make',
-            'make install DESTDIR=`pwd`/D',
+            'make install DESTDIR=`pwd`/D -j1',
             ],
         environment=OSX_ENVIRONMENT_X86,
         outputs=['D/usr/local/*'])
@@ -233,14 +297,15 @@ gettext_win32 = env.BuildComponent(
         sources=src_gettext,
         deps=[(libiconv_win32, 'libiconv')],
         commands=[
-            './configure --host=$MINGW_HOST --with-libiconv-prefix=`pwd`/libiconv %s' % GETTEXT_CONFIGURE,
+            './configure --host=$$MINGW_HOST --with-libiconv-prefix=`pwd`/libiconv --enable-threads=win32 %s CC=$$MINGW_CC_42 CXX=$$MINGW_CXX_42' % GETTEXT_CONFIGURE,
             'make',
             'make install-strip DESTDIR=`pwd`/D',
             'cp libiconv/bin/*.dll D/usr/local/bin',
-            '$MINGW_HOST-strip -x D/usr/local/bin/*.dll', # FIXME
-            'cp COPYING `pwd`/D/usr/local/bin',
+            '$$MINGW_HOST-strip -x D/usr/local/bin/*.dll', # FIXME
+            'cp COPYING D/usr/local/bin',
+            'cp $$MINGW_DIR/bin/mingwm10.dll D/usr/local/bin',
+            'cp $$MINGW_DIR/bin/pthreadGC2.dll D/usr/local/bin',
             ],
-        environment=MINGW_ENVIRONMENT,
         outputs=['D/usr/local/bin/*'])
 
 

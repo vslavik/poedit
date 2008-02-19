@@ -1,0 +1,66 @@
+Index: libgomp/config/posix/proc.c
+===================================================================
+--- libgomp/config/posix/proc.c	(revision 132391)
++++ libgomp/config/posix/proc.c	(working copy)
+@@ -40,16 +40,30 @@
+ # endif
+ #endif
+ 
++/* Count the CPU's currently available to this process.  */
++#ifdef _SC_NPROCESSORS_ONLN
++static int
++count_avail_process_cpus (int def)
++{
++  int n;
++  n = sysconf (_SC_NPROCESSORS_ONLN);
++  if (n == -1)
++    return def;
++  else
++    return n;
++}
++#else
++# define count_avail_process_cpus(def) (def)
++#endif
+ 
++
+ /* At startup, determine the default number of threads.  It would seem
+    this should be related to the number of cpus online.  */
+ 
+ void
+ gomp_init_num_threads (void)
+ {
+-#ifdef _SC_NPROCESSORS_ONLN
+-  gomp_nthreads_var = sysconf (_SC_NPROCESSORS_ONLN);
+-#endif
++  gomp_nthreads_var = count_avail_process_cpus (1);
+ }
+ 
+ /* When OMP_DYNAMIC is set, at thread launch determine the number of
+@@ -64,13 +78,9 @@
+ {
+   unsigned n_onln, loadavg;
+ 
+-#ifdef _SC_NPROCESSORS_ONLN
+-  n_onln = sysconf (_SC_NPROCESSORS_ONLN);
++  n_onln = count_avail_process_cpus(gomp_nthreads_var);
+   if (n_onln > gomp_nthreads_var)
+     n_onln = gomp_nthreads_var;
+-#else
+-  n_onln = gomp_nthreads_var;
+-#endif
+ 
+   loadavg = 0;
+ #ifdef HAVE_GETLOADAVG
+@@ -93,11 +103,7 @@
+ int
+ omp_get_num_procs (void)
+ {
+-#ifdef _SC_NPROCESSORS_ONLN
+-  return sysconf (_SC_NPROCESSORS_ONLN);
+-#else
+-  return gomp_nthreads_var;
+-#endif
++  return count_avail_process_cpus (gomp_nthreads_var);
+ }
+ 
+ ialias (omp_get_num_procs)

@@ -18,6 +18,9 @@
         </tags>
         <env>
             <var name="MINGW_HOST">i686-pc-mingw32</var>
+            <var name="MINGW_DIR">/usr/i686-pc-mingw32</var>
+            <var name="MINGW_CC_42">i686-pc-mingw32-gcc-4.2</var>
+            <var name="MINGW_CXX_42">i686-pc-mingw32-g++-4.2</var>
         </env>
     </agent>
 
@@ -35,12 +38,17 @@
     </agent>
     
     <agent>
-        <name>Mac OS X 10.4</name>
+        <name>Mac OS X 10.5</name>
         <address>YourOSXHost</address>
         <tags>
             <tag>unix</tag>
             <tag>osx</tag>
+            <tag>osx10.5</tag>
         </tags>
+        <env>
+            <var name="OSX_CC_42">gcc-4.2</var>
+            <var name="OSX_CXX_42">g++-4.2</var>
+        </env>
     </agent>
 
 </rlsbot-agents>
