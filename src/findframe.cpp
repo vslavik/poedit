@@ -233,7 +233,7 @@ bool FindFrame::DoFind(int dir)
     m_position += dir;
     while (m_position >= 0 && m_position < cnt)
     {
-        CatalogData &dt = (*m_catalog)[m_listCtrl->GetIndexInCatalog(m_position)];
+        CatalogItem &dt = (*m_catalog)[m_listCtrl->GetIndexInCatalog(m_position)];
 
         if (inStr)
         {

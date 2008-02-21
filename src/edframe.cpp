@@ -1291,8 +1291,8 @@ void PoeditFrame::OnListActivated(wxListEvent& event)
     {
         int ind = m_list->GetIndexInCatalog(event.GetIndex());
         if (ind >= (int)m_catalog->GetCount()) return;
-        CatalogData& entry = (*m_catalog)[ind];
-        if (entry.GetValidity() == CatalogData::Val_Invalid)
+        CatalogItem& entry = (*m_catalog)[ind];
+        if (entry.GetValidity() == CatalogItem::Val_Invalid)
         {
             wxMessageBox(entry.GetErrorString(),
                          _("Gettext syntax error"),
@@ -1538,7 +1538,7 @@ void PoeditFrame::UpdateFromTextCtrl(int item)
     int ind = m_list->GetIndexInCatalog(item);
     if (ind >= (int)m_catalog->GetCount()) return;
 
-    CatalogData& entry = (*m_catalog)[ind];
+    CatalogItem& entry = (*m_catalog)[ind];
 
     wxString key = entry.GetString();
     bool newfuzzy = GetToolBar()->GetToolState(XRCID("menu_fuzzy"));
@@ -1631,7 +1631,7 @@ void PoeditFrame::UpdateToTextCtrl(int item)
     int ind = m_list->GetIndexInCatalog(item);
     if (ind >= (int)m_catalog->GetCount()) return;
 
-    const CatalogData& entry = (*m_catalog)[ind];
+    const CatalogItem& entry = (*m_catalog)[ind];
 
     wxString quote;
     wxString t_o, t_t, t_c, t_ac;
@@ -1923,9 +1923,9 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
         size_t cnt = m_catalog->GetCount();
         for (size_t i = 0; i < cnt; i++)
         {
-            CatalogData& dt = (*m_catalog)[i];
+            CatalogItem& dt = (*m_catalog)[i];
             if (dt.IsModified() && !dt.IsFuzzy() &&
-                dt.GetValidity() == CatalogData::Val_Valid &&
+                dt.GetValidity() == CatalogItem::Val_Valid &&
                 !dt.GetTranslation().empty())
             {
                 tm->Store(dt.GetString(), dt.GetTranslation());
@@ -2017,7 +2017,7 @@ bool PoeditFrame::AutoTranslateCatalog()
     pi.SetGaugeMax(cnt);
     for (size_t i = 0; i < cnt; i++)
     {
-        CatalogData& dt = (*m_catalog)[i];
+        CatalogItem& dt = (*m_catalog)[i];
         if (dt.IsFuzzy() || !dt.IsTranslated())
         {
             wxArrayString results;
@@ -2084,7 +2084,7 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
 #endif
 
         wxBusyCursor bcur;
-        CatalogData& dt = (*m_catalog)[item];
+        CatalogItem& dt = (*m_catalog)[item];
         m_autoTranslations.Clear();
         if (GetTransMem()->Lookup(dt.GetString(), m_autoTranslations) > 0)
         {
@@ -2295,7 +2295,7 @@ void PoeditFrame::OnCommentWindowText(wxCommandEvent&)
 
     wxString comment;
     comment = CommentDialog::AddStartHash(m_textComment->GetValue());
-    CatalogData& data((*m_catalog)[m_list->GetIndexInCatalog(m_sel)]);
+    CatalogItem& data((*m_catalog)[m_list->GetIndexInCatalog(m_sel)]);
 
     if (comment == data.GetComment())
         return;
@@ -2355,18 +2355,18 @@ void PoeditFrame::BeginItemValidation()
 #if USE_GETTEXT_VALIDATION
     int item = m_itemsToValidate.front();
     int index = m_list->GetIndexInCatalog(item);
-    CatalogData& dt = (*m_catalog)[index];
+    CatalogItem& dt = (*m_catalog)[index];
 
     if (!dt.IsTranslated())
         return;
 
-    if (dt.GetValidity() != CatalogData::Val_Unknown)
+    if (dt.GetValidity() != CatalogItem::Val_Unknown)
         return;
 
     // run this entry through msgfmt (in a single-entry catalog) to check if
     // it is correct:
     Catalog cat;
-    cat.AddItem(new CatalogData(dt));
+    cat.AddItem(new CatalogItem(dt));
 
     if (m_catalog->Header().HasHeader(_T("Plural-Forms")))
     {
@@ -2411,7 +2411,7 @@ void PoeditFrame::EndItemValidation()
     {
         int item = m_itemBeingValidated;
         int index = m_list->GetIndexInCatalog(item);
-        CatalogData& dt = (*m_catalog)[index];
+        CatalogItem& dt = (*m_catalog)[index];
 
         bool ok = (m_validationProcess.ExitCode == 0);
         dt.SetValidity(ok);

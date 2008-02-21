@@ -849,7 +849,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
     }
     else
     {
-        CatalogData d;
+        CatalogItem d;
         if (!flags.empty()) d.SetFlags(flags);
         d.SetString(msgid);
         if (has_plural)
@@ -1071,7 +1071,7 @@ bool Catalog::Load(const wxString& po_file)
     return true;
 }
 
-void Catalog::AddItem(const CatalogData& data)
+void Catalog::AddItem(const CatalogItem& data)
 {
     m_items.push_back(data);
 }
@@ -1288,7 +1288,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 
     for (unsigned i = 0; i < m_items.size(); i++)
     {
-        CatalogData& data = m_items[i];
+        CatalogItem& data = m_items[i];
         SaveMultiLines(f, data.GetComment());
         for (unsigned i = 0; i < data.GetAutoComments().GetCount(); i++)
         {
@@ -1568,7 +1568,7 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens, int *untransla
         if (all) (*all)++;
         if ((*this)[i].IsFuzzy())
             (*fuzzy)++;
-        if ((*this)[i].GetValidity() == CatalogData::Val_Invalid)
+        if ((*this)[i].GetValidity() == CatalogItem::Val_Invalid)
             (*badtokens)++;
         if (!(*this)[i].IsTranslated())
             (*untranslated)++;
@@ -1576,7 +1576,7 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens, int *untransla
 }
 
 
-void CatalogData::SetFlags(const wxString& flags)
+void CatalogItem::SetFlags(const wxString& flags)
 {
     m_isFuzzy = false;
     m_moreFlags.Empty();
@@ -1593,7 +1593,7 @@ void CatalogData::SetFlags(const wxString& flags)
 }
 
 
-wxString CatalogData::GetFlags() const
+wxString CatalogItem::GetFlags() const
 {
     wxString f;
     if (m_isFuzzy) f << _T(", fuzzy");
@@ -1604,7 +1604,7 @@ wxString CatalogData::GetFlags() const
         return wxEmptyString;
 }
 
-bool CatalogData::IsInFormat(const wxString& format)
+bool CatalogItem::IsInFormat(const wxString& format)
 {
     wxString lookingFor;
     lookingFor.Printf(_T("%s-format"), format.c_str());
@@ -1617,7 +1617,7 @@ bool CatalogData::IsInFormat(const wxString& format)
     return false;
 }
 
-wxString CatalogData::GetTranslation(unsigned idx) const
+wxString CatalogItem::GetTranslation(unsigned idx) const
 {
     if (idx >= GetNumberOfTranslations())
         return wxEmptyString;
@@ -1625,7 +1625,7 @@ wxString CatalogData::GetTranslation(unsigned idx) const
         return m_translations[idx];
 }
 
-void CatalogData::SetTranslation(const wxString &t, unsigned idx)
+void CatalogItem::SetTranslation(const wxString &t, unsigned idx)
 {
     while (idx >= m_translations.GetCount())
         m_translations.Add(wxEmptyString);
@@ -1638,7 +1638,7 @@ void CatalogData::SetTranslation(const wxString &t, unsigned idx)
             m_isTranslated = true;
 }
 
-void CatalogData::SetTranslations(const wxArrayString &t)
+void CatalogItem::SetTranslations(const wxArrayString &t)
 {
     m_translations = t;
 

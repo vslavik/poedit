@@ -234,7 +234,7 @@ bool TranslationMemoryUpdater::UpdateFromCatalog(const wxString& filename)
     size_t cnt = cat.GetCount();
     for (size_t i = 0; i < cnt; i++)
     {
-        CatalogData &dt = cat[i];
+        CatalogItem &dt = cat[i];
         if (!dt.IsTranslated() || dt.IsFuzzy()) continue;
         if (!m_mem->Store(dt.GetString(), dt.GetTranslation())) 
             return false;

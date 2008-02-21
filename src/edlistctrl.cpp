@@ -273,10 +273,10 @@ void PoeditListCtrl::ReadCatalog()
 
     for (size_t i = 0; i < m_catalog->GetCount(); i++)
     {
-        CatalogData& d = (*m_catalog)[i];
+        CatalogItem& d = (*m_catalog)[i];
         if (!d.IsTranslated())
           untranslatedIds.push_back(i);
-        else if (d.GetValidity() == CatalogData::Val_Invalid)
+        else if (d.GetValidity() == CatalogItem::Val_Invalid)
           invalidIds.push_back(i);
         else if (d.IsFuzzy())
           fuzzyIds.push_back(i);
@@ -324,7 +324,7 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
     if (m_catalog == NULL)
         return wxEmptyString;
 
-    CatalogData& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
+    CatalogItem& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
     switch (column)
     {
         case 0:
@@ -352,13 +352,13 @@ wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
     if (m_catalog == NULL)
         return (wxListItemAttr*)&m_attrNormal[idx];
 
-    CatalogData& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
+    CatalogItem& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
 
     if (!d.IsTranslated())
         return (wxListItemAttr*)&m_attrUntranslated[idx];
     else if (d.IsFuzzy())
         return (wxListItemAttr*)&m_attrFuzzy[idx];
-    else if (d.GetValidity() == CatalogData::Val_Invalid)
+    else if (d.GetValidity() == CatalogItem::Val_Invalid)
         return (wxListItemAttr*)&m_attrInvalid[idx];
     else
         return (wxListItemAttr*)&m_attrNormal[idx];
@@ -369,7 +369,7 @@ int PoeditListCtrl::OnGetItemImage(long item) const
     if (m_catalog == NULL)
         return IMG_NOTHING;
 
-    CatalogData& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
+    CatalogItem& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
     int index = IMG_NOTHING;
 
     if (d.IsAutomatic())

@@ -155,7 +155,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
 	
 	for (i = 0; i < GetCount(); i++)
     {
-        const CatalogData& data = m_items[i];
+        const CatalogItem& data = m_items[i];
 
 		wxColour bgcolor = g_ItemColourNormal[i % 2];
 		wxString original_string = data.GetString();

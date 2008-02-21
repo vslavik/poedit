@@ -62,11 +62,11 @@ typedef enum
 
     This class is mostly internal, used by Catalog to store data.
  */
-class CatalogData
+class CatalogItem
 {
     public:
         /// Ctor. Initializes the object with original string and translation.
-        CatalogData(const wxString& str = wxEmptyString,
+        CatalogItem(const wxString& str = wxEmptyString,
                     const wxString& str_plural = wxEmptyString)
                 : m_string(str),
                   m_plural(str_plural),
@@ -81,7 +81,7 @@ class CatalogData
                   m_lineNum(0),
                   m_bookmark(NO_BOOKMARK) {}
 
-        CatalogData(const CatalogData& dt)
+        CatalogItem(const CatalogItem& dt)
                 : m_string(dt.m_string),
                   m_plural(dt.m_plural),
                   m_hasPlural(dt.m_hasPlural),
@@ -286,7 +286,7 @@ class CatalogData
 
     This class is mostly internal, used by Catalog to store data.
  */
-// FIXME: derive this from CatalogData (or CatalogDataBase)
+// FIXME: derive this from CatalogItem (or CatalogItemBase)
 class CatalogDeletedData
 {
     public:
@@ -381,9 +381,9 @@ class CatalogDeletedData
 };
 
 
-typedef std::vector<CatalogData> CatalogDataArray;
+typedef std::vector<CatalogItem> CatalogItemArray;
 typedef std::vector<CatalogDeletedData> CatalogDeletedDataArray;
-typedef std::map<wxString, unsigned> CatalogDataIndex;
+typedef std::map<wxString, unsigned> CatalogItemIndex;
 
 /** This class stores all translations, together with filelists, references
     and other additional information. It can read .po files and save both
@@ -510,10 +510,10 @@ class Catalog
         void GetStatistics(int *all, int *fuzzy, int *badtokens, int *untranslated);
 
         /// Gets n-th item in the catalog (read-write access).
-        CatalogData& operator[](unsigned n) { return m_items[n]; }
+        CatalogItem& operator[](unsigned n) { return m_items[n]; }
 
         /// Gets n-th item in the catalog (read-only access).
-        const CatalogData& operator[](unsigned n) const { return m_items[n]; }
+        const CatalogItem& operator[](unsigned n) const { return m_items[n]; }
 
         /// Gets catalog header (read-write access).
         HeaderData& Header() { return m_header; }
@@ -534,7 +534,7 @@ class Catalog
 
         /// Adds entry to the catalog (the catalog will take ownership of
         /// the object).
-        void AddItem(const CatalogData& data);
+        void AddItem(const CatalogItem& data);
 
         /// Adds entry to the catalog (the catalog will take ownership of
         /// the object).
@@ -584,7 +584,7 @@ class Catalog
         bool ShowMergeSummary(Catalog *refcat);
 
     private:
-        CatalogDataArray m_items;
+        CatalogItemArray m_items;
         CatalogDeletedDataArray m_deletedItems;
 
         bool m_isOk;
