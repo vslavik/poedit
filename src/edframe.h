@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2005 Vaclav Slavik
+ *  Copyright (C) 1999-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -62,6 +62,7 @@ class WXDLLEXPORT wxStaticText;
 
 class ListHandler;
 class TextctrlHandler;
+class TransTextctrlHandler;
 
 class TranslationMemory;
 class PoeditFrame;
@@ -121,10 +122,13 @@ class PoeditFrame : public wxFrame
         void RefreshControls();
         /// Sets controls custom fonts.
         void SetCustomFonts();
+
+        CatalogItem *GetCurrentItem() const;
+
         /// Puts text from textctrls to catalog & listctrl.
-        void UpdateFromTextCtrl(int item = -1);
+        void UpdateFromTextCtrl();
         /// Puts text from catalog & listctrl to textctrls.
-        void UpdateToTextCtrl(int item = -1);
+        void UpdateToTextCtrl();
 
         /// Updates statistics in statusbar.
         void UpdateStatusBar();
@@ -166,7 +170,6 @@ class PoeditFrame : public wxFrame
         void OnPreferences(wxCommandEvent& event);
         void OnUpdate(wxCommandEvent& event);
         void OnListSel(wxListEvent& event);
-        void OnListDesel(wxListEvent& event);
         void OnListActivated(wxListEvent& event);
         void OnListRightClick(wxMouseEvent& event);
         void OnListFocus(wxFocusEvent& event);
@@ -277,13 +280,15 @@ class PoeditFrame : public wxFrame
         bool m_displayLines;
         bool m_displayCommentWin;
         bool m_displayAutoCommentsWin;
-        int m_sel;//, m_selItem;
         wxFileHistory m_history;
         std::vector<wxString> m_edittedTextOrig;
         bool m_edittedTextFuzzyChanged;
 
+        wxEvtHandler *m_handlerTransText;
+
         friend class ListHandler;
         friend class TextctrlHandler;
+        friend class TransTextctrlHandler;
 };
 
 
