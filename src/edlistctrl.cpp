@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2007 Vaclav Slavik
+ *  Copyright (C) 1999-2008 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
@@ -41,16 +41,10 @@
 bool gs_shadedList = false;
 
 // colours used in the list:
-#define g_darkColourFactor 0.95
-#define DARKEN_COLOUR(r,g,b) (wxColour(int((r)*g_darkColourFactor),\
-                                       int((g)*g_darkColourFactor),\
-                                       int((b)*g_darkColourFactor)))
-#define LIST_COLOURS(r,g,b) { wxColour(r,g,b), DARKEN_COLOUR(r,g,b) }
-static const wxColour
-    g_ItemColourNormal[2] =       LIST_COLOURS(0xFF,0xFF,0xFF), // white
-    g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
-    g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1), // yellow
-    g_ItemColourInvalid[2] =      LIST_COLOURS(0xFF,0x20,0x20); // red
+#define DARKEN_FACTOR      0.95
+
+// FIXME: configurable?
+static const wxColour g_ErrorColour(255, 0, 0);
 
 static const wxColour g_TranspColour(254, 0, 253);
 
@@ -191,14 +185,28 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     AssignImageList(list, wxIMAGE_LIST_SMALL);
 
     // configure items colors:
-    m_attrNormal[0].SetBackgroundColour(g_ItemColourNormal[0]);
-    m_attrNormal[1].SetBackgroundColour(g_ItemColourNormal[1]);
-    m_attrUntranslated[0].SetBackgroundColour(g_ItemColourUntranslated[0]);
-    m_attrUntranslated[1].SetBackgroundColour(g_ItemColourUntranslated[1]);
-    m_attrFuzzy[0].SetBackgroundColour(g_ItemColourFuzzy[0]);
-    m_attrFuzzy[1].SetBackgroundColour(g_ItemColourFuzzy[1]);
-    m_attrInvalid[0].SetBackgroundColour(g_ItemColourInvalid[0]);
-    m_attrInvalid[1].SetBackgroundColour(g_ItemColourInvalid[1]);
+    wxColour shaded = GetBackgroundColour();
+    shaded.Set(int(DARKEN_FACTOR * shaded.Red()),
+               int(DARKEN_FACTOR * shaded.Green()),
+               int(DARKEN_FACTOR * shaded.Blue()));
+
+    m_attrNormal[1].SetBackgroundColour(shaded);
+    m_attrUntranslated[1].SetBackgroundColour(shaded);
+    m_attrFuzzy[1].SetBackgroundColour(shaded);
+
+    m_attrInvalid[0].SetTextColour(g_ErrorColour);
+    m_attrInvalid[1].SetTextColour(g_ErrorColour);
+    m_attrInvalid[1].SetBackgroundColour(shaded);
+
+    wxFont fontb = GetFont();
+    fontb.SetWeight(wxFONTWEIGHT_BOLD);
+    m_attrUntranslated[0].SetFont(fontb);
+    m_attrUntranslated[1].SetFont(fontb);
+
+    wxFont fonti = GetFont();
+    fonti.SetStyle(wxFONTSTYLE_ITALIC);
+    m_attrFuzzy[0].SetFont(fonti);
+    m_attrFuzzy[1].SetFont(fonti);
 }
 
 PoeditListCtrl::~PoeditListCtrl()
