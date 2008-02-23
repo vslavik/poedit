@@ -45,7 +45,12 @@ MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
              wxConfig::Get()->Read(_T("summary_pos_y"), -1),
 	     wxConfig::Get()->Read(_T("summary_pos_w"), -1),
              wxConfig::Get()->Read(_T("summary_pos_h"), -1));
-    if (r.x != -1) SetSize(r);
+
+    if (r.x != -1)
+    {
+        Move(r.GetPosition());
+        SetClientSize(r.GetSize());
+    }
 }
 
 
@@ -54,8 +59,8 @@ MergeSummaryDialog::~MergeSummaryDialog()
 {
     wxConfig::Get()->Write(_T("summary_pos_x"), (long)GetPosition().x);
     wxConfig::Get()->Write(_T("summary_pos_y"), (long)GetPosition().y);
-    wxConfig::Get()->Write(_T("summary_pos_w"), (long)GetSize().x);
-    wxConfig::Get()->Write(_T("summary_pos_h"), (long)GetSize().y);
+    wxConfig::Get()->Write(_T("summary_pos_w"), (long)GetClientSize().x);
+    wxConfig::Get()->Write(_T("summary_pos_h"), (long)GetClientSize().y);
 }
 
 

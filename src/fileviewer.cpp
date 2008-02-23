@@ -43,13 +43,7 @@ FileViewer::FileViewer(wxWindow *parent,
                        const wxString& basePath,
                        const wxArrayString& references,
                        size_t startAt)
-        : wxFrame(parent, -1, _("Source file"),
-                            wxPoint(
-                                 wxConfig::Get()->Read(_T("fileviewer/frame_x"), -1),
-                                 wxConfig::Get()->Read(_T("fileviewer/frame_y"), -1)),
-                             wxSize(
-                                 wxConfig::Get()->Read(_T("fileviewer/frame_w"), 600),
-                                 wxConfig::Get()->Read(_T("fileviewer/frame_h"), 400))),
+        : wxFrame(parent, -1, _("Source file")),
           m_references(references)
 {
     m_basePath = basePath;
@@ -75,6 +69,15 @@ FileViewer::FileViewer(wxWindow *parent,
     // are accepted on all platforms:
     ref.Replace(wxT("\\"), wxT("/"));
     ShowReference(ref);
+
+    wxConfigBase *cfg = wxConfig::Get();
+    int posx = cfg->Read(_T("fileviewer/frame_x"), -1);
+    int posy = cfg->Read(_T("fileviewer/frame_y"), -1);
+    int width = cfg->Read(_T("fileviewer/frame_w"), 600);
+    int height = cfg->Read(_T("fileviewer/frame_h"), 400);
+
+    Move(posx, posy);
+    SetClientSize(width, height);
 }
 
 void FileViewer::ShowReference(const wxString& ref)
@@ -126,7 +129,7 @@ void FileViewer::ShowReference(const wxString& ref)
 
 FileViewer::~FileViewer()
 {
-    wxSize sz = GetSize();
+    wxSize sz = GetClientSize();
     wxPoint pos = GetPosition();
     wxConfigBase *cfg = wxConfig::Get();
     cfg->Write(_T("fileviewer/frame_w"), (long)sz.x);

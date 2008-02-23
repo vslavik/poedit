@@ -454,9 +454,8 @@ PoeditFrame::PoeditFrame() :
     //     because they would overlap and nobody could recognize that there are
     //     many of them
     if (ms_instances.GetCount() == 0)
-        SetSize(posx, posy, width, height);
-    else
-        SetSize(-1, -1, width, height);
+        Move(posx, posy);
+    SetClientSize(width, height);
     if (cfg->Read(_T("frame_maximized"), long(0)))
         Maximize();
 
@@ -581,7 +580,7 @@ PoeditFrame::~PoeditFrame()
         if (!IsMaximized())
         {
             wxPoint pos = GetPosition();
-            wxSize sz = GetSize();
+            wxSize sz = GetClientSize();
 
             cfg->Write(_T("frame_w"), (long)sz.x);
             cfg->Write(_T("frame_h"), (long)sz.y);

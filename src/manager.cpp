@@ -66,24 +66,14 @@ ManagerFrame *ManagerFrame::ms_instance = NULL;
 }
 
 ManagerFrame::ManagerFrame() :
-    wxFrame(NULL, -1, _("Poedit - Catalogs manager"), wxPoint(
-                                 wxConfig::Get()->Read(_T("manager_x"), -1),
-                                 wxConfig::Get()->Read(_T("manager_y"), -1)),
-                             wxSize(
-                                 wxConfig::Get()->Read(_T("manager_w"), 400),
-                                 wxConfig::Get()->Read(_T("manager_h"), 300)),
-                             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
+    wxFrame(NULL, -1, _("Poedit - Catalogs manager"),
+            wxDefaultPosition, wxDefaultSize,
+            wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
 {
 #ifdef __UNIX__
     SetIcon(wxArtProvider::GetIcon(_T("poedit")));
 #else
     SetIcon(wxICON(appicon));
-#endif
-
-#if !defined(__WXGTK12__) || defined(__WXGTK20__)
-    // GTK+ 1.2 doesn't support this
-    if (wxConfig::Get()->Read(_T("manager_maximized"), long(0)))
-        Maximize();
 #endif
 
     ms_instance = this;
@@ -110,13 +100,28 @@ ManagerFrame::ManagerFrame() :
     UpdateListPrj(last);
     if (m_listPrj->GetCount() > 0)
         UpdateListCat(last);
+
+    wxConfigBase *cfg = wxConfig::Get();
+    int posx = cfg->Read(_T("manager_x"), -1);
+    int posy = cfg->Read(_T("manager_y"), -1);
+    int width = cfg->Read(_T("manager_w"), 400);
+    int height = cfg->Read(_T("manager_h"), 300);
+
+    Move(posx, posy);
+    SetClientSize(width, height);
+
+#if !defined(__WXGTK12__) || defined(__WXGTK20__)
+    // GTK+ 1.2 doesn't support this
+    if (wxConfig::Get()->Read(_T("manager_maximized"), long(0)))
+        Maximize();
+#endif
 }
 
 
 
 ManagerFrame::~ManagerFrame()
 {
-    wxSize sz = GetSize();
+    wxSize sz = GetClientSize();
     wxPoint pos = GetPosition();
     wxConfigBase *cfg = wxConfig::Get();
 
