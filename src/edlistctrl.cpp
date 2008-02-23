@@ -326,7 +326,7 @@ void PoeditListCtrl::ReadCatalog()
     if ( m_catalog->GetCount() )
     {
         Select(0);
-        RefreshItems(0, m_catalog->GetCount());
+        RefreshItems(0, m_catalog->GetCount()-1);
     }
     else
     {
