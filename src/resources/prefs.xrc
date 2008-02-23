@@ -538,14 +538,14 @@
           </object>
           <object class="sizeritem">
             <object class="wxTextCtrl" name="parser_command"/>
-            <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
+            <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
           <object class="sizeritem">
             <object class="wxStaticText">
               <label>This is the command used to launch the parser.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files,\n%C to charset flag (see below).</label>
             </object>
-            <flag>wxRIGHT|wxTOP|wxALIGN_RIGHT</flag>
+            <flag>wxLEFT|wxRIGHT</flag> 
             <border>5d</border>
           </object>
           <object class="sizeritem">
@@ -564,7 +564,7 @@
             <object class="wxStaticText">
               <label>This will be attached to the command line once\nfor each keyword. %k expands to the keyword.</label>
             </object>
-            <flag>wxRIGHT|wxALIGN_RIGHT</flag>
+            <flag>wxLEFT|wxRIGHT</flag> 
             <border>5d</border>
           </object>
           <object class="sizeritem">
@@ -583,7 +583,7 @@
             <object class="wxStaticText">
               <label>This will be attached to the command line once\nfor each input file. %f expands to the filename.</label>
             </object>
-            <flag>wxRIGHT|wxBOTTOM|wxALIGN_RIGHT</flag>
+            <flag>wxLEFT|wxRIGHT</flag> 
             <border>5d</border>
           </object>
           <object class="sizeritem">
@@ -602,7 +602,7 @@
             <object class="wxStaticText">
               <label>This will be attached to the command line\nonly if source codecharset was given. %c expands to charset value.</label>
             </object>
-            <flag>wxRIGHT|wxBOTTOM|wxALIGN_RIGHT</flag>
+            <flag>wxLEFT|wxRIGHT</flag> 
             <border>5d</border>
           </object>
         </object>
