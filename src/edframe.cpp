@@ -446,8 +446,8 @@ PoeditFrame::PoeditFrame() :
     //     it's not done correctly on wxMac:
     int posx = cfg->Read(_T("frame_x"), -1);
     int posy = cfg->Read(_T("frame_y"), -1);
-    int width = cfg->Read(_T("frame_w"), 600);
-    int height = cfg->Read(_T("frame_h"), 400);
+    int width = cfg->Read(_T("frame_w"), 780);
+    int height = cfg->Read(_T("frame_h"), 570);
 
     // NB: if this is the only Poedit frame opened, place it at remembered
     //     position, but don't do that if there already are other frames,
@@ -539,7 +539,7 @@ PoeditFrame::PoeditFrame() :
     m_bottomSplitter->Initialize(m_bottomLeftPanel);
 
     m_splitter->SetMinimumPaneSize(40);
-    m_splitter->SplitHorizontally(m_list, m_bottomSplitter, cfg->Read(_T("splitter"), 240L));
+    m_splitter->SplitHorizontally(m_list, m_bottomSplitter, cfg->Read(_T("splitter"), 330L));
 
     m_list->PushEventHandler(new ListHandler(this));
     m_textTrans->PushEventHandler(new TransTextctrlHandler(this));
