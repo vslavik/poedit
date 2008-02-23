@@ -80,35 +80,6 @@ void RemoveTempFiles(const wxArrayString& files)
     }
 }
 
-// fixes gettext header by replacing "CHARSET" with "iso-8859-1" -- msgcat
-// doesn't like CHARSET value
-bool FixCharsetInfo(const wxString& filename)
-{
-    wxFFile file;
-    wxString data;
-
-    if ( !file.Open(filename) ||
-         !file.ReadAll(&data, wxConvISO8859_1) ||
-         !file.Close() )
-    {
-        wxLogError(_("Failed to read extracted catalog."));
-        return false;
-    }
-
-    data.Replace(_T("CHARSET"),
-                 _T("iso-8859-1"));
-
-    if ( !file.Open(filename, _T("w")) ||
-         !file.Write(data, wxConvISO8859_1) ||
-         !file.Close() )
-    {
-        wxLogError(_("Failed to read extracted catalog."));
-        return false;
-    }
-
-    return true;
-}
-
 } // anonymous namespace
 
 Catalog *SourceDigger::Dig(const wxArrayString& paths,
@@ -195,9 +166,6 @@ bool SourceDigger::DigFiles(wxArrayString& outFiles,
         {
             return false;
         }
-
-        if ( !FixCharsetInfo(tempfile) )
-            return false;
 
         tempfiles.push_back(tempfile);
 
