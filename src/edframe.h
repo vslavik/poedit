@@ -284,8 +284,6 @@ class PoeditFrame : public wxFrame
         std::vector<wxString> m_edittedTextOrig;
         bool m_edittedTextFuzzyChanged;
 
-        wxEvtHandler *m_handlerTransText;
-
         friend class ListHandler;
         friend class TextctrlHandler;
         friend class TransTextctrlHandler;
