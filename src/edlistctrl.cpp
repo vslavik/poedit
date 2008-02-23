@@ -323,8 +323,15 @@ void PoeditListCtrl::ReadCatalog()
     SetItemCount(m_catalog->GetCount());
 
     // scroll to the top and refresh everything:
-    Select(0);
-    RefreshItems(0, m_catalog->GetCount());
+    if ( m_catalog->GetCount() )
+    {
+        Select(0);
+        RefreshItems(0, m_catalog->GetCount());
+    }
+    else
+    {
+        Refresh();
+    }
 }
 
 wxString PoeditListCtrl::OnGetItemText(long item, long column) const
