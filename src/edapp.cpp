@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2007 Vaclav Slavik
+ *  Copyright (C) 1999-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -99,6 +99,11 @@ bool PoeditApp::OnInit()
 
 #if defined(__WXMAC__) && wxCHECK_VERSION(2,8,5)
     wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
+#endif
+//    wxSystemOptions::SetOption(wxMAC_ALWAYS_USE_GENERIC_LISTCTRL, 1);
+
+#ifdef __WXMAC__
+    SetExitOnFrameDelete(false);
 #endif
 
 #if defined(__UNIX__) && !defined(__WXMAC__)

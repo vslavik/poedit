@@ -824,6 +824,10 @@ TranslationMemory *PoeditFrame::GetTransMem()
 void PoeditFrame::OnQuit(wxCommandEvent&)
 {
     Close(true);
+#ifdef __WXMAC__
+    // FIXME: do this always when we have both Quit and Exit items
+    wxGetApp().ExitMainLoop();
+#endif
 }
 
 
