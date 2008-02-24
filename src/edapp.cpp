@@ -167,7 +167,7 @@ bool PoeditApp::OnInit()
 
     if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
     {
-        wxMessageBox(_("This is first time you run Poedit.\nPlease fill in your name and e-mail address.\n(This information is used only in catalogs headers)"), _("Setup"),
+        wxMessageBox(_("This is first time you run Poedit.\nPlease fill in your name and email address.\n(This information is used only in catalogs headers)"), _("Setup"),
                        wxOK | wxICON_INFORMATION);
 
         PreferencesDialog dlg;
