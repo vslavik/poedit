@@ -1233,9 +1233,12 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 
     GetCRLFBehaviour(crlfOrig, crlfPreserve);
 
-    /* Update information about last modification time: */
-
-    m_header.RevisionDate = GetCurrentTimeRFC822();
+    // Update information about last modification time. But if the header
+    // was empty previously, the author apparently doesn't want this header
+    // set, so don't mess with it. See https://sourceforge.net/tracker/?func=detail&atid=389156&aid=1900298&group_id=27043
+    // for motivation:
+    if ( !m_header.RevisionDate.empty() )
+        m_header.RevisionDate = GetCurrentTimeRFC822();
 
     /* Detect CRLF format: */
 
