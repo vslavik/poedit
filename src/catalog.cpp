@@ -1635,10 +1635,16 @@ void CatalogItem::SetTranslation(const wxString &t, unsigned idx)
     m_translations[idx] = t;
 
     m_validity = Val_Unknown;
-    m_isTranslated = false;
+
+    m_isTranslated = true;
     for (size_t i = 0; i < m_translations.GetCount(); i++)
-        if (!m_translations[i].empty())
-            m_isTranslated = true;
+    {
+        if (m_translations[i].empty())
+        {
+            m_isTranslated = false;
+            break;
+        }
+    }
 }
 
 void CatalogItem::SetTranslations(const wxArrayString &t)
@@ -1646,10 +1652,16 @@ void CatalogItem::SetTranslations(const wxArrayString &t)
     m_translations = t;
 
     m_validity = Val_Unknown;
-    m_isTranslated = false;
+
+    m_isTranslated = true;
     for (size_t i = 0; i < m_translations.GetCount(); i++)
-        if (!m_translations[i].empty())
-            m_isTranslated = true;
+    {
+        if (m_translations[i].empty())
+        {
+            m_isTranslated = false;
+            break;
+        }
+    }
 }
 
 
