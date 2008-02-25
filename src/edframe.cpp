@@ -1554,6 +1554,7 @@ void PoeditFrame::UpdateFromTextCtrl()
     wxString key = entry->GetString();
     bool newfuzzy = GetToolBar()->GetToolState(XRCID("menu_fuzzy"));
 
+    const bool oldIsTranslated = entry->IsTranslated();
     bool allTranslated = true; // will be updated later
     bool anyTransChanged = false; // ditto
 
@@ -1595,26 +1596,42 @@ void PoeditFrame::UpdateFromTextCtrl()
         return; // not even fuzzy status changed, so return
     }
 
+    // did something affecting statistics change?
+    bool statisticsChanged = false;
+
     if (newfuzzy == entry->IsFuzzy() && !m_dontAutoclearFuzzyStatus)
         newfuzzy = false;
-    entry->SetFuzzy(newfuzzy);
+
+
     GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), newfuzzy);
     GetMenuBar()->Check(XRCID("menu_fuzzy"), newfuzzy);
 
-
+    if ( entry->IsFuzzy() != newfuzzy )
+    {
+        entry->SetFuzzy(newfuzzy);
+        statisticsChanged = true;
+    }
+    if ( oldIsTranslated != allTranslated )
+    {
+        entry->SetTranslated(allTranslated);
+        statisticsChanged = true;
+    }
     entry->SetModified(true);
     entry->SetAutomatic(false);
-    entry->SetTranslated(allTranslated);
 
     m_list->RefreshSelectedItem();
+
+    if ( statisticsChanged )
+    {
+        UpdateStatusBar();
+    }
+    // else: no point in recomputing stats
 
     if (m_modified == false)
     {
         m_modified = true;
         UpdateTitle();
     }
-
-    UpdateStatusBar();
 
 #if USE_GETTEXT_VALIDATION
     // check validity of this item:
