@@ -41,7 +41,7 @@
 bool gs_shadedList = false;
 
 // colours used in the list:
-#define DARKEN_FACTOR      0.95
+#define DARKEN_FACTOR      0.98
 
 // FIXME: configurable?
 static const wxColour g_ErrorColour(255, 0, 0);
