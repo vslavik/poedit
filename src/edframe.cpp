@@ -370,7 +370,7 @@ PoeditFrame::PoeditFrame() :
     m_list(NULL),
     m_modified(false),
     m_hasObsoleteItems(false),
-    m_edittedTextFuzzyChanged(false)
+    m_dontAutoclearFuzzyStatus(false)
 {
     // make sure that the [ID_POEDIT_FIRST,ID_POEDIT_LAST] range of IDs is not
     // used for anything else:
@@ -1391,7 +1391,14 @@ void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
         GetToolBar()->ToggleTool(XRCID("menu_fuzzy"),
                                  GetMenuBar()->IsChecked(XRCID("menu_fuzzy")));
     }
-    m_edittedTextFuzzyChanged = true;
+
+    // The user explicitly changed fuzzy status (e.g. to on). Normally, if the
+    // user edits an entry, it's fuzzy flag is cleared, but if the user sets
+    // fuzzy on to indicate the translation is problematic and then continues
+    // editing the entry, we do not want to annoy him by changing fuzzy back on
+    // every keystroke.
+    m_dontAutoclearFuzzyStatus = true;
+
     UpdateFromTextCtrl();
 }
 
@@ -1550,37 +1557,6 @@ void PoeditFrame::UpdateFromTextCtrl()
     bool allTranslated = true; // will be updated later
     bool anyTransChanged = false; // ditto
 
-    // check if anything changed:
-    if (entry->HasPlural())
-    {
-        wxASSERT( m_textTransPlural.size() == m_edittedTextOrig.size() );
-        size_t size = m_textTransPlural.size();
-
-        for (size_t i = 0; i < size; i++)
-        {
-            wxString newval = m_textTransPlural[i]->GetValue();
-            if (m_edittedTextOrig.empty() ||
-                newval != m_edittedTextOrig[i])
-            {
-                anyTransChanged = true;
-            }
-            if ( newval.empty() )
-            {
-                allTranslated = false;
-            }
-        }
-    }
-    else
-    {
-        wxString newval = m_textTrans->GetValue();
-        anyTransChanged =
-            m_edittedTextOrig.empty() || newval != m_edittedTextOrig[0];
-        allTranslated = !newval.empty();
-    }
-
-    if (entry->IsFuzzy() == newfuzzy && !anyTransChanged)
-        return; // not even fuzzy status changed, so return
-
     if (entry->HasPlural())
     {
         wxArrayString str;
@@ -1589,17 +1565,37 @@ void PoeditFrame::UpdateFromTextCtrl()
             wxString val = TransformNewval(m_textTransPlural[i]->GetValue(),
                                            m_displayQuotes);
             str.Add(val);
+            if ( val.empty() )
+                allTranslated = false;
         }
-        entry->SetTranslations(str);
+
+        if ( str != entry->GetTranslations() )
+        {
+            anyTransChanged = true;
+            entry->SetTranslations(str);
+        }
     }
     else
     {
         wxString newval =
             TransformNewval(m_textTrans->GetValue(), m_displayQuotes);
-        entry->SetTranslation(newval);
+
+        if ( newval.empty() )
+            allTranslated = false;
+
+        if ( newval != entry->GetTranslation() )
+        {
+            anyTransChanged = true;
+            entry->SetTranslation(newval);
+        }
     }
 
-    if (newfuzzy == entry->IsFuzzy() && !m_edittedTextFuzzyChanged)
+    if (entry->IsFuzzy() == newfuzzy && !anyTransChanged)
+    {
+        return; // not even fuzzy status changed, so return
+    }
+
+    if (newfuzzy == entry->IsFuzzy() && !m_dontAutoclearFuzzyStatus)
         newfuzzy = false;
     entry->SetFuzzy(newfuzzy);
     GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), newfuzzy);
@@ -1674,8 +1670,6 @@ void PoeditFrame::UpdateToTextCtrl()
 
     m_textOrig->SetValue(t_o);
 
-    m_edittedTextOrig.clear();
-
     if (entry->HasPlural())
     {
         wxString t_op = quote + entry->GetPluralString() + quote;
@@ -1694,11 +1688,7 @@ void PoeditFrame::UpdateToTextCtrl()
             SetTranslationValue(m_textTransPlural[i], t_t);
             if (m_displayQuotes)
                 m_textTransPlural[i]->SetInsertionPoint(1);
-            m_edittedTextOrig.push_back(t_t);
         }
-        // fill in remaining unset values:
-        for (; i < formsCnt; i++)
-            m_edittedTextOrig.push_back(_T(""));
     }
     else
     {
@@ -1707,7 +1697,6 @@ void PoeditFrame::UpdateToTextCtrl()
         SetTranslationValue(m_textTrans, t_t);
         if (m_displayQuotes)
             m_textTrans->SetInsertionPoint(1);
-        m_edittedTextOrig.push_back(t_t);
     }
 
     if (m_displayCommentWin)
@@ -1716,7 +1705,9 @@ void PoeditFrame::UpdateToTextCtrl()
     if (m_displayAutoCommentsWin)
         m_textAutoComments->SetValue(t_ac);
 
-    m_edittedTextFuzzyChanged = false;
+    // by default, editing fuzzy item unfuzzies it
+    m_dontAutoclearFuzzyStatus = false;
+
     GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), entry->IsFuzzy());
     GetMenuBar()->Check(XRCID("menu_fuzzy"), entry->IsFuzzy());
 

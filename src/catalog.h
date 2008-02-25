@@ -121,10 +121,14 @@ class CatalogItem
 
         /// How many translations (plural forms) do we have?
         size_t GetNumberOfTranslations() const
-            { return m_translations.GetCount(); }
+            { return m_translations.size(); }
 
         /// Returns the nth-translation.
         wxString GetTranslation(unsigned n = 0) const;
+
+        /// Returns all translations.
+        const wxArrayString& GetTranslations() const
+            { return m_translations; }
 
         /// Returns array of all occurences of this string in source code.
         const wxArrayString& GetReferences() const { return m_references; }

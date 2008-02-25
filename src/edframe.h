@@ -281,8 +281,7 @@ class PoeditFrame : public wxFrame
         bool m_displayCommentWin;
         bool m_displayAutoCommentsWin;
         wxFileHistory m_history;
-        std::vector<wxString> m_edittedTextOrig;
-        bool m_edittedTextFuzzyChanged;
+        bool m_dontAutoclearFuzzyStatus;
 
         friend class ListHandler;
         friend class TextctrlHandler;
