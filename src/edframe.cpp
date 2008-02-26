@@ -1619,7 +1619,7 @@ void PoeditFrame::UpdateFromTextCtrl()
     entry->SetModified(true);
     entry->SetAutomatic(false);
 
-    m_list->RefreshSelectedItem();
+    RefreshSelectedItem();
 
     if ( statisticsChanged )
     {
@@ -1777,7 +1777,10 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
 
 void PoeditFrame::RefreshControls()
 {
-    if (!m_catalog) return;
+    m_itemsRefreshQueue.clear();
+
+    if (!m_catalog)
+        return;
 
     m_hasObsoleteItems = false;
     if (!m_catalog->IsOk())
@@ -1983,7 +1986,7 @@ void PoeditFrame::OnEditComment(wxCommandEvent& event)
         comment = dlg.GetComment();
         entry->SetComment(comment);
 
-        m_list->RefreshSelectedItem();
+        RefreshSelectedItem();
 
         // update comment window
         m_textComment->SetValue(CommentDialog::RemoveStartHash(comment));
@@ -2014,7 +2017,7 @@ void PoeditFrame::OnAutoTranslate(wxCommandEvent& event)
     int ind = event.GetId() - ID_POPUP_TRANS;
     entry->SetTranslation(m_autoTranslations[ind]);
     UpdateToTextCtrl();
-    m_list->RefreshSelectedItem();
+    RefreshSelectedItem();
 }
 
 void PoeditFrame::OnAutoTranslateAll(wxCommandEvent& event)
@@ -2326,7 +2329,7 @@ void PoeditFrame::OnCommentWindowText(wxCommandEvent&)
         return;
 
     entry->SetComment(comment);
-    m_list->RefreshSelectedItem();
+    RefreshSelectedItem();
 
     if (m_modified == false)
     {
@@ -2336,13 +2339,26 @@ void PoeditFrame::OnCommentWindowText(wxCommandEvent&)
 }
 
 
+void PoeditFrame::RefreshSelectedItem()
+{
+    m_itemsRefreshQueue.insert(m_list->GetSelection());
+}
+
 void PoeditFrame::OnIdle(wxIdleEvent& event)
 {
+    event.Skip();
+
 #if USE_GETTEXT_VALIDATION
     if (!m_itemsToValidate.empty() && m_itemBeingValidated == -1)
         BeginItemValidation();
 #endif
-    event.Skip();
+
+    for ( std::set<int>::const_iterator i = m_itemsRefreshQueue.begin();
+          i != m_itemsRefreshQueue.end(); ++i )
+    {
+        m_list->RefreshItem(*i);
+    }
+    m_itemsRefreshQueue.clear();
 }
 
 void PoeditFrame::OnEndProcess(wxProcessEvent& event)
@@ -2655,7 +2671,7 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     }
 
     // Refresh items
-    m_list->RefreshSelectedItem();
+    RefreshSelectedItem();
     if (bkIndex != -1)
         m_list->RefreshItem(m_list->GetItemIndex(bkIndex));
 

@@ -103,11 +103,6 @@ class PoeditListCtrl : public wxListView
             wxListView::Select(n, on);
         }
 
-        void RefreshSelectedItem()
-        {
-            RefreshItem(GetSelection());
-        }
-
     private:
         void OnSize(wxSizeEvent& event);
 

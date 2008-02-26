@@ -38,7 +38,11 @@
 // processes doesn't work well:
 #define USE_GETTEXT_VALIDATION 0
 
+#if USE_GETTEXT_VALIDATION
 #include <list>
+#endif
+
+#include <set>
 
 #include <wx/frame.h>
 #include <wx/docview.h>
@@ -228,6 +232,8 @@ class PoeditFrame : public wxFrame
         void InitHelp();
         wxString LoadHelpBook(const wxString& name);
 
+        void RefreshSelectedItem();
+
         DECLARE_EVENT_TABLE()
 
     private:
@@ -242,6 +248,8 @@ class PoeditFrame : public wxFrame
         std::list<int> m_itemsToValidate;
         ValidationProcessData m_validationProcess;
 #endif
+
+        std::set<int> m_itemsRefreshQueue;
 
         bool m_commentWindowEditable;
         Catalog *m_catalog;
