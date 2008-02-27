@@ -184,8 +184,10 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 
     AssignImageList(list, wxIMAGE_LIST_SMALL);
 
-    // configure items colors:
-    wxColour shaded = GetBackgroundColour();
+    // configure items colors & fonts:
+
+    wxVisualAttributes visual = GetDefaultAttributes();
+    wxColour shaded = visual.colBg;
     shaded.Set(int(DARKEN_FACTOR * shaded.Red()),
                int(DARKEN_FACTOR * shaded.Green()),
                int(DARKEN_FACTOR * shaded.Blue()));
@@ -198,12 +200,12 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     m_attrInvalid[1].SetTextColour(g_ErrorColour);
     m_attrInvalid[1].SetBackgroundColour(shaded);
 
-    wxFont fontb = GetFont();
+    wxFont fontb = visual.font;
     fontb.SetWeight(wxFONTWEIGHT_BOLD);
     m_attrUntranslated[0].SetFont(fontb);
     m_attrUntranslated[1].SetFont(fontb);
 
-    wxFont fonti = GetFont();
+    wxFont fonti = visual.font;
     fonti.SetStyle(wxFONTSTYLE_ITALIC);
     m_attrFuzzy[0].SetFont(fonti);
     m_attrFuzzy[1].SetFont(fonti);

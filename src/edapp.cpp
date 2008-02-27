@@ -100,7 +100,6 @@ bool PoeditApp::OnInit()
 #if defined(__WXMAC__) && wxCHECK_VERSION(2,8,5)
     wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
 #endif
-//    wxSystemOptions::SetOption(wxMAC_ALWAYS_USE_GENERIC_LISTCTRL, 1);
 
 #ifdef __WXMAC__
     SetExitOnFrameDelete(false);
