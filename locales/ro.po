@@ -2,9 +2,9 @@
 # Version 1.01 - Sorin Sbarnea (sorin@intersol.ro), 2003-08-04
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.3.9\n"
+"Project-Id-Version: Poedit 1.4.0pre_1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-15 10:08+0100\n"
+"POT-Creation-Date: 2008-02-27 17:02+0100\n"
 "PO-Revision-Date: 2006-02-11 09:48+0200\n"
 "Last-Translator: Manuel Ciosici <manuelciosici@yahoo.com>\n"
 "Language-Team: Romanian Translators for Free Software <rtfs-project@lists."
@@ -13,11 +13,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1824
+#: ../src/edframe.cpp:1863
 msgid " (modified)"
 msgstr " (modificat)"
 
-#: ../src/edframe.cpp:1794
+#: ../src/export_html.cpp:137 ../src/edframe.cpp:1833
 #, fuzzy, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
@@ -28,28 +28,23 @@ msgstr "%i şiruri (%i aproximative, %i simboluri invalide, %i netraduse)"
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i linii din fişierul '%s' nu au fost încărcate corect."
 
-#: ../src/export_html.cpp:135
-#, c-format
-msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i şiruri (%i aproximative, %i simboluri invalide, %i netraduse)"
-
-#: ../src/resources/menus.xrc:139
+#: ../src/resources/menus.xrc:143
 msgid "&About..."
 msgstr "&Despre..."
 
-#: ../src/resources/menus.xrc:84
+#: ../src/resources/menus.xrc:88
 msgid "&Automatically translate using TM"
 msgstr "Tradu &automat folosind TM"
 
-#: ../src/edframe.cpp:2588
+#: ../src/edframe.cpp:2636
 msgid "&Bookmarks"
 msgstr "&Semne de carte"
 
-#: ../src/resources/manager.xrc:130 ../src/resources/menus.xrc:39
+#: ../src/resources/manager.xrc:131 ../src/resources/menus.xrc:39
 msgid "&Close"
 msgstr "În&chide"
 
-#: ../src/resources/menus.xrc:128
+#: ../src/resources/menus.xrc:132
 msgid "&Contents..."
 msgstr "&Conţinut..."
 
@@ -57,7 +52,7 @@ msgstr "&Conţinut..."
 msgid "&Edit"
 msgstr "&Editează"
 
-#: ../src/edframe.cpp:397 ../src/resources/manager.xrc:123
+#: ../src/edframe.cpp:418 ../src/resources/manager.xrc:124
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&Fişier"
@@ -66,11 +61,11 @@ msgstr "&Fişier"
 msgid "&Find..."
 msgstr "&Caută..."
 
-#: ../src/resources/menus.xrc:97 ../src/resources/menus.xrc:101
+#: ../src/resources/menus.xrc:101 ../src/resources/menus.xrc:105
 msgid "&Fullscreen view"
 msgstr "&Vizualizare pe tot ecranul"
 
-#: ../src/resources/menus.xrc:141
+#: ../src/resources/menus.xrc:145
 msgid "&Help"
 msgstr "&Ajutor"
 
@@ -83,11 +78,16 @@ msgstr "Catalog &nou..."
 msgid "&Open..."
 msgstr "&Deschide"
 
-#: ../src/resources/manager.xrc:126 ../src/resources/menus.xrc:35
+#: ../src/resources/menus.xrc:74
+#, fuzzy
+msgid "&Preferences"
+msgstr "Preferinţe"
+
+#: ../src/resources/manager.xrc:127 ../src/resources/menus.xrc:35
 msgid "&Preferences..."
 msgstr "&Preferinţe..."
 
-#: ../src/resources/menus.xrc:87
+#: ../src/resources/menus.xrc:91
 msgid "&Purge deleted translations"
 msgstr "&Curăţă traducerile şterse"
 
@@ -95,11 +95,11 @@ msgstr "&Curăţă traducerile şterse"
 msgid "&Save"
 msgstr "&Salvează"
 
-#: ../src/resources/menus.xrc:91
+#: ../src/resources/menus.xrc:95
 msgid "&Settings..."
 msgstr "&Opţiuni..."
 
-#: ../src/resources/menus.xrc:121
+#: ../src/resources/menus.xrc:125
 msgid "&Shaded translations list"
 msgstr "Listă traduceri &umbrită"
 
@@ -107,28 +107,24 @@ msgstr "Listă traduceri &umbrită"
 msgid "&Show references"
 msgstr "Arată &referinţele"
 
-#: ../src/resources/menus.xrc:78
+#: ../src/resources/menus.xrc:82
 msgid "&Update from sources"
 msgstr "Actualizează din surse"
 
-#: ../src/resources/menus.xrc:95
+#: ../src/resources/menus.xrc:99
 msgid "&View"
 msgstr "&Vizualizare"
 
-#: ../src/catalog.cpp:1450
+#: ../src/catalog.cpp:1453
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' nu este un fişier POT valid."
 
-#: ../src/edframe.cpp:1715
-msgid "'."
-msgstr "'."
-
-#: ../src/resources/prefs.xrc:202
+#: ../src/resources/prefs.xrc:211
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f va fi înlocuit cu numele fişierului, %l cu numărul liniei)"
 
-#: ../src/summarydlg.cpp:66
+#: ../src/summarydlg.cpp:71
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i noi, %i vechi)"
@@ -141,7 +137,7 @@ msgstr "(0 noi, 0 vechi)"
 msgid "(Use default language)"
 msgstr "(Foloseşte limba implicită)"
 
-#: ../src/edframe.cpp:750
+#: ../src/edframe.cpp:792
 msgid "(none of these)"
 msgstr "(nici una din acestea)"
 
@@ -149,19 +145,15 @@ msgstr "(nici una din acestea)"
 msgid "< Previous"
 msgstr "< Înapoi"
 
-#: ../src/manager.cpp:381
+#: ../src/manager.cpp:396
 msgid "<unnamed>"
 msgstr "<fără nume>"
 
-#: ../src/resources/about.xrc:4
-msgid "About Poedit"
-msgstr "Despre Poedit"
-
-#: ../src/resources/prefs.xrc:328
+#: ../src/resources/prefs.xrc:337
 msgid "Add"
 msgstr "Adaugă"
 
-#: ../src/resources/manager.xrc:89
+#: ../src/resources/manager.xrc:90
 msgid "Add directory to the list"
 msgstr "Adaugă directorul la listă"
 
@@ -169,65 +161,65 @@ msgstr "Adaugă directorul la listă"
 msgid "Add files"
 msgstr "Adaugă fişiere..."
 
-#: ../src/resources/prefs.xrc:646
+#: ../src/resources/prefs.xrc:655
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Adaugă calea la lista directoarelor unde se găsesc cataloage."
 
-#: ../src/resources/prefs.xrc:101
+#: ../src/resources/prefs.xrc:110
 msgid "Always change focus to text input field"
 msgstr "Întotdeauna schimbă focusul la câmpul de introducere a textului"
 
-#: ../src/resources/prefs.xrc:571
+#: ../src/resources/prefs.xrc:580
 msgid "An item in input files list:"
 msgstr "Un element în lista de fişiere de intrare:"
 
-#: ../src/resources/prefs.xrc:552
+#: ../src/resources/prefs.xrc:561
 msgid "An item in keywords list:"
 msgstr "Un element în lista de cuvinte cheie:"
 
-#: ../src/resources/prefs.xrc:118
+#: ../src/resources/prefs.xrc:127
 msgid "Automatic spellchecking"
 msgstr "Corectare automată a traducerii"
 
-#: ../src/export_html.cpp:174
+#: ../src/export_html.cpp:177
 msgid "Automatic translation"
 msgstr "Traducere automată"
 
-#: ../src/edframe.cpp:2070 ../src/edframe.cpp:2074
+#: ../src/edframe.cpp:2105 ../src/edframe.cpp:2109
 msgid "Automatic translations:"
 msgstr "Traduceri automate:"
 
-#: ../src/resources/prefs.xrc:60
+#: ../src/resources/prefs.xrc:69
 #, fuzzy
 msgid "Automatically check for new version of Poedit"
 msgstr "Compilează automat fişierul .mo la salvare"
 
-#: ../src/resources/prefs.xrc:78
+#: ../src/resources/prefs.xrc:87
 msgid "Automatically compile .mo file on save"
 msgstr "Compilează automat fişierul .mo la salvare"
 
-#: ../src/resources/prefs.xrc:399
+#: ../src/resources/prefs.xrc:408
 msgid "Automatically translate when updating catalog"
 msgstr "Tradu automat la actualizarea catalogului"
 
-#: ../src/edframe.cpp:2022
+#: ../src/edframe.cpp:2057
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Am tradus automat %u şiruri"
 
-#: ../src/edframe.cpp:2007
+#: ../src/edframe.cpp:2042
 msgid "Automatically translating..."
 msgstr "Traduc automat..."
 
-#: ../src/manager.cpp:254
+#: ../src/manager.cpp:267
 msgid "Bad Tokens"
 msgstr "Simboluri invalide"
 
-#: ../src/resources/settings.xrc:131
+#: ../src/resources/settings.xrc:132
 msgid "Base path:"
 msgstr "Cale de bază:"
 
-#: ../src/resources/prefs.xrc:74
+#: ../src/resources/prefs.xrc:83
 msgid "Behavior"
 msgstr "Comportament"
 
@@ -244,23 +236,23 @@ msgstr ""
 "Fişier catalog stricat: forma de singular de la msgtr a fost folosită "
 "împreună cu msgid_plural"
 
-#: ../src/resources/manager.xrc:88 ../src/resources/prefs.xrc:311
-#: ../src/resources/prefs.xrc:645 ../src/resources/tm_update.xrc:37
+#: ../src/resources/manager.xrc:89 ../src/resources/prefs.xrc:320
+#: ../src/resources/prefs.xrc:654 ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "Navighează"
 
-#: ../src/resources/menus.xrc:75
+#: ../src/resources/menus.xrc:79
 msgid "C&atalog"
 msgstr "Catalog"
 
-#: ../src/resources/prefs.xrc:131
+#: ../src/resources/prefs.xrc:140
 msgid "CR/LF conversion"
 msgstr "Conversie CR/LF"
 
-#: ../src/resources/comment.xrc:37 ../src/resources/find.xrc:87
-#: ../src/resources/manager.xrc:111 ../src/resources/prefs.xrc:481
-#: ../src/resources/prefs.xrc:623 ../src/resources/prefs.xrc:668
-#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:193
+#: ../src/resources/comment.xrc:38 ../src/resources/find.xrc:87
+#: ../src/resources/manager.xrc:112 ../src/resources/prefs.xrc:490
+#: ../src/resources/prefs.xrc:632 ../src/resources/prefs.xrc:677
+#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:194
 msgid "Cancel"
 msgstr "Renunţă"
 
@@ -268,7 +260,7 @@ msgstr "Renunţă"
 msgid "Cannot create database directory!"
 msgstr "Nu pot crea directorul bazei de date!"
 
-#: ../src/gexecute.cpp:174 ../src/gexecute.cpp:230
+#: ../src/gexecute.cpp:172 ../src/gexecute.cpp:228
 msgid "Cannot execute program: "
 msgstr "Nu pot executa programul: "
 
@@ -280,12 +272,12 @@ msgstr "Nu pot extrage cataloagele din fişierul RPM."
 msgid "Case sensitive"
 msgstr "Cu majuscule semnificative"
 
-#: ../src/manager.cpp:250
+#: ../src/manager.cpp:263
 msgid "Catalog"
 msgstr "Catalog"
 
-#: ../src/edframe.cpp:795 ../src/edframe.cpp:821 ../src/edframe.cpp:858
-#: ../src/edframe.cpp:904 ../src/edframe.cpp:1028
+#: ../src/edframe.cpp:840 ../src/edframe.cpp:865 ../src/edframe.cpp:906
+#: ../src/edframe.cpp:958 ../src/edframe.cpp:1076
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Catalogul a fost modificat. Doriţi să salvaţi schimbările?"
 
@@ -293,23 +285,23 @@ msgstr "Catalogul a fost modificat. Doriţi să salvaţi schimbările?"
 msgid "Catalogs &manager"
 msgstr "&Manager cataloage"
 
-#: ../src/resources/prefs.xrc:53
+#: ../src/resources/prefs.xrc:62
 msgid "Change UI language"
 msgstr "Schimbă limba intefeţei"
 
-#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:85
+#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:86
 msgid "Charset:"
 msgstr "Set de caractere:"
 
-#: ../src/resources/prefs.xrc:244 ../src/resources/prefs.xrc:270
+#: ../src/resources/prefs.xrc:253 ../src/resources/prefs.xrc:279
 msgid "Choose"
 msgstr "Alegeţi"
 
-#: ../src/resources/comment.xrc:44
+#: ../src/resources/comment.xrc:45
 msgid "Clear"
 msgstr "Şterge"
 
-#: ../src/resources/comment.xrc:45
+#: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "Şterge comentariul"
 
@@ -318,7 +310,7 @@ msgstr "Şterge comentariul"
 msgid "Comment"
 msgstr "Comentariu:"
 
-#: ../src/resources/prefs.xrc:110
+#: ../src/resources/prefs.xrc:119
 msgid "Comment window is editable"
 msgstr "Fereastra de comentarii este editabilă"
 
@@ -326,15 +318,15 @@ msgstr "Fereastra de comentarii este editabilă"
 msgid "Comment:"
 msgstr "Comentariu:"
 
-#: ../src/resources/prefs.xrc:349
+#: ../src/resources/prefs.xrc:358
 msgid "Configuration"
 msgstr "Configuraţie"
 
-#: ../src/manager.cpp:411 ../src/manager.cpp:431
+#: ../src/manager.cpp:426 ../src/manager.cpp:446
 msgid "Confirmation"
 msgstr "Confirmare"
 
-#: ../src/edframe.cpp:2050 ../src/resources/menus.xrc:47
+#: ../src/edframe.cpp:2085 ../src/resources/menus.xrc:47
 msgid "Copy original to translation field"
 msgstr "Copiază originalul în câmpul traducere"
 
@@ -344,7 +336,7 @@ msgid "Couldn't load file %s, it is probably corrupted."
 msgstr ""
 "A apărut o eroare la încărcarea fişierului '%s': linia %u este coruptă."
 
-#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:73
+#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:74
 msgid "Country:"
 msgstr "Ţara:"
 
@@ -352,7 +344,7 @@ msgstr "Ţara:"
 msgid "Create new translations project"
 msgstr "Crează un nou proiect de traducere"
 
-#: ../src/resources/prefs.xrc:292
+#: ../src/resources/prefs.xrc:301
 msgid "Database"
 msgstr "Bază de date"
 
@@ -361,7 +353,7 @@ msgstr "Bază de date"
 msgid "Database error: %s"
 msgstr "Eroare bază de date: %s"
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:447
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:456
 msgid "Delete"
 msgstr "Şterge"
 
@@ -373,19 +365,19 @@ msgstr "Şterge element"
 msgid "Delete the project"
 msgstr "Şterge proiectul"
 
-#: ../src/manager.cpp:304
+#: ../src/manager.cpp:319
 msgid "Directories:"
 msgstr "Directoare:"
 
-#: ../src/resources/menus.xrc:109
+#: ../src/resources/menus.xrc:113
 msgid "Display &line numbers"
 msgstr "Afişează numerele &liniilor"
 
-#: ../src/resources/menus.xrc:105
+#: ../src/resources/menus.xrc:109
 msgid "Display &quotes"
 msgstr "Afişează &ghilimelele"
 
-#: ../src/manager.cpp:430
+#: ../src/manager.cpp:445
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -393,7 +385,7 @@ msgstr ""
 "Doriţi să actualizaţi în masă toate\n"
 "cataloagele din acest proiect?"
 
-#: ../src/edframe.cpp:1964
+#: ../src/edframe.cpp:1999
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -405,11 +397,11 @@ msgstr ""
 "Dacă continui cu curăţarea, va trebui să le traduci din nou dacă ele vor fi "
 "readăugate în viitor."
 
-#: ../src/manager.cpp:410
+#: ../src/manager.cpp:425
 msgid "Do you want to delete the project?"
 msgstr "Doriţi să ştergeţi proiectul?"
 
-#: ../src/resources/prefs.xrc:162
+#: ../src/resources/prefs.xrc:171
 msgid "Don't change format of existing catalogs"
 msgstr "Nu schimba formatul cataloagelor existente"
 
@@ -417,7 +409,7 @@ msgstr "Nu schimba formatul cataloagelor existente"
 msgid "E&xport..."
 msgstr "E&xport..."
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:440
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:449
 msgid "Edit"
 msgstr "Editează"
 
@@ -445,45 +437,46 @@ msgstr "Editează fişierul în editorul de text"
 msgid "Edit the project"
 msgstr "Editează proiectul"
 
-#: ../src/resources/prefs.xrc:68
+#: ../src/resources/prefs.xrc:77
 msgid "Editor"
 msgstr "Editor"
 
-#: ../src/resources/prefs.xrc:181
+#: ../src/resources/prefs.xrc:190
 msgid "Editor executable:"
 msgstr "Executabil editor:"
 
-#: ../src/resources/prefs.xrc:119
+#: ../src/resources/prefs.xrc:128
 msgid "Enables on-the-fly spellchecking"
 msgstr "Activează corectarea rapidă"
 
-#: ../src/edframe.cpp:1170
+#: ../src/edframe.cpp:1221
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Intrările din catalog sunt probabil incorecte."
 
-#: ../src/edframe.cpp:701
+#: ../src/edframe.cpp:721
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "Eroare la iniţializarea uneltei de corectare automată: %s"
 
-#: ../src/edframe.cpp:1715
-msgid "Error loading message catalog file '"
+#: ../src/edframe.cpp:1788
+#, fuzzy, c-format
+msgid "Error loading message catalog file '%s'."
 msgstr "Eroare la încărcarea fişierului catalog mesaje '"
 
-#: ../src/fileviewer.cpp:94
+#: ../src/fileviewer.cpp:97
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Eroare la deschiderea fişierului %s!"
 
-#: ../src/catalog.cpp:1266
+#: ../src/catalog.cpp:1269
 msgid "Error saving catalog"
 msgstr "Eroare la salvarea catalogului"
 
-#: ../src/edframe.cpp:1000
+#: ../src/edframe.cpp:1049
 msgid "Export as..."
 msgstr "Exportă ca..."
 
-#: ../src/resources/prefs.xrc:173
+#: ../src/resources/prefs.xrc:182
 msgid "External editor"
 msgstr "Editor extern"
 
@@ -492,7 +485,7 @@ msgstr "Editor extern"
 msgid "Failed command: %s"
 msgstr "Comandă analizator:"
 
-#: ../src/digger.cpp:160
+#: ../src/digger.cpp:131
 #, fuzzy
 msgid "Failed to load extracted catalog."
 msgstr "Fişierul '%s' nu este un catalog de mesaje."
@@ -502,16 +495,12 @@ msgstr "Fişierul '%s' nu este un catalog de mesaje."
 msgid "Failed to merge gettext catalogs."
 msgstr "Fişierul '%s' nu este un catalog de mesaje."
 
-#: ../src/digger.cpp:94 ../src/digger.cpp:105
-msgid "Failed to read extracted catalog."
-msgstr ""
-
-#: ../src/edframe.cpp:876 ../src/edframe.cpp:920
+#: ../src/edframe.cpp:931 ../src/edframe.cpp:974
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Fişierul '%s' nu există."
 
-#: ../src/edframe.cpp:893
+#: ../src/edframe.cpp:948
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Fişierul '%s' nu este un catalog de mesaje."
@@ -549,16 +538,16 @@ msgstr "Caută în traduceri"
 msgid "Find..."
 msgstr "Caută..."
 
-#: ../src/resources/prefs.xrc:221
+#: ../src/resources/prefs.xrc:230
 msgid "Fonts"
 msgstr "Fonturi"
 
-#: ../src/edframe.cpp:2504
+#: ../src/edframe.cpp:2552
 #, fuzzy, c-format
 msgid "Form %i"
 msgstr "De la %u"
 
-#: ../src/edframe.cpp:2506
+#: ../src/edframe.cpp:2554
 #, fuzzy, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr "De la %u (ex. \"%u\")"
@@ -567,49 +556,49 @@ msgstr "De la %u (ex. \"%u\")"
 msgid "Fullscreen view"
 msgstr "Vizualizare pe tot ecranul"
 
-#: ../src/manager.cpp:253 ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:266 ../src/resources/toolbar.xrc:28
 msgid "Fuzzy"
 msgstr "Aproximativ"
 
-#: ../src/export_html.cpp:180
+#: ../src/export_html.cpp:183
 msgid "Fuzzy translation"
 msgstr "Traducere aproximativă"
 
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:960
+#: ../src/edframe.cpp:885 ../src/edframe.cpp:1013
 msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Cataloage GNU Gettext (*.po)|*.po|Toate fişierele (*.*)|*.*"
 
-#: ../src/edframe.cpp:1053 ../src/edframe.cpp:1190
+#: ../src/edframe.cpp:1101 ../src/edframe.cpp:1239
 msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "Şabloane GNU Gettext (*.po)|*.po|Toate fişierele (*.*)|*.*"
 
-#: ../src/resources/menus.xrc:134
+#: ../src/resources/menus.xrc:138
 msgid "GNU gettext documentation"
 msgstr "Documentaţie GNU gettext"
 
-#: ../src/resources/prefs.xrc:678
+#: ../src/resources/prefs.xrc:687
 msgid "Generate TM database"
 msgstr "Generează baza de date MT"
 
-#: ../src/resources/prefs.xrc:336
+#: ../src/resources/prefs.xrc:345
 msgid "Generate database"
 msgstr "Generează baza de date"
 
-#: ../src/edframe.cpp:1252
+#: ../src/edframe.cpp:1291
 msgid "Gettext syntax error"
 msgstr "Eroare de sintaxă gettext"
 
-#: ../src/edframe.cpp:2572
+#: ../src/edframe.cpp:2620
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
 msgstr "Mergi la semnul de carte %i\tCtrl-%i"
 
-#: ../src/edframe.cpp:2569
+#: ../src/edframe.cpp:2617
 #, fuzzy, c-format
 msgid "Go to bookmark %i\tCtrl-Alt-%i"
 msgstr "Mergi la semnul de carte %i\tCtrl-%i"
 
-#: ../src/edframe.cpp:1002
+#: ../src/edframe.cpp:1051
 msgid "HTML file (*.html)|*.html"
 msgstr "Fişier HTML (*.html)|*.html"
 
@@ -617,32 +606,32 @@ msgstr "Fişier HTML (*.html)|*.html"
 msgid "Identity"
 msgstr "Identitate"
 
-#: ../src/resources/prefs.xrc:111
+#: ../src/resources/prefs.xrc:120
 msgid "If checked, the comment window will be editable."
 msgstr "Dacă este bifat, fereastra de comentarii va fi editabilă."
 
-#: ../src/resources/prefs.xrc:529
+#: ../src/resources/prefs.xrc:538
 msgid "Invocation:"
 msgstr "Apelare:"
 
-#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:174
+#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:175
 msgid "Keywords"
 msgstr "Cuvinte cheie"
 
-#: ../src/chooselang.cpp:161
+#: ../src/chooselang.cpp:162
 msgid "Language selection"
 msgstr "Selectare limbă"
 
-#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:497
-#: ../src/resources/prefs.xrc:501 ../src/resources/settings.xrc:61
+#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:506
+#: ../src/resources/prefs.xrc:510 ../src/resources/settings.xrc:62
 msgid "Language:"
 msgstr "Limbă:"
 
-#: ../src/manager.cpp:255
+#: ../src/manager.cpp:268
 msgid "Last modified"
 msgstr "Ultima modificare"
 
-#: ../src/edlistctrl.cpp:214 ../src/fileviewer.cpp:103
+#: ../src/edlistctrl.cpp:230 ../src/fileviewer.cpp:106
 msgid "Line"
 msgstr "Linie"
 
@@ -651,15 +640,15 @@ msgstr "Linie"
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "Linia %u din fişierul '%s' este coruptă ( datele %s invalide)."
 
-#: ../src/resources/prefs.xrc:139
+#: ../src/resources/prefs.xrc:148
 msgid "Line endings format:"
 msgstr "Format sfârşit de linie:"
 
-#: ../src/resources/prefs.xrc:513
+#: ../src/resources/prefs.xrc:522
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Lista extensiilor separate cu virgule (ex. *.cpp;*.h):"
 
-#: ../src/resources/prefs.xrc:149
+#: ../src/resources/prefs.xrc:158
 msgid "Macintosh"
 msgstr "Macintosh"
 
@@ -668,15 +657,15 @@ msgstr "Macintosh"
 msgid "Malformed header: '%s'"
 msgstr "Antet format greşit: '%s'"
 
-#: ../src/resources/prefs.xrc:357
+#: ../src/resources/prefs.xrc:366
 msgid "Max. # of missing words:"
 msgstr "Număr maxim de cuvinte lipsă:"
 
-#: ../src/resources/prefs.xrc:379
+#: ../src/resources/prefs.xrc:388
 msgid "Max. difference in sentence length:"
 msgstr "Număr maxim de diferenţe în lungimea propoziţiei:"
 
-#: ../src/catalog.cpp:1422
+#: ../src/catalog.cpp:1425
 msgid "Merging differences..."
 msgstr "Adaug diferenţele..."
 
@@ -688,15 +677,15 @@ msgstr "Mută în jos"
 msgid "Move up"
 msgstr "Mută în sus"
 
-#: ../src/prefsdlg.cpp:55
+#: ../src/prefsdlg.cpp:59
 msgid "My Languages"
 msgstr "Limbile mele"
 
-#: ../src/manager.cpp:307
+#: ../src/manager.cpp:322
 msgid "My Project"
 msgstr "Proiectul meu"
 
-#: ../src/resources/prefs.xrc:103
+#: ../src/resources/prefs.xrc:112
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -707,7 +696,7 @@ msgstr ""
 "asemenea să scrieţi text imediat, fără a trebui să apăsaţi Tab pentru a "
 "schimba focusul."
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:435
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:444
 msgid "New"
 msgstr "Nou"
 
@@ -727,27 +716,26 @@ msgstr "Şiruri noi"
 msgid "Next >"
 msgstr "Înainte >"
 
-#: ../src/fileviewer.cpp:144
+#: ../src/fileviewer.cpp:147
 msgid "No editor specified. Please set it in Preferences dialog."
 msgstr ""
 "Nu a fost specificat nici un editor. Vă rog precizaţi în dialogul Preferinţe."
 
-#: ../src/digger.cpp:250
+#: ../src/digger.cpp:218
 msgid "No files found in: "
 msgstr "Nici un fişier găsit în: "
 
-#: ../src/edframe.cpp:1268
+#: ../src/edframe.cpp:1308
 msgid "No references to this string found."
 msgstr "Nu a fost găsită nici o referinţă la acest şir."
 
-#: ../src/export_html.cpp:152
+#: ../src/export_html.cpp:155
 msgid "Notes"
 msgstr "Note"
 
-#: ../src/resources/about.xrc:50 ../src/resources/comment.xrc:29
-#: ../src/resources/manager.xrc:103 ../src/resources/prefs.xrc:473
-#: ../src/resources/prefs.xrc:615 ../src/resources/settings.xrc:185
-#: ../src/resources/summary.xrc:71
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:104
+#: ../src/resources/prefs.xrc:482 ../src/resources/prefs.xrc:624
+#: ../src/resources/settings.xrc:186 ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "OK"
 
@@ -760,48 +748,48 @@ msgstr "Şiruri vechi"
 msgid "Open"
 msgstr "&Deschide"
 
-#: ../src/edframe.cpp:839 ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:883 ../src/resources/toolbar.xrc:13
 msgid "Open catalog"
 msgstr "Deschide catalog"
 
-#: ../src/edframe.cpp:1051 ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1099 ../src/edframe.cpp:1237
 msgid "Open catalog template"
 msgstr "Deschide şablon catalog"
 
-#: ../src/resources/prefs.xrc:94
+#: ../src/resources/prefs.xrc:103
 msgid "Open catalogs manager on Poedit startup"
 msgstr "Deschide managerul de cataloage la pornirea Poedit"
 
-#: ../src/resources/prefs.xrc:211
+#: ../src/resources/prefs.xrc:220
 msgid "Open source files in editor, not in file viewer"
 msgstr "Deschide fişierele sursă în editor, nu în vizualizatorul de fişiere"
 
-#: ../src/export_html.cpp:145 ../src/edlistctrl.cpp:211
+#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:227
 msgid "Original string"
 msgstr "Şir original"
 
-#: ../src/resources/prefs.xrc:533
+#: ../src/resources/prefs.xrc:542
 msgid "Parser command:"
 msgstr "Comandă analizator:"
 
-#: ../src/resources/prefs.xrc:492
+#: ../src/resources/prefs.xrc:501
 msgid "Parser setup"
 msgstr "Configurare analizator"
 
-#: ../src/resources/prefs.xrc:410
+#: ../src/resources/prefs.xrc:419
 msgid "Parsers"
 msgstr "Analizatoare"
 
-#: ../src/digger.cpp:135
+#: ../src/digger.cpp:106
 #, fuzzy, c-format
 msgid "Parsing %s files..."
 msgstr "Scanez fişierele..."
 
-#: ../src/resources/prefs.xrc:295
+#: ../src/resources/prefs.xrc:304
 msgid "Path to DB:"
 msgstr "Cale la BD:"
 
-#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:153
+#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:154
 msgid "Paths"
 msgstr "Căi"
 
@@ -809,7 +797,7 @@ msgstr "Căi"
 msgid "Personalize"
 msgstr "Personalizează"
 
-#: ../src/resources/prefs.xrc:329
+#: ../src/resources/prefs.xrc:338
 msgid "Pick language from the list of known languages"
 msgstr "Alegeţi limba din lista de limbi cunoscute"
 
@@ -819,27 +807,27 @@ msgstr ""
 "Vă rugăm să adăugaţi directoarele unde sunt stocate fişierele locale pe "
 "sistemul dumneavoastă:"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "Please choose the reference you want to show:"
 msgstr "Vă rog alegeţi referinţa pe care doriţi să o vedeţi:"
 
-#: ../src/prefsdlg.cpp:341
+#: ../src/prefsdlg.cpp:355
 msgid "Please select language ISO code:"
 msgstr "Vă rog selectaţi codul ISO al limbii:"
 
-#: ../src/edframe.cpp:759
+#: ../src/edframe.cpp:801
 msgid "Please select language code:"
 msgstr "Vă rog selectaţi codul limbii:"
 
-#: ../src/resources/settings.xrc:109
+#: ../src/resources/settings.xrc:110
 msgid "Plural Forms:"
 msgstr "Forme de plural:"
 
-#: ../src/edframe.cpp:470
+#: ../src/edframe.cpp:489
 msgid "Plural:"
 msgstr "Plural:"
 
-#: ../src/edframe.cpp:337
+#: ../src/edframe.cpp:359
 msgid "Poedit"
 msgstr "Poedit"
 
@@ -847,7 +835,7 @@ msgstr "Poedit"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Manager cataloage"
 
-#: ../src/digger.cpp:251
+#: ../src/digger.cpp:219
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Poedit nu a găsit nici un fişier în directoarele scanate."
 
@@ -855,11 +843,11 @@ msgstr "Poedit nu a găsit nici un fişier în directoarele scanate."
 msgid "Preferences"
 msgstr "Preferinţe"
 
-#: ../src/resources/prefs.xrc:660
+#: ../src/resources/prefs.xrc:669
 msgid "Proceed"
 msgstr "Continuă"
 
-#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:121
+#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:122
 msgid "Project info"
 msgstr "Informaţii proiect"
 
@@ -871,20 +859,20 @@ msgstr "Numele proiectului şi versiunea:"
 msgid "Project name:"
 msgstr "Nume proiect:"
 
-#: ../src/edframe.cpp:1965
+#: ../src/edframe.cpp:2000
 #, fuzzy
 msgid "Purge deleted translations"
 msgstr "&Curăţă traducerile şterse"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "References"
 msgstr "Referinţe"
 
-#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
+#: ../src/edframe.cpp:2090 ../src/edframe.cpp:2094
 msgid "References:"
 msgstr "Referinţe:"
 
-#: ../src/resources/prefs.xrc:337
+#: ../src/resources/prefs.xrc:346
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr ""
 "Regenerează memoria de traduceri din cataloage în căile listate mai sus."
@@ -902,7 +890,7 @@ msgstr "&Salvează"
 msgid "Save &as..."
 msgstr "Salvează &ca..."
 
-#: ../src/edframe.cpp:959
+#: ../src/edframe.cpp:1012
 msgid "Save as..."
 msgstr "Salvează ca..."
 
@@ -910,8 +898,8 @@ msgstr "Salvează ca..."
 msgid "Save catalog"
 msgstr "Salvează catalogul"
 
-#: ../src/edframe.cpp:796 ../src/edframe.cpp:822 ../src/edframe.cpp:859
-#: ../src/edframe.cpp:905 ../src/edframe.cpp:1029
+#: ../src/edframe.cpp:841 ../src/edframe.cpp:866 ../src/edframe.cpp:907
+#: ../src/edframe.cpp:959 ../src/edframe.cpp:1077
 msgid "Save changes"
 msgstr "Salvează schimbările"
 
@@ -919,7 +907,7 @@ msgstr "Salvează schimbările"
 msgid "Scanning file: "
 msgstr "Scanez fişierul: "
 
-#: ../src/digger.cpp:121
+#: ../src/digger.cpp:92
 msgid "Scanning files..."
 msgstr "Scanez fişierele..."
 
@@ -927,29 +915,29 @@ msgstr "Scanez fişierele..."
 msgid "Search Paths"
 msgstr "Căi de căutare"
 
-#: ../src/edframe.cpp:758
+#: ../src/edframe.cpp:800
 msgid "Select catalog's language"
 msgstr "Selectaţi limba catalogului"
 
-#: ../src/prefsdlg.cpp:354 ../src/manager.cpp:284
+#: ../src/prefsdlg.cpp:368 ../src/manager.cpp:299
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "Selectaţi directorul"
 
-#: ../src/prefsdlg.cpp:340
+#: ../src/prefsdlg.cpp:354
 msgid "Select language"
 msgstr "Selectaţi limba"
 
-#: ../src/chooselang.cpp:160
+#: ../src/chooselang.cpp:161
 msgid "Select your prefered language"
 msgstr "Selectaţi limba preferată"
 
-#: ../src/edframe.cpp:2571
+#: ../src/edframe.cpp:2619
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr "Pune semn de carte %i\tAlt-%i"
 
-#: ../src/edframe.cpp:2568
+#: ../src/edframe.cpp:2616
 #, fuzzy, c-format
 msgid "Set bookmark %i\tCtrl-%i"
 msgstr "Pune semn de carte %i\tAlt-%i"
@@ -958,31 +946,31 @@ msgstr "Pune semn de carte %i\tAlt-%i"
 msgid "Settings"
 msgstr "Opţiuni"
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
 msgid "Setup"
 msgstr "Configurare"
 
-#: ../src/resources/menus.xrc:113
+#: ../src/resources/menus.xrc:117
 msgid "Show &comment window"
 msgstr "Arată fereastra de &comentarii"
 
-#: ../src/resources/menus.xrc:117
+#: ../src/resources/menus.xrc:121
 msgid "Show automatic c&omments window"
 msgstr "Arată fereastra de &comentarii automate"
 
-#: ../src/resources/prefs.xrc:87
+#: ../src/resources/prefs.xrc:96
 msgid "Show summary after catalog update"
 msgstr "Arată sumarul după actualizarea catalogului"
 
-#: ../src/edframe.cpp:469
+#: ../src/edframe.cpp:488
 msgid "Singular:"
 msgstr "Singular:"
 
-#: ../src/resources/prefs.xrc:590 ../src/resources/settings.xrc:97
+#: ../src/resources/prefs.xrc:599 ../src/resources/settings.xrc:98
 msgid "Source code charset:"
 msgstr "Set caractere cod sursă:"
 
-#: ../src/resources/prefs.xrc:416
+#: ../src/resources/prefs.xrc:425
 msgid "Source code parsers:"
 msgstr "Parsere cod sursă:"
 
@@ -998,15 +986,15 @@ msgstr "Începe de la primul item."
 msgid "String to find:"
 msgstr "Şirul de căutat:"
 
-#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:47
+#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:48
 msgid "Team's email address:"
 msgstr "Adresa de email a echipei:"
 
-#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:33
+#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:34
 msgid "Team:"
 msgstr "Echipa:"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1268
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -1041,17 +1029,18 @@ msgstr ""
 "Aceste siruri au fost găsite în surse dar nu erau în catalog.\n"
 "Poedit le va adăuga la catalog acum."
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
+#, fuzzy
 msgid ""
 "This is first time you run Poedit.\n"
-"Please fill in your name and e-mail address.\n"
+"Please fill in your name and email address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
 "Aceasta este prima dată când rulaţi Poedit.\n"
 "Vă rog să completaţi numele şi adresa de email.\n"
 "(Această informaţie este folosită doar în antetele cataloagelor)"
 
-#: ../src/resources/prefs.xrc:545
+#: ../src/resources/prefs.xrc:554
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1063,7 +1052,7 @@ msgstr ""
 "de cuvinte, %F la lista de fişiere de intrare,\n"
 "%C la setul de caractere (vedeţi mai jos)."
 
-#: ../src/resources/prefs.xrc:602
+#: ../src/resources/prefs.xrc:611
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1072,7 +1061,7 @@ msgstr ""
 "Aceasta va fi ataşată la linia de comandă doar dacă setul de\n"
 "caractere sursă este dat. %c se extinde la valoarea tipului de caractere."
 
-#: ../src/resources/prefs.xrc:583
+#: ../src/resources/prefs.xrc:592
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1081,7 +1070,7 @@ msgstr ""
 "Aceasta va fi ataşată la linia de comandă la fiecare\n"
 "fişier de intrare. %f se extinde la numele fişierului."
 
-#: ../src/resources/prefs.xrc:564
+#: ../src/resources/prefs.xrc:573
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -1093,15 +1082,15 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Comutat dacă şirul selectat are traducere aproximativă"
 
-#: ../src/manager.cpp:251
+#: ../src/manager.cpp:264
 msgid "Total"
 msgstr "Total"
 
-#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:212
+#: ../src/export_html.cpp:151 ../src/edlistctrl.cpp:228
 msgid "Translation"
 msgstr "Traducere"
 
-#: ../src/resources/prefs.xrc:285
+#: ../src/resources/prefs.xrc:294
 msgid "Translation Memory"
 msgstr "Memorie de traduceri"
 
@@ -1134,11 +1123,11 @@ msgstr "Cod de localizare '%s' necunoscut a fost găsit în registrii."
 msgid "Undo"
 msgstr "Anulează"
 
-#: ../src/resources/prefs.xrc:147
+#: ../src/resources/prefs.xrc:156
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:252
+#: ../src/manager.cpp:265
 msgid "Untrans"
 msgstr "Netrad"
 
@@ -1160,7 +1149,7 @@ msgstr "Actualizează toate cataloagele din proiect"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Actualizează catalogul - sincronizează-l cu sursele"
 
-#: ../src/resources/menus.xrc:81
+#: ../src/resources/menus.xrc:85
 msgid "Update from &POT file..."
 msgstr "Actualizeză din fisier POT..."
 
@@ -1172,24 +1161,24 @@ msgstr "Sumar actualizare"
 msgid "Update translation memory"
 msgstr "Actualizez memoria de traduceri"
 
-#: ../src/catalog.cpp:1382
+#: ../src/catalog.cpp:1385
 msgid "Updating catalog..."
 msgstr "Actualizez catalogul..."
 
-#: ../src/edframe.cpp:1172
+#: ../src/edframe.cpp:1223
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr ""
 "Actualizarea catalogului a eşuat. Apăsaţi pe 'Mai mult>>' pentru detalii."
 
-#: ../src/resources/prefs.xrc:253
+#: ../src/resources/prefs.xrc:262
 msgid "Use custom font for text fields"
 msgstr "Foloseşte font personalizat pentru câmpurile text"
 
-#: ../src/resources/prefs.xrc:227
+#: ../src/resources/prefs.xrc:236
 msgid "Use custom font for translations list"
 msgstr "Foloseşte font personalizat pentru lista de traduceri"
 
-#: ../src/resources/settings.xrc:161
+#: ../src/resources/settings.xrc:162
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
@@ -1201,42 +1190,62 @@ msgstr ""
 msgid "Whole words only"
 msgstr "Doar cuvintele întregi"
 
-#: ../src/resources/prefs.xrc:148
+#: ../src/resources/prefs.xrc:157
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:886
+#: ../src/edframe.cpp:941
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Nu puteţi să trageţi mai mult de un fişier în fereastra Poedit."
 
-#: ../src/chooselang.cpp:175
+#: ../src/chooselang.cpp:176
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Trebuie să reporniţi Poedit pentru ca această schimbare să aibă efect."
 
-#: ../src/resources/prefs.xrc:34
-msgid "Your e-mail address:"
+#: ../src/resources/prefs.xrc:43
+#, fuzzy
+msgid "Your email address:"
 msgstr "Adresa de email:"
 
 #: ../src/resources/prefs.xrc:22
+msgid ""
+"Your name and email set below are only used\n"
+"to set the Last-Translator header of GNU gettext files."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:30
 msgid "Your name:"
 msgstr "Numele dumneavoastră:"
 
-#: ../src/edframe.cpp:1801
+#: ../src/edframe.cpp:1840
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[se verifică traducerile: %i rămas]"
 
-#: ../src/resources/prefs.xrc:150
+#: ../src/resources/prefs.xrc:159
 msgid "current platform's default"
 msgstr "implicit pentru platforma curentă"
 
-#: ../src/edframe.cpp:2093
+#: ../src/edframe.cpp:2128
 msgid "none"
 msgstr "nici una"
 
-#: ../src/edframe.cpp:2108
-msgid "version"
-msgstr "versiunea"
+#: ../src/edframe.cpp:2144
+#, fuzzy
+msgid "translations editor"
+msgstr "Memorie de traduceri"
+
+#~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
+#~ msgstr "%i şiruri (%i aproximative, %i simboluri invalide, %i netraduse)"
+
+#~ msgid "'."
+#~ msgstr "'."
+
+#~ msgid "About Poedit"
+#~ msgstr "Despre Poedit"
+
+#~ msgid "version"
+#~ msgstr "versiunea"
 
 #~ msgid " files..."
 #~ msgstr " fişiere..."

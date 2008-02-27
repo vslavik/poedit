@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.3.9\n"
+"Project-Id-Version: Poedit 1.4.0pre_1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-15 10:08+0100\n"
+"POT-Creation-Date: 2008-02-27 17:02+0100\n"
 "PO-Revision-Date: 2007-09-11 00:21+0200\n"
 "Last-Translator: Hakki Dogusan <dogusanh@tr.net>\n"
 "Language-Team: Hakki Dogusan <dogusanh@tr.net>\n"
@@ -12,11 +12,11 @@ msgstr ""
 "X-Poedit-Language: Turkish\n"
 "X-Poedit-Country: TURKEY\n"
 
-#: ../src/edframe.cpp:1824
+#: ../src/edframe.cpp:1863
 msgid " (modified)"
 msgstr "(değiştirildi)"
 
-#: ../src/edframe.cpp:1794
+#: ../src/export_html.cpp:137 ../src/edframe.cpp:1833
 #, fuzzy, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
@@ -27,28 +27,23 @@ msgstr "%i dizgi (%i bulanık, %i kötü öğe, %i çevirilmedi)"
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i satır ('%s' dosyası) doğru olarak yüklenemedi."
 
-#: ../src/export_html.cpp:135
-#, c-format
-msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i dizgi (%i bulanık, %i kötü öğe, %i çevirilmedi)"
-
-#: ../src/resources/menus.xrc:139
+#: ../src/resources/menus.xrc:143
 msgid "&About..."
 msgstr "&Hakkında..."
 
-#: ../src/resources/menus.xrc:84
+#: ../src/resources/menus.xrc:88
 msgid "&Automatically translate using TM"
 msgstr "TM'yi kullanarak otom&atik olarak çevir"
 
-#: ../src/edframe.cpp:2588
+#: ../src/edframe.cpp:2636
 msgid "&Bookmarks"
 msgstr "Y&er İmleri"
 
-#: ../src/resources/manager.xrc:130 ../src/resources/menus.xrc:39
+#: ../src/resources/manager.xrc:131 ../src/resources/menus.xrc:39
 msgid "&Close"
 msgstr "&Kapat"
 
-#: ../src/resources/menus.xrc:128
+#: ../src/resources/menus.xrc:132
 msgid "&Contents..."
 msgstr "İç&erik..."
 
@@ -56,7 +51,7 @@ msgstr "İç&erik..."
 msgid "&Edit"
 msgstr "Dü&zenle"
 
-#: ../src/edframe.cpp:397 ../src/resources/manager.xrc:123
+#: ../src/edframe.cpp:418 ../src/resources/manager.xrc:124
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&Dosya"
@@ -65,11 +60,11 @@ msgstr "&Dosya"
 msgid "&Find..."
 msgstr "B&ul..."
 
-#: ../src/resources/menus.xrc:97 ../src/resources/menus.xrc:101
+#: ../src/resources/menus.xrc:101 ../src/resources/menus.xrc:105
 msgid "&Fullscreen view"
 msgstr "&Tamekran görünüm"
 
-#: ../src/resources/menus.xrc:141
+#: ../src/resources/menus.xrc:145
 msgid "&Help"
 msgstr "&Yardım"
 
@@ -81,11 +76,16 @@ msgstr "&Yeni katalog..."
 msgid "&Open..."
 msgstr "&Aç..."
 
-#: ../src/resources/manager.xrc:126 ../src/resources/menus.xrc:35
+#: ../src/resources/menus.xrc:74
+#, fuzzy
+msgid "&Preferences"
+msgstr "Tercihler"
+
+#: ../src/resources/manager.xrc:127 ../src/resources/menus.xrc:35
 msgid "&Preferences..."
 msgstr "Te&rcihler..."
 
-#: ../src/resources/menus.xrc:87
+#: ../src/resources/menus.xrc:91
 msgid "&Purge deleted translations"
 msgstr "Silin&miş çevirileri temizle"
 
@@ -93,11 +93,11 @@ msgstr "Silin&miş çevirileri temizle"
 msgid "&Save"
 msgstr "Kay&det"
 
-#: ../src/resources/menus.xrc:91
+#: ../src/resources/menus.xrc:95
 msgid "&Settings..."
 msgstr "&Ayarlar"
 
-#: ../src/resources/menus.xrc:121
+#: ../src/resources/menus.xrc:125
 msgid "&Shaded translations list"
 msgstr "&Gölgeli çeviriler listesi"
 
@@ -105,28 +105,24 @@ msgstr "&Gölgeli çeviriler listesi"
 msgid "&Show references"
 msgstr "Başvuruları göster"
 
-#: ../src/resources/menus.xrc:78
+#: ../src/resources/menus.xrc:82
 msgid "&Update from sources"
 msgstr "Kaynaklardan dü&zenle"
 
-#: ../src/resources/menus.xrc:95
+#: ../src/resources/menus.xrc:99
 msgid "&View"
 msgstr "&Görünüm"
 
-#: ../src/catalog.cpp:1450
+#: ../src/catalog.cpp:1453
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' geçerli bir POT dosyası değil."
 
-#: ../src/edframe.cpp:1715
-msgid "'."
-msgstr "'."
-
-#: ../src/resources/prefs.xrc:202
+#: ../src/resources/prefs.xrc:211
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f yerine dosya adı, %l yerine satır numarası yerleştirilecektir)"
 
-#: ../src/summarydlg.cpp:66
+#: ../src/summarydlg.cpp:71
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i yeni, %i eski)"
@@ -139,7 +135,7 @@ msgstr "(0 yeni, 0 eski)"
 msgid "(Use default language)"
 msgstr "(Varsayılan dili kullan)"
 
-#: ../src/edframe.cpp:750
+#: ../src/edframe.cpp:792
 msgid "(none of these)"
 msgstr "(bunların hiçbiri)"
 
@@ -147,19 +143,15 @@ msgstr "(bunların hiçbiri)"
 msgid "< Previous"
 msgstr "< Önceki"
 
-#: ../src/manager.cpp:381
+#: ../src/manager.cpp:396
 msgid "<unnamed>"
 msgstr "<adsız>"
 
-#: ../src/resources/about.xrc:4
-msgid "About Poedit"
-msgstr "Poedit hakkında"
-
-#: ../src/resources/prefs.xrc:328
+#: ../src/resources/prefs.xrc:337
 msgid "Add"
 msgstr "Ekle"
 
-#: ../src/resources/manager.xrc:89
+#: ../src/resources/manager.xrc:90
 msgid "Add directory to the list"
 msgstr "Dizini listeye ekle"
 
@@ -167,65 +159,65 @@ msgstr "Dizini listeye ekle"
 msgid "Add files"
 msgstr "Dosya ekle..."
 
-#: ../src/resources/prefs.xrc:646
+#: ../src/resources/prefs.xrc:655
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Yolu kataloğların bulunduğu dizinler listesine ekle."
 
-#: ../src/resources/prefs.xrc:101
+#: ../src/resources/prefs.xrc:110
 msgid "Always change focus to text input field"
 msgstr "Odaklanmayı herzaman dizgi giriş alanına yap"
 
-#: ../src/resources/prefs.xrc:571
+#: ../src/resources/prefs.xrc:580
 msgid "An item in input files list:"
 msgstr "Girdi dosyaları listesindeki bir öğe:"
 
-#: ../src/resources/prefs.xrc:552
+#: ../src/resources/prefs.xrc:561
 msgid "An item in keywords list:"
 msgstr "Anahtar sözcükler listesindeki bir öğe:"
 
-#: ../src/resources/prefs.xrc:118
+#: ../src/resources/prefs.xrc:127
 msgid "Automatic spellchecking"
 msgstr "Otomatik yazım denetimi"
 
-#: ../src/export_html.cpp:174
+#: ../src/export_html.cpp:177
 msgid "Automatic translation"
 msgstr "Otomatik çeviri"
 
-#: ../src/edframe.cpp:2070 ../src/edframe.cpp:2074
+#: ../src/edframe.cpp:2105 ../src/edframe.cpp:2109
 msgid "Automatic translations:"
 msgstr "Otomatik çeviriler:"
 
-#: ../src/resources/prefs.xrc:60
+#: ../src/resources/prefs.xrc:69
 #, fuzzy
 msgid "Automatically check for new version of Poedit"
 msgstr "Kaydederken .mo dosyasını otomatik olarak derle"
 
-#: ../src/resources/prefs.xrc:78
+#: ../src/resources/prefs.xrc:87
 msgid "Automatically compile .mo file on save"
 msgstr "Kaydederken .mo dosyasını otomatik olarak derle"
 
-#: ../src/resources/prefs.xrc:399
+#: ../src/resources/prefs.xrc:408
 msgid "Automatically translate when updating catalog"
 msgstr "Kataloğu düzenlerken otomatik olarak çevir"
 
-#: ../src/edframe.cpp:2022
+#: ../src/edframe.cpp:2057
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Otomatik olarak %u dizgi çevrildi"
 
-#: ../src/edframe.cpp:2007
+#: ../src/edframe.cpp:2042
 msgid "Automatically translating..."
 msgstr "Otomatik olarak çeviriliyor..."
 
-#: ../src/manager.cpp:254
+#: ../src/manager.cpp:267
 msgid "Bad Tokens"
 msgstr "Kötü öğeler"
 
-#: ../src/resources/settings.xrc:131
+#: ../src/resources/settings.xrc:132
 msgid "Base path:"
 msgstr "Ana yol:"
 
-#: ../src/resources/prefs.xrc:74
+#: ../src/resources/prefs.xrc:83
 msgid "Behavior"
 msgstr "Davranış"
 
@@ -242,23 +234,23 @@ msgstr ""
 "Bozuk katalog dosyası: tekil biçim 'msgstr', 'msgid_plural' ile birilikte "
 "kullanılmış"
 
-#: ../src/resources/manager.xrc:88 ../src/resources/prefs.xrc:311
-#: ../src/resources/prefs.xrc:645 ../src/resources/tm_update.xrc:37
+#: ../src/resources/manager.xrc:89 ../src/resources/prefs.xrc:320
+#: ../src/resources/prefs.xrc:654 ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "Göz at"
 
-#: ../src/resources/menus.xrc:75
+#: ../src/resources/menus.xrc:79
 msgid "C&atalog"
 msgstr "K&atalog"
 
-#: ../src/resources/prefs.xrc:131
+#: ../src/resources/prefs.xrc:140
 msgid "CR/LF conversion"
 msgstr "CR/LF dönüşümü"
 
-#: ../src/resources/comment.xrc:37 ../src/resources/find.xrc:87
-#: ../src/resources/manager.xrc:111 ../src/resources/prefs.xrc:481
-#: ../src/resources/prefs.xrc:623 ../src/resources/prefs.xrc:668
-#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:193
+#: ../src/resources/comment.xrc:38 ../src/resources/find.xrc:87
+#: ../src/resources/manager.xrc:112 ../src/resources/prefs.xrc:490
+#: ../src/resources/prefs.xrc:632 ../src/resources/prefs.xrc:677
+#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:194
 msgid "Cancel"
 msgstr "Vazgeç"
 
@@ -266,7 +258,7 @@ msgstr "Vazgeç"
 msgid "Cannot create database directory!"
 msgstr "Veritabanı dizini yaratılamadı!"
 
-#: ../src/gexecute.cpp:174 ../src/gexecute.cpp:230
+#: ../src/gexecute.cpp:172 ../src/gexecute.cpp:228
 msgid "Cannot execute program: "
 msgstr "Program çalıştırılamadı:"
 
@@ -278,12 +270,12 @@ msgstr "Kataloğlar RPM dosyasından çıkarılamıyor."
 msgid "Case sensitive"
 msgstr "Küçük büyük harfe duyarlı"
 
-#: ../src/manager.cpp:250
+#: ../src/manager.cpp:263
 msgid "Catalog"
 msgstr "Katalog"
 
-#: ../src/edframe.cpp:795 ../src/edframe.cpp:821 ../src/edframe.cpp:858
-#: ../src/edframe.cpp:904 ../src/edframe.cpp:1028
+#: ../src/edframe.cpp:840 ../src/edframe.cpp:865 ../src/edframe.cpp:906
+#: ../src/edframe.cpp:958 ../src/edframe.cpp:1076
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalog değiştirildi. Değişiklikleri kaydetmek istiyor musunuz?"
 
@@ -291,23 +283,23 @@ msgstr "Katalog değiştirildi. Değişiklikleri kaydetmek istiyor musunuz?"
 msgid "Catalogs &manager"
 msgstr "&Katalog yöneticisi"
 
-#: ../src/resources/prefs.xrc:53
+#: ../src/resources/prefs.xrc:62
 msgid "Change UI language"
 msgstr "Kullanıcı arabirimi dilini değiştir"
 
-#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:85
+#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:86
 msgid "Charset:"
 msgstr "Karakter kümesi:"
 
-#: ../src/resources/prefs.xrc:244 ../src/resources/prefs.xrc:270
+#: ../src/resources/prefs.xrc:253 ../src/resources/prefs.xrc:279
 msgid "Choose"
 msgstr "Seç"
 
-#: ../src/resources/comment.xrc:44
+#: ../src/resources/comment.xrc:45
 msgid "Clear"
 msgstr "Temizle"
 
-#: ../src/resources/comment.xrc:45
+#: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "Açıklamayı temizle"
 
@@ -316,7 +308,7 @@ msgstr "Açıklamayı temizle"
 msgid "Comment"
 msgstr "Açıklama:"
 
-#: ../src/resources/prefs.xrc:110
+#: ../src/resources/prefs.xrc:119
 msgid "Comment window is editable"
 msgstr "Açıklama penceresi düzenlenebilir"
 
@@ -324,15 +316,15 @@ msgstr "Açıklama penceresi düzenlenebilir"
 msgid "Comment:"
 msgstr "Açıklama:"
 
-#: ../src/resources/prefs.xrc:349
+#: ../src/resources/prefs.xrc:358
 msgid "Configuration"
 msgstr "Konfigürasyon"
 
-#: ../src/manager.cpp:411 ../src/manager.cpp:431
+#: ../src/manager.cpp:426 ../src/manager.cpp:446
 msgid "Confirmation"
 msgstr "Onay"
 
-#: ../src/edframe.cpp:2050 ../src/resources/menus.xrc:47
+#: ../src/edframe.cpp:2085 ../src/resources/menus.xrc:47
 msgid "Copy original to translation field"
 msgstr "Özgün olanı çeviri alanına kopyala"
 
@@ -341,7 +333,7 @@ msgstr "Özgün olanı çeviri alanına kopyala"
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "'%s' dosyası yüklenemedi, muhtemelen bozuk."
 
-#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:73
+#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:74
 msgid "Country:"
 msgstr "Ülke:"
 
@@ -349,7 +341,7 @@ msgstr "Ülke:"
 msgid "Create new translations project"
 msgstr "Yeni çeviri projesi yarat"
 
-#: ../src/resources/prefs.xrc:292
+#: ../src/resources/prefs.xrc:301
 msgid "Database"
 msgstr "Veritabanı"
 
@@ -358,7 +350,7 @@ msgstr "Veritabanı"
 msgid "Database error: %s"
 msgstr "Veritabanı hatası: %s"
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:447
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:456
 msgid "Delete"
 msgstr "Sil"
 
@@ -370,19 +362,19 @@ msgstr "Öğeyi sil"
 msgid "Delete the project"
 msgstr "Projeyi sil"
 
-#: ../src/manager.cpp:304
+#: ../src/manager.cpp:319
 msgid "Directories:"
 msgstr "Dizinler:"
 
-#: ../src/resources/menus.xrc:109
+#: ../src/resources/menus.xrc:113
 msgid "Display &line numbers"
 msgstr "Satır numaralarını göster"
 
-#: ../src/resources/menus.xrc:105
+#: ../src/resources/menus.xrc:109
 msgid "Display &quotes"
 msgstr "Tırnakları göster"
 
-#: ../src/manager.cpp:430
+#: ../src/manager.cpp:445
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -390,7 +382,7 @@ msgstr ""
 "Projedeki tüm kataloğları düzenlemeyi\n"
 "gerçekten istiyor musunuz?"
 
-#: ../src/edframe.cpp:1964
+#: ../src/edframe.cpp:1999
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -402,11 +394,11 @@ msgstr ""
 "Eğer temizlemeye devam ederseniz, gelecekte eklendiklerinde bunları yeniden "
 "çevirmek zorunda kalacaksınız."
 
-#: ../src/manager.cpp:410
+#: ../src/manager.cpp:425
 msgid "Do you want to delete the project?"
 msgstr "Projeyi silmek istiyor musunuz?"
 
-#: ../src/resources/prefs.xrc:162
+#: ../src/resources/prefs.xrc:171
 msgid "Don't change format of existing catalogs"
 msgstr "Varolan kataloğların biçemini değiştirme"
 
@@ -414,7 +406,7 @@ msgstr "Varolan kataloğların biçemini değiştirme"
 msgid "E&xport..."
 msgstr "İh&raç..."
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:440
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:449
 msgid "Edit"
 msgstr "Düzenle"
 
@@ -442,45 +434,46 @@ msgstr "Dosyayı metin düzenleyicisinde düzenleyiniz"
 msgid "Edit the project"
 msgstr "Projeyi düzenle"
 
-#: ../src/resources/prefs.xrc:68
+#: ../src/resources/prefs.xrc:77
 msgid "Editor"
 msgstr "Metin düzenleyicisi"
 
-#: ../src/resources/prefs.xrc:181
+#: ../src/resources/prefs.xrc:190
 msgid "Editor executable:"
 msgstr "Metin düzenleyici:"
 
-#: ../src/resources/prefs.xrc:119
+#: ../src/resources/prefs.xrc:128
 msgid "Enables on-the-fly spellchecking"
 msgstr "Otomatik yazım denetimini aktifleştirir"
 
-#: ../src/edframe.cpp:1170
+#: ../src/edframe.cpp:1221
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Kataloğdaki öğeler muhtemelen hatalı."
 
-#: ../src/edframe.cpp:701
+#: ../src/edframe.cpp:721
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "Yazım denetimi başlatılamadı: %s"
 
-#: ../src/edframe.cpp:1715
-msgid "Error loading message catalog file '"
+#: ../src/edframe.cpp:1788
+#, fuzzy, c-format
+msgid "Error loading message catalog file '%s'."
 msgstr "Katalog dosyası yükleme hatası '"
 
-#: ../src/fileviewer.cpp:94
+#: ../src/fileviewer.cpp:97
 #, c-format
 msgid "Error opening file %s!"
 msgstr "%s dosyası açma hatası!"
 
-#: ../src/catalog.cpp:1266
+#: ../src/catalog.cpp:1269
 msgid "Error saving catalog"
 msgstr "Katalog saklama hatası"
 
-#: ../src/edframe.cpp:1000
+#: ../src/edframe.cpp:1049
 msgid "Export as..."
 msgstr "Farklı ihraç..."
 
-#: ../src/resources/prefs.xrc:173
+#: ../src/resources/prefs.xrc:182
 msgid "External editor"
 msgstr "Harici metin düzenleyicisi"
 
@@ -489,7 +482,7 @@ msgstr "Harici metin düzenleyicisi"
 msgid "Failed command: %s"
 msgstr "Ayrıştırıcı komutu:"
 
-#: ../src/digger.cpp:160
+#: ../src/digger.cpp:131
 #, fuzzy
 msgid "Failed to load extracted catalog."
 msgstr "'%s' dosyası ileti kataloğu değil."
@@ -499,16 +492,12 @@ msgstr "'%s' dosyası ileti kataloğu değil."
 msgid "Failed to merge gettext catalogs."
 msgstr "'%s' dosyası ileti kataloğu değil."
 
-#: ../src/digger.cpp:94 ../src/digger.cpp:105
-msgid "Failed to read extracted catalog."
-msgstr ""
-
-#: ../src/edframe.cpp:876 ../src/edframe.cpp:920
+#: ../src/edframe.cpp:931 ../src/edframe.cpp:974
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "'%s' dosyası yok."
 
-#: ../src/edframe.cpp:893
+#: ../src/edframe.cpp:948
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "'%s' dosyası ileti kataloğu değil."
@@ -546,16 +535,16 @@ msgstr "Çeviriler içinde bul"
 msgid "Find..."
 msgstr "Bul..."
 
-#: ../src/resources/prefs.xrc:221
+#: ../src/resources/prefs.xrc:230
 msgid "Fonts"
 msgstr "Yazı tipleri"
 
-#: ../src/edframe.cpp:2504
+#: ../src/edframe.cpp:2552
 #, c-format
 msgid "Form %i"
 msgstr "Biçim %i"
 
-#: ../src/edframe.cpp:2506
+#: ../src/edframe.cpp:2554
 #, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr "Biçim %i (ör. \"%u\")"
@@ -564,49 +553,49 @@ msgstr "Biçim %i (ör. \"%u\")"
 msgid "Fullscreen view"
 msgstr "Tamekran görünüm"
 
-#: ../src/manager.cpp:253 ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:266 ../src/resources/toolbar.xrc:28
 msgid "Fuzzy"
 msgstr "Bulanık"
 
-#: ../src/export_html.cpp:180
+#: ../src/export_html.cpp:183
 msgid "Fuzzy translation"
 msgstr "Bulanık çeviri"
 
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:960
+#: ../src/edframe.cpp:885 ../src/edframe.cpp:1013
 msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "'GNU Gettext' kataloğları (*.po)|*.po|Tüm dosyalar (*.*)|*.*"
 
-#: ../src/edframe.cpp:1053 ../src/edframe.cpp:1190
+#: ../src/edframe.cpp:1101 ../src/edframe.cpp:1239
 msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "'GNU Gettext' katalog örnekleri (*.pot)|*.pot|Tüm dosyalar (*.*)|*.*"
 
-#: ../src/resources/menus.xrc:134
+#: ../src/resources/menus.xrc:138
 msgid "GNU gettext documentation"
 msgstr "'GNU gettext' dökümanları"
 
-#: ../src/resources/prefs.xrc:678
+#: ../src/resources/prefs.xrc:687
 msgid "Generate TM database"
 msgstr "TM veritabanı üret"
 
-#: ../src/resources/prefs.xrc:336
+#: ../src/resources/prefs.xrc:345
 msgid "Generate database"
 msgstr "Veritabanı üret"
 
-#: ../src/edframe.cpp:1252
+#: ../src/edframe.cpp:1291
 msgid "Gettext syntax error"
 msgstr "Gettext sözdizimi hatası"
 
-#: ../src/edframe.cpp:2572
+#: ../src/edframe.cpp:2620
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
 msgstr "Yer imine git %i\tCtrl-%i"
 
-#: ../src/edframe.cpp:2569
+#: ../src/edframe.cpp:2617
 #, c-format
 msgid "Go to bookmark %i\tCtrl-Alt-%i"
 msgstr "Yer imine git %i\tCtrl-Alt-%i"
 
-#: ../src/edframe.cpp:1002
+#: ../src/edframe.cpp:1051
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML dosyası (*.html)|*.html"
 
@@ -614,32 +603,32 @@ msgstr "HTML dosyası (*.html)|*.html"
 msgid "Identity"
 msgstr "Kimlik"
 
-#: ../src/resources/prefs.xrc:111
+#: ../src/resources/prefs.xrc:120
 msgid "If checked, the comment window will be editable."
 msgstr "İşaretlendiğinde açıklama penceresi düzenlenebilir olacaktır."
 
-#: ../src/resources/prefs.xrc:529
+#: ../src/resources/prefs.xrc:538
 msgid "Invocation:"
 msgstr "Uygulama:"
 
-#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:174
+#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:175
 msgid "Keywords"
 msgstr "Anahtar kelimeler"
 
-#: ../src/chooselang.cpp:161
+#: ../src/chooselang.cpp:162
 msgid "Language selection"
 msgstr "Dil seçimi"
 
-#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:497
-#: ../src/resources/prefs.xrc:501 ../src/resources/settings.xrc:61
+#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:506
+#: ../src/resources/prefs.xrc:510 ../src/resources/settings.xrc:62
 msgid "Language:"
 msgstr "Dil:"
 
-#: ../src/manager.cpp:255
+#: ../src/manager.cpp:268
 msgid "Last modified"
 msgstr "Son değiştirilme"
 
-#: ../src/edlistctrl.cpp:214 ../src/fileviewer.cpp:103
+#: ../src/edlistctrl.cpp:230 ../src/fileviewer.cpp:106
 msgid "Line"
 msgstr "Satır"
 
@@ -648,15 +637,15 @@ msgstr "Satır"
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "Bozuk satır %u, dosya '%s' (geçerli olmayan %s veri)."
 
-#: ../src/resources/prefs.xrc:139
+#: ../src/resources/prefs.xrc:148
 msgid "Line endings format:"
 msgstr "Satır sonu biçemi:"
 
-#: ../src/resources/prefs.xrc:513
+#: ../src/resources/prefs.xrc:522
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Virgülle ayrılmış uzantı listesi (ör. *.cpp;*.h):"
 
-#: ../src/resources/prefs.xrc:149
+#: ../src/resources/prefs.xrc:158
 msgid "Macintosh"
 msgstr "Macintosh"
 
@@ -665,15 +654,15 @@ msgstr "Macintosh"
 msgid "Malformed header: '%s'"
 msgstr "Bozuk başlık: '%s'"
 
-#: ../src/resources/prefs.xrc:357
+#: ../src/resources/prefs.xrc:366
 msgid "Max. # of missing words:"
 msgstr "Enfazla eksik sözcük sayısı:"
 
-#: ../src/resources/prefs.xrc:379
+#: ../src/resources/prefs.xrc:388
 msgid "Max. difference in sentence length:"
 msgstr "Cümle uzunluğundaki enfazla fark:"
 
-#: ../src/catalog.cpp:1422
+#: ../src/catalog.cpp:1425
 msgid "Merging differences..."
 msgstr "Farklılıklar birleştiriliyor..."
 
@@ -685,15 +674,15 @@ msgstr "Aşağı kaydır"
 msgid "Move up"
 msgstr "Yukarı kaydır"
 
-#: ../src/prefsdlg.cpp:55
+#: ../src/prefsdlg.cpp:59
 msgid "My Languages"
 msgstr "Dillerim"
 
-#: ../src/manager.cpp:307
+#: ../src/manager.cpp:322
 msgid "My Project"
 msgstr "Projem"
 
-#: ../src/resources/prefs.xrc:103
+#: ../src/resources/prefs.xrc:112
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -703,7 +692,7 @@ msgstr ""
 "dolaşmak için Ctrl-ok tuşlarını kullanmalısınız; ama odağı değiştirmek için "
 "Tab-sekme tuşuna basmaksızın dizgiyi hemen yazabilirsiniz."
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:435
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:444
 msgid "New"
 msgstr "Yeni"
 
@@ -723,28 +712,27 @@ msgstr "Yeni dizgiler"
 msgid "Next >"
 msgstr "Sonraki >"
 
-#: ../src/fileviewer.cpp:144
+#: ../src/fileviewer.cpp:147
 msgid "No editor specified. Please set it in Preferences dialog."
 msgstr ""
 "Metin düzenleyicisi belirtilmemiş. Lütfen Tercihler Penceresinden "
 "ayarlayınız."
 
-#: ../src/digger.cpp:250
+#: ../src/digger.cpp:218
 msgid "No files found in: "
 msgstr "Hiç dosya bulunamadı:"
 
-#: ../src/edframe.cpp:1268
+#: ../src/edframe.cpp:1308
 msgid "No references to this string found."
 msgstr "Bu dizgiye başvuru bulunamadı."
 
-#: ../src/export_html.cpp:152
+#: ../src/export_html.cpp:155
 msgid "Notes"
 msgstr "Notlar"
 
-#: ../src/resources/about.xrc:50 ../src/resources/comment.xrc:29
-#: ../src/resources/manager.xrc:103 ../src/resources/prefs.xrc:473
-#: ../src/resources/prefs.xrc:615 ../src/resources/settings.xrc:185
-#: ../src/resources/summary.xrc:71
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:104
+#: ../src/resources/prefs.xrc:482 ../src/resources/prefs.xrc:624
+#: ../src/resources/settings.xrc:186 ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "Tamam"
 
@@ -757,48 +745,48 @@ msgstr "Eski dizgiler"
 msgid "Open"
 msgstr "&Aç..."
 
-#: ../src/edframe.cpp:839 ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:883 ../src/resources/toolbar.xrc:13
 msgid "Open catalog"
 msgstr "Katalog aç"
 
-#: ../src/edframe.cpp:1051 ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1099 ../src/edframe.cpp:1237
 msgid "Open catalog template"
 msgstr "Katalog örneği aç"
 
-#: ../src/resources/prefs.xrc:94
+#: ../src/resources/prefs.xrc:103
 msgid "Open catalogs manager on Poedit startup"
 msgstr "Poedit başlatıldığında katalog yöneticisini aç"
 
-#: ../src/resources/prefs.xrc:211
+#: ../src/resources/prefs.xrc:220
 msgid "Open source files in editor, not in file viewer"
 msgstr "Kaynak dosyaları görüntüleyicide değil metin düzenleyicide aç"
 
-#: ../src/export_html.cpp:145 ../src/edlistctrl.cpp:211
+#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:227
 msgid "Original string"
 msgstr "Özgün dizgi"
 
-#: ../src/resources/prefs.xrc:533
+#: ../src/resources/prefs.xrc:542
 msgid "Parser command:"
 msgstr "Ayrıştırıcı komutu:"
 
-#: ../src/resources/prefs.xrc:492
+#: ../src/resources/prefs.xrc:501
 msgid "Parser setup"
 msgstr "Ayrıştırıcı ayarları"
 
-#: ../src/resources/prefs.xrc:410
+#: ../src/resources/prefs.xrc:419
 msgid "Parsers"
 msgstr "Ayrıştırıcılar"
 
-#: ../src/digger.cpp:135
+#: ../src/digger.cpp:106
 #, fuzzy, c-format
 msgid "Parsing %s files..."
 msgstr "Dosyalar taranıyor..."
 
-#: ../src/resources/prefs.xrc:295
+#: ../src/resources/prefs.xrc:304
 msgid "Path to DB:"
 msgstr "DB yolu:"
 
-#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:153
+#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:154
 msgid "Paths"
 msgstr "Yollar"
 
@@ -806,7 +794,7 @@ msgstr "Yollar"
 msgid "Personalize"
 msgstr "Kişiselleştir"
 
-#: ../src/resources/prefs.xrc:329
+#: ../src/resources/prefs.xrc:338
 msgid "Pick language from the list of known languages"
 msgstr "Bilinen diller listesinden seçiniz"
 
@@ -814,27 +802,27 @@ msgstr "Bilinen diller listesinden seçiniz"
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "Lütfen dil dosyalarının bulunduğu dizinleri ekleyiniz:"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "Please choose the reference you want to show:"
 msgstr "Lütfen göztermek istediğiniz başvuruyu seçiniz:"
 
-#: ../src/prefsdlg.cpp:341
+#: ../src/prefsdlg.cpp:355
 msgid "Please select language ISO code:"
 msgstr "Dilin ISO kodunu seçiniz:"
 
-#: ../src/edframe.cpp:759
+#: ../src/edframe.cpp:801
 msgid "Please select language code:"
 msgstr "Lütfen dil kodunu seçiniz:"
 
-#: ../src/resources/settings.xrc:109
+#: ../src/resources/settings.xrc:110
 msgid "Plural Forms:"
 msgstr "Çoğul Biçimler:"
 
-#: ../src/edframe.cpp:470
+#: ../src/edframe.cpp:489
 msgid "Plural:"
 msgstr "Çoğul:"
 
-#: ../src/edframe.cpp:337
+#: ../src/edframe.cpp:359
 msgid "Poedit"
 msgstr "Poedit"
 
@@ -842,7 +830,7 @@ msgstr "Poedit"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Katalog yöneticisi"
 
-#: ../src/digger.cpp:251
+#: ../src/digger.cpp:219
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Poedit taranan dizinlerde dosya bulamadı."
 
@@ -850,11 +838,11 @@ msgstr "Poedit taranan dizinlerde dosya bulamadı."
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: ../src/resources/prefs.xrc:660
+#: ../src/resources/prefs.xrc:669
 msgid "Proceed"
 msgstr "İlerle"
 
-#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:121
+#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:122
 msgid "Project info"
 msgstr "Proje bilgileri"
 
@@ -866,19 +854,19 @@ msgstr "Proje adı ve sürümü:"
 msgid "Project name:"
 msgstr "Proje adı:"
 
-#: ../src/edframe.cpp:1965
+#: ../src/edframe.cpp:2000
 msgid "Purge deleted translations"
 msgstr "Silinmiş çevirileri temizle"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "References"
 msgstr "Başvurular"
 
-#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
+#: ../src/edframe.cpp:2090 ../src/edframe.cpp:2094
 msgid "References:"
 msgstr "Başvurular:"
 
-#: ../src/resources/prefs.xrc:337
+#: ../src/resources/prefs.xrc:346
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr ""
 "Çeviri belleğini yukarıdaki dizin listesindeki kataloğlardan yeniden oluştur."
@@ -896,7 +884,7 @@ msgstr "Kay&det"
 msgid "Save &as..."
 msgstr "&Farklı kaydet..."
 
-#: ../src/edframe.cpp:959
+#: ../src/edframe.cpp:1012
 msgid "Save as..."
 msgstr "Farklı kaydet..."
 
@@ -904,8 +892,8 @@ msgstr "Farklı kaydet..."
 msgid "Save catalog"
 msgstr "Kataloğu kaydet"
 
-#: ../src/edframe.cpp:796 ../src/edframe.cpp:822 ../src/edframe.cpp:859
-#: ../src/edframe.cpp:905 ../src/edframe.cpp:1029
+#: ../src/edframe.cpp:841 ../src/edframe.cpp:866 ../src/edframe.cpp:907
+#: ../src/edframe.cpp:959 ../src/edframe.cpp:1077
 msgid "Save changes"
 msgstr "Değişiklikleri kaydet"
 
@@ -913,7 +901,7 @@ msgstr "Değişiklikleri kaydet"
 msgid "Scanning file: "
 msgstr "Taranan dosya:"
 
-#: ../src/digger.cpp:121
+#: ../src/digger.cpp:92
 msgid "Scanning files..."
 msgstr "Dosyalar taranıyor..."
 
@@ -921,29 +909,29 @@ msgstr "Dosyalar taranıyor..."
 msgid "Search Paths"
 msgstr "Arama yolları"
 
-#: ../src/edframe.cpp:758
+#: ../src/edframe.cpp:800
 msgid "Select catalog's language"
 msgstr "Katalog dilini seçiniz"
 
-#: ../src/prefsdlg.cpp:354 ../src/manager.cpp:284
+#: ../src/prefsdlg.cpp:368 ../src/manager.cpp:299
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "Dizin seçiniz"
 
-#: ../src/prefsdlg.cpp:340
+#: ../src/prefsdlg.cpp:354
 msgid "Select language"
 msgstr "Dil seçiniz"
 
-#: ../src/chooselang.cpp:160
+#: ../src/chooselang.cpp:161
 msgid "Select your prefered language"
 msgstr "Tercih ettiğiniz dili seçiniz"
 
-#: ../src/edframe.cpp:2571
+#: ../src/edframe.cpp:2619
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr "Yer imi koy %i\tAlt-%i"
 
-#: ../src/edframe.cpp:2568
+#: ../src/edframe.cpp:2616
 #, c-format
 msgid "Set bookmark %i\tCtrl-%i"
 msgstr "Yer imi koy %i\tCtrl-%i"
@@ -952,31 +940,31 @@ msgstr "Yer imi koy %i\tCtrl-%i"
 msgid "Settings"
 msgstr "Ayarlar"
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
 msgid "Setup"
 msgstr "Kur"
 
-#: ../src/resources/menus.xrc:113
+#: ../src/resources/menus.xrc:117
 msgid "Show &comment window"
 msgstr "Açıklama pen&ceresini göster"
 
-#: ../src/resources/menus.xrc:117
+#: ../src/resources/menus.xrc:121
 msgid "Show automatic c&omments window"
 msgstr "Otomatik açıklamalar pen&ceresini göster"
 
-#: ../src/resources/prefs.xrc:87
+#: ../src/resources/prefs.xrc:96
 msgid "Show summary after catalog update"
 msgstr "Katalog düzenlendikten sonra özet göster"
 
-#: ../src/edframe.cpp:469
+#: ../src/edframe.cpp:488
 msgid "Singular:"
 msgstr "Tekil:"
 
-#: ../src/resources/prefs.xrc:590 ../src/resources/settings.xrc:97
+#: ../src/resources/prefs.xrc:599 ../src/resources/settings.xrc:98
 msgid "Source code charset:"
 msgstr "Kaynak kod karakter kümesi:"
 
-#: ../src/resources/prefs.xrc:416
+#: ../src/resources/prefs.xrc:425
 msgid "Source code parsers:"
 msgstr "Kaynak dosya ayrıştırıcıları:"
 
@@ -992,15 +980,15 @@ msgstr "İlk öğeden başla"
 msgid "String to find:"
 msgstr "Aranan:"
 
-#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:47
+#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:48
 msgid "Team's email address:"
 msgstr "Ekip e-posta adresi:"
 
-#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:33
+#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:34
 msgid "Team:"
 msgstr "Ekip:"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1268
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -1035,17 +1023,18 @@ msgstr ""
 "Kaynak programda bulunan bu dizgiler katalogda yoktu.\n"
 "Poedit şimdi onları kataloğa ekleyecek."
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
+#, fuzzy
 msgid ""
 "This is first time you run Poedit.\n"
-"Please fill in your name and e-mail address.\n"
+"Please fill in your name and email address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
 "Poedit'i ilk kez kullanıyorsunuz.\n"
 "Lütfen adınızı ve e-posta adresinizi giriniz.\n"
 "(Bu bilgi sadece katalog başlıklarında kullanılacaktır)"
 
-#: ../src/resources/prefs.xrc:545
+#: ../src/resources/prefs.xrc:554
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1057,7 +1046,7 @@ msgstr ""
 "%F girdi dosyaları listesi,\n"
 "%C karakter kümesi bayrağı (aşağıya bakınız) olur."
 
-#: ../src/resources/prefs.xrc:602
+#: ../src/resources/prefs.xrc:611
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1067,7 +1056,7 @@ msgstr ""
 "bu komut satırına eklenecektir.\n"
 "%c karakter kümesi değeri olur."
 
-#: ../src/resources/prefs.xrc:583
+#: ../src/resources/prefs.xrc:592
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1076,7 +1065,7 @@ msgstr ""
 "Her girdi dosyası için bu komut satırına eklenecektir.\n"
 "%f dosya adı olur."
 
-#: ../src/resources/prefs.xrc:564
+#: ../src/resources/prefs.xrc:573
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -1088,15 +1077,15 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Seçilen dizgenin çevirisi bulanıksa değiştirilir"
 
-#: ../src/manager.cpp:251
+#: ../src/manager.cpp:264
 msgid "Total"
 msgstr "Toplam"
 
-#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:212
+#: ../src/export_html.cpp:151 ../src/edlistctrl.cpp:228
 msgid "Translation"
 msgstr "Çeviri"
 
-#: ../src/resources/prefs.xrc:285
+#: ../src/resources/prefs.xrc:294
 msgid "Translation Memory"
 msgstr "Çeviri Belleği"
 
@@ -1129,11 +1118,11 @@ msgstr "Bilinmeyen dil kodu '%s'."
 msgid "Undo"
 msgstr "Geri al"
 
-#: ../src/resources/prefs.xrc:147
+#: ../src/resources/prefs.xrc:156
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:252
+#: ../src/manager.cpp:265
 msgid "Untrans"
 msgstr "Çeviriyi geri al"
 
@@ -1155,7 +1144,7 @@ msgstr "Projedeki tüm kataloğları düzenle"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Kataloğu düzenle - kaynak programla eşle"
 
-#: ../src/resources/menus.xrc:81
+#: ../src/resources/menus.xrc:85
 msgid "Update from &POT file..."
 msgstr "&POT dosyasından düzenle..."
 
@@ -1167,25 +1156,25 @@ msgstr "Değişiklik özeti"
 msgid "Update translation memory"
 msgstr "Çeviri belleğini düzenle"
 
-#: ../src/catalog.cpp:1382
+#: ../src/catalog.cpp:1385
 msgid "Updating catalog..."
 msgstr "Katalog düzenleniyor..."
 
-#: ../src/edframe.cpp:1172
+#: ../src/edframe.cpp:1223
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr ""
 "Katalog değiştirme başarısız oldu. Detaylar için 'Daha >>' düğmesini "
 "tıklayınız."
 
-#: ../src/resources/prefs.xrc:253
+#: ../src/resources/prefs.xrc:262
 msgid "Use custom font for text fields"
 msgstr "Yazı alanlarında seçilmiş yazı tipini kullan"
 
-#: ../src/resources/prefs.xrc:227
+#: ../src/resources/prefs.xrc:236
 msgid "Use custom font for translations list"
 msgstr "Çeviriler listesinde seçilmiş yazı tipini kullan"
 
-#: ../src/resources/settings.xrc:161
+#: ../src/resources/settings.xrc:162
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
@@ -1197,42 +1186,62 @@ msgstr ""
 msgid "Whole words only"
 msgstr "Sadece tam sözcükler"
 
-#: ../src/resources/prefs.xrc:148
+#: ../src/resources/prefs.xrc:157
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:886
+#: ../src/edframe.cpp:941
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Poedit penceresine birden fazla dosya sürükleyip-bırakamazsınız."
 
-#: ../src/chooselang.cpp:175
+#: ../src/chooselang.cpp:176
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Değişikliğin etkili olabilmesi için Poedit'i yeniden başlatmalısınız."
 
-#: ../src/resources/prefs.xrc:34
-msgid "Your e-mail address:"
+#: ../src/resources/prefs.xrc:43
+#, fuzzy
+msgid "Your email address:"
 msgstr "e-posta adresiniz:"
 
 #: ../src/resources/prefs.xrc:22
+msgid ""
+"Your name and email set below are only used\n"
+"to set the Last-Translator header of GNU gettext files."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:30
 msgid "Your name:"
 msgstr "Adınız:"
 
-#: ../src/edframe.cpp:1801
+#: ../src/edframe.cpp:1840
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[çeviriler denetleniyor: kalan %i]"
 
-#: ../src/resources/prefs.xrc:150
+#: ../src/resources/prefs.xrc:159
 msgid "current platform's default"
 msgstr "sistem varsayılanı"
 
-#: ../src/edframe.cpp:2093
+#: ../src/edframe.cpp:2128
 msgid "none"
 msgstr "hiçbiri"
 
-#: ../src/edframe.cpp:2108
-msgid "version"
-msgstr "sürüm"
+#: ../src/edframe.cpp:2144
+#, fuzzy
+msgid "translations editor"
+msgstr "Çeviri Belleği"
+
+#~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
+#~ msgstr "%i dizgi (%i bulanık, %i kötü öğe, %i çevirilmedi)"
+
+#~ msgid "'."
+#~ msgstr "'."
+
+#~ msgid "About Poedit"
+#~ msgstr "Poedit hakkında"
+
+#~ msgid "version"
+#~ msgstr "sürüm"
 
 #~ msgid " files..."
 #~ msgstr "dosyalar..."

@@ -5,9 +5,9 @@
 # Khurelbaatar Lkhagvasuren <hujii@openmn.org>, 2004
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.3.9\n"
+"Project-Id-Version: Poedit 1.4.0pre_1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-15 10:08+0100\n"
+"POT-Creation-Date: 2008-02-27 17:02+0100\n"
 "PO-Revision-Date: 2004-12-03 23:56+0100\n"
 "Last-Translator: Khurelbaatar Lkhagvasuren <hujii@openmn.org>\n"
 "Language-Team: \n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1824
+#: ../src/edframe.cpp:1863
 msgid " (modified)"
 msgstr "(өөрчлөгдсөн)"
 
-#: ../src/edframe.cpp:1794
+#: ../src/export_html.cpp:137 ../src/edframe.cpp:1833
 #, fuzzy, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
@@ -31,29 +31,23 @@ msgstr ""
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr ""
 
-#: ../src/export_html.cpp:135
-#, c-format
-msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr ""
-"%i тэмдэгт мөрнүүд (%i бүдэг, %i алдаатай тэмдэглээ, %i орчуулагдаагүй)"
-
-#: ../src/resources/menus.xrc:139
+#: ../src/resources/menus.xrc:143
 msgid "&About..."
 msgstr "&Тухай"
 
-#: ../src/resources/menus.xrc:84
+#: ../src/resources/menus.xrc:88
 msgid "&Automatically translate using TM"
 msgstr "&ОС ашиглан автоматаар орчуул"
 
-#: ../src/edframe.cpp:2588
+#: ../src/edframe.cpp:2636
 msgid "&Bookmarks"
 msgstr ""
 
-#: ../src/resources/manager.xrc:130 ../src/resources/menus.xrc:39
+#: ../src/resources/manager.xrc:131 ../src/resources/menus.xrc:39
 msgid "&Close"
 msgstr "&Хаах"
 
-#: ../src/resources/menus.xrc:128
+#: ../src/resources/menus.xrc:132
 msgid "&Contents..."
 msgstr "&Агуулга"
 
@@ -61,7 +55,7 @@ msgstr "&Агуулга"
 msgid "&Edit"
 msgstr "&Засвар"
 
-#: ../src/edframe.cpp:397 ../src/resources/manager.xrc:123
+#: ../src/edframe.cpp:418 ../src/resources/manager.xrc:124
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&Файл"
@@ -70,11 +64,11 @@ msgstr "&Файл"
 msgid "&Find..."
 msgstr "&Хайх"
 
-#: ../src/resources/menus.xrc:97 ../src/resources/menus.xrc:101
+#: ../src/resources/menus.xrc:101 ../src/resources/menus.xrc:105
 msgid "&Fullscreen view"
 msgstr "&Бүтэн Дэлгэцээр Харах"
 
-#: ../src/resources/menus.xrc:141
+#: ../src/resources/menus.xrc:145
 msgid "&Help"
 msgstr "&Тусламж"
 
@@ -87,11 +81,16 @@ msgstr "&Шинэ каталог"
 msgid "&Open..."
 msgstr "&Нээх"
 
-#: ../src/resources/manager.xrc:126 ../src/resources/menus.xrc:35
+#: ../src/resources/menus.xrc:74
+#, fuzzy
+msgid "&Preferences"
+msgstr "Лавлагаанууд"
+
+#: ../src/resources/manager.xrc:127 ../src/resources/menus.xrc:35
 msgid "&Preferences..."
 msgstr "&Лавлагаанууд"
 
-#: ../src/resources/menus.xrc:87
+#: ../src/resources/menus.xrc:91
 #, fuzzy
 msgid "&Purge deleted translations"
 msgstr "&Сүүдэрлүүлсэн орчуулгын жагсаалт"
@@ -100,11 +99,11 @@ msgstr "&Сүүдэрлүүлсэн орчуулгын жагсаалт"
 msgid "&Save"
 msgstr "&Хадгалах"
 
-#: ../src/resources/menus.xrc:91
+#: ../src/resources/menus.xrc:95
 msgid "&Settings..."
 msgstr "&Тохируулгууд..."
 
-#: ../src/resources/menus.xrc:121
+#: ../src/resources/menus.xrc:125
 msgid "&Shaded translations list"
 msgstr "&Сүүдэрлүүлсэн орчуулгын жагсаалт"
 
@@ -112,28 +111,24 @@ msgstr "&Сүүдэрлүүлсэн орчуулгын жагсаалт"
 msgid "&Show references"
 msgstr "&Тохируулга үзүүлэх"
 
-#: ../src/resources/menus.xrc:78
+#: ../src/resources/menus.xrc:82
 msgid "&Update from sources"
 msgstr "&Эхнүүдээс шинэчлэх"
 
-#: ../src/resources/menus.xrc:95
+#: ../src/resources/menus.xrc:99
 msgid "&View"
 msgstr "&Харагдац"
 
-#: ../src/catalog.cpp:1450
+#: ../src/catalog.cpp:1453
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' нь зөв РОТ файл биш байна."
 
-#: ../src/edframe.cpp:1715
-msgid "'."
-msgstr "'."
-
-#: ../src/resources/prefs.xrc:202
+#: ../src/resources/prefs.xrc:211
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f нь файлын нэрийг, %l нь мөрийн дугаарыг илэрхийлнэ)"
 
-#: ../src/summarydlg.cpp:66
+#: ../src/summarydlg.cpp:71
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i шинэ, %i хуучирсан)"
@@ -146,7 +141,7 @@ msgstr "(0 шинэ, 0 хуучирсан)"
 msgid "(Use default language)"
 msgstr "(Үндсэн хэлийг хэрэглэ)"
 
-#: ../src/edframe.cpp:750
+#: ../src/edframe.cpp:792
 msgid "(none of these)"
 msgstr "(эндээс биш)"
 
@@ -154,19 +149,15 @@ msgstr "(эндээс биш)"
 msgid "< Previous"
 msgstr "<Өмнөх"
 
-#: ../src/manager.cpp:381
+#: ../src/manager.cpp:396
 msgid "<unnamed>"
 msgstr "<нэргүй>"
 
-#: ../src/resources/about.xrc:4
-msgid "About Poedit"
-msgstr "PoEditийн тухай"
-
-#: ../src/resources/prefs.xrc:328
+#: ../src/resources/prefs.xrc:337
 msgid "Add"
 msgstr "Нэмэх"
 
-#: ../src/resources/manager.xrc:89
+#: ../src/resources/manager.xrc:90
 msgid "Add directory to the list"
 msgstr "Лавлахыг жагсаалтанд нэмэх"
 
@@ -174,66 +165,66 @@ msgstr "Лавлахыг жагсаалтанд нэмэх"
 msgid "Add files"
 msgstr "Файлууд нэмэх"
 
-#: ../src/resources/prefs.xrc:646
+#: ../src/resources/prefs.xrc:655
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Каталогууд байгаа хавтаснуудын жагсаалт руу шинээр зам нэмэх"
 
-#: ../src/resources/prefs.xrc:101
+#: ../src/resources/prefs.xrc:110
 msgid "Always change focus to text input field"
 msgstr "Текст оруулах талбарыг байнга эхэлж идэвхжүүлэх"
 
-#: ../src/resources/prefs.xrc:571
+#: ../src/resources/prefs.xrc:580
 msgid "An item in input files list:"
 msgstr "Оролтын файлуудын жагсаалт дахь элемент:"
 
-#: ../src/resources/prefs.xrc:552
+#: ../src/resources/prefs.xrc:561
 msgid "An item in keywords list:"
 msgstr "Түлхүүр үгнүүдийн жагсаалт дахь элемент:"
 
-#: ../src/resources/prefs.xrc:118
+#: ../src/resources/prefs.xrc:127
 #, fuzzy
 msgid "Automatic spellchecking"
 msgstr "Автомат орчуулга:"
 
-#: ../src/export_html.cpp:174
+#: ../src/export_html.cpp:177
 msgid "Automatic translation"
 msgstr "Автомат орчуулга:"
 
-#: ../src/edframe.cpp:2070 ../src/edframe.cpp:2074
+#: ../src/edframe.cpp:2105 ../src/edframe.cpp:2109
 msgid "Automatic translations:"
 msgstr "Автомат орчуулгууд:"
 
-#: ../src/resources/prefs.xrc:60
+#: ../src/resources/prefs.xrc:69
 #, fuzzy
 msgid "Automatically check for new version of Poedit"
 msgstr "Хадгалахдаа автоматаар .mo файл болгон эмхлэх "
 
-#: ../src/resources/prefs.xrc:78
+#: ../src/resources/prefs.xrc:87
 msgid "Automatically compile .mo file on save"
 msgstr "Хадгалахдаа автоматаар .mo файл болгон эмхлэх "
 
-#: ../src/resources/prefs.xrc:399
+#: ../src/resources/prefs.xrc:408
 msgid "Automatically translate when updating catalog"
 msgstr "Каталог шинэчлэж байхад автоматаар орчуул"
 
-#: ../src/edframe.cpp:2022
+#: ../src/edframe.cpp:2057
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Автоматаар орчуулагдсан %u тэмдэгт мөрнүүд"
 
-#: ../src/edframe.cpp:2007
+#: ../src/edframe.cpp:2042
 msgid "Automatically translating..."
 msgstr "Автоматаар орчуулаж байна..."
 
-#: ../src/manager.cpp:254
+#: ../src/manager.cpp:267
 msgid "Bad Tokens"
 msgstr "Буруу тэмдэглэгээнүүд"
 
-#: ../src/resources/settings.xrc:131
+#: ../src/resources/settings.xrc:132
 msgid "Base path:"
 msgstr "Үндсэн зам:"
 
-#: ../src/resources/prefs.xrc:74
+#: ../src/resources/prefs.xrc:83
 msgid "Behavior"
 msgstr "Ажиллах горим"
 
@@ -246,24 +237,24 @@ msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
 
-#: ../src/resources/manager.xrc:88 ../src/resources/prefs.xrc:311
-#: ../src/resources/prefs.xrc:645 ../src/resources/tm_update.xrc:37
+#: ../src/resources/manager.xrc:89 ../src/resources/prefs.xrc:320
+#: ../src/resources/prefs.xrc:654 ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "Нэгжих"
 
-#: ../src/resources/menus.xrc:75
+#: ../src/resources/menus.xrc:79
 #, fuzzy
 msgid "C&atalog"
 msgstr "Каталог"
 
-#: ../src/resources/prefs.xrc:131
+#: ../src/resources/prefs.xrc:140
 msgid "CR/LF conversion"
 msgstr "CR/LF хөрвүүлэлт"
 
-#: ../src/resources/comment.xrc:37 ../src/resources/find.xrc:87
-#: ../src/resources/manager.xrc:111 ../src/resources/prefs.xrc:481
-#: ../src/resources/prefs.xrc:623 ../src/resources/prefs.xrc:668
-#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:193
+#: ../src/resources/comment.xrc:38 ../src/resources/find.xrc:87
+#: ../src/resources/manager.xrc:112 ../src/resources/prefs.xrc:490
+#: ../src/resources/prefs.xrc:632 ../src/resources/prefs.xrc:677
+#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:194
 msgid "Cancel"
 msgstr "Болих"
 
@@ -271,7 +262,7 @@ msgstr "Болих"
 msgid "Cannot create database directory!"
 msgstr "Өгөгдлийн баазын хавтас үүсгэж чадахгүй байна!"
 
-#: ../src/gexecute.cpp:174 ../src/gexecute.cpp:230
+#: ../src/gexecute.cpp:172 ../src/gexecute.cpp:228
 msgid "Cannot execute program: "
 msgstr "Програмыг ажиллуулж чадсангүй."
 
@@ -283,12 +274,12 @@ msgstr "RPM файлаас каталогууыг задлаж чадсангү�
 msgid "Case sensitive"
 msgstr "Том жижиг үсэг ялгана"
 
-#: ../src/manager.cpp:250
+#: ../src/manager.cpp:263
 msgid "Catalog"
 msgstr "Каталог"
 
-#: ../src/edframe.cpp:795 ../src/edframe.cpp:821 ../src/edframe.cpp:858
-#: ../src/edframe.cpp:904 ../src/edframe.cpp:1028
+#: ../src/edframe.cpp:840 ../src/edframe.cpp:865 ../src/edframe.cpp:906
+#: ../src/edframe.cpp:958 ../src/edframe.cpp:1076
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Каталог өөрчлөгдлөө. Та өөрчлөлтийг хадгалахыг хүсч байна уу?"
 
@@ -296,23 +287,23 @@ msgstr "Каталог өөрчлөгдлөө. Та өөрчлөлтийг ха�
 msgid "Catalogs &manager"
 msgstr "Каталогын &менежер"
 
-#: ../src/resources/prefs.xrc:53
+#: ../src/resources/prefs.xrc:62
 msgid "Change UI language"
 msgstr "Хэрэглэгчийн гадаргуун хэлийг өөрчлөх "
 
-#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:85
+#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:86
 msgid "Charset:"
 msgstr "Кодчлол:"
 
-#: ../src/resources/prefs.xrc:244 ../src/resources/prefs.xrc:270
+#: ../src/resources/prefs.xrc:253 ../src/resources/prefs.xrc:279
 msgid "Choose"
 msgstr "Сонгох"
 
-#: ../src/resources/comment.xrc:44
+#: ../src/resources/comment.xrc:45
 msgid "Clear"
 msgstr "Арилгах"
 
-#: ../src/resources/comment.xrc:45
+#: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "Тайлбарыг арилгах"
 
@@ -321,7 +312,7 @@ msgstr "Тайлбарыг арилгах"
 msgid "Comment"
 msgstr "Тайлбар:"
 
-#: ../src/resources/prefs.xrc:110
+#: ../src/resources/prefs.xrc:119
 msgid "Comment window is editable"
 msgstr "Тайлбарын цонхонд засвар хийж болно"
 
@@ -329,15 +320,15 @@ msgstr "Тайлбарын цонхонд засвар хийж болно"
 msgid "Comment:"
 msgstr "Тайлбар:"
 
-#: ../src/resources/prefs.xrc:349
+#: ../src/resources/prefs.xrc:358
 msgid "Configuration"
 msgstr "Тохируулга"
 
-#: ../src/manager.cpp:411 ../src/manager.cpp:431
+#: ../src/manager.cpp:426 ../src/manager.cpp:446
 msgid "Confirmation"
 msgstr "Баталгаажуулалт"
 
-#: ../src/edframe.cpp:2050 ../src/resources/menus.xrc:47
+#: ../src/edframe.cpp:2085 ../src/resources/menus.xrc:47
 msgid "Copy original to translation field"
 msgstr "Эх хувилбарыг орчуулгын талбарт хуулах"
 
@@ -346,7 +337,7 @@ msgstr "Эх хувилбарыг орчуулгын талбарт хуулах
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr ""
 
-#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:73
+#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:74
 msgid "Country:"
 msgstr "Улс:"
 
@@ -354,7 +345,7 @@ msgstr "Улс:"
 msgid "Create new translations project"
 msgstr "Шинэ орчуулгын төсөл үүсгэх"
 
-#: ../src/resources/prefs.xrc:292
+#: ../src/resources/prefs.xrc:301
 msgid "Database"
 msgstr "Өгөгдлийн сан"
 
@@ -363,7 +354,7 @@ msgstr "Өгөгдлийн сан"
 msgid "Database error: %s"
 msgstr "Өгөгдлийн сангийн алдаа: %s"
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:447
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:456
 msgid "Delete"
 msgstr "Устгах"
 
@@ -375,19 +366,19 @@ msgstr "Элемент устгах"
 msgid "Delete the project"
 msgstr "Төслийг устгах"
 
-#: ../src/manager.cpp:304
+#: ../src/manager.cpp:319
 msgid "Directories:"
 msgstr "Лавлах хавтасууд:"
 
-#: ../src/resources/menus.xrc:109
+#: ../src/resources/menus.xrc:113
 msgid "Display &line numbers"
 msgstr "&Мөрийн дугаарыг харуулах"
 
-#: ../src/resources/menus.xrc:105
+#: ../src/resources/menus.xrc:109
 msgid "Display &quotes"
 msgstr "Давхар хашилтыг харуулах"
 
-#: ../src/manager.cpp:430
+#: ../src/manager.cpp:445
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -395,7 +386,7 @@ msgstr ""
 "Та үнэхээр энэ төсөл дэх каталогуудын хувьд\n"
 "хүчтэй шинэчлэлт хийхийг хүсэж байна уу?"
 
-#: ../src/edframe.cpp:1964
+#: ../src/edframe.cpp:1999
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -403,11 +394,11 @@ msgid ""
 "are added back in the future."
 msgstr ""
 
-#: ../src/manager.cpp:410
+#: ../src/manager.cpp:425
 msgid "Do you want to delete the project?"
 msgstr "Та төслийг устгахыг хүсч байна уу?"
 
-#: ../src/resources/prefs.xrc:162
+#: ../src/resources/prefs.xrc:171
 msgid "Don't change format of existing catalogs"
 msgstr "Байгаа каталогын форматыг битгий өөрчлө"
 
@@ -415,7 +406,7 @@ msgstr "Байгаа каталогын форматыг битгий өөрчл
 msgid "E&xport..."
 msgstr "&Экспортлох"
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:440
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:449
 msgid "Edit"
 msgstr "Засах"
 
@@ -443,45 +434,46 @@ msgstr "Файлыг текст засварлагчаар засах"
 msgid "Edit the project"
 msgstr "Төслийг засах"
 
-#: ../src/resources/prefs.xrc:68
+#: ../src/resources/prefs.xrc:77
 msgid "Editor"
 msgstr "Засварлагч"
 
-#: ../src/resources/prefs.xrc:181
+#: ../src/resources/prefs.xrc:190
 msgid "Editor executable:"
 msgstr "Ачаалагдах засварлагч:"
 
-#: ../src/resources/prefs.xrc:119
+#: ../src/resources/prefs.xrc:128
 msgid "Enables on-the-fly spellchecking"
 msgstr ""
 
-#: ../src/edframe.cpp:1170
+#: ../src/edframe.cpp:1221
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Каталогт оруулсан зүйлс магадгүй буруу байна."
 
-#: ../src/edframe.cpp:701
+#: ../src/edframe.cpp:721
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr ""
 
-#: ../src/edframe.cpp:1715
-msgid "Error loading message catalog file '"
+#: ../src/edframe.cpp:1788
+#, fuzzy, c-format
+msgid "Error loading message catalog file '%s'."
 msgstr "Каталогын мессеж уншихад алдаатай '"
 
-#: ../src/fileviewer.cpp:94
+#: ../src/fileviewer.cpp:97
 #, c-format
 msgid "Error opening file %s!"
 msgstr "%s файлыг нээхэд алдаатай!"
 
-#: ../src/catalog.cpp:1266
+#: ../src/catalog.cpp:1269
 msgid "Error saving catalog"
 msgstr "Каталог хадгалахад алдаатай"
 
-#: ../src/edframe.cpp:1000
+#: ../src/edframe.cpp:1049
 msgid "Export as..."
 msgstr "Экспортлох..."
 
-#: ../src/resources/prefs.xrc:173
+#: ../src/resources/prefs.xrc:182
 msgid "External editor"
 msgstr "Гадаад засварлагч"
 
@@ -490,7 +482,7 @@ msgstr "Гадаад засварлагч"
 msgid "Failed command: %s"
 msgstr "Тайлж унших тушаал:"
 
-#: ../src/digger.cpp:160
+#: ../src/digger.cpp:131
 #, fuzzy
 msgid "Failed to load extracted catalog."
 msgstr "Файл '%s' бол мессежийн каталог биш байна"
@@ -500,16 +492,12 @@ msgstr "Файл '%s' бол мессежийн каталог биш байна
 msgid "Failed to merge gettext catalogs."
 msgstr "Файл '%s' бол мессежийн каталог биш байна"
 
-#: ../src/digger.cpp:94 ../src/digger.cpp:105
-msgid "Failed to read extracted catalog."
-msgstr ""
-
-#: ../src/edframe.cpp:876 ../src/edframe.cpp:920
+#: ../src/edframe.cpp:931 ../src/edframe.cpp:974
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Файл  '%s' байхгүй байна."
 
-#: ../src/edframe.cpp:893
+#: ../src/edframe.cpp:948
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Файл '%s' бол мессежийн каталог биш байна"
@@ -547,16 +535,16 @@ msgstr "Орчуулгаас хайх"
 msgid "Find..."
 msgstr "Хайх..."
 
-#: ../src/resources/prefs.xrc:221
+#: ../src/resources/prefs.xrc:230
 msgid "Fonts"
 msgstr "Фонтууд"
 
-#: ../src/edframe.cpp:2504
+#: ../src/edframe.cpp:2552
 #, c-format
 msgid "Form %i"
 msgstr ""
 
-#: ../src/edframe.cpp:2506
+#: ../src/edframe.cpp:2554
 #, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr ""
@@ -565,49 +553,49 @@ msgstr ""
 msgid "Fullscreen view"
 msgstr "Бүтэн Дэлгэцээр Харах"
 
-#: ../src/manager.cpp:253 ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:266 ../src/resources/toolbar.xrc:28
 msgid "Fuzzy"
 msgstr "Бүдэг"
 
-#: ../src/export_html.cpp:180
+#: ../src/export_html.cpp:183
 msgid "Fuzzy translation"
 msgstr "Бүдэг орчуулга"
 
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:960
+#: ../src/edframe.cpp:885 ../src/edframe.cpp:1013
 msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU Gettext каталогууд (*.po)|*.po|Бүх файлууд (*.*)|*.*"
 
-#: ../src/edframe.cpp:1053 ../src/edframe.cpp:1190
+#: ../src/edframe.cpp:1101 ../src/edframe.cpp:1239
 msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU Gettext бэлэн загварууд (*.pot)|*.pot|Бүх файлууд (*.*)|*.*"
 
-#: ../src/resources/menus.xrc:134
+#: ../src/resources/menus.xrc:138
 msgid "GNU gettext documentation"
 msgstr "GNU gettext баримтжуулалт"
 
-#: ../src/resources/prefs.xrc:678
+#: ../src/resources/prefs.xrc:687
 msgid "Generate TM database"
 msgstr "TM өгөгдлийн бааз үүсгэх"
 
-#: ../src/resources/prefs.xrc:336
+#: ../src/resources/prefs.xrc:345
 msgid "Generate database"
 msgstr "Өгөгдлийн бааз гаргах"
 
-#: ../src/edframe.cpp:1252
+#: ../src/edframe.cpp:1291
 msgid "Gettext syntax error"
 msgstr ""
 
-#: ../src/edframe.cpp:2572
+#: ../src/edframe.cpp:2620
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
 msgstr ""
 
-#: ../src/edframe.cpp:2569
+#: ../src/edframe.cpp:2617
 #, c-format
 msgid "Go to bookmark %i\tCtrl-Alt-%i"
 msgstr ""
 
-#: ../src/edframe.cpp:1002
+#: ../src/edframe.cpp:1051
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML файл (*.html)|*.html"
 
@@ -615,32 +603,32 @@ msgstr "HTML файл (*.html)|*.html"
 msgid "Identity"
 msgstr "Тодотгол"
 
-#: ../src/resources/prefs.xrc:111
+#: ../src/resources/prefs.xrc:120
 msgid "If checked, the comment window will be editable."
 msgstr "Хэрэв чагталбал, тайлбарын цонх засвар хийж болохуйц болно."
 
-#: ../src/resources/prefs.xrc:529
+#: ../src/resources/prefs.xrc:538
 msgid "Invocation:"
 msgstr "Залбирал:"
 
-#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:174
+#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:175
 msgid "Keywords"
 msgstr "Түлхүүр үгнүүд"
 
-#: ../src/chooselang.cpp:161
+#: ../src/chooselang.cpp:162
 msgid "Language selection"
 msgstr "Хэл сонголт"
 
-#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:497
-#: ../src/resources/prefs.xrc:501 ../src/resources/settings.xrc:61
+#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:506
+#: ../src/resources/prefs.xrc:510 ../src/resources/settings.xrc:62
 msgid "Language:"
 msgstr "Хэл:"
 
-#: ../src/manager.cpp:255
+#: ../src/manager.cpp:268
 msgid "Last modified"
 msgstr "Сүүлд өөрчлөгдсөн"
 
-#: ../src/edlistctrl.cpp:214 ../src/fileviewer.cpp:103
+#: ../src/edlistctrl.cpp:230 ../src/fileviewer.cpp:106
 msgid "Line"
 msgstr "Мөр"
 
@@ -649,15 +637,15 @@ msgstr "Мөр"
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr ""
 
-#: ../src/resources/prefs.xrc:139
+#: ../src/resources/prefs.xrc:148
 msgid "Line endings format:"
 msgstr "Мөрийн төгсгөлийн формат:"
 
-#: ../src/resources/prefs.xrc:513
+#: ../src/resources/prefs.xrc:522
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Цэг таслалаар тусгаарлагдсан өргөтгөлүүдийн жагсаалт (e.g. *.cpp;*.h):"
 
-#: ../src/resources/prefs.xrc:149
+#: ../src/resources/prefs.xrc:158
 msgid "Macintosh"
 msgstr "Макинтош"
 
@@ -666,15 +654,15 @@ msgstr "Макинтош"
 msgid "Malformed header: '%s'"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:357
+#: ../src/resources/prefs.xrc:366
 msgid "Max. # of missing words:"
 msgstr "Байхгүй үгний хамгийн их тоо:"
 
-#: ../src/resources/prefs.xrc:379
+#: ../src/resources/prefs.xrc:388
 msgid "Max. difference in sentence length:"
 msgstr "Өгүүлбэрийн урт дахь хамгийн их ялгаа:"
 
-#: ../src/catalog.cpp:1422
+#: ../src/catalog.cpp:1425
 msgid "Merging differences..."
 msgstr "Ялгааг нийлүүлж байна..."
 
@@ -686,15 +674,15 @@ msgstr "Доошлуулах"
 msgid "Move up"
 msgstr "Дээшлүүлэх"
 
-#: ../src/prefsdlg.cpp:55
+#: ../src/prefsdlg.cpp:59
 msgid "My Languages"
 msgstr "Миний Хэлнүүд"
 
-#: ../src/manager.cpp:307
+#: ../src/manager.cpp:322
 msgid "My Project"
 msgstr "Миний Төсөл"
 
-#: ../src/resources/prefs.xrc:103
+#: ../src/resources/prefs.xrc:112
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -703,7 +691,7 @@ msgstr ""
 "Хэрэв та үүнийг чагталвал, та өгүүлбэр солих бүрт орчуулгын хэсэгт курсоор "
 "автоматаар байрлах болно. Жагсаалт руу шилжихийн тулд Tab товч ашиглана уу."
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:435
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:444
 msgid "New"
 msgstr "Шинэ"
 
@@ -724,26 +712,25 @@ msgstr "Шинэ тэмдэгт мөрнүүд"
 msgid "Next >"
 msgstr "Дараахь>"
 
-#: ../src/fileviewer.cpp:144
+#: ../src/fileviewer.cpp:147
 msgid "No editor specified. Please set it in Preferences dialog."
 msgstr "Засварлагч сонгогдоогүй байна. Үүнийг Лавлагаанууд диалогд оруулна уу."
 
-#: ../src/digger.cpp:250
+#: ../src/digger.cpp:218
 msgid "No files found in: "
 msgstr "Файл олдсонгүй:"
 
-#: ../src/edframe.cpp:1268
+#: ../src/edframe.cpp:1308
 msgid "No references to this string found."
 msgstr "Энэ тэмдэгт мөрд хамаарах лавламж олдмонгүй."
 
-#: ../src/export_html.cpp:152
+#: ../src/export_html.cpp:155
 msgid "Notes"
 msgstr "Тэмдэглэлүүд"
 
-#: ../src/resources/about.xrc:50 ../src/resources/comment.xrc:29
-#: ../src/resources/manager.xrc:103 ../src/resources/prefs.xrc:473
-#: ../src/resources/prefs.xrc:615 ../src/resources/settings.xrc:185
-#: ../src/resources/summary.xrc:71
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:104
+#: ../src/resources/prefs.xrc:482 ../src/resources/prefs.xrc:624
+#: ../src/resources/settings.xrc:186 ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "ОК"
 
@@ -756,48 +743,48 @@ msgstr "Хуучирсан тэмдэгт мөрнүүд"
 msgid "Open"
 msgstr "&Нээх"
 
-#: ../src/edframe.cpp:839 ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:883 ../src/resources/toolbar.xrc:13
 msgid "Open catalog"
 msgstr "Каталог нээх"
 
-#: ../src/edframe.cpp:1051 ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1099 ../src/edframe.cpp:1237
 msgid "Open catalog template"
 msgstr "Бэлэн каталог загвар нээх"
 
-#: ../src/resources/prefs.xrc:94
+#: ../src/resources/prefs.xrc:103
 msgid "Open catalogs manager on Poedit startup"
 msgstr "Каталог менежерийг роEdit-ыг эхлүүлэхэд нээх "
 
-#: ../src/resources/prefs.xrc:211
+#: ../src/resources/prefs.xrc:220
 msgid "Open source files in editor, not in file viewer"
 msgstr "Эх файлуудыг файл харагчаар бус, засварлагчаар нээх"
 
-#: ../src/export_html.cpp:145 ../src/edlistctrl.cpp:211
+#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:227
 msgid "Original string"
 msgstr "Эх мөр"
 
-#: ../src/resources/prefs.xrc:533
+#: ../src/resources/prefs.xrc:542
 msgid "Parser command:"
 msgstr "Тайлж унших тушаал:"
 
-#: ../src/resources/prefs.xrc:492
+#: ../src/resources/prefs.xrc:501
 msgid "Parser setup"
 msgstr "Тайлж унших тохиргоо"
 
-#: ../src/resources/prefs.xrc:410
+#: ../src/resources/prefs.xrc:419
 msgid "Parsers"
 msgstr "Тайлж уншигчид"
 
-#: ../src/digger.cpp:135
+#: ../src/digger.cpp:106
 #, fuzzy, c-format
 msgid "Parsing %s files..."
 msgstr "Файлуудыг шалгаж байна..."
 
-#: ../src/resources/prefs.xrc:295
+#: ../src/resources/prefs.xrc:304
 msgid "Path to DB:"
 msgstr "МС байгаа зам:"
 
-#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:153
+#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:154
 msgid "Paths"
 msgstr "Замууд"
 
@@ -805,7 +792,7 @@ msgstr "Замууд"
 msgid "Personalize"
 msgstr "Өөриймсөглөх"
 
-#: ../src/resources/prefs.xrc:329
+#: ../src/resources/prefs.xrc:338
 msgid "Pick language from the list of known languages"
 msgstr "Мэдэгдэж байгаа хэлнүүдээс хэлийг сонгоно уу "
 
@@ -813,27 +800,27 @@ msgstr "Мэдэгдэж байгаа хэлнүүдээс хэлийг сонг
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "Системд локал файлууд хаана байгаа хавтасыг нэмэх:"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "Please choose the reference you want to show:"
 msgstr "Үзүүлэх лавламжийг сонгоно уу:"
 
-#: ../src/prefsdlg.cpp:341
+#: ../src/prefsdlg.cpp:355
 msgid "Please select language ISO code:"
 msgstr "Хэлнийхээ ISO кодыг сонгоно уу:"
 
-#: ../src/edframe.cpp:759
+#: ../src/edframe.cpp:801
 msgid "Please select language code:"
 msgstr "Хэлнийхээ кодыг сонгоно уу:"
 
-#: ../src/resources/settings.xrc:109
+#: ../src/resources/settings.xrc:110
 msgid "Plural Forms:"
 msgstr ""
 
-#: ../src/edframe.cpp:470
+#: ../src/edframe.cpp:489
 msgid "Plural:"
 msgstr ""
 
-#: ../src/edframe.cpp:337
+#: ../src/edframe.cpp:359
 msgid "Poedit"
 msgstr "Poedit"
 
@@ -841,7 +828,7 @@ msgstr "Poedit"
 msgid "Poedit - Catalogs manager"
 msgstr "роEdit - Каталогийн менежер "
 
-#: ../src/digger.cpp:251
+#: ../src/digger.cpp:219
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Poedit шалгасан хавтасаас ямарч файл олдсонгүй. "
 
@@ -849,11 +836,11 @@ msgstr "Poedit шалгасан хавтасаас ямарч файл олдс�
 msgid "Preferences"
 msgstr "Лавлагаанууд"
 
-#: ../src/resources/prefs.xrc:660
+#: ../src/resources/prefs.xrc:669
 msgid "Proceed"
 msgstr "Үргэлжлүүлэх"
 
-#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:121
+#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:122
 msgid "Project info"
 msgstr "Төслийн мэдээлэл"
 
@@ -865,20 +852,20 @@ msgstr "Төслийн нэр ба хувилбар:"
 msgid "Project name:"
 msgstr "Төслийн нэр:"
 
-#: ../src/edframe.cpp:1965
+#: ../src/edframe.cpp:2000
 #, fuzzy
 msgid "Purge deleted translations"
 msgstr "&Сүүдэрлүүлсэн орчуулгын жагсаалт"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "References"
 msgstr "Лавламжууд"
 
-#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
+#: ../src/edframe.cpp:2090 ../src/edframe.cpp:2094
 msgid "References:"
 msgstr "Лавламжууд:"
 
-#: ../src/resources/prefs.xrc:337
+#: ../src/resources/prefs.xrc:346
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr ""
 "Орчуулгын санамжуудыг дээр жагсаагдсан замууд дахь каталогуудаас дахин "
@@ -897,7 +884,7 @@ msgstr "&Хадгалах"
 msgid "Save &as..."
 msgstr "Хадгалахдаа..."
 
-#: ../src/edframe.cpp:959
+#: ../src/edframe.cpp:1012
 msgid "Save as..."
 msgstr "Хадгалахдаа..."
 
@@ -905,8 +892,8 @@ msgstr "Хадгалахдаа..."
 msgid "Save catalog"
 msgstr "Каталог хадгалах"
 
-#: ../src/edframe.cpp:796 ../src/edframe.cpp:822 ../src/edframe.cpp:859
-#: ../src/edframe.cpp:905 ../src/edframe.cpp:1029
+#: ../src/edframe.cpp:841 ../src/edframe.cpp:866 ../src/edframe.cpp:907
+#: ../src/edframe.cpp:959 ../src/edframe.cpp:1077
 msgid "Save changes"
 msgstr "Өөрчлөлтүүдийг хадгалах"
 
@@ -914,7 +901,7 @@ msgstr "Өөрчлөлтүүдийг хадгалах"
 msgid "Scanning file: "
 msgstr "Файлыг шалгах:"
 
-#: ../src/digger.cpp:121
+#: ../src/digger.cpp:92
 msgid "Scanning files..."
 msgstr "Файлуудыг шалгаж байна..."
 
@@ -922,29 +909,29 @@ msgstr "Файлуудыг шалгаж байна..."
 msgid "Search Paths"
 msgstr "Хайх замууд"
 
-#: ../src/edframe.cpp:758
+#: ../src/edframe.cpp:800
 msgid "Select catalog's language"
 msgstr "Каталогын хэлийг сонгоно уу"
 
-#: ../src/prefsdlg.cpp:354 ../src/manager.cpp:284
+#: ../src/prefsdlg.cpp:368 ../src/manager.cpp:299
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "Хавтас сонгох"
 
-#: ../src/prefsdlg.cpp:340
+#: ../src/prefsdlg.cpp:354
 msgid "Select language"
 msgstr "Хэл сонгох"
 
-#: ../src/chooselang.cpp:160
+#: ../src/chooselang.cpp:161
 msgid "Select your prefered language"
 msgstr "Төлөвлөсөн хэлээ сонгох"
 
-#: ../src/edframe.cpp:2571
+#: ../src/edframe.cpp:2619
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr ""
 
-#: ../src/edframe.cpp:2568
+#: ../src/edframe.cpp:2616
 #, c-format
 msgid "Set bookmark %i\tCtrl-%i"
 msgstr ""
@@ -953,32 +940,32 @@ msgstr ""
 msgid "Settings"
 msgstr "Тохиргоонууд"
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
 msgid "Setup"
 msgstr "Тохиргоо"
 
-#: ../src/resources/menus.xrc:113
+#: ../src/resources/menus.xrc:117
 msgid "Show &comment window"
 msgstr "&Тайлбар цонх үзүүлэх"
 
-#: ../src/resources/menus.xrc:117
+#: ../src/resources/menus.xrc:121
 #, fuzzy
 msgid "Show automatic c&omments window"
 msgstr "&Тайлбар цонх үзүүлэх"
 
-#: ../src/resources/prefs.xrc:87
+#: ../src/resources/prefs.xrc:96
 msgid "Show summary after catalog update"
 msgstr "Каталогыг шинэчлэсний дараа товчийг харуулах"
 
-#: ../src/edframe.cpp:469
+#: ../src/edframe.cpp:488
 msgid "Singular:"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:590 ../src/resources/settings.xrc:97
+#: ../src/resources/prefs.xrc:599 ../src/resources/settings.xrc:98
 msgid "Source code charset:"
 msgstr "Эх кодын тэмдэгтийн кодчлол:"
 
-#: ../src/resources/prefs.xrc:416
+#: ../src/resources/prefs.xrc:425
 msgid "Source code parsers:"
 msgstr "Эх код тайлж уншигчид:"
 
@@ -994,15 +981,15 @@ msgstr ""
 msgid "String to find:"
 msgstr "Хайх тэмдэгт мөр:"
 
-#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:47
+#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:48
 msgid "Team's email address:"
 msgstr "Багийн э-захианы хаяг:"
 
-#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:33
+#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:34
 msgid "Team:"
 msgstr "Баг:"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1268
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -1035,17 +1022,18 @@ msgstr ""
 "Эдгээр тэмдэгт мөрүүд эх сурвалжид олдсон боловч каталогид\n"
 "байсангүй. Poedit одоо тэднийг каталог руу нэмэх болно."
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
+#, fuzzy
 msgid ""
 "This is first time you run Poedit.\n"
-"Please fill in your name and e-mail address.\n"
+"Please fill in your name and email address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
 "Та анх удаа Poedit-ийг ажилуулж байна.\n"
 "Та нэр болон Э-Захианыхаа хаягыг оруулна уу.\n"
 "(Энэ зөвхөн каталогын толгойд хэрэглэгдэх болно)"
 
-#: ../src/resources/prefs.xrc:545
+#: ../src/resources/prefs.xrc:554
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1057,7 +1045,7 @@ msgstr ""
 "%F оролтын файлуудын жагсаалтыг\n"
 "%C тэмдэгтийн кодчлолыг flag (доорхыг үз) илтгэнэ."
 
-#: ../src/resources/prefs.xrc:602
+#: ../src/resources/prefs.xrc:611
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1066,7 +1054,7 @@ msgstr ""
 "Хэрэв эх хжвийн тэмдэгтийн кодчлол өгөгдсөн байвал л энэ нь\n"
 "тушаалын мөрөнд хавсаргагдана. %c нь кодчлолын утгийг илтгэнэ."
 
-#: ../src/resources/prefs.xrc:583
+#: ../src/resources/prefs.xrc:592
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1075,7 +1063,7 @@ msgstr ""
 "Оролтын файл бүрийн хувьд тушаалын мөр лүү нэг \n"
 "удаа хавсаргагдана. %f нь файлын нэрийг илтгэнэ."
 
-#: ../src/resources/prefs.xrc:564
+#: ../src/resources/prefs.xrc:573
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -1087,15 +1075,15 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Хэрэв сонгогдсон тэмдэгт мөр бүдэг орчуулгатай бол солигдоно"
 
-#: ../src/manager.cpp:251
+#: ../src/manager.cpp:264
 msgid "Total"
 msgstr "Нийт"
 
-#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:212
+#: ../src/export_html.cpp:151 ../src/edlistctrl.cpp:228
 msgid "Translation"
 msgstr "Орчуулга"
 
-#: ../src/resources/prefs.xrc:285
+#: ../src/resources/prefs.xrc:294
 msgid "Translation Memory"
 msgstr "Орчуулгын санамж"
 
@@ -1128,11 +1116,11 @@ msgstr "Регистерт мэдэгдэхгүй локале код '%s' ба�
 msgid "Undo"
 msgstr "Эгэж үйлдэх"
 
-#: ../src/resources/prefs.xrc:147
+#: ../src/resources/prefs.xrc:156
 msgid "Unix"
 msgstr "Юникс"
 
-#: ../src/manager.cpp:252
+#: ../src/manager.cpp:265
 msgid "Untrans"
 msgstr "Орчуулаагүй"
 
@@ -1154,7 +1142,7 @@ msgstr "Төсөл дэх бүх каталогыг шинэчлэх"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Каталог шинэчлэх - эхтэй цуг зэрэгцүүлэх"
 
-#: ../src/resources/menus.xrc:81
+#: ../src/resources/menus.xrc:85
 msgid "Update from &POT file..."
 msgstr "&POT файлаас шинэчилж байна..."
 
@@ -1166,23 +1154,23 @@ msgstr "Шинэчлэлийн хураангуй"
 msgid "Update translation memory"
 msgstr "Орчуулгын санамжыг шинэчлэх"
 
-#: ../src/catalog.cpp:1382
+#: ../src/catalog.cpp:1385
 msgid "Updating catalog..."
 msgstr "Каталог шинэчлэлт..."
 
-#: ../src/edframe.cpp:1172
+#: ../src/edframe.cpp:1223
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "Каталог шинэчлэлт бүтсэнгүй. 'Цааш>>' дээр даран нарийвчлан үзнэ үү."
 
-#: ../src/resources/prefs.xrc:253
+#: ../src/resources/prefs.xrc:262
 msgid "Use custom font for text fields"
 msgstr "Текст талбай дээр хэвшмэл фонтоор бичих"
 
-#: ../src/resources/prefs.xrc:227
+#: ../src/resources/prefs.xrc:236
 msgid "Use custom font for translations list"
 msgstr "Орчуулагын жагсаалтанд хэвшмэл фонт хэрэглэх"
 
-#: ../src/resources/settings.xrc:161
+#: ../src/resources/settings.xrc:162
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
@@ -1194,42 +1182,63 @@ msgstr ""
 msgid "Whole words only"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:148
+#: ../src/resources/prefs.xrc:157
 msgid "Windows"
 msgstr "Цонхнууд"
 
-#: ../src/edframe.cpp:886
+#: ../src/edframe.cpp:941
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Та Poedit цонх руу нэгээс их файл чирч оруулж чадахгүй."
 
-#: ../src/chooselang.cpp:175
+#: ../src/chooselang.cpp:176
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Та  энэ өөрчлөлтийг идвэхжүүлэхийн тулд Poedit-ийг дахин ачаална уу!"
 
-#: ../src/resources/prefs.xrc:34
-msgid "Your e-mail address:"
+#: ../src/resources/prefs.xrc:43
+#, fuzzy
+msgid "Your email address:"
 msgstr "Таны Э-Захианы хаяг:"
 
 #: ../src/resources/prefs.xrc:22
+msgid ""
+"Your name and email set below are only used\n"
+"to set the Last-Translator header of GNU gettext files."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:30
 msgid "Your name:"
 msgstr "Таны нэр:"
 
-#: ../src/edframe.cpp:1801
+#: ../src/edframe.cpp:1840
 #, fuzzy, c-format
 msgid "[checking translations: %i left]"
 msgstr "&Сүүдэрлүүлсэн орчуулгын жагсаалт"
 
-#: ../src/resources/prefs.xrc:150
+#: ../src/resources/prefs.xrc:159
 msgid "current platform's default"
 msgstr "одоогийн платформын үндсэн"
 
-#: ../src/edframe.cpp:2093
+#: ../src/edframe.cpp:2128
 msgid "none"
 msgstr "байхгүй"
 
-#: ../src/edframe.cpp:2108
-msgid "version"
-msgstr "хувилбар"
+#: ../src/edframe.cpp:2144
+#, fuzzy
+msgid "translations editor"
+msgstr "Орчуулгын санамж"
+
+#~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
+#~ msgstr ""
+#~ "%i тэмдэгт мөрнүүд (%i бүдэг, %i алдаатай тэмдэглээ, %i орчуулагдаагүй)"
+
+#~ msgid "'."
+#~ msgstr "'."
+
+#~ msgid "About Poedit"
+#~ msgstr "PoEditийн тухай"
+
+#~ msgid "version"
+#~ msgstr "хувилбар"
 
 #~ msgid " files..."
 #~ msgstr "файлууд..."

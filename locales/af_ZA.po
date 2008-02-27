@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.3.9\n"
+"Project-Id-Version: Poedit 1.4.0pre_1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-15 10:08+0100\n"
+"POT-Creation-Date: 2008-02-27 17:02+0100\n"
 "PO-Revision-Date: 2007-04-23 08:46+0200\n"
 "Last-Translator: Petri Jooste <petri.jooste@nwu.ac.za>\n"
 "Language-Team: Petri Jooste <rkwjpj@puk.ac.za>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1824
+#: ../src/edframe.cpp:1863
 msgid " (modified)"
 msgstr " (gewysig) "
 
-#: ../src/edframe.cpp:1794
+#: ../src/export_html.cpp:137 ../src/edframe.cpp:1833
 #, fuzzy, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
@@ -30,28 +30,23 @@ msgstr "%i stringe (%i wasig, %i onaanvaarbaar, %i nie vertaal nie)"
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i reëls van die lêer '%s' is nie korrek gelaai nie."
 
-#: ../src/export_html.cpp:135
-#, c-format
-msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i stringe (%i wasig, %i onaanvaarbaar, %i nie vertaal nie)"
-
-#: ../src/resources/menus.xrc:139
+#: ../src/resources/menus.xrc:143
 msgid "&About..."
 msgstr "&Aangaande..."
 
-#: ../src/resources/menus.xrc:84
+#: ../src/resources/menus.xrc:88
 msgid "&Automatically translate using TM"
 msgstr "Vert&aal outomaties met vertaalgeheue"
 
-#: ../src/edframe.cpp:2588
+#: ../src/edframe.cpp:2636
 msgid "&Bookmarks"
 msgstr "&Boekmerke"
 
-#: ../src/resources/manager.xrc:130 ../src/resources/menus.xrc:39
+#: ../src/resources/manager.xrc:131 ../src/resources/menus.xrc:39
 msgid "&Close"
 msgstr "Maak &toe "
 
-#: ../src/resources/menus.xrc:128
+#: ../src/resources/menus.xrc:132
 msgid "&Contents..."
 msgstr "&Inhoud..."
 
@@ -59,7 +54,7 @@ msgstr "&Inhoud..."
 msgid "&Edit"
 msgstr "R&edigeer"
 
-#: ../src/edframe.cpp:397 ../src/resources/manager.xrc:123
+#: ../src/edframe.cpp:418 ../src/resources/manager.xrc:124
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&Lêer"
@@ -68,11 +63,11 @@ msgstr "&Lêer"
 msgid "&Find..."
 msgstr "&Soek..."
 
-#: ../src/resources/menus.xrc:97 ../src/resources/menus.xrc:101
+#: ../src/resources/menus.xrc:101 ../src/resources/menus.xrc:105
 msgid "&Fullscreen view"
 msgstr "&Volskermaansig"
 
-#: ../src/resources/menus.xrc:141
+#: ../src/resources/menus.xrc:145
 msgid "&Help"
 msgstr "&Hulp"
 
@@ -85,11 +80,16 @@ msgstr "&Nuwe katalogus"
 msgid "&Open..."
 msgstr "Maak &oop"
 
-#: ../src/resources/manager.xrc:126 ../src/resources/menus.xrc:35
+#: ../src/resources/menus.xrc:74
+#, fuzzy
+msgid "&Preferences"
+msgstr "Voorkeure"
+
+#: ../src/resources/manager.xrc:127 ../src/resources/menus.xrc:35
 msgid "&Preferences..."
 msgstr "&Voorkeure..."
 
-#: ../src/resources/menus.xrc:87
+#: ../src/resources/menus.xrc:91
 msgid "&Purge deleted translations"
 msgstr "&Verwyder vertalings wat vir uitvee gemerk is"
 
@@ -97,11 +97,11 @@ msgstr "&Verwyder vertalings wat vir uitvee gemerk is"
 msgid "&Save"
 msgstr "&Stoor"
 
-#: ../src/resources/menus.xrc:91
+#: ../src/resources/menus.xrc:95
 msgid "&Settings..."
 msgstr "Op&stellings..."
 
-#: ../src/resources/menus.xrc:121
+#: ../src/resources/menus.xrc:125
 msgid "&Shaded translations list"
 msgstr "&Skakeringstrepe in vertaallys"
 
@@ -109,28 +109,24 @@ msgstr "&Skakeringstrepe in vertaallys"
 msgid "&Show references"
 msgstr "&Wys verwysings"
 
-#: ../src/resources/menus.xrc:78
+#: ../src/resources/menus.xrc:82
 msgid "&Update from sources"
 msgstr "Werk by vanuit &bronlêers"
 
-#: ../src/resources/menus.xrc:95
+#: ../src/resources/menus.xrc:99
 msgid "&View"
 msgstr "&Besigtig"
 
-#: ../src/catalog.cpp:1450
+#: ../src/catalog.cpp:1453
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' is nie 'n geldige POT-lêer nie."
 
-#: ../src/edframe.cpp:1715
-msgid "'."
-msgstr "'."
-
-#: ../src/resources/prefs.xrc:202
+#: ../src/resources/prefs.xrc:211
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f sal vervang word met lêernaam, %l met reëlnommer)"
 
-#: ../src/summarydlg.cpp:66
+#: ../src/summarydlg.cpp:71
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i nuut, %i verouderd)"
@@ -143,7 +139,7 @@ msgstr "(0 nuut, 0 verouderd)"
 msgid "(Use default language)"
 msgstr "(Gebruik verstektaal)"
 
-#: ../src/edframe.cpp:750
+#: ../src/edframe.cpp:792
 msgid "(none of these)"
 msgstr "(geen van hierdie)"
 
@@ -151,19 +147,15 @@ msgstr "(geen van hierdie)"
 msgid "< Previous"
 msgstr "< Vorige"
 
-#: ../src/manager.cpp:381
+#: ../src/manager.cpp:396
 msgid "<unnamed>"
 msgstr "<onbenoemd>"
 
-#: ../src/resources/about.xrc:4
-msgid "About Poedit"
-msgstr "Aangaande Poedit"
-
-#: ../src/resources/prefs.xrc:328
+#: ../src/resources/prefs.xrc:337
 msgid "Add"
 msgstr "Voeg by"
 
-#: ../src/resources/manager.xrc:89
+#: ../src/resources/manager.xrc:90
 msgid "Add directory to the list"
 msgstr "Voeg gids by die lys"
 
@@ -171,65 +163,65 @@ msgstr "Voeg gids by die lys"
 msgid "Add files"
 msgstr "Voeg Lêers by..."
 
-#: ../src/resources/prefs.xrc:646
+#: ../src/resources/prefs.xrc:655
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Voeg pad by die lys van gidse waar katalogusse lê."
 
-#: ../src/resources/prefs.xrc:101
+#: ../src/resources/prefs.xrc:110
 msgid "Always change focus to text input field"
 msgstr "Verander altyd die fokus na die teks-insleutelveld"
 
-#: ../src/resources/prefs.xrc:571
+#: ../src/resources/prefs.xrc:580
 msgid "An item in input files list:"
 msgstr "'n Item in die lys van toevoerlêers:"
 
-#: ../src/resources/prefs.xrc:552
+#: ../src/resources/prefs.xrc:561
 msgid "An item in keywords list:"
 msgstr "'n Item in die lys van sleutelwoorde:"
 
-#: ../src/resources/prefs.xrc:118
+#: ../src/resources/prefs.xrc:127
 msgid "Automatic spellchecking"
 msgstr "Outomatiese speltoetsing"
 
-#: ../src/export_html.cpp:174
+#: ../src/export_html.cpp:177
 msgid "Automatic translation"
 msgstr "Outomatiese vertaling"
 
-#: ../src/edframe.cpp:2070 ../src/edframe.cpp:2074
+#: ../src/edframe.cpp:2105 ../src/edframe.cpp:2109
 msgid "Automatic translations:"
 msgstr "Outomatiese vertalings:"
 
-#: ../src/resources/prefs.xrc:60
+#: ../src/resources/prefs.xrc:69
 #, fuzzy
 msgid "Automatically check for new version of Poedit"
 msgstr "Maak outomaties .mo lêer tydens stoor"
 
-#: ../src/resources/prefs.xrc:78
+#: ../src/resources/prefs.xrc:87
 msgid "Automatically compile .mo file on save"
 msgstr "Maak outomaties .mo lêer tydens stoor"
 
-#: ../src/resources/prefs.xrc:399
+#: ../src/resources/prefs.xrc:408
 msgid "Automatically translate when updating catalog"
 msgstr "Vertaal outomaties wanneer katalogus opdateer word"
 
-#: ../src/edframe.cpp:2022
+#: ../src/edframe.cpp:2057
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Outomaties vertaalde %u stringe"
 
-#: ../src/edframe.cpp:2007
+#: ../src/edframe.cpp:2042
 msgid "Automatically translating..."
 msgstr "Besig met automatiese vertaling"
 
-#: ../src/manager.cpp:254
+#: ../src/manager.cpp:267
 msgid "Bad Tokens"
 msgstr "Onaanvaarbare tokens"
 
-#: ../src/resources/settings.xrc:131
+#: ../src/resources/settings.xrc:132
 msgid "Base path:"
 msgstr "Basispad:"
 
-#: ../src/resources/prefs.xrc:74
+#: ../src/resources/prefs.xrc:83
 msgid "Behavior"
 msgstr "Gedrag"
 
@@ -244,23 +236,23 @@ msgid ""
 msgstr ""
 "Gebroke kataloguslêer: enkelvoudvorm msgstr is gebruik saam met msgid_plural"
 
-#: ../src/resources/manager.xrc:88 ../src/resources/prefs.xrc:311
-#: ../src/resources/prefs.xrc:645 ../src/resources/tm_update.xrc:37
+#: ../src/resources/manager.xrc:89 ../src/resources/prefs.xrc:320
+#: ../src/resources/prefs.xrc:654 ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "Blaai"
 
-#: ../src/resources/menus.xrc:75
+#: ../src/resources/menus.xrc:79
 msgid "C&atalog"
 msgstr "K&atalogus"
 
-#: ../src/resources/prefs.xrc:131
+#: ../src/resources/prefs.xrc:140
 msgid "CR/LF conversion"
 msgstr "CR/LF omskakeling"
 
-#: ../src/resources/comment.xrc:37 ../src/resources/find.xrc:87
-#: ../src/resources/manager.xrc:111 ../src/resources/prefs.xrc:481
-#: ../src/resources/prefs.xrc:623 ../src/resources/prefs.xrc:668
-#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:193
+#: ../src/resources/comment.xrc:38 ../src/resources/find.xrc:87
+#: ../src/resources/manager.xrc:112 ../src/resources/prefs.xrc:490
+#: ../src/resources/prefs.xrc:632 ../src/resources/prefs.xrc:677
+#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:194
 msgid "Cancel"
 msgstr "Kanseleer"
 
@@ -268,7 +260,7 @@ msgstr "Kanseleer"
 msgid "Cannot create database directory!"
 msgstr "Kan nie databasisgids skep nie!"
 
-#: ../src/gexecute.cpp:174 ../src/gexecute.cpp:230
+#: ../src/gexecute.cpp:172 ../src/gexecute.cpp:228
 msgid "Cannot execute program: "
 msgstr "Kan nie die program uitvoer nie:"
 
@@ -280,12 +272,12 @@ msgstr "Katalogus kan nie vanuit RPM-lêer onttrek word nie."
 msgid "Case sensitive"
 msgstr "Kas sensitief"
 
-#: ../src/manager.cpp:250
+#: ../src/manager.cpp:263
 msgid "Catalog"
 msgstr "Katalogus"
 
-#: ../src/edframe.cpp:795 ../src/edframe.cpp:821 ../src/edframe.cpp:858
-#: ../src/edframe.cpp:904 ../src/edframe.cpp:1028
+#: ../src/edframe.cpp:840 ../src/edframe.cpp:865 ../src/edframe.cpp:906
+#: ../src/edframe.cpp:958 ../src/edframe.cpp:1076
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Die katalogus het verander.  Wil jy die veranderinge stoor?"
 
@@ -293,23 +285,23 @@ msgstr "Die katalogus het verander.  Wil jy die veranderinge stoor?"
 msgid "Catalogs &manager"
 msgstr "Katalogus&bestuurder"
 
-#: ../src/resources/prefs.xrc:53
+#: ../src/resources/prefs.xrc:62
 msgid "Change UI language"
 msgstr "Verander koppelvlaktaal"
 
-#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:85
+#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:86
 msgid "Charset:"
 msgstr "Karakterstel:"
 
-#: ../src/resources/prefs.xrc:244 ../src/resources/prefs.xrc:270
+#: ../src/resources/prefs.xrc:253 ../src/resources/prefs.xrc:279
 msgid "Choose"
 msgstr "Kies"
 
-#: ../src/resources/comment.xrc:44
+#: ../src/resources/comment.xrc:45
 msgid "Clear"
 msgstr "Maak skoon"
 
-#: ../src/resources/comment.xrc:45
+#: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "Verwyder kommentaar"
 
@@ -318,7 +310,7 @@ msgstr "Verwyder kommentaar"
 msgid "Comment"
 msgstr "Kommentaar:"
 
-#: ../src/resources/prefs.xrc:110
+#: ../src/resources/prefs.xrc:119
 msgid "Comment window is editable"
 msgstr "Kommentaarvenster is redigeerbaar"
 
@@ -326,15 +318,15 @@ msgstr "Kommentaarvenster is redigeerbaar"
 msgid "Comment:"
 msgstr "Kommentaar:"
 
-#: ../src/resources/prefs.xrc:349
+#: ../src/resources/prefs.xrc:358
 msgid "Configuration"
 msgstr "Konfigurasie"
 
-#: ../src/manager.cpp:411 ../src/manager.cpp:431
+#: ../src/manager.cpp:426 ../src/manager.cpp:446
 msgid "Confirmation"
 msgstr "Bevestiging"
 
-#: ../src/edframe.cpp:2050 ../src/resources/menus.xrc:47
+#: ../src/edframe.cpp:2085 ../src/resources/menus.xrc:47
 msgid "Copy original to translation field"
 msgstr "&Kopieer oorspronklike na vertalingveld"
 
@@ -343,7 +335,7 @@ msgstr "&Kopieer oorspronklike na vertalingveld"
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "Kon nie lêer %s laai nie.  Dit is waarskynlik korrup."
 
-#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:73
+#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:74
 msgid "Country:"
 msgstr "Land:"
 
@@ -351,7 +343,7 @@ msgstr "Land:"
 msgid "Create new translations project"
 msgstr "Skep nuwe vertaalprojek"
 
-#: ../src/resources/prefs.xrc:292
+#: ../src/resources/prefs.xrc:301
 msgid "Database"
 msgstr "Databasis"
 
@@ -360,7 +352,7 @@ msgstr "Databasis"
 msgid "Database error: %s"
 msgstr "Databasisfout: %s"
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:447
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:456
 msgid "Delete"
 msgstr "Wis uit"
 
@@ -372,19 +364,19 @@ msgstr "Verwyder item"
 msgid "Delete the project"
 msgstr "Vee die projek uit"
 
-#: ../src/manager.cpp:304
+#: ../src/manager.cpp:319
 msgid "Directories:"
 msgstr "Gidse:"
 
-#: ../src/resources/menus.xrc:109
+#: ../src/resources/menus.xrc:113
 msgid "Display &line numbers"
 msgstr "Wys reë&lnommers"
 
-#: ../src/resources/menus.xrc:105
+#: ../src/resources/menus.xrc:109
 msgid "Display &quotes"
 msgstr "Wys &aanhalingstekens"
 
-#: ../src/manager.cpp:430
+#: ../src/manager.cpp:445
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -392,7 +384,7 @@ msgstr ""
 "Wil jy regtig 'n massa-opdatering doen van\n"
 "alle katalogusse in hierdie projek?"
 
-#: ../src/edframe.cpp:1964
+#: ../src/edframe.cpp:1999
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -404,11 +396,11 @@ msgstr ""
 "Indie jy voortgaan met die skoonmaakproses, sal jy hulle weer moet vertaal "
 "as hulle weer bygevoeg word in die toekoms."
 
-#: ../src/manager.cpp:410
+#: ../src/manager.cpp:425
 msgid "Do you want to delete the project?"
 msgstr "Wil jy die projek uitvee?"
 
-#: ../src/resources/prefs.xrc:162
+#: ../src/resources/prefs.xrc:171
 msgid "Don't change format of existing catalogs"
 msgstr "Moenie die formaat van bestaande katalogusse verander nie"
 
@@ -416,7 +408,7 @@ msgstr "Moenie die formaat van bestaande katalogusse verander nie"
 msgid "E&xport..."
 msgstr "Skryf uit ..."
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:440
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:449
 msgid "Edit"
 msgstr "Redigeer"
 
@@ -444,45 +436,46 @@ msgstr "Redigeer die lêer in 'n teksredigeerder"
 msgid "Edit the project"
 msgstr "Redigeer die projek"
 
-#: ../src/resources/prefs.xrc:68
+#: ../src/resources/prefs.xrc:77
 msgid "Editor"
 msgstr "Redigeerder "
 
-#: ../src/resources/prefs.xrc:181
+#: ../src/resources/prefs.xrc:190
 msgid "Editor executable:"
 msgstr "Redigeerderprogram:"
 
-#: ../src/resources/prefs.xrc:119
+#: ../src/resources/prefs.xrc:128
 msgid "Enables on-the-fly spellchecking"
 msgstr "Skakel intydse speltoetsing aan."
 
-#: ../src/edframe.cpp:1170
+#: ../src/edframe.cpp:1221
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Inskrywings in die katalogus is waarskynlik verkeerd."
 
-#: ../src/edframe.cpp:701
+#: ../src/edframe.cpp:721
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "Fout met inisiëring van speltoetsing: %s"
 
-#: ../src/edframe.cpp:1715
-msgid "Error loading message catalog file '"
+#: ../src/edframe.cpp:1788
+#, fuzzy, c-format
+msgid "Error loading message catalog file '%s'."
 msgstr "Fout met laaiïng van kataloguslêer '"
 
-#: ../src/fileviewer.cpp:94
+#: ../src/fileviewer.cpp:97
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Fout met oopmaak van lêer %s!"
 
-#: ../src/catalog.cpp:1266
+#: ../src/catalog.cpp:1269
 msgid "Error saving catalog"
 msgstr "Fout met stoor van katalogus"
 
-#: ../src/edframe.cpp:1000
+#: ../src/edframe.cpp:1049
 msgid "Export as..."
 msgstr "Skryf uit as ..."
 
-#: ../src/resources/prefs.xrc:173
+#: ../src/resources/prefs.xrc:182
 msgid "External editor"
 msgstr "Eksterne Redigeerder"
 
@@ -491,7 +484,7 @@ msgstr "Eksterne Redigeerder"
 msgid "Failed command: %s"
 msgstr "Ontlederbevel:"
 
-#: ../src/digger.cpp:160
+#: ../src/digger.cpp:131
 #, fuzzy
 msgid "Failed to load extracted catalog."
 msgstr "Lêer '%s' is nie 'n katalogus nie."
@@ -501,16 +494,12 @@ msgstr "Lêer '%s' is nie 'n katalogus nie."
 msgid "Failed to merge gettext catalogs."
 msgstr "Lêer '%s' is nie 'n katalogus nie."
 
-#: ../src/digger.cpp:94 ../src/digger.cpp:105
-msgid "Failed to read extracted catalog."
-msgstr ""
-
-#: ../src/edframe.cpp:876 ../src/edframe.cpp:920
+#: ../src/edframe.cpp:931 ../src/edframe.cpp:974
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Lêer '%s' bestaan nie."
 
-#: ../src/edframe.cpp:893
+#: ../src/edframe.cpp:948
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Lêer '%s' is nie 'n katalogus nie."
@@ -548,16 +537,16 @@ msgstr "Soek in vertalings"
 msgid "Find..."
 msgstr "Soek..."
 
-#: ../src/resources/prefs.xrc:221
+#: ../src/resources/prefs.xrc:230
 msgid "Fonts"
 msgstr "Fonte"
 
-#: ../src/edframe.cpp:2504
+#: ../src/edframe.cpp:2552
 #, fuzzy, c-format
 msgid "Form %i"
 msgstr "Vorm %u"
 
-#: ../src/edframe.cpp:2506
+#: ../src/edframe.cpp:2554
 #, fuzzy, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr "Vorm %u (bv. \"%u\")"
@@ -566,49 +555,49 @@ msgstr "Vorm %u (bv. \"%u\")"
 msgid "Fullscreen view"
 msgstr "Volskermaansig"
 
-#: ../src/manager.cpp:253 ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:266 ../src/resources/toolbar.xrc:28
 msgid "Fuzzy"
 msgstr "Wasig"
 
-#: ../src/export_html.cpp:180
+#: ../src/export_html.cpp:183
 msgid "Fuzzy translation"
 msgstr "Wasige vertaling"
 
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:960
+#: ../src/edframe.cpp:885 ../src/edframe.cpp:1013
 msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU gettext-katalogusse (*.po)|*.po|Alle lêers (*.*)|*.*"
 
-#: ../src/edframe.cpp:1053 ../src/edframe.cpp:1190
+#: ../src/edframe.cpp:1101 ../src/edframe.cpp:1239
 msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU gettext-sjablone (*.pot)|*.pot|Alle lêers (*.*)|*.*"
 
-#: ../src/resources/menus.xrc:134
+#: ../src/resources/menus.xrc:138
 msgid "GNU gettext documentation"
 msgstr "&GNU gettext-dokumentasie"
 
-#: ../src/resources/prefs.xrc:678
+#: ../src/resources/prefs.xrc:687
 msgid "Generate TM database"
 msgstr "Genereer TM databasis"
 
-#: ../src/resources/prefs.xrc:336
+#: ../src/resources/prefs.xrc:345
 msgid "Generate database"
 msgstr "Genereer databasis"
 
-#: ../src/edframe.cpp:1252
+#: ../src/edframe.cpp:1291
 msgid "Gettext syntax error"
 msgstr "Gettext sintaksfout"
 
-#: ../src/edframe.cpp:2572
+#: ../src/edframe.cpp:2620
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
 msgstr "Gaan na boekmerk %i\tCtrl-%i"
 
-#: ../src/edframe.cpp:2569
+#: ../src/edframe.cpp:2617
 #, fuzzy, c-format
 msgid "Go to bookmark %i\tCtrl-Alt-%i"
 msgstr "Gaan na boekmerk %i\tCtrl-%i"
 
-#: ../src/edframe.cpp:1002
+#: ../src/edframe.cpp:1051
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML lêer (*.html)|*.html"
 
@@ -616,32 +605,32 @@ msgstr "HTML lêer (*.html)|*.html"
 msgid "Identity"
 msgstr "Identiteit "
 
-#: ../src/resources/prefs.xrc:111
+#: ../src/resources/prefs.xrc:120
 msgid "If checked, the comment window will be editable."
 msgstr "Indien gekies, sal die kommentaarvenster redigeerbaar wees."
 
-#: ../src/resources/prefs.xrc:529
+#: ../src/resources/prefs.xrc:538
 msgid "Invocation:"
 msgstr "Aktivering:"
 
-#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:174
+#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:175
 msgid "Keywords"
 msgstr "Sleutelwoorde "
 
-#: ../src/chooselang.cpp:161
+#: ../src/chooselang.cpp:162
 msgid "Language selection"
 msgstr "Taalkeuse"
 
-#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:497
-#: ../src/resources/prefs.xrc:501 ../src/resources/settings.xrc:61
+#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:506
+#: ../src/resources/prefs.xrc:510 ../src/resources/settings.xrc:62
 msgid "Language:"
 msgstr "Taal: "
 
-#: ../src/manager.cpp:255
+#: ../src/manager.cpp:268
 msgid "Last modified"
 msgstr "Laas verander"
 
-#: ../src/edlistctrl.cpp:214 ../src/fileviewer.cpp:103
+#: ../src/edlistctrl.cpp:230 ../src/fileviewer.cpp:106
 msgid "Line"
 msgstr "Reël"
 
@@ -650,15 +639,15 @@ msgstr "Reël"
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "Reël %u van die lêer '%s' is korrup (data %s ongeldig)."
 
-#: ../src/resources/prefs.xrc:139
+#: ../src/resources/prefs.xrc:148
 msgid "Line endings format:"
 msgstr "Formaat van reëleindes:"
 
-#: ../src/resources/prefs.xrc:513
+#: ../src/resources/prefs.xrc:522
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Lys van uitgange geskei deur kommapunte (bv. *.cpp;*.h):"
 
-#: ../src/resources/prefs.xrc:149
+#: ../src/resources/prefs.xrc:158
 msgid "Macintosh"
 msgstr "Macintosh "
 
@@ -667,15 +656,15 @@ msgstr "Macintosh "
 msgid "Malformed header: '%s'"
 msgstr "Wangevormde kopstuk: '%s'"
 
-#: ../src/resources/prefs.xrc:357
+#: ../src/resources/prefs.xrc:366
 msgid "Max. # of missing words:"
 msgstr "Maks # ontbrekende woorde:"
 
-#: ../src/resources/prefs.xrc:379
+#: ../src/resources/prefs.xrc:388
 msgid "Max. difference in sentence length:"
 msgstr "Maks. verskil in sinlengte:"
 
-#: ../src/catalog.cpp:1422
+#: ../src/catalog.cpp:1425
 msgid "Merging differences..."
 msgstr "Verskille word bygewerk..."
 
@@ -687,15 +676,15 @@ msgstr "Beweeg af"
 msgid "Move up"
 msgstr "Beweeg op"
 
-#: ../src/prefsdlg.cpp:55
+#: ../src/prefsdlg.cpp:59
 msgid "My Languages"
 msgstr "My tale"
 
-#: ../src/manager.cpp:307
+#: ../src/manager.cpp:322
 msgid "My Project"
 msgstr "My projek"
 
-#: ../src/resources/prefs.xrc:103
+#: ../src/resources/prefs.xrc:112
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -706,7 +695,7 @@ msgstr ""
 "sodoende kan vertaalteks dadelik getik word sonder om eers Tab te druk om "
 "fokus te verkry."
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:435
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:444
 msgid "New"
 msgstr "Nuwe "
 
@@ -726,26 +715,25 @@ msgstr "Nuwe stringe"
 msgid "Next >"
 msgstr "Volgende >"
 
-#: ../src/fileviewer.cpp:144
+#: ../src/fileviewer.cpp:147
 msgid "No editor specified. Please set it in Preferences dialog."
 msgstr "Geen redigeerder gespesifiseer. Stel dit asb. op in die voorkeure."
 
-#: ../src/digger.cpp:250
+#: ../src/digger.cpp:218
 msgid "No files found in: "
 msgstr "Geen lêers gevind in:"
 
-#: ../src/edframe.cpp:1268
+#: ../src/edframe.cpp:1308
 msgid "No references to this string found."
 msgstr "Geen verwysings na hierdie string gevind nie."
 
-#: ../src/export_html.cpp:152
+#: ../src/export_html.cpp:155
 msgid "Notes"
 msgstr "Notas"
 
-#: ../src/resources/about.xrc:50 ../src/resources/comment.xrc:29
-#: ../src/resources/manager.xrc:103 ../src/resources/prefs.xrc:473
-#: ../src/resources/prefs.xrc:615 ../src/resources/settings.xrc:185
-#: ../src/resources/summary.xrc:71
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:104
+#: ../src/resources/prefs.xrc:482 ../src/resources/prefs.xrc:624
+#: ../src/resources/settings.xrc:186 ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "OK "
 
@@ -758,48 +746,48 @@ msgstr "Verouderde stringe"
 msgid "Open"
 msgstr "Maak &oop"
 
-#: ../src/edframe.cpp:839 ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:883 ../src/resources/toolbar.xrc:13
 msgid "Open catalog"
 msgstr "Maak katalogus oop"
 
-#: ../src/edframe.cpp:1051 ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1099 ../src/edframe.cpp:1237
 msgid "Open catalog template"
 msgstr "Maak sjabloon oop"
 
-#: ../src/resources/prefs.xrc:94
+#: ../src/resources/prefs.xrc:103
 msgid "Open catalogs manager on Poedit startup"
 msgstr "Maak katalogusbestuurder oop wanneer Poedit begin"
 
-#: ../src/resources/prefs.xrc:211
+#: ../src/resources/prefs.xrc:220
 msgid "Open source files in editor, not in file viewer"
 msgstr "Maak bronlêers oop in redigeerder, nie in lêerbekyker nie"
 
-#: ../src/export_html.cpp:145 ../src/edlistctrl.cpp:211
+#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:227
 msgid "Original string"
 msgstr "Oorspronklike string"
 
-#: ../src/resources/prefs.xrc:533
+#: ../src/resources/prefs.xrc:542
 msgid "Parser command:"
 msgstr "Ontlederbevel:"
 
-#: ../src/resources/prefs.xrc:492
+#: ../src/resources/prefs.xrc:501
 msgid "Parser setup"
 msgstr "Ontleder-opstelling"
 
-#: ../src/resources/prefs.xrc:410
+#: ../src/resources/prefs.xrc:419
 msgid "Parsers"
 msgstr "Ontleders"
 
-#: ../src/digger.cpp:135
+#: ../src/digger.cpp:106
 #, fuzzy, c-format
 msgid "Parsing %s files..."
 msgstr "Lêers word verwerk..."
 
-#: ../src/resources/prefs.xrc:295
+#: ../src/resources/prefs.xrc:304
 msgid "Path to DB:"
 msgstr "Pad na DB:"
 
-#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:153
+#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:154
 msgid "Paths"
 msgstr "Paaie"
 
@@ -807,7 +795,7 @@ msgstr "Paaie"
 msgid "Personalize"
 msgstr "Persoonlik"
 
-#: ../src/resources/prefs.xrc:329
+#: ../src/resources/prefs.xrc:338
 msgid "Pick language from the list of known languages"
 msgstr "Kies 'n taal uit die lys van bekende tale"
 
@@ -815,27 +803,27 @@ msgstr "Kies 'n taal uit die lys van bekende tale"
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "Voeg asb. gidse waarin  locale-lêers gehou word, by:"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "Please choose the reference you want to show:"
 msgstr "Kies asb. die verwysing wat gewys moet word:"
 
-#: ../src/prefsdlg.cpp:341
+#: ../src/prefsdlg.cpp:355
 msgid "Please select language ISO code:"
 msgstr "Kies asb. die ISO taalkode:"
 
-#: ../src/edframe.cpp:759
+#: ../src/edframe.cpp:801
 msgid "Please select language code:"
 msgstr "Kies asb. die taalkode:"
 
-#: ../src/resources/settings.xrc:109
+#: ../src/resources/settings.xrc:110
 msgid "Plural Forms:"
 msgstr "Meervoudvorme:"
 
-#: ../src/edframe.cpp:470
+#: ../src/edframe.cpp:489
 msgid "Plural:"
 msgstr "Meervoud:"
 
-#: ../src/edframe.cpp:337
+#: ../src/edframe.cpp:359
 msgid "Poedit"
 msgstr "Poedit "
 
@@ -843,7 +831,7 @@ msgstr "Poedit "
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Katalogusbestuurder "
 
-#: ../src/digger.cpp:251
+#: ../src/digger.cpp:219
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Poedit kon geen lêers in die deursoekte gidse kry nie."
 
@@ -851,11 +839,11 @@ msgstr "Poedit kon geen lêers in die deursoekte gidse kry nie."
 msgid "Preferences"
 msgstr "Voorkeure"
 
-#: ../src/resources/prefs.xrc:660
+#: ../src/resources/prefs.xrc:669
 msgid "Proceed"
 msgstr "Gaan voort "
 
-#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:121
+#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:122
 msgid "Project info"
 msgstr "Projekinligting"
 
@@ -867,20 +855,20 @@ msgstr "Projeknaam en weergawe:"
 msgid "Project name:"
 msgstr "Projeknaam:"
 
-#: ../src/edframe.cpp:1965
+#: ../src/edframe.cpp:2000
 #, fuzzy
 msgid "Purge deleted translations"
 msgstr "&Verwyder vertalings wat vir uitvee gemerk is"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "References"
 msgstr "Verwysings "
 
-#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
+#: ../src/edframe.cpp:2090 ../src/edframe.cpp:2094
 msgid "References:"
 msgstr "Verwysings: "
 
-#: ../src/resources/prefs.xrc:337
+#: ../src/resources/prefs.xrc:346
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr "Hergenereer vertaalgeheue met katalogusse in soekpad hierbo."
 
@@ -897,7 +885,7 @@ msgstr "&Stoor"
 msgid "Save &as..."
 msgstr "Stoor &as..."
 
-#: ../src/edframe.cpp:959
+#: ../src/edframe.cpp:1012
 msgid "Save as..."
 msgstr "Stoor as..."
 
@@ -905,8 +893,8 @@ msgstr "Stoor as..."
 msgid "Save catalog"
 msgstr "Stoor katalogus"
 
-#: ../src/edframe.cpp:796 ../src/edframe.cpp:822 ../src/edframe.cpp:859
-#: ../src/edframe.cpp:905 ../src/edframe.cpp:1029
+#: ../src/edframe.cpp:841 ../src/edframe.cpp:866 ../src/edframe.cpp:907
+#: ../src/edframe.cpp:959 ../src/edframe.cpp:1077
 msgid "Save changes"
 msgstr "Stoor veranderinge?"
 
@@ -914,7 +902,7 @@ msgstr "Stoor veranderinge?"
 msgid "Scanning file: "
 msgstr "Lêer word deursoek:"
 
-#: ../src/digger.cpp:121
+#: ../src/digger.cpp:92
 msgid "Scanning files..."
 msgstr "Lêers word verwerk..."
 
@@ -922,29 +910,29 @@ msgstr "Lêers word verwerk..."
 msgid "Search Paths"
 msgstr "Soekpaaie"
 
-#: ../src/edframe.cpp:758
+#: ../src/edframe.cpp:800
 msgid "Select catalog's language"
 msgstr "Kies die katlogustaal"
 
-#: ../src/prefsdlg.cpp:354 ../src/manager.cpp:284
+#: ../src/prefsdlg.cpp:368 ../src/manager.cpp:299
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "Kies gids "
 
-#: ../src/prefsdlg.cpp:340
+#: ../src/prefsdlg.cpp:354
 msgid "Select language"
 msgstr "Kies die taal asb. "
 
-#: ../src/chooselang.cpp:160
+#: ../src/chooselang.cpp:161
 msgid "Select your prefered language"
 msgstr "Asseblief kies jou voorkeurtaal"
 
-#: ../src/edframe.cpp:2571
+#: ../src/edframe.cpp:2619
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr "Stel boekmerk %i\tAlt-%i"
 
-#: ../src/edframe.cpp:2568
+#: ../src/edframe.cpp:2616
 #, fuzzy, c-format
 msgid "Set bookmark %i\tCtrl-%i"
 msgstr "Stel boekmerk %i\tAlt-%i"
@@ -953,31 +941,31 @@ msgstr "Stel boekmerk %i\tAlt-%i"
 msgid "Settings"
 msgstr "Opstellings"
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
 msgid "Setup"
 msgstr "Opstelling"
 
-#: ../src/resources/menus.xrc:113
+#: ../src/resources/menus.xrc:117
 msgid "Show &comment window"
 msgstr "Vertoon &kommentaarvenster"
 
-#: ../src/resources/menus.xrc:117
+#: ../src/resources/menus.xrc:121
 msgid "Show automatic c&omments window"
 msgstr "Vertoon &outomatiese-kommentaarvenster"
 
-#: ../src/resources/prefs.xrc:87
+#: ../src/resources/prefs.xrc:96
 msgid "Show summary after catalog update"
 msgstr "Wys opsomming na katalogus opdatering"
 
-#: ../src/edframe.cpp:469
+#: ../src/edframe.cpp:488
 msgid "Singular:"
 msgstr "Enkelvoud"
 
-#: ../src/resources/prefs.xrc:590 ../src/resources/settings.xrc:97
+#: ../src/resources/prefs.xrc:599 ../src/resources/settings.xrc:98
 msgid "Source code charset:"
 msgstr "Bronkode karakterstel:"
 
-#: ../src/resources/prefs.xrc:416
+#: ../src/resources/prefs.xrc:425
 msgid "Source code parsers:"
 msgstr "Bronkode-ontleders:"
 
@@ -993,15 +981,15 @@ msgstr "Begin vanaf die eerste item"
 msgid "String to find:"
 msgstr "String om te vind:"
 
-#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:47
+#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:48
 msgid "Team's email address:"
 msgstr "Span se e-pos adres:"
 
-#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:33
+#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:34
 msgid "Team:"
 msgstr "Span:"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1268
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -1036,17 +1024,18 @@ msgstr ""
 "Hierdie string is gevind in die bronkkode, maar nie in die katalogus nie.\n"
 "Poedit gaan hulle nou byvoeg by die katalogus."
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
+#, fuzzy
 msgid ""
 "This is first time you run Poedit.\n"
-"Please fill in your name and e-mail address.\n"
+"Please fill in your name and email address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
 "Hierdie is die eerste keer wat jy Poedit loop.\n"
 "Vul asb. jou naam en e-posadres in.\n"
 "(Hierdie inligting word slegs gebruik in katalogusopskrifte)"
 
-#: ../src/resources/prefs.xrc:545
+#: ../src/resources/prefs.xrc:554
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1059,7 +1048,7 @@ msgstr ""
 "%F tot lys van toevoerlêers,\n"
 "%C tot die karakterstel vlaggie (sien hieronder)."
 
-#: ../src/resources/prefs.xrc:602
+#: ../src/resources/prefs.xrc:611
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1069,7 +1058,7 @@ msgstr ""
 "by die bevellyn as die bronkodekarakterstel gegee is.  %c brei uit na die "
 "karakterstel waarde."
 
-#: ../src/resources/prefs.xrc:583
+#: ../src/resources/prefs.xrc:592
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1078,7 +1067,7 @@ msgstr ""
 "Dit sal vir elke toevoerlêer eenmaal bygevoeg word\n"
 "by die bevellyn.  %f brei uit na die lêernaam."
 
-#: ../src/resources/prefs.xrc:564
+#: ../src/resources/prefs.xrc:573
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -1090,15 +1079,15 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Dui aan of die gekose string 'n wasige vertaling het"
 
-#: ../src/manager.cpp:251
+#: ../src/manager.cpp:264
 msgid "Total"
 msgstr "Totaal"
 
-#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:212
+#: ../src/export_html.cpp:151 ../src/edlistctrl.cpp:228
 msgid "Translation"
 msgstr "Vertaling"
 
-#: ../src/resources/prefs.xrc:285
+#: ../src/resources/prefs.xrc:294
 msgid "Translation Memory"
 msgstr "Vertaalgeheue"
 
@@ -1131,11 +1120,11 @@ msgstr "Onbekende locale-kode '%s' in registry."
 msgid "Undo"
 msgstr "Herroep"
 
-#: ../src/resources/prefs.xrc:147
+#: ../src/resources/prefs.xrc:156
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:252
+#: ../src/manager.cpp:265
 msgid "Untrans"
 msgstr "Onvertaal"
 
@@ -1157,7 +1146,7 @@ msgstr "Bring alle katalogusse in die projek op datum"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Werk katalogus by - sinkroniseer met bronne"
 
-#: ../src/resources/menus.xrc:81
+#: ../src/resources/menus.xrc:85
 msgid "Update from &POT file..."
 msgstr "Werk by vanuit &POT-lêer..."
 
@@ -1169,23 +1158,23 @@ msgstr "Dateer opsomming op"
 msgid "Update translation memory"
 msgstr "Dateer vertaalgeheue op"
 
-#: ../src/catalog.cpp:1382
+#: ../src/catalog.cpp:1385
 msgid "Updating catalog..."
 msgstr "Katalogus word bygewerk"
 
-#: ../src/edframe.cpp:1172
+#: ../src/edframe.cpp:1223
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "Bywerking van katalogus het gefaal. Klik op 'Meer>>' vir besonderhede."
 
-#: ../src/resources/prefs.xrc:253
+#: ../src/resources/prefs.xrc:262
 msgid "Use custom font for text fields"
 msgstr "Gebruik eie font vir teksvelde"
 
-#: ../src/resources/prefs.xrc:227
+#: ../src/resources/prefs.xrc:236
 msgid "Use custom font for translations list"
 msgstr "Gebruik eie font vir vertaallys"
 
-#: ../src/resources/settings.xrc:161
+#: ../src/resources/settings.xrc:162
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
@@ -1198,42 +1187,62 @@ msgstr ""
 msgid "Whole words only"
 msgstr "Slegs heel woorde"
 
-#: ../src/resources/prefs.xrc:148
+#: ../src/resources/prefs.xrc:157
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:886
+#: ../src/edframe.cpp:941
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Slegs een lêer kan na die Poedit-venster gesleep word."
 
-#: ../src/chooselang.cpp:175
+#: ../src/chooselang.cpp:176
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Herbegin Poedit vir hierdie verandering om 'n effek te hê."
 
-#: ../src/resources/prefs.xrc:34
-msgid "Your e-mail address:"
+#: ../src/resources/prefs.xrc:43
+#, fuzzy
+msgid "Your email address:"
 msgstr "Jou e-pos adres:"
 
 #: ../src/resources/prefs.xrc:22
+msgid ""
+"Your name and email set below are only used\n"
+"to set the Last-Translator header of GNU gettext files."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:30
 msgid "Your name:"
 msgstr "Jou naam: "
 
-#: ../src/edframe.cpp:1801
+#: ../src/edframe.cpp:1840
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[vertalings word nagegaan: %i oor]"
 
-#: ../src/resources/prefs.xrc:150
+#: ../src/resources/prefs.xrc:159
 msgid "current platform's default"
 msgstr "Huidige platform se verstek "
 
-#: ../src/edframe.cpp:2093
+#: ../src/edframe.cpp:2128
 msgid "none"
 msgstr "geen "
 
-#: ../src/edframe.cpp:2108
-msgid "version"
-msgstr "weergawe "
+#: ../src/edframe.cpp:2144
+#, fuzzy
+msgid "translations editor"
+msgstr "Vertaalgeheue"
+
+#~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
+#~ msgstr "%i stringe (%i wasig, %i onaanvaarbaar, %i nie vertaal nie)"
+
+#~ msgid "'."
+#~ msgstr "'."
+
+#~ msgid "About Poedit"
+#~ msgstr "Aangaande Poedit"
+
+#~ msgid "version"
+#~ msgstr "weergawe "
 
 #~ msgid " files..."
 #~ msgstr "lêers..."

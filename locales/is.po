@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.3.9\n"
+"Project-Id-Version: Poedit 1.4.0pre_1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-15 10:08+0100\n"
+"POT-Creation-Date: 2008-02-27 17:02+0100\n"
 "PO-Revision-Date: 2003-11-28 18:24+0100\n"
 "Last-Translator: Samúel Jón Gunnarsson <sammi@techattack.nu>\n"
 "Language-Team: Icelandic <sammi@techattack.nu>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1824
+#: ../src/edframe.cpp:1863
 msgid " (modified)"
 msgstr "(breytt)"
 
-#: ../src/edframe.cpp:1794
+#: ../src/export_html.cpp:137 ../src/edframe.cpp:1833
 #, fuzzy, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
@@ -30,28 +30,23 @@ msgstr "%i strengir (%i óljósir, %i óþýddir)"
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr ""
 
-#: ../src/export_html.cpp:135
-#, fuzzy, c-format
-msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i strengir (%i óljósir, %i óþýddir)"
-
-#: ../src/resources/menus.xrc:139
+#: ../src/resources/menus.xrc:143
 msgid "&About..."
 msgstr "&Um..."
 
-#: ../src/resources/menus.xrc:84
+#: ../src/resources/menus.xrc:88
 msgid "&Automatically translate using TM"
 msgstr "&Sjálfvirk þýðing með ÞM"
 
-#: ../src/edframe.cpp:2588
+#: ../src/edframe.cpp:2636
 msgid "&Bookmarks"
 msgstr ""
 
-#: ../src/resources/manager.xrc:130 ../src/resources/menus.xrc:39
+#: ../src/resources/manager.xrc:131 ../src/resources/menus.xrc:39
 msgid "&Close"
 msgstr "&Loka"
 
-#: ../src/resources/menus.xrc:128
+#: ../src/resources/menus.xrc:132
 msgid "&Contents..."
 msgstr "&Innihald..."
 
@@ -59,7 +54,7 @@ msgstr "&Innihald..."
 msgid "&Edit"
 msgstr "Sýs&l"
 
-#: ../src/edframe.cpp:397 ../src/resources/manager.xrc:123
+#: ../src/edframe.cpp:418 ../src/resources/manager.xrc:124
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&Skrá"
@@ -68,11 +63,11 @@ msgstr "&Skrá"
 msgid "&Find..."
 msgstr "&Leita..."
 
-#: ../src/resources/menus.xrc:97 ../src/resources/menus.xrc:101
+#: ../src/resources/menus.xrc:101 ../src/resources/menus.xrc:105
 msgid "&Fullscreen view"
 msgstr "&Heilskjá sýn"
 
-#: ../src/resources/menus.xrc:141
+#: ../src/resources/menus.xrc:145
 msgid "&Help"
 msgstr "&Hjálp"
 
@@ -85,11 +80,16 @@ msgstr "&Ný safnskrá..."
 msgid "&Open..."
 msgstr "&Opna"
 
-#: ../src/resources/manager.xrc:126 ../src/resources/menus.xrc:35
+#: ../src/resources/menus.xrc:74
+#, fuzzy
+msgid "&Preferences"
+msgstr "Forstillingar"
+
+#: ../src/resources/manager.xrc:127 ../src/resources/menus.xrc:35
 msgid "&Preferences..."
 msgstr "&Forstillingar..."
 
-#: ../src/resources/menus.xrc:87
+#: ../src/resources/menus.xrc:91
 #, fuzzy
 msgid "&Purge deleted translations"
 msgstr "&Skyggður þýðendalisti"
@@ -98,11 +98,11 @@ msgstr "&Skyggður þýðendalisti"
 msgid "&Save"
 msgstr "&Vista"
 
-#: ../src/resources/menus.xrc:91
+#: ../src/resources/menus.xrc:95
 msgid "&Settings..."
 msgstr "&Stillingar..."
 
-#: ../src/resources/menus.xrc:121
+#: ../src/resources/menus.xrc:125
 msgid "&Shaded translations list"
 msgstr "&Skyggður þýðendalisti"
 
@@ -110,28 +110,24 @@ msgstr "&Skyggður þýðendalisti"
 msgid "&Show references"
 msgstr "&Sýna tilvísanir"
 
-#: ../src/resources/menus.xrc:78
+#: ../src/resources/menus.xrc:82
 msgid "&Update from sources"
 msgstr "&Uppfæra frá frumkóða"
 
-#: ../src/resources/menus.xrc:95
+#: ../src/resources/menus.xrc:99
 msgid "&View"
 msgstr "Sý&n"
 
-#: ../src/catalog.cpp:1450
+#: ../src/catalog.cpp:1453
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' er ógild POT skrá."
 
-#: ../src/edframe.cpp:1715
-msgid "'."
-msgstr "'."
-
-#: ../src/resources/prefs.xrc:202
+#: ../src/resources/prefs.xrc:211
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f mun verða skipt út með skráarnafni, %l með línu númer)"
 
-#: ../src/summarydlg.cpp:66
+#: ../src/summarydlg.cpp:71
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i nýjir, %i úreltir)"
@@ -144,7 +140,7 @@ msgstr "(0 nýir, 0 úreltir)"
 msgid "(Use default language)"
 msgstr "Nota sjálfgefið tungumál"
 
-#: ../src/edframe.cpp:750
+#: ../src/edframe.cpp:792
 msgid "(none of these)"
 msgstr "(engin af þessum)"
 
@@ -152,19 +148,15 @@ msgstr "(engin af þessum)"
 msgid "< Previous"
 msgstr "< Fyrra"
 
-#: ../src/manager.cpp:381
+#: ../src/manager.cpp:396
 msgid "<unnamed>"
 msgstr "<ónefnt>"
 
-#: ../src/resources/about.xrc:4
-msgid "About Poedit"
-msgstr "Um Poedit"
-
-#: ../src/resources/prefs.xrc:328
+#: ../src/resources/prefs.xrc:337
 msgid "Add"
 msgstr "Bæta Við"
 
-#: ../src/resources/manager.xrc:89
+#: ../src/resources/manager.xrc:90
 msgid "Add directory to the list"
 msgstr "Bæta möppu við á lista"
 
@@ -172,67 +164,67 @@ msgstr "Bæta möppu við á lista"
 msgid "Add files"
 msgstr "Bæta við skrá(m)"
 
-#: ../src/resources/prefs.xrc:646
+#: ../src/resources/prefs.xrc:655
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Bæta við á lista yfir möppur þar sem safnskrár liggja."
 
-#: ../src/resources/prefs.xrc:101
+#: ../src/resources/prefs.xrc:110
 msgid "Always change focus to text input field"
 msgstr "Ávallt auka fókus á innsláttarreit"
 
-#: ../src/resources/prefs.xrc:571
+#: ../src/resources/prefs.xrc:580
 msgid "An item in input files list:"
 msgstr "Íhlutir í lista yfir inngagnsskrár:"
 
-#: ../src/resources/prefs.xrc:552
+#: ../src/resources/prefs.xrc:561
 msgid "An item in keywords list:"
 msgstr "Bæta við í lista yfir lykilorð:"
 
-#: ../src/resources/prefs.xrc:118
+#: ../src/resources/prefs.xrc:127
 #, fuzzy
 msgid "Automatic spellchecking"
 msgstr "Sjálfvirkar þýðingar:"
 
-#: ../src/export_html.cpp:174
+#: ../src/export_html.cpp:177
 #, fuzzy
 msgid "Automatic translation"
 msgstr "Sjálfvirkar þýðingar:"
 
-#: ../src/edframe.cpp:2070 ../src/edframe.cpp:2074
+#: ../src/edframe.cpp:2105 ../src/edframe.cpp:2109
 msgid "Automatic translations:"
 msgstr "Sjálfvirkar þýðingar:"
 
-#: ../src/resources/prefs.xrc:60
+#: ../src/resources/prefs.xrc:69
 #, fuzzy
 msgid "Automatically check for new version of Poedit"
 msgstr "Sjálfvirk vistþýðing á .mo skrám við vistun"
 
-#: ../src/resources/prefs.xrc:78
+#: ../src/resources/prefs.xrc:87
 msgid "Automatically compile .mo file on save"
 msgstr "Sjálfvirk vistþýðing á .mo skrám við vistun"
 
-#: ../src/resources/prefs.xrc:399
+#: ../src/resources/prefs.xrc:408
 msgid "Automatically translate when updating catalog"
 msgstr "Þýða sjálfvirt við uppfærslu á safnskrá"
 
-#: ../src/edframe.cpp:2022
+#: ../src/edframe.cpp:2057
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Þýddi sjálfvirkt %u strengi"
 
-#: ../src/edframe.cpp:2007
+#: ../src/edframe.cpp:2042
 msgid "Automatically translating..."
 msgstr "Sjálfvirkar þýðing..."
 
-#: ../src/manager.cpp:254
+#: ../src/manager.cpp:267
 msgid "Bad Tokens"
 msgstr ""
 
-#: ../src/resources/settings.xrc:131
+#: ../src/resources/settings.xrc:132
 msgid "Base path:"
 msgstr "Grunnstígur:"
 
-#: ../src/resources/prefs.xrc:74
+#: ../src/resources/prefs.xrc:83
 msgid "Behavior"
 msgstr "Hegðun"
 
@@ -245,24 +237,24 @@ msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
 
-#: ../src/resources/manager.xrc:88 ../src/resources/prefs.xrc:311
-#: ../src/resources/prefs.xrc:645 ../src/resources/tm_update.xrc:37
+#: ../src/resources/manager.xrc:89 ../src/resources/prefs.xrc:320
+#: ../src/resources/prefs.xrc:654 ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "Vafra"
 
-#: ../src/resources/menus.xrc:75
+#: ../src/resources/menus.xrc:79
 #, fuzzy
 msgid "C&atalog"
 msgstr "Safnskrá"
 
-#: ../src/resources/prefs.xrc:131
+#: ../src/resources/prefs.xrc:140
 msgid "CR/LF conversion"
 msgstr "CR/LF umbreyting"
 
-#: ../src/resources/comment.xrc:37 ../src/resources/find.xrc:87
-#: ../src/resources/manager.xrc:111 ../src/resources/prefs.xrc:481
-#: ../src/resources/prefs.xrc:623 ../src/resources/prefs.xrc:668
-#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:193
+#: ../src/resources/comment.xrc:38 ../src/resources/find.xrc:87
+#: ../src/resources/manager.xrc:112 ../src/resources/prefs.xrc:490
+#: ../src/resources/prefs.xrc:632 ../src/resources/prefs.xrc:677
+#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:194
 msgid "Cancel"
 msgstr "Hætta við"
 
@@ -270,7 +262,7 @@ msgstr "Hætta við"
 msgid "Cannot create database directory!"
 msgstr "Ekki tókst að búa til gagnagrunnsmöppu!"
 
-#: ../src/gexecute.cpp:174 ../src/gexecute.cpp:230
+#: ../src/gexecute.cpp:172 ../src/gexecute.cpp:228
 msgid "Cannot execute program: "
 msgstr "Ekki tókst að ræsa forrit:"
 
@@ -282,12 +274,12 @@ msgstr "Ekki tókst að draga safnskrár út úr RPM skrá."
 msgid "Case sensitive"
 msgstr "Mismunur á há og lágstöfum"
 
-#: ../src/manager.cpp:250
+#: ../src/manager.cpp:263
 msgid "Catalog"
 msgstr "Safnskrá"
 
-#: ../src/edframe.cpp:795 ../src/edframe.cpp:821 ../src/edframe.cpp:858
-#: ../src/edframe.cpp:904 ../src/edframe.cpp:1028
+#: ../src/edframe.cpp:840 ../src/edframe.cpp:865 ../src/edframe.cpp:906
+#: ../src/edframe.cpp:958 ../src/edframe.cpp:1076
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Safnskrá hefur verið breytt. Viltu vista breytingar?"
 
@@ -295,23 +287,23 @@ msgstr "Safnskrá hefur verið breytt. Viltu vista breytingar?"
 msgid "Catalogs &manager"
 msgstr "Safnskrá"
 
-#: ../src/resources/prefs.xrc:53
+#: ../src/resources/prefs.xrc:62
 msgid "Change UI language"
 msgstr "Veldu tungumál fyrir notendaviðmót"
 
-#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:85
+#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:86
 msgid "Charset:"
 msgstr "Stafasett:"
 
-#: ../src/resources/prefs.xrc:244 ../src/resources/prefs.xrc:270
+#: ../src/resources/prefs.xrc:253 ../src/resources/prefs.xrc:279
 msgid "Choose"
 msgstr "Velja"
 
-#: ../src/resources/comment.xrc:44
+#: ../src/resources/comment.xrc:45
 msgid "Clear"
 msgstr "Hreinsa"
 
-#: ../src/resources/comment.xrc:45
+#: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "Hreinsa athugasemd"
 
@@ -320,7 +312,7 @@ msgstr "Hreinsa athugasemd"
 msgid "Comment"
 msgstr "Athugasemd:"
 
-#: ../src/resources/prefs.xrc:110
+#: ../src/resources/prefs.xrc:119
 msgid "Comment window is editable"
 msgstr ""
 
@@ -328,15 +320,15 @@ msgstr ""
 msgid "Comment:"
 msgstr "Athugasemd:"
 
-#: ../src/resources/prefs.xrc:349
+#: ../src/resources/prefs.xrc:358
 msgid "Configuration"
 msgstr "Stillingar"
 
-#: ../src/manager.cpp:411 ../src/manager.cpp:431
+#: ../src/manager.cpp:426 ../src/manager.cpp:446
 msgid "Confirmation"
 msgstr "Staðfesting"
 
-#: ../src/edframe.cpp:2050 ../src/resources/menus.xrc:47
+#: ../src/edframe.cpp:2085 ../src/resources/menus.xrc:47
 msgid "Copy original to translation field"
 msgstr "Afrita yfir á þýðendareit"
 
@@ -345,7 +337,7 @@ msgstr "Afrita yfir á þýðendareit"
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr ""
 
-#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:73
+#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:74
 msgid "Country:"
 msgstr "Land:"
 
@@ -353,7 +345,7 @@ msgstr "Land:"
 msgid "Create new translations project"
 msgstr "Stofna nýtt þýðingarverkefni"
 
-#: ../src/resources/prefs.xrc:292
+#: ../src/resources/prefs.xrc:301
 msgid "Database"
 msgstr "Gagnagrunnur"
 
@@ -362,7 +354,7 @@ msgstr "Gagnagrunnur"
 msgid "Database error: %s"
 msgstr "Gagnagrunns villa: %s"
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:447
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:456
 msgid "Delete"
 msgstr "Eyða"
 
@@ -374,19 +366,19 @@ msgstr "Eyða"
 msgid "Delete the project"
 msgstr "Eyða verkefni"
 
-#: ../src/manager.cpp:304
+#: ../src/manager.cpp:319
 msgid "Directories:"
 msgstr "Möppur:"
 
-#: ../src/resources/menus.xrc:109
+#: ../src/resources/menus.xrc:113
 msgid "Display &line numbers"
 msgstr "Sýna &línu númer"
 
-#: ../src/resources/menus.xrc:105
+#: ../src/resources/menus.xrc:109
 msgid "Display &quotes"
 msgstr "Sýna g&æsalappir"
 
-#: ../src/manager.cpp:430
+#: ../src/manager.cpp:445
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -394,7 +386,7 @@ msgstr ""
 "Viltu virkilega framkvæma fjöldauppfærslu á\n"
 "öllum safnskrám í þessu verki?"
 
-#: ../src/edframe.cpp:1964
+#: ../src/edframe.cpp:1999
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -402,11 +394,11 @@ msgid ""
 "are added back in the future."
 msgstr ""
 
-#: ../src/manager.cpp:410
+#: ../src/manager.cpp:425
 msgid "Do you want to delete the project?"
 msgstr "Viltu eyða verkefni?"
 
-#: ../src/resources/prefs.xrc:162
+#: ../src/resources/prefs.xrc:171
 msgid "Don't change format of existing catalogs"
 msgstr "Ekki breyta vistunarformi núverandi safnskráa"
 
@@ -415,7 +407,7 @@ msgstr "Ekki breyta vistunarformi núverandi safnskráa"
 msgid "E&xport..."
 msgstr "&Um..."
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:440
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:449
 msgid "Edit"
 msgstr "Breyta"
 
@@ -443,45 +435,46 @@ msgstr "Rita í skrá með textaritli"
 msgid "Edit the project"
 msgstr "Breyta þýðingarverkefni"
 
-#: ../src/resources/prefs.xrc:68
+#: ../src/resources/prefs.xrc:77
 msgid "Editor"
 msgstr "Ritill"
 
-#: ../src/resources/prefs.xrc:181
+#: ../src/resources/prefs.xrc:190
 msgid "Editor executable:"
 msgstr "Keyrsluskrá ritils:"
 
-#: ../src/resources/prefs.xrc:119
+#: ../src/resources/prefs.xrc:128
 msgid "Enables on-the-fly spellchecking"
 msgstr ""
 
-#: ../src/edframe.cpp:1170
+#: ../src/edframe.cpp:1221
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Færsla / færslur í safnskránni eru líklegast rangar."
 
-#: ../src/edframe.cpp:701
+#: ../src/edframe.cpp:721
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr ""
 
-#: ../src/edframe.cpp:1715
-msgid "Error loading message catalog file '"
+#: ../src/edframe.cpp:1788
+#, fuzzy, c-format
+msgid "Error loading message catalog file '%s'."
 msgstr "Villa við hleðslu á safnskrá '"
 
-#: ../src/fileviewer.cpp:94
+#: ../src/fileviewer.cpp:97
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Villa við opnun á skránni %s!"
 
-#: ../src/catalog.cpp:1266
+#: ../src/catalog.cpp:1269
 msgid "Error saving catalog"
 msgstr "Villa við vistun á safnskrá"
 
-#: ../src/edframe.cpp:1000
+#: ../src/edframe.cpp:1049
 msgid "Export as..."
 msgstr ""
 
-#: ../src/resources/prefs.xrc:173
+#: ../src/resources/prefs.xrc:182
 msgid "External editor"
 msgstr "Utanaðkomandi ritill"
 
@@ -490,7 +483,7 @@ msgstr "Utanaðkomandi ritill"
 msgid "Failed command: %s"
 msgstr "Skipanir greinis:"
 
-#: ../src/digger.cpp:160
+#: ../src/digger.cpp:131
 #, fuzzy
 msgid "Failed to load extracted catalog."
 msgstr "Skráin '%s' er ekki safnskrá."
@@ -500,16 +493,12 @@ msgstr "Skráin '%s' er ekki safnskrá."
 msgid "Failed to merge gettext catalogs."
 msgstr "Skráin '%s' er ekki safnskrá."
 
-#: ../src/digger.cpp:94 ../src/digger.cpp:105
-msgid "Failed to read extracted catalog."
-msgstr ""
-
-#: ../src/edframe.cpp:876 ../src/edframe.cpp:920
+#: ../src/edframe.cpp:931 ../src/edframe.cpp:974
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Skráin '%s' fannst ekki."
 
-#: ../src/edframe.cpp:893
+#: ../src/edframe.cpp:948
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "Skráin '%s' er ekki safnskrá."
@@ -547,16 +536,16 @@ msgstr "Finna í þýðingum"
 msgid "Find..."
 msgstr "Finna..."
 
-#: ../src/resources/prefs.xrc:221
+#: ../src/resources/prefs.xrc:230
 msgid "Fonts"
 msgstr "Letur"
 
-#: ../src/edframe.cpp:2504
+#: ../src/edframe.cpp:2552
 #, c-format
 msgid "Form %i"
 msgstr ""
 
-#: ../src/edframe.cpp:2506
+#: ../src/edframe.cpp:2554
 #, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr ""
@@ -565,50 +554,50 @@ msgstr ""
 msgid "Fullscreen view"
 msgstr "Heilskjá sýn"
 
-#: ../src/manager.cpp:253 ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:266 ../src/resources/toolbar.xrc:28
 msgid "Fuzzy"
 msgstr "Óskýr"
 
-#: ../src/export_html.cpp:180
+#: ../src/export_html.cpp:183
 #, fuzzy
 msgid "Fuzzy translation"
 msgstr "Þýðing"
 
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:960
+#: ../src/edframe.cpp:885 ../src/edframe.cpp:1013
 msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU Gettext safnskrár (*.po)|*.po|Allar skrár (*.*)|*.*"
 
-#: ../src/edframe.cpp:1053 ../src/edframe.cpp:1190
+#: ../src/edframe.cpp:1101 ../src/edframe.cpp:1239
 msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU Gettext skapalón (*.po)|*.po|Allar skrár (*.*)|*.*"
 
-#: ../src/resources/menus.xrc:134
+#: ../src/resources/menus.xrc:138
 msgid "GNU gettext documentation"
 msgstr "GNU gettext hjálpargögn"
 
-#: ../src/resources/prefs.xrc:678
+#: ../src/resources/prefs.xrc:687
 msgid "Generate TM database"
 msgstr "Byggja upp TM gagnagrunn"
 
-#: ../src/resources/prefs.xrc:336
+#: ../src/resources/prefs.xrc:345
 msgid "Generate database"
 msgstr "Búa til gagnagrunn"
 
-#: ../src/edframe.cpp:1252
+#: ../src/edframe.cpp:1291
 msgid "Gettext syntax error"
 msgstr ""
 
-#: ../src/edframe.cpp:2572
+#: ../src/edframe.cpp:2620
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
 msgstr ""
 
-#: ../src/edframe.cpp:2569
+#: ../src/edframe.cpp:2617
 #, c-format
 msgid "Go to bookmark %i\tCtrl-Alt-%i"
 msgstr ""
 
-#: ../src/edframe.cpp:1002
+#: ../src/edframe.cpp:1051
 msgid "HTML file (*.html)|*.html"
 msgstr ""
 
@@ -616,32 +605,32 @@ msgstr ""
 msgid "Identity"
 msgstr "Auðkenni"
 
-#: ../src/resources/prefs.xrc:111
+#: ../src/resources/prefs.xrc:120
 msgid "If checked, the comment window will be editable."
 msgstr ""
 
-#: ../src/resources/prefs.xrc:529
+#: ../src/resources/prefs.xrc:538
 msgid "Invocation:"
 msgstr "Ræsing:"
 
-#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:174
+#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:175
 msgid "Keywords"
 msgstr "Lykilorð"
 
-#: ../src/chooselang.cpp:161
+#: ../src/chooselang.cpp:162
 msgid "Language selection"
 msgstr "Valið tungumál"
 
-#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:497
-#: ../src/resources/prefs.xrc:501 ../src/resources/settings.xrc:61
+#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:506
+#: ../src/resources/prefs.xrc:510 ../src/resources/settings.xrc:62
 msgid "Language:"
 msgstr "Tungumál:"
 
-#: ../src/manager.cpp:255
+#: ../src/manager.cpp:268
 msgid "Last modified"
 msgstr "Síðast breytt"
 
-#: ../src/edlistctrl.cpp:214 ../src/fileviewer.cpp:103
+#: ../src/edlistctrl.cpp:230 ../src/fileviewer.cpp:106
 msgid "Line"
 msgstr "Lína"
 
@@ -650,15 +639,15 @@ msgstr "Lína"
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr ""
 
-#: ../src/resources/prefs.xrc:139
+#: ../src/resources/prefs.xrc:148
 msgid "Line endings format:"
 msgstr "Form línuendinga:"
 
-#: ../src/resources/prefs.xrc:513
+#: ../src/resources/prefs.xrc:522
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Listi yfir skjalform aðskilið með semikommu (dæmi. *.cpp, *.h):"
 
-#: ../src/resources/prefs.xrc:149
+#: ../src/resources/prefs.xrc:158
 msgid "Macintosh"
 msgstr "Macintosh"
 
@@ -667,15 +656,15 @@ msgstr "Macintosh"
 msgid "Malformed header: '%s'"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:357
+#: ../src/resources/prefs.xrc:366
 msgid "Max. # of missing words:"
 msgstr "Hámarksfj. týndra orða:"
 
-#: ../src/resources/prefs.xrc:379
+#: ../src/resources/prefs.xrc:388
 msgid "Max. difference in sentence length:"
 msgstr "Hámarksmismunur í lengd setninga:"
 
-#: ../src/catalog.cpp:1422
+#: ../src/catalog.cpp:1425
 msgid "Merging differences..."
 msgstr "Samfletti mismunum..."
 
@@ -687,15 +676,15 @@ msgstr "Flytja niður"
 msgid "Move up"
 msgstr "Flytja upp"
 
-#: ../src/prefsdlg.cpp:55
+#: ../src/prefsdlg.cpp:59
 msgid "My Languages"
 msgstr "Tungumálin mín"
 
-#: ../src/manager.cpp:307
+#: ../src/manager.cpp:322
 msgid "My Project"
 msgstr "Verkið mitt"
 
-#: ../src/resources/prefs.xrc:103
+#: ../src/resources/prefs.xrc:112
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -705,7 +694,7 @@ msgstr ""
 "örvar til að flakka með lyklaborði, en þú getur líka slegið inn texta "
 "samstundis án þess að þurfa að þrýsta á TAB til að breyta fókus."
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:435
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:444
 msgid "New"
 msgstr "Nýr"
 
@@ -726,27 +715,26 @@ msgstr "Nýir strengir"
 msgid "Next >"
 msgstr "Næsta >"
 
-#: ../src/fileviewer.cpp:144
+#: ../src/fileviewer.cpp:147
 msgid "No editor specified. Please set it in Preferences dialog."
 msgstr "Engin ritill tilgreindur. Vinsamlegast settu ritil í forstillingum."
 
-#: ../src/digger.cpp:250
+#: ../src/digger.cpp:218
 msgid "No files found in: "
 msgstr "Engar skrár fundust í:"
 
-#: ../src/edframe.cpp:1268
+#: ../src/edframe.cpp:1308
 msgid "No references to this string found."
 msgstr "Engar tilvísanir fundust tengdum þessum streng."
 
-#: ../src/export_html.cpp:152
+#: ../src/export_html.cpp:155
 #, fuzzy
 msgid "Notes"
 msgstr "Letur"
 
-#: ../src/resources/about.xrc:50 ../src/resources/comment.xrc:29
-#: ../src/resources/manager.xrc:103 ../src/resources/prefs.xrc:473
-#: ../src/resources/prefs.xrc:615 ../src/resources/settings.xrc:185
-#: ../src/resources/summary.xrc:71
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:104
+#: ../src/resources/prefs.xrc:482 ../src/resources/prefs.xrc:624
+#: ../src/resources/settings.xrc:186 ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "OK"
 
@@ -759,48 +747,48 @@ msgstr "Úreltir strengir"
 msgid "Open"
 msgstr "&Opna"
 
-#: ../src/edframe.cpp:839 ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:883 ../src/resources/toolbar.xrc:13
 msgid "Open catalog"
 msgstr "Opna safnskrá"
 
-#: ../src/edframe.cpp:1051 ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1099 ../src/edframe.cpp:1237
 msgid "Open catalog template"
 msgstr "Opna safnskráarskapalón"
 
-#: ../src/resources/prefs.xrc:94
+#: ../src/resources/prefs.xrc:103
 msgid "Open catalogs manager on Poedit startup"
 msgstr "Opna safnskrástjóra við ræsingu Poedit"
 
-#: ../src/resources/prefs.xrc:211
+#: ../src/resources/prefs.xrc:220
 msgid "Open source files in editor, not in file viewer"
 msgstr "Opna kóðaskrár í ritil, en ekki í rýni"
 
-#: ../src/export_html.cpp:145 ../src/edlistctrl.cpp:211
+#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:227
 msgid "Original string"
 msgstr "Upprunalegi strengur"
 
-#: ../src/resources/prefs.xrc:533
+#: ../src/resources/prefs.xrc:542
 msgid "Parser command:"
 msgstr "Skipanir greinis:"
 
-#: ../src/resources/prefs.xrc:492
+#: ../src/resources/prefs.xrc:501
 msgid "Parser setup"
 msgstr "Uppsetning greinis"
 
-#: ../src/resources/prefs.xrc:410
+#: ../src/resources/prefs.xrc:419
 msgid "Parsers"
 msgstr "Greinar"
 
-#: ../src/digger.cpp:135
+#: ../src/digger.cpp:106
 #, fuzzy, c-format
 msgid "Parsing %s files..."
 msgstr "Les skrár..."
 
-#: ../src/resources/prefs.xrc:295
+#: ../src/resources/prefs.xrc:304
 msgid "Path to DB:"
 msgstr "Stígur að Gagnagrunni:"
 
-#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:153
+#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:154
 msgid "Paths"
 msgstr "Stígur"
 
@@ -808,7 +796,7 @@ msgstr "Stígur"
 msgid "Personalize"
 msgstr "Persónuvæða"
 
-#: ../src/resources/prefs.xrc:329
+#: ../src/resources/prefs.xrc:338
 msgid "Pick language from the list of known languages"
 msgstr "Veldu tungumál út frá listanum yfir þekkt tungumál"
 
@@ -818,27 +806,27 @@ msgstr ""
 "Bættu við þeim möppum sem hafa að geyma viðeigandi tungumálaskrár í þinni "
 "tölvu:"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "Please choose the reference you want to show:"
 msgstr "Vinsamlegast veldu tilvísun sem þú vilt sjá:"
 
-#: ../src/prefsdlg.cpp:341
+#: ../src/prefsdlg.cpp:355
 msgid "Please select language ISO code:"
 msgstr "Vinsamlegast veldu ISO kóða tungumáls:"
 
-#: ../src/edframe.cpp:759
+#: ../src/edframe.cpp:801
 msgid "Please select language code:"
 msgstr "Veldu tungumálakóða:"
 
-#: ../src/resources/settings.xrc:109
+#: ../src/resources/settings.xrc:110
 msgid "Plural Forms:"
 msgstr ""
 
-#: ../src/edframe.cpp:470
+#: ../src/edframe.cpp:489
 msgid "Plural:"
 msgstr ""
 
-#: ../src/edframe.cpp:337
+#: ../src/edframe.cpp:359
 msgid "Poedit"
 msgstr "Poedit"
 
@@ -846,7 +834,7 @@ msgstr "Poedit"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Safnskrástjóri"
 
-#: ../src/digger.cpp:251
+#: ../src/digger.cpp:219
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Poedit tókst ekki að finna neinar skrár í þessum möppum."
 
@@ -854,11 +842,11 @@ msgstr "Poedit tókst ekki að finna neinar skrár í þessum möppum."
 msgid "Preferences"
 msgstr "Forstillingar"
 
-#: ../src/resources/prefs.xrc:660
+#: ../src/resources/prefs.xrc:669
 msgid "Proceed"
 msgstr "Halda áfram"
 
-#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:121
+#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:122
 msgid "Project info"
 msgstr "Upplýsingar um verk"
 
@@ -870,20 +858,20 @@ msgstr "Nafn verks og útgáfunúmer:"
 msgid "Project name:"
 msgstr "Nafn á verki:"
 
-#: ../src/edframe.cpp:1965
+#: ../src/edframe.cpp:2000
 #, fuzzy
 msgid "Purge deleted translations"
 msgstr "&Skyggður þýðendalisti"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "References"
 msgstr "Tilvísanir"
 
-#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
+#: ../src/edframe.cpp:2090 ../src/edframe.cpp:2094
 msgid "References:"
 msgstr "Tilvísanir:"
 
-#: ../src/resources/prefs.xrc:337
+#: ../src/resources/prefs.xrc:346
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr "Endurbyggja þýðingarminni út frá safnskrám frá slóðum hér að ofan."
 
@@ -900,7 +888,7 @@ msgstr "&Vista"
 msgid "Save &as..."
 msgstr "Vist&a sem..."
 
-#: ../src/edframe.cpp:959
+#: ../src/edframe.cpp:1012
 msgid "Save as..."
 msgstr "Vista sem..."
 
@@ -908,8 +896,8 @@ msgstr "Vista sem..."
 msgid "Save catalog"
 msgstr "Vista safnskrá"
 
-#: ../src/edframe.cpp:796 ../src/edframe.cpp:822 ../src/edframe.cpp:859
-#: ../src/edframe.cpp:905 ../src/edframe.cpp:1029
+#: ../src/edframe.cpp:841 ../src/edframe.cpp:866 ../src/edframe.cpp:907
+#: ../src/edframe.cpp:959 ../src/edframe.cpp:1077
 msgid "Save changes"
 msgstr "Vista breytingar"
 
@@ -917,7 +905,7 @@ msgstr "Vista breytingar"
 msgid "Scanning file: "
 msgstr "Les skrá:"
 
-#: ../src/digger.cpp:121
+#: ../src/digger.cpp:92
 msgid "Scanning files..."
 msgstr "Les skrár..."
 
@@ -925,29 +913,29 @@ msgstr "Les skrár..."
 msgid "Search Paths"
 msgstr "Leitarstígur"
 
-#: ../src/edframe.cpp:758
+#: ../src/edframe.cpp:800
 msgid "Select catalog's language"
 msgstr "Veldu tungumál safnskrár"
 
-#: ../src/prefsdlg.cpp:354 ../src/manager.cpp:284
+#: ../src/prefsdlg.cpp:368 ../src/manager.cpp:299
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "Veldu möppu"
 
-#: ../src/prefsdlg.cpp:340
+#: ../src/prefsdlg.cpp:354
 msgid "Select language"
 msgstr "Veldu tungumál"
 
-#: ../src/chooselang.cpp:160
+#: ../src/chooselang.cpp:161
 msgid "Select your prefered language"
 msgstr "Veldu þitt óskaða tungumál"
 
-#: ../src/edframe.cpp:2571
+#: ../src/edframe.cpp:2619
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr ""
 
-#: ../src/edframe.cpp:2568
+#: ../src/edframe.cpp:2616
 #, c-format
 msgid "Set bookmark %i\tCtrl-%i"
 msgstr ""
@@ -956,33 +944,33 @@ msgstr ""
 msgid "Settings"
 msgstr "Stillingar"
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
 msgid "Setup"
 msgstr "Uppsetning"
 
-#: ../src/resources/menus.xrc:113
+#: ../src/resources/menus.xrc:117
 msgid "Show &comment window"
 msgstr "Sýna &athugarsemdarglugga"
 
-#: ../src/resources/menus.xrc:117
+#: ../src/resources/menus.xrc:121
 #, fuzzy
 msgid "Show automatic c&omments window"
 msgstr "Sýna &athugarsemdarglugga"
 
-#: ../src/resources/prefs.xrc:87
+#: ../src/resources/prefs.xrc:96
 msgid "Show summary after catalog update"
 msgstr "Sýna samantekt eftur uppfærslu safnskráa"
 
-#: ../src/edframe.cpp:469
+#: ../src/edframe.cpp:488
 msgid "Singular:"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:590 ../src/resources/settings.xrc:97
+#: ../src/resources/prefs.xrc:599 ../src/resources/settings.xrc:98
 #, fuzzy
 msgid "Source code charset:"
 msgstr "Kóðagreinar:"
 
-#: ../src/resources/prefs.xrc:416
+#: ../src/resources/prefs.xrc:425
 msgid "Source code parsers:"
 msgstr "Kóðagreinar:"
 
@@ -998,15 +986,15 @@ msgstr ""
 msgid "String to find:"
 msgstr "Finna streng:"
 
-#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:47
+#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:48
 msgid "Team's email address:"
 msgstr "Netfang teymis:"
 
-#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:33
+#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:34
 msgid "Team:"
 msgstr "Teymi:"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1268
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -1039,17 +1027,18 @@ msgstr ""
 "Þessir strengir fundust í kóða, en fundust ekki í safnskrá.\n"
 "Poedit mun nú bæta við þessum strengjum."
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
+#, fuzzy
 msgid ""
 "This is first time you run Poedit.\n"
-"Please fill in your name and e-mail address.\n"
+"Please fill in your name and email address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
 "Þetta er fyrsta skipti sem þú keyrir Poedit.\n"
 "Vinsamlegast sláðu inn nafn og netfang.\n"
 "(Þessar upplýsingar verða einungis notaðar í safnskráarhöfuð)"
 
-#: ../src/resources/prefs.xrc:545
+#: ../src/resources/prefs.xrc:554
 #, fuzzy
 msgid ""
 "This is the command used to launch the parser.\n"
@@ -1061,7 +1050,7 @@ msgstr ""
 "%o flettir útgangsnafni skráar, %K í lista af lykilorðum,\n"
 "%F í lista af inngangsskjölum ( sjá hér að neðan)"
 
-#: ../src/resources/prefs.xrc:602
+#: ../src/resources/prefs.xrc:611
 #, fuzzy, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1070,7 +1059,7 @@ msgstr ""
 "Þetta mun verða viðhengt í skipanaham einusinni\n"
 "fyrir hverja inngangsskrá. %f framlengir skráarnafni."
 
-#: ../src/resources/prefs.xrc:583
+#: ../src/resources/prefs.xrc:592
 #, fuzzy, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1079,7 +1068,7 @@ msgstr ""
 "Þetta mun verða viðhengt í skipanaham einusinni\n"
 "fyrir hverja inngangsskrá. %f framlengir skráarnafni."
 
-#: ../src/resources/prefs.xrc:564
+#: ../src/resources/prefs.xrc:573
 #, fuzzy
 msgid ""
 "This will be attached to the command line once\n"
@@ -1092,15 +1081,15 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Fletta ef valin strengur inniheldur óljósa þýðingu"
 
-#: ../src/manager.cpp:251
+#: ../src/manager.cpp:264
 msgid "Total"
 msgstr "Alls"
 
-#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:212
+#: ../src/export_html.cpp:151 ../src/edlistctrl.cpp:228
 msgid "Translation"
 msgstr "Þýðing"
 
-#: ../src/resources/prefs.xrc:285
+#: ../src/resources/prefs.xrc:294
 msgid "Translation Memory"
 msgstr "Þýðendaminni"
 
@@ -1133,11 +1122,11 @@ msgstr "Óþekktur tungumálakóði '%s' í registry."
 msgid "Undo"
 msgstr "Afturkalla"
 
-#: ../src/resources/prefs.xrc:147
+#: ../src/resources/prefs.xrc:156
 msgid "Unix"
 msgstr "Unix"
 
-#: ../src/manager.cpp:252
+#: ../src/manager.cpp:265
 msgid "Untrans"
 msgstr "Óþýtt"
 
@@ -1159,7 +1148,7 @@ msgstr "Uppfæra allar safnskrár í verkefni"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Uppfæra safnskrár - samræma við kóðaskrár"
 
-#: ../src/resources/menus.xrc:81
+#: ../src/resources/menus.xrc:85
 msgid "Update from &POT file..."
 msgstr "Uppfæra frá &POT skrá..."
 
@@ -1171,24 +1160,24 @@ msgstr "Samantekt uppfærslu"
 msgid "Update translation memory"
 msgstr "Uppfæra þýðendaminni"
 
-#: ../src/catalog.cpp:1382
+#: ../src/catalog.cpp:1385
 msgid "Updating catalog..."
 msgstr "Uppfæri safnskrá..."
 
-#: ../src/edframe.cpp:1172
+#: ../src/edframe.cpp:1223
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr ""
 "Uppfærsla á safnskrá mistókst. Ýttu á 'Meira>>' fyrir frekari upplýsingar."
 
-#: ../src/resources/prefs.xrc:253
+#: ../src/resources/prefs.xrc:262
 msgid "Use custom font for text fields"
 msgstr "Nota sérvalið letur fyrir textareiti"
 
-#: ../src/resources/prefs.xrc:227
+#: ../src/resources/prefs.xrc:236
 msgid "Use custom font for translations list"
 msgstr "Nota sérvalið letur fyrir þýðendalista"
 
-#: ../src/resources/settings.xrc:161
+#: ../src/resources/settings.xrc:162
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
@@ -1200,42 +1189,63 @@ msgstr ""
 msgid "Whole words only"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:148
+#: ../src/resources/prefs.xrc:157
 msgid "Windows"
 msgstr "Gluggar"
 
-#: ../src/edframe.cpp:886
+#: ../src/edframe.cpp:941
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Þú getur sleppt fleiri en einni skrá í Poedit gluggan."
 
-#: ../src/chooselang.cpp:175
+#: ../src/chooselang.cpp:176
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Þú þarft að endurræsa Poedit til að breytingar taki gildi."
 
-#: ../src/resources/prefs.xrc:34
-msgid "Your e-mail address:"
+#: ../src/resources/prefs.xrc:43
+#, fuzzy
+msgid "Your email address:"
 msgstr "Netfang:"
 
 #: ../src/resources/prefs.xrc:22
+msgid ""
+"Your name and email set below are only used\n"
+"to set the Last-Translator header of GNU gettext files."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:30
 msgid "Your name:"
 msgstr "Nafn:"
 
-#: ../src/edframe.cpp:1801
+#: ../src/edframe.cpp:1840
 #, fuzzy, c-format
 msgid "[checking translations: %i left]"
 msgstr "&Skyggður þýðendalisti"
 
-#: ../src/resources/prefs.xrc:150
+#: ../src/resources/prefs.xrc:159
 msgid "current platform's default"
 msgstr "sjálfgefið fyrir þetta stýrikerfi"
 
-#: ../src/edframe.cpp:2093
+#: ../src/edframe.cpp:2128
 msgid "none"
 msgstr "ekkert fannst"
 
-#: ../src/edframe.cpp:2108
-msgid "version"
-msgstr "útgáfa"
+#: ../src/edframe.cpp:2144
+#, fuzzy
+msgid "translations editor"
+msgstr "Þýðendaminni"
+
+#, fuzzy
+#~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
+#~ msgstr "%i strengir (%i óljósir, %i óþýddir)"
+
+#~ msgid "'."
+#~ msgstr "'."
+
+#~ msgid "About Poedit"
+#~ msgstr "Um Poedit"
+
+#~ msgid "version"
+#~ msgstr "útgáfa"
 
 #~ msgid " files..."
 #~ msgstr "skrár..."

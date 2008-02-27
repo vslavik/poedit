@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.3.9\n"
+"Project-Id-Version: Poedit 1.4.0pre_1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-15 10:08+0100\n"
+"POT-Creation-Date: 2008-02-27 17:02+0100\n"
 "PO-Revision-Date: 2006-09-27 16:09+0530\n"
 "Last-Translator: Priyank Bolia <soft@priyank.in>\n"
 "Language-Team: हिन्दी (Hindi) <dysxhi@yahoo.co.in>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3\n"
 
-#: ../src/edframe.cpp:1824
+#: ../src/edframe.cpp:1863
 msgid " (modified)"
 msgstr " (परिवर्तित)"
 
-#: ../src/edframe.cpp:1794
+#: ../src/export_html.cpp:137 ../src/edframe.cpp:1833
 #, fuzzy, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
@@ -31,28 +31,23 @@ msgstr "%i श्रेणियां (%i अस्पष्ट, %i खरा�
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i पंक्तिया, फ़ाइल '%s' से सही लोड नही की जा सकी।"
 
-#: ../src/export_html.cpp:135
-#, c-format
-msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i श्रेणियां (%i अस्पष्ट, %i खराब संकेत, %i अ-अनुवादित)"
-
-#: ../src/resources/menus.xrc:139
+#: ../src/resources/menus.xrc:143
 msgid "&About..."
 msgstr "के बारे में (&A)..."
 
-#: ../src/resources/menus.xrc:84
+#: ../src/resources/menus.xrc:88
 msgid "&Automatically translate using TM"
 msgstr "अनुवाद-प्रबंधक का उपयोग करने स्वचलित अनुवाद (&A)"
 
-#: ../src/edframe.cpp:2588
+#: ../src/edframe.cpp:2636
 msgid "&Bookmarks"
 msgstr "पृष्ठ स्मृति (&B)"
 
-#: ../src/resources/manager.xrc:130 ../src/resources/menus.xrc:39
+#: ../src/resources/manager.xrc:131 ../src/resources/menus.xrc:39
 msgid "&Close"
 msgstr "बन्द करें (&C)"
 
-#: ../src/resources/menus.xrc:128
+#: ../src/resources/menus.xrc:132
 msgid "&Contents..."
 msgstr "विषयवस्तु (&C)..."
 
@@ -60,7 +55,7 @@ msgstr "विषयवस्तु (&C)..."
 msgid "&Edit"
 msgstr "संपादन (&E)"
 
-#: ../src/edframe.cpp:397 ../src/resources/manager.xrc:123
+#: ../src/edframe.cpp:418 ../src/resources/manager.xrc:124
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "फ़ाइल (&F)"
@@ -69,11 +64,11 @@ msgstr "फ़ाइल (&F)"
 msgid "&Find..."
 msgstr "खोज (&F)..."
 
-#: ../src/resources/menus.xrc:97 ../src/resources/menus.xrc:101
+#: ../src/resources/menus.xrc:101 ../src/resources/menus.xrc:105
 msgid "&Fullscreen view"
 msgstr "पूर्णस्क्रीन अवलोकन (&F)"
 
-#: ../src/resources/menus.xrc:141
+#: ../src/resources/menus.xrc:145
 msgid "&Help"
 msgstr "सहायता (&H)"
 
@@ -86,11 +81,16 @@ msgstr "नया सूचीपत्र (&N)..."
 msgid "&Open..."
 msgstr "खोलें (&O)"
 
-#: ../src/resources/manager.xrc:126 ../src/resources/menus.xrc:35
+#: ../src/resources/menus.xrc:74
+#, fuzzy
+msgid "&Preferences"
+msgstr "वरीयतायें"
+
+#: ../src/resources/manager.xrc:127 ../src/resources/menus.xrc:35
 msgid "&Preferences..."
 msgstr "वरीयतायें (&P)..."
 
-#: ../src/resources/menus.xrc:87
+#: ../src/resources/menus.xrc:91
 msgid "&Purge deleted translations"
 msgstr "मिटाएँ गये अनुवाद निकाल दे (&P)"
 
@@ -98,11 +98,11 @@ msgstr "मिटाएँ गये अनुवाद निकाल दे (
 msgid "&Save"
 msgstr "सुरक्षित करें (&S)"
 
-#: ../src/resources/menus.xrc:91
+#: ../src/resources/menus.xrc:95
 msgid "&Settings..."
 msgstr "समायोजनायें (&S)..."
 
-#: ../src/resources/menus.xrc:121
+#: ../src/resources/menus.xrc:125
 msgid "&Shaded translations list"
 msgstr "छायांकित अनुवादों की सूची (&S)"
 
@@ -110,28 +110,24 @@ msgstr "छायांकित अनुवादों की सूची (&
 msgid "&Show references"
 msgstr "संदर्भों को दिखाएँ (&S)"
 
-#: ../src/resources/menus.xrc:78
+#: ../src/resources/menus.xrc:82
 msgid "&Update from sources"
 msgstr "स्रोतों से अपडेट करें (&U)"
 
-#: ../src/resources/menus.xrc:95
+#: ../src/resources/menus.xrc:99
 msgid "&View"
 msgstr "अवलोकन (&V)"
 
-#: ../src/catalog.cpp:1450
+#: ../src/catalog.cpp:1453
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' एक वैध पॉट फ़ाइल नहीं है।"
 
-#: ../src/edframe.cpp:1715
-msgid "'."
-msgstr "'."
-
-#: ../src/resources/prefs.xrc:202
+#: ../src/resources/prefs.xrc:211
 msgid "(%f will be substituted with filename, %l with line number)"
 msgstr "(%f को फ़ाइलनाम से बदला जायेगा, %l को पंक्ति संख्या से)"
 
-#: ../src/summarydlg.cpp:66
+#: ../src/summarydlg.cpp:71
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i नये, %i अप्रचलित)"
@@ -144,7 +140,7 @@ msgstr "(० नये, ० अप्रचलित)"
 msgid "(Use default language)"
 msgstr "(डिफ़ाल्ट भाषा का उपयोग करें)"
 
-#: ../src/edframe.cpp:750
+#: ../src/edframe.cpp:792
 msgid "(none of these)"
 msgstr "(इनमें से कोई नहीं)"
 
@@ -152,19 +148,15 @@ msgstr "(इनमें से कोई नहीं)"
 msgid "< Previous"
 msgstr "< पिछला"
 
-#: ../src/manager.cpp:381
+#: ../src/manager.cpp:396
 msgid "<unnamed>"
 msgstr "<बेनाम>"
 
-#: ../src/resources/about.xrc:4
-msgid "About Poedit"
-msgstr "Poedit के बारे में"
-
-#: ../src/resources/prefs.xrc:328
+#: ../src/resources/prefs.xrc:337
 msgid "Add"
 msgstr "जोड़ें"
 
-#: ../src/resources/manager.xrc:89
+#: ../src/resources/manager.xrc:90
 msgid "Add directory to the list"
 msgstr "इस सूची में निर्देशिका को जोड़ें"
 
@@ -172,65 +164,65 @@ msgstr "इस सूची में निर्देशिका को ज�
 msgid "Add files"
 msgstr "फ़ाइलों को जोड़ें"
 
-#: ../src/resources/prefs.xrc:646
+#: ../src/resources/prefs.xrc:655
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "निर्देशिकाओं की सूची में पथ जोड़े जहाँ सूचीपत्र रहता है।"
 
-#: ../src/resources/prefs.xrc:101
+#: ../src/resources/prefs.xrc:110
 msgid "Always change focus to text input field"
 msgstr "पाठ इनपुट प्रविष्टी पर केन्द्रीभूत को सदैव परिवर्तित करें"
 
-#: ../src/resources/prefs.xrc:571
+#: ../src/resources/prefs.xrc:580
 msgid "An item in input files list:"
 msgstr "इनपुट फ़ाइलों की सूची में एक आयट्म:"
 
-#: ../src/resources/prefs.xrc:552
+#: ../src/resources/prefs.xrc:561
 msgid "An item in keywords list:"
 msgstr "प्रमुखशब्दों की सूची में एक आयट्म:"
 
-#: ../src/resources/prefs.xrc:118
+#: ../src/resources/prefs.xrc:127
 msgid "Automatic spellchecking"
 msgstr "स्वचलित वर्तनी जाँच"
 
-#: ../src/export_html.cpp:174
+#: ../src/export_html.cpp:177
 msgid "Automatic translation"
 msgstr "स्वचलित अनुवाद"
 
-#: ../src/edframe.cpp:2070 ../src/edframe.cpp:2074
+#: ../src/edframe.cpp:2105 ../src/edframe.cpp:2109
 msgid "Automatic translations:"
 msgstr "स्वचलित रूप से किये गये अनुवाद:"
 
-#: ../src/resources/prefs.xrc:60
+#: ../src/resources/prefs.xrc:69
 #, fuzzy
 msgid "Automatically check for new version of Poedit"
 msgstr "सुरक्षित करने पर .mo फ़ाइल को स्वतः ही संकलित करें"
 
-#: ../src/resources/prefs.xrc:78
+#: ../src/resources/prefs.xrc:87
 msgid "Automatically compile .mo file on save"
 msgstr "सुरक्षित करने पर .mo फ़ाइल को स्वतः ही संकलित करें"
 
-#: ../src/resources/prefs.xrc:399
+#: ../src/resources/prefs.xrc:408
 msgid "Automatically translate when updating catalog"
 msgstr "सूचीपत्र को अपडेट करते समय अनुवाद को स्वतः ही करें"
 
-#: ../src/edframe.cpp:2022
+#: ../src/edframe.cpp:2057
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "स्वतः अनुवादित %u श्रेणियां"
 
-#: ../src/edframe.cpp:2007
+#: ../src/edframe.cpp:2042
 msgid "Automatically translating..."
 msgstr "स्वचलित रूप से अनुवाद हो रहा है..."
 
-#: ../src/manager.cpp:254
+#: ../src/manager.cpp:267
 msgid "Bad Tokens"
 msgstr "खराब संकेत"
 
-#: ../src/resources/settings.xrc:131
+#: ../src/resources/settings.xrc:132
 msgid "Base path:"
 msgstr "मूल पथ:"
 
-#: ../src/resources/prefs.xrc:74
+#: ../src/resources/prefs.xrc:83
 msgid "Behavior"
 msgstr "व्यवहार"
 
@@ -243,23 +235,23 @@ msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr "खंडित सूचीपत्र फ़ाइल: एक वचन रूप msgstr का प्रयोग msgid_plural के साथ"
 
-#: ../src/resources/manager.xrc:88 ../src/resources/prefs.xrc:311
-#: ../src/resources/prefs.xrc:645 ../src/resources/tm_update.xrc:37
+#: ../src/resources/manager.xrc:89 ../src/resources/prefs.xrc:320
+#: ../src/resources/prefs.xrc:654 ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "ब्राउज"
 
-#: ../src/resources/menus.xrc:75
+#: ../src/resources/menus.xrc:79
 msgid "C&atalog"
 msgstr "सूचीपत्र (&a)"
 
-#: ../src/resources/prefs.xrc:131
+#: ../src/resources/prefs.xrc:140
 msgid "CR/LF conversion"
 msgstr "CR/LF रूपांतरण"
 
-#: ../src/resources/comment.xrc:37 ../src/resources/find.xrc:87
-#: ../src/resources/manager.xrc:111 ../src/resources/prefs.xrc:481
-#: ../src/resources/prefs.xrc:623 ../src/resources/prefs.xrc:668
-#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:193
+#: ../src/resources/comment.xrc:38 ../src/resources/find.xrc:87
+#: ../src/resources/manager.xrc:112 ../src/resources/prefs.xrc:490
+#: ../src/resources/prefs.xrc:632 ../src/resources/prefs.xrc:677
+#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:194
 msgid "Cancel"
 msgstr "निरस्त"
 
@@ -267,7 +259,7 @@ msgstr "निरस्त"
 msgid "Cannot create database directory!"
 msgstr "डाटाबेस निर्देशिका का निर्माण नहीं हो सका!"
 
-#: ../src/gexecute.cpp:174 ../src/gexecute.cpp:230
+#: ../src/gexecute.cpp:172 ../src/gexecute.cpp:228
 msgid "Cannot execute program: "
 msgstr "कार्यक्रम का निष्पादन नहीं हो सका:"
 
@@ -279,12 +271,12 @@ msgstr "आरपीएम फ़ाइल से सूचीपत्रों �
 msgid "Case sensitive"
 msgstr "छोटा-बड़ा संवेदी"
 
-#: ../src/manager.cpp:250
+#: ../src/manager.cpp:263
 msgid "Catalog"
 msgstr "सूचीपत्र"
 
-#: ../src/edframe.cpp:795 ../src/edframe.cpp:821 ../src/edframe.cpp:858
-#: ../src/edframe.cpp:904 ../src/edframe.cpp:1028
+#: ../src/edframe.cpp:840 ../src/edframe.cpp:865 ../src/edframe.cpp:906
+#: ../src/edframe.cpp:958 ../src/edframe.cpp:1076
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "सूचीपत्र परिवर्तित हो गया है। क्या आप परिवर्तनों को सुरक्षित करना चाहते है?"
 
@@ -292,23 +284,23 @@ msgstr "सूचीपत्र परिवर्तित हो गया �
 msgid "Catalogs &manager"
 msgstr "सूचीपत्रों का प्रबंधक (&m)"
 
-#: ../src/resources/prefs.xrc:53
+#: ../src/resources/prefs.xrc:62
 msgid "Change UI language"
 msgstr "यूआई भाषा को परिवर्तित करें"
 
-#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:85
+#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:86
 msgid "Charset:"
 msgstr "शब्दसमुच्चय:"
 
-#: ../src/resources/prefs.xrc:244 ../src/resources/prefs.xrc:270
+#: ../src/resources/prefs.xrc:253 ../src/resources/prefs.xrc:279
 msgid "Choose"
 msgstr "चयन करें"
 
-#: ../src/resources/comment.xrc:44
+#: ../src/resources/comment.xrc:45
 msgid "Clear"
 msgstr "साफ़ करें"
 
-#: ../src/resources/comment.xrc:45
+#: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "इस टिप्पणी को साफ़ करें"
 
@@ -317,7 +309,7 @@ msgstr "इस टिप्पणी को साफ़ करें"
 msgid "Comment"
 msgstr "टिप्पणी:"
 
-#: ../src/resources/prefs.xrc:110
+#: ../src/resources/prefs.xrc:119
 msgid "Comment window is editable"
 msgstr "टिप्पणी खिड़की संपादन योग्य है"
 
@@ -325,15 +317,15 @@ msgstr "टिप्पणी खिड़की संपादन योग्य
 msgid "Comment:"
 msgstr "टिप्पणी:"
 
-#: ../src/resources/prefs.xrc:349
+#: ../src/resources/prefs.xrc:358
 msgid "Configuration"
 msgstr "संरचना"
 
-#: ../src/manager.cpp:411 ../src/manager.cpp:431
+#: ../src/manager.cpp:426 ../src/manager.cpp:446
 msgid "Confirmation"
 msgstr "संपुष्टी"
 
-#: ../src/edframe.cpp:2050 ../src/resources/menus.xrc:47
+#: ../src/edframe.cpp:2085 ../src/resources/menus.xrc:47
 msgid "Copy original to translation field"
 msgstr "मूल की अनुवाद प्रविष्टी में प्रतिलिपि बनाएँ"
 
@@ -342,7 +334,7 @@ msgstr "मूल की अनुवाद प्रविष्टी मे�
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr " फ़ाइल %s लोड करने में असमर्थ, विकृत संभावित।"
 
-#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:73
+#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:74
 msgid "Country:"
 msgstr "देश:"
 
@@ -350,7 +342,7 @@ msgstr "देश:"
 msgid "Create new translations project"
 msgstr "नये अनुवाद परियोजना का निर्माण करें"
 
-#: ../src/resources/prefs.xrc:292
+#: ../src/resources/prefs.xrc:301
 msgid "Database"
 msgstr "डाटाबेस"
 
@@ -359,7 +351,7 @@ msgstr "डाटाबेस"
 msgid "Database error: %s"
 msgstr "डाटाबेस त्रुटि: %s"
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:447
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:456
 msgid "Delete"
 msgstr "मिटाएँ"
 
@@ -371,19 +363,19 @@ msgstr "आयट्म को मिटाएँ"
 msgid "Delete the project"
 msgstr "परियोजना को मिटाएँ"
 
-#: ../src/manager.cpp:304
+#: ../src/manager.cpp:319
 msgid "Directories:"
 msgstr "निर्देशिकायें:"
 
-#: ../src/resources/menus.xrc:109
+#: ../src/resources/menus.xrc:113
 msgid "Display &line numbers"
 msgstr "पंक्ति संख्याओं को दिखाएँ (&l)"
 
-#: ../src/resources/menus.xrc:105
+#: ../src/resources/menus.xrc:109
 msgid "Display &quotes"
 msgstr "क्वोटों को दिखाएँ (&q)"
 
-#: ../src/manager.cpp:430
+#: ../src/manager.cpp:445
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -391,7 +383,7 @@ msgstr ""
 "क्या आप वास्तव में इस परियोजना के सभी सूचीपत्रों को\n"
 "एकसाथ अपडेट करना चाहते है?"
 
-#: ../src/edframe.cpp:1964
+#: ../src/edframe.cpp:1999
 msgid ""
 "Do you really want to remove all translations that are no longer used from "
 "the catalog?\n"
@@ -403,11 +395,11 @@ msgstr ""
 "अगर आप अनुवाद मिटाना जारी रखतें हें, तो आपको फिर से अनुवाद करना पड़ेगा, अगर वो भविष्य "
 "में जोड़े जाते हें।"
 
-#: ../src/manager.cpp:410
+#: ../src/manager.cpp:425
 msgid "Do you want to delete the project?"
 msgstr "क्या आप इस परियोजना को मिटाना चाहते है?"
 
-#: ../src/resources/prefs.xrc:162
+#: ../src/resources/prefs.xrc:171
 msgid "Don't change format of existing catalogs"
 msgstr "विद्यमान सूचीपत्रों के प्रारूप को परिवर्तित ना करें"
 
@@ -415,7 +407,7 @@ msgstr "विद्यमान सूचीपत्रों के प्र
 msgid "E&xport..."
 msgstr "एक्सपोर्ट (&x)..."
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:440
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:449
 msgid "Edit"
 msgstr "संपादन"
 
@@ -443,45 +435,46 @@ msgstr "पाठ संपादक में इस फ़ाइल का सं
 msgid "Edit the project"
 msgstr "इस परियोजना का संपादन"
 
-#: ../src/resources/prefs.xrc:68
+#: ../src/resources/prefs.xrc:77
 msgid "Editor"
 msgstr "संपादक"
 
-#: ../src/resources/prefs.xrc:181
+#: ../src/resources/prefs.xrc:190
 msgid "Editor executable:"
 msgstr "चलनेयोग्य संपादक कार्यक्रम:"
 
-#: ../src/resources/prefs.xrc:119
+#: ../src/resources/prefs.xrc:128
 msgid "Enables on-the-fly spellchecking"
 msgstr "वर्तनी जाँच को सक्रिय करें"
 
-#: ../src/edframe.cpp:1170
+#: ../src/edframe.cpp:1221
 msgid "Entries in the catalog are probably incorrect."
 msgstr "सम्भवता इस सूचीपत्र में प्रविष्टियां गलत है।"
 
-#: ../src/edframe.cpp:701
+#: ../src/edframe.cpp:721
 #, c-format
 msgid "Error initializing spell checking: %s"
 msgstr "वर्तनी जाँच शुरू करने में त्रुटि: %s"
 
-#: ../src/edframe.cpp:1715
-msgid "Error loading message catalog file '"
+#: ../src/edframe.cpp:1788
+#, fuzzy, c-format
+msgid "Error loading message catalog file '%s'."
 msgstr "संदेश सूचीपत्र फ़ाइल को लोड करने में त्रुटि '"
 
-#: ../src/fileviewer.cpp:94
+#: ../src/fileviewer.cpp:97
 #, c-format
 msgid "Error opening file %s!"
 msgstr "%s फ़ाइल को खोलने में त्रुटि!"
 
-#: ../src/catalog.cpp:1266
+#: ../src/catalog.cpp:1269
 msgid "Error saving catalog"
 msgstr "सूचीपत्र को सुरक्षित करने में त्रुटि"
 
-#: ../src/edframe.cpp:1000
+#: ../src/edframe.cpp:1049
 msgid "Export as..."
 msgstr "इस जैसा एक्सपोर्ट..."
 
-#: ../src/resources/prefs.xrc:173
+#: ../src/resources/prefs.xrc:182
 msgid "External editor"
 msgstr "बाह्य संपादक"
 
@@ -490,7 +483,7 @@ msgstr "बाह्य संपादक"
 msgid "Failed command: %s"
 msgstr "पदभंजन निर्देश:"
 
-#: ../src/digger.cpp:160
+#: ../src/digger.cpp:131
 #, fuzzy
 msgid "Failed to load extracted catalog."
 msgstr "'%s' फ़ाइल एक संदेश सूचीपत्र नहीं है।"
@@ -500,16 +493,12 @@ msgstr "'%s' फ़ाइल एक संदेश सूचीपत्र नह
 msgid "Failed to merge gettext catalogs."
 msgstr "'%s' फ़ाइल एक संदेश सूचीपत्र नहीं है।"
 
-#: ../src/digger.cpp:94 ../src/digger.cpp:105
-msgid "Failed to read extracted catalog."
-msgstr ""
-
-#: ../src/edframe.cpp:876 ../src/edframe.cpp:920
+#: ../src/edframe.cpp:931 ../src/edframe.cpp:974
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "'%s' विद्यमान नहीं है।"
 
-#: ../src/edframe.cpp:893
+#: ../src/edframe.cpp:948
 #, c-format
 msgid "File '%s' is not message catalog."
 msgstr "'%s' फ़ाइल एक संदेश सूचीपत्र नहीं है।"
@@ -547,16 +536,16 @@ msgstr "अनुवादों में खोजें"
 msgid "Find..."
 msgstr "खोजें..."
 
-#: ../src/resources/prefs.xrc:221
+#: ../src/resources/prefs.xrc:230
 msgid "Fonts"
 msgstr "फ़ॉन्ट"
 
-#: ../src/edframe.cpp:2504
+#: ../src/edframe.cpp:2552
 #, fuzzy, c-format
 msgid "Form %i"
 msgstr "रूप %u"
 
-#: ../src/edframe.cpp:2506
+#: ../src/edframe.cpp:2554
 #, fuzzy, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr "रूप %u (e.g. \"%u\")"
@@ -565,49 +554,49 @@ msgstr "रूप %u (e.g. \"%u\")"
 msgid "Fullscreen view"
 msgstr "पूर्णस्क्रीन अवलोकन"
 
-#: ../src/manager.cpp:253 ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:266 ../src/resources/toolbar.xrc:28
 msgid "Fuzzy"
 msgstr "अस्पष्ट"
 
-#: ../src/export_html.cpp:180
+#: ../src/export_html.cpp:183
 msgid "Fuzzy translation"
 msgstr "अस्पष्ट अनुवाद"
 
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:960
+#: ../src/edframe.cpp:885 ../src/edframe.cpp:1013
 msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "जीएनयू गेटटेक्सट के सूचीपत्र (*.po)|*.po|सभी फ़ाइलें (*.*)|*.*"
 
-#: ../src/edframe.cpp:1053 ../src/edframe.cpp:1190
+#: ../src/edframe.cpp:1101 ../src/edframe.cpp:1239
 msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "जीएनयू गेटटेक्सट मानकफ़ाइलें (*.pot)|*.pot|सभी फ़ाइलें (*.*)|*.*"
 
-#: ../src/resources/menus.xrc:134
+#: ../src/resources/menus.xrc:138
 msgid "GNU gettext documentation"
 msgstr "जीएनयू गेटटेक्सट प्रलेखन"
 
-#: ../src/resources/prefs.xrc:678
+#: ../src/resources/prefs.xrc:687
 msgid "Generate TM database"
 msgstr "अनुवाद-प्रबंधक डाटाबेस का निर्माण करें"
 
-#: ../src/resources/prefs.xrc:336
+#: ../src/resources/prefs.xrc:345
 msgid "Generate database"
 msgstr "डाटाबेस का निर्माण करें"
 
-#: ../src/edframe.cpp:1252
+#: ../src/edframe.cpp:1291
 msgid "Gettext syntax error"
 msgstr "गेटटेक्सट वाक्य विश्लेषण त्रुटि"
 
-#: ../src/edframe.cpp:2572
+#: ../src/edframe.cpp:2620
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
 msgstr "पृष्ठ स्मृति %i पर जाए\tCtrl-%i"
 
-#: ../src/edframe.cpp:2569
+#: ../src/edframe.cpp:2617
 #, fuzzy, c-format
 msgid "Go to bookmark %i\tCtrl-Alt-%i"
 msgstr "पृष्ठ स्मृति %i पर जाए\tCtrl-%i"
 
-#: ../src/edframe.cpp:1002
+#: ../src/edframe.cpp:1051
 msgid "HTML file (*.html)|*.html"
 msgstr "एचटीएमएल फ़ाइल (*.html)|*.html"
 
@@ -615,32 +604,32 @@ msgstr "एचटीएमएल फ़ाइल (*.html)|*.html"
 msgid "Identity"
 msgstr "पहचान"
 
-#: ../src/resources/prefs.xrc:111
+#: ../src/resources/prefs.xrc:120
 msgid "If checked, the comment window will be editable."
 msgstr "यदि चिह्ननित है, तो टिप्पणी खिड़की संपादन योग्य होगी।"
 
-#: ../src/resources/prefs.xrc:529
+#: ../src/resources/prefs.xrc:538
 msgid "Invocation:"
 msgstr "नवीन क्रिया:"
 
-#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:174
+#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:175
 msgid "Keywords"
 msgstr "प्रमुखशब्द"
 
-#: ../src/chooselang.cpp:161
+#: ../src/chooselang.cpp:162
 msgid "Language selection"
 msgstr "भाषा चयन"
 
-#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:497
-#: ../src/resources/prefs.xrc:501 ../src/resources/settings.xrc:61
+#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:506
+#: ../src/resources/prefs.xrc:510 ../src/resources/settings.xrc:62
 msgid "Language:"
 msgstr "भाषा:"
 
-#: ../src/manager.cpp:255
+#: ../src/manager.cpp:268
 msgid "Last modified"
 msgstr "अंतिम परिवर्तन तिथि"
 
-#: ../src/edlistctrl.cpp:214 ../src/fileviewer.cpp:103
+#: ../src/edlistctrl.cpp:230 ../src/fileviewer.cpp:106
 msgid "Line"
 msgstr "पंक्ति"
 
@@ -649,15 +638,15 @@ msgstr "पंक्ति"
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "पंक्ति %u, फ़ाइल '%s' में विकृत हें (आँकड़ा %s मान्य नही)।"
 
-#: ../src/resources/prefs.xrc:139
+#: ../src/resources/prefs.xrc:148
 msgid "Line endings format:"
 msgstr "पंक्ति समाप्ति प्रारूप:"
 
-#: ../src/resources/prefs.xrc:513
+#: ../src/resources/prefs.xrc:522
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "सेमीकोलनों द्वारा अलग-अलग किये हुए उपनामों की सूची (उदाहरण हेतु: *.cpp;*.h):"
 
-#: ../src/resources/prefs.xrc:149
+#: ../src/resources/prefs.xrc:158
 msgid "Macintosh"
 msgstr "मैक्नटोश"
 
@@ -666,15 +655,15 @@ msgstr "मैक्नटोश"
 msgid "Malformed header: '%s'"
 msgstr "विकृत शीर्षणी: '%s'"
 
-#: ../src/resources/prefs.xrc:357
+#: ../src/resources/prefs.xrc:366
 msgid "Max. # of missing words:"
 msgstr "महत्तम # विलुप्त शब्द:"
 
-#: ../src/resources/prefs.xrc:379
+#: ../src/resources/prefs.xrc:388
 msgid "Max. difference in sentence length:"
 msgstr "वाक्य लंबाई में महत्तम अंतर:"
 
-#: ../src/catalog.cpp:1422
+#: ../src/catalog.cpp:1425
 msgid "Merging differences..."
 msgstr "अंतरों को विलय किया जा रहा है..."
 
@@ -686,15 +675,15 @@ msgstr "नीचे लाएँ"
 msgid "Move up"
 msgstr "ऊपर लाएँ"
 
-#: ../src/prefsdlg.cpp:55
+#: ../src/prefsdlg.cpp:59
 msgid "My Languages"
 msgstr "मेरी भाषायें"
 
-#: ../src/manager.cpp:307
+#: ../src/manager.cpp:322
 msgid "My Project"
 msgstr "मेरी परियोजना"
 
-#: ../src/resources/prefs.xrc:103
+#: ../src/resources/prefs.xrc:112
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -704,7 +693,7 @@ msgstr ""
 "बोर्ड संचालनपरन्तु आप फ़ोकस को परिवर्तन करने हेतु कन्ट्रोल-ऐरोओं (Ctrl-arrows) का उपयोग "
 "करना चाहिएके लिए बिना टैब (Tab) को दबाएँ तुरन्त पाठ को टाइप कर सकते है।"
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:435
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:444
 msgid "New"
 msgstr "नया"
 
@@ -724,26 +713,25 @@ msgstr "नयी श्रेणियां"
 msgid "Next >"
 msgstr "अगला >"
 
-#: ../src/fileviewer.cpp:144
+#: ../src/fileviewer.cpp:147
 msgid "No editor specified. Please set it in Preferences dialog."
 msgstr "कोई संपादक निर्दिष्ट किया गया। कृपया वरीयताओं संवाद में इसे स्थापित करें।"
 
-#: ../src/digger.cpp:250
+#: ../src/digger.cpp:218
 msgid "No files found in: "
 msgstr "में कोई फ़ाइलें नहीं मिली: "
 
-#: ../src/edframe.cpp:1268
+#: ../src/edframe.cpp:1308
 msgid "No references to this string found."
 msgstr "इस श्रेणी के लिए कोई संदर्भ नहीं मिला।"
 
-#: ../src/export_html.cpp:152
+#: ../src/export_html.cpp:155
 msgid "Notes"
 msgstr "जानकारियां"
 
-#: ../src/resources/about.xrc:50 ../src/resources/comment.xrc:29
-#: ../src/resources/manager.xrc:103 ../src/resources/prefs.xrc:473
-#: ../src/resources/prefs.xrc:615 ../src/resources/settings.xrc:185
-#: ../src/resources/summary.xrc:71
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:104
+#: ../src/resources/prefs.xrc:482 ../src/resources/prefs.xrc:624
+#: ../src/resources/settings.xrc:186 ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "ठीक"
 
@@ -756,48 +744,48 @@ msgstr "अप्रचलित श्रेणियां"
 msgid "Open"
 msgstr "खोलें (&O)"
 
-#: ../src/edframe.cpp:839 ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:883 ../src/resources/toolbar.xrc:13
 msgid "Open catalog"
 msgstr "सूचीपत्र को खोलें"
 
-#: ../src/edframe.cpp:1051 ../src/edframe.cpp:1188
+#: ../src/edframe.cpp:1099 ../src/edframe.cpp:1237
 msgid "Open catalog template"
 msgstr "सूचीपत्र मानकपत्र को खोलें"
 
-#: ../src/resources/prefs.xrc:94
+#: ../src/resources/prefs.xrc:103
 msgid "Open catalogs manager on Poedit startup"
 msgstr "Poedit के आरम्भ पर सूचीपत्र प्रबंधक को खोलें"
 
-#: ../src/resources/prefs.xrc:211
+#: ../src/resources/prefs.xrc:220
 msgid "Open source files in editor, not in file viewer"
 msgstr "स्रोत फ़ाइल को संपादक में खोलें, ना कि फ़ाइल व्यूअर में"
 
-#: ../src/export_html.cpp:145 ../src/edlistctrl.cpp:211
+#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:227
 msgid "Original string"
 msgstr "मूल श्रेणी"
 
-#: ../src/resources/prefs.xrc:533
+#: ../src/resources/prefs.xrc:542
 msgid "Parser command:"
 msgstr "पदभंजन निर्देश:"
 
-#: ../src/resources/prefs.xrc:492
+#: ../src/resources/prefs.xrc:501
 msgid "Parser setup"
 msgstr "पदभंजन स्थापना"
 
-#: ../src/resources/prefs.xrc:410
+#: ../src/resources/prefs.xrc:419
 msgid "Parsers"
 msgstr "पदभंजनकर्तायें"
 
-#: ../src/digger.cpp:135
+#: ../src/digger.cpp:106
 #, fuzzy, c-format
 msgid "Parsing %s files..."
 msgstr "फ़ाइलों की स्कैनिंग की जा रही है..."
 
-#: ../src/resources/prefs.xrc:295
+#: ../src/resources/prefs.xrc:304
 msgid "Path to DB:"
 msgstr "डीबी की ओर पथ:"
 
-#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:153
+#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:154
 msgid "Paths"
 msgstr "पथ"
 
@@ -805,7 +793,7 @@ msgstr "पथ"
 msgid "Personalize"
 msgstr "व्यक्तीकरण करें"
 
-#: ../src/resources/prefs.xrc:329
+#: ../src/resources/prefs.xrc:338
 msgid "Pick language from the list of known languages"
 msgstr "ज्ञात भाषाओं की इस सूची में से भाषा का चुनें"
 
@@ -813,27 +801,27 @@ msgstr "ज्ञात भाषाओं की इस सूची में 
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "कॄपया निर्देशिकाओं को जोडें जहाँ आपके तंत्र में लोकेल फ़ाइलें सुरक्षित की गई है:"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "Please choose the reference you want to show:"
 msgstr "कॄपया उस संदर्भ का चयन करें जिसे आप दर्शाना चाहते है:"
 
-#: ../src/prefsdlg.cpp:341
+#: ../src/prefsdlg.cpp:355
 msgid "Please select language ISO code:"
 msgstr "कॄपया भाषा आईसो कूट का चयन करें:"
 
-#: ../src/edframe.cpp:759
+#: ../src/edframe.cpp:801
 msgid "Please select language code:"
 msgstr "कॄपया भाषा कूट का चयन करें:"
 
-#: ../src/resources/settings.xrc:109
+#: ../src/resources/settings.xrc:110
 msgid "Plural Forms:"
 msgstr "बहुवचन रूप:"
 
-#: ../src/edframe.cpp:470
+#: ../src/edframe.cpp:489
 msgid "Plural:"
 msgstr "बहुवचन:"
 
-#: ../src/edframe.cpp:337
+#: ../src/edframe.cpp:359
 msgid "Poedit"
 msgstr "पीओऐडिट(Poedit)"
 
@@ -841,7 +829,7 @@ msgstr "पीओऐडिट(Poedit)"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - सूचीपत्रों का प्रबंधक"
 
-#: ../src/digger.cpp:251
+#: ../src/digger.cpp:219
 msgid "Poedit did not find any files in scanned directories."
 msgstr "स्कैन की गयी निर्देशिकाओं में Poedit को कोई फ़ाइलें नहीं मिली।"
 
@@ -849,11 +837,11 @@ msgstr "स्कैन की गयी निर्देशिकाओं �
 msgid "Preferences"
 msgstr "वरीयतायें"
 
-#: ../src/resources/prefs.xrc:660
+#: ../src/resources/prefs.xrc:669
 msgid "Proceed"
 msgstr "शुरू करें"
 
-#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:121
+#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:122
 msgid "Project info"
 msgstr "परियोजना सूचना"
 
@@ -865,20 +853,20 @@ msgstr "परियोजना नाम और संस्मरण:"
 msgid "Project name:"
 msgstr "परियोजना नाम:"
 
-#: ../src/edframe.cpp:1965
+#: ../src/edframe.cpp:2000
 #, fuzzy
 msgid "Purge deleted translations"
 msgstr "मिटाएँ गये अनुवाद निकाल दे (&P)"
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1316
 msgid "References"
 msgstr "संदर्भ"
 
-#: ../src/edframe.cpp:2055 ../src/edframe.cpp:2059
+#: ../src/edframe.cpp:2090 ../src/edframe.cpp:2094
 msgid "References:"
 msgstr "संदर्भ:"
 
-#: ../src/resources/prefs.xrc:337
+#: ../src/resources/prefs.xrc:346
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr "उपरोक्त पथों में दिये हुए सूचीपत्रों से अनुवाद स्मॄति का पुनः सर्जन करें।"
 
@@ -895,7 +883,7 @@ msgstr "सुरक्षित करें (&S)"
 msgid "Save &as..."
 msgstr "इस जैसा सुरक्षित करें (&a)..."
 
-#: ../src/edframe.cpp:959
+#: ../src/edframe.cpp:1012
 msgid "Save as..."
 msgstr "इस जैसा सुरक्षित करें..."
 
@@ -903,8 +891,8 @@ msgstr "इस जैसा सुरक्षित करें..."
 msgid "Save catalog"
 msgstr "सूचीपत्र को सुरक्षित करें"
 
-#: ../src/edframe.cpp:796 ../src/edframe.cpp:822 ../src/edframe.cpp:859
-#: ../src/edframe.cpp:905 ../src/edframe.cpp:1029
+#: ../src/edframe.cpp:841 ../src/edframe.cpp:866 ../src/edframe.cpp:907
+#: ../src/edframe.cpp:959 ../src/edframe.cpp:1077
 msgid "Save changes"
 msgstr "परिवर्तनों को सुरक्षित करें"
 
@@ -912,7 +900,7 @@ msgstr "परिवर्तनों को सुरक्षित करे
 msgid "Scanning file: "
 msgstr "स्कैनिंग फ़ाइल: "
 
-#: ../src/digger.cpp:121
+#: ../src/digger.cpp:92
 msgid "Scanning files..."
 msgstr "फ़ाइलों की स्कैनिंग की जा रही है..."
 
@@ -920,29 +908,29 @@ msgstr "फ़ाइलों की स्कैनिंग की जा रह�
 msgid "Search Paths"
 msgstr "पथों की खोज करें"
 
-#: ../src/edframe.cpp:758
+#: ../src/edframe.cpp:800
 msgid "Select catalog's language"
 msgstr "सूचीपत्र की भाषा का चयन करें"
 
-#: ../src/prefsdlg.cpp:354 ../src/manager.cpp:284
+#: ../src/prefsdlg.cpp:368 ../src/manager.cpp:299
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "निर्देशिका का चयन करें"
 
-#: ../src/prefsdlg.cpp:340
+#: ../src/prefsdlg.cpp:354
 msgid "Select language"
 msgstr "भाषा का चयन करें"
 
-#: ../src/chooselang.cpp:160
+#: ../src/chooselang.cpp:161
 msgid "Select your prefered language"
 msgstr "अपनी मनपसन्द भाषा का चयन करें"
 
-#: ../src/edframe.cpp:2571
+#: ../src/edframe.cpp:2619
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
 msgstr "पृष्ठ स्मृति %i लगायें\tAlt-%i"
 
-#: ../src/edframe.cpp:2568
+#: ../src/edframe.cpp:2616
 #, fuzzy, c-format
 msgid "Set bookmark %i\tCtrl-%i"
 msgstr "पृष्ठ स्मृति %i लगायें\tAlt-%i"
@@ -951,31 +939,31 @@ msgstr "पृष्ठ स्मृति %i लगायें\tAlt-%i"
 msgid "Settings"
 msgstr "समायोजनायें"
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
 msgid "Setup"
 msgstr "स्थापना"
 
-#: ../src/resources/menus.xrc:113
+#: ../src/resources/menus.xrc:117
 msgid "Show &comment window"
 msgstr "टिप्पणी खिड़की को दिखाएँ (&c)"
 
-#: ../src/resources/menus.xrc:117
+#: ../src/resources/menus.xrc:121
 msgid "Show automatic c&omments window"
 msgstr "स्वचलित टिप्पणी खिड़की को दिखाएँ (&o)"
 
-#: ../src/resources/prefs.xrc:87
+#: ../src/resources/prefs.xrc:96
 msgid "Show summary after catalog update"
 msgstr "सूचीपत्र अपडेट के उपरान्त सारांश को दिखाएँ"
 
-#: ../src/edframe.cpp:469
+#: ../src/edframe.cpp:488
 msgid "Singular:"
 msgstr "एक वचन:"
 
-#: ../src/resources/prefs.xrc:590 ../src/resources/settings.xrc:97
+#: ../src/resources/prefs.xrc:599 ../src/resources/settings.xrc:98
 msgid "Source code charset:"
 msgstr "स्रोत कूट शब्दसमुच्चय:"
 
-#: ../src/resources/prefs.xrc:416
+#: ../src/resources/prefs.xrc:425
 msgid "Source code parsers:"
 msgstr "स्रोत कूट पदभंजनकर्ता:"
 
@@ -991,15 +979,15 @@ msgstr "पहले अंश से शुरू करे"
 msgid "String to find:"
 msgstr "श्रेणी जिसे खोजना है:"
 
-#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:47
+#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:48
 msgid "Team's email address:"
 msgstr "दल का विपत्र पता:"
 
-#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:33
+#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:34
 msgid "Team:"
 msgstr "दल:"
 
-#: ../src/catalog.cpp:1265
+#: ../src/catalog.cpp:1268
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -1034,17 +1022,18 @@ msgstr ""
 "ये श्रेणीयां स्रोत में मिली थी परन्तु सूचीपत्र में नहीं थी।\n"
 "Poedit इन्हें इस सूचीपत्र में अब जोड़ेगा।"
 
-#: ../src/edapp.cpp:161
+#: ../src/edapp.cpp:174
+#, fuzzy
 msgid ""
 "This is first time you run Poedit.\n"
-"Please fill in your name and e-mail address.\n"
+"Please fill in your name and email address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
 "आप प्रथमबार Poedit को चला रहे है।\n"
 "कृपया अपना नाम और विपत्र पता बताएँ।\n"
 "(इस सूचना का उपयोग सिर्फ़ सूचीपत्रों के शीर्षकों में किया जायेगा)"
 
-#: ../src/resources/prefs.xrc:545
+#: ../src/resources/prefs.xrc:554
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1056,7 +1045,7 @@ msgstr ""
 "%F का अर्थ इनपुट फ़ाइल की सूची, %C का अर्थ शब्दसमुच्चय फ़्लैग है।\n"
 "(नीचे देखें)।"
 
-#: ../src/resources/prefs.xrc:602
+#: ../src/resources/prefs.xrc:611
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1065,7 +1054,7 @@ msgstr ""
 "यह इस निर्देश पंक्ति के साथ संलग्न हो जायेगा\n"
 "यदि स्रोत शब्दसमुच्चय प्रदान किया गया हो। %c का अर्थ शब्दसमुच्चय मूल्य है।"
 
-#: ../src/resources/prefs.xrc:583
+#: ../src/resources/prefs.xrc:592
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1074,7 +1063,7 @@ msgstr ""
 "प्रत्येक इनपुट फ़ाइले के लिए, यह इस निर्देश पंक्ति के साथ एकबार\n"
 "संलग्न हो जायेगा । %f का अर्थ यह फ़ाइलनाम है।"
 
-#: ../src/resources/prefs.xrc:564
+#: ../src/resources/prefs.xrc:573
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -1086,15 +1075,15 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "टॉगल्ड यदि चयनित श्रेणी अस्पष्ट अनुवाद हो चुका है"
 
-#: ../src/manager.cpp:251
+#: ../src/manager.cpp:264
 msgid "Total"
 msgstr "कुल"
 
-#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:212
+#: ../src/export_html.cpp:151 ../src/edlistctrl.cpp:228
 msgid "Translation"
 msgstr "अनुवाद"
 
-#: ../src/resources/prefs.xrc:285
+#: ../src/resources/prefs.xrc:294
 msgid "Translation Memory"
 msgstr "अनुवाद स्मॄति"
 
@@ -1127,11 +1116,11 @@ msgstr "रजिस्ट्री में अज्ञात लोकेल
 msgid "Undo"
 msgstr "पहिले जैसा करें"
 
-#: ../src/resources/prefs.xrc:147
+#: ../src/resources/prefs.xrc:156
 msgid "Unix"
 msgstr "यूनिक्स"
 
-#: ../src/manager.cpp:252
+#: ../src/manager.cpp:265
 msgid "Untrans"
 msgstr "अ-अनुवादित करें"
 
@@ -1153,7 +1142,7 @@ msgstr "इस परियोजना में सभी सूचीपत�
 msgid "Update catalog - synchronize it with sources"
 msgstr "सूचीपत्र अपडेट - स्रोतों के साथ एकसारीकॄत"
 
-#: ../src/resources/menus.xrc:81
+#: ../src/resources/menus.xrc:85
 msgid "Update from &POT file..."
 msgstr "पॉट (POT) फ़ाइल से अपडेट करें..."
 
@@ -1165,23 +1154,23 @@ msgstr "सारांश को अपडेट करें"
 msgid "Update translation memory"
 msgstr "अनुवाद-स्मॄति को अपडेट करें"
 
-#: ../src/catalog.cpp:1382
+#: ../src/catalog.cpp:1385
 msgid "Updating catalog..."
 msgstr "सूचीपत्र को अपडेट किया जा रहा है..."
 
-#: ../src/edframe.cpp:1172
+#: ../src/edframe.cpp:1223
 msgid "Updating the catalog failed. Click on 'More>>' for details."
 msgstr "इस सूचीपत्र को अपडेट करना असफ़ल रहा । विवरण के लिए 'और अधिक>>' पर क्लिक करें।"
 
-#: ../src/resources/prefs.xrc:253
+#: ../src/resources/prefs.xrc:262
 msgid "Use custom font for text fields"
 msgstr "पाठ प्रविष्टियों के लिए इच्छित फ़ॉन्ट का उपयोग"
 
-#: ../src/resources/prefs.xrc:227
+#: ../src/resources/prefs.xrc:236
 msgid "Use custom font for translations list"
 msgstr "अनुवादों की सूची के लिए इच्छित फ़ॉन्ट का उपयोग"
 
-#: ../src/resources/settings.xrc:161
+#: ../src/resources/settings.xrc:162
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
@@ -1193,42 +1182,62 @@ msgstr ""
 msgid "Whole words only"
 msgstr "सिर्फ पूर्ण शब्द"
 
-#: ../src/resources/prefs.xrc:148
+#: ../src/resources/prefs.xrc:157
 msgid "Windows"
 msgstr "खिड़कियां"
 
-#: ../src/edframe.cpp:886
+#: ../src/edframe.cpp:941
 msgid "You can't drop more than one file on Poedit window."
 msgstr "आप Poedit खिड़की पर एक से अधिक फ़ाइल नहीं गिरा सकते है।"
 
-#: ../src/chooselang.cpp:175
+#: ../src/chooselang.cpp:176
 msgid "You must restart Poedit for this change to take effect."
 msgstr "इन परिवर्तनों को प्रभाव में लाने के लिए आपको Poedit को पुनःआरम्भ करना होगा।"
 
-#: ../src/resources/prefs.xrc:34
-msgid "Your e-mail address:"
+#: ../src/resources/prefs.xrc:43
+#, fuzzy
+msgid "Your email address:"
 msgstr "आपका विपत्र पता:"
 
 #: ../src/resources/prefs.xrc:22
+msgid ""
+"Your name and email set below are only used\n"
+"to set the Last-Translator header of GNU gettext files."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:30
 msgid "Your name:"
 msgstr "आपका नाम:"
 
-#: ../src/edframe.cpp:1801
+#: ../src/edframe.cpp:1840
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[अनुवादों की जाँच: %i बचे]"
 
-#: ../src/resources/prefs.xrc:150
+#: ../src/resources/prefs.xrc:159
 msgid "current platform's default"
 msgstr "वर्तमान मंच का डिफ़ाल्ट"
 
-#: ../src/edframe.cpp:2093
+#: ../src/edframe.cpp:2128
 msgid "none"
 msgstr "कुछ नहीं"
 
-#: ../src/edframe.cpp:2108
-msgid "version"
-msgstr "संस्मरण"
+#: ../src/edframe.cpp:2144
+#, fuzzy
+msgid "translations editor"
+msgstr "अनुवाद स्मॄति"
+
+#~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
+#~ msgstr "%i श्रेणियां (%i अस्पष्ट, %i खराब संकेत, %i अ-अनुवादित)"
+
+#~ msgid "'."
+#~ msgstr "'."
+
+#~ msgid "About Poedit"
+#~ msgstr "Poedit के बारे में"
+
+#~ msgid "version"
+#~ msgstr "संस्मरण"
 
 #~ msgid " files..."
 #~ msgstr " फ़ाइलें..."
