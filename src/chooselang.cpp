@@ -149,7 +149,11 @@ wxLanguage ChooseLanguage()
         { _T("Turkish"), wxLANGUAGE_TURKISH },
         { _T("Ukrainian"), wxLANGUAGE_UKRAINIAN },
         { _T("Urdu"), wxLANGUAGE_URDU },
-
+// FIXME: wxHAS_LANGUAGE_VALENCIAN is a hack to accommodate custom wx patches
+//        until wx-2.8.8 is released
+#if wxCHECK_VERSION(2,8,8) || defined(wxHAS_LANGUAGE_VALENCIAN)
+        { _T("Valencian"), wxLANGUAGE_VALENCIAN },
+#endif
         { _T(""), wxLANGUAGE_UNKNOWN }
     };
 
