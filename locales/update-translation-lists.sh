@@ -11,7 +11,7 @@ LANGS_POEDIT=`echo $LANGS_POEDIT`
 replace_str()
 {
     echo "
-,s@$2@$3@g
+,s;$2;$3;g
 w
 q
 " | ed -s $1 2>/dev/null
