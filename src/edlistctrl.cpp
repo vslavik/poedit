@@ -40,8 +40,11 @@
 // I don't like this global flag, but all PoeditFrame instances should share it :(
 bool gs_shadedList = false;
 
+// how much to darken the other color in shaded list (this value
+// is what GTK+ uses in its tree view control)
+#define DARKEN_FACTOR      0.95
+
 // colours used in the list:
-#define DARKEN_FACTOR      0.98
 
 // FIXME: configurable?
 static const wxColour g_ErrorColour(255, 0, 0);
