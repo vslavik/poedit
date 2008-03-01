@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2004-2006 Vaclav Slavik
+ *  Copyright (C) 2004-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -63,6 +63,10 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
                                          const wxArtClient& client,
                                          const wxSize& size)
 {
+    // Note: On Unix, this code is only called as last resolt, if standard
+    //       theme provider (that uses current icon theme and files from
+    //       /usr/share/icons/<theme>) didn't find any matching icon.
+
     wxLogTrace(_T("poedit.icons"), _T("getting icon '%s'"), id.c_str());
 
 #ifdef __UNIX__
@@ -71,7 +75,7 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
 #endif
 
 #ifdef __WXGTK20__
-    // try legacy GNOME icons:
+    // try legacy GNOME icons from standard theme:
     wxString gnomeId = GetGnomeStockId(id);
     if ( !gnomeId.empty() )
     {
