@@ -46,6 +46,7 @@
 #include <wx/textfile.h>
 #include <wx/wupdlock.h>
 #include <wx/aboutdlg.h>
+#include <wx/iconbndl.h>
 
 #ifdef USE_SPELLCHECKING
 
@@ -402,7 +403,11 @@ PoeditFrame::PoeditFrame() :
     gs_shadedList = (bool)cfg->Read(_T("shaded_list"), (long)true);
 
 #ifdef __UNIX__
-    SetIcon(wxArtProvider::GetIcon(_T("poedit")));
+    wxIconBundle appicons;
+    appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(16,16)));
+    appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(32,32)));
+    appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(48,48)));
+    SetIcons(appicons);
 #else
     SetIcon(wxICON(appicon));
 #endif

@@ -33,10 +33,6 @@
 #include "icons.h"
 #include "edapp.h"
 
-#ifdef __UNIX__
-#include "icons/appicon/poedit.xpm"
-#endif
-
 #ifdef __WXGTK20__
 // translates poedit item id or Tango stock item id to "legacy" GNOME id:
 static wxString GetGnomeStockId(const wxString& id)
@@ -68,11 +64,6 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
     //       /usr/share/icons/<theme>) didn't find any matching icon.
 
     wxLogTrace(_T("poedit.icons"), _T("getting icon '%s'"), id.c_str());
-
-#ifdef __UNIX__
-    if (id == _T("poedit"))
-        return wxBitmap(appicon_xpm);
-#endif
 
 #ifdef __WXGTK20__
     // try legacy GNOME icons from standard theme:

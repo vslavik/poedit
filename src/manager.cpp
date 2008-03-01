@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2005 Vaclav Slavik
+ *  Copyright (C) 2001-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -47,6 +47,7 @@
 #include <wx/dirdlg.h>
 #include <wx/log.h>
 #include <wx/artprov.h>
+#include <wx/iconbndl.h>
 
 #include "catalog.h"
 #include "edframe.h"
@@ -71,7 +72,11 @@ ManagerFrame::ManagerFrame() :
             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
 {
 #ifdef __UNIX__
-    SetIcon(wxArtProvider::GetIcon(_T("poedit")));
+    wxIconBundle appicons;
+    appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(16,16)));
+    appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(32,32)));
+    appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(48,48)));
+    SetIcons(appicons);
 #else
     SetIcon(wxICON(appicon));
 #endif
