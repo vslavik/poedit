@@ -36,11 +36,6 @@
     #define HAS_THEMES_SUPPORT
 #endif
 
-// see icons.cpp for explanation
-#if wxCHECK_VERSION(2,7,1)
-    #define HAS_INSERT_PROVIDER
-#endif
-
 class PoeditArtProvider : public wxArtProvider
 {
 protected:

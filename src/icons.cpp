@@ -59,39 +59,10 @@ static wxString GetGnomeStockId(const wxString& id)
 #endif // __WXGTK20__
 
 
-// wxWidgets prior to 2.7.1 didn't have wxArtProvider::InsertProvider() and
-// so it wasn't possibly to add a provider that would be used as the last
-// resort. Unfortunately that's exactly what we need: use the stock (GTK2)
-// provider to try to look up poedit icons in the theme (so that themes
-// may override them) and only if that fails, use the Tango icons shipped
-// with poedit. So we use a hack instead: temporarily disable this provider
-// and re-run the lookup from its CreateBitmap, thus getting the bitmap from
-// providers lower on the stack:
-#if defined(HAS_THEMES_SUPPORT) && !defined(HAS_INSERT_PROVIDER)
-    #define USE_THEME_HACK
-#endif
-
-#ifdef USE_THEME_HACK
-static bool gs_disablePoeditProvider = false;
-#endif
-
-
 wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
                                          const wxArtClient& client,
                                          const wxSize& size)
 {
-#ifdef USE_THEME_HACK
-    if ( gs_disablePoeditProvider )
-        return wxNullBitmap;
-
-    // try to get the icon from theme provider:
-    gs_disablePoeditProvider = true;
-    wxBitmap hackbmp = wxArtProvider::GetBitmap(id, client, size);
-    gs_disablePoeditProvider = false;
-    if ( hackbmp.Ok() )
-        return hackbmp;
-#endif // USE_THEME_HACK
-
     wxLogTrace(_T("poedit.icons"), _T("getting icon '%s'"), id.c_str());
 
 #ifdef __UNIX__

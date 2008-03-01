@@ -156,11 +156,7 @@ bool PoeditApp::OnInit()
 
     SetDefaultCfg(wxConfig::Get());
 
-#ifdef HAS_INSERT_PROVIDER
     wxArtProvider::Insert(new PoeditArtProvider);
-#else
-    wxArtProvider::PushProvider(new PoeditArtProvider);
-#endif
 
 #ifdef __WXMAC__
     wxLocale::AddCatalogLookupPathPrefix(
@@ -170,7 +166,7 @@ bool PoeditApp::OnInit()
 #endif
 
     m_locale.Init(GetUILanguage());
-    
+
     m_locale.AddCatalog(_T("poedit"));
 
     if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
