@@ -485,7 +485,7 @@ PoeditFrame::PoeditFrame() :
     m_textAutoComments = new UnfocusableTextCtrl(m_bottomRightPanel,
                                 ID_TEXTORIG, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
-                                wxTE_MULTILINE | wxTE_READONLY);
+                                wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
     // This call will force the creation of the right kind of control
     // for the m_textComment member
     UpdateCommentWindowEditable();
@@ -495,16 +495,16 @@ PoeditFrame::PoeditFrame() :
     m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
                                 ID_TEXTORIG, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
-                                wxTE_MULTILINE | wxTE_READONLY);
+                                wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
     m_textOrigPlural = new UnfocusableTextCtrl(m_bottomLeftPanel,
                                 ID_TEXTORIGPLURAL, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
-                                wxTE_MULTILINE | wxTE_READONLY);
+                                wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
 
     m_textTrans = new wxTextCtrl(m_bottomLeftPanel,
                                 ID_TEXTTRANS, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
-                                wxTE_MULTILINE);
+                                wxTE_MULTILINE | wxTE_RICH2);
 
     // in case of plurals form, this is the control for n=1:
     m_textTransSingularForm = NULL;
@@ -2259,14 +2259,14 @@ void PoeditFrame::UpdateCommentWindowEditable()
             m_textComment = new wxTextCtrl(m_bottomRightPanel,
                                         ID_TEXTCOMMENT, wxEmptyString,
                                         wxDefaultPosition, wxDefaultSize,
-                                        wxTE_MULTILINE);
+                                        wxTE_MULTILINE | wxTE_RICH2);
         }
         else
         {
             m_textComment = new UnfocusableTextCtrl(m_bottomRightPanel,
                                         ID_TEXTCOMMENT, wxEmptyString,
                                         wxDefaultPosition, wxDefaultSize,
-                                        wxTE_MULTILINE | wxTE_READONLY);
+                                        wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
         }
         UpdateDisplayCommentWin();
     }
@@ -2562,7 +2562,7 @@ void PoeditFrame::RecreatePluralTextCtrls()
         wxTextCtrl *txt = new wxTextCtrl(m_pluralNotebook, -1,
                                          wxEmptyString,
                                          wxDefaultPosition, wxDefaultSize,
-                                         wxTE_MULTILINE);
+                                         wxTE_MULTILINE | wxTE_RICH2);
         txt->PushEventHandler(new TransTextctrlHandler(this));
         m_textTransPlural.push_back(txt);
         m_pluralNotebook->AddPage(txt, desc);
