@@ -41,7 +41,7 @@ class WXDLLEXPORT wxListEvent;
 
 #include "catalog.h"
 
-extern bool gs_shadedList;
+extern bool g_shadedList;
 
 // list control with both columns equally wide:
 class PoeditListCtrl : public wxListView

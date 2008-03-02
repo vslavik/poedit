@@ -38,7 +38,7 @@
 #include "digits.h"
 
 // I don't like this global flag, but all PoeditFrame instances should share it :(
-bool gs_shadedList = false;
+bool g_shadedList = false;
 
 // how much to darken the other color in shaded list (this value
 // is what GTK+ uses in its tree view control)
@@ -372,7 +372,7 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
 
 wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
 {
-    size_t idx = gs_shadedList ? size_t(item % 2) : 0;
+    size_t idx = g_shadedList ? size_t(item % 2) : 0;
 
     if (m_catalog == NULL)
         return (wxListItemAttr*)&m_attrNormal[idx];

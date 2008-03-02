@@ -110,7 +110,7 @@ const wxWindowID ID_TEXTCOMMENT = wxNewId();
 
 
 // I don't like this global flag, but all PoeditFrame instances must share it
-bool gs_focusToText = false;
+bool g_focusToText = false;
 
 /*static*/ PoeditFrame *PoeditFrame::Find(const wxString& filename)
 {
@@ -142,7 +142,7 @@ bool gs_focusToText = false;
     }
     f->Show(true);
 
-    if (gs_focusToText)
+    if (g_focusToText)
         f->m_textTrans->SetFocus();
     else
         f->m_list->SetFocus();
@@ -399,8 +399,8 @@ PoeditFrame::PoeditFrame() :
         (bool)cfg->Read(_T("display_auto_comments_win"), (long)false);
     m_commentWindowEditable =
         (bool)cfg->Read(_T("comment_window_editable"), (long)false);
-    gs_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
-    gs_shadedList = (bool)cfg->Read(_T("shaded_list"), (long)true);
+    g_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
+    g_shadedList = (bool)cfg->Read(_T("shaded_list"), (long)true);
 
 #ifdef __UNIX__
     wxIconBundle appicons;
@@ -443,7 +443,7 @@ PoeditFrame::PoeditFrame() :
     GetMenuBar()->Check(XRCID("menu_lines"), m_displayLines);
     GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
     GetMenuBar()->Check(XRCID("menu_auto_comments_win"), m_displayAutoCommentsWin);
-    GetMenuBar()->Check(XRCID("menu_shaded"), gs_shadedList);
+    GetMenuBar()->Check(XRCID("menu_shaded"), g_shadedList);
 
     CreateStatusBar(1, wxST_SIZEGRIP);
 
@@ -606,7 +606,7 @@ PoeditFrame::~PoeditFrame()
     cfg->Write(_T("display_lines"), m_displayLines);
     cfg->Write(_T("display_comment_win"), m_displayCommentWin);
     cfg->Write(_T("display_auto_comments_win"), m_displayAutoCommentsWin);
-    cfg->Write(_T("shaded_list"), gs_shadedList);
+    cfg->Write(_T("shaded_list"), g_shadedList);
 
     m_history.Save(*cfg);
 
@@ -894,7 +894,7 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
         ReadCatalog(name);
 
-        if (gs_focusToText)
+        if (g_focusToText)
             m_textTrans->SetFocus();
         else
             m_list->SetFocus();
@@ -927,7 +927,7 @@ void PoeditFrame::OnOpenHist(wxCommandEvent& event)
     {
         ReadCatalog(f);
 
-        if (gs_focusToText)
+        if (g_focusToText)
             m_textTrans->SetFocus();
         else
             m_list->SetFocus();
@@ -1190,7 +1190,7 @@ void PoeditFrame::OnPreferences(wxCommandEvent&)
     if (dlg.ShowModal() == wxID_OK)
     {
         dlg.TransferFrom(wxConfig::Get());
-        gs_focusToText = (bool)wxConfig::Get()->Read(_T("focus_to_text"),
+        g_focusToText = (bool)wxConfig::Get()->Read(_T("focus_to_text"),
                                                      (long)false);
         SetCustomFonts();
         UpdateCommentWindowEditable();
@@ -1439,7 +1439,7 @@ void PoeditFrame::OnAutoCommentsWinFlag(wxCommandEvent& event)
 
 void PoeditFrame::OnShadedListFlag(wxCommandEvent& event)
 {
-    gs_shadedList = GetMenuBar()->IsChecked(XRCID("menu_shaded"));
+    g_shadedList = GetMenuBar()->IsChecked(XRCID("menu_shaded"));
     RefreshControls();
 }
 
@@ -2600,7 +2600,7 @@ void PoeditFrame::OnListRightClick(wxMouseEvent& event)
 
 void PoeditFrame::OnListFocus(wxFocusEvent& event)
 {
-    if (gs_focusToText)
+    if (g_focusToText)
     {
         if (m_textTrans->IsShown())
             m_textTrans->SetFocus();
