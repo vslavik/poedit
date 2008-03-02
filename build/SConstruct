@@ -27,6 +27,7 @@ WX_VERSION = '2.8.7'
 WX_URL = 'ftp://ftp.wxwidgets.org/pub/%s/wxWidgets-%s.tar.bz2' % (WX_VERSION, WX_VERSION)
 WX_PATCHES = ['wx-2.8.7-mac-listctrl-refreshitem.patch',
               'wx-2.8.7-mac-listctrl-attributes.patch',
+              'wx-2.8.7-msw-richedit-border.patch',
               'wx-2.8.7-valencian.patch']
 # NB: don't use --enable-debug_info, it forces -O0!
 WX_CONFIGURE = '--disable-shared --enable-unicode --disable-tga'

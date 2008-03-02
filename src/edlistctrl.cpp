@@ -197,7 +197,11 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 
     m_attrNormal[1].SetBackgroundColour(shaded);
     m_attrUntranslated[1].SetBackgroundColour(shaded);
+    m_attrUntranslated[0].SetTextColour(wxColour(_T("#000030")));
+    m_attrUntranslated[1].SetTextColour(wxColour(_T("#000030")));
     m_attrFuzzy[1].SetBackgroundColour(shaded);
+    m_attrFuzzy[0].SetTextColour(wxColour(_T("#a9861b")));
+    m_attrFuzzy[1].SetTextColour(wxColour(_T("#a9861b")));
 
     m_attrInvalid[0].SetTextColour(g_ErrorColour);
     m_attrInvalid[1].SetTextColour(g_ErrorColour);
@@ -209,7 +213,8 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     m_attrUntranslated[1].SetFont(fontb);
 
     wxFont fonti = visual.font;
-    fonti.SetStyle(wxFONTSTYLE_ITALIC);
+    //fonti.SetStyle(wxFONTSTYLE_ITALIC);
+    fonti.SetWeight(wxFONTWEIGHT_BOLD);
     m_attrFuzzy[0].SetFont(fonti);
     m_attrFuzzy[1].SetFont(fonti);
 }
