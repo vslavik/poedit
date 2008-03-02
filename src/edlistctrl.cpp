@@ -40,16 +40,46 @@
 // I don't like this global flag, but all PoeditFrame instances should share it :(
 bool g_shadedList = false;
 
+namespace
+{
+
 // how much to darken the other color in shaded list (this value
 // is what GTK+ uses in its tree view control)
 #define DARKEN_FACTOR      0.95
 
+// max difference in color to consider it "amost" same if it differs by most
+// this amount (in 0..255 range) from the tested color:
+#define COLOR_SIMILARITY_FACTOR  20
+
+inline bool IsAlmostBlack(const wxColour& clr)
+{
+    return (clr.Red() <= COLOR_SIMILARITY_FACTOR &&
+            clr.Green() <= COLOR_SIMILARITY_FACTOR &&
+            clr.Blue() <= COLOR_SIMILARITY_FACTOR);
+}
+
+inline bool IsAlmostWhite(const wxColour& clr)
+{
+    return (clr.Red() >= 255-COLOR_SIMILARITY_FACTOR &&
+            clr.Green() >= 255-COLOR_SIMILARITY_FACTOR &&
+            clr.Blue() >= 255-COLOR_SIMILARITY_FACTOR);
+}
+
+
 // colours used in the list:
 
-// FIXME: configurable?
-static const wxColour g_ErrorColour(255, 0, 0);
+const wxColour gs_ErrorColor(_T("#ff0000"));
 
-static const wxColour g_TranspColour(254, 0, 253);
+// colors for white list control background
+const wxColour gs_UntranslatedForWhite(_T("#103f67"));
+const wxColour gs_FuzzyForWhite(_T("#a9861b"));
+
+// ditto for black background
+const wxColour gs_UntranslatedForBlack(_T("#1962a0"));
+const wxColour gs_FuzzyForBlack(_T("#a9861b"));
+
+
+const wxColour gs_TranspColor(254, 0, 253); // FIXME: get rid of this
 
 enum
 {
@@ -69,12 +99,8 @@ enum
     IMG_BK9       = 10 << 3
 };
 
-BEGIN_EVENT_TABLE(PoeditListCtrl, wxListCtrl)
-   EVT_SIZE(PoeditListCtrl::OnSize)
-END_EVENT_TABLE()
 
-
-static wxBitmap AddDigit(int digit, int x, int y, const wxBitmap& bmp)
+wxBitmap AddDigit(int digit, int x, int y, const wxBitmap& bmp)
 {
     wxMemoryDC dc;
     int width = bmp.GetWidth();
@@ -82,7 +108,7 @@ static wxBitmap AddDigit(int digit, int x, int y, const wxBitmap& bmp)
     wxBitmap tmpBmp(width, height);
     dc.SelectObject(tmpBmp);
     dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(g_TranspColour, wxSOLID));
+    dc.SetBrush(wxBrush(gs_TranspColor, wxSOLID));
     dc.DrawRectangle(0, 0, width, height);
 
     dc.DrawBitmap(bmp, 0,0,true);
@@ -98,7 +124,7 @@ static wxBitmap AddDigit(int digit, int x, int y, const wxBitmap& bmp)
     }
 
     dc.SelectObject(wxNullBitmap);
-    tmpBmp.SetMask(new wxMask(tmpBmp, g_TranspColour));
+    tmpBmp.SetMask(new wxMask(tmpBmp, gs_TranspColor));
     return tmpBmp;
 }
 
@@ -109,13 +135,13 @@ wxBitmap MergeBitmaps(const wxBitmap& bmp1, const wxBitmap& bmp2)
 
     dc.SelectObject(tmpBmp);
     dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(g_TranspColour, wxSOLID));
+    dc.SetBrush(wxBrush(gs_TranspColor, wxSOLID));
     dc.DrawRectangle(0, 0, bmp1.GetWidth(), bmp1.GetHeight());
     dc.DrawBitmap(bmp1, 0, 0, true);
     dc.DrawBitmap(bmp2, 0, 0, true);
     dc.SelectObject(wxNullBitmap);
 
-    tmpBmp.SetMask(new wxMask(tmpBmp, g_TranspColour));
+    tmpBmp.SetMask(new wxMask(tmpBmp, gs_TranspColor));
     return tmpBmp;
 }
 
@@ -127,15 +153,22 @@ wxBitmap BitmapFromList(wxImageList* list, int index)
     wxBitmap bmp(width, height);
     dc.SelectObject(bmp);
     dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(g_TranspColour, wxSOLID));
+    dc.SetBrush(wxBrush(gs_TranspColor, wxSOLID));
     dc.DrawRectangle(0, 0, width, height);
 
     list->Draw(index, dc, 0, 0, wxIMAGELIST_DRAW_TRANSPARENT);
 
     dc.SelectObject(wxNullBitmap);
-    bmp.SetMask(new wxMask(bmp, g_TranspColour));
+    bmp.SetMask(new wxMask(bmp, gs_TranspColor));
     return bmp;
 }
+
+} // anonymous namespace
+
+
+BEGIN_EVENT_TABLE(PoeditListCtrl, wxListCtrl)
+   EVT_SIZE(PoeditListCtrl::OnSize)
+END_EVENT_TABLE()
 
 PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
                wxWindowID id,
@@ -197,14 +230,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 
     m_attrNormal[1].SetBackgroundColour(shaded);
     m_attrUntranslated[1].SetBackgroundColour(shaded);
-    m_attrUntranslated[0].SetTextColour(wxColour(_T("#000030")));
-    m_attrUntranslated[1].SetTextColour(wxColour(_T("#000030")));
     m_attrFuzzy[1].SetBackgroundColour(shaded);
-    m_attrFuzzy[0].SetTextColour(wxColour(_T("#a9861b")));
-    m_attrFuzzy[1].SetTextColour(wxColour(_T("#a9861b")));
-
-    m_attrInvalid[0].SetTextColour(g_ErrorColour);
-    m_attrInvalid[1].SetTextColour(g_ErrorColour);
     m_attrInvalid[1].SetBackgroundColour(shaded);
 
     wxFont fontb = visual.font;
@@ -212,11 +238,33 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     m_attrUntranslated[0].SetFont(fontb);
     m_attrUntranslated[1].SetFont(fontb);
 
-    wxFont fonti = visual.font;
-    //fonti.SetStyle(wxFONTSTYLE_ITALIC);
-    fonti.SetWeight(wxFONTWEIGHT_BOLD);
-    m_attrFuzzy[0].SetFont(fonti);
-    m_attrFuzzy[1].SetFont(fonti);
+    wxFont fontf = visual.font;
+    fontf.SetWeight(wxFONTWEIGHT_BOLD);
+    m_attrFuzzy[0].SetFont(fontf);
+    m_attrFuzzy[1].SetFont(fontf);
+
+    // FIXME: make this user-configurable
+    if ( IsAlmostWhite(visual.colBg) )
+    {
+        m_attrUntranslated[0].SetTextColour(gs_UntranslatedForWhite);
+        m_attrUntranslated[1].SetTextColour(gs_UntranslatedForWhite);
+        m_attrFuzzy[0].SetTextColour(gs_FuzzyForWhite);
+        m_attrFuzzy[1].SetTextColour(gs_FuzzyForWhite);
+    }
+    else if ( IsAlmostBlack(visual.colBg) )
+    {
+        m_attrUntranslated[0].SetTextColour(gs_UntranslatedForBlack);
+        m_attrUntranslated[1].SetTextColour(gs_UntranslatedForBlack);
+        m_attrFuzzy[0].SetTextColour(gs_FuzzyForBlack);
+        m_attrFuzzy[1].SetTextColour(gs_FuzzyForBlack);
+    }
+    // else: we don't know if the default colors would be well-visible on
+    //       user's background color, so play it safe and don't highlight
+    //       anything
+
+    // FIXME: todo; use appropriate font for fuzzy/trans/untrans
+    m_attrInvalid[0].SetTextColour(gs_ErrorColor);
+    m_attrInvalid[1].SetTextColour(gs_ErrorColor);
 }
 
 PoeditListCtrl::~PoeditListCtrl()
