@@ -323,10 +323,9 @@ bool ManagerFrame::EditProject(int id)
     wxXmlResource::Get()->AttachUnknownControl(_T("prj_dirs"),
                 new wxEditableListBox(this, -1, _("Directories:")));
 
-    XRCCTRL(dlg, "prj_name", wxTextCtrl)->SetValue(
-           cfg->Read(key + _T("Name"), _("My Project")));
+    XRCCTRL(dlg, "prj_name", wxTextCtrl)->SetValue(cfg->Read(key + _T("Name")));
 
-    wxString dirs = cfg->Read(key + _T("Dirs"), wxGetCwd());
+    wxString dirs = cfg->Read(key + _T("Dirs"));
     wxArrayString adirs;
     wxStringTokenizer tkn(dirs, wxPATH_SEP);
     while (tkn.HasMoreTokens()) adirs.Add(tkn.GetNextToken());
