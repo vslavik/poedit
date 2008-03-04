@@ -103,6 +103,8 @@ class PoeditListCtrl : public wxListView
             wxListView::Select(n, on);
         }
 
+        void SetCustomFont(wxFont font);
+
     private:
         void OnSize(wxSizeEvent& event);
 

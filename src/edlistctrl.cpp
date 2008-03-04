@@ -233,16 +233,6 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     m_attrFuzzy[1].SetBackgroundColour(shaded);
     m_attrInvalid[1].SetBackgroundColour(shaded);
 
-    wxFont fontb = visual.font;
-    fontb.SetWeight(wxFONTWEIGHT_BOLD);
-    m_attrUntranslated[0].SetFont(fontb);
-    m_attrUntranslated[1].SetFont(fontb);
-
-    wxFont fontf = visual.font;
-    fontf.SetWeight(wxFONTWEIGHT_BOLD);
-    m_attrFuzzy[0].SetFont(fontf);
-    m_attrFuzzy[1].SetFont(fontf);
-
     // FIXME: make this user-configurable
     if ( IsAlmostWhite(visual.colBg) )
     {
@@ -265,10 +255,32 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     // FIXME: todo; use appropriate font for fuzzy/trans/untrans
     m_attrInvalid[0].SetTextColour(gs_ErrorColor);
     m_attrInvalid[1].SetTextColour(gs_ErrorColor);
+
+    SetCustomFont(wxNullFont);
 }
 
 PoeditListCtrl::~PoeditListCtrl()
 {
+}
+
+void PoeditListCtrl::SetCustomFont(wxFont font_)
+{
+    wxFont font(font_);
+
+    m_attrNormal[0].SetFont(font);
+    m_attrNormal[1].SetFont(font);
+
+    if ( !font.IsOk() )
+        font = GetDefaultAttributes().font;
+
+    wxFont fontb = font;
+    fontb.SetWeight(wxFONTWEIGHT_BOLD);
+
+    m_attrUntranslated[0].SetFont(fontb);
+    m_attrUntranslated[1].SetFont(fontb);
+
+    m_attrFuzzy[0].SetFont(fontb);
+    m_attrFuzzy[1].SetFont(fontb);
 }
 
 void PoeditListCtrl::SetDisplayLines(bool dl)

@@ -1192,7 +1192,10 @@ void PoeditFrame::OnPreferences(wxCommandEvent&)
         dlg.TransferFrom(wxConfig::Get());
         g_focusToText = (bool)wxConfig::Get()->Read(_T("focus_to_text"),
                                                      (long)false);
+
         SetCustomFonts();
+        m_list->Refresh(); // if font changed
+
         UpdateCommentWindowEditable();
         InitSpellchecker();
     }
@@ -2185,7 +2188,6 @@ void PoeditFrame::SetCustomFonts()
 {
     wxConfigBase *cfg = wxConfig::Get();
 
-    static bool prevUseFontList = false;
     static bool prevUseFontText = false;
 
     bool useFontList = (bool)cfg->Read(_T("custom_font_list_use"), (long)false);
@@ -2200,14 +2202,12 @@ void PoeditFrame::SetCustomFonts()
             fi.FromString(name);
             wxFont font;
             font.SetNativeFontInfo(fi);
-            m_list->SetFont(font);
-            prevUseFontList = true;
+            m_list->SetCustomFont(font);
         }
     }
-    else if (prevUseFontList)
+    else
     {
-        m_list->SetFont(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT));
-        prevUseFontList = false;
+        m_list->SetCustomFont(wxNullFont);
     }
 
     if (useFontText)
