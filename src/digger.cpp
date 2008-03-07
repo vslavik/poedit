@@ -55,7 +55,7 @@ wxString ConcatCatalogs(const wxArrayString& files)
     }
 
     wxString cmd =
-        wxString::Format(_T("msgcat --force-po -o \"%s\" %s"),
+        wxString::Format(_T("msgcat --force-po --use-first -o \"%s\" %s"),
                          tempfile.c_str(),
                          list.c_str());
     bool succ = ExecuteGettext(cmd);
@@ -78,6 +78,35 @@ void RemoveTempFiles(const wxArrayString& files)
     {
         wxRemoveFile(*i);
     }
+}
+
+// fixes gettext header by replacing "CHARSET" with "iso-8859-1" -- msgcat
+// doesn't like CHARSET value
+bool FixCharsetInfo(const wxString& filename)
+{
+    wxFFile file;
+    wxString data;
+
+    if ( !file.Open(filename) ||
+         !file.ReadAll(&data, wxConvISO8859_1) ||
+         !file.Close() )
+    {
+        wxLogError(_("Failed to read extracted catalog."));
+        return false;
+    }
+
+    data.Replace(_T("CHARSET"),
+                 _T("iso-8859-1"));
+
+    if ( !file.Open(filename, _T("w")) ||
+         !file.Write(data, wxConvISO8859_1) ||
+         !file.Close() )
+    {
+        wxLogError(_("Failed to read extracted catalog."));
+        return false;
+    }
+
+    return true;
 }
 
 } // anonymous namespace
@@ -166,6 +195,9 @@ bool SourceDigger::DigFiles(wxArrayString& outFiles,
         {
             return false;
         }
+
+        if ( !FixCharsetInfo(tempfile) )
+            return false;
 
         tempfiles.push_back(tempfile);
 

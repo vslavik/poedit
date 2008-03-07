@@ -254,7 +254,7 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
         Parser p;
         p.Name = s_gettextLangs[i].name;
         p.Extensions = s_gettextLangs[i].exts;
-        p.Command = _T("xgettext --force-po --omit-header -o %o %C %K %F");
+        p.Command = _T("xgettext --force-po -o %o %C %K %F");
         p.KeywordItem = _T("-k%k");
         p.FileItem = _T("%f");
         p.CharsetItem = _T("--from-code=%c");
@@ -285,20 +285,10 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
         {
             if (pdb[cpp].Command == _T("xgettext --force-po -o %o %K %F"))
             {
-                pdb[cpp].Command = _T("xgettext --force-po --omit-header -o %o %C %K %F");
+                pdb[cpp].Command = _T("xgettext --force-po -o %o %C %K %F");
                 pdb[cpp].CharsetItem = _T("--from-code=%c");
                 changed = true;
             }
-        }
-    }
-
-    // 1.4.0 adds --omit-header to parsers lines:
-    for ( size_t i = 0; i < pdb.size(); ++i )
-    {
-        if ( pdb[i].Command == _T("xgettext --force-po -o %o %C %K %F") )
-        {
-            pdb[i].Command = _T("xgettext --force-po --omit-header -o %o %C %K %F");
-            changed = true;
         }
     }
 
