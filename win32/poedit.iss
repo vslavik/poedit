@@ -27,7 +27,7 @@
 ;
 
 #define VERSION          "1.4"
-#define VERSION_FULL     "1.4pre2"
+#define VERSION_FULL     "1.4"
 
 ; FIXME: extract this from manifest file somehow?
 #define CRT_VERSION      "8.0.50727.762"
