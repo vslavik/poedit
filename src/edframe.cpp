@@ -47,6 +47,7 @@
 #include <wx/wupdlock.h>
 #include <wx/aboutdlg.h>
 #include <wx/iconbndl.h>
+#include <wx/clipbrd.h>
 
 #ifdef USE_SPELLCHECKING
 
@@ -219,10 +220,94 @@ class TextctrlHandler : public wxEvtHandler
                     m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                     break;
                 }
+
+#ifdef __WXMSW__
+                // Text controls with wxTE_RICH2 style (richedit native
+                // controls) don't generate WM_COPY, WM_PASTE and WM_CUT
+                // messages that we need to capture (see below), so we have
+                // to handle their respective keys ourselves:
+                case 'C':
+                    dynamic_cast<wxTextCtrl*>(event.GetEventObject())->Copy();
+                    break;
+                case 'V':
+                    dynamic_cast<wxTextCtrl*>(event.GetEventObject())->Paste();
+                    break;
+                case 'X':
+                    dynamic_cast<wxTextCtrl*>(event.GetEventObject())->Cut();
+                    break;
+#endif
+
                 default:
                     event.Skip();
             }
         }
+
+#ifdef __WXMSW__
+        // We use wxTE_RICH2 style, which allows for pasting rich-formatted
+        // text into the control. We want to allow only plain text (all the
+        // formatting done is Poedit's syntax highlighting), so we need to
+        // override copy/cut/paste command.s Plus, the richedit control
+        // (or wx's use of it) has a bug in it that causes it to copy wrong
+        // data when copying from the same text control to itself after its
+        // content was programatically changed:
+        // https://sourceforge.net/tracker/index.php?func=detail&aid=1910234&group_id=27043&atid=389153
+
+        bool DoCopy(wxTextCtrl *textctrl)
+        {
+            long from, to;
+            textctrl->GetSelection(&from, &to);
+            if ( from == to )
+                return false;
+
+            const wxString sel = textctrl->GetRange(from, to);
+
+            wxClipboardLocker lock;
+            wxCHECK_MSG( !!lock, false, "failed to lock clipboard" );
+
+            wxClipboard::Get()->SetData(new wxTextDataObject(sel));
+            return true;
+        }
+
+        void OnCopy(wxClipboardTextEvent& event)
+        {
+            wxLogDebug("OnCopy");
+            wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
+            wxCHECK_RET( textctrl, "wrong use of event handler" );
+
+            DoCopy(textctrl);
+        }
+
+        void OnCut(wxClipboardTextEvent& event)
+        {
+            wxLogDebug("OnCut");
+            wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
+            wxCHECK_RET( textctrl, "wrong use of event handler" );
+
+            if ( !DoCopy(textctrl) )
+                return;
+
+            long from, to;
+            textctrl->GetSelection(&from, &to);
+            textctrl->Remove(from, to);
+        }
+
+        void OnPaste(wxClipboardTextEvent& event)
+        {
+            wxLogDebug("OnPaste");
+            wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
+            wxCHECK_RET( textctrl, "wrong use of event handler" );
+
+            wxClipboardLocker lock;
+            wxCHECK_RET( !!lock, "failed to lock clipboard" );
+
+            wxTextDataObject d;
+            wxClipboard::Get()->GetData(d);
+
+            long from, to;
+            textctrl->GetSelection(&from, &to);
+            textctrl->Replace(from, to, d.GetText());
+        }
+#endif // __WXMSW__
 
         DECLARE_EVENT_TABLE()
 
@@ -233,6 +318,11 @@ class TextctrlHandler : public wxEvtHandler
 
 BEGIN_EVENT_TABLE(TextctrlHandler, wxEvtHandler)
     EVT_KEY_DOWN(TextctrlHandler::OnKeyDown)
+#ifdef __WXMSW__
+    EVT_TEXT_COPY(-1, TextctrlHandler::OnCopy)
+    EVT_TEXT_CUT(-1, TextctrlHandler::OnCut)
+    EVT_TEXT_PASTE(-1, TextctrlHandler::OnPaste)
+#endif
 END_EVENT_TABLE()
 
 
