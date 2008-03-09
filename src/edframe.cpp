@@ -270,7 +270,6 @@ class TextctrlHandler : public wxEvtHandler
 
         void OnCopy(wxClipboardTextEvent& event)
         {
-            wxLogDebug("OnCopy");
             wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
             wxCHECK_RET( textctrl, "wrong use of event handler" );
 
@@ -279,7 +278,6 @@ class TextctrlHandler : public wxEvtHandler
 
         void OnCut(wxClipboardTextEvent& event)
         {
-            wxLogDebug("OnCut");
             wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
             wxCHECK_RET( textctrl, "wrong use of event handler" );
 
@@ -293,7 +291,6 @@ class TextctrlHandler : public wxEvtHandler
 
         void OnPaste(wxClipboardTextEvent& event)
         {
-            wxLogDebug("OnPaste");
             wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
             wxCHECK_RET( textctrl, "wrong use of event handler" );
 
