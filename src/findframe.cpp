@@ -48,10 +48,9 @@ wxString FindFrame::ms_text;
 BEGIN_EVENT_TABLE(FindFrame, wxFrame)
    EVT_BUTTON(XRCID("find_next"), FindFrame::OnNext)
    EVT_BUTTON(XRCID("find_prev"), FindFrame::OnPrev)
-   EVT_BUTTON(wxID_CLOSE, FindFrame::OnCancel)
+   EVT_BUTTON(wxID_CLOSE, FindFrame::OnClose)
    EVT_TEXT(XRCID("string_to_find"), FindFrame::OnTextChange)
    EVT_CHECKBOX(-1, FindFrame::OnCheckbox)
-   EVT_CLOSE(FindFrame::OnClose)
 END_EVENT_TABLE()
 
 FindFrame::FindFrame(wxWindow *parent,
@@ -143,12 +142,7 @@ void FindFrame::Reset(Catalog *c)
 }
 
 
-void FindFrame::OnClose(wxCloseEvent &event)
-{
-    Destroy();
-}
-
-void FindFrame::OnCancel(wxCommandEvent &event)
+void FindFrame::OnClose(wxCommandEvent &event)
 {
     Destroy();
 }

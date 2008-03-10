@@ -63,8 +63,7 @@ class FindFrame : public wxFrame
         void Reset(Catalog *c);
 
     private:
-        void OnCancel(wxCommandEvent &event);
-        void OnClose(wxCloseEvent &event);
+        void OnClose(wxCommandEvent &event);
         void OnPrev(wxCommandEvent &event);
         void OnNext(wxCommandEvent &event);
         void OnTextChange(wxCommandEvent &event);
