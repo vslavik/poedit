@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2006 Vaclav Slavik
+ *  Copyright (C) 2001-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -75,10 +75,12 @@ class FindFrame : public wxFrame
         PoeditListCtrl *m_listCtrl;
         Catalog *m_catalog;
         int m_position;
-        wxString m_text;
         wxButton *m_btnPrev, *m_btnNext;
         wxTextCtrl *m_textCtrlOrig, *m_textCtrlTrans;
         wxTextCtrl *m_textCtrlComments, *m_textCtrlAutoComments;
+
+        // NB: this is static so that last search term is remembered
+        static wxString ms_text;
 };
 
 
