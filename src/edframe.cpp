@@ -2236,7 +2236,9 @@ void PoeditFrame::OnAbout(wxCommandEvent&)
 
     about.SetName(_T("Poedit"));
     about.SetVersion(wxGetApp().GetAppVersion());
+#ifndef __WXMAC__
     about.SetDescription(_("Poedit is an easy to use translations editor."));
+#endif
     about.SetCopyright(_T("Copyright \u00a9 1999-2008 Vaclav Slavik"));
 #ifdef __WXGTK__ // other ports would show non-native about dlg
     about.SetWebSite(_T("http://www.poedit.net"));

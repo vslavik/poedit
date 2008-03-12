@@ -1,0 +1,16 @@
+Index: src/mac/carbon/aboutdlg.cpp
+===================================================================
+--- src/mac/carbon/aboutdlg.cpp	(revision 52453)
++++ src/mac/carbon/aboutdlg.cpp	(working copy)
+@@ -69,7 +69,10 @@
+         opts.Set(kHIAboutBoxNameKey, info.GetName());
+ 
+         if ( info.HasVersion() )
+-            opts.Set(kHIAboutBoxVersionKey, info.GetVersion());
++        {
++            opts.Set(kHIAboutBoxVersionKey,
++                     wxString::Format(_("Version %s"), info.GetVersion().c_str()));
++        }
+ 
+         if ( info.HasCopyright() )
+             opts.Set(kHIAboutBoxCopyrightKey, info.GetCopyright());
