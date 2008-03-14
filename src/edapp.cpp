@@ -86,9 +86,7 @@ wxString PoeditApp::GetAppVersion() const
 }
 
 
-#ifndef __WXMAC__
 static wxArrayString gs_filesToOpen;
-#endif
 
 extern void InitXmlResource();
 
@@ -180,18 +178,20 @@ bool PoeditApp::OnInit()
             dlg.TransferFrom(wxConfig::Get());
     }
 
-    // opening files or creating empty window is handled differently on Macs,
-    // using MacOpenFile() and MacNewFile(), so don't do it here:
-#ifndef __WXMAC__
-    if (gs_filesToOpen.GetCount() == 0)
-    {
-        OpenNewFile();
-    }
-    else
+    // NB: opening files or creating empty window is handled differently on
+    //     Macs, using MacOpenFile() and MacNewFile(), so don't create empty
+    //     window if no files are given on command line; but still support
+    //     passing files on command line
+    if (!gs_filesToOpen.empty())
     {
         for (size_t i = 0; i < gs_filesToOpen.GetCount(); i++)
             OpenFile(gs_filesToOpen[i]);
         gs_filesToOpen.clear();
+    }
+#ifndef __WXMAC__
+    else
+    {
+        OpenNewFile();
     }
 #endif // !__WXMAC__
 
@@ -344,10 +344,8 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
     if (!wxApp::OnCmdLineParsed(parser))
         return false;
 
-#ifndef __WXMAC__
     for (size_t i = 0; i < parser.GetParamCount(); i++)
         gs_filesToOpen.Add(parser.GetParam(i));
-#endif
 
     return true;
 }
