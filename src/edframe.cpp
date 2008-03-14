@@ -221,22 +221,6 @@ class TextctrlHandler : public wxEvtHandler
                     break;
                 }
 
-#ifdef __WXMSW__
-                // Text controls with wxTE_RICH2 style (richedit native
-                // controls) don't generate WM_COPY, WM_PASTE and WM_CUT
-                // messages that we need to capture (see below), so we have
-                // to handle their respective keys ourselves:
-                case 'C':
-                    dynamic_cast<wxTextCtrl*>(event.GetEventObject())->Copy();
-                    break;
-                case 'V':
-                    dynamic_cast<wxTextCtrl*>(event.GetEventObject())->Paste();
-                    break;
-                case 'X':
-                    dynamic_cast<wxTextCtrl*>(event.GetEventObject())->Cut();
-                    break;
-#endif
-
                 default:
                     event.Skip();
             }
