@@ -3,7 +3,7 @@ POEDIT_LINGUAS = af_ZA am ar ast be@latin be bg bn br ca cs da de el eo es es_PR
 
 localedir = $(datadir)/locale
 
-install-data-local: @CATALOGS_TO_INSTALL@
+install-data-local: install-poedit-catalogs
 
 install-poedit-catalogs:
 	for i in $(POEDIT_LINGUAS) ; do \
