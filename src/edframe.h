@@ -70,6 +70,7 @@ class TransTextctrlHandler;
 
 class TranslationMemory;
 class PoeditFrame;
+class AttentionBar;
 
 WX_DECLARE_LIST(PoeditFrame, PoeditFramesList);
 
@@ -154,6 +155,8 @@ class PoeditFrame : public wxFrame
 
         // (Re)initializes spellchecker, if needed
         void InitSpellchecker();
+
+        void EditPreferences();
 
         // Message handlers:
         void OnNew(wxCommandEvent& event);
@@ -281,6 +284,8 @@ class PoeditFrame : public wxFrame
 #ifdef CAN_MODIFY_DEFAULT_FONT
         wxFont m_boldGuiFont;
 #endif
+
+        AttentionBar *m_attentionBar;
 
         bool m_modified;
         bool m_hasObsoleteItems;

@@ -20,7 +20,8 @@ SPARKLE_FRAMEWORK = @SPARKLE_FRAMEWORK@
 
 bin_PROGRAMS = poedit
 
-poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
+poedit_SOURCES = attentionbar.cpp attentionbar.h \
+                 catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  edframe.h fileviewer.cpp fileviewer.h parser.cpp parser.h \
                  isocodes.cpp isocodes.h prefsdlg.cpp prefsdlg.h \
                  settingsdlg.cpp settingsdlg.h progressinfo.h \

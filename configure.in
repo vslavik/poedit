@@ -119,6 +119,11 @@ fi
 AC_MSG_RESULT([$WXRC])
 
 
+AC_CHECK_HEADER([boost/function.hpp],
+    [],
+    [AC_MSG_ERROR([Boost is required to compile Poedit.])])
+
+
 use_osx=no
 case "${host}" in
     *-*-darwin* )

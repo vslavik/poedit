@@ -167,17 +167,6 @@ bool PoeditApp::OnInit()
 
     m_locale.AddCatalog(_T("poedit"));
 
-    if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
-    {
-        wxMessageBox(_("This is first time you run Poedit.\nPlease fill in your name and email address.\n(This information is used only in catalogs headers)"), _("Setup"),
-                       wxOK | wxICON_INFORMATION);
-
-        PreferencesDialog dlg;
-        dlg.TransferTo(wxConfig::Get());
-        if (dlg.ShowModal() == wxID_OK)
-            dlg.TransferFrom(wxConfig::Get());
-    }
-
     // NB: opening files or creating empty window is handled differently on
     //     Macs, using MacOpenFile() and MacNewFile(), so don't create empty
     //     window if no files are given on command line; but still support

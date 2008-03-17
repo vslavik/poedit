@@ -75,6 +75,7 @@
 #include "commentdlg.h"
 #include "manager.h"
 #include "pluralforms/pl_evaluate.h"
+#include "attentionbar.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(PoeditFramesList);
@@ -535,18 +536,26 @@ PoeditFrame::PoeditFrame() :
     if (cfg->Read(_T("frame_maximized"), long(0)))
         Maximize();
 
-
     m_splitter = new wxSplitterWindow(this, -1,
                                       wxDefaultPosition, wxDefaultSize,
                                       SPLITTER_FLAGS);
     // make only the upper part grow when resizing
     m_splitter->SetSashGravity(1.0);
 
-    m_list = new PoeditListCtrl(m_splitter,
+    wxPanel *topPanel = new wxPanel(m_splitter, wxID_ANY);
+
+    m_attentionBar = new AttentionBar(topPanel);
+
+    m_list = new PoeditListCtrl(topPanel,
                                 ID_LIST,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxLC_REPORT | wxLC_SINGLE_SEL,
                                 m_displayLines);
+
+    wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
+    topSizer->Add(m_attentionBar, wxSizerFlags().Expand());
+    topSizer->Add(m_list, wxSizerFlags(1).Expand());
+    topPanel->SetSizer(topSizer);
 
     m_bottomSplitter = new wxSplitterWindow(m_splitter, -1,
                                             wxDefaultPosition, wxDefaultSize,
@@ -619,7 +628,7 @@ PoeditFrame::PoeditFrame() :
     m_bottomSplitter->Initialize(m_bottomLeftPanel);
 
     m_splitter->SetMinimumPaneSize(40);
-    m_splitter->SplitHorizontally(m_list, m_bottomSplitter, cfg->Read(_T("splitter"), 330L));
+    m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, cfg->Read(_T("splitter"), 330L));
 
     m_list->PushEventHandler(new ListHandler(this));
     m_textTrans->PushEventHandler(new TransTextctrlHandler(this));
@@ -1258,7 +1267,7 @@ void PoeditFrame::OnSettings(wxCommandEvent&)
 
 
 
-void PoeditFrame::OnPreferences(wxCommandEvent&)
+void PoeditFrame::EditPreferences()
 {
     PreferencesDialog dlg(this);
 
@@ -1275,6 +1284,11 @@ void PoeditFrame::OnPreferences(wxCommandEvent&)
         UpdateCommentWindowEditable();
         InitSpellchecker();
     }
+}
+
+void PoeditFrame::OnPreferences(wxCommandEvent&)
+{
+    EditPreferences();
 }
 
 
@@ -1856,6 +1870,23 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     InitSpellchecker();
 
     RestartItemsValidation();
+
+
+    // FIXME: do this for Gettext PO files only
+    if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
+    {
+        AttentionMessage msg
+            (
+                _T("no-translator-info"),
+                AttentionMessage::Info,
+                _("You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files.")
+            );
+        msg.AddAction(_("Set email"),
+                      boost::bind(&PoeditFrame::EditPreferences, this));
+        msg.AddDontShowAgain();
+
+        m_attentionBar->ShowMessage(msg);
+    }
 }
 
 
