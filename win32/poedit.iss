@@ -47,21 +47,16 @@ ChangesAssociations=true
 AlwaysShowComponentsList=true
 SourceDir=..
 DefaultDirName={pf}\Poedit
-
 DefaultGroupName=Poedit
 AllowNoIcons=true
 LicenseFile=COPYING
 OutputDir=.
 InfoAfterFile=
 Compression=lzma/ultra
-
 WindowShowCaption=true
 WindowStartMaximized=false
 FlatComponentsList=true
 WindowResizable=true
-
-
-
 SolidCompression=true
 ShowLanguageDialog=no
 AllowUNCPath=true
@@ -81,6 +76,11 @@ AppContact=poedit-users@lists.sourceforge.net
 UninstallDisplayIcon={app}\bin\poedit.exe
 UninstallDisplayName=Poedit
 MinVersion=0,4.0.1381
+
+[LangOptions]
+; make the installer use standard (WinXP, ...) fonts
+DialogFontName=Tahoma
+DialogFontSize=8
 
 [Files]
 Source: win32\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
