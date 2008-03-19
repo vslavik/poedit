@@ -26,6 +26,11 @@
         <description>Version of Berkeley DB used</description>
     </option>
 
+    <option name="BOOST_PATH" category="path">
+        <default-value>./boost</default-value>
+        <description>Path to directory with Boost libraries and headers</description>
+    </option>
+
     <set var="DB_INCLUDE_PATH">$(DB_PATH)/build_windows</set>
     <set var="DB_LIB_PATH">$(DB_PATH)/build_windows/$(BUILDDIR_PART)</set>
     <set var="DB_LIB">libdb$(DB_VERSION)s</set>
@@ -46,6 +51,7 @@
         <define>DB_HEADER="db.h"</define>
         <include>$(DB_INCLUDE_PATH)</include>
         <lib-path>$(DB_LIB_PATH)</lib-path>
+        <include>$(BOOST_PATH)</include>
         <sys-lib>$(DB_LIB)</sys-lib>
         <sys-lib>ws2_32</sys-lib>
 

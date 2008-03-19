@@ -46,6 +46,9 @@ INNOSETUP_VERSION = '5.2.2'
 INNOSETUP_URL = 'http://files.jrsoftware.org/ispack/ispack-%s.exe' % INNOSETUP_VERSION
 INNOUNP_URL = 'http://innounp.sf.net/test020.rar'
 
+BOOST_VERSION = '1.34.1'
+BOOST_URL = 'http://downloads.sourceforge.net/boost/boost_%s.tar.bz2' % BOOST_VERSION.replace('.','_')
+
 
 from rlsbot import BuildEnvironment
 env = BuildEnvironment()
@@ -418,6 +421,22 @@ innosetup = env.BuildComponent(
         ],
         outputs=['{app}/*'])
 
+# -----------------------------------------------------------------
+# Boost
+# -----------------------------------------------------------------
+
+src_boost = env.ComponentSources(
+        name='boost',
+        source=BOOST_URL,
+        post_commands=['rm -rf doc more '])
+
+boost_headers = env.BuildComponent(
+        name='boost-headers',
+        agent='unix',
+        sources=src_boost,
+        deps=None,
+        commands=[],
+        outputs=['boost'])
 
 # -----------------------------------------------------------------
 # poedit
@@ -446,6 +465,7 @@ poedit_osx = env.BuildComponent(
               (db_osx_ppc, 'ppc/deps'),
               (db_osx_x86, 'x86/deps'),
               (gettext_osx, 'deps/gettext'),
+              (boost_headers, 'deps/boost'),
               (sparkle, 'deps/sparkle'),
               ],
         commands=[
@@ -458,7 +478,7 @@ poedit_osx = env.BuildComponent(
             '  CFLAGS="$OSX_CFLAGS_PPC"'
             '  CXXFLAGS="$OSX_CXXFLAGS_PPC"'
             '  OBJCFLAGS="$OSX_OBJCFLAGS_PPC"'
-            '  CPPFLAGS="-I`pwd`/deps/include"'
+            '  CPPFLAGS="-I`pwd`/deps/include -I`pwd`/../deps/boost"'
             '  LDFLAGS="$OSX_LDFLAGS_PPC -L`pwd`/deps/lib"'
             '  WXRC="`pwd`/../$OSX_NATIVE/deps/bin/wxrc"',
             'make',
@@ -472,7 +492,7 @@ poedit_osx = env.BuildComponent(
             '  CFLAGS="$OSX_CFLAGS_X86"'
             '  CXXFLAGS="$OSX_CXXFLAGS_X86"'
             '  OBJCFLAGS="$OSX_OBJCFLAGS_X86"'
-            '  CPPFLAGS="-I`pwd`/deps/include"'
+            '  CPPFLAGS="-I`pwd`/deps/include -I`pwd`/../deps/boost"'
             '  LDFLAGS="$OSX_LDFLAGS_X86 -L`pwd`/deps/lib"'
             '  WXRC="`pwd`/../$OSX_NATIVE/deps/bin/wxrc"',
             'make',
@@ -494,13 +514,14 @@ poedit_win32 = env.BuildComponent(
               (gettext_win32, 'deps/gettext'),
               (db_win32, 'deps/db'),
               (innosetup, 'deps/inno'),
+              (boost_headers, 'deps/boost'),
               ],
         toolchain=env.VisualStudioToolchain,
         commands=[
             'cd win32',
             'set WXWIN=..\\deps\\wx',
             'set WXRC="%WXWIN%\\wxrc.exe"',
-            'nmake -f makefile.vc WX_DEBUG=0 WXRC=%WXRC% DB_PATH=..\\deps\\db',
+            'nmake -f makefile.vc WX_DEBUG=0 WXRC=%WXRC% DB_PATH=..\\deps\\db BOOST_PATH=..\\deps\\boost',
             '..\\deps\\inno\\iscc poedit.iss',
             ],
         environment=VS2005_ENVIRONMENT,
