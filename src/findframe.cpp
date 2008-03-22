@@ -82,7 +82,7 @@ FindFrame::FindFrame(wxWindow *parent,
     {
         wxTextCtrl *t = XRCCTRL(*this, "string_to_find", wxTextCtrl);
         t->SetValue(ms_text);
-        t->SetSelection(-1, -1);
+        t->SelectAll();
     }
 
     Reset(c);
