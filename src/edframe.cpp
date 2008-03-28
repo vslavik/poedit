@@ -377,10 +377,10 @@ class UnfocusableTextCtrl : public wxTextCtrl
 
 BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_EXIT,                 PoeditFrame::OnQuit)
-   EVT_MENU           (XRCID("menu_help"),        PoeditFrame::OnHelp)
+   EVT_MENU           (wxID_HELP,                 PoeditFrame::OnHelp)
    EVT_MENU           (XRCID("menu_help_gettext"),PoeditFrame::OnHelpGettext)
    EVT_MENU           (wxID_ABOUT,                PoeditFrame::OnAbout)
-   EVT_MENU           (XRCID("menu_new"),         PoeditFrame::OnNew)
+   EVT_MENU           (wxID_NEW,                  PoeditFrame::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditFrame::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditFrame::OnOpen)
    EVT_MENU           (wxID_SAVE,                 PoeditFrame::OnSave)
@@ -403,7 +403,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
 #ifndef __WXMAC__
    EVT_MENU           (XRCID("menu_fullscreen"),  PoeditFrame::OnFullscreen)
 #endif
-   EVT_MENU           (XRCID("menu_find"),        PoeditFrame::OnFind)
+   EVT_MENU           (wxID_FIND,                 PoeditFrame::OnFind)
    EVT_MENU           (XRCID("menu_comment"),     PoeditFrame::OnEditComment)
    EVT_MENU           (XRCID("menu_manager"),     PoeditFrame::OnManager)
    EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
@@ -2002,7 +2002,7 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_comment"), editable);
     menubar->Enable(XRCID("menu_insert_orig"), editable);
     menubar->Enable(XRCID("menu_references"), editable);
-    menubar->Enable(XRCID("menu_find"), editable);
+    menubar->Enable(wxID_FIND, editable);
 
     menubar->EnableTop(2, editable);
 

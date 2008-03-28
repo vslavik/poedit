@@ -8,7 +8,7 @@
         <label>Catalogs _manager</label>
       </object>
       <object class="separator"/>
-      <object class="wxMenuItem" name="menu_new">
+      <object class="wxMenuItem" name="wxID_NEW">
         <label>_New catalog...</label>
       </object>
       <object class="wxMenuItem" name="menu_new_from_pot">
@@ -53,7 +53,7 @@
       <object class="wxMenuItem" name="menu_references">
         <label>_Show references</label>
       </object>
-      <object class="wxMenuItem" name="menu_find">
+      <object class="wxMenuItem" name="wxID_FIND">
         <label>_Find...</label>
         <accel>Ctrl-F</accel>
       </object>
@@ -127,9 +127,9 @@
       </object>
       <style>wxMENU_TEAROFF</style>
     </object>
-    <object class="wxMenu" name="menu_help2">
-      <object class="wxMenuItem" name="menu_help">
-        <label>_Contents...</label>
+    <object class="wxMenu" name="menu_help">
+      <object class="wxMenuItem" name="wxID_HELP">
+        <label>_Contents</label>
         <accel platform="win">F1</accel>
         <accel platform="unix">F1</accel>
         <accel platform="mac">Ctrl+?</accel>
@@ -137,10 +137,8 @@
       <object class="wxMenuItem" name="menu_help_gettext" platform="win">
         <label>GNU gettext documentation</label>
       </object>
-      <object platform="unix" class="separator"/>
-      <object platform="win" class="separator"/>
       <object class="wxMenuItem" name="wxID_ABOUT">
-        <label>_About...</label>
+        <label>_About</label>
       </object>
       <label>_Help</label>
       <style>wxMENU_TEAROFF</style>
