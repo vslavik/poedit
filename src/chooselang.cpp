@@ -52,17 +52,10 @@ wxLanguage GetUILanguage()
 #if !NEED_CHOOSELANG_UI
     return wxLANGUAGE_DEFAULT;
 #else
-    wxLanguage lang(wxLANGUAGE_DEFAULT);
+    wxLanguage lang = wxLANGUAGE_DEFAULT;
+
     wxString lng = wxConfig::Get()->Read(_T("ui_language"));
-    if (lng.empty())
-    {
-        lang = ChooseLanguage();
-        if (lang != wxLANGUAGE_UNKNOWN)
-            SaveUILanguage(lang);
-        else
-            lang = wxLANGUAGE_DEFAULT;
-    }
-    else if (lng != _T("default"))
+    if (!lng.empty() && lng != _T("default"))
     {
         const wxLanguageInfo *info = wxLocale::FindLanguageInfo(lng);
         if (info != NULL)
@@ -70,6 +63,8 @@ wxLanguage GetUILanguage()
         else
             wxLogError(_("Uknown locale code '%s' in registry."), lng.c_str());
     }
+    // else: use autodetected language
+
     return lang;
 #endif // NEED_CHOOSELANG_UI
 }
