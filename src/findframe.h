@@ -75,10 +75,12 @@ class FindFrame : public wxFrame
         PoeditListCtrl *m_listCtrl;
         Catalog *m_catalog;
         int m_position;
-        wxString m_text;
         wxButton *m_btnPrev, *m_btnNext;
         wxTextCtrl *m_textCtrlOrig, *m_textCtrlTrans;
         wxTextCtrl *m_textCtrlComments, *m_textCtrlAutoComments;
+
+        // NB: this is static so that last search term is remembered
+        static wxString ms_text;
 };
 
 

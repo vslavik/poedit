@@ -42,6 +42,8 @@
 // The word separators used when doing a "Whole words only" search
 static const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
 
+wxString FindFrame::ms_text;
+
 BEGIN_EVENT_TABLE(FindFrame, wxFrame)
    EVT_BUTTON(XRCID("find_next"), FindFrame::OnNext)
    EVT_BUTTON(XRCID("find_prev"), FindFrame::OnPrev)
@@ -75,6 +77,13 @@ FindFrame::FindFrame(wxWindow *parent,
 
     m_btnNext = XRCCTRL(*this, "find_next", wxButton);
     m_btnPrev = XRCCTRL(*this, "find_prev", wxButton);
+
+    if ( !ms_text.empty() )
+    {
+        wxTextCtrl *t = XRCCTRL(*this, "string_to_find", wxTextCtrl);
+        t->SetValue(ms_text);
+        t->SelectAll();
+    }
 
     Reset(c);
 
@@ -128,8 +137,8 @@ void FindFrame::Reset(Catalog *c)
                                              wxLIST_NEXT_ALL,
                                              wxLIST_STATE_SELECTED);
 
-    m_btnPrev->Enable(!!m_text);
-    m_btnNext->Enable(!!m_text);
+    m_btnPrev->Enable(!ms_text.empty());
+    m_btnNext->Enable(!ms_text.empty());
 }
 
 
@@ -146,7 +155,7 @@ void FindFrame::OnCancel(wxCommandEvent &event)
 
 void FindFrame::OnTextChange(wxCommandEvent &event)
 {
-    m_text = XRCCTRL(*this, "string_to_find", wxTextCtrl)->GetValue();
+    ms_text = XRCCTRL(*this, "string_to_find", wxTextCtrl)->GetValue();
     Reset(m_catalog);
 }
 
@@ -225,7 +234,7 @@ bool FindFrame::DoFind(int dir)
 
     FoundState found = Found_Not;
     wxString textc;
-    wxString text(m_text);
+    wxString text(ms_text);
 
     if (!caseSens)
         text.MakeLower();
