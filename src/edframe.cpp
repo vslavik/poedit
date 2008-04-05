@@ -163,7 +163,7 @@ class TextctrlHandler : public wxEvtHandler
         {
             int keyCode = event.GetKeyCode();
 
-            if (!(event.ControlDown() || event.CmdDown()))
+            if ( event.GetModifiers() != wxMOD_CMD ) // Cmd-* or Ctrl-*
             {
                 event.Skip();
                 return;
