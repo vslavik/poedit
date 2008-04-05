@@ -555,6 +555,8 @@ PoeditFrame::PoeditFrame() :
     m_splitter = new wxSplitterWindow(this, -1,
                                       wxDefaultPosition, wxDefaultSize,
                                       SPLITTER_FLAGS);
+    // make only the upper part grow when resizing
+    m_splitter->SetSashGravity(1.0);
 
     m_list = new PoeditListCtrl(m_splitter,
                                 ID_LIST,
@@ -565,6 +567,9 @@ PoeditFrame::PoeditFrame() :
     m_bottomSplitter = new wxSplitterWindow(m_splitter, -1,
                                             wxDefaultPosition, wxDefaultSize,
                                             SPLITTER_FLAGS);
+    // left part (translation) should grow, not comments one:
+    m_bottomSplitter->SetSashGravity(1.0);
+
     m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
     m_bottomRightPanel = new wxPanel(m_bottomSplitter);
 
