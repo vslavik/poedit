@@ -81,7 +81,7 @@ wxString PoeditApp::GetAppPath() const
 
 wxString PoeditApp::GetAppVersion() const
 {
-    wxString version(_T("1.4"));
+    wxString version(_T("1.4.1"));
     return version;
 }
 
