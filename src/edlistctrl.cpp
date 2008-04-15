@@ -224,9 +224,20 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 
     wxVisualAttributes visual = GetDefaultAttributes();
     wxColour shaded = visual.colBg;
-    shaded.Set(int(DARKEN_FACTOR * shaded.Red()),
-               int(DARKEN_FACTOR * shaded.Green()),
-               int(DARKEN_FACTOR * shaded.Blue()));
+
+#ifdef __WXMAC__
+    if ( shaded == *wxWHITE )
+    {
+        // use standard shaded color from finder/databrowser:
+        shaded.Set(_T("#f0f5fd"));
+    }
+    else
+#endif // __WXMAC__
+    {
+        shaded.Set(int(DARKEN_FACTOR * shaded.Red()),
+                   int(DARKEN_FACTOR * shaded.Green()),
+                   int(DARKEN_FACTOR * shaded.Blue()));
+    }
 
     m_attrNormal[1].SetBackgroundColour(shaded);
     m_attrUntranslated[1].SetBackgroundColour(shaded);
