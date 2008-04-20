@@ -100,10 +100,6 @@ bool PoeditApp::OnInit()
 #endif
 
 #ifdef __WXMAC__
-    // so that help menu is correctly merged with system-provided menu
-    // (see http://sourceforge.net/tracker/index.php?func=detail&aid=1600747&group_id=9863&atid=309863)
-    s_macHelpMenuTitleName = _("&Help");
-
     SetExitOnFrameDelete(false);
 #endif
 
@@ -166,6 +162,12 @@ bool PoeditApp::OnInit()
     m_locale.Init(GetUILanguage());
 
     m_locale.AddCatalog(_T("poedit"));
+
+#ifdef __WXMAC__
+    // so that help menu is correctly merged with system-provided menu
+    // (see http://sourceforge.net/tracker/index.php?func=detail&aid=1600747&group_id=9863&atid=309863)
+    s_macHelpMenuTitleName = _("&Help");
+#endif
 
     // NB: opening files or creating empty window is handled differently on
     //     Macs, using MacOpenFile() and MacNewFile(), so don't create empty
