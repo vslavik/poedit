@@ -163,6 +163,14 @@ bool PoeditApp::OnInit()
 
     m_locale.AddCatalog(_T("poedit"));
 
+#ifdef __WXMSW__
+    // Italian version of Windows uses just "?" for "Help" menu. This is
+    // correctly handled by wxWidgets catalogs, but Poedit catalog has "Help"
+    // entry too, so we add wxmsw.mo catalog again so that it takes
+    // precedence over poedit.mo:
+    m_locale.AddCatalog(_T("wxmsw"));
+#endif
+
 #ifdef __WXMAC__
     // so that help menu is correctly merged with system-provided menu
     // (see http://sourceforge.net/tracker/index.php?func=detail&aid=1600747&group_id=9863&atid=309863)
