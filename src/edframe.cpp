@@ -2130,7 +2130,15 @@ void PoeditFrame::OnAutoTranslate(wxCommandEvent& event)
     wxCHECK_RET( entry, _T("no entry selected") );
 
     int ind = event.GetId() - ID_POPUP_TRANS;
+
     entry->SetTranslation(m_autoTranslations[ind]);
+    entry->SetFuzzy(false);
+    entry->SetModified(true);
+
+    // FIXME: instead of this mess, use notifications of catalog change
+    m_modified = true;
+    UpdateTitle();
+
     UpdateToTextCtrl();
     RefreshSelectedItem();
 }
