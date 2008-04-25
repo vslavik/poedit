@@ -118,3 +118,5 @@ find $bundle/Contents/Resources/locale -type f
 iconsdir="$bundle/Contents/Resources/icons"
 mkdir -p $iconsdir
 cp $top_srcdir/src/icons/*.png $iconsdir
+# now overwrite with Mac-specific ones:
+cp $top_srcdir/src/icons/macosx/*.png $iconsdir

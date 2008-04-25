@@ -41,6 +41,14 @@
     #define USE_SLIDE_EFFECT
 #endif
 
+#ifdef __WXMAC__
+    #define SMALL_BORDER   5
+    #define BUTTONS_SPACE 10
+#else
+    #define SMALL_BORDER   3
+    #define BUTTONS_SPACE  3
+#endif
+
 BEGIN_EVENT_TABLE(AttentionBar, wxPanel)
     EVT_BUTTON(wxID_CLOSE, AttentionBar::OnClose)
     EVT_BUTTON(wxID_ANY, AttentionBar::OnAction)
@@ -67,10 +75,9 @@ AttentionBar::AttentionBar(wxWindow *parent)
             new wxBitmapButton
                 (
                     this, wxID_CLOSE,
-                    wxArtProvider::GetBitmap(_T("window-close"), wxART_MENU)
-#ifndef __WXMAC__
-                    , wxDefaultPosition, wxDefaultSize, wxNO_BORDER
-#endif
+                    wxArtProvider::GetBitmap(_T("window-close"), wxART_MENU),
+                    wxDefaultPosition, wxDefaultSize,
+                    wxNO_BORDER
                 );
     btnClose->SetToolTip(_("Hide this notification message"));
 #ifndef __WXGTK__
@@ -79,10 +86,10 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->AddSpacer(wxSizerFlags::GetDefaultBorder());
-    sizer->Add(m_icon, wxSizerFlags().Center().Border(wxRIGHT, 3));
-    sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxALL, 3));
-    sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, 3));
-    sizer->Add(btnClose, wxSizerFlags().Center().Border(wxALL, 3));
+    sizer->Add(m_icon, wxSizerFlags().Center().Border(wxRIGHT, SMALL_BORDER));
+    sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxALL, SMALL_BORDER));
+    sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
+    sizer->Add(btnClose, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
 
     SetSizer(sizer);
 
@@ -117,7 +124,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
           i != msg.m_actions.end(); ++i )
     {
         wxButton *b = new wxButton(this, wxID_ANY, i->first);
-        m_buttons->Add(b, wxSizerFlags().Center().Border(wxRIGHT, 3));
+        m_buttons->Add(b, wxSizerFlags().Center().Border(wxRIGHT, BUTTONS_SPACE));
         m_actions[b] = i->second;
     }
 

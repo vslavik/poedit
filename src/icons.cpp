@@ -29,6 +29,7 @@
 
 #include <wx/log.h>
 #include <wx/stdpaths.h>
+#include <wx/image.h>
 
 #include "icons.h"
 #include "edapp.h"
@@ -97,7 +98,6 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
         return wxNullBitmap;
 
     wxLogTrace(_T("poedit.icons"), _T("loading from %s"), icon.c_str());
-    wxBitmap bmp;
-    bmp.LoadFile(icon, wxBITMAP_TYPE_ANY);
+    wxBitmap bmp(wxImage(icon, wxBITMAP_TYPE_ANY));
     return bmp;
 }
