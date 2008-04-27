@@ -262,7 +262,7 @@ class TextctrlHandler : public wxEvtHandler
             const wxString sel = textctrl->GetRange(from, to);
 
             wxClipboardLocker lock;
-            wxCHECK_MSG( !!lock, false, "failed to lock clipboard" );
+            wxCHECK_MSG( !!lock, false, _T("failed to lock clipboard") );
 
             wxClipboard::Get()->SetData(new wxTextDataObject(sel));
             return true;
@@ -271,7 +271,7 @@ class TextctrlHandler : public wxEvtHandler
         void OnCopy(wxClipboardTextEvent& event)
         {
             wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-            wxCHECK_RET( textctrl, "wrong use of event handler" );
+            wxCHECK_RET( textctrl, _T("wrong use of event handler") );
 
             DoCopy(textctrl);
         }
@@ -279,7 +279,7 @@ class TextctrlHandler : public wxEvtHandler
         void OnCut(wxClipboardTextEvent& event)
         {
             wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-            wxCHECK_RET( textctrl, "wrong use of event handler" );
+            wxCHECK_RET( textctrl, _T("wrong use of event handler") );
 
             if ( !DoCopy(textctrl) )
                 return;
@@ -292,10 +292,10 @@ class TextctrlHandler : public wxEvtHandler
         void OnPaste(wxClipboardTextEvent& event)
         {
             wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-            wxCHECK_RET( textctrl, "wrong use of event handler" );
+            wxCHECK_RET( textctrl, _T("wrong use of event handler") );
 
             wxClipboardLocker lock;
-            wxCHECK_RET( !!lock, "failed to lock clipboard" );
+            wxCHECK_RET( !!lock, _T("failed to lock clipboard") );
 
             wxTextDataObject d;
             wxClipboard::Get()->GetData(d);
