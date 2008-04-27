@@ -2260,6 +2260,26 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
 
 void PoeditFrame::OnAbout(wxCommandEvent&)
 {
+#if 0
+    // Forces translation of several strings that are used for about
+    // dialog internally by wx, but are frequently not translate due to
+    // state of wx's translations:
+
+    // TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+    //              ("Poedit" here, but please use "%s")
+    _("About %s");
+    // TRANSLATORS: This is version information in about dialog, "%s" will be
+    //              version number when used
+    _("Version %s");
+    // TRANSLATORS: This is version information in about dialog, it is followed
+    //              by version number when used
+    _(" Version ");
+    // TRANSLATORS: This is titlebar of about dialog, the string ends with space
+    //              and is followed by application name when used ("Poedit",
+    //              but don't add it to this translation yourself)
+    _("About ");
+#endif
+
     wxAboutDialogInfo about;
 
     about.SetName(_T("Poedit"));
