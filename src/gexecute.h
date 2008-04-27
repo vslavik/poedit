@@ -46,8 +46,7 @@ struct GettextProcessData
     and logs it with wxLogError otherwise.
     \return true if program exited with exit code 0, false otherwise.
  */
-extern bool ExecuteGettext(const wxString& cmdline,
-                           wxString *stderrOutput = NULL);
+extern bool ExecuteGettext(const wxString& cmdline);
 
 /** Nonblocking version of the above -- upon termination, EVT_END_PROCESS
     event is delivered to \a parent and \a data are filled. */

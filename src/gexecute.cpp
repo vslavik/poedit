@@ -116,7 +116,7 @@ static wxString MacGetPathToBinary(const wxString& program)
 }
 #endif // __WXMAC__
 
-bool ExecuteGettext(const wxString& cmdline_, wxString *stderrOutput)
+bool ExecuteGettext(const wxString& cmdline_)
 {
     wxString cmdline(cmdline_);
 
@@ -127,37 +127,26 @@ bool ExecuteGettext(const wxString& cmdline_, wxString *stderrOutput)
 
     wxLogTrace(_T("poedit.execute"), _T("executing '%s'"), cmdline.c_str());
 
-    size_t i;
-    GettextProcessData pdata;
-    GettextProcess *process;
+    wxArrayString gstdout;
+    wxArrayString gstderr;
 
-    process = new GettextProcess(&pdata, NULL);
-    int pid = wxExecute(cmdline, false, process);
+    int retcode = wxExecute(cmdline, gstdout, gstderr);
 
-    if (pid == 0)
+    if ( retcode == -1 )
     {
-        wxLogError(_("Cannot execute program: ") + cmdline.BeforeFirst(_T(' ')));
+        wxLogError(_("Cannot execute program: %s"),
+                   cmdline.BeforeFirst(_T(' ')).c_str());
         return false;
     }
 
-    while (pdata.Running)
+    for ( size_t i = 0; i < gstderr.size(); i++ )
     {
-        process->HasInput();
-        wxMilliSleep(50);
-        wxYield();
-    }
-
-    for (i = 0; i < pdata.Stderr.GetCount(); i++) 
-    {
-        if (pdata.Stderr[i].empty())
+        if ( gstderr[i].empty() )
             continue;
-        if (stderrOutput)
-            *stderrOutput += pdata.Stderr[i] + _T("\n");
-        else
-            wxLogError(_T("%s"), pdata.Stderr[i].c_str());
+        wxLogError(_T("%s"), gstderr[i].c_str());
     }
 
-    return pdata.ExitCode == 0;
+    return retcode == 0;
 }
 
 
@@ -177,7 +166,7 @@ wxProcess *ExecuteGettextNonblocking(const wxString& cmdline_,
     GettextProcess *process;
 
     process = new GettextProcess(data, parent);
-    int pid = wxExecute(cmdline, false, process);
+    int pid = wxExecute(cmdline, wxEXEC_ASYNC, process);
 
     if (pid == 0)
     {
