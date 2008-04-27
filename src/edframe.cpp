@@ -431,7 +431,7 @@ END_EVENT_TABLE()
 PoeditFrame::PoeditFrame() :
     wxFrame(NULL, -1, _("Poedit"), wxDefaultPosition, wxDefaultSize,
                              wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
     m_itemBeingValidated(-1), m_gettextProcess(NULL),
 #endif
     m_catalog(NULL),
@@ -650,7 +650,7 @@ PoeditFrame::PoeditFrame() :
 
 PoeditFrame::~PoeditFrame()
 {
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
     if (m_gettextProcess)
         m_gettextProcess->Detach();
 #endif
@@ -1731,7 +1731,7 @@ void PoeditFrame::UpdateFromTextCtrl()
         UpdateTitle();
     }
 
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
     // check validity of this item:
     m_itemsToValidate.push_front(item);
 #endif
@@ -1948,7 +1948,7 @@ void PoeditFrame::UpdateStatusBar()
         txt.Printf(_("%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"),
                    percent, all, fuzzy, badtokens, untranslated);
 
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
         if (!m_itemsToValidate.empty())
         {
             wxString progress;
@@ -2490,7 +2490,7 @@ void PoeditFrame::OnIdle(wxIdleEvent& event)
 {
     event.Skip();
 
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
     if (!m_itemsToValidate.empty() && m_itemBeingValidated == -1)
         BeginItemValidation();
 #endif
@@ -2505,7 +2505,7 @@ void PoeditFrame::OnIdle(wxIdleEvent& event)
 
 void PoeditFrame::OnEndProcess(wxProcessEvent& event)
 {
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
     m_gettextProcess = NULL;
     event.Skip(); // deletes wxProcess object
     EndItemValidation();
@@ -2515,7 +2515,7 @@ void PoeditFrame::OnEndProcess(wxProcessEvent& event)
 
 void PoeditFrame::CancelItemsValidation()
 {
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
     // stop checking entries in the background:
     m_itemsToValidate.clear();
     m_itemBeingValidated = -1;
@@ -2524,7 +2524,7 @@ void PoeditFrame::CancelItemsValidation()
 
 void PoeditFrame::RestartItemsValidation()
 {
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
     // start checking catalog's entries in the background:
     int cnt = m_list->GetItemCount();
     for (int i = 0; i < cnt; i++)
@@ -2534,7 +2534,7 @@ void PoeditFrame::RestartItemsValidation()
 
 void PoeditFrame::BeginItemValidation()
 {
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
     int item = m_itemsToValidate.front();
     int index = m_list->GetIndexInCatalog(item);
     CatalogItem& dt = (*m_catalog)[index];
@@ -2583,7 +2583,7 @@ void PoeditFrame::BeginItemValidation()
 
 void PoeditFrame::EndItemValidation()
 {
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
     wxASSERT( m_catalog );
 
     wxRemoveFile(m_validationProcess.tmp1);

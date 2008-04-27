@@ -48,10 +48,12 @@ struct GettextProcessData
  */
 extern bool ExecuteGettext(const wxString& cmdline);
 
+#ifdef USE_GETTEXT_VALIDATION
 /** Nonblocking version of the above -- upon termination, EVT_END_PROCESS
     event is delivered to \a parent and \a data are filled. */
 extern wxProcess *ExecuteGettextNonblocking(const wxString& cmdline,
                                             GettextProcessData *data,
                                             wxEvtHandler *parent);
+#endif
 
 #endif // _GEXECUTE_H_

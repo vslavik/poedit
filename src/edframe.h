@@ -36,9 +36,9 @@
 
 // disable on-the-fly gettext validation, launching so many xmsgfmt
 // processes doesn't work well:
-#define USE_GETTEXT_VALIDATION 0
+//#undef USE_GETTEXT_VALIDATION
 
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
 #include <list>
 #endif
 
@@ -240,7 +240,7 @@ class PoeditFrame : public wxFrame
         DECLARE_EVENT_TABLE()
 
     private:
-#if USE_GETTEXT_VALIDATION
+#ifdef USE_GETTEXT_VALIDATION
         struct ValidationProcessData : public GettextProcessData
         {
             wxString tmp1, tmp2;

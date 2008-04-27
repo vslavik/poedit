@@ -43,6 +43,7 @@
 
 #include "gexecute.h"
 
+#ifdef USE_GETTEXT_VALIDATION
 class GettextProcess : public wxProcess
 {
     public:
@@ -89,6 +90,7 @@ class GettextProcess : public wxProcess
     private:
         GettextProcessData *m_data;
 };
+#endif // USE_GETTEXT_VALIDATION
 
 
 #ifdef __WXMAC__
@@ -150,6 +152,7 @@ bool ExecuteGettext(const wxString& cmdline_)
 }
 
 
+#ifdef USE_GETTEXT_VALIDATION
 wxProcess *ExecuteGettextNonblocking(const wxString& cmdline_,
                                      GettextProcessData *data,
                                      wxEvtHandler *parent)
@@ -176,3 +179,4 @@ wxProcess *ExecuteGettextNonblocking(const wxString& cmdline_,
 
     return process;
 }
+#endif // USE_GETTEXT_VALIDATION
