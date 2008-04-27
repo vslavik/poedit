@@ -1605,7 +1605,7 @@ CatalogItem *PoeditFrame::GetCurrentItem() const
     if ( item == -1 )
         return NULL;
 
-    wxASSERT( item >= 0 && item < m_catalog->GetCount() );
+    wxASSERT( item >= 0 && item < (int)m_catalog->GetCount() );
 
     return &(*m_catalog)[item];
 }
