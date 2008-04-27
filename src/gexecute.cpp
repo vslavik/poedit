@@ -29,8 +29,8 @@
 
 #include <wx/wxprec.h>
 
-#include <wx/utils.h> 
-#include <wx/log.h> 
+#include <wx/utils.h>
+#include <wx/log.h>
 #include <wx/process.h>
 #include <wx/txtstrm.h>
 #include <wx/string.h>
@@ -91,37 +91,6 @@ class GettextProcess : public wxProcess
 };
 
 
-// we have to do this because otherwise xgettext might
-// speak in native language, not English, and we cannot parse
-// it correctly (not yet)
-class TempLocaleSwitcher
-{
-    public:
-        TempLocaleSwitcher(const wxString& locale)
-        {
-            wxGetEnv(_T("LC_ALL"), &m_all);
-            wxGetEnv(_T("LC_MESSAGES"), &m_messages);
-            wxGetEnv(_T("LANG"), &m_lang);
-            wxGetEnv(_T("LANGUAGE"), &m_language);
-
-            wxSetEnv(_T("LC_ALL"), locale);
-            wxSetEnv(_T("LC_MESSAGES"), locale);
-            wxSetEnv(_T("LANG"), locale);
-            wxSetEnv(_T("LANGUAGE"), locale);
-        }
-
-        ~TempLocaleSwitcher()
-        {
-            wxSetEnv(_T("LC_ALL"), m_all);
-            wxSetEnv(_T("LC_MESSAGES"), m_messages);
-            wxSetEnv(_T("LANG"), m_lang);
-            wxSetEnv(_T("LANGUAGE"), m_language);
-        }
-
-    private:
-        wxString m_all, m_messages, m_lang, m_language;
-};
-
 #ifdef __WXMAC__
 static wxString MacGetPathToBinary(const wxString& program)
 {
@@ -158,8 +127,6 @@ bool ExecuteGettext(const wxString& cmdline_, wxString *stderrOutput)
 
     wxLogTrace(_T("poedit.execute"), _T("executing '%s'"), cmdline.c_str());
 
-    TempLocaleSwitcher localeSwitcher(_T("C"));
-
     size_t i;
     GettextProcessData pdata;
     GettextProcess *process;
@@ -180,19 +147,10 @@ bool ExecuteGettext(const wxString& cmdline_, wxString *stderrOutput)
         wxYield();
     }
 
-    bool isMsgmerge = (cmdline.BeforeFirst(_T(' ')) == _T("msgmerge"));
-    wxString dummy;
-
     for (i = 0; i < pdata.Stderr.GetCount(); i++) 
     {
-        if (pdata.Stderr[i].empty()) continue;
-        if (isMsgmerge)
-        {
-            dummy = pdata.Stderr[i];
-            dummy.Replace(_T("."), wxEmptyString);
-            if (dummy.empty() || dummy == _T(" done")) continue;
-            //msgmerge outputs *progress* to stderr, damn it!
-        }
+        if (pdata.Stderr[i].empty())
+            continue;
         if (stderrOutput)
             *stderrOutput += pdata.Stderr[i] + _T("\n");
         else
@@ -215,8 +173,6 @@ wxProcess *ExecuteGettextNonblocking(const wxString& cmdline_,
 #endif // __WXMAC__
 
     wxLogTrace(_T("poedit.execute"), _T("executing '%s'"), cmdline.c_str());
-
-    TempLocaleSwitcher localeSwitcher(_T("C"));
 
     GettextProcess *process;
 

@@ -1477,9 +1477,15 @@ bool Catalog::Merge(Catalog *refcat)
     refcat->Save(tmp1, false);
     Save(tmp2, false);
 
-    bool succ =
-        ExecuteGettext(_T("msgmerge --force-po -o \"") + tmp3 + _T("\" \"") +
-                       tmp2 + _T("\" \"") + tmp1 + _T("\""));
+    bool succ = ExecuteGettext
+                (
+                    wxString::Format
+                    (
+                        _T("msgmerge -q --force-po -o \"%s\" \"%s\" \"%s\""),
+                        tmp3.c_str(), tmp2.c_str(), tmp1.c_str()
+                    )
+                );
+
     if (succ)
     {
         Load(tmp3);
