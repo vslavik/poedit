@@ -239,18 +239,24 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
         { _T("TCL"),      _T("*.tcl") },
         { NULL, NULL }
     };
-   
+
     for (size_t i = 0; s_gettextLangs[i].name != NULL; i++)
     {
         // if this lang is already registered, don't overwrite it:
         if (pdb.FindParser(s_gettextLangs[i].name) != -1)
             continue;
 
+        wxString langflag;
+        if ( wxStrcmp(s_gettextLangs[i].name, _T("C/C++")) == 0 )
+            langflag = _T(" --language=C++");
+        else
+            langflag = wxString(_T(" --language=")) + s_gettextLangs[i].name;
+
         // otherwise add new parser:
         Parser p;
         p.Name = s_gettextLangs[i].name;
         p.Extensions = s_gettextLangs[i].exts;
-        p.Command = _T("xgettext --force-po -o %o %C %K %F");
+        p.Command = wxString(_T("xgettext")) + langflag + _T(" --force-po -o %o %C %K %F");
         p.KeywordItem = _T("-k%k");
         p.FileItem = _T("%f");
         p.CharsetItem = _T("--from-code=%c");
