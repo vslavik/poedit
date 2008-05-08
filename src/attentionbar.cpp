@@ -135,7 +135,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     Layout();
 
 #ifdef USE_SLIDE_EFFECT
-    ShowWithEffect(wxSHOW_EFFECT_SLIDE, 0, wxBOTTOM);
+    ShowWithEffect(wxSHOW_EFFECT_SLIDE_TO_BOTTOM);
 #else
     Show();
 #endif
@@ -145,7 +145,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
 void AttentionBar::HideMessage()
 {
 #ifdef USE_SLIDE_EFFECT
-    HideWithEffect(wxSHOW_EFFECT_SLIDE, 0, wxTOP);
+    HideWithEffect(wxSHOW_EFFECT_SLIDE_TO_TOP);
 #else
     Hide();
 #endif
