@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2007 Vaclav Slavik
+ *  Copyright (C) 1999-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -120,8 +120,13 @@ class CatalogItem
         const wxString& GetContext() const { return m_context; }
 
         /// How many translations (plural forms) do we have?
-        size_t GetNumberOfTranslations() const
+        unsigned GetNumberOfTranslations() const
             { return m_translations.size(); }
+
+        /// Returns number of plural forms in this translation; note that this
+        /// may be less than what the header says, because some may be
+        /// still untranslated
+        unsigned GetPluralFormsCount() const;
 
         /// Returns the nth-translation.
         wxString GetTranslation(unsigned n = 0) const;
@@ -523,8 +528,16 @@ class Catalog
         HeaderData& Header() { return m_header; }
 
         /// Returns plural forms count: taken from Plural-Forms header if
-        /// present, 0 otherwise
+        /// present, 0 otherwise (unless there are existing plural forms
+        /// translations in the file)
         unsigned GetPluralFormsCount() const;
+
+        /// Returns true if Plural-Forms header doesn't match plural forms
+        /// usage in catalog items
+        bool HasWrongPluralFormsCount() const;
+
+        /// Does this catalog have any items with plural forms?
+        const bool HasPluralItems() const;
 
         /** Returns status of catalog object: true if ok, false if damaged
             (i.e. constructor or Load failed).

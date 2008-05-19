@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2007 Vaclav Slavik
+ *  Copyright (C) 1999-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -42,6 +42,7 @@
 #include <wx/filename.h>
 
 #include <set>
+#include <algorithm>
 
 #include "catalog.h"
 #include "digger.h"
@@ -1544,15 +1545,14 @@ bool Catalog::ShowMergeSummary(Catalog *refcat)
         return true;
 }
 
-
-unsigned Catalog::GetPluralFormsCount() const
+static unsigned ParsePluralFormsHeader(const Catalog::HeaderData& header)
 {
-    if (m_header.HasHeader(_T("Plural-Forms")))
+    if ( header.HasHeader(_T("Plural-Forms")) )
     {
         // e.g. "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ?
         //       0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-        wxString form = m_header.GetHeader(_T("Plural-Forms"));
+        wxString form = header.GetHeader(_T("Plural-Forms"));
         form = form.BeforeFirst(_T(';'));
         if (form.BeforeFirst(_T('=')) == _T("nplurals"))
         {
@@ -1563,6 +1563,52 @@ unsigned Catalog::GetPluralFormsCount() const
     }
 
     return 0;
+}
+
+unsigned Catalog::GetPluralFormsCount() const
+{
+    unsigned count = ParsePluralFormsHeader(m_header);
+
+    for ( CatalogItemArray::const_iterator i = m_items.begin();
+          i != m_items.end(); ++i )
+    {
+        count = std::max(count, i->GetPluralFormsCount());
+    }
+
+    return count;
+}
+
+bool Catalog::HasWrongPluralFormsCount() const
+{
+    unsigned count = 0;
+
+    for ( CatalogItemArray::const_iterator i = m_items.begin();
+          i != m_items.end(); ++i )
+    {
+        count = std::max(count, i->GetPluralFormsCount());
+    }
+
+    if ( count == 0 )
+        return false; // nothing translated, so we can't tell
+
+    // if 'count' is less than the count from header, it may simply mean there
+    // are untranslated strings
+    if ( count > ParsePluralFormsHeader(m_header) )
+        return true;
+
+    return false;
+}
+
+const bool Catalog::HasPluralItems() const
+{
+    for ( CatalogItemArray::const_iterator i = m_items.begin();
+          i != m_items.end(); ++i )
+    {
+        if ( i->HasPlural() )
+            return true;
+    }
+
+    return false;
 }
 
 
@@ -1668,6 +1714,15 @@ void CatalogItem::SetTranslations(const wxArrayString &t)
             break;
         }
     }
+}
+
+unsigned CatalogItem::GetPluralFormsCount() const
+{
+    unsigned trans = GetNumberOfTranslations();
+    if ( !HasPlural() || !trans )
+        return 0;
+
+    return trans - 1;
 }
 
 

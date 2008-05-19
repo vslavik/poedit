@@ -157,6 +157,7 @@ class PoeditFrame : public wxFrame
         void InitSpellchecker();
 
         void EditPreferences();
+        void EditCatalogSettings();
 
         // Message handlers:
         void OnNew(wxCommandEvent& event);

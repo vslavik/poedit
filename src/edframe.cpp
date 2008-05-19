@@ -61,6 +61,7 @@
 #endif // USE_SPELLCHECKING
 
 #include <map>
+#include <algorithm>
 
 #include "catalog.h"
 #include "edapp.h"
@@ -1251,6 +1252,11 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
 
 void PoeditFrame::OnSettings(wxCommandEvent&)
 {
+    EditCatalogSettings();
+}
+
+void PoeditFrame::EditCatalogSettings()
+{
     SettingsDialog dlg(this);
 
     dlg.TransferTo(m_catalog);
@@ -1791,11 +1797,11 @@ void PoeditFrame::UpdateToTextCtrl()
         t_op.Replace(_T("\\n"), _T("\\n\n"));
         m_textOrigPlural->SetValue(t_op);
 
-        size_t formsCnt = m_textTransPlural.size();
-        for (size_t j = 0; j < formsCnt; j++)
+        unsigned formsCnt = m_textTransPlural.size();
+        for (unsigned j = 0; j < formsCnt; j++)
             SetTranslationValue(m_textTransPlural[j], wxEmptyString);
 
-        size_t i = 0;
+        unsigned i = 0;
         for (i = 0; i < std::min(formsCnt, entry->GetNumberOfTranslations()); i++)
         {
             t_t = quote + entry->GetTranslation(i) + quote;
@@ -1886,6 +1892,35 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
         msg.AddDontShowAgain();
 
         m_attentionBar->ShowMessage(msg);
+    }
+
+    // check if plural forms header is correct:
+    if ( m_catalog->HasPluralItems() )
+    {
+        wxString err;
+
+        if ( m_catalog->Header().GetHeader(_T("Plural-Forms")).empty() )
+        {
+            err = _("This catalog has entries with plural forms, but doesn't have Plural Forms header configured.");
+        }
+        else if ( m_catalog->HasWrongPluralFormsCount() )
+        {
+            err = _("Entries in this catalog have different plural forms count from what catalog's Plural Forms header says");
+        }
+
+        if ( !err.empty() )
+        {
+            AttentionMessage msg
+                (
+                    _T("malformed-plural-forms"),
+                    AttentionMessage::Error,
+                    err
+                );
+            msg.AddAction(_("Fix the header"),
+                          boost::bind(&PoeditFrame::EditCatalogSettings, this));
+
+            m_attentionBar->ShowMessage(msg);
+        }
     }
 }
 

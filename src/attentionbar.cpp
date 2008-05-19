@@ -112,6 +112,9 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
         case AttentionMessage::Warning:
             iconName = wxART_WARNING;
             break;
+        case AttentionMessage::Error:
+            iconName = wxART_ERROR;
+            break;
     }
 
     m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU));

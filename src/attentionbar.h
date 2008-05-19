@@ -48,7 +48,8 @@ public:
     enum Kind
     {
         Info,
-        Warning
+        Warning,
+        Error
     };
 
     /**
