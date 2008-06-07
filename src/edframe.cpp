@@ -227,14 +227,30 @@ class TextctrlHandler : public wxEvtHandler
                 // messages that we need to capture (see below), so we have
                 // to handle their respective keys ourselves:
                 case 'C':
-                    dynamic_cast<wxTextCtrl*>(event.GetEventObject())->Copy();
+                {
+                    wxTextCtrl *txt = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
+                    if ( txt )
+                        txt->Copy();
+                    else
+                        event.Skip();
                     break;
+                }
                 case 'V':
-                    dynamic_cast<wxTextCtrl*>(event.GetEventObject())->Paste();
+                    wxTextCtrl *txt = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
+                    if ( txt )
+                        txt->Paste();
+                    else
+                        event.Skip();
                     break;
+                }
                 case 'X':
-                    dynamic_cast<wxTextCtrl*>(event.GetEventObject())->Cut();
+                    wxTextCtrl *txt = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
+                    if ( txt )
+                        txt->Cut();
+                    else
+                        event.Skip();
                     break;
+                }
 #endif
 
                 default:
