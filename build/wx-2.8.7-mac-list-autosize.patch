@@ -1,7 +1,6 @@
-Index: include/wx/mac/carbon/listctrl.h
-===================================================================
---- include/wx/mac/carbon/listctrl.h	(revision 52547)
-+++ include/wx/mac/carbon/listctrl.h	(working copy)
+diff -ru wxWidgets-2.8.7.orig/include/wx/mac/carbon/listctrl.h wxWidgets-2.8.7/include/wx/mac/carbon/listctrl.h
+--- wxWidgets-2.8.7.orig/include/wx/mac/carbon/listctrl.h	2008-06-07 02:02:07.000000000 +0200
++++ wxWidgets-2.8.7/include/wx/mac/carbon/listctrl.h	2008-06-07 02:03:07.000000000 +0200
 @@ -419,6 +419,9 @@
                                    // keep track of inserted/deleted columns
  
@@ -12,11 +11,10 @@ Index: include/wx/mac/carbon/listctrl.h
    
  private: 
    DECLARE_EVENT_TABLE()
-Index: src/mac/carbon/listctrl_mac.cpp
-===================================================================
---- src/mac/carbon/listctrl_mac.cpp	(revision 53273)
-+++ src/mac/carbon/listctrl_mac.cpp	(working copy)
-@@ -1052,9 +1052,10 @@
+diff -ru wxWidgets-2.8.7.orig/src/mac/carbon/listctrl_mac.cpp wxWidgets-2.8.7/src/mac/carbon/listctrl_mac.cpp
+--- wxWidgets-2.8.7.orig/src/mac/carbon/listctrl_mac.cpp	2008-06-07 02:02:07.000000000 +0200
++++ wxWidgets-2.8.7/src/mac/carbon/listctrl_mac.cpp	2008-06-07 02:04:28.000000000 +0200
+@@ -1051,9 +1051,10 @@
  
      if (m_dbImpl)
      {
@@ -30,13 +28,13 @@ Index: src/mac/carbon/listctrl_mac.cpp
  
          if (col == -1)
          {
-@@ -1066,17 +1067,22 @@
+@@ -1065,17 +1066,22 @@
                  colInfo.SetWidth(width);
-                 SetColumn(column, colInfo);
+                 SetColumn(col, colInfo);
  
 +                const int mywidth = (width == wxLIST_AUTOSIZE)
 +                                    ? CalcColumnAutoWidth(column) : width;
-                 m_dbImpl->SetColumnWidth(column, mywidth);
+                 m_dbImpl->SetColumnWidth(col, mywidth);
              }
          }
          else
@@ -46,8 +44,7 @@ Index: src/mac/carbon/listctrl_mac.cpp
 +
              wxListItem colInfo;
              GetColumn(col, colInfo);
--            
-+
+             
              colInfo.SetWidth(width);
              SetColumn(col, colInfo);
 -            m_dbImpl->SetColumnWidth(col, mywidth);
@@ -55,7 +52,7 @@ Index: src/mac/carbon/listctrl_mac.cpp
          }
          return true;
      }
-@@ -3339,5 +3345,36 @@
+@@ -3338,5 +3344,36 @@
      }
  }
  
