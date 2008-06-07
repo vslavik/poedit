@@ -44,9 +44,9 @@ SPARKLE_VERSION = '1.1'
 SPARKLE_URL = 'http://www.andymatuschak.org/files/Sparkle-%s.zip' % SPARKLE_VERSION
 SPARKLE_PATCHES = ['sparkle-1.1-carbon.patch']
 
-INNOSETUP_VERSION = '5.2.2'
+INNOSETUP_VERSION = '5.2.3'
 INNOSETUP_URL = 'http://files.jrsoftware.org/ispack/ispack-%s.exe' % INNOSETUP_VERSION
-INNOUNP_URL = 'http://innounp.sf.net/test020.rar'
+INNOUNP_URL = 'http://downloads.sourceforge.net/innounp/innounp020.rar'
 
 BOOST_VERSION = '1.34.1'
 BOOST_URL = 'http://downloads.sourceforge.net/boost/boost_%s.tar.bz2' % BOOST_VERSION.replace('.','_')
@@ -415,7 +415,7 @@ innosetup = env.BuildComponent(
         sources=src_innosetup,
         deps=[src_innounp],
         commands=[
-            'innounp -x ispack-5.2.2.exe',
+            'innounp -x ispack-%s.exe' % INNOSETUP_VERSION,
             'move {app}\\ISCC?2.exe {app}\\ISCC.exe',
             'del {app}\\ISCC?1.exe',
             'move {app}\\ISCmplr?2.dll {app}\\ISCmplr.dll',
