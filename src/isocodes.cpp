@@ -206,7 +206,7 @@ LanguageStruct isoLanguages[] =
     {_T("tw"), _T("Twi")},
     {_T("ty"), _T("Tahitian")},
 
-    {_T("ug"), _T("Uighur")},
+    {_T("ug"), _T("Uyghur")},
     {_T("uk"), _T("Ukrainian")},
     {_T("ur"), _T("Urdu")},
     {_T("uz"), _T("Uzbek")},

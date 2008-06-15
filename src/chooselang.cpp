@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2003-2006 Vaclav Slavik
+ *  Copyright (C) 2003-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -144,6 +144,7 @@ wxLanguage ChooseLanguage()
         { _T("Turkish"), wxLANGUAGE_TURKISH },
         { _T("Ukrainian"), wxLANGUAGE_UKRAINIAN },
         { _T("Urdu"), wxLANGUAGE_URDU },
+        { _T("Uyghur"), wxLANGUAGE_UIGHUR },
         { _T(""), wxLANGUAGE_UNKNOWN }
     };
 
