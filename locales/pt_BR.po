@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Poedit 1.4\n"
 "Report-Msgid-Bugs-To: poedit-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-27 23:19+0100\n"
-"PO-Revision-Date: 2008-04-20 23:25-0300\n"
+"PO-Revision-Date: 2008-06-17 08:02-0300\n"
 "Last-Translator: Cleber Tavano <clebertavano@gmail.com>\n"
 "Language-Team: Cleber Tavano <clebertavano@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -20,6 +20,7 @@ msgstr ""
 "X-Poedit-Language: Portuguese\n"
 "X-Poedit-Country: BRAZIL\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Bookmarks: 8,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: ../src/edframe.cpp:1863
 msgid " (modified)"
@@ -43,7 +44,7 @@ msgstr "&Sobre..."
 # atalho teclado corrigido. clebertavano
 #: ../src/resources/menus.xrc:88
 msgid "&Automatically translate using TM"
-msgstr "&Traduzir automaticamente utilizando TM"
+msgstr "&Traduzir automaticamente utilizando MT"
 
 #: ../src/edframe.cpp:2636
 msgid "&Bookmarks"
@@ -85,7 +86,7 @@ msgstr "A&juda"
 
 #: ../src/resources/menus.xrc:12
 msgid "&New catalog..."
-msgstr "Atualizar"
+msgstr "&Novo catálogo..."
 
 #: ../src/resources/menus.xrc:18
 msgid "&Open..."
@@ -190,11 +191,11 @@ msgstr "Mudar o foco para o campo de entrada de texto"
 
 #: ../src/resources/prefs.xrc:580
 msgid "An item in input files list:"
-msgstr "Um ítem da lista de arquivos de entrada:"
+msgstr "Um item da lista de arquivos de entrada:"
 
 #: ../src/resources/prefs.xrc:561
 msgid "An item in keywords list:"
-msgstr "Um ítem da lista de palavras-chave:"
+msgstr "Um item da lista de palavras-chave:"
 
 #: ../src/resources/prefs.xrc:127
 msgid "Automatic spellchecking"
@@ -500,11 +501,11 @@ msgstr "Erro carregando arquivo de catálogo de mensagens '%s'."
 #: ../src/fileviewer.cpp:97
 #, c-format
 msgid "Error opening file %s!"
-msgstr "Erro abrindo arquivo %s!"
+msgstr "Erro ao abrir arquivo %s!"
 
 #: ../src/catalog.cpp:1269
 msgid "Error saving catalog"
-msgstr "Erro salvando catálogo"
+msgstr "Erro ao salvar o catálogo"
 
 #: ../src/edframe.cpp:1049
 msgid "Export as..."
@@ -617,11 +618,11 @@ msgstr "Modelos GNU Gettext (*.pot)|*.pot|Todos os arquivos (*.*)|*.*"
 msgid "GNU gettext documentation"
 msgstr "&Documentação do GNU gettext"
 
-# tm = translation memory, em portugues tm = tradução memorizável
+# tm = translation memory, em portugues mt=memoria de traducoes
 # o Openoffice/access usa 'criar' banco de dados e não gerar
 #: ../src/resources/prefs.xrc:687
 msgid "Generate TM database"
-msgstr "Criar banco de dados TM"
+msgstr "Criar banco de dados MT"
 
 # uniformizando com a string anterior
 #: ../src/resources/prefs.xrc:345
@@ -816,7 +817,7 @@ msgstr "Abrir modelo de catálogo"
 
 #: ../src/resources/prefs.xrc:103
 msgid "Open catalogs manager on Poedit startup"
-msgstr "Abrir gerenciador de catálogos ao iniciar o  Poedit"
+msgstr "Abrir o Gerenciador de catálogos ao iniciar o  Poedit"
 
 #: ../src/resources/prefs.xrc:220
 msgid "Open source files in editor, not in file viewer"
@@ -862,22 +863,22 @@ msgstr "Personalizar"
 msgid "Pick language from the list of known languages"
 msgstr "Escolha o idioma da lista de idiomas conhecidos"
 
-# o windows chama diretorio de pasta.
+# o windows chama diretorio de pasta. o texto teve de ser alterado por falta de espaço na janela.
 #: ../src/resources/tm_update.xrc:21
 msgid "Please add directories where locale files are stored on your system:"
-msgstr "Por favor insira as pastas onde os arquivos de localização estão armazenados no seu sistema:"
+msgstr "Insira o caminho para as pastas com os arquivos de localização:"
 
 #: ../src/edframe.cpp:1316
 msgid "Please choose the reference you want to show:"
-msgstr "Por favor escolha a referência que você quer mostrar:"
+msgstr "Por favor, escolha a referência que você quer mostrar:"
 
 #: ../src/prefsdlg.cpp:355
 msgid "Please select language ISO code:"
-msgstr "Escolha o código ISO do idioma:"
+msgstr "Por favor, escolha o código ISO do idioma:"
 
 #: ../src/edframe.cpp:801
 msgid "Please select language code:"
-msgstr "Por favor selecione o código do idioma:"
+msgstr "Por favor, selecione o código do idioma:"
 
 #: ../src/resources/settings.xrc:110
 msgid "Plural Forms:"
@@ -944,7 +945,7 @@ msgstr "Referências:"
 # tm traducoes memorizaveis
 #: ../src/resources/prefs.xrc:346
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr "Recriar Traduções Memorizáveis a partir dos catálogos listados acima."
+msgstr "Recriar Memória das Traduções a partir dos catálogos listados acima."
 
 #: ../src/resources/tm_update.xrc:42
 msgid "Reset to defaults"
@@ -964,7 +965,7 @@ msgstr "Salvar como..."
 
 #: ../src/resources/toolbar.xrc:18
 msgid "Save catalog"
-msgstr "Salvar Catálogo"
+msgstr "Salvar catálogo"
 
 #: ../src/edframe.cpp:841
 #: ../src/edframe.cpp:866
@@ -1174,13 +1175,14 @@ msgstr "Total"
 msgid "Translation"
 msgstr "Tradução"
 
+# MT - Memória de Traduções
 #: ../src/resources/prefs.xrc:294
 msgid "Translation Memory"
-msgstr "TM - Tradução Memorizável"
+msgstr "MT - Memória de Traduções"
 
 #: ../src/transmemupd_wizard.cpp:144
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
-msgstr "Arquivos de Tradução (*.po;*.mo)|*.po;*.mo"
+msgstr "Arquivos de tradução (*.po;*.mo)|*.po;*.mo"
 
 #: ../src/transmemupd_wizard.cpp:142
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
@@ -1196,7 +1198,7 @@ msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
 msgstr ""
-"A Memória de Traduções vai ser construída a partir dos arquivos listados abaixo.\n"
+"A Memória de Traduções será construída a partir dos arquivos listados abaixo.\n"
 "Você pode adicionar mais arquivos à lista agora."
 
 #: ../src/chooselang.cpp:71
@@ -1242,7 +1244,7 @@ msgstr "Atualizar relatório"
 
 #: ../src/resources/tm_update.xrc:4
 msgid "Update translation memory"
-msgstr "Atualizar Traduções Memórizáveis"
+msgstr "Atualizar Memória de Traduções"
 
 # uniform de termos
 #: ../src/catalog.cpp:1385
@@ -1318,12 +1320,4 @@ msgstr "padrão desse computador"
 #: ../src/edframe.cpp:2128
 msgid "none"
 msgstr "nenhum"
-
-#, fuzzy
-#~ msgid "translations editor"
-#~ msgstr "TM - Tradução Memorizável"
-#~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-#~ msgstr "%i linhas ( %i incertas, %i incorretas, %i não traduzidas )"
-#~ msgid "'."
-#~ msgstr "'."
 
