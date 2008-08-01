@@ -162,8 +162,15 @@ class TextctrlHandler : public wxEvtHandler
         void OnKeyDown(wxKeyEvent& event)
         {
             int keyCode = event.GetKeyCode();
+            int modifiers = event.GetModifiers();
 
-            if ( event.GetModifiers() != wxMOD_CMD ) // Cmd-* or Ctrl-*
+#if defined(__WXGTK__) && !wxCHECK_VERSION(2,8,9)
+            // wxGTK < 2.8.9 had a bug in Meta key detection, see
+            // bug #2006843 at http://tinyurl.com/56lsk2
+            modifiers &= ~wxMOD_META;
+#endif
+
+            if ( modifiers != wxMOD_CMD ) // Cmd-* or Ctrl-*
             {
                 event.Skip();
                 return;
