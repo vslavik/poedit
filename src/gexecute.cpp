@@ -105,7 +105,10 @@ static wxString MacGetPathToBinary(const wxString& program)
     CFURLRef urlRel = CFBundleCopyAuxiliaryExecutableURL(bundle, programstr);
 
     if ( urlRel == NULL )
+    {
+        wxLogTrace(_T("poedit.execute"), _T("failed to locate '%s'"), program.c_str());
         return program;
+    }
 
     CFURLRef urlAbs = CFURLCopyAbsoluteURL(urlRel);
 
@@ -114,7 +117,10 @@ static wxString MacGetPathToBinary(const wxString& program)
     CFRelease(urlRel);
     CFRelease(urlAbs);
 
-    return path.AsString(wxLocale::GetSystemEncoding());
+    wxString full = path.AsString(wxLocale::GetSystemEncoding());
+    wxLogTrace(_T("poedit.execute"), _T("using '%s'"), full.c_str());
+
+    return wxString::Format(_T("\"%s\""), full.c_str());
 }
 #endif // __WXMAC__
 
