@@ -1368,7 +1368,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 
     /* If the user wants it, compile .mo file right now: */
 
-    if (save_mo && wxConfig::Get()->Read(_T("compile_mo"), true))
+    if (save_mo && wxConfig::Get()->Read(_T("compile_mo"), false))
         ExecuteGettext(_T("msgfmt -c -o \"") +
                        po_file.BeforeLast(_T('.')) + _T(".mo\" \"") + po_file + _T("\""));
 
