@@ -1725,6 +1725,24 @@ unsigned CatalogItem::GetPluralFormsCount() const
     return trans - 1;
 }
 
+static wxString TryIfStringIsLangCode(const wxString& s)
+{
+    if (s.length() == 2)
+    {
+        if (IsKnownLanguageCode(s))
+            return s;
+    }
+    else if (s.length() == 5 && s[2u] == _T('_'))
+    {
+        if (IsKnownLanguageCode(s.Mid(0, 2)) &&
+            IsKnownCountryCode(s.Mid(3, 2)))
+        {
+            return s;
+        }
+    }
+
+    return wxEmptyString;
+}
 
 wxString Catalog::GetLocaleCode() const
 {
@@ -1747,16 +1765,12 @@ wxString Catalog::GetLocaleCode() const
         wxString name;
         wxFileName::SplitPath(m_fileName, NULL, &name, NULL);
 
-        if (name.length() == 2)
+        lang = TryIfStringIsLangCode(name);
+        if ( lang.empty() )
         {
-            if (IsKnownLanguageCode(name))
-                lang = name;
-        }
-        else if (name.length() == 5 && name[2u] == _T('_'))
-        {
-            if (IsKnownLanguageCode(name.Mid(0, 2)) &&
-                    IsKnownCountryCode(name.Mid(3, 2)))
-                lang = name;
+            wxString afterDot = name.AfterLast('.');
+            if ( afterDot != name )
+                lang = TryIfStringIsLangCode(afterDot);
         }
     }
 
