@@ -1369,8 +1369,18 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     /* If the user wants it, compile .mo file right now: */
 
     if (save_mo && wxConfig::Get()->Read(_T("compile_mo"), (long)false))
-        ExecuteGettext(_T("msgfmt -c -o \"") +
-                       po_file.BeforeLast(_T('.')) + _T(".mo\" \"") + po_file + _T("\""));
+    {
+        const wxString mofile = po_file.BeforeLast(_T('.')) + _T(".mo");
+        if ( !ExecuteGettext
+              (
+                  wxString::Format(_T("msgfmt -c -o \"%s\" \"%s\""),
+                                   mofile.c_str(),
+                                   po_file.c_str())
+              ) )
+        {
+            wxLogWarning(_("There were errors while compiling the saved catalog into MO file."));
+        }
+    }
 
     m_fileName = po_file;
 
