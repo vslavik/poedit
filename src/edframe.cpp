@@ -243,6 +243,7 @@ class TextctrlHandler : public wxEvtHandler
                     break;
                 }
                 case 'V':
+                {
                     wxTextCtrl *txt = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
                     if ( txt )
                         txt->Paste();
@@ -251,6 +252,7 @@ class TextctrlHandler : public wxEvtHandler
                     break;
                 }
                 case 'X':
+                {
                     wxTextCtrl *txt = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
                     if ( txt )
                         txt->Cut();
