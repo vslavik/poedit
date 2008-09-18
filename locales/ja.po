@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Poedit 1.4\n"
 "Report-Msgid-Bugs-To: poedit-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-27 23:19+0100\n"
-"PO-Revision-Date: 2006-06-27 21:59+0900\n"
-"Last-Translator: 鈴見咲君高 <suzumizaki@free.japandesign.ne.jp>\n"
+"PO-Revision-Date: 2008-09-18 13:02+0900\n"
+"Last-Translator: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>\n"
 "Language-Team: ja <masapon@dream.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,11 +21,11 @@ msgstr ""
 msgid " (modified)"
 msgstr " - 変更されました"
 
-#: ../src/export_html.cpp:137 ../src/edframe.cpp:1833
-#, fuzzy, c-format
-msgid ""
-"%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "翻訳対象は %i 個です（未確定 %i、問題あり %i、未翻訳 %i )。"
+#: ../src/export_html.cpp:137
+#: ../src/edframe.cpp:1833
+#, c-format
+msgid "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
+msgstr "%i %% 翻訳完了、%i 文字（未確定 %i、問題あり %i、未翻訳 %i )。"
 
 #: ../src/catalog.cpp:118
 #, c-format
@@ -44,7 +44,8 @@ msgstr "翻訳メモリを利用して自動翻訳する(&A)"
 msgid "&Bookmarks"
 msgstr "しおり(&B)"
 
-#: ../src/resources/manager.xrc:131 ../src/resources/menus.xrc:39
+#: ../src/resources/manager.xrc:131
+#: ../src/resources/menus.xrc:39
 msgid "&Close"
 msgstr "閉じる(&C)"
 
@@ -56,7 +57,8 @@ msgstr "目次(&C)..."
 msgid "&Edit"
 msgstr "編集(&E)"
 
-#: ../src/edframe.cpp:418 ../src/resources/manager.xrc:124
+#: ../src/edframe.cpp:418
+#: ../src/resources/manager.xrc:124
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "ファイル(&F)"
@@ -65,7 +67,8 @@ msgstr "ファイル(&F)"
 msgid "&Find..."
 msgstr "検索(&F)..."
 
-#: ../src/resources/menus.xrc:101 ../src/resources/menus.xrc:105
+#: ../src/resources/menus.xrc:101
+#: ../src/resources/menus.xrc:105
 msgid "&Fullscreen view"
 msgstr "フルスクリーン表示(&F)"
 
@@ -78,16 +81,15 @@ msgid "&New catalog..."
 msgstr "新規カタログ(&N)..."
 
 #: ../src/resources/menus.xrc:18
-#, fuzzy
 msgid "&Open..."
-msgstr "開く(&O)"
+msgstr "開く...(&O)"
 
 #: ../src/resources/menus.xrc:74
-#, fuzzy
 msgid "&Preferences"
-msgstr "設定"
+msgstr "設定(&P)"
 
-#: ../src/resources/manager.xrc:127 ../src/resources/menus.xrc:35
+#: ../src/resources/manager.xrc:127
+#: ../src/resources/menus.xrc:35
 msgid "&Preferences..."
 msgstr "設定(&P)..."
 
@@ -161,7 +163,8 @@ msgstr "追加"
 msgid "Add directory to the list"
 msgstr "ディレクトリをリストに追加"
 
-#: ../src/transmemupd_wizard.cpp:138 ../src/resources/tm_update.xrc:85
+#: ../src/transmemupd_wizard.cpp:138
+#: ../src/resources/tm_update.xrc:85
 msgid "Add files"
 msgstr "ファイルの追加"
 
@@ -189,14 +192,14 @@ msgstr "自動綴り検査:"
 msgid "Automatic translation"
 msgstr "自動翻訳"
 
-#: ../src/edframe.cpp:2105 ../src/edframe.cpp:2109
+#: ../src/edframe.cpp:2105
+#: ../src/edframe.cpp:2109
 msgid "Automatic translations:"
 msgstr "自動翻訳:"
 
 #: ../src/resources/prefs.xrc:69
-#, fuzzy
 msgid "Automatically check for new version of Poedit"
-msgstr "保存時に .mo ファイルを自動生成する"
+msgstr "Poedt の最新版を自動的にチェックする"
 
 #: ../src/resources/prefs.xrc:87
 msgid "Automatically compile .mo file on save"
@@ -229,19 +232,16 @@ msgstr "動作"
 
 #: ../src/catalog.cpp:658
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr ""
-"カタログファイルが不正です： 複数形表記の msgstr が使われていますが "
-"msgid_plural の指定がありません。"
+msgstr "カタログファイルが不正です： 複数形表記の msgstr が使われていますが msgid_plural の指定がありません。"
 
 #: ../src/catalog.cpp:620
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr ""
-"カタログファイルが不正です： msgid_plural が指定されていますが msgstr は複数"
-"形表記ではありません。"
+msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr "カタログファイルが不正です： msgid_plural が指定されていますが msgstr は複数形表記ではありません。"
 
-#: ../src/resources/manager.xrc:89 ../src/resources/prefs.xrc:320
-#: ../src/resources/prefs.xrc:654 ../src/resources/tm_update.xrc:37
+#: ../src/resources/manager.xrc:89
+#: ../src/resources/prefs.xrc:320
+#: ../src/resources/prefs.xrc:654
+#: ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "参照"
 
@@ -253,10 +253,14 @@ msgstr "カタログ(&A)"
 msgid "CR/LF conversion"
 msgstr "CR/LF 変換"
 
-#: ../src/resources/comment.xrc:38 ../src/resources/find.xrc:87
-#: ../src/resources/manager.xrc:112 ../src/resources/prefs.xrc:490
-#: ../src/resources/prefs.xrc:632 ../src/resources/prefs.xrc:677
-#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:194
+#: ../src/resources/comment.xrc:38
+#: ../src/resources/find.xrc:87
+#: ../src/resources/manager.xrc:112
+#: ../src/resources/prefs.xrc:490
+#: ../src/resources/prefs.xrc:632
+#: ../src/resources/prefs.xrc:677
+#: ../src/resources/progress.xrc:31
+#: ../src/resources/settings.xrc:194
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -264,7 +268,8 @@ msgstr "キャンセル"
 msgid "Cannot create database directory!"
 msgstr "データベースのディレクトリを作成できません！"
 
-#: ../src/gexecute.cpp:172 ../src/gexecute.cpp:228
+#: ../src/gexecute.cpp:172
+#: ../src/gexecute.cpp:228
 msgid "Cannot execute program: "
 msgstr "プログラムを実行できません:"
 
@@ -280,8 +285,11 @@ msgstr "あいまい検索"
 msgid "Catalog"
 msgstr "カタログ"
 
-#: ../src/edframe.cpp:840 ../src/edframe.cpp:865 ../src/edframe.cpp:906
-#: ../src/edframe.cpp:958 ../src/edframe.cpp:1076
+#: ../src/edframe.cpp:840
+#: ../src/edframe.cpp:865
+#: ../src/edframe.cpp:906
+#: ../src/edframe.cpp:958
+#: ../src/edframe.cpp:1076
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "カタログの変更を保存しますか？"
 
@@ -293,11 +301,13 @@ msgstr "カタログマネージャ(&M)"
 msgid "Change UI language"
 msgstr "Poedit の UI 言語を変更"
 
-#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:86
+#: ../src/export_html.cpp:122
+#: ../src/resources/settings.xrc:86
 msgid "Charset:"
 msgstr "文字符号化法:"
 
-#: ../src/resources/prefs.xrc:253 ../src/resources/prefs.xrc:279
+#: ../src/resources/prefs.xrc:253
+#: ../src/resources/prefs.xrc:279
 msgid "Choose"
 msgstr "選択"
 
@@ -310,9 +320,8 @@ msgid "Clear the comment"
 msgstr "コメントのクリア"
 
 #: ../src/resources/toolbar.xrc:34
-#, fuzzy
 msgid "Comment"
-msgstr "コメント:"
+msgstr "コメント"
 
 #: ../src/resources/prefs.xrc:119
 msgid "Comment window is editable"
@@ -326,21 +335,23 @@ msgstr "コメント:"
 msgid "Configuration"
 msgstr "自動翻訳の設定"
 
-#: ../src/manager.cpp:426 ../src/manager.cpp:446
+#: ../src/manager.cpp:426
+#: ../src/manager.cpp:446
 msgid "Confirmation"
 msgstr "確認"
 
-#: ../src/edframe.cpp:2085 ../src/resources/menus.xrc:47
+#: ../src/edframe.cpp:2085
+#: ../src/resources/menus.xrc:47
 msgid "Copy original to translation field"
 msgstr "原文を翻訳フィールドにコピー"
 
 #: ../src/catalog.cpp:993
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
-msgstr ""
-"ファイル %s を読み出し中にエラーが発生しました： %u 行目が破損しています。"
+msgstr "ファイル %s が読み込めません。たぶんデータが破損しています。"
 
-#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:74
+#: ../src/export_html.cpp:112
+#: ../src/resources/settings.xrc:74
 msgid "Country:"
 msgstr "国または地域:"
 
@@ -357,7 +368,8 @@ msgstr "データベース"
 msgid "Database error: %s"
 msgstr "データベースエラー: %s"
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:456
+#: ../src/resources/manager.xrc:53
+#: ../src/resources/prefs.xrc:456
 msgid "Delete"
 msgstr "削除"
 
@@ -389,10 +401,8 @@ msgstr "このプロジェクトのすべてのカタログを更新してもよ
 
 #: ../src/edframe.cpp:1999
 msgid ""
-"Do you really want to remove all translations that are no longer used from "
-"the catalog?\n"
-"If you continue with purging, you will have to translate them again if they "
-"are added back in the future."
+"Do you really want to remove all translations that are no longer used from the catalog?\n"
+"If you continue with purging, you will have to translate them again if they are added back in the future."
 msgstr ""
 "カタログから来た未使用の翻訳を削除してかまいませんか？\n"
 "一掃を完了すると、将来再追加されたときに翻訳し直さなくてはなりません。"
@@ -409,7 +419,8 @@ msgstr "既存のカタログのフォーマットは変更しない"
 msgid "E&xport..."
 msgstr "別書式で出力(&X)..."
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:449
+#: ../src/resources/manager.xrc:48
+#: ../src/resources/prefs.xrc:449
 msgid "Edit"
 msgstr "編集"
 
@@ -417,7 +428,8 @@ msgstr "編集"
 msgid "Edit &comment"
 msgstr "コメントの編集(&C)"
 
-#: ../src/resources/comment.xrc:4 ../src/resources/toolbar.xrc:35
+#: ../src/resources/comment.xrc:4
+#: ../src/resources/toolbar.xrc:35
 msgid "Edit comment"
 msgstr "コメントの編集"
 
@@ -459,9 +471,9 @@ msgid "Error initializing spell checking: %s"
 msgstr "綴り検査の初期化でエラーが発生しました： %s"
 
 #: ../src/edframe.cpp:1788
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading message catalog file '%s'."
-msgstr "メッセージカタログの読み込みエラー"
+msgstr "メッセージカタログ '%s' の読み込みエラーです。"
 
 #: ../src/fileviewer.cpp:97
 #, c-format
@@ -481,21 +493,20 @@ msgid "External editor"
 msgstr "外部エディタ"
 
 #: ../src/digger.cpp:65
-#, fuzzy, c-format
+#, c-format
 msgid "Failed command: %s"
-msgstr "パーサのコマンド:"
+msgstr "パーサのコマンド: %s"
 
 #: ../src/digger.cpp:131
-#, fuzzy
 msgid "Failed to load extracted catalog."
-msgstr "ファイル '%s' はメッセージカタログではありません。"
+msgstr "抽出したカタログの読み込みに失敗しました。"
 
 #: ../src/digger.cpp:66
-#, fuzzy
 msgid "Failed to merge gettext catalogs."
-msgstr "ファイル '%s' はメッセージカタログではありません。"
+msgstr "gettext カタログのマージに失敗しました。"
 
-#: ../src/edframe.cpp:931 ../src/edframe.cpp:974
+#: ../src/edframe.cpp:931
+#: ../src/edframe.cpp:974
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "ファイル '%s' が見つかりません。"
@@ -543,20 +554,22 @@ msgid "Fonts"
 msgstr "フォント"
 
 #: ../src/edframe.cpp:2552
-#, fuzzy, c-format
+#, c-format
 msgid "Form %i"
-msgstr "形式 %u"
+msgstr "形式 %i"
 
 #: ../src/edframe.cpp:2554
-#, fuzzy, c-format
+#, c-format
 msgid "Form %i (e.g. \"%u\")"
-msgstr "形式 %u （例：  \"%u\"）"
+msgstr "形式 %i （例：  \"%u\"）"
 
-#: ../src/resources/toolbar.xrc:40 ../src/resources/toolbar.xrc:46
+#: ../src/resources/toolbar.xrc:40
+#: ../src/resources/toolbar.xrc:46
 msgid "Fullscreen view"
 msgstr "フルスクリーン表示"
 
-#: ../src/manager.cpp:266 ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:266
+#: ../src/resources/toolbar.xrc:28
 msgid "Fuzzy"
 msgstr "未確定"
 
@@ -564,11 +577,13 @@ msgstr "未確定"
 msgid "Fuzzy translation"
 msgstr "未確定文字列"
 
-#: ../src/edframe.cpp:885 ../src/edframe.cpp:1013
+#: ../src/edframe.cpp:885
+#: ../src/edframe.cpp:1013
 msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU gettext カタログ (*.po)|*.po|すべてのファイル (*.*)|*.*"
 
-#: ../src/edframe.cpp:1101 ../src/edframe.cpp:1239
+#: ../src/edframe.cpp:1101
+#: ../src/edframe.cpp:1239
 msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU gettext テンプレート (*.pot)|*.pot|すべてのファイル (*.*)|*.*"
 
@@ -594,9 +609,9 @@ msgid "Go to bookmark %i\tCtrl-%i"
 msgstr "しおり %i へ移動します\tCtrl-%i"
 
 #: ../src/edframe.cpp:2617
-#, fuzzy, c-format
+#, c-format
 msgid "Go to bookmark %i\tCtrl-Alt-%i"
-msgstr "しおり %i へ移動します\tCtrl-%i"
+msgstr "しおり %i へ移動します\tCtrl-Alt-%i"
 
 #: ../src/edframe.cpp:1051
 msgid "HTML file (*.html)|*.html"
@@ -614,7 +629,8 @@ msgstr "チェックしておくと、コメントウィンドウで編集がで
 msgid "Invocation:"
 msgstr "実行オプション:"
 
-#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:175
+#: ../src/settingsdlg.cpp:71
+#: ../src/resources/settings.xrc:175
 msgid "Keywords"
 msgstr "キーワード"
 
@@ -622,8 +638,10 @@ msgstr "キーワード"
 msgid "Language selection"
 msgstr "言語を選択："
 
-#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:506
-#: ../src/resources/prefs.xrc:510 ../src/resources/settings.xrc:62
+#: ../src/export_html.cpp:109
+#: ../src/resources/prefs.xrc:506
+#: ../src/resources/prefs.xrc:510
+#: ../src/resources/settings.xrc:62
 msgid "Language:"
 msgstr "言語:"
 
@@ -631,7 +649,8 @@ msgstr "言語:"
 msgid "Last modified"
 msgstr "最終更新"
 
-#: ../src/edlistctrl.cpp:230 ../src/fileviewer.cpp:106
+#: ../src/edlistctrl.cpp:230
+#: ../src/fileviewer.cpp:106
 msgid "Line"
 msgstr "行"
 
@@ -687,15 +706,11 @@ msgid "My Project"
 msgstr "My Project"
 
 #: ../src/resources/prefs.xrc:112
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"チェックすると一覧にフォーカスが移動しなくなります。キーボードによる項目の移"
-"動は Ctrl + 矢印キー のみとなります。"
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "チェックすると一覧にフォーカスが移動しなくなります。キーボードによる項目の移動は Ctrl + 矢印キー のみとなります。"
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:444
+#: ../src/resources/manager.xrc:43
+#: ../src/resources/prefs.xrc:444
 msgid "New"
 msgstr "新規"
 
@@ -731,9 +746,12 @@ msgstr "この文字列への参照は見つかりませんでした。"
 msgid "Notes"
 msgstr "注記"
 
-#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:104
-#: ../src/resources/prefs.xrc:482 ../src/resources/prefs.xrc:624
-#: ../src/resources/settings.xrc:186 ../src/resources/summary.xrc:71
+#: ../src/resources/comment.xrc:30
+#: ../src/resources/manager.xrc:104
+#: ../src/resources/prefs.xrc:482
+#: ../src/resources/prefs.xrc:624
+#: ../src/resources/settings.xrc:186
+#: ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "OK"
 
@@ -742,15 +760,16 @@ msgid "Obsolete strings"
 msgstr "もう使われていない文字列"
 
 #: ../src/resources/toolbar.xrc:12
-#, fuzzy
 msgid "Open"
-msgstr "開く(&O)"
+msgstr "開く"
 
-#: ../src/edframe.cpp:883 ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:883
+#: ../src/resources/toolbar.xrc:13
 msgid "Open catalog"
 msgstr "カタログを開く"
 
-#: ../src/edframe.cpp:1099 ../src/edframe.cpp:1237
+#: ../src/edframe.cpp:1099
+#: ../src/edframe.cpp:1237
 msgid "Open catalog template"
 msgstr "カタログの雛形を開く"
 
@@ -762,7 +781,8 @@ msgstr "起動時にカタログマネージャを開く"
 msgid "Open source files in editor, not in file viewer"
 msgstr "ソースファイルをエディタで開く"
 
-#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:227
+#: ../src/export_html.cpp:148
+#: ../src/edlistctrl.cpp:227
 msgid "Original string"
 msgstr "原文"
 
@@ -779,15 +799,16 @@ msgid "Parsers"
 msgstr "パーサ"
 
 #: ../src/digger.cpp:106
-#, fuzzy, c-format
+#, c-format
 msgid "Parsing %s files..."
-msgstr "ファイルを検索中..."
+msgstr "%s ファイルを解析中..."
 
 #: ../src/resources/prefs.xrc:304
 msgid "Path to DB:"
 msgstr "データベースへのパス:"
 
-#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:154
+#: ../src/settingsdlg.cpp:73
+#: ../src/resources/settings.xrc:154
 msgid "Paths"
 msgstr "パス"
 
@@ -833,12 +854,11 @@ msgstr "Poedit - カタログマネージャ"
 
 #: ../src/digger.cpp:219
 msgid "Poedit did not find any files in scanned directories."
-msgstr ""
-"Poedit は検索対象ディレクトリにおいてファイルを見つけられませんでした。"
+msgstr "Poedit は検索対象ディレクトリにおいてファイルを見つけられませんでした。"
 
 #: ../src/edframe.cpp:2144
 msgid "Poedit is an easy to use translations editor."
-msgstr ""
+msgstr "Poeditは使いやすい翻訳エディタです。"
 
 #: ../src/resources/prefs.xrc:4
 msgid "Preferences"
@@ -848,11 +868,13 @@ msgstr "設定"
 msgid "Proceed"
 msgstr "続行"
 
-#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:122
+#: ../src/export_html.cpp:102
+#: ../src/resources/settings.xrc:122
 msgid "Project info"
 msgstr "情報"
 
-#: ../src/export_html.cpp:106 ../src/resources/settings.xrc:19
+#: ../src/export_html.cpp:106
+#: ../src/resources/settings.xrc:19
 msgid "Project name and version:"
 msgstr "プロジェクトの名前とバージョン:"
 
@@ -861,15 +883,15 @@ msgid "Project name:"
 msgstr "プロジェクト名:"
 
 #: ../src/edframe.cpp:2000
-#, fuzzy
 msgid "Purge deleted translations"
-msgstr "削除された翻訳を一掃する(&P)"
+msgstr "削除された翻訳を一掃する"
 
 #: ../src/edframe.cpp:1316
 msgid "References"
 msgstr "参照"
 
-#: ../src/edframe.cpp:2090 ../src/edframe.cpp:2094
+#: ../src/edframe.cpp:2090
+#: ../src/edframe.cpp:2094
 msgid "References:"
 msgstr "参照位置:"
 
@@ -882,9 +904,8 @@ msgid "Reset to defaults"
 msgstr "初期値に戻す"
 
 #: ../src/resources/toolbar.xrc:17
-#, fuzzy
 msgid "Save"
-msgstr "保存(&S)"
+msgstr "保存"
 
 #: ../src/resources/menus.xrc:26
 msgid "Save &as..."
@@ -898,8 +919,11 @@ msgstr "名前を付けて保存..."
 msgid "Save catalog"
 msgstr "カタログの保存"
 
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:866 ../src/edframe.cpp:907
-#: ../src/edframe.cpp:959 ../src/edframe.cpp:1077
+#: ../src/edframe.cpp:841
+#: ../src/edframe.cpp:866
+#: ../src/edframe.cpp:907
+#: ../src/edframe.cpp:959
+#: ../src/edframe.cpp:1077
 msgid "Save changes"
 msgstr "変更を保存"
 
@@ -919,7 +943,8 @@ msgstr "検索パス"
 msgid "Select catalog's language"
 msgstr "カタログの言語を選択"
 
-#: ../src/prefsdlg.cpp:368 ../src/manager.cpp:299
+#: ../src/prefsdlg.cpp:368
+#: ../src/manager.cpp:299
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "ディレクトリの選択"
@@ -938,9 +963,9 @@ msgid "Set bookmark %i\tAlt-%i"
 msgstr "ここへしおり %i を挟む\tAlt-%i"
 
 #: ../src/edframe.cpp:2616
-#, fuzzy, c-format
+#, c-format
 msgid "Set bookmark %i\tCtrl-%i"
-msgstr "ここへしおり %i を挟む\tAlt-%i"
+msgstr "しおり %i を挟む\tCtrl-%i"
 
 #: ../src/resources/settings.xrc:4
 msgid "Settings"
@@ -966,7 +991,8 @@ msgstr "カタログ更新後に要約を表示"
 msgid "Singular:"
 msgstr "単数形："
 
-#: ../src/resources/prefs.xrc:599 ../src/resources/settings.xrc:98
+#: ../src/resources/prefs.xrc:599
+#: ../src/resources/settings.xrc:98
 msgid "Source code charset:"
 msgstr "ソースコードの文字符号化法:"
 
@@ -986,11 +1012,13 @@ msgstr "最初の項目から順に検索する"
 msgid "String to find:"
 msgstr "検索する文字列:"
 
-#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:48
+#: ../src/export_html.cpp:119
+#: ../src/resources/settings.xrc:48
 msgid "Team's email address:"
 msgstr "翻訳チームのメールアドレス:"
 
-#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:34
+#: ../src/export_html.cpp:115
+#: ../src/resources/settings.xrc:34
 msgid "Team:"
 msgstr "翻訳チーム:"
 
@@ -1006,12 +1034,8 @@ msgstr ""
 "代わりに UTF-8 で保存し、設定も変更されました。"
 
 #: ../src/catalog.cpp:985
-msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"カタログを読み出し中にエラーが発生しました。この結果、いくつかのデータが失わ"
-"れたり破壊されたりしているかもしれません"
+msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
+msgstr "カタログを読み出し中にエラーが発生しました。この結果、いくつかのデータが失われたり破壊されたりしているかもしれません"
 
 #: ../src/resources/summary.xrc:38
 msgid ""
@@ -1026,18 +1050,16 @@ msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "Poedit will add them to the catalog now."
 msgstr ""
-"これらの文字列はソースファイル中に存在しますが、カタログにありませんでし"
-"た。\n"
+"これらの文字列はソースファイル中に存在しますが、カタログにありませんでした。\n"
 "Poedit はカタログにそれらの文字列を加えます。"
 
 #: ../src/edapp.cpp:174
-#, fuzzy
 msgid ""
 "This is first time you run Poedit.\n"
 "Please fill in your name and email address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
-"Poedit が初めて実行されました。.\n"
+"Poedit が初めて実行されました。\n"
 "名前とメールアドレスを設定してください。\n"
 "(これらの情報はカタログファイルのヘッダとしてのみ利用されます)"
 
@@ -1087,7 +1109,8 @@ msgstr "現在の項目を未確定翻訳に設定"
 msgid "Total"
 msgstr "トータル"
 
-#: ../src/export_html.cpp:151 ../src/edlistctrl.cpp:228
+#: ../src/export_html.cpp:151
+#: ../src/edlistctrl.cpp:228
 msgid "Translation"
 msgstr "対訳"
 
@@ -1111,9 +1134,7 @@ msgstr "未確定翻訳 (&F)"
 msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
-msgstr ""
-"翻訳メモリは下にリストされたファイルから構築されます。より多くのファイルをリ"
-"ストに追加することができます。"
+msgstr "翻訳メモリは下にリストされたファイルから構築されます。より多くのファイルをリストに追加することができます。"
 
 #: ../src/chooselang.cpp:71
 #, c-format
@@ -1133,14 +1154,12 @@ msgid "Untrans"
 msgstr "翻訳できない"
 
 #: ../src/resources/toolbar.xrc:22
-#, fuzzy
 msgid "Update"
-msgstr "要約を更新中..."
+msgstr "更新する"
 
 #: ../src/resources/manager.xrc:59
-#, fuzzy
 msgid "Update all"
-msgstr "要約を更新中..."
+msgstr "全て更新する"
 
 #: ../src/resources/manager.xrc:60
 msgid "Update all catalogs in the project"
@@ -1168,9 +1187,7 @@ msgstr "カタログを更新中..."
 
 #: ../src/edframe.cpp:1223
 msgid "Updating the catalog failed. Click on 'More>>' for details."
-msgstr ""
-"カタログの更新に失敗しました。詳細を見るには 'More>>' をクリックしてくださ"
-"い。"
+msgstr "カタログの更新に失敗しました。詳細を見るには 'More>>' をクリックしてください。"
 
 #: ../src/resources/prefs.xrc:262
 msgid "Use custom font for text fields"
@@ -1205,15 +1222,16 @@ msgid "You must restart Poedit for this change to take effect."
 msgstr "変更を有効にするには Poedit を再起動してください。"
 
 #: ../src/resources/prefs.xrc:43
-#, fuzzy
 msgid "Your email address:"
-msgstr "メールアドレス:"
+msgstr "あなたのメールアドレス:"
 
 #: ../src/resources/prefs.xrc:22
 msgid ""
 "Your name and email set below are only used\n"
 "to set the Last-Translator header of GNU gettext files."
 msgstr ""
+"以下でセットされる名前と電子メールは、GNU gettext ファイルの\n"
+"Last-Translator ヘッダをセットするためにのに用いられます。"
 
 #: ../src/resources/prefs.xrc:30
 msgid "Your name:"
@@ -1235,55 +1253,42 @@ msgstr "なし"
 #, fuzzy
 #~ msgid "translations editor"
 #~ msgstr "翻訳メモリ"
-
 #~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 #~ msgstr "翻訳対象は %i 個です（未確定 %i、問題あり %i、未翻訳 %i )。"
-
 #~ msgid "'."
 #~ msgstr "'."
-
 #~ msgid "About Poedit"
 #~ msgstr "Poedit について"
-
 #~ msgid "version"
 #~ msgstr "バージョン"
-
 #~ msgid " files..."
 #~ msgstr " 個のファイル..."
-
 #~ msgid "Display quotes around the string?"
 #~ msgstr "文字列の両側に引用符を表示"
-
 #~ msgid "Error while loading file '%s': line %u is corrupted."
 #~ msgstr ""
 #~ "ファイル %s を読み出し中にエラーが発生しました： %u 行目が破損しています。"
-
 #~ msgid "Help"
 #~ msgstr "ヘルプ"
-
 #~ msgid "Parsing "
 #~ msgstr "パーシング中"
-
 #~ msgid ""
 #~ "Poedit installation is broken, cannot find application's home directory."
 #~ msgstr ""
 #~ "Poedit の設置に失敗しています。アプリケーションのホームディレクトリが見つ"
 #~ "かりません。"
-
 #~ msgid "Purge delete translations"
 #~ msgstr "削除された翻訳を完全に消去"
 
 #, fuzzy
 #~ msgid "; charset="
 #~ msgstr "キャラクタセット:"
-
 #~ msgid ""
 #~ "Cannot find resources file '%s'!\n"
 #~ "Please reinstall Poedit."
 #~ msgstr ""
 #~ "リソースファイル '%s' が見つかりません！\n"
 #~ "Poedit を再インストールしてください。."
-
 #~ msgid ""
 #~ "Cannot find resources file '%s'!\n"
 #~ "Poedit was configured to be installed in '%s'.\n"
@@ -1294,13 +1299,12 @@ msgstr "なし"
 #~ "Poedit はインストール時に '%s' を設定しました。\n"
 #~ "修正のためには環境変数 POEDIT_PREFIX が\n"
 #~ "Poedit のインスールパスを指定するように設定してください。"
-
 #~ msgid "Poedit Error"
 #~ msgstr "Poedit エラー"
 
 #, fuzzy
 #~ msgid "X-Poedit-Keywords"
 #~ msgstr "キーワード"
-
 #~ msgid "&Catalog"
 #~ msgstr "カタログ(&C)"
+
