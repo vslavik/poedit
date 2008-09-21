@@ -430,6 +430,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_DROP_FILES     (PoeditFrame::OnFileDrop)
 #endif
    EVT_IDLE           (PoeditFrame::OnIdle)
+   EVT_SIZE           (PoeditFrame::OnSize)
    EVT_END_PROCESS    (-1, PoeditFrame::OnEndProcess)
 END_EVENT_TABLE()
 
@@ -451,7 +452,8 @@ PoeditFrame::PoeditFrame() :
     m_list(NULL),
     m_modified(false),
     m_hasObsoleteItems(false),
-    m_dontAutoclearFuzzyStatus(false)
+    m_dontAutoclearFuzzyStatus(false),
+    m_setSashPositionsWhenMaximized(false)
 {
     // make sure that the [ID_POEDIT_FIRST,ID_POEDIT_LAST] range of IDs is not
     // used for anything else:
@@ -527,28 +529,15 @@ PoeditFrame::PoeditFrame() :
 
     CreateStatusBar(1, wxST_SIZEGRIP);
 
-    // NB: setting the position & size has to be the last thing done, otherwise
-    //     it's not done correctly on wxMac:
-    int posx = cfg->Read(_T("frame_x"), -1);
-    int posy = cfg->Read(_T("frame_y"), -1);
-    int width = cfg->Read(_T("frame_w"), 780);
-    int height = cfg->Read(_T("frame_h"), 570);
-
-    // NB: if this is the only Poedit frame opened, place it at remembered
-    //     position, but don't do that if there already are other frames,
-    //     because they would overlap and nobody could recognize that there are
-    //     many of them
-    if (ms_instances.GetCount() == 0)
-        Move(posx, posy);
-    SetClientSize(width, height);
-    if (cfg->Read(_T("frame_maximized"), long(0)))
-        Maximize();
-
     m_splitter = new wxSplitterWindow(this, -1,
                                       wxDefaultPosition, wxDefaultSize,
                                       SPLITTER_FLAGS);
     // make only the upper part grow when resizing
     m_splitter->SetSashGravity(1.0);
+
+    wxSizer *mainSizer = new wxBoxSizer(wxHORIZONTAL);
+    mainSizer->Add(m_splitter, wxSizerFlags(1).Expand());
+    SetSizer(mainSizer);
 
     wxPanel *topPanel = new wxPanel(m_splitter, wxID_ANY);
 
@@ -634,6 +623,31 @@ PoeditFrame::PoeditFrame() :
     m_bottomSplitter->SetMinimumPaneSize(40);
     m_bottomRightPanel->Show(false);
     m_bottomSplitter->Initialize(m_bottomLeftPanel);
+
+
+    int posx = cfg->Read(_T("frame_x"), -1);
+    int posy = cfg->Read(_T("frame_y"), -1);
+    int width = cfg->Read(_T("frame_w"), 780);
+    int height = cfg->Read(_T("frame_h"), 570);
+
+    // NB: if this is the only Poedit frame opened, place it at remembered
+    //     position, but don't do that if there already are other frames,
+    //     because they would overlap and nobody could recognize that there are
+    //     many of them
+    if (ms_instances.GetCount() == 0)
+        Move(posx, posy);
+    SetClientSize(width, height);
+    if ( cfg->Read(_T("frame_maximized"), long(0)) )
+    {
+        Maximize();
+
+        // This is a hack -- windows are not maximized immediately and so we
+        // can't set correct sash position in ctor (unmaximized window may
+        // be too small for sash position when maximized -- see bug #2120600)
+        m_setSashPositionsWhenMaximized = true;
+    }
+
+    Layout();
 
     m_splitter->SetMinimumPaneSize(40);
     m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, cfg->Read(_T("splitter"), 330L));
@@ -2543,6 +2557,28 @@ void PoeditFrame::OnIdle(wxIdleEvent& event)
         m_list->RefreshItem(*i);
     }
     m_itemsRefreshQueue.clear();
+}
+
+void PoeditFrame::OnSize(wxSizeEvent& event)
+{
+    event.Skip();
+
+    // see the comment in PoeditFrame ctor
+    if ( m_setSashPositionsWhenMaximized && IsMaximized() )
+    {
+        m_setSashPositionsWhenMaximized = false;
+
+        // update sizes of child windows first:
+        Layout();
+
+        // then set sash positions
+        m_splitter->SetSashPosition(wxConfig::Get()->Read(_T("splitter"), 240L));
+        if ( m_bottomSplitter->IsSplit() )
+        {
+            m_bottomSplitter->SetSashPosition(
+                wxConfig::Get()->Read(_T("bottom_splitter"), -200L));
+        }
+    }
 }
 
 void PoeditFrame::OnEndProcess(wxProcessEvent& event)

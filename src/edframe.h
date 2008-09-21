@@ -216,6 +216,7 @@ class PoeditFrame : public wxFrame
         bool ExportCatalog(const wxString& filename);
 
         void OnIdle(wxIdleEvent& event);
+        void OnSize(wxSizeEvent& event);
         void OnEndProcess(wxProcessEvent& event);
 
         void BeginItemValidation();
@@ -296,6 +297,7 @@ class PoeditFrame : public wxFrame
         bool m_displayAutoCommentsWin;
         wxFileHistory m_history;
         bool m_dontAutoclearFuzzyStatus;
+        bool m_setSashPositionsWhenMaximized;
 
         friend class ListHandler;
         friend class TextctrlHandler;
