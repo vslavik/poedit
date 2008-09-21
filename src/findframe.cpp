@@ -45,7 +45,7 @@ static const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
 
 wxString FindFrame::ms_text;
 
-BEGIN_EVENT_TABLE(FindFrame, wxFrame)
+BEGIN_EVENT_TABLE(FindFrame, wxDialog)
    EVT_BUTTON(XRCID("find_next"), FindFrame::OnNext)
    EVT_BUTTON(XRCID("find_prev"), FindFrame::OnPrev)
    EVT_BUTTON(wxID_CLOSE, FindFrame::OnClose)
@@ -71,7 +71,10 @@ FindFrame::FindFrame(wxWindow *parent,
     wxPoint p(wxConfig::Get()->Read(_T("find_pos_x"), -1),
               wxConfig::Get()->Read(_T("find_pos_y"), -1));
 
-    wxXmlResource::Get()->LoadFrame(this, parent, _T("find_frame"));
+    wxXmlResource::Get()->LoadDialog(this, parent, _T("find_frame"));
+
+    SetEscapeId(wxID_CLOSE);
+
     if (p.x != -1)
         Move(p);
 

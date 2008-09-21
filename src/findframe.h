@@ -30,7 +30,7 @@
 #ifndef _FINDFRAME_H_
 #define _FINDFRAME_H_
 
-#include <wx/frame.h>
+#include <wx/dialog.h>
 
 class PoeditListCtrl;
 class WXDLLEXPORT wxButton;
@@ -43,7 +43,7 @@ class Catalog;
     This class assumes that list control's user data contains index
     into the catalog.
  */
-class FindFrame : public wxFrame
+class FindFrame : public wxDialog
 {
     public:
         /** Ctor.
