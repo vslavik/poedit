@@ -41,24 +41,19 @@
 MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
 {
     wxXmlResource::Get()->LoadDialog(this, parent, _T("summary"));
-    wxRect r(wxConfig::Get()->Read(_T("summary_pos_x"), -1),
-             wxConfig::Get()->Read(_T("summary_pos_y"), -1),
-	     wxConfig::Get()->Read(_T("summary_pos_w"), -1),
-             wxConfig::Get()->Read(_T("summary_pos_h"), -1));
+    wxSize sz(wxConfig::Get()->Read(_T("summary_pos_w"), -1),
+              wxConfig::Get()->Read(_T("summary_pos_h"), -1));
 
-    if (r.x != -1)
-    {
-        Move(r.GetPosition());
-        SetClientSize(r.GetSize());
-    }
+    if (sz.x != -1)
+        SetClientSize(sz);
+
+    CentreOnParent();
 }
 
 
 
 MergeSummaryDialog::~MergeSummaryDialog()
 {
-    wxConfig::Get()->Write(_T("summary_pos_x"), (long)GetPosition().x);
-    wxConfig::Get()->Write(_T("summary_pos_y"), (long)GetPosition().y);
     wxConfig::Get()->Write(_T("summary_pos_w"), (long)GetClientSize().x);
     wxConfig::Get()->Write(_T("summary_pos_h"), (long)GetClientSize().y);
 }
