@@ -107,13 +107,15 @@ ManagerFrame::ManagerFrame() :
         UpdateListCat(last);
 
     wxConfigBase *cfg = wxConfig::Get();
-    int posx = cfg->Read(_T("manager_x"), -1);
-    int posy = cfg->Read(_T("manager_y"), -1);
     int width = cfg->Read(_T("manager_w"), 400);
     int height = cfg->Read(_T("manager_h"), 300);
-
-    Move(posx, posy);
     SetClientSize(width, height);
+
+#ifndef __WXGTK__
+    int posx = cfg->Read(_T("manager_x"), -1);
+    int posy = cfg->Read(_T("manager_y"), -1);
+    Move(posx, posy);
+#endif
 
 #if !defined(__WXGTK12__) || defined(__WXGTK20__)
     // GTK+ 1.2 doesn't support this

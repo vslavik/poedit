@@ -68,15 +68,16 @@ FindFrame::FindFrame(wxWindow *parent,
           m_textCtrlComments(textCtrlComments),
           m_textCtrlAutoComments(textCtrlAutoComments)
 {
-    wxPoint p(wxConfig::Get()->Read(_T("find_pos_x"), -1),
-              wxConfig::Get()->Read(_T("find_pos_y"), -1));
-
     wxXmlResource::Get()->LoadDialog(this, parent, _T("find_frame"));
 
     SetEscapeId(wxID_CLOSE);
 
+#ifndef __WXGTK__
+    wxPoint p(wxConfig::Get()->Read(_T("find_pos_x"), -1),
+              wxConfig::Get()->Read(_T("find_pos_y"), -1));
     if (p.x != -1)
         Move(p);
+#endif
 
     m_btnNext = XRCCTRL(*this, "find_next", wxButton);
     m_btnPrev = XRCCTRL(*this, "find_prev", wxButton);

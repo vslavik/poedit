@@ -625,18 +625,21 @@ PoeditFrame::PoeditFrame() :
     m_bottomSplitter->Initialize(m_bottomLeftPanel);
 
 
-    int posx = cfg->Read(_T("frame_x"), -1);
-    int posy = cfg->Read(_T("frame_y"), -1);
     int width = cfg->Read(_T("frame_w"), 780);
     int height = cfg->Read(_T("frame_h"), 570);
+    SetClientSize(width, height);
 
+#ifndef __WXGTK__
+    int posx = cfg->Read(_T("frame_x"), -1);
+    int posy = cfg->Read(_T("frame_y"), -1);
     // NB: if this is the only Poedit frame opened, place it at remembered
     //     position, but don't do that if there already are other frames,
     //     because they would overlap and nobody could recognize that there are
     //     many of them
     if (ms_instances.GetCount() == 0)
         Move(posx, posy);
-    SetClientSize(width, height);
+#endif
+
     if ( cfg->Read(_T("frame_maximized"), long(0)) )
     {
         Maximize();

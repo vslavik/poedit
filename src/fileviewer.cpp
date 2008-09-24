@@ -71,13 +71,15 @@ FileViewer::FileViewer(wxWindow *parent,
     ShowReference(ref);
 
     wxConfigBase *cfg = wxConfig::Get();
-    int posx = cfg->Read(_T("fileviewer/frame_x"), -1);
-    int posy = cfg->Read(_T("fileviewer/frame_y"), -1);
     int width = cfg->Read(_T("fileviewer/frame_w"), 600);
     int height = cfg->Read(_T("fileviewer/frame_h"), 400);
-
-    Move(posx, posy);
     SetClientSize(width, height);
+
+#ifndef __WXGTK__
+    int posx = cfg->Read(_T("fileviewer/frame_x"), -1);
+    int posy = cfg->Read(_T("fileviewer/frame_y"), -1);
+    Move(posx, posy);
+#endif
 }
 
 void FileViewer::ShowReference(const wxString& ref)
