@@ -1401,14 +1401,21 @@ bool Catalog::Update(bool summary)
         wxString path;
 
         if (wxIsAbsolutePath(m_header.BasePath))
+        {
             path = m_header.BasePath;
+        }
         else
-            path = wxPathOnly(m_fileName) + _T("/") + m_header.BasePath;
+        {
+            path = wxPathOnly(m_fileName);
+            if (path.empty())
+                path = _T(".");
+            path = path + _T("/") + m_header.BasePath;
+        }
 
-        if (wxIsAbsolutePath(path))
-            wxSetWorkingDirectory(path);
-        else
-            wxSetWorkingDirectory(cwd + _T("/") + path);
+        if (!wxIsAbsolutePath(path))
+            path = cwd + _T("/") + path;
+
+        wxSetWorkingDirectory(path);
     }
 
     SourceDigger dig(&pinfo);
