@@ -1506,7 +1506,14 @@ bool Catalog::Merge(Catalog *refcat)
 
     if (succ)
     {
+        const wxString charset = m_header.Charset;
+
         Load(tmp3);
+
+        // msgmerge doesn't always preserve the charset, it tends to pick
+        // the most generic one of the charsets used, so if we are merging with
+        // UTF-8 catalog, it will become UTF-8. Some people hate this.
+        m_header.Charset = charset;
     }
 
     wxRemoveFile(tmp1);
