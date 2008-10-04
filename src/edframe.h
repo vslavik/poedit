@@ -193,6 +193,7 @@ class PoeditFrame : public wxFrame
         void OnAutoCommentsWinFlag(wxCommandEvent& event);
         void OnShadedListFlag(wxCommandEvent& event);
         void OnInsertOriginal(wxCommandEvent& event);
+        void OnClearTranslation(wxCommandEvent& event);
 #ifndef __WXMAC__
         void OnFullscreen(wxCommandEvent& event);
 #endif

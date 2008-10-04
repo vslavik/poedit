@@ -407,6 +407,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_auto_comments_win"), PoeditFrame::OnAutoCommentsWinFlag)
    EVT_MENU           (XRCID("menu_shaded"),      PoeditFrame::OnShadedListFlag)
    EVT_MENU           (XRCID("menu_insert_orig"), PoeditFrame::OnInsertOriginal)
+   EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
 #ifndef __WXMAC__
    EVT_MENU           (XRCID("menu_fullscreen"),  PoeditFrame::OnFullscreen)
@@ -1587,7 +1588,23 @@ void PoeditFrame::OnInsertOriginal(wxCommandEvent& event)
     }
 }
 
+void PoeditFrame::OnClearTranslation(wxCommandEvent& event)
+{
+    if (!m_textTrans->IsShown())
+    {
+        // plural form entry:
+        for (size_t i=0; i < m_textTransPlural.size(); i++)
+            m_textTransPlural[i]->Clear();
 
+        if (m_textTransSingularForm)
+            m_textTransSingularForm->Clear();
+    }
+    else
+    {
+        // singular form entry:
+        m_textTrans->Clear();
+    }
+}
 
 #ifndef __WXMAC__
 void PoeditFrame::OnFullscreen(wxCommandEvent& event)
@@ -2060,6 +2077,7 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_fuzzy"), editable);
     menubar->Enable(XRCID("menu_comment"), editable);
     menubar->Enable(XRCID("menu_insert_orig"), editable);
+    menubar->Enable(XRCID("menu_clear"), editable);
     menubar->Enable(XRCID("menu_references"), editable);
     menubar->Enable(wxID_FIND, editable);
 
@@ -2266,6 +2284,9 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
     menu->Append(XRCID("menu_insert_orig"),
                  wxString(_("Copy original to translation field"))
                    + _T("\tAlt-C"));
+    menu->Append(XRCID("menu_clear"),
+                 wxString(_("Clear translation field"))
+                   + _T("\tCtrl-K"));
     menu->AppendSeparator();
 
 #ifdef CAN_MODIFY_DEFAULT_FONT
