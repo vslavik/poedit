@@ -2291,21 +2291,21 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
 #ifdef USE_TRANSMEM
     if (GetTransMem())
     {
-        menu->AppendSeparator();
-#ifdef CAN_MODIFY_DEFAULT_FONT
-        wxMenuItem *it2 = new wxMenuItem(menu, ID_POPUP_DUMMY+1,
-                                         _("Automatic translations:"));
-        it2->SetFont(m_boldGuiFont);
-        menu->Append(it2);
-#else
-        menu->Append(ID_POPUP_DUMMY+1, _("Automatic translations:"));
-#endif
-
         wxBusyCursor bcur;
         CatalogItem& dt = (*m_catalog)[item];
         m_autoTranslations.Clear();
         if (GetTransMem()->Lookup(dt.GetString(), m_autoTranslations) > 0)
         {
+            menu->AppendSeparator();
+#ifdef CAN_MODIFY_DEFAULT_FONT
+            wxMenuItem *it2 = new wxMenuItem(menu, ID_POPUP_DUMMY+1,
+                                             _("Automatic translations:"));
+            it2->SetFont(m_boldGuiFont);
+            menu->Append(it2);
+#else
+            menu->Append(ID_POPUP_DUMMY+1, _("Automatic translations:"));
+#endif
+
             for (size_t i = 0; i < m_autoTranslations.GetCount(); i++)
             {
                 // Convert from UTF-8 to environment's default charset:
@@ -2315,24 +2315,24 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
                 menu->Append(ID_POPUP_TRANS + i, _T("    ") + s);
             }
         }
-        else
-        {
-            menu->Append(ID_POPUP_DUMMY+2, _("none"));
-            menu->Enable(ID_POPUP_DUMMY+2, false);
-        }
     }
 #endif
 
-    menu->AppendSeparator();
+    if ( !refs.empty() )
+    {
+        menu->AppendSeparator();
+
 #ifdef CAN_MODIFY_DEFAULT_FONT
-    wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
-    it1->SetFont(m_boldGuiFont);
-    menu->Append(it1);
+        wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
+        it1->SetFont(m_boldGuiFont);
+        menu->Append(it1);
 #else
-    menu->Append(ID_POPUP_DUMMY+0, _("References:"));
+        menu->Append(ID_POPUP_DUMMY+0, _("References:"));
 #endif
-    for (size_t i = 0; i < refs.GetCount(); i++)
-        menu->Append(ID_POPUP_REFS + i, _T("    ") + refs[i]);
+
+        for (size_t i = 0; i < refs.GetCount(); i++)
+            menu->Append(ID_POPUP_REFS + i, _T("    ") + refs[i]);
+    }
 
     return menu;
 }
