@@ -1061,7 +1061,7 @@ void PoeditFrame::OnFileDrop(wxDropFilesEvent& event)
     wxFileName f(event.GetFiles()[0]);
     if (f.GetExt().Lower() != _T("po"))
     {
-        wxLogError(_("File '%s' is not message catalog."),
+        wxLogError(_("File '%s' is not a message catalog."),
                    f.GetFullPath().c_str());
         return;
     }
