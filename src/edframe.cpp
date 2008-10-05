@@ -2287,17 +2287,6 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
     menu->Append(XRCID("menu_clear"),
                  wxString(_("Clear translation field"))
                    + _T("\tCtrl-K"));
-    menu->AppendSeparator();
-
-#ifdef CAN_MODIFY_DEFAULT_FONT
-    wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
-    it1->SetFont(m_boldGuiFont);
-    menu->Append(it1);
-#else
-    menu->Append(ID_POPUP_DUMMY+0, _("References:"));
-#endif
-    for (size_t i = 0; i < refs.GetCount(); i++)
-        menu->Append(ID_POPUP_REFS + i, _T("    ") + refs[i]);
 
 #ifdef USE_TRANSMEM
     if (GetTransMem())
@@ -2333,6 +2322,17 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
         }
     }
 #endif
+
+    menu->AppendSeparator();
+#ifdef CAN_MODIFY_DEFAULT_FONT
+    wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
+    it1->SetFont(m_boldGuiFont);
+    menu->Append(it1);
+#else
+    menu->Append(ID_POPUP_DUMMY+0, _("References:"));
+#endif
+    for (size_t i = 0; i < refs.GetCount(); i++)
+        menu->Append(ID_POPUP_REFS + i, _T("    ") + refs[i]);
 
     return menu;
 }
