@@ -667,7 +667,7 @@ PoeditFrame::PoeditFrame() :
 
     ms_instances.Append(this);
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || wxCHECK_VERSION(2,8,10)
     DragAcceptFiles(true);
 #endif
 }
