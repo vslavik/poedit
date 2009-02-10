@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the poedit package.
 # Pavol Cvengros <orpheus@hq.alert.sk>, 2003.
 # Tibor Pittich <Tibor.Pittich@phuture.sk>, 2004.
-# Ivan Masár <helix84@centrum.sk>, 2007, 2008.
+# Ivan Masár <helix84@centrum.sk>, 2007, 2008, 2009.
+# Jaroslav Rynik <jrynik@yahoo.co.uk>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Poedit 1.4\n"
 "Report-Msgid-Bugs-To: poedit-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-27 23:19+0100\n"
-"PO-Revision-Date: 2008-03-02 12:57+0100\n"
+"PO-Revision-Date: 2009-02-01 19:23+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <ski18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -232,11 +233,11 @@ msgstr "Správanie"
 
 #: ../src/catalog.cpp:658
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "Chybný katalóg: verzia msgstr pre plurál je použitá bez msgid_plural"
+msgstr "Chybný katalóg: pred formou množného čísla nie je napísané msgid_plural"
 
 #: ../src/catalog.cpp:620
 msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr "Chybný katalóg: verzia msgstr pre singulár je použitá bez msgid_plural"
+msgstr "Chybný katalóg: forma jednotného čísla msgstr je použitá aj v msgid_plural"
 
 #: ../src/resources/manager.xrc:89
 #: ../src/resources/prefs.xrc:320
@@ -313,11 +314,11 @@ msgstr "Vyberte"
 
 #: ../src/resources/comment.xrc:45
 msgid "Clear"
-msgstr "Vyprázdniť"
+msgstr "Vymazať"
 
 #: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
-msgstr "Vyprázdniť komentár"
+msgstr "Vymazať komentár"
 
 #: ../src/resources/toolbar.xrc:34
 msgid "Comment"
@@ -343,12 +344,12 @@ msgstr "Potvrdenie"
 #: ../src/edframe.cpp:2085
 #: ../src/resources/menus.xrc:47
 msgid "Copy original to translation field"
-msgstr "Skopírovať originálny reťazec do preloženého"
+msgstr "Do okna na preklad skopírovať originál"
 
 #: ../src/catalog.cpp:993
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
-msgstr "Nie je možné načítať súbor %s. Pravdepodobne je poškodený."
+msgstr "Nie je možné otvoriť súbor %s. Pravdepodobne je poškodený."
 
 #: ../src/export_html.cpp:112
 #: ../src/resources/settings.xrc:74
@@ -424,24 +425,24 @@ msgstr "E&xport..."
 #: ../src/resources/manager.xrc:48
 #: ../src/resources/prefs.xrc:449
 msgid "Edit"
-msgstr "Zmeniť"
+msgstr "Upraviť"
 
 #: ../src/resources/menus.xrc:70
 msgid "Edit &comment"
-msgstr "&Zmeniť komentár"
+msgstr "&Upraviť komentár"
 
 #: ../src/resources/comment.xrc:4
 #: ../src/resources/toolbar.xrc:35
 msgid "Edit comment"
-msgstr "Zmeniť komentár"
+msgstr "Upraviť komentár"
 
 #: ../src/editlbox/editlbox.cpp:169
 msgid "Edit item"
-msgstr "Zmeniť položku"
+msgstr "Upraviť položku"
 
 #: ../src/resources/manager.xrc:64
 msgid "Edit project"
-msgstr "Zmeniť projekt"
+msgstr "Upraviť projekt"
 
 #: ../src/resources/fileview.xrc:10
 msgid "Edit the file in text editor"
@@ -449,7 +450,7 @@ msgstr "Upraviť súbor v textovom editore"
 
 #: ../src/resources/manager.xrc:49
 msgid "Edit the project"
-msgstr "Zmeniť projekt"
+msgstr "Upraviť projekt"
 
 #: ../src/resources/prefs.xrc:77
 msgid "Editor"
@@ -470,17 +471,17 @@ msgstr "Položky v katalógu sú pravdepodobne nesprávne."
 #: ../src/edframe.cpp:721
 #, c-format
 msgid "Error initializing spell checking: %s"
-msgstr "Chyba pri inicializácii kontroly pravopisu: %s"
+msgstr "Chyba pri spušťaní kontroly pravopisu: %s"
 
 #: ../src/edframe.cpp:1788
 #, c-format
 msgid "Error loading message catalog file '%s'."
-msgstr "Chyba pri nahrávaní katalógového súboru „%s“."
+msgstr "Chyba pri spúšťaní katalógového súboru „%s“."
 
 #: ../src/fileviewer.cpp:97
 #, c-format
 msgid "Error opening file %s!"
-msgstr "Chyba pri otvorení súboru %s!"
+msgstr "Chyba pri otváraní súboru %s!"
 
 #: ../src/catalog.cpp:1269
 msgid "Error saving catalog"
@@ -608,12 +609,12 @@ msgstr "Syntaktická chyba gettext"
 #: ../src/edframe.cpp:2620
 #, c-format
 msgid "Go to bookmark %i\tCtrl-%i"
-msgstr "Záložky %i\tCtrl-%i"
+msgstr "Záložky %i\tCtrl – %i"
 
 #: ../src/edframe.cpp:2617
 #, c-format
 msgid "Go to bookmark %i\tCtrl-Alt-%i"
-msgstr "Prejsť na záložku %i\tCtrl-Alt-%i"
+msgstr "Prejsť na záložku %i\tCtrl – Alt – %i"
 
 #: ../src/edframe.cpp:1051
 msgid "HTML file (*.html)|*.html"
@@ -667,7 +668,7 @@ msgstr "Formát ukončovania riadkov:"
 
 #: ../src/resources/prefs.xrc:522
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "Zoznam prípon oddelených bodkočiarkou (t.j. *.cpp;*.h):"
+msgstr "Zoznam prípon oddelených bodkočiarkou (napr. *.cpp;*.h):"
 
 #: ../src/resources/prefs.xrc:158
 msgid "Macintosh"
@@ -680,11 +681,11 @@ msgstr "Zle formátovaná hlavička: „%s“"
 
 #: ../src/resources/prefs.xrc:366
 msgid "Max. # of missing words:"
-msgstr "Max. # chýbajúcich slov:"
+msgstr "Max. počet chýbajúcich slov:"
 
 #: ../src/resources/prefs.xrc:388
 msgid "Max. difference in sentence length:"
-msgstr "Max. rozdiel v dĺžke slova:"
+msgstr "Max. rozdiel v dĺžke vety:"
 
 #: ../src/catalog.cpp:1425
 msgid "Merging differences..."
@@ -708,7 +709,7 @@ msgstr "Môj projekt"
 
 #: ../src/resources/prefs.xrc:112
 msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Nepovoliť aby bol zoznam reťazcov aktivovaný. Ak je to povolené, musíte pre navigáciu použiť Ctrl-šípky na klávesnici, inak môžete priamo začať písať text bez nutnosti stlačiť Tab pre aktiváciu poľa."
+msgstr "Nepovoliť aby bol zoznam reťazcov aktivovaný. Ak je to povolené, musíte pre navigáciu použiť Ctrl – šípky na klávesnici, inak môžete priamo začať písať text bez nutnosti stlačiť Tab pre aktiváciu poľa."
 
 #: ../src/resources/manager.xrc:43
 #: ../src/resources/prefs.xrc:444
@@ -785,7 +786,7 @@ msgstr "Otvárať zdrojové súbory v editore, nie v prehliadači"
 #: ../src/export_html.cpp:148
 #: ../src/edlistctrl.cpp:227
 msgid "Original string"
-msgstr "Originálny reťazec"
+msgstr "Text originálu"
 
 #: ../src/resources/prefs.xrc:542
 msgid "Parser command:"
@@ -843,7 +844,7 @@ msgstr "Tvorba plurálu:"
 
 #: ../src/edframe.cpp:489
 msgid "Plural:"
-msgstr "Plurál:"
+msgstr "Množné číslo:"
 
 #: ../src/edframe.cpp:359
 msgid "Poedit"
@@ -851,7 +852,7 @@ msgstr "Poedit"
 
 #: ../src/manager.cpp:69
 msgid "Poedit - Catalogs manager"
-msgstr "Poedit - správca katalógov"
+msgstr "Poedit – správca katalógov"
 
 #: ../src/digger.cpp:219
 msgid "Poedit did not find any files in scanned directories."
@@ -877,11 +878,11 @@ msgstr "Informácie o projekte"
 #: ../src/export_html.cpp:106
 #: ../src/resources/settings.xrc:19
 msgid "Project name and version:"
-msgstr "Meno projektu a verzia:"
+msgstr "Názov projektu a verzia:"
 
 #: ../src/resources/manager.xrc:69
 msgid "Project name:"
-msgstr "Meno projektu:"
+msgstr "Názov projektu:"
 
 #: ../src/edframe.cpp:2000
 msgid "Purge deleted translations"
@@ -898,11 +899,11 @@ msgstr "Odkazy:"
 
 #: ../src/resources/prefs.xrc:346
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr "Vygenerovať pamäť prekladov z katalógov v ceste zadanej hore."
+msgstr "Vygenerovať pamäť prekladov z katalógov v hore uvedenom umiestnení."
 
 #: ../src/resources/tm_update.xrc:42
 msgid "Reset to defaults"
-msgstr "Vrátiť štandardné"
+msgstr "Vrátiť predvolené"
 
 #: ../src/resources/toolbar.xrc:17
 msgid "Save"
@@ -938,7 +939,7 @@ msgstr "Prehľadávanie súborov..."
 
 #: ../src/transmemupd_wizard.cpp:59
 msgid "Search Paths"
-msgstr "Cesty"
+msgstr "Prehľadať umiestnenia"
 
 #: ../src/edframe.cpp:800
 msgid "Select catalog's language"
@@ -948,7 +949,7 @@ msgstr "Vyberte si jazyk katalógu"
 #: ../src/manager.cpp:299
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
-msgstr "Vyberte priečinok"
+msgstr "Vyberte si priečinok"
 
 #: ../src/prefsdlg.cpp:354
 msgid "Select language"
@@ -961,12 +962,12 @@ msgstr "Vyberte si váš preferovaný jazyk"
 #: ../src/edframe.cpp:2619
 #, c-format
 msgid "Set bookmark %i\tAlt-%i"
-msgstr "Nastaviť záložku %i\tAlt-%i"
+msgstr "Nastaviť záložku %i\tAlt – %i"
 
 #: ../src/edframe.cpp:2616
 #, c-format
 msgid "Set bookmark %i\tCtrl-%i"
-msgstr "Nastaviť záložku %i\tCtrl-%i"
+msgstr "Nastaviť záložku %i\tCtrl – %i"
 
 #: ../src/resources/settings.xrc:4
 msgid "Settings"
@@ -1011,7 +1012,7 @@ msgstr "Začať na prvej položke"
 
 #: ../src/resources/find.xrc:21
 msgid "String to find:"
-msgstr "Vyhľadať reťazec:"
+msgstr "Vyhľadať text:"
 
 #: ../src/export_html.cpp:119
 #: ../src/resources/settings.xrc:48
@@ -1061,7 +1062,7 @@ msgid ""
 "(This information is used only in catalogs headers)"
 msgstr ""
 "Toto je prvýkrát čo ste spustili Poedit.\n"
-"Prosím, vyplňte vaše meno a emailovú adresu.\n"
+"Prosím, vyplňte svoje meno a emailovú adresu.\n"
 "(Tieto informácie sa použijú hlavičkách katalógov)"
 
 #: ../src/resources/prefs.xrc:554
@@ -1071,7 +1072,7 @@ msgid ""
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
 msgstr ""
-"Tento príkaz sa používa na spustenie parsera.\n"
+"Tento príkaz sa používa na spustenie syntaktického analyzátora.\n"
 "%o sa zamení za meno výstupného súboru, %K na\n"
 "zoznam kľúčových slov, %F na zoznam\n"
 "vstupných súborov, %C na znak kódovej stránky (pozri nižšie)."
@@ -1104,7 +1105,7 @@ msgstr ""
 
 #: ../src/resources/toolbar.xrc:29
 msgid "Toggled if selected string has fuzzy translation"
-msgstr "Nastavené, ak je vybraný reťazec nepresný preklad"
+msgstr "Nastavené, ak je vybraný text preložený nepresne"
 
 #: ../src/manager.cpp:264
 msgid "Total"
@@ -1121,11 +1122,11 @@ msgstr "Pamäť prekladov"
 
 #: ../src/transmemupd_wizard.cpp:144
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
-msgstr "Prekladové súbory (*.po;*.mo)|*.po;*.mo"
+msgstr "Súbory s prekladmi (*.po;*.mo)|*.po;*.mo"
 
 #: ../src/transmemupd_wizard.cpp:142
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
-msgstr "Prekladové súbory (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
+msgstr "Súbory s prekladmi (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 
 #: ../src/resources/menus.xrc:62
 msgid "Translation is &fuzzy"
@@ -1194,7 +1195,7 @@ msgstr "Aktualizácia katalógu zlyhala. Podrobnosti po kliknutí na „Viac>>�
 
 #: ../src/resources/prefs.xrc:262
 msgid "Use custom font for text fields"
-msgstr "Použiť vlastné písmo pre textové vstupné polia"
+msgstr "Použiť vlastné písmo v textových poliach"
 
 #: ../src/resources/prefs.xrc:236
 msgid "Use custom font for translations list"
@@ -1222,7 +1223,7 @@ msgstr "Nemôžete zmazať viac ako jeden súbor naraz v okne aplikácie Poedit.
 
 #: ../src/chooselang.cpp:176
 msgid "You must restart Poedit for this change to take effect."
-msgstr "Aby zmeny boli aplikované je potrebné reštartovať Poedit."
+msgstr "Aby sa zmeny prejavili, treba Poedit reštartovať."
 
 #: ../src/resources/prefs.xrc:43
 msgid "Your email address:"
