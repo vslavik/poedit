@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2008 Vaclav Slavik
+ *  Copyright (C) 1999-2009 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -823,23 +823,30 @@ static void DoInitSpellchecker(wxTextCtrl *text,
     wxASSERT_MSG( textview, _T("wxTextCtrl is supposed to use GtkTextView") );
     GtkSpell *spell = gtkspell_get_from_text_view(textview);
 
-    if (spell)
-        gtkspell_detach(spell);
+    GError *err = NULL;
 
     if (enable)
     {
-        GError *err = NULL;
-        if (!gtkspell_new_attach(textview, lang.ToAscii(), &err))
-        {
-#if 0
-            // FIXME: report the failure in some less intrusive way than the
-            //        code that was used here; say for which language, too
-            wxLogError(_("Error initializing spell checking: %s"),
-                       wxString(err->message, wxConvUTF8).c_str());
-#endif
-            g_error_free(err);
-        }
+        if (spell)
+            gtkspell_set_language(spell, lang.ToAscii(), &err);
+        else
+            gtkspell_new_attach(textview, lang.ToAscii(), &err) != NULL;
     }
+    else // !enable
+    {
+        // GtkSpell when used with Zemberek Enchant module doesn't work
+        // correctly if you repeatedly attach and detach a speller to text
+        // view. See http://www.poedit.net/trac/ticket/276 for details.
+        //
+        // To work around this, we set the language to a non-existent one
+        // instead of detaching GtkSpell -- this has the same effect as
+        // detaching the speller as far as the UI is concerned.
+        if (spell)
+            gtkspell_set_language(spell, "unknown_language", &err);
+    }
+
+    if (err)
+        g_error_free(err);
 }
 #endif // __WXGTK__
 
