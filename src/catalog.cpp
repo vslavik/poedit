@@ -76,14 +76,44 @@ static wxString ReadTextLine(wxTextFile* f)
 
 // If input begins with pattern, fill output with end of input (without
 // pattern; strips trailing spaces) and return true.  Return false otherwise
-// and don't touch output
+// and don't touch output. Is permissive about whitespace in the input:
+// a space (' ') in pattern will match any number of any whitespace characters
+// on that position in input.
 static bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
 {
-    if (input.Length() < pattern.Length()) return false;
+    if (input.size() < pattern.size())
+        return false;
 
-    for (unsigned i = 0; i < pattern.Length(); i++)
-        if (input[i] != pattern[i]) return false;
-    output = input.Mid(pattern.Length()).Strip(wxString::trailing);
+    unsigned in_pos = 0;
+    unsigned pat_pos = 0;
+    while (pat_pos < pattern.size() && in_pos < input.size())
+    {
+        const wxChar pat = pattern[pat_pos++];
+
+        if (pat == _T(' '))
+        {
+            if (!wxIsspace(input[in_pos++]))
+                return false;
+
+            while (wxIsspace(input[in_pos]))
+            {
+                in_pos++;
+                if (in_pos == input.size())
+                    return false;
+            }
+        }
+        else
+        {
+            if (input[in_pos++] != pat)
+                return false;
+        }
+
+    }
+
+    if (pat_pos < pattern.size()) // pattern not fully matched
+        return false;
+
+    output = input.Mid(in_pos).Strip(wxString::trailing);
     return true;
 }
 
@@ -560,8 +590,7 @@ bool CatalogParser::Parse()
         }
 
         // msgctxt:
-        else if (ReadParam(line, _T("msgctxt \""), dummy) ||
-                 ReadParam(line, _T("msgctxt\t\""), dummy))
+        else if (ReadParam(line, _T("msgctxt \""), dummy))
         {
             has_context = true;
             msgctxt = dummy.RemoveLast();
@@ -577,8 +606,7 @@ bool CatalogParser::Parse()
         }
 
         // msgid:
-        else if (ReadParam(line, _T("msgid \""), dummy) ||
-                 ReadParam(line, _T("msgid\t\""), dummy))
+        else if (ReadParam(line, _T("msgid \""), dummy))
         {
             mstr = dummy.RemoveLast();
             mlinenum = m_textFile->GetCurrentLine() + 1;
@@ -594,8 +622,7 @@ bool CatalogParser::Parse()
         }
 
         // msgid_plural:
-        else if (ReadParam(line, _T("msgid_plural \""), dummy) ||
-                 ReadParam(line, _T("msgid_plural\t\""), dummy))
+        else if (ReadParam(line, _T("msgid_plural \""), dummy))
         {
             msgid_plural = dummy.RemoveLast();
             has_plural = true;
@@ -612,8 +639,7 @@ bool CatalogParser::Parse()
         }
 
         // msgstr:
-        else if (ReadParam(line, _T("msgstr \""), dummy) ||
-                 ReadParam(line, _T("msgstr\t\""), dummy))
+        else if (ReadParam(line, _T("msgstr \""), dummy))
         {
             if (has_plural)
             {
@@ -662,15 +688,13 @@ bool CatalogParser::Parse()
             wxString idx = dummy.BeforeFirst(_T(']'));
             wxString label = _T("msgstr[") + idx + _T("]");
 
-            while (ReadParam(line, label + _T(" \""), dummy) ||
-                   ReadParam(line, label + _T("\t\""), dummy))
+            while (ReadParam(line, label + _T(" \""), dummy))
             {
                 wxString str = dummy.RemoveLast();
 
                 while (!(line=ReadTextLine(m_textFile)).empty())
                 {
-                    if (line[0u] == _T('\t'))
-                        line.Remove(0, 1);
+                    line.Trim(/*fromRight=*/false);
                     if (line[0u] == _T('"') && line.Last() == _T('"'))
                         str += line.Mid(1, line.Length() - 2);
                     else
@@ -750,7 +774,9 @@ bool CatalogParser::Parse()
         }
 
         else
+        {
             line = ReadTextLine(m_textFile);
+        }
     }
 
     return true;
