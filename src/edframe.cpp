@@ -830,7 +830,7 @@ static void DoInitSpellchecker(wxTextCtrl *text,
         if (spell)
             gtkspell_set_language(spell, lang.ToAscii(), &err);
         else
-            gtkspell_new_attach(textview, lang.ToAscii(), &err) != NULL;
+            gtkspell_new_attach(textview, lang.ToAscii(), &err);
     }
     else // !enable
     {
