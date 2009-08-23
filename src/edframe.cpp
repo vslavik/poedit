@@ -2148,13 +2148,21 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
         size_t cnt = m_catalog->GetCount();
         for (size_t i = 0; i < cnt; i++)
         {
-            CatalogItem& dt = (*m_catalog)[i];
-            if (dt.IsModified() && !dt.IsFuzzy() &&
-                dt.GetValidity() == CatalogItem::Val_Valid &&
-                !dt.GetTranslation().empty())
-            {
-                tm->Store(dt.GetString(), dt.GetTranslation());
-            }
+            const CatalogItem& dt = (*m_catalog)[i];
+
+            // ignore translations with errors in them
+            if (dt.GetValidity() == CatalogItem::Val_Invalid)
+                continue;
+
+            // ignore untranslated or unfinished translations
+            if (dt.IsFuzzy() || dt.GetTranslation().empty())
+                continue;
+
+            // Note that dt.IsModified() is intentionally not checked - we
+            // want to save old entries in the TM too, so that we harvest as
+            // much useful translations as we can.
+
+            tm->Store(dt.GetString(), dt.GetTranslation());
         }
     }
 #endif
