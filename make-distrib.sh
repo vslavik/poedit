@@ -13,9 +13,15 @@ VERSION=1.4
 #doxygen
 #)
 
+./bootstrap
+
 (
-cd locales
-for i in *.po ; do msgfmt -o `basename $i .po`.mo $i ; done
+mkdir -p tmp-locale-update
+cd tmp-locale-update
+../configure
+(cd locales && make allmo)
+cd ..
+rm -rf tmp-locale-update
 )
 
 
