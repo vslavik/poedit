@@ -185,6 +185,7 @@ LanguageStruct isoLanguages[] =
     {_T("so"), _T("Somali")},
     {_T("sq"), _T("Albanian")},
     {_T("sr"), _T("Serbian")},
+    {_T("sr_RS@latin"), _T("Serbian (Latin)")},
     {_T("ss"), _T("Siswati")},
     {_T("st"), _T("Sesotho")},
     {_T("su"), _T("Sundanese")},

@@ -133,6 +133,7 @@ wxLanguage ChooseLanguage()
         { _T("Romanian"), wxLANGUAGE_ROMANIAN },
         { _T("Russian"), wxLANGUAGE_RUSSIAN },
         { _T("Serbian"), wxLANGUAGE_SERBIAN },
+        { _T("Serbian (Latin)"), wxLANGUAGE_SERBIAN_LATIN },
         { _T("Slovak"), wxLANGUAGE_SLOVAK },
         { _T("Slovenian"), wxLANGUAGE_SLOVENIAN },
         { _T("Spanish"), wxLANGUAGE_SPANISH },

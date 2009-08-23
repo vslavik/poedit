@@ -1,5 +1,5 @@
 
-POEDIT_LINGUAS = af_ZA am ar ast be@latin be bg bn br ca ca@valencia cs da de el eo es es_PR et eu fa_IR fi fr fur ga gl he hi hr hu id is it ja ka ko ku ky lt lv mk mn ms nb nl nn pa pl pt_BR pt_PT ro ru sk sl sq_AL sr sv ta th tr tt ug uk ur wa zh_CN zh_TW
+POEDIT_LINGUAS = af_ZA am ar ast be@latin be bg bn br ca ca@valencia cs da de el eo es es_PR et eu fa_IR fi fr fur ga gl he hi hr hu id is it ja ka ko ku ky lt lv mk mn ms nb nl nn pa pl pt_BR pt_PT ro ru sk sl sq_AL sr sr_RS@latin sv ta th tr tt ug uk ur wa zh_CN zh_TW
 
 localedir = $(datadir)/locale
 
@@ -35,6 +35,9 @@ XGETTEXT_ARGS=-C -k_ -kwxGetTranslation -kwxTRANSLATE -s -j --add-comments=TRANS
 # a PO file must be updated from  poedit.pot include new translations
 %.po: $(srcdir)/poedit.pot
 	if [ -f $@ ]; then $(MSGMERGE) $@ $(srcdir)/poedit.pot > $@.new && mv $@.new $@; else cp $(srcdir)/poedit.pot $@; fi
+
+$(srcdir)/sr_RS@latin.po: $(srcdir)/sr.po
+	recode-sr-latin <$< >$@
 
 $(srcdir)/poedit.pot:
 	touch $@
