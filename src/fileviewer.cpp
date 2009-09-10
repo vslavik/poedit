@@ -84,9 +84,13 @@ void FileViewer::ShowReference(const wxString& ref)
 {
     wxFileName filename(ref.BeforeLast(_T(':')));
     filename.MakeAbsolute(m_basePath);
-    
+
+    // support GNOME's xml2po's extension to references in the form of
+    // filename:line(xml_node):
+    wxString linenumStr = ref.AfterLast(_T(':')).BeforeFirst(_T('('));
+
     long linenum;
-    if (!ref.AfterLast(_T(':')).ToLong(&linenum))
+    if (!linenumStr.ToLong(&linenum))
         linenum = 0;
 
     wxTextFile textf(filename.GetFullPath());
@@ -149,10 +153,15 @@ FileViewer::~FileViewer()
     }
     wxFileName fn(reference.BeforeLast(_T(':')));
     fn.MakeAbsolute(basepath);
+
+    // support GNOME's xml2po's extension to references in the form of
+    // filename:line(xml_node):
+    wxString linenum = reference.AfterLast(_T(':')).BeforeFirst(_T('('));
+
     editor.Replace(_T("%f"),
                    wxString::Format(_T("\"%s\""), fn.GetFullPath().c_str()));
-    editor.Replace(_T("%l"),
-                   reference.AfterLast(_T(':')));
+    editor.Replace(_T("%l"), linenum);
+
     wxExecute(editor);
 }
 
