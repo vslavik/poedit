@@ -173,10 +173,10 @@ wxString Parser::GetCommand(const wxArrayString& files,
         charsetline = CharsetItem;
         charsetline.Replace(_T("%c"), charset);
     }
-    
+
+    cmdline.Replace(_T("%C"), charsetline);
     cmdline.Replace(_T("%K"), kline);
     cmdline.Replace(_T("%F"), fline);
-    cmdline.Replace(_T("%C"), charsetline);
-    
+
     return cmdline;
 }
