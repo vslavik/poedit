@@ -146,6 +146,7 @@ wxLanguage ChooseLanguage()
         { _T("Ukrainian"), wxLANGUAGE_UKRAINIAN },
         { _T("Urdu"), wxLANGUAGE_URDU },
         { _T("Uyghur"), wxLANGUAGE_UIGHUR },
+        { _T("Uzbek"), wxLANGUAGE_UZBEK },
         { _T("Vietnamese"), wxLANGUAGE_VIETNAMESE },
         { _T(""), wxLANGUAGE_UNKNOWN }
     };
