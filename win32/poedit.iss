@@ -43,6 +43,7 @@ OutputBaseFilename=poedit-{#VERSION_FULL}-setup
 AppName=Poedit
 AppVerName=Poedit {#VERSION_FULL}
 
+PrivilegesRequired=none
 ChangesAssociations=true
 AlwaysShowComponentsList=true
 SourceDir=..
