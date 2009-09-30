@@ -262,6 +262,8 @@ void ManagerFrame::UpdateListCat(int id)
         wxDir::GetAllFiles(tkn.GetNextToken(), &m_catalogs,
                            _T("*.po"), wxDIR_FILES | wxDIR_DIRS);
 
+    m_catalogs.Sort();
+
     m_listCat->Freeze();
 
     m_listCat->ClearAll();
