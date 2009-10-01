@@ -1,5 +1,5 @@
 
-POEDIT_LINGUAS = af_ZA am ar ast be@latin be bg bn br ca ca@valencia cs da de el eo es es_PR et eu fa_IR fi fr fur ga gl he hi hr hu id is it ja ka ko ku ky lt lv mk mn ms nb nl nn pa pl pt_BR pt_PT ro ru sk sl sq_AL sr sv ta th tr tt ug uk ur uz vi wa zh_CN zh_TW
+POEDIT_LINGUAS = af_ZA am ar ast be@latin be bg bn br bs ca ca@valencia cs da de el eo es es_PR et eu fa_IR fi fr fur ga gl he hi hr hu id is it ja ka ko ku ky lt lv mk mn ms nb nl nn pa pl pt_BR pt_PT ro ru sk sl sq_AL sr sv ta th tr tt ug uk ur uz vi wa zh_CN zh_TW
 
 localedir = $(datadir)/locale
 
