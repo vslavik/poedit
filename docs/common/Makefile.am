@@ -7,7 +7,6 @@ helpcommon_DATA = \
               comment.gif \
 			  fileopen.gif \
 			  filesave.gif \
-			  fullscreen.gif \
 			  fuzzy.gif \
 			  quotes.gif \
 			  update.gif

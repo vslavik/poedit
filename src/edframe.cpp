@@ -409,9 +409,6 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_insert_orig"), PoeditFrame::OnInsertOriginal)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
-#ifndef __WXMAC__
-   EVT_MENU           (XRCID("menu_fullscreen"),  PoeditFrame::OnFullscreen)
-#endif
    EVT_MENU           (wxID_FIND,                 PoeditFrame::OnFind)
    EVT_MENU           (XRCID("menu_comment"),     PoeditFrame::OnEditComment)
    EVT_MENU           (XRCID("menu_manager"),     PoeditFrame::OnManager)
@@ -691,7 +688,7 @@ PoeditFrame::~PoeditFrame()
     wxConfigBase *cfg = wxConfig::Get();
     cfg->SetPath(_T("/"));
 
-    if (!IsIconized() && !IsFullScreen())
+    if (!IsIconized())
     {
         if (!IsMaximized())
         {
@@ -1612,32 +1609,6 @@ void PoeditFrame::OnClearTranslation(wxCommandEvent& event)
         m_textTrans->Clear();
     }
 }
-
-#ifndef __WXMAC__
-void PoeditFrame::OnFullscreen(wxCommandEvent& event)
-{
-    bool fs = IsFullScreen();
-    wxConfigBase *cfg = wxConfigBase::Get();
-
-    GetMenuBar()->Check(XRCID("menu_fullscreen"), !fs);
-    GetToolBar()->ToggleTool(XRCID("menu_fullscreen"), !fs);
-
-    if (fs)
-    {
-        cfg->Write(_T("splitter_fullscreen"), (long)m_splitter->GetSashPosition());
-        m_splitter->SetSashPosition(cfg->Read(_T("splitter"), 240L));
-    }
-    else
-    {
-        long oldSash = m_splitter->GetSashPosition();
-        cfg->Write(_T("splitter"), oldSash);
-        m_splitter->SetSashPosition(cfg->Read(_T("splitter_fullscreen"), oldSash));
-    }
-
-    ShowFullScreen(!fs, wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION);
-}
-#endif // !__WXMAC__
-
 
 
 void PoeditFrame::OnFind(wxCommandEvent& event)

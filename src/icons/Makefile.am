@@ -33,5 +33,4 @@ poediticons_DATA = \
 		poedit-status-modified.png \
 		poedit-status-nothing.png \
 		poedit-update.png \
-		view-fullscreen.png \
 		window-close.png

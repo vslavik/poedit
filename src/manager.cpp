@@ -132,7 +132,7 @@ ManagerFrame::~ManagerFrame()
     wxPoint pos = GetPosition();
     wxConfigBase *cfg = wxConfig::Get();
 
-    if (!IsIconized() && !IsFullScreen())
+    if (!IsIconized())
     {
         if (!IsMaximized())
         {

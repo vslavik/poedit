@@ -194,9 +194,6 @@ class PoeditFrame : public wxFrame
         void OnShadedListFlag(wxCommandEvent& event);
         void OnInsertOriginal(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);
-#ifndef __WXMAC__
-        void OnFullscreen(wxCommandEvent& event);
-#endif
         void OnFind(wxCommandEvent& event);
         void OnEditComment(wxCommandEvent& event);
         void OnManager(wxCommandEvent& event);

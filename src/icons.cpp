@@ -42,7 +42,6 @@ static wxString GetGnomeStockId(const wxString& id)
 
     MAP("document-open",        "gtk-open");
     MAP("document-save",        "gtk-save");
-    MAP("view-fullscreen",      "stock_fullscreen");
     MAP("help-browser",         "gtk-help");
     MAP("window-close",         "gtk-close");
 
