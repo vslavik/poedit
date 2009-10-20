@@ -1920,12 +1920,24 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
 
         if ( m_catalog->Header().GetHeader(_T("Plural-Forms")).empty() )
         {
-            err = _("This catalog has entries with plural forms, but doesn't have Plural Forms header configured.");
+            err = _("This catalog has entries with plural forms, but doesn't have Plural-Forms header configured.");
         }
         else if ( m_catalog->HasWrongPluralFormsCount() )
         {
-            err = _("Entries in this catalog have different plural forms count from what catalog's Plural Forms header says");
+            err = _("Entries in this catalog have different plural forms count from what catalog's Plural-Forms header says");
         }
+
+        // FIXME: make this part of global error checking
+        wxString plForms = m_catalog->Header().GetHeader(_T("Plural-Forms"));
+        PluralFormsCalculator *plCalc =
+                PluralFormsCalculator::make(plForms.ToAscii());
+        if ( !plCalc )
+        {
+            err = wxString::Format(
+                        _("Syntax error in Plural-Forms header (\"\%s\")."),
+                        plForms.c_str());
+        }
+        delete plCalc;
 
         if ( !err.empty() )
         {
