@@ -2810,7 +2810,7 @@ void PoeditFrame::RecreatePluralTextCtrls()
 
     // as a fallback, assume 1st form for plural entries is the singular
     // (like in English and most real-life uses):
-    if (!m_textTransSingularForm)
+    if (!m_textTransSingularForm && !m_textTransPlural.empty())
         m_textTransSingularForm = m_textTransPlural[0];
 
     delete calc;
