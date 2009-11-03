@@ -77,6 +77,7 @@ AppContact=poedit-users@lists.sourceforge.net
 UninstallDisplayIcon={app}\bin\poedit.exe
 UninstallDisplayName=Poedit
 MinVersion=0,4.0.1381
+WizardSmallImageFile=icons\win32\installer_wizard_image.bmp
 
 [LangOptions]
 ; make the installer use standard (WinXP, ...) fonts
@@ -104,7 +105,9 @@ Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit\help\en\gettext; Compo
 Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit\help\hr; Components: i18n
 Source: COPYING; DestDir: {app}\doc; DestName: copying.txt; Components: docs
 Source: NEWS; DestDir: {app}\doc; DestName: news.txt; Components: docs
-Source: src\icons\*.png; DestDir: {app}\share\poedit\icons; Components: core
+Source: icons\ui\*.png; DestDir: {app}\share\poedit\icons; Components: core
+Source: icons\win32\xp\*.ico; DestDir: {app}\share\poedit\icons; Components: core; OnlyBelowVersion: 0,6.0.6000
+Source: icons\win32\vista\*.ico; DestDir: {app}\share\poedit\icons; Components: core; MinVersion: 0,6.0.6000
 Source: {#WINDIR}\WinSxS\Manifests\{#ASSEMBLY}.manifest; DestDir: {app}\bin; Components: core; DestName: Microsoft.VC80.CRT.manifest
 Source: {#WINDIR}\WinSxS\{#ASSEMBLY}\*.dll; DestDir: {app}\bin; Components: core
 #emit LocaleFiles
@@ -123,7 +126,7 @@ Name: {app}\bin\mingwm10.dll; Type: files; Components: core
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
 Root: HKCR; SubKey: GettextFile; ValueType: string; ValueData: Gettext message catalog; Flags: uninsdeletekey noerror
 Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData: """{app}\bin\poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
-Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\bin\poedit.exe,0; Flags: uninsdeletekey noerror
+Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\share\poedit\icons\poedit-translation-generic.ico; Flags: uninsdeletekey noerror
 Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty dontcreatekey
 Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcreatekey
 

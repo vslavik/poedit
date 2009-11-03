@@ -28,7 +28,7 @@ rm -rf tmp-locale-update
 find_unix_files()
 {
   (find . -maxdepth 1 -type f ; \
-  find admin build locales src docs macosx win32 -type f) | \
+  find admin build locales src docs macosx win32 icons -type f) | \
     grep -v '/win32-' | \
     grep -v '/\.svn' | \
     grep -v '/\.bakefile_gen.state' | \

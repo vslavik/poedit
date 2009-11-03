@@ -85,7 +85,7 @@ fi
 
 # metadata:
 cp $top_builddir/macosx/Info.plist $bundle/Contents
-cp $top_srcdir/macosx/*.icns $bundle/Contents/Resources
+cp $top_srcdir/icons/osx/*.icns $bundle/Contents/Resources
 
 # gettext catalogs:
 for i in $top_srcdir/locales/*.mo ; do
@@ -117,6 +117,6 @@ find $bundle/Contents/Resources/locale -type f
 # icons:
 iconsdir="$bundle/Contents/Resources/icons"
 mkdir -p $iconsdir
-cp $top_srcdir/src/icons/*.png $iconsdir
+cp $top_srcdir/icons/ui/*.png $iconsdir
 # now overwrite with Mac-specific ones:
-cp $top_srcdir/src/icons/macosx/*.png $iconsdir
+cp $top_srcdir/icons/ui/macosx/*.png $iconsdir
