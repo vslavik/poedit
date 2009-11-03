@@ -1,7 +1,10 @@
 
+ACLOCAL_AMFLAGS = -I admin
+
 SUBDIRS = src docs install locales
 
-ACLOCAL_AMFLAGS = -I admin
+desktopdir=$(datadir)/applications
+desktop_DATA = poedit.desktop
 
 
 dist-osx:
