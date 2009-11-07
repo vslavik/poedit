@@ -81,7 +81,7 @@
     \section tm_ops Operations
     
     TM supports two operations: 
-    - Store(original_string, translation)
+    - Store(source_string, translation)
     - Lookup(string, max_words_diff, max_length_delta). This operation returns
       array of results and integer value indicating exactness of result
       (0=worst, 100=exact). All returned strings are of same exactness.
@@ -89,17 +89,17 @@
 
     \subsection tm_write Writing to TM
 
-    First, TM tries to find \a original_string in DbOrig. This is a trivial
+    First, TM tries to find \a source_string in DbOrig. This is a trivial
     case - if TM finds it, it reads the record with obtained ID from DbTrans,
     checks if the list already contains \a translation and if not, adds 
     \a translation to the list and writes it back to DbTrans. DBs are 
     consistent at this point and operation finished successfully.
     
-    If DbOrig doesn't contain \a original_string, however, the situation is
+    If DbOrig doesn't contain \a source_string, however, the situation is
     more complicated. TM writes \a translation to DbTrans and obtains ID
     (which equals new record's index in DbTrans).
-    It then writes \a original_string and this ID to DbOrig. Last, TM converts
-    \a original_string to an array of words (by splitting it with usual
+    It then writes \a source_string and this ID to DbOrig. Last, TM converts
+    \a source_string to an array of words (by splitting it with usual
     word separators, converting to lowercase and removing bad words that
     are too common, such as "a", "the" or "will"). Number of words is used
     as sentence length and the ID is added to (word,length) records in 

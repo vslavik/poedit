@@ -56,7 +56,7 @@ typedef enum
 } Bookmark;
 
 /** This class holds information about one particular string.
-    This includes original string and its occurences in source code
+    This includes source string and its occurrences in source code
     (so-called references), translation and translation's status
     (fuzzy, non translated, translated) and optional comment.
 
@@ -65,7 +65,7 @@ typedef enum
 class CatalogItem
 {
     public:
-        /// Ctor. Initializes the object with original string and translation.
+        /// Ctor. Initializes the object with source string and translation.
         CatalogItem(const wxString& str = wxEmptyString,
                     const wxString& str_plural = wxEmptyString)
                 : m_string(str),
@@ -103,7 +103,7 @@ class CatalogItem
                   m_errorString(dt.m_errorString),
                   m_bookmark(dt.m_bookmark) {}
 
-        /// Returns the original string.
+        /// Returns the source string.
         const wxString& GetString() const { return m_string; }
 
         /// Does this entry have a msgid_plural?

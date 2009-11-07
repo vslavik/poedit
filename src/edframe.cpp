@@ -406,7 +406,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
    EVT_MENU           (XRCID("menu_auto_comments_win"), PoeditFrame::OnAutoCommentsWinFlag)
    EVT_MENU           (XRCID("menu_shaded"),      PoeditFrame::OnShadedListFlag)
-   EVT_MENU           (XRCID("menu_insert_orig"), PoeditFrame::OnInsertOriginal)
+   EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
    EVT_MENU           (wxID_FIND,                 PoeditFrame::OnFind)
@@ -1573,7 +1573,7 @@ void PoeditFrame::OnShadedListFlag(wxCommandEvent& event)
 
 
 
-void PoeditFrame::OnInsertOriginal(wxCommandEvent& event)
+void PoeditFrame::OnCopyFromSource(wxCommandEvent& event)
 {
     if (!m_textTrans->IsShown())
     {
@@ -2066,7 +2066,7 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_update"), editable);
     menubar->Enable(XRCID("menu_fuzzy"), editable);
     menubar->Enable(XRCID("menu_comment"), editable);
-    menubar->Enable(XRCID("menu_insert_orig"), editable);
+    menubar->Enable(XRCID("menu_copy_from_src"), editable);
     menubar->Enable(XRCID("menu_clear"), editable);
     menubar->Enable(XRCID("menu_references"), editable);
     menubar->Enable(wxID_FIND, editable);
@@ -2279,8 +2279,8 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
     const wxArrayString& refs = (*m_catalog)[item].GetReferences();
     wxMenu *menu = new wxMenu;
 
-    menu->Append(XRCID("menu_insert_orig"),
-                 wxString(_("Copy original to translation field"))
+    menu->Append(XRCID("menu_copy_from_src"),
+                 wxString(_("Copy translation from source text"))
                    + _T("\tAlt-C"));
     menu->Append(XRCID("menu_clear"),
                  wxString(_("Clear translation"))

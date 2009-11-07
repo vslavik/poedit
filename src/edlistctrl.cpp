@@ -303,7 +303,7 @@ void PoeditListCtrl::SetDisplayLines(bool dl)
 void PoeditListCtrl::CreateColumns()
 {
     DeleteAllColumns();
-    InsertColumn(0, _("Original string"));
+    InsertColumn(0, _("Source"));
     InsertColumn(1, _("Translation"));
     if (m_displayLines)
         InsertColumn(2, _("Line"), wxLIST_FORMAT_RIGHT);

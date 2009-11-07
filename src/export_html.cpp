@@ -160,7 +160,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
 
     f.AddLine(_T("<tr>"));
     f.AddLine(_T("<th>"));
-    f.AddLine(_("Original string"));
+    f.AddLine(_("Source"));
     f.AddLine(_T("</th>"));
     f.AddLine(_T("<th>"));
     f.AddLine(_("Translation"));
@@ -176,7 +176,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
         const CatalogItem& data = m_items[i];
 
         wxColour bgcolor = g_ItemColourNormal[i % 2];
-        wxString original_string = data.GetString();
+        wxString source_string = data.GetString();
 
         wxString translation = data.GetTranslation();
         if (translation.empty())
@@ -209,7 +209,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
         f.AddLine(tr);
 
         f.AddLine(_T("<td>"));
-        f.AddLine(Escape(original_string));
+        f.AddLine(Escape(source_string));
         f.AddLine(_T("</td>"));
         f.AddLine(_T("<td>"));
         f.AddLine(Escape(translation));

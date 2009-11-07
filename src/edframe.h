@@ -192,7 +192,7 @@ class PoeditFrame : public wxFrame
         void OnCommentWinFlag(wxCommandEvent& event);
         void OnAutoCommentsWinFlag(wxCommandEvent& event);
         void OnShadedListFlag(wxCommandEvent& event);
-        void OnInsertOriginal(wxCommandEvent& event);
+        void OnCopyFromSource(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
         void OnEditComment(wxCommandEvent& event);
