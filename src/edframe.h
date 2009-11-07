@@ -276,14 +276,14 @@ class PoeditFrame : public wxFrame
         wxPanel *m_bottomRightPanel;
         wxSplitterWindow *m_splitter, *m_bottomSplitter;
         PoeditListCtrl *m_list;
+        wxStaticText *m_labelComment, *m_labelAutoComments;
         wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textTrans, *m_textComment, *m_textAutoComments;
         std::vector<wxTextCtrl*> m_textTransPlural;
         wxTextCtrl *m_textTransSingularForm;
         wxNotebook *m_pluralNotebook;
         wxStaticText *m_labelSingular, *m_labelPlural;
-#ifdef CAN_MODIFY_DEFAULT_FONT
+
         wxFont m_boldGuiFont;
-#endif
 
         AttentionBar *m_attentionBar;
 

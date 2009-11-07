@@ -492,10 +492,8 @@ PoeditFrame::PoeditFrame() :
     SetIcon(wxICON(appicon));
 #endif
 
-#ifdef CAN_MODIFY_DEFAULT_FONT
     m_boldGuiFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     m_boldGuiFont.SetWeight(wxFONTWEIGHT_BOLD);
-#endif
 
     wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar(_T("mainmenu"));
     if (MenuBar)
@@ -561,6 +559,20 @@ PoeditFrame::PoeditFrame() :
     m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
     m_bottomRightPanel = new wxPanel(m_bottomSplitter);
 
+    wxStaticText *labelSource =
+        new wxStaticText(m_bottomLeftPanel, -1, _("Source text:"));
+    labelSource->SetFont(m_boldGuiFont);
+
+    wxStaticText *labelTrans =
+        new wxStaticText(m_bottomLeftPanel, -1, _("Translation:"));
+    labelTrans->SetFont(m_boldGuiFont);
+
+    m_labelComment = new wxStaticText(m_bottomRightPanel, -1, _("Comment:"));
+    m_labelComment->SetFont(m_boldGuiFont);
+
+    m_labelAutoComments = new wxStaticText(m_bottomRightPanel, -1, _("Automatic comments:"));
+    m_labelAutoComments->SetFont(m_boldGuiFont);
+
     m_textComment = NULL;
     m_textAutoComments = new UnfocusableTextCtrl(m_bottomRightPanel,
                                 ID_TEXTORIG, wxEmptyString,
@@ -606,10 +618,15 @@ PoeditFrame::PoeditFrame() :
     gridSizer->Add(m_textOrigPlural, 1, wxEXPAND);
     gridSizer->SetItemMinSize(m_textOrig, 1, 1);
     gridSizer->SetItemMinSize(m_textOrigPlural, 1, 1);
+
+    leftSizer->Add(labelSource, 0, wxEXPAND | wxALL, 3);
     leftSizer->Add(gridSizer, 1, wxEXPAND);
+    leftSizer->Add(labelTrans, 0, wxEXPAND | wxALL, 3);
     leftSizer->Add(m_textTrans, 1, wxEXPAND);
     leftSizer->Add(m_pluralNotebook, 1, wxEXPAND);
+    rightSizer->Add(m_labelAutoComments, 0, wxEXPAND | wxALL, 3);
     rightSizer->Add(m_textAutoComments, 1, wxEXPAND);
+    rightSizer->Add(m_labelComment, 0, wxEXPAND | wxALL, 3);
     rightSizer->Add(m_textComment, 1, wxEXPAND);
 
     m_bottomLeftPanel->SetAutoLayout(true);
@@ -2506,16 +2523,16 @@ void PoeditFrame::UpdateDisplayCommentWin()
         // (sizer may be NULL on first call)
         if (m_bottomRightPanel->GetSizer() != NULL)
         {
-            // need to remove and add again to ensure accurate resizing:
-            m_bottomRightPanel->GetSizer()->Detach(m_textAutoComments);
-
-            m_bottomRightPanel->GetSizer()->Detach(m_textComment);
-            m_bottomRightPanel->GetSizer()->Add(m_textAutoComments, 1, wxEXPAND);
-            m_bottomRightPanel->GetSizer()->Add(m_textComment, 1, wxEXPAND);
+            m_bottomRightPanel->GetSizer()->Show(m_labelComment,
+                                                 m_displayCommentWin);
             m_bottomRightPanel->GetSizer()->Show(m_textComment,
                                                  m_displayCommentWin);
+
+            m_bottomRightPanel->GetSizer()->Show(m_labelAutoComments,
+                                                 m_displayAutoCommentsWin);
             m_bottomRightPanel->GetSizer()->Show(m_textAutoComments,
                                                  m_displayAutoCommentsWin);
+
             m_bottomRightPanel->GetSizer()->Layout();
             m_bottomRightPanel->Layout();
         }
