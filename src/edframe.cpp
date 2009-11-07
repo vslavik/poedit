@@ -2283,7 +2283,7 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
                  wxString(_("Copy original to translation field"))
                    + _T("\tAlt-C"));
     menu->Append(XRCID("menu_clear"),
-                 wxString(_("Clear translation field"))
+                 wxString(_("Clear translation"))
                    + _T("\tCtrl-K"));
 
 #ifdef USE_TRANSMEM
