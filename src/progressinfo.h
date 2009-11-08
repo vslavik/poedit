@@ -30,9 +30,9 @@
 #ifndef _PROGRESSINFO_H_
 #define _PROGRESSINFO_H_
 
-class WXDLLEXPORT wxString;
-class WXDLLEXPORT wxDialog;
-class WXDLLEXPORT wxWindowDisabler;
+class WXDLLIMPEXP_FWD_BASE wxString;
+class WXDLLIMPEXP_FWD_CORE wxDialog;
+class WXDLLIMPEXP_FWD_CORE wxWindowDisabler;
 
 /// This class displays fancy progress dialog.
 class ProgressInfo

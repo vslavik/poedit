@@ -36,8 +36,8 @@
 
 #include <vector>
 
-class WXDLLEXPORT wxListCtrl;
-class WXDLLEXPORT wxListEvent;
+class WXDLLIMPEXP_FWD_CORE wxListCtrl;
+class WXDLLIMPEXP_FWD_CORE wxListEvent;
 
 #include "catalog.h"
 

@@ -31,7 +31,7 @@
 #define _COMMENTDLG_H_
 
 #include <wx/dialog.h>
-class WXDLLEXPORT wxTextCtrl;
+class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
 
 /** CommentDialog is a very simple dialog that lets the user edit
     catalog comments. Comment consists of one or more lines that

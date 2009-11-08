@@ -31,7 +31,7 @@
 #define _FILEVIEWER_H_
 
 #include <wx/frame.h>
-class WXDLLEXPORT wxListCtrl;
+class WXDLLIMPEXP_FWD_CORE wxListCtrl;
 
 
 /** This class implements frame that shows part of file

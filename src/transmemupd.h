@@ -32,8 +32,8 @@
 
 #ifdef USE_TRANSMEM
 
-class WXDLLEXPORT wxString;
-class WXDLLEXPORT wxArrayString;
+class WXDLLIMPEXP_FWD_BASE wxString;
+class WXDLLIMPEXP_FWD_BASE wxArrayString;
 
 class TranslationMemory;
 class ProgressInfo;

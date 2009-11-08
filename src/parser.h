@@ -34,6 +34,8 @@
 #include <wx/dynarray.h>
 #include <wx/string.h>
 
+class WXDLLIMPEXP_FWD_BASE wxConfigBase;
+
 
 /** This class holds information about an external parser. It does
     \b not do any parsing. The only functionality it provides
@@ -84,8 +86,6 @@ class Parser
 };
 
 WX_DECLARE_OBJARRAY(Parser, ParserArray);
-
-class WXDLLEXPORT wxConfigBase;
 
 /** Database of all available parsers. This class is regular pseudo-template
     dynamic wxArray with additional methods for storing its content to

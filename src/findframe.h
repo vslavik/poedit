@@ -32,8 +32,9 @@
 
 #include <wx/dialog.h>
 
+class WXDLLIMPEXP_FWD_CORE wxButton;
+
 class PoeditListCtrl;
-class WXDLLEXPORT wxButton;
 class Catalog;
 
 /** FindFrame is small dialog frame that contains controls for searching

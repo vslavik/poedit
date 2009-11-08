@@ -36,9 +36,9 @@
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 
-class WXDLLIMPEXP_CORE wxStaticText;
-class WXDLLIMPEXP_CORE wxStaticBitmap;
-class WXDLLIMPEXP_CORE wxSizer;
+class WXDLLIMPEXP_FWD_CORE wxStaticText;
+class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
+class WXDLLIMPEXP_FWD_CORE wxSizer;
 
 /// Message to be displayed in AttentionBar
 class AttentionMessage

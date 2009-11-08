@@ -33,8 +33,9 @@
 #include <wx/frame.h>
 #include <wx/string.h>
 
-class WXDLLEXPORT wxListCtrl;
-class WXDLLEXPORT wxListBox;
+class WXDLLIMPEXP_FWD_CORE wxListCtrl;
+class WXDLLIMPEXP_FWD_CORE wxListBox;
+
 class Catalog;
 
 /** ManagerFrame provides a convenient way to manage PO catalogs.

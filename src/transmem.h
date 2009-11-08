@@ -32,7 +32,7 @@
 
 #ifdef USE_TRANSMEM
 
-class WXDLLEXPORT wxString;
+class WXDLLIMPEXP_FWD_BASE wxString;
 
 class DbTrans;
 class DbOrig;

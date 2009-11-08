@@ -35,9 +35,9 @@
 
 #include "catalog.h"
 
-class WXDLLEXPORT wxEditableListBox;
-class WXDLLEXPORT wxTextCtrl;
-class WXDLLEXPORT wxComboBox;
+class WXDLLIMPEXP_FWD_ADV wxEditableListBox;
+class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
+class WXDLLIMPEXP_FWD_CORE wxComboBox;
 
 /// Dialog setting various catalog parameters.
 class SettingsDialog : public wxDialog

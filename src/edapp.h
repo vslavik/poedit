@@ -35,7 +35,7 @@
 #include <wx/string.h>
 #include <wx/intl.h>
 
-class WXDLLEXPORT wxConfigBase;
+class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 
 
 /// wxApp for use with 

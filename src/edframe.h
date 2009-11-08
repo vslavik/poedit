@@ -48,11 +48,11 @@
 #include <wx/docview.h>
 #include <wx/process.h>
 
-class WXDLLEXPORT wxSplitterWindow;
-class WXDLLEXPORT wxTextCtrl;
-class WXDLLEXPORT wxGauge;
-class WXDLLEXPORT wxNotebook;
-class WXDLLEXPORT wxStaticText;
+class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
+class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
+class WXDLLIMPEXP_FWD_CORE wxGauge;
+class WXDLLIMPEXP_FWD_CORE wxNotebook;
+class WXDLLIMPEXP_FWD_CORE wxStaticText;
 
 #ifdef __WXMSW__
 #include <wx/msw/helpchm.h>

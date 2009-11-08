@@ -30,8 +30,8 @@
 #ifndef _GEXECUTE_H_
 #define _GEXECUTE_H_
 
-class WXDLLEXPORT wxString;
-class WXDLLEXPORT wxEvtHandler;
+class WXDLLIMPEXP_FWD_BASE wxString;
+class WXDLLIMPEXP_FWD_CORE wxEvtHandler;
 
 struct GettextProcessData
 {

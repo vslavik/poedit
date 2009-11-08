@@ -35,7 +35,7 @@
 #include "parser.h"
 #include "chooselang.h"
 
-class WXDLLEXPORT wxConfigBase;
+class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 
 /** Preferences dialog for setting user's identity, parsers and other
     global, catalog-independent settings.

@@ -36,7 +36,7 @@
 #include <vector>
 #include <map>
 
-class WXDLLEXPORT wxTextFile;
+class WXDLLIMPEXP_FWD_BASE wxTextFile;
 
 /// The possible bookmarks for a given item
 typedef enum
