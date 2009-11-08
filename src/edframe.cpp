@@ -2202,10 +2202,21 @@ void PoeditFrame::OnEditComment(wxCommandEvent& event)
 
 void PoeditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
 {
-    wxMessageDialog dlg(this,
-                        _("Do you really want to remove all translations that are no longer used from the catalog?\n\nIf you continue with purging, you will have to translate them again if they are added back in the future."),
-                        _("Purge deleted translations"),
-                        wxYES_NO | wxICON_QUESTION);
+    const wxString title =
+        _("Purge deleted translations");
+    const wxString main =
+        _("Do you want to remove all translations that are no longer used?");
+    const wxString details =
+        _("If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future.");
+
+#if wxCHECK_VERSION(2,9,0)
+    wxMessageDialog dlg(this, main, title, wxYES_NO | wxICON_QUESTION);
+    dlg.SetExtendedMessage(details);
+    dlg.SetYesNoLabels(_("Purge"), _("Keep"));
+#else // wx < 2.9.0
+    const wxString all = main + _T("\n\n") + details;
+    wxMessageDialog dlg(this, all, title, wxYES_NO | wxICON_QUESTION);
+#endif
 
     if (dlg.ShowModal() == wxID_YES)
     {
