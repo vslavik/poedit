@@ -38,6 +38,8 @@
 
 class WXDLLIMPEXP_FWD_BASE wxTextFile;
 
+class ProgressInfo;
+
 /// The possible bookmarks for a given item
 typedef enum
 {
@@ -502,7 +504,7 @@ class Catalog
         /** Updates the catalog from sources.
             \see SourceDigger, Parser, UpdateFromPOT.
          */
-        bool Update(bool summary = true);
+        bool Update(ProgressInfo *progress, bool summary = true);
 
         /** Updates the catalog from POT file.
             \see Update

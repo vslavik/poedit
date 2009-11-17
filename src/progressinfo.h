@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2005 Vaclav Slavik
+ *  Copyright (C) 2000-2009 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -31,6 +31,7 @@
 #define _PROGRESSINFO_H_
 
 class WXDLLIMPEXP_FWD_BASE wxString;
+class WXDLLIMPEXP_FWD_CORE wxWindow;
 class WXDLLIMPEXP_FWD_CORE wxDialog;
 class WXDLLIMPEXP_FWD_CORE wxWindowDisabler;
 
@@ -38,7 +39,7 @@ class WXDLLIMPEXP_FWD_CORE wxWindowDisabler;
 class ProgressInfo
 {
     public:
-            ProgressInfo();
+            ProgressInfo(wxWindow *parent);
             ~ProgressInfo();
  
             /// Sets task's title, i.e. dialog's caption.

@@ -1414,12 +1414,12 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 }
 
 
-bool Catalog::Update(bool summary)
+bool Catalog::Update(ProgressInfo *progress, bool summary)
 {
     if (!m_isOk) return false;
 
-    ProgressInfo pinfo;
-    pinfo.SetTitle(_("Updating catalog..."));
+    if ( progress )
+        progress->SetTitle(_("Updating catalog..."));
 
     wxString cwd = wxGetCwd();
     if (m_fileName != wxEmptyString)
@@ -1444,7 +1444,7 @@ bool Catalog::Update(bool summary)
         wxSetWorkingDirectory(path);
     }
 
-    SourceDigger dig(&pinfo);
+    SourceDigger dig(progress);
 
     wxArrayString keywords;
     if (m_header.Keywords.empty())
@@ -1466,7 +1466,8 @@ bool Catalog::Update(bool summary)
     if (newcat != NULL)
     {
         bool succ = false;
-        pinfo.UpdateMessage(_("Merging differences..."));
+        if ( progress )
+            progress->UpdateMessage(_("Merging differences..."));
 
         if (!summary || ShowMergeSummary(newcat))
             succ = Merge(newcat);

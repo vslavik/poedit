@@ -53,6 +53,8 @@
 #include "edframe.h"
 #include "manager.h"
 #include "prefsdlg.h"
+#include "progressinfo.h"
+
 
 ManagerFrame *ManagerFrame::ms_instance = NULL;
 
@@ -457,6 +459,10 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
 
         for (size_t i = 0; i < m_catalogs.GetCount(); i++)
         {
+            // FIXME: there should be only one progress bar for _all_
+            //        catalogs, it shouldn't restart on next catalog
+            ProgressInfo pinfo(this);
+
             wxString f = m_catalogs[i];
             PoeditFrame *fr = PoeditFrame::Find(f);
             if (fr)
@@ -466,7 +472,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
             else
             {
                 Catalog cat(f);
-                cat.Update();
+                cat.Update(&pinfo);
                 cat.Save(f, false);
             }
          }
