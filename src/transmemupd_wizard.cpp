@@ -192,19 +192,23 @@ void RunTMUpdateWizard(wxWindow *parent,
             wizard.Destroy();
             return;
         }
-        
+
         TranslationMemory *tm = 
             TranslationMemory::Create(langs[i], dbPath);
         if (tm)
         {
-            ProgressInfo *pi = new ProgressInfo(parent);
-            TranslationMemoryUpdater u(tm, pi);
+            ProgressInfo pi(parent);
+            TranslationMemoryUpdater u(tm, &pi);
             wxArrayString files;
             wizard.GetFiles(files);
-            if (!u.Update(files)) 
-                { tm->Release(); break; }
+
+            if (!u.Update(files))
+            {
+                tm->Release();
+                break;
+            }
+
             tm->Release();
-            delete pi;
         }
 
         // Save the directories:
