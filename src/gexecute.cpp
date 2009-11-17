@@ -138,7 +138,11 @@ bool ExecuteGettext(const wxString& cmdline_)
     wxArrayString gstdout;
     wxArrayString gstderr;
 
+#if wxCHECK_VERSION(2,9,0)
+    int retcode = wxExecute(cmdline, gstdout, gstderr, wxEXEC_BLOCK);
+#else
     int retcode = wxExecute(cmdline, gstdout, gstderr);
+#endif
 
     if ( retcode == -1 )
     {
