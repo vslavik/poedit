@@ -5,16 +5,16 @@
                                     Poedit
                                  ------------
                                   
-              a cross-platform Gettext catalogs editing tool
+              a cross-platform gettext catalogs editing tool
 
 
  About
 =======
 
-This program is GUI frontend to GNU Gettext utilities (win32 version
+This program is GUI frontend to GNU gettext utilities (win32 version
 is part of the distribution) and catalogs editor/source code parser. It helps
 with translating application into another language. For details on principles
-of the solution used, see GNU Gettext documentation or wxWidgets' wxLocale 
+of the solution used, see GNU gettext documentation or wxWidgets' wxLocale 
 class reference.
 
 
@@ -49,7 +49,7 @@ MinGW toolchain and MSYS shell installed. You must have the dependencies
 installed in a location configure will find, e.g. by setting CPPFLAGS and
 LDFLAGS appropriately.
 
-Win32 version is distributed as precompiled binary with Gettext utilities
+Win32 version is distributed as precompiled binary with gettext utilities
 included. You don't need wxWidgets for it. If you want to compile Poedit
 yourself, then the best way is to install Mingw and MSYS and use Unix
 way of building the library.
@@ -60,8 +60,8 @@ OS X
 After compiling the application as above, you can additionally create an OS X
 bundle by running "make bundle" in the src/ subdirectory. This requires that
 GETTEXT_PREFIX environment variable is set and points to a directory with
-compiled GNU Gettext programs installed (e.g. msgfmt; GETTEXT_PREFIX=/opt/local
-works if you used MacPorts to install Gettext and so msgfmt is in
+compiled GNU gettext programs installed (e.g. msgfmt; GETTEXT_PREFIX=/opt/local
+works if you used MacPorts to install gettext and so msgfmt is in
 /opt/local/bin/msgfmt). Finally, running "make dist-osx" in the toplevel
 directory will create disk image with the bundle.
 
@@ -79,7 +79,7 @@ makefile.
 
 Once the program is compiled, you may wish to create the installer. Inno Setup
 is used for installation on Windows and it's made to use the VS2005 binaries.
-In order to compile the installer, you must first copy Gettext binaries to
+In order to compile the installer, you must first copy gettext binaries to
 deps/gettext directory - if you don't, the installer will report errors.
 
 Installing from Subversion repository
@@ -103,7 +103,7 @@ and Mark James's Silk icons set [http://www.famfamfam.com/lab/icons/silk].
 See the COPYING file for details on program's licensing and the
 src/icons/README file for details on the icons.
 
-Win32 and Mac OS X versions contain GNU Gettext binaries. They are distributed
+Win32 and Mac OS X versions contain GNU gettext binaries. They are distributed
 under the GNU General Public License and their source code is available from
 http://www.gnu.org/software/gettext or, if you have difficulties getting them
 from there, email me for a copy of the sources.
@@ -125,7 +125,7 @@ http://www.poedit.net
 http://www.wxwidgets.org
         - wxWidgets toolkit homepage
 http://www.gnu.org
-        - GNU project homepage, contains Gettext and documentation
+        - GNU project homepage, contains gettext and documentation
 http://www.innosetup.org
 http://isx.wintax.nl
         - Inno Setup and Inno Setup Extensions, installation
