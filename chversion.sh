@@ -22,7 +22,7 @@ replace_ver win32/poedit.iss \
             '\(#define VERSION_FULL *"\).*\("\)' "\1$VER_FULL\2"
 replace_ver win32/poedit.iss \
             '\(#define VERSION *"\).*\("\)' "\1$VER_SHORT\2"
-replace_ver configure.in \
+replace_ver configure.ac \
             '\(AC_INIT(\[poedit\], \[\)[^]]*\(\],.*\)' "\1$VER_FULL\2"
 replace_ver make-distrib.sh \
             '\(VERSION=\).*' "\1$VER_FULL"
