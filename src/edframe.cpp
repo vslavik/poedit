@@ -1953,7 +1953,7 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
         if ( !plCalc )
         {
             err = wxString::Format(
-                        _("Syntax error in Plural-Forms header (\"\%s\")."),
+                        _("Syntax error in Plural-Forms header (\"%s\")."),
                         plForms.c_str());
         }
         delete plCalc;
