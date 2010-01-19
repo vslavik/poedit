@@ -56,6 +56,7 @@
 #include "parser.h"
 #include "chooselang.h"
 #include "icons.h"
+#include "version.h"
 
 
 IMPLEMENT_APP(PoeditApp);
@@ -81,8 +82,7 @@ wxString PoeditApp::GetAppPath() const
 
 wxString PoeditApp::GetAppVersion() const
 {
-    wxString version(_T("1.4.3"));
-    return version;
+    return wxString::FromAscii(POEDIT_VERSION);
 }
 
 

@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2005 Vaclav Slavik
+ *  Copyright (C) 2000-2010 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -30,4 +30,41 @@
 appicon ICON   "icons/appicon/poedit.ico"
 
 #include "wx/msw/wx.rc"
+#include "version.h"
 
+#ifndef NDEBUG
+#define VER_DEBUG    VS_FF_DEBUG
+#else
+#define VER_DEBUG    0
+#endif
+
+1 VERSIONINFO
+ FILEVERSION     POEDIT_VERSION_WIN
+ PRODUCTVERSION  POEDIT_VERSION_WIN
+ FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+ FILEFLAGS       VER_DEBUG
+ FILEOS          VOS_NT_WINDOWS32
+ FILETYPE        VFT_APP
+ FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0" // US English, Unicode
+        BEGIN
+            VALUE "Comments", "http://wwww.poedit.net"
+            VALUE "CompanyName", "Vaclav Slavik\0"
+            VALUE "FileDescription", "Translations editor\0"
+            VALUE "FileVersion", POEDIT_VERSION "\0"
+            VALUE "InternalName", "Poedit\0"
+            VALUE "OriginalFilename", "Poedit.exe\0"
+            VALUE "LegalCopyright", "Copyright (C) 1999-2010 Vaclav Slavik\0"
+            VALUE "ProductName", "Poedit\0"
+            VALUE "ProductVersion", POEDIT_VERSION "\0"
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END
