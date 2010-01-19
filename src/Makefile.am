@@ -33,7 +33,8 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  pluralforms/pl_evaluate.cpp \
                  wxeditablelistbox.h editlbox/editlbox.cpp \
                  edlistctrl.cpp edlistctrl.h digits.h \
-				 $(OSX_SOURCES) \
+                 version.h \
+                 $(OSX_SOURCES) \
                  compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS)
