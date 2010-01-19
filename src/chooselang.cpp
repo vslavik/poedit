@@ -68,7 +68,7 @@ wxLanguage GetUILanguage()
         if (info != NULL)
             lang = (wxLanguage)info->Language;
         else
-            wxLogError(_("Uknown locale code '%s' in registry."), lng.c_str());
+            wxLogError(_("Unknown locale code '%s' in registry."), lng.c_str());
     }
     return lang;
 #endif // NEED_CHOOSELANG_UI
