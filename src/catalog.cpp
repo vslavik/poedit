@@ -192,6 +192,10 @@ static wxString UnescapeCEscapes(const wxString& str)
                     out << _T('\\');
                     i++;
                     break;
+                case _T('"'):
+                    out << _T('"');
+                    i++;
+                    break;
                 default:
                     out << _T('\\');
             }
@@ -255,6 +259,7 @@ wxString Catalog::HeaderData::ToString(const wxString& line_delim)
     {
         wxString v(i->Value);
         v.Replace(_T("\\"), _T("\\\\"));
+        v.Replace(_T("\""), _T("\\\""));
         hdr << i->Key << _T(": ") << v << _T("\\n") << line_delim;
     }
     return hdr;
