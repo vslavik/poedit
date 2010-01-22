@@ -1233,13 +1233,19 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
         if (!pot_file.empty())
         {
             wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(pot_file));
-            ok = catalog->UpdateFromPOT(pot_file, false/*summary*/);
+            ok = catalog->UpdateFromPOT(pot_file,
+                                        /*summary=*/false,
+                                        /*replace_header=*/true);
         }
         if (!ok)
         {
             delete catalog;
             return;
         }
+    }
+    else
+    {
+        catalog->CreateNewHeader();
     }
 
     dlg.TransferTo(catalog);

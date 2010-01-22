@@ -987,6 +987,27 @@ void Catalog::CreateNewHeader()
     dt.UpdateDict();
 }
 
+void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
+{
+    HeaderData &dt = Header();
+    dt = pot_header;
+
+    // UTF-8 should be used by default no matter what the POT uses
+    dt.Charset = _T("UTF-8");
+
+    // clear the fields that are translation-specific:
+    dt.Language.clear();
+    dt.Country.clear();
+    dt.Team.clear();
+    dt.TeamEmail.clear();
+
+    // translator should be pre-filled
+    dt.Translator = wxConfig::Get()->Read(_T("translator_name"), wxEmptyString);
+    dt.TranslatorEmail = wxConfig::Get()->Read(_T("translator_email"), wxEmptyString);
+
+    dt.UpdateDict();
+}
+
 
 bool Catalog::Load(const wxString& po_file)
 {
@@ -1473,7 +1494,8 @@ bool Catalog::Update(bool summary)
 }
 
 
-bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary)
+bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary,
+                            bool replace_header)
 {
     if (!m_isOk) return false;
 
@@ -1486,9 +1508,16 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary)
     }
 
     if (!summary || ShowMergeSummary(&newcat))
-        return Merge(&newcat);
+    {
+        if ( !Merge(&newcat) )
+            return false;
+        CreateNewHeader(newcat.Header());
+        return true;
+    }
     else
+    {
         return false;
+    }
 }
 
 
