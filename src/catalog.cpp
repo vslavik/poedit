@@ -743,6 +743,10 @@ bool CatalogParser::Parse()
                 // if line does not start with "#~ " anymore, stop reading
                 if (!ReadParam(line, _T("#~ "), dummy))
                     break;
+                // if the line starts with "#~ msgid", we skipped an empty line
+                // and it's a new entry, so stop reading too (see bug #329)
+                if (ReadParam(line, _T("#~ msgid"), dummy))
+                    break;
 
                 deletedLines.Add(line);
             }
@@ -1389,6 +1393,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     // Write back deleted items in the file so that they're not lost
     for (unsigned i = 0; i < m_deletedItems.size(); i++)
     {
+        if ( i != 0 )
+            f.AddLine(wxEmptyString);
+
         CatalogDeletedData& deletedItem = m_deletedItems[i];
         SaveMultiLines(f, deletedItem.GetComment());
         for (unsigned i = 0; i < deletedItem.GetAutoComments().GetCount(); i++)
@@ -1402,8 +1409,6 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 
         for (size_t j = 0; j < deletedItem.GetDeletedLines().GetCount(); j++)
             f.AddLine(deletedItem.GetDeletedLines()[j]);
-
-        f.AddLine(wxEmptyString);
     }
 
 
