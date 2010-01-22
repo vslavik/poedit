@@ -972,7 +972,7 @@ void Catalog::CreateNewHeader()
     dt.Project = wxEmptyString;
     dt.Team = wxEmptyString;
     dt.TeamEmail = wxEmptyString;
-    dt.Charset = _T("utf-8");
+    dt.Charset = _T("UTF-8");
     dt.Translator = wxConfig::Get()->Read(_T("translator_name"), wxEmptyString);
     dt.TranslatorEmail = wxConfig::Get()->Read(_T("translator_email"), wxEmptyString);
     dt.SourceCodeCharset = wxEmptyString;
@@ -1165,7 +1165,7 @@ static bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
 
 static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
 {
-    if (charset == _T("utf-8") || charset == _T("UTF-8"))
+    if (charset.Lower() == _T("utf-8") || charset.Lower() == _T("utf8"))
         return true;
 
     wxCSConv conv(charset);
@@ -1291,7 +1291,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 
     wxString charset(m_header.Charset);
     if (!charset || charset == _T("CHARSET"))
-        charset = _T("utf-8");
+        charset = _T("UTF-8");
 
     if (!CanEncodeToCharset(*this, charset))
     {
@@ -1299,7 +1299,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         msg.Printf(_("The catalog couldn't be saved in '%s' charset as\nspecified in catalog settings. It was saved in UTF-8 instead\nand the setting was modified accordingly."), charset.c_str());
         wxMessageBox(msg, _("Error saving catalog"),
                      wxOK | wxICON_EXCLAMATION);
-        charset = _T("utf-8");
+        charset = _T("UTF-8");
     }
     m_header.Charset = charset;
 
