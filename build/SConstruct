@@ -38,6 +38,9 @@ SPARKLE_VERSION = '1.1'
 SPARKLE_URL = 'http://www.andymatuschak.org/files/Sparkle-%s.zip' % SPARKLE_VERSION
 SPARKLE_PATCHES = ['sparkle-1.1-carbon.patch']
 
+WINSPARKLE_VERSION = '0.1'
+WINSPARKLE_URL = 'http://d10xg45o6p6dbl.cloudfront.net/projects/w/winsparkle/WinSparkle-%s.zip' % WINSPARKLE_VERSION
+
 INNOSETUP_VERSION = '5.2.2'
 INNOSETUP_URL = 'http://files.jrsoftware.org/ispack/ispack-%s.exe' % INNOSETUP_VERSION
 INNOUNP_URL = 'http://innounp.sf.net/test020.rar'
@@ -389,6 +392,24 @@ wx_win32 = env.BuildComponent(
 
 
 # -----------------------------------------------------------------
+# WinSparkle
+# -----------------------------------------------------------------
+
+src_winsparkle = env.ComponentSources(
+        name='winsparkle',
+        source=WINSPARKLE_URL)
+
+winsparkle = env.BuildComponent(
+        name='winsparkle',
+        agent=['win32'],
+        sources=src_winsparkle,
+        deps=None,
+        commands=[],
+        environment=VS2005_ENVIRONMENT,
+        outputs=['*'])
+
+
+# -----------------------------------------------------------------
 # innosetup
 # -----------------------------------------------------------------
 
@@ -490,13 +511,14 @@ poedit_win32 = env.BuildComponent(
               (gettext_win32, 'deps/gettext'),
               (db_win32, 'deps/db'),
               (innosetup, 'deps/inno'),
+              (winsparkle, 'deps/winsparkle'),
               ],
         toolchain=env.VisualStudioToolchain,
         commands=[
             'cd win32',
             'set WXWIN=..\\deps\\wx',
             'set WXRC="%WXWIN%\\wxrc.exe"',
-            'nmake -f makefile.vc WX_DEBUG=0 WXRC=%WXRC% DB_PATH=..\\deps\\db',
+            'nmake -f makefile.vc WX_DEBUG=0 WXRC=%WXRC% DB_PATH=..\\deps\\db WINSPARKLE_PATH=..\\deps\\winsparkle',
             '..\\deps\\inno\\iscc poedit.iss',
             ],
         environment=VS2005_ENVIRONMENT,
