@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2008 Vaclav Slavik
+ *  Copyright (C) 1999-2010 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -44,6 +44,10 @@
 #ifdef USE_SPARKLE
 #include <Sparkle/SUCarbonAPI.h>
 #endif // USE_SPARKLE
+
+#ifdef __WXMSW__
+#include <winsparkle.h>
+#endif
 
 #if !wxUSE_UNICODE
     #error "Unicode build of wxWidgets is required by Poedit"
@@ -199,7 +203,21 @@ bool PoeditApp::OnInit()
     SUSparkleInitializeForCarbon();
 #endif // USE_SPARKLE
 
+#ifdef __WXMSW__
+    win_sparkle_set_appcast_url("http://releases.poedit.net/appcast_win.xml");
+    win_sparkle_init();
+#endif
+
     return true;
+}
+
+int PoeditApp::OnExit()
+{
+#ifdef __WXMSW__
+    win_sparkle_cleanup();
+#endif
+
+    return wxApp::OnExit();
 }
 
 

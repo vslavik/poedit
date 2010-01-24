@@ -26,6 +26,11 @@
         <description>Version of Berkeley DB used</description>
     </option>
 
+    <option name="WINSPARKLE_PATH" category="path">
+        <default-value>.</default-value>
+        <description>Path to WinSparkle files</description>
+    </option>
+
     <set var="DB_INCLUDE_PATH">$(DB_PATH)/build_windows</set>
     <set var="DB_LIB_PATH">$(DB_PATH)/build_windows/$(BUILDDIR_PART)</set>
     <set var="DB_LIB">libdb$(DB_VERSION)s</set>
@@ -48,6 +53,9 @@
         <lib-path>$(DB_LIB_PATH)</lib-path>
         <sys-lib>$(DB_LIB)</sys-lib>
         <sys-lib>ws2_32</sys-lib>
+        <include>$(WINSPARKLE_PATH)</include>
+        <lib-path>$(WINSPARKLE_PATH)</lib-path>
+        <sys-lib>WinSparkle</sys-lib>
 
         <sources>
             src/catalog.cpp
