@@ -476,6 +476,10 @@ class Catalog
          */
         void CreateNewHeader();
 
+        /** Creates new header initialized based on a POT file's header.
+         */
+        void CreateNewHeader(const HeaderData& pot_header);
+
         /// Clears the catalog, removes all entries from it.
         void Clear();
 
@@ -509,7 +513,9 @@ class Catalog
         /** Updates the catalog from POT file.
             \see Update
          */
-        bool UpdateFromPOT(const wxString& pot_file, bool summary = true);
+        bool UpdateFromPOT(const wxString& pot_file,
+                           bool summary = true,
+                           bool replace_header = false);
 
         /// Returns the number of strings/translations in the catalog.
         size_t GetCount() const { return m_items.size(); }

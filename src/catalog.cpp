@@ -193,6 +193,10 @@ static wxString UnescapeCEscapes(const wxString& str)
                     out << _T('\\');
                     i++;
                     break;
+                case _T('"'):
+                    out << _T('"');
+                    i++;
+                    break;
                 default:
                     out << _T('\\');
             }
@@ -256,6 +260,7 @@ wxString Catalog::HeaderData::ToString(const wxString& line_delim)
     {
         wxString v(i->Value);
         v.Replace(_T("\\"), _T("\\\\"));
+        v.Replace(_T("\""), _T("\\\""));
         hdr << i->Key << _T(": ") << v << _T("\\n") << line_delim;
     }
     return hdr;
@@ -739,6 +744,10 @@ bool CatalogParser::Parse()
                 // if line does not start with "#~ " anymore, stop reading
                 if (!ReadParam(line, _T("#~ "), dummy))
                     break;
+                // if the line starts with "#~ msgid", we skipped an empty line
+                // and it's a new entry, so stop reading too (see bug #329)
+                if (ReadParam(line, _T("#~ msgid"), dummy))
+                    break;
 
                 deletedLines.Add(line);
             }
@@ -968,7 +977,7 @@ void Catalog::CreateNewHeader()
     dt.Project = wxEmptyString;
     dt.Team = wxEmptyString;
     dt.TeamEmail = wxEmptyString;
-    dt.Charset = _T("utf-8");
+    dt.Charset = _T("UTF-8");
     dt.Translator = wxConfig::Get()->Read(_T("translator_name"), wxEmptyString);
     dt.TranslatorEmail = wxConfig::Get()->Read(_T("translator_email"), wxEmptyString);
     dt.SourceCodeCharset = wxEmptyString;
@@ -979,6 +988,27 @@ void Catalog::CreateNewHeader()
     dt.Keywords.Add(_T("gettext_noop"));
 
     dt.BasePath = _T(".");
+
+    dt.UpdateDict();
+}
+
+void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
+{
+    HeaderData &dt = Header();
+    dt = pot_header;
+
+    // UTF-8 should be used by default no matter what the POT uses
+    dt.Charset = _T("UTF-8");
+
+    // clear the fields that are translation-specific:
+    dt.Language.clear();
+    dt.Country.clear();
+    dt.Team.clear();
+    dt.TeamEmail.clear();
+
+    // translator should be pre-filled
+    dt.Translator = wxConfig::Get()->Read(_T("translator_name"), wxEmptyString);
+    dt.TranslatorEmail = wxConfig::Get()->Read(_T("translator_email"), wxEmptyString);
 
     dt.UpdateDict();
 }
@@ -1161,7 +1191,7 @@ static bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
 
 static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
 {
-    if (charset == _T("utf-8") || charset == _T("UTF-8"))
+    if (charset.Lower() == _T("utf-8") || charset.Lower() == _T("utf8"))
         return true;
 
     wxCSConv conv(charset);
@@ -1287,7 +1317,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 
     wxString charset(m_header.Charset);
     if (!charset || charset == _T("CHARSET"))
-        charset = _T("utf-8");
+        charset = _T("UTF-8");
 
     if (!CanEncodeToCharset(*this, charset))
     {
@@ -1295,7 +1325,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         msg.Printf(_("The catalog couldn't be saved in '%s' charset as\nspecified in catalog settings. It was saved in UTF-8 instead\nand the setting was modified accordingly."), charset.c_str());
         wxMessageBox(msg, _("Error saving catalog"),
                      wxOK | wxICON_EXCLAMATION);
-        charset = _T("utf-8");
+        charset = _T("UTF-8");
     }
     m_header.Charset = charset;
 
@@ -1364,6 +1394,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     // Write back deleted items in the file so that they're not lost
     for (unsigned i = 0; i < m_deletedItems.size(); i++)
     {
+        if ( i != 0 )
+            f.AddLine(wxEmptyString);
+
         CatalogDeletedData& deletedItem = m_deletedItems[i];
         SaveMultiLines(f, deletedItem.GetComment());
         for (unsigned i = 0; i < deletedItem.GetAutoComments().GetCount(); i++)
@@ -1377,8 +1410,6 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 
         for (size_t j = 0; j < deletedItem.GetDeletedLines().GetCount(); j++)
             f.AddLine(deletedItem.GetDeletedLines()[j]);
-
-        f.AddLine(wxEmptyString);
     }
 
 
@@ -1487,7 +1518,8 @@ bool Catalog::Update(ProgressInfo *progress, bool summary)
 }
 
 
-bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary)
+bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary,
+                            bool replace_header)
 {
     if (!m_isOk) return false;
 
@@ -1500,9 +1532,16 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary)
     }
 
     if (!summary || ShowMergeSummary(&newcat))
-        return Merge(&newcat);
+    {
+        if ( !Merge(&newcat) )
+            return false;
+        CreateNewHeader(newcat.Header());
+        return true;
+    }
     else
+    {
         return false;
+    }
 }
 
 

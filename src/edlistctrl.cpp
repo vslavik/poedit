@@ -225,6 +225,19 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     wxVisualAttributes visual = GetDefaultAttributes();
     wxColour shaded = visual.colBg;
 
+#ifdef __WXMSW__
+    // On Windows 7, shaded list items make it impossible to see the selection,
+    // so use different color for it (see bug #336).
+    int verMaj, verMin;
+    wxGetOsVersion(&verMaj, &verMin);
+    if ( verMaj > 6 || (verMaj == 6 && verMin >= 1) )
+    {
+        shaded.Set(int(0.99 * shaded.Red()),
+                   int(0.99 * shaded.Green()),
+                   shaded.Blue());
+    }
+    else
+#endif // __WXMSW__
 #ifdef __WXMAC__
     if ( shaded == *wxWHITE )
     {
