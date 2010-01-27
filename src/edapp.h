@@ -45,7 +45,8 @@ class PoeditApp : public wxApp
         /** wxWin initalization hook. Shows PoeditFrame and initializes
             configuration entries to default values if they were missing.
          */
-        bool OnInit();
+        virtual bool OnInit();
+        virtual int OnExit();
 
         /** Gets application's path. This path is used when looking for 
             resources.zip and help files, both of them can be found

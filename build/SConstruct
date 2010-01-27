@@ -34,9 +34,11 @@ WX_PATCHES = ['wx-2.8.7-mac-listctrl-refreshitem.patch',
 WX_CONFIGURE = '--disable-shared --enable-unicode --disable-tga'
 WX_WINFLAGS = 'SHARED=0 BUILD=release DEBUG_INFO=1 UNICODE=1 USE_MEDIA=0 USE_AUI=0 USE_RICHTEXT=0 USE_STC=0 USE_QA=1'
 
-SPARKLE_VERSION = '1.1'
-SPARKLE_URL = 'http://www.andymatuschak.org/files/Sparkle-%s.zip' % SPARKLE_VERSION
-SPARKLE_PATCHES = ['sparkle-1.1-carbon.patch']
+SPARKLE_VERSION = '1.5b6'
+SPARKLE_URL = 'http://sparkle.downtowncode.com/sources/CarbonSparkle_%s.zip' % SPARKLE_VERSION
+
+WINSPARKLE_VERSION = '0.1'
+WINSPARKLE_URL = 'http://d10xg45o6p6dbl.cloudfront.net/projects/w/winsparkle/WinSparkle-%s.zip' % WINSPARKLE_VERSION
 
 INNOSETUP_VERSION = '5.2.2'
 INNOSETUP_URL = 'http://files.jrsoftware.org/ispack/ispack-%s.exe' % INNOSETUP_VERSION
@@ -320,7 +322,10 @@ gettext_win32 = env.BuildComponent(
 src_sparkle = env.ComponentSources(
         name='sparkle',
         source=SPARKLE_URL,
-        patches=SPARKLE_PATCHES)
+        post_commands=[
+            'rm -rf __MACOSX',
+            'mv Sparkle*/* .',
+        ])
 
 
 sparkle = env.BuildComponent(
@@ -329,11 +334,11 @@ sparkle = env.BuildComponent(
         sources=src_sparkle,
         deps=None,
         commands=[
-            'cd Extras/Source',
-            'xcodebuild -project Sparkle.xcodeproj -target Sparkle -configuration Release',
+            'cd "Extras/Source Code Carbon"',
+            'xcodebuild -project Sparkle.xcodeproj -target Sparkle -configuration Release GCC_TREAT_WARNINGS_AS_ERRORS=NO',
             ],
         environment=OSX_ENVIRONMENT_COMMON,
-        outputs=['Extras/Source/build/Release/*'])
+        outputs=['Extras/Source*Carbon/build/Release/*'])
 
 # -----------------------------------------------------------------
 # wxWidgets
@@ -386,6 +391,24 @@ wx_win32 = env.BuildComponent(
             'nmake -f makefile.vc %s' % WX_WINFLAGS],
         environment=VS2005_ENVIRONMENT,
         outputs=['include', 'lib', 'locale', 'utils/wxrc/vc_*/wxrc.exe*'])
+
+
+# -----------------------------------------------------------------
+# WinSparkle
+# -----------------------------------------------------------------
+
+src_winsparkle = env.ComponentSources(
+        name='winsparkle',
+        source=WINSPARKLE_URL)
+
+winsparkle = env.BuildComponent(
+        name='winsparkle',
+        agent=['win32'],
+        sources=src_winsparkle,
+        deps=None,
+        commands=[],
+        environment=VS2005_ENVIRONMENT,
+        outputs=['*'])
 
 
 # -----------------------------------------------------------------
@@ -490,13 +513,14 @@ poedit_win32 = env.BuildComponent(
               (gettext_win32, 'deps/gettext'),
               (db_win32, 'deps/db'),
               (innosetup, 'deps/inno'),
+              (winsparkle, 'deps/winsparkle'),
               ],
         toolchain=env.VisualStudioToolchain,
         commands=[
             'cd win32',
             'set WXWIN=..\\deps\\wx',
             'set WXRC="%WXWIN%\\wxrc.exe"',
-            'nmake -f makefile.vc WX_DEBUG=0 WXRC=%WXRC% DB_PATH=..\\deps\\db',
+            'nmake -f makefile.vc WX_DEBUG=0 WXRC=%WXRC% DB_PATH=..\\deps\\db WINSPARKLE_PATH=..\\deps\\winsparkle',
             '..\\deps\\inno\\iscc poedit.iss',
             ],
         environment=VS2005_ENVIRONMENT,
