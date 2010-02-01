@@ -43,6 +43,7 @@
 
 #ifdef USE_SPARKLE
 #include <Sparkle/SUCarbonAPI.h>
+#include "osx/userdefaults.h"
 #endif // USE_SPARKLE
 
 #ifdef __WXMSW__
@@ -199,6 +200,9 @@ bool PoeditApp::OnInit()
 #endif // !__WXMAC__
 
 #ifdef USE_SPARKLE
+    // Remove config key for Sparkle < 1.5.
+    UserDefaults::RemoveValue("SUCheckAtStartup");
+
     SUSparkleInitializeForCarbon();
 #endif // USE_SPARKLE
 

@@ -178,7 +178,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
 
 #ifdef USE_SPARKLE
     XRCCTRL(*this, "auto_updates", wxCheckBox)->SetValue(
-                UserDefaults::GetBoolValue("SUCheckAtStartup"));
+                UserDefaults::GetBoolValue("SUEnableAutomaticChecks"));
 #endif // USE_SPARKLE
 }
  
@@ -247,7 +247,7 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
 #endif
 
 #ifdef USE_SPARKLE
-    UserDefaults::SetBoolValue("SUCheckAtStartup",
+    UserDefaults::SetBoolValue("SUEnableAutomaticChecks",
                 XRCCTRL(*this, "auto_updates", wxCheckBox)->GetValue());
 #endif // USE_SPARKLE
 }

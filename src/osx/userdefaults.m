@@ -34,6 +34,20 @@
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSUserDefaults.h>
 
+int UserDefaults_GetBoolValue(const char *key)
+{
+    NSApplicationLoad();
+
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSString *nskey = [NSString stringWithUTF8String: key];
+
+    int rv = [[NSUserDefaults standardUserDefaults] boolForKey:nskey];
+
+    [pool release];
+
+    return rv;
+}
+
 void UserDefaults_SetBoolValue(const char *key, int value)
 {
     NSApplicationLoad();
@@ -47,16 +61,15 @@ void UserDefaults_SetBoolValue(const char *key, int value)
     [pool release];
 }
 
-int UserDefaults_GetBoolValue(const char *key)
+void UserDefaults_RemoveValue(const char *key)
 {
     NSApplicationLoad();
 
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     NSString *nskey = [NSString stringWithUTF8String: key];
 
-    int rv = [[NSUserDefaults standardUserDefaults] boolForKey:nskey];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:nskey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
     [pool release];
-
-    return rv;
 }

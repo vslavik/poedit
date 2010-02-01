@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Poedit 1.4\n"
 "Report-Msgid-Bugs-To: poedit-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-27 23:19+0100\n"
-"PO-Revision-Date: 2007-08-01 12:23+0200\n"
-"Last-Translator: Shalom Craimer <scraimer.AT.GEEmail.DOT.com>\n"
+"PO-Revision-Date: 2010-01-30 10:37+0200\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid " (modified)"
 msgstr "(שונה)"
 
-#: ../src/export_html.cpp:137 ../src/edframe.cpp:1833
-#, fuzzy, c-format
-msgid ""
-"%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i מחרוזות (%i מעורפלות, %i לא תקניות, %i לא מתורגמות)"
+#: ../src/export_html.cpp:137
+#: ../src/edframe.cpp:1833
+#, c-format
+msgid "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
+msgstr "%i %% מתורגמות, %i מחרוזות (%i מעורפלות, %i לא תקניות, %i לא מתורגמות)"
 
 #: ../src/catalog.cpp:118
 #, c-format
@@ -40,13 +40,14 @@ msgstr "&אודות"
 
 #: ../src/resources/menus.xrc:88
 msgid "&Automatically translate using TM"
-msgstr "תרגם אוטומטית עם T&M"
+msgstr "תרגום אוטומטית עם T&M"
 
 #: ../src/edframe.cpp:2636
 msgid "&Bookmarks"
 msgstr "&סימניות"
 
-#: ../src/resources/manager.xrc:131 ../src/resources/menus.xrc:39
+#: ../src/resources/manager.xrc:131
+#: ../src/resources/menus.xrc:39
 msgid "&Close"
 msgstr "&סגור"
 
@@ -58,7 +59,8 @@ msgstr "&נושאי עזרה..."
 msgid "&Edit"
 msgstr "&עריכה"
 
-#: ../src/edframe.cpp:418 ../src/resources/manager.xrc:124
+#: ../src/edframe.cpp:418
+#: ../src/resources/manager.xrc:124
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&קובץ"
@@ -67,7 +69,8 @@ msgstr "&קובץ"
 msgid "&Find..."
 msgstr "&חיפוש..."
 
-#: ../src/resources/menus.xrc:101 ../src/resources/menus.xrc:105
+#: ../src/resources/menus.xrc:101
+#: ../src/resources/menus.xrc:105
 msgid "&Fullscreen view"
 msgstr "מ&סך מלא"
 
@@ -84,11 +87,11 @@ msgid "&Open..."
 msgstr "&פתיחה..."
 
 #: ../src/resources/menus.xrc:74
-#, fuzzy
 msgid "&Preferences"
-msgstr "העדפות"
+msgstr "ה&עדפות"
 
-#: ../src/resources/manager.xrc:127 ../src/resources/menus.xrc:35
+#: ../src/resources/manager.xrc:127
+#: ../src/resources/menus.xrc:35
 msgid "&Preferences..."
 msgstr "&העדפות"
 
@@ -162,7 +165,8 @@ msgstr "הוסף"
 msgid "Add directory to the list"
 msgstr "הוסף תיקיה לרשימה"
 
-#: ../src/transmemupd_wizard.cpp:138 ../src/resources/tm_update.xrc:85
+#: ../src/transmemupd_wizard.cpp:138
+#: ../src/resources/tm_update.xrc:85
 msgid "Add files"
 msgstr "הוסף קבצים"
 
@@ -190,14 +194,14 @@ msgstr "בדיקת איות אוטומטית"
 msgid "Automatic translation"
 msgstr "תרגום אוטומטי"
 
-#: ../src/edframe.cpp:2105 ../src/edframe.cpp:2109
+#: ../src/edframe.cpp:2105
+#: ../src/edframe.cpp:2109
 msgid "Automatic translations:"
 msgstr "תרגומים אוטומטיים:"
 
 #: ../src/resources/prefs.xrc:69
-#, fuzzy
 msgid "Automatically check for new version of Poedit"
-msgstr "הדר לקובץ .mo אוטומטית בשמירה"
+msgstr "יש לבדוק אחר גרסאות חדשות של Poedit אוטומטית"
 
 #: ../src/resources/prefs.xrc:87
 msgid "Automatically compile .mo file on save"
@@ -233,12 +237,13 @@ msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "קובץ קטלוג לא תקני: צורת רבים של msgstr נמצאת בשימוש בלי mdgid_plural"
 
 #: ../src/catalog.cpp:620
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr "קובץ קטלוג פגום: msgstr לשון-יחיד בשימוש עם msgid_plural"
 
-#: ../src/resources/manager.xrc:89 ../src/resources/prefs.xrc:320
-#: ../src/resources/prefs.xrc:654 ../src/resources/tm_update.xrc:37
+#: ../src/resources/manager.xrc:89
+#: ../src/resources/prefs.xrc:320
+#: ../src/resources/prefs.xrc:654
+#: ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "עיין"
 
@@ -250,10 +255,14 @@ msgstr "&קטלוג"
 msgid "CR/LF conversion"
 msgstr "המרת תווי CR/LF"
 
-#: ../src/resources/comment.xrc:38 ../src/resources/find.xrc:87
-#: ../src/resources/manager.xrc:112 ../src/resources/prefs.xrc:490
-#: ../src/resources/prefs.xrc:632 ../src/resources/prefs.xrc:677
-#: ../src/resources/progress.xrc:31 ../src/resources/settings.xrc:194
+#: ../src/resources/comment.xrc:38
+#: ../src/resources/find.xrc:87
+#: ../src/resources/manager.xrc:112
+#: ../src/resources/prefs.xrc:490
+#: ../src/resources/prefs.xrc:632
+#: ../src/resources/prefs.xrc:677
+#: ../src/resources/progress.xrc:31
+#: ../src/resources/settings.xrc:194
 msgid "Cancel"
 msgstr "בטל"
 
@@ -261,7 +270,8 @@ msgstr "בטל"
 msgid "Cannot create database directory!"
 msgstr "לא יכול ליצור תיקית מסד נתונים!"
 
-#: ../src/gexecute.cpp:172 ../src/gexecute.cpp:228
+#: ../src/gexecute.cpp:172
+#: ../src/gexecute.cpp:228
 msgid "Cannot execute program: "
 msgstr "אין אפשרות להריץ את התוכנית:"
 
@@ -277,8 +287,11 @@ msgstr "מבדיל בין אותיות גדולות לקטנות"
 msgid "Catalog"
 msgstr "קטלוג"
 
-#: ../src/edframe.cpp:840 ../src/edframe.cpp:865 ../src/edframe.cpp:906
-#: ../src/edframe.cpp:958 ../src/edframe.cpp:1076
+#: ../src/edframe.cpp:840
+#: ../src/edframe.cpp:865
+#: ../src/edframe.cpp:906
+#: ../src/edframe.cpp:958
+#: ../src/edframe.cpp:1076
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "הקטלוג שונה. האם ברצונך לשמור את השינויים?"
 
@@ -290,11 +303,13 @@ msgstr "מ&נהל קטלוגים"
 msgid "Change UI language"
 msgstr "שנה של שפת המנשק"
 
-#: ../src/export_html.cpp:122 ../src/resources/settings.xrc:86
+#: ../src/export_html.cpp:122
+#: ../src/resources/settings.xrc:86
 msgid "Charset:"
 msgstr "קידוד:"
 
-#: ../src/resources/prefs.xrc:253 ../src/resources/prefs.xrc:279
+#: ../src/resources/prefs.xrc:253
+#: ../src/resources/prefs.xrc:279
 msgid "Choose"
 msgstr "בחר"
 
@@ -307,9 +322,8 @@ msgid "Clear the comment"
 msgstr "נקה את ההערה"
 
 #: ../src/resources/toolbar.xrc:34
-#, fuzzy
 msgid "Comment"
-msgstr "הערה:"
+msgstr "הערה"
 
 #: ../src/resources/prefs.xrc:119
 msgid "Comment window is editable"
@@ -323,11 +337,13 @@ msgstr "הערה:"
 msgid "Configuration"
 msgstr "הגדרות"
 
-#: ../src/manager.cpp:426 ../src/manager.cpp:446
+#: ../src/manager.cpp:426
+#: ../src/manager.cpp:446
 msgid "Confirmation"
 msgstr "אימות"
 
-#: ../src/edframe.cpp:2085 ../src/resources/menus.xrc:47
+#: ../src/edframe.cpp:2085
+#: ../src/resources/menus.xrc:47
 msgid "Copy original to translation field"
 msgstr "העתק מקור לשדה התרגום"
 
@@ -336,7 +352,8 @@ msgstr "העתק מקור לשדה התרגום"
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "לא ניתן לטעון קובץ %s, כנראה פגום."
 
-#: ../src/export_html.cpp:112 ../src/resources/settings.xrc:74
+#: ../src/export_html.cpp:112
+#: ../src/resources/settings.xrc:74
 msgid "Country:"
 msgstr "מדינה:"
 
@@ -353,7 +370,8 @@ msgstr "מסד נתונים"
 msgid "Database error: %s"
 msgstr "שגיאה במסד נתונים: %s"
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:456
+#: ../src/resources/manager.xrc:53
+#: ../src/resources/prefs.xrc:456
 msgid "Delete"
 msgstr "מחק"
 
@@ -385,10 +403,8 @@ msgstr "האם אתה בטוח שברצונך לבצע עדכון המוני ש�
 
 #: ../src/edframe.cpp:1999
 msgid ""
-"Do you really want to remove all translations that are no longer used from "
-"the catalog?\n"
-"If you continue with purging, you will have to translate them again if they "
-"are added back in the future."
+"Do you really want to remove all translations that are no longer used from the catalog?\n"
+"If you continue with purging, you will have to translate them again if they are added back in the future."
 msgstr ""
 "האם ברצונך להסיר את כל התרגומים שאינם בשימוש מן הקטלוג?\n"
 "אם כן, יהיה צורך לתרגם אותם מחדש אם הם יוחזרו בעתיד."
@@ -405,7 +421,8 @@ msgstr "אל תשנה את הפורמט של קטלוגים קיימים"
 msgid "E&xport..."
 msgstr "י&צא..."
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:449
+#: ../src/resources/manager.xrc:48
+#: ../src/resources/prefs.xrc:449
 msgid "Edit"
 msgstr "ערוך"
 
@@ -413,7 +430,8 @@ msgstr "ערוך"
 msgid "Edit &comment"
 msgstr "ערוך ה&ערה"
 
-#: ../src/resources/comment.xrc:4 ../src/resources/toolbar.xrc:35
+#: ../src/resources/comment.xrc:4
+#: ../src/resources/toolbar.xrc:35
 msgid "Edit comment"
 msgstr "ערוך הערה"
 
@@ -455,9 +473,9 @@ msgid "Error initializing spell checking: %s"
 msgstr "שגיאה באתחול בדיקת איות: %s"
 
 #: ../src/edframe.cpp:1788
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading message catalog file '%s'."
-msgstr "שגיאה בפתיחת קובץ הקטלוג '"
+msgstr "שגיאה בטעינת קובץ קטלוג ההודעות '%s'."
 
 #: ../src/fileviewer.cpp:97
 #, c-format
@@ -477,21 +495,20 @@ msgid "External editor"
 msgstr "עורך טקסט חיצוני"
 
 #: ../src/digger.cpp:65
-#, fuzzy, c-format
+#, c-format
 msgid "Failed command: %s"
-msgstr "פקודה לפורס:"
+msgstr "פקודה שגויה: %s"
 
 #: ../src/digger.cpp:131
-#, fuzzy
 msgid "Failed to load extracted catalog."
-msgstr "הקובץ '%s' הוא לא קובץ קטלוג"
+msgstr "ארע כשל בטעינת הקטלוג שחולץ."
 
 #: ../src/digger.cpp:66
-#, fuzzy
 msgid "Failed to merge gettext catalogs."
-msgstr "הקובץ '%s' הוא לא קובץ קטלוג"
+msgstr "ארע כשל במיזוג קטלוגים של gettext."
 
-#: ../src/edframe.cpp:931 ../src/edframe.cpp:974
+#: ../src/edframe.cpp:931
+#: ../src/edframe.cpp:974
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "הקובץ '%s' לא קיים"
@@ -548,11 +565,13 @@ msgstr "צורה %i"
 msgid "Form %i (e.g. \"%u\")"
 msgstr "צורה %i (למשל \"%u\")"
 
-#: ../src/resources/toolbar.xrc:40 ../src/resources/toolbar.xrc:46
+#: ../src/resources/toolbar.xrc:40
+#: ../src/resources/toolbar.xrc:46
 msgid "Fullscreen view"
 msgstr "מצב מסך מלא"
 
-#: ../src/manager.cpp:266 ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:266
+#: ../src/resources/toolbar.xrc:28
 msgid "Fuzzy"
 msgstr "מעורפל"
 
@@ -560,11 +579,13 @@ msgstr "מעורפל"
 msgid "Fuzzy translation"
 msgstr "תרגום מעורפל"
 
-#: ../src/edframe.cpp:885 ../src/edframe.cpp:1013
+#: ../src/edframe.cpp:885
+#: ../src/edframe.cpp:1013
 msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "קטלוגים של GNU gettext (*.po)|*.po|כל הקבצים (*.*)|*.*"
 
-#: ../src/edframe.cpp:1101 ../src/edframe.cpp:1239
+#: ../src/edframe.cpp:1101
+#: ../src/edframe.cpp:1239
 msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "תבניות של GNU gettext ( *.pot)|*.pot|כל הקבצים (*.*)|*.*"
 
@@ -610,7 +631,8 @@ msgstr "אם נבחר, ניתן יהיה לערוך את התוכן בחלון �
 msgid "Invocation:"
 msgstr "קריאה:"
 
-#: ../src/settingsdlg.cpp:71 ../src/resources/settings.xrc:175
+#: ../src/settingsdlg.cpp:71
+#: ../src/resources/settings.xrc:175
 msgid "Keywords"
 msgstr "מילות מפתח"
 
@@ -618,8 +640,10 @@ msgstr "מילות מפתח"
 msgid "Language selection"
 msgstr "בחירת שפה"
 
-#: ../src/export_html.cpp:109 ../src/resources/prefs.xrc:506
-#: ../src/resources/prefs.xrc:510 ../src/resources/settings.xrc:62
+#: ../src/export_html.cpp:109
+#: ../src/resources/prefs.xrc:506
+#: ../src/resources/prefs.xrc:510
+#: ../src/resources/settings.xrc:62
 msgid "Language:"
 msgstr "שפה:"
 
@@ -627,7 +651,8 @@ msgstr "שפה:"
 msgid "Last modified"
 msgstr "שונה לאחרונה"
 
-#: ../src/edlistctrl.cpp:230 ../src/fileviewer.cpp:106
+#: ../src/edlistctrl.cpp:230
+#: ../src/fileviewer.cpp:106
 msgid "Line"
 msgstr "שורה"
 
@@ -682,16 +707,11 @@ msgid "My Project"
 msgstr "הפרויקט שלי"
 
 #: ../src/resources/prefs.xrc:112
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"לעולם אין לאפשר לרשימת המחרוזות לקבל פוקוס. אם מופעל, עליך להשתמש במקשי "
-"החיצים בצירוף מקש הקונטרול לניווט, אבל גם ניתן לכתוב טקסט מיידית, ללא צורך "
-"בלחיצת טאב לשינוי הפוקוס."
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "לעולם אין לאפשר לרשימת המחרוזות לקבל פוקוס. אם מופעל, עליך להשתמש במקשי החיצים בצירוף מקש הקונטרול לניווט, אבל גם ניתן לכתוב טקסט מיידית, ללא צורך בלחיצת טאב לשינוי הפוקוס."
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:444
+#: ../src/resources/manager.xrc:43
+#: ../src/resources/prefs.xrc:444
 msgid "New"
 msgstr "חדש"
 
@@ -727,9 +747,12 @@ msgstr "לא נמצאו הפניות למחרוזת זו"
 msgid "Notes"
 msgstr "הערות"
 
-#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:104
-#: ../src/resources/prefs.xrc:482 ../src/resources/prefs.xrc:624
-#: ../src/resources/settings.xrc:186 ../src/resources/summary.xrc:71
+#: ../src/resources/comment.xrc:30
+#: ../src/resources/manager.xrc:104
+#: ../src/resources/prefs.xrc:482
+#: ../src/resources/prefs.xrc:624
+#: ../src/resources/settings.xrc:186
+#: ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "OK"
 
@@ -738,15 +761,16 @@ msgid "Obsolete strings"
 msgstr "מחרוזות מיושנות"
 
 #: ../src/resources/toolbar.xrc:12
-#, fuzzy
 msgid "Open"
-msgstr "&פתיחה..."
+msgstr "פתיחה"
 
-#: ../src/edframe.cpp:883 ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:883
+#: ../src/resources/toolbar.xrc:13
 msgid "Open catalog"
 msgstr "פתח קטלוג"
 
-#: ../src/edframe.cpp:1099 ../src/edframe.cpp:1237
+#: ../src/edframe.cpp:1099
+#: ../src/edframe.cpp:1237
 msgid "Open catalog template"
 msgstr "תבנית פתיחת קטלוג"
 
@@ -758,7 +782,8 @@ msgstr "פתח את מנהל הקטלוגים בהפעלה של Poedit"
 msgid "Open source files in editor, not in file viewer"
 msgstr "פתח קבצי קוד בעורך טקסט, לא בתוכנה לצפיה בקבצים"
 
-#: ../src/export_html.cpp:148 ../src/edlistctrl.cpp:227
+#: ../src/export_html.cpp:148
+#: ../src/edlistctrl.cpp:227
 msgid "Original string"
 msgstr "מחרוזת מקורית"
 
@@ -775,15 +800,16 @@ msgid "Parsers"
 msgstr "פורסים"
 
 #: ../src/digger.cpp:106
-#, fuzzy, c-format
+#, c-format
 msgid "Parsing %s files..."
-msgstr "סורק קבצים..."
+msgstr "מנתח קובצי %s..."
 
 #: ../src/resources/prefs.xrc:304
 msgid "Path to DB:"
 msgstr "נתיב למסד נתונים:"
 
-#: ../src/settingsdlg.cpp:73 ../src/resources/settings.xrc:154
+#: ../src/settingsdlg.cpp:73
+#: ../src/resources/settings.xrc:154
 msgid "Paths"
 msgstr "נתיבית"
 
@@ -833,7 +859,7 @@ msgstr "Poedit לא הצליח למצוא קבצים בתיקיות שנסרקו
 
 #: ../src/edframe.cpp:2144
 msgid "Poedit is an easy to use translations editor."
-msgstr ""
+msgstr "Poedit הינו עורך תרגומים פשוט לתפעול."
 
 #: ../src/resources/prefs.xrc:4
 msgid "Preferences"
@@ -843,11 +869,13 @@ msgstr "העדפות"
 msgid "Proceed"
 msgstr "המשך"
 
-#: ../src/export_html.cpp:102 ../src/resources/settings.xrc:122
+#: ../src/export_html.cpp:102
+#: ../src/resources/settings.xrc:122
 msgid "Project info"
 msgstr "מידע על הפרויקט"
 
-#: ../src/export_html.cpp:106 ../src/resources/settings.xrc:19
+#: ../src/export_html.cpp:106
+#: ../src/resources/settings.xrc:19
 msgid "Project name and version:"
 msgstr "שם וגירסת הפרויקט:"
 
@@ -863,7 +891,8 @@ msgstr "נקה תרגומים מחוקים"
 msgid "References"
 msgstr "הפניות"
 
-#: ../src/edframe.cpp:2090 ../src/edframe.cpp:2094
+#: ../src/edframe.cpp:2090
+#: ../src/edframe.cpp:2094
 msgid "References:"
 msgstr "הפניות:"
 
@@ -876,9 +905,8 @@ msgid "Reset to defaults"
 msgstr "שחזר לברירת מחדל"
 
 #: ../src/resources/toolbar.xrc:17
-#, fuzzy
 msgid "Save"
-msgstr "ש&מור"
+msgstr "שמור"
 
 #: ../src/resources/menus.xrc:26
 msgid "Save &as..."
@@ -892,8 +920,11 @@ msgstr "שמור בשם:"
 msgid "Save catalog"
 msgstr "שמור קטלוג"
 
-#: ../src/edframe.cpp:841 ../src/edframe.cpp:866 ../src/edframe.cpp:907
-#: ../src/edframe.cpp:959 ../src/edframe.cpp:1077
+#: ../src/edframe.cpp:841
+#: ../src/edframe.cpp:866
+#: ../src/edframe.cpp:907
+#: ../src/edframe.cpp:959
+#: ../src/edframe.cpp:1077
 msgid "Save changes"
 msgstr "שמור שינויים"
 
@@ -913,7 +944,8 @@ msgstr "חפש נתיבים"
 msgid "Select catalog's language"
 msgstr "בחר את שפת הקטלוג"
 
-#: ../src/prefsdlg.cpp:368 ../src/manager.cpp:299
+#: ../src/prefsdlg.cpp:368
+#: ../src/manager.cpp:299
 #: ../src/transmemupd_wizard.cpp:112
 msgid "Select directory"
 msgstr "בחר תיקיה"
@@ -960,7 +992,8 @@ msgstr "הצג תקציר אחרי עדכון הקטלוג"
 msgid "Singular:"
 msgstr "יחיד:"
 
-#: ../src/resources/prefs.xrc:599 ../src/resources/settings.xrc:98
+#: ../src/resources/prefs.xrc:599
+#: ../src/resources/settings.xrc:98
 msgid "Source code charset:"
 msgstr "קידוד קבצי הקוד:"
 
@@ -980,11 +1013,13 @@ msgstr "התחל מהפריט הראשון"
 msgid "String to find:"
 msgstr "מחרוזת למצוא:"
 
-#: ../src/export_html.cpp:119 ../src/resources/settings.xrc:48
+#: ../src/export_html.cpp:119
+#: ../src/resources/settings.xrc:48
 msgid "Team's email address:"
 msgstr "כתובת הדואר של הקבוצה:"
 
-#: ../src/export_html.cpp:115 ../src/resources/settings.xrc:34
+#: ../src/export_html.cpp:115
+#: ../src/resources/settings.xrc:34
 msgid "Team:"
 msgstr "צוות:"
 
@@ -994,13 +1029,10 @@ msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
 "specified in catalog settings. It was saved in UTF-8 instead\n"
 "and the setting was modified accordingly."
-msgstr ""
-"אין אפשרות לשמור את הקטלוג בקידוד '%s' כפי שמצוין בו. הוא נשמר כ UTF-8 במקום"
+msgstr "אין אפשרות לשמור את הקטלוג בקידוד '%s' כפי שמצוין בו. הוא נשמר כ UTF-8 במקום"
 
 #: ../src/catalog.cpp:985
-msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
-"corrupted as the result."
+msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
 msgstr "ישנם שגיאות בטעינת הקטלוג. כתוצאה מכך, ייתכן וחלק מהמידע חסר או נפגם."
 
 #: ../src/resources/summary.xrc:38
@@ -1020,14 +1052,13 @@ msgstr ""
 "Poedit יוסיף אותן לקטלוג כעת"
 
 #: ../src/edapp.cpp:174
-#, fuzzy
 msgid ""
 "This is first time you run Poedit.\n"
 "Please fill in your name and email address.\n"
 "(This information is used only in catalogs headers)"
 msgstr ""
-"זוהי הפעם הראשונה שאתה מפעיל את Poedit.\n"
-"עליך למלא את שמך וכתובך הדוא\"ל שלך\n"
+"זוהי הפעם הראשונה ש־Poedit מופעל.\n"
+"עליך למלא את שמך וכתובך הדוא\"ל שלך.\n"
 "(מידע זה נמצא בשימוש רק בכותרות של הקטלוגים)."
 
 #: ../src/resources/prefs.xrc:554
@@ -1076,7 +1107,8 @@ msgstr "מסומן אם למחרוזת שנבחרה התרגום מעורפל"
 msgid "Total"
 msgstr "סה\"כ"
 
-#: ../src/export_html.cpp:151 ../src/edlistctrl.cpp:228
+#: ../src/export_html.cpp:151
+#: ../src/edlistctrl.cpp:228
 msgid "Translation"
 msgstr "תרגום"
 
@@ -1122,14 +1154,12 @@ msgid "Untrans"
 msgstr "לא מתורגם"
 
 #: ../src/resources/toolbar.xrc:22
-#, fuzzy
 msgid "Update"
-msgstr "תקציר עדכון"
+msgstr "עדכון"
 
 #: ../src/resources/manager.xrc:59
-#, fuzzy
 msgid "Update all"
-msgstr "תקציר עדכון"
+msgstr "עדכון הכל"
 
 #: ../src/resources/manager.xrc:60
 msgid "Update all catalogs in the project"
@@ -1171,9 +1201,7 @@ msgstr "השתמש בגופן מותאם אישית לרשימת התרגומי�
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files, in addition to default ones."
-msgstr ""
-"השתמש במילות מפתח אלה (שמות פונקציות) ע\"מ לזהות מחרוזות ניתנות לתרגום בקבצי "
-"הקוד, בנוסף לברירות המחדל"
+msgstr "השתמש במילות מפתח אלה (שמות פונקציות) ע\"מ לזהות מחרוזות ניתנות לתרגום בקבצי הקוד, בנוסף לברירות המחדל"
 
 #: ../src/resources/find.xrc:50
 msgid "Whole words only"
@@ -1192,15 +1220,16 @@ msgid "You must restart Poedit for this change to take effect."
 msgstr "עליך להפעיל מחדש את Poedit ע\"מ שהשינויים יכנסו לתוקף"
 
 #: ../src/resources/prefs.xrc:43
-#, fuzzy
 msgid "Your email address:"
-msgstr "כתובות דוא\"ל:"
+msgstr "כתובת הדוא\"ל שלך:"
 
 #: ../src/resources/prefs.xrc:22
 msgid ""
 "Your name and email set below are only used\n"
 "to set the Last-Translator header of GNU gettext files."
 msgstr ""
+"שמך וכתובת הדוא\"ל שלך ישמשו אך ורק כדי להגדיר\n"
+" את כותרת ה־Last-Translator בקובצי gettext של GNU."
 
 #: ../src/resources/prefs.xrc:30
 msgid "Your name:"
@@ -1222,34 +1251,24 @@ msgstr "ללא"
 #, fuzzy
 #~ msgid "translations editor"
 #~ msgstr "זכרון תרגומים"
-
 #~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 #~ msgstr "%i מחרוזות (%i מעורפלות, %i לא תקניות, %i לא מתורגמות)"
-
 #~ msgid "'."
 #~ msgstr "'."
-
 #~ msgid "About Poedit"
 #~ msgstr "אודות Poedit"
-
 #~ msgid "version"
 #~ msgstr "גירסה"
-
 #~ msgid " files..."
 #~ msgstr "קבצים..."
-
 #~ msgid "Display quotes around the string?"
 #~ msgstr "להציג מרכאות סביב המחרוזת?"
-
 #~ msgid "Error while loading file '%s': line %u is corrupted."
 #~ msgstr "שגיאה בעת טעינת הקובץ '%s': השורה %u שגוייה."
-
 #~ msgid "Help"
 #~ msgstr "עזרה"
-
 #~ msgid "Parsing "
 #~ msgstr "פורס"
-
 #~ msgid ""
 #~ "Poedit installation is broken, cannot find application's home directory."
 #~ msgstr "ההתקנה של Poedit לא תקינה, אין אפשרות למצוא את תיקית הבית של היישום"
@@ -1261,17 +1280,16 @@ msgstr "ללא"
 #, fuzzy
 #~ msgid "; charset="
 #~ msgstr "קידוד:"
-
 #~ msgid ""
 #~ "Cannot find resources file '%s'!\n"
 #~ "Please reinstall Poedit."
 #~ msgstr ""
 #~ "אין אפשרות למצוא את קובץ המשאבים '%s'!\n"
 #~ "עליך להתקין מחדש את Poedit"
-
 #~ msgid "Poedit Error"
 #~ msgstr "שגיאה של Poedit"
 
 #, fuzzy
 #~ msgid "X-Poedit-Keywords"
 #~ msgstr "מילות מפתח"
+

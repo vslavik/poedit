@@ -37,6 +37,7 @@ extern "C" {
 #endif
 void UserDefaults_SetBoolValue(const char *key, int value);
 int UserDefaults_GetBoolValue(const char *key);
+void UserDefaults_RemoveValue(const char *key);
 #ifdef __cplusplus
 }
 #endif
@@ -54,6 +55,8 @@ public:
         { UserDefaults_SetBoolValue(key, (int)value); }
     static bool GetBoolValue(const char *key)
         { return (bool)UserDefaults_GetBoolValue(key); }
+    static void RemoveValue(const char *key)
+        { UserDefaults_RemoveValue(key); }
 };
 
 #endif // __cplusplus
