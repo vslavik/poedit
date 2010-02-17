@@ -1224,9 +1224,7 @@ static void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
     wxString format = wxConfigBase::Get()->Read(_T("crlf_format"), _T("unix"));
 
     if (format == _T("win")) type = wxTextFileType_Dos;
-    else if (format == _T("mac")) type = wxTextFileType_Mac;
-    else if (format == _T("native")) type = wxTextFile::typeDefault;
-    else /* _T("unix") */ type = wxTextFileType_Unix;
+    else /* _T("unix") or obsolete settings */ type = wxTextFileType_Unix;
 
     preserve = (bool)(wxConfigBase::Get()->Read(_T("keep_crlf"), true));
 }
@@ -1277,7 +1275,7 @@ static wxString FormatStringForFile(const wxString& text)
 
 bool Catalog::Save(const wxString& po_file, bool save_mo)
 {
-    wxTextFileType crlfOrig, crlf;
+    wxTextFileType crlfDefault, crlf;
     bool crlfPreserve;
     wxTextFile f;
 
@@ -1288,7 +1286,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         return false;
     }
 
-    GetCRLFBehaviour(crlfOrig, crlfPreserve);
+    GetCRLFBehaviour(crlfDefault, crlfPreserve);
 
     // Update information about last modification time. But if the header
     // was empty previously, the author apparently doesn't want this header
@@ -1306,12 +1304,19 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         wxLogNull null;
         crlf = f.GuessType();
         }
-        if (crlf == wxTextFileType_None || crlf == wxTextFile::typeDefault)
-            crlf = crlfOrig;
+        // Discard any unsupported setting. In particular, we ignore "Mac"
+        // line endings, because the ancient OS 9 systems aren't used anymore,
+        // OSX uses Unix ending *and* "Mac" endings break gettext tools. So if
+        // we encounter a catalog with "Mac" line endings, we silently convert
+        // it into Unix endings (i.e. the modern Mac).
+        if (crlf == wxTextFileType_Mac)
+            crlf = wxTextFileType_Unix;
+        if (crlf != wxTextFileType_Dos && crlf != wxTextFileType_Unix)
+            crlf = crlfDefault;
         f.Close();
     }
     else
-        crlf = crlfOrig;
+        crlf = crlfDefault;
 
     /* Save .po file: */
 

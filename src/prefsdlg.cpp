@@ -139,9 +139,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     wxString format = cfg->Read(_T("crlf_format"), _T("unix"));
     int sel;
     if (format == _T("win")) sel = 1;
-    else if (format == _T("mac")) sel = 2;
-    else if (format == _T("native")) sel = 3;
-    else /* _T("unix") */ sel = 0;
+    else /* _T("unix") or obsolete settings */ sel = 0;
 
     XRCCTRL(*this, "crlf_format", wxChoice)->SetSelection(sel);
 
@@ -219,8 +217,7 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
     cfg->Write(_T("custom_font_text_name"),
                 XRCCTRL(*this, "fontname_text", wxTextCtrl)->GetValue());
  
-    static const wxChar *formats[] = 
-        { _T("unix"), _T("win"), _T("mac"), _T("native") };
+    static const wxChar *formats[] = { _T("unix"), _T("win") };
     cfg->Write(_T("crlf_format"), formats[
                 XRCCTRL(*this, "crlf_format", wxChoice)->GetSelection()]);
                
