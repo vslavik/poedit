@@ -165,10 +165,6 @@
 
 #include DB_HEADER
 
-#if (DB_VERSION_MAJOR > 4) || (DB_VERSION_MAJOR == 4 && DB_VERSION_MINOR >= 1)
-    #define DB_OPEN_WITH_TRANSACTION
-#endif
-
 #include "transmem.h"
 
 
@@ -296,7 +292,6 @@ DbBase::DbBase(const wxString& filename, DBTYPE type)
         LogError();
         return;
     }
-#ifdef DB_OPEN_WITH_TRANSACTION
     m_err = m_db->open(m_db,
                        NULL,
                        filename.mb_str(wxConvUTF8),
@@ -304,14 +299,6 @@ DbBase::DbBase(const wxString& filename, DBTYPE type)
                        type,
                        DB_CREATE,
                        0);
-#else
-    m_err = m_db->open(m_db,
-                       filename.mb_str(wxConvUTF8),
-                       NULL,
-                       type,
-                       DB_CREATE,
-                       0);
-#endif
 
     if (m_err != 0)
     {

@@ -39,7 +39,7 @@ AC_DEFUN([AX_BERKELEY_DB],
       AC_MSG_CHECKING([for Berkeley DB >= $minversion])
   fi
 
-  for version in "" 5.0 4.9 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1 4.0 3.6 3.5 3.4 3.3 3.2 3.1 ; do
+  for version in "" 5.0 4.9 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1 ; do
 
     if test -z $version ; then
         db_lib="-ldb"
