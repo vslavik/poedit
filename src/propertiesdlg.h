@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2005 Vaclav Slavik
+ *  Copyright (C) 2000-2010 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,12 +23,12 @@
  *
  *  $Id$
  *
- *  Catalog settings dialog
+ *  Catalog properties dialog
  *
  */
 
-#ifndef _SETTINGSDLG_H_
-#define _SETTINGSDLG_H_
+#ifndef _PROPERTIESDLG_H_
+#define _PROPERTIESDLG_H_
 
 #include <wx/dialog.h>
 #include <wx/notebook.h>
@@ -40,10 +40,10 @@ class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
 class WXDLLIMPEXP_FWD_CORE wxComboBox;
 
 /// Dialog setting various catalog parameters.
-class SettingsDialog : public wxDialog
+class PropertiesDialog : public wxDialog
 {
     public:
-        SettingsDialog(wxWindow *parent = NULL);
+        PropertiesDialog(wxWindow *parent = NULL);
 
         /// Reads data from the catalog and fill dialog's controls.
         void TransferTo(Catalog *cat);
@@ -61,4 +61,4 @@ class SettingsDialog : public wxDialog
 
 
 
-#endif // _SETTINGSDLG_H_
+#endif // _PROPERTIESDLG_H_

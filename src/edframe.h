@@ -157,7 +157,7 @@ class PoeditFrame : public wxFrame
         void InitSpellchecker();
 
         void EditPreferences();
-        void EditCatalogSettings();
+        void EditCatalogProperties();
 
         // Message handlers:
         void OnNew(wxCommandEvent& event);
@@ -174,7 +174,7 @@ class PoeditFrame : public wxFrame
 #ifdef __WXMSW__
         void OnFileDrop(wxDropFilesEvent& event);
 #endif
-        void OnSettings(wxCommandEvent& event);
+        void OnProperties(wxCommandEvent& event);
         void OnPreferences(wxCommandEvent& event);
         void OnUpdate(wxCommandEvent& event);
         void OnListSel(wxListEvent& event);

@@ -22,7 +22,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  edframe.h fileviewer.cpp fileviewer.h parser.cpp parser.h \
                  isocodes.cpp isocodes.h prefsdlg.cpp prefsdlg.h \
-                 settingsdlg.cpp settingsdlg.h progressinfo.h \
+                 propertiesdlg.cpp propertiesdlg.h progressinfo.h \
                  progressinfo.cpp digger.h digger.cpp gexecute.h \
                  gexecute.cpp summarydlg.h summarydlg.cpp \
                  findframe.cpp findframe.h commentdlg.h commentdlg.cpp \
@@ -48,7 +48,7 @@ XRC_RESOURCES = \
 		$(srcdir)/resources/menus.xrc \
 		$(srcdir)/resources/prefs.xrc \
 		$(srcdir)/resources/progress.xrc \
-		$(srcdir)/resources/settings.xrc \
+		$(srcdir)/resources/properties.xrc \
         $(srcdir)/resources/summary.xrc \
 		$(srcdir)/resources/toolbar.xrc \
 		$(srcdir)/resources/find.xrc \

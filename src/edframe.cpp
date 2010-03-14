@@ -66,7 +66,7 @@
 #include "catalog.h"
 #include "edapp.h"
 #include "edframe.h"
-#include "settingsdlg.h"
+#include "propertiesdlg.h"
 #include "prefsdlg.h"
 #include "fileviewer.h"
 #include "findframe.h"
@@ -395,7 +395,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_SAVEAS,               PoeditFrame::OnSaveAs)
    EVT_MENU           (XRCID("menu_export"),      PoeditFrame::OnExport)
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
-   EVT_MENU           (XRCID("menu_catsettings"), PoeditFrame::OnSettings)
+   EVT_MENU           (XRCID("menu_catproperties"), PoeditFrame::OnProperties)
    EVT_MENU           (wxID_PREFERENCES,          PoeditFrame::OnPreferences)
    EVT_MENU           (XRCID("menu_update"),      PoeditFrame::OnUpdate)
    EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdate)
@@ -1224,7 +1224,7 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
         }
     }
 
-    SettingsDialog dlg(this);
+    PropertiesDialog dlg(this);
     Catalog *catalog = new Catalog;
 
     if (isFromPOT)
@@ -1302,14 +1302,14 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
 
 
 
-void PoeditFrame::OnSettings(wxCommandEvent&)
+void PoeditFrame::OnProperties(wxCommandEvent&)
 {
-    EditCatalogSettings();
+    EditCatalogProperties();
 }
 
-void PoeditFrame::EditCatalogSettings()
+void PoeditFrame::EditCatalogProperties()
 {
-    SettingsDialog dlg(this);
+    PropertiesDialog dlg(this);
 
     dlg.TransferTo(m_catalog);
     if (dlg.ShowModal() == wxID_OK)
@@ -1973,7 +1973,7 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
                     err
                 );
             msg.AddAction(_("Fix the header"),
-                          boost::bind(&PoeditFrame::EditCatalogSettings, this));
+                          boost::bind(&PoeditFrame::EditCatalogProperties, this));
 
             m_attentionBar->ShowMessage(msg);
         }

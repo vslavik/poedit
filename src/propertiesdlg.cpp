@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2005 Vaclav Slavik
+ *  Copyright (C) 2000-2010 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,7 +23,7 @@
  *
  *  $Id$
  *
- *  Catalog settings dialog
+ *  Catalog properties dialog
  *
  */
 
@@ -40,12 +40,12 @@
 #include <wx/tokenzr.h>
 
 #include "isocodes.h"
-#include "settingsdlg.h"
+#include "propertiesdlg.h"
 
 
-SettingsDialog::SettingsDialog(wxWindow *parent)
+PropertiesDialog::PropertiesDialog(wxWindow *parent)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("settings"));
+    wxXmlResource::Get()->LoadDialog(this, parent, _T("properties"));
 
     m_team = XRCCTRL(*this, "team_name", wxTextCtrl);
     m_teamEmail = XRCCTRL(*this, "team_email", wxTextCtrl);
@@ -139,7 +139,7 @@ wxString GetCharsetFromCombobox(wxComboBox *ctrl)
 } // anonymous namespace
 
 
-void SettingsDialog::TransferTo(Catalog *cat)
+void PropertiesDialog::TransferTo(Catalog *cat)
 {
     SetCharsetToCombobox(m_charset, cat->Header().Charset);
     SetCharsetToCombobox(m_sourceCodeCharset, cat->Header().SourceCodeCharset);
@@ -161,7 +161,7 @@ void SettingsDialog::TransferTo(Catalog *cat)
 }
 
 
-void SettingsDialog::TransferFrom(Catalog *cat)
+void PropertiesDialog::TransferFrom(Catalog *cat)
 {
     cat->Header().Charset = GetCharsetFromCombobox(m_charset);
     cat->Header().SourceCodeCharset = GetCharsetFromCombobox(m_sourceCodeCharset);
