@@ -1,10 +1,8 @@
 
-
-
                                  ------------
                                     Poedit
                                  ------------
-                                  
+
               a cross-platform gettext catalogs editing tool
 
 
@@ -31,14 +29,15 @@ part of many Linux distributions.
 Requirements:
 
   * Boost
-  * Unicode build of wxWidgets library, version >= 2.8.0
+  * Unicode build of wxWidgets library, version >= 2.8.7
     (see http://www.wxwidgets.org)
   * Berkeley DB >= 3 if you need translation memory
   * If on Unix, GtkSpell 2.x plus GTK+ 2 build of wxWidgets for spell
     checking support
 
-Unix and OS X/Windows using GNU toolchain
------------------------------------------
+
+ Unix and OS X/Windows using GNU toolchain
+-------------------------------------------
 
 Do the usual thing:
     ./configure
@@ -54,8 +53,9 @@ included. You don't need wxWidgets for it. If you want to compile Poedit
 yourself, then the best way is to install Mingw and MSYS and use Unix
 way of building the library.
 
-OS X
-----
+
+ Mac OS X
+----------
 
 After compiling the application as above, you can additionally create an OS X
 bundle by running "make bundle" in the src/ subdirectory. This requires that
@@ -65,8 +65,9 @@ works if you used MacPorts to install gettext and so msgfmt is in
 /opt/local/bin/msgfmt). Finally, running "make dist-osx" in the toplevel
 directory will create disk image with the bundle.
 
-Windows using Visual Studio 2005 Express
-----------------------------------------
+
+ Windows using Visual Studio 2005 Express
+------------------------------------------
 
 Visual Studio makefile is in win32/ directory. Change to this directory
 and run "nmake -f makefile.vc [additional options]". The flags to set are
@@ -82,12 +83,24 @@ is used for installation on Windows and it's made to use the VS2005 binaries.
 In order to compile the installer, you must first copy gettext binaries to
 deps/gettext directory - if you don't, the installer will report errors.
 
-Installing from Subversion repository
--------------------------------------
 
-If you get the sources directly from SVN repository, some generated files are
-not present. You have to run the ./bootstrap script to create them. After
+ Installing from Git repository
+--------------------------------
+
+If you get the sources directly from the Git repository, some generated files
+are not present. You have to run the ./bootstrap script to create them. After
 that, continue according to the instructions above.
+
+The ./bootstrap script requires some additional tools to be installed:
+
+ * AsciiDoc, xsltproc and xmlto to generate the manual page
+ * Bakefile, to generate Windows makefiles/projects
+ * ImageMagick and png2icns from libicns to generate icons in Windows and
+   OS X native formats
+
+If you don't have any of the dependencies, ./bootstrap will print errors, but
+will continue to run. In other words, if you don't need e.g. Windows stuff, you
+can ignore Windows-specific dependencies.
 
 
  License
@@ -97,11 +110,8 @@ Poedit is released under the MIT license and you're free to do
 whatever you want with it and its source code (well, almost :-) -- see the
 license text).
 
-Icons are from the Tango Desktop Project [http://tango.freedesktop.org]
-and Mark James's Silk icons set [http://www.famfamfam.com/lab/icons/silk].
-
 See the COPYING file for details on program's licensing and the
-src/icons/README file for details on the icons.
+icons/README file for details on the icons.
 
 Win32 and Mac OS X versions contain GNU gettext binaries. They are distributed
 under the GNU General Public License and their source code is available from
@@ -111,7 +121,7 @@ from there, email me for a copy of the sources.
 
  Author
 ========
- 
+
 Vaclav Slavik <vslavik@fastmail.fm>
 Please see the AUTHORS file for information about other contributors.
 
@@ -119,14 +129,7 @@ Please see the AUTHORS file for information about other contributors.
  Links
 =======
 
-http://www.poedit.net
+http://www.poedit.net/
         - Poedit homepage
-
-http://www.wxwidgets.org
-        - wxWidgets toolkit homepage
-http://www.gnu.org
+http://www.gnu.org/software/gettext/
         - GNU project homepage, contains gettext and documentation
-http://www.innosetup.org
-http://isx.wintax.nl
-        - Inno Setup and Inno Setup Extensions, installation
-          program used by Poedit under Windows
