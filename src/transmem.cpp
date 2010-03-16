@@ -317,7 +317,7 @@ DbBase::~DbBase()
 void DbBase::LogError()
 {
     wxString err = wxString::FromAscii(db_strerror(m_err));
-    wxLogError(_("Database error: %s"), err.c_str());
+    wxLogError(_("TM database error: %s"), err.c_str());
     m_err = 0;
 }
 
@@ -735,7 +735,7 @@ TranslationMemory *TranslationMemory::Create(const wxString& language)
 
     if ( !wxFileName::Mkdir(dbPath, 0700, wxPATH_MKDIR_FULL) )
     {
-        wxLogError(_("Cannot create database directory!"));
+        wxLogError(_("Cannot create TM database directory!"));
         return NULL;
     }
     dbPath += _T('/');
