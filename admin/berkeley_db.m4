@@ -3,7 +3,7 @@ dnl @synopsis AX_BERKELEY_DB([MINIMUM-VERSION
 dnl                          [, ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl
 dnl This macro tries to find Berkeley DB. It honors MINIMUM-VERSION if given.
-dnl 
+dnl
 dnl If libdb is found, DB_HEADER and DB_LIBS variables are set and 
 dnl ACTION-IF-FOUND shell code is executed if specified. DB_HEADER is set to 
 dnl location of db.h header in quotes (e.g. "db3/db.h") and AC_DEFINE_UNQUOTED
@@ -20,7 +20,7 @@ AC_DEFUN([AX_BERKELEY_DB],
   old_LIBS="$LIBS"
 
   minversion=ifelse([$1], ,,$1)
-                
+
   DB_HEADER=""
   DB_LIBS=""
 
@@ -39,7 +39,7 @@ AC_DEFUN([AX_BERKELEY_DB],
       AC_MSG_CHECKING([for Berkeley DB >= $minversion])
   fi
 
-  for version in "" 5.0 4.9 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1 ; do
+  for version in "" 4.9 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1 ; do
 
     if test -z $version ; then
         db_lib="-ldb"
@@ -48,9 +48,9 @@ AC_DEFUN([AX_BERKELEY_DB],
         db_lib="-ldb-$version"
         try_headers="db$version/db.h db`echo $version | sed -e 's,\..*,,g'`/db.h"
     fi
-        
+
     LIBS="$old_LIBS $db_lib"
- 
+
     for db_hdr in $try_headers ; do
         if test -z $DB_HEADER ; then
             AC_LINK_IFELSE(
@@ -67,13 +67,13 @@ AC_DEFUN([AX_BERKELEY_DB],
                                     DB_VERSION_PATCH >= (${minverpatch}))))
                             #error "too old version"
                         #endif
-                    
+
                         DB *db;
                         db_create(&db, NULL, 0);
                     ])],
                 [
                     AC_MSG_RESULT([header $db_hdr, library $db_lib])
-                                
+
                     DB_HEADER="$db_hdr"
                     DB_LIBS="$db_lib"
                 ])
