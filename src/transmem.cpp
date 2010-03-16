@@ -163,7 +163,11 @@
 #include <wx/utils.h>
 #include <wx/filename.h>
 
-#include DB_HEADER
+#ifdef DB_HEADER
+    #include DB_HEADER
+#else
+    #include <db.h>
+#endif
 
 #include "transmem.h"
 
