@@ -2101,7 +2101,14 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
             // want to save old entries in the TM too, so that we harvest as
             // much useful translations as we can.
 
-            tm->Store(dt.GetString(), dt.GetTranslation());
+            if ( !tm->Store(dt.GetString(), dt.GetTranslation()) )
+            {
+                // If the TM failed, it would almost certainly fail to store
+                // the next item as well. Don't bother, just stop updating
+                // it here, so that the user is given only one error message
+                // instead of an insane amount of them.
+                break;
+            }
         }
     }
 #endif
