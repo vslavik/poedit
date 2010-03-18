@@ -405,7 +405,6 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_lines"),       PoeditFrame::OnLinesFlag)
    EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
    EVT_MENU           (XRCID("menu_auto_comments_win"), PoeditFrame::OnAutoCommentsWinFlag)
-   EVT_MENU           (XRCID("menu_shaded"),      PoeditFrame::OnShadedListFlag)
    EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
@@ -480,7 +479,6 @@ PoeditFrame::PoeditFrame() :
     m_commentWindowEditable =
         (bool)cfg->Read(_T("comment_window_editable"), (long)false);
     g_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
-    g_shadedList = (bool)cfg->Read(_T("shaded_list"), (long)true);
 
 #ifdef __UNIX__
     wxIconBundle appicons;
@@ -521,7 +519,6 @@ PoeditFrame::PoeditFrame() :
     GetMenuBar()->Check(XRCID("menu_lines"), m_displayLines);
     GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
     GetMenuBar()->Check(XRCID("menu_auto_comments_win"), m_displayAutoCommentsWin);
-    GetMenuBar()->Check(XRCID("menu_shaded"), g_shadedList);
 
     CreateStatusBar(1, wxST_SIZEGRIP);
 
@@ -731,7 +728,6 @@ PoeditFrame::~PoeditFrame()
     cfg->Write(_T("display_lines"), m_displayLines);
     cfg->Write(_T("display_comment_win"), m_displayCommentWin);
     cfg->Write(_T("display_auto_comments_win"), m_displayAutoCommentsWin);
-    cfg->Write(_T("shaded_list"), g_shadedList);
 
     m_history.Save(*cfg);
 
@@ -1588,14 +1584,6 @@ void PoeditFrame::OnAutoCommentsWinFlag(wxCommandEvent& event)
 {
     UpdateDisplayCommentWin();
 }
-
-
-void PoeditFrame::OnShadedListFlag(wxCommandEvent& event)
-{
-    g_shadedList = GetMenuBar()->IsChecked(XRCID("menu_shaded"));
-    RefreshControls();
-}
-
 
 
 void PoeditFrame::OnCopyFromSource(wxCommandEvent& event)

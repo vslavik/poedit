@@ -37,9 +37,6 @@
 #include "edlistctrl.h"
 #include "digits.h"
 
-// I don't like this global flag, but all PoeditFrame instances should share it :(
-bool g_shadedList = false;
-
 namespace
 {
 
@@ -456,7 +453,7 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
 
 wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
 {
-    size_t idx = g_shadedList ? size_t(item % 2) : 0;
+    long idx = item % 2;
 
     if (m_catalog == NULL)
         return (wxListItemAttr*)&m_attrNormal[idx];
