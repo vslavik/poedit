@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2007 Vaclav Slavik
+ *  Copyright (C) 2001-2010 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -171,25 +171,24 @@
 
 #include "transmem.h"
 
-
 typedef db_recno_t DbKey;
 const DbKey DBKEY_ILLEGAL = 0;
 
 class DbKeys
 {
     public:
-        DbKeys(DBT& data)
+        DbKeys(const Dbt& data)
         {
-            Count = data.size / sizeof(DbKey);
+            Count = data.get_size() / sizeof(DbKey);
             List = new DbKey[Count];
-            memcpy(List, data.data, data.size);
+            memcpy(List, data.get_data(), data.get_size());
         }
-        
+
         DbKeys(size_t cnt) : Count(cnt)
-        {   
+        {
             List = new DbKey[Count];
         }
-        
+
         ~DbKeys()
         {
             delete[] List;
@@ -205,16 +204,13 @@ class DbBase
     public:
         /// Ctor.
         DbBase(const wxString& filename, DBTYPE type);
-        virtual ~DbBase();
-        /// Returns false if opening DB failed
-        bool IsOk() const { return m_ok; }
-        /// Logs last DB error and sets error variable to "no error".
-        void LogError();
-        
+
+        void Release();
+
     protected:
-        DB *m_db;
-        bool m_ok;
-        int m_err;
+        virtual ~DbBase() {}
+
+        Db m_db;
 };
 
 /// Interface to the database of translations.
@@ -242,6 +238,9 @@ class DbTrans : public DbBase
             \remark The caller must delete returned object
          */
         wxArrayString *Read(DbKey index);
+
+    protected:
+        ~DbTrans() {}
 };
 
 /// Interface to DB of original strings.
@@ -260,7 +259,10 @@ class DbOrig : public DbBase
             It is caller's responsibility to ensure \a value is consistent
             with DbTrans instance.
          */
-        bool Write(const wxString& str, DbKey value);
+        void Write(const wxString& str, DbKey value);
+
+    protected:
+        ~DbOrig() {}
 };
 
 
@@ -279,52 +281,33 @@ class DbWords : public DbBase
 
         /** Adds \a value to the list of DbTrans indexes stored for
             \a word and \a sentenceSize. 
-            \return false on DB failure, true otherwise
             \see Read
          */
-        bool Append(const wxString& word, unsigned sentenceSize, DbKey value);
+        void Append(const wxString& word, unsigned sentenceSize, DbKey value);
+
+    protected:
+        ~DbWords() {}
 };
 
 
 
 DbBase::DbBase(const wxString& filename, DBTYPE type)
+    : m_db(NULL, 0)
 {
-    m_ok = false;
-    m_err = db_create(&m_db, NULL, 0);
-    if (m_err != 0)
-    {
-        LogError();
-        return;
-    }
-    m_err = m_db->open(m_db,
-                       NULL,
-                       filename.mb_str(wxConvUTF8),
-                       NULL,
-                       type,
-                       DB_CREATE,
-                       0);
-
-    if (m_err != 0)
-    {
-        LogError();
-        return;
-    }
-    m_ok = true;
+    m_db.open(NULL,
+              filename.mb_str(wxConvUTF8),
+              NULL,
+              type,
+              DB_CREATE,
+              0);
 }
 
-DbBase::~DbBase()
-{
-    if ((m_err = m_db->close(m_db, 0)) != 0)
-        LogError();
-}
 
-void DbBase::LogError()
+void DbBase::Release()
 {
-    wxString err = wxString::FromAscii(db_strerror(m_err));
-    wxLogError(_("TM database error: %s"), err.c_str());
-    m_err = 0;
+    m_db.close(0);
+    delete this;
 }
-
 
 
 DbKey DbTrans::Write(const wxString& str, DbKey index)
@@ -336,8 +319,6 @@ DbKey DbTrans::Write(const wxString& str, DbKey index)
 
 DbKey DbTrans::Write(wxArrayString *strs, DbKey index)
 {
-    DBT key, data;
-    char *buf;
     size_t bufLen;
     size_t i;
     char *ptr;
@@ -346,57 +327,41 @@ DbKey DbTrans::Write(wxArrayString *strs, DbKey index)
     {
         bufLen += strlen(strs->Item(i).mb_str(wxConvUTF8)) + 1;
     }
-    buf = new char[bufLen];
-    for (ptr = buf, i = 0; i < strs->GetCount(); i++)
+    wxCharBuffer buf(bufLen);
+    for (ptr = buf.data(), i = 0; i < strs->GetCount(); i++)
     {
         strcpy(ptr, strs->Item(i).mb_str(wxConvUTF8));
         ptr += strlen(ptr) + 1;
     }
 
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    data.data = buf;
-    data.size = bufLen;
+    Dbt data(buf.data(), bufLen);
 
     if (index == DBKEY_ILLEGAL)
     {
-        m_err = m_db->put(m_db, NULL, &key, &data, DB_APPEND);
+        Dbt key;
+        m_db.put(NULL, &key, &data, DB_APPEND);
+        return *((db_recno_t*)key.get_data());
     }
     else
     {
-        key.data = &index;
-        key.size = sizeof(index);
-        m_err = m_db->put(m_db, NULL, &key, &data, 0);
+        Dbt key(&index, sizeof(index));
+        m_db.put(NULL, &key, &data, 0);
+        return index;
     }
-    delete[] buf;
-
-    if (m_err != 0)
-    {
-        LogError();
-        return DBKEY_ILLEGAL;
-    }    
-    return (index == DBKEY_ILLEGAL) ? *((db_recno_t*)key.data) : index;
 }
 
 wxArrayString *DbTrans::Read(DbKey index)
 {
-    DBT key, data;
+    Dbt key(&index, sizeof(index));
+    Dbt data;
 
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    key.data = &index;
-    key.size = sizeof(index);
-    m_err = m_db->get(m_db, NULL, &key, &data, 0);
-
-    if (m_err != 0)
-    {
-        LogError();
+    if ( m_db.get(NULL, &key, &data, 0) == DB_NOTFOUND )
         return NULL;
-    }
-    
+
     wxArrayString *arr = new wxArrayString;
-    char *ptr = (char*)data.data;
-    while (ptr < ((char*)data.data) + data.size)
+    char *ptr = (char*)data.get_data();
+    char *endptr = ((char*)data.get_data()) + data.get_size();
+    while (ptr < endptr)
     {
         arr->Add(wxString(ptr, wxConvUTF8));
         ptr += strlen(ptr) + 1;
@@ -406,88 +371,52 @@ wxArrayString *DbTrans::Read(DbKey index)
 }
 
 
-
 DbKey DbOrig::Read(const wxString& str)
 {
     const wxWX2MBbuf c_str_buf = str.mb_str(wxConvUTF8);
     const char *c_str = c_str_buf;
-    DBT key, data;
 
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    key.data = (void*)c_str;
-    key.size = strlen(c_str);
-    m_err = m_db->get(m_db, NULL, &key, &data, 0);
-    if (m_err != 0)
-    {
-        if (m_err == DB_NOTFOUND)
-            m_err = 0;
-        else
-            LogError();
+    Dbt key((void*)c_str, strlen(c_str));
+    Dbt data;
+
+    if ( m_db.get(NULL, &key, &data, 0) == DB_NOTFOUND )
         return DBKEY_ILLEGAL;
-    }
-    
-    return *((DbKey*)data.data);
+
+    return *((DbKey*)data.get_data());
 }
 
-bool DbOrig::Write(const wxString& str, DbKey value)
+
+void DbOrig::Write(const wxString& str, DbKey value)
 {
     const wxWX2MBbuf c_str_buf = str.mb_str(wxConvUTF8);
     const char *c_str = c_str_buf;
-    DBT key, data;
 
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    key.data = (void*) c_str;
-    key.size = strlen(c_str);
-    data.data = &value;
-    data.size = sizeof(value);
+    Dbt key((void*)c_str, strlen(c_str));
+    Dbt data(&value, sizeof(value));
 
-    m_err = m_db->put(m_db, NULL, &key, &data, 0);
-    if (m_err != 0)
-    {
-        LogError();
-        return false;
-    }
-
-    return true;
+    m_db.put(NULL, &key, &data, 0);
 }
-
 
 
 DbKeys *DbWords::Read(const wxString& word, unsigned sentenceSize)
 {
     const wxWX2MBbuf word_mb = word.mb_str(wxConvUTF8);
-    char *keyBuf;
-    size_t keyLen;
-    DBT key, data;
+    size_t keyLen = strlen(word_mb) + sizeof(wxUint32);
+    wxCharBuffer keyBuf(keyLen+1);
+    strcpy(keyBuf.data() + sizeof(wxUint32), word_mb);
+    *((wxUint32*)(keyBuf.data())) = sentenceSize;
 
-    keyLen = strlen(word_mb) + sizeof(wxUint32);
-    keyBuf = new char[keyLen+1];
-    strcpy(keyBuf + sizeof(wxUint32), word_mb);
-    *((wxUint32*)(keyBuf)) = sentenceSize;
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    key.data = keyBuf;
-    key.size = keyLen;
-    m_err = m_db->get(m_db, NULL, &key, &data, 0);
-    delete[] keyBuf;
+    Dbt key(keyBuf.data(), keyLen);
+    Dbt data;
 
-    if (m_err != 0)
-    {
-        if (m_err == DB_NOTFOUND)
-            m_err = 0;
-        else
-            LogError();
+    if ( m_db.get(NULL, &key, &data, 0) == DB_NOTFOUND )
         return NULL;
-    }    
 
-    DbKeys *result = new DbKeys(data);
-    
-    return result;
+    return new DbKeys(data);
 }
 
-bool DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
+
+void DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
 {
     // VS: there is a dirty trick: it is always true that 'value' is 
     //     greater than all values already present in the db, so we may
@@ -497,48 +426,40 @@ bool DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
 
     const wxWX2MBbuf word_mb = word.mb_str(wxConvUTF8);
     DbKey *valueBuf;
-    char *keyBuf;
-    size_t keyLen;
-    DBT key, data;
 
-    keyLen = strlen(word_mb) + sizeof(wxUint32);
-    keyBuf = new char[keyLen+1];
-    strcpy(keyBuf + sizeof(wxUint32), word_mb);
-    *((wxUint32*)(keyBuf)) = sentenceSize;
+    size_t keyLen = strlen(word_mb) + sizeof(wxUint32);
+    wxCharBuffer keyBuf(keyLen+1);
+    strcpy(keyBuf.data() + sizeof(wxUint32), word_mb);
+    *((wxUint32*)(keyBuf.data())) = sentenceSize;
 
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    key.data = keyBuf;
-    key.size = keyLen;
+    Dbt key(keyBuf.data(), keyLen);
+    Dbt data;
 
-    DbKeys *keys = Read(word, sentenceSize);
-    if (keys == NULL)
+    std::auto_ptr<DbKeys> keys(Read(word, sentenceSize));
+    if (keys.get() == NULL)
     {
         valueBuf = NULL;
-        data.data = &value;
-        data.size = sizeof(DbKey);
+        data.set_data(&value);
+        data.set_size(sizeof(DbKey));
     }
     else
     {
         valueBuf = new DbKey[keys->Count + 1];
         memcpy(valueBuf, keys->List, keys->Count * sizeof(DbKey));
         valueBuf[keys->Count] = value;
-        data.data = valueBuf;
-        data.size = (keys->Count + 1) * sizeof(DbKey);
+        data.set_data(valueBuf);
+        data.set_size((keys->Count + 1) * sizeof(DbKey));
     }
-    
-    m_err = m_db->put(m_db, NULL, &key, &data, 0);
 
-    delete[] keyBuf;
-    delete[] valueBuf;
-
-    if (m_err != 0)
+    try
     {
-        LogError();
-        return false;
+        m_db.put(NULL, &key, &data, 0);
     }
-
-    return true;
+    catch ( ... )
+    {
+        delete[] valueBuf;
+        throw;
+    }
 }
 
 
@@ -728,6 +649,12 @@ namespace
 typedef std::set<TranslationMemory*> TranslationMemories;
 TranslationMemories ms_instances;
 
+void ReportDbError(const DbException& e)
+{
+    wxString what(e.what(), wxConvLocal);
+    wxLogError(_("Translation memory database error: %s"), what.c_str());
+}
+
 } // anonymous namespace
 
 /*static*/
@@ -755,44 +682,79 @@ TranslationMemory *TranslationMemory::Create(const wxString& language)
         }
     }
 
-    TranslationMemory *tm = new TranslationMemory(language, dbPath);
-    if (!tm->m_dbTrans->IsOk() || !tm->m_dbOrig->IsOk() || 
-        !tm->m_dbWords->IsOk())
+    try
     {
-        delete tm;
+        TranslationMemory *tm = new TranslationMemory(language, dbPath);
+        ms_instances.insert(tm);
+        return tm;
+    }
+    catch ( const DbException& e )
+    {
+        ReportDbError(e);
         return NULL;
     }
-
-    ms_instances.insert(tm);
-    return tm;
 }
 
 void TranslationMemory::Release()
 {
     if (--m_refCnt == 0)
     {
+        try
+        {
+            m_dbTrans->Release();
+        }
+        catch ( const DbException& e) { ReportDbError(e); }
+
+        try
+        {
+            m_dbOrig->Release();
+        }
+        catch ( const DbException& e) { ReportDbError(e); }
+
+        try
+        {
+            m_dbWords->Release();
+        }
+        catch ( const DbException& e) { ReportDbError(e); }
+
         ms_instances.erase(this);
         delete this;
     }
 }
 
-TranslationMemory::TranslationMemory(const wxString& language, 
+TranslationMemory::TranslationMemory(const wxString& language,
                                      const wxString& dbPath)
 {
     m_dbPath = dbPath;
     m_refCnt = 1;
     m_lang = language;
     SetParams(2, 2);
-    m_dbTrans = new DbTrans(dbPath);
-    m_dbOrig = new DbOrig(dbPath);
-    m_dbWords = new DbWords(dbPath);
-}                                     
+
+    try
+    {
+        m_dbTrans = NULL;
+        m_dbOrig = NULL;
+        m_dbWords = NULL;
+
+        m_dbTrans = new DbTrans(dbPath);
+        m_dbOrig = new DbOrig(dbPath);
+        m_dbWords = new DbWords(dbPath);
+    }
+    catch ( ... )
+    {
+        if ( m_dbTrans )
+            m_dbTrans->Release();
+        if ( m_dbOrig )
+            m_dbOrig->Release();
+        if ( m_dbWords )
+            m_dbWords->Release();
+
+        throw;
+    }
+}
 
 TranslationMemory::~TranslationMemory()
 {
-    delete m_dbTrans;
-    delete m_dbOrig;
-    delete m_dbWords;
 }
 
 /*static*/ bool TranslationMemory::IsSupported(const wxString& lang)
@@ -800,42 +762,45 @@ TranslationMemory::~TranslationMemory()
     return !!MakeLangDbPath(GetDatabaseDir(), lang);
 }
 
-bool TranslationMemory::Store(const wxString& string, 
+bool TranslationMemory::Store(const wxString& string,
                               const wxString& translation)
 {
-    DbKey key;
-    bool ok;
-    
-    key = m_dbOrig->Read(string);
-    if (key == DBKEY_ILLEGAL)
+    try
     {
-        key = m_dbTrans->Write(translation);
-        ok = (key != DBKEY_ILLEGAL) && m_dbOrig->Write(string, key);
-        if (ok)
+        DbKey key = m_dbOrig->Read(string);
+
+        if (key == DBKEY_ILLEGAL)
         {
+            key = m_dbTrans->Write(translation);
+            m_dbOrig->Write(string, key);
+
             wxArrayString words;
             StringToWordsArray(string, words);
-            size_t sz = words.GetCount();
+            const size_t sz = words.GetCount();
             for (size_t i = 0; i < sz; i++)
                 m_dbWords->Append(words[i], sz, key);
-        }
-        return ok;
-    }
-    else
-    {
-        wxArrayString *t = m_dbTrans->Read(key);
-        if (!t)
-            return false;
-        if (t->Index(translation) == wxNOT_FOUND)
-        {
-            t->Add(translation);
-            DbKey key2 = m_dbTrans->Write(t, key);
-            ok = (key2 != DBKEY_ILLEGAL);
+
+            return true;
         }
         else
-            ok = true;
-        delete t;
-        return ok;
+        {
+            std::auto_ptr<wxArrayString> t(m_dbTrans->Read(key));
+            if (!t.get())
+                return false;
+
+            if (t->Index(translation) == wxNOT_FOUND)
+            {
+                t->Add(translation);
+                m_dbTrans->Write(t.get(), key);
+            }
+
+            return true;
+        }
+    }
+    catch ( const DbException& e )
+    {
+        ReportDbError(e);
+        return false;
     }
 }
 
@@ -844,41 +809,48 @@ int TranslationMemory::Lookup(const wxString& string, wxArrayString& results)
 {
     results.Clear();
 
-    // First of all, try exact match:
-    DbKey key = m_dbOrig->Read(string);
-    if (key != DBKEY_ILLEGAL)
+    try
     {
-        wxArrayString *a = m_dbTrans->Read(key);
-        if (a)
+        // First of all, try exact match:
+        DbKey key = m_dbOrig->Read(string);
+        if (key != DBKEY_ILLEGAL)
         {
-            WX_APPEND_ARRAY(results, (*a));
-            delete a;
-            return 100;
-        }
-    }
-    
-    // Then, try to find inexact one within defined limits
-    // (MAX_OMITS is max permitted number of unmatched words,
-    // MAX_DELTA is max difference in sentences lengths).
-    // Start with best matches first, continue to worse ones.
-    wxArrayString words;
-    StringToWordsArray(string, words);
-    for (unsigned omits = 0; omits <= m_maxOmits; omits++)
-    {
-        for (size_t delta = 0; delta <= m_maxDelta; delta++)
-        {
-            if (LookupFuzzy(words, results, omits, delta))
+            std::auto_ptr<wxArrayString> a(m_dbTrans->Read(key));
+            if (a.get())
             {
-                int score = 
-                    (m_maxOmits - omits) * 100 / (m_maxOmits + 1) +
-                    (m_maxDelta - delta) * 100 / 
-                            ((m_maxDelta + 1) * (m_maxDelta + 1));
-                return (score == 0) ? 1 : score;
+                WX_APPEND_ARRAY(results, (*a));
+                return 100;
             }
         }
+
+        // Then, try to find inexact one within defined limits
+        // (MAX_OMITS is max permitted number of unmatched words,
+        // MAX_DELTA is max difference in sentences lengths).
+        // Start with best matches first, continue to worse ones.
+        wxArrayString words;
+        StringToWordsArray(string, words);
+        for (unsigned omits = 0; omits <= m_maxOmits; omits++)
+        {
+            for (size_t delta = 0; delta <= m_maxDelta; delta++)
+            {
+                if (LookupFuzzy(words, results, omits, delta))
+                {
+                    int score =
+                        (m_maxOmits - omits) * 100 / (m_maxOmits + 1) +
+                        (m_maxDelta - delta) * 100 / 
+                                ((m_maxDelta + 1) * (m_maxDelta + 1));
+                    return (score == 0) ? 1 : score;
+                }
+            }
+        }
+
+        return 0;
     }
-    
-    return 0;
+    catch ( const DbException& e )
+    {
+        ReportDbError(e);
+        return 0;
+    }
 }
 
 
@@ -928,70 +900,79 @@ bool TranslationMemory::LookupFuzzy(const wxArrayString& words,
     bool *mask = new bool[cnt];
     size_t *omitted = new size_t[omits];
 
-    for (missing = 0, slot = 0, i = 0; i < cnt; i++)
+    try
     {
-        keys[i] = NULL; // so that unused entries are NULL
-        keys[slot] = m_dbWords->Read(words[i], cnt + delta);
-        if (keys[slot])
-            slot++;
-        else
-            missing++;
-    }
-
-    if (missing >= cnt || missing > omits)
-        RETURN_WITH_CLEANUP(false)
-    cnt -= missing;
-    omits -= missing;
-
-    if (omits == 0)
-    {
-        for (i = 0; i < cnt; i++) mask[i] = true;
-        DbKeys *result = UnionOfDbKeys(cnt, keys, mask);
-        if (result != NULL)
+        for (missing = 0, slot = 0, i = 0; i < cnt; i++)
         {
-            wxArrayString *a;
-            for (i = 0; i < result->Count; i++)
-            {
-                a = m_dbTrans->Read(result->List[i]);
-                if (a)
-                {
-                    WX_APPEND_ARRAY(results, (*a));
-                    delete a;
-                }
-            }
-            delete result;
-            RETURN_WITH_CLEANUP(true)
+            keys[i] = NULL; // so that unused entries are NULL
+            keys[slot] = m_dbWords->Read(words[i], cnt + delta);
+            if (keys[slot])
+                slot++;
+            else
+                missing++;
         }
-    } 
-    else
-    {
-        DbKeys *result;
-        size_t depth = omits - 1;
-        for (i = 0; i < omits; i++) omitted[i] = i;
-        for (;;)
+
+        if (missing >= cnt || missing > omits)
+            RETURN_WITH_CLEANUP(false)
+        cnt -= missing;
+        omits -= missing;
+
+        if (omits == 0)
         {
             for (i = 0; i < cnt; i++) mask[i] = true;
-            for (i = 0; i < omits; i++) mask[omitted[i]] = false;
-
-            result = UnionOfDbKeys(cnt, keys, mask);
+            DbKeys *result = UnionOfDbKeys(cnt, keys, mask);
             if (result != NULL)
             {
-                wxArrayString *a;
                 for (i = 0; i < result->Count; i++)
                 {
-                    a = m_dbTrans->Read(result->List[i]);
-                    WX_APPEND_ARRAY(results, (*a));
-                    delete a;
+                    wxArrayString *a = m_dbTrans->Read(result->List[i]);
+                    if (a)
+                    {
+                        WX_APPEND_ARRAY(results, (*a));
+                        delete a;
+                    }
                 }
                 delete result;
                 RETURN_WITH_CLEANUP(true)
             }
-            
-            if (!AdvanceCycle(omitted, depth, cnt)) break;
         }
-    }
+        else
+        {
+            DbKeys *result;
+            size_t depth = omits - 1;
+            for (i = 0; i < omits; i++) omitted[i] = i;
+            for (;;)
+            {
+                for (i = 0; i < cnt; i++) mask[i] = true;
+                for (i = 0; i < omits; i++) mask[omitted[i]] = false;
 
-    RETURN_WITH_CLEANUP(false)
+                result = UnionOfDbKeys(cnt, keys, mask);
+                if (result != NULL)
+                {
+                    for (i = 0; i < result->Count; i++)
+                    {
+                        wxArrayString *a = m_dbTrans->Read(result->List[i]);
+                        if (a)
+                        {
+                            WX_APPEND_ARRAY(results, (*a));
+                            delete a;
+                        }
+                    }
+                    delete result;
+                    RETURN_WITH_CLEANUP(true)
+                }
+
+                if (!AdvanceCycle(omitted, depth, cnt)) break;
+            }
+        }
+
+        RETURN_WITH_CLEANUP(false)
+    }
+    catch ( const DbException& e )
+    {
+        ReportDbError(e);
+        RETURN_WITH_CLEANUP(false);
+    }
 
     #undef RETURN_WITH_CLEANUP
 }

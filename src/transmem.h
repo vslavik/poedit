@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2007 Vaclav Slavik
+ *  Copyright (C) 2001-2010 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -76,8 +76,6 @@ class TranslationMemory
         static TranslationMemory *Create(const wxString& language);
 
         void Release();
-
-        ~TranslationMemory();
 
         /// Returns language of the catalog.
         wxString GetLanguage() const { return m_lang; }
@@ -155,6 +153,9 @@ class TranslationMemory
          */
         bool LookupFuzzy(const wxArrayString& words, wxArrayString& results, 
                          unsigned omits, int delta);
+
+    private:
+        ~TranslationMemory();
         
     private:
         DbTrans *m_dbTrans;

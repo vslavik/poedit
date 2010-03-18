@@ -214,7 +214,7 @@ fi
 AM_CONDITIONAL(USE_WINDOWS, test $use_windows = yes)
 
 if test x$USE_TRANSMEM != xno ; then
-    AX_BERKELEY_DB(4.1,
+    AX_BERKELEY_DB_CXX(4.1,
     [
         AC_DEFINE(USE_TRANSMEM)
         AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
