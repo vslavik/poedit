@@ -227,6 +227,11 @@ if test x$USE_TRANSMEM != xno ; then
 fi
 
 
+if test "x$GXX" == "xyes"; then
+    AX_CXX_CHECK_FLAG([-Wall],[],[], [CXXFLAGS="$CXXFLAGS -Wall"])
+    AX_CXX_CHECK_FLAG([-Wextra],[],[], [CXXFLAGS="$CXXFLAGS -Wextra"])
+fi
+
 CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 
 
