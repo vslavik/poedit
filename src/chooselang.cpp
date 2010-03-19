@@ -138,6 +138,7 @@ wxLanguage ChooseLanguage()
         { _T("Romanian"), wxLANGUAGE_ROMANIAN },
         { _T("Russian"), wxLANGUAGE_RUSSIAN },
         { _T("Serbian"), wxLANGUAGE_SERBIAN },
+        { _T("Serbian (Latin)"), wxLANGUAGE_SERBIAN_LATIN },
         { _T("Slovak"), wxLANGUAGE_SLOVAK },
         { _T("Slovenian"), wxLANGUAGE_SLOVENIAN },
         { _T("Spanish"), wxLANGUAGE_SPANISH },
@@ -149,6 +150,9 @@ wxLanguage ChooseLanguage()
         { _T("Turkish"), wxLANGUAGE_TURKISH },
         { _T("Ukrainian"), wxLANGUAGE_UKRAINIAN },
         { _T("Urdu"), wxLANGUAGE_URDU },
+        { _T("Uyghur"), wxLANGUAGE_UIGHUR },
+        { _T("Uzbek"), wxLANGUAGE_UZBEK },
+        { _T("Vietnamese"), wxLANGUAGE_VIETNAMESE },
         { _T(""), wxLANGUAGE_UNKNOWN }
     };
 
