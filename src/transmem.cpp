@@ -203,7 +203,7 @@ class DbBase
 {
     public:
         /// Ctor.
-        DbBase(const wxString& filename, DBTYPE type);
+        DbBase(DbEnv *env, const wxString& filename, DBTYPE type);
 
         void Release();
 
@@ -217,7 +217,8 @@ class DbBase
 class DbTrans : public DbBase
 {
     public:
-        DbTrans(const wxString& path) : DbBase(path + _T("translations.db"), DB_RECNO) {}
+        DbTrans(DbEnv *env, const wxString& path)
+            : DbBase(env, path + _T("translations.db"), DB_RECNO) {}
 
         /** Writes array of translations for entry \a index to DB.
             \param strs   array of UTF-8 encoded strings to save 
@@ -247,7 +248,8 @@ class DbTrans : public DbBase
 class DbOrig : public DbBase
 {
     public:
-        DbOrig(const wxString& path) : DbBase(path + _T("strings.db"), DB_HASH) {}
+        DbOrig(DbEnv *env, const wxString& path)
+            : DbBase(env, path + _T("strings.db"), DB_HASH) {}
         
         /** Returns index of string \a str or \c DBKEY_ILLEGAL if not found.
             Returned index can be used with DbTrans::Write and DbTrans::Read
@@ -270,7 +272,8 @@ class DbOrig : public DbBase
 class DbWords : public DbBase
 {
     public:
-        DbWords(const wxString& path) : DbBase(path + _T("words.db"), DB_HASH) {}
+        DbWords(DbEnv *env, const wxString& path)
+            : DbBase(env, path + _T("words.db"), DB_HASH) {}
         
         /** Reads list of DbTrans indexes of translations of which
             original strings contained \a word and were \a sentenceSize
@@ -291,14 +294,18 @@ class DbWords : public DbBase
 
 
 
-DbBase::DbBase(const wxString& filename, DBTYPE type)
-    : m_db(NULL, 0)
+DbBase::DbBase(DbEnv *env, const wxString& filename, DBTYPE type)
+    : m_db(env, 0)
 {
     m_db.open(NULL,
-              filename.mb_str(wxConvUTF8),
+#ifdef __WINDOWS__
+              filename.utf8_str(),
+#else
+              filename.fn_str(),
+#endif
               NULL,
               type,
-              DB_CREATE,
+              DB_CREATE | DB_AUTO_COMMIT,
               0);
 }
 
@@ -648,11 +655,66 @@ namespace
 
 typedef std::set<TranslationMemory*> TranslationMemories;
 TranslationMemories ms_instances;
+DbEnv *gs_dbEnv = NULL;
+
 
 void ReportDbError(const DbException& e)
 {
     wxString what(e.what(), wxConvLocal);
     wxLogError(_("Translation memory database error: %s"), what.c_str());
+}
+
+
+DbEnv *CreateDbEnv(const wxString& path)
+{
+    wxLogTrace(_T("poedit.tm"),
+               _T("initializing BDB environment in %s"),
+               path.c_str());
+
+    const u_int32_t flags =
+        DB_INIT_MPOOL | DB_INIT_LOG | DB_INIT_TXN | DB_RECOVER | DB_CREATE;
+
+    std::auto_ptr<DbEnv> env(new DbEnv(0));
+#ifdef __WINDOWS__
+    env->open(path.utf8_str(), flags, 0600);
+#else
+    env->open(path.fn_str(), flags, 0600);
+#endif
+
+    // This prevents the log from growing indefinitely
+    env->log_set_config(DB_LOG_AUTO_REMOVE, 1);
+
+    return env.release();
+}
+
+
+void DestroyDbEnv(DbEnv *env)
+{
+    try
+    {
+        const char *dbpath_c;
+        gs_dbEnv->get_home(&dbpath_c);
+        std::string dbpath(dbpath_c);
+
+        wxLogTrace(_T("poedit.tm"),
+                   _T("closing and removing BDB environment in %s"),
+                   wxString(dbpath.c_str(), wxConvUTF8).c_str());
+
+        gs_dbEnv->close(0);
+
+        // Clean up temporary environment files (unless they're still in use):
+        DbEnv env2(0);
+        env2.remove(dbpath.c_str(), 0);
+
+        wxLogTrace(_T("poedit.tm"),
+                   _T("closed and removed BDB environment"));
+    }
+    catch ( const DbException& e)
+    {
+        ReportDbError(e);
+    }
+
+    delete env;
 }
 
 } // anonymous namespace
@@ -684,6 +746,9 @@ TranslationMemory *TranslationMemory::Create(const wxString& language)
 
     try
     {
+        if ( !gs_dbEnv )
+            gs_dbEnv = CreateDbEnv(GetDatabaseDir());
+
         TranslationMemory *tm = new TranslationMemory(language, dbPath);
         ms_instances.insert(tm);
         return tm;
@@ -719,6 +784,12 @@ void TranslationMemory::Release()
 
         ms_instances.erase(this);
         delete this;
+
+        if ( gs_dbEnv && ms_instances.empty() && gs_dbEnv )
+        {
+            DestroyDbEnv(gs_dbEnv);
+            gs_dbEnv = NULL;
+        }
     }
 }
 
@@ -736,9 +807,9 @@ TranslationMemory::TranslationMemory(const wxString& language,
         m_dbOrig = NULL;
         m_dbWords = NULL;
 
-        m_dbTrans = new DbTrans(dbPath);
-        m_dbOrig = new DbOrig(dbPath);
-        m_dbWords = new DbWords(dbPath);
+        m_dbTrans = new DbTrans(gs_dbEnv, dbPath);
+        m_dbOrig = new DbOrig(gs_dbEnv, dbPath);
+        m_dbWords = new DbWords(gs_dbEnv, dbPath);
     }
     catch ( ... )
     {
