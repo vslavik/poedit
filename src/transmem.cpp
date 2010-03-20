@@ -705,7 +705,7 @@ static DbKeys *UnionOfDbKeys(size_t cnt, DbKeys *keys[], bool mask[])
 }
 
 
-static inline wxString GetDBPath(const wxString& p, const wxString& l)
+static inline wxString MakeLangDbPath(const wxString& p, const wxString& l)
 {
     if (!wxDirExists(p))
         return wxEmptyString;
@@ -739,12 +739,12 @@ TranslationMemories ms_instances;
 
 } // anonymous namespace
 
-/*static*/ TranslationMemory *TranslationMemory::Create(
-                      const wxString& language, const wxString& path)
+/*static*/
+TranslationMemory *TranslationMemory::Create(const wxString& language)
 {
-    wxString dbPath = GetDBPath(path, language);
+    wxString dbPath = MakeLangDbPath(GetDatabaseDir(), language);
     if (!dbPath)
-        dbPath = path + _T("/") + language;
+        dbPath = GetDatabaseDir() + wxFILE_SEP_PATH + language;
 
     if ( !wxFileName::Mkdir(dbPath, 0700, wxPATH_MKDIR_FULL) )
     {
@@ -804,10 +804,9 @@ TranslationMemory::~TranslationMemory()
     delete m_dbWords;
 }
 
-/*static*/ bool TranslationMemory::IsSupported(const wxString& lang,
-                                               const wxString& path)
+/*static*/ bool TranslationMemory::IsSupported(const wxString& lang)
 {
-    return !!GetDBPath(path, lang);
+    return !!MakeLangDbPath(GetDatabaseDir(), lang);
 }
 
 bool TranslationMemory::Store(const wxString& string, 

@@ -913,7 +913,6 @@ TranslationMemory *PoeditFrame::GetTransMem()
     else
     {
         wxString lang;
-        wxString dbPath = cfg->Read(_T("TM/database_path"), wxEmptyString);
 
         lang = m_catalog->GetLocaleCode();
         if (!lang)
@@ -937,9 +936,9 @@ TranslationMemory *PoeditFrame::GetTransMem()
                 lang = lngs[index];
         }
 
-        if (!lang.empty() && TranslationMemory::IsSupported(lang, dbPath))
+        if (!lang.empty() && TranslationMemory::IsSupported(lang))
         {
-            m_transMem = TranslationMemory::Create(lang, dbPath);
+            m_transMem = TranslationMemory::Create(lang);
             if (m_transMem)
                 m_transMem->SetParams(cfg->Read(_T("TM/max_delta"), 2),
                                       cfg->Read(_T("TM/max_omitted"), 2));

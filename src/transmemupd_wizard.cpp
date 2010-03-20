@@ -174,8 +174,7 @@ END_EVENT_TABLE()
 
 
 
-void RunTMUpdateWizard(wxWindow *parent,
-                       const wxString& dbPath, const wxArrayString& langs)
+void RunTMUpdateWizard(wxWindow *parent, const wxArrayString& langs)
 {
     for (size_t i = 0; i < langs.GetCount(); i++)
     {
@@ -193,8 +192,7 @@ void RunTMUpdateWizard(wxWindow *parent,
             return;
         }
 
-        TranslationMemory *tm = 
-            TranslationMemory::Create(langs[i], dbPath);
+        TranslationMemory *tm = TranslationMemory::Create(langs[i]);
         if (tm)
         {
             ProgressInfo pi(parent);

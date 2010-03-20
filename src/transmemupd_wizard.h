@@ -36,11 +36,8 @@ class WXDLLIMPEXP_FWD_BASE wxString;
 class WXDLLIMPEXP_FWD_BASE wxArrayString;
 class WXDLLIMPEXP_FWD_CORE wxWindow;
 
-/** Runs a wizard to setup update of TM stored in \a dbPath with languages
-    \a langs.
- */
-void RunTMUpdateWizard(wxWindow *parent,
-                       const wxString& dbPath, const wxArrayString& langs);
+/// Runs a wizard to setup update of TM  with languages \a langs.
+void RunTMUpdateWizard(wxWindow *parent, const wxArrayString& langs);
 
 #endif // USE_TRANSMEM
 

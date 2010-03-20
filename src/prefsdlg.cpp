@@ -371,16 +371,10 @@ void PreferencesDialog::OnTMBrowseDbPath(wxCommandEvent& event)
 
 void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
 {
-    wxString dbPath = XRCCTRL(*this, "tm_dbpath", wxTextCtrl)->GetValue();
-        // VS: we can't get it from TM/database_path key in wxConfig object
-        //     because it wasn't update yet with information from the dialog
-        //     (which happens when the users presses OK) but we still won't
-        //     to use the path entered by the user...
-
     wxArrayString langs;
     XRCCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
 
-    RunTMUpdateWizard(this, dbPath, langs);
+    RunTMUpdateWizard(this, langs);
 }
 
 #endif // USE_TRANSMEM
