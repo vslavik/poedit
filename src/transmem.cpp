@@ -28,8 +28,14 @@
  */
 
 #include <wx/wxprec.h>
+#include <wx/string.h>
+#include <wx/stdpaths.h>
+#include <wx/filename.h>
+#include <wx/config.h>
+#include <wx/tokenzr.h>
 
 #include <set>
+#include <memory>
 
 /** \page db_desc Translation Memory Algorithms
 
@@ -998,6 +1004,67 @@ bool TranslationMemory::LookupFuzzy(const wxArrayString& words,
     RETURN_WITH_CLEANUP(false)
 
     #undef RETURN_WITH_CLEANUP
+}
+
+
+/*static*/
+wxString TranslationMemory::GetDatabaseDir()
+{
+    wxString data;
+#if defined(__UNIX__) && !defined(__WXMAC__)
+    if ( !wxGetEnv(_T("XDG_DATA_HOME"), &data) )
+        data = wxGetHomeDir() + _T("/.local/share");
+    data += _T("/poedit");
+#else
+    data = wxStandardPaths::Get().GetUserDataDir();
+#endif
+
+    data += wxFILE_SEP_PATH;
+    data += _T("TM");
+    return data;
+}
+
+/*static*/
+void TranslationMemory::MoveLegacyDbIfNeeded()
+{
+    wxASSERT_MSG( ms_instances.empty(),
+                  _T("TM cannot be migrated if already in use") );
+
+    wxConfigBase *cfg = wxConfig::Get();
+
+    const wxString oldPath = cfg->Read(_T("/TM/database_path"), _T(""));
+    const wxString newPath = GetDatabaseDir();
+
+    if ( oldPath == newPath )
+        return; // already in the right location, nothing to do
+
+    wxLogTrace(_T("poedit.tm"),
+               _T("moving TM database from old location \"%s\" to \"%s\""),
+               oldPath.c_str(), newPath.c_str());
+
+    const wxString tmLangsStr = cfg->Read(_T("/TM/languages"), _T(""));
+    wxStringTokenizer tmLangs(tmLangsStr, _T(":"));
+    wxLogTrace(_T("poedit.tm"),
+               _T("languages to move: %s"), tmLangsStr.c_str());
+
+    while ( tmLangs.HasMoreTokens() )
+    {
+        const wxString lang = tmLangs.GetNextToken();
+
+        if ( !wxFileName::Mkdir(newPath, 0700, wxPATH_MKDIR_FULL) )
+            return; // error
+        if ( !wxRenameFile(oldPath + wxFILE_SEP_PATH + lang,
+                           newPath + wxFILE_SEP_PATH + lang) )
+            return; // error
+    }
+
+    // intentionally don't delete the old path recursively, the user may have
+    // pointed it to a location with their own files:
+    wxFileName::Rmdir(oldPath);
+
+    // For now, keep the config setting, even though it's obsolete, just in
+    // case some users downgrade. (FIXME)
+    cfg->Write(_T("/TM/database_path"), newPath);
 }
 
 #endif // USE_TRANSMEM

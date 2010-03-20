@@ -62,7 +62,7 @@
 #include "chooselang.h"
 #include "icons.h"
 #include "version.h"
-
+#include "transmem.h"
 
 IMPLEMENT_APP(PoeditApp);
 
@@ -180,6 +180,11 @@ bool PoeditApp::OnInit()
     // so that help menu is correctly merged with system-provided menu
     // (see http://sourceforge.net/tracker/index.php?func=detail&aid=1600747&group_id=9863&atid=309863)
     s_macHelpMenuTitleName = _("&Help");
+#endif
+
+#ifdef USE_TRANSMEM
+    // NB: It's important to do this before TM is used for the first time.
+    TranslationMemory::MoveLegacyDbIfNeeded();
 #endif
 
     // NB: opening files or creating empty window is handled differently on

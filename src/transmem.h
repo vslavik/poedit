@@ -118,7 +118,17 @@ class TranslationMemory
          */
         void SetParams(size_t maxDelta, size_t maxOmits)
             { m_maxDelta = maxDelta, m_maxOmits = maxOmits; }
-        
+
+        // Return location of TM database files
+        static wxString GetDatabaseDir();
+
+        /**
+            Moves the TM from old location (user-configurable,
+            /TM/database_path in config) to a standard OS-specific location.
+         */
+        static void MoveLegacyDbIfNeeded();
+
+
     protected:
         /// Real ctor.
         TranslationMemory(const wxString& language, 
