@@ -60,7 +60,6 @@ class PreferencesDialog : public wxDialog
 
 #ifdef USE_TRANSMEM
         void OnTMAddLang(wxCommandEvent& event);
-        void OnTMBrowseDbPath(wxCommandEvent& event);
         void OnTMGenerate(wxCommandEvent& event);
 #endif
 

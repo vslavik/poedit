@@ -158,9 +158,6 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
         list->SetSelection(0);
 
 #ifdef USE_TRANSMEM        
-    XRCCTRL(*this, "tm_dbpath", wxTextCtrl)->SetValue(
-                cfg->Read(_T("TM/database_path"), wxEmptyString));
-
     wxStringTokenizer tkn(cfg->Read(_T("TM/languages"), wxEmptyString), _T(":"));
     wxArrayString langs;
     while (tkn.HasMoreTokens()) langs.Add(tkn.GetNextToken());
@@ -233,8 +230,6 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
         languages << langs[i];
     }
     cfg->Write(_T("TM/languages"), languages);
-    cfg->Write(_T("TM/database_path"),
-                XRCCTRL(*this, "tm_dbpath", wxTextCtrl)->GetValue());
     cfg->Write(_T("TM/max_omitted"), 
                 (long)XRCCTRL(*this, "tm_omits", wxSpinCtrl)->GetValue());
     cfg->Write(_T("TM/max_delta"), 
@@ -259,7 +254,6 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
    EVT_BUTTON(XRCID("fontpicker_text"), PreferencesDialog::OnChooseTextFont)
 #ifdef USE_TRANSMEM
    EVT_BUTTON(XRCID("tm_addlang"), PreferencesDialog::OnTMAddLang)
-   EVT_BUTTON(XRCID("tm_browsedbpath"), PreferencesDialog::OnTMBrowseDbPath)
    EVT_BUTTON(XRCID("tm_generate"), PreferencesDialog::OnTMGenerate)
 #endif
 #if NEED_CHOOSELANG_UI
@@ -358,14 +352,6 @@ void PreferencesDialog::OnTMAddLang(wxCommandEvent& event)
         a.Add(isoLanguages[index].iso);
         XRCCTRL(*this, "tm_langs", wxEditableListBox)->SetStrings(a);
     }
-}
-
-void PreferencesDialog::OnTMBrowseDbPath(wxCommandEvent& event)
-{
-    wxDirDialog dlg(this, _("Select directory"), 
-                    XRCCTRL(*this, "tm_dbpath", wxTextCtrl)->GetValue());
-    if (dlg.ShowModal() == wxID_OK)
-        XRCCTRL(*this, "tm_dbpath", wxTextCtrl)->SetValue(dlg.GetPath());
 }
 
 
