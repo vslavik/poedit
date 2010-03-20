@@ -746,7 +746,7 @@ TranslationMemories ms_instances;
     if (!dbPath)
         dbPath = path + _T("/") + language;
 
-    if ( !wxFileName::Mkdir(dbPath, 0777, wxPATH_MKDIR_FULL) )
+    if ( !wxFileName::Mkdir(dbPath, 0700, wxPATH_MKDIR_FULL) )
     {
         wxLogError(_("Cannot create database directory!"));
         return NULL;
