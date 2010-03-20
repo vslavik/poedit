@@ -334,19 +334,6 @@ void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
 
     if (cfg->Read(_T("version"), wxEmptyString) == GetAppVersion()) return;
 
-    if (cfg->Read(_T("TM/database_path"), wxEmptyString).empty())
-    {
-        wxString dbpath;
-#if defined(__WXMAC__)
-        dbpath = wxStandardPaths::Get().GetUserDataDir() + _T("/tm");
-#elif defined(__UNIX__)
-        dbpath = wxGetHomeDir() + _T("/.poedit/tm");
-#elif defined(__WXMSW__)
-        dbpath = wxGetHomeDir() + _T("\\poedit_tm");
-#endif
-        cfg->Write(_T("TM/database_path"), dbpath);
-    }
-
     if (cfg->Read(_T("TM/search_paths"), wxEmptyString).empty())
     {
         wxString paths;
