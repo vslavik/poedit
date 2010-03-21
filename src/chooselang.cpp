@@ -121,6 +121,7 @@ wxLanguage ChooseLanguage()
         { _T("Irish"), wxLANGUAGE_IRISH },
         { _T("Italian"), wxLANGUAGE_ITALIAN },
         { _T("Japanese"), wxLANGUAGE_JAPANESE },
+        { _T("Kazakh"), wxLANGUAGE_KAZAKH },
         { _T("Korean"), wxLANGUAGE_KOREAN },
         { _T("Kurdish"), wxLANGUAGE_KURDISH },
         { _T("Kyrgyz"), wxLANGUAGE_KIRGHIZ },
