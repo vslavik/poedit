@@ -1540,7 +1540,8 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary,
     {
         if ( !Merge(&newcat) )
             return false;
-        CreateNewHeader(newcat.Header());
+        if ( replace_header )
+            CreateNewHeader(newcat.Header());
         return true;
     }
     else
