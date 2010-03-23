@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Art provider classes
- *
  */
 
 #ifndef _ICONS_H_

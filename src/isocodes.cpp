@@ -21,11 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  This file contains languages & countries names and 2-letter codes as
- *  defined by ISO 639 and ISO 3166 standards.
- *
  */
 
 #include <wx/wxprec.h>

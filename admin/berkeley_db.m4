@@ -12,7 +12,6 @@ dnl      #include DB_HEADER
 dnl in your C++ code. DB_LIBS is set to linker flags needed to link against
 dnl the library (e.g. -ldb_cxx-4.1) and AC_SUBST is called on it.
 dnl
-dnl @version $Id$
 dnl @author Vaclav Slavik <vslavik@fastmail.fm>
 dnl
 AC_DEFUN([AX_BERKELEY_DB_CXX],
