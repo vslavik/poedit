@@ -822,7 +822,7 @@ static GtkTextView *GetTextView(wxTextCtrl *ctrl)
 #endif // __WXOSX__
 
 #ifdef __WXGTK__
-static void DoInitSpellchecker(wxTextCtrl *text,
+static bool DoInitSpellchecker(wxTextCtrl *text,
                                bool enable, const wxString& lang)
 {
     GtkTextView *textview = GetTextView(text);
@@ -853,6 +853,8 @@ static void DoInitSpellchecker(wxTextCtrl *text,
 
     if (err)
         g_error_free(err);
+
+    return err == NULL;
 }
 #endif // __WXGTK__
 
@@ -868,18 +870,35 @@ static bool SetSpellcheckerLang(const wxString& lang)
     return SpellChecker_SetLang(lang.mb_str(wxConvUTF8));
 }
 
-static void DoInitSpellchecker(wxTextCtrl *text,
+static bool DoInitSpellchecker(wxTextCtrl *text,
                                bool enable, const wxString& /*lang*/)
 {
     text->MacCheckSpelling(enable);
+    return true;
 }
 #endif // __WXOSX__
+
+static void ShowSpellcheckerHelp()
+{
+#if defined(__WXOSX__)
+    #define SPELL_HELP_PAGE   "SpellcheckerMac"
+#elif defined(__UNIX__)
+    #define SPELL_HELP_PAGE   "SpellcheckerLinux"
+#else
+    #error "missing spellchecker instructions for platform"
+#endif
+    wxLaunchDefaultBrowser(
+        wxString::FromAscii("http://www.poedit.net/trac/wiki/Doc/"
+                            SPELL_HELP_PAGE));
+}
 
 #endif // USE_SPELLCHECKING
 
 void PoeditFrame::InitSpellchecker()
 {
 #ifdef USE_SPELLCHECKING
+    bool report_problem = false;
+
     wxString lang;
     if (m_catalog) lang = m_catalog->GetLocaleCode();
     bool enabled = m_catalog && !lang.empty() &&
@@ -888,12 +907,46 @@ void PoeditFrame::InitSpellchecker()
 
 #ifdef __WXOSX__
     if (enabled)
-        enabled = SetSpellcheckerLang(lang);
+    {
+        if ( !SetSpellcheckerLang(lang) )
+        {
+            enabled = false;
+            report_problem = true;
+        }
+    }
 #endif
 
-    DoInitSpellchecker(m_textTrans, enabled, lang);
+    if ( !DoInitSpellchecker(m_textTrans, enabled, lang) )
+        report_problem = true;
+
     for (size_t i = 0; i < m_textTransPlural.size(); i++)
-        DoInitSpellchecker(m_textTransPlural[i], enabled, lang);
+    {
+        if ( !DoInitSpellchecker(m_textTransPlural[i], enabled, lang) )
+            report_problem = true;
+    }
+
+    if ( enabled && report_problem )
+    {
+        wxString langname = LookupLanguageName(lang);
+        if ( !langname )
+            langname = lang;
+
+        AttentionMessage msg
+        (
+            _T("missing-spell-dict"),
+            AttentionMessage::Warning,
+            wxString::Format
+            (
+                // TRANSLATORS: %s is language name in its basic form (as you
+                // would see e.g. in a list of supported languages).
+                _("Spellchecker dictionary for %s isn't available, you need to install it."),
+                langname.c_str()
+            )
+        );
+        msg.AddAction(_("Learn more"), boost::bind(ShowSpellcheckerHelp));
+        msg.AddDontShowAgain();
+        m_attentionBar->ShowMessage(msg);
+    }
 #endif // USE_SPELLCHECKING
 }
 

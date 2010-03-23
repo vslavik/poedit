@@ -36,5 +36,7 @@ extern LanguageStruct isoCountries[];
 extern const wxChar *LookupLanguageCode(const wxString& language);
 extern const wxChar *LookupCountryCode(const wxString& country);
 
+extern const wxChar *LookupLanguageName(const wxString& code);
+
 extern bool IsKnownLanguageCode(const wxString& code);
 extern bool IsKnownCountryCode(const wxString& code);

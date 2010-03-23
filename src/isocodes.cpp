@@ -484,6 +484,11 @@ const wxChar *LookupCountryCode(const wxString& country)
     return DoLookupByLang(country.c_str(), isoCountries);
 }
 
+const wxChar *LookupLanguageName(const wxString& code)
+{
+    return DoLookupByIso(code.c_str(), isoLanguages);
+}
+
 bool IsKnownLanguageCode(const wxString& code)
 {
     return DoLookupByIso(code.c_str(), isoLanguages) != NULL;
