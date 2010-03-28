@@ -29,12 +29,9 @@
 #define VERSION          "1.4.6"
 #define VERSION_FULL     "1.4.6"
 
-; FIXME: extract this from manifest file somehow?
-#define CRT_VERSION      "8.0.50727.762"
-#define CRT_HASH1        "1fc8b3b9a1e18e3b"
-#define CRT_HASH2        "6b128700"
-#define ASSEMBLY         "x86_Microsoft.VC80.CRT_" + CRT_HASH1 + "_" + CRT_VERSION + "_x-ww_" + CRT_HASH2
-#define WINDIR           GetEnv("WINDIR")
+#ifndef CRT_REDIST
+#define CRT_REDIST       "C:\Program Files\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT"
+#endif
 
 #include "poedit-locale-files.iss"
 
@@ -102,8 +99,8 @@ Source: NEWS; DestDir: {app}\doc; DestName: news.txt; Components: docs
 Source: icons\ui\*.png; DestDir: {app}\share\poedit\icons; Components: core
 Source: icons\win32\xp\*.ico; DestDir: {app}\share\poedit\icons; Components: core; OnlyBelowVersion: 0,6.0.6000
 Source: icons\win32\vista\*.ico; DestDir: {app}\share\poedit\icons; Components: core; MinVersion: 0,6.0.6000
-Source: {#WINDIR}\WinSxS\Manifests\{#ASSEMBLY}.manifest; DestDir: {app}\bin; Components: core; DestName: Microsoft.VC80.CRT.manifest
-Source: {#WINDIR}\WinSxS\{#ASSEMBLY}\*.dll; DestDir: {app}\bin; Components: core
+Source: {#CRT_REDIST}\Microsoft.*.CRT.manifest; DestDir: {app}\bin; Components: core
+Source: {#CRT_REDIST}\*.dll; DestDir: {app}\bin; Components: core
 #emit LocaleFiles
 
 [InstallDelete]
@@ -154,4 +151,3 @@ Name: i18n; Description: Localization files for the UI; Types: full
 
 [Messages]
 BeveledLabel=http://www.poedit.net
-
