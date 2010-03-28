@@ -2,42 +2,46 @@
 <!-- $Id$ -->
 
 <makefile>
-    <include file="presets/simple.bkl"/>
+    <set var="WX_UNICODE">1</set>
+
     <include file="presets/wx.bkl"/>
 
     <set-srcdir>..</set-srcdir>
 
-    <set var="BUILDDIR_PART">
-        $(substituteFromDict(DEBUG, {'1':'Debug','0':'Release'}))
-    </set>
+    <set var="DEPS">..\deps</set>
+    <set var="WX_DIR_DEFAULT">$(DEPS)/wx</set>
 
     <option name="WXRC">
-        <default-value>wxrc</default-value>
+        <default-value>$(DEPS)\wx\utils\wxrc\vc_mswu\wxrc</default-value>
         <description>Path to wxrc tool</description>
     </option>
 
     <option name="DB_PATH" category="path">
-        <default-value>./db</default-value>
+        <default-value>$(DEPS)\db</default-value>
         <description>Path to Berkeley DB tree</description>
     </option>
 
     <option name="DB_VERSION">
-        <default-value>45</default-value>
+        <default-value>48</default-value>
         <description>Version of Berkeley DB used</description>
     </option>
 
     <option name="BOOST_PATH" category="path">
-        <default-value>./boost</default-value>
+        <default-value>$(DEPS)\boost</default-value>
         <description>Path to directory with Boost libraries and headers</description>
     </option>
 
     <option name="WINSPARKLE_PATH" category="path">
-        <default-value>.</default-value>
+        <default-value>$(DEPS)\winsparkle</default-value>
         <description>Path to WinSparkle files</description>
     </option>
 
-    <set var="DB_INCLUDE_PATH">$(DB_PATH)/build_windows</set>
-    <set var="DB_LIB_PATH">$(DB_PATH)/build_windows/$(BUILDDIR_PART)</set>
+    <set var="BUILDDIR_PART">
+        $(substituteFromDict(WX_DEBUG, {'1':'Debug','0':'Release'}))
+    </set>
+
+    <set var="DB_INCLUDE_PATH">$(DB_PATH)\build_windows</set>
+    <set var="DB_LIB_PATH">$(DB_PATH)\build_windows\Win32\$(BUILDDIR_PART)_static</set>
     <set var="DB_LIB">libdb$(DB_VERSION)s</set>
 
     <!--
@@ -48,8 +52,22 @@
     </if>
     -->
 
+    <set var="XRC_FILES" hints="files" make_var="1">
+        ../src/resources/comment.xrc
+        ../src/resources/fileview.xrc
+        ../src/resources/find.xrc
+        ../src/resources/manager.xrc
+        ../src/resources/menus.xrc
+        ../src/resources/prefs.xrc
+        ../src/resources/progress.xrc
+        ../src/resources/properties.xrc
+        ../src/resources/summary.xrc
+        ../src/resources/tm_update.xrc
+        ../src/resources/toolbar.xrc
+    </set>
 
-    <exe id="poedit" template="simple,wx">
+
+    <exe id="poedit" template="wx">
         <app-type>gui</app-type>
 
         <define>USE_TRANSMEM</define>
@@ -88,20 +106,45 @@
             src/transmemupd_wizard.cpp
             src/pluralforms/pl_evaluate.cpp
             src/editlbox/editlbox.cpp
-            <!-- FIXME: handle this in a better way: -->
-            win32/$(BUILDDIR)/compiled_xrc.cpp
         </sources>
 
+        <if cond="FORMAT!='msvs2008prj'">
+            <!-- FIXME: handle this in a better way: -->
+            <sources>win32/$(BUILDDIR)/compiled_xrc.cpp</sources>
+        </if>
+
+        <if cond="FORMAT=='msvs2008prj'">
+            <sources>win32/compiled_xrc.cpp</sources>
+            <sources>src/resources/menus.xrc</sources>
+            <set var="_custom_build_files">
+                $(nativePaths('src/resources/menus.xrc'))
+            </set>
+            <set var="_custom_build_src_resources_menus_xrc">
+Compiling XRC resources...
+InputPath=..\src\resources\menus.xrc
+
+"..\win32\compiled_xrc.cpp" : $(';'.join(XRC_FILES.split()))
+$(TAB)$(WXRC) -v -c -o compiled_xrc.cpp $(XRC_FILES)
+            </set>
+        </if>
+
         <win32-res>src/poedit.rc</win32-res>
-           
+
         <runtime-libs>dynamic</runtime-libs>
+
+        <define>
+            $(substituteFromDict(WX_DEBUG,{'1':'','0':'NDEBUG'}))
+        </define>
+        <optimize>
+            $(substituteFromDict(WX_DEBUG,{'1':'off','0':'speed'}))
+        </optimize>
 
         <!-- always include debug information in PDB file: -->
         <debug-info>on</debug-info>
         <debug-runtime-libs>
-            $(substituteFromDict(DEBUG, {'1':'on','0':'off'}))
+            $(substituteFromDict(WX_DEBUG, {'1':'on','0':'off'}))
         </debug-runtime-libs>
-       
+
         <wx-lib>xrc</wx-lib>
         <wx-lib>adv</wx-lib>
         <wx-lib>html</wx-lib>
@@ -116,20 +159,6 @@
         </postlink-command>
         </if>
     </exe>
-
-    <set var="XRC_FILES" hints="files" make_var="1">
-        ../src/resources/comment.xrc
-        ../src/resources/fileview.xrc
-        ../src/resources/find.xrc
-        ../src/resources/manager.xrc
-        ../src/resources/menus.xrc
-        ../src/resources/prefs.xrc
-        ../src/resources/progress.xrc
-        ../src/resources/properties.xrc
-        ../src/resources/summary.xrc
-        ../src/resources/tm_update.xrc
-        ../src/resources/toolbar.xrc
-    </set>
 
     <set var="VARS_DONT_ELIMINATE" cond="FORMAT=='msvc'" append="1">
         XRC_FILES WXRC
