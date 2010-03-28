@@ -162,7 +162,7 @@
 #ifdef DB_HEADER
     #include DB_HEADER
 #else
-    #include <db.h>
+    #include <db_cxx.h>
 #endif
 
 #include "transmem.h"
