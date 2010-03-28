@@ -1,7 +1,7 @@
 ;
 ;   This file is part of Poedit (http://www.poedit.net)
 ;
-;   Copyright (C) 1999-2008 Vaclav Slavik
+;   Copyright (C) 1999-2010 Vaclav Slavik
 ;
 ;   Permission is hereby granted, free of charge, to any person obtaining a
 ;   copy of this software and associated documentation files (the "Software"),
@@ -73,8 +73,9 @@ AppVersion={#VERSION_FULL}
 AppContact=poedit-users@lists.sourceforge.net
 UninstallDisplayIcon={app}\bin\poedit.exe
 UninstallDisplayName=Poedit
-MinVersion=0,4.0.1381
+MinVersion=0,5.0.2195
 WizardSmallImageFile=icons\win32\installer_wizard_image.bmp
+AppPublisherURL=http://www.poedit.net/
 
 [LangOptions]
 ; make the installer use standard (WinXP, ...) fonts
@@ -82,20 +83,15 @@ DialogFontName=Tahoma
 DialogFontSize=8
 
 [Files]
-Source: win32\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
+Source: win32\Release\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
 Source: deps\gettext\COPYING; DestDir: {app}\doc; Components: docs; DestName: GNU_Gettext_COPYING.txt
-Source: deps\gettext\xgettext.exe; DestDir: {app}\bin; Components: core
-Source: deps\gettext\msgmerge.exe; DestDir: {app}\bin; Components: core
-Source: deps\gettext\msgunfmt.exe; DestDir: {app}\bin; Components: core
-Source: deps\gettext\msgfmt.exe; DestDir: {app}\bin; Components: core
-Source: deps\gettext\msgcat.exe; DestDir: {app}\bin; Components: core
-Source: deps\gettext\libintl-*.dll; DestDir: {app}\bin; Components: core
-Source: deps\gettext\libgettextlib-*.dll; DestDir: {app}\bin; Components: core
-Source: deps\gettext\libgettextsrc-*.dll; DestDir: {app}\bin; Components: core
-Source: deps\gettext\libcharset-*.dll; DestDir: {app}\bin; Components: core
-Source: deps\gettext\libiconv-*.dll; DestDir: {app}\bin; Components: core
-Source: deps\gettext\mingwm10.dll; DestDir: {app}\bin; Components: core
-Source: deps\gettext\pthreadGC2.dll; DestDir: {app}\bin; Components: core
+Source: deps\bin-gettext\bin\xgettext.exe; DestDir: {app}\bin; Components: core
+Source: deps\bin-gettext\bin\msgmerge.exe; DestDir: {app}\bin; Components: core
+Source: deps\bin-gettext\bin\msgunfmt.exe; DestDir: {app}\bin; Components: core
+Source: deps\bin-gettext\bin\msgfmt.exe; DestDir: {app}\bin; Components: core
+Source: deps\bin-gettext\bin\msgcat.exe; DestDir: {app}\bin; Components: core
+Source: deps\bin-gettext\bin\*.dll; DestDir: {app}\bin; Components: core
+Source: deps\db\build_windows\Win32\Release\libdb*.dll; DestDir: {app}\bin; Components: core
 Source: deps\winsparkle\WinSparkle.dll; DestDir: {app}\bin; Components: core
 Source: README; DestDir: {app}\doc; DestName: readme.txt; Components: docs
 Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit\help\en; Components: docs
