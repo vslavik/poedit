@@ -15,15 +15,6 @@ VERSION=1.4.6
 
 ./bootstrap
 
-(
-mkdir -p tmp-locale-update
-cd tmp-locale-update
-../configure
-(cd locales && make allmo)
-cd ..
-rm -rf tmp-locale-update
-)
-
 
 find_unix_files()
 {

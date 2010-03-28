@@ -7,3 +7,11 @@ autoconf
 
 make -C docs -f generate-docs.make
 make -C icons -f generate-icons.make
+
+if [ -d deps/wx/locale ] ; then
+    make -C deps/wx/locale allmo
+fi
+
+for i in locales/*.po ; do
+    msgfmt -c -o `echo $i | sed -e s/\.po/.mo/g` $i
+done
