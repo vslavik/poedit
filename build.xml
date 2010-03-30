@@ -1,0 +1,54 @@
+<project name="Poedit" default="compile">
+
+    <description>
+    Builds Poedit.
+    </description>
+
+    <property file="build.local.properties"/>
+    <property file="build.properties"/>
+
+    <condition property="is_osx">
+        <os family="mac"/>
+    </condition>
+    <condition property="is_windows">
+        <os family="windows"/>
+    </condition>
+
+
+    <target name="deps"
+            description="build Poedit dependencies">
+        <ant dir="deps"/>
+    </target>
+
+
+    <target name="compile"
+            description="compile all dependencies for building on this platform"
+            depends="compile-win"/>
+
+
+    <target name="distrib"
+            description="build distribution for this platform"
+            depends="distrib-win"/>
+
+
+<!-- ==============================================================
+     Windows build
+     ============================================================== -->
+
+    <target name="compile-win" if="is_windows">
+        <exec dir="win32" executable="${msvs.vcbuild}" failonerror="true">
+            <arg value="/platform:Win32"/>
+            <arg value="poedit.vcproj"/>
+            <arg value="Release"/>
+        </exec>
+    </target>
+
+
+    <target name="distrib-win" if="is_windows" depends="compile-win">
+        <exec dir="win32" executable="deps/inno-setup/iscc.exe" failonerror="true">
+            <arg value="poedit.iss"/>
+            <arg value="/dCRT_REDIST=${msvs.redist}"/>
+        </exec>
+    </target>
+
+</project>

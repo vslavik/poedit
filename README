@@ -36,8 +36,8 @@ Requirements:
     checking support
 
 
- Unix and OS X/Windows using GNU toolchain
--------------------------------------------
+ Unix
+------
 
 Do the usual thing:
     ./configure
@@ -47,11 +47,6 @@ This works on OS X (which is a standard BSD Unix system) and Windows with
 MinGW toolchain and MSYS shell installed. You must have the dependencies
 installed in a location configure will find, e.g. by setting CPPFLAGS and
 LDFLAGS appropriately.
-
-Win32 version is distributed as precompiled binary with gettext utilities
-included. You don't need wxWidgets for it. If you want to compile Poedit
-yourself, then the best way is to install Mingw and MSYS and use Unix
-way of building the library.
 
 
  Mac OS X
@@ -66,26 +61,40 @@ works if you used MacPorts to install gettext and so msgfmt is in
 directory will create disk image with the bundle.
 
 
- Windows using Visual Studio 2005 Express
+ Windows using Visual Studio 2008 Express
 ------------------------------------------
 
-Visual Studio makefile is in win32/ directory. Change to this directory
-and run "nmake -f makefile.vc [additional options]". The flags to set are
-documented near the top of the makefile. In particular, you have to set the
-WX_DIR variable to point to wxWidgets installation (by default, WXWIN
-environment variable is used), WXRC variable to point to wxWidget's wxrc.exe,
-point DB_PATH to Berkeley DB tree with compiled static library and set
-DB_VERSION to the version you use, if it differs from the setting in the
+Visual Studio makefile and project files are in win32/ directory; the project
+is the primary supported way, but the makefile allows you to customize location
+of 3rdparty software by setting variables documented near the top of the
 makefile.
 
-Once the program is compiled, you may wish to create the installer. Inno Setup
-is used for installation on Windows and it's made to use the VS2005 binaries.
-In order to compile the installer, you must first copy gettext binaries to
-deps/gettext directory - if you don't, the installer will report errors.
+The simplest way of handling 3rd party dependencies is to get them from
+http://github.com/vslavik/poedit-deps. Put that sources into the "deps"
+directory. This is linked as submodule from the main Poedit repository;
+see "Installing from Git repository" below.
+
+Now go into the deps directory and run "ant" from command line. See deps/README
+for information on what you need to do that.
+
+You can also use Ant to build Poedit itself; run "ant -p" to see available
+targets. This is the most convenient way of building full Poedit distribution;
+it's how Poedit binaries are built.
 
 
  Installing from Git repository
 --------------------------------
+
+Get the sources from github (http://github.com/vslavik/poedit):
+
+    git clone git://github.com/vslavik/poedit.git
+
+If you are on Windows or OSX, you probably want the dependencies too. They
+are at git://github.com/vslavik/poedit-deps.git, but as it's a git submodule,
+you can get them by just doing
+
+    git submodule init
+    git submodule update --recursive
 
 If you get the sources directly from the Git repository, some generated files
 are not present. You have to run the ./bootstrap script to create them. After
