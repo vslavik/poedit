@@ -21,8 +21,6 @@
 ;   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ;   DEALINGS IN THE SOFTWARE.
 ;
-;   $Id$
-;
 ;   Inno Setup installer script
 ;
 
@@ -90,7 +88,6 @@ Source: deps\bin-gettext\bin\msgcat.exe; DestDir: {app}\bin; Components: core
 Source: deps\bin-gettext\bin\*.dll; DestDir: {app}\bin; Components: core
 Source: deps\db\build_windows\Win32\Release\libdb*.dll; DestDir: {app}\bin; Components: core
 Source: deps\winsparkle\WinSparkle.dll; DestDir: {app}\bin; Components: core
-Source: README; DestDir: {app}\doc; DestName: readme.txt; Components: docs
 Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit\help\en; Components: docs
 Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit\help\en\gettext; Components: docs
 Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit\help\hr; Components: i18n
@@ -123,10 +120,8 @@ Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcre
 
 [Icons]
 Name: {group}\Poedit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0
-Name: {group}\Readme; Filename: {app}\doc\readme.txt; IconIndex: 0
 
 [Run]
-Filename: {app}\doc\readme.txt; Description: View readme.txt; Flags: shellexec postinstall unchecked; Components: docs
 Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run Poedit now; Flags: postinstall unchecked nowait
 
 [_ISTool]
