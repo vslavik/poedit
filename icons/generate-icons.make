@@ -11,10 +11,7 @@ APPICONS_WIN32 = \
 	appicon/16x16/apps/poedit.png \
 	appicon/32x32/apps/poedit.png \
 	appicon/48x48/apps/poedit.png \
-
-#   FIXME: disabled 256x256 for now, because VC++ 2005's resource compiler
-#          cannot handle ICO files with embedded PNG images yet
-#	appicon/256x256/apps/poedit.png
+	appicon/256x256/apps/poedit.png
 
 APPICONS_OSX = \
 	appicon/16x16/apps/poedit.png \
