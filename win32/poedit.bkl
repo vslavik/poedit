@@ -41,8 +41,9 @@
     </set>
 
     <set var="DB_INCLUDE_PATH">$(DB_PATH)\build_windows</set>
-    <set var="DB_LIB_PATH">$(DB_PATH)\build_windows\Win32\$(BUILDDIR_PART)_static</set>
-    <set var="DB_LIB">libdb$(DB_VERSION)s</set>
+    <set var="DB_LIB_PATH">$(DB_PATH)\build_windows\Win32\$(BUILDDIR_PART)</set>
+    <set var="DB_LIB">libdb$(DB_VERSION)</set>
+    <set var="DB_DEFINE">DB_USE_DLL</set>
 
     <!--
       FIXME: this currently conflicts with XRC compilation
@@ -71,6 +72,7 @@
         <app-type>gui</app-type>
 
         <define>USE_TRANSMEM</define>
+        <define>$(DB_DEFINE)</define>
         <include>$(DB_INCLUDE_PATH)</include>
         <lib-path>$(DB_LIB_PATH)</lib-path>
         <include>$(BOOST_PATH)</include>
