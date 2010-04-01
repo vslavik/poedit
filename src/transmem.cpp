@@ -667,8 +667,12 @@ DbEnv *CreateDbEnv(const wxString& path)
                _T("initializing BDB environment in %s"),
                path.c_str());
 
-    const u_int32_t flags =
-        DB_INIT_MPOOL | DB_INIT_LOG | DB_INIT_TXN | DB_RECOVER | DB_CREATE;
+    const u_int32_t flags = DB_INIT_MPOOL |
+                            DB_INIT_LOCK |
+                            DB_INIT_LOG |
+                            DB_INIT_TXN |
+                            DB_RECOVER |
+                            DB_CREATE;
 
     std::auto_ptr<DbEnv> env(new DbEnv(0));
 #ifdef __WINDOWS__
