@@ -71,8 +71,10 @@
     <exe id="poedit" template="wx">
         <app-type>gui</app-type>
 
+        <define>_BIND_TO_CURRENT_VCLIBS_VERSION=1</define>
         <define>USE_TRANSMEM</define>
         <define>$(DB_DEFINE)</define>
+
         <include>$(DB_INCLUDE_PATH)</include>
         <lib-path>$(DB_LIB_PATH)</lib-path>
         <include>$(BOOST_PATH)</include>
