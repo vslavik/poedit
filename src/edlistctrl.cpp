@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2008 Vaclav Slavik
+ *  Copyright (C) 1999-2010 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
@@ -29,6 +29,7 @@
 #include <wx/artprov.h>
 #include <wx/dcmemory.h>
 #include <wx/image.h>
+#include <wx/wupdlock.h>
 
 #include "edlistctrl.h"
 #include "digits.h"
@@ -334,7 +335,7 @@ void PoeditListCtrl::SizeColumns()
 
 void PoeditListCtrl::CatalogChanged(Catalog* catalog)
 {
-    Freeze();
+    wxWindowUpdateLocker no_updates(this);
 
     // this is to prevent crashes (wxMac at least) when shortening virtual
     // listctrl when its scrolled to the bottom:
@@ -344,21 +345,58 @@ void PoeditListCtrl::CatalogChanged(Catalog* catalog)
     // now read the new catalog:
     m_catalog = catalog;
     ReadCatalog();
-
-    Thaw();
 }
 
 void PoeditListCtrl::ReadCatalog()
 {
+    wxWindowUpdateLocker no_updates(this);
+
+    // clear the list and its sort order too:
+    SetItemCount(0);
+    m_itemIndexToCatalogIndexArray.clear();
+    m_catalogIndexToItemIndexArray.clear();
+
     if (m_catalog == NULL)
     {
-        SetItemCount(0);
+        Refresh();
         return;
     }
 
-    // create the lookup arrays of Ids by first splitting it upon
-    // four categories of items:
-    // unstranslated, invalid, fuzzy and the rest
+    // sort catalog items, create indexes mapping
+    CreateSortMap();
+
+    // now that everything is prepared, we may set the item count
+    SetItemCount(m_catalog->GetCount());
+
+    // scroll to the top and refresh everything:
+    if ( m_catalog->GetCount() )
+    {
+        Select(0);
+        RefreshItems(0, m_catalog->GetCount()-1);
+    }
+    else
+    {
+        Refresh();
+    }
+}
+
+
+void PoeditListCtrl::Sort()
+{
+    if ( m_catalog && m_catalog->GetCount() )
+    {
+        CreateSortMap();
+        RefreshItems(0, m_catalog->GetCount()-1);
+    }
+    else
+    {
+        Refresh();
+    }
+}
+
+
+void PoeditListCtrl::CreateSortMap()
+{
     m_itemIndexToCatalogIndexArray.clear();
 
     std::vector<int> untranslatedIds;
@@ -404,29 +442,16 @@ void PoeditListCtrl::ReadCatalog()
         m_itemIndexToCatalogIndexArray.push_back(restIds[i]);
         m_catalogIndexToItemIndexArray[restIds[i]] = listItemId++;
     }
-
-
-    // now that everything is prepared, we may set the item count
-    SetItemCount(m_catalog->GetCount());
-
-    // scroll to the top and refresh everything:
-    if ( m_catalog->GetCount() )
-    {
-        Select(0);
-        RefreshItems(0, m_catalog->GetCount()-1);
-    }
-    else
-    {
-        Refresh();
-    }
 }
+
 
 wxString PoeditListCtrl::OnGetItemText(long item, long column) const
 {
     if (m_catalog == NULL)
         return wxEmptyString;
 
-    CatalogItem& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
+    const CatalogItem& d = ListIndexToCatalogItem(item);
+
     switch (column)
     {
         case 0:
@@ -454,7 +479,7 @@ wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
     if (m_catalog == NULL)
         return (wxListItemAttr*)&m_attrNormal[idx];
 
-    CatalogItem& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
+    const CatalogItem& d = ListIndexToCatalogItem(item);
 
     if (!d.IsTranslated())
         return (wxListItemAttr*)&m_attrUntranslated[idx];
@@ -471,7 +496,7 @@ int PoeditListCtrl::OnGetItemImage(long item) const
     if (m_catalog == NULL)
         return IMG_NOTHING;
 
-    CatalogItem& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
+    const CatalogItem& d = ListIndexToCatalogItem(item);
     int index = IMG_NOTHING;
 
     if (d.IsAutomatic())
@@ -490,24 +515,4 @@ void PoeditListCtrl::OnSize(wxSizeEvent& event)
 {
     SizeColumns();
     event.Skip();
-}
-
-long PoeditListCtrl::GetIndexInCatalog(long item) const
-{
-    if (item == -1)
-        return -1;
-    else if (item < (long)m_itemIndexToCatalogIndexArray.size())
-        return m_itemIndexToCatalogIndexArray[item];
-    else
-        return -1;
-}
-
-int PoeditListCtrl::GetItemIndex(int catalogIndex) const
-{
-    if (catalogIndex == -1)
-        return -1;
-    else if (catalogIndex < (int)m_catalogIndexToItemIndexArray.size())
-        return m_catalogIndexToItemIndexArray[catalogIndex];
-    else
-        return -1;
 }

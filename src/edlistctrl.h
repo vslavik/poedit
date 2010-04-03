@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2005 Vaclav Slavik
+ *  Copyright (C) 1999-2010 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
@@ -52,6 +52,9 @@ class PoeditListCtrl : public wxListView
 
         virtual ~PoeditListCtrl();
 
+        /// Re-sort the control according to user-specified criteria.
+        void Sort();
+
         void SizeColumns();
 
         void SetDisplayLines(bool dl);
@@ -68,11 +71,30 @@ class PoeditListCtrl : public wxListView
         virtual wxListItemAttr * OnGetItemAttr(long item) const;
         virtual int OnGetItemImage(long item) const;
 
-        /// Returns item's index in the catalog
-        long GetIndexInCatalog(long item) const;
-
         /// Returns the list item index for the given catalog index
-        int GetItemIndex(int catalogIndex) const;
+        int CatalogIndexToList(int index) const
+        {
+            if ( index < 0 || index >= (int)m_catalogIndexToItemIndexArray.size() )
+                return index;
+            else
+                return m_catalogIndexToItemIndexArray[index];
+        }
+
+        /// Returns item's index in the catalog
+        int ListIndexToCatalog(int index) const
+        {
+            if ( index < 0 || index >= (int)m_itemIndexToCatalogIndexArray.size() )
+                return index;
+            else
+                return m_itemIndexToCatalogIndexArray[index];
+        }
+
+        /// Returns item from the catalog based on list index
+        const CatalogItem& ListIndexToCatalogItem(int index) const
+        {
+            return (*m_catalog)[ListIndexToCatalog(index)];
+        }
+
 
         /// Returns current list selection (as list item index)
         int GetSelection() const { return GetFirstSelected(); }
@@ -80,13 +102,13 @@ class PoeditListCtrl : public wxListView
         /// Returns index of selected catalog item
         int GetSelectedCatalogItem() const
         {
-            return GetIndexInCatalog(GetSelection());
+            return ListIndexToCatalog(GetSelection());
         }
 
         /// Selects given catalog item
         void SelectCatalogItem(int catalogIndex)
         {
-            Select(GetItemIndex(catalogIndex));
+            Select(CatalogIndexToList(catalogIndex));
         }
 
         void Select(long n, bool on = true)
@@ -100,11 +122,10 @@ class PoeditListCtrl : public wxListView
         void SetCustomFont(wxFont font);
 
     private:
-        void OnSize(wxSizeEvent& event);
-
+        void CreateSortMap();
         void CreateColumns();
-
         void ReadCatalog();
+        void OnSize(wxSizeEvent& event);
 
         bool m_displayLines;
         unsigned m_colWidth;

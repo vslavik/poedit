@@ -1484,7 +1484,7 @@ void PoeditFrame::OnListActivated(wxListEvent& event)
 {
     if (m_catalog)
     {
-        int ind = m_list->GetIndexInCatalog(event.GetIndex());
+        int ind = m_list->ListIndexToCatalog(event.GetIndex());
         if (ind >= (int)m_catalog->GetCount()) return;
         CatalogItem& entry = (*m_catalog)[ind];
         if (entry.GetValidity() == CatalogItem::Val_Invalid)
@@ -2739,7 +2739,7 @@ void PoeditFrame::BeginItemValidation()
 {
 #ifdef USE_GETTEXT_VALIDATION
     int item = m_itemsToValidate.front();
-    int index = m_list->GetIndexInCatalog(item);
+    int index = m_list->ListIndexToCatalog(item);
     CatalogItem& dt = (*m_catalog)[index];
 
     if (!dt.IsTranslated())
@@ -2795,7 +2795,7 @@ void PoeditFrame::EndItemValidation()
     if (m_itemBeingValidated != -1)
     {
         int item = m_itemBeingValidated;
-        int index = m_list->GetIndexInCatalog(item);
+        int index = m_list->ListIndexToCatalog(item);
         CatalogItem& dt = (*m_catalog)[index];
 
         bool ok = (m_validationProcess.ExitCode == 0);
@@ -2998,7 +2998,7 @@ void PoeditFrame::OnGoToBookmark(wxCommandEvent& event)
     int bkIndex = m_catalog->GetBookmarkIndex(bk);
     if (bkIndex != -1)
     {
-        int listIndex = m_list->GetItemIndex(bkIndex);
+        int listIndex = m_list->CatalogIndexToList(bkIndex);
         if (listIndex >= 0 && listIndex < m_list->GetItemCount())
         {
             m_list->EnsureVisible(listIndex);
@@ -3028,7 +3028,7 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     // Refresh items
     RefreshSelectedItem();
     if (bkIndex != -1)
-        m_list->RefreshItem(m_list->GetItemIndex(bkIndex));
+        m_list->RefreshItem(m_list->CatalogIndexToList(bkIndex));
 
     // Catalog has been modified
     m_modified = true;
