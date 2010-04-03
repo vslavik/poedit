@@ -74,19 +74,19 @@ class PoeditListCtrl : public wxListView
         /// Returns the list item index for the given catalog index
         int CatalogIndexToList(int index) const
         {
-            if ( index < 0 || index >= (int)m_catalogIndexToItemIndexArray.size() )
+            if ( index < 0 || index >= (int)m_mapCatalogToList.size() )
                 return index;
             else
-                return m_catalogIndexToItemIndexArray[index];
+                return m_mapCatalogToList[index];
         }
 
         /// Returns item's index in the catalog
         int ListIndexToCatalog(int index) const
         {
-            if ( index < 0 || index >= (int)m_itemIndexToCatalogIndexArray.size() )
+            if ( index < 0 || index >= (int)m_mapListToCatalog.size() )
                 return index;
             else
-                return m_itemIndexToCatalogIndexArray[index];
+                return m_mapListToCatalog[index];
         }
 
         /// Returns item from the catalog based on list index
@@ -132,8 +132,8 @@ class PoeditListCtrl : public wxListView
 
         Catalog* m_catalog;
 
-        std::vector<int> m_itemIndexToCatalogIndexArray;
-        std::vector<int> m_catalogIndexToItemIndexArray;
+        std::vector<int> m_mapListToCatalog;
+        std::vector<int> m_mapCatalogToList;
 
         wxListItemAttr m_attrNormal[2];
         wxListItemAttr m_attrUntranslated[2];

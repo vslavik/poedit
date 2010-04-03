@@ -353,8 +353,8 @@ void PoeditListCtrl::ReadCatalog()
 
     // clear the list and its sort order too:
     SetItemCount(0);
-    m_itemIndexToCatalogIndexArray.clear();
-    m_catalogIndexToItemIndexArray.clear();
+    m_mapListToCatalog.clear();
+    m_mapCatalogToList.clear();
 
     if (m_catalog == NULL)
     {
@@ -397,7 +397,7 @@ void PoeditListCtrl::Sort()
 
 void PoeditListCtrl::CreateSortMap()
 {
-    m_itemIndexToCatalogIndexArray.clear();
+    m_mapListToCatalog.clear();
 
     std::vector<int> untranslatedIds;
     std::vector<int> invalidIds;
@@ -420,27 +420,27 @@ void PoeditListCtrl::CreateSortMap()
     // Now fill the lookup array, not forgetting to set the appropriate
     // property in the catalog entry to be able to go back and forth
     // from one numbering system to the other
-    m_catalogIndexToItemIndexArray.resize(m_catalog->GetCount());
+    m_mapCatalogToList.resize(m_catalog->GetCount());
     int listItemId = 0;
     for (size_t i = 0; i < untranslatedIds.size(); i++)
     {
-        m_itemIndexToCatalogIndexArray.push_back(untranslatedIds[i]);
-        m_catalogIndexToItemIndexArray[untranslatedIds[i]] = listItemId++;
+        m_mapListToCatalog.push_back(untranslatedIds[i]);
+        m_mapCatalogToList[untranslatedIds[i]] = listItemId++;
     }
     for (size_t i = 0; i < invalidIds.size(); i++)
     {
-        m_itemIndexToCatalogIndexArray.push_back(invalidIds[i]);
-        m_catalogIndexToItemIndexArray[invalidIds[i]] = listItemId++;
+        m_mapListToCatalog.push_back(invalidIds[i]);
+        m_mapCatalogToList[invalidIds[i]] = listItemId++;
     }
     for (size_t i = 0; i < fuzzyIds.size(); i++)
     {
-        m_itemIndexToCatalogIndexArray.push_back(fuzzyIds[i]);
-        m_catalogIndexToItemIndexArray[fuzzyIds[i]] = listItemId++;
+        m_mapListToCatalog.push_back(fuzzyIds[i]);
+        m_mapCatalogToList[fuzzyIds[i]] = listItemId++;
     }
     for (size_t i = 0; i < restIds.size(); i++)
     {
-        m_itemIndexToCatalogIndexArray.push_back(restIds[i]);
-        m_catalogIndexToItemIndexArray[restIds[i]] = listItemId++;
+        m_mapListToCatalog.push_back(restIds[i]);
+        m_mapCatalogToList[restIds[i]] = listItemId++;
     }
 }
 
