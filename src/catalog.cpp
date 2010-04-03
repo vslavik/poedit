@@ -537,7 +537,7 @@ bool CatalogParser::Parse()
     bool has_plural = false;
     bool has_context = false;
     wxString msgctxt;
-    unsigned mlinenum;
+    unsigned mlinenum = 0;
 
     line = m_textFile->GetFirstLine();
     if (line.empty()) line = ReadTextLine(m_textFile);
@@ -801,17 +801,17 @@ class CharsetInfoFinder : public CatalogParser
         wxString m_charset;
 
         virtual bool OnEntry(const wxString& msgid,
-                             const wxString& msgid_plural,
-                             bool has_plural,
-                             bool has_context,
-                             const wxString& context,
+                             const wxString& /*msgid_plural*/,
+                             bool /*has_plural*/,
+                             bool /*has_context*/,
+                             const wxString& /*context*/,
                              const wxArrayString& mtranslations,
-                             const wxString& flags,
-                             const wxArrayString& references,
-                             const wxString& comment,
-                             const wxArrayString& autocomments,
-                             const wxArrayString& msgid_old,
-                             unsigned lineNumber)
+                             const wxString& /*flags*/,
+                             const wxArrayString& /*references*/,
+                             const wxString& /*comment*/,
+                             const wxArrayString& /*autocomments*/,
+                             const wxArrayString& /*msgid_old*/,
+                             unsigned /*lineNumber*/)
         {
             if (msgid.empty())
             {
@@ -903,7 +903,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
 
 bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
                                 const wxString& flags,
-                                const wxArrayString& references,
+                                const wxArrayString& /*references*/,
                                 const wxString& comment,
                                 const wxArrayString& autocomments,
                                 unsigned lineNumber)
@@ -1691,7 +1691,7 @@ bool Catalog::HasWrongPluralFormsCount() const
     return false;
 }
 
-const bool Catalog::HasPluralItems() const
+bool Catalog::HasPluralItems() const
 {
     for ( CatalogItemArray::const_iterator i = m_items.begin();
           i != m_items.end(); ++i )

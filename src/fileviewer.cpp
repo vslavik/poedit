@@ -174,7 +174,7 @@ void FileViewer::OnChoice(wxCommandEvent &event)
     ShowReference(m_references[event.GetSelection()]);
 }
 
-void FileViewer::OnEditFile(wxCommandEvent &event)
+void FileViewer::OnEditFile(wxCommandEvent&)
 {
     OpenInEditor(m_basePath, m_current);
 }

@@ -142,13 +142,13 @@ void FindFrame::Reset(Catalog *c)
 }
 
 
-void FindFrame::OnClose(wxCommandEvent &event)
+void FindFrame::OnClose(wxCommandEvent&)
 {
     Destroy();
 }
 
 
-void FindFrame::OnTextChange(wxCommandEvent &event)
+void FindFrame::OnTextChange(wxCommandEvent&)
 {
     ms_text = XRCCTRL(*this, "string_to_find", wxTextCtrl)->GetValue();
 
@@ -156,13 +156,13 @@ void FindFrame::OnTextChange(wxCommandEvent &event)
 }
 
 
-void FindFrame::OnCheckbox(wxCommandEvent &event)
+void FindFrame::OnCheckbox(wxCommandEvent&)
 {
     Reset(m_catalog);
 }
 
 
-void FindFrame::OnPrev(wxCommandEvent &event)
+void FindFrame::OnPrev(wxCommandEvent&)
 {
     if (!DoFind(-1))
         m_btnPrev->Enable(false);
@@ -171,7 +171,7 @@ void FindFrame::OnPrev(wxCommandEvent &event)
 }
 
 
-void FindFrame::OnNext(wxCommandEvent &event)
+void FindFrame::OnNext(wxCommandEvent&)
 {
     if (!DoFind(+1))
         m_btnNext->Enable(false);

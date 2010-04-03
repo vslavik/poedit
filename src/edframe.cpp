@@ -1498,7 +1498,7 @@ void PoeditFrame::OnListActivated(wxListEvent& event)
 
 
 
-void PoeditFrame::OnReferencesMenu(wxCommandEvent& event)
+void PoeditFrame::OnReferencesMenu(wxCommandEvent&)
 {
     CatalogItem *entry = GetCurrentItem();
     if ( !entry )
@@ -1606,7 +1606,7 @@ void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
 
 
 
-void PoeditFrame::OnQuotesFlag(wxCommandEvent& event)
+void PoeditFrame::OnQuotesFlag(wxCommandEvent&)
 {
     UpdateFromTextCtrl();
     m_displayQuotes = GetMenuBar()->IsChecked(XRCID("menu_quotes"));
@@ -1615,7 +1615,7 @@ void PoeditFrame::OnQuotesFlag(wxCommandEvent& event)
 
 
 
-void PoeditFrame::OnLinesFlag(wxCommandEvent& event)
+void PoeditFrame::OnLinesFlag(wxCommandEvent&)
 {
     m_displayLines = GetMenuBar()->IsChecked(XRCID("menu_lines"));
     m_list->SetDisplayLines(m_displayLines);
@@ -1623,18 +1623,18 @@ void PoeditFrame::OnLinesFlag(wxCommandEvent& event)
 
 
 
-void PoeditFrame::OnCommentWinFlag(wxCommandEvent& event)
+void PoeditFrame::OnCommentWinFlag(wxCommandEvent&)
 {
     UpdateDisplayCommentWin();
 }
 
-void PoeditFrame::OnAutoCommentsWinFlag(wxCommandEvent& event)
+void PoeditFrame::OnAutoCommentsWinFlag(wxCommandEvent&)
 {
     UpdateDisplayCommentWin();
 }
 
 
-void PoeditFrame::OnCopyFromSource(wxCommandEvent& event)
+void PoeditFrame::OnCopyFromSource(wxCommandEvent&)
 {
     if (!m_textTrans->IsShown())
     {
@@ -1653,7 +1653,7 @@ void PoeditFrame::OnCopyFromSource(wxCommandEvent& event)
     }
 }
 
-void PoeditFrame::OnClearTranslation(wxCommandEvent& event)
+void PoeditFrame::OnClearTranslation(wxCommandEvent&)
 {
     if (!m_textTrans->IsShown())
     {
@@ -1672,7 +1672,7 @@ void PoeditFrame::OnClearTranslation(wxCommandEvent& event)
 }
 
 
-void PoeditFrame::OnFind(wxCommandEvent& event)
+void PoeditFrame::OnFind(wxCommandEvent&)
 {
     FindFrame *f = (FindFrame*)FindWindow(_T("find_frame"));
 
@@ -2230,7 +2230,7 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
 }
 
 
-void PoeditFrame::OnEditComment(wxCommandEvent& event)
+void PoeditFrame::OnEditComment(wxCommandEvent&)
 {
     CatalogItem *entry = GetCurrentItem();
     wxCHECK_RET( entry, _T("no entry selected") );
@@ -2297,7 +2297,7 @@ void PoeditFrame::OnAutoTranslate(wxCommandEvent& event)
     RefreshSelectedItem();
 }
 
-void PoeditFrame::OnAutoTranslateAll(wxCommandEvent& event)
+void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
 {
     AutoTranslateCatalog();
 }
@@ -2682,7 +2682,7 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
     }
 }
 
-void PoeditFrame::OnEndProcess(wxProcessEvent& event)
+void PoeditFrame::OnEndProcess(wxProcessEvent&)
 {
 #ifdef USE_GETTEXT_VALIDATION
     m_gettextProcess = NULL;

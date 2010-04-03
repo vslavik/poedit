@@ -98,10 +98,10 @@ class TMUDirTraverser : public wxDirTraverser
             }
             return wxDIR_CONTINUE;
         }
-        
-        virtual wxDirTraverseResult OnDir(const wxString& dirname)
+
+        virtual wxDirTraverseResult OnDir(const wxString&)
             { return wxDIR_CONTINUE; }
-        
+
     private:
         wxArrayString *m_files;
         wxString m_lang;

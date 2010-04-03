@@ -301,7 +301,7 @@ BEGIN_EVENT_TABLE(ProjectDlg, wxDialog)
    EVT_BUTTON(XRCID("adddir"), ProjectDlg::OnBrowse)
 END_EVENT_TABLE()
 
-void ProjectDlg::OnBrowse(wxCommandEvent& event)
+void ProjectDlg::OnBrowse(wxCommandEvent&)
 {
     wxDirDialog dlg(this, _("Select directory"));
     if (dlg.ShowModal() == wxID_OK)
@@ -367,7 +367,7 @@ void ManagerFrame::DeleteProject(int id)
     }
 }
 
-void ManagerFrame::NotifyFileChanged(const wxString& catalog)
+void ManagerFrame::NotifyFileChanged(const wxString& /*catalog*/)
 {
    // VS: We must do full update even if the file 'catalog' is not in
    //     m_catalogs. The reason is simple: the user might use SaveAs
@@ -389,7 +389,7 @@ BEGIN_EVENT_TABLE(ManagerFrame, wxFrame)
 END_EVENT_TABLE()
 
 
-void ManagerFrame::OnNewProject(wxCommandEvent& event)
+void ManagerFrame::OnNewProject(wxCommandEvent&)
 {
     wxConfigBase *cfg = wxConfig::Get();
     int max = cfg->Read(_T("Manager/max_project_num"), (long)0) + 1;
@@ -416,7 +416,7 @@ void ManagerFrame::OnNewProject(wxCommandEvent& event)
 }
 
 
-void ManagerFrame::OnEditProject(wxCommandEvent& event)
+void ManagerFrame::OnEditProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
@@ -424,7 +424,7 @@ void ManagerFrame::OnEditProject(wxCommandEvent& event)
 }
 
 
-void ManagerFrame::OnDeleteProject(wxCommandEvent& event)
+void ManagerFrame::OnDeleteProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
@@ -434,7 +434,7 @@ void ManagerFrame::OnDeleteProject(wxCommandEvent& event)
 }
 
 
-void ManagerFrame::OnSelectProject(wxCommandEvent& event)
+void ManagerFrame::OnSelectProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
@@ -443,7 +443,7 @@ void ManagerFrame::OnSelectProject(wxCommandEvent& event)
 }
 
 
-void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
+void ManagerFrame::OnUpdateProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;

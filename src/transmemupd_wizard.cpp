@@ -103,7 +103,7 @@ private:
             event.Skip();
     }
     
-    void OnBrowse(wxCommandEvent& event)
+    void OnBrowse(wxCommandEvent&)
     {
         wxDirDialog dlg(this, _("Select directory"));
         if (dlg.ShowModal() == wxID_OK)
@@ -115,7 +115,7 @@ private:
         }
     }
 
-    void OnDefaults(wxCommandEvent& event)
+    void OnDefaults(wxCommandEvent&)
     {
         wxArrayString a;
 #if defined(__UNIX__)
@@ -128,7 +128,7 @@ private:
         m_paths->SetStrings(a);
     }
 
-    void OnAddFiles(wxCommandEvent& event)
+    void OnAddFiles(wxCommandEvent&)
     {
         wxFileDialog dlg(this,
                          _("Add files"),

@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2008 Vaclav Slavik
+ *  Copyright (C) 1999-2010 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -105,13 +105,13 @@ class CatalogItem
         const wxString& GetString() const { return m_string; }
 
         /// Does this entry have a msgid_plural?
-        const bool HasPlural() const { return m_hasPlural; }
+        bool HasPlural() const { return m_hasPlural; }
 
         /// Returns the plural string.
         const wxString& GetPluralString() const { return m_plural; }
 
         /// Does this entry have a msgctxt?
-        const bool HasContext() const { return m_hasContext; }
+        bool HasContext() const { return m_hasContext; }
 
         /// Returns context string (can only be called if HasContext() returns
         /// true and empty string is accepted value).
@@ -143,7 +143,7 @@ class CatalogItem
         const wxArrayString& GetAutoComments() const { return m_autocomments; }
 
         /// Convenience function: does this entry has a comment?
-        const bool HasComment() const { return !m_comment.empty(); }
+        bool HasComment() const { return !m_comment.empty(); }
 
         /// Adds new reference to the entry (used by SourceDigger).
         void AddReference(const wxString& ref)
@@ -325,7 +325,7 @@ class CatalogDeletedData
         const wxArrayString& GetAutoComments() const { return m_autocomments; }
 
         /// Convenience function: does this entry has a comment?
-        const bool HasComment() const { return !m_comment.empty(); }
+        bool HasComment() const { return !m_comment.empty(); }
 
         /// Adds new reference to the entry (used by SourceDigger).
         void AddReference(const wxString& ref)
@@ -541,7 +541,7 @@ class Catalog
         bool HasWrongPluralFormsCount() const;
 
         /// Does this catalog have any items with plural forms?
-        const bool HasPluralItems() const;
+        bool HasPluralItems() const;
 
         /** Returns status of catalog object: true if ok, false if damaged
             (i.e. constructor or Load failed).
@@ -652,12 +652,12 @@ class CatalogParser
             if returned value is true and is cancelled if it
             is false. Defaults to an empty implementation.
          */
-        virtual bool OnDeletedEntry(const wxArrayString& deletedLines,
-                                    const wxString& flags,
-                                    const wxArrayString& references,
-                                    const wxString& comment,
-                                    const wxArrayString& autocomments,
-                                    unsigned lineNumber)
+        virtual bool OnDeletedEntry(const wxArrayString& /*deletedLines*/,
+                                    const wxString& /*flags*/,
+                                    const wxArrayString& /*references*/,
+                                    const wxString& /*comment*/,
+                                    const wxArrayString& /*autocomments*/,
+                                    unsigned /*lineNumber*/)
         {
             return true;
         }

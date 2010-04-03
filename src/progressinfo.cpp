@@ -46,7 +46,7 @@ class ProgressDlg : public wxDialog
     
         DECLARE_EVENT_TABLE()
 
-        void OnCancel(wxCommandEvent& event)
+        void OnCancel(wxCommandEvent&)
         {
             ((wxButton*)FindWindow(wxID_CANCEL))->Enable(false);
             *m_cancelFlag = true;

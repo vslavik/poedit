@@ -294,7 +294,7 @@ bool PreferencesDialog::EditParser(int num)
         return false;
 }
 
-void PreferencesDialog::OnNewParser(wxCommandEvent& event)
+void PreferencesDialog::OnNewParser(wxCommandEvent&)
 {
     Parser info;
     m_parsers.Add(info);
@@ -312,12 +312,12 @@ void PreferencesDialog::OnNewParser(wxCommandEvent& event)
     }
 }
 
-void PreferencesDialog::OnEditParser(wxCommandEvent& event)
+void PreferencesDialog::OnEditParser(wxCommandEvent&)
 {
     EditParser(XRCCTRL(*this, "parsers_list", wxListBox)->GetSelection());
 }
 
-void PreferencesDialog::OnDeleteParser(wxCommandEvent& event)
+void PreferencesDialog::OnDeleteParser(wxCommandEvent&)
 {
     size_t index = XRCCTRL(*this, "parsers_list", wxListBox)->GetSelection();
     m_parsers.RemoveAt(index);
@@ -331,7 +331,7 @@ void PreferencesDialog::OnDeleteParser(wxCommandEvent& event)
 
 #ifdef USE_TRANSMEM
 
-void PreferencesDialog::OnTMAddLang(wxCommandEvent& event)
+void PreferencesDialog::OnTMAddLang(wxCommandEvent&)
 {
     wxArrayString lngs;
     int index;
@@ -351,7 +351,7 @@ void PreferencesDialog::OnTMAddLang(wxCommandEvent& event)
 }
 
 
-void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
+void PreferencesDialog::OnTMGenerate(wxCommandEvent&)
 {
     wxArrayString langs;
     XRCCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
@@ -385,12 +385,12 @@ void PreferencesDialog::DoChooseFont(wxTextCtrl *nameField)
     }
 }
 
-void PreferencesDialog::OnChooseListFont(wxCommandEvent& event)
+void PreferencesDialog::OnChooseListFont(wxCommandEvent&)
 {
     DoChooseFont(XRCCTRL(*this, "fontname_list", wxTextCtrl));
 }
 
-void PreferencesDialog::OnChooseTextFont(wxCommandEvent& event)
+void PreferencesDialog::OnChooseTextFont(wxCommandEvent&)
 {
     DoChooseFont(XRCCTRL(*this, "fontname_text", wxTextCtrl));
 }

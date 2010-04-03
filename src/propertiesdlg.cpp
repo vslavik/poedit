@@ -114,7 +114,7 @@ void SetCharsetToCombobox(wxComboBox *ctrl, const wxString& value)
         };
 
     ctrl->Clear();
-    for ( int i = 0; i < WXSIZEOF(all_charsets); i++ )
+    for ( int i = 0; i < (int)WXSIZEOF(all_charsets); i++ )
         ctrl->Append(all_charsets[i]);
 
     const wxString low = value.Lower();

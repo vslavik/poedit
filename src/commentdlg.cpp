@@ -52,7 +52,7 @@ BEGIN_EVENT_TABLE(CommentDialog, wxDialog)
    EVT_BUTTON(XRCID("clear"), CommentDialog::OnClear)
 END_EVENT_TABLE()
 
-void CommentDialog::OnClear(wxCommandEvent& event)
+void CommentDialog::OnClear(wxCommandEvent&)
 {
     m_text->Clear();
 }
