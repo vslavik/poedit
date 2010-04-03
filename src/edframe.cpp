@@ -2359,10 +2359,18 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
     wxMenu *menu = new wxMenu;
 
     menu->Append(XRCID("menu_copy_from_src"),
+                 #ifdef __WXMSW__
                  wxString(_("Copy translation from source text"))
+                 #else
+                 wxString(_("Copy Translation from Source Text"))
+                 #endif
                    + _T("\tAlt-C"));
     menu->Append(XRCID("menu_clear"),
+                 #ifdef __WXMSW__
                  wxString(_("Clear translation"))
+                 #else
+                 wxString(_("Clear Translation"))
+                 #endif
                    + _T("\tCtrl-K"));
 
 #ifdef USE_TRANSMEM
@@ -2375,12 +2383,28 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
         {
             menu->AppendSeparator();
 #ifdef CAN_MODIFY_DEFAULT_FONT
-            wxMenuItem *it2 = new wxMenuItem(menu, ID_POPUP_DUMMY+1,
-                                             _("Automatic translations:"));
+            wxMenuItem *it2 = new wxMenuItem
+                                  (
+                                      menu,
+                                      ID_POPUP_DUMMY+1,
+                                      #ifdef __WXMSW__
+                                      _("Automatic translations:")
+                                      #else
+                                      _("Automatic Translations:")
+                                      #endif
+                                  );
             it2->SetFont(m_boldGuiFont);
             menu->Append(it2);
 #else
-            menu->Append(ID_POPUP_DUMMY+1, _("Automatic translations:"));
+            menu->Append
+                  (
+                      ID_POPUP_DUMMY+1,
+                      #ifdef __WXMSW__
+                      _("Automatic translations:")
+                      #else
+                      _("Automatic Translations:")
+                      #endif
+                  );
 #endif
 
             for (size_t i = 0; i < m_autoTranslations.GetCount(); i++)
@@ -2936,14 +2960,19 @@ void PoeditFrame::AddBookmarksMenu()
 {
     wxMenu *menu = new wxMenu();
 
-#ifdef __WXMAC__
+#if defined(__WXMAC__)
     // on Mac, Alt+something is used during normal typing, so we shouldn't
     // use it as shortcuts:
-    #define LABEL_BOOKMARK_SET   _("Set bookmark %i\tCtrl-%i")
-    #define LABEL_BOOKMARK_GO    _("Go to bookmark %i\tCtrl-Alt-%i")
-#else
+    #define LABEL_BOOKMARK_SET   _("Set Bookmark %i\tCtrl-%i")
+    #define LABEL_BOOKMARK_GO    _("Go to Bookmark %i\tCtrl-Alt-%i")
+#elif defined(__WXMSW__)
     #define LABEL_BOOKMARK_SET   _("Set bookmark %i\tAlt-%i")
     #define LABEL_BOOKMARK_GO    _("Go to bookmark %i\tCtrl-%i")
+#elif defined(__WXGTK__)
+    #define LABEL_BOOKMARK_SET   _("Set Bookmark %i\tAlt-%i")
+    #define LABEL_BOOKMARK_GO    _("Go to Bookmark %i\tCtrl-%i")
+#else
+    #error "what is correct capitalization for this toolkit?"
 #endif
 
     for (int i = 0; i < 10; i++)
