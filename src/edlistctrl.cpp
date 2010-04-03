@@ -24,6 +24,11 @@
  *
  */
 
+#include "edlistctrl.h"
+
+#include "digits.h"
+#include "cat_sorting.h"
+
 #include <wx/wx.h>
 #include <wx/imaglist.h>
 #include <wx/artprov.h>
@@ -31,8 +36,8 @@
 #include <wx/image.h>
 #include <wx/wupdlock.h>
 
-#include "edlistctrl.h"
-#include "digits.h"
+#include <algorithm>
+
 
 namespace
 {
@@ -397,51 +402,28 @@ void PoeditListCtrl::Sort()
 
 void PoeditListCtrl::CreateSortMap()
 {
-    m_mapListToCatalog.clear();
+    int count = (int)m_catalog->GetCount();
 
-    std::vector<int> untranslatedIds;
-    std::vector<int> invalidIds;
-    std::vector<int> fuzzyIds;
-    std::vector<int> restIds;
+    m_mapListToCatalog.resize(count);
+    m_mapCatalogToList.resize(count);
 
-    for (size_t i = 0; i < m_catalog->GetCount(); i++)
-    {
-        CatalogItem& d = (*m_catalog)[i];
-        if (!d.IsTranslated())
-          untranslatedIds.push_back(i);
-        else if (d.GetValidity() == CatalogItem::Val_Invalid)
-          invalidIds.push_back(i);
-        else if (d.IsFuzzy())
-          fuzzyIds.push_back(i);
-        else
-          restIds.push_back(i);
-    }
+    // First create identity mapping for the sort order.
+    for ( int i = 0; i < count; i++ )
+        m_mapListToCatalog[i] = i;
 
-    // Now fill the lookup array, not forgetting to set the appropriate
-    // property in the catalog entry to be able to go back and forth
-    // from one numbering system to the other
-    m_mapCatalogToList.resize(m_catalog->GetCount());
-    int listItemId = 0;
-    for (size_t i = 0; i < untranslatedIds.size(); i++)
-    {
-        m_mapListToCatalog.push_back(untranslatedIds[i]);
-        m_mapCatalogToList[untranslatedIds[i]] = listItemId++;
-    }
-    for (size_t i = 0; i < invalidIds.size(); i++)
-    {
-        m_mapListToCatalog.push_back(invalidIds[i]);
-        m_mapCatalogToList[invalidIds[i]] = listItemId++;
-    }
-    for (size_t i = 0; i < fuzzyIds.size(); i++)
-    {
-        m_mapListToCatalog.push_back(fuzzyIds[i]);
-        m_mapCatalogToList[fuzzyIds[i]] = listItemId++;
-    }
-    for (size_t i = 0; i < restIds.size(); i++)
-    {
-        m_mapListToCatalog.push_back(restIds[i]);
-        m_mapCatalogToList[restIds[i]] = listItemId++;
-    }
+    // m_mapListToCatalog will hold our desired sort order. Sort it in place
+    // now, using the desired sort criteria.
+    std::sort
+    (
+        m_mapListToCatalog.begin(),
+        m_mapListToCatalog.end(),
+        CatalogItemsComparator(*m_catalog)
+    );
+
+    // Finally, construct m_mapCatalogToList to be the inverse mapping to
+    // m_mapListToCatalog.
+    for ( int i = 0; i < count; i++ )
+        m_mapCatalogToList[m_mapListToCatalog[i]] = i;
 }
 
 
