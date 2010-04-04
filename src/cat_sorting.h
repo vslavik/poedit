@@ -28,21 +28,54 @@
 
 #include "catalog.h"
 
+
+/// Sort order information
+struct SortOrder
+{
+    enum ByWhat
+    {
+        By_FileOrder,
+        By_Source,
+        By_Translation
+    };
+
+    SortOrder() : by(By_FileOrder), untransFirst(true) {}
+
+    /// Loads default sort order from config settings
+    static SortOrder Default();
+
+    /// Saves this sort order into config
+    void Save();
+
+    /// What are we sorting by
+    ByWhat by;
+
+    /// Do untranslated entries go first?
+    bool untransFirst;
+};
+
 /**
     Comparator for sorting catalog items by different criteria.
  */
 class CatalogItemsComparator
 {
 public:
-    CatalogItemsComparator(const Catalog& catalog);
+    /**
+        Initializes comparator instance for given catalog.
+     */
+    CatalogItemsComparator(const Catalog& catalog, const SortOrder& order)
+        : m_catalog(catalog), m_order(order)
+    {}
 
     bool operator()(int i, int j) const;
 
 protected:
     const CatalogItem& Item(int i) const { return m_catalog[i]; }
+    int CompareStrings(const wxString& a, const wxString& b) const;
 
 private:
     const Catalog& m_catalog;
+    SortOrder m_order;
 };
 
 

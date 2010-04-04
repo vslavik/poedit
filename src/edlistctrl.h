@@ -36,6 +36,7 @@ class WXDLLIMPEXP_FWD_CORE wxListCtrl;
 class WXDLLIMPEXP_FWD_CORE wxListEvent;
 
 #include "catalog.h"
+#include "cat_sorting.h"
 
 // list control with both columns equally wide:
 class PoeditListCtrl : public wxListView
@@ -121,6 +122,9 @@ class PoeditListCtrl : public wxListView
         }
 
         void SetCustomFont(wxFont font);
+
+        // Order used for sorting
+        SortOrder sortOrder;
 
     private:
         void CreateSortMap();

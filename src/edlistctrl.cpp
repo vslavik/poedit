@@ -181,6 +181,9 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 {
     m_catalog = NULL;
     m_displayLines = dispLines;
+
+    sortOrder = SortOrder::Default();
+
     CreateColumns();
 
     int i;
@@ -284,6 +287,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 
 PoeditListCtrl::~PoeditListCtrl()
 {
+    sortOrder.Save();
 }
 
 void PoeditListCtrl::SetCustomFont(wxFont font_)
@@ -390,8 +394,13 @@ void PoeditListCtrl::Sort()
 {
     if ( m_catalog && m_catalog->GetCount() )
     {
+        int sel = GetSelectedCatalogItem();
+
         CreateSortMap();
         RefreshItems(0, m_catalog->GetCount()-1);
+
+        if ( sel != -1 )
+            SelectCatalogItem(sel);
     }
     else
     {
@@ -417,7 +426,7 @@ void PoeditListCtrl::CreateSortMap()
     (
         m_mapListToCatalog.begin(),
         m_mapListToCatalog.end(),
-        CatalogItemsComparator(*m_catalog)
+        CatalogItemsComparator(*m_catalog, sortOrder)
     );
 
     // Finally, construct m_mapCatalogToList to be the inverse mapping to

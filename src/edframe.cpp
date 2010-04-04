@@ -401,6 +401,10 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_lines"),       PoeditFrame::OnLinesFlag)
    EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
    EVT_MENU           (XRCID("menu_auto_comments_win"), PoeditFrame::OnAutoCommentsWinFlag)
+   EVT_MENU           (XRCID("sort_by_order"),    PoeditFrame::OnSortByFileOrder)
+   EVT_MENU           (XRCID("sort_by_source"),    PoeditFrame::OnSortBySource)
+   EVT_MENU           (XRCID("sort_by_translation"), PoeditFrame::OnSortByTranslation)
+   EVT_MENU           (XRCID("sort_untrans_first"), PoeditFrame::OnSortUntranslatedFirst)
    EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
@@ -671,6 +675,20 @@ PoeditFrame::PoeditFrame() :
 
     UpdateMenu();
     UpdateDisplayCommentWin();
+
+    switch ( m_list->sortOrder.by )
+    {
+        case SortOrder::By_FileOrder:
+            MenuBar->Check(XRCID("sort_by_order"), true);
+            break;
+        case SortOrder::By_Source:
+            MenuBar->Check(XRCID("sort_by_source"), true);
+            break;
+        case SortOrder::By_Translation:
+            MenuBar->Check(XRCID("sort_by_translation"), true);
+            break;
+    }
+    MenuBar->Check(XRCID("sort_untrans_first"), m_list->sortOrder.untransFirst);
 
     ms_instances.Append(this);
 
@@ -3034,4 +3052,32 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     m_modified = true;
     UpdateTitle();
     UpdateMenu();
+}
+
+
+void PoeditFrame::OnSortByFileOrder(wxCommandEvent&)
+{
+    m_list->sortOrder.by = SortOrder::By_FileOrder;
+    m_list->Sort();
+}
+
+
+void PoeditFrame::OnSortBySource(wxCommandEvent&)
+{
+    m_list->sortOrder.by = SortOrder::By_Source;
+    m_list->Sort();
+}
+
+
+void PoeditFrame::OnSortByTranslation(wxCommandEvent&)
+{
+    m_list->sortOrder.by = SortOrder::By_Translation;
+    m_list->Sort();
+}
+
+
+void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
+{
+    m_list->sortOrder.untransFirst = event.IsChecked();
+    m_list->Sort();
 }

@@ -193,6 +193,10 @@ class PoeditFrame : public wxFrame
         void OnEditComment(wxCommandEvent& event);
         void OnManager(wxCommandEvent& event);
         void OnCommentWindowText(wxCommandEvent& event);
+        void OnSortByFileOrder(wxCommandEvent&);
+        void OnSortBySource(wxCommandEvent&);
+        void OnSortByTranslation(wxCommandEvent&);
+        void OnSortUntranslatedFirst(wxCommandEvent&);
 #ifdef USE_TRANSMEM
         void OnAutoTranslate(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
