@@ -72,7 +72,7 @@ esac
 
 AM_PATH_WXCONFIG([2.8.7],
                  [WXFOUND=1], [WXFOUND=0],
-                 [xrc,html,xml,adv,core], [--unicode])
+                 [xrc,stc,html,xml,adv,core], [--unicode])
 
 if test "$WXFOUND" != 1; then
     AC_MSG_ERROR([

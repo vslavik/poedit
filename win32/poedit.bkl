@@ -74,6 +74,8 @@
         <define>USE_TRANSMEM</define>
         <define>$(DB_DEFINE)</define>
 
+        <include>$(WX_DIR)/contrib/include</include>
+
         <include>$(DB_INCLUDE_PATH)</include>
         <lib-path>$(DB_LIB_PATH)</lib-path>
         <include>$(BOOST_PATH)</include>
@@ -149,6 +151,7 @@ $(TAB)$(WXRC) -v -c -o compiled_xrc.cpp $(XRC_FILES)
             $(substituteFromDict(WX_DEBUG, {'1':'on','0':'off'}))
         </debug-runtime-libs>
 
+        <wx-lib>stc</wx-lib>
         <wx-lib>xrc</wx-lib>
         <wx-lib>adv</wx-lib>
         <wx-lib>html</wx-lib>
