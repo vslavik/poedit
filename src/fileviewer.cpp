@@ -60,11 +60,7 @@ FileViewer::FileViewer(wxWindow *parent,
         choice->Append(references[i]);
     choice->SetSelection(startAt);
 
-    wxString ref(m_references[startAt]);
-    // translate windows-style paths to Unix ones, which
-    // are accepted on all platforms:
-    ref.Replace(wxT("\\"), wxT("/"));
-    ShowReference(ref);
+    ShowReference(m_references[startAt]);
 
     wxConfigBase *cfg = wxConfig::Get();
     int width = cfg->Read(_T("fileviewer/frame_w"), 600);
@@ -80,7 +76,8 @@ FileViewer::FileViewer(wxWindow *parent,
 
 void FileViewer::ShowReference(const wxString& ref)
 {
-    wxFileName filename(ref.BeforeLast(_T(':')));
+    wxPathFormat pathfmt = ref.Contains(_T('\\')) ? wxPATH_WIN : wxPATH_UNIX;
+    wxFileName filename(ref.BeforeLast(_T(':')), pathfmt);
     filename.MakeAbsolute(m_basePath);
 
     // support GNOME's xml2po's extension to references in the form of
