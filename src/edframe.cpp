@@ -1577,24 +1577,13 @@ void PoeditFrame::ShowReference(int num)
             basepath = cwd + _T("/") + path;
     }
 
-    if (wxConfig::Get()->Read(_T("open_editor_immediately"), (long)false))
-    {
-        wxString ref = entry->GetReferences()[num];
-        // translate windows-style paths to Unix ones, which
-        // are accepted on all platforms:
-        ref.Replace(_T("\\"), _T("/"));
-        FileViewer::OpenInEditor(basepath, ref);
-    }
+    FileViewer *w = new FileViewer(this, basepath,
+                                   entry->GetReferences(),
+                                   num);
+    if (w->FileOk())
+        w->Show(true);
     else
-    {
-        FileViewer *w = new FileViewer(this, basepath,
-                                       entry->GetReferences(),
-                                       num);
-        if (w->FileOk())
-            w->Show(true);
-        else
-            w->Close();
-    }
+        w->Close();
 }
 
 

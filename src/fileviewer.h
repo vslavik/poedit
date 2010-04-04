@@ -50,10 +50,6 @@ class FileViewer : public wxFrame
         
         /// Shows given reference, i.e. loads the file
         void ShowReference(const wxString& ref);
-        
-        /// Open file in an editor
-        static void OpenInEditor(const wxString& basepath, 
-                                 const wxString& reference);
 
         bool FileOk() { return !m_current.empty(); }
         
@@ -65,7 +61,6 @@ class FileViewer : public wxFrame
         wxListCtrl *m_list;
     
         void OnChoice(wxCommandEvent &event);
-        void OnEditFile(wxCommandEvent &event);
         DECLARE_EVENT_TABLE();
 };
 

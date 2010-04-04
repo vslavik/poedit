@@ -137,41 +137,12 @@ FileViewer::~FileViewer()
     cfg->Write(_T("fileviewer/frame_y"), (long)pos.y);
 }
 
-/*static*/ void FileViewer::OpenInEditor(const wxString& basepath,
-                                         const wxString& reference)
-{
-    wxString editor = wxConfig::Get()->Read(_T("ext_editor"), wxEmptyString);
-    if (!editor)
-    {
-        wxLogError(_("No editor specified. Please set it in Preferences dialog."));
-        return;
-    }
-    wxFileName fn(reference.BeforeLast(_T(':')));
-    fn.MakeAbsolute(basepath);
-
-    // support GNOME's xml2po's extension to references in the form of
-    // filename:line(xml_node):
-    wxString linenum = reference.AfterLast(_T(':')).BeforeFirst(_T('('));
-
-    editor.Replace(_T("%f"),
-                   wxString::Format(_T("\"%s\""), fn.GetFullPath().c_str()));
-    editor.Replace(_T("%l"), linenum);
-
-    wxExecute(editor);
-}
-
 
 BEGIN_EVENT_TABLE(FileViewer, wxFrame)
     EVT_CHOICE(XRCID("references"), FileViewer::OnChoice)
-    EVT_MENU(XRCID("edit_file"), FileViewer::OnEditFile)
 END_EVENT_TABLE()
 
 void FileViewer::OnChoice(wxCommandEvent &event)
 {
     ShowReference(m_references[event.GetSelection()]);
-}
-
-void FileViewer::OnEditFile(wxCommandEvent&)
-{
-    OpenInEditor(m_basePath, m_current);
 }
