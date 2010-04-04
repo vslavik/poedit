@@ -28,7 +28,7 @@ replace_ver configure.ac \
 replace_ver make-distrib.sh \
             '\(VERSION=\).*' "\1$VER_FULL"
 replace_ver src/version.h \
-            '\(POEDIT_VERSION.*"\).*\("\)' "\1$VER_SHORT\2"
+            '\(POEDIT_VERSION.*"\).*\("\)' "\1$VER_FULL\2"
 replace_ver src/version.h \
             '\(POEDIT_VERSION_WIN *\).*' "\1$VER_WIN"
 
