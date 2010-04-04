@@ -16,7 +16,7 @@ q
 }
 
 VER_FULL=$1
-VER_SHORT="`echo $VER_FULL | sed -e 's/pre[0-9]//g'`"
+VER_SHORT="`echo $VER_FULL | sed -e 's/\(pre\|beta\|rc\)[0-9]//g'`"
 VER_WIN="`echo $VER_SHORT | tr '.' ','`,0"
 
 replace_ver win32/poedit.iss \
