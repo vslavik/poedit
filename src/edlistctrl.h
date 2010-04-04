@@ -117,6 +117,7 @@ class PoeditListCtrl : public wxListView
             SetItemState(GetSelection(), 0, wxLIST_STATE_SELECTED);
 #endif
             wxListView::Select(n, on);
+            EnsureVisible(n);
         }
 
         void SetCustomFont(wxFont font);
