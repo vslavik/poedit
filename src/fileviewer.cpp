@@ -26,12 +26,15 @@
 #include <wx/wxprec.h>
 
 #include "fileviewer.h"
-#include <wx/wx.h>
+#include <wx/filename.h>
+#include <wx/log.h>
+#include <wx/panel.h>
+#include <wx/stattext.h>
+#include <wx/choice.h>
 #include <wx/textfile.h>
 #include <wx/config.h>
 #include <wx/sizer.h>
 #include <wx/listctrl.h>
-#include <wx/xrc/xmlres.h>
 
 #define NEIGHBOUR_SIZE  40
 
@@ -43,22 +46,30 @@ FileViewer::FileViewer(wxWindow *parent,
           m_references(references)
 {
     m_basePath = basePath;
-    SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("fileview_toolbar")));
 
     wxPanel *panel = new wxPanel(this, -1);
-	m_list = new wxListCtrl(panel, -1, wxDefaultPosition, wxDefaultSize, 
-                            wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_NO_HEADER |
-                            wxSUNKEN_BORDER);
     wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-    sizer->Add(m_list, 1, wxEXPAND);
     panel->SetSizer(sizer);
-    panel->SetAutoLayout(true);
-	panel->Layout();
-    
-    wxChoice *choice = XRCCTRL(*GetToolBar(), "references", wxChoice);
+    panel->Layout();
+
+    wxSizer *barsizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(barsizer, wxSizerFlags().Expand().Border());
+
+    barsizer->Add(new wxStaticText(panel, wxID_ANY,
+                                   _("Source file occurrence:")),
+                  wxSizerFlags().Center().Border(wxRIGHT));
+
+    wxChoice *choice = new wxChoice(panel, wxID_ANY);
+    barsizer->Add(choice, wxSizerFlags(1).Center());
+
     for (size_t i = 0; i < references.Count(); i++)
         choice->Append(references[i]);
     choice->SetSelection(startAt);
+
+    m_list = new wxListCtrl(panel, -1, wxDefaultPosition, wxDefaultSize, 
+                            wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_NO_HEADER |
+                            wxSUNKEN_BORDER);
+    sizer->Add(m_list, 1, wxEXPAND);
 
     ShowReference(m_references[startAt]);
 
@@ -72,6 +83,11 @@ FileViewer::FileViewer(wxWindow *parent,
     int posy = cfg->Read(_T("fileviewer/frame_y"), -1);
     Move(posx, posy);
 #endif
+
+    wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+    topsizer->Add(panel, wxSizerFlags(1).Expand());
+    SetSizer(topsizer);
+    Layout();
 }
 
 void FileViewer::ShowReference(const wxString& ref)
@@ -139,7 +155,7 @@ FileViewer::~FileViewer()
 
 
 BEGIN_EVENT_TABLE(FileViewer, wxFrame)
-    EVT_CHOICE(XRCID("references"), FileViewer::OnChoice)
+    EVT_CHOICE(wxID_ANY, FileViewer::OnChoice)
 END_EVENT_TABLE()
 
 void FileViewer::OnChoice(wxCommandEvent &event)
