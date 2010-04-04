@@ -52,7 +52,7 @@ END_EVENT_TABLE()
 
 AttentionBar::AttentionBar(wxWindow *parent)
     : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-              wxTAB_TRAVERSAL | wxSIMPLE_BORDER)
+              wxTAB_TRAVERSAL | wxBORDER_NONE)
 {
     wxColour bg = wxSystemSettings::GetColour(wxSYS_COLOUR_INFOBK);
     SetBackgroundColour(bg);
