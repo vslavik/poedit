@@ -401,6 +401,10 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_lines"),       PoeditFrame::OnLinesFlag)
    EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
    EVT_MENU           (XRCID("menu_auto_comments_win"), PoeditFrame::OnAutoCommentsWinFlag)
+   EVT_MENU           (XRCID("sort_by_order"),    PoeditFrame::OnSortByFileOrder)
+   EVT_MENU           (XRCID("sort_by_source"),    PoeditFrame::OnSortBySource)
+   EVT_MENU           (XRCID("sort_by_translation"), PoeditFrame::OnSortByTranslation)
+   EVT_MENU           (XRCID("sort_untrans_first"), PoeditFrame::OnSortUntranslatedFirst)
    EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
@@ -671,6 +675,20 @@ PoeditFrame::PoeditFrame() :
 
     UpdateMenu();
     UpdateDisplayCommentWin();
+
+    switch ( m_list->sortOrder.by )
+    {
+        case SortOrder::By_FileOrder:
+            MenuBar->Check(XRCID("sort_by_order"), true);
+            break;
+        case SortOrder::By_Source:
+            MenuBar->Check(XRCID("sort_by_source"), true);
+            break;
+        case SortOrder::By_Translation:
+            MenuBar->Check(XRCID("sort_by_translation"), true);
+            break;
+    }
+    MenuBar->Check(XRCID("sort_untrans_first"), m_list->sortOrder.untransFirst);
 
     ms_instances.Append(this);
 
@@ -1484,7 +1502,7 @@ void PoeditFrame::OnListActivated(wxListEvent& event)
 {
     if (m_catalog)
     {
-        int ind = m_list->GetIndexInCatalog(event.GetIndex());
+        int ind = m_list->ListIndexToCatalog(event.GetIndex());
         if (ind >= (int)m_catalog->GetCount()) return;
         CatalogItem& entry = (*m_catalog)[ind];
         if (entry.GetValidity() == CatalogItem::Val_Invalid)
@@ -2739,7 +2757,7 @@ void PoeditFrame::BeginItemValidation()
 {
 #ifdef USE_GETTEXT_VALIDATION
     int item = m_itemsToValidate.front();
-    int index = m_list->GetIndexInCatalog(item);
+    int index = m_list->ListIndexToCatalog(item);
     CatalogItem& dt = (*m_catalog)[index];
 
     if (!dt.IsTranslated())
@@ -2795,7 +2813,7 @@ void PoeditFrame::EndItemValidation()
     if (m_itemBeingValidated != -1)
     {
         int item = m_itemBeingValidated;
-        int index = m_list->GetIndexInCatalog(item);
+        int index = m_list->ListIndexToCatalog(item);
         CatalogItem& dt = (*m_catalog)[index];
 
         bool ok = (m_validationProcess.ExitCode == 0);
@@ -2998,7 +3016,7 @@ void PoeditFrame::OnGoToBookmark(wxCommandEvent& event)
     int bkIndex = m_catalog->GetBookmarkIndex(bk);
     if (bkIndex != -1)
     {
-        int listIndex = m_list->GetItemIndex(bkIndex);
+        int listIndex = m_list->CatalogIndexToList(bkIndex);
         if (listIndex >= 0 && listIndex < m_list->GetItemCount())
         {
             m_list->EnsureVisible(listIndex);
@@ -3028,10 +3046,38 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     // Refresh items
     RefreshSelectedItem();
     if (bkIndex != -1)
-        m_list->RefreshItem(m_list->GetItemIndex(bkIndex));
+        m_list->RefreshItem(m_list->CatalogIndexToList(bkIndex));
 
     // Catalog has been modified
     m_modified = true;
     UpdateTitle();
     UpdateMenu();
+}
+
+
+void PoeditFrame::OnSortByFileOrder(wxCommandEvent&)
+{
+    m_list->sortOrder.by = SortOrder::By_FileOrder;
+    m_list->Sort();
+}
+
+
+void PoeditFrame::OnSortBySource(wxCommandEvent&)
+{
+    m_list->sortOrder.by = SortOrder::By_Source;
+    m_list->Sort();
+}
+
+
+void PoeditFrame::OnSortByTranslation(wxCommandEvent&)
+{
+    m_list->sortOrder.by = SortOrder::By_Translation;
+    m_list->Sort();
+}
+
+
+void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
+{
+    m_list->sortOrder.untransFirst = event.IsChecked();
+    m_list->Sort();
 }

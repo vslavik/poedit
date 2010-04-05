@@ -33,6 +33,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  pluralforms/pl_evaluate.cpp \
                  wxeditablelistbox.h editlbox/editlbox.cpp \
                  edlistctrl.cpp edlistctrl.h digits.h \
+                 cat_sorting.cpp cat_sorting.h \
                  version.h \
                  $(OSX_SOURCES) \
                  compiled_xrc.cpp

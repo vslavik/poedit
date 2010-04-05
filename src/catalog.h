@@ -28,6 +28,7 @@
 
 #include <wx/encconv.h>
 #include <wx/regex.h>
+#include <wx/arrstr.h>
 
 #include <vector>
 #include <map>
@@ -260,9 +261,9 @@ class CatalogItem
         wxString GetErrorString() const { return m_errorString; }
 
         /// Returns the bookmark for the item
-        Bookmark GetBookmark() {return m_bookmark;}
+        Bookmark GetBookmark() const {return m_bookmark;}
         /// Returns true if the item has a bookmark
-        bool HasBookmark() {return (GetBookmark() != NO_BOOKMARK);}
+        bool HasBookmark() const {return (GetBookmark() != NO_BOOKMARK);}
         /// Sets the bookmark
         void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
 
