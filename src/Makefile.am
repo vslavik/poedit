@@ -54,7 +54,6 @@ XRC_RESOURCES = \
 		$(srcdir)/resources/toolbar.xrc \
 		$(srcdir)/resources/find.xrc \
 		$(srcdir)/resources/comment.xrc \
-		$(srcdir)/resources/fileview.xrc \
         $(srcdir)/resources/manager.xrc \
 		$(srcdir)/resources/tm_update.xrc
 

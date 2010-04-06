@@ -178,54 +178,6 @@ to set the Last-Translator header of GNU gettext files.</label>
                 </object>
                 <object class="sizeritem">
                   <object class="wxStaticBoxSizer">
-                    <label>External editor</label>
-                    <orient>wxVERTICAL</orient>
-                    <object class="sizeritem">
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxTOP|wxEXPAND</flag>
-                      <object class="wxBoxSizer">
-                        <object class="sizeritem">
-                          <object class="wxStaticText">
-                            <label>Editor executable:</label>
-                          </object>
-                          <flag>wxRIGHT|wxLEFT|wxALIGN_CENTER_VERTICAL</flag>
-                          <border>2d</border>
-                        </object>
-                        <object class="sizeritem">
-                          <object class="wxComboBox" name="ext_editor">
-                            <content>
-                              <item platform="unix" translate="0">nedit -line %l %f</item>
-                              <item platform="win" translate="0">notepad %f</item>
-                              <item translate="0">gvim +%l %f</item>
-                            </content>
-                          </object>
-                          <option>1</option>
-                        </object>
-                      </object>
-                    </object>
-                    <object class="sizeritem">
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
-                      <object class="wxStaticText">
-                        <label>(%f will be substituted with filename, %l with line number)</label>
-                      </object>
-                      <flag>wxLEFT|wxRIGHT|wxTOP|wxBOTTOM|wxALIGN_RIGHT</flag>
-                      <border>2d</border>
-                    </object>
-                    <object class="sizeritem">
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND</flag>
-                      <object class="wxCheckBox" name="open_editor_immediately">
-                        <label>Open source files in editor, not in file viewer</label>
-                      </object>
-                    </object>
-                  </object>
-                  <option>0</option>
-                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
-                  <border>5d</border>
-                </object>
-                <object class="sizeritem">
-                  <object class="wxStaticBoxSizer">
                     <label>Fonts</label>
                     <orient>wxVERTICAL</orient>
                     <object class="sizeritem">

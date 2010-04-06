@@ -26,14 +26,18 @@
 #include <wx/wxprec.h>
 
 #include "fileviewer.h"
-#include <wx/wx.h>
-#include <wx/textfile.h>
+
+#include <wx/filename.h>
+#include <wx/log.h>
+#include <wx/panel.h>
+#include <wx/stattext.h>
+#include <wx/choice.h>
 #include <wx/config.h>
 #include <wx/sizer.h>
+#include <wx/settings.h>
 #include <wx/listctrl.h>
-#include <wx/xrc/xmlres.h>
-
-#define NEIGHBOUR_SIZE  40
+#include <wx/fontenum.h>
+#include <wx/stc/stc.h>
 
 FileViewer::FileViewer(wxWindow *parent, 
                        const wxString& basePath,
@@ -43,28 +47,30 @@ FileViewer::FileViewer(wxWindow *parent,
           m_references(references)
 {
     m_basePath = basePath;
-    SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("fileview_toolbar")));
 
     wxPanel *panel = new wxPanel(this, -1);
-	m_list = new wxListCtrl(panel, -1, wxDefaultPosition, wxDefaultSize, 
-                            wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_NO_HEADER |
-                            wxSUNKEN_BORDER);
     wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-    sizer->Add(m_list, 1, wxEXPAND);
     panel->SetSizer(sizer);
-    panel->SetAutoLayout(true);
-	panel->Layout();
-    
-    wxChoice *choice = XRCCTRL(*GetToolBar(), "references", wxChoice);
+
+    wxSizer *barsizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(barsizer, wxSizerFlags().Expand().Border());
+
+    barsizer->Add(new wxStaticText(panel, wxID_ANY,
+                                   _("Source file occurrence:")),
+                  wxSizerFlags().Center().Border(wxRIGHT));
+
+    wxChoice *choice = new wxChoice(panel, wxID_ANY);
+    barsizer->Add(choice, wxSizerFlags(1).Center());
+
     for (size_t i = 0; i < references.Count(); i++)
         choice->Append(references[i]);
     choice->SetSelection(startAt);
 
-    wxString ref(m_references[startAt]);
-    // translate windows-style paths to Unix ones, which
-    // are accepted on all platforms:
-    ref.Replace(wxT("\\"), wxT("/"));
-    ShowReference(ref);
+    m_text = new wxStyledTextCtrl(panel, wxID_ANY,
+                                  wxDefaultPosition, wxDefaultSize,
+                                  wxBORDER_THEME);
+    SetupTextCtrl();
+    sizer->Add(m_text, 1, wxEXPAND);
 
     wxConfigBase *cfg = wxConfig::Get();
     int width = cfg->Read(_T("fileviewer/frame_w"), 600);
@@ -76,58 +82,15 @@ FileViewer::FileViewer(wxWindow *parent,
     int posy = cfg->Read(_T("fileviewer/frame_y"), -1);
     Move(posx, posy);
 #endif
+
+    wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+    topsizer->Add(panel, wxSizerFlags(1).Expand());
+    SetSizer(topsizer);
+    Layout();
+
+    ShowReference(m_references[startAt]);
 }
 
-void FileViewer::ShowReference(const wxString& ref)
-{
-    wxFileName filename(ref.BeforeLast(_T(':')));
-    filename.MakeAbsolute(m_basePath);
-
-    // support GNOME's xml2po's extension to references in the form of
-    // filename:line(xml_node):
-    wxString linenumStr = ref.AfterLast(_T(':')).BeforeFirst(_T('('));
-
-    long linenum;
-    if (!linenumStr.ToLong(&linenum))
-        linenum = 0;
-
-    wxTextFile textf(filename.GetFullPath());
-
-    textf.Open();
-    if (!textf.IsOpened())
-    {
-        wxLogError(_("Error opening file %s!"), filename.GetFullPath().c_str());
-        return;
-    }
-    
-    int top    = wxMax(1, linenum - NEIGHBOUR_SIZE),
-        bottom = wxMin(linenum + NEIGHBOUR_SIZE, (int)textf.GetLineCount());
-
-    m_list->ClearAll();
-    m_list->InsertColumn(0, _T("#"), wxLIST_FORMAT_RIGHT);
-    m_list->InsertColumn(1, _("Line"));
-
-    for (int i = top; i < bottom; i++)
-    {
-        wxString linenum(wxString::Format(_T("%i  "), i));
-        wxString linetxt = textf[i-1];
-        // FIXME: this is not correct
-        linetxt.Replace(_T("\t"), _T("    "));
-        m_list->InsertItem(i - top, linenum);
-        m_list->SetItem(i - top, 1, linetxt);
-    }
-
-    m_list->SetColumnWidth(0, wxLIST_AUTOSIZE);
-    m_list->SetColumnWidth(1, wxLIST_AUTOSIZE);
-
-    m_list->SetItemState(linenum - top,
-                         wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-    m_list->EnsureVisible(wxMax(0, linenum - top - 5));
-    m_list->EnsureVisible(wxMin(linenum - top + 5, bottom - top - 1));
-    m_list->EnsureVisible(linenum - top);
-
-    m_current = ref;
-}
 
 FileViewer::~FileViewer()
 {
@@ -140,41 +103,172 @@ FileViewer::~FileViewer()
     cfg->Write(_T("fileviewer/frame_y"), (long)pos.y);
 }
 
-/*static*/ void FileViewer::OpenInEditor(const wxString& basepath,
-                                         const wxString& reference)
+
+void FileViewer::SetupTextCtrl()
 {
-    wxString editor = wxConfig::Get()->Read(_T("ext_editor"), wxEmptyString);
-    if (!editor)
+    wxStyledTextCtrl& t = *m_text;
+
+    wxFont font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+
+#ifdef __WXGTK__
+    font.SetFaceName(_T("monospace"));
+#else
+    static const wxChar *s_monospaced_fonts[] = {
+#ifdef __WXMSW__
+        _T("Consolas"),
+        _T("Lucida Console"),
+#endif
+#ifdef __WXOSX__
+        _T("Menlo"),
+        _T("Monaco"),
+#endif
+        NULL
+    };
+
+    for ( const wxChar **f = s_monospaced_fonts; *f; ++f )
     {
-        wxLogError(_("No editor specified. Please set it in Preferences dialog."));
-        return;
+        if ( wxFontEnumerator::IsValidFacename(*f) )
+        {
+            font.SetFaceName(*f);
+            break;
+        }
     }
-    wxFileName fn(reference.BeforeLast(_T(':')));
-    fn.MakeAbsolute(basepath);
+#endif
 
-    // support GNOME's xml2po's extension to references in the form of
-    // filename:line(xml_node):
-    wxString linenum = reference.AfterLast(_T(':')).BeforeFirst(_T('('));
+    wxString fontspec = wxString::Format(_T("face:%s,size:%d"),
+                                         font.GetFaceName().c_str(),
+                                         font.GetPointSize());
 
-    editor.Replace(_T("%f"),
-                   wxString::Format(_T("\"%s\""), fn.GetFullPath().c_str()));
-    editor.Replace(_T("%l"), linenum);
+    // current line marker
+    t.MarkerDefine(1, wxSTC_MARK_BACKGROUND, wxNullColour, wxColour(255,255,0));
 
-    wxExecute(editor);
+    // set fonts
+    t.StyleSetSpec(wxSTC_STYLE_LINENUMBER, fontspec);
+    t.StyleSetSpec(wxSTC_STYLE_DEFAULT, fontspec);
+
+    // line numbers margin size:
+    t.SetMarginType(0, wxSTC_MARGIN_NUMBER);
+    t.SetMarginWidth(0,
+                     t.TextWidth(wxSTC_STYLE_LINENUMBER, _T("9999 ")));
+    t.SetMarginWidth(1, 0);
+    t.SetMarginWidth(2, 3);
+
+    // set syntax highlighter styling
+    const wxString STRING(_T("fore:#16bc16"));
+    const wxString COMMENT(_T("fore:#808080"));
+
+    t.StyleSetSpec(wxSTC_C_STRING, STRING);
+    t.StyleSetSpec(wxSTC_C_COMMENT, COMMENT);
+    t.StyleSetSpec(wxSTC_C_COMMENTLINE, COMMENT);
+
+    t.StyleSetSpec(wxSTC_P_STRING, STRING);
+    t.StyleSetSpec(wxSTC_P_COMMENTLINE, COMMENT);
+    t.StyleSetSpec(wxSTC_P_COMMENTBLOCK, COMMENT);
+
+    t.StyleSetSpec(wxSTC_LUA_STRING, STRING);
+    t.StyleSetSpec(wxSTC_LUA_LITERALSTRING, STRING);
+    t.StyleSetSpec(wxSTC_LUA_COMMENT, COMMENT);
+    t.StyleSetSpec(wxSTC_LUA_COMMENTLINE, COMMENT);
+
+    t.StyleSetSpec(wxSTC_HPHP_HSTRING, STRING);
+    t.StyleSetSpec(wxSTC_HPHP_SIMPLESTRING, STRING);
+    t.StyleSetSpec(wxSTC_HPHP_COMMENT, COMMENT);
+    t.StyleSetSpec(wxSTC_HPHP_COMMENTLINE, COMMENT);
+
+    t.StyleSetSpec(wxSTC_TCL_COMMENT, COMMENT);
+    t.StyleSetSpec(wxSTC_TCL_COMMENTLINE, COMMENT);
+    t.StyleSetSpec(wxSTC_TCL_BLOCK_COMMENT, COMMENT);
+
+#if wxCHECK_VERSION(2,9,0)
+    t.StyleSetSpec(wxSTC_PAS_STRING, STRING);
+    t.StyleSetSpec(wxSTC_PAS_COMMENT, COMMENT);
+    t.StyleSetSpec(wxSTC_PAS_COMMENT2, COMMENT);
+    t.StyleSetSpec(wxSTC_PAS_COMMENTLINE, COMMENT);
+#endif
 }
 
 
+int FileViewer::GetLexer(const wxString& ext)
+{
+    struct LexerInfo
+    {
+        const char *ext;
+        int lexer;
+    };
+
+    static const LexerInfo s_lexer[] = {
+        { "c", wxSTC_LEX_CPP },
+        { "cpp", wxSTC_LEX_CPP },
+        { "cc", wxSTC_LEX_CPP },
+        { "cxx", wxSTC_LEX_CPP },
+        { "h", wxSTC_LEX_CPP },
+        { "hxx", wxSTC_LEX_CPP },
+        { "hpp", wxSTC_LEX_CPP },
+        { "py", wxSTC_LEX_PYTHON },
+        { "htm", wxSTC_LEX_HTML },
+        { "html", wxSTC_LEX_HTML },
+        { "php", wxSTC_LEX_PHPSCRIPT },
+        { "xml", wxSTC_LEX_XML },
+        { "pas", wxSTC_LEX_PASCAL },
+        { NULL, -1 }
+    };
+
+    wxString e = ext.Lower();
+
+    for ( const LexerInfo *i = s_lexer; i->ext; ++i )
+    {
+        if ( e == wxString::FromAscii(i->ext) )
+            return i->lexer;
+    }
+
+    return wxSTC_LEX_NULL;
+}
+
+
+void FileViewer::ShowReference(const wxString& ref)
+{
+    wxPathFormat pathfmt = ref.Contains(_T('\\')) ? wxPATH_WIN : wxPATH_UNIX;
+    wxFileName filename(ref.BeforeLast(_T(':')), pathfmt);
+    filename.MakeAbsolute(m_basePath);
+
+    if ( !filename.IsFileReadable() )
+    {
+        wxLogError(_("Error opening file %s!"), filename.GetFullPath().c_str());
+        return;
+    }
+
+    m_current = ref;
+
+    // support GNOME's xml2po's extension to references in the form of
+    // filename:line(xml_node):
+    wxString linenumStr = ref.AfterLast(_T(':')).BeforeFirst(_T('('));
+
+    long linenum;
+    if (!linenumStr.ToLong(&linenum))
+        linenum = 0;
+
+    m_text->SetReadOnly(false);
+    m_text->LoadFile(filename.GetFullPath());
+    m_text->SetLexer(GetLexer(filename.GetExt()));
+    m_text->SetReadOnly(true);
+
+    m_text->MarkerDeleteAll(1);
+    m_text->MarkerAdd(linenum, 1);
+
+    // Center the highlighted line:
+    int lineHeight = m_text->TextHeight(linenum);
+    int linesInWnd = m_text->GetSize().y / lineHeight;
+    m_text->ScrollToLine(wxMax(0, linenum - linesInWnd/2));
+
+}
+
+
+
 BEGIN_EVENT_TABLE(FileViewer, wxFrame)
-    EVT_CHOICE(XRCID("references"), FileViewer::OnChoice)
-    EVT_MENU(XRCID("edit_file"), FileViewer::OnEditFile)
+    EVT_CHOICE(wxID_ANY, FileViewer::OnChoice)
 END_EVENT_TABLE()
 
 void FileViewer::OnChoice(wxCommandEvent &event)
 {
     ShowReference(m_references[event.GetSelection()]);
-}
-
-void FileViewer::OnEditFile(wxCommandEvent&)
-{
-    OpenInEditor(m_basePath, m_current);
 }
