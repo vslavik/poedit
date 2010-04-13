@@ -1087,18 +1087,27 @@ void PoeditFrame::DoOpenFile(const wxString& filename)
 
 bool PoeditFrame::CanDiscardCurrentDoc()
 {
-    if (m_catalog && m_modified)
+    if ( m_catalog && m_modified )
     {
-        int r =
-            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"),
-                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
-        if (r == wxYES)
+        wxMessageDialog dlg
+                        (
+                            this,
+                            _("Catalog modified. Do you want to save changes?"),
+                            _("Save changes"),
+                            wxYES_NO | wxCANCEL | wxICON_QUESTION
+                        );
+#if wxCHECK_VERSION(2,9,0)
+        dlg.SetExtendedMessage(_("Your changes will be lost if you don't save them."));
+        dlg.SetYesNoLabels(_("Save"), _("Don't Save"));
+#endif
+
+        int r = dlg.ShowModal();
+        if ( r == wxID_YES )
         {
             if ( !WriteCatalog(m_fileName) )
                 return false;
         }
-        else if (r == wxCANCEL)
+        else if ( r == wxID_CANCEL )
         {
             return false;
         }
