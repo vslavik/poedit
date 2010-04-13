@@ -39,7 +39,7 @@
 #include <wx/fontenum.h>
 #include <wx/stc/stc.h>
 
-FileViewer::FileViewer(wxWindow *parent, 
+FileViewer::FileViewer(wxWindow *parent,
                        const wxString& basePath,
                        const wxArrayString& references,
                        size_t startAt)
@@ -135,16 +135,22 @@ void FileViewer::SetupTextCtrl()
     }
 #endif
 
+    // style used:
     wxString fontspec = wxString::Format(_T("face:%s,size:%d"),
                                          font.GetFaceName().c_str(),
                                          font.GetPointSize());
+    const wxString STRING      = fontspec + _T(",bold,fore:#882d21");
+    const wxString COMMENT     = fontspec + _T(",fore:#487e18");
+    const wxString KEYWORD     = fontspec + _T(",fore:#2f00f9");
+    const wxString LINENUMBERS = fontspec + _T(",fore:#5d8bab");
+
 
     // current line marker
     t.MarkerDefine(1, wxSTC_MARK_BACKGROUND, wxNullColour, wxColour(255,255,0));
 
     // set fonts
-    t.StyleSetSpec(wxSTC_STYLE_LINENUMBER, fontspec);
     t.StyleSetSpec(wxSTC_STYLE_DEFAULT, fontspec);
+    t.StyleSetSpec(wxSTC_STYLE_LINENUMBER, LINENUMBERS);
 
     // line numbers margin size:
     t.SetMarginType(0, wxSTC_MARGIN_NUMBER);
@@ -153,10 +159,7 @@ void FileViewer::SetupTextCtrl()
     t.SetMarginWidth(1, 0);
     t.SetMarginWidth(2, 3);
 
-    // set syntax highlighter styling
-    const wxString STRING(_T("fore:#16bc16"));
-    const wxString COMMENT(_T("fore:#808080"));
-
+    // set syntax highlighting styling
     t.StyleSetSpec(wxSTC_C_STRING, STRING);
     t.StyleSetSpec(wxSTC_C_COMMENT, COMMENT);
     t.StyleSetSpec(wxSTC_C_COMMENTLINE, COMMENT);
