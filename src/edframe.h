@@ -167,7 +167,7 @@ class PoeditFrame : public wxFrame
         void DoSaveAs(const wxString& filename);
         void OnOpen(wxCommandEvent& event);
         void OnOpenHist(wxCommandEvent& event);
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || wxCHECK_VERSION(2,8,10)
         void OnFileDrop(wxDropFilesEvent& event);
 #endif
         void OnProperties(wxCommandEvent& event);

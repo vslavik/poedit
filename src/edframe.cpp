@@ -423,7 +423,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
                        PoeditFrame::OnSetBookmark)
    EVT_CLOSE          (                PoeditFrame::OnCloseWindow)
    EVT_TEXT           (ID_TEXTCOMMENT,PoeditFrame::OnCommentWindowText)
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || wxCHECK_VERSION(2,8,10)
    EVT_DROP_FILES     (PoeditFrame::OnFileDrop)
 #endif
    EVT_IDLE           (PoeditFrame::OnIdle)
@@ -1132,12 +1132,13 @@ void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 
 
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || wxCHECK_VERSION(2,8,10)
 void PoeditFrame::OnFileDrop(wxDropFilesEvent& event)
 {
     if (event.GetNumberOfFiles() != 1)
     {
         wxLogError(_("You can't drop more than one file on Poedit window."));
+        event.Skip();
         return;
     }
 
@@ -1172,7 +1173,7 @@ void PoeditFrame::OnFileDrop(wxDropFilesEvent& event)
     else
         wxLogError(_("File '%s' doesn't exist."), f.GetFullPath().c_str());
 }
-#endif
+#endif // defined(__WXMSW__) || wxCHECK_VERSION(2,8,10)
 
 
 
