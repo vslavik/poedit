@@ -44,6 +44,7 @@
 #include <wx/aboutdlg.h>
 #include <wx/iconbndl.h>
 #include <wx/clipbrd.h>
+#include <wx/dnd.h>
 
 #ifdef USE_SPELLCHECKING
 
@@ -423,13 +424,50 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
                        PoeditFrame::OnSetBookmark)
    EVT_CLOSE          (                PoeditFrame::OnCloseWindow)
    EVT_TEXT           (ID_TEXTCOMMENT,PoeditFrame::OnCommentWindowText)
-#if defined(__WXMSW__) || wxCHECK_VERSION(2,8,10)
-   EVT_DROP_FILES     (PoeditFrame::OnFileDrop)
-#endif
    EVT_IDLE           (PoeditFrame::OnIdle)
    EVT_SIZE           (PoeditFrame::OnSize)
    EVT_END_PROCESS    (-1, PoeditFrame::OnEndProcess)
 END_EVENT_TABLE()
+
+
+
+class PoeditDropTarget : public wxFileDropTarget
+{
+public:
+    PoeditDropTarget(PoeditFrame *win) : m_win(win) {}
+
+    virtual bool OnDropFiles(wxCoord /*x*/, wxCoord /*y*/,
+                             const wxArrayString& files)
+    {
+        if ( files.size() != 1 )
+        {
+            wxLogError(_("You can't drop more than one file on Poedit window."));
+            return false;
+        }
+
+        wxFileName f(files[0]);
+
+        if ( f.GetExt().Lower() != _T("po") )
+        {
+            wxLogError(_("File '%s' is not a message catalog."),
+                       f.GetFullPath().c_str());
+            return false;
+        }
+
+        if ( !f.FileExists() )
+        {
+            wxLogError(_("File '%s' doesn't exist."), f.GetFullPath().c_str());
+            return false;
+        }
+
+        m_win->OpenFile(f.GetFullPath());
+
+        return true;
+    }
+
+private:
+    PoeditFrame *m_win;
+};
 
 
 // Frame class:
@@ -692,9 +730,7 @@ PoeditFrame::PoeditFrame() :
 
     ms_instances.Append(this);
 
-#if defined(__WXMSW__) || wxCHECK_VERSION(2,8,10)
-    DragAcceptFiles(true);
-#endif
+    SetDropTarget(new PoeditDropTarget(this));
 }
 
 
@@ -1030,8 +1066,26 @@ void PoeditFrame::OnQuit(wxCommandEvent&)
 }
 
 
+void PoeditFrame::OpenFile(const wxString& filename)
+{
+    if ( !CanDiscardCurrentDoc() )
+        return;
+    DoOpenFile(filename);
+}
 
-void PoeditFrame::OnCloseWindow(wxCloseEvent&)
+
+void PoeditFrame::DoOpenFile(const wxString& filename)
+{
+    ReadCatalog(filename);
+
+    if (g_focusToText)
+        m_textTrans->SetFocus();
+    else
+        m_list->SetFocus();
+}
+
+
+bool PoeditFrame::CanDiscardCurrentDoc()
 {
     if (m_catalog && m_modified)
     {
@@ -1042,38 +1096,32 @@ void PoeditFrame::OnCloseWindow(wxCloseEvent&)
         if (r == wxYES)
         {
             if ( !WriteCatalog(m_fileName) )
-                return;
+                return false;
         }
         else if (r == wxCANCEL)
         {
-            return;
+            return false;
         }
     }
+
+    return true;
+}
+
+
+void PoeditFrame::OnCloseWindow(wxCloseEvent&)
+{
+    if ( !CanDiscardCurrentDoc() )
+        return;
 
     CancelItemsValidation();
     Destroy();
 }
 
 
-
 void PoeditFrame::OnOpen(wxCommandEvent&)
 {
-    if (m_catalog && m_modified)
-    {
-        int r =
-            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"),
-                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
-        if (r == wxYES)
-        {
-            if ( !WriteCatalog(m_fileName) )
-                return;
-        }
-        else if (r == wxCANCEL)
-        {
-            return;
-        }
-    }
+    if ( !CanDiscardCurrentDoc() )
+        return;
 
     wxString path = wxPathOnly(m_fileName);
     if (path.empty())
@@ -1083,15 +1131,12 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
                     path, wxEmptyString, wxEmptyString,
                     _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
                     wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
+
     if (!name.empty())
     {
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
-        ReadCatalog(name);
 
-        if (g_focusToText)
-            m_textTrans->SetFocus();
-        else
-            m_list->SetFocus();
+        DoOpenFile(name);
     }
 }
 
@@ -1099,82 +1144,15 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
 
 void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 {
-    if (m_catalog && m_modified)
-    {
-        int r =
-            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"),
-                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
-        if (r == wxYES)
-        {
-            if ( !WriteCatalog(m_fileName) )
-                return;
-        }
-        else if (r == wxCANCEL)
-        {
-            return;
-        }
-    }
-
     wxString f(m_history.GetHistoryFile(event.GetId() - wxID_FILE1));
-    if (f != wxEmptyString && wxFileExists(f))
+    if ( !wxFileExists(f) )
     {
-        ReadCatalog(f);
-
-        if (g_focusToText)
-            m_textTrans->SetFocus();
-        else
-            m_list->SetFocus();
-    }
-    else
         wxLogError(_("File '%s' doesn't exist."), f.c_str());
-}
-
-
-
-#if defined(__WXMSW__) || wxCHECK_VERSION(2,8,10)
-void PoeditFrame::OnFileDrop(wxDropFilesEvent& event)
-{
-    if (event.GetNumberOfFiles() != 1)
-    {
-        wxLogError(_("You can't drop more than one file on Poedit window."));
-        event.Skip();
         return;
     }
 
-    wxFileName f(event.GetFiles()[0]);
-    if (f.GetExt().Lower() != _T("po"))
-    {
-        wxLogError(_("File '%s' is not a message catalog."),
-                   f.GetFullPath().c_str());
-        return;
-    }
-
-    if (f.FileExists())
-    {
-        if (m_catalog && m_modified)
-        {
-            int r =
-              wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                           _("Save changes"),
-                           wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
-            if (r == wxYES)
-            {
-                if ( !WriteCatalog(m_fileName) )
-                    return;
-            }
-            else if (r == wxCANCEL)
-            {
-                return;
-            }
-        }
-        ReadCatalog(f.GetFullPath());
-    }
-    else
-        wxLogError(_("File '%s' doesn't exist."), f.GetFullPath().c_str());
+    OpenFile(f);
 }
-#endif // defined(__WXMSW__) || wxCHECK_VERSION(2,8,10)
-
 
 
 void PoeditFrame::OnSave(wxCommandEvent& event)
@@ -1268,24 +1246,10 @@ bool PoeditFrame::ExportCatalog(const wxString& filename)
 
 void PoeditFrame::OnNew(wxCommandEvent& event)
 {
-    bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
+    if ( !CanDiscardCurrentDoc() )
+        return;
 
-    if (m_catalog && m_modified)
-    {
-        int r =
-            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"),
-                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
-        if (r == wxYES)
-        {
-            if ( !WriteCatalog(m_fileName) )
-                return;
-        }
-        else if (r == wxCANCEL)
-        {
-            return;
-        }
-    }
+    bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
 
     PropertiesDialog dlg(this);
     Catalog *catalog = new Catalog;

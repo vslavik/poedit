@@ -87,6 +87,9 @@ class PoeditFrame : public wxFrame
          */
         static PoeditFrame *Create(const wxString& catalog = wxEmptyString);
 
+        /// Opens given file in this frame. Asks user for permission first
+        /// if there's unsaved document.
+        void OpenFile(const wxString& filename);
 
         /** Returns pointer to existing instance of PoeditFrame that currently
             exists and edits \a catalog. If no such frame exists, returns NULL.
@@ -125,6 +128,12 @@ class PoeditFrame : public wxFrame
         void SetCustomFonts();
 
         CatalogItem *GetCurrentItem() const;
+
+        // if there's modified catalog, ask user to save it; return true
+        // if it's save to discard m_catalog and load new data
+        bool CanDiscardCurrentDoc();
+        // implements opening of files, without asking user
+        void DoOpenFile(const wxString& filename);
 
         /// Puts text from textctrls to catalog & listctrl.
         void UpdateFromTextCtrl();
@@ -167,9 +176,6 @@ class PoeditFrame : public wxFrame
         void DoSaveAs(const wxString& filename);
         void OnOpen(wxCommandEvent& event);
         void OnOpenHist(wxCommandEvent& event);
-#if defined(__WXMSW__) || wxCHECK_VERSION(2,8,10)
-        void OnFileDrop(wxDropFilesEvent& event);
-#endif
         void OnProperties(wxCommandEvent& event);
         void OnPreferences(wxCommandEvent& event);
         void OnUpdate(wxCommandEvent& event);
