@@ -48,13 +48,14 @@ AllowNoIcons=true
 LicenseFile=COPYING
 OutputDir=distrib
 InfoAfterFile=
-Compression=lzma/ultra
+Compression=lzma2
 WindowShowCaption=true
 WindowStartMaximized=false
 FlatComponentsList=true
 WindowResizable=true
 SolidCompression=true
 ShowLanguageDialog=no
+DisableWelcomePage=true
 AllowUNCPath=true
 InternalCompressLevel=ultra
 AppID={{68EB2C37-083A-4303-B5D8-41FA67E50B8F}
@@ -71,11 +72,6 @@ UninstallDisplayName=Poedit
 MinVersion=0,5.0.2195
 WizardSmallImageFile=icons\win32\installer_wizard_image.bmp
 AppPublisherURL=http://www.poedit.net/
-
-[LangOptions]
-; make the installer use standard (WinXP, ...) fonts
-DialogFontName=Tahoma
-DialogFontSize=8
 
 [Files]
 Source: win32\Release\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
