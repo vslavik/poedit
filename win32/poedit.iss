@@ -40,7 +40,7 @@ AppVerName=Poedit {#VERSION_FULL}
 
 PrivilegesRequired=none
 ChangesAssociations=true
-AlwaysShowComponentsList=true
+AlwaysShowComponentsList=false
 SourceDir=..
 DefaultDirName={pf}\Poedit
 DefaultGroupName=Poedit
@@ -75,37 +75,37 @@ AppPublisherURL=http://www.poedit.net/
 DisableProgramGroupPage=true
 
 [Files]
-Source: win32\Release\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
-Source: deps\gettext\COPYING; DestDir: {app}\doc; Components: docs; DestName: GNU_Gettext_COPYING.txt
-Source: deps\bin-gettext\bin\xgettext.exe; DestDir: {app}\bin; Components: core
-Source: deps\bin-gettext\bin\msgmerge.exe; DestDir: {app}\bin; Components: core
-Source: deps\bin-gettext\bin\msgunfmt.exe; DestDir: {app}\bin; Components: core
-Source: deps\bin-gettext\bin\msgfmt.exe; DestDir: {app}\bin; Components: core
-Source: deps\bin-gettext\bin\msgcat.exe; DestDir: {app}\bin; Components: core
-Source: deps\bin-gettext\bin\*.dll; DestDir: {app}\bin; Components: core
-Source: deps\db\build_windows\Win32\Release\libdb*.dll; DestDir: {app}\bin; Components: core
-Source: deps\winsparkle\WinSparkle.dll; DestDir: {app}\bin; Components: core
-Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit\help\en; Components: docs
-Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit\help\en\gettext; Components: docs
-Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit\help\hr; Components: i18n
-Source: COPYING; DestDir: {app}\doc; DestName: copying.txt; Components: docs
-Source: NEWS; DestDir: {app}\doc; DestName: news.txt; Components: docs
-Source: icons\ui\*.png; DestDir: {app}\share\poedit\icons; Components: core
-Source: icons\win32\xp\*.ico; DestDir: {app}\share\poedit\icons; Components: core; OnlyBelowVersion: 0,6.0.6000
-Source: icons\win32\vista\*.ico; DestDir: {app}\share\poedit\icons; Components: core; MinVersion: 0,6.0.6000
-Source: {#CRT_REDIST}\Microsoft.*.CRT.manifest; DestDir: {app}\bin; Components: core
-Source: {#CRT_REDIST}\*.dll; DestDir: {app}\bin; Components: core
+Source: win32\Release\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe
+Source: deps\gettext\COPYING; DestDir: {app}\doc; DestName: GNU_Gettext_COPYING.txt
+Source: deps\bin-gettext\bin\xgettext.exe; DestDir: {app}\bin
+Source: deps\bin-gettext\bin\msgmerge.exe; DestDir: {app}\bin
+Source: deps\bin-gettext\bin\msgunfmt.exe; DestDir: {app}\bin
+Source: deps\bin-gettext\bin\msgfmt.exe; DestDir: {app}\bin
+Source: deps\bin-gettext\bin\msgcat.exe; DestDir: {app}\bin
+Source: deps\bin-gettext\bin\*.dll; DestDir: {app}\bin
+Source: deps\db\build_windows\Win32\Release\libdb*.dll; DestDir: {app}\bin
+Source: deps\winsparkle\WinSparkle.dll; DestDir: {app}\bin
+Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit\help\en
+Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit\help\en\gettext
+Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit\help\hr
+Source: COPYING; DestDir: {app}\doc; DestName: copying.txt
+Source: NEWS; DestDir: {app}\doc; DestName: news.txt
+Source: icons\ui\*.png; DestDir: {app}\share\poedit\icons
+Source: icons\win32\xp\*.ico; DestDir: {app}\share\poedit\icons; OnlyBelowVersion: 0,6.0.6000
+Source: icons\win32\vista\*.ico; DestDir: {app}\share\poedit\icons; MinVersion: 0,6.0.6000
+Source: {#CRT_REDIST}\Microsoft.*.CRT.manifest; DestDir: {app}\bin
+Source: {#CRT_REDIST}\*.dll; DestDir: {app}\bin
 #emit LocaleFiles
 
 [InstallDelete]
 ; delete files from previous versions that are no longer needed (and in case of
 ; poedit.exe.manifest, actually harmful):
-Name: {app}\bin\poedit.exe.manifest; Type: files; Components: core
-Name: {app}\bin\gettextlib.dll; Type: files; Components: core
-Name: {app}\bin\gettextsrc.dll; Type: files; Components: core
-Name: {app}\bin\iconv.dll; Type: files; Components: core
-Name: {app}\bin\intl.dll; Type: files; Components: core
-Name: {app}\bin\mingwm10.dll; Type: files; Components: core
+Name: {app}\bin\poedit.exe.manifest; Type: files
+Name: {app}\bin\gettextlib.dll; Type: files
+Name: {app}\bin\gettextsrc.dll; Type: files
+Name: {app}\bin\iconv.dll; Type: files
+Name: {app}\bin\intl.dll; Type: files
+Name: {app}\bin\mingwm10.dll; Type: files
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
@@ -125,21 +125,16 @@ Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run Poedit now; 
 UseAbsolutePaths=false
 
 [Dirs]
-Name: {app}\bin; Components: core
-Name: {app}\doc; Components: docs
-Name: {app}\share; Components: core
-Name: {app}\share\locale; Components: i18n
-Name: {app}\share\poedit; Components: core
-Name: {app}\share\poedit\icons; Components: core
-Name: {app}\share\poedit\help; Components: docs
-Name: {app}\share\poedit\help\en; Components: docs
-Name: {app}\share\poedit\help\en\gettext; Components: docs
-Name: {app}\share\poedit\help\hr; Components: docs
-
-[Components]
-Name: core; Description: Core files; Flags: fixed; Types: custom compact full
-Name: docs; Description: Documentation; Types: custom compact full
-Name: i18n; Description: Localization files for the UI; Types: full
+Name: {app}\bin
+Name: {app}\doc
+Name: {app}\share
+Name: {app}\share\locale
+Name: {app}\share\poedit
+Name: {app}\share\poedit\icons
+Name: {app}\share\poedit\help
+Name: {app}\share\poedit\help\en
+Name: {app}\share\poedit\help\en\gettext
+Name: {app}\share\poedit\help\hr
 
 [Messages]
 BeveledLabel=http://www.poedit.net
