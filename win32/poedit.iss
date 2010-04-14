@@ -72,6 +72,7 @@ UninstallDisplayName=Poedit
 MinVersion=0,5.0.2195
 WizardSmallImageFile=icons\win32\installer_wizard_image.bmp
 AppPublisherURL=http://www.poedit.net/
+DisableProgramGroupPage=true
 
 [Files]
 Source: win32\Release\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Components: core
@@ -115,7 +116,7 @@ Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty dontcre
 Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcreatekey
 
 [Icons]
-Name: {group}\Poedit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0
+Name: {commonprograms}\Poedit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0
 
 [Run]
 Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run Poedit now; Flags: postinstall unchecked nowait
