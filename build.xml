@@ -38,7 +38,6 @@
     <available property="bootstrapped.win" file="win32/poedit.vcproj"/>
     <target name="bootstrap-win" if="is_windows" unless="bootstrapped.win">
         <echo level="info" message="Bootstrapping git sources..."/>
-        <exec dir="win32" executable="bakefile_gen" failonerror="true"/>
         <mkdir dir="icons/win32"/>
         <mkdir dir="icons/win32/vista"/>
         <mkdir dir="icons/win32/xp"/>
@@ -73,6 +72,8 @@
             <arg value="None"/>
             <arg value="win32\vista\poedit-translation-generic.ico"/>
         </exec>
+        <!-- generate project files: -->
+        <exec dir="win32" executable="bakefile_gen" failonerror="true"/>
     </target>
 
     <target name="compile-win" if="is_windows" depends="bootstrap-win">
