@@ -36,8 +36,9 @@ hdiutil attach $outfile.tmp.dmg -mountpoint "$mountp" -nobrowse
 /Developer/Tools/SetFile -a C $mountp/
 hdiutil detach "$mountp"
 
+rm -f $outfile
 # can't use UDBZ (bzip2) format, because Safari may misinterpret file's content
 # and rename it to .dmg.bz2, see here:
 # http://unsanity.org/archives/mac_os_x/my_dmg_is_bwoken_after_download.php
 hdiutil convert -format UDZO -imagekey zlib-level=9 -o $outfile $outfile.tmp.dmg
-rm -rf $outfile.tmp.dmg
+rm -f $outfile.tmp.dmg
