@@ -3,13 +3,13 @@
 #
 # Creates Mac OS X bundle file. Must be run from $(builddir)/src
 #
-# Usage: make-bundle <bundleName.app> <rez> <top_builddir> <top_srcdir>
+# Usage: make-bundle <bundleName.app> <poedit_binary> <top_builddir> <top_srcdir>
 # 
 # $Id$
 #
 
 bundle="$1"
-rez="$2"
+poedit_binary="$2"
 top_builddir="$3"
 top_srcdir="$4"
 
@@ -36,8 +36,7 @@ mkdir -p $bundle/Contents/Resources
 bindir="$bundle/Contents/MacOS"
 
 # executables:
-cp poedit $bindir/Poedit
-$rez $bindir/Poedit
+cp $poedit_binary $bindir/Poedit
 
 if [ -n "$GETTEXT_PREFIX" ] ; then
     gettext_apps="msgfmt msgmerge msgunfmt msgcat xgettext"

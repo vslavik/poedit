@@ -70,5 +70,5 @@ bundle: poedit
 	SPARKLE_FRAMEWORK=$(SPARKLE_FRAMEWORK) \
 		$(top_srcdir)/macosx/make-bundle \
 			"Poedit.app" \
-			"`$(WX_CONFIG_WITH_ARGS) --rezflags`" \
+			./poedit \
 			"$(top_builddir)" "$(top_srcdir)"
