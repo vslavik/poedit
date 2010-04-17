@@ -23,12 +23,12 @@
 
     <target name="compile"
             description="compile all dependencies for building on this platform"
-            depends="compile-win"/>
+            depends="compile-win,compile-osx"/>
 
 
     <target name="distrib"
             description="build distribution for this platform"
-            depends="distrib-win"/>
+            depends="distrib-win,distrib-osx"/>
 
 
 <!-- ==============================================================
@@ -44,10 +44,86 @@
     </target>
 
 
-    <target name="distrib-win" if="is_windows" depends="compile-win">
+    <target name="distrib-win" if="is_windows">
         <exec dir="win32" executable="deps/inno-setup/iscc.exe" failonerror="true">
             <arg value="poedit.iss"/>
             <arg value="/dCRT_REDIST=${msvs.redist}"/>
+        </exec>
+    </target>
+    
+    
+<!-- ==============================================================
+     OS X build
+     ============================================================== -->
+
+    <available property="bootstrapped" file="configure"/>
+    <target name="bootstrap-osx" if="is_osx" unless="bootstrapped">
+        <echo level="info" message="Bootstrapping git sources..."/>
+        <exec executable="./bootstrap" failonerror="true"/>
+    </target>
+
+
+    <target name="compile-osx-arch">
+        <echo level="info" message="Building Poedit for ${osx.arch}..."/>
+        <mkdir dir="build-osx/${osx.arch}"/>
+        <exec dir="build-osx/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="../../configure"/>
+            <arg value="CC=${osx.cc}"/>
+            <arg value="CXX=${osx.cxx}"/>
+            <arg value="CPPFLAGS=-I${deps.dir}/boost -I${deps.dir}/bin-osx/${osx.arch}/include"/>
+            <arg value="CFLAGS=-arch ${osx.arch} ${osx.cflags}"/>
+            <arg value="CXXFLAGS=-arch ${osx.arch} ${osx.cflags}"/>
+            <arg value="OBJCFLAGS=-arch ${osx.arch} ${osx.cflags}"/>
+            <arg value="LDFLAGS=-arch ${osx.arch} ${osx.ldflags} -L${deps.dir}/bin-osx/${osx.arch}/lib"/>
+            <arg value="--with-wx-config=${deps.dir}/bin-osx/${osx.arch}/bin/wx-config"/>
+            <arg value="--with-sparkle=${deps.dir}/sparkle/build/Release"/>
+            <arg value="WXRC=${deps.dir}/bin-osx/${osx.arch.native}/bin/wxrc"/>
+        </exec>
+        <exec dir="build-osx/${osx.arch}/src" executable="make" failonerror="true">
+            <arg value="all"/>
+        </exec>
+    </target>
+
+    <target name="compile-osx" if="is_osx" depends="bootstrap-osx">
+        <antcall target="compile-osx-arch">
+            <param name="osx.arch" value="i386"/>
+        </antcall>
+        <antcall target="compile-osx-arch">
+            <param name="osx.arch" value="ppc"/>
+        </antcall>
+
+        <echo level="info" message="Creating universal Poedit binary..."/>
+        <exec dir="build-osx" executable="lipo" failonerror="true">
+            <arg value="-arch"/>
+            <arg value="i386"/>
+            <arg value="i386/src/poedit"/>
+            <arg value="-arch"/>
+            <arg value="ppc"/>
+            <arg value="ppc/src/poedit"/>
+            <arg value="-create"/>
+            <arg value="-output"/>
+            <arg value="poedit.universal"/>
+        </exec>
+
+        <echo level="info" message="Creating Poedit.app bundle..."/>
+        <exec dir="build-osx" executable="../macosx/make-bundle" failonerror="true">
+            <env key="GETTEXT_PREFIX" path="${deps.dir}/bin-gettext"/>
+            <env key="WX_ROOT" path="${deps.dir}/bin-osx/i386"/>
+            <env key="SPARKLE_FRAMEWORK" path="${deps.dir}/sparkle/build/Release/Sparkle.framework"/>
+            <arg value="Poedit.app"/>
+            <arg value="poedit.universal"/>
+            <arg value="i386"/> <!-- top_builddir (any) -->
+            <arg value=".."/>   <!-- top_srcdir -->
+        </exec>
+    </target>
+
+    <target name="distrib-osx" if="is_osx">
+        <echo level="info" message="Creating DMG package..."/>
+        <mkdir dir="distrib"/>
+        <exec executable="macosx/make-dmg" failonerror="true">
+            <arg value="distrib/poedit-${poedit.version}.dmg"/>
+            <arg value="build-osx/Poedit.app"/>
+            <arg value="macosx/dmg"/>
         </exec>
     </target>
 
