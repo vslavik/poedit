@@ -35,9 +35,7 @@
      Windows build
      ============================================================== -->
 
-    <!--
     <available property="bootstrapped.win" file="win32/poedit.vcproj"/>
-    -->
     <target name="bootstrap-win" if="is_windows" unless="bootstrapped.win">
         <echo level="info" message="Bootstrapping git sources..."/>
         <exec dir="win32" executable="bakefile_gen" failonerror="true"/>
