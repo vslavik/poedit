@@ -35,7 +35,49 @@
      Windows build
      ============================================================== -->
 
-    <target name="compile-win" if="is_windows">
+    <!--
+    <available property="bootstrapped.win" file="win32/poedit.vcproj"/>
+    -->
+    <target name="bootstrap-win" if="is_windows" unless="bootstrapped.win">
+        <echo level="info" message="Bootstrapping git sources..."/>
+        <exec dir="win32" executable="bakefile_gen" failonerror="true"/>
+        <mkdir dir="icons/win32"/>
+        <mkdir dir="icons/win32/vista"/>
+        <mkdir dir="icons/win32/xp"/>
+        <exec dir="icons" executable="${imagemagick.convert}" failonerror="true">
+            <arg value="appicon\48x48\apps\poedit.png"/>
+            <arg value="-background"/>
+            <arg value="white"/>
+            <arg value="-extent"/>
+            <arg value="55x55-4-4"/>
+            <arg value="-type"/>
+            <arg value="palette"/>
+            <arg value="BMP3:win32\installer_wizard_image.bmp"/>
+        </exec>
+        <exec dir="icons" executable="${imagemagick.convert}" failonerror="true">
+            <arg value="appicon\16x16\apps\poedit.png"/>
+            <arg value="appicon\32x32\apps\poedit.png"/>
+            <arg value="appicon\48x48\apps\poedit.png"/>
+            <arg value="appicon\256x256\apps\poedit.png"/>
+            <arg value="-compress"/>
+            <arg value="None"/>
+            <arg value="win32\appicon.ico"/>
+        </exec>
+        <exec dir="icons" executable="${imagemagick.convert}" failonerror="true">
+            <arg value="mime-win32\xp\generic\*.png"/>
+            <arg value="-compress"/>
+            <arg value="None"/>
+            <arg value="win32\xp\poedit-translation-generic.ico"/>
+        </exec>
+        <exec dir="icons" executable="${imagemagick.convert}" failonerror="true">
+            <arg value="mime-win32\vista\generic\*.png"/>
+            <arg value="-compress"/>
+            <arg value="None"/>
+            <arg value="win32\vista\poedit-translation-generic.ico"/>
+        </exec>
+    </target>
+
+    <target name="compile-win" if="is_windows" depends="bootstrap-win">
         <exec dir="win32" executable="${msvs.vcbuild}" failonerror="true">
             <arg value="/platform:Win32"/>
             <arg value="poedit.vcproj"/>
@@ -50,14 +92,14 @@
             <arg value="/dCRT_REDIST=${msvs.redist}"/>
         </exec>
     </target>
-    
-    
+
+
 <!-- ==============================================================
      OS X build
      ============================================================== -->
 
-    <available property="bootstrapped" file="configure"/>
-    <target name="bootstrap-osx" if="is_osx" unless="bootstrapped">
+    <available property="bootstrapped.osx" file="configure"/>
+    <target name="bootstrap-osx" if="is_osx" unless="bootstrapped.osx">
         <echo level="info" message="Bootstrapping git sources..."/>
         <exec executable="./bootstrap" failonerror="true"/>
     </target>
