@@ -16,8 +16,9 @@
 
 
     <target name="deps"
-            description="build Poedit dependencies">
-        <ant dir="deps"/>
+        description="build Poedit dependencies">
+        <!-- this is a hack to make my unusual use of Ant work, <ant> breaks it -->
+        <exec dir="deps" executable="ant"/>
     </target>
 
 
