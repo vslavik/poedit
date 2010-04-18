@@ -27,11 +27,6 @@ find_unix_files()
     grep -v '\.\(dsp\|dsw\|chm\|rtf\|ncb\|opt\|plg\)'
 }
 
-find_win32_files()
-{
-  echo "docs/chm/*.chm"
-}
-
 
 DIST_DIR=`pwd`
 
@@ -39,9 +34,4 @@ rm -rf /tmp/poedit-$VERSION
 mkdir /tmp/poedit-$VERSION
 tar -c `find_unix_files` | (cd /tmp/poedit-$VERSION ; tar -x)
 (cd /tmp ; tar -c poedit-$VERSION | gzip -9 >$DIST_DIR/poedit-$VERSION.tar.gz)
-rm -rf /tmp/poedit-$VERSION
-
-mkdir /tmp/poedit-$VERSION
-tar -c `find_win32_files` | (cd /tmp/poedit-$VERSION ; tar -x)
-(cd /tmp ; tar -c poedit-$VERSION | gzip -9 >$DIST_DIR/poedit-$VERSION-win32-addon.tar.gz)
 rm -rf /tmp/poedit-$VERSION

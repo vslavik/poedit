@@ -250,9 +250,6 @@ AC_CONFIG_FILES([
          icons/Makefile
          locales/Makefile
          docs/Makefile
-         docs/common/Makefile
-         docs/en/Makefile
-         docs/hr/Makefile
          macosx/Info.plist
          ])
 

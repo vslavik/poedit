@@ -85,9 +85,6 @@ Source: deps\bin-gettext\bin\msgcat.exe; DestDir: {app}\bin
 Source: deps\bin-gettext\bin\*.dll; DestDir: {app}\bin
 Source: deps\db\build_windows\Win32\Release\libdb*.dll; DestDir: {app}\bin
 Source: deps\winsparkle\WinSparkle.dll; DestDir: {app}\bin
-Source: docs\chm\poedit.chm; DestDir: {app}\share\poedit\help\en
-Source: docs\chm\gettext.chm; DestDir: {app}\share\poedit\help\en\gettext
-Source: docs\chm\poedit-hr.chm; DestDir: {app}\share\poedit\help\hr
 Source: COPYING; DestDir: {app}\doc; DestName: copying.txt
 Source: NEWS; DestDir: {app}\doc; DestName: news.txt
 Source: icons\ui\*.png; DestDir: {app}\share\poedit\icons
