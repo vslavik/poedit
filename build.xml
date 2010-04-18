@@ -87,10 +87,28 @@
 
 
     <target name="distrib-win" if="is_windows">
+        <mkdir dir="distrib"/>
+        <parallel>
+            <antcall target="win-make-installer"/>
+            <antcall target="win-debug-info"/>
+        </parallel>
+    </target>
+
+    <target name="win-make-installer">
+        <echo level="info" message="Building Windows installer.."/>
         <exec dir="win32" executable="deps/inno-setup/iscc.exe" failonerror="true">
             <arg value="poedit.iss"/>
             <arg value="/dCRT_REDIST=${msvs.redist}"/>
         </exec>
+    </target>
+
+    <target name="win-debug-info">
+        <echo level="info" message="Packaging debug info (PDB) files.."/>
+        <tar destfile="distrib/poedit-pdbs-${poedit.version}.tar.bz2"
+             compression="bzip2">
+            <tarfileset file="win32/Release/*.pdb"/>
+            <tarfileset file="deps/db/build_windows/Win32/Release/*.pdb"/>
+        </tar>
     </target>
 
 
@@ -133,7 +151,10 @@
         <antcall target="compile-osx-arch">
             <param name="osx.arch" value="ppc"/>
         </antcall>
+        <antcall target="osx-make-bundle"/>
+    </target>
 
+    <target name="osx-make-bundle">
         <echo level="info" message="Creating universal Poedit binary..."/>
         <exec dir="build-osx" executable="lipo" failonerror="true">
             <arg value="-arch"/>
@@ -157,15 +178,49 @@
             <arg value="i386"/> <!-- top_builddir (any) -->
             <arg value=".."/>   <!-- top_srcdir -->
         </exec>
+   
+        <echo level="info" message="Stripping debug info into dSYM..."/>
+        <delete dir="build-osx/Poedit.app.dSYM"/>
+        <exec dir="build-osx" executable="dsymutil" failonerror="true">
+            <arg value="--out=Poedit.app.dSYM"/>
+            <arg value="--threads=2"/>
+            <arg value="Poedit.app/Contents/MacOS/Poedit"/>
+        </exec>
+        <exec dir="build-osx" executable="strip" failonerror="true">
+            <arg value="-u"/>
+            <arg value="-r"/>
+            <arg value="Poedit.app/Contents/MacOS/Poedit"/>
+        </exec>
+    </target>
+    
+    
+    <target name="distrib-osx" if="is_osx">
+        <mkdir dir="distrib"/>
+        <parallel>
+            <antcall target="osx-make-installer"/>
+            <antcall target="osx-debug-info"/>
+        </parallel>
     </target>
 
-    <target name="distrib-osx" if="is_osx">
+    <target name="osx-make-installer">
         <echo level="info" message="Creating DMG package..."/>
-        <mkdir dir="distrib"/>
         <exec executable="macosx/make-dmg" failonerror="true">
             <arg value="distrib/poedit-${poedit.version}.dmg"/>
             <arg value="build-osx/Poedit.app"/>
             <arg value="macosx/dmg"/>
+        </exec>
+    </target>
+
+    <target name="osx-debug-info">
+        <echo level="info" message="Packaging debug info (dSYM) files.."/>
+        <tar destfile="distrib/poedit-dSYM-${poedit.version}.tar">
+            <tarfileset dir="deps/sparkle/build/Release" includes="*.dSYM/**"/>
+            <tarfileset dir="build-osx" includes="*.dSYM/**"/>
+        </tar>
+        <delete file="distrib/poedit-dSYM-${poedit.version}.tar.lzma"/>
+        <exec executable="lzma">
+            <arg value="--best"/>
+            <arg value="distrib/poedit-dSYM-${poedit.version}.tar"/>
         </exec>
     </target>
 

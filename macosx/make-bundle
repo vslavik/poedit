@@ -71,17 +71,6 @@ else
     echo "         environment variable to a directory that contains them" >&2
 fi
 
-# extract (DWARF) debug information into separate dSYM files and pack them into
-# an archive:
-if [ -f /usr/bin/dsymutil ] ; then
-    dsymutil $bindir/Poedit
-    tar -cjf $bundle.dSYM.tar.bz2 $bundle/Contents/MacOS/Poedit.dSYM
-    rm -rf $bundle/Contents/MacOS/Poedit.dSYM
-    strip -u -r $bindir/Poedit
-else
-    echo "WARNING: Xcode 2.4+ is needed to extract debug information" >&2
-fi
-
 # metadata:
 cp $top_builddir/macosx/Info.plist $bundle/Contents
 cp $top_srcdir/icons/osx/*.icns $bundle/Contents/Resources
