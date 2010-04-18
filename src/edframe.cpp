@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2009 Vaclav Slavik
+ *  Copyright (C) 1999-2010 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -383,7 +383,6 @@ class UnfocusableTextCtrl : public wxTextCtrl
 BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_EXIT,                 PoeditFrame::OnQuit)
    EVT_MENU           (wxID_HELP,                 PoeditFrame::OnHelp)
-   EVT_MENU           (XRCID("menu_help_gettext"),PoeditFrame::OnHelpGettext)
    EVT_MENU           (wxID_ABOUT,                PoeditFrame::OnAbout)
    EVT_MENU           (wxID_NEW,                  PoeditFrame::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditFrame::OnNew)
@@ -483,7 +482,6 @@ PoeditFrame::PoeditFrame() :
     m_transMem(NULL),
     m_transMemLoaded(false),
 #endif
-    m_helpInitialized(false),
     m_list(NULL),
     m_modified(false),
     m_hasObsoleteItems(false),
@@ -797,57 +795,6 @@ PoeditFrame::~PoeditFrame()
     InitSpellchecker();
 }
 
-void PoeditFrame::InitHelp()
-{
-    if ( !m_helpInitialized )
-    {
-        m_helpBook = LoadHelpBook(_T("poedit"));
-        m_helpBookGettext = LoadHelpBook(_T("gettext/gettext"));
-        m_helpInitialized = true;
-    }
-}
-
-wxString PoeditFrame::LoadHelpBook(const wxString& name)
-{
-    wxString lng = wxGetApp().GetLocale().GetCanonicalName().Left(2);
-    wxString helpdir = wxGetApp().GetAppPath() + _T("/share/poedit/help");
-
-#ifdef __WXMSW__
-    #define HLPEXT _T("chm")
-#else
-    #define HLPEXT _T("hhp")
-#endif
-
-    wxLogTrace(_T("poedit.help"),
-               _T("looking for help book '%s' under %s"),
-               name.c_str(), helpdir.c_str());
-
-    wxString file;
-    file.Printf(_T("%s/%s/%s.%s"),
-                helpdir.c_str(), lng.c_str(), name.c_str(), HLPEXT);
-    wxLogTrace(_T("poedit.help"), _T("trying %s"), file.c_str());
-
-    if (!wxFileExists(file))
-    {
-        file.Printf(_T("%s/en/%s.%s"),
-                    helpdir.c_str(), name.c_str(), HLPEXT);
-        wxLogTrace(_T("poedit.help"), _T("trying %s"), file.c_str());
-    }
-
-    if (!wxFileExists(file))
-    {
-        wxLogTrace(_T("poedit.help"), _T("not found"));
-        return wxEmptyString;
-    }
-
-    wxLogTrace(_T("poedit.help"), _T("using help file %s"), file.c_str());
-    m_help.Initialize(file);
-#ifndef __WXMSW__
-    m_help.AddBook(file);
-#endif
-
-    return file;
-}
 
 #ifdef USE_SPELLCHECKING
 
@@ -2460,20 +2407,7 @@ void PoeditFrame::OnAbout(wxCommandEvent&)
 
 void PoeditFrame::OnHelp(wxCommandEvent&)
 {
-    InitHelp();
-#ifdef __WXMSW__
-    m_help.LoadFile(m_helpBook);
-#endif
-    m_help.DisplayContents();
-}
-
-void PoeditFrame::OnHelpGettext(wxCommandEvent&)
-{
-    InitHelp();
-#ifdef __WXMSW__
-    m_help.LoadFile(m_helpBookGettext);
-    m_help.DisplayContents();
-#endif
+    wxLaunchDefaultBrowser(_T("http://www.poedit.net/trac/wiki/Doc"));
 }
 
 

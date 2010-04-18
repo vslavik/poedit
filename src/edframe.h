@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2008 Vaclav Slavik
+ *  Copyright (C) 1999-2010 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -49,12 +49,6 @@ class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
 class WXDLLIMPEXP_FWD_CORE wxGauge;
 class WXDLLIMPEXP_FWD_CORE wxNotebook;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
-
-#ifdef __WXMSW__
-#include <wx/msw/helpchm.h>
-#else
-#include <wx/html/helpctrl.h>
-#endif
 
 #include "catalog.h"
 #include "gexecute.h"
@@ -168,7 +162,6 @@ class PoeditFrame : public wxFrame
         void OnNew(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
         void OnHelp(wxCommandEvent& event);
-        void OnHelpGettext(wxCommandEvent& event);
         void OnQuit(wxCommandEvent& event);
         void OnSave(wxCommandEvent& event);
         void OnSaveAs(wxCommandEvent& event);
@@ -237,9 +230,6 @@ class PoeditFrame : public wxFrame
 
         void RecreatePluralTextCtrls();
 
-        void InitHelp();
-        wxString LoadHelpBook(const wxString& name);
-
         void RefreshSelectedItem();
 
         DECLARE_EVENT_TABLE()
@@ -268,14 +258,6 @@ class PoeditFrame : public wxFrame
         bool m_transMemLoaded;
         wxArrayString m_autoTranslations;
 #endif
-
-        bool m_helpInitialized;
-#ifdef __WXMSW__
-        wxCHMHelpController m_help;
-#else
-        wxHtmlHelpController m_help;
-#endif
-        wxString m_helpBook, m_helpBookGettext;
 
         wxPanel *m_bottomLeftPanel;
         wxPanel *m_bottomRightPanel;

@@ -162,13 +162,11 @@
     </object>
     <object class="wxMenu" name="menu_help">
       <object class="wxMenuItem" name="wxID_HELP">
-        <label>_Contents</label>
+        <label platform="win">_Online help</label>
+        <label platform="unix|mac">_Online Help</label>
         <accel platform="win">F1</accel>
         <accel platform="unix">F1</accel>
         <accel platform="mac">Ctrl+?</accel>
-      </object>
-      <object class="wxMenuItem" name="menu_help_gettext" platform="win">
-        <label>GNU gettext Documentation</label>
       </object>
       <object class="wxMenuItem" name="wxID_ABOUT">
         <label>_About</label>
