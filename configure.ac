@@ -227,6 +227,13 @@ if test x$USE_TRANSMEM != xno ; then
 fi
 
 
+APPCAST_SUFFIX=""
+if echo "$VERSION" | grep -q '\(beta\|rc\)' ; then
+    APPCAST_SUFFIX="/beta"
+fi
+AC_SUBST(APPCAST_SUFFIX)
+
+
 if test "x$GXX" == "xyes"; then
     AX_CXX_CHECK_FLAG([-Wall],[],[], [CXXFLAGS="$CXXFLAGS -Wall"])
     AX_CXX_CHECK_FLAG([-Wextra],[],[], [CXXFLAGS="$CXXFLAGS -Wextra"])
