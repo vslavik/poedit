@@ -17,8 +17,7 @@
 
     <target name="deps"
         description="build Poedit dependencies">
-        <!-- this is a hack to make my unusual use of Ant work, <ant> breaks it -->
-        <exec dir="deps" executable="ant"/>
+        <ant dir="deps" target="compile-gettext"/>
     </target>
 
 
@@ -124,32 +123,32 @@
 
 
     <target name="compile-osx-arch">
-        <echo level="info" message="Building Poedit for ${osx.arch}..."/>
-        <mkdir dir="build-osx/${osx.arch}"/>
-        <exec dir="build-osx/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <echo level="info" message="Building Poedit for ${poedit.osx.arch}..."/>
+        <mkdir dir="build-osx/${poedit.osx.arch}"/>
+        <exec dir="build-osx/${poedit.osx.arch}" executable="/bin/sh" failonerror="true">
             <arg value="../../configure"/>
-            <arg value="CC=${osx.cc}"/>
-            <arg value="CXX=${osx.cxx}"/>
-            <arg value="CPPFLAGS=-I${deps.dir}/boost -I${deps.dir}/bin-osx/${osx.arch}/include"/>
-            <arg value="CFLAGS=-arch ${osx.arch} ${osx.cflags}"/>
-            <arg value="CXXFLAGS=-arch ${osx.arch} ${osx.cflags}"/>
-            <arg value="OBJCFLAGS=-arch ${osx.arch} ${osx.cflags}"/>
-            <arg value="LDFLAGS=-arch ${osx.arch} ${osx.ldflags} -L${deps.dir}/bin-osx/${osx.arch}/lib"/>
-            <arg value="--with-wx-config=${deps.dir}/bin-osx/${osx.arch}/bin/wx-config"/>
+            <arg value="CC=${poedit.osx.cc}"/>
+            <arg value="CXX=${poedit.osx.cxx}"/>
+            <arg value="CPPFLAGS=-I${deps.dir}/boost -I${deps.dir}/bin-osx/${poedit.osx.arch}/include"/>
+            <arg value="CFLAGS=-arch ${poedit.osx.arch} ${poedit.osx.cflags}"/>
+            <arg value="CXXFLAGS=-arch ${poedit.osx.arch} ${poedit.osx.cflags}"/>
+            <arg value="OBJCFLAGS=-arch ${poedit.osx.arch} ${poedit.osx.cflags}"/>
+            <arg value="LDFLAGS=-arch ${poedit.osx.arch} ${poedit.osx.ldflags} -L${deps.dir}/bin-osx/${poedit.osx.arch}/lib"/>
+            <arg value="--with-wx-config=${deps.dir}/bin-osx/${poedit.osx.arch}/bin/wx-config"/>
             <arg value="--with-sparkle=${deps.dir}/sparkle/build/Release"/>
-            <arg value="WXRC=${deps.dir}/bin-osx/${osx.arch.native}/bin/wxrc"/>
+            <arg value="WXRC=${deps.dir}/bin-osx/${poedit.osx.arch.native}/bin/wxrc"/>
         </exec>
-        <exec dir="build-osx/${osx.arch}/src" executable="make" failonerror="true">
+        <exec dir="build-osx/${poedit.osx.arch}/src" executable="make" failonerror="true">
             <arg value="all"/>
         </exec>
     </target>
 
     <target name="compile-osx" if="is_osx" depends="bootstrap-osx">
         <antcall target="compile-osx-arch">
-            <param name="osx.arch" value="i386"/>
+            <param name="poedit.osx.arch" value="i386"/>
         </antcall>
         <antcall target="compile-osx-arch">
-            <param name="osx.arch" value="ppc"/>
+            <param name="poedit.osx.arch" value="ppc"/>
         </antcall>
         <antcall target="osx-make-bundle"/>
     </target>
