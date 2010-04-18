@@ -103,7 +103,7 @@
 
     <target name="win-debug-info">
         <echo level="info" message="Packaging debug info (PDB) files.."/>
-        <tar destfile="distrib/poedit-pdbs-${poedit.version}.tar.bz2"
+        <tar destfile="distrib/poedit-pdb-${poedit.version}.tar.bz2"
              compression="bzip2">
             <tarfileset file="win32/Release/*.pdb"/>
             <tarfileset file="deps/db/build_windows/Win32/Release/*.pdb"/>
