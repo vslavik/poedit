@@ -208,7 +208,7 @@ bool PoeditApp::OnInit()
 #endif // USE_SPARKLE
 
 #ifdef __WXMSW__
-    win_sparkle_set_appcast_url("http://releases.poedit.net/appcast_win.xml");
+    win_sparkle_set_appcast_url("https://dl.updatica.com/poedit-win/appcast");
     win_sparkle_init();
 #endif
 
