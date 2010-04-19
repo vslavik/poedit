@@ -5,6 +5,11 @@ if [ -z "$1" ] ; then
     exit 1
 fi
 
+if [ ! -f configure.ac ] ; then
+    echo "Run this script from project root directory" >&2
+    exit 2
+fi
+
 replace_ver()
 {
     echo "replacing in $1..."
