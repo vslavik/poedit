@@ -190,6 +190,23 @@
             <arg value="-r"/>
             <arg value="Poedit.app/Contents/MacOS/Poedit"/>
         </exec>
+
+        <antcall target="osx-codesign"/>
+    </target>
+
+    <target name="osx-codesign" if="codesign.identity">
+        <echo level="info" message="Signing Poedit.app binary..."/>
+        <exec dir="build-osx" executable="codesign" failonerror="true">
+            <arg line="${codesign.osx.args}"/>
+            <arg value="-s"/>
+            <arg value="${codesign.identity}"/>
+            <arg value="Poedit.app"/>
+        </exec>
+        <echo level="info" message="Verifying signature..."/>
+        <exec dir="build-osx" executable="codesign" failonerror="true">
+            <arg value="-vv"/>
+            <arg value="Poedit.app"/>
+        </exec>
     </target>
     
     
