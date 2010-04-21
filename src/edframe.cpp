@@ -180,6 +180,7 @@ class TextctrlHandler : public wxEvtHandler
             switch (keyCode)
             {
                 case WXK_UP:
+                case WXK_NUMPAD_UP:
                     if ((sel > 0))
                     {
 #ifdef __WXMAC__
@@ -192,6 +193,7 @@ class TextctrlHandler : public wxEvtHandler
                         event.Skip();
                     break;
                 case WXK_DOWN:
+                case WXK_NUMPAD_DOWN:
                     if ((sel < m_list->GetItemCount() - 1))
                     {
 #ifdef __WXMAC__
@@ -204,6 +206,7 @@ class TextctrlHandler : public wxEvtHandler
                         event.Skip();
                     break;
                 case WXK_PAGEUP:
+                case WXK_NUMPAD_PAGEUP:
                 {
 #ifdef __WXMAC__
                     m_list->SetItemState(sel, 0, wxLIST_STATE_SELECTED);
@@ -215,6 +218,7 @@ class TextctrlHandler : public wxEvtHandler
                     break;
                 }
                 case WXK_PAGEDOWN:
+                case WXK_NUMPAD_PAGEDOWN:
                 {
 #ifdef __WXMAC__
                     m_list->SetItemState(sel, 0, wxLIST_STATE_SELECTED);
