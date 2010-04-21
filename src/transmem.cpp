@@ -1093,11 +1093,14 @@ void TranslationMemory::MoveLegacyDbIfNeeded()
     {
         const wxString lang = tmLangs.GetNextToken();
 
+        if ( !wxFileName::DirExists(oldPath + wxFILE_SEP_PATH + lang) )
+            continue; // TM for this lang doesn't exist
+
         if ( !wxFileName::Mkdir(newPath, 0700, wxPATH_MKDIR_FULL) )
-            return; // error
+            continue; // error
         if ( !wxRenameFile(oldPath + wxFILE_SEP_PATH + lang,
                            newPath + wxFILE_SEP_PATH + lang) )
-            return; // error
+            continue; // error
     }
 
     // intentionally don't delete the old path recursively, the user may have
