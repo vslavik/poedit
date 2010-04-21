@@ -546,7 +546,7 @@ PoeditFrame::PoeditFrame() :
 #ifndef USE_TRANSMEM
         MenuBar->Enable(XRCID("menu_auto_translate"), false);
 #endif
-        AddBookmarksMenu();
+        AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
     }
     else
     {
@@ -2120,7 +2120,7 @@ void PoeditFrame::UpdateMenu()
     }
 #endif
 
-    menubar->EnableTop(4, editable);
+    menubar->EnableTop(3, editable);
     for (int i = 0; i < 10; i++)
     {
         menubar->Enable(ID_BOOKMARK_SET + i, editable);
@@ -2904,9 +2904,12 @@ void PoeditFrame::OnListFocus(wxFocusEvent& event)
         event.Skip();
 }
 
-void PoeditFrame::AddBookmarksMenu()
+void PoeditFrame::AddBookmarksMenu(wxMenu *parent)
 {
     wxMenu *menu = new wxMenu();
+
+    parent->AppendSeparator();
+    parent->AppendSubMenu(menu, _("&Bookmarks"));
 
 #if defined(__WXMAC__)
     // on Mac, Alt+something is used during normal typing, so we shouldn't
@@ -2934,9 +2937,6 @@ void PoeditFrame::AddBookmarksMenu()
         menu->Append(ID_BOOKMARK_GO + i,
                      wxString::Format(LABEL_BOOKMARK_GO, i, i));
     }
-
-    wxMenuBar *bar = GetMenuBar();
-    bar->Insert(bar->GetMenuCount() - 1, menu, _("&Bookmarks"));
 }
 
 void PoeditFrame::OnGoToBookmark(wxCommandEvent& event)

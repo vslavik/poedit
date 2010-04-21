@@ -207,7 +207,7 @@ class PoeditFrame : public wxFrame
         void OnGoToBookmark(wxCommandEvent& event);
         void OnSetBookmark(wxCommandEvent& event);
 
-        void AddBookmarksMenu();
+        void AddBookmarksMenu(wxMenu *menu);
 
         void OnExport(wxCommandEvent& event);
         bool ExportCatalog(const wxString& filename);
