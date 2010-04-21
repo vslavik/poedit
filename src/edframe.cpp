@@ -1999,8 +1999,34 @@ void PoeditFrame::UpdateStatusBar()
         m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated, &unfinished);
 
         int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
-        txt.Printf(_("%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"),
-                   percent, all, fuzzy, badtokens, untranslated);
+
+        wxString details;
+        if ( fuzzy > 0 )
+        {
+            details += wxString::Format(_("%i fuzzy"), fuzzy);
+        }
+        if ( badtokens > 0 )
+        {
+            if ( !details.empty() )
+                details += _T(", ");
+            details += wxString::Format(_("%i bad tokens"), badtokens);
+        }
+        if ( untranslated > 0 )
+        {
+            if ( !details.empty() )
+                details += _T(", ");
+            details += wxString::Format(_("%i not translated"), untranslated);
+        }
+
+        if ( details.empty() )
+        {
+            txt.Printf(_("%i %% translated, %i strings"), percent, all);
+        }
+        else
+        {
+            txt.Printf(_("%i %% translated, %i strings (%s)"),
+                       percent, all, details.c_str());
+        }
 
 #ifdef USE_GETTEXT_VALIDATION
         if (!m_itemsToValidate.empty())
