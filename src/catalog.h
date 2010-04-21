@@ -520,8 +520,12 @@ class Catalog
         /** Returns number of all, fuzzy, badtokens and untranslated items.
             Any argument may be NULL if the caller is not interested in
             given statistic value.
+
+            @note "untranslated" are entries without translation; "unfinished"
+                  are entries with any problems
          */
-        void GetStatistics(int *all, int *fuzzy, int *badtokens, int *untranslated);
+        void GetStatistics(int *all, int *fuzzy, int *badtokens,
+                           int *untranslated, int *unfinished);
 
         /// Gets n-th item in the catalog (read-write access).
         CatalogItem& operator[](unsigned n) { return m_items[n]; }

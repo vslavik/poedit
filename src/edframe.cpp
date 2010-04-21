@@ -1991,15 +1991,14 @@ void PoeditFrame::RefreshControls()
 
 void PoeditFrame::UpdateStatusBar()
 {
-    int all, fuzzy, untranslated, badtokens;
+    int all, fuzzy, untranslated, badtokens, unfinished;
     if (m_catalog)
     {
         wxString txt;
 
-        m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
+        m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated, &unfinished);
 
-        int percent = (all == 0 ) ? 0 :
-                      (100 * (all-fuzzy-badtokens-untranslated) / all);
+        int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
         txt.Printf(_("%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"),
                    percent, all, fuzzy, badtokens, untranslated);
 

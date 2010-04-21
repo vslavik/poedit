@@ -213,7 +213,7 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
         // FIXME: don't re-load the catalog if it's already loaded in the
         //        editor, reuse loaded instance
         Catalog cat(file);
-        cat.GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
+        cat.GetStatistics(&all, &fuzzy, &badtokens, &untranslated, NULL);
         modtime = wxFileModificationTime(file);
         lastmodified = cat.Header().RevisionDate;
         cfg->Write(key + _T("timestamp"), (long)modtime);

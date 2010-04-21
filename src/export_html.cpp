@@ -141,10 +141,10 @@ bool Catalog::ExportToHTML(const wxString& filename)
     int fuzzy = 0;
     int untranslated = 0;
     int badtokens = 0;
-    GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
+    int unfinished = 0;
+    GetStatistics(&all, &fuzzy, &badtokens, &untranslated, &unfinished);
 
-    int percent = (all == 0 ) ? 0 :
-                  (100 * (all-fuzzy-badtokens-untranslated) / all);
+    int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
     line.Printf(_("%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"),
                percent, all, fuzzy, badtokens, untranslated);
 

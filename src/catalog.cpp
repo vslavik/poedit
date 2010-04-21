@@ -1704,21 +1704,40 @@ bool Catalog::HasPluralItems() const
 }
 
 
-void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens, int *untranslated)
+void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
+                            int *untranslated, int *unfinished)
 {
     if (all) *all = 0;
     if (fuzzy) *fuzzy = 0;
     if (badtokens) *badtokens = 0;
     if (untranslated) *untranslated = 0;
+    if (unfinished) *unfinished = 0;
+
     for (size_t i = 0; i < GetCount(); i++)
     {
-        if (all) (*all)++;
+        bool ok = true;
+
+        if (all)
+            (*all)++;
+
         if ((*this)[i].IsFuzzy())
+        {
             (*fuzzy)++;
+            ok = false;
+        }
         if ((*this)[i].GetValidity() == CatalogItem::Val_Invalid)
+        {
             (*badtokens)++;
+            ok = false;
+        }
         if (!(*this)[i].IsTranslated())
+        {
             (*untranslated)++;
+            ok = false;
+        }
+
+        if ( !ok && unfinished )
+            (*unfinished)++;
     }
 }
 
