@@ -1365,7 +1365,7 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
     {
         wxLogWarning(_("Entries in the catalog are probably incorrect."));
         wxLogError(
-           _("Updating the catalog failed. Click on 'More>>' for details."));
+           _("Updating the catalog failed. Click on 'Details >>' for details."));
     }
 }
 
