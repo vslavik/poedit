@@ -120,7 +120,7 @@ Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcre
 Name: {commonprograms}\Poedit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0
 
 [Run]
-Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Run Poedit now; Flags: postinstall unchecked nowait
+Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Open Poedit after installation; Flags: postinstall unchecked nowait skipifsilent runasoriginaluser
 
 [_ISTool]
 UseAbsolutePaths=false
