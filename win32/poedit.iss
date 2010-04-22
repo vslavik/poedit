@@ -74,6 +74,10 @@ WizardSmallImageFile=icons\win32\installer_wizard_image.bmp
 AppPublisherURL=http://www.poedit.net/
 DisableProgramGroupPage=true
 
+#ifdef SIGNTOOL
+SignTool={#SIGNTOOL}
+#endif
+
 [Files]
 Source: win32\Release\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe
 Source: deps\gettext\COPYING; DestDir: {app}\doc; DestName: GNU_Gettext_COPYING.txt

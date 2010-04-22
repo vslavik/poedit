@@ -82,23 +82,18 @@
             <arg value="poedit.vcproj"/>
             <arg value="Release"/>
         </exec>
+        <antcall target="win-codesign">
+            <param name="codesign.what" value="win32/Release/poedit.exe"/>
+        </antcall>
     </target>
 
 
     <target name="distrib-win" if="is_windows">
         <mkdir dir="distrib"/>
         <parallel>
-            <antcall target="win-make-installer"/>
             <antcall target="win-debug-info"/>
+            <antcall target="win-make-installer"/>
         </parallel>
-    </target>
-
-    <target name="win-make-installer">
-        <echo level="info" message="Building Windows installer.."/>
-        <exec dir="win32" executable="deps/inno-setup/iscc.exe" failonerror="true">
-            <arg value="poedit.iss"/>
-            <arg value="/dCRT_REDIST=${msvs.redist}"/>
-        </exec>
     </target>
 
     <target name="win-debug-info">
@@ -108,6 +103,60 @@
             <tarfileset file="win32/Release/*.pdb"/>
             <tarfileset file="deps/db/build_windows/Win32/Release/*.pdb"/>
         </tar>
+    </target>
+
+    <target name="win-make-installer">
+        <echo level="info" message="Building Windows installer.."/>
+        <!-- only one of these will run, they're conditions are mutually exclusive: -->
+        <antcall target="win-make-installer-signed"/>
+        <antcall target="win-make-installer-unsigned"/>
+    </target>
+
+    <target name="win-make-installer-unsigned" unless="codesign.identity">
+        <exec dir="win32" executable="deps/inno-setup/iscc.exe" failonerror="true">
+            <arg value="poedit.iss"/>
+            <arg value="/dCRT_REDIST=${msvs.redist}"/>
+        </exec>
+    </target>
+
+    <target name="win-make-installer-signed" if="codesign.identity">
+        <exec dir="win32" executable="deps/inno-setup/iscc.exe" failonerror="true">
+            <arg value="poedit.iss"/>
+            <arg value="/dCRT_REDIST=${msvs.redist}"/>
+            <arg value="/dSIGNTOOL=default"/>
+            <arg value="/Sdefault=signtool.exe sign /n $$q${codesign.identity}$$q /t ${codesign.timestamp.server} /d Poedit /du http://www.poedit.net $$f"/>
+        </exec>
+        <antcall target="win-codesign-verify">
+            <param name="codesign.what" value="distrib/poedit-${poedit.version}-setup.exe"/>
+        </antcall>
+    </target>
+
+
+    <target name="win-codesign" if="codesign.identity">
+        <echo level="info" message="Signing binary ${codesign.what}..."/>
+        <exec executable="signtool" failonerror="true">
+            <arg value="sign"/>
+            <arg value="/n"/>
+            <arg value="${codesign.identity}"/>
+            <arg value="/t"/>
+            <arg value="${codesign.timestamp.server}"/>
+            <arg value="/d"/>
+            <arg value="Poedit"/>
+            <arg value="/du"/>
+            <arg value="http://www.poedit.net"/>
+            <arg path="${codesign.what}"/>
+        </exec>
+        <antcall target="win-codesign-verify">
+            <param name="codesign.what" value="win32/Release/poedit.exe"/>
+        </antcall>
+    </target>
+    <target name="win-codesign-verify" if="codesign.identity">
+        <echo level="info" message="Verifying signature on ${codesign.what}..."/>
+        <exec executable="signtool" failonerror="true">
+            <arg value="verify"/>
+            <arg value="/pa"/>
+            <arg path="${codesign.what}"/>
+        </exec>
     </target>
 
 
