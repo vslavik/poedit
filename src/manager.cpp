@@ -385,6 +385,7 @@ BEGIN_EVENT_TABLE(ManagerFrame, wxFrame)
    EVT_LISTBOX              (XRCID("prj_list"),   ManagerFrame::OnSelectProject)
    EVT_LIST_ITEM_ACTIVATED  (XRCID("prj_files"),  ManagerFrame::OnOpenCatalog)
    EVT_MENU                 (wxID_EXIT,           ManagerFrame::OnQuit)
+   EVT_MENU                 (wxID_CLOSE,          ManagerFrame::OnCloseCmd)
    EVT_MENU                 (wxID_PREFERENCES,    ManagerFrame::OnPreferences)
 END_EVENT_TABLE()
 
@@ -496,6 +497,12 @@ void ManagerFrame::OnPreferences(wxCommandEvent&)
 }
 
 void ManagerFrame::OnQuit(wxCommandEvent&)
+{
+    Close(true);
+    wxTheApp->ExitMainLoop();
+}
+
+void ManagerFrame::OnCloseCmd(wxCommandEvent&)
 {
     Close(true);
 }

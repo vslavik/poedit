@@ -21,6 +21,11 @@
         <label>_Open...</label>
         <accel>Ctrl+O</accel>
       </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="wxID_CLOSE" platform="mac">
+        <label>_Close</label>
+        <accel>Ctrl+W</accel>
+      </object>
       <object class="wxMenuItem" name="wxID_SAVE">
         <label>_Save</label>
         <accel>Ctrl+S</accel>
@@ -39,9 +44,11 @@
         <label>_Preferences...</label>
       </object>
       <object class="separator"/>
+      <object class="wxMenuItem" name="wxID_CLOSE" platform="unix">
+      </object>
       <object class="wxMenuItem" name="wxID_EXIT">
-        <label>_Close</label>
-        <accel platform="unix">Ctrl+W</accel>
+        <label platform="win">E_xit</label>
+        <label platform="mac">Quit</label>
       </object>
     </object>
     <object class="wxMenu" name="menu_edit">

@@ -386,6 +386,7 @@ class UnfocusableTextCtrl : public wxTextCtrl
 
 BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_EXIT,                 PoeditFrame::OnQuit)
+   EVT_MENU           (wxID_CLOSE,                PoeditFrame::OnCloseCmd)
    EVT_MENU           (wxID_HELP,                 PoeditFrame::OnHelp)
    EVT_MENU           (wxID_ABOUT,                PoeditFrame::OnAbout)
    EVT_MENU           (wxID_NEW,                  PoeditFrame::OnNew)
@@ -1010,10 +1011,12 @@ TranslationMemory *PoeditFrame::GetTransMem()
 void PoeditFrame::OnQuit(wxCommandEvent&)
 {
     Close(true);
-#ifdef __WXMAC__
-    // FIXME: do this always when we have both Quit and Exit items
     wxGetApp().ExitMainLoop();
-#endif
+}
+
+void PoeditFrame::OnCloseCmd(wxCommandEvent&)
+{
+    Close(true);
 }
 
 

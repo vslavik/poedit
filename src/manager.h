@@ -79,6 +79,7 @@ class ManagerFrame : public wxFrame
         void OnOpenCatalog(wxListEvent& event);
         void OnPreferences(wxCommandEvent& event);
         void OnQuit(wxCommandEvent& event);
+        void OnCloseCmd(wxCommandEvent& event);
 
         wxListCtrl *m_listCat;
         wxListBox  *m_listPrj;      

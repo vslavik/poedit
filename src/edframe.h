@@ -163,6 +163,7 @@ class PoeditFrame : public wxFrame
         void OnAbout(wxCommandEvent& event);
         void OnHelp(wxCommandEvent& event);
         void OnQuit(wxCommandEvent& event);
+        void OnCloseCmd(wxCommandEvent& event);
         void OnSave(wxCommandEvent& event);
         void OnSaveAs(wxCommandEvent& event);
         wxString GetSaveAsFilename(Catalog *cat, const wxString& current);
