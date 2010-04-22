@@ -124,7 +124,7 @@
             <arg value="poedit.iss"/>
             <arg value="/dCRT_REDIST=${msvs.redist}"/>
             <arg value="/dSIGNTOOL=default"/>
-            <arg value="/Sdefault=signtool.exe sign /n $$q${codesign.identity}$$q /t ${codesign.timestamp.server} /d Poedit /du http://www.poedit.net $$f"/>
+            <arg value="/Sdefault=${codesign.win.signtool} sign /n $$q${codesign.identity}$$q /t ${codesign.timestamp.server} /d Poedit /du http://www.poedit.net $$f"/>
         </exec>
         <antcall target="win-codesign-verify">
             <param name="codesign.what" value="distrib/poedit-${poedit.version}-setup.exe"/>
@@ -134,7 +134,7 @@
 
     <target name="win-codesign" if="codesign.identity">
         <echo level="info" message="Signing binary ${codesign.what}..."/>
-        <exec executable="signtool" failonerror="true">
+        <exec executable="${codesign.win.signtool}" failonerror="true">
             <arg value="sign"/>
             <arg value="/n"/>
             <arg value="${codesign.identity}"/>
@@ -152,7 +152,7 @@
     </target>
     <target name="win-codesign-verify" if="codesign.identity">
         <echo level="info" message="Verifying signature on ${codesign.what}..."/>
-        <exec executable="signtool" failonerror="true">
+        <exec executable="${codesign.win.signtool}" failonerror="true">
             <arg value="verify"/>
             <arg value="/pa"/>
             <arg path="${codesign.what}"/>
