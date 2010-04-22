@@ -169,7 +169,7 @@ class TextctrlHandler : public wxEvtHandler
             modifiers &= ~wxMOD_META;
 #endif
 
-            if ( modifiers != wxMOD_CMD ) // Cmd-* or Ctrl-*
+            if ( modifiers != wxMOD_CMD ) // Cmd+* or Ctrl+*
             {
                 event.Skip();
                 return;
@@ -2322,14 +2322,14 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
                  #else
                  wxString(_("Copy Translation from Source Text"))
                  #endif
-                   + _T("\tAlt-C"));
+                   + _T("\tAlt+C"));
     menu->Append(XRCID("menu_clear"),
                  #ifdef __WXMSW__
                  wxString(_("Clear translation"))
                  #else
                  wxString(_("Clear Translation"))
                  #endif
-                   + _T("\tCtrl-K"));
+                   + _T("\tCtrl+K"));
 
 #ifdef USE_TRANSMEM
     if (GetTransMem())
@@ -2908,14 +2908,14 @@ void PoeditFrame::AddBookmarksMenu()
 #if defined(__WXMAC__)
     // on Mac, Alt+something is used during normal typing, so we shouldn't
     // use it as shortcuts:
-    #define LABEL_BOOKMARK_SET   _("Set Bookmark %i\tCtrl-%i")
-    #define LABEL_BOOKMARK_GO    _("Go to Bookmark %i\tCtrl-Alt-%i")
+    #define LABEL_BOOKMARK_SET   _("Set Bookmark %i\tCtrl+%i")
+    #define LABEL_BOOKMARK_GO    _("Go to Bookmark %i\tCtrl+Alt+%i")
 #elif defined(__WXMSW__)
-    #define LABEL_BOOKMARK_SET   _("Set bookmark %i\tAlt-%i")
-    #define LABEL_BOOKMARK_GO    _("Go to bookmark %i\tCtrl-%i")
+    #define LABEL_BOOKMARK_SET   _("Set bookmark %i\tAlt+%i")
+    #define LABEL_BOOKMARK_GO    _("Go to bookmark %i\tCtrl+%i")
 #elif defined(__WXGTK__)
-    #define LABEL_BOOKMARK_SET   _("Set Bookmark %i\tAlt-%i")
-    #define LABEL_BOOKMARK_GO    _("Go to Bookmark %i\tCtrl-%i")
+    #define LABEL_BOOKMARK_SET   _("Set Bookmark %i\tAlt+%i")
+    #define LABEL_BOOKMARK_GO    _("Go to Bookmark %i\tCtrl+%i")
 #else
     #error "what is correct capitalization for this toolkit?"
 #endif
