@@ -158,6 +158,15 @@ class PoeditFrame : public wxFrame
         void EditPreferences();
         void EditCatalogProperties();
 
+        // navigation to another item in the list
+        typedef bool (*NavigatePredicate)(const CatalogItem& item);
+        void Navigate(int step, NavigatePredicate predicate, bool wrap);
+        void OnDoneAndNext(wxCommandEvent&);
+        void OnPrev(wxCommandEvent&);
+        void OnNext(wxCommandEvent&);
+        void OnPrevUnfinished(wxCommandEvent&);
+        void OnNextUnfinished(wxCommandEvent&);
+
         // Message handlers:
         void OnNew(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);

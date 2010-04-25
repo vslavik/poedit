@@ -416,6 +416,11 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_FIND,                 PoeditFrame::OnFind)
    EVT_MENU           (XRCID("menu_comment"),     PoeditFrame::OnEditComment)
    EVT_MENU           (XRCID("menu_manager"),     PoeditFrame::OnManager)
+   EVT_MENU           (XRCID("go_done_and_next"),   PoeditFrame::OnDoneAndNext)
+   EVT_MENU           (XRCID("go_prev"),            PoeditFrame::OnPrev)
+   EVT_MENU           (XRCID("go_next"),            PoeditFrame::OnNext)
+   EVT_MENU           (XRCID("go_prev_unfinished"), PoeditFrame::OnPrevUnfinished)
+   EVT_MENU           (XRCID("go_next_unfinished"), PoeditFrame::OnNextUnfinished)
    EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
 #ifdef USE_TRANSMEM
    EVT_MENU_RANGE     (ID_POPUP_TRANS, ID_POPUP_TRANS + 999,
@@ -3010,4 +3015,88 @@ void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
 {
     m_list->sortOrder.untransFirst = event.IsChecked();
     m_list->Sort();
+}
+
+// ------------------------------------------------------------------
+//  catalog navigation
+// ------------------------------------------------------------------
+
+namespace
+{
+
+bool Pred_AnyItem(const CatalogItem&)
+{
+    return true;
+}
+
+bool Pred_UnfinishedItem(const CatalogItem& item)
+{
+    return !item.IsTranslated() || item.IsFuzzy();
+}
+
+} // anonymous namespace
+
+
+void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
+{
+    const int count = m_list->GetItemCount();
+    const int start = m_list->GetSelection();
+
+    int i = start;
+
+    for ( ;; )
+    {
+        i += step;
+
+        if ( i < 0 )
+        {
+            if ( wrap )
+                i += count;
+            else
+                return; // nowhere to go
+        }
+        else if ( i >= count )
+        {
+            if ( wrap )
+                i -= count;
+            else
+                return; // nowhere to go
+        }
+
+        if ( i == start )
+            return; // nowhere to go
+
+        const CatalogItem& item = m_list->ListIndexToCatalogItem(i);
+        if ( predicate(item) )
+        {
+            m_list->Select(i);
+            return;
+        }
+    }
+}
+
+void PoeditFrame::OnPrev(wxCommandEvent&)
+{
+    Navigate(-1, Pred_AnyItem, /*wrap=*/false);
+}
+
+void PoeditFrame::OnNext(wxCommandEvent&)
+{
+    Navigate(+1, Pred_AnyItem, /*wrap=*/false);
+}
+
+void PoeditFrame::OnPrevUnfinished(wxCommandEvent&)
+{
+    Navigate(-1, Pred_UnfinishedItem, /*wrap=*/false);
+}
+
+void PoeditFrame::OnNextUnfinished(wxCommandEvent&)
+{
+    Navigate(+1, Pred_UnfinishedItem, /*wrap=*/false);
+}
+
+void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
+{
+    // like "next unfinished", but wraps
+    Navigate(+1, Pred_UnfinishedItem, /*wrap=*/true);
 }

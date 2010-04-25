@@ -125,6 +125,33 @@
     <object class="wxMenu" name="menu_go">
       <label>_Go</label>
       <style>wxMENU_TEAROFF</style>
+      <object class="wxMenuItem" name="go_done_and_next">
+        <label platform="win">_Done and next</label>
+        <label platform="unix|mac">_Done and Next</label>
+        <accel platform="unix|mac">Ctrl+Return</accel>
+        <accel platform="win">Ctrl+Enter</accel>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="go_prev">
+        <label platform="win">_Previous message</label>
+        <label platform="unix|mac">_Previous Message</label>
+        <accel>Ctrl+Up</accel>
+      </object>
+      <object class="wxMenuItem" name="go_next">
+        <label platform="win">_Next message</label>
+        <label platform="unix|mac">_Next Message</label>
+        <accel>Ctrl+Down</accel>
+      </object>
+      <object class="wxMenuItem" name="go_prev_unfinished">
+        <label platform="win">P_revious unfinished</label>
+        <label platform="unix|mac">P_revious Unfinished</label>
+        <accel>Ctrl+Shift+Up</accel>
+      </object>
+      <object class="wxMenuItem" name="go_next_unfinished">
+        <label platform="win">Ne_xt unfinished</label>
+        <label platform="unix|mac">Ne_xt Unfinished</label>
+        <accel>Ctrl+Shift+Down</accel>
+      </object>
     </object>
     <object class="wxMenu" name="menu_view">
       <label>_View</label>
