@@ -79,16 +79,16 @@ SignTool={#SIGNTOOL}
 #endif
 
 [Files]
-Source: win32\Release\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe
+Source: win32\Release\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Flags: ignoreversion
 Source: deps\gettext\COPYING; DestDir: {app}\doc; DestName: GNU_Gettext_COPYING.txt
-Source: deps\bin-gettext\bin\xgettext.exe; DestDir: {app}\bin
-Source: deps\bin-gettext\bin\msgmerge.exe; DestDir: {app}\bin
-Source: deps\bin-gettext\bin\msgunfmt.exe; DestDir: {app}\bin
-Source: deps\bin-gettext\bin\msgfmt.exe; DestDir: {app}\bin
-Source: deps\bin-gettext\bin\msgcat.exe; DestDir: {app}\bin
-Source: deps\bin-gettext\bin\*.dll; DestDir: {app}\bin
-Source: deps\db\build_windows\Win32\Release\libdb*.dll; DestDir: {app}\bin
-Source: deps\winsparkle\WinSparkle.dll; DestDir: {app}\bin
+Source: deps\bin-gettext\bin\xgettext.exe; DestDir: {app}\bin; Flags: ignoreversion
+Source: deps\bin-gettext\bin\msgmerge.exe; DestDir: {app}\bin; Flags: ignoreversion
+Source: deps\bin-gettext\bin\msgunfmt.exe; DestDir: {app}\bin; Flags: ignoreversion
+Source: deps\bin-gettext\bin\msgfmt.exe; DestDir: {app}\bin; Flags: ignoreversion
+Source: deps\bin-gettext\bin\msgcat.exe; DestDir: {app}\bin; Flags: ignoreversion
+Source: deps\bin-gettext\bin\*.dll; DestDir: {app}\bin; Flags: ignoreversion
+Source: deps\db\build_windows\Win32\Release\libdb*.dll; DestDir: {app}\bin; Flags: ignoreversion
+Source: deps\winsparkle\WinSparkle.dll; DestDir: {app}\bin; Flags: ignoreversion
 Source: COPYING; DestDir: {app}\doc; DestName: copying.txt
 Source: NEWS; DestDir: {app}\doc; DestName: news.txt
 Source: icons\ui\*.png; DestDir: {app}\share\poedit\icons
