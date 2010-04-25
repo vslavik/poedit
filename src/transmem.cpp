@@ -29,6 +29,7 @@
 #include <wx/filename.h>
 #include <wx/config.h>
 #include <wx/tokenzr.h>
+#include <wx/msgdlg.h>
 
 #include <set>
 #include <memory>
@@ -1066,6 +1067,46 @@ wxString TranslationMemory::GetDatabaseDir()
     return data;
 }
 
+namespace
+{
+
+bool MoveDBFile(const wxString& from, const wxString& to, const wxString& name)
+{
+    wxString f = from + wxFILE_SEP_PATH + name;
+    wxString t = to + wxFILE_SEP_PATH + name;
+
+    if ( wxRenameFile(f, t) )
+        return true;
+
+    if ( !wxCopyFile(f, t, false) )
+        return false;
+
+    return wxRemoveFile(f);
+}
+
+bool MoveDBLang(const wxString& from, const wxString& to)
+{
+    // maybe the files are on different volumes, try copying them
+    if ( !wxFileName::DirExists(to) )
+    {
+        if ( !wxFileName::Mkdir(to, 0700, wxPATH_MKDIR_FULL) )
+            return false;
+    }
+
+    bool ok1 = MoveDBFile(from, to, _T("strings.db"));
+    bool ok2 = MoveDBFile(from, to, _T("translations.db"));
+    bool ok3 = MoveDBFile(from, to, _T("words.db"));
+
+    bool ok = ok1 && ok2 && ok3;
+
+    if ( ok )
+        return wxFileName::Rmdir(from);
+
+    return ok;
+}
+
+} // anonymous namespace
+
 /*static*/
 void TranslationMemory::MoveLegacyDbIfNeeded()
 {
@@ -1089,27 +1130,66 @@ void TranslationMemory::MoveLegacyDbIfNeeded()
     wxLogTrace(_T("poedit.tm"),
                _T("languages to move: %s"), tmLangsStr.c_str());
 
-    while ( tmLangs.HasMoreTokens() )
+    bool ok = true;
     {
-        const wxString lang = tmLangs.GetNextToken();
+        wxLogNull null;
+        while ( tmLangs.HasMoreTokens() )
+        {
+            const wxString lang = tmLangs.GetNextToken();
 
-        if ( !wxFileName::DirExists(oldPath + wxFILE_SEP_PATH + lang) )
-            continue; // TM for this lang doesn't exist
+            if ( !wxFileName::DirExists(oldPath + wxFILE_SEP_PATH + lang) )
+            {
+                ok = false;
+                continue; // TM for this lang doesn't exist
+            }
 
-        if ( !wxFileName::Mkdir(newPath, 0700, wxPATH_MKDIR_FULL) )
-            continue; // error
-        if ( !wxRenameFile(oldPath + wxFILE_SEP_PATH + lang,
-                           newPath + wxFILE_SEP_PATH + lang) )
-            continue; // error
+            if ( !wxFileName::DirExists(newPath) )
+            {
+                if ( !wxFileName::Mkdir(newPath, 0700, wxPATH_MKDIR_FULL) )
+                {
+                    ok = false;
+                    continue; // error
+                }
+            }
+            if ( !MoveDBLang(oldPath + wxFILE_SEP_PATH + lang,
+                             newPath + wxFILE_SEP_PATH + lang) )
+            {
+                ok = false;
+                continue; // error
+            }
+        }
+
+        // intentionally don't delete the old path recursively, the user may
+        // have pointed it to a location with their own files:
+        if ( ok )
+            ok = wxFileName::Rmdir(oldPath);
     }
-
-    // intentionally don't delete the old path recursively, the user may have
-    // pointed it to a location with their own files:
-    wxFileName::Rmdir(oldPath);
 
     // For now, keep the config setting, even though it's obsolete, just in
     // case some users downgrade. (FIXME)
     cfg->Write(_T("/TM/database_path"), newPath);
+
+    if ( !ok )
+    {
+        const wxString title =
+            _("Poedit translation memory error");
+        const wxString main =
+            _("There was a problem moving your translation memory.");
+        const wxString details =
+            wxString::Format(
+            _("Please verify that all files were moved to the new location or do it manually if they weren't.\n\nOld location: %s\nNew location: %s"),
+            oldPath.c_str(), newPath.c_str());
+
+#if wxCHECK_VERSION(2,9,0)
+        wxMessageDialog dlg(NULL, main, title, wxOK | wxICON_ERROR);
+        dlg.SetExtendedMessage(details);
+        dlg.SetYesNoLabels(_("Purge"), _("Keep"));
+#else // wx < 2.9.0
+        const wxString all = main + _T("\n\n") + details;
+        wxMessageDialog dlg(NULL, all, title, wxOK | wxICON_ERROR);
+#endif
+        dlg.ShowModal();
+    }
 }
 
 #endif // USE_TRANSMEM
