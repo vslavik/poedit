@@ -158,84 +158,6 @@ class TextctrlHandler : public wxEvtHandler
         TextctrlHandler(PoeditFrame* frame) : m_list(frame->m_list) {}
 
     private:
-        void OnKeyDown(wxKeyEvent& event)
-        {
-            int keyCode = event.GetKeyCode();
-            int modifiers = event.GetModifiers();
-
-#if defined(__WXGTK__) && !wxCHECK_VERSION(2,8,9)
-            // wxGTK < 2.8.9 had a bug in Meta key detection, see
-            // bug #2006843 at http://tinyurl.com/56lsk2
-            modifiers &= ~wxMOD_META;
-#endif
-
-            if ( modifiers != wxMOD_CMD ) // Cmd+* or Ctrl+*
-            {
-                event.Skip();
-                return;
-            }
-
-            int sel = m_list->GetSelection();
-
-            switch (keyCode)
-            {
-                case WXK_UP:
-                case WXK_NUMPAD_UP:
-                    if ((sel > 0))
-                    {
-#ifdef __WXMAC__
-                        m_list->SetItemState(sel, 0, wxLIST_STATE_SELECTED);
-#endif
-                        m_list->EnsureVisible(sel - 1);
-                        m_list->SetItemState(sel - 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                    }
-                    else
-                        event.Skip();
-                    break;
-                case WXK_DOWN:
-                case WXK_NUMPAD_DOWN:
-                    if ((sel < m_list->GetItemCount() - 1))
-                    {
-#ifdef __WXMAC__
-                        m_list->SetItemState(sel, 0, wxLIST_STATE_SELECTED);
-#endif
-                        m_list->EnsureVisible(sel + 1);
-                        m_list->SetItemState(sel + 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                    }
-                    else
-                        event.Skip();
-                    break;
-                case WXK_PAGEUP:
-                case WXK_NUMPAD_PAGEUP:
-                {
-#ifdef __WXMAC__
-                    m_list->SetItemState(sel, 0, wxLIST_STATE_SELECTED);
-#endif
-                    int newy = sel - 10;
-                    if (newy < 0) newy = 0;
-                    m_list->EnsureVisible(newy);
-                    m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                    break;
-                }
-                case WXK_PAGEDOWN:
-                case WXK_NUMPAD_PAGEDOWN:
-                {
-#ifdef __WXMAC__
-                    m_list->SetItemState(sel, 0, wxLIST_STATE_SELECTED);
-#endif
-                    int newy = sel + 10;
-                    if (newy >= m_list->GetItemCount())
-                        newy = m_list->GetItemCount() - 1;
-                    m_list->EnsureVisible(newy);
-                    m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                    break;
-                }
-
-                default:
-                    event.Skip();
-            }
-        }
-
 #ifdef __WXMSW__
         // We use wxTE_RICH2 style, which allows for pasting rich-formatted
         // text into the control. We want to allow only plain text (all the
@@ -308,7 +230,6 @@ class TextctrlHandler : public wxEvtHandler
 };
 
 BEGIN_EVENT_TABLE(TextctrlHandler, wxEvtHandler)
-    EVT_KEY_DOWN(TextctrlHandler::OnKeyDown)
 #ifdef __WXMSW__
     EVT_TEXT_COPY(-1, TextctrlHandler::OnCopy)
     EVT_TEXT_CUT(-1, TextctrlHandler::OnCut)
@@ -352,7 +273,6 @@ class ListHandler : public wxEvtHandler
         void OnActivated(wxListEvent& event) { m_frame->OnListActivated(event); }
         void OnRightClick(wxMouseEvent& event) { m_frame->OnListRightClick(event); }
         void OnFocus(wxFocusEvent& event) { m_frame->OnListFocus(event); }
-        void OnKeyDown(wxKeyEvent& event) { dynamic_cast<TextctrlHandler*>(m_frame->m_textTrans->GetEventHandler())->OnKeyDown(event); }
 
         DECLARE_EVENT_TABLE()
 
@@ -364,7 +284,6 @@ BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
    EVT_LIST_ITEM_ACTIVATED (ID_LIST, ListHandler::OnActivated)
    EVT_RIGHT_DOWN          (          ListHandler::OnRightClick)
    EVT_SET_FOCUS           (          ListHandler::OnFocus)
-   EVT_KEY_DOWN            (          ListHandler::OnKeyDown)
 END_EVENT_TABLE()
 
 
@@ -419,6 +338,8 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("go_done_and_next"),   PoeditFrame::OnDoneAndNext)
    EVT_MENU           (XRCID("go_prev"),            PoeditFrame::OnPrev)
    EVT_MENU           (XRCID("go_next"),            PoeditFrame::OnNext)
+   EVT_MENU           (XRCID("go_prev_page"),       PoeditFrame::OnPrevPage)
+   EVT_MENU           (XRCID("go_next_page"),       PoeditFrame::OnNextPage)
    EVT_MENU           (XRCID("go_prev_unfinished"), PoeditFrame::OnPrevUnfinished)
    EVT_MENU           (XRCID("go_next_unfinished"), PoeditFrame::OnNextUnfinished)
    EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
@@ -647,6 +568,7 @@ PoeditFrame::PoeditFrame() :
     m_pluralNotebook = new wxNotebook(m_bottomLeftPanel, -1);
 
     SetCustomFonts();
+    SetAccelerators();
 
     wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
     wxSizer *rightSizer = new wxBoxSizer(wxVERTICAL);
@@ -803,6 +725,23 @@ PoeditFrame::~PoeditFrame()
 
     // shutdown the spellchecker:
     InitSpellchecker();
+}
+
+
+void PoeditFrame::SetAccelerators()
+{
+    wxAcceleratorEntry entries[6];
+
+    entries[0].Set(wxACCEL_CTRL, WXK_PAGEUP,          XRCID("go_prev_page"));
+    entries[1].Set(wxACCEL_CTRL, WXK_NUMPAD_PAGEUP,   XRCID("go_prev_page"));
+    entries[2].Set(wxACCEL_CTRL, WXK_PAGEDOWN,        XRCID("go_next_page"));
+    entries[3].Set(wxACCEL_CTRL, WXK_NUMPAD_PAGEDOWN, XRCID("go_next_page"));
+
+    entries[4].Set(wxACCEL_CTRL, WXK_NUMPAD_UP,       XRCID("go_prev"));
+    entries[5].Set(wxACCEL_CTRL, WXK_NUMPAD_DOWN,     XRCID("go_next"));
+
+    wxAcceleratorTable accel(WXSIZEOF(entries), entries);
+    SetAcceleratorTable(accel);
 }
 
 
@@ -3099,4 +3038,16 @@ void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
 {
     // like "next unfinished", but wraps
     Navigate(+1, Pred_UnfinishedItem, /*wrap=*/true);
+}
+
+void PoeditFrame::OnPrevPage(wxCommandEvent&)
+{
+    int pos = std::max(m_list->GetSelection()-10, 0);
+    m_list->Select(pos);
+}
+
+void PoeditFrame::OnNextPage(wxCommandEvent&)
+{
+    int pos = std::min(m_list->GetSelection()+10, m_list->GetItemCount()-1);
+    m_list->Select(pos);
 }

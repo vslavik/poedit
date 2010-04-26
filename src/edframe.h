@@ -120,6 +120,7 @@ class PoeditFrame : public wxFrame
         void RefreshControls();
         /// Sets controls custom fonts.
         void SetCustomFonts();
+        void SetAccelerators();
 
         CatalogItem *GetCurrentItem() const;
 
@@ -164,6 +165,8 @@ class PoeditFrame : public wxFrame
         void OnDoneAndNext(wxCommandEvent&);
         void OnPrev(wxCommandEvent&);
         void OnNext(wxCommandEvent&);
+        void OnPrevPage(wxCommandEvent&);
+        void OnNextPage(wxCommandEvent&);
         void OnPrevUnfinished(wxCommandEvent&);
         void OnNextUnfinished(wxCommandEvent&);
 
