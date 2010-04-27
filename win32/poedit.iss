@@ -117,7 +117,7 @@ Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty dontcre
 Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcreatekey
 
 [Icons]
-Name: {commonprograms}\Poedit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0
+Name: {commonprograms}\Poedit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0; Comment: Translate applications and other message catalogs.
 
 [Run]
 Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Open Poedit after installation; Flags: postinstall unchecked nowait skipifsilent runasoriginaluser
