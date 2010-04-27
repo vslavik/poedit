@@ -730,7 +730,7 @@ PoeditFrame::~PoeditFrame()
 
 void PoeditFrame::SetAccelerators()
 {
-    wxAcceleratorEntry entries[6];
+    wxAcceleratorEntry entries[7];
 
     entries[0].Set(wxACCEL_CTRL, WXK_PAGEUP,          XRCID("go_prev_page"));
     entries[1].Set(wxACCEL_CTRL, WXK_NUMPAD_PAGEUP,   XRCID("go_prev_page"));
@@ -739,6 +739,8 @@ void PoeditFrame::SetAccelerators()
 
     entries[4].Set(wxACCEL_CTRL, WXK_NUMPAD_UP,       XRCID("go_prev"));
     entries[5].Set(wxACCEL_CTRL, WXK_NUMPAD_DOWN,     XRCID("go_next"));
+
+    entries[6].Set(wxACCEL_CTRL, WXK_NUMPAD_ENTER,    XRCID("go_done_and_next"));
 
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
     SetAcceleratorTable(accel);
