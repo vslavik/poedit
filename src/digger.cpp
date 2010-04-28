@@ -51,7 +51,7 @@ wxString ConcatCatalogs(const wxArrayString& files)
     }
 
     wxString cmd =
-        wxString::Format(_T("msgcat --force-po --use-first -o \"%s\" %s"),
+        wxString::Format(_T("msgcat --force-po -o \"%s\" %s"),
                          tempfile.c_str(),
                          list.c_str());
     bool succ = ExecuteGettext(cmd);
