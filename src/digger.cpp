@@ -27,6 +27,7 @@
 #include <wx/config.h>
 #include <wx/dir.h>
 #include <wx/ffile.h>
+#include <wx/filename.h>
 
 #include "digger.h"
 #include "parser.h"
@@ -41,7 +42,7 @@ namespace
 // temporary file with the results
 wxString ConcatCatalogs(const wxArrayString& files)
 {
-    wxString tempfile = wxGetTempFileName(_T("poedit"));
+    wxString tempfile = wxFileName::CreateTempFileName(_T("poedit"));
 
     wxString list;
     for ( wxArrayString::const_iterator i = files.begin();
@@ -185,7 +186,7 @@ bool SourceDigger::DigFiles(wxArrayString& outFiles,
             batchfiles.Add(files[i]);
         last = i;
 
-        wxString tempfile = wxGetTempFileName(_T("poedit"));
+        wxString tempfile = wxFileName::CreateTempFileName(_T("poedit"));
         if (!ExecuteGettext(
                     parser.GetCommand(batchfiles, keywords, tempfile, charset)))
         {

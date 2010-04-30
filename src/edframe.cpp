@@ -2654,8 +2654,8 @@ void PoeditFrame::BeginItemValidation()
                 m_catalog->Header().GetHeader(_T("Plural-Forms")));
     }
 
-    wxString tmp1 = wxGetTempFileName(_T("poedit"));
-    wxString tmp2 = wxGetTempFileName(_T("poedit"));
+    wxString tmp1 = wxFileName::CreateTempFileName(_T("poedit"));
+    wxString tmp2 = wxFileName::CreateTempFileName(_T("poedit"));
     cat.Save(tmp1, false);
     wxString cmdline = _T("msgfmt -c -f -o \"") + tmp2 +
                        _T("\" \"") + tmp1 + _T("\"");

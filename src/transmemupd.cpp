@@ -33,6 +33,7 @@
 #include <wx/intl.h>
 #include <wx/utils.h>
 #include <wx/dir.h>
+#include <wx/filename.h>
 
 #include "catalog.h"
 #include "transmem.h"
@@ -171,10 +172,10 @@ bool TranslationMemoryUpdater::UpdateFromPO(const wxString& filename)
 
 bool TranslationMemoryUpdater::UpdateFromMO(const wxString& filename)
 {
-    wxString tmp;
+    wxString tmp = wxFileName::CreateTempFileName(_T("poedit"));
     wxLogNull null;
 
-    if (!wxGetTempFileName(_T("poedit"), tmp))
+    if ( tmp.empty() )
         return false;
     if (!ExecuteGettext(_T("msgunfmt --force-po -o \"") + tmp + _T("\" \"") + 
                         filename + _T("\"")))

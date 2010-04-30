@@ -1551,7 +1551,7 @@ bool Catalog::Merge(Catalog *refcat)
 {
     wxString oldname = m_fileName;
 
-    wxString tmpdir = wxGetTempFileName(_T("poedit"));
+    wxString tmpdir = wxFileName::CreateTempFileName(_T("poedit"));
     wxRemoveFile(tmpdir);
     if (!wxMkdir(tmpdir, 0700))
         return false;
