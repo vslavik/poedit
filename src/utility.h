@@ -43,10 +43,15 @@ public:
     // creates new file name in that directory
     wxString CreateFileName(const wxString& suffix);
 
+    // whether to keep temporary files
+    static void KeepFiles(bool keep = true) { ms_keepFiles = keep; }
+
 private:
     int m_counter;
     wxString m_dir;
     wxArrayString m_files;
+
+    static bool ms_keepFiles;
 };
 
 #endif // _UTILITY_H_

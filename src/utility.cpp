@@ -29,6 +29,8 @@
 #include <wx/filename.h>
 #include <wx/log.h>
 
+bool TempDirectory::ms_keepFiles = false;
+
 TempDirectory::TempDirectory() : m_counter(0)
 {
 #ifdef HAVE_MKDTEMP
@@ -68,6 +70,12 @@ TempDirectory::~TempDirectory()
 {
     if ( m_dir.empty() )
         return;
+
+    if ( ms_keepFiles )
+    {
+        wxLogTrace(_T("poedit.tmp"), _T("keeping temp files in %s"), m_dir.c_str());
+        return;
+    }
 
     for ( wxArrayString::const_iterator i = m_files.begin(); i != m_files.end(); ++i )
     {

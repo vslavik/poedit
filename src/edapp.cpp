@@ -59,6 +59,7 @@
 #include "icons.h"
 #include "version.h"
 #include "transmem.h"
+#include "utility.h"
 
 IMPLEMENT_APP(PoeditApp);
 
@@ -353,9 +354,19 @@ void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
     cfg->Write(_T("version"), GetAppVersion());
 }
 
+
+namespace
+{
+const wxChar *CL_KEEP_TEMP_FILES = _T("keep-temp-files");
+}
+
 void PoeditApp::OnInitCmdLine(wxCmdLineParser& parser)
 {
     wxApp::OnInitCmdLine(parser);
+
+    parser.AddSwitch(_T(""), CL_KEEP_TEMP_FILES,
+                     _("don't delete temporary files (for debugging)"));
+
     parser.AddParam(_T("catalog.po"), wxCMD_LINE_VAL_STRING, 
                     wxCMD_LINE_PARAM_OPTIONAL | wxCMD_LINE_PARAM_MULTIPLE);
 }
@@ -364,6 +375,9 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
 {
     if (!wxApp::OnCmdLineParsed(parser))
         return false;
+
+    if ( parser.Found(CL_KEEP_TEMP_FILES) )
+        TempDirectory::KeepFiles();
 
     for (size_t i = 0; i < parser.GetParamCount(); i++)
         gs_filesToOpen.Add(parser.GetParam(i));
