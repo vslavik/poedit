@@ -124,6 +124,7 @@ AC_CHECK_HEADER([boost/function.hpp],
     [],
     [AC_MSG_ERROR([Boost is required to compile Poedit.])])
 
+AC_CHECK_FUNCS([mkdtemp])
 
 use_osx=no
 case "${host}" in

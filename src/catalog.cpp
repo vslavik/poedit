@@ -46,7 +46,7 @@
 #include "progressinfo.h"
 #include "summarydlg.h"
 #include "isocodes.h"
-
+#include "utility.h"
 
 
 // ----------------------------------------------------------------------
@@ -1551,14 +1551,13 @@ bool Catalog::Merge(Catalog *refcat)
 {
     wxString oldname = m_fileName;
 
-    wxString tmpdir = wxFileName::CreateTempFileName(_T("poedit"));
-    wxRemoveFile(tmpdir);
-    if (!wxMkdir(tmpdir, 0700))
+    TempDirectory tmpdir;
+    if ( !tmpdir.IsOk() )
         return false;
 
-    wxString tmp1 = tmpdir + wxFILE_SEP_PATH + _T("ref.pot");
-    wxString tmp2 = tmpdir + wxFILE_SEP_PATH + _T("input.po");
-    wxString tmp3 = tmpdir + wxFILE_SEP_PATH + _T("output.po");
+    wxString tmp1 = tmpdir.CreateFileName(_T("ref.pot"));
+    wxString tmp2 = tmpdir.CreateFileName(_T("input.po"));
+    wxString tmp3 = tmpdir.CreateFileName(_T("output.po"));
 
     refcat->Save(tmp1, false);
     Save(tmp2, false);
@@ -1583,11 +1582,6 @@ bool Catalog::Merge(Catalog *refcat)
         // UTF-8 catalog, it will become UTF-8. Some people hate this.
         m_header.Charset = charset;
     }
-
-    wxRemoveFile(tmp1);
-    wxRemoveFile(tmp2);
-    wxRemoveFile(tmp3);
-    wxRmdir(tmpdir);
 
     m_fileName = oldname;
 

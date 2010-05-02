@@ -35,7 +35,8 @@ class wxArrayString;
 class ParsersDB;
 class Parser;
 class ProgressInfo;
-    
+class TempDirectory;
+
 /** This class extracts translatable strings from sources.
     It uses ParsersDB to get information about external programs to
     call in order to dig information from single file.
@@ -82,7 +83,8 @@ class SourceDigger
             \param keywords list of keywords that mark translatable strings
             \param charset  source code charset (may be empty)
          */
-        bool DigFiles(wxArrayString& outFiles,
+        bool DigFiles(TempDirectory& tmpdir,
+                      wxArrayString& outFiles,
                       const wxArrayString& files,
                       Parser &parser, const wxArrayString& keywords,
                       const wxString& charset);
