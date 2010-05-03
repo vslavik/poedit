@@ -153,12 +153,6 @@ class CatalogItem
                 m_references.Add(ref);
         }
 
-        /// Clears references (used by SourceDigger).
-        void ClearReferences()
-        {
-            m_references.Clear();
-        }
-
         /// Sets the string.
         void SetString(const wxString& s)
         {
@@ -333,12 +327,6 @@ class CatalogDeletedData
         {
             if (m_references.Index(ref) == wxNOT_FOUND)
                 m_references.Add(ref);
-        }
-
-        /// Clears references (used by SourceDigger).
-        void ClearReferences()
-        {
-            m_references.Clear();
         }
 
         /// Sets the string.
