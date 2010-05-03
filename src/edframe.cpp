@@ -998,7 +998,15 @@ bool PoeditFrame::CanDiscardCurrentDoc()
                         );
 #if wxCHECK_VERSION(2,9,0)
         dlg.SetExtendedMessage(_("Your changes will be lost if you don't save them."));
-        dlg.SetYesNoLabels(_("Save"), _("Don't Save"));
+        dlg.SetYesNoLabels
+            (
+                _("Save"),
+            #ifdef __WXMSW__
+                _("Don't save")
+            #else
+                _("Don't Save")
+            #endif
+            );
 #endif
 
         int r = dlg.ShowModal();
