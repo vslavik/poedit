@@ -134,8 +134,12 @@ class CatalogItem
         const wxArrayString& GetTranslations() const
             { return m_translations; }
 
-        /// Returns array of all occurences of this string in source code.
-        const wxArrayString& GetReferences() const { return m_references; }
+        /// Returns references (#:) lines for the entry
+        const wxArrayString& GetRawReferences() const { return m_references; }
+
+        /// Returns array of all occurrences of this string in source code,
+        /// parsed into individual references
+        wxArrayString GetReferences() const;
 
         /// Returns comment added by the translator to this entry
         const wxString& GetComment() const { return m_comment; }
@@ -310,8 +314,8 @@ class CatalogDeletedData
         /// Returns the deleted lines.
         const wxArrayString& GetDeletedLines() const { return m_deletedLines; }
 
-        /// Returns array of all occurences of this string in source code.
-        const wxArrayString& GetReferences() const { return m_references; }
+        /// Returns references (#:) lines for the entry
+        const wxArrayString& GetRawReferences() const { return m_references; }
 
         /// Returns comment added by the translator to this entry
         const wxString& GetComment() const { return m_comment; }

@@ -567,20 +567,9 @@ bool CatalogParser::Parse()
         // references:
         else if (ReadParam(line, _T("#: "), dummy))
         {
-            // A line may contain several references, separated by white-space.
-            // Each reference is in the form "path_name:line_number"
-            // (path_name may contain spaces)
-            dummy = dummy.Strip(wxString::both);
-            while (!dummy.empty())
-            {
-                size_t i = 0;
-                while (i < dummy.length() && dummy[i] != _T(':')) { i++; }
-                while (i < dummy.length() && !wxIsspace(dummy[i])) { i++; }
-
-                mrefs.Add(dummy.Left(i));
-                dummy = dummy.Mid(i).Strip(wxString::both);
-            }
-
+            // Just store the references unmodified, we don't modify this
+            // data anywhere.
+            mrefs.push_back(dummy);
             line = ReadTextLine(m_textFile);
         }
 
@@ -1358,8 +1347,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
             else
               f.AddLine(_T("#. ") + data.GetAutoComments()[i]);
         }
-        for (unsigned i = 0; i < data.GetReferences().GetCount(); i++)
-            f.AddLine(_T("#: ") + data.GetReferences()[i]);
+        for (unsigned i = 0; i < data.GetRawReferences().GetCount(); i++)
+            f.AddLine(_T("#: ") + data.GetRawReferences()[i]);
         wxString dummy = data.GetFlags();
         if (!dummy.empty())
             f.AddLine(dummy);
@@ -1402,8 +1391,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         SaveMultiLines(f, deletedItem.GetComment());
         for (unsigned i = 0; i < deletedItem.GetAutoComments().GetCount(); i++)
             f.AddLine(_T("#. ") + deletedItem.GetAutoComments()[i]);
-        for (unsigned i = 0; i < deletedItem.GetReferences().GetCount(); i++)
-            f.AddLine(_T("#: ") + deletedItem.GetReferences()[i]);
+        for (unsigned i = 0; i < deletedItem.GetRawReferences().GetCount(); i++)
+            f.AddLine(_T("#: ") + deletedItem.GetRawReferences()[i]);
         wxString dummy = deletedItem.GetFlags();
         if (!dummy.empty())
             f.AddLine(dummy);
@@ -1828,6 +1817,33 @@ unsigned CatalogItem::GetPluralFormsCount() const
         return 0;
 
     return trans - 1;
+}
+
+wxArrayString CatalogItem::GetReferences() const
+{
+    // A line may contain several references, separated by white-space.
+    // Each reference is in the form "path_name:line_number"
+    // (path_name may contain spaces)
+
+    wxArrayString refs;
+
+    for ( wxArrayString::const_iterator i = m_references.begin(); i != m_references.end(); ++i )
+    {
+        wxString line = *i;
+
+        line = line.Strip(wxString::both);
+        while (!line.empty())
+        {
+            size_t i = 0;
+            while (i < line.length() && line[i] != _T(':')) { i++; }
+            while (i < line.length() && !wxIsspace(line[i])) { i++; }
+
+            refs.push_back(line.Left(i));
+            line = line.Mid(i).Strip(wxString::both);
+        }
+    }
+
+    return refs;
 }
 
 static wxString TryIfStringIsLangCode(const wxString& s)
