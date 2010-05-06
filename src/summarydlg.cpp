@@ -32,17 +32,14 @@
 #include <wx/intl.h>
 
 #include "summarydlg.h"
+#include "utility.h"
 
 
 MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
 {
     wxXmlResource::Get()->LoadDialog(this, parent, _T("summary"));
-    wxSize sz(wxConfig::Get()->Read(_T("summary_pos_w"), -1),
-              wxConfig::Get()->Read(_T("summary_pos_h"), -1));
 
-    if (sz.x != -1)
-        SetClientSize(sz);
-
+    RestoreWindowState(this, wxDefaultSize, WinState_Size);
     CentreOnParent();
 }
 
@@ -50,8 +47,7 @@ MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
 
 MergeSummaryDialog::~MergeSummaryDialog()
 {
-    wxConfig::Get()->Write(_T("summary_pos_w"), (long)GetClientSize().x);
-    wxConfig::Get()->Write(_T("summary_pos_h"), (long)GetClientSize().y);
+    SaveWindowState(this, WinState_Size);
 }
 
 

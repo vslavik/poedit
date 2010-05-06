@@ -28,6 +28,11 @@
 #include <stdio.h>
 #include <wx/filename.h>
 #include <wx/log.h>
+#include <wx/config.h>
+
+// ----------------------------------------------------------------------
+// TempDirectory
+// ----------------------------------------------------------------------
 
 bool TempDirectory::ms_keepFiles = false;
 
@@ -100,4 +105,67 @@ wxString TempDirectory::CreateFileName(const wxString& suffix)
     m_files.push_back(s);
     wxLogTrace(_T("poedit.tmp"), _T("new temp file %s"), s.c_str());
     return s;
+}
+
+
+// ----------------------------------------------------------------------
+// Helpers for persisting windows' state
+// ----------------------------------------------------------------------
+
+void SaveWindowState(const wxTopLevelWindow *win, int flags)
+{
+    wxConfigBase *cfg = wxConfig::Get();
+    const wxString path = WindowStatePath(win);
+
+    if ( !win->IsIconized() )
+    {
+        if ( !win->IsMaximized() )
+        {
+            if ( flags & WinState_Pos )
+            {
+                const wxPoint pos = win->GetPosition();
+                cfg->Write(path + _T("x"), (long)pos.x);
+                cfg->Write(path + _T("y"), (long)pos.y);
+            }
+            if ( flags &  WinState_Size )
+            {
+                const wxSize sz = win->GetClientSize();
+                cfg->Write(path + _T("w"), (long)sz.x);
+                cfg->Write(path + _T("h"), (long)sz.y);
+            }
+        }
+
+        if ( flags &  WinState_Size )
+            cfg->Write(path + _T("maximized"), (long)win->IsMaximized());
+    }
+}
+
+
+void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int flags)
+{
+    wxConfigBase *cfg = wxConfig::Get();
+    const wxString path = WindowStatePath(win);
+
+    if ( flags & WinState_Size )
+    {
+        int width = cfg->Read(path + _T("w"), defaultSize.x);
+        int height = cfg->Read(path + _T("h"), defaultSize.y);
+        if ( width != -1 || height != -1 )
+            win->SetClientSize(width, height);
+    }
+
+    if ( flags & WinState_Pos )
+    {
+#ifndef __WXGTK__
+        int posx = cfg->Read(path + _T("x"), -1);
+        int posy = cfg->Read(path + _T("y"), -1);
+        if ( posx != -1 || posy != -1 )
+            win->Move(posx, posy);
+#endif
+    }
+
+    if ( cfg->Read(path + _T("maximized"), long(0)) )
+    {
+        win->Maximize();
+    }
 }

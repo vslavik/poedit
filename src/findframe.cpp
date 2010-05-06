@@ -34,6 +34,7 @@
 #include "catalog.h"
 #include "findframe.h"
 #include "edlistctrl.h"
+#include "utility.h"
 
 // The word separators used when doing a "Whole words only" search
 // FIXME-ICU: use ICU to separate words
@@ -68,12 +69,7 @@ FindFrame::FindFrame(wxWindow *parent,
 
     SetEscapeId(wxID_CLOSE);
 
-#ifndef __WXGTK__
-    wxPoint p(wxConfig::Get()->Read(_T("find_pos_x"), -1),
-              wxConfig::Get()->Read(_T("find_pos_y"), -1));
-    if (p.x != -1)
-        Move(p);
-#endif
+    RestoreWindowState(this, wxDefaultSize, WinState_Pos);
 
     m_btnNext = XRCCTRL(*this, "find_next", wxButton);
     m_btnPrev = XRCCTRL(*this, "find_prev", wxButton);
@@ -106,8 +102,7 @@ FindFrame::FindFrame(wxWindow *parent,
 
 FindFrame::~FindFrame()
 {
-    wxConfig::Get()->Write(_T("find_pos_x"), (long)GetPosition().x);
-    wxConfig::Get()->Write(_T("find_pos_y"), (long)GetPosition().y);
+    SaveWindowState(this, WinState_Pos);
 
     wxConfig::Get()->Write(_T("find_in_orig"),
             XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue());

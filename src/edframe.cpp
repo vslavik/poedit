@@ -74,6 +74,7 @@
 #include "manager.h"
 #include "pluralforms/pl_evaluate.h"
 #include "attentionbar.h"
+#include "utility.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(PoeditFramesList);
@@ -403,8 +404,10 @@ private:
 // Frame class:
 
 PoeditFrame::PoeditFrame() :
-    wxFrame(NULL, -1, _("Poedit"), wxDefaultPosition, wxDefaultSize,
-                             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
+    wxFrame(NULL, -1, _("Poedit"),
+            wxDefaultPosition, wxDefaultSize,
+            wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
+            _T("mainwin")),
 #ifdef USE_GETTEXT_VALIDATION
     m_itemBeingValidated(-1), m_gettextProcess(NULL),
 #endif
@@ -605,30 +608,20 @@ PoeditFrame::PoeditFrame() :
     m_bottomSplitter->Initialize(m_bottomLeftPanel);
 
 
-    int width = cfg->Read(_T("frame_w"), 780);
-    int height = cfg->Read(_T("frame_h"), 570);
-    SetClientSize(width, height);
-
-#ifndef __WXGTK__
-    int posx = cfg->Read(_T("frame_x"), -1);
-    int posy = cfg->Read(_T("frame_y"), -1);
+    int restore_flags = WinState_Size;
     // NB: if this is the only Poedit frame opened, place it at remembered
     //     position, but don't do that if there already are other frames,
     //     because they would overlap and nobody could recognize that there are
     //     many of them
     if (ms_instances.GetCount() == 0)
-        Move(posx, posy);
-#endif
+        restore_flags |= WinState_Pos;
+    RestoreWindowState(this, wxSize(780, 570), restore_flags);
 
-    if ( cfg->Read(_T("frame_maximized"), long(0)) )
-    {
-        Maximize();
-
-        // This is a hack -- windows are not maximized immediately and so we
-        // can't set correct sash position in ctor (unmaximized window may
-        // be too small for sash position when maximized -- see bug #2120600)
+    // This is a hack -- windows are not maximized immediately and so we can't
+    // set correct sash position in ctor (unmaximized window may be too small
+    // for sash position when maximized -- see bug #2120600)
+    if ( cfg->Read(WindowStatePath(this) + _T("maximized"), long(0)) )
         m_setSashPositionsWhenMaximized = true;
-    }
 
     Layout();
 
@@ -682,22 +675,6 @@ PoeditFrame::~PoeditFrame()
     wxConfigBase *cfg = wxConfig::Get();
     cfg->SetPath(_T("/"));
 
-    if (!IsIconized())
-    {
-        if (!IsMaximized())
-        {
-            wxPoint pos = GetPosition();
-            wxSize sz = GetClientSize();
-
-            cfg->Write(_T("frame_w"), (long)sz.x);
-            cfg->Write(_T("frame_h"), (long)sz.y);
-            cfg->Write(_T("frame_x"), (long)pos.x);
-            cfg->Write(_T("frame_y"), (long)pos.y);
-        }
-
-        cfg->Write(_T("frame_maximized"), (long)IsMaximized());
-    }
-
     if (m_displayCommentWin || m_displayAutoCommentsWin)
     {
         cfg->Write(_T("bottom_splitter"),
@@ -708,6 +685,8 @@ PoeditFrame::~PoeditFrame()
     cfg->Write(_T("display_lines"), m_displayLines);
     cfg->Write(_T("display_comment_win"), m_displayCommentWin);
     cfg->Write(_T("display_auto_comments_win"), m_displayAutoCommentsWin);
+
+    SaveWindowState(this);
 
     m_history.Save(*cfg);
 

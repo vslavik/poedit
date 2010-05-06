@@ -50,6 +50,7 @@
 #include "manager.h"
 #include "prefsdlg.h"
 #include "progressinfo.h"
+#include "utility.h"
 
 
 ManagerFrame *ManagerFrame::ms_instance = NULL;
@@ -67,7 +68,8 @@ ManagerFrame *ManagerFrame::ms_instance = NULL;
 ManagerFrame::ManagerFrame() :
     wxFrame(NULL, -1, _("Poedit - Catalogs manager"),
             wxDefaultPosition, wxDefaultSize,
-            wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
+            wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
+            _T("manager"))
 {
 #ifdef __UNIX__
     wxIconBundle appicons;
@@ -104,44 +106,16 @@ ManagerFrame::ManagerFrame() :
     if (m_listPrj->GetCount() > 0)
         UpdateListCat(last);
 
-    wxConfigBase *cfg = wxConfig::Get();
-    int width = cfg->Read(_T("manager_w"), 400);
-    int height = cfg->Read(_T("manager_h"), 300);
-    SetClientSize(width, height);
-
-#ifndef __WXGTK__
-    int posx = cfg->Read(_T("manager_x"), -1);
-    int posy = cfg->Read(_T("manager_y"), -1);
-    Move(posx, posy);
-#endif
-
-#if !defined(__WXGTK12__) || defined(__WXGTK20__)
-    // GTK+ 1.2 doesn't support this
-    if (wxConfig::Get()->Read(_T("manager_maximized"), long(0)))
-        Maximize();
-#endif
+    RestoreWindowState(this, wxSize(400, 300));
 }
 
 
 
 ManagerFrame::~ManagerFrame()
 {
-    wxSize sz = GetClientSize();
-    wxPoint pos = GetPosition();
+    SaveWindowState(this);
+
     wxConfigBase *cfg = wxConfig::Get();
-
-    if (!IsIconized())
-    {
-        if (!IsMaximized())
-        {
-            cfg->Write(_T("manager_w"), (long)sz.x);
-            cfg->Write(_T("manager_h"), (long)sz.y);
-            cfg->Write(_T("manager_x"), (long)pos.x);
-            cfg->Write(_T("manager_y"), (long)pos.y);
-        }
-
-        cfg->Write(_T("manager_maximized"), (long)IsMaximized());
-    }
 
     int sel = m_listPrj->GetSelection();
     if (sel != -1)

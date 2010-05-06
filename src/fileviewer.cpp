@@ -24,9 +24,6 @@
  */
 
 #include <wx/wxprec.h>
-
-#include "fileviewer.h"
-
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/panel.h>
@@ -39,6 +36,9 @@
 #include <wx/fontenum.h>
 #include <wx/stc/stc.h>
 
+#include "fileviewer.h"
+#include "utility.h"
+
 FileViewer::FileViewer(wxWindow *parent,
                        const wxString& basePath,
                        const wxArrayString& references,
@@ -47,6 +47,8 @@ FileViewer::FileViewer(wxWindow *parent,
           m_references(references)
 {
     m_basePath = basePath;
+
+    SetName(_T("fileviewer"));
 
     wxPanel *panel = new wxPanel(this, -1);
     wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
@@ -72,16 +74,7 @@ FileViewer::FileViewer(wxWindow *parent,
     SetupTextCtrl();
     sizer->Add(m_text, 1, wxEXPAND);
 
-    wxConfigBase *cfg = wxConfig::Get();
-    int width = cfg->Read(_T("fileviewer/frame_w"), 600);
-    int height = cfg->Read(_T("fileviewer/frame_h"), 400);
-    SetClientSize(width, height);
-
-#ifndef __WXGTK__
-    int posx = cfg->Read(_T("fileviewer/frame_x"), -1);
-    int posy = cfg->Read(_T("fileviewer/frame_y"), -1);
-    Move(posx, posy);
-#endif
+    RestoreWindowState(this, wxSize(600, 400));
 
     wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
     topsizer->Add(panel, wxSizerFlags(1).Expand());
@@ -94,13 +87,7 @@ FileViewer::FileViewer(wxWindow *parent,
 
 FileViewer::~FileViewer()
 {
-    wxSize sz = GetClientSize();
-    wxPoint pos = GetPosition();
-    wxConfigBase *cfg = wxConfig::Get();
-    cfg->Write(_T("fileviewer/frame_w"), (long)sz.x);
-    cfg->Write(_T("fileviewer/frame_h"), (long)sz.y);
-    cfg->Write(_T("fileviewer/frame_x"), (long)pos.x);
-    cfg->Write(_T("fileviewer/frame_y"), (long)pos.y);
+    SaveWindowState(this);
 }
 
 

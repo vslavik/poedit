@@ -28,6 +28,11 @@
 
 #include <wx/string.h>
 #include <wx/arrstr.h>
+#include <wx/toplevel.h>
+
+// ----------------------------------------------------------------------
+// TempDirectory
+// ----------------------------------------------------------------------
 
 // Helper class for managing temporary directories.
 // Cleans the directory when destroyed.
@@ -53,5 +58,25 @@ private:
 
     static bool ms_keepFiles;
 };
+
+// ----------------------------------------------------------------------
+// Helpers for persisting windows' state
+// ----------------------------------------------------------------------
+
+enum WinStateFlags
+{
+    WinState_Pos  = 1,
+    WinState_Size = 2,
+    WinState_All  = WinState_Pos | WinState_Size
+};
+
+void SaveWindowState(const wxTopLevelWindow *win, int flags = WinState_All);
+void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize,
+                        int flags = WinState_All);
+
+inline wxString WindowStatePath(const wxWindow *win)
+{
+    return wxString::Format(_T("/windows/%s/"), win->GetName().c_str());
+}
 
 #endif // _UTILITY_H_
