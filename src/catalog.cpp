@@ -1218,6 +1218,41 @@ void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
     preserve = (bool)(wxConfigBase::Get()->Read(_T("keep_crlf"), true));
 }
 
+
+wxTextFileType GetDesiredCRLFFormat(const wxString& po_file)
+{
+    wxTextFileType crlfDefault, crlf;
+    bool crlfPreserve;
+    GetCRLFBehaviour(crlfDefault, crlfPreserve);
+
+    wxTextFile f;
+    if ( crlfPreserve && wxFileExists(po_file) &&
+         f.Open(po_file, wxConvISO8859_1) )
+    {
+        wxLogNull null;
+        crlf = f.GuessType();
+
+        // Discard any unsupported setting. In particular, we ignore "Mac"
+        // line endings, because the ancient OS 9 systems aren't used anymore,
+        // OSX uses Unix ending *and* "Mac" endings break gettext tools. So if
+        // we encounter a catalog with "Mac" line endings, we silently convert
+        // it into Unix endings (i.e. the modern Mac).
+        if (crlf == wxTextFileType_Mac)
+            crlf = wxTextFileType_Unix;
+        if (crlf != wxTextFileType_Dos && crlf != wxTextFileType_Unix)
+            crlf = crlfDefault;
+
+        f.Close();
+    }
+    else
+    {
+        crlf = crlfDefault;
+    }
+
+    return crlf;
+}
+
+
 void SaveMultiLines(wxTextFile &f, const wxString& text)
 {
     wxStringTokenizer tkn(text, _T('\n'));
@@ -1264,20 +1299,15 @@ wxString FormatStringForFile(const wxString& text)
 
 } // anonymous namespace
 
+
 bool Catalog::Save(const wxString& po_file, bool save_mo)
 {
-    wxTextFileType crlfDefault, crlf;
-    bool crlfPreserve;
-    wxTextFile f;
-
     if ( wxFileExists(po_file) && !wxFile::Access(po_file, wxFile::write) )
     {
         wxLogError(_("File '%s' is read-only and cannot be saved.\nPlease save it under different name."),
                    po_file.c_str());
         return false;
     }
-
-    GetCRLFBehaviour(crlfDefault, crlfPreserve);
 
     // Update information about last modification time. But if the header
     // was empty previously, the author apparently doesn't want this header
@@ -1287,30 +1317,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         m_header.RevisionDate = GetCurrentTimeRFC822();
 
     /* Detect CRLF format: */
-
-    if ( crlfPreserve && wxFileExists(po_file) &&
-         f.Open(po_file, wxConvISO8859_1) )
-    {
-        {
-        wxLogNull null;
-        crlf = f.GuessType();
-        }
-        // Discard any unsupported setting. In particular, we ignore "Mac"
-        // line endings, because the ancient OS 9 systems aren't used anymore,
-        // OSX uses Unix ending *and* "Mac" endings break gettext tools. So if
-        // we encounter a catalog with "Mac" line endings, we silently convert
-        // it into Unix endings (i.e. the modern Mac).
-        if (crlf == wxTextFileType_Mac)
-            crlf = wxTextFileType_Unix;
-        if (crlf != wxTextFileType_Dos && crlf != wxTextFileType_Unix)
-            crlf = crlfDefault;
-        f.Close();
-    }
-    else
-        crlf = crlfDefault;
+    wxTextFileType crlf = GetDesiredCRLFFormat(po_file);
 
     /* Save .po file: */
-
     wxString charset(m_header.Charset);
     if (!charset || charset == _T("CHARSET"))
         charset = _T("UTF-8");
@@ -1325,6 +1334,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     }
     m_header.Charset = charset;
 
+    wxTextFile f;
     if (!wxFileExists(po_file) || !f.Open(po_file, wxConvISO8859_1))
         if (!f.Create(po_file))
             return false;
