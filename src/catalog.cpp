@@ -1334,15 +1334,12 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     }
     m_header.Charset = charset;
 
+    const wxString po_file_temp = po_file + _T(".temp.po");
+    if ( wxFileExists(po_file_temp) )
+        wxRemoveFile(po_file_temp);
     wxTextFile f;
-    if (!wxFileExists(po_file) || !f.Open(po_file, wxConvISO8859_1))
-        if (!f.Create(po_file))
-            return false;
-    for (int j = f.GetLineCount() - 1; j >= 0; j--)
-        f.RemoveLine(j);
-
-
-    wxCSConv encConv(charset);
+    if (!f.Create(po_file_temp))
+        return false;
 
     SaveMultiLines(f, m_header.Comment);
     f.AddLine(_T("msgid \"\""));
@@ -1418,9 +1415,34 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
             f.AddLine(deletedItem.GetDeletedLines()[j]);
     }
 
-
-    f.Write(crlf, encConv);
+    f.Write(crlf, wxCSConv(charset));
     f.Close();
+
+    // Now that the file was written, run msgcat to re-format it according
+    // to the usual format. This is a good enough fix for #25 until proper
+    // preservation of formatting is implemented.
+    if ( ExecuteGettext
+          (
+              wxString::Format(_T("msgcat --force-po -o \"%s\" \"%s\""),
+                               po_file.c_str(),
+                               po_file_temp.c_str())
+          )
+         && wxFileExists(po_file)
+       )
+    {
+        wxRemoveFile(po_file_temp);
+    }
+    else
+    {
+        if ( !wxRemoveFile(po_file) || !wxRenameFile(po_file_temp, po_file) )
+        {
+            wxLogWarning(_("Couldn't save file %s."), po_file.c_str());
+        }
+        else
+        {
+            wxLogWarning(_("There was a problem formatting the file nicely (but it was saved all right)."));
+        }
+    }
 
     /* Poedit < 1.3.0 used to save additional info in .po.poedit file. It's
        not used anymore, so delete the file if it exists: */
