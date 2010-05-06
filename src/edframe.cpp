@@ -603,7 +603,7 @@ PoeditFrame::PoeditFrame() :
     m_bottomRightPanel->SetAutoLayout(true);
     m_bottomRightPanel->SetSizer(rightSizer);
 
-    m_bottomSplitter->SetMinimumPaneSize(40);
+    m_bottomSplitter->SetMinimumPaneSize(150);
     m_bottomRightPanel->Show(false);
     m_bottomSplitter->Initialize(m_bottomLeftPanel);
 
@@ -625,7 +625,7 @@ PoeditFrame::PoeditFrame() :
 
     Layout();
 
-    m_splitter->SetMinimumPaneSize(40);
+    m_splitter->SetMinimumPaneSize(120);
     m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, cfg->Read(_T("splitter"), 330L));
 
     m_list->PushEventHandler(new ListHandler(this));
