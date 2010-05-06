@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2008 Vaclav Slavik
+ *  Copyright (C) 1999-2010 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -1165,7 +1165,11 @@ int Catalog::SetBookmark(int id, Bookmark bookmark)
 }
 
 
-static bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
+// misc file-saving helpers
+namespace
+{
+
+bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
 {
     if (s.empty())
         return true;
@@ -1174,7 +1178,7 @@ static bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
     return true;
 }
 
-static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
+bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
 {
     if (charset.Lower() == _T("utf-8") || charset.Lower() == _T("utf8"))
         return true;
@@ -1204,7 +1208,7 @@ static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
 }
 
 
-static void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
+void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
 {
     wxString format = wxConfigBase::Get()->Read(_T("crlf_format"), _T("unix"));
 
@@ -1214,7 +1218,7 @@ static void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
     preserve = (bool)(wxConfigBase::Get()->Read(_T("keep_crlf"), true));
 }
 
-static void SaveMultiLines(wxTextFile &f, const wxString& text)
+void SaveMultiLines(wxTextFile &f, const wxString& text)
 {
     wxStringTokenizer tkn(text, _T('\n'));
     while (tkn.HasMoreTokens())
@@ -1223,7 +1227,7 @@ static void SaveMultiLines(wxTextFile &f, const wxString& text)
 
 /** Adds \n characters as neccesary for good-looking output
  */
-static wxString FormatStringForFile(const wxString& text)
+wxString FormatStringForFile(const wxString& text)
 {
     wxString s;
     unsigned n_cnt = 0;
@@ -1257,6 +1261,8 @@ static wxString FormatStringForFile(const wxString& text)
     else
         return s;
 }
+
+} // anonymous namespace
 
 bool Catalog::Save(const wxString& po_file, bool save_mo)
 {
