@@ -29,6 +29,7 @@
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/config.h>
+#include <wx/display.h>
 
 // ----------------------------------------------------------------------
 // TempDirectory
@@ -164,6 +165,25 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
 #endif
     }
 
+#ifndef __WXGTK__
+    // If the window is completely out of all screens (e.g. because
+    // screens configuration changed), move it to primary screen:
+    if ( wxDisplay::GetFromWindow(win) == wxNOT_FOUND )
+        win->Move(0, 0);
+#endif
+
+    // If the window is larger than current screen, resize it to fit:
+    int display = wxDisplay::GetFromWindow(win);
+    wxCHECK_RET( display != wxNOT_FOUND, _T("window not on screen") );
+    wxRect screenRect = wxDisplay(display).GetClientArea();
+    wxRect winRect = win->GetRect();
+    if ( !screenRect.Contains(winRect) )
+    {
+        winRect.Intersect(screenRect);
+        win->SetSize(winRect);
+    }
+
+    // Maximize if it should be
     if ( cfg->Read(path + _T("maximized"), long(0)) )
     {
         win->Maximize();
