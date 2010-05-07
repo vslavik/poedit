@@ -3,6 +3,8 @@ dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.59)
 
 AC_INIT([poedit], [1.5beta1], [poedit-devel@lists.sourceforge.net])
+PACKAGE_SHORT_VERSION=1.5
+AC_SUBST(PACKAGE_SHORT_VERSION)
 
 AC_CONFIG_AUX_DIR([admin])
 AC_CONFIG_SRCDIR([README])
