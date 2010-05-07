@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Poedit 1.5\n"
 "Report-Msgid-Bugs-To: poedit-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-02-27 23:19+0100\n"
+"POT-Creation-Date: 2010-05-07 08:40+0200\n"
 "PO-Revision-Date: 2008-11-24 21:42-0000\n"
 "Last-Translator: Seanán Ó Coistín <seananoc@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,120 +15,215 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/edframe.cpp:1863
+#: ../src/edframe.cpp:1999
 msgid " (modified)"
 msgstr " (mionathraithe)"
 
-#: ../src/export_html.cpp:137
-#: ../src/edframe.cpp:1833
-#, c-format
-msgid "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i %% aistrithe, %i teaghráin (%i doiléir, %i droch cheadchomharthaithe, %i nach bhfuil aistrithe fós)"
+#. TRANSLATORS: This is version information in about dialog, it is followed
+#. by version number when used
+#: ../src/edframe.cpp:2351
+#, fuzzy
+msgid " Version "
+msgstr "leagan"
 
-#: ../src/catalog.cpp:118
+#: ../src/edframe.cpp:1964
+#, fuzzy, c-format
+msgid "%i %% translated, %i strings"
+msgstr "Aistríodh go huathoibríoch %u teaghráin"
+
+#: ../src/export_html.cpp:148
+#, c-format
+msgid ""
+"%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
+msgstr ""
+"%i %% aistrithe, %i teaghráin (%i doiléir, %i droch cheadchomharthaithe, %i "
+"nach bhfuil aistrithe fós)"
+
+#: ../src/edframe.cpp:1968
+#, fuzzy, c-format
+msgid "%i %% translated, %i strings (%s)"
+msgstr "Aistríodh go huathoibríoch %u teaghráin"
+
+#: ../src/edframe.cpp:1953
+#, fuzzy, c-format
+msgid "%i bad tokens"
+msgstr "Droch Cheadchomharthaithe"
+
+#: ../src/edframe.cpp:1947
+#, fuzzy, c-format
+msgid "%i fuzzy"
+msgstr "Doiléir"
+
+#: ../src/catalog.cpp:145
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "Níor luchtaíodh %i línte den chomhad '%s'. "
 
-#: ../src/resources/menus.xrc:143
-msgid "&About..."
+#: ../src/edframe.cpp:1959
+#, fuzzy, c-format
+msgid "%i not translated"
+msgstr "Aimsigh sna haistriúcháin"
+
+#: ../src/resources/menus.xrc:206
+#, fuzzy
+msgid "&About"
 msgstr "&Maidir le..."
 
-#: ../src/resources/menus.xrc:88
+#: ../src/resources/menus.xrc:105
+#, fuzzy
+msgid "&Automatically Translate Using TM"
+msgstr "&Aistrigh go huathoibríoch leis an CA"
+
+#: ../src/resources/menus.xrc:104
 msgid "&Automatically translate using TM"
 msgstr "&Aistrigh go huathoibríoch leis an CA"
 
-#: ../src/edframe.cpp:2636
+#: ../src/edframe.cpp:2845
 msgid "&Bookmarks"
 msgstr "&Astail"
 
-#: ../src/resources/manager.xrc:131
-#: ../src/resources/menus.xrc:39
+#: ../src/resources/manager.xrc:132 ../src/resources/menus.xrc:26
 msgid "&Close"
 msgstr "&Dún"
 
-#: ../src/resources/menus.xrc:132
-msgid "&Contents..."
-msgstr "&Inneachair..."
+#: ../src/resources/menus.xrc:165
+#, fuzzy
+msgid "&Comment Window"
+msgstr "Taispeáin an fhuinneog tráchta"
 
-#: ../src/resources/menus.xrc:45
+#: ../src/resources/menus.xrc:164
+#, fuzzy
+msgid "&Comment window"
+msgstr "Taispeáin an fhuinneog tráchta"
+
+#: ../src/resources/menus.xrc:124
+msgid "&Done and Next"
+msgstr ""
+
+#: ../src/resources/menus.xrc:123
+msgid "&Done and next"
+msgstr ""
+
+#: ../src/resources/menus.xrc:55
 msgid "&Edit"
 msgstr "&Eagar"
 
-#: ../src/edframe.cpp:418
-#: ../src/resources/manager.xrc:124
+#: ../src/edframe.cpp:469 ../src/resources/manager.xrc:125
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&Comhad"
 
-#: ../src/resources/menus.xrc:57
+#: ../src/resources/menus.xrc:72
 msgid "&Find..."
 msgstr "&Aimsigh..."
 
-#: ../src/resources/menus.xrc:101
-#: ../src/resources/menus.xrc:105
-msgid "&Fullscreen view"
-msgstr "&Amharc lánscáileán"
+#: ../src/edframe.cpp:478 ../src/resources/menus.xrc:120
+msgid "&Go"
+msgstr ""
 
-#: ../src/resources/menus.xrc:145
+#: ../src/edapp.cpp:179 ../src/resources/menus.xrc:208
 msgid "&Help"
 msgstr "&Cabhair"
 
-#: ../src/resources/menus.xrc:12
+#: ../src/resources/menus.xrc:14
+#, fuzzy
+msgid "&New Catalog..."
+msgstr "&Clár nua..."
+
+#: ../src/resources/menus.xrc:13
 msgid "&New catalog..."
 msgstr "&Clár nua..."
 
-#: ../src/resources/menus.xrc:18
+#: ../src/resources/menus.xrc:136
+msgid "&Next Message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:135
+msgid "&Next message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:200
+msgid "&Online Help"
+msgstr ""
+
+#: ../src/resources/menus.xrc:199
+msgid "&Online help"
+msgstr ""
+
+#: ../src/resources/menus.xrc:21
 msgid "&Open..."
 msgstr "&Oscail..."
 
-#: ../src/resources/menus.xrc:74
+#: ../src/resources/menus.xrc:88
 msgid "&Preferences"
 msgstr "&Sainroghanna"
 
-#: ../src/resources/manager.xrc:127
-#: ../src/resources/menus.xrc:35
+#: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:44
 msgid "&Preferences..."
 msgstr "&Sainroghanna..."
 
-#: ../src/resources/menus.xrc:91
+#: ../src/resources/menus.xrc:131
+msgid "&Previous Message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:130
+msgid "&Previous message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:113
+#, fuzzy
+msgid "&Properties..."
+msgstr "&Sainroghanna..."
+
+#: ../src/resources/menus.xrc:109
+#, fuzzy
+msgid "&Purge Deleted Translations"
+msgstr "&Glan na haistriúcháin scriosta"
+
+#: ../src/resources/menus.xrc:108
 msgid "&Purge deleted translations"
 msgstr "&Glan na haistriúcháin scriosta"
 
-#: ../src/resources/menus.xrc:22
+#: ../src/resources/menus.xrc:30
 msgid "&Save"
 msgstr "&Cuir i dtaisce"
 
-#: ../src/resources/menus.xrc:95
-msgid "&Settings..."
-msgstr "&Socruithe..."
+#: ../src/resources/menus.xrc:69
+#, fuzzy
+msgid "&Show References"
+msgstr "&Taispeáin tagairtí"
 
-#: ../src/resources/menus.xrc:125
-msgid "&Shaded translations list"
-msgstr "&Réim aistriúcháin scáthaithe"
-
-#: ../src/resources/menus.xrc:54
+#: ../src/resources/menus.xrc:68
 msgid "&Show references"
 msgstr "&Taispeáin tagairtí"
 
-#: ../src/resources/menus.xrc:82
+#: ../src/resources/menus.xrc:192
+msgid "&Untranslated Entries First"
+msgstr ""
+
+#: ../src/resources/menus.xrc:191
+msgid "&Untranslated entries first"
+msgstr ""
+
+#: ../src/resources/menus.xrc:97
+#, fuzzy
+msgid "&Update from Sources"
+msgstr "&Nuashonraigh ó foinsí"
+
+#: ../src/resources/menus.xrc:96
 msgid "&Update from sources"
 msgstr "&Nuashonraigh ó foinsí"
 
-#: ../src/resources/menus.xrc:99
+#: ../src/resources/menus.xrc:151
 msgid "&View"
 msgstr "&Amharc"
 
-#: ../src/catalog.cpp:1453
+#: ../src/catalog.cpp:1558
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "Ní comhad POT ceart é '%s'."
 
-#: ../src/resources/prefs.xrc:211
-msgid "(%f will be substituted with filename, %l with line number)"
-msgstr "(beidh %f curtha in ionad leis an ainm comhad, %l leis an uimhir líne)"
-
-#: ../src/summarydlg.cpp:71
+#: ../src/summarydlg.cpp:58
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i nua, %i as feidhm)"
@@ -137,11 +232,11 @@ msgstr "(%i nua, %i as feidhm)"
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 nua, 0 as feidhm)"
 
-#: ../src/chooselang.cpp:88
+#: ../src/chooselang.cpp:79
 msgid "(Use default language)"
 msgstr "(Bain feidhm as an béarla réamhshocraithe)"
 
-#: ../src/edframe.cpp:792
+#: ../src/edframe.cpp:904
 msgid "(none of these)"
 msgstr "(ní ceann acu seo)"
 
@@ -149,129 +244,170 @@ msgstr "(ní ceann acu seo)"
 msgid "< Previous"
 msgstr "< Roimhe"
 
-#: ../src/manager.cpp:396
+#: ../src/manager.cpp:377
 msgid "<unnamed>"
 msgstr "<gan ainm>"
 
-#: ../src/resources/prefs.xrc:337
+#. TRANSLATORS: This is titlebar of about dialog, the string ends with space
+#. and is followed by application name when used ("Poedit",
+#. but don't add it to this translation yourself)
+#: ../src/edframe.cpp:2355
+#, fuzzy
+msgid "About "
+msgstr "&Maidir le..."
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: ../src/edframe.cpp:2345
+#, fuzzy, c-format
+msgid "About %s"
+msgstr "Maidir le Poedit"
+
+#: ../src/resources/prefs.xrc:270
 msgid "Add"
 msgstr "Cuir le"
 
-#: ../src/resources/manager.xrc:90
+#: ../src/resources/manager.xrc:91
 msgid "Add directory to the list"
 msgstr "Cuir comhadlann leis an réim"
 
-#: ../src/transmemupd_wizard.cpp:138
-#: ../src/resources/tm_update.xrc:85
+#: ../src/transmemupd_wizard.cpp:134 ../src/resources/tm_update.xrc:85
 msgid "Add files"
 msgstr "Cuir comhaid le"
 
-#: ../src/resources/prefs.xrc:655
+#: ../src/resources/prefs.xrc:589
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Cuir conair chuig réim na comhadlanna ina bhfuil na cláir lonnaithe."
 
-#: ../src/resources/prefs.xrc:110
+#: ../src/resources/prefs.xrc:111
 msgid "Always change focus to text input field"
 msgstr "Athruigh an sprioc i gcónaí chuig réimse inchur téacs"
 
-#: ../src/resources/prefs.xrc:580
+#: ../src/resources/prefs.xrc:514
 msgid "An item in input files list:"
 msgstr "Mír i réim na comhaid inchur:"
 
-#: ../src/resources/prefs.xrc:561
+#: ../src/resources/prefs.xrc:495
 msgid "An item in keywords list:"
 msgstr "Mír i réim na treoirfhocail:"
 
-#: ../src/resources/prefs.xrc:127
+#: ../src/resources/menus.xrc:170
+#, fuzzy
+msgid "Automatic C&omments Window"
+msgstr "Taispeáin fuinneog uathoibríoch na n&ótaí tráchta "
+
+#: ../src/edframe.cpp:2287 ../src/edframe.cpp:2299
+#, fuzzy
+msgid "Automatic Translations:"
+msgstr "Aistriúcháin uathoibríoch:"
+
+#: ../src/resources/menus.xrc:169
+#, fuzzy
+msgid "Automatic c&omments window"
+msgstr "Taispeáin fuinneog uathoibríoch na n&ótaí tráchta "
+
+#: ../src/edframe.cpp:540
+#, fuzzy
+msgid "Automatic comments:"
+msgstr "Aimsigh i nótaí tráchta uathoibríoch"
+
+#: ../src/resources/prefs.xrc:128
 msgid "Automatic spellchecking"
 msgstr "Dearbhú litriú uathoibríoch"
 
-#: ../src/export_html.cpp:177
+#: ../src/export_html.cpp:188
 msgid "Automatic translation"
 msgstr "Aistriúchán uathoibríoch"
 
-#: ../src/edframe.cpp:2105
-#: ../src/edframe.cpp:2109
+#: ../src/edframe.cpp:2285 ../src/edframe.cpp:2297
 msgid "Automatic translations:"
 msgstr "Aistriúcháin uathoibríoch:"
 
-#: ../src/resources/prefs.xrc:69
+#: ../src/resources/prefs.xrc:70
 msgid "Automatically check for new version of Poedit"
 msgstr "Cuardaigh go huathoibríoch do leagan nua do Poedit"
 
-#: ../src/resources/prefs.xrc:87
+#: ../src/resources/prefs.xrc:88
 msgid "Automatically compile .mo file on save"
 msgstr "Tiomsaigh comhad .mo go huathoibríoch nuair atá sé á chur i dtaisce"
 
-#: ../src/resources/prefs.xrc:408
+#: ../src/resources/prefs.xrc:342
 msgid "Automatically translate when updating catalog"
 msgstr "Aistrigh go huathoibríoch nuair atá an clár á nuashonrú"
 
-#: ../src/edframe.cpp:2057
+#: ../src/edframe.cpp:2228
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Aistríodh go huathoibríoch %u teaghráin"
 
-#: ../src/edframe.cpp:2042
+#: ../src/edframe.cpp:2213
 msgid "Automatically translating..."
 msgstr "Ag aistriú go huathoibríoch..."
 
-#: ../src/manager.cpp:267
+#: ../src/manager.cpp:248
 msgid "Bad Tokens"
 msgstr "Droch Cheadchomharthaithe"
 
-#: ../src/resources/settings.xrc:132
+#: ../src/resources/properties.xrc:139
 msgid "Base path:"
 msgstr "Cosán bunaidh:"
 
-#: ../src/resources/prefs.xrc:83
+#: ../src/resources/prefs.xrc:84
 msgid "Behavior"
 msgstr "Iompar"
 
-#: ../src/catalog.cpp:658
+#: ../src/catalog.cpp:675
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "Comhad comhaid briste: baineadh feidhm as leagan iolrach mgstr gan msgid_plural"
+msgstr ""
+"Comhad comhaid briste: baineadh feidhm as leagan iolrach mgstr gan "
+"msgid_plural"
 
-#: ../src/catalog.cpp:620
-msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr "Comhad clár briste: baineadh feidhm as leagan uatha mgstr le msgid_plural"
+#: ../src/catalog.cpp:637
+msgid ""
+"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr ""
+"Comhad clár briste: baineadh feidhm as leagan uatha mgstr le msgid_plural"
 
-#: ../src/resources/manager.xrc:89
-#: ../src/resources/prefs.xrc:320
-#: ../src/resources/prefs.xrc:654
+#: ../src/resources/manager.xrc:90 ../src/resources/prefs.xrc:588
 #: ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "Siortaigh"
 
-#: ../src/resources/menus.xrc:79
+#: ../src/resources/menus.xrc:93
 msgid "C&atalog"
 msgstr "C&omhad"
 
-#: ../src/resources/prefs.xrc:140
+#: ../src/resources/prefs.xrc:141
 msgid "CR/LF conversion"
 msgstr "Tiontúchán CR/LF"
 
-#: ../src/resources/comment.xrc:38
-#: ../src/resources/find.xrc:87
-#: ../src/resources/manager.xrc:112
-#: ../src/resources/prefs.xrc:490
-#: ../src/resources/prefs.xrc:632
-#: ../src/resources/prefs.xrc:677
-#: ../src/resources/progress.xrc:31
-#: ../src/resources/settings.xrc:194
+#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:113
+#: ../src/resources/prefs.xrc:424 ../src/resources/prefs.xrc:566
+#: ../src/resources/prefs.xrc:611 ../src/resources/progress.xrc:32
+#: ../src/resources/properties.xrc:201
 msgid "Cancel"
 msgstr "Cealaigh"
 
-#: ../src/transmem.cpp:745
-msgid "Cannot create database directory!"
+#: ../src/transmem.cpp:732
+#, fuzzy
+msgid "Cannot create TM database directory!"
 msgstr "Ní féidir bunachar sonraí comhadlann a chruthú!"
 
-#: ../src/gexecute.cpp:172
-#: ../src/gexecute.cpp:228
+#: ../src/utility.cpp:48 ../src/utility.cpp:58
+#, fuzzy
+msgid "Cannot create temporary directory."
+msgstr "Ní féidir bunachar sonraí comhadlann a chruthú!"
+
+#: ../src/gexecute.cpp:182
 msgid "Cannot execute program: "
 msgstr "Ní féidir an ríomhoideas a rith:"
 
-#: ../src/transmemupd.cpp:202
+#: ../src/gexecute.cpp:145
+#, fuzzy, c-format
+msgid "Cannot execute program: %s"
+msgstr "Ní féidir an ríomhoideas a rith:"
+
+#: ../src/transmemupd.cpp:199
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Níorbh fhéidir cláir a bhaint as an comhad RPM."
 
@@ -279,33 +415,36 @@ msgstr "Níorbh fhéidir cláir a bhaint as an comhad RPM."
 msgid "Case sensitive"
 msgstr "Cásíogair"
 
-#: ../src/manager.cpp:263
+#: ../src/manager.cpp:244
 msgid "Catalog"
 msgstr "Clár"
 
-#: ../src/edframe.cpp:840
-#: ../src/edframe.cpp:865
-#: ../src/edframe.cpp:906
-#: ../src/edframe.cpp:958
-#: ../src/edframe.cpp:1076
+#: ../src/edframe.cpp:974
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Clár mionathraithe. Ar mhaith leat na hathruithe a chur i dtaisce?"
+
+#: ../src/resources/properties.xrc:4
+msgid "Catalog properties"
+msgstr ""
+
+#: ../src/resources/menus.xrc:9
+#, fuzzy
+msgid "Catalogs &Manager"
+msgstr "&Bainisteoir clár"
 
 #: ../src/resources/menus.xrc:8
 msgid "Catalogs &manager"
 msgstr "&Bainisteoir clár"
 
-#: ../src/resources/prefs.xrc:62
+#: ../src/resources/prefs.xrc:63
 msgid "Change UI language"
 msgstr "Athraigh teanga an chomhéadain"
 
-#: ../src/export_html.cpp:122
-#: ../src/resources/settings.xrc:86
+#: ../src/export_html.cpp:133 ../src/resources/properties.xrc:86
 msgid "Charset:"
 msgstr "Foireann litreacha:"
 
-#: ../src/resources/prefs.xrc:253
-#: ../src/resources/prefs.xrc:279
+#: ../src/resources/prefs.xrc:204 ../src/resources/prefs.xrc:230
 msgid "Choose"
 msgstr "Roghnaigh"
 
@@ -313,43 +452,73 @@ msgstr "Roghnaigh"
 msgid "Clear"
 msgstr "Glan"
 
+#: ../src/edframe.cpp:2266 ../src/resources/menus.xrc:63
+#, fuzzy
+msgid "Clear Translation"
+msgstr "Aistriúchán"
+
 #: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "Glan an nóta tráchta"
+
+#: ../src/edframe.cpp:2264 ../src/resources/menus.xrc:62
+#, fuzzy
+msgid "Clear translation"
+msgstr "Aistriúchán"
+
+#: ../src/resources/find.xrc:87
+#, fuzzy
+msgid "Close"
+msgstr "&Dún"
 
 #: ../src/resources/toolbar.xrc:34
 msgid "Comment"
 msgstr "Nóta tráchta"
 
-#: ../src/resources/prefs.xrc:119
+#: ../src/resources/prefs.xrc:120
 msgid "Comment window is editable"
 msgstr "Is féidir eagar a dhéanamh ar an fhuinneog nóta tráchta"
 
-#: ../src/resources/comment.xrc:10
+#: ../src/edframe.cpp:537 ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Nóta tráchta:"
 
-#: ../src/resources/prefs.xrc:358
+#: ../src/resources/prefs.xrc:292
 msgid "Configuration"
 msgstr "Cumraíocht"
 
-#: ../src/manager.cpp:426
-#: ../src/manager.cpp:446
+#: ../src/manager.cpp:407 ../src/manager.cpp:427
 msgid "Confirmation"
 msgstr "Dearbhú"
 
-#: ../src/edframe.cpp:2085
-#: ../src/resources/menus.xrc:47
-msgid "Copy original to translation field"
-msgstr "Macasamhlaigh an bunleagan chuig réimse an t-aistriúchán"
+#: ../src/edframe.cpp:2259
+msgid "Copy Translation from Source Text"
+msgstr ""
 
-#: ../src/catalog.cpp:993
+#: ../src/resources/menus.xrc:58
+msgid "Copy from Source Text"
+msgstr ""
+
+#: ../src/resources/menus.xrc:57
+#, fuzzy
+msgid "Copy from source text"
+msgstr "&Nuashonraigh ó foinsí"
+
+#: ../src/edframe.cpp:2257
+msgid "Copy translation from source text"
+msgstr ""
+
+#: ../src/catalog.cpp:1035
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "Ní bhféidir an comhad %s a luchtú, is dóigh go bhfuil sé truaillithe."
 
-#: ../src/export_html.cpp:112
-#: ../src/resources/settings.xrc:74
+#: ../src/catalog.cpp:1439
+#, c-format
+msgid "Couldn't save file %s."
+msgstr ""
+
+#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:74
 msgid "Country:"
 msgstr "Tír:"
 
@@ -357,17 +526,11 @@ msgstr "Tír:"
 msgid "Create new translations project"
 msgstr "Cruthaigh togra aistriúcháin nua"
 
-#: ../src/resources/prefs.xrc:301
+#: ../src/resources/prefs.xrc:252
 msgid "Database"
 msgstr "Bunachar sonraí"
 
-#: ../src/transmem.cpp:327
-#, c-format
-msgid "Database error: %s"
-msgstr "Botún bunachar sonraí: %s"
-
-#: ../src/resources/manager.xrc:53
-#: ../src/resources/prefs.xrc:456
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:390
 msgid "Delete"
 msgstr "Scrios"
 
@@ -379,19 +542,29 @@ msgstr "Scrios mír"
 msgid "Delete the project"
 msgstr "Scrios an togra"
 
-#: ../src/manager.cpp:319
+#: ../src/manager.cpp:300
 msgid "Directories:"
 msgstr "Comhadlannaí:"
 
-#: ../src/resources/menus.xrc:113
+#: ../src/resources/menus.xrc:159
+#, fuzzy
+msgid "Display &Line Numbers"
+msgstr "Taispeáin uimhreacha na &línte"
+
+#: ../src/resources/menus.xrc:154
+#, fuzzy
+msgid "Display &Quotes"
+msgstr "Taispeáin &comharthaí athfhriotail"
+
+#: ../src/resources/menus.xrc:158
 msgid "Display &line numbers"
 msgstr "Taispeáin uimhreacha na &línte"
 
-#: ../src/resources/menus.xrc:109
+#: ../src/resources/menus.xrc:153
 msgid "Display &quotes"
 msgstr "Taispeáin &comharthaí athfhriotail"
 
-#: ../src/manager.cpp:445
+#: ../src/manager.cpp:426
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -399,37 +572,53 @@ msgstr ""
 "An bhfuil tú cinnte go dteastaíonn uait nuashonrú ollmhór\n"
 "dos na cláir uile sa togra seo a dhéanamh?"
 
-#: ../src/edframe.cpp:1999
-msgid ""
-"Do you really want to remove all translations that are no longer used from the catalog?\n"
-"If you continue with purging, you will have to translate them again if they are added back in the future."
-msgstr ""
-"An bhfuil tú cinnte go dteastaíonn uait gach aistriúchán a bhaint nach mbaintear feidhm astu ón gclár?\n"
-"Má leanann tú leis an glanadh, beidh ort iad a aistriú arís má chuirtear ar ais sa todhchaí iad."
-
-#: ../src/manager.cpp:425
+#: ../src/manager.cpp:406
 msgid "Do you want to delete the project?"
 msgstr "An dteastaíonn uait an togra a scrios?"
 
-#: ../src/resources/prefs.xrc:171
+#: ../src/edframe.cpp:2153
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr ""
+
+#: ../src/edframe.cpp:986
+msgid "Don't Save"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:170
 msgid "Don't change format of existing catalogs"
 msgstr "Ná athruigh cuma na cláir atá ann cheana"
 
-#: ../src/resources/menus.xrc:30
+#: ../src/edframe.cpp:984
+msgid "Don't save"
+msgstr ""
+
+#: ../src/attentionbar.cpp:195
+msgid "Don't show again"
+msgstr ""
+
+#: ../src/resources/manager.xrc:136 ../src/resources/menus.xrc:50
+#, fuzzy
+msgid "E&xit"
+msgstr "Déan eagar"
+
+#: ../src/resources/menus.xrc:39
 msgid "E&xport..."
 msgstr "Onn&mharaigh..."
 
-#: ../src/resources/manager.xrc:48
-#: ../src/resources/prefs.xrc:449
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:383
 msgid "Edit"
 msgstr "Déan eagar"
 
-#: ../src/resources/menus.xrc:70
+#: ../src/resources/menus.xrc:84
+#, fuzzy
+msgid "Edit &Comment"
+msgstr "Déan eagar ar an &nóta tráchta"
+
+#: ../src/resources/menus.xrc:83
 msgid "Edit &comment"
 msgstr "Déan eagar ar an &nóta tráchta"
 
-#: ../src/resources/comment.xrc:4
-#: ../src/resources/toolbar.xrc:35
+#: ../src/resources/comment.xrc:4 ../src/resources/toolbar.xrc:35
 msgid "Edit comment"
 msgstr "Déan eagar ar an nóta tráchta"
 
@@ -441,82 +630,74 @@ msgstr "Déan eagar ar an mhír"
 msgid "Edit project"
 msgstr "Déan eagar ar an togra"
 
-#: ../src/resources/fileview.xrc:10
-msgid "Edit the file in text editor"
-msgstr "Déan eagar ar an comhad san eagarthóir téacs"
-
 #: ../src/resources/manager.xrc:49
 msgid "Edit the project"
 msgstr "Déan eagar ar an togra"
 
-#: ../src/resources/prefs.xrc:77
+#: ../src/resources/prefs.xrc:78
 msgid "Editor"
 msgstr "Eagarthóir"
 
-#: ../src/resources/prefs.xrc:190
-msgid "Editor executable:"
-msgstr "Eagarthóir inrite:"
-
-#: ../src/resources/prefs.xrc:128
+#: ../src/resources/prefs.xrc:129
 msgid "Enables on-the-fly spellchecking"
 msgstr "Cumasaíonn sé dearbhú litrithe ar eitleog"
 
-#: ../src/edframe.cpp:1221
+#: ../src/edframe.cpp:1302
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Is dóigh go bhfuil na hiontrálacha sa chlár mícheart."
 
-#: ../src/edframe.cpp:721
-#, c-format
-msgid "Error initializing spell checking: %s"
-msgstr "Tharla botún ag tosú an dearbhú litriú: %s"
+#: ../src/edframe.cpp:1857
+msgid ""
+"Entries in this catalog have different plural forms count from what "
+"catalog's Plural-Forms header says"
+msgstr ""
 
-#: ../src/edframe.cpp:1788
+#: ../src/edframe.cpp:1899
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "Tharla botún ag luchtú comhad clár teachtaireachtaí '%s'."
 
-#: ../src/fileviewer.cpp:97
+#: ../src/fileviewer.cpp:226
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Tharla botún ag oscailt comhad %s!"
 
-#: ../src/catalog.cpp:1269
+#: ../src/catalog.cpp:1331
 msgid "Error saving catalog"
 msgstr "Tharla botún ag chuir an clár i dtaisce"
 
-#: ../src/edframe.cpp:1049
+#: ../src/edframe.cpp:1123
 msgid "Export as..."
 msgstr "Onnmharaigh mar..."
 
-#: ../src/resources/prefs.xrc:182
-msgid "External editor"
-msgstr "Eagarthóir seachtrach"
+#: ../src/resources/properties.xrc:130
+msgid "Extract text from source files in the following directories:"
+msgstr ""
 
-#: ../src/digger.cpp:65
+#: ../src/digger.cpp:60
 #, c-format
 msgid "Failed command: %s"
 msgstr "Ordú teipthe: %s"
 
-#: ../src/digger.cpp:131
+#: ../src/digger.cpp:114
 msgid "Failed to load extracted catalog."
 msgstr "Theip ar luchtú an clár bainte amach."
 
-#: ../src/digger.cpp:66
+#: ../src/digger.cpp:61
 msgid "Failed to merge gettext catalogs."
 msgstr "Theip ar cláir gettext a chumascú. "
 
-#: ../src/edframe.cpp:931
-#: ../src/edframe.cpp:974
+#: ../src/edframe.cpp:390 ../src/edframe.cpp:1046
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Níl an comhad '%s' ann."
 
-#: ../src/edframe.cpp:948
-#, c-format
-msgid "File '%s' is not message catalog."
+#: ../src/edframe.cpp:383
+#, fuzzy, c-format
+msgid "File '%s' is not a message catalog."
 msgstr "Ní clár teachtaireachtaí é an comhad '%s'. "
 
-#: ../src/catalog.cpp:1229
+#: ../src/catalog.cpp:1307
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -525,7 +706,7 @@ msgstr ""
 "Is comhad inléite-amháin é '%s' agus ní féidir é a chur i dtaisce.\n"
 "Cuir i dtaisce é faoi ainm eile."
 
-#: ../src/transmemupd_wizard.cpp:63
+#: ../src/transmemupd_wizard.cpp:59
 msgid "Files List"
 msgstr "Réim Comhaid"
 
@@ -549,142 +730,156 @@ msgstr "Aimsigh sna haistriúcháin"
 msgid "Find..."
 msgstr "Aimsigh..."
 
-#: ../src/resources/prefs.xrc:230
+#: ../src/edframe.cpp:1880
+msgid "Fix the header"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:181
 msgid "Fonts"
 msgstr "Clóanna"
 
-#: ../src/edframe.cpp:2552
+#: ../src/edframe.cpp:2778
 #, c-format
 msgid "Form %i"
 msgstr "Leagan %i"
 
-#: ../src/edframe.cpp:2554
+#: ../src/edframe.cpp:2780
 #, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr "Leagan %i (m.sh. \"%u\")"
 
-#: ../src/resources/toolbar.xrc:40
-#: ../src/resources/toolbar.xrc:46
-msgid "Fullscreen view"
-msgstr "Amharc lán scáileán"
-
-#: ../src/manager.cpp:266
-#: ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:247 ../src/resources/toolbar.xrc:28
 msgid "Fuzzy"
 msgstr "Doiléir"
 
-#: ../src/export_html.cpp:183
+#: ../src/export_html.cpp:194
 msgid "Fuzzy translation"
 msgstr "Aistriúchán doiléir"
 
-#: ../src/edframe.cpp:885
-#: ../src/edframe.cpp:1013
+#: ../src/edframe.cpp:1028 ../src/edframe.cpp:1087
 msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Cláir GNU gettext (*.po)|*.po|Gach comhad (*.*)|*.*"
 
-#: ../src/edframe.cpp:1101
-#: ../src/edframe.cpp:1239
+#: ../src/edframe.cpp:1161 ../src/edframe.cpp:1320
 msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "Fíoraithe GNU gettext (*.pot)|*.pot|Gach comhaid (*.*)|*.*"
 
-#: ../src/resources/menus.xrc:138
-msgid "GNU gettext documentation"
-msgstr "Cáipéisí gettext GNU"
-
-#: ../src/resources/prefs.xrc:687
+#: ../src/resources/prefs.xrc:621
 msgid "Generate TM database"
 msgstr "Gin bunachar sonraí CA"
 
-#: ../src/resources/prefs.xrc:345
+#: ../src/resources/prefs.xrc:278
 msgid "Generate database"
 msgstr "Gin bunachar sonraí"
 
-#: ../src/edframe.cpp:1291
+#: ../src/edframe.cpp:1372
 msgid "Gettext syntax error"
 msgstr "Botún comhréir gettext"
 
-#: ../src/edframe.cpp:2620
-#, c-format
-msgid "Go to bookmark %i\tCtrl-%i"
+#: ../src/edframe.cpp:2857
+#, fuzzy, c-format
+msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "Téigh chuig an astal %i\tCtrl-%i"
 
-#: ../src/edframe.cpp:2617
-#, c-format
-msgid "Go to bookmark %i\tCtrl-Alt-%i"
+#: ../src/edframe.cpp:2851
+#, fuzzy, c-format
+msgid "Go to Bookmark %i\tCtrl+Alt+%i"
 msgstr "Téigh chuig an astal %i\tCtrl-Alt-%i"
 
-#: ../src/edframe.cpp:1051
+#: ../src/edframe.cpp:2854
+#, fuzzy, c-format
+msgid "Go to bookmark %i\tCtrl+%i"
+msgstr "Téigh chuig an astal %i\tCtrl-%i"
+
+#: ../src/edframe.cpp:1125
 msgid "HTML file (*.html)|*.html"
 msgstr "Comhad HTML (*.html)|*.html"
+
+#: ../src/attentionbar.cpp:78
+msgid "Hide this notification message"
+msgstr ""
 
 #: ../src/resources/prefs.xrc:18
 msgid "Identity"
 msgstr "Céannacht"
 
-#: ../src/resources/prefs.xrc:120
+#: ../src/resources/prefs.xrc:121
 msgid "If checked, the comment window will be editable."
-msgstr "Má cuirtear tic ann, is féidir eagar a dhéanamh ar fuinneog na nótaí tráchta."
+msgstr ""
+"Má cuirtear tic ann, is féidir eagar a dhéanamh ar fuinneog na nótaí tráchta."
 
-#: ../src/resources/prefs.xrc:538
+#: ../src/edframe.cpp:2155
+#, fuzzy
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"An bhfuil tú cinnte go dteastaíonn uait gach aistriúchán a bhaint nach "
+"mbaintear feidhm astu ón gclár?\n"
+"Má leanann tú leis an glanadh, beidh ort iad a aistriú arís má chuirtear ar "
+"ais sa todhchaí iad."
+
+#: ../src/resources/prefs.xrc:472
 msgid "Invocation:"
 msgstr "Gairm:"
 
-#: ../src/settingsdlg.cpp:71
-#: ../src/resources/settings.xrc:175
+#: ../src/edframe.cpp:2160 ../src/transmem.cpp:1186
+msgid "Keep"
+msgstr ""
+
+#: ../src/propertiesdlg.cpp:67
 msgid "Keywords"
 msgstr "Treoir-fhocail"
 
-#: ../src/chooselang.cpp:162
+#: ../src/chooselang.cpp:157
 msgid "Language selection"
 msgstr "Rogha béarla"
 
-#: ../src/export_html.cpp:109
-#: ../src/resources/prefs.xrc:506
-#: ../src/resources/prefs.xrc:510
-#: ../src/resources/settings.xrc:62
+#: ../src/export_html.cpp:119 ../src/resources/prefs.xrc:440
+#: ../src/resources/prefs.xrc:444 ../src/resources/properties.xrc:62
 msgid "Language:"
 msgstr "Béarla:"
 
-#: ../src/manager.cpp:268
+#: ../src/manager.cpp:249
 msgid "Last modified"
 msgstr "Mionathraithe an uair deirineadh ar an"
 
-#: ../src/edlistctrl.cpp:230
-#: ../src/fileviewer.cpp:106
+#: ../src/edframe.cpp:877
+msgid "Learn more"
+msgstr ""
+
+#: ../src/edlistctrl.cpp:325
 msgid "Line"
 msgstr "Líne"
 
-#: ../src/catalog.cpp:131
+#: ../src/catalog.cpp:158
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "Tá an líne %u sa comhad '%s' truaillithe (níl na sonraí %s seasmhach)."
 
-#: ../src/resources/prefs.xrc:148
+#: ../src/resources/prefs.xrc:149
 msgid "Line endings format:"
 msgstr "Cruth na bhfoircinn línte:"
 
-#: ../src/resources/prefs.xrc:522
+#: ../src/resources/prefs.xrc:456
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Réim breiseáin scartha le leathstadanna (m.sh. *.cpp;*.h):"
 
-#: ../src/resources/prefs.xrc:158
-msgid "Macintosh"
-msgstr "Macintosh"
-
-#: ../src/catalog.cpp:202
+#: ../src/catalog.cpp:233
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Ceanntásc míchumtha: '%s'"
 
-#: ../src/resources/prefs.xrc:366
+#: ../src/resources/prefs.xrc:300
 msgid "Max. # of missing words:"
 msgstr "Uasmhéid # focail in easnamh:"
 
-#: ../src/resources/prefs.xrc:388
+#: ../src/resources/prefs.xrc:322
 msgid "Max. difference in sentence length:"
 msgstr "Uas-éagsúlacht i bhfad abairte:"
 
-#: ../src/catalog.cpp:1425
+#: ../src/catalog.cpp:1529
 msgid "Merging differences..."
 msgstr "Ag cumascú éagsúlachtaí..."
 
@@ -696,24 +891,39 @@ msgstr "Bog síos"
 msgid "Move up"
 msgstr "Bog suas"
 
-#: ../src/prefsdlg.cpp:59
+#: ../src/prefsdlg.cpp:55
 msgid "My Languages"
 msgstr "Mo Bhéarlaí"
 
-#: ../src/manager.cpp:322
-msgid "My Project"
-msgstr "Mo Thogra"
+#: ../src/resources/menus.xrc:146
+msgid "Ne&xt Unfinished"
+msgstr ""
 
-#: ../src/resources/prefs.xrc:112
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Ná riamh lig don réim teaghráin bheith mar sprioc. Má tá sé chumasaithe, caithfear feidhm a bhaint as na saighdeanna Ctrl le haghaidh an méarchlár a fheidhmiú ach is féidir téacs a chlóscríobh láithreach, gan Tab a bhrúigh chun an sprioc a athrú."
+#: ../src/resources/menus.xrc:145
+msgid "Ne&xt unfinished"
+msgstr ""
 
-#: ../src/resources/manager.xrc:43
-#: ../src/resources/prefs.xrc:444
+#: ../src/resources/prefs.xrc:113
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Ná riamh lig don réim teaghráin bheith mar sprioc. Má tá sé chumasaithe, "
+"caithfear feidhm a bhaint as na saighdeanna Ctrl le haghaidh an méarchlár a "
+"fheidhmiú ach is féidir téacs a chlóscríobh láithreach, gan Tab a bhrúigh "
+"chun an sprioc a athrú."
+
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:378
 msgid "New"
 msgstr "Nua"
 
-#: ../src/resources/menus.xrc:15
+#: ../src/resources/menus.xrc:18
+#, fuzzy
+msgid "New Catalog from POT File..."
+msgstr "Clár nua ó chomhad POT..."
+
+#: ../src/resources/menus.xrc:17
 msgid "New catalog from POT file..."
 msgstr "Clár nua ó chomhad POT..."
 
@@ -729,28 +939,21 @@ msgstr "Teaghráin nua"
 msgid "Next >"
 msgstr "Ar Aghaidh >"
 
-#: ../src/fileviewer.cpp:147
-msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "Ní sonraíodh eagarthóir. Socraigh sa comhrá Sainroghanna é."
-
-#: ../src/digger.cpp:218
+#: ../src/digger.cpp:201
 msgid "No files found in: "
 msgstr "Níor aimsíodh comhaid i:"
 
-#: ../src/edframe.cpp:1308
+#: ../src/edframe.cpp:1389
 msgid "No references to this string found."
 msgstr "Níor aimsíodh tagairtí don teaghrán seo."
 
-#: ../src/export_html.cpp:155
+#: ../src/export_html.cpp:166
 msgid "Notes"
 msgstr "Nótaí"
 
-#: ../src/resources/comment.xrc:30
-#: ../src/resources/manager.xrc:104
-#: ../src/resources/prefs.xrc:482
-#: ../src/resources/prefs.xrc:624
-#: ../src/resources/settings.xrc:186
-#: ../src/resources/summary.xrc:71
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
+#: ../src/resources/prefs.xrc:416 ../src/resources/prefs.xrc:558
+#: ../src/resources/properties.xrc:193 ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "Tá go maith"
 
@@ -762,52 +965,44 @@ msgstr "Teaghráin as feidhm"
 msgid "Open"
 msgstr "Oscail"
 
-#: ../src/edframe.cpp:883
-#: ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:1026 ../src/resources/toolbar.xrc:13
 msgid "Open catalog"
 msgstr "Oscail clár"
 
-#: ../src/edframe.cpp:1099
-#: ../src/edframe.cpp:1237
+#: ../src/edframe.cpp:1159 ../src/edframe.cpp:1318
 msgid "Open catalog template"
 msgstr "Oscail fíoraí an chláir"
 
-#: ../src/resources/prefs.xrc:103
+#: ../src/resources/prefs.xrc:104
 msgid "Open catalogs manager on Poedit startup"
 msgstr "Oscail bainisteoir na gclár nuair a thosaíonn Poedit"
 
-#: ../src/resources/prefs.xrc:220
-msgid "Open source files in editor, not in file viewer"
-msgstr "Oscail comhaid foinseach in eagarthóir, ní i mbreathadóir comhaid"
+#: ../src/resources/menus.xrc:141
+msgid "P&revious Unfinished"
+msgstr ""
 
-#: ../src/export_html.cpp:148
-#: ../src/edlistctrl.cpp:227
-msgid "Original string"
-msgstr "Teaghrán bunaidh"
+#: ../src/resources/menus.xrc:140
+msgid "P&revious unfinished"
+msgstr ""
 
-#: ../src/resources/prefs.xrc:542
+#: ../src/resources/prefs.xrc:476
 msgid "Parser command:"
 msgstr "Ordú an miondealathóir:"
 
-#: ../src/resources/prefs.xrc:501
+#: ../src/resources/prefs.xrc:435
 msgid "Parser setup"
 msgstr "Cumraíocht an miondealathóir"
 
-#: ../src/resources/prefs.xrc:419
+#: ../src/resources/prefs.xrc:353
 msgid "Parsers"
 msgstr "Miondealathóirí"
 
-#: ../src/digger.cpp:106
+#: ../src/digger.cpp:92
 #, c-format
 msgid "Parsing %s files..."
 msgstr "Ag miondealú %s comhaid..."
 
-#: ../src/resources/prefs.xrc:304
-msgid "Path to DB:"
-msgstr "Cosán chuig an Bunachar Sonraí:"
-
-#: ../src/settingsdlg.cpp:73
-#: ../src/resources/settings.xrc:154
+#: ../src/propertiesdlg.cpp:69
 msgid "Paths"
 msgstr "Cosáin:"
 
@@ -815,35 +1010,47 @@ msgstr "Cosáin:"
 msgid "Personalize"
 msgstr "Oiriúnaigh"
 
-#: ../src/resources/prefs.xrc:338
+#: ../src/resources/prefs.xrc:271
 msgid "Pick language from the list of known languages"
 msgstr "Roghnaigh béarla ón réim de bhéarlaí aitheanta"
 
 #: ../src/resources/tm_update.xrc:21
 msgid "Please add directories where locale files are stored on your system:"
-msgstr "Cuir comhadlannaí san áit ina bhfuil na comhaid logchaighdeáin i dtaisce ar do chóras:"
+msgstr ""
+"Cuir comhadlannaí san áit ina bhfuil na comhaid logchaighdeáin i dtaisce ar "
+"do chóras:"
 
-#: ../src/edframe.cpp:1316
+#: ../src/edframe.cpp:1397
 msgid "Please choose the reference you want to show:"
 msgstr "Roghnaigh an tagairt a dteastaíonn uait taispeáint:"
 
-#: ../src/prefsdlg.cpp:355
+#: ../src/prefsdlg.cpp:334
 msgid "Please select language ISO code:"
 msgstr "Roghnaigh tagairt béarla ISO:"
 
-#: ../src/edframe.cpp:801
+#: ../src/edframe.cpp:913
 msgid "Please select language code:"
 msgstr "Roghnaigh tagairt béarla:"
 
-#: ../src/resources/settings.xrc:110
+#: ../src/transmem.cpp:1180
+#, c-format
+msgid ""
+"Please verify that all files were moved to the new location or do it "
+"manually if they weren't.\n"
+"\n"
+"Old location: %s\n"
+"New location: %s"
+msgstr ""
+
+#: ../src/resources/properties.xrc:110
 msgid "Plural Forms:"
 msgstr "Leaganacha Iolra:"
 
-#: ../src/edframe.cpp:489
+#: ../src/edframe.cpp:553
 msgid "Plural:"
 msgstr "Iolra:"
 
-#: ../src/edframe.cpp:359
+#: ../src/edframe.cpp:407
 msgid "Poedit"
 msgstr "Poedit"
 
@@ -851,29 +1058,32 @@ msgstr "Poedit"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Bainisteoir Clár"
 
-#: ../src/digger.cpp:219
+#: ../src/digger.cpp:202
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Níor aimsigh Poedit aon comhaid sna chomhadlannaí siortaithe."
 
-#: ../src/edframe.cpp:2144
+#: ../src/edframe.cpp:2363
 msgid "Poedit is an easy to use translations editor."
 msgstr "Is eagarthóir aistriúcháin é Poedit atá furasta feidhm a bhaint as."
+
+#: ../src/transmem.cpp:1175
+#, fuzzy
+msgid "Poedit translation memory error"
+msgstr "Nuashonraigh an cuimhneachán aistriúchán"
 
 #: ../src/resources/prefs.xrc:4
 msgid "Preferences"
 msgstr "Sainroghanna"
 
-#: ../src/resources/prefs.xrc:669
+#: ../src/resources/prefs.xrc:603
 msgid "Proceed"
 msgstr "Téigh ar aghaidh"
 
-#: ../src/export_html.cpp:102
-#: ../src/resources/settings.xrc:122
+#: ../src/export_html.cpp:112
 msgid "Project info"
 msgstr "Faisnéis an togra"
 
-#: ../src/export_html.cpp:106
-#: ../src/resources/settings.xrc:19
+#: ../src/export_html.cpp:116 ../src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Ainm agus leagan an togra:"
 
@@ -881,20 +1091,27 @@ msgstr "Ainm agus leagan an togra:"
 msgid "Project name:"
 msgstr "Ainm an togra:"
 
-#: ../src/edframe.cpp:2000
+#: ../src/edframe.cpp:2160 ../src/transmem.cpp:1186
+msgid "Purge"
+msgstr ""
+
+#: ../src/edframe.cpp:2151
 msgid "Purge deleted translations"
 msgstr "Glan aistriúcháin scriosta"
 
-#: ../src/edframe.cpp:1316
+#: ../src/resources/manager.xrc:137 ../src/resources/menus.xrc:51
+msgid "Quit"
+msgstr ""
+
+#: ../src/edframe.cpp:1397
 msgid "References"
 msgstr "Tagairtí"
 
-#: ../src/edframe.cpp:2090
-#: ../src/edframe.cpp:2094
+#: ../src/edframe.cpp:2321 ../src/edframe.cpp:2325
 msgid "References:"
 msgstr "Tagairtí:"
 
-#: ../src/resources/prefs.xrc:346
+#: ../src/resources/prefs.xrc:279
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr "Athghin an chuimhne aistriúchán ó chláir sna conairí luaite thuas."
 
@@ -902,15 +1119,20 @@ msgstr "Athghin an chuimhne aistriúchán ó chláir sna conairí luaite thuas."
 msgid "Reset to defaults"
 msgstr "Athshocraigh chuig réamhshocruithe"
 
-#: ../src/resources/toolbar.xrc:17
+#: ../src/edframe.cpp:982 ../src/resources/toolbar.xrc:17
 msgid "Save"
 msgstr "Cuir i dtaisce"
 
-#: ../src/resources/menus.xrc:26
+#: ../src/resources/menus.xrc:35
+#, fuzzy
+msgid "Save &As..."
+msgstr "Cuir i dtaisce &mar..."
+
+#: ../src/resources/menus.xrc:34
 msgid "Save &as..."
 msgstr "Cuir i dtaisce &mar..."
 
-#: ../src/edframe.cpp:1012
+#: ../src/edframe.cpp:1086
 msgid "Save as..."
 msgstr "Cuir i dtaisce mar..."
 
@@ -918,90 +1140,138 @@ msgstr "Cuir i dtaisce mar..."
 msgid "Save catalog"
 msgstr "Cuir an clár i dtaisce"
 
-#: ../src/edframe.cpp:841
-#: ../src/edframe.cpp:866
-#: ../src/edframe.cpp:907
-#: ../src/edframe.cpp:959
-#: ../src/edframe.cpp:1077
+#: ../src/edframe.cpp:975
 msgid "Save changes"
 msgstr "Cuir i dtaisce na hathruithe"
 
-#: ../src/transmemupd.cpp:152
+#: ../src/transmemupd.cpp:149
 msgid "Scanning file: "
 msgstr "Scanadh comhad:"
 
-#: ../src/digger.cpp:92
+#: ../src/digger.cpp:77
 msgid "Scanning files..."
 msgstr "Scanadh comhaid..."
 
-#: ../src/transmemupd_wizard.cpp:59
+#: ../src/transmemupd_wizard.cpp:55
 msgid "Search Paths"
 msgstr "Cuardaigh Cosáin"
 
-#: ../src/edframe.cpp:800
+#: ../src/edframe.cpp:912
 msgid "Select catalog's language"
 msgstr "Roghnaigh béarla an chláir"
 
-#: ../src/prefsdlg.cpp:368
-#: ../src/manager.cpp:299
-#: ../src/transmemupd_wizard.cpp:112
+#: ../src/transmemupd_wizard.cpp:108 ../src/manager.cpp:280
 msgid "Select directory"
 msgstr "Select directory"
 
-#: ../src/prefsdlg.cpp:354
+#: ../src/prefsdlg.cpp:333
 msgid "Select language"
 msgstr "Roghnaigh béarla"
 
-#: ../src/chooselang.cpp:161
+#: ../src/chooselang.cpp:156
 msgid "Select your prefered language"
 msgstr "Roghnaigh do rogha béarla"
 
-#: ../src/edframe.cpp:2619
-#, c-format
-msgid "Set bookmark %i\tAlt-%i"
+#: ../src/edframe.cpp:2856
+#, fuzzy, c-format
+msgid "Set Bookmark %i\tAlt+%i"
 msgstr "Socraigh astal %i\tAlt-%i"
 
-#: ../src/edframe.cpp:2616
-#, c-format
-msgid "Set bookmark %i\tCtrl-%i"
+#: ../src/edframe.cpp:2850
+#, fuzzy, c-format
+msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "Socraigh astal %i\tCtrl-%i"
 
-#: ../src/resources/settings.xrc:4
-msgid "Settings"
-msgstr "Socruithe"
+#: ../src/edframe.cpp:2853
+#, fuzzy, c-format
+msgid "Set bookmark %i\tAlt+%i"
+msgstr "Socraigh astal %i\tAlt-%i"
 
-#: ../src/edapp.cpp:174
-msgid "Setup"
-msgstr "Cumraíocht"
+#: ../src/edframe.cpp:1839
+msgid "Set email"
+msgstr ""
 
-#: ../src/resources/menus.xrc:117
-msgid "Show &comment window"
-msgstr "Taispeáin an fhuinneog tráchta"
-
-#: ../src/resources/menus.xrc:121
-msgid "Show automatic c&omments window"
-msgstr "Taispeáin fuinneog uathoibríoch na n&ótaí tráchta "
-
-#: ../src/resources/prefs.xrc:96
+#: ../src/resources/prefs.xrc:97
 msgid "Show summary after catalog update"
 msgstr "Taispeáin achoimre tar éis nuashonrú an clár"
 
-#: ../src/edframe.cpp:488
+#: ../src/edframe.cpp:552
 msgid "Singular:"
 msgstr "Uatha:"
 
-#: ../src/resources/prefs.xrc:599
-#: ../src/resources/settings.xrc:98
+#: ../src/resources/menus.xrc:176
+msgid "Sort by &File Order"
+msgstr ""
+
+#: ../src/resources/menus.xrc:181
+msgid "Sort by &Source"
+msgstr ""
+
+#: ../src/resources/menus.xrc:186
+#, fuzzy
+msgid "Sort by &Translation"
+msgstr "Aistriúchán"
+
+#: ../src/resources/menus.xrc:175
+msgid "Sort by &file order"
+msgstr ""
+
+#: ../src/resources/menus.xrc:180
+msgid "Sort by &source"
+msgstr ""
+
+#: ../src/resources/menus.xrc:185
+#, fuzzy
+msgid "Sort by &translation"
+msgstr "Aistriúchán doiléir"
+
+#: ../src/export_html.cpp:159
+#, fuzzy
+msgid "Source"
+msgstr "Comhad foinse"
+
+#: ../src/resources/prefs.xrc:533 ../src/resources/properties.xrc:98
 msgid "Source code charset:"
 msgstr "Tagairt foinse foireann litreacha:"
 
-#: ../src/resources/prefs.xrc:425
+#: ../src/resources/prefs.xrc:359
 msgid "Source code parsers:"
 msgstr "Miondealathóirí foinsí cóid:"
 
 #: ../src/fileviewer.cpp:46
 msgid "Source file"
 msgstr "Comhad foinse"
+
+#: ../src/fileviewer.cpp:61
+#, fuzzy
+msgid "Source file occurrence:"
+msgstr "Comhad foinse"
+
+#: ../src/edlistctrl.cpp:322
+#, fuzzy
+msgid "Source text"
+msgstr "Comhad foinse"
+
+#: ../src/edframe.cpp:530
+#, fuzzy
+msgid "Source text:"
+msgstr "Comhad foinse"
+
+#: ../src/resources/properties.xrc:182
+msgid "Sources keywords"
+msgstr ""
+
+#: ../src/resources/properties.xrc:161
+#, fuzzy
+msgid "Sources paths"
+msgstr "Cuardaigh Cosáin"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages).
+#: ../src/edframe.cpp:873
+#, c-format
+msgid "Spellchecker dictionary for %s isn't available, you need to install it."
+msgstr ""
 
 #: ../src/resources/find.xrc:43
 msgid "Start from the first item"
@@ -1011,17 +1281,20 @@ msgstr "Tosaigh ón chéad mhír"
 msgid "String to find:"
 msgstr "Teaghrán le haimsiú:"
 
-#: ../src/export_html.cpp:119
-#: ../src/resources/settings.xrc:48
+#: ../src/edframe.cpp:1867
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr ""
+
+#: ../src/export_html.cpp:129 ../src/resources/properties.xrc:48
 msgid "Team's email address:"
 msgstr "Seoladh ríomhphoist na foirne:"
 
-#: ../src/export_html.cpp:115
-#: ../src/resources/settings.xrc:34
+#: ../src/export_html.cpp:125 ../src/resources/properties.xrc:34
 msgid "Team:"
 msgstr "Foireann:"
 
-#: ../src/catalog.cpp:1268
+#: ../src/catalog.cpp:1330
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -1029,12 +1302,30 @@ msgid ""
 "and the setting was modified accordingly."
 msgstr ""
 "Níorbh fhéidir an clár a chur i dtaisce san fhoireann litreacha '%s' mar\n"
-"atá sonraithe i socruithe an chláir. Chuireadh i dtaisce i UTF-8 é ina ionad sin\n"
+"atá sonraithe i socruithe an chláir. Chuireadh i dtaisce i UTF-8 é ina ionad "
+"sin\n"
 "agus mionathraíodh an socrú dá réir sin."
 
-#: ../src/catalog.cpp:985
-msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
-msgstr "Tharla botúin i rith luchtú an clár. D'fhéadfadh sonraí bheith in easnamh nó truaillithe dá bharr."
+#: ../src/catalog.cpp:1443
+msgid ""
+"There was a problem formatting the file nicely (but it was saved all right)."
+msgstr ""
+
+#: ../src/transmem.cpp:1177
+msgid "There was a problem moving your translation memory."
+msgstr ""
+
+#: ../src/catalog.cpp:1027
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
+"Tharla botúin i rith luchtú an clár. D'fhéadfadh sonraí bheith in easnamh nó "
+"truaillithe dá bharr."
+
+#: ../src/catalog.cpp:1466
+msgid "There were errors while compiling the saved catalog into MO file."
+msgstr ""
 
 #: ../src/resources/summary.xrc:38
 msgid ""
@@ -1052,17 +1343,13 @@ msgstr ""
 "Aimsíodh na teaghráin seo sna foinsí ach ní raibh siad sa chlár.\n"
 "Cuirfidh Poedit sa chlár iad anois."
 
-#: ../src/edapp.cpp:174
+#: ../src/edframe.cpp:1853
 msgid ""
-"This is first time you run Poedit.\n"
-"Please fill in your name and email address.\n"
-"(This information is used only in catalogs headers)"
+"This catalog has entries with plural forms, but doesn't have Plural-Forms "
+"header configured."
 msgstr ""
-"Seo an chéad uair duit Poedit a rith.\n"
-"Cuir isteach d'ainm agus do sheoladh ríomhphoist.\n"
-"(Baintear feidhm as an fhaisnéis seo i gceanntásca na gclár amháin)"
 
-#: ../src/resources/prefs.xrc:554
+#: ../src/resources/prefs.xrc:488
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1074,16 +1361,17 @@ msgstr ""
 "na treoirfhocail, leathnaíonn %F chuig réim comhaid inchur,\n"
 "leathnaíonn %C chuig brat an fhoireann litreacha (féach thíos)."
 
-#: ../src/resources/prefs.xrc:611
+#: ../src/resources/prefs.xrc:545
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
 "only if source codecharset was given. %c expands to charset value."
 msgstr ""
 "Ceanglófar é seo le líne na n-orduithe\n"
-"amháin má tugadh foinse tagairt an fhoireann litreacha. Leathnaíonn %c chuig luach an fhoireann litreacha."
+"amháin má tugadh foinse tagairt an fhoireann litreacha. Leathnaíonn %c chuig "
+"luach an fhoireann litreacha."
 
-#: ../src/resources/prefs.xrc:592
+#: ../src/resources/prefs.xrc:526
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1092,7 +1380,7 @@ msgstr ""
 "Ceanglófar é seo chuig líne na n-orduithe uair amháin\n"
 "do gach comhad inchur. Leathnaíonn %f chuig an ainm comhad."
 
-#: ../src/resources/prefs.xrc:573
+#: ../src/resources/prefs.xrc:507
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -1104,30 +1392,39 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Scagtha má tá aistriúchán doiléir ag an teaghrán roghnaithe"
 
-#: ../src/manager.cpp:264
+#: ../src/manager.cpp:245
 msgid "Total"
 msgstr "Iomlán"
 
-#: ../src/export_html.cpp:151
-#: ../src/edlistctrl.cpp:228
+#: ../src/edlistctrl.cpp:323 ../src/export_html.cpp:162
 msgid "Translation"
 msgstr "Aistriúchán"
 
-#: ../src/resources/prefs.xrc:294
+#: ../src/resources/menus.xrc:78
+#, fuzzy
+msgid "Translation Is &Fuzzy"
+msgstr "Tá an t-aistriuchán &doiléir"
+
+#: ../src/resources/prefs.xrc:245
 msgid "Translation Memory"
 msgstr "Cuimhne Aistriúcháin"
 
-#: ../src/transmemupd_wizard.cpp:144
+#: ../src/transmemupd_wizard.cpp:140
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 msgstr "Comhaid aistriúchán (*.po;*.mo)|*.po;*.mo"
 
-#: ../src/transmemupd_wizard.cpp:142
+#: ../src/transmemupd_wizard.cpp:138
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "Comhaid aistriúchán (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 
-#: ../src/resources/menus.xrc:62
+#: ../src/resources/menus.xrc:77
 msgid "Translation is &fuzzy"
 msgstr "Tá an t-aistriuchán &doiléir"
+
+#: ../src/transmem.cpp:661
+#, fuzzy, c-format
+msgid "Translation memory database error: %s"
+msgstr "Botún bunachar sonraí: %s"
 
 #: ../src/resources/tm_update.xrc:68
 msgid ""
@@ -1137,20 +1434,34 @@ msgstr ""
 "Tógfar an cuimhne aistriúchán ón na comhaid luaite thíos.\n"
 "Is féidir tuilleadh comhaid a chur leis an réim seo anois."
 
-#: ../src/chooselang.cpp:71
-#, c-format
-msgid "Unknown locale code '%s' in registry."
-msgstr "Tagairt logchaighdeáin anaithnid '%s' sa chlárlann."
+#: ../src/resources/properties.xrc:122
+#, fuzzy
+msgid "Translation properties"
+msgstr "Cuimhne Aistriúcháin"
+
+#: ../src/edframe.cpp:534
+#, fuzzy
+msgid "Translation:"
+msgstr "Aistriúchán"
+
+#: ../src/propertiesdlg.cpp:82
+msgid "UTF-8 (recommended)"
+msgstr ""
 
 #: ../src/resources/summary.xrc:79
 msgid "Undo"
 msgstr "Cealaigh"
 
-#: ../src/resources/prefs.xrc:156
-msgid "Unix"
-msgstr "Unix"
+#: ../src/resources/prefs.xrc:157
+msgid "Unix (recommended)"
+msgstr ""
 
-#: ../src/manager.cpp:265
+#: ../src/chooselang.cpp:60
+#, c-format
+msgid "Unknown locale code '%s' in registry."
+msgstr "Tagairt logchaighdeáin anaithnid '%s' sa chlárlann."
+
+#: ../src/manager.cpp:246
 msgid "Untrans"
 msgstr "Neamhaistrithe"
 
@@ -1170,7 +1481,12 @@ msgstr "Nuashonraigh gach clár sa togra"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Nuashonraigh an clár - comhaimsearaigh é le foinsí"
 
-#: ../src/resources/menus.xrc:85
+#: ../src/resources/menus.xrc:101
+#, fuzzy
+msgid "Update from &POT File..."
+msgstr "Nuashonraigh ó chomhad &POT..."
+
+#: ../src/resources/menus.xrc:100
 msgid "Update from &POT file..."
 msgstr "Nuashonraigh ó chomhad &POT..."
 
@@ -1182,47 +1498,75 @@ msgstr "Nuashonraigh achoimre"
 msgid "Update translation memory"
 msgstr "Nuashonraigh an cuimhneachán aistriúchán"
 
-#: ../src/catalog.cpp:1385
+#: ../src/catalog.cpp:1481
 msgid "Updating catalog..."
 msgstr "Ag nuashonrú an clár..."
 
-#: ../src/edframe.cpp:1223
-msgid "Updating the catalog failed. Click on 'More>>' for details."
-msgstr "Theip ar nuashonrú an chláir. Brúigh ar 'Tuilleadh>>' le haghaidh sonraí."
+#: ../src/edframe.cpp:1304
+#, fuzzy
+msgid "Updating the catalog failed. Click on 'Details >>' for details."
+msgstr ""
+"Theip ar nuashonrú an chláir. Brúigh ar 'Tuilleadh>>' le haghaidh sonraí."
 
-#: ../src/resources/prefs.xrc:262
+#: ../src/resources/prefs.xrc:213
 msgid "Use custom font for text fields"
 msgstr "Bain feidhm as chló saincheaptha do réimsí téasc"
 
-#: ../src/resources/prefs.xrc:236
+#: ../src/resources/prefs.xrc:187
 msgid "Use custom font for translations list"
 msgstr "Bain feidhm as chló saincheaptha do réim na haistriúcháin"
 
-#: ../src/resources/settings.xrc:162
+#: ../src/resources/properties.xrc:169
+#, fuzzy
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
-"in source files, in addition to default ones."
+"in source files:"
 msgstr ""
 "Bain feidhm as na treoirfhocail seo chun teaghráin inaistrithe a aithint\n"
 "sna comhaid foinseach, i dteannta leis na comhaid réamhshocraithe."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: ../src/edframe.cpp:2348
+#, fuzzy, c-format
+msgid "Version %s"
+msgstr "leagan"
+
+#: ../src/resources/prefs.xrc:255
+msgid "What languages do you want to use the TM with?"
+msgstr ""
 
 #: ../src/resources/find.xrc:50
 msgid "Whole words only"
 msgstr "Focail iomlán amháin"
 
-#: ../src/resources/prefs.xrc:157
+#: ../src/resources/prefs.xrc:158
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:941
+#: ../src/edframe.cpp:375
 msgid "You can't drop more than one file on Poedit window."
-msgstr "Ní féidir ach comhad amháin a chaitheamh isteach ar an fhuinneog PoEdit."
+msgstr ""
+"Ní féidir ach comhad amháin a chaitheamh isteach ar an fhuinneog PoEdit."
 
-#: ../src/chooselang.cpp:176
+#: ../src/chooselang.cpp:171
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Caithfear Poedit a atosú chun an athrú a chur i bhfeidhm."
 
-#: ../src/resources/prefs.xrc:43
+#: ../src/edframe.cpp:1837
+#, fuzzy
+msgid ""
+"You should set your email address in Preferences so that it can be used for "
+"Last-Translator header in GNU gettext files."
+msgstr ""
+"Baintear feidhm as d'ainm agus do sheoladh ríomhphoist thíos\n"
+"chun an ceanntásc an Aistritheora Deiridh de chomhaid GNU gettext a shocrú."
+
+#: ../src/edframe.cpp:979
+msgid "Your changes will be lost if you don't save them."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:44
 #, fuzzy
 msgid "Your email address:"
 msgstr "Do sheoladh ríomhphoist:"
@@ -1239,31 +1583,104 @@ msgstr ""
 msgid "Your name:"
 msgstr "D'ainm:"
 
-#: ../src/edframe.cpp:1840
+#: ../src/edframe.cpp:1976
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[ag dearbhú na haistriúcháin: %i fágtha]"
 
-#: ../src/resources/prefs.xrc:159
-msgid "current platform's default"
-msgstr "réamhshocrú an t-ardán reatha"
+#: ../src/edapp.cpp:368
+msgid "don't delete temporary files (for debugging)"
+msgstr ""
 
-#: ../src/edframe.cpp:2128
-msgid "none"
-msgstr "dada"
+#~ msgid "&Contents..."
+#~ msgstr "&Inneachair..."
+
+#~ msgid "&Fullscreen view"
+#~ msgstr "&Amharc lánscáileán"
+
+#~ msgid "&Settings..."
+#~ msgstr "&Socruithe..."
+
+#~ msgid "&Shaded translations list"
+#~ msgstr "&Réim aistriúcháin scáthaithe"
+
+#~ msgid "(%f will be substituted with filename, %l with line number)"
+#~ msgstr ""
+#~ "(beidh %f curtha in ionad leis an ainm comhad, %l leis an uimhir líne)"
+
+#~ msgid "Copy original to translation field"
+#~ msgstr "Macasamhlaigh an bunleagan chuig réimse an t-aistriúchán"
+
+#~ msgid "Edit the file in text editor"
+#~ msgstr "Déan eagar ar an comhad san eagarthóir téacs"
+
+#~ msgid "Editor executable:"
+#~ msgstr "Eagarthóir inrite:"
+
+#~ msgid "Error initializing spell checking: %s"
+#~ msgstr "Tharla botún ag tosú an dearbhú litriú: %s"
+
+#~ msgid "External editor"
+#~ msgstr "Eagarthóir seachtrach"
+
+#~ msgid "Fullscreen view"
+#~ msgstr "Amharc lán scáileán"
+
+#~ msgid "GNU gettext documentation"
+#~ msgstr "Cáipéisí gettext GNU"
+
+#~ msgid "Macintosh"
+#~ msgstr "Macintosh"
+
+#~ msgid "My Project"
+#~ msgstr "Mo Thogra"
+
+#~ msgid "No editor specified. Please set it in Preferences dialog."
+#~ msgstr "Ní sonraíodh eagarthóir. Socraigh sa comhrá Sainroghanna é."
+
+#~ msgid "Open source files in editor, not in file viewer"
+#~ msgstr "Oscail comhaid foinseach in eagarthóir, ní i mbreathadóir comhaid"
+
+#~ msgid "Original string"
+#~ msgstr "Teaghrán bunaidh"
+
+#~ msgid "Path to DB:"
+#~ msgstr "Cosán chuig an Bunachar Sonraí:"
+
+#~ msgid "Settings"
+#~ msgstr "Socruithe"
+
+#~ msgid "Setup"
+#~ msgstr "Cumraíocht"
+
+#~ msgid ""
+#~ "This is first time you run Poedit.\n"
+#~ "Please fill in your name and email address.\n"
+#~ "(This information is used only in catalogs headers)"
+#~ msgstr ""
+#~ "Seo an chéad uair duit Poedit a rith.\n"
+#~ "Cuir isteach d'ainm agus do sheoladh ríomhphoist.\n"
+#~ "(Baintear feidhm as an fhaisnéis seo i gceanntásca na gclár amháin)"
+
+#~ msgid "Unix"
+#~ msgstr "Unix"
+
+#~ msgid "current platform's default"
+#~ msgstr "réamhshocrú an t-ardán reatha"
+
+#~ msgid "none"
+#~ msgstr "dada"
 
 #, fuzzy
 #~ msgid "translations editor"
 #~ msgstr "Cuimhne Aistriúcháin"
+
 #~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 #~ msgstr ""
 #~ "%i teaghráin (%i doiléir, %i droch cheadchomharthaithe, %i gan aistriú)"
+
 #~ msgid "'."
 #~ msgstr "'."
-#~ msgid "About Poedit"
-#~ msgstr "Maidir le Poedit"
+
 #~ msgid "Failed to read extracted catalog."
 #~ msgstr "Theip ar an clár a bhaineadh amach a léamh."
-#~ msgid "version"
-#~ msgstr "leagan"
-

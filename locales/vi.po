@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Poedit 1.5\n"
 "Report-Msgid-Bugs-To: poedit-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-02-27 23:19+0100\n"
+"POT-Creation-Date: 2010-05-07 08:40+0200\n"
 "PO-Revision-Date: 2009-02-13 09:53+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Trần Ngọc Quân <vnwildman@gmail.com>\n"
@@ -19,120 +19,214 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "Plural-Forms: nplurals=2; plural=1;\n"
 
-#: ../src/edframe.cpp:1863
+#: ../src/edframe.cpp:1999
 msgid " (modified)"
 msgstr " (đã bị sửa)"
 
-#: ../src/export_html.cpp:137
-#: ../src/edframe.cpp:1833
-#, c-format
-msgid "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i %% đã dịch, %i xâu chữ (%i chưa hoàn thiện, %i có dấu hiệu sai, %i chưa được dịch)"
+#. TRANSLATORS: This is version information in about dialog, it is followed
+#. by version number when used
+#: ../src/edframe.cpp:2351
+msgid " Version "
+msgstr ""
 
-#: ../src/catalog.cpp:118
+#: ../src/edframe.cpp:1964
+#, fuzzy, c-format
+msgid "%i %% translated, %i strings"
+msgstr "Đã tự động dịch %u xâu chữ"
+
+#: ../src/export_html.cpp:148
+#, c-format
+msgid ""
+"%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
+msgstr ""
+"%i %% đã dịch, %i xâu chữ (%i chưa hoàn thiện, %i có dấu hiệu sai, %i chưa "
+"được dịch)"
+
+#: ../src/edframe.cpp:1968
+#, fuzzy, c-format
+msgid "%i %% translated, %i strings (%s)"
+msgstr "Đã tự động dịch %u xâu chữ"
+
+#: ../src/edframe.cpp:1953
+#, fuzzy, c-format
+msgid "%i bad tokens"
+msgstr "Biểu hiện hỏng"
+
+#: ../src/edframe.cpp:1947
+#, fuzzy, c-format
+msgid "%i fuzzy"
+msgstr "Chưa hoàn thiện"
+
+#: ../src/catalog.cpp:145
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i  dòng của tệp tin  '%s' được tải lên không chính xác."
 
-#: ../src/resources/menus.xrc:143
-msgid "&About..."
+#: ../src/edframe.cpp:1959
+#, fuzzy, c-format
+msgid "%i not translated"
+msgstr "Tìm trong phần dịch"
+
+#: ../src/resources/menus.xrc:206
+#, fuzzy
+msgid "&About"
 msgstr "&Thông tin thêm..."
 
-#: ../src/resources/menus.xrc:88
+#: ../src/resources/menus.xrc:105
+#, fuzzy
+msgid "&Automatically Translate Using TM"
+msgstr "&Tự động dịch sử dụng TM"
+
+#: ../src/resources/menus.xrc:104
 msgid "&Automatically translate using TM"
 msgstr "&Tự động dịch sử dụng TM"
 
-#: ../src/edframe.cpp:2636
+#: ../src/edframe.cpp:2845
 msgid "&Bookmarks"
 msgstr "D&ấu sách"
 
-#: ../src/resources/manager.xrc:131
-#: ../src/resources/menus.xrc:39
+#: ../src/resources/manager.xrc:132 ../src/resources/menus.xrc:26
 msgid "&Close"
 msgstr "Đó&ng"
 
-#: ../src/resources/menus.xrc:132
-msgid "&Contents..."
-msgstr "&Nội dung..."
+#: ../src/resources/menus.xrc:165
+#, fuzzy
+msgid "&Comment Window"
+msgstr "Hiển thị cửa sổ &chú thích"
 
-#: ../src/resources/menus.xrc:45
+#: ../src/resources/menus.xrc:164
+#, fuzzy
+msgid "&Comment window"
+msgstr "Hiển thị cửa sổ &chú thích"
+
+#: ../src/resources/menus.xrc:124
+msgid "&Done and Next"
+msgstr ""
+
+#: ../src/resources/menus.xrc:123
+msgid "&Done and next"
+msgstr ""
+
+#: ../src/resources/menus.xrc:55
 msgid "&Edit"
 msgstr "&Biên tập"
 
-#: ../src/edframe.cpp:418
-#: ../src/resources/manager.xrc:124
+#: ../src/edframe.cpp:469 ../src/resources/manager.xrc:125
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&Chính"
 
-#: ../src/resources/menus.xrc:57
+#: ../src/resources/menus.xrc:72
 msgid "&Find..."
 msgstr "&Tìm kiếm..."
 
-#: ../src/resources/menus.xrc:101
-#: ../src/resources/menus.xrc:105
-msgid "&Fullscreen view"
-msgstr "&Hiển thị toàn màn hình"
+#: ../src/edframe.cpp:478 ../src/resources/menus.xrc:120
+msgid "&Go"
+msgstr ""
 
-#: ../src/resources/menus.xrc:145
+#: ../src/edapp.cpp:179 ../src/resources/menus.xrc:208
 msgid "&Help"
 msgstr "T&rợ giúp"
 
-#: ../src/resources/menus.xrc:12
+#: ../src/resources/menus.xrc:14
+#, fuzzy
+msgid "&New Catalog..."
+msgstr "&Tạo catalog mới..."
+
+#: ../src/resources/menus.xrc:13
 msgid "&New catalog..."
 msgstr "&Tạo catalog mới..."
 
-#: ../src/resources/menus.xrc:18
+#: ../src/resources/menus.xrc:136
+msgid "&Next Message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:135
+msgid "&Next message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:200
+msgid "&Online Help"
+msgstr ""
+
+#: ../src/resources/menus.xrc:199
+msgid "&Online help"
+msgstr ""
+
+#: ../src/resources/menus.xrc:21
 msgid "&Open..."
 msgstr "&Mở..."
 
-#: ../src/resources/menus.xrc:74
+#: ../src/resources/menus.xrc:88
 msgid "&Preferences"
 msgstr "&Sở thích riêng"
 
-#: ../src/resources/manager.xrc:127
-#: ../src/resources/menus.xrc:35
+#: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:44
 msgid "&Preferences..."
 msgstr "&Sở thích riêng..."
 
-#: ../src/resources/menus.xrc:91
+#: ../src/resources/menus.xrc:131
+msgid "&Previous Message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:130
+msgid "&Previous message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:113
+#, fuzzy
+msgid "&Properties..."
+msgstr "&Sở thích riêng..."
+
+#: ../src/resources/menus.xrc:109
+#, fuzzy
+msgid "&Purge Deleted Translations"
+msgstr "&Thanh lọc các bản dịch đã bị xóa"
+
+#: ../src/resources/menus.xrc:108
 msgid "&Purge deleted translations"
 msgstr "&Thanh lọc các bản dịch đã bị xóa"
 
-#: ../src/resources/menus.xrc:22
+#: ../src/resources/menus.xrc:30
 msgid "&Save"
 msgstr "&Ghi lại"
 
-#: ../src/resources/menus.xrc:95
-msgid "&Settings..."
-msgstr "&Các cài đặt..."
+#: ../src/resources/menus.xrc:69
+#, fuzzy
+msgid "&Show References"
+msgstr "&Hiển thị tham khảo"
 
-#: ../src/resources/menus.xrc:125
-msgid "&Shaded translations list"
-msgstr "Danh &sách bản dịch mang nghĩa bóng"
-
-#: ../src/resources/menus.xrc:54
+#: ../src/resources/menus.xrc:68
 msgid "&Show references"
 msgstr "&Hiển thị tham khảo"
 
-#: ../src/resources/menus.xrc:82
+#: ../src/resources/menus.xrc:192
+msgid "&Untranslated Entries First"
+msgstr ""
+
+#: ../src/resources/menus.xrc:191
+msgid "&Untranslated entries first"
+msgstr ""
+
+#: ../src/resources/menus.xrc:97
+#, fuzzy
+msgid "&Update from Sources"
+msgstr "&Cập nhật từ mã nguồn"
+
+#: ../src/resources/menus.xrc:96
 msgid "&Update from sources"
 msgstr "&Cập nhật từ mã nguồn"
 
-#: ../src/resources/menus.xrc:99
+#: ../src/resources/menus.xrc:151
 msgid "&View"
 msgstr "&Hiển thị"
 
-#: ../src/catalog.cpp:1453
+#: ../src/catalog.cpp:1558
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "tệp tin '%s' không hợp kiểu POT."
 
-#: ../src/resources/prefs.xrc:211
-msgid "(%f will be substituted with filename, %l with line number)"
-msgstr "(%f sẽ bị tác động với tên tệp tin, %l với số của dòng)"
-
-#: ../src/summarydlg.cpp:71
+#: ../src/summarydlg.cpp:58
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i mới, %i quá cũ)"
@@ -141,11 +235,11 @@ msgstr "(%i mới, %i quá cũ)"
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 mới, 0 cũ)"
 
-#: ../src/chooselang.cpp:88
+#: ../src/chooselang.cpp:79
 msgid "(Use default language)"
 msgstr "(Sử dụng ngôn ngữ mặc định)"
 
-#: ../src/edframe.cpp:792
+#: ../src/edframe.cpp:904
 msgid "(none of these)"
 msgstr "(không có trong những cái đó)"
 
@@ -153,129 +247,169 @@ msgstr "(không có trong những cái đó)"
 msgid "< Previous"
 msgstr "<Trước"
 
-#: ../src/manager.cpp:396
+#: ../src/manager.cpp:377
 msgid "<unnamed>"
 msgstr "<vô danh>"
 
-#: ../src/resources/prefs.xrc:337
+#. TRANSLATORS: This is titlebar of about dialog, the string ends with space
+#. and is followed by application name when used ("Poedit",
+#. but don't add it to this translation yourself)
+#: ../src/edframe.cpp:2355
+#, fuzzy
+msgid "About "
+msgstr "&Thông tin thêm..."
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: ../src/edframe.cpp:2345
+#, c-format
+msgid "About %s"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:270
 msgid "Add"
 msgstr "Thêm vào"
 
-#: ../src/resources/manager.xrc:90
+#: ../src/resources/manager.xrc:91
 msgid "Add directory to the list"
 msgstr "Thêm thư mục vào danh sách"
 
-#: ../src/transmemupd_wizard.cpp:138
-#: ../src/resources/tm_update.xrc:85
+#: ../src/transmemupd_wizard.cpp:134 ../src/resources/tm_update.xrc:85
 msgid "Add files"
 msgstr "Thêm các tệp tin"
 
-#: ../src/resources/prefs.xrc:655
+#: ../src/resources/prefs.xrc:589
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Thêm đường dẫn vào danh sách thư mục nơi catalog đặt."
 
-#: ../src/resources/prefs.xrc:110
+#: ../src/resources/prefs.xrc:111
 msgid "Always change focus to text input field"
 msgstr "Luôn luôn để focus vào ô nhập liệu"
 
-#: ../src/resources/prefs.xrc:580
+#: ../src/resources/prefs.xrc:514
 msgid "An item in input files list:"
 msgstr "Một mục tin trong danh sách các tệp tin nguồn vào:"
 
-#: ../src/resources/prefs.xrc:561
+#: ../src/resources/prefs.xrc:495
 msgid "An item in keywords list:"
 msgstr "Một mục tin trong danh sách các từ khóa:"
 
-#: ../src/resources/prefs.xrc:127
+#: ../src/resources/menus.xrc:170
+#, fuzzy
+msgid "Automatic C&omments Window"
+msgstr "H&iển thị tự đông cửa sổ chú thích"
+
+#: ../src/edframe.cpp:2287 ../src/edframe.cpp:2299
+#, fuzzy
+msgid "Automatic Translations:"
+msgstr "Tự động dịch:"
+
+#: ../src/resources/menus.xrc:169
+#, fuzzy
+msgid "Automatic c&omments window"
+msgstr "H&iển thị tự đông cửa sổ chú thích"
+
+#: ../src/edframe.cpp:540
+#, fuzzy
+msgid "Automatic comments:"
+msgstr "Tìm trong chú thích tự động"
+
+#: ../src/resources/prefs.xrc:128
 msgid "Automatic spellchecking"
 msgstr "Tự động kiểm tra chính tả"
 
-#: ../src/export_html.cpp:177
+#: ../src/export_html.cpp:188
 msgid "Automatic translation"
 msgstr "Tự động dịch"
 
-#: ../src/edframe.cpp:2105
-#: ../src/edframe.cpp:2109
+#: ../src/edframe.cpp:2285 ../src/edframe.cpp:2297
 msgid "Automatic translations:"
 msgstr "Tự động dịch:"
 
-#: ../src/resources/prefs.xrc:69
+#: ../src/resources/prefs.xrc:70
 msgid "Automatically check for new version of Poedit"
 msgstr "Tự động kiểm tra phiên bản mới nhất của Poedit"
 
-#: ../src/resources/prefs.xrc:87
+#: ../src/resources/prefs.xrc:88
 msgid "Automatically compile .mo file on save"
 msgstr "Tự động dịch ra tệp tin .mo khi được ghi lại"
 
-#: ../src/resources/prefs.xrc:408
+#: ../src/resources/prefs.xrc:342
 msgid "Automatically translate when updating catalog"
 msgstr "Tự động dịch khi cập nhật catalog"
 
-#: ../src/edframe.cpp:2057
+#: ../src/edframe.cpp:2228
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Đã tự động dịch %u xâu chữ"
 
-#: ../src/edframe.cpp:2042
+#: ../src/edframe.cpp:2213
 msgid "Automatically translating..."
 msgstr "Đang tự động dịch..."
 
-#: ../src/manager.cpp:267
+#: ../src/manager.cpp:248
 msgid "Bad Tokens"
 msgstr "Biểu hiện hỏng"
 
-#: ../src/resources/settings.xrc:132
+#: ../src/resources/properties.xrc:139
 msgid "Base path:"
 msgstr "Đường dẫn cơ sở:"
 
-#: ../src/resources/prefs.xrc:83
+#: ../src/resources/prefs.xrc:84
 msgid "Behavior"
 msgstr "Cách sử lý"
 
-#: ../src/catalog.cpp:658
+#: ../src/catalog.cpp:675
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "Tệp tin catalog hỏng: số nhiều từ msgstr sử dụng mà không có msgid_plural"
+msgstr ""
+"Tệp tin catalog hỏng: số nhiều từ msgstr sử dụng mà không có msgid_plural"
 
-#: ../src/catalog.cpp:620
-msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr "Tệp tin catalog hỏng: số ít từ msgstr sử dụng mà sử dụng với msgid_plural"
+#: ../src/catalog.cpp:637
+msgid ""
+"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr ""
+"Tệp tin catalog hỏng: số ít từ msgstr sử dụng mà sử dụng với msgid_plural"
 
-#: ../src/resources/manager.xrc:89
-#: ../src/resources/prefs.xrc:320
-#: ../src/resources/prefs.xrc:654
+#: ../src/resources/manager.xrc:90 ../src/resources/prefs.xrc:588
 #: ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "Tìm duyệt"
 
-#: ../src/resources/menus.xrc:79
+#: ../src/resources/menus.xrc:93
 msgid "C&atalog"
 msgstr "C&atalog"
 
-#: ../src/resources/prefs.xrc:140
+#: ../src/resources/prefs.xrc:141
 msgid "CR/LF conversion"
 msgstr "Sự chuyển đổi ký tự xuống dòng CR/LF"
 
-#: ../src/resources/comment.xrc:38
-#: ../src/resources/find.xrc:87
-#: ../src/resources/manager.xrc:112
-#: ../src/resources/prefs.xrc:490
-#: ../src/resources/prefs.xrc:632
-#: ../src/resources/prefs.xrc:677
-#: ../src/resources/progress.xrc:31
-#: ../src/resources/settings.xrc:194
+#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:113
+#: ../src/resources/prefs.xrc:424 ../src/resources/prefs.xrc:566
+#: ../src/resources/prefs.xrc:611 ../src/resources/progress.xrc:32
+#: ../src/resources/properties.xrc:201
 msgid "Cancel"
 msgstr "Hủy"
 
-#: ../src/transmem.cpp:745
-msgid "Cannot create database directory!"
+#: ../src/transmem.cpp:732
+#, fuzzy
+msgid "Cannot create TM database directory!"
 msgstr "Không thể tạo cơ sở dữ liệu thư mục!"
 
-#: ../src/gexecute.cpp:172
-#: ../src/gexecute.cpp:228
+#: ../src/utility.cpp:48 ../src/utility.cpp:58
+#, fuzzy
+msgid "Cannot create temporary directory."
+msgstr "Không thể tạo cơ sở dữ liệu thư mục!"
+
+#: ../src/gexecute.cpp:182
 msgid "Cannot execute program: "
 msgstr "Không thể thi hành chương trình:"
 
-#: ../src/transmemupd.cpp:202
+#: ../src/gexecute.cpp:145
+#, fuzzy, c-format
+msgid "Cannot execute program: %s"
+msgstr "Không thể thi hành chương trình:"
+
+#: ../src/transmemupd.cpp:199
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Không thể trích catalog từ gói RPM."
 
@@ -283,33 +417,36 @@ msgstr "Không thể trích catalog từ gói RPM."
 msgid "Case sensitive"
 msgstr "Có phân biệt chữ hoa"
 
-#: ../src/manager.cpp:263
+#: ../src/manager.cpp:244
 msgid "Catalog"
 msgstr "Catalog"
 
-#: ../src/edframe.cpp:840
-#: ../src/edframe.cpp:865
-#: ../src/edframe.cpp:906
-#: ../src/edframe.cpp:958
-#: ../src/edframe.cpp:1076
+#: ../src/edframe.cpp:974
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Catalog đã bị sửa. Bạn có muốn ghi lại các thay đổi không?"
+
+#: ../src/resources/properties.xrc:4
+msgid "Catalog properties"
+msgstr ""
+
+#: ../src/resources/menus.xrc:9
+#, fuzzy
+msgid "Catalogs &Manager"
+msgstr "&Quản Lý các catalog"
 
 #: ../src/resources/menus.xrc:8
 msgid "Catalogs &manager"
 msgstr "&Quản Lý các catalog"
 
-#: ../src/resources/prefs.xrc:62
+#: ../src/resources/prefs.xrc:63
 msgid "Change UI language"
 msgstr "Thay đổi ngôn ngữ UI"
 
-#: ../src/export_html.cpp:122
-#: ../src/resources/settings.xrc:86
+#: ../src/export_html.cpp:133 ../src/resources/properties.xrc:86
 msgid "Charset:"
 msgstr "Bộ mã ký tự:"
 
-#: ../src/resources/prefs.xrc:253
-#: ../src/resources/prefs.xrc:279
+#: ../src/resources/prefs.xrc:204 ../src/resources/prefs.xrc:230
 msgid "Choose"
 msgstr "Chọn dùng"
 
@@ -317,43 +454,73 @@ msgstr "Chọn dùng"
 msgid "Clear"
 msgstr "Xóa sạch"
 
+#: ../src/edframe.cpp:2266 ../src/resources/menus.xrc:63
+#, fuzzy
+msgid "Clear Translation"
+msgstr "Bản dịch"
+
 #: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "Xóa sạch chú thích"
+
+#: ../src/edframe.cpp:2264 ../src/resources/menus.xrc:62
+#, fuzzy
+msgid "Clear translation"
+msgstr "Bản dịch"
+
+#: ../src/resources/find.xrc:87
+#, fuzzy
+msgid "Close"
+msgstr "Đó&ng"
 
 #: ../src/resources/toolbar.xrc:34
 msgid "Comment"
 msgstr "Chú thích"
 
-#: ../src/resources/prefs.xrc:119
+#: ../src/resources/prefs.xrc:120
 msgid "Comment window is editable"
 msgstr "Cửa sổ chủ thích có thể nhập liệu được "
 
-#: ../src/resources/comment.xrc:10
+#: ../src/edframe.cpp:537 ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Chú thích:"
 
-#: ../src/resources/prefs.xrc:358
+#: ../src/resources/prefs.xrc:292
 msgid "Configuration"
 msgstr "Cấu hình"
 
-#: ../src/manager.cpp:426
-#: ../src/manager.cpp:446
+#: ../src/manager.cpp:407 ../src/manager.cpp:427
 msgid "Confirmation"
 msgstr "Sự xác thực"
 
-#: ../src/edframe.cpp:2085
-#: ../src/resources/menus.xrc:47
-msgid "Copy original to translation field"
-msgstr "Sao chép toàn bộ nguyên bản sang ô dịch"
+#: ../src/edframe.cpp:2259
+msgid "Copy Translation from Source Text"
+msgstr ""
 
-#: ../src/catalog.cpp:993
+#: ../src/resources/menus.xrc:58
+msgid "Copy from Source Text"
+msgstr ""
+
+#: ../src/resources/menus.xrc:57
+#, fuzzy
+msgid "Copy from source text"
+msgstr "&Cập nhật từ mã nguồn"
+
+#: ../src/edframe.cpp:2257
+msgid "Copy translation from source text"
+msgstr ""
+
+#: ../src/catalog.cpp:1035
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "Không thể tải tệp tin %s,  nó chắc chắn đã hỏng."
 
-#: ../src/export_html.cpp:112
-#: ../src/resources/settings.xrc:74
+#: ../src/catalog.cpp:1439
+#, c-format
+msgid "Couldn't save file %s."
+msgstr ""
+
+#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:74
 msgid "Country:"
 msgstr "Quốc gia:"
 
@@ -361,17 +528,11 @@ msgstr "Quốc gia:"
 msgid "Create new translations project"
 msgstr "Tạo một đề án dịch mới"
 
-#: ../src/resources/prefs.xrc:301
+#: ../src/resources/prefs.xrc:252
 msgid "Database"
 msgstr "Cơ sở dữ liệu"
 
-#: ../src/transmem.cpp:327
-#, c-format
-msgid "Database error: %s"
-msgstr "Lỗi cơ sở dữ liệu: %s"
-
-#: ../src/resources/manager.xrc:53
-#: ../src/resources/prefs.xrc:456
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:390
 msgid "Delete"
 msgstr "Xóa bỏ"
 
@@ -383,19 +544,29 @@ msgstr "Xóa bỏ mục tin"
 msgid "Delete the project"
 msgstr "Xóa bỏ đề án"
 
-#: ../src/manager.cpp:319
+#: ../src/manager.cpp:300
 msgid "Directories:"
 msgstr "Thư mục:"
 
-#: ../src/resources/menus.xrc:113
+#: ../src/resources/menus.xrc:159
+#, fuzzy
+msgid "Display &Line Numbers"
+msgstr "Hiển thị số của dòn&g"
+
+#: ../src/resources/menus.xrc:154
+#, fuzzy
+msgid "Display &Quotes"
+msgstr "Hiển thị dấu nháy &kép"
+
+#: ../src/resources/menus.xrc:158
 msgid "Display &line numbers"
 msgstr "Hiển thị số của dòn&g"
 
-#: ../src/resources/menus.xrc:109
+#: ../src/resources/menus.xrc:153
 msgid "Display &quotes"
 msgstr "Hiển thị dấu nháy &kép"
 
-#: ../src/manager.cpp:445
+#: ../src/manager.cpp:426
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -403,37 +574,53 @@ msgstr ""
 "Bạn có muốn cập nhật hàng loạt\n"
 "tất cả các catalog trong đề án này?"
 
-#: ../src/edframe.cpp:1999
-msgid ""
-"Do you really want to remove all translations that are no longer used from the catalog?\n"
-"If you continue with purging, you will have to translate them again if they are added back in the future."
-msgstr ""
-"Bạn có muốn xóa bỏ tất cả các bản dịch không còn sử dụng nữa trong catalog?\n"
-"Nếu bạn tiếp tục với sự thanh lọc, bạn sẽ phải dịch lại chúng nếu họ đặt lại nó trong tương lai."
-
-#: ../src/manager.cpp:425
+#: ../src/manager.cpp:406
 msgid "Do you want to delete the project?"
 msgstr "Bạn có muốn xóa bỏ đề án không?"
 
-#: ../src/resources/prefs.xrc:171
+#: ../src/edframe.cpp:2153
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr ""
+
+#: ../src/edframe.cpp:986
+msgid "Don't Save"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:170
 msgid "Don't change format of existing catalogs"
 msgstr "Không thay đổi định dạng của catalog đã tạo"
 
-#: ../src/resources/menus.xrc:30
+#: ../src/edframe.cpp:984
+msgid "Don't save"
+msgstr ""
+
+#: ../src/attentionbar.cpp:195
+msgid "Don't show again"
+msgstr ""
+
+#: ../src/resources/manager.xrc:136 ../src/resources/menus.xrc:50
+#, fuzzy
+msgid "E&xit"
+msgstr "Biên tập"
+
+#: ../src/resources/menus.xrc:39
 msgid "E&xport..."
 msgstr "X&uất ra..."
 
-#: ../src/resources/manager.xrc:48
-#: ../src/resources/prefs.xrc:449
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:383
 msgid "Edit"
 msgstr "Biên tập"
 
-#: ../src/resources/menus.xrc:70
+#: ../src/resources/menus.xrc:84
+#, fuzzy
+msgid "Edit &Comment"
+msgstr "Biên tập &chú thích"
+
+#: ../src/resources/menus.xrc:83
 msgid "Edit &comment"
 msgstr "Biên tập &chú thích"
 
-#: ../src/resources/comment.xrc:4
-#: ../src/resources/toolbar.xrc:35
+#: ../src/resources/comment.xrc:4 ../src/resources/toolbar.xrc:35
 msgid "Edit comment"
 msgstr "Biên tập chú thích"
 
@@ -445,82 +632,74 @@ msgstr "Biên tập mục tin"
 msgid "Edit project"
 msgstr "Biên tập đề án"
 
-#: ../src/resources/fileview.xrc:10
-msgid "Edit the file in text editor"
-msgstr "Biên tập tệp tin trong chương trình biên tập"
-
 #: ../src/resources/manager.xrc:49
 msgid "Edit the project"
 msgstr "Biên tập đề án"
 
-#: ../src/resources/prefs.xrc:77
+#: ../src/resources/prefs.xrc:78
 msgid "Editor"
 msgstr "Chương trình biên tập"
 
-#: ../src/resources/prefs.xrc:190
-msgid "Editor executable:"
-msgstr "Bộ biên dịch có thể thi hành được:"
-
-#: ../src/resources/prefs.xrc:128
+#: ../src/resources/prefs.xrc:129
 msgid "Enables on-the-fly spellchecking"
 msgstr "Cho phép kiểm tra chính tả kiểu on-the-fly"
 
-#: ../src/edframe.cpp:1221
+#: ../src/edframe.cpp:1302
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Các đề mục trong catalog chắc chắn có nhiều lỗi."
 
-#: ../src/edframe.cpp:721
-#, c-format
-msgid "Error initializing spell checking: %s"
-msgstr "Khởi tạo kiểm tra chính tả lỗi: %s"
+#: ../src/edframe.cpp:1857
+msgid ""
+"Entries in this catalog have different plural forms count from what "
+"catalog's Plural-Forms header says"
+msgstr ""
 
-#: ../src/edframe.cpp:1788
+#: ../src/edframe.cpp:1899
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "Lỗi rút trích thông điệp từ tệp tin catalog '%s'."
 
-#: ../src/fileviewer.cpp:97
+#: ../src/fileviewer.cpp:226
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Lỗi mở tệp tin %s!"
 
-#: ../src/catalog.cpp:1269
+#: ../src/catalog.cpp:1331
 msgid "Error saving catalog"
 msgstr "Lỗi ghi lại catalog"
 
-#: ../src/edframe.cpp:1049
+#: ../src/edframe.cpp:1123
 msgid "Export as..."
 msgstr "Xuất ra thành..."
 
-#: ../src/resources/prefs.xrc:182
-msgid "External editor"
-msgstr "Bộ biên dịch ở ngoài chương trình"
+#: ../src/resources/properties.xrc:130
+msgid "Extract text from source files in the following directories:"
+msgstr ""
 
-#: ../src/digger.cpp:65
+#: ../src/digger.cpp:60
 #, c-format
 msgid "Failed command: %s"
 msgstr "Lệnh lỗi: %s"
 
-#: ../src/digger.cpp:131
+#: ../src/digger.cpp:114
 msgid "Failed to load extracted catalog."
 msgstr "Lỗi rút trích catalog."
 
-#: ../src/digger.cpp:66
+#: ../src/digger.cpp:61
 msgid "Failed to merge gettext catalogs."
 msgstr "Lỗi trộn catalog."
 
-#: ../src/edframe.cpp:931
-#: ../src/edframe.cpp:974
+#: ../src/edframe.cpp:390 ../src/edframe.cpp:1046
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Tệp tin  '%s' chưa tồn tại."
 
-#: ../src/edframe.cpp:948
-#, c-format
-msgid "File '%s' is not message catalog."
+#: ../src/edframe.cpp:383
+#, fuzzy, c-format
+msgid "File '%s' is not a message catalog."
 msgstr "Tệp tin '%s' không phải là catalog thông điệp."
 
-#: ../src/catalog.cpp:1229
+#: ../src/catalog.cpp:1307
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -529,7 +708,7 @@ msgstr ""
 "Tệp tin '%s' chỉ cho phép đọc và không thể ghi lại được.\n"
 "Xin hãy ghi lại dưới một cái tên mới."
 
-#: ../src/transmemupd_wizard.cpp:63
+#: ../src/transmemupd_wizard.cpp:59
 msgid "Files List"
 msgstr "Danh sách tệp tin"
 
@@ -553,142 +732,154 @@ msgstr "Tìm trong phần dịch"
 msgid "Find..."
 msgstr "Tìm kiếm..."
 
-#: ../src/resources/prefs.xrc:230
+#: ../src/edframe.cpp:1880
+msgid "Fix the header"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:181
 msgid "Fonts"
 msgstr "Font chữ"
 
-#: ../src/edframe.cpp:2552
+#: ../src/edframe.cpp:2778
 #, c-format
 msgid "Form %i"
 msgstr "Từ %i"
 
-#: ../src/edframe.cpp:2554
+#: ../src/edframe.cpp:2780
 #, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr "Từ %i (ví dụ \"%u\")"
 
-#: ../src/resources/toolbar.xrc:40
-#: ../src/resources/toolbar.xrc:46
-msgid "Fullscreen view"
-msgstr "Hiển thị toàn màn hình"
-
-#: ../src/manager.cpp:266
-#: ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:247 ../src/resources/toolbar.xrc:28
 msgid "Fuzzy"
 msgstr "Chưa hoàn thiện"
 
-#: ../src/export_html.cpp:183
+#: ../src/export_html.cpp:194
 msgid "Fuzzy translation"
 msgstr "Dịch chưa hoàn thiện"
 
-#: ../src/edframe.cpp:885
-#: ../src/edframe.cpp:1013
+#: ../src/edframe.cpp:1028 ../src/edframe.cpp:1087
 msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU gettext catalogs (*.po)|*.po|Tất cả các kiểu tệp tin (*.*)|*.*"
 
-#: ../src/edframe.cpp:1101
-#: ../src/edframe.cpp:1239
+#: ../src/edframe.cpp:1161 ../src/edframe.cpp:1320
 msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU gettext templates (*.pot)|*.pot|Tất cả các kiểu tệp tin (*.*)|*.*"
 
-#: ../src/resources/menus.xrc:138
-msgid "GNU gettext documentation"
-msgstr "Tài liệu về GNU gettext"
-
-#: ../src/resources/prefs.xrc:687
+#: ../src/resources/prefs.xrc:621
 msgid "Generate TM database"
 msgstr "Tạo cơ sở dữ liệu TM"
 
-#: ../src/resources/prefs.xrc:345
+#: ../src/resources/prefs.xrc:278
 msgid "Generate database"
 msgstr "Tạo ra cơ sở dữ liệu"
 
-#: ../src/edframe.cpp:1291
+#: ../src/edframe.cpp:1372
 msgid "Gettext syntax error"
 msgstr "Cú pháp Gettext lỗi"
 
-#: ../src/edframe.cpp:2620
-#, c-format
-msgid "Go to bookmark %i\tCtrl-%i"
+#: ../src/edframe.cpp:2857
+#, fuzzy, c-format
+msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "Nhảy tới dấu sách %i\tCtrl-%i"
 
-#: ../src/edframe.cpp:2617
-#, c-format
-msgid "Go to bookmark %i\tCtrl-Alt-%i"
+#: ../src/edframe.cpp:2851
+#, fuzzy, c-format
+msgid "Go to Bookmark %i\tCtrl+Alt+%i"
 msgstr "Nhảy tới dấu sách %i\tCtrl-Alt-%i"
 
-#: ../src/edframe.cpp:1051
+#: ../src/edframe.cpp:2854
+#, fuzzy, c-format
+msgid "Go to bookmark %i\tCtrl+%i"
+msgstr "Nhảy tới dấu sách %i\tCtrl-%i"
+
+#: ../src/edframe.cpp:1125
 msgid "HTML file (*.html)|*.html"
 msgstr "Tệp tin dạng HTML (*.html)|*.html"
+
+#: ../src/attentionbar.cpp:78
+msgid "Hide this notification message"
+msgstr ""
 
 #: ../src/resources/prefs.xrc:18
 msgid "Identity"
 msgstr "Sự đồng nhất"
 
-#: ../src/resources/prefs.xrc:120
+#: ../src/resources/prefs.xrc:121
 msgid "If checked, the comment window will be editable."
 msgstr "Nếu đặt dấu kiểm, cửa sổ chú thích sẽ có thể nhập liệu."
 
-#: ../src/resources/prefs.xrc:538
+#: ../src/edframe.cpp:2155
+#, fuzzy
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Bạn có muốn xóa bỏ tất cả các bản dịch không còn sử dụng nữa trong catalog?\n"
+"Nếu bạn tiếp tục với sự thanh lọc, bạn sẽ phải dịch lại chúng nếu họ đặt lại "
+"nó trong tương lai."
+
+#: ../src/resources/prefs.xrc:472
 msgid "Invocation:"
 msgstr "Dẫn ra:"
 
-#: ../src/settingsdlg.cpp:71
-#: ../src/resources/settings.xrc:175
+#: ../src/edframe.cpp:2160 ../src/transmem.cpp:1186
+msgid "Keep"
+msgstr ""
+
+#: ../src/propertiesdlg.cpp:67
 msgid "Keywords"
 msgstr "Từ khóa"
 
-#: ../src/chooselang.cpp:162
+#: ../src/chooselang.cpp:157
 msgid "Language selection"
 msgstr "Lựa chọn ngôn ngữ"
 
-#: ../src/export_html.cpp:109
-#: ../src/resources/prefs.xrc:506
-#: ../src/resources/prefs.xrc:510
-#: ../src/resources/settings.xrc:62
+#: ../src/export_html.cpp:119 ../src/resources/prefs.xrc:440
+#: ../src/resources/prefs.xrc:444 ../src/resources/properties.xrc:62
 msgid "Language:"
 msgstr "Ngôn ngữ:"
 
-#: ../src/manager.cpp:268
+#: ../src/manager.cpp:249
 msgid "Last modified"
 msgstr "Lần cuối sửa"
 
-#: ../src/edlistctrl.cpp:230
-#: ../src/fileviewer.cpp:106
+#: ../src/edframe.cpp:877
+msgid "Learn more"
+msgstr ""
+
+#: ../src/edlistctrl.cpp:325
 msgid "Line"
 msgstr "Dòng"
 
-#: ../src/catalog.cpp:131
+#: ../src/catalog.cpp:158
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "Dòng %u thứ của tệp tin '%s' bị sai (không hợp kiểu dữ liệu  %s)."
 
-#: ../src/resources/prefs.xrc:148
+#: ../src/resources/prefs.xrc:149
 msgid "Line endings format:"
 msgstr "Định dạng xuống dòng:"
 
-#: ../src/resources/prefs.xrc:522
+#: ../src/resources/prefs.xrc:456
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Danh sách đuôi tệp tin ngăn cách bởi dấu chấm phẩy (ví dụ *.cpp;*.h):"
 
-#: ../src/resources/prefs.xrc:158
-msgid "Macintosh"
-msgstr "Máy Macintosh"
-
-#: ../src/catalog.cpp:202
+#: ../src/catalog.cpp:233
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Phần đầu dị hình: '%s'"
 
-#: ../src/resources/prefs.xrc:366
+#: ../src/resources/prefs.xrc:300
 msgid "Max. # of missing words:"
 msgstr "Tối đa. # số từ bị mất:"
 
-#: ../src/resources/prefs.xrc:388
+#: ../src/resources/prefs.xrc:322
 msgid "Max. difference in sentence length:"
 msgstr "Tối đa sự khác biệt độ dài câu:"
 
-#: ../src/catalog.cpp:1425
+#: ../src/catalog.cpp:1529
 msgid "Merging differences..."
 msgstr "Đang trộn các khác biệt..."
 
@@ -700,24 +891,38 @@ msgstr "Di chuyển xuống"
 msgid "Move up"
 msgstr "Di chuyển lên"
 
-#: ../src/prefsdlg.cpp:59
+#: ../src/prefsdlg.cpp:55
 msgid "My Languages"
 msgstr "Ngôn ngữ của tôi"
 
-#: ../src/manager.cpp:322
-msgid "My Project"
-msgstr "Đề án của tôi"
+#: ../src/resources/menus.xrc:146
+msgid "Ne&xt Unfinished"
+msgstr ""
 
-#: ../src/resources/prefs.xrc:112
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Không bao giờ để xâu chữ nhận focus. Nếu cho phép, bạn phải sử dụng Ctrl-Phím mũi tên để điều khiển bằng bàn phím nhưng bạn không thể gõ chữ một cách trực tiếp, không cần phải nhấn Tab để thay đổi focus."
+#: ../src/resources/menus.xrc:145
+msgid "Ne&xt unfinished"
+msgstr ""
 
-#: ../src/resources/manager.xrc:43
-#: ../src/resources/prefs.xrc:444
+#: ../src/resources/prefs.xrc:113
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Không bao giờ để xâu chữ nhận focus. Nếu cho phép, bạn phải sử dụng Ctrl-"
+"Phím mũi tên để điều khiển bằng bàn phím nhưng bạn không thể gõ chữ một cách "
+"trực tiếp, không cần phải nhấn Tab để thay đổi focus."
+
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:378
 msgid "New"
 msgstr "Mới"
 
-#: ../src/resources/menus.xrc:15
+#: ../src/resources/menus.xrc:18
+#, fuzzy
+msgid "New Catalog from POT File..."
+msgstr "Tạo catalog mới từ tệp tin POT..."
+
+#: ../src/resources/menus.xrc:17
 msgid "New catalog from POT file..."
 msgstr "Tạo catalog mới từ tệp tin POT..."
 
@@ -733,28 +938,21 @@ msgstr "Xâu chữ mới"
 msgid "Next >"
 msgstr "Tiếp theo >"
 
-#: ../src/fileviewer.cpp:147
-msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "Không có trình biên dịch danh nghĩa. Xin hãy cài đặt trong hộp thoại Sở thích riêng. "
-
-#: ../src/digger.cpp:218
+#: ../src/digger.cpp:201
 msgid "No files found in: "
 msgstr "Không có tệp tin nào tìm thấy trong:"
 
-#: ../src/edframe.cpp:1308
+#: ../src/edframe.cpp:1389
 msgid "No references to this string found."
 msgstr "Không thấy xâu chữ liên quan."
 
-#: ../src/export_html.cpp:155
+#: ../src/export_html.cpp:166
 msgid "Notes"
 msgstr "Chú ý"
 
-#: ../src/resources/comment.xrc:30
-#: ../src/resources/manager.xrc:104
-#: ../src/resources/prefs.xrc:482
-#: ../src/resources/prefs.xrc:624
-#: ../src/resources/settings.xrc:186
-#: ../src/resources/summary.xrc:71
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
+#: ../src/resources/prefs.xrc:416 ../src/resources/prefs.xrc:558
+#: ../src/resources/properties.xrc:193 ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "OK"
 
@@ -766,52 +964,44 @@ msgstr "Xâu chữ đã cổ"
 msgid "Open"
 msgstr "Mở"
 
-#: ../src/edframe.cpp:883
-#: ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:1026 ../src/resources/toolbar.xrc:13
 msgid "Open catalog"
 msgstr "Mở catalog"
 
-#: ../src/edframe.cpp:1099
-#: ../src/edframe.cpp:1237
+#: ../src/edframe.cpp:1159 ../src/edframe.cpp:1318
 msgid "Open catalog template"
 msgstr "Mở tệp tin catalog  mẫu"
 
-#: ../src/resources/prefs.xrc:103
+#: ../src/resources/prefs.xrc:104
 msgid "Open catalogs manager on Poedit startup"
 msgstr "Mở cửa sổ quản lý catalog khi Poedit khởi động"
 
-#: ../src/resources/prefs.xrc:220
-msgid "Open source files in editor, not in file viewer"
-msgstr "Mở tệp tin nguồn trong trình biên dịch, không phải trong trình xem tệp tin."
+#: ../src/resources/menus.xrc:141
+msgid "P&revious Unfinished"
+msgstr ""
 
-#: ../src/export_html.cpp:148
-#: ../src/edlistctrl.cpp:227
-msgid "Original string"
-msgstr "Xâu chữ nguyên bản"
+#: ../src/resources/menus.xrc:140
+msgid "P&revious unfinished"
+msgstr ""
 
-#: ../src/resources/prefs.xrc:542
+#: ../src/resources/prefs.xrc:476
 msgid "Parser command:"
 msgstr "Lệnh phân tích cú pháp:"
 
-#: ../src/resources/prefs.xrc:501
+#: ../src/resources/prefs.xrc:435
 msgid "Parser setup"
 msgstr "Cài đặt cú pháp"
 
-#: ../src/resources/prefs.xrc:419
+#: ../src/resources/prefs.xrc:353
 msgid "Parsers"
 msgstr "Phân tích cú pháp"
 
-#: ../src/digger.cpp:106
+#: ../src/digger.cpp:92
 #, c-format
 msgid "Parsing %s files..."
 msgstr "Đang phân tích cú pháp tệp tin %s..."
 
-#: ../src/resources/prefs.xrc:304
-msgid "Path to DB:"
-msgstr "Đường dẫn tới DB:"
-
-#: ../src/settingsdlg.cpp:73
-#: ../src/resources/settings.xrc:154
+#: ../src/propertiesdlg.cpp:69
 msgid "Paths"
 msgstr "Đường dẫn"
 
@@ -819,35 +1009,46 @@ msgstr "Đường dẫn"
 msgid "Personalize"
 msgstr "Thông tin cá nhân"
 
-#: ../src/resources/prefs.xrc:338
+#: ../src/resources/prefs.xrc:271
 msgid "Pick language from the list of known languages"
 msgstr "Chọn lựa ngôn ngữ từ danh sách"
 
 #: ../src/resources/tm_update.xrc:21
 msgid "Please add directories where locale files are stored on your system:"
-msgstr "Xin hãy thêm thư mục nơi mà các tệp tin được lưu giữ trong hệ thống của bạn:"
+msgstr ""
+"Xin hãy thêm thư mục nơi mà các tệp tin được lưu giữ trong hệ thống của bạn:"
 
-#: ../src/edframe.cpp:1316
+#: ../src/edframe.cpp:1397
 msgid "Please choose the reference you want to show:"
 msgstr "Xin hãy chọn tham chiếu bạn muốn hiển thị:"
 
-#: ../src/prefsdlg.cpp:355
+#: ../src/prefsdlg.cpp:334
 msgid "Please select language ISO code:"
 msgstr "Xin hãy chọn mã ngôn ngữ theo chuẩn ISO:"
 
-#: ../src/edframe.cpp:801
+#: ../src/edframe.cpp:913
 msgid "Please select language code:"
 msgstr "Xin hãy chọn mã ngôn ngữ:"
 
-#: ../src/resources/settings.xrc:110
+#: ../src/transmem.cpp:1180
+#, c-format
+msgid ""
+"Please verify that all files were moved to the new location or do it "
+"manually if they weren't.\n"
+"\n"
+"Old location: %s\n"
+"New location: %s"
+msgstr ""
+
+#: ../src/resources/properties.xrc:110
 msgid "Plural Forms:"
 msgstr "Dạng số nhiều:"
 
-#: ../src/edframe.cpp:489
+#: ../src/edframe.cpp:553
 msgid "Plural:"
 msgstr "Số nhiều:"
 
-#: ../src/edframe.cpp:359
+#: ../src/edframe.cpp:407
 msgid "Poedit"
 msgstr "Poedit"
 
@@ -855,29 +1056,32 @@ msgstr "Poedit"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Quản Lý catalog"
 
-#: ../src/digger.cpp:219
+#: ../src/digger.cpp:202
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Poedit không tìm thấy bất kỳ tệp tin nào trong các thư mục đã quét."
 
-#: ../src/edframe.cpp:2144
+#: ../src/edframe.cpp:2363
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit rất dễ dùng cho việc biên tập bản dịch."
+
+#: ../src/transmem.cpp:1175
+#, fuzzy
+msgid "Poedit translation memory error"
+msgstr "Cập nhật bộ nhớ bản dịch"
 
 #: ../src/resources/prefs.xrc:4
 msgid "Preferences"
 msgstr "Sở thích riêng"
 
-#: ../src/resources/prefs.xrc:669
+#: ../src/resources/prefs.xrc:603
 msgid "Proceed"
 msgstr "Tiếp tục"
 
-#: ../src/export_html.cpp:102
-#: ../src/resources/settings.xrc:122
+#: ../src/export_html.cpp:112
 msgid "Project info"
 msgstr "Thông tin về đề án"
 
-#: ../src/export_html.cpp:106
-#: ../src/resources/settings.xrc:19
+#: ../src/export_html.cpp:116 ../src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Tên và phiên bản của đề án:"
 
@@ -885,36 +1089,49 @@ msgstr "Tên và phiên bản của đề án:"
 msgid "Project name:"
 msgstr "Tên đề án:"
 
-#: ../src/edframe.cpp:2000
+#: ../src/edframe.cpp:2160 ../src/transmem.cpp:1186
+msgid "Purge"
+msgstr ""
+
+#: ../src/edframe.cpp:2151
 msgid "Purge deleted translations"
 msgstr "Thanh lọc các bản dịch đã bị xóa"
 
-#: ../src/edframe.cpp:1316
+#: ../src/resources/manager.xrc:137 ../src/resources/menus.xrc:51
+msgid "Quit"
+msgstr ""
+
+#: ../src/edframe.cpp:1397
 msgid "References"
 msgstr "Tham khảo"
 
-#: ../src/edframe.cpp:2090
-#: ../src/edframe.cpp:2094
+#: ../src/edframe.cpp:2321 ../src/edframe.cpp:2325
 msgid "References:"
 msgstr "Tham khảo:"
 
-#: ../src/resources/prefs.xrc:346
+#: ../src/resources/prefs.xrc:279
 msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr "Phục hồi bộ nhớ bản dịch từ catalog trong danh sách đường dẫn bên dưới đây."
+msgstr ""
+"Phục hồi bộ nhớ bản dịch từ catalog trong danh sách đường dẫn bên dưới đây."
 
 #: ../src/resources/tm_update.xrc:42
 msgid "Reset to defaults"
 msgstr "Đặt lại chế độ mặc định"
 
-#: ../src/resources/toolbar.xrc:17
+#: ../src/edframe.cpp:982 ../src/resources/toolbar.xrc:17
 msgid "Save"
 msgstr "Ghi lại"
 
-#: ../src/resources/menus.xrc:26
+#: ../src/resources/menus.xrc:35
+#, fuzzy
+msgid "Save &As..."
+msgstr "Ghi lại dưới tên &mới..."
+
+#: ../src/resources/menus.xrc:34
 msgid "Save &as..."
 msgstr "Ghi lại dưới tên &mới..."
 
-#: ../src/edframe.cpp:1012
+#: ../src/edframe.cpp:1086
 msgid "Save as..."
 msgstr "Ghi lại dưới tên mới..."
 
@@ -922,90 +1139,138 @@ msgstr "Ghi lại dưới tên mới..."
 msgid "Save catalog"
 msgstr "Ghi lại catalog"
 
-#: ../src/edframe.cpp:841
-#: ../src/edframe.cpp:866
-#: ../src/edframe.cpp:907
-#: ../src/edframe.cpp:959
-#: ../src/edframe.cpp:1077
+#: ../src/edframe.cpp:975
 msgid "Save changes"
 msgstr "Ghi lại các thay đổi"
 
-#: ../src/transmemupd.cpp:152
+#: ../src/transmemupd.cpp:149
 msgid "Scanning file: "
 msgstr "Đang quét tệp tin:"
 
-#: ../src/digger.cpp:92
+#: ../src/digger.cpp:77
 msgid "Scanning files..."
 msgstr "Đang duyệt qua các tệp tin..."
 
-#: ../src/transmemupd_wizard.cpp:59
+#: ../src/transmemupd_wizard.cpp:55
 msgid "Search Paths"
 msgstr "Tìm kiếm Đường Dẫn"
 
-#: ../src/edframe.cpp:800
+#: ../src/edframe.cpp:912
 msgid "Select catalog's language"
 msgstr "Chọn ngôn ngữ cho catalog"
 
-#: ../src/prefsdlg.cpp:368
-#: ../src/manager.cpp:299
-#: ../src/transmemupd_wizard.cpp:112
+#: ../src/transmemupd_wizard.cpp:108 ../src/manager.cpp:280
 msgid "Select directory"
 msgstr "Chọn thư mục"
 
-#: ../src/prefsdlg.cpp:354
+#: ../src/prefsdlg.cpp:333
 msgid "Select language"
 msgstr "Chọn ngôn ngữ"
 
-#: ../src/chooselang.cpp:161
+#: ../src/chooselang.cpp:156
 msgid "Select your prefered language"
 msgstr "Chọn ngôn ngữ ưa thích"
 
-#: ../src/edframe.cpp:2619
-#, c-format
-msgid "Set bookmark %i\tAlt-%i"
+#: ../src/edframe.cpp:2856
+#, fuzzy, c-format
+msgid "Set Bookmark %i\tAlt+%i"
 msgstr "Đặt dấu sách %i\tAlt-%i"
 
-#: ../src/edframe.cpp:2616
-#, c-format
-msgid "Set bookmark %i\tCtrl-%i"
+#: ../src/edframe.cpp:2850
+#, fuzzy, c-format
+msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "Đặt dấu sách %i\tCtrl-%i"
 
-#: ../src/resources/settings.xrc:4
-msgid "Settings"
-msgstr "Các cài đặt"
+#: ../src/edframe.cpp:2853
+#, fuzzy, c-format
+msgid "Set bookmark %i\tAlt+%i"
+msgstr "Đặt dấu sách %i\tAlt-%i"
 
-#: ../src/edapp.cpp:174
-msgid "Setup"
-msgstr "Cài đặt"
+#: ../src/edframe.cpp:1839
+msgid "Set email"
+msgstr ""
 
-#: ../src/resources/menus.xrc:117
-msgid "Show &comment window"
-msgstr "Hiển thị cửa sổ &chú thích"
-
-#: ../src/resources/menus.xrc:121
-msgid "Show automatic c&omments window"
-msgstr "H&iển thị tự đông cửa sổ chú thích"
-
-#: ../src/resources/prefs.xrc:96
+#: ../src/resources/prefs.xrc:97
 msgid "Show summary after catalog update"
 msgstr "Hiển thị thông tin tóm tắt sau khi cập nhật catalog"
 
-#: ../src/edframe.cpp:488
+#: ../src/edframe.cpp:552
 msgid "Singular:"
 msgstr "Dạng số ít:"
 
-#: ../src/resources/prefs.xrc:599
-#: ../src/resources/settings.xrc:98
+#: ../src/resources/menus.xrc:176
+msgid "Sort by &File Order"
+msgstr ""
+
+#: ../src/resources/menus.xrc:181
+msgid "Sort by &Source"
+msgstr ""
+
+#: ../src/resources/menus.xrc:186
+#, fuzzy
+msgid "Sort by &Translation"
+msgstr "Bản dịch"
+
+#: ../src/resources/menus.xrc:175
+msgid "Sort by &file order"
+msgstr ""
+
+#: ../src/resources/menus.xrc:180
+msgid "Sort by &source"
+msgstr ""
+
+#: ../src/resources/menus.xrc:185
+#, fuzzy
+msgid "Sort by &translation"
+msgstr "Dịch chưa hoàn thiện"
+
+#: ../src/export_html.cpp:159
+#, fuzzy
+msgid "Source"
+msgstr "Tệp tin mã nguồn"
+
+#: ../src/resources/prefs.xrc:533 ../src/resources/properties.xrc:98
 msgid "Source code charset:"
 msgstr "Mã nguồn bộ ký tự:"
 
-#: ../src/resources/prefs.xrc:425
+#: ../src/resources/prefs.xrc:359
 msgid "Source code parsers:"
 msgstr "Mã nguồn bộ phân tích cú pháp:"
 
 #: ../src/fileviewer.cpp:46
 msgid "Source file"
 msgstr "Tệp tin mã nguồn"
+
+#: ../src/fileviewer.cpp:61
+#, fuzzy
+msgid "Source file occurrence:"
+msgstr "Tệp tin mã nguồn"
+
+#: ../src/edlistctrl.cpp:322
+#, fuzzy
+msgid "Source text"
+msgstr "Tệp tin mã nguồn"
+
+#: ../src/edframe.cpp:530
+#, fuzzy
+msgid "Source text:"
+msgstr "Tệp tin mã nguồn"
+
+#: ../src/resources/properties.xrc:182
+msgid "Sources keywords"
+msgstr ""
+
+#: ../src/resources/properties.xrc:161
+#, fuzzy
+msgid "Sources paths"
+msgstr "Tìm kiếm Đường Dẫn"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages).
+#: ../src/edframe.cpp:873
+#, c-format
+msgid "Spellchecker dictionary for %s isn't available, you need to install it."
+msgstr ""
 
 #: ../src/resources/find.xrc:43
 msgid "Start from the first item"
@@ -1015,17 +1280,20 @@ msgstr "Bắt đầu với mục tin đầu tiên"
 msgid "String to find:"
 msgstr "Xâu chữ tìm kiếm:"
 
-#: ../src/export_html.cpp:119
-#: ../src/resources/settings.xrc:48
+#: ../src/edframe.cpp:1867
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr ""
+
+#: ../src/export_html.cpp:129 ../src/resources/properties.xrc:48
 msgid "Team's email address:"
 msgstr "Địa chỉ thư điện tử của nhóm"
 
-#: ../src/export_html.cpp:115
-#: ../src/resources/settings.xrc:34
+#: ../src/export_html.cpp:125 ../src/resources/properties.xrc:34
 msgid "Team:"
 msgstr "Nhóm:"
 
-#: ../src/catalog.cpp:1268
+#: ../src/catalog.cpp:1330
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -1036,9 +1304,25 @@ msgstr ""
 "như trong cài đặt. Nó được ghi lại bằng kiểu UTF-8 thay thế\n"
 "và cài đặt sẽ bị chỉnh sửa cho phù hợp."
 
-#: ../src/catalog.cpp:985
-msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
-msgstr "Có nhiều lỗi khi tải lên tệp tin catalog. Một số dữ liệu bị mất hay sai lạc."
+#: ../src/catalog.cpp:1443
+msgid ""
+"There was a problem formatting the file nicely (but it was saved all right)."
+msgstr ""
+
+#: ../src/transmem.cpp:1177
+msgid "There was a problem moving your translation memory."
+msgstr ""
+
+#: ../src/catalog.cpp:1027
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
+"Có nhiều lỗi khi tải lên tệp tin catalog. Một số dữ liệu bị mất hay sai lạc."
+
+#: ../src/catalog.cpp:1466
+msgid "There were errors while compiling the saved catalog into MO file."
+msgstr ""
 
 #: ../src/resources/summary.xrc:38
 msgid ""
@@ -1056,17 +1340,13 @@ msgstr ""
 "Các xâu chữ tìm thấy trong tệp tin nguồn nhưng không có trong catalog.\n"
 "Poedit sẽ thêm vào ngay bây giờ."
 
-#: ../src/edapp.cpp:174
+#: ../src/edframe.cpp:1853
 msgid ""
-"This is first time you run Poedit.\n"
-"Please fill in your name and email address.\n"
-"(This information is used only in catalogs headers)"
+"This catalog has entries with plural forms, but doesn't have Plural-Forms "
+"header configured."
 msgstr ""
-"Đây là lần đầu tiên bạn chạy Poedit.\n"
-"Hãy điền đầy đủ tên và địa chỉ thư điện tử của  bạn.\n"
-"(Thông tin này chỉ sử dụng để ghi vào phần đầu của tệp tin catalog)"
 
-#: ../src/resources/prefs.xrc:554
+#: ../src/resources/prefs.xrc:488
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1077,7 +1357,7 @@ msgstr ""
 "%o phát triển thành tên của tệp tin đầu ra, %K thành danh sách\n"
 "%C thành cờ bộ mã ký tự (xem bên dưới)."
 
-#: ../src/resources/prefs.xrc:611
+#: ../src/resources/prefs.xrc:545
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1086,7 +1366,7 @@ msgstr ""
 "Điều này sẽ gắn với dòng lệnh\n"
 "chỉ khi nguồn mã bộ ký tự được đưa ra.  %c phát triển giá trị bộ ký tự."
 
-#: ../src/resources/prefs.xrc:592
+#: ../src/resources/prefs.xrc:526
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1095,7 +1375,7 @@ msgstr ""
 "Điều này sẽ gắn với dòng lệnh một lần\n"
 "cho mỗi tệp tin đầu vào. %f phát triển thành tên tệp tin."
 
-#: ../src/resources/prefs.xrc:573
+#: ../src/resources/prefs.xrc:507
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -1107,30 +1387,39 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Đảo chiều nếu chọn xâu chữ dịch chưa hoàn thiện"
 
-#: ../src/manager.cpp:264
+#: ../src/manager.cpp:245
 msgid "Total"
 msgstr "Tổng cộng"
 
-#: ../src/export_html.cpp:151
-#: ../src/edlistctrl.cpp:228
+#: ../src/edlistctrl.cpp:323 ../src/export_html.cpp:162
 msgid "Translation"
 msgstr "Bản dịch"
 
-#: ../src/resources/prefs.xrc:294
+#: ../src/resources/menus.xrc:78
+#, fuzzy
+msgid "Translation Is &Fuzzy"
+msgstr "Xâu chữ dịch là chưa &hoàn thiện"
+
+#: ../src/resources/prefs.xrc:245
 msgid "Translation Memory"
 msgstr "Bộ nhớ Bản dịch"
 
-#: ../src/transmemupd_wizard.cpp:144
+#: ../src/transmemupd_wizard.cpp:140
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 msgstr "Tệp tin bản dịch (*.po;*.mo)|*.po;*.mo"
 
-#: ../src/transmemupd_wizard.cpp:142
+#: ../src/transmemupd_wizard.cpp:138
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "Tệp tin bản dịch (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 
-#: ../src/resources/menus.xrc:62
+#: ../src/resources/menus.xrc:77
 msgid "Translation is &fuzzy"
 msgstr "Xâu chữ dịch là chưa &hoàn thiện"
+
+#: ../src/transmem.cpp:661
+#, fuzzy, c-format
+msgid "Translation memory database error: %s"
+msgstr "Lỗi cơ sở dữ liệu: %s"
 
 #: ../src/resources/tm_update.xrc:68
 msgid ""
@@ -1140,20 +1429,34 @@ msgstr ""
 "Bộ nhớ bản dịch sẽ được xây dựng từ danh sách các tệp tín bên dưới .\n"
 "Bạn có thể thêm vào các tệp tín vào danh sách bây giờ."
 
-#: ../src/chooselang.cpp:71
-#, c-format
-msgid "Unknown locale code '%s' in registry."
-msgstr "Không hiểu mã nơi diễn ra '%s' trong đăng ký."
+#: ../src/resources/properties.xrc:122
+#, fuzzy
+msgid "Translation properties"
+msgstr "Bộ nhớ Bản dịch"
+
+#: ../src/edframe.cpp:534
+#, fuzzy
+msgid "Translation:"
+msgstr "Bản dịch"
+
+#: ../src/propertiesdlg.cpp:82
+msgid "UTF-8 (recommended)"
+msgstr ""
 
 #: ../src/resources/summary.xrc:79
 msgid "Undo"
 msgstr "Hủy lệnh vừa rồi"
 
-#: ../src/resources/prefs.xrc:156
-msgid "Unix"
-msgstr "Hệ điều hành Unix"
+#: ../src/resources/prefs.xrc:157
+msgid "Unix (recommended)"
+msgstr ""
 
-#: ../src/manager.cpp:265
+#: ../src/chooselang.cpp:60
+#, c-format
+msgid "Unknown locale code '%s' in registry."
+msgstr "Không hiểu mã nơi diễn ra '%s' trong đăng ký."
+
+#: ../src/manager.cpp:246
 msgid "Untrans"
 msgstr "Chưa dịch"
 
@@ -1173,7 +1476,12 @@ msgstr "Cập nhật tất cả các catalog trong đề án"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Cập nhật catalog - đồng bộ hóa với mã nguồn"
 
-#: ../src/resources/menus.xrc:85
+#: ../src/resources/menus.xrc:101
+#, fuzzy
+msgid "Update from &POT File..."
+msgstr "Cập nhật từ tệp tin &POT..."
+
+#: ../src/resources/menus.xrc:100
 msgid "Update from &POT file..."
 msgstr "Cập nhật từ tệp tin &POT..."
 
@@ -1185,47 +1493,74 @@ msgstr "Tóm tắt sơ lược quá trình cập nhật"
 msgid "Update translation memory"
 msgstr "Cập nhật bộ nhớ bản dịch"
 
-#: ../src/catalog.cpp:1385
+#: ../src/catalog.cpp:1481
 msgid "Updating catalog..."
 msgstr "Cập nhật catalog..."
 
-#: ../src/edframe.cpp:1223
-msgid "Updating the catalog failed. Click on 'More>>' for details."
-msgstr "Cập nhật catalog không thành công. Click vào 'Thêm nữa>>' để biết chi tiết."
+#: ../src/edframe.cpp:1304
+#, fuzzy
+msgid "Updating the catalog failed. Click on 'Details >>' for details."
+msgstr ""
+"Cập nhật catalog không thành công. Click vào 'Thêm nữa>>' để biết chi tiết."
 
-#: ../src/resources/prefs.xrc:262
+#: ../src/resources/prefs.xrc:213
 msgid "Use custom font for text fields"
 msgstr "Sử dụng font chữ tùy thích cho ô nhập"
 
-#: ../src/resources/prefs.xrc:236
+#: ../src/resources/prefs.xrc:187
 msgid "Use custom font for translations list"
 msgstr "Sử dụng font chữ tùy thích cho danh sách bản dịch"
 
-#: ../src/resources/settings.xrc:162
+#: ../src/resources/properties.xrc:169
+#, fuzzy
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
-"in source files, in addition to default ones."
+"in source files:"
 msgstr ""
 "Sử dụng những từ khóa (tên hàm) để thừa nhận các xâu chữ có thể dịch\n"
 "trong tệp tin nguồn, bổ xung thêm một từ khóa mặc định."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: ../src/edframe.cpp:2348
+#, c-format
+msgid "Version %s"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:255
+msgid "What languages do you want to use the TM with?"
+msgstr ""
 
 #: ../src/resources/find.xrc:50
 msgid "Whole words only"
 msgstr "Toàn bộ các từ"
 
-#: ../src/resources/prefs.xrc:157
+#: ../src/resources/prefs.xrc:158
 msgid "Windows"
 msgstr "Hệ điều hành Windows"
 
-#: ../src/edframe.cpp:941
+#: ../src/edframe.cpp:375
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Bạn không thể thả nhiều hơn một tệp tin vào trong cửa sổ Poedit."
 
-#: ../src/chooselang.cpp:176
+#: ../src/chooselang.cpp:171
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Bạn phải khởi động lại Poedit để các thay đổi có tác dụng."
 
-#: ../src/resources/prefs.xrc:43
+#: ../src/edframe.cpp:1837
+#, fuzzy
+msgid ""
+"You should set your email address in Preferences so that it can be used for "
+"Last-Translator header in GNU gettext files."
+msgstr ""
+"Tên và thư điện tử của bạn đặt bên dưới chỉ sử dụng\n"
+"để đặt cho Người-dịch-cuối-cùng phần đầu tệp tin GNU gettext."
+
+#: ../src/edframe.cpp:979
+msgid "Your changes will be lost if you don't save them."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:44
 msgid "Your email address:"
 msgstr "Địa chỉ thư điện tử của bạn:"
 
@@ -1241,16 +1576,93 @@ msgstr ""
 msgid "Your name:"
 msgstr "Tên của bạn:"
 
-#: ../src/edframe.cpp:1840
+#: ../src/edframe.cpp:1976
 #, c-format
 msgid "[checking translations: %i left]"
 msgstr "[đang kiểm tra bản dịch:dưới  %i]"
 
-#: ../src/resources/prefs.xrc:159
-msgid "current platform's default"
-msgstr "nền hệ thống mặc định hiện hành"
+#: ../src/edapp.cpp:368
+msgid "don't delete temporary files (for debugging)"
+msgstr ""
 
-#: ../src/edframe.cpp:2128
-msgid "none"
-msgstr "không"
+#~ msgid "&Contents..."
+#~ msgstr "&Nội dung..."
 
+#~ msgid "&Fullscreen view"
+#~ msgstr "&Hiển thị toàn màn hình"
+
+#~ msgid "&Settings..."
+#~ msgstr "&Các cài đặt..."
+
+#~ msgid "&Shaded translations list"
+#~ msgstr "Danh &sách bản dịch mang nghĩa bóng"
+
+#~ msgid "(%f will be substituted with filename, %l with line number)"
+#~ msgstr "(%f sẽ bị tác động với tên tệp tin, %l với số của dòng)"
+
+#~ msgid "Copy original to translation field"
+#~ msgstr "Sao chép toàn bộ nguyên bản sang ô dịch"
+
+#~ msgid "Edit the file in text editor"
+#~ msgstr "Biên tập tệp tin trong chương trình biên tập"
+
+#~ msgid "Editor executable:"
+#~ msgstr "Bộ biên dịch có thể thi hành được:"
+
+#~ msgid "Error initializing spell checking: %s"
+#~ msgstr "Khởi tạo kiểm tra chính tả lỗi: %s"
+
+#~ msgid "External editor"
+#~ msgstr "Bộ biên dịch ở ngoài chương trình"
+
+#~ msgid "Fullscreen view"
+#~ msgstr "Hiển thị toàn màn hình"
+
+#~ msgid "GNU gettext documentation"
+#~ msgstr "Tài liệu về GNU gettext"
+
+#~ msgid "Macintosh"
+#~ msgstr "Máy Macintosh"
+
+#~ msgid "My Project"
+#~ msgstr "Đề án của tôi"
+
+#~ msgid "No editor specified. Please set it in Preferences dialog."
+#~ msgstr ""
+#~ "Không có trình biên dịch danh nghĩa. Xin hãy cài đặt trong hộp thoại Sở "
+#~ "thích riêng. "
+
+#~ msgid "Open source files in editor, not in file viewer"
+#~ msgstr ""
+#~ "Mở tệp tin nguồn trong trình biên dịch, không phải trong trình xem tệp "
+#~ "tin."
+
+#~ msgid "Original string"
+#~ msgstr "Xâu chữ nguyên bản"
+
+#~ msgid "Path to DB:"
+#~ msgstr "Đường dẫn tới DB:"
+
+#~ msgid "Settings"
+#~ msgstr "Các cài đặt"
+
+#~ msgid "Setup"
+#~ msgstr "Cài đặt"
+
+#~ msgid ""
+#~ "This is first time you run Poedit.\n"
+#~ "Please fill in your name and email address.\n"
+#~ "(This information is used only in catalogs headers)"
+#~ msgstr ""
+#~ "Đây là lần đầu tiên bạn chạy Poedit.\n"
+#~ "Hãy điền đầy đủ tên và địa chỉ thư điện tử của  bạn.\n"
+#~ "(Thông tin này chỉ sử dụng để ghi vào phần đầu của tệp tin catalog)"
+
+#~ msgid "Unix"
+#~ msgstr "Hệ điều hành Unix"
+
+#~ msgid "current platform's default"
+#~ msgstr "nền hệ thống mặc định hiện hành"
+
+#~ msgid "none"
+#~ msgstr "không"
