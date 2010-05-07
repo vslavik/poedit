@@ -176,7 +176,11 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
     int display = wxDisplay::GetFromWindow(win);
     wxCHECK_RET( display != wxNOT_FOUND, _T("window not on screen") );
     wxRect screenRect = wxDisplay(display).GetClientArea();
+
     wxRect winRect = win->GetRect();
+    if ( winRect.GetPosition() == wxDefaultPosition )
+        winRect.SetPosition(screenRect.GetPosition()); // not place yet, fake it
+
     if ( !screenRect.Contains(winRect) )
     {
         winRect.Intersect(screenRect);
