@@ -2254,11 +2254,11 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
 
     menu->Append(XRCID("menu_copy_from_src"),
                  #ifdef __WXMSW__
-                 wxString(_("Copy translation from source text"))
+                 wxString(_("Copy from source text"))
                  #else
-                 wxString(_("Copy Translation from Source Text"))
+                 wxString(_("Copy from Source Text"))
                  #endif
-                   + _T("\tAlt+C"));
+                   + _T("\tCtrl+B"));
     menu->Append(XRCID("menu_clear"),
                  #ifdef __WXMSW__
                  wxString(_("Clear translation"))
