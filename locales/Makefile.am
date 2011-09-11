@@ -29,7 +29,7 @@ XARGS=xargs
 XGETTEXT_ARGS=-C -k_ -kwxGetTranslation -kwxTRANSLATE -s -j \
               --add-comments=TRANSLATORS \
               --package-name=Poedit --package-version=$(PACKAGE_SHORT_VERSION) \
-              --msgid-bugs-address=poedit-devel@lists.sourceforge.net
+              --msgid-bugs-address=poedit@googlegroups.com
 
 # implicit rules
 %.mo: %.po
