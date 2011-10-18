@@ -243,7 +243,7 @@ void FileViewer::ShowReference(const wxString& ref)
     m_text->SetReadOnly(true);
 
     m_text->MarkerDeleteAll(1);
-    m_text->MarkerAdd(linenum, 1);
+    m_text->MarkerAdd(linenum - 1, 1);
 
     // Center the highlighted line:
     int lineHeight = m_text->TextHeight(linenum);
