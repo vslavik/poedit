@@ -2266,6 +2266,13 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
                  wxString(_("Clear Translation"))
                  #endif
                    + _T("\tCtrl+K"));
+   menu->Append(XRCID("menu_comment"),
+                 #ifdef __WXMSW__
+                 wxString(_("Edit comment"))
+                 #else
+                 wxString(_("Edit Comment"))
+                 #endif
+                   + _T("\tCtrl+M"));
 
 #ifdef USE_TRANSMEM
     if (GetTransMem())
