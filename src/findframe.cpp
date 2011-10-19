@@ -93,6 +93,8 @@ FindFrame::FindFrame(wxWindow *parent,
         wxConfig::Get()->Read(_T("find_in_auto_comments"), (long)true));
     XRCCTRL(*this, "case_sensitive", wxCheckBox)->SetValue(
         wxConfig::Get()->Read(_T("find_case_sensitive"), (long)false));
+    XRCCTRL(*this, "ignore_mnemonics", wxCheckBox)->SetValue(
+        wxConfig::Get()->Read(_T("find_ignore_mnemonics"), (long)false));
     XRCCTRL(*this, "from_first", wxCheckBox)->SetValue(
         wxConfig::Get()->Read(_T("find_from_first"), (long)true));
     XRCCTRL(*this, "whole_words", wxCheckBox)->SetValue(
@@ -105,7 +107,7 @@ FindFrame::~FindFrame()
     SaveWindowState(this, WinState_Pos);
 
     wxConfig::Get()->Write(_T("find_in_orig"),
-            XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue());
+                XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("find_in_trans"),
                 XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("find_in_comments"),
@@ -114,6 +116,8 @@ FindFrame::~FindFrame()
                 XRCCTRL(*this, "in_auto_comments", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("find_case_sensitive"),
                 XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue());
+    wxConfig::Get()->Write(_T("find_ignore_mnemonics"),
+                XRCCTRL(*this, "ignore_mnemonics", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("find_from_first"),
                 XRCCTRL(*this, "from_first", wxCheckBox)->GetValue());
     wxConfig::Get()->Write(_T("whole_words"),
@@ -220,6 +224,7 @@ bool FindFrame::DoFind(int dir)
     bool inComments = XRCCTRL(*this, "in_comments", wxCheckBox)->GetValue();
     bool inAutoComments = XRCCTRL(*this, "in_auto_comments", wxCheckBox)->GetValue();
     bool caseSens = XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue();
+    bool ignoreMnemonics = XRCCTRL(*this, "ignore_mnemonics", wxCheckBox)->GetValue();
     bool wholeWords = XRCCTRL(*this, "whole_words", wxCheckBox)->GetValue();
     int posOrig = m_position;
 
@@ -240,6 +245,13 @@ bool FindFrame::DoFind(int dir)
             textc = dt.GetString();
             if (!caseSens)
                 textc.MakeLower();
+
+	    if (ignoreMnemonics)
+	    {
+                textc.Replace(_T("_"),_T(""));
+                textc.Replace(_T("&"),_T(""));
+	    }
+
             if (TextInString(textc, text, wholeWords))
             {
                 found = Found_InOrig;
@@ -258,6 +270,12 @@ bool FindFrame::DoFind(int dir)
             // and search for the substring in them:
             if (!caseSens)
                 textc.MakeLower();
+
+            if (ignoreMnemonics)
+            {
+                textc.Replace(_T("_"),_T(""));
+                textc.Replace(_T("&"),_T(""));
+            }
 
             if (TextInString(textc, text, wholeWords)) { found = Found_InTrans; break; }
         }
