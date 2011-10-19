@@ -330,7 +330,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("sort_by_source"),    PoeditFrame::OnSortBySource)
    EVT_MENU           (XRCID("sort_by_translation"), PoeditFrame::OnSortByTranslation)
    EVT_MENU           (XRCID("sort_untrans_first"), PoeditFrame::OnSortUntranslatedFirst)
-   EVT_MENU           (XRCID("sort_ignore_amps"), PoeditFrame::OnSortIgnoreAmps)
+   EVT_MENU           (XRCID("sort_ignore_mnemonics"), PoeditFrame::OnSortIgnoreAmps)
    EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
@@ -651,7 +651,7 @@ PoeditFrame::PoeditFrame() :
             break;
     }
     MenuBar->Check(XRCID("sort_untrans_first"), m_list->sortOrder.untransFirst);
-    MenuBar->Check(XRCID("sort_ignore_amps"), m_list->sortOrder.ignoreAmps);
+    MenuBar->Check(XRCID("sort_ignore_mnemonics"), m_list->sortOrder.ignoreAmps);
 
     ms_instances.Append(this);
 

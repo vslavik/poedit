@@ -131,13 +131,15 @@ int CatalogItemsComparator::CompareStrings(const wxString& a, const wxString& b)
     // TODO: * use ICU for correct ordering
     //       * use natural sort (for numbers)
     //       * use ICU for correct case insensitivity
-    //       * ignore accelerators, especially at the beginning
+    //       * ignore accelerators, especially at the beginning 
     if ( m_order.ignoreAmps )
     {
         wxString tmp_a = a;
         wxString tmp_b = b;
         tmp_a.Replace(_T("&"), _T(""));
-        tmp_b.Replace(_T("&"), _T(""));
+	tmp_a.Replace(_T("_"), _T(""));
+	tmp_b.Replace(_T("&"), _T(""));
+	tmp_b.Replace(_T("_"), _T(""));
         return tmp_a.CmpNoCase(tmp_b);
     }
     return a.CmpNoCase(b);
