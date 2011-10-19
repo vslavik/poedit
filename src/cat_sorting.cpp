@@ -34,6 +34,7 @@
 
     wxString by = wxConfig::Get()->Read(_T("/sort_by"), _T("file-order"));
     long untrans = wxConfig::Get()->Read(_T("/sort_untrans_first"), 1L);
+    long amps = wxConfig::Get()->Read(_T("/sort_ignore_amps"), 0L);
 
     if ( by == _T("source") )
         order.by = By_Source;
@@ -43,6 +44,7 @@
         order.by = By_FileOrder;
 
     order.untransFirst = (untrans != 0);
+    order.ignoreAmps = (amps != 0);
 
     return order;
 }
@@ -66,6 +68,7 @@ void SortOrder::Save()
 
     wxConfig::Get()->Write(_T("/sort_by"), bystr);
     wxConfig::Get()->Write(_T("/sort_untrans_first"), untransFirst);
+    wxConfig::Get()->Write(_T("/sort_ignore_amps"), ignoreAmps);
 }
 
 
@@ -129,5 +132,13 @@ int CatalogItemsComparator::CompareStrings(const wxString& a, const wxString& b)
     //       * use natural sort (for numbers)
     //       * use ICU for correct case insensitivity
     //       * ignore accelerators, especially at the beginning
+    if ( m_order.ignoreAmps )
+    {
+        wxString tmp_a = a;
+        wxString tmp_b = b;
+        tmp_a.Replace(_T("&"), _T(""));
+        tmp_b.Replace(_T("&"), _T(""));
+        return tmp_a.CmpNoCase(tmp_b);
+    }
     return a.CmpNoCase(b);
 }

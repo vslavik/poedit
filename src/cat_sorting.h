@@ -52,6 +52,9 @@ struct SortOrder
 
     /// Do untranslated entries go first?
     bool untransFirst;
+
+    /// Ignore ampersands when sorting?
+    bool ignoreAmps;
 };
 
 /**
