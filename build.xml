@@ -178,6 +178,8 @@
             <arg value="../../configure"/>
             <arg value="CC=${poedit.osx.cc}"/>
             <arg value="CXX=${poedit.osx.cxx}"/>
+            <arg value="OBJC=${poedit.osx.cc}"/>
+            <arg value="OBJCXX=${poedit.osx.cxx}"/>
             <arg value="CPPFLAGS=-I${deps.dir}/boost -I${deps.dir}/bin-osx/${poedit.osx.arch}/include"/>
             <arg value="CFLAGS=-arch ${poedit.osx.arch} ${poedit.osx.cflags}"/>
             <arg value="CXXFLAGS=-arch ${poedit.osx.arch} ${poedit.osx.cflags}"/>
@@ -186,6 +188,7 @@
             <arg value="--with-wx-config=${deps.dir}/bin-osx/${poedit.osx.arch}/bin/wx-config"/>
             <arg value="--with-sparkle=${deps.dir}/sparkle/build/Release"/>
             <arg value="WXRC=${deps.dir}/bin-osx/${poedit.osx.arch.native}/bin/wxrc"/>
+            <arg value="${poedit.osx.host}"/>
         </exec>
         <exec dir="build-osx/${poedit.osx.arch}/src" executable="make" failonerror="true">
             <arg value="all"/>
@@ -195,9 +198,11 @@
     <target name="compile-osx" if="is_osx" depends="bootstrap-osx">
         <antcall target="compile-osx-arch">
             <param name="poedit.osx.arch" value="i386"/>
+            <param name="poedit.osx.host" value=""/>
         </antcall>
         <antcall target="compile-osx-arch">
             <param name="poedit.osx.arch" value="ppc"/>
+            <param name="poedit.osx.host" value="--host=powerpc-apple-darwin10"/>
         </antcall>
         <antcall target="osx-make-bundle"/>
     </target>
