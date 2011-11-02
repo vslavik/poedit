@@ -152,7 +152,11 @@ bool PoeditApp::OnInit()
 
     SetDefaultCfg(wxConfig::Get());
 
+#if wxCHECK_VERSION(2,9,0)
+    wxArtProvider::PushBack(new PoeditArtProvider);
+#else    
     wxArtProvider::Insert(new PoeditArtProvider);
+#endif
 
 #ifdef __WXMAC__
     wxLocale::AddCatalogLookupPathPrefix(
