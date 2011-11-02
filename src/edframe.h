@@ -209,6 +209,7 @@ class PoeditFrame : public wxFrame
         void OnSortBySource(wxCommandEvent&);
         void OnSortByTranslation(wxCommandEvent&);
         void OnSortUntranslatedFirst(wxCommandEvent&);
+        void OnSortIgnoreAmps(wxCommandEvent&);
 #ifdef USE_TRANSMEM
         void OnAutoTranslate(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);

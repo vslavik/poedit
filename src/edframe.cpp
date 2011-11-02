@@ -330,6 +330,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("sort_by_source"),    PoeditFrame::OnSortBySource)
    EVT_MENU           (XRCID("sort_by_translation"), PoeditFrame::OnSortByTranslation)
    EVT_MENU           (XRCID("sort_untrans_first"), PoeditFrame::OnSortUntranslatedFirst)
+   EVT_MENU           (XRCID("sort_ignore_mnemonics"), PoeditFrame::OnSortIgnoreAmps)
    EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
@@ -650,6 +651,7 @@ PoeditFrame::PoeditFrame() :
             break;
     }
     MenuBar->Check(XRCID("sort_untrans_first"), m_list->sortOrder.untransFirst);
+    MenuBar->Check(XRCID("sort_ignore_mnemonics"), m_list->sortOrder.ignoreAmps);
 
     ms_instances.Append(this);
 
@@ -2266,6 +2268,13 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
                  wxString(_("Clear Translation"))
                  #endif
                    + _T("\tCtrl+K"));
+   menu->Append(XRCID("menu_comment"),
+                 #ifdef __WXMSW__
+                 wxString(_("Edit comment"))
+                 #else
+                 wxString(_("Edit Comment"))
+                 #endif
+                   + _T("\tCtrl+M"));
 
 #ifdef USE_TRANSMEM
     if (GetTransMem())
@@ -2942,6 +2951,12 @@ void PoeditFrame::OnSortByTranslation(wxCommandEvent&)
 void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
 {
     m_list->sortOrder.untransFirst = event.IsChecked();
+    m_list->Sort();
+}
+
+void PoeditFrame::OnSortIgnoreAmps(wxCommandEvent& event)
+{
+    m_list->sortOrder.ignoreAmps = event.IsChecked();
     m_list->Sort();
 }
 
