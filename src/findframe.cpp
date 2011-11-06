@@ -230,6 +230,13 @@ bool FindFrame::DoFind(int dir)
     if (!caseSens)
         text.MakeLower();
 
+    // Only ignore mnemonics when searching if the text being searched for
+    // doesn't contain them. That's a reasonable heuristics: most of the time,
+    // ignoring them is the right thing to do and provides better results. But
+    // sometimes, people want to search for them.
+    const bool ignoreMnemonicsAmp = (text.Find(_T('&')) == wxNOT_FOUND);
+    const bool ignoreMnemonicsUnderscore = (text.Find(_T('_')) == wxNOT_FOUND);
+
     m_position += dir;
     while (m_position >= 0 && m_position < cnt)
     {
@@ -240,6 +247,10 @@ bool FindFrame::DoFind(int dir)
             textc = dt.GetString();
             if (!caseSens)
                 textc.MakeLower();
+            if (ignoreMnemonicsAmp)
+                textc.Replace(_T("&"), _T(""));
+            if (ignoreMnemonicsUnderscore)
+                textc.Replace(_T("_"), _T(""));
             if (TextInString(textc, text, wholeWords))
             {
                 found = Found_InOrig;
@@ -258,6 +269,10 @@ bool FindFrame::DoFind(int dir)
             // and search for the substring in them:
             if (!caseSens)
                 textc.MakeLower();
+            if (ignoreMnemonicsAmp)
+                textc.Replace(_T("&"), _T(""));
+            if (ignoreMnemonicsUnderscore)
+                textc.Replace(_T("_"), _T(""));
 
             if (TextInString(textc, text, wholeWords)) { found = Found_InTrans; break; }
         }
