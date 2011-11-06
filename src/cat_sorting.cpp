@@ -123,11 +123,17 @@ bool CatalogItemsComparator::operator()(int i, int j) const
 }
 
 
-int CatalogItemsComparator::CompareStrings(const wxString& a, const wxString& b) const
+int CatalogItemsComparator::CompareStrings(wxString a, wxString b) const
 {
     // TODO: * use ICU for correct ordering
     //       * use natural sort (for numbers)
     //       * use ICU for correct case insensitivity
-    //       * ignore accelerators, especially at the beginning
+
+    a.Replace(_T("&"), _T(""));
+    a.Replace(_T("_"), _T(""));
+
+    b.Replace(_T("&"), _T(""));
+    b.Replace(_T("_"), _T(""));
+
     return a.CmpNoCase(b);
 }

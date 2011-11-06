@@ -71,7 +71,7 @@ public:
 
 protected:
     const CatalogItem& Item(int i) const { return m_catalog[i]; }
-    int CompareStrings(const wxString& a, const wxString& b) const;
+    int CompareStrings(wxString a, wxString b) const;
 
 private:
     const Catalog& m_catalog;
