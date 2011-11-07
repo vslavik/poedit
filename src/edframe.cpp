@@ -1863,9 +1863,16 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
                 PluralFormsCalculator::make(plForms.ToAscii());
         if ( !plCalc )
         {
-            err = wxString::Format(
-                        _("Syntax error in Plural-Forms header (\"%s\")."),
-                        plForms.c_str());
+            if ( plForms.empty() )
+            {
+                err = _("Required header Plural-Forms is missing.");
+            }
+            else
+            {
+                err = wxString::Format(
+                            _("Syntax error in Plural-Forms header (\"%s\")."),
+                            plForms.c_str());
+            }
         }
         delete plCalc;
 
