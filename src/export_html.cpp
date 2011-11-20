@@ -184,13 +184,13 @@ bool Catalog::ExportToHTML(const wxString& filename)
 
         if (data.IsAutomatic())
         {
-            flags += _("Automatic translation");
+            flags += Escape(_("Automatic translation"));
             flags += _T("<BR>");
         }
         if (data.IsFuzzy())
         {
             bgcolor = g_ItemColourFuzzy[i % 2];
-            flags += _("Fuzzy translation");
+            flags += Escape(_("Fuzzy translation"));
             flags += _T("<BR>");
         }
         if (flags.empty())
@@ -211,7 +211,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
         f.AddLine(_T("</td>"));
         f.AddLine(_T("<td>"));
         f.AddLine(_T("<font size=\"-1\">"));
-        f.AddLine(Escape(flags));
+        f.AddLine(flags);
         f.AddLine(_T("</font>"));
         f.AddLine(_T("</td>"));
         f.AddLine(_T("</tr>"));
