@@ -161,7 +161,6 @@ bool Catalog::ExportToHTML(const wxString& filename)
     f.AddLine(_T("<th>"));
     f.AddLine(_("Translation"));
     f.AddLine(_T("</th>"));
-    f.AddLine(_T("</th>"));
     f.AddLine(_T("<th>"));
     f.AddLine(_("Notes"));
     f.AddLine(_T("</th>"));
