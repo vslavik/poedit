@@ -1725,11 +1725,12 @@ bool Catalog::HasPluralItems() const
 }
 
 
-void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
+void Catalog::GetStatistics(int *all, int *checked, int *fuzzy, int *badtokens,
                             int *untranslated, int *unfinished)
 {
     if (all) *all = 0;
     if (fuzzy) *fuzzy = 0;
+    if (checked) *checked = 0;
     if (badtokens) *badtokens = 0;
     if (untranslated) *untranslated = 0;
     if (unfinished) *unfinished = 0;
@@ -1740,6 +1741,12 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
 
         if (all)
             (*all)++;
+
+        if ((*this)[i].IsChecked())
+        {
+            (*checked)++;
+            ok = false;
+        }
 
         if ((*this)[i].IsFuzzy())
         {
@@ -1774,7 +1781,8 @@ void CatalogItem::SetFlags(const wxString& flags)
     while (tkn.HasMoreTokens())
     {
         s = tkn.GetNextToken();
-        if (s == _T("fuzzy")) m_isFuzzy = true;
+        if (s == _T("checked")) m_isChecked = true;
+        else if (s == _T("fuzzy")) m_isFuzzy = true;
         else m_moreFlags << _T(", ") << s;
     }
 }
@@ -1783,7 +1791,8 @@ void CatalogItem::SetFlags(const wxString& flags)
 wxString CatalogItem::GetFlags() const
 {
     wxString f;
-    if (m_isFuzzy) f << _T(", fuzzy");
+    if (m_isChecked) f << _T(", checked");
+    else if (m_isFuzzy) f << _T(", fuzzy");
     f << m_moreFlags;
     if (!f.empty())
         return _T("#") + f;

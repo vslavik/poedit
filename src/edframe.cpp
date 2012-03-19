@@ -322,6 +322,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdate)
    EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
    EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
+   EVT_MENU           (XRCID("menu_checked"),     PoeditFrame::OnCheckedFlag)
    EVT_MENU           (XRCID("menu_quotes"),      PoeditFrame::OnQuotesFlag)
    EVT_MENU           (XRCID("menu_lines"),       PoeditFrame::OnLinesFlag)
    EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
@@ -1472,6 +1473,29 @@ void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
     UpdateFromTextCtrl();
 }
 
+void PoeditFrame::OnCheckedFlag(wxCommandEvent& event)
+{
+    if (event.GetEventObject() == GetToolBar())
+    {
+        GetMenuBar()->Check(XRCID("menu_checked"),
+                            GetToolBar()->GetToolState(XRCID("menu_checked")));
+    }
+    else
+    {
+        GetToolBar()->ToggleTool(XRCID("menu_checked"),
+                                 GetMenuBar()->IsChecked(XRCID("menu_checked")));
+    }
+
+    // The user explicitly changed checked status (e.g. to on). Normally, if the
+    // user edits an entry, it's checked flag is cleared, but if the user sets
+    // checked on to indicate the translation is checked, we do not want to annoy
+    // him by changing checked back on every keystroke.
+    //                  
+    m_dontAutoclearCheckedStatus = true;
+
+    UpdateFromTextCtrl();
+}
+
 
 
 void PoeditFrame::OnQuotesFlag(wxCommandEvent&)
@@ -1605,6 +1629,7 @@ void PoeditFrame::UpdateFromTextCtrl()
 
     wxString key = entry->GetString();
     bool newfuzzy = GetToolBar()->GetToolState(XRCID("menu_fuzzy"));
+    bool newchecked = GetToolBar()->GetToolState(XRCID("menu_checked"));
 
     const bool oldIsTranslated = entry->IsTranslated();
     bool allTranslated = true; // will be updated later
@@ -1643,7 +1668,7 @@ void PoeditFrame::UpdateFromTextCtrl()
         }
     }
 
-    if (entry->IsFuzzy() == newfuzzy && !anyTransChanged)
+    if (entry->IsFuzzy() == newfuzzy  && entry->IsChecked() == newchecked && !anyTransChanged)
     {
         return; // not even fuzzy status changed, so return
     }
@@ -1668,6 +1693,27 @@ void PoeditFrame::UpdateFromTextCtrl()
         entry->SetTranslated(allTranslated);
         statisticsChanged = true;
     }
+
+    if (newfuzzy == true)
+    {
+        entry->SetChecked(false);
+        GetToolBar()->ToggleTool(XRCID("menu_checked"), false);
+        GetMenuBar()->Check(XRCID("menu_checked"), false);
+        GetToolBar()->EnableTool(XRCID("menu_checked"), false);
+        GetMenuBar()->Enable(XRCID("menu_checked"), false);
+    }
+    else
+    {
+        if (entry->IsChecked () != newchecked)
+          statisticsChanged = true;
+        entry->SetChecked(newchecked);
+        GetToolBar()->ToggleTool(XRCID("menu_checked"), newchecked);
+        GetMenuBar()->Check(XRCID("menu_checked"), newchecked);
+        GetToolBar()->EnableTool(XRCID("menu_checked"), true);
+        GetMenuBar()->Enable(XRCID("menu_checked"), true);
+    }
+ 
+
     entry->SetModified(true);
     entry->SetAutomatic(false);
 
@@ -1779,6 +1825,24 @@ void PoeditFrame::UpdateToTextCtrl()
 
     GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), entry->IsFuzzy());
     GetMenuBar()->Check(XRCID("menu_fuzzy"), entry->IsFuzzy());
+
+    if (entry->IsFuzzy() == true)
+    {
+      entry->SetChecked(false);
+      GetToolBar()->EnableTool(XRCID("menu_checked"), false);
+      GetMenuBar()->Enable(XRCID("menu_checked"), false);
+      GetToolBar()->ToggleTool(XRCID("menu_checked"), false);
+      GetMenuBar()->Check(XRCID("menu_checked"), false);
+    }
+    else
+    {
+      GetToolBar()->EnableTool(XRCID("menu_checked"), true);
+      GetMenuBar()->Enable(XRCID("menu_checked"), true);
+      GetToolBar()->ToggleTool(XRCID("menu_checked"), entry->IsChecked ());
+      GetMenuBar()->Check(XRCID("menu_checked"), entry->IsChecked ()) ;
+    }
+
+
 
     ShowPluralFormUI(entry->HasPlural());
 }
@@ -1939,18 +2003,25 @@ void PoeditFrame::RefreshControls()
 
 void PoeditFrame::UpdateStatusBar()
 {
-    int all, fuzzy, untranslated, badtokens, unfinished;
+    int all, checked, fuzzy, untranslated, badtokens, unfinished;
     if (m_catalog)
     {
         wxString txt;
 
-        m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated, &unfinished);
+        m_catalog->GetStatistics(&all, &checked, &fuzzy, &badtokens, &untranslated, &unfinished);
 
         int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
+        int percentChecked = (all == 0 ) ? 0 : (100 * (checked) / all);
 
         wxString details;
+        if ( checked > 0 )
+        {
+            details += wxString::Format(_("%i checked"), checked);
+        }
         if ( fuzzy > 0 )
         {
+            if ( !details.empty() )
+                details += _T(", ");
             details += wxString::Format(_("%i fuzzy"), fuzzy);
         }
         if ( badtokens > 0 )
@@ -1968,12 +2039,12 @@ void PoeditFrame::UpdateStatusBar()
 
         if ( details.empty() )
         {
-            txt.Printf(_("%i %% translated, %i strings"), percent, all);
+            txt.Printf(_("%i %% checked / %i %% translated, %i strings"), percentChecked, percent, all);
         }
         else
         {
-            txt.Printf(_("%i %% translated, %i strings (%s)"),
-                       percent, all, details.c_str());
+            txt.Printf(_("%i %% checked / %i %% translated, %i strings (%s)"),
+                       percentChecked, percent, all, details.c_str());
         }
 
 #ifdef USE_GETTEXT_VALIDATION

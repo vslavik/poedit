@@ -158,7 +158,7 @@ void ManagerFrame::UpdateListPrj(int select)
 static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& file)
 {
     wxConfigBase *cfg = wxConfig::Get();
-    int all = 0, fuzzy = 0, untranslated = 0, badtokens = 0;
+    int all = 0, checked = 0, fuzzy = 0, untranslated = 0, badtokens = 0;
     wxString lastmodified;
     time_t modtime;
     wxString key;
@@ -173,6 +173,7 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     if (modtime == wxFileModificationTime(file))
     {
         all = cfg->Read(key + _T("all"), (long)0);
+        checked = cfg->Read(key + _T("checked"), (long)0);
         fuzzy = cfg->Read(key + _T("fuzzy"), (long)0);
         badtokens = cfg->Read(key + _T("badtokens"), (long)0);
         untranslated = cfg->Read(key + _T("untranslated"), (long)0);
@@ -187,11 +188,12 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
         // FIXME: don't re-load the catalog if it's already loaded in the
         //        editor, reuse loaded instance
         Catalog cat(file);
-        cat.GetStatistics(&all, &fuzzy, &badtokens, &untranslated, NULL);
+        cat.GetStatistics(&all, &checked, &fuzzy, &badtokens, &untranslated, NULL);
         modtime = wxFileModificationTime(file);
         lastmodified = cat.Header().RevisionDate;
         cfg->Write(key + _T("timestamp"), (long)modtime);
         cfg->Write(key + _T("all"), (long)all);
+        cfg->Write(key + _T("checked"), (long)checked);
         cfg->Write(key + _T("fuzzy"), (long)fuzzy);
         cfg->Write(key + _T("badtokens"), (long)badtokens);
         cfg->Write(key + _T("untranslated"), (long)untranslated);
@@ -216,6 +218,8 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     tmp.Printf(_T("%i"), badtokens);
     list->SetItem(i, 4, tmp);
     list->SetItem(i, 5, lastmodified);
+    tmp.Printf(_T("%i"), checked);
+    list->SetItem(i, 6, tmp);
 }
 
 void ManagerFrame::UpdateListCat(int id)
@@ -247,6 +251,7 @@ void ManagerFrame::UpdateListCat(int id)
     m_listCat->InsertColumn(3, _("Fuzzy"));
     m_listCat->InsertColumn(4, _("Bad Tokens"));
     m_listCat->InsertColumn(5, _("Last modified"));
+    m_listCat->InsertColumn(6, _("Checked"));
 
     // FIXME: this is time-consuming, it should be done in parallel on
     //        multi-core/SMP systems
@@ -259,6 +264,7 @@ void ManagerFrame::UpdateListCat(int id)
     m_listCat->SetColumnWidth(3, wxLIST_AUTOSIZE_USEHEADER);
     m_listCat->SetColumnWidth(4, wxLIST_AUTOSIZE_USEHEADER);
     m_listCat->SetColumnWidth(5, wxLIST_AUTOSIZE);
+    m_listCat->SetColumnWidth(6, wxLIST_AUTOSIZE_USEHEADER);
 
     m_listCat->Thaw();
 }

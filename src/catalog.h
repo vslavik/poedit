@@ -72,6 +72,7 @@ class CatalogItem
                   m_hasPlural(false),
                   m_hasContext(false),
                   m_references(),
+                  m_isChecked(false),
                   m_isFuzzy(false),
                   m_isTranslated(false),
                   m_isModified(false),
@@ -90,6 +91,7 @@ class CatalogItem
                   m_references(dt.m_references),
                   m_autocomments(dt.m_autocomments),
                   m_oldMsgid(dt.m_oldMsgid),
+                  m_isChecked(dt.m_isChecked),
                   m_isFuzzy(dt.m_isFuzzy),
                   m_isTranslated(dt.m_isTranslated),
                   m_isModified(dt.m_isModified),
@@ -205,6 +207,10 @@ class CatalogItem
         void SetFuzzy(bool fuzzy) { m_isFuzzy = fuzzy; }
         /// Gets value of fuzzy flag.
         bool IsFuzzy() const { return m_isFuzzy; }
+        /// Sets checked flag.
+        void SetChecked(bool checked) { m_isChecked = checked; }
+        /// Gets value of checked flag.
+        bool IsChecked() const { return m_isChecked; }
         /// Sets translated flag.
         void SetTranslated(bool t) { m_isTranslated = t; }
         /// Gets value of translated flag.
@@ -276,7 +282,7 @@ class CatalogItem
 
         wxArrayString m_references, m_autocomments;
         wxArrayString m_oldMsgid;
-        bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
+        bool m_isChecked, m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
         bool m_hasBadTokens;
         wxString m_moreFlags;
         wxString m_comment;
@@ -516,7 +522,7 @@ class Catalog
             @note "untranslated" are entries without translation; "unfinished"
                   are entries with any problems
          */
-        void GetStatistics(int *all, int *fuzzy, int *badtokens,
+        void GetStatistics(int *all, int *checked, int *fuzzy, int *badtokens,
                            int *untranslated, int *unfinished);
 
         /// Gets n-th item in the catalog (read-write access).

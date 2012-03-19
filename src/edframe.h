@@ -195,6 +195,7 @@ class PoeditFrame : public wxFrame
         void ShowReference(int num);
         void OnRightClick(wxCommandEvent& event);
         void OnFuzzyFlag(wxCommandEvent& event);
+        void OnCheckedFlag(wxCommandEvent& event);
         void OnQuotesFlag(wxCommandEvent& event);
         void OnLinesFlag(wxCommandEvent& event);
         void OnCommentWinFlag(wxCommandEvent& event);
@@ -295,6 +296,7 @@ class PoeditFrame : public wxFrame
         bool m_displayAutoCommentsWin;
         wxFileHistory m_history;
         bool m_dontAutoclearFuzzyStatus;
+        bool m_dontAutoclearCheckedStatus;
         bool m_setSashPositionsWhenMaximized;
 
         friend class ListHandler;
