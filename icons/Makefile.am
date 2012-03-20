@@ -35,6 +35,7 @@ uiicons_DATA = \
 		ui/document-save.png \
 		ui/help-browser.png \
 		ui/poedit-comment.png \
+		ui/poedit-checked.png \
 		ui/poedit-fuzzy.png \
 		ui/edit-delete.png \
 		ui/document-properties.png \

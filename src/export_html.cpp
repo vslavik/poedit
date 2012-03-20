@@ -46,7 +46,8 @@ namespace
 wxColour
     g_ItemColourNormal[2] =       LIST_COLOURS(0xFF,0xFF,0xFF), // white
     g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
-    g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1); // yellow
+    g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1), // yellow
+    g_ItemColourChecked[2] =      LIST_COLOURS(0x00,0xF1,0x00); // green
 
 
 // escape string for HTML:
@@ -138,15 +139,17 @@ bool Catalog::ExportToHTML(const wxString& filename)
     // statistics
 
     int all = 0;
+    int checked = 0;
     int fuzzy = 0;
     int untranslated = 0;
     int badtokens = 0;
     int unfinished = 0;
-    GetStatistics(&all, &fuzzy, &badtokens, &untranslated, &unfinished);
+    GetStatistics(&all, &checked, &fuzzy, &badtokens, &untranslated, &unfinished);
 
     int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
-    line.Printf(_("%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"),
-               percent, all, fuzzy, badtokens, untranslated);
+    int percentChecked = (all == 0 ) ? 0 : (100 * (checked) / all);
+    line.Printf(_("%i %% checked / %i %% translated, %i strings (%i checked, %i fuzzy, %i bad tokens, %i not translated)"),
+               percentChecked, percent, all, checked, fuzzy, badtokens, untranslated);
 
     f.AddLine(line);
 
@@ -185,6 +188,12 @@ bool Catalog::ExportToHTML(const wxString& filename)
         if (data.IsAutomatic())
         {
             flags += Escape(_("Automatic translation"));
+            flags += _T("<BR>");
+        }
+        if (data.IsChecked())
+        {
+            bgcolor = g_ItemColourChecked[i % 2];
+            flags += Escape(_("Checked translation"));
             flags += _T("<BR>");
         }
         if (data.IsFuzzy())

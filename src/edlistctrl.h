@@ -142,6 +142,7 @@ class PoeditListCtrl : public wxListView
 
         wxListItemAttr m_attrNormal[2];
         wxListItemAttr m_attrUntranslated[2];
+        wxListItemAttr m_attrChecked[2];
         wxListItemAttr m_attrFuzzy[2];
         wxListItemAttr m_attrInvalid[2];
 

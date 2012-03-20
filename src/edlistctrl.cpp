@@ -72,10 +72,12 @@ const wxColour gs_ErrorColor(_T("#ff0000"));
 // colors for white list control background
 const wxColour gs_UntranslatedForWhite(_T("#103f67"));
 const wxColour gs_FuzzyForWhite(_T("#a9861b"));
+const wxColour gs_CheckedForWhite(_T("#10861b"));
 
 // ditto for black background
 const wxColour gs_UntranslatedForBlack(_T("#1962a0"));
 const wxColour gs_FuzzyForBlack(_T("#a9861b"));
+const wxColour gs_CheckedForBlack(_T("#19861b"));
 
 
 const wxColour gs_TranspColor(254, 0, 253); // FIXME: get rid of this
@@ -256,6 +258,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 
     m_attrNormal[1].SetBackgroundColour(shaded);
     m_attrUntranslated[1].SetBackgroundColour(shaded);
+    m_attrChecked[1].SetBackgroundColour(shaded);
     m_attrFuzzy[1].SetBackgroundColour(shaded);
     m_attrInvalid[1].SetBackgroundColour(shaded);
 
@@ -264,6 +267,8 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     {
         m_attrUntranslated[0].SetTextColour(gs_UntranslatedForWhite);
         m_attrUntranslated[1].SetTextColour(gs_UntranslatedForWhite);
+        m_attrChecked[0].SetTextColour(gs_CheckedForWhite);
+        m_attrChecked[1].SetTextColour(gs_CheckedForWhite);
         m_attrFuzzy[0].SetTextColour(gs_FuzzyForWhite);
         m_attrFuzzy[1].SetTextColour(gs_FuzzyForWhite);
     }
@@ -271,6 +276,8 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     {
         m_attrUntranslated[0].SetTextColour(gs_UntranslatedForBlack);
         m_attrUntranslated[1].SetTextColour(gs_UntranslatedForBlack);
+        m_attrChecked[0].SetTextColour(gs_CheckedForBlack);
+        m_attrChecked[1].SetTextColour(gs_CheckedForBlack);
         m_attrFuzzy[0].SetTextColour(gs_FuzzyForBlack);
         m_attrFuzzy[1].SetTextColour(gs_FuzzyForBlack);
     }
@@ -305,6 +312,9 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
 
     m_attrUntranslated[0].SetFont(fontb);
     m_attrUntranslated[1].SetFont(fontb);
+
+    m_attrChecked[0].SetFont(fontb);
+    m_attrChecked[1].SetFont(fontb);
 
     m_attrFuzzy[0].SetFont(fontb);
     m_attrFuzzy[1].SetFont(fontb);
@@ -474,6 +484,8 @@ wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
 
     if (!d.IsTranslated())
         return (wxListItemAttr*)&m_attrUntranslated[idx];
+    else if (d.IsChecked())
+        return (wxListItemAttr*)&m_attrChecked[idx];
     else if (d.IsFuzzy())
         return (wxListItemAttr*)&m_attrFuzzy[idx];
     else if (d.GetValidity() == CatalogItem::Val_Invalid)
