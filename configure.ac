@@ -217,7 +217,7 @@ fi
 AM_CONDITIONAL(USE_WINDOWS, test $use_windows = yes)
 
 if test x$USE_TRANSMEM != xno ; then
-    AX_BERKELEY_DB_CXX(4.1,
+    AX_BERKELEY_DB_CXX(4.7,
     [
         AC_DEFINE(USE_TRANSMEM)
         AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
@@ -225,7 +225,7 @@ if test x$USE_TRANSMEM != xno ; then
    ],
    [
       USE_TRANSMEM=no
-      AC_MSG_WARN([cannot find Berkeley DB >= 4.1, Poedit will build w/o translation memory feature])
+      AC_MSG_WARN([cannot find Berkeley DB >= 4.7, Poedit will build w/o translation memory feature])
    ])
 fi
 
