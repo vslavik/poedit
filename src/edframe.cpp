@@ -2361,11 +2361,11 @@ void PoeditFrame::OnAbout(wxCommandEvent&)
     //              version number when used
     _("Version %s");
     // TRANSLATORS: This is version information in about dialog, it is followed
-    //              by version number when used
+    //              by version number when used (wxWidgets 2.8)
     _(" Version ");
     // TRANSLATORS: This is titlebar of about dialog, the string ends with space
     //              and is followed by application name when used ("Poedit",
-    //              but don't add it to this translation yourself)
+    //              but don't add it to this translation yourself) (wxWidgets 2.8)
     _("About ");
 #endif
 
