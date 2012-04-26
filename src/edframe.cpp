@@ -1951,28 +1951,28 @@ void PoeditFrame::UpdateStatusBar()
         wxString details;
         if ( fuzzy > 0 )
         {
-            details += wxString::Format(_("%i fuzzy"), fuzzy);
+            details += wxString::Format(wxPLURAL("%i fuzzy", "%i fuzzy", fuzzy), fuzzy);
         }
         if ( badtokens > 0 )
         {
             if ( !details.empty() )
                 details += _T(", ");
-            details += wxString::Format(_("%i bad tokens"), badtokens);
+            details += wxString::Format(wxPLURAL("%i bad token", "%i bad tokens", badtokens), badtokens);
         }
         if ( untranslated > 0 )
         {
             if ( !details.empty() )
                 details += _T(", ");
-            details += wxString::Format(_("%i not translated"), untranslated);
+            details += wxString::Format(wxPLURAL("%i not translated", "%i not translated", untranslated), untranslated);
         }
-
         if ( details.empty() )
         {
-            txt.Printf(_("%i %% translated, %i strings"), percent, all);
+            txt.Printf(wxPLURAL("%i %% translated, %i string", "%i %% translated, %i strings", all),
+                       percent, all);
         }
         else
         {
-            txt.Printf(_("%i %% translated, %i strings (%s)"),
+            txt.Printf(wxPLURAL("%i %% translated, %i string (%s)", "%i %% translated, %i strings (%s)", all),
                        percent, all, details.c_str());
         }
 
@@ -1980,7 +1980,8 @@ void PoeditFrame::UpdateStatusBar()
         if (!m_itemsToValidate.empty())
         {
             wxString progress;
-            progress.Printf(_("[checking translations: %i left]"),
+            progress.Printf(wxPLURAL("[checking translations: %i left]", "[checking translations: %i left]",
+                                     m_itemsToValidate.size()),
                             m_itemsToValidate.size());
             txt += _T("    ");
             txt += progress;
