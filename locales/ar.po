@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Poedit 1.5\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2010-05-07 08:40+0200\n"
+"POT-Creation-Date: 2012-04-26 19:02+0200\n"
 "PO-Revision-Date: 2009-10-10 14:33+0200\n"
 "Last-Translator: Abdullah Abouzekry <abouzekry@gmail.com>\n"
 "Language-Team: أشخاص عديدون\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,21 +16,30 @@ msgstr ""
 # يحوي هذا الملف أحرف تحكم يونيكود للتحكم في اتجاهات الانسياب في العبارات التي تتداخل الأحرف العربية و اللاتينية، و بالذات التي تحوي علامات ترقيم مثل النقاط و الأقواس و الشرطات المائلة. أحرف التحكم هذه غير ظاهرة مبدئيا في معظم محررات النصوص لكن توجد محررات يمكنها إظهارها و التعامل معها.
 # رجاء راع الحفاظ على هذه العلامات عند تحرير الملف.
 # This file contains Unicode control characters
-#: ../src/edframe.cpp:1999
+#: ../src/edframe.cpp:2007
 msgid " (modified)"
 msgstr " (تم تعديله)"
 
 #. TRANSLATORS: This is version information in about dialog, it is followed
-#. by version number when used
-#: ../src/edframe.cpp:2351
+#. by version number when used (wxWidgets 2.8)
+#: ../src/edframe.cpp:2366
 #, fuzzy
 msgid " Version "
 msgstr "الإصدارة"
 
-#: ../src/edframe.cpp:1964
+#: ../src/edframe.cpp:1970
 #, fuzzy, c-format
-msgid "%i %% translated, %i strings"
-msgstr "تُرجمت آليًا %u عبارة"
+msgid "%i %% translated, %i string"
+msgid_plural "%i %% translated, %i strings"
+msgstr[0] "تُرجمت آليًا %u عبارة"
+msgstr[1] "تُرجمت آليًا %u عبارة"
+
+#: ../src/edframe.cpp:1975
+#, fuzzy, c-format
+msgid "%i %% translated, %i string (%s)"
+msgid_plural "%i %% translated, %i strings (%s)"
+msgstr[0] "تُرجمت آليًا %u عبارة"
+msgstr[1] "تُرجمت آليًا %u عبارة"
 
 #: ../src/export_html.cpp:148
 #, c-format
@@ -37,182 +47,182 @@ msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i %% مترجم، %i عبارات (%i غبشه، %i سيئة الدلالة، %i غير مترجمة)"
 
-#: ../src/edframe.cpp:1968
+#: ../src/edframe.cpp:1960
 #, fuzzy, c-format
-msgid "%i %% translated, %i strings (%s)"
-msgstr "تُرجمت آليًا %u عبارة"
+msgid "%i bad token"
+msgid_plural "%i bad tokens"
+msgstr[0] "عناصر سيئة"
+msgstr[1] "عناصر سيئة"
 
-#: ../src/edframe.cpp:1953
-#, fuzzy, c-format
-msgid "%i bad tokens"
-msgstr "عناصر سيئة"
-
-#: ../src/edframe.cpp:1947
+#: ../src/edframe.cpp:1954
 #, fuzzy, c-format
 msgid "%i fuzzy"
-msgstr "تقريبية"
+msgid_plural "%i fuzzy"
+msgstr[0] "تقريبية"
+msgstr[1] "تقريبية"
 
 #: ../src/catalog.cpp:145
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i من سطور الملف '%s' لم تحمل بشكل صحيح."
 
-#: ../src/edframe.cpp:1959
+#: ../src/edframe.cpp:1966
 #, fuzzy, c-format
 msgid "%i not translated"
-msgstr "في الترجمات"
+msgid_plural "%i not translated"
+msgstr[0] "في الترجمات"
+msgstr[1] "في الترجمات"
 
-#: ../src/resources/menus.xrc:206
+#: standard input:107
 #, fuzzy
 msgid "&About"
 msgstr "&عن البرمجية…"
 
-#: ../src/resources/menus.xrc:105
+#: standard input:73
 #, fuzzy
 msgid "&Automatically Translate Using TM"
 msgstr "&ترجم آليا باستخدام TM"
 
-#: ../src/resources/menus.xrc:104
+#: standard input:72
 msgid "&Automatically translate using TM"
 msgstr "&ترجم آليا باستخدام TM"
 
-#: ../src/edframe.cpp:2845
+#: ../src/edframe.cpp:2860
 msgid "&Bookmarks"
 msgstr "علا&مات"
 
-#: ../src/resources/manager.xrc:132 ../src/resources/menus.xrc:26
+#: standard input:35 input:46
 msgid "&Close"
 msgstr "&اغلق"
 
-#: ../src/resources/menus.xrc:165
+#: standard input:94
 #, fuzzy
 msgid "&Comment Window"
 msgstr "نافذة الملا&حظات"
 
-#: ../src/resources/menus.xrc:164
+#: standard input:93
 #, fuzzy
 msgid "&Comment window"
 msgstr "نافذة الملا&حظات"
 
-#: ../src/resources/menus.xrc:124
+#: standard input:79
 msgid "&Done and Next"
 msgstr ""
 
-#: ../src/resources/menus.xrc:123
+#: standard input:78
 msgid "&Done and next"
 msgstr ""
 
-#: ../src/resources/menus.xrc:55
+#: standard input:54
 msgid "&Edit"
 msgstr "&حرر"
 
-#: ../src/edframe.cpp:469 ../src/resources/manager.xrc:125
-#: ../src/resources/menus.xrc:5
+#: ../src/edframe.cpp:469 standard input:33 input:38
 msgid "&File"
 msgstr "&ملف"
 
-#: ../src/resources/menus.xrc:72
+#: standard input:61
 msgid "&Find..."
 msgstr "&ابحث"
 
-#: ../src/edframe.cpp:478 ../src/resources/menus.xrc:120
+#: ../src/edframe.cpp:478 standard input:77
 msgid "&Go"
 msgstr ""
 
-#: ../src/edapp.cpp:179 ../src/resources/menus.xrc:208
+#: ../src/edapp.cpp:183 standard input:108
 msgid "&Help"
 msgstr "&مساعدة"
 
-#: ../src/resources/menus.xrc:14
+#: standard input:42
 #, fuzzy
 msgid "&New Catalog..."
 msgstr "&كتالوج جديد…"
 
-#: ../src/resources/menus.xrc:13
+#: standard input:41
 msgid "&New catalog..."
 msgstr "&كتالوج جديد…"
 
-#: ../src/resources/menus.xrc:136
+#: standard input:83
 msgid "&Next Message"
 msgstr ""
 
-#: ../src/resources/menus.xrc:135
+#: standard input:82
 msgid "&Next message"
 msgstr ""
 
-#: ../src/resources/menus.xrc:200
+#: standard input:106
 msgid "&Online Help"
 msgstr ""
 
-#: ../src/resources/menus.xrc:199
+#: standard input:105
 msgid "&Online help"
 msgstr ""
 
-#: ../src/resources/menus.xrc:21
+#: standard input:45
 msgid "&Open..."
 msgstr "&فتح"
 
-#: ../src/resources/menus.xrc:88
+#: standard input:66
 msgid "&Preferences"
 msgstr "&تفضيلات"
 
-#: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:44
+#: standard input:34 input:51
 msgid "&Preferences..."
 msgstr "&تفضيلات"
 
-#: ../src/resources/menus.xrc:131
+#: standard input:81
 msgid "&Previous Message"
 msgstr ""
 
-#: ../src/resources/menus.xrc:130
+#: standard input:80
 msgid "&Previous message"
 msgstr ""
 
-#: ../src/resources/menus.xrc:113
+#: standard input:76
 #, fuzzy
 msgid "&Properties..."
 msgstr "&تفضيلات"
 
-#: ../src/resources/menus.xrc:109
+#: standard input:75
 #, fuzzy
 msgid "&Purge Deleted Translations"
 msgstr "&مسح الترجمات المحذوفة نهائيا"
 
-#: ../src/resources/menus.xrc:108
+#: standard input:74
 msgid "&Purge deleted translations"
 msgstr "&مسح الترجمات المحذوفة نهائيا"
 
-#: ../src/resources/menus.xrc:30
+#: standard input:47
 msgid "&Save"
 msgstr "&حفظ"
 
-#: ../src/resources/menus.xrc:69
+#: standard input:60
 #, fuzzy
 msgid "&Show References"
 msgstr "&اظهر المراجع"
 
-#: ../src/resources/menus.xrc:68
+#: standard input:59
 msgid "&Show references"
 msgstr "&اظهر المراجع"
 
-#: ../src/resources/menus.xrc:192
+#: standard input:104
 msgid "&Untranslated Entries First"
 msgstr ""
 
-#: ../src/resources/menus.xrc:191
+#: standard input:103
 msgid "&Untranslated entries first"
 msgstr ""
 
-#: ../src/resources/menus.xrc:97
+#: standard input:69
 #, fuzzy
 msgid "&Update from Sources"
 msgstr "&حدِّث من المصادرِ"
 
-#: ../src/resources/menus.xrc:96
+#: standard input:68
 msgid "&Update from sources"
 msgstr "&حدِّث من المصادرِ"
 
-#: ../src/resources/menus.xrc:151
+#: standard input:88
 msgid "&View"
 msgstr "&اعرض"
 
@@ -226,7 +236,7 @@ msgstr "'%s' ليس ملف POT صحيحِ."
 msgid "(%i new, %i obsolete)"
 msgstr "(%i جديد، %i ملغي)"
 
-#: ../src/resources/summary.xrc:63
+#: standard input:199
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 جديد، 0 ملغي)"
 
@@ -238,7 +248,7 @@ msgstr "(اللغة المبدئية)"
 msgid "(none of these)"
 msgstr "(لاشيء من هذه)"
 
-#: ../src/resources/find.xrc:94
+#: standard input:17
 msgid "< Previous"
 msgstr "<السابق"
 
@@ -248,58 +258,58 @@ msgstr "<غير مسمّى>"
 
 #. TRANSLATORS: This is titlebar of about dialog, the string ends with space
 #. and is followed by application name when used ("Poedit",
-#. but don't add it to this translation yourself)
-#: ../src/edframe.cpp:2355
+#. but don't add it to this translation yourself) (wxWidgets 2.8)
+#: ../src/edframe.cpp:2370
 #, fuzzy
 msgid "About "
 msgstr "&عن البرمجية…"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
-#: ../src/edframe.cpp:2345
+#: ../src/edframe.cpp:2360
 #, fuzzy, c-format
 msgid "About %s"
 msgstr "عن Poedit"
 
-#: ../src/resources/prefs.xrc:270
+#: standard input:141
 msgid "Add"
 msgstr "أضف"
 
-#: ../src/resources/manager.xrc:91
+#: standard input:30
 msgid "Add directory to the list"
 msgstr "أضف دليلا إلى القائمة"
 
-#: ../src/transmemupd_wizard.cpp:134 ../src/resources/tm_update.xrc:85
+#: ../src/transmemupd_wizard.cpp:134 standard input:207
 msgid "Add files"
 msgstr "أضف ملفات"
 
-#: ../src/resources/prefs.xrc:589
+#: standard input:172
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "أضف مسارا إلى قائمة الأدلة التي تحوي الكتالوجات."
 
-#: ../src/resources/prefs.xrc:111
+#: standard input:122
 msgid "Always change focus to text input field"
 msgstr "دائما اجعل المحث في حقل إدخال النصوص"
 
-#: ../src/resources/prefs.xrc:514
+#: standard input:165
 msgid "An item in input files list:"
 msgstr "عنصر في قائمة ملفات المدخلات:"
 
-#: ../src/resources/prefs.xrc:495
+#: standard input:163
 msgid "An item in keywords list:"
 msgstr "عنصر في قائمة الكلمات المفتاحية:"
 
-#: ../src/resources/menus.xrc:170
+#: standard input:96
 #, fuzzy
 msgid "Automatic C&omments Window"
 msgstr "نافذة الملاح&ظات المولدة آليا"
 
-#: ../src/edframe.cpp:2287 ../src/edframe.cpp:2299
+#: ../src/edframe.cpp:2302 ../src/edframe.cpp:2314
 #, fuzzy
 msgid "Automatic Translations:"
 msgstr "الترجمات الآلية:"
 
-#: ../src/resources/menus.xrc:169
+#: standard input:95
 #, fuzzy
 msgid "Automatic c&omments window"
 msgstr "نافذة الملاح&ظات المولدة آليا"
@@ -309,36 +319,36 @@ msgstr "نافذة الملاح&ظات المولدة آليا"
 msgid "Automatic comments:"
 msgstr "في التعليقات المولدة آليا"
 
-#: ../src/resources/prefs.xrc:128
+#: standard input:126
 msgid "Automatic spellchecking"
 msgstr "المدقق الإملائي الآلي"
 
-#: ../src/export_html.cpp:188
+#: ../src/export_html.cpp:187
 msgid "Automatic translation"
 msgstr " الترجمة الآلية"
 
-#: ../src/edframe.cpp:2285 ../src/edframe.cpp:2297
+#: ../src/edframe.cpp:2300 ../src/edframe.cpp:2312
 msgid "Automatic translations:"
 msgstr "الترجمات الآلية:"
 
-#: ../src/resources/prefs.xrc:70
+#: standard input:116
 msgid "Automatically check for new version of Poedit"
 msgstr "فحص تلقائي لاحتمال وجود نسخة جديدة من Poedit"
 
-#: ../src/resources/prefs.xrc:88
+#: standard input:119
 msgid "Automatically compile .mo file on save"
 msgstr "حول ملف ‪.mo‬ آليا عند حفظه"
 
-#: ../src/resources/prefs.xrc:342
+#: standard input:148
 msgid "Automatically translate when updating catalog"
 msgstr "ترجم آليا عند تحديث الكتالوج"
 
-#: ../src/edframe.cpp:2228
+#: ../src/edframe.cpp:2236
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "تُرجمت آليًا %u عبارة"
 
-#: ../src/edframe.cpp:2213
+#: ../src/edframe.cpp:2221
 msgid "Automatically translating..."
 msgstr "يُترجم آليا…"
 
@@ -346,11 +356,11 @@ msgstr "يُترجم آليا…"
 msgid "Bad Tokens"
 msgstr "عناصر سيئة"
 
-#: ../src/resources/properties.xrc:139
+#: standard input:188
 msgid "Base path:"
 msgstr "المسار القاعدي:"
 
-#: ../src/resources/prefs.xrc:84
+#: standard input:118
 msgid "Behavior"
 msgstr "السلوك"
 
@@ -363,23 +373,24 @@ msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr "ملف كتالوج معطوب: وردت msgstr تدل عبى صيغة مفرد لكن دون msgid_plural"
 
-#: ../src/resources/manager.xrc:90 ../src/resources/prefs.xrc:588
-#: ../src/resources/tm_update.xrc:37
+#: standard input:29 input:171 input:204
 msgid "Browse"
 msgstr "تصفح"
 
-#: ../src/resources/menus.xrc:93
+#: standard input:67
 msgid "C&atalog"
 msgstr "&كتالوج"
 
-#: ../src/resources/prefs.xrc:141
+#: standard input:5
+#, fuzzy
+msgid "C&lear"
+msgstr "احذف"
+
+#: standard input:128
 msgid "CR/LF conversion"
 msgstr "‫تحويل CR/LF"
 
-#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:113
-#: ../src/resources/prefs.xrc:424 ../src/resources/prefs.xrc:566
-#: ../src/resources/prefs.xrc:611 ../src/resources/progress.xrc:32
-#: ../src/resources/properties.xrc:201
+#: standard input:4 input:32 input:155 input:170 input:174 input:176 input:193
 msgid "Cancel"
 msgstr "الغ"
 
@@ -406,7 +417,7 @@ msgstr "تعذر تنفيذ برمجية:"
 msgid "Cannot extract catalogs from RPM file."
 msgstr "تعذر استخراج الكتالوجات من ملف RPM"
 
-#: ../src/resources/find.xrc:36
+#: standard input:9
 msgid "Case sensitive"
 msgstr "راع اختلاف الأحرف الكبيرة/الصغيرة"
 
@@ -418,67 +429,63 @@ msgstr "كتالوج"
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "الكتالوج تغير. أتريد حفظ التغييرات؟"
 
-#: ../src/resources/properties.xrc:4
+#: standard input:177
 msgid "Catalog properties"
 msgstr ""
 
-#: ../src/resources/menus.xrc:9
+#: standard input:40
 #, fuzzy
 msgid "Catalogs &Manager"
 msgstr "&مدير الكتالوجات"
 
-#: ../src/resources/menus.xrc:8
+#: standard input:39
 msgid "Catalogs &manager"
 msgstr "&مدير الكتالوجات"
 
-#: ../src/resources/prefs.xrc:63
+#: standard input:115
 msgid "Change UI language"
 msgstr "غيِّر لغة واجهة المستخدم"
 
-#: ../src/export_html.cpp:133 ../src/resources/properties.xrc:86
+#: ../src/export_html.cpp:133 standard input:183
 msgid "Charset:"
 msgstr "محارف:"
 
-#: ../src/resources/prefs.xrc:204 ../src/resources/prefs.xrc:230
+#: standard input:135 input:137
 msgid "Choose"
 msgstr "اختر"
 
-#: ../src/resources/comment.xrc:45
-msgid "Clear"
-msgstr "احذف"
-
-#: ../src/edframe.cpp:2266 ../src/resources/menus.xrc:63
+#: ../src/edframe.cpp:2274 standard input:58
 #, fuzzy
 msgid "Clear Translation"
 msgstr "ترجمة"
 
-#: ../src/resources/comment.xrc:46
+#: standard input:6
 msgid "Clear the comment"
 msgstr "احذف التعليق"
 
-#: ../src/edframe.cpp:2264 ../src/resources/menus.xrc:62
+#: ../src/edframe.cpp:2272 standard input:57
 #, fuzzy
 msgid "Clear translation"
 msgstr "ترجمة"
 
-#: ../src/resources/find.xrc:87
+#: standard input:16
 #, fuzzy
 msgid "Close"
 msgstr "&اغلق"
 
-#: ../src/resources/toolbar.xrc:34
+#: standard input:216
 msgid "Comment"
 msgstr "تعليق:"
 
-#: ../src/resources/prefs.xrc:120
+#: standard input:124
 msgid "Comment window is editable"
 msgstr "نافذة التعليق قابلة للتحرير"
 
-#: ../src/edframe.cpp:537 ../src/resources/comment.xrc:10
+#: ../src/edframe.cpp:537 standard input:2
 msgid "Comment:"
 msgstr "تعليق:"
 
-#: ../src/resources/prefs.xrc:292
+#: standard input:145
 msgid "Configuration"
 msgstr "تضبيطات"
 
@@ -486,22 +493,14 @@ msgstr "تضبيطات"
 msgid "Confirmation"
 msgstr "توكيد"
 
-#: ../src/edframe.cpp:2259
-msgid "Copy Translation from Source Text"
-msgstr ""
-
-#: ../src/resources/menus.xrc:58
+#: ../src/edframe.cpp:2267 standard input:56
 msgid "Copy from Source Text"
 msgstr ""
 
-#: ../src/resources/menus.xrc:57
+#: ../src/edframe.cpp:2265 standard input:55
 #, fuzzy
 msgid "Copy from source text"
 msgstr "&حدِّث من المصادرِ"
-
-#: ../src/edframe.cpp:2257
-msgid "Copy translation from source text"
-msgstr ""
 
 #: ../src/catalog.cpp:1035
 #, c-format
@@ -513,19 +512,19 @@ msgstr "تعذر تحميل الملف '%s'، هو غالبا معطوب."
 msgid "Couldn't save file %s."
 msgstr ""
 
-#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:74
+#: ../src/export_html.cpp:122 standard input:182
 msgid "Country:"
 msgstr "البلد:"
 
-#: ../src/resources/manager.xrc:44
+#: standard input:20
 msgid "Create new translations project"
 msgstr "أنشئ مشروع ترجمات جديد"
 
-#: ../src/resources/prefs.xrc:252
+#: standard input:139
 msgid "Database"
 msgstr "قاعدة البيانات"
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:390
+#: standard input:23 input:153
 msgid "Delete"
 msgstr "احذف"
 
@@ -533,7 +532,7 @@ msgstr "احذف"
 msgid "Delete item"
 msgstr "احذف العنصر"
 
-#: ../src/resources/manager.xrc:54
+#: standard input:24
 msgid "Delete the project"
 msgstr "احذف المشروع"
 
@@ -541,21 +540,21 @@ msgstr "احذف المشروع"
 msgid "Directories:"
 msgstr "أدلة:"
 
-#: ../src/resources/menus.xrc:159
+#: standard input:92
 #, fuzzy
 msgid "Display &Line Numbers"
 msgstr "أ&رقام السطور"
 
-#: ../src/resources/menus.xrc:154
+#: standard input:90
 #, fuzzy
 msgid "Display &Quotes"
 msgstr "الا&قتباسات"
 
-#: ../src/resources/menus.xrc:158
+#: standard input:91
 msgid "Display &line numbers"
 msgstr "أ&رقام السطور"
 
-#: ../src/resources/menus.xrc:153
+#: standard input:89
 msgid "Display &quotes"
 msgstr "الا&قتباسات"
 
@@ -569,7 +568,7 @@ msgstr "أتريد حقا إجراء تحديث شامل لكل الكتالوج
 msgid "Do you want to delete the project?"
 msgstr "أتريد حذف المشروع؟"
 
-#: ../src/edframe.cpp:2153
+#: ../src/edframe.cpp:2161
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr ""
 
@@ -577,7 +576,7 @@ msgstr ""
 msgid "Don't Save"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:170
+#: standard input:132
 msgid "Don't change format of existing catalogs"
 msgstr "لا تغير صيغة الكتالوجات الموجودة"
 
@@ -589,29 +588,34 @@ msgstr ""
 msgid "Don't show again"
 msgstr ""
 
-#: ../src/resources/manager.xrc:136 ../src/resources/menus.xrc:50
+#: standard input:36 input:52
 #, fuzzy
 msgid "E&xit"
 msgstr "حرر"
 
-#: ../src/resources/menus.xrc:39
+#: standard input:50
 msgid "E&xport..."
 msgstr "&صدِّر…"
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:383
+#: standard input:21 input:152
 msgid "Edit"
 msgstr "حرر"
 
-#: ../src/resources/menus.xrc:84
+#: standard input:65
 #, fuzzy
 msgid "Edit &Comment"
 msgstr "حرر الت&عليق"
 
-#: ../src/resources/menus.xrc:83
+#: standard input:64
 msgid "Edit &comment"
 msgstr "حرر الت&عليق"
 
-#: ../src/resources/comment.xrc:4 ../src/resources/toolbar.xrc:35
+#: ../src/edframe.cpp:2281
+#, fuzzy
+msgid "Edit Comment"
+msgstr "حرر الت&عليق"
+
+#: ../src/edframe.cpp:2279 standard input:1 input:217
 msgid "Edit comment"
 msgstr "حرر التعليق"
 
@@ -619,19 +623,19 @@ msgstr "حرر التعليق"
 msgid "Edit item"
 msgstr "حرر العنصر"
 
-#: ../src/resources/manager.xrc:64
+#: standard input:27
 msgid "Edit project"
 msgstr "حرر المشروع"
 
-#: ../src/resources/manager.xrc:49
+#: standard input:22
 msgid "Edit the project"
 msgstr "حرر المشروع"
 
-#: ../src/resources/prefs.xrc:78
+#: standard input:117
 msgid "Editor"
 msgstr "المحرر"
 
-#: ../src/resources/prefs.xrc:129
+#: standard input:127
 msgid "Enables on-the-fly spellchecking"
 msgstr "يمكن التدقيق الاملائي الآني"
 
@@ -645,7 +649,7 @@ msgid ""
 "catalog's Plural-Forms header says"
 msgstr ""
 
-#: ../src/edframe.cpp:1899
+#: ../src/edframe.cpp:1906
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "خطأ أثناء تحميل ملف الكتالوج '%s'."
@@ -663,7 +667,7 @@ msgstr "عطل في حفظ الكتالوج"
 msgid "Export as..."
 msgstr "صدِّر إلى…"
 
-#: ../src/resources/properties.xrc:130
+#: standard input:187
 msgid "Extract text from source files in the following directories:"
 msgstr ""
 
@@ -703,49 +707,49 @@ msgstr ""
 msgid "Files List"
 msgstr "قائمة الملفات"
 
-#: ../src/resources/find.xrc:78
+#: standard input:15
 msgid "Find in automatic comments"
 msgstr "في التعليقات المولدة آليا"
 
-#: ../src/resources/find.xrc:71
+#: standard input:14
 msgid "Find in comments"
 msgstr "في التعليقات"
 
-#: ../src/resources/find.xrc:57
+#: standard input:12
 msgid "Find in original strings"
 msgstr "في العبارات الأصلية"
 
-#: ../src/resources/find.xrc:64
+#: standard input:13
 msgid "Find in translations"
 msgstr "في الترجمات"
 
-#: ../src/resources/find.xrc:4
+#: standard input:7
 msgid "Find..."
 msgstr "ابحث…"
 
-#: ../src/edframe.cpp:1880
+#: ../src/edframe.cpp:1887
 msgid "Fix the header"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:181
+#: standard input:133
 msgid "Fonts"
 msgstr "خطوط"
 
-#: ../src/edframe.cpp:2778
+#: ../src/edframe.cpp:2793
 #, c-format
 msgid "Form %i"
 msgstr "شكل %i"
 
-#: ../src/edframe.cpp:2780
+#: ../src/edframe.cpp:2795
 #, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr "شكل %i (على سبيل المثال \"%u\")"
 
-#: ../src/manager.cpp:247 ../src/resources/toolbar.xrc:28
+#: ../src/manager.cpp:247 standard input:214
 msgid "Fuzzy"
 msgstr "تقريبية"
 
-#: ../src/export_html.cpp:194
+#: ../src/export_html.cpp:193
 msgid "Fuzzy translation"
 msgstr "ترجمة تقريبية"
 
@@ -757,11 +761,11 @@ msgstr "(*.po) GNU gettext كتالوجات|*.po|(*.*) كل الملفات|*.*"
 msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "(*.pot) GNU gettext قوالب|*.pot|(*.*) كل الملفات|*.*"
 
-#: ../src/resources/prefs.xrc:621
+#: standard input:175
 msgid "Generate TM database"
 msgstr "ولِّد قاعدة بيانات TM"
 
-#: ../src/resources/prefs.xrc:278
+#: standard input:143
 msgid "Generate database"
 msgstr "ولِّد قاعدة بيانات"
 
@@ -769,17 +773,17 @@ msgstr "ولِّد قاعدة بيانات"
 msgid "Gettext syntax error"
 msgstr "Gettext خطأ نحوي لدى"
 
-#: ../src/edframe.cpp:2857
+#: ../src/edframe.cpp:2872
 #, fuzzy, c-format
 msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "إلى العلامة %i\tCtrl-%i"
 
-#: ../src/edframe.cpp:2851
+#: ../src/edframe.cpp:2866
 #, fuzzy, c-format
 msgid "Go to Bookmark %i\tCtrl+Alt+%i"
 msgstr "إذهب إلى علامة القراة %i\tCtrl-Alt-%i"
 
-#: ../src/edframe.cpp:2854
+#: ../src/edframe.cpp:2869
 #, fuzzy, c-format
 msgid "Go to bookmark %i\tCtrl+%i"
 msgstr "إلى العلامة %i\tCtrl-%i"
@@ -792,15 +796,15 @@ msgstr "(*.html) HTML ملف|*.html"
 msgid "Hide this notification message"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:18
+#: standard input:111
 msgid "Identity"
 msgstr "الهوية"
 
-#: ../src/resources/prefs.xrc:121
+#: standard input:125
 msgid "If checked, the comment window will be editable."
 msgstr "إذا أُشِّر، فسيمكن تحرير نافذة التعليق."
 
-#: ../src/edframe.cpp:2155
+#: ../src/edframe.cpp:2163
 #, fuzzy
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
@@ -810,11 +814,11 @@ msgstr ""
 "أتريد حقا إزالة كل الترجمات التي لم تعد مستعملة من الكتالوج؟ \n"
 "إن أزلتها فسيتوجب عليك ترجمتها مجددا إذا أضيفت مرة أخرى في المستقبل."
 
-#: ../src/resources/prefs.xrc:472
+#: standard input:160
 msgid "Invocation:"
 msgstr "استدعاء:"
 
-#: ../src/edframe.cpp:2160 ../src/transmem.cpp:1186
+#: ../src/edframe.cpp:2168 ../src/transmem.cpp:1186
 msgid "Keep"
 msgstr ""
 
@@ -822,12 +826,11 @@ msgstr ""
 msgid "Keywords"
 msgstr "الكلمات المفتاحية"
 
-#: ../src/chooselang.cpp:157
+#: ../src/chooselang.cpp:159
 msgid "Language selection"
 msgstr "اختيار اللغة"
 
-#: ../src/export_html.cpp:119 ../src/resources/prefs.xrc:440
-#: ../src/resources/prefs.xrc:444 ../src/resources/properties.xrc:62
+#: ../src/export_html.cpp:119 standard input:157 input:158 input:181
 msgid "Language:"
 msgstr "اللغة:"
 
@@ -848,11 +851,11 @@ msgstr "سطر"
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "السطر %u من الملف '%s' معطوب (ليست بيانات %s صحيحة)."
 
-#: ../src/resources/prefs.xrc:149
+#: standard input:129
 msgid "Line endings format:"
 msgstr "صيغة نهايات الأسطر:"
 
-#: ../src/resources/prefs.xrc:456
+#: standard input:159
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "قائمة امتدادات تفصلها فاصلة منقوطة (e.g. *.cpp;*.h):"
 
@@ -861,11 +864,11 @@ msgstr "قائمة امتدادات تفصلها فاصلة منقوطة (e.g. *
 msgid "Malformed header: '%s'"
 msgstr "ترويسة معطوبة: '%s'"
 
-#: ../src/resources/prefs.xrc:300
+#: standard input:146
 msgid "Max. # of missing words:"
 msgstr "أقصى عدد من الكلمات المغفلة:"
 
-#: ../src/resources/prefs.xrc:322
+#: standard input:147
 msgid "Max. difference in sentence length:"
 msgstr "أقصى تباين في أطوال الجمل:"
 
@@ -885,15 +888,15 @@ msgstr "حرك لأعلى"
 msgid "My Languages"
 msgstr "لغاتي"
 
-#: ../src/resources/menus.xrc:146
+#: standard input:87
 msgid "Ne&xt Unfinished"
 msgstr ""
 
-#: ../src/resources/menus.xrc:145
+#: standard input:86
 msgid "Ne&xt unfinished"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:113
+#: standard input:123
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -903,16 +906,16 @@ msgstr ""
 "إن أُشِّر فسيتوجب عليك استخدام Ctrl-أسهم للملاحة من لوحة المفاتيح\n"
 "لكن سيظل بوسعك إدخال النصوص فورادون الحاجة لضغط Tab لتغيير المحث."
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:378
+#: standard input:19 input:151
 msgid "New"
 msgstr "جديد"
 
-#: ../src/resources/menus.xrc:18
+#: standard input:44
 #, fuzzy
 msgid "New Catalog from POT File..."
 msgstr "كتالوج &جديد من ملفPOT..."
 
-#: ../src/resources/menus.xrc:17
+#: standard input:43
 msgid "New catalog from POT file..."
 msgstr "كتالوج &جديد من ملفPOT..."
 
@@ -920,11 +923,11 @@ msgstr "كتالوج &جديد من ملفPOT..."
 msgid "New item"
 msgstr "عنصر جديد"
 
-#: ../src/resources/summary.xrc:30
+#: standard input:196
 msgid "New strings"
 msgstr "عبارات جديدة"
 
-#: ../src/resources/find.xrc:102
+#: standard input:18
 msgid "Next >"
 msgstr "التالي >"
 
@@ -936,25 +939,23 @@ msgstr "تعذر العثور على ملفات في:"
 msgid "No references to this string found."
 msgstr "تعذر العثور على مراجع لهذه العبارة."
 
-#: ../src/export_html.cpp:166
+#: ../src/export_html.cpp:165
 msgid "Notes"
 msgstr "ملاحظات"
 
-#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
-#: ../src/resources/prefs.xrc:416 ../src/resources/prefs.xrc:558
-#: ../src/resources/properties.xrc:193 ../src/resources/summary.xrc:71
+#: standard input:3 input:31 input:154 input:169 input:192 input:200
 msgid "OK"
 msgstr "موافق"
 
-#: ../src/resources/summary.xrc:51
+#: standard input:198
 msgid "Obsolete strings"
 msgstr "العبارات الملغية"
 
-#: ../src/resources/toolbar.xrc:12
+#: standard input:208
 msgid "Open"
 msgstr "فتح"
 
-#: ../src/edframe.cpp:1026 ../src/resources/toolbar.xrc:13
+#: ../src/edframe.cpp:1026 standard input:209
 msgid "Open catalog"
 msgstr "افتح كتالوجا"
 
@@ -962,27 +963,27 @@ msgstr "افتح كتالوجا"
 msgid "Open catalog template"
 msgstr "افتح قالب كتالوج"
 
-#: ../src/resources/prefs.xrc:104
+#: standard input:121
 msgid "Open catalogs manager on Poedit startup"
 msgstr "افتح مدير الكتالوجات عند تشغيل Poedit"
 
-#: ../src/resources/menus.xrc:141
+#: standard input:85
 msgid "P&revious Unfinished"
 msgstr ""
 
-#: ../src/resources/menus.xrc:140
+#: standard input:84
 msgid "P&revious unfinished"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:476
+#: standard input:161
 msgid "Parser command:"
 msgstr "أوامر parser:"
 
-#: ../src/resources/prefs.xrc:435
+#: standard input:156
 msgid "Parser setup"
 msgstr "ضبط Parser"
 
-#: ../src/resources/prefs.xrc:353
+#: standard input:149
 msgid "Parsers"
 msgstr "Parsers"
 
@@ -995,15 +996,15 @@ msgstr "تمشيط ملفات %s"
 msgid "Paths"
 msgstr "مسارات"
 
-#: ../src/resources/prefs.xrc:12
+#: standard input:110
 msgid "Personalize"
 msgstr "التطبيع"
 
-#: ../src/resources/prefs.xrc:271
+#: standard input:142
 msgid "Pick language from the list of known languages"
 msgstr "اختر لغة من قائمة اللغات المعروفة"
 
-#: ../src/resources/tm_update.xrc:21
+#: standard input:203
 msgid "Please add directories where locale files are stored on your system:"
 msgstr "أضف الأدلة التي تحفظ فيها ملفات المحليات في نظامك:"
 
@@ -1029,7 +1030,7 @@ msgid ""
 "New location: %s"
 msgstr ""
 
-#: ../src/resources/properties.xrc:110
+#: standard input:185
 msgid "Plural Forms:"
 msgstr "صِيَغ الجمع:"
 
@@ -1049,7 +1050,7 @@ msgstr "Poedit - مدير الكتالوجات"
 msgid "Poedit did not find any files in scanned directories."
 msgstr "لم يعثر Poedit على أي ملفات في الأدلة المفحوصة."
 
-#: ../src/edframe.cpp:2363
+#: ../src/edframe.cpp:2378
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit هو محرر ترجمات سهل الاستعمال"
 
@@ -1058,11 +1059,11 @@ msgstr "Poedit هو محرر ترجمات سهل الاستعمال"
 msgid "Poedit translation memory error"
 msgstr "حدث ذاكرة الترجمة"
 
-#: ../src/resources/prefs.xrc:4
+#: standard input:109
 msgid "Preferences"
 msgstr "تفضيلات"
 
-#: ../src/resources/prefs.xrc:603
+#: standard input:173
 msgid "Proceed"
 msgstr "تابع"
 
@@ -1070,23 +1071,23 @@ msgstr "تابع"
 msgid "Project info"
 msgstr "معلومات المشروع"
 
-#: ../src/export_html.cpp:116 ../src/resources/properties.xrc:19
+#: ../src/export_html.cpp:116 standard input:178
 msgid "Project name and version:"
 msgstr "عنوان و إصدارة المشروع:"
 
-#: ../src/resources/manager.xrc:69
+#: standard input:28
 msgid "Project name:"
 msgstr "عنوان المشروع:"
 
-#: ../src/edframe.cpp:2160 ../src/transmem.cpp:1186
+#: ../src/edframe.cpp:2168 ../src/transmem.cpp:1186
 msgid "Purge"
 msgstr ""
 
-#: ../src/edframe.cpp:2151
+#: ../src/edframe.cpp:2159
 msgid "Purge deleted translations"
 msgstr "مسح الترجمات المحذوفة نهائيا"
 
-#: ../src/resources/manager.xrc:137 ../src/resources/menus.xrc:51
+#: standard input:37 input:53
 msgid "Quit"
 msgstr ""
 
@@ -1094,28 +1095,32 @@ msgstr ""
 msgid "References"
 msgstr "المراجع"
 
-#: ../src/edframe.cpp:2321 ../src/edframe.cpp:2325
+#: ../src/edframe.cpp:2336 ../src/edframe.cpp:2340
 msgid "References:"
 msgstr "المراجع:"
 
-#: ../src/resources/prefs.xrc:279
+#: standard input:144
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr "أعد توليد ذاكرة الترجمة من الكتالوجات في المسارات أعلاه."
 
-#: ../src/resources/tm_update.xrc:42
+#: ../src/edframe.cpp:1868
+msgid "Required header Plural-Forms is missing."
+msgstr ""
+
+#: standard input:205
 msgid "Reset to defaults"
 msgstr "صَفِّر إلى المبدئي"
 
-#: ../src/edframe.cpp:982 ../src/resources/toolbar.xrc:17
+#: ../src/edframe.cpp:982 standard input:210
 msgid "Save"
 msgstr "حفظ"
 
-#: ../src/resources/menus.xrc:35
+#: standard input:49
 #, fuzzy
 msgid "Save &As..."
 msgstr "احفظ &باسم…"
 
-#: ../src/resources/menus.xrc:34
+#: standard input:48
 msgid "Save &as..."
 msgstr "احفظ &باسم…"
 
@@ -1123,7 +1128,7 @@ msgstr "احفظ &باسم…"
 msgid "Save as..."
 msgstr "احفظ باسم…"
 
-#: ../src/resources/toolbar.xrc:18
+#: standard input:211
 msgid "Save catalog"
 msgstr "احفظ الكتالوج"
 
@@ -1147,7 +1152,7 @@ msgstr "مسارات البحث"
 msgid "Select catalog's language"
 msgstr "اختر لغة الكتالوج"
 
-#: ../src/transmemupd_wizard.cpp:108 ../src/manager.cpp:280
+#: ../src/manager.cpp:280 ../src/transmemupd_wizard.cpp:108
 msgid "Select directory"
 msgstr "اختر دليلا"
 
@@ -1155,21 +1160,21 @@ msgstr "اختر دليلا"
 msgid "Select language"
 msgstr "اختر لغة"
 
-#: ../src/chooselang.cpp:156
+#: ../src/chooselang.cpp:158
 msgid "Select your prefered language"
 msgstr "اختر لغتك المفضلة"
 
-#: ../src/edframe.cpp:2856
+#: ../src/edframe.cpp:2871
 #, fuzzy, c-format
 msgid "Set Bookmark %i\tAlt+%i"
 msgstr "ضع علامة %i\tAlt-%i"
 
-#: ../src/edframe.cpp:2850
+#: ../src/edframe.cpp:2865
 #, fuzzy, c-format
 msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "ضع علامة قراءة %i\tCtrl-%i"
 
-#: ../src/edframe.cpp:2853
+#: ../src/edframe.cpp:2868
 #, fuzzy, c-format
 msgid "Set bookmark %i\tAlt+%i"
 msgstr "ضع علامة %i\tAlt-%i"
@@ -1178,7 +1183,7 @@ msgstr "ضع علامة %i\tAlt-%i"
 msgid "Set email"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:97
+#: standard input:120
 msgid "Show summary after catalog update"
 msgstr "اعرض ملخص تحديث الكتالوج"
 
@@ -1186,28 +1191,28 @@ msgstr "اعرض ملخص تحديث الكتالوج"
 msgid "Singular:"
 msgstr "المفرد:"
 
-#: ../src/resources/menus.xrc:176
+#: standard input:98
 msgid "Sort by &File Order"
 msgstr ""
 
-#: ../src/resources/menus.xrc:181
+#: standard input:100
 msgid "Sort by &Source"
 msgstr ""
 
-#: ../src/resources/menus.xrc:186
+#: standard input:102
 #, fuzzy
 msgid "Sort by &Translation"
 msgstr "ترجمة"
 
-#: ../src/resources/menus.xrc:175
+#: standard input:97
 msgid "Sort by &file order"
 msgstr ""
 
-#: ../src/resources/menus.xrc:180
+#: standard input:99
 msgid "Sort by &source"
 msgstr ""
 
-#: ../src/resources/menus.xrc:185
+#: standard input:101
 #, fuzzy
 msgid "Sort by &translation"
 msgstr "ترجمة تقريبية"
@@ -1217,11 +1222,11 @@ msgstr "ترجمة تقريبية"
 msgid "Source"
 msgstr "ملف المصدر"
 
-#: ../src/resources/prefs.xrc:533 ../src/resources/properties.xrc:98
+#: standard input:167 input:184
 msgid "Source code charset:"
 msgstr "محارف المصدر:"
 
-#: ../src/resources/prefs.xrc:359
+#: standard input:150
 msgid "Source code parsers:"
 msgstr "parsers أكواد المصدر:"
 
@@ -1244,11 +1249,11 @@ msgstr "ملف المصدر"
 msgid "Source text:"
 msgstr "ملف المصدر"
 
-#: ../src/resources/properties.xrc:182
+#: standard input:191
 msgid "Sources keywords"
 msgstr ""
 
-#: ../src/resources/properties.xrc:161
+#: standard input:189
 #, fuzzy
 msgid "Sources paths"
 msgstr "مسارات البحث"
@@ -1260,24 +1265,24 @@ msgstr "مسارات البحث"
 msgid "Spellchecker dictionary for %s isn't available, you need to install it."
 msgstr ""
 
-#: ../src/resources/find.xrc:43
+#: standard input:10
 msgid "Start from the first item"
 msgstr "ابدأ من العنصر الأول"
 
-#: ../src/resources/find.xrc:21
+#: standard input:8
 msgid "String to find:"
 msgstr "ابحث عن عبارة:"
 
-#: ../src/edframe.cpp:1867
+#: ../src/edframe.cpp:1873
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr ""
 
-#: ../src/export_html.cpp:129 ../src/resources/properties.xrc:48
+#: ../src/export_html.cpp:129 standard input:180
 msgid "Team's email address:"
 msgstr "بريد الفريق:"
 
-#: ../src/export_html.cpp:125 ../src/resources/properties.xrc:34
+#: ../src/export_html.cpp:125 standard input:179
 msgid "Team:"
 msgstr "الفريق:"
 
@@ -1310,7 +1315,7 @@ msgstr "حدثت أعطال أثناء تحميل الكتالوج.قد تُعط
 msgid "There were errors while compiling the saved catalog into MO file."
 msgstr ""
 
-#: ../src/resources/summary.xrc:38
+#: standard input:197
 msgid ""
 "These strings are no longer in the sources.\n"
 "Poedit will remove them from the catalog now."
@@ -1318,7 +1323,7 @@ msgstr ""
 "هذه العبارات لم تعد موجودة في المصدر.\n"
 "سيحذفها Poedit من الكتالوج الآن."
 
-#: ../src/resources/summary.xrc:17
+#: standard input:195
 msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "Poedit will add them to the catalog now."
@@ -1332,7 +1337,7 @@ msgid ""
 "header configured."
 msgstr ""
 
-#: ../src/resources/prefs.xrc:488
+#: standard input:162
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1343,7 +1348,7 @@ msgstr ""
 "‪%o‬ يعوض عنها باسم ملف المخرجات، و ‪%K‬ بقائمة الكلمات المفتاحية\n"
 "و ‪%F‬ بقائمة ملفات المدخلات، و ‪%C‬ بمؤشر المحارف (انظر أدناه)."
 
-#: ../src/resources/prefs.xrc:545
+#: standard input:168
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1352,21 +1357,21 @@ msgstr ""
 "سيلحق هذا بسطر الأوامر إن كانت المحارف قد عُينت.\n"
 "‪%c‬ يعوض عنها بقيمة المحارف."
 
-#: ../src/resources/prefs.xrc:526
+#: standard input:166
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
 msgstr "سيلحق هذا بسطر الأوامر مرة لكل ملف مدخلات. ‪%f‬ يعوض عنها باسم الملف."
 
-#: ../src/resources/prefs.xrc:507
+#: standard input:164
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
 msgstr ""
 "سيلحق هذا بسطر الأوامر مرة لكل كلمة مفتاحية. ‪%k‬ يعوض عنها بالكلمة المفتاحية."
 
-#: ../src/resources/toolbar.xrc:29
+#: standard input:215
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "حدد إذا ما كانت العبارة المختارة مترجمة تقريبيا"
 
@@ -1378,12 +1383,12 @@ msgstr "الإجمالي"
 msgid "Translation"
 msgstr "ترجمة"
 
-#: ../src/resources/menus.xrc:78
+#: standard input:63
 #, fuzzy
 msgid "Translation Is &Fuzzy"
 msgstr "الترجمة ت&قريبية"
 
-#: ../src/resources/prefs.xrc:245
+#: standard input:138
 msgid "Translation Memory"
 msgstr "ذاكرة الترجمة"
 
@@ -1395,7 +1400,7 @@ msgstr "ملفات الترجمة (*.po;*.mo)|*.po;*.mo"
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "ملفات الترجمة (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 
-#: ../src/resources/menus.xrc:77
+#: standard input:62
 msgid "Translation is &fuzzy"
 msgstr "الترجمة ت&قريبية"
 
@@ -1404,7 +1409,7 @@ msgstr "الترجمة ت&قريبية"
 msgid "Translation memory database error: %s"
 msgstr "عطل في قاعدة بيانات: %s"
 
-#: ../src/resources/tm_update.xrc:68
+#: standard input:206
 msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
@@ -1412,7 +1417,7 @@ msgstr ""
 "ستبنى ذاكرة الترجمة من الملفات في القائمة أدناه.\n"
 "يمكنك إضافة المزيد من الملفات إلى القائمة."
 
-#: ../src/resources/properties.xrc:122
+#: standard input:186
 #, fuzzy
 msgid "Translation properties"
 msgstr "ذاكرة الترجمة"
@@ -1426,11 +1431,11 @@ msgstr "ترجمة"
 msgid "UTF-8 (recommended)"
 msgstr ""
 
-#: ../src/resources/summary.xrc:79
+#: standard input:201
 msgid "Undo"
 msgstr "تراجع"
 
-#: ../src/resources/prefs.xrc:157
+#: standard input:130
 msgid "Unix (recommended)"
 msgstr ""
 
@@ -1443,36 +1448,36 @@ msgstr "يوجد في السجل رمز محلية '%s' غير معروف."
 msgid "Untrans"
 msgstr "لم يترجم"
 
-#: ../src/resources/toolbar.xrc:22
+#: standard input:212
 msgid "Update"
 msgstr "حدث"
 
-#: ../src/resources/manager.xrc:59
+#: standard input:25
 msgid "Update all"
 msgstr "حدث الكل"
 
-#: ../src/resources/manager.xrc:60
+#: standard input:26
 msgid "Update all catalogs in the project"
 msgstr "حدث كل الكتالوجات في المشروع"
 
-#: ../src/resources/toolbar.xrc:23
+#: standard input:213
 msgid "Update catalog - synchronize it with sources"
 msgstr "حدث الكتالوج - زامنه مع المصدر"
 
-#: ../src/resources/menus.xrc:101
+#: standard input:71
 #, fuzzy
 msgid "Update from &POT File..."
 msgstr "حدث من &ملف POT..."
 
-#: ../src/resources/menus.xrc:100
+#: standard input:70
 msgid "Update from &POT file..."
 msgstr "حدث من &ملف POT..."
 
-#: ../src/resources/summary.xrc:4
+#: standard input:194
 msgid "Update summary"
 msgstr "ملخص التحديث"
 
-#: ../src/resources/tm_update.xrc:4
+#: standard input:202
 msgid "Update translation memory"
 msgstr "حدث ذاكرة الترجمة"
 
@@ -1485,15 +1490,15 @@ msgstr "تحديث الكتالوج يجري…"
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
 msgstr "تعذر تحديث الكتالوج. لمزيد من المعلومات اضغط 'المزيد>>' "
 
-#: ../src/resources/prefs.xrc:213
+#: standard input:136
 msgid "Use custom font for text fields"
 msgstr "استخدم الخط المُطوع في حقول النصوص"
 
-#: ../src/resources/prefs.xrc:187
+#: standard input:134
 msgid "Use custom font for translations list"
 msgstr "استخدم الخط المُطوَّع في قائمة الترجمات"
 
-#: ../src/resources/properties.xrc:169
+#: standard input:190
 #, fuzzy
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
@@ -1504,20 +1509,20 @@ msgstr ""
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
-#: ../src/edframe.cpp:2348
+#: ../src/edframe.cpp:2363
 #, fuzzy, c-format
 msgid "Version %s"
 msgstr "الإصدارة"
 
-#: ../src/resources/prefs.xrc:255
+#: standard input:140
 msgid "What languages do you want to use the TM with?"
 msgstr ""
 
-#: ../src/resources/find.xrc:50
+#: standard input:11
 msgid "Whole words only"
 msgstr "كلمات كاملة فقط"
 
-#: ../src/resources/prefs.xrc:158
+#: standard input:131
 msgid "Windows"
 msgstr "ويندوز"
 
@@ -1525,7 +1530,7 @@ msgstr "ويندوز"
 msgid "You can't drop more than one file on Poedit window."
 msgstr "لا يمكنك اسقاط أكثر من ملف واحد على نافذة Poedit."
 
-#: ../src/chooselang.cpp:171
+#: ../src/chooselang.cpp:173
 msgid "You must restart Poedit for this change to take effect."
 msgstr "ينبغي إعادة تشغيل Poedit ليسري هذا التغيير."
 
@@ -1542,11 +1547,11 @@ msgstr ""
 msgid "Your changes will be lost if you don't save them."
 msgstr ""
 
-#: ../src/resources/prefs.xrc:44
+#: standard input:114
 msgid "Your email address:"
 msgstr "عنوان بريدك الإلكتروني:"
 
-#: ../src/resources/prefs.xrc:22
+#: standard input:112
 msgid ""
 "Your name and email set below are only used\n"
 "to set the Last-Translator header of GNU gettext files."
@@ -1554,16 +1559,18 @@ msgstr ""
 "اسمك و بريدك الإلكتروني أدناه\n"
 "فقط سيتم استخدامهم لتحديد خاصية ءاخر مترجم عند رأس ملفات GNU gettext"
 
-#: ../src/resources/prefs.xrc:30
+#: standard input:113
 msgid "Your name:"
 msgstr "اسمك:"
 
-#: ../src/edframe.cpp:1976
-#, c-format
+#: ../src/edframe.cpp:1983
+#, fuzzy, c-format
 msgid "[checking translations: %i left]"
-msgstr "[الترجمات تُفحص: يتبقى %i]"
+msgid_plural "[checking translations: %i left]"
+msgstr[0] "[الترجمات تُفحص: يتبقى %i]"
+msgstr[1] "[الترجمات تُفحص: يتبقى %i]"
 
-#: ../src/edapp.cpp:368
+#: ../src/edapp.cpp:372
 msgid "don't delete temporary files (for debugging)"
 msgstr ""
 
