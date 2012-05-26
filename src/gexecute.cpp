@@ -33,7 +33,11 @@
 #include <wx/intl.h>
 
 #ifdef __WXMAC__
+#if wxCHECK_VERSION(2, 9, 0)
+#include <wx/osx/core/cfstring.h>
+#else
 #include <wx/mac/corefoundation/cfstring.h>
+#endif
 #include <CoreFoundation/CFBundle.h>
 #endif
 
