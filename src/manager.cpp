@@ -71,13 +71,13 @@ ManagerFrame::ManagerFrame() :
             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
             _T("manager"))
 {
-#ifdef __UNIX__
+#if defined(__WXGTK__)
     wxIconBundle appicons;
     appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(16,16)));
     appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(32,32)));
     appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(48,48)));
     SetIcons(appicons);
-#else
+#elif defined(__WXMSW__)
     SetIcon(wxICON(appicon));
 #endif
 
