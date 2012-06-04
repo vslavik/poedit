@@ -671,6 +671,7 @@ PoeditFrame::~PoeditFrame()
     m_textTrans->PopEventHandler(true/*delete*/);
     for (size_t i = 0; i < m_textTransPlural.size(); i++)
         m_textTransPlural[i]->PopEventHandler(true/*delete*/);
+    m_textComment->PopEventHandler(true/*delete*/);
 
     wxConfigBase *cfg = wxConfig::Get();
     cfg->SetPath(_T("/"));
