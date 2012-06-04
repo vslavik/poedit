@@ -17,7 +17,7 @@ AM_MAINTAINER_MODE
 
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
-AM_OPTIONS_WXCONFIG
+WX_CONFIG_OPTIONS
 
 AC_ARG_ENABLE(transmem,
               AS_HELP_STRING([--enable-transmem],
@@ -72,9 +72,9 @@ yes)	DEBUG_FLAGS="-g -Wall -O0"
     ;;    
 esac
 
-AM_PATH_WXCONFIG([2.8.7],
-                 [WXFOUND=1], [WXFOUND=0],
-                 [xrc,stc,html,xml,adv,core], [--unicode])
+WX_CONFIG_CHECK([2.8.7],
+                [WXFOUND=1], [WXFOUND=0],
+                [xrc,stc,html,xml,adv,core], [--unicode])
 
 if test "$WXFOUND" != 1; then
     AC_MSG_ERROR([
@@ -109,17 +109,7 @@ CXXFLAGS="$saved_CXXFLAGS"
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS"
 
 
-AC_ARG_VAR(WXRC, Path to wxrc resource compiler)
-
-AC_MSG_CHECKING([for wxrc])
-if test "x$WXRC" = x ; then
-    WXRC=`$WX_CONFIG_WITH_ARGS --utility=wxrc`
-    if test "x$WXRC" = x ; then
-        AC_MSG_RESULT([not found])
-        AC_MSG_ERROR([wxrc is needed to compile Poedit.])
-    fi
-fi
-AC_MSG_RESULT([$WXRC])
+WXRC_CHECK([], [AC_MSG_ERROR([wxrc is needed to compile Poedit.])])
 
 
 AC_CHECK_HEADER([boost/function.hpp],
