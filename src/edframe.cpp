@@ -2984,6 +2984,9 @@ bool Pred_UnfinishedItem(const CatalogItem& item)
 void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
 {
     const int count = m_list->GetItemCount();
+    if ( !count )
+        return;
+
     const int start = m_list->GetSelection();
 
     int i = start;
