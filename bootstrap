@@ -1,17 +1,31 @@
 #!/bin/sh
 
-aclocal -I admin
-automake --foreign -a -c -f
-autoconf
-(cd win32 ; bakefile_gen)
+function make_msgfmt_wx()
+{
+    if [ -d deps/wx/locale ] ; then
+        make -C deps/wx/locale allmo
+    fi
+}
 
-make -C docs -f generate-docs.make
-make -C icons -f generate-icons.make
+function make_msgfmt()
+{
+    for i in locales/*.po ; do
+        msgfmt -c -o `echo $i | sed -e s/\.po/.mo/g` $i || exit 1
+    done
+}
 
-if [ -d deps/wx/locale ] ; then
-    make -C deps/wx/locale allmo
-fi
+echo " - aclocal" && aclocal -I admin && \
+echo " - automake" && automake --foreign -a -c -f && \
+echo " - autoconf" && autoconf && \
+echo " - bakefile_gen" && (cd win32 ; bakefile_gen) && \
+\
+echo " - generate-docs.make" && make -C docs  -f generate-docs.make && \
+echo " - generate-icons" &&     make -C icons -f generate-icons.make && \
+\
+echo " - msgfmt (wx)" && make_msgfmt_wx && \
+echo " - msgfmt" && make_msgfmt && \
+exit 0
 
-for i in locales/*.po ; do
-    msgfmt -c -o `echo $i | sed -e s/\.po/.mo/g` $i
-done
+echo "Automatic build files setup failed!"
+exit 1
+
