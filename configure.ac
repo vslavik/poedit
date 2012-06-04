@@ -141,14 +141,9 @@ case "${host}" in
             CXXFLAGS="$CXXFLAGS -F$with_sparkle"
             AC_MSG_CHECKING([for Sparkle framework with Carbon support])
             AC_LINK_IFELSE(
-                AC_LANG_PROGRAM(
-                    [
-                        #include <Sparkle/SUCarbonAPI.h>
-                    ],
-                    [
-                        SUSparkleInitializeForCarbon();
-                    ])
-                ,
+                [AC_LANG_PROGRAM([#include <Sparkle/SUCarbonAPI.h>],
+                                 [SUSparkleInitializeForCarbon();])
+                ],
                 [
                   SPARKLE_FRAMEWORK="$with_sparkle/Sparkle.framework"
                   AC_DEFINE(USE_SPARKLE)
