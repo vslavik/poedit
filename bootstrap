@@ -1,13 +1,13 @@
 #!/bin/sh
 
-function make_msgfmt_wx()
+make_msgfmt_wx()
 {
     if [ -d deps/wx/locale ] ; then
         make -C deps/wx/locale allmo
     fi
 }
 
-function make_msgfmt()
+make_msgfmt()
 {
     for i in locales/*.po ; do
         msgfmt -c -o `echo $i | sed -e s/\.po/.mo/g` $i || exit 1
