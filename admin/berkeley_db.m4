@@ -40,7 +40,7 @@ AC_DEFUN([AX_BERKELEY_DB_CXX],
 
   AC_LANG_PUSH([C++])
 
-  for version in "" 4.9 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1 ; do
+  for version in "" 5.9 5.8 5.7 5.6 5.5 5.4 5.3 5.2 5.1 5.0 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1 ; do
 
     if test -z $version ; then
         db_lib="-ldb_cxx"
