@@ -35,7 +35,7 @@ rm -rf $imagedir
 
 mountp="`pwd`/mounted-img-$$"
 hdiutil attach $outfile.tmp.dmg -mountpoint "$mountp" -nobrowse
-/Developer/Tools/SetFile -a C $mountp/
+SetFile -a C $mountp/
 hdiutil detach "$mountp"
 
 rm -f $outfile
