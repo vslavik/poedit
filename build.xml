@@ -287,8 +287,8 @@
             <tarfileset dir="deps/sparkle/build/Release" includes="*.dSYM/**"/>
             <tarfileset dir="build-osx" includes="*.dSYM/**"/>
         </tar>
-        <delete file="distrib/poedit-dSYM-${poedit.version}.tar.lzma"/>
-        <exec executable="lzma">
+        <delete file="distrib/poedit-dSYM-${poedit.version}.tar.xz"/>
+        <exec executable="xz">
             <arg value="--best"/>
             <arg value="distrib/poedit-dSYM-${poedit.version}.tar"/>
         </exec>
