@@ -21,7 +21,7 @@ find_unix_files()
   (find . -maxdepth 1 -type f ; \
   find admin locales src docs macosx win32 icons -type f) | \
     grep -v '/win32-' | \
-    grep -v '/\.svn' | \
+    grep -v '/\.git' | \
     grep -v '/\.bakefile_gen.state' | \
     grep -v '\.#' | \
     grep -v '\.\(dsp\|dsw\|chm\|rtf\|ncb\|opt\|plg\)'
