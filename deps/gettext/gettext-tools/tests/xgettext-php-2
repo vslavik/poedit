@@ -1,0 +1,76 @@
+#!/bin/sh
+
+# Test PHP support: here documents.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles xg-ph-2.php"
+cat <<EOF > xg-ph-2.php
+<?
+echo _("Egyptians");
+echo <<<EOTMARKER
+Ramses
+EOTMARKER;
+echo _("Babylonians");
+echo <<<EOTMARKER
+Nebukadnezar
+EOTMARKER
+echo _("Assyrians");
+echo <<<EOTMARKER
+Assurbanipal
+EOT
+echo _("Persians");
+echo <<<EOTMARKER
+Darius
+
+echo _("Greeks");
+echo <<<EOTMARKER
+Alexander
+
+EOTMARKER
+echo _("Romans");
+echo <<<EOTMARKER
+Augustus
+  EOTMARKER
+echo _("Goths");
+echo <<<EOTMARKER
+Odoakar
+Theoderich
+EOTMARKER
+echo _("Franks");
+?>
+EOF
+
+tmpfiles="$tmpfiles xg-ph-2.tmp.po xg-ph-2.po"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} --omit-header --no-location -d xg-ph-2.tmp xg-ph-2.php
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < xg-ph-2.tmp.po > xg-ph-2.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles xg-ph-2.ok"
+cat <<EOF > xg-ph-2.ok
+msgid "Egyptians"
+msgstr ""
+
+msgid "Babylonians"
+msgstr ""
+
+msgid "Assyrians"
+msgstr ""
+
+msgid "Romans"
+msgstr ""
+
+msgid "Franks"
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-ph-2.ok xg-ph-2.po
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

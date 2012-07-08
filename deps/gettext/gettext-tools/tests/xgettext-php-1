@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# Test PHP support: --add-comments option.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles xg-ph-1.php"
+cat <<EOF > xg-ph-1.php
+<?
+// This comment will not be extracted.
+echo _("help");
+//  TRANSLATORS: This is an extracted comment.
+echo _("me");
+# TRANSLATORS: This is extracted too.
+echo _("and you");
+/* Not extracted either. */
+echo _("Hey Jude");
+/*  TRANSLATORS:
+     Nickname of the Beatles
+*/
+echo _("The Fabulous Four");
+// This will not be extracted.
+echo _(table["key"]);
+?>
+EOF
+
+tmpfiles="$tmpfiles xg-ph-1.tmp.po xg-ph-1.po"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} --omit-header --no-location --add-comments=TRANSLATORS: \
+  -d xg-ph-1.tmp xg-ph-1.php
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < xg-ph-1.tmp.po > xg-ph-1.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles xg-ph-1.ok"
+cat <<EOF > xg-ph-1.ok
+msgid "help"
+msgstr ""
+
+#. TRANSLATORS: This is an extracted comment.
+msgid "me"
+msgstr ""
+
+#. TRANSLATORS: This is extracted too.
+msgid "and you"
+msgstr ""
+
+msgid "Hey Jude"
+msgstr ""
+
+#. TRANSLATORS:
+#. Nickname of the Beatles
+#.
+msgid "The Fabulous Four"
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-ph-1.ok xg-ph-1.po
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

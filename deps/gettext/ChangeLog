@@ -1,0 +1,1479 @@
+2010-06-04  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.18.1 released.
+
+2010-06-04  Bruno Haible  <bruno@clisp.org>
+
+	* DEPENDENCIES: Add entries for 'tar' and 'gzip'.
+
+2010-06-04  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: For libgrep, don't use --avoid of modules with
+	applicability 'all'.
+	Reported by Ryan Schmidt <ryandesign@macports.org>.
+
+2010-06-03  Bruno Haible  <bruno@clisp.org>
+
+	* README: Remove lots of old cruft. Mention the translators as the
+	third audience.
+
+2010-06-03  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump to 0.18.1.
+	* autogen.sh: Record the gnulib version that is being used.
+
+2010-06-03  Bruno Haible  <bruno@clisp.org>
+
+	Deprecate the --with-cvs option.
+	* DEPENDENCIES: Update entries for git, CVS. Remove entry for RCS.
+	* PACKAGING: Update comments about archive.*.tar.gz.
+
+2010-05-19  Bruno Haible  <bruno@clisp.org>
+
+	Link with libunistring, if it exists.
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC,
+	GNULIB_MODULES_LIBGETTEXTPO): Add libunistring-optional.
+	* DEPENDENCIES: Mention optional dependency to GNU libunistring.
+
+2010-05-22  Bruno Haible  <bruno@clisp.org>
+
+	* README.woe32: Explain how to build 64-bit mode binaries.
+	Reported by Rob <sisyphus1@optusnet.com.au>.
+
+2010-05-24  Bruno Haible  <bruno@clisp.org>
+
+	Use the newest regex module from gnulib.
+	* autogen.sh: Add another gnulib-tool invocation for libgrep.
+	(GNULIB_MODULES_TOOLS_FOR_SRC_COMMON_DEPENDENCIES): New variable.
+	(GNULIB_MODULES_TOOLS_FOR_LIBGREP): Change value.
+	Pass option -I libgrep/gnulib-m4 to 'aclocal'.
+	* Makefile.am (distcheck-hook): Don't compare memchr.c.
+
+2010-05-23  Bruno Haible  <bruno@clisp.org>
+
+	Do regex matching purely with regex, not regex + dfa + kwset.
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_LIBGREP): Remove hard-locale.
+
+2010-05-15  Bruno Haible  <bruno@clisp.org>
+
+	List the build dependencies.
+	* DEPENDENCIES: Clarify that 'git' is also a build dependencies.
+	List the non-trivial build dependencies.
+	Reported by Santiago Vila <sanvila@unex.es>.
+
+2010-05-09  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.18 released.
+
+2010-05-09  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump to 0.18.
+	* windows/gettext.rc: Update year.
+	* autogen.sh: Record the gnulib version that is being used.
+
+2010-05-08  Bruno Haible  <bruno@clisp.org>
+
+	* NEWS: Mention the PO mode changes.
+
+2010-04-02  Bruno Haible  <bruno@clisp.org>
+
+	Remove autoconf-lib-link directory, obsoleted by gnulib.
+	* Makefile.am (SUBDIRS): Remove autoconf-lib-link.
+	($(srcdir)/configure): Don't depend on autoconf-lib-link/configure.ac.
+	(distcheck-hook): Remove checks of lib-*.m4 and config.rpath.
+	* autogen.sh (GNULIB_MODULES_RUNTIME_FOR_SRC): Add havelib.
+	Remove configuration of autoconf-lib-link subdirectory. Remove
+	"-I ../autoconf-lib-link/m4" option to aclocal. Don't copy
+	config.rpath.
+	* configure.ac (AC_CONFIG_SUBDIRS): Remove autoconf-lib-link.
+	Don't recurse into autoconf-lib-link.
+
+2010-03-30  Bruno Haible  <bruno@clisp.org>
+
+	* README.woe32: Update for Cygwin 1.7.x.
+
+2010-03-28  Bruno Haible  <bruno@clisp.org>
+
+	* NEWS: Deprecate the use of AM_GNU_GETTEXT with 'no-libtool' argument
+	and 'gettextize --intl'.
+
+2010-03-28  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add fnmatch, remove
+	fnmatch-posix.
+
+	* autogen.sh (GNULIB_MODULES_RUNTIME_FOR_SRC,
+	GNULIB_MODULES_TOOLS_FOR_SRC, GNULIB_MODULES_LIBGETTEXTPO): Add stdlib,
+	remove exit.
+
+2010-03-13  Bruno Haible  <bruno@clisp.org>
+
+	* NEWS: Mention the --color and --style options on many programs.
+
+2010-01-19  Bruno Haible  <bruno@clisp.org>
+
+	* AUTHORS: Update from fencepost.gnu.org:/gd/gnuorg/copyright.list.
+
+2010-01-11  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC,
+	GNULIB_MODULES_LIBGETTEXTPO): Replace ucs4-utf8, utf8-ucs4, utf16-ucs4
+	with their modern equivalents.
+
+2009-12-26  Bruno Haible  <bruno@clisp.org>
+
+	* windows/gettext.rc: Update.
+
+2009-12-26  Bruno Haible  <bruno@clisp.org>
+
+	* NEWS: Mention the use of the thread-specific locale on MacOS X.
+
+2009-12-25  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): Compare fcntl-o.m4 instead of
+	fcntl_h.m4.
+	* PACKAGING: Mention fcntl-o.m4 instead of fcntl_h.m4.
+
+2009-12-12  Bruno Haible  <bruno@clisp.org>
+
+	* AUTHORS: Untabify.
+	* README: Untabify.
+	* THANKS: Untabify.
+
+2009-12-01  Bruno Haible  <bruno@clisp.org>
+
+	* m4/init-package-version.m4 (gl_INIT_PACKAGE): Set AC_PACKAGE_NAME.
+
+2009-11-30  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Treat gettext-runtime/libasprintf before gettext-runtime.
+	Treat gettext-tools/examples before gettext-tools.
+
+2009-10-18  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): Compare fcntl_h.m4.
+	* PACKAGING: Mention also fcntl_h.m4.
+
+2009-09-27  Bruno Haible  <bruno@clisp.org>
+
+	* NEWS: Mention configure options --without-cvs and --with-git.
+	* PACKAGING: Mention archive.*.tar.gz instead of archive.tar.gz.
+	* DEPENDENCIES: Mention also git.
+
+2009-09-01  Bruno Haible  <bruno@clisp.org>
+
+	* README.woe32: Put the -mno-cygwin option into CC and CXX.
+	Recommended by Paolo Bonzini and Eric Blake.
+
+2009-08-30  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add xstriconveh.
+
+2009-08-30  Bruno Haible  <bruno@clisp.org>
+
+	* configure.ac (AC_PREREQ): Require at least autoconf 2.59.
+
+2009-08-15  Bruno Haible  <bruno@clisp.org>
+
+	Stop using gnulib module 'strdup'.
+	* Makefile.am (distcheck-hook): Don't compare strdup.c.
+
+2009-08-14  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Invoke gnulib-tool also for gettext-runtime/libasprintf.
+	(GNULIB_MODULES_LIBASPRINTF, GNULIB_MODULES_LIBASPRINTF_OTHER): New
+	variables.
+	Update aclocal options for gettext-runtime/libasprintf.
+	* Makefile.am (distcheck-hook): Don't compare eoverflow.m4. Update
+	comparison of alloca.in.h.
+
+2009-08-14  Bruno Haible  <bruno@clisp.org>
+
+	Remove automatically copied files from version control.
+	* autogen.sh (GNULIB_MODULES_TOOLS_OTHER): Add csharpcomp-script,
+	csharpexec-script, javacomp-script, javaexec-script.
+	* build-aux/csharpcomp.sh.in: Remove file.
+	* build-aux/csharpexec.sh.in: Remove file.
+	* build-aux/javacomp.sh.in: Remove file.
+	* build-aux/javaexec.sh.in: Remove file.
+
+2009-08-14  Bruno Haible  <bruno@clisp.org>
+
+	Remove automatically copied files from version control.
+	* autogen.sh: Fetch config.guess, config.sub.
+	* build-aux/config.guess: Remove file.
+	* build-aux/config.sub: Remove file.
+
+	Remove automatically copied files from version control.
+	* autogen.sh: Invoke automake with options --add-missing --copy.
+	* build-aux/compile: Remove file.
+	* build-aux/depcomp: Remove file.
+	* build-aux/elisp-comp: Remove file.
+	* build-aux/install-sh: Remove file.
+	* build-aux/mdate-sh: Remove file.
+	* build-aux/missing: Remove file.
+	* build-aux/ylwrap: Remove file.
+
+2009-08-14  Bruno Haible  <bruno@clisp.org>
+
+	Remove automatically generated files from version control.
+	* autogen.sh: If --quick was not given, rebuild autoconfiguration of
+	tests, PO files, manual pages, documentation, test files.
+
+2009-08-14  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Update comments.
+
+2009-08-14  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Create gettext-tools/intl directory before running
+	automake.
+
+2009-08-12  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_RUNTIME_FOR_SRC,
+	GNULIB_MODULES_TOOLS_FOR_SRC): Use getopt-gnu instead of getopt.
+
+2009-08-10  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Avoid the 'hash-tests' module. It corresponds to an
+	incompatible 'hash' module.
+
+2009-08-04  Bruno Haible  <bruno@clisp.org>
+
+	Port msgfilter to Woe32 platforms.
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add pipe-filter-ii.
+
+2009-08-03  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Remove statements to fix permissions. Now fixed in git.
+
+2009-05-23  Bruno Haible  <bruno@clisp.org>
+
+	* configure.ac (AM_INIT_AUTOMAKE): Add 'silent-rules' option.
+
+2009-05-23  Bruno Haible  <bruno@clisp.org>
+
+	* m4/init-package-version.m4: New file.
+	* configure.ac: Invoke gl_INIT_PACKAGE. Use the preferred form of
+	AM_INIT_AUTOMAKE.
+	* Makefile.am (ACLOCAL_AMFLAGS): New variable.
+	* autogen.sh: Update aclocal invocation.
+
+2009-05-21  Bruno Haible  <bruno@clisp.org>
+
+	Require automake >= 1.11.
+	* autogen.sh: Update comment.
+
+2009-05-21  Bruno Haible  <bruno@clisp.org>
+
+	Support automake 1.11.
+	* m4/fixautomake.m4 (FIX_MAKEFILE_TOPDIR_DISTRIB): Update for
+	automake 1.11.
+	* autogen.sh: Update comment.
+
+2009-05-21  Bruno Haible  <bruno@clisp.org>
+
+	Assume automake >= 1.10.2.
+	* m4/fixautomake.m4 (FIX_MAKEFILE_COMPILE, FIX_MAKEFILE_INFO): Remove
+	macros.
+
+2009-04-23  Bruno Haible  <bruno@clisp.org>
+
+	Fix recognition of "nm" command.
+	* m4/libtool.m4 (LT_PATH_NM): Try "nm" program also when compiling for
+	mingw in a cygwin environment.
+
+2009-04-23  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4: Fix recognition of 'link' command.
+	2009-01-26  Peter Rosin  <peda@lysator.liu.se>
+		Don't settle for any dumpbin/link program as name lister.
+		* m4/libtool.m4 (LT_PATH_NM): When locating dumpbin or
+		link -dump, check if they appear to really be capable of name
+		listing, in order to eliminate e.g. link from coreutils. This
+		makes the name lister decision fall back on nm as the default
+		if no acceptable candidate is found, which mainly happens on
+		(arguably broken) cross compiles.
+
+2009-03-14  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Checkout gnulib using 'git' instead of 'cvs'.
+
+2009-01-14  Bruno Haible  <bruno@clisp.org>
+
+	* configure.ac: More consistent m4 quoting.
+
+2008-12-07  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/fixaclocal: Update for automake-1.10.2.
+
+2008-10-01  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* m4/libtool.m4 (install_override_mode): New LT_DECL.
+	(_LT_SYS_DYNAMIC_LINKER) [hpux9*, hpux10*, hpux11*]: Set it.
+	* build-aux/ltmain.sh (func_mode_install): Build a second command line,
+	$install_shared_prog, for the installation of the shared library.
+	Override resp. set the permission mode if install_override_mode is
+	nonempty.
+
+2008-10-04  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Fix execute permissions of some files.
+
+2008-09-28  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/ltmain.sh (func_emit_cwrapperexe_src): On mingw,
+	preprocess the argument vector through prepare_spawn.
+
+2008-09-27  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_RUNTIME_FOR_SRC): Add sigpipe, stdio.
+	(GNULIB_MODULES_TOOLS_FOR_SRC): Add sigpipe, stdio, sys_select, write.
+	(GNULIB_MODULES_LIBGETTEXTPO): Add sigpipe, stdio.
+
+2008-09-27  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/config.guess: Update to GNU version 2008-09-08.
+	* build-aux/config.sub: Likewise.
+
+2008-09-21  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/fixaclocal: Adapt for newer versions of 'aclocal'.
+
+2008-09-14  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC,
+	GNULIB_MODULES_LIBGETTEXTPO): Add strerror.
+
+2008-09-07  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4: Update from libtool-2.2.6, with modifications:
+	2008-04-06  Bruno Haible  <bruno@clisp.org>
+		* m4/libtool.m4 (LT_INIT): When setting LIBTOOL, use
+		CONFIG_SHELL; don't assume that the Makefile.in will set SHELL
+		to ${CONFIG_SHELL}.
+	* m4/ltoptions.m4: Update from libtool-2.2.6.
+	* m4/ltsugar.m4: Likewise.
+	* m4/ltversion.m4: Likewise.
+	* build-aux/ltmain.sh: Likewise.
+
+2008-09-01  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC,
+	GNULIB_MODULES_LIBGETTEXTPO): Add xconcat-filename.
+
+2008-08-31  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add sigprocmask.
+
+2008-08-30  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_LIBGETTEXTPO): Add open.
+
+2008-08-17  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): Also compare threadlib.m4.
+
+2008-08-14  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): Update check of lock.h and lock.c.
+
+2008-05-22  Bruno Haible  <bruno@clisp.org>
+
+	* README.woe32: Add a note about the libiconv dependency.
+	Reported by Marko Lindqvist <cazfi74@gmail.com>.
+
+2008-05-18  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4: Update from libtool-2.2.4, with modifications:
+	2008-04-06  Bruno Haible  <bruno@clisp.org>
+		* m4/libtool.m4 (LT_INIT): When setting LIBTOOL, use
+		CONFIG_SHELL; don't assume that the Makefile.in will set SHELL
+		to ${CONFIG_SHELL}.
+	* m4/ltoptions.m4: Update from libtool-2.2.4.
+	* m4/ltversion.m4: Likewise.
+	* m4/lt~obsolete.m4: Likewise.
+	* build-aux/ltmain.sh: Likewise.
+
+2008-05-10  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Replace linebreak with
+	unilbrk/ulc-width-linebreaks.
+	(GNULIB_MODULES_LIBGETTEXTPO): Likewise. 
+
+2008-04-20  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4: Update from libtool-2.2.2, with modifications:
+	2008-04-06  Bruno Haible  <bruno@clisp.org>
+		* m4/libtool.m4 (LT_INIT): When setting LIBTOOL, use
+		CONFIG_SHELL; don't assume that the Makefile.in will set SHELL
+		to ${CONFIG_SHELL}.
+	* m4/ltoptions.m4: New file, from libtool-2.2.2.
+	* m4/ltsugar.m4: New file, from libtool-2.2.2.
+	* m4/ltversion.m4: New file, from libtool-2.2.2.
+	* m4/lt~obsolete.m4: New file, from libtool-2.2.2.
+	* build-aux/ltmain.sh: Update from libtool-2.2.2.
+
+2007-12-24  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump to 0.18-pre1.
+
+2007-11-10  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): Add a check for eoverflow.m4.
+
+2007-11-07  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.17 released.
+
+2007-11-04  Bruno Haible  <bruno@clisp.org>
+
+	* windows/windres-options (sed_extract_major, sed_extract_minor,
+	sed_extract_subminor): Use 'c' command instead of 'a' command. Needed
+	for GNU sed 3.02.
+
+2007-11-03  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): Add another check for vasnprintf.c.
+
+2007-11-01  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.17.
+
+2007-10-31  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): Exclude copyright header when comparing
+	localename.c, relocatable.h, relocatable.c.
+
+2007-10-31  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Remove ulonglong.m4.
+	* Makefile.am (distcheck-hook): Remove check of ulonglong.m4.
+
+2007-10-26  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4: Update, based on libtool-1.5.24.
+	* build-aux/ltmain.sh: Update, based on libtool-1.5.24.
+
+2007-10-17  Bruno Haible  <bruno@clisp.org>
+
+	* windows/windres-options (sed_extract_major, sed_extract_minor,
+	sed_extract_subminor): Use newlines instead of semicolons. Add a
+	newline also after the last command in a braced group.
+	Needed for GNU sed-3.02, which does not like "q}".
+
+2007-10-17  Bruno Haible  <bruno@clisp.org>
+
+	* README.woe32: Recommend to set PATH. Needed so that libiconv-2.dll
+	is found during autoconfiguration.
+
+2007-10-07  Bruno Haible  <bruno@clisp.org>
+
+	* COPYING: Replace with GPL 3.
+	* windows/gettext.rc (Comments): Update.
+	* Makefile.am (distcheck-hook): Update.
+
+2007-10-06  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add open, fopen.
+	(GNULIB_MODULES_LIBGETTEXTPO): Add fopen.
+	Reported by Mark Moriarty <mfmbusiness@earthlink.net>.
+
+2007-10-06  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/texinfo.tex: Upgrade to texinfo-4.11.
+	Needed because the original texinfo.tex does not support the
+	@documentencoding macro and the texinfo-4.11 texi2dvi then fails due to
+	this.
+
+2007-10-05  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): Update check of relocatable.h,
+	relocatable.c. Check alloca.in.h instead of alloca_.h. Remove check of
+	strdup.h.
+
+2007-10-03  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (EXTRA_DIST): Add build-aux/fixaclocal.
+
+2007-10-03  Bruno Haible  <bruno@clisp.org>
+
+	* INSTALL (Enabling Relocatability): New section, produced by
+	"LANG= LC_MESSAGES= LC_ALL= LANGUAGE= \
+	 makeinfo --no-header --no-validate --output=... relocatable.texi".
+	(Relocatable Installation): Remove section.
+
+2007-10-01  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Invoke gnulib-tool with options --tests-base=gnulib-tests
+	--with-tests.
+
+2007-10-01  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/depcomp: New file, from automake-1.10. Needed for the
+	gettext-tools/gnulib-tests directory.
+
+2007-09-29  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_CVS_ROOT): Change to read-only git mirror
+	valid since 2007-09-19.
+
+2007-09-01  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC,
+	GNULIB_MODULES_LIBGETTEXTPO): Add uniwidth/width.
+
+2007-07-07  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add uniname/uniname.
+
+2007-07-06  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Add an option --skip-gnulib.
+
+2007-06-28  Bruno Haible  <bruno@clisp.org>
+
+	* HACKING: New file.
+	* Makefile.am (EXTRA_DIST): Add it.
+
+2007-06-09  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Use xmalloca instead of
+	xallocsa.
+	(GNULIB_MODULES_LIBGETTEXTPO): Likewise.
+
+2007-06-08  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add module 'localename'.
+	* Makefile.am (distcheck-hook): Compare also localename.c.
+
+2007-06-07  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): Check also intlmacosx.m4.
+	* PACKAGING: Mention also intlmacosx.m4.
+
+2007-05-28  Bruno Haible  <bruno@clisp.org>
+
+	* windows/windres-options: New file.
+	* windows/gettext.rc: New file.
+	* Makefile.am (EXTRA_DIST): Add them.
+
+2007-05-27  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4 (AC_LIBTOOL_PROG_LD_SHLIBS): Fix support for Sun C 5.9
+	on Linux.
+
+2007-05-27  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add module 'openmp'.
+
+2007-05-14  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add module 'sys_stat'.
+
+2007-04-10  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add module 'locale'.
+	Reported by Dennis Schridde <devurandom@gmx.net>.
+
+2007-04-06  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): Don't compare longdouble.m4.
+	* PACKAGING: Remove longdouble.m4 from the file list.
+
+2007-04-02  Bruno Haible  <bruno@clisp.org>
+
+	* DEPENDENCIES: Mention dependency towards cvs.
+	Reported by Dennis Schridde <devurandom@gmx.net>.
+
+2007-03-27  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Don't mention share/doc/gettext/javadoc1/ any more.
+
+2007-03-04  Bruno Haible  <bruno@clisp.org>
+
+	Moved --enable-relocatable infrastructure to gnulib.
+	* autogen.sh (GNULIB_MODULES_RUNTIME_FOR_SRC): Add relocatable-prog.
+	Remove relocatable, relocwrapper.
+	(GNULIB_MODULES_TOOLS_FOR_SRC): Likewise.
+	(GNULIB_MODULES_LIBGETTEXTPO): Add relocatable-lib.
+	(GNULIB_MODULES_LIBGETTEXTPO_OTHER): Remove
+	gettext-tools-libgettextpo-misc.
+
+2007-03-04  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC,
+	GNULIB_MODULES_LIBGETTEXTPO): Use module 'filename' instead of
+	'pathname'.
+
+2007-03-04  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Remove gnulib-cache.m4 files before running gnulib-tool,
+	so that removed modules are really dropped.
+
+2007-02-28  Bruno Haible  <bruno@clisp.org>
+
+	Move relocatability infrastructure to gnulib.
+	* build-aux/config.libpath: Remove file.
+	* build-aux/reloc-ldflags: Remove file.
+	* build-aux/install-reloc: Remove file.
+	* Makefile.am (EXTRA_DIST): Remove these files.
+
+2007-01-26  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add sys_time.
+
+2006-12-23  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_OTHER): Add stdint.
+
+2006-12-21  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Pass --makefile-name option to gnulib-tool for
+	gettext-tools/gnulib-lib.
+
+2006-12-19  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (EXTRA_DIST): Add build-aux/moopp.
+
+2006-12-01  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add fd-ostream,
+	styled-ostream, html-styled-ostream, term-styled-ostream.
+
+2006-12-04  Bruno Haible  <bruno@clisp.org>
+
+	* DEPENDENCIES: New file.
+	* INSTALL, README: Refer to it.
+	* Makefile.am (EXTRA_DIST): Add it.
+
+2006-11-23  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC,
+	GNULIB_MODULES_LIBGETTEXTPO): Add ostream, file-ostream.
+
+2006-11-12  Bruno Haible  <bruno@clisp.org>
+
+	* configure.ac (am__tar): Override automake's definition.
+
+2006-11-12  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Pass --local-symlink option to all gnulib-tool
+	invocations.
+
+2006-11-08  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/install-reloc: Use canonicalize-lgpl.c instead of
+	canonicalize.c.
+
+2006-11-05  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_RUNTIME_FOR_SRC): Renamed from
+	GNULIB_MODULES_FOR_SRC.
+	(GNULIB_MODULES_RUNTIME_OTHER): Renamed from GNULIB_MODULES_OTHER.
+	(GNULIB_MODULES_TOOLS_FOR_SRC): Renamed from GNULIB_MODULES_FOR_SRC.
+	(GNULIB_MODULES_TOOLS_FOR_LIBGREP): Renamed from
+	GNULIB_MODULES_FOR_LIBGREP.
+	(GNULIB_MODULES_TOOLS_OTHER): Renamed from GNULIB_MODULES_OTHER.
+	(GNULIB_MODULES_LIBGETTEXTPO): Renamed from
+	GNULIB_MODULES_FOR_LIBGETTEXTPO.
+	(GNULIB_MODULES_LIBGETTEXTPO_OTHER): Renamed from GNULIB_MODULES_OTHER.
+
+2006-10-27  Bruno Haible  <bruno@clisp.org>
+
+	Work around automake-1.10 annoyance.
+	* build-aux/fixaclocal: New file.
+	* autogen.sh: Use it for every aclocal invocation.
+	* Makefile.am (ACLOCAL): New macro.
+
+2006-11-27  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.16.1 released.
+
+2006-11-27  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.16.1.
+
+2006-10-26  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.16 released.
+
+2006-10-25  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_OTHER): For libgettextpo, add
+	gettext-tools-libgettextpo-misc.
+
+2006-10-25  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/install-reloc: Define IN_RELOCWRAPPER for the compilation.
+
+2006-10-24  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.16.
+
+2006-10-24  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_FOR_LIBGETTEXTPO): Add unlocked-io.
+	Needed because gettext-tools/configure ends up setting USE_UNLOCKED_IO
+	in gettext-tools/config.h.
+
+2006-10-23  Bruno Haible  <bruno@clisp.org>
+
+	* m4/fixautomake.m4 (FIX_MAKEFILE_TOPDIR_DISTRIB): Make it work with
+	automake-1.10 too.
+
+2006-10-20  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Don't remove gettext-tools/libgettextpo/gnulib-m4.
+	Move the "-I gnulib-m4" to the end of the aclocal command lines.
+	Also add "-I libgettextpo/gnulib-m4".
+
+2006-10-16  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_FOR_LIBGETTEXTPO): New variable.
+	Invoke gnulib-tool also for libgettextpo.
+
+2006-10-16  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_FOR_SRC): Add xstriconv.
+
+2006-10-07  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): New rule.
+
+2006-10-02  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.15.1.
+
+2006-10-02  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/config.sub: Update to GNU version 2006-09-20.
+
+2006-10-01  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Mention intldir.m4.
+
+2006-09-18  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Remove inttypes-h.m4.
+
+2006-09-11  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Mention intl.m4.
+
+2006-09-06  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_FOR_SRC): Add xstriconv, remove
+	iconvstring.
+
+2006-08-26  Bruno Haible  <bruno@clisp.org>
+
+	* m4/woe32-dll.m4: Update comments.
+
+2006-08-28  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Remove signed.m4.
+
+2006-08-23  Bruno Haible  <bruno@clisp.org>
+
+	* INSTALL: Recommend to pass variables as configure arguments.
+	Suggested by Ralf Wildenhues.
+
+2006-08-08  Bruno Haible  <bruno@clisp.org>
+
+	* INSTALL: Add a recommendation for Tru64.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2006-08-04  Bruno Haible  <bruno@clisp.org>
+
+	* README.woe32: Recommend to use cygwin as development environment,
+	and mingw only as target environment. Needed to avoid libtool problems
+	reported by Matthew McGillis <matthew@jenika.com>.
+
+2006-07-31  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Invoke gnulib-tool inside gettext-runtime directory.
+	Append gettext-runtime/gnulib-m4 to the macro search path; remove
+	references to gettext-tools from gettext-runtime.
+
+2006-08-02  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (SUBDIRS): Add gnulib-local.
+	* configure.ac (AC_CONFIG_FILES): Add gnulib-local/Makefile.
+
+2006-07-31  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Process the top-level directory after its subdirectories,
+	not before. Needed because of the recursive autoconf invocation in
+	the top-level configure.ac.
+
+2006-07-31  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: If GNULIB_TOOL is not set, make an anonymous checkout
+	of gnulib.
+
+2006-07-30  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-local: New directory.
+	* autogen.sh: Invoke gnulib-tool inside gettext-tools directory.
+	Append gettext-tools/gnulib-m4 to the macro search path.
+
+2006-07-30  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/csharpcomp.sh.in: Move here from
+	gettext-tools/lib/csharpcomp.sh.in.
+	* build-aux/csharpexec.sh.in: Move here from
+	gettext-tools/lib/csharpexec.sh.in.
+	* build-aux/javacomp.sh.in: Move here from
+	gettext-tools/lib/javacomp.sh.in.
+	* build-aux/javaexec.sh.in: Move here from
+	gettext-tools/lib/javaexec.sh.in.
+
+2006-07-22  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Accept option --quick.
+
+2006-07-25  Bruno Haible  <bruno@clisp.org>
+
+	Remove MSVC/nmake build support.
+	* Makefile.msvc: Remove file.
+	* Makefile.am (EXTRA_DIST): Remove Makefile.msvc.
+
+2006-07-25  Bruno Haible  <bruno@clisp.org>
+
+	Remove VMS support.
+	* vms: Remove directory.
+	* Makefile.vms: Remove file.
+	* README.vms: Remove file.
+	* Makefile.am (EXTRA_DIST): Update.
+
+2006-07-24  Bruno Haible  <bruno@clisp.org>
+
+	* m4/fixautomake.m4 (FIX_MAKEFILE_TOPDIR_DISTRIB): Protect the initial
+	tab with a backslash. Needed for MacOS X sed.
+	Reported by Denis Excoffier <Denis.Excoffier@free.fr>.
+
+2006-07-21  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.15 released.
+
+2006-07-21  Bruno Haible  <bruno@clisp.org>
+
+	* m4/fixautomake.m4 (FIX_MAKEFILE_TOPDIR_DISTRIB): Use a multiline -e
+	argument instead of multiple -e arguments. Needed for AIX 4.
+
+2006-07-20  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.15.
+
+2006-07-20  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/compile: Update from automake-1.9.6.
+	* build-aux/elisp-comp: Likewise.
+	* build-aux/install-sh: Likewise.
+	* build-aux/mdate-sh: Likewise.
+	* build-aux/missing: Likewise.
+	* build-aux/mkinstalldirs: Likewise.
+	* build-aux/ylwrap: Likewise.
+
+2006-07-20  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/config.guess, build-aux/config.sub: Update to GNU version
+	2006-07-02.
+
+2006-07-13  Bruno Haible  <bruno@clisp.org>
+
+	* m4/fixautomake.m4 (FIX_MAKEFILE_TOPDIR_DISTRIB): New macro.
+
+2006-07-13  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (SUBDIRS): Put autoconf-lib-link last.
+
+2006-06-29  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Recurse also into the gettext-tools/examples directory
+	and update the PO files there.
+
+2006-06-27  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Don't mention isc-posix.m4.
+
+2006-06-27  Bruno Haible  <bruno@clisp.org>
+
+	Assume vprintf function.
+	* os2/configure.awk: Remove unused HAVE_VPRINTF substitution.
+
+2006-04-14  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Require autoconf-2.60.
+
+2006-03-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* m4/libtool.m4 (_LT_SYS_DYNAMIC_LINKER) [ linux ]: Avoid warning when
+	"parsing" /etc/ld.so.conf and empty /etc/ld.so.conf.d.
+
+2006-06-04  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Mention inttypes-h.m4.
+
+2006-05-14  Bruno Haible  <bruno@clisp.org>,
+            Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* m4/libtool.m4 [ linux ] (AC_LIBTOOL_LANG_CXX_CONFIG)
+	(AC_LIBTOOL_POSTDEP_PREDEP, AC_LIBTOOL_PROG_COMPILER_PIC)
+	(AC_LIBTOOL_PROG_LD_SHLIBS): Add support for Sun C 5.9,
+	Sun C++ 5.9, and Sun Fortran 8.3 on Linux.
+
+2006-05-06  Charles Wilson  <cygwin@cwilson.fastmail.fm>
+
+	* m4/libtool.m4: On Cygwin, like on mingw, define DLL_EXPORT when
+	compiling a shared library object.
+
+2006-04-26  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/config.guess, build-aux/config.sub: Update to GNU version
+	2006-04-26.
+
+2006-04-17  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Remove mkinstalldirs file.
+
+2006-04-20  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Also regenerate examples PO files.
+	Reported by Charles Wilson <cygwin@cwilson.fastmail.fm>.
+
+2006-03-28  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Mention bin/recode* programs.
+
+2005-12-29  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/install-reloc: If hard linking is not possible, use a
+	simple copy. Needed on Woe32 filesystems.
+
+2005-12-19  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/ltmain.sh: Upgrade to libtool-1.5.22.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* build-aux/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+	* m4/libtool.m4: Upgrade to libtool-1.5.22.
+	2004-02-22  Bruno Haible  <bruno@clisp.org>
+		* m4/libtool.m4: Add support for Comeau C++ on Linux.
+		Reported by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2005-11-23  Bruno Haible  <bruno@clisp.org>
+
+	Cygwin portability.
+	* build-aux/install-reloc: Expect additional exeext argument. On
+	Cygwin, use suffix ".bin.exe" instead of just ".bin".
+	* m4/woe32-dll.m4: New file.
+	* Makefile.am (EXTRA_DIST): Add it.
+
+2005-09-18  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/ltmain.sh: Upgrade to libtool-1.5.20.
+	2003-11-27  Bruno Haible  <bruno@clisp.org>
+		* build-aux/ltmain.sh: In the trampoline code, include
+		string.h, ctype.h. Fixes warnings on cygwin.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* build-aux/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+	* m4/libtool.m4: Upgrade to libtool-1.5.20.
+	2004-02-22  Bruno Haible  <bruno@clisp.org>
+		* m4/libtool.m4: Add support for Comeau C++ on Linux.
+		Reported by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2008-08-28  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Make the script executable.
+
+2008-08-28  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Remove code for gettext-runtime/glocale.
+
+2005-07-31  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh: Add commands for gettext-runtime/glocale directory.
+
+2005-07-24  Bruno Haible  <bruno@clisp.org>
+
+	Tidy up exported symbols.
+	* PACKAGING: Mention visibility.m4.
+
+2005-07-16  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Add lock.m4.
+
+2005-07-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4 (postinstall_cmds) [cygwin,mingw,pw32]: Make DLL
+	executable after installing it.
+
+2005-07-06  Bruno Haible  <bruno@clisp.org>
+
+	* README.mingw: Remove file.
+	* Makefile.am (EXTRA_DIST): Remove README.mingw.
+
+2006-06-21  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.6 released.
+
+2006-06-21  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.6.
+
+2005-05-23  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.5 released.
+
+2005-05-23  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.5.
+
+2005-04-11  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.4 released.
+
+2005-04-11  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.4.
+
+2005-04-06  Bruno Haible  <bruno@clisp.org>
+
+	* README: Recommend --program-transform-name instead of
+	--program-prefix.
+	Reported by Joel Reicher <joel@panacea.null.org>.
+
+2005-03-22  Bruno Haible  <bruno@clisp.org>
+
+	* m4: New directory, renamed from config/m4/.
+	* build-aux: New directory, renamed from config/.
+	* configure.ac (AC_CONFIG_AUX_DIR): Use build-aux.
+	* Makefile.am (EXTRA_DIST): Update.
+
+2005-03-14  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.3 released.
+
+2005-03-14  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.3.
+
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.2.
+
+2005-02-23  Bruno Haible  <bruno@clisp.org>
+
+	* config/mdate-sh: Upgrade to automake-1.9.5.
+	* config/missing: Upgrade to automake-1.9.5.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* config/ltmain.sh: Upgrade to libtool-1.5.14.
+	2003-11-27  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: In the trampoline code, include string.h,
+		ctype.h, and return 127. Fixes warnings on cygwin.
+	2003-02-18  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh (install): Use "ln -s -f" instead of
+		"rm -f && ln -s" to make a symlink for a shared library. Take
+		care of Solaris /bin/ln.
+		Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+
+2005-02-11  Bruno Haible  <bruno@clisp.org>
+
+	* config/config.guess, config/config.sub: Update to GNU version
+	2005-02-10.
+
+2005-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* config/config.libpath: Use LC_ALL=C to protect range expression
+	against Estonian locale.
+
+2005-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* config/ltmain.sh: Upgrade to libtool-1.5.12.
+	2003-11-27  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: In the trampoline code, include string.h,
+		ctype.h, and return 127. Fixes warnings on cygwin.
+	2003-02-18  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh (install): Use "ln -s -f" instead of
+		"rm -f && ln -s" to make a symlink for a shared library. Take
+		care of Solaris /bin/ln.
+		Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+	* config/m4/libtool.m4: Upgrade to libtool-1.5.12.
+	2004-02-22  Bruno Haible  <bruno@clisp.org>
+		* config/m4/libtool.m4: Add support for Comeau C++ on Linux.
+		Reported by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2005-02-06  Bruno Haible  <bruno@clisp.org>
+
+	* config/compile: Upgrade to automake-1.9.4.
+	* config/elisp-comp: Upgrade to automake-1.9.4.
+	* config/install-sh: Upgrade to automake-1.9.4.
+	* config/mdate-sh: Upgrade to automake-1.9.4.
+	* config/missing: Upgrade to automake-1.9.4.
+	2002-03-07  Bruno Haible  <bruno@clisp.org>
+		* config/missing (makeinfo): Don't call touch without arguments
+		if the source texinfo file doesn't contain a @setfilename
+		command.
+		Reported by Miroslaw Dobrzanski-Neumann <mne@mosaic-ag.com>.
+	* config/mkinstalldirs: Upgrade to automake-1.9.4.
+	* config/ylwrap: Upgrade to automake-1.9.4.
+	Reported by Albert Chin-A-Young <china@thewrittenword.com>.
+
+2005-01-20  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Add some notes about Java and C#.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	Fix the "configure --help" output.
+	* config/ac-help.sed: New file.
+	* configure.ac: Use it.
+	* Makefile.am (EXTRA_DIST): Add config/ac-help.sed.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.2-pre1.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	* config/ltmain.sh: Upgrade to libtool-1.5.10.
+	2003-11-27  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: In the trampoline code, include string.h,
+		ctype.h, and return 127. Fixes warnings on cygwin.
+	2003-02-18  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh (install): Use "ln -s -f" instead of
+		"rm -f && ln -s" to make a symlink for a shared library. Take
+		care of Solaris /bin/ln.
+		Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+	* config/m4/libtool.m4: Upgrade to libtool-1.5.10.
+	2004-02-22  Bruno Haible  <bruno@clisp.org>
+		* config/m4/libtool.m4: Add support for Comeau C++ on Linux.
+		Reported by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2004-09-06  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (EXTRA_DIST): Add autogen.sh.
+
+2004-08-25  Bruno Haible  <bruno@clisp.org>
+
+	* config/ltmain.sh: Upgrade to libtool-1.5.6.
+	2003-11-27  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: In the trampoline code, include string.h,
+		ctype.h, and return 127. Fixes warnings on cygwin.
+	2003-02-18  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh (install): Use "ln -s -f" instead of
+		"rm -f && ln -s" to make a symlink for a shared library. Take
+		care of Solaris /bin/ln.
+		Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+	* config/m4/libtool.m4: Upgrade to libtool-1.5.6.
+	2004-02-22  Bruno Haible  <bruno@clisp.org>
+		* config/m4/libtool.m4: Add support for Comeau C++ on Linux.
+		Reported by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2004-02-22  Bruno Haible  <bruno@clisp.org>
+
+	* config/m4/libtool.m4: Add support for Comeau C++ on Linux.
+	Reported by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2004-02-21  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Add FAQ.html.
+
+2004-01-26  Bruno Haible  <bruno@clisp.org>
+
+	* config/config.libpath: Upgrade to libtool-1.5.2.
+
+2004-01-26  Bruno Haible  <bruno@clisp.org>
+
+	* config/ltmain.sh: Upgrade to libtool-1.5.2.
+	2003-11-27  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: In the trampoline code, include string.h,
+		ctype.h, and return 127. Fixes warnings on cygwin.
+	2003-02-18  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh (install): Use "ln -s -f" instead of
+		"rm -f && ln -s" to make a symlink for a shared library. Take
+		care of Solaris /bin/ln.
+		Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+	* config/m4/libtool.m4: Upgrade to libtool-1.5.2.
+
+2004-02-02  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Add glibc2.m4.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.1.
+
+2004-01-28  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14 released.
+
+2004-01-28  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.
+
+2004-01-17  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14-pre1.
+
+2004-01-17  Bruno Haible  <bruno@clisp.org>
+
+	* config/config.guess, config/config.sub: Update to GNU version
+	2004-01-05.
+
+2003-12-12  Bruno Haible  <bruno@clisp.org>
+
+	Assume automake-1.8.
+	* Makefile.am (html): Remove rule.
+
+2003-11-30  Bruno Haible  <bruno@clisp.org>
+
+	* config/install-reloc: Compile also the allocsa.c file.
+
+2003-12-17  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.13.1 released.
+
+2003-12-17  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.13.1.
+
+2003-11-30  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.13 released.
+
+2003-11-30  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.13.
+
+2003-11-27  Bruno Haible  <bruno@clisp.org>
+
+	* config/ltmain.sh: In the trampoline code, include string.h, ctype.h,
+	and return 127. Fixes warnings on cygwin.
+
+2003-11-23  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Remove ssize_t.m4.
+
+2003-11-16  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Add size_max.m4, ssize_t.m4, xsize.m4.
+
+2003-11-16  Bruno Haible  <bruno@clisp.org>
+
+	* config/config.guess, config/config.sub: Update to GNU version
+	2003-11-03.
+
+2003-11-16  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.13-pre1.
+
+2003-11-15  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Add examples.
+
+2003-10-31  Bruno Haible  <bruno@clisp.org>
+
+	* config/m4/fixautomake.m4 (FIX_MAKEFILE_COMPILE, FIX_MAKEFILE_DISTRIB,
+	FIX_MAKEFILE_INFO): Drop argument, use $ac_file instead.
+
+2003-09-13  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Add envsubst related files and gettext.sh.
+
+2003-08-23  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.12.2.
+
+2003-07-01  Bruno Haible  <bruno@clisp.org>
+
+	* config/install-reloc: Also compile readlink.c.
+
+2003-06-19  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Add intmax.m4, longdouble.m4, longlong.m4,
+	printf-posix.m4, signed.m4, wchar_t.m4, wint_t.m4.
+
+2003-06-18  Bruno Haible  <bruno@clisp.org>
+
+	* config/install-sh: Update from automake-1.7.5.
+	Reported by Paul Eggert.
+
+2003-06-11  Bruno Haible  <bruno@clisp.org>
+
+	* README.gemtext: Remove outdated file.
+	* Makefile.am (EXTRA_DIST): Remove it.
+	Reported by Guido Flohr <guido@imperia.net>.
+
+2003-06-08  Bruno Haible  <bruno@clisp.org>
+
+	* vms/link_options.opt: New file.
+	* vms/with-libiconv.opt, vms/without-libiconv.opt: New files.
+	* Makefile.am (EXTRA_DIST): Add them.
+	Reported by Jouk Jansen <joukj@hrem.stm.tudelft.nl>.
+
+2003-05-22  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.12.1 released.
+
+2003-05-22  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.12.1.
+
+2003-05-19  Bruno Haible  <bruno@clisp.org>
+
+	* config/mdate-sh: Update from automake-1.7.5.
+
+2003-05-17  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.12 released.
+
+2003-05-17  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.12.
+
+2003-05-08  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Update for changed default value of $mandir and $docdir.
+
+2003-05-06  Bruno Haible  <bruno@clisp.org>
+
+	* config/config.guess, config/config.sub: Update to GNU version
+	2003-02-22.
+
+2003-04-24  Bruno Haible  <bruno@clisp.org>
+
+	Support for libtool-1.5.
+	* configure.ac: Postprocess the esyscmd output by replacing
+	]AC_ENABLE_SHARED_DEFAULT[ -> yes
+	]AC_ENABLE_STATIC_DEFAULT[ -> yes
+	]AC_ENABLE_FAST_INSTALL_DEFAULT[ -> yes
+
+	* config/ltmain.sh: Upgrade to libtool-1.5.
+	2003-02-18  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh (install): Use "ln -s -f" instead of
+		"rm -f && ln -s" to make a symlink for a shared library. Take
+		care of Solaris /bin/ln.
+		Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* config/m4/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+	* config/m4/libtool.m4: Upgrade to libtool-1.5.
+	2002-07-14  Bruno Haible  <bruno@clisp.org>
+		* config/m4/libtool.m4 (AC_LIBTOOL_SYS_DYNAMIC_LINKER): Add
+		support for GNU/FreeBSD.
+
+2003-04-12  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.vms: Don't use the force target.
+	Suggested by Jouk Jansen <joukj@hrem.stm.tudelft.nl>.
+
+2003-04-12  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.msvc (mandir, docdir): Use datadir instead of prefix.
+
+2003-04-06  Bruno Haible  <bruno@clisp.org>
+
+	* config/install-reloc: Also compile progreloc.c.
+
+2003-04-05  Bruno Haible  <bruno@clisp.org>
+
+	* config/install-reloc: Don't define NO_LIBRARIES.
+
+2003-04-01  Bruno Haible  <bruno@clisp.org>
+
+	* README.mingw: New file.
+	* README.vms: New file.
+	* Makefile.am (EXTRA_DIST): Add them.
+
+2003-03-30  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.vms: New file.
+	* Makefile.am (EXTRA_DIST): Add Makefile.vms.
+
+2003-03-17  Bruno Haible  <bruno@clisp.org>
+
+	Native Woe32/MSVC support.
+	* Makefile.msvc: New file.
+	* README.woe32: New file.
+	* Makefile.am (EXTRA_DIST): Add them.
+
+2003-02-28  Bruno Haible  <bruno@clisp.org>
+
+	Support for relocatable installation.
+	* config/config.libpath: New file.
+	* config/install-reloc: New file.
+	* config/reloc-ldflags: New file.
+	* Makefile.am (EXTRA_DIST): Add them.
+	* config/compile: New file, from automake-1.7.2.
+	* INSTALL: Document --enable-relocatable and --with-libintl-prefix.
+
+2003-02-27  Bruno Haible  <bruno@clisp.org>
+
+	* configure.ac: Include AC_CANONICAL_HOST, AC_ARG_ENABLE, AC_ARG_WITH,
+	AC_ARG_VAR calls from the subdir configures.
+	* Makefile.am (configure): Depend on each subdir's configure.ac.
+
+2003-02-22  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (ps, pdf): Remove rules, redundant with automake 1.7.2.
+
+2003-02-18  Bruno Haible  <bruno@clisp.org>
+
+	Fix the 2002-09-16 fix.
+	* ltmain.sh (install): If "ln -s -f" fails (this is the case with
+	/usr/bin/ln on Solaris 2.7), fall back to "rm && ln -s".
+
+2003-02-18  Bruno Haible  <haible@clisp.cons.org>
+
+	* config/config.guess, config/config.sub: Update to GNU version
+	2003-02-03.
+
+2003-02-16  Bruno Haible  <bruno@clisp.org>
+
+	Workaround autoconf >= 2.52 breakage.
+	* config/m4/libtool.m4 (AC_LIBTOOL_ARG_WITH): New macro.
+	(_LT_AC_LTCONFIG_HACK, AC_PROG_LD): Use it.
+
+2003-02-12  Bruno Haible  <bruno@clisp.org>
+
+	Big restructuring.
+	* autoconf-lib-link: New subdirectory.
+	* gettext-runtime: New subdirectory.
+	* gettext-tools: New subdirectory.
+	* config: New subdirectory.
+	* configure.ac: New file.
+	* Makefile.am: New file.
+	* version.sh: New file.
+
+
+See ChangeLog.0 for earlier changes.

@@ -1,0 +1,99 @@
+#! /bin/sh
+
+# Test of --csharp option.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+# Test whether we can compile and execute C# programs.
+test "${CSHARP_CHOICE}" != no || {
+  echo "Skipping test: configured with --disable-csharp"
+  exit 77
+}
+test "${BUILDCSHARP}" = yes || {
+  echo "Skipping test: C# compiler not found"
+  exit 77
+}
+test "${TESTCSHARP}" = yes || {
+  echo "Skipping test: C# engine not found"
+  exit 77
+}
+
+tmpfiles="$tmpfiles fr.po"
+cat <<\EOF > fr.po
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "'Your command, please?', asked the waiter."
+msgstr "«Votre commande, s'il vous plait», dit le garçon."
+
+# Les gateaux allemands sont les meilleurs du monde.
+#, csharp-format
+msgid "a piece of cake"
+msgid_plural "{0} pieces of cake"
+msgstr[0] "un morceau de gateau"
+msgstr[1] "{0} morceaux de gateau"
+
+# Reverse the arguments.
+#, csharp-format
+msgid "{0} is replaced by {1}."
+msgstr "{1} remplace {0}."
+
+# A proximity measure.
+msgid "Close"
+msgstr "Proche"
+
+# A menu entry.
+msgctxt "File"
+msgid "Close"
+msgstr "Fermer"
+EOF
+
+tmpfiles="$tmpfiles fr/prog.resources.dll"
+: ${MSGFMT=msgfmt}
+GETTEXTCSHARPLIBDIR=../../gettext-runtime/intl-csharp \
+${MSGFMT} --csharp -d . -r prog -l fr fr.po || exit 1
+
+tmpfiles="$tmpfiles prog.out"
+: ${MSGUNFMT=msgunfmt}
+GETTEXTCSHARPEXEDIR=../src \
+GETTEXTCSHARPLIBDIR=../../gettext-runtime/intl-csharp \
+${MSGUNFMT} --csharp -d . -r prog -l fr -o prog.out || exit 1
+
+tmpfiles="$tmpfiles prog.sort"
+: ${MSGCAT=msgcat}
+${MSGCAT} -s -o prog.sort prog.out || exit 1
+
+tmpfiles="$tmpfiles prog.ok"
+cat <<\EOF > prog.ok
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "'Your command, please?', asked the waiter."
+msgstr "Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on."
+
+msgid "Close"
+msgstr "Proche"
+
+msgctxt "File"
+msgid "Close"
+msgstr "Fermer"
+
+msgid "a piece of cake"
+msgid_plural "{0} pieces of cake"
+msgstr[0] "un morceau de gateau"
+msgstr[1] "{0} morceaux de gateau"
+
+msgid "{0} is replaced by {1}."
+msgstr "{1} remplace {0}."
+EOF
+: ${DIFF=diff}
+${DIFF} prog.ok prog.sort || exit 1
+
+rm -fr $tmpfiles
+
+exit 0

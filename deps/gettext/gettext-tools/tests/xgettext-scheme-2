@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Test Scheme support: strings outside any function call.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles xg-sc-2.scm"
+cat <<EOF > xg-sc-2.scm
+(define foo '("bar" "quux"))
+EOF
+
+tmpfiles="$tmpfiles xg-sc-2.po"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} -k_ --omit-header --no-location --force-po -d xg-sc-2 xg-sc-2.scm
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles xg-sc-2.ok"
+cat <<EOF > xg-sc-2.ok
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-sc-2.ok xg-sc-2.po
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

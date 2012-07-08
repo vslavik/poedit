@@ -1,0 +1,33 @@
+#! /bin/sh
+
+# Test C support: valid but unlikely C format strings are _not_ marked as
+# c-format by default.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles xg-c-12.c"
+cat <<\EOF > xg-c-12.c
+gettext ("%1% on, %2% off");
+EOF
+
+tmpfiles="$tmpfiles xg-c-12.tmp.po xg-c-12.po"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} --omit-header --no-location -d xg-c-12.tmp xg-c-12.c
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < xg-c-12.tmp.po > xg-c-12.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles xg-c-12.ok"
+cat <<EOF > xg-c-12.ok
+msgid "%1% on, %2% off"
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-c-12.ok xg-c-12.po
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

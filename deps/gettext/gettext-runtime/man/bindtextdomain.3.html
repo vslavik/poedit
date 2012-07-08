@@ -1,0 +1,160 @@
+<!-- Creator     : groff version 1.18.1 -->
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta name="Content-Style" content="text/css">
+<title>BINDTEXTDOMAIN</title>
+</head>
+<body>
+
+<h1 align=center>BINDTEXTDOMAIN</h1>
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#RETURN VALUE">RETURN VALUE</a><br>
+<a href="#ERRORS">ERRORS</a><br>
+<a href="#BUGS">BUGS</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+
+<hr>
+<a name="NAME"></a>
+<h2>NAME</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td>
+<td width="89%">
+<p>bindtextdomain &minus; set directory containing message
+catalogs</p>
+</td>
+</table>
+<a name="SYNOPSIS"></a>
+<h2>SYNOPSIS</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td>
+<td width="89%">
+<pre><b>#include &lt;libintl.h&gt;
+
+char * bindtextdomain (const char *</b> <i>domainname</i><b>, const char *</b> <i>dirname</i><b>);
+</b></pre>
+</td>
+</table>
+<a name="DESCRIPTION"></a>
+<h2>DESCRIPTION</h2>
+<!-- INDENTATION -->
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td>
+<td width="89%">
+<p>The <b>bindtextdomain</b> function sets the base
+directory of the hierarchy containing message catalogs for a
+given message domain.</p>
+<!-- INDENTATION -->
+<p>A message domain is a set of translatable <i>msgid</i>
+messages. Usually, every software package has its own
+message domain. The need for calling <b>bindtextdomain</b>
+arises because packages are not always installed with the
+same prefix as the &lt;libintl.h&gt; header and the
+libc/libintl libraries.</p>
+<!-- INDENTATION -->
+<p>Message catalogs will be expected at the pathnames
+<i>dirname</i>/<i>locale</i>/<i>category</i>/<i>domainname</i>.mo,
+where <i>locale</i> is a locale name and <i>category</i> is
+a locale facet such as <b>LC_MESSAGES</b>.</p>
+<!-- INDENTATION -->
+<p><i>domainname</i> must be a non-empty string.</p>
+<!-- INDENTATION -->
+<p>If <i>dirname</i> is not NULL, the base directory for
+message catalogs belonging to domain <i>domainname</i> is
+set to <i>dirname</i>. The function makes copies of the
+argument strings as needed. If the program wishes to call
+the <b>chdir</b> function, it is important that
+<i>dirname</i> be an absolute pathname; otherwise it cannot
+be guaranteed that the message catalogs will be found.</p>
+<!-- INDENTATION -->
+<p>If <i>dirname</i> is NULL, the function returns the
+previously set base directory for domain
+<i>domainname</i>.</p>
+</td>
+</table>
+<a name="RETURN VALUE"></a>
+<h2>RETURN VALUE</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td>
+<td width="89%">
+<p>If successful, the <b>bindtextdomain</b> function returns
+the current base directory for domain <i>domainname</i>,
+after possibly changing it. The resulting string is valid
+until the next <b>bindtextdomain</b> call for the same
+<i>domainname</i> and must not be modified or freed. If a
+memory allocation failure occurs, it sets <b>errno</b> to
+<b>ENOMEM</b> and returns NULL.</p>
+</td>
+</table>
+<a name="ERRORS"></a>
+<h2>ERRORS</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td>
+<td width="89%">
+<p>The following error can occur, among others:</p>
+</td>
+</table>
+<!-- TABS -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="5" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="8%">
+
+<p><b>ENOMEM</b></p>
+</td>
+<td width="13%"></td>
+<td width="41%">
+
+<p>Not enough memory available.</p>
+</td>
+<td width="24%">
+</td>
+</table>
+<a name="BUGS"></a>
+<h2>BUGS</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td>
+<td width="89%">
+<p>The return type ought to be <b>const char *</b>, but is
+<b>char *</b> to avoid warnings in C code predating ANSI
+C.</p>
+</td>
+</table>
+<a name="SEE ALSO"></a>
+<h2>SEE ALSO</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td>
+<td width="89%">
+<p><b>gettext</b>(3), <b>dgettext</b>(3),
+<b>dcgettext</b>(3), <b>ngettext</b>(3),
+<b>dngettext</b>(3), <b>dcngettext</b>(3),
+<b>textdomain</b>(3), <b>realpath</b>(3)</p>
+</td>
+</table>
+<hr>
+</body>
+</html>

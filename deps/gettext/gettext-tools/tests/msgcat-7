@@ -1,0 +1,46 @@
+#! /bin/sh
+
+# Verify 'msgcat --sort-output'
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles mcat-test7.in1"
+cat <<EOF > mcat-test7.in1
+#: clients/inst_language.ycp:119
+msgid "two"
+msgstr "2"
+
+#: clients/inst_language.ycp:108
+msgid ""
+"one"
+msgstr ""
+"1"
+EOF
+
+tmpfiles="$tmpfiles mcat-test7.tmp mcat-test7.out"
+rm -f mcat-test7.tmp
+: ${MSGCAT=msgcat}
+${MSGCAT} --sort-output -o mcat-test7.tmp mcat-test7.in1
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < mcat-test7.tmp > mcat-test7.out
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mcat-test7.ok"
+cat << EOF > mcat-test7.ok
+#: clients/inst_language.ycp:108
+msgid "one"
+msgstr "1"
+
+#: clients/inst_language.ycp:119
+msgid "two"
+msgstr "2"
+EOF
+
+: ${DIFF=diff}
+${DIFF} mcat-test7.ok mcat-test7.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

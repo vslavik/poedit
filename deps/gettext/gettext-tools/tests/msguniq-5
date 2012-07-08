@@ -1,0 +1,118 @@
+#! /bin/sh
+
+# Test msguniq on a PO file with contexts.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles msguniq-5.po"
+cat <<\EOF > msguniq-5.po
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. A menu item
+msgctxt "File|"
+msgid "Open"
+msgstr "Ouvrir"
+
+#. A menu item
+msgctxt "File|"
+msgid "New"
+msgstr "Nouveau"
+
+#. Denote a lock's state
+msgctxt "Lock state"
+msgid "Open"
+msgstr "Ouvert"
+
+#. Denote a lock's state
+msgctxt "Lock state"
+msgid "Closed"
+msgstr "Fermé"
+
+# A verb.
+msgctxt "File|"
+msgid "Open"
+msgstr ""
+
+#. A product
+msgctxt "Audi"
+msgid "car"
+msgstr "voiture"
+
+#. A product
+msgctxt "Océ"
+msgid "copier"
+msgstr "photocopieur"
+
+#~ msgid "Save As"
+#~ msgstr "Enregistrer l'as"
+
+#. A menu item
+#~ msgctxt "File|"
+#~ msgid "Save As"
+#~ msgstr "Enregistrer sous"
+EOF
+
+tmpfiles="$tmpfiles msguniq-5.tmp msguniq-5.out"
+: ${MSGUNIQ-msguniq}
+${MSGUNIQ} -o msguniq-5.tmp msguniq-5.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < msguniq-5.tmp > msguniq-5.out
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles msguniq-5.ok"
+cat <<\EOF > msguniq-5.ok
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. A menu item
+msgctxt "File|"
+msgid "Open"
+msgstr "Ouvrir"
+
+#. A menu item
+msgctxt "File|"
+msgid "New"
+msgstr "Nouveau"
+
+#. Denote a lock's state
+msgctxt "Lock state"
+msgid "Open"
+msgstr "Ouvert"
+
+#. Denote a lock's state
+msgctxt "Lock state"
+msgid "Closed"
+msgstr "Fermé"
+
+#. A product
+msgctxt "Audi"
+msgid "car"
+msgstr "voiture"
+
+#. A product
+msgctxt "Océ"
+msgid "copier"
+msgstr "photocopieur"
+
+#~ msgid "Save As"
+#~ msgstr "Enregistrer l'as"
+
+#. A menu item
+#~ msgctxt "File|"
+#~ msgid "Save As"
+#~ msgstr "Enregistrer sous"
+EOF
+
+: ${DIFF=diff}
+${DIFF} msguniq-5.ok msguniq-5.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result
