@@ -1,0 +1,542 @@
+<project name="Poedit dependencies" default="compile">
+
+    <description>
+    Builds all Poedit's 3rd party dependencies needed on current platform.
+    Usage: just run `ant`.
+    </description>
+
+    <property environment="env"/>
+    <property file="build.local.properties"/>
+    <property file="build.properties"/>
+
+    <condition property="is_osx">
+        <os family="mac"/>
+    </condition>
+    <condition property="is_windows">
+        <os family="windows"/>
+    </condition>
+
+    <pathconvert property="basedir.unix" targetos="unix">
+        <path location="${basedir}"/>
+    </pathconvert>
+
+    <property name="gettextdir" value="${basedir.unix}/bin-gettext"/>
+    <property name="osx.destdir" value="${basedir.unix}/bin-osx"/>
+
+
+    <target name="clean"
+            description="clean compiled binary files">
+        <delete dir="${gettextdir}"/>
+        <delete dir="${osx.destdir}"/>
+        <delete dir="libiconv/builddir"/>
+        <delete dir="gettext/builddir"/>
+        <delete dir="wx/builddir"/>
+        <delete dir="sparkle/build"/>
+        <delete dir="db/build_windows/Win32"/>
+        <delete dir="db/build_unix/i386"/>
+        <delete dir="db/build_unix/ppc"/>
+    </target>
+
+
+    <target name="compile"
+            description="compile all dependencies for building on this platform"
+            depends="compile-gettext,compile-db,compile-wx,compile-sparkle">
+    </target>
+
+    <target name="compile-gettext" depends="win-gettext,osx-gettext"
+            description="compile GNU gettext"/>
+    <target name="compile-db" depends="win-db,osx-db"
+            description="compile Berkeley DB"/>
+    <target name="compile-wx" depends="win-wx,osx-wx"
+            description="compile wxWidgets"/>
+    <target name="compile-sparkle" depends="osx-sparkle"
+            description="compile (Win)Sparkle"/>
+
+
+<!-- ==============================================================
+     Windows dependencies - GNU gettext
+     ============================================================== -->
+
+     <target name="mingw-dlls" if="is_windows">
+       <copy file="${mingw.bindir}/libgcc_s_dw2-1.dll" todir="${gettextdir}/bin"/>
+       <copy file="${mingw.bindir}/libgomp-1.dll" todir="${gettextdir}/bin"/>
+       <copy file="${mingw.bindir}/pthreadGC2.dll" todir="${gettextdir}/bin"/>
+       <!-- TODO: build it ourselves -->
+       <copy file="${mingw.bindir}/libiconv-2.dll" todir="${gettextdir}/bin"/>
+    </target>
+
+    <!--
+    <target name="win-libiconv-check" if="is_windows">
+        <echo level="info" message="Checking if libiconv needs building..."/>
+        <dependset>
+            <srcfileset dir="libiconv" excludes="builddir/**"/>
+            <targetfileset dir="${gettextdir}" includes="bin/*iconv*,bin/*charset*"/>
+            <targetfileset dir="${gettextdir}" includes="lib/*iconv*,lib/*charset*"/>
+            <targetfilelist files="${gettextdir}/built.libiconv"/>
+        </dependset>
+        <available property="built.libiconv" file="${gettextdir}/built.libiconv"/>
+    </target>
+
+    <target name="win-libiconv" depends="win-libiconv-check" unless="built.libiconv" if="is_windows">
+        <echo level="info" message="Building libiconv DLL..."/>
+        <mkdir dir="${gettextdir}"/>
+        <mkdir dir="libiconv/builddir"/>
+        <exec dir="libiconv" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <env key="GNULIB_TOOL" value="${basedir.msys}/gnulib/gnulib-tool"/>
+            <env key="MAKEFLAGS" value="-j1"/>
+            <arg value="-e"/>
+            <arg value="./autogen.sh"/>
+        </exec>
+        <exec dir="libiconv/builddir" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="../configure"/>
+            <arg value=" - - prefix=${gettextdir}"/>
+            <arg value=" - - disable-static"/>
+        </exec>
+        <exec dir="libiconv/builddir" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="make install -j1"/>
+        </exec>
+        <exec dir="${gettextdir}/bin" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="strip *.dll"/>
+        </exec>
+        <touch file="${gettextdir}/built.libiconv"/>
+    </target>
+    -->
+
+    <target name="win-gettext-check" if="is_windows">
+        <echo level="info" message="Checking if GNU gettext needs building..."/>
+        <dependset>
+            <!-- NB: gnulib-lib is excluded, because some sources
+                     are regenerated and I can't figure out how to fix it -->
+            <srcfileset dir="gettext" excludes="builddir/**,gettext-tools/gnulib-lib/**"/>
+            <targetfileset dir="${gettextdir}" includes="bin/*gettext*"/>
+            <targetfileset dir="${gettextdir}" includes="bin/msg*.exe"/>
+            <targetfilelist files="${gettextdir}/built.gettext"/>
+        </dependset>
+        <available property="built.gettext" file="${gettextdir}/built.gettext"/>
+    </target>
+
+    <target name="win-gettext" depends="mingw-dlls,win-gettext-check" unless="built.gettext" if="is_windows">
+        <echo level="info" message="Building GNU gettext..."/>
+        <mkdir dir="${gettextdir}"/>
+        <mkdir dir="gettext/builddir"/>
+        <exec dir="gettext" executable="${msys.sh}" outputproperty="basedir.msys" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="echo '${basedir.unix}' | sed -e 's@^\(.\):/@/\1/@'"/>
+        </exec>
+        <exec dir="gettext" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <env key="MAKEFLAGS" value="-j1"/>
+            <env key="GNULIB_TOOL" value="${basedir.msys}/gnulib/gnulib-tool"/>
+            <arg value="-e"/>
+            <arg value="./autogen.sh"/>
+        </exec>
+        <exec dir="gettext/builddir" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="../configure"/>
+            <arg value="--prefix=${gettextdir}"/>
+            <!-- <arg value=" - - with-libiconv-prefix=${gettextdir}"/> -->
+            <arg value="--enable-threads=win32"/>
+            <arg value="--disable-static"/>
+            <arg value="--disable-java"/>
+            <arg value="--disable-rpath"/>
+            <arg value="CFLAGS=${msys.env.CFLAGS}"/>
+            <arg value="CXXFLAGS=${msys.env.CFLAGS}"/>
+        </exec>
+        <touch file="gettext/builddir/gettext-tools/misc/archive.dir.tar.gz"/>
+        <touch file="gettext/builddir/gettext-tools/misc/archive.git.tar.gz"/>
+        <touch file="gettext/builddir/gettext-tools/misc/archive.cvs.tar.gz"/>
+        <exec dir="gettext/builddir" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="make"/>
+        </exec>
+        <exec dir="gettext/builddir" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="make install -j1"/>
+        </exec>
+        <exec dir="${gettextdir}/bin" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="strip *.dll *.exe"/>
+        </exec>
+        <touch file="${gettextdir}/built.gettext"/>
+    </target>
+
+
+
+<!-- ==============================================================
+     Windows dependencies - Berkeley DB
+     ============================================================== -->
+
+     <target name="win-db-check" if="is_windows">
+        <echo level="info" message="Checking if Berkeley DB needs building..."/>
+        <dependset>
+            <srcfileset dir="db" excludes="build_windows/Win32/**,build_windows/db_my*"/>
+            <targetfileset dir="db/build_windows/Win32"/>
+        </dependset>
+        <available property="built.win-db" file="db/build_windows/Win32/Release/libdb48.dll"/>
+    </target>
+
+    <target name="win-db" depends="win-db-check" unless="built.win-db" if="is_windows">
+        <echo level="info" message="Building Berkeley DB..."/>
+        <copy file="db/build_windows/db.vcproj" tofile="db/build_windows/db_my.vcproj"/>
+        <exec dir="db/build_windows" executable="${msvs.vcbuild}" failonerror="true">
+            <arg value="/upgrade"/>
+            <arg value="db_my.vcproj"/>
+        </exec>
+        <exec dir="db/build_windows" executable="${msvs.vcbuild}" failonerror="true">
+            <arg value="/platform:Win32"/>
+            <arg value="db_my.vcproj"/>
+            <arg value="Release"/>
+        </exec>
+        <delete>
+            <fileset dir="db/build_windows" includes="db_my.*"/>
+        </delete>
+    </target>
+
+
+
+<!-- ==============================================================
+     Windows dependencies - wxWidgets
+     ============================================================== -->
+
+     <target name="win-wx-check" if="is_windows">
+        <echo level="info" message="Checking if wxWidgets needs building..."/>
+        <dependset>
+            <srcfileset dir="wx" includes="include/**,src/**,contrib/include/**,contrib/src/**"/>
+            <targetfileset dir="wx"
+                           includes="build/msw/vc_mswu/**,lib/vc_lib/*.lib"/>
+        </dependset>
+        <available property="built.win-wx" file="wx/lib/vc_lib/wxmsw28u_core.lib"/>
+    </target>
+
+    <target name="win-wx" depends="win-wx-check" unless="built.win-wx" if="is_windows">
+        <echo level="info" message="Building wxWidgets..."/>
+        <exec dir="wx/build/msw" executable="${msvs.vcbuild}" failonerror="true">
+            <arg value="/platform:Win32"/>
+            <arg value="wxWidgetsForPoedit.vcproj"/>
+            <arg value="Release"/>
+        </exec>
+        <exec dir="wx/contrib/build/stc" executable="${msvs.vcbuild}" failonerror="true">
+            <arg value="/platform:Win32"/>
+            <arg value="wxWidgetsForPoedit_STC.vcproj"/>
+            <arg value="Release"/>
+        </exec>
+        <exec dir="wx/utils/wxrc" executable="${msvs.vcbuild}" failonerror="true">
+            <arg value="/platform:Win32"/>
+            <arg value="wxWidgetsForPoedit_WXRC.vcproj"/>
+            <arg value="Release"/>
+        </exec>
+    </target>
+
+
+<!-- ==============================================================
+     OS X dependencies - misc helpers
+     ============================================================== -->
+
+     <!-- merge 3 arch binaries into one fat one -->
+     <macrodef name="merge-archs-3">
+         <attribute name="prefix"/>
+         <attribute name="dir"/>
+         <attribute name="file"/>
+         <sequential>
+             <echo level="info" message="merging archs into universal binary @{prefix}/@{dir}/@{file}"/>
+             <mkdir dir="@{prefix}/@{dir}"/>
+             <exec dir="@{prefix}" executable="lipo" failonerror="true">
+                 <arg value="-arch"/>
+                 <arg value="i386"/>
+                 <arg value="i386/@{dir}/@{file}"/>
+                 <arg value="-arch"/>
+                 <arg value="ppc"/>
+                 <arg value="ppc/@{dir}/@{file}"/>
+                 <arg value="-arch"/>
+                 <arg value="x86_64"/>
+                 <arg value="x86_64/@{dir}/@{file}"/>
+                 <arg value="-create"/>
+                 <arg value="-output"/>
+                 <arg value="@{dir}/@{file}"/>
+             </exec>
+             <exec dir="@{prefix}" executable="strip" failonerror="true">
+                 <arg value="-u"/>
+                 <arg value="-r"/>
+                 <arg value="@{dir}/@{file}"/>
+             </exec>
+         </sequential>
+     </macrodef>
+
+     <macrodef name="strip-exe">
+         <attribute name="file"/>
+         <sequential>
+             <echo level="info" message="stripping @{file}"/>
+             <exec executable="/usr/bin/strip" failonerror="true">
+                 <arg value="-u"/>
+                 <arg value="-r"/>
+                 <arg value="@{file}"/>
+             </exec>
+         </sequential>
+     </macrodef>
+
+     <macrodef name="strip-dylib">
+         <attribute name="file"/>
+         <sequential>
+             <echo level="info" message="stripping @{file}"/>
+             <exec executable="/usr/bin/strip" failonerror="true">
+                 <arg value="-x"/>
+                 <arg value="@{file}"/>
+             </exec>
+         </sequential>
+     </macrodef>
+
+
+<!-- ==============================================================
+     OS X dependencies - Berkeley DB
+     ============================================================== -->
+
+     <target name="osx-db-check" if="is_osx">
+        <echo level="info" message="Checking if Berkeley DB needs building..."/>
+        <dependset>
+            <srcfileset dir="db" excludes="build_unix/**"/>
+            <targetfileset dir="db/build_unix/i386"/>
+            <targetfileset dir="db/build_unix/ppc"/>
+            <targetfileset dir="${osx.destdir}" includes="*/lib/libdb*"/>
+            <targetfilelist files="${osx.destdir}/built.db"/>
+        </dependset>
+        <available property="built.osx-db" file="${osx.destdir}/built.db"/>
+    </target>
+
+    <target name="osx-db-arch">
+        <echo level="info" message="Building Berkeley DB for ${osx.arch}..."/>
+        <property file="macosx.properties"/>
+        <mkdir dir="db/build_unix/${osx.arch}"/>
+        <exec dir="db/build_unix/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="../../dist/configure"/>
+            <arg value="--prefix=${osx.destdir}/${osx.arch}"/>
+            <arg value="CC=${osx.cc}"/>
+            <arg value="CXX=${osx.cxx}"/>
+            <arg value="CFLAGS=${osx.cflags}"/>
+            <arg value="CXXFLAGS=${osx.cxxflags}"/>
+            <arg value="LDFLAGS=${osx.ldflags}"/>
+            <arg value="--enable-cxx"/>
+            <arg value="--disable-shared"/>
+            <arg value="--disable-cryptography"/>
+            <arg value="--disable-replication"/>
+            <arg value="--disable-statistics"/>
+            <arg value="${osx.host}"/>
+        </exec>
+        <exec dir="db/build_unix/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="-c"/>
+            <arg value="make"/>
+        </exec>
+        <exec dir="db/build_unix/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="-c"/>
+            <arg value="make install -j1"/>
+        </exec>
+        <touch file="${osx.destdir}/built.db"/>
+    </target>
+
+    <target name="osx-db" depends="osx-db-check" unless="built.osx-db" if="is_osx">
+        <antcall target="osx-db-arch">
+            <param name="osx.arch" value="i386"/>
+            <param name="osx.sdk" value="${osx.deploy.sdk}"/>
+            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
+        </antcall>
+        <antcall target="osx-db-arch">
+            <param name="osx.arch" value="ppc"/>
+            <param name="osx.sdk" value="${osx.deploy.sdk}"/>
+            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
+            <param name="osx.host" value="--host=powerpc-apple-darwin10"/>
+        </antcall>
+    </target>
+
+
+    <!-- ==============================================================
+     OS X dependencies - GNU gettext
+     ============================================================== -->
+
+     <target name="osx-gettext-check" if="is_osx">
+        <echo level="info" message="Checking if GNU gettext needs building..."/>
+        <dependset>
+            <!-- NB: gnulib-lib is excluded, because some sources
+                     are regenerated and I can't figure out how to fix it -->
+            <srcfileset dir="gettext" excludes="builddir/**,gettext-tools/gnulib-lib/**"/>
+            <targetfileset dir="${gettextdir}" includes="bin/*"/>
+            <targetfilelist files="${gettextdir}/built.gettext"/>
+        </dependset>
+        <available property="built.gettext" file="${gettextdir}/built.gettext"/>
+    </target>
+
+    <target name="osx-gettext-arch">
+        <echo level="info" message="Building GNU gettext for ${osx.arch}..."/>
+        <property file="macosx.properties"/>
+        <mkdir dir="gettext/builddir/${osx.arch}"/>
+        <exec dir="gettext/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="../../configure"/>
+            <arg value="--prefix=${gettextdir}/${osx.arch}"/>
+            <arg value="CC=${osx.cc}"/>
+            <arg value="CXX=${osx.cxx}"/>
+            <arg value="CFLAGS=${osx.cflags}"/>
+            <arg value="CXXFLAGS=${osx.cxxflags}"/>
+            <arg value="LDFLAGS=${osx.ldflags}"/>
+            <arg value="GSED=${osx.gnu.sed}"/>
+            <arg value="--with-libiconv-prefix=${osx.sdk.path}/usr"/>
+            <arg value="--disable-static"/>
+            <arg value="--disable-java"/>
+            <arg value="--disable-rpath"/>
+            <arg value="${osx.host}"/>
+        </exec>
+        <touch file="gettext/builddir/${osx.arch}/gettext-tools/misc/archive.dir.tar.gz"/>
+        <touch file="gettext/builddir/${osx.arch}/gettext-tools/misc/archive.git.tar.gz"/>
+        <touch file="gettext/builddir/${osx.arch}/gettext-tools/misc/archive.cvs.tar.gz"/>
+        <exec dir="gettext/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="-c"/>
+            <arg value="make"/>
+        </exec>
+        <exec dir="gettext/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="-c"/>
+            <arg value="make install -j1"/>
+        </exec>
+    </target>
+
+    <target name="osx-gettext" depends="osx-gettext-check" unless="built.gettext" if="is_osx">
+        <exec dir="gettext" executable="/bin/sh" failonerror="true">
+            <env key="GNULIB_TOOL" value="${basedir.unix}/gnulib/gnulib-tool"/>
+            <env key="MAKEFLAGS" value="-j1"/>
+            <arg value="-e"/>
+            <arg value="./autogen.sh"/>
+        </exec>
+        <delete file="gettext/gettext-tools/doc/stamp-vti"/>
+        <antcall target="osx-gettext-arch">
+            <param name="osx.arch" value="i386"/>
+            <param name="osx.sdk" value="${osx.deploy.sdk}"/>
+            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
+        </antcall>
+        <antcall target="osx-gettext-arch">
+            <param name="osx.arch" value="ppc"/>
+            <param name="osx.sdk" value="${osx.deploy.sdk}"/>
+            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
+            <param name="osx.host" value="--host=powerpc-apple-darwin10"/>
+        </antcall>
+        <antcall target="osx-gettext-arch">
+            <param name="osx.arch" value="x86_64"/>
+            <param name="osx.sdk" value="${osx.deploy.sdk}"/>
+            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
+        </antcall>
+
+        <merge-archs-3 prefix="${gettextdir}" dir="bin" file="msgfmt"/>
+        <merge-archs-3 prefix="${gettextdir}" dir="bin" file="msgmerge"/>
+        <merge-archs-3 prefix="${gettextdir}" dir="bin" file="msgunfmt"/>
+        <merge-archs-3 prefix="${gettextdir}" dir="bin" file="msgcat"/>
+        <merge-archs-3 prefix="${gettextdir}" dir="bin" file="xgettext"/>
+        <merge-archs-3 prefix="${gettextdir}" dir="lib" file="libasprintf.0.dylib"/>
+        <merge-archs-3 prefix="${gettextdir}" dir="lib" file="libgettextlib-0.18.1.dylib"/>
+        <merge-archs-3 prefix="${gettextdir}" dir="lib" file="libgettextsrc-0.18.1.dylib"/>
+        <merge-archs-3 prefix="${gettextdir}" dir="lib" file="libintl.8.dylib"/>
+
+        <!-- TODO: keep dSYM files? -->
+        <strip-exe file="${gettextdir}/bin/msgfmt"/>
+        <strip-exe file="${gettextdir}/bin/msgmerge"/>
+        <strip-exe file="${gettextdir}/bin/msgunfmt"/>
+        <strip-exe file="${gettextdir}/bin/msgcat"/>
+        <strip-exe file="${gettextdir}/bin/xgettext"/>
+        <strip-dylib file="${gettextdir}/lib/libasprintf.0.dylib"/>
+        <strip-dylib file="${gettextdir}/lib/libgettextlib-0.18.1.dylib"/>
+        <strip-dylib file="${gettextdir}/lib/libgettextsrc-0.18.1.dylib"/>
+        <strip-dylib file="${gettextdir}/lib/libintl.8.dylib"/>
+
+        <touch file="${gettextdir}/built.gettext"/>
+    </target>
+    
+    
+<!-- ==============================================================
+     OS X dependencies - wxWidgets
+     ============================================================== -->
+
+     <target name="osx-wx-check" if="is_osx">
+        <echo level="info" message="Checking if wxWidgets needs building..."/>
+        <dependset>
+            <srcfileset dir="wx" excludes="builddir/**,locale/**"/>
+            <targetfileset dir="wx/builddir/i386"/>
+            <targetfileset dir="wx/builddir/ppc"/>
+            <targetfileset dir="${osx.destdir}" includes="*/lib/libwx*"/>
+            <targetfileset dir="${osx.destdir}" includes="*/lib/wx/**"/>
+            <targetfilelist files="${osx.destdir}/built.wx"/>
+        </dependset>
+        <available property="built.osx-wx" file="${osx.destdir}/built.wx"/>
+    </target>
+
+    <target name="osx-wx-arch">
+        <echo level="info" message="Building wxWidgets for ${osx.arch}..."/>
+        <property file="macosx.properties"/>
+        <mkdir dir="wx/builddir/${osx.arch}"/>
+        <exec dir="wx/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="../../configure"/>
+            <arg value="--prefix=${osx.destdir}/${osx.arch}"/>
+            <arg value="--disable-shared"/>
+            <arg value="--enable-unicode"/>
+            <!-- expat is part of the system since 10.5 -->
+            <arg value="--with-expat=builtin"/>
+            <arg value="CC=${osx.cc}"/>
+            <arg value="CXX=${osx.cxx}"/>
+            <arg value="CFLAGS=${osx.cflags}"/>
+            <arg value="CXXFLAGS=${osx.cxxflags}"/>
+            <arg value="OBJCFLAGS=${osx.cflags}"/>
+            <arg value="OBJCXXFLAGS=${osx.cxxflags}"/>
+            <arg value="LDFLAGS=${osx.ldflags}"/>
+            <arg value="${osx.host}"/>
+        </exec>
+        <exec dir="wx/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="-c"/>
+            <arg value="make install"/>
+        </exec>
+        <exec dir="wx/builddir/${osx.arch}/contrib/src/stc" executable="/bin/sh" failonerror="true">
+            <arg value="-c"/>
+            <arg value="make install"/>
+        </exec>
+    </target>
+
+    <target name="osx-wx" depends="osx-wx-check" unless="built.osx-wx" if="is_osx">
+        <antcall target="osx-wx-arch">
+            <param name="osx.arch" value="i386"/>
+            <param name="osx.sdk" value="${osx.best.sdk}"/>
+            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
+        </antcall>
+        <antcall target="osx-wx-arch">
+            <param name="osx.arch" value="ppc"/>
+            <param name="osx.sdk" value="${osx.best.sdk}"/>
+            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
+            <param name="osx.host" value="--host=powerpc-apple-darwin10"/>
+        </antcall>
+        <touch file="${osx.destdir}/built.wx"/>
+    </target>
+    
+    
+<!-- ==============================================================
+     OS X dependencies - Sparkle
+     ============================================================== -->
+
+    <target name="osx-sparkle" if="is_osx">
+        <echo level="info" message="Building Sparkle.framework..."/>
+        <exec dir="sparkle" executable="${osx.xcodebuild}" failonerror="true">
+            <arg value="-project"/>
+            <arg value="Sparkle.xcodeproj"/>
+            <arg value="-target"/>
+            <arg value="Sparkle"/>
+            <arg value="-configuration"/>
+            <arg value="Release"/>
+            <arg value="DEPLOYMENT_POSTPROCESSING=YES"/>
+            <arg value="GCC_TREAT_WARNINGS_AS_ERRORS=NO"/>
+            <arg value="GCC_GENERATE_DEBUGGING_SYMBOLS=YES"/>
+            <arg value="DEBUG_INFORMATION_FORMAT=dwarf-with-dsym"/>
+            <arg value="STRIP_INSTALLED_PRODUCT=YES"/>
+        </exec>
+    </target>
+
+</project>

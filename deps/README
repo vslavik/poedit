@@ -1,0 +1,43 @@
+
+  Introduction
+================
+
+This directory contains all 3rd party dependencies needed to build Poedit.
+It's typically not needed on Linux, where all the dependencies are commonly
+available, but it comes handy when compiling for Windows and OS X.
+
+Note that some sources are slightly patched, too.
+
+
+  Windows requirements
+========================
+
+In order to build the dependencies on Windows, you will need to have the
+following installed:
+
+1. Sun JDK (for Ant; JRE is not enough)
+2. Apache Ant, e.g. from http://code.google.com/p/winant/
+3. MinGW with MSYS shell from http://www.mingw.org/wiki/MinGW
+4. Visual C++ 2008 (the free Express edition suffices)
+
+MinGW is only needed to build GNU gettext utilities, you may opt to copy them
+to bin-gettext/bin/ directory from existing Poedit installation instead.
+
+  Installing MinGW
+--------------------
+
+Follow the instructions from http://www.mingw.org/wiki/Getting_Started to
+install basic MinGW system. Make sure the shell (MSYS) is enabled, as well as
+both C and C++ components.
+
+Once installed, run the MinGW Shell from the Start menu. Now use the
+"mingw-get" tool to install some additional tools that Poedit build uses:
+
+ $ mingw-get install mingw-developer-toolkit
+
+
+  How to build the dependencies
+=================================
+
+Once you have the prerequisites all installed, open a shell, change to this
+directory, and type "ant". That's it.
