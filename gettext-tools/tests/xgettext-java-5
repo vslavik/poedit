@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# Test Java support: --add-comments option.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles xg-j-5.java"
+cat <<EOF > xg-j-5.java
+// This comment will not be extracted.
+System.out.println(gettext("help"));
+//  TRANSLATORS: This is an extracted comment.
+System.out.println(gettext("me"));
+/* Not extracted either. */
+System.out.println(gettext("Hey Jude"));
+/*  TRANSLATORS:
+     Nickname of the Beatles
+*/
+System.out.println(gettext("The Fabulous Four"));
+/* TRANSLATORS: The strings get concatenated.  */
+System.out.println(gettext("there is not enough" +
+" room on a single line for this entire long, " // confusing, eh?
++ "verbose string"));
+EOF
+
+tmpfiles="$tmpfiles xg-j-5.tmp.po xg-j-5.po"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} --omit-header --no-location --add-comments=TRANSLATORS: \
+  -d xg-j-5.tmp xg-j-5.java
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < xg-j-5.tmp.po > xg-j-5.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles xg-j-5.ok"
+cat <<EOF > xg-j-5.ok
+msgid "help"
+msgstr ""
+
+#. TRANSLATORS: This is an extracted comment.
+msgid "me"
+msgstr ""
+
+msgid "Hey Jude"
+msgstr ""
+
+#. TRANSLATORS:
+#. Nickname of the Beatles
+#.
+msgid "The Fabulous Four"
+msgstr ""
+
+#. TRANSLATORS: The strings get concatenated.
+msgid ""
+"there is not enough room on a single line for this entire long, verbose "
+"string"
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-j-5.ok xg-j-5.po
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

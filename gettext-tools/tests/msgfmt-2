@@ -1,0 +1,88 @@
+#! /bin/sh
+
+# Test basic functionality, duplicate detection, multiple domains.
+
+if (echo "testing\c"; echo 1,2,3) | grep c >/dev/null; then
+  # Stardent Vistra SVR4 grep lacks -e, says ghazi@caip.rutgers.edu.
+  if (echo -n testing; echo 1,2,3) | sed s/-n/xn/ | grep xn >/dev/null; then
+    ac_n= ac_c='
+' ac_t='        '
+  else
+    ac_n=-n ac_c= ac_t=
+  fi
+else
+  ac_n= ac_c='\c' ac_t=
+fi
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles LC_MESSAGES"
+test -d LC_MESSAGES || mkdir LC_MESSAGES
+
+tmpfiles="$tmpfiles module1.po module2.po"
+cat <<EOF > module1.po
+#default domain "messages.mo"
+msgid	"SYS_(C)\n"
+msgstr "MSGFMT(3) portable message object file compiler\n"
+"Copyright (C) 1995 Free Software Foundation\n"
+"Report bugs to <bug-gnu-utils@gnu.org>\n"
+msgid	"msg 1"
+msgstr	"msg 1 translation"
+#
+domain	"help_dom"
+msgid	"help 2 %d"
+msgstr	"help 2 translation"
+#
+domain	"error_dom"
+msgid	"error 3"
+msgstr	"error 3 translation"
+EOF
+
+cat <<EOF > module2.po
+# ---
+#default domain "messages.mo"
+msgid	"mesg 4"
+msgstr	"mesg 4 translation"
+#
+domain	"error_dom"
+msgid	"error 3"
+msgstr	"alternate error 3 translation"
+msgid	"error 5"
+msgstr	"error 5 translation"
+#
+domain	"window_dom"
+msgid	"window 6"
+msgstr	"window 6 translation"
+EOF
+
+# Without use of msgcat, expect a "duplicate message definition" error.
+: ${MSGFMT=msgfmt}
+if ${MSGFMT} -o LC_MESSAGES/gen.mo module1.po module2.po 2> /dev/null; then
+  rm -fr $tmpfiles
+  exit 1
+fi
+
+# With msgcat, it should work.
+tmpfiles="$tmpfiles modules.po"
+: ${MSGCAT=msgcat} ${MSGFMT=msgfmt}
+${MSGCAT} --use-first -o modules.po module1.po module2.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGFMT} -o LC_MESSAGES/gen.mo modules.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mf-test2.out"
+: ${GETTEXT=gettext}
+TEXTDOMAINDIR=.. LANGUAGE=tests \
+${GETTEXT} --env LC_ALL=en gen 'error 3' > mf-test2.out
+
+tmpfiles="$tmpfiles gtmf-test2.ok"
+echo $ac_n "error 3 translation$ac_c" > gtmf-test2.ok
+
+: ${DIFF=diff}
+${DIFF} gtmf-test2.ok mf-test2.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

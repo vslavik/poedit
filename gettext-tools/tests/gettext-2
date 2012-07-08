@@ -1,0 +1,40 @@
+#! /bin/sh
+
+# Test the gettext program without -e option.
+
+if (echo "testing\c"; echo 1,2,3) | grep c >/dev/null; then
+  # Stardent Vistra SVR4 grep lacks -e, says ghazi@caip.rutgers.edu.
+  if (echo -n testing; echo 1,2,3) | sed s/-n/xn/ | grep xn >/dev/null; then
+    ac_n= ac_c='
+' ac_t='        '
+  else
+    ac_n=-n ac_c= ac_t=
+  fi
+else
+  ac_n= ac_c='\c' ac_t=
+fi
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+# Create binary test file in correct position.
+tmpfiles="$tmpfiles LC_MESSAGES"
+test -d LC_MESSAGES || mkdir LC_MESSAGES
+cp $top_srcdir/tests/test.mo LC_MESSAGES
+
+tmpfiles="$tmpfiles gt-test2.out"
+: ${GETTEXT=gettext}
+TEXTDOMAINDIR=.. LANGUAGE=tests \
+${GETTEXT} --env LC_ALL=en test 'error 3' > gt-test2.out
+
+# Create correct file.
+tmpfile="$tmpfiles gtmf-test2.ok"
+echo $ac_n "error 3 translation$ac_c" > gtmf-test2.ok
+
+: ${DIFF=diff}
+${DIFF} gtmf-test2.ok gt-test2.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

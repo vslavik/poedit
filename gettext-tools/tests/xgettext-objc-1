@@ -1,0 +1,67 @@
+#! /bin/sh
+
+# Test ObjectiveC extractor.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles xg-ob-1.m"
+cat <<\EOF > xg-ob-1.m
+id str = _(@
+"conca" /* comment */
+@
+// another comment
+ "tenated");
+
+_(@"foo") _ ( @"foo2" /* test */ )
+
+"_()"
+
+"  \" _(foo) \" /* comment "
+
+_ // test
+(@ /* comment " */ "test"
+@
+" test2"
+)
+
+NSLocalizedString(@"Information", @"")
+EOF
+
+tmpfiles="$tmpfiles xg-ob-1.tmp.po xg-ob-1.po"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} --omit-header -k_ -kNSLocalizedString -d xg-ob-1.tmp xg-ob-1.m
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < xg-ob-1.tmp.po > xg-ob-1.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles xg-ob-1.ok"
+cat <<\EOF > xg-ob-1.ok
+#: xg-ob-1.m:2
+msgid "concatenated"
+msgstr ""
+
+#: xg-ob-1.m:7
+msgid "foo"
+msgstr ""
+
+#: xg-ob-1.m:7
+msgid "foo2"
+msgstr ""
+
+#: xg-ob-1.m:14
+msgid "test test2"
+msgstr ""
+
+#: xg-ob-1.m:19
+msgid "Information"
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-ob-1.ok xg-ob-1.po
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

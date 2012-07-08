@@ -1,0 +1,155 @@
+#! /bin/sh
+
+# Test of gettext facilities in the guile implementation of Scheme.
+# Assumes an fr_FR locale is installed.
+# Assumes the following packages are installed: guile.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles prog.scm"
+cat <<\EOF > prog.scm
+(use-modules (ice-9 format))
+
+(setlocale LC_ALL "")
+(textdomain "prog")
+(bindtextdomain "prog" ".")
+
+(define n (string->number (list-ref (command-line) 1)))
+
+(format #t "~A~%" (gettext "'Your command, please?', asked the waiter."))
+
+(format #t "~@?~%" (ngettext "a piece of cake" "~D pieces of cake" n) n)
+
+(format #t "~A~%" (format #f (gettext "~A is replaced by ~A.") "FF" "EUR"))
+EOF
+
+tmpfiles="$tmpfiles prog.tmp prog.pot"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} -o prog.tmp --omit-header --no-location prog.scm
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles prog.ok"
+cat <<EOF > prog.ok
+msgid "'Your command, please?', asked the waiter."
+msgstr ""
+
+#, scheme-format
+msgid "a piece of cake"
+msgid_plural "~D pieces of cake"
+msgstr[0] ""
+msgstr[1] ""
+
+#, scheme-format
+msgid "~A is replaced by ~A."
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} prog.ok prog.pot || exit 1
+
+tmpfiles="$tmpfiles fr.po"
+cat <<\EOF > fr.po
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "'Your command, please?', asked the waiter."
+msgstr "«Votre commande, s'il vous plait», dit le garçon."
+
+# Les gateaux allemands sont les meilleurs du monde.
+#, scheme-format
+msgid "a piece of cake"
+msgid_plural "~D pieces of cake"
+msgstr[0] "un morceau de gateau"
+msgstr[1] "~D morceaux de gateau"
+
+# Reverse the arguments.
+#, scheme-format
+msgid "~A is replaced by ~A."
+msgstr "~1@*~A remplace ~0@*~A."
+EOF
+
+tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+: ${MSGMERGE=msgmerge}
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+: ${DIFF=diff}
+${DIFF} fr.po fr.po.new || exit 1
+
+tmpfiles="$tmpfiles fr"
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+
+: ${MSGFMT=msgfmt}
+${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
+
+# Test for presence of guile version 1.7 or newer.
+(guile --version) >/dev/null 2>/dev/null \
+  || { echo "Skipping test: guile not found"; rm -fr $tmpfiles; exit 77; }
+case `guile --version | sed -e 1q | sed -e 's/^[^0-9]*//'` in
+  0.* | 1.[0-6] | 1.[0-6].* )
+    echo "Skipping test: guile version too old"; rm -fr $tmpfiles; exit 77;;
+esac
+
+# Test which of the fr_FR locales are installed.
+: ${LOCALE_FR=fr_FR}
+: ${LOCALE_FR_UTF8=fr_FR.UTF-8}
+if test $LOCALE_FR != none; then
+  LC_ALL=$LOCALE_FR ./testlocale
+  case $? in
+    0) ;;
+    77) LOCALE_FR=none;;
+    *) exit 1;;
+  esac
+fi
+if test $LOCALE_FR_UTF8 != none; then
+  LC_ALL=$LOCALE_FR_UTF8 ./testlocale
+  case $? in
+    0) ;;
+    77) LOCALE_FR_UTF8=none;;
+    *) exit 1;;
+  esac
+fi
+if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
+  if test -f /usr/bin/localedef; then
+    echo "Skipping test: no french locale is installed"
+  else
+    echo "Skipping test: no french locale is supported"
+  fi
+  rm -fr $tmpfiles; exit 77
+fi
+
+tmpfiles="$tmpfiles prog.ok prog.oku prog.out"
+: ${DIFF=diff}
+cat <<\EOF > prog.ok
+«Votre commande, s'il vous plait», dit le garçon.
+2 morceaux de gateau
+EUR remplace FF.
+EOF
+cat <<\EOF > prog.oku
+Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
+2 morceaux de gateau
+EUR remplace FF.
+EOF
+
+: ${LOCALE_FR=fr_FR}
+: ${LOCALE_FR_UTF8=fr_FR.UTF-8}
+if test $LOCALE_FR != none; then
+  LANGUAGE= LC_ALL=$LOCALE_FR guile -s prog.scm 2 > prog.out || exit 1
+  ${DIFF} prog.ok prog.out || exit 1
+fi
+if test $LOCALE_FR_UTF8 != none; then
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 guile -s prog.scm 2 > prog.out || exit 1
+  ${DIFF} prog.oku prog.out || exit 1
+fi
+
+rm -fr $tmpfiles
+
+exit 0

@@ -1,0 +1,48 @@
+#! /bin/sh
+
+# Test --more-than=0; identical message are wanted once only.
+# If both occurrences are fuzzy, keep the fuzzy mark.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles mcomm-test21.in1 mcomm-test21.in2"
+cat <<EOF > mcomm-test21.in1
+# Not sure.
+#: first.c:123
+#, fuzzy
+msgid "1"
+msgstr "1x"
+EOF
+
+cat <<EOF > mcomm-test21.in2
+# Doubt.
+#: hunt.c:759
+#, fuzzy
+msgid "1"
+msgstr "1x"
+EOF
+
+tmpfiles="$tmpfiles mcomm-test21.tmp mcomm-test21.out"
+: ${MSGCOMM=msgcomm}
+${MSGCOMM} --more-than=0 -o mcomm-test21.tmp mcomm-test21.in1 mcomm-test21.in2
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < mcomm-test21.tmp > mcomm-test21.out
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mcomm-test21.ok"
+cat << EOF > mcomm-test21.ok
+# Not sure.
+#: first.c:123 hunt.c:759
+#, fuzzy
+msgid "1"
+msgstr "1x"
+EOF
+
+: ${DIFF=diff}
+${DIFF} mcomm-test21.ok mcomm-test21.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# Test Smalltalk support: --add-comments option.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles xg-st-1.st"
+cat <<EOF > xg-st-1.st
+"This comment will not be extracted."
+Transcript showCr: (NLS ? 'help').
+" TRANSLATORS: This is an extracted comment."
+Transcript showCr: (NLS ? 'me').
+"Not extracted either."
+Transcript showCr: (NLS ? 'Hey Jude').
+"TRANSLATORS:
+     Nickname of the Beatles
+"
+Transcript showCr: (NLS ? 'The Fabulous Four').
+EOF
+
+tmpfiles="$tmpfiles xg-st-1.tmp.po xg-st-1.po"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} --omit-header --no-location --add-comments=TRANSLATORS: \
+  -d xg-st-1.tmp xg-st-1.st
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < xg-st-1.tmp.po > xg-st-1.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles xg-st-1.ok"
+cat <<EOF > xg-st-1.ok
+msgid "help"
+msgstr ""
+
+#. TRANSLATORS: This is an extracted comment.
+msgid "me"
+msgstr ""
+
+msgid "Hey Jude"
+msgstr ""
+
+#. TRANSLATORS:
+#. Nickname of the Beatles
+#.
+msgid "The Fabulous Four"
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-st-1.ok xg-st-1.po
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

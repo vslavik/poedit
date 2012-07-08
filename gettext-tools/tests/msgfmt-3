@@ -1,0 +1,36 @@
+#! /bin/sh
+
+# Test that an empty header entry is OK.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles mf-test3.po"
+cat <<EOF >mf-test3.po
+#
+#       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#       xxxxxxxxxxxxxxxxxxxx
+#
+#       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+msgid   ""
+msgstr  ""
+EOF
+
+tmpfiles="$tmpfiles mftest3.mo mftest3.err"
+: ${MSGFMT=msgfmt}
+LC_MESSAGES=C LC_ALL= \
+${MSGFMT} -o mftest3.mo mf-test3.po >mftest3.err 2>&1
+result=$?
+cat mftest3.err | grep -v 'warning: Charset' | grep -v '^ '
+test $result = 0 || { rm -fr $tmpfiles; exit 1; }
+
+test ! -f mftest3.mo
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result
