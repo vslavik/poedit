@@ -61,11 +61,8 @@
        <copy file="${mingw.bindir}/libgcc_s_dw2-1.dll" todir="${gettextdir}/bin"/>
        <copy file="${mingw.bindir}/libgomp-1.dll" todir="${gettextdir}/bin"/>
        <copy file="${mingw.bindir}/pthreadGC2.dll" todir="${gettextdir}/bin"/>
-       <!-- TODO: build it ourselves -->
-       <copy file="${mingw.bindir}/libiconv-2.dll" todir="${gettextdir}/bin"/>
     </target>
 
-    <!--
     <target name="win-libiconv-check" if="is_windows">
         <echo level="info" message="Checking if libiconv needs building..."/>
         <dependset>
@@ -79,20 +76,20 @@
 
     <target name="win-libiconv" depends="win-libiconv-check" unless="built.libiconv" if="is_windows">
         <echo level="info" message="Building libiconv DLL..."/>
+        <!-- Prevent automake regeneration: -->
+        <touch>
+            <fileset dir="gettext" includes="**/aclocal.m4"/>
+            <fileset dir="gettext" includes="**/config.h.in"/>
+            <fileset dir="libiconv" includes="**/Makefile.in"/>
+            <fileset dir="libiconv" includes="**/configure"/>
+        </touch>
         <mkdir dir="${gettextdir}"/>
         <mkdir dir="libiconv/builddir"/>
-        <exec dir="libiconv" executable="${msys.sh}" failonerror="true">
-            <env key="PATH" path="${msys.env.PATH}"/>
-            <env key="GNULIB_TOOL" value="${basedir.msys}/gnulib/gnulib-tool"/>
-            <env key="MAKEFLAGS" value="-j1"/>
-            <arg value="-e"/>
-            <arg value="./autogen.sh"/>
-        </exec>
         <exec dir="libiconv/builddir" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
             <arg value="../configure"/>
-            <arg value=" - - prefix=${gettextdir}"/>
-            <arg value=" - - disable-static"/>
+            <arg value="--prefix=${gettextdir}"/>
+            <arg value="--disable-static"/>
         </exec>
         <exec dir="libiconv/builddir" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
@@ -106,7 +103,6 @@
         </exec>
         <touch file="${gettextdir}/built.libiconv"/>
     </target>
-    -->
 
     <target name="win-gettext-check" if="is_windows">
         <echo level="info" message="Checking if GNU gettext needs building..."/>
@@ -121,27 +117,23 @@
         <available property="built.gettext" file="${gettextdir}/built.gettext"/>
     </target>
 
-    <target name="win-gettext" depends="mingw-dlls,win-gettext-check" unless="built.gettext" if="is_windows">
+    <target name="win-gettext" depends="win-libiconv,mingw-dlls,win-gettext-check" unless="built.gettext" if="is_windows">
         <echo level="info" message="Building GNU gettext..."/>
+        <!-- Prevent automake regeneration: -->
+        <touch>
+            <fileset dir="gettext" includes="**/aclocal.m4"/>
+            <fileset dir="gettext" includes="**/config.h.in"/>
+            <fileset dir="gettext" includes="**/Makefile.in"/>
+            <fileset dir="gettext" includes="**/configure"/>
+        </touch>
+        <touch file="gettext/gettext-tools/doc/stamp-vti"/>
         <mkdir dir="${gettextdir}"/>
         <mkdir dir="gettext/builddir"/>
-        <exec dir="gettext" executable="${msys.sh}" outputproperty="basedir.msys" failonerror="true">
-            <env key="PATH" path="${msys.env.PATH}"/>
-            <arg value="-c"/>
-            <arg value="echo '${basedir.unix}' | sed -e 's@^\(.\):/@/\1/@'"/>
-        </exec>
-        <exec dir="gettext" executable="${msys.sh}" failonerror="true">
-            <env key="PATH" path="${msys.env.PATH}"/>
-            <env key="MAKEFLAGS" value="-j1"/>
-            <env key="GNULIB_TOOL" value="${basedir.msys}/gnulib/gnulib-tool"/>
-            <arg value="-e"/>
-            <arg value="./autogen.sh"/>
-        </exec>
         <exec dir="gettext/builddir" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
             <arg value="../configure"/>
             <arg value="--prefix=${gettextdir}"/>
-            <!-- <arg value=" - - with-libiconv-prefix=${gettextdir}"/> -->
+            <arg value="--with-libiconv-prefix=${gettextdir}"/>
             <arg value="--enable-threads=win32"/>
             <arg value="--disable-static"/>
             <arg value="--disable-java"/>
@@ -406,13 +398,15 @@
     </target>
 
     <target name="osx-gettext" depends="osx-gettext-check" unless="built.gettext" if="is_osx">
-        <exec dir="gettext" executable="/bin/sh" failonerror="true">
-            <env key="GNULIB_TOOL" value="${basedir.unix}/gnulib/gnulib-tool"/>
-            <env key="MAKEFLAGS" value="-j1"/>
-            <arg value="-e"/>
-            <arg value="./autogen.sh"/>
-        </exec>
-        <delete file="gettext/gettext-tools/doc/stamp-vti"/>
+        <!-- Prevent automake regeneration: -->
+        <touch>
+            <fileset dir="gettext" includes="**/aclocal.m4"/>
+            <fileset dir="gettext" includes="**/config.h.in"/>
+            <fileset dir="gettext" includes="**/Makefile.in"/>
+            <fileset dir="gettext" includes="**/configure"/>
+        </touch>
+        <touch file="gettext/gettext-tools/doc/stamp-vti"/>
+
         <antcall target="osx-gettext-arch">
             <param name="osx.arch" value="i386"/>
             <param name="osx.sdk" value="${osx.deploy.sdk}"/>
