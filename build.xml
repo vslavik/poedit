@@ -77,6 +77,14 @@
     </target>
 
     <target name="compile-win" if="is_windows" depends="bootstrap-win">
+        <apply executable="deps/bin-gettext/bin/msgfmt.exe" dest="locales">
+            <arg value="-c"/>
+            <arg value="-o"/>
+            <targetfile/>
+            <srcfile/>
+            <fileset dir="locales" includes="*.po"/>
+            <mapper type="glob" from="*.po" to="*.mo"/>
+        </apply>
         <exec dir="win32" executable="${msvs.vcbuild}" failonerror="true">
             <arg value="/platform:Win32"/>
             <arg value="poedit.vcproj"/>

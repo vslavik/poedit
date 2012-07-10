@@ -235,11 +235,12 @@
                         includes="include/**,src/**,contrib/include/**,contrib/src/**"/>
             <targetfileset dir="wx"
                            includes="build/msw/vc_mswu*/**,contrib/build/stc/vc_mswu*/**,lib/vc_lib/*"/>
+            <targetfileset dir="wx/locale/*.mo"/>
         </dependset>
         <available property="built.win-wx" file="wx/lib/vc_lib/wxmsw28u_core.lib"/>
     </target>
 
-    <target name="win-wx" depends="win-wx-check" unless="built.win-wx" if="is_windows">
+    <target name="win-wx" depends="win-gettext,win-wx-check" unless="built.win-wx" if="is_windows">
         <echo level="info" message="Building wxWidgets..."/>
         <exec dir="." executable="${msvs.vcbuild}" failonerror="true">
             <arg value="/platform:Win32"/>
@@ -255,6 +256,11 @@
             <arg value="/platform:Win32"/>
             <arg value="wxWidgetsForPoedit_WXRC.vcproj"/>
             <arg value="Release"/>
+        </exec>
+        <exec dir="wx/locale" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="make allmo MSGFMT=${gettextdir}/bin/msgfmt.exe"/>
         </exec>
     </target>
 
@@ -486,8 +492,7 @@
         <echo level="info" message="Checking if wxWidgets needs building..."/>
         <dependset>
             <srcfileset dir="wx" excludes="builddir/**,locale/**"/>
-            <targetfileset dir="wx/builddir/i386"/>
-            <targetfileset dir="wx/builddir/ppc"/>
+            <targetfileset dir="wx/locale/*.mo"/>
             <targetfileset dir="${osx.destdir}" includes="*/lib/libwx*"/>
             <targetfileset dir="${osx.destdir}" includes="*/lib/wx/**"/>
             <targetfilelist files="${osx.destdir}/built.wx"/>
@@ -525,7 +530,11 @@
         </exec>
     </target>
 
-    <target name="osx-wx" depends="osx-wx-check" unless="built.osx-wx" if="is_osx">
+    <target name="osx-wx" depends="osx-gettext,osx-wx-check" unless="built.osx-wx" if="is_osx">
+        <exec dir="wx/locale" executable="/bin/sh" failonerror="true">
+            <arg value="-c"/>
+            <arg value="make allmo MSGFMT=${gettextdir}/bin/msgfmt"/>
+        </exec>
         <antcall target="osx-wx-arch">
             <param name="osx.arch" value="i386"/>
             <param name="osx.sdk" value="${osx.best.sdk}"/>
