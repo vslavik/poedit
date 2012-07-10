@@ -231,26 +231,27 @@
      <target name="win-wx-check" if="is_windows">
         <echo level="info" message="Checking if wxWidgets needs building..."/>
         <dependset>
-            <srcfileset dir="wx" includes="include/**,src/**,contrib/include/**,contrib/src/**"/>
+            <srcfileset dir="wx"
+                        includes="include/**,src/**,contrib/include/**,contrib/src/**"/>
             <targetfileset dir="wx"
-                           includes="build/msw/vc_mswu/**,lib/vc_lib/*.lib"/>
+                           includes="build/msw/vc_mswu*/**,contrib/build/stc/vc_mswu*/**,lib/vc_lib/*"/>
         </dependset>
         <available property="built.win-wx" file="wx/lib/vc_lib/wxmsw28u_core.lib"/>
     </target>
 
     <target name="win-wx" depends="win-wx-check" unless="built.win-wx" if="is_windows">
         <echo level="info" message="Building wxWidgets..."/>
-        <exec dir="wx/build/msw" executable="${msvs.vcbuild}" failonerror="true">
+        <exec dir="." executable="${msvs.vcbuild}" failonerror="true">
             <arg value="/platform:Win32"/>
             <arg value="wxWidgetsForPoedit.vcproj"/>
             <arg value="Release"/>
         </exec>
-        <exec dir="wx/contrib/build/stc" executable="${msvs.vcbuild}" failonerror="true">
+        <exec dir="." executable="${msvs.vcbuild}" failonerror="true">
             <arg value="/platform:Win32"/>
             <arg value="wxWidgetsForPoedit_STC.vcproj"/>
             <arg value="Release"/>
         </exec>
-        <exec dir="wx/utils/wxrc" executable="${msvs.vcbuild}" failonerror="true">
+        <exec dir="." executable="${msvs.vcbuild}" failonerror="true">
             <arg value="/platform:Win32"/>
             <arg value="wxWidgetsForPoedit_WXRC.vcproj"/>
             <arg value="Release"/>
