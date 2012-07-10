@@ -49,7 +49,7 @@
             description="compile Berkeley DB"/>
     <target name="compile-wx" depends="win-wx,osx-wx"
             description="compile wxWidgets"/>
-    <target name="compile-sparkle" depends="osx-sparkle"
+    <target name="compile-sparkle" depends="win-sparkle,osx-sparkle"
             description="compile (Win)Sparkle"/>
 
 
@@ -192,6 +192,34 @@
         <delete>
             <fileset dir="db/build_windows" includes="db_my.*"/>
         </delete>
+    </target>
+
+
+<!-- ==============================================================
+     Windows dependencies - WinSparkle
+     ============================================================== -->
+
+     <target name="win-sparkle-check" if="is_windows">
+        <echo level="info" message="Checking if WinSparkle needs building..."/>
+        <dependset>
+            <srcfileset dir="winsparkle" excludes="**/Release*/**"/>
+            <targetfileset dir="winsparkle" includes="Release/*"/>
+        </dependset>
+        <available property="built.win-sparkle" file="winsparkle/Release/WinSparkle.dll"/>
+    </target>
+
+    <target name="win-sparkle" depends="win-sparkle-check" unless="built.win-sparkle" if="is_windows">
+        <echo level="info" message="Building WinSparkle..."/>
+        <exec dir="winsparkle/3rdparty" executable="${msvs.vcbuild}" failonerror="true">
+            <arg value="/platform:Win32"/>
+            <arg value="WinSparkleDeps.sln"/>
+            <arg value="Release|Win32"/>
+        </exec>
+        <exec dir="winsparkle" executable="${msvs.vcbuild}" failonerror="true">
+            <arg value="/platform:Win32"/>
+            <arg value="WinSparkle.sln"/>
+            <arg value="Release|Win32"/>
+        </exec>
     </target>
 
 

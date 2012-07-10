@@ -88,7 +88,7 @@ Source: deps\bin-gettext\bin\msgfmt.exe; DestDir: {app}\bin; Flags: ignoreversio
 Source: deps\bin-gettext\bin\msgcat.exe; DestDir: {app}\bin; Flags: ignoreversion
 Source: deps\bin-gettext\bin\*.dll; DestDir: {app}\bin; Flags: ignoreversion
 Source: deps\db\build_windows\Win32\Release\libdb*.dll; DestDir: {app}\bin; Flags: ignoreversion
-Source: deps\winsparkle\WinSparkle.dll; DestDir: {app}\bin; Flags: ignoreversion
+Source: deps\winsparkle\Release\WinSparkle.dll; DestDir: {app}\bin; Flags: ignoreversion
 Source: COPYING; DestDir: {app}\doc; DestName: copying.txt
 Source: NEWS; DestDir: {app}\doc; DestName: news.txt
 Source: icons\ui\*.png; DestDir: {app}\share\poedit\icons
