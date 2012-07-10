@@ -113,14 +113,14 @@
     </target>
 
     <target name="win-make-installer-unsigned" unless="codesign.identity">
-        <exec dir="win32" executable="deps/inno-setup/iscc.exe" failonerror="true">
+        <exec dir="win32" executable="${innosetup.iscc}" failonerror="true">
             <arg value="poedit.iss"/>
             <arg value="/dCRT_REDIST=${msvs.redist}"/>
         </exec>
     </target>
 
     <target name="win-make-installer-signed" if="codesign.identity">
-        <exec dir="win32" executable="deps/inno-setup/iscc.exe" failonerror="true">
+        <exec dir="win32" executable="${innosetup.iscc}" failonerror="true">
             <arg value="poedit.iss"/>
             <arg value="/dCRT_REDIST=${msvs.redist}"/>
             <arg value="/dSIGNTOOL=default"/>
