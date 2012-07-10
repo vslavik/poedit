@@ -171,7 +171,7 @@
      <target name="win-db-check" if="is_windows">
         <echo level="info" message="Checking if Berkeley DB needs building..."/>
         <dependset>
-            <srcfileset dir="db" excludes="build_windows/Win32/**,build_windows/db_my*"/>
+            <srcfileset dir="db" excludes="build_windows/Win32/**,build_unix/**"/>
             <targetfileset dir="db/build_windows/Win32"/>
         </dependset>
         <available property="built.win-db" file="db/build_windows/Win32/Release/libdb48.dll"/>
