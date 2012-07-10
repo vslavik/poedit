@@ -1,4 +1,4 @@
-<project name="Poedit" default="compile">
+<project name="Poedit" default="distrib">
 
     <description>
     Builds Poedit.
@@ -16,15 +16,14 @@
 
 
     <target name="deps"
-        description="build Poedit dependencies">
+            description="compile all dependencies for building on this platform">
         <ant dir="deps"/>
     </target>
 
 
     <target name="compile"
-            description="compile all dependencies for building on this platform"
+            description="compile Poedit"
             depends="compile-win,compile-osx"/>
-
 
     <target name="distrib"
             description="build distribution for this platform"
@@ -96,7 +95,7 @@
     </target>
 
 
-    <target name="distrib-win" if="is_windows">
+    <target name="distrib-win" depends="compile-win" if="is_windows">
         <mkdir dir="distrib"/>
         <parallel>
             <antcall target="win-debug-info"/>
@@ -272,7 +271,7 @@
     </target>
     
     
-    <target name="distrib-osx" if="is_osx">
+    <target name="distrib-osx" depends="compile-osx" if="is_osx">
         <mkdir dir="distrib"/>
         <parallel>
             <antcall target="osx-make-installer"/>
