@@ -11,7 +11,7 @@
     <set var="DEPS">..\deps</set>
     <set var="WX_DIR_DEFAULT">$(DEPS)/wx</set>
 
-    <option name="WXRC">
+    <option name="POEDIT_WXRC">
         <default-value>$(DEPS)\wx\utils\wxrc\vc_mswu\wxrc</default-value>
         <description>Path to wxrc tool</description>
     </option>
@@ -131,7 +131,7 @@ Compiling XRC resources...
 InputPath=..\src\resources\menus.xrc
 
 "..\win32\compiled_xrc.cpp" : $(';'.join(XRC_FILES.split()))
-$(TAB)$(WXRC) -v -c -o compiled_xrc.cpp $(XRC_FILES)
+$(TAB)$(POEDIT_WXRC) -v -c -o compiled_xrc.cpp $(XRC_FILES)
             </set>
         </if>
 
@@ -169,11 +169,11 @@ $(TAB)$(WXRC) -v -c -o compiled_xrc.cpp $(XRC_FILES)
     </exe>
 
     <set var="VARS_DONT_ELIMINATE" cond="FORMAT=='msvc'" append="1">
-        XRC_FILES WXRC
+        XRC_FILES POEDIT_WXRC
     </set>
     <fragment format="msvc">
 ..\win32\.\compiled_xrc.cpp: $(XRC_FILES)
-    $(WXRC) -v -c -o $@ $(XRC_FILES)
+    $(POEDIT_WXRC) -v -c -o $@ $(XRC_FILES)
     </fragment>
 
 </makefile>
