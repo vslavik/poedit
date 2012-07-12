@@ -90,6 +90,8 @@
             <arg value="../configure"/>
             <arg value="--prefix=${gettextdir}"/>
             <arg value="--disable-static"/>
+            <arg value="CFLAGS=${msys.env.CFLAGS}"/>
+            <arg value="CXXFLAGS=${msys.env.CFLAGS}"/>
         </exec>
         <exec dir="libiconv/builddir" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
