@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# Test Python support: --add-comments option.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles xg-py-3.py"
+cat <<\EOF > xg-py-3.py
+# a
+string = # b
+# c
+_( # d
+"hello " "world" # e
+);
+EOF
+
+tmpfiles="$tmpfiles xg-py-3.tmp.po xg-py-3.po"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} --add-comments --omit-header --no-location --keyword=_ \
+  -d xg-py-3.tmp xg-py-3.py
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < xg-py-3.tmp.po > xg-py-3.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles xg-py-3.ok"
+cat <<EOF > xg-py-3.ok
+#. a
+#. b
+#. c
+#. d
+msgid "hello world"
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-py-3.ok xg-py-3.po
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

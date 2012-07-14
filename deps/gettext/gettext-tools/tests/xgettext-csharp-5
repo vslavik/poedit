@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# Test C# support: --add-comments option.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles xg-cs-5.cs"
+cat <<EOF > xg-cs-5.cs
+// This comment will not be extracted.
+Console.WriteLine(GetString("help"));
+//  TRANSLATORS: This is an extracted comment.
+Console.WriteLine(GetString("me"));
+/* Not extracted either. */
+Console.WriteLine(GetString("Hey Jude"));
+/*  TRANSLATORS:
+     Nickname of the Beatles
+*/
+Console.WriteLine(GetString("The Fabulous Four"));
+/* TRANSLATORS: The strings get concatenated.  */
+Console.WriteLine(GetString("there is not enough" +
+" room on a single line for this entire long, " // confusing, eh?
++ "verbose string"));
+EOF
+
+tmpfiles="$tmpfiles xg-cs-5.tmp.po xg-cs-5.po"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} --omit-header --no-location --add-comments=TRANSLATORS: \
+  -d xg-cs-5.tmp xg-cs-5.cs
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < xg-cs-5.tmp.po > xg-cs-5.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles xg-cs-5.ok"
+cat <<EOF > xg-cs-5.ok
+msgid "help"
+msgstr ""
+
+#. TRANSLATORS: This is an extracted comment.
+msgid "me"
+msgstr ""
+
+msgid "Hey Jude"
+msgstr ""
+
+#. TRANSLATORS:
+#. Nickname of the Beatles
+#.
+msgid "The Fabulous Four"
+msgstr ""
+
+#. TRANSLATORS: The strings get concatenated.
+msgid ""
+"there is not enough room on a single line for this entire long, verbose "
+"string"
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-cs-5.ok xg-cs-5.po
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

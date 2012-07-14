@@ -1,0 +1,25 @@
+#! /bin/sh
+
+# "msgcomm INPUT INPUT" is equivalent to "msguniq INPUT"
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles mcomm-23.in1 mcomm-23.in2"
+cp ${top_srcdir}/tests/msguniq-a.in mcomm-23.in1
+cp ${top_srcdir}/tests/msguniq-a.in mcomm-23.in2
+
+tmpfiles="$tmpfiles mcomm-23.tmp mcomm-23.out"
+: ${MSGCOMM=msgcomm}
+${MSGCOMM} -w 1000 -o mcomm-23.tmp mcomm-23.in1 mcomm-23.in2
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < mcomm-23.tmp > mcomm-23.out
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+: ${DIFF=diff}
+${DIFF} ${top_srcdir}/tests/msguniq-a.out mcomm-23.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

@@ -1,0 +1,54 @@
+#! /bin/sh
+
+# Test ISO C 99 <inttypes.h> format string directives.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles fc3.tmp fc3.pot"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} -o fc3.tmp --omit-header --no-location ${top_srcdir}/tests/format-c-3-prg.c
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < fc3.tmp > fc3.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles fc3.ok"
+cat <<EOF > fc3.ok
+#, c-format
+msgid "father of %<PRId8> children"
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} fc3.ok fc3.pot || exit 1
+
+tmpfiles="$tmpfiles de.po"
+cat <<EOF > de.po
+#, c-format
+msgid "father of %<PRId8> children"
+msgstr "Vater von %<PRId8> Kindern"
+EOF
+
+tmpfiles="$tmpfiles de"
+test -d de || mkdir de
+test -d de/LC_MESSAGES || mkdir de/LC_MESSAGES
+
+: ${MSGFMT=msgfmt}
+${MSGFMT} -o de/LC_MESSAGES/fc3.mo de.po
+
+tmpfiles="$tmpfiles de.po.tmp de.po.un"
+: ${MSGUNFMT=msgunfmt}
+${MSGUNFMT} -o de.po.tmp de/LC_MESSAGES/fc3.mo
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < de.po.tmp > de.po.un
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+: ${DIFF=diff}
+${DIFF} de.po de.po.un || exit 1
+
+LANGUAGE= ./fc3 de_DE
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

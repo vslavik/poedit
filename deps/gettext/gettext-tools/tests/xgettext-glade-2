@@ -1,0 +1,110 @@
+#!/bin/sh
+
+# Test of Glade support, in particular ISO-8859-1 to UTF-8 conversion
+# and ASCII entities (&lt; &gt; &quot;).
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles empty.glade"
+cat <<EOF > empty.glade
+<?xml version="1.0"?>
+<GTK-Interface/>
+EOF
+
+tmpfiles="$tmpfiles xg-gl-2.pot"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} -o xg-gl-2.pot empty.glade 2>/dev/null
+test $? = 0 || {
+  echo "Skipping test: xgettext was built without Glade support"
+  rm -fr $tmpfiles; exit 77
+}
+
+tmpfiles="$tmpfiles simple.glade"
+cat <<\EOF > simple.glade
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<GTK-Interface>
+
+
+<widget>
+  <class>GtkWindow</class>
+  <name>HelloWindow</name>
+  <border_width>5</border_width>
+  <Signal>
+    <name>destroy</name>
+    <handler>gtk_main_quit</handler>
+  </Signal>
+  <title>Hello</title>
+  <type>GTK_WINDOW_TOPLEVEL</type>
+  <position>GTK_WIN_POS_NONE</position>
+  <allow_shrink>True</allow_shrink>
+  <allow_grow>True</allow_grow>
+  <auto_shrink>False</auto_shrink>
+
+  <widget>
+    <class>GtkButton</class>
+    <name>Hello World</name>
+    <can_focus>True</can_focus>
+    <Signal>
+      <name>clicked</name>
+      <handler>gtk_widget_destroy</handler>
+      <object>HelloWindow</object>
+    </Signal>
+    <!-- Der übliche Programm-Gruß -->
+    <label>Hello World</label>
+    <comments>This &lt;button&gt; displays &quot;Hello World&quot;.</comments>
+  </widget>
+</widget>
+
+</GTK-Interface>
+EOF
+
+tmpfiles="$tmpfiles xg-gl-2.tmp xg-gl-2.pot"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} --add-comments -o xg-gl-2.tmp simple.glade 
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+# Don't simplify this to "grep ... < xg-gl-2.tmp", otherwise OpenBSD 4.0 grep
+# only outputs "Binary file (standard input) matches".
+cat xg-gl-2.tmp | grep -v 'POT-Creation-Date' > xg-gl-2.pot
+
+tmpfiles="$tmpfiles xg-gl-2.ok"
+cat <<\EOF > xg-gl-2.ok
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: simple.glade:13
+msgid "Hello"
+msgstr ""
+
+#. Der Ã¼bliche Programm-GruÃŸ
+#: simple.glade:30
+msgid "Hello World"
+msgstr ""
+
+#: simple.glade:31
+msgid "This <button> displays \"Hello World\"."
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-gl-2.ok xg-gl-2.pot
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

@@ -1,4 +1,4 @@
-<project name="Poedit" default="compile">
+<project name="Poedit" default="distrib">
 
     <description>
     Builds Poedit.
@@ -16,15 +16,14 @@
 
 
     <target name="deps"
-        description="build Poedit dependencies">
+            description="compile all dependencies for building on this platform">
         <ant dir="deps"/>
     </target>
 
 
     <target name="compile"
-            description="compile all dependencies for building on this platform"
+            description="compile Poedit"
             depends="compile-win,compile-osx"/>
-
 
     <target name="distrib"
             description="build distribution for this platform"
@@ -77,6 +76,14 @@
     </target>
 
     <target name="compile-win" if="is_windows" depends="bootstrap-win">
+        <apply executable="deps/bin-gettext/bin/msgfmt.exe" dest="locales">
+            <arg value="-c"/>
+            <arg value="-o"/>
+            <targetfile/>
+            <srcfile/>
+            <fileset dir="locales" includes="*.po"/>
+            <mapper type="glob" from="*.po" to="*.mo"/>
+        </apply>
         <exec dir="win32" executable="${msvs.vcbuild}" failonerror="true">
             <arg value="/platform:Win32"/>
             <arg value="poedit.vcproj"/>
@@ -88,7 +95,7 @@
     </target>
 
 
-    <target name="distrib-win" if="is_windows">
+    <target name="distrib-win" depends="compile-win" if="is_windows">
         <mkdir dir="distrib"/>
         <parallel>
             <antcall target="win-debug-info"/>
@@ -113,14 +120,14 @@
     </target>
 
     <target name="win-make-installer-unsigned" unless="codesign.identity">
-        <exec dir="win32" executable="deps/inno-setup/iscc.exe" failonerror="true">
+        <exec dir="win32" executable="${innosetup.iscc}" failonerror="true">
             <arg value="poedit.iss"/>
             <arg value="/dCRT_REDIST=${msvs.redist}"/>
         </exec>
     </target>
 
     <target name="win-make-installer-signed" if="codesign.identity">
-        <exec dir="win32" executable="deps/inno-setup/iscc.exe" failonerror="true">
+        <exec dir="win32" executable="${innosetup.iscc}" failonerror="true">
             <arg value="poedit.iss"/>
             <arg value="/dCRT_REDIST=${msvs.redist}"/>
             <arg value="/dSIGNTOOL=default"/>
@@ -264,7 +271,7 @@
     </target>
     
     
-    <target name="distrib-osx" if="is_osx">
+    <target name="distrib-osx" depends="compile-osx" if="is_osx">
         <mkdir dir="distrib"/>
         <parallel>
             <antcall target="osx-make-installer"/>

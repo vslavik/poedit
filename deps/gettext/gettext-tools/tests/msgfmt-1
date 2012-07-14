@@ -1,0 +1,81 @@
+#! /bin/sh
+
+# Test basic functionality, duplicate detection, multiple domains.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles LC_MESSAGES"
+test -d LC_MESSAGES || mkdir LC_MESSAGES
+
+tmpfiles="$tmpfiles module1.po module2.po"
+cat <<EOF > module1.po
+#default domain "messages.mo"
+msgid	"SYS_(C)\n"
+msgstr "MSGFMT(3) portable message object file compiler\n"
+"Copyright (C) 1995 Free Software Foundation\n"
+"Report bugs to <bug-gnu-utils@gnu.org>\n"
+msgid	"msg 1"
+msgstr	"msg 1 translation"
+#
+domain	"help_dom"
+msgid	"help 2 %d"
+msgstr	"help 2 translation"
+#
+domain	"error_dom"
+msgid	"error 3"
+msgstr	"error 3 translation"
+EOF
+
+cat <<EOF > module2.po
+# ---
+#default domain "messages.mo"
+msgid	"mesg 4"
+msgstr	"mesg 4 translation"
+#
+domain	"error_dom"
+msgid	"error 3"
+msgstr	"alternate error 3 translation"
+msgid	"error 5"
+msgstr	"error 5 translation"
+#
+domain	"window_dom"
+msgid	"window 6"
+msgstr	"window 6 translation"
+EOF
+
+# Without use of msgcat, expect a "duplicate message definition" error.
+: ${MSGFMT=msgfmt}
+if ${MSGFMT} -o LC_MESSAGES/gen.mo module1.po module2.po 2> /dev/null; then
+  rm -fr $tmpfiles
+  exit 1
+fi
+
+# With msgcat, it should work.
+tmpfiles="$tmpfiles modules.po"
+: ${MSGCAT=msgcat} ${MSGFMT=msgfmt}
+${MSGCAT} --use-first -o modules.po module1.po module2.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGFMT} -o LC_MESSAGES/gen.mo modules.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mf-test1.out"
+: ${GETTEXT=gettext}
+TEXTDOMAINDIR=.. LANGUAGE=tests \
+${GETTEXT} --env LC_ALL=en gen 'SYS_(C)
+' | LC_ALL=C tr -d '\r' > mf-test1.out
+
+tmpfiles="$tmpfiles gtmf-test1.ok"
+cat <<EOF > gtmf-test1.ok
+MSGFMT(3) portable message object file compiler
+Copyright (C) 1995 Free Software Foundation
+Report bugs to <bug-gnu-utils@gnu.org>
+EOF
+
+: ${DIFF=diff}
+${DIFF} gtmf-test1.ok mf-test1.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

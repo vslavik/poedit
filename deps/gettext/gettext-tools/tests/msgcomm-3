@@ -1,0 +1,46 @@
+#! /bin/sh
+
+# Test --omit-header option when there is no header.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles mcomm-test3.in1 mcomm-test3.in2"
+cat <<EOF > mcomm-test3.in1
+#: first.c:123
+msgid "1"
+msgstr "1x"
+EOF
+
+cat <<EOF > mcomm-test3.in2
+#: hunt.c:759
+msgid "2"
+msgstr "2x"
+EOF
+
+tmpfiles="$tmpfiles mcomm-test3.tmp mcomm-test3.out"
+: ${MSGCOMM=msgcomm}
+${MSGCOMM} --more-than=0 --omit-header -o mcomm-test3.tmp \
+    mcomm-test3.in1 mcomm-test3.in2
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < mcomm-test3.tmp > mcomm-test3.out
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mcomm-test3.ok"
+cat << EOF > mcomm-test3.ok
+#: first.c:123
+msgid "1"
+msgstr "1x"
+
+#: hunt.c:759
+msgid "2"
+msgstr "2x"
+EOF
+
+: ${DIFF=diff}
+${DIFF} mcomm-test3.ok mcomm-test3.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

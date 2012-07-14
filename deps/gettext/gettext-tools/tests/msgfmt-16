@@ -1,0 +1,77 @@
+#! /bin/sh
+
+# Test msgfmt on a PO file with previous msgids.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles mf-16.po"
+cat <<\EOF > mf-16.po
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. TRANSLATORS: An error message.
+#: src/args.c:242
+#, fuzzy, c-format
+#| msgid "too many arguments"
+msgid "Too many arguments."
+msgstr "zu viele Argumente"
+
+#. TRANSLATORS: An error message.
+#: src/args.c:247
+#, fuzzy, c-format
+#| msgid "too many arguments"
+msgid "Too few arguments."
+msgstr "zu viele Argumente"
+
+# Oder besser "fehlende Argumente"?
+#. TRANSLATORS: An error message.
+#: src/args.c:273
+#, c-format
+#| msgid "missing arguments"
+msgid "Missing arguments."
+msgstr "Argumente fehlen."
+
+#, fuzzy
+#~| msgid "%s: invalid option -- %c\n"
+#~ msgid "%s: illegal option -- %c\n"
+#~ msgstr "%s: ungültige Option -- %c\n"
+
+#~ msgid "%s: invalid option -- %c\n"
+#~ msgstr "%s: ungültige Option -- %c\n"
+EOF
+
+tmpfiles="$tmpfiles mf-16.mo"
+: ${MSGFMT=msgfmt}
+${MSGFMT} -o mf-16.mo mf-16.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mf-16.tmp mf-16.out"
+: ${MSGUNFMT=msgunfmt}
+${MSGUNFMT} -o mf-16.tmp mf-16.mo
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < mf-16.tmp > mf-16.out
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mf-16.ok"
+cat <<\EOF > mf-16.ok
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Missing arguments."
+msgstr "Argumente fehlen."
+EOF
+
+: ${DIFF=diff}
+${DIFF} mf-16.ok mf-16.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# Test of comment extraction in the case of duplicated msgids.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles xg-test7.c"
+cat <<\EOF > xg-test7.c
+/* first comment */
+/* xgettext: c-format */
+gettext ("abc");
+
+/* first comment */
+/* xgettext: lisp-format */
+gettext ("abc");
+
+/* second comment */
+/* xgettext: python-format */
+gettext ("abc");
+EOF
+
+tmpfiles="$tmpfiles xg-test7.tmp.po xg-test7.po"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} --omit-header --add-comments -d xg-test7.tmp xg-test7.c
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < xg-test7.tmp.po > xg-test7.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles xg-test7.ok"
+cat <<\EOF > xg-test7.ok
+#. first comment
+#. second comment
+#: xg-test7.c:3 xg-test7.c:7 xg-test7.c:11
+#, c-format, python-format, lisp-format
+msgid "abc"
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-test7.ok xg-test7.po
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

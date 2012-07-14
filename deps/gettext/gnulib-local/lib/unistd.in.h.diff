@@ -1,0 +1,15 @@
+--- unistd.in.h.orig	2010-05-09 02:37:27.000000000 +0200
++++ unistd.in.h	2010-05-09 10:51:25.000000000 +0200
+@@ -93,7 +93,11 @@
+ 
+ /* Get getopt(), optarg, optind, opterr, optopt.
+    But avoid namespace pollution on glibc systems.  */
+-#if @GNULIB_UNISTD_H_GETOPT@ && !defined __GLIBC__ && !defined _GL_SYSTEM_GETOPT
++/* Also, don't include <getopt.h> inside libgettextpo, because we use
++   the getopt module only in gettext-tools/gnulib-lib/, not in
++   gettext-tools/libgettextpo/, but there is only a single
++   GNULIB_UNISTD_H_GETOPT variable for both.  */
++#if @GNULIB_UNISTD_H_GETOPT@ && !defined GTPO_CONFIG_H && !defined __GLIBC__ && !defined _GL_SYSTEM_GETOPT
+ # include <getopt.h>
+ #endif
+ 
