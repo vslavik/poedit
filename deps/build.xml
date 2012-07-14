@@ -66,7 +66,8 @@
     <target name="win-libiconv-check" if="is_windows">
         <echo level="info" message="Checking if libiconv needs building..."/>
         <dependset>
-            <srcfileset dir="libiconv" excludes="builddir/**"/>
+            <srcfileset dir="libiconv"
+                excludes="builddir/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure"/>
             <targetfileset dir="${gettextdir}" includes="bin/*iconv*,bin/*charset*"/>
             <targetfileset dir="${gettextdir}" includes="lib/*iconv*,lib/*charset*"/>
             <targetfilelist files="${gettextdir}/built.libiconv"/>
@@ -111,7 +112,7 @@
         <dependset>
             <!-- NB: gnulib-lib is excluded, because some sources
                      are regenerated and I can't figure out how to fix it -->
-            <srcfileset dir="gettext" excludes="builddir/**,gettext-tools/gnulib-lib/**"/>
+            <srcfileset dir="gettext" excludes="builddir/**,gettext-tools/gnulib-lib/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure,gettext-tools/doc/stamp-vti"/>
             <targetfileset dir="${gettextdir}" includes="bin/*gettext*"/>
             <targetfileset dir="${gettextdir}" includes="bin/msg*.exe"/>
             <targetfilelist files="${gettextdir}/built.gettext"/>
@@ -395,7 +396,7 @@
         <dependset>
             <!-- NB: gnulib-lib is excluded, because some sources
                      are regenerated and I can't figure out how to fix it -->
-            <srcfileset dir="gettext" excludes="builddir/**,gettext-tools/gnulib-lib/**"/>
+            <srcfileset dir="gettext" excludes="builddir/**,gettext-tools/gnulib-lib/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure,gettext-tools/doc/stamp-vti"/>
             <targetfileset dir="${gettextdir}" includes="bin/*"/>
             <targetfilelist files="${gettextdir}/built.gettext"/>
         </dependset>
