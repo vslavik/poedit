@@ -128,12 +128,11 @@ case "${host}" in
         if test "x$with_sparkle" != "xno" ; then
             LIBS="$LIBS -F$with_sparkle -framework Sparkle"
             CFLAGS="$CFLAGS -F$with_sparkle"
+            OBJCFLAGS="$OBJCFLAGS -F$with_sparkle"
             CXXFLAGS="$CXXFLAGS -F$with_sparkle"
-            AC_MSG_CHECKING([for Sparkle framework with Carbon support])
+            AC_MSG_CHECKING([for Sparkle framework])
             AC_LINK_IFELSE(
-                [AC_LANG_PROGRAM([#include <Sparkle/SUCarbonAPI.h>],
-                                 [SUSparkleInitializeForCarbon();])
-                ],
+                [AC_LANG_PROGRAM([], [])],
                 [
                   SPARKLE_FRAMEWORK="$with_sparkle/Sparkle.framework"
                   AC_DEFINE(USE_SPARKLE)
@@ -141,7 +140,7 @@ case "${host}" in
                   AC_MSG_RESULT([$SPARKLE_FRAMEWORK])
                 ],
                 [
-                  AC_MSG_FAILURE([Can't find Sparkle framework with Carbon support, get it from http://sparkle.downtowncode.com/SparkleForCarbon.html])
+                  AC_MSG_FAILURE([Can't find Sparkle framework])
                 ])
         fi
     ;;

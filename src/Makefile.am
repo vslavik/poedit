@@ -10,6 +10,8 @@ endif
 if USE_OSX
 OSX_SOURCES =    osx/userdefaults.h \
 				 osx/userdefaults.m \
+				 osx/sparkle.h \
+				 osx/sparkle.m \
 				 osx/spellchecker.h \
 				 osx/spellchecker.m
 endif

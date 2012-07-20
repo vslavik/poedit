@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2007-2012 Vaclav Slavik
+ *  Copyright (C) 2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,43 +23,20 @@
  *
  */
 
-#include "userdefaults.h"
+#ifndef _OSX_SPARKLE_H_
+#define _OSX_SPARKLE_H_
 
-#import <AppKit/NSApplication.h>
-#import <Foundation/NSString.h>
-#import <Foundation/NSAutoreleasePool.h>
-#import <Foundation/NSUserDefaults.h>
+// FIXME: This is a hack to work around Automake's lack of support for ObjC++.
+//        Remove it after switching build system to Bakefile.
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-int UserDefaults_GetBoolValue(const char *key)
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSString *nskey = [NSString stringWithUTF8String: key];
+void Sparkle_Initialize();
+void Sparkle_Cleanup();
 
-    int rv = [[NSUserDefaults standardUserDefaults] boolForKey:nskey];
-
-    [pool release];
-
-    return rv;
+#ifdef __cplusplus
 }
+#endif
 
-void UserDefaults_SetBoolValue(const char *key, int value)
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSString *nskey = [NSString stringWithUTF8String: key];
-
-    [[NSUserDefaults standardUserDefaults] setBool:value forKey:nskey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
-    [pool release];
-}
-
-void UserDefaults_RemoveValue(const char *key)
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSString *nskey = [NSString stringWithUTF8String: key];
-
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:nskey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
-    [pool release];
-}
+#endif

@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2007-2012 Vaclav Slavik
+ *  Copyright (C) 2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,43 +23,29 @@
  *
  */
 
+#include "sparkle.h"
+
 #include "userdefaults.h"
 
-#import <AppKit/NSApplication.h>
-#import <Foundation/NSString.h>
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSUserDefaults.h>
+#import <Sparkle/Sparkle.h>
 
-int UserDefaults_GetBoolValue(const char *key)
+
+void Sparkle_Initialize()
 {
+    /* Remove config key for Sparkle < 1.5. */
+    UserDefaults_RemoveValue("SUCheckAtStartup");
+
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSString *nskey = [NSString stringWithUTF8String: key];
-
-    int rv = [[NSUserDefaults standardUserDefaults] boolForKey:nskey];
-
-    [pool release];
-
-    return rv;
-}
-
-void UserDefaults_SetBoolValue(const char *key, int value)
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSString *nskey = [NSString stringWithUTF8String: key];
-
-    [[NSUserDefaults standardUserDefaults] setBool:value forKey:nskey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
+    SUUpdater *updater = [SUUpdater sharedUpdater];
     [pool release];
 }
 
-void UserDefaults_RemoveValue(const char *key)
+void Sparkle_Cleanup()
 {
+    /*  Make sure that Sparkle's updates to plist preferences are saved: */
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSString *nskey = [NSString stringWithUTF8String: key];
-
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:nskey];
     [[NSUserDefaults standardUserDefaults] synchronize];
-
     [pool release];
 }

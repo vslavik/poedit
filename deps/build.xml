@@ -499,6 +499,7 @@
         <exec dir="wx/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
             <arg value="../../configure"/>
             <arg value="--prefix=${osx.destdir}/${osx.arch}"/>
+            <arg value="--with-cocoa"/>
             <arg value="--disable-shared"/>
             <arg value="--enable-unicode"/>
             <!-- expat is part of the system since 10.5 -->
