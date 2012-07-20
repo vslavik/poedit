@@ -83,8 +83,8 @@ ManagerFrame::ManagerFrame() :
 
     ms_instance = this;
 
-    SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("manager_toolbar")));
-    SetMenuBar(wxXmlResource::Get()->LoadMenuBar(_T("manager_menu")));
+    wxXmlResource::Get()->LoadToolBar(this, _T("manager_toolbar"));
+    wxXmlResource::Get()->LoadMenuBar(this, _T("manager_menu"));
 
     wxPanel *panel = wxXmlResource::Get()->LoadPanel(this, _T("manager_panel"));
 

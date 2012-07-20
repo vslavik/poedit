@@ -483,7 +483,7 @@ PoeditFrame::PoeditFrame() :
         wxLog::FlushActive();
     }
 
-    SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("toolbar")));
+    wxXmlResource::Get()->LoadToolBar(this, _T("toolbar"));
 
     GetMenuBar()->Check(XRCID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XRCID("menu_lines"), m_displayLines);
