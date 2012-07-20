@@ -46,6 +46,10 @@
 #include <wx/clipbrd.h>
 #include <wx/dnd.h>
 
+#ifdef USE_SPARKLE
+#include "osx/sparkle.h"
+#endif // USE_SPARKLE
+
 #ifdef USE_SPELLCHECKING
 
 #ifdef __WXGTK__
@@ -476,6 +480,10 @@ PoeditFrame::PoeditFrame() :
         MenuBar->Enable(XRCID("menu_auto_translate"), false);
 #endif
         AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
+
+#if USE_SPARKLE
+        Sparkle_AddMenuItem(_("Check for Updates...").utf8_str());
+#endif
     }
     else
     {

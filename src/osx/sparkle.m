@@ -42,6 +42,25 @@ void Sparkle_Initialize()
     [pool release];
 }
 
+
+void Sparkle_AddMenuItem(const char *title)
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+    NSString *nstitle = [NSString stringWithUTF8String: title];
+    NSMenu *appmenu = [[[[NSApplication sharedApplication] mainMenu] itemAtIndex:0] submenu];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:nstitle
+                                           action:@selector(checkForUpdates:)
+                                           keyEquivalent:@""];
+    SUUpdater *updater = [SUUpdater sharedUpdater];
+    [item setEnabled:YES];
+    [item setTarget:updater];
+    [appmenu insertItem:item atIndex:1];
+
+    [pool release];
+}
+
+
 void Sparkle_Cleanup()
 {
     /*  Make sure that Sparkle's updates to plist preferences are saved: */

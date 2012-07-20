@@ -33,6 +33,7 @@ extern "C" {
 #endif
 
 void Sparkle_Initialize();
+void Sparkle_AddMenuItem(const char *title);
 void Sparkle_Cleanup();
 
 #ifdef __cplusplus
