@@ -482,7 +482,8 @@
      <target name="osx-wx-check" if="is_osx">
         <echo level="info" message="Checking if wxWidgets needs building..."/>
         <dependset>
-            <srcfileset dir="wx" excludes="builddir/**,locale/**"/>
+            <srcfileset dir="wx"
+                        excludes="builddir/**,locale/**,include/wx/stc/stc.h,src/stc/stc.cpp"/>
             <targetfileset dir="wx/locale/*.mo"/>
             <targetfileset dir="${osx.destdir}" includes="*/lib/libwx*"/>
             <targetfileset dir="${osx.destdir}" includes="*/include/wx/**"/>
