@@ -31,13 +31,14 @@ pixmaps_DATA = appicon/48x48/apps/poedit.png
 
 
 uiicons_DATA = \
-		ui/document-open.png \
-		ui/document-save.png \
-		ui/poedit-comment.png \
-		ui/poedit-fuzzy.png \
-		ui/edit-delete.png \
-		ui/document-properties.png \
-		ui/document-new.png \
+		ui/toolbar-24/document-open.png \
+		ui/toolbar-24/document-save.png \
+		ui/toolbar-24/document-properties.png \
+		ui/toolbar-24/document-new.png \
+		ui/toolbar-24/edit-delete.png \
+		ui/toolbar-24/poedit-comment.png \
+		ui/toolbar-24/poedit-fuzzy.png \
+		ui/toolbar-24/poedit-update.png \
 		ui/poedit-status-automatic.png \
 		ui/poedit-status-cat-mid.png \
 		ui/poedit-status-cat-no.png \
@@ -46,7 +47,6 @@ uiicons_DATA = \
 		ui/poedit-status-comment.png \
 		ui/poedit-status-modified.png \
 		ui/poedit-status-nothing.png \
-		ui/poedit-update.png \
 		ui/window-close.png
 
 

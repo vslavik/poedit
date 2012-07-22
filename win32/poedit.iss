@@ -92,6 +92,7 @@ Source: deps\winsparkle\Release\WinSparkle.dll; DestDir: {app}\bin; Flags: ignor
 Source: COPYING; DestDir: {app}\doc; DestName: copying.txt
 Source: NEWS; DestDir: {app}\doc; DestName: news.txt
 Source: icons\ui\*.png; DestDir: {app}\share\poedit\icons
+Source: icons\ui\toolbar-32\*.png; DestDir: {app}\share\poedit\icons
 Source: icons\win32\xp\*.ico; DestDir: {app}\share\poedit\icons; OnlyBelowVersion: 0,6.0.6000
 Source: icons\win32\vista\*.ico; DestDir: {app}\share\poedit\icons; MinVersion: 0,6.0.6000
 Source: {#CRT_REDIST}\Microsoft.*.CRT.manifest; DestDir: {app}\bin
