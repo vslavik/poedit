@@ -1477,9 +1477,6 @@ bool Catalog::Update(ProgressInfo *progress, bool summary)
 {
     if (!m_isOk) return false;
 
-    if ( progress )
-        progress->SetTitle(_("Updating catalog..."));
-
     wxString cwd = wxGetCwd();
     if (m_fileName != wxEmptyString)
     {

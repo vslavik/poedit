@@ -35,11 +35,8 @@ class WXDLLIMPEXP_FWD_CORE wxWindowDisabler;
 class ProgressInfo
 {
     public:
-            ProgressInfo(wxWindow *parent);
+            ProgressInfo(wxWindow *parent, const wxString& title);
             ~ProgressInfo();
- 
-            /// Sets task's title, i.e. dialog's caption.
-            void SetTitle(const wxString& text);
 
             /// Sets gauge's values interval to <0..limit).
             void SetGaugeMax(int limit);

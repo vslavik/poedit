@@ -1298,7 +1298,7 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
     // m_list->CatalogChanged(NULL) here
     wxWindowUpdateLocker locker(m_list);
 
-    ProgressInfo progress(this);
+    ProgressInfo progress(this, _("Updating catalog"));
 
     bool succ;
     if (pot_file.empty())
@@ -2230,8 +2230,7 @@ bool PoeditFrame::AutoTranslateCatalog()
     size_t matches = 0;
     wxString msg;
 
-    ProgressInfo pi(this);
-    pi.SetTitle(_("Automatically translating..."));
+    ProgressInfo pi(this, _("Automatically translating..."));
     pi.SetGaugeMax(cnt);
     for (size_t i = 0; i < cnt; i++)
     {

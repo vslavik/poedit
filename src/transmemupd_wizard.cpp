@@ -191,7 +191,7 @@ void RunTMUpdateWizard(wxWindow *parent, const wxArrayString& langs)
         TranslationMemory *tm = TranslationMemory::Create(langs[i]);
         if (tm)
         {
-            ProgressInfo pi(parent);
+            ProgressInfo pi(parent, _("Updating translation memory"));
             TranslationMemoryUpdater u(tm, &pi);
             wxArrayString files;
             wizard.GetFiles(files);

@@ -432,7 +432,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
         {
             // FIXME: there should be only one progress bar for _all_
             //        catalogs, it shouldn't restart on next catalog
-            ProgressInfo pinfo(this);
+            ProgressInfo pinfo(this, _("Updating catalog"));
 
             wxString f = m_catalogs[i];
             PoeditFrame *fr = PoeditFrame::Find(f);
