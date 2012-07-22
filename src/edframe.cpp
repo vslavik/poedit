@@ -1692,7 +1692,7 @@ void PoeditFrame::UpdateFromTextCtrl()
     }
     // else: no point in recomputing stats
 
-    if (m_modified == false)
+    if ( !IsModified() )
     {
         m_modified = true;
         UpdateTitle();
@@ -2016,7 +2016,7 @@ void PoeditFrame::DoGiveHelp(const wxString& text, bool show)
 
 void PoeditFrame::UpdateTitle()
 {
-    if (m_modified)
+    if ( IsModified() )
         SetTitle(_T("Poedit : ") + m_fileName + _(" (modified)"));
     else
         SetTitle(_T("Poedit : ") + m_fileName);
