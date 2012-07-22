@@ -109,7 +109,7 @@ int ParsersDB::FindParser(const wxString& name)
 
 wxArrayString Parser::SelectParsable(const wxArrayString& files)
 {
-    wxStringTokenizer tkn(Extensions, _T(";"));
+    wxStringTokenizer tkn(Extensions, _T(";, \t"), wxTOKEN_STRTOK);
     wxString wildcard;
     wxArrayString result;
     size_t i;
