@@ -2016,10 +2016,28 @@ void PoeditFrame::DoGiveHelp(const wxString& text, bool show)
 
 void PoeditFrame::UpdateTitle()
 {
-    if ( IsModified() )
-        SetTitle(_T("Poedit : ") + m_fileName + _(" (modified)"));
+    OSXSetModified(IsModified());
+
+    wxString title;
+    if ( !m_fileName.empty() )
+    {
+#if wxCHECK_VERSION(2,9,4)
+        SetRepresentedFilename(m_fileName);
+#endif
+        wxFileName fn(m_fileName);
+        title = wxString::Format(_T("%s.%s"), fn.GetName().c_str(), fn.GetExt().c_str());
+#ifndef __WXOSX__
+        if ( IsModified() )
+            title += _(" (modified)");
+        title += " - Poedit";
+#endif
+    }
     else
-        SetTitle(_T("Poedit : ") + m_fileName);
+    {
+        title = _T("Poedit");
+    }
+
+    SetTitle(title);
 }
 
 
