@@ -7,16 +7,30 @@
     <style platform="mac">wxTB_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
     <style platform="win">wxTB_HORZ_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
     <style platform="unix">wxTB_HORZ_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
-    <object class="tool" name="wxID_OPEN">
+
+    <!-- On OS X, only document-manipulating buttons should be in the toolbar,
+         not app-scope things such as Open and not Save. -->
+    <object class="tool" name="wxID_OPEN" platform="win">
       <bitmap stock_id="document-open"/>
       <label>Open</label>
       <tooltip>Open catalog</tooltip>
     </object>
-    <object class="tool" name="wxID_SAVE">
+    <object class="tool" name="wxID_OPEN" platform="unix">
+      <bitmap stock_id="document-open"/>
+      <label>Open</label>
+      <tooltip>Open catalog</tooltip>
+    </object>
+    <object class="tool" name="wxID_SAVE" platform="win">
       <bitmap stock_id="document-save"/>
       <label>Save</label>
       <tooltip>Save catalog</tooltip>
     </object>
+    <object class="tool" name="wxID_SAVE" platform="unix">
+      <bitmap stock_id="document-save"/>
+      <label>Save</label>
+      <tooltip>Save catalog</tooltip>
+    </object>
+
     <object class="tool" name="menu_update">
       <bitmap stock_id="poedit-update"/>
       <label>Update</label>
