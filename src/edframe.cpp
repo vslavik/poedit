@@ -944,13 +944,14 @@ TranslationMemory *PoeditFrame::GetTransMem()
 
 void PoeditFrame::OnQuit(wxCommandEvent&)
 {
-    Close(true);
+    if ( !Close() )
+        return;
     wxGetApp().ExitMainLoop();
 }
 
 void PoeditFrame::OnCloseCmd(wxCommandEvent&)
 {
-    Close(true);
+    Close();
 }
 
 
@@ -1013,10 +1014,13 @@ bool PoeditFrame::CanDiscardCurrentDoc()
 }
 
 
-void PoeditFrame::OnCloseWindow(wxCloseEvent&)
+void PoeditFrame::OnCloseWindow(wxCloseEvent& event)
 {
-    if ( !CanDiscardCurrentDoc() )
+    if ( event.CanVeto() && !CanDiscardCurrentDoc() )
+    {
+        event.Veto();
         return;
+    }
 
     CancelItemsValidation();
     Destroy();
