@@ -33,7 +33,6 @@ pixmaps_DATA = appicon/48x48/apps/poedit.png
 uiicons_DATA = \
 		ui/document-open.png \
 		ui/document-save.png \
-		ui/help-browser.png \
 		ui/poedit-comment.png \
 		ui/poedit-fuzzy.png \
 		ui/edit-delete.png \
