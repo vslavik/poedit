@@ -1125,6 +1125,18 @@ void TranslationMemory::MoveLegacyDbIfNeeded()
     if ( oldPath == newPath )
         return; // already in the right location, nothing to do
 
+#if defined(__WXMSW__) || defined(__WXMAC__)
+    if ( oldPath.IsSameAs(newPath, /*caseSensitive=*/false) )
+    {
+        // This is no real difference and migration would fail, so just update
+        // the path:
+        // For now, keep the config setting, even though it's obsolete, just in
+        // case some users downgrade. (FIXME)
+        cfg->Write(_T("/TM/database_path"), newPath);
+        return;
+    }
+#endif
+
     wxLogTrace(_T("poedit.tm"),
                _T("moving TM database from old location \"%s\" to \"%s\""),
                oldPath.c_str(), newPath.c_str());
