@@ -1116,6 +1116,10 @@ void TranslationMemory::MoveLegacyDbIfNeeded()
     wxConfigBase *cfg = wxConfig::Get();
 
     const wxString oldPath = cfg->Read(_T("/TM/database_path"), _T(""));
+
+    if ( oldPath.empty() )
+        return; // nothing to do, legacy setting not present
+
     const wxString newPath = GetDatabaseDir();
 
     if ( oldPath == newPath )
