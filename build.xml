@@ -259,13 +259,37 @@
         <echo level="info" message="Signing Poedit.app binary..."/>
         <exec dir="build-osx" executable="codesign" failonerror="true">
             <arg line="${codesign.osx.args}"/>
+            <arg value="-f"/>
             <arg value="-s"/>
             <arg value="${codesign.identity}"/>
             <arg value="Poedit.app"/>
         </exec>
+        <!-- Developer ID signatures must contain explicit designated
+             requirements for the signature to be accepted by pre-10.7 versions
+             of OS X. Unfortunately, it's not done by default, so we need to read the
+             requirement and apply it.
+
+             See http://sutes.co.uk/2012/03/code-signing-using-new-apple-d.html.
+          -->
+        <echo level="info" message="Re-signing Poedit.app binary for pre-10.7 compatibility..."/>
+        <exec dir="build-osx" executable="/bin/sh" failonerror="true"
+              outputproperty="codesign.osx.designated" error="/dev/null">
+            <arg value="-c"/>
+            <arg value="codesign -d -r- Poedit.app | grep '# designated' | cut -c3-"/>
+        </exec>
+        <exec dir="build-osx" executable="codesign" failonerror="true">
+            <arg line="${codesign.osx.args}"/>
+            <arg value="-f"/>
+            <arg value="-s"/>
+            <arg value="${codesign.identity}"/>
+            <arg value="-r"/>
+            <arg value="=${codesign.osx.designated}"/>
+            <arg value="Poedit.app"/>
+        </exec>
         <echo level="info" message="Verifying signature..."/>
         <exec dir="build-osx" executable="codesign" failonerror="true">
-            <arg value="-vv"/>
+            <arg value="--verify"/>
+            <arg value="-vvv"/>
             <arg value="Poedit.app"/>
         </exec>
     </target>
