@@ -472,7 +472,8 @@ void ManagerFrame::OnPreferences(wxCommandEvent&)
 
 void ManagerFrame::OnQuit(wxCommandEvent&)
 {
-    Close();
+    if ( !Close() )
+        return;
     wxTheApp->ExitMainLoop();
 }
 
