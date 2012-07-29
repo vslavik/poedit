@@ -361,7 +361,6 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_TEXT           (ID_TEXTCOMMENT,PoeditFrame::OnCommentWindowText)
    EVT_IDLE           (PoeditFrame::OnIdle)
    EVT_SIZE           (PoeditFrame::OnSize)
-   EVT_END_PROCESS    (-1, PoeditFrame::OnEndProcess)
 END_EVENT_TABLE()
 
 
@@ -412,9 +411,6 @@ PoeditFrame::PoeditFrame() :
             wxDefaultPosition, wxDefaultSize,
             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
             _T("mainwin")),
-#ifdef USE_GETTEXT_VALIDATION
-    m_itemBeingValidated(-1), m_gettextProcess(NULL),
-#endif
     m_catalog(NULL),
 #ifdef USE_TRANSMEM
     m_transMem(NULL),
@@ -677,11 +673,6 @@ PoeditFrame::PoeditFrame() :
 
 PoeditFrame::~PoeditFrame()
 {
-#ifdef USE_GETTEXT_VALIDATION
-    if (m_gettextProcess)
-        m_gettextProcess->Detach();
-#endif
-
     ms_instances.DeleteObject(this);
 
     m_list->PopEventHandler(true/*delete*/);
@@ -1031,7 +1022,6 @@ void PoeditFrame::OnCloseWindow(wxCloseEvent& event)
         return;
     }
 
-    CancelItemsValidation();
     Destroy();
 }
 
@@ -1211,8 +1201,6 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
             return;
         }
 
-        CancelItemsValidation();
-
         dlg.TransferFrom(catalog);
         delete m_catalog;
         m_catalog = catalog;
@@ -1223,8 +1211,6 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
         {
             OnUpdate(event);
         }
-
-        RestartItemsValidation();
     }
     else
     {
@@ -1300,8 +1286,6 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 {
     wxBusyCursor bcur;
 
-    CancelItemsValidation();
-
     // This ensures that the list control won't be redrawn during Update()
     // call when a dialog box is hidden; another alternative would be to call
     // m_list->CatalogChanged(NULL) here
@@ -1315,8 +1299,6 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
     else
         succ = m_catalog->UpdateFromPOT(pot_file);
     m_list->CatalogChanged(m_catalog);
-
-    RestartItemsValidation();
 
     m_modified = succ || m_modified;
     if (!succ)
@@ -1706,11 +1688,6 @@ void PoeditFrame::UpdateFromTextCtrl()
         m_modified = true;
         UpdateTitle();
     }
-
-#ifdef USE_GETTEXT_VALIDATION
-    // check validity of this item:
-    m_itemsToValidate.push_front(item);
-#endif
 }
 
 namespace
@@ -1825,8 +1802,6 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
 {
     wxBusyCursor bcur;
 
-    CancelItemsValidation();
-
     Catalog *cat = new Catalog(catalog);
     if (!cat->IsOk())
         return;
@@ -1859,8 +1834,6 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     m_history.AddFileToHistory(fn.GetFullPath());
 
     InitSpellchecker();
-
-    RestartItemsValidation();
 
 
     // FIXME: do this for Gettext PO files only
@@ -2011,18 +1984,6 @@ void PoeditFrame::UpdateStatusBar()
             txt.Printf(wxPLURAL("%i %% translated, %i string (%s)", "%i %% translated, %i strings (%s)", all),
                        percent, all, details.c_str());
         }
-
-#ifdef USE_GETTEXT_VALIDATION
-        if (!m_itemsToValidate.empty())
-        {
-            wxString progress;
-            progress.Printf(wxPLURAL("[checking translations: %i left]", "[checking translations: %i left]",
-                                     m_itemsToValidate.size()),
-                            m_itemsToValidate.size());
-            txt += _T("    ");
-            txt += progress;
-        }
-#endif
 
         GetStatusBar()->SetStatusText(txt);
     }
@@ -2620,11 +2581,6 @@ void PoeditFrame::OnIdle(wxIdleEvent& event)
 {
     event.Skip();
 
-#ifdef USE_GETTEXT_VALIDATION
-    if (!m_itemsToValidate.empty() && m_itemBeingValidated == -1)
-        BeginItemValidation();
-#endif
-
     for ( std::set<int>::const_iterator i = m_itemsRefreshQueue.begin();
           i != m_itemsRefreshQueue.end(); ++i )
     {
@@ -2653,140 +2609,6 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
                 wxConfig::Get()->Read(_T("bottom_splitter"), -200L));
         }
     }
-}
-
-void PoeditFrame::OnEndProcess(wxProcessEvent&)
-{
-#ifdef USE_GETTEXT_VALIDATION
-    m_gettextProcess = NULL;
-    event.Skip(); // deletes wxProcess object
-    EndItemValidation();
-    wxWakeUpIdle();
-#endif
-}
-
-void PoeditFrame::CancelItemsValidation()
-{
-#ifdef USE_GETTEXT_VALIDATION
-    // stop checking entries in the background:
-    m_itemsToValidate.clear();
-    m_itemBeingValidated = -1;
-#endif
-}
-
-void PoeditFrame::RestartItemsValidation()
-{
-#ifdef USE_GETTEXT_VALIDATION
-    // start checking catalog's entries in the background:
-    int cnt = m_list->GetItemCount();
-    for (int i = 0; i < cnt; i++)
-        m_itemsToValidate.push_back(i);
-#endif
-}
-
-void PoeditFrame::BeginItemValidation()
-{
-#ifdef USE_GETTEXT_VALIDATION
-    int item = m_itemsToValidate.front();
-    int index = m_list->ListIndexToCatalog(item);
-    CatalogItem& dt = (*m_catalog)[index];
-
-    if (!dt.IsTranslated())
-        return;
-
-    if (dt.GetValidity() != CatalogItem::Val_Unknown)
-        return;
-
-    // run this entry through msgfmt (in a single-entry catalog) to check if
-    // it is correct:
-    Catalog cat;
-    cat.AddItem(new CatalogItem(dt));
-
-    if (m_catalog->Header().HasHeader(_T("Plural-Forms")))
-    {
-        cat.Header().SetHeader(
-                _T("Plural-Forms"),
-                m_catalog->Header().GetHeader(_T("Plural-Forms")));
-    }
-
-    wxString tmp1 = wxFileName::CreateTempFileName(_T("poedit"));
-    wxString tmp2 = wxFileName::CreateTempFileName(_T("poedit"));
-    cat.Save(tmp1, false);
-    wxString cmdline = _T("msgfmt -c -f -o \"") + tmp2 +
-                       _T("\" \"") + tmp1 + _T("\"");
-
-    m_validationProcess.tmp1 = tmp1;
-    m_validationProcess.tmp2 = tmp2;
-
-    wxProcess *process =
-        ExecuteGettextNonblocking(cmdline, &m_validationProcess, this);
-    if (process)
-    {
-        m_gettextProcess = process;
-        m_itemBeingValidated = item;
-        m_itemsToValidate.pop_front();
-    }
-    else
-    {
-        EndItemValidation();
-    }
-#endif
-}
-
-void PoeditFrame::EndItemValidation()
-{
-#ifdef USE_GETTEXT_VALIDATION
-    wxASSERT( m_catalog );
-
-    wxRemoveFile(m_validationProcess.tmp1);
-    wxRemoveFile(m_validationProcess.tmp2);
-
-    if (m_itemBeingValidated != -1)
-    {
-        int item = m_itemBeingValidated;
-        int index = m_list->ListIndexToCatalog(item);
-        CatalogItem& dt = (*m_catalog)[index];
-
-        bool ok = (m_validationProcess.ExitCode == 0);
-        dt.SetValidity(ok);
-
-        if (!ok)
-        {
-            wxString err;
-            for (size_t i = 0; i < m_validationProcess.Stderr.GetCount(); i++)
-            {
-                wxString line(m_validationProcess.Stderr[i]);
-                if (!line.empty())
-                {
-                    err += line;
-                    err += _T('\n');
-                }
-            }
-            err.RemoveLast();
-            err.Replace(m_validationProcess.tmp1, _T(""));
-            if (err[0u] == _T(':'))
-                err = err.Mid(1);
-            err = err.AfterFirst(_T(':'));
-            dt.SetErrorString(err);
-        }
-
-        m_itemBeingValidated = -1;
-
-        if ((m_itemsToValidate.size() % 10) == 0)
-        {
-            UpdateStatusBar();
-        }
-
-        if (!ok)
-            m_list->Refresh(item);  // Force refresh
-
-        if (m_itemsToValidate.empty())
-        {
-            wxLogTrace(_T("poedit"),
-                       _T("finished checking validity in background"));
-        }
-    }
-#endif
 }
 
 void PoeditFrame::ShowPluralFormUI(bool show)

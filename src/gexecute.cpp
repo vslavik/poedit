@@ -43,56 +43,6 @@
 
 #include "gexecute.h"
 
-#ifdef USE_GETTEXT_VALIDATION
-class GettextProcess : public wxProcess
-{
-    public:
-        GettextProcess(GettextProcessData *data, wxEvtHandler *parent) 
-            : wxProcess(parent), m_data(data)
-        {
-            m_data->Running = true;
-            m_data->Stderr.Empty();
-            m_data->Stdout.Empty();
-            Redirect();
-        }
-
-        bool HasInput()
-        {
-            bool hasInput = false;
-
-            wxInputStream* is = GetInputStream();
-            if (is && is->CanRead() && !is->Eof()) 
-            {
-                wxTextInputStream tis(*is);
-                m_data->Stdout.Add(tis.ReadLine());
-                hasInput = true;
-            }
-
-            wxInputStream* es = GetErrorStream();
-            if (es && es->CanRead() && !es->Eof()) 
-            {
-                wxTextInputStream tis(*es);
-                m_data->Stderr.Add(tis.ReadLine());
-                hasInput = true;
-            }
-
-            return hasInput;
-        }
-
-        void OnTerminate(int pid, int status)
-        {
-            while (HasInput()) {}
-            m_data->Running = false;
-            m_data->ExitCode = status;
-            wxProcess::OnTerminate(pid, status);
-        }
-
-    private:
-        GettextProcessData *m_data;
-};
-#endif // USE_GETTEXT_VALIDATION
-
-
 #ifdef __WXMAC__
 static wxString MacGetPathToBinary(const wxString& program)
 {
@@ -160,33 +110,3 @@ bool ExecuteGettext(const wxString& cmdline_)
 
     return retcode == 0;
 }
-
-
-#ifdef USE_GETTEXT_VALIDATION
-wxProcess *ExecuteGettextNonblocking(const wxString& cmdline_,
-                                     GettextProcessData *data,
-                                     wxEvtHandler *parent)
-{
-    wxString cmdline(cmdline_);
-
-#ifdef __WXMAC__
-    wxString binary = cmdline.BeforeFirst(_T(' '));
-    cmdline = MacGetPathToBinary(binary) + cmdline.Mid(binary.length());
-#endif // __WXMAC__
-
-    wxLogTrace(_T("poedit.execute"), _T("executing '%s'"), cmdline.c_str());
-
-    GettextProcess *process;
-
-    process = new GettextProcess(data, parent);
-    int pid = wxExecute(cmdline, wxEXEC_ASYNC, process);
-
-    if (pid == 0)
-    {
-        wxLogError(_("Cannot execute program: ") + cmdline.BeforeFirst(_T(' ')));
-        return NULL;
-    }
-
-    return process;
-}
-#endif // USE_GETTEXT_VALIDATION

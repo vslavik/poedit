@@ -27,15 +27,7 @@
 #define _GEXECUTE_H_
 
 class WXDLLIMPEXP_FWD_BASE wxString;
-class WXDLLIMPEXP_FWD_CORE wxEvtHandler;
 
-struct GettextProcessData
-{
-        bool Running;
-        int ExitCode;
-        wxArrayString Stderr;
-        wxArrayString Stdout;
-};
 
 
 /** Executes command. Writes stderr output to \a stderrOutput if not NULL,
@@ -43,13 +35,5 @@ struct GettextProcessData
     \return true if program exited with exit code 0, false otherwise.
  */
 extern bool ExecuteGettext(const wxString& cmdline);
-
-#ifdef USE_GETTEXT_VALIDATION
-/** Nonblocking version of the above -- upon termination, EVT_END_PROCESS
-    event is delivered to \a parent and \a data are filled. */
-extern wxProcess *ExecuteGettextNonblocking(const wxString& cmdline,
-                                            GettextProcessData *data,
-                                            wxEvtHandler *parent);
-#endif
 
 #endif // _GEXECUTE_H_

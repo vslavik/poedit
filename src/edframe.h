@@ -30,14 +30,6 @@
   #define CAN_MODIFY_DEFAULT_FONT
 #endif
 
-// disable on-the-fly gettext validation, launching so many xmsgfmt
-// processes doesn't work well:
-//#undef USE_GETTEXT_VALIDATION
-
-#ifdef USE_GETTEXT_VALIDATION
-#include <list>
-#endif
-
 #include <set>
 
 #include <wx/frame.h>
@@ -226,15 +218,6 @@ class PoeditFrame : public wxFrame
 
         void OnIdle(wxIdleEvent& event);
         void OnSize(wxSizeEvent& event);
-        void OnEndProcess(wxProcessEvent& event);
-
-        void BeginItemValidation();
-        void EndItemValidation();
-
-        // stops validation
-        void CancelItemsValidation();
-        // starts validation from scratch
-        void RestartItemsValidation();
 
         // updates the status of both comment windows: Automatic and Translator's
         void UpdateDisplayCommentWin();
@@ -248,18 +231,6 @@ class PoeditFrame : public wxFrame
         DECLARE_EVENT_TABLE()
 
     private:
-#ifdef USE_GETTEXT_VALIDATION
-        struct ValidationProcessData : public GettextProcessData
-        {
-            wxString tmp1, tmp2;
-        };
-
-        wxProcess *m_gettextProcess;
-        int m_itemBeingValidated;
-        std::list<int> m_itemsToValidate;
-        ValidationProcessData m_validationProcess;
-#endif
-
         std::set<int> m_itemsRefreshQueue;
 
         bool m_commentWindowEditable;
