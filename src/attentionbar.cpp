@@ -114,7 +114,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     }
 
     m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU));
-    m_label->SetLabel(msg.m_text);
+    m_label->SetLabelText(msg.m_text);
 
     m_buttons->Clear(true/*delete_windows*/);
     m_actions.clear();
