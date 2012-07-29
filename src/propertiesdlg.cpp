@@ -43,6 +43,8 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
 {
     wxXmlResource::Get()->LoadDialog(this, parent, _T("properties"));
 
+    XRCCTRL(*this, "plural_forms_help", wxControl)->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+
     m_team = XRCCTRL(*this, "team_name", wxTextCtrl);
     m_teamEmail = XRCCTRL(*this, "team_email", wxTextCtrl);
     m_project = XRCCTRL(*this, "prj_name", wxTextCtrl);
