@@ -114,19 +114,6 @@ static bool ReadParam(const wxString& input, const wxString& pattern, wxString& 
     return true;
 }
 
-static bool ReadParamIfNotSet(const wxString& input,
-                              const wxString& pattern, wxString& output)
-{
-    wxString dummy;
-    if (ReadParam(input, pattern, dummy))
-    {
-        if (output.empty())
-            output = dummy;
-        return true;
-    }
-    return false;
-}
-
 
 // Checks if the file was loaded correctly, i.e. that non-empty lines
 // ended up non-empty in memory, after doing charset conversion in
@@ -1053,63 +1040,6 @@ bool Catalog::Load(const wxString& po_file)
 
     f.Close();
 
-    /* Load extended information from .po.poedit file, if present:
-       (NB: this is deprecated, poedit >= 1.3.0 stores the data in
-            .po file's header as X-Poedit-Foo) */
-
-    if (wxFileExists(po_file + _T(".poedit")) &&
-        f.Open(po_file + _T(".poedit"), wxConvISO8859_1))
-    {
-        wxString dummy;
-        // poedit header (optional, we should be able to read any catalog):
-        f.GetFirstLine();
-        if (ReadParam(ReadTextLine(&f),
-                      _T("#. Number of items: "), dummy))
-        {
-            // not used anymore
-        }
-        ReadParamIfNotSet(ReadTextLine(&f),
-                  _T("#. Language: "), m_header.Language);
-        dummy = ReadTextLine(&f);
-        if (ReadParamIfNotSet(dummy, _T("#. Country: "), m_header.Country))
-            dummy = ReadTextLine(&f);
-        if (ReadParamIfNotSet(dummy, _T("#. Basepath: "), m_header.BasePath))
-            dummy = ReadTextLine(&f);
-        ReadParamIfNotSet(dummy, _T("#. SourceCodeCharSet: "), m_header.SourceCodeCharset);
-
-        if (ReadParam(ReadTextLine(&f), _T("#. Paths: "), dummy))
-        {
-            bool setPaths = m_header.SearchPaths.empty();
-            long sz;
-            dummy.ToLong(&sz);
-            for (; sz > 0; sz--)
-            {
-                if (ReadParam(ReadTextLine(&f), _T("#.     "), dummy))
-                {
-                    if (setPaths)
-                        m_header.SearchPaths.Add(dummy);
-                }
-            }
-        }
-
-        if (ReadParam(ReadTextLine(&f), _T("#. Keywords: "), dummy))
-        {
-            bool setKeyw = m_header.Keywords.empty();
-            long sz;
-            dummy.ToLong(&sz);
-            for (; sz > 0; sz--)
-            {
-                if (ReadParam(ReadTextLine(&f), _T("#.     "), dummy))
-                {
-                    if (setKeyw)
-                        m_header.Keywords.Add(dummy);
-                }
-            }
-        }
-
-        f.Close();
-    }
-
     return true;
 }
 
@@ -1442,13 +1372,6 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         {
             wxLogWarning(_("There was a problem formatting the file nicely (but it was saved all right)."));
         }
-    }
-
-    /* Poedit < 1.3.0 used to save additional info in .po.poedit file. It's
-       not used anymore, so delete the file if it exists: */
-    if (wxFileExists(po_file + _T(".poedit")))
-    {
-        wxRemoveFile(po_file + _T(".poedit"));
     }
 
     /* If the user wants it, compile .mo file right now: */
