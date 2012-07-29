@@ -272,10 +272,10 @@ void Catalog::HeaderData::UpdateDict()
     SetHeader(_T("Content-Transfer-Encoding"), _T("8bit"));
 
 
+    SetHeaderNotEmpty(_T("Language"), LanguageCode);
+
     // Set extended information:
 
-    SetHeaderNotEmpty(_T("X-Poedit-Language"), Language);
-    SetHeaderNotEmpty(_T("X-Poedit-Country"), Country);
     SetHeaderNotEmpty(_T("X-Poedit-SourceCharset"), SourceCodeCharset);
 
     if (!Keywords.empty())
@@ -373,11 +373,29 @@ void Catalog::HeaderData::ParseDict()
         Charset = _T("iso-8859-1");
     }
 
+    // Parse language information, with backwards compatibility with X-Poedit-*:
+    LanguageCode = GetHeader(_T("Language"));
+    if ( LanguageCode.empty() )
+    {
+        wxString X_Language = GetHeader(_T("X-Poedit-Language"));
+        if ( !X_Language.empty() )
+            X_Language = LookupLanguageCode(X_Language);
+
+        wxString X_Country = GetHeader(_T("X-Poedit-Country"));
+        if ( !X_Country.empty() )
+            X_Country = LookupCountryCode(X_Country);
+
+        if ( !X_Language.empty() )
+        {
+            LanguageCode = X_Language;
+            if ( !X_Country.empty() )
+                LanguageCode += _T("_") + X_Country;
+        }
+    }
+    DeleteHeader(_T("X-Poedit-Language"));
+    DeleteHeader(_T("X-Poedit-Country"));
 
     // Parse extended information:
-
-    Language = GetHeader(_T("X-Poedit-Language"));
-    Country = GetHeader(_T("X-Poedit-Country"));
     SourceCodeCharset = GetHeader(_T("X-Poedit-SourceCharset"));
     BasePath = GetHeader(_T("X-Poedit-Basepath"));
 
@@ -944,8 +962,7 @@ void Catalog::CreateNewHeader()
     dt.CreationDate = GetCurrentTimeRFC822();
     dt.RevisionDate = dt.CreationDate;
 
-    dt.Language = wxEmptyString;
-    dt.Country = wxEmptyString;
+    dt.LanguageCode = wxEmptyString;
     dt.Project = wxEmptyString;
     dt.Team = wxEmptyString;
     dt.TeamEmail = wxEmptyString;
@@ -973,8 +990,7 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
     dt.Charset = _T("UTF-8");
 
     // clear the fields that are translation-specific:
-    dt.Language.clear();
-    dt.Country.clear();
+    dt.LanguageCode.clear();
     dt.Team.clear();
     dt.TeamEmail.clear();
 
@@ -1828,15 +1844,8 @@ wxString Catalog::GetLocaleCode() const
     wxString lang;
 
     // was the language explicitly specified?
-    if (!m_header.Language.empty())
-    {
-        lang = LookupLanguageCode(m_header.Language.c_str());
-        if (!m_header.Country.empty())
-        {
-            lang += _T('_');
-            lang += LookupCountryCode(m_header.Country.c_str());
-        }
-    }
+    if ( !m_header.LanguageCode.empty() )
+        lang = m_header.LanguageCode;
 
     // if not, can we deduce it from filename?
     if (lang.empty() && !m_fileName.empty())

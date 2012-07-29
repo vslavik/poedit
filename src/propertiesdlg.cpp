@@ -46,23 +46,12 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
     m_team = XRCCTRL(*this, "team_name", wxTextCtrl);
     m_teamEmail = XRCCTRL(*this, "team_email", wxTextCtrl);
     m_project = XRCCTRL(*this, "prj_name", wxTextCtrl);
-    m_language = XRCCTRL(*this, "language", wxComboBox);
-    m_country = XRCCTRL(*this, "country", wxComboBox);
+    m_language = XRCCTRL(*this, "language", wxTextCtrl);
     m_charset = XRCCTRL(*this, "charset", wxComboBox);
     m_basePath = XRCCTRL(*this, "basepath", wxTextCtrl);
     m_sourceCodeCharset = XRCCTRL(*this, "source_code_charset", wxComboBox);
     m_pluralForms = XRCCTRL(*this, "plural_forms", wxTextCtrl);
 
-    const LanguageStruct *lang = isoLanguages; /*from isocodes.h*/ 
-    m_language->Append(wxEmptyString);
-    while (lang->lang != NULL)
-        m_language->Append((lang++)->lang);
-    
-    lang = isoCountries;
-    m_country->Append(wxEmptyString);
-    while (lang->lang != NULL)
-        m_country->Append((lang++)->lang);
-        
     // my custom controls:
     m_keywords = new wxEditableListBox(this, -1, _("Keywords"));
     wxXmlResource::Get()->AttachUnknownControl(_T("keywords"), m_keywords);
@@ -145,8 +134,7 @@ void PropertiesDialog::TransferTo(Catalog *cat)
     SET_VAL(TeamEmail, teamEmail);
     SET_VAL(Project, project);
     SET_VAL(BasePath, basePath);
-    SET_VAL(Language, language);
-    SET_VAL(Country, country);
+    SET_VAL(LanguageCode, language);
     #undef SET_VAL
 
     if (cat->Header().HasHeader(_T("Plural-Forms")))
@@ -163,8 +151,7 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
     cat->Header().SourceCodeCharset = GetCharsetFromCombobox(m_sourceCodeCharset);
 
     #define GET_VAL(what,what2) cat->Header().what = m_##what2->GetValue()
-    GET_VAL(Language, language);
-    GET_VAL(Country, country);
+    GET_VAL(LanguageCode, language);
     GET_VAL(Team, team);
     GET_VAL(TeamEmail, teamEmail);
     GET_VAL(Project, project);

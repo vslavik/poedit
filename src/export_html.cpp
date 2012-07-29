@@ -76,19 +76,17 @@ bool Catalog::ExportToHTML(const wxString& filename)
     f.AddLine(_T("<html>"));
 
     f.AddLine(_T("<head>"));
-    line.Printf(_T("<title> %s - %s / %s - Poedit Export </title>"),
+    line.Printf(_T("<title> %s - %s - Poedit Export </title>"),
                 EscapeMarkup(m_header.Project).c_str(),
-                EscapeMarkup(m_header.Language).c_str(),
-                EscapeMarkup(m_header.Country).c_str());
+                EscapeMarkup(m_header.LanguageCode).c_str());
     f.AddLine(line);
     f.AddLine(_T("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" ) );
     f.AddLine(_T("</head>"));
     f.AddLine(_T("<body bgcolor='#FFFFFF'>"));
 
-    line.Printf(_T("<h1> %s : %s / %s</h1>"),
+    line.Printf(_T("<h1> %s : %s</h1>"),
                 EscapeMarkup(m_header.Project).c_str(),
-                EscapeMarkup(m_header.Language).c_str(),
-                EscapeMarkup(m_header.Country).c_str());
+                EscapeMarkup(m_header.LanguageCode).c_str());
     f.AddLine(line);
 
 
@@ -108,10 +106,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
                 EscapeMarkup(m_header.Project).c_str());
     f.AddLine(line);
     line.Printf(line_format, _("Language:"),
-                EscapeMarkup(m_header.Language).c_str());
-    f.AddLine(line);
-    line.Printf(line_format, _("Country:"),
-                EscapeMarkup(m_header.Country).c_str());
+                EscapeMarkup(m_header.LanguageCode).c_str());
     f.AddLine(line);
     line.Printf(line_format, _("Team:"),
                 EscapeMarkup(m_header.Team).c_str());

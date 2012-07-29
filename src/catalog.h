@@ -438,7 +438,7 @@ class Catalog
 
             // Parsed values:
 
-            wxString Language, Country, Project, CreationDate,
+            wxString LanguageCode, Project, CreationDate,
                      RevisionDate, Translator, TranslatorEmail,
                      Team, TeamEmail, Charset, SourceCodeCharset;
 

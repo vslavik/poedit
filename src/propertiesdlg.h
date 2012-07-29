@@ -48,8 +48,9 @@ class PropertiesDialog : public wxDialog
         void TransferFrom(Catalog *cat);
             
     private:
-        wxTextCtrl *m_team, *m_teamEmail, *m_project;            
-        wxComboBox *m_charset, *m_language, *m_country, *m_sourceCodeCharset;
+        wxTextCtrl *m_team, *m_teamEmail, *m_project;
+        wxTextCtrl *m_language;
+        wxComboBox *m_charset, *m_sourceCodeCharset;
         wxTextCtrl *m_pluralForms;
         wxTextCtrl *m_basePath;
         wxEditableListBox *m_paths, *m_keywords;
