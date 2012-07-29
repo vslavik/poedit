@@ -31,6 +31,15 @@
 #include <wx/config.h>
 #include <wx/display.h>
 
+wxString EscapeMarkup(const wxString& str)
+{
+    wxString s(str);
+    s.Replace(_T("&"), _T("&amp;"));
+    s.Replace(_T("<"), _T("&lt;"));
+    s.Replace(_T(">"), _T("&gt;"));
+    return s;
+}
+
 // ----------------------------------------------------------------------
 // TempDirectory
 // ----------------------------------------------------------------------

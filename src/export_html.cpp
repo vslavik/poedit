@@ -29,6 +29,7 @@
 #include <wx/textfile.h>
 
 #include "catalog.h"
+#include "utility.h"
 
 namespace
 {
@@ -48,16 +49,6 @@ wxColour
     g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
     g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1); // yellow
 
-
-// escape string for HTML:
-wxString Escape(const wxString& str)
-{
-    wxString s(str);
-    s.Replace(_T("&"), _T("&amp;"));
-    s.Replace(_T("<"), _T("&lt;"));
-    s.Replace(_T(">"), _T("&gt;"));
-    return s;
-}
 
 } // anonymous namespace
 
@@ -86,18 +77,18 @@ bool Catalog::ExportToHTML(const wxString& filename)
 
     f.AddLine(_T("<head>"));
     line.Printf(_T("<title> %s - %s / %s - Poedit Export </title>"),
-                Escape(m_header.Project).c_str(),
-                Escape(m_header.Language).c_str(),
-                Escape(m_header.Country).c_str());
+                EscapeMarkup(m_header.Project).c_str(),
+                EscapeMarkup(m_header.Language).c_str(),
+                EscapeMarkup(m_header.Country).c_str());
     f.AddLine(line);
     f.AddLine(_T("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" ) );
     f.AddLine(_T("</head>"));
     f.AddLine(_T("<body bgcolor='#FFFFFF'>"));
 
     line.Printf(_T("<h1> %s : %s / %s</h1>"),
-                Escape(m_header.Project).c_str(),
-                Escape(m_header.Language).c_str(),
-                Escape(m_header.Country).c_str());
+                EscapeMarkup(m_header.Project).c_str(),
+                EscapeMarkup(m_header.Language).c_str(),
+                EscapeMarkup(m_header.Country).c_str());
     f.AddLine(line);
 
 
@@ -114,24 +105,24 @@ bool Catalog::ExportToHTML(const wxString& filename)
     wxString line_format = _T("<tr><td>%s</td><td>%s</td></tr>");
     line.Printf(line_format,
                 _("Project name and version:"),
-                Escape(m_header.Project).c_str());
+                EscapeMarkup(m_header.Project).c_str());
     f.AddLine(line);
     line.Printf(line_format, _("Language:"),
-                Escape(m_header.Language).c_str());
+                EscapeMarkup(m_header.Language).c_str());
     f.AddLine(line);
     line.Printf(line_format, _("Country:"),
-                Escape(m_header.Country).c_str());
+                EscapeMarkup(m_header.Country).c_str());
     f.AddLine(line);
     line.Printf(line_format, _("Team:"),
-                Escape(m_header.Team).c_str());
+                EscapeMarkup(m_header.Team).c_str());
     f.AddLine(line);
     line.Printf(_T("<tr><td>%s</td><td><a href=\"mailto:%s\">%s</a></td></tr>"),
                 _("Team's email address:"),
-                Escape(m_header.TeamEmail).c_str(),
-                Escape(m_header.TeamEmail).c_str());
+                EscapeMarkup(m_header.TeamEmail).c_str(),
+                EscapeMarkup(m_header.TeamEmail).c_str());
     f.AddLine(line);
     line.Printf(line_format, _("Charset:"),
-                Escape(m_header.Charset).c_str());
+                EscapeMarkup(m_header.Charset).c_str());
     f.AddLine(line);
 
     f.AddLine( _T("</table>") );
@@ -184,13 +175,13 @@ bool Catalog::ExportToHTML(const wxString& filename)
 
         if (data.IsAutomatic())
         {
-            flags += Escape(_("Automatic translation"));
+            flags += EscapeMarkup(_("Automatic translation"));
             flags += _T("<BR>");
         }
         if (data.IsFuzzy())
         {
             bgcolor = g_ItemColourFuzzy[i % 2];
-            flags += Escape(_("Fuzzy translation"));
+            flags += EscapeMarkup(_("Fuzzy translation"));
             flags += _T("<BR>");
         }
         if (flags.empty())
@@ -204,10 +195,10 @@ bool Catalog::ExportToHTML(const wxString& filename)
         f.AddLine(tr);
 
         f.AddLine(_T("<td>"));
-        f.AddLine(Escape(source_string));
+        f.AddLine(EscapeMarkup(source_string));
         f.AddLine(_T("</td>"));
         f.AddLine(_T("<td>"));
-        f.AddLine(Escape(translation));
+        f.AddLine(EscapeMarkup(translation));
         f.AddLine(_T("</td>"));
         f.AddLine(_T("<td>"));
         f.AddLine(_T("<font size=\"-1\">"));

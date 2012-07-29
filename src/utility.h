@@ -30,6 +30,8 @@
 #include <wx/arrstr.h>
 #include <wx/toplevel.h>
 
+wxString EscapeMarkup(const wxString& str);
+
 // ----------------------------------------------------------------------
 // TempDirectory
 // ----------------------------------------------------------------------
