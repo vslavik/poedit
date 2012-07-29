@@ -575,6 +575,8 @@ class Catalog
         }
 
     protected:
+        bool DoSaveOnly(const wxString& po_file);
+
         /** Merges the catalog with reference catalog
             (in the sense of msgmerge -- this catalog is old one with
             translations, \a refcat is reference catalog created by Update().)

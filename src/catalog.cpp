@@ -1262,6 +1262,63 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     if ( !m_header.RevisionDate.empty() )
         m_header.RevisionDate = GetCurrentTimeRFC822();
 
+    const wxString po_file_temp = po_file + _T(".temp.po");
+    if ( wxFileExists(po_file_temp) )
+        wxRemoveFile(po_file_temp);
+
+    if ( !DoSaveOnly(po_file_temp) )
+        return false;
+
+    // Now that the file was written, run msgcat to re-format it according
+    // to the usual format. This is a good enough fix for #25 until proper
+    // preservation of formatting is implemented.
+    if ( ExecuteGettext
+          (
+              wxString::Format(_T("msgcat --force-po -o \"%s\" \"%s\""),
+                               po_file.c_str(),
+                               po_file_temp.c_str())
+          )
+         && wxFileExists(po_file)
+       )
+    {
+        wxRemoveFile(po_file_temp);
+    }
+    else
+    {
+        if ( !wxRemoveFile(po_file) || !wxRenameFile(po_file_temp, po_file) )
+        {
+            wxLogWarning(_("Couldn't save file %s."), po_file.c_str());
+        }
+        else
+        {
+            wxLogWarning(_("There was a problem formatting the file nicely (but it was saved all right)."));
+        }
+    }
+
+    /* If the user wants it, compile .mo file right now: */
+
+    if (save_mo && wxConfig::Get()->Read(_T("compile_mo"), (long)false))
+    {
+        const wxString mofile = po_file.BeforeLast(_T('.')) + _T(".mo");
+        if ( !ExecuteGettext
+              (
+                  wxString::Format(_T("msgfmt -c -o \"%s\" \"%s\""),
+                                   mofile.c_str(),
+                                   po_file.c_str())
+              ) )
+        {
+            wxLogWarning(_("There were errors while compiling the saved catalog into MO file."));
+        }
+    }
+
+    m_fileName = po_file;
+
+    return true;
+}
+
+
+bool Catalog::DoSaveOnly(const wxString& po_file)
+{
     /* Detect CRLF format: */
     wxTextFileType crlf = GetDesiredCRLFFormat(po_file);
 
@@ -1280,11 +1337,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     }
     m_header.Charset = charset;
 
-    const wxString po_file_temp = po_file + _T(".temp.po");
-    if ( wxFileExists(po_file_temp) )
-        wxRemoveFile(po_file_temp);
     wxTextFile f;
-    if (!f.Create(po_file_temp))
+    if (!f.Create(po_file))
         return false;
 
     SaveMultiLines(f, m_header.Comment);
@@ -1364,51 +1418,12 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     f.Write(crlf, wxCSConv(charset));
     f.Close();
 
-    // Now that the file was written, run msgcat to re-format it according
-    // to the usual format. This is a good enough fix for #25 until proper
-    // preservation of formatting is implemented.
-    if ( ExecuteGettext
-          (
-              wxString::Format(_T("msgcat --force-po -o \"%s\" \"%s\""),
-                               po_file.c_str(),
-                               po_file_temp.c_str())
-          )
-         && wxFileExists(po_file)
-       )
-    {
-        wxRemoveFile(po_file_temp);
-    }
-    else
-    {
-        if ( !wxRemoveFile(po_file) || !wxRenameFile(po_file_temp, po_file) )
-        {
-            wxLogWarning(_("Couldn't save file %s."), po_file.c_str());
-        }
-        else
-        {
-            wxLogWarning(_("There was a problem formatting the file nicely (but it was saved all right)."));
-        }
-    }
-
-    /* If the user wants it, compile .mo file right now: */
-
-    if (save_mo && wxConfig::Get()->Read(_T("compile_mo"), (long)false))
-    {
-        const wxString mofile = po_file.BeforeLast(_T('.')) + _T(".mo");
-        if ( !ExecuteGettext
-              (
-                  wxString::Format(_T("msgfmt -c -o \"%s\" \"%s\""),
-                                   mofile.c_str(),
-                                   po_file.c_str())
-              ) )
-        {
-            wxLogWarning(_("There were errors while compiling the saved catalog into MO file."));
-        }
-    }
-
-    m_fileName = po_file;
-
     return true;
+}
+
+
+
+
 }
 
 
