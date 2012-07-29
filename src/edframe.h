@@ -283,7 +283,7 @@ class PoeditFrame : public wxFrame
         wxNotebook *m_pluralNotebook;
         wxStaticText *m_labelSingular, *m_labelPlural;
 
-        wxFont m_boldGuiFont;
+        wxFont m_normalGuiFont, m_boldGuiFont;
 
         AttentionBar *m_attentionBar;
 

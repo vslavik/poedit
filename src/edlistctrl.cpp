@@ -294,11 +294,11 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
 {
     wxFont font(font_);
 
-    m_attrNormal[0].SetFont(font);
-    m_attrNormal[1].SetFont(font);
-
     if ( !font.IsOk() )
         font = GetDefaultAttributes().font;
+
+    m_attrNormal[0].SetFont(font);
+    m_attrNormal[1].SetFont(font);
 
     wxFont fontb = font;
     fontb.SetWeight(wxFONTWEIGHT_BOLD);

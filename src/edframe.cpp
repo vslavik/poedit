@@ -464,7 +464,9 @@ PoeditFrame::PoeditFrame() :
     SetIcon(wxICON(appicon));
 #endif
 
-    m_boldGuiFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+    // This is different from the default, because it's a bit smaller on OS X
+    m_normalGuiFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+    m_boldGuiFont = m_normalGuiFont;
     m_boldGuiFont.SetWeight(wxFONTWEIGHT_BOLD);
 
     wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar(_T("mainmenu"));
@@ -558,7 +560,9 @@ PoeditFrame::PoeditFrame() :
     UpdateCommentWindowEditable();
 
     m_labelSingular = new wxStaticText(m_bottomLeftPanel, -1, _("Singular:"));
+    m_labelSingular->SetFont(m_normalGuiFont);
     m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
+    m_labelPlural->SetFont(m_normalGuiFont);
     m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
                                 ID_TEXTORIG, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
