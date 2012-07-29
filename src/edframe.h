@@ -277,6 +277,7 @@ class PoeditFrame : public wxFrame
         wxSplitterWindow *m_splitter, *m_bottomSplitter;
         PoeditListCtrl *m_list;
         wxStaticText *m_labelComment, *m_labelAutoComments;
+        wxStaticText *m_labelContext;
         wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textTrans, *m_textComment, *m_textAutoComments;
         std::vector<wxTextCtrl*> m_textTransPlural;
         wxTextCtrl *m_textTransSingularForm;

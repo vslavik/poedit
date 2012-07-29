@@ -447,7 +447,12 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
     {
         case 0:
         {
-            wxString orig = d.GetString();
+            wxString orig;
+            if ( d.HasContext() )
+                orig.Printf(_T("%s  [ %s ]"),
+                            d.GetString().c_str(), d.GetContext().c_str());
+            else
+                orig = d.GetString();
             return orig.substr(0,GetMaxColChars());
         }
         case 1:

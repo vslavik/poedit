@@ -540,6 +540,10 @@ PoeditFrame::PoeditFrame() :
         new wxStaticText(m_bottomLeftPanel, -1, _("Source text:"));
     labelSource->SetFont(m_boldGuiFont);
 
+    m_labelContext = new wxStaticText(m_bottomLeftPanel, -1, wxEmptyString);
+    m_labelContext->SetFont(m_normalGuiFont);
+    m_labelContext->Hide();
+
     wxStaticText *labelTrans =
         new wxStaticText(m_bottomLeftPanel, -1, _("Translation:"));
     labelTrans->SetFont(m_boldGuiFont);
@@ -599,6 +603,7 @@ PoeditFrame::PoeditFrame() :
     gridSizer->SetItemMinSize(m_textOrig, 1, 1);
     gridSizer->SetItemMinSize(m_textOrigPlural, 1, 1);
 
+    leftSizer->Add(m_labelContext, 0, wxEXPAND | wxALL, 3);
     leftSizer->Add(labelSource, 0, wxEXPAND | wxALL, 3);
     leftSizer->Add(gridSizer, 1, wxEXPAND);
     leftSizer->Add(labelTrans, 0, wxEXPAND | wxALL, 3);
@@ -1784,6 +1789,20 @@ void PoeditFrame::UpdateToTextCtrl()
         if (m_displayQuotes)
             m_textTrans->SetInsertionPoint(1);
     }
+
+    if ( entry->HasContext() )
+    {
+        const wxString prefix = _("Context:");
+        const wxString ctxt = entry->GetContext();
+#if wxCHECK_VERSION(2,9,2)
+        m_labelContext->SetLabelMarkup(
+            wxString::Format("<b>%s</b> %s", prefix, EscapeMarkup(ctxt)));
+#else
+        m_labelContext->SetLabel(
+            wxString::Format(_T("%s %s"), prefix.c_str(), ctxt.c_str());
+#endif
+    }
+    m_labelContext->GetContainingSizer()->Show(m_labelContext, entry->HasContext());
 
     if (m_displayCommentWin)
         m_textComment->SetValue(t_c);
