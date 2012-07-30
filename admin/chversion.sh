@@ -13,11 +13,7 @@ fi
 replace_ver()
 {
     echo "replacing in $1..."
-    echo "
-,s@$2@$3@g
-w
-q
-" | ed -s $1 2>/dev/null
+    sed -e "s@$2@$3@g" -i $1
 }
 
 VER_FULL=$1
