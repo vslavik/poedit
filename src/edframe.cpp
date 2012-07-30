@@ -547,7 +547,7 @@ PoeditFrame::PoeditFrame() :
     m_labelComment = new wxStaticText(m_bottomRightPanel, -1, _("Comment:"));
     m_labelComment->SetFont(m_boldGuiFont);
 
-    m_labelAutoComments = new wxStaticText(m_bottomRightPanel, -1, _("Automatic comments:"));
+    m_labelAutoComments = new wxStaticText(m_bottomRightPanel, -1, _("Notes for translators:"));
     m_labelAutoComments->SetFont(m_boldGuiFont);
 
     m_textComment = NULL;
