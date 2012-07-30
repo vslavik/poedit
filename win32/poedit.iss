@@ -25,7 +25,7 @@
 ;
 
 #define VERSION          "1.5"
-#define VERSION_FULL     "1.5beta1"
+#define VERSION_FULL     "1.5"
 
 #ifndef CRT_REDIST
 #define CRT_REDIST       "C:\Program Files\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT"

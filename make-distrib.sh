@@ -5,7 +5,7 @@
 # $Id$
 #
 
-VERSION=1.5beta1
+VERSION=1.5
 
 #(
 #cd docs_classes
