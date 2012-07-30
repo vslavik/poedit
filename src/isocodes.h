@@ -21,11 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  This file contains languages & countries names and 2-letter codes as
- *  defined by ISO 639 and ISO 3166 standards.
- *
  */
 
 #include <wx/string.h>
@@ -40,6 +35,8 @@ extern LanguageStruct isoCountries[];
 
 extern const wxChar *LookupLanguageCode(const wxString& language);
 extern const wxChar *LookupCountryCode(const wxString& country);
+
+extern const wxChar *LookupLanguageName(const wxString& code);
 
 extern bool IsKnownLanguageCode(const wxString& code);
 extern bool IsKnownCountryCode(const wxString& code);

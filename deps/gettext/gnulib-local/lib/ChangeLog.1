@@ -1,0 +1,1796 @@
+2006-07-30  Bruno Haible  <bruno@clisp.org>
+
+	* propername.c: Temporarily use c_strstr always.
+
+2006-07-30  Bruno Haible  <bruno@clisp.org>
+
+	* c-strstr.h: Renamed from strstr.h. Don't test HAVE_STRSTR.
+	(c_strstr): Renamed from strstr.
+	* c-strstr.c: Renamed from strstr.c.
+	(c_strstr): Renamed from strstr.
+	* javacomp.c: Include c-strstr.h instead of strstr.h.
+	(is_envjavac_gcj): Use c_strstr instead of strstr.
+	* propername.c: Include c-strstr.h.
+	(proper_name_utf8): Use c_strstr instead of strstr.
+
+2006-07-29  Bruno Haible  <bruno@clisp.org>
+
+	* xreadlink.c: Assume <stdlib.h> exists.
+
+2006-07-29  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c: Assume <stddef.h>, <stdlib.h>, <string.h> exist.
+
+2006-07-23  Bruno Haible  <bruno@clisp.org>
+
+	Make fstrcmp multithread-safe.
+	* lock.h: New file, from gnulib.
+	* lock.c: New file, from gnulib.
+	* tls.h: New file, from gnulib.
+	* tls.c: New file, from gnulib.
+	* Makefile.am (libgettextlib_la_SOURCES): Add them.
+	* fstrcmp.c: Include lock.h, tls.h.
+	(uintptr_t): New macro.
+	(struct context): New structure, grouping all variables.
+	(diag, compareseq): Add context argument.
+	(buffer_key, bufmax_key): New variables.
+	(keys_init): New functions.
+	(keys_init_once): New variable.
+	(fstrcmp): Establish a struct context. Allocate memory per-thread.
+
+2006-07-22  Bruno Haible  <bruno@clisp.org>
+
+	* gl_anyhash_list1.h: New file, from gnulib.
+	* gl_anyhash_list2.h: New file, from gnulib.
+	* gl_anylinked_list1.h: New file, from gnulib.
+	* gl_anylinked_list2.h: New file, from gnulib.
+	* gl_linkedhash_list.h: New file, from gnulib.
+	* gl_linkedhash_list.c: New file, from gnulib.
+	* gl_list.h: New file, from gnulib.
+	* gl_list.c: New file, from gnulib.
+	* size_max.h: New file, from gnulib.
+	* Makefile.am (libgettextlib_la_SOURCES): Add them.
+	(DEFS): Also define SIGNAL_SAFE_LIST.
+	* clean-temp.c: Include limits.h, gl_linkedhash_list.h.
+	(struct tempdir): Use gl_list_t instead of a self-made array-list.
+	(string_equals, string_hash): New functions.
+	(SIZE_BITS): New macro.
+	(cleanup): Use gl_list_iterator_t to walk through the list. No need
+	tp ignore NULLs any more.
+	(create_temp_dir, register_temp_file, unregister_temp_file,
+	register_temp_subdir, unregister_temp_subdir,
+	cleanup_temp_dir_contents): Update.
+
+2006-07-18  Bruno Haible  <bruno@clisp.org>
+
+	* xalloc.h (xzalloc): New declaration.
+	* xmalloc.c (xzalloc): New function.
+
+2006-07-25  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.msvc: Remove file.
+	* Makefile.am (EXTRA_DIST): Remove Makefile.msvc.
+
+2006-07-25  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.vms: Remove file.
+	* Makefile.am (EXTRA_DIST): Remove Makefile.vms.
+
+2006-07-22  Bruno Haible  <bruno@clisp.org>
+
+	* stdbool_.h: Update from gnulib.
+
+	* quotearg.c: Update from gnulib.
+
+	* pathmax.h: Update from gnulib.
+
+	* obstack.h: Update from gnulib, keeping DLL_VARIABLE annotation.
+	* obstack.c: Update from gnulib.
+
+	* minmax.h: Update from gnulib.
+
+	* mbswidth.c: Update from gnulib.
+
+	* wcwidth.h: New file, from gnulib.
+	* Makefile.am (libgettextlib_la_SOURCES): Add it.
+
+	* getopt.c: Update from gnulib.
+	* getopt1.c: Likewise.
+
+	* gcd.c: Update from gnulib.
+
+	* fwriteerror.c: Update from gnulib.
+
+	* fnmatch_.h: Update from gnulib.
+	* fnmatch.c: Likewise.
+	* fnmatch_loop.c: Likewise.
+
+	* fatal-signal.c: Include <config.h>, not "config.h".
+	* findprog.c: Likewise.
+	* pipe.c: Likewise.
+	* progname.c: Likewise.
+	* progreloc.c: Likewise.
+	* wait-process.c: Likewise.
+
+	* c-strcasecmp.c: Update from gnulib. Don't assume that
+	UCHAR_MAX <= INT_MAX.
+	* c-strncasecmp.c: Likewise.
+
+	* copy-file.c: Update from gnulib.
+
+	* atexit.c: Update from gnulib.
+
+	* verify.h: New file, from gnulib.
+	* argmatch.h: Update from gnulib, keeping DLL_VARIABLE annotation.
+	* Makefile.am (libgettextlib_la_SOURCES): Add verify.h.
+
+2006-07-21  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.15 released.
+
+2006-07-14  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (MOSTLYCLEANFILES): Add core and *.stackdump.
+
+2006-07-13  Bruno Haible  <bruno@clisp.org>
+
+	Fix construction of temporary directory names on mingw.
+	* tmpdir.c (ISSLASH): New macro.
+	(path_search): Use it, and remove also the first character if it is
+	a slash.
+	Reported by Steffen Macke <sdteffen@gmail.com>.
+
+2006-07-13  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (EXTRA_DIST): Add javaversion.class.
+
+2006-07-11  Bruno Haible  <bruno@clisp.org>
+
+	* javacomp.c: Fix a comment.
+	Reported by Jim Meyering.
+
+2006-07-02  Bruno Haible  <bruno@clisp.org>
+
+	* clean-temp.h (register_temp_file): Renamed from enqueue_temp_file.
+	(unregister_temp_file): Renamed from dequeue_temp_file.
+	(register_temp_subdir): Renamed from enqueue_temp_subdir.
+	(unregister_temp_subdir): Renamed from dequeue_temp_subdir.
+	* clean-temp.c (register_temp_file): Renamed from enqueue_temp_file.
+	(unregister_temp_file): Renamed from dequeue_temp_file.
+	(register_temp_subdir): Renamed from enqueue_temp_subdir.
+	(unregister_temp_subdir): Renamed from dequeue_temp_subdir.
+	(cleanup_temp_file, cleanup_temp_subdir): Update.
+	* javacomp.c (write_temp_file, is_envjavac_gcj_14_14_usable,
+	is_envjavac_gcj_14_13_usable, is_envjavac_nongcj_usable,
+	is_gcj_present, is_gcj_14_14_usable, is_gcj_14_13_usable,
+	is_javac_usable): Update.
+
+2006-06-29  Bruno Haible  <bruno@clisp.org>
+
+	* clean-temp.h: Include <stdbool.h>.
+	(struct temp_dir): Add cleanup_verbose field.
+	(create_temp_dir): Add parentdir, cleanup_verbose arguments.
+	* clean-temp.c (struct tempdir): Add cleanup_verbose field.
+	(create_temp_dir): Add parentdir, cleanup_verbose arguments.
+	(do_unlink. do_rmdir): New functions.
+	(cleanup_temp_file, cleanup_temp_subdir, cleanup_temp_dir_contents,
+	cleanup_temp_dir): Use them.
+	* javacomp.c (is_envjavac_gcj_14_14_usable,
+	is_envjavac_gcj_14_13_usable, is_envjavac_nongcj_usable,
+	is_gcj_present, is_gcj_14_14_usable, is_gcj_14_13_usable,
+	is_javac_usable): Update.
+
+2006-06-28  Bruno Haible  <bruno@clisp.org>
+
+	Assume <dirent.h> on all Unix platforms. Assume closedir works.
+	* backupfile.c: Don't include <sys/ndir.h>, <sys/dir.h>, <ndir.h>.
+	(NLENGTH): Remove macro.
+	(max_backup_version): Use closedir directly.
+
+2006-06-27  Bruno Haible  <bruno@clisp.org>
+
+	Assume correct S_ISDIR macro.
+	* mkdtemp.c: Remove test of STAT_MACROS_BROKEN.
+	* tmpdir.c: Remove test of STAT_MACROS_BROKEN.
+
+2006-06-27  Bruno Haible  <bruno@clisp.org>
+
+	Assume ANSI C header files and <ctype.h> functions.
+	* fnmatch.c (ISASCII): Remove macro.
+	(isblank): Renamed from ISBLANK.
+	(isgraph): Renamed from isgraph.
+	(ISPRINT, ISDIGIT, ISALNUM, ISALPHA, ISCNTRL, ISLOWER, ISPUNCT,
+	ISSPACE, ISUPPER, ISXDIGIT): Remove macros.
+	(FOLD): Update.
+	* fnmatch_loop.c (FCT): Update.
+	* getndelim2.c: Include <stdlib.h> always.
+	* mbswidth.c (IN_CTYPE_DOMAIN, ISPRINT, ISCNTRL): Remove macros.
+	(mbsnwidth): Use isprint, iscntrl instead.
+	* strtol.c (IN_CTYPE_DOMAIN): Remove macro.
+	(ISSPACE, ISALPHA, TOUPPER): Use isspace, isalpha, toupper directly.
+
+2006-06-28  Bruno Haible  <bruno@clisp.org>
+
+        * xvasprintf.h: Update from gnulib.
+
+2006-04-14  Bruno Haible  <bruno@clisp.org>
+
+	Assume autoconf >= 2.60.
+	* Makefile.am (docdir): Remove variable.
+
+2006-06-21  Bruno Haible  <bruno@clisp.org>
+
+	Avoid warnings from recent versions of mcs.
+	* csharpcomp.sh.in (options_mcs): Don't use options -o, -L, -r any
+	more. Use options documented since mcs-1.0 instead. Similarly for -g.
+	* csharpcomp.c (compile_csharp_using_mono): Likewise.
+
+2006-06-17  Bruno Haible  <bruno@clisp.org>
+
+	* iconvstring.c (UNSAFE_ICONV): New macro.
+	(iconv_string): Add slower but safer code for UNSAFE_ICONV.
+	Needed for IRIX iconv() and NetBSD's iconv().
+
+2006-06-17  Bruno Haible  <bruno@clisp.org>
+
+	* iconvstring.c (iconv_string): Recognize conversion failures also
+	from NetBSD's iconv().
+
+2006-06-17  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Update for NetBSD 3.0.
+
+2006-06-17  Bruno Haible  <bruno@clisp.org>
+
+	* xgetcwd.c: Assume errno.h declares errno.
+	* xreadlink.c: Likewise.
+
+2006-06-16  Eric Blake  <ebb9@byu.net>
+
+	* unsetenv.c [!defined errno]: Assume errno.h declares errno.
+	* strtol.c [!defined errno]: Likewise.
+
+2006-06-04  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.h (_LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS): Parenthesize.
+	Include stdlib.h.
+
+2006-05-17  Bruno Haible  <bruno@clisp.org>
+
+	Cygwin portability.
+	* classpath.c (PATH_SEPARATOR) [CYGWIN]: Define as ':'.
+	* javaexec.c (execute_java_class): Test for jview program also on
+	Cygwin.
+	* localcharset.c (WIN32_NATIVE): Renamed from WIN32.
+	* progreloc.c (WIN32_NATIVE): Renamed from WIN32.
+
+2006-05-16  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c [CYGWIN]: Include <windows.h>.
+	(get_charset_aliases): For Cygwin, return the same CPxxx aliases list
+	as under WIN32.
+	(locale_charset) [CYGWIN]: Try to retrieve the encoding from the
+	environment variables. Fall back to GetACP().
+
+2006-05-16  Bruno Haible  <bruno@clisp.org>
+
+	* javacomp.c (is_envjavac_gcj_14_14_usable,
+	is_envjavac_gcj_14_13_usable, is_envjavac_nongcj_usable,
+	is_gcj_present, is_gcj_14_14_usable, is_gcj_14_13_usable,
+	is_javac_usable): Remove unused variable.
+
+2006-05-15  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am: Test flag WOE32DLL instead of CYGWINDLL.
+
+2006-04-30  Bruno Haible  <bruno@clisp.org>
+
+	* progreloc.c: Include <mach-o/dyld.h> if available.
+	(find_executable): Use _NSGetExecutablePath when possible.
+
+2006-05-12  Bruno Haible  <bruno@clisp.org>
+
+	* mkdtemp.c [MINGW]: Include <io.h>.
+	(mkdir): Define using _mkdir.
+
+2006-05-11  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (libgettextlib_la_SOURCES, libgettextlib_la_LDFLAGS):
+	Modify for Cygwin.
+
+2006-05-09  Bruno Haible  <bruno@clisp.org>
+
+	* xvasprintf.c (xstrcat): Handle overflow. Suggested by Paul Eggert.
+	Optimize away a va_copy call. Suggested by Eric Blake. Add missing
+	va_end call.
+
+2006-05-06  Charles Wilson  <cygwin@cwilson.fastmail.fm>
+
+	* progreloc.c (maybe_executable) [CYGWIN]: Use the access() function.
+
+2006-04-30  Bruno Haible  <bruno@clisp.org>
+
+	* javacomp.h (compile_java_class): Add source_version, target_version
+	arguments.
+	* javacomp.c: Rewritten to choose only a compiler that respects the
+	specified source_version and target_version.
+
+2006-04-30  Bruno Haible  <bruno@clisp.org>
+
+	* xvasprintf.c: Include limits.h, string.h, xsize.h.
+	(EOVERFLOW): Define fallback value.
+	(xstrcat): New function.
+	(xvasprintf): Recognize the special case of a string concatenation.
+
+2006-03-13  Bruno Haible  <bruno@clisp.org>
+
+	* javaversion.h: New file.
+	* javaversion.c: New file.
+	* javaversion.java: New file.
+	* javaversion.class: New file, generated from javaversion.java.
+	* Makefile.am (libgettextlib_la_SOURCES): Add javaversion.h,
+	javaversion.c.
+	(pkgdatadir, pkgdata_DATA): New variables.
+	(EXTRA_DIST): Add javaversion.java.
+	(DEFS): Also define PKGDATADIR.
+	* Makefile.msvc (pkgdatadir, IIpkgdatadir): New variables.
+	(CFLAGS): Also define PKGDATADIR.
+	(OBJECTS): Add javaversion.obj.
+	(javaversion.obj): New rule.
+	* Makefile.vms (pkgdatadir): New variable.
+	(CFLAGS): Also define PKGDATADIR.
+	(OBJECTS): Add javaversion.obj.
+	(javaversion.obj): New rule.
+
+2006-04-30  Bruno Haible  <bruno@clisp.org>
+
+	* xvasprintf.h: New file, from gnulib.
+	* xvasprintf.c: New file, from gnulib.
+	* xasprintf.c: New file, from gnulib.
+	* xerror.h (xasprintf): Remove declaration.
+	* xerror.c: Don't include stdarg.h, error.h, exit.h, vasprintf.h,
+	gettext.h.
+	(_): Remove macro.
+	(xasprintf): Remove function.
+	* Makefile.am (libgettextlib_la_SOURCES): Add xvasprintf.h,
+	xvasprintf.c, xasprintf.c.
+	* Makefile.msvc (OBJECTS): Add xvasprintf.obj, xasprintf.obj.
+	(xvasprintf.obj, xasprintf.obj): New rules.
+	* Makefile.vms (OBJECTS): Add xvasprintf.obj, xasprintf.obj.
+	(xvasprintf.obj, xasprintf.obj): New rules.
+
+2006-05-01  Bruno Haible  <bruno@clisp.org>
+
+	* javacomp.sh.in: Update for changed javacomp.m4.
+
+2006-04-23  Bruno Haible  <bruno@clisp.org>
+
+	* addext.c: Include <unistd.h> unconditionally.
+	* clean-temp.c: Likewise.
+	* copy-file.c: Likewise.
+	* execute.c: Likewise.
+	* fatal-signal.c: Likewise.
+	* findprog.c: Likewise.
+	* getopt_.h: Likewise.
+	* mkdtemp.c: Likewise.
+	* pathmax.h: Likewise.
+	* pipe.h: Likewise.
+	* pipe.c: Likewise.
+	* safe-read.c: Likewise.
+	* unsetenv.c: Likewise.
+	* wait-process.h: Likewise.
+	* xgetcwd.c: Likewise.
+	* Makefile.am (BUILT_SOURCES): Conditionally add unistd.h.
+	(unistd.h): New rule.
+	(MOSTLYCLEANFILES): Add unistd.h.
+
+2006-04-17  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am: Use $(mkdir_p) instead of $(mkinstalldirs).
+
+2006-04-17  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (byteswap.h): Don't use $(srcdir)/$<, for portability.
+
+2006-04-09  Bruno Haible  <bruno@clisp.org>
+
+	* clean-temp.h: New file.
+	* clean-temp.c: New file.
+	* Makefile.am (libgettextlib_la_SOURCES): Add them.
+	* Makefile.msvc (OBJECTS): Add clean-temp.obj.
+	(clean-temp.obj): New rule.
+	* Makefile.vms (OBJECTS): Add clean-temp.obj.
+	(clean-temp.obj): New rule.
+
+2006-04-09  Bruno Haible  <bruno@clisp.org>
+
+	* fatal-signal.c: Don't include string.h.
+	(at_fatal_signal): Use a copying loop instead of memcpy.
+
+2006-04-05  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Update Juan Manuel Guerrero's address.
+
+2006-04-02  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.h (_LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS, pgettext_expr,
+	dpgettext_expr, npgettext_expr, dnpgettext_expr): New macros.
+	(dcpgettext_expr, dcnpgettext_expr): New inline functions.
+	Reported by Chusslove Illich <caslav.ilic@gmx.net>.
+
+2006-04-02  Bruno Haible  <bruno@clisp.org>
+
+	Support for non-ASCII author names.
+	* propername.h: New file.
+	* propername.c: New file.
+	* Makefile.am (libgettextlib_la_SOURCES): Add propername.h,
+	propername.c.
+	* Makefile.msvc (OBJECTS): Add propername.obj.
+	(propername.obj): New rule.
+	* Makefile.vms (OBJECTS): Add propername.obj.
+	(propername.obj): New rule.
+
+2006-03-28  Bruno Haible  <bruno@clisp.org>
+
+	* iconvstring.h: New file.
+	* iconvstring.c: New file, mostly extracted from ../src/msgl-iconv.c.
+	* Makefile.am (libgettextlib_la_SOURCES): Add them.
+	* Makefile.msvc (OBJECTS): Add iconvstring.obj.
+	(iconvstring.obj): New rule.
+	* Makefile.vms (OBJECTS): Add iconvstring.obj.
+	(iconvstring.obj): New rule.
+
+2006-03-12  Bruno Haible  <bruno@clisp.org>
+
+	* javaexec.sh.in: Update for changed javaexec.m4.
+
+2006-03-11  Bruno Haible  <bruno@clisp.org>
+
+	Avoid gcc-4.x warnings.
+	* hash.h (struct hash_entry): New declaration.
+	(struct hash_table): Use it, instead of 'void *'.
+	* hash.c (hash_init): Update.
+	(lookup, hash_find_entry, insert_entry_2): Remove casts.
+	(resize): Update.
+	(hash_insert_entry, hash_set_value): Remove casts.
+	(hash_iterate, hash_iterate_modify): Likewise.
+
+2006-03-11  Bruno Haible  <bruno@clisp.org>
+
+	* hash.h (hash_iterate_modify): New declaration.
+	* hash.c (hash_iterate_modify): New function.
+
+2006-01-10  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c: Assume ANSI C. Fixes a gcc warning.
+	Reported by Werner Lemberg <wl@gnu.org>.
+
+2005-12-29  Bruno Haible  <bruno@clisp.org>
+
+	* progreloc.c (set_program_name_and_installdir): Fix compilation error.
+
+2005-12-04  Bruno Haible  <bruno@clisp.org>
+
+	* csharpexec.sh.in: Add support for 'clix' launcher (untested).
+	* csharpexec.c: Likewise.
+	(execute_csharp_using_sscli): New function.
+	(execute_csharp_program): Call it.
+
+2005-12-04  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.sh.in: Suffix for resources is .resources, not .resource.
+
+2005-12-04  Bruno Haible  <bruno@clisp.org>
+
+	Cygwin portability.
+	* progreloc.c: Include <windows.h> also on Cygwin.
+	(find_executable): Add support for Cygwin.
+	(set_program_name_and_installdir): Handle also platforms with nonempty
+	EXEEXT.
+	* relocatable.c: Include <windows.h> also on Cygwin.
+	(DllMain): Add support for Cygwin.
+	(get_shared_library_fullname): Update.
+	* relocwrapper.c (add_dotbin): Handle also platforms with nonempty
+	EXEEXT.
+	Patches partially from Charles Wilson <cygwin@cwilson.fastmail.fm>.
+
+2005-10-09  Bruno Haible  <bruno@clisp.org>
+
+	* c-strcasestr.h: New file.
+	* c-strcasestr.c: New file, based on gnulib's strcasestr.c.
+	* Makefile.am (libgettextlib_la_SOURCES): Add them.
+
+2005-10-06  Bruno Haible  <bruno@clisp.org>
+
+	* addext.c: Test HAVE_CONFIG_H using #ifdef.
+	* argmatch.c: Likewise.
+	* backupfile.c: Likewise.
+	* c-strcasecmp.c: Likewise.
+	* c-strncasecmp.c: Likewise.
+	* canonicalize.c: Likewise.
+	* closeout.c: Likewise.
+	* exitfail.c: Likewise.
+	* fnmatch.c: Likewise.
+	* full-write.c: Likewise.
+	* fwriteerror.c: Likewise.
+	* getline.c: Likewise.
+	* getndelim2.c: Likewise.
+	* getopt_.h: Likewise.
+	* hash.c: Likewise.
+	* memmove.c: Likewise.
+	* quote.c: Likewise.
+	* quotearg.c: Likewise.
+	* readlink.c: Likewise.
+	* safe-read.c: Likewise.
+	* setenv.c: Likewise.
+	* strcspn.c: Likewise.
+	* strerror.c: Likewise.
+	* strstr.c: Likewise.
+	* strtol.c: Likewise.
+	* unsetenv.c: Likewise.
+	* xgetcwd.c: Likewise.
+	* xmalloc.c: Likewise.
+	* xreadlink.c: Likewise.
+	* xsetenv.c: Likewise.
+	* xstrdup.c: Likewise.
+	Reported by Ralf Wildenhues on bug-gnulib.
+
+2005-10-03  Bruno Haible  <bruno@clisp.org>
+
+	* hash.h (hash_insert_entry): Return a pointer instead of int.
+	* hash.c (hash_insert_entry): Return a pointer to the copy of the key.
+
+2005-10-03  Bruno Haible  <bruno@clisp.org>
+
+	* hash.h: Add comments everywhere.
+	(hash_init): Renamed from init_hash.
+	(hash_destroy): Renamed from delete_hash.
+	(hash_find_entry): Renamed from find_entry.
+	(hash_insert_entry): Renamed from insert_entry.
+	(hash_set_value): New declaration.
+	(hash_iterate): Renamed from iterate_table.
+	* hash.c: Add comments everywhere. Reorder.
+	(hash_init): Renamed from init_hash.
+	(hash_destroy): Renamed from delete_hash.
+	(hash_find_entry): Renamed from find_entry.
+	(hash_insert_entry): Renamed from insert_entry.
+	(hash_set_value): New function.
+	(hash_iterate): Renamed from iterate_table.
+
+2005-10-01  Bruno Haible  <bruno@clisp.org>
+
+	Support for context dependent translations in PO files.
+	* gettext.h (GETTEXT_CONTEXT_GLUE): New macro.
+	(pgettext, dpgettext, dcpgettext, npgettext, dnpgettext, dcnpgettext):
+	New macros.
+	(pgettext_aux, npgettext_aux): New inline functions.
+
+2005-08-23  Bruno Haible  <bruno@clisp.org>
+
+	* byteswap_.h: New file, from gnulib.
+	* Makefile.am (BUILT_SOURCES, EXTRA_DIST, MOSTLYCLEANFILES): Adjust
+	for byteswap.h.
+	(byteswap.h): New rule.
+
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
+	* strcase.h: Remove file.
+	* strcasecmp.c: Remove file.
+	* strncasecmp.c: Remove file.
+	* Makefile.am (LIBADD_SOURCE): Remove them.
+	* Makefile.msvc (OBJECTS): Remove strcasecmp.obj, strncasecmp.obj.
+	(strcasecmp.obj, strncasecmp.obj): Remove rules.
+
+2005-07-31  Bruno Haible  <bruno@clisp.org>
+
+	* hash.c (resize): New function, extracted from insert_entry_2.
+	(insert_entry): Invoke resize here.
+	(insert_entry_2): ... not here.
+
+2005-07-24  Bruno Haible  <bruno@clisp.org>
+
+	Tidy up exported symbols.
+	* relocatable.h (RELOCATABLE_DLL_EXPORTED) [HAVE_VISIBILITY]: Define
+	to the gcc visibility attribute.
+
+2005-07-22  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am: Remove rules depending on @STDBOOL_H@, @ALLOCA_H@,
+	@FNMATCH_H@, @GETOPT_H@.
+	(BUILT_SOURCES): Add $(STDBOOL_H), $(ALLOCA_H).
+	Reported by Alexandre Duret-Lutz <adl@src.lip6.fr>.
+
+2005-07-09  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.sh.in (options_csc): For -l option, add a .dll suffix.
+	* csharpcomp.c (compile_csharp_using_sscli): Likewise.
+	Reported by Mark Junker <mjscod@gmx.de>.
+
+2005-07-05  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (libgettextlib_la_LDFLAGS): Use LTNOUNDEF.
+
+2005-07-02  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c (get_charset_aliases) [WIN32]: Add CP65001 and others.
+	Reported by <mus1876@gmx.info> via Alain Bench <messtic@oreka.com>.
+
+2005-06-08  Bruno Haible  <bruno@clisp.org>
+
+	* canonicalize.c (__realpath): Avoid gcc warnings on platforms that
+	don't support symbolic links.
+
+2005-06-08  Bruno Haible  <bruno@clisp.org>
+
+	* binary-io.h (fileno): Undefine before defining it. Avoids a gcc
+	warning on mingw.
+
+2006-06-21  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.6 released.
+
+2005-05-23  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.5 released.
+
+2005-04-11  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.4 released.
+
+2005-03-22  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (examplesbuildauxdir): Renamed from examplesconfigdir.
+	(examplesbuildaux_DATA): Renamed from examplesconfig_DATA.
+
+2005-03-14  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.3 released.
+
+2004-09-12  Bruno Haible  <bruno@clisp.org>
+
+	* hash.c: Include <limits.h> instead of <values.h>.
+	Assume an ANSI C implementation with stdlib.h, string.h.
+	(BITSPERBYTE, LONGBITS, bcopy): Remove macros.
+
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.msvc (OBJECTS): Remove strtoul.obj.
+	(strtoul.obj): Remove target.
+	* Makefile.vms (OBJECTS): Remove strtoul.obj.
+	(strtoul.obj): Remove target.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* allocsa.h: Add extern "C" for C++.
+	* xallocsa.h: Likewise.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* exitfail.h (exit_failure): Add DLL_VARIABLE attribute.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* obstack.c: Update from current gnulib version.
+
+2005-02-10  Bruno Haible  <bruno@clisp.org>
+
+	* allocsa.h (sa_alignof): Define differently with AIX xlc, to avoid
+	a bug of this compiler on AIX 3.2.5 dealing with enums.
+
+2005-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* c-strcase.h: New file, based on strcase.h.
+	* c-strcasecmp.c: New file, based on strcasecmp.c.
+	* c-strncasecmp.c: New file, based on strcasecmp.c.
+	* Makefile.am (libgettextlib_la_SOURCES): Add c-strcase.h,
+	c-strcasecmp.c, c-strncasecmp.c.
+	* Makefile.msvc (OBJECTS): Add c-strcasecmp.obj, c-strncasecmp.obj.
+	(c-strcasecmp.obj, c-strncasecmp.obj): New rules.
+	* Makefile.vms (OBJECTS): Add c-strcasecmp.obj, c-strncasecmp.obj.
+	(c-strcasecmp.obj, c-strncasecmp.obj): New rules.
+
+2005-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* progname.c (program_name): Initialize.
+	Needed when linking statically on MacOS X.
+
+2005-01-27  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (libgettextlib_la_SOURCES): Remove strtoul.c.
+	(LIBADD_SOURCE): Add strtoul.c here.
+
+2005-01-28  Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.h (stpncpy): Define as a macro without arguments, so that
+	stpncpy.c uses it.
+
+2005-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.sh.in (func_tmpdir): New function.
+	(mcs invocation): Use it. Fix exit code.
+
+2005-01-07  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.c: Include safe-read.h.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* fwriteerror.h (fwriteerror): Change specification to include fclose.
+	* fwriteerror.c: Include <stdbool.h>.
+	(fwriteerror): At the end, close the file stream. Record whether
+	stdout was already closed.
+	* closeout.c: Update comments.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* strerror.c: Update from gnulib, with HAVE_STRERROR modifications.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* strtol.c: Update from gnulib.
+	* strtoul.c: Update from gnulib.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* strstr.c: Update from gnulib.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* strpbrk.c: Update from gnulib.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* strcspn.c: Update from gnulib.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* strcasecmp.c: Update from gnulib.
+	* strncasecmp.c: Update from gnulib.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.h: Update from gnulib.
+	* stpncpy.c: Update from gnulib with simplifications.
+	* Makefile.am (libgettextlib_la_SOURCES): Remove stpncpy.h, stpncpy.c.
+	(LIBADD_SOURCE): Add stpncpy.h, stpncpy.c.
+	* Makefile.msvc: Update.
+	* Makefie.vms: Update.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* error.h: Update from gnulib.
+	* error.c: Update from gnulib.
+	* Makefile.am (libgettextlib_la_SOURCES): Remove error.h, error.c.
+	(LIBADD_SOURCE): Add error.h, error.c here.
+	* Makefile.msvc: Update.
+	* Makefile.vms: Update.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* argmatch.h: Update from gnulib, with DLL_VARIABLE modifications.
+	* argmatch.c: Update from gnulib.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* quote.h: New file, from gnulib.
+	* quote.c: New file, from gnulib.
+	* Makefile.am (libgettextlib_la_SOURCES): Add quote.h, quote.c.
+	* Makefile.msvc (OBJECTS): Add quote.obj.
+	(quote.obj): New rule.
+	* Makefile.vms (OBJECTS): Add quote.obj.
+	(quote.obj): New rule.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* exitfail.h: New file, from gnulib.
+	* exitfail.c: New file, from gnulib.
+	* Makefile.am (libgettextlib_la_SOURCES): Add exitfail.h, exitfail.c.
+	* Makefile.msvc (OBJECTS): Add exitfail.obj.
+	(exitfail.obj): New rule.
+	* Makefile.vms (OBJECTS): Add exitfail.obj.
+	(exitfail.obj): New rule.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (libgettextlib_la_SOURCES): Remove getopt files.
+	(LIBADD_SOURCE): Add getopt files here, except getopt.h.
+	(BUILT_SOURCES, EXTRA_DIST, all-local, getopt.h): Support for getopt
+	module.
+	* getopt.h: Remove file.
+	* getopt_.h: New file, from gnulib, with DLL_VARIABLE modifications.
+	* getopt.c: Update from gnulib.
+	* getopt1.c: Update from gnulib.
+	* getopt_int.h: New file, from gnulib.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* fnmatch_.h: Upgrade from gnulib.
+	* fnmatch.c: Upgrade from gnulib.
+	* fnmatch_loop.c: New file, from gnulib.
+	* Makefile.am (DISTCLEANFILES): Remove fnmatch.h.
+	(BUILT_SOURCES): New variable.
+	(EXTRA_DIST): Add fnmatch_loop.c.
+	* Makefile.vms (fnmatch.obj): Depend also on fnmatch_loop.c.
+
+2004-12-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* alloca_.h: Conditionalize on _GNULIB_ALLOCA_H, not _ALLOCA_H.
+
+2004-12-18  Bruno Haible  <bruno@clisp.org>
+
+	* fatal-signal.c (fatal_signals): Make non-const.
+	(init_fatal_signals): New function.
+	(uninstall_handlers, install_handlers): Ignore signals that were set to
+	SIG_IGN.
+	(at_fatal_signal): Call init_fatal_signals.
+	(init_fatal_signal_set): Likewise. Ignore signals that were set to
+	SIG_IGN.
+	Reported by Paul Eggert.
+
+2004-11-11  Jim Meyering  <jim@meyering.net>
+
+	* linebreak.c: Remove trailing blanks.
+
+2004-11-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* quotearg.c (struct quoting_options): Use unsigned int for
+	quote_these_too, so that right shifts are well defined.  All uses
+	changed.
+
+2004-11-05  Bruno Haible  <bruno@clisp.org>
+
+	* readlink.c: Include stddef.h, needed for size_t on Woe32.
+	Reported by Mark D. Baushke <mdb@cvshome.org>.
+
+2004-11-02  Bruno Haible  <bruno@clisp.org>
+
+	* setenv.h (unsetenv): Define as a macro if the system's unsetenv()
+	function returns void.
+
+2004-10-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* unlocked-io.h: Don't worry about USE_UNLOCKED_IO; that's now
+	the includer's responsibility.
+
+2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* full-write.c: Import changes from coreutils.
+
+2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* safe-read.c: Import changes from coreutils.
+
+2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* quotearg.c, quotearg.h: Import changes from coreutils.
+
+2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* setenv.c: Import changes from coreutils.
+
+2004-08-03  Simon Josefsson  <jas@extundo.com>
+
+	* progname.h: Don't include stdbool.h.
+
+2004-07-16  Bruno Haible  <bruno@clisp.org>
+
+	* mbswidth.h: Add extern "C" for C++.
+	Reported by Albert Chin-A-Young <china@thewrittenword.com>.
+
+2003-09-09  Paul Eggert  <eggert@twinsun.com>
+
+	* memmove.c, memset.c: Include <stddef.h>.
+	Use types required by C89 in prototype.
+
+2003-09-08  Paul Eggert  <eggert@twinsun.com>
+
+	* atexit.c (atexit): Define using a prototype.
+
+2004-12-10  Bruno Haible  <bruno@clisp.org>
+
+	* obstack.h: Update from current gnulib version.
+	* obstack.c: Update from current gnulib version.
+	Reported by Raphaël Zhou <xzhou@tlmcom.fr>.
+
+2004-11-23  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.h [!ENABLE_NLS]: When using GNU libstdc++, include
+	<libintl.h> early.
+	Reported by Peter Breitenlohner <peb@mppmu.mpg.de>.
+
+2004-10-07  Bruno Haible  <bruno@clisp.org>
+
+	* gen-lbrkprop.c (output_tables): Emit a GPL copyright notice.
+	* lbrkprop.h: Update.
+
+2004-09-11  Bruno Haible  <bruno@clisp.org>
+
+	* allocsa.valgrind: New file.
+	* Makefile.am (EXTRA_DIST): Add it.
+
+2004-09-01  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Add support for Darwin 7.
+
+2004-08-08  Bruno Haible  <bruno@clisp.org>
+
+	* pathname.h (FILE_SYSTEM_PREFIX_LEN): Renamed from
+	FILESYSTEM_PREFIX_LEN.
+	* progreloc.c: Likewise.
+	* concatpath.c (concatenated_pathname): Use FILE_SYSTEM_PREFIX_LEN.
+	* basename.c (FILE_SYSTEM_PREFIX_LEN): Renamed from
+	FILESYSTEM_PREFIX_LEN.
+	(basename): Update.
+	* relocatable.c (FILE_SYSTEM_PREFIX_LEN): Renamed from
+	FILESYSTEM_PREFIX_LEN.
+	(compute_curr_prefix): Update.
+
+2004-05-27  Bruno Haible  <bruno@clisp.org>
+
+	* execute.c (environ): Declare if needed.
+	* pipe.c (environ): Likewise.
+	Reported by Michael Schloh von Bennewitz <michael.schloh@cw.com>.
+
+2004-04-28  Bruno Haible  <bruno@clisp.org>
+
+	* basename.c (FILESYSTEM_PREFIX_LEN, ISSLASH): Treat Cygwin like
+	Windows, since it now accepts Windows pathnames.
+	* findprog.c (find_in_path): Treat Cygwin like Windows, since it also
+	implicitly appends .exe to executables.
+	* localcharset.c (ISSLASH): Treat Cygwin like Windows, since it now
+	accepts Windows pathnames.
+	* pathname.h (ISSLASH, IS_PATH_WITH_DIR, FILESYSTEM_PREFIX_LEN): Treat
+	Cygwin like Windows, since it now accepts Windows pathnames.
+	* relocatable.c (ISSLASH, IS_PATH_WITH_DIR, FILESYSTEM_PREFIX_LEN):
+	Treat Cygwin like Windows, since it now accepts Windows pathnames.
+	(compute_curr_prefix): Likewise.
+	* progreloc.c (ISSLASH, IS_PATH_WITH_DIR, FILESYSTEM_PREFIX_LEN): Treat
+	Cygwin like Windows, since it now accepts Windows pathnames.
+	Reported by Derek Robert Price <derek@ximbiot.com>.
+
+2004-04-23  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c (get_charset_aliases): Allow the CHARSETALIASDIR
+	environment variable to override LIBDIR.
+	Suggested by Matthias Clasen <mclasen@redhat.com>.
+
+2004-04-20  Jim Meyering  <jim@meyering.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c (get_charset_aliases) [!VMS && !WIN32]: Don't leak
+	memory when realloc fails.
+
+2004-03-18  Paul Eggert  <eggert@twinsun.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* mbswidth.h: Include <wchar.h> only if HAVE_DECL_MBSWIDTH_IN_WCHAR_H,
+	not on all platforms that have <wchar.h>.
+	* mbswidth.c: Include <stdio.h> and <time.h> before <wchar.h>.
+
+2004-03-19  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (install-exec-clean): Don't remove libgettextlib.a on
+	AIX.
+	Reported by Kouichi Hashikawa <z01a7ksy@cs.ecip.tohoku.ac.jp>.
+
+2004-03-08  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.c (compile_csharp_using_sscli): Test whether csc is not
+	the chicken scheme's 'csc' compiler.
+	Reported by Colin Marquardt <colin@marquardt-home.de>.
+
+2004-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* xalloc.h (xalloc_oversized): New macro, from gnulib.
+	* quotearg.h: New file, from gnulib.
+	* quotearg.c: New file, from gnulib.
+	* sh-quote.c: Include quotearg.h.
+	(sh_quoting_options): New variable.
+	(init_sh_quoting_options): New function.
+	(shell_quote_length, shell_quote_copy, shell_quote): Rewrite to use
+	quotearg.
+	* Makefile.am (libgettextlib_la_SOURCES): Add quotearg.h, quotearg.c.
+	* Makefile.msvc (OBJECTS): Add quotearg.obj.
+	(quotearg.obj): New rule.
+	* Makefile.vms (OBJECTS): Add quotearg.obj.
+	(quotearg.obj): New rule.
+
+2004-02-06  Bruno Haible  <bruno@clisp.org>
+
+	* allocsa.h (sa_alignof): Define differently with HP-UX cc, to avoid
+	a bug of this cc on HP-UX 10.20 dealing with enums.
+	Reported by Christopher Seip <chris.seip@hp.com>.
+
+2004-02-03  Bruno Haible  <bruno@clisp.org>
+
+	* pipe.c: New file, synthesis of pipe-in.c, pipe-out.c, pipe-bidi.c.
+	* pipe-in.c: Remove file.
+	* pipe-out.c: Remove file.
+	* pipe-bidi.c: Remove file.
+	* Makefile.am (libgettextlib_la_SOURCES): Add pipe.c, Remove pipe-in.c,
+	pipe-out.c, pipe-bidi.c.
+	* Makefile.msvc (OBJECTS): Add pipe.obj. Remove pipe-in.obj,
+	pipe-out.obj, pipe-bidi.obj.
+	(pipe.obj): New rule.
+	(pipe-in.obj, pipe-out.obj, pipe-bidi.obj): Remove rules.
+	* Makefile.vms (OBJECTS): Add pipe.obj. Remove pipe-in.obj,
+	pipe-out.obj, pipe-bidi.obj.
+	(pipe.obj): New rule.
+	(pipe-in.obj, pipe-out.obj, pipe-bidi.obj): Remove rules.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
+2004-01-28  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14 released.
+
+2004-01-24  Bruno Haible  <bruno@clisp.org>
+
+	* progreloc.c (xstrdup): Define as strdup if no xmalloc should be used.
+
+2004-01-21  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Add support for MacOS X (Darwin).
+
+2004-01-10  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.c (compile_csharp_using_pnet, compile_csharp_using_mono,
+	compile_csharp_using_sscli): New functions.
+	(compile_csharp_class): Call them. Respect the CSHARP_CHOICE_* macros.
+	* csharpexec.c (execute_csharp_using_pnet, execute_csharp_using_mono):
+	New functions.
+	(execute_csharp_program): Call them. Respect the CSHARP_CHOICE_*
+	macros.
+
+2004-01-10  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.sh.in: Copy the mcs output to stderr, dropping the
+	"Compilation succeeded" message.
+	* csharpcomp.c: Include errno.h, pipe.h, wait-process.h, getline.h.
+	(compile_csharp_class): Copy the mcs output to stderr, dropping the
+	"Compilation succeeded" message.
+
+2003-12-26  Bruno Haible  <bruno@clisp.org>
+
+	Support for C#.
+	* csharpcomp.sh.in: New file.
+	* csharpcomp.h: New file.
+	* csharpcomp.c: New file.
+	* csharpexec.sh.in: New file.
+	* csharpexec.h: New file.
+	* csharpexec.c: New file.
+	* classpath.c (CLASSPATHVAR): New variable.
+	(new_classpath, set_classpath, reset_classpath): Use it instead of
+	hardcoding "CLASSPATH".
+	* Makefile.am (libgettextlib_la_SOURCES): Add csharpcomp.h,
+	csharpcomp.c, csharpexec.h, csharpexec.c.
+	(examplesconfig_DATA): Add csharpcomp.sh.in, csharpexec.sh.in.
+	* Makefile.msvc (OBJECTS): Add csharpcomp.obj, csharpexec.obj.
+	(csharpcomp.obj, csharpexec.obj): New rules.
+	* Makefile.vms (OBJECTS): Add csharpcomp.obj, csharpexec.obj.
+	(csharpcomp.obj, csharpexec.obj): New rules.
+
+2003-12-28  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.c (wait_subprocess): Add ignore_sigpipe argument.
+	* wait-process.c (wait_subprocess): Likewise. Handle SIGPIPE specially.
+	* execute.h (execute): Add ignore_sigpipe argument.
+	* execute.c (execute): Likewise.
+	* javacomp.c (compile_java_class): Always pass ignore_sigpipe = false.
+	* javaexec.c (execute_java_class): Likewise.
+
+2003-09-12  Paul Eggert  <eggert@twinsun.com>
+
+	* setenv.c (clearenv): Define via prototype.
+
+2003-09-10  Bruno Haible  <bruno@clisp.org>
+
+	* setenv.c: Include <stdlib.h> and <string.h> unconditionally.
+	* unsetenv.c: Likewise.
+
+2003-12-12  Bruno Haible  <bruno@clisp.org>
+
+	Assume automake-1.8.
+	* Makefile.am (install-exec-local): Renamed from install-exec-am.
+
+2003-11-30  Bruno Haible  <bruno@clisp.org>
+
+	* alloca.c: Remove file.
+	* Makefile.am (LIBADD_SOURCE): Remove alloca.c.
+	(libgettextlib_la_LIBADD): Drop @LTALLOCA@.
+
+2003-11-30  Bruno Haible  <bruno@clisp.org>
+
+	Safer stack allocation.
+	* allocsa.h: New file.
+	* allocsa.c: New file.
+	* xallocsa.h: New file.
+	* xallocsa.c: New file.
+	* canonicalize.c: Include allocsa.h.
+	(__realpath): Use allocsa instead of alloca. Don't clobber errno right
+	before returning NULL.
+	* javacomp.c: Include xallocsa.h.
+	(compile_java_class): Use allocsa instead of alloca.
+	* javaexec.c: Include xallocsa.h.
+	(execute_java_class): Use allocsa instead of alloca.
+	* relocwrapper.c: Indirectly depends on allocsa.
+	* setenv.c: Include allocsa.h.
+	(alloca): Remove fallback definition.
+	(freea): Remove macro.
+	(__add_to_environ) [!_LIBC]: Use allocsa instead of alloca. Use freesa
+	instead of freea.
+	* Makefile.am (libgettextlib_la_SOURCES): Add allocsa.h, allocsa.c,
+	xallocsa.h, xallocsa.c.
+	* Makefile.msvc (OBJECTS): Add allocsa.obj, xallocsa.obj.
+	(allocsa.obj, xallocsa.obj): New rules.
+	* Makefile.vms (OBJECTS): Add allocsa.obj, xallocsa.obj.
+	(allocsa.obj, xallocsa.obj): New rules.
+
+2003-12-17  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.13.1 released.
+
+2003-12-02  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Treat the new country name CS like the old country
+	name YU.
+
+2003-11-30  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.13 released.
+
+2003-11-28  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.msvc (OBJECTS): Fix typo.
+	* wait-process.c (cleanup_slaves): Use ANSI C declaration.
+
+2003-11-27  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.c: On Windows, include windows.h. Needed on mingw.
+
+2003-11-17  Bruno Haible  <bruno@clisp.org>
+
+	* canonicalize.c: #undef realpath after <config.h> but before the
+	system includes, so as to avoid a prototype clash on Solaris 2.5.1.
+	Reported by Warren L. Dodge <warrend@mdhost.cse.tek.com>.
+
+2003-11-17  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.c (wait_process): Disable the 2003-10-31 waitid() patch.
+
+2003-11-16  Bruno Haible  <bruno@clisp.org>
+
+	* xsize.h (xmax): New function.
+	(xsum, xsum3, xsum4): Declare as "pure" functions.
+
+2003-11-15  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (AM_CPPFLAGS): Renamed from INCLUDES.
+
+2003-11-15  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (docdir, examplesconfigdir, examplesconfig_DATA): New
+	variables.
+
+2003-11-11  Bruno Haible  <bruno@clisp.org>
+
+	* xsize.h (SIZE_MAX): Remove fallback definition.
+
+2003-11-05  Bruno Haible  <bruno@clisp.org>
+
+	* xsize.h: Include limits.h, to avoid a possible collision with
+	SIZE_MAX defined in <limits.h> on Solaris.
+
+2003-11-04  Bruno Haible  <bruno@clisp.org>
+
+	* xsize.h: New file.
+	* linebreak.c: Include xsize.h.
+	(mbs_possible_linebreaks, mbs_width_linebreaks): Check malloc()
+	argument for overflow.
+	* Makefile.am (libgettextlib_la_SOURCES): Add xsize.h.
+
+2003-10-31  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.c (wait_process): Use waitid with WNOWAIT if available,
+	to avoid (extremely rare) race condition.
+
+2003-10-27  Bruno Haible  <bruno@clisp.org>
+
+	* stdbool_.h: Better support for BeOS.
+
+2003-10-14  Bruno Haible  <bruno@clisp.org>
+
+	* hash.h: Make it includable in C++ mode.
+
+2003-10-21  Bruno Haible  <bruno@clisp.org>
+
+	* canonicalize.c (lstat): Define as an alias to 'stat' on systems
+	without symbolic links.
+
+2003-10-21  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.c (kill): Define appropriately for native Woe32 API.
+
+2003-10-21  Bruno Haible  <bruno@clisp.org>
+
+	* mkdtemp.c (mkdir): Redefine on mingw.
+
+2003-10-17  Bruno Haible  <bruno@clisp.org>
+
+	* binary-io.h: Avoid warnings on Cygwin.
+
+2003-10-09  Bruno Haible  <bruno@clisp.org>
+
+	* xalloc.h: Renamed from xmalloc.h.
+	* classpath.c: Include xalloc.h instead of xmalloc.h.
+	* concatpath.c: Likewise.
+	* fatal-signal.c: Likewise.
+	* findprog.c: Likewise.
+	* fstrcmp.c: Likewise.
+	* hash.c: Likewise.
+	* javacomp.c: Likewise.
+	* javaexec.c: Likewise.
+	* progreloc.c: Likewise.
+	* relocatable.c: Likewise.
+	* sh-quote.c: Likewise.
+	* w32spawn.h: Likewise.
+	* wait-process.c: Likewise.
+	* xgetcwd.c: Likewise.
+	* xmalloc.c: Likewise.
+	* xreadlink.c: Likewise.
+	* xstrdup.c: Likewise.
+	* Makefile.am (libgettextlib_la_SOURCES): Use xalloc.h instead of
+	xmalloc.h.
+	* Makefile.msvc: Reorder accordingly.
+	* Makefile.vms: Likewise.
+
+2003-10-07  Bruno Haible  <bruno@clisp.org>
+
+	More reliable subprocess cleanup.
+	* javacomp.c (compile_java_class): Pass slave_process = true to
+	execute(). create_pipe_in(), wait_subprocess().
+	* javaexec.c (execute_java_class): Pass slave_process = true to
+	execute().
+
+	* wait-process.h (wait_subprocess): Add slave_process argument.
+	(register_slave_subprocess): New declaration.
+	* wait-process.c: Include string.h, signal.h, fatal-signal.h,
+	xmalloc.h.
+	(slaves_entry_t): New type.
+	(static_slaves, slaves, slaves_count, slaves_allocated): New variables.
+	(TERMINATOR): New macro.
+	(cleanup_slaves, register_slave_subprocess,
+	unregister_slave_subprocess): New functions.
+	(wait_subprocess): Add slave_process argument.
+	* execute.h (execute): Add slave_process argument.
+	* execute.c: Include signal.h, fatal-signal.h.
+	(execute): Add slave_process argument.
+	* pipe.h (create_pipe_in, create_pipe_out, create_pipe_bidi): Add
+	slave_process argument.
+	* pipe-in.c: Include signal.h, fatal-signal.h, wait-process.h.
+	(create_pipe_in): Add slave_process argument.
+	* pipe-out.c: Include signal.h, fatal-signal.h, wait-process.h.
+	(create_pipe_out): Add slave_process argument.
+	* pipe-bidi.c: Include signal.h, fatal-signal.h, wait-process.h.
+	(create_pipe_bidi): Add slave_process argument.
+
+2003-10-08  Bruno Haible  <bruno@clisp.org>
+
+	* fatal-signal.h: New file.
+	* fatal-signal.c: New file.
+	* Makefile.am (libgettextlib_la_SOURCES): Add them.
+	* Makefile.msvc (OBJECTS): Add fatal-signal.obj.
+	(fatal-signal.obj): New rule.
+	* Makefile.vms (OBJECTS): Add fatal-signal.obj.
+	(fatal-signal.obj): New rule.
+
+2003-09-21  Bruno Haible  <bruno@clisp.org>
+
+	* vasprintf.c (int_vasprintf): Assume ANSI C when copying a structure.
+
+2003-09-16  Bruno Haible  <bruno@clisp.org>
+
+	Portability to SunOS 4.
+	* atexit.c: New file, from gnulib with modifications.
+	* Makefile.am (LIBADD_SOURCE): Add atexit.c.
+
+2003-09-14  Bruno Haible  <bruno@clisp.org>
+
+	* closeout.c: Include fwriteerror.h.
+	(close_stdout_status): Use improved errno value from fwriteerror().
+	Don't call fclose; it is be done implicitly during exit().
+
+2003-09-14  Bruno Haible  <bruno@clisp.org>
+
+	* fwriteerror.h: New file.
+	* fwriteerror.c: New file.
+	* Makefile.am (libgettextlib_la_SOURCES): Add fwriteerror.h,
+	fwriteerror.c.
+	* Makefile.msvc (OBJECTS): Add fwriteerror.obj.
+	(fwriteerror.obj): New rule.
+	* Makefile.vms (OBJECTS): Add fwriteerror.obj.
+	(fwriteerror.obj): New rule.
+
+2003-09-13  Bruno Haible  <bruno@clisp.org>
+
+	* closeout.h: New file, from gnulib with modifications.
+	* closeout.c: New file, from gnulib with modifications.
+	* Makefile.am (libgettextlib_la_SOURCES): Add closeout.h, closeout.c.
+	* Makefile.msvc (OBJECTS): Add closeout.obj.
+	(closeout.obj): New rule.
+	* Makefile.vms (OBJECTS): Add closeout.obj.
+	(closeout.obj): New rule.
+
+2003-09-12  Paul Eggert  <eggert@twinsun.com>
+
+	* progreloc.c (get_full_program_name): Define via prototype.
+
+2003-08-28  Bruno Haible  <bruno@clisp.org>
+
+	* binary-io.h: Undefine O_BINARY before defining it. This avoids a
+	warning on QNX, which defines O_BINARY to 000000.
+
+2003-08-27  Bruno Haible  <bruno@clisp.org>
+
+	* getopt.h: Include config.h. Needed for DLL_VARIABLE on OSF/1 4.0.
+
+2003-08-24  Bruno Haible  <bruno@clisp.org>
+
+	* binary-io.h: Include <stdio.h>, to avoid a compilation error when
+	MSVC7 <stdio.h> is included later.
+
+2003-08-24  Bruno Haible  <bruno@clisp.org>
+
+	* error.h: Use ANSI C "..." declarations when compiling with MSVC, even
+	though it doesn't define __STDC__ by default.
+	* error.c: Use <stdarg.h> when compiling with MSVC, even though it
+	doesn't define __STDC__ by default.
+
+2003-08-24  Bruno Haible  <bruno@clisp.org>
+
+	Support for building DLLs on Windows.
+	* argmatch.h (argmatch_die): Add DLL_VARIABLE attribute.
+	* backupfile.h (simple_backup_suffix): Likewise.
+	* error.h (error_print_progname, error_message_count,
+	error_one_per_line): Likewise.
+	* error-progname.h (error_with_progname): Likewise.
+	* getopt.h (optarg, optind, opterr, optopt): Likewise.
+	* obstack.h (obstack_alloc_failed_handler, obstack_exit_failure):
+	Likewise.
+	* progname.h (program_name): Likewise.
+
+2003-08-24  Bruno Haible  <bruno@clisp.org>
+
+	* backupfile.h: Make this file includable in C++ mode: add extern "C".
+	* basename.h: Likewise.
+	* copy-file.h: Likewise.
+	* error-progname.h: Likewise.
+	* findprog.h: Likewise.
+	* full-write.h: Likewise.
+	* pathname.h: Likewise.
+	* pipe.h: Likewise.
+	* progname.h: Likewise.
+	* relocatable.h: Likewise.
+	* stpcpy.h: Likewise.
+	* stpncpy.h: Likewise,
+	* strcase.h: Likewise.
+	* strstr.h: Likewise.
+	* wait-process.h: Likewise.
+	* xerror.h: Likewise.
+	* xmalloc.h: Likewise.
+
+2003-08-23  Bruno Haible  <bruno@clisp.org>
+
+	* getline.h: Update from gnulib.
+	* getline.c: Update from gnulib.
+	* getndelim2.h: New file, from gnulib.
+	* getndelim2.c: New file, from gnulib.
+	* Makefile.am (LIBADD_SOURCE): Add getndelim2.h, getndelim2.c.
+	* Makefile.msvc (OBJECTS): Add getndelim2.obj.
+	(getndelim2.obj): New rule.
+	* Makefile.vms (OBJECTS): Add getndelim2.obj.
+	(getndelim2.obj): New rule.
+
+2003-08-23  Bruno Haible  <bruno@clisp.org>
+
+	* fnmatch_.h: Renamed from pfnmatch.h.
+	* fnmatch.c: Renamed from pfnmatch.c.
+	* Makefile.am (LIBADD_SOURCE): Remove pfnmatch.h, pfnmatch.c, add
+	fnmatch.c.
+	(EXTRA_DIST): Add fnmatch_.h.
+	(all-local): Depend on fnmatch.h.
+	(fnmatch.h): New rule.
+	(MOSTLYCLEANFILES): Add fnmatch.h.
+	* Makefile.msvc (OBJECTS): Remove pfnmatch.obj, add fnmatch.obj.
+	(fnmatch.obj): Renamed from pfnmatch.obj.
+	* Makefile.vms (OBJECTS): Remove pfnmatch.obj, add fnmatch.obj.
+	(fnmatch.h): Update rule.
+	(fnmatch.obj): Renamed from pfnmatch.obj.
+
+2003-07-01  Paul Eggert  <eggert@twinsun.com>
+
+	* xreadlink.c: Include <sys/types.h> unconditionally, instead of
+	having it depend on HAVE_SYS_TYPES_H.
+
+2003-06-27  Bruno Haible  <bruno@clisp.org>
+
+	Avoid use of *_unlocked functions on Solaris 2.5.1.
+	* localcharset.c: Test HAVE_DECL_GETC_UNLOCKED, not HAVE_GETC_UNLOCKED.
+	Reported by Eric Botcazou <ebotcazou@libertysurf.fr>.
+
+2003-08-22  Bruno Haible  <bruno@clisp.org>
+
+	* error-progname.h: New file, extracted from progname.h.
+	* error-progname.c: New file, extracted from progname.c.
+	* progname.h (error_with_progname, maybe_print_progname): Remove
+	declarations.
+	* progname.c (error_with_progname): Remove variable.
+	(maybe_print_progname): Remove function.
+	* xerror.c: Include error-progname.h.
+	* Makefile.am (libgettextlib_la_SOURCES): Add error-progname.h and
+	error-progname.c.
+	* Makefile.msvc (OBJECTS): Add error-progname.obj.
+	(error-progname.obj): New rule.
+	* Makefile.vms (OBJECTS): Add error-progname.obj.
+	(error-progname.obj): New rule.
+
+2003-08-20  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset (linux-gnulibc1*): Change hr_HR, ro_RO to ISO-8859-2.
+	Reported by Alain Guibert <derogaton+bgli@oreka.com>.
+
+2003-08-11  Bruno Haible  <bruno@clisp.org>
+
+	* stdbool_.h: Update from gnulib.
+	2003-08-11  Bruno Haible  <bruno@clisp.org>
+		* stdbool_.h (_Bool): Undo last change; instead use a negative
+		enum value to ensure that _Bool promotes to int. Use #define
+		for _Bool when using the Solaris C compiler. Adds comments
+		suggested by Paul Eggert.
+	2003-08-03  Paul Eggert  <eggert@twinsun.com>
+		* stdbool_.h (_Bool): Make it signed char, instead of
+		an enum type, so that it's guaranteed to promote to int.  See:
+		<http://mail.gnu.org/archive/html/bug-gnulib/2003-07/msg00124.html>
+
+2003-05-28  Paul Eggert  <eggert@twinsun.com>
+
+	* safe-read.c (CHAR_BIT): Don't define, since <limits.h> is guaranteed
+	to do that.
+	* safe-read.c (INT_MAX): Don't define, since <limits.h> does that.
+	* safe-read.c (TYPE_MINIMUM, TYPE_MAXIMUM): Remove; no longer needed.
+	* safe-read.c: Remove TYPE_SIGNED; no longer needed.
+
+2003-04-25  Bruno Haible  <bruno@clisp.org>
+
+	* copy-file.c: Include <stddef.h>, for size_t.
+
+2003-03-03  Paul Eggert  <eggert@twinsun.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* mbswidth.h: Include <wchar.h>. Needed for UnixWare 7.1.1.
+	Reported by John Hughes, see
+	http://mail.gnu.org/archive/html/bug-bison/2003-02/msg00030.html
+
+2003-01-28  Bruno Haible  <bruno@clisp.org>
+
+	* c-ctype.h: Assume C_CTYPE_CONSECUTIVE_DIGITS.
+	(c_isascii, c_isalnum, c_isalpha, c_isxdigit): Optimize.
+	* c-ctype.c (c_isascii, c_isalnum, c_isalpha, c_ispunct, c_isxdigit):
+	Optimize.
+	Suggested by Paul Eggert.
+
+2003-01-23  Bruno Haible  <bruno@clisp.org>
+
+	* minmax.h: Add comments from Paul Eggert.
+
+2002-11-15  Bruno Haible  <bruno@clisp.org>
+
+	* strcspn.c: Include <stddef.h>.
+	* strpbrk.c: Minimize diffs to glibc. Include <stddef.h>.
+
+2003-08-14  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Add support for Linux libc5. Based on data from
+	Alain Guibert <derogaton+bgli@oreka.com>.
+
+2003-08-01  Bruno Haible  <bruno@clisp.org>
+
+	* relocatable.c (find_shared_library_fullname): Disable the code on
+	Linux/libc5. Reported by Alain Guibert <derogaton+bgli@oreka.com>.
+
+2003-07-09  Paul Eggert  <eggert@twinsun.com>
+
+	* alloca_.h: Switch from LGPL to GPL.
+
+2003-07-01  Bruno Haible  <bruno@clisp.org>
+
+	* readlink.c: New file, from gnulib.
+	* Makefile.am (LIBADD_SOURCE): Add it.
+
+2003-07-01  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (EXTRA_DIST, stdbool.h): Use stdbool_.h instead of
+	stdbool.h.in.
+
+2003-05-28  Paul Eggert  <eggert@twinsun.com>
+
+	* pathmax.h: Include <limits.h> without checking for HAVE_LIMITS_H.
+	* addext.c: Likewise.
+	* backupfile.c: Likewise.
+	* xreadlink.c: Likewise.
+
+2003-06-23  Bruno Haible  <bruno@clisp.org>
+
+	Avoid compilation units that are empty after preprocessing.
+	* canonicalize.c: Add dummy declaration.
+	* strerror.c: Likewise.
+	* strtoul.c: Likewise.
+	* error.c: Include <stdio.h> even if there's nothing to be compiled.
+
+2003-06-22  Bruno Haible  <bruno@clisp.org>
+
+	Portability to mingw32.
+	* relocatable.c [WIN32]: Include <windows.h>.
+	Reported by Jeff Bonggren <jbon@cfl.rr.com>.
+
+2003-06-22  Bruno Haible  <bruno@clisp.org>
+
+	* relocatable.c (compute_curr_prefix): Comment out this function in
+	the case when it is not used.
+	Reported by Pavel Roskin <proski@gnu.org>.
+
+2003-06-13  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.h (wait_subprocess): Add null_stderr argument.
+	* wait-process.c (wait_subprocess): Add null_stderr argument.
+	When !exit_on_error && !null_stderr, still emit error messages, but
+	don't exit.
+	* execute.c (execute): When !exit_on_error && !null_stderr, still
+	emit error messages, but don't exit. Update wait_subprocess call.
+	* pipe-in.c (create_pipe_in): When !exit_on_error && !null_stderr,
+	still emit error messages, but don't exit.
+	* pipe-out.c (create_pipe_out): Likewise.
+	* pipe-bidi.c (create_pipe_bidi): Likewise.
+	* javacomp.c (compile_java_class): Update wait_subprocess call.
+
+2003-06-08  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.vms (alloca.h): New rule.
+	(all, javacomp.obj, javaexec.obj): Depend on it.
+	(getopt.obj): Compile with ELIDE_CODE.
+	* canonicalize.c (__getcwd) [VMS]: Pass 3 arguments to getcwd.
+	* xgetcwd.c (getcwd) [VMS]: Pass 3 arguments.
+	Reported by Jouk Jansen <joukj@hrem.stm.tudelft.nl>.
+
+2003-05-22  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.12.1 released.
+
+2003-05-18  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.msvc (DEBUGFLAGS): New variable.
+	(gettextlib.lib): Use it.
+
+2003-05-17  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.12 released.
+
+2003-05-17  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.msvc (OBJECTS): Remove strpbrk.obj.
+	(strpbrk.obj): Remove rule.
+
+	* w32spawn.h (dup_noinherit): Cast _get_osfhandle result and
+	_open_osfhandle argument, to avoid warnings.
+	(prepare_spawn): Add a cast.
+	* execute.c (execute) [WIN32]: Don't call wait_subprocess; the
+	return value from spawnvp is already the exit code.
+
+2003-05-10  Bruno Haible  <bruno@clisp.org>
+
+	* linebreak.c (iconv_string_length): Don't return -1 just because the
+	string is longer than 4 KB.
+
+2003-05-09  Bruno Haible  <bruno@clisp.org>
+
+	* error.c: Update from gnulib with modifications.
+	* unlocked-io.h: New file, from gnulib.
+	* Makefile.am (libgettextlib_la_SOURCES): Add it.
+
+2003-05-09  Bruno Haible  <bruno@clisp.org>
+
+	* canonicalize.c: Add #ifdef around versioned_symbol. Avoids an
+	"extraneous semicolon" warning from Tru64 cc.
+
+2003-05-06  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (DEFS): Fix spelling of DEPENDS_ON_LIBICONV.
+	* Makefile.msvc (CFLAGS): Likewise.
+
+2003-05-03  Bruno Haible  <bruno@clisp.org>
+
+	Upgrade to Unicode-4.0.
+	* linebreak.c (nonspacing_table_data): Change width of U+00AD,
+	U+0350..U+0357, U+035D..U+035F, U+0600..U+0603, U+0610..U+0615,
+	U+0656..U+0658, U+0A01, U+0AE2..U+0AE3, U+0CBC, U+17B4..U+17B5,
+	U+17DD, U+1920..U+1922, U+1927..U+192B, U+1932, U+1939..U+193B
+	from 1 to 0. Change width of U+0CBF, U+0CC6, U+180E from 0 to 1.
+	(uc_width): Change width of U+4DC0..U+4DFF from 2 to 1. Change width
+	of U+2A6D7..U+2F7FF, U+2FA1E..U+2FFFD, U+30000..U+3FFFD from 1 to 2.
+	Change width of U+E0100..U+E01EF from 1 to 0.
+
+2003-05-02  Bruno Haible  <bruno@clisp.org>
+
+	Support for libtool-1.5.
+	* progname.c (set_program_name): Remove a leading "<dirname>/.libs/lt-"
+	or "<dirname>/.libs/", not only "lt-".
+
+2003-04-12  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.vms: New variables ABIFLAGS, DEFS. Avoid rules with no
+	lines. Update library creation rule. Don't use the force target.
+	Correct wildcard syntax. Create fnmatch.h.
+	Suggested by Jouk Jansen <joukj@hrem.stm.tudelft.nl>.
+
+2003-04-12  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c (get_charset_aliases): Add special case for VMS.
+
+2003-04-10  Bruno Haible  <bruno@clisp.org>
+
+	* findprog.c (find_in_path): Use 'bool' and eaccess().
+	Suggested by Paul Eggert.
+
+2003-04-06  Bruno Haible  <bruno@clisp.org>
+
+	* progname.c: Move out all methods depending on ENABLE_RELOCATABLE...
+	* progreloc.c: ... to here. New file.
+	* Makefile.am (libgettextlib_la_SOURCES): Add progreloc.c.
+	* Makefile.msvc (OBJECTS): Add progreloc.obj.
+	(progreloc.obj): New rule.
+	* Makefile.vms (OBJECTS): Add progreloc.obj.
+	(progreloc.obj): New rule.
+
+2003-04-05  Bruno Haible  <bruno@clisp.org>
+
+	* relocatable.c: Rely on DEPENDS_ON_LIBCHARSET, DEPENDS_ON_LIBICONV,
+	DEPENDS_ON_LIBINTL, not on NO_LIBRARIES.
+	* Makefile.am (DEFS): Define DEPENDS_ON_LIBINTL and DEPENDS_ON_LIBICONV,
+	for relocatable.c.
+	* Makefile.msvc (CFLAGS): Also define DEPENDS_ON_LIBINTL and
+	DEPENDS_ON_LIBCONV.
+
+2003-04-05  Bruno Haible  <bruno@clisp.org>
+
+	* relocatable.c (_GNU_SOURCE): Define, to ensure getline() gets
+	declared by <stdio.h>.
+
+2003-03-30  Bruno Haible  <bruno@clisp.org>
+
+	* xgetcwd.c: Include <unistd.h>.
+
+2003-04-03  Bruno Haible  <bruno@clisp.org>
+
+	* w32spawn.h (dup_noinherit): Signal an error instead of returning -1.
+	* execute.c: Reorder includes.
+	* pipe-bidi.c: Likewise.
+	* pipe-in.c: Likewise.
+	* pipe-out.c: Likewise.
+
+2003-04-02  Bruno Haible  <bruno@clisp.org>
+
+	* binary-io.h: Cosmetics. Suggested by Jim Meyering.
+
+2003-03-30  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.vms: New file.
+	* Makefile.am (EXTRA_DIST): Add Makefile.vms.
+	* execute.c (open): #undef before redefining it. Needed for VMS.
+	* pipe-in.c (open): Likewise.
+	* pipe-out.c (open): Likewise.
+
+2003-03-31  Bruno Haible  <bruno@clisp.org>
+
+	* sh-quote.c (shell_quote_length, shell_quote_copy): Handle empty
+	argument string correctly.
+
+2003-03-30  Bruno Haible  <bruno@clisp.org>
+
+	* progname.c (ISSLASH, HAS_DEVICE, IS_PATH_WITH_DIR,
+	FILESYSTEM_PREFIX_LEN): New macros.
+	(maybe_executable): Make a nop on Woe32.
+	(find_executable) [WIN32]: Fix compilation.
+
+	* relocatable.h (RELOCATABLE_DLL_EXPORTED): New macro.
+
+	* w32spawn.h: New file.
+	* execute.c: Add alternative implementation using native Woe32 API.
+	* pipe-bidi.c: Likewise.
+	* pipe-in.c: Likewise.
+	* pipe-out.c: Likewise.
+	* wait-process.c: Likewise.
+	* Makefile.am (libgettextlib_la_SOURCES): Add w32spawn.h.
+
+	* pipe.h (DEV_NULL): New macro.
+	* javacomp.c (compile_java_class): Use DEV_NULL instead of "/dev/null".
+
+	* pipe-bidi.c (STDERR_FILENO): Provide a fallback value.
+	* pipe-in.c (STDERR_FILENO): Likewise.
+	* pipe-out.c (STDERR_FILENO): Likewise.
+
+	* copy-file.c (copy_file_preserving): Don't set owner if the function
+	chown() doesn't exist.
+
+2003-03-17  Bruno Haible  <bruno@clisp.org>
+
+	Native Woe32/MSVC support.
+	* Makefile.msvc: New file.
+	* Makefile.am (EXTRA_DIST): Add it.
+
+2003-03-28  Bruno Haible  <bruno@clisp.org>
+
+	* copy-file.h (copy_file_preserving): Renamed from copy_file.
+	* copy-file.c (copy_file_preserving): Renamed from copy_file.
+	Preserve the owner and group as well.
+
+2003-02-28  Bruno Haible  <bruno@clisp.org>
+
+	Support for relocatable installation.
+	* canonicalize.h: New file.
+	* canonicalize.c: New file, from glibc 2.3.1 with modifications.
+	* relocatable.h: New file.
+	* relocatable.c: New file.
+	* relocwrapper.c: New file.
+	* strerror.c: New file, from gnulib with modifications.
+	* xreadlink.h: New file, from gnulib with modifications.
+	* xreadlink.c: New file, from gnulib with modifications.
+	* progname.h (set_program_name_and_installdir): New declaration.
+	(set_program_name) [ENABLE_RELOCATABLE]: Define as macro.
+	(get_full_program_name): New declaration.
+	* progname.c: Include xreadlink.h, canonicalize.h, relocatable.h.
+	(executable_fd): New variable.
+	(maybe_executable): New function.
+	(find_executable): New function.
+	(executable_fullname): New variable.
+	(prepare_relocate): New function.
+	(set_program_name_and_installdir): New function.
+	(get_full_program_name): New function.
+	* localcharset.c: Include relocatable.h.
+	(get_charset_aliases): Relocate LIBDIR value.
+	* xmalloc.h (xalloc_die): New declaration.
+	* xmalloc.c (xalloc_die): New function.
+	(fixup_null_alloc): Use it.
+	* Makefile.am (libgettextlib_la_SOURCES): Add xreadlink.h, xreadlink.c.
+	(LIBADD_SOURCE): Add canonicalize.h, canonicalize.c, memmove.c,
+	relocatable.h, relocatable.c, strerror.c.
+	(UNUSED_SOURCE): Remove memmove.c.
+	(EXTRA_DIST): Add relocwrapper.c.
+
+2003-02-28  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.h: Change copyright to LGPL. Enclose declaration in
+	extern "C", for C++ compilers.
+	* localcharset.c: Drop C linkage declaration.
+
+2003-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Add an alias for CP1251 on Solaris.
+	Reported by Hidetoshi Tajima <hidetoshi.tajima@sun.com>.
+
+2003-02-18  Bruno Haible  <bruno@clisp.org>
+
+	* copy-file.c: Include safe-read.h.
+	(copy_file): Simplify code by using safe_read() instead of read().
+
+2003-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (EXTRA_DIST): Add ChangeLog.0.
+
+
+See ChangeLog.0 for earlier changes.

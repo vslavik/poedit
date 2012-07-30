@@ -21,14 +21,11 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Art provider classes
- *
  */
 
 #include <wx/log.h>
 #include <wx/stdpaths.h>
+#include <wx/image.h>
 
 #include "icons.h"
 #include "edapp.h"
@@ -41,8 +38,7 @@ static wxString GetGnomeStockId(const wxString& id)
 
     MAP("document-open",        "gtk-open");
     MAP("document-save",        "gtk-save");
-    MAP("view-fullscreen",      "stock_fullscreen");
-    MAP("help-browser",         "gtk-help");
+    MAP("window-close",         "gtk-close");
 
     MAP("document-new",         "gtk-new");
     MAP("document-properties",  "stock_edit");
@@ -96,7 +92,6 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
         return wxNullBitmap;
 
     wxLogTrace(_T("poedit.icons"), _T("loading from %s"), icon.c_str());
-    wxBitmap bmp;
-    bmp.LoadFile(icon, wxBITMAP_TYPE_ANY);
+    wxBitmap bmp(wxImage(icon, wxBITMAP_TYPE_ANY));
     return bmp;
 }

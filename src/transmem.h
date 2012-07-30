@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2007 Vaclav Slavik
+ *  Copyright (C) 2001-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Translation memory database
- *
  */
 
 #ifndef _TRANSMEM_H_
@@ -32,7 +28,7 @@
 
 #ifdef USE_TRANSMEM
 
-class WXDLLEXPORT wxString;
+class WXDLLIMPEXP_FWD_BASE wxString;
 
 class DbTrans;
 class DbOrig;
@@ -61,10 +57,8 @@ class TranslationMemory
 {
     public:
         /** Ctor. Constructs TM object that will use database stored in
-            given location. Database files are %1/%2/strings.db, 
-            %1/%2/translations.db and %1/%2/words.db where %1 is \a path
-            and %2 is \a language, two-letter ISO 639 language code.
-            
+            given location.
+
             \return NULL if failed (e.g. cannot load DLL under Windows),
                     constructed object otherwise.
 
@@ -75,12 +69,9 @@ class TranslationMemory
                     pointer to the same instance
                     
          */
-        static TranslationMemory *Create(const wxString& language, 
-                                         const wxString& path = wxEmptyString);
+        static TranslationMemory *Create(const wxString& language);
 
         void Release();
-
-        ~TranslationMemory();
 
         /// Returns language of the catalog.
         wxString GetLanguage() const { return m_lang; }
@@ -92,8 +83,7 @@ class TranslationMemory
               - if \a lang is 2-letter, try any \i la_?? language
               - if \a lang is 5-letter, try \i la instead of \i la_NG
          */
-        static bool IsSupported(const wxString& lang,
-                                const wxString& path = wxEmptyString);
+        static bool IsSupported(const wxString& lang);
         
         /** Saves string and its translation into DB. 
          */
@@ -118,10 +108,20 @@ class TranslationMemory
          */
         void SetParams(size_t maxDelta, size_t maxOmits)
             { m_maxDelta = maxDelta, m_maxOmits = maxOmits; }
-        
+
+        // Return location of TM database files
+        static wxString GetDatabaseDir();
+
+        /**
+            Moves the TM from old location (user-configurable,
+            /TM/database_path in config) to a standard OS-specific location.
+         */
+        static void MoveLegacyDbIfNeeded();
+
+
     protected:
         /// Real ctor.
-        TranslationMemory(const wxString& language, 
+        TranslationMemory(const wxString& language,
                           const wxString& dbPath);
 
         /** Tries to find entries matching given criteria. Used by Lookup.
@@ -149,6 +149,9 @@ class TranslationMemory
          */
         bool LookupFuzzy(const wxArrayString& words, wxArrayString& results, 
                          unsigned omits, int delta);
+
+    private:
+        ~TranslationMemory();
         
     private:
         DbTrans *m_dbTrans;

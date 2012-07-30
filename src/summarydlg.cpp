@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Catalog update summary dialog
- *
  */
 
 #include <wx/wxprec.h>
@@ -36,31 +32,22 @@
 #include <wx/intl.h>
 
 #include "summarydlg.h"
+#include "utility.h"
 
 
 MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
 {
     wxXmlResource::Get()->LoadDialog(this, parent, _T("summary"));
-    wxRect r(wxConfig::Get()->Read(_T("summary_pos_x"), -1),
-             wxConfig::Get()->Read(_T("summary_pos_y"), -1),
-	     wxConfig::Get()->Read(_T("summary_pos_w"), -1),
-             wxConfig::Get()->Read(_T("summary_pos_h"), -1));
 
-    if (r.x != -1)
-    {
-        Move(r.GetPosition());
-        SetClientSize(r.GetSize());
-    }
+    RestoreWindowState(this, wxDefaultSize, WinState_Size);
+    CentreOnParent();
 }
 
 
 
 MergeSummaryDialog::~MergeSummaryDialog()
 {
-    wxConfig::Get()->Write(_T("summary_pos_x"), (long)GetPosition().x);
-    wxConfig::Get()->Write(_T("summary_pos_y"), (long)GetPosition().y);
-    wxConfig::Get()->Write(_T("summary_pos_w"), (long)GetClientSize().x);
-    wxConfig::Get()->Write(_T("summary_pos_h"), (long)GetClientSize().y);
+    SaveWindowState(this, WinState_Size);
 }
 
 

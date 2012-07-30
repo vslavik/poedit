@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Preferences settings dialog
- *
  */
 
 #include <wx/wxprec.h>
@@ -107,7 +103,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XRCCTRL(*this, "user_email", wxTextCtrl)->SetValue(
                 cfg->Read(_T("translator_email"), wxEmptyString));
     XRCCTRL(*this, "compile_mo", wxCheckBox)->SetValue(
-                cfg->Read(_T("compile_mo"), true));
+                cfg->Read(_T("compile_mo"), (long)false));
     XRCCTRL(*this, "show_summary", wxCheckBox)->SetValue(
                 cfg->Read(_T("show_summary"), true));
     XRCCTRL(*this, "manager_startup", wxCheckBox)->SetValue(
@@ -116,10 +112,6 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 (bool)cfg->Read(_T("focus_to_text"), (long)false));
     XRCCTRL(*this, "comment_window_editable", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("comment_window_editable"), (long)false));
-    XRCCTRL(*this, "ext_editor", wxComboBox)->SetValue(
-                cfg->Read(_T("ext_editor"), wxEmptyString));
-    XRCCTRL(*this, "open_editor_immediately", wxCheckBox)->SetValue(
-                cfg->Read(_T("open_editor_immediately"), (long)false));
     XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("keep_crlf"), true));
 #ifdef USE_SPELLCHECKING
@@ -139,9 +131,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     wxString format = cfg->Read(_T("crlf_format"), _T("unix"));
     int sel;
     if (format == _T("win")) sel = 1;
-    else if (format == _T("mac")) sel = 2;
-    else if (format == _T("native")) sel = 3;
-    else /* _T("unix") */ sel = 0;
+    else /* _T("unix") or obsolete settings */ sel = 0;
 
     XRCCTRL(*this, "crlf_format", wxChoice)->SetSelection(sel);
 
@@ -160,9 +150,6 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
         list->SetSelection(0);
 
 #ifdef USE_TRANSMEM        
-    XRCCTRL(*this, "tm_dbpath", wxTextCtrl)->SetValue(
-                cfg->Read(_T("TM/database_path"), wxEmptyString));
-
     wxStringTokenizer tkn(cfg->Read(_T("TM/languages"), wxEmptyString), _T(":"));
     wxArrayString langs;
     while (tkn.HasMoreTokens()) langs.Add(tkn.GetNextToken());
@@ -199,10 +186,6 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XRCCTRL(*this, "focus_to_text", wxCheckBox)->GetValue());
     cfg->Write(_T("comment_window_editable"), 
                 XRCCTRL(*this, "comment_window_editable", wxCheckBox)->GetValue());
-    cfg->Write(_T("ext_editor"), 
-                XRCCTRL(*this, "ext_editor", wxComboBox)->GetValue());
-    cfg->Write(_T("open_editor_immediately"), 
-                XRCCTRL(*this, "open_editor_immediately", wxCheckBox)->GetValue());
     cfg->Write(_T("keep_crlf"), 
                 XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
 #ifdef USE_SPELLCHECKING
@@ -219,8 +202,7 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
     cfg->Write(_T("custom_font_text_name"),
                 XRCCTRL(*this, "fontname_text", wxTextCtrl)->GetValue());
  
-    static const wxChar *formats[] = 
-        { _T("unix"), _T("win"), _T("mac"), _T("native") };
+    static const wxChar *formats[] = { _T("unix"), _T("win") };
     cfg->Write(_T("crlf_format"), formats[
                 XRCCTRL(*this, "crlf_format", wxChoice)->GetSelection()]);
                
@@ -236,8 +218,6 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
         languages << langs[i];
     }
     cfg->Write(_T("TM/languages"), languages);
-    cfg->Write(_T("TM/database_path"),
-                XRCCTRL(*this, "tm_dbpath", wxTextCtrl)->GetValue());
     cfg->Write(_T("TM/max_omitted"), 
                 (long)XRCCTRL(*this, "tm_omits", wxSpinCtrl)->GetValue());
     cfg->Write(_T("TM/max_delta"), 
@@ -262,7 +242,6 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
    EVT_BUTTON(XRCID("fontpicker_text"), PreferencesDialog::OnChooseTextFont)
 #ifdef USE_TRANSMEM
    EVT_BUTTON(XRCID("tm_addlang"), PreferencesDialog::OnTMAddLang)
-   EVT_BUTTON(XRCID("tm_browsedbpath"), PreferencesDialog::OnTMBrowseDbPath)
    EVT_BUTTON(XRCID("tm_generate"), PreferencesDialog::OnTMGenerate)
 #endif
 #if NEED_CHOOSELANG_UI
@@ -307,7 +286,7 @@ bool PreferencesDialog::EditParser(int num)
         return false;
 }
 
-void PreferencesDialog::OnNewParser(wxCommandEvent& event)
+void PreferencesDialog::OnNewParser(wxCommandEvent&)
 {
     Parser info;
     m_parsers.Add(info);
@@ -325,12 +304,12 @@ void PreferencesDialog::OnNewParser(wxCommandEvent& event)
     }
 }
 
-void PreferencesDialog::OnEditParser(wxCommandEvent& event)
+void PreferencesDialog::OnEditParser(wxCommandEvent&)
 {
     EditParser(XRCCTRL(*this, "parsers_list", wxListBox)->GetSelection());
 }
 
-void PreferencesDialog::OnDeleteParser(wxCommandEvent& event)
+void PreferencesDialog::OnDeleteParser(wxCommandEvent&)
 {
     size_t index = XRCCTRL(*this, "parsers_list", wxListBox)->GetSelection();
     m_parsers.RemoveAt(index);
@@ -344,7 +323,7 @@ void PreferencesDialog::OnDeleteParser(wxCommandEvent& event)
 
 #ifdef USE_TRANSMEM
 
-void PreferencesDialog::OnTMAddLang(wxCommandEvent& event)
+void PreferencesDialog::OnTMAddLang(wxCommandEvent&)
 {
     wxArrayString lngs;
     int index;
@@ -363,27 +342,13 @@ void PreferencesDialog::OnTMAddLang(wxCommandEvent& event)
     }
 }
 
-void PreferencesDialog::OnTMBrowseDbPath(wxCommandEvent& event)
+
+void PreferencesDialog::OnTMGenerate(wxCommandEvent&)
 {
-    wxDirDialog dlg(this, _("Select directory"), 
-                    XRCCTRL(*this, "tm_dbpath", wxTextCtrl)->GetValue());
-    if (dlg.ShowModal() == wxID_OK)
-        XRCCTRL(*this, "tm_dbpath", wxTextCtrl)->SetValue(dlg.GetPath());
-}
-
-
-void PreferencesDialog::OnTMGenerate(wxCommandEvent& event)
-{
-    wxString dbPath = XRCCTRL(*this, "tm_dbpath", wxTextCtrl)->GetValue();
-        // VS: we can't get it from TM/database_path key in wxConfig object
-        //     because it wasn't update yet with information from the dialog
-        //     (which happens when the users presses OK) but we still won't
-        //     to use the path entered by the user...
-
     wxArrayString langs;
     XRCCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
 
-    RunTMUpdateWizard(this, dbPath, langs);
+    RunTMUpdateWizard(this, langs);
 }
 
 #endif // USE_TRANSMEM
@@ -412,12 +377,12 @@ void PreferencesDialog::DoChooseFont(wxTextCtrl *nameField)
     }
 }
 
-void PreferencesDialog::OnChooseListFont(wxCommandEvent& event)
+void PreferencesDialog::OnChooseListFont(wxCommandEvent&)
 {
     DoChooseFont(XRCCTRL(*this, "fontname_list", wxTextCtrl));
 }
 
-void PreferencesDialog::OnChooseTextFont(wxCommandEvent& event)
+void PreferencesDialog::OnChooseTextFont(wxCommandEvent&)
 {
     DoChooseFont(XRCCTRL(*this, "fontname_text", wxTextCtrl));
 }

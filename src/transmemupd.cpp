@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Translation memory database updater
- *
  */
 
 #include <wx/wxprec.h>
@@ -37,6 +33,7 @@
 #include <wx/intl.h>
 #include <wx/utils.h>
 #include <wx/dir.h>
+#include <wx/filename.h>
 
 #include "catalog.h"
 #include "transmem.h"
@@ -102,10 +99,10 @@ class TMUDirTraverser : public wxDirTraverser
             }
             return wxDIR_CONTINUE;
         }
-        
-        virtual wxDirTraverseResult OnDir(const wxString& dirname)
+
+        virtual wxDirTraverseResult OnDir(const wxString&)
             { return wxDIR_CONTINUE; }
-        
+
     private:
         wxArrayString *m_files;
         wxString m_lang;
@@ -175,10 +172,10 @@ bool TranslationMemoryUpdater::UpdateFromPO(const wxString& filename)
 
 bool TranslationMemoryUpdater::UpdateFromMO(const wxString& filename)
 {
-    wxString tmp;
+    wxString tmp = wxFileName::CreateTempFileName(_T("poedit"));
     wxLogNull null;
 
-    if (!wxGetTempFileName(_T("poedit"), tmp))
+    if ( tmp.empty() )
         return false;
     if (!ExecuteGettext(_T("msgunfmt --force-po -o \"") + tmp + _T("\" \"") + 
                         filename + _T("\"")))

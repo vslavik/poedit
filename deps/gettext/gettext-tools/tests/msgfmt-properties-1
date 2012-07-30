@@ -1,0 +1,61 @@
+#! /bin/sh
+
+# Test basic functioning with Java .properties syntax.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles LC_MESSAGES"
+test -d LC_MESSAGES || mkdir LC_MESSAGES
+
+tmpfiles="$tmpfiles mf-p-1-1.properties mf-p-1-2.properties"
+cat <<\EOF > mf-p-1-1.properties
+SYS_(C)\n=MSGFMT(3) portable message object file compiler\nCopyright (C) 1995 Free Software Foundation\nReport bugs to <bug-gnu-utils@gnu.org>\n
+msg\ 1=msg 1 translation
+help\ 2\ %d=help 2 translation
+error\ 3=error 3 translation
+EOF
+
+cat <<\EOF > mf-p-1-2.properties
+# ---
+mesg\ 4=mesg 4 translation
+error\ 3=alternate error 3 translation
+error\ 5=error 5 translation
+window\ 6=window 6 translation
+EOF
+
+# Without use of msgcat, expect a "duplicate message definition" error.
+: ${MSGFMT=msgfmt}
+if ${MSGFMT} --properties-input -o LC_MESSAGES/gen.mo mf-p-1-1.properties mf-p-1-2.properties 2> /dev/null; then
+  rm -fr $tmpfiles
+  exit 1
+fi
+
+# With msgcat, it should work.
+tmpfiles="$tmpfiles mf-p-1-s.properties"
+: ${MSGCAT=msgcat} ${MSGFMT=msgfmt}
+${MSGCAT} --properties-input --properties-output --use-first -o mf-p-1-s.properties mf-p-1-1.properties mf-p-1-2.properties
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGFMT} --properties-input -o LC_MESSAGES/gen.mo mf-p-1-s.properties
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mf-test1.out"
+: ${GETTEXT=gettext}
+TEXTDOMAINDIR=.. LANGUAGE=tests \
+${GETTEXT} --env LC_ALL=en gen 'SYS_(C)
+' | LC_ALL=C tr -d '\r' > mf-test1.out
+
+tmpfiles="$tmpfiles gtmf-test1.ok"
+cat <<EOF > gtmf-test1.ok
+MSGFMT(3) portable message object file compiler
+Copyright (C) 1995 Free Software Foundation
+Report bugs to <bug-gnu-utils@gnu.org>
+EOF
+
+: ${DIFF=diff}
+${DIFF} gtmf-test1.ok mf-test1.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2007 Vaclav Slavik
+ *  Copyright (C) 1999-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE. 
  *
- *  $Id$
- *
- *  Translations catalog
- *
  */
 
 #ifndef _CATALOG_H_
@@ -32,11 +28,14 @@
 
 #include <wx/encconv.h>
 #include <wx/regex.h>
+#include <wx/arrstr.h>
 
 #include <vector>
 #include <map>
 
-class WXDLLEXPORT wxTextFile;
+class WXDLLIMPEXP_FWD_BASE wxTextFile;
+
+class ProgressInfo;
 
 /// The possible bookmarks for a given item
 typedef enum
@@ -56,7 +55,7 @@ typedef enum
 } Bookmark;
 
 /** This class holds information about one particular string.
-    This includes original string and its occurences in source code
+    This includes source string and its occurrences in source code
     (so-called references), translation and translation's status
     (fuzzy, non translated, translated) and optional comment.
 
@@ -65,7 +64,7 @@ typedef enum
 class CatalogItem
 {
     public:
-        /// Ctor. Initializes the object with original string and translation.
+        /// Ctor. Initializes the object with source string and translation.
         CatalogItem(const wxString& str = wxEmptyString,
                     const wxString& str_plural = wxEmptyString)
                 : m_string(str),
@@ -103,25 +102,30 @@ class CatalogItem
                   m_errorString(dt.m_errorString),
                   m_bookmark(dt.m_bookmark) {}
 
-        /// Returns the original string.
+        /// Returns the source string.
         const wxString& GetString() const { return m_string; }
 
         /// Does this entry have a msgid_plural?
-        const bool HasPlural() const { return m_hasPlural; }
+        bool HasPlural() const { return m_hasPlural; }
 
         /// Returns the plural string.
         const wxString& GetPluralString() const { return m_plural; }
 
         /// Does this entry have a msgctxt?
-        const bool HasContext() const { return m_hasContext; }
+        bool HasContext() const { return m_hasContext; }
 
         /// Returns context string (can only be called if HasContext() returns
         /// true and empty string is accepted value).
         const wxString& GetContext() const { return m_context; }
 
         /// How many translations (plural forms) do we have?
-        size_t GetNumberOfTranslations() const
+        unsigned GetNumberOfTranslations() const
             { return m_translations.size(); }
+
+        /// Returns number of plural forms in this translation; note that this
+        /// may be less than what the header says, because some may be
+        /// still untranslated
+        unsigned GetPluralFormsCount() const;
 
         /// Returns the nth-translation.
         wxString GetTranslation(unsigned n = 0) const;
@@ -130,8 +134,12 @@ class CatalogItem
         const wxArrayString& GetTranslations() const
             { return m_translations; }
 
-        /// Returns array of all occurences of this string in source code.
-        const wxArrayString& GetReferences() const { return m_references; }
+        /// Returns references (#:) lines for the entry
+        const wxArrayString& GetRawReferences() const { return m_references; }
+
+        /// Returns array of all occurrences of this string in source code,
+        /// parsed into individual references
+        wxArrayString GetReferences() const;
 
         /// Returns comment added by the translator to this entry
         const wxString& GetComment() const { return m_comment; }
@@ -140,19 +148,13 @@ class CatalogItem
         const wxArrayString& GetAutoComments() const { return m_autocomments; }
 
         /// Convenience function: does this entry has a comment?
-        const bool HasComment() const { return !m_comment.empty(); }
+        bool HasComment() const { return !m_comment.empty(); }
 
         /// Adds new reference to the entry (used by SourceDigger).
         void AddReference(const wxString& ref)
         {
             if (m_references.Index(ref) == wxNOT_FOUND)
                 m_references.Add(ref);
-        }
-
-        /// Clears references (used by SourceDigger).
-        void ClearReferences()
-        {
-            m_references.Clear();
         }
 
         /// Sets the string.
@@ -216,9 +218,9 @@ class CatalogItem
         /// Gets value of automatic translation flag.
         bool IsAutomatic() const { return m_isAutomatic; }
         /// Sets the number of the line this entry occurs on.
-        void SetLineNumber(unsigned line) { m_lineNum = line; }
+        void SetLineNumber(int line) { m_lineNum = line; }
         /// Get line number of this entry.
-        unsigned GetLineNumber() const { return m_lineNum; }
+        int GetLineNumber() const { return m_lineNum; }
 
         /** Returns true if the gettext flags line contains "foo-format"
             flag when called with "foo" as argument. */
@@ -257,9 +259,9 @@ class CatalogItem
         wxString GetErrorString() const { return m_errorString; }
 
         /// Returns the bookmark for the item
-        Bookmark GetBookmark() {return m_bookmark;}
+        Bookmark GetBookmark() const {return m_bookmark;}
         /// Returns true if the item has a bookmark
-        bool HasBookmark() {return (GetBookmark() != NO_BOOKMARK);}
+        bool HasBookmark() const {return (GetBookmark() != NO_BOOKMARK);}
         /// Sets the bookmark
         void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
 
@@ -279,7 +281,7 @@ class CatalogItem
         wxString m_moreFlags;
         wxString m_comment;
         Validity m_validity;
-        unsigned m_lineNum;
+        int m_lineNum;
         wxString m_errorString;
         Bookmark m_bookmark;
 };
@@ -312,8 +314,8 @@ class CatalogDeletedData
         /// Returns the deleted lines.
         const wxArrayString& GetDeletedLines() const { return m_deletedLines; }
 
-        /// Returns array of all occurences of this string in source code.
-        const wxArrayString& GetReferences() const { return m_references; }
+        /// Returns references (#:) lines for the entry
+        const wxArrayString& GetRawReferences() const { return m_references; }
 
         /// Returns comment added by the translator to this entry
         const wxString& GetComment() const { return m_comment; }
@@ -322,19 +324,13 @@ class CatalogDeletedData
         const wxArrayString& GetAutoComments() const { return m_autocomments; }
 
         /// Convenience function: does this entry has a comment?
-        const bool HasComment() const { return !m_comment.empty(); }
+        bool HasComment() const { return !m_comment.empty(); }
 
         /// Adds new reference to the entry (used by SourceDigger).
         void AddReference(const wxString& ref)
         {
             if (m_references.Index(ref) == wxNOT_FOUND)
                 m_references.Add(ref);
-        }
-
-        /// Clears references (used by SourceDigger).
-        void ClearReferences()
-        {
-            m_references.Clear();
         }
 
         /// Sets the string.
@@ -359,9 +355,9 @@ class CatalogDeletedData
         wxString GetFlags() const {return m_flags;};
 
         /// Sets the number of the line this entry occurs on.
-        void SetLineNumber(unsigned line) { m_lineNum = line; }
+        void SetLineNumber(int line) { m_lineNum = line; }
         /// Get line number of this entry.
-        unsigned GetLineNumber() const { return m_lineNum; }
+        int GetLineNumber() const { return m_lineNum; }
 
         /// Adds new autocomments (#. )
         void AddAutoComments(const wxString& com)
@@ -381,7 +377,7 @@ class CatalogDeletedData
         wxArrayString m_references, m_autocomments;
         wxString m_flags;
         wxString m_comment;
-        unsigned m_lineNum;
+        int m_lineNum;
 };
 
 
@@ -442,7 +438,7 @@ class Catalog
 
             // Parsed values:
 
-            wxString Language, Country, Project, CreationDate,
+            wxString LanguageCode, Project, CreationDate,
                      RevisionDate, Translator, TranslatorEmail,
                      Team, TeamEmail, Charset, SourceCodeCharset;
 
@@ -493,7 +489,7 @@ class Catalog
             Note that \a po_file refers to .po file, .mo file will have same
             name & location as .po file except for different extension.
          */
-        bool Save(const wxString& po_file, bool save_mo = true);
+        bool Save(const wxString& po_file, bool save_mo, int& validation_errors);
 
         /// Exports the catalog to HTML format
         bool ExportToHTML(const wxString& filename);
@@ -501,7 +497,7 @@ class Catalog
         /** Updates the catalog from sources.
             \see SourceDigger, Parser, UpdateFromPOT.
          */
-        bool Update(bool summary = true);
+        bool Update(ProgressInfo *progress, bool summary = true);
 
         /** Updates the catalog from POT file.
             \see Update
@@ -516,8 +512,12 @@ class Catalog
         /** Returns number of all, fuzzy, badtokens and untranslated items.
             Any argument may be NULL if the caller is not interested in
             given statistic value.
+
+            @note "untranslated" are entries without translation; "unfinished"
+                  are entries with any problems
          */
-        void GetStatistics(int *all, int *fuzzy, int *badtokens, int *untranslated);
+        void GetStatistics(int *all, int *fuzzy, int *badtokens,
+                           int *untranslated, int *unfinished);
 
         /// Gets n-th item in the catalog (read-write access).
         CatalogItem& operator[](unsigned n) { return m_items[n]; }
@@ -529,8 +529,16 @@ class Catalog
         HeaderData& Header() { return m_header; }
 
         /// Returns plural forms count: taken from Plural-Forms header if
-        /// present, 0 otherwise
+        /// present, 0 otherwise (unless there are existing plural forms
+        /// translations in the file)
         unsigned GetPluralFormsCount() const;
+
+        /// Returns true if Plural-Forms header doesn't match plural forms
+        /// usage in catalog items
+        bool HasWrongPluralFormsCount() const;
+
+        /// Does this catalog have any items with plural forms?
+        bool HasPluralItems() const;
 
         /** Returns status of catalog object: true if ok, false if damaged
             (i.e. constructor or Load failed).
@@ -556,6 +564,9 @@ class Catalog
         /// Removes all obsolete translations from the catalog
         void RemoveDeletedItems();
 
+        /// Finds item by line number
+        CatalogItem *FindItemByLine(int lineno);
+
         /// Sets the given item to have the given bookmark and returns the index
         /// of the item that previously had this bookmark (or -1)
         int SetBookmark(int id, Bookmark bookmark);
@@ -566,7 +577,15 @@ class Catalog
             return m_header.Bookmarks[bookmark];
         }
 
+
+        /// Validates correctness of the translation by running msgfmt
+        /// Returns number of errors (i.e. 0 if no errors).
+        int Validate();
+
     protected:
+        int DoValidate(const wxString& po_file);
+        bool DoSaveOnly(const wxString& po_file);
+
         /** Merges the catalog with reference catalog
             (in the sense of msgmerge -- this catalog is old one with
             translations, \a refcat is reference catalog created by Update().)
@@ -641,12 +660,12 @@ class CatalogParser
             if returned value is true and is cancelled if it
             is false. Defaults to an empty implementation.
          */
-        virtual bool OnDeletedEntry(const wxArrayString& deletedLines,
-                                    const wxString& flags,
-                                    const wxArrayString& references,
-                                    const wxString& comment,
-                                    const wxArrayString& autocomments,
-                                    unsigned lineNumber)
+        virtual bool OnDeletedEntry(const wxArrayString& /*deletedLines*/,
+                                    const wxString& /*flags*/,
+                                    const wxArrayString& /*references*/,
+                                    const wxString& /*comment*/,
+                                    const wxArrayString& /*autocomments*/,
+                                    unsigned /*lineNumber*/)
         {
             return true;
         }

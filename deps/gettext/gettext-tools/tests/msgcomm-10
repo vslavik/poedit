@@ -1,0 +1,63 @@
+#! /bin/sh
+
+# Test merge of common entries with --more-than=1 and --omit-header.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles mcomm-test10.in1 mcomm-test10.in2"
+cat <<EOF > mcomm-test10.in1
+msgid ""
+msgstr ""
+"Project-Id-Version: GNU one 1.2.3\n"
+"POT-Creation-Date: 2000-12-11 20:49+0100\n"
+"PO-Revision-Date: 2000-03-18 15:25+01:00\n"
+"Last-Translator: Karl Eichwalder <ke@suse.de>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: first.c:123
+msgid "1"
+msgstr "1x"
+EOF
+
+cat <<EOF > mcomm-test10.in2
+msgid ""
+msgstr ""
+"Project-Id-Version: GNU one 1.2.3\n"
+"POT-Creation-Date: 2000-12-11 20:49+0100\n"
+"PO-Revision-Date: 2000-03-18 15:25+01:00\n"
+"Last-Translator: Karl Eichwalder <ke@suse.de>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: hunt.c:759
+msgid "1"
+msgstr ""
+EOF
+
+tmpfiles="$tmpfiles mcomm-test10.tmp mcomm-test10.out"
+: ${MSGCOMM=msgcomm}
+${MSGCOMM} --more-than=1 --no-location --omit-header -o mcomm-test10.tmp \
+    mcomm-test10.in1 mcomm-test10.in2
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < mcomm-test10.tmp > mcomm-test10.out
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mcomm-test10.ok"
+cat << EOF > mcomm-test10.ok
+msgid "1"
+msgstr "1x"
+EOF
+
+: ${DIFF=diff}
+${DIFF} mcomm-test10.ok mcomm-test10.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

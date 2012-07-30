@@ -7,7 +7,7 @@
 #sub ProcessCat
   #define FileName FindGetFileName(FindHandle)
   #define BaseName Copy(FileName, 1, Len(FileName)-3)
-  Source: {#Path}\{#FileName}; DestDir: {app}\share\locale\{#BaseName}\LC_MESSAGES; Components: i18n; DestName: {#DestName}
+  Source: {#Path}\{#FileName}; DestDir: {app}\share\locale\{#BaseName}\LC_MESSAGES; DestName: {#DestName}
 #endsub
 
 #sub DoLocaleFiles

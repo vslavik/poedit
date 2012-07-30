@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Database of available parsers
- *
  */
 
 #ifndef _PARSER_H_
@@ -33,6 +29,8 @@
 #include <wx/wx.h>
 #include <wx/dynarray.h>
 #include <wx/string.h>
+
+class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 
 
 /** This class holds information about an external parser. It does
@@ -84,8 +82,6 @@ class Parser
 };
 
 WX_DECLARE_OBJARRAY(Parser, ParserArray);
-
-class WXDLLEXPORT wxConfigBase;
 
 /** Database of all available parsers. This class is regular pseudo-template
     dynamic wxArray with additional methods for storing its content to

@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Preferences settings dialog
- *
  */
 
 #ifndef _PREFSDLG_H_
@@ -35,7 +31,7 @@
 #include "parser.h"
 #include "chooselang.h"
 
-class WXDLLEXPORT wxConfigBase;
+class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 
 /** Preferences dialog for setting user's identity, parsers and other
     global, catalog-independent settings.
@@ -60,7 +56,6 @@ class PreferencesDialog : public wxDialog
 
 #ifdef USE_TRANSMEM
         void OnTMAddLang(wxCommandEvent& event);
-        void OnTMBrowseDbPath(wxCommandEvent& event);
         void OnTMGenerate(wxCommandEvent& event);
 #endif
 

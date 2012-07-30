@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2003-2006 Vaclav Slavik
+ *  Copyright (C) 2003-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -20,10 +20,6 @@
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
- *
- *  $Id$
- *
- *  Language chooser
  *
  */
 
@@ -52,17 +48,10 @@ wxLanguage GetUILanguage()
 #if !NEED_CHOOSELANG_UI
     return wxLANGUAGE_DEFAULT;
 #else
-    wxLanguage lang(wxLANGUAGE_DEFAULT);
+    wxLanguage lang = wxLANGUAGE_DEFAULT;
+
     wxString lng = wxConfig::Get()->Read(_T("ui_language"));
-    if (lng.empty())
-    {
-        lang = ChooseLanguage();
-        if (lang != wxLANGUAGE_UNKNOWN)
-            SaveUILanguage(lang);
-        else
-            lang = wxLANGUAGE_DEFAULT;
-    }
-    else if (lng != _T("default"))
+    if (!lng.empty() && lng != _T("default"))
     {
         const wxLanguageInfo *info = wxLocale::FindLanguageInfo(lng);
         if (info != NULL)
@@ -70,6 +59,8 @@ wxLanguage GetUILanguage()
         else
             wxLogError(_("Unknown locale code '%s' in registry."), lng.c_str());
     }
+    // else: use autodetected language
+
     return lang;
 #endif // NEED_CHOOSELANG_UI
 }
@@ -129,6 +120,7 @@ wxLanguage ChooseLanguage()
         { _T("Lithuanian"), wxLANGUAGE_LITHUANIAN },
         { _T("Macedonian"), wxLANGUAGE_MACEDONIAN },
         { _T("Malay"), wxLANGUAGE_MALAY },
+        { _T("Marathi"), wxLANGUAGE_MARATHI },
         { _T("Mongolian"), wxLANGUAGE_MONGOLIAN },
         { _T("Norwegian Nynorsk"), wxLANGUAGE_NORWEGIAN_NYNORSK },
         { _T("Norwegian Bokmal"), wxLANGUAGE_NORWEGIAN_BOKMAL },
@@ -145,6 +137,7 @@ wxLanguage ChooseLanguage()
         { _T("Spanish"), wxLANGUAGE_SPANISH },
         { _T("Spanish (Puerto Rico)"), wxLANGUAGE_SPANISH_PUERTO_RICO },
         { _T("Swedish"), wxLANGUAGE_SWEDISH },
+        { _T("Tajik"), wxLANGUAGE_TAJIK },
         { _T("Tamil"), wxLANGUAGE_TAMIL },
         { _T("Tatarish"), wxLANGUAGE_TATAR },
         { _T("Thai"), wxLANGUAGE_THAI },

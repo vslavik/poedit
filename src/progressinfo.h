@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2005 Vaclav Slavik
+ *  Copyright (C) 2000-2009 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,28 +21,22 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Shows progress of lengthy operation
- *
  */
 
 #ifndef _PROGRESSINFO_H_
 #define _PROGRESSINFO_H_
 
-class WXDLLEXPORT wxString;
-class WXDLLEXPORT wxDialog;
-class WXDLLEXPORT wxWindowDisabler;
+class WXDLLIMPEXP_FWD_BASE wxString;
+class WXDLLIMPEXP_FWD_CORE wxWindow;
+class WXDLLIMPEXP_FWD_CORE wxDialog;
+class WXDLLIMPEXP_FWD_CORE wxWindowDisabler;
 
 /// This class displays fancy progress dialog.
 class ProgressInfo
 {
     public:
-            ProgressInfo();
+            ProgressInfo(wxWindow *parent, const wxString& title);
             ~ProgressInfo();
- 
-            /// Sets task's title, i.e. dialog's caption.
-            void SetTitle(const wxString& text);
 
             /// Sets gauge's values interval to <0..limit).
             void SetGaugeMax(int limit);

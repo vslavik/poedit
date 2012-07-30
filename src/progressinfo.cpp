@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2005 Vaclav Slavik
+ *  Copyright (C) 2000-2009 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -20,10 +20,6 @@
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
- *
- *  $Id$
- *
- *  Shows progress of lengthy operation
  *
  */
 
@@ -50,7 +46,7 @@ class ProgressDlg : public wxDialog
     
         DECLARE_EVENT_TABLE()
 
-        void OnCancel(wxCommandEvent& event)
+        void OnCancel(wxCommandEvent&)
         {
             ((wxButton*)FindWindow(wxID_CANCEL))->Enable(false);
             *m_cancelFlag = true;
@@ -61,14 +57,12 @@ BEGIN_EVENT_TABLE(ProgressDlg, wxDialog)
    EVT_BUTTON(wxID_CANCEL, ProgressDlg::OnCancel)
 END_EVENT_TABLE()
 
-ProgressInfo::ProgressInfo()
+ProgressInfo::ProgressInfo(wxWindow *parent, const wxString& title)
 {
     m_cancelled = false;
     m_dlg = new ProgressDlg(&m_cancelled);
-    wxXmlResource::Get()->LoadDialog(m_dlg, NULL, _T("parser_progress"));
-    wxPoint pos(wxConfig::Get()->Read(_T("progress_pos_x"), -1),
-               wxConfig::Get()->Read(_T("progress_pos_y"), -1));
-    if (pos.x != -1 && pos.y != -1) m_dlg->Move(pos);
+    wxXmlResource::Get()->LoadDialog(m_dlg, parent, _T("parser_progress"));
+    m_dlg->SetTitle(title);
     m_dlg->Show(true);
     m_disabler = new wxWindowDisabler(m_dlg);
 }
@@ -76,17 +70,9 @@ ProgressInfo::ProgressInfo()
 ProgressInfo::~ProgressInfo()
 {
     delete m_disabler;
-    wxConfig::Get()->Write(_T("progress_pos_x"), (long)m_dlg->GetPosition().x);
-    wxConfig::Get()->Write(_T("progress_pos_y"), (long)m_dlg->GetPosition().y);
     m_dlg->Destroy();
 }
 
-void ProgressInfo::SetTitle(const wxString& text)
-{
-    m_dlg->SetTitle(text);
-    wxYield();
-}
-           
 void ProgressInfo::SetGaugeMax(int limit)
 {
     XRCCTRL(*m_dlg, "progress", wxGauge)->SetRange(limit);

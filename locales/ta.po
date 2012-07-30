@@ -2,23 +2,52 @@
 # ஆமாச்சு <amachu@ubuntu.com>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.4\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-25 16:42+0100\n"
+"Project-Id-Version: Poedit 1.5\n"
+"Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
+"POT-Creation-Date: 2012-07-30 10:34+0200\n"
 "PO-Revision-Date: 2008-02-11 18:33+0530\n"
 "Last-Translator: ஆமாச்சு <amachu@ubuntu.com>\n"
 "Language-Team: தமிழ் <https://lists.ubuntu.com/mailman/listinfo/ubuntu-l10n-"
 "tam>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../src/edframe.cpp:2001
+#: ../src/edframe.cpp:2060
 msgid " (modified)"
 msgstr "(மாற்றப்பட்டவை)"
 
-#: ../src/edframe.cpp:1971 ../src/export_html.cpp:152
+#. TRANSLATORS: This is version information in about dialog, it is followed
+#. by version number when used (wxWidgets 2.8)
+#: ../src/edframe.cpp:2431
+#, fuzzy
+msgid " Version "
+msgstr "பதிப்பு"
+
+#: ../src/edframe.cpp:1367
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/edframe.cpp:2024
+#, fuzzy, c-format
+msgid "%i %% translated, %i string"
+msgid_plural "%i %% translated, %i strings"
+msgstr[0] "சுயமாக மொழிபெயர்க்கப் பட்ட %u சரங்கள்"
+msgstr[1] "சுயமாக மொழிபெயர்க்கப் பட்ட %u சரங்கள்"
+
+#: ../src/edframe.cpp:2029
+#, fuzzy, c-format
+msgid "%i %% translated, %i string (%s)"
+msgid_plural "%i %% translated, %i strings (%s)"
+msgstr[0] "சுயமாக மொழிபெயர்க்கப் பட்ட %u சரங்கள்"
+msgstr[1] "சுயமாக மொழிபெயர்க்கப் பட்ட %u சரங்கள்"
+
+#: ../src/export_html.cpp:134
 #, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
@@ -26,328 +55,499 @@ msgstr ""
 "%i %% மொழிப்பெயர்க்கப்பட்டவை, %i சரங்கள் (%i ஐயமுள்ளவை, %i தவறானவை, %i "
 "மொழிபெயர்க்கப்படாதவை)"
 
-#: ../src/catalog.cpp:148
+#: ../src/edframe.cpp:2014
+#, fuzzy, c-format
+msgid "%i bad token"
+msgid_plural "%i bad tokens"
+msgstr[0] "குறை காணப்பட்டவை"
+msgstr[1] "குறை காணப்பட்டவை"
+
+#: ../src/edframe.cpp:2008
+#, fuzzy, c-format
+msgid "%i fuzzy"
+msgid_plural "%i fuzzy"
+msgstr[0] "அரைகுறை "
+msgstr[1] "அரைகுறை "
+
+#: ../src/catalog.cpp:132
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i  வரிகள், '%s' கோப்பில் சரிவர ஏற்றப் படவில்லை."
 
-#: standard input:70
-msgid "&About..."
+#: ../src/edframe.cpp:2020
+#, fuzzy, c-format
+msgid "%i not translated"
+msgid_plural "%i not translated"
+msgstr[0] "மொழிபெயர்ப்புகளில் தேடுக"
+msgstr[1] "மொழிபெயர்ப்புகளில் தேடுக"
+
+#: ../src/resources/menus.xrc:213 ../src/resources/menus.xrc:214
+#, fuzzy
+msgid "&About"
 msgstr "&அறிமுகம்..."
 
-#: standard input:57
+#: ../src/resources/menus.xrc:212
+#, fuzzy
+msgid "&About Poedit"
+msgstr "&அறிமுகம்..."
+
+#: ../src/resources/menus.xrc:107
+#, fuzzy
+msgid "&Automatically Translate Using TM"
+msgstr "நினைவகத்தினைப் பயன்படுத்தி &சுயமாக மொழிபெயர்க்கவும்"
+
+#: ../src/resources/menus.xrc:106
 msgid "&Automatically translate using TM"
 msgstr "நினைவகத்தினைப் பயன்படுத்தி &சுயமாக மொழிபெயர்க்கவும்"
 
-#: ../src/edframe.cpp:2784
+#: ../src/edframe.cpp:2786
 msgid "&Bookmarks"
 msgstr "&நினைவுக்குறி"
 
-#: standard input:36 input:46
+#: ../src/resources/manager.xrc:132 ../src/resources/menus.xrc:26
 msgid "&Close"
 msgstr "&நிறைவு செய்க"
 
-#: standard input:68
-msgid "&Contents..."
-msgstr "&உள்ளடக்கங்கள்"
+#: ../src/resources/menus.xrc:176
+#, fuzzy
+msgid "&Comment Window"
+msgstr "&குறிப்புகள் சாளரத்தினைக் காட்டுக"
 
-#: standard input:47
+#: ../src/resources/menus.xrc:175
+#, fuzzy
+msgid "&Comment window"
+msgstr "&குறிப்புகள் சாளரத்தினைக் காட்டுக"
+
+#: ../src/resources/menus.xrc:130
+msgid "&Done and Next"
+msgstr ""
+
+#: ../src/resources/menus.xrc:129
+msgid "&Done and next"
+msgstr ""
+
+#: ../src/resources/menus.xrc:56
 msgid "&Edit"
 msgstr "&தொகுக்க"
 
-#: ../src/edframe.cpp:535 standard input:34 input:37
+#: ../src/edframe.cpp:471 ../src/resources/manager.xrc:125
+#: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&கோப்பினை"
 
-#: standard input:50
+#: ../src/resources/menus.xrc:73
 msgid "&Find..."
 msgstr "தேடுக..."
 
-#: standard input:61 input:62
-msgid "&Fullscreen view"
-msgstr "&முழுத்திரைக் காட்சி"
+#: ../src/edframe.cpp:480 ../src/resources/menus.xrc:126
+msgid "&Go"
+msgstr ""
 
-#: ../src/edapp.cpp:107 standard input:71
+#: ../src/edapp.cpp:183 ../src/resources/menus.xrc:216
 msgid "&Help"
 msgstr "&உதவி"
 
-#: standard input:39
+#: ../src/resources/menus.xrc:14
+#, fuzzy
+msgid "&New Catalog..."
+msgstr "&புதிய காடலாக்..."
+
+#: ../src/resources/menus.xrc:13
 msgid "&New catalog..."
 msgstr "&புதிய காடலாக்..."
 
-#: standard input:41
+#: ../src/resources/menus.xrc:142
+msgid "&Next Message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:141
+msgid "&Next message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:206
+msgid "&Online Help"
+msgstr ""
+
+#: ../src/resources/menus.xrc:205
+msgid "&Online help"
+msgstr ""
+
+#: ../src/resources/menus.xrc:21
 msgid "&Open..."
 msgstr "&திறக்க..."
 
-#: standard input:53
+#: ../src/resources/menus.xrc:90
 #, fuzzy
 msgid "&Preferences"
 msgstr "முன்னுரிமைகள்"
 
-#: standard input:35 input:45
+#: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:44
 msgid "&Preferences..."
 msgstr "முன்னுரிமைகள்"
 
-#: standard input:58
+#: ../src/resources/menus.xrc:137
+msgid "&Previous Message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:136
+msgid "&Previous message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:119
+#, fuzzy
+msgid "&Properties..."
+msgstr "முன்னுரிமைகள்"
+
+#: ../src/resources/menus.xrc:111
+#, fuzzy
+msgid "&Purge Deleted Translations"
+msgstr "&அகற்றுக - அழிக்கப் பட்ட மொழிபெயர்ப்புகளை"
+
+#: ../src/resources/menus.xrc:110
 msgid "&Purge deleted translations"
 msgstr "&அகற்றுக - அழிக்கப் பட்ட மொழிபெயர்ப்புகளை"
 
-#: standard input:42
+#: ../src/resources/menus.xrc:30
 msgid "&Save"
 msgstr "&காக்க"
 
-#: standard input:59
-msgid "&Settings..."
-msgstr "&அமைப்புகள்"
+#: ../src/resources/menus.xrc:70
+#, fuzzy
+msgid "&Show References"
+msgstr "சுட்டிகளைக் &காட்டுக"
 
-#: standard input:67
-msgid "&Shaded translations list"
-msgstr "&வண்ணமிடப் பட்ட மொழிபெயர்ப்புப் பட்டியல்"
-
-#: standard input:49
+#: ../src/resources/menus.xrc:69
 msgid "&Show references"
 msgstr "சுட்டிகளைக் &காட்டுக"
 
-#: standard input:55
+#: ../src/resources/menus.xrc:198
+msgid "&Untranslated Entries First"
+msgstr ""
+
+#: ../src/resources/menus.xrc:197
+msgid "&Untranslated entries first"
+msgstr ""
+
+#: ../src/resources/menus.xrc:99
+#, fuzzy
+msgid "&Update from Sources"
+msgstr "&முல ஆவணங்களிலிருந்து புதுபிக்கவும்"
+
+#: ../src/resources/menus.xrc:98
 msgid "&Update from sources"
 msgstr "&முல ஆவணங்களிலிருந்து புதுபிக்கவும்"
 
-#: standard input:60
+#: ../src/resources/menus.xrc:115
+#, fuzzy
+msgid "&Validate Translations"
+msgstr "மொழிபெயர்ப்பு"
+
+#: ../src/resources/menus.xrc:114
+#, fuzzy
+msgid "&Validate translations"
+msgstr "&வண்ணமிடப் பட்ட மொழிபெயர்ப்புப் பட்டியல்"
+
+#: ../src/resources/menus.xrc:157
 msgid "&View"
 msgstr "&பார்வையிடு"
 
-#: ../src/catalog.cpp:1511
+#: ../src/catalog.cpp:1572
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' முறையானதொரு POT வகை  கோப்பு அல்ல."
 
-#: standard input:100
-msgid "(%f will be substituted with filename, %l with line number)"
-msgstr "(%l வரியெண்ணுக்கும், %f கோப்பினது பெயருக்கும் மாற்றப் படும்)"
-
-#: ../src/summarydlg.cpp:71
+#: ../src/summarydlg.cpp:58
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(புதியது %i , காலாவதியானது %i)"
 
-#: standard input:168
+#: ../src/resources/summary.xrc:63
 msgid "(0 new, 0 obsolete)"
 msgstr "(புதியது 0 , காலாவதியானது 0)"
 
-#: ../src/chooselang.cpp:88
+#: ../src/chooselang.cpp:79
 msgid "(Use default language)"
 msgstr "(இயல்பிருப்பு மொழியினைத் பயன்படுத்துக)"
 
-#: ../src/edframe.cpp:921
+#: ../src/edframe.cpp:916
 msgid "(none of these)"
 msgstr "(­இவையெதுவும் இல்லை)"
 
-#: standard input:18
+#: ../src/resources/find.xrc:94
 msgid "< Previous"
 msgstr "< முந்தைய"
 
-#: ../src/manager.cpp:402
+#: ../src/manager.cpp:377
 msgid "<unnamed>"
 msgstr "<பெயரிடப் படாத>"
 
-#: standard input:111
+#. TRANSLATORS: This is titlebar of about dialog, the string ends with space
+#. and is followed by application name when used ("Poedit",
+#. but don't add it to this translation yourself) (wxWidgets 2.8)
+#: ../src/edframe.cpp:2435
+#, fuzzy
+msgid "About "
+msgstr "&அறிமுகம்..."
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: ../src/edframe.cpp:2425
+#, fuzzy, c-format
+msgid "About %s"
+msgstr "பி.ஓ.  எடிட் பற்றி"
+
+#: ../src/resources/prefs.xrc:270
 msgid "Add"
 msgstr "சேர்க்க"
 
-#: standard input:31
+#: ../src/resources/manager.xrc:91
 msgid "Add directory to the list"
 msgstr "அடைவினைப்  பட்டியலில் சேர்க்கவும்"
 
-#: ../src/transmemupd_wizard.cpp:138 standard input:176
+#: ../src/transmemupd_wizard.cpp:134 ../src/resources/tm_update.xrc:85
 msgid "Add files"
 msgstr "கோப்புகளை சேர்க்க"
 
-#: standard input:142
+#: ../src/resources/prefs.xrc:589
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "காடலாகுகள் உண்மையுரைக்காத அடைவுகளுக்கு பாதையினைச் சேர்க்கவும்."
 
-#: standard input:85
+#: ../src/resources/prefs.xrc:111
 msgid "Always change focus to text input field"
 msgstr "உரை  உள்ளீட்டுக் களத்தில் எப்போதும் கவனம் இருக்கட்டும்"
 
-#: standard input:135
+#: ../src/resources/prefs.xrc:514
 msgid "An item in input files list:"
 msgstr "உள்ளீட்டு கோப்புகள் பட்டியலில் பொருளினைச் சேர்க்கவும்:"
 
-#: standard input:133
+#: ../src/resources/prefs.xrc:495
 msgid "An item in keywords list:"
 msgstr "துருப்புச் சொற்களின் பட்டியலில் பொருளினைச் சேர்க்கவும்:"
 
-#: standard input:89
+#: ../src/edframe.cpp:2367 ../src/edframe.cpp:2379
+#, fuzzy
+msgid "Automatic Translations:"
+msgstr "சுயமான மொழிபெயர்ப்புகள்:"
+
+#: ../src/resources/prefs.xrc:128
 msgid "Automatic spellchecking"
 msgstr "சொற்பிழைகளை சுயமாகத் திருத்துக"
 
-#: ../src/export_html.cpp:192
+#: ../src/export_html.cpp:173
 msgid "Automatic translation"
 msgstr "சுயமான மொழிபெயர்ப்பு"
 
-#: ../src/edframe.cpp:2251 ../src/edframe.cpp:2255
+#: ../src/edframe.cpp:2365 ../src/edframe.cpp:2377
 msgid "Automatic translations:"
 msgstr "சுயமான மொழிபெயர்ப்புகள்:"
 
-#: standard input:79
+#: ../src/resources/prefs.xrc:70
 msgid "Automatically check for new version of Poedit"
 msgstr "பிஓஎடிட்டின் புதிய வெளியீட்டினைத் தானாகவே தேடவும்"
 
-#: standard input:82
+#: ../src/resources/prefs.xrc:88
 msgid "Automatically compile .mo file on save"
 msgstr "காக்கும் போதே சுயமாக .mo கோப்பாக ஒடுக்கவும்"
 
-#: standard input:118
+#: ../src/resources/prefs.xrc:342
 msgid "Automatically translate when updating catalog"
 msgstr "காடலாகினைப் புதுப்பிக்கையில் சுயமாக மொழிபெயர்க்கவும்"
 
-#: ../src/edframe.cpp:2203
+#: ../src/edframe.cpp:2301
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "சுயமாக மொழிபெயர்க்கப் பட்ட %u சரங்கள்"
 
-#: ../src/edframe.cpp:2188
+#: ../src/edframe.cpp:2286
 msgid "Automatically translating..."
 msgstr "சுயமாக மொழிபெயர்க்கப்படுகின்றது..."
 
-#: ../src/manager.cpp:274
+#: ../src/manager.cpp:248
 msgid "Bad Tokens"
 msgstr "குறை காணப்பட்டவை"
 
-#: standard input:157
+#: ../src/resources/properties.xrc:136
 msgid "Base path:"
 msgstr "பிரதானப் பாதை:"
 
-#: standard input:81
+#: ../src/resources/prefs.xrc:84
 msgid "Behavior"
 msgstr "செயற்குணங்கள்"
 
-#: ../src/catalog.cpp:689
+#: ../src/catalog.cpp:680
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 "வழுவுடைய காடலாக் கோப்பு: msgid_plural பன்மையாக இல்லாத போது msgstr பன்மையாக உள்ளது."
 
-#: ../src/catalog.cpp:651
+#: ../src/catalog.cpp:642
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
 "வழுவுடைய காடலாக் கோப்பு: msgid_plural பன்மையாக இருக்கும் போது msgstr ஒருமையாக "
 "உள்ளது."
 
-#: standard input:30 input:110 input:141 input:173
+#: ../src/resources/manager.xrc:90 ../src/resources/prefs.xrc:588
+#: ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "கண்டெடுக்க"
 
-#: standard input:54
+#: ../src/resources/menus.xrc:95
 msgid "C&atalog"
 msgstr "&காடலாக்"
 
-#: standard input:91
+#: ../src/resources/comment.xrc:45
+#, fuzzy
+msgid "C&lear"
+msgstr "துடைக்க"
+
+#: ../src/resources/prefs.xrc:141
 msgid "CR/LF conversion"
 msgstr "CR/LF பரிவர்த்தனைகள்"
 
-#: standard input:4 input:17 input:33 input:125 input:140 input:144 input:146
-#: input:162
+#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:113
+#: ../src/resources/prefs.xrc:424 ../src/resources/prefs.xrc:566
+#: ../src/resources/prefs.xrc:611 ../src/resources/progress.xrc:32
+#: ../src/resources/properties.xrc:198
 msgid "Cancel"
 msgstr "தவிர்க்க"
 
-#: ../src/transmem.cpp:745
-msgid "Cannot create database directory!"
+#: ../src/transmem.cpp:732
+#, fuzzy
+msgid "Cannot create TM database directory!"
 msgstr "தரவுக் களனுடைய அடைவினை  உருவாக்க இயலவில்லை!"
 
-#: ../src/gexecute.cpp:178 ../src/gexecute.cpp:234
-msgid "Cannot execute program: "
+#: ../src/utility.cpp:57 ../src/utility.cpp:67
+#, fuzzy
+msgid "Cannot create temporary directory."
+msgstr "தரவுக் களனுடைய அடைவினை  உருவாக்க இயலவில்லை!"
+
+#: ../src/gexecute.cpp:100
+#, fuzzy, c-format
+msgid "Cannot execute program: %s"
 msgstr "நிரலினை செயற்படுத்த இயலவில்லை:"
 
-#: ../src/transmemupd.cpp:202
+#: ../src/transmemupd.cpp:199
 msgid "Cannot extract catalogs from RPM file."
 msgstr "RPM கோப்பிலிருந்து காடலாகினைக் கொணர இயலவில்லை."
 
-#: standard input:10
+#: ../src/resources/find.xrc:36
 msgid "Case sensitive"
 msgstr "எழுத்தின் தன்மைச் சார்ந்தது"
 
-#: ../src/manager.cpp:270
+#: ../src/manager.cpp:244
 msgid "Catalog"
 msgstr "காடலாக்"
 
-#: ../src/edframe.cpp:969 ../src/edframe.cpp:994 ../src/edframe.cpp:1035
-#: ../src/edframe.cpp:1087 ../src/edframe.cpp:1205
+#: ../src/edframe.cpp:987
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "காடலாக் மாற்றப் பட்டுள்ளது. மாற்றங்களைக் காக்க விரும்புகிறீர்களா?"
 
-#: standard input:38
+#: ../src/resources/properties.xrc:4
+msgid "Catalog properties"
+msgstr ""
+
+#: ../src/resources/menus.xrc:9
+#, fuzzy
+msgid "Catalogs &Manager"
+msgstr "காடலாக் &நிர்வாகம்"
+
+#: ../src/resources/menus.xrc:8
 msgid "Catalogs &manager"
 msgstr "காடலாக் &நிர்வாகம்"
 
-#: standard input:78
+#: ../src/resources/prefs.xrc:63
 msgid "Change UI language"
 msgstr "இடைமுகப்பு மொழியினைத் தேர்வு செய்க"
 
-#: ../src/export_html.cpp:137 standard input:153
+#: ../src/export_html.cpp:119 ../src/resources/properties.xrc:74
 msgid "Charset:"
 msgstr "எழுத்து வகை:"
 
-#: standard input:104 input:106
+#: ../src/edframe.cpp:483
+msgid "Check for Updates..."
+msgstr ""
+
+#: ../src/resources/toolbar.xrc:39
+#, fuzzy
+msgid "Check for errors in the translation"
+msgstr "மொழிப் பெயர்ப்பு களத்திற்கு மூலச் சொல்லினையே  நகலெடுக்கவும்"
+
+#: ../src/resources/prefs.xrc:204 ../src/resources/prefs.xrc:230
 msgid "Choose"
 msgstr "தேர்வு செய்க:"
 
-#: standard input:5
-msgid "Clear"
-msgstr "துடைக்க"
+#: ../src/edframe.cpp:2339 ../src/resources/menus.xrc:64
+#, fuzzy
+msgid "Clear Translation"
+msgstr "மொழிபெயர்ப்பு"
 
-#: standard input:6
+#: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "குறிப்பினைத் துடைக்க"
 
-#: standard input:185
+#: ../src/edframe.cpp:2337 ../src/resources/menus.xrc:63
+#, fuzzy
+msgid "Clear translation"
+msgstr "மொழிபெயர்ப்பு"
+
+#: ../src/resources/find.xrc:87
+#, fuzzy
+msgid "Close"
+msgstr "&நிறைவு செய்க"
+
+#: ../src/resources/toolbar.xrc:57
 msgid "Comment"
 msgstr "குறிப்புகள்"
 
-#: standard input:87
+#: ../src/resources/prefs.xrc:120
 msgid "Comment window is editable"
 msgstr "குறிப்பிடுவதற்கானச் சாளரம் தொகுக்க வல்லதாக உள்ளது"
 
-#: standard input:2
+#: ../src/edframe.cpp:547 ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "குறிப்புகள்:"
 
-#: standard input:115
+#: ../src/resources/prefs.xrc:292
 msgid "Configuration"
 msgstr "கட்டமைப்பு"
 
-#: ../src/manager.cpp:432 ../src/manager.cpp:452
+#: ../src/manager.cpp:407 ../src/manager.cpp:427
 msgid "Confirmation"
 msgstr "உறுதியாக"
 
-#: ../src/edframe.cpp:2231 standard input:48
-msgid "Copy original to translation field"
-msgstr "மொழிப் பெயர்ப்பு களத்திற்கு மூலச் சொல்லினையே  நகலெடுக்கவும்"
+#: ../src/edframe.cpp:1812
+#, fuzzy
+msgid "Context:"
+msgstr "மூலக் கோப்பு"
 
-#: ../src/catalog.cpp:1049
+#: ../src/edframe.cpp:2332 ../src/resources/menus.xrc:59
+msgid "Copy from Source Text"
+msgstr ""
+
+#: ../src/edframe.cpp:2330 ../src/resources/menus.xrc:58
+#, fuzzy
+msgid "Copy from source text"
+msgstr "&முல ஆவணங்களிலிருந்து புதுபிக்கவும்"
+
+#: ../src/catalog.cpp:1038
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "%s பழுதடைந்துள்ளது போல் தெரிகிறது. ஏற்ற இயலவில்லை."
 
-#: ../src/export_html.cpp:126 standard input:152
-msgid "Country:"
-msgstr "நாடு:"
+#: ../src/catalog.cpp:1307
+#, c-format
+msgid "Couldn't save file %s."
+msgstr ""
 
-#: standard input:21
+#: ../src/resources/manager.xrc:44
 msgid "Create new translations project"
 msgstr "புதிய மொழிபெயர்ப்புத் திட்டங்களை  உருவாக்குக"
 
-#: standard input:108
+#: ../src/resources/prefs.xrc:252
 msgid "Database"
 msgstr "தரவுக் களன்"
 
-#: ../src/transmem.cpp:327
-#, c-format
-msgid "Database error: %s"
-msgstr "தரவுக் கள வழு: %s"
-
-#: standard input:24 input:123
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:390
 msgid "Delete"
 msgstr "அகற்றுக"
 
@@ -355,62 +555,100 @@ msgstr "அகற்றுக"
 msgid "Delete item"
 msgstr "பொருளை அகற்றுக"
 
-#: standard input:25
+#: ../src/resources/manager.xrc:54
 msgid "Delete the project"
 msgstr "திட்டத்தினை அகற்றி விடவும்"
 
-#: ../src/manager.cpp:326
+#: ../src/manager.cpp:300
 msgid "Directories:"
 msgstr "அடைவுகள்:"
 
-#: standard input:64
+#: ../src/resources/menus.xrc:165
+#, fuzzy
+msgid "Display &Line Numbers"
+msgstr "&வரி எண்களை திரையிடுக"
+
+#: ../src/resources/menus.xrc:170
+msgid "Display &Notes for Translators"
+msgstr ""
+
+#: ../src/resources/menus.xrc:160
+#, fuzzy
+msgid "Display &Quotes"
+msgstr "&மேற்கோள்களைத் திரையிடுக"
+
+#: ../src/resources/menus.xrc:164
 msgid "Display &line numbers"
 msgstr "&வரி எண்களை திரையிடுக"
 
-#: standard input:63
+#: ../src/resources/menus.xrc:169
+msgid "Display &notes for translators"
+msgstr ""
+
+#: ../src/resources/menus.xrc:159
 msgid "Display &quotes"
 msgstr "&மேற்கோள்களைத் திரையிடுக"
 
-#: ../src/manager.cpp:451
+#: ../src/manager.cpp:426
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
 msgstr ""
 "இத்திட்டத்திலுள்ள அனைத்து காடலாகினையும் ஒட்டுமொத்தமாக புதுப்பிக்க தாங்கள் விரும்புகிறீர்களா?"
 
-#: ../src/edframe.cpp:2145
-msgid ""
-"Do you really want to remove all translations that are no longer used from "
-"the catalog?\n"
-"If you continue with purging, you will have to translate them again if they "
-"are added back in the future."
-msgstr ""
-"காடலாகிலிருந்து பயன்படுத்தப் படாத அனைத்து மொழிபெயர்ப்புகளையும் அகற்றுவதில் தாங்கள் "
-"உறுதியாக உள்ளீர்களா? \n"
-" அங்ஙனம் தொடர விரும்பிடின் இவை  எதிர்காலத்தில் மீண்டும் சேர்க்கப் பட்டால் தாங்கள் மீண்டும் "
-"புதிதாக மொழிபெயர்க்க வேண்டிய அவசியம் உண்டாகலாம்."
-
-#: ../src/manager.cpp:431
+#: ../src/manager.cpp:406
 msgid "Do you want to delete the project?"
 msgstr "திட்டத்தினை அகற்ற விரும்புகிறீர்களா?"
 
-#: standard input:97
+#: ../src/edframe.cpp:2227
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr ""
+
+#: ../src/edframe.cpp:999
+msgid "Don't Save"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:170
 msgid "Don't change format of existing catalogs"
 msgstr "இருக்கக் கூடிய காடலாகின் வடிவினை மாற்ற வேண்டாம்."
 
-#: standard input:44
+#: ../src/edframe.cpp:997
+msgid "Don't save"
+msgstr ""
+
+#: ../src/attentionbar.cpp:195
+msgid "Don't show again"
+msgstr ""
+
+#: ../src/resources/manager.xrc:136 ../src/resources/menus.xrc:51
+#, fuzzy
+msgid "E&xit"
+msgstr "தொகுக்க"
+
+#: ../src/resources/menus.xrc:39
 msgid "E&xport..."
 msgstr "&வெளியேற்றம்"
 
-#: standard input:22 input:122
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:383
 msgid "Edit"
 msgstr "தொகுக்க"
 
-#: standard input:52
+#: ../src/resources/menus.xrc:85
+#, fuzzy
+msgid "Edit &Comment"
+msgstr "&குறிப்பினைத் தொகுக்க"
+
+#: ../src/resources/menus.xrc:84
 msgid "Edit &comment"
 msgstr "&குறிப்பினைத் தொகுக்க"
 
-#: standard input:1 input:186
+#: ../src/edframe.cpp:2346
+#, fuzzy
+msgid "Edit Comment"
+msgstr "&குறிப்பினைத் தொகுக்க"
+
+#: ../src/edframe.cpp:2344 ../src/resources/comment.xrc:4
+#: ../src/resources/toolbar.xrc:58
 msgid "Edit comment"
 msgstr "குறிப்பினைத் தொகுக்க"
 
@@ -418,84 +656,88 @@ msgstr "குறிப்பினைத் தொகுக்க"
 msgid "Edit item"
 msgstr "பொருளினைத் தொகுக்க"
 
-#: standard input:28
+#: ../src/resources/manager.xrc:64
 msgid "Edit project"
 msgstr "திட்டத்தினைத் தொகுக்க"
 
-#: standard input:7
-msgid "Edit the file in text editor"
-msgstr "உரை  தொகுப்பளரின் துணையுடன் தொகுக்க"
-
-#: standard input:23
+#: ../src/resources/manager.xrc:49
 msgid "Edit the project"
 msgstr "திட்டத்தினைத் தொகுக்க"
 
-#: standard input:80
+#: ../src/resources/prefs.xrc:78
 msgid "Editor"
 msgstr "தொகுப்பாளர்"
 
-#: standard input:99
-msgid "Editor executable:"
-msgstr "செயற்படுத்தவல்ல தொகுப்பாளர்:"
-
-#: standard input:90
+#: ../src/resources/prefs.xrc:129
 msgid "Enables on-the-fly spellchecking"
 msgstr "நிகழும் போதே சொற்திருத்த உதவுகிறது"
 
-#: ../src/edframe.cpp:1359
+#: ../src/edframe.cpp:1309
 msgid "Entries in the catalog are probably incorrect."
 msgstr "காடலாகில் உள்ள பதிவுகள் தவறானதாக இருப்பது போல் தோன்றுகிறது."
 
-#: ../src/edframe.cpp:1926
+#: ../src/edframe.cpp:1911
+msgid ""
+"Entries in this catalog have different plural forms count from what "
+"catalog's Plural-Forms header says"
+msgstr ""
+
+#: ../src/edframe.cpp:1376
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+
+#: ../src/edframe.cpp:1960
 #, fuzzy, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "காடலாக் கோப்பின் செய்தியினை ஏற்றுவதில் சிக்கல் '"
 
-#: ../src/fileviewer.cpp:101
+#: ../src/fileviewer.cpp:226
 #, c-format
 msgid "Error opening file %s!"
 msgstr "%s கோப்பினைத் திறப்பதில் சிக்கல்!"
 
-#: ../src/catalog.cpp:1325
+#: ../src/catalog.cpp:1354
 msgid "Error saving catalog"
 msgstr "காடல்லகினை  காப்பதில் சிக்கல்"
 
-#: ../src/edframe.cpp:1178
+#: ../src/errorbar.cpp:60
+msgid "Error:"
+msgstr ""
+
+#: ../src/edframe.cpp:1138
 msgid "Export as..."
 msgstr "விருப்பம் போல் வேளியேற்றவும்..."
 
-#: standard input:98
-msgid "External editor"
-msgstr "புற தொகுப்பாளர்"
+#: ../src/resources/properties.xrc:127
+msgid "Extract text from source files in the following directories:"
+msgstr ""
 
-#: ../src/digger.cpp:65
+#: ../src/digger.cpp:60
 #, c-format
 msgid "Failed command: %s"
 msgstr "நிறைவேறா ஆணை: %s"
 
-#: ../src/digger.cpp:160
+#: ../src/digger.cpp:114
 msgid "Failed to load extracted catalog."
 msgstr "வெளிக்கொணரப் பட்ட காடலாக்கினை ஏற்ற இயலவில்லை."
 
-#: ../src/digger.cpp:66
+#: ../src/digger.cpp:61
 msgid "Failed to merge gettext catalogs."
 msgstr "கெட்டெகஸ்ட் காடலாகுகளை இணைக்க இயலவில்லை."
 
-#: ../src/digger.cpp:94 ../src/digger.cpp:105
-msgid "Failed to read extracted catalog."
-msgstr "வெளிக்கொணரப்பட்ட காடலாகுகளை வாசிக்க இயலவில்லை."
-
-#: ../src/edframe.cpp:1060 ../src/edframe.cpp:1103
+#: ../src/edframe.cpp:393 ../src/edframe.cpp:1061
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "'%s' எனும் கோப்பு இல்லை."
 
-#: ../src/edframe.cpp:1077
-#, c-format
-msgid "File '%s' is not message catalog."
+#: ../src/edframe.cpp:386
+#, fuzzy, c-format
+msgid "File '%s' is not a message catalog."
 msgstr "'%s' ஒரு தகவல் காடலாக் அல்ல."
 
-#: ../src/catalog.cpp:1285
+#: ../src/catalog.cpp:1268
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -504,159 +746,179 @@ msgstr ""
 "'%s' னை வாசிக்க மட்டுமே  உரிமம் உள்ளது. காக்க இயலாது. \n"
 " மாற்றுப் பெயரிட்டு காக்கவும்."
 
-#: ../src/transmemupd_wizard.cpp:63
+#: ../src/transmemupd_wizard.cpp:59
 msgid "Files List"
 msgstr "கோப்புகளின் பட்டியல்"
 
-#: standard input:16
+#: ../src/resources/find.xrc:78
 msgid "Find in automatic comments"
 msgstr "சுய குறிப்புகளில் தேடுக"
 
-#: standard input:15
+#: ../src/resources/find.xrc:71
 msgid "Find in comments"
 msgstr "குறிப்புகளில் தேடுக"
 
-#: standard input:13
+#: ../src/resources/find.xrc:57
 msgid "Find in original strings"
 msgstr "மூலச் சரங்களில் தேடுக..."
 
-#: standard input:14
+#: ../src/resources/find.xrc:64
 msgid "Find in translations"
 msgstr "மொழிபெயர்ப்புகளில் தேடுக"
 
-#: standard input:8
+#: ../src/resources/find.xrc:4
 msgid "Find..."
 msgstr "தேடுக..."
 
-#: standard input:102
+#: ../src/edframe.cpp:1941
+msgid "Fix the header"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:181
 msgid "Fonts"
 msgstr " எழுத்துருக்கள்"
 
-#: ../src/edframe.cpp:2695
+#: ../src/edframe.cpp:2719
 #, c-format
 msgid "Form %i"
 msgstr "படிவம் %i"
 
-#: ../src/edframe.cpp:2697
+#: ../src/edframe.cpp:2721
 #, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr "படிவம் %i (உ.ம். \"%u\")"
 
-#: standard input:187 input:188
-msgid "Fullscreen view"
-msgstr "முழுத்திரைக் காட்சி"
-
-#: ../src/manager.cpp:273 standard input:183
+#: ../src/manager.cpp:247 ../src/resources/toolbar.xrc:51
 msgid "Fuzzy"
 msgstr "அரைகுறை "
 
-#: ../src/export_html.cpp:198
+#: ../src/export_html.cpp:179
 msgid "Fuzzy translation"
 msgstr "அரைகுறை  மொழிபெயர்ப்பு"
 
-#: ../src/edframe.cpp:1014 ../src/edframe.cpp:1142
-#, fuzzy
-msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
+#: ../src/edframe.cpp:1043 ../src/edframe.cpp:1102
+msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "குனு கெட்டெக்ஸ்ட் காடலாகுகள் (*.po)|*.po|All files (*.*)|*.*"
 
-#: ../src/edframe.cpp:1230 ../src/edframe.cpp:1377
-#, fuzzy
-msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
+#: ../src/edframe.cpp:1176 ../src/edframe.cpp:1327
+msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "குனு கெட்டெக்ஸ்ட் வார்ப்புகள் (*.pot)|*.pot|All files (*.*)|*.*"
 
-#: standard input:69
-msgid "GNU gettext documentation"
-msgstr "குனு கெட்டெக்ஸ்ட் ஆவணம்"
-
-#: standard input:145
+#: ../src/resources/prefs.xrc:621
 msgid "Generate TM database"
 msgstr "நினைவக தரவுக் களனை  உருவாக்குக"
 
-#: standard input:113
+#: ../src/resources/prefs.xrc:278
 msgid "Generate database"
 msgstr "தரவுக் களனை உருவாக்குக"
 
-#: ../src/edframe.cpp:1429
-msgid "Gettext syntax error"
-msgstr "கெட்டெக்ஸ்ட் நெறி வழு"
-
-#: ../src/edframe.cpp:2768
-#, c-format
-msgid "Go to bookmark %i\tCtrl-%i"
+#: ../src/edframe.cpp:2798
+#, fuzzy, c-format
+msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "நினைவுக் குறி %i\tCtrl-%i க்குச் செல்லவும்."
 
-#: ../src/edframe.cpp:2765
-#, c-format
-msgid "Go to bookmark %i\tCtrl-Alt-%i"
+#: ../src/edframe.cpp:2792
+#, fuzzy, c-format
+msgid "Go to Bookmark %i\tCtrl+Alt+%i"
 msgstr "நினைவுக் குறி %i\tCtrl-Alt-%i க்குச் செல்கம்."
 
-#: ../src/edframe.cpp:1180
+#: ../src/edframe.cpp:2795
+#, fuzzy, c-format
+msgid "Go to bookmark %i\tCtrl+%i"
+msgstr "நினைவுக் குறி %i\tCtrl-%i க்குச் செல்லவும்."
+
+#: ../src/edframe.cpp:1140
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML கோப்பு (*.html)|*.html"
 
-#: standard input:74
+#: ../src/attentionbar.cpp:78
+msgid "Hide this notification message"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:18
 msgid "Identity"
 msgstr "அடையாளம்"
 
-#: standard input:88
+#: ../src/resources/prefs.xrc:121
 msgid "If checked, the comment window will be editable."
 msgstr "தேர்வு செய்யப் பட்டால், குறிப்பிடுவதற்கானச் சாளரம் தொகுக்க வல்லதாக மாறும்."
 
-#: standard input:130
+#: ../src/edframe.cpp:2229
+#, fuzzy
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"காடலாகிலிருந்து பயன்படுத்தப் படாத அனைத்து மொழிபெயர்ப்புகளையும் அகற்றுவதில் தாங்கள் "
+"உறுதியாக உள்ளீர்களா? \n"
+" அங்ஙனம் தொடர விரும்பிடின் இவை  எதிர்காலத்தில் மீண்டும் சேர்க்கப் பட்டால் தாங்கள் மீண்டும் "
+"புதிதாக மொழிபெயர்க்க வேண்டிய அவசியம் உண்டாகலாம்."
+
+#: ../src/resources/prefs.xrc:472
 msgid "Invocation:"
 msgstr "சுழி:"
 
-#: ../src/settingsdlg.cpp:71 standard input:160
+#: ../src/edframe.cpp:2234 ../src/transmem.cpp:1202
+msgid "Keep"
+msgstr ""
+
+#: ../src/propertiesdlg.cpp:58
 msgid "Keywords"
 msgstr "துருப்புச் சொற்கள்"
 
-#: ../src/chooselang.cpp:161
+#: ../src/chooselang.cpp:159
 msgid "Language selection"
 msgstr "மொழித் தேர்வு:"
 
-#: ../src/export_html.cpp:123 standard input:127 input:128 input:151
+#: ../src/export_html.cpp:108 ../src/resources/prefs.xrc:440
+#: ../src/resources/prefs.xrc:444 ../src/resources/properties.xrc:62
 msgid "Language:"
 msgstr "மொழி:"
 
-#: ../src/manager.cpp:275
+#: ../src/manager.cpp:249
 msgid "Last modified"
 msgstr "கடைசியாக புதுப்பிக்கப் பட்டது"
 
-#: ../src/edlistctrl.cpp:314 ../src/fileviewer.cpp:110
+#: ../src/resources/properties.xrc:111
+msgid "Learn about plural forms"
+msgstr ""
+
+#: ../src/edframe.cpp:889
+msgid "Learn more"
+msgstr ""
+
+#: ../src/edlistctrl.cpp:328
 msgid "Line"
 msgstr "வரி"
 
-#: ../src/catalog.cpp:161
+#: ../src/catalog.cpp:145
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "%u வரிகள், '%s' கோப்பில் பழுதடைந்துள்ளது (ஏற்க இயலாத %s தரவு)."
 
-#: standard input:92
+#: ../src/resources/prefs.xrc:149
 msgid "Line endings format:"
 msgstr "வரி நிறைவடையும் வகை:"
 
-#: standard input:129
+#: ../src/resources/prefs.xrc:456
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "செமி கோலன்களால் பிரிக்கப் படும்படிக்கு விகுதிகள் (உ.ம். *.cpp;*.h):"
 
-#: standard input:95
-msgid "Macintosh"
-msgstr "மாகின்டோஷ்"
-
-#: ../src/catalog.cpp:236
+#: ../src/catalog.cpp:220
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "எசகு பிசகான தலைப்பு: '%s'"
 
-#: standard input:116
+#: ../src/resources/prefs.xrc:300
 msgid "Max. # of missing words:"
 msgstr "அதிகபட்சமாக. # சொற்கள் விடுபட்டுள்ளன:"
 
-#: standard input:117
+#: ../src/resources/prefs.xrc:322
 msgid "Max. difference in sentence length:"
 msgstr "வாசகத்தின் உட்ச பட்ச வேறுபாடு:"
 
-#: ../src/catalog.cpp:1482
+#: ../src/catalog.cpp:1543
 msgid "Merging differences..."
 msgstr "வேறுபாடுகள் ஒன்றிணைக்கப் படுகின்றன..."
 
@@ -668,11 +930,19 @@ msgstr "கீழே  நகர்க"
 msgid "Move up"
 msgstr "மேலே  நகர்க"
 
-#: ../src/prefsdlg.cpp:59
+#: ../src/prefsdlg.cpp:55
 msgid "My Languages"
 msgstr "எமது மொழிகள்"
 
-#: standard input:86
+#: ../src/resources/menus.xrc:152
+msgid "Ne&xt Unfinished"
+msgstr ""
+
+#: ../src/resources/menus.xrc:151
+msgid "Ne&xt unfinished"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:113
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -682,11 +952,16 @@ msgstr ""
 "விசைப் பலகையின் Ctrl-arrows விசைகளை பயன்படுத்தவேண்டியிருக்கும். ஆயினும் தத்து "
 "விசையினை  அழுத்தாது உடனுக்குடன் உரையிடவும் இது உதவும்."
 
-#: standard input:20 input:121
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:378
 msgid "New"
 msgstr "புதியவை "
 
-#: standard input:40
+#: ../src/resources/menus.xrc:18
+#, fuzzy
+msgid "New Catalog from POT File..."
+msgstr "POT கோப்பிலிருந்து புதிய காடலாக்..."
+
+#: ../src/resources/menus.xrc:17
 msgid "New catalog from POT file..."
 msgstr "POT கோப்பிலிருந்து புதிய காடலாக்..."
 
@@ -694,266 +969,326 @@ msgstr "POT கோப்பிலிருந்து புதிய காட
 msgid "New item"
 msgstr "புதிய பொருள்"
 
-#: standard input:165
+#: ../src/resources/summary.xrc:30
 msgid "New strings"
 msgstr "புதிய சரங்கள்"
 
-#: standard input:19
+#: ../src/resources/find.xrc:102
 msgid "Next >"
 msgstr "அடுத்து >"
 
-#: ../src/fileviewer.cpp:151
-msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "தொகுப்பவர் குறிப்பிடப் படவில்லை. முன்னுரிமைச் சாளரத்தில் குறிப்பிடவும்."
-
-#: ../src/digger.cpp:250
+#: ../src/digger.cpp:201
 msgid "No files found in: "
 msgstr "கோப்பெதுவும் கிடைக்கவில்லை "
 
-#: ../src/edframe.cpp:1446
+#: ../src/edframe.cpp:1391
+#, fuzzy
+msgid "No problems with the translation found."
+msgstr "இச்சரத்திற்கு சுட்டிகள் எதுவும் கிடைக்கவில்லை."
+
+#: ../src/edframe.cpp:1433
 msgid "No references to this string found."
 msgstr "இச்சரத்திற்கு சுட்டிகள் எதுவும் கிடைக்கவில்லை."
 
-#: ../src/export_html.cpp:170
+#: ../src/export_html.cpp:151
 msgid "Notes"
 msgstr "துப்புகள்"
 
-#: standard input:3 input:32 input:124 input:139 input:161 input:169
+#: ../src/edframe.cpp:550
+#, fuzzy
+msgid "Notes for translators:"
+msgstr "சுயமான மொழிபெயர்ப்புகள்:"
+
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
+#: ../src/resources/prefs.xrc:416 ../src/resources/prefs.xrc:558
+#: ../src/resources/properties.xrc:190 ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "ஆம்"
 
-#: standard input:167
+#: ../src/resources/summary.xrc:51
 msgid "Obsolete strings"
 msgstr "காலாவதியான சரங்கள்"
 
-#: standard input:177
+#: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
 msgid "Open"
 msgstr "திறக்க"
 
-#: ../src/edframe.cpp:1012 standard input:178
+#: ../src/edframe.cpp:1041 ../src/resources/toolbar.xrc:16
+#: ../src/resources/toolbar.xrc:21
 msgid "Open catalog"
 msgstr "காடலாகினைத் திறக்கவும்"
 
-#: ../src/edframe.cpp:1228 ../src/edframe.cpp:1375
+#: ../src/edframe.cpp:1174 ../src/edframe.cpp:1325
 msgid "Open catalog template"
 msgstr "காடலாக் வார்ப்பினைத் திறக்க"
 
-#: standard input:84
+#: ../src/resources/prefs.xrc:104
 msgid "Open catalogs manager on Poedit startup"
 msgstr "பி.ஓ எடிட் துவங்குகையிலேயே  காடலாக் நிர்வாகத்தினைத் துவக்கவும்."
 
-#: standard input:101
-msgid "Open source files in editor, not in file viewer"
-msgstr "திறந்த மூல கோப்புகள் உரைத்தொகுப்பில், விழியில் அல்ல"
+#: ../src/resources/menus.xrc:147
+msgid "P&revious Unfinished"
+msgstr ""
 
-#: ../src/edlistctrl.cpp:311 ../src/export_html.cpp:163
-msgid "Original string"
-msgstr "மூலச் சரம்"
+#: ../src/resources/menus.xrc:146
+msgid "P&revious unfinished"
+msgstr ""
 
-#: standard input:131
+#: ../src/resources/prefs.xrc:476
 msgid "Parser command:"
 msgstr "பார்ஸர் ஆணை:"
 
-#: standard input:126
+#: ../src/resources/prefs.xrc:435
 msgid "Parser setup"
 msgstr "பார்ஸர் அமைப்பு"
 
-#: standard input:119
+#: ../src/resources/prefs.xrc:353
 msgid "Parsers"
 msgstr "பார்ஸர்கள்"
 
-#: ../src/digger.cpp:135
+#: ../src/digger.cpp:92
 #, c-format
 msgid "Parsing %s files..."
 msgstr "%s கோப்புகள் சரவையிடப்படுகின்றன..."
 
-#: standard input:109
-msgid "Path to DB:"
-msgstr "தரவுக் களனுடைய பாதை:"
-
-#: ../src/settingsdlg.cpp:73 standard input:158
+#: ../src/propertiesdlg.cpp:60
 msgid "Paths"
 msgstr "பாதைகள்"
 
-#: standard input:73
+#: ../src/resources/prefs.xrc:12
 msgid "Personalize"
 msgstr "தன்மயமாக்குக"
 
-#: standard input:112
+#: ../src/resources/prefs.xrc:271
 msgid "Pick language from the list of known languages"
 msgstr "அறியக் கிடைக்கும் மொழிகளிலிருந்து மொழியினைத் தேர்வு செய்க: "
 
-#: standard input:172
+#: ../src/resources/tm_update.xrc:21
 msgid "Please add directories where locale files are stored on your system:"
 msgstr ""
 "சுய மொழியின் கோப்புகள் கணினியின் எந்த அடைவுகளில் காக்கப்பட்டுள்ளனவோ, அவற்றை  சேர்க்கவும்."
 
-#: ../src/edframe.cpp:1454
+#: ../src/edframe.cpp:1441
 msgid "Please choose the reference you want to show:"
 msgstr "காட்ட விரும்பும் சுட்டியினை தேர்வு செய்க:"
 
-#: ../src/prefsdlg.cpp:355
+#: ../src/prefsdlg.cpp:334
 msgid "Please select language ISO code:"
 msgstr "மொழியின் ISO குறியீடு:"
 
-#: ../src/edframe.cpp:930
+#: ../src/edframe.cpp:925
 msgid "Please select language code:"
 msgstr "மொழிக்கான குறியீடு:"
 
-#: standard input:155
+#: ../src/transmem.cpp:1196
+#, c-format
+msgid ""
+"Please verify that all files were moved to the new location or do it "
+"manually if they weren't.\n"
+"\n"
+"Old location: %s\n"
+"New location: %s"
+msgstr ""
+
+#: ../src/resources/properties.xrc:98
 msgid "Plural Forms:"
 msgstr "பன்மை  வடிவங்கள்:"
 
-#: ../src/edframe.cpp:611
+#: ../src/edframe.cpp:564
 msgid "Plural:"
 msgstr "பன்மை:"
 
-#: ../src/edframe.cpp:472
+#: ../src/edframe.cpp:410
 msgid "Poedit"
 msgstr "பி.ஓ.எடிட்"
 
-#: ../src/manager.cpp:70
+#: ../src/manager.cpp:69
 msgid "Poedit - Catalogs manager"
 msgstr "பி.ஓ.எடிட் - காடலாக் நிர்வாகம்"
 
-#: ../src/digger.cpp:251
+#: ../src/digger.cpp:202
 msgid "Poedit did not find any files in scanned directories."
 msgstr "அலசப்பட்ட படைவுகளில் பி.ஓ எடிட் எந்தவொரு கோப்பினையும் கண்டெடுக்கவில்லை."
 
-#: ../src/edframe.cpp:2290
+#: ../src/edframe.cpp:2443
 msgid "Poedit is an easy to use translations editor."
 msgstr ""
 
-#: standard input:72
+#: ../src/transmem.cpp:1191
+#, fuzzy
+msgid "Poedit translation memory error"
+msgstr "நினைவகத்தினை புதுப்பிக்கவும்"
+
+#: ../src/resources/prefs.xrc:4
 msgid "Preferences"
 msgstr "முன்னுரிமைகள்"
 
-#: standard input:143
+#: ../src/resources/prefs.xrc:603
 msgid "Proceed"
 msgstr "முன்னேறுக"
 
-#: ../src/export_html.cpp:116 standard input:156
+#: ../src/export_html.cpp:101
 msgid "Project info"
 msgstr "திட்ட விவரம்"
 
-#: ../src/export_html.cpp:120 standard input:148
+#: ../src/export_html.cpp:105 ../src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "திட்டத்தின் பெயர் மற்றும் வெளியீட்டு எண்:"
 
-#: standard input:29
+#: ../src/resources/manager.xrc:69
 msgid "Project name:"
 msgstr "திட்டத்தின் பெயர்:"
 
-#: ../src/edframe.cpp:2146
+#: ../src/edframe.cpp:2234 ../src/transmem.cpp:1202
+msgid "Purge"
+msgstr ""
+
+#: ../src/edframe.cpp:2225
 msgid "Purge deleted translations"
 msgstr "அழிக்கப் பட்ட மொழிபெயர்ப்புகளை அகற்றவும்"
 
-#: ../src/edframe.cpp:1454
+#: ../src/resources/manager.xrc:137 ../src/resources/menus.xrc:52
+msgid "Quit"
+msgstr ""
+
+#: ../src/edframe.cpp:1441
 msgid "References"
 msgstr "சுட்டிகள்"
 
-#: ../src/edframe.cpp:2236 ../src/edframe.cpp:2240
+#: ../src/edframe.cpp:2401 ../src/edframe.cpp:2405
 msgid "References:"
 msgstr "சுட்டிகள்:"
 
-#: standard input:114
+#: ../src/resources/prefs.xrc:279
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr ""
 "மேற்குறிப்பிடப் பட்டுள்ள பாதைகளிலிருந்து மொழிபெயர்ப்பு நினைவகத்திற்கு புத்துயிரூட்டுக."
 
-#: standard input:174
+#: ../src/edframe.cpp:1922
+msgid "Required header Plural-Forms is missing."
+msgstr ""
+
+#: ../src/resources/tm_update.xrc:42
 msgid "Reset to defaults"
 msgstr "இயல்பானத் தேர்வுகளுக்கு மாற்றுக"
 
-#: standard input:179
+#: ../src/edframe.cpp:995 ../src/resources/toolbar.xrc:25
+#: ../src/resources/toolbar.xrc:30
 msgid "Save"
 msgstr "காக்க"
 
-#: standard input:43
+#: ../src/resources/menus.xrc:35
+#, fuzzy
+msgid "Save &As..."
+msgstr "காக்க &as..."
+
+#: ../src/resources/menus.xrc:34
 msgid "Save &as..."
 msgstr "காக்க &as..."
 
-#: ../src/edframe.cpp:1141
+#: ../src/edframe.cpp:1101
 msgid "Save as..."
 msgstr "விருப்பம் போல் காக்க..."
 
-#: standard input:180
+#: ../src/resources/toolbar.xrc:26 ../src/resources/toolbar.xrc:31
 msgid "Save catalog"
 msgstr "காடலாகினைக் காக்கவும்"
 
-#: ../src/edframe.cpp:970 ../src/edframe.cpp:995 ../src/edframe.cpp:1036
-#: ../src/edframe.cpp:1088 ../src/edframe.cpp:1206
+#: ../src/edframe.cpp:988
 msgid "Save changes"
 msgstr "மாற்றங்களைக் காக்கவும்"
 
-#: ../src/transmemupd.cpp:152
+#: ../src/transmemupd.cpp:149
 msgid "Scanning file: "
 msgstr "அலசப் படும் கோப்பு: "
 
-#: ../src/digger.cpp:121
+#: ../src/digger.cpp:77
 msgid "Scanning files..."
 msgstr "கோப்புகள் அலசப் படுகின்றன..."
 
-#: ../src/transmemupd_wizard.cpp:59
+#: ../src/transmemupd_wizard.cpp:55
 msgid "Search Paths"
 msgstr "தேடப் பட வேண்டிய பாதைகள்"
 
-#: ../src/edframe.cpp:929
+#: ../src/edframe.cpp:924
 msgid "Select catalog's language"
 msgstr "காடலாகின் மொழியினைத் தேர்வு செய்க"
 
-#: ../src/prefsdlg.cpp:368 ../src/transmemupd_wizard.cpp:112
-#: ../src/manager.cpp:306
+#: ../src/manager.cpp:280 ../src/transmemupd_wizard.cpp:108
 msgid "Select directory"
 msgstr "அடைவினைத் தேர்வு செய்க"
 
-#: ../src/prefsdlg.cpp:354
+#: ../src/prefsdlg.cpp:333
 msgid "Select language"
 msgstr "மொழியினைத் தேர்வு செய்க"
 
-#: ../src/chooselang.cpp:160
+#: ../src/chooselang.cpp:158
 msgid "Select your prefered language"
 msgstr "தாங்கள் விரும்பும் மொழியினைத் தேர்வு செய்க"
 
-#: ../src/edframe.cpp:2767
-#, c-format
-msgid "Set bookmark %i\tAlt-%i"
+#: ../src/edframe.cpp:2797
+#, fuzzy, c-format
+msgid "Set Bookmark %i\tAlt+%i"
 msgstr "நினைவுக்குறி %i\tAlt-%i இடுக"
 
-#: ../src/edframe.cpp:2764
-#, c-format
-msgid "Set bookmark %i\tCtrl-%i"
+#: ../src/edframe.cpp:2791
+#, fuzzy, c-format
+msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "நினைவுக்குறி %i\tCtrl-%i இடுக"
 
-#: standard input:147
-msgid "Settings"
-msgstr "அமைப்பு"
+#: ../src/edframe.cpp:2794
+#, fuzzy, c-format
+msgid "Set bookmark %i\tAlt+%i"
+msgstr "நினைவுக்குறி %i\tAlt-%i இடுக"
 
-#: ../src/edapp.cpp:174
-msgid "Setup"
-msgstr "நிறுவுக"
+#: ../src/edframe.cpp:1893
+msgid "Set email"
+msgstr ""
 
-#: standard input:65
-msgid "Show &comment window"
-msgstr "&குறிப்புகள் சாளரத்தினைக் காட்டுக"
-
-#: standard input:66
-msgid "Show automatic c&omments window"
-msgstr "சுய &குறிப்புச் சாளரத்தினைக் காட்டவும்"
-
-#: standard input:83
+#: ../src/resources/prefs.xrc:97
 msgid "Show summary after catalog update"
 msgstr "காடலாக் புதுப்பிக்கப் பட்ட பின்னர் தொகுப்புரையினைத் திரையிடுக"
 
-#: ../src/edframe.cpp:610
+#: ../src/edframe.cpp:562
 msgid "Singular:"
 msgstr "ஒருமை:"
 
-#: standard input:137 input:154
+#: ../src/resources/menus.xrc:182
+msgid "Sort by &File Order"
+msgstr ""
+
+#: ../src/resources/menus.xrc:187
+msgid "Sort by &Source"
+msgstr ""
+
+#: ../src/resources/menus.xrc:192
+#, fuzzy
+msgid "Sort by &Translation"
+msgstr "மொழிபெயர்ப்பு"
+
+#: ../src/resources/menus.xrc:181
+msgid "Sort by &file order"
+msgstr ""
+
+#: ../src/resources/menus.xrc:186
+msgid "Sort by &source"
+msgstr ""
+
+#: ../src/resources/menus.xrc:191
+#, fuzzy
+msgid "Sort by &translation"
+msgstr "அரைகுறை  மொழிபெயர்ப்பு"
+
+#: ../src/export_html.cpp:145
+#, fuzzy
+msgid "Source"
+msgstr "மூலக் கோப்பு"
+
+#: ../src/resources/prefs.xrc:533 ../src/resources/properties.xrc:86
 msgid "Source code charset:"
 msgstr "மூல நிரலின் எழுத்து வகை:"
 
-#: standard input:120
+#: ../src/resources/prefs.xrc:359
 msgid "Source code parsers:"
 msgstr "மூல நிரலின் பார்ஸர்கள்:"
 
@@ -961,23 +1296,59 @@ msgstr "மூல நிரலின் பார்ஸர்கள்:"
 msgid "Source file"
 msgstr "மூலக் கோப்பு"
 
-#: standard input:11
+#: ../src/fileviewer.cpp:61
+#, fuzzy
+msgid "Source file occurrence:"
+msgstr "மூலக் கோப்பு"
+
+#: ../src/edlistctrl.cpp:325
+#, fuzzy
+msgid "Source text"
+msgstr "மூலக் கோப்பு"
+
+#: ../src/edframe.cpp:536
+#, fuzzy
+msgid "Source text:"
+msgstr "மூலக் கோப்பு"
+
+#: ../src/resources/properties.xrc:179
+msgid "Sources keywords"
+msgstr ""
+
+#: ../src/resources/properties.xrc:158
+#, fuzzy
+msgid "Sources paths"
+msgstr "தேடப் பட வேண்டிய பாதைகள்"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages).
+#: ../src/edframe.cpp:885
+#, c-format
+msgid "Spellchecker dictionary for %s isn't available, you need to install it."
+msgstr ""
+
+#: ../src/resources/find.xrc:43
 msgid "Start from the first item"
 msgstr "முதற் பொருளிலிருந்து துவக்குக"
 
-#: standard input:9
+#: ../src/resources/find.xrc:21
 msgid "String to find:"
 msgstr "தேடப் பட வேண்டிய சரம்: "
 
-#: ../src/export_html.cpp:133 standard input:150
+#: ../src/edframe.cpp:1927
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr ""
+
+#: ../src/export_html.cpp:115 ../src/resources/properties.xrc:48
 msgid "Team's email address:"
 msgstr "குழுமத்தின் மின்னஞ்சல் முகவரி:"
 
-#: ../src/export_html.cpp:129 standard input:149
+#: ../src/export_html.cpp:111 ../src/resources/properties.xrc:34
 msgid "Team:"
 msgstr "குழுமம்:"
 
-#: ../src/catalog.cpp:1324
+#: ../src/catalog.cpp:1353
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -987,7 +1358,27 @@ msgstr ""
 "காடலாக் அமைப்புகளில் கூறிய படி '%s' எழுத்து வகையில் காடலாகினைச் காக்க இயலவில்லை. "
 "மாறாக UTF-8 ல் காக்கப் பட்டு அதற்கேற்றாற் போல் அமைப்பும் மாற்றப் பட்டுள்ளது."
 
-#: ../src/catalog.cpp:1041
+#: ../src/edframe.cpp:1380
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+
+#: ../src/edframe.cpp:1396
+#, fuzzy
+msgid "The translation is ready for use."
+msgstr "மொழிபெயர்ப்பு நினைவகம்"
+
+#: ../src/catalog.cpp:1311
+msgid ""
+"There was a problem formatting the file nicely (but it was saved all right)."
+msgstr ""
+
+#: ../src/transmem.cpp:1193
+msgid "There was a problem moving your translation memory."
+msgstr ""
+
+#: ../src/catalog.cpp:1030
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -995,7 +1386,7 @@ msgstr ""
 "காடலாகினைப் புதுப்பிக்கையில் சிக்கல். தரவு விடுபட்டுப்போகவோ  கெட்டுப் போகவோ  "
 "வாய்ப்புகளுண்டு."
 
-#: standard input:166
+#: ../src/resources/summary.xrc:38
 msgid ""
 "These strings are no longer in the sources.\n"
 "Poedit will remove them from the catalog now."
@@ -1003,7 +1394,7 @@ msgstr ""
 "இச்சரங்கள் மூல நிரலில் தற்பொழுது இல்லை.\n"
 "காடலாலிலிருந்து பி.ஓ. எடிட் அவற்றை  தற்போது நீக்கிவிடும்."
 
-#: standard input:164
+#: ../src/resources/summary.xrc:17
 msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "Poedit will add them to the catalog now."
@@ -1011,18 +1402,13 @@ msgstr ""
 "இச்சரங்கள் மூல நிரலில் இருந்தும் காடலாகில் இல்லை. \n"
 "பி.ஓ.எடிட் அவற்றை  தற்போது காடலாகில் சேர்க்கும்."
 
-#: ../src/edapp.cpp:174
-#, fuzzy
+#: ../src/edframe.cpp:1907
 msgid ""
-"This is first time you run Poedit.\n"
-"Please fill in your name and email address.\n"
-"(This information is used only in catalogs headers)"
+"This catalog has entries with plural forms, but doesn't have Plural-Forms "
+"header configured."
 msgstr ""
-"தாங்கள் முதல் முறையாக பி.ஓ.எடிட்டினை இயக்குகிறீர்கள்.\n"
-"தங்களின் பெயர் மர்றும் மின்னஞ்சல் முகவரிகளைத் தரவும்.\n"
-"(காடலாகின் தலைப்புகளில் இவை  பயன்படுத்தப் படும்)"
 
-#: standard input:132
+#: ../src/resources/prefs.xrc:488
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1033,7 +1419,7 @@ msgstr ""
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files (see below)."
 
-#: standard input:138
+#: ../src/resources/prefs.xrc:545
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1043,7 +1429,7 @@ msgstr ""
 "படும். \n"
 " %c எழுத்து வகையின் மதிப்பக விரிகிறது."
 
-#: standard input:136
+#: ../src/resources/prefs.xrc:526
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1053,7 +1439,7 @@ msgstr ""
 "படும். \n"
 " %f கோப்பின் பெயராக விரிகிறது. "
 
-#: standard input:134
+#: ../src/resources/prefs.xrc:507
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -1062,35 +1448,45 @@ msgstr ""
 "படும். \n"
 " %k துருப்புச் சொல்லாக விரிகிறது. "
 
-#: standard input:184
+#: ../src/resources/toolbar.xrc:52
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "அரைகுறை  மொழிபெயர்ப்பு இருக்குமாயின் மாற்றப்படும்"
 
-#: ../src/manager.cpp:271
+#: ../src/manager.cpp:245
 msgid "Total"
 msgstr "மொத்தம்"
 
-#: ../src/edlistctrl.cpp:312 ../src/export_html.cpp:166
+#: ../src/edlistctrl.cpp:326 ../src/export_html.cpp:148
 msgid "Translation"
 msgstr "மொழிபெயர்ப்பு"
 
-#: standard input:107
+#: ../src/resources/menus.xrc:79
+#, fuzzy
+msgid "Translation Is &Fuzzy"
+msgstr "&அரைகுறை  மொழிபெயர்ப்பு"
+
+#: ../src/resources/prefs.xrc:245
 msgid "Translation Memory"
 msgstr "மொழிபெயர்ப்பு நினைவகம்"
 
-#: ../src/transmemupd_wizard.cpp:144
+#: ../src/transmemupd_wizard.cpp:140
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 msgstr "(*.po;*.mo)|*.po;*.mo முதலிய மொழிபெயர்ப்புச் சொற்கள்."
 
-#: ../src/transmemupd_wizard.cpp:142
+#: ../src/transmemupd_wizard.cpp:138
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "(*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm முதலிய மொழிபெயர்ப்புச் சொற்கள்."
 
-#: standard input:51
+#: ../src/resources/menus.xrc:78
 msgid "Translation is &fuzzy"
 msgstr "&அரைகுறை  மொழிபெயர்ப்பு"
 
-#: standard input:175
+#: ../src/transmem.cpp:661
+#, fuzzy, c-format
+msgid "Translation memory database error: %s"
+msgstr "தரவுக் கள வழு: %s"
+
+#: ../src/resources/tm_update.xrc:68
 msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
@@ -1098,130 +1494,268 @@ msgstr ""
 "மொழிபெயர்ப்புக்கான நினைவகம் கீழ்காணும் கோப்புகளிலிருந்து உருவாக்கப் படும். \n"
 " தாங்கள் விருப்பப் பட்டால் மேற்கொண்டு கோப்புகளைச் சேர்க்கலாம்."
 
-#: standard input:170
+#: ../src/resources/properties.xrc:119
+#, fuzzy
+msgid "Translation properties"
+msgstr "மொழிபெயர்ப்பு நினைவகம்"
+
+#: ../src/edframe.cpp:544
+#, fuzzy
+msgid "Translation:"
+msgstr "மொழிபெயர்ப்பு"
+
+#: ../src/propertiesdlg.cpp:73
+msgid "UTF-8 (recommended)"
+msgstr ""
+
+#: ../src/resources/summary.xrc:79
 msgid "Undo"
 msgstr "வாபஸ்"
 
-#: standard input:93
-msgid "Unix"
-msgstr "யுனிக்ஸ்"
+#: ../src/resources/prefs.xrc:157
+msgid "Unix (recommended)"
+msgstr ""
 
-#: ../src/chooselang.cpp:71
+#: ../src/chooselang.cpp:60
 #, c-format
 msgid "Unknown locale code '%s' in registry."
 msgstr "பதிவில் இனங்காணப் படாத '%s' மொழிக் குறியீடு உள்ளது."
 
-#: ../src/manager.cpp:272
+#: ../src/manager.cpp:246
 msgid "Untrans"
 msgstr "மொழிபெயர்ப்பு வாபஸ்"
 
-#: standard input:181
+#: ../src/resources/toolbar.xrc:44
 msgid "Update"
 msgstr "ுரையினை புதிக்கவும்"
 
-#: standard input:26
+#: ../src/resources/manager.xrc:59
 msgid "Update all"
 msgstr "அனைத்தையும் புதுப்பி"
 
-#: standard input:27
+#: ../src/resources/manager.xrc:60
 msgid "Update all catalogs in the project"
 msgstr "இத்திட்டத்தில் உள்ள அனைத்து காடலாக் களையும் புதுப்பிக்க"
 
-#: standard input:182
+#: ../src/resources/toolbar.xrc:45
 msgid "Update catalog - synchronize it with sources"
 msgstr "காடலாகினைப் புதுப்பிக்க - மூலங்களுடன் இசைவு காண்க"
 
-#: standard input:56
+#: ../src/resources/menus.xrc:103
+#, fuzzy
+msgid "Update from &POT File..."
+msgstr "&POT கோப்பிலிருந்து புதுப்பிக்க"
+
+#: ../src/resources/menus.xrc:102
 msgid "Update from &POT file..."
 msgstr "&POT கோப்பிலிருந்து புதுப்பிக்க"
 
-#: standard input:163
+#: ../src/resources/summary.xrc:4
 msgid "Update summary"
 msgstr "தொகுப்புரையினை புதுப்பிக்கவும்"
 
-#: standard input:171
+#: ../src/resources/tm_update.xrc:4
 msgid "Update translation memory"
 msgstr "நினைவகத்தினை புதுப்பிக்கவும்"
 
-#: ../src/catalog.cpp:1442
-msgid "Updating catalog..."
+#: ../src/edframe.cpp:1297 ../src/manager.cpp:435
+#, fuzzy
+msgid "Updating catalog"
 msgstr "காடலாக் புதுப்பிக்கப் படுகின்றது..."
 
-#: ../src/edframe.cpp:1361
-msgid "Updating the catalog failed. Click on 'More>>' for details."
+#: ../src/edframe.cpp:1311
+#, fuzzy
+msgid "Updating the catalog failed. Click on 'Details >>' for details."
 msgstr ""
 "காடலாகினைப் புதுப்பிக்கையில் சிக்கல். விவரங்களுக்கு 'மேலும் அறிய >>' பொத்தானைச் "
 "சொடுக்குங்கள்."
 
-#: standard input:105
+#: ../src/transmemupd_wizard.cpp:194
+#, fuzzy
+msgid "Updating translation memory"
+msgstr "நினைவகத்தினை புதுப்பிக்கவும்"
+
+#: ../src/resources/prefs.xrc:213
 msgid "Use custom font for text fields"
 msgstr "தேர்வு செய்யப்பட்ட எழுத்துருக்களை  உரைக் களத்தில் பயன்படுத்துக"
 
-#: standard input:103
+#: ../src/resources/prefs.xrc:187
 msgid "Use custom font for translations list"
 msgstr "தேர்வு செய்யப் பட்ட எழுத்துருக்களை மொழிபெயர்ப்புப் பட்டியல்களில் பயன்படுத்தவும்."
 
-#: standard input:159
+#: ../src/resources/properties.xrc:166
+#, fuzzy
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
-"in source files, in addition to default ones."
+"in source files:"
 msgstr ""
 "மூலக் கோப்புகளில் மொழிபெயர்க்கப் படவேண்டிய சரங்களை  இனங்காண இத் துருப்புச் சொற்களை "
 "பயன்படுத்துக."
 
-#: standard input:12
+#: ../src/resources/toolbar.xrc:38
+msgid "Validate"
+msgstr ""
+
+#: ../src/edframe.cpp:1372 ../src/edframe.cpp:1392
+#, fuzzy
+msgid "Validation results"
+msgstr "மொழிபெயர்ப்பு நினைவகம்"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: ../src/edframe.cpp:2428
+#, fuzzy, c-format
+msgid "Version %s"
+msgstr "பதிப்பு"
+
+#: ../src/resources/prefs.xrc:255
+msgid "What languages do you want to use the TM with?"
+msgstr ""
+
+#: ../src/resources/find.xrc:50
 msgid "Whole words only"
 msgstr "முழுமையானச் சொற்கள் மாத்திரம்"
 
-#: standard input:94
+#: ../src/resources/prefs.xrc:158
 msgid "Windows"
 msgstr "விண்டோஸ்"
 
-#: ../src/edframe.cpp:1070
+#: ../src/edframe.cpp:378
 msgid "You can't drop more than one file on Poedit window."
 msgstr "ஒன்றுக்கு மேற்பட்ட கோப்புகளை  பி.ஓ.எடிட் சாளரத்தில் இடுவது சாத்தியமில்லை."
 
-#: ../src/chooselang.cpp:175
+#: ../src/chooselang.cpp:173
 msgid "You must restart Poedit for this change to take effect."
 msgstr "இம்மாற்றம் செயற்படுத்தப் பட பி.ஓ.எடிட்டினைத் தாங்கள் மீண்டும் துவங்க வேண்டும்."
 
-#: standard input:77
+#: ../src/edframe.cpp:1891
+msgid ""
+"You should set your email address in Preferences so that it can be used for "
+"Last-Translator header in GNU gettext files."
+msgstr ""
+
+#: ../src/edframe.cpp:992
+msgid "Your changes will be lost if you don't save them."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:44
 #, fuzzy
 msgid "Your email address:"
 msgstr "தங்களின் மின்னஞ்சல் முகவரி:"
 
-#: standard input:75
+#: ../src/resources/prefs.xrc:22
 msgid ""
 "Your name and email set below are only used\n"
 "to set the Last-Translator header of GNU gettext files."
 msgstr ""
 
-#: standard input:76
+#: ../src/resources/prefs.xrc:30
 msgid "Your name:"
 msgstr "தங்களின் பெயர்:"
 
-#: ../src/edframe.cpp:1978
-#, c-format
-msgid "[checking translations: %i left]"
-msgstr "[மொழிபெயர்ப்புகள் சரிபார்க்கப் படுகின்றன: %i எஞ்சியுள்ளது]"
+#: ../src/edapp.cpp:372
+msgid "don't delete temporary files (for debugging)"
+msgstr ""
 
-#: standard input:96
-msgid "current platform's default"
-msgstr "நிகழும் ப்ளாட்பார்மின் இயல்பிருப்பு"
+#, fuzzy
+#~ msgid "Automatic C&omments Window"
+#~ msgstr "சுய &குறிப்புச் சாளரத்தினைக் காட்டவும்"
 
-#: ../src/edframe.cpp:2274
-msgid "none"
-msgstr "ஒன்றுமில்லை "
+#, fuzzy
+#~ msgid "Automatic c&omments window"
+#~ msgstr "சுய &குறிப்புச் சாளரத்தினைக் காட்டவும்"
+
+#, fuzzy
+#~ msgid "Automatic comments:"
+#~ msgstr "சுய குறிப்புகளில் தேடுக"
+
+#~ msgid "Cannot execute program: "
+#~ msgstr "நிரலினை செயற்படுத்த இயலவில்லை:"
+
+#~ msgid "Country:"
+#~ msgstr "நாடு:"
+
+#~ msgid "Gettext syntax error"
+#~ msgstr "கெட்டெக்ஸ்ட் நெறி வழு"
+
+#, fuzzy
+#~ msgid "[checking translations: %i left]"
+#~ msgid_plural "[checking translations: %i left]"
+#~ msgstr[0] "[மொழிபெயர்ப்புகள் சரிபார்க்கப் படுகின்றன: %i எஞ்சியுள்ளது]"
+#~ msgstr[1] "[மொழிபெயர்ப்புகள் சரிபார்க்கப் படுகின்றன: %i எஞ்சியுள்ளது]"
+
+#~ msgid "&Contents..."
+#~ msgstr "&உள்ளடக்கங்கள்"
+
+#~ msgid "&Fullscreen view"
+#~ msgstr "&முழுத்திரைக் காட்சி"
+
+#~ msgid "&Settings..."
+#~ msgstr "&அமைப்புகள்"
+
+#~ msgid "(%f will be substituted with filename, %l with line number)"
+#~ msgstr "(%l வரியெண்ணுக்கும், %f கோப்பினது பெயருக்கும் மாற்றப் படும்)"
+
+#~ msgid "Edit the file in text editor"
+#~ msgstr "உரை  தொகுப்பளரின் துணையுடன் தொகுக்க"
+
+#~ msgid "Editor executable:"
+#~ msgstr "செயற்படுத்தவல்ல தொகுப்பாளர்:"
 
 #~ msgid "Error initializing spell checking: %s"
 #~ msgstr "%s க்கான பிழை திருத்தத்தினைத் துவக்குவதில் சிக்கல்"
 
+#~ msgid "External editor"
+#~ msgstr "புற தொகுப்பாளர்"
+
+#~ msgid "Fullscreen view"
+#~ msgstr "முழுத்திரைக் காட்சி"
+
+#~ msgid "GNU gettext documentation"
+#~ msgstr "குனு கெட்டெக்ஸ்ட் ஆவணம்"
+
+#~ msgid "Macintosh"
+#~ msgstr "மாகின்டோஷ்"
+
 #~ msgid "My Project"
 #~ msgstr "எமது திட்டம்"
 
+#~ msgid "No editor specified. Please set it in Preferences dialog."
+#~ msgstr "தொகுப்பவர் குறிப்பிடப் படவில்லை. முன்னுரிமைச் சாளரத்தில் குறிப்பிடவும்."
+
+#~ msgid "Open source files in editor, not in file viewer"
+#~ msgstr "திறந்த மூல கோப்புகள் உரைத்தொகுப்பில், விழியில் அல்ல"
+
+#~ msgid "Original string"
+#~ msgstr "மூலச் சரம்"
+
+#~ msgid "Path to DB:"
+#~ msgstr "தரவுக் களனுடைய பாதை:"
+
+#~ msgid "Settings"
+#~ msgstr "அமைப்பு"
+
+#~ msgid "Setup"
+#~ msgstr "நிறுவுக"
+
 #, fuzzy
-#~ msgid "translations editor"
-#~ msgstr "மொழிபெயர்ப்பு நினைவகம்"
+#~ msgid ""
+#~ "This is first time you run Poedit.\n"
+#~ "Please fill in your name and email address.\n"
+#~ "(This information is used only in catalogs headers)"
+#~ msgstr ""
+#~ "தாங்கள் முதல் முறையாக பி.ஓ.எடிட்டினை இயக்குகிறீர்கள்.\n"
+#~ "தங்களின் பெயர் மர்றும் மின்னஞ்சல் முகவரிகளைத் தரவும்.\n"
+#~ "(காடலாகின் தலைப்புகளில் இவை  பயன்படுத்தப் படும்)"
+
+#~ msgid "Unix"
+#~ msgstr "யுனிக்ஸ்"
+
+#~ msgid "current platform's default"
+#~ msgstr "நிகழும் ப்ளாட்பார்மின் இயல்பிருப்பு"
+
+#~ msgid "none"
+#~ msgstr "ஒன்றுமில்லை "
 
 #~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 #~ msgstr "சரங்கள் %i (அரைகுறை %i, வழு சான்றுடன் %i , மொழிபெயர்க்கப் படாதது %i)"
@@ -1229,8 +1763,5 @@ msgstr "ஒன்றுமில்லை "
 #~ msgid "'."
 #~ msgstr "'."
 
-#~ msgid "About Poedit"
-#~ msgstr "பி.ஓ.  எடிட் பற்றி"
-
-#~ msgid "version"
-#~ msgstr "பதிப்பு"
+#~ msgid "Failed to read extracted catalog."
+#~ msgstr "வெளிக்கொணரப்பட்ட காடலாகுகளை வாசிக்க இயலவில்லை."

@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2005 Vaclav Slavik
+ *  Copyright (C) 2000-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,38 +21,33 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Gettext execution code
- *
  */
 
 #ifndef _GEXECUTE_H_
 #define _GEXECUTE_H_
 
-class WXDLLEXPORT wxString;
-class WXDLLEXPORT wxEvtHandler;
+#include <wx/string.h>
+#include <vector>
 
-struct GettextProcessData
+
+struct GettextError
 {
-        bool Running;
-        int ExitCode;
-        wxArrayString Stderr;
-        wxArrayString Stdout;
+    int line;
+    wxString text;
 };
+
+typedef std::vector<GettextError> GettextErrors;
 
 
 /** Executes command. Writes stderr output to \a stderrOutput if not NULL,
     and logs it with wxLogError otherwise.
     \return true if program exited with exit code 0, false otherwise.
  */
-extern bool ExecuteGettext(const wxString& cmdline,
-                           wxString *stderrOutput = NULL);
+extern bool ExecuteGettext(const wxString& cmdline);
 
-/** Nonblocking version of the above -- upon termination, EVT_END_PROCESS
-    event is delivered to \a parent and \a data are filled. */
-extern wxProcess *ExecuteGettextNonblocking(const wxString& cmdline,
-                                            GettextProcessData *data,
-                                            wxEvtHandler *parent);
+/// Like ExecuteGettext(), but stores error output parsed into per-item entries.
+extern bool ExecuteGettextAndParseOutput(const wxString& cmdline,
+                                         GettextErrors& errors);
+
 
 #endif // _GEXECUTE_H_

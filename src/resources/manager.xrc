@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resource version="2.3.0.1">
+<resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
   <object class="wxPanel" name="manager_panel">
     <style>wxSUNKEN_BORDER</style>
     <object class="wxBoxSizer">
@@ -33,10 +33,10 @@
   </object>
   <object class="wxToolBar" name="manager_toolbar">
     <style platform="mac">wxTB_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
-    <style platform="win">wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
-    <style platform="unix">wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
-    <margins platform="win">2,2</margins>
-    <bitmapsize platform="win">22,22</bitmapsize>
+    <style platform="win">wxTB_HORZ_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT|wxTB_NODIVIDER</style>
+    <style platform="unix">wxTB_HORZ_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
+    <margins platform="win">4,4</margins>
+    <bitmapsize platform="win">32,32</bitmapsize>
     <bitmapsize platform="mac">32,32</bitmapsize>
     <object class="tool" name="prj_new">
       <bitmap stock_id="document-new"/>
@@ -128,10 +128,13 @@
         <label>_Preferences...</label>
       </object>
       <object class="separator"/>
+      <object class="wxMenuItem" name="wxID_CLOSE" platform="unix|mac">
+        <label platform="mac">_Close</label>
+        <accel platform="mac">Ctrl+W</accel>
+      </object>
       <object class="wxMenuItem" name="wxID_EXIT">
-        <label>_Close</label>
-        <accel platform="unix">Ctrl-W</accel>
-        <accel platform="win">Alt-F4</accel>
+        <label platform="win">E_xit</label>
+        <label platform="mac">Quit</label>
       </object>
     </object>
   </object>

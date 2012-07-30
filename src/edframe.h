@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2008 Vaclav Slavik
+ *  Copyright (C) 1999-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Editor frame
- *
  */
 
 #ifndef _EDFRAME_H_
@@ -34,31 +30,17 @@
   #define CAN_MODIFY_DEFAULT_FONT
 #endif
 
-// disable on-the-fly gettext validation, launching so many xmsgfmt
-// processes doesn't work well:
-#define USE_GETTEXT_VALIDATION 0
-
-#if USE_GETTEXT_VALIDATION
-#include <list>
-#endif
-
 #include <set>
 
 #include <wx/frame.h>
 #include <wx/docview.h>
 #include <wx/process.h>
 
-class WXDLLEXPORT wxSplitterWindow;
-class WXDLLEXPORT wxTextCtrl;
-class WXDLLEXPORT wxGauge;
-class WXDLLEXPORT wxNotebook;
-class WXDLLEXPORT wxStaticText;
-
-#ifdef __WXMSW__
-#include <wx/msw/helpchm.h>
-#else
-#include <wx/html/helpctrl.h>
-#endif
+class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
+class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
+class WXDLLIMPEXP_FWD_CORE wxGauge;
+class WXDLLIMPEXP_FWD_CORE wxNotebook;
+class WXDLLIMPEXP_FWD_CORE wxStaticText;
 
 #include "catalog.h"
 #include "gexecute.h"
@@ -70,6 +52,8 @@ class TransTextctrlHandler;
 
 class TranslationMemory;
 class PoeditFrame;
+class AttentionBar;
+class ErrorBar;
 
 WX_DECLARE_LIST(PoeditFrame, PoeditFramesList);
 
@@ -90,6 +74,9 @@ class PoeditFrame : public wxFrame
          */
         static PoeditFrame *Create(const wxString& catalog = wxEmptyString);
 
+        /// Opens given file in this frame. Asks user for permission first
+        /// if there's unsaved document.
+        void OpenFile(const wxString& filename);
 
         /** Returns pointer to existing instance of PoeditFrame that currently
             exists and edits \a catalog. If no such frame exists, returns NULL.
@@ -126,8 +113,15 @@ class PoeditFrame : public wxFrame
         void RefreshControls();
         /// Sets controls custom fonts.
         void SetCustomFonts();
+        void SetAccelerators();
 
         CatalogItem *GetCurrentItem() const;
+
+        // if there's modified catalog, ask user to save it; return true
+        // if it's save to discard m_catalog and load new data
+        bool CanDiscardCurrentDoc();
+        // implements opening of files, without asking user
+        void DoOpenFile(const wxString& filename);
 
         /// Puts text from textctrls to catalog & listctrl.
         void UpdateFromTextCtrl();
@@ -155,26 +149,37 @@ class PoeditFrame : public wxFrame
         // (Re)initializes spellchecker, if needed
         void InitSpellchecker();
 
+        void EditPreferences();
+        void EditCatalogProperties();
+
+        // navigation to another item in the list
+        typedef bool (*NavigatePredicate)(const CatalogItem& item);
+        void Navigate(int step, NavigatePredicate predicate, bool wrap);
+        void OnDoneAndNext(wxCommandEvent&);
+        void OnPrev(wxCommandEvent&);
+        void OnNext(wxCommandEvent&);
+        void OnPrevPage(wxCommandEvent&);
+        void OnNextPage(wxCommandEvent&);
+        void OnPrevUnfinished(wxCommandEvent&);
+        void OnNextUnfinished(wxCommandEvent&);
+
         // Message handlers:
         void OnNew(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
         void OnHelp(wxCommandEvent& event);
-        void OnHelpGettext(wxCommandEvent& event);
         void OnQuit(wxCommandEvent& event);
+        void OnCloseCmd(wxCommandEvent& event);
         void OnSave(wxCommandEvent& event);
         void OnSaveAs(wxCommandEvent& event);
         wxString GetSaveAsFilename(Catalog *cat, const wxString& current);
         void DoSaveAs(const wxString& filename);
         void OnOpen(wxCommandEvent& event);
         void OnOpenHist(wxCommandEvent& event);
-#ifdef __WXMSW__
-        void OnFileDrop(wxDropFilesEvent& event);
-#endif
-        void OnSettings(wxCommandEvent& event);
+        void OnProperties(wxCommandEvent& event);
         void OnPreferences(wxCommandEvent& event);
         void OnUpdate(wxCommandEvent& event);
+        void OnValidate(wxCommandEvent& event);
         void OnListSel(wxListEvent& event);
-        void OnListActivated(wxListEvent& event);
         void OnListRightClick(wxMouseEvent& event);
         void OnListFocus(wxFocusEvent& event);
         void OnCloseWindow(wxCloseEvent& event);
@@ -187,15 +192,16 @@ class PoeditFrame : public wxFrame
         void OnLinesFlag(wxCommandEvent& event);
         void OnCommentWinFlag(wxCommandEvent& event);
         void OnAutoCommentsWinFlag(wxCommandEvent& event);
-        void OnShadedListFlag(wxCommandEvent& event);
-        void OnInsertOriginal(wxCommandEvent& event);
-#ifndef __WXMAC__
-        void OnFullscreen(wxCommandEvent& event);
-#endif
+        void OnCopyFromSource(wxCommandEvent& event);
+        void OnClearTranslation(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
         void OnEditComment(wxCommandEvent& event);
         void OnManager(wxCommandEvent& event);
         void OnCommentWindowText(wxCommandEvent& event);
+        void OnSortByFileOrder(wxCommandEvent&);
+        void OnSortBySource(wxCommandEvent&);
+        void OnSortByTranslation(wxCommandEvent&);
+        void OnSortUntranslatedFirst(wxCommandEvent&);
 #ifdef USE_TRANSMEM
         void OnAutoTranslate(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
@@ -206,21 +212,13 @@ class PoeditFrame : public wxFrame
         void OnGoToBookmark(wxCommandEvent& event);
         void OnSetBookmark(wxCommandEvent& event);
 
-        void AddBookmarksMenu();
+        void AddBookmarksMenu(wxMenu *menu);
 
         void OnExport(wxCommandEvent& event);
         bool ExportCatalog(const wxString& filename);
 
         void OnIdle(wxIdleEvent& event);
-        void OnEndProcess(wxProcessEvent& event);
-
-        void BeginItemValidation();
-        void EndItemValidation();
-
-        // stops validation
-        void CancelItemsValidation();
-        // starts validation from scratch
-        void RestartItemsValidation();
+        void OnSize(wxSizeEvent& event);
 
         // updates the status of both comment windows: Automatic and Translator's
         void UpdateDisplayCommentWin();
@@ -229,26 +227,13 @@ class PoeditFrame : public wxFrame
 
         void RecreatePluralTextCtrls();
 
-        void InitHelp();
-        wxString LoadHelpBook(const wxString& name);
-
         void RefreshSelectedItem();
+
+        void ReportValidationErrors(int errors, bool from_save);
 
         DECLARE_EVENT_TABLE()
 
     private:
-#if USE_GETTEXT_VALIDATION
-        struct ValidationProcessData : public GettextProcessData
-        {
-            wxString tmp1, tmp2;
-        };
-
-        wxProcess *m_gettextProcess;
-        int m_itemBeingValidated;
-        std::list<int> m_itemsToValidate;
-        ValidationProcessData m_validationProcess;
-#endif
-
         std::set<int> m_itemsRefreshQueue;
 
         bool m_commentWindowEditable;
@@ -261,26 +246,22 @@ class PoeditFrame : public wxFrame
         wxArrayString m_autoTranslations;
 #endif
 
-        bool m_helpInitialized;
-#ifdef __WXMSW__
-        wxCHMHelpController m_help;
-#else
-        wxHtmlHelpController m_help;
-#endif
-        wxString m_helpBook, m_helpBookGettext;
-
         wxPanel *m_bottomLeftPanel;
         wxPanel *m_bottomRightPanel;
         wxSplitterWindow *m_splitter, *m_bottomSplitter;
         PoeditListCtrl *m_list;
+        wxStaticText *m_labelComment, *m_labelAutoComments;
+        wxStaticText *m_labelContext;
+        ErrorBar *m_errorBar;
         wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textTrans, *m_textComment, *m_textAutoComments;
         std::vector<wxTextCtrl*> m_textTransPlural;
         wxTextCtrl *m_textTransSingularForm;
         wxNotebook *m_pluralNotebook;
         wxStaticText *m_labelSingular, *m_labelPlural;
-#ifdef CAN_MODIFY_DEFAULT_FONT
-        wxFont m_boldGuiFont;
-#endif
+
+        wxFont m_normalGuiFont, m_boldGuiFont;
+
+        AttentionBar *m_attentionBar;
 
         bool m_modified;
         bool m_hasObsoleteItems;
@@ -290,6 +271,7 @@ class PoeditFrame : public wxFrame
         bool m_displayAutoCommentsWin;
         wxFileHistory m_history;
         bool m_dontAutoclearFuzzyStatus;
+        bool m_setSashPositionsWhenMaximized;
 
         friend class ListHandler;
         friend class TextctrlHandler;

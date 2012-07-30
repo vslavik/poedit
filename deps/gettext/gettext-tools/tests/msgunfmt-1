@@ -1,0 +1,53 @@
+#! /bin/sh
+
+# Test of general operation.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles mu-test1.in"
+cat <<EOF > mu-test1.in
+msgid "eight"
+msgstr "eighth"
+
+msgid "five"
+msgstr "fifth"
+
+msgid "four"
+msgstr "fourth"
+
+msgid "one"
+msgstr "first"
+
+msgid "seven"
+msgstr "seventh"
+
+msgid "six"
+msgstr "sixth"
+
+msgid "three"
+msgstr "third"
+
+msgid "two"
+msgstr "second"
+EOF
+
+tmpfiles="$tmpfiles mu-test1.mo"
+: ${MSGFMT=msgfmt}
+${MSGFMT} -o mu-test1.mo mu-test1.in
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mu-test1.tmp mu-test1.out"
+: ${MSGUNFMT=msgunfmt}
+${MSGUNFMT} -o mu-test1.tmp mu-test1.mo
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < mu-test1.tmp > mu-test1.out
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+: ${DIFF=diff}
+${DIFF} mu-test1.in mu-test1.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

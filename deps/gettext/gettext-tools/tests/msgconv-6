@@ -1,0 +1,59 @@
+#! /bin/sh
+
+# Test msgconv on a PO file with previous msgids.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles mco-test6.po"
+cat <<\EOF > mco-test6.po
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, fuzzy
+#| msgid "Â© Frobby Inc."
+msgid "(C) Frobby Inc."
+msgstr "(C) Dingsbums GmbH"
+
+#, fuzzy
+#| msgid "full 360Â°"
+msgid "full turn"
+msgstr "Volle 360 Grad"
+EOF
+
+tmpfiles="$tmpfiles mco-test6.tmp mco-test6.out"
+: ${MSGCONV=msgconv}
+${MSGCONV} --to-code=ISO-8859-1 -o mco-test6.tmp mco-test6.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < mco-test6.tmp > mco-test6.out
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mco-test6.ok"
+cat <<\EOF > mco-test6.ok
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, fuzzy
+#| msgid "© Frobby Inc."
+msgid "(C) Frobby Inc."
+msgstr "(C) Dingsbums GmbH"
+
+#, fuzzy
+#| msgid "full 360°"
+msgid "full turn"
+msgstr "Volle 360 Grad"
+EOF
+
+: ${DIFF=diff}
+${DIFF} mco-test6.ok mco-test6.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

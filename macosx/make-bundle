@@ -1,15 +1,17 @@
 #!/bin/sh
 
+set -e
+
 #
 # Creates Mac OS X bundle file. Must be run from $(builddir)/src
 #
-# Usage: make-bundle <bundleName.app> <rez> <top_builddir> <top_srcdir>
+# Usage: make-bundle <bundleName.app> <poedit_binary> <top_builddir> <top_srcdir>
 # 
 # $Id$
 #
 
 bundle="$1"
-rez="$2"
+poedit_binary="$2"
 top_builddir="$3"
 top_srcdir="$4"
 
@@ -36,8 +38,7 @@ mkdir -p $bundle/Contents/Resources
 bindir="$bundle/Contents/MacOS"
 
 # executables:
-cp poedit $bindir/Poedit
-$rez $bindir/Poedit
+cp $poedit_binary $bindir/Poedit
 
 if [ -n "$GETTEXT_PREFIX" ] ; then
     gettext_apps="msgfmt msgmerge msgunfmt msgcat xgettext"
@@ -72,20 +73,9 @@ else
     echo "         environment variable to a directory that contains them" >&2
 fi
 
-# extract (DWARF) debug information into separate dSYM files and pack them into
-# an archive:
-if [ -f /usr/bin/dsymutil ] ; then
-    dsymutil $bindir/Poedit
-    tar -cjf $bundle.dSYM.tar.bz2 $bundle/Contents/MacOS/Poedit.dSYM
-    rm -rf $bundle/Contents/MacOS/Poedit.dSYM
-    strip -u -r $bindir/Poedit
-else
-    echo "WARNING: Xcode 2.4+ is needed to extract debug information" >&2
-fi
-
 # metadata:
 cp $top_builddir/macosx/Info.plist $bundle/Contents
-cp $top_srcdir/macosx/*.icns $bundle/Contents/Resources
+cp $top_srcdir/icons/osx/*.icns $bundle/Contents/Resources
 cp $top_srcdir/macosx/dsa_pub.pem $bundle/Contents/Resources
 
 # gettext catalogs:
@@ -118,4 +108,7 @@ find $bundle/Contents/Resources/locale -type f
 # icons:
 iconsdir="$bundle/Contents/Resources/icons"
 mkdir -p $iconsdir
-cp $top_srcdir/src/icons/*.png $iconsdir
+cp $top_srcdir/icons/ui/*.png $iconsdir
+cp $top_srcdir/icons/ui/toolbar-32/*.png $iconsdir
+# now overwrite with Mac-specific ones:
+cp $top_srcdir/icons/ui/macosx/*.png $iconsdir

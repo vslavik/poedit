@@ -1,0 +1,56 @@
+#! /bin/sh
+
+# Even an empty string is extracted, if not overridden by xgettext's
+# default-constructed header entry.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles xg-test2.in.c"
+cat <<EOF > xg-test2.in.c
+This is a test of the xgettext functionality.
+/* xgettext:no-c-format */
+_("extract me")
+Sometimes keywords can be spread apart
+xgettext:no-c-format
+_ ( "what about me" )
+And even further on occasion
+_
+(
+"hello"
+)
+
+/* also empty strings */
+_("")
+EOF
+
+tmpfiles="$tmpfiles xg-test2.tmp.po xg-test2.po"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} -d xg-test2.tmp -k_ --omit-header --no-location xg-test2.in.c
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < xg-test2.tmp.po > xg-test2.po
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles xg-test2.ok"
+cat <<EOF > xg-test2.ok
+#, no-c-format
+msgid "extract me"
+msgstr ""
+
+msgid "what about me"
+msgstr ""
+
+msgid "hello"
+msgstr ""
+
+msgid ""
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} xg-test2.ok xg-test2.po
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

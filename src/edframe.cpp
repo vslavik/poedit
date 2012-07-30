@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2009 Vaclav Slavik
+ *  Copyright (C) 1999-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -20,10 +20,6 @@
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE. 
- *
- *  $Id$
- *
- *  Editor frame
  *
  */
 
@@ -48,6 +44,11 @@
 #include <wx/aboutdlg.h>
 #include <wx/iconbndl.h>
 #include <wx/clipbrd.h>
+#include <wx/dnd.h>
+
+#ifdef USE_SPARKLE
+#include "osx/sparkle.h"
+#endif // USE_SPARKLE
 
 #ifdef USE_SPELLCHECKING
 
@@ -61,11 +62,12 @@
 #endif // USE_SPELLCHECKING
 
 #include <map>
+#include <algorithm>
 
 #include "catalog.h"
 #include "edapp.h"
 #include "edframe.h"
-#include "settingsdlg.h"
+#include "propertiesdlg.h"
 #include "prefsdlg.h"
 #include "fileviewer.h"
 #include "findframe.h"
@@ -75,6 +77,9 @@
 #include "commentdlg.h"
 #include "manager.h"
 #include "pluralforms/pl_evaluate.h"
+#include "attentionbar.h"
+#include "errorbar.h"
+#include "utility.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(PoeditFramesList);
@@ -159,114 +164,6 @@ class TextctrlHandler : public wxEvtHandler
         TextctrlHandler(PoeditFrame* frame) : m_list(frame->m_list) {}
 
     private:
-        void OnKeyDown(wxKeyEvent& event)
-        {
-            int keyCode = event.GetKeyCode();
-            int modifiers = event.GetModifiers();
-
-#if defined(__WXGTK__) && !wxCHECK_VERSION(2,8,9)
-            // wxGTK < 2.8.9 had a bug in Meta key detection, see
-            // bug #2006843 at http://tinyurl.com/56lsk2
-            modifiers &= ~wxMOD_META;
-#endif
-
-            if ( modifiers != wxMOD_CMD ) // Cmd-* or Ctrl-*
-            {
-                event.Skip();
-                return;
-            }
-
-            int sel = m_list->GetSelection();
-
-            switch (keyCode)
-            {
-                case WXK_UP:
-                    if ((sel > 0))
-                    {
-#ifdef __WXMAC__
-                        m_list->SetItemState(sel, 0, wxLIST_STATE_SELECTED);
-#endif
-                        m_list->EnsureVisible(sel - 1);
-                        m_list->SetItemState(sel - 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                    }
-                    else
-                        event.Skip();
-                    break;
-                case WXK_DOWN:
-                    if ((sel < m_list->GetItemCount() - 1))
-                    {
-#ifdef __WXMAC__
-                        m_list->SetItemState(sel, 0, wxLIST_STATE_SELECTED);
-#endif
-                        m_list->EnsureVisible(sel + 1);
-                        m_list->SetItemState(sel + 1, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                    }
-                    else
-                        event.Skip();
-                    break;
-                case WXK_PAGEUP:
-                {
-#ifdef __WXMAC__
-                    m_list->SetItemState(sel, 0, wxLIST_STATE_SELECTED);
-#endif
-                    int newy = sel - 10;
-                    if (newy < 0) newy = 0;
-                    m_list->EnsureVisible(newy);
-                    m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                    break;
-                }
-                case WXK_PAGEDOWN:
-                {
-#ifdef __WXMAC__
-                    m_list->SetItemState(sel, 0, wxLIST_STATE_SELECTED);
-#endif
-                    int newy = sel + 10;
-                    if (newy >= m_list->GetItemCount())
-                        newy = m_list->GetItemCount() - 1;
-                    m_list->EnsureVisible(newy);
-                    m_list->SetItemState(newy, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                    break;
-                }
-
-#ifdef __WXMSW__
-                // Text controls with wxTE_RICH2 style (richedit native
-                // controls) don't generate WM_COPY, WM_PASTE and WM_CUT
-                // messages that we need to capture (see below), so we have
-                // to handle their respective keys ourselves:
-                case 'C':
-                {
-                    wxTextCtrl *txt = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-                    if ( txt )
-                        txt->Copy();
-                    else
-                        event.Skip();
-                    break;
-                }
-                case 'V':
-                {
-                    wxTextCtrl *txt = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-                    if ( txt )
-                        txt->Paste();
-                    else
-                        event.Skip();
-                    break;
-                }
-                case 'X':
-                {
-                    wxTextCtrl *txt = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-                    if ( txt )
-                        txt->Cut();
-                    else
-                        event.Skip();
-                    break;
-                }
-#endif
-
-                default:
-                    event.Skip();
-            }
-        }
-
 #ifdef __WXMSW__
         // We use wxTE_RICH2 style, which allows for pasting rich-formatted
         // text into the control. We want to allow only plain text (all the
@@ -339,7 +236,6 @@ class TextctrlHandler : public wxEvtHandler
 };
 
 BEGIN_EVENT_TABLE(TextctrlHandler, wxEvtHandler)
-    EVT_KEY_DOWN(TextctrlHandler::OnKeyDown)
 #ifdef __WXMSW__
     EVT_TEXT_COPY(-1, TextctrlHandler::OnCopy)
     EVT_TEXT_CUT(-1, TextctrlHandler::OnCut)
@@ -380,10 +276,8 @@ class ListHandler : public wxEvtHandler
 
     private:
         void OnSel(wxListEvent& event) { m_frame->OnListSel(event); }
-        void OnActivated(wxListEvent& event) { m_frame->OnListActivated(event); }
         void OnRightClick(wxMouseEvent& event) { m_frame->OnListRightClick(event); }
         void OnFocus(wxFocusEvent& event) { m_frame->OnListFocus(event); }
-        void OnKeyDown(wxKeyEvent& event) { dynamic_cast<TextctrlHandler*>(m_frame->m_textTrans->GetEventHandler())->OnKeyDown(event); }
 
         DECLARE_EVENT_TABLE()
 
@@ -392,10 +286,8 @@ class ListHandler : public wxEvtHandler
 
 BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
    EVT_LIST_ITEM_SELECTED  (ID_LIST, ListHandler::OnSel)
-   EVT_LIST_ITEM_ACTIVATED (ID_LIST, ListHandler::OnActivated)
    EVT_RIGHT_DOWN          (          ListHandler::OnRightClick)
    EVT_SET_FOCUS           (          ListHandler::OnFocus)
-   EVT_KEY_DOWN            (          ListHandler::OnKeyDown)
 END_EVENT_TABLE()
 
 
@@ -417,35 +309,44 @@ class UnfocusableTextCtrl : public wxTextCtrl
 
 BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_EXIT,                 PoeditFrame::OnQuit)
-   EVT_MENU           (XRCID("menu_help"),        PoeditFrame::OnHelp)
-   EVT_MENU           (XRCID("menu_help_gettext"),PoeditFrame::OnHelpGettext)
+   EVT_MENU           (wxID_CLOSE,                PoeditFrame::OnCloseCmd)
+   EVT_MENU           (wxID_HELP,                 PoeditFrame::OnHelp)
    EVT_MENU           (wxID_ABOUT,                PoeditFrame::OnAbout)
-   EVT_MENU           (XRCID("menu_new"),         PoeditFrame::OnNew)
+   EVT_MENU           (wxID_NEW,                  PoeditFrame::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditFrame::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditFrame::OnOpen)
    EVT_MENU           (wxID_SAVE,                 PoeditFrame::OnSave)
    EVT_MENU           (wxID_SAVEAS,               PoeditFrame::OnSaveAs)
    EVT_MENU           (XRCID("menu_export"),      PoeditFrame::OnExport)
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
-   EVT_MENU           (XRCID("menu_catsettings"), PoeditFrame::OnSettings)
+   EVT_MENU           (XRCID("menu_catproperties"), PoeditFrame::OnProperties)
    EVT_MENU           (wxID_PREFERENCES,          PoeditFrame::OnPreferences)
    EVT_MENU           (XRCID("menu_update"),      PoeditFrame::OnUpdate)
    EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdate)
+   EVT_MENU           (XRCID("menu_validate"),    PoeditFrame::OnValidate)
    EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
    EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
    EVT_MENU           (XRCID("menu_quotes"),      PoeditFrame::OnQuotesFlag)
    EVT_MENU           (XRCID("menu_lines"),       PoeditFrame::OnLinesFlag)
    EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
    EVT_MENU           (XRCID("menu_auto_comments_win"), PoeditFrame::OnAutoCommentsWinFlag)
-   EVT_MENU           (XRCID("menu_shaded"),      PoeditFrame::OnShadedListFlag)
-   EVT_MENU           (XRCID("menu_insert_orig"), PoeditFrame::OnInsertOriginal)
+   EVT_MENU           (XRCID("sort_by_order"),    PoeditFrame::OnSortByFileOrder)
+   EVT_MENU           (XRCID("sort_by_source"),    PoeditFrame::OnSortBySource)
+   EVT_MENU           (XRCID("sort_by_translation"), PoeditFrame::OnSortByTranslation)
+   EVT_MENU           (XRCID("sort_untrans_first"), PoeditFrame::OnSortUntranslatedFirst)
+   EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
+   EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
-#ifndef __WXMAC__
-   EVT_MENU           (XRCID("menu_fullscreen"),  PoeditFrame::OnFullscreen)
-#endif
-   EVT_MENU           (XRCID("menu_find"),        PoeditFrame::OnFind)
+   EVT_MENU           (wxID_FIND,                 PoeditFrame::OnFind)
    EVT_MENU           (XRCID("menu_comment"),     PoeditFrame::OnEditComment)
    EVT_MENU           (XRCID("menu_manager"),     PoeditFrame::OnManager)
+   EVT_MENU           (XRCID("go_done_and_next"),   PoeditFrame::OnDoneAndNext)
+   EVT_MENU           (XRCID("go_prev"),            PoeditFrame::OnPrev)
+   EVT_MENU           (XRCID("go_next"),            PoeditFrame::OnNext)
+   EVT_MENU           (XRCID("go_prev_page"),       PoeditFrame::OnPrevPage)
+   EVT_MENU           (XRCID("go_next_page"),       PoeditFrame::OnNextPage)
+   EVT_MENU           (XRCID("go_prev_unfinished"), PoeditFrame::OnPrevUnfinished)
+   EVT_MENU           (XRCID("go_next_unfinished"), PoeditFrame::OnNextUnfinished)
    EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
 #ifdef USE_TRANSMEM
    EVT_MENU_RANGE     (ID_POPUP_TRANS, ID_POPUP_TRANS + 999,
@@ -458,32 +359,68 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
                        PoeditFrame::OnSetBookmark)
    EVT_CLOSE          (                PoeditFrame::OnCloseWindow)
    EVT_TEXT           (ID_TEXTCOMMENT,PoeditFrame::OnCommentWindowText)
-#ifdef __WXMSW__
-   EVT_DROP_FILES     (PoeditFrame::OnFileDrop)
-#endif
    EVT_IDLE           (PoeditFrame::OnIdle)
-   EVT_END_PROCESS    (-1, PoeditFrame::OnEndProcess)
+   EVT_SIZE           (PoeditFrame::OnSize)
 END_EVENT_TABLE()
+
+
+
+class PoeditDropTarget : public wxFileDropTarget
+{
+public:
+    PoeditDropTarget(PoeditFrame *win) : m_win(win) {}
+
+    virtual bool OnDropFiles(wxCoord /*x*/, wxCoord /*y*/,
+                             const wxArrayString& files)
+    {
+        if ( files.size() != 1 )
+        {
+            wxLogError(_("You can't drop more than one file on Poedit window."));
+            return false;
+        }
+
+        wxFileName f(files[0]);
+
+        if ( f.GetExt().Lower() != _T("po") )
+        {
+            wxLogError(_("File '%s' is not a message catalog."),
+                       f.GetFullPath().c_str());
+            return false;
+        }
+
+        if ( !f.FileExists() )
+        {
+            wxLogError(_("File '%s' doesn't exist."), f.GetFullPath().c_str());
+            return false;
+        }
+
+        m_win->OpenFile(f.GetFullPath());
+
+        return true;
+    }
+
+private:
+    PoeditFrame *m_win;
+};
 
 
 // Frame class:
 
 PoeditFrame::PoeditFrame() :
-    wxFrame(NULL, -1, _("Poedit"), wxDefaultPosition, wxDefaultSize,
-                             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
-#if USE_GETTEXT_VALIDATION
-    m_itemBeingValidated(-1), m_gettextProcess(NULL),
-#endif
+    wxFrame(NULL, -1, _("Poedit"),
+            wxDefaultPosition, wxDefaultSize,
+            wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
+            _T("mainwin")),
     m_catalog(NULL),
 #ifdef USE_TRANSMEM
     m_transMem(NULL),
     m_transMemLoaded(false),
 #endif
-    m_helpInitialized(false),
     m_list(NULL),
     m_modified(false),
     m_hasObsoleteItems(false),
-    m_dontAutoclearFuzzyStatus(false)
+    m_dontAutoclearFuzzyStatus(false),
+    m_setSashPositionsWhenMaximized(false)
 {
     // make sure that the [ID_POEDIT_FIRST,ID_POEDIT_LAST] range of IDs is not
     // used for anything else:
@@ -508,26 +445,25 @@ PoeditFrame::PoeditFrame() :
     m_displayCommentWin =
         (bool)cfg->Read(_T("display_comment_win"), (long)false);
     m_displayAutoCommentsWin =
-        (bool)cfg->Read(_T("display_auto_comments_win"), (long)false);
+        (bool)cfg->Read(_T("display_auto_comments_win"), (long)true);
     m_commentWindowEditable =
         (bool)cfg->Read(_T("comment_window_editable"), (long)false);
     g_focusToText = (bool)cfg->Read(_T("focus_to_text"), (long)false);
-    g_shadedList = (bool)cfg->Read(_T("shaded_list"), (long)true);
 
-#ifdef __UNIX__
+#if defined(__WXGTK__)
     wxIconBundle appicons;
     appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(16,16)));
     appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(32,32)));
     appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(48,48)));
     SetIcons(appicons);
-#else
+#elif defined(__WXMSW__)
     SetIcon(wxICON(appicon));
 #endif
 
-#ifdef CAN_MODIFY_DEFAULT_FONT
-    m_boldGuiFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+    // This is different from the default, because it's a bit smaller on OS X
+    m_normalGuiFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+    m_boldGuiFont = m_normalGuiFont;
     m_boldGuiFont.SetWeight(wxFONTWEIGHT_BOLD);
-#endif
 
     wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar(_T("mainmenu"));
     if (MenuBar)
@@ -541,7 +477,11 @@ PoeditFrame::PoeditFrame() :
 #ifndef USE_TRANSMEM
         MenuBar->Enable(XRCID("menu_auto_translate"), false);
 #endif
-        AddBookmarksMenu();
+        AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
+
+#if USE_SPARKLE
+        Sparkle_AddMenuItem(_("Check for Updates...").utf8_str());
+#endif
     }
     else
     {
@@ -549,33 +489,14 @@ PoeditFrame::PoeditFrame() :
         wxLog::FlushActive();
     }
 
-    SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("toolbar")));
+    wxXmlResource::Get()->LoadToolBar(this, _T("toolbar"));
 
     GetMenuBar()->Check(XRCID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XRCID("menu_lines"), m_displayLines);
     GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
     GetMenuBar()->Check(XRCID("menu_auto_comments_win"), m_displayAutoCommentsWin);
-    GetMenuBar()->Check(XRCID("menu_shaded"), g_shadedList);
 
     CreateStatusBar(1, wxST_SIZEGRIP);
-
-    // NB: setting the position & size has to be the last thing done, otherwise
-    //     it's not done correctly on wxMac:
-    int posx = cfg->Read(_T("frame_x"), -1);
-    int posy = cfg->Read(_T("frame_y"), -1);
-    int width = cfg->Read(_T("frame_w"), 780);
-    int height = cfg->Read(_T("frame_h"), 570);
-
-    // NB: if this is the only Poedit frame opened, place it at remembered
-    //     position, but don't do that if there already are other frames,
-    //     because they would overlap and nobody could recognize that there are
-    //     many of them
-    if (ms_instances.GetCount() == 0)
-        Move(posx, posy);
-    SetClientSize(width, height);
-    if (cfg->Read(_T("frame_maximized"), long(0)))
-        Maximize();
-
 
     m_splitter = new wxSplitterWindow(this, -1,
                                       wxDefaultPosition, wxDefaultSize,
@@ -583,11 +504,24 @@ PoeditFrame::PoeditFrame() :
     // make only the upper part grow when resizing
     m_splitter->SetSashGravity(1.0);
 
-    m_list = new PoeditListCtrl(m_splitter,
+    wxSizer *mainSizer = new wxBoxSizer(wxHORIZONTAL);
+    mainSizer->Add(m_splitter, wxSizerFlags(1).Expand());
+    SetSizer(mainSizer);
+
+    wxPanel *topPanel = new wxPanel(m_splitter, wxID_ANY);
+
+    m_attentionBar = new AttentionBar(topPanel);
+
+    m_list = new PoeditListCtrl(topPanel,
                                 ID_LIST,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxLC_REPORT | wxLC_SINGLE_SEL,
                                 m_displayLines);
+
+    wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
+    topSizer->Add(m_attentionBar, wxSizerFlags().Expand());
+    topSizer->Add(m_list, wxSizerFlags(1).Expand());
+    topPanel->SetSizer(topSizer);
 
     m_bottomSplitter = new wxSplitterWindow(m_splitter, -1,
                                             wxDefaultPosition, wxDefaultSize,
@@ -597,6 +531,24 @@ PoeditFrame::PoeditFrame() :
 
     m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
     m_bottomRightPanel = new wxPanel(m_bottomSplitter);
+
+    wxStaticText *labelSource =
+        new wxStaticText(m_bottomLeftPanel, -1, _("Source text:"));
+    labelSource->SetFont(m_boldGuiFont);
+
+    m_labelContext = new wxStaticText(m_bottomLeftPanel, -1, wxEmptyString);
+    m_labelContext->SetFont(m_normalGuiFont);
+    m_labelContext->Hide();
+
+    wxStaticText *labelTrans =
+        new wxStaticText(m_bottomLeftPanel, -1, _("Translation:"));
+    labelTrans->SetFont(m_boldGuiFont);
+
+    m_labelComment = new wxStaticText(m_bottomRightPanel, -1, _("Comment:"));
+    m_labelComment->SetFont(m_boldGuiFont);
+
+    m_labelAutoComments = new wxStaticText(m_bottomRightPanel, -1, _("Notes for translators:"));
+    m_labelAutoComments->SetFont(m_boldGuiFont);
 
     m_textComment = NULL;
     m_textAutoComments = new UnfocusableTextCtrl(m_bottomRightPanel,
@@ -608,7 +560,9 @@ PoeditFrame::PoeditFrame() :
     UpdateCommentWindowEditable();
 
     m_labelSingular = new wxStaticText(m_bottomLeftPanel, -1, _("Singular:"));
+    m_labelSingular->SetFont(m_normalGuiFont);
     m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
+    m_labelPlural->SetFont(m_normalGuiFont);
     m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
                                 ID_TEXTORIG, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
@@ -628,7 +582,10 @@ PoeditFrame::PoeditFrame() :
 
     m_pluralNotebook = new wxNotebook(m_bottomLeftPanel, -1);
 
+    m_errorBar = new ErrorBar(m_bottomLeftPanel);
+
     SetCustomFonts();
+    SetAccelerators();
 
     wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
     wxSizer *rightSizer = new wxBoxSizer(wxVERTICAL);
@@ -643,10 +600,17 @@ PoeditFrame::PoeditFrame() :
     gridSizer->Add(m_textOrigPlural, 1, wxEXPAND);
     gridSizer->SetItemMinSize(m_textOrig, 1, 1);
     gridSizer->SetItemMinSize(m_textOrigPlural, 1, 1);
+
+    leftSizer->Add(m_labelContext, 0, wxEXPAND | wxALL, 3);
+    leftSizer->Add(labelSource, 0, wxEXPAND | wxALL, 3);
     leftSizer->Add(gridSizer, 1, wxEXPAND);
+    leftSizer->Add(labelTrans, 0, wxEXPAND | wxALL, 3);
     leftSizer->Add(m_textTrans, 1, wxEXPAND);
     leftSizer->Add(m_pluralNotebook, 1, wxEXPAND);
+    leftSizer->Add(m_errorBar, 0, wxEXPAND | wxALL, 2);
+    rightSizer->Add(m_labelAutoComments, 0, wxEXPAND | wxALL, 3);
     rightSizer->Add(m_textAutoComments, 1, wxEXPAND);
+    rightSizer->Add(m_labelComment, 0, wxEXPAND | wxALL, 3);
     rightSizer->Add(m_textComment, 1, wxEXPAND);
 
     m_bottomLeftPanel->SetAutoLayout(true);
@@ -655,12 +619,30 @@ PoeditFrame::PoeditFrame() :
     m_bottomRightPanel->SetAutoLayout(true);
     m_bottomRightPanel->SetSizer(rightSizer);
 
-    m_bottomSplitter->SetMinimumPaneSize(40);
+    m_bottomSplitter->SetMinimumPaneSize(150);
     m_bottomRightPanel->Show(false);
     m_bottomSplitter->Initialize(m_bottomLeftPanel);
 
-    m_splitter->SetMinimumPaneSize(40);
-    m_splitter->SplitHorizontally(m_list, m_bottomSplitter, cfg->Read(_T("splitter"), 330L));
+
+    int restore_flags = WinState_Size;
+    // NB: if this is the only Poedit frame opened, place it at remembered
+    //     position, but don't do that if there already are other frames,
+    //     because they would overlap and nobody could recognize that there are
+    //     many of them
+    if (ms_instances.GetCount() == 0)
+        restore_flags |= WinState_Pos;
+    RestoreWindowState(this, wxSize(780, 570), restore_flags);
+
+    // This is a hack -- windows are not maximized immediately and so we can't
+    // set correct sash position in ctor (unmaximized window may be too small
+    // for sash position when maximized -- see bug #2120600)
+    if ( cfg->Read(WindowStatePath(this) + _T("maximized"), long(0)) )
+        m_setSashPositionsWhenMaximized = true;
+
+    Layout();
+
+    m_splitter->SetMinimumPaneSize(120);
+    m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, cfg->Read(_T("splitter"), 330L));
 
     m_list->PushEventHandler(new ListHandler(this));
     m_textTrans->PushEventHandler(new TransTextctrlHandler(this));
@@ -671,47 +653,39 @@ PoeditFrame::PoeditFrame() :
     UpdateMenu();
     UpdateDisplayCommentWin();
 
+    switch ( m_list->sortOrder.by )
+    {
+        case SortOrder::By_FileOrder:
+            MenuBar->Check(XRCID("sort_by_order"), true);
+            break;
+        case SortOrder::By_Source:
+            MenuBar->Check(XRCID("sort_by_source"), true);
+            break;
+        case SortOrder::By_Translation:
+            MenuBar->Check(XRCID("sort_by_translation"), true);
+            break;
+    }
+    MenuBar->Check(XRCID("sort_untrans_first"), m_list->sortOrder.untransFirst);
+
     ms_instances.Append(this);
 
-#ifdef __WXMSW__
-    DragAcceptFiles(true);
-#endif
+    SetDropTarget(new PoeditDropTarget(this));
 }
 
 
 
 PoeditFrame::~PoeditFrame()
 {
-#if USE_GETTEXT_VALIDATION
-    if (m_gettextProcess)
-        m_gettextProcess->Detach();
-#endif
-
     ms_instances.DeleteObject(this);
 
     m_list->PopEventHandler(true/*delete*/);
     m_textTrans->PopEventHandler(true/*delete*/);
     for (size_t i = 0; i < m_textTransPlural.size(); i++)
         m_textTransPlural[i]->PopEventHandler(true/*delete*/);
+    m_textComment->PopEventHandler(true/*delete*/);
 
     wxConfigBase *cfg = wxConfig::Get();
     cfg->SetPath(_T("/"));
-
-    if (!IsIconized() && !IsFullScreen())
-    {
-        if (!IsMaximized())
-        {
-            wxPoint pos = GetPosition();
-            wxSize sz = GetClientSize();
-
-            cfg->Write(_T("frame_w"), (long)sz.x);
-            cfg->Write(_T("frame_h"), (long)sz.y);
-            cfg->Write(_T("frame_x"), (long)pos.x);
-            cfg->Write(_T("frame_y"), (long)pos.y);
-        }
-
-        cfg->Write(_T("frame_maximized"), (long)IsMaximized());
-    }
 
     if (m_displayCommentWin || m_displayAutoCommentsWin)
     {
@@ -723,7 +697,8 @@ PoeditFrame::~PoeditFrame()
     cfg->Write(_T("display_lines"), m_displayLines);
     cfg->Write(_T("display_comment_win"), m_displayCommentWin);
     cfg->Write(_T("display_auto_comments_win"), m_displayAutoCommentsWin);
-    cfg->Write(_T("shaded_list"), g_shadedList);
+
+    SaveWindowState(this);
 
     m_history.Save(*cfg);
 
@@ -743,57 +718,25 @@ PoeditFrame::~PoeditFrame()
     InitSpellchecker();
 }
 
-void PoeditFrame::InitHelp()
+
+void PoeditFrame::SetAccelerators()
 {
-    if ( !m_helpInitialized )
-    {
-        m_helpBook = LoadHelpBook(_T("poedit"));
-        m_helpBookGettext = LoadHelpBook(_T("gettext/gettext"));
-        m_helpInitialized = true;
-    }
+    wxAcceleratorEntry entries[7];
+
+    entries[0].Set(wxACCEL_CTRL, WXK_PAGEUP,          XRCID("go_prev_page"));
+    entries[1].Set(wxACCEL_CTRL, WXK_NUMPAD_PAGEUP,   XRCID("go_prev_page"));
+    entries[2].Set(wxACCEL_CTRL, WXK_PAGEDOWN,        XRCID("go_next_page"));
+    entries[3].Set(wxACCEL_CTRL, WXK_NUMPAD_PAGEDOWN, XRCID("go_next_page"));
+
+    entries[4].Set(wxACCEL_CTRL, WXK_NUMPAD_UP,       XRCID("go_prev"));
+    entries[5].Set(wxACCEL_CTRL, WXK_NUMPAD_DOWN,     XRCID("go_next"));
+
+    entries[6].Set(wxACCEL_CTRL, WXK_NUMPAD_ENTER,    XRCID("go_done_and_next"));
+
+    wxAcceleratorTable accel(WXSIZEOF(entries), entries);
+    SetAcceleratorTable(accel);
 }
 
-wxString PoeditFrame::LoadHelpBook(const wxString& name)
-{
-    wxString lng = wxGetApp().GetLocale().GetCanonicalName().Left(2);
-    wxString helpdir = wxGetApp().GetAppPath() + _T("/share/poedit/help");
-
-#ifdef __WXMSW__
-    #define HLPEXT _T("chm")
-#else
-    #define HLPEXT _T("hhp")
-#endif
-
-    wxLogTrace(_T("poedit.help"),
-               _T("looking for help book '%s' under %s"),
-               name.c_str(), helpdir.c_str());
-
-    wxString file;
-    file.Printf(_T("%s/%s/%s.%s"),
-                helpdir.c_str(), lng.c_str(), name.c_str(), HLPEXT);
-    wxLogTrace(_T("poedit.help"), _T("trying %s"), file.c_str());
-
-    if (!wxFileExists(file))
-    {
-        file.Printf(_T("%s/en/%s.%s"),
-                    helpdir.c_str(), name.c_str(), HLPEXT);
-        wxLogTrace(_T("poedit.help"), _T("trying %s"), file.c_str());
-    }
-
-    if (!wxFileExists(file))
-    {
-        wxLogTrace(_T("poedit.help"), _T("not found"));
-        return wxEmptyString;
-    }
-
-    wxLogTrace(_T("poedit.help"), _T("using help file %s"), file.c_str());
-    m_help.Initialize(file);
-#ifndef __WXMSW__
-    m_help.AddBook(file);
-#endif
-
-    return file;
-}
 
 #ifdef USE_SPELLCHECKING
 
@@ -822,7 +765,7 @@ static GtkTextView *GetTextView(wxTextCtrl *ctrl)
 #endif // __WXOSX__
 
 #ifdef __WXGTK__
-static void DoInitSpellchecker(wxTextCtrl *text,
+static bool DoInitSpellchecker(wxTextCtrl *text,
                                bool enable, const wxString& lang)
 {
     GtkTextView *textview = GetTextView(text);
@@ -836,7 +779,7 @@ static void DoInitSpellchecker(wxTextCtrl *text,
         if (spell)
             gtkspell_set_language(spell, lang.ToAscii(), &err);
         else
-            gtkspell_new_attach(textview, lang.ToAscii(), &err) != NULL;
+            gtkspell_new_attach(textview, lang.ToAscii(), &err);
     }
     else // !enable
     {
@@ -853,6 +796,8 @@ static void DoInitSpellchecker(wxTextCtrl *text,
 
     if (err)
         g_error_free(err);
+
+    return err == NULL;
 }
 #endif // __WXGTK__
 
@@ -868,18 +813,35 @@ static bool SetSpellcheckerLang(const wxString& lang)
     return SpellChecker_SetLang(lang.mb_str(wxConvUTF8));
 }
 
-static void DoInitSpellchecker(wxTextCtrl *text,
+static bool DoInitSpellchecker(wxTextCtrl *text,
                                bool enable, const wxString& /*lang*/)
 {
     text->MacCheckSpelling(enable);
+    return true;
 }
 #endif // __WXOSX__
+
+static void ShowSpellcheckerHelp()
+{
+#if defined(__WXOSX__)
+    #define SPELL_HELP_PAGE   "SpellcheckerMac"
+#elif defined(__UNIX__)
+    #define SPELL_HELP_PAGE   "SpellcheckerLinux"
+#else
+    #error "missing spellchecker instructions for platform"
+#endif
+    wxLaunchDefaultBrowser(
+        wxString::FromAscii("http://www.poedit.net/trac/wiki/Doc/"
+                            SPELL_HELP_PAGE));
+}
 
 #endif // USE_SPELLCHECKING
 
 void PoeditFrame::InitSpellchecker()
 {
 #ifdef USE_SPELLCHECKING
+    bool report_problem = false;
+
     wxString lang;
     if (m_catalog) lang = m_catalog->GetLocaleCode();
     bool enabled = m_catalog && !lang.empty() &&
@@ -888,12 +850,46 @@ void PoeditFrame::InitSpellchecker()
 
 #ifdef __WXOSX__
     if (enabled)
-        enabled = SetSpellcheckerLang(lang);
+    {
+        if ( !SetSpellcheckerLang(lang) )
+        {
+            enabled = false;
+            report_problem = true;
+        }
+    }
 #endif
 
-    DoInitSpellchecker(m_textTrans, enabled, lang);
+    if ( !DoInitSpellchecker(m_textTrans, enabled, lang) )
+        report_problem = true;
+
     for (size_t i = 0; i < m_textTransPlural.size(); i++)
-        DoInitSpellchecker(m_textTransPlural[i], enabled, lang);
+    {
+        if ( !DoInitSpellchecker(m_textTransPlural[i], enabled, lang) )
+            report_problem = true;
+    }
+
+    if ( enabled && report_problem )
+    {
+        wxString langname = LookupLanguageName(lang);
+        if ( !langname )
+            langname = lang;
+
+        AttentionMessage msg
+        (
+            _T("missing-spell-dict"),
+            AttentionMessage::Warning,
+            wxString::Format
+            (
+                // TRANSLATORS: %s is language name in its basic form (as you
+                // would see e.g. in a list of supported languages).
+                _("Spellchecker dictionary for %s isn't available, you need to install it."),
+                langname.c_str()
+            )
+        );
+        msg.AddAction(_("Learn more"), boost::bind(ShowSpellcheckerHelp));
+        msg.AddDontShowAgain();
+        m_attentionBar->ShowMessage(msg);
+    }
 #endif // USE_SPELLCHECKING
 }
 
@@ -909,7 +905,6 @@ TranslationMemory *PoeditFrame::GetTransMem()
     else
     {
         wxString lang;
-        wxString dbPath = cfg->Read(_T("TM/database_path"), wxEmptyString);
 
         lang = m_catalog->GetLocaleCode();
         if (!lang)
@@ -933,9 +928,9 @@ TranslationMemory *PoeditFrame::GetTransMem()
                 lang = lngs[index];
         }
 
-        if (!lang.empty() && TranslationMemory::IsSupported(lang, dbPath))
+        if (!lang.empty() && TranslationMemory::IsSupported(lang))
         {
-            m_transMem = TranslationMemory::Create(lang, dbPath);
+            m_transMem = TranslationMemory::Create(lang);
             if (m_transMem)
                 m_transMem->SetParams(cfg->Read(_T("TM/max_delta"), 2),
                                       cfg->Read(_T("TM/max_omitted"), 2));
@@ -952,58 +947,92 @@ TranslationMemory *PoeditFrame::GetTransMem()
 
 void PoeditFrame::OnQuit(wxCommandEvent&)
 {
-    Close(true);
-#ifdef __WXMAC__
-    // FIXME: do this always when we have both Quit and Exit items
+    if ( !Close() )
+        return;
     wxGetApp().ExitMainLoop();
-#endif
+}
+
+void PoeditFrame::OnCloseCmd(wxCommandEvent&)
+{
+    Close();
 }
 
 
-
-void PoeditFrame::OnCloseWindow(wxCloseEvent&)
+void PoeditFrame::OpenFile(const wxString& filename)
 {
-    if (m_catalog && m_modified)
+    if ( !CanDiscardCurrentDoc() )
+        return;
+    DoOpenFile(filename);
+}
+
+
+void PoeditFrame::DoOpenFile(const wxString& filename)
+{
+    ReadCatalog(filename);
+
+    if (g_focusToText)
+        m_textTrans->SetFocus();
+    else
+        m_list->SetFocus();
+}
+
+
+bool PoeditFrame::CanDiscardCurrentDoc()
+{
+    if ( m_catalog && m_modified )
     {
-        int r =
-            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"),
-                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
-        if (r == wxYES)
+        wxMessageDialog dlg
+                        (
+                            this,
+                            _("Catalog modified. Do you want to save changes?"),
+                            _("Save changes"),
+                            wxYES_NO | wxCANCEL | wxICON_QUESTION
+                        );
+#if wxCHECK_VERSION(2,9,0)
+        dlg.SetExtendedMessage(_("Your changes will be lost if you don't save them."));
+        dlg.SetYesNoLabels
+            (
+                _("Save"),
+            #ifdef __WXMSW__
+                _("Don't save")
+            #else
+                _("Don't Save")
+            #endif
+            );
+#endif
+
+        int r = dlg.ShowModal();
+        if ( r == wxID_YES )
         {
             if ( !WriteCatalog(m_fileName) )
-                return;
+                return false;
         }
-        else if (r == wxCANCEL)
+        else if ( r == wxID_CANCEL )
         {
-            return;
+            return false;
         }
     }
 
-    CancelItemsValidation();
+    return true;
+}
+
+
+void PoeditFrame::OnCloseWindow(wxCloseEvent& event)
+{
+    if ( event.CanVeto() && !CanDiscardCurrentDoc() )
+    {
+        event.Veto();
+        return;
+    }
+
     Destroy();
 }
 
 
-
 void PoeditFrame::OnOpen(wxCommandEvent&)
 {
-    if (m_catalog && m_modified)
-    {
-        int r =
-            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"),
-                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
-        if (r == wxYES)
-        {
-            if ( !WriteCatalog(m_fileName) )
-                return;
-        }
-        else if (r == wxCANCEL)
-        {
-            return;
-        }
-    }
+    if ( !CanDiscardCurrentDoc() )
+        return;
 
     wxString path = wxPathOnly(m_fileName);
     if (path.empty())
@@ -1011,17 +1040,14 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
 
     wxString name = wxFileSelector(_("Open catalog"),
                     path, wxEmptyString, wxEmptyString,
-                    _("GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+                    _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
                     wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
+
     if (!name.empty())
     {
         wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
-        ReadCatalog(name);
 
-        if (g_focusToText)
-            m_textTrans->SetFocus();
-        else
-            m_list->SetFocus();
+        DoOpenFile(name);
     }
 }
 
@@ -1029,81 +1055,15 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
 
 void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 {
-    if (m_catalog && m_modified)
-    {
-        int r =
-            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"),
-                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
-        if (r == wxYES)
-        {
-            if ( !WriteCatalog(m_fileName) )
-                return;
-        }
-        else if (r == wxCANCEL)
-        {
-            return;
-        }
-    }
-
     wxString f(m_history.GetHistoryFile(event.GetId() - wxID_FILE1));
-    if (f != wxEmptyString && wxFileExists(f))
+    if ( !wxFileExists(f) )
     {
-        ReadCatalog(f);
-
-        if (g_focusToText)
-            m_textTrans->SetFocus();
-        else
-            m_list->SetFocus();
-    }
-    else
         wxLogError(_("File '%s' doesn't exist."), f.c_str());
-}
-
-
-
-#ifdef __WXMSW__
-void PoeditFrame::OnFileDrop(wxDropFilesEvent& event)
-{
-    if (event.GetNumberOfFiles() != 1)
-    {
-        wxLogError(_("You can't drop more than one file on Poedit window."));
         return;
     }
 
-    wxFileName f(event.GetFiles()[0]);
-    if (f.GetExt().Lower() != _T("po"))
-    {
-        wxLogError(_("File '%s' is not message catalog."),
-                   f.GetFullPath().c_str());
-        return;
-    }
-
-    if (f.FileExists())
-    {
-        if (m_catalog && m_modified)
-        {
-            int r =
-              wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                           _("Save changes"),
-                           wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
-            if (r == wxYES)
-            {
-                if ( !WriteCatalog(m_fileName) )
-                    return;
-            }
-            else if (r == wxCANCEL)
-            {
-                return;
-            }
-        }
-        ReadCatalog(f.GetFullPath());
-    }
-    else
-        wxLogError(_("File '%s' doesn't exist."), f.GetFullPath().c_str());
+    OpenFile(f);
 }
-#endif
-
 
 
 void PoeditFrame::OnSave(wxCommandEvent& event)
@@ -1139,7 +1099,7 @@ wxString PoeditFrame::GetSaveAsFilename(Catalog *cat, const wxString& current)
     }
 
     name = wxFileSelector(_("Save as..."), path, name, wxEmptyString,
-                          _("GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+                          _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
     if (!name.empty())
     {
@@ -1197,26 +1157,12 @@ bool PoeditFrame::ExportCatalog(const wxString& filename)
 
 void PoeditFrame::OnNew(wxCommandEvent& event)
 {
+    if ( !CanDiscardCurrentDoc() )
+        return;
+
     bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
 
-    if (m_catalog && m_modified)
-    {
-        int r =
-            wxMessageBox(_("Catalog modified. Do you want to save changes?"),
-                         _("Save changes"),
-                         wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
-        if (r == wxYES)
-        {
-            if ( !WriteCatalog(m_fileName) )
-                return;
-        }
-        else if (r == wxCANCEL)
-        {
-            return;
-        }
-    }
-
-    SettingsDialog dlg(this);
+    PropertiesDialog dlg(this);
     Catalog *catalog = new Catalog;
 
     if (isFromPOT)
@@ -1227,7 +1173,7 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
         wxString pot_file =
             wxFileSelector(_("Open catalog template"),
                  path, wxEmptyString, wxEmptyString,
-                 _("GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
+                 _("GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
                  wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
         bool ok = false;
         if (!pot_file.empty())
@@ -1258,8 +1204,6 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
             return;
         }
 
-        CancelItemsValidation();
-
         dlg.TransferFrom(catalog);
         delete m_catalog;
         m_catalog = catalog;
@@ -1270,8 +1214,6 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
         {
             OnUpdate(event);
         }
-
-        RestartItemsValidation();
     }
     else
     {
@@ -1294,9 +1236,14 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
 
 
 
-void PoeditFrame::OnSettings(wxCommandEvent&)
+void PoeditFrame::OnProperties(wxCommandEvent&)
 {
-    SettingsDialog dlg(this);
+    EditCatalogProperties();
+}
+
+void PoeditFrame::EditCatalogProperties()
+{
+    PropertiesDialog dlg(this);
 
     dlg.TransferTo(m_catalog);
     if (dlg.ShowModal() == wxID_OK)
@@ -1312,7 +1259,7 @@ void PoeditFrame::OnSettings(wxCommandEvent&)
 
 
 
-void PoeditFrame::OnPreferences(wxCommandEvent&)
+void PoeditFrame::EditPreferences()
 {
     PreferencesDialog dlg(this);
 
@@ -1331,34 +1278,37 @@ void PoeditFrame::OnPreferences(wxCommandEvent&)
     }
 }
 
+void PoeditFrame::OnPreferences(wxCommandEvent&)
+{
+    EditPreferences();
+}
+
 
 
 void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 {
     wxBusyCursor bcur;
 
-    CancelItemsValidation();
-
     // This ensures that the list control won't be redrawn during Update()
     // call when a dialog box is hidden; another alternative would be to call
     // m_list->CatalogChanged(NULL) here
     wxWindowUpdateLocker locker(m_list);
 
+    ProgressInfo progress(this, _("Updating catalog"));
+
     bool succ;
     if (pot_file.empty())
-        succ = m_catalog->Update();
+        succ = m_catalog->Update(&progress);
     else
         succ = m_catalog->UpdateFromPOT(pot_file);
     m_list->CatalogChanged(m_catalog);
-
-    RestartItemsValidation();
 
     m_modified = succ || m_modified;
     if (!succ)
     {
         wxLogWarning(_("Entries in the catalog are probably incorrect."));
         wxLogError(
-           _("Updating the catalog failed. Click on 'More>>' for details."));
+           _("Updating the catalog failed. Click on 'Details >>' for details."));
     }
 }
 
@@ -1374,7 +1324,7 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
         pot_file =
             wxFileSelector(_("Open catalog template"),
                  path, wxEmptyString, wxEmptyString,
-                 _("GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
+                 _("GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
                  wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
         if (pot_file.empty())
             return;
@@ -1394,6 +1344,60 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
     RefreshControls();
 }
 
+
+void PoeditFrame::OnValidate(wxCommandEvent&)
+{
+    wxBusyCursor bcur;
+    ReportValidationErrors(m_catalog->Validate(), false);
+}
+
+
+void PoeditFrame::ReportValidationErrors(int errors, bool from_save)
+{
+    if ( errors )
+    {
+        m_list->RefreshItem(0);
+        RefreshControls();
+
+        wxMessageDialog dlg
+        (
+            this,
+            wxString::Format
+            (
+                wxPLURAL("%d issue with the translation found.",
+                         "%d issues with the translation found.",
+                         errors),
+                errors
+            ),
+            _("Validation results"),
+            wxOK | wxICON_ERROR
+        );
+#if wxCHECK_VERSION(2,9,0)
+        wxString details = _("Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry.");
+        if ( from_save )
+        {
+            details += "\n\n";
+            details += _("The file was saved safely, but it cannot be compiled into the MO format and used.");
+        }
+        dlg.SetExtendedMessage(details);
+#endif
+        dlg.ShowModal();
+    }
+    else
+    {
+        wxMessageDialog dlg
+        (
+            this,
+            _("No problems with the translation found."),
+            _("Validation results"),
+            wxOK | wxICON_INFORMATION
+        );
+#if wxCHECK_VERSION(2,9,0)
+        dlg.SetExtendedMessage(_("The translation is ready for use."));
+#endif
+        dlg.ShowModal();
+    }
+}
 
 
 void PoeditFrame::OnListSel(wxListEvent& event)
@@ -1416,25 +1420,8 @@ void PoeditFrame::OnListSel(wxListEvent& event)
 }
 
 
-void PoeditFrame::OnListActivated(wxListEvent& event)
-{
-    if (m_catalog)
-    {
-        int ind = m_list->GetIndexInCatalog(event.GetIndex());
-        if (ind >= (int)m_catalog->GetCount()) return;
-        CatalogItem& entry = (*m_catalog)[ind];
-        if (entry.GetValidity() == CatalogItem::Val_Invalid)
-        {
-            wxMessageBox(entry.GetErrorString(),
-                         _("Gettext syntax error"),
-                         wxOK | wxICON_ERROR);
-        }
-    }
-}
 
-
-
-void PoeditFrame::OnReferencesMenu(wxCommandEvent& event)
+void PoeditFrame::OnReferencesMenu(wxCommandEvent&)
 {
     CatalogItem *entry = GetCurrentItem();
     if ( !entry )
@@ -1495,24 +1482,13 @@ void PoeditFrame::ShowReference(int num)
             basepath = cwd + _T("/") + path;
     }
 
-    if (wxConfig::Get()->Read(_T("open_editor_immediately"), (long)false))
-    {
-        wxString ref = entry->GetReferences()[num];
-        // translate windows-style paths to Unix ones, which
-        // are accepted on all platforms:
-        ref.Replace(_T("\\"), _T("/"));
-        FileViewer::OpenInEditor(basepath, ref);
-    }
+    FileViewer *w = new FileViewer(this, basepath,
+                                   entry->GetReferences(),
+                                   num);
+    if (w->FileOk())
+        w->Show(true);
     else
-    {
-        FileViewer *w = new FileViewer(this, basepath,
-                                       entry->GetReferences(),
-                                       num);
-        if (w->FileOk())
-            w->Show(true);
-        else
-            w->Close();
-    }
+        w->Close();
 }
 
 
@@ -1542,7 +1518,7 @@ void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
 
 
 
-void PoeditFrame::OnQuotesFlag(wxCommandEvent& event)
+void PoeditFrame::OnQuotesFlag(wxCommandEvent&)
 {
     UpdateFromTextCtrl();
     m_displayQuotes = GetMenuBar()->IsChecked(XRCID("menu_quotes"));
@@ -1551,7 +1527,7 @@ void PoeditFrame::OnQuotesFlag(wxCommandEvent& event)
 
 
 
-void PoeditFrame::OnLinesFlag(wxCommandEvent& event)
+void PoeditFrame::OnLinesFlag(wxCommandEvent&)
 {
     m_displayLines = GetMenuBar()->IsChecked(XRCID("menu_lines"));
     m_list->SetDisplayLines(m_displayLines);
@@ -1559,26 +1535,18 @@ void PoeditFrame::OnLinesFlag(wxCommandEvent& event)
 
 
 
-void PoeditFrame::OnCommentWinFlag(wxCommandEvent& event)
+void PoeditFrame::OnCommentWinFlag(wxCommandEvent&)
 {
     UpdateDisplayCommentWin();
 }
 
-void PoeditFrame::OnAutoCommentsWinFlag(wxCommandEvent& event)
+void PoeditFrame::OnAutoCommentsWinFlag(wxCommandEvent&)
 {
     UpdateDisplayCommentWin();
 }
 
 
-void PoeditFrame::OnShadedListFlag(wxCommandEvent& event)
-{
-    g_shadedList = GetMenuBar()->IsChecked(XRCID("menu_shaded"));
-    RefreshControls();
-}
-
-
-
-void PoeditFrame::OnInsertOriginal(wxCommandEvent& event)
+void PoeditFrame::OnCopyFromSource(wxCommandEvent&)
 {
     if (!m_textTrans->IsShown())
     {
@@ -1597,42 +1565,33 @@ void PoeditFrame::OnInsertOriginal(wxCommandEvent& event)
     }
 }
 
-
-
-#ifndef __WXMAC__
-void PoeditFrame::OnFullscreen(wxCommandEvent& event)
+void PoeditFrame::OnClearTranslation(wxCommandEvent&)
 {
-    bool fs = IsFullScreen();
-    wxConfigBase *cfg = wxConfigBase::Get();
-
-    GetMenuBar()->Check(XRCID("menu_fullscreen"), !fs);
-    GetToolBar()->ToggleTool(XRCID("menu_fullscreen"), !fs);
-
-    if (fs)
+    if (!m_textTrans->IsShown())
     {
-        cfg->Write(_T("splitter_fullscreen"), (long)m_splitter->GetSashPosition());
-        m_splitter->SetSashPosition(cfg->Read(_T("splitter"), 240L));
+        // plural form entry:
+        for (size_t i=0; i < m_textTransPlural.size(); i++)
+            m_textTransPlural[i]->Clear();
+
+        if (m_textTransSingularForm)
+            m_textTransSingularForm->Clear();
     }
     else
     {
-        long oldSash = m_splitter->GetSashPosition();
-        cfg->Write(_T("splitter"), oldSash);
-        m_splitter->SetSashPosition(cfg->Read(_T("splitter_fullscreen"), oldSash));
+        // singular form entry:
+        m_textTrans->Clear();
     }
-
-    ShowFullScreen(!fs, wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION);
 }
-#endif // !__WXMAC__
 
 
-
-void PoeditFrame::OnFind(wxCommandEvent& event)
+void PoeditFrame::OnFind(wxCommandEvent&)
 {
     FindFrame *f = (FindFrame*)FindWindow(_T("find_frame"));
 
     if (!f)
         f = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans, m_textComment, m_textAutoComments);
     f->Show(true);
+    f->Raise();
 }
 
 
@@ -1645,7 +1604,7 @@ CatalogItem *PoeditFrame::GetCurrentItem() const
     if ( item == -1 )
         return NULL;
 
-    wxASSERT( item >= 0 && item < m_catalog->GetCount() );
+    wxASSERT( item >= 0 && item < (int)m_catalog->GetCount() );
 
     return &(*m_catalog)[item];
 }
@@ -1765,16 +1724,11 @@ void PoeditFrame::UpdateFromTextCtrl()
     }
     // else: no point in recomputing stats
 
-    if (m_modified == false)
+    if ( !IsModified() )
     {
         m_modified = true;
         UpdateTitle();
     }
-
-#if USE_GETTEXT_VALIDATION
-    // check validity of this item:
-    m_itemsToValidate.push_front(item);
-#endif
 }
 
 namespace
@@ -1831,11 +1785,11 @@ void PoeditFrame::UpdateToTextCtrl()
         t_op.Replace(_T("\\n"), _T("\\n\n"));
         m_textOrigPlural->SetValue(t_op);
 
-        size_t formsCnt = m_textTransPlural.size();
-        for (size_t j = 0; j < formsCnt; j++)
+        unsigned formsCnt = m_textTransPlural.size();
+        for (unsigned j = 0; j < formsCnt; j++)
             SetTranslationValue(m_textTransPlural[j], wxEmptyString);
 
-        size_t i = 0;
+        unsigned i = 0;
         for (i = 0; i < std::min(formsCnt, entry->GetNumberOfTranslations()); i++)
         {
             t_t = quote + entry->GetTranslation(i) + quote;
@@ -1854,8 +1808,27 @@ void PoeditFrame::UpdateToTextCtrl()
             m_textTrans->SetInsertionPoint(1);
     }
 
+    if ( entry->HasContext() )
+    {
+        const wxString prefix = _("Context:");
+        const wxString ctxt = entry->GetContext();
+#if wxCHECK_VERSION(2,9,2)
+        m_labelContext->SetLabelMarkup(
+            wxString::Format("<b>%s</b> %s", prefix, EscapeMarkup(ctxt)));
+#else
+        m_labelContext->SetLabel(
+            wxString::Format(_T("%s %s"), prefix.c_str(), ctxt.c_str()));
+#endif
+    }
+    m_labelContext->GetContainingSizer()->Show(m_labelContext, entry->HasContext());
+
     if (m_displayCommentWin)
         m_textComment->SetValue(t_c);
+
+    if( entry->GetValidity() == CatalogItem::Val_Invalid )
+        m_errorBar->ShowError(entry->GetErrorString());
+    else
+        m_errorBar->HideError();
 
     if (m_displayAutoCommentsWin)
         m_textAutoComments->SetValue(t_ac);
@@ -1875,8 +1848,6 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
 {
     wxBusyCursor bcur;
 
-    CancelItemsValidation();
-
     Catalog *cat = new Catalog(catalog);
     if (!cat->IsOk())
         return;
@@ -1884,8 +1855,9 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     delete m_catalog;
     m_catalog = cat;
 
-    // don't call this, it's called from RefreshControls below:
-    //m_list->CatalogChanged(m_catalog);
+    // this must be done as soon as possible, otherwise the list would be
+    // confused
+    m_list->CatalogChanged(m_catalog);
 
 #ifdef USE_TRANSMEM
     if (m_transMem)
@@ -1909,7 +1881,70 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
 
     InitSpellchecker();
 
-    RestartItemsValidation();
+
+    // FIXME: do this for Gettext PO files only
+    if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
+    {
+        AttentionMessage msg
+            (
+                _T("no-translator-info"),
+                AttentionMessage::Info,
+                _("You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files.")
+            );
+        msg.AddAction(_("Set email"),
+                      boost::bind(&PoeditFrame::EditPreferences, this));
+        msg.AddDontShowAgain();
+
+        m_attentionBar->ShowMessage(msg);
+    }
+
+    // check if plural forms header is correct:
+    if ( m_catalog->HasPluralItems() )
+    {
+        wxString err;
+
+        if ( m_catalog->Header().GetHeader(_T("Plural-Forms")).empty() )
+        {
+            err = _("This catalog has entries with plural forms, but doesn't have Plural-Forms header configured.");
+        }
+        else if ( m_catalog->HasWrongPluralFormsCount() )
+        {
+            err = _("Entries in this catalog have different plural forms count from what catalog's Plural-Forms header says");
+        }
+
+        // FIXME: make this part of global error checking
+        wxString plForms = m_catalog->Header().GetHeader(_T("Plural-Forms"));
+        PluralFormsCalculator *plCalc =
+                PluralFormsCalculator::make(plForms.ToAscii());
+        if ( !plCalc )
+        {
+            if ( plForms.empty() )
+            {
+                err = _("Required header Plural-Forms is missing.");
+            }
+            else
+            {
+                err = wxString::Format(
+                            _("Syntax error in Plural-Forms header (\"%s\")."),
+                            plForms.c_str());
+            }
+        }
+        delete plCalc;
+
+        if ( !err.empty() )
+        {
+            AttentionMessage msg
+                (
+                    _T("malformed-plural-forms"),
+                    AttentionMessage::Error,
+                    err
+                );
+            msg.AddAction(_("Fix the header"),
+                          boost::bind(&PoeditFrame::EditCatalogProperties, this));
+
+            m_attentionBar->ShowMessage(msg);
+        }
+    }
 }
 
 
@@ -1959,28 +1994,42 @@ void PoeditFrame::RefreshControls()
 
 void PoeditFrame::UpdateStatusBar()
 {
-    int all, fuzzy, untranslated, badtokens;
+    int all, fuzzy, untranslated, badtokens, unfinished;
     if (m_catalog)
     {
         wxString txt;
 
-        m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
+        m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated, &unfinished);
 
-        int percent = (all == 0 ) ? 0 :
-                      (100 * (all-fuzzy-badtokens-untranslated) / all);
-        txt.Printf(_("%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"),
-                   percent, all, fuzzy, badtokens, untranslated);
+        int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
 
-#if USE_GETTEXT_VALIDATION
-        if (!m_itemsToValidate.empty())
+        wxString details;
+        if ( fuzzy > 0 )
         {
-            wxString progress;
-            progress.Printf(_("[checking translations: %i left]"),
-                            m_itemsToValidate.size());
-            txt += _T("    ");
-            txt += progress;
+            details += wxString::Format(wxPLURAL("%i fuzzy", "%i fuzzy", fuzzy), fuzzy);
         }
-#endif
+        if ( badtokens > 0 )
+        {
+            if ( !details.empty() )
+                details += _T(", ");
+            details += wxString::Format(wxPLURAL("%i bad token", "%i bad tokens", badtokens), badtokens);
+        }
+        if ( untranslated > 0 )
+        {
+            if ( !details.empty() )
+                details += _T(", ");
+            details += wxString::Format(wxPLURAL("%i not translated", "%i not translated", untranslated), untranslated);
+        }
+        if ( details.empty() )
+        {
+            txt.Printf(wxPLURAL("%i %% translated, %i string", "%i %% translated, %i strings", all),
+                       percent, all);
+        }
+        else
+        {
+            txt.Printf(wxPLURAL("%i %% translated, %i string (%s)", "%i %% translated, %i strings (%s)", all),
+                       percent, all, details.c_str());
+        }
 
         GetStatusBar()->SetStatusText(txt);
     }
@@ -1997,10 +2046,30 @@ void PoeditFrame::DoGiveHelp(const wxString& text, bool show)
 
 void PoeditFrame::UpdateTitle()
 {
-    if (m_modified)
-        SetTitle(_T("Poedit : ") + m_fileName + _(" (modified)"));
+#ifdef __WXMAC__
+    OSXSetModified(IsModified());
+#endif
+
+    wxString title;
+    if ( !m_fileName.empty() )
+    {
+#if wxCHECK_VERSION(2,9,4)
+        SetRepresentedFilename(m_fileName);
+#endif
+        wxFileName fn(m_fileName);
+        title = wxString::Format(_T("%s.%s"), fn.GetName().c_str(), fn.GetExt().c_str());
+#ifndef __WXOSX__
+        if ( IsModified() )
+            title += _(" (modified)");
+        title += _T(" - Poedit");
+#endif
+    }
     else
-        SetTitle(_T("Poedit : ") + m_fileName);
+    {
+        title = _T("Poedit");
+    }
+
+    SetTitle(title);
 }
 
 
@@ -2017,15 +2086,18 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_export"), editable);
     toolbar->EnableTool(wxID_SAVE, editable);
     toolbar->EnableTool(XRCID("menu_update"), editable);
+    toolbar->EnableTool(XRCID("menu_validate"), editable);
     toolbar->EnableTool(XRCID("menu_fuzzy"), editable);
     toolbar->EnableTool(XRCID("menu_comment"), editable);
 
     menubar->Enable(XRCID("menu_update"), editable);
+    menubar->Enable(XRCID("menu_validate"), editable);
     menubar->Enable(XRCID("menu_fuzzy"), editable);
     menubar->Enable(XRCID("menu_comment"), editable);
-    menubar->Enable(XRCID("menu_insert_orig"), editable);
+    menubar->Enable(XRCID("menu_copy_from_src"), editable);
+    menubar->Enable(XRCID("menu_clear"), editable);
     menubar->Enable(XRCID("menu_references"), editable);
-    menubar->Enable(XRCID("menu_find"), editable);
+    menubar->Enable(wxID_FIND, editable);
 
     menubar->EnableTop(2, editable);
 
@@ -2054,7 +2126,7 @@ void PoeditFrame::UpdateMenu()
     }
 #endif
 
-    menubar->EnableTop(4, editable);
+    menubar->EnableTop(3, editable);
     for (int i = 0; i < 10; i++)
     {
         menubar->Enable(ID_BOOKMARK_SET + i, editable);
@@ -2074,7 +2146,8 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
     dt.Translator = wxConfig::Get()->Read(_T("translator_name"), dt.Translator);
     dt.TranslatorEmail = wxConfig::Get()->Read(_T("translator_email"), dt.TranslatorEmail);
 
-    if ( !m_catalog->Save(catalog) )
+    int validation_errors = 0;
+    if ( !m_catalog->Save(catalog, true, validation_errors) )
         return false;
 
     m_fileName = catalog;
@@ -2121,11 +2194,14 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(m_fileName);
 
+    if ( validation_errors )
+        ReportValidationErrors(validation_errors, true);
+
     return true;
 }
 
 
-void PoeditFrame::OnEditComment(wxCommandEvent& event)
+void PoeditFrame::OnEditComment(wxCommandEvent&)
 {
     CatalogItem *entry = GetCurrentItem();
     wxCHECK_RET( entry, _T("no entry selected") );
@@ -2148,10 +2224,21 @@ void PoeditFrame::OnEditComment(wxCommandEvent& event)
 
 void PoeditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
 {
-    wxMessageDialog dlg(this,
-                        _("Do you really want to remove all translations that are no longer used from the catalog?\nIf you continue with purging, you will have to translate them again if they are added back in the future."),
-                        _("Purge deleted translations"),
-                        wxYES_NO | wxICON_QUESTION);
+    const wxString title =
+        _("Purge deleted translations");
+    const wxString main =
+        _("Do you want to remove all translations that are no longer used?");
+    const wxString details =
+        _("If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future.");
+
+#if wxCHECK_VERSION(2,9,0)
+    wxMessageDialog dlg(this, main, title, wxYES_NO | wxICON_QUESTION);
+    dlg.SetExtendedMessage(details);
+    dlg.SetYesNoLabels(_("Purge"), _("Keep"));
+#else // wx < 2.9.0
+    const wxString all = main + _T("\n\n") + details;
+    wxMessageDialog dlg(this, all, title, wxYES_NO | wxICON_QUESTION);
+#endif
 
     if (dlg.ShowModal() == wxID_YES)
     {
@@ -2168,12 +2255,20 @@ void PoeditFrame::OnAutoTranslate(wxCommandEvent& event)
     wxCHECK_RET( entry, _T("no entry selected") );
 
     int ind = event.GetId() - ID_POPUP_TRANS;
+
     entry->SetTranslation(m_autoTranslations[ind]);
+    entry->SetFuzzy(false);
+    entry->SetModified(true);
+
+    // FIXME: instead of this mess, use notifications of catalog change
+    m_modified = true;
+    UpdateTitle();
+
     UpdateToTextCtrl();
     RefreshSelectedItem();
 }
 
-void PoeditFrame::OnAutoTranslateAll(wxCommandEvent& event)
+void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
 {
     AutoTranslateCatalog();
 }
@@ -2191,8 +2286,7 @@ bool PoeditFrame::AutoTranslateCatalog()
     size_t matches = 0;
     wxString msg;
 
-    ProgressInfo pi;
-    pi.SetTitle(_("Automatically translating..."));
+    ProgressInfo pi(this, _("Automatically translating..."));
     pi.SetGaugeMax(cnt);
     for (size_t i = 0; i < cnt; i++)
     {
@@ -2234,39 +2328,62 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
     const wxArrayString& refs = (*m_catalog)[item].GetReferences();
     wxMenu *menu = new wxMenu;
 
-    menu->Append(XRCID("menu_insert_orig"),
-                 wxString(_("Copy original to translation field"))
-                   + _T("\tAlt-C"));
-    menu->AppendSeparator();
-
-#ifdef CAN_MODIFY_DEFAULT_FONT
-    wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
-    it1->SetFont(m_boldGuiFont);
-    menu->Append(it1);
-#else
-    menu->Append(ID_POPUP_DUMMY+0, _("References:"));
-#endif
-    for (size_t i = 0; i < refs.GetCount(); i++)
-        menu->Append(ID_POPUP_REFS + i, _T("    ") + refs[i]);
+    menu->Append(XRCID("menu_copy_from_src"),
+                 #ifdef __WXMSW__
+                 wxString(_("Copy from source text"))
+                 #else
+                 wxString(_("Copy from Source Text"))
+                 #endif
+                   + _T("\tCtrl+B"));
+    menu->Append(XRCID("menu_clear"),
+                 #ifdef __WXMSW__
+                 wxString(_("Clear translation"))
+                 #else
+                 wxString(_("Clear Translation"))
+                 #endif
+                   + _T("\tCtrl+K"));
+   menu->Append(XRCID("menu_comment"),
+                 #ifdef __WXMSW__
+                 wxString(_("Edit comment"))
+                 #else
+                 wxString(_("Edit Comment"))
+                 #endif
+                   + _T("\tCtrl+M"));
 
 #ifdef USE_TRANSMEM
     if (GetTransMem())
     {
-        menu->AppendSeparator();
-#ifdef CAN_MODIFY_DEFAULT_FONT
-        wxMenuItem *it2 = new wxMenuItem(menu, ID_POPUP_DUMMY+1,
-                                         _("Automatic translations:"));
-        it2->SetFont(m_boldGuiFont);
-        menu->Append(it2);
-#else
-        menu->Append(ID_POPUP_DUMMY+1, _("Automatic translations:"));
-#endif
-
         wxBusyCursor bcur;
         CatalogItem& dt = (*m_catalog)[item];
         m_autoTranslations.Clear();
         if (GetTransMem()->Lookup(dt.GetString(), m_autoTranslations) > 0)
         {
+            menu->AppendSeparator();
+#ifdef CAN_MODIFY_DEFAULT_FONT
+            wxMenuItem *it2 = new wxMenuItem
+                                  (
+                                      menu,
+                                      ID_POPUP_DUMMY+1,
+                                      #ifdef __WXMSW__
+                                      _("Automatic translations:")
+                                      #else
+                                      _("Automatic Translations:")
+                                      #endif
+                                  );
+            it2->SetFont(m_boldGuiFont);
+            menu->Append(it2);
+#else
+            menu->Append
+                  (
+                      ID_POPUP_DUMMY+1,
+                      #ifdef __WXMSW__
+                      _("Automatic translations:")
+                      #else
+                      _("Automatic Translations:")
+                      #endif
+                  );
+#endif
+
             for (size_t i = 0; i < m_autoTranslations.GetCount(); i++)
             {
                 // Convert from UTF-8 to environment's default charset:
@@ -2276,13 +2393,24 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
                 menu->Append(ID_POPUP_TRANS + i, _T("    ") + s);
             }
         }
-        else
-        {
-            menu->Append(ID_POPUP_DUMMY+2, _("none"));
-            menu->Enable(ID_POPUP_DUMMY+2, false);
-        }
     }
 #endif
+
+    if ( !refs.empty() )
+    {
+        menu->AppendSeparator();
+
+#ifdef CAN_MODIFY_DEFAULT_FONT
+        wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
+        it1->SetFont(m_boldGuiFont);
+        menu->Append(it1);
+#else
+        menu->Append(ID_POPUP_DUMMY+0, _("References:"));
+#endif
+
+        for (size_t i = 0; i < refs.GetCount(); i++)
+            menu->Append(ID_POPUP_REFS + i, _T("    ") + refs[i]);
+    }
 
     return menu;
 }
@@ -2290,12 +2418,34 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
 
 void PoeditFrame::OnAbout(wxCommandEvent&)
 {
+#if 0
+    // Forces translation of several strings that are used for about
+    // dialog internally by wx, but are frequently not translate due to
+    // state of wx's translations:
+
+    // TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+    //              ("Poedit" here, but please use "%s")
+    _("About %s");
+    // TRANSLATORS: This is version information in about dialog, "%s" will be
+    //              version number when used
+    _("Version %s");
+    // TRANSLATORS: This is version information in about dialog, it is followed
+    //              by version number when used (wxWidgets 2.8)
+    _(" Version ");
+    // TRANSLATORS: This is titlebar of about dialog, the string ends with space
+    //              and is followed by application name when used ("Poedit",
+    //              but don't add it to this translation yourself) (wxWidgets 2.8)
+    _("About ");
+#endif
+
     wxAboutDialogInfo about;
 
     about.SetName(_T("Poedit"));
     about.SetVersion(wxGetApp().GetAppVersion());
+#ifndef __WXMAC__
     about.SetDescription(_("Poedit is an easy to use translations editor."));
-    about.SetCopyright(_T("Copyright \u00a9 1999-2010 Vaclav Slavik"));
+#endif
+    about.SetCopyright(_T("Copyright \u00a9 1999-2012 Vaclav Slavik"));
 #ifdef __WXGTK__ // other ports would show non-native about dlg
     about.SetWebSite(_T("http://www.poedit.net"));
 #endif
@@ -2306,20 +2456,7 @@ void PoeditFrame::OnAbout(wxCommandEvent&)
 
 void PoeditFrame::OnHelp(wxCommandEvent&)
 {
-    InitHelp();
-#ifdef __WXMSW__
-    m_help.LoadFile(m_helpBook);
-#endif
-    m_help.DisplayContents();
-}
-
-void PoeditFrame::OnHelpGettext(wxCommandEvent&)
-{
-    InitHelp();
-#ifdef __WXMSW__
-    m_help.LoadFile(m_helpBookGettext);
-    m_help.DisplayContents();
-#endif
+    wxLaunchDefaultBrowser(_T("http://www.poedit.net/trac/wiki/Doc"));
 }
 
 
@@ -2436,16 +2573,16 @@ void PoeditFrame::UpdateDisplayCommentWin()
         // (sizer may be NULL on first call)
         if (m_bottomRightPanel->GetSizer() != NULL)
         {
-            // need to remove and add again to ensure accurate resizing:
-            m_bottomRightPanel->GetSizer()->Detach(m_textAutoComments);
-
-            m_bottomRightPanel->GetSizer()->Detach(m_textComment);
-            m_bottomRightPanel->GetSizer()->Add(m_textAutoComments, 1, wxEXPAND);
-            m_bottomRightPanel->GetSizer()->Add(m_textComment, 1, wxEXPAND);
+            m_bottomRightPanel->GetSizer()->Show(m_labelComment,
+                                                 m_displayCommentWin);
             m_bottomRightPanel->GetSizer()->Show(m_textComment,
                                                  m_displayCommentWin);
+
+            m_bottomRightPanel->GetSizer()->Show(m_labelAutoComments,
+                                                 m_displayAutoCommentsWin);
             m_bottomRightPanel->GetSizer()->Show(m_textAutoComments,
                                                  m_displayAutoCommentsWin);
+
             m_bottomRightPanel->GetSizer()->Layout();
             m_bottomRightPanel->Layout();
         }
@@ -2498,11 +2635,6 @@ void PoeditFrame::OnIdle(wxIdleEvent& event)
 {
     event.Skip();
 
-#if USE_GETTEXT_VALIDATION
-    if (!m_itemsToValidate.empty() && m_itemBeingValidated == -1)
-        BeginItemValidation();
-#endif
-
     for ( std::set<int>::const_iterator i = m_itemsRefreshQueue.begin();
           i != m_itemsRefreshQueue.end(); ++i )
     {
@@ -2511,138 +2643,26 @@ void PoeditFrame::OnIdle(wxIdleEvent& event)
     m_itemsRefreshQueue.clear();
 }
 
-void PoeditFrame::OnEndProcess(wxProcessEvent& event)
+void PoeditFrame::OnSize(wxSizeEvent& event)
 {
-#if USE_GETTEXT_VALIDATION
-    m_gettextProcess = NULL;
-    event.Skip(); // deletes wxProcess object
-    EndItemValidation();
-    wxWakeUpIdle();
-#endif
-}
+    event.Skip();
 
-void PoeditFrame::CancelItemsValidation()
-{
-#if USE_GETTEXT_VALIDATION
-    // stop checking entries in the background:
-    m_itemsToValidate.clear();
-    m_itemBeingValidated = -1;
-#endif
-}
-
-void PoeditFrame::RestartItemsValidation()
-{
-#if USE_GETTEXT_VALIDATION
-    // start checking catalog's entries in the background:
-    int cnt = m_list->GetItemCount();
-    for (int i = 0; i < cnt; i++)
-        m_itemsToValidate.push_back(i);
-#endif
-}
-
-void PoeditFrame::BeginItemValidation()
-{
-#if USE_GETTEXT_VALIDATION
-    int item = m_itemsToValidate.front();
-    int index = m_list->GetIndexInCatalog(item);
-    CatalogItem& dt = (*m_catalog)[index];
-
-    if (!dt.IsTranslated())
-        return;
-
-    if (dt.GetValidity() != CatalogItem::Val_Unknown)
-        return;
-
-    // run this entry through msgfmt (in a single-entry catalog) to check if
-    // it is correct:
-    Catalog cat;
-    cat.AddItem(new CatalogItem(dt));
-
-    if (m_catalog->Header().HasHeader(_T("Plural-Forms")))
+    // see the comment in PoeditFrame ctor
+    if ( m_setSashPositionsWhenMaximized && IsMaximized() )
     {
-        cat.Header().SetHeader(
-                _T("Plural-Forms"),
-                m_catalog->Header().GetHeader(_T("Plural-Forms")));
-    }
+        m_setSashPositionsWhenMaximized = false;
 
-    wxString tmp1 = wxGetTempFileName(_T("poedit"));
-    wxString tmp2 = wxGetTempFileName(_T("poedit"));
-    cat.Save(tmp1, false);
-    wxString cmdline = _T("msgfmt -c -f -o \"") + tmp2 +
-                       _T("\" \"") + tmp1 + _T("\"");
+        // update sizes of child windows first:
+        Layout();
 
-    m_validationProcess.tmp1 = tmp1;
-    m_validationProcess.tmp2 = tmp2;
-
-    wxProcess *process =
-        ExecuteGettextNonblocking(cmdline, &m_validationProcess, this);
-    if (process)
-    {
-        m_gettextProcess = process;
-        m_itemBeingValidated = item;
-        m_itemsToValidate.pop_front();
-    }
-    else
-    {
-        EndItemValidation();
-    }
-#endif
-}
-
-void PoeditFrame::EndItemValidation()
-{
-#if USE_GETTEXT_VALIDATION
-    wxASSERT( m_catalog );
-
-    wxRemoveFile(m_validationProcess.tmp1);
-    wxRemoveFile(m_validationProcess.tmp2);
-
-    if (m_itemBeingValidated != -1)
-    {
-        int item = m_itemBeingValidated;
-        int index = m_list->GetIndexInCatalog(item);
-        CatalogItem& dt = (*m_catalog)[index];
-
-        bool ok = (m_validationProcess.ExitCode == 0);
-        dt.SetValidity(ok);
-
-        if (!ok)
+        // then set sash positions
+        m_splitter->SetSashPosition(wxConfig::Get()->Read(_T("splitter"), 240L));
+        if ( m_bottomSplitter->IsSplit() )
         {
-            wxString err;
-            for (size_t i = 0; i < m_validationProcess.Stderr.GetCount(); i++)
-            {
-                wxString line(m_validationProcess.Stderr[i]);
-                if (!line.empty())
-                {
-                    err += line;
-                    err += _T('\n');
-                }
-            }
-            err.RemoveLast();
-            err.Replace(m_validationProcess.tmp1, _T(""));
-            if (err[0u] == _T(':'))
-                err = err.Mid(1);
-            err = err.AfterFirst(_T(':'));
-            dt.SetErrorString(err);
-        }
-
-        m_itemBeingValidated = -1;
-
-        if ((m_itemsToValidate.size() % 10) == 0)
-        {
-            UpdateStatusBar();
-        }
-
-        if (!ok)
-            m_list->Refresh(item);  // Force refresh
-
-        if (m_itemsToValidate.empty())
-        {
-            wxLogTrace(_T("poedit"),
-                       _T("finished checking validity in background"));
+            m_bottomSplitter->SetSashPosition(
+                wxConfig::Get()->Read(_T("bottom_splitter"), -200L));
         }
     }
-#endif
 }
 
 void PoeditFrame::ShowPluralFormUI(bool show)
@@ -2761,18 +2781,26 @@ void PoeditFrame::OnListFocus(wxFocusEvent& event)
         event.Skip();
 }
 
-void PoeditFrame::AddBookmarksMenu()
+void PoeditFrame::AddBookmarksMenu(wxMenu *parent)
 {
     wxMenu *menu = new wxMenu();
 
-#ifdef __WXMAC__
+    parent->AppendSeparator();
+    parent->AppendSubMenu(menu, _("&Bookmarks"));
+
+#if defined(__WXMAC__)
     // on Mac, Alt+something is used during normal typing, so we shouldn't
     // use it as shortcuts:
-    #define LABEL_BOOKMARK_SET   _("Set bookmark %i\tCtrl-%i")
-    #define LABEL_BOOKMARK_GO    _("Go to bookmark %i\tCtrl-Alt-%i")
+    #define LABEL_BOOKMARK_SET   _("Set Bookmark %i\tCtrl+%i")
+    #define LABEL_BOOKMARK_GO    _("Go to Bookmark %i\tCtrl+Alt+%i")
+#elif defined(__WXMSW__)
+    #define LABEL_BOOKMARK_SET   _("Set bookmark %i\tAlt+%i")
+    #define LABEL_BOOKMARK_GO    _("Go to bookmark %i\tCtrl+%i")
+#elif defined(__WXGTK__)
+    #define LABEL_BOOKMARK_SET   _("Set Bookmark %i\tAlt+%i")
+    #define LABEL_BOOKMARK_GO    _("Go to Bookmark %i\tCtrl+%i")
 #else
-    #define LABEL_BOOKMARK_SET   _("Set bookmark %i\tAlt-%i")
-    #define LABEL_BOOKMARK_GO    _("Go to bookmark %i\tCtrl-%i")
+    #error "what is correct capitalization for this toolkit?"
 #endif
 
     for (int i = 0; i < 10; i++)
@@ -2786,9 +2814,6 @@ void PoeditFrame::AddBookmarksMenu()
         menu->Append(ID_BOOKMARK_GO + i,
                      wxString::Format(LABEL_BOOKMARK_GO, i, i));
     }
-
-    wxMenuBar *bar = GetMenuBar();
-    bar->Insert(bar->GetMenuCount() - 1, menu, _("&Bookmarks"));
 }
 
 void PoeditFrame::OnGoToBookmark(wxCommandEvent& event)
@@ -2798,7 +2823,7 @@ void PoeditFrame::OnGoToBookmark(wxCommandEvent& event)
     int bkIndex = m_catalog->GetBookmarkIndex(bk);
     if (bkIndex != -1)
     {
-        int listIndex = m_list->GetItemIndex(bkIndex);
+        int listIndex = m_list->CatalogIndexToList(bkIndex);
         if (listIndex >= 0 && listIndex < m_list->GetItemCount())
         {
             m_list->EnsureVisible(listIndex);
@@ -2828,10 +2853,137 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     // Refresh items
     RefreshSelectedItem();
     if (bkIndex != -1)
-        m_list->RefreshItem(m_list->GetItemIndex(bkIndex));
+        m_list->RefreshItem(m_list->CatalogIndexToList(bkIndex));
 
     // Catalog has been modified
     m_modified = true;
     UpdateTitle();
     UpdateMenu();
+}
+
+
+void PoeditFrame::OnSortByFileOrder(wxCommandEvent&)
+{
+    m_list->sortOrder.by = SortOrder::By_FileOrder;
+    m_list->Sort();
+}
+
+
+void PoeditFrame::OnSortBySource(wxCommandEvent&)
+{
+    m_list->sortOrder.by = SortOrder::By_Source;
+    m_list->Sort();
+}
+
+
+void PoeditFrame::OnSortByTranslation(wxCommandEvent&)
+{
+    m_list->sortOrder.by = SortOrder::By_Translation;
+    m_list->Sort();
+}
+
+
+void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
+{
+    m_list->sortOrder.untransFirst = event.IsChecked();
+    m_list->Sort();
+}
+
+// ------------------------------------------------------------------
+//  catalog navigation
+// ------------------------------------------------------------------
+
+namespace
+{
+
+bool Pred_AnyItem(const CatalogItem&)
+{
+    return true;
+}
+
+bool Pred_UnfinishedItem(const CatalogItem& item)
+{
+    return !item.IsTranslated() || item.IsFuzzy();
+}
+
+} // anonymous namespace
+
+
+void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
+{
+    const int count = m_list->GetItemCount();
+    if ( !count )
+        return;
+
+    const int start = m_list->GetSelection();
+
+    int i = start;
+
+    for ( ;; )
+    {
+        i += step;
+
+        if ( i < 0 )
+        {
+            if ( wrap )
+                i += count;
+            else
+                return; // nowhere to go
+        }
+        else if ( i >= count )
+        {
+            if ( wrap )
+                i -= count;
+            else
+                return; // nowhere to go
+        }
+
+        if ( i == start )
+            return; // nowhere to go
+
+        const CatalogItem& item = m_list->ListIndexToCatalogItem(i);
+        if ( predicate(item) )
+        {
+            m_list->Select(i);
+            return;
+        }
+    }
+}
+
+void PoeditFrame::OnPrev(wxCommandEvent&)
+{
+    Navigate(-1, Pred_AnyItem, /*wrap=*/false);
+}
+
+void PoeditFrame::OnNext(wxCommandEvent&)
+{
+    Navigate(+1, Pred_AnyItem, /*wrap=*/false);
+}
+
+void PoeditFrame::OnPrevUnfinished(wxCommandEvent&)
+{
+    Navigate(-1, Pred_UnfinishedItem, /*wrap=*/false);
+}
+
+void PoeditFrame::OnNextUnfinished(wxCommandEvent&)
+{
+    Navigate(+1, Pred_UnfinishedItem, /*wrap=*/false);
+}
+
+void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
+{
+    // like "next unfinished", but wraps
+    Navigate(+1, Pred_UnfinishedItem, /*wrap=*/true);
+}
+
+void PoeditFrame::OnPrevPage(wxCommandEvent&)
+{
+    int pos = std::max(m_list->GetSelection()-10, 0);
+    m_list->Select(pos);
+}
+
+void PoeditFrame::OnNextPage(wxCommandEvent&)
+{
+    int pos = std::min(m_list->GetSelection()+10, m_list->GetItemCount()-1);
+    m_list->Select(pos);
 }

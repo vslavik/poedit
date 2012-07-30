@@ -1,27 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resource version="2.3.0.1">
+<resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
   <object class="wxToolBar" name="toolbar">
-    <bitmapsize platform="win">22,22</bitmapsize>
+    <bitmapsize platform="win">32,32</bitmapsize>
     <bitmapsize platform="mac">32,32</bitmapsize>
-    <margins>2,2</margins> 
+    <margins>4,4</margins> 
     <style platform="mac">wxTB_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
-    <style platform="win">wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
-    <style platform="unix">wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
-    <object class="tool" name="wxID_OPEN">
+    <style platform="win">wxTB_HORZ_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT|wxTB_NODIVIDER</style>
+    <style platform="unix">wxTB_HORZ_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
+
+    <!-- On OS X, only document-manipulating buttons should be in the toolbar,
+         not app-scope things such as Open and not Save. -->
+    <object class="tool" name="wxID_OPEN" platform="win">
       <bitmap stock_id="document-open"/>
       <label>Open</label>
       <tooltip>Open catalog</tooltip>
     </object>
-    <object class="tool" name="wxID_SAVE">
+    <object class="tool" name="wxID_OPEN" platform="unix">
+      <bitmap stock_id="document-open"/>
+      <label>Open</label>
+      <tooltip>Open catalog</tooltip>
+    </object>
+    <object class="tool" name="wxID_SAVE" platform="win">
       <bitmap stock_id="document-save"/>
       <label>Save</label>
       <tooltip>Save catalog</tooltip>
     </object>
+    <object class="tool" name="wxID_SAVE" platform="unix">
+      <bitmap stock_id="document-save"/>
+      <label>Save</label>
+      <tooltip>Save catalog</tooltip>
+    </object>
+    <object class="separator" platform="unix"/>
+    <object class="separator" platform="win"/>
+
+    <object class="tool" name="menu_validate">
+      <bitmap stock_id="poedit-validate"/>
+      <label>Validate</label>
+      <tooltip>Check for errors in the translation</tooltip>
+    </object>
+
     <object class="tool" name="menu_update">
       <bitmap stock_id="poedit-update"/>
       <label>Update</label>
       <tooltip>Update catalog - synchronize it with sources</tooltip>
     </object>
+
     <object class="separator"/>
     <object class="tool" name="menu_fuzzy">
       <bitmap stock_id="poedit-fuzzy"/>
@@ -33,18 +56,6 @@
       <bitmap stock_id="poedit-comment"/>
       <label>Comment</label>
       <tooltip>Edit comment</tooltip>
-    </object>
-    <object class="separator" platform="win"/>
-    <object class="tool" name="menu_fullscreen" platform="win">
-      <bitmap stock_id="view-fullscreen"/>
-      <tooltip>Fullscreen view</tooltip>
-      <toggle>1</toggle>
-    </object>
-    <object class="separator" platform="unix"/>
-    <object class="tool" name="menu_fullscreen" platform="unix">
-      <bitmap stock_id="view-fullscreen"/>
-      <tooltip>Fullscreen view</tooltip>
-      <toggle>1</toggle>
     </object>
   </object>
 </resource>

@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Catalog export into HTML file
- *
  */
 
 #include <wx/intl.h>
@@ -33,6 +29,7 @@
 #include <wx/textfile.h>
 
 #include "catalog.h"
+#include "utility.h"
 
 namespace
 {
@@ -52,16 +49,6 @@ wxColour
     g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
     g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1); // yellow
 
-
-// escape string for HTML:
-wxString Escape(const wxString& str)
-{
-    wxString s(str);
-    s.Replace(_T("&"), _T("&amp;"));
-    s.Replace(_T("<"), _T("&lt;"));
-    s.Replace(_T(">"), _T("&gt;"));
-    return s;
-}
 
 } // anonymous namespace
 
@@ -89,19 +76,17 @@ bool Catalog::ExportToHTML(const wxString& filename)
     f.AddLine(_T("<html>"));
 
     f.AddLine(_T("<head>"));
-    line.Printf(_T("<title> %s - %s / %s - Poedit Export </title>"),
-                Escape(m_header.Project).c_str(),
-                Escape(m_header.Language).c_str(),
-                Escape(m_header.Country).c_str());
+    line.Printf(_T("<title> %s - %s - Poedit Export </title>"),
+                EscapeMarkup(m_header.Project).c_str(),
+                EscapeMarkup(m_header.LanguageCode).c_str());
     f.AddLine(line);
     f.AddLine(_T("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" ) );
     f.AddLine(_T("</head>"));
     f.AddLine(_T("<body bgcolor='#FFFFFF'>"));
 
-    line.Printf(_T("<h1> %s : %s / %s</h1>"),
-                Escape(m_header.Project).c_str(),
-                Escape(m_header.Language).c_str(),
-                Escape(m_header.Country).c_str());
+    line.Printf(_T("<h1> %s : %s</h1>"),
+                EscapeMarkup(m_header.Project).c_str(),
+                EscapeMarkup(m_header.LanguageCode).c_str());
     f.AddLine(line);
 
 
@@ -118,24 +103,21 @@ bool Catalog::ExportToHTML(const wxString& filename)
     wxString line_format = _T("<tr><td>%s</td><td>%s</td></tr>");
     line.Printf(line_format,
                 _("Project name and version:"),
-                Escape(m_header.Project).c_str());
+                EscapeMarkup(m_header.Project).c_str());
     f.AddLine(line);
     line.Printf(line_format, _("Language:"),
-                Escape(m_header.Language).c_str());
-    f.AddLine(line);
-    line.Printf(line_format, _("Country:"),
-                Escape(m_header.Country).c_str());
+                EscapeMarkup(m_header.LanguageCode).c_str());
     f.AddLine(line);
     line.Printf(line_format, _("Team:"),
-                Escape(m_header.Team).c_str());
+                EscapeMarkup(m_header.Team).c_str());
     f.AddLine(line);
     line.Printf(_T("<tr><td>%s</td><td><a href=\"mailto:%s\">%s</a></td></tr>"),
                 _("Team's email address:"),
-                Escape(m_header.TeamEmail).c_str(),
-                Escape(m_header.TeamEmail).c_str());
+                EscapeMarkup(m_header.TeamEmail).c_str(),
+                EscapeMarkup(m_header.TeamEmail).c_str());
     f.AddLine(line);
     line.Printf(line_format, _("Charset:"),
-                Escape(m_header.Charset).c_str());
+                EscapeMarkup(m_header.Charset).c_str());
     f.AddLine(line);
 
     f.AddLine( _T("</table>") );
@@ -145,10 +127,10 @@ bool Catalog::ExportToHTML(const wxString& filename)
     int fuzzy = 0;
     int untranslated = 0;
     int badtokens = 0;
-    GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
+    int unfinished = 0;
+    GetStatistics(&all, &fuzzy, &badtokens, &untranslated, &unfinished);
 
-    int percent = (all == 0 ) ? 0 :
-                  (100 * (all-fuzzy-badtokens-untranslated) / all);
+    int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
     line.Printf(_("%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"),
                percent, all, fuzzy, badtokens, untranslated);
 
@@ -160,11 +142,10 @@ bool Catalog::ExportToHTML(const wxString& filename)
 
     f.AddLine(_T("<tr>"));
     f.AddLine(_T("<th>"));
-    f.AddLine(_("Original string"));
+    f.AddLine(_("Source"));
     f.AddLine(_T("</th>"));
     f.AddLine(_T("<th>"));
     f.AddLine(_("Translation"));
-    f.AddLine(_T("</th>"));
     f.AddLine(_T("</th>"));
     f.AddLine(_T("<th>"));
     f.AddLine(_("Notes"));
@@ -176,7 +157,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
         const CatalogItem& data = m_items[i];
 
         wxColour bgcolor = g_ItemColourNormal[i % 2];
-        wxString original_string = data.GetString();
+        wxString source_string = data.GetString();
 
         wxString translation = data.GetTranslation();
         if (translation.empty())
@@ -189,13 +170,13 @@ bool Catalog::ExportToHTML(const wxString& filename)
 
         if (data.IsAutomatic())
         {
-            flags += _("Automatic translation");
+            flags += EscapeMarkup(_("Automatic translation"));
             flags += _T("<BR>");
         }
         if (data.IsFuzzy())
         {
             bgcolor = g_ItemColourFuzzy[i % 2];
-            flags += _("Fuzzy translation");
+            flags += EscapeMarkup(_("Fuzzy translation"));
             flags += _T("<BR>");
         }
         if (flags.empty())
@@ -209,14 +190,14 @@ bool Catalog::ExportToHTML(const wxString& filename)
         f.AddLine(tr);
 
         f.AddLine(_T("<td>"));
-        f.AddLine(Escape(original_string));
+        f.AddLine(EscapeMarkup(source_string));
         f.AddLine(_T("</td>"));
         f.AddLine(_T("<td>"));
-        f.AddLine(Escape(translation));
+        f.AddLine(EscapeMarkup(translation));
         f.AddLine(_T("</td>"));
         f.AddLine(_T("<td>"));
         f.AddLine(_T("<font size=\"-1\">"));
-        f.AddLine(Escape(flags));
+        f.AddLine(flags);
         f.AddLine(_T("</font>"));
         f.AddLine(_T("</td>"));
         f.AddLine(_T("</tr>"));

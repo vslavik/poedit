@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Translation memory database update wizard
- *
  */
 
 #include <wx/wxprec.h>
@@ -107,7 +103,7 @@ private:
             event.Skip();
     }
     
-    void OnBrowse(wxCommandEvent& event)
+    void OnBrowse(wxCommandEvent&)
     {
         wxDirDialog dlg(this, _("Select directory"));
         if (dlg.ShowModal() == wxID_OK)
@@ -119,7 +115,7 @@ private:
         }
     }
 
-    void OnDefaults(wxCommandEvent& event)
+    void OnDefaults(wxCommandEvent&)
     {
         wxArrayString a;
 #if defined(__UNIX__)
@@ -132,7 +128,7 @@ private:
         m_paths->SetStrings(a);
     }
 
-    void OnAddFiles(wxCommandEvent& event)
+    void OnAddFiles(wxCommandEvent&)
     {
         wxFileDialog dlg(this,
                          _("Add files"),
@@ -174,8 +170,7 @@ END_EVENT_TABLE()
 
 
 
-void RunTMUpdateWizard(wxWindow *parent,
-                       const wxString& dbPath, const wxArrayString& langs)
+void RunTMUpdateWizard(wxWindow *parent, const wxArrayString& langs)
 {
     for (size_t i = 0; i < langs.GetCount(); i++)
     {
@@ -192,19 +187,22 @@ void RunTMUpdateWizard(wxWindow *parent,
             wizard.Destroy();
             return;
         }
-        
-        TranslationMemory *tm = 
-            TranslationMemory::Create(langs[i], dbPath);
+
+        TranslationMemory *tm = TranslationMemory::Create(langs[i]);
         if (tm)
         {
-            ProgressInfo *pi = new ProgressInfo;
-            TranslationMemoryUpdater u(tm, pi);
+            ProgressInfo pi(parent, _("Updating translation memory"));
+            TranslationMemoryUpdater u(tm, &pi);
             wxArrayString files;
             wizard.GetFiles(files);
-            if (!u.Update(files)) 
-                { tm->Release(); break; }
+
+            if (!u.Update(files))
+            {
+                tm->Release();
+                break;
+            }
+
             tm->Release();
-            delete pi;
         }
 
         // Save the directories:

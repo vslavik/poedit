@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2007 Vaclav Slavik
+ *  Copyright (C) 1999-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE. 
  *
- *  $Id$
- *
- *  Translations catalog
- *
  */
 
 #include <wx/wxprec.h>
@@ -42,6 +38,7 @@
 #include <wx/filename.h>
 
 #include <set>
+#include <algorithm>
 
 #include "catalog.h"
 #include "digger.h"
@@ -49,7 +46,7 @@
 #include "progressinfo.h"
 #include "summarydlg.h"
 #include "isocodes.h"
-
+#include "utility.h"
 
 
 // ----------------------------------------------------------------------
@@ -115,19 +112,6 @@ static bool ReadParam(const wxString& input, const wxString& pattern, wxString& 
 
     output = input.Mid(in_pos).Strip(wxString::trailing);
     return true;
-}
-
-static bool ReadParamIfNotSet(const wxString& input,
-                              const wxString& pattern, wxString& output)
-{
-    wxString dummy;
-    if (ReadParam(input, pattern, dummy))
-    {
-        if (output.empty())
-            output = dummy;
-        return true;
-    }
-    return false;
 }
 
 
@@ -288,10 +272,10 @@ void Catalog::HeaderData::UpdateDict()
     SetHeader(_T("Content-Transfer-Encoding"), _T("8bit"));
 
 
+    SetHeaderNotEmpty(_T("Language"), LanguageCode);
+
     // Set extended information:
 
-    SetHeaderNotEmpty(_T("X-Poedit-Language"), Language);
-    SetHeaderNotEmpty(_T("X-Poedit-Country"), Country);
     SetHeaderNotEmpty(_T("X-Poedit-SourceCharset"), SourceCodeCharset);
 
     if (!Keywords.empty())
@@ -389,11 +373,29 @@ void Catalog::HeaderData::ParseDict()
         Charset = _T("iso-8859-1");
     }
 
+    // Parse language information, with backwards compatibility with X-Poedit-*:
+    LanguageCode = GetHeader(_T("Language"));
+    if ( LanguageCode.empty() )
+    {
+        wxString X_Language = GetHeader(_T("X-Poedit-Language"));
+        if ( !X_Language.empty() )
+            X_Language = LookupLanguageCode(X_Language);
+
+        wxString X_Country = GetHeader(_T("X-Poedit-Country"));
+        if ( !X_Country.empty() )
+            X_Country = LookupCountryCode(X_Country);
+
+        if ( !X_Language.empty() )
+        {
+            LanguageCode = X_Language;
+            if ( !X_Country.empty() )
+                LanguageCode += _T("_") + X_Country;
+        }
+    }
+    DeleteHeader(_T("X-Poedit-Language"));
+    DeleteHeader(_T("X-Poedit-Country"));
 
     // Parse extended information:
-
-    Language = GetHeader(_T("X-Poedit-Language"));
-    Country = GetHeader(_T("X-Poedit-Country"));
     SourceCodeCharset = GetHeader(_T("X-Poedit-SourceCharset"));
     BasePath = GetHeader(_T("X-Poedit-Basepath"));
 
@@ -540,7 +542,7 @@ bool CatalogParser::Parse()
     bool has_plural = false;
     bool has_context = false;
     wxString msgctxt;
-    unsigned mlinenum;
+    unsigned mlinenum = 0;
 
     line = m_textFile->GetFirstLine();
     if (line.empty()) line = ReadTextLine(m_textFile);
@@ -570,20 +572,9 @@ bool CatalogParser::Parse()
         // references:
         else if (ReadParam(line, _T("#: "), dummy))
         {
-            // A line may contain several references, separated by white-space.
-            // Each reference is in the form "path_name:line_number"
-            // (path_name may contain spaces)
-            dummy = dummy.Strip(wxString::both);
-            while (!dummy.empty())
-            {
-                size_t i = 0;
-                while (i < dummy.length() && dummy[i] != _T(':')) { i++; }
-                while (i < dummy.length() && !wxIsspace(dummy[i])) { i++; }
-
-                mrefs.Add(dummy.Left(i));
-                dummy = dummy.Mid(i).Strip(wxString::both);
-            }
-
+            // Just store the references unmodified, we don't modify this
+            // data anywhere.
+            mrefs.push_back(dummy);
             line = ReadTextLine(m_textFile);
         }
 
@@ -804,17 +795,17 @@ class CharsetInfoFinder : public CatalogParser
         wxString m_charset;
 
         virtual bool OnEntry(const wxString& msgid,
-                             const wxString& msgid_plural,
-                             bool has_plural,
-                             bool has_context,
-                             const wxString& context,
+                             const wxString& /*msgid_plural*/,
+                             bool /*has_plural*/,
+                             bool /*has_context*/,
+                             const wxString& /*context*/,
                              const wxArrayString& mtranslations,
-                             const wxString& flags,
-                             const wxArrayString& references,
-                             const wxString& comment,
-                             const wxArrayString& autocomments,
-                             const wxArrayString& msgid_old,
-                             unsigned lineNumber)
+                             const wxString& /*flags*/,
+                             const wxArrayString& /*references*/,
+                             const wxString& /*comment*/,
+                             const wxArrayString& /*autocomments*/,
+                             const wxArrayString& /*msgid_old*/,
+                             unsigned /*lineNumber*/)
         {
             if (msgid.empty())
             {
@@ -906,7 +897,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
 
 bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
                                 const wxString& flags,
-                                const wxArrayString& references,
+                                const wxArrayString& /*references*/,
                                 const wxString& comment,
                                 const wxArrayString& autocomments,
                                 unsigned lineNumber)
@@ -971,8 +962,7 @@ void Catalog::CreateNewHeader()
     dt.CreationDate = GetCurrentTimeRFC822();
     dt.RevisionDate = dt.CreationDate;
 
-    dt.Language = wxEmptyString;
-    dt.Country = wxEmptyString;
+    dt.LanguageCode = wxEmptyString;
     dt.Project = wxEmptyString;
     dt.Team = wxEmptyString;
     dt.TeamEmail = wxEmptyString;
@@ -1000,8 +990,7 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
     dt.Charset = _T("UTF-8");
 
     // clear the fields that are translation-specific:
-    dt.Language.clear();
-    dt.Country.clear();
+    dt.LanguageCode.clear();
     dt.Team.clear();
     dt.TeamEmail.clear();
 
@@ -1067,63 +1056,6 @@ bool Catalog::Load(const wxString& po_file)
 
     f.Close();
 
-    /* Load extended information from .po.poedit file, if present:
-       (NB: this is deprecated, poedit >= 1.3.0 stores the data in
-            .po file's header as X-Poedit-Foo) */
-
-    if (wxFileExists(po_file + _T(".poedit")) &&
-        f.Open(po_file + _T(".poedit"), wxConvISO8859_1))
-    {
-        wxString dummy;
-        // poedit header (optional, we should be able to read any catalog):
-        f.GetFirstLine();
-        if (ReadParam(ReadTextLine(&f),
-                      _T("#. Number of items: "), dummy))
-        {
-            // not used anymore
-        }
-        ReadParamIfNotSet(ReadTextLine(&f),
-                  _T("#. Language: "), m_header.Language);
-        dummy = ReadTextLine(&f);
-        if (ReadParamIfNotSet(dummy, _T("#. Country: "), m_header.Country))
-            dummy = ReadTextLine(&f);
-        if (ReadParamIfNotSet(dummy, _T("#. Basepath: "), m_header.BasePath))
-            dummy = ReadTextLine(&f);
-        ReadParamIfNotSet(dummy, _T("#. SourceCodeCharSet: "), m_header.SourceCodeCharset);
-
-        if (ReadParam(ReadTextLine(&f), _T("#. Paths: "), dummy))
-        {
-            bool setPaths = m_header.SearchPaths.empty();
-            long sz;
-            dummy.ToLong(&sz);
-            for (; sz > 0; sz--)
-            {
-                if (ReadParam(ReadTextLine(&f), _T("#.     "), dummy))
-                {
-                    if (setPaths)
-                        m_header.SearchPaths.Add(dummy);
-                }
-            }
-        }
-
-        if (ReadParam(ReadTextLine(&f), _T("#. Keywords: "), dummy))
-        {
-            bool setKeyw = m_header.Keywords.empty();
-            long sz;
-            dummy.ToLong(&sz);
-            for (; sz > 0; sz--)
-            {
-                if (ReadParam(ReadTextLine(&f), _T("#.     "), dummy))
-                {
-                    if (setKeyw)
-                        m_header.Keywords.Add(dummy);
-                }
-            }
-        }
-
-        f.Close();
-    }
-
     return true;
 }
 
@@ -1145,6 +1077,21 @@ bool Catalog::HasDeletedItems()
 void Catalog::RemoveDeletedItems()
 {
     m_deletedItems.clear();
+}
+
+CatalogItem *Catalog::FindItemByLine(int lineno)
+{
+    CatalogItem *last = NULL;
+
+    for ( CatalogItemArray::iterator i = m_items.begin();
+          i != m_items.end(); ++i )
+    {
+        if ( i->GetLineNumber() > lineno )
+            return last;
+        last = &(*i);
+    }
+
+    return last;
 }
 
 void Catalog::Clear()
@@ -1179,7 +1126,11 @@ int Catalog::SetBookmark(int id, Bookmark bookmark)
 }
 
 
-static bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
+// misc file-saving helpers
+namespace
+{
+
+bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
 {
     if (s.empty())
         return true;
@@ -1188,7 +1139,7 @@ static bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
     return true;
 }
 
-static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
+bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
 {
     if (charset.Lower() == _T("utf-8") || charset.Lower() == _T("utf8"))
         return true;
@@ -1218,19 +1169,52 @@ static bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
 }
 
 
-static void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
+void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
 {
     wxString format = wxConfigBase::Get()->Read(_T("crlf_format"), _T("unix"));
 
     if (format == _T("win")) type = wxTextFileType_Dos;
-    else if (format == _T("mac")) type = wxTextFileType_Mac;
-    else if (format == _T("native")) type = wxTextFile::typeDefault;
-    else /* _T("unix") */ type = wxTextFileType_Unix;
+    else /* _T("unix") or obsolete settings */ type = wxTextFileType_Unix;
 
     preserve = (bool)(wxConfigBase::Get()->Read(_T("keep_crlf"), true));
 }
 
-static void SaveMultiLines(wxTextFile &f, const wxString& text)
+
+wxTextFileType GetDesiredCRLFFormat(const wxString& po_file)
+{
+    wxTextFileType crlfDefault, crlf;
+    bool crlfPreserve;
+    GetCRLFBehaviour(crlfDefault, crlfPreserve);
+
+    wxTextFile f;
+    if ( crlfPreserve && wxFileExists(po_file) &&
+         f.Open(po_file, wxConvISO8859_1) )
+    {
+        wxLogNull null;
+        crlf = f.GuessType();
+
+        // Discard any unsupported setting. In particular, we ignore "Mac"
+        // line endings, because the ancient OS 9 systems aren't used anymore,
+        // OSX uses Unix ending *and* "Mac" endings break gettext tools. So if
+        // we encounter a catalog with "Mac" line endings, we silently convert
+        // it into Unix endings (i.e. the modern Mac).
+        if (crlf == wxTextFileType_Mac)
+            crlf = wxTextFileType_Unix;
+        if (crlf != wxTextFileType_Dos && crlf != wxTextFileType_Unix)
+            crlf = crlfDefault;
+
+        f.Close();
+    }
+    else
+    {
+        crlf = crlfDefault;
+    }
+
+    return crlf;
+}
+
+
+void SaveMultiLines(wxTextFile &f, const wxString& text)
 {
     wxStringTokenizer tkn(text, _T('\n'));
     while (tkn.HasMoreTokens())
@@ -1239,7 +1223,7 @@ static void SaveMultiLines(wxTextFile &f, const wxString& text)
 
 /** Adds \n characters as neccesary for good-looking output
  */
-static wxString FormatStringForFile(const wxString& text)
+wxString FormatStringForFile(const wxString& text)
 {
     wxString s;
     unsigned n_cnt = 0;
@@ -1274,20 +1258,17 @@ static wxString FormatStringForFile(const wxString& text)
         return s;
 }
 
-bool Catalog::Save(const wxString& po_file, bool save_mo)
-{
-    wxTextFileType crlfOrig, crlf;
-    bool crlfPreserve;
-    wxTextFile f;
+} // anonymous namespace
 
+
+bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors)
+{
     if ( wxFileExists(po_file) && !wxFile::Access(po_file, wxFile::write) )
     {
         wxLogError(_("File '%s' is read-only and cannot be saved.\nPlease save it under different name."),
                    po_file.c_str());
         return false;
     }
-
-    GetCRLFBehaviour(crlfOrig, crlfPreserve);
 
     // Update information about last modification time. But if the header
     // was empty previously, the author apparently doesn't want this header
@@ -1296,24 +1277,72 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     if ( !m_header.RevisionDate.empty() )
         m_header.RevisionDate = GetCurrentTimeRFC822();
 
-    /* Detect CRLF format: */
+    const wxString po_file_temp = po_file + _T(".temp.po");
+    if ( wxFileExists(po_file_temp) )
+        wxRemoveFile(po_file_temp);
 
-    if ( crlfPreserve && wxFileExists(po_file) &&
-         f.Open(po_file, wxConvISO8859_1) )
+    if ( !DoSaveOnly(po_file_temp) )
+        return false;
+
+    validation_errors = DoValidate(po_file_temp);
+
+    // Now that the file was written, run msgcat to re-format it according
+    // to the usual format. This is a good enough fix for #25 until proper
+    // preservation of formatting is implemented.
+    if ( ExecuteGettext
+          (
+              wxString::Format(_T("msgcat --force-po -o \"%s\" \"%s\""),
+                               po_file.c_str(),
+                               po_file_temp.c_str())
+          )
+         && wxFileExists(po_file)
+       )
     {
-        {
-        wxLogNull null;
-        crlf = f.GuessType();
-        }
-        if (crlf == wxTextFileType_None || crlf == wxTextFile::typeDefault)
-            crlf = crlfOrig;
-        f.Close();
+        wxRemoveFile(po_file_temp);
     }
     else
-        crlf = crlfOrig;
+    {
+        if ( !wxRemoveFile(po_file) || !wxRenameFile(po_file_temp, po_file) )
+        {
+            wxLogWarning(_("Couldn't save file %s."), po_file.c_str());
+        }
+        else
+        {
+            wxLogWarning(_("There was a problem formatting the file nicely (but it was saved all right)."));
+        }
+    }
+
+    /* If the user wants it, compile .mo file right now: */
+
+    if (save_mo && wxConfig::Get()->Read(_T("compile_mo"), (long)false))
+    {
+        const wxString mofile = po_file.BeforeLast(_T('.')) + _T(".mo");
+        if ( !ExecuteGettext
+              (
+                  wxString::Format(_T("msgfmt -o \"%s\" \"%s\""),
+                                   mofile.c_str(),
+                                   po_file.c_str())
+              ) )
+        {
+            // Don't report errors, they were reported as part of validation
+            // step above.  Notice that we run msgfmt *without* the -c flag
+            // here to create the MO file in as many cases as possible, even if
+            // it has some errors.
+        }
+    }
+
+    m_fileName = po_file;
+
+    return true;
+}
+
+
+bool Catalog::DoSaveOnly(const wxString& po_file)
+{
+    /* Detect CRLF format: */
+    wxTextFileType crlf = GetDesiredCRLFFormat(po_file);
 
     /* Save .po file: */
-
     wxString charset(m_header.Charset);
     if (!charset || charset == _T("CHARSET"))
         charset = _T("UTF-8");
@@ -1328,14 +1357,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     }
     m_header.Charset = charset;
 
-    if (!wxFileExists(po_file) || !f.Open(po_file, wxConvISO8859_1))
-        if (!f.Create(po_file))
-            return false;
-    for (int j = f.GetLineCount() - 1; j >= 0; j--)
-        f.RemoveLine(j);
-
-
-    wxCSConv encConv(charset);
+    wxTextFile f;
+    if (!f.Create(po_file))
+        return false;
 
     SaveMultiLines(f, m_header.Comment);
     f.AddLine(_T("msgid \"\""));
@@ -1348,6 +1372,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
     for (unsigned i = 0; i < m_items.size(); i++)
     {
         CatalogItem& data = m_items[i];
+        data.SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, data.GetComment());
         for (unsigned i = 0; i < data.GetAutoComments().GetCount(); i++)
         {
@@ -1356,8 +1381,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
             else
               f.AddLine(_T("#. ") + data.GetAutoComments()[i]);
         }
-        for (unsigned i = 0; i < data.GetReferences().GetCount(); i++)
-            f.AddLine(_T("#: ") + data.GetReferences()[i]);
+        for (unsigned i = 0; i < data.GetRawReferences().GetCount(); i++)
+            f.AddLine(_T("#: ") + data.GetRawReferences()[i]);
         wxString dummy = data.GetFlags();
         if (!dummy.empty())
             f.AddLine(dummy);
@@ -1368,7 +1393,6 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
             SaveMultiLines(f, _T("msgctxt \"") + FormatStringForFile(data.GetContext()) + _T("\""));
         }
         dummy = FormatStringForFile(data.GetString());
-        data.SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
         if (data.HasPlural())
         {
@@ -1397,49 +1421,78 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
             f.AddLine(wxEmptyString);
 
         CatalogDeletedData& deletedItem = m_deletedItems[i];
+        deletedItem.SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, deletedItem.GetComment());
         for (unsigned i = 0; i < deletedItem.GetAutoComments().GetCount(); i++)
             f.AddLine(_T("#. ") + deletedItem.GetAutoComments()[i]);
-        for (unsigned i = 0; i < deletedItem.GetReferences().GetCount(); i++)
-            f.AddLine(_T("#: ") + deletedItem.GetReferences()[i]);
+        for (unsigned i = 0; i < deletedItem.GetRawReferences().GetCount(); i++)
+            f.AddLine(_T("#: ") + deletedItem.GetRawReferences()[i]);
         wxString dummy = deletedItem.GetFlags();
         if (!dummy.empty())
             f.AddLine(dummy);
-        deletedItem.SetLineNumber(f.GetLineCount()+1);
 
         for (size_t j = 0; j < deletedItem.GetDeletedLines().GetCount(); j++)
             f.AddLine(deletedItem.GetDeletedLines()[j]);
     }
 
-
-    f.Write(crlf, encConv);
+    f.Write(crlf, wxCSConv(charset));
     f.Close();
-
-    /* Poedit < 1.3.0 used to save additional info in .po.poedit file. It's
-       not used anymore, so delete the file if it exists: */
-    if (wxFileExists(po_file + _T(".poedit")))
-    {
-        wxRemoveFile(po_file + _T(".poedit"));
-    }
-
-    /* If the user wants it, compile .mo file right now: */
-
-    if (save_mo && wxConfig::Get()->Read(_T("compile_mo"), true))
-        ExecuteGettext(_T("msgfmt -c -o \"") +
-                       po_file.BeforeLast(_T('.')) + _T(".mo\" \"") + po_file + _T("\""));
-
-    m_fileName = po_file;
 
     return true;
 }
 
 
-bool Catalog::Update(bool summary)
+int Catalog::Validate()
+{
+    TempDirectory tmpdir;
+    if ( !tmpdir.IsOk() )
+        return 0;
+
+    wxString tmp_po = tmpdir.CreateFileName(_T("validated.po"));
+    if ( !DoSaveOnly(tmp_po) )
+        return 0;
+
+    return DoValidate(tmp_po);
+}
+
+int Catalog::DoValidate(const wxString& po_file)
+{
+    GettextErrors err;
+    ExecuteGettextAndParseOutput
+    (
+        wxString::Format(_T("msgfmt -o /dev/null -c \"%s\""), po_file.c_str()),
+        err
+    );
+
+    for ( CatalogItemArray::iterator i = m_items.begin();
+          i != m_items.end(); ++i )
+    {
+        i->SetValidity(CatalogItem::Val_Valid);
+    }
+
+    for ( GettextErrors::const_iterator i = err.begin(); i != err.end(); ++i )
+    {
+        if ( i->line != -1 )
+        {
+            CatalogItem *item = FindItemByLine(i->line);
+            if ( item )
+            {
+                item->SetValidity(CatalogItem::Val_Invalid);
+                item->SetErrorString(i->text);
+                continue;
+            }
+        }
+        // if not matched to an item:
+        wxLogError(i->text);
+    }
+
+    return err.size();
+}
+
+
+bool Catalog::Update(ProgressInfo *progress, bool summary)
 {
     if (!m_isOk) return false;
-
-    ProgressInfo pinfo;
-    pinfo.SetTitle(_("Updating catalog..."));
 
     wxString cwd = wxGetCwd();
     if (m_fileName != wxEmptyString)
@@ -1447,17 +1500,24 @@ bool Catalog::Update(bool summary)
         wxString path;
 
         if (wxIsAbsolutePath(m_header.BasePath))
+        {
             path = m_header.BasePath;
+        }
         else
-            path = wxPathOnly(m_fileName) + _T("/") + m_header.BasePath;
+        {
+            path = wxPathOnly(m_fileName);
+            if (path.empty())
+                path = _T(".");
+            path = path + _T("/") + m_header.BasePath;
+        }
 
-        if (wxIsAbsolutePath(path))
-            wxSetWorkingDirectory(path);
-        else
-            wxSetWorkingDirectory(cwd + _T("/") + path);
+        if (!wxIsAbsolutePath(path))
+            path = cwd + _T("/") + path;
+
+        wxSetWorkingDirectory(path);
     }
 
-    SourceDigger dig(&pinfo);
+    SourceDigger dig(progress);
 
     wxArrayString keywords;
     if (m_header.Keywords.empty())
@@ -1479,7 +1539,8 @@ bool Catalog::Update(bool summary)
     if (newcat != NULL)
     {
         bool succ = false;
-        pinfo.UpdateMessage(_("Merging differences..."));
+        if ( progress )
+            progress->UpdateMessage(_("Merging differences..."));
 
         if (!summary || ShowMergeSummary(newcat))
             succ = Merge(newcat);
@@ -1531,30 +1592,37 @@ bool Catalog::Merge(Catalog *refcat)
 {
     wxString oldname = m_fileName;
 
-    wxString tmpdir = wxGetTempFileName(_T("poedit"));
-    wxRemoveFile(tmpdir);
-    if (!wxMkdir(tmpdir, 0700))
+    TempDirectory tmpdir;
+    if ( !tmpdir.IsOk() )
         return false;
 
-    wxString tmp1 = tmpdir + wxFILE_SEP_PATH + _T("ref.pot");
-    wxString tmp2 = tmpdir + wxFILE_SEP_PATH + _T("input.po");
-    wxString tmp3 = tmpdir + wxFILE_SEP_PATH + _T("output.po");
+    wxString tmp1 = tmpdir.CreateFileName(_T("ref.pot"));
+    wxString tmp2 = tmpdir.CreateFileName(_T("input.po"));
+    wxString tmp3 = tmpdir.CreateFileName(_T("output.po"));
 
-    refcat->Save(tmp1, false);
-    Save(tmp2, false);
+    refcat->DoSaveOnly(tmp1);
+    DoSaveOnly(tmp2);
 
-    bool succ =
-        ExecuteGettext(_T("msgmerge --force-po -o \"") + tmp3 + _T("\" \"") +
-                       tmp2 + _T("\" \"") + tmp1 + _T("\""));
+    bool succ = ExecuteGettext
+                (
+                    wxString::Format
+                    (
+                        _T("msgmerge -q --force-po -o \"%s\" \"%s\" \"%s\""),
+                        tmp3.c_str(), tmp2.c_str(), tmp1.c_str()
+                    )
+                );
+
     if (succ)
     {
-        Load(tmp3);
-    }
+        const wxString charset = m_header.Charset;
 
-    wxRemoveFile(tmp1);
-    wxRemoveFile(tmp2);
-    wxRemoveFile(tmp3);
-    wxRmdir(tmpdir);
+        Load(tmp3);
+
+        // msgmerge doesn't always preserve the charset, it tends to pick
+        // the most generic one of the charsets used, so if we are merging with
+        // UTF-8 catalog, it will become UTF-8. Some people hate this.
+        m_header.Charset = charset;
+    }
 
     m_fileName = oldname;
 
@@ -1604,15 +1672,14 @@ bool Catalog::ShowMergeSummary(Catalog *refcat)
         return true;
 }
 
-
-unsigned Catalog::GetPluralFormsCount() const
+static unsigned ParsePluralFormsHeader(const Catalog::HeaderData& header)
 {
-    if (m_header.HasHeader(_T("Plural-Forms")))
+    if ( header.HasHeader(_T("Plural-Forms")) )
     {
         // e.g. "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ?
         //       0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-        wxString form = m_header.GetHeader(_T("Plural-Forms"));
+        wxString form = header.GetHeader(_T("Plural-Forms"));
         form = form.BeforeFirst(_T(';'));
         if (form.BeforeFirst(_T('=')) == _T("nplurals"))
         {
@@ -1625,22 +1692,87 @@ unsigned Catalog::GetPluralFormsCount() const
     return 0;
 }
 
+unsigned Catalog::GetPluralFormsCount() const
+{
+    unsigned count = ParsePluralFormsHeader(m_header);
 
-void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens, int *untranslated)
+    for ( CatalogItemArray::const_iterator i = m_items.begin();
+          i != m_items.end(); ++i )
+    {
+        count = std::max(count, i->GetPluralFormsCount());
+    }
+
+    return count;
+}
+
+bool Catalog::HasWrongPluralFormsCount() const
+{
+    unsigned count = 0;
+
+    for ( CatalogItemArray::const_iterator i = m_items.begin();
+          i != m_items.end(); ++i )
+    {
+        count = std::max(count, i->GetPluralFormsCount());
+    }
+
+    if ( count == 0 )
+        return false; // nothing translated, so we can't tell
+
+    // if 'count' is less than the count from header, it may simply mean there
+    // are untranslated strings
+    if ( count > ParsePluralFormsHeader(m_header) )
+        return true;
+
+    return false;
+}
+
+bool Catalog::HasPluralItems() const
+{
+    for ( CatalogItemArray::const_iterator i = m_items.begin();
+          i != m_items.end(); ++i )
+    {
+        if ( i->HasPlural() )
+            return true;
+    }
+
+    return false;
+}
+
+
+void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
+                            int *untranslated, int *unfinished)
 {
     if (all) *all = 0;
     if (fuzzy) *fuzzy = 0;
     if (badtokens) *badtokens = 0;
     if (untranslated) *untranslated = 0;
+    if (unfinished) *unfinished = 0;
+
     for (size_t i = 0; i < GetCount(); i++)
     {
-        if (all) (*all)++;
+        bool ok = true;
+
+        if (all)
+            (*all)++;
+
         if ((*this)[i].IsFuzzy())
+        {
             (*fuzzy)++;
+            ok = false;
+        }
         if ((*this)[i].GetValidity() == CatalogItem::Val_Invalid)
+        {
             (*badtokens)++;
+            ok = false;
+        }
         if (!(*this)[i].IsTranslated())
+        {
             (*untranslated)++;
+            ok = false;
+        }
+
+        if ( !ok && unfinished )
+            (*unfinished)++;
     }
 }
 
@@ -1730,21 +1862,68 @@ void CatalogItem::SetTranslations(const wxArrayString &t)
     }
 }
 
+unsigned CatalogItem::GetPluralFormsCount() const
+{
+    unsigned trans = GetNumberOfTranslations();
+    if ( !HasPlural() || !trans )
+        return 0;
+
+    return trans - 1;
+}
+
+wxArrayString CatalogItem::GetReferences() const
+{
+    // A line may contain several references, separated by white-space.
+    // Each reference is in the form "path_name:line_number"
+    // (path_name may contain spaces)
+
+    wxArrayString refs;
+
+    for ( wxArrayString::const_iterator i = m_references.begin(); i != m_references.end(); ++i )
+    {
+        wxString line = *i;
+
+        line = line.Strip(wxString::both);
+        while (!line.empty())
+        {
+            size_t i = 0;
+            while (i < line.length() && line[i] != _T(':')) { i++; }
+            while (i < line.length() && !wxIsspace(line[i])) { i++; }
+
+            refs.push_back(line.Left(i));
+            line = line.Mid(i).Strip(wxString::both);
+        }
+    }
+
+    return refs;
+}
+
+static wxString TryIfStringIsLangCode(const wxString& s)
+{
+    if (s.length() == 2)
+    {
+        if (IsKnownLanguageCode(s))
+            return s;
+    }
+    else if (s.length() == 5 && s[2u] == _T('_'))
+    {
+        if (IsKnownLanguageCode(s.Mid(0, 2)) &&
+            IsKnownCountryCode(s.Mid(3, 2)))
+        {
+            return s;
+        }
+    }
+
+    return wxEmptyString;
+}
 
 wxString Catalog::GetLocaleCode() const
 {
     wxString lang;
 
     // was the language explicitly specified?
-    if (!m_header.Language.empty())
-    {
-        lang = LookupLanguageCode(m_header.Language.c_str());
-        if (!m_header.Country.empty())
-        {
-            lang += _T('_');
-            lang += LookupCountryCode(m_header.Country.c_str());
-        }
-    }
+    if ( !m_header.LanguageCode.empty() )
+        lang = m_header.LanguageCode;
 
     // if not, can we deduce it from filename?
     if (lang.empty() && !m_fileName.empty())
@@ -1752,16 +1931,12 @@ wxString Catalog::GetLocaleCode() const
         wxString name;
         wxFileName::SplitPath(m_fileName, NULL, &name, NULL);
 
-        if (name.length() == 2)
+        lang = TryIfStringIsLangCode(name);
+        if ( lang.empty() )
         {
-            if (IsKnownLanguageCode(name))
-                lang = name;
-        }
-        else if (name.length() == 5 && name[2u] == _T('_'))
-        {
-            if (IsKnownLanguageCode(name.Mid(0, 2)) &&
-                    IsKnownCountryCode(name.Mid(3, 2)))
-                lang = name;
+            wxString afterDot = name.AfterLast('.');
+            if ( afterDot != name )
+                lang = TryIfStringIsLangCode(afterDot);
         }
     }
 

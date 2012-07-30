@@ -1,0 +1,138 @@
+#! /bin/sh
+
+# Test of gettext facilities in the Object Pascal language.
+# Assumes the following packages are installed: fpk.
+
+# Note: This test fails with fpk 1.0.10 when an UTF-8 locale is present,
+# because fpk ignores the locale's encoding. It supports only unibyte locales.
+# This here is a quick workaround:
+UTF8_LOCALE_UNSUPPORTED=yes
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles prog.pp"
+cat <<\EOF > prog.pp
+program prog;
+{$mode delphi}
+
+uses gettext, sysutils;
+
+resourcestring
+  question = '''Your command, please?'', asked the waiter.';
+  currencies = '%s is replaced by %s.';
+
+begin
+  translateresourcestrings('%s/LC_MESSAGES/prog.mo');
+  writeln(question);
+  writeln(format(currencies, ['FF', 'EUR']));
+end.
+EOF
+
+tmpfiles="$tmpfiles prog.o prog.rst prog"
+(ppc386 prog.pp) >/dev/null 2>&1 || {
+  echo "Skipping test: ppc386 compiler not found"
+  rm -fr $tmpfiles; exit 77
+}
+
+tmpfiles="$tmpfiles prog.tmp prog.pot"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} -o prog.tmp --omit-header --add-location prog.rst
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles prog.ok"
+cat <<EOF > prog.ok
+#: prog.question
+msgid "'Your command, please?', asked the waiter."
+msgstr ""
+
+#: prog.currencies
+#, object-pascal-format
+msgid "%s is replaced by %s."
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} prog.ok prog.pot || exit 1
+
+tmpfiles="$tmpfiles fr.po"
+cat <<\EOF > fr.po
+msgid ""
+msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
+
+#: prog.question
+msgid "'Your command, please?', asked the waiter."
+msgstr "«Votre commande, s'il vous plait», dit le garçon."
+
+# Reverse the arguments.
+#: prog.currencies
+#, object-pascal-format
+msgid "%s is replaced by %s."
+msgstr "%1:s remplace %0:s."
+EOF
+
+tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+: ${MSGMERGE=msgmerge}
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+: ${DIFF=diff}
+${DIFF} fr.po fr.po.new || exit 1
+
+tmpfiles="$tmpfiles fr"
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+
+: ${MSGFMT=msgfmt}
+${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
+
+tmpfiles="$tmpfiles prog.ok prog.oku prog.out"
+: ${DIFF=diff}
+cat <<\EOF > prog.ok
+«Votre commande, s'il vous plait», dit le garçon.
+EUR remplace FF.
+EOF
+cat <<\EOF > prog.oku
+Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
+EUR remplace FF.
+EOF
+
+: ${LOCALE_FR=fr_FR}
+: ${LOCALE_FR_UTF8=fr_FR.UTF-8}
+if test $LOCALE_FR != none; then
+  LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR ./prog > prog.out || exit 1
+  : ${DIFF=diff}
+  ${DIFF} prog.ok prog.out || exit 1
+fi
+if test -z "$UTF8_LOCALE_UNSUPPORTED"; then
+  if test $LOCALE_FR_UTF8 != none; then
+    LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR_UTF8 ./prog > prog.out || exit 1
+    : ${DIFF=diff}
+    ${DIFF} prog.oku prog.out || exit 1
+  fi
+  if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
+    if test -f /usr/bin/localedef; then
+      echo "Skipping test: no french locale is installed"
+    else
+      echo "Skipping test: no french locale is supported"
+    fi
+    rm -fr $tmpfiles; exit 77
+  fi
+else
+  if test $LOCALE_FR = none; then
+    if test -f /usr/bin/localedef; then
+      echo "Skipping test: no traditional french locale is installed"
+    else
+      echo "Skipping test: no traditional french locale is supported"
+    fi
+    rm -fr $tmpfiles; exit 77
+  fi
+fi
+
+rm -fr $tmpfiles
+
+exit 0

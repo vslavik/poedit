@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2007 Vaclav Slavik
+ *  Copyright (C) 2007-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE. 
  *
- *  $Id$
- *
- *  Simple interface for accessing NSUserDefaults
- *
  */
 
 #include "userdefaults.h"
@@ -36,8 +32,6 @@
 
 int UserDefaults_GetBoolValue(const char *key)
 {
-    NSApplicationLoad();
-
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     NSString *nskey = [NSString stringWithUTF8String: key];
 
@@ -50,8 +44,6 @@ int UserDefaults_GetBoolValue(const char *key)
 
 void UserDefaults_SetBoolValue(const char *key, int value)
 {
-    NSApplicationLoad();
-
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     NSString *nskey = [NSString stringWithUTF8String: key];
 
@@ -63,8 +55,6 @@ void UserDefaults_SetBoolValue(const char *key, int value)
 
 void UserDefaults_RemoveValue(const char *key)
 {
-    NSApplicationLoad();
-
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     NSString *nskey = [NSString stringWithUTF8String: key];
 

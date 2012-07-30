@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2007 Vaclav Slavik
+ *  Copyright (C) 2001-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,15 +21,18 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Translation memory database
- *
  */
 
 #include <wx/wxprec.h>
+#include <wx/string.h>
+#include <wx/stdpaths.h>
+#include <wx/filename.h>
+#include <wx/config.h>
+#include <wx/tokenzr.h>
+#include <wx/msgdlg.h>
 
 #include <set>
+#include <memory>
 
 /** \page db_desc Translation Memory Algorithms
 
@@ -81,7 +84,7 @@
     \section tm_ops Operations
     
     TM supports two operations: 
-    - Store(original_string, translation)
+    - Store(source_string, translation)
     - Lookup(string, max_words_diff, max_length_delta). This operation returns
       array of results and integer value indicating exactness of result
       (0=worst, 100=exact). All returned strings are of same exactness.
@@ -89,17 +92,17 @@
 
     \subsection tm_write Writing to TM
 
-    First, TM tries to find \a original_string in DbOrig. This is a trivial
+    First, TM tries to find \a source_string in DbOrig. This is a trivial
     case - if TM finds it, it reads the record with obtained ID from DbTrans,
     checks if the list already contains \a translation and if not, adds 
     \a translation to the list and writes it back to DbTrans. DBs are 
     consistent at this point and operation finished successfully.
     
-    If DbOrig doesn't contain \a original_string, however, the situation is
+    If DbOrig doesn't contain \a source_string, however, the situation is
     more complicated. TM writes \a translation to DbTrans and obtains ID
     (which equals new record's index in DbTrans).
-    It then writes \a original_string and this ID to DbOrig. Last, TM converts
-    \a original_string to an array of words (by splitting it with usual
+    It then writes \a source_string and this ID to DbOrig. Last, TM converts
+    \a source_string to an array of words (by splitting it with usual
     word separators, converting to lowercase and removing bad words that
     are too common, such as "a", "the" or "will"). Number of words is used
     as sentence length and the ID is added to (word,length) records in 
@@ -157,14 +160,13 @@
 #include <wx/utils.h>
 #include <wx/filename.h>
 
-#include DB_HEADER
-
-#if (DB_VERSION_MAJOR > 4) || (DB_VERSION_MAJOR == 4 && DB_VERSION_MINOR >= 1)
-    #define DB_OPEN_WITH_TRANSACTION
+#ifdef DB_HEADER
+    #include DB_HEADER
+#else
+    #include <db_cxx.h>
 #endif
 
 #include "transmem.h"
-
 
 typedef db_recno_t DbKey;
 const DbKey DBKEY_ILLEGAL = 0;
@@ -172,18 +174,18 @@ const DbKey DBKEY_ILLEGAL = 0;
 class DbKeys
 {
     public:
-        DbKeys(DBT& data)
+        DbKeys(const Dbt& data)
         {
-            Count = data.size / sizeof(DbKey);
+            Count = data.get_size() / sizeof(DbKey);
             List = new DbKey[Count];
-            memcpy(List, data.data, data.size);
+            memcpy(List, data.get_data(), data.get_size());
         }
-        
+
         DbKeys(size_t cnt) : Count(cnt)
-        {   
+        {
             List = new DbKey[Count];
         }
-        
+
         ~DbKeys()
         {
             delete[] List;
@@ -198,24 +200,22 @@ class DbBase
 {
     public:
         /// Ctor.
-        DbBase(const wxString& filename, DBTYPE type);
-        virtual ~DbBase();
-        /// Returns false if opening DB failed
-        bool IsOk() const { return m_ok; }
-        /// Logs last DB error and sets error variable to "no error".
-        void LogError();
-        
+        DbBase(DbEnv *env, const wxString& filename, DBTYPE type);
+
+        void Release();
+
     protected:
-        DB *m_db;
-        bool m_ok;
-        int m_err;
+        virtual ~DbBase() {}
+
+        Db m_db;
 };
 
 /// Interface to the database of translations.
 class DbTrans : public DbBase
 {
     public:
-        DbTrans(const wxString& path) : DbBase(path + _T("translations.db"), DB_RECNO) {}
+        DbTrans(DbEnv *env, const wxString& path)
+            : DbBase(env, path + _T("translations.db"), DB_RECNO) {}
 
         /** Writes array of translations for entry \a index to DB.
             \param strs   array of UTF-8 encoded strings to save 
@@ -236,13 +236,17 @@ class DbTrans : public DbBase
             \remark The caller must delete returned object
          */
         wxArrayString *Read(DbKey index);
+
+    protected:
+        ~DbTrans() {}
 };
 
 /// Interface to DB of original strings.
 class DbOrig : public DbBase
 {
     public:
-        DbOrig(const wxString& path) : DbBase(path + _T("strings.db"), DB_HASH) {}
+        DbOrig(DbEnv *env, const wxString& path)
+            : DbBase(env, path + _T("strings.db"), DB_HASH) {}
         
         /** Returns index of string \a str or \c DBKEY_ILLEGAL if not found.
             Returned index can be used with DbTrans::Write and DbTrans::Read
@@ -254,7 +258,10 @@ class DbOrig : public DbBase
             It is caller's responsibility to ensure \a value is consistent
             with DbTrans instance.
          */
-        bool Write(const wxString& str, DbKey value);
+        void Write(const wxString& str, DbKey value);
+
+    protected:
+        ~DbOrig() {}
 };
 
 
@@ -262,7 +269,8 @@ class DbOrig : public DbBase
 class DbWords : public DbBase
 {
     public:
-        DbWords(const wxString& path) : DbBase(path + _T("words.db"), DB_HASH) {}
+        DbWords(DbEnv *env, const wxString& path)
+            : DbBase(env, path + _T("words.db"), DB_HASH) {}
         
         /** Reads list of DbTrans indexes of translations of which
             original strings contained \a word and were \a sentenceSize
@@ -273,61 +281,37 @@ class DbWords : public DbBase
 
         /** Adds \a value to the list of DbTrans indexes stored for
             \a word and \a sentenceSize. 
-            \return false on DB failure, true otherwise
             \see Read
          */
-        bool Append(const wxString& word, unsigned sentenceSize, DbKey value);
+        void Append(const wxString& word, unsigned sentenceSize, DbKey value);
+
+    protected:
+        ~DbWords() {}
 };
 
 
 
-DbBase::DbBase(const wxString& filename, DBTYPE type)
+DbBase::DbBase(DbEnv *env, const wxString& filename, DBTYPE type)
+    : m_db(env, 0)
 {
-    m_ok = false;
-    m_err = db_create(&m_db, NULL, 0);
-    if (m_err != 0)
-    {
-        LogError();
-        return;
-    }
-#ifdef DB_OPEN_WITH_TRANSACTION
-    m_err = m_db->open(m_db,
-                       NULL,
-                       filename.mb_str(wxConvUTF8),
-                       NULL,
-                       type,
-                       DB_CREATE,
-                       0);
+    m_db.open(NULL,
+#ifdef __WINDOWS__
+              filename.utf8_str(),
 #else
-    m_err = m_db->open(m_db,
-                       filename.mb_str(wxConvUTF8),
-                       NULL,
-                       type,
-                       DB_CREATE,
-                       0);
+              filename.fn_str(),
 #endif
-
-    if (m_err != 0)
-    {
-        LogError();
-        return;
-    }
-    m_ok = true;
+              NULL,
+              type,
+              DB_CREATE | DB_AUTO_COMMIT,
+              0);
 }
 
-DbBase::~DbBase()
+
+void DbBase::Release()
 {
-    if ((m_err = m_db->close(m_db, 0)) != 0)
-        LogError();
+    m_db.close(0);
+    delete this;
 }
-
-void DbBase::LogError()
-{
-    wxString err = wxString::FromAscii(db_strerror(m_err));
-    wxLogError(_("Database error: %s"), err.c_str());
-    m_err = 0;
-}
-
 
 
 DbKey DbTrans::Write(const wxString& str, DbKey index)
@@ -339,8 +323,6 @@ DbKey DbTrans::Write(const wxString& str, DbKey index)
 
 DbKey DbTrans::Write(wxArrayString *strs, DbKey index)
 {
-    DBT key, data;
-    char *buf;
     size_t bufLen;
     size_t i;
     char *ptr;
@@ -349,57 +331,41 @@ DbKey DbTrans::Write(wxArrayString *strs, DbKey index)
     {
         bufLen += strlen(strs->Item(i).mb_str(wxConvUTF8)) + 1;
     }
-    buf = new char[bufLen];
-    for (ptr = buf, i = 0; i < strs->GetCount(); i++)
+    wxCharBuffer buf(bufLen);
+    for (ptr = buf.data(), i = 0; i < strs->GetCount(); i++)
     {
         strcpy(ptr, strs->Item(i).mb_str(wxConvUTF8));
         ptr += strlen(ptr) + 1;
     }
 
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    data.data = buf;
-    data.size = bufLen;
+    Dbt data(buf.data(), bufLen);
 
     if (index == DBKEY_ILLEGAL)
     {
-        m_err = m_db->put(m_db, NULL, &key, &data, DB_APPEND);
+        Dbt key;
+        m_db.put(NULL, &key, &data, DB_APPEND);
+        return *((db_recno_t*)key.get_data());
     }
     else
     {
-        key.data = &index;
-        key.size = sizeof(index);
-        m_err = m_db->put(m_db, NULL, &key, &data, 0);
+        Dbt key(&index, sizeof(index));
+        m_db.put(NULL, &key, &data, 0);
+        return index;
     }
-    delete[] buf;
-
-    if (m_err != 0)
-    {
-        LogError();
-        return DBKEY_ILLEGAL;
-    }    
-    return (index == DBKEY_ILLEGAL) ? *((db_recno_t*)key.data) : index;
 }
 
 wxArrayString *DbTrans::Read(DbKey index)
 {
-    DBT key, data;
+    Dbt key(&index, sizeof(index));
+    Dbt data;
 
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    key.data = &index;
-    key.size = sizeof(index);
-    m_err = m_db->get(m_db, NULL, &key, &data, 0);
-
-    if (m_err != 0)
-    {
-        LogError();
+    if ( m_db.get(NULL, &key, &data, 0) == DB_NOTFOUND )
         return NULL;
-    }
-    
+
     wxArrayString *arr = new wxArrayString;
-    char *ptr = (char*)data.data;
-    while (ptr < ((char*)data.data) + data.size)
+    char *ptr = (char*)data.get_data();
+    char *endptr = ((char*)data.get_data()) + data.get_size();
+    while (ptr < endptr)
     {
         arr->Add(wxString(ptr, wxConvUTF8));
         ptr += strlen(ptr) + 1;
@@ -409,88 +375,52 @@ wxArrayString *DbTrans::Read(DbKey index)
 }
 
 
-
 DbKey DbOrig::Read(const wxString& str)
 {
     const wxWX2MBbuf c_str_buf = str.mb_str(wxConvUTF8);
     const char *c_str = c_str_buf;
-    DBT key, data;
 
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    key.data = (void*)c_str;
-    key.size = strlen(c_str);
-    m_err = m_db->get(m_db, NULL, &key, &data, 0);
-    if (m_err != 0)
-    {
-        if (m_err == DB_NOTFOUND)
-            m_err = 0;
-        else
-            LogError();
+    Dbt key((void*)c_str, strlen(c_str));
+    Dbt data;
+
+    if ( m_db.get(NULL, &key, &data, 0) == DB_NOTFOUND )
         return DBKEY_ILLEGAL;
-    }
-    
-    return *((DbKey*)data.data);
+
+    return *((DbKey*)data.get_data());
 }
 
-bool DbOrig::Write(const wxString& str, DbKey value)
+
+void DbOrig::Write(const wxString& str, DbKey value)
 {
     const wxWX2MBbuf c_str_buf = str.mb_str(wxConvUTF8);
     const char *c_str = c_str_buf;
-    DBT key, data;
 
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    key.data = (void*) c_str;
-    key.size = strlen(c_str);
-    data.data = &value;
-    data.size = sizeof(value);
+    Dbt key((void*)c_str, strlen(c_str));
+    Dbt data(&value, sizeof(value));
 
-    m_err = m_db->put(m_db, NULL, &key, &data, 0);
-    if (m_err != 0)
-    {
-        LogError();
-        return false;
-    }
-
-    return true;
+    m_db.put(NULL, &key, &data, 0);
 }
-
 
 
 DbKeys *DbWords::Read(const wxString& word, unsigned sentenceSize)
 {
     const wxWX2MBbuf word_mb = word.mb_str(wxConvUTF8);
-    char *keyBuf;
-    size_t keyLen;
-    DBT key, data;
+    size_t keyLen = strlen(word_mb) + sizeof(wxUint32);
+    wxCharBuffer keyBuf(keyLen+1);
+    strcpy(keyBuf.data() + sizeof(wxUint32), word_mb);
+    *((wxUint32*)(keyBuf.data())) = sentenceSize;
 
-    keyLen = strlen(word_mb) + sizeof(wxUint32);
-    keyBuf = new char[keyLen+1];
-    strcpy(keyBuf + sizeof(wxUint32), word_mb);
-    *((wxUint32*)(keyBuf)) = sentenceSize;
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    key.data = keyBuf;
-    key.size = keyLen;
-    m_err = m_db->get(m_db, NULL, &key, &data, 0);
-    delete[] keyBuf;
+    Dbt key(keyBuf.data(), keyLen);
+    Dbt data;
 
-    if (m_err != 0)
-    {
-        if (m_err == DB_NOTFOUND)
-            m_err = 0;
-        else
-            LogError();
+    if ( m_db.get(NULL, &key, &data, 0) == DB_NOTFOUND )
         return NULL;
-    }    
 
-    DbKeys *result = new DbKeys(data);
-    
-    return result;
+    return new DbKeys(data);
 }
 
-bool DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
+
+void DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
 {
     // VS: there is a dirty trick: it is always true that 'value' is 
     //     greater than all values already present in the db, so we may
@@ -500,48 +430,40 @@ bool DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
 
     const wxWX2MBbuf word_mb = word.mb_str(wxConvUTF8);
     DbKey *valueBuf;
-    char *keyBuf;
-    size_t keyLen;
-    DBT key, data;
 
-    keyLen = strlen(word_mb) + sizeof(wxUint32);
-    keyBuf = new char[keyLen+1];
-    strcpy(keyBuf + sizeof(wxUint32), word_mb);
-    *((wxUint32*)(keyBuf)) = sentenceSize;
+    size_t keyLen = strlen(word_mb) + sizeof(wxUint32);
+    wxCharBuffer keyBuf(keyLen+1);
+    strcpy(keyBuf.data() + sizeof(wxUint32), word_mb);
+    *((wxUint32*)(keyBuf.data())) = sentenceSize;
 
-    memset(&key, 0, sizeof(key));
-    memset(&data, 0, sizeof(data));
-    key.data = keyBuf;
-    key.size = keyLen;
+    Dbt key(keyBuf.data(), keyLen);
+    Dbt data;
 
-    DbKeys *keys = Read(word, sentenceSize);
-    if (keys == NULL)
+    std::auto_ptr<DbKeys> keys(Read(word, sentenceSize));
+    if (keys.get() == NULL)
     {
         valueBuf = NULL;
-        data.data = &value;
-        data.size = sizeof(DbKey);
+        data.set_data(&value);
+        data.set_size(sizeof(DbKey));
     }
     else
     {
         valueBuf = new DbKey[keys->Count + 1];
         memcpy(valueBuf, keys->List, keys->Count * sizeof(DbKey));
         valueBuf[keys->Count] = value;
-        data.data = valueBuf;
-        data.size = (keys->Count + 1) * sizeof(DbKey);
+        data.set_data(valueBuf);
+        data.set_size((keys->Count + 1) * sizeof(DbKey));
     }
-    
-    m_err = m_db->put(m_db, NULL, &key, &data, 0);
 
-    delete[] keyBuf;
-    delete[] valueBuf;
-
-    if (m_err != 0)
+    try
     {
-        LogError();
-        return false;
+        m_db.put(NULL, &key, &data, 0);
     }
-
-    return true;
+    catch ( ... )
+    {
+        delete[] valueBuf;
+        throw;
+    }
 }
 
 
@@ -699,7 +621,7 @@ static DbKeys *UnionOfDbKeys(size_t cnt, DbKeys *keys[], bool mask[])
 }
 
 
-static inline wxString GetDBPath(const wxString& p, const wxString& l)
+static inline wxString MakeLangDbPath(const wxString& p, const wxString& l)
 {
     if (!wxDirExists(p))
         return wxEmptyString;
@@ -730,19 +652,84 @@ namespace
 
 typedef std::set<TranslationMemory*> TranslationMemories;
 TranslationMemories ms_instances;
+DbEnv *gs_dbEnv = NULL;
+
+
+void ReportDbError(const DbException& e)
+{
+    wxString what(e.what(), wxConvLocal);
+    wxLogError(_("Translation memory database error: %s"), what.c_str());
+}
+
+
+DbEnv *CreateDbEnv(const wxString& path)
+{
+    wxLogTrace(_T("poedit.tm"),
+               _T("initializing BDB environment in %s"),
+               path.c_str());
+
+    const u_int32_t flags = DB_INIT_MPOOL |
+                            DB_INIT_LOCK |
+                            DB_INIT_LOG |
+                            DB_INIT_TXN |
+                            DB_RECOVER |
+                            DB_CREATE;
+
+    std::auto_ptr<DbEnv> env(new DbEnv(0));
+#ifdef __WINDOWS__
+    env->open(path.utf8_str(), flags, 0600);
+#else
+    env->open(path.fn_str(), flags, 0600);
+#endif
+
+    // This prevents the log from growing indefinitely
+    env->log_set_config(DB_LOG_AUTO_REMOVE, 1);
+
+    return env.release();
+}
+
+
+void DestroyDbEnv(DbEnv *env)
+{
+    try
+    {
+        const char *dbpath_c;
+        gs_dbEnv->get_home(&dbpath_c);
+        std::string dbpath(dbpath_c);
+
+        wxLogTrace(_T("poedit.tm"),
+                   _T("closing and removing BDB environment in %s"),
+                   wxString(dbpath.c_str(), wxConvUTF8).c_str());
+
+        gs_dbEnv->close(0);
+
+        // Clean up temporary environment files (unless they're still in use):
+        DbEnv env2(0);
+        env2.remove(dbpath.c_str(), 0);
+
+        wxLogTrace(_T("poedit.tm"),
+                   _T("closed and removed BDB environment"));
+    }
+    catch ( const DbException& e)
+    {
+        ReportDbError(e);
+    }
+
+    delete env;
+}
 
 } // anonymous namespace
 
-/*static*/ TranslationMemory *TranslationMemory::Create(
-                      const wxString& language, const wxString& path)
+/*static*/
+TranslationMemory *TranslationMemory::Create(const wxString& language)
 {
-    wxString dbPath = GetDBPath(path, language);
+    wxString dbPath = MakeLangDbPath(GetDatabaseDir(), language);
     if (!dbPath)
-        dbPath = path + _T("/") + language;
+        dbPath = GetDatabaseDir() + wxFILE_SEP_PATH + language;
 
-    if ( !wxFileName::Mkdir(dbPath, 0777, wxPATH_MKDIR_FULL) )
+    if ( !wxFileName::Mkdir(dbPath, 0700, wxPATH_MKDIR_FULL) )
     {
-        wxLogError(_("Cannot create database directory!"));
+        wxLogError(_("Cannot create TM database directory!"));
         return NULL;
     }
     dbPath += _T('/');
@@ -758,88 +745,134 @@ TranslationMemories ms_instances;
         }
     }
 
-    TranslationMemory *tm = new TranslationMemory(language, dbPath);
-    if (!tm->m_dbTrans->IsOk() || !tm->m_dbOrig->IsOk() || 
-        !tm->m_dbWords->IsOk())
+    try
     {
-        delete tm;
+        if ( !gs_dbEnv )
+            gs_dbEnv = CreateDbEnv(GetDatabaseDir());
+
+        TranslationMemory *tm = new TranslationMemory(language, dbPath);
+        ms_instances.insert(tm);
+        return tm;
+    }
+    catch ( const DbException& e )
+    {
+        ReportDbError(e);
         return NULL;
     }
-
-    ms_instances.insert(tm);
-    return tm;
 }
 
 void TranslationMemory::Release()
 {
     if (--m_refCnt == 0)
     {
+        try
+        {
+            m_dbTrans->Release();
+        }
+        catch ( const DbException& e) { ReportDbError(e); }
+
+        try
+        {
+            m_dbOrig->Release();
+        }
+        catch ( const DbException& e) { ReportDbError(e); }
+
+        try
+        {
+            m_dbWords->Release();
+        }
+        catch ( const DbException& e) { ReportDbError(e); }
+
         ms_instances.erase(this);
         delete this;
+
+        if ( gs_dbEnv && ms_instances.empty() && gs_dbEnv )
+        {
+            DestroyDbEnv(gs_dbEnv);
+            gs_dbEnv = NULL;
+        }
     }
 }
 
-TranslationMemory::TranslationMemory(const wxString& language, 
+TranslationMemory::TranslationMemory(const wxString& language,
                                      const wxString& dbPath)
 {
     m_dbPath = dbPath;
     m_refCnt = 1;
     m_lang = language;
     SetParams(2, 2);
-    m_dbTrans = new DbTrans(dbPath);
-    m_dbOrig = new DbOrig(dbPath);
-    m_dbWords = new DbWords(dbPath);
-}                                     
+
+    try
+    {
+        m_dbTrans = NULL;
+        m_dbOrig = NULL;
+        m_dbWords = NULL;
+
+        m_dbTrans = new DbTrans(gs_dbEnv, dbPath);
+        m_dbOrig = new DbOrig(gs_dbEnv, dbPath);
+        m_dbWords = new DbWords(gs_dbEnv, dbPath);
+    }
+    catch ( ... )
+    {
+        if ( m_dbTrans )
+            m_dbTrans->Release();
+        if ( m_dbOrig )
+            m_dbOrig->Release();
+        if ( m_dbWords )
+            m_dbWords->Release();
+
+        throw;
+    }
+}
 
 TranslationMemory::~TranslationMemory()
 {
-    delete m_dbTrans;
-    delete m_dbOrig;
-    delete m_dbWords;
 }
 
-/*static*/ bool TranslationMemory::IsSupported(const wxString& lang,
-                                               const wxString& path)
+/*static*/ bool TranslationMemory::IsSupported(const wxString& lang)
 {
-    return !!GetDBPath(path, lang);
+    return !!MakeLangDbPath(GetDatabaseDir(), lang);
 }
 
-bool TranslationMemory::Store(const wxString& string, 
+bool TranslationMemory::Store(const wxString& string,
                               const wxString& translation)
 {
-    DbKey key;
-    bool ok;
-    
-    key = m_dbOrig->Read(string);
-    if (key == DBKEY_ILLEGAL)
+    try
     {
-        key = m_dbTrans->Write(translation);
-        ok = (key != DBKEY_ILLEGAL) && m_dbOrig->Write(string, key);
-        if (ok)
+        DbKey key = m_dbOrig->Read(string);
+
+        if (key == DBKEY_ILLEGAL)
         {
+            key = m_dbTrans->Write(translation);
+            m_dbOrig->Write(string, key);
+
             wxArrayString words;
             StringToWordsArray(string, words);
-            size_t sz = words.GetCount();
+            const size_t sz = words.GetCount();
             for (size_t i = 0; i < sz; i++)
                 m_dbWords->Append(words[i], sz, key);
-        }
-        return ok;
-    }
-    else
-    {
-        wxArrayString *t = m_dbTrans->Read(key);
-        if (!t)
-            return false;
-        if (t->Index(translation) == wxNOT_FOUND)
-        {
-            t->Add(translation);
-            DbKey key2 = m_dbTrans->Write(t, key);
-            ok = (key2 != DBKEY_ILLEGAL);
+
+            return true;
         }
         else
-            ok = true;
-        delete t;
-        return ok;
+        {
+            std::auto_ptr<wxArrayString> t(m_dbTrans->Read(key));
+            if (!t.get())
+                return false;
+
+            if (t->Index(translation) == wxNOT_FOUND)
+            {
+                t->Add(translation);
+                m_dbTrans->Write(t.get(), key);
+            }
+
+            return true;
+        }
+    }
+    catch ( const DbException& e )
+    {
+        ReportDbError(e);
+        return false;
     }
 }
 
@@ -848,41 +881,48 @@ int TranslationMemory::Lookup(const wxString& string, wxArrayString& results)
 {
     results.Clear();
 
-    // First of all, try exact match:
-    DbKey key = m_dbOrig->Read(string);
-    if (key != DBKEY_ILLEGAL)
+    try
     {
-        wxArrayString *a = m_dbTrans->Read(key);
-        if (a)
+        // First of all, try exact match:
+        DbKey key = m_dbOrig->Read(string);
+        if (key != DBKEY_ILLEGAL)
         {
-            WX_APPEND_ARRAY(results, (*a));
-            delete a;
-            return 100;
-        }
-    }
-    
-    // Then, try to find inexact one within defined limits
-    // (MAX_OMITS is max permitted number of unmatched words,
-    // MAX_DELTA is max difference in sentences lengths).
-    // Start with best matches first, continue to worse ones.
-    wxArrayString words;
-    StringToWordsArray(string, words);
-    for (unsigned omits = 0; omits <= m_maxOmits; omits++)
-    {
-        for (size_t delta = 0; delta <= m_maxDelta; delta++)
-        {
-            if (LookupFuzzy(words, results, omits, delta))
+            std::auto_ptr<wxArrayString> a(m_dbTrans->Read(key));
+            if (a.get())
             {
-                int score = 
-                    (m_maxOmits - omits) * 100 / (m_maxOmits + 1) +
-                    (m_maxDelta - delta) * 100 / 
-                            ((m_maxDelta + 1) * (m_maxDelta + 1));
-                return (score == 0) ? 1 : score;
+                WX_APPEND_ARRAY(results, (*a));
+                return 100;
             }
         }
+
+        // Then, try to find inexact one within defined limits
+        // (MAX_OMITS is max permitted number of unmatched words,
+        // MAX_DELTA is max difference in sentences lengths).
+        // Start with best matches first, continue to worse ones.
+        wxArrayString words;
+        StringToWordsArray(string, words);
+        for (unsigned omits = 0; omits <= m_maxOmits; omits++)
+        {
+            for (size_t delta = 0; delta <= m_maxDelta; delta++)
+            {
+                if (LookupFuzzy(words, results, omits, delta))
+                {
+                    int score =
+                        (m_maxOmits - omits) * 100 / (m_maxOmits + 1) +
+                        (m_maxDelta - delta) * 100 / 
+                                ((m_maxDelta + 1) * (m_maxDelta + 1));
+                    return (score == 0) ? 1 : score;
+                }
+            }
+        }
+
+        return 0;
     }
-    
-    return 0;
+    catch ( const DbException& e )
+    {
+        ReportDbError(e);
+        return 0;
+    }
 }
 
 
@@ -932,72 +972,240 @@ bool TranslationMemory::LookupFuzzy(const wxArrayString& words,
     bool *mask = new bool[cnt];
     size_t *omitted = new size_t[omits];
 
-    for (missing = 0, slot = 0, i = 0; i < cnt; i++)
+    try
     {
-        keys[i] = NULL; // so that unused entries are NULL
-        keys[slot] = m_dbWords->Read(words[i], cnt + delta);
-        if (keys[slot])
-            slot++;
-        else
-            missing++;
-    }
-
-    if (missing >= cnt || missing > omits)
-        RETURN_WITH_CLEANUP(false)
-    cnt -= missing;
-    omits -= missing;
-
-    if (omits == 0)
-    {
-        for (i = 0; i < cnt; i++) mask[i] = true;
-        DbKeys *result = UnionOfDbKeys(cnt, keys, mask);
-        if (result != NULL)
+        for (missing = 0, slot = 0, i = 0; i < cnt; i++)
         {
-            wxArrayString *a;
-            for (i = 0; i < result->Count; i++)
-            {
-                a = m_dbTrans->Read(result->List[i]);
-                if (a)
-                {
-                    WX_APPEND_ARRAY(results, (*a));
-                    delete a;
-                }
-            }
-            delete result;
-            RETURN_WITH_CLEANUP(true)
+            keys[i] = NULL; // so that unused entries are NULL
+            keys[slot] = m_dbWords->Read(words[i], cnt + delta);
+            if (keys[slot])
+                slot++;
+            else
+                missing++;
         }
-    } 
-    else
-    {
-        DbKeys *result;
-        size_t depth = omits - 1;
-        for (i = 0; i < omits; i++) omitted[i] = i;
-        for (;;)
+
+        if (missing >= cnt || missing > omits)
+            RETURN_WITH_CLEANUP(false)
+        cnt -= missing;
+        omits -= missing;
+
+        if (omits == 0)
         {
             for (i = 0; i < cnt; i++) mask[i] = true;
-            for (i = 0; i < omits; i++) mask[omitted[i]] = false;
-
-            result = UnionOfDbKeys(cnt, keys, mask);
+            DbKeys *result = UnionOfDbKeys(cnt, keys, mask);
             if (result != NULL)
             {
-                wxArrayString *a;
                 for (i = 0; i < result->Count; i++)
                 {
-                    a = m_dbTrans->Read(result->List[i]);
-                    WX_APPEND_ARRAY(results, (*a));
-                    delete a;
+                    wxArrayString *a = m_dbTrans->Read(result->List[i]);
+                    if (a)
+                    {
+                        WX_APPEND_ARRAY(results, (*a));
+                        delete a;
+                    }
                 }
                 delete result;
                 RETURN_WITH_CLEANUP(true)
             }
-            
-            if (!AdvanceCycle(omitted, depth, cnt)) break;
         }
+        else
+        {
+            DbKeys *result;
+            size_t depth = omits - 1;
+            for (i = 0; i < omits; i++) omitted[i] = i;
+            for (;;)
+            {
+                for (i = 0; i < cnt; i++) mask[i] = true;
+                for (i = 0; i < omits; i++) mask[omitted[i]] = false;
+
+                result = UnionOfDbKeys(cnt, keys, mask);
+                if (result != NULL)
+                {
+                    for (i = 0; i < result->Count; i++)
+                    {
+                        wxArrayString *a = m_dbTrans->Read(result->List[i]);
+                        if (a)
+                        {
+                            WX_APPEND_ARRAY(results, (*a));
+                            delete a;
+                        }
+                    }
+                    delete result;
+                    RETURN_WITH_CLEANUP(true)
+                }
+
+                if (!AdvanceCycle(omitted, depth, cnt)) break;
+            }
+        }
+
+        RETURN_WITH_CLEANUP(false)
+    }
+    catch ( const DbException& e )
+    {
+        ReportDbError(e);
+        RETURN_WITH_CLEANUP(false);
     }
 
-    RETURN_WITH_CLEANUP(false)
-
     #undef RETURN_WITH_CLEANUP
+}
+
+
+/*static*/
+wxString TranslationMemory::GetDatabaseDir()
+{
+    wxString data;
+#if defined(__UNIX__) && !defined(__WXMAC__)
+    if ( !wxGetEnv(_T("XDG_DATA_HOME"), &data) )
+        data = wxGetHomeDir() + _T("/.local/share");
+    data += _T("/poedit");
+#else
+    data = wxStandardPaths::Get().GetUserDataDir();
+#endif
+
+    data += wxFILE_SEP_PATH;
+    data += _T("TM");
+    return data;
+}
+
+namespace
+{
+
+bool MoveDBFile(const wxString& from, const wxString& to, const wxString& name)
+{
+    wxString f = from + wxFILE_SEP_PATH + name;
+    wxString t = to + wxFILE_SEP_PATH + name;
+
+    if ( wxRenameFile(f, t) )
+        return true;
+
+    if ( !wxCopyFile(f, t, false) )
+        return false;
+
+    return wxRemoveFile(f);
+}
+
+bool MoveDBLang(const wxString& from, const wxString& to)
+{
+    // maybe the files are on different volumes, try copying them
+    if ( !wxFileName::DirExists(to) )
+    {
+        if ( !wxFileName::Mkdir(to, 0700, wxPATH_MKDIR_FULL) )
+            return false;
+    }
+
+    bool ok1 = MoveDBFile(from, to, _T("strings.db"));
+    bool ok2 = MoveDBFile(from, to, _T("translations.db"));
+    bool ok3 = MoveDBFile(from, to, _T("words.db"));
+
+    bool ok = ok1 && ok2 && ok3;
+
+    if ( ok )
+        return wxFileName::Rmdir(from);
+
+    return ok;
+}
+
+} // anonymous namespace
+
+/*static*/
+void TranslationMemory::MoveLegacyDbIfNeeded()
+{
+    wxASSERT_MSG( ms_instances.empty(),
+                  _T("TM cannot be migrated if already in use") );
+
+    wxConfigBase *cfg = wxConfig::Get();
+
+    const wxString oldPath = cfg->Read(_T("/TM/database_path"), _T(""));
+
+    if ( oldPath.empty() )
+        return; // nothing to do, legacy setting not present
+
+    const wxString newPath = GetDatabaseDir();
+
+    if ( oldPath == newPath )
+        return; // already in the right location, nothing to do
+
+#if defined(__WXMSW__) || defined(__WXMAC__)
+    if ( oldPath.IsSameAs(newPath, /*caseSensitive=*/false) )
+    {
+        // This is no real difference and migration would fail, so just update
+        // the path:
+        // For now, keep the config setting, even though it's obsolete, just in
+        // case some users downgrade. (FIXME)
+        cfg->Write(_T("/TM/database_path"), newPath);
+        return;
+    }
+#endif
+
+    wxLogTrace(_T("poedit.tm"),
+               _T("moving TM database from old location \"%s\" to \"%s\""),
+               oldPath.c_str(), newPath.c_str());
+
+    const wxString tmLangsStr = cfg->Read(_T("/TM/languages"), _T(""));
+    wxStringTokenizer tmLangs(tmLangsStr, _T(":"));
+    wxLogTrace(_T("poedit.tm"),
+               _T("languages to move: %s"), tmLangsStr.c_str());
+
+    bool ok = true;
+    {
+        wxLogNull null;
+        while ( tmLangs.HasMoreTokens() )
+        {
+            const wxString lang = tmLangs.GetNextToken();
+
+            if ( !wxFileName::DirExists(oldPath + wxFILE_SEP_PATH + lang) )
+            {
+                ok = false;
+                continue; // TM for this lang doesn't exist
+            }
+
+            if ( !wxFileName::DirExists(newPath) )
+            {
+                if ( !wxFileName::Mkdir(newPath, 0700, wxPATH_MKDIR_FULL) )
+                {
+                    ok = false;
+                    continue; // error
+                }
+            }
+            if ( !MoveDBLang(oldPath + wxFILE_SEP_PATH + lang,
+                             newPath + wxFILE_SEP_PATH + lang) )
+            {
+                ok = false;
+                continue; // error
+            }
+        }
+
+        // intentionally don't delete the old path recursively, the user may
+        // have pointed it to a location with their own files:
+        if ( ok )
+            ok = wxFileName::Rmdir(oldPath);
+    }
+
+    // For now, keep the config setting, even though it's obsolete, just in
+    // case some users downgrade. (FIXME)
+    cfg->Write(_T("/TM/database_path"), newPath);
+
+    if ( !ok )
+    {
+        const wxString title =
+            _("Poedit translation memory error");
+        const wxString main =
+            _("There was a problem moving your translation memory.");
+        const wxString details =
+            wxString::Format(
+            _("Please verify that all files were moved to the new location or do it manually if they weren't.\n\nOld location: %s\nNew location: %s"),
+            oldPath.c_str(), newPath.c_str());
+
+#if wxCHECK_VERSION(2,9,0)
+        wxMessageDialog dlg(NULL, main, title, wxOK | wxICON_ERROR);
+        dlg.SetExtendedMessage(details);
+        dlg.SetYesNoLabels(_("Purge"), _("Keep"));
+#else // wx < 2.9.0
+        const wxString all = main + _T("\n\n") + details;
+        wxMessageDialog dlg(NULL, all, title, wxOK | wxICON_ERROR);
+#endif
+        dlg.ShowModal();
+    }
 }
 
 #endif // USE_TRANSMEM

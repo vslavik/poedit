@@ -1,6 +1,4 @@
 
-SUBDIRS = icons
-
 WINDRES = @WINDRES@
 WX_LIBS = @WX_LIBS@
 RC_WX_INCLUDES = @RC_WX_INCLUDES@
@@ -12,6 +10,8 @@ endif
 if USE_OSX
 OSX_SOURCES =    osx/userdefaults.h \
 				 osx/userdefaults.m \
+				 osx/sparkle.h \
+				 osx/sparkle.m \
 				 osx/spellchecker.h \
 				 osx/spellchecker.m
 endif
@@ -20,10 +20,12 @@ SPARKLE_FRAMEWORK = @SPARKLE_FRAMEWORK@
 
 bin_PROGRAMS = poedit
 
-poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
+poedit_SOURCES = attentionbar.cpp attentionbar.h \
+                 errorbar.cpp errorbar.h \
+                 catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  edframe.h fileviewer.cpp fileviewer.h parser.cpp parser.h \
                  isocodes.cpp isocodes.h prefsdlg.cpp prefsdlg.h \
-                 settingsdlg.cpp settingsdlg.h progressinfo.h \
+                 propertiesdlg.cpp propertiesdlg.h progressinfo.h \
                  progressinfo.cpp digger.h digger.cpp gexecute.h \
                  gexecute.cpp summarydlg.h summarydlg.cpp \
                  findframe.cpp findframe.h commentdlg.h commentdlg.cpp \
@@ -34,7 +36,10 @@ poedit_SOURCES = catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  pluralforms/pl_evaluate.cpp \
                  wxeditablelistbox.h editlbox/editlbox.cpp \
                  edlistctrl.cpp edlistctrl.h digits.h \
-				 $(OSX_SOURCES) \
+                 cat_sorting.cpp cat_sorting.h \
+                 utility.cpp utility.h \
+                 version.h \
+                 $(OSX_SOURCES) \
                  compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS)
@@ -48,12 +53,11 @@ XRC_RESOURCES = \
 		$(srcdir)/resources/menus.xrc \
 		$(srcdir)/resources/prefs.xrc \
 		$(srcdir)/resources/progress.xrc \
-		$(srcdir)/resources/settings.xrc \
+		$(srcdir)/resources/properties.xrc \
         $(srcdir)/resources/summary.xrc \
 		$(srcdir)/resources/toolbar.xrc \
 		$(srcdir)/resources/find.xrc \
 		$(srcdir)/resources/comment.xrc \
-		$(srcdir)/resources/fileview.xrc \
         $(srcdir)/resources/manager.xrc \
 		$(srcdir)/resources/tm_update.xrc
 
@@ -70,5 +74,5 @@ bundle: poedit
 	SPARKLE_FRAMEWORK=$(SPARKLE_FRAMEWORK) \
 		$(top_srcdir)/macosx/make-bundle \
 			"Poedit.app" \
-			"`$(WX_CONFIG_WITH_ARGS) --rezflags`" \
+			./poedit \
 			"$(top_builddir)" "$(top_srcdir)"

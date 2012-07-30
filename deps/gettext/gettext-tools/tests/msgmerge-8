@@ -1,0 +1,85 @@
+#! /bin/sh
+
+# Test multi-domain handling.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles mm-test8.po"
+cat <<\EOF > mm-test8.po
+domain "foo-de"
+msgid ""
+msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
+
+# Das ist ein Kommentar.
+msgid "hello"
+msgstr "Hallo"
+
+# Noch einer.
+msgid "bye"
+msgstr "Tschüß"
+
+domain "foo-fr"
+msgid ""
+msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
+
+# Ceci est un commentaire.
+msgid "hello"
+msgstr "Salut"
+
+# Encore un.
+msgid "bye"
+msgstr "A bientôt"
+EOF
+
+tmpfiles="$tmpfiles mm-test8.pot"
+cat <<EOF > mm-test8.pot
+msgid "Hello"
+msgstr ""
+EOF
+
+tmpfiles="$tmpfiles mm-test8.tmp mm-test8.out"
+: ${MSGMERGE=msgmerge}
+${MSGMERGE} --multi-domain -q -o mm-test8.tmp mm-test8.po mm-test8.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < mm-test8.tmp > mm-test8.out
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mm-test8.ok"
+cat <<\EOF > mm-test8.ok
+domain "foo-de"
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
+
+# Das ist ein Kommentar.
+#, fuzzy
+msgid "Hello"
+msgstr "Hallo"
+
+# Noch einer.
+#~ msgid "bye"
+#~ msgstr "Tschüß"
+
+domain "foo-fr"
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
+
+# Ceci est un commentaire.
+#, fuzzy
+msgid "Hello"
+msgstr "Salut"
+
+# Encore un.
+#~ msgid "bye"
+#~ msgstr "A bientôt"
+EOF
+
+: ${DIFF=diff}
+${DIFF} mm-test8.ok mm-test8.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

@@ -1,0 +1,181 @@
+#! /bin/sh
+
+# Test of gettext facilities in the Objective C language.
+# Assumes an fr_FR locale is installed.
+# Assumes the following packages are installed: gcc.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+# Test whether an ObjectiveC compiler is found.
+tmpfiles="$tmpfiles hello.m hello.${OBJEXT} hello${EXEEXT}"
+cat <<\EOF > hello.m
+#include <stdio.h>
+#include <stdlib.h>
+int main ()
+{
+  printf ("Hello world\n");
+  exit (0);
+}
+EOF
+${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o hello hello.m 2>/dev/null \
+  || { echo "Skipping test: Objective C compiler not found"
+       rm -fr $tmpfiles; exit 77
+     }
+
+tmpfiles="$tmpfiles prog.m"
+cat <<\EOF > prog.m
+#include "config.h"
+#include <libintl.h>
+#include <locale.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "xsetenv.h"
+#define _(string) gettext (string)
+
+int main (int argc, char *argv[])
+{
+  int n = atoi (argv[2]);
+
+  xsetenv ("LC_ALL", argv[1], 1);
+  if (setlocale (LC_ALL, "") == NULL)
+    /* Couldn't set locale.  */
+    exit (77);
+
+  textdomain ("prog");
+  bindtextdomain ("prog", ".");
+
+  printf (_("'Your command, please?', asked the waiter."));
+  printf ("\n");
+
+  printf (ngettext ("a piece of cake", "%d pieces of cake", n), n);
+  printf ("\n");
+
+  printf (_("%s is replaced by %s."), "FF", "EUR");
+  printf ("\n");
+
+  exit (0);
+}
+EOF
+
+# Variable needed by LTLIBINTL.
+top_builddir=..
+
+tmpfiles="$tmpfiles prog.${OBJEXT} prog${EXEEXT}"
+# Put the -I flags before ${CFLAGS} ${CPPFLAGS}, to make sure that libintl.h
+# is found in the build directory, regardless of -I options present in
+# ${CFLAGS} or ${CPPFLAGS}.
+${LIBTOOL} --quiet --mode=link ${CC} -I.. -I$top_srcdir/gnulib-lib ../gnulib-lib/libgettextlib.la -I../intl ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o prog prog.m ${LTLIBINTL} \
+  || exit 1
+
+tmpfiles="$tmpfiles prog.tmp prog.pot"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} -o prog.tmp --omit-header --no-location -k_ prog.m
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles prog.ok"
+cat <<EOF > prog.ok
+#, c-format
+msgid "'Your command, please?', asked the waiter."
+msgstr ""
+
+#, c-format
+msgid "a piece of cake"
+msgid_plural "%d pieces of cake"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%s is replaced by %s."
+msgstr ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} prog.ok prog.pot || exit 1
+
+tmpfiles="$tmpfiles fr.po"
+cat <<\EOF > fr.po
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#, c-format
+msgid "'Your command, please?', asked the waiter."
+msgstr "«Votre commande, s'il vous plait», dit le garçon."
+
+# Les gateaux allemands sont les meilleurs du monde.
+#, c-format
+msgid "a piece of cake"
+msgid_plural "%d pieces of cake"
+msgstr[0] "un morceau de gateau"
+msgstr[1] "%d morceaux de gateau"
+
+# Reverse the arguments.
+#, c-format
+msgid "%s is replaced by %s."
+msgstr "%2$s remplace %1$s."
+EOF
+
+tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+: ${MSGMERGE=msgmerge}
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+: ${DIFF=diff}
+${DIFF} fr.po fr.po.new || exit 1
+
+tmpfiles="$tmpfiles fr"
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+
+: ${MSGFMT=msgfmt}
+${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
+
+tmpfiles="$tmpfiles prog.ok prog.oku prog.out"
+: ${DIFF=diff}
+cat <<\EOF > prog.ok
+«Votre commande, s'il vous plait», dit le garçon.
+2 morceaux de gateau
+EUR remplace FF.
+EOF
+cat <<\EOF > prog.oku
+Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
+2 morceaux de gateau
+EUR remplace FF.
+EOF
+
+: ${LOCALE_FR=fr_FR}
+: ${LOCALE_FR_UTF8=fr_FR.UTF-8}
+if test $LOCALE_FR != none; then
+  LANGUAGE= ./prog $LOCALE_FR 2 > prog.out
+  case $? in
+    0) ${DIFF} prog.ok prog.out || exit 1;;
+    77) LOCALE_FR=none;;
+    *) exit 1;;
+  esac
+fi
+if test $LOCALE_FR_UTF8 != none; then
+  LANGUAGE= ./prog $LOCALE_FR_UTF8 2 > prog.out
+  case $? in
+    0) ${DIFF} prog.oku prog.out || exit 1;;
+    77) LOCALE_FR_UTF8=none;;
+    *) exit 1;;
+  esac
+fi
+if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
+  if test -f /usr/bin/localedef; then
+    echo "Skipping test: no french locale is installed"
+  else
+    echo "Skipping test: no french locale is supported"
+  fi
+  rm -fr $tmpfiles; exit 77
+fi
+
+rm -fr $tmpfiles
+
+exit 0

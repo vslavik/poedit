@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9.00"
+	Name="wxWidgetsForPoedit"
+	ProjectGUID="{A5567248-7F06-4B2A-AF38-CEB52E15B73B}"
+	Keyword="MakeFileProj"
+	TargetFrameworkVersion="196613"
+	>
+	<Platforms>
+		<Platform
+			Name="Win32"
+		/>
+	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="wx/build/msw/vc_mswud"
+			IntermediateDirectory="wx/build/msw/vc_mswud"
+			ConfigurationType="0"
+			>
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="cd wx/build/msw&#x0D;&#x0A;nmake -f makefile.vc BUILD=debug SHARED=0 DEBUG_INFO=1 UNICODE=1 USE_MEDIA=0 USE_AUI=0 USE_RICHTEXT=0 USE_STC=1 USE_QA=1&#x0D;&#x0A;cd ../../utils/wxrc&#x0D;&#x0A;nmake -f makefile.vc BUILD=debug SHARED=0 DEBUG_INFO=1 UNICODE=1"
+				ReBuildCommandLine=""
+				CleanCommandLine="cd wx/build/msw&#x0D;&#x0A;nmake -f makefile.vc clean BUILD=debug&#x0D;&#x0A;cd ../../utils/wxrc&#x0D;&#x0A;nmake -f makefile.vc clean BUILD=debug"
+				Output=""
+				PreprocessorDefinitions=""
+				IncludeSearchPath=""
+				ForcedIncludes=""
+				AssemblySearchPath=""
+				ForcedUsingAssemblies=""
+				CompileAsManaged=""
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="wx/build/msw/vc_mswu"
+			IntermediateDirectory="wx/build/msw/vc_mswu"
+			ConfigurationType="0"
+			>
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="cd wx/build/msw&#x0D;&#x0A;nmake -f makefile.vc BUILD=release SHARED=0 DEBUG_INFO=1 UNICODE=1 USE_MEDIA=0 USE_AUI=0 USE_RICHTEXT=0 USE_STC=1 USE_QA=1 CPPFLAGS=/D_BIND_TO_CURRENT_VCLIBS_VERSION=1&#x0D;&#x0A;cd ../../utils/wxrc&#x0D;&#x0A;nmake -f makefile.vc BUILD=release SHARED=0 DEBUG_INFO=1 UNICODE=1"
+				ReBuildCommandLine=""
+				CleanCommandLine="cd wx/build/msw&#x0D;&#x0A;nmake -f makefile.vc clean BUILD=release&#x0D;&#x0A;cd ../../utils/wxrc&#x0D;&#x0A;nmake -f makefile.vc clean BUILD=release"
+				Output=""
+				PreprocessorDefinitions=""
+				IncludeSearchPath=""
+				ForcedIncludes=""
+				AssemblySearchPath=""
+				ForcedUsingAssemblies=""
+				CompileAsManaged=""
+			/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

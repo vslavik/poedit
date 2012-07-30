@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Catalogs manager frame
- *
  */
 
 #ifndef _MANAGER_H_
@@ -33,8 +29,9 @@
 #include <wx/frame.h>
 #include <wx/string.h>
 
-class WXDLLEXPORT wxListCtrl;
-class WXDLLEXPORT wxListBox;
+class WXDLLIMPEXP_FWD_CORE wxListCtrl;
+class WXDLLIMPEXP_FWD_CORE wxListBox;
+
 class Catalog;
 
 /** ManagerFrame provides a convenient way to manage PO catalogs.
@@ -82,6 +79,7 @@ class ManagerFrame : public wxFrame
         void OnOpenCatalog(wxListEvent& event);
         void OnPreferences(wxCommandEvent& event);
         void OnQuit(wxCommandEvent& event);
+        void OnCloseCmd(wxCommandEvent& event);
 
         wxListCtrl *m_listCat;
         wxListBox  *m_listPrj;      

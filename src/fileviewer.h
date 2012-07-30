@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2005 Vaclav Slavik
+ *  Copyright (C) 1999-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,17 +21,15 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Shows part of file around specified line
- *
  */
 
 #ifndef _FILEVIEWER_H_
 #define _FILEVIEWER_H_
 
 #include <wx/frame.h>
-class WXDLLEXPORT wxListCtrl;
+
+class WXDLLIMPEXP_FWD_CORE wxListCtrl;
+class WXDLLIMPEXP_FWD_CORE wxStyledTextCtrl;
 
 
 /** This class implements frame that shows part of file
@@ -39,40 +37,38 @@ class WXDLLEXPORT wxListCtrl;
  */
 class FileViewer : public wxFrame
 {
-    public:
-        /** Ctor. 
-            \param basePath   base directory that all entries in 
-                              \i references are relative to
-            \param references array of strings in format \i filename:linenum
-                              that lists all occurences of given string
-            \param openAt     number of the \i references entry to show
-                              by default
-         */
-        FileViewer(wxWindow *parent, const wxString& basePath,
-                   const wxArrayString& references, size_t openAt);
-        ~FileViewer();
-        
-        /// Shows given reference, i.e. loads the file
-        void ShowReference(const wxString& ref);
-        
-        /// Open file in an editor
-        static void OpenInEditor(const wxString& basepath, 
-                                 const wxString& reference);
+public:
+    /** Ctor. 
+        \param basePath   base directory that all entries in 
+                          \i references are relative to
+        \param references array of strings in format \i filename:linenum
+                          that lists all occurences of given string
+        \param openAt     number of the \i references entry to show
+                          by default
+     */
+    FileViewer(wxWindow *parent, const wxString& basePath,
+               const wxArrayString& references, size_t openAt);
+    ~FileViewer();
 
-        bool FileOk() { return !m_current.empty(); }
-        
-    private:
-        wxString m_basePath;
-        wxArrayString m_references;
-        wxString m_current;
-        
-        wxListCtrl *m_list;
-    
-        void OnChoice(wxCommandEvent &event);
-        void OnEditFile(wxCommandEvent &event);
-        DECLARE_EVENT_TABLE();
+    /// Shows given reference, i.e. loads the file
+    void ShowReference(const wxString& ref);
+
+    bool FileOk() { return !m_current.empty(); }
+
+private:
+    void SetupTextCtrl();
+    int GetLexer(const wxString& extension);
+
+private:
+    wxString m_basePath;
+    wxArrayString m_references;
+    wxString m_current;
+
+    wxStyledTextCtrl *m_text;
+
+    void OnChoice(wxCommandEvent &event);
+    void OnEditFile(wxCommandEvent &event);
+    DECLARE_EVENT_TABLE();
 };
-
-
 
 #endif // _FILEVIEWER_H_

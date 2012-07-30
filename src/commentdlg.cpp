@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  A trivial dialog for editing comments
- *
  */
 
 #include <wx/wxprec.h>
@@ -56,7 +52,7 @@ BEGIN_EVENT_TABLE(CommentDialog, wxDialog)
    EVT_BUTTON(XRCID("clear"), CommentDialog::OnClear)
 END_EVENT_TABLE()
 
-void CommentDialog::OnClear(wxCommandEvent& event)
+void CommentDialog::OnClear(wxCommandEvent&)
 {
     m_text->Clear();
 }

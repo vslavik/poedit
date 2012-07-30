@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2007 Vaclav Slavik
+ *  Copyright (C) 2001-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Search frame
- *
  */
 
 #include <wx/wxprec.h>
@@ -38,19 +34,20 @@
 #include "catalog.h"
 #include "findframe.h"
 #include "edlistctrl.h"
+#include "utility.h"
 
 // The word separators used when doing a "Whole words only" search
+// FIXME-ICU: use ICU to separate words
 static const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
 
 wxString FindFrame::ms_text;
 
-BEGIN_EVENT_TABLE(FindFrame, wxFrame)
+BEGIN_EVENT_TABLE(FindFrame, wxDialog)
    EVT_BUTTON(XRCID("find_next"), FindFrame::OnNext)
    EVT_BUTTON(XRCID("find_prev"), FindFrame::OnPrev)
-   EVT_BUTTON(wxID_CANCEL, FindFrame::OnCancel)
+   EVT_BUTTON(wxID_CLOSE, FindFrame::OnClose)
    EVT_TEXT(XRCID("string_to_find"), FindFrame::OnTextChange)
    EVT_CHECKBOX(-1, FindFrame::OnCheckbox)
-   EVT_CLOSE(FindFrame::OnClose)
 END_EVENT_TABLE()
 
 FindFrame::FindFrame(wxWindow *parent,
@@ -68,12 +65,11 @@ FindFrame::FindFrame(wxWindow *parent,
           m_textCtrlComments(textCtrlComments),
           m_textCtrlAutoComments(textCtrlAutoComments)
 {
-    wxPoint p(wxConfig::Get()->Read(_T("find_pos_x"), -1),
-              wxConfig::Get()->Read(_T("find_pos_y"), -1));
+    wxXmlResource::Get()->LoadDialog(this, parent, _T("find_frame"));
 
-    wxXmlResource::Get()->LoadFrame(this, parent, _T("find_frame"));
-    if (p.x != -1)
-        Move(p);
+    SetEscapeId(wxID_CLOSE);
+
+    RestoreWindowState(this, wxDefaultSize, WinState_Pos);
 
     m_btnNext = XRCCTRL(*this, "find_next", wxButton);
     m_btnPrev = XRCCTRL(*this, "find_prev", wxButton);
@@ -106,8 +102,7 @@ FindFrame::FindFrame(wxWindow *parent,
 
 FindFrame::~FindFrame()
 {
-    wxConfig::Get()->Write(_T("find_pos_x"), (long)GetPosition().x);
-    wxConfig::Get()->Write(_T("find_pos_y"), (long)GetPosition().y);
+    SaveWindowState(this, WinState_Pos);
 
     wxConfig::Get()->Write(_T("find_in_orig"),
             XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue());
@@ -142,31 +137,27 @@ void FindFrame::Reset(Catalog *c)
 }
 
 
-void FindFrame::OnClose(wxCloseEvent &event)
-{
-    Destroy();
-}
-
-void FindFrame::OnCancel(wxCommandEvent &event)
+void FindFrame::OnClose(wxCommandEvent&)
 {
     Destroy();
 }
 
 
-void FindFrame::OnTextChange(wxCommandEvent &event)
+void FindFrame::OnTextChange(wxCommandEvent&)
 {
     ms_text = XRCCTRL(*this, "string_to_find", wxTextCtrl)->GetValue();
+
     Reset(m_catalog);
 }
 
 
-void FindFrame::OnCheckbox(wxCommandEvent &event)
+void FindFrame::OnCheckbox(wxCommandEvent&)
 {
     Reset(m_catalog);
 }
 
 
-void FindFrame::OnPrev(wxCommandEvent &event)
+void FindFrame::OnPrev(wxCommandEvent&)
 {
     if (!DoFind(-1))
         m_btnPrev->Enable(false);
@@ -175,7 +166,7 @@ void FindFrame::OnPrev(wxCommandEvent &event)
 }
 
 
-void FindFrame::OnNext(wxCommandEvent &event)
+void FindFrame::OnNext(wxCommandEvent&)
 {
     if (!DoFind(+1))
         m_btnNext->Enable(false);
@@ -239,16 +230,27 @@ bool FindFrame::DoFind(int dir)
     if (!caseSens)
         text.MakeLower();
 
+    // Only ignore mnemonics when searching if the text being searched for
+    // doesn't contain them. That's a reasonable heuristics: most of the time,
+    // ignoring them is the right thing to do and provides better results. But
+    // sometimes, people want to search for them.
+    const bool ignoreMnemonicsAmp = (text.Find(_T('&')) == wxNOT_FOUND);
+    const bool ignoreMnemonicsUnderscore = (text.Find(_T('_')) == wxNOT_FOUND);
+
     m_position += dir;
     while (m_position >= 0 && m_position < cnt)
     {
-        CatalogItem &dt = (*m_catalog)[m_listCtrl->GetIndexInCatalog(m_position)];
+        CatalogItem &dt = (*m_catalog)[m_listCtrl->ListIndexToCatalog(m_position)];
 
         if (inStr)
         {
             textc = dt.GetString();
             if (!caseSens)
                 textc.MakeLower();
+            if (ignoreMnemonicsAmp)
+                textc.Replace(_T("&"), _T(""));
+            if (ignoreMnemonicsUnderscore)
+                textc.Replace(_T("_"), _T(""));
             if (TextInString(textc, text, wholeWords))
             {
                 found = Found_InOrig;
@@ -267,6 +269,10 @@ bool FindFrame::DoFind(int dir)
             // and search for the substring in them:
             if (!caseSens)
                 textc.MakeLower();
+            if (ignoreMnemonicsAmp)
+                textc.Replace(_T("&"), _T(""));
+            if (ignoreMnemonicsUnderscore)
+                textc.Replace(_T("_"), _T(""));
 
             if (TextInString(textc, text, wholeWords)) { found = Found_InTrans; break; }
         }

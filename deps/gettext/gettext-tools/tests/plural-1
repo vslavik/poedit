@@ -1,0 +1,82 @@
+#! /bin/sh
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles cake.tmp cake.pot"
+: ${XGETTEXT=xgettext}
+${XGETTEXT} -o cake.tmp --omit-header --no-location ${top_srcdir}/tests/plural-1-prg.c
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < cake.tmp > cake.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles cake.ok"
+cat <<EOF > cake.ok
+#, c-format
+msgid "a piece of cake"
+msgid_plural "%d pieces of cake"
+msgstr[0] ""
+msgstr[1] ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} cake.ok cake.pot || exit 1
+
+tmpfiles="$tmpfiles fr.po"
+cat <<EOF > fr.po
+# Les gateaux allemands sont les meilleurs du monde.
+#, c-format
+msgid "a piece of cake"
+msgid_plural "%d pieces of cake"
+msgstr[0] "un morceau de gateau"
+msgstr[1] "%d morceaux de gateau"
+EOF
+
+tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+: ${MSGMERGE=msgmerge}
+${MSGMERGE} -q -o fr.po.tmp fr.po cake.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+: ${DIFF=diff}
+${DIFF} fr.po fr.po.new || exit 1
+
+tmpfiles="$tmpfiles fr"
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+
+: ${MSGFMT=msgfmt}
+${MSGFMT} -o fr/LC_MESSAGES/cake.mo fr.po
+
+tmpfiles="$tmpfiles fr.po.tmp fr.po.un"
+: ${MSGUNFMT=msgunfmt}
+${MSGUNFMT} -o fr.po.tmp fr/LC_MESSAGES/cake.mo
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.un
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles fr.po.strip"
+sed 1,2d < fr.po > fr.po.strip
+
+: ${DIFF=diff}
+${DIFF} fr.po.strip fr.po.un || exit 1
+
+tmpfiles="$tmpfiles cake.ok cake.tmp cake.out"
+: ${DIFF=diff}
+echo 'un morceau de gateau' > cake.ok
+LANGUAGE= ./cake fr 1 > cake.tmp || exit 1
+LC_ALL=C tr -d '\r' < cake.tmp > cake.out || exit 1
+${DIFF} cake.ok cake.out || exit 1
+echo '2 morceaux de gateau' > cake.ok
+LANGUAGE= ./cake fr 2 > cake.tmp || exit 1
+LC_ALL=C tr -d '\r' < cake.tmp > cake.out || exit 1
+${DIFF} cake.ok cake.out || exit 1
+echo '10 morceaux de gateau' > cake.ok
+LANGUAGE= ./cake fr 10 > cake.tmp || exit 1
+LC_ALL=C tr -d '\r' < cake.tmp > cake.out || exit 1
+${DIFF} cake.ok cake.out || exit 1
+
+rm -fr $tmpfiles
+
+exit 0

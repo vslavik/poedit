@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Translation memory database updater
- *
  */
 
 #ifndef _TRANSMEMUPD_H_
@@ -32,8 +28,8 @@
 
 #ifdef USE_TRANSMEM
 
-class WXDLLEXPORT wxString;
-class WXDLLEXPORT wxArrayString;
+class WXDLLIMPEXP_FWD_BASE wxString;
+class WXDLLIMPEXP_FWD_BASE wxArrayString;
 
 class TranslationMemory;
 class ProgressInfo;

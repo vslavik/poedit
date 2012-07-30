@@ -1,9 +1,9 @@
 
-POEDIT_LINGUAS = af_ZA am ar ast be@latin be bg bn br ca ca@valencia cs da de el eo es es_PR et eu fa_IR fi fr fur ga gl he hi hr hu id is it ja ka kk ko ku ky lt lv mk mn ms nb nl nn pa pl pt_BR pt_PT ro ru sk sl sq_AL sr sv ta th tr tt ug uk ur uz vi wa zh_CN zh_TW
+POEDIT_LINGUAS = af_ZA am ar ast be be@latin bg bn br bs ca ca@valencia ckb cs da de el en_GB eo es es_PR et eu fa_IR fi fr fur ga gl he hi hr hu id is it ja ka kk ko ku ky lt lv mk mn mr ms nb nl nn pa pl pt_BR pt_PT ro ru sk sl sq sr sv ta tg th tr tt ug uk ur uz vi wa zh_CN zh_TW
 
 localedir = $(datadir)/locale
 
-install-data-local: @CATALOGS_TO_INSTALL@
+install-data-local: install-poedit-catalogs
 
 install-poedit-catalogs:
 	for i in $(POEDIT_LINGUAS) ; do \
@@ -26,7 +26,10 @@ XGETTEXT=xgettext
 XARGS=xargs
 
 # common xgettext args: C++ syntax, use the specified macro names as markers
-XGETTEXT_ARGS=-C -k_ -kwxGetTranslation -kwxTRANSLATE -s -j
+XGETTEXT_ARGS=-C -k_ -kwxGetTranslation -kwxTRANSLATE -kwxPLURAL:1,2 -s -j \
+              --add-comments=TRANSLATORS \
+              --package-name=Poedit --package-version=$(PACKAGE_SHORT_VERSION) \
+              --msgid-bugs-address=poedit@googlegroups.com
 
 # implicit rules
 %.mo: %.po
@@ -35,6 +38,9 @@ XGETTEXT_ARGS=-C -k_ -kwxGetTranslation -kwxTRANSLATE -s -j
 # a PO file must be updated from  poedit.pot include new translations
 %.po: $(srcdir)/poedit.pot
 	if [ -f $@ ]; then $(MSGMERGE) $@ $(srcdir)/poedit.pot > $@.new && mv $@.new $@; else cp $(srcdir)/poedit.pot $@; fi
+
+$(srcdir)/sr_RS@latin.po: $(srcdir)/sr.po
+	recode-sr-latin <$< >$@
 
 $(srcdir)/poedit.pot:
 	touch $@

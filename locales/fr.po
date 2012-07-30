@@ -11,23 +11,51 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.4\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-25 16:42+0100\n"
-"PO-Revision-Date: 2008-06-05 13:58-0500\n"
-"Last-Translator: Daniel U. Thibault <d.u.thibault@bigfoot.com>\n"
-"Language-Team: French <poedit-translators@lists.sourceforge.net>\n"
+"Project-Id-Version: Poedit 1.5\n"
+"Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
+"POT-Creation-Date: 2012-07-30 10:34+0200\n"
+"PO-Revision-Date: 2011-10-03 23:23+0100\n"
+"Last-Translator: Alexandre Franke <alexandre.franke@gmail.com>\n"
+"Language-Team: French <poedit@googlegroups.com>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 
-#: ../src/edframe.cpp:2001
+#: ../src/edframe.cpp:2060
 msgid " (modified)"
 msgstr " (modifié)"
 
+#. TRANSLATORS: This is version information in about dialog, it is followed
+#. by version number when used (wxWidgets 2.8)
+#: ../src/edframe.cpp:2431
+msgid " Version "
+msgstr "Version "
+
+#: ../src/edframe.cpp:1367
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/edframe.cpp:2024
+#, fuzzy, c-format
+msgid "%i %% translated, %i string"
+msgid_plural "%i %% translated, %i strings"
+msgstr[0] "traduit à %i %%, %i chaînes"
+msgstr[1] "traduit à %i %%, %i chaînes"
+
+#: ../src/edframe.cpp:2029
+#, fuzzy, c-format
+msgid "%i %% translated, %i string (%s)"
+msgid_plural "%i %% translated, %i strings (%s)"
+msgstr[0] "traduit à %i %%, %i chaînes (%s)"
+msgstr[1] "traduit à %i %%, %i chaînes (%s)"
+
 # Status bar text
-#: ../src/edframe.cpp:1971 ../src/export_html.cpp:152
+#: ../src/export_html.cpp:134
 #, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
@@ -35,239 +63,358 @@ msgstr ""
 "Traduit à %i %%, %i chaînes (%i approximatives, %i marqueurs incorrects, %i "
 "restant à traduire)"
 
-#: ../src/catalog.cpp:148
+#: ../src/edframe.cpp:2014
+#, fuzzy, c-format
+msgid "%i bad token"
+msgid_plural "%i bad tokens"
+msgstr[0] "%i marqueurs incorrects"
+msgstr[1] "%i marqueurs incorrects"
+
+#: ../src/edframe.cpp:2008
+#, fuzzy, c-format
+msgid "%i fuzzy"
+msgid_plural "%i fuzzy"
+msgstr[0] "%i approximatives"
+msgstr[1] "%i approximatives"
+
+#: ../src/catalog.cpp:132
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
-msgstr "%i lignes du fichier '%s' n'ont pas été chargées correctement"
+msgstr "%i lignes du fichier « %s » n'ont pas été chargées correctement."
+
+# Checkbox label in the Find... window
+#: ../src/edframe.cpp:2020
+#, fuzzy, c-format
+msgid "%i not translated"
+msgid_plural "%i not translated"
+msgstr[0] "%i non traduites"
+msgstr[1] "%i non traduites"
 
 # Help menu item label; the hint is system-supplied
-#: standard input:70
-msgid "&About..."
-msgstr "À &propos..."
+#: ../src/resources/menus.xrc:213 ../src/resources/menus.xrc:214
+msgid "&About"
+msgstr "À &propos"
+
+# Help menu item label; the hint is system-supplied
+#: ../src/resources/menus.xrc:212
+#, fuzzy
+msgid "&About Poedit"
+msgstr "À &propos"
 
 # Catalog menu item label
-#: standard input:57
+#: ../src/resources/menus.xrc:107
+msgid "&Automatically Translate Using TM"
+msgstr "Traduire &automatiquement avec TM"
+
+# Catalog menu item label
+#: ../src/resources/menus.xrc:106
 msgid "&Automatically translate using TM"
 msgstr "Traduire &automatiquement avec TM"
 
 # Main menu
-#: ../src/edframe.cpp:2784
+#: ../src/edframe.cpp:2786
 msgid "&Bookmarks"
 msgstr "&Marque-pages"
 
 # File menu item label; the hint is system-supplied (also Catalogs manager window)
-#: standard input:36 input:46
+#: ../src/resources/manager.xrc:132 ../src/resources/menus.xrc:26
 msgid "&Close"
 msgstr "&Quitter"
 
-# Help menu item label
-#: standard input:68
-msgid "&Contents..."
-msgstr "&Table des matières..."
+# View menu item label
+#: ../src/resources/menus.xrc:176
+msgid "&Comment Window"
+msgstr "Fenêtre de co&mmentaires"
+
+# View menu item label
+#: ../src/resources/menus.xrc:175
+msgid "&Comment window"
+msgstr "Fenêtre de co&mmentaires"
+
+#: ../src/resources/menus.xrc:130
+msgid "&Done and Next"
+msgstr "&Appliquer et continuer"
+
+#: ../src/resources/menus.xrc:129
+msgid "&Done and next"
+msgstr "&Appliquer et continuer"
 
 # Main menu
-#: standard input:47
+#: ../src/resources/menus.xrc:56
 msgid "&Edit"
 msgstr "&Edition"
 
 # Main menu (also Catalogs manager window)
-#: ../src/edframe.cpp:535 standard input:34 input:37
+#: ../src/edframe.cpp:471 ../src/resources/manager.xrc:125
+#: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&Fichier"
 
 # Edit menu item label
-#: standard input:50
+#: ../src/resources/menus.xrc:73
 msgid "&Find..."
 msgstr "Rec&hercher..."
 
-# View menu item label
-#: standard input:61 input:62
-msgid "&Fullscreen view"
-msgstr "Plein é&cran"
+#: ../src/edframe.cpp:480 ../src/resources/menus.xrc:126
+msgid "&Go"
+msgstr "&Démarrer"
 
 # Main menu
-#: ../src/edapp.cpp:107 standard input:71
+#: ../src/edapp.cpp:183 ../src/resources/menus.xrc:216
 msgid "&Help"
 msgstr "&?"
 
 # File menu item label
-#: standard input:39
-msgid "&New catalog..."
+#: ../src/resources/menus.xrc:14
+msgid "&New Catalog..."
 msgstr "&Nouveau catalogue..."
 
 # File menu item label
-#: standard input:41
+#: ../src/resources/menus.xrc:13
+msgid "&New catalog..."
+msgstr "&Nouveau catalogue..."
+
+#: ../src/resources/menus.xrc:142
+msgid "&Next Message"
+msgstr "Message &suivant"
+
+#: ../src/resources/menus.xrc:141
+msgid "&Next message"
+msgstr "Message &suivant"
+
+#: ../src/resources/menus.xrc:206
+msgid "&Online Help"
+msgstr "&Aide en ligne"
+
+#: ../src/resources/menus.xrc:205
+msgid "&Online help"
+msgstr "&Aide en ligne"
+
+# File menu item label
+#: ../src/resources/menus.xrc:21
 msgid "&Open..."
 msgstr "Ou&vrir..."
 
-#: standard input:53
+#: ../src/resources/menus.xrc:90
 msgid "&Preferences"
 msgstr "&Préférences"
 
 # File menu item label (also Catalogs manager window)
-#: standard input:35 input:45
+#: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:44
 msgid "&Preferences..."
 msgstr "Pré&férences..."
 
+#: ../src/resources/menus.xrc:137
+msgid "&Previous Message"
+msgstr "Message &précédent"
+
+#: ../src/resources/menus.xrc:136
+msgid "&Previous message"
+msgstr "Message &précédent"
+
+# File menu item label (also Catalogs manager window)
+#: ../src/resources/menus.xrc:119
+msgid "&Properties..."
+msgstr "&Préférences..."
+
 # Catalog menu item label
-#: standard input:58
+#: ../src/resources/menus.xrc:111
+msgid "&Purge Deleted Translations"
+msgstr "Pu&rger les traductions supprimées"
+
+# Catalog menu item label
+#: ../src/resources/menus.xrc:110
 msgid "&Purge deleted translations"
 msgstr "Pu&rger les traductions supprimées"
 
 # File menu item label; the hint is system-supplied
-#: standard input:42
+#: ../src/resources/menus.xrc:30
 msgid "&Save"
 msgstr "Enre&gistrer"
 
-# Catalog menu item label
-#: standard input:59
-msgid "&Settings..."
-msgstr "&Configuration..."
-
-# View menu item label
-#: standard input:67
-msgid "&Shaded translations list"
-msgstr "&Ombrer la liste des traductions"
+# Edit menu item label
+#: ../src/resources/menus.xrc:70
+msgid "&Show References"
+msgstr "&Voir les références"
 
 # Edit menu item label
-#: standard input:49
+#: ../src/resources/menus.xrc:69
 msgid "&Show references"
-msgstr "&Voir la référence"
+msgstr "&Voir les références"
+
+#: ../src/resources/menus.xrc:198
+msgid "&Untranslated Entries First"
+msgstr "Éléments &non traduits en premier"
+
+#: ../src/resources/menus.xrc:197
+msgid "&Untranslated entries first"
+msgstr "Éléments &non traduits en premier"
 
 # Catalog menu item label
-#: standard input:55
+#: ../src/resources/menus.xrc:99
+msgid "&Update from Sources"
+msgstr "Mise à jo&ur depuis les sources"
+
+# Catalog menu item label
+#: ../src/resources/menus.xrc:98
 msgid "&Update from sources"
 msgstr "Mise à jo&ur depuis les sources"
 
+# Main window list header
+#: ../src/resources/menus.xrc:115
+#, fuzzy
+msgid "&Validate Translations"
+msgstr "Vider la traduction"
+
+# View menu item label
+#: ../src/resources/menus.xrc:114
+#, fuzzy
+msgid "&Validate translations"
+msgstr "&Ombrer la liste des traductions"
+
 # Main menu
-#: standard input:60
+#: ../src/resources/menus.xrc:157
 msgid "&View"
 msgstr "&Affichage"
 
-#: ../src/catalog.cpp:1511
+#: ../src/catalog.cpp:1572
 #, c-format
 msgid "'%s' is not a valid POT file."
-msgstr "'%s' n'est pas un fichier POT valide."
+msgstr "« %s » n'est pas un fichier POT valide."
 
-# Preferences window, Editor tab static text
-#: standard input:100
-msgid "(%f will be substituted with filename, %l with line number)"
-msgstr "(%f : nom du fichier; %l : numéro de ligne)"
-
-#: ../src/summarydlg.cpp:71
+#: ../src/summarydlg.cpp:58
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i nouvelles, %i désuètes)"
 
-#: standard input:168
+#: ../src/resources/summary.xrc:63
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 nouvelles, 0 désuètes)"
 
 # Language selection window list entry
-#: ../src/chooselang.cpp:88
+#: ../src/chooselang.cpp:79
 msgid "(Use default language)"
 msgstr "(Utiliser la langue par défaut)"
 
-#: ../src/edframe.cpp:921
+#: ../src/edframe.cpp:916
 msgid "(none of these)"
 msgstr "(aucun de ceux là)"
 
 # Button label in the Find... window
-#: standard input:18
+#: ../src/resources/find.xrc:94
 msgid "< Previous"
-msgstr "< &Précédente"
+msgstr "< Précédente"
 
-#: ../src/manager.cpp:402
+#: ../src/manager.cpp:377
 msgid "<unnamed>"
 msgstr "<sans_nom>"
 
+# Help menu item label; the hint is system-supplied
+#. TRANSLATORS: This is titlebar of about dialog, the string ends with space
+#. and is followed by application name when used ("Poedit",
+#. but don't add it to this translation yourself) (wxWidgets 2.8)
+#: ../src/edframe.cpp:2435
+msgid "About "
+msgstr "À propos"
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: ../src/edframe.cpp:2425
+#, c-format
+msgid "About %s"
+msgstr "À propos de %s"
+
 # Preferences window, Translation Memory tab button label
-#: standard input:111
+#: ../src/resources/prefs.xrc:270
 msgid "Add"
-msgstr "&Ajouter..."
+msgstr "Ajouter"
 
 # Edit project window Browse button hint
-#: standard input:31
+#: ../src/resources/manager.xrc:91
 msgid "Add directory to the list"
 msgstr "Ajouter un répertoire à la liste"
 
-#: ../src/transmemupd_wizard.cpp:138 standard input:176
+#: ../src/transmemupd_wizard.cpp:134 ../src/resources/tm_update.xrc:85
 msgid "Add files"
 msgstr "Ajouter des fichiers"
 
-#: standard input:142
+#: ../src/resources/prefs.xrc:589
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Ajouter un chemin vers un répertoire où l'on trouve des catalogues."
 
 # Preferences dialog, Editor tab check box label
-#: standard input:85
+#: ../src/resources/prefs.xrc:111
 msgid "Always change focus to text input field"
-msgstr "Toujours activer la &zone de saisie du texte"
+msgstr "Toujours activer la zone de saisie du texte"
 
 # Parsers window text box label
-#: standard input:135
+#: ../src/resources/prefs.xrc:514
 msgid "An item in input files list:"
-msgstr "Un élément de la liste des &fichiers d'entrée :"
+msgstr "Un élément de la liste des fichiers d'éléments :"
 
 # Parsers window text box label
-#: standard input:133
+#: ../src/resources/prefs.xrc:495
 msgid "An item in keywords list:"
-msgstr "Un élément de la liste des &mots clés :"
+msgstr "Un élément de la liste des mots clés :"
 
-#: standard input:89
+#: ../src/edframe.cpp:2367 ../src/edframe.cpp:2379
+msgid "Automatic Translations:"
+msgstr "Traductions automatiques :"
+
+#: ../src/resources/prefs.xrc:128
 msgid "Automatic spellchecking"
-msgstr "Vérification automatique"
+msgstr "Vérification orthographique automatique"
 
-#: ../src/export_html.cpp:192
+#: ../src/export_html.cpp:173
 msgid "Automatic translation"
 msgstr "Traduction automatique"
 
-#: ../src/edframe.cpp:2251 ../src/edframe.cpp:2255
+#: ../src/edframe.cpp:2365 ../src/edframe.cpp:2377
 msgid "Automatic translations:"
 msgstr "Traductions automatiques :"
 
-#: standard input:79
+#: ../src/resources/prefs.xrc:70
 msgid "Automatically check for new version of Poedit"
 msgstr "Vérifier automatiquement l'existence d'une nouvelle version de Poedit"
 
 # Preferences window, Editor tab check box label
-#: standard input:82
+#: ../src/resources/prefs.xrc:88
 msgid "Automatically compile .mo file on save"
-msgstr "&Compiler automatiquement les fichiers .mo lors de la sauvegarde"
+msgstr "Compiler automatiquement les fichiers .mo lors de l'enregistrement"
 
 # Preferences window, Translation Memory tab check box label
-#: standard input:118
+#: ../src/resources/prefs.xrc:342
 msgid "Automatically translate when updating catalog"
-msgstr "Traduire a&utomatiquement lors de la mise à jour du catalogue"
+msgstr "Traduire automatiquement lors de la mise à jour du catalogue"
 
-#: ../src/edframe.cpp:2203
+#: ../src/edframe.cpp:2301
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "%u chaînes traduites automatiquement"
 
-#: ../src/edframe.cpp:2188
+#: ../src/edframe.cpp:2286
 msgid "Automatically translating..."
 msgstr "Traduction automatique en cours..."
 
-#: ../src/manager.cpp:274
+#: ../src/manager.cpp:248
 msgid "Bad Tokens"
 msgstr "Marqueurs incorrects"
 
 # Settings window, Paths tab text box label
-#: standard input:157
+#: ../src/resources/properties.xrc:136
 msgid "Base path:"
-msgstr "Chemin de &base :"
+msgstr "Chemin de base :"
 
 # Group box label in the Preferences window, Editor tab
-#: standard input:81
+#: ../src/resources/prefs.xrc:84
 msgid "Behavior"
 msgstr "Comportement"
 
-#: ../src/catalog.cpp:689
+#: ../src/catalog.cpp:680
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "Catalogue corrompu : forme plurielle msgstr utilisée sans msgid_plural"
 
-#: ../src/catalog.cpp:651
+#: ../src/catalog.cpp:642
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -275,141 +422,187 @@ msgstr ""
 "msgid_plural"
 
 # Preferences dialog, Translation Memory tab button label; Edit project window button label; Translation Memory window (?) button label
-#: standard input:30 input:110 input:141 input:173
+#: ../src/resources/manager.xrc:90 ../src/resources/prefs.xrc:588
+#: ../src/resources/tm_update.xrc:37
 msgid "Browse"
-msgstr "&Parcourir..."
+msgstr "Parcourir"
 
 # Main menu
-#: standard input:54
+#: ../src/resources/menus.xrc:95
 msgid "C&atalog"
-msgstr "&Catalogue"
+msgstr "Ca&talogue"
+
+# Edit comment window button label
+#: ../src/resources/comment.xrc:45
+#, fuzzy
+msgid "C&lear"
+msgstr "Effacer"
 
 # Preferences window, Editor tab group box label
-#: standard input:91
+#: ../src/resources/prefs.xrc:141
 msgid "CR/LF conversion"
 msgstr "Conversion CR/LF"
 
 # Button label
-#: standard input:4 input:17 input:33 input:125 input:140 input:144 input:146
-#: input:162
+#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:113
+#: ../src/resources/prefs.xrc:424 ../src/resources/prefs.xrc:566
+#: ../src/resources/prefs.xrc:611 ../src/resources/progress.xrc:32
+#: ../src/resources/properties.xrc:198
 msgid "Cancel"
 msgstr "Annuler"
 
-#: ../src/transmem.cpp:745
-msgid "Cannot create database directory!"
-msgstr "Impossible de créer le répertoire de la base de données !"
+#: ../src/transmem.cpp:732
+msgid "Cannot create TM database directory!"
+msgstr "Impossible de créer le répertoire de la base de données TM !"
 
-#: ../src/gexecute.cpp:178 ../src/gexecute.cpp:234
-msgid "Cannot execute program: "
-msgstr "Impossible d'exécuter le programme :"
+#: ../src/utility.cpp:57 ../src/utility.cpp:67
+msgid "Cannot create temporary directory."
+msgstr "Impossible de créer le répertoire temporaire."
 
-#: ../src/transmemupd.cpp:202
+#: ../src/gexecute.cpp:100
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Impossible d'exécuter le programme : %s"
+
+#: ../src/transmemupd.cpp:199
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Impossible d'extraire les catalogues du fichier RPM."
 
 # Checkbox label in the Find... window
-#: standard input:10
+#: ../src/resources/find.xrc:36
 msgid "Case sensitive"
-msgstr "Respecter la &casse"
+msgstr "Respecter la casse"
 
-#: ../src/manager.cpp:270
+#: ../src/manager.cpp:244
 msgid "Catalog"
 msgstr "Catalogue"
 
 # Alert text
-#: ../src/edframe.cpp:969 ../src/edframe.cpp:994 ../src/edframe.cpp:1035
-#: ../src/edframe.cpp:1087 ../src/edframe.cpp:1205
+#: ../src/edframe.cpp:987
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Le catalogue a été modifié. Voulez-vous enregistrer les changements ?"
 
+#: ../src/resources/properties.xrc:4
+msgid "Catalog properties"
+msgstr "Propriétés du catalogue"
+
 # File menu item label
-#: standard input:38
+#: ../src/resources/menus.xrc:9
+msgid "Catalogs &Manager"
+msgstr "Gestionnaire de &catalogues"
+
+# File menu item label
+#: ../src/resources/menus.xrc:8
 msgid "Catalogs &manager"
 msgstr "Gestion des &catalogues"
 
 # Preferences window, Personalize tab button label
-#: standard input:78
+#: ../src/resources/prefs.xrc:63
 msgid "Change UI language"
 msgstr "Langue d'a&ffichage..."
 
 # Settings window, Project Info tab list box label
-#: ../src/export_html.cpp:137 standard input:153
+#: ../src/export_html.cpp:119 ../src/resources/properties.xrc:74
 msgid "Charset:"
-msgstr "&Jeu de caractères :"
+msgstr "Jeu de caractères :"
+
+#: ../src/edframe.cpp:483
+msgid "Check for Updates..."
+msgstr ""
+
+# Edit menu item label
+#: ../src/resources/toolbar.xrc:39
+#, fuzzy
+msgid "Check for errors in the translation"
+msgstr "Copier l'&original vers la traduction"
 
 # Preferences window, Editor tab button label
-#: standard input:104 input:106
+#: ../src/resources/prefs.xrc:204 ../src/resources/prefs.xrc:230
 msgid "Choose"
-msgstr "&Police..."
+msgstr "Choisir"
 
-# Edit comment window button label
-#: standard input:5
-msgid "Clear"
-msgstr "Effacer"
+# Main window list header
+#: ../src/edframe.cpp:2339 ../src/resources/menus.xrc:64
+msgid "Clear Translation"
+msgstr "Vider la traduction"
 
 # Edit comment window Clear button hint
-#: standard input:6
+#: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "Effacer le commentaire"
 
+# Main window list header
+#: ../src/edframe.cpp:2337 ../src/resources/menus.xrc:63
+msgid "Clear translation"
+msgstr "Vider la traduction"
+
+# File menu item label; the hint is system-supplied (also Catalogs manager window)
+#: ../src/resources/find.xrc:87
+msgid "Close"
+msgstr "Fermer"
+
 # Toolbar button hint for Edit: Comment
-#: standard input:185
+#: ../src/resources/toolbar.xrc:57
 msgid "Comment"
 msgstr "Commentaire"
 
 # Checkbox label in the Preferences window, Editor tab
-#: standard input:87
+#: ../src/resources/prefs.xrc:120
 msgid "Comment window is editable"
-msgstr "Fenêtre de commentaire &modifiable"
+msgstr "Fenêtre de commentaire modifiable"
 
 # Edit comment window tex box label
-#: standard input:2
+#: ../src/edframe.cpp:547 ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Commentaire :"
 
 # Preferences window, Translation Memory tab group box label
-#: standard input:115
+#: ../src/resources/prefs.xrc:292
 msgid "Configuration"
 msgstr "Configuration"
 
-#: ../src/manager.cpp:432 ../src/manager.cpp:452
+#: ../src/manager.cpp:407 ../src/manager.cpp:427
 msgid "Confirmation"
 msgstr "Confirmation"
 
-# Edit menu item label
-#: ../src/edframe.cpp:2231 standard input:48
-msgid "Copy original to translation field"
-msgstr "Copier l'&original vers la traduction"
+#: ../src/edframe.cpp:1812
+#, fuzzy
+msgid "Context:"
+msgstr "Texte original :"
 
-#: ../src/catalog.cpp:1049
+#: ../src/edframe.cpp:2332 ../src/resources/menus.xrc:59
+msgid "Copy from Source Text"
+msgstr "Copier à partir de l'original"
+
+# Catalog menu item label
+#: ../src/edframe.cpp:2330 ../src/resources/menus.xrc:58
+msgid "Copy from source text"
+msgstr "Copier depuis l'original"
+
+#: ../src/catalog.cpp:1038
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "Échec au chargement du fichier %s : il est probablement corrompu."
 
-# Settings window, Project Info tab list box label
-#: ../src/export_html.cpp:126 standard input:152
-msgid "Country:"
-msgstr "&Pays :"
+#: ../src/catalog.cpp:1307
+#, c-format
+msgid "Couldn't save file %s."
+msgstr "Impossible d'enregistrer le fichier %s."
 
 # Toolbar button hint for the Catalogs manager window
-#: standard input:21
+#: ../src/resources/manager.xrc:44
 msgid "Create new translations project"
 msgstr "Créer un nouveau projet de traduction"
 
 # Preferences dialog, Translation Memory tab group box label
-#: standard input:108
+#: ../src/resources/prefs.xrc:252
 msgid "Database"
 msgstr "Base de données"
 
-#: ../src/transmem.cpp:327
-#, c-format
-msgid "Database error: %s"
-msgstr "Erreur de base de données : %s"
-
 # Button label in Preferences dialog, Parsers tab
-#: standard input:24 input:123
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:390
 msgid "Delete"
-msgstr "&Supprimer"
+msgstr "Supprimer"
 
 # Settings window, Paths/Keywords tabs toolbox hint
 #: ../src/editlbox/editlbox.cpp:171
@@ -417,26 +610,45 @@ msgid "Delete item"
 msgstr "Supprimer"
 
 # Toolbar button hint for the Catalogs manager window
-#: standard input:25
+#: ../src/resources/manager.xrc:54
 msgid "Delete the project"
 msgstr "Supprimer le projet"
 
 # Edit project window list box label
-#: ../src/manager.cpp:326
+#: ../src/manager.cpp:300
 msgid "Directories:"
-msgstr "&Répertoires :"
+msgstr "Répertoires :"
 
 # View menu item label
-#: standard input:64
+#: ../src/resources/menus.xrc:165
+msgid "Display &Line Numbers"
+msgstr "Afficher les numéros de &lignes"
+
+#: ../src/resources/menus.xrc:170
+msgid "Display &Notes for Translators"
+msgstr ""
+
+# View menu item label
+#: ../src/resources/menus.xrc:160
+msgid "Display &Quotes"
+msgstr "Afficher les &guillemets"
+
+# View menu item label
+#: ../src/resources/menus.xrc:164
 msgid "Display &line numbers"
-msgstr "Afficher les numéros de &ligne"
+msgstr "Afficher les numéros de &lignes"
+
+#: ../src/resources/menus.xrc:169
+#, fuzzy
+msgid "Display &notes for translators"
+msgstr "Afficher les guillemets autour des chaînes ?"
 
 # View menu item label
-#: standard input:63
+#: ../src/resources/menus.xrc:159
 msgid "Display &quotes"
 msgstr "Afficher les &guillemets"
 
-#: ../src/manager.cpp:451
+#: ../src/manager.cpp:426
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -444,44 +656,66 @@ msgstr ""
 "Voulez-vous vraiment faire une mise à jour\n"
 "de tous les catalogues de ce projet ?"
 
-#: ../src/edframe.cpp:2145
-msgid ""
-"Do you really want to remove all translations that are no longer used from "
-"the catalog?\n"
-"If you continue with purging, you will have to translate them again if they "
-"are added back in the future."
-msgstr ""
-"Voulez-vous vraiment enlever toutes les traductions qui ne sont plus "
-"utilisées dans le catalogue ?\n"
-"Si vous continuez à purger, vous allez avoir à les re-traduire si elles sont "
-"rétablies dans le futur."
-
-#: ../src/manager.cpp:431
+#: ../src/manager.cpp:406
 msgid "Do you want to delete the project?"
 msgstr "Voulez-vous effacer ce projet ?"
 
+#: ../src/edframe.cpp:2227
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr ""
+"Voulez-vous supprimer toutes les traductions qui ne sont plus utilisées ?"
+
+#: ../src/edframe.cpp:999
+msgid "Don't Save"
+msgstr "Ne pas enregistrer"
+
 # Preferences window, Editor tab check box label
-#: standard input:97
+#: ../src/resources/prefs.xrc:170
 msgid "Don't change format of existing catalogs"
-msgstr "Ne pas changer le format des catalogues e&xistants"
+msgstr "Ne pas changer le format des catalogues existants"
+
+#: ../src/edframe.cpp:997
+msgid "Don't save"
+msgstr "Ne pas enregistrer"
+
+#: ../src/attentionbar.cpp:195
+msgid "Don't show again"
+msgstr "Ne plus afficher"
+
+# Button label in Preferences dialog, Parsers tab
+#: ../src/resources/manager.xrc:136 ../src/resources/menus.xrc:51
+msgid "E&xit"
+msgstr "&Quitter"
 
 # File menu item label
-#: standard input:44
+#: ../src/resources/menus.xrc:39
 msgid "E&xport..."
 msgstr "E&xporter..."
 
 # Button label in Preferences dialog, Parsers tab
-#: standard input:22 input:122
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:383
 msgid "Edit"
-msgstr "&Modifier..."
+msgstr "Modifier..."
 
 # Edit menu item label
-#: standard input:52
+#: ../src/resources/menus.xrc:85
+msgid "Edit &Comment"
+msgstr "Mofidier le &commentaire"
+
+# Edit menu item label
+#: ../src/resources/menus.xrc:84
 msgid "Edit &comment"
 msgstr "Co&mmentaire"
 
+# Edit menu item label
+#: ../src/edframe.cpp:2346
+#, fuzzy
+msgid "Edit Comment"
+msgstr "Mofidier le &commentaire"
+
 # Edit comment window caption
-#: standard input:1 input:186
+#: ../src/edframe.cpp:2344 ../src/resources/comment.xrc:4
+#: ../src/resources/toolbar.xrc:58
 msgid "Edit comment"
 msgstr "Commentaire"
 
@@ -491,269 +725,289 @@ msgid "Edit item"
 msgstr "Modifier"
 
 # Edit project window caption
-#: standard input:28
+#: ../src/resources/manager.xrc:64
 msgid "Edit project"
 msgstr "Modifier le projet"
 
-#: standard input:7
-msgid "Edit the file in text editor"
-msgstr "Éditer le fichier dans un éditeur"
-
 # Toolbar button hint for the Catalogs manager window
-#: standard input:23
+#: ../src/resources/manager.xrc:49
 msgid "Edit the project"
 msgstr "Modifier le projet"
 
 # Preferences dialog tab label (&d once it accepts accelerators)
-#: standard input:80
+#: ../src/resources/prefs.xrc:78
 msgid "Editor"
 msgstr "Éditeur"
 
-# Preferences window, Editor tab list box label
-#: standard input:99
-msgid "Editor executable:"
-msgstr "Exéc&utable :"
-
-#: standard input:90
+#: ../src/resources/prefs.xrc:129
 msgid "Enables on-the-fly spellchecking"
 msgstr "Active la vérification à la volée"
 
-#: ../src/edframe.cpp:1359
+#: ../src/edframe.cpp:1309
 msgid "Entries in the catalog are probably incorrect."
-msgstr "Certaines entrées du catalogue sont probablement incorrectes."
+msgstr "Certains éléments du catalogue sont probablement incorrects."
 
-#: ../src/edframe.cpp:1926
+#: ../src/edframe.cpp:1911
+msgid ""
+"Entries in this catalog have different plural forms count from what "
+"catalog's Plural-Forms header says"
+msgstr ""
+"Les éléments dans ce catalogue ont un nombre de formes plurielles différent "
+"de celui indiqué dans l'en-tête Plural-Forms"
+
+#: ../src/edframe.cpp:1376
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+
+#: ../src/edframe.cpp:1960
 #, c-format
 msgid "Error loading message catalog file '%s'."
-msgstr "Erreur au chargement du fichier catalogue '%s'."
+msgstr "Erreur au chargement du fichier catalogue « %s »."
 
-#: ../src/fileviewer.cpp:101
+#: ../src/fileviewer.cpp:226
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Erreur à l'ouverture du fichier %s !"
 
-#: ../src/catalog.cpp:1325
+#: ../src/catalog.cpp:1354
 msgid "Error saving catalog"
 msgstr "Erreur d'enregistrement du catalogue"
 
-#: ../src/edframe.cpp:1178
+#: ../src/errorbar.cpp:60
+msgid "Error:"
+msgstr ""
+
+#: ../src/edframe.cpp:1138
 msgid "Export as..."
 msgstr "Exporter en tant que..."
 
-# Preferences window, Editor tab group box label
-#: standard input:98
-msgid "External editor"
-msgstr "Éditeur externe"
+#: ../src/resources/properties.xrc:127
+msgid "Extract text from source files in the following directories:"
+msgstr "Extraire le teste des répertoires suivants :"
 
-#: ../src/digger.cpp:65
+#: ../src/digger.cpp:60
 #, c-format
 msgid "Failed command: %s"
 msgstr "Commande en échec : %s"
 
-#: ../src/digger.cpp:160
+#: ../src/digger.cpp:114
 msgid "Failed to load extracted catalog."
 msgstr "Échec du chargement du catalogue extrait."
 
-#: ../src/digger.cpp:66
+#: ../src/digger.cpp:61
 msgid "Failed to merge gettext catalogs."
 msgstr "Échec de la fusion des catalogues gettext."
 
-#: ../src/digger.cpp:94 ../src/digger.cpp:105
-msgid "Failed to read extracted catalog."
-msgstr "Echec à la lecture du catalogue extrait."
-
-#: ../src/edframe.cpp:1060 ../src/edframe.cpp:1103
+#: ../src/edframe.cpp:393 ../src/edframe.cpp:1061
 #, c-format
 msgid "File '%s' doesn't exist."
-msgstr "Le fichier %s n'existe pas."
+msgstr "Le fichier « %s » n'existe pas."
 
-#: ../src/edframe.cpp:1077
+#: ../src/edframe.cpp:386
 #, c-format
-msgid "File '%s' is not message catalog."
-msgstr "Le fichier %s n'est pas un catalogue."
+msgid "File '%s' is not a message catalog."
+msgstr "Le fichier « %s » n'est pas un catalogue."
 
-#: ../src/catalog.cpp:1285
+#: ../src/catalog.cpp:1268
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"Le fichier '%s' est en lecture seule et ne peut être sauvegardé.\n"
-"Veuillez le sauvegarder sous un nom différent."
+"Le fichier « %s » est en lecture seule et ne peut être enregistré.\n"
+"Veuillez l'enregistrer sous un nom différent."
 
-#: ../src/transmemupd_wizard.cpp:63
+#: ../src/transmemupd_wizard.cpp:59
 msgid "Files List"
 msgstr "Liste des fichiers"
 
 # Checkbox label in the Find... window
-#: standard input:16
+#: ../src/resources/find.xrc:78
 msgid "Find in automatic comments"
-msgstr "Trouver dans les commentaires &automatiques"
+msgstr "Rechercher dans les commentaires automatiques"
 
 # Checkbox label in the Find... window
-#: standard input:15
+#: ../src/resources/find.xrc:71
 msgid "Find in comments"
-msgstr "Rechercher dans les co&mmentaires"
+msgstr "Rechercher dans les commentaires"
 
 # Checkbox label in the Find... window
-#: standard input:13
+#: ../src/resources/find.xrc:57
 msgid "Find in original strings"
-msgstr "Rechercher dans les chaînes &originales"
+msgstr "Rechercher dans les chaînes originales"
 
 # Checkbox label in the Find... window
-#: standard input:14
+#: ../src/resources/find.xrc:64
 msgid "Find in translations"
-msgstr "Rechercher dans les &traductions"
+msgstr "Rechercher dans les traductions"
 
 # Window caption
-#: standard input:8
+#: ../src/resources/find.xrc:4
 msgid "Find..."
 msgstr "Rechercher..."
 
+#: ../src/edframe.cpp:1941
+msgid "Fix the header"
+msgstr "Corriger l'en-tête"
+
 # Preferences window, Editor tab group box label
-#: standard input:102
+#: ../src/resources/prefs.xrc:181
 msgid "Fonts"
 msgstr "Polices"
 
-#: ../src/edframe.cpp:2695
+#: ../src/edframe.cpp:2719
 #, c-format
 msgid "Form %i"
 msgstr "Forme %i"
 
-#: ../src/edframe.cpp:2697
+#: ../src/edframe.cpp:2721
 #, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr "Forme %i (c.-à-d. \"%u\")"
 
-# Toolbar button hint for View: Fullscreen
-#: standard input:187 input:188
-msgid "Fullscreen view"
-msgstr "Plein écran"
-
-#: ../src/manager.cpp:273 standard input:183
+#: ../src/manager.cpp:247 ../src/resources/toolbar.xrc:51
 msgid "Fuzzy"
 msgstr "Approximative"
 
-#: ../src/export_html.cpp:198
+#: ../src/export_html.cpp:179
 msgid "Fuzzy translation"
 msgstr "Traduction approximative"
 
-#: ../src/edframe.cpp:1014 ../src/edframe.cpp:1142
-#, fuzzy
-msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
+#: ../src/edframe.cpp:1043 ../src/edframe.cpp:1102
+msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Catalogues GNU GetGext (*.po)|*.po|Tous les fichiers (*.*)|*.*"
 
-#: ../src/edframe.cpp:1230 ../src/edframe.cpp:1377
-#, fuzzy
-msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
+#: ../src/edframe.cpp:1176 ../src/edframe.cpp:1327
+msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "Modèles GNU gettext (*.pot)|*.pot|Tous les fichiers (*.*)|*.*"
 
-# Help menu item label
-#: standard input:69
-msgid "GNU gettext documentation"
-msgstr "Documentation &GNU de gettext"
-
-#: standard input:145
+#: ../src/resources/prefs.xrc:621
 msgid "Generate TM database"
 msgstr "Générer la base de données TM"
 
 # Preferences window, Translation Memory tab button label
-#: standard input:113
+#: ../src/resources/prefs.xrc:278
 msgid "Generate database"
-msgstr "Const&ruire la base de données"
-
-#: ../src/edframe.cpp:1429
-msgid "Gettext syntax error"
-msgstr "Erreur de syntaxe Gettext"
+msgstr "Construire la base de données"
 
 # Bookmarks menu item label
-#: ../src/edframe.cpp:2768
+#: ../src/edframe.cpp:2798
 #, c-format
-msgid "Go to bookmark %i\tCtrl-%i"
+msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "Aller au marque-page %i\tCtrl-%i"
 
-#: ../src/edframe.cpp:2765
+#: ../src/edframe.cpp:2792
 #, c-format
-msgid "Go to bookmark %i\tCtrl-Alt-%i"
-msgstr "Aller au marque-pages %i\tCtrl-Alt-%i"
+msgid "Go to Bookmark %i\tCtrl+Alt+%i"
+msgstr "Aller au marque-page %i\tCtrl-Alt-%i"
 
-#: ../src/edframe.cpp:1180
+# Bookmarks menu item label
+#: ../src/edframe.cpp:2795
+#, c-format
+msgid "Go to bookmark %i\tCtrl+%i"
+msgstr "Aller au marque-page %i\tCtrl-%i"
+
+#: ../src/edframe.cpp:1140
 msgid "HTML file (*.html)|*.html"
 msgstr "Fichier HTML (*.html)|*.html"
 
+#: ../src/attentionbar.cpp:78
+msgid "Hide this notification message"
+msgstr "Masquer ce message de notification"
+
 # Preferences window, Editor tab group box label
-#: standard input:74
+#: ../src/resources/prefs.xrc:18
 msgid "Identity"
 msgstr "Identité"
 
 # Hint for the "Comment window is editable" checkbox, Preferences dialog, Editor tab
-#: standard input:88
+#: ../src/resources/prefs.xrc:121
 msgid "If checked, the comment window will be editable."
 msgstr "Si activée, la fenêtre de commentaire peut être modifiée."
 
-#: standard input:130
+#: ../src/edframe.cpp:2229
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Si vous continuez à purger, toutes les traductions marquées comme supprimées "
+"seront définitivement supprimes. Vous allez avoir à les re-traduire si elles "
+"sont rétablies dans le futur."
+
+#: ../src/resources/prefs.xrc:472
 msgid "Invocation:"
 msgstr "Appel :"
 
+#: ../src/edframe.cpp:2234 ../src/transmem.cpp:1202
+msgid "Keep"
+msgstr "Conserver"
+
 # Settings window tab label; also Keywords list label on that tab (&m once it accepts accelerators)
-#: ../src/settingsdlg.cpp:71 standard input:160
+#: ../src/propertiesdlg.cpp:58
 msgid "Keywords"
 msgstr "Mots clés"
 
 # Language selection window caption
-#: ../src/chooselang.cpp:161
+#: ../src/chooselang.cpp:159
 msgid "Language selection"
 msgstr "Sélection de langue"
 
 # Parsers window: text box label and group box label; also Settings window, Project Info tab list box label (which is unfortunate as the two need different translations sometimes)
-#: ../src/export_html.cpp:123 standard input:127 input:128 input:151
+#: ../src/export_html.cpp:108 ../src/resources/prefs.xrc:440
+#: ../src/resources/prefs.xrc:444 ../src/resources/properties.xrc:62
 msgid "Language:"
-msgstr "&Langue :"
+msgstr "Langue :"
 
-#: ../src/manager.cpp:275
+#: ../src/manager.cpp:249
 msgid "Last modified"
 msgstr "Dernière modification"
 
-#: ../src/edlistctrl.cpp:314 ../src/fileviewer.cpp:110
+#: ../src/resources/properties.xrc:111
+msgid "Learn about plural forms"
+msgstr ""
+
+#: ../src/edframe.cpp:889
+msgid "Learn more"
+msgstr "En savoir plus"
+
+#: ../src/edlistctrl.cpp:328
 msgid "Line"
 msgstr "Ligne"
 
-#: ../src/catalog.cpp:161
+#: ../src/catalog.cpp:145
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
-msgstr "La ligne %u du fichier '%s' est corrompue (donnée %s invalide)."
+msgstr "La ligne %u du fichier « %s » est corrompue (donnée %s invalide)."
 
 # Preferences window, Editor tab list box label
-#: standard input:92
+#: ../src/resources/prefs.xrc:149
 msgid "Line endings format:"
-msgstr "&Format de fin de ligne :"
+msgstr "Format de fin de ligne :"
 
 # Parsers window text box label
-#: standard input:129
+#: ../src/resources/prefs.xrc:456
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "E&xtensions, séparées par des points-virgules (e.g. *.cpp;*.h) :"
+msgstr "Extensions, séparées par des points-virgules (e.g. *.cpp;*.h) :"
 
-# Preferences window, Editor tab list entry
-#: standard input:95
-msgid "Macintosh"
-msgstr "Macintosh"
-
-#: ../src/catalog.cpp:236
+#: ../src/catalog.cpp:220
 #, c-format
 msgid "Malformed header: '%s'"
-msgstr "Entête mal formée : '%s'"
+msgstr "Entête mal formée : « %s »"
 
 # Preferences window, Translation Memory tab number box label
-#: standard input:116
+#: ../src/resources/prefs.xrc:300
 msgid "Max. # of missing words:"
-msgstr "Nombre ma&ximum de mots manquants :"
+msgstr "Nombre maximum de mots manquants :"
 
 # Preferences window, Translation Memory tab number box label
-#: standard input:117
+#: ../src/resources/prefs.xrc:322
 msgid "Max. difference in sentence length:"
-msgstr "Différence max. de longueur de p&hrase :"
+msgstr "Différence max. de longueur de phrase :"
 
-#: ../src/catalog.cpp:1482
+#: ../src/catalog.cpp:1543
 msgid "Merging differences..."
 msgstr "Intégration des changements..."
 
@@ -767,12 +1021,20 @@ msgstr "Descendre"
 msgid "Move up"
 msgstr "Monter"
 
-#: ../src/prefsdlg.cpp:59
+#: ../src/prefsdlg.cpp:55
 msgid "My Languages"
 msgstr "Langues"
 
+#: ../src/resources/menus.xrc:152
+msgid "Ne&xt Unfinished"
+msgstr "Incomplet suivan&t"
+
+#: ../src/resources/menus.xrc:151
+msgid "Ne&xt unfinished"
+msgstr "Incomplet suivan&t"
+
 # Hint for "Always change focus to text input field" checkbox in the Preferences window, Editor tab
-#: standard input:86
+#: ../src/resources/prefs.xrc:113
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -784,360 +1046,478 @@ msgstr ""
 "de traduction."
 
 # Button label in Preferences dialog, Parsers tab
-#: standard input:20 input:121
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:378
 msgid "New"
-msgstr "&Nouveau..."
+msgstr "Nouveau"
 
 # File menu item label
-#: standard input:40
+#: ../src/resources/menus.xrc:18
+msgid "New Catalog from POT File..."
+msgstr "Nouveau catalogue depuis un fichier POT..."
+
+# File menu item label
+#: ../src/resources/menus.xrc:17
 msgid "New catalog from POT file..."
-msgstr "Nouveau catalogue depuis un fichier &POT..."
+msgstr "Nouveau catalogue depuis un fichier POT..."
 
 # Settings window, Paths/Keywords tabs toolbox hint
 #: ../src/editlbox/editlbox.cpp:170
 msgid "New item"
 msgstr "Créer"
 
-#: standard input:165
+#: ../src/resources/summary.xrc:30
 msgid "New strings"
 msgstr "Nouvelles chaînes"
 
 # Button label in the Find... window
-#: standard input:19
+#: ../src/resources/find.xrc:102
 msgid "Next >"
-msgstr "&Suivante >"
+msgstr "Suivante >"
 
-#: ../src/fileviewer.cpp:151
-msgid "No editor specified. Please set it in Preferences dialog."
-msgstr ""
-"L'éditeur n'a pas été désigné. Veuillez le faire dans la fenêtre Préférences."
-
-#: ../src/digger.cpp:250
+#: ../src/digger.cpp:201
 msgid "No files found in: "
 msgstr "Aucun fichier trouvé dans :"
 
-#: ../src/edframe.cpp:1446
+#: ../src/edframe.cpp:1391
+#, fuzzy
+msgid "No problems with the translation found."
+msgstr "Aucune référence trouvée pour cette chaîne."
+
+#: ../src/edframe.cpp:1433
 msgid "No references to this string found."
 msgstr "Aucune référence trouvée pour cette chaîne."
 
-#: ../src/export_html.cpp:170
+#: ../src/export_html.cpp:151
 msgid "Notes"
 msgstr "Notes"
 
+#: ../src/edframe.cpp:550
+#, fuzzy
+msgid "Notes for translators:"
+msgstr "Traductions automatiques :"
+
 # Button label
-#: standard input:3 input:32 input:124 input:139 input:161 input:169
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
+#: ../src/resources/prefs.xrc:416 ../src/resources/prefs.xrc:558
+#: ../src/resources/properties.xrc:190 ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "OK"
 
-#: standard input:167
+#: ../src/resources/summary.xrc:51
 msgid "Obsolete strings"
 msgstr "Chaînes désuètes"
 
-#: standard input:177
+#: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
 msgid "Open"
 msgstr "Ouvrir"
 
 # Toolbar button hint for File: Open
-#: ../src/edframe.cpp:1012 standard input:178
+#: ../src/edframe.cpp:1041 ../src/resources/toolbar.xrc:16
+#: ../src/resources/toolbar.xrc:21
 msgid "Open catalog"
 msgstr "Ouvrir un catalogue"
 
-#: ../src/edframe.cpp:1228 ../src/edframe.cpp:1375
+#: ../src/edframe.cpp:1174 ../src/edframe.cpp:1325
 msgid "Open catalog template"
 msgstr "Ouvrir un modèle de catalogue"
 
 # Preferences window, Editor tab check box label
-#: standard input:84
+#: ../src/resources/prefs.xrc:104
 msgid "Open catalogs manager on Poedit startup"
-msgstr "&Ouvrir le gestionnaire de catalogues au démarrage de Poedit"
+msgstr "Ouvrir le gestionnaire de catalogues au démarrage de Poedit"
 
-# Preferences window, Editor tab check box label
-#: standard input:101
-msgid "Open source files in editor, not in file viewer"
-msgstr "Ou&vrir les fichiers sources avec cet éditeur"
+#: ../src/resources/menus.xrc:147
+msgid "P&revious Unfinished"
+msgstr "Incomplet p&récédent"
 
-# Main window list header
-#: ../src/edlistctrl.cpp:311 ../src/export_html.cpp:163
-msgid "Original string"
-msgstr "Original"
+#: ../src/resources/menus.xrc:146
+msgid "P&revious unfinished"
+msgstr "Incomplet p&récédent"
 
 # Parsers window text box label
-#: standard input:131
+#: ../src/resources/prefs.xrc:476
 msgid "Parser command:"
-msgstr "&Commande de l'analyseur :"
+msgstr "Commande de l'analyseur :"
 
 # Parsers window caption
-#: standard input:126
+#: ../src/resources/prefs.xrc:435
 msgid "Parser setup"
 msgstr "Configuration d'un analyseur"
 
 # Preferences dialog tab label (&l once it accepts accelerators)
-#: standard input:119
+#: ../src/resources/prefs.xrc:353
 msgid "Parsers"
 msgstr "Analyseurs"
 
-#: ../src/digger.cpp:135
+#: ../src/digger.cpp:92
 #, c-format
 msgid "Parsing %s files..."
 msgstr "Analyse fichiers %s..."
 
-# Preferences dialog, Translation Memory tab text box label
-#: standard input:109
-msgid "Path to DB:"
-msgstr "Chemin vers la &base de données :"
-
 # Settings window tab label; also Paths list label on that tab (&c once it accepts accelerators)
-#: ../src/settingsdlg.cpp:73 standard input:158
+#: ../src/propertiesdlg.cpp:60
 msgid "Paths"
 msgstr "Chemins"
 
 # Preferences dialog tab label (&e once it accepts accelerators)
-#: standard input:73
+#: ../src/resources/prefs.xrc:12
 msgid "Personalize"
 msgstr "Personnalisation"
 
 # Preferences window, Translation Memory tab, Add button hint
-#: standard input:112
+#: ../src/resources/prefs.xrc:271
 msgid "Pick language from the list of known languages"
 msgstr "Choisissez une langue parmi la liste de celles disponibles"
 
-#: standard input:172
+#: ../src/resources/tm_update.xrc:21
 msgid "Please add directories where locale files are stored on your system:"
 msgstr ""
 "Répertoires de votre système qui contiennent les fichiers de localisation :"
 
 # References window label (appears when multiple references exist and Edit: Show references is chosen)
-#: ../src/edframe.cpp:1454
+#: ../src/edframe.cpp:1441
 msgid "Please choose the reference you want to show:"
 msgstr "Veuillez choisir la référence que vous voulez voir :"
 
 # Language selection window caption (Preferences: Translation Memory: Add)
-#: ../src/prefsdlg.cpp:355
+#: ../src/prefsdlg.cpp:334
 msgid "Please select language ISO code:"
 msgstr "Code ISO de la langue :"
 
 # Language selection window caption (?)
-#: ../src/edframe.cpp:930
+#: ../src/edframe.cpp:925
 msgid "Please select language code:"
 msgstr "Veuillez sélectionner le code de la langue :"
 
-# Settings window, Project Info tab text box label
-#: standard input:155
-msgid "Plural Forms:"
-msgstr "&Formes plurielles :"
+#: ../src/transmem.cpp:1196
+#, c-format
+msgid ""
+"Please verify that all files were moved to the new location or do it "
+"manually if they weren't.\n"
+"\n"
+"Old location: %s\n"
+"New location: %s"
+msgstr ""
+"Veuillez vérifier que tous les fichiers ont été déplacer vers le nouvel "
+"emplacement ou faites-le manuellement le cas échéant.\n"
+"\n"
+"Ancien emplacement : %s\n"
+"Nouvel emplacement : %s"
 
-#: ../src/edframe.cpp:611
+# Settings window, Project Info tab text box label
+#: ../src/resources/properties.xrc:98
+msgid "Plural Forms:"
+msgstr "Formes plurielles :"
+
+#: ../src/edframe.cpp:564
 msgid "Plural:"
 msgstr "Pluriel :"
 
-#: ../src/edframe.cpp:472
+#: ../src/edframe.cpp:410
 msgid "Poedit"
 msgstr "Poedit"
 
 # Catalogs manager window caption
-#: ../src/manager.cpp:70
+#: ../src/manager.cpp:69
 msgid "Poedit - Catalogs manager"
 msgstr "Gestionnaire de catalogues Poedit"
 
-#: ../src/digger.cpp:251
+#: ../src/digger.cpp:202
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Poedit n'a trouvé aucun fichier dans les répertoires analysés."
 
 # About window static text
-#: ../src/edframe.cpp:2290
+#: ../src/edframe.cpp:2443
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit est un éditeur de traductions simple à utiliser."
 
-#: standard input:72
+#: ../src/transmem.cpp:1191
+msgid "Poedit translation memory error"
+msgstr "Erreur de mémoire de traduction Poedit"
+
+#: ../src/resources/prefs.xrc:4
 msgid "Preferences"
 msgstr "Préférences"
 
-#: standard input:143
+#: ../src/resources/prefs.xrc:603
 msgid "Proceed"
 msgstr "Procéder"
 
 # Settings window tab label (&i once it accepts accelerators)
-#: ../src/export_html.cpp:116 standard input:156
+#: ../src/export_html.cpp:101
 msgid "Project info"
 msgstr "Informations"
 
 # Settings window, Project Info tab text box label
-#: ../src/export_html.cpp:120 standard input:148
+#: ../src/export_html.cpp:105 ../src/resources/properties.xrc:19
 msgid "Project name and version:"
-msgstr "Nom et &version du projet :"
+msgstr "Nom et version du projet :"
 
 # Edit project window text box label
-#: standard input:29
+#: ../src/resources/manager.xrc:69
 msgid "Project name:"
-msgstr "&Nom du projet :"
+msgstr "Nom du projet :"
 
-#: ../src/edframe.cpp:2146
+#: ../src/edframe.cpp:2234 ../src/transmem.cpp:1202
+msgid "Purge"
+msgstr "Purger"
+
+#: ../src/edframe.cpp:2225
 msgid "Purge deleted translations"
 msgstr "Purger les traductions supprimées"
 
+#: ../src/resources/manager.xrc:137 ../src/resources/menus.xrc:52
+msgid "Quit"
+msgstr "Quitter"
+
 # References window caption (appears when multiple references exist and Edit: Show references is chosen)
-#: ../src/edframe.cpp:1454
+#: ../src/edframe.cpp:1441
 msgid "References"
 msgstr "Références"
 
-#: ../src/edframe.cpp:2236 ../src/edframe.cpp:2240
+#: ../src/edframe.cpp:2401 ../src/edframe.cpp:2405
 msgid "References:"
 msgstr "Références :"
 
 # Preferences window, Translation Memory tab, Generate database button hint
-#: standard input:114
+#: ../src/resources/prefs.xrc:279
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr ""
 "Construire (ou reconstruire) la mémoire de traduction à partir des "
 "catalogues trouvés dans les chemins spécifiés ci-dessus."
 
-#: standard input:174
+#: ../src/edframe.cpp:1922
+msgid "Required header Plural-Forms is missing."
+msgstr ""
+
+#: ../src/resources/tm_update.xrc:42
 msgid "Reset to defaults"
 msgstr "Revenir aux réglages par défaut"
 
-#: standard input:179
+#: ../src/edframe.cpp:995 ../src/resources/toolbar.xrc:25
+#: ../src/resources/toolbar.xrc:30
 msgid "Save"
 msgstr "Enregistrer"
 
 # File menu item label; the hint is system-supplied
-#: standard input:43
+#: ../src/resources/menus.xrc:35
+msgid "Save &As..."
+msgstr "En&registrer sous..."
+
+# File menu item label; the hint is system-supplied
+#: ../src/resources/menus.xrc:34
 msgid "Save &as..."
 msgstr "En&registrer sous..."
 
-#: ../src/edframe.cpp:1141
+#: ../src/edframe.cpp:1101
 msgid "Save as..."
 msgstr "Enregistrer sous..."
 
 # Toolbar button hint for File: Save
-#: standard input:180
+#: ../src/resources/toolbar.xrc:26 ../src/resources/toolbar.xrc:31
 msgid "Save catalog"
 msgstr "Enregistrer le catalogue"
 
 # Alert caption
-#: ../src/edframe.cpp:970 ../src/edframe.cpp:995 ../src/edframe.cpp:1036
-#: ../src/edframe.cpp:1088 ../src/edframe.cpp:1206
+#: ../src/edframe.cpp:988
 msgid "Save changes"
 msgstr "Enregistrer les changements"
 
-#: ../src/transmemupd.cpp:152
+#: ../src/transmemupd.cpp:149
 msgid "Scanning file: "
 msgstr "Analyse du fichier :"
 
-#: ../src/digger.cpp:121
+#: ../src/digger.cpp:77
 msgid "Scanning files..."
 msgstr "Analyse des fichiers..."
 
-#: ../src/transmemupd_wizard.cpp:59
+#: ../src/transmemupd_wizard.cpp:55
 msgid "Search Paths"
 msgstr "Chemins pour la recherche"
 
 # Language selection window label (?)
-#: ../src/edframe.cpp:929
+#: ../src/edframe.cpp:924
 msgid "Select catalog's language"
 msgstr "Sélectionner la langue du catalogue"
 
 # Language selection window caption (Preferences: Translation Memory: Browse)
-#: ../src/prefsdlg.cpp:368 ../src/transmemupd_wizard.cpp:112
-#: ../src/manager.cpp:306
+#: ../src/manager.cpp:280 ../src/transmemupd_wizard.cpp:108
 msgid "Select directory"
 msgstr "Choisir un répertoire"
 
 # Language selection window label (Preferences: Translation Memory: Add)
-#: ../src/prefsdlg.cpp:354
+#: ../src/prefsdlg.cpp:333
 msgid "Select language"
 msgstr "Sélectionner une langue"
 
 # Language selection window label (Preferences: Personalize: Change UI language)
-#: ../src/chooselang.cpp:160
+#: ../src/chooselang.cpp:158
 msgid "Select your prefered language"
 msgstr "Sélectionnez votre langue de préférence"
 
 # Bookmarks menu item label
-#: ../src/edframe.cpp:2767
+#: ../src/edframe.cpp:2797
 #, c-format
-msgid "Set bookmark %i\tAlt-%i"
+msgid "Set Bookmark %i\tAlt+%i"
 msgstr "Créer un marque-page %i\tAlt-%i"
 
-#: ../src/edframe.cpp:2764
+#: ../src/edframe.cpp:2791
 #, c-format
-msgid "Set bookmark %i\tCtrl-%i"
+msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "Créer un marque-page %i\tCtrl-%i"
 
-# Settings window caption
-#: standard input:147
-msgid "Settings"
-msgstr "Configuration"
+# Bookmarks menu item label
+#: ../src/edframe.cpp:2794
+#, c-format
+msgid "Set bookmark %i\tAlt+%i"
+msgstr "Créer un marque-page %i\tAlt-%i"
 
-#: ../src/edapp.cpp:174
-msgid "Setup"
-msgstr "Initialisation"
-
-# View menu item label
-#: standard input:65
-msgid "Show &comment window"
-msgstr "Montrer la fenêtre de co&mmentaires"
-
-# View menu item label
-#: standard input:66
-msgid "Show automatic c&omments window"
-msgstr "Montrer la fenêtre de commentaires &automatiques"
+#: ../src/edframe.cpp:1893
+msgid "Set email"
+msgstr "Indiquer le courriel"
 
 # Preferences window, Editor tab check box label
-#: standard input:83
+#: ../src/resources/prefs.xrc:97
 msgid "Show summary after catalog update"
-msgstr "&Afficher un résumé après la mise à jour du catalogue"
+msgstr "Afficher un résumé après la mise à jour du catalogue"
 
-#: ../src/edframe.cpp:610
+#: ../src/edframe.cpp:562
 msgid "Singular:"
 msgstr "Singulier :"
 
+#: ../src/resources/menus.xrc:182
+msgid "Sort by &File Order"
+msgstr "Trier selon le &fichier"
+
+#: ../src/resources/menus.xrc:187
+msgid "Sort by &Source"
+msgstr "Trier selon la &source"
+
+# Main window list header
+#: ../src/resources/menus.xrc:192
+msgid "Sort by &Translation"
+msgstr "Trier par &traduction"
+
+#: ../src/resources/menus.xrc:181
+msgid "Sort by &file order"
+msgstr "Trier selon le &fichier"
+
+#: ../src/resources/menus.xrc:186
+msgid "Sort by &source"
+msgstr "Trier selon la &source"
+
+#: ../src/resources/menus.xrc:191
+msgid "Sort by &translation"
+msgstr "Trier par &traduction"
+
+#: ../src/export_html.cpp:145
+msgid "Source"
+msgstr "Original"
+
 # Parsers window text box label; also Settings window, Project Info tab list box label
-#: standard input:137 input:154
+#: ../src/resources/prefs.xrc:533 ../src/resources/properties.xrc:86
 msgid "Source code charset:"
-msgstr "Jeu de caractères du code &source :"
+msgstr "Jeu de caractères du code source :"
 
 # Preferences dialog, Parsers tab list label
-#: standard input:120
+#: ../src/resources/prefs.xrc:359
 msgid "Source code parsers:"
-msgstr "Analyseurs de &code source :"
+msgstr "Analyseurs de code source :"
 
 #: ../src/fileviewer.cpp:46
 msgid "Source file"
 msgstr "Fichier source"
 
+#: ../src/fileviewer.cpp:61
+msgid "Source file occurrence:"
+msgstr "Fichier source :"
+
+#: ../src/edlistctrl.cpp:325
+msgid "Source text"
+msgstr "Texte original"
+
+#: ../src/edframe.cpp:536
+msgid "Source text:"
+msgstr "Texte original :"
+
+#: ../src/resources/properties.xrc:179
+msgid "Sources keywords"
+msgstr "Mots-clés source"
+
+#: ../src/resources/properties.xrc:158
+msgid "Sources paths"
+msgstr "Chemins des sources"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages).
+#: ../src/edframe.cpp:885
+#, c-format
+msgid "Spellchecker dictionary for %s isn't available, you need to install it."
+msgstr ""
+"Le dictionnaire de correction automatique pour %s n'est pas disponible, vous "
+"devez l'installer."
+
 # Checkbox label in the Find... window
-#: standard input:11
+#: ../src/resources/find.xrc:43
 msgid "Start from the first item"
-msgstr "Partir du p&remier élément"
+msgstr "Partir du premier élément"
 
 # Text box label in the Find... window
-#: standard input:9
+#: ../src/resources/find.xrc:21
 msgid "String to find:"
-msgstr "Chaîne à rec&hercher :"
+msgstr "Chaîne à rechercher :"
+
+#: ../src/edframe.cpp:1927
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Erreur de syntaxe dans l'en-tête Plural-Forms (\"%s\")."
 
 # Settings window, Project Info tab text box label
-#: ../src/export_html.cpp:133 standard input:150
+#: ../src/export_html.cpp:115 ../src/resources/properties.xrc:48
 msgid "Team's email address:"
-msgstr "&Adresse électronique de l'équipe :"
+msgstr "Adresse électronique de l'équipe :"
 
 # Settings window, Project Info tab text box label
-#: ../src/export_html.cpp:129 standard input:149
+#: ../src/export_html.cpp:111 ../src/resources/properties.xrc:34
 msgid "Team:"
-msgstr "Équipe de &traduction :"
+msgstr "Équipe de traduction :"
 
-#: ../src/catalog.cpp:1324
+#: ../src/catalog.cpp:1353
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
 "specified in catalog settings. It was saved in UTF-8 instead\n"
 "and the setting was modified accordingly."
 msgstr ""
-"Le catalogue n'a pas pu être enregistré avec le jeu de caractères %s,\n"
+"Le catalogue n'a pas pu être enregistré avec le jeu de caractères « %s »,\n"
 "tel qu'indiqué dans la configuration du catalogue. Le jeu UTF-8 a été "
 "utilisé\n"
 "en remplacement et la configuration a été modifiée en conséquence."
 
-#: ../src/catalog.cpp:1041
+#: ../src/edframe.cpp:1380
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+
+#: ../src/edframe.cpp:1396
+#, fuzzy
+msgid "The translation is ready for use."
+msgstr "Mémoire de traduction"
+
+#: ../src/catalog.cpp:1311
+msgid ""
+"There was a problem formatting the file nicely (but it was saved all right)."
+msgstr ""
+"Il y a eu un problème lors du formatage propre du fichier (mais il a été "
+"enregistré correctement)."
+
+#: ../src/transmem.cpp:1193
+msgid "There was a problem moving your translation memory."
+msgstr ""
+"Un problème a été rencontré lors du déplacement de la mémoire de traduction."
+
+#: ../src/catalog.cpp:1030
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -1145,7 +1525,7 @@ msgstr ""
 "Il y a eu des erreurs lors du chargement du catalogue. Il se pourrait que "
 "des données manquent ou soient corrompues."
 
-#: standard input:166
+#: ../src/resources/summary.xrc:38
 msgid ""
 "These strings are no longer in the sources.\n"
 "Poedit will remove them from the catalog now."
@@ -1153,7 +1533,7 @@ msgstr ""
 "Les chaînes suivantes ne sont plus présentes dans les sources.\n"
 "Poedit va les retirer du catalogue maintenant."
 
-#: standard input:164
+#: ../src/resources/summary.xrc:17
 msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "Poedit will add them to the catalog now."
@@ -1162,18 +1542,16 @@ msgstr ""
 "dans le catalogue.\n"
 "Poedit va les ajouter au catalogue maintenant."
 
-#: ../src/edapp.cpp:174
+#: ../src/edframe.cpp:1907
 msgid ""
-"This is first time you run Poedit.\n"
-"Please fill in your name and email address.\n"
-"(This information is used only in catalogs headers)"
+"This catalog has entries with plural forms, but doesn't have Plural-Forms "
+"header configured."
 msgstr ""
-"C'est la première fois que vous lancez Poedit.\n"
-"Veuillez indiquer vos nom et adresse électronique.\n"
-"(Ces informations ne sont utilisées que dans les en-têtes de catalogue)"
+"Ce catalogue a des éléments avec une forme plurielle, mais son en-tête "
+"Plural-Forms n'est pas configurée."
 
 # Parsers window static text
-#: standard input:132
+#: ../src/resources/prefs.xrc:488
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1186,7 +1564,7 @@ msgstr ""
 "%C : jeu de caractères (voir ci-dessous)."
 
 # Parsers window static text
-#: standard input:138
+#: ../src/resources/prefs.xrc:545
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1196,7 +1574,7 @@ msgstr ""
 "caractères de la source est fourni. %c : valeur du jeu de caractères."
 
 # Parsers window static text
-#: standard input:136
+#: ../src/resources/prefs.xrc:526
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1206,7 +1584,7 @@ msgstr ""
 "fichier d'entrée. %f : nom du fichier."
 
 # Parsers window static text
-#: standard input:134
+#: ../src/resources/prefs.xrc:507
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -1215,40 +1593,50 @@ msgstr ""
 "mot clé. %k : le mot clé."
 
 # Toolbar button hint for Edit: Translation is fuzzy
-#: standard input:184
+#: ../src/resources/toolbar.xrc:52
 msgid "Toggled if selected string has fuzzy translation"
 msgstr ""
 "Basculer la traduction sélectionnée en traduction approximative (et "
 "inversement)"
 
-#: ../src/manager.cpp:271
+#: ../src/manager.cpp:245
 msgid "Total"
 msgstr "Total"
 
 # Main window list header
-#: ../src/edlistctrl.cpp:312 ../src/export_html.cpp:166
+#: ../src/edlistctrl.cpp:326 ../src/export_html.cpp:148
 msgid "Translation"
 msgstr "Traduction"
 
+# Edit menu item label
+#: ../src/resources/menus.xrc:79
+msgid "Translation Is &Fuzzy"
+msgstr "La traduction est &approximative"
+
 # Preferences dialog tab label (&t once it accepts accelerators)
-#: standard input:107
+#: ../src/resources/prefs.xrc:245
 msgid "Translation Memory"
 msgstr "Mémoire de traduction"
 
-#: ../src/transmemupd_wizard.cpp:144
+#: ../src/transmemupd_wizard.cpp:140
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 msgstr "Fichiers de traduction (*.po, *.mo)|*.po,*.mo"
 
-#: ../src/transmemupd_wizard.cpp:142
+#: ../src/transmemupd_wizard.cpp:138
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "Fichiers de traduction (*.po, *.mo, *.rpm)|*.po,*.mo,*.rpm"
 
 # Edit menu item label
-#: standard input:51
+#: ../src/resources/menus.xrc:78
 msgid "Translation is &fuzzy"
 msgstr "Traduction &approximative"
 
-#: standard input:175
+#: ../src/transmem.cpp:661
+#, c-format
+msgid "Translation memory database error: %s"
+msgstr "Erreur de base de données de traduction : %s"
+
+#: ../src/resources/tm_update.xrc:68
 msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
@@ -1256,114 +1644,172 @@ msgstr ""
 "La mémoire de traduction sera contruite à partir des fichiers ci-dessous.\n"
 "Vous pouvez ajouter d'autres fichiers à la liste maintenant."
 
+# Preferences dialog tab label (&t once it accepts accelerators)
+#: ../src/resources/properties.xrc:119
+msgid "Translation properties"
+msgstr "Propriétés de traduction"
+
+# Main window list header
+#: ../src/edframe.cpp:544
+msgid "Translation:"
+msgstr "Traduction :"
+
+#: ../src/propertiesdlg.cpp:73
+msgid "UTF-8 (recommended)"
+msgstr "UTF-8 (recommandé)"
+
 # Menu item?
-#: standard input:170
+#: ../src/resources/summary.xrc:79
 msgid "Undo"
 msgstr "Annuler"
 
-# Preferences window, Editor tab list entry
-#: standard input:93
-msgid "Unix"
-msgstr "Unix"
+#: ../src/resources/prefs.xrc:157
+msgid "Unix (recommended)"
+msgstr "Unix (recommandé)"
 
-#: ../src/chooselang.cpp:71
+#: ../src/chooselang.cpp:60
 #, c-format
 msgid "Unknown locale code '%s' in registry."
-msgstr "Code de localisation '%s' inconnu dans la base de registre."
+msgstr "Code de localisation « %s » inconnu dans la base de registre."
 
-#: ../src/manager.cpp:272
+#: ../src/manager.cpp:246
 msgid "Untrans"
 msgstr "Non traduite"
 
-#: standard input:181
+#: ../src/resources/toolbar.xrc:44
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: standard input:26
+#: ../src/resources/manager.xrc:59
 msgid "Update all"
 msgstr "Tout mettre à jour"
 
 # Toolbar button hint for the Catalogs manager window
-#: standard input:27
+#: ../src/resources/manager.xrc:60
 msgid "Update all catalogs in the project"
 msgstr "Mettre à jour tous les catalogues du projet"
 
 # Toolbar button hint for Catalog: Update from Sources
-#: standard input:182
+#: ../src/resources/toolbar.xrc:45
 msgid "Update catalog - synchronize it with sources"
 msgstr "Mettre à jour le catalogue - le synchroniser avec les sources"
 
 # Catalog menu item label
-#: standard input:56
+#: ../src/resources/menus.xrc:103
+msgid "Update from &POT File..."
+msgstr "Mettre à jour depuis un fichier &POT..."
+
+# Catalog menu item label
+#: ../src/resources/menus.xrc:102
 msgid "Update from &POT file..."
 msgstr "Mettre à jour depuis un fichier &POT..."
 
-#: standard input:163
+#: ../src/resources/summary.xrc:4
 msgid "Update summary"
 msgstr "Résumé de la mise à jour"
 
-#: standard input:171
+#: ../src/resources/tm_update.xrc:4
 msgid "Update translation memory"
 msgstr "Mettre à jour la mémoire de traduction"
 
-#: ../src/catalog.cpp:1442
-msgid "Updating catalog..."
+#: ../src/edframe.cpp:1297 ../src/manager.cpp:435
+#, fuzzy
+msgid "Updating catalog"
 msgstr "Mise à jour du catalogue..."
 
-#: ../src/edframe.cpp:1361
-msgid "Updating the catalog failed. Click on 'More>>' for details."
+#: ../src/edframe.cpp:1311
+msgid "Updating the catalog failed. Click on 'Details >>' for details."
 msgstr ""
-"La mise à jour du catalogue a échoué. Cliquez sur « Détails >> » pour en "
+"La mise à jour du catalogue a échoué. Cliquez sur « Détails >> » pour en "
 "savoir plus."
 
-# Preferences window, Editor tab check box label
-#: standard input:105
-msgid "Use custom font for text fields"
-msgstr "Utili&ser une police personnalisée pour les champs de texte"
+#: ../src/transmemupd_wizard.cpp:194
+#, fuzzy
+msgid "Updating translation memory"
+msgstr "Mettre à jour la mémoire de traduction"
 
 # Preferences window, Editor tab check box label
-#: standard input:103
+#: ../src/resources/prefs.xrc:213
+msgid "Use custom font for text fields"
+msgstr "Utiliser une police personnalisée pour les champs de texte"
+
+# Preferences window, Editor tab check box label
+#: ../src/resources/prefs.xrc:187
 msgid "Use custom font for translations list"
-msgstr "Ut&iliser une police personnalisée pour le liste des traductions"
+msgstr "Utiliser une police personnalisée pour le liste des traductions"
 
 # Settings window, Keywords tab static text
-#: standard input:159
+#: ../src/resources/properties.xrc:166
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
-"in source files, in addition to default ones."
+"in source files:"
 msgstr ""
 "Utilisez ces mots clés (noms de fonctions) pour reconnaître les chaînes\n"
-"à traduire dans les fichiers sources, en plus de celles par défaut."
+"à traduire dans les fichiers sources :"
+
+#: ../src/resources/toolbar.xrc:38
+msgid "Validate"
+msgstr ""
+
+# Preferences dialog tab label (&t once it accepts accelerators)
+#: ../src/edframe.cpp:1372 ../src/edframe.cpp:1392
+#, fuzzy
+msgid "Validation results"
+msgstr "Propriétés de traduction"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: ../src/edframe.cpp:2428
+#, c-format
+msgid "Version %s"
+msgstr "Version %s"
+
+#: ../src/resources/prefs.xrc:255
+msgid "What languages do you want to use the TM with?"
+msgstr "Avec quelles langues voulez-vous utiliser la TM ?"
 
 # Checkbox label in the Find... window
-#: standard input:12
+#: ../src/resources/find.xrc:50
 msgid "Whole words only"
-msgstr "Mots &entiers uniquement"
+msgstr "Mots entiers uniquement"
 
 # Preferences window, Editor tab list entry
-#: standard input:94
+#: ../src/resources/prefs.xrc:158
 msgid "Windows"
 msgstr "Windows"
 
 # Alert text
-#: ../src/edframe.cpp:1070
+#: ../src/edframe.cpp:378
 msgid "You can't drop more than one file on Poedit window."
 msgstr ""
 "Il est impossible de déposer plus d'un fichier à la fois dans la fenêtre de "
 "Poedit."
 
 # Alert text
-#: ../src/chooselang.cpp:175
+#: ../src/chooselang.cpp:173
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Vous devez redémarrer Poedit pour que ce changement prenne effet."
 
+# Preferences window, Personalize tab static text
+#: ../src/edframe.cpp:1891
+msgid ""
+"You should set your email address in Preferences so that it can be used for "
+"Last-Translator header in GNU gettext files."
+msgstr ""
+"Vous devriez indiquer votre adresse courriel dans les Préférences afin de "
+"l'utiliser dans l'en-tête Last-Translator des fichiers GNu gettext."
+
+#: ../src/edframe.cpp:992
+msgid "Your changes will be lost if you don't save them."
+msgstr "Vos changements seront perdus si vous ne les enregistrez pas"
+
 # Preferences window, Personalize tab text box label
-#: standard input:77
+#: ../src/resources/prefs.xrc:44
 msgid "Your email address:"
-msgstr "Votre &adresse électronique :"
+msgstr "Votre adresse électronique :"
 
 # Preferences window, Personalize tab static text
-#: standard input:75
+#: ../src/resources/prefs.xrc:22
 msgid ""
 "Your name and email set below are only used\n"
 "to set the Last-Translator header of GNU gettext files."
@@ -1372,33 +1818,141 @@ msgstr ""
 "que pour l'en-tête Last-Translator des fichiers GNU gettext."
 
 # Preferences window, Personalize tab text box label
-#: standard input:76
+#: ../src/resources/prefs.xrc:30
 msgid "Your name:"
-msgstr "Votre &nom :"
+msgstr "Votre nom :"
 
-#: ../src/edframe.cpp:1978
-#, c-format
-msgid "[checking translations: %i left]"
-msgstr "[vérification des traductions : %i restantes]"
+#: ../src/edapp.cpp:372
+msgid "don't delete temporary files (for debugging)"
+msgstr "ne pas supprimer les fichiers temporaires (à des fins de débogage)"
 
-# Preferences window, Editor tab list entry
-#: standard input:96
-msgid "current platform's default"
-msgstr "spécifié par le système"
+# View menu item label
+#~ msgid "Automatic C&omments Window"
+#~ msgstr "Montrer la fenêtre de commentaires &automatiques"
 
-#: ../src/edframe.cpp:2274
-msgid "none"
-msgstr "aucun"
+# View menu item label
+#~ msgid "Automatic c&omments window"
+#~ msgstr "Montrer la fenêtre de commentaires &automatiques"
+
+# Checkbox label in the Find... window
+#~ msgid "Automatic comments:"
+#~ msgstr "Commentaires automatiques :"
+
+#~ msgid "Cannot execute program: "
+#~ msgstr "Impossible d'exécuter le programme :"
+
+# Settings window, Project Info tab list box label
+#~ msgid "Country:"
+#~ msgstr "Pays :"
+
+#~ msgid "Gettext syntax error"
+#~ msgstr "Erreur de syntaxe Gettext"
+
+#~ msgid "There were errors while compiling the saved catalog into MO file."
+#~ msgstr ""
+#~ "Des erreurs sont survenues pendant la compilation du catalogue enregistré "
+#~ "dans le fichier MO."
+
+#, fuzzy
+#~ msgid "[checking translations: %i left]"
+#~ msgid_plural "[checking translations: %i left]"
+#~ msgstr[0] "[vérification des traductions : %i restantes]"
+#~ msgstr[1] "[vérification des traductions : %i restantes]"
+
+#~ msgid "Copy Translation from Source Text"
+#~ msgstr "Copier la traduction vers l'original"
+
+#~ msgid "Copy translation from source text"
+#~ msgstr "Copier la traduction vers l'original"
+
+# Help menu item label
+#~ msgid "&Contents..."
+#~ msgstr "&Table des matières..."
+
+# View menu item label
+#~ msgid "&Fullscreen view"
+#~ msgstr "Plein é&cran"
+
+# Catalog menu item label
+#~ msgid "&Settings..."
+#~ msgstr "&Configuration..."
+
+# Preferences window, Editor tab static text
+#~ msgid "(%f will be substituted with filename, %l with line number)"
+#~ msgstr "(%f : nom du fichier; %l : numéro de ligne)"
+
+#~ msgid "Edit the file in text editor"
+#~ msgstr "Éditer le fichier dans un éditeur"
+
+# Preferences window, Editor tab list box label
+#~ msgid "Editor executable:"
+#~ msgstr "Exéc&utable :"
 
 #~ msgid "Error initializing spell checking: %s"
 #~ msgstr "Erreur d'initialisation du vérificateur : %s"
 
+# Preferences window, Editor tab group box label
+#~ msgid "External editor"
+#~ msgstr "Éditeur externe"
+
+# Toolbar button hint for View: Fullscreen
+#~ msgid "Fullscreen view"
+#~ msgstr "Plein écran"
+
+# Help menu item label
+#~ msgid "GNU gettext documentation"
+#~ msgstr "Documentation &GNU de gettext"
+
+# Preferences window, Editor tab list entry
+#~ msgid "Macintosh"
+#~ msgstr "Macintosh"
+
 #~ msgid "My Project"
 #~ msgstr "Mon projet"
 
-#, fuzzy
-#~ msgid "translations editor"
-#~ msgstr "Mémoire de traduction"
+#~ msgid "No editor specified. Please set it in Preferences dialog."
+#~ msgstr ""
+#~ "L'éditeur n'a pas été désigné. Veuillez le faire dans la fenêtre "
+#~ "Préférences."
+
+# Preferences window, Editor tab check box label
+#~ msgid "Open source files in editor, not in file viewer"
+#~ msgstr "Ou&vrir les fichiers sources avec cet éditeur"
+
+# Main window list header
+#~ msgid "Original string"
+#~ msgstr "Original"
+
+# Preferences dialog, Translation Memory tab text box label
+#~ msgid "Path to DB:"
+#~ msgstr "Chemin vers la &base de données :"
+
+# Settings window caption
+#~ msgid "Settings"
+#~ msgstr "Configuration"
+
+#~ msgid "Setup"
+#~ msgstr "Initialisation"
+
+#~ msgid ""
+#~ "This is first time you run Poedit.\n"
+#~ "Please fill in your name and email address.\n"
+#~ "(This information is used only in catalogs headers)"
+#~ msgstr ""
+#~ "C'est la première fois que vous lancez Poedit.\n"
+#~ "Veuillez indiquer vos nom et adresse électronique.\n"
+#~ "(Ces informations ne sont utilisées que dans les en-têtes de catalogue)"
+
+# Preferences window, Editor tab list entry
+#~ msgid "Unix"
+#~ msgstr "Unix"
+
+# Preferences window, Editor tab list entry
+#~ msgid "current platform's default"
+#~ msgstr "spécifié par le système"
+
+#~ msgid "none"
+#~ msgstr "aucun"
 
 #~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 #~ msgstr ""
@@ -1408,17 +1962,11 @@ msgstr "aucun"
 #~ msgid "'."
 #~ msgstr "'."
 
-#~ msgid "About Poedit"
-#~ msgstr "À propos de Poedit"
-
-#~ msgid "version"
-#~ msgstr "version"
+#~ msgid "Failed to read extracted catalog."
+#~ msgstr "Echec à la lecture du catalogue extrait."
 
 #~ msgid " files..."
 #~ msgstr " fichiers..."
-
-#~ msgid "Display quotes around the string?"
-#~ msgstr "Afficher les guillemets autour des chaînes ?"
 
 #~ msgid "Error while loading file '%s': line %u is corrupted."
 #~ msgstr ""

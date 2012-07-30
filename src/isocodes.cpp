@@ -21,11 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  This file contains languages & countries names and 2-letter codes as
- *  defined by ISO 639 and ISO 3166 standards.
- *
  */
 
 #include <wx/wxprec.h>
@@ -158,6 +153,7 @@ LanguageStruct isoLanguages[] =
     {_T("sa"), _T("Sanskrit")},
     {_T("sc"), _T("Sardinian")},
     {_T("sr"), _T("Serbian")},
+    {_T("sr_RS@latin"), _T("Serbian (Latin)")},
     {_T("sh"), _T("Serbo-Croatian")},
     {_T("st"), _T("Sesotho")},
     {_T("tn"), _T("Setswana")},
@@ -186,9 +182,9 @@ LanguageStruct isoLanguages[] =
     {_T("tr"), _T("Turkish")},
     {_T("tk"), _T("Turkmen")},
     {_T("tw"), _T("Twi")},
-    {_T("ug"), _T("Uighur")},
     {_T("uk"), _T("Ukrainian")},
     {_T("ur"), _T("Urdu")},
+    {_T("ug"), _T("Uyghur")},
     {_T("uz"), _T("Uzbek")},
     {_T("vi"), _T("Vietnamese")},
     {_T("vo"), _T("Volapuk")},
@@ -486,6 +482,11 @@ const wxChar *LookupLanguageCode(const wxString& language)
 const wxChar *LookupCountryCode(const wxString& country)
 {
     return DoLookupByLang(country.c_str(), isoCountries);
+}
+
+const wxChar *LookupLanguageName(const wxString& code)
+{
+    return DoLookupByIso(code.c_str(), isoLanguages);
 }
 
 bool IsKnownLanguageCode(const wxString& code)

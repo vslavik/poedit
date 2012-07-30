@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Catalogs manager frame
- *
  */
 
 #include <wx/wxprec.h>
@@ -53,6 +49,9 @@
 #include "edframe.h"
 #include "manager.h"
 #include "prefsdlg.h"
+#include "progressinfo.h"
+#include "utility.h"
+
 
 ManagerFrame *ManagerFrame::ms_instance = NULL;
 
@@ -69,22 +68,23 @@ ManagerFrame *ManagerFrame::ms_instance = NULL;
 ManagerFrame::ManagerFrame() :
     wxFrame(NULL, -1, _("Poedit - Catalogs manager"),
             wxDefaultPosition, wxDefaultSize,
-            wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
+            wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
+            _T("manager"))
 {
-#ifdef __UNIX__
+#if defined(__WXGTK__)
     wxIconBundle appicons;
     appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(16,16)));
     appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(32,32)));
     appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(48,48)));
     SetIcons(appicons);
-#else
+#elif defined(__WXMSW__)
     SetIcon(wxICON(appicon));
 #endif
 
     ms_instance = this;
 
-    SetToolBar(wxXmlResource::Get()->LoadToolBar(this, _T("manager_toolbar")));
-    SetMenuBar(wxXmlResource::Get()->LoadMenuBar(_T("manager_menu")));
+    wxXmlResource::Get()->LoadToolBar(this, _T("manager_toolbar"));
+    wxXmlResource::Get()->LoadMenuBar(this, _T("manager_menu"));
 
     wxPanel *panel = wxXmlResource::Get()->LoadPanel(this, _T("manager_panel"));
 
@@ -106,42 +106,16 @@ ManagerFrame::ManagerFrame() :
     if (m_listPrj->GetCount() > 0)
         UpdateListCat(last);
 
-    wxConfigBase *cfg = wxConfig::Get();
-    int posx = cfg->Read(_T("manager_x"), -1);
-    int posy = cfg->Read(_T("manager_y"), -1);
-    int width = cfg->Read(_T("manager_w"), 400);
-    int height = cfg->Read(_T("manager_h"), 300);
-
-    Move(posx, posy);
-    SetClientSize(width, height);
-
-#if !defined(__WXGTK12__) || defined(__WXGTK20__)
-    // GTK+ 1.2 doesn't support this
-    if (wxConfig::Get()->Read(_T("manager_maximized"), long(0)))
-        Maximize();
-#endif
+    RestoreWindowState(this, wxSize(400, 300));
 }
 
 
 
 ManagerFrame::~ManagerFrame()
 {
-    wxSize sz = GetClientSize();
-    wxPoint pos = GetPosition();
+    SaveWindowState(this);
+
     wxConfigBase *cfg = wxConfig::Get();
-
-    if (!IsIconized() && !IsFullScreen())
-    {
-        if (!IsMaximized())
-        {
-            cfg->Write(_T("manager_w"), (long)sz.x);
-            cfg->Write(_T("manager_h"), (long)sz.y);
-            cfg->Write(_T("manager_x"), (long)pos.x);
-            cfg->Write(_T("manager_y"), (long)pos.y);
-        }
-
-        cfg->Write(_T("manager_maximized"), (long)IsMaximized());
-    }
 
     int sel = m_listPrj->GetSelection();
     if (sel != -1)
@@ -213,7 +187,7 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
         // FIXME: don't re-load the catalog if it's already loaded in the
         //        editor, reuse loaded instance
         Catalog cat(file);
-        cat.GetStatistics(&all, &fuzzy, &badtokens, &untranslated);
+        cat.GetStatistics(&all, &fuzzy, &badtokens, &untranslated, NULL);
         modtime = wxFileModificationTime(file);
         lastmodified = cat.Header().RevisionDate;
         cfg->Write(key + _T("timestamp"), (long)modtime);
@@ -301,7 +275,7 @@ BEGIN_EVENT_TABLE(ProjectDlg, wxDialog)
    EVT_BUTTON(XRCID("adddir"), ProjectDlg::OnBrowse)
 END_EVENT_TABLE()
 
-void ProjectDlg::OnBrowse(wxCommandEvent& event)
+void ProjectDlg::OnBrowse(wxCommandEvent&)
 {
     wxDirDialog dlg(this, _("Select directory"));
     if (dlg.ShowModal() == wxID_OK)
@@ -367,7 +341,7 @@ void ManagerFrame::DeleteProject(int id)
     }
 }
 
-void ManagerFrame::NotifyFileChanged(const wxString& catalog)
+void ManagerFrame::NotifyFileChanged(const wxString& /*catalog*/)
 {
    // VS: We must do full update even if the file 'catalog' is not in
    //     m_catalogs. The reason is simple: the user might use SaveAs
@@ -385,11 +359,12 @@ BEGIN_EVENT_TABLE(ManagerFrame, wxFrame)
    EVT_LISTBOX              (XRCID("prj_list"),   ManagerFrame::OnSelectProject)
    EVT_LIST_ITEM_ACTIVATED  (XRCID("prj_files"),  ManagerFrame::OnOpenCatalog)
    EVT_MENU                 (wxID_EXIT,           ManagerFrame::OnQuit)
+   EVT_MENU                 (wxID_CLOSE,          ManagerFrame::OnCloseCmd)
    EVT_MENU                 (wxID_PREFERENCES,    ManagerFrame::OnPreferences)
 END_EVENT_TABLE()
 
 
-void ManagerFrame::OnNewProject(wxCommandEvent& event)
+void ManagerFrame::OnNewProject(wxCommandEvent&)
 {
     wxConfigBase *cfg = wxConfig::Get();
     int max = cfg->Read(_T("Manager/max_project_num"), (long)0) + 1;
@@ -416,7 +391,7 @@ void ManagerFrame::OnNewProject(wxCommandEvent& event)
 }
 
 
-void ManagerFrame::OnEditProject(wxCommandEvent& event)
+void ManagerFrame::OnEditProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
@@ -424,7 +399,7 @@ void ManagerFrame::OnEditProject(wxCommandEvent& event)
 }
 
 
-void ManagerFrame::OnDeleteProject(wxCommandEvent& event)
+void ManagerFrame::OnDeleteProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
@@ -434,7 +409,7 @@ void ManagerFrame::OnDeleteProject(wxCommandEvent& event)
 }
 
 
-void ManagerFrame::OnSelectProject(wxCommandEvent& event)
+void ManagerFrame::OnSelectProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
@@ -443,7 +418,7 @@ void ManagerFrame::OnSelectProject(wxCommandEvent& event)
 }
 
 
-void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
+void ManagerFrame::OnUpdateProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
@@ -455,6 +430,10 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
 
         for (size_t i = 0; i < m_catalogs.GetCount(); i++)
         {
+            // FIXME: there should be only one progress bar for _all_
+            //        catalogs, it shouldn't restart on next catalog
+            ProgressInfo pinfo(this, _("Updating catalog"));
+
             wxString f = m_catalogs[i];
             PoeditFrame *fr = PoeditFrame::Find(f);
             if (fr)
@@ -464,8 +443,9 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent& event)
             else
             {
                 Catalog cat(f);
-                cat.Update();
-                cat.Save(f, false);
+                cat.Update(&pinfo);
+                int validation_errors = 0;
+                cat.Save(f, false, validation_errors);
             }
          }
 
@@ -493,5 +473,12 @@ void ManagerFrame::OnPreferences(wxCommandEvent&)
 
 void ManagerFrame::OnQuit(wxCommandEvent&)
 {
-    Close(true);
+    if ( !Close() )
+        return;
+    wxTheApp->ExitMainLoop();
+}
+
+void ManagerFrame::OnCloseCmd(wxCommandEvent&)
+{
+    Close();
 }

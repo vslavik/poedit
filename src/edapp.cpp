@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2010 Vaclav Slavik
+ *  Copyright (C) 1999-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Application class
- *
  */
 
 #include <wx/wxprec.h>
@@ -42,8 +38,8 @@
 #include <wx/sysopt.h>
 
 #ifdef USE_SPARKLE
-#include <Sparkle/SUCarbonAPI.h>
 #include "osx/userdefaults.h"
+#include "osx/sparkle.h"
 #endif // USE_SPARKLE
 
 #ifdef __WXMSW__
@@ -62,7 +58,8 @@
 #include "chooselang.h"
 #include "icons.h"
 #include "version.h"
-
+#include "transmem.h"
+#include "utility.h"
 
 IMPLEMENT_APP(PoeditApp);
 
@@ -91,9 +88,7 @@ wxString PoeditApp::GetAppVersion() const
 }
 
 
-#ifndef __WXMAC__
 static wxArrayString gs_filesToOpen;
-#endif
 
 extern void InitXmlResource();
 
@@ -107,10 +102,6 @@ bool PoeditApp::OnInit()
 #endif
 
 #ifdef __WXMAC__
-    // so that help menu is correctly merged with system-provided menu
-    // (see http://sourceforge.net/tracker/index.php?func=detail&aid=1600747&group_id=9863&atid=309863)
-    s_macHelpMenuTitleName = _("&Help");
-
     SetExitOnFrameDelete(false);
 #endif
 
@@ -161,7 +152,11 @@ bool PoeditApp::OnInit()
 
     SetDefaultCfg(wxConfig::Get());
 
+#if wxCHECK_VERSION(2,9,0)
+    wxArtProvider::PushBack(new PoeditArtProvider);
+#else    
     wxArtProvider::Insert(new PoeditArtProvider);
+#endif
 
 #ifdef __WXMAC__
     wxLocale::AddCatalogLookupPathPrefix(
@@ -174,41 +169,57 @@ bool PoeditApp::OnInit()
 
     m_locale.AddCatalog(_T("poedit"));
 
-    if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
-    {
-        wxMessageBox(_("This is first time you run Poedit.\nPlease fill in your name and email address.\n(This information is used only in catalogs headers)"), _("Setup"),
-                       wxOK | wxICON_INFORMATION);
+#ifdef __WXMSW__
+    // Italian version of Windows uses just "?" for "Help" menu. This is
+    // correctly handled by wxWidgets catalogs, but Poedit catalog has "Help"
+    // entry too, so we add wxmsw.mo catalog again so that it takes
+    // precedence over poedit.mo:
+    m_locale.AddCatalog(_T("wxmsw"));
+#endif
 
-        PreferencesDialog dlg;
-        dlg.TransferTo(wxConfig::Get());
-        if (dlg.ShowModal() == wxID_OK)
-            dlg.TransferFrom(wxConfig::Get());
-    }
+#ifdef __WXMAC__
+    // so that help menu is correctly merged with system-provided menu
+    // (see http://sourceforge.net/tracker/index.php?func=detail&aid=1600747&group_id=9863&atid=309863)
+    s_macHelpMenuTitleName = _("&Help");
+#endif
 
-    // opening files or creating empty window is handled differently on Macs,
-    // using MacOpenFile() and MacNewFile(), so don't do it here:
-#ifndef __WXMAC__
-    if (gs_filesToOpen.GetCount() == 0)
-    {
-        OpenNewFile();
-    }
-    else
+#ifdef USE_TRANSMEM
+    // NB: It's important to do this before TM is used for the first time.
+    TranslationMemory::MoveLegacyDbIfNeeded();
+#endif
+
+    // NB: opening files or creating empty window is handled differently on
+    //     Macs, using MacOpenFile() and MacNewFile(), so don't create empty
+    //     window if no files are given on command line; but still support
+    //     passing files on command line
+    if (!gs_filesToOpen.empty())
     {
         for (size_t i = 0; i < gs_filesToOpen.GetCount(); i++)
             OpenFile(gs_filesToOpen[i]);
         gs_filesToOpen.clear();
     }
+#ifndef __WXMAC__
+    else
+    {
+        OpenNewFile();
+    }
 #endif // !__WXMAC__
 
 #ifdef USE_SPARKLE
-    // Remove config key for Sparkle < 1.5.
-    UserDefaults::RemoveValue("SUCheckAtStartup");
-
-    SUSparkleInitializeForCarbon();
+    Sparkle_Initialize();
 #endif // USE_SPARKLE
 
 #ifdef __WXMSW__
-    win_sparkle_set_appcast_url("http://releases.poedit.net/appcast_win.xml");
+    const char *appcast = "https://dl.updatica.com/poedit-win/appcast";
+
+    if ( GetAppVersion().Contains(_T("beta")) ||
+         GetAppVersion().Contains(_T("rc")) )
+    {
+        // Beta versions use unstable feed.
+        appcast = "https://dl.updatica.com/poedit-win/appcast/beta";
+    }
+
+    win_sparkle_set_appcast_url(appcast);
     win_sparkle_init();
 #endif
 
@@ -217,6 +228,9 @@ bool PoeditApp::OnInit()
 
 int PoeditApp::OnExit()
 {
+#ifdef USE_SPARKLE
+    Sparkle_Cleanup();
+#endif // USE_SPARKLE
 #ifdef __WXMSW__
     win_sparkle_cleanup();
 #endif
@@ -254,10 +268,7 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
         const wxChar *exts;
     } s_gettextLangs[] = {
         { _T("C/C++"),    _T("*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx") },
-#ifndef __WINDOWS__
-        // FIXME: not supported by 0.13.1 shipped with poedit on win32
         { _T("C#"),       _T("*.cs") },
-#endif
         { _T("Java"),     _T("*.java") },
         { _T("Perl"),     _T("*.pl") },
         { _T("PHP"),      _T("*.php") },
@@ -265,18 +276,24 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
         { _T("TCL"),      _T("*.tcl") },
         { NULL, NULL }
     };
-   
+
     for (size_t i = 0; s_gettextLangs[i].name != NULL; i++)
     {
         // if this lang is already registered, don't overwrite it:
         if (pdb.FindParser(s_gettextLangs[i].name) != -1)
             continue;
 
+        wxString langflag;
+        if ( wxStrcmp(s_gettextLangs[i].name, _T("C/C++")) == 0 )
+            langflag = _T(" --language=C++");
+        else
+            langflag = wxString(_T(" --language=")) + s_gettextLangs[i].name;
+
         // otherwise add new parser:
         Parser p;
         p.Name = s_gettextLangs[i].name;
         p.Extensions = s_gettextLangs[i].exts;
-        p.Command = _T("xgettext --force-po -o %o %C %K %F");
+        p.Command = wxString(_T("xgettext")) + langflag + _T(" --force-po -o %o %C %K %F");
         p.KeywordItem = _T("-k%k");
         p.FileItem = _T("%f");
         p.CharsetItem = _T("--from-code=%c");
@@ -327,19 +344,6 @@ void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
 
     if (cfg->Read(_T("version"), wxEmptyString) == GetAppVersion()) return;
 
-    if (cfg->Read(_T("TM/database_path"), wxEmptyString).empty())
-    {
-        wxString dbpath;
-#if defined(__WXMAC__)
-        dbpath = wxStandardPaths::Get().GetUserDataDir() + _T("/tm");
-#elif defined(__UNIX__)
-        dbpath = wxGetHomeDir() + _T("/.poedit/tm");
-#elif defined(__WXMSW__)
-        dbpath = wxGetHomeDir() + _T("\\poedit_tm");
-#endif
-        cfg->Write(_T("TM/database_path"), dbpath);
-    }
-
     if (cfg->Read(_T("TM/search_paths"), wxEmptyString).empty())
     {
         wxString paths;
@@ -354,9 +358,19 @@ void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
     cfg->Write(_T("version"), GetAppVersion());
 }
 
+
+namespace
+{
+const wxChar *CL_KEEP_TEMP_FILES = _T("keep-temp-files");
+}
+
 void PoeditApp::OnInitCmdLine(wxCmdLineParser& parser)
 {
     wxApp::OnInitCmdLine(parser);
+
+    parser.AddSwitch(_T(""), CL_KEEP_TEMP_FILES,
+                     _("don't delete temporary files (for debugging)"));
+
     parser.AddParam(_T("catalog.po"), wxCMD_LINE_VAL_STRING, 
                     wxCMD_LINE_PARAM_OPTIONAL | wxCMD_LINE_PARAM_MULTIPLE);
 }
@@ -366,10 +380,11 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
     if (!wxApp::OnCmdLineParsed(parser))
         return false;
 
-#ifndef __WXMAC__
+    if ( parser.Found(CL_KEEP_TEMP_FILES) )
+        TempDirectory::KeepFiles();
+
     for (size_t i = 0; i < parser.GetParamCount(); i++)
         gs_filesToOpen.Add(parser.GetParam(i));
-#endif
 
     return true;
 }

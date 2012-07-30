@@ -1,0 +1,45 @@
+#! /bin/sh
+
+# Test --more-than=0 option.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles mcomm-test1.in1 mcomm-test1.in2"
+cat <<EOF > mcomm-test1.in1
+#: first.c:123
+msgid "1"
+msgstr "1x"
+EOF
+
+cat <<EOF > mcomm-test1.in2
+#: hunt.c:759
+msgid "2"
+msgstr "2x"
+EOF
+
+tmpfiles="$tmpfiles mcomm-test1.tmp mcomm-test1.out"
+: ${MSGCOMM=msgcomm}
+${MSGCOMM} --more-than=0 -o mcomm-test1.tmp mcomm-test1.in1 mcomm-test1.in2
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < mcomm-test1.tmp > mcomm-test1.out
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles mcomm-test1.ok"
+cat << EOF > mcomm-test1.ok
+#: first.c:123
+msgid "1"
+msgstr "1x"
+
+#: hunt.c:759
+msgid "2"
+msgstr "2x"
+EOF
+
+: ${DIFF=diff}
+${DIFF} mcomm-test1.ok mcomm-test1.out
+result=$?
+
+rm -fr $tmpfiles
+
+exit $result

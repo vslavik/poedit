@@ -1,0 +1,169 @@
+#! /bin/sh
+
+# Test of gettext facilities in the bash language.
+# Assumes an fr_FR locale is installed.
+# Assumes the following packages are installed: bash 2.0 or newer.
+
+# This test fails on MacOS X 10.5 because its 'bash' command is built with
+# an included intl directory without iconv support; hence it produces wrong
+# output when accessing any .mo file not generated from a .po file in UTF-8
+# encoding.
+
+tmpfiles=""
+trap 'rm -fr $tmpfiles' 1 2 3 15
+
+tmpfiles="$tmpfiles prog.sh"
+cat <<\EOF > prog.sh
+#! /bin/bash
+
+n=$1
+
+. gettext.sh
+
+TEXTDOMAIN=prog
+export TEXTDOMAIN
+TEXTDOMAINDIR=.
+export TEXTDOMAINDIR
+
+$echo $"'Your command, please?', asked the waiter."
+
+$echo "`eval_ngettext "a piece of cake" "\\$n pieces of cake" $n`"
+EOF
+
+tmpfiles="$tmpfiles prog.tmp prog.pot prog.err"
+: ${XGETTEXT=xgettext}
+LC_MESSAGES=C LC_ALL= \
+${XGETTEXT} -o prog.tmp --omit-header --no-location prog.sh \
+  >prog.err 2>&1
+result=$?
+cat prog.err | grep -v 'warning: the syntax \$"\.\.\." is deprecated due to security reasons'
+test $result = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+tmpfiles="$tmpfiles prog.ok"
+cat <<\EOF > prog.ok
+msgid "'Your command, please?', asked the waiter."
+msgstr ""
+
+#, sh-format
+msgid "a piece of cake"
+msgid_plural "$n pieces of cake"
+msgstr[0] ""
+msgstr[1] ""
+EOF
+
+: ${DIFF=diff}
+${DIFF} prog.ok prog.pot || exit 1
+
+tmpfiles="$tmpfiles fr.po"
+cat <<\EOF > fr.po
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "'Your command, please?', asked the waiter."
+msgstr "«Votre commande, s'il vous plait», dit le garçon."
+
+# Les gateaux allemands sont les meilleurs du monde.
+#, sh-format
+msgid "a piece of cake"
+msgid_plural "$n pieces of cake"
+msgstr[0] "un morceau de gateau"
+msgstr[1] "$n morceaux de gateau"
+EOF
+
+tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+: ${MSGMERGE=msgmerge}
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+
+: ${DIFF=diff}
+${DIFF} fr.po fr.po.new || exit 1
+
+tmpfiles="$tmpfiles fr"
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+
+: ${MSGFMT=msgfmt}
+${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
+
+# Test for presence of bash version 2.0 or newer.
+(bash -c :) >/dev/null 2>/dev/null \
+  || { echo "Skipping test: bash not found"; rm -fr $tmpfiles; exit 77; }
+case `bash -c 'echo $BASH_VERSION'` in
+  [2-9].*) ;;
+  *) echo "Skipping test: bash version too old"; rm -fr $tmpfiles; exit 77;;
+esac
+
+# Test which of the fr_FR locales are installed.
+: ${LOCALE_FR=fr_FR}
+: ${LOCALE_FR_UTF8=fr_FR.UTF-8}
+if test $LOCALE_FR != none; then
+  LC_ALL=$LOCALE_FR ./testlocale
+  case $? in
+    0) ;;
+    77) LOCALE_FR=none;;
+    *) exit 1;;
+  esac
+fi
+if test $LOCALE_FR_UTF8 != none; then
+  LC_ALL=$LOCALE_FR_UTF8 ./testlocale
+  case $? in
+    0) ;;
+    77) LOCALE_FR_UTF8=none;;
+    *) exit 1;;
+  esac
+fi
+if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
+  if test -f /usr/bin/localedef; then
+    echo "Skipping test: no french locale is installed"
+  else
+    echo "Skipping test: no french locale is supported"
+  fi
+  rm -fr $tmpfiles; exit 77
+fi
+
+tmpfiles="$tmpfiles prog.nok prog.ok prog.oku prog.out"
+# Expected result when bash is built without i18n support.
+cat <<\EOF > prog.nok
+'Your command, please?', asked the waiter.
+2 morceaux de gateau
+EOF
+# Expected result when bash is built with i18n support.
+cat <<\EOF > prog.ok
+«Votre commande, s'il vous plait», dit le garçon.
+2 morceaux de gateau
+EOF
+cat <<\EOF > prog.oku
+Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
+2 morceaux de gateau
+EOF
+
+: ${LOCALE_FR=fr_FR}
+: ${LOCALE_FR_UTF8=fr_FR.UTF-8}
+if test $LOCALE_FR != none; then
+  LANGUAGE= LC_ALL=$LOCALE_FR bash ./prog.sh 2 > prog.out || exit 1
+  : ${DIFF=diff}
+  ${DIFF} prog.nok prog.out > /dev/null && {
+    echo "Skipping test: bash is built without i18n support"
+    rm -fr $tmpfiles; exit 77
+  }
+  ${DIFF} prog.ok prog.out || exit 1
+fi
+if test $LOCALE_FR_UTF8 != none; then
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 bash ./prog.sh 2 > prog.out || exit 1
+  : ${DIFF=diff}
+  ${DIFF} prog.nok prog.out > /dev/null && {
+    echo "Skipping test: bash is built without i18n support"
+    rm -fr $tmpfiles; exit 77
+  }
+  ${DIFF} prog.oku prog.out || exit 1
+fi
+
+rm -fr $tmpfiles
+
+exit 0

@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Database of available parsers
- *
  */
 
 
@@ -113,7 +109,7 @@ int ParsersDB::FindParser(const wxString& name)
 
 wxArrayString Parser::SelectParsable(const wxArrayString& files)
 {
-    wxStringTokenizer tkn(Extensions, _T(";"));
+    wxStringTokenizer tkn(Extensions, _T(";, \t"), wxTOKEN_STRTOK);
     wxString wildcard;
     wxArrayString result;
     size_t i;

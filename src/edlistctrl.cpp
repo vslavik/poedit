@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2008 Vaclav Slavik
+ *  Copyright (C) 1999-2012 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
@@ -22,23 +22,22 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  List view control
- *
  */
+
+#include "edlistctrl.h"
+
+#include "digits.h"
+#include "cat_sorting.h"
 
 #include <wx/wx.h>
 #include <wx/imaglist.h>
 #include <wx/artprov.h>
 #include <wx/dcmemory.h>
 #include <wx/image.h>
+#include <wx/wupdlock.h>
 
-#include "edlistctrl.h"
-#include "digits.h"
+#include <algorithm>
 
-// I don't like this global flag, but all PoeditFrame instances should share it :(
-bool g_shadedList = false;
 
 namespace
 {
@@ -68,7 +67,7 @@ inline bool IsAlmostWhite(const wxColour& clr)
 
 // colours used in the list:
 
-const wxColour gs_ErrorColor(_T("#ff0000"));
+const wxColour gs_ErrorColor(_T("#ff5050"));
 
 // colors for white list control background
 const wxColour gs_UntranslatedForWhite(_T("#103f67"));
@@ -182,6 +181,9 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 {
     m_catalog = NULL;
     m_displayLines = dispLines;
+
+    sortOrder = SortOrder::Default();
+
     CreateColumns();
 
     int i;
@@ -238,6 +240,14 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     }
     else
 #endif // __WXMSW__
+#ifdef __WXMAC__
+    if ( shaded == *wxWHITE )
+    {
+        // use standard shaded color from finder/databrowser:
+        shaded.Set(_T("#f0f5fd"));
+    }
+    else
+#endif // __WXMAC__
     {
         shaded.Set(int(DARKEN_FACTOR * shaded.Red()),
                    int(DARKEN_FACTOR * shaded.Green()),
@@ -269,25 +279,26 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     //       anything
 
     // FIXME: todo; use appropriate font for fuzzy/trans/untrans
-    m_attrInvalid[0].SetTextColour(gs_ErrorColor);
-    m_attrInvalid[1].SetTextColour(gs_ErrorColor);
+    m_attrInvalid[0].SetBackgroundColour(gs_ErrorColor);
+    m_attrInvalid[1].SetBackgroundColour(gs_ErrorColor);
 
     SetCustomFont(wxNullFont);
 }
 
 PoeditListCtrl::~PoeditListCtrl()
 {
+    sortOrder.Save();
 }
 
 void PoeditListCtrl::SetCustomFont(wxFont font_)
 {
     wxFont font(font_);
 
-    m_attrNormal[0].SetFont(font);
-    m_attrNormal[1].SetFont(font);
-
     if ( !font.IsOk() )
         font = GetDefaultAttributes().font;
+
+    m_attrNormal[0].SetFont(font);
+    m_attrNormal[1].SetFont(font);
 
     wxFont fontb = font;
     fontb.SetWeight(wxFONTWEIGHT_BOLD);
@@ -297,6 +308,9 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
 
     m_attrFuzzy[0].SetFont(fontb);
     m_attrFuzzy[1].SetFont(fontb);
+
+    m_attrInvalid[0].SetFont(fontb);
+    m_attrInvalid[1].SetFont(fontb);
 }
 
 void PoeditListCtrl::SetDisplayLines(bool dl)
@@ -308,7 +322,7 @@ void PoeditListCtrl::SetDisplayLines(bool dl)
 void PoeditListCtrl::CreateColumns()
 {
     DeleteAllColumns();
-    InsertColumn(0, _("Original string"));
+    InsertColumn(0, _("Source text"));
     InsertColumn(1, _("Translation"));
     if (m_displayLines)
         InsertColumn(2, _("Line"), wxLIST_FORMAT_RIGHT);
@@ -333,7 +347,7 @@ void PoeditListCtrl::SizeColumns()
 
 void PoeditListCtrl::CatalogChanged(Catalog* catalog)
 {
-    Freeze();
+    wxWindowUpdateLocker no_updates(this);
 
     // this is to prevent crashes (wxMac at least) when shortening virtual
     // listctrl when its scrolled to the bottom:
@@ -343,67 +357,25 @@ void PoeditListCtrl::CatalogChanged(Catalog* catalog)
     // now read the new catalog:
     m_catalog = catalog;
     ReadCatalog();
-
-    Thaw();
 }
 
 void PoeditListCtrl::ReadCatalog()
 {
+    wxWindowUpdateLocker no_updates(this);
+
+    // clear the list and its sort order too:
+    SetItemCount(0);
+    m_mapListToCatalog.clear();
+    m_mapCatalogToList.clear();
+
     if (m_catalog == NULL)
     {
-        SetItemCount(0);
+        Refresh();
         return;
     }
 
-    // create the lookup arrays of Ids by first splitting it upon
-    // four categories of items:
-    // unstranslated, invalid, fuzzy and the rest
-    m_itemIndexToCatalogIndexArray.clear();
-
-    std::vector<int> untranslatedIds;
-    std::vector<int> invalidIds;
-    std::vector<int> fuzzyIds;
-    std::vector<int> restIds;
-
-    for (size_t i = 0; i < m_catalog->GetCount(); i++)
-    {
-        CatalogItem& d = (*m_catalog)[i];
-        if (!d.IsTranslated())
-          untranslatedIds.push_back(i);
-        else if (d.GetValidity() == CatalogItem::Val_Invalid)
-          invalidIds.push_back(i);
-        else if (d.IsFuzzy())
-          fuzzyIds.push_back(i);
-        else
-          restIds.push_back(i);
-    }
-
-    // Now fill the lookup array, not forgetting to set the appropriate
-    // property in the catalog entry to be able to go back and forth
-    // from one numbering system to the other
-    m_catalogIndexToItemIndexArray.resize(m_catalog->GetCount());
-    int listItemId = 0;
-    for (size_t i = 0; i < untranslatedIds.size(); i++)
-    {
-        m_itemIndexToCatalogIndexArray.push_back(untranslatedIds[i]);
-        m_catalogIndexToItemIndexArray[untranslatedIds[i]] = listItemId++;
-    }
-    for (size_t i = 0; i < invalidIds.size(); i++)
-    {
-        m_itemIndexToCatalogIndexArray.push_back(invalidIds[i]);
-        m_catalogIndexToItemIndexArray[invalidIds[i]] = listItemId++;
-    }
-    for (size_t i = 0; i < fuzzyIds.size(); i++)
-    {
-        m_itemIndexToCatalogIndexArray.push_back(fuzzyIds[i]);
-        m_catalogIndexToItemIndexArray[fuzzyIds[i]] = listItemId++;
-    }
-    for (size_t i = 0; i < restIds.size(); i++)
-    {
-        m_itemIndexToCatalogIndexArray.push_back(restIds[i]);
-        m_catalogIndexToItemIndexArray[restIds[i]] = listItemId++;
-    }
-
+    // sort catalog items, create indexes mapping
+    CreateSortMap();
 
     // now that everything is prepared, we may set the item count
     SetItemCount(m_catalog->GetCount());
@@ -420,17 +392,70 @@ void PoeditListCtrl::ReadCatalog()
     }
 }
 
+
+void PoeditListCtrl::Sort()
+{
+    if ( m_catalog && m_catalog->GetCount() )
+    {
+        int sel = GetSelectedCatalogItem();
+
+        CreateSortMap();
+        RefreshItems(0, m_catalog->GetCount()-1);
+
+        if ( sel != -1 )
+            SelectCatalogItem(sel);
+    }
+    else
+    {
+        Refresh();
+    }
+}
+
+
+void PoeditListCtrl::CreateSortMap()
+{
+    int count = (int)m_catalog->GetCount();
+
+    m_mapListToCatalog.resize(count);
+    m_mapCatalogToList.resize(count);
+
+    // First create identity mapping for the sort order.
+    for ( int i = 0; i < count; i++ )
+        m_mapListToCatalog[i] = i;
+
+    // m_mapListToCatalog will hold our desired sort order. Sort it in place
+    // now, using the desired sort criteria.
+    std::sort
+    (
+        m_mapListToCatalog.begin(),
+        m_mapListToCatalog.end(),
+        CatalogItemsComparator(*m_catalog, sortOrder)
+    );
+
+    // Finally, construct m_mapCatalogToList to be the inverse mapping to
+    // m_mapListToCatalog.
+    for ( int i = 0; i < count; i++ )
+        m_mapCatalogToList[m_mapListToCatalog[i]] = i;
+}
+
+
 wxString PoeditListCtrl::OnGetItemText(long item, long column) const
 {
     if (m_catalog == NULL)
         return wxEmptyString;
 
-    CatalogItem& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
+    const CatalogItem& d = ListIndexToCatalogItem(item);
+
     switch (column)
     {
         case 0:
         {
-            wxString orig = d.GetString();
+            wxString orig;
+            if ( d.HasContext() )
+                orig.Printf(_T("%s  [ %s ]"),
+                            d.GetString().c_str(), d.GetContext().c_str());
+            else
+                orig = d.GetString();
             return orig.substr(0,GetMaxColChars());
         }
         case 1:
@@ -448,19 +473,19 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
 
 wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
 {
-    size_t idx = g_shadedList ? size_t(item % 2) : 0;
+    long idx = item % 2;
 
     if (m_catalog == NULL)
         return (wxListItemAttr*)&m_attrNormal[idx];
 
-    CatalogItem& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
+    const CatalogItem& d = ListIndexToCatalogItem(item);
 
-    if (!d.IsTranslated())
+    if (d.GetValidity() == CatalogItem::Val_Invalid)
+        return (wxListItemAttr*)&m_attrInvalid[idx];
+    else if (!d.IsTranslated())
         return (wxListItemAttr*)&m_attrUntranslated[idx];
     else if (d.IsFuzzy())
         return (wxListItemAttr*)&m_attrFuzzy[idx];
-    else if (d.GetValidity() == CatalogItem::Val_Invalid)
-        return (wxListItemAttr*)&m_attrInvalid[idx];
     else
         return (wxListItemAttr*)&m_attrNormal[idx];
 }
@@ -470,7 +495,7 @@ int PoeditListCtrl::OnGetItemImage(long item) const
     if (m_catalog == NULL)
         return IMG_NOTHING;
 
-    CatalogItem& d = (*m_catalog)[m_itemIndexToCatalogIndexArray[item]];
+    const CatalogItem& d = ListIndexToCatalogItem(item);
     int index = IMG_NOTHING;
 
     if (d.IsAutomatic())
@@ -489,24 +514,4 @@ void PoeditListCtrl::OnSize(wxSizeEvent& event)
 {
     SizeColumns();
     event.Skip();
-}
-
-long PoeditListCtrl::GetIndexInCatalog(long item) const
-{
-    if (item == -1)
-        return -1;
-    else if (item < (long)m_itemIndexToCatalogIndexArray.size())
-        return m_itemIndexToCatalogIndexArray[item];
-    else
-        return -1;
-}
-
-int PoeditListCtrl::GetItemIndex(int catalogIndex) const
-{
-    if (catalogIndex == -1)
-        return -1;
-    else if (catalogIndex < (int)m_catalogIndexToItemIndexArray.size())
-        return m_catalogIndexToItemIndexArray[catalogIndex];
-    else
-        return -1;
 }

@@ -21,10 +21,6 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE. 
  *
- *  $Id$
- *
- *  Editor application object
- *
  */
 
 
@@ -35,7 +31,7 @@
 #include <wx/string.h>
 #include <wx/intl.h>
 
-class WXDLLEXPORT wxConfigBase;
+class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 
 
 /// wxApp for use with 

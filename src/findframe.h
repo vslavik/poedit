@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2006 Vaclav Slavik
+ *  Copyright (C) 2001-2008 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -21,19 +21,16 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  $Id$
- *
- *  Search frame
- *
  */
 
 #ifndef _FINDFRAME_H_
 #define _FINDFRAME_H_
 
-#include <wx/frame.h>
+#include <wx/dialog.h>
+
+class WXDLLIMPEXP_FWD_CORE wxButton;
 
 class PoeditListCtrl;
-class WXDLLEXPORT wxButton;
 class Catalog;
 
 /** FindFrame is small dialog frame that contains controls for searching
@@ -43,7 +40,7 @@ class Catalog;
     This class assumes that list control's user data contains index
     into the catalog.
  */
-class FindFrame : public wxFrame
+class FindFrame : public wxDialog
 {
     public:
         /** Ctor.
@@ -63,8 +60,7 @@ class FindFrame : public wxFrame
         void Reset(Catalog *c);
 
     private:
-        void OnCancel(wxCommandEvent &event);
-        void OnClose(wxCloseEvent &event);
+        void OnClose(wxCommandEvent &event);
         void OnPrev(wxCommandEvent &event);
         void OnNext(wxCommandEvent &event);
         void OnTextChange(wxCommandEvent &event);

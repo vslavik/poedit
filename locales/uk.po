@@ -4,26 +4,58 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.4\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-25 16:42+0100\n"
+"Project-Id-Version: Poedit 1.5\n"
+"Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
+"POT-Creation-Date: 2012-07-30 10:34+0200\n"
 "PO-Revision-Date: 2008-03-12 12:29+0200\n"
 "Last-Translator: Hrytsiv Roman (Retro) <romanhriz@yahoo.com>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Ukrainian\n"
 "X-Poedit-Country: UKRAINE\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../src/edframe.cpp:2001
+#: ../src/edframe.cpp:2060
 msgid " (modified)"
 msgstr " (змінено)"
 
-#: ../src/edframe.cpp:1971 ../src/export_html.cpp:152
+#. TRANSLATORS: This is version information in about dialog, it is followed
+#. by version number when used (wxWidgets 2.8)
+#: ../src/edframe.cpp:2431
+#, fuzzy
+msgid " Version "
+msgstr "версія"
+
+#: ../src/edframe.cpp:1367
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: ../src/edframe.cpp:2024
+#, fuzzy, c-format
+msgid "%i %% translated, %i string"
+msgid_plural "%i %% translated, %i strings"
+msgstr[0] "Автоматично перекладено %u рядків"
+msgstr[1] "Автоматично перекладено %u рядків"
+msgstr[2] "Автоматично перекладено %u рядків"
+
+#: ../src/edframe.cpp:2029
+#, fuzzy, c-format
+msgid "%i %% translated, %i string (%s)"
+msgid_plural "%i %% translated, %i strings (%s)"
+msgstr[0] "Автоматично перекладено %u рядків"
+msgstr[1] "Автоматично перекладено %u рядків"
+msgstr[2] "Автоматично перекладено %u рядків"
+
+#: ../src/export_html.cpp:134
 #, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
@@ -31,327 +63,501 @@ msgstr ""
 "Загалом рядків: %2$i, перекладено %1$i %% (%3$i неточно, %4$i з "
 "неправильними лексемами та %5$i ще не перекладено)"
 
-#: ../src/catalog.cpp:148
+#: ../src/edframe.cpp:2014
+#, fuzzy, c-format
+msgid "%i bad token"
+msgid_plural "%i bad tokens"
+msgstr[0] "Неправильні лексеми"
+msgstr[1] "Неправильні лексеми"
+msgstr[2] "Неправильні лексеми"
+
+#: ../src/edframe.cpp:2008
+#, fuzzy, c-format
+msgid "%i fuzzy"
+msgid_plural "%i fuzzy"
+msgstr[0] "Неточно"
+msgstr[1] "Неточно"
+msgstr[2] "Неточно"
+
+#: ../src/catalog.cpp:132
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i рядків з файлу '%s' не були коректно завантажені."
 
-#: standard input:70
-msgid "&About..."
+#: ../src/edframe.cpp:2020
+#, fuzzy, c-format
+msgid "%i not translated"
+msgid_plural "%i not translated"
+msgstr[0] "Пошук у перекладах"
+msgstr[1] "Пошук у перекладах"
+msgstr[2] "Пошук у перекладах"
+
+#: ../src/resources/menus.xrc:213 ../src/resources/menus.xrc:214
+#, fuzzy
+msgid "&About"
 msgstr "&Про програму..."
 
-#: standard input:57
+#: ../src/resources/menus.xrc:212
+#, fuzzy
+msgid "&About Poedit"
+msgstr "&Про програму..."
+
+#: ../src/resources/menus.xrc:107
+#, fuzzy
+msgid "&Automatically Translate Using TM"
+msgstr "&Перекласти автоматично з допомогою памяті перекладів"
+
+#: ../src/resources/menus.xrc:106
 msgid "&Automatically translate using TM"
 msgstr "&Перекласти автоматично з допомогою памяті перекладів"
 
-#: ../src/edframe.cpp:2784
+#: ../src/edframe.cpp:2786
 msgid "&Bookmarks"
 msgstr "Зак&ладки"
 
-#: standard input:36 input:46
+#: ../src/resources/manager.xrc:132 ../src/resources/menus.xrc:26
 msgid "&Close"
 msgstr "&Закрити"
 
-#: standard input:68
-msgid "&Contents..."
-msgstr "&Зміст..."
+#: ../src/resources/menus.xrc:176
+#, fuzzy
+msgid "&Comment Window"
+msgstr "Показувати вікно коментарів"
 
-#: standard input:47
+#: ../src/resources/menus.xrc:175
+#, fuzzy
+msgid "&Comment window"
+msgstr "Показувати вікно коментарів"
+
+#: ../src/resources/menus.xrc:130
+msgid "&Done and Next"
+msgstr ""
+
+#: ../src/resources/menus.xrc:129
+msgid "&Done and next"
+msgstr ""
+
+#: ../src/resources/menus.xrc:56
 msgid "&Edit"
 msgstr "&Правка"
 
-#: ../src/edframe.cpp:535 standard input:34 input:37
+#: ../src/edframe.cpp:471 ../src/resources/manager.xrc:125
+#: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&Файл"
 
-#: standard input:50
+#: ../src/resources/menus.xrc:73
 msgid "&Find..."
 msgstr "&Знайти..."
 
-#: standard input:61 input:62
-msgid "&Fullscreen view"
-msgstr "&Повноекранний режим"
+#: ../src/edframe.cpp:480 ../src/resources/menus.xrc:126
+msgid "&Go"
+msgstr ""
 
-#: ../src/edapp.cpp:107 standard input:71
+#: ../src/edapp.cpp:183 ../src/resources/menus.xrc:216
 msgid "&Help"
 msgstr "&Довідка"
 
-#: standard input:39
+#: ../src/resources/menus.xrc:14
+#, fuzzy
+msgid "&New Catalog..."
+msgstr "&Новий каталог..."
+
+#: ../src/resources/menus.xrc:13
 msgid "&New catalog..."
 msgstr "&Новий каталог..."
 
-#: standard input:41
+#: ../src/resources/menus.xrc:142
+msgid "&Next Message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:141
+msgid "&Next message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:206
+msgid "&Online Help"
+msgstr ""
+
+#: ../src/resources/menus.xrc:205
+msgid "&Online help"
+msgstr ""
+
+#: ../src/resources/menus.xrc:21
 msgid "&Open..."
 msgstr "&Відкрити..."
 
-#: standard input:53
+#: ../src/resources/menus.xrc:90
 msgid "&Preferences"
 msgstr "Параметри"
 
-#: standard input:35 input:45
+#: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:44
 msgid "&Preferences..."
 msgstr "&Параметри..."
 
-#: standard input:58
+#: ../src/resources/menus.xrc:137
+msgid "&Previous Message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:136
+msgid "&Previous message"
+msgstr ""
+
+#: ../src/resources/menus.xrc:119
+#, fuzzy
+msgid "&Properties..."
+msgstr "&Параметри..."
+
+#: ../src/resources/menus.xrc:111
+#, fuzzy
+msgid "&Purge Deleted Translations"
+msgstr "&Знищити вилучені переклади"
+
+#: ../src/resources/menus.xrc:110
 msgid "&Purge deleted translations"
 msgstr "&Знищити вилучені переклади"
 
-#: standard input:42
+#: ../src/resources/menus.xrc:30
 msgid "&Save"
 msgstr "&Зберегти"
 
-#: standard input:59
-msgid "&Settings..."
-msgstr "&Налаштування..."
+#: ../src/resources/menus.xrc:70
+#, fuzzy
+msgid "&Show References"
+msgstr "&Показувати посилання"
 
-#: standard input:67
-msgid "&Shaded translations list"
-msgstr "&Відтінити список перекладів"
-
-#: standard input:49
+#: ../src/resources/menus.xrc:69
 msgid "&Show references"
 msgstr "&Показувати посилання"
 
-#: standard input:55
+#: ../src/resources/menus.xrc:198
+msgid "&Untranslated Entries First"
+msgstr ""
+
+#: ../src/resources/menus.xrc:197
+msgid "&Untranslated entries first"
+msgstr ""
+
+#: ../src/resources/menus.xrc:99
+#, fuzzy
+msgid "&Update from Sources"
+msgstr "&Поновити з джерельних кодів"
+
+#: ../src/resources/menus.xrc:98
 msgid "&Update from sources"
 msgstr "&Поновити з джерельних кодів"
 
-#: standard input:60
+#: ../src/resources/menus.xrc:115
+#, fuzzy
+msgid "&Validate Translations"
+msgstr "Переклад"
+
+#: ../src/resources/menus.xrc:114
+#, fuzzy
+msgid "&Validate translations"
+msgstr "&Відтінити список перекладів"
+
+#: ../src/resources/menus.xrc:157
 msgid "&View"
 msgstr "&Вигляд"
 
-#: ../src/catalog.cpp:1511
+#: ../src/catalog.cpp:1572
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s': некоректний POT-файл."
 
-#: standard input:100
-msgid "(%f will be substituted with filename, %l with line number)"
-msgstr "(%f буде замінено на ім'я файлу, %l - на номер рядка)"
-
-#: ../src/summarydlg.cpp:71
+#: ../src/summarydlg.cpp:58
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(%i нових, %i застарілих)"
 
-#: standard input:168
+#: ../src/resources/summary.xrc:63
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 нових, 0 застарілих)"
 
-#: ../src/chooselang.cpp:88
+#: ../src/chooselang.cpp:79
 msgid "(Use default language)"
 msgstr "(Мова за замовчанням)"
 
-#: ../src/edframe.cpp:921
+#: ../src/edframe.cpp:916
 msgid "(none of these)"
 msgstr "(жодний із зазначених)"
 
-#: standard input:18
+#: ../src/resources/find.xrc:94
 msgid "< Previous"
 msgstr "< Назад"
 
-#: ../src/manager.cpp:402
+#: ../src/manager.cpp:377
 msgid "<unnamed>"
 msgstr "<без назви>"
 
-#: standard input:111
+#. TRANSLATORS: This is titlebar of about dialog, the string ends with space
+#. and is followed by application name when used ("Poedit",
+#. but don't add it to this translation yourself) (wxWidgets 2.8)
+#: ../src/edframe.cpp:2435
+#, fuzzy
+msgid "About "
+msgstr "&Про програму..."
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: ../src/edframe.cpp:2425
+#, fuzzy, c-format
+msgid "About %s"
+msgstr "Інформація про Poedit"
+
+#: ../src/resources/prefs.xrc:270
 msgid "Add"
 msgstr "Додати"
 
-#: standard input:31
+#: ../src/resources/manager.xrc:91
 msgid "Add directory to the list"
 msgstr "Додати теку до списку"
 
-#: ../src/transmemupd_wizard.cpp:138 standard input:176
+#: ../src/transmemupd_wizard.cpp:134 ../src/resources/tm_update.xrc:85
 msgid "Add files"
 msgstr "Додати файли"
 
-#: standard input:142
+#: ../src/resources/prefs.xrc:589
 msgid "Add path to the list of directories where catalogs lie."
 msgstr "Додати шлях до списку тек, де знаходяться файли каталогів."
 
-#: standard input:85
+#: ../src/resources/prefs.xrc:111
 msgid "Always change focus to text input field"
 msgstr "Завжди встановлювати фокус у поле вводу тесту"
 
-#: standard input:135
+#: ../src/resources/prefs.xrc:514
 msgid "An item in input files list:"
 msgstr "Елемент в списку вхідних файлів:"
 
-#: standard input:133
+#: ../src/resources/prefs.xrc:495
 msgid "An item in keywords list:"
 msgstr "Елемент списку ключових слів:"
 
-#: standard input:89
+#: ../src/edframe.cpp:2367 ../src/edframe.cpp:2379
+#, fuzzy
+msgid "Automatic Translations:"
+msgstr "Варіанти автоперекладу:"
+
+#: ../src/resources/prefs.xrc:128
 msgid "Automatic spellchecking"
 msgstr "Автоматична перевірка правопису"
 
-#: ../src/export_html.cpp:192
+#: ../src/export_html.cpp:173
 msgid "Automatic translation"
 msgstr "Автоматичний переклад"
 
-#: ../src/edframe.cpp:2251 ../src/edframe.cpp:2255
+#: ../src/edframe.cpp:2365 ../src/edframe.cpp:2377
 msgid "Automatic translations:"
 msgstr "Варіанти автоперекладу:"
 
-#: standard input:79
+#: ../src/resources/prefs.xrc:70
 msgid "Automatically check for new version of Poedit"
 msgstr "Автоматично перевіряти за новою версію Poedit"
 
-#: standard input:82
+#: ../src/resources/prefs.xrc:88
 msgid "Automatically compile .mo file on save"
 msgstr "При збереженні автоматично збирати файл .mo "
 
-#: standard input:118
+#: ../src/resources/prefs.xrc:342
 msgid "Automatically translate when updating catalog"
 msgstr "Автоматично перекладати при поновленні каталогу"
 
-#: ../src/edframe.cpp:2203
+#: ../src/edframe.cpp:2301
 #, c-format
 msgid "Automatically translated %u strings"
 msgstr "Автоматично перекладено %u рядків"
 
-#: ../src/edframe.cpp:2188
+#: ../src/edframe.cpp:2286
 msgid "Automatically translating..."
 msgstr "Автоматичний переклад..."
 
-#: ../src/manager.cpp:274
+#: ../src/manager.cpp:248
 msgid "Bad Tokens"
 msgstr "Неправильні лексеми"
 
-#: standard input:157
+#: ../src/resources/properties.xrc:136
 msgid "Base path:"
 msgstr "Базовий шлях:"
 
-#: standard input:81
+#: ../src/resources/prefs.xrc:84
 msgid "Behavior"
 msgstr "Поведінка"
 
-#: ../src/catalog.cpp:689
+#: ../src/catalog.cpp:680
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 "Зіпсований файл каталогу: msgstr у множині використано без msgid_plural"
 
-#: ../src/catalog.cpp:651
+#: ../src/catalog.cpp:642
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
 "Зіпсований файл каталогу: msgstr у однині використана разом із формою "
 "множини msgid_plural"
 
-#: standard input:30 input:110 input:141 input:173
+#: ../src/resources/manager.xrc:90 ../src/resources/prefs.xrc:588
+#: ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "Вибрати"
 
-#: standard input:54
+#: ../src/resources/menus.xrc:95
 msgid "C&atalog"
 msgstr "&Каталог"
 
-#: standard input:91
+#: ../src/resources/comment.xrc:45
+#, fuzzy
+msgid "C&lear"
+msgstr "Очистити"
+
+#: ../src/resources/prefs.xrc:141
 msgid "CR/LF conversion"
 msgstr "Перетворення CR/LF"
 
-#: standard input:4 input:17 input:33 input:125 input:140 input:144 input:146
-#: input:162
+#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:113
+#: ../src/resources/prefs.xrc:424 ../src/resources/prefs.xrc:566
+#: ../src/resources/prefs.xrc:611 ../src/resources/progress.xrc:32
+#: ../src/resources/properties.xrc:198
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: ../src/transmem.cpp:745
-msgid "Cannot create database directory!"
+#: ../src/transmem.cpp:732
+#, fuzzy
+msgid "Cannot create TM database directory!"
 msgstr "Не вдається створити теку бази перекладів!"
 
-#: ../src/gexecute.cpp:178 ../src/gexecute.cpp:234
-msgid "Cannot execute program: "
+#: ../src/utility.cpp:57 ../src/utility.cpp:67
+#, fuzzy
+msgid "Cannot create temporary directory."
+msgstr "Не вдається створити теку бази перекладів!"
+
+#: ../src/gexecute.cpp:100
+#, fuzzy, c-format
+msgid "Cannot execute program: %s"
 msgstr "Не вдається виконати програму: "
 
-#: ../src/transmemupd.cpp:202
+#: ../src/transmemupd.cpp:199
 msgid "Cannot extract catalogs from RPM file."
 msgstr "Не вдається витягти каталоги з RPM-файлу."
 
-#: standard input:10
+#: ../src/resources/find.xrc:36
 msgid "Case sensitive"
 msgstr "Враховувати регістр"
 
-#: ../src/manager.cpp:270
+#: ../src/manager.cpp:244
 msgid "Catalog"
 msgstr "Каталог"
 
-#: ../src/edframe.cpp:969 ../src/edframe.cpp:994 ../src/edframe.cpp:1035
-#: ../src/edframe.cpp:1087 ../src/edframe.cpp:1205
+#: ../src/edframe.cpp:987
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Каталог змінено. Зберегти зміни?"
 
-#: standard input:38
+#: ../src/resources/properties.xrc:4
+msgid "Catalog properties"
+msgstr ""
+
+#: ../src/resources/menus.xrc:9
+#, fuzzy
+msgid "Catalogs &Manager"
+msgstr "Менеджер &каталогів"
+
+#: ../src/resources/menus.xrc:8
 msgid "Catalogs &manager"
 msgstr "Менеджер &каталогів"
 
-#: standard input:78
+#: ../src/resources/prefs.xrc:63
 msgid "Change UI language"
 msgstr "Змінити мову інтерфейсу"
 
-#: ../src/export_html.cpp:137 standard input:153
+#: ../src/export_html.cpp:119 ../src/resources/properties.xrc:74
 msgid "Charset:"
 msgstr "Кодування каталогу:"
 
-#: standard input:104 input:106
+#: ../src/edframe.cpp:483
+msgid "Check for Updates..."
+msgstr ""
+
+#: ../src/resources/toolbar.xrc:39
+#, fuzzy
+msgid "Check for errors in the translation"
+msgstr "Скопіювати початковий рядок у поле перекладу"
+
+#: ../src/resources/prefs.xrc:204 ../src/resources/prefs.xrc:230
 msgid "Choose"
 msgstr "Вибрати"
 
-#: standard input:5
-msgid "Clear"
-msgstr "Очистити"
+#: ../src/edframe.cpp:2339 ../src/resources/menus.xrc:64
+#, fuzzy
+msgid "Clear Translation"
+msgstr "Переклад"
 
-#: standard input:6
+#: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "Очистити коментар"
 
-#: standard input:185
+#: ../src/edframe.cpp:2337 ../src/resources/menus.xrc:63
+#, fuzzy
+msgid "Clear translation"
+msgstr "Переклад"
+
+#: ../src/resources/find.xrc:87
+#, fuzzy
+msgid "Close"
+msgstr "&Закрити"
+
+#: ../src/resources/toolbar.xrc:57
 msgid "Comment"
 msgstr "Коментар"
 
-#: standard input:87
+#: ../src/resources/prefs.xrc:120
 msgid "Comment window is editable"
 msgstr "Дозволити зміни у полі коментаря "
 
-#: standard input:2
+#: ../src/edframe.cpp:547 ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Коментар:"
 
-#: standard input:115
+#: ../src/resources/prefs.xrc:292
 msgid "Configuration"
 msgstr "Конфігурація"
 
-#: ../src/manager.cpp:432 ../src/manager.cpp:452
+#: ../src/manager.cpp:407 ../src/manager.cpp:427
 msgid "Confirmation"
 msgstr "Підтвердження"
 
-#: ../src/edframe.cpp:2231 standard input:48
-msgid "Copy original to translation field"
-msgstr "Скопіювати початковий рядок у поле перекладу"
+#: ../src/edframe.cpp:1812
+#, fuzzy
+msgid "Context:"
+msgstr "Джерельний файл"
 
-#: ../src/catalog.cpp:1049
+#: ../src/edframe.cpp:2332 ../src/resources/menus.xrc:59
+msgid "Copy from Source Text"
+msgstr ""
+
+#: ../src/edframe.cpp:2330 ../src/resources/menus.xrc:58
+#, fuzzy
+msgid "Copy from source text"
+msgstr "&Поновити з джерельних кодів"
+
+#: ../src/catalog.cpp:1038
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "Не вдається завантажити файл %s. Можливо він пошкоджений."
 
-#: ../src/export_html.cpp:126 standard input:152
-msgid "Country:"
-msgstr "Країна:"
+#: ../src/catalog.cpp:1307
+#, c-format
+msgid "Couldn't save file %s."
+msgstr ""
 
-#: standard input:21
+#: ../src/resources/manager.xrc:44
 msgid "Create new translations project"
 msgstr "Створити новий проект перекладів"
 
-#: standard input:108
+#: ../src/resources/prefs.xrc:252
 msgid "Database"
 msgstr "База перекладів"
 
-#: ../src/transmem.cpp:327
-#, c-format
-msgid "Database error: %s"
-msgstr "Помилка бази даних: %s"
-
-#: standard input:24 input:123
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:390
 msgid "Delete"
 msgstr "Вилучити"
 
@@ -359,23 +565,42 @@ msgstr "Вилучити"
 msgid "Delete item"
 msgstr "Вилучити елемент"
 
-#: standard input:25
+#: ../src/resources/manager.xrc:54
 msgid "Delete the project"
 msgstr "Вилучити проект"
 
-#: ../src/manager.cpp:326
+#: ../src/manager.cpp:300
 msgid "Directories:"
 msgstr "Теки:"
 
-#: standard input:64
+#: ../src/resources/menus.xrc:165
+#, fuzzy
+msgid "Display &Line Numbers"
+msgstr "Показувати &номери рядків"
+
+#: ../src/resources/menus.xrc:170
+msgid "Display &Notes for Translators"
+msgstr ""
+
+#: ../src/resources/menus.xrc:160
+#, fuzzy
+msgid "Display &Quotes"
+msgstr "Показувати &лапки"
+
+#: ../src/resources/menus.xrc:164
 msgid "Display &line numbers"
 msgstr "Показувати &номери рядків"
 
-#: standard input:63
+#: ../src/resources/menus.xrc:169
+#, fuzzy
+msgid "Display &notes for translators"
+msgstr "Показувати лапки навколо рядка?"
+
+#: ../src/resources/menus.xrc:159
 msgid "Display &quotes"
 msgstr "Показувати &лапки"
 
-#: ../src/manager.cpp:451
+#: ../src/manager.cpp:426
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -383,38 +608,59 @@ msgstr ""
 "Ви дійсно хочете поновити\n"
 "усі каталоги у цьому проекті?"
 
-#: ../src/edframe.cpp:2145
-msgid ""
-"Do you really want to remove all translations that are no longer used from "
-"the catalog?\n"
-"If you continue with purging, you will have to translate them again if they "
-"are added back in the future."
-msgstr ""
-"Ви дійсно хочете вилучити з каталогу усі невживані переклади?\n"
-"Якщо Ви продовжите знищення, Вам доведеться знову перекладати їх, якщо вони "
-"будуть знову додані в майбутньому."
-
-#: ../src/manager.cpp:431
+#: ../src/manager.cpp:406
 msgid "Do you want to delete the project?"
 msgstr "Ви дійсно хочете вилучити проект?"
 
-#: standard input:97
+#: ../src/edframe.cpp:2227
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr ""
+
+#: ../src/edframe.cpp:999
+msgid "Don't Save"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:170
 msgid "Don't change format of existing catalogs"
 msgstr "Не змінювати формат існуючих каталогів"
 
-#: standard input:44
+#: ../src/edframe.cpp:997
+msgid "Don't save"
+msgstr ""
+
+#: ../src/attentionbar.cpp:195
+msgid "Don't show again"
+msgstr ""
+
+#: ../src/resources/manager.xrc:136 ../src/resources/menus.xrc:51
+#, fuzzy
+msgid "E&xit"
+msgstr "Редагувати"
+
+#: ../src/resources/menus.xrc:39
 msgid "E&xport..."
 msgstr "Е&кспорт..."
 
-#: standard input:22 input:122
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:383
 msgid "Edit"
 msgstr "Редагувати"
 
-#: standard input:52
+#: ../src/resources/menus.xrc:85
+#, fuzzy
+msgid "Edit &Comment"
+msgstr "Змінити &коментар"
+
+#: ../src/resources/menus.xrc:84
 msgid "Edit &comment"
 msgstr "Змінити &коментар"
 
-#: standard input:1 input:186
+#: ../src/edframe.cpp:2346
+#, fuzzy
+msgid "Edit Comment"
+msgstr "Змінити &коментар"
+
+#: ../src/edframe.cpp:2344 ../src/resources/comment.xrc:4
+#: ../src/resources/toolbar.xrc:58
 msgid "Edit comment"
 msgstr "Зміна коментаря"
 
@@ -422,84 +668,88 @@ msgstr "Зміна коментаря"
 msgid "Edit item"
 msgstr "Редагувати елемент"
 
-#: standard input:28
+#: ../src/resources/manager.xrc:64
 msgid "Edit project"
 msgstr "Зміна проекту"
 
-#: standard input:7
-msgid "Edit the file in text editor"
-msgstr "Змінити файл у текстовому редакторі"
-
-#: standard input:23
+#: ../src/resources/manager.xrc:49
 msgid "Edit the project"
 msgstr "Змінити проект"
 
-#: standard input:80
+#: ../src/resources/prefs.xrc:78
 msgid "Editor"
 msgstr "Редактор"
 
-#: standard input:99
-msgid "Editor executable:"
-msgstr "Зовнішній редактор:"
-
-#: standard input:90
+#: ../src/resources/prefs.xrc:129
 msgid "Enables on-the-fly spellchecking"
 msgstr "Вмикає перевірку орфографії \"на льоту\""
 
-#: ../src/edframe.cpp:1359
+#: ../src/edframe.cpp:1309
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Напевне, у каталозі є неправильні записи."
 
-#: ../src/edframe.cpp:1926
+#: ../src/edframe.cpp:1911
+msgid ""
+"Entries in this catalog have different plural forms count from what "
+"catalog's Plural-Forms header says"
+msgstr ""
+
+#: ../src/edframe.cpp:1376
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+
+#: ../src/edframe.cpp:1960
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "Помилка завантаження файлу каталогу '%s'."
 
-#: ../src/fileviewer.cpp:101
+#: ../src/fileviewer.cpp:226
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Помилка при відкритті файлу '%s'!"
 
-#: ../src/catalog.cpp:1325
+#: ../src/catalog.cpp:1354
 msgid "Error saving catalog"
 msgstr "Помилка збереження каталогу"
 
-#: ../src/edframe.cpp:1178
+#: ../src/errorbar.cpp:60
+msgid "Error:"
+msgstr ""
+
+#: ../src/edframe.cpp:1138
 msgid "Export as..."
 msgstr "Експортувати як..."
 
-#: standard input:98
-msgid "External editor"
-msgstr "Зовнішній редактор"
+#: ../src/resources/properties.xrc:127
+msgid "Extract text from source files in the following directories:"
+msgstr ""
 
-#: ../src/digger.cpp:65
+#: ../src/digger.cpp:60
 #, c-format
 msgid "Failed command: %s"
 msgstr "Не вдалося виконати команду: %s"
 
-#: ../src/digger.cpp:160
+#: ../src/digger.cpp:114
 msgid "Failed to load extracted catalog."
 msgstr "Не вдалося завантажити добутий каталог."
 
-#: ../src/digger.cpp:66
+#: ../src/digger.cpp:61
 msgid "Failed to merge gettext catalogs."
 msgstr "Не вдалося злити gettext-каталоги."
 
-#: ../src/digger.cpp:94 ../src/digger.cpp:105
-msgid "Failed to read extracted catalog."
-msgstr "Не вдалося прочитати добутий каталог."
-
-#: ../src/edframe.cpp:1060 ../src/edframe.cpp:1103
+#: ../src/edframe.cpp:393 ../src/edframe.cpp:1061
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Файл '%s' не існує."
 
-#: ../src/edframe.cpp:1077
-#, c-format
-msgid "File '%s' is not message catalog."
+#: ../src/edframe.cpp:386
+#, fuzzy, c-format
+msgid "File '%s' is not a message catalog."
 msgstr "'%s' не є каталогом повідомлень."
 
-#: ../src/catalog.cpp:1285
+#: ../src/catalog.cpp:1268
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -508,159 +758,178 @@ msgstr ""
 "Файл '%s' доступний лише для читання і не може бути збережений.\n"
 "Будь ласка, збережіть його під іншим іменем."
 
-#: ../src/transmemupd_wizard.cpp:63
+#: ../src/transmemupd_wizard.cpp:59
 msgid "Files List"
 msgstr "Список файлів"
 
-#: standard input:16
+#: ../src/resources/find.xrc:78
 msgid "Find in automatic comments"
 msgstr "Шукати в автоматичних коментарях"
 
-#: standard input:15
+#: ../src/resources/find.xrc:71
 msgid "Find in comments"
 msgstr "Шукати в коментарях"
 
-#: standard input:13
+#: ../src/resources/find.xrc:57
 msgid "Find in original strings"
 msgstr "Пошук у початкових рядках"
 
-#: standard input:14
+#: ../src/resources/find.xrc:64
 msgid "Find in translations"
 msgstr "Пошук у перекладах"
 
-#: standard input:8
+#: ../src/resources/find.xrc:4
 msgid "Find..."
 msgstr "Пошук..."
 
-#: standard input:102
+#: ../src/edframe.cpp:1941
+msgid "Fix the header"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:181
 msgid "Fonts"
 msgstr "Шрифти"
 
-#: ../src/edframe.cpp:2695
+#: ../src/edframe.cpp:2719
 #, c-format
 msgid "Form %i"
 msgstr "Форма %i"
 
-#: ../src/edframe.cpp:2697
+#: ../src/edframe.cpp:2721
 #, c-format
 msgid "Form %i (e.g. \"%u\")"
 msgstr "Форма %i (наприклад, \"%u\")"
 
-#: standard input:187 input:188
-msgid "Fullscreen view"
-msgstr "Повноекранний режим"
-
-#: ../src/manager.cpp:273 standard input:183
+#: ../src/manager.cpp:247 ../src/resources/toolbar.xrc:51
 msgid "Fuzzy"
 msgstr "Неточно"
 
-#: ../src/export_html.cpp:198
+#: ../src/export_html.cpp:179
 msgid "Fuzzy translation"
 msgstr "Неточний переклад"
 
-#: ../src/edframe.cpp:1014 ../src/edframe.cpp:1142
-#, fuzzy
-msgid "GNU Gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
+#: ../src/edframe.cpp:1043 ../src/edframe.cpp:1102
+msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Каталог GNU gettext (*.po)|*.po|Усі файли (*.*)|*.*"
 
-#: ../src/edframe.cpp:1230 ../src/edframe.cpp:1377
-#, fuzzy
-msgid "GNU Gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
+#: ../src/edframe.cpp:1176 ../src/edframe.cpp:1327
+msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "Шаблон GNU gettext (*.pot)|*.pot|Усі файли (*.*)|*.*"
 
-#: standard input:69
-msgid "GNU gettext documentation"
-msgstr "Документація GNU gettext"
-
-#: standard input:145
+#: ../src/resources/prefs.xrc:621
 msgid "Generate TM database"
 msgstr "Створити базу даних пам'яті перекладів"
 
-#: standard input:113
+#: ../src/resources/prefs.xrc:278
 msgid "Generate database"
 msgstr "Створити базу перекладів"
 
-#: ../src/edframe.cpp:1429
-msgid "Gettext syntax error"
-msgstr "Синтаксична помилка Gettext"
-
-#: ../src/edframe.cpp:2768
-#, c-format
-msgid "Go to bookmark %i\tCtrl-%i"
+#: ../src/edframe.cpp:2798
+#, fuzzy, c-format
+msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "Перейти до закладки %i\tCtrl-%i"
 
-#: ../src/edframe.cpp:2765
-#, c-format
-msgid "Go to bookmark %i\tCtrl-Alt-%i"
+#: ../src/edframe.cpp:2792
+#, fuzzy, c-format
+msgid "Go to Bookmark %i\tCtrl+Alt+%i"
 msgstr "Перейти до закладки %i\tCtrl-Alt-%i"
 
-#: ../src/edframe.cpp:1180
+#: ../src/edframe.cpp:2795
+#, fuzzy, c-format
+msgid "Go to bookmark %i\tCtrl+%i"
+msgstr "Перейти до закладки %i\tCtrl-%i"
+
+#: ../src/edframe.cpp:1140
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML-файл (*.html)|*.html"
 
-#: standard input:74
+#: ../src/attentionbar.cpp:78
+msgid "Hide this notification message"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:18
 msgid "Identity"
 msgstr "Персональна інформація"
 
-#: standard input:88
+#: ../src/resources/prefs.xrc:121
 msgid "If checked, the comment window will be editable."
 msgstr "Якщо відмічено, у вікні коментарів можна змінювати текст."
 
-#: standard input:130
+#: ../src/edframe.cpp:2229
+#, fuzzy
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Ви дійсно хочете вилучити з каталогу усі невживані переклади?\n"
+"Якщо Ви продовжите знищення, Вам доведеться знову перекладати їх, якщо вони "
+"будуть знову додані в майбутньому."
+
+#: ../src/resources/prefs.xrc:472
 msgid "Invocation:"
 msgstr "Виклик:"
 
-#: ../src/settingsdlg.cpp:71 standard input:160
+#: ../src/edframe.cpp:2234 ../src/transmem.cpp:1202
+msgid "Keep"
+msgstr ""
+
+#: ../src/propertiesdlg.cpp:58
 msgid "Keywords"
 msgstr "Ключові слова"
 
-#: ../src/chooselang.cpp:161
+#: ../src/chooselang.cpp:159
 msgid "Language selection"
 msgstr "Вибір мови"
 
-#: ../src/export_html.cpp:123 standard input:127 input:128 input:151
+#: ../src/export_html.cpp:108 ../src/resources/prefs.xrc:440
+#: ../src/resources/prefs.xrc:444 ../src/resources/properties.xrc:62
 msgid "Language:"
 msgstr "Мова:"
 
-#: ../src/manager.cpp:275
+#: ../src/manager.cpp:249
 msgid "Last modified"
 msgstr "Останні зміни"
 
-#: ../src/edlistctrl.cpp:314 ../src/fileviewer.cpp:110
+#: ../src/resources/properties.xrc:111
+msgid "Learn about plural forms"
+msgstr ""
+
+#: ../src/edframe.cpp:889
+msgid "Learn more"
+msgstr ""
+
+#: ../src/edlistctrl.cpp:328
 msgid "Line"
 msgstr "Рядок"
 
-#: ../src/catalog.cpp:161
+#: ../src/catalog.cpp:145
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "Рядок %u файлу '%s' пошкоджений (некоректні дані %s)."
 
-#: standard input:92
+#: ../src/resources/prefs.xrc:149
 msgid "Line endings format:"
 msgstr "Формат кінця рядка:"
 
-#: standard input:129
+#: ../src/resources/prefs.xrc:456
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Список розширень, розділених крапкою з комою (наприклад, *.cpp;*.h):"
 
-#: standard input:95
-msgid "Macintosh"
-msgstr "Macintosh"
-
-#: ../src/catalog.cpp:236
+#: ../src/catalog.cpp:220
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Невірний заголовок '%s'"
 
-#: standard input:116
+#: ../src/resources/prefs.xrc:300
 msgid "Max. # of missing words:"
 msgstr "Максимальна кількість пропущених слів:"
 
-#: standard input:117
+#: ../src/resources/prefs.xrc:322
 msgid "Max. difference in sentence length:"
 msgstr "Максимальна різниця у довжині речень:"
 
-#: ../src/catalog.cpp:1482
+#: ../src/catalog.cpp:1543
 msgid "Merging differences..."
 msgstr "Злиття відмінностей..."
 
@@ -672,11 +941,19 @@ msgstr "Посунути донизу"
 msgid "Move up"
 msgstr "Посунути вгору"
 
-#: ../src/prefsdlg.cpp:59
+#: ../src/prefsdlg.cpp:55
 msgid "My Languages"
 msgstr "Мої мови"
 
-#: standard input:86
+#: ../src/resources/menus.xrc:152
+msgid "Ne&xt Unfinished"
+msgstr ""
+
+#: ../src/resources/menus.xrc:151
+msgid "Ne&xt unfinished"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:113
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -686,11 +963,16 @@ msgstr ""
 "Ctrl+стрілки для навігації за допомогою клавіатури, але ввід тексту можна "
 "починати одразу не натискаючи Tab для зміни фокусу."
 
-#: standard input:20 input:121
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:378
 msgid "New"
 msgstr "Новий"
 
-#: standard input:40
+#: ../src/resources/menus.xrc:18
+#, fuzzy
+msgid "New Catalog from POT File..."
+msgstr "Новий каталог з POT-файлу..."
+
+#: ../src/resources/menus.xrc:17
 msgid "New catalog from POT file..."
 msgstr "Новий каталог з POT-файлу..."
 
@@ -698,267 +980,327 @@ msgstr "Новий каталог з POT-файлу..."
 msgid "New item"
 msgstr "Новий елемент"
 
-#: standard input:165
+#: ../src/resources/summary.xrc:30
 msgid "New strings"
 msgstr "Нові рядки"
 
-#: standard input:19
+#: ../src/resources/find.xrc:102
 msgid "Next >"
 msgstr "Вперед >"
 
-#: ../src/fileviewer.cpp:151
-msgid "No editor specified. Please set it in Preferences dialog."
-msgstr "Не вказано редактор. Задайте у вікні параметрів."
-
-#: ../src/digger.cpp:250
+#: ../src/digger.cpp:201
 msgid "No files found in: "
 msgstr "Не знайдено файлів у теці:"
 
-#: ../src/edframe.cpp:1446
+#: ../src/edframe.cpp:1391
+#, fuzzy
+msgid "No problems with the translation found."
+msgstr "Посилань на цей рядок не знайдено."
+
+#: ../src/edframe.cpp:1433
 msgid "No references to this string found."
 msgstr "Посилань на цей рядок не знайдено."
 
-#: ../src/export_html.cpp:170
+#: ../src/export_html.cpp:151
 msgid "Notes"
 msgstr "Нотатки"
 
-#: standard input:3 input:32 input:124 input:139 input:161 input:169
+#: ../src/edframe.cpp:550
+#, fuzzy
+msgid "Notes for translators:"
+msgstr "Варіанти автоперекладу:"
+
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
+#: ../src/resources/prefs.xrc:416 ../src/resources/prefs.xrc:558
+#: ../src/resources/properties.xrc:190 ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "Гаразд"
 
-#: standard input:167
+#: ../src/resources/summary.xrc:51
 msgid "Obsolete strings"
 msgstr "Застарілі рядки"
 
-#: standard input:177
+#: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
 msgid "Open"
 msgstr "Відкрити"
 
-#: ../src/edframe.cpp:1012 standard input:178
+#: ../src/edframe.cpp:1041 ../src/resources/toolbar.xrc:16
+#: ../src/resources/toolbar.xrc:21
 msgid "Open catalog"
 msgstr "Відкрити каталог"
 
-#: ../src/edframe.cpp:1228 ../src/edframe.cpp:1375
+#: ../src/edframe.cpp:1174 ../src/edframe.cpp:1325
 msgid "Open catalog template"
 msgstr "Відкрити шаблон каталогу"
 
-#: standard input:84
+#: ../src/resources/prefs.xrc:104
 msgid "Open catalogs manager on Poedit startup"
 msgstr "Відкривати менеджер каталогів при запуску Poedit"
 
-#: standard input:101
-msgid "Open source files in editor, not in file viewer"
-msgstr "Відкривати джерельні файли у редакторі, а не у програмі перегляду"
+#: ../src/resources/menus.xrc:147
+msgid "P&revious Unfinished"
+msgstr ""
 
-#: ../src/edlistctrl.cpp:311 ../src/export_html.cpp:163
-msgid "Original string"
-msgstr "Початковий рядок"
+#: ../src/resources/menus.xrc:146
+msgid "P&revious unfinished"
+msgstr ""
 
-#: standard input:131
+#: ../src/resources/prefs.xrc:476
 msgid "Parser command:"
 msgstr "Команда аналізатора:"
 
-#: standard input:126
+#: ../src/resources/prefs.xrc:435
 msgid "Parser setup"
 msgstr "Налаштування аналізатора"
 
-#: standard input:119
+#: ../src/resources/prefs.xrc:353
 msgid "Parsers"
 msgstr "Аналізатори"
 
-#: ../src/digger.cpp:135
+#: ../src/digger.cpp:92
 #, c-format
 msgid "Parsing %s files..."
 msgstr "Аналіз %s файлів..."
 
-#: standard input:109
-msgid "Path to DB:"
-msgstr "Шлях до бази перекладів:"
-
-#: ../src/settingsdlg.cpp:73 standard input:158
+#: ../src/propertiesdlg.cpp:60
 msgid "Paths"
 msgstr "Шляхи"
 
-#: standard input:73
+#: ../src/resources/prefs.xrc:12
 msgid "Personalize"
 msgstr "Персональні налаштування"
 
-#: standard input:112
+#: ../src/resources/prefs.xrc:271
 msgid "Pick language from the list of known languages"
 msgstr "Виберіть мову зі списку відомих мов"
 
-#: standard input:172
+#: ../src/resources/tm_update.xrc:21
 msgid "Please add directories where locale files are stored on your system:"
 msgstr ""
 "Будь ласка, додайте теки, де знаходяться файли локалей у Вашій системі:"
 
-#: ../src/edframe.cpp:1454
+#: ../src/edframe.cpp:1441
 msgid "Please choose the reference you want to show:"
 msgstr "Виберіть посилання, яке Ви хочете переглянути:"
 
-#: ../src/prefsdlg.cpp:355
+#: ../src/prefsdlg.cpp:334
 msgid "Please select language ISO code:"
 msgstr "Виберіть код мови за ISO:"
 
-#: ../src/edframe.cpp:930
+#: ../src/edframe.cpp:925
 msgid "Please select language code:"
 msgstr "Виберіть код мови:"
 
-#: standard input:155
+#: ../src/transmem.cpp:1196
+#, c-format
+msgid ""
+"Please verify that all files were moved to the new location or do it "
+"manually if they weren't.\n"
+"\n"
+"Old location: %s\n"
+"New location: %s"
+msgstr ""
+
+#: ../src/resources/properties.xrc:98
 msgid "Plural Forms:"
 msgstr "Форми множини:"
 
-#: ../src/edframe.cpp:611
+#: ../src/edframe.cpp:564
 msgid "Plural:"
 msgstr "Множина:"
 
-#: ../src/edframe.cpp:472
+#: ../src/edframe.cpp:410
 msgid "Poedit"
 msgstr "Poedit"
 
-#: ../src/manager.cpp:70
+#: ../src/manager.cpp:69
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - менеджер каталогів"
 
-#: ../src/digger.cpp:251
+#: ../src/digger.cpp:202
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Poedit не знайшов жодного файлу у сканованих теках."
 
-#: ../src/edframe.cpp:2290
+#: ../src/edframe.cpp:2443
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit - легкий в користуванні  редактор перекладів"
 
-#: standard input:72
+#: ../src/transmem.cpp:1191
+#, fuzzy
+msgid "Poedit translation memory error"
+msgstr "Поновити пам'ять перекладів"
+
+#: ../src/resources/prefs.xrc:4
 msgid "Preferences"
 msgstr "Параметри"
 
-#: standard input:143
+#: ../src/resources/prefs.xrc:603
 msgid "Proceed"
 msgstr "Продовжити"
 
-#: ../src/export_html.cpp:116 standard input:156
+#: ../src/export_html.cpp:101
 msgid "Project info"
 msgstr "Інформація про проект"
 
-#: ../src/export_html.cpp:120 standard input:148
+#: ../src/export_html.cpp:105 ../src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Назва та версія проекту:"
 
-#: standard input:29
+#: ../src/resources/manager.xrc:69
 msgid "Project name:"
 msgstr "Назва проекту:"
 
-#: ../src/edframe.cpp:2146
+#: ../src/edframe.cpp:2234 ../src/transmem.cpp:1202
+msgid "Purge"
+msgstr ""
+
+#: ../src/edframe.cpp:2225
 msgid "Purge deleted translations"
 msgstr "Знищити вилучені переклади"
 
-#: ../src/edframe.cpp:1454
+#: ../src/resources/manager.xrc:137 ../src/resources/menus.xrc:52
+msgid "Quit"
+msgstr ""
+
+#: ../src/edframe.cpp:1441
 msgid "References"
 msgstr "Посилання"
 
-#: ../src/edframe.cpp:2236 ../src/edframe.cpp:2240
+#: ../src/edframe.cpp:2401 ../src/edframe.cpp:2405
 msgid "References:"
 msgstr "Посилання:"
 
-#: standard input:114
+#: ../src/resources/prefs.xrc:279
 msgid "Regenerate translation memory from catalogs in paths listed above."
 msgstr ""
 "Перестворити пам'ять перекладів з каталогів, що знаходяться по шляхах "
 "перелічених вище."
 
-#: standard input:174
+#: ../src/edframe.cpp:1922
+msgid "Required header Plural-Forms is missing."
+msgstr ""
+
+#: ../src/resources/tm_update.xrc:42
 msgid "Reset to defaults"
 msgstr "Скинути на умовчальні"
 
-#: standard input:179
+#: ../src/edframe.cpp:995 ../src/resources/toolbar.xrc:25
+#: ../src/resources/toolbar.xrc:30
 msgid "Save"
 msgstr "Зберегти"
 
-#: standard input:43
+#: ../src/resources/menus.xrc:35
+#, fuzzy
+msgid "Save &As..."
+msgstr "Зберегти &як..."
+
+#: ../src/resources/menus.xrc:34
 msgid "Save &as..."
 msgstr "Зберегти &як..."
 
-#: ../src/edframe.cpp:1141
+#: ../src/edframe.cpp:1101
 msgid "Save as..."
 msgstr "Зберегти як"
 
-#: standard input:180
+#: ../src/resources/toolbar.xrc:26 ../src/resources/toolbar.xrc:31
 msgid "Save catalog"
 msgstr "Зберегти каталог"
 
-#: ../src/edframe.cpp:970 ../src/edframe.cpp:995 ../src/edframe.cpp:1036
-#: ../src/edframe.cpp:1088 ../src/edframe.cpp:1206
+#: ../src/edframe.cpp:988
 msgid "Save changes"
 msgstr "Зберегти зміни"
 
-#: ../src/transmemupd.cpp:152
+#: ../src/transmemupd.cpp:149
 msgid "Scanning file: "
 msgstr "Сканувати файл: "
 
-#: ../src/digger.cpp:121
+#: ../src/digger.cpp:77
 msgid "Scanning files..."
 msgstr "Сканування файлів..."
 
-#: ../src/transmemupd_wizard.cpp:59
+#: ../src/transmemupd_wizard.cpp:55
 msgid "Search Paths"
 msgstr "Шляхи пошуку"
 
-#: ../src/edframe.cpp:929
+#: ../src/edframe.cpp:924
 msgid "Select catalog's language"
 msgstr "Виберіть мову каталогу"
 
-#: ../src/prefsdlg.cpp:368 ../src/transmemupd_wizard.cpp:112
-#: ../src/manager.cpp:306
+#: ../src/manager.cpp:280 ../src/transmemupd_wizard.cpp:108
 msgid "Select directory"
 msgstr "Виберіть теку"
 
-#: ../src/prefsdlg.cpp:354
+#: ../src/prefsdlg.cpp:333
 msgid "Select language"
 msgstr "Виберіть мову"
 
-#: ../src/chooselang.cpp:160
+#: ../src/chooselang.cpp:158
 msgid "Select your prefered language"
 msgstr "Виберіть бажану мову"
 
-#: ../src/edframe.cpp:2767
-#, c-format
-msgid "Set bookmark %i\tAlt-%i"
+#: ../src/edframe.cpp:2797
+#, fuzzy, c-format
+msgid "Set Bookmark %i\tAlt+%i"
 msgstr "Встановити закладку %i\tAlt-%i"
 
-#: ../src/edframe.cpp:2764
-#, c-format
-msgid "Set bookmark %i\tCtrl-%i"
+#: ../src/edframe.cpp:2791
+#, fuzzy, c-format
+msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "Встановити закладку %i\tCtrl-%i"
 
-#: standard input:147
-msgid "Settings"
-msgstr "Налаштування"
+#: ../src/edframe.cpp:2794
+#, fuzzy, c-format
+msgid "Set bookmark %i\tAlt+%i"
+msgstr "Встановити закладку %i\tAlt-%i"
 
-#: ../src/edapp.cpp:174
-msgid "Setup"
-msgstr "Конфігурація"
+#: ../src/edframe.cpp:1893
+msgid "Set email"
+msgstr ""
 
-#: standard input:65
-msgid "Show &comment window"
-msgstr "Показувати вікно коментарів"
-
-#: standard input:66
-msgid "Show automatic c&omments window"
-msgstr "Показати вікно автоматичних ко&ментарів"
-
-#: standard input:83
+#: ../src/resources/prefs.xrc:97
 msgid "Show summary after catalog update"
 msgstr "Показувати підсумок після поновлення каталогу"
 
-#: ../src/edframe.cpp:610
+#: ../src/edframe.cpp:562
 msgid "Singular:"
 msgstr "Однина:"
 
-#: standard input:137 input:154
+#: ../src/resources/menus.xrc:182
+msgid "Sort by &File Order"
+msgstr ""
+
+#: ../src/resources/menus.xrc:187
+msgid "Sort by &Source"
+msgstr ""
+
+#: ../src/resources/menus.xrc:192
+#, fuzzy
+msgid "Sort by &Translation"
+msgstr "Переклад"
+
+#: ../src/resources/menus.xrc:181
+msgid "Sort by &file order"
+msgstr ""
+
+#: ../src/resources/menus.xrc:186
+msgid "Sort by &source"
+msgstr ""
+
+#: ../src/resources/menus.xrc:191
+#, fuzzy
+msgid "Sort by &translation"
+msgstr "Неточний переклад"
+
+#: ../src/export_html.cpp:145
+#, fuzzy
+msgid "Source"
+msgstr "Джерельний файл"
+
+#: ../src/resources/prefs.xrc:533 ../src/resources/properties.xrc:86
 msgid "Source code charset:"
 msgstr "Кодування файлів з джерельним кодом:"
 
-#: standard input:120
+#: ../src/resources/prefs.xrc:359
 msgid "Source code parsers:"
 msgstr "Аналізатори джерельного коду:"
 
@@ -966,23 +1308,59 @@ msgstr "Аналізатори джерельного коду:"
 msgid "Source file"
 msgstr "Джерельний файл"
 
-#: standard input:11
+#: ../src/fileviewer.cpp:61
+#, fuzzy
+msgid "Source file occurrence:"
+msgstr "Джерельний файл"
+
+#: ../src/edlistctrl.cpp:325
+#, fuzzy
+msgid "Source text"
+msgstr "Джерельний файл"
+
+#: ../src/edframe.cpp:536
+#, fuzzy
+msgid "Source text:"
+msgstr "Джерельний файл"
+
+#: ../src/resources/properties.xrc:179
+msgid "Sources keywords"
+msgstr ""
+
+#: ../src/resources/properties.xrc:158
+#, fuzzy
+msgid "Sources paths"
+msgstr "Шляхи пошуку"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages).
+#: ../src/edframe.cpp:885
+#, c-format
+msgid "Spellchecker dictionary for %s isn't available, you need to install it."
+msgstr ""
+
+#: ../src/resources/find.xrc:43
 msgid "Start from the first item"
 msgstr "Почати з першого елементу"
 
-#: standard input:9
+#: ../src/resources/find.xrc:21
 msgid "String to find:"
 msgstr "Знайти рядок:"
 
-#: ../src/export_html.cpp:133 standard input:150
+#: ../src/edframe.cpp:1927
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr ""
+
+#: ../src/export_html.cpp:115 ../src/resources/properties.xrc:48
 msgid "Team's email address:"
 msgstr "Електронна пошта команди:"
 
-#: ../src/export_html.cpp:129 standard input:149
+#: ../src/export_html.cpp:111 ../src/resources/properties.xrc:34
 msgid "Team:"
 msgstr "Команда:"
 
-#: ../src/catalog.cpp:1324
+#: ../src/catalog.cpp:1353
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as\n"
@@ -993,7 +1371,27 @@ msgstr ""
 "у налаштуваннях каталогу. Натомість збережено у кодуванні UTF-8 та \n"
 "змінено відповідно і у налаштуваннях."
 
-#: ../src/catalog.cpp:1041
+#: ../src/edframe.cpp:1380
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+
+#: ../src/edframe.cpp:1396
+#, fuzzy
+msgid "The translation is ready for use."
+msgstr "Пам'ять перекладів"
+
+#: ../src/catalog.cpp:1311
+msgid ""
+"There was a problem formatting the file nicely (but it was saved all right)."
+msgstr ""
+
+#: ../src/transmem.cpp:1193
+msgid "There was a problem moving your translation memory."
+msgstr ""
+
+#: ../src/catalog.cpp:1030
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -1001,7 +1399,7 @@ msgstr ""
 "При завантаженні каталогу виникли помилки. В результаті деякі дані можуть "
 "бути відсутніми або бути пошкоджені."
 
-#: standard input:166
+#: ../src/resources/summary.xrc:38
 msgid ""
 "These strings are no longer in the sources.\n"
 "Poedit will remove them from the catalog now."
@@ -1009,7 +1407,7 @@ msgstr ""
 "Цих рядків вже немає у джерельних текстах.\n"
 "Poedit вилучить їх з каталогу."
 
-#: standard input:164
+#: ../src/resources/summary.xrc:17
 msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "Poedit will add them to the catalog now."
@@ -1017,17 +1415,13 @@ msgstr ""
 "Ці рядки було знайдено у джерельних текстах, але вони відсутні у каталозі.\n"
 "Poedit додасть їх до каталогу."
 
-#: ../src/edapp.cpp:174
+#: ../src/edframe.cpp:1907
 msgid ""
-"This is first time you run Poedit.\n"
-"Please fill in your name and email address.\n"
-"(This information is used only in catalogs headers)"
+"This catalog has entries with plural forms, but doesn't have Plural-Forms "
+"header configured."
 msgstr ""
-"Це Ваш перший запуск Poedit.\n"
-"Будь ласка, введіть Ваше ім'я та адресу електронної пошти.\n"
-"(Ця інформація буде використана для заголовків каталогів)"
 
-#: standard input:132
+#: ../src/resources/prefs.xrc:488
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1039,7 +1433,7 @@ msgstr ""
 "%K на список ключових слів, %F на список\n"
 "вхідних файлів, %C на кодування (див. далі)."
 
-#: standard input:138
+#: ../src/resources/prefs.xrc:545
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1048,7 +1442,7 @@ msgstr ""
 "Це буде додано до командного рядку лише якщо вказано\n"
 "кодування файлів з джерельними кодами. %c замінюється на кодування."
 
-#: standard input:136
+#: ../src/resources/prefs.xrc:526
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1057,7 +1451,7 @@ msgstr ""
 "Це буде додано до командного рядку для кожного\n"
 "вхідного файлу. %f замінюється на ім'я файлу."
 
-#: standard input:134
+#: ../src/resources/prefs.xrc:507
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -1065,35 +1459,45 @@ msgstr ""
 "Це буде додано до командного рядку для кожного\n"
 "ключового слова. %k замінюється на ключове слово."
 
-#: standard input:184
+#: ../src/resources/toolbar.xrc:52
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Натиснуто, якщо рядок містить неточний переклад"
 
-#: ../src/manager.cpp:271
+#: ../src/manager.cpp:245
 msgid "Total"
 msgstr "Всього"
 
-#: ../src/edlistctrl.cpp:312 ../src/export_html.cpp:166
+#: ../src/edlistctrl.cpp:326 ../src/export_html.cpp:148
 msgid "Translation"
 msgstr "Переклад"
 
-#: standard input:107
+#: ../src/resources/menus.xrc:79
+#, fuzzy
+msgid "Translation Is &Fuzzy"
+msgstr "Переклад є &неточним"
+
+#: ../src/resources/prefs.xrc:245
 msgid "Translation Memory"
 msgstr "Пам'ять перекладів"
 
-#: ../src/transmemupd_wizard.cpp:144
+#: ../src/transmemupd_wizard.cpp:140
 msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 msgstr "Файли перекладів (*.po;*.mo)|*.po;*.mo"
 
-#: ../src/transmemupd_wizard.cpp:142
+#: ../src/transmemupd_wizard.cpp:138
 msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 msgstr "Файли перекладів (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
 
-#: standard input:51
+#: ../src/resources/menus.xrc:78
 msgid "Translation is &fuzzy"
 msgstr "Переклад є &неточним"
 
-#: standard input:175
+#: ../src/transmem.cpp:661
+#, fuzzy, c-format
+msgid "Translation memory database error: %s"
+msgstr "Помилка бази даних: %s"
+
+#: ../src/resources/tm_update.xrc:68
 msgid ""
 "Translation memory will be built from the files listed below.\n"
 "You can add more files to the list now."
@@ -1101,97 +1505,157 @@ msgstr ""
 "Пам'ять перекладів буде поновлено з перелічених файлів.\n"
 "Ви можете додати інші файли до цього списку."
 
-#: standard input:170
+#: ../src/resources/properties.xrc:119
+#, fuzzy
+msgid "Translation properties"
+msgstr "Пам'ять перекладів"
+
+#: ../src/edframe.cpp:544
+#, fuzzy
+msgid "Translation:"
+msgstr "Переклад"
+
+#: ../src/propertiesdlg.cpp:73
+msgid "UTF-8 (recommended)"
+msgstr ""
+
+#: ../src/resources/summary.xrc:79
 msgid "Undo"
 msgstr "Скасувати"
 
-#: standard input:93
-msgid "Unix"
-msgstr "Unix"
+#: ../src/resources/prefs.xrc:157
+msgid "Unix (recommended)"
+msgstr ""
 
-#: ../src/chooselang.cpp:71
+#: ../src/chooselang.cpp:60
 #, c-format
 msgid "Unknown locale code '%s' in registry."
 msgstr "Невідомий код локалі '%s' у реєстрі."
 
-#: ../src/manager.cpp:272
+#: ../src/manager.cpp:246
 msgid "Untrans"
 msgstr "Без перекладу"
 
-#: standard input:181
+#: ../src/resources/toolbar.xrc:44
 msgid "Update"
 msgstr "Поновити"
 
-#: standard input:26
+#: ../src/resources/manager.xrc:59
 msgid "Update all"
 msgstr "Поновити усе"
 
-#: standard input:27
+#: ../src/resources/manager.xrc:60
 msgid "Update all catalogs in the project"
 msgstr "Поновити усі каталоги в цьому проекті"
 
-#: standard input:182
+#: ../src/resources/toolbar.xrc:45
 msgid "Update catalog - synchronize it with sources"
 msgstr "Поновлення каталогу - синхронізація з джерельними текстами"
 
-#: standard input:56
+#: ../src/resources/menus.xrc:103
+#, fuzzy
+msgid "Update from &POT File..."
+msgstr "Поновити з POT-файлу..."
+
+#: ../src/resources/menus.xrc:102
 msgid "Update from &POT file..."
 msgstr "Поновити з POT-файлу..."
 
-#: standard input:163
+#: ../src/resources/summary.xrc:4
 msgid "Update summary"
 msgstr "Підсумок про поновлення"
 
-#: standard input:171
+#: ../src/resources/tm_update.xrc:4
 msgid "Update translation memory"
 msgstr "Поновити пам'ять перекладів"
 
-#: ../src/catalog.cpp:1442
-msgid "Updating catalog..."
+#: ../src/edframe.cpp:1297 ../src/manager.cpp:435
+#, fuzzy
+msgid "Updating catalog"
 msgstr "Поновлюється каталог..."
 
-#: ../src/edframe.cpp:1361
-msgid "Updating the catalog failed. Click on 'More>>' for details."
+#: ../src/edframe.cpp:1311
+#, fuzzy
+msgid "Updating the catalog failed. Click on 'Details >>' for details."
 msgstr "Збій поновлення каталогу. Для детальної інформації клацніть 'Далі>>'"
 
-#: standard input:105
+#: ../src/transmemupd_wizard.cpp:194
+#, fuzzy
+msgid "Updating translation memory"
+msgstr "Поновити пам'ять перекладів"
+
+#: ../src/resources/prefs.xrc:213
 msgid "Use custom font for text fields"
 msgstr "Власний шрифт для текстових полів"
 
-#: standard input:103
+#: ../src/resources/prefs.xrc:187
 msgid "Use custom font for translations list"
 msgstr "Власний шрифт для списку перекладів"
 
-#: standard input:159
+#: ../src/resources/properties.xrc:166
+#, fuzzy
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
-"in source files, in addition to default ones."
+"in source files:"
 msgstr ""
 "Використовувати ці ключові слова (назви функцій) додатково до\n"
 "типових для розпізнавання у джерельних файлах рядків,\n"
 "придатних для перекладу."
 
-#: standard input:12
+#: ../src/resources/toolbar.xrc:38
+msgid "Validate"
+msgstr ""
+
+#: ../src/edframe.cpp:1372 ../src/edframe.cpp:1392
+#, fuzzy
+msgid "Validation results"
+msgstr "Пам'ять перекладів"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: ../src/edframe.cpp:2428
+#, fuzzy, c-format
+msgid "Version %s"
+msgstr "версія"
+
+#: ../src/resources/prefs.xrc:255
+msgid "What languages do you want to use the TM with?"
+msgstr ""
+
+#: ../src/resources/find.xrc:50
 msgid "Whole words only"
 msgstr "Лише повні слова"
 
-#: standard input:94
+#: ../src/resources/prefs.xrc:158
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/edframe.cpp:1070
+#: ../src/edframe.cpp:378
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Не можна перетягувати на вікно Poedit більш аніж один файл."
 
-#: ../src/chooselang.cpp:175
+#: ../src/chooselang.cpp:173
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Перезапустіть Poedit, щоб зміни набули чинності."
 
-#: standard input:77
+#: ../src/edframe.cpp:1891
+#, fuzzy
+msgid ""
+"You should set your email address in Preferences so that it can be used for "
+"Last-Translator header in GNU gettext files."
+msgstr ""
+"Ваше ім'я і електронна пошта вказані нище використовується тільки для "
+"встановлення даних про останнього перекладача в загаловку GNU gettext файлів."
+
+#: ../src/edframe.cpp:992
+msgid "Your changes will be lost if you don't save them."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:44
 msgid "Your email address:"
 msgstr "Адреса Вашої електронної пошти:"
 
-#: standard input:75
+#: ../src/resources/prefs.xrc:22
 msgid ""
 "Your name and email set below are only used\n"
 "to set the Last-Translator header of GNU gettext files."
@@ -1199,32 +1663,113 @@ msgstr ""
 "Ваше ім'я і електронна пошта вказані нище використовується тільки для "
 "встановлення даних про останнього перекладача в загаловку GNU gettext файлів."
 
-#: standard input:76
+#: ../src/resources/prefs.xrc:30
 msgid "Your name:"
 msgstr "Ваше ім'я:"
 
-#: ../src/edframe.cpp:1978
-#, c-format
-msgid "[checking translations: %i left]"
-msgstr "[перевірка перекладів: %i лишилося]"
+#: ../src/edapp.cpp:372
+msgid "don't delete temporary files (for debugging)"
+msgstr ""
 
-#: standard input:96
-msgid "current platform's default"
-msgstr "для поточної платформи за умовчанням"
+#, fuzzy
+#~ msgid "Automatic C&omments Window"
+#~ msgstr "Показати вікно автоматичних ко&ментарів"
 
-#: ../src/edframe.cpp:2274
-msgid "none"
-msgstr "нема"
+#, fuzzy
+#~ msgid "Automatic c&omments window"
+#~ msgstr "Показати вікно автоматичних ко&ментарів"
+
+#, fuzzy
+#~ msgid "Automatic comments:"
+#~ msgstr "Шукати в автоматичних коментарях"
+
+#~ msgid "Cannot execute program: "
+#~ msgstr "Не вдається виконати програму: "
+
+#~ msgid "Country:"
+#~ msgstr "Країна:"
+
+#~ msgid "Gettext syntax error"
+#~ msgstr "Синтаксична помилка Gettext"
+
+#, fuzzy
+#~ msgid "[checking translations: %i left]"
+#~ msgid_plural "[checking translations: %i left]"
+#~ msgstr[0] "[перевірка перекладів: %i лишилося]"
+#~ msgstr[1] "[перевірка перекладів: %i лишилося]"
+#~ msgstr[2] "[перевірка перекладів: %i лишилося]"
+
+#~ msgid "&Contents..."
+#~ msgstr "&Зміст..."
+
+#~ msgid "&Fullscreen view"
+#~ msgstr "&Повноекранний режим"
+
+#~ msgid "&Settings..."
+#~ msgstr "&Налаштування..."
+
+#~ msgid "(%f will be substituted with filename, %l with line number)"
+#~ msgstr "(%f буде замінено на ім'я файлу, %l - на номер рядка)"
+
+#~ msgid "Edit the file in text editor"
+#~ msgstr "Змінити файл у текстовому редакторі"
+
+#~ msgid "Editor executable:"
+#~ msgstr "Зовнішній редактор:"
 
 #~ msgid "Error initializing spell checking: %s"
 #~ msgstr "Помилка ініціалізації перевірки орфографії: %s"
 
+#~ msgid "External editor"
+#~ msgstr "Зовнішній редактор"
+
+#~ msgid "Fullscreen view"
+#~ msgstr "Повноекранний режим"
+
+#~ msgid "GNU gettext documentation"
+#~ msgstr "Документація GNU gettext"
+
+#~ msgid "Macintosh"
+#~ msgstr "Macintosh"
+
 #~ msgid "My Project"
 #~ msgstr "Мій проект"
 
-#, fuzzy
-#~ msgid "translations editor"
-#~ msgstr "Пам'ять перекладів"
+#~ msgid "No editor specified. Please set it in Preferences dialog."
+#~ msgstr "Не вказано редактор. Задайте у вікні параметрів."
+
+#~ msgid "Open source files in editor, not in file viewer"
+#~ msgstr "Відкривати джерельні файли у редакторі, а не у програмі перегляду"
+
+#~ msgid "Original string"
+#~ msgstr "Початковий рядок"
+
+#~ msgid "Path to DB:"
+#~ msgstr "Шлях до бази перекладів:"
+
+#~ msgid "Settings"
+#~ msgstr "Налаштування"
+
+#~ msgid "Setup"
+#~ msgstr "Конфігурація"
+
+#~ msgid ""
+#~ "This is first time you run Poedit.\n"
+#~ "Please fill in your name and email address.\n"
+#~ "(This information is used only in catalogs headers)"
+#~ msgstr ""
+#~ "Це Ваш перший запуск Poedit.\n"
+#~ "Будь ласка, введіть Ваше ім'я та адресу електронної пошти.\n"
+#~ "(Ця інформація буде використана для заголовків каталогів)"
+
+#~ msgid "Unix"
+#~ msgstr "Unix"
+
+#~ msgid "current platform's default"
+#~ msgstr "для поточної платформи за умовчанням"
+
+#~ msgid "none"
+#~ msgstr "нема"
 
 #~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
 #~ msgstr ""
@@ -1234,17 +1779,11 @@ msgstr "нема"
 #~ msgid "'."
 #~ msgstr "'."
 
-#~ msgid "About Poedit"
-#~ msgstr "Інформація про Poedit"
-
-#~ msgid "version"
-#~ msgstr "версія"
+#~ msgid "Failed to read extracted catalog."
+#~ msgstr "Не вдалося прочитати добутий каталог."
 
 #~ msgid " files..."
 #~ msgstr " файлів..."
-
-#~ msgid "Display quotes around the string?"
-#~ msgstr "Показувати лапки навколо рядка?"
 
 #~ msgid "Error while loading file '%s': line %u is corrupted."
 #~ msgstr "Помилка завантаження файлу '%s': пошкоджений рядок %u."
