@@ -1817,7 +1817,7 @@ void PoeditFrame::UpdateToTextCtrl()
             wxString::Format("<b>%s</b> %s", prefix, EscapeMarkup(ctxt)));
 #else
         m_labelContext->SetLabel(
-            wxString::Format(_T("%s %s"), prefix.c_str(), ctxt.c_str());
+            wxString::Format(_T("%s %s"), prefix.c_str(), ctxt.c_str()));
 #endif
     }
     m_labelContext->GetContainingSizer()->Show(m_labelContext, entry->HasContext());
@@ -2046,7 +2046,9 @@ void PoeditFrame::DoGiveHelp(const wxString& text, bool show)
 
 void PoeditFrame::UpdateTitle()
 {
+#ifdef __WXMAC__
     OSXSetModified(IsModified());
+#endif
 
     wxString title;
     if ( !m_fileName.empty() )
@@ -2059,7 +2061,7 @@ void PoeditFrame::UpdateTitle()
 #ifndef __WXOSX__
         if ( IsModified() )
             title += _(" (modified)");
-        title += " - Poedit";
+        title += _T(" - Poedit");
 #endif
     }
     else
