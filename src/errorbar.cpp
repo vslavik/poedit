@@ -31,10 +31,17 @@
 #include <wx/stattext.h>
 #include <wx/dcclient.h>
 
+namespace
+{
+
+const wxColour gs_ErrorColor(_T("#ff5050"));
+
+} // anonymous namespace
+
 
 ErrorBar::ErrorBar(wxWindow *parent)
     : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-              wxTAB_TRAVERSAL | wxBORDER_NONE)
+              wxTAB_TRAVERSAL | wxBORDER_NONE | wxFULL_REPAINT_ON_RESIZE)
 {
     Bind(wxEVT_PAINT, &ErrorBar::OnPaint, this);
 
@@ -43,10 +50,11 @@ ErrorBar::ErrorBar(wxWindow *parent)
 #endif
 
     m_label = new wxStaticText(this, wxID_ANY, wxEmptyString);
+    m_label->SetBackgroundColour(gs_ErrorColor);
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->AddSpacer(wxSizerFlags::GetDefaultBorder());
-    sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxTOP | wxBOTTOM, 3));
+    sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxTOP | wxBOTTOM | wxRIGHT, 3));
 
     SetSizer(sizer);
 
@@ -79,7 +87,7 @@ void ErrorBar::HideError()
 void ErrorBar::OnPaint(wxPaintEvent&)
 {
     wxPaintDC dc(this);
-    dc.SetBrush(wxColour("#ff5050"));
-    dc.SetPen(wxNullPen);
+    dc.SetBrush(gs_ErrorColor);
+    dc.SetPen(gs_ErrorColor);
     dc.DrawRoundedRectangle(wxPoint(0,0), dc.GetSize(), 2.0);
 }
