@@ -218,9 +218,9 @@ class CatalogItem
         /// Gets value of automatic translation flag.
         bool IsAutomatic() const { return m_isAutomatic; }
         /// Sets the number of the line this entry occurs on.
-        void SetLineNumber(unsigned line) { m_lineNum = line; }
+        void SetLineNumber(int line) { m_lineNum = line; }
         /// Get line number of this entry.
-        unsigned GetLineNumber() const { return m_lineNum; }
+        int GetLineNumber() const { return m_lineNum; }
 
         /** Returns true if the gettext flags line contains "foo-format"
             flag when called with "foo" as argument. */
@@ -281,7 +281,7 @@ class CatalogItem
         wxString m_moreFlags;
         wxString m_comment;
         Validity m_validity;
-        unsigned m_lineNum;
+        int m_lineNum;
         wxString m_errorString;
         Bookmark m_bookmark;
 };
@@ -355,9 +355,9 @@ class CatalogDeletedData
         wxString GetFlags() const {return m_flags;};
 
         /// Sets the number of the line this entry occurs on.
-        void SetLineNumber(unsigned line) { m_lineNum = line; }
+        void SetLineNumber(int line) { m_lineNum = line; }
         /// Get line number of this entry.
-        unsigned GetLineNumber() const { return m_lineNum; }
+        int GetLineNumber() const { return m_lineNum; }
 
         /// Adds new autocomments (#. )
         void AddAutoComments(const wxString& com)
@@ -377,7 +377,7 @@ class CatalogDeletedData
         wxArrayString m_references, m_autocomments;
         wxString m_flags;
         wxString m_comment;
-        unsigned m_lineNum;
+        int m_lineNum;
 };
 
 
@@ -489,7 +489,7 @@ class Catalog
             Note that \a po_file refers to .po file, .mo file will have same
             name & location as .po file except for different extension.
          */
-        bool Save(const wxString& po_file, bool save_mo = true);
+        bool Save(const wxString& po_file, bool save_mo, int& validation_errors);
 
         /// Exports the catalog to HTML format
         bool ExportToHTML(const wxString& filename);
@@ -564,6 +564,9 @@ class Catalog
         /// Removes all obsolete translations from the catalog
         void RemoveDeletedItems();
 
+        /// Finds item by line number
+        CatalogItem *FindItemByLine(int lineno);
+
         /// Sets the given item to have the given bookmark and returns the index
         /// of the item that previously had this bookmark (or -1)
         int SetBookmark(int id, Bookmark bookmark);
@@ -574,7 +577,13 @@ class Catalog
             return m_header.Bookmarks[bookmark];
         }
 
+
+        /// Validates correctness of the translation by running msgfmt
+        /// Returns number of errors (i.e. 0 if no errors).
+        int Validate();
+
     protected:
+        int DoValidate(const wxString& po_file);
         bool DoSaveOnly(const wxString& po_file);
 
         /** Merges the catalog with reference catalog

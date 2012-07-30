@@ -67,7 +67,7 @@ inline bool IsAlmostWhite(const wxColour& clr)
 
 // colours used in the list:
 
-const wxColour gs_ErrorColor(_T("#ff0000"));
+const wxColour gs_ErrorColor(_T("#ff5050"));
 
 // colors for white list control background
 const wxColour gs_UntranslatedForWhite(_T("#103f67"));
@@ -279,8 +279,8 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     //       anything
 
     // FIXME: todo; use appropriate font for fuzzy/trans/untrans
-    m_attrInvalid[0].SetTextColour(gs_ErrorColor);
-    m_attrInvalid[1].SetTextColour(gs_ErrorColor);
+    m_attrInvalid[0].SetBackgroundColour(gs_ErrorColor);
+    m_attrInvalid[1].SetBackgroundColour(gs_ErrorColor);
 
     SetCustomFont(wxNullFont);
 }
@@ -308,6 +308,9 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
 
     m_attrFuzzy[0].SetFont(fontb);
     m_attrFuzzy[1].SetFont(fontb);
+
+    m_attrInvalid[0].SetFont(fontb);
+    m_attrInvalid[1].SetFont(fontb);
 }
 
 void PoeditListCtrl::SetDisplayLines(bool dl)
@@ -477,12 +480,12 @@ wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
 
     const CatalogItem& d = ListIndexToCatalogItem(item);
 
-    if (!d.IsTranslated())
+    if (d.GetValidity() == CatalogItem::Val_Invalid)
+        return (wxListItemAttr*)&m_attrInvalid[idx];
+    else if (!d.IsTranslated())
         return (wxListItemAttr*)&m_attrUntranslated[idx];
     else if (d.IsFuzzy())
         return (wxListItemAttr*)&m_attrFuzzy[idx];
-    else if (d.GetValidity() == CatalogItem::Val_Invalid)
-        return (wxListItemAttr*)&m_attrInvalid[idx];
     else
         return (wxListItemAttr*)&m_attrNormal[idx];
 }

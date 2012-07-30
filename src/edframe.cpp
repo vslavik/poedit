@@ -78,6 +78,7 @@
 #include "manager.h"
 #include "pluralforms/pl_evaluate.h"
 #include "attentionbar.h"
+#include "errorbar.h"
 #include "utility.h"
 
 #include <wx/listimpl.cpp>
@@ -275,7 +276,6 @@ class ListHandler : public wxEvtHandler
 
     private:
         void OnSel(wxListEvent& event) { m_frame->OnListSel(event); }
-        void OnActivated(wxListEvent& event) { m_frame->OnListActivated(event); }
         void OnRightClick(wxMouseEvent& event) { m_frame->OnListRightClick(event); }
         void OnFocus(wxFocusEvent& event) { m_frame->OnListFocus(event); }
 
@@ -286,7 +286,6 @@ class ListHandler : public wxEvtHandler
 
 BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
    EVT_LIST_ITEM_SELECTED  (ID_LIST, ListHandler::OnSel)
-   EVT_LIST_ITEM_ACTIVATED (ID_LIST, ListHandler::OnActivated)
    EVT_RIGHT_DOWN          (          ListHandler::OnRightClick)
    EVT_SET_FOCUS           (          ListHandler::OnFocus)
 END_EVENT_TABLE()
@@ -324,6 +323,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_PREFERENCES,          PoeditFrame::OnPreferences)
    EVT_MENU           (XRCID("menu_update"),      PoeditFrame::OnUpdate)
    EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdate)
+   EVT_MENU           (XRCID("menu_validate"),    PoeditFrame::OnValidate)
    EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
    EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
    EVT_MENU           (XRCID("menu_quotes"),      PoeditFrame::OnQuotesFlag)
@@ -582,6 +582,8 @@ PoeditFrame::PoeditFrame() :
 
     m_pluralNotebook = new wxNotebook(m_bottomLeftPanel, -1);
 
+    m_errorBar = new ErrorBar(m_bottomLeftPanel);
+
     SetCustomFonts();
     SetAccelerators();
 
@@ -605,6 +607,7 @@ PoeditFrame::PoeditFrame() :
     leftSizer->Add(labelTrans, 0, wxEXPAND | wxALL, 3);
     leftSizer->Add(m_textTrans, 1, wxEXPAND);
     leftSizer->Add(m_pluralNotebook, 1, wxEXPAND);
+    leftSizer->Add(m_errorBar, 0, wxEXPAND | wxALL, 2);
     rightSizer->Add(m_labelAutoComments, 0, wxEXPAND | wxALL, 3);
     rightSizer->Add(m_textAutoComments, 1, wxEXPAND);
     rightSizer->Add(m_labelComment, 0, wxEXPAND | wxALL, 3);
@@ -1342,6 +1345,60 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
 }
 
 
+void PoeditFrame::OnValidate(wxCommandEvent&)
+{
+    wxBusyCursor bcur;
+    ReportValidationErrors(m_catalog->Validate(), false);
+}
+
+
+void PoeditFrame::ReportValidationErrors(int errors, bool from_save)
+{
+    if ( errors )
+    {
+        m_list->RefreshItem(0);
+        RefreshControls();
+
+        wxMessageDialog dlg
+        (
+            this,
+            wxString::Format
+            (
+                wxPLURAL("%d issue with the translation found.",
+                         "%d issues with the translation found.",
+                         errors),
+                errors
+            ),
+            _("Validation results"),
+            wxOK | wxICON_ERROR
+        );
+#if wxCHECK_VERSION(2,9,0)
+        wxString details = _("Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry.");
+        if ( from_save )
+        {
+            details += "\n\n";
+            details += _("The file was saved safely, but it cannot be compiled into the MO format and used.");
+        }
+        dlg.SetExtendedMessage(details);
+#endif
+        dlg.ShowModal();
+    }
+    else
+    {
+        wxMessageDialog dlg
+        (
+            this,
+            _("No problems with the translation found."),
+            _("Validation results"),
+            wxOK | wxICON_INFORMATION
+        );
+#if wxCHECK_VERSION(2,9,0)
+        dlg.SetExtendedMessage(_("The translation is ready for use."));
+#endif
+        dlg.ShowModal();
+    }
+}
+
 
 void PoeditFrame::OnListSel(wxListEvent& event)
 {
@@ -1359,23 +1416,6 @@ void PoeditFrame::OnListSel(wxListEvent& event)
             m_textTrans->SetFocus();
         else if (!m_textTransPlural.empty())
             m_textTransPlural[0]->SetFocus();
-    }
-}
-
-
-void PoeditFrame::OnListActivated(wxListEvent& event)
-{
-    if (m_catalog)
-    {
-        int ind = m_list->ListIndexToCatalog(event.GetIndex());
-        if (ind >= (int)m_catalog->GetCount()) return;
-        CatalogItem& entry = (*m_catalog)[ind];
-        if (entry.GetValidity() == CatalogItem::Val_Invalid)
-        {
-            wxMessageBox(entry.GetErrorString(),
-                         _("Gettext syntax error"),
-                         wxOK | wxICON_ERROR);
-        }
     }
 }
 
@@ -1784,6 +1824,11 @@ void PoeditFrame::UpdateToTextCtrl()
     if (m_displayCommentWin)
         m_textComment->SetValue(t_c);
 
+    if( entry->GetValidity() == CatalogItem::Val_Invalid )
+        m_errorBar->ShowError(entry->GetErrorString());
+    else
+        m_errorBar->HideError();
+
     if (m_displayAutoCommentsWin)
         m_textAutoComments->SetValue(t_ac);
 
@@ -2038,10 +2083,12 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_export"), editable);
     toolbar->EnableTool(wxID_SAVE, editable);
     toolbar->EnableTool(XRCID("menu_update"), editable);
+    toolbar->EnableTool(XRCID("menu_validate"), editable);
     toolbar->EnableTool(XRCID("menu_fuzzy"), editable);
     toolbar->EnableTool(XRCID("menu_comment"), editable);
 
     menubar->Enable(XRCID("menu_update"), editable);
+    menubar->Enable(XRCID("menu_validate"), editable);
     menubar->Enable(XRCID("menu_fuzzy"), editable);
     menubar->Enable(XRCID("menu_comment"), editable);
     menubar->Enable(XRCID("menu_copy_from_src"), editable);
@@ -2096,7 +2143,8 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
     dt.Translator = wxConfig::Get()->Read(_T("translator_name"), dt.Translator);
     dt.TranslatorEmail = wxConfig::Get()->Read(_T("translator_email"), dt.TranslatorEmail);
 
-    if ( !m_catalog->Save(catalog) )
+    int validation_errors = 0;
+    if ( !m_catalog->Save(catalog, true, validation_errors) )
         return false;
 
     m_fileName = catalog;
@@ -2142,6 +2190,9 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
 
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(m_fileName);
+
+    if ( validation_errors )
+        ReportValidationErrors(validation_errors, true);
 
     return true;
 }

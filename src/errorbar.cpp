@@ -1,0 +1,85 @@
+/*
+ *  This file is part of Poedit (http://www.poedit.net)
+ *
+ *  Copyright (C) 2012 Vaclav Slavik
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
+ *  Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ *  DEALINGS IN THE SOFTWARE.
+ *
+ */
+
+#include "errorbar.h"
+
+#include "utility.h"
+
+#include <wx/sizer.h>
+#include <wx/stattext.h>
+#include <wx/dcclient.h>
+
+
+ErrorBar::ErrorBar(wxWindow *parent)
+    : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+              wxTAB_TRAVERSAL | wxBORDER_NONE)
+{
+    Bind(wxEVT_PAINT, &ErrorBar::OnPaint, this);
+
+#ifdef __WXMAC__
+    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+
+    m_label = new wxStaticText(this, wxID_ANY, wxEmptyString);
+
+    wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer->AddSpacer(wxSizerFlags::GetDefaultBorder());
+    sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxTOP | wxBOTTOM, 3));
+
+    SetSizer(sizer);
+
+    // the bar should be initially hidden
+    Show(false);
+}
+
+
+void ErrorBar::ShowError(const wxString& error)
+{
+    const wxString prefix = _("Error:");
+#if wxCHECK_VERSION(2,9,2)
+    m_label->SetLabelMarkup(
+        wxString::Format("<b>%s</b> %s", prefix, EscapeMarkup(error)));
+#else
+    m_label->SetLabel(
+        wxString::Format(_T("%s %s"), prefix.c_str(), error.c_str());
+#endif
+
+    GetContainingSizer()->Show(this);
+}
+
+
+void ErrorBar::HideError()
+{
+    GetContainingSizer()->Hide(this);
+}
+
+
+void ErrorBar::OnPaint(wxPaintEvent&)
+{
+    wxPaintDC dc(this);
+    dc.SetBrush(wxColour("#ff5050"));
+    dc.SetPen(wxNullPen);
+    dc.DrawRoundedRectangle(wxPoint(0,0), dc.GetSize(), 2.0);
+}

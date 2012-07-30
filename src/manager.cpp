@@ -444,7 +444,8 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
             {
                 Catalog cat(f);
                 cat.Update(&pinfo);
-                cat.Save(f, false);
+                int validation_errors = 0;
+                cat.Save(f, false, validation_errors);
             }
          }
 

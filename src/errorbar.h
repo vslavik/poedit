@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2012 Vaclav Slavik
+ *  Copyright (C) 2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,31 +23,29 @@
  *
  */
 
-#ifndef _GEXECUTE_H_
-#define _GEXECUTE_H_
+#ifndef _ERRORBAR_H_
+#define _ERRORBAR_H_
 
-#include <wx/string.h>
-#include <vector>
+#include <wx/panel.h>
 
+class WXDLLIMPEXP_FWD_CORE wxStaticText;
 
-struct GettextError
+/**
+    Error bar displays an error under the translation.
+ */
+class ErrorBar : public wxPanel
 {
-    int line;
-    wxString text;
+public:
+    ErrorBar(wxWindow *parent);
+
+    void ShowError(const wxString& error);
+    void HideError();
+
+private:
+    void OnPaint(wxPaintEvent& event);
+
+private:
+    wxStaticText *m_label;
 };
 
-typedef std::vector<GettextError> GettextErrors;
-
-
-/** Executes command. Writes stderr output to \a stderrOutput if not NULL,
-    and logs it with wxLogError otherwise.
-    \return true if program exited with exit code 0, false otherwise.
- */
-extern bool ExecuteGettext(const wxString& cmdline);
-
-/// Like ExecuteGettext(), but stores error output parsed into per-item entries.
-extern bool ExecuteGettextAndParseOutput(const wxString& cmdline,
-                                         GettextErrors& errors);
-
-
-#endif // _GEXECUTE_H_
+#endif // _ERRORBAR_H_

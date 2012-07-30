@@ -53,6 +53,7 @@ class TransTextctrlHandler;
 class TranslationMemory;
 class PoeditFrame;
 class AttentionBar;
+class ErrorBar;
 
 WX_DECLARE_LIST(PoeditFrame, PoeditFramesList);
 
@@ -177,8 +178,8 @@ class PoeditFrame : public wxFrame
         void OnProperties(wxCommandEvent& event);
         void OnPreferences(wxCommandEvent& event);
         void OnUpdate(wxCommandEvent& event);
+        void OnValidate(wxCommandEvent& event);
         void OnListSel(wxListEvent& event);
-        void OnListActivated(wxListEvent& event);
         void OnListRightClick(wxMouseEvent& event);
         void OnListFocus(wxFocusEvent& event);
         void OnCloseWindow(wxCloseEvent& event);
@@ -228,6 +229,8 @@ class PoeditFrame : public wxFrame
 
         void RefreshSelectedItem();
 
+        void ReportValidationErrors(int errors, bool from_save);
+
         DECLARE_EVENT_TABLE()
 
     private:
@@ -249,6 +252,7 @@ class PoeditFrame : public wxFrame
         PoeditListCtrl *m_list;
         wxStaticText *m_labelComment, *m_labelAutoComments;
         wxStaticText *m_labelContext;
+        ErrorBar *m_errorBar;
         wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textTrans, *m_textComment, *m_textAutoComments;
         std::vector<wxTextCtrl*> m_textTransPlural;
         wxTextCtrl *m_textTransSingularForm;

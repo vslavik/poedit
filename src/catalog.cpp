@@ -1079,6 +1079,21 @@ void Catalog::RemoveDeletedItems()
     m_deletedItems.clear();
 }
 
+CatalogItem *Catalog::FindItemByLine(int lineno)
+{
+    CatalogItem *last = NULL;
+
+    for ( CatalogItemArray::iterator i = m_items.begin();
+          i != m_items.end(); ++i )
+    {
+        if ( i->GetLineNumber() > lineno )
+            return last;
+        last = &(*i);
+    }
+
+    return last;
+}
+
 void Catalog::Clear()
 {
     m_items.clear();
@@ -1246,7 +1261,7 @@ wxString FormatStringForFile(const wxString& text)
 } // anonymous namespace
 
 
-bool Catalog::Save(const wxString& po_file, bool save_mo)
+bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors)
 {
     if ( wxFileExists(po_file) && !wxFile::Access(po_file, wxFile::write) )
     {
@@ -1268,6 +1283,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
 
     if ( !DoSaveOnly(po_file_temp) )
         return false;
+
+    validation_errors = DoValidate(po_file_temp);
 
     // Now that the file was written, run msgcat to re-format it according
     // to the usual format. This is a good enough fix for #25 until proper
@@ -1302,12 +1319,15 @@ bool Catalog::Save(const wxString& po_file, bool save_mo)
         const wxString mofile = po_file.BeforeLast(_T('.')) + _T(".mo");
         if ( !ExecuteGettext
               (
-                  wxString::Format(_T("msgfmt -c -o \"%s\" \"%s\""),
+                  wxString::Format(_T("msgfmt -o \"%s\" \"%s\""),
                                    mofile.c_str(),
                                    po_file.c_str())
               ) )
         {
-            wxLogWarning(_("There were errors while compiling the saved catalog into MO file."));
+            // Don't report errors, they were reported as part of validation
+            // step above.  Notice that we run msgfmt *without* the -c flag
+            // here to create the MO file in as many cases as possible, even if
+            // it has some errors.
         }
     }
 
@@ -1352,6 +1372,7 @@ bool Catalog::DoSaveOnly(const wxString& po_file)
     for (unsigned i = 0; i < m_items.size(); i++)
     {
         CatalogItem& data = m_items[i];
+        data.SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, data.GetComment());
         for (unsigned i = 0; i < data.GetAutoComments().GetCount(); i++)
         {
@@ -1372,7 +1393,6 @@ bool Catalog::DoSaveOnly(const wxString& po_file)
             SaveMultiLines(f, _T("msgctxt \"") + FormatStringForFile(data.GetContext()) + _T("\""));
         }
         dummy = FormatStringForFile(data.GetString());
-        data.SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
         if (data.HasPlural())
         {
@@ -1401,6 +1421,7 @@ bool Catalog::DoSaveOnly(const wxString& po_file)
             f.AddLine(wxEmptyString);
 
         CatalogDeletedData& deletedItem = m_deletedItems[i];
+        deletedItem.SetLineNumber(f.GetLineCount()+1);
         SaveMultiLines(f, deletedItem.GetComment());
         for (unsigned i = 0; i < deletedItem.GetAutoComments().GetCount(); i++)
             f.AddLine(_T("#. ") + deletedItem.GetAutoComments()[i]);
@@ -1409,7 +1430,6 @@ bool Catalog::DoSaveOnly(const wxString& po_file)
         wxString dummy = deletedItem.GetFlags();
         if (!dummy.empty())
             f.AddLine(dummy);
-        deletedItem.SetLineNumber(f.GetLineCount()+1);
 
         for (size_t j = 0; j < deletedItem.GetDeletedLines().GetCount(); j++)
             f.AddLine(deletedItem.GetDeletedLines()[j]);
@@ -1422,8 +1442,51 @@ bool Catalog::DoSaveOnly(const wxString& po_file)
 }
 
 
+int Catalog::Validate()
+{
+    TempDirectory tmpdir;
+    if ( !tmpdir.IsOk() )
+        return 0;
 
+    wxString tmp_po = tmpdir.CreateFileName(_T("validated.po"));
+    if ( !DoSaveOnly(tmp_po) )
+        return 0;
 
+    return DoValidate(tmp_po);
+}
+
+int Catalog::DoValidate(const wxString& po_file)
+{
+    GettextErrors err;
+    ExecuteGettextAndParseOutput
+    (
+        wxString::Format(_T("msgfmt -o /dev/null -c \"%s\""), po_file.c_str()),
+        err
+    );
+
+    for ( CatalogItemArray::iterator i = m_items.begin();
+          i != m_items.end(); ++i )
+    {
+        i->SetValidity(CatalogItem::Val_Valid);
+    }
+
+    for ( GettextErrors::const_iterator i = err.begin(); i != err.end(); ++i )
+    {
+        if ( i->line != -1 )
+        {
+            CatalogItem *item = FindItemByLine(i->line);
+            if ( item )
+            {
+                item->SetValidity(CatalogItem::Val_Invalid);
+                item->SetErrorString(i->text);
+                continue;
+            }
+        }
+        // if not matched to an item:
+        wxLogError(i->text);
+    }
+
+    return err.size();
 }
 
 
@@ -1537,8 +1600,8 @@ bool Catalog::Merge(Catalog *refcat)
     wxString tmp2 = tmpdir.CreateFileName(_T("input.po"));
     wxString tmp3 = tmpdir.CreateFileName(_T("output.po"));
 
-    refcat->Save(tmp1, false);
-    Save(tmp2, false);
+    refcat->DoSaveOnly(tmp1);
+    DoSaveOnly(tmp2);
 
     bool succ = ExecuteGettext
                 (

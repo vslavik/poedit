@@ -39,6 +39,7 @@ uiicons_DATA = \
 		ui/toolbar-24/poedit-comment.png \
 		ui/toolbar-24/poedit-fuzzy.png \
 		ui/toolbar-24/poedit-update.png \
+		ui/toolbar-24/poedit-validate.png \
 		ui/poedit-status-automatic.png \
 		ui/poedit-status-cat-mid.png \
 		ui/poedit-status-cat-no.png \

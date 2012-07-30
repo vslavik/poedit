@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2005 Vaclav Slavik
+ *  Copyright (C) 2000-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -31,6 +31,7 @@
 #include <wx/txtstrm.h>
 #include <wx/string.h>
 #include <wx/intl.h>
+#include <wx/regex.h>
 
 #ifdef __WXMAC__
 #if wxCHECK_VERSION(2,9,0)
@@ -74,7 +75,10 @@ static wxString MacGetPathToBinary(const wxString& program)
 }
 #endif // __WXMAC__
 
-bool ExecuteGettext(const wxString& cmdline_)
+
+int DoExecuteGettext(const wxString& cmdline_,
+                     wxArrayString& gstdout,
+                     wxArrayString& gstderr)
 {
     wxString cmdline(cmdline_);
 
@@ -84,9 +88,6 @@ bool ExecuteGettext(const wxString& cmdline_)
 #endif // __WXMAC__
 
     wxLogTrace(_T("poedit.execute"), _T("executing '%s'"), cmdline.c_str());
-
-    wxArrayString gstdout;
-    wxArrayString gstderr;
 
 #if wxCHECK_VERSION(2,9,0)
     int retcode = wxExecute(cmdline, gstdout, gstderr, wxEXEC_BLOCK);
@@ -98,14 +99,54 @@ bool ExecuteGettext(const wxString& cmdline_)
     {
         wxLogError(_("Cannot execute program: %s"),
                    cmdline.BeforeFirst(_T(' ')).c_str());
-        return false;
     }
+
+    return retcode;
+}
+
+
+bool ExecuteGettext(const wxString& cmdline)
+{
+    wxArrayString gstdout;
+    wxArrayString gstderr;
+    int retcode = DoExecuteGettext(cmdline, gstdout, gstderr);
 
     for ( size_t i = 0; i < gstderr.size(); i++ )
     {
         if ( gstderr[i].empty() )
             continue;
         wxLogError(_T("%s"), gstderr[i].c_str());
+    }
+
+    return retcode == 0;
+}
+
+
+bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors)
+{
+    wxArrayString gstdout;
+    wxArrayString gstderr;
+    int retcode = DoExecuteGettext(cmdline, gstdout, gstderr);
+
+    wxRegEx reError(_T(".*\\.po:([0-9]+): (.*)"));
+
+    for ( size_t i = 0; i < gstderr.size(); i++ )
+    {
+        const wxString e = gstderr[i];
+        if ( e.empty() )
+            continue;
+
+        GettextError rec;
+
+        if ( reError.Matches(e) )
+        {
+            long num = -1;
+            reError.GetMatch(e, 1).ToLong(&num);
+            rec.line = (int)num;
+            rec.text = reError.GetMatch(e, 2);
+            errors.push_back(rec);
+        }
+        // FIXME: handle the rest of output gracefully too
     }
 
     return retcode == 0;
