@@ -59,6 +59,7 @@
 
      <target name="mingw-dlls" if="is_windows">
        <copy file="${mingw.bindir}/libgcc_s_dw2-1.dll" todir="${gettextdir}/bin"/>
+       <copy file="${mingw.bindir}/libstdc++-6.dll" todir="${gettextdir}/bin"/>
        <copy file="${mingw.bindir}/libgomp-1.dll" todir="${gettextdir}/bin"/>
        <copy file="${mingw.bindir}/pthreadGC2.dll" todir="${gettextdir}/bin"/>
     </target>
