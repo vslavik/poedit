@@ -1623,7 +1623,8 @@ static wxString TransformNewval(const wxString& val, bool displayQuotes)
             newval.RemoveLast();
     }
 
-    if (newval[0u] == _T('"')) newval.Prepend(_T("\\"));
+    if (!newval.empty() && newval[0u] == _T('"'))
+        newval.Prepend(_T("\\"));
     for (unsigned i = 1; i < newval.Len(); i++)
         if (newval[i] == _T('"') && newval[i-1] != _T('\\'))
         {
