@@ -133,3 +133,13 @@ void UserDefaults_RemoveValue(const char *key)
 
     [pool release];
 }
+
+
+// --------------------------------------------------------------------------------
+// Misc UI helpers
+// --------------------------------------------------------------------------------
+
+void MakeButtonRounded(void *button)
+{
+    [(NSButton*)button setBezelStyle:NSRoundRectBezelStyle];
+}

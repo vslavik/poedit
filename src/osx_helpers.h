@@ -46,6 +46,9 @@ void UserDefaults_SetBoolValue(const char *key, int value);
 int  UserDefaults_GetBoolValue(const char *key);
 void UserDefaults_RemoveValue(const char *key);
 
+// Misc UI helpers
+void MakeButtonRounded(void *button);
+
 #ifdef __cplusplus
 }
 #endif

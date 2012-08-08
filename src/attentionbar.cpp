@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2008 Vaclav Slavik
+ *  Copyright (C) 2008-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -32,6 +32,11 @@
 #include <wx/stattext.h>
 #include <wx/statbmp.h>
 #include <wx/config.h>
+#include <wx/dcclient.h>
+
+#ifdef __WXMAC__
+#include "osx_helpers.h"
+#endif
 
 #if defined(__WXMSW__) && wxCHECK_VERSION(2,9,0)
     #define USE_SLIDE_EFFECT
@@ -58,10 +63,6 @@ AttentionBar::AttentionBar(wxWindow *parent)
     SetBackgroundColour(bg);
     SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOTEXT));
 
-#ifdef __WXMAC__
-    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#endif
-
     m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
     m_label = new wxStaticText(this, wxID_ANY, wxEmptyString);
 
@@ -80,6 +81,15 @@ AttentionBar::AttentionBar(wxWindow *parent)
     btnClose->SetBackgroundColour(bg);
 #endif
 
+#ifdef __WXMAC__
+    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    Bind(wxEVT_PAINT, &AttentionBar::OnPaint, this);
+
+    wxFont boldFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+    boldFont.SetWeight(wxFONTWEIGHT_BOLD);
+    m_label->SetFont(boldFont);
+#endif // __WXMAC__
+
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->AddSpacer(wxSizerFlags::GetDefaultBorder());
     sizer->Add(m_icon, wxSizerFlags().Center().Border(wxRIGHT, SMALL_BORDER));
@@ -92,6 +102,31 @@ AttentionBar::AttentionBar(wxWindow *parent)
     // the bar should be initially hidden
     Show(false);
 }
+
+
+#ifdef __WXMAC__
+void AttentionBar::OnPaint(wxPaintEvent&)
+{
+    wxPaintDC dc(this);
+
+    wxRect rect(dc.GetSize());
+
+    dc.SetPen(wxColour(254,230,93));
+    dc.DrawLine(rect.GetTopLeft(), rect.GetTopRight());
+    dc.SetPen(wxColour(176,120,7));
+    dc.DrawLine(rect.GetBottomLeft(), rect.GetBottomRight());
+
+    rect.Deflate(0,1);
+    dc.GradientFillLinear
+       (
+         rect,
+         wxColour(254,220,48),
+         wxColour(253,188,11),
+         wxDOWN
+       );
+}
+#endif // __WXMAC__
+
 
 void AttentionBar::ShowMessage(const AttentionMessage& msg)
 {
@@ -127,6 +162,9 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
           i != msg.m_actions.end(); ++i )
     {
         wxButton *b = new wxButton(this, wxID_ANY, i->first);
+#ifdef __WXMAC__
+        MakeButtonRounded(b->GetHandle());
+#endif
         m_buttons->Add(b, wxSizerFlags().Center().Border(wxRIGHT, BUTTONS_SPACE));
         m_actions[b] = i->second;
     }
