@@ -47,7 +47,7 @@
 #include <wx/dnd.h>
 
 #ifdef USE_SPARKLE
-#include "osx/sparkle.h"
+#include "osx_helpers.h"
 #endif // USE_SPARKLE
 
 #ifdef USE_SPELLCHECKING
@@ -755,10 +755,6 @@ static GtkTextView *GetTextView(wxTextCtrl *ctrl)
 }
 #endif // __WXGTK__
 
-#ifdef __WXOSX__
-#include "osx/spellchecker.h"
-#endif // __WXOSX__
-
 #ifdef __WXGTK__
 static bool DoInitSpellchecker(wxTextCtrl *text,
                                bool enable, const wxString& lang)
@@ -797,8 +793,6 @@ static bool DoInitSpellchecker(wxTextCtrl *text,
 #endif // __WXGTK__
 
 #ifdef __WXOSX__
-
-#include "osx/spellchecker.h"
 
 static bool SetSpellcheckerLang(const wxString& lang)
 {
