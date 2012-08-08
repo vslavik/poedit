@@ -47,7 +47,6 @@ class PoeditListCtrl : public wxListView
                        const wxPoint &pos = wxDefaultPosition,
                        const wxSize &size = wxDefaultSize,
                        long style = wxLC_ICON,
-                       bool dispLines = false,
                        const wxValidator& validator = wxDefaultValidator,
                        const wxString &name = _T("listctrl"));
 
@@ -57,14 +56,6 @@ class PoeditListCtrl : public wxListView
         void Sort();
 
         void SizeColumns();
-
-        void SetDisplayLines(bool dl);
-
-        // Returns average width of one column in number of characters:
-        size_t GetMaxColChars() const
-        {
-            return m_colWidth * 2/*safety coefficient*/;
-        }
 
         void CatalogChanged(Catalog* catalog);
 
@@ -127,12 +118,17 @@ class PoeditListCtrl : public wxListView
         SortOrder sortOrder;
 
     private:
+        // Returns average width of one column in number of characters:
+        size_t GetMaxColChars() const
+        {
+            return m_colWidth * 2/*safety coefficient*/;
+        }
+
         void CreateSortMap();
         void CreateColumns();
         void ReadCatalog();
         void OnSize(wxSizeEvent& event);
 
-        bool m_displayLines;
         unsigned m_colWidth;
 
         Catalog* m_catalog;
