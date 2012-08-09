@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2012 Vaclav Slavik
+ *  Copyright (C) 2007-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,14 +23,21 @@
  *
  */
 
-#include "sparkle.h"
+#include "osx_helpers.h"
 
-#include "userdefaults.h"
-
-#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSString.h>
 #import <Foundation/NSUserDefaults.h>
+#import <Foundation/NSAutoreleasePool.h>
+
+#import <AppKit/NSApplication.h>
+#import <AppKit/NSButton.h>
+#import <AppKit/NSSpellChecker.h>
+
 #import <Sparkle/Sparkle.h>
 
+// --------------------------------------------------------------------------------
+// Sparkle helpers
+// --------------------------------------------------------------------------------
 
 void Sparkle_Initialize()
 {
@@ -67,4 +74,72 @@ void Sparkle_Cleanup()
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [pool release];
+}
+
+
+// --------------------------------------------------------------------------------
+// Spell checking
+// --------------------------------------------------------------------------------
+
+int SpellChecker_SetLang(const char *lang)
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSString *nslang = [NSString stringWithUTF8String: lang];
+
+    BOOL ret = [[NSSpellChecker sharedSpellChecker] setLanguage: nslang];
+
+    [pool release];
+
+    return ret;
+}
+
+
+// --------------------------------------------------------------------------------
+// Native preferences
+// --------------------------------------------------------------------------------
+
+int UserDefaults_GetBoolValue(const char *key)
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSString *nskey = [NSString stringWithUTF8String: key];
+
+    int rv = [[NSUserDefaults standardUserDefaults] boolForKey:nskey];
+
+    [pool release];
+
+    return rv;
+}
+
+
+void UserDefaults_SetBoolValue(const char *key, int value)
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSString *nskey = [NSString stringWithUTF8String: key];
+
+    [[NSUserDefaults standardUserDefaults] setBool:value forKey:nskey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    [pool release];
+}
+
+
+void UserDefaults_RemoveValue(const char *key)
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSString *nskey = [NSString stringWithUTF8String: key];
+
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:nskey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    [pool release];
+}
+
+
+// --------------------------------------------------------------------------------
+// Misc UI helpers
+// --------------------------------------------------------------------------------
+
+void MakeButtonRounded(void *button)
+{
+    [(NSButton*)button setBezelStyle:NSRoundRectBezelStyle];
 }

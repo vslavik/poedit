@@ -189,7 +189,6 @@ class PoeditFrame : public wxFrame
         void OnRightClick(wxCommandEvent& event);
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnQuotesFlag(wxCommandEvent& event);
-        void OnLinesFlag(wxCommandEvent& event);
         void OnCommentWinFlag(wxCommandEvent& event);
         void OnAutoCommentsWinFlag(wxCommandEvent& event);
         void OnCopyFromSource(wxCommandEvent& event);
@@ -266,7 +265,6 @@ class PoeditFrame : public wxFrame
         bool m_modified;
         bool m_hasObsoleteItems;
         bool m_displayQuotes;
-        bool m_displayLines;
         bool m_displayCommentWin;
         bool m_displayAutoCommentsWin;
         wxFileHistory m_history;

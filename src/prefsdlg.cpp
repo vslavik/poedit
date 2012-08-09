@@ -44,7 +44,7 @@
 #include "chooselang.h"
 
 #ifdef USE_SPARKLE
-#include "osx/userdefaults.h"
+#include "osx_helpers.h"
 #endif // USE_SPARKLE
 
 PreferencesDialog::PreferencesDialog(wxWindow *parent)
@@ -165,7 +165,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
 
 #ifdef USE_SPARKLE
     XRCCTRL(*this, "auto_updates", wxCheckBox)->SetValue(
-                UserDefaults::GetBoolValue("SUEnableAutomaticChecks"));
+                (bool)UserDefaults_GetBoolValue("SUEnableAutomaticChecks"));
 #endif // USE_SPARKLE
 }
  
@@ -227,7 +227,7 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
 #endif
 
 #ifdef USE_SPARKLE
-    UserDefaults::SetBoolValue("SUEnableAutomaticChecks",
+    UserDefaults_SetBoolValue("SUEnableAutomaticChecks",
                 XRCCTRL(*this, "auto_updates", wxCheckBox)->GetValue());
 #endif // USE_SPARKLE
 }

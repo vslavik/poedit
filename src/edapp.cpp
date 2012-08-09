@@ -38,8 +38,7 @@
 #include <wx/sysopt.h>
 
 #ifdef USE_SPARKLE
-#include "osx/userdefaults.h"
-#include "osx/sparkle.h"
+#include "osx_helpers.h"
 #endif // USE_SPARKLE
 
 #ifdef __WXMSW__

@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2007 Vaclav Slavik
+ *  Copyright (C) 2007-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,38 +23,34 @@
  *
  */
 
-#ifndef _OSX_USERDEFAULTS_H_
-#define _OSX_USERDEFAULTS_H_
+#ifndef _OSX_HELPERS_H_
+#define _OSX_HELPERS_H_
 
 // FIXME: This is a hack to work around Automake's lack of support for ObjC++.
 //        Remove it after switching build system to Bakefile.
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+// Sparkle helpers
+void Sparkle_Initialize();
+void Sparkle_AddMenuItem(const char *title);
+void Sparkle_Cleanup();
+
+// Spell checking
+int SpellChecker_SetLang(const char *lang);
+
+// Native preferences
 void UserDefaults_SetBoolValue(const char *key, int value);
-int UserDefaults_GetBoolValue(const char *key);
+int  UserDefaults_GetBoolValue(const char *key);
 void UserDefaults_RemoveValue(const char *key);
+
+// Misc UI helpers
+void MakeButtonRounded(void *button);
+
 #ifdef __cplusplus
 }
 #endif
 
-#ifdef __cplusplus
-
-/**
-    This class implements setting and reading of config values in NSUserDefaults
-    storage (aka plist files in ~/Library/Preferences).
- */
-class UserDefaults
-{
-public:
-    static void SetBoolValue(const char *key, bool value)
-        { UserDefaults_SetBoolValue(key, (int)value); }
-    static bool GetBoolValue(const char *key)
-        { return (bool)UserDefaults_GetBoolValue(key); }
-    static void RemoveValue(const char *key)
-        { UserDefaults_RemoveValue(key); }
-};
-
-#endif // __cplusplus
-
-#endif
+#endif // _OSX_HELPERS_H_

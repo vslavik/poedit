@@ -174,13 +174,11 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
                const wxPoint &pos,
                const wxSize &size,
                long style,
-               bool dispLines,
                const wxValidator& validator,
                const wxString &name)
      : wxListView(parent, id, pos, size, style | wxLC_VIRTUAL, validator, name)
 {
     m_catalog = NULL;
-    m_displayLines = dispLines;
 
     sortOrder = SortOrder::Default();
 
@@ -313,33 +311,20 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
     m_attrInvalid[1].SetFont(fontb);
 }
 
-void PoeditListCtrl::SetDisplayLines(bool dl)
-{
-    m_displayLines = dl;
-    CreateColumns();
-}
-
 void PoeditListCtrl::CreateColumns()
 {
     DeleteAllColumns();
     InsertColumn(0, _("Source text"));
     InsertColumn(1, _("Translation"));
-    if (m_displayLines)
-        InsertColumn(2, _("Line"), wxLIST_FORMAT_RIGHT);
     SizeColumns();
 }
 
 void PoeditListCtrl::SizeColumns()
 {
-    const int LINE_COL_SIZE = m_displayLines ? 50 : 0;
-
     int w = GetSize().x
-            - wxSystemSettings::GetMetric(wxSYS_VSCROLL_X) - 10
-            - LINE_COL_SIZE;
+            - wxSystemSettings::GetMetric(wxSYS_VSCROLL_X) - 10;
     SetColumnWidth(0, w / 2);
     SetColumnWidth(1, w - w / 2);
-    if (m_displayLines)
-        SetColumnWidth(2, LINE_COL_SIZE);
 
     m_colWidth = (w/2) / GetCharWidth();
 }
@@ -463,8 +448,6 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
             wxString trans = d.GetTranslation();
             return trans;
         }
-        case 2:
-            return wxString() << d.GetLineNumber();
 
         default:
             return wxEmptyString;
