@@ -1276,8 +1276,6 @@ void PoeditFrame::OnPreferences(wxCommandEvent&)
 
 void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 {
-    wxBusyCursor bcur;
-
     // This ensures that the list control won't be redrawn during Update()
     // call when a dialog box is hidden; another alternative would be to call
     // m_list->CatalogChanged(NULL) here
