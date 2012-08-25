@@ -94,7 +94,7 @@ else
 fi
 
 # 3rd party frameworks:
-if [ -n "$SPARKLE_FRAMEWORK" ] ; then
+if [ "x$SPARKLE_FRAMEWORK" != "xno" ] ; then
     mkdir -p $bundle/Contents/Frameworks
     cp -R $SPARKLE_FRAMEWORK $bundle/Contents/Frameworks
 else
