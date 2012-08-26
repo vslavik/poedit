@@ -85,6 +85,7 @@ wxLanguage ChooseLanguage()
         { _T("Bangla"), wxLANGUAGE_BENGALI },
         { _T("Basque"), wxLANGUAGE_BASQUE },
         { _T("Belarusian"), wxLANGUAGE_BELARUSIAN },
+        { _T("Bosnian"), wxLANGUAGE_BOSNIAN },
         { _T("Breton"), wxLANGUAGE_BRETON },
         { _T("Bulgarian"), wxLANGUAGE_BULGARIAN },
         { _T("Catalan"), wxLANGUAGE_CATALAN },
