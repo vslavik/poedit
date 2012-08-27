@@ -250,7 +250,7 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
 END_EVENT_TABLE()
 
 #if NEED_CHOOSELANG_UI
-void PreferencesDialog::OnUILanguage(wxCommandEvent& event)
+void PreferencesDialog::OnUILanguage(wxCommandEvent&)
 {
     ChangeUILanguage();
 }
