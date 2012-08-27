@@ -14,14 +14,14 @@ msgstr ""
 "Project-Id-Version: Poedit 1.5\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
 "POT-Creation-Date: 2012-07-30 10:34+0200\n"
-"PO-Revision-Date: 2011-10-03 23:23+0100\n"
-"Last-Translator: Alexandre Franke <alexandre.franke@gmail.com>\n"
-"Language-Team: French <poedit@googlegroups.com>\n"
+"PO-Revision-Date: 2012-08-09 13:47+0100\n"
+"Last-Translator: FxB <fx@fxbenard.com>\n"
+"Language-Team: French & FxB <poedit@googlegroups.com>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: French\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 #: ../src/edframe.cpp:2060
 msgid " (modified)"
@@ -37,22 +37,22 @@ msgstr "Version "
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d problème trouvé dans la traduction"
+msgstr[1] "%d problèmes trouvés dans la traduction"
 
 #: ../src/edframe.cpp:2024
-#, fuzzy, c-format
+#, c-format
 msgid "%i %% translated, %i string"
 msgid_plural "%i %% translated, %i strings"
-msgstr[0] "traduit à %i %%, %i chaînes"
-msgstr[1] "traduit à %i %%, %i chaînes"
+msgstr[0] "Traduit à %i %%, %i chaîne"
+msgstr[1] "Traduit à %i %%, %i chaînes"
 
 #: ../src/edframe.cpp:2029
-#, fuzzy, c-format
+#, c-format
 msgid "%i %% translated, %i string (%s)"
 msgid_plural "%i %% translated, %i strings (%s)"
-msgstr[0] "traduit à %i %%, %i chaînes (%s)"
-msgstr[1] "traduit à %i %%, %i chaînes (%s)"
+msgstr[0] "Traduit à %i %%, %i chaîne (%s)"
+msgstr[1] "Traduit à %i %%, %i chaînes (%s)"
 
 # Status bar text
 #: ../src/export_html.cpp:134
@@ -64,17 +64,17 @@ msgstr ""
 "restant à traduire)"
 
 #: ../src/edframe.cpp:2014
-#, fuzzy, c-format
+#, c-format
 msgid "%i bad token"
 msgid_plural "%i bad tokens"
-msgstr[0] "%i marqueurs incorrects"
+msgstr[0] "%i marqueur incorrect"
 msgstr[1] "%i marqueurs incorrects"
 
 #: ../src/edframe.cpp:2008
-#, fuzzy, c-format
+#, c-format
 msgid "%i fuzzy"
 msgid_plural "%i fuzzy"
-msgstr[0] "%i approximatives"
+msgstr[0] "%i approximative"
 msgstr[1] "%i approximatives"
 
 #: ../src/catalog.cpp:132
@@ -84,10 +84,10 @@ msgstr "%i lignes du fichier « %s » n'ont pas été chargées correctement."
 
 # Checkbox label in the Find... window
 #: ../src/edframe.cpp:2020
-#, fuzzy, c-format
+#, c-format
 msgid "%i not translated"
 msgid_plural "%i not translated"
-msgstr[0] "%i non traduites"
+msgstr[0] "%i non traduite"
 msgstr[1] "%i non traduites"
 
 # Help menu item label; the hint is system-supplied
@@ -97,9 +97,8 @@ msgstr "À &propos"
 
 # Help menu item label; the hint is system-supplied
 #: ../src/resources/menus.xrc:212
-#, fuzzy
 msgid "&About Poedit"
-msgstr "À &propos"
+msgstr "À &propos de Poedit"
 
 # Catalog menu item label
 #: ../src/resources/menus.xrc:107
@@ -262,15 +261,13 @@ msgstr "Mise à jo&ur depuis les sources"
 
 # Main window list header
 #: ../src/resources/menus.xrc:115
-#, fuzzy
 msgid "&Validate Translations"
-msgstr "Vider la traduction"
+msgstr "&Valider la traduction"
 
 # View menu item label
 #: ../src/resources/menus.xrc:114
-#, fuzzy
 msgid "&Validate translations"
-msgstr "&Ombrer la liste des traductions"
+msgstr "&Valider les traductions"
 
 # Main menu
 #: ../src/resources/menus.xrc:157
@@ -430,13 +427,12 @@ msgstr "Parcourir"
 # Main menu
 #: ../src/resources/menus.xrc:95
 msgid "C&atalog"
-msgstr "Ca&talogue"
+msgstr "C&atalogue"
 
 # Edit comment window button label
 #: ../src/resources/comment.xrc:45
-#, fuzzy
 msgid "C&lear"
-msgstr "Effacer"
+msgstr "&Effacer"
 
 # Preferences window, Editor tab group box label
 #: ../src/resources/prefs.xrc:141
@@ -508,13 +504,12 @@ msgstr "Jeu de caractères :"
 
 #: ../src/edframe.cpp:483
 msgid "Check for Updates..."
-msgstr ""
+msgstr "Vérifier les mises à jour..."
 
 # Edit menu item label
 #: ../src/resources/toolbar.xrc:39
-#, fuzzy
 msgid "Check for errors in the translation"
-msgstr "Copier l'&original vers la traduction"
+msgstr "Vérifier les erreurs dans la traduction"
 
 # Preferences window, Editor tab button label
 #: ../src/resources/prefs.xrc:204 ../src/resources/prefs.xrc:230
@@ -566,7 +561,6 @@ msgid "Confirmation"
 msgstr "Confirmation"
 
 #: ../src/edframe.cpp:1812
-#, fuzzy
 msgid "Context:"
 msgstr "Texte original :"
 
@@ -626,7 +620,7 @@ msgstr "Afficher les numéros de &lignes"
 
 #: ../src/resources/menus.xrc:170
 msgid "Display &Notes for Translators"
-msgstr ""
+msgstr "Afficher les &notes pour les traducteurs"
 
 # View menu item label
 #: ../src/resources/menus.xrc:160
@@ -639,9 +633,8 @@ msgid "Display &line numbers"
 msgstr "Afficher les numéros de &lignes"
 
 #: ../src/resources/menus.xrc:169
-#, fuzzy
 msgid "Display &notes for translators"
-msgstr "Afficher les guillemets autour des chaînes ?"
+msgstr "Afficher les &notes pour les traducteurs"
 
 # View menu item label
 #: ../src/resources/menus.xrc:159
@@ -709,9 +702,8 @@ msgstr "Co&mmentaire"
 
 # Edit menu item label
 #: ../src/edframe.cpp:2346
-#, fuzzy
 msgid "Edit Comment"
-msgstr "Mofidier le &commentaire"
+msgstr "Mofidier le commentaire"
 
 # Edit comment window caption
 #: ../src/edframe.cpp:2344 ../src/resources/comment.xrc:4
@@ -760,6 +752,9 @@ msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
 msgstr ""
+"Les entrées avec des erreurs ont été marquées en rouge dans la liste. Les "
+"détails de l'erreur seront affichés lorsque vous sélectionnez une telle "
+"entrée."
 
 #: ../src/edframe.cpp:1960
 #, c-format
@@ -777,7 +772,7 @@ msgstr "Erreur d'enregistrement du catalogue"
 
 #: ../src/errorbar.cpp:60
 msgid "Error:"
-msgstr ""
+msgstr "Erreur :"
 
 #: ../src/edframe.cpp:1138
 msgid "Export as..."
@@ -967,7 +962,7 @@ msgstr "Dernière modification"
 
 #: ../src/resources/properties.xrc:111
 msgid "Learn about plural forms"
-msgstr ""
+msgstr "En savoir plus sur les formes plurielles"
 
 #: ../src/edframe.cpp:889
 msgid "Learn more"
@@ -1079,9 +1074,8 @@ msgid "No files found in: "
 msgstr "Aucun fichier trouvé dans :"
 
 #: ../src/edframe.cpp:1391
-#, fuzzy
 msgid "No problems with the translation found."
-msgstr "Aucune référence trouvée pour cette chaîne."
+msgstr "Aucun problème trouvé dans la traduction."
 
 #: ../src/edframe.cpp:1433
 msgid "No references to this string found."
@@ -1092,9 +1086,8 @@ msgid "Notes"
 msgstr "Notes"
 
 #: ../src/edframe.cpp:550
-#, fuzzy
 msgid "Notes for translators:"
-msgstr "Traductions automatiques :"
+msgstr "Notes pour les traducteurs :"
 
 # Button label
 #: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
@@ -1288,7 +1281,7 @@ msgstr ""
 
 #: ../src/edframe.cpp:1922
 msgid "Required header Plural-Forms is missing."
-msgstr ""
+msgstr "L'en-tête Plural-Forms nécessaire est manquante."
 
 #: ../src/resources/tm_update.xrc:42
 msgid "Reset to defaults"
@@ -1499,11 +1492,12 @@ msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr ""
+"Le fichier a été enregistré en toute sécurité, mais il ne peut pas être "
+"compilé dans le format MO et utilisé."
 
 #: ../src/edframe.cpp:1396
-#, fuzzy
 msgid "The translation is ready for use."
-msgstr "Mémoire de traduction"
+msgstr "La traduction est prête à être utilisée."
 
 #: ../src/catalog.cpp:1311
 msgid ""
@@ -1713,9 +1707,8 @@ msgid "Update translation memory"
 msgstr "Mettre à jour la mémoire de traduction"
 
 #: ../src/edframe.cpp:1297 ../src/manager.cpp:435
-#, fuzzy
 msgid "Updating catalog"
-msgstr "Mise à jour du catalogue..."
+msgstr "Mise à jour du catalogue"
 
 #: ../src/edframe.cpp:1311
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
@@ -1724,9 +1717,8 @@ msgstr ""
 "savoir plus."
 
 #: ../src/transmemupd_wizard.cpp:194
-#, fuzzy
 msgid "Updating translation memory"
-msgstr "Mettre à jour la mémoire de traduction"
+msgstr "Mise à jour de la mémoire de traduction"
 
 # Preferences window, Editor tab check box label
 #: ../src/resources/prefs.xrc:213
@@ -1749,13 +1741,12 @@ msgstr ""
 
 #: ../src/resources/toolbar.xrc:38
 msgid "Validate"
-msgstr ""
+msgstr "Valider"
 
 # Preferences dialog tab label (&t once it accepts accelerators)
 #: ../src/edframe.cpp:1372 ../src/edframe.cpp:1392
-#, fuzzy
 msgid "Validation results"
-msgstr "Propriétés de traduction"
+msgstr "Résultats de la validation"
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used

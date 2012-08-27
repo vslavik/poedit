@@ -33,6 +33,7 @@
 #import <AppKit/NSButton.h>
 #import <AppKit/NSSpellChecker.h>
 
+#ifdef USE_SPARKLE
 #import <Sparkle/Sparkle.h>
 
 // --------------------------------------------------------------------------------
@@ -75,7 +76,7 @@ void Sparkle_Cleanup()
     [[NSUserDefaults standardUserDefaults] synchronize];
     [pool release];
 }
-
+#endif // USE_SPARKLE
 
 // --------------------------------------------------------------------------------
 // Spell checking

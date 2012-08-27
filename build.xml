@@ -276,7 +276,8 @@
         <exec dir="build-osx" executable="/bin/sh" failonerror="true"
               outputproperty="codesign.osx.designated" error="/dev/null">
             <arg value="-c"/>
-            <arg value="codesign -d -r- Poedit.app | grep '# designated' | cut -c3-"/>
+            <!-- NB: the sed call is for compatibility with pre-10.8 codesign -->
+            <arg value="codesign -d -r- Poedit.app | grep 'designated' | sed -e 's/# designated/designated/'"/>
         </exec>
         <exec dir="build-osx" executable="codesign" failonerror="true">
             <arg line="${codesign.osx.args}"/>

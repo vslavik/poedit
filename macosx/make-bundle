@@ -86,7 +86,7 @@ for i in $top_srcdir/locales/*.mo ; do
 done
 
 if [ -n "$WX_ROOT" ] ; then
-    (cd $WX_ROOT/share ; tar -c locale) | \
+    (cd $WX_ROOT/share ; tar -c locale/*/*/wx*.mo) | \
         (cd $bundle/Contents/Resources ; tar -x)
 else
     echo "WARNING: not copying wxWidgets message catalogs, point WX_ROOT" >&2
@@ -94,7 +94,7 @@ else
 fi
 
 # 3rd party frameworks:
-if [ -n "$SPARKLE_FRAMEWORK" ] ; then
+if [ "x$SPARKLE_FRAMEWORK" != "xno" ] ; then
     mkdir -p $bundle/Contents/Frameworks
     cp -R $SPARKLE_FRAMEWORK $bundle/Contents/Frameworks
 else

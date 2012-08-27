@@ -33,10 +33,12 @@
 extern "C" {
 #endif
 
+#ifdef USE_SPARKLE
 // Sparkle helpers
 void Sparkle_Initialize();
 void Sparkle_AddMenuItem(const char *title);
 void Sparkle_Cleanup();
+#endif // USE_SPARKLE
 
 // Spell checking
 int SpellChecker_SetLang(const char *lang);

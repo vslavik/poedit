@@ -1137,6 +1137,9 @@ void TranslationMemory::MoveLegacyDbIfNeeded()
     }
 #endif
 
+    if ( !wxFileName::DirExists(oldPath) )
+        return; // no TM data at all, don't bother
+
     wxLogTrace(_T("poedit.tm"),
                _T("moving TM database from old location \"%s\" to \"%s\""),
                oldPath.c_str(), newPath.c_str());
