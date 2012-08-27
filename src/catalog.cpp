@@ -47,6 +47,7 @@
 #include "summarydlg.h"
 #include "isocodes.h"
 #include "utility.h"
+#include "version.h"
 
 
 // ----------------------------------------------------------------------
@@ -270,9 +271,8 @@ void Catalog::HeaderData::UpdateDict()
     SetHeader(_T("MIME-Version"), _T("1.0"));
     SetHeader(_T("Content-Type"), _T("text/plain; charset=") + Charset);
     SetHeader(_T("Content-Transfer-Encoding"), _T("8bit"));
-
-
     SetHeaderNotEmpty(_T("Language"), LanguageCode);
+    SetHeader(_T("X-Generator"), wxString::FromAscii("Poedit " POEDIT_VERSION));
 
     // Set extended information:
 
