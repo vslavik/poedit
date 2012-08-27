@@ -46,6 +46,10 @@
 #include <wx/clipbrd.h>
 #include <wx/dnd.h>
 
+#ifdef __WXMSW__
+#include <winsparkle.h>
+#endif
+
 #ifdef USE_SPARKLE
 #include "osx_helpers.h"
 #endif // USE_SPARKLE
@@ -321,6 +325,9 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
    EVT_MENU           (XRCID("menu_catproperties"), PoeditFrame::OnProperties)
    EVT_MENU           (wxID_PREFERENCES,          PoeditFrame::OnPreferences)
+#ifdef __WXMSW__
+   EVT_MENU           (XRCID("menu_check_for_updates"), PoeditFrame::OnWinsparkleCheck)
+#endif
    EVT_MENU           (XRCID("menu_update"),      PoeditFrame::OnUpdate)
    EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdate)
    EVT_MENU           (XRCID("menu_validate"),    PoeditFrame::OnValidate)
@@ -1271,6 +1278,14 @@ void PoeditFrame::OnPreferences(wxCommandEvent&)
 {
     EditPreferences();
 }
+
+
+#ifdef __WXMSW__
+void PoeditFrame::OnWinsparkleCheck(wxCommandEvent& event)
+{
+    win_sparkle_check_update_with_ui();
+}
+#endif // __WXMSW__
 
 
 

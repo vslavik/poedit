@@ -177,6 +177,9 @@ class PoeditFrame : public wxFrame
         void OnOpenHist(wxCommandEvent& event);
         void OnProperties(wxCommandEvent& event);
         void OnPreferences(wxCommandEvent& event);
+#ifdef __WXMSW__
+        void OnWinsparkleCheck(wxCommandEvent& event);
+#endif
         void OnUpdate(wxCommandEvent& event);
         void OnValidate(wxCommandEvent& event);
         void OnListSel(wxListEvent& event);
