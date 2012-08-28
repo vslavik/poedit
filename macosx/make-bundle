@@ -43,30 +43,9 @@ cp $poedit_binary $bindir/Poedit
 if [ -n "$GETTEXT_PREFIX" ] ; then
     gettext_apps="msgfmt msgmerge msgunfmt msgcat xgettext"
 
-    all_dylibs=""
-
     # copy gettext binaries over:
     for f in $gettext_apps ; do
         cp -pPf $GETTEXT_PREFIX/bin/$f $bindir
-
-        # now copy any gettext shared libs they need and update their install paths
-        # so that they are usable from the bundle:
-        for dylib_full in `get_private_shared_deps $bindir/$f` ; do
-            all_dylibs="$all_dylibs $dylib_full"
-            dylib=`basename $dylib_full`
-            if [ ! -f $bindir/$dylib -a -f $GETTEXT_PREFIX/lib/$dylib ] ; then
-                cp -pPf $GETTEXT_PREFIX/lib/$dylib $bindir
-                install_name_tool -id $dylib $bindir/$dylib
-            fi
-        done
-    done
-    
-    # now update shared libs references to point to bundle's location so that they
-    # are correctly resolved at runtime:
-    for dylib in $all_dylibs ; do
-        for f in `prepend_path $bindir $gettext_apps` $bindir/*.dylib ; do
-            install_name_tool -change $dylib "@executable_path/`basename $dylib`" $f
-        done
     done
 else
     echo "WARNING: not copying gettext binaries, point GETTEXT_PREFIX" >&2
