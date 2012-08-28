@@ -406,7 +406,13 @@
             <arg value="LDFLAGS=${osx.ldflags}"/>
             <arg value="GSED=${osx.gnu.sed}"/>
             <arg value="--with-libiconv-prefix=${osx.sdk.path}/usr"/>
-            <arg value="--disable-static"/>
+            <!-- Make our life simpler by using static linking and not having to deal with dylibs
+                 and install_name_tool. If re-enabling shared builds, don't forget to also add
+                 calls to install_name_tool *here*, in osx-gettext-arch, before lipo, because it
+                 has to be called on thin, single-arch binaries, it doesn't correctly handle fat
+                 ones (only updating the arch it runs on natively). Also consider using @rpath
+                 (available since 10.5) instead of @executable_path. -->
+            <arg value="--disable-shared"/>
             <arg value="--disable-java"/>
             <arg value="--disable-rpath"/>
             <arg value="${osx.host}"/>
@@ -456,10 +462,6 @@
         <merge-archs-3 prefix="${gettextdir}" dir="bin" file="msgunfmt"/>
         <merge-archs-3 prefix="${gettextdir}" dir="bin" file="msgcat"/>
         <merge-archs-3 prefix="${gettextdir}" dir="bin" file="xgettext"/>
-        <merge-archs-3 prefix="${gettextdir}" dir="lib" file="libasprintf.0.dylib"/>
-        <merge-archs-3 prefix="${gettextdir}" dir="lib" file="libgettextlib-0.18.1.dylib"/>
-        <merge-archs-3 prefix="${gettextdir}" dir="lib" file="libgettextsrc-0.18.1.dylib"/>
-        <merge-archs-3 prefix="${gettextdir}" dir="lib" file="libintl.8.dylib"/>
 
         <!-- TODO: keep dSYM files? -->
         <strip-exe file="${gettextdir}/bin/msgfmt"/>
@@ -467,10 +469,6 @@
         <strip-exe file="${gettextdir}/bin/msgunfmt"/>
         <strip-exe file="${gettextdir}/bin/msgcat"/>
         <strip-exe file="${gettextdir}/bin/xgettext"/>
-        <strip-dylib file="${gettextdir}/lib/libasprintf.0.dylib"/>
-        <strip-dylib file="${gettextdir}/lib/libgettextlib-0.18.1.dylib"/>
-        <strip-dylib file="${gettextdir}/lib/libgettextsrc-0.18.1.dylib"/>
-        <strip-dylib file="${gettextdir}/lib/libintl.8.dylib"/>
 
         <touch file="${gettextdir}/built.gettext"/>
     </target>
