@@ -655,13 +655,17 @@ bool CatalogParser::Parse()
             }
             mtranslations.Add(str);
 
-            if (!OnEntry(mstr, wxEmptyString, false,
-                         has_context, msgctxt,
-                         mtranslations,
-                         mflags, mrefs, mcomment, mautocomments, msgid_old,
-                         mlinenum))
+            bool shouldIgnore = m_ignoreHeader && mstr.empty();
+            if ( !shouldIgnore )
             {
-                return false;
+                if (!OnEntry(mstr, wxEmptyString, false,
+                             has_context, msgctxt,
+                             mtranslations,
+                             mflags, mrefs, mcomment, mautocomments, msgid_old,
+                             mlinenum))
+                {
+                    return false;
+                }
             }
 
             mcomment = mstr = msgid_plural = msgctxt = mflags = wxEmptyString;
@@ -937,9 +941,9 @@ Catalog::~Catalog()
 }
 
 
-Catalog::Catalog(const wxString& po_file)
+Catalog::Catalog(const wxString& po_file, int flags)
 {
-    m_isOk = Load(po_file);
+    m_isOk = Load(po_file, flags);
 }
 
 
@@ -1002,7 +1006,7 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
 }
 
 
-bool Catalog::Load(const wxString& po_file)
+bool Catalog::Load(const wxString& po_file, int flags)
 {
     wxTextFile f;
 
@@ -1016,9 +1020,12 @@ bool Catalog::Load(const wxString& po_file)
     if (!f.Open(po_file, wxConvISO8859_1))
         return false;
 
-    CharsetInfoFinder charsetFinder(&f);
-    charsetFinder.Parse();
-    m_header.Charset = charsetFinder.GetCharset();
+    {
+        wxLogNull null; // don't report parsing errors from here, report them later
+        CharsetInfoFinder charsetFinder(&f);
+        charsetFinder.Parse();
+        m_header.Charset = charsetFinder.GetCharset();
+    }
 
     f.Close();
     wxCSConv encConv(m_header.Charset);
@@ -1031,6 +1038,7 @@ bool Catalog::Load(const wxString& po_file)
     }
 
     LoadParser parser(this, &f);
+    parser.IgnoreHeader(flags & CreationFlag_IgnoreHeader);
     if (!parser.Parse())
     {
         wxLogError(
@@ -1055,6 +1063,9 @@ bool Catalog::Load(const wxString& po_file)
     m_isOk = true;
 
     f.Close();
+
+    if ( flags & CreationFlag_IgnoreHeader )
+        CreateNewHeader();
 
     return true;
 }

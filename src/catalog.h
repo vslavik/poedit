@@ -454,10 +454,18 @@ class Catalog
             const Entry *Find(const wxString& key) const;
         };
 
+        enum CreationFlags
+        {
+            CreationFlag_IgnoreHeader = 1
+        };
+
         /// Default ctor. Creates empty catalog, you have to call Load.
         Catalog();
+
         /// Ctor that loads the catalog from \a po_file with Load.
-        Catalog(const wxString& po_file);
+        /// \a flags is CreationFlags combination.
+        Catalog(const wxString& po_file, int flags = 0);
+
         ~Catalog();
 
         /** Creates new, empty header. Sets Charset to something meaningful
@@ -478,8 +486,10 @@ class Catalog
             file contains parts of catalog header data that are not part
             of standard .po format, namely SearchPaths, Keywords, BasePath
             and Language.
+
+            @param flags  CreationFlags combination.
          */
-        bool Load(const wxString& po_file);
+        bool Load(const wxString& po_file, int flags = 0);
 
         /** Saves catalog to file. Creates both .po (text) and .mo (binary)
             version of the catalog (unless the latter was disabled in
@@ -628,8 +638,15 @@ class Catalog
 class CatalogParser
 {
     public:
-        CatalogParser(wxTextFile *f) : m_textFile(f) {}
+        CatalogParser(wxTextFile *f)
+            : m_textFile(f),
+              m_ignoreHeader(false)
+        {}
+
         virtual ~CatalogParser() {}
+
+        /// Tell the parser to ignore header entries when processing
+        void IgnoreHeader(bool ignore) { m_ignoreHeader = ignore; }
 
         /** Parses the entire file, calls OnEntry each time
             new msgid/msgstr pair is found.
@@ -672,6 +689,9 @@ class CatalogParser
 
         /// Textfile being parsed.
         wxTextFile *m_textFile;
+
+        /// Whether the header should be parsed or not
+        bool m_ignoreHeader;
 };
 
 #endif // _CATALOG_H_
