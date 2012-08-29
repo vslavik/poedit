@@ -1514,6 +1514,12 @@ bool Catalog::Update(ProgressInfo *progress, bool summary)
         if (!wxIsAbsolutePath(path))
             path = cwd + _T("/") + path;
 
+        if (!wxFileName::DirExists(path))
+        {
+            wxLogError(_("Source code directory '%s' doesn't exist."), path.c_str());
+            return false;
+        }
+
         wxSetWorkingDirectory(path);
     }
 
