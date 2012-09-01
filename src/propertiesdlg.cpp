@@ -183,6 +183,8 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
     m_keywords->GetStrings(arr);
     cat->Header().Keywords = arr;
 
-    cat->Header().SetHeaderNotEmpty(_T("Plural-Forms"),
-                                    m_pluralForms->GetValue());
+    wxString pluralForms = m_pluralForms->GetValue().Strip(wxString::both);
+    if ( !pluralForms.empty() && !pluralForms.EndsWith(_T(";")) )
+        pluralForms += _T(";");
+    cat->Header().SetHeaderNotEmpty(_T("Plural-Forms"), pluralForms);
 }

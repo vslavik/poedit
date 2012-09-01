@@ -225,6 +225,14 @@ void Catalog::HeaderData::FromString(const wxString& str)
             Entry en;
             en.Key = wxString(ln.substr(0, pos)).Strip(wxString::both);
             en.Value = wxString(ln.substr(pos + 1)).Strip(wxString::both);
+
+            // correct some common errors:
+            if ( en.Key == _T("Plural-Forms") )
+            {
+                if ( !en.Value.empty() && !en.Value.EndsWith(_T(";")) )
+                    en.Value += _T(";");
+            }
+
             m_entries.push_back(en);
             wxLogTrace(_T("poedit.header"),
                        _T("%s='%s'"), en.Key.c_str(), en.Value.c_str());
