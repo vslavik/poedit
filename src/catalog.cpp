@@ -1691,7 +1691,7 @@ bool Catalog::ShowMergeSummary(Catalog *refcat)
         return true;
 }
 
-static unsigned ParsePluralFormsHeader(const Catalog::HeaderData& header)
+static unsigned GetCountFromPluralFormsHeader(const Catalog::HeaderData& header)
 {
     if ( header.HasHeader(_T("Plural-Forms")) )
     {
@@ -1713,7 +1713,7 @@ static unsigned ParsePluralFormsHeader(const Catalog::HeaderData& header)
 
 unsigned Catalog::GetPluralFormsCount() const
 {
-    unsigned count = ParsePluralFormsHeader(m_header);
+    unsigned count = GetCountFromPluralFormsHeader(m_header);
 
     for ( CatalogItemArray::const_iterator i = m_items.begin();
           i != m_items.end(); ++i )
@@ -1739,7 +1739,7 @@ bool Catalog::HasWrongPluralFormsCount() const
 
     // if 'count' is less than the count from header, it may simply mean there
     // are untranslated strings
-    if ( count > ParsePluralFormsHeader(m_header) )
+    if ( count > GetCountFromPluralFormsHeader(m_header) )
         return true;
 
     return false;
