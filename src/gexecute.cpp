@@ -128,7 +128,7 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
     wxArrayString gstderr;
     int retcode = DoExecuteGettext(cmdline, gstdout, gstderr);
 
-    wxRegEx reError(_T(".*\\.po:([0-9]+): (.*)"));
+    wxRegEx reError(_T(".*\\.po:([0-9]+)(:[0-9]+)?: (.*)"));
 
     for ( size_t i = 0; i < gstderr.size(); i++ )
     {
@@ -143,7 +143,7 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
             long num = -1;
             reError.GetMatch(e, 1).ToLong(&num);
             rec.line = (int)num;
-            rec.text = reError.GetMatch(e, 2);
+            rec.text = reError.GetMatch(e, 3);
             errors.push_back(rec);
         }
         // FIXME: handle the rest of output gracefully too
