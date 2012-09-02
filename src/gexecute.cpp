@@ -133,6 +133,7 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
     for ( size_t i = 0; i < gstderr.size(); i++ )
     {
         const wxString e = gstderr[i];
+        wxLogTrace(_T("poedit.execute"), _T("  stderr: %s"), e.c_str());
         if ( e.empty() )
             continue;
 
@@ -145,8 +146,15 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
             rec.line = (int)num;
             rec.text = reError.GetMatch(e, 3);
             errors.push_back(rec);
+            wxLogTrace(_T("poedit.execute"),
+                       _T("        => parsed error = \"%s\" at %d"),
+                       rec.text.c_str(), rec.line);
         }
-        // FIXME: handle the rest of output gracefully too
+        else
+        {
+            wxLogTrace(_T("poedit.execute"), _T("        (unrecognized line!)"));
+            // FIXME: handle the rest of output gracefully too
+        }
     }
 
     return retcode == 0;
