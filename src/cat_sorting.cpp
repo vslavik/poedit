@@ -76,14 +76,14 @@ bool CatalogItemsComparator::operator()(int i, int j) const
 
     if ( m_order.untransFirst )
     {
-        if ( !a.IsTranslated() && b.IsTranslated() )
-            return true;
-        if ( a.IsTranslated() && !b.IsTranslated() )
-            return false;
-
         if ( a.GetValidity() == CatalogItem::Val_Invalid && b.GetValidity() != CatalogItem::Val_Invalid )
             return true;
         if ( a.GetValidity() != CatalogItem::Val_Invalid && b.GetValidity() == CatalogItem::Val_Invalid )
+            return false;
+
+        if ( !a.IsTranslated() && b.IsTranslated() )
+            return true;
+        if ( a.IsTranslated() && !b.IsTranslated() )
             return false;
 
         if ( a.IsFuzzy() && !b.IsFuzzy() )

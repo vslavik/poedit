@@ -225,6 +225,14 @@ void Catalog::HeaderData::FromString(const wxString& str)
             Entry en;
             en.Key = wxString(ln.substr(0, pos)).Strip(wxString::both);
             en.Value = wxString(ln.substr(pos + 1)).Strip(wxString::both);
+
+            // correct some common errors:
+            if ( en.Key == _T("Plural-Forms") )
+            {
+                if ( !en.Value.empty() && !en.Value.EndsWith(_T(";")) )
+                    en.Value += _T(";");
+            }
+
             m_entries.push_back(en);
             wxLogTrace(_T("poedit.header"),
                        _T("%s='%s'"), en.Key.c_str(), en.Value.c_str());
@@ -655,13 +663,17 @@ bool CatalogParser::Parse()
             }
             mtranslations.Add(str);
 
-            if (!OnEntry(mstr, wxEmptyString, false,
-                         has_context, msgctxt,
-                         mtranslations,
-                         mflags, mrefs, mcomment, mautocomments, msgid_old,
-                         mlinenum))
+            bool shouldIgnore = m_ignoreHeader && mstr.empty();
+            if ( !shouldIgnore )
             {
-                return false;
+                if (!OnEntry(mstr, wxEmptyString, false,
+                             has_context, msgctxt,
+                             mtranslations,
+                             mflags, mrefs, mcomment, mautocomments, msgid_old,
+                             mlinenum))
+                {
+                    return false;
+                }
             }
 
             mcomment = mstr = msgid_plural = msgctxt = mflags = wxEmptyString;
@@ -937,9 +949,9 @@ Catalog::~Catalog()
 }
 
 
-Catalog::Catalog(const wxString& po_file)
+Catalog::Catalog(const wxString& po_file, int flags)
 {
-    m_isOk = Load(po_file);
+    m_isOk = Load(po_file, flags);
 }
 
 
@@ -1002,7 +1014,7 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
 }
 
 
-bool Catalog::Load(const wxString& po_file)
+bool Catalog::Load(const wxString& po_file, int flags)
 {
     wxTextFile f;
 
@@ -1016,9 +1028,12 @@ bool Catalog::Load(const wxString& po_file)
     if (!f.Open(po_file, wxConvISO8859_1))
         return false;
 
-    CharsetInfoFinder charsetFinder(&f);
-    charsetFinder.Parse();
-    m_header.Charset = charsetFinder.GetCharset();
+    {
+        wxLogNull null; // don't report parsing errors from here, report them later
+        CharsetInfoFinder charsetFinder(&f);
+        charsetFinder.Parse();
+        m_header.Charset = charsetFinder.GetCharset();
+    }
 
     f.Close();
     wxCSConv encConv(m_header.Charset);
@@ -1031,6 +1046,7 @@ bool Catalog::Load(const wxString& po_file)
     }
 
     LoadParser parser(this, &f);
+    parser.IgnoreHeader(flags & CreationFlag_IgnoreHeader);
     if (!parser.Parse())
     {
         wxLogError(
@@ -1055,6 +1071,9 @@ bool Catalog::Load(const wxString& po_file)
     m_isOk = true;
 
     f.Close();
+
+    if ( flags & CreationFlag_IgnoreHeader )
+        CreateNewHeader();
 
     return true;
 }
@@ -1287,16 +1306,28 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
     validation_errors = DoValidate(po_file_temp);
 
     // Now that the file was written, run msgcat to re-format it according
-    // to the usual format. This is a good enough fix for #25 until proper
-    // preservation of formatting is implemented.
-    if ( ExecuteGettext
-          (
-              wxString::Format(_T("msgcat --force-po -o \"%s\" \"%s\""),
-                               po_file.c_str(),
-                               po_file_temp.c_str())
-          )
-         && wxFileExists(po_file)
-       )
+    // to the usual format. This is a (barely) passable fix for #25 until
+    // proper preservation of formatting is implemented.
+
+    int msgcat_ok = -1;
+    {
+        // Ignore msgcat errors output (but not exit code), because it
+        //   a) complains about things DoValidate() already complained above
+        //   b) issues warnings about source-extraction things (e.g. using non-ASCII
+        //      msgids) that, while correct, are not something a *translator* can
+        //      do anything about.
+        wxLogNull null;
+        msgcat_ok =
+              ExecuteGettext
+              (
+                  wxString::Format(_T("msgcat --force-po -o \"%s\" \"%s\""),
+                                   po_file.c_str(),
+                                   po_file_temp.c_str())
+              )
+              && wxFileExists(po_file);
+    }
+
+    if ( msgcat_ok )
     {
         wxRemoveFile(po_file_temp);
     }
@@ -1304,11 +1335,15 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
     {
         if ( !wxRemoveFile(po_file) || !wxRenameFile(po_file_temp, po_file) )
         {
-            wxLogWarning(_("Couldn't save file %s."), po_file.c_str());
+            wxLogError(_("Couldn't save file %s."), po_file.c_str());
         }
         else
         {
-            wxLogWarning(_("There was a problem formatting the file nicely (but it was saved all right)."));
+            // Only shows msgcat's failure warning if we don't also get
+            // validation errors, because if we do, the cause is likely the
+            // same.
+            if ( !validation_errors )
+                wxLogWarning(_("There was a problem formatting the file nicely (but it was saved all right)."));
         }
     }
 
@@ -1678,7 +1713,7 @@ bool Catalog::ShowMergeSummary(Catalog *refcat)
         return true;
 }
 
-static unsigned ParsePluralFormsHeader(const Catalog::HeaderData& header)
+static unsigned GetCountFromPluralFormsHeader(const Catalog::HeaderData& header)
 {
     if ( header.HasHeader(_T("Plural-Forms")) )
     {
@@ -1700,7 +1735,7 @@ static unsigned ParsePluralFormsHeader(const Catalog::HeaderData& header)
 
 unsigned Catalog::GetPluralFormsCount() const
 {
-    unsigned count = ParsePluralFormsHeader(m_header);
+    unsigned count = GetCountFromPluralFormsHeader(m_header);
 
     for ( CatalogItemArray::const_iterator i = m_items.begin();
           i != m_items.end(); ++i )
@@ -1726,7 +1761,7 @@ bool Catalog::HasWrongPluralFormsCount() const
 
     // if 'count' is less than the count from header, it may simply mean there
     // are untranslated strings
-    if ( count > ParsePluralFormsHeader(m_header) )
+    if ( count > GetCountFromPluralFormsHeader(m_header) )
         return true;
 
     return false;

@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2005 Vaclav Slavik
+ *  Copyright (C) 2000-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -107,7 +107,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
     if ( !ConcatCatalogs(partials, mergedFile) )
         return NULL;
 
-    Catalog *c = new Catalog(mergedFile);
+    Catalog *c = new Catalog(mergedFile, Catalog::CreationFlag_IgnoreHeader);
 
     if ( !c->IsOk() )
     {
@@ -115,8 +115,6 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
         delete c;
         return NULL;
     }
-
-    c->CreateNewHeader();
 
     return c;
 }

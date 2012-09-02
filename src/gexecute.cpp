@@ -32,48 +32,33 @@
 #include <wx/string.h>
 #include <wx/intl.h>
 #include <wx/regex.h>
-
-#ifdef __WXMAC__
-#if wxCHECK_VERSION(2,9,0)
-#include <wx/osx/core/cfstring.h>
-#else
-#include <wx/mac/corefoundation/cfstring.h>
-#endif
-#include <CoreFoundation/CFBundle.h>
-#endif
+#include <wx/stdpaths.h>
+#include <wx/filename.h>
 
 #include "gexecute.h"
 
-#ifdef __WXMAC__
-static wxString MacGetPathToBinary(const wxString& program)
+#if defined(__WXMAC__) || defined(__WXMSW__)
+static wxString GetPathToAuxBinary(const wxString& program)
 {
-#if !wxCHECK_VERSION(2,9,0)
-    #define wxCFStringRef wxMacCFStringHolder
+    wxFileName path(wxStandardPaths::Get().GetExecutablePath());
+    path.SetName(program);
+#ifdef __WXMSW__
+    path.SetExt(_T("exe"));
 #endif
-    wxCFStringRef programstr(program);
-
-    CFBundleRef bundle = CFBundleGetMainBundle();
-    CFURLRef urlRel = CFBundleCopyAuxiliaryExecutableURL(bundle, programstr);
-
-    if ( urlRel == NULL )
+    if ( path.IsFileExecutable() )
     {
-        wxLogTrace(_T("poedit.execute"), _T("failed to locate '%s'"), program.c_str());
+        return wxString::Format(_T("\"%s\""), path.GetFullPath().c_str());
+    }
+    else
+    {
+        wxLogTrace(_T("poedit.execute"),
+                   _T("%s doesn't exist, falling back to %s"),
+                   path.GetFullPath().c_str(),
+                   program.c_str());
         return program;
     }
-
-    CFURLRef urlAbs = CFURLCopyAbsoluteURL(urlRel);
-
-    wxCFStringRef path(CFURLCopyFileSystemPath(urlAbs, kCFURLPOSIXPathStyle));
-
-    CFRelease(urlRel);
-    CFRelease(urlAbs);
-
-    wxString full = path.AsString(wxLocale::GetSystemEncoding());
-    wxLogTrace(_T("poedit.execute"), _T("using '%s'"), full.c_str());
-
-    return wxString::Format(_T("\"%s\""), full.c_str());
 }
-#endif // __WXMAC__
+#endif // __WXMAC__ || __WXMSW__
 
 
 int DoExecuteGettext(const wxString& cmdline_,
@@ -82,12 +67,12 @@ int DoExecuteGettext(const wxString& cmdline_,
 {
     wxString cmdline(cmdline_);
 
-#ifdef __WXMAC__
+#if defined(__WXMAC__) || defined(__WXMSW__)
     wxString binary = cmdline.BeforeFirst(_T(' '));
-    cmdline = MacGetPathToBinary(binary) + cmdline.Mid(binary.length());
-#endif // __WXMAC__
+    cmdline = GetPathToAuxBinary(binary) + cmdline.Mid(binary.length());
+#endif
 
-    wxLogTrace(_T("poedit.execute"), _T("executing '%s'"), cmdline.c_str());
+    wxLogTrace(_T("poedit.execute"), _T("executing: %s"), cmdline.c_str());
 
 #if wxCHECK_VERSION(2,9,0)
     int retcode = wxExecute(cmdline, gstdout, gstderr, wxEXEC_BLOCK);
@@ -97,8 +82,7 @@ int DoExecuteGettext(const wxString& cmdline_,
 
     if ( retcode == -1 )
     {
-        wxLogError(_("Cannot execute program: %s"),
-                   cmdline.BeforeFirst(_T(' ')).c_str());
+        wxLogError(_("Cannot execute program: %s"), cmdline.c_str());
     }
 
     return retcode;
@@ -128,11 +112,12 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
     wxArrayString gstderr;
     int retcode = DoExecuteGettext(cmdline, gstdout, gstderr);
 
-    wxRegEx reError(_T(".*\\.po:([0-9]+): (.*)"));
+    wxRegEx reError(_T(".*\\.po:([0-9]+)(:[0-9]+)?: (.*)"));
 
     for ( size_t i = 0; i < gstderr.size(); i++ )
     {
         const wxString e = gstderr[i];
+        wxLogTrace(_T("poedit.execute"), _T("  stderr: %s"), e.c_str());
         if ( e.empty() )
             continue;
 
@@ -143,10 +128,17 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
             long num = -1;
             reError.GetMatch(e, 1).ToLong(&num);
             rec.line = (int)num;
-            rec.text = reError.GetMatch(e, 2);
+            rec.text = reError.GetMatch(e, 3);
             errors.push_back(rec);
+            wxLogTrace(_T("poedit.execute"),
+                       _T("        => parsed error = \"%s\" at %d"),
+                       rec.text.c_str(), rec.line);
         }
-        // FIXME: handle the rest of output gracefully too
+        else
+        {
+            wxLogTrace(_T("poedit.execute"), _T("        (unrecognized line!)"));
+            // FIXME: handle the rest of output gracefully too
+        }
     }
 
     return retcode == 0;

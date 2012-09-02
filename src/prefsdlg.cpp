@@ -43,6 +43,10 @@
 #include "transmemupd_wizard.h"
 #include "chooselang.h"
 
+#ifdef __WXMSW__
+#include <winsparkle.h>
+#endif
+
 #ifdef USE_SPARKLE
 #include "osx_helpers.h"
 #endif // USE_SPARKLE
@@ -167,6 +171,10 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XRCCTRL(*this, "auto_updates", wxCheckBox)->SetValue(
                 (bool)UserDefaults_GetBoolValue("SUEnableAutomaticChecks"));
 #endif // USE_SPARKLE
+#ifdef __WXMSW__
+    XRCCTRL(*this, "auto_updates", wxCheckBox)->SetValue(
+                (bool)win_sparkle_get_automatic_check_for_updates());
+#endif
 }
  
             
@@ -230,6 +238,10 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
     UserDefaults_SetBoolValue("SUEnableAutomaticChecks",
                 XRCCTRL(*this, "auto_updates", wxCheckBox)->GetValue());
 #endif // USE_SPARKLE
+#ifdef __WXMSW__
+    win_sparkle_set_automatic_check_for_updates(
+                XRCCTRL(*this, "auto_updates", wxCheckBox)->GetValue());
+#endif
 }
 
 
@@ -250,7 +262,7 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
 END_EVENT_TABLE()
 
 #if NEED_CHOOSELANG_UI
-void PreferencesDialog::OnUILanguage(wxCommandEvent& event)
+void PreferencesDialog::OnUILanguage(wxCommandEvent&)
 {
     ChangeUILanguage();
 }
