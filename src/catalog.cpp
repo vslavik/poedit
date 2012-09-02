@@ -1306,16 +1306,28 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
     validation_errors = DoValidate(po_file_temp);
 
     // Now that the file was written, run msgcat to re-format it according
-    // to the usual format. This is a good enough fix for #25 until proper
-    // preservation of formatting is implemented.
-    if ( ExecuteGettext
-          (
-              wxString::Format(_T("msgcat --force-po -o \"%s\" \"%s\""),
-                               po_file.c_str(),
-                               po_file_temp.c_str())
-          )
-         && wxFileExists(po_file)
-       )
+    // to the usual format. This is a (barely) passable fix for #25 until
+    // proper preservation of formatting is implemented.
+
+    int msgcat_ok = -1;
+    {
+        // Ignore msgcat errors output (but not exit code), because it
+        //   a) complains about things DoValidate() already complained above
+        //   b) issues warnings about source-extraction things (e.g. using non-ASCII
+        //      msgids) that, while correct, are not something a *translator* can
+        //      do anything about.
+        wxLogNull null;
+        msgcat_ok =
+              ExecuteGettext
+              (
+                  wxString::Format(_T("msgcat --force-po -o \"%s\" \"%s\""),
+                                   po_file.c_str(),
+                                   po_file_temp.c_str())
+              )
+              && wxFileExists(po_file);
+    }
+
+    if ( msgcat_ok )
     {
         wxRemoveFile(po_file_temp);
     }
@@ -1327,7 +1339,11 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
         }
         else
         {
-            wxLogWarning(_("There was a problem formatting the file nicely (but it was saved all right)."));
+            // Only shows msgcat's failure warning if we don't also get
+            // validation errors, because if we do, the cause is likely the
+            // same.
+            if ( !validation_errors )
+                wxLogWarning(_("There was a problem formatting the file nicely (but it was saved all right)."));
         }
     }
 
