@@ -1323,7 +1323,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
     {
         if ( !wxRemoveFile(po_file) || !wxRenameFile(po_file_temp, po_file) )
         {
-            wxLogWarning(_("Couldn't save file %s."), po_file.c_str());
+            wxLogError(_("Couldn't save file %s."), po_file.c_str());
         }
         else
         {
