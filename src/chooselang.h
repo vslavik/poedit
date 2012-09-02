@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2003-2005 Vaclav Slavik
+ *  Copyright (C) 2003-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -32,18 +32,26 @@
 #if defined(__UNIX__) && !defined(__WXMAC__)
     #define NEED_CHOOSELANG_UI 0
 #else
-    #define NEED_CHOOSELANG_UI 1
+    #if wxCHECK_VERSION(2,9,1)
+        #define NEED_CHOOSELANG_UI 1
+    #else
+        #ifdef __VISUALC__
+            #pragma message ("disabling language-choosing UI for wxWidgets < 2.9.1")
+        #else
+            #warning "disabling language-choosing UI for wxWidgets < 2.9.1"
+        #endif
+        #define NEED_CHOOSELANG_UI 0
+    #endif
 #endif
 
 #if NEED_CHOOSELANG_UI
-/// Let the user select language
-wxLanguage ChooseLanguage();
 
 /// Let the user change UI language
 void ChangeUILanguage();
-#endif
 
 /** Return currently choosen language. Calls  ChooseLanguage if neccessary. */
-wxLanguage GetUILanguage();
+wxString GetUILanguage();
+
+#endif // NEED_CHOOSELANG_UI
 
 #endif

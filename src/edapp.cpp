@@ -162,7 +162,12 @@ bool PoeditApp::OnInit()
     wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
 #endif
 
-    m_locale.Init(GetUILanguage());
+#if NEED_CHOOSELANG_UI
+    const wxLanguageInfo *langInfo = wxLocale::FindLanguageInfo(GetUILanguage());
+    m_locale.Init(langInfo ? langInfo->Language : wxLANGUAGE_DEFAULT);
+#else
+    m_locale.Init(wxLANGUAGE_DEFAULT);
+#endif
 
     m_locale.AddCatalog(_T("poedit"));
 

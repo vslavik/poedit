@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2003-2008 Vaclav Slavik
+ *  Copyright (C) 2003-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,150 +23,66 @@
  *
  */
 
-#include <wx/wx.h>
-#include <wx/config.h>
-
 #include "chooselang.h"
 
 #if NEED_CHOOSELANG_UI
-static void SaveUILanguage(wxLanguage lang)
+
+#include <wx/wx.h>
+#include <wx/config.h>
+#include <wx/intl.h>
+#include <wx/translation.h>
+
+static void SaveUILanguage(const wxString& lang)
 {
-    if (lang == wxLANGUAGE_UNKNOWN)
-        return;
-    if (lang == wxLANGUAGE_DEFAULT)
+    if (lang.empty())
         wxConfig::Get()->Write(_T("ui_language"), _T("default"));
     else
-        wxConfig::Get()->Write(_T("ui_language"),
-                               wxLocale::GetLanguageInfo(lang)->CanonicalName);
+        wxConfig::Get()->Write(_T("ui_language"), lang);
 }
-#endif // NEED_CHOOSELANG_UI
 
-wxLanguage GetUILanguage()
+wxString GetUILanguage()
 {
-#if !NEED_CHOOSELANG_UI
-    return wxLANGUAGE_DEFAULT;
-#else
-    wxLanguage lang = wxLANGUAGE_DEFAULT;
-
     wxString lng = wxConfig::Get()->Read(_T("ui_language"));
     if (!lng.empty() && lng != _T("default"))
-    {
-        const wxLanguageInfo *info = wxLocale::FindLanguageInfo(lng);
-        if (info != NULL)
-            lang = (wxLanguage)info->Language;
-        else
-            wxLogError(_("Unknown locale code '%s' in registry."), lng.c_str());
-    }
-    // else: use autodetected language
-
-    return lang;
-#endif // NEED_CHOOSELANG_UI
+        return lng;
+    else
+        return "";
 }
 
-#if NEED_CHOOSELANG_UI
-wxLanguage ChooseLanguage()
+static bool ChooseLanguage(wxString *value)
 {
-    struct LangInfo
-    {
-        wxString name;
-        wxLanguage code;
-    };
-
-    LangInfo langs[] =
-    {
-        { _("(Use default language)"), wxLANGUAGE_DEFAULT },
-
-        { _T("Afrikaans"), wxLANGUAGE_AFRIKAANS },
-        { _T("Albanian"), wxLANGUAGE_ALBANIAN },
-        { _T("Amharic"), wxLANGUAGE_AMHARIC },
-        { _T("Arabic"), wxLANGUAGE_ARABIC },
-        { _T("Bangla"), wxLANGUAGE_BENGALI },
-        { _T("Basque"), wxLANGUAGE_BASQUE },
-        { _T("Belarusian"), wxLANGUAGE_BELARUSIAN },
-        { _T("Bosnian"), wxLANGUAGE_BOSNIAN },
-        { _T("Breton"), wxLANGUAGE_BRETON },
-        { _T("Bulgarian"), wxLANGUAGE_BULGARIAN },
-        { _T("Catalan"), wxLANGUAGE_CATALAN },
-        { _T("Chinese (Traditional)"), wxLANGUAGE_CHINESE_TRADITIONAL },
-        { _T("Chinese (Simplified)"), wxLANGUAGE_CHINESE_SIMPLIFIED },
-        { _T("Croatian"), wxLANGUAGE_CROATIAN },
-        { _T("Czech"), wxLANGUAGE_CZECH },
-        { _T("Danish"), wxLANGUAGE_DANISH },
-        { _T("Dutch"), wxLANGUAGE_DUTCH },
-        { _T("English"), wxLANGUAGE_ENGLISH },
-        { _T("Estonian"), wxLANGUAGE_ESTONIAN },
-        { _T("Esperanto"), wxLANGUAGE_ESPERANTO },
-        { _T("Farsi"), wxLANGUAGE_FARSI },
-        { _T("Finnish"), wxLANGUAGE_FINNISH },
-        { _T("French"), wxLANGUAGE_FRENCH },
-        { _T("Galician"), wxLANGUAGE_GALICIAN },
-        { _T("Georgian"), wxLANGUAGE_GEORGIAN },
-        { _T("German"), wxLANGUAGE_GERMAN },
-        { _T("Greek"), wxLANGUAGE_GREEK },
-        { _T("Hebrew"), wxLANGUAGE_HEBREW },
-        { _T("Hindi"), wxLANGUAGE_HINDI },
-        { _T("Hungarian"), wxLANGUAGE_HUNGARIAN },
-        { _T("Icelandic"), wxLANGUAGE_ICELANDIC },
-        { _T("Indonesian"), wxLANGUAGE_INDONESIAN },
-        { _T("Irish"), wxLANGUAGE_IRISH },
-        { _T("Italian"), wxLANGUAGE_ITALIAN },
-        { _T("Japanese"), wxLANGUAGE_JAPANESE },
-        { _T("Kazakh"), wxLANGUAGE_KAZAKH },
-        { _T("Korean"), wxLANGUAGE_KOREAN },
-        { _T("Kurdish"), wxLANGUAGE_KURDISH },
-        { _T("Kyrgyz"), wxLANGUAGE_KIRGHIZ },
-        { _T("Latvian"), wxLANGUAGE_LATVIAN },
-        { _T("Lithuanian"), wxLANGUAGE_LITHUANIAN },
-        { _T("Macedonian"), wxLANGUAGE_MACEDONIAN },
-        { _T("Malay"), wxLANGUAGE_MALAY },
-        { _T("Marathi"), wxLANGUAGE_MARATHI },
-        { _T("Mongolian"), wxLANGUAGE_MONGOLIAN },
-        { _T("Norwegian Nynorsk"), wxLANGUAGE_NORWEGIAN_NYNORSK },
-        { _T("Norwegian Bokmal"), wxLANGUAGE_NORWEGIAN_BOKMAL },
-        { _T("Polish"), wxLANGUAGE_POLISH },
-        { _T("Portuguese"), wxLANGUAGE_PORTUGUESE },
-        { _T("Portuguese (Brazilian)"), wxLANGUAGE_PORTUGUESE_BRAZILIAN },
-        { _T("Punjabi"), wxLANGUAGE_PUNJABI },
-        { _T("Romanian"), wxLANGUAGE_ROMANIAN },
-        { _T("Russian"), wxLANGUAGE_RUSSIAN },
-        { _T("Serbian"), wxLANGUAGE_SERBIAN },
-        { _T("Serbian (Latin)"), wxLANGUAGE_SERBIAN_LATIN },
-        { _T("Slovak"), wxLANGUAGE_SLOVAK },
-        { _T("Slovenian"), wxLANGUAGE_SLOVENIAN },
-        { _T("Spanish"), wxLANGUAGE_SPANISH },
-        { _T("Spanish (Puerto Rico)"), wxLANGUAGE_SPANISH_PUERTO_RICO },
-        { _T("Swedish"), wxLANGUAGE_SWEDISH },
-        { _T("Tajik"), wxLANGUAGE_TAJIK },
-        { _T("Tamil"), wxLANGUAGE_TAMIL },
-        { _T("Tatarish"), wxLANGUAGE_TATAR },
-        { _T("Thai"), wxLANGUAGE_THAI },
-        { _T("Turkish"), wxLANGUAGE_TURKISH },
-        { _T("Ukrainian"), wxLANGUAGE_UKRAINIAN },
-        { _T("Urdu"), wxLANGUAGE_URDU },
-        { _T("Uyghur"), wxLANGUAGE_UIGHUR },
-        { _T("Uzbek"), wxLANGUAGE_UZBEK },
-        { _T("Vietnamese"), wxLANGUAGE_VIETNAMESE },
-        { _T(""), wxLANGUAGE_UNKNOWN }
-    };
-
+    wxArrayString langs;
     wxArrayString arr;
-    for (int i = 0; !langs[i].name.empty(); i++)
-        arr.Add(langs[i].name);
 
+    {
+        wxBusyCursor bcur;
+        langs = wxTranslations::Get()->GetAvailableTranslations(_T("poedit"));
+
+        arr.push_back(_("(Use default language)"));
+        for ( wxArrayString::const_iterator i = langs.begin(); i != langs.end(); ++i )
+        {
+            const wxLanguageInfo *langInfo = wxLocale::FindLanguageInfo(*i);
+            arr.push_back(langInfo ? langInfo->Description : *i);
+        }
+    }
     int choice = wxGetSingleChoiceIndex(
             _("Select your prefered language"),
             _("Language selection"),
             arr);
-    if (choice == -1)
-        return wxLANGUAGE_UNKNOWN;
+    if ( choice == -1 )
+        return false;
+
+    if ( choice == 0 )
+        *value = "";
     else
-        return langs[choice].code;
+        *value = langs[choice-1];
+    return true;
 }
 
 void ChangeUILanguage()
 {
-    wxLanguage lang = ChooseLanguage();
-    if (lang == wxLANGUAGE_UNKNOWN)
+    wxString lang;
+    if ( !ChooseLanguage(&lang) )
         return;
     SaveUILanguage(lang);
     wxMessageBox(_("You must restart Poedit for this change to take effect."),
