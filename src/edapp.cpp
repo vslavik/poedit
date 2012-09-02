@@ -34,6 +34,10 @@
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 #include <wx/sysopt.h>
+#include <wx/intl.h>
+#if wxCHECK_VERSION(2,9,1)
+#include <wx/translation.h>
+#endif
 
 #ifdef USE_SPARKLE
 #include "osx_helpers.h"
@@ -155,29 +159,7 @@ bool PoeditApp::OnInit()
     wxArtProvider::Insert(new PoeditArtProvider);
 #endif
 
-#ifdef __WXMAC__
-    wxLocale::AddCatalogLookupPathPrefix(
-        wxStandardPaths::Get().GetResourcesDir() + _T("/locale"));
-#else
-    wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
-#endif
-
-#if NEED_CHOOSELANG_UI
-    const wxLanguageInfo *langInfo = wxLocale::FindLanguageInfo(GetUILanguage());
-    m_locale.Init(langInfo ? langInfo->Language : wxLANGUAGE_DEFAULT);
-#else
-    m_locale.Init(wxLANGUAGE_DEFAULT);
-#endif
-
-    m_locale.AddCatalog(_T("poedit"));
-
-#ifdef __WXMSW__
-    // Italian version of Windows uses just "?" for "Help" menu. This is
-    // correctly handled by wxWidgets catalogs, but Poedit catalog has "Help"
-    // entry too, so we add wxmsw.mo catalog again so that it takes
-    // precedence over poedit.mo:
-    m_locale.AddCatalog(_T("wxmsw"));
-#endif
+    SetupLanguage();
 
 #ifdef __WXMAC__
     // so that help menu is correctly merged with system-provided menu
@@ -238,6 +220,41 @@ int PoeditApp::OnExit()
 #endif
 
     return wxApp::OnExit();
+}
+
+
+void PoeditApp::SetupLanguage()
+{
+#ifdef __WXMAC__
+    wxLocale::AddCatalogLookupPathPrefix(
+        wxStandardPaths::Get().GetResourcesDir() + _T("/locale"));
+#else
+    wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
+#endif
+
+#if wxCHECK_VERSION(2,9,1)
+
+    wxTranslations *trans = new wxTranslations();
+    wxTranslations::Set(trans);
+    #if NEED_CHOOSELANG_UI
+    trans->SetLanguage(GetUILanguage());
+    #endif
+    trans->AddCatalog("poedit");
+    trans->AddStdCatalog();
+
+#else // wx < 2.9.1
+
+    m_locale.Init(wxLANGUAGE_DEFAULT);
+    m_locale.AddCatalog(_T("poedit"));
+    #ifdef __WXMSW__
+    // Italian version of Windows uses just "?" for "Help" menu. This is
+    // correctly handled by wxWidgets catalogs, but Poedit catalog has "Help"
+    // entry too, so we add wxmsw.mo catalog again so that it takes
+    // precedence over poedit.mo:
+    m_locale.AddCatalog(_T("wxmsw"));
+    #endif
+
+#endif // wx < 2.9.1
 }
 
 

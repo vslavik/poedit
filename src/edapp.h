@@ -57,9 +57,6 @@ class PoeditApp : public wxApp
         /// Returns Poedit version string.
         wxString GetAppVersion() const;
 
-        /// Returns our locale object
-        wxLocale& GetLocale() { return m_locale; }
-
         // opens a file in new frame
         void OpenFile(const wxString& name);
         // opens empty frame or catalogs manager
@@ -82,7 +79,11 @@ class PoeditApp : public wxApp
         bool OnCmdLineParsed(wxCmdLineParser& parser);
         
     private:
+        void SetupLanguage();
+
+#if !wxCHECK_VERSION(2,9,1)
         wxLocale m_locale;
+#endif
 };
 
 DECLARE_APP(PoeditApp);
