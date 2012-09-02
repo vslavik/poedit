@@ -23,7 +23,6 @@
  *
  */
 
-#include <wx/wxprec.h>
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/panel.h>

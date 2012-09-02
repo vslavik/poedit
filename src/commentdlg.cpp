@@ -23,8 +23,6 @@
  *
  */
 
-#include <wx/wxprec.h>
-
 #include <wx/xrc/xmlres.h>
 #include <wx/config.h>
 #include <wx/textctrl.h>

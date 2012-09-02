@@ -23,8 +23,6 @@
  *
  */
 
-#include <wx/wxprec.h>
-
 #include <wx/imaglist.h>
 #include <wx/config.h>
 #include <wx/textctrl.h>

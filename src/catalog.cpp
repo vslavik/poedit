@@ -23,8 +23,6 @@
  *
  */
 
-#include <wx/wxprec.h>
-
 #include <stdio.h>
 #include <wx/utils.h>
 #include <wx/tokenzr.h>

@@ -23,7 +23,6 @@
  *
  */
 
-#include <wx/wxprec.h>
 #include "wxeditablelistbox.h"
 #include <wx/textctrl.h>
 #include <wx/button.h>
