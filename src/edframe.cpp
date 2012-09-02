@@ -1861,7 +1861,8 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
 
 
     // FIXME: do this for Gettext PO files only
-    if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
+    if (wxConfig::Get()->Read(_T("translator_name"), _T("")).empty() ||
+        wxConfig::Get()->Read(_T("translator_email"), _T("")).empty())
     {
         AttentionMessage msg
             (
