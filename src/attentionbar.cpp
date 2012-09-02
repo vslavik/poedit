@@ -77,7 +77,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
                     wxNO_BORDER
                 );
     btnClose->SetToolTip(_("Hide this notification message"));
-#ifndef __WXGTK__
+#ifdef __WXMSW__
     btnClose->SetBackgroundColour(bg);
 #endif
 
