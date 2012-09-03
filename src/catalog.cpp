@@ -1331,7 +1331,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
     }
     else
     {
-        if ( !wxRemoveFile(po_file) || !wxRenameFile(po_file_temp, po_file) )
+        if ( wxFileExists(po_file) )
+            wxRemoveFile(po_file);
+        if ( !wxRenameFile(po_file_temp, po_file) )
         {
             wxLogError(_("Couldn't save file %s."), po_file.c_str());
         }
