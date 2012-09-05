@@ -77,8 +77,6 @@ class ManagerFrame : public wxFrame
         void OnUpdateProject(wxCommandEvent& event);
         void OnSelectProject(wxCommandEvent& event);
         void OnOpenCatalog(wxListEvent& event);
-        void OnPreferences(wxCommandEvent& event);
-        void OnQuit(wxCommandEvent& event);
         void OnCloseCmd(wxCommandEvent& event);
 
         wxListCtrl *m_listCat;

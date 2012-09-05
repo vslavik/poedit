@@ -44,9 +44,9 @@
 #include <wx/iconbndl.h>
 
 #include "catalog.h"
+#include "edapp.h"
 #include "edframe.h"
 #include "manager.h"
-#include "prefsdlg.h"
 #include "progressinfo.h"
 #include "utility.h"
 
@@ -356,9 +356,7 @@ BEGIN_EVENT_TABLE(ManagerFrame, wxFrame)
    EVT_MENU                 (XRCID("prj_update"), ManagerFrame::OnUpdateProject)
    EVT_LISTBOX              (XRCID("prj_list"),   ManagerFrame::OnSelectProject)
    EVT_LIST_ITEM_ACTIVATED  (XRCID("prj_files"),  ManagerFrame::OnOpenCatalog)
-   EVT_MENU                 (wxID_EXIT,           ManagerFrame::OnQuit)
    EVT_MENU                 (wxID_CLOSE,          ManagerFrame::OnCloseCmd)
-   EVT_MENU                 (wxID_PREFERENCES,    ManagerFrame::OnPreferences)
 END_EVENT_TABLE()
 
 
@@ -457,24 +455,6 @@ void ManagerFrame::OnOpenCatalog(wxListEvent& event)
     PoeditFrame::Create(m_catalogs[event.GetIndex()])->Raise();
 }
 
-
-void ManagerFrame::OnPreferences(wxCommandEvent&)
-{
-    PreferencesDialog dlg(this);
-
-    dlg.TransferTo(wxConfig::Get());
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        dlg.TransferFrom(wxConfig::Get());
-    }
-}
-
-void ManagerFrame::OnQuit(wxCommandEvent&)
-{
-    if ( !Close() )
-        return;
-    wxTheApp->ExitMainLoop();
-}
 
 void ManagerFrame::OnCloseCmd(wxCommandEvent&)
 {

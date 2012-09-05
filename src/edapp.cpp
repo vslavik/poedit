@@ -34,6 +34,7 @@
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 #include <wx/sysopt.h>
+#include <wx/aboutdlg.h>
 #include <wx/intl.h>
 #if wxCHECK_VERSION(2,9,1)
 #include <wx/translation.h>
@@ -61,6 +62,7 @@
 #include "version.h"
 #include "transmem.h"
 #include "utility.h"
+#include "prefsdlg.h"
 
 IMPLEMENT_APP(PoeditApp);
 
@@ -162,10 +164,13 @@ bool PoeditApp::OnInit()
     SetupLanguage();
 
 #ifdef __WXMAC__
+    wxMenuBar::MacSetCommonMenuBar(wxXmlResource::Get()->LoadMenuBar(_T("mainmenu_mac_global")));
     // so that help menu is correctly merged with system-provided menu
     // (see http://sourceforge.net/tracker/index.php?func=detail&aid=1600747&group_id=9863&atid=309863)
     s_macHelpMenuTitleName = _("&Help");
 #endif
+
+    FileHistory().Load(*wxConfig::Get());
 
 #ifdef USE_TRANSMEM
     // NB: It's important to do this before TM is used for the first time.
@@ -263,7 +268,7 @@ void PoeditApp::OpenNewFile()
     if (wxConfig::Get()->Read(_T("manager_startup"), (long)false))
         ManagerFrame::Create()->Show(true);
     else
-        PoeditFrame::Create(wxEmptyString);
+        PoeditFrame::Create();
 }
 
 void PoeditApp::OpenFile(const wxString& name)
@@ -406,4 +411,163 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
         gs_filesToOpen.Add(parser.GetParam(i));
 
     return true;
+}
+
+
+// ---------------------------------------------------------------------------
+// event handlers for app-global menu actions
+// ---------------------------------------------------------------------------
+
+BEGIN_EVENT_TABLE(PoeditApp, wxApp)
+#ifndef __WXMSW__
+   EVT_MENU           (wxID_NEW,                  PoeditApp::OnNew)
+   EVT_MENU           (XRCID("menu_new_from_pot"),PoeditApp::OnNew)
+   EVT_MENU           (wxID_OPEN,                 PoeditApp::OnOpen)
+   EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditApp::OnOpenHist)
+#endif // !__WXMSW__
+   EVT_MENU           (wxID_ABOUT,                PoeditApp::OnAbout)
+   EVT_MENU           (XRCID("menu_manager"),     PoeditApp::OnManager)
+   EVT_MENU           (wxID_EXIT,                 PoeditApp::OnQuit)
+   EVT_MENU           (wxID_PREFERENCES,          PoeditApp::OnPreferences)
+   EVT_MENU           (wxID_HELP,                 PoeditApp::OnHelp)
+END_EVENT_TABLE()
+
+
+// OS X and GNOME apps should open new documents in a new window. On Windows,
+// however, the usual thing to do is to open the new document in the already
+// open window and replace the current document.
+#ifndef __WXMSW__
+
+#define TRY_FORWARD_TO_ACTIVE_WINDOW(funcCall)                          \
+    {                                                                   \
+        PoeditFrame *active = PoeditFrame::UnusedActiveWindow();        \
+        if ( active )                                                   \
+        {                                                               \
+            active->funcCall;                                           \
+            return;                                                     \
+        }                                                               \
+    }
+
+void PoeditApp::OnNew(wxCommandEvent& event)
+{
+    TRY_FORWARD_TO_ACTIVE_WINDOW( OnNew(event) );
+
+    PoeditFrame *f = PoeditFrame::Create();
+    f->OnNew(event);
+}
+
+
+void PoeditApp::OnOpen(wxCommandEvent& event)
+{
+    TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpen(event) );
+
+    wxString path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
+    wxString name = wxFileSelector(_("Open catalog"),
+                    path, wxEmptyString, wxEmptyString,
+                    _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+                    wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+
+    if (!name.empty())
+    {
+        wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
+        OpenFile(name);
+    }
+}
+
+
+void PoeditApp::OnOpenHist(wxCommandEvent& event)
+{
+    TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpenHist(event) );
+
+    wxString f(FileHistory().GetHistoryFile(event.GetId() - wxID_FILE1));
+    if ( !wxFileExists(f) )
+    {
+        wxLogError(_("File '%s' doesn't exist."), f.c_str());
+        return;
+    }
+
+    OpenFile(f);
+}
+
+#endif // !__WXMSW__
+
+
+void PoeditApp::OnAbout(wxCommandEvent&)
+{
+#if 0
+    // Forces translation of several strings that are used for about
+    // dialog internally by wx, but are frequently not translate due to
+    // state of wx's translations:
+
+    // TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+    //              ("Poedit" here, but please use "%s")
+    _("About %s");
+    // TRANSLATORS: This is version information in about dialog, "%s" will be
+    //              version number when used
+    _("Version %s");
+    // TRANSLATORS: This is version information in about dialog, it is followed
+    //              by version number when used (wxWidgets 2.8)
+    _(" Version ");
+    // TRANSLATORS: This is titlebar of about dialog, the string ends with space
+    //              and is followed by application name when used ("Poedit",
+    //              but don't add it to this translation yourself) (wxWidgets 2.8)
+    _("About ");
+#endif
+
+    wxAboutDialogInfo about;
+
+    about.SetName(_T("Poedit"));
+    about.SetVersion(wxGetApp().GetAppVersion());
+#ifndef __WXMAC__
+    about.SetDescription(_("Poedit is an easy to use translations editor."));
+#endif
+    about.SetCopyright(_T("Copyright \u00a9 1999-2012 Vaclav Slavik"));
+#ifdef __WXGTK__ // other ports would show non-native about dlg
+    about.SetWebSite(_T("http://www.poedit.net"));
+#endif
+
+    wxAboutBox(about);
+}
+
+
+void PoeditApp::OnManager(wxCommandEvent&)
+{
+    wxFrame *f = ManagerFrame::Create();
+    f->Raise();
+}
+
+
+void PoeditApp::OnQuit(wxCommandEvent&)
+{
+    for ( wxWindowList::iterator i = wxTopLevelWindows.begin(); i != wxTopLevelWindows.end(); ++i )
+    {
+        if ( !(*i)->Close() )
+            return;
+    }
+
+    ExitMainLoop();
+}
+
+
+void PoeditApp::EditPreferences()
+{
+    PreferencesDialog dlg(NULL);
+
+    dlg.TransferTo(wxConfig::Get());
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        dlg.TransferFrom(wxConfig::Get());
+        PoeditFrame::UpdateAllAfterPreferencesChange();
+    }
+}
+
+void PoeditApp::OnPreferences(wxCommandEvent&)
+{
+    EditPreferences();
+}
+
+
+void PoeditApp::OnHelp(wxCommandEvent&)
+{
+    wxLaunchDefaultBrowser(_T("http://www.poedit.net/trac/wiki/Doc"));
 }

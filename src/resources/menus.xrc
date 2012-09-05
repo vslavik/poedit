@@ -212,4 +212,48 @@
       <style>wxMENU_TEAROFF</style>
     </object>
   </object>
+
+  <object class="wxMenuBar" name="mainmenu_mac_global">
+    <object class="wxMenu" name="menu_file">
+      <label>_File</label>
+      <style>wxMENU_TEAROFF</style>
+      <object class="wxMenuItem" name="menu_manager">
+        <label platform="unix|mac">Catalogs _Manager</label>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="wxID_NEW">
+        <label platform="unix|mac">_New Catalog...</label>
+      </object>
+      <object class="wxMenuItem" name="menu_new_from_pot">
+        <label platform="unix|mac">New Catalog from POT File...</label>
+      </object>
+      <object class="wxMenuItem" name="wxID_OPEN">
+        <label>_Open...</label>
+        <accel>Ctrl+O</accel>
+      </object>
+      <object class="wxMenuItem" name="wxID_PREFERENCES" platform="win|mac">
+        <label>_Preferences...</label>
+        <accel platform="mac">Ctrl+,</accel>
+      </object>
+      <object class="wxMenuItem" name="wxID_EXIT">
+        <label platform="mac">Quit</label>
+      </object>
+    </object>
+    <object class="wxMenu" name="menu_help">
+      <object class="wxMenuItem" name="wxID_HELP">
+        <label platform="win">_Online help</label>
+        <label platform="unix|mac">_Online Help</label>
+        <accel platform="win">F1</accel>
+        <accel platform="unix">F1</accel>
+        <accel platform="mac">Ctrl+?</accel>
+      </object>
+      <object class="wxMenuItem" name="wxID_ABOUT">
+        <label platform="mac">_About Poedit</label>
+        <label platform="win">_About</label>
+        <label platform="unix">_About</label>
+      </object>
+      <label>_Help</label>
+      <style>wxMENU_TEAROFF</style>
+    </object>
+  </object>
 </resource>
