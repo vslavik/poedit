@@ -192,23 +192,17 @@ to set the Last-Translator header of GNU gettext files.</label>
                       <flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
                       <object class="wxBoxSizer">
                         <object class="sizeritem">
-                          <object class="wxTextCtrl" name="fontname_list">
-                            <style>wxTE_READONLY</style>
+                          <object class="wxFontPickerCtrl" name="font_list">
                           </object>
                           <option>1</option>
                           <flag>wxRIGHT</flag>
                           <border>5d</border>
                         </object>
-                        <object class="sizeritem">
-                          <object class="wxButton" name="fontpicker_list">
-                            <label>Choose</label>
-                          </object>
-                        </object>
                       </object>
                     </object>
                     <object class="sizeritem">
                       <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT</flag>
+                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
                       <object class="wxCheckBox" name="use_font_text">
                         <label>Use custom font for text fields</label>
                       </object>
@@ -218,17 +212,11 @@ to set the Last-Translator header of GNU gettext files.</label>
                       <flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
                       <object class="wxBoxSizer">
                         <object class="sizeritem">
-                          <object class="wxTextCtrl" name="fontname_text">
-                            <style>wxTE_READONLY</style>
+                          <object class="wxFontPickerCtrl" name="font_text">
                           </object>
                           <option>1</option>
                           <flag>wxRIGHT</flag>
                           <border>5d</border>
-                        </object>
-                        <object class="sizeritem">
-                          <object class="wxButton" name="fontpicker_text">
-                            <label>Choose</label>
-                          </object>
                         </object>
                       </object>
                     </object>

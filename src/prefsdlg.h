@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2005 Vaclav Slavik
+ *  Copyright (C) 2000-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -65,12 +65,11 @@ class PreferencesDialog : public wxDialog
         void OnNewParser(wxCommandEvent& event);
         void OnEditParser(wxCommandEvent& event);
         void OnDeleteParser(wxCommandEvent& event);
+        void OnUpdateUIFontList(wxUpdateUIEvent& event);
+        void OnUpdateUIFontText(wxUpdateUIEvent& event);
+
         /// Called to launch dialog for editting parser properties.
         bool EditParser(int num);
-
-        void OnChooseListFont(wxCommandEvent& event);
-        void OnChooseTextFont(wxCommandEvent& event);
-        void DoChooseFont(wxTextCtrl *nameField);
 };
 
 
