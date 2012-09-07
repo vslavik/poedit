@@ -106,7 +106,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XRCCTRL(*this, "user_email", wxTextCtrl)->SetValue(
                 cfg->Read(_T("translator_email"), wxEmptyString));
     XRCCTRL(*this, "compile_mo", wxCheckBox)->SetValue(
-                cfg->Read(_T("compile_mo"), (long)false));
+                cfg->Read(_T("compile_mo"), (long)true));
     XRCCTRL(*this, "show_summary", wxCheckBox)->SetValue(
                 cfg->Read(_T("show_summary"), true));
     XRCCTRL(*this, "manager_startup", wxCheckBox)->SetValue(

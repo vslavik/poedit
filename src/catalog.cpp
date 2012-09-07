@@ -1349,7 +1349,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
 
     /* If the user wants it, compile .mo file right now: */
 
-    if (save_mo && wxConfig::Get()->Read(_T("compile_mo"), (long)false))
+    if (save_mo && wxConfig::Get()->Read(_T("compile_mo"), (long)true))
     {
         const wxString mofile = po_file.BeforeLast(_T('.')) + _T(".mo");
         if ( !ExecuteGettext
