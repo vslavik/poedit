@@ -64,10 +64,8 @@ class CatalogItem
 {
     public:
         /// Ctor. Initializes the object with source string and translation.
-        CatalogItem(const wxString& str = wxEmptyString,
-                    const wxString& str_plural = wxEmptyString)
-                : m_string(str),
-                  m_plural(str_plural),
+        CatalogItem()
+                : m_id(0),
                   m_hasPlural(false),
                   m_hasContext(false),
                   m_references(),
@@ -80,7 +78,8 @@ class CatalogItem
                   m_bookmark(NO_BOOKMARK) {}
 
         CatalogItem(const CatalogItem& dt)
-                : m_string(dt.m_string),
+                : m_id(dt.m_id),
+                  m_string(dt.m_string),
                   m_plural(dt.m_plural),
                   m_hasPlural(dt.m_hasPlural),
                   m_hasContext(dt.m_hasContext),
@@ -100,6 +99,9 @@ class CatalogItem
                   m_lineNum(dt.m_lineNum),
                   m_errorString(dt.m_errorString),
                   m_bookmark(dt.m_bookmark) {}
+
+        /// Gets numeric, 1-based ID
+        int GetId() const { return m_id; }
 
         /// Returns the source string.
         const wxString& GetString() const { return m_string; }
@@ -155,6 +157,8 @@ class CatalogItem
             if (m_references.Index(ref) == wxNOT_FOUND)
                 m_references.Add(ref);
         }
+
+        void SetId(int id) { m_id = id; }
 
         /// Sets the string.
         void SetString(const wxString& s)
@@ -265,6 +269,8 @@ class CatalogItem
         void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
 
     private:
+        int m_id;
+
         wxString m_string, m_plural;
         bool m_hasPlural;
 

@@ -831,7 +831,7 @@ class LoadParser : public CatalogParser
 {
     public:
         LoadParser(Catalog *c, wxTextFile *f)
-              : CatalogParser(f), m_catalog(c) {}
+              : CatalogParser(f), m_catalog(c), m_nextId(1) {}
 
     protected:
         Catalog *m_catalog;
@@ -855,6 +855,9 @@ class LoadParser : public CatalogParser
                                     const wxString& comment,
                                     const wxArrayString& autocomments,
                                     unsigned lineNumber);
+
+    private:
+        int m_nextId;
 };
 
 
@@ -880,7 +883,9 @@ bool LoadParser::OnEntry(const wxString& msgid,
     else
     {
         CatalogItem d;
-        if (!flags.empty()) d.SetFlags(flags);
+        d.SetId(m_nextId++);
+        if (!flags.empty())
+            d.SetFlags(flags);
         d.SetString(msgid);
         if (has_plural)
             d.SetPluralString(msgid_plural);
