@@ -193,6 +193,7 @@ private:
         void OnRightClick(wxCommandEvent& event);
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnQuotesFlag(wxCommandEvent& event);
+        void OnLinesFlag(wxCommandEvent& event);
         void OnCommentWinFlag(wxCommandEvent& event);
         void OnAutoCommentsWinFlag(wxCommandEvent& event);
         void OnCopyFromSource(wxCommandEvent& event);
@@ -271,6 +272,7 @@ private:
         bool m_modified;
         bool m_hasObsoleteItems;
         bool m_displayQuotes;
+        bool m_displayLines;
         bool m_displayCommentWin;
         bool m_displayAutoCommentsWin;
         bool m_dontAutoclearFuzzyStatus;

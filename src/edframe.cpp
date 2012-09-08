@@ -337,6 +337,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
    EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
    EVT_MENU           (XRCID("menu_quotes"),      PoeditFrame::OnQuotesFlag)
+   EVT_MENU           (XRCID("menu_lines"),       PoeditFrame::OnLinesFlag)
    EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
    EVT_MENU           (XRCID("menu_auto_comments_win"), PoeditFrame::OnAutoCommentsWinFlag)
    EVT_MENU           (XRCID("sort_by_order"),    PoeditFrame::OnSortByFileOrder)
@@ -449,6 +450,7 @@ PoeditFrame::PoeditFrame() :
     wxConfigBase *cfg = wxConfig::Get();
 
     m_displayQuotes = (bool)cfg->Read(_T("display_quotes"), (long)false);
+    m_displayLines = (bool)cfg->Read(_T("display_lines"), (long)false);
     m_displayCommentWin =
         (bool)cfg->Read(_T("display_comment_win"), (long)false);
     m_displayAutoCommentsWin =
@@ -499,6 +501,7 @@ PoeditFrame::PoeditFrame() :
     wxXmlResource::Get()->LoadToolBar(this, _T("toolbar"));
 
     GetMenuBar()->Check(XRCID("menu_quotes"), m_displayQuotes);
+    GetMenuBar()->Check(XRCID("menu_lines"), m_displayLines);
     GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
     GetMenuBar()->Check(XRCID("menu_auto_comments_win"), m_displayAutoCommentsWin);
 
@@ -521,7 +524,8 @@ PoeditFrame::PoeditFrame() :
     m_list = new PoeditListCtrl(topPanel,
                                 ID_LIST,
                                 wxDefaultPosition, wxDefaultSize,
-                                wxLC_REPORT | wxLC_SINGLE_SEL);
+                                wxLC_REPORT | wxLC_SINGLE_SEL,
+                                m_displayLines);
 
     wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
     topSizer->Add(m_attentionBar, wxSizerFlags().Expand());
@@ -699,6 +703,7 @@ PoeditFrame::~PoeditFrame()
     }
     cfg->Write(_T("splitter"), (long)m_splitter->GetSashPosition());
     cfg->Write(_T("display_quotes"), m_displayQuotes);
+    cfg->Write(_T("display_lines"), m_displayLines);
     cfg->Write(_T("display_comment_win"), m_displayCommentWin);
     cfg->Write(_T("display_auto_comments_win"), m_displayAutoCommentsWin);
 
@@ -1507,6 +1512,14 @@ void PoeditFrame::OnQuotesFlag(wxCommandEvent&)
     UpdateFromTextCtrl();
     m_displayQuotes = GetMenuBar()->IsChecked(XRCID("menu_quotes"));
     UpdateToTextCtrl();
+}
+
+
+
+void PoeditFrame::OnLinesFlag(wxCommandEvent&)
+{
+    m_displayLines = GetMenuBar()->IsChecked(XRCID("menu_lines"));
+    m_list->SetDisplayLines(m_displayLines);
 }
 
 
@@ -2525,6 +2538,7 @@ void PoeditFrame::UpdateDisplayCommentWin()
         m_bottomRightPanel->Show(false);
         m_bottomSplitter->Unsplit();
     }
+    m_list->SetDisplayLines(m_displayLines);
     RefreshControls();
 }
 
