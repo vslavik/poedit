@@ -35,6 +35,8 @@
 #include <wx/filename.h>
 #include <wx/sysopt.h>
 #include <wx/aboutdlg.h>
+#include <wx/artprov.h>
+#include <wx/datetime.h>
 #include <wx/intl.h>
 #if wxCHECK_VERSION(2,9,1)
 #include <wx/translation.h>
@@ -265,15 +267,24 @@ void PoeditApp::SetupLanguage()
 
 void PoeditApp::OpenNewFile()
 {
+    wxWindow *win;
     if (wxConfig::Get()->Read(_T("manager_startup"), (long)false))
-        ManagerFrame::Create()->Show(true);
+    {
+        win = ManagerFrame::Create();
+        win->Show(true);
+    }
     else
-        PoeditFrame::Create();
+    {
+        win = PoeditFrame::Create();
+    }
+
+    AskForDonations(win);
 }
 
 void PoeditApp::OpenFile(const wxString& name)
 {
-    PoeditFrame::Create(name);
+    wxWindow *win = PoeditFrame::Create(name);
+    AskForDonations(win);
 }
 
 void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
@@ -570,4 +581,81 @@ void PoeditApp::OnPreferences(wxCommandEvent&)
 void PoeditApp::OnHelp(wxCommandEvent&)
 {
     wxLaunchDefaultBrowser(_T("http://www.poedit.net/trac/wiki/Doc"));
+}
+
+
+void PoeditApp::AskForDonations(wxWindow *parent)
+{
+    wxConfigBase *cfg = wxConfigBase::Get();
+
+    if ( (bool)cfg->Read(_T("donate/dont_bug"), (long)false) )
+        return; // the user doesn't like us, don't be a bother
+    if ( (bool)cfg->Read(_T("donate/donated"), (long)false) )
+        return; // the user likes us a lot, don't be a bother
+
+    wxDateTime lastAsked((time_t)cfg->Read(_T("donate/last_asked"), (long)0));
+
+    wxDateTime now = wxDateTime::Now();
+    if ( lastAsked.Add(wxDateSpan::Days(7)) >= now )
+        return; // don't ask too frequently
+
+    // let's ask nicely:
+    wxDialog dlg(parent, wxID_ANY, _T(""));
+    wxBoxSizer *topsizer = new wxBoxSizer(wxHORIZONTAL);
+
+    wxIcon icon(wxArtProvider::GetIcon(_T("poedit"), wxART_OTHER, wxSize(64,64)));
+    topsizer->Add(new wxStaticBitmap(&dlg, wxID_ANY, icon), wxSizerFlags().DoubleBorder());
+
+    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+
+    wxStaticText *big = new wxStaticText(&dlg, wxID_ANY, _T("Support Open Source software"));
+    wxFont font = big->GetFont();
+    font.SetWeight(wxFONTWEIGHT_BOLD);
+#if defined(__WXMSW__) && wxCHECK_VERSION(2,9,1)
+    font.MakeLarger();
+#endif
+    big->SetFont(font);
+    sizer->Add(big);
+
+    wxStaticText *desc = new wxStaticText(&dlg, wxID_ANY,
+            _T("A lot of time and effort have gone into development\n")
+            _T("of Poedit. If it's useful to you, please consider showing\n")
+            _T("your appreciation with a donation.\n")
+            _T("\n")
+            _T("Donate or not, there will be no difference in Poedit's\n")
+            _T("features and functionality.")
+            );
+#ifdef __WXMAC__
+    desc->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+    sizer->Add(desc, wxSizerFlags(1).Expand().DoubleBorder(wxTOP|wxBOTTOM|wxRIGHT));
+
+    wxCheckBox *checkbox = new wxCheckBox(&dlg, wxID_ANY, _T("Don't bug me about this again"));
+    sizer->Add(checkbox);
+
+    wxStdDialogButtonSizer *buttons = new wxStdDialogButtonSizer();
+    wxButton *ok = new wxButton(&dlg, wxID_OK, _("Donate..."));
+    ok->SetDefault();
+    buttons->AddButton(ok);
+    buttons->AddButton(new wxButton(&dlg, wxID_CANCEL, _("No, thanks")));
+    buttons->Realize();
+    sizer->Add(buttons, wxSizerFlags().Right().DoubleBorder(wxTOP));
+    dlg.SetSizerAndFit(topsizer);
+    dlg.Centre();
+
+    if ( dlg.ShowModal() == wxID_OK )
+    {
+        wxLaunchDefaultBrowser(_T("http://www.poedit.net/donate.php"));
+        cfg->Write(_T("donate/donated"), true);
+    }
+    else
+    {
+        cfg->Write(_T("donate/dont_bug"), checkbox->GetValue());
+    }
+
+    cfg->Write(_T("donate/last_asked"), (long)now.GetTicks());
+
+    // re-asking after a crash wouldn't be a good idea:
+    cfg->Flush();
 }

@@ -91,6 +91,7 @@ Source: deps\db\build_windows\Win32\Release\libdb*.dll; DestDir: {app}\bin; Flag
 Source: deps\winsparkle\Release\WinSparkle.dll; DestDir: {app}\bin; Flags: ignoreversion
 Source: COPYING; DestDir: {app}\doc; DestName: copying.txt
 Source: NEWS; DestDir: {app}\doc; DestName: news.txt
+Source: icons\appicon\128x128\apps\poedit.png; DestDir: {app}\share\poedit\icons
 Source: icons\ui\*.png; DestDir: {app}\share\poedit\icons
 Source: icons\ui\toolbar-32\*.png; DestDir: {app}\share\poedit\icons
 Source: icons\win32\xp\*.ico; DestDir: {app}\share\poedit\icons; OnlyBelowVersion: 0,6.0.6000

@@ -85,6 +85,7 @@ class PoeditApp : public wxApp
         
     private:
         void SetupLanguage();
+        void AskForDonations(wxWindow *parent);
 
         // App-global menu commands:
         void OnNew(wxCommandEvent& event);
