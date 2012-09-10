@@ -811,9 +811,6 @@ static bool DoInitSpellchecker(wxTextCtrl *text,
 
 static bool SetSpellcheckerLang(const wxString& lang)
 {
-    // FIXME: if this fails, report an error in some unobtrusive way,
-    //        tell the user to install cocoaSpell from
-    //        http://people.ict.usc.edu/~leuski/cocoaspell/
     return SpellChecker_SetLang(lang.mb_str(wxConvUTF8));
 }
 
