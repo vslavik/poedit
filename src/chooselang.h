@@ -29,9 +29,7 @@
 #include <wx/string.h>
 #include <wx/intl.h>
 
-#if defined(__UNIX__) && !defined(__WXMAC__)
-    #define NEED_CHOOSELANG_UI 0
-#else
+#ifdef __WXMSW__
     #if wxCHECK_VERSION(2,9,1)
         #define NEED_CHOOSELANG_UI 1
     #else
@@ -42,6 +40,8 @@
         #endif
         #define NEED_CHOOSELANG_UI 0
     #endif
+#else
+    #define NEED_CHOOSELANG_UI 0
 #endif
 
 #if NEED_CHOOSELANG_UI
