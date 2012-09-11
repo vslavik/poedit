@@ -23,8 +23,6 @@
  *
  */
 
-#include <wx/wxprec.h>
-
 #include "progressinfo.h"
 
 #include <wx/dialog.h>

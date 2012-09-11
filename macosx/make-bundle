@@ -87,6 +87,7 @@ find $bundle/Contents/Resources/locale -type f
 # icons:
 iconsdir="$bundle/Contents/Resources/icons"
 mkdir -p $iconsdir
+cp $top_srcdir/icons/appicon/128x128/apps/poedit.png $iconsdir
 cp $top_srcdir/icons/ui/*.png $iconsdir
 cp $top_srcdir/icons/ui/toolbar-32/*.png $iconsdir
 # now overwrite with Mac-specific ones:

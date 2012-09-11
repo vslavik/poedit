@@ -23,8 +23,6 @@
  *
  */
 
-#include <wx/wxprec.h>
-
 #ifdef USE_TRANSMEM
 
 #include <wx/string.h>

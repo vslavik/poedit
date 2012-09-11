@@ -33,7 +33,6 @@
 #include <set>
 
 #include <wx/frame.h>
-#include <wx/docview.h>
 #include <wx/process.h>
 
 class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
@@ -45,6 +44,7 @@ class WXDLLIMPEXP_FWD_CORE wxStaticText;
 #include "catalog.h"
 #include "gexecute.h"
 #include "edlistctrl.h"
+#include "edapp.h"
 
 class ListHandler;
 class TextctrlHandler;
@@ -83,6 +83,10 @@ class PoeditFrame : public wxFrame
          */
         static PoeditFrame *Find(const wxString& catalog);
 
+        /// Returns active PoeditFrame, if it is unused (i.e. not showing
+        /// content, not having catalog loaded); NULL otherwise.
+        static PoeditFrame *UnusedActiveWindow();
+
         ~PoeditFrame();
 
         /// Reads catalog, refreshes controls.
@@ -98,6 +102,9 @@ class PoeditFrame : public wxFrame
 
 
         virtual void DoGiveHelp(const wxString& text, bool show);
+
+        void UpdateAfterPreferencesChange();
+        static void UpdateAllAfterPreferencesChange();
 
     private:
         /** Ctor.
@@ -149,7 +156,6 @@ class PoeditFrame : public wxFrame
         // (Re)initializes spellchecker, if needed
         void InitSpellchecker();
 
-        void EditPreferences();
         void EditCatalogProperties();
 
         // navigation to another item in the list
@@ -164,19 +170,17 @@ class PoeditFrame : public wxFrame
         void OnNextUnfinished(wxCommandEvent&);
 
         // Message handlers:
+public: // for PoeditApp
         void OnNew(wxCommandEvent& event);
-        void OnAbout(wxCommandEvent& event);
-        void OnHelp(wxCommandEvent& event);
-        void OnQuit(wxCommandEvent& event);
+        void OnOpen(wxCommandEvent& event);
+        void OnOpenHist(wxCommandEvent& event);
+private:
         void OnCloseCmd(wxCommandEvent& event);
         void OnSave(wxCommandEvent& event);
         void OnSaveAs(wxCommandEvent& event);
         wxString GetSaveAsFilename(Catalog *cat, const wxString& current);
         void DoSaveAs(const wxString& filename);
-        void OnOpen(wxCommandEvent& event);
-        void OnOpenHist(wxCommandEvent& event);
         void OnProperties(wxCommandEvent& event);
-        void OnPreferences(wxCommandEvent& event);
 #ifdef __WXMSW__
         void OnWinsparkleCheck(wxCommandEvent& event);
 #endif
@@ -192,13 +196,13 @@ class PoeditFrame : public wxFrame
         void OnRightClick(wxCommandEvent& event);
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnQuotesFlag(wxCommandEvent& event);
+        void OnLinesFlag(wxCommandEvent& event);
         void OnCommentWinFlag(wxCommandEvent& event);
         void OnAutoCommentsWinFlag(wxCommandEvent& event);
         void OnCopyFromSource(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
         void OnEditComment(wxCommandEvent& event);
-        void OnManager(wxCommandEvent& event);
         void OnCommentWindowText(wxCommandEvent& event);
         void OnSortByFileOrder(wxCommandEvent&);
         void OnSortBySource(wxCommandEvent&);
@@ -233,6 +237,8 @@ class PoeditFrame : public wxFrame
 
         void ReportValidationErrors(int errors, bool from_save);
 
+        wxFileHistory& FileHistory() { return wxGetApp().FileHistory(); }
+
         DECLARE_EVENT_TABLE()
 
     private:
@@ -260,6 +266,7 @@ class PoeditFrame : public wxFrame
         wxTextCtrl *m_textTransSingularForm;
         wxNotebook *m_pluralNotebook;
         wxStaticText *m_labelSingular, *m_labelPlural;
+        wxMenu *m_menuForHistory;
 
         wxFont m_normalGuiFont, m_boldGuiFont;
 
@@ -268,9 +275,9 @@ class PoeditFrame : public wxFrame
         bool m_modified;
         bool m_hasObsoleteItems;
         bool m_displayQuotes;
+        bool m_displayLines;
         bool m_displayCommentWin;
         bool m_displayAutoCommentsWin;
-        wxFileHistory m_history;
         bool m_dontAutoclearFuzzyStatus;
         bool m_setSashPositionsWhenMaximized;
 

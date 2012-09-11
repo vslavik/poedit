@@ -131,14 +131,14 @@ void SaveWindowState(const wxTopLevelWindow *win, int flags)
     {
         if ( !win->IsMaximized() )
         {
-#ifndef __WXGTK__
+#ifdef __WXMSW__
             if ( flags & WinState_Pos )
             {
                 const wxPoint pos = win->GetPosition();
                 cfg->Write(path + _T("x"), (long)pos.x);
                 cfg->Write(path + _T("y"), (long)pos.y);
             }
-#endif // !__WXGTK__
+#endif // __WXMSW__
             if ( flags &  WinState_Size )
             {
                 const wxSize sz = win->GetClientSize();
@@ -166,7 +166,7 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
             win->SetClientSize(width, height);
     }
 
-#ifndef __WXGTK__
+#ifdef __WXMSW__
     if ( flags & WinState_Pos )
     {
         int posx = cfg->Read(path + _T("x"), -1);
@@ -179,7 +179,7 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
     // screens configuration changed), move it to primary screen:
     if ( wxDisplay::GetFromWindow(win) == wxNOT_FOUND )
         win->Move(0, 0);
-#endif // !__WXGTK__
+#endif // __WXMSW__
 
     // If the window is larger than current screen, resize it to fit:
     int display = wxDisplay::GetFromWindow(win);

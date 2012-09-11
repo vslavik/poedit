@@ -23,7 +23,7 @@
  *
  */
 
-#include <wx/wxprec.h>
+#include <wx/defs.h>
 #include <wx/wxchar.h>
 
 #include "isocodes.h"

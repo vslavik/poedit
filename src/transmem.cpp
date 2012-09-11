@@ -23,7 +23,6 @@
  *
  */
 
-#include <wx/wxprec.h>
 #include <wx/string.h>
 #include <wx/stdpaths.h>
 #include <wx/filename.h>

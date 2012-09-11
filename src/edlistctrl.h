@@ -47,6 +47,7 @@ class PoeditListCtrl : public wxListView
                        const wxPoint &pos = wxDefaultPosition,
                        const wxSize &size = wxDefaultSize,
                        long style = wxLC_ICON,
+                       bool dispLines = false,
                        const wxValidator& validator = wxDefaultValidator,
                        const wxString &name = _T("listctrl"));
 
@@ -56,6 +57,8 @@ class PoeditListCtrl : public wxListView
         void Sort();
 
         void SizeColumns();
+
+        void SetDisplayLines(bool dl);
 
         void CatalogChanged(Catalog* catalog);
 
@@ -129,6 +132,7 @@ class PoeditListCtrl : public wxListView
         void ReadCatalog();
         void OnSize(wxSizeEvent& event);
 
+        bool m_displayLines;
         unsigned m_colWidth;
 
         Catalog* m_catalog;

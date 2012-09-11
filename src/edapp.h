@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2006 Vaclav Slavik
+ *  Copyright (C) 1999-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -30,6 +30,7 @@
 #include <wx/app.h>
 #include <wx/string.h>
 #include <wx/intl.h>
+#include <wx/docview.h>
 
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 
@@ -57,18 +58,19 @@ class PoeditApp : public wxApp
         /// Returns Poedit version string.
         wxString GetAppVersion() const;
 
-        /// Returns our locale object
-        wxLocale& GetLocale() { return m_locale; }
-
         // opens a file in new frame
         void OpenFile(const wxString& name);
         // opens empty frame or catalogs manager
         void OpenNewFile();
 
+        wxFileHistory& FileHistory() { return m_history; }
+
 #ifdef __WXMAC__
         virtual void MacOpenFile(const wxString& name) { OpenFile(name); }
         virtual void MacNewFile() { OpenNewFile(); }
 #endif
+
+        void EditPreferences();
 
     protected:
         /** Sets default values to configuration items that don't
@@ -82,7 +84,25 @@ class PoeditApp : public wxApp
         bool OnCmdLineParsed(wxCmdLineParser& parser);
         
     private:
+        void SetupLanguage();
+        void AskForDonations(wxWindow *parent);
+
+        // App-global menu commands:
+        void OnNew(wxCommandEvent& event);
+        void OnOpen(wxCommandEvent& event);
+        void OnOpenHist(wxCommandEvent& event);
+        void OnAbout(wxCommandEvent& event);
+        void OnManager(wxCommandEvent& event);
+        void OnQuit(wxCommandEvent& event);
+        void OnPreferences(wxCommandEvent& event);
+        void OnHelp(wxCommandEvent& event);
+
+        DECLARE_EVENT_TABLE()
+
+        wxFileHistory m_history;
+#if !wxCHECK_VERSION(2,9,1)
         wxLocale m_locale;
+#endif
 };
 
 DECLARE_APP(PoeditApp);

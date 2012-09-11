@@ -23,8 +23,6 @@
  *
  */
 
-#include <wx/wxprec.h>
-
 #include <wx/sizer.h>
 #include <wx/statline.h>
 #include <wx/combobox.h>

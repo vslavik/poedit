@@ -24,8 +24,6 @@
  */
 
 
-#include <wx/wxprec.h>
-
 #include <wx/wfstream.h>
 #include <wx/config.h>
 #include <wx/tokenzr.h>

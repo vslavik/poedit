@@ -23,8 +23,6 @@
  *
  */
 
-#include <wx/wxprec.h>
-
 #include <wx/wx.h>
 #include <wx/config.h>
 #include <wx/html/htmlwin.h>
@@ -41,7 +39,6 @@
 #include <wx/fontutil.h>
 #include <wx/textfile.h>
 #include <wx/wupdlock.h>
-#include <wx/aboutdlg.h>
 #include <wx/iconbndl.h>
 #include <wx/clipbrd.h>
 #include <wx/dnd.h>
@@ -129,6 +126,18 @@ bool g_focusToText = false;
     {
         if ((*n)->m_fileName == filename)
             return *n;
+    }
+    return NULL;
+}
+
+/*static*/ PoeditFrame *PoeditFrame::UnusedActiveWindow()
+{
+    for (PoeditFramesList::const_iterator n = ms_instances.begin();
+         n != ms_instances.end(); ++n)
+    {
+        PoeditFrame *win = *n;
+        if (win->IsActive() && win->m_catalog == NULL)
+            return win;
     }
     return NULL;
 }
@@ -312,19 +321,20 @@ class UnfocusableTextCtrl : public wxTextCtrl
 
 
 BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
-   EVT_MENU           (wxID_EXIT,                 PoeditFrame::OnQuit)
-   EVT_MENU           (wxID_CLOSE,                PoeditFrame::OnCloseCmd)
-   EVT_MENU           (wxID_HELP,                 PoeditFrame::OnHelp)
-   EVT_MENU           (wxID_ABOUT,                PoeditFrame::OnAbout)
+// OS X and GNOME apps should open new documents in a new window. On Windows,
+// however, the usual thing to do is to open the new document in the already
+// open window and replace the current document.
+#ifdef __WXMSW__
    EVT_MENU           (wxID_NEW,                  PoeditFrame::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditFrame::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditFrame::OnOpen)
+   EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
+#endif // __WXMSW__
+   EVT_MENU           (wxID_CLOSE,                PoeditFrame::OnCloseCmd)
    EVT_MENU           (wxID_SAVE,                 PoeditFrame::OnSave)
    EVT_MENU           (wxID_SAVEAS,               PoeditFrame::OnSaveAs)
    EVT_MENU           (XRCID("menu_export"),      PoeditFrame::OnExport)
-   EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
    EVT_MENU           (XRCID("menu_catproperties"), PoeditFrame::OnProperties)
-   EVT_MENU           (wxID_PREFERENCES,          PoeditFrame::OnPreferences)
 #ifdef __WXMSW__
    EVT_MENU           (XRCID("menu_check_for_updates"), PoeditFrame::OnWinsparkleCheck)
 #endif
@@ -334,6 +344,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
    EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
    EVT_MENU           (XRCID("menu_quotes"),      PoeditFrame::OnQuotesFlag)
+   EVT_MENU           (XRCID("menu_lines"),       PoeditFrame::OnLinesFlag)
    EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
    EVT_MENU           (XRCID("menu_auto_comments_win"), PoeditFrame::OnAutoCommentsWinFlag)
    EVT_MENU           (XRCID("sort_by_order"),    PoeditFrame::OnSortByFileOrder)
@@ -345,7 +356,6 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
    EVT_MENU           (wxID_FIND,                 PoeditFrame::OnFind)
    EVT_MENU           (XRCID("menu_comment"),     PoeditFrame::OnEditComment)
-   EVT_MENU           (XRCID("menu_manager"),     PoeditFrame::OnManager)
    EVT_MENU           (XRCID("go_done_and_next"),   PoeditFrame::OnDoneAndNext)
    EVT_MENU           (XRCID("go_prev"),            PoeditFrame::OnPrev)
    EVT_MENU           (XRCID("go_next"),            PoeditFrame::OnNext)
@@ -447,6 +457,7 @@ PoeditFrame::PoeditFrame() :
     wxConfigBase *cfg = wxConfig::Get();
 
     m_displayQuotes = (bool)cfg->Read(_T("display_quotes"), (long)false);
+    m_displayLines = (bool)cfg->Read(_T("display_lines"), (long)false);
     m_displayCommentWin =
         (bool)cfg->Read(_T("display_comment_win"), (long)false);
     m_displayAutoCommentsWin =
@@ -475,10 +486,10 @@ PoeditFrame::PoeditFrame() :
     {
         wxString menuName(_("&File"));
         menuName.Replace(wxT("&"), wxEmptyString);
-        m_history.UseMenu(MenuBar->GetMenu(MenuBar->FindMenu(menuName)));
+        m_menuForHistory = MenuBar->GetMenu(MenuBar->FindMenu(menuName));
+        FileHistory().UseMenu(m_menuForHistory);
+        FileHistory().AddFilesToMenu(m_menuForHistory);
         SetMenuBar(MenuBar);
-        m_history.AddFilesToMenu();
-        m_history.Load(*cfg);
 #ifndef USE_TRANSMEM
         MenuBar->Enable(XRCID("menu_auto_translate"), false);
 #endif
@@ -497,6 +508,7 @@ PoeditFrame::PoeditFrame() :
     wxXmlResource::Get()->LoadToolBar(this, _T("toolbar"));
 
     GetMenuBar()->Check(XRCID("menu_quotes"), m_displayQuotes);
+    GetMenuBar()->Check(XRCID("menu_lines"), m_displayLines);
     GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
     GetMenuBar()->Check(XRCID("menu_auto_comments_win"), m_displayAutoCommentsWin);
 
@@ -519,7 +531,8 @@ PoeditFrame::PoeditFrame() :
     m_list = new PoeditListCtrl(topPanel,
                                 ID_LIST,
                                 wxDefaultPosition, wxDefaultSize,
-                                wxLC_REPORT | wxLC_SINGLE_SEL);
+                                wxLC_REPORT | wxLC_SINGLE_SEL,
+                                m_displayLines);
 
     wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
     topSizer->Add(m_attentionBar, wxSizerFlags().Expand());
@@ -697,12 +710,14 @@ PoeditFrame::~PoeditFrame()
     }
     cfg->Write(_T("splitter"), (long)m_splitter->GetSashPosition());
     cfg->Write(_T("display_quotes"), m_displayQuotes);
+    cfg->Write(_T("display_lines"), m_displayLines);
     cfg->Write(_T("display_comment_win"), m_displayCommentWin);
     cfg->Write(_T("display_auto_comments_win"), m_displayAutoCommentsWin);
 
     SaveWindowState(this);
 
-    m_history.Save(*cfg);
+    FileHistory().RemoveMenu(m_menuForHistory);
+    FileHistory().Save(*cfg);
 
     // write all changes:
     cfg->Flush();
@@ -803,9 +818,6 @@ static bool DoInitSpellchecker(wxTextCtrl *text,
 
 static bool SetSpellcheckerLang(const wxString& lang)
 {
-    // FIXME: if this fails, report an error in some unobtrusive way,
-    //        tell the user to install cocoaSpell from
-    //        http://people.ict.usc.edu/~leuski/cocoaspell/
     return SpellChecker_SetLang(lang.mb_str(wxConvUTF8));
 }
 
@@ -940,14 +952,6 @@ TranslationMemory *PoeditFrame::GetTransMem()
 #endif
 
 
-
-void PoeditFrame::OnQuit(wxCommandEvent&)
-{
-    if ( !Close() )
-        return;
-    wxGetApp().ExitMainLoop();
-}
-
 void PoeditFrame::OnCloseCmd(wxCommandEvent&)
 {
     Close();
@@ -1051,7 +1055,7 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
 
 void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 {
-    wxString f(m_history.GetHistoryFile(event.GetId() - wxID_FILE1));
+    wxString f(FileHistory().GetHistoryFile(event.GetId() - wxID_FILE1));
     if ( !wxFileExists(f) )
     {
         wxLogError(_("File '%s' doesn't exist."), f.c_str());
@@ -1254,29 +1258,25 @@ void PoeditFrame::EditCatalogProperties()
 }
 
 
-
-void PoeditFrame::EditPreferences()
+void PoeditFrame::UpdateAfterPreferencesChange()
 {
-    PreferencesDialog dlg(this);
+    g_focusToText = (bool)wxConfig::Get()->Read(_T("focus_to_text"),
+                                                 (long)false);
 
-    dlg.TransferTo(wxConfig::Get());
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        dlg.TransferFrom(wxConfig::Get());
-        g_focusToText = (bool)wxConfig::Get()->Read(_T("focus_to_text"),
-                                                     (long)false);
+    SetCustomFonts();
+    m_list->Refresh(); // if font changed
 
-        SetCustomFonts();
-        m_list->Refresh(); // if font changed
-
-        UpdateCommentWindowEditable();
-        InitSpellchecker();
-    }
+    UpdateCommentWindowEditable();
+    InitSpellchecker();
 }
 
-void PoeditFrame::OnPreferences(wxCommandEvent&)
+/*static*/ void PoeditFrame::UpdateAllAfterPreferencesChange()
 {
-    EditPreferences();
+    for (PoeditFramesList::const_iterator n = ms_instances.begin();
+         n != ms_instances.end(); ++n)
+    {
+        (*n)->UpdateAfterPreferencesChange();
+    }
 }
 
 
@@ -1286,7 +1286,6 @@ void PoeditFrame::OnWinsparkleCheck(wxCommandEvent& event)
     win_sparkle_check_update_with_ui();
 }
 #endif // __WXMSW__
-
 
 
 void PoeditFrame::UpdateCatalog(const wxString& pot_file)
@@ -1525,6 +1524,14 @@ void PoeditFrame::OnQuotesFlag(wxCommandEvent&)
     UpdateFromTextCtrl();
     m_displayQuotes = GetMenuBar()->IsChecked(XRCID("menu_quotes"));
     UpdateToTextCtrl();
+}
+
+
+
+void PoeditFrame::OnLinesFlag(wxCommandEvent&)
+{
+    m_displayLines = GetMenuBar()->IsChecked(XRCID("menu_lines"));
+    m_list->SetDisplayLines(m_displayLines);
 }
 
 
@@ -1872,13 +1879,14 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
 
     wxFileName fn(m_fileName);
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
-    m_history.AddFileToHistory(fn.GetFullPath());
+    FileHistory().AddFileToHistory(fn.GetFullPath());
 
     InitSpellchecker();
 
 
     // FIXME: do this for Gettext PO files only
-    if (wxConfig::Get()->Read(_T("translator_name"), _T("nothing")) == _T("nothing"))
+    if (wxConfig::Get()->Read(_T("translator_name"), _T("")).empty() ||
+        wxConfig::Get()->Read(_T("translator_email"), _T("")).empty())
     {
         AttentionMessage msg
             (
@@ -1887,7 +1895,7 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
                 _("You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files.")
             );
         msg.AddAction(_("Set email"),
-                      boost::bind(&PoeditFrame::EditPreferences, this));
+                      boost::bind(&PoeditApp::EditPreferences, &wxGetApp()));
         msg.AddDontShowAgain();
 
         m_attentionBar->ShowMessage(msg);
@@ -2181,7 +2189,7 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
     }
 #endif
 
-    m_history.AddFileToHistory(m_fileName);
+    FileHistory().AddFileToHistory(m_fileName);
     UpdateTitle();
 
     RefreshControls();
@@ -2411,56 +2419,6 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
 }
 
 
-void PoeditFrame::OnAbout(wxCommandEvent&)
-{
-#if 0
-    // Forces translation of several strings that are used for about
-    // dialog internally by wx, but are frequently not translate due to
-    // state of wx's translations:
-
-    // TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-    //              ("Poedit" here, but please use "%s")
-    _("About %s");
-    // TRANSLATORS: This is version information in about dialog, "%s" will be
-    //              version number when used
-    _("Version %s");
-    // TRANSLATORS: This is version information in about dialog, it is followed
-    //              by version number when used (wxWidgets 2.8)
-    _(" Version ");
-    // TRANSLATORS: This is titlebar of about dialog, the string ends with space
-    //              and is followed by application name when used ("Poedit",
-    //              but don't add it to this translation yourself) (wxWidgets 2.8)
-    _("About ");
-#endif
-
-    wxAboutDialogInfo about;
-
-    about.SetName(_T("Poedit"));
-    about.SetVersion(wxGetApp().GetAppVersion());
-#ifndef __WXMAC__
-    about.SetDescription(_("Poedit is an easy to use translations editor."));
-#endif
-    about.SetCopyright(_T("Copyright \u00a9 1999-2012 Vaclav Slavik"));
-#ifdef __WXGTK__ // other ports would show non-native about dlg
-    about.SetWebSite(_T("http://www.poedit.net"));
-#endif
-
-    wxAboutBox(about);
-}
-
-
-void PoeditFrame::OnHelp(wxCommandEvent&)
-{
-    wxLaunchDefaultBrowser(_T("http://www.poedit.net/trac/wiki/Doc"));
-}
-
-
-void PoeditFrame::OnManager(wxCommandEvent&)
-{
-    wxFrame *f = ManagerFrame::Create();
-    f->Raise();
-}
-
 void PoeditFrame::SetCustomFonts()
 {
     wxConfigBase *cfg = wxConfig::Get();
@@ -2592,6 +2550,7 @@ void PoeditFrame::UpdateDisplayCommentWin()
         m_bottomRightPanel->Show(false);
         m_bottomSplitter->Unsplit();
     }
+    m_list->SetDisplayLines(m_displayLines);
     RefreshControls();
 }
 

@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2000-2005 Vaclav Slavik
+ *  Copyright (C) 2000-2012 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,7 +23,6 @@
  *
  */
 
-#include <wx/wxprec.h>
 #include "wxeditablelistbox.h"
 #include <wx/textctrl.h>
 #include <wx/button.h>
@@ -32,8 +31,8 @@
 #include <wx/choicdlg.h>
 #include <wx/spinctrl.h>
 #include <wx/notebook.h>
-#include <wx/fontdlg.h>
 #include <wx/fontutil.h>
+#include <wx/fontpicker.h>
 #include <wx/xrc/xmlres.h>
 
 #include "prefsdlg.h"
@@ -107,7 +106,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XRCCTRL(*this, "user_email", wxTextCtrl)->SetValue(
                 cfg->Read(_T("translator_email"), wxEmptyString));
     XRCCTRL(*this, "compile_mo", wxCheckBox)->SetValue(
-                cfg->Read(_T("compile_mo"), (long)false));
+                cfg->Read(_T("compile_mo"), (long)true));
     XRCCTRL(*this, "show_summary", wxCheckBox)->SetValue(
                 cfg->Read(_T("show_summary"), true));
     XRCCTRL(*this, "manager_startup", wxCheckBox)->SetValue(
@@ -122,15 +121,15 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("enable_spellchecking"), true));
 #endif
-    
+
     XRCCTRL(*this, "use_font_list", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("custom_font_list_use"), (long)false));
     XRCCTRL(*this, "use_font_text", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("custom_font_text_use"), (long)false));
-    XRCCTRL(*this, "fontname_list", wxTextCtrl)->SetValue(
-            cfg->Read(_T("custom_font_list_name"), wxEmptyString));
-    XRCCTRL(*this, "fontname_text", wxTextCtrl)->SetValue(
-            cfg->Read(_T("custom_font_text_name"), wxEmptyString));
+    XRCCTRL(*this, "font_list", wxFontPickerCtrl)->SetSelectedFont(
+            wxFont(cfg->Read(_T("custom_font_list_name"), wxEmptyString)));
+    XRCCTRL(*this, "font_text", wxFontPickerCtrl)->SetSelectedFont(
+            wxFont(cfg->Read(_T("custom_font_text_name"), wxEmptyString)));
 
     wxString format = cfg->Read(_T("crlf_format"), _T("unix"));
     int sel;
@@ -200,16 +199,19 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
     cfg->Write(_T("enable_spellchecking"), 
                 XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->GetValue());
 #endif
-    
+   
+    wxFont listFont = XRCCTRL(*this, "font_list", wxFontPickerCtrl)->GetSelectedFont();
+    wxFont textFont = XRCCTRL(*this, "font_text", wxFontPickerCtrl)->GetSelectedFont();
+
     cfg->Write(_T("custom_font_list_use"),
-                XRCCTRL(*this, "use_font_list", wxCheckBox)->GetValue());
+               listFont.IsOk() && XRCCTRL(*this, "use_font_list", wxCheckBox)->GetValue());
     cfg->Write(_T("custom_font_text_use"),
-                XRCCTRL(*this, "use_font_text", wxCheckBox)->GetValue());
-    cfg->Write(_T("custom_font_list_name"),
-                XRCCTRL(*this, "fontname_list", wxTextCtrl)->GetValue());
-    cfg->Write(_T("custom_font_text_name"),
-                XRCCTRL(*this, "fontname_text", wxTextCtrl)->GetValue());
- 
+               textFont.IsOk() && XRCCTRL(*this, "use_font_text", wxCheckBox)->GetValue());
+    if ( listFont.IsOk() )
+        cfg->Write(_T("custom_font_list_name"), listFont.GetNativeFontInfoDesc());
+    if ( textFont.IsOk() )
+        cfg->Write(_T("custom_font_text_name"), textFont.GetNativeFontInfoDesc());
+
     static const wxChar *formats[] = { _T("unix"), _T("win") };
     cfg->Write(_T("crlf_format"), formats[
                 XRCCTRL(*this, "crlf_format", wxChoice)->GetSelection()]);
@@ -250,8 +252,6 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
    EVT_BUTTON(XRCID("parser_new"), PreferencesDialog::OnNewParser)
    EVT_BUTTON(XRCID("parser_edit"), PreferencesDialog::OnEditParser)
    EVT_BUTTON(XRCID("parser_delete"), PreferencesDialog::OnDeleteParser)
-   EVT_BUTTON(XRCID("fontpicker_list"), PreferencesDialog::OnChooseListFont)
-   EVT_BUTTON(XRCID("fontpicker_text"), PreferencesDialog::OnChooseTextFont)
 #ifdef USE_TRANSMEM
    EVT_BUTTON(XRCID("tm_addlang"), PreferencesDialog::OnTMAddLang)
    EVT_BUTTON(XRCID("tm_generate"), PreferencesDialog::OnTMGenerate)
@@ -259,6 +259,8 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
 #if NEED_CHOOSELANG_UI
    EVT_BUTTON(XRCID("ui_language"), PreferencesDialog::OnUILanguage)
 #endif
+   EVT_UPDATE_UI(XRCID("font_list"), PreferencesDialog::OnUpdateUIFontList)
+   EVT_UPDATE_UI(XRCID("font_text"), PreferencesDialog::OnUpdateUIFontText)
 END_EVENT_TABLE()
 
 #if NEED_CHOOSELANG_UI
@@ -267,6 +269,18 @@ void PreferencesDialog::OnUILanguage(wxCommandEvent&)
     ChangeUILanguage();
 }
 #endif
+
+
+void PreferencesDialog::OnUpdateUIFontList(wxUpdateUIEvent& event)
+{
+    event.Enable(XRCCTRL(*this, "use_font_list", wxCheckBox)->GetValue());
+}
+
+void PreferencesDialog::OnUpdateUIFontText(wxUpdateUIEvent& event)
+{
+    event.Enable(XRCCTRL(*this, "use_font_text", wxCheckBox)->GetValue());
+}
+
 
 bool PreferencesDialog::EditParser(int num)
 {
@@ -354,7 +368,6 @@ void PreferencesDialog::OnTMAddLang(wxCommandEvent&)
     }
 }
 
-
 void PreferencesDialog::OnTMGenerate(wxCommandEvent&)
 {
     wxArrayString langs;
@@ -364,37 +377,3 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent&)
 }
 
 #endif // USE_TRANSMEM
-        
-void PreferencesDialog::DoChooseFont(wxTextCtrl *nameField)
-{
-    wxFont font;
-    wxString fontname = nameField->GetValue();
-    if (!fontname.empty())
-    {
-        wxNativeFontInfo fi;
-        fi.FromString(fontname);
-        font.SetNativeFontInfo(fi);
-    }
-    wxFontData data;
-    data.EnableEffects(false);
-    data.SetAllowSymbols(false);
-    data.SetInitialFont(font);
-    wxFontDialog dlg(this, data);
-
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        data = dlg.GetFontData();
-        font = data.GetChosenFont();
-        nameField->SetValue(font.GetNativeFontInfoDesc());
-    }
-}
-
-void PreferencesDialog::OnChooseListFont(wxCommandEvent&)
-{
-    DoChooseFont(XRCCTRL(*this, "fontname_list", wxTextCtrl));
-}
-
-void PreferencesDialog::OnChooseTextFont(wxCommandEvent&)
-{
-    DoChooseFont(XRCCTRL(*this, "fontname_text", wxTextCtrl));
-}

@@ -26,7 +26,8 @@
 #ifndef _PROGRESSINFO_H_
 #define _PROGRESSINFO_H_
 
-class WXDLLIMPEXP_FWD_BASE wxString;
+#include <wx/string.h>
+
 class WXDLLIMPEXP_FWD_CORE wxWindow;
 class WXDLLIMPEXP_FWD_CORE wxDialog;
 class WXDLLIMPEXP_FWD_CORE wxWindowDisabler;
