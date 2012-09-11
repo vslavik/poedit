@@ -181,9 +181,6 @@ private:
         wxString GetSaveAsFilename(Catalog *cat, const wxString& current);
         void DoSaveAs(const wxString& filename);
         void OnProperties(wxCommandEvent& event);
-#ifdef __WXMSW__
-        void OnWinsparkleCheck(wxCommandEvent& event);
-#endif
         void OnUpdate(wxCommandEvent& event);
         void OnValidate(wxCommandEvent& event);
         void OnListSel(wxListEvent& event);
