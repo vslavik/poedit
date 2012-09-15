@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: Poedit 1.5\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
 "POT-Creation-Date: 2012-07-30 10:34+0200\n"
-"PO-Revision-Date: 2012-08-20 17:20+0300\n"
-"Last-Translator: Roman A. aka BasicXP <x12ozmouse@ya.ru>\n"
+"PO-Revision-Date: 2012-09-15 15:10+0300\n"
+"Last-Translator: Musatov M. <m1kc@yandex.ru>\n"
 "Language-Team: Russian <poedit@googlegroups.com>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -33,15 +33,15 @@ msgstr " (изменён)"
 #. by version number when used (wxWidgets 2.8)
 #: ../src/edframe.cpp:2431
 msgid " Version "
-msgstr " версия "
+msgstr " Версия "
 
 #: ../src/edframe.cpp:1367
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
-msgstr[0] "Найдена %d проблема с переводом."
-msgstr[1] "Найдены %d проблемы с переводом."
-msgstr[2] "Найдено %d проблем с переводом."
+msgstr[0] "В переводе найдена %d проблема."
+msgstr[1] "В переводы найдены %d проблемы."
+msgstr[2] "В переводе найдено %d проблем."
 
 #: ../src/edframe.cpp:2024
 #, c-format
@@ -79,9 +79,9 @@ msgstr[2] "неверных записей: %i"
 #, c-format
 msgid "%i fuzzy"
 msgid_plural "%i fuzzy"
-msgstr[0] "неточно: %i"
-msgstr[1] "неточно: %i"
-msgstr[2] "неточно: %i"
+msgstr[0] "%i переведена неточно"
+msgstr[1] "%i переведены неточно"
+msgstr[2] "%i переведены неточно"
 
 # This has to be made available to translate for singular-plural forms, depending on %i
 #: ../src/catalog.cpp:132
@@ -93,9 +93,9 @@ msgstr "%i строк файла '%s' не были загружены корр�
 #, c-format
 msgid "%i not translated"
 msgid_plural "%i not translated"
-msgstr[0] "не переведено: %i"
-msgstr[1] "не переведено: %i"
-msgstr[2] "не переведено: %i"
+msgstr[0] "%i не переведена"
+msgstr[1] "%i не переведены"
+msgstr[2] "%i не переведено"
 
 #: ../src/resources/menus.xrc:213 ../src/resources/menus.xrc:214
 msgid "&About"
@@ -176,11 +176,11 @@ msgstr "&Следующее сообщение"
 
 #: ../src/resources/menus.xrc:206
 msgid "&Online Help"
-msgstr "Он&лайн-справка"
+msgstr "&Справка в Интернете"
 
 #: ../src/resources/menus.xrc:205
 msgid "&Online help"
-msgstr "Он&лайн-справка"
+msgstr "&Справка в Интернете"
 
 #: ../src/resources/menus.xrc:21
 msgid "&Open..."
@@ -257,16 +257,16 @@ msgstr "&Вид"
 #: ../src/catalog.cpp:1572
 #, c-format
 msgid "'%s' is not a valid POT file."
-msgstr "'%s' не является допустимым POT-файлом."
+msgstr "'%s' не является корректным POT-файлом."
 
 #: ../src/summarydlg.cpp:58
 #, c-format
 msgid "(%i new, %i obsolete)"
-msgstr "(новых: %i, устаревших: %i)"
+msgstr "(%i новых, %i устаревших)"
 
 #: ../src/resources/summary.xrc:63
 msgid "(0 new, 0 obsolete)"
-msgstr "(новых: 0, устаревших: 0)"
+msgstr "(0 новых, 0 устаревших)"
 
 #: ../src/chooselang.cpp:79
 msgid "(Use default language)"
@@ -278,7 +278,7 @@ msgstr "(ни один из этих)"
 
 #: ../src/resources/find.xrc:94
 msgid "< Previous"
-msgstr "< Назад"
+msgstr "< Предыдущее"
 
 #: ../src/manager.cpp:377
 msgid "<unnamed>"
@@ -369,7 +369,7 @@ msgstr "Неверные записи"
 
 #: ../src/resources/properties.xrc:136
 msgid "Base path:"
-msgstr "Путь к базе:"
+msgstr "Базовый путь:"
 
 #: ../src/resources/prefs.xrc:84
 msgid "Behavior"
@@ -439,7 +439,7 @@ msgstr "Каталог"
 
 #: ../src/edframe.cpp:987
 msgid "Catalog modified. Do you want to save changes?"
-msgstr "Каталог был изменён. Желаете сохранить изменения?"
+msgstr "Каталог был изменён. Сохранить изменения?"
 
 #: ../src/resources/properties.xrc:4
 msgid "Catalog properties"
@@ -968,7 +968,7 @@ msgstr "Новые строки"
 
 #: ../src/resources/find.xrc:102
 msgid "Next >"
-msgstr "Далее >"
+msgstr "Следующее >"
 
 #: ../src/digger.cpp:201
 msgid "No files found in: "
@@ -1054,10 +1054,9 @@ msgstr "Личные настройки"
 msgid "Pick language from the list of known languages"
 msgstr "Выберите язык из списка известных языков"
 
-# Место ограничено :-/
 #: ../src/resources/tm_update.xrc:21
 msgid "Please add directories where locale files are stored on your system:"
-msgstr "Добавьте папки, в которых хранятся файлы локализации в вашей системе:"
+msgstr "Добавьте папки, в которых хранятся языковые файлы в вашей системе:"
 
 #: ../src/edframe.cpp:1441
 msgid "Please choose the reference you want to show:"
@@ -1080,11 +1079,11 @@ msgid ""
 "Old location: %s\n"
 "New location: %s"
 msgstr ""
-"Убедитесь, что все файлы были перемещены в новое расположение. Если нет, "
-"сделайте это вручную.\n"
+"Убедитесь, что все файлы были перемещены в новое место. Если нет, сделайте "
+"это вручную.\n"
 "\n"
-"Старое расположение: %s\n"
-"Новое расположение: %s"
+"Старое местоположение: %s\n"
+"Новое местоположение: %s"
 
 #: ../src/resources/properties.xrc:98
 msgid "Plural Forms:"
@@ -1105,7 +1104,7 @@ msgstr "Poedit - Менеджер каталогов"
 
 #: ../src/digger.cpp:202
 msgid "Poedit did not find any files in scanned directories."
-msgstr "Poedit не нашел никаких файлов в просканированных папках."
+msgstr "Poedit не нашёл никаких файлов в просканированных папках."
 
 #: ../src/edframe.cpp:2443
 msgid "Poedit is an easy to use translations editor."
@@ -1117,7 +1116,7 @@ msgstr "Ошибка памяти переводов Poedit"
 
 #: ../src/resources/prefs.xrc:4
 msgid "Preferences"
-msgstr "Установки"
+msgstr "Настройки"
 
 #: ../src/resources/prefs.xrc:603
 msgid "Proceed"
@@ -1500,7 +1499,7 @@ msgstr "Перевод:"
 
 #: ../src/propertiesdlg.cpp:73
 msgid "UTF-8 (recommended)"
-msgstr "UTF-8 (рекомендовано)"
+msgstr "UTF-8 (рекомендуется)"
 
 #: ../src/resources/summary.xrc:79
 msgid "Undo"
@@ -1508,7 +1507,7 @@ msgstr "Отменить"
 
 #: ../src/resources/prefs.xrc:157
 msgid "Unix (recommended)"
-msgstr "Unix (рекомендовано)"
+msgstr "Unix (рекомендуется)"
 
 #: ../src/chooselang.cpp:60
 #, c-format
@@ -1605,9 +1604,8 @@ msgstr "С какими языками вы хотите использоват�
 msgid "Whole words only"
 msgstr "Только полные слова"
 
-# Is this the operating system name or a proper noun "windows"?
+# Name of the operating system.
 #: ../src/resources/prefs.xrc:158
-#, fuzzy
 msgid "Windows"
 msgstr "Windows"
 
