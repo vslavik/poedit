@@ -636,9 +636,10 @@ void PoeditApp::AskForDonations(wxWindow *parent)
 
     wxStdDialogButtonSizer *buttons = new wxStdDialogButtonSizer();
     wxButton *ok = new wxButton(&dlg, wxID_OK, _("Donate..."));
-    ok->SetDefault();
+    wxButton *cancel = new wxButton(&dlg, wxID_CANCEL, _("No, thanks"));
+    cancel->SetDefault();
     buttons->AddButton(ok);
-    buttons->AddButton(new wxButton(&dlg, wxID_CANCEL, _("No, thanks")));
+    buttons->AddButton(cancel);
     buttons->Realize();
     sizer->Add(buttons, wxSizerFlags().Right().DoubleBorder(wxTOP));
     dlg.SetSizerAndFit(topsizer);
