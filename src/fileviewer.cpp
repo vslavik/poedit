@@ -125,6 +125,7 @@ void FileViewer::SetupTextCtrl()
     wxString fontspec = wxString::Format(_T("face:%s,size:%d"),
                                          font.GetFaceName().c_str(),
                                          font.GetPointSize());
+    const wxString DEFAULT     = fontspec + _T(",fore:black,back:white");
     const wxString STRING      = fontspec + _T(",bold,fore:#882d21");
     const wxString COMMENT     = fontspec + _T(",fore:#487e18");
     const wxString KEYWORD     = fontspec + _T(",fore:#2f00f9");
@@ -135,7 +136,7 @@ void FileViewer::SetupTextCtrl()
     t.MarkerDefine(1, wxSTC_MARK_BACKGROUND, wxNullColour, wxColour(255,255,0));
 
     // set fonts
-    t.StyleSetSpec(wxSTC_STYLE_DEFAULT, fontspec);
+    t.StyleSetSpec(wxSTC_STYLE_DEFAULT, DEFAULT);
     t.StyleSetSpec(wxSTC_STYLE_LINENUMBER, LINENUMBERS);
 
     // line numbers margin size:
@@ -238,7 +239,6 @@ void FileViewer::ShowReference(const wxString& ref)
 
     m_text->SetReadOnly(false);
     m_text->LoadFile(filename.GetFullPath());
-    m_text->SetLexer(GetLexer(filename.GetExt()));
     m_text->SetReadOnly(true);
 
     m_text->MarkerDeleteAll(1);
