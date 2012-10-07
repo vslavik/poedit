@@ -5,19 +5,20 @@
 # Tibor Pittich <Tibor.Pittich@phuture.sk>, 2004.
 # Jaroslav Rynik <jrynik@yahoo.co.uk>, 2009.
 # Ivan Masár <helix84@centrum.sk>, 2007, 2008, 2009, 2010.
-#
+# Dušan Kazik <prescott66@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Poedit 1.5\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
 "POT-Creation-Date: 2012-07-30 10:34+0200\n"
-"PO-Revision-Date: 2010-02-16 10:04+0100\n"
-"Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
+"PO-Revision-Date: 2012-10-06 16:12+0100\n"
+"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <ski18n@lists.linux.sk>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../src/edframe.cpp:2060
 msgid " (modified)"
@@ -26,51 +27,53 @@ msgstr " (zmenené)"
 #. TRANSLATORS: This is version information in about dialog, it is followed
 #. by version number when used (wxWidgets 2.8)
 #: ../src/edframe.cpp:2431
-#, fuzzy
 msgid " Version "
-msgstr "verzia"
+msgstr " Verzia "
 
 #: ../src/edframe.cpp:1367
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Našiel sa %d prípad s prekladom."
+msgstr[1] "Našli sa %d prípady s prekladom."
+msgstr[2] "Našlo sa %d prípadov s prekladom."
 
 #: ../src/edframe.cpp:2024
-#, fuzzy, c-format
+#, c-format
 msgid "%i %% translated, %i string"
 msgid_plural "%i %% translated, %i strings"
-msgstr[0] "Automaticky preložené %u reťazce"
-msgstr[1] "Automaticky preložené %u reťazce"
+msgstr[0] "%i %% preložených, %i reťazec"
+msgstr[1] "%i %% preložených, %i reťazce"
+msgstr[2] "%i %% preložených, %i reťazcov"
 
 #: ../src/edframe.cpp:2029
-#, fuzzy, c-format
+#, c-format
 msgid "%i %% translated, %i string (%s)"
 msgid_plural "%i %% translated, %i strings (%s)"
-msgstr[0] "Automaticky preložené %u reťazce"
-msgstr[1] "Automaticky preložené %u reťazce"
+msgstr[0] "%i %% preložených, %i reťazec (%s)"
+msgstr[1] "%i %% preložených, %i reťazce (%s)"
+msgstr[2] "%i %% preložených, %i reťazcov (%s)"
 
 #: ../src/export_html.cpp:134
 #, c-format
-msgid ""
-"%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr ""
-"%i %% preložených, %i reťazcov (%i nepresných, %i zlých, %i nepreložených)"
+msgid "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
+msgstr "%i %% preložených, %i reťazcov (%i nepresných, %i zlých, %i nepreložených)"
 
 #: ../src/edframe.cpp:2014
-#, fuzzy, c-format
+#, c-format
 msgid "%i bad token"
 msgid_plural "%i bad tokens"
-msgstr[0] "Zlé symboly"
-msgstr[1] "Zlé symboly"
+msgstr[0] "%i zlý znak"
+msgstr[1] "%i zlé znaky"
+msgstr[2] "%i zlých znakov"
 
 #: ../src/edframe.cpp:2008
-#, fuzzy, c-format
+#, c-format
 msgid "%i fuzzy"
 msgid_plural "%i fuzzy"
-msgstr[0] "Nepresný"
-msgstr[1] "Nepresný"
+msgstr[0] "%i nepresný reťazec"
+msgstr[1] "%i nepresné reťazce"
+msgstr[2] "%i nepresných reťazcov"
 
 #: ../src/catalog.cpp:132
 #, c-format
@@ -78,62 +81,61 @@ msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i riadkov zo súboru „%s“ nebolo správne načítaných."
 
 #: ../src/edframe.cpp:2020
-#, fuzzy, c-format
+#, c-format
 msgid "%i not translated"
 msgid_plural "%i not translated"
-msgstr[0] "Hľadať v prekladoch"
-msgstr[1] "Hľadať v prekladoch"
+msgstr[0] "%i reťazec nepreložený"
+msgstr[1] "%i reťazce nepreložené"
+msgstr[2] "%i reťazcov nepreložených"
 
-#: ../src/resources/menus.xrc:213 ../src/resources/menus.xrc:214
-#, fuzzy
+#: ../src/resources/menus.xrc:213
+#: ../src/resources/menus.xrc:214
 msgid "&About"
-msgstr "&O..."
+msgstr "&O programe..."
 
 #: ../src/resources/menus.xrc:212
-#, fuzzy
 msgid "&About Poedit"
-msgstr "&O..."
+msgstr "&O programe Poedit..."
 
 #: ../src/resources/menus.xrc:107
-#, fuzzy
 msgid "&Automatically Translate Using TM"
-msgstr "&Automaticky preložiť pomocou TM"
+msgstr "&Automaticky preložiť pomocou pamäte prekladov"
 
 #: ../src/resources/menus.xrc:106
 msgid "&Automatically translate using TM"
-msgstr "&Automaticky preložiť pomocou TM"
+msgstr "&Automaticky preložiť pomocou pamäte prekladov"
 
 #: ../src/edframe.cpp:2786
 msgid "&Bookmarks"
 msgstr "&Záložky"
 
-#: ../src/resources/manager.xrc:132 ../src/resources/menus.xrc:26
+#: ../src/resources/manager.xrc:132
+#: ../src/resources/menus.xrc:26
 msgid "&Close"
 msgstr "&Zatvoriť"
 
 #: ../src/resources/menus.xrc:176
-#, fuzzy
 msgid "&Comment Window"
-msgstr "Zobraziť okno s &komentárom"
+msgstr "Okno s &komentárom"
 
 #: ../src/resources/menus.xrc:175
-#, fuzzy
 msgid "&Comment window"
-msgstr "Zobraziť okno s &komentárom"
+msgstr "Okno s &komentárom"
 
 #: ../src/resources/menus.xrc:130
 msgid "&Done and Next"
-msgstr ""
+msgstr "&Dokončiť a ísť na ďalší"
 
 #: ../src/resources/menus.xrc:129
 msgid "&Done and next"
-msgstr ""
+msgstr "&Dokončiť a ísť na ďalší"
 
 #: ../src/resources/menus.xrc:56
 msgid "&Edit"
 msgstr "&Zmeniť"
 
-#: ../src/edframe.cpp:471 ../src/resources/manager.xrc:125
+#: ../src/edframe.cpp:471
+#: ../src/resources/manager.xrc:125
 #: ../src/resources/menus.xrc:5
 msgid "&File"
 msgstr "&Súbor"
@@ -142,16 +144,17 @@ msgstr "&Súbor"
 msgid "&Find..."
 msgstr "&Hľadať..."
 
-#: ../src/edframe.cpp:480 ../src/resources/menus.xrc:126
+#: ../src/edframe.cpp:480
+#: ../src/resources/menus.xrc:126
 msgid "&Go"
-msgstr ""
+msgstr "&Prejsť"
 
-#: ../src/edapp.cpp:183 ../src/resources/menus.xrc:216
+#: ../src/edapp.cpp:183
+#: ../src/resources/menus.xrc:216
 msgid "&Help"
 msgstr "&Pomoc"
 
 #: ../src/resources/menus.xrc:14
-#, fuzzy
 msgid "&New Catalog..."
 msgstr "&Nový katalóg..."
 
@@ -161,19 +164,19 @@ msgstr "&Nový katalóg..."
 
 #: ../src/resources/menus.xrc:142
 msgid "&Next Message"
-msgstr ""
+msgstr "&Ďalšia správa"
 
 #: ../src/resources/menus.xrc:141
 msgid "&Next message"
-msgstr ""
+msgstr "&Ďalšia správa"
 
 #: ../src/resources/menus.xrc:206
 msgid "&Online Help"
-msgstr ""
+msgstr "&Pomocník Online"
 
 #: ../src/resources/menus.xrc:205
 msgid "&Online help"
-msgstr ""
+msgstr "&Pomocník Online"
 
 #: ../src/resources/menus.xrc:21
 msgid "&Open..."
@@ -183,27 +186,26 @@ msgstr "&Otvoriť..."
 msgid "&Preferences"
 msgstr "&Nastavenia"
 
-#: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:44
+#: ../src/resources/manager.xrc:128
+#: ../src/resources/menus.xrc:44
 msgid "&Preferences..."
 msgstr "&Nastavenia..."
 
 #: ../src/resources/menus.xrc:137
 msgid "&Previous Message"
-msgstr ""
+msgstr "&Predošlá správa"
 
 #: ../src/resources/menus.xrc:136
 msgid "&Previous message"
-msgstr ""
+msgstr "&Predošlá správa"
 
 #: ../src/resources/menus.xrc:119
-#, fuzzy
 msgid "&Properties..."
-msgstr "&Nastavenia..."
+msgstr "&Vlastnosti..."
 
 #: ../src/resources/menus.xrc:111
-#, fuzzy
 msgid "&Purge Deleted Translations"
-msgstr "O&dstrániť nepoužívané preklady"
+msgstr "&Vyčistiť zmazané preklady"
 
 #: ../src/resources/menus.xrc:110
 msgid "&Purge deleted translations"
@@ -214,7 +216,6 @@ msgid "&Save"
 msgstr "&Uložiť"
 
 #: ../src/resources/menus.xrc:70
-#, fuzzy
 msgid "&Show References"
 msgstr "&Zobraziť odkazy"
 
@@ -224,14 +225,13 @@ msgstr "&Zobraziť odkazy"
 
 #: ../src/resources/menus.xrc:198
 msgid "&Untranslated Entries First"
-msgstr ""
+msgstr "&Najskôr nepreložené záznamy"
 
 #: ../src/resources/menus.xrc:197
 msgid "&Untranslated entries first"
-msgstr ""
+msgstr "&Najskôr nepreložené záznamy"
 
 #: ../src/resources/menus.xrc:99
-#, fuzzy
 msgid "&Update from Sources"
 msgstr "Akt&ualizovať zo zdrojových kódov"
 
@@ -240,14 +240,12 @@ msgid "&Update from sources"
 msgstr "Akt&ualizovať zo zdrojových kódov"
 
 #: ../src/resources/menus.xrc:115
-#, fuzzy
 msgid "&Validate Translations"
-msgstr "Preklad"
+msgstr "&Overiť preklady"
 
 #: ../src/resources/menus.xrc:114
-#, fuzzy
 msgid "&Validate translations"
-msgstr "&Vyšrafovaný zoznam reťazcov na preklad"
+msgstr "&Overiť preklady"
 
 #: ../src/resources/menus.xrc:157
 msgid "&View"
@@ -287,16 +285,15 @@ msgstr "<nepomenované>"
 #. and is followed by application name when used ("Poedit",
 #. but don't add it to this translation yourself) (wxWidgets 2.8)
 #: ../src/edframe.cpp:2435
-#, fuzzy
 msgid "About "
-msgstr "&O..."
+msgstr "O programe"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
 #: ../src/edframe.cpp:2425
-#, fuzzy, c-format
+#, c-format
 msgid "About %s"
-msgstr "O Poedit"
+msgstr "O programe %s"
 
 #: ../src/resources/prefs.xrc:270
 msgid "Add"
@@ -306,7 +303,8 @@ msgstr "Pridať"
 msgid "Add directory to the list"
 msgstr "Pridať priečinok do zoznamu"
 
-#: ../src/transmemupd_wizard.cpp:134 ../src/resources/tm_update.xrc:85
+#: ../src/transmemupd_wizard.cpp:134
+#: ../src/resources/tm_update.xrc:85
 msgid "Add files"
 msgstr "Pridať súbory"
 
@@ -326,8 +324,8 @@ msgstr "Položka v zozname vstupných súborov:"
 msgid "An item in keywords list:"
 msgstr "Položka v zozname kľúčových slov:"
 
-#: ../src/edframe.cpp:2367 ../src/edframe.cpp:2379
-#, fuzzy
+#: ../src/edframe.cpp:2367
+#: ../src/edframe.cpp:2379
 msgid "Automatic Translations:"
 msgstr "Automatické preklady:"
 
@@ -339,7 +337,8 @@ msgstr "Automatická kontrola pravopisu"
 msgid "Automatic translation"
 msgstr "Automatický preklad"
 
-#: ../src/edframe.cpp:2365 ../src/edframe.cpp:2377
+#: ../src/edframe.cpp:2365
+#: ../src/edframe.cpp:2377
 msgid "Automatic translations:"
 msgstr "Automatické preklady:"
 
@@ -378,16 +377,14 @@ msgstr "Správanie"
 
 #: ../src/catalog.cpp:680
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr ""
-"Chybný katalóg: pred formou množného čísla nie je napísané msgid_plural"
+msgstr "Chybný katalóg: pred formou množného čísla nie je napísané msgid_plural"
 
 #: ../src/catalog.cpp:642
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr ""
-"Chybný katalóg: forma jednotného čísla msgstr je použitá aj v msgid_plural"
+msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr "Chybný katalóg: forma jednotného čísla msgstr je použitá aj v msgid_plural"
 
-#: ../src/resources/manager.xrc:90 ../src/resources/prefs.xrc:588
+#: ../src/resources/manager.xrc:90
+#: ../src/resources/prefs.xrc:588
 #: ../src/resources/tm_update.xrc:37
 msgid "Browse"
 msgstr "Prehliadať"
@@ -397,35 +394,36 @@ msgid "C&atalog"
 msgstr "K&atalóg"
 
 #: ../src/resources/comment.xrc:45
-#, fuzzy
 msgid "C&lear"
-msgstr "Vymazať"
+msgstr "Z&mazať"
 
 #: ../src/resources/prefs.xrc:141
 msgid "CR/LF conversion"
 msgstr "CR/LF konverzia"
 
-#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:113
-#: ../src/resources/prefs.xrc:424 ../src/resources/prefs.xrc:566
-#: ../src/resources/prefs.xrc:611 ../src/resources/progress.xrc:32
+#: ../src/resources/comment.xrc:38
+#: ../src/resources/manager.xrc:113
+#: ../src/resources/prefs.xrc:424
+#: ../src/resources/prefs.xrc:566
+#: ../src/resources/prefs.xrc:611
+#: ../src/resources/progress.xrc:32
 #: ../src/resources/properties.xrc:198
 msgid "Cancel"
 msgstr "Zrušiť"
 
 #: ../src/transmem.cpp:732
-#, fuzzy
 msgid "Cannot create TM database directory!"
-msgstr "Nie je možné vytvoriť priečinok pre databázu!"
+msgstr "Nepodarilo sa vytvoriť adresár pre databázu pamäte prekladov!"
 
-#: ../src/utility.cpp:57 ../src/utility.cpp:67
-#, fuzzy
+#: ../src/utility.cpp:57
+#: ../src/utility.cpp:67
 msgid "Cannot create temporary directory."
-msgstr "Nie je možné vytvoriť priečinok pre databázu!"
+msgstr "Nepodarilo sa vytvoriť dočasný adresár."
 
 #: ../src/gexecute.cpp:100
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot execute program: %s"
-msgstr "Nie je možné spustiť program:"
+msgstr "Nepodarilo sa spustiť program: %s"
 
 #: ../src/transmemupd.cpp:199
 msgid "Cannot extract catalogs from RPM file."
@@ -445,10 +443,9 @@ msgstr "Katalóg bol zmenený. Želáte si uložiť zmeny?"
 
 #: ../src/resources/properties.xrc:4
 msgid "Catalog properties"
-msgstr ""
+msgstr "Vlastnosti katalógu"
 
 #: ../src/resources/menus.xrc:9
-#, fuzzy
 msgid "Catalogs &Manager"
 msgstr "&Správca katalógov"
 
@@ -460,39 +457,39 @@ msgstr "&Správca katalógov"
 msgid "Change UI language"
 msgstr "Zmena jazyka rozhrania"
 
-#: ../src/export_html.cpp:119 ../src/resources/properties.xrc:74
+#: ../src/export_html.cpp:119
+#: ../src/resources/properties.xrc:74
 msgid "Charset:"
 msgstr "Znaková sada:"
 
 #: ../src/edframe.cpp:483
 msgid "Check for Updates..."
-msgstr ""
+msgstr "Skontrolovať aktualizácie..."
 
 #: ../src/resources/toolbar.xrc:39
-#, fuzzy
 msgid "Check for errors in the translation"
-msgstr "Do okna na preklad skopírovať originál"
+msgstr "Skontrolovať chyby v preklade"
 
-#: ../src/resources/prefs.xrc:204 ../src/resources/prefs.xrc:230
+#: ../src/resources/prefs.xrc:204
+#: ../src/resources/prefs.xrc:230
 msgid "Choose"
 msgstr "Vyberte"
 
-#: ../src/edframe.cpp:2339 ../src/resources/menus.xrc:64
-#, fuzzy
+#: ../src/edframe.cpp:2339
+#: ../src/resources/menus.xrc:64
 msgid "Clear Translation"
-msgstr "Preklad"
+msgstr "Zmazať preklad"
 
 #: ../src/resources/comment.xrc:46
 msgid "Clear the comment"
 msgstr "Vymazať komentár"
 
-#: ../src/edframe.cpp:2337 ../src/resources/menus.xrc:63
-#, fuzzy
+#: ../src/edframe.cpp:2337
+#: ../src/resources/menus.xrc:63
 msgid "Clear translation"
-msgstr "Preklad"
+msgstr "Zmazať preklad"
 
 #: ../src/resources/find.xrc:87
-#, fuzzy
 msgid "Close"
 msgstr "&Zatvoriť"
 
@@ -504,7 +501,8 @@ msgstr "Komentár"
 msgid "Comment window is editable"
 msgstr "Okno s komentárom je editovateľné"
 
-#: ../src/edframe.cpp:547 ../src/resources/comment.xrc:10
+#: ../src/edframe.cpp:547
+#: ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Komentár:"
 
@@ -512,23 +510,24 @@ msgstr "Komentár:"
 msgid "Configuration"
 msgstr "Konfigurácia"
 
-#: ../src/manager.cpp:407 ../src/manager.cpp:427
+#: ../src/manager.cpp:407
+#: ../src/manager.cpp:427
 msgid "Confirmation"
 msgstr "Potvrdenie"
 
 #: ../src/edframe.cpp:1812
-#, fuzzy
 msgid "Context:"
-msgstr "Zdrojový súbor"
+msgstr "Kontext:"
 
-#: ../src/edframe.cpp:2332 ../src/resources/menus.xrc:59
+#: ../src/edframe.cpp:2332
+#: ../src/resources/menus.xrc:59
 msgid "Copy from Source Text"
-msgstr ""
+msgstr "Skopírovať zo zdrojového textu"
 
-#: ../src/edframe.cpp:2330 ../src/resources/menus.xrc:58
-#, fuzzy
+#: ../src/edframe.cpp:2330
+#: ../src/resources/menus.xrc:58
 msgid "Copy from source text"
-msgstr "Akt&ualizovať zo zdrojových kódov"
+msgstr "Skopírovať zo zdrojového textu"
 
 #: ../src/catalog.cpp:1038
 #, c-format
@@ -538,7 +537,7 @@ msgstr "Nie je možné otvoriť súbor %s. Pravdepodobne je poškodený."
 #: ../src/catalog.cpp:1307
 #, c-format
 msgid "Couldn't save file %s."
-msgstr ""
+msgstr "Nedá sa uložiť súbor %s."
 
 #: ../src/resources/manager.xrc:44
 msgid "Create new translations project"
@@ -548,7 +547,8 @@ msgstr "Vytvoriť nový projekt prekladu"
 msgid "Database"
 msgstr "Databáza"
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:390
+#: ../src/resources/manager.xrc:53
+#: ../src/resources/prefs.xrc:390
 msgid "Delete"
 msgstr "Odstrániť"
 
@@ -565,16 +565,14 @@ msgid "Directories:"
 msgstr "Priečinky:"
 
 #: ../src/resources/menus.xrc:165
-#, fuzzy
 msgid "Display &Line Numbers"
 msgstr "Zobraziť čís&la riadkov"
 
 #: ../src/resources/menus.xrc:170
 msgid "Display &Notes for Translators"
-msgstr ""
+msgstr "Zobraziť poz&námky pre prekladateľov"
 
 #: ../src/resources/menus.xrc:160
-#, fuzzy
 msgid "Display &Quotes"
 msgstr "Zobraziť ú&vodzovky"
 
@@ -583,9 +581,8 @@ msgid "Display &line numbers"
 msgstr "Zobraziť čís&la riadkov"
 
 #: ../src/resources/menus.xrc:169
-#, fuzzy
 msgid "Display &notes for translators"
-msgstr "Zobraziť preklady v úvodzovkách?"
+msgstr "Zobraziť poz&námky pre prekladateľov"
 
 #: ../src/resources/menus.xrc:159
 msgid "Display &quotes"
@@ -605,11 +602,11 @@ msgstr "Chcete odstrániť tento projekt?"
 
 #: ../src/edframe.cpp:2227
 msgid "Do you want to remove all translations that are no longer used?"
-msgstr ""
+msgstr "Chcete odstrániť všetky preklady, ktoré sa už viac nepoužívajú?"
 
 #: ../src/edframe.cpp:999
 msgid "Don't Save"
-msgstr ""
+msgstr "Neukladať"
 
 #: ../src/resources/prefs.xrc:170
 msgid "Don't change format of existing catalogs"
@@ -617,27 +614,27 @@ msgstr "Nemeniť formát existujúcich katalógov"
 
 #: ../src/edframe.cpp:997
 msgid "Don't save"
-msgstr ""
+msgstr "Neukladať"
 
 #: ../src/attentionbar.cpp:195
 msgid "Don't show again"
-msgstr ""
+msgstr "Nezobrazovať znovu"
 
-#: ../src/resources/manager.xrc:136 ../src/resources/menus.xrc:51
-#, fuzzy
+#: ../src/resources/manager.xrc:136
+#: ../src/resources/menus.xrc:51
 msgid "E&xit"
-msgstr "Upraviť"
+msgstr "&Skončiť"
 
 #: ../src/resources/menus.xrc:39
 msgid "E&xport..."
 msgstr "E&xport..."
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:383
+#: ../src/resources/manager.xrc:48
+#: ../src/resources/prefs.xrc:383
 msgid "Edit"
 msgstr "Upraviť"
 
 #: ../src/resources/menus.xrc:85
-#, fuzzy
 msgid "Edit &Comment"
 msgstr "&Upraviť komentár"
 
@@ -646,11 +643,11 @@ msgid "Edit &comment"
 msgstr "&Upraviť komentár"
 
 #: ../src/edframe.cpp:2346
-#, fuzzy
 msgid "Edit Comment"
-msgstr "&Upraviť komentár"
+msgstr "Upraviť komentár"
 
-#: ../src/edframe.cpp:2344 ../src/resources/comment.xrc:4
+#: ../src/edframe.cpp:2344
+#: ../src/resources/comment.xrc:4
 #: ../src/resources/toolbar.xrc:58
 msgid "Edit comment"
 msgstr "Upraviť komentár"
@@ -680,16 +677,12 @@ msgid "Entries in the catalog are probably incorrect."
 msgstr "Položky v katalógu sú pravdepodobne nesprávne."
 
 #: ../src/edframe.cpp:1911
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog's Plural-Forms header says"
-msgstr ""
+msgid "Entries in this catalog have different plural forms count from what catalog's Plural-Forms header says"
+msgstr "Záznamy v tomto katalógu majú rozdielny počet foriem množného čísla ako je udané v hlavičke Plural-Forms katalógu"
 
 #: ../src/edframe.cpp:1376
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
+msgstr "Záznamy s chybami boli v zozname vyznačené na červeno.Podrobnosti o chybe budú zobrazené, ak vyberiete nejaký záznam."
 
 #: ../src/edframe.cpp:1960
 #, c-format
@@ -707,7 +700,7 @@ msgstr "Chyba pri ukladaní katalógu"
 
 #: ../src/errorbar.cpp:60
 msgid "Error:"
-msgstr ""
+msgstr "Chyba:"
 
 #: ../src/edframe.cpp:1138
 msgid "Export as..."
@@ -715,7 +708,7 @@ msgstr "Exportovať ako..."
 
 #: ../src/resources/properties.xrc:127
 msgid "Extract text from source files in the following directories:"
-msgstr ""
+msgstr "Extrahovať text zo zdrojových súborov v nasledovných adresároch:"
 
 #: ../src/digger.cpp:60
 #, c-format
@@ -730,15 +723,16 @@ msgstr "Nepodarilo sa načítať extrahovaný katalóg."
 msgid "Failed to merge gettext catalogs."
 msgstr "Nepodarilo sa zlúčiť katalógy gettext."
 
-#: ../src/edframe.cpp:393 ../src/edframe.cpp:1061
+#: ../src/edframe.cpp:393
+#: ../src/edframe.cpp:1061
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Súbor „%s“ neexistuje."
 
 #: ../src/edframe.cpp:386
-#, fuzzy, c-format
+#, c-format
 msgid "File '%s' is not a message catalog."
-msgstr "Súbor „%s“ nie je katalóg správ."
+msgstr "Súbor '%s' nie je katalógom správ."
 
 #: ../src/catalog.cpp:1268
 #, c-format
@@ -775,7 +769,7 @@ msgstr "Hľadať..."
 
 #: ../src/edframe.cpp:1941
 msgid "Fix the header"
-msgstr ""
+msgstr "Opraviť hlavičku"
 
 #: ../src/resources/prefs.xrc:181
 msgid "Fonts"
@@ -791,7 +785,8 @@ msgstr "Tvar %i"
 msgid "Form %i (e.g. \"%u\")"
 msgstr "Tvar %i (napr. „%u“)"
 
-#: ../src/manager.cpp:247 ../src/resources/toolbar.xrc:51
+#: ../src/manager.cpp:247
+#: ../src/resources/toolbar.xrc:51
 msgid "Fuzzy"
 msgstr "Nepresný"
 
@@ -799,11 +794,13 @@ msgstr "Nepresný"
 msgid "Fuzzy translation"
 msgstr "Nepresný preklad"
 
-#: ../src/edframe.cpp:1043 ../src/edframe.cpp:1102
+#: ../src/edframe.cpp:1043
+#: ../src/edframe.cpp:1102
 msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU gettext katalógy (*.po)|*.po|Všetky súbory (*.*)|*.*"
 
-#: ../src/edframe.cpp:1176 ../src/edframe.cpp:1327
+#: ../src/edframe.cpp:1176
+#: ../src/edframe.cpp:1327
 msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU gettext katalógy (*.pot)|*.pot|Všetky súbory (*.*)|*.*"
 
@@ -816,19 +813,19 @@ msgid "Generate database"
 msgstr "Generovať databázu"
 
 #: ../src/edframe.cpp:2798
-#, fuzzy, c-format
+#, c-format
 msgid "Go to Bookmark %i\tCtrl+%i"
-msgstr "Prejsť na záložku %i\tCtrl – %i"
+msgstr "Prejsť na záložku %i\tCtrl+%i"
 
 #: ../src/edframe.cpp:2792
-#, fuzzy, c-format
+#, c-format
 msgid "Go to Bookmark %i\tCtrl+Alt+%i"
-msgstr "Prejsť na záložku %i\tCtrl – Alt – %i"
+msgstr "Prejsť na záložku %i\tCtrl+Alt+%i"
 
 #: ../src/edframe.cpp:2795
-#, fuzzy, c-format
+#, c-format
 msgid "Go to bookmark %i\tCtrl+%i"
-msgstr "Prejsť na záložku %i\tCtrl – %i"
+msgstr "Prejsť na záložku %i\tCtrl+%i"
 
 #: ../src/edframe.cpp:1140
 msgid "HTML file (*.html)|*.html"
@@ -836,7 +833,7 @@ msgstr "HTML súbor (*.html)|*.html"
 
 #: ../src/attentionbar.cpp:78
 msgid "Hide this notification message"
-msgstr ""
+msgstr "Skryť túto správu s upozornením"
 
 #: ../src/resources/prefs.xrc:18
 msgid "Identity"
@@ -847,24 +844,17 @@ msgid "If checked, the comment window will be editable."
 msgstr "Ak je zaškrtnuté, okno s komentárom bude editovateľné."
 
 #: ../src/edframe.cpp:2229
-#, fuzzy
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Naozaj si želáte odstrániť všetky preklady ktoré už nie sú v katalógu "
-"použité?\n"
-"Ak budete pokračovať, bude ich potrebné znovu preložiť v prípade, ak budú "
-"opäť v budúcnosti zaradené do katalógu."
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
+msgstr "Ak budete pokračovať s čistením, všetky preklady označene ako zmazané budú natrvalo odstránené. V prípade, že budú v budúcnosti znovu pridané, budete ich musieť preložiť znovu."
 
 #: ../src/resources/prefs.xrc:472
 msgid "Invocation:"
 msgstr "Vyvolanie:"
 
-#: ../src/edframe.cpp:2234 ../src/transmem.cpp:1202
+#: ../src/edframe.cpp:2234
+#: ../src/transmem.cpp:1202
 msgid "Keep"
-msgstr ""
+msgstr "Zachovať"
 
 #: ../src/propertiesdlg.cpp:58
 msgid "Keywords"
@@ -874,8 +864,10 @@ msgstr "Kľúčové slová"
 msgid "Language selection"
 msgstr "Výber jazyka"
 
-#: ../src/export_html.cpp:108 ../src/resources/prefs.xrc:440
-#: ../src/resources/prefs.xrc:444 ../src/resources/properties.xrc:62
+#: ../src/export_html.cpp:108
+#: ../src/resources/prefs.xrc:440
+#: ../src/resources/prefs.xrc:444
+#: ../src/resources/properties.xrc:62
 msgid "Language:"
 msgstr "Jazyk:"
 
@@ -885,11 +877,11 @@ msgstr "Posledná zmena"
 
 #: ../src/resources/properties.xrc:111
 msgid "Learn about plural forms"
-msgstr ""
+msgstr "Zistiť informácie o formách množného čísla"
 
 #: ../src/edframe.cpp:889
 msgid "Learn more"
-msgstr ""
+msgstr "Zistiť viac"
 
 #: ../src/edlistctrl.cpp:328
 msgid "Line"
@@ -939,28 +931,22 @@ msgstr "Moje jazyky"
 
 #: ../src/resources/menus.xrc:152
 msgid "Ne&xt Unfinished"
-msgstr ""
+msgstr "Ďalší &nedokončený"
 
 #: ../src/resources/menus.xrc:151
 msgid "Ne&xt unfinished"
-msgstr ""
+msgstr "Ďalší &nedokončený"
 
 #: ../src/resources/prefs.xrc:113
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Nepovoliť aby bol zoznam reťazcov aktivovaný. Ak je to povolené, musíte pre "
-"navigáciu použiť Ctrl – šípky na klávesnici, inak môžete priamo začať písať "
-"text bez nutnosti stlačiť Tab pre aktiváciu poľa."
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Nepovoliť aby bol zoznam reťazcov aktivovaný. Ak je to povolené, musíte pre navigáciu použiť Ctrl – šípky na klávesnici, inak môžete priamo začať písať text bez nutnosti stlačiť Tab pre aktiváciu poľa."
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:378
+#: ../src/resources/manager.xrc:43
+#: ../src/resources/prefs.xrc:378
 msgid "New"
 msgstr "Nový"
 
 #: ../src/resources/menus.xrc:18
-#, fuzzy
 msgid "New Catalog from POT File..."
 msgstr "Nový katalóg z POT súboru..."
 
@@ -985,9 +971,8 @@ msgid "No files found in: "
 msgstr "Žiadne súbory neboli nájdené v: "
 
 #: ../src/edframe.cpp:1391
-#, fuzzy
 msgid "No problems with the translation found."
-msgstr "Žiadne odkazy k reťazcu neboli nájdené."
+msgstr "Nenašli sa žiadne problémy s prekladom."
 
 #: ../src/edframe.cpp:1433
 msgid "No references to this string found."
@@ -998,13 +983,15 @@ msgid "Notes"
 msgstr "Poznámky"
 
 #: ../src/edframe.cpp:550
-#, fuzzy
 msgid "Notes for translators:"
-msgstr "Automatické preklady:"
+msgstr "Poznámky pre prekladateľov:"
 
-#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
-#: ../src/resources/prefs.xrc:416 ../src/resources/prefs.xrc:558
-#: ../src/resources/properties.xrc:190 ../src/resources/summary.xrc:71
+#: ../src/resources/comment.xrc:30
+#: ../src/resources/manager.xrc:105
+#: ../src/resources/prefs.xrc:416
+#: ../src/resources/prefs.xrc:558
+#: ../src/resources/properties.xrc:190
+#: ../src/resources/summary.xrc:71
 msgid "OK"
 msgstr "OK"
 
@@ -1012,16 +999,19 @@ msgstr "OK"
 msgid "Obsolete strings"
 msgstr "Vyradené preklady"
 
-#: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
+#: ../src/resources/toolbar.xrc:15
+#: ../src/resources/toolbar.xrc:20
 msgid "Open"
 msgstr "Otvoriť"
 
-#: ../src/edframe.cpp:1041 ../src/resources/toolbar.xrc:16
+#: ../src/edframe.cpp:1041
+#: ../src/resources/toolbar.xrc:16
 #: ../src/resources/toolbar.xrc:21
 msgid "Open catalog"
 msgstr "Otvoriť katalóg"
 
-#: ../src/edframe.cpp:1174 ../src/edframe.cpp:1325
+#: ../src/edframe.cpp:1174
+#: ../src/edframe.cpp:1325
 msgid "Open catalog template"
 msgstr "Otvoriť katalóg návrhov"
 
@@ -1031,11 +1021,11 @@ msgstr "Otvoriť správcu katalógov pri štarte Poedit"
 
 #: ../src/resources/menus.xrc:147
 msgid "P&revious Unfinished"
-msgstr ""
+msgstr "P&redošlý nedokončený"
 
 #: ../src/resources/menus.xrc:146
 msgid "P&revious unfinished"
-msgstr ""
+msgstr "P&redošlý nedokončený"
 
 #: ../src/resources/prefs.xrc:476
 msgid "Parser command:"
@@ -1068,8 +1058,7 @@ msgstr "Vyberte si jazyk zo zoznamu známych jazykov"
 
 #: ../src/resources/tm_update.xrc:21
 msgid "Please add directories where locale files are stored on your system:"
-msgstr ""
-"Prosím pridajte priečinky kde sa nachádzajú lokálne súbory vo vašom systéme:"
+msgstr "Prosím pridajte priečinky kde sa nachádzajú lokálne súbory vo vašom systéme:"
 
 #: ../src/edframe.cpp:1441
 msgid "Please choose the reference you want to show:"
@@ -1086,12 +1075,15 @@ msgstr "Prosím, vyberte kód jazyka:"
 #: ../src/transmem.cpp:1196
 #, c-format
 msgid ""
-"Please verify that all files were moved to the new location or do it "
-"manually if they weren't.\n"
+"Please verify that all files were moved to the new location or do it manually if they weren't.\n"
 "\n"
 "Old location: %s\n"
 "New location: %s"
 msgstr ""
+"Prosím, overte, či boli všetky súbory presunuté do nového umiestnenia. V prípade že neboli presunuté, presuňte ich ručne.\n"
+"\n"
+"Pôvodné umiestnenie: %s\n"
+"Nové umiestnenie: %s"
 
 #: ../src/resources/properties.xrc:98
 msgid "Plural Forms:"
@@ -1118,9 +1110,8 @@ msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit je jednoducho použiteľný editor prekladov."
 
 #: ../src/transmem.cpp:1191
-#, fuzzy
 msgid "Poedit translation memory error"
-msgstr "Aktualizovať pamäť prekladov"
+msgstr "Chyba pamäte prekladov programu Poedit"
 
 #: ../src/resources/prefs.xrc:4
 msgid "Preferences"
@@ -1134,7 +1125,8 @@ msgstr "Pokračovať"
 msgid "Project info"
 msgstr "Informácie o projekte"
 
-#: ../src/export_html.cpp:105 ../src/resources/properties.xrc:19
+#: ../src/export_html.cpp:105
+#: ../src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Názov projektu a verzia:"
 
@@ -1142,23 +1134,26 @@ msgstr "Názov projektu a verzia:"
 msgid "Project name:"
 msgstr "Názov projektu:"
 
-#: ../src/edframe.cpp:2234 ../src/transmem.cpp:1202
+#: ../src/edframe.cpp:2234
+#: ../src/transmem.cpp:1202
 msgid "Purge"
-msgstr ""
+msgstr "Vyčistiť"
 
 #: ../src/edframe.cpp:2225
 msgid "Purge deleted translations"
 msgstr "Odstrániť zmazané preklady"
 
-#: ../src/resources/manager.xrc:137 ../src/resources/menus.xrc:52
+#: ../src/resources/manager.xrc:137
+#: ../src/resources/menus.xrc:52
 msgid "Quit"
-msgstr ""
+msgstr "Ukončiť"
 
 #: ../src/edframe.cpp:1441
 msgid "References"
 msgstr "Odkazy"
 
-#: ../src/edframe.cpp:2401 ../src/edframe.cpp:2405
+#: ../src/edframe.cpp:2401
+#: ../src/edframe.cpp:2405
 msgid "References:"
 msgstr "Odkazy:"
 
@@ -1168,19 +1163,19 @@ msgstr "Vygenerovať pamäť prekladov z katalógov v hore uvedenom umiestnení.
 
 #: ../src/edframe.cpp:1922
 msgid "Required header Plural-Forms is missing."
-msgstr ""
+msgstr "Potrebná hlavička Plural-Forms sa nenašla."
 
 #: ../src/resources/tm_update.xrc:42
 msgid "Reset to defaults"
 msgstr "Vrátiť predvolené"
 
-#: ../src/edframe.cpp:995 ../src/resources/toolbar.xrc:25
+#: ../src/edframe.cpp:995
+#: ../src/resources/toolbar.xrc:25
 #: ../src/resources/toolbar.xrc:30
 msgid "Save"
 msgstr "Uložiť"
 
 #: ../src/resources/menus.xrc:35
-#, fuzzy
 msgid "Save &As..."
 msgstr "Uložiť &ako..."
 
@@ -1192,7 +1187,8 @@ msgstr "Uložiť &ako..."
 msgid "Save as..."
 msgstr "Uložiť ako..."
 
-#: ../src/resources/toolbar.xrc:26 ../src/resources/toolbar.xrc:31
+#: ../src/resources/toolbar.xrc:26
+#: ../src/resources/toolbar.xrc:31
 msgid "Save catalog"
 msgstr "Uložiť katalóg"
 
@@ -1216,7 +1212,8 @@ msgstr "Prehľadať umiestnenia"
 msgid "Select catalog's language"
 msgstr "Vyberte si jazyk katalógu"
 
-#: ../src/manager.cpp:280 ../src/transmemupd_wizard.cpp:108
+#: ../src/manager.cpp:280
+#: ../src/transmemupd_wizard.cpp:108
 msgid "Select directory"
 msgstr "Vyberte si priečinok"
 
@@ -1229,23 +1226,23 @@ msgid "Select your prefered language"
 msgstr "Vyberte si váš preferovaný jazyk"
 
 #: ../src/edframe.cpp:2797
-#, fuzzy, c-format
+#, c-format
 msgid "Set Bookmark %i\tAlt+%i"
-msgstr "Nastaviť záložku %i\tAlt – %i"
+msgstr "Nastaviť záložku %i\tAlt+%i"
 
 #: ../src/edframe.cpp:2791
-#, fuzzy, c-format
+#, c-format
 msgid "Set Bookmark %i\tCtrl+%i"
-msgstr "Nastaviť záložku %i\tCtrl – %i"
+msgstr "Nastaviť záložku %i\tCtrl+%i"
 
 #: ../src/edframe.cpp:2794
-#, fuzzy, c-format
+#, c-format
 msgid "Set bookmark %i\tAlt+%i"
-msgstr "Nastaviť záložku %i\tAlt – %i"
+msgstr "Nastaviť záložku %i\tAlt+%i"
 
 #: ../src/edframe.cpp:1893
 msgid "Set email"
-msgstr ""
+msgstr "Nastaviť email"
 
 #: ../src/resources/prefs.xrc:97
 msgid "Show summary after catalog update"
@@ -1257,36 +1254,34 @@ msgstr "Singulár:"
 
 #: ../src/resources/menus.xrc:182
 msgid "Sort by &File Order"
-msgstr ""
+msgstr "Usporiadať podľa &poradia súborov"
 
 #: ../src/resources/menus.xrc:187
 msgid "Sort by &Source"
-msgstr ""
+msgstr "Usporiadať podľa &zdroja"
 
 #: ../src/resources/menus.xrc:192
-#, fuzzy
 msgid "Sort by &Translation"
-msgstr "Preklad"
+msgstr "Usporiadať podľa &prekladu"
 
 #: ../src/resources/menus.xrc:181
 msgid "Sort by &file order"
-msgstr ""
+msgstr "Usporiadať podľa &poradia súborov"
 
 #: ../src/resources/menus.xrc:186
 msgid "Sort by &source"
-msgstr ""
+msgstr "Usporiadať podľa &zdroja"
 
 #: ../src/resources/menus.xrc:191
-#, fuzzy
 msgid "Sort by &translation"
-msgstr "Nepresný preklad"
+msgstr "Usporiadať podľa &prekladu"
 
 #: ../src/export_html.cpp:145
-#, fuzzy
 msgid "Source"
-msgstr "Zdrojový súbor"
+msgstr "Zdroj"
 
-#: ../src/resources/prefs.xrc:533 ../src/resources/properties.xrc:86
+#: ../src/resources/prefs.xrc:533
+#: ../src/resources/properties.xrc:86
 msgid "Source code charset:"
 msgstr "Kódová stránka zdrojových kódov:"
 
@@ -1299,35 +1294,31 @@ msgid "Source file"
 msgstr "Zdrojový súbor"
 
 #: ../src/fileviewer.cpp:61
-#, fuzzy
 msgid "Source file occurrence:"
-msgstr "Zdrojový súbor"
+msgstr "Výskyt v zdrojovom súbori:"
 
 #: ../src/edlistctrl.cpp:325
-#, fuzzy
 msgid "Source text"
-msgstr "Zdrojový súbor"
+msgstr "Zdrojový text"
 
 #: ../src/edframe.cpp:536
-#, fuzzy
 msgid "Source text:"
-msgstr "Zdrojový súbor"
+msgstr "drojový text:"
 
 #: ../src/resources/properties.xrc:179
 msgid "Sources keywords"
-msgstr ""
+msgstr "Zdrojové kľúčové slová"
 
 #: ../src/resources/properties.xrc:158
-#, fuzzy
 msgid "Sources paths"
-msgstr "Prehľadať umiestnenia"
+msgstr "Cesty k zdrojom"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages).
 #: ../src/edframe.cpp:885
 #, c-format
 msgid "Spellchecker dictionary for %s isn't available, you need to install it."
-msgstr ""
+msgstr "Slovník kontroly pravopisu pre jazyk %s nie je dostupný. Musíte ho doinštalovať."
 
 #: ../src/resources/find.xrc:43
 msgid "Start from the first item"
@@ -1340,13 +1331,15 @@ msgstr "Vyhľadať text:"
 #: ../src/edframe.cpp:1927
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr ""
+msgstr "Chyba syntaxe v hlavičke Plural-Forms (\"%s\")."
 
-#: ../src/export_html.cpp:115 ../src/resources/properties.xrc:48
+#: ../src/export_html.cpp:115
+#: ../src/resources/properties.xrc:48
 msgid "Team's email address:"
 msgstr "Emailová adresa tímu:"
 
-#: ../src/export_html.cpp:111 ../src/resources/properties.xrc:34
+#: ../src/export_html.cpp:111
+#: ../src/resources/properties.xrc:34
 msgid "Team:"
 msgstr "Tím:"
 
@@ -1362,32 +1355,24 @@ msgstr ""
 "v UTF-8 a dané nastavenie bolo príslušne modifikované."
 
 #: ../src/edframe.cpp:1380
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
+msgstr "Súbor bol bezpečne uložený, ale nemôže byť skompilovaný do formátu MO a následne použitý."
 
 #: ../src/edframe.cpp:1396
-#, fuzzy
 msgid "The translation is ready for use."
-msgstr "Pamäť prekladov"
+msgstr "Preklad je pripravený na používanie."
 
 #: ../src/catalog.cpp:1311
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
-msgstr ""
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
+msgstr "Vyskytol sa problém pri formátovaní súboru (napriek tomu bol správne uložený)."
 
 #: ../src/transmem.cpp:1193
 msgid "There was a problem moving your translation memory."
-msgstr ""
+msgstr "Vyskytol sa problém pri premiestňovaní Vašej pamäte prekladov."
 
 #: ../src/catalog.cpp:1030
-msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"Nastala chyba pri načítaní katalógu. Niektoré údaje môžu chýbať alebo byť "
-"poškodené."
+msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
+msgstr "Nastala chyba pri načítaní katalógu. Niektoré údaje môžu chýbať alebo byť poškodené."
 
 #: ../src/resources/summary.xrc:38
 msgid ""
@@ -1402,15 +1387,12 @@ msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "Poedit will add them to the catalog now."
 msgstr ""
-"Tieto reťazce boli nájdené v zdrojových kódoch avšak nenachádzajú sa v "
-"katalógu.\n"
+"Tieto reťazce boli nájdené v zdrojových kódoch avšak nenachádzajú sa v katalógu.\n"
 "Poedit ich teraz pridá do katalógu."
 
 #: ../src/edframe.cpp:1907
-msgid ""
-"This catalog has entries with plural forms, but doesn't have Plural-Forms "
-"header configured."
-msgstr ""
+msgid "This catalog has entries with plural forms, but doesn't have Plural-Forms header configured."
+msgstr "Tento katalóg obsahuje záznamy s formami množného čísla, ale nemá nakonfigurovanú hlavičku Plural-Forms."
 
 #: ../src/resources/prefs.xrc:488
 msgid ""
@@ -1458,12 +1440,12 @@ msgstr "Nastavené, ak je vybraný text preložený nepresne"
 msgid "Total"
 msgstr "Celkovo"
 
-#: ../src/edlistctrl.cpp:326 ../src/export_html.cpp:148
+#: ../src/edlistctrl.cpp:326
+#: ../src/export_html.cpp:148
 msgid "Translation"
 msgstr "Preklad"
 
 #: ../src/resources/menus.xrc:79
-#, fuzzy
 msgid "Translation Is &Fuzzy"
 msgstr "Preklad je &nepresný"
 
@@ -1484,9 +1466,9 @@ msgid "Translation is &fuzzy"
 msgstr "Preklad je &nepresný"
 
 #: ../src/transmem.cpp:661
-#, fuzzy, c-format
+#, c-format
 msgid "Translation memory database error: %s"
-msgstr "Chyba databázy: %s"
+msgstr "Chyba databázy pamäte prekladov: %s"
 
 #: ../src/resources/tm_update.xrc:68
 msgid ""
@@ -1497,18 +1479,16 @@ msgstr ""
 "Teraz môžete pridať do zoznamu viac súborov."
 
 #: ../src/resources/properties.xrc:119
-#, fuzzy
 msgid "Translation properties"
-msgstr "Pamäť prekladov"
+msgstr "Vlastnosti prekladu"
 
 #: ../src/edframe.cpp:544
-#, fuzzy
 msgid "Translation:"
-msgstr "Preklad"
+msgstr "Preklad:"
 
 #: ../src/propertiesdlg.cpp:73
 msgid "UTF-8 (recommended)"
-msgstr ""
+msgstr "UTF-8 (odporúčané)"
 
 #: ../src/resources/summary.xrc:79
 msgid "Undo"
@@ -1516,7 +1496,7 @@ msgstr "Späť"
 
 #: ../src/resources/prefs.xrc:157
 msgid "Unix (recommended)"
-msgstr ""
+msgstr "Unix (odporúčané)"
 
 #: ../src/chooselang.cpp:60
 #, c-format
@@ -1544,7 +1524,6 @@ msgid "Update catalog - synchronize it with sources"
 msgstr "Aktualizovať katalóg - synchronizácia so zdrojovým kódom"
 
 #: ../src/resources/menus.xrc:103
-#, fuzzy
 msgid "Update from &POT File..."
 msgstr "Aktualizovať z &POT súboru..."
 
@@ -1560,20 +1539,18 @@ msgstr "Súhrn aktualizácie"
 msgid "Update translation memory"
 msgstr "Aktualizovať pamäť prekladov"
 
-#: ../src/edframe.cpp:1297 ../src/manager.cpp:435
-#, fuzzy
+#: ../src/edframe.cpp:1297
+#: ../src/manager.cpp:435
 msgid "Updating catalog"
-msgstr "Aktualizácia katalógu..."
+msgstr "Aktualizuje sa katalóg"
 
 #: ../src/edframe.cpp:1311
-#, fuzzy
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr "Aktualizácia katalógu zlyhala. Podrobnosti po kliknutí na „Viac>>“."
+msgstr "Aktualizácia katalógu zlyhala. Kliknite na 'Podrobnosti >>' pre viac podrobností."
 
 #: ../src/transmemupd_wizard.cpp:194
-#, fuzzy
 msgid "Updating translation memory"
-msgstr "Aktualizovať pamäť prekladov"
+msgstr "Aktualizácia pamäte prekladov"
 
 #: ../src/resources/prefs.xrc:213
 msgid "Use custom font for text fields"
@@ -1584,33 +1561,32 @@ msgid "Use custom font for translations list"
 msgstr "Použiť vlastné písmo pre zoznam prekladov"
 
 #: ../src/resources/properties.xrc:166
-#, fuzzy
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
 msgstr ""
 "Použiť tieto kľúčové slová (názvy funkcií) pre rozlíšenie preložiteľných\n"
-"reťazcov v zdrojových súboroch, okrem štandardných."
+"reťazcov v zdrojových súboroch:"
 
 #: ../src/resources/toolbar.xrc:38
 msgid "Validate"
-msgstr ""
+msgstr "Overiť"
 
-#: ../src/edframe.cpp:1372 ../src/edframe.cpp:1392
-#, fuzzy
+#: ../src/edframe.cpp:1372
+#: ../src/edframe.cpp:1392
 msgid "Validation results"
-msgstr "Pamäť prekladov"
+msgstr "Výsledky overovania"
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
 #: ../src/edframe.cpp:2428
-#, fuzzy, c-format
+#, c-format
 msgid "Version %s"
-msgstr "verzia"
+msgstr "Verzia %s"
 
 #: ../src/resources/prefs.xrc:255
 msgid "What languages do you want to use the TM with?"
-msgstr ""
+msgstr "Ktoré jazyky chcete použiť pre pamäť prekladov?"
 
 #: ../src/resources/find.xrc:50
 msgid "Whole words only"
@@ -1629,17 +1605,12 @@ msgid "You must restart Poedit for this change to take effect."
 msgstr "Aby sa zmeny prejavili, treba Poedit reštartovať."
 
 #: ../src/edframe.cpp:1891
-#, fuzzy
-msgid ""
-"You should set your email address in Preferences so that it can be used for "
-"Last-Translator header in GNU gettext files."
-msgstr ""
-"Vaše meno a email, ktoré uvediete nižšie, sa používajú iba na\n"
-"nastavenie hodnoty hlavičky Last-Translator súborov GNU gettext."
+msgid "You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files."
+msgstr "Mali by ste nastaviť Vašu emailovú adresu vo Vlastnostiach, aby mohla byť použitá pre hlavičku Last-Translator v súboroch GNU gettext."
 
 #: ../src/edframe.cpp:992
 msgid "Your changes will be lost if you don't save them."
-msgstr ""
+msgstr "Vaše zmeny budú stratené, ak ich neuložíte."
 
 #: ../src/resources/prefs.xrc:44
 msgid "Your email address:"
@@ -1659,7 +1630,7 @@ msgstr "Vaše meno:"
 
 #: ../src/edapp.cpp:372
 msgid "don't delete temporary files (for debugging)"
-msgstr ""
+msgstr "nemazať dočasné súbory (pre ladiace účely)"
 
 #, fuzzy
 #~ msgid "Automatic C&omments Window"
@@ -1684,6 +1655,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "[checking translations: %i left]"
+
 #~ msgid_plural "[checking translations: %i left]"
 #~ msgstr[0] "[ kontrola pravopisu: zostáva %i ]"
 #~ msgstr[1] "[ kontrola pravopisu: zostáva %i ]"

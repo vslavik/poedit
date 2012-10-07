@@ -173,16 +173,16 @@ bool SourceDigger::DigFiles(TempDirectory& tmpdir,
 wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths, 
                                        ParsersDB& pdb)
 {
-    if (pdb.GetCount() == 0) return NULL;
+    if (pdb.GetCount() == 0)
+      return NULL;
     wxArrayString *p_files = new wxArrayString[pdb.GetCount()];
     wxArrayString files;
     size_t i;
     
     for (i = 0; i < paths.GetCount(); i++)
-        if (!FindInDir(paths[i], files))
     {
-        delete[] p_files;
-        return NULL;
+        if ( !FindInDir(paths[i], files) )
+            wxLogWarning(_("No files found in: ") + paths[i]);
     }
 
     size_t filescnt = 0;
@@ -194,39 +194,37 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
     m_progressInfo->SetGaugeMax(filescnt);
     
     if (filescnt == 0)
-    {
-        for (i = 0; i < paths.GetCount(); i++)
-            wxLogWarning(_("No files found in: ") + paths[i]);
         wxLogError(_("Poedit did not find any files in scanned directories."));
-    }
 
     return p_files;
 }
 
 
 
-bool SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
+int SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
 {
     wxDir dir(dirname);
     if (!dir.IsOpened()) 
-        return false;
+        return 0;
     bool cont;
     wxString filename;
+    int found = 0;
     
     cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_FILES);
     while (cont)
     {
         files.Add(dirname + _T("/") + filename);
+        found++;
         cont = dir.GetNext(&filename);
     }    
 
     cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_DIRS);
     while (cont)
     {
-        if (!FindInDir(dirname + _T("/") + filename, files))
-            return false;
+        found += FindInDir(dirname + _T("/") + filename, files);
         cont = dir.GetNext(&filename);
     }
-    return true;
+
+    return found;
 }
 

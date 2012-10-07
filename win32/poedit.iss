@@ -24,8 +24,8 @@
 ;   Inno Setup installer script
 ;
 
-#define VERSION          "1.5.3"
-#define VERSION_FULL     "1.5.3"
+#define VERSION          "1.5.4"
+#define VERSION_FULL     "1.5.4"
 
 #ifndef CRT_REDIST
 #define CRT_REDIST       "C:\Program Files\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT"
@@ -61,7 +61,7 @@ InternalCompressLevel=ultra
 AppID={{68EB2C37-083A-4303-B5D8-41FA67E50B8F}
 VersionInfoVersion={#VERSION}
 VersionInfoTextVersion={#VERSION_FULL}
-AppCopyright=© 1999-2010 Vaclav Slavik
+AppCopyright=© 1999-2012 Vaclav Slavik
 AppPublisher=Vaclav Slavik
 AppSupportURL=http://www.poedit.net/support.php
 AppUpdatesURL=http://www.poedit.net/download.php

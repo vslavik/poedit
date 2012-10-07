@@ -73,7 +73,7 @@ class SourceDigger
         /** Finds all files in given directory.
             \return false if an error occured.
          */
-        bool FindInDir(const wxString& dirname, wxArrayString& files);
+        int FindInDir(const wxString& dirname, wxArrayString& files);
 
         /** Digs translatable strings from given files.
             \param outfiles list to which (temporary) file name of extracted
