@@ -1299,7 +1299,10 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
         wxRemoveFile(po_file_temp);
 
     if ( !DoSaveOnly(po_file_temp) )
+    {
+        wxLogError(_("Couldn't save file %s."), po_file.c_str());
         return false;
+    }
 
     validation_errors = DoValidate(po_file_temp);
 
@@ -1307,7 +1310,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
     // to the usual format. This is a (barely) passable fix for #25 until
     // proper preservation of formatting is implemented.
 
-    int msgcat_ok = -1;
+    int msgcat_ok = false;
     {
         // Ignore msgcat errors output (but not exit code), because it
         //   a) complains about things DoValidate() already complained above
@@ -1331,9 +1334,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
     }
     else
     {
-        if ( wxFileExists(po_file) )
-            wxRemoveFile(po_file);
-        if ( !wxRenameFile(po_file_temp, po_file) )
+        if ( !wxRenameFile(po_file_temp, po_file, /*overwrite=*/true) )
         {
             wxLogError(_("Couldn't save file %s."), po_file.c_str());
         }
@@ -1470,10 +1471,7 @@ bool Catalog::DoSaveOnly(const wxString& po_file)
             f.AddLine(deletedItem.GetDeletedLines()[j]);
     }
 
-    f.Write(crlf, wxCSConv(charset));
-    f.Close();
-
-    return true;
+    return f.Write(crlf, wxCSConv(charset));
 }
 
 
