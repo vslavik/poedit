@@ -2283,7 +2283,7 @@ bool PoeditFrame::AutoTranslateCatalog()
         {
             wxArrayString results;
             int score = tm->Lookup(dt.GetString(), results);
-            if (score > 0)
+            if (score > 0 && !results.empty())
             {
                 dt.SetTranslation(results[0]);
                 dt.SetAutomatic(true);
