@@ -65,6 +65,8 @@ FindFrame::FindFrame(wxWindow *parent,
 {
     wxXmlResource::Get()->LoadDialog(this, parent, _T("find_frame"));
 
+    m_textField = XRCCTRL(*this, "string_to_find", wxTextCtrl);
+
     SetEscapeId(wxID_CLOSE);
 
     RestoreWindowState(this, wxDefaultSize, WinState_Pos);
@@ -74,9 +76,8 @@ FindFrame::FindFrame(wxWindow *parent,
 
     if ( !ms_text.empty() )
     {
-        wxTextCtrl *t = XRCCTRL(*this, "string_to_find", wxTextCtrl);
-        t->SetValue(ms_text);
-        t->SelectAll();
+        m_textField->SetValue(ms_text);
+        m_textField->SelectAll();
     }
 
     Reset(c);
@@ -143,7 +144,7 @@ void FindFrame::OnClose(wxCommandEvent&)
 
 void FindFrame::OnTextChange(wxCommandEvent&)
 {
-    ms_text = XRCCTRL(*this, "string_to_find", wxTextCtrl)->GetValue();
+    ms_text = m_textField->GetValue();
 
     Reset(m_catalog);
 }
