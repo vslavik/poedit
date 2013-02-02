@@ -72,9 +72,32 @@
         <label platform="win">_Show references</label>
         <label platform="unix|mac">_Show References</label>
       </object>
-      <object class="wxMenuItem" name="wxID_FIND">
+      <object class="wxMenuItem" name="wxID_FIND" platform="unix|win">
         <label>_Find...</label>
         <accel>Ctrl+F</accel>
+      </object>
+      <object class="wxMenuItem" name="menu_find_next" platform="unix|win">
+        <label>Find next</label>
+        <accel>Ctrl+G</accel>
+      </object>
+      <object class="wxMenuItem" name="menu_find_prev" platform="unix|win">
+        <label>Find previous</label>
+        <accel>Ctrl+Shift+G</accel>
+      </object>
+      <object class="wxMenu" name="menu_sub_find" platform="mac">
+        <label>Find</label>
+        <object class="wxMenuItem" name="wxID_FIND">
+          <label>_Find...</label>
+          <accel>Ctrl+F</accel>
+        </object>
+        <object class="wxMenuItem" name="menu_find_next">
+          <label>Find Next</label>
+          <accel>Ctrl+G</accel>
+        </object>
+        <object class="wxMenuItem" name="menu_find_prev">
+          <label>Find Previous</label>
+          <accel>Ctrl+Shift+G</accel>
+        </object>
       </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="menu_fuzzy">
