@@ -1456,7 +1456,7 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
     if (!CanEncodeToCharset(f, m_header.Charset))
     {
         wxString msg;
-        msg.Printf(_("The catalog couldn't be saved in '%s' charset as\nspecified in catalog settings. It was saved in UTF-8 instead\nand the setting was modified accordingly."),
+        msg.Printf(_("The catalog couldn't be saved in '%s' charset as specified in catalog settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."),
                    m_header.Charset.c_str());
         wxMessageBox(msg, _("Error saving catalog"),
                      wxOK | wxICON_EXCLAMATION);
