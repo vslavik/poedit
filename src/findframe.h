@@ -61,6 +61,9 @@ class FindFrame : public wxDialog
 
         void FocusSearchField() { m_textField->SetFocus(); }
 
+        void FindPrev();
+        void FindNext();
+
     private:
         void OnClose(wxCommandEvent &event);
         void OnPrev(wxCommandEvent &event);

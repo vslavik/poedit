@@ -158,6 +158,11 @@ void FindFrame::OnCheckbox(wxCommandEvent&)
 
 void FindFrame::OnPrev(wxCommandEvent&)
 {
+    FindPrev();
+}
+
+void FindFrame::FindPrev()
+{
     if (!DoFind(-1))
         m_btnPrev->Enable(false);
     else
@@ -166,6 +171,11 @@ void FindFrame::OnPrev(wxCommandEvent&)
 
 
 void FindFrame::OnNext(wxCommandEvent&)
+{
+    FindNext();
+}
+
+void FindFrame::FindNext()
 {
     if (!DoFind(+1))
         m_btnNext->Enable(false);

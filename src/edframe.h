@@ -199,6 +199,8 @@ private:
         void OnCopyFromSource(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
+        void OnFindNext(wxCommandEvent& event);
+        void OnFindPrev(wxCommandEvent& event);
         void OnEditComment(wxCommandEvent& event);
         void OnCommentWindowText(wxCommandEvent& event);
         void OnSortByFileOrder(wxCommandEvent&);
