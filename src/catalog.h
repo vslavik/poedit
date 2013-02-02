@@ -29,11 +29,10 @@
 #include <wx/encconv.h>
 #include <wx/regex.h>
 #include <wx/arrstr.h>
+#include <wx/textfile.h>
 
 #include <vector>
 #include <map>
-
-class WXDLLIMPEXP_FWD_BASE wxTextFile;
 
 class ProgressInfo;
 
@@ -595,6 +594,7 @@ class Catalog
     protected:
         int DoValidate(const wxString& po_file);
         bool DoSaveOnly(const wxString& po_file);
+        bool DoSaveOnly(wxTextFile& f, wxTextFileType crlf);
 
         /** Merges the catalog with reference catalog
             (in the sense of msgmerge -- this catalog is old one with
