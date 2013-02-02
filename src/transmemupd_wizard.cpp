@@ -117,11 +117,8 @@ private:
     {
         wxArrayString a;
 #if defined(__UNIX__)
-        a.Add(wxGetHomeDir());
         a.Add(_T("/usr/share/locale"));
         a.Add(_T("/usr/local/share/locale"));
-#elif defined(__WXMSW__)
-        a.Add(_T("C:"));
 #endif
         m_paths->SetStrings(a);
     }
