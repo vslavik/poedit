@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2012 Vaclav Slavik
+ *  Copyright (C) 1999-2013 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -29,11 +29,10 @@
 #include <wx/encconv.h>
 #include <wx/regex.h>
 #include <wx/arrstr.h>
+#include <wx/textfile.h>
 
 #include <vector>
 #include <map>
-
-class WXDLLIMPEXP_FWD_BASE wxTextFile;
 
 class ProgressInfo;
 
@@ -595,6 +594,7 @@ class Catalog
     protected:
         int DoValidate(const wxString& po_file);
         bool DoSaveOnly(const wxString& po_file);
+        bool DoSaveOnly(wxTextFile& f, wxTextFileType crlf);
 
         /** Merges the catalog with reference catalog
             (in the sense of msgmerge -- this catalog is old one with

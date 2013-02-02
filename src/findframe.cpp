@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2008 Vaclav Slavik
+ *  Copyright (C) 2001-2013 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -65,6 +65,8 @@ FindFrame::FindFrame(wxWindow *parent,
 {
     wxXmlResource::Get()->LoadDialog(this, parent, _T("find_frame"));
 
+    m_textField = XRCCTRL(*this, "string_to_find", wxTextCtrl);
+
     SetEscapeId(wxID_CLOSE);
 
     RestoreWindowState(this, wxDefaultSize, WinState_Pos);
@@ -74,9 +76,8 @@ FindFrame::FindFrame(wxWindow *parent,
 
     if ( !ms_text.empty() )
     {
-        wxTextCtrl *t = XRCCTRL(*this, "string_to_find", wxTextCtrl);
-        t->SetValue(ms_text);
-        t->SelectAll();
+        m_textField->SetValue(ms_text);
+        m_textField->SelectAll();
     }
 
     Reset(c);
@@ -143,7 +144,7 @@ void FindFrame::OnClose(wxCommandEvent&)
 
 void FindFrame::OnTextChange(wxCommandEvent&)
 {
-    ms_text = XRCCTRL(*this, "string_to_find", wxTextCtrl)->GetValue();
+    ms_text = m_textField->GetValue();
 
     Reset(m_catalog);
 }
@@ -157,6 +158,11 @@ void FindFrame::OnCheckbox(wxCommandEvent&)
 
 void FindFrame::OnPrev(wxCommandEvent&)
 {
+    FindPrev();
+}
+
+void FindFrame::FindPrev()
+{
     if (!DoFind(-1))
         m_btnPrev->Enable(false);
     else
@@ -165,6 +171,11 @@ void FindFrame::OnPrev(wxCommandEvent&)
 
 
 void FindFrame::OnNext(wxCommandEvent&)
+{
+    FindNext();
+}
+
+void FindFrame::FindNext()
 {
     if (!DoFind(+1))
         m_btnNext->Enable(false);

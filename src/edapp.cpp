@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2012 Vaclav Slavik
+ *  Copyright (C) 1999-2013 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -535,7 +535,7 @@ void PoeditApp::OnAbout(wxCommandEvent&)
 #ifndef __WXMAC__
     about.SetDescription(_("Poedit is an easy to use translations editor."));
 #endif
-    about.SetCopyright(_T("Copyright \u00a9 1999-2012 Vaclav Slavik"));
+    about.SetCopyright(_T("Copyright \u00a9 1999-2013 Vaclav Slavik"));
 #ifdef __WXGTK__ // other ports would show non-native about dlg
     about.SetWebSite(_T("http://www.poedit.net"));
 #endif

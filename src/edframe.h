@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2012 Vaclav Slavik
+ *  Copyright (C) 1999-2013 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -199,6 +199,8 @@ private:
         void OnCopyFromSource(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
+        void OnFindNext(wxCommandEvent& event);
+        void OnFindPrev(wxCommandEvent& event);
         void OnEditComment(wxCommandEvent& event);
         void OnCommentWindowText(wxCommandEvent& event);
         void OnSortByFileOrder(wxCommandEvent&);

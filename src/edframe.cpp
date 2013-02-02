@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2012 Vaclav Slavik
+ *  Copyright (C) 1999-2013 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -348,6 +348,8 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
    EVT_MENU           (wxID_FIND,                 PoeditFrame::OnFind)
+   EVT_MENU           (XRCID("menu_find_next"),   PoeditFrame::OnFindNext)
+   EVT_MENU           (XRCID("menu_find_prev"),   PoeditFrame::OnFindPrev)
    EVT_MENU           (XRCID("menu_comment"),     PoeditFrame::OnEditComment)
    EVT_MENU           (XRCID("go_done_and_next"),   PoeditFrame::OnDoneAndNext)
    EVT_MENU           (XRCID("go_prev"),            PoeditFrame::OnPrev)
@@ -731,7 +733,11 @@ PoeditFrame::~PoeditFrame()
 
 void PoeditFrame::SetAccelerators()
 {
-    wxAcceleratorEntry entries[7];
+#ifdef __WXMSW__
+    wxAcceleratorEntry entries[11];
+#else
+    wxAcceleratorEntry entries[9];
+#endif
 
     entries[0].Set(wxACCEL_CTRL, WXK_PAGEUP,          XRCID("go_prev_page"));
     entries[1].Set(wxACCEL_CTRL, WXK_NUMPAD_PAGEUP,   XRCID("go_prev_page"));
@@ -742,6 +748,13 @@ void PoeditFrame::SetAccelerators()
     entries[5].Set(wxACCEL_CTRL, WXK_NUMPAD_DOWN,     XRCID("go_next"));
 
     entries[6].Set(wxACCEL_CTRL, WXK_NUMPAD_ENTER,    XRCID("go_done_and_next"));
+
+    entries[7].Set(wxACCEL_CTRL, 'G',                 XRCID("menu_find_next"));
+    entries[8].Set(wxACCEL_CTRL | wxACCEL_SHIFT, 'G', XRCID("menu_find_prev"));
+#ifdef __WXMSW__
+    entries[9].Set(wxACCEL_CTRL, WXK_F3,                 XRCID("menu_find_next"));
+    entries[10].Set(wxACCEL_CTRL | wxACCEL_SHIFT, WXK_F3, XRCID("menu_find_prev"));
+#endif
 
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
     SetAcceleratorTable(accel);
@@ -1576,8 +1589,24 @@ void PoeditFrame::OnFind(wxCommandEvent&)
 
     if (!f)
         f = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans, m_textComment, m_textAutoComments);
+    else
+        f->FocusSearchField();
     f->Show(true);
     f->Raise();
+}
+
+void PoeditFrame::OnFindNext(wxCommandEvent&)
+{
+    FindFrame *f = (FindFrame*)FindWindow(_T("find_frame"));
+    if ( f )
+        f->FindNext();
+}
+
+void PoeditFrame::OnFindPrev(wxCommandEvent&)
+{
+    FindFrame *f = (FindFrame*)FindWindow(_T("find_frame"));
+    if ( f )
+        f->FindPrev();
 }
 
 
@@ -2283,7 +2312,7 @@ bool PoeditFrame::AutoTranslateCatalog()
         {
             wxArrayString results;
             int score = tm->Lookup(dt.GetString(), results);
-            if (score > 0)
+            if (score > 0 && !results.empty())
             {
                 dt.SetTranslation(results[0]);
                 dt.SetAutomatic(true);

@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2001-2008 Vaclav Slavik
+ *  Copyright (C) 2001-2013 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -59,6 +59,11 @@ class FindFrame : public wxDialog
          */
         void Reset(Catalog *c);
 
+        void FocusSearchField() { m_textField->SetFocus(); }
+
+        void FindPrev();
+        void FindNext();
+
     private:
         void OnClose(wxCommandEvent &event);
         void OnPrev(wxCommandEvent &event);
@@ -67,6 +72,8 @@ class FindFrame : public wxDialog
         void OnCheckbox(wxCommandEvent &event);
         bool DoFind(int dir);
         DECLARE_EVENT_TABLE()
+
+        wxTextCtrl *m_textField;
 
         PoeditListCtrl *m_listCtrl;
         Catalog *m_catalog;

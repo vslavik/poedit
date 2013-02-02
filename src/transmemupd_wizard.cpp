@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2003-2005 Vaclav Slavik
+ *  Copyright (C) 2003-2013 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -117,11 +117,8 @@ private:
     {
         wxArrayString a;
 #if defined(__UNIX__)
-        a.Add(wxGetHomeDir());
         a.Add(_T("/usr/share/locale"));
         a.Add(_T("/usr/local/share/locale"));
-#elif defined(__WXMSW__)
-        a.Add(_T("C:"));
 #endif
         m_paths->SetStrings(a);
     }

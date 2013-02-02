@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 1999-2012 Vaclav Slavik
+ *  Copyright (C) 1999-2013 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -1147,41 +1147,30 @@ int Catalog::SetBookmark(int id, Bookmark bookmark)
 namespace
 {
 
-bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
+inline bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
 {
     if (s.empty())
         return true;
-    if (!s.mb_str(conv))
+    wxCharBuffer converted(s.mb_str(conv));
+    if ( converted.length() == 0 )
         return false;
     return true;
 }
 
-bool CanEncodeToCharset(Catalog& catalog, const wxString& charset)
+bool CanEncodeToCharset(const wxTextFile& f, const wxString& charset)
 {
     if (charset.Lower() == _T("utf-8") || charset.Lower() == _T("utf8"))
         return true;
 
     wxCSConv conv(charset);
 
-    catalog.Header().UpdateDict();
-    const Catalog::HeaderData::Entries& hdr(catalog.Header().GetAllHeaders());
-
-    for (Catalog::HeaderData::Entries::const_iterator i = hdr.begin();
-            i != hdr.end(); i++)
+    const size_t lines = f.GetLineCount();
+    for ( size_t i = 0; i < lines; i++ )
     {
-        if (!CanEncodeStringToCharset(i->Value, conv))
+        if ( !CanEncodeStringToCharset(f.GetLine(i), conv) )
             return false;
     }
 
-    size_t cnt = catalog.GetCount();
-    for (size_t i = 0; i < cnt; i++)
-    {
-        if (!CanEncodeStringToCharset(catalog[i].GetTranslation(), conv) ||
-            !CanEncodeStringToCharset(catalog[i].GetString(), conv))
-        {
-            return false;
-        }
-    }
     return true;
 }
 
@@ -1375,27 +1364,20 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
 
 bool Catalog::DoSaveOnly(const wxString& po_file)
 {
-    /* Detect CRLF format: */
     wxTextFileType crlf = GetDesiredCRLFFormat(po_file);
-
-    /* Save .po file: */
-    wxString charset(m_header.Charset);
-    if (!charset || charset == _T("CHARSET"))
-        charset = _T("UTF-8");
-
-    if (!CanEncodeToCharset(*this, charset))
-    {
-        wxString msg;
-        msg.Printf(_("The catalog couldn't be saved in '%s' charset as\nspecified in catalog settings. It was saved in UTF-8 instead\nand the setting was modified accordingly."), charset.c_str());
-        wxMessageBox(msg, _("Error saving catalog"),
-                     wxOK | wxICON_EXCLAMATION);
-        charset = _T("UTF-8");
-    }
-    m_header.Charset = charset;
 
     wxTextFile f;
     if (!f.Create(po_file))
         return false;
+
+    return DoSaveOnly(f, crlf);
+}
+
+bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
+{
+    /* Save .po file: */
+    if (!m_header.Charset || m_header.Charset == _T("CHARSET"))
+        m_header.Charset = _T("UTF-8");
 
     SaveMultiLines(f, m_header.Comment);
     f.AddLine(_T("msgid \"\""));
@@ -1471,7 +1453,22 @@ bool Catalog::DoSaveOnly(const wxString& po_file)
             f.AddLine(deletedItem.GetDeletedLines()[j]);
     }
 
-    return f.Write(crlf, wxCSConv(charset));
+    if (!CanEncodeToCharset(f, m_header.Charset))
+    {
+        wxString msg;
+        msg.Printf(_("The catalog couldn't be saved in '%s' charset as\nspecified in catalog settings. It was saved in UTF-8 instead\nand the setting was modified accordingly."),
+                   m_header.Charset.c_str());
+        wxMessageBox(msg, _("Error saving catalog"),
+                     wxOK | wxICON_EXCLAMATION);
+        m_header.Charset = _T("UTF-8");
+
+        // Re-do the save again because we modified a header:
+        f.Clear();
+        return DoSaveOnly(f, crlf);
+    }
+
+    // Otherwise everything can be safely saved:
+    return f.Write(crlf, wxCSConv(m_header.Charset));
 }
 
 
