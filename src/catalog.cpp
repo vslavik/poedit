@@ -1151,8 +1151,12 @@ inline bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
 {
     if (s.empty())
         return true;
+#if wxCHECK_VERSION(2,9,0)
     wxCharBuffer converted(s.mb_str(conv));
     if ( converted.length() == 0 )
+#else
+    if ( wxStrlen(s.mb_str(conv)) == 0 )
+#endif
         return false;
     return true;
 }
