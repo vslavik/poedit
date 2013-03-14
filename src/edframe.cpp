@@ -734,9 +734,9 @@ PoeditFrame::~PoeditFrame()
 void PoeditFrame::SetAccelerators()
 {
 #ifdef __WXMSW__
-    wxAcceleratorEntry entries[11];
-#else
     wxAcceleratorEntry entries[9];
+#else
+    wxAcceleratorEntry entries[7];
 #endif
 
     entries[0].Set(wxACCEL_CTRL, WXK_PAGEUP,          XRCID("go_prev_page"));
@@ -749,11 +749,9 @@ void PoeditFrame::SetAccelerators()
 
     entries[6].Set(wxACCEL_CTRL, WXK_NUMPAD_ENTER,    XRCID("go_done_and_next"));
 
-    entries[7].Set(wxACCEL_CTRL, 'G',                 XRCID("menu_find_next"));
-    entries[8].Set(wxACCEL_CTRL | wxACCEL_SHIFT, 'G', XRCID("menu_find_prev"));
 #ifdef __WXMSW__
-    entries[9].Set(wxACCEL_CTRL, WXK_F3,                 XRCID("menu_find_next"));
-    entries[10].Set(wxACCEL_CTRL | wxACCEL_SHIFT, WXK_F3, XRCID("menu_find_prev"));
+    entries[7].Set(wxACCEL_CTRL, WXK_F3,                 XRCID("menu_find_next"));
+    entries[8].Set(wxACCEL_CTRL | wxACCEL_SHIFT, WXK_F3, XRCID("menu_find_prev"));
 #endif
 
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
@@ -2115,6 +2113,8 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_clear"), editable);
     menubar->Enable(XRCID("menu_references"), editable);
     menubar->Enable(wxID_FIND, editable);
+    menubar->Enable(XRCID("menu_find_next"), editable);
+    menubar->Enable(XRCID("menu_find_prev"), editable);
 
     menubar->EnableTop(2, editable);
 

@@ -441,6 +441,9 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (wxID_EXIT,                 PoeditApp::OnQuit)
    EVT_MENU           (wxID_PREFERENCES,          PoeditApp::OnPreferences)
    EVT_MENU           (wxID_HELP,                 PoeditApp::OnHelp)
+#ifdef __WXMSW__
+   EVT_MENU           (XRCID("menu_check_for_updates"), PoeditApp::OnWinsparkleCheck)
+#endif
 END_EVENT_TABLE()
 
 
@@ -582,6 +585,14 @@ void PoeditApp::OnHelp(wxCommandEvent&)
 {
     wxLaunchDefaultBrowser(_T("http://www.poedit.net/trac/wiki/Doc"));
 }
+
+
+#ifdef __WXMSW__
+void PoeditApp::OnWinsparkleCheck(wxCommandEvent& event)
+{
+    win_sparkle_check_update_with_ui();
+}
+#endif // __WXMSW__
 
 
 void PoeditApp::AskForDonations(wxWindow *parent)
