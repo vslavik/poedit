@@ -1665,6 +1665,17 @@ bool Catalog::Merge(Catalog *refcat)
 }
 
 
+static inline wxString ItemMergeSummary(const CatalogItem& item)
+{
+    wxString s = item.GetString();
+    if ( item.HasPlural() )
+        s += _T("|") + item.GetPluralString();
+    if ( item.HasContext() )
+        s += wxString::Format(_T("%s [%s]"), s.c_str(), item.GetContext().c_str());
+
+    return s;
+}
+
 void Catalog::GetMergeSummary(Catalog *refcat,
                               wxArrayString& snew, wxArrayString& sobsolete)
 {
@@ -1674,22 +1685,22 @@ void Catalog::GetMergeSummary(Catalog *refcat,
     std::set<wxString> strsThis, strsRef;
 
     for ( unsigned i = 0; i < GetCount(); i++ )
-        strsThis.insert((*this)[i].GetString());
+        strsThis.insert(ItemMergeSummary((*this)[i]));
     for ( unsigned i = 0; i < refcat->GetCount(); i++ )
-        strsRef.insert((*refcat)[i].GetString());
+        strsRef.insert(ItemMergeSummary((*refcat)[i]));
 
     unsigned i;
 
-    for (i = 0; i < GetCount(); i++)
+    for ( std::set<wxString>::const_iterator i = strsThis.begin(); i != strsThis.end(); ++i )
     {
-        if (strsRef.find((*this)[i].GetString()) == strsRef.end())
-            sobsolete.Add((*this)[i].GetString());
+        if (strsRef.find(*i) == strsRef.end())
+            sobsolete.Add(*i);
     }
 
-    for (i = 0; i < refcat->GetCount(); i++)
+    for ( std::set<wxString>::const_iterator i = strsRef.begin(); i != strsRef.end(); ++i )
     {
-        if (strsThis.find((*refcat)[i].GetString()) == strsThis.end())
-            snew.Add((*refcat)[i].GetString());
+        if (strsThis.find(*i) == strsThis.end())
+            snew.Add(*i);
     }
 }
 
