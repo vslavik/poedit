@@ -208,10 +208,6 @@
             <param name="poedit.osx.arch" value="i386"/>
             <param name="poedit.osx.host" value=""/>
         </antcall>
-        <antcall target="compile-osx-arch">
-            <param name="poedit.osx.arch" value="ppc"/>
-            <param name="poedit.osx.host" value="--host=powerpc-apple-darwin10"/>
-        </antcall>
         <antcall target="osx-make-bundle"/>
     </target>
 
@@ -221,9 +217,6 @@
             <arg value="-arch"/>
             <arg value="i386"/>
             <arg value="i386/src/poedit"/>
-            <arg value="-arch"/>
-            <arg value="ppc"/>
-            <arg value="ppc/src/poedit"/>
             <arg value="-create"/>
             <arg value="-output"/>
             <arg value="poedit.universal"/>

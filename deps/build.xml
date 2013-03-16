@@ -261,8 +261,8 @@
      OS X dependencies - misc helpers
      ============================================================== -->
 
-     <!-- merge 3 arch binaries into one fat one -->
-     <macrodef name="merge-archs-3">
+     <!-- merge 2 arch binaries into one fat one -->
+     <macrodef name="merge-archs-2">
          <attribute name="prefix"/>
          <attribute name="dir"/>
          <attribute name="file"/>
@@ -273,9 +273,6 @@
                  <arg value="-arch"/>
                  <arg value="i386"/>
                  <arg value="i386/@{dir}/@{file}"/>
-                 <arg value="-arch"/>
-                 <arg value="ppc"/>
-                 <arg value="ppc/@{dir}/@{file}"/>
                  <arg value="-arch"/>
                  <arg value="x86_64"/>
                  <arg value="x86_64/@{dir}/@{file}"/>
@@ -348,7 +345,6 @@
             <arg value="--disable-cryptography"/>
             <arg value="--disable-replication"/>
             <arg value="--disable-statistics"/>
-            <arg value="${osx.host}"/>
         </exec>
         <exec dir="db/build_unix/${osx.arch}" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
@@ -366,12 +362,6 @@
             <param name="osx.arch" value="i386"/>
             <param name="osx.sdk" value="${osx.deploy.sdk}"/>
             <param name="osx.deploy" value="${osx.deploy.sdk}"/>
-        </antcall>
-        <antcall target="osx-db-arch">
-            <param name="osx.arch" value="ppc"/>
-            <param name="osx.sdk" value="${osx.deploy.sdk}"/>
-            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
-            <param name="osx.host" value="--host=powerpc-apple-darwin10"/>
         </antcall>
     </target>
 
@@ -415,7 +405,6 @@
             <arg value="--disable-shared"/>
             <arg value="--disable-java"/>
             <arg value="--disable-rpath"/>
-            <arg value="${osx.host}"/>
         </exec>
         <touch file="gettext/builddir/${osx.arch}/gettext-tools/misc/archive.dir.tar.gz"/>
         <touch file="gettext/builddir/${osx.arch}/gettext-tools/misc/archive.git.tar.gz"/>
@@ -446,22 +435,16 @@
             <param name="osx.deploy" value="${osx.deploy.sdk}"/>
         </antcall>
         <antcall target="osx-gettext-arch">
-            <param name="osx.arch" value="ppc"/>
-            <param name="osx.sdk" value="${osx.deploy.sdk}"/>
-            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
-            <param name="osx.host" value="--host=powerpc-apple-darwin10"/>
-        </antcall>
-        <antcall target="osx-gettext-arch">
             <param name="osx.arch" value="x86_64"/>
             <param name="osx.sdk" value="${osx.deploy.sdk}"/>
             <param name="osx.deploy" value="${osx.deploy.sdk}"/>
         </antcall>
 
-        <merge-archs-3 prefix="${gettextdir}" dir="bin" file="msgfmt"/>
-        <merge-archs-3 prefix="${gettextdir}" dir="bin" file="msgmerge"/>
-        <merge-archs-3 prefix="${gettextdir}" dir="bin" file="msgunfmt"/>
-        <merge-archs-3 prefix="${gettextdir}" dir="bin" file="msgcat"/>
-        <merge-archs-3 prefix="${gettextdir}" dir="bin" file="xgettext"/>
+        <merge-archs-2 prefix="${gettextdir}" dir="bin" file="msgfmt"/>
+        <merge-archs-2 prefix="${gettextdir}" dir="bin" file="msgmerge"/>
+        <merge-archs-2 prefix="${gettextdir}" dir="bin" file="msgunfmt"/>
+        <merge-archs-2 prefix="${gettextdir}" dir="bin" file="msgcat"/>
+        <merge-archs-2 prefix="${gettextdir}" dir="bin" file="xgettext"/>
 
         <!-- TODO: keep dSYM files? -->
         <strip-exe file="${gettextdir}/bin/msgfmt"/>
@@ -517,7 +500,6 @@
             <arg value="OBJCFLAGS=${osx.cflags}"/>
             <arg value="OBJCXXFLAGS=${osx.cxxflags}"/>
             <arg value="LDFLAGS=${osx.ldflags}"/>
-            <arg value="${osx.host}"/>
         </exec>
         <exec dir="wx/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
@@ -534,12 +516,6 @@
             <param name="osx.arch" value="i386"/>
             <param name="osx.sdk" value="${osx.best.sdk}"/>
             <param name="osx.deploy" value="${osx.deploy.sdk}"/>
-        </antcall>
-        <antcall target="osx-wx-arch">
-            <param name="osx.arch" value="ppc"/>
-            <param name="osx.sdk" value="${osx.best.sdk}"/>
-            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
-            <param name="osx.host" value="--host=powerpc-apple-darwin10"/>
         </antcall>
         <touch file="${osx.destdir}/built.wx"/>
     </target>
