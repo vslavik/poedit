@@ -478,7 +478,6 @@
         <dependset>
             <srcfileset dir="wx"
                         excludes="locale/**,include/wx/stc/stc.h,src/stc/stc.cpp"/>
-            <targetfileset dir="wx/locale/*.mo"/>
             <targetfileset dir="${builddir}/wx"/>
             <targetfilelist files="${intdir}/wx.buildtag"/>
         </dependset>
@@ -522,10 +521,6 @@
     </target>
 
     <target name="osx-wx" depends="osx-gettext,osx-wx-check" unless="built.osx-wx" if="is_osx">
-        <exec dir="wx/locale" executable="/bin/sh" failonerror="true">
-            <arg value="-c"/>
-            <arg value="make allmo MSGFMT=${gettextdir}/bin/msgfmt"/>
-        </exec>
         <antcall target="osx-wx-arch">
             <param name="osx.arch" value="i386"/>
             <param name="osx.sdk" value="${osx.best.sdk}"/>
