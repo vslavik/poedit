@@ -369,8 +369,8 @@
     <target name="osx-db" depends="osx-db-check" unless="built.osx-db" if="is_osx">
         <antcall target="osx-db-arch">
             <param name="osx.arch" value="i386"/>
-            <param name="osx.sdk" value="${osx.deploy.sdk}"/>
-            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
+            <param name="osx.cc" value="gcc"/>
+            <param name="osx.cxx" value="g++"/>
         </antcall>
         <antcall target="osx-db-arch">
             <param name="osx.arch" value="x86_64"/>
@@ -452,13 +452,9 @@
 
         <antcall target="osx-gettext-arch">
             <param name="osx.arch" value="i386"/>
-            <param name="osx.sdk" value="${osx.deploy.sdk}"/>
-            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
         </antcall>
         <antcall target="osx-gettext-arch">
             <param name="osx.arch" value="x86_64"/>
-            <param name="osx.sdk" value="${osx.deploy.sdk}"/>
-            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
         </antcall>
 
         <merge-archs-2 prefix="${gettextdir}" dir="bin" file="msgfmt"/>
@@ -533,8 +529,6 @@
     <target name="osx-wx" depends="osx-gettext,osx-wx-check" unless="built.osx-wx" if="is_osx">
         <antcall target="osx-wx-arch">
             <param name="osx.arch" value="i386"/>
-            <param name="osx.sdk" value="${osx.best.sdk}"/>
-            <param name="osx.deploy" value="${osx.deploy.sdk}"/>
         </antcall>
         <touch file="${intdir}/wx.buildtag"/>
         <delete dir="${intdir}/wx"/>
