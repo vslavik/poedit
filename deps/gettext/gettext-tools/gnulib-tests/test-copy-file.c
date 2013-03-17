@@ -1,5 +1,5 @@
 /* Test of copying of files.
-   Copyright (C) 2008-2010 Free Software Foundation, Inc.
+   Copyright (C) 2008-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 
 #include "copy-file.h"
 
+#include <stdlib.h>
+
 #include "progname.h"
 #include "macros.h"
 
@@ -28,6 +30,7 @@ main (int argc, char *argv[])
 {
   const char *file1;
   const char *file2;
+  int null_stderr;
 
   set_program_name (argv[0]);
 
@@ -35,8 +38,12 @@ main (int argc, char *argv[])
 
   file1 = argv[1];
   file2 = argv[2];
+  null_stderr = (getenv ("NO_STDERR_OUTPUT") != NULL);
 
-  copy_file_preserving (file1, file2);
+  if (null_stderr)
+    ASSERT (qcopy_file_preserving (file1, file2) == 0);
+  else
+    copy_file_preserving (file1, file2);
 
   return 0;
 }

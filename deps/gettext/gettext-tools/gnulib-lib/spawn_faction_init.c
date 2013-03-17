@@ -1,4 +1,4 @@
-/* Copyright (C) 2000, 2009, 2010 Free Software Foundation, Inc.
+/* Copyright (C) 2000, 2009-2013 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
 
 
 /* Function used to increase the size of the allocated array.  This
-   function is called from the `add'-functions.  */
+   function is called from the 'add'-functions.  */
 int
 __posix_spawn_file_actions_realloc (posix_spawn_file_actions_t *file_actions)
 {
@@ -46,7 +46,7 @@ __posix_spawn_file_actions_realloc (posix_spawn_file_actions_t *file_actions)
 }
 
 
-/* Initialize data structure for file attribute for `spawn' call.  */
+/* Initialize data structure for file attribute for 'spawn' call.  */
 int
 posix_spawn_file_actions_init (posix_spawn_file_actions_t *file_actions)
 {

@@ -1,3 +1,94 @@
+2012-12-27  Daiki Ueno  <ueno@gnu.org>
+
+	Determine imported C symbol prefix at configure time.
+	Suggested by Evgeny Grin in <http://savannah.gnu.org/bugs/?29946>.
+	* woe32dll/export.h (IMP): Define depending on the result of the
+	configure run.
+	* configure.ac (GETTEXTLIB_EXPORTS_FLAGS): Add
+	-DUSER_LABEL_PREFIX_UNDERSCORE if imported C symbol has
+	underscore prefix.
+
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-0.18.2 released.
+
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* woe32dll/export.h (IMP): Check __MINGW32__ as well as _WIN64.
+
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	Work around error_* symbol conflict with Cygwin 1.7 DLL.
+	* configure.ac: Reset ac_cv_lib_error_at_line on Cygwin.
+	(GETTEXTLIB_EXPORTS_FLAGS): Add -DGNULIB_DEFINED_ERROR if the
+	error facility is replaced by gnulib.
+	(GNULIB_REPLACE_ERROR): Define if the error facility is replaced
+	by gnulib.
+	* woe32dll/gettextlib-exports.c (rpl_error_message_count)
+	(rpl_error_one_per_line, rpl_error_print_progname): Export only
+	if GNULIB_DEFINED_ERROR is set.
+
+2012-12-21  Daiki Ueno  <ueno@gnu.org>
+
+	Fix W64 build errors.
+	* woe32dll/export.h (IMP) [_WIN64]: Prefix "__imp_" instead of
+	"_imp__".
+
+2012-12-17  Daiki Ueno  <ueno@unixuser.org>
+
+	* configure.ac: Use AC_CONFIG_HEADERS instead of AM_CONFIG_HEADER.
+	Suggested by Stefano Lattarini <stefano.lattarini@gmail.com>.
+
+2012-01-26  Bruno Haible  <bruno@clisp.org>
+
+	Modernize quoting.
+	* INSTALL: Process through sed -e "s/\`\([^']*\)'/‘\1’/g"
+
+2012-01-15  Bruno Haible  <bruno@clisp.org>
+
+	Support for MSVC 9.
+	* woe32dll/export.h (VARIABLE): Define to empty if not using GCC.
+
+2011-11-27  Bruno Haible  <bruno@clisp.org>
+
+	Speed up configure a bit.
+	* configure.ac: Don't invoke AM_PATH_LISPDIR if the user specified
+	--without-emacs.
+	Based on a patch by DJ Lucas <dj@linuxfromscratch.org>.
+
+2011-06-03  Bruno Haible  <bruno@clisp.org>
+
+	Update after gl_PROG_ANSI_CXX changed in gnulib.
+	* configure.ac: Test whether CXX is "no", not ":".
+
+2011-06-03  Bruno Haible  <bruno@clisp.org>
+
+	Fix link error on Cygwin 1.5.x.
+	* woe32dll/gettextsrc-exports.c: Add color_test_mode.
+
+2011-01-28  Bruno Haible  <bruno@clisp.org>
+
+	Add a comment.
+	* woe32dll/export.h: Add a reference to the woe32dll writeup.
+
+2010-10-10  Bruno Haible  <bruno@clisp.org>
+
+	Rely more on libtool.
+	* configure.ac (LTNOUNDEF): Remove variable.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
+	Use new ansi-c++.m4 from gnulib.
+	* configure.ac: Invoke gl_PROG_ANSI_CXX instead of gt_PROG_ANSI_CXX.
+	Reported at <https://savannah.gnu.org/bugs/?30607>.
+
+2010-06-06  Bruno Haible  <bruno@clisp.org>
+
+	New options --with-xz and --with-bzip2 for compressing the archive.
+	* configure.ac: New options --without-bzip2, --without-xz.
+	(ARCHIVE_FORMAT): Rename value 'dir' to 'dirgz'. Recognize also values
+	'dirxz' or 'dirbz2', depending on options.
+
 2010-06-06  Bruno Haible  <bruno@clisp.org>
 
 	* configure.ac (ARCHIVE_FORMAT): If neither --with-git nor --with-cvs

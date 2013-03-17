@@ -1,5 +1,5 @@
-# fopen.m4 serial 5
-dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
+# fopen.m4 serial 9
+dnl Copyright (C) 2007-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -21,19 +21,23 @@ AC_DEFUN([gl_FUNC_FOPEN],
       AC_CACHE_CHECK([whether fopen recognizes a trailing slash],
         [gl_cv_func_fopen_slash],
         [
-          AC_TRY_RUN([
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
 #include <stddef.h>
 #include <stdio.h>
 int main ()
 {
   return fopen ("conftest.sl/", "w") != NULL;
-}], [gl_cv_func_fopen_slash=yes], [gl_cv_func_fopen_slash=no],
+}]])],
+            [gl_cv_func_fopen_slash=yes],
+            [gl_cv_func_fopen_slash=no],
             [
 changequote(,)dnl
              case "$host_os" in
-               solaris2.[0-9]*) gl_cv_func_fopen_slash="guessing no" ;;
-               hpux*)           gl_cv_func_fopen_slash="guessing no" ;;
-               *)               gl_cv_func_fopen_slash="guessing yes" ;;
+               aix* | hpux* | solaris2.[0-9] | solaris2.[0-9].*)
+                 gl_cv_func_fopen_slash="guessing no" ;;
+               *)
+                 gl_cv_func_fopen_slash="guessing yes" ;;
              esac
 changequote([,])dnl
             ])
@@ -48,14 +52,7 @@ changequote([,])dnl
       REPLACE_FOPEN=1
       ;;
   esac
-  if test $REPLACE_FOPEN = 1; then
-    AC_LIBOBJ([fopen])
-    gl_PREREQ_FOPEN
-  fi
 ])
 
 # Prerequisites of lib/fopen.c.
-AC_DEFUN([gl_PREREQ_FOPEN],
-[
-  AC_REQUIRE([AC_C_INLINE])
-])
+AC_DEFUN([gl_PREREQ_FOPEN], [:])

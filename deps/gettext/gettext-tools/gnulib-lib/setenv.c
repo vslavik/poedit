@@ -1,4 +1,4 @@
-/* Copyright (C) 1992, 1995-2003, 2005-2010 Free Software Foundation, Inc.
+/* Copyright (C) 1992, 1995-2003, 2005-2013 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -15,12 +15,13 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #if !_LIBC
-# include <config.h>
-#endif
-
 /* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
    optimizes away the name == NULL test below.  */
-#define _GL_ARG_NONNULL(params)
+# define _GL_ARG_NONNULL(params)
+
+# define _GL_USE_STDLIB_ALLOC 1
+# include <config.h>
+#endif
 
 #include <alloca.h>
 
@@ -48,7 +49,7 @@
 #endif
 
 #if _LIBC
-/* This lock protects against simultaneous modifications of `environ'.  */
+/* This lock protects against simultaneous modifications of 'environ'.  */
 # include <bits/libc-lock.h>
 __libc_lock_define_initialized (static, envlock)
 # define LOCK   __libc_lock_lock (envlock)
@@ -102,11 +103,11 @@ static void *known_values;
 static char **last_environ;
 
 
-/* This function is used by `setenv' and `putenv'.  The difference between
+/* This function is used by 'setenv' and 'putenv'.  The difference between
    the two functions is that for the former must create a new string which
-   is then placed in the environment, while the argument of `putenv'
+   is then placed in the environment, while the argument of 'putenv'
    must be used directly.  This is all complicated by the fact that we try
-   to reuse values once generated for a `setenv' call since we can never
+   to reuse values once generated for a 'setenv' call since we can never
    free the strings.  */
 int
 __add_to_environ (const char *name, const char *value, const char *combined,
@@ -147,6 +148,9 @@ __add_to_environ (const char *name, const char *value, const char *combined,
                    : realloc (last_environ, (size + 2) * sizeof (char *)));
       if (new_environ == NULL)
         {
+          /* It's easier to set errno to ENOMEM than to rely on the
+             'malloc-posix' and 'realloc-posix' gnulib modules.  */
+          __set_errno (ENOMEM);
           UNLOCK;
           return -1;
         }
@@ -295,7 +299,7 @@ setenv (const char *name, const char *value, int replace)
   return __add_to_environ (name, value, NULL, replace);
 }
 
-/* The `clearenv' was planned to be added to POSIX.1 but probably
+/* The 'clearenv' was planned to be added to POSIX.1 but probably
    never made it.  Nevertheless the POSIX.9 standard (POSIX bindings
    for Fortran 77) requires this function.  */
 int
@@ -346,6 +350,9 @@ weak_alias (__clearenv, clearenv)
 #if HAVE_SETENV
 
 # undef setenv
+# if !HAVE_DECL_SETENV
+extern int setenv (const char *, const char *, int);
+# endif
 # define STREQ(a, b) (strcmp (a, b) == 0)
 
 int

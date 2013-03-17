@@ -1,5 +1,5 @@
-# rawmemchr.m4 serial 1
-dnl Copyright (C) 2003, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+# rawmemchr.m4 serial 2
+dnl Copyright (C) 2003, 2007-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -10,10 +10,9 @@ AC_DEFUN([gl_FUNC_RAWMEMCHR],
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
-  AC_REPLACE_FUNCS([rawmemchr])
+  AC_CHECK_FUNCS([rawmemchr])
   if test $ac_cv_func_rawmemchr = no; then
     HAVE_RAWMEMCHR=0
-    gl_PREREQ_RAWMEMCHR
   fi
 ])
 

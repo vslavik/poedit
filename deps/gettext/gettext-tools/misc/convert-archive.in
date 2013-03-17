@@ -17,8 +17,8 @@
 #
 
 # Usage: convert-archive FROM TO [FROMFILE [TOFILE]]
-# where FROM is dir or cvs or git
-# and   TO   is dir or cvs or git
+# where FROM is dir or dirgz or dirbz2 or dirxz or cvs or git
+# and   TO   is dir or dirgz or dirbz2 or dirxz or cvs or git
 # This will read FROMFILE (default: archive.$FROM.tar.gz)
 # and produce TOFILE (default: archive.$TO.tar.gz).
 
@@ -89,8 +89,15 @@ mkdir "$unpacked" || {
 
 # Unpack the original archive.
 case "$from" in
-  dir)
-    gzip -d -c < "$fromfile" | (cd "$unpacked" && tar xf -) \
+  dir*)
+    { case "$from" in
+        dir) cat < "$fromfile" ;;
+        dirgz) gzip -d -c < "$fromfile" ;;
+        dirbz2) bzip2 -d -c < "$fromfile" ;;
+        dirxz) xz -d -c < "$fromfile" ;;
+      esac
+    } \
+      | (cd "$unpacked" && tar xf -) \
       || func_fatal_error "file copy failed"
     ;;
 
@@ -234,9 +241,15 @@ done
 
 # Create the target archive.
 case "$to" in
-  dir)
+  dir*)
     (cd "$unpacked" && $TAR cf - $TAR_OPTIONS *) \
-      | gzip -c -9 > "$tofile" \
+      | { case "$to" in
+            dir) cat > "$tofile" ;;
+            dirgz) gzip -c -9 > "$tofile" ;;
+            dirbz2) bzip2 -c -9 > "$tofile" ;;
+            dirxz) xz -c -5 > "$tofile" ;;
+          esac
+        } \
       || func_fatal_error "archive creation failed"
     ;;
 
@@ -312,8 +325,7 @@ case "$to" in
       touch .gitignore
       git add .
       git commit --author="Bruno Haible <bruno@clisp.org>" \
-                 --message="Empty directory" 2>&1 \
-        | grep -v '^ '
+                 --message="Empty directory" 2>&1 >/dev/null
       git tag empty
     }) || func_fatal_error "git init failed"
     sed_remove_leading_dot='s,^\./,,'
@@ -329,8 +341,7 @@ case "$to" in
          tar xf -
          git add .
          git commit --author="Bruno Haible <bruno@clisp.org>" \
-                    --message="Import $version" 2>&1 \
-           | grep -v '^ '
+                    --message="Import $version" 2>&1 >/dev/null
          git tag "$version"
        }) || func_fatal_error "file copy into git repository failed"
      done

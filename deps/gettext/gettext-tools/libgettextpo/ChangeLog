@@ -1,3 +1,33 @@
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-0.18.2 released.
+
+2012-12-08  Daiki Ueno  <ueno@unixuser.org>
+
+	* gettext-po.in.h (LIBGETTEXTPO_VERSION): Bump to 0.18.2.
+	* Makefile.am (LTV_CURRENT): Bump to 5:2:5.
+
+2010-11-07  Bruno Haible  <bruno@clisp.org>
+
+	Rename gettext-po.h.in to gettext-po.in.h.
+	* gettext-po.in.h: New file, renamed from gettext-po.h.in.
+	* Makefile.am (EXTRA_DIST, gettext-po.h): Update.
+
+2011-06-07  Bruno Haible  <bruno@clisp.org>
+
+	Rely more on libtool.
+	* Makefile.am (libgettextpo_la_LDFLAGS): Use -no-undefined always.
+	Don't use @LTNOUNDEF@.
+
+2010-06-06  Bruno Haible  <bruno@clisp.org>
+
+	Bug fixes in libgettextpo.
+	* gettext-po.c (po_message_create): Initialize msgstr with the empty
+	string, not with NULL.
+	(po_message_is_range): Assign to output parameters correctly.
+	(po_file_check_all, po_message_check_all): Have check_message_list
+	ignore untranslated and fuzzy messages.
+
 2010-06-06  Bruno Haible  <bruno@clisp.org>
 
 	Avoid link error in programs that use libgettextpo.

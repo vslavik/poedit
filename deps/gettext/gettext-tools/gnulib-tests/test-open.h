@@ -1,5 +1,5 @@
 /* Test of opening a file descriptor.
-   Copyright (C) 2007-2010 Free Software Foundation, Inc.
+   Copyright (C) 2007-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -61,6 +61,12 @@ test_open (int (*func) (char const *, int, ...), bool print)
   fd = func ("/dev/null", O_WRONLY);
   ASSERT (0 <= fd);
   ASSERT (write (fd, "c", 1) == 1);
+  ASSERT (close (fd) == 0);
+
+  /* Although O_NONBLOCK on regular files can be ignored, it must not
+     cause a failure.  */
+  fd = func (BASE "file", O_NONBLOCK | O_RDONLY);
+  ASSERT (0 <= fd);
   ASSERT (close (fd) == 0);
 
   /* Symlink handling, where supported.  */

@@ -1,6 +1,6 @@
 /* Test the "verify" module.
 
-   Copyright (C) 2005, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -42,7 +42,8 @@ enum
   item = verify_true (1 == 1) * 0 + 17 /* should be ok */
 };
 
-int function (int n)
+static int
+function (int n)
 {
 #if EXP_FAIL == 3
   verify (n >= 0);                  /* should give ERROR: non-constant expression */
@@ -54,9 +55,9 @@ int function (int n)
   verify (1 == 1); verify (1 == 1); /* should be ok */
 
   if (n)
-    return ((void) verify_true (1 == 1), verify_true (1 == 1) + 7); /* should be ok */
+    return ((void) verify_expr (1 == 1, 1), verify_expr (1 == 1, 8)); /* should be ok */
 #if EXP_FAIL == 5
-  return (verify_true (1 == 2), 5); /* should give ERROR */
+  return verify_expr (1 == 2, 5); /* should give ERROR */
 #endif
   return 0;
 }

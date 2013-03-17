@@ -1,5 +1,5 @@
 /* Execute a C# program.
-   Copyright (C) 2003-2010 Free Software Foundation, Inc.
+   Copyright (C) 2003-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -44,10 +44,10 @@
 
 /* Handling of clix' PATH variable is just like Java CLASSPATH.  */
 #if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__
-  /* Win32, Cygwin */
+  /* Native Windows, Cygwin */
   #define CLASSPATHVAR "PATH"
 #elif defined __APPLE__ && defined __MACH__
-  /* MacOS X */
+  /* Mac OS X */
   #define CLASSPATHVAR "DYLD_LIBRARY_PATH"
 #else
   /* Normal Unix */

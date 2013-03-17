@@ -1,5 +1,5 @@
-# woe32-dll.m4 serial 2
-dnl Copyright (C) 2005-2006 Free Software Foundation, Inc.
+# woe32-dll.m4 serial 3
+dnl Copyright (C) 2005-2006, 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -25,6 +25,7 @@ dnl From Bruno Haible.
 #     exported struct variable, or to a particular element of an exported
 #     array variable), requiring code modifications.  One platform
 #     dictates code modifications on all platforms.
+# See <http://www.haible.de/bruno/woe32dll.html> for more details.
 AC_DEFUN([gl_WOE32_DLL],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])

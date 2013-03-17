@@ -1,5 +1,5 @@
 /* Error handling during reading and writing of PO files.
-   Copyright (C) 2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006, 2012 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2004.
 
    This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@
 # if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5) || __STRICT_ANSI__
 #  define __attribute__(Spec) /* empty */
 # endif
-/* The __-protected variants of `format' and `printf' attributes
+/* The __-protected variants of 'format' and 'printf' attributes
    are accepted by gcc versions 2.6.4 (effectively 2.7) and later.  */
 # if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 7)
 #  define __format__ format

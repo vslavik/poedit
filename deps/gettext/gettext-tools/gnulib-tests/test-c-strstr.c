@@ -1,5 +1,5 @@
 /* Test of searching in a string.
-   Copyright (C) 2007-2010 Free Software Foundation, Inc.
+   Copyright (C) 2007-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ main ()
   {
     size_t repeat = 10000;
     size_t m = 1000000;
-    char *needle =
+    const char *needle =
       "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
     char *haystack = (char *) malloc (m + 1);
@@ -81,7 +81,7 @@ main ()
   {
     size_t repeat = 10000;
     size_t m = 1000000;
-    char *haystack =
+    const char *haystack =
       "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       "ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB";
     char *needle = (char *) malloc (m + 1);

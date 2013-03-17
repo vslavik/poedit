@@ -1,5 +1,5 @@
 /* Determine the Java version supported by javaexec.
-   Copyright (C) 2006-2010 Free Software Foundation, Inc.
+   Copyright (C) 2006-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@
 #endif
 
 #include "javaexec.h"
-#include "pipe.h"
+#include "spawn-pipe.h"
 #include "wait-process.h"
 #include "error.h"
 #include "gettext.h"

@@ -1,6 +1,6 @@
 /* Analyze differences between two vectors.
 
-   Copyright (C) 1988-1989, 1992-1995, 2001-2004, 2006-2010 Free Software
+   Copyright (C) 1988-1989, 1992-1995, 2001-2004, 2006-2013 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -76,7 +76,7 @@
 # define EARLY_ABORT(ctxt) false
 #endif
 
-/* Use this to suppress gcc's `...may be used before initialized' warnings.
+/* Use this to suppress gcc's "...may be used before initialized" warnings.
    Beware: The Code argument must not contain commas.  */
 #ifndef IF_LINT
 # ifdef lint
@@ -129,7 +129,7 @@ struct context
   /* Edit scripts longer than this are too expensive to compute.  */
   OFFSET too_expensive;
 
-  /* Snakes bigger than this are considered `big'.  */
+  /* Snakes bigger than this are considered "big".  */
   #define SNAKE_LIMIT 20
 };
 

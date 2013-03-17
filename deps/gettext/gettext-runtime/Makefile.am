@@ -1,5 +1,5 @@
 ## Makefile for the gettext-runtime directory of GNU gettext
-## Copyright (C) 1995-1999, 2000-2006, 2010 Free Software Foundation, Inc.
+## Copyright (C) 1995-1999, 2000-2006, 2010, 2012 Free Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -44,8 +44,8 @@ all-local: ABOUT-NLS
 
 ABOUT-NLS: $(srcdir)/doc/nls.texi $(srcdir)/doc/matrix.texi
 	rm -f $(srcdir)/ABOUT-NLS \
-	  && $(MAKEINFO) --output=$(srcdir)/ABOUT-NLS --no-header \
-	    -I $(srcdir)/doc --no-validate nls.texi
+	  && $(MAKEINFO) --plaintext --no-validate -I $(srcdir)/doc nls.texi \
+	     | sed -e "s/\`\([^']*\)'/‘\1’/g" > $(srcdir)/ABOUT-NLS
 
 
 # Allow users to use "gnulib-tool --update".

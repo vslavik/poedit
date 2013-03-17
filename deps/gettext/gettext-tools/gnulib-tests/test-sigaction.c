@@ -1,5 +1,5 @@
 /* Test of sigaction() function.
-   Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2008-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,6 +33,12 @@ SIGNATURE_CHECK (sigaction, int, (int, struct sigaction const *,
 #endif
 #ifndef SA_ONSTACK
 # define SA_ONSTACK 0
+#endif
+#ifndef SA_RESETHAND
+# define SA_RESETHAND 0
+#endif
+#ifndef SA_RESTART
+# define SA_RESTART 0
 #endif
 #ifndef SA_SIGINFO
 # define SA_SIGINFO 0
@@ -71,7 +77,7 @@ handler (int sig)
       /* This assertion fails on glibc-2.3.6 systems with LinuxThreads,
          when this program is linked with -lpthread, due to the sigaction()
          override in libpthread.so.  */
-#if !defined __GLIBC__
+#if !(defined __GLIBC__ || defined __UCLIBC__)
       ASSERT (sa.sa_handler == SIG_DFL);
 #endif
       break;
@@ -101,7 +107,7 @@ main (void)
   sa.sa_handler = SIG_DFL;
   ASSERT (sigaction (SIGABRT, &sa, &old_sa) == 0);
   ASSERT ((old_sa.sa_flags & SA_SIGINFO) == 0);
-#if !defined __GLIBC__ /* see above */
+#if !(defined __GLIBC__ || defined __UCLIBC__) /* see above */
   ASSERT (old_sa.sa_handler == SIG_DFL);
 #endif
 

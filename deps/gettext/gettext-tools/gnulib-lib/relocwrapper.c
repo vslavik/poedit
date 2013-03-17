@@ -1,5 +1,5 @@
 /* Relocating wrapper program.
-   Copyright (C) 2003, 2005-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2005-2007, 2009-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,8 @@
     -> progname
     -> progreloc
         -> areadlink
+           -> careadlinkat
+             -> allocator
            -> readlink
         -> canonicalize-lgpl
            -> malloca
@@ -27,7 +29,6 @@
     -> relocatable
     -> setenv
        -> malloca
-    -> strerror
     -> c-ctype
 
    Macros that need to be set while compiling this file:
@@ -43,6 +44,7 @@
    libc functions, no gettext(), no error(), no xmalloc(), no xsetenv().
  */
 
+#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
 #include <stdio.h>
@@ -54,6 +56,10 @@
 #include "progname.h"
 #include "relocatable.h"
 #include "c-ctype.h"
+#include "verify.h"
+
+/* Use the system functions, not the gnulib overrides in this file.  */
+#undef fprintf
 
 /* Return a copy of the filename, with an extra ".bin" at the end.
    More generally, it replaces "${EXEEXT}" at the end with ".bin${EXEEXT}".  */
@@ -110,7 +116,7 @@ add_dotbin (const char *filename)
 /* List of directories that contain the libraries.  */
 static const char *libdirs[] = { LIBDIRS NULL };
 /* Verify that at least one directory is given.  */
-typedef int verify1[2 * (sizeof (libdirs) / sizeof (libdirs[0]) > 1) - 1];
+verify (sizeof (libdirs) / sizeof (libdirs[0]) > 1);
 
 /* Relocate the list of directories that contain the libraries.  */
 static void

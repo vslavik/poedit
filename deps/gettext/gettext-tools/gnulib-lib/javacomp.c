@@ -1,5 +1,5 @@
 /* Compile a Java program.
-   Copyright (C) 2001-2003, 2006-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@
 
 #include "javaversion.h"
 #include "execute.h"
-#include "pipe.h"
+#include "spawn-pipe.h"
 #include "wait-process.h"
 #include "classpath.h"
 #include "xsetenv.h"

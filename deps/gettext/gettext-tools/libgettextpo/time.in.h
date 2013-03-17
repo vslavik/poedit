@@ -1,6 +1,6 @@
 /* A more-standard <time.h>.
 
-   Copyright (C) 2007-2010 Free Software Foundation, Inc.
+   Copyright (C) 2007-2013 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -13,12 +13,12 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 /* Don't get in the way of glibc when it includes time.h merely to
    declare a few standard symbols, rather than to declare all the
@@ -27,13 +27,13 @@
    without adding our own declarations.  */
 #if (defined __need_time_t || defined __need_clock_t \
      || defined __need_timespec \
-     || defined _GL_TIME_H)
+     || defined _@GUARD_PREFIX@_TIME_H)
 
 # @INCLUDE_NEXT@ @NEXT_TIME_H@
 
 #else
 
-# define _GL_TIME_H
+# define _@GUARD_PREFIX@_TIME_H
 
 # @INCLUDE_NEXT@ @NEXT_TIME_H@
 
@@ -68,19 +68,34 @@
 extern "C" {
 #   endif
 
-#   undef timespec
-#   define timespec rpl_timespec
+#   if !GNULIB_defined_struct_timespec
+#    undef timespec
+#    define timespec rpl_timespec
 struct timespec
 {
   time_t tv_sec;
   long int tv_nsec;
 };
+#    define GNULIB_defined_struct_timespec 1
+#   endif
 
 #   ifdef __cplusplus
 }
 #   endif
 
 #  endif
+# endif
+
+# if !GNULIB_defined_struct_time_t_must_be_integral
+/* Per http://austingroupbugs.net/view.php?id=327, POSIX requires
+   time_t to be an integer type, even though C99 permits floating
+   point.  We don't know of any implementation that uses floating
+   point, and it is much easier to write code that doesn't have to
+   worry about that corner case, so we force the issue.  */
+struct __time_t_must_be_integral {
+  unsigned int __floating_time_t_unsupported : (time_t) 1;
+};
+#  define GNULIB_defined_struct_time_t_must_be_integral 1
 # endif
 
 /* Sleep for at least RQTP seconds unless interrupted,  If interrupted,
@@ -137,7 +152,7 @@ _GL_FUNCDECL_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
 _GL_CXXALIAS_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result));
 #  else
-#   if ! @HAVE_LOCALTIME_R@
+#   if ! @HAVE_DECL_LOCALTIME_R@
 _GL_FUNCDECL_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result)
                                             _GL_ARG_NONNULL ((1, 2)));
@@ -145,7 +160,9 @@ _GL_FUNCDECL_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
 _GL_CXXALIAS_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result));
 #  endif
+#  if @HAVE_DECL_LOCALTIME_R@
 _GL_CXXALIASWARN (localtime_r);
+#  endif
 #  if @REPLACE_LOCALTIME_R@
 #   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #    undef gmtime_r
@@ -157,7 +174,7 @@ _GL_FUNCDECL_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
 _GL_CXXALIAS_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result));
 #  else
-#   if ! @HAVE_LOCALTIME_R@
+#   if ! @HAVE_DECL_LOCALTIME_R@
 _GL_FUNCDECL_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result)
                                          _GL_ARG_NONNULL ((1, 2)));
@@ -165,7 +182,9 @@ _GL_FUNCDECL_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
 _GL_CXXALIAS_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result));
 #  endif
+#  if @HAVE_DECL_LOCALTIME_R@
 _GL_CXXALIASWARN (gmtime_r);
+#  endif
 # endif
 
 /* Parse BUF as a time stamp, assuming FORMAT specifies its layout, and store

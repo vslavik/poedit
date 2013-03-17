@@ -1,5 +1,5 @@
 /* Converts Uniforum style .po files to binary .mo files
-   Copyright (C) 1995-1998, 2000-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2007, 2009-2010, 2012 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -530,6 +530,10 @@ There is NO WARRANTY, to the extent permitted by law.\n\
     for (domain = domain_list; domain != NULL; domain = domain->next)
       nerrors +=
         check_message_list (domain->mlp,
+                            /* Untranslated and fuzzy messages have already
+                               been dealt with during parsing, see below in
+                               msgfmt_frob_new_message.  */
+                            0, 0,
                             1, check_format_strings, check_header,
                             check_compatibility,
                             check_accelerators, accelerator_char);
@@ -643,7 +647,7 @@ static void
 usage (int status)
 {
   if (status != EXIT_SUCCESS)
-    fprintf (stderr, _("Try `%s --help' for more information.\n"),
+    fprintf (stderr, _("Try '%s --help' for more information.\n"),
              program_name);
   else
     {
@@ -762,6 +766,9 @@ Input file interpretation:\n"));
 Output details:\n"));
       printf (_("\
   -a, --alignment=NUMBER      align strings to NUMBER bytes (default: %d)\n"), DEFAULT_OUTPUT_ALIGNMENT);
+      printf (_("\
+      --endianness=BYTEORDER  write out 32-bit numbers in the given byte order\n\
+                                (big or little, default depends on platform)\n"));
       printf (_("\
       --no-hash               binary file will not include the hash table\n"));
       printf ("\n");
@@ -913,7 +920,7 @@ warning: older versions of msgfmt will give an error on this\n")));
 static void
 msgfmt_set_domain (default_catalog_reader_ty *this, char *name)
 {
-  /* If no output file was given, we change it with each `domain'
+  /* If no output file was given, we change it with each 'domain'
      directive.  */
   if (!java_mode && !csharp_mode && !csharp_resources_mode && !tcl_mode
       && !qt_mode && output_file_name == NULL)
@@ -945,7 +952,7 @@ domain name \"%s\" not suitable as file name: will use prefix"), name);
     {
       if (check_domain)
         po_gram_error_at_line (&gram_pos,
-                               _("`domain %s' directive ignored"), name);
+                               _("'domain %s' directive ignored"), name);
 
       /* NAME was allocated in po-gram-gen.y but is not used anywhere.  */
       free (name);
@@ -1005,8 +1012,8 @@ msgfmt_frob_new_message (default_catalog_reader_ty *that, message_ty *mp,
               error_with_progname = false;
               error_at_line (0, 0, mp->pos.file_name, mp->pos.line_number,
                              (mp->msgstr[0] == '\0'
-                              ? _("empty `msgstr' entry ignored")
-                              : _("fuzzy `msgstr' entry ignored")));
+                              ? _("empty 'msgstr' entry ignored")
+                              : _("fuzzy 'msgstr' entry ignored")));
               error_with_progname = true;
             }
 
@@ -1039,7 +1046,7 @@ msgfmt_frob_new_message (default_catalog_reader_ty *that, message_ty *mp,
 }
 
 
-/* Test for `#, fuzzy' comments and warn.  */
+/* Test for '#, fuzzy' comments and warn.  */
 static void
 msgfmt_comment_special (abstract_catalog_reader_ty *that, const char *s)
 {

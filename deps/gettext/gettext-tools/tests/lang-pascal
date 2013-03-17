@@ -30,8 +30,10 @@ end.
 EOF
 
 tmpfiles="$tmpfiles prog.o prog.rst prog"
-(ppc386 prog.pp) >/dev/null 2>&1 || {
-  echo "Skipping test: ppc386 compiler not found"
+(ppc386 prog.pp) >/dev/null 2>&1 ||
+(ppcx64 prog.pp) >/dev/null 2>&1 ||
+{
+  echo "Skipping test: Pascal compiler ppc386 or ppcx64 not found"
   rm -fr $tmpfiles; exit 77
 }
 

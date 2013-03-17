@@ -89,7 +89,7 @@ Portability Guide, is also in use, but we shall not discuss that here.
 A simple example</A>
 </H1>
 <A NAME="sec:simple"></A>Our first example of using <TT>gettext</TT> will be the good old Hello World program,
-whose sole function is to print the phrase ``Hello, world!'' to the terminal.
+whose sole function is to print the phrase “Hello, world!” to the terminal.
 The internationalized version of this program might be saved in hello.c as:
 <PRE>
 1    #include &lt;libintl.h&gt;
@@ -116,7 +116,7 @@ using glibc.
 The programmer's viewpoint</A>
 </H2>
    As expected, when the <TT>hello</TT> executable is run under the default locale
-(usually the C locale) it prints ``Hello, world!'' in the terminal. Besides
+(usually the C locale) it prints “Hello, world!” in the terminal. Besides
 some initial setup work, the only additional burden faced by the programmer is
 to replace any string to be printed with <TT>gettext(string)</TT>, i.e., to
 instead pass the string as an argument to the <TT>gettext</TT> function. For lazy
@@ -140,24 +140,24 @@ Let us dissect the program line-by-line.
   and an empty string as the second one, initializes the entire current locale
   of the program as per environment variables set by the user. In other words,
   the program locale is initialized to match that of the user. For details see
-  ``man <TT>setlocale</TT>.''
+  “man <TT>setlocale</TT>.”
 </LI>
 <LI>The <TT>bindtextdomain</TT> function on line 8 sets the base directory for the
   message catalogs for a given message domain. A message domain is a set of
   translatable messages, with every software package typically having its own
-  domain. Here, we have used ``hello'' as the name of the message domain for
+  domain. Here, we have used “hello” as the name of the message domain for
   our toy program. As the second argument, /usr/share/locale, is the default
   system location for message catalogs, what we are saying here is that we are
   going to place the message catalog in the default system directory. Thus, we
   could have dispensed with the call to <TT>bindtextdomain</TT> here, and this
   function is useful only if the message catalogs are installed in a
   non-standard place, e.g., a packaged software distribution might have
-  the catalogs under a po/ directory under its own main directory. See ``man
-  <TT>bindtextdomain</TT>'' for details.
+  the catalogs under a po/ directory under its own main directory. See “man
+  <TT>bindtextdomain</TT>” for details.
 </LI>
 <LI>The <TT>textdomain</TT> call on line 9 sets the message domain of the current
-  program to ``hello,'' i.e., the name that we are using for our example
-  program. ``man textdomain'' will give usage details for the function.
+  program to “hello,” i.e., the name that we are using for our example
+  program. “man textdomain” will give usage details for the function.
 </LI>
 <LI>Finally, on line 10, we have replaced what would normally have been,
 <PRE>
@@ -192,7 +192,7 @@ argument to the -o option).
 The message domain for the program should be specified as the argument
 to the -d option, and should match the domain specified in the call to
 <TT>textdomain</TT> (on line 9 of the program source). Other details on how to use
-<TT>gettext</TT> can be found from ``man gettext.''
+<TT>gettext</TT> can be found from “man gettext.”
 
 <P>
 A .pot (portable object template) file is used as the basis for translating
@@ -279,14 +279,14 @@ work consists of typing the Oriya text that is to serve as translations for
 the corresponding English string. For the <TT>msgstr</TT> line in each of the
 remaining entries, add the translated Oriya text between the double quotes;
 the translation corresponding to the English phrase in the <TT>msgid</TT> string
-for the entry. For example, for the phrase ``Hello world!<!-- MATH
+for the entry. For example, for the phrase “Hello world!<!-- MATH
  $\backslash$
  -->
-<SPAN CLASS="MATH">&#92;</SPAN>n'' in
-oriya.po, we could enter ``&#x0b28;&#x0b2e;&#x0b38;&#x0b4d;&#x0b15;&#x0b3e;&#x0b30;<!-- MATH
+<SPAN CLASS="MATH">&#92;</SPAN>n” in
+oriya.po, we could enter “&#x0b28;&#x0b2e;&#x0b38;&#x0b4d;&#x0b15;&#x0b3e;&#x0b30;<!-- MATH
  $\backslash$
  -->
-<SPAN CLASS="MATH">&#92;</SPAN>n''. The final
+<SPAN CLASS="MATH">&#92;</SPAN>n”. The final
 oriya.po file might look like:
 <PRE>
   # Oriya translations for hello example package.
@@ -346,8 +346,8 @@ given by the second argument to <TT>bindtextdomain</TT>. The final location of t
 file will be in the sub-directory LL/LC_MESSAGES or LL_CC/LC_MESSAGES under
 the base directory, where LL stands for a language, and CC for a country. For
 example, as we have chosen the standard location, /usr/share/locale, for our
-base directory, and for us the language and country strings are ``or'' and
-``IN,'' respectively, we will place hello.mo in /usr/share/locale/or_IN. Note
+base directory, and for us the language and country strings are “or” and
+“IN,” respectively, we will place hello.mo in /usr/share/locale/or_IN. Note
 that you will need super-user privilege to copy hello.mo to this system
 directory. Thus,
 <PRE><FONT color="red">
@@ -376,30 +376,30 @@ terminal emulator) are Unicode-aware. I will focus on gnome-terminal as it
 seems to have better support for internationalization. gnome-terminal needs to
 be told that the bytes arriving are UTF-8 encoded multibyte sequences. This
 can be done by (a) choosing Terminal <TT>-&gt;</TT> Character Coding <TT>-&gt;</TT>
-Unicode (UTF-8), or (b) typing ``/bin/echo -n -e
+Unicode (UTF-8), or (b) typing “/bin/echo -n -e
 '<!-- MATH
  $\backslash$
  -->
 <SPAN CLASS="MATH">&#92;</SPAN>033%<!-- MATH
  $\backslash$
  -->
-<SPAN CLASS="MATH">&#92;</SPAN>G''' in the terminal, or (c) by running
+<SPAN CLASS="MATH">&#92;</SPAN>G'” in the terminal, or (c) by running
 /bin/unicode_start. Likewise, you can revert to the default locale by (a)
 choosing Terminal <TT>-&gt;</TT> Character Coding <TT>-&gt;</TT> Current Locale
-(ISO-8859-1), or (b) ``/bin/echo -n -e '<!-- MATH
+(ISO-8859-1), or (b) “/bin/echo -n -e '<!-- MATH
  $\backslash$
  -->
 <SPAN CLASS="MATH">&#92;</SPAN>033%<!-- MATH
  $\backslash$
  -->
-<SPAN CLASS="MATH">&#92;</SPAN>@','' or
+<SPAN CLASS="MATH">&#92;</SPAN>@',” or
 (c) by running /bin/unicode_stop. Now, running the example program (after
 compiling with gcc as described in Sec.&nbsp;<A HREF="#sec:simple">2</A>) with,
 <PRE><FONT color="red">
   ./hello
 </FONT></PRE>
 should give you output in Oriya. Please note that conjuncts will most likely
-be displayed with a ``halant'' as the terminal probably does not render Indian
+be displayed with a “halant” as the terminal probably does not render Indian
 language fonts correctly. Also, as most terminal emulators assume fixed-width
 fonts, the results are hardly likely to be aesthetically appealing.
 
@@ -469,7 +469,7 @@ translations into the new template file, viz.,
 </FONT></PRE>
 The -U option updates the existing
 .po file, oriya.po. We could have chosen to instead create a new .po file by
-using ``-o <SPAN CLASS="MATH">&lt;</SPAN>filename<SPAN CLASS="MATH">&gt;</SPAN>'' instead of -U. The updated .po file will still
+using “-o <SPAN CLASS="MATH">&lt;</SPAN>filename<SPAN CLASS="MATH">&gt;</SPAN>” instead of -U. The updated .po file will still
 have the old translations embedded in it, and new entries with untranslated
 <TT>msgid</TT> lines. For us, the new lines in oriya.po will look like,
 <PRE>
@@ -477,9 +477,9 @@ have the old translations embedded in it, and new entries with untranslated
   msgid "How are you?\n"
   msgstr ""
 </PRE>
-For the new translation, we could use, ``&#x0b06;&#x0b2a;&#x0b23;
-&#x0b15;&#x0b3f;&#x0b2a;&#x0b30;&#x0b3f; &#x0b05;&#x0b1b;&#x0b28;&#x0b4d;&#x0b24;&#x0b3f;?'' in
-place of the English phrase ``How are you?'' The updated oriya.po file,
+For the new translation, we could use, “&#x0b06;&#x0b2a;&#x0b23;
+&#x0b15;&#x0b3f;&#x0b2a;&#x0b30;&#x0b3f; &#x0b05;&#x0b1b;&#x0b28;&#x0b4d;&#x0b24;&#x0b3f;?” in
+place of the English phrase “How are you?” The updated oriya.po file,
 including the translation might look like:
 <PRE>
   # Oriya translations for hello example package.
@@ -572,21 +572,21 @@ A.&nbsp;Nayak, and M.&nbsp;Chand is much appreciated.
 <H1><A NAME="SECTION00070000000000000000">
 The Emacs info browser</A>
 </H1>
-<A NAME="sec:emacs-info"></A>You can start up Emacs from the command-line by typing ``emacs,'' or ``emacs
-<SPAN CLASS="MATH">&lt;</SPAN>filename<SPAN CLASS="MATH">&gt;</SPAN>.'' It can be started from the menu in some desktops, e.g., on
+<A NAME="sec:emacs-info"></A>You can start up Emacs from the command-line by typing “emacs,” or “emacs
+<SPAN CLASS="MATH">&lt;</SPAN>filename<SPAN CLASS="MATH">&gt;</SPAN>.” It can be started from the menu in some desktops, e.g., on
 my GNOME desktop, it is under Main Menu <TT>-&gt;</TT> Programming <TT>-&gt;</TT>
 Emacs. If you are unfamiliar with Emacs, a tutorial can be started by typing
-``C-h t'' in an Emacs window, or from the Help item in the menubar at the
-top. Emacs makes extensive use of the Control (sometimes labelled as ``CTRL''
-or ``CTL'') and Meta (sometimes labelled as ``Edit'' or ``Alt'') keys. In
-Emacs parlance, a hyphenated sequence, such as ``C-h'' means to press the
-Control and `h' key simultaneously, while ``C-h t'' would mean to press the
-Control and `h' key together, release them, and press the `t' key. Similarly,
-``M-x'' is used to indicate that the Meta and `x' keys should be pressed at
+“C-h t” in an Emacs window, or from the Help item in the menubar at the
+top. Emacs makes extensive use of the Control (sometimes labelled as “CTRL”
+or “CTL”) and Meta (sometimes labelled as “Edit” or “Alt”) keys. In
+Emacs parlance, a hyphenated sequence, such as “C-h” means to press the
+Control and ‘h’ key simultaneously, while “C-h t” would mean to press the
+Control and ‘h’ key together, release them, and press the ‘t’ key. Similarly,
+“M-x” is used to indicate that the Meta and ‘x’ keys should be pressed at
 the same time.
 
 <P>
-The info browser can be started by typing ``C-h i'' in Emacs. The first time
+The info browser can be started by typing “C-h i” in Emacs. The first time
 you do this, it will briefly list some commands available inside the info
 browser, and present you with a menu of major topics. Each menu item, or
 cross-reference is hyperlinked to the appropriate node, and you can visit that
@@ -597,26 +597,26 @@ you can either scroll down to the line,
   * gettext: (gettext).                          GNU gettext utilities.
 </PRE>
 and visit that node. Or, as it is several pages down, you can locate it using
-``I-search.'' Type ``C-s'' to enter ``I-search'' which will then prompt you
+“I-search.” Type “C-s” to enter “I-search” which will then prompt you
 for a string in the mini-buffer at the bottom of the window. This is an
 incremental search, so that Emacs will keep moving you forward through the
 buffer as you are entering your search string. If you have reached the last
 occurrence of the search string in the current buffer, you will get a message
-saying ``Failing I-search: ...'' on pressing ``C-s.'' At that point, press
-``C-s'' again to resume the search at the beginning of the buffer. Likewise,
-``C-r'' incrementally searches backwards from the present location.
+saying “Failing I-search: ...” on pressing “C-s.” At that point, press
+“C-s” again to resume the search at the beginning of the buffer. Likewise,
+“C-r” incrementally searches backwards from the present location.
 
 <P>
-Info nodes are listed in this document with a ``::'' separator, so
+Info nodes are listed in this document with a “::” separator, so
 that one can go to the gettext::Creating::Header Entry:: by visiting the
-``gettext'' node from the main info menu, navigating to the ``Creating''
-node, and following that to the ``Header Entry'' node.
+“gettext” node from the main info menu, navigating to the “Creating”
+node, and following that to the “Header Entry” node.
 
 <P>
 A stand-alone info browser, independent of Emacs, is also available on many
 systems. Thus, the <TT>gettext</TT> info page can also be accessed by typing
-``info gettext'' in a terminal. <TT>xinfo</TT> is an X application serving as an
-info browser, so that if it is installed, typing ``xinfo gettext'' from the
+“info gettext” in a terminal. <TT>xinfo</TT> is an X application serving as an
+info browser, so that if it is installed, typing “xinfo gettext” from the
 command line will open a new browser window with the <TT>gettext</TT> info page.
 
 <P>
@@ -636,10 +636,10 @@ settling on one. The ones considered here are: Emacs in po-mode, <TT>poedit</TT>
 Emacs PO mode</A>
 </H2>
   Emacs should automatically enter po-mode when you load a .po file, as
-indicated by ``PO'' in the modeline at the bottom. The window is made
+indicated by “PO” in the modeline at the bottom. The window is made
 read-only, so that you can edit the .po file only through special commands.  A
 description of Emacs po-mode can be found under the gettext::Basics info node,
-or type `h' or `?' in a po-mode window for a list of available commands. While
+or type ‘h’ or ‘?’ in a po-mode window for a list of available commands. While
 I find Emacs po-mode quite restrictive, this is probably due to unfamiliarity
 with it. Its main advantage is that it imposes rigid conformance to the PO
 file format, and checks the file format when closing the .po file

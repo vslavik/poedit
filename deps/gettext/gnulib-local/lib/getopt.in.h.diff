@@ -19,7 +19,7 @@
      defined in this header.  When this happens, include the
 ***************
 *** 111,117 ****
-     Also, when `ordering' is RETURN_IN_ORDER,
+     Also, when 'ordering' is RETURN_IN_ORDER,
      each non-option ARGV-element is returned here.  */
   
 ! extern char *optarg;
@@ -27,7 +27,7 @@
   /* Index in ARGV of the next element to be scanned.
      This is used for communication to and from the caller
 --- 119,125 ----
-     Also, when `ordering' is RETURN_IN_ORDER,
+     Also, when 'ordering' is RETURN_IN_ORDER,
      each non-option ARGV-element is returned here.  */
   
 ! extern DLL_VARIABLE char *optarg;
@@ -36,12 +36,12 @@
      This is used for communication to and from the caller
 ***************
 *** 125,140 ****
-     Otherwise, `optind' communicates from one call to the next
+     Otherwise, 'optind' communicates from one call to the next
      how much of ARGV has been scanned so far.  */
   
 ! extern int optind;
   
-  /* Callers store zero here to inhibit the error message `getopt' prints
+  /* Callers store zero here to inhibit the error message 'getopt' prints
      for unrecognized options.  */
   
 ! extern int opterr;
@@ -53,12 +53,12 @@
   #ifndef __need_getopt
   /* Describe the long-named options requested by the application.
 --- 133,148 ----
-     Otherwise, `optind' communicates from one call to the next
+     Otherwise, 'optind' communicates from one call to the next
      how much of ARGV has been scanned so far.  */
   
 ! extern DLL_VARIABLE int optind;
   
-  /* Callers store zero here to inhibit the error message `getopt' prints
+  /* Callers store zero here to inhibit the error message 'getopt' prints
      for unrecognized options.  */
   
 ! extern DLL_VARIABLE int opterr;

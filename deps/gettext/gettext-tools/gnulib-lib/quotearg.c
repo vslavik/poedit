@@ -1,7 +1,6 @@
 /* quotearg.c - quote arguments for output
 
-   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006, 2007, 2008,
-   2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 1998-2002, 2004-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,11 +17,21 @@
 
 /* Written by Paul Eggert <eggert@twinsun.com> */
 
+/* Without this pragma, gcc 4.7.0 20111124 mistakenly suggests that
+   the quoting_options_from_style function might be candidate for
+   attribute 'pure'  */
+#if (__GNUC__ == 4 && 6 <= __GNUC_MINOR__) || 4 < __GNUC__
+# pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
+#endif
+
 #include <config.h>
 
 #include "quotearg.h"
+#include "quote.h"
 
 #include "xalloc.h"
+#include "c-strcaseeq.h"
+#include "localcharset.h"
 
 #include <ctype.h>
 #include <errno.h>
@@ -166,25 +175,54 @@ set_custom_quoting (struct quoting_options *o,
 }
 
 /* Return quoting options for STYLE, with no extra quoting.  */
-static struct quoting_options
+static struct quoting_options /* NOT PURE!! */
 quoting_options_from_style (enum quoting_style style)
 {
-  struct quoting_options o;
+  struct quoting_options o = { 0, 0, { 0 }, NULL, NULL };
+  if (style == custom_quoting_style)
+    abort ();
   o.style = style;
-  o.flags = 0;
-  memset (o.quote_these_too, 0, sizeof o.quote_these_too);
   return o;
 }
 
 /* MSGID approximates a quotation mark.  Return its translation if it
-   has one; otherwise, return either it or "\"", depending on S.  */
+   has one; otherwise, return either it or "\"", depending on S.
+
+   S is either clocale_quoting_style or locale_quoting_style.  */
 static char const *
 gettext_quote (char const *msgid, enum quoting_style s)
 {
   char const *translation = _(msgid);
-  if (translation == msgid && s == clocale_quoting_style)
-    translation = "\"";
-  return translation;
+  char const *locale_code;
+
+  if (translation != msgid)
+    return translation;
+
+  /* For UTF-8 and GB-18030, use single quotes U+2018 and U+2019.
+     Here is a list of other locales that include U+2018 and U+2019:
+
+        ISO-8859-7   0xA1                 KOI8-T       0x91
+        CP869        0x8B                 CP874        0x91
+        CP932        0x81 0x65            CP936        0xA1 0xAE
+        CP949        0xA1 0xAE            CP950        0xA1 0xA5
+        CP1250       0x91                 CP1251       0x91
+        CP1252       0x91                 CP1253       0x91
+        CP1254       0x91                 CP1255       0x91
+        CP1256       0x91                 CP1257       0x91
+        EUC-JP       0xA1 0xC6            EUC-KR       0xA1 0xAE
+        EUC-TW       0xA1 0xE4            BIG5         0xA1 0xA5
+        BIG5-HKSCS   0xA1 0xA5            EUC-CN       0xA1 0xAE
+        GBK          0xA1 0xAE            Georgian-PS  0x91
+        PT154        0x91
+
+     None of these is still in wide use; using iconv is overkill.  */
+  locale_code = locale_charset ();
+  if (STRCASEEQ (locale_code, "UTF-8", 'U','T','F','-','8',0,0,0,0))
+    return msgid[0] == '`' ? "\xe2\x80\x98": "\xe2\x80\x99";
+  if (STRCASEEQ (locale_code, "GB18030", 'G','B','1','8','0','3','0',0,0))
+    return msgid[0] == '`' ? "\xa1\ae": "\xa1\xaf";
+
+  return (s == clocale_quoting_style ? "\"" : "'");
 }
 
 /* Place into buffer BUFFER (of size BUFFERSIZE) a quoted version of
@@ -252,22 +290,24 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
           {
             /* TRANSLATORS:
                Get translations for open and closing quotation marks.
-
                The message catalog should translate "`" to a left
                quotation mark suitable for the locale, and similarly for
-               "'".  If the catalog has no translation,
-               locale_quoting_style quotes `like this', and
-               clocale_quoting_style quotes "like this".
+               "'".  For example, a French Unicode local should translate
+               these to U+00AB (LEFT-POINTING DOUBLE ANGLE
+               QUOTATION MARK), and U+00BB (RIGHT-POINTING DOUBLE ANGLE
+               QUOTATION MARK), respectively.
 
-               For example, an American English Unicode locale should
-               translate "`" to U+201C (LEFT DOUBLE QUOTATION MARK), and
-               should translate "'" to U+201D (RIGHT DOUBLE QUOTATION
-               MARK).  A British English Unicode locale should instead
-               translate these to U+2018 (LEFT SINGLE QUOTATION MARK)
-               and U+2019 (RIGHT SINGLE QUOTATION MARK), respectively.
+               If the catalog has no translation, we will try to
+               use Unicode U+2018 (LEFT SINGLE QUOTATION MARK) and
+               Unicode U+2019 (RIGHT SINGLE QUOTATION MARK).  If the
+               current locale is not Unicode, locale_quoting_style
+               will quote 'like this', and clocale_quoting_style will
+               quote "like this".  You should always include translations
+               for "`" and "'" even if U+2018 and U+2019 are appropriate
+               for your locale.
 
                If you don't know what to put here, please see
-               <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
+               <http://en.wikipedia.org/wiki/Quotation_marks_in_other_languages>
                and use glyphs suitable for your language.  */
             left_quote = gettext_quote (N_("`"), quoting_style);
             right_quote = gettext_quote (N_("'"), quoting_style);
@@ -731,7 +771,7 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
 
   if (nslots <= n0)
     {
-      /* FIXME: technically, the type of n1 should be `unsigned int',
+      /* FIXME: technically, the type of n1 should be 'unsigned int',
          but that evokes an unsuppressible warning from gcc-4.0.1 and
          older.  If gcc ever provides an option to suppress that warning,
          revert to the original type, so that the test in xalloc_oversized
@@ -886,4 +926,38 @@ quotearg_custom_mem (char const *left_quote, char const *right_quote,
 {
   return quotearg_n_custom_mem (0, left_quote, right_quote, arg,
                                 argsize);
+}
+
+
+/* The quoting option used by the functions of quote.h.  */
+struct quoting_options quote_quoting_options =
+  {
+    locale_quoting_style,
+    0,
+    { 0 },
+    NULL, NULL
+  };
+
+char const *
+quote_n_mem (int n, char const *arg, size_t argsize)
+{
+  return quotearg_n_options (n, arg, argsize, &quote_quoting_options);
+}
+
+char const *
+quote_mem (char const *arg, size_t argsize)
+{
+  return quote_n_mem (0, arg, argsize);
+}
+
+char const *
+quote_n (int n, char const *arg)
+{
+  return quote_n_mem (n, arg, SIZE_MAX);
+}
+
+char const *
+quote (char const *arg)
+{
+  return quote_n (0, arg);
 }

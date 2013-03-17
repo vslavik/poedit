@@ -1,6 +1,6 @@
 /* malloc() function that is glibc compatible.
 
-   Copyright (C) 1997-1998, 2006-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 1997-1998, 2006-2007, 2009-2013 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -13,25 +13,24 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 /* written by Jim Meyering and Bruno Haible */
 
+#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 /* Only the AC_FUNC_MALLOC macro defines 'malloc' already in config.h.  */
 #ifdef malloc
-# define NEED_MALLOC_GNU
+# define NEED_MALLOC_GNU 1
 # undef malloc
+/* Whereas the gnulib module 'malloc-gnu' defines HAVE_MALLOC_GNU.  */
+#elif GNULIB_MALLOC_GNU && !HAVE_MALLOC_GNU
+# define NEED_MALLOC_GNU 1
 #endif
 
-/* Specification.  */
 #include <stdlib.h>
 
 #include <errno.h>
-
-/* Call the system's malloc below.  */
-#undef malloc
 
 /* Allocate an N-byte block of memory from the heap.
    If N is zero, allocate a 1-byte block.  */
@@ -41,7 +40,7 @@ rpl_malloc (size_t n)
 {
   void *result;
 
-#ifdef NEED_MALLOC_GNU
+#if NEED_MALLOC_GNU
   if (n == 0)
     n = 1;
 #endif

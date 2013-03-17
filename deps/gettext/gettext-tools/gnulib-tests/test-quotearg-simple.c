@@ -1,5 +1,5 @@
 /* Test of quotearg family of functions.
-   Copyright (C) 2008-2010 Free Software Foundation, Inc.
+   Copyright (C) 2008-2013 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -12,8 +12,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 /* Written by Eric Blake <ebb9@byu.net>, 2008.  */
 
@@ -27,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "localcharset.h"
 #include "progname.h"
 #include "macros.h"
 
@@ -85,12 +85,12 @@ static struct result_groups results_g[] = {
       "a\\\\b", LQ_ENC RQ_ENC, LQ RQ } },
 
   /* locale_quoting_style */
-  { { "`'", "`\\0001\\0'", 9, "`simple'", "` \\t\\n\\'\"\\033?""?/\\\\'",
-      "`a:b'", "`a\\\\b'", "`" LQ_ENC RQ_ENC "'", "`" LQ RQ "'" },
-    { "`'", "`\\0001\\0'", 9, "`simple'", "` \\t\\n\\'\"\\033?""?/\\\\'",
-      "`a:b'", "`a\\\\b'", "`" LQ_ENC RQ_ENC "'", "`" LQ RQ "'" },
-    { "`'", "`\\0001\\0'", 9, "`simple'", "` \\t\\n\\'\"\\033?""?/\\\\'",
-      "`a\\:b'", "`a\\\\b'", "`" LQ_ENC RQ_ENC "'", "`" LQ RQ "'" } },
+  { { "''", "'\\0001\\0'", 9, "'simple'", "' \\t\\n\\'\"\\033?""?/\\\\'",
+      "'a:b'", "'a\\\\b'", "'" LQ_ENC RQ_ENC "'", "'" LQ RQ "'" },
+    { "''", "'\\0001\\0'", 9, "'simple'", "' \\t\\n\\'\"\\033?""?/\\\\'",
+      "'a:b'", "'a\\\\b'", "'" LQ_ENC RQ_ENC "'", "'" LQ RQ "'" },
+    { "''", "'\\0001\\0'", 9, "'simple'", "' \\t\\n\\'\"\\033?""?/\\\\'",
+      "'a\\:b'", "'a\\\\b'", "'" LQ_ENC RQ_ENC "'", "'" LQ RQ "'" } },
 
   /* clocale_quoting_style */
   { { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
@@ -244,13 +244,21 @@ main (int argc _GL_UNUSED, char *argv[])
   ASSERT (!isprint ('\033'));
   for (i = literal_quoting_style; i <= clocale_quoting_style; i++)
     {
-      set_quoting_style (NULL, i);
-      compare_strings (use_quotearg_buffer, &results_g[i].group1, ascii_only);
-      compare_strings (use_quotearg, &results_g[i].group2, ascii_only);
-      if (i == c_quoting_style)
-        compare_strings (use_quote_double_quotes, &results_g[i].group2,
-                         ascii_only);
-      compare_strings (use_quotearg_colon, &results_g[i].group3, ascii_only);
+      set_quoting_style (NULL, (enum quoting_style) i);
+      if (!(i == locale_quoting_style || i == clocale_quoting_style)
+          || (strcmp (locale_charset (), "ASCII") == 0
+              || strcmp (locale_charset (), "ANSI_X3.4-1968") == 0))
+        {
+          compare_strings (use_quotearg_buffer, &results_g[i].group1,
+                           ascii_only);
+          compare_strings (use_quotearg, &results_g[i].group2,
+                           ascii_only);
+          if (i == c_quoting_style)
+            compare_strings (use_quote_double_quotes, &results_g[i].group2,
+                             ascii_only);
+          compare_strings (use_quotearg_colon, &results_g[i].group3,
+                           ascii_only);
+        }
     }
 
   set_quoting_style (NULL, literal_quoting_style);

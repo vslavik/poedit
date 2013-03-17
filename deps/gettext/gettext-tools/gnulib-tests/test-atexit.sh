@@ -25,4 +25,4 @@ if test -f t-atexit.tmp; then
   Exit 1
 fi
 
-exit 0
+Exit 0

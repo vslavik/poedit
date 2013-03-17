@@ -1,5 +1,5 @@
 /* vasprintf and asprintf with out-of-memory checking.
-   Copyright (C) 1999, 2002-2004, 2006-2010 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002-2004, 2006-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 /* Checked size_t computations.  */
 #include "xsize.h"
 
-static inline char *
+static char *
 xstrcat (size_t argcount, va_list args)
 {
   char *result;

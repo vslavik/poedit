@@ -1,5 +1,4 @@
-/* Copyright (C) 1991, 1992, 1993, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
-   2003, 2004, 2005, 2006, 2007, 2009, 2010 Free Software Foundation, Inc.
+/* Copyright (C) 1991-1993, 1996-2007, 2009-2013 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -12,8 +11,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 #ifndef _LIBC
 # include <config.h>
@@ -43,7 +41,7 @@
   (HAVE_WCTYPE_H && HAVE_BTOWC && HAVE_ISWCTYPE \
    && HAVE_WMEMCHR && (HAVE_WMEMCPY || HAVE_WMEMPCPY))
 
-/* For platform which support the ISO C amendement 1 functionality we
+/* For platform which support the ISO C amendment 1 functionality we
    support user defined character classes.  */
 #if defined _LIBC || WIDE_CHAR_SUPPORT
 # include <wctype.h>
@@ -79,7 +77,7 @@ extern int fnmatch (const char *pattern, const char *string, int flags);
    Library, but also included in many other GNU distributions.  Compiling
    and linking in this code is a waste when using the GNU C library
    (especially if it is a shared library).  Rather than having every GNU
-   program understand `configure --with-gnu-libc' and omit the object files,
+   program understand 'configure --with-gnu-libc' and omit the object files,
    it is simpler to just do this in the source for each such file.  */
 
 #if defined _LIBC || !defined __GNU_LIBRARY__ || !HAVE_FNMATCH_GNU
@@ -93,7 +91,7 @@ extern int fnmatch (const char *pattern, const char *string, int flags);
 
 # if defined _LIBC || WIDE_CHAR_SUPPORT
 /* The GNU C library provides support for user-defined character classes
-   and the functions from ISO C amendement 1.  */
+   and the functions from ISO C amendment 1.  */
 #  ifdef CHARCLASS_NAME_MAX
 #   define CHAR_CLASS_MAX_LENGTH CHARCLASS_NAME_MAX
 #  else
@@ -120,7 +118,7 @@ extern int fnmatch (const char *pattern, const char *string, int flags);
 #  endif
 
 # else
-#  define CHAR_CLASS_MAX_LENGTH  6 /* Namely, `xdigit'.  */
+#  define CHAR_CLASS_MAX_LENGTH  6 /* Namely, 'xdigit'.  */
 
 #  define IS_CHAR_CLASS(string)                                               \
    (STREQ (string, "alpha") || STREQ (string, "upper")                        \
@@ -169,7 +167,6 @@ static int posixly_correct;
 #  endif
 # endif
 # define MEMCHR(S, C, N) memchr (S, C, N)
-# define STRCOLL(S1, S2) strcoll (S1, S2)
 # include "fnmatch_loop.c"
 
 
@@ -197,7 +194,6 @@ static int posixly_correct;
 #   endif
 #  endif
 #  define MEMCHR(S, C, N) wmemchr (S, C, N)
-#  define STRCOLL(S1, S2) wcscoll (S1, S2)
 #  define WIDE_CHAR_VERSION 1
 
 #  undef IS_CHAR_CLASS

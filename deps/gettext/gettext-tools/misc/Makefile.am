@@ -18,6 +18,7 @@
 
 AUTOMAKE_OPTIONS = 1.2 gnits
 EXTRA_DIST =
+MOSTLYCLEANFILES =
 CLEANFILES =
 DISTCLEANFILES =
 
@@ -28,38 +29,87 @@ bin_SCRIPTS = gettextize autopoint
 
 DISTCLEANFILES += gettextize autopoint convert-archive
 
-CLEANFILES += archive.cvs.tar.gz archive.git.tar.gz
+CLEANFILES += \
+  archive.dir.tar.gz \
+  archive.dir.tar.bz2 \
+  archive.dir.tar.xz \
+  archive.cvs.tar.gz \
+  archive.git.tar.gz
 
-EXTRA_DIST += add-to-archive cvsuser.c archive.dir.tar.gz
+EXTRA_DIST += add-to-archive cvsuser.c archive.dir.tar
 
 gettextsrcdir = $(datadir)/gettext
-gettextsrc_DATA = archive.@ARCHIVE_FORMAT@.tar.gz
+gettextsrc_DATA = $(ARCHIVE_@ARCHIVE_FORMAT@)
+ARCHIVE_dirgz = archive.dir.tar.gz
+ARCHIVE_dirbz2 = archive.dir.tar.bz2
+ARCHIVE_dirxz = archive.dir.tar.xz
+ARCHIVE_git = archive.git.tar.gz
+ARCHIVE_cvs = archive.cvs.tar.gz
 
-# The archive.dir.tar.gz is not in the CVS. Alpha-testers must use the one from
+# The archive.dir.tar is not in the CVS. Alpha-testers must use the one from
 # an already installed release.
-archive.dir.tar.gz:
+archive.dir.tar:
 	if test -f $(gettextsrcdir)/archive.dir.tar.gz; then \
-	  cp -p $(gettextsrcdir)/archive.dir.tar.gz $@; \
+	  gzip -d -c < $(gettextsrcdir)/archive.dir.tar.gz > $@-t && mv $@-t $@; \
 	else \
-	  echo "archive.dir.tar.gz is not under version control. Please copy the archive.dir.tar.gz from an already installed release to gettext-tools/misc/." 1>&2; \
-	  exit 1; \
+	  if test -f $(gettextsrcdir)/archive.dir.tar.bz2; then \
+	    bzip2 -d -c < $(gettextsrcdir)/archive.dir.tar.bz2 > $@-t && mv $@-t $@; \
+	  else \
+	    if test -f $(gettextsrcdir)/archive.dir.tar.xz; then \
+	      xz -d -c < $(gettextsrcdir)/archive.dir.tar.xz > $@-t && mv $@-t $@; \
+	    else \
+	      echo "archive.dir.tar is not under version control. Please copy the archive.dir.tar.{gz,bz2,xz} from an already installed release to gettext-tools/misc/ and decompress it there." 1>&2; \
+	      exit 1; \
+	    fi; \
+	  fi; \
 	fi
+MOSTLYCLEANFILES += archive.dir.tar-t
 
-# The archive.git.tar.gz is generated from archive.dir.tar.gz.
-archive.git.tar.gz: archive.dir.tar.gz
-	if test -f archive.dir.tar.gz; then \
-	  inputfile=archive.dir.tar.gz; \
+# The archive.dir.tar.gz is generated from archive.dir.tar.
+archive.dir.tar.gz: archive.dir.tar
+	if test -f archive.dir.tar; then \
+	  inputfile=archive.dir.tar; \
 	else \
-	  inputfile='$(srcdir)'/archive.dir.tar.gz; \
+	  inputfile='$(srcdir)'/archive.dir.tar; \
+	fi; \
+	gzip -c -9 < "$$inputfile" > $@-t && mv $@-t $@
+MOSTLYCLEANFILES += archive.dir.tar.gz-t
+
+# The archive.dir.tar.bz2 is generated from archive.dir.tar.
+archive.dir.tar.bz2: archive.dir.tar
+	if test -f archive.dir.tar; then \
+	  inputfile=archive.dir.tar; \
+	else \
+	  inputfile='$(srcdir)'/archive.dir.tar; \
+	fi; \
+	bzip2 -c -9 < "$$inputfile" > $@-t && mv $@-t $@
+MOSTLYCLEANFILES += archive.dir.tar.bz2-t
+
+# The archive.dir.tar.xz is generated from archive.dir.tar.
+archive.dir.tar.xz: archive.dir.tar
+	if test -f archive.dir.tar; then \
+	  inputfile=archive.dir.tar; \
+	else \
+	  inputfile='$(srcdir)'/archive.dir.tar; \
+	fi; \
+	xz -c -5 < "$$inputfile" > $@-t && mv $@-t $@
+MOSTLYCLEANFILES += archive.dir.tar.xz-t
+
+# The archive.git.tar.gz is generated from archive.dir.tar.
+archive.git.tar.gz: archive.dir.tar
+	if test -f archive.dir.tar; then \
+	  inputfile=archive.dir.tar; \
+	else \
+	  inputfile='$(srcdir)'/archive.dir.tar; \
 	fi; \
 	./convert-archive dir git "$$inputfile" $@
 
-# The archive.cvs.tar.gz is generated from archive.dir.tar.gz.
-archive.cvs.tar.gz: archive.dir.tar.gz
-	if test -f archive.dir.tar.gz; then \
-	  inputfile=archive.dir.tar.gz; \
+# The archive.cvs.tar.gz is generated from archive.dir.tar.
+archive.cvs.tar.gz: archive.dir.tar
+	if test -f archive.dir.tar; then \
+	  inputfile=archive.dir.tar; \
 	else \
-	  inputfile='$(srcdir)'/archive.dir.tar.gz; \
+	  inputfile='$(srcdir)'/archive.dir.tar; \
 	fi; \
 	./convert-archive dir cvs "$$inputfile" $@
 

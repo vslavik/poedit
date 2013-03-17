@@ -1,5 +1,5 @@
 /* Test of gl_locale_name function and its variants.
-   Copyright (C) 2007-2010 Free Software Foundation, Inc.
+   Copyright (C) 2007-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -715,7 +715,7 @@ test_locale_name_default (void)
 
   ASSERT (name != NULL);
 
-  /* Only MacOS X and Windows have a facility for the user to set the default
+  /* Only Mac OS X and Windows have a facility for the user to set the default
      locale.  */
 #if !((defined __APPLE__ && defined __MACH__) || (defined _WIN32 || defined __WIN32__ || defined __CYGWIN__))
   ASSERT (strcmp (name, "C") == 0);

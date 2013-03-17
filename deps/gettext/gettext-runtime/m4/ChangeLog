@@ -1,3 +1,296 @@
+2013-03-05  Daiki Ueno  <ueno@gnu.org>
+
+	* fcntl-o.m4: Update copyright year.
+	* gettext.m4: Likewise.
+	* glibc2.m4: Likewise.
+	* glibc21.m4: Likewise.
+	* iconv.m4: Likewise.
+	* intdiv0.m4: Likewise.
+	* intl.m4: Likewise.
+	* intldir.m4: Likewise.
+	* intlmacosx.m4: Likewise.
+	* intmax.m4: Likewise.
+	* inttypes-pri.m4: Likewise.
+	* inttypes_h.m4: Likewise.
+	* lcmessage.m4: Likewise.
+	* lock.m4: Likewise.
+	* longlong.m4: Likewise.
+	* nls.m4: Likewise.
+	* po.m4: Likewise.
+	* printf-posix.m4: Likewise.
+	* progtest.m4: Likewise.
+	* size_max.m4: Likewise.
+	* stdint_h.m4: Likewise.
+	* threadlib.m4: Likewise.
+	* uintmax_t.m4: Likewise.
+	* visibility.m4: Likewise.
+	* wchar_t.m4: Likewise.
+	* wint_t.m4: Likewise.
+	* xsize.m4: Likewise.
+
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-0.18.2 released.
+
+2012-12-07  Stefano Lattarini  <stefano.lattarini@gmailcom>  (tiny change)
+
+	m4: use AC_PROG_MKDIR_P, not the deprecated AM_PROG_MKDIR_P
+	* gettext.m4 (AM_INTL_SUBDIR): Require AC_PROG_MKDIR_P instead
+	of AM_PROG_MKDIR_P, as this latter macro is deprecated since
+	Automake 1.12.1, and will be removed in Automake 1.14.
+	Accordingly, bump requirement in AC_PREREQ to 2.60.
+	* po.m4 (AM_PO_SUBDIRS): Likewise.
+
+2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lock.m4 (gl_PREREQ_LOCK): Do not require AC_C_INLINE.
+
+2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* xsize.m4 (gl_XSIZE): Do not require AC_C_INLINE.
+
+2012-09-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* fcntl-o.m4 (gl_FCNTL_O_FLAGS): Check for AIX 7.1 bug
+	that caused a GNU tar test failure.  Problem reported by Jez Wain; see
+	<http://lists.gnu.org/archive/html/bug-tar/2012-07/msg00018.html>.
+
+2012-06-22  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.m4: Write "Mac OS X" instead of "MacOS X".
+	* intdiv0.m4: Likewise.
+	* intlmacosx.m4: Likewise.
+	* lock.m4: Likewise.
+	* threadlib.m4: Likewise.
+	* visibility.m4: Likewise.
+
+2012-02-18  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (EXTRA_DIST): Remove intmax_t.m4.
+
+2012-02-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* po.m4: Spelling fixes.
+
+2012-01-26  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.m4: Update copyright year.
+	* codeset.m4: Likewise.
+	* glibc2.m4: Likewise.
+	* glibc21.m4: Likewise.
+	* iconv.m4: Likewise.
+	* intdiv0.m4: Likewise.
+	* intl.m4: Likewise.
+	* intldir.m4: Likewise.
+	* intlmacosx.m4: Likewise.
+	* intmax.m4: Likewise.
+	* inttypes-pri.m4: Likewise.
+	* inttypes_h.m4: Likewise.
+	* lcmessage.m4: Likewise.
+	* lock.m4: Likewise.
+	* longlong.m4: Likewise.
+	* nls.m4: Likewise.
+	* printf-posix.m4: Likewise.
+	* progtest.m4: Likewise.
+	* size_max.m4: Likewise.
+	* stdint_h.m4: Likewise.
+	* uintmax_t.m4: Likewise.
+	* visibility.m4: Likewise.
+	* wchar_t.m4: Likewise.
+	* wint_t.m4: Likewise.
+	* xsize.m4: Likewise.
+
+2011-09-11  Bruno Haible  <bruno@clisp.org>
+
+	Don't assume <unistd.h> exists.
+	* fcntl-o.m4 (gl_FCNTL_O_FLAGS): If <unistd.h> does not exist,
+	include <io.h> and <stdlib.h> instead. Don't test symbolink links if
+	symlink() does not exist.
+
+2012-01-04  Bruno Haible  <bruno@clisp.org>
+
+	Talk about "native Windows API", not "Win32".
+	* threadlib.m4: Update comments to mention native Windows.
+	(gl_THREADLIB_EARLY_BODY, gl_THREADLIB_BODY): Expect
+	--enable-threads=windows instead of --enable-threads=win32. Set
+	USE_WINDOWS_THREADS, not USE_WIN32_THREADS.
+
+2012-01-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/gettext.m4: In commentary, do not use ` to quote.
+
+2012-01-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Use ', not `, for quoting output.
+	* m4/intl.m4 (gt_CHECK_DECL): Quote 'like this', not `like this', as
+	per the recent change to the GNU coding standards.
+	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT,
+	AC_TYPE_UNSIGNED_LONG_LONG_INT): Likewise.
+
+2011-09-10  Bruno Haible  <bruno@clisp.org>
+
+	iconv.m4: Add support for MSVC compiler.
+	* iconv.m4 (AM_ICONV): Use ISO C declaration syntax on MSVC.
+
+2011-07-07  Bruno Haible  <bruno@clisp.org>
+
+	Avoid literal tabs.
+	* po,m4 (AM_PO_SUBDIRS, AM_POSTPROCESS_PO_MAKEFILE): Use a shell
+	variable containing a tab instead of a literal tab.
+	Reported by Jim Meyering.
+
+2011-06-04  Bruno Haible  <bruno@clisp.org>
+
+	Ensure intmax_t gets defined in libasprintf.
+	* Makefile.am (EXTRA_DIST): Add intmax_t.m4.
+
+2011-02-18  Eric Blake  <eblake@redhat.com>
+
+	longlong: skip, rather than fail, on cross-compilation
+	* longlong.m4 (AC_TYPE_LONG_LONG_INT): Avoid aborting configure
+	when cross-compiling; regression from 2011-02-16.
+
+2011-02-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	longlong: tune, particularly for common case of c99
+	* longlong.m4 (AC_TYPE_LONG_LONG_INT): Don't bother compiling
+	or running anything if c99, or if unsigned long long int does not
+	work.  In either case, we know the answer without further tests.
+	Do not compile _AC_TYPE_LONG_LONG_SNIPPET twice.  Instead, compile
+	it at most once, and use its results for both long long int and
+	unsigned long long int.  This is more likely to be efficient in
+	the common case where the program wants to check for both long
+	long int and unsigned long long int.
+	(AC_TYPE_UNSIGNED_LONG_LONG_INT): Don't bother compiling if c99,
+	since the answer is already known.
+
+2010-12-04  Bruno Haible  <bruno@clisp.org>
+
+	Put more information about failed tests into the test return codes.
+	* intdiv0.m4 (gt_INTDIV0): Change test program so that it returns an
+	enumerated value (0, 1, 2, 3, 4, ...).
+	* fcntl-o.m4 (gl_FCNTL_O_FLAGS): Change test program so that it returns
+	a bit mask.
+	* iconv.m4 (AM_ICONV_LINK): Likewise.
+
+2010-11-26  Bruno Haible  <bruno@clisp.org>
+
+	* iconv.m4 (AM_ICONV): If the gnulib module 'iconv-h' is present, set
+	ICONV_CONST.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* intl.m4 (AM_INTL_SUBDIR): Test for <features.h>.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	Port to uClibc.
+	* glibc21.m4 (gl_GLIBC21): Treat uClibc like glibc.
+	* glibc2.m4 (gt_GLIBC2): Treat uClibc like a non-glibc platform.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+2010-10-04  Bruno Haible  <bruno@clisp.org>
+
+	Make option --with-libpth-prefix work.
+	* threadlib.m4 (gl_THREADLIB_BODY): When testing whether pth works, use
+	$LIBPTH, not just -lpth.
+
+2010-09-22  Bruno Haible  <bruno@clisp.org>
+
+	* threadlib.m4 (gl_THREADLIB_EARLY_BODY): When gl_THREADLIB_DEFAULT_NO
+	is defined, change the default to 'no'.
+	Reported by Paul Eggert.
+
+2010-09-04  Bruno Haible  <bruno@clisp.org>
+
+	Set PATH_SEPARATOR the same way autoconf does.
+	* progtest.m4 (AM_PATH_PROG_WITH_TEST): Determine the value of
+	PATH_SEPARATOR the same way autoconf-generated configure scripts do.
+
+2010-08-28  Bruno Haible  <bruno@clisp.org>
+
+	Prefer using AC_DEFUN_ONCE over AC_DEFUN in projects with gnulib.
+	* iconv.m4 (gl_iconv_AC_DEFUN): Use AC_DEFUN_ONCE if gl_00GNULIB is
+	defined.
+	Suggested by Eric Blake.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
+	Use new ansi-c++.m4 from gnulib.
+	* ansi-c++.m4: Remove file.
+	* Makefile.am (EXTRA_DIST): Remove it.
+	Reported at <https://savannah.gnu.org/bugs/?30607>.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
+	iconv: Work around AIX 6.1..7.1 bug.
+	* iconv.m4 (AM_ICONV_LINK): Test against AIX 6.1, 7.1 bug. When
+	cross-compiling, guess no on all versions of AIX.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
+	iconv: Update regarding AIX.
+	* iconv.m4 (AM_ICONV_LINK): When cross-compiling, guess yes on AIX 7.
+	Reported by Rainer Tammer.
+
+2010-07-19  Bruno Haible  <bruno@clisp.org>
+
+	Modernize AC_TRY_RUN invocations.
+	* iconv.m4 (AM_ICONV_LINK): Use AC_RUN_IFELSE instead of AC_TRY_RUN.
+	* intdiv0.m4 (gt_INTDIV0): Likewise.
+	* printf-posix.m4 (gt_PRINTF_POSIX): Likewise.
+	* threadlib.m4 (gl_THREADLIB_BODY): Likewise.
+
+2010-07-19  Bruno Haible  <bruno@clisp.org>
+
+	Modernize AC_TRY_LINK invocations.
+	* codeset.m4 (AM_LANGINFO_CODESET): Use AC_LINK_IFELSE instead of
+	AC_TRY_LINK.
+	* gettext.m4 (AM_GNU_GETTEXT): Likewise.
+	* iconv.m4 (AM_ICONV_LINK): Likewise.
+	* intl.m4 (gt_INTL_SUBDIR_CORE): Likewise.
+	* intlmacosx.m4 (gt_INTL_MACOSX): Likewise.
+	* lcmessage.m4 (gt_LC_MESSAGES): Likewise.
+	* threadlib.m4 (gl_THREADLIB_BODY): Likewise.
+
+2010-07-18  Bruno Haible  <bruno@clisp.org>
+
+	Modernize AC_TRY_COMPILE invocations.
+	* iconv.m4 (gl_iconv_AC_DEFUN): Use AC_COMPILE_IFELSE instead of
+	AC_TRY_COMPILE.
+	* intl.m4 (gt_CHECK_DECL): Likewise.
+	* intmax.m4 (gt_TYPE_INTMAX_T): Likewise.
+	* inttypes-pri.m4 (gt_INTTYPES_PRI): Likewise.
+	* inttypes_h.m4 (gl_AC_HEADER_INTTYPES_H): Likewise.
+	* lock.m4 (gl_LOCK): Likewise.
+	* size_max.m4 (gl_SIZE_MAX): Likewise.
+	* stdint_h.m4 (gl_AC_HEADER_STDINT_H): Likewise.
+	* visibility.m4 (gl_VISIBILITY): Likewise.
+	* wchar_t.m4 (gt_TYPE_WCHAR_T): Likewise.
+	* wint_t.m4 (gt_TYPE_WINT_T): Likewise.
+
+2010-07-01  Christian Weisgerber  <naddy@mips.inka.de>  (tiny change)
+
+	Use AC_GNU_SOURCE as a fallback for AC_USE_SYSTEM_EXTENSIONS.
+	* fcntl-o.m4 (gl_FCNTL_O_FLAGS): When AC_USE_SYSTEM_EXTENSIONS is
+	not present (i.e. with autoconf 2.59 and when using gettextize, not
+	gnulib), require AC_GNU_SOURCE instead.
+
+2010-06-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Avoid double-quotes inside backquote inside double-quote.
+	* gettext-runtime/m4/po.m4 (AM_PO_SUBDIRS, AM_POSTPROCESS_PO_MAKEFILE):
+	Remove unneeded outermost double-quotes around backquote that contains
+	double-quoted strings. Avoids an idiom that nearly triggers a ksh bug.
+
+2010-06-04  Bruno Haible  <bruno@clisp.org>
+
+	Prefer documented low-level autoconf macro names.
+	* intl.m4 (gt_CHECK_DECL): Use m4_translit instead of translit.
+
 2010-06-04  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.18.1 released.

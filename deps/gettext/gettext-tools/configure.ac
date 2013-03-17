@@ -1,5 +1,5 @@
 dnl Configuration for the gettext-tools directory of GNU gettext
-dnl Copyright (C) 1995-1999, 2000-2010 Free Software Foundation, Inc.
+dnl Copyright (C) 1995-1999, 2000-2011 Free Software Foundation, Inc.
 dnl
 dnl This program is free software: you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ AC_CONFIG_AUX_DIR([../build-aux])
 . $srcdir/../version.sh
 gl_INIT_PACKAGE([gettext-tools], [$VERSION_NUMBER])
 AM_INIT_AUTOMAKE([silent-rules])
-AM_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 
 dnl Installation directories.
 test "$docdir" != '${datarootdir}/doc/${PACKAGE}' || docdir='${datarootdir}/doc/gettext'
@@ -97,14 +97,6 @@ dnl Prepares the libtool configuration for handling of Windows resources, and
 dnl sets the RC variable to a program that compiles Windows resource files.
 LT_LANG([Windows Resource])
 
-case "$host_os" in
-  # On Cygwin, without -no-undefined, a warning is emitted and only a static
-  # library is built.
-  beos* | mingw* | cygwin*) LTNOUNDEF='-no-undefined' ;;
-  *) LTNOUNDEF='' ;;
-esac
-AC_SUBST([LTNOUNDEF])
-
 dnl On mingw and Cygwin, we can activate special Makefile rules which add
 dnl version information to the shared libraries and executables.
 case "$host_os" in
@@ -112,6 +104,13 @@ case "$host_os" in
   *) is_woe32=no ;;
 esac
 AM_CONDITIONAL([WOE32], [test $is_woe32 = yes])
+
+dnl On Cygwin 1.7.10-1 or later, error_* variables are defined in the
+dnl Cygwin DLL.  To avoid any conflict with gettext DLLs, always link
+dnl to gnulib's error.c.  See GETTEXTLIB_EXPORTS_FLAGS setting below.
+case "$host_os" in
+  cygwin*) ac_cv_lib_error_at_line=no ;;
+esac
 
 dnl Checks for libraries.
 
@@ -223,15 +222,34 @@ if test $is_woe32dll = yes; then
     [Define when --enable-shared is used on mingw or Cygwin.])
 fi
 
+GETTEXTLIB_EXPORTS_FLAGS=
 dnl woe32dll/gettextlib-exports.c needs to know whether the getopt facility
 dnl is replaced by gnulib. GETOPT_H is set by gl_FUNC_GETOPT_POSIX, inside
 dnl gl_INIT.
 if test -n "$GETOPT_H"; then
-  GETTEXTLIB_EXPORTS_FLAGS="-DGNULIB_DEFINED_GETOPT"
-else
-  GETTEXTLIB_EXPORTS_FLAGS=
+  GETTEXTLIB_EXPORTS_FLAGS="-DGNULIB_DEFINED_GETOPT $GETTEXTLIB_EXPORTS_FLAGS"
+fi
+dnl woe32dll/gettextlib-exports.c needs to know whether the error
+dnl facility is replaced by gnulib. ac_cv_lib_error_at_line is set by
+dnl gl_ERROR, inside gl_INIT.
+if test "$ac_cv_lib_error_at_line" = no; then
+  GETTEXTLIB_EXPORTS_FLAGS="-DGNULIB_DEFINED_ERROR $GETTEXTLIB_EXPORTS_FLAGS"
+fi
+
+dnl 64-bit mingw does not prepend an underscore to C symbols.
+dnl USER_LABEL_PREFIX is set by gl_ASM_SYMBOL_PREFIX, inside gl_INIT.
+if test "$USER_LABEL_PREFIX" = _; then
+  GETTEXTLIB_EXPORTS_FLAGS="-DUSER_LABEL_PREFIX_UNDERSCORE $GETTEXTLIB_EXPORTS_FLAGS"
 fi
 AC_SUBST([GETTEXTLIB_EXPORTS_FLAGS])
+
+dnl Tell the source files that the error facility is replaced by
+dnl gnulib, to make sure to prepend "rpl_" prefix to the error_*
+dnl symbols.
+if test "$ac_cv_lib_error_at_line" = no; then
+  AC_DEFINE([GNULIB_REPLACE_ERROR], [1],
+    [Define when the error facility is replaced by gnulib.])
+fi
 
 dnl Put some default definitions into config.h.
 AH_TOP([
@@ -296,7 +314,6 @@ dnl Check for nm output filter that yields the exported symbols.
 gt_GLOBAL_SYMBOL_PIPE
 
 dnl Check for Emacs and where to install .elc files.
-AM_PATH_LISPDIR
 dnl Sometimes Emacs is badly installed. Allow the user to work around it.
 AC_ARG_WITH([emacs],
   [  --without-emacs         do not use Emacs, don't install po-mode],
@@ -308,6 +325,11 @@ if test "$EMACS" != no; then
   if test "$gt_use_emacs" = no; then
     EMACS=no
   fi
+fi
+dnl If $EMACS = no, we won't install any Emacs Lisp (*.el) files,
+dnl therefore it's useless to determine $(lispdir).
+if test "$EMACS" != no; then
+  AM_PATH_LISPDIR
 fi
 
 aclocaldir='${datadir}/aclocal'
@@ -323,36 +345,114 @@ AC_ARG_WITH([cvs],
                           (deprecated)],
   [gt_use_cvs=$withval],
   [gt_use_cvs=no])
+AC_ARG_WITH([bzip2],
+  [  --without-bzip2         don't use bzip2 to compress the infrastructure archive],
+  [gt_use_bzip2=$withval],
+  [gt_use_bzip2=maybe])
+AC_ARG_WITH([xz],
+  [  --without-xz            don't use xz to compress the infrastructure archive],
+  [gt_use_xz=$withval],
+  [gt_use_xz=maybe])
 # The CVS format is deprecated, because "cvs init" does not work in all
 # circumstances
 # (see <http://lists.gnu.org/archive/html/bug-cvs/2010-05/msg00003.html>)
 # and we are not allowed to distribute the cvs infrastructure files ourselves
 # (see <http://lists.gnu.org/archive/html/bug-cvs/2010-06/msg00011.html>).
-if test "$gt_use_git" != no && test "$gt_use_git" != maybe; then
-  # --with-git is specified. Even if --with-cvs is also specified, we use the
-  # git format.
-  ARCHIVE_FORMAT=git
+#
+# With the archive from version 0.18.1, we can observe the following
+# compression rates:
+#    Size           File
+#  16916480   archive.dir.tar
+#   3528757   archive.dir.tar.gz
+#   2621440   archive.cvs.tar
+#   2082492   archive.dir.tar.bz2
+#    696320   archive.git.tar
+#    599046   archive.git.tar.bz2
+#    592989   archive.git.tar.gz
+#    588124   archive.git.tar.xz
+#    457190   archive.cvs.tar.gz
+#    335808   archive.cvs.tar.bz2
+#    308880   archive.dir.tar.xz
+#    299124   archive.cvs.tar.xz
+# Among these:
+#   - We don't offer the uncompressed ones, because at least gzip can be
+#     assumed to be present everywhere.
+#   - Among archive.git.tar.*, all have approximately the same size, because
+#     git already compresses most of its repository data. Offer only .gz here.
+#   - Among archive.cvs.tar.*, offer only .gz, for simplicity, since --with-cvs
+#     is deprecated.
+# The remaining ones are:
+#    Size           File            ARCHIVE_FORMAT
+#   3528757   archive.dir.tar.gz      dirgz
+#   2082492   archive.dir.tar.bz2     dirbz2
+#    592989   archive.git.tar.gz      git
+#    457190   archive.cvs.tar.gz      cvs
+#    308880   archive.dir.tar.xz      dirxz
+if test "$gt_use_xz" != no && test "$gt_use_xz" != maybe; then
+  # --with-xz is specified. Even if --with-git or --with-cvs or --with-bzip2 is
+  # also specified, we use the dirxz format.
+  ARCHIVE_FORMAT=dirxz
 else
-  if test "$gt_use_cvs" != no; then
-    # --with-cvs is specified.
-    ARCHIVE_FORMAT=cvs
+  if test "$gt_use_git" != no && test "$gt_use_git" != maybe; then
+    # --with-git is specified. Even if --with-cvs or --with-bzip2 is also
+    # specified, we use the git format.
+    ARCHIVE_FORMAT=git
   else
-    # Neither --with-git nor --with-cvs is specified.
-changequote(,)dnl
-    if test "$gt_use_git" != no \
-       && (git --version) >/dev/null 2>&1 \
-       && { case `git --version | sed -e 's/^[^0-9]*//'` in
-              0.* | 1.[0-5].*) false ;;
-              *) true ;;
-            esac
-          }; then
-changequote([,])dnl
-      # --without-git is not specified, and the git program exists
-      # in version 1.6 or newer. Use git format.
-      ARCHIVE_FORMAT=git
+    if test "$gt_use_cvs" != no; then
+      # --with-cvs is specified. Even if --with-bzip2 is also specified, we use
+      # the cvs format.
+      ARCHIVE_FORMAT=cvs
     else
-      # --without-git is specified, or the git program is missing.
-      ARCHIVE_FORMAT=dir
+      if test "$gt_use_bzip2" != no && test "$gt_use_bzip2" != maybe; then
+        # --with-bzip2 is specified. We use the dirbz2 format.
+        ARCHIVE_FORMAT=dirbz2
+      else
+        # Neither --with-git nor --with-cvs nor --with-bzip2 nor --with-xz is
+        # specified. Determine which programs are present.
+        if test "$gt_use_xz" != no \
+           && (xz --version) >/dev/null 2>&1 \
+           && xz --version | grep lzma >/dev/null; then
+          # --without-xz is not specified, and the xz program exists.
+          ARCHIVE_FORMAT=dirxz
+        else
+          # --without-xz is specified, or the xz program is missing.
+changequote(,)dnl
+          if test "$gt_use_git" != no \
+             && (git --version) >/dev/null 2>&1 \
+             && { case `git --version | sed -e 's/^[^0-9]*//'` in
+                    0.* | 1.[0-5].*) false ;;
+                    *) true ;;
+                  esac
+                }; then
+changequote([,])dnl
+            # --without-git is not specified, and the git program exists
+            # in version 1.6 or newer. Use git format.
+            ARCHIVE_FORMAT=git
+          else
+            # --without-git is specified, or the git program is missing.
+changequote(,)dnl
+            if test "$gt_use_bzip2" != no \
+               && (: | bzip2 --version) >/dev/null 2>&1 \
+               && { sed_bzip2_version1='s/ \([0-9][0-9.]*\).*/ \1/'
+                    sed_bzip2_version2='s/^.* //'
+                    case `(: | bzip2 --version) 2>&1 \
+                          | sed -e 1q \
+                          | sed -e "$sed_bzip2_version1" -e "$sed_bzip2_version2"` in
+                      0.*) false ;;
+                      *) true ;;
+                    esac
+                  }; then
+changequote([,])dnl
+              # --without-bzip2 is not specified, and the bzip2 program exists
+              # in version 1.0 or newer. Use dirbz2 format.
+              ARCHIVE_FORMAT=dirbz2
+            else
+              # --without-bzip2 is specified, or the bzip2 program is missing.
+              ARCHIVE_FORMAT=dirgz
+            fi
+          fi
+        fi
+      fi
     fi
   fi
 fi
@@ -369,7 +469,7 @@ CROSS_COMPILING=$cross_compiling
 AC_SUBST([CROSS_COMPILING])
 
 dnl Checks for optional programs for the tests/lang-*, tests/recode-* tests.
-gt_PROG_ANSI_CXX
+gl_PROG_ANSI_CXX([CXX], [ANSICXX])
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 gt_LOCALE_JA
@@ -391,7 +491,7 @@ if test "${enable_libasprintf+set}" = set; then
 else
   TESTLIBASPRINTF=yes
 fi
-if test "$CXX" = ":"; then
+if test "$CXX" = no; then
   TESTLIBASPRINTF=no
 fi
 AC_SUBST([TESTLIBASPRINTF])

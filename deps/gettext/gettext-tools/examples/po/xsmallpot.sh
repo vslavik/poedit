@@ -24,7 +24,7 @@ case $directory in
     sed -e 's,tmp-,,' < configure.in > configure.ac
     grep '^\(AC_INIT\|AC_CONFIG\|AC_PROG_\|AC_SUBST(.*OBJC\|AM_INIT\|AM_CONDITIONAL\|AM_GNU_GETTEXT\|AM_PO_SUBDIRS\|AC_OUTPUT\)' configure.ac > configure.in
     rm -f configure.ac 
-    autoconf
+    autoconf -f
     ./configure
     ;;
   hello-objc-gnustep)

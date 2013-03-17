@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2007, 2010 Free Software Foundation, Inc.
+ * Copyright (C) 2006-2007, 2010-2013 Free Software Foundation, Inc.
  * Written by Simon Josefsson
  *
  * This program is free software: you can redistribute it and/or modify
@@ -52,11 +52,23 @@ main (void)
               err = 1;
             }
 
-          /* Assume FILE1 is a regular file or a symlink to a regular file.  */
-          if (len != statbuf.st_size)
+          if (S_ISREG (statbuf.st_mode))
             {
-              fprintf (stderr, "Read %ld from %s...\n", (unsigned long) len, FILE1);
-              err = 1;
+              /* FILE1 is a regular file or a symlink to a regular file.  */
+              if (len != statbuf.st_size)
+                {
+                  fprintf (stderr, "Read %ld from %s...\n", (unsigned long) len, FILE1);
+                  err = 1;
+                }
+            }
+          else
+            {
+              /* Assume FILE1 is not empty.  */
+              if (len == 0)
+                {
+                  fprintf (stderr, "Read nothing from %s\n", FILE1);
+                  err = 1;
+                }
             }
           free (out);
         }

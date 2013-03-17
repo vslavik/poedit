@@ -1,5 +1,5 @@
 /* Character set conversion with error handling.
-   Copyright (C) 2001-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2007, 2009-2013 Free Software Foundation, Inc.
    Written by Bruno Haible and Simon Josefsson.
 
    This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ extern "C" {
 
 #if HAVE_ICONV
 
-/* An conversion descriptor for use by the iconveh functions.  */
+/* A conversion descriptor for use by the iconveh functions.  */
 typedef struct
   {
     /* Conversion descriptor from FROM_CODESET to TO_CODESET, or (iconv_t)(-1)

@@ -1,5 +1,5 @@
 /* Definitions for POSIX spawn interface.
-   Copyright (C) 2000, 2003-2004, 2008-2010 Free Software Foundation, Inc.
+   Copyright (C) 2000, 2003-2004, 2008-2013 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -15,23 +15,24 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _GL_SPAWN_H
+#ifndef _@GUARD_PREFIX@_SPAWN_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_SPAWN_H@
 # @INCLUDE_NEXT@ @NEXT_SPAWN_H@
 #endif
 
-#ifndef _GL_SPAWN_H
-#define _GL_SPAWN_H
+#ifndef _@GUARD_PREFIX@_SPAWN_H
+#define _@GUARD_PREFIX@_SPAWN_H
 
 /* Get definitions of 'struct sched_param' and 'sigset_t'.
    But avoid namespace pollution on glibc systems.  */
-#ifndef __GLIBC__
+#if !(defined __GLIBC__ && !defined __UCLIBC__)
 # include <sched.h>
 # include <signal.h>
 #endif
@@ -62,7 +63,7 @@
 #ifndef _Restrict_arr_
 # if ((199901L <= __STDC_VERSION__                                      \
        || ((3 < __GNUC__ || (3 == __GNUC__ && 1 <= __GNUC_MINOR__))     \
-           && !__STRICT_ANSI__))                                        \
+           && !defined __STRICT_ANSI__))                                        \
       && !defined __GNUG__)
 #  define _Restrict_arr_ _Restrict_
 # else
@@ -82,6 +83,7 @@
 # define posix_spawnattr_t rpl_posix_spawnattr_t
 #endif
 #if @REPLACE_POSIX_SPAWN@ || !@HAVE_POSIX_SPAWNATTR_T@
+# if !GNULIB_defined_posix_spawnattr_t
 typedef struct
 {
   short int _flags;
@@ -92,6 +94,8 @@ typedef struct
   int _policy;
   int __pad[16];
 } posix_spawnattr_t;
+#  define GNULIB_defined_posix_spawnattr_t 1
+# endif
 #endif
 
 
@@ -101,6 +105,7 @@ typedef struct
 # define posix_spawn_file_actions_t rpl_posix_spawn_file_actions_t
 #endif
 #if @REPLACE_POSIX_SPAWN@ || !@HAVE_POSIX_SPAWN_FILE_ACTIONS_T@
+# if !GNULIB_defined_posix_spawn_file_actions_t
 typedef struct
 {
   int _allocated;
@@ -108,10 +113,12 @@ typedef struct
   struct __spawn_action *_actions;
   int __pad[16];
 } posix_spawn_file_actions_t;
+#  define GNULIB_defined_posix_spawn_file_actions_t 1
+# endif
 #endif
 
 
-/* Flags to be set in the `posix_spawnattr_t'.  */
+/* Flags to be set in the 'posix_spawnattr_t'.  */
 #if @HAVE_POSIX_SPAWN@
 /* Use the values from the system, but provide the missing ones.  */
 # ifndef POSIX_SPAWN_SETSCHEDPARAM
@@ -145,11 +152,16 @@ typedef struct
     | POSIX_SPAWN_SETSCHEDULER                                            \
     | (POSIX_SPAWN_SETSCHEDULER > 0 ? POSIX_SPAWN_SETSCHEDULER - 1 : 0))  \
    + 1)
+#if !GNULIB_defined_verify_POSIX_SPAWN_USEVFORK_no_overlap
 typedef int verify_POSIX_SPAWN_USEVFORK_no_overlap
-            [2 * (((POSIX_SPAWN_RESETIDS | POSIX_SPAWN_SETPGROUP
-                    | POSIX_SPAWN_SETSIGDEF | POSIX_SPAWN_SETSIGMASK
-                    | POSIX_SPAWN_SETSCHEDPARAM | POSIX_SPAWN_SETSCHEDULER)
-                   & POSIX_SPAWN_USEVFORK) == 0) - 1];
+            [(((POSIX_SPAWN_RESETIDS | POSIX_SPAWN_SETPGROUP
+                | POSIX_SPAWN_SETSIGDEF | POSIX_SPAWN_SETSIGMASK
+                | POSIX_SPAWN_SETSCHEDPARAM | POSIX_SPAWN_SETSCHEDULER)
+               & POSIX_SPAWN_USEVFORK)
+              == 0)
+             ? 1 : -1];
+# define GNULIB_defined_verify_POSIX_SPAWN_USEVFORK_no_overlap 1
+#endif
 
 
 #if @GNULIB_POSIX_SPAWN@
@@ -206,7 +218,7 @@ _GL_WARN_ON_USE (posix_spawn, "posix_spawn is unportable - "
 #endif
 
 #if @GNULIB_POSIX_SPAWNP@
-/* Similar to `posix_spawn' but search for FILE in the PATH.
+/* Similar to 'posix_spawn' but search for FILE in the PATH.
 
    This function is a possible cancellation points and therefore not
    marked with __THROW.  */
@@ -251,7 +263,7 @@ _GL_WARN_ON_USE (posix_spawnp, "posix_spawnp is unportable - "
 
 
 #if @GNULIB_POSIX_SPAWNATTR_INIT@
-/* Initialize data structure with attributes for `spawn' to default values.  */
+/* Initialize data structure with attributes for 'spawn' to default values.  */
 # if @REPLACE_POSIX_SPAWN@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define posix_spawnattr_init rpl_posix_spawnattr_init
@@ -295,7 +307,8 @@ _GL_CXXALIASWARN (posix_spawnattr_destroy);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_destroy
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_DESTROY
-_GL_WARN_ON_USE (posix_spawnattr_destroy, "posix_spawnattr_destroy is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_destroy,
+                 "posix_spawnattr_destroy is unportable - "
                  "use gnulib module posix_spawnattr_destroy for portability");
 # endif
 #endif
@@ -329,7 +342,8 @@ _GL_CXXALIASWARN (posix_spawnattr_getsigdefault);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getsigdefault
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETSIGDEFAULT
-_GL_WARN_ON_USE (posix_spawnattr_getsigdefault, "posix_spawnattr_getsigdefault is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_getsigdefault,
+                 "posix_spawnattr_getsigdefault is unportable - "
                  "use gnulib module posix_spawnattr_getsigdefault for portability");
 # endif
 #endif
@@ -362,7 +376,8 @@ _GL_CXXALIASWARN (posix_spawnattr_setsigdefault);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setsigdefault
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETSIGDEFAULT
-_GL_WARN_ON_USE (posix_spawnattr_setsigdefault, "posix_spawnattr_setsigdefault is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_setsigdefault,
+                 "posix_spawnattr_setsigdefault is unportable - "
                  "use gnulib module posix_spawnattr_setsigdefault for portability");
 # endif
 #endif
@@ -395,7 +410,8 @@ _GL_CXXALIASWARN (posix_spawnattr_getsigmask);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getsigmask
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETSIGMASK
-_GL_WARN_ON_USE (posix_spawnattr_getsigmask, "posix_spawnattr_getsigmask is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_getsigmask,
+                 "posix_spawnattr_getsigmask is unportable - "
                  "use gnulib module posix_spawnattr_getsigmask for portability");
 # endif
 #endif
@@ -428,7 +444,8 @@ _GL_CXXALIASWARN (posix_spawnattr_setsigmask);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setsigmask
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETSIGMASK
-_GL_WARN_ON_USE (posix_spawnattr_setsigmask, "posix_spawnattr_setsigmask is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_setsigmask,
+                 "posix_spawnattr_setsigmask is unportable - "
                  "use gnulib module posix_spawnattr_setsigmask for portability");
 # endif
 #endif
@@ -461,7 +478,8 @@ _GL_CXXALIASWARN (posix_spawnattr_getflags);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getflags
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETFLAGS
-_GL_WARN_ON_USE (posix_spawnattr_getflags, "posix_spawnattr_getflags is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_getflags,
+                 "posix_spawnattr_getflags is unportable - "
                  "use gnulib module posix_spawnattr_getflags for portability");
 # endif
 #endif
@@ -490,7 +508,8 @@ _GL_CXXALIASWARN (posix_spawnattr_setflags);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setflags
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETFLAGS
-_GL_WARN_ON_USE (posix_spawnattr_setflags, "posix_spawnattr_setflags is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_setflags,
+                 "posix_spawnattr_setflags is unportable - "
                  "use gnulib module posix_spawnattr_setflags for portability");
 # endif
 #endif
@@ -523,7 +542,8 @@ _GL_CXXALIASWARN (posix_spawnattr_getpgroup);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getpgroup
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETPGROUP
-_GL_WARN_ON_USE (posix_spawnattr_getpgroup, "posix_spawnattr_getpgroup is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_getpgroup,
+                 "posix_spawnattr_getpgroup is unportable - "
                  "use gnulib module posix_spawnattr_getpgroup for portability");
 # endif
 #endif
@@ -552,7 +572,8 @@ _GL_CXXALIASWARN (posix_spawnattr_setpgroup);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setpgroup
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETPGROUP
-_GL_WARN_ON_USE (posix_spawnattr_setpgroup, "posix_spawnattr_setpgroup is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_setpgroup,
+                 "posix_spawnattr_setpgroup is unportable - "
                  "use gnulib module posix_spawnattr_setpgroup for portability");
 # endif
 #endif
@@ -585,7 +606,8 @@ _GL_CXXALIASWARN (posix_spawnattr_getschedpolicy);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getschedpolicy
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETSCHEDPOLICY
-_GL_WARN_ON_USE (posix_spawnattr_getschedpolicy, "posix_spawnattr_getschedpolicy is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_getschedpolicy,
+                 "posix_spawnattr_getschedpolicy is unportable - "
                  "use gnulib module posix_spawnattr_getschedpolicy for portability");
 # endif
 #endif
@@ -614,7 +636,8 @@ _GL_CXXALIASWARN (posix_spawnattr_setschedpolicy);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setschedpolicy
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETSCHEDPOLICY
-_GL_WARN_ON_USE (posix_spawnattr_setschedpolicy, "posix_spawnattr_setschedpolicy is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_setschedpolicy,
+                 "posix_spawnattr_setschedpolicy is unportable - "
                  "use gnulib module posix_spawnattr_setschedpolicy for portability");
 # endif
 #endif
@@ -647,7 +670,8 @@ _GL_CXXALIASWARN (posix_spawnattr_getschedparam);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getschedparam
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETSCHEDPARAM
-_GL_WARN_ON_USE (posix_spawnattr_getschedparam, "posix_spawnattr_getschedparam is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_getschedparam,
+                 "posix_spawnattr_getschedparam is unportable - "
                  "use gnulib module posix_spawnattr_getschedparam for portability");
 # endif
 #endif
@@ -680,14 +704,15 @@ _GL_CXXALIASWARN (posix_spawnattr_setschedparam);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setschedparam
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETSCHEDPARAM
-_GL_WARN_ON_USE (posix_spawnattr_setschedparam, "posix_spawnattr_setschedparam is unportable - "
+_GL_WARN_ON_USE (posix_spawnattr_setschedparam,
+                 "posix_spawnattr_setschedparam is unportable - "
                  "use gnulib module posix_spawnattr_setschedparam for portability");
 # endif
 #endif
 
 
 #if @GNULIB_POSIX_SPAWN_FILE_ACTIONS_INIT@
-/* Initialize data structure for file attribute for `spawn' call.  */
+/* Initialize data structure for file attribute for 'spawn' call.  */
 # if @REPLACE_POSIX_SPAWN@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define posix_spawn_file_actions_init rpl_posix_spawn_file_actions_init
@@ -710,7 +735,8 @@ _GL_CXXALIASWARN (posix_spawn_file_actions_init);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_init
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_INIT
-_GL_WARN_ON_USE (posix_spawn_file_actions_init, "posix_spawn_file_actions_init is unportable - "
+_GL_WARN_ON_USE (posix_spawn_file_actions_init,
+                 "posix_spawn_file_actions_init is unportable - "
                  "use gnulib module posix_spawn_file_actions_init for portability");
 # endif
 #endif
@@ -739,15 +765,16 @@ _GL_CXXALIASWARN (posix_spawn_file_actions_destroy);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_destroy
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_DESTROY
-_GL_WARN_ON_USE (posix_spawn_file_actions_destroy, "posix_spawn_file_actions_destroy is unportable - "
+_GL_WARN_ON_USE (posix_spawn_file_actions_destroy,
+                 "posix_spawn_file_actions_destroy is unportable - "
                  "use gnulib module posix_spawn_file_actions_destroy for portability");
 # endif
 #endif
 
 #if @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN@
 /* Add an action to FILE-ACTIONS which tells the implementation to call
-   `open' for the given file during the `spawn' call.  */
-# if @REPLACE_POSIX_SPAWN@
+   'open' for the given file during the 'spawn' call.  */
+# if @REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define posix_spawn_file_actions_addopen rpl_posix_spawn_file_actions_addopen
 #  endif
@@ -777,15 +804,16 @@ _GL_CXXALIASWARN (posix_spawn_file_actions_addopen);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_addopen
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN
-_GL_WARN_ON_USE (posix_spawn_file_actions_addopen, "posix_spawn_file_actions_addopen is unportable - "
+_GL_WARN_ON_USE (posix_spawn_file_actions_addopen,
+                 "posix_spawn_file_actions_addopen is unportable - "
                  "use gnulib module posix_spawn_file_actions_addopen for portability");
 # endif
 #endif
 
 #if @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE@
 /* Add an action to FILE-ACTIONS which tells the implementation to call
-   `close' for the given file descriptor during the `spawn' call.  */
-# if @REPLACE_POSIX_SPAWN@
+   'close' for the given file descriptor during the 'spawn' call.  */
+# if @REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define posix_spawn_file_actions_addclose rpl_posix_spawn_file_actions_addclose
 #  endif
@@ -807,15 +835,16 @@ _GL_CXXALIASWARN (posix_spawn_file_actions_addclose);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_addclose
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE
-_GL_WARN_ON_USE (posix_spawn_file_actions_addclose, "posix_spawn_file_actions_addclose is unportable - "
+_GL_WARN_ON_USE (posix_spawn_file_actions_addclose,
+                 "posix_spawn_file_actions_addclose is unportable - "
                  "use gnulib module posix_spawn_file_actions_addclose for portability");
 # endif
 #endif
 
 #if @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2@
 /* Add an action to FILE-ACTIONS which tells the implementation to call
-   `dup2' for the given file descriptors during the `spawn' call.  */
-# if @REPLACE_POSIX_SPAWN@
+   'dup2' for the given file descriptors during the 'spawn' call.  */
+# if @REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define posix_spawn_file_actions_adddup2 rpl_posix_spawn_file_actions_adddup2
 #  endif
@@ -841,11 +870,12 @@ _GL_CXXALIASWARN (posix_spawn_file_actions_adddup2);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_adddup2
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2
-_GL_WARN_ON_USE (posix_spawn_file_actions_adddup2, "posix_spawn_file_actions_adddup2 is unportable - "
+_GL_WARN_ON_USE (posix_spawn_file_actions_adddup2,
+                 "posix_spawn_file_actions_adddup2 is unportable - "
                  "use gnulib module posix_spawn_file_actions_adddup2 for portability");
 # endif
 #endif
 
 
-#endif /* _GL_SPAWN_H */
-#endif /* _GL_SPAWN_H */
+#endif /* _@GUARD_PREFIX@_SPAWN_H */
+#endif /* _@GUARD_PREFIX@_SPAWN_H */

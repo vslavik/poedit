@@ -1,5 +1,5 @@
-# mbswidth.m4 serial 17
-dnl Copyright (C) 2000-2002, 2004, 2006-2010 Free Software Foundation, Inc.
+# mbswidth.m4 serial 18
+dnl Copyright (C) 2000-2002, 2004, 2006-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -15,8 +15,10 @@ AC_DEFUN([gl_MBSWIDTH],
   dnl UnixWare 7.1.1 <wchar.h> has a declaration of a function mbswidth()
   dnl that clashes with ours.
   AC_CACHE_CHECK([whether mbswidth is declared in <wchar.h>],
-    ac_cv_have_decl_mbswidth,
-    [AC_TRY_COMPILE([
+    [ac_cv_have_decl_mbswidth],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[
 /* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
    <wchar.h>.
    BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be included
@@ -25,10 +27,13 @@ AC_DEFUN([gl_MBSWIDTH],
 #include <stdio.h>
 #include <time.h>
 #include <wchar.h>
-], [
+          ]],
+          [[
   char *p = (char *) mbswidth;
   return !p;
-], ac_cv_have_decl_mbswidth=yes, ac_cv_have_decl_mbswidth=no)])
+          ]])],
+       [ac_cv_have_decl_mbswidth=yes],
+       [ac_cv_have_decl_mbswidth=no])])
   if test $ac_cv_have_decl_mbswidth = yes; then
     ac_val=1
   else

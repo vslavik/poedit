@@ -1,6 +1,6 @@
 /* Internal implementation of access control lists.
 
-   Copyright (C) 2002-2003, 2005-2010 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,13 +26,22 @@
 #if HAVE_SYS_ACL_H
 # include <sys/acl.h>
 #endif
-#if defined HAVE_ACL && ! defined GETACLCNT && defined ACL_CNT
+#if defined HAVE_FACL && ! defined GETACLCNT && defined ACL_CNT
 # define GETACLCNT ACL_CNT
 #endif
 
 /* On Linux, additional ACL related API is available in <acl/libacl.h>.  */
 #ifdef HAVE_ACL_LIBACL_H
 # include <acl/libacl.h>
+#endif
+
+/* On HP-UX >= 11.11, additional ACL API is available in <aclv.h>.  */
+#if HAVE_ACLV_H
+# include <sys/types.h>
+# include <aclv.h>
+/* HP-UX 11.11 lacks these declarations.  */
+extern int acl (char *, int, int, struct acl *);
+extern int aclsort (int, int, struct acl *);
 #endif
 
 #include "error.h"
@@ -46,17 +55,43 @@
 # define ENOTSUP (-1)
 #endif
 
+#include <limits.h>
+#ifndef MIN
+# define MIN(a,b) ((a) < (b) ? (a) : (b))
+#endif
+
+#ifndef SIZE_MAX
+# define SIZE_MAX ((size_t) -1)
+#endif
+
 #ifndef HAVE_FCHMOD
 # define HAVE_FCHMOD false
 # define fchmod(fd, mode) (-1)
 #endif
 
+/* Recognize some common errors such as from an NFS mount that does
+   not support ACLs, even when local drives do.  */
+#if defined __APPLE__ && defined __MACH__ /* Mac OS X */
+# define ACL_NOT_WELL_SUPPORTED(Err) \
+     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == ENOENT)
+#elif defined EOPNOTSUPP /* Tru64 NFS */
+# define ACL_NOT_WELL_SUPPORTED(Err) \
+     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == EOPNOTSUPP)
+#else
+# define ACL_NOT_WELL_SUPPORTED(Err) \
+     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY)
+#endif
+
+_GL_INLINE_HEADER_BEGIN
+#ifndef ACL_INTERNAL_INLINE
+# define ACL_INTERNAL_INLINE _GL_INLINE
+#endif
 
 #if USE_ACL
 
 # if HAVE_ACL_GET_FILE
 /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
-/* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
+/* Linux, FreeBSD, Mac OS X, IRIX, Tru64 */
 
 #  ifndef MIN_ACL_ENTRIES
 #   define MIN_ACL_ENTRIES 4
@@ -67,7 +102,7 @@
 /* Most platforms have a 1-argument acl_get_fd, only OSF/1 has a 2-argument
    macro(!).  */
 #   if HAVE_ACL_FREE_TEXT /* OSF/1 */
-static inline acl_t
+ACL_INTERNAL_INLINE acl_t
 rpl_acl_get_fd (int fd)
 {
   return acl_get_fd (fd, ACL_TYPE_ACCESS);
@@ -86,7 +121,7 @@ rpl_acl_get_fd (int fd)
 /* Most platforms have a 2-argument acl_set_fd, only OSF/1 has a 3-argument
    macro(!).  */
 #   if HAVE_ACL_FREE_TEXT /* OSF/1 */
-static inline int
+ACL_INTERNAL_INLINE int
 rpl_acl_set_fd (int fd, acl_t acl)
 {
   return acl_set_fd (fd, ACL_TYPE_ACCESS, acl);
@@ -119,21 +154,10 @@ rpl_acl_set_fd (int fd, acl_t acl)
 
 /* Set to 1 if a file's mode is implicit by the ACL.
    Set to 0 if a file's mode is stored independently from the ACL.  */
-#  if HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP /* MacOS X */
+#  if (HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP) || defined __sgi /* Mac OS X, IRIX */
 #   define MODE_INSIDE_ACL 0
 #  else
 #   define MODE_INSIDE_ACL 1
-#  endif
-
-#  if defined __APPLE__ && defined __MACH__ /* MacOS X */
-#   define ACL_NOT_WELL_SUPPORTED(Err) \
-     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == ENOENT)
-#  elif defined EOPNOTSUPP /* Tru64 NFS */
-#   define ACL_NOT_WELL_SUPPORTED(Err) \
-     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == EOPNOTSUPP)
-#  else
-#   define ACL_NOT_WELL_SUPPORTED(Err) \
-     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY)
 #  endif
 
 /* Return the number of entries in ACL.
@@ -144,7 +168,7 @@ rpl_acl_set_fd (int fd, acl_t acl)
 extern int acl_entries (acl_t);
 #  endif
 
-#  if HAVE_ACL_TYPE_EXTENDED /* MacOS X */
+#  if HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
 /* ACL is an ACL, from a file, stored as type ACL_TYPE_EXTENDED.
    Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial.  */
@@ -157,7 +181,7 @@ extern int acl_extended_nontrivial (acl_t);
 extern int acl_access_nontrivial (acl_t);
 #  endif
 
-# elif HAVE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
+# elif HAVE_FACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
 
 /* Set to 1 if a file's mode is implicit by the ACL.
    Set to 0 if a file's mode is stored independently from the ACL.  */
@@ -167,13 +191,11 @@ extern int acl_access_nontrivial (acl_t);
 #   define MODE_INSIDE_ACL 1
 #  endif
 
-#  if !defined ACL_NO_TRIVIAL /* Solaris <= 10, Cygwin */
-
 /* Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
 extern int acl_nontrivial (int count, aclent_t *entries);
 
-#   ifdef ACE_GETACL /* Solaris 10 */
+#  ifdef ACE_GETACL /* Solaris 10 */
 
 /* Test an ACL retrieved with ACE_GETACL.
    Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
@@ -183,19 +205,33 @@ extern int acl_ace_nontrivial (int count, ace_t *entries);
 /* Definitions for when the built executable is executed on Solaris 10
    (newer version) or Solaris 11.  */
 /* For a_type.  */
-#    define ACE_ACCESS_ALLOWED_ACE_TYPE 0 /* replaces ALLOW */
-#    define ACE_ACCESS_DENIED_ACE_TYPE  1 /* replaces DENY */
+#   define OLD_ALLOW 0
+#   define OLD_DENY  1
+#   define NEW_ACE_ACCESS_ALLOWED_ACE_TYPE 0 /* replaces ALLOW */
+#   define NEW_ACE_ACCESS_DENIED_ACE_TYPE  1 /* replaces DENY */
 /* For a_flags.  */
-#    define NEW_ACE_OWNER            0x1000
-#    define NEW_ACE_GROUP            0x2000
-#    define NEW_ACE_IDENTIFIER_GROUP 0x0040
-#    define ACE_EVERYONE             0x4000
+#   define OLD_ACE_OWNER            0x0100
+#   define OLD_ACE_GROUP            0x0200
+#   define OLD_ACE_OTHER            0x0400
+#   define NEW_ACE_OWNER            0x1000
+#   define NEW_ACE_GROUP            0x2000
+#   define NEW_ACE_IDENTIFIER_GROUP 0x0040
+#   define NEW_ACE_EVERYONE         0x4000
 /* For a_access_mask.  */
-#    define NEW_ACE_READ_DATA  0x001 /* corresponds to 'r' */
-#    define NEW_ACE_WRITE_DATA 0x002 /* corresponds to 'w' */
-#    define NEW_ACE_EXECUTE    0x004 /* corresponds to 'x' */
-
-#   endif
+#   define NEW_ACE_READ_DATA         0x001 /* corresponds to 'r' */
+#   define NEW_ACE_WRITE_DATA        0x002 /* corresponds to 'w' */
+#   define NEW_ACE_APPEND_DATA       0x004
+#   define NEW_ACE_READ_NAMED_ATTRS  0x008
+#   define NEW_ACE_WRITE_NAMED_ATTRS 0x010
+#   define NEW_ACE_EXECUTE           0x020
+#   define NEW_ACE_DELETE_CHILD      0x040
+#   define NEW_ACE_READ_ATTRIBUTES   0x080
+#   define NEW_ACE_WRITE_ATTRIBUTES  0x100
+#   define NEW_ACE_DELETE          0x10000
+#   define NEW_ACE_READ_ACL        0x20000
+#   define NEW_ACE_WRITE_ACL       0x40000
+#   define NEW_ACE_WRITE_OWNER     0x80000
+#   define NEW_ACE_SYNCHRONIZE    0x100000
 
 #  endif
 
@@ -204,6 +240,14 @@ extern int acl_ace_nontrivial (int count, ace_t *entries);
 /* Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
 extern int acl_nontrivial (int count, struct acl_entry *entries, struct stat *sb);
+
+#  if HAVE_ACLV_H /* HP-UX >= 11.11 */
+
+/* Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+extern int aclv_nontrivial (int count, struct acl *entries);
+
+#  endif
 
 # elif HAVE_ACLX_GET && 0 /* AIX */
 
@@ -215,6 +259,14 @@ extern int acl_nontrivial (int count, struct acl_entry *entries, struct stat *sb
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
 extern int acl_nontrivial (struct acl *a);
 
+# elif HAVE_ACLSORT /* NonStop Kernel */
+
+/* Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+extern int acl_nontrivial (int count, struct acl *entries);
+
 # endif
 
 #endif
+
+_GL_INLINE_HEADER_END

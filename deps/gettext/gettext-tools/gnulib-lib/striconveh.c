@@ -1,5 +1,5 @@
 /* Character set conversion with error handling.
-   Copyright (C) 2001-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2013 Free Software Foundation, Inc.
    Written by Bruno Haible and Simon Josefsson.
 
    This program is free software: you can redistribute it and/or modify
@@ -52,7 +52,8 @@ iconveh_open (const char *to_codeset, const char *from_codeset, iconveh_t *cdp)
   iconv_t cd2;
 
   /* Avoid glibc-2.1 bug with EUC-KR.  */
-# if (__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) && !defined _LIBICONV_VERSION
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
+     && !defined _LIBICONV_VERSION
   if (c_strcasecmp (from_codeset, "EUC-KR") == 0
       || c_strcasecmp (to_codeset, "EUC-KR") == 0)
     {
@@ -79,7 +80,9 @@ iconveh_open (const char *to_codeset, const char *from_codeset, iconveh_t *cdp)
     }
 
   if (STRCASEEQ (to_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0)
-# if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
+# if (((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2) \
+      && !defined __UCLIBC__) \
+     || _LIBICONV_VERSION >= 0x0105
       || c_strcasecmp (to_codeset, "UTF-8//TRANSLIT") == 0
 # endif
      )
@@ -136,7 +139,7 @@ iconveh_close (const iconveh_t *cd)
 /* iconv_carefully is like iconv, except that it stops as soon as it encounters
    a conversion error, and it returns in *INCREMENTED a boolean telling whether
    it has incremented the input pointers past the error location.  */
-# if !defined _LIBICONV_VERSION && !defined __GLIBC__
+# if !defined _LIBICONV_VERSION && !(defined __GLIBC__ && !defined __UCLIBC__)
 /* Irix iconv() inserts a NUL byte if it cannot convert.
    NetBSD iconv() inserts a question mark if it cannot convert.
    Only GNU libiconv and GNU libc are known to prefer to fail rather
@@ -244,7 +247,7 @@ iconv_carefully_1 (iconv_t cd,
 
   *inbuf = inptr;
   *inbytesleft = inptr_end - inptr;
-# if !defined _LIBICONV_VERSION && !defined __GLIBC__
+# if !defined _LIBICONV_VERSION && !(defined __GLIBC__ && !defined __UCLIBC__)
   /* Irix iconv() inserts a NUL byte if it cannot convert.
      NetBSD iconv() inserts a question mark if it cannot convert.
      Only GNU libiconv and GNU libc are known to prefer to fail rather
@@ -403,7 +406,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 
     /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
 # if defined _LIBICONV_VERSION \
-     || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
+          || defined __sun)
     /* Set to the initial state.  */
     iconv (cd, NULL, NULL, NULL, NULL);
 # endif
@@ -531,7 +535,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
   /* Now get the conversion state back to the initial state.
      But avoid glibc-2.1 bug and Solaris 2.7 bug.  */
 #if defined _LIBICONV_VERSION \
-    || !((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) || defined __sun)
+    || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
+         || defined __sun)
   for (;;)
     {
       char *outptr = result + length;
@@ -606,7 +611,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 
     /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
 # if defined _LIBICONV_VERSION \
-     || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
+          || defined __sun)
     /* Set to the initial state.  */
     if (cd1 != (iconv_t)(-1))
       iconv (cd1, NULL, NULL, NULL, NULL);
@@ -658,7 +664,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
             /* Now get the conversion state of CD1 back to the initial state.
                But avoid glibc-2.1 bug and Solaris 2.7 bug.  */
 # if defined _LIBICONV_VERSION \
-     || !((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) || defined __sun)
+     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
+          || defined __sun)
             if (cd1 != (iconv_t)(-1))
               res1 = iconv (cd1, NULL, NULL, &out1ptr, &out1size);
             else
@@ -740,7 +747,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                     /* Now get the conversion state of CD1 back to the initial
                        state.  But avoid glibc-2.1 bug and Solaris 2.7 bug.  */
 # if defined _LIBICONV_VERSION \
-     || !((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) || defined __sun)
+     || !(((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
+          || defined __sun)
                     if (cd2 != (iconv_t)(-1))
                       res2 = iconv (cd2, NULL, NULL, &out2ptr, &out2size);
                     else
@@ -883,7 +891,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
                               }
                             length = out2ptr - result;
                           }
-# if !defined _LIBICONV_VERSION && !defined __GLIBC__
+# if !defined _LIBICONV_VERSION && !(defined __GLIBC__ && !defined __UCLIBC__)
                         /* Irix iconv() inserts a NUL byte if it cannot convert.
                            NetBSD iconv() inserts a question mark if it cannot
                            convert.
@@ -970,19 +978,23 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
   if (result == tmpbuf)
     {
       size_t memsize = length + extra_alloc;
-      char *memory;
 
-      memory = (char *) malloc (memsize > 0 ? memsize : 1);
-      if (memory != NULL)
-        {
-          memcpy (memory, tmpbuf, length);
-          result = memory;
-        }
+      if (*resultp != NULL && *lengthp >= memsize)
+        result = *resultp;
       else
         {
-          errno = ENOMEM;
-          return -1;
+          char *memory;
+
+          memory = (char *) malloc (memsize > 0 ? memsize : 1);
+          if (memory != NULL)
+            result = memory;
+          else
+            {
+              errno = ENOMEM;
+              return -1;
+            }
         }
+      memcpy (result, tmpbuf, length);
     }
   else if (result != *resultp && length + extra_alloc < allocated)
     {

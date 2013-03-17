@@ -1,5 +1,5 @@
 /* Compile a C# program.
-   Copyright (C) 2003-2010 Free Software Foundation, Inc.
+   Copyright (C) 2003-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
 #include <string.h>
 
 #include "execute.h"
-#include "pipe.h"
+#include "spawn-pipe.h"
 #include "wait-process.h"
 #include "sh-quote.h"
 #include "safe-read.h"

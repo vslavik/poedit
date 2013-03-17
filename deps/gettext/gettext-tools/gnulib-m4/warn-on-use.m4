@@ -1,5 +1,5 @@
-# warn-on-use.m4 serial 2
-dnl Copyright (C) 2010 Free Software Foundation, Inc.
+# warn-on-use.m4 serial 5
+dnl Copyright (C) 2010-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -18,8 +18,8 @@ dnl with or without modifications, as long as this notice is preserved.
 # some systems declare functions in the wrong header, then INCLUDES
 # should do likewise.
 #
-# If you assume C89, then it is generally safe to assume declarations
-# for functions declared in that standard (such as gets) without
+# It is generally safe to assume declarations for functions declared
+# in the intersection of C89 and C11 (such as printf) without
 # needing gl_WARN_ON_USE_PREPARE.
 AC_DEFUN([gl_WARN_ON_USE_PREPARE],
 [
@@ -27,6 +27,8 @@ AC_DEFUN([gl_WARN_ON_USE_PREPARE],
     [AH_TEMPLATE([HAVE_RAW_DECL_]AS_TR_CPP(m4_defn([gl_decl])),
       [Define to 1 if ]m4_defn([gl_decl])[ is declared even after
        undefining macros.])])dnl
+dnl FIXME: gl_Symbol must be used unquoted until we can assume
+dnl autoconf 2.64 or newer.
   for gl_func in m4_flatten([$2]); do
     AS_VAR_PUSHDEF([gl_Symbol], [gl_cv_have_raw_decl_$gl_func])dnl
     AC_CACHE_CHECK([whether $gl_func is declared without a macro],
@@ -35,8 +37,8 @@ AC_DEFUN([gl_WARN_ON_USE_PREPARE],
 [@%:@undef $gl_func
   (void) $gl_func;])],
         [AS_VAR_SET(gl_Symbol, [yes])], [AS_VAR_SET(gl_Symbol, [no])])])
-     AS_VAR_IF(gl_Symbol, [yes],
-       [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_RAW_DECL_$gl_func]), [1])
+    AS_VAR_IF(gl_Symbol, [yes],
+      [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_RAW_DECL_$gl_func]), [1])
        dnl shortcut - if the raw declaration exists, then set a cache
        dnl variable to allow skipping any later AC_CHECK_DECL efforts
        eval ac_cv_have_decl_$gl_func=yes])

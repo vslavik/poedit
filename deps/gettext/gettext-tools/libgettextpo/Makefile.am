@@ -1,5 +1,5 @@
 ## Makefile for the gettext-tools/libgettextpo subdirectory of GNU gettext
-## Copyright (C) 1995-1998, 2000-2010 Free Software Foundation, Inc.
+## Copyright (C) 1995-1998, 2000-2011 Free Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ libgettextpo_la_AUXSOURCES = \
 # Libtool's library version information for libgettextpo.
 # See the libtool documentation, section "Library interface versions".
 LTV_CURRENT=5
-LTV_REVISION=1
+LTV_REVISION=2
 LTV_AGE=5
 
 # How to build libgettextpo.la.
@@ -102,7 +102,7 @@ libgettextpo_la_LIBADD = libgnu.la $(WOE32_LIBADD) $(LTLIBUNISTRING)
 libgettextpo_la_LDFLAGS = \
   -version-info $(LTV_CURRENT):$(LTV_REVISION):$(LTV_AGE) \
   -rpath $(libdir) \
-  @LTLIBINTL@ @LTLIBICONV@ -lc @LTNOUNDEF@
+  @LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined
 
 # Tell the mingw or Cygwin linker which symbols to export.
 if WOE32DLL
@@ -170,14 +170,14 @@ MOSTLYCLEANFILES += config.h config.h-t
 
 # Special rules for installable include files that export variables.
 
-EXTRA_DIST += gettext-po.h.in
+EXTRA_DIST += gettext-po.in.h
 BUILT_SOURCES += gettext-po.h
 CLEANFILES += gettext-po.h
-gettext-po.h: gettext-po.h.in
+gettext-po.h: gettext-po.in.h
 if WOE32DLL
-	sed -e 's/extern \([^()]*\);/extern __declspec (dllimport) \1;/' $(srcdir)/gettext-po.h.in > gettext-po.h-tmp
+	sed -e 's/extern \([^()]*\);/extern __declspec (dllimport) \1;/' $(srcdir)/gettext-po.in.h > gettext-po.h-tmp
 else
-	cp $(srcdir)/gettext-po.h.in gettext-po.h-tmp
+	cp $(srcdir)/gettext-po.in.h gettext-po.h-tmp
 endif
 	mv gettext-po.h-tmp gettext-po.h
 

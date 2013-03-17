@@ -1,8 +1,6 @@
 /* obstack.c - subroutines used implicitly by object stack macros
 
-   Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1996, 1997, 1998,
-   1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2009, 2010 Free Software
-   Foundation, Inc.
+   Copyright (C) 1988-1994, 1996-2006, 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -36,7 +34,7 @@
    C Library, but also included in many other GNU distributions.  Compiling
    and linking in this code is a waste when using the GNU C library
    (especially if it is a shared library).  Rather than having every GNU
-   program understand `configure --with-gnu-libc' and omit the object
+   program understand 'configure --with-gnu-libc' and omit the object
    files, it is simpler to just do this in the source for each such file.  */
 
 #include <stdio.h>              /* Random thing to get __GNU_LIBRARY__.  */
@@ -76,23 +74,23 @@ enum
 
 /* When we copy a long block of data, this is the unit to do it with.
    On some machines, copying successive ints does not work;
-   in such a case, redefine COPYING_UNIT to `long' (if that works)
-   or `char' as a last resort.  */
+   in such a case, redefine COPYING_UNIT to 'long' (if that works)
+   or 'char' as a last resort.  */
 # ifndef COPYING_UNIT
 #  define COPYING_UNIT int
 # endif
 
 
-/* The functions allocating more room by calling `obstack_chunk_alloc'
-   jump to the handler pointed to by `obstack_alloc_failed_handler'.
+/* The functions allocating more room by calling 'obstack_chunk_alloc'
+   jump to the handler pointed to by 'obstack_alloc_failed_handler'.
    This can be set to a user defined function which should either
    abort gracefully or use longjump - but shouldn't return.  This
    variable by default points to the internal function
-   `print_and_abort'.  */
-static void print_and_abort (void);
+   'print_and_abort'.  */
+static _Noreturn void print_and_abort (void);
 void (*obstack_alloc_failed_handler) (void) = print_and_abort;
 
-/* Exit value used when `print_and_abort' is used.  */
+/* Exit value used when 'print_and_abort' is used.  */
 # include <stdlib.h>
 # ifdef _LIBC
 int obstack_exit_failure = EXIT_FAILURE;
@@ -403,15 +401,7 @@ _obstack_memory_used (struct obstack *h)
 #  include <libio/iolibio.h>
 # endif
 
-# ifndef __attribute__
-/* This feature is available in gcc versions 2.5 and later.  */
-#  if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5)
-#   define __attribute__(Spec) /* empty */
-#  endif
-# endif
-
-static void
-__attribute__ ((noreturn))
+static _Noreturn void
 print_and_abort (void)
 {
   /* Don't change any of these strings.  Yes, it would be possible to add

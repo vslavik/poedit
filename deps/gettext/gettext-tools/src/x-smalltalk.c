@@ -1,5 +1,5 @@
 /* xgettext Smalltalk backend.
-   Copyright (C) 2002-2003, 2005-2009 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2009, 2011 Free Software Foundation, Inc.
 
    This file was written by Bruno Haible <haible@clisp.cons.org>, 2002.
 
@@ -562,9 +562,10 @@ extract_smalltalk (FILE *f,
                 lex_pos_ty pos;
                 pos.file_name = logical_file_name;
                 pos.line_number = token.line_number;
-                remember_a_message_plural (plural_mp, token.string,
-                                           null_context, &pos,
-                                           savable_comment);
+                if (plural_mp != NULL)
+                  remember_a_message_plural (plural_mp, token.string,
+                                             null_context, &pos,
+                                             savable_comment);
                 state = 0;
                 break;
               }

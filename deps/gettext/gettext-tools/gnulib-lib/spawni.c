@@ -1,5 +1,5 @@
 /* Guts of POSIX spawn interface.  Generic POSIX.1 version.
-   Copyright (C) 2000-2006, 2008-2010 Free Software Foundation, Inc.
+   Copyright (C) 2000-2006, 2008-2013 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -91,7 +91,7 @@
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-/* Native Woe32 API.  */
+/* Native Windows API.  */
 int
 __spawni (pid_t *pid, const char *file,
           const posix_spawn_file_actions_t *file_actions,
@@ -259,7 +259,7 @@ __spawni (pid_t *pid, const char *file,
                                               action->action.open_action.mode);
 
                 if (new_fd == -1)
-                  /* The `open' call failed.  */
+                  /* The 'open' call failed.  */
                   _exit (SPAWN_ERROR);
 
                 /* Make sure the desired file descriptor is used.  */
@@ -267,11 +267,11 @@ __spawni (pid_t *pid, const char *file,
                   {
                     if (dup2 (new_fd, action->action.open_action.fd)
                         != action->action.open_action.fd)
-                      /* The `dup2' call failed.  */
+                      /* The 'dup2' call failed.  */
                       _exit (SPAWN_ERROR);
 
                     if (close_not_cancel (new_fd) != 0)
-                      /* The `close' call failed.  */
+                      /* The 'close' call failed.  */
                       _exit (SPAWN_ERROR);
                   }
               }
@@ -281,7 +281,7 @@ __spawni (pid_t *pid, const char *file,
               if (dup2 (action->action.dup2_action.fd,
                         action->action.dup2_action.newfd)
                   != action->action.dup2_action.newfd)
-                /* The `dup2' call failed.  */
+                /* The 'dup2' call failed.  */
                 _exit (SPAWN_ERROR);
               break;
             }
@@ -296,7 +296,7 @@ __spawni (pid_t *pid, const char *file,
       if (errno == ENOEXEC)
         script_execute (file, argv, envp);
 
-      /* Oh, oh.  `execve' returns.  This is bad.  */
+      /* Oh, oh.  'execve' returns.  This is bad.  */
       _exit (SPAWN_ERROR);
     }
 
@@ -305,9 +305,9 @@ __spawni (pid_t *pid, const char *file,
   if (path == NULL)
     {
 #if HAVE_CONFSTR
-      /* There is no `PATH' in the environment.
+      /* There is no 'PATH' in the environment.
          The default search path is the current directory
-         followed by the path `confstr' returns for `_CS_PATH'.  */
+         followed by the path 'confstr' returns for '_CS_PATH'.  */
       len = confstr (_CS_PATH, (char *) NULL, 0);
       path = (char *) alloca (1 + len);
       path[0] = ':';
@@ -336,7 +336,7 @@ __spawni (pid_t *pid, const char *file,
 
       if (p == path)
         /* Two adjacent colons, or a colon at the beginning or the end
-           of `PATH' means to search the current directory.  */
+           of 'PATH' means to search the current directory.  */
         startp = name + 1;
       else
         startp = (char *) memcpy (name - (p - path), path, p - path);

@@ -1,6 +1,6 @@
 /* Work around rmdir bugs.
 
-   Copyright (C) 1988, 1990, 1999, 2003-2006, 2009-2010 Free Software
+   Copyright (C) 1988, 1990, 1999, 2003-2006, 2009-2013 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,8 @@
 
 #include <errno.h>
 #include <string.h>
+
+#include "dosname.h"
 
 #undef rmdir
 

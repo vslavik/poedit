@@ -1,5 +1,5 @@
 /* xgettext YCP backend.
-   Copyright (C) 2001-2003, 2005-2009 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2009, 2011 Free Software Foundation, Inc.
 
    This file was written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
@@ -640,6 +640,7 @@ extract_parenthesized (message_list_ty *mlp,
                        bool in_i18n)
 {
   int state; /* 1 or 2 inside _( ... ), otherwise 0 */
+  int plural_state = 0; /* defined only when in states 1 and 2 */
   message_ty *plural_mp = NULL; /* defined only when in states 1 and 2 */
   /* Context iterator that will be used if the next token is a '('.  */
   flag_context_list_iterator_ty next_context_iter =
@@ -678,20 +679,22 @@ extract_parenthesized (message_list_ty *mlp,
               pos.file_name = logical_file_name;
               pos.line_number = token.line_number;
 
-              if (plural_mp == NULL)
+              if (plural_state == 0)
                 {
                   /* Seen an msgid.  */
                   plural_mp = remember_a_message (mlp, NULL, token.string,
                                                   inner_context, &pos,
                                                   NULL, token.comment);
+                  plural_state = 1;
                   state = 2;
                 }
               else
                 {
                   /* Seen an msgid_plural.  */
-                  remember_a_message_plural (plural_mp, token.string,
-                                             inner_context, &pos,
-                                             token.comment);
+                  if (plural_mp != NULL)
+                    remember_a_message_plural (plural_mp, token.string,
+                                               inner_context, &pos,
+                                               token.comment);
                   state = 0;
                 }
               drop_reference (token.comment);

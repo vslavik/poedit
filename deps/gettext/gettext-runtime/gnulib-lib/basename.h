@@ -1,5 +1,5 @@
 /* Pathname hacking.
-   Copyright (C) 2001-2003 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2010 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 
-#if !(__GLIBC__ >= 2)
+#if !(__GLIBC__ >= 2 || defined __UCLIBC__)
 /* When not using the GNU libc we use the basename implementation we
    provide here.  */
 extern char *gnu_basename (const char *);

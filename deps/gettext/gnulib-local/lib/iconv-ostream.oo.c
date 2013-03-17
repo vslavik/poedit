@@ -1,5 +1,5 @@
 /* Output stream that converts the output to another encoding.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007, 2010 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -98,7 +98,8 @@ iconv_ostream::write_mem (iconv_ostream_t stream, const void *data, size_t len)
             size_t res = iconv (stream->cd,
                                 (ICONV_CONST char **) &inptr, &insize,
                                 &outptr, &outsize);
-            #if !defined _LIBICONV_VERSION && !defined __GLIBC__
+            #if !defined _LIBICONV_VERSION \
+                && !(defined __GLIBC__ && !defined __UCLIBC__)
             /* Irix iconv() inserts a NUL byte if it cannot convert.
                NetBSD iconv() inserts a question mark if it cannot convert.
                Only GNU libiconv and GNU libc are known to prefer to fail rather
@@ -152,7 +153,9 @@ iconv_ostream::free (iconv_ostream_t stream)
 
   /* Avoid glibc-2.1 bug and Solaris 2.7 bug.  */
   #if defined _LIBICONV_VERSION \
-      || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+      || !(((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) \
+            && !defined __UCLIBC__) \
+           || defined __sun)
   {
     char outbuffer[2048];
     char *outptr = outbuffer;
@@ -188,7 +191,9 @@ iconv_ostream_create (const char *from_encoding, const char *to_encoding,
   stream->to_encoding = xstrdup (to_encoding);
 
   /* Avoid glibc-2.1 bug with EUC-KR.  */
-  #if  (__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) && !defined _LIBICONV_VERSION
+  #if ((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) \
+       && !defined __UCLIBC__) \
+      && !defined _LIBICONV_VERSION
   if (c_strcasecmp (from_encoding, "EUC-KR") == 0
       || c_strcasecmp (to_encoding, "EUC-KR") == 0)
     stream->cd = (iconv_t)(-1):

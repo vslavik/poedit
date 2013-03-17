@@ -1,8 +1,7 @@
 #!/bin/sh
-# Copyright (C) 1995, 2000, 2003, 2004, 2005, 2009 Free Software
-# Foundation, Inc.
+# Copyright (C) 1995-2012 Free Software Foundation, Inc.
 
-scriptversion=2009-04-28.21; # UTC
+scriptversion=2012-07-05.17; # UTC
 
 # Franc,ois Pinard <pinard@iro.umontreal.ca>, 1995.
 #
@@ -30,16 +29,16 @@ scriptversion=2009-04-28.21; # UTC
 
 case $1 in
   '')
-     echo "$0: No files.  Try \`$0 --help' for more information." 1>&2
+     echo "$0: No files.  Try '$0 --help' for more information." 1>&2
      exit 1;
      ;;
   -h | --h*)
     cat <<\EOF
 Usage: elisp-comp [--help] [--version] FILES...
 
-This script byte-compiles all `.el' files listed as FILES using GNU
-Emacs, and put the resulting `.elc' files into the current directory,
-so disregarding the original directories used in `.el' arguments.
+This script byte-compiles all '.el' files listed as FILES using GNU
+Emacs, and put the resulting '.elc' files into the current directory,
+so disregarding the original directories used in '.el' arguments.
 
 This script manages in such a way that all Emacs LISP files to
 be compiled are made visible between themselves, in the event
@@ -65,14 +64,18 @@ tempdir=elc.$$
 
 # Cleanup the temporary directory on exit.
 trap 'ret=$?; rm -rf "$tempdir" && exit $ret' 0
-trap '(exit $?); exit' 1 2 13 15
+do_exit='(exit $ret); exit $ret'
+trap "ret=129; $do_exit" 1
+trap "ret=130; $do_exit" 2
+trap "ret=141; $do_exit" 13
+trap "ret=143; $do_exit" 15
 
 mkdir $tempdir
 cp "$@" $tempdir
 
 (
   cd $tempdir
-  echo "(setq load-path (cons nil load-path))" > script
+  echo "(setq load-path (cons nil (cons \"$abs_srcdir\" load-path)))" > script
   $EMACS -batch -q -l script -f batch-byte-compile *.el || exit $?
   mv *.elc ..
 ) || exit $?

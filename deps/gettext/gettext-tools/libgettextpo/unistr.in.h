@@ -1,5 +1,5 @@
 /* Elementary Unicode string functions.
-   Copyright (C) 2001-2002, 2005-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002, 2005-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published
@@ -9,7 +9,7 @@
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
+   General Public License for more details.
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
@@ -66,17 +66,20 @@ extern "C" {
 /* Check whether an UTF-8 string is well-formed.
    Return NULL if valid, or a pointer to the first invalid unit otherwise.  */
 extern const uint8_t *
-       u8_check (const uint8_t *s, size_t n);
+       u8_check (const uint8_t *s, size_t n)
+       _UC_ATTRIBUTE_PURE;
 
 /* Check whether an UTF-16 string is well-formed.
    Return NULL if valid, or a pointer to the first invalid unit otherwise.  */
 extern const uint16_t *
-       u16_check (const uint16_t *s, size_t n);
+       u16_check (const uint16_t *s, size_t n)
+       _UC_ATTRIBUTE_PURE;
 
 /* Check whether an UCS-4 string is well-formed.
    Return NULL if valid, or a pointer to the first invalid unit otherwise.  */
 extern const uint32_t *
-       u32_check (const uint32_t *s, size_t n);
+       u32_check (const uint32_t *s, size_t n)
+       _UC_ATTRIBUTE_PURE;
 
 
 /* Elementary string conversions.  */
@@ -119,11 +122,14 @@ extern uint16_t *
    failure.  */
 /* Similar to mblen(), except that s must not be NULL.  */
 extern int
-       u8_mblen (const uint8_t *s, size_t n);
+       u8_mblen (const uint8_t *s, size_t n)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u16_mblen (const uint16_t *s, size_t n);
+       u16_mblen (const uint16_t *s, size_t n)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u32_mblen (const uint32_t *s, size_t n);
+       u32_mblen (const uint32_t *s, size_t n)
+       _UC_ATTRIBUTE_PURE;
 
 /* Return the length (number of units) of the first character in S, putting
    its 'ucs4_t' representation in *PUC.  Upon failure, *PUC is set to 0xfffd,
@@ -134,7 +140,7 @@ extern int
 /* The variants with _safe suffix are safe, even if the library is compiled
    without --enable-safety.  */
 
-#ifdef GNULIB_UNISTR_U8_MBTOUC_UNSAFE
+#if GNULIB_UNISTR_U8_MBTOUC_UNSAFE || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u8_mbtouc_unsafe (ucs4_t *puc, const uint8_t *s, size_t n);
@@ -157,7 +163,7 @@ u8_mbtouc_unsafe (ucs4_t *puc, const uint8_t *s, size_t n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U16_MBTOUC_UNSAFE
+#if GNULIB_UNISTR_U16_MBTOUC_UNSAFE || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u16_mbtouc_unsafe (ucs4_t *puc, const uint16_t *s, size_t n);
@@ -180,7 +186,7 @@ u16_mbtouc_unsafe (ucs4_t *puc, const uint16_t *s, size_t n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U32_MBTOUC_UNSAFE
+#if GNULIB_UNISTR_U32_MBTOUC_UNSAFE || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u32_mbtouc_unsafe (ucs4_t *puc, const uint32_t *s, size_t n);
@@ -205,7 +211,7 @@ u32_mbtouc_unsafe (ucs4_t *puc,
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U8_MBTOUC
+#if GNULIB_UNISTR_U8_MBTOUC || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u8_mbtouc (ucs4_t *puc, const uint8_t *s, size_t n);
@@ -228,7 +234,7 @@ u8_mbtouc (ucs4_t *puc, const uint8_t *s, size_t n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U16_MBTOUC
+#if GNULIB_UNISTR_U16_MBTOUC || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u16_mbtouc (ucs4_t *puc, const uint16_t *s, size_t n);
@@ -251,7 +257,7 @@ u16_mbtouc (ucs4_t *puc, const uint16_t *s, size_t n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U32_MBTOUC
+#if GNULIB_UNISTR_U32_MBTOUC || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n);
@@ -279,17 +285,17 @@ u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n _GL_UNUSED_PARAMETER)
 /* Similar to u*_mbtouc(), except that the return value gives more details
    about the failure, similar to mbrtowc().  */
 
-#ifdef GNULIB_UNISTR_U8_MBTOUCR
+#if GNULIB_UNISTR_U8_MBTOUCR || HAVE_LIBUNISTRING
 extern int
        u8_mbtoucr (ucs4_t *puc, const uint8_t *s, size_t n);
 #endif
 
-#ifdef GNULIB_UNISTR_U16_MBTOUCR
+#if GNULIB_UNISTR_U16_MBTOUCR || HAVE_LIBUNISTRING
 extern int
        u16_mbtoucr (ucs4_t *puc, const uint16_t *s, size_t n);
 #endif
 
-#ifdef GNULIB_UNISTR_U32_MBTOUCR
+#if GNULIB_UNISTR_U32_MBTOUCR || HAVE_LIBUNISTRING
 extern int
        u32_mbtoucr (ucs4_t *puc, const uint32_t *s, size_t n);
 #endif
@@ -300,7 +306,7 @@ extern int
 /* Similar to wctomb(), except that s must not be NULL, and the argument n
    must be specified.  */
 
-#ifdef GNULIB_UNISTR_U8_UCTOMB
+#if GNULIB_UNISTR_U8_UCTOMB || HAVE_LIBUNISTRING
 /* Auxiliary function, also used by u8_chr, u8_strchr, u8_strrchr.  */
 extern int
        u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n);
@@ -322,7 +328,7 @@ u8_uctomb (uint8_t *s, ucs4_t uc, int n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U16_UCTOMB
+#if GNULIB_UNISTR_U16_UCTOMB || HAVE_LIBUNISTRING
 /* Auxiliary function, also used by u16_chr, u16_strchr, u16_strrchr.  */
 extern int
        u16_uctomb_aux (uint16_t *s, ucs4_t uc, int n);
@@ -344,7 +350,7 @@ u16_uctomb (uint16_t *s, ucs4_t uc, int n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U32_UCTOMB
+#if GNULIB_UNISTR_U32_UCTOMB || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u32_uctomb (uint32_t *s, ucs4_t uc, int n);
@@ -400,38 +406,50 @@ extern uint32_t *
 /* Compare S1 and S2, each of length N.  */
 /* Similar to memcmp().  */
 extern int
-       u8_cmp (const uint8_t *s1, const uint8_t *s2, size_t n);
+       u8_cmp (const uint8_t *s1, const uint8_t *s2, size_t n)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u16_cmp (const uint16_t *s1, const uint16_t *s2, size_t n);
+       u16_cmp (const uint16_t *s1, const uint16_t *s2, size_t n)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u32_cmp (const uint32_t *s1, const uint32_t *s2, size_t n);
+       u32_cmp (const uint32_t *s1, const uint32_t *s2, size_t n)
+       _UC_ATTRIBUTE_PURE;
 
 /* Compare S1 and S2.  */
 /* Similar to the gnulib function memcmp2().  */
 extern int
-       u8_cmp2 (const uint8_t *s1, size_t n1, const uint8_t *s2, size_t n2);
+       u8_cmp2 (const uint8_t *s1, size_t n1, const uint8_t *s2, size_t n2)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u16_cmp2 (const uint16_t *s1, size_t n1, const uint16_t *s2, size_t n2);
+       u16_cmp2 (const uint16_t *s1, size_t n1, const uint16_t *s2, size_t n2)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u32_cmp2 (const uint32_t *s1, size_t n1, const uint32_t *s2, size_t n2);
+       u32_cmp2 (const uint32_t *s1, size_t n1, const uint32_t *s2, size_t n2)
+       _UC_ATTRIBUTE_PURE;
 
 /* Search the string at S for UC.  */
 /* Similar to memchr().  */
 extern uint8_t *
-       u8_chr (const uint8_t *s, size_t n, ucs4_t uc);
+       u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
+       _UC_ATTRIBUTE_PURE;
 extern uint16_t *
-       u16_chr (const uint16_t *s, size_t n, ucs4_t uc);
+       u16_chr (const uint16_t *s, size_t n, ucs4_t uc)
+       _UC_ATTRIBUTE_PURE;
 extern uint32_t *
-       u32_chr (const uint32_t *s, size_t n, ucs4_t uc);
+       u32_chr (const uint32_t *s, size_t n, ucs4_t uc)
+       _UC_ATTRIBUTE_PURE;
 
 /* Count the number of Unicode characters in the N units from S.  */
 /* Similar to mbsnlen().  */
 extern size_t
-       u8_mbsnlen (const uint8_t *s, size_t n);
+       u8_mbsnlen (const uint8_t *s, size_t n)
+       _UC_ATTRIBUTE_PURE;
 extern size_t
-       u16_mbsnlen (const uint16_t *s, size_t n);
+       u16_mbsnlen (const uint16_t *s, size_t n)
+       _UC_ATTRIBUTE_PURE;
 extern size_t
-       u32_mbsnlen (const uint32_t *s, size_t n);
+       u32_mbsnlen (const uint32_t *s, size_t n)
+       _UC_ATTRIBUTE_PURE;
 
 /* Elementary string functions with memory allocation.  */
 
@@ -448,11 +466,14 @@ extern uint32_t *
 /* Return the length (number of units) of the first character in S.
    Return 0 if it is the NUL character.  Return -1 upon failure.  */
 extern int
-       u8_strmblen (const uint8_t *s);
+       u8_strmblen (const uint8_t *s)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u16_strmblen (const uint16_t *s);
+       u16_strmblen (const uint16_t *s)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u32_strmblen (const uint32_t *s);
+       u32_strmblen (const uint32_t *s)
+       _UC_ATTRIBUTE_PURE;
 
 /* Return the length (number of units) of the first character in S, putting
    its 'ucs4_t' representation in *PUC.  Return 0 if it is the NUL
@@ -487,20 +508,26 @@ extern const uint32_t *
 /* Return the number of units in S.  */
 /* Similar to strlen(), wcslen().  */
 extern size_t
-       u8_strlen (const uint8_t *s);
+       u8_strlen (const uint8_t *s)
+       _UC_ATTRIBUTE_PURE;
 extern size_t
-       u16_strlen (const uint16_t *s);
+       u16_strlen (const uint16_t *s)
+       _UC_ATTRIBUTE_PURE;
 extern size_t
-       u32_strlen (const uint32_t *s);
+       u32_strlen (const uint32_t *s)
+       _UC_ATTRIBUTE_PURE;
 
 /* Return the number of units in S, but at most MAXLEN.  */
 /* Similar to strnlen(), wcsnlen().  */
 extern size_t
-       u8_strnlen (const uint8_t *s, size_t maxlen);
+       u8_strnlen (const uint8_t *s, size_t maxlen)
+       _UC_ATTRIBUTE_PURE;
 extern size_t
-       u16_strnlen (const uint16_t *s, size_t maxlen);
+       u16_strnlen (const uint16_t *s, size_t maxlen)
+       _UC_ATTRIBUTE_PURE;
 extern size_t
-       u32_strnlen (const uint32_t *s, size_t maxlen);
+       u32_strnlen (const uint32_t *s, size_t maxlen)
+       _UC_ATTRIBUTE_PURE;
 
 /* Copy SRC to DEST.  */
 /* Similar to strcpy(), wcscpy().  */
@@ -559,12 +586,23 @@ extern uint32_t *
 
 /* Compare S1 and S2.  */
 /* Similar to strcmp(), wcscmp().  */
+#ifdef __sun
+/* Avoid a collision with the u8_strcmp() function in Solaris 11 libc.  */
 extern int
-       u8_strcmp (const uint8_t *s1, const uint8_t *s2);
+       u8_strcmp_gnu (const uint8_t *s1, const uint8_t *s2)
+       _UC_ATTRIBUTE_PURE;
+# define u8_strcmp u8_strcmp_gnu
+#else
 extern int
-       u16_strcmp (const uint16_t *s1, const uint16_t *s2);
+       u8_strcmp (const uint8_t *s1, const uint8_t *s2)
+       _UC_ATTRIBUTE_PURE;
+#endif
 extern int
-       u32_strcmp (const uint32_t *s1, const uint32_t *s2);
+       u16_strcmp (const uint16_t *s1, const uint16_t *s2)
+       _UC_ATTRIBUTE_PURE;
+extern int
+       u32_strcmp (const uint32_t *s1, const uint32_t *s2)
+       _UC_ATTRIBUTE_PURE;
 
 /* Compare S1 and S2 using the collation rules of the current locale.
    Return -1 if S1 < S2, 0 if S1 = S2, 1 if S1 > S2.
@@ -580,11 +618,14 @@ extern int
 /* Compare no more than N units of S1 and S2.  */
 /* Similar to strncmp(), wcsncmp().  */
 extern int
-       u8_strncmp (const uint8_t *s1, const uint8_t *s2, size_t n);
+       u8_strncmp (const uint8_t *s1, const uint8_t *s2, size_t n)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u16_strncmp (const uint16_t *s1, const uint16_t *s2, size_t n);
+       u16_strncmp (const uint16_t *s1, const uint16_t *s2, size_t n)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u32_strncmp (const uint32_t *s1, const uint32_t *s2, size_t n);
+       u32_strncmp (const uint32_t *s1, const uint32_t *s2, size_t n)
+       _UC_ATTRIBUTE_PURE;
 
 /* Duplicate S, returning an identical malloc'd string.  */
 /* Similar to strdup(), wcsdup().  */
@@ -598,74 +639,98 @@ extern uint32_t *
 /* Find the first occurrence of UC in STR.  */
 /* Similar to strchr(), wcschr().  */
 extern uint8_t *
-       u8_strchr (const uint8_t *str, ucs4_t uc);
+       u8_strchr (const uint8_t *str, ucs4_t uc)
+       _UC_ATTRIBUTE_PURE;
 extern uint16_t *
-       u16_strchr (const uint16_t *str, ucs4_t uc);
+       u16_strchr (const uint16_t *str, ucs4_t uc)
+       _UC_ATTRIBUTE_PURE;
 extern uint32_t *
-       u32_strchr (const uint32_t *str, ucs4_t uc);
+       u32_strchr (const uint32_t *str, ucs4_t uc)
+       _UC_ATTRIBUTE_PURE;
 
 /* Find the last occurrence of UC in STR.  */
 /* Similar to strrchr(), wcsrchr().  */
 extern uint8_t *
-       u8_strrchr (const uint8_t *str, ucs4_t uc);
+       u8_strrchr (const uint8_t *str, ucs4_t uc)
+       _UC_ATTRIBUTE_PURE;
 extern uint16_t *
-       u16_strrchr (const uint16_t *str, ucs4_t uc);
+       u16_strrchr (const uint16_t *str, ucs4_t uc)
+       _UC_ATTRIBUTE_PURE;
 extern uint32_t *
-       u32_strrchr (const uint32_t *str, ucs4_t uc);
+       u32_strrchr (const uint32_t *str, ucs4_t uc)
+       _UC_ATTRIBUTE_PURE;
 
 /* Return the length of the initial segment of STR which consists entirely
    of Unicode characters not in REJECT.  */
 /* Similar to strcspn(), wcscspn().  */
 extern size_t
-       u8_strcspn (const uint8_t *str, const uint8_t *reject);
+       u8_strcspn (const uint8_t *str, const uint8_t *reject)
+       _UC_ATTRIBUTE_PURE;
 extern size_t
-       u16_strcspn (const uint16_t *str, const uint16_t *reject);
+       u16_strcspn (const uint16_t *str, const uint16_t *reject)
+       _UC_ATTRIBUTE_PURE;
 extern size_t
-       u32_strcspn (const uint32_t *str, const uint32_t *reject);
+       u32_strcspn (const uint32_t *str, const uint32_t *reject)
+       _UC_ATTRIBUTE_PURE;
 
 /* Return the length of the initial segment of STR which consists entirely
    of Unicode characters in ACCEPT.  */
 /* Similar to strspn(), wcsspn().  */
 extern size_t
-       u8_strspn (const uint8_t *str, const uint8_t *accept);
+       u8_strspn (const uint8_t *str, const uint8_t *accept)
+       _UC_ATTRIBUTE_PURE;
 extern size_t
-       u16_strspn (const uint16_t *str, const uint16_t *accept);
+       u16_strspn (const uint16_t *str, const uint16_t *accept)
+       _UC_ATTRIBUTE_PURE;
 extern size_t
-       u32_strspn (const uint32_t *str, const uint32_t *accept);
+       u32_strspn (const uint32_t *str, const uint32_t *accept)
+       _UC_ATTRIBUTE_PURE;
 
 /* Find the first occurrence in STR of any character in ACCEPT.  */
 /* Similar to strpbrk(), wcspbrk().  */
 extern uint8_t *
-       u8_strpbrk (const uint8_t *str, const uint8_t *accept);
+       u8_strpbrk (const uint8_t *str, const uint8_t *accept)
+       _UC_ATTRIBUTE_PURE;
 extern uint16_t *
-       u16_strpbrk (const uint16_t *str, const uint16_t *accept);
+       u16_strpbrk (const uint16_t *str, const uint16_t *accept)
+       _UC_ATTRIBUTE_PURE;
 extern uint32_t *
-       u32_strpbrk (const uint32_t *str, const uint32_t *accept);
+       u32_strpbrk (const uint32_t *str, const uint32_t *accept)
+       _UC_ATTRIBUTE_PURE;
 
 /* Find the first occurrence of NEEDLE in HAYSTACK.  */
 /* Similar to strstr(), wcsstr().  */
 extern uint8_t *
-       u8_strstr (const uint8_t *haystack, const uint8_t *needle);
+       u8_strstr (const uint8_t *haystack, const uint8_t *needle)
+       _UC_ATTRIBUTE_PURE;
 extern uint16_t *
-       u16_strstr (const uint16_t *haystack, const uint16_t *needle);
+       u16_strstr (const uint16_t *haystack, const uint16_t *needle)
+       _UC_ATTRIBUTE_PURE;
 extern uint32_t *
-       u32_strstr (const uint32_t *haystack, const uint32_t *needle);
+       u32_strstr (const uint32_t *haystack, const uint32_t *needle)
+       _UC_ATTRIBUTE_PURE;
 
 /* Test whether STR starts with PREFIX.  */
 extern bool
-       u8_startswith (const uint8_t *str, const uint8_t *prefix);
+       u8_startswith (const uint8_t *str, const uint8_t *prefix)
+       _UC_ATTRIBUTE_PURE;
 extern bool
-       u16_startswith (const uint16_t *str, const uint16_t *prefix);
+       u16_startswith (const uint16_t *str, const uint16_t *prefix)
+       _UC_ATTRIBUTE_PURE;
 extern bool
-       u32_startswith (const uint32_t *str, const uint32_t *prefix);
+       u32_startswith (const uint32_t *str, const uint32_t *prefix)
+       _UC_ATTRIBUTE_PURE;
 
 /* Test whether STR ends with SUFFIX.  */
 extern bool
-       u8_endswith (const uint8_t *str, const uint8_t *suffix);
+       u8_endswith (const uint8_t *str, const uint8_t *suffix)
+       _UC_ATTRIBUTE_PURE;
 extern bool
-       u16_endswith (const uint16_t *str, const uint16_t *suffix);
+       u16_endswith (const uint16_t *str, const uint16_t *suffix)
+       _UC_ATTRIBUTE_PURE;
 extern bool
-       u32_endswith (const uint32_t *str, const uint32_t *suffix);
+       u32_endswith (const uint32_t *str, const uint32_t *suffix)
+       _UC_ATTRIBUTE_PURE;
 
 /* Divide STR into tokens separated by characters in DELIM.
    This interface is actually more similar to wcstok than to strtok.  */

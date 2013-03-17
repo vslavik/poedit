@@ -1,5 +1,5 @@
 /* Test of pipe2.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2013 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -12,8 +12,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
 
@@ -26,20 +25,25 @@ SIGNATURE_CHECK (pipe2, int, (int[2], int));
 #include <stdbool.h>
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Get declarations of the Win32 API functions.  */
+/* Get declarations of the native Windows API functions.  */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
+/* Get _get_osfhandle.  */
+# include "msvc-nothrow.h"
 #endif
 
 #include "binary-io.h"
 #include "macros.h"
+#if GNULIB_NONBLOCKING
+# include "nonblocking.h"
+#endif
 
 /* Return true if FD is open.  */
 static bool
 is_open (int fd)
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  /* On Win32, the initial state of unassigned standard file
+  /* On native Windows, the initial state of unassigned standard file
      descriptors is that they are open but point to an
      INVALID_HANDLE_VALUE, and there is no fcntl.  */
   return (HANDLE) _get_osfhandle (fd) != INVALID_HANDLE_VALUE;
@@ -67,19 +71,22 @@ is_cloexec (int fd)
 #endif
 }
 
-/* Return true if FD is in non-blocking mode.  */
-static bool
-is_nonblocking (int fd)
+#if ! GNULIB_NONBLOCKING
+static int
+get_nonblocking_flag (int fd)
 {
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  /* We don't use the non-blocking mode for sockets here.  */
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   return 0;
-#else
+# else
+#  ifndef F_GETFL
+#   error Please port fcntl to your platform
+#  endif
   int flags;
   ASSERT ((flags = fcntl (fd, F_GETFL)) >= 0);
   return (flags & O_NONBLOCK) != 0;
-#endif
+# endif
 }
+#endif
 
 int
 main ()
@@ -87,29 +94,17 @@ main ()
   int use_nonblocking;
   int use_cloexec;
 
-#if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
-  for (use_nonblocking = 0; use_nonblocking <= 1; use_nonblocking++)
-#else
-  use_nonblocking = 0;
-#endif
-#if defined O_CLOEXEC
-    for (use_cloexec = 0; use_cloexec <= 1; use_cloexec++)
-#else
-    use_cloexec = 0;
-#endif
+  for (use_nonblocking = 0; use_nonblocking <= !!O_NONBLOCK; use_nonblocking++)
+    for (use_cloexec = 0; use_cloexec <= !!O_CLOEXEC; use_cloexec++)
       {
         int o_flags;
         int fd[2];
 
         o_flags = 0;
-#if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
         if (use_nonblocking)
           o_flags |= O_NONBLOCK;
-#endif
-#if defined O_CLOEXEC
         if (use_cloexec)
           o_flags |= O_CLOEXEC;
-#endif
 
         fd[0] = -1;
         fd[1] = -1;
@@ -117,8 +112,8 @@ main ()
         ASSERT (fd[0] >= 0);
         ASSERT (fd[1] >= 0);
         ASSERT (fd[0] != fd[1]);
-        ASSERT (is_open (fd[0]) >= 0);
-        ASSERT (is_open (fd[1]) >= 0);
+        ASSERT (is_open (fd[0]));
+        ASSERT (is_open (fd[1]));
         if (use_cloexec)
           {
             ASSERT (is_cloexec (fd[0]));
@@ -131,14 +126,17 @@ main ()
           }
         if (use_nonblocking)
           {
-            ASSERT (is_nonblocking (fd[0]));
-            ASSERT (is_nonblocking (fd[1]));
+            ASSERT (get_nonblocking_flag (fd[0]) == 1);
+            ASSERT (get_nonblocking_flag (fd[1]) == 1);
           }
         else
           {
-            ASSERT (!is_nonblocking (fd[0]));
-            ASSERT (!is_nonblocking (fd[1]));
+            ASSERT (get_nonblocking_flag (fd[0]) == 0);
+            ASSERT (get_nonblocking_flag (fd[1]) == 0);
           }
+
+        ASSERT (close (fd[0]) == 0);
+        ASSERT (close (fd[1]) == 0);
       }
 
   return 0;

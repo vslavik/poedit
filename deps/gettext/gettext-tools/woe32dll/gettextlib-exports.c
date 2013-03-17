@@ -18,9 +18,11 @@
 #include "woe32dll/export.h"
 
 VARIABLE(argmatch_die)
-VARIABLE(error_message_count)
-VARIABLE(error_one_per_line)
-VARIABLE(error_print_progname)
+#if GNULIB_DEFINED_ERROR
+VARIABLE(rpl_error_message_count)
+VARIABLE(rpl_error_one_per_line)
+VARIABLE(rpl_error_print_progname)
+#endif
 VARIABLE(error_with_progname)
 VARIABLE(exit_failure)
 VARIABLE(gl_array_list_implementation)

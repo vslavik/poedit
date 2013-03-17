@@ -1,19 +1,19 @@
-*** modules/regex.orig	Mon May 24 12:36:55 2010
---- modules/regex	Mon May 24 12:36:42 2010
+*** modules/regex.orig	2013-01-03 10:18:51.000000000 +0900
+--- modules/regex	2013-01-03 10:20:47.000000000 +0900
 ***************
-*** 17,23 ****
-  extensions
-  gettext-h
-  localcharset
-! malloc
-  memcmp
-  memmove
-  mbrtowc
---- 17,23 ----
-  extensions
-  gettext-h
-  localcharset
-! malloc-posix
-  memcmp
-  memmove
-  mbrtowc
+*** 18,24 ****
+  alloca-opt      [test $ac_use_included_regex = yes]
+  btowc           [test $ac_use_included_regex = yes]
+  gettext-h       [test $ac_use_included_regex = yes]
+! malloc-gnu      [test $ac_use_included_regex = yes]
+  memcmp          [test $ac_use_included_regex = yes]
+  memmove         [test $ac_use_included_regex = yes]
+  mbrtowc         [test $ac_use_included_regex = yes]
+--- 18,24 ----
+  alloca-opt      [test $ac_use_included_regex = yes]
+  btowc           [test $ac_use_included_regex = yes]
+  gettext-h       [test $ac_use_included_regex = yes]
+! malloc-posix    [test $ac_use_included_regex = yes]
+  memcmp          [test $ac_use_included_regex = yes]
+  memmove         [test $ac_use_included_regex = yes]
+  mbrtowc         [test $ac_use_included_regex = yes]
