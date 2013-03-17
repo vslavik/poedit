@@ -7,12 +7,6 @@ if USE_WINDOWS
 RESOURCE_FILES = poedit_resource.o
 endif
 
-if USE_OSX
-OSX_SOURCES = osx_helpers.h osx_helpers.m
-endif
-
-SPARKLE_FRAMEWORK = @SPARKLE_FRAMEWORK@
-
 bin_PROGRAMS = poedit
 
 poedit_SOURCES = attentionbar.cpp attentionbar.h \
@@ -34,7 +28,6 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  cat_sorting.cpp cat_sorting.h \
                  utility.cpp utility.h \
                  version.h \
-                 $(OSX_SOURCES) \
                  compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS)
@@ -61,13 +54,3 @@ XRC_MORE_FILES = \
 
 compiled_xrc.cpp: $(XRC_RESOURCES) $(XRC_MORE_FILES)
 	$(WXRC) -v -c -o $@ $(XRC_RESOURCES)
-
-
-# Mac OS X bundle:
-bundle: poedit
-	$(MAKE) -C ../locales allmo
-	SPARKLE_FRAMEWORK=$(SPARKLE_FRAMEWORK) \
-		$(top_srcdir)/macosx/make-bundle \
-			"Poedit.app" \
-			./poedit \
-			"$(top_builddir)" "$(top_srcdir)"

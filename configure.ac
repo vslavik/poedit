@@ -32,16 +32,6 @@ AC_ARG_ENABLE(debug,
                              [Enable debugging information]),
               USE_DEBUG="$enableval", USE_DEBUG="no")
 
-AC_ARG_WITH([sparkle],
-            [AS_HELP_STRING([--with-sparkle],
-                            [Directory with Sparkle framework to use (OS X only)])],
-            [
-              with_sparkle="$withval"
-            ],
-            [
-              with_sparkle="no"
-            ])
-
 AC_MSG_CHECKING(for install location)
 case "$prefix" in
 NONE)	AC_CACHE_VAL(m_cv_prefix,m_cv_prefix=$ac_default_prefix);;
@@ -118,70 +108,35 @@ AC_CHECK_HEADER([boost/function.hpp],
 
 AC_CHECK_FUNCS([mkdtemp])
 
-use_osx=no
-case "${host}" in
-    *-*-darwin* )
-        use_osx=yes
-        LIBS="$LIBS -framework Foundation -framework AppKit"
-
-        SPARKLE_FRAMEWORK=no
-        if test "x$with_sparkle" != "xno" ; then
-            LIBS="$LIBS -F$with_sparkle -framework Sparkle"
-            CFLAGS="$CFLAGS -F$with_sparkle"
-            OBJCFLAGS="$OBJCFLAGS -F$with_sparkle"
-            CXXFLAGS="$CXXFLAGS -F$with_sparkle"
-            AC_MSG_CHECKING([for Sparkle framework])
-            AC_LINK_IFELSE(
-                [AC_LANG_PROGRAM([], [])],
-                [
-                  SPARKLE_FRAMEWORK="$with_sparkle/Sparkle.framework"
-                  AC_DEFINE(USE_SPARKLE)
-                  AC_SUBST(SPARKLE_FRAMEWORK)
-                  AC_MSG_RESULT([$SPARKLE_FRAMEWORK])
-                ],
-                [
-                  AC_MSG_FAILURE([Can't find Sparkle framework])
-                ])
-        fi
-    ;;
-esac
-
-AM_CONDITIONAL(USE_OSX, test $use_osx = yes)
-
 
 if test "$USE_SPELLCHECKING" != "no" ; then
-    if test "$use_osx" = yes ; then
-        dnl spellchecker is always available on OS X
-        AC_DEFINE(USE_SPELLCHECKING)
-    else
-        dnl we need GtkSpell and GTK+ 2.x for this, check if we're compatible
-        PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0],
-            [
-                AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 2])
-                AC_TRY_COMPILE([#include <wx/defs.h>],
-                    [
-                        #ifndef __WXGTK20__
-                            #error "not GTK+ 2"
-                        #endif
-                    ],
-                    [
-                        AC_MSG_RESULT([yes])
-                        CXXFLAGS="$CXXFLAGS $GTKSPELL_CFLAGS"
-                        LIBS="$LIBS $GTKSPELL_LIBS"
-                        AC_DEFINE(USE_SPELLCHECKING)
-                    ],
-                    [
-                    
-                        AC_MSG_RESULT([no])
-                        USE_SPELLCHECKING="no"
-                        AC_MSG_WARN([disabling spellchecking because GTK+ 2 is required by it])
-                    ])
-            ],
-            [
-                USE_SPELLCHECKING="no"
-                AC_MSG_WARN([disabling spellchecking because GtkSpell is missing])
-            ])
-    fi
+    dnl we need GtkSpell and GTK+ 2.x for this, check if we're compatible
+    PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0],
+        [
+            AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 2])
+            AC_TRY_COMPILE([#include <wx/defs.h>],
+                [
+                    #ifndef __WXGTK20__
+                        #error "not GTK+ 2"
+                    #endif
+                ],
+                [
+                    AC_MSG_RESULT([yes])
+                    CXXFLAGS="$CXXFLAGS $GTKSPELL_CFLAGS"
+                    LIBS="$LIBS $GTKSPELL_LIBS"
+                    AC_DEFINE(USE_SPELLCHECKING)
+                ],
+                [
+                
+                    AC_MSG_RESULT([no])
+                    USE_SPELLCHECKING="no"
+                    AC_MSG_WARN([disabling spellchecking because GTK+ 2 is required by it])
+                ])
+        ],
+        [
+            USE_SPELLCHECKING="no"
+            AC_MSG_WARN([disabling spellchecking because GtkSpell is missing])
+        ])
 fi
 
 
@@ -244,7 +199,6 @@ AC_CONFIG_FILES([
          icons/Makefile
          locales/Makefile
          docs/Makefile
-         macosx/Info.plist
          ])
 
 AC_OUTPUT
@@ -255,7 +209,4 @@ Configured $PACKAGE-$VERSION for $host
     Debugging information:      $USE_DEBUG
     Translation memory:         $USE_TRANSMEM
     Spellchecking:              $USE_SPELLCHECKING"
-if test "$use_osx" = "yes" ; then
-    echo "    Sparkle support:            $SPARKLE_FRAMEWORK"
-fi
 echo ""

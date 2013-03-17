@@ -7,9 +7,6 @@
     <property file="build.local.properties"/>
     <property file="build.properties"/>
 
-    <condition property="is_osx">
-        <os family="mac"/>
-    </condition>
     <condition property="is_windows">
         <os family="windows"/>
     </condition>
@@ -23,11 +20,11 @@
 
     <target name="compile"
             description="compile Poedit"
-            depends="compile-win,compile-osx"/>
+            depends="compile-win"/>
 
     <target name="distrib"
             description="build distribution for this platform"
-            depends="distrib-win,distrib-osx"/>
+            depends="distrib-win"/>
 
 
 <!-- ==============================================================
@@ -164,159 +161,6 @@
             <arg value="verify"/>
             <arg value="/pa"/>
             <arg path="${codesign.what}"/>
-        </exec>
-    </target>
-
-
-<!-- ==============================================================
-     OS X build
-     ============================================================== -->
-
-    <available property="bootstrapped.osx" file="configure"/>
-    <target name="bootstrap-osx" if="is_osx" unless="bootstrapped.osx">
-        <echo level="info" message="Bootstrapping git sources..."/>
-        <exec executable="./bootstrap" failonerror="true"/>
-    </target>
-
-
-    <target name="compile-osx-arch">
-        <echo level="info" message="Building Poedit for ${poedit.osx.arch}..."/>
-        <mkdir dir="build-osx/${poedit.osx.arch}"/>
-        <exec dir="build-osx/${poedit.osx.arch}" executable="/bin/sh" failonerror="true">
-            <arg value="../../configure"/>
-            <arg value="CC=${poedit.osx.cc}"/>
-            <arg value="CXX=${poedit.osx.cxx}"/>
-            <arg value="OBJC=${poedit.osx.cc}"/>
-            <arg value="OBJCXX=${poedit.osx.cxx}"/>
-            <arg value="CPPFLAGS=-I${deps.dir}/boost -I${deps.dir}/bin-osx/${poedit.osx.arch}/include"/>
-            <arg value="CFLAGS=-arch ${poedit.osx.arch} ${poedit.osx.cflags}"/>
-            <arg value="CXXFLAGS=-arch ${poedit.osx.arch} ${poedit.osx.cflags}"/>
-            <arg value="OBJCFLAGS=-arch ${poedit.osx.arch} ${poedit.osx.cflags}"/>
-            <arg value="LDFLAGS=-arch ${poedit.osx.arch} ${poedit.osx.ldflags} -L${deps.dir}/bin-osx/${poedit.osx.arch}/lib"/>
-            <arg value="--with-wx-config=${deps.dir}/bin-osx/${poedit.osx.arch}/bin/wx-config"/>
-            <arg value="--with-sparkle=${deps.dir}/sparkle/build/Release"/>
-            <arg value="WXRC=${deps.dir}/bin-osx/${poedit.osx.arch.native}/bin/wxrc"/>
-            <arg value="${poedit.osx.host}"/>
-        </exec>
-        <exec dir="build-osx/${poedit.osx.arch}/src" executable="make" failonerror="true">
-            <arg value="all"/>
-        </exec>
-    </target>
-
-    <target name="compile-osx" if="is_osx" depends="bootstrap-osx">
-        <antcall target="compile-osx-arch">
-            <param name="poedit.osx.arch" value="i386"/>
-            <param name="poedit.osx.host" value=""/>
-        </antcall>
-        <antcall target="osx-make-bundle"/>
-    </target>
-
-    <target name="osx-make-bundle">
-        <echo level="info" message="Creating universal Poedit binary..."/>
-        <exec dir="build-osx" executable="lipo" failonerror="true">
-            <arg value="-arch"/>
-            <arg value="i386"/>
-            <arg value="i386/src/poedit"/>
-            <arg value="-create"/>
-            <arg value="-output"/>
-            <arg value="poedit.universal"/>
-        </exec>
-
-        <echo level="info" message="Creating Poedit.app bundle..."/>
-        <exec dir="build-osx" executable="../macosx/make-bundle" failonerror="true">
-            <env key="GETTEXT_PREFIX" path="${deps.dir}/bin-gettext"/>
-            <env key="WX_ROOT" path="${deps.dir}/bin-osx/i386"/>
-            <env key="SPARKLE_FRAMEWORK" path="${deps.dir}/sparkle/build/Release/Sparkle.framework"/>
-            <arg value="Poedit.app"/>
-            <arg value="poedit.universal"/>
-            <arg value="i386"/> <!-- top_builddir (any) -->
-            <arg value=".."/>   <!-- top_srcdir -->
-        </exec>
-   
-        <echo level="info" message="Stripping debug info into dSYM..."/>
-        <delete dir="build-osx/Poedit.app.dSYM"/>
-        <exec dir="build-osx" executable="dsymutil" failonerror="true">
-            <arg value="--out=Poedit.app.dSYM"/>
-            <arg value="--threads=2"/>
-            <arg value="Poedit.app/Contents/MacOS/Poedit"/>
-        </exec>
-        <exec dir="build-osx" executable="strip" failonerror="true">
-            <arg value="-u"/>
-            <arg value="-r"/>
-            <arg value="Poedit.app/Contents/MacOS/Poedit"/>
-        </exec>
-
-        <antcall target="osx-codesign"/>
-    </target>
-
-    <target name="osx-codesign" if="codesign.identity">
-        <echo level="info" message="Signing Poedit.app binary..."/>
-        <exec dir="build-osx" executable="codesign" failonerror="true">
-            <arg line="${codesign.osx.args}"/>
-            <arg value="-f"/>
-            <arg value="-s"/>
-            <arg value="${codesign.identity}"/>
-            <arg value="Poedit.app"/>
-        </exec>
-        <!-- Developer ID signatures must contain explicit designated
-             requirements for the signature to be accepted by pre-10.7 versions
-             of OS X. Unfortunately, it's not done by default, so we need to read the
-             requirement and apply it.
-
-             See http://sutes.co.uk/2012/03/code-signing-using-new-apple-d.html.
-          -->
-        <echo level="info" message="Re-signing Poedit.app binary for pre-10.7 compatibility..."/>
-        <exec dir="build-osx" executable="/bin/sh" failonerror="true"
-              outputproperty="codesign.osx.designated" error="/dev/null">
-            <arg value="-c"/>
-            <!-- NB: the sed call is for compatibility with pre-10.8 codesign -->
-            <arg value="codesign -d -r- Poedit.app | grep 'designated' | sed -e 's/# designated/designated/'"/>
-        </exec>
-        <exec dir="build-osx" executable="codesign" failonerror="true">
-            <arg line="${codesign.osx.args}"/>
-            <arg value="-f"/>
-            <arg value="-s"/>
-            <arg value="${codesign.identity}"/>
-            <arg value="-r"/>
-            <arg value="=${codesign.osx.designated}"/>
-            <arg value="Poedit.app"/>
-        </exec>
-        <echo level="info" message="Verifying signature..."/>
-        <exec dir="build-osx" executable="codesign" failonerror="true">
-            <arg value="--verify"/>
-            <arg value="-vvv"/>
-            <arg value="Poedit.app"/>
-        </exec>
-    </target>
-    
-    
-    <target name="distrib-osx" depends="compile-osx" if="is_osx">
-        <mkdir dir="distrib"/>
-        <parallel>
-            <antcall target="osx-make-installer"/>
-            <antcall target="osx-debug-info"/>
-        </parallel>
-    </target>
-
-    <target name="osx-make-installer">
-        <echo level="info" message="Creating DMG package..."/>
-        <exec executable="macosx/make-dmg" failonerror="true">
-            <arg value="distrib/poedit-${poedit.version}.dmg"/>
-            <arg value="build-osx/Poedit.app"/>
-            <arg value="macosx/dmg"/>
-        </exec>
-    </target>
-
-    <target name="osx-debug-info">
-        <echo level="info" message="Packaging debug info (dSYM) files.."/>
-        <tar destfile="distrib/poedit-dSYM-${poedit.version}.tar">
-            <tarfileset dir="deps/sparkle/build/Release" includes="*.dSYM/**"/>
-            <tarfileset dir="build-osx" includes="*.dSYM/**"/>
-        </tar>
-        <delete file="distrib/poedit-dSYM-${poedit.version}.tar.xz"/>
-        <exec executable="xz">
-            <arg value="--best"/>
-            <arg value="distrib/poedit-dSYM-${poedit.version}.tar"/>
         </exec>
     </target>
 

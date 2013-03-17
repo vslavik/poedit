@@ -1,0 +1,795 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B24ACD5F16F6201F00399242 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B24ACD5E16F6201F00399242 /* Cocoa.framework */; };
+		B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD6716F6201F00399242 /* InfoPlist.strings */; };
+		B24ACD8416F6263900399242 /* Poedit.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD8316F6263900399242 /* Poedit.iconset */; };
+		B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; };
+		B2567977170763B700C52BC5 /* libwx_osx_cocoa_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */; };
+		B28F1CAA16F627170018AF7E /* GenericTranslation.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B28F1CA916F627170018AF7E /* GenericTranslation.iconset */; };
+		B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAC16F629D30018AF7E /* catalog.cpp */; };
+		B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAE16F629D30018AF7E /* edapp.cpp */; };
+		B28F1CE816F629D30018AF7E /* edframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CB016F629D30018AF7E /* edframe.cpp */; };
+		B28F1CE916F629D30018AF7E /* attentionbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CB116F629D30018AF7E /* attentionbar.cpp */; };
+		B28F1CEA16F629D30018AF7E /* cat_sorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CB316F629D30018AF7E /* cat_sorting.cpp */; };
+		B28F1CEB16F629D30018AF7E /* chooselang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CB616F629D30018AF7E /* chooselang.cpp */; };
+		B28F1CEC16F629D30018AF7E /* commentdlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CB716F629D30018AF7E /* commentdlg.cpp */; };
+		B28F1CED16F629D30018AF7E /* digger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CB916F629D30018AF7E /* digger.cpp */; };
+		B28F1CEE16F629D30018AF7E /* edlistctrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CBC16F629D30018AF7E /* edlistctrl.cpp */; };
+		B28F1CEF16F629D30018AF7E /* errorbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CBE16F629D30018AF7E /* errorbar.cpp */; };
+		B28F1CF016F629D30018AF7E /* fileviewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC016F629D30018AF7E /* fileviewer.cpp */; };
+		B28F1CF116F629D30018AF7E /* findframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC216F629D30018AF7E /* findframe.cpp */; };
+		B28F1CF216F629D30018AF7E /* gexecute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC416F629D30018AF7E /* gexecute.cpp */; };
+		B28F1CF316F629D30018AF7E /* icons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC616F629D30018AF7E /* icons.cpp */; };
+		B28F1CF416F629D30018AF7E /* isocodes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC816F629D30018AF7E /* isocodes.cpp */; };
+		B28F1CF516F629D30018AF7E /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CCA16F629D30018AF7E /* manager.cpp */; };
+		B28F1CF616F629D30018AF7E /* osx_helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CCD16F629D30018AF7E /* osx_helpers.m */; };
+		B28F1CF716F629D30018AF7E /* parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CCE16F629D30018AF7E /* parser.cpp */; };
+		B28F1CF816F629D30018AF7E /* prefsdlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CD016F629D30018AF7E /* prefsdlg.cpp */; };
+		B28F1CF916F629D30018AF7E /* progressinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CD216F629D30018AF7E /* progressinfo.cpp */; };
+		B28F1CFA16F629D30018AF7E /* propertiesdlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CD416F629D30018AF7E /* propertiesdlg.cpp */; };
+		B28F1CFB16F629D30018AF7E /* summarydlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CD616F629D30018AF7E /* summarydlg.cpp */; };
+		B28F1CFC16F629D30018AF7E /* transmem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CD816F629D30018AF7E /* transmem.cpp */; };
+		B28F1CFD16F629D30018AF7E /* transmemupd_wizard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CDA16F629D30018AF7E /* transmemupd_wizard.cpp */; };
+		B28F1CFE16F629D30018AF7E /* transmemupd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CDC16F629D30018AF7E /* transmemupd.cpp */; };
+		B28F1CFF16F629D30018AF7E /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CDE16F629D30018AF7E /* utility.cpp */; };
+		B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CE216F629D30018AF7E /* export_html.cpp */; };
+		B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CE316F629D30018AF7E /* pl_evaluate.cpp */; };
+		B29AE89017103992008D1F8A /* comment.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB05D1709DA4A009C1328 /* comment.xrc */; };
+		B29AE89117103992008D1F8A /* find.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB05E1709DA4A009C1328 /* find.xrc */; };
+		B29AE89217103992008D1F8A /* manager.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB05F1709DA4A009C1328 /* manager.xrc */; };
+		B29AE89317103992008D1F8A /* menus.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0601709DA4A009C1328 /* menus.xrc */; };
+		B29AE89417103992008D1F8A /* prefs.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0611709DA4A009C1328 /* prefs.xrc */; };
+		B29AE89517103992008D1F8A /* progress.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0621709DA4A009C1328 /* progress.xrc */; };
+		B29AE89617103992008D1F8A /* properties.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0631709DA4A009C1328 /* properties.xrc */; };
+		B29AE89717103992008D1F8A /* summary.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0641709DA4A009C1328 /* summary.xrc */; };
+		B29AE89817103992008D1F8A /* tm_update.gif in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0651709DA4A009C1328 /* tm_update.gif */; };
+		B29AE89917103992008D1F8A /* tm_update.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0661709DA4A009C1328 /* tm_update.xrc */; };
+		B29AE89A17103992008D1F8A /* toolbar.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0671709DA4A009C1328 /* toolbar.xrc */; };
+		B2BF84BA170846290030AA22 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84B9170846290030AA22 /* OpenGL.framework */; };
+		B2BF84BE170847220030AA22 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84BD170847220030AA22 /* libz.dylib */; };
+		B2BF84C1170847E60030AA22 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84C0170847E60030AA22 /* IOKit.framework */; };
+		B2BF84C4170849D00030AA22 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84BB170846940030AA22 /* Carbon.framework */; };
+		B2E836D91709EB0D00F31559 /* Sparkle.framework in Copy Private Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; };
+		B2E836DE1709ECD600F31559 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = B2E836DD1709ECD600F31559 /* dsa_pub.pem */; };
+		B2E836E91709ED2A00F31559 /* window-close.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E01709ED2A00F31559 /* window-close.png */; };
+		B2E836EA1709ED2A00F31559 /* poedit-status-automatic.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E11709ED2A00F31559 /* poedit-status-automatic.png */; };
+		B2E836EB1709ED2A00F31559 /* poedit-status-cat-mid.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E21709ED2A00F31559 /* poedit-status-cat-mid.png */; };
+		B2E836EC1709ED2A00F31559 /* poedit-status-cat-no.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E31709ED2A00F31559 /* poedit-status-cat-no.png */; };
+		B2E836ED1709ED2A00F31559 /* poedit-status-cat-ok.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E41709ED2A00F31559 /* poedit-status-cat-ok.png */; };
+		B2E836EE1709ED2A00F31559 /* poedit-status-comment-modif.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E51709ED2A00F31559 /* poedit-status-comment-modif.png */; };
+		B2E836EF1709ED2A00F31559 /* poedit-status-comment.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E61709ED2A00F31559 /* poedit-status-comment.png */; };
+		B2E836F01709ED2A00F31559 /* poedit-status-modified.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E71709ED2A00F31559 /* poedit-status-modified.png */; };
+		B2E836F11709ED2A00F31559 /* poedit-status-nothing.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E81709ED2A00F31559 /* poedit-status-nothing.png */; };
+		B2E836FB1709ED6300F31559 /* document-new.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F21709ED6300F31559 /* document-new.png */; };
+		B2E836FC1709ED6300F31559 /* document-open.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F31709ED6300F31559 /* document-open.png */; };
+		B2E836FD1709ED6300F31559 /* document-properties.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F41709ED6300F31559 /* document-properties.png */; };
+		B2E836FE1709ED6300F31559 /* document-save.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F51709ED6300F31559 /* document-save.png */; };
+		B2E836FF1709ED6300F31559 /* edit-delete.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F61709ED6300F31559 /* edit-delete.png */; };
+		B2E837001709ED6300F31559 /* poedit-comment.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F71709ED6300F31559 /* poedit-comment.png */; };
+		B2E837011709ED6300F31559 /* poedit-fuzzy.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F81709ED6300F31559 /* poedit-fuzzy.png */; };
+		B2E837021709ED6300F31559 /* poedit-update.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F91709ED6300F31559 /* poedit-update.png */; };
+		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
+		B2E83709170C97ED00F31559 /* copy-translations.sh in Resources */ = {isa = PBXBuildFile; fileRef = B2E83708170C97ED00F31559 /* copy-translations.sh */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B2BF72EF170831830030AA22 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B27115F8170830A800B936D5;
+			remoteInfo = ant_external_deps;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B2E836D81709EB0700F31559 /* Copy Private Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B2E836D91709EB0D00F31559 /* Sparkle.framework in Copy Private Frameworks */,
+			);
+			name = "Copy Private Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		B24ACD5B16F6201F00399242 /* Poedit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poedit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B24ACD5E16F6201F00399242 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		B24ACD6116F6201F00399242 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		B24ACD6216F6201F00399242 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		B24ACD6316F6201F00399242 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B24ACD6616F6201F00399242 /* Poedit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Poedit-Info.plist"; path = "macosx/Poedit-Info.plist"; sourceTree = "<group>"; };
+		B24ACD6816F6201F00399242 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B24ACD6C16F6201F00399242 /* Poedit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Poedit-Prefix.pch"; path = "src/Poedit-Prefix.pch"; sourceTree = "<group>"; };
+		B24ACD8316F6263900399242 /* Poedit.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = Poedit.iconset; path = icons/appicon/Poedit.iconset; sourceTree = SOURCE_ROOT; };
+		B256797417075E6000C52BC5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwx_osx_cocoa_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B27EB05D1709DA4A009C1328 /* comment.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = comment.xrc; sourceTree = "<group>"; };
+		B27EB05E1709DA4A009C1328 /* find.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = find.xrc; sourceTree = "<group>"; };
+		B27EB05F1709DA4A009C1328 /* manager.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = manager.xrc; sourceTree = "<group>"; };
+		B27EB0601709DA4A009C1328 /* menus.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = menus.xrc; sourceTree = "<group>"; };
+		B27EB0611709DA4A009C1328 /* prefs.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = prefs.xrc; sourceTree = "<group>"; };
+		B27EB0621709DA4A009C1328 /* progress.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = progress.xrc; sourceTree = "<group>"; };
+		B27EB0631709DA4A009C1328 /* properties.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = properties.xrc; sourceTree = "<group>"; };
+		B27EB0641709DA4A009C1328 /* summary.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = summary.xrc; sourceTree = "<group>"; };
+		B27EB0651709DA4A009C1328 /* tm_update.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = tm_update.gif; sourceTree = "<group>"; };
+		B27EB0661709DA4A009C1328 /* tm_update.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tm_update.xrc; sourceTree = "<group>"; };
+		B27EB0671709DA4A009C1328 /* toolbar.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = toolbar.xrc; sourceTree = "<group>"; };
+		B28F1CA916F627170018AF7E /* GenericTranslation.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = GenericTranslation.iconset; path = "icons/mime-osx/GenericTranslation.iconset"; sourceTree = SOURCE_ROOT; };
+		B28F1CAC16F629D30018AF7E /* catalog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = catalog.cpp; sourceTree = "<group>"; };
+		B28F1CAD16F629D30018AF7E /* chooselang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chooselang.h; sourceTree = "<group>"; };
+		B28F1CAE16F629D30018AF7E /* edapp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edapp.cpp; sourceTree = "<group>"; };
+		B28F1CAF16F629D30018AF7E /* edapp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edapp.h; sourceTree = "<group>"; };
+		B28F1CB016F629D30018AF7E /* edframe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edframe.cpp; sourceTree = "<group>"; };
+		B28F1CB116F629D30018AF7E /* attentionbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attentionbar.cpp; sourceTree = "<group>"; };
+		B28F1CB216F629D30018AF7E /* attentionbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attentionbar.h; sourceTree = "<group>"; };
+		B28F1CB316F629D30018AF7E /* cat_sorting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cat_sorting.cpp; sourceTree = "<group>"; };
+		B28F1CB416F629D30018AF7E /* cat_sorting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cat_sorting.h; sourceTree = "<group>"; };
+		B28F1CB516F629D30018AF7E /* catalog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = catalog.h; sourceTree = "<group>"; };
+		B28F1CB616F629D30018AF7E /* chooselang.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chooselang.cpp; sourceTree = "<group>"; };
+		B28F1CB716F629D30018AF7E /* commentdlg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commentdlg.cpp; sourceTree = "<group>"; };
+		B28F1CB816F629D30018AF7E /* commentdlg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commentdlg.h; sourceTree = "<group>"; };
+		B28F1CB916F629D30018AF7E /* digger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = digger.cpp; sourceTree = "<group>"; };
+		B28F1CBA16F629D30018AF7E /* digger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = digger.h; sourceTree = "<group>"; };
+		B28F1CBB16F629D30018AF7E /* edframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edframe.h; sourceTree = "<group>"; };
+		B28F1CBC16F629D30018AF7E /* edlistctrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edlistctrl.cpp; sourceTree = "<group>"; };
+		B28F1CBD16F629D30018AF7E /* edlistctrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edlistctrl.h; sourceTree = "<group>"; };
+		B28F1CBE16F629D30018AF7E /* errorbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = errorbar.cpp; sourceTree = "<group>"; };
+		B28F1CBF16F629D30018AF7E /* errorbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errorbar.h; sourceTree = "<group>"; };
+		B28F1CC016F629D30018AF7E /* fileviewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fileviewer.cpp; sourceTree = "<group>"; };
+		B28F1CC116F629D30018AF7E /* fileviewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fileviewer.h; sourceTree = "<group>"; };
+		B28F1CC216F629D30018AF7E /* findframe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = findframe.cpp; sourceTree = "<group>"; };
+		B28F1CC316F629D30018AF7E /* findframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = findframe.h; sourceTree = "<group>"; };
+		B28F1CC416F629D30018AF7E /* gexecute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gexecute.cpp; sourceTree = "<group>"; };
+		B28F1CC516F629D30018AF7E /* gexecute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gexecute.h; sourceTree = "<group>"; };
+		B28F1CC616F629D30018AF7E /* icons.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = icons.cpp; sourceTree = "<group>"; };
+		B28F1CC716F629D30018AF7E /* icons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icons.h; sourceTree = "<group>"; };
+		B28F1CC816F629D30018AF7E /* isocodes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = isocodes.cpp; sourceTree = "<group>"; };
+		B28F1CC916F629D30018AF7E /* isocodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isocodes.h; sourceTree = "<group>"; };
+		B28F1CCA16F629D30018AF7E /* manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = manager.cpp; sourceTree = "<group>"; };
+		B28F1CCB16F629D30018AF7E /* manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = manager.h; sourceTree = "<group>"; };
+		B28F1CCC16F629D30018AF7E /* osx_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osx_helpers.h; sourceTree = "<group>"; };
+		B28F1CCD16F629D30018AF7E /* osx_helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = osx_helpers.m; sourceTree = "<group>"; };
+		B28F1CCE16F629D30018AF7E /* parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = parser.cpp; sourceTree = "<group>"; };
+		B28F1CCF16F629D30018AF7E /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = "<group>"; };
+		B28F1CD016F629D30018AF7E /* prefsdlg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = prefsdlg.cpp; sourceTree = "<group>"; };
+		B28F1CD116F629D30018AF7E /* prefsdlg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefsdlg.h; sourceTree = "<group>"; };
+		B28F1CD216F629D30018AF7E /* progressinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = progressinfo.cpp; sourceTree = "<group>"; };
+		B28F1CD316F629D30018AF7E /* progressinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = progressinfo.h; sourceTree = "<group>"; };
+		B28F1CD416F629D30018AF7E /* propertiesdlg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = propertiesdlg.cpp; sourceTree = "<group>"; };
+		B28F1CD516F629D30018AF7E /* propertiesdlg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = propertiesdlg.h; sourceTree = "<group>"; };
+		B28F1CD616F629D30018AF7E /* summarydlg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = summarydlg.cpp; sourceTree = "<group>"; };
+		B28F1CD716F629D30018AF7E /* summarydlg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = summarydlg.h; sourceTree = "<group>"; };
+		B28F1CD816F629D30018AF7E /* transmem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transmem.cpp; sourceTree = "<group>"; };
+		B28F1CD916F629D30018AF7E /* transmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transmem.h; sourceTree = "<group>"; };
+		B28F1CDA16F629D30018AF7E /* transmemupd_wizard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transmemupd_wizard.cpp; sourceTree = "<group>"; };
+		B28F1CDB16F629D30018AF7E /* transmemupd_wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transmemupd_wizard.h; sourceTree = "<group>"; };
+		B28F1CDC16F629D30018AF7E /* transmemupd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transmemupd.cpp; sourceTree = "<group>"; };
+		B28F1CDD16F629D30018AF7E /* transmemupd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transmemupd.h; sourceTree = "<group>"; };
+		B28F1CDE16F629D30018AF7E /* utility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utility.cpp; sourceTree = "<group>"; };
+		B28F1CDF16F629D30018AF7E /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
+		B28F1CE016F629D30018AF7E /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
+		B28F1CE116F629D30018AF7E /* wxeditablelistbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wxeditablelistbox.h; sourceTree = "<group>"; };
+		B28F1CE216F629D30018AF7E /* export_html.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = export_html.cpp; sourceTree = "<group>"; };
+		B28F1CE316F629D30018AF7E /* pl_evaluate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pl_evaluate.cpp; path = pluralforms/pl_evaluate.cpp; sourceTree = "<group>"; };
+		B28F1CE416F629D30018AF7E /* pl_evaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pl_evaluate.h; path = pluralforms/pl_evaluate.h; sourceTree = "<group>"; };
+		B28F1CE516F629D30018AF7E /* digits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = digits.h; sourceTree = "<group>"; };
+		B2BF84B9170846290030AA22 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		B2BF84BB170846940030AA22 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		B2BF84BD170847220030AA22 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		B2BF84C0170847E60030AA22 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		B2BF84C21708498B0030AA22 /* HIToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HIToolbox.framework; path = System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework; sourceTree = SDKROOT; };
+		B2E836DD1709ECD600F31559 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = macosx/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
+		B2E836E01709ED2A00F31559 /* window-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "window-close.png"; path = "macosx/window-close.png"; sourceTree = "<group>"; };
+		B2E836E11709ED2A00F31559 /* poedit-status-automatic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-automatic.png"; sourceTree = "<group>"; };
+		B2E836E21709ED2A00F31559 /* poedit-status-cat-mid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-cat-mid.png"; sourceTree = "<group>"; };
+		B2E836E31709ED2A00F31559 /* poedit-status-cat-no.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-cat-no.png"; sourceTree = "<group>"; };
+		B2E836E41709ED2A00F31559 /* poedit-status-cat-ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-cat-ok.png"; sourceTree = "<group>"; };
+		B2E836E51709ED2A00F31559 /* poedit-status-comment-modif.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-comment-modif.png"; sourceTree = "<group>"; };
+		B2E836E61709ED2A00F31559 /* poedit-status-comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-comment.png"; sourceTree = "<group>"; };
+		B2E836E71709ED2A00F31559 /* poedit-status-modified.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-modified.png"; sourceTree = "<group>"; };
+		B2E836E81709ED2A00F31559 /* poedit-status-nothing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-nothing.png"; sourceTree = "<group>"; };
+		B2E836F21709ED6300F31559 /* document-new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "document-new.png"; path = "toolbar-32/document-new.png"; sourceTree = "<group>"; };
+		B2E836F31709ED6300F31559 /* document-open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "document-open.png"; path = "toolbar-32/document-open.png"; sourceTree = "<group>"; };
+		B2E836F41709ED6300F31559 /* document-properties.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "document-properties.png"; path = "toolbar-32/document-properties.png"; sourceTree = "<group>"; };
+		B2E836F51709ED6300F31559 /* document-save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "document-save.png"; path = "toolbar-32/document-save.png"; sourceTree = "<group>"; };
+		B2E836F61709ED6300F31559 /* edit-delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit-delete.png"; path = "toolbar-32/edit-delete.png"; sourceTree = "<group>"; };
+		B2E836F71709ED6300F31559 /* poedit-comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-comment.png"; path = "toolbar-32/poedit-comment.png"; sourceTree = "<group>"; };
+		B2E836F81709ED6300F31559 /* poedit-fuzzy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-fuzzy.png"; path = "toolbar-32/poedit-fuzzy.png"; sourceTree = "<group>"; };
+		B2E836F91709ED6300F31559 /* poedit-update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-update.png"; path = "toolbar-32/poedit-update.png"; sourceTree = "<group>"; };
+		B2E836FA1709ED6300F31559 /* poedit-validate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-validate.png"; path = "toolbar-32/poedit-validate.png"; sourceTree = "<group>"; };
+		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macosx/copy-translations.sh"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B24ACD5816F6201F00399242 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2567977170763B700C52BC5 /* libwx_osx_cocoa_static.a in Frameworks */,
+				B24ACD5F16F6201F00399242 /* Cocoa.framework in Frameworks */,
+				B2BF84C4170849D00030AA22 /* Carbon.framework in Frameworks */,
+				B2BF84BA170846290030AA22 /* OpenGL.framework in Frameworks */,
+				B2BF84C1170847E60030AA22 /* IOKit.framework in Frameworks */,
+				B2BF84BE170847220030AA22 /* libz.dylib in Frameworks */,
+				B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B24ACD5216F6201F00399242 = {
+			isa = PBXGroup;
+			children = (
+				B24ACD6416F6201F00399242 /* Poedit */,
+				B24ACD5D16F6201F00399242 /* Frameworks */,
+				B24ACD5C16F6201F00399242 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B24ACD5C16F6201F00399242 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B24ACD5B16F6201F00399242 /* Poedit.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B24ACD5D16F6201F00399242 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B256797417075E6000C52BC5 /* Sparkle.framework */,
+				B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */,
+				B2BF84C21708498B0030AA22 /* HIToolbox.framework */,
+				B2BF84C0170847E60030AA22 /* IOKit.framework */,
+				B2BF84BD170847220030AA22 /* libz.dylib */,
+				B24ACD5E16F6201F00399242 /* Cocoa.framework */,
+				B2BF84BB170846940030AA22 /* Carbon.framework */,
+				B2BF84B9170846290030AA22 /* OpenGL.framework */,
+				B24ACD6016F6201F00399242 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B24ACD6016F6201F00399242 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B24ACD6116F6201F00399242 /* AppKit.framework */,
+				B24ACD6216F6201F00399242 /* CoreData.framework */,
+				B24ACD6316F6201F00399242 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		B24ACD6416F6201F00399242 /* Poedit */ = {
+			isa = PBXGroup;
+			children = (
+				B2E837041709F8EC00F31559 /* Headers */,
+				B28F1CAB16F629890018AF7E /* Sources */,
+				B27EB05C1709DA2B009C1328 /* XRC Resources */,
+				B24ACD7E16F6252600399242 /* Resources */,
+				B24ACD6516F6201F00399242 /* Supporting Files */,
+			);
+			name = Poedit;
+			sourceTree = SOURCE_ROOT;
+		};
+		B24ACD6516F6201F00399242 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B24ACD6616F6201F00399242 /* Poedit-Info.plist */,
+				B24ACD6716F6201F00399242 /* InfoPlist.strings */,
+				B24ACD6C16F6201F00399242 /* Poedit-Prefix.pch */,
+				B2E83708170C97ED00F31559 /* copy-translations.sh */,
+			);
+			name = "Supporting Files";
+			sourceTree = SOURCE_ROOT;
+		};
+		B24ACD7E16F6252600399242 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B2E836DF1709ECF100F31559 /* icons */,
+				B2E836DD1709ECD600F31559 /* dsa_pub.pem */,
+				B24ACD8316F6263900399242 /* Poedit.iconset */,
+				B28F1CA916F627170018AF7E /* GenericTranslation.iconset */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		B27EB05C1709DA2B009C1328 /* XRC Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B27EB05D1709DA4A009C1328 /* comment.xrc */,
+				B27EB05E1709DA4A009C1328 /* find.xrc */,
+				B27EB05F1709DA4A009C1328 /* manager.xrc */,
+				B27EB0601709DA4A009C1328 /* menus.xrc */,
+				B27EB0611709DA4A009C1328 /* prefs.xrc */,
+				B27EB0621709DA4A009C1328 /* progress.xrc */,
+				B27EB0631709DA4A009C1328 /* properties.xrc */,
+				B27EB0641709DA4A009C1328 /* summary.xrc */,
+				B27EB0651709DA4A009C1328 /* tm_update.gif */,
+				B27EB0661709DA4A009C1328 /* tm_update.xrc */,
+				B27EB0671709DA4A009C1328 /* toolbar.xrc */,
+			);
+			name = "XRC Resources";
+			path = src/resources;
+			sourceTree = SOURCE_ROOT;
+		};
+		B28F1CAB16F629890018AF7E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				B28F1CB116F629D30018AF7E /* attentionbar.cpp */,
+				B28F1CB316F629D30018AF7E /* cat_sorting.cpp */,
+				B28F1CAC16F629D30018AF7E /* catalog.cpp */,
+				B28F1CB616F629D30018AF7E /* chooselang.cpp */,
+				B28F1CB716F629D30018AF7E /* commentdlg.cpp */,
+				B28F1CB916F629D30018AF7E /* digger.cpp */,
+				B28F1CAE16F629D30018AF7E /* edapp.cpp */,
+				B28F1CB016F629D30018AF7E /* edframe.cpp */,
+				B28F1CBC16F629D30018AF7E /* edlistctrl.cpp */,
+				B28F1CBE16F629D30018AF7E /* errorbar.cpp */,
+				B28F1CE216F629D30018AF7E /* export_html.cpp */,
+				B28F1CC016F629D30018AF7E /* fileviewer.cpp */,
+				B28F1CC216F629D30018AF7E /* findframe.cpp */,
+				B28F1CC416F629D30018AF7E /* gexecute.cpp */,
+				B28F1CC616F629D30018AF7E /* icons.cpp */,
+				B28F1CC816F629D30018AF7E /* isocodes.cpp */,
+				B28F1CCA16F629D30018AF7E /* manager.cpp */,
+				B28F1CCD16F629D30018AF7E /* osx_helpers.m */,
+				B28F1CCE16F629D30018AF7E /* parser.cpp */,
+				B28F1CE316F629D30018AF7E /* pl_evaluate.cpp */,
+				B28F1CD016F629D30018AF7E /* prefsdlg.cpp */,
+				B28F1CD216F629D30018AF7E /* progressinfo.cpp */,
+				B28F1CD416F629D30018AF7E /* propertiesdlg.cpp */,
+				B28F1CD616F629D30018AF7E /* summarydlg.cpp */,
+				B28F1CD816F629D30018AF7E /* transmem.cpp */,
+				B28F1CDC16F629D30018AF7E /* transmemupd.cpp */,
+				B28F1CDA16F629D30018AF7E /* transmemupd_wizard.cpp */,
+				B28F1CDE16F629D30018AF7E /* utility.cpp */,
+			);
+			name = Sources;
+			path = src;
+			sourceTree = "<group>";
+		};
+		B2E836DF1709ECF100F31559 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				B2E836F21709ED6300F31559 /* document-new.png */,
+				B2E836F31709ED6300F31559 /* document-open.png */,
+				B2E836F41709ED6300F31559 /* document-properties.png */,
+				B2E836F51709ED6300F31559 /* document-save.png */,
+				B2E836F61709ED6300F31559 /* edit-delete.png */,
+				B2E836F71709ED6300F31559 /* poedit-comment.png */,
+				B2E836F81709ED6300F31559 /* poedit-fuzzy.png */,
+				B2E836F91709ED6300F31559 /* poedit-update.png */,
+				B2E836FA1709ED6300F31559 /* poedit-validate.png */,
+				B2E836E01709ED2A00F31559 /* window-close.png */,
+				B2E836E11709ED2A00F31559 /* poedit-status-automatic.png */,
+				B2E836E21709ED2A00F31559 /* poedit-status-cat-mid.png */,
+				B2E836E31709ED2A00F31559 /* poedit-status-cat-no.png */,
+				B2E836E41709ED2A00F31559 /* poedit-status-cat-ok.png */,
+				B2E836E51709ED2A00F31559 /* poedit-status-comment-modif.png */,
+				B2E836E61709ED2A00F31559 /* poedit-status-comment.png */,
+				B2E836E71709ED2A00F31559 /* poedit-status-modified.png */,
+				B2E836E81709ED2A00F31559 /* poedit-status-nothing.png */,
+			);
+			name = icons;
+			path = icons/ui;
+			sourceTree = SOURCE_ROOT;
+		};
+		B2E837041709F8EC00F31559 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				B28F1CB216F629D30018AF7E /* attentionbar.h */,
+				B28F1CB416F629D30018AF7E /* cat_sorting.h */,
+				B28F1CB516F629D30018AF7E /* catalog.h */,
+				B28F1CAD16F629D30018AF7E /* chooselang.h */,
+				B28F1CB816F629D30018AF7E /* commentdlg.h */,
+				B28F1CBA16F629D30018AF7E /* digger.h */,
+				B28F1CE516F629D30018AF7E /* digits.h */,
+				B28F1CAF16F629D30018AF7E /* edapp.h */,
+				B28F1CBB16F629D30018AF7E /* edframe.h */,
+				B28F1CBD16F629D30018AF7E /* edlistctrl.h */,
+				B28F1CBF16F629D30018AF7E /* errorbar.h */,
+				B28F1CC116F629D30018AF7E /* fileviewer.h */,
+				B28F1CC316F629D30018AF7E /* findframe.h */,
+				B28F1CC516F629D30018AF7E /* gexecute.h */,
+				B28F1CC716F629D30018AF7E /* icons.h */,
+				B28F1CC916F629D30018AF7E /* isocodes.h */,
+				B28F1CCB16F629D30018AF7E /* manager.h */,
+				B28F1CCC16F629D30018AF7E /* osx_helpers.h */,
+				B28F1CCF16F629D30018AF7E /* parser.h */,
+				B28F1CE416F629D30018AF7E /* pl_evaluate.h */,
+				B28F1CD116F629D30018AF7E /* prefsdlg.h */,
+				B28F1CD316F629D30018AF7E /* progressinfo.h */,
+				B28F1CD516F629D30018AF7E /* propertiesdlg.h */,
+				B28F1CD716F629D30018AF7E /* summarydlg.h */,
+				B28F1CD916F629D30018AF7E /* transmem.h */,
+				B28F1CDD16F629D30018AF7E /* transmemupd.h */,
+				B28F1CDB16F629D30018AF7E /* transmemupd_wizard.h */,
+				B28F1CDF16F629D30018AF7E /* utility.h */,
+				B28F1CE016F629D30018AF7E /* version.h */,
+				B28F1CE116F629D30018AF7E /* wxeditablelistbox.h */,
+			);
+			name = Headers;
+			path = src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		B27115F8170830A800B936D5 /* ant_external_deps */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = B27115F9170830A800B936D5 /* Build configuration list for PBXLegacyTarget "ant_external_deps" */;
+			buildPhases = (
+			);
+			buildToolPath = ant;
+			buildWorkingDirectory = deps;
+			dependencies = (
+			);
+			name = ant_external_deps;
+			passBuildSettingsInEnvironment = 1;
+			productName = external_deps;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXNativeTarget section */
+		B24ACD5A16F6201F00399242 /* Poedit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B24ACD7B16F6201F00399242 /* Build configuration list for PBXNativeTarget "Poedit" */;
+			buildPhases = (
+				B24ACD5716F6201F00399242 /* Sources */,
+				B24ACD5816F6201F00399242 /* Frameworks */,
+				B24ACD5916F6201F00399242 /* Resources */,
+				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
+				B2E836DB1709EBBC00F31559 /* Copy GNU gettext binaries */,
+				B2E83707170C96DB00F31559 /* Install translations */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B2BF72F0170831830030AA22 /* PBXTargetDependency */,
+			);
+			name = Poedit;
+			productName = Poedit;
+			productReference = B24ACD5B16F6201F00399242 /* Poedit.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B24ACD5316F6201F00399242 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = PO;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Václav Slavík";
+			};
+			buildConfigurationList = B24ACD5616F6201F00399242 /* Build configuration list for PBXProject "Poedit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B24ACD5216F6201F00399242;
+			productRefGroup = B24ACD5C16F6201F00399242 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B24ACD5A16F6201F00399242 /* Poedit */,
+				B27115F8170830A800B936D5 /* ant_external_deps */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B24ACD5916F6201F00399242 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */,
+				B24ACD8416F6263900399242 /* Poedit.iconset in Resources */,
+				B28F1CAA16F627170018AF7E /* GenericTranslation.iconset in Resources */,
+				B2E836DE1709ECD600F31559 /* dsa_pub.pem in Resources */,
+				B2E836E91709ED2A00F31559 /* window-close.png in Resources */,
+				B2E836EA1709ED2A00F31559 /* poedit-status-automatic.png in Resources */,
+				B2E836EB1709ED2A00F31559 /* poedit-status-cat-mid.png in Resources */,
+				B2E836EC1709ED2A00F31559 /* poedit-status-cat-no.png in Resources */,
+				B2E836ED1709ED2A00F31559 /* poedit-status-cat-ok.png in Resources */,
+				B2E836EE1709ED2A00F31559 /* poedit-status-comment-modif.png in Resources */,
+				B2E836EF1709ED2A00F31559 /* poedit-status-comment.png in Resources */,
+				B2E836F01709ED2A00F31559 /* poedit-status-modified.png in Resources */,
+				B2E836F11709ED2A00F31559 /* poedit-status-nothing.png in Resources */,
+				B2E836FB1709ED6300F31559 /* document-new.png in Resources */,
+				B2E836FC1709ED6300F31559 /* document-open.png in Resources */,
+				B2E836FD1709ED6300F31559 /* document-properties.png in Resources */,
+				B2E836FE1709ED6300F31559 /* document-save.png in Resources */,
+				B2E836FF1709ED6300F31559 /* edit-delete.png in Resources */,
+				B2E837001709ED6300F31559 /* poedit-comment.png in Resources */,
+				B2E837011709ED6300F31559 /* poedit-fuzzy.png in Resources */,
+				B2E837021709ED6300F31559 /* poedit-update.png in Resources */,
+				B2E837031709ED6300F31559 /* poedit-validate.png in Resources */,
+				B29AE89017103992008D1F8A /* comment.xrc in Resources */,
+				B29AE89117103992008D1F8A /* find.xrc in Resources */,
+				B29AE89217103992008D1F8A /* manager.xrc in Resources */,
+				B29AE89317103992008D1F8A /* menus.xrc in Resources */,
+				B29AE89417103992008D1F8A /* prefs.xrc in Resources */,
+				B29AE89517103992008D1F8A /* progress.xrc in Resources */,
+				B29AE89617103992008D1F8A /* properties.xrc in Resources */,
+				B29AE89717103992008D1F8A /* summary.xrc in Resources */,
+				B29AE89817103992008D1F8A /* tm_update.gif in Resources */,
+				B29AE89917103992008D1F8A /* tm_update.xrc in Resources */,
+				B29AE89A17103992008D1F8A /* toolbar.xrc in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B2E836DB1709EBBC00F31559 /* Copy GNU gettext binaries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy GNU gettext binaries";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp -a deps/bin-osx/${CONFIGURATION}/gettext/bin/* \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"";
+		};
+		B2E83707170C96DB00F31559 /* Install translations */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Install translations";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export MSGFMT=\"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/msgfmt\"\nmacosx/copy-translations.sh \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B24ACD5716F6201F00399242 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */,
+				B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */,
+				B28F1CE816F629D30018AF7E /* edframe.cpp in Sources */,
+				B28F1CE916F629D30018AF7E /* attentionbar.cpp in Sources */,
+				B28F1CEA16F629D30018AF7E /* cat_sorting.cpp in Sources */,
+				B28F1CEB16F629D30018AF7E /* chooselang.cpp in Sources */,
+				B28F1CEC16F629D30018AF7E /* commentdlg.cpp in Sources */,
+				B28F1CED16F629D30018AF7E /* digger.cpp in Sources */,
+				B28F1CEE16F629D30018AF7E /* edlistctrl.cpp in Sources */,
+				B28F1CEF16F629D30018AF7E /* errorbar.cpp in Sources */,
+				B28F1CF016F629D30018AF7E /* fileviewer.cpp in Sources */,
+				B28F1CF116F629D30018AF7E /* findframe.cpp in Sources */,
+				B28F1CF216F629D30018AF7E /* gexecute.cpp in Sources */,
+				B28F1CF316F629D30018AF7E /* icons.cpp in Sources */,
+				B28F1CF416F629D30018AF7E /* isocodes.cpp in Sources */,
+				B28F1CF516F629D30018AF7E /* manager.cpp in Sources */,
+				B28F1CF616F629D30018AF7E /* osx_helpers.m in Sources */,
+				B28F1CF716F629D30018AF7E /* parser.cpp in Sources */,
+				B28F1CF816F629D30018AF7E /* prefsdlg.cpp in Sources */,
+				B28F1CF916F629D30018AF7E /* progressinfo.cpp in Sources */,
+				B28F1CFA16F629D30018AF7E /* propertiesdlg.cpp in Sources */,
+				B28F1CFB16F629D30018AF7E /* summarydlg.cpp in Sources */,
+				B28F1CFC16F629D30018AF7E /* transmem.cpp in Sources */,
+				B28F1CFD16F629D30018AF7E /* transmemupd_wizard.cpp in Sources */,
+				B28F1CFE16F629D30018AF7E /* transmemupd.cpp in Sources */,
+				B28F1CFF16F629D30018AF7E /* utility.cpp in Sources */,
+				B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */,
+				B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B2BF72F0170831830030AA22 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B27115F8170830A800B936D5 /* ant_external_deps */;
+			targetProxy = B2BF72EF170831830030AA22 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B24ACD6716F6201F00399242 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B24ACD6816F6201F00399242 /* en */,
+			);
+			name = InfoPlist.strings;
+			path = macosx;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B24ACD7916F6201F00399242 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEPS_BUILD_DIR = "deps/bin-osx/$(CONFIGURATION)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(WX_DEFINES)",
+					"$(POEDIT_FEATURES)",
+					"DEBUG=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					deps/wx/build/osx/setup/cocoa/include,
+					deps/wx/include,
+					deps/boost,
+					"$(DEPS_BUILD_DIR)/db/include",
+				);
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				POEDIT_FEATURES = "USE_SPARKLE USE_TRANSMEM USE_SPELLCHECKING";
+				SDKROOT = macosx;
+				WX_DEFINES = "__WXOSX_COCOA__ __WX__ __WXMAC_XCODE__=1 wxUSE_UNICODE_UTF8=0 wxUSE_UNICODE_WCHAR=1";
+			};
+			name = Debug;
+		};
+		B24ACD7A16F6201F00399242 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPS_BUILD_DIR = "deps/bin-osx/$(CONFIGURATION)";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(WX_DEFINES)",
+					"$(POEDIT_FEATURES)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					deps/wx/build/osx/setup/cocoa/include,
+					deps/wx/include,
+					deps/boost,
+					"$(DEPS_BUILD_DIR)/db/include",
+				);
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				POEDIT_FEATURES = "USE_SPARKLE USE_TRANSMEM USE_SPELLCHECKING";
+				SDKROOT = macosx;
+				WX_DEFINES = "__WXOSX_COCOA__ __WX__ __WXMAC_XCODE__=1 wxUSE_UNICODE_UTF8=0 wxUSE_UNICODE_WCHAR=1";
+			};
+			name = Release;
+		};
+		B24ACD7C16F6201F00399242 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
+				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
+				OTHER_LDFLAGS = "-ldb_cxx";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B24ACD7D16F6201F00399242 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
+				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
+				OTHER_LDFLAGS = "-ldb_cxx";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		B27115FA170830A800B936D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B27115FB170830A800B936D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B24ACD5616F6201F00399242 /* Build configuration list for PBXProject "Poedit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B24ACD7916F6201F00399242 /* Debug */,
+				B24ACD7A16F6201F00399242 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B24ACD7B16F6201F00399242 /* Build configuration list for PBXNativeTarget "Poedit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B24ACD7C16F6201F00399242 /* Debug */,
+				B24ACD7D16F6201F00399242 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B27115F9170830A800B936D5 /* Build configuration list for PBXLegacyTarget "ant_external_deps" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B27115FA170830A800B936D5 /* Debug */,
+				B27115FB170830A800B936D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B24ACD5316F6201F00399242 /* Project object */;
+}
