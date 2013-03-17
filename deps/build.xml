@@ -58,7 +58,7 @@
             description="compile GNU gettext"/>
     <target name="compile-db" depends="win-db,osx-db"
             description="compile Berkeley DB"/>
-    <target name="compile-wx" depends="win-wx,osx-wx"
+    <target name="compile-wx" depends="win-wx"
             description="compile wxWidgets"/>
     <target name="compile-win-sparkle" depends="win-sparkle"
             description="compile WinSparkle"/>
@@ -472,66 +472,6 @@
 
         <touch file="${intdir}/gettext.buildtag"/>
         <delete dir="${intdir}/gettext"/>
-    </target>
-
-
-<!-- ==============================================================
-     OS X dependencies - wxWidgets
-     ============================================================== -->
-
-     <target name="osx-wx-check" if="is_osx">
-        <echo level="info" message="Checking if wxWidgets needs building..."/>
-        <dependset>
-            <srcfileset dir="wx"
-                        excludes="locale/**,include/wx/stc/stc.h,src/stc/stc.cpp"/>
-            <targetfileset dir="${builddir}/wx"/>
-            <targetfilelist files="${intdir}/wx.buildtag"/>
-        </dependset>
-        <available property="built.osx-wx" file="${intdir}/wx.buildtag"/>
-    </target>
-
-    <target name="osx-wx-arch">
-        <echo level="info" message="Building wxWidgets for ${osx.arch}..."/>
-        <property file="macosx.properties"/>
-        <mkdir dir="${intdir}/wx/${osx.arch}"/>
-        <exec dir="${intdir}/wx/${osx.arch}" executable="/bin/sh" failonerror="true">
-            <arg value="${basedir}/wx/configure"/>
-            <arg value="--prefix=${builddir}/wx/${osx.arch}"/>
-            <arg value="--with-cocoa"/>
-            <arg value="--with-macosx-version-min=${osx.deploy}"/>
-            <arg value="--enable-debug_flag"/>
-            <arg value="--enable-debug_info"/>
-            <arg value="--disable-shared"/>
-            <arg value="--enable-unicode"/>
-            <!-- The streams add dependency on std::ostream& std::ostream::_M_insert<double>(double),
-                 among other things, and that breaks deployment to OS X 10.5
-                 (because we use 10.6 SDK and so 10.6's libstdc++ is linked
-                 against. Fixing the issue in a better way (somehow forcing
-                 linkage against 10.5's copy) is not worth the effort, because
-                 Poedit doesn't rely on the wx's streams support. -->
-            <arg value="--disable-std_iostreams"/>
-            <!-- expat is part of the system since 10.5 -->
-            <arg value="--with-expat=builtin"/>
-            <arg value="CC=${osx.cc}"/>
-            <arg value="CXX=${osx.cxx}"/>
-            <arg value="CFLAGS=${osx.cflags}"/>
-            <arg value="CXXFLAGS=${osx.cxxflags}"/>
-            <arg value="OBJCFLAGS=${osx.cflags}"/>
-            <arg value="OBJCXXFLAGS=${osx.cxxflags}"/>
-            <arg value="LDFLAGS=${osx.ldflags}"/>
-        </exec>
-        <exec dir="${intdir}/wx/${osx.arch}" executable="/bin/sh" failonerror="true">
-            <arg value="-c"/>
-            <arg value="make install"/>
-        </exec>
-    </target>
-
-    <target name="osx-wx" depends="osx-gettext,osx-wx-check" unless="built.osx-wx" if="is_osx">
-        <antcall target="osx-wx-arch">
-            <param name="osx.arch" value="i386"/>
-        </antcall>
-        <touch file="${intdir}/wx.buildtag"/>
-        <delete dir="${intdir}/wx"/>
     </target>
 
 </project>
