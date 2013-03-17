@@ -1,5 +1,5 @@
 /* Byte-wise substring search, using the Two-Way algorithm.
-   Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2008-2013 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Written by Eric Blake <ebb9@byu.net>, 2008.
 
@@ -14,8 +14,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License along
-   with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 /* Before including this file, you need to include <config.h> and
    <string.h>, and define:
@@ -44,14 +43,15 @@
 #include <limits.h>
 #include <stdint.h>
 
-/* We use the Two-Way string matching algorithm, which guarantees
-   linear complexity with constant space.  Additionally, for long
-   needles, we also use a bad character shift table similar to the
-   Boyer-Moore algorithm to achieve improved (potentially sub-linear)
-   performance.
+/* We use the Two-Way string matching algorithm (also known as
+   Chrochemore-Perrin), which guarantees linear complexity with
+   constant space.  Additionally, for long needles, we also use a bad
+   character shift table similar to the Boyer-Moore algorithm to
+   achieve improved (potentially sub-linear) performance.
 
-   See http://www-igm.univ-mlv.fr/~lecroq/string/node26.html#SECTION00260
-   and http://en.wikipedia.org/wiki/Boyer-Moore_string_search_algorithm
+   See http://www-igm.univ-mlv.fr/~lecroq/string/node26.html#SECTION00260,
+   http://en.wikipedia.org/wiki/Boyer-Moore_string_search_algorithm,
+   http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.6641&rep=rep1&type=pdf
 */
 
 /* Point at which computing a bad-byte shift table is likely to be
@@ -95,11 +95,14 @@
    A critical factorization has the property that the local period
    equals the global period.  All strings have at least one critical
    factorization with the left half smaller than the global period.
+   And while some strings have more than one critical factorization,
+   it is provable that with an ordered alphabet, at least one of the
+   critical factorizations corresponds to a maximal suffix.
 
    Given an ordered alphabet, a critical factorization can be computed
    in linear time, with 2 * NEEDLE_LEN comparisons, by computing the
-   larger of two ordered maximal suffixes.  The ordered maximal
-   suffixes are determined by lexicographic comparison of
+   shorter of two ordered maximal suffixes.  The ordered maximal
+   suffixes are determined by lexicographic comparison while tracking
    periodicity.  */
 static size_t
 critical_factorization (const unsigned char *needle, size_t needle_len,
@@ -111,6 +114,14 @@ critical_factorization (const unsigned char *needle, size_t needle_len,
   size_t k; /* Offset into current period.  */
   size_t p; /* Intermediate period.  */
   unsigned char a, b; /* Current comparison bytes.  */
+
+  /* Special case NEEDLE_LEN of 1 or 2 (all callers already filtered
+     out 0-length needles.  */
+  if (needle_len < 3)
+    {
+      *period = 1;
+      return needle_len - 1;
+    }
 
   /* Invariants:
      0 <= j < NEEDLE_LEN - 1
@@ -190,8 +201,20 @@ critical_factorization (const unsigned char *needle, size_t needle_len,
         }
     }
 
-  /* Choose the longer suffix.  Return the first byte of the right
-     half, rather than the last byte of the left half.  */
+  /* Choose the shorter suffix.  Return the index of the first byte of
+     the right half, rather than the last byte of the left half.
+
+     For some examples, 'banana' has two critical factorizations, both
+     exposed by the two lexicographic extreme suffixes of 'anana' and
+     'nana', where both suffixes have a period of 2.  On the other
+     hand, with 'aab' and 'bba', both strings have a single critical
+     factorization of the last byte, with the suffix having a period
+     of 1.  While the maximal lexicographic suffix of 'aab' is 'b',
+     the maximal lexicographic suffix of 'bba' is 'ba', which is not a
+     critical factorization.  Conversely, the maximal reverse
+     lexicographic suffix of 'a' works for 'bba', but not 'ab' for
+     'aab'.  The shorter suffix of the two will always be a critical
+     factorization.  */
   if (max_suffix_rev + 1 < max_suffix + 1)
     return max_suffix + 1;
   *period = p;
@@ -226,9 +249,9 @@ two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
      first.  */
   if (CMP_FUNC (needle, needle + period, suffix) == 0)
     {
-      /* Entire needle is periodic; a mismatch can only advance by the
-         period, so use memory to avoid rescanning known occurrences
-         of the period.  */
+      /* Entire needle is periodic; a mismatch in the left half can
+         only advance by the period, so use memory to avoid rescanning
+         known occurrences of the period in the right half.  */
       size_t memory = 0;
       j = 0;
       while (AVAILABLE (haystack, haystack_len, j, needle_len))
@@ -330,9 +353,9 @@ two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
      first.  */
   if (CMP_FUNC (needle, needle + period, suffix) == 0)
     {
-      /* Entire needle is periodic; a mismatch can only advance by the
-         period, so use memory to avoid rescanning known occurrences
-         of the period.  */
+      /* Entire needle is periodic; a mismatch in the left half can
+         only advance by the period, so use memory to avoid rescanning
+         known occurrences of the period in the right half.  */
       size_t memory = 0;
       size_t shift;
       j = 0;
@@ -349,8 +372,8 @@ two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
                      a byte out of place, there can be no match until
                      after the mismatch.  */
                   shift = needle_len - period;
-                  memory = 0;
                 }
+              memory = 0;
               j += shift;
               continue;
             }

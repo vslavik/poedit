@@ -1,5 +1,5 @@
-# relocatable-lib.m4 serial 5
-dnl Copyright (C) 2003, 2005-2007, 2009-2010 Free Software Foundation, Inc.
+# relocatable-lib.m4 serial 6
+dnl Copyright (C) 2003, 2005-2007, 2009-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -10,9 +10,6 @@ dnl Support for relocatable libraries.
 AC_DEFUN([gl_RELOCATABLE_LIBRARY],
 [
   AC_REQUIRE([gl_RELOCATABLE_LIBRARY_BODY])
-  if test $RELOCATABLE = yes; then
-    AC_LIBOBJ([relocatable])
-  fi
 ])
 AC_DEFUN([gl_RELOCATABLE_LIBRARY_BODY],
 [
@@ -32,13 +29,6 @@ AC_DEFUN([gl_RELOCATABLE_LIBRARY_BODY],
   fi
 ])
 
-dnl Like gl_RELOCATABLE_LIBRARY, except prepare for separate compilation
-dnl (no AC_LIBOBJ).
-AC_DEFUN([gl_RELOCATABLE_LIBRARY_SEPARATE],
-[
-  AC_REQUIRE([gl_RELOCATABLE_LIBRARY_BODY])
-])
-
 dnl Support for relocatable packages for which it is a nop.
 AC_DEFUN([gl_RELOCATABLE_NOP],
 [
@@ -55,4 +45,3 @@ AC_DEFUN([gl_RELOCATABLE_NOP],
   AC_SUBST([RELOCATABLE])
   AC_MSG_RESULT([$RELOCATABLE])
 ])
-

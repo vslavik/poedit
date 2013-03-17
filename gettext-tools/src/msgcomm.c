@@ -1,5 +1,5 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1997-1998, 2000-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 1997-1998, 2000-2007, 2009-2012 Free Software Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
@@ -351,7 +351,7 @@ static void
 usage (int status)
 {
   if (status != EXIT_SUCCESS)
-    fprintf (stderr, _("Try `%s --help' for more information.\n"),
+    fprintf (stderr, _("Try '%s --help' for more information.\n"),
              program_name);
   else
     {
@@ -366,7 +366,7 @@ By using the --more-than option, greater commonality may be requested\n\
 before messages are printed.  Conversely, the --less-than option may be\n\
 used to specify less commonality before messages are printed (i.e.\n\
 --less-than=2 will only print the unique messages).  Translations,\n\
-comments and extract comments will be preserved, but only from the first\n\
+comments and extracted comments will be preserved, but only from the first\n\
 PO file to define them.  File positions from all PO files will be\n\
 cumulated.\n\
 "));
@@ -449,7 +449,7 @@ Output details:\n"));
       printf (_("\
   -F, --sort-by-file          sort output by file location\n"));
       printf (_("\
-      --omit-header           don't write header with `msgid \"\"' entry\n"));
+      --omit-header           don't write header with 'msgid \"\"' entry\n"));
       printf ("\n");
       printf (_("\
 Informative output:\n"));

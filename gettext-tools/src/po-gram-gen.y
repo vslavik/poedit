@@ -1,5 +1,5 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1996, 1998, 2000-2001, 2003, 2005-2006 Free Software Foundation, Inc.
+   Copyright (C) 1995-1996, 1998, 2000-2001, 2003, 2005-2006, 2012 Free Software Foundation, Inc.
 
    This file was written by Peter Miller <pmiller@agso.gov.au>
 
@@ -237,7 +237,7 @@ message
                 {
                   check_obsolete ($1, $2);
                   check_obsolete ($1, $3);
-                  po_gram_error_at_line (&$1.pos, _("missing `msgstr[]' section"));
+                  po_gram_error_at_line (&$1.pos, _("missing 'msgstr[]' section"));
                   free_message_intro ($1);
                   string_list_destroy (&$2.stringlist);
                   free ($3.string);
@@ -246,7 +246,7 @@ message
                 {
                   check_obsolete ($1, $2);
                   check_obsolete ($1, $3);
-                  po_gram_error_at_line (&$1.pos, _("missing `msgid_plural' section"));
+                  po_gram_error_at_line (&$1.pos, _("missing 'msgid_plural' section"));
                   free_message_intro ($1);
                   string_list_destroy (&$2.stringlist);
                   free ($3.rhs.msgstr);
@@ -254,7 +254,7 @@ message
         | message_intro string_list
                 {
                   check_obsolete ($1, $2);
-                  po_gram_error_at_line (&$1.pos, _("missing `msgstr' section"));
+                  po_gram_error_at_line (&$1.pos, _("missing 'msgstr' section"));
                   free_message_intro ($1);
                   string_list_destroy (&$2.stringlist);
                 }

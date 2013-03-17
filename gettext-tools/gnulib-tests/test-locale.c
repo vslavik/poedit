@@ -1,5 +1,5 @@
 /* Test of <locale.h> substitute.
-   Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,6 +38,10 @@ int a[] =
 locale_t b = LC_GLOBAL_LOCALE;
 #endif
 
+/* Check that the 'struct lconv' type is defined.  */
+struct lconv l;
+int ls;
+
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
 verify (sizeof NULL == sizeof (void *));
@@ -45,5 +49,31 @@ verify (sizeof NULL == sizeof (void *));
 int
 main ()
 {
+  /* Check that 'struct lconv' has the ISO C and POSIX specified members.  */
+  ls += sizeof (*l.decimal_point);
+  ls += sizeof (*l.thousands_sep);
+  ls += sizeof (*l.grouping);
+  ls += sizeof (*l.mon_decimal_point);
+  ls += sizeof (*l.mon_thousands_sep);
+  ls += sizeof (*l.mon_grouping);
+  ls += sizeof (*l.positive_sign);
+  ls += sizeof (*l.negative_sign);
+  ls += sizeof (*l.currency_symbol);
+  ls += sizeof (l.frac_digits);
+  ls += sizeof (l.p_cs_precedes);
+  ls += sizeof (l.p_sign_posn);
+  ls += sizeof (l.p_sep_by_space);
+  ls += sizeof (l.n_cs_precedes);
+  ls += sizeof (l.n_sign_posn);
+  ls += sizeof (l.n_sep_by_space);
+  ls += sizeof (*l.int_curr_symbol);
+  ls += sizeof (l.int_frac_digits);
+  ls += sizeof (l.int_p_cs_precedes);
+  ls += sizeof (l.int_p_sign_posn);
+  ls += sizeof (l.int_p_sep_by_space);
+  ls += sizeof (l.int_n_cs_precedes);
+  ls += sizeof (l.int_n_sign_posn);
+  ls += sizeof (l.int_n_sep_by_space);
+
   return 0;
 }

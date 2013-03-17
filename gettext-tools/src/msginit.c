@@ -1,5 +1,5 @@
 /* Initializes a new PO file.
-   Copyright (C) 2001-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2012 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -79,7 +79,7 @@
 #include "xvasprintf.h"
 #include "msgl-english.h"
 #include "plural-count.h"
-#include "pipe.h"
+#include "spawn-pipe.h"
 #include "wait-process.h"
 #include "xsetenv.h"
 #include "str-list.h"
@@ -355,7 +355,7 @@ static void
 usage (int status)
 {
   if (status != EXIT_SUCCESS)
-    fprintf (stderr, _("Try `%s --help' for more information.\n"),
+    fprintf (stderr, _("Try '%s --help' for more information.\n"),
              program_name);
   else
     {
@@ -1080,7 +1080,7 @@ get_user_fullname ()
       const char *fullname_end;
       char *result;
 
-      /* Return the pw_gecos field, upto the first comma (if any).  */
+      /* Return the pw_gecos field, up to the first comma (if any).  */
       fullname = pwd->pw_gecos;
       fullname_end = strchr (fullname, ',');
       if (fullname_end == NULL)

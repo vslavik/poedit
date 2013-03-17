@@ -1,5 +1,5 @@
 /* Display width functions.
-   Copyright (C) 2001-2002, 2005, 2007, 2009-2010 Free Software Foundation,
+   Copyright (C) 2001-2002, 2005, 2007, 2009-2013 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify it
@@ -10,7 +10,7 @@
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
+   General Public License for more details.
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
@@ -38,24 +38,31 @@ extern "C" {
 
 /* Determine number of column positions required for UC.  */
 extern int
-       uc_width (ucs4_t uc, const char *encoding);
+       uc_width (ucs4_t uc, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 
 /* Determine number of column positions required for first N units
    (or fewer if S ends before this) in S.  */
 extern int
-       u8_width (const uint8_t *s, size_t n, const char *encoding);
+       u8_width (const uint8_t *s, size_t n, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u16_width (const uint16_t *s, size_t n, const char *encoding);
+       u16_width (const uint16_t *s, size_t n, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u32_width (const uint32_t *s, size_t n, const char *encoding);
+       u32_width (const uint32_t *s, size_t n, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 
 /* Determine number of column positions required for S.  */
 extern int
-       u8_strwidth (const uint8_t *s, const char *encoding);
+       u8_strwidth (const uint8_t *s, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u16_strwidth (const uint16_t *s, const char *encoding);
+       u16_strwidth (const uint16_t *s, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u32_strwidth (const uint32_t *s, const char *encoding);
+       u32_strwidth (const uint32_t *s, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 
 
 #ifdef __cplusplus

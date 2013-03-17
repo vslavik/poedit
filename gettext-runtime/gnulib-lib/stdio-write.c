@@ -1,5 +1,5 @@
 /* POSIX compatible FILE stream write function.
-   Copyright (C) 2008-2010 Free Software Foundation, Inc.
+   Copyright (C) 2008-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2008.
 
    This program is free software: you can redistribute it and/or modify
@@ -20,8 +20,9 @@
 /* Specification.  */
 #include <stdio.h>
 
-/* Replace these functions only if module 'sigpipe' is requested.  */
-#if GNULIB_SIGPIPE
+/* Replace these functions only if module 'nonblocking' or module 'sigpipe' is
+   requested.  */
+#if GNULIB_NONBLOCKING || GNULIB_SIGPIPE
 
 /* On native Windows platforms, SIGPIPE does not exist.  When write() is
    called on a pipe with no readers, WriteFile() fails with error
@@ -38,26 +39,75 @@
 #  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 #  include <windows.h>
 
+#  include "msvc-nothrow.h"
+
+#  if GNULIB_NONBLOCKING
+#   define CLEAR_ERRNO \
+      errno = 0;
+#   define HANDLE_ENOSPC \
+          if (errno == ENOSPC && ferror (stream))                             \
+            {                                                                 \
+              int fd = fileno (stream);                                       \
+              if (fd >= 0)                                                    \
+                {                                                             \
+                  HANDLE h = (HANDLE) _get_osfhandle (fd);                    \
+                  if (GetFileType (h) == FILE_TYPE_PIPE)                      \
+                    {                                                         \
+                      /* h is a pipe or socket.  */                           \
+                      DWORD state;                                            \
+                      if (GetNamedPipeHandleState (h, &state, NULL, NULL,     \
+                                                   NULL, NULL, 0)             \
+                          && (state & PIPE_NOWAIT) != 0)                      \
+                        /* h is a pipe in non-blocking mode.                  \
+                           Change errno from ENOSPC to EAGAIN.  */            \
+                        errno = EAGAIN;                                       \
+                    }                                                         \
+                }                                                             \
+            }                                                                 \
+          else
+#  else
+#   define CLEAR_ERRNO
+#   define HANDLE_ENOSPC
+#  endif
+
+#  if GNULIB_SIGPIPE
+#   define CLEAR_LastError \
+      SetLastError (0);
+#   define HANDLE_ERROR_NO_DATA \
+          if (GetLastError () == ERROR_NO_DATA && ferror (stream))            \
+            {                                                                 \
+              int fd = fileno (stream);                                       \
+              if (fd >= 0                                                     \
+                  && GetFileType ((HANDLE) _get_osfhandle (fd))               \
+                     == FILE_TYPE_PIPE)                                       \
+                {                                                             \
+                  /* Try to raise signal SIGPIPE.  */                         \
+                  raise (SIGPIPE);                                            \
+                  /* If it is currently blocked or ignored, change errno from \
+                     EINVAL to EPIPE.  */                                     \
+                  errno = EPIPE;                                              \
+                }                                                             \
+            }                                                                 \
+          else
+#  else
+#   define CLEAR_LastError
+#   define HANDLE_ERROR_NO_DATA
+#  endif
+
 #  define CALL_WITH_SIGPIPE_EMULATION(RETTYPE, EXPRESSION, FAILED) \
   if (ferror (stream))                                                        \
     return (EXPRESSION);                                                      \
   else                                                                        \
     {                                                                         \
       RETTYPE ret;                                                            \
-      SetLastError (0);                                                       \
+      CLEAR_ERRNO                                                             \
+      CLEAR_LastError                                                         \
       ret = (EXPRESSION);                                                     \
-      if (FAILED && GetLastError () == ERROR_NO_DATA && ferror (stream))      \
+      if (FAILED)                                                             \
         {                                                                     \
-          int fd = fileno (stream);                                           \
-          if (fd >= 0                                                         \
-              && GetFileType ((HANDLE) _get_osfhandle (fd)) == FILE_TYPE_PIPE)\
-            {                                                                 \
-              /* Try to raise signal SIGPIPE.  */                             \
-              raise (SIGPIPE);                                                \
-              /* If it is currently blocked or ignored, change errno from     \
-                 EINVAL to EPIPE.  */                                         \
-              errno = EPIPE;                                                  \
-            }                                                                 \
+          HANDLE_ENOSPC                                                       \
+          HANDLE_ERROR_NO_DATA                                                \
+          ;                                                                   \
         }                                                                     \
       return ret;                                                             \
     }

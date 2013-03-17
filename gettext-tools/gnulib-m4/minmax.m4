@@ -1,10 +1,10 @@
-# minmax.m4 serial 3
-dnl Copyright (C) 2005, 2009, 2010 Free Software Foundation, Inc.
+# minmax.m4 serial 4
+dnl Copyright (C) 2005, 2009-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_PREREQ([2.52])
+AC_PREREQ([2.53])
 
 AC_DEFUN([gl_MINMAX],
 [
@@ -28,8 +28,11 @@ AC_DEFUN([gl_MINMAX_IN_HEADER],
   m4_pushdef([HEADER], AS_TR_CPP([$1]))
   AC_CACHE_CHECK([whether <$1> defines MIN and MAX],
     [gl_cv_minmax_in_]header,
-    [AC_TRY_COMPILE([#include <$1>
-int x = MIN (42, 17);], [],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <$1>
+            int x = MIN (42, 17);]],
+          [[]])],
        [gl_cv_minmax_in_]header[=yes],
        [gl_cv_minmax_in_]header[=no])])
   if test $gl_cv_minmax_in_[]header = yes; then

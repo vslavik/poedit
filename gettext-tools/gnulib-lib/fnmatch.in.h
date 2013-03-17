@@ -1,5 +1,5 @@
-/* Copyright (C) 1991, 1992, 1993, 1996, 1997, 1998, 1999, 2001, 2002, 2003,
-   2005, 2007, 2009, 2010 Free Software Foundation, Inc.
+/* Copyright (C) 1991-1993, 1996-1999, 2001-2003, 2005, 2007, 2009-2013 Free
+   Software Foundation, Inc.
 
    This file is part of the GNU C Library.
 
@@ -14,8 +14,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 #ifndef _FNMATCH_H
 #define _FNMATCH_H      1
@@ -32,23 +31,23 @@ extern "C" {
 #undef  FNM_NOESCAPE
 #undef  FNM_PERIOD
 
-/* Bits set in the FLAGS argument to `fnmatch'.  */
-#define FNM_PATHNAME    (1 << 0) /* No wildcard can ever match `/'.  */
+/* Bits set in the FLAGS argument to 'fnmatch'.  */
+#define FNM_PATHNAME    (1 << 0) /* No wildcard can ever match '/'.  */
 #define FNM_NOESCAPE    (1 << 1) /* Backslashes don't quote special chars.  */
-#define FNM_PERIOD      (1 << 2) /* Leading `.' is matched only explicitly.  */
+#define FNM_PERIOD      (1 << 2) /* Leading '.' is matched only explicitly.  */
 
 #if !defined _POSIX_C_SOURCE || _POSIX_C_SOURCE < 2 || defined _GNU_SOURCE
 # define FNM_FILE_NAME   FNM_PATHNAME   /* Preferred GNU name.  */
-# define FNM_LEADING_DIR (1 << 3)       /* Ignore `/...' after a match.  */
+# define FNM_LEADING_DIR (1 << 3)       /* Ignore '/...' after a match.  */
 # define FNM_CASEFOLD    (1 << 4)       /* Compare without regard to case.  */
 # define FNM_EXTMATCH    (1 << 5)       /* Use ksh-like extended matching. */
 #endif
 
-/* Value returned by `fnmatch' if STRING does not match PATTERN.  */
+/* Value returned by 'fnmatch' if STRING does not match PATTERN.  */
 #define FNM_NOMATCH     1
 
 /* This value is returned if the implementation does not support
-   `fnmatch'.  Since this is not the case here it will never be
+   'fnmatch'.  Since this is not the case here it will never be
    returned but the conformance test suites still require the symbol
    to be defined.  */
 #ifdef _XOPEN_SOURCE

@@ -1,5 +1,5 @@
 /* xmalloc.c -- malloc with out of memory checking
-   Copyright (C) 1990-1996, 2000-2003, 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 1990-1996, 2000-2003, 2005-2007, 2012 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ void
 xalloc_die ()
 {
   error (xmalloc_exit_failure, 0, _("memory exhausted"));
-  /* The `noreturn' cannot be given to error, since it may return if
+  /* _Noreturn cannot be given to error, since it may return if
      its first argument is 0.  To help compilers understand the
      xalloc_die does terminate, call exit. */
   exit (EXIT_FAILURE);

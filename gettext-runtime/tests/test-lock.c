@@ -1,28 +1,24 @@
 /* Test of locking in multithreaded situations.
-   Copyright (C) 2005 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2008-2012 Free Software Foundation, Inc.
 
-   This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU Library General Public License as published
-   by the Free Software Foundation; either version 2, or (at your option)
-   any later version.
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-   You should have received a copy of the GNU Library General Public
-   License along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
-   USA.  */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2005.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
-#if USE_POSIX_THREADS || USE_SOLARIS_THREADS || USE_PTH_THREADS || USE_WIN32_THREADS
+#if USE_POSIX_THREADS || USE_SOLARIS_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS
 
 #if USE_POSIX_THREADS
 # define TEST_POSIX_THREADS 1
@@ -33,8 +29,8 @@
 #if USE_PTH_THREADS
 # define TEST_PTH_THREADS 1
 #endif
-#if USE_WIN32_THREADS
-# define TEST_WIN32_THREADS 1
+#if USE_WINDOWS_THREADS
+# define TEST_WINDOWS_THREADS 1
 #endif
 
 /* Whether to enable locking.
@@ -73,7 +69,7 @@
 # undef USE_POSIX_THREADS
 # undef USE_SOLARIS_THREADS
 # undef USE_PTH_THREADS
-# undef USE_WIN32_THREADS
+# undef USE_WINDOWS_THREADS
 #endif
 #include "lock.h"
 
@@ -94,19 +90,22 @@ static inline gl_thread_t gl_thread_create (void * (*func) (void *), void *arg)
     abort ();
   return thread;
 }
-static inline void gl_thread_join (gl_thread_t thread)
+static inline void gl_thread_join (gl_thread_t thread, void **retvalp)
 {
-  void *retval;
-  if (pthread_join (thread, &retval) != 0)
+  if (pthread_join (thread, retvalp) != 0)
     abort ();
 }
 static inline void gl_thread_yield (void)
 {
   sched_yield ();
 }
-static inline void * gl_thread_self (void)
+static inline void * gl_thread_self_pointer (void)
 {
+# ifdef PTW32_VERSION
+  return pthread_self ().p;
+# else
   return (void *) pthread_self ();
+# endif
 }
 #endif
 #if TEST_PTH_THREADS
@@ -119,16 +118,16 @@ static inline gl_thread_t gl_thread_create (void * (*func) (void *), void *arg)
     abort ();
   return thread;
 }
-static inline void gl_thread_join (gl_thread_t thread)
+static inline void gl_thread_join (gl_thread_t thread, void **retvalp)
 {
-  if (!pth_join (thread, NULL))
+  if (!pth_join (thread, retvalp))
     abort ();
 }
 static inline void gl_thread_yield (void)
 {
   pth_yield (NULL);
 }
-static inline void * gl_thread_self (void)
+static inline void * gl_thread_self_pointer (void)
 {
   return pth_self ();
 }
@@ -143,22 +142,21 @@ static inline gl_thread_t gl_thread_create (void * (*func) (void *), void *arg)
     abort ();
   return thread;
 }
-static inline void gl_thread_join (gl_thread_t thread)
+static inline void gl_thread_join (gl_thread_t thread, void **retvalp)
 {
-  void *retval;
-  if (thr_join (thread, NULL, &retval) != 0)
+  if (thr_join (thread, NULL, retvalp) != 0)
     abort ();
 }
 static inline void gl_thread_yield (void)
 {
   thr_yield ();
 }
-static inline void * gl_thread_self (void)
+static inline void * gl_thread_self_pointer (void)
 {
   return (void *) thr_self ();
 }
 #endif
-#if TEST_WIN32_THREADS
+#if TEST_WINDOWS_THREADS
 # include <windows.h>
 typedef HANDLE gl_thread_t;
 /* Use a wrapper function, instead of adding WINAPI through a cast.  */
@@ -189,8 +187,9 @@ static inline gl_thread_t gl_thread_create (void * (*func) (void *), void *arg)
     return thread;
   }
 }
-static inline void gl_thread_join (gl_thread_t thread)
+static inline void gl_thread_join (gl_thread_t thread, void **retvalp)
 {
+  (void) retvalp;
   if (WaitForSingleObject (thread, INFINITE) == WAIT_FAILED)
     abort ();
   if (!CloseHandle (thread))
@@ -200,7 +199,7 @@ static inline void gl_thread_yield (void)
 {
   Sleep (0);
 }
-static inline void * gl_thread_self (void)
+static inline void * gl_thread_self_pointer (void)
 {
   return (void *) GetCurrentThreadId ();
 }
@@ -218,7 +217,7 @@ static int account[ACCOUNT_COUNT];
 static int
 random_account (void)
 {
-  return ((unsigned int) rand() >> 3) % ACCOUNT_COUNT;
+  return ((unsigned int) rand () >> 3) % ACCOUNT_COUNT;
 }
 
 static void
@@ -232,6 +231,9 @@ check_accounts (void)
   if (sum != ACCOUNT_COUNT * 1000)
     abort ();
 }
+
+
+/* ------------------- Test normal (non-recursive) locks ------------------- */
 
 /* Test normal locks by having several bank accounts and several threads
    which shuffle around money between the accounts and another thread
@@ -248,30 +250,30 @@ lock_mutator_thread (void *arg)
     {
       int i1, i2, value;
 
-      dbgprintf ("Mutator %p before lock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p before lock\n", gl_thread_self_pointer ());
       gl_lock_lock (my_lock);
-      dbgprintf ("Mutator %p after  lock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p after  lock\n", gl_thread_self_pointer ());
 
       i1 = random_account ();
       i2 = random_account ();
-      value = ((unsigned int) rand() >> 3) % 10;
+      value = ((unsigned int) rand () >> 3) % 10;
       account[i1] += value;
       account[i2] -= value;
 
-      dbgprintf ("Mutator %p before unlock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p before unlock\n", gl_thread_self_pointer ());
       gl_lock_unlock (my_lock);
-      dbgprintf ("Mutator %p after  unlock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p after  unlock\n", gl_thread_self_pointer ());
 
-      dbgprintf ("Mutator %p before check lock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p before check lock\n", gl_thread_self_pointer ());
       gl_lock_lock (my_lock);
       check_accounts ();
       gl_lock_unlock (my_lock);
-      dbgprintf ("Mutator %p after  check unlock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p after  check unlock\n", gl_thread_self_pointer ());
 
       yield ();
     }
 
-  dbgprintf ("Mutator %p dying.\n", gl_thread_self ());
+  dbgprintf ("Mutator %p dying.\n", gl_thread_self_pointer ());
   return NULL;
 }
 
@@ -282,20 +284,20 @@ lock_checker_thread (void *arg)
 {
   while (!lock_checker_done)
     {
-      dbgprintf ("Checker %p before check lock\n", gl_thread_self ());
+      dbgprintf ("Checker %p before check lock\n", gl_thread_self_pointer ());
       gl_lock_lock (my_lock);
       check_accounts ();
       gl_lock_unlock (my_lock);
-      dbgprintf ("Checker %p after  check unlock\n", gl_thread_self ());
+      dbgprintf ("Checker %p after  check unlock\n", gl_thread_self_pointer ());
 
       yield ();
     }
 
-  dbgprintf ("Checker %p dying.\n", gl_thread_self ());
+  dbgprintf ("Checker %p dying.\n", gl_thread_self_pointer ());
   return NULL;
 }
 
-void
+static void
 test_lock (void)
 {
   int i;
@@ -314,11 +316,14 @@ test_lock (void)
 
   /* Wait for the threads to terminate.  */
   for (i = 0; i < THREAD_COUNT; i++)
-    gl_thread_join (threads[i]);
+    gl_thread_join (threads[i], NULL);
   lock_checker_done = 1;
-  gl_thread_join (checkerthread);
+  gl_thread_join (checkerthread, NULL);
   check_accounts ();
 }
+
+
+/* ----------------- Test read-write (non-recursive) locks ----------------- */
 
 /* Test read-write locks by having several bank accounts and several threads
    which shuffle around money between the accounts and several other threads
@@ -335,24 +340,24 @@ rwlock_mutator_thread (void *arg)
     {
       int i1, i2, value;
 
-      dbgprintf ("Mutator %p before wrlock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p before wrlock\n", gl_thread_self_pointer ());
       gl_rwlock_wrlock (my_rwlock);
-      dbgprintf ("Mutator %p after  wrlock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p after  wrlock\n", gl_thread_self_pointer ());
 
       i1 = random_account ();
       i2 = random_account ();
-      value = ((unsigned int) rand() >> 3) % 10;
+      value = ((unsigned int) rand () >> 3) % 10;
       account[i1] += value;
       account[i2] -= value;
 
-      dbgprintf ("Mutator %p before unlock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p before unlock\n", gl_thread_self_pointer ());
       gl_rwlock_unlock (my_rwlock);
-      dbgprintf ("Mutator %p after  unlock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p after  unlock\n", gl_thread_self_pointer ());
 
       yield ();
     }
 
-  dbgprintf ("Mutator %p dying.\n", gl_thread_self ());
+  dbgprintf ("Mutator %p dying.\n", gl_thread_self_pointer ());
   return NULL;
 }
 
@@ -363,20 +368,20 @@ rwlock_checker_thread (void *arg)
 {
   while (!rwlock_checker_done)
     {
-      dbgprintf ("Checker %p before check rdlock\n", gl_thread_self ());
+      dbgprintf ("Checker %p before check rdlock\n", gl_thread_self_pointer ());
       gl_rwlock_rdlock (my_rwlock);
       check_accounts ();
       gl_rwlock_unlock (my_rwlock);
-      dbgprintf ("Checker %p after  check unlock\n", gl_thread_self ());
+      dbgprintf ("Checker %p after  check unlock\n", gl_thread_self_pointer ());
 
       yield ();
     }
 
-  dbgprintf ("Checker %p dying.\n", gl_thread_self ());
+  dbgprintf ("Checker %p dying.\n", gl_thread_self_pointer ());
   return NULL;
 }
 
-void
+static void
 test_rwlock (void)
 {
   int i;
@@ -396,12 +401,15 @@ test_rwlock (void)
 
   /* Wait for the threads to terminate.  */
   for (i = 0; i < THREAD_COUNT; i++)
-    gl_thread_join (threads[i]);
+    gl_thread_join (threads[i], NULL);
   rwlock_checker_done = 1;
   for (i = 0; i < THREAD_COUNT; i++)
-    gl_thread_join (checkerthreads[i]);
+    gl_thread_join (checkerthreads[i], NULL);
   check_accounts ();
 }
+
+
+/* -------------------------- Test recursive locks -------------------------- */
 
 /* Test recursive locks by having several bank accounts and several threads
    which shuffle around money between the accounts (recursively) and another
@@ -414,23 +422,23 @@ recshuffle (void)
 {
   int i1, i2, value;
 
-  dbgprintf ("Mutator %p before lock\n", gl_thread_self ());
+  dbgprintf ("Mutator %p before lock\n", gl_thread_self_pointer ());
   gl_recursive_lock_lock (my_reclock);
-  dbgprintf ("Mutator %p after  lock\n", gl_thread_self ());
+  dbgprintf ("Mutator %p after  lock\n", gl_thread_self_pointer ());
 
   i1 = random_account ();
   i2 = random_account ();
-  value = ((unsigned int) rand() >> 3) % 10;
+  value = ((unsigned int) rand () >> 3) % 10;
   account[i1] += value;
   account[i2] -= value;
 
   /* Recursive with probability 0.5.  */
-  if (((unsigned int) rand() >> 3) % 2)
+  if (((unsigned int) rand () >> 3) % 2)
     recshuffle ();
 
-  dbgprintf ("Mutator %p before unlock\n", gl_thread_self ());
+  dbgprintf ("Mutator %p before unlock\n", gl_thread_self_pointer ());
   gl_recursive_lock_unlock (my_reclock);
-  dbgprintf ("Mutator %p after  unlock\n", gl_thread_self ());
+  dbgprintf ("Mutator %p after  unlock\n", gl_thread_self_pointer ());
 }
 
 static void *
@@ -442,16 +450,16 @@ reclock_mutator_thread (void *arg)
     {
       recshuffle ();
 
-      dbgprintf ("Mutator %p before check lock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p before check lock\n", gl_thread_self_pointer ());
       gl_recursive_lock_lock (my_reclock);
       check_accounts ();
       gl_recursive_lock_unlock (my_reclock);
-      dbgprintf ("Mutator %p after  check unlock\n", gl_thread_self ());
+      dbgprintf ("Mutator %p after  check unlock\n", gl_thread_self_pointer ());
 
       yield ();
     }
 
-  dbgprintf ("Mutator %p dying.\n", gl_thread_self ());
+  dbgprintf ("Mutator %p dying.\n", gl_thread_self_pointer ());
   return NULL;
 }
 
@@ -462,20 +470,20 @@ reclock_checker_thread (void *arg)
 {
   while (!reclock_checker_done)
     {
-      dbgprintf ("Checker %p before check lock\n", gl_thread_self ());
+      dbgprintf ("Checker %p before check lock\n", gl_thread_self_pointer ());
       gl_recursive_lock_lock (my_reclock);
       check_accounts ();
       gl_recursive_lock_unlock (my_reclock);
-      dbgprintf ("Checker %p after  check unlock\n", gl_thread_self ());
+      dbgprintf ("Checker %p after  check unlock\n", gl_thread_self_pointer ());
 
       yield ();
     }
 
-  dbgprintf ("Checker %p dying.\n", gl_thread_self ());
+  dbgprintf ("Checker %p dying.\n", gl_thread_self_pointer ());
   return NULL;
 }
 
-void
+static void
 test_recursive_lock (void)
 {
   int i;
@@ -494,11 +502,14 @@ test_recursive_lock (void)
 
   /* Wait for the threads to terminate.  */
   for (i = 0; i < THREAD_COUNT; i++)
-    gl_thread_join (threads[i]);
+    gl_thread_join (threads[i], NULL);
   reclock_checker_done = 1;
-  gl_thread_join (checkerthread);
+  gl_thread_join (checkerthread, NULL);
   check_accounts ();
 }
+
+
+/* ------------------------ Test once-only execution ------------------------ */
 
 /* Test once-only execution by having several threads attempt to grab a
    once-only task simultaneously (triggered by releasing a read-write lock).  */
@@ -540,7 +551,7 @@ once_contender_thread (void *arg)
         break;
 
       dbgprintf ("Contender %p waiting for signal for round %d\n",
-                 gl_thread_self (), repeat);
+                 gl_thread_self_pointer (), repeat);
 #if ENABLE_LOCKING
       /* Wait for the signal to go.  */
       gl_rwlock_rdlock (fire_signal[repeat]);
@@ -552,7 +563,7 @@ once_contender_thread (void *arg)
         yield ();
 #endif
       dbgprintf ("Contender %p got the     signal for round %d\n",
-                 gl_thread_self (), repeat);
+                 gl_thread_self_pointer (), repeat);
 
       /* Contend for execution.  */
       gl_once (once_control, once_execute);
@@ -561,7 +572,7 @@ once_contender_thread (void *arg)
   return NULL;
 }
 
-void
+static void
 test_once (void)
 {
   int i, repeat;
@@ -591,7 +602,7 @@ test_once (void)
   for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
     {
       /* Wait until every thread is ready.  */
-      dbgprintf ("Main thread before synchonizing for round %d\n", repeat);
+      dbgprintf ("Main thread before synchronizing for round %d\n", repeat);
       for (;;)
         {
           int ready_count = 0;
@@ -605,7 +616,7 @@ test_once (void)
             break;
           yield ();
         }
-      dbgprintf ("Main thread after  synchonizing for round %d\n", repeat);
+      dbgprintf ("Main thread after  synchronizing for round %d\n", repeat);
 
       if (repeat > 0)
         {
@@ -643,8 +654,11 @@ test_once (void)
 
   /* Wait for the threads to terminate.  */
   for (i = 0; i < THREAD_COUNT; i++)
-    gl_thread_join (threads[i]);
+    gl_thread_join (threads[i], NULL);
 }
+
+
+/* -------------------------------------------------------------------------- */
 
 int
 main ()
@@ -682,9 +696,12 @@ main ()
 
 /* No multithreading available.  */
 
+#include <stdio.h>
+
 int
 main ()
 {
+  fputs ("Skipping test: multithreading not enabled\n", stderr);
   return 77;
 }
 

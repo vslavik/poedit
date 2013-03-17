@@ -1,5 +1,5 @@
 /* gettext - retrieve text string from message catalog and print it.
-   Copyright (C) 1995-1997, 2000-2007 Free Software Foundation, Inc.
+   Copyright (C) 1995-1997, 2000-2007, 2012 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, May 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@
 #define _(str) gettext (str)
 
 /* If true, add newline after last string.  This makes only sense in
-   the `echo' emulation mode.  */
+   the 'echo' emulation mode.  */
 static bool add_newline;
 
 /* If true, expand escape sequences in strings before looking in the
@@ -145,7 +145,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
     usage (EXIT_SUCCESS);
 
   /* We have two major modes: use following Uniforum spec and as
-     internationalized `echo' program.  */
+     internationalized 'echo' program.  */
   if (!do_shell)
     {
       /* We have to write a single strings translation to stdout.  */
@@ -201,7 +201,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
             if (domaindir != NULL && domaindir[0] != '\0')
               bindtextdomain (domain, domaindir);
 
-          /* We have to simulate `echo'.  All arguments are strings.  */
+          /* We have to simulate 'echo'.  All arguments are strings.  */
           do
             {
               msgid = argv[optind++];
@@ -235,7 +235,7 @@ static void
 usage (int status)
 {
   if (status != EXIT_SUCCESS)
-    fprintf (stderr, _("Try `%s --help' for more information.\n"),
+    fprintf (stderr, _("Try '%s --help' for more information.\n"),
              program_name);
   else
     {
@@ -266,7 +266,7 @@ If the TEXTDOMAIN parameter is not given, the domain is determined from the\n\
 environment variable TEXTDOMAIN.  If the message catalog is not found in the\n\
 regular directory, another location can be specified with the environment\n\
 variable TEXTDOMAINDIR.\n\
-When used with the -s option the program behaves like the `echo' command.\n\
+When used with the -s option the program behaves like the 'echo' command.\n\
 But it does not simply copy its arguments to stdout.  Instead those messages\n\
 found in the selected catalog are translated.\n\
 Standard search directory: %s\n"),

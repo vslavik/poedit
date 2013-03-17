@@ -1,5 +1,5 @@
 /* Test of <stddef.h> substitute.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,6 +30,20 @@ size_t c = 2;
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
 verify (sizeof NULL == sizeof (void *));
+
+/* Check that offsetof produces integer constants with correct type.  */
+struct d
+{
+  char e;
+  char f;
+};
+/* Solaris 10 has a bug where offsetof is under-parenthesized, and
+   cannot be used as an arbitrary expression.  However, since it is
+   unlikely to bite real code, we ignore that short-coming.  */
+/* verify (sizeof offsetof (struct d, e) == sizeof (size_t)); */
+verify (sizeof (offsetof (struct d, e)) == sizeof (size_t));
+verify (offsetof (struct d, e) < -1); /* Must be unsigned.  */
+verify (offsetof (struct d, f) == 1);
 
 int
 main (void)

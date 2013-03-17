@@ -1,4 +1,4 @@
-/* Copyright (C) 2000, 2009, 2010 Free Software Foundation, Inc.
+/* Copyright (C) 2000, 2009-2013 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 /* Specification.  */
 #include <spawn.h>
 
-/* Initialize data structure for file attribute for `spawn' call.  */
+/* Initialize data structure for file attribute for 'spawn' call.  */
 int
 posix_spawnattr_destroy (posix_spawnattr_t *attr)
 {

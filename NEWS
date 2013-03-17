@@ -1,3 +1,28 @@
+Version 0.18.2 - December 2012
+
+* xgettext now understands the block comment syntax of Guile 2.0.
+
+* libgettextpo library:
+  - The initial msgstr of a new message is now "", not NULL.
+  - Bug fixes in the functions po_message_is_range, po_file_check_all,
+    po_message_check_all.
+
+* Installation options:
+  The configure options --with-xz and --with-bzip2 can be used to specify
+  alternate compression methods for the archive used by the 'autopoint'
+  program. These options, together with --with-git, allow to trade
+  dependencies against installed package size. --with-xz has the highest
+  compression rate, followed by --with-git, followed by --with-bzip2.
+
+* Autoconf macros:
+  - The autoconf macros installed by 'gettextize' now work with the
+    forthcoming Automake 1.14 and require Autoconf version 2.60 or
+    newer.
+
+* Portability:
+  - Building on MacOS X 10.7, Cygwin 1.7.10, and newer 64-bit mingw is
+    now supported.
+
 Version 0.18.1 - June 2010
 
 * msggrep: A '$' anchor in a regular expression now also matches the end of
@@ -752,7 +777,7 @@ Version 0.10.35 - April 1998, by Ulrich Drepper
 * better C format string implementation.  The xgettext will classify
   strings as being a format string, or not, in the .po file.  The
   programmer can override the decision explicitly for each string
-  by specifying `xgettext:c-format' and `xgettext:no-c-format'
+  by specifying 'xgettext:c-format' and 'xgettext:no-c-format'
   respectively in a C comment preceding the string.
 
 * msgmerge program now always produces output.  Fuzzy or non-existing
@@ -762,11 +787,11 @@ Version 0.10.35 - April 1998, by Ulrich Drepper
 
 * Norwegian translation by Karl Anders �gard
 
-* Configure command line option `--with-gnu-gettext' is renamed to
-  `--with-included-gettext'
+* Configure command line option '--with-gnu-gettext' is renamed to
+  '--with-included-gettext'
 
 * gettextize now can determine whether the aclocal.m4 of the project
-  is sufficent
+  is sufficient
 
 * use automake for Makefile.in generation
 
@@ -812,7 +837,7 @@ Version 0.10 - December 1995, by Ulrich Drepper
 
 * msgcmp program to find matches in two .po files
 
-* programs now have exit status != 0 if errors occured
+* programs now have exit status != 0 if errors occurred
 
 * libintl.a is now selfcontained and can be used without context in
   other projects (even on systems missing alloca)

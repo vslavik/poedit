@@ -1,3 +1,67 @@
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-0.18.2 released.
+
+2012-06-03  Jim Meyering  <jim@meyering.net>
+
+	* msgcomm-17: Spelling fixes.
+
+2012-02-19  Bruno Haible  <bruno@clisp.org>
+
+	Avoid spurious test output with guile 2.0.x.
+	* lang-guile: Filter out ";;;" lines from standard error.
+
+2012-02-18  Bruno Haible  <bruno@clisp.org>
+
+	Avoid test failure with fpc version 2.6.0.
+	* lang-rst: Allow a test result with line wrapping.
+
+2012-02-18  Bruno Haible  <bruno@clisp.org>
+
+	Make the lang-pascal test work on x86_64 platforms.
+	* lang-pascal: Try also the ppcx64 program.
+
+2012-01-26  Bruno Haible  <bruno@clisp.org>
+
+	Modernize quoting.
+	* tstgettext.c (usage): Quote 'like this', not `like this', as per the
+	recent change to the GNU coding standards.
+	* tstngettext.c (usage): Likewise.
+
+2012-01-15  Bruno Haible  <bruno@clisp.org>
+
+	Avoid test failure on Solaris 11.
+	* msgfilter-sr-latin-1: Skip the test if the PO file is incorrect.
+
+2011-06-02  Bruno Haible  <bruno@clisp.org>
+
+	* xgettext-python-1: Update expected result after linebreaking in
+	libunistring changed on 2011-01-09.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	Port to uClibc.
+	* gettext-6-prg.c: Treat uClibc like a non-glibc platform.
+	* gettext-7-prg.c: Likewise.
+	* format-c-5-prg.c: Likewise.
+
+2010-08-31  Bruno Haible  <bruno@clisp.org>
+
+	Avoid test leftovers on MacOS X 10.5.
+	* lang-objc: Add hello.dSYM to tmpfiles.
+
+2010-06-06  Bruno Haible  <bruno@clisp.org>
+
+	Test the libgettextpo library and its functions.
+	* gettextpo-1: New file.
+	* gettextpo-1-prg.c: New file.
+	* gettextpo-1.de.po: New file.
+	* Makefile.am (TESTS): Add gettextpo-1.
+	(EXTRA_DIST): Add gettextpo-1.de.po.
+	(noinst_PROGRAMS): Add gettextpo-1-prg.
+	(gettextpo_1_prg_SOURCES, gettextpo_1_prg_CPPFLAGS,
+	gettextpo_1_prg_LDADD): New variables.
+
 2010-06-04  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.18.1 released.

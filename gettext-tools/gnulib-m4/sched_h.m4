@@ -1,5 +1,5 @@
-# sched_h.m4 serial 2
-dnl Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
+# sched_h.m4 serial 6
+dnl Copyright (C) 2008-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -13,13 +13,13 @@ AC_DEFUN([gl_SCHED_H],
        #include <sched.h>
        struct sched_param a;
        int b[] = { SCHED_FIFO, SCHED_RR, SCHED_OTHER };
+       pid_t t1;
      ]])],
     [SCHED_H=''],
     [SCHED_H='sched.h'
 
      gl_CHECK_NEXT_HEADERS([sched.h])
 
-     AC_CHECK_HEADERS_ONCE([sched.h])
      if test $ac_cv_header_sched_h = yes; then
        HAVE_SCHED_H=1
      else
@@ -31,6 +31,10 @@ AC_DEFUN([gl_SCHED_H],
        [HAVE_STRUCT_SCHED_PARAM=1], [HAVE_STRUCT_SCHED_PARAM=0],
        [#include <sched.h>])
      AC_SUBST([HAVE_STRUCT_SCHED_PARAM])
+
+     dnl Ensure the type pid_t gets defined.
+     AC_REQUIRE([AC_TYPE_PID_T])
     ])
   AC_SUBST([SCHED_H])
+  AM_CONDITIONAL([GL_GENERATE_SCHED_H], [test -n "$SCHED_H"])
 ])

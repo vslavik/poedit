@@ -1,5 +1,5 @@
 /* Temporary directories and temporary files with automatic cleanup.
-   Copyright (C) 2006, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2011-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,16 @@ extern "C" {
 
    This module provides support for temporary directories and temporary files
    inside these temporary directories.  Temporary files without temporary
-   directories are not supported here.  */
+   directories are not supported here.  The temporary directories and files
+   are automatically cleaned up (at the latest) when the program exits or
+   dies from a fatal signal such as SIGINT, SIGTERM, SIGHUP, but not if it
+   dies from a fatal signal such as SIGQUIT, SIGKILL, or SIGABRT, SIGSEGV,
+   SIGBUS, SIGILL, SIGFPE.
+
+   For the cleanup in the normal case, programs that use this module need to
+   call 'cleanup_temp_dir' for each successful return of 'create_temp_dir'.
+   The cleanup in the case of a fatal signal such as SIGINT, SIGTERM, SIGHUP,
+   is done entirely automatically by the functions of this module.  */
 
 struct temp_dir
 {

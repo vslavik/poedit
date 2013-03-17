@@ -1,6 +1,5 @@
 /* Binary mode I/O.
-   Copyright (C) 2001, 2003, 2005, 2008, 2009, 2010 Free Software Foundation,
-   Inc.
+   Copyright (C) 2001, 2003, 2005, 2008-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,48 +18,55 @@
 #define _BINARY_H
 
 /* For systems that distinguish between text and binary I/O.
-   O_BINARY is usually declared in <fcntl.h>. */
+   O_BINARY is guaranteed by the gnulib <fcntl.h>. */
 #include <fcntl.h>
 
 /* The MSVC7 <stdio.h> doesn't like to be included after '#define fileno ...',
    so we include it here first.  */
 #include <stdio.h>
 
-#if !defined O_BINARY && defined _O_BINARY
-  /* For MSC-compatible compilers.  */
-# define O_BINARY _O_BINARY
-# define O_TEXT _O_TEXT
+_GL_INLINE_HEADER_BEGIN
+#ifndef BINARY_IO_INLINE
+# define BINARY_IO_INLINE _GL_INLINE
 #endif
-#if defined __BEOS__ || defined __HAIKU__
-  /* BeOS 5 and Haiku have O_BINARY and O_TEXT, but they have no effect.  */
-# undef O_BINARY
-# undef O_TEXT
+
+/* set_binary_mode (fd, mode)
+   sets the binary/text I/O mode of file descriptor fd to the given mode
+   (must be O_BINARY or O_TEXT) and returns the previous mode.  */
+#if O_BINARY
+# if defined __EMX__ || defined __DJGPP__ || defined __CYGWIN__
+#  include <io.h> /* declares setmode() */
+#  define set_binary_mode setmode
+# else
+#  define set_binary_mode _setmode
+#  undef fileno
+#  define fileno _fileno
+# endif
+#else
+  /* On reasonable systems, binary I/O is the only choice.  */
+  /* Use a function rather than a macro, to avoid gcc warnings
+     "warning: statement with no effect".  */
+BINARY_IO_INLINE int
+set_binary_mode (int fd, int mode)
+{
+  (void) fd;
+  (void) mode;
+  return O_BINARY;
+}
 #endif
 
 /* SET_BINARY (fd);
    changes the file descriptor fd to perform binary I/O.  */
-#if O_BINARY
-# if defined __EMX__ || defined __DJGPP__ || defined __CYGWIN__
-#  include <io.h> /* declares setmode() */
-# else
-#  define setmode _setmode
-#  undef fileno
-#  define fileno _fileno
-# endif
-# ifdef __DJGPP__
-#  include <unistd.h> /* declares isatty() */
-   /* Avoid putting stdin/stdout in binary mode if it is connected to
-      the console, because that would make it impossible for the user
-      to interrupt the program through Ctrl-C or Ctrl-Break.  */
-#  define SET_BINARY(fd) ((void) (!isatty (fd) ? (setmode (fd, O_BINARY), 0) : 0))
-# else
-#  define SET_BINARY(fd) ((void) setmode (fd, O_BINARY))
-# endif
+#ifdef __DJGPP__
+# include <unistd.h> /* declares isatty() */
+  /* Avoid putting stdin/stdout in binary mode if it is connected to
+     the console, because that would make it impossible for the user
+     to interrupt the program through Ctrl-C or Ctrl-Break.  */
+# define SET_BINARY(fd) ((void) (!isatty (fd) ? (set_binary_mode (fd, O_BINARY), 0) : 0))
 #else
-  /* On reasonable systems, binary I/O is the default.  */
-# undef O_BINARY
-# define O_BINARY 0
-# define SET_BINARY(fd) /* do nothing */ ((void) 0)
+# define SET_BINARY(fd) ((void) set_binary_mode (fd, O_BINARY))
 #endif
+
+_GL_INLINE_HEADER_END
 
 #endif /* _BINARY_H */

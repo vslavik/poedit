@@ -1,5 +1,5 @@
 /* closeout.c - close standard output and standard error
-   Copyright (C) 1998-2007 Free Software Foundation, Inc.
+   Copyright (C) 1998-2007, 2012 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@
    Likewise for standard error.
 
    It's important to detect such failures and exit nonzero because many
-   tools (most notably `make' and other build-management systems) depend
+   tools (most notably 'make' and other build-management systems) depend
    on being able to detect failure in other tools via their exit status.  */
 
 /* Close standard output and standard error, exiting with status EXIT_FAILURE

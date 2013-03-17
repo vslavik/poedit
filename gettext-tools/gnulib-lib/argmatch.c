@@ -1,7 +1,7 @@
 /* argmatch.c -- find a match for a string in an array
 
-   Copyright (C) 1990, 1998, 1999, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-   2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 1990, 1998-1999, 2001-2007, 2009-2013 Free Software
+   Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ argmatch_exit_fn argmatch_die = __argmatch_die;
    synonyms, i.e., for
      "yes", "yop" -> 0
      "no", "nope" -> 1
-   "y" is a valid argument, for `0', and "n" for `1'.  */
+   "y" is a valid argument, for 0, and "n" for 1.  */
 
 ptrdiff_t
 argmatch (const char *arg, const char *const *arglist,
@@ -150,17 +150,17 @@ argmatch_valid (const char *const *arglist,
 
   /* We try to put synonyms on the same line.  The assumption is that
      synonyms follow each other */
-  fprintf (stderr, _("Valid arguments are:"));
+  fputs (_("Valid arguments are:"), stderr);
   for (i = 0; arglist[i]; i++)
     if ((i == 0)
         || memcmp (last_val, vallist + valsize * i, valsize))
       {
-        fprintf (stderr, "\n  - `%s'", arglist[i]);
+        fprintf (stderr, "\n  - %s", quote (arglist[i]));
         last_val = vallist + valsize * i;
       }
     else
       {
-        fprintf (stderr, ", `%s'", arglist[i]);
+        fprintf (stderr, ", %s", quote (arglist[i]));
       }
   putc ('\n', stderr);
 }
@@ -269,7 +269,7 @@ main (int argc, const char *const *argv)
     backup_type = XARGMATCH (program_name, argv[1],
                              backup_args, backup_vals);
 
-  printf ("The version control is `%s'\n",
+  printf ("The version control is '%s'\n",
           ARGMATCH_TO_ARGUMENT (backup_type, backup_args, backup_vals));
 
   return 0;

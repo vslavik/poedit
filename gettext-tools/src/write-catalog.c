@@ -1,5 +1,5 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1998, 2000-2008 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2008, 2012 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -119,7 +119,7 @@ msgdomain_list_print (msgdomain_list_ty *mdlp, const char *filename,
         return;
     }
 
-  /* Check whether the output format can accomodate all messages.  */
+  /* Check whether the output format can accommodate all messages.  */
   if (!output_syntax->supports_multiple_domains && mdlp->nitems > 1)
     {
       if (output_syntax->alternative_is_po)

@@ -1,5 +1,5 @@
 /* kwset.c - search for any of a set of keywords.
-   Copyright 1989, 1998, 2000, 2005-2006, 2010 Free Software Foundation, Inc.
+   Copyright 1989, 1998, 2000, 2005-2006, 2010, 2012 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
    The author may be reached (Email) at the address mike@ai.mit.edu,
    or (US mail) as Mike Haertel c/o Free Software Foundation. */
 
-/* The algorithm implemented by these routines bears a startling resemblence
+/* The algorithm implemented by these routines bears a startling resemblance
    to one discovered by Beate Commentz-Walter, although it is not identical.
    See "A String Matching Algorithm Fast on the Average," Technical Report,
    IBM-Germany, Scientific Center Heidelberg, Tiergartenstrasse 15, D-6900
@@ -438,7 +438,7 @@ kwsprep (kwset_t kwset)
           /* Update the delta table for the descendents of this node. */
           treedelta (curr->links, curr->depth, delta);
 
-          /* Compute the failure function for the decendents of this node. */
+          /* Compute the failure function for the descendants of this node. */
           treefails (curr->links, curr->fail, kwset->trie);
 
           /* Update the shifts at each node in the current node's chain

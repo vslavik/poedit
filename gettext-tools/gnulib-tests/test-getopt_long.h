@@ -1,5 +1,5 @@
 /* Test of command line argument processing.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -312,6 +312,25 @@ test_getopt_long (void)
         ASSERT (c == 'W');
         ASSERT (strcmp (optarg, "unknown") == 0);
       }
+  }
+
+  /* Test that 'W' does not dump core:
+     http://sourceware.org/bugzilla/show_bug.cgi?id=12922  */
+  {
+    int argc = 0;
+    const char *argv[10];
+    int option_index;
+    int c;
+
+    argv[argc++] = "program";
+    argv[argc++] = "-W";
+    argv[argc++] = "dummy";
+    argv[argc] = NULL;
+    optind = 1;
+    opterr = 0;
+    c = do_getopt_long (argc, argv, "W;", NULL, &option_index);
+    ASSERT (c == 'W');
+    ASSERT (optind == 2);
   }
 
   /* Test processing of boolean short options.  */
@@ -1747,7 +1766,7 @@ test_getopt_long (void)
       ASSERT (q_value == NULL);
       ASSERT (non_options_count == 0);
       ASSERT (unrecognized == 0);
-      ASSERT (optind = 1);
+      ASSERT (optind == 1);
     }
 
   /* Check that the '+' flag has to come first.  */

@@ -1,3 +1,35 @@
+2012-12-27  Daiki Ueno  <ueno@gnu.org>
+
+	* configure.ac (WOE32DLL): New conditional.
+	(INTL_EXPORTS_FLAGS): New substituted variable.
+
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-0.18.2 released.
+
+2012-12-17  Daiki Ueno  <ueno@unixuser.org>
+
+	* configure.ac: Use AC_CONFIG_HEADERS instead of AM_CONFIG_HEADER.
+	Suggested by Stefano Lattarini <stefano.lattarini@gmail.com>.
+
+2012-01-26  Bruno Haible  <bruno@clisp.org>
+
+	Modernize quoting.
+	* INSTALL: Process through sed -e "s/\`\([^']*\)'/‘\1’/g"
+	* Makefile.am (ABOUT-NLS): Likewise. Use --plaintext instead of
+	--no-header.
+
+2011-06-03  Bruno Haible  <bruno@clisp.org>
+
+	Copyright: Use LGPL 2.1 instead of LGPL 2.0.
+	* COPYING: Update file references.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
+	Use new ansi-c++.m4 from gnulib.
+	* configure.ac: Invoke gl_PROG_ANSI_CXX instead of gt_PROG_ANSI_CXX.
+	Reported at <https://savannah.gnu.org/bugs/?30607>.
+
 2010-06-04  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.18.1 released.

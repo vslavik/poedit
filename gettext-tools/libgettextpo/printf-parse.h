@@ -1,5 +1,5 @@
 /* Parse printf format string.
-   Copyright (C) 1999, 2002-2003, 2005, 2007, 2009-2010 Free Software
+   Copyright (C) 1999, 2002-2003, 2005, 2007, 2010-2013 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -13,8 +13,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License along
-   with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 #ifndef _PRINTF_PARSE_H
 #define _PRINTF_PARSE_H
@@ -22,6 +21,10 @@
 /* This file can be parametrized with the following macros:
      ENABLE_UNISTDIO    Set to 1 to enable the unistdio extensions.
      STATIC             Set to 'static' to declare the function static.  */
+
+#if HAVE_FEATURES_H
+# include <features.h> /* for __GLIBC__, __UCLIBC__ */
+#endif
 
 #include "printf-args.h"
 
@@ -33,12 +36,18 @@
 #define FLAG_SPACE       8      /* space flag */
 #define FLAG_ALT        16      /* # flag */
 #define FLAG_ZERO       32
+#if __GLIBC__ >= 2 && !defined __UCLIBC__
+# define FLAG_LOCALIZED 64      /* I flag, uses localized digits */
+#endif
 
 /* arg_index value indicating that no argument is consumed.  */
 #define ARG_NONE        (~(size_t)0)
 
 /* xxx_directive: A parsed directive.
    xxx_directives: A parsed format string.  */
+
+/* Number of directly allocated directives (no malloc() needed).  */
+#define N_DIRECT_ALLOC_DIRECTIVES 7
 
 /* A parsed directive.  */
 typedef struct
@@ -64,6 +73,7 @@ typedef struct
   char_directive *dir;
   size_t max_width_length;
   size_t max_precision_length;
+  char_directive direct_alloc_dir[N_DIRECT_ALLOC_DIRECTIVES];
 }
 char_directives;
 
@@ -93,6 +103,7 @@ typedef struct
   u8_directive *dir;
   size_t max_width_length;
   size_t max_precision_length;
+  u8_directive direct_alloc_dir[N_DIRECT_ALLOC_DIRECTIVES];
 }
 u8_directives;
 
@@ -120,6 +131,7 @@ typedef struct
   u16_directive *dir;
   size_t max_width_length;
   size_t max_precision_length;
+  u16_directive direct_alloc_dir[N_DIRECT_ALLOC_DIRECTIVES];
 }
 u16_directives;
 
@@ -147,6 +159,7 @@ typedef struct
   u32_directive *dir;
   size_t max_width_length;
   size_t max_precision_length;
+  u32_directive direct_alloc_dir[N_DIRECT_ALLOC_DIRECTIVES];
 }
 u32_directives;
 

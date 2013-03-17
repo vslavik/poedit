@@ -1,5 +1,5 @@
 /* Optimized string comparison.
-   Copyright (C) 2001-2002, 2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002, 2007, 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published
@@ -9,7 +9,7 @@
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
+   General Public License for more details.
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
@@ -21,8 +21,8 @@
 
 #include <string.h>
 
-/* STREQ allows to optimize string comparison with a small literal string.
-     STREQ (s, "EUC-KR", 'E', 'U', 'C', '-', 'K', 'R', 0, 0, 0)
+/* STREQ_OPT allows to optimize string comparison with a small literal string.
+     STREQ_OPT (s, "EUC-KR", 'E', 'U', 'C', '-', 'K', 'R', 0, 0, 0)
    is semantically equivalent to
      strcmp (s, "EUC-KR") == 0
    just faster.  */
@@ -163,12 +163,12 @@ streq0 (const char *s1, const char *s2, char s20, char s21, char s22, char s23, 
     return 0;
 }
 
-#define STREQ(s1,s2,s20,s21,s22,s23,s24,s25,s26,s27,s28) \
+#define STREQ_OPT(s1,s2,s20,s21,s22,s23,s24,s25,s26,s27,s28) \
   streq0 (s1, s2, s20, s21, s22, s23, s24, s25, s26, s27, s28)
 
 #else
 
-#define STREQ(s1,s2,s20,s21,s22,s23,s24,s25,s26,s27,s28) \
+#define STREQ_OPT(s1,s2,s20,s21,s22,s23,s24,s25,s26,s27,s28) \
   (strcmp (s1, s2) == 0)
 
 #endif

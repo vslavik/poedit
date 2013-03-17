@@ -3,7 +3,6 @@
 # Generate this list with
 # find . -type f -name '*.m4' -printf '%f\n' | sort | tr '\012' @ | sed 's/@$/%/;s/@/ \\@/g' | tr @% '\012\012'
 EXTRA_DIST = README \
-ansi-c++.m4 \
 codeset.m4 \
 fcntl-o.m4 \
 gettext.m4 \

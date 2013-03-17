@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <!-- This HTML file has been created by texi2html 1.52b
-     from gettext.texi on 6 June 2010 -->
+     from gettext.texi on 5 March 2013 -->
 
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <TITLE>GNU gettext utilities - 15  Other Programming Languages</TITLE>
@@ -26,8 +26,8 @@ approach.
 
 <H2><A NAME="SEC246" HREF="gettext_toc.html#TOC246">15.1  The Language Implementor's View</A></H2>
 <P>
-<A NAME="IDX1170"></A>
 <A NAME="IDX1171"></A>
+<A NAME="IDX1172"></A>
 
 </P>
 <P>
@@ -214,8 +214,8 @@ activates these replacement functions automatically.
 
 </P>
 <P>
-<A NAME="IDX1172"></A>
 <A NAME="IDX1173"></A>
+<A NAME="IDX1174"></A>
 As a special feature for Farsi (Persian) and maybe Arabic, translators can
 insert an <SAMP>&lsquo;I&rsquo;</SAMP> flag into numeric format directives.  For example, the
 translation of <CODE>"%d"</CODE> can be <CODE>"%Id"</CODE>.  The effect of this flag,
@@ -550,7 +550,7 @@ that language, and to combine the resulting files using <CODE>msgcat</CODE>.
 
 <H3><A NAME="SEC274" HREF="gettext_toc.html#TOC274">15.5.1  C, C++, Objective C</A></H3>
 <P>
-<A NAME="IDX1174"></A>
+<A NAME="IDX1175"></A>
 
 </P>
 <DL COMPACT>
@@ -630,7 +630,7 @@ The following examples are available in the <TT>&lsquo;examples&rsquo;</TT> dire
 
 <H3><A NAME="SEC275" HREF="gettext_toc.html#TOC275">15.5.2  sh - Shell Script</A></H3>
 <P>
-<A NAME="IDX1175"></A>
+<A NAME="IDX1176"></A>
 
 </P>
 <DL COMPACT>
@@ -653,19 +653,19 @@ bash, gettext
 
 <DT>gettext/ngettext functions
 <DD>
-<A NAME="IDX1176"></A>
 <A NAME="IDX1177"></A>
+<A NAME="IDX1178"></A>
 <CODE>gettext</CODE>, <CODE>ngettext</CODE> programs
 <BR><CODE>eval_gettext</CODE>, <CODE>eval_ngettext</CODE> shell functions
 
 <DT>textdomain
 <DD>
-<A NAME="IDX1178"></A>
+<A NAME="IDX1179"></A>
 environment variable <CODE>TEXTDOMAIN</CODE>
 
 <DT>bindtextdomain
 <DD>
-<A NAME="IDX1179"></A>
+<A NAME="IDX1180"></A>
 environment variable <CODE>TEXTDOMAINDIR</CODE>
 
 <DT>setlocale
@@ -706,7 +706,7 @@ An example is available in the <TT>&lsquo;examples&rsquo;</TT> directory: <CODE>
 
 <H4><A NAME="SEC276" HREF="gettext_toc.html#TOC276">15.5.2.1  Preparing Shell Scripts for Internationalization</A></H4>
 <P>
-<A NAME="IDX1180"></A>
+<A NAME="IDX1181"></A>
 
 </P>
 <P>
@@ -872,8 +872,8 @@ See section <A HREF="gettext_15.html#SEC282">15.5.2.7  Invoking the <CODE>eval_n
 <H4><A NAME="SEC278" HREF="gettext_toc.html#TOC278">15.5.2.3  Invoking the <CODE>gettext</CODE> program</A></H4>
 
 <P>
-<A NAME="IDX1181"></A>
 <A NAME="IDX1182"></A>
+<A NAME="IDX1183"></A>
 
 <PRE>
 gettext [<VAR>option</VAR>] [[<VAR>textdomain</VAR>] <VAR>msgid</VAR>]
@@ -881,7 +881,7 @@ gettext [<VAR>option</VAR>] -s [<VAR>msgid</VAR>]...
 </PRE>
 
 <P>
-<A NAME="IDX1183"></A>
+<A NAME="IDX1184"></A>
 The <CODE>gettext</CODE> program displays the native language translation of a
 textual message.
 
@@ -896,14 +896,14 @@ textual message.
 <DD>
 <DT><SAMP>&lsquo;--domain=<VAR>textdomain</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1184"></A>
 <A NAME="IDX1185"></A>
+<A NAME="IDX1186"></A>
 Retrieve translated messages from <VAR>textdomain</VAR>.  Usually a <VAR>textdomain</VAR>
 corresponds to a package, a program, or a module of a program.
 
 <DT><SAMP>&lsquo;-e&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1186"></A>
+<A NAME="IDX1187"></A>
 Enable expansion of some escape sequences.  This option is for compatibility
 with the <SAMP>&lsquo;echo&rsquo;</SAMP> program or shell built-in.  The escape sequences
 <SAMP>&lsquo;\a&rsquo;</SAMP>, <SAMP>&lsquo;\b&rsquo;</SAMP>, <SAMP>&lsquo;\c&rsquo;</SAMP>, <SAMP>&lsquo;\f&rsquo;</SAMP>, <SAMP>&lsquo;\n&rsquo;</SAMP>, <SAMP>&lsquo;\r&rsquo;</SAMP>, <SAMP>&lsquo;\t&rsquo;</SAMP>,
@@ -912,7 +912,7 @@ interpreted like the System V <SAMP>&lsquo;echo&rsquo;</SAMP> program did.
 
 <DT><SAMP>&lsquo;-E&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1187"></A>
+<A NAME="IDX1188"></A>
 This option is only for compatibility with the <SAMP>&lsquo;echo&rsquo;</SAMP> program or shell
 built-in.  It has no effect.
 
@@ -920,13 +920,13 @@ built-in.  It has no effect.
 <DD>
 <DT><SAMP>&lsquo;--help&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1188"></A>
 <A NAME="IDX1189"></A>
+<A NAME="IDX1190"></A>
 Display this help and exit.
 
 <DT><SAMP>&lsquo;-n&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1190"></A>
+<A NAME="IDX1191"></A>
 Suppress trailing newline.  By default, <CODE>gettext</CODE> adds a newline to
 the output.
 
@@ -934,8 +934,8 @@ the output.
 <DD>
 <DT><SAMP>&lsquo;--version&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1191"></A>
 <A NAME="IDX1192"></A>
+<A NAME="IDX1193"></A>
 Output version information and exit.
 
 <DT><SAMP>&lsquo;[<VAR>textdomain</VAR>] <VAR>msgid</VAR>&rsquo;</SAMP>
@@ -968,15 +968,15 @@ Note: <CODE>xgettext</CODE> supports only the one-argument form of the
 <H4><A NAME="SEC279" HREF="gettext_toc.html#TOC279">15.5.2.4  Invoking the <CODE>ngettext</CODE> program</A></H4>
 
 <P>
-<A NAME="IDX1193"></A>
 <A NAME="IDX1194"></A>
+<A NAME="IDX1195"></A>
 
 <PRE>
 ngettext [<VAR>option</VAR>] [<VAR>textdomain</VAR>] <VAR>msgid</VAR> <VAR>msgid-plural</VAR> <VAR>count</VAR>
 </PRE>
 
 <P>
-<A NAME="IDX1195"></A>
+<A NAME="IDX1196"></A>
 The <CODE>ngettext</CODE> program displays the native language translation of a
 textual message whose grammatical form depends on a number.
 
@@ -991,14 +991,14 @@ textual message whose grammatical form depends on a number.
 <DD>
 <DT><SAMP>&lsquo;--domain=<VAR>textdomain</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1196"></A>
 <A NAME="IDX1197"></A>
+<A NAME="IDX1198"></A>
 Retrieve translated messages from <VAR>textdomain</VAR>.  Usually a <VAR>textdomain</VAR>
 corresponds to a package, a program, or a module of a program.
 
 <DT><SAMP>&lsquo;-e&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1198"></A>
+<A NAME="IDX1199"></A>
 Enable expansion of some escape sequences.  This option is for compatibility
 with the <SAMP>&lsquo;gettext&rsquo;</SAMP> program.  The escape sequences
 <SAMP>&lsquo;\a&rsquo;</SAMP>, <SAMP>&lsquo;\b&rsquo;</SAMP>, <SAMP>&lsquo;\c&rsquo;</SAMP>, <SAMP>&lsquo;\f&rsquo;</SAMP>, <SAMP>&lsquo;\n&rsquo;</SAMP>, <SAMP>&lsquo;\r&rsquo;</SAMP>, <SAMP>&lsquo;\t&rsquo;</SAMP>,
@@ -1007,7 +1007,7 @@ interpreted like the System V <SAMP>&lsquo;echo&rsquo;</SAMP> program did.
 
 <DT><SAMP>&lsquo;-E&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1199"></A>
+<A NAME="IDX1200"></A>
 This option is only for compatibility with the <SAMP>&lsquo;gettext&rsquo;</SAMP> program.  It has
 no effect.
 
@@ -1015,16 +1015,16 @@ no effect.
 <DD>
 <DT><SAMP>&lsquo;--help&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1200"></A>
 <A NAME="IDX1201"></A>
+<A NAME="IDX1202"></A>
 Display this help and exit.
 
 <DT><SAMP>&lsquo;-V&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--version&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1202"></A>
 <A NAME="IDX1203"></A>
+<A NAME="IDX1204"></A>
 Output version information and exit.
 
 <DT><SAMP>&lsquo;<VAR>textdomain</VAR>&rsquo;</SAMP>
@@ -1059,17 +1059,17 @@ Note: <CODE>xgettext</CODE> supports only the three-arguments form of the
 <H4><A NAME="SEC280" HREF="gettext_toc.html#TOC280">15.5.2.5  Invoking the <CODE>envsubst</CODE> program</A></H4>
 
 <P>
-<A NAME="IDX1204"></A>
 <A NAME="IDX1205"></A>
+<A NAME="IDX1206"></A>
 
 <PRE>
 envsubst [<VAR>option</VAR>] [<VAR>shell-format</VAR>]
 </PRE>
 
 <P>
-<A NAME="IDX1206"></A>
 <A NAME="IDX1207"></A>
 <A NAME="IDX1208"></A>
+<A NAME="IDX1209"></A>
 The <CODE>envsubst</CODE> program substitutes the values of environment variables.
 
 </P>
@@ -1083,8 +1083,8 @@ The <CODE>envsubst</CODE> program substitutes the values of environment variable
 <DD>
 <DT><SAMP>&lsquo;--variables&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1209"></A>
 <A NAME="IDX1210"></A>
+<A NAME="IDX1211"></A>
 Output the variables occurring in <VAR>shell-format</VAR>.
 
 </DL>
@@ -1099,16 +1099,16 @@ Output the variables occurring in <VAR>shell-format</VAR>.
 <DD>
 <DT><SAMP>&lsquo;--help&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1211"></A>
 <A NAME="IDX1212"></A>
+<A NAME="IDX1213"></A>
 Display this help and exit.
 
 <DT><SAMP>&lsquo;-V&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--version&rsquo;</SAMP>
 <DD>
-<A NAME="IDX1213"></A>
 <A NAME="IDX1214"></A>
+<A NAME="IDX1215"></A>
 Output version information and exit.
 
 </DL>
@@ -1141,14 +1141,14 @@ consists of the environment variables that are referenced in
 <H4><A NAME="SEC281" HREF="gettext_toc.html#TOC281">15.5.2.6  Invoking the <CODE>eval_gettext</CODE> function</A></H4>
 
 <P>
-<A NAME="IDX1215"></A>
+<A NAME="IDX1216"></A>
 
 <PRE>
 eval_gettext <VAR>msgid</VAR>
 </PRE>
 
 <P>
-<A NAME="IDX1216"></A>
+<A NAME="IDX1217"></A>
 This function outputs the native language translation of a textual message,
 performing dollar-substitution on the result.  Note that only shell variables
 mentioned in <VAR>msgid</VAR> will be dollar-substituted in the result.
@@ -1159,14 +1159,14 @@ mentioned in <VAR>msgid</VAR> will be dollar-substituted in the result.
 <H4><A NAME="SEC282" HREF="gettext_toc.html#TOC282">15.5.2.7  Invoking the <CODE>eval_ngettext</CODE> function</A></H4>
 
 <P>
-<A NAME="IDX1217"></A>
+<A NAME="IDX1218"></A>
 
 <PRE>
 eval_ngettext <VAR>msgid</VAR> <VAR>msgid-plural</VAR> <VAR>count</VAR>
 </PRE>
 
 <P>
-<A NAME="IDX1218"></A>
+<A NAME="IDX1219"></A>
 This function outputs the native language translation of a textual message
 whose grammatical form depends on a number, performing dollar-substitution
 on the result.  Note that only shell variables mentioned in <VAR>msgid</VAR> or
@@ -1177,7 +1177,7 @@ on the result.  Note that only shell variables mentioned in <VAR>msgid</VAR> or
 
 <H3><A NAME="SEC283" HREF="gettext_toc.html#TOC283">15.5.3  bash - Bourne-Again Shell Script</A></H3>
 <P>
-<A NAME="IDX1219"></A>
+<A NAME="IDX1220"></A>
 
 </P>
 <P>
@@ -1228,7 +1228,7 @@ that don't have the <CODE>gettext()</CODE> function in libc.
 
 <H3><A NAME="SEC284" HREF="gettext_toc.html#TOC284">15.5.4  Python</A></H3>
 <P>
-<A NAME="IDX1220"></A>
+<A NAME="IDX1221"></A>
 
 </P>
 <DL COMPACT>
@@ -1342,9 +1342,9 @@ verifies that the format string uses all supplied arguments.)
 
 <H3><A NAME="SEC285" HREF="gettext_toc.html#TOC285">15.5.5  GNU clisp - Common Lisp</A></H3>
 <P>
-<A NAME="IDX1221"></A>
 <A NAME="IDX1222"></A>
 <A NAME="IDX1223"></A>
+<A NAME="IDX1224"></A>
 
 </P>
 <DL COMPACT>
@@ -1414,7 +1414,7 @@ An example is available in the <TT>&lsquo;examples&rsquo;</TT> directory: <CODE>
 
 <H3><A NAME="SEC286" HREF="gettext_toc.html#TOC286">15.5.6  GNU clisp C sources</A></H3>
 <P>
-<A NAME="IDX1224"></A>
+<A NAME="IDX1225"></A>
 
 </P>
 <DL COMPACT>
@@ -1482,7 +1482,7 @@ On platforms without gettext, no translation.
 
 <H3><A NAME="SEC287" HREF="gettext_toc.html#TOC287">15.5.7  Emacs Lisp</A></H3>
 <P>
-<A NAME="IDX1225"></A>
+<A NAME="IDX1226"></A>
 
 </P>
 <DL COMPACT>
@@ -1548,7 +1548,7 @@ Only XEmacs.  Without <CODE>I18N3</CODE> defined at build time, no translation.
 
 <H3><A NAME="SEC288" HREF="gettext_toc.html#TOC288">15.5.8  librep</A></H3>
 <P>
-<A NAME="IDX1226"></A>
+<A NAME="IDX1227"></A>
 
 </P>
 <DL COMPACT>
@@ -1618,8 +1618,8 @@ An example is available in the <TT>&lsquo;examples&rsquo;</TT> directory: <CODE>
 
 <H3><A NAME="SEC289" HREF="gettext_toc.html#TOC289">15.5.9  GNU guile - Scheme</A></H3>
 <P>
-<A NAME="IDX1227"></A>
 <A NAME="IDX1228"></A>
+<A NAME="IDX1229"></A>
 
 </P>
 <DL COMPACT>
@@ -1689,7 +1689,7 @@ An example is available in the <TT>&lsquo;examples&rsquo;</TT> directory: <CODE>
 
 <H3><A NAME="SEC290" HREF="gettext_toc.html#TOC290">15.5.10  GNU Smalltalk</A></H3>
 <P>
-<A NAME="IDX1229"></A>
+<A NAME="IDX1230"></A>
 
 </P>
 <DL COMPACT>
@@ -1762,7 +1762,7 @@ An example is available in the <TT>&lsquo;examples&rsquo;</TT> directory:
 
 <H3><A NAME="SEC291" HREF="gettext_toc.html#TOC291">15.5.11  Java</A></H3>
 <P>
-<A NAME="IDX1230"></A>
+<A NAME="IDX1231"></A>
 
 </P>
 <DL COMPACT>
@@ -1896,7 +1896,7 @@ This has the advantage of having the <CODE>ngettext</CODE> function for plural
 handling and the <CODE>pgettext</CODE> and <CODE>npgettext</CODE> for strings constraint
 to a particular context.
 
-<A NAME="IDX1231"></A>
+<A NAME="IDX1232"></A>
 To use this API, one needs the <CODE>libintl.jar</CODE> file which is part of
 the GNU gettext package and distributed under the LGPL.
 </OL>
@@ -2005,7 +2005,7 @@ than a class with a single-letter name.
 
 <H3><A NAME="SEC292" HREF="gettext_toc.html#TOC292">15.5.12  C#</A></H3>
 <P>
-<A NAME="IDX1232"></A>
+<A NAME="IDX1233"></A>
 
 </P>
 <DL COMPACT>
@@ -2244,7 +2244,7 @@ The <CODE>GetParticularPluralString</CODE> function returns a string translation
 specific to a particular context, with plural handling, like the
 <CODE>npgettext</CODE> function in C.
 
-<A NAME="IDX1233"></A>
+<A NAME="IDX1234"></A>
 To use this API, one needs the <CODE>GNU.Gettext.dll</CODE> file which is part of
 the GNU gettext package and distributed under the LGPL.
 </OL>
@@ -2331,8 +2331,8 @@ with a single-letter name.
 
 <H3><A NAME="SEC293" HREF="gettext_toc.html#TOC293">15.5.13  GNU awk</A></H3>
 <P>
-<A NAME="IDX1234"></A>
 <A NAME="IDX1235"></A>
+<A NAME="IDX1236"></A>
 
 </P>
 <DL COMPACT>
@@ -2404,9 +2404,9 @@ An example is available in the <TT>&lsquo;examples&rsquo;</TT> directory: <CODE>
 
 <H3><A NAME="SEC294" HREF="gettext_toc.html#TOC294">15.5.14  Pascal - Free Pascal Compiler</A></H3>
 <P>
-<A NAME="IDX1236"></A>
 <A NAME="IDX1237"></A>
 <A NAME="IDX1238"></A>
+<A NAME="IDX1239"></A>
 
 </P>
 <DL COMPACT>
@@ -2485,7 +2485,7 @@ An example is available in the <TT>&lsquo;examples&rsquo;</TT> directory: <CODE>
 
 <H3><A NAME="SEC295" HREF="gettext_toc.html#TOC295">15.5.15  wxWidgets library</A></H3>
 <P>
-<A NAME="IDX1239"></A>
+<A NAME="IDX1240"></A>
 
 </P>
 <DL COMPACT>
@@ -2553,8 +2553,8 @@ yes
 
 <H3><A NAME="SEC296" HREF="gettext_toc.html#TOC296">15.5.16  YCP - YaST2 scripting language</A></H3>
 <P>
-<A NAME="IDX1240"></A>
 <A NAME="IDX1241"></A>
+<A NAME="IDX1242"></A>
 
 </P>
 <DL COMPACT>
@@ -2624,8 +2624,8 @@ An example is available in the <TT>&lsquo;examples&rsquo;</TT> directory: <CODE>
 
 <H3><A NAME="SEC297" HREF="gettext_toc.html#TOC297">15.5.17  Tcl - Tk's scripting language</A></H3>
 <P>
-<A NAME="IDX1242"></A>
 <A NAME="IDX1243"></A>
+<A NAME="IDX1244"></A>
 
 </P>
 <DL COMPACT>
@@ -2710,7 +2710,7 @@ argument is given.
 
 <H3><A NAME="SEC298" HREF="gettext_toc.html#TOC298">15.5.18  Perl</A></H3>
 <P>
-<A NAME="IDX1244"></A>
+<A NAME="IDX1245"></A>
 
 </P>
 <DL COMPACT>
@@ -2721,7 +2721,7 @@ perl
 
 <DT>File extension
 <DD>
-<CODE>pl</CODE>, <CODE>PL</CODE>, <CODE>pm</CODE>, <CODE>cgi</CODE>
+<CODE>pl</CODE>, <CODE>PL</CODE>, <CODE>pm</CODE>, <CODE>perl</CODE>, <CODE>cgi</CODE>
 
 <DT>String syntax
 <DD>
@@ -2823,7 +2823,7 @@ An example is available in the <TT>&lsquo;examples&rsquo;</TT> directory: <CODE>
 
 </P>
 <P>
-<A NAME="IDX1245"></A>
+<A NAME="IDX1246"></A>
 
 </P>
 <P>
@@ -3045,7 +3045,7 @@ about such constructs.
 
 <H4><A NAME="SEC300" HREF="gettext_toc.html#TOC300">15.5.18.2  Which keywords will xgettext look for?</A></H4>
 <P>
-<A NAME="IDX1246"></A>
+<A NAME="IDX1247"></A>
 
 </P>
 <P>
@@ -3094,7 +3094,7 @@ The keys of lookups into the hash reference <CODE>$gettext</CODE> will be extrac
 
 <H4><A NAME="SEC301" HREF="gettext_toc.html#TOC301">15.5.18.3  How to Extract Hash Keys</A></H4>
 <P>
-<A NAME="IDX1247"></A>
+<A NAME="IDX1248"></A>
 
 </P>
 <P>
@@ -3149,7 +3149,7 @@ are <EM>not</EM> allowed, regardless of the <CODE>use utf8</CODE> pragma.
 
 <H4><A NAME="SEC302" HREF="gettext_toc.html#TOC302">15.5.18.4  What are Strings And Quote-like Expressions?</A></H4>
 <P>
-<A NAME="IDX1248"></A>
+<A NAME="IDX1249"></A>
 
 </P>
 <P>
@@ -3249,7 +3249,7 @@ Delimiters that start with a digit are not supported!
 
 <H4><A NAME="SEC303" HREF="gettext_toc.html#TOC303">15.5.18.5  Invalid Uses Of String Interpolation</A></H4>
 <P>
-<A NAME="IDX1249"></A>
+<A NAME="IDX1250"></A>
 
 </P>
 <P>
@@ -3387,7 +3387,7 @@ well write what you mean.
 
 <H4><A NAME="SEC304" HREF="gettext_toc.html#TOC304">15.5.18.6  Valid Uses Of String Interpolation</A></H4>
 <P>
-<A NAME="IDX1250"></A>
+<A NAME="IDX1251"></A>
 
 </P>
 <P>
@@ -3475,7 +3475,7 @@ s/$gettext{"U. S. A."}/$gettext{"U. S. A."} $gettext{"(dial +0)"}/g;
 
 <H4><A NAME="SEC305" HREF="gettext_toc.html#TOC305">15.5.18.7  When To Use Parentheses</A></H4>
 <P>
-<A NAME="IDX1251"></A>
+<A NAME="IDX1252"></A>
 
 </P>
 <P>
@@ -3521,7 +3521,7 @@ print dngettext 'package', ("one cake", "several cakes", $n), $discarded;
 
 <H4><A NAME="SEC306" HREF="gettext_toc.html#TOC306">15.5.18.8  How To Grok with Long Lines</A></H4>
 <P>
-<A NAME="IDX1252"></A>
+<A NAME="IDX1253"></A>
 
 </P>
 <P>
@@ -3595,7 +3595,7 @@ the resulting POT file.
 
 <H4><A NAME="SEC307" HREF="gettext_toc.html#TOC307">15.5.18.9  Bugs, Pitfalls, And Things That Do Not Work</A></H4>
 <P>
-<A NAME="IDX1253"></A>
+<A NAME="IDX1254"></A>
 
 </P>
 <P>
@@ -3747,7 +3747,7 @@ get executed.  Most of the time you will happily get along with
 
 <H3><A NAME="SEC308" HREF="gettext_toc.html#TOC308">15.5.19  PHP Hypertext Preprocessor</A></H3>
 <P>
-<A NAME="IDX1254"></A>
+<A NAME="IDX1255"></A>
 
 </P>
 <DL COMPACT>
@@ -3818,7 +3818,7 @@ An example is available in the <TT>&lsquo;examples&rsquo;</TT> directory: <CODE>
 
 <H3><A NAME="SEC309" HREF="gettext_toc.html#TOC309">15.5.20  Pike</A></H3>
 <P>
-<A NAME="IDX1255"></A>
+<A NAME="IDX1256"></A>
 
 </P>
 <DL COMPACT>
@@ -3884,7 +3884,7 @@ On platforms without gettext, the functions are not available.
 
 <H3><A NAME="SEC310" HREF="gettext_toc.html#TOC310">15.5.21  GNU Compiler Collection sources</A></H3>
 <P>
-<A NAME="IDX1256"></A>
+<A NAME="IDX1257"></A>
 
 </P>
 <DL COMPACT>
@@ -3980,7 +3980,7 @@ gettext
 
 <H3><A NAME="SEC313" HREF="gettext_toc.html#TOC313">15.6.2  Resource String Table</A></H3>
 <P>
-<A NAME="IDX1257"></A>
+<A NAME="IDX1258"></A>
 
 </P>
 <DL COMPACT>

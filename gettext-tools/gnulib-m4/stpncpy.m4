@@ -1,5 +1,5 @@
-# stpncpy.m4 serial 11
-dnl Copyright (C) 2002-2003, 2005-2007, 2009-2010 Free Software Foundation,
+# stpncpy.m4 serial 16
+dnl Copyright (C) 2002-2003, 2005-2007, 2009-2013 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,49 +25,69 @@ AC_DEFUN([gl_FUNC_STPNCPY],
   dnl   in AIX:     dest + max(0,n-1)
   dnl Only the glibc return value is useful in practice.
 
+  AC_CHECK_DECLS_ONCE([stpncpy])
   AC_CHECK_FUNCS_ONCE([stpncpy])
   if test $ac_cv_func_stpncpy = yes; then
     AC_CACHE_CHECK([for working stpncpy], [gl_cv_func_stpncpy], [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <string.h> /* for strcpy */
 /* The stpncpy prototype is missing in <string.h> on AIX 4.  */
-extern char *stpncpy (char *dest, const char *src, size_t n);
-int main () {
+#if !HAVE_DECL_STPNCPY
+extern
+# ifdef __cplusplus
+"C"
+# endif
+char *stpncpy (char *dest, const char *src, size_t n);
+#endif
+int main ()
+{
+  int result = 0;
   const char *src = "Hello";
   char dest[10];
   /* AIX 4.3.3 and AIX 5.1 stpncpy() returns dest+1 here.  */
-  strcpy (dest, "\377\377\377\377\377\377");
-  if (stpncpy (dest, src, 2) != dest + 2) exit(1);
+  {
+    strcpy (dest, "\377\377\377\377\377\377");
+    if (stpncpy (dest, src, 2) != dest + 2)
+      result |= 1;
+  }
   /* AIX 4.3.3 and AIX 5.1 stpncpy() returns dest+4 here.  */
-  strcpy (dest, "\377\377\377\377\377\377");
-  if (stpncpy (dest, src, 5) != dest + 5) exit(1);
+  {
+    strcpy (dest, "\377\377\377\377\377\377");
+    if (stpncpy (dest, src, 5) != dest + 5)
+      result |= 2;
+  }
   /* AIX 4.3.3 and AIX 5.1 stpncpy() returns dest+6 here.  */
-  strcpy (dest, "\377\377\377\377\377\377");
-  if (stpncpy (dest, src, 7) != dest + 5) exit(1);
-  exit(0);
+  {
+    strcpy (dest, "\377\377\377\377\377\377");
+    if (stpncpy (dest, src, 7) != dest + 5)
+      result |= 4;
+  }
+  return result;
 }
-], [gl_cv_func_stpncpy=yes], [gl_cv_func_stpncpy=no],
+]])],
+        [gl_cv_func_stpncpy=yes],
+        [gl_cv_func_stpncpy=no],
         [AC_EGREP_CPP([Thanks for using GNU], [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
   Thanks for using GNU
 #endif
-], [gl_cv_func_stpncpy=yes], [gl_cv_func_stpncpy=no])
+], [gl_cv_func_stpncpy="guessing yes"], [gl_cv_func_stpncpy="guessing no"])
         ])
     ])
-    if test $gl_cv_func_stpncpy = yes; then
-      AC_DEFINE([HAVE_STPNCPY], [1],
-        [Define if you have the stpncpy() function and it works.])
-    else
-      REPLACE_STPNCPY=1
-      AC_LIBOBJ([stpncpy])
-      gl_PREREQ_STPNCPY
-    fi
+    case "$gl_cv_func_stpncpy" in
+      *yes)
+        AC_DEFINE([HAVE_STPNCPY], [1],
+          [Define if you have the stpncpy() function and it works.])
+        ;;
+      *)
+        REPLACE_STPNCPY=1
+        ;;
+    esac
   else
     HAVE_STPNCPY=0
-    AC_LIBOBJ([stpncpy])
-    gl_PREREQ_STPNCPY
   fi
 ])
 

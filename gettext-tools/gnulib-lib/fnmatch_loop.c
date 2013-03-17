@@ -1,5 +1,4 @@
-/* Copyright (C) 1991, 1992, 1993, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
-   2003, 2004, 2005, 2006, 2009, 2010 Free Software Foundation, Inc.
+/* Copyright (C) 1991-1993, 1996-2006, 2009-2013 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software; you can redistribute it and/or modify
@@ -13,8 +12,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 /* Match STRING against the file name pattern PATTERN, returning zero if
    it matches, nonzero if not.  */
@@ -201,6 +199,8 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
         case L_('['):
           {
             /* Nonzero if the sense of the character class is inverted.  */
+            const CHAR *p_init = p;
+            const CHAR *n_init = n;
             register bool not;
             CHAR cold;
             UCHAR fn;
@@ -215,7 +215,7 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
               return FNM_NOMATCH;
 
             if (*n == L_('/') && (flags & FNM_FILE_NAME))
-              /* `/' cannot be matched.  */
+              /* '/' cannot be matched.  */
               return FNM_NOMATCH;
 
             not = (*p == L_('!') || (posixly_correct < 0 && *p == L_('^')));
@@ -381,7 +381,7 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
                           {
                             /* We found a table entry.  Now see whether the
                                character we are currently at has the same
-                               equivalance class value.  */
+                               equivalence class value.  */
                             int len = weights[idx & 0xffffff];
                             int32_t idx2;
                             const UCHAR *np = (const UCHAR *) n;
@@ -411,8 +411,13 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
                   }
 #endif
                 else if (c == L_('\0'))
-                  /* [ (unterminated) loses.  */
-                  return FNM_NOMATCH;
+                  {
+                    /* [ unterminated, treat as normal character.  */
+                    p = p_init;
+                    n = n_init;
+                    c = L_('[');
+                    goto normal_match;
+                  }
                 else
                   {
                     bool is_range = false;
@@ -630,7 +635,7 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
                         UCHAR cend = *p++;
 
 # ifdef WIDE_CHAR_VERSION
-                        /* Search in the `names' array for the characters.  */
+                        /* Search in the 'names' array for the characters.  */
                         fcollseq = __collseq_table_lookup (collseq, fn);
                         if (fcollseq == ~((uint32_t) 0))
                           /* XXX We don't know anything about the character
@@ -833,7 +838,7 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
 #else
                         /* We use a boring value comparison of the character
                            values.  This is better than comparing using
-                           `strcoll' since the latter would have surprising
+                           'strcoll' since the latter would have surprising
                            and sometimes fatal consequences.  */
                         UCHAR cend = *p++;
 
@@ -1185,7 +1190,7 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
         {
           struct patternlist *next;
 
-          /* I cannot believe it but `strcat' is actually acceptable
+          /* I cannot believe it but 'strcat' is actually acceptable
              here.  Match the entire string with the prefix from the
              pattern list and the rest of the pattern following the
              pattern list.  */
@@ -1267,7 +1272,6 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
 #undef END
 #undef MEMPCPY
 #undef MEMCHR
-#undef STRCOLL
 #undef STRLEN
 #undef STRCAT
 #undef L_

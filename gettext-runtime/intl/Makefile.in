@@ -1,20 +1,18 @@
 # Makefile for directory with message catalog handling library of GNU gettext
-# Copyright (C) 1995-1998, 2000-2007, 2009-2010 Free Software Foundation, Inc.
+# Copyright (C) 1995-1998, 2000-2007, 2009-2012 Free Software Foundation, Inc.
 #
-# This program is free software; you can redistribute it and/or modify it
-# under the terms of the GNU Library General Public License as published
-# by the Free Software Foundation; either version 2, or (at your option)
-# any later version.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Library General Public License for more details.
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
 #
-# You should have received a copy of the GNU Library General Public
-# License along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
-# USA.
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 PACKAGE = @PACKAGE@
 VERSION = @VERSION@
@@ -125,12 +123,13 @@ HEADERS = \
   lock.h \
   relocatable.h \
   tsearch.h tsearch.c \
+  verify.h \
   xsize.h \
   printf-args.h printf-args.c \
   printf-parse.h wprintf-parse.h printf-parse.c \
   vasnprintf.h vasnwprintf.h vasnprintf.c \
   os2compat.h \
-  libgnuintl.h.in
+  libgnuintl.in.h
 SOURCES = \
   bindtextdom.c \
   dcgettext.c \
@@ -159,6 +158,7 @@ SOURCES = \
   printf.c \
   setlocale.c \
   version.c \
+  xsize.c \
   osdep.c \
   os2compat.c \
   intl-exports.c \
@@ -191,6 +191,7 @@ OBJECTS = \
   printf.$lo \
   setlocale.$lo \
   version.$lo \
+  xsize.$lo \
   osdep.$lo \
   intl-compat.$lo
 OBJECTS_RES_yes = libintl.res.$lo
@@ -200,9 +201,10 @@ config.charset locale.alias ref-add.sin ref-del.sin export.h libintl.rc \
 $(HEADERS) $(SOURCES)
 DISTFILES.generated = plural.c
 DISTFILES.normal = VERSION
-DISTFILES.gettext = COPYING.LIB-2.0 COPYING.LIB-2.1 libintl.glibc README.woe32
+DISTFILES.gettext = COPYING.LIB libintl.glibc README.woe32
 DISTFILES.obsolete = xopen-msg.sed linux-msg.sed po2tbl.sed.in cat-compat.c \
-COPYING.LIB-2 gettext.h libgettext.h plural-eval.c libgnuintl.h \
+COPYING.LIB-2 COPYING.LIB-2.0 COPYING.LIB-2.1 \
+gettext.h libgettext.h plural-eval.c libgnuintl.h \
 libgnuintl.h_vms Makefile.vms libgnuintl.h.msvc-static \
 libgnuintl.h.msvc-shared Makefile.msvc
 
@@ -232,7 +234,7 @@ libintl.la libgnuintl.la: $(OBJECTS) $(OBJECTS_RES_@WOE32@)
 # Maintainers of other packages that include the intl directory must *not*
 # change these values.
 LTV_CURRENT=9
-LTV_REVISION=1
+LTV_REVISION=2
 LTV_AGE=1
 
 .SUFFIXES:
@@ -299,6 +301,8 @@ setlocale.lo: $(srcdir)/setlocale.c
 	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC --mode=compile $(COMPILE) $(srcdir)/setlocale.c
 version.lo: $(srcdir)/version.c
 	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC --mode=compile $(COMPILE) $(srcdir)/version.c
+xsize.lo: $(srcdir)/xsize.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC --mode=compile $(COMPILE) $(srcdir)/xsize.c
 osdep.lo: $(srcdir)/osdep.c
 	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC --mode=compile $(COMPILE) $(srcdir)/osdep.c
 intl-compat.lo: $(srcdir)/intl-compat.c
@@ -341,14 +345,14 @@ ref-del.sed: $(srcdir)/ref-del.sin
 
 INCLUDES = -I. -I$(srcdir) -I..
 
-libgnuintl.h: $(srcdir)/libgnuintl.h.in
+libgnuintl.h: $(srcdir)/libgnuintl.in.h
 	sed -e '/IN_LIBGLOCALE/d' \
 	    -e 's,@''HAVE_POSIX_PRINTF''@,@HAVE_POSIX_PRINTF@,g' \
 	    -e 's,@''HAVE_ASPRINTF''@,@HAVE_ASPRINTF@,g' \
 	    -e 's,@''HAVE_NEWLOCALE''@,@HAVE_NEWLOCALE@,g' \
 	    -e 's,@''HAVE_SNPRINTF''@,@HAVE_SNPRINTF@,g' \
 	    -e 's,@''HAVE_WPRINTF''@,@HAVE_WPRINTF@,g' \
-	  < $(srcdir)/libgnuintl.h.in \
+	  < $(srcdir)/libgnuintl.in.h \
 	| if test '@WOE32DLL@' = yes; then \
 	    sed -e 's/extern \([^()]*\);/extern __declspec (dllimport) \1;/'; \
 	  else \
@@ -359,14 +363,14 @@ libgnuintl.h: $(srcdir)/libgnuintl.h.in
 	| sed -e 's,@''HAVE_VISIBILITY''@,@HAVE_VISIBILITY@,g' \
 	  > libgnuintl.h
 
-libintl.h: $(srcdir)/libgnuintl.h.in
+libintl.h: $(srcdir)/libgnuintl.in.h
 	sed -e '/IN_LIBGLOCALE/d' \
 	    -e 's,@''HAVE_POSIX_PRINTF''@,@HAVE_POSIX_PRINTF@,g' \
 	    -e 's,@''HAVE_ASPRINTF''@,@HAVE_ASPRINTF@,g' \
 	    -e 's,@''HAVE_NEWLOCALE''@,@HAVE_NEWLOCALE@,g' \
 	    -e 's,@''HAVE_SNPRINTF''@,@HAVE_SNPRINTF@,g' \
 	    -e 's,@''HAVE_WPRINTF''@,@HAVE_WPRINTF@,g' \
-	  < $(srcdir)/libgnuintl.h.in > libintl.h
+	  < $(srcdir)/libgnuintl.in.h > libintl.h
 
 charset.alias: $(srcdir)/config.charset
 	$(SHELL) $(srcdir)/config.charset '@host@' > t-$@
@@ -378,7 +382,7 @@ check: all
 # system which has the GNU gettext() function in its C library or in a
 # separate library.
 # If you want to use the one which comes with this version of the
-# package, you have to use `configure --with-included-gettext'.
+# package, you have to use "configure --with-included-gettext".
 install: install-exec install-data
 install-exec: all
 	if { test "$(PACKAGE)" = "gettext-runtime" || test "$(PACKAGE)" = "gettext-tools"; } \
@@ -457,7 +461,7 @@ install-data: all
 	  $(mkdir_p) $(DESTDIR)$(gettextsrcdir); \
 	  $(INSTALL_DATA) VERSION $(DESTDIR)$(gettextsrcdir)/VERSION; \
 	  $(INSTALL_DATA) ChangeLog.inst $(DESTDIR)$(gettextsrcdir)/ChangeLog; \
-	  dists="COPYING.LIB-2.0 COPYING.LIB-2.1 $(DISTFILES.common)"; \
+	  dists="COPYING.LIB $(DISTFILES.common)"; \
 	  for file in $$dists; do \
 	    $(INSTALL_DATA) $(srcdir)/$$file \
 			    $(DESTDIR)$(gettextsrcdir)/$$file; \
@@ -567,7 +571,7 @@ uninstall:
 	  : ; \
 	fi
 	if test "$(PACKAGE)" = "gettext-tools"; then \
-	  for file in VERSION ChangeLog COPYING.LIB-2.0 COPYING.LIB-2.1 $(DISTFILES.common) $(DISTFILES.generated); do \
+	  for file in VERSION ChangeLog COPYING.LIB $(DISTFILES.common) $(DISTFILES.generated); do \
 	    rm -f $(DESTDIR)$(gettextsrcdir)/$$file; \
 	  done; \
 	else \
@@ -586,7 +590,7 @@ dcigettext.$lo: $(srcdir)/eval-plural.h
 localcharset.$lo: $(srcdir)/localcharset.h
 bindtextdom.$lo dcigettext.$lo finddomain.$lo loadmsgcat.$lo localealias.$lo lock.$lo log.$lo: $(srcdir)/lock.h
 localealias.$lo localcharset.$lo relocatable.$lo: $(srcdir)/relocatable.h
-printf.$lo: $(srcdir)/printf-args.h $(srcdir)/printf-args.c $(srcdir)/printf-parse.h $(srcdir)/wprintf-parse.h $(srcdir)/xsize.h $(srcdir)/printf-parse.c $(srcdir)/vasnprintf.h $(srcdir)/vasnwprintf.h $(srcdir)/vasnprintf.c
+printf.$lo: $(srcdir)/printf-args.h $(srcdir)/printf-args.c $(srcdir)/printf-parse.h $(srcdir)/wprintf-parse.h $(srcdir)/xsize.h $(srcdir)/xsize.c $(srcdir)/printf-parse.c $(srcdir)/vasnprintf.h $(srcdir)/vasnwprintf.h $(srcdir)/vasnprintf.c
 
 # A bison-2.1 generated plural.c includes <libintl.h> if ENABLE_NLS.
 PLURAL_DEPS_yes = libintl.h
@@ -629,7 +633,7 @@ maintainer-clean: distclean
 	@echo "it deletes files that may require special tools to rebuild."
 
 
-# GNU gettext needs not contain the file `VERSION' but contains some
+# GNU gettext needs not contain the file 'VERSION' but contains some
 # other files which should not be distributed in other packages.
 distdir = ../$(PACKAGE)-$(VERSION)/$(subdir)
 dist distdir: Makefile

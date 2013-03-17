@@ -1,3 +1,46 @@
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in: Update for 0.18.2.
+
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-0.18.2 released.
+
+2010-08-30  Bruno Haible  <bruno@clisp.org>
+
+	Improve interopability with Emacs 23.
+	* po-compat.el (po-find-file-coding-system-guts): Don't use codepages
+	API in Emacs >= 23.
+	* po-mode.el (po-mode-version-string): Bump to 2.21.
+	(po-ediff-buffers-exit-recursive, po-send-mail): Use
+	insert-buffer-substring instead of insert-buffer.
+
+2010-06-06  Bruno Haible  <bruno@clisp.org>
+
+	New options --with-xz and --with-bzip2 for compressing the archive.
+	* autopoint.in: Handle the archive formats dirgz, dirbz2, dirxz instead
+	of dir.
+	* convert-archive.in: Handle the archive formats dirgz, dirbz2, dirxz
+	like dir. Format 'dir' is now without compression.
+	* Makefile.am (MOSTLYCLEANFILES): New variable.
+	(CLEANFILES): Add archive.dir.tar.gz, archive.dir.tar.bz2,
+	archive.dir.tar.xz.
+	(EXTRA_DIST): Add archive.dir.tar. Remove archive.dir.tar.gz.
+	(ARCHIVE_dirgz, ARCHIVE_dirbz2, ARCHIVE_dirxz, ARCHIVE_git,
+	ARCHIVE_cvs): New variables.
+	(gettextsrc_DATA): Use them.
+	(archive.dir.tar): Renamed from archive.dir.tar.gz. Look for an
+	installed .tar.bzip2 or .tar.xz as well.
+	(archive.dir.tar.gz, archive.dir.tar.bz2, archive.dir.tar.xz): New
+	rules.
+	(archive.git.tar.gz, archive.cvs.tar.gz): Update.
+	* add-to-archive: Read and write an uncompressed archive.dir.tar.
+
+2010-06-06  Bruno Haible  <bruno@clisp.org>
+
+	Make 'convert-archive' less verbose.
+	* convert-archive.in: Avoid all output from "git commit".
+
 2010-06-04  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.18.1 released.

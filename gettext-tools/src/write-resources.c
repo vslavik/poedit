@@ -1,5 +1,5 @@
 /* Writing C# .resources files.
-   Copyright (C) 2003, 2005, 2007-2009 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2005, 2007-2009, 2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@
 #include "xerror.h"
 #include "relocatable.h"
 #include "csharpexec.h"
-#include "pipe.h"
+#include "spawn-pipe.h"
 #include "wait-process.h"
 #include "message.h"
 #include "msgfmt.h"

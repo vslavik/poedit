@@ -1,5 +1,5 @@
 /* Concatenates several translation catalogs.
-   Copyright (C) 2001-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2007, 2009-2012 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -359,7 +359,7 @@ static void
 usage (int status)
 {
   if (status != EXIT_SUCCESS)
-    fprintf (stderr, _("Try `%s --help' for more information.\n"),
+    fprintf (stderr, _("Try '%s --help' for more information.\n"),
              program_name);
   else
     {
@@ -375,9 +375,9 @@ By using the --more-than option, greater commonality may be requested\n\
 before messages are printed.  Conversely, the --less-than option may be\n\
 used to specify less commonality before messages are printed (i.e.\n\
 --less-than=2 will only print the unique messages).  Translations,\n\
-comments and extract comments will be cumulated, except that if --use-first\n\
-is specified, they will be taken from the first PO file to define them.\n\
-File positions from all PO files will be cumulated.\n\
+comments, extracted comments, and file positions will be cumulated, except\n\
+that if --use-first is specified, they will be taken from the first PO file\n\
+to define them.\n\
 "));
       printf ("\n");
       printf (_("\

@@ -1,5 +1,5 @@
 /* Return the name-within-directory of a file name.
-   Copyright (C) 1996-1999, 2000-2002, 2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1996-1999, 2000-2002, 2004, 2006, 2010, 2012 Free Software Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C Library.
    Bugs can be reported to bug-glibc@gnu.org.
@@ -22,7 +22,7 @@
 /* Specification.  */
 #include "basename.h"
 
-#if !(__GLIBC__ >= 2)
+#if !(__GLIBC__ >= 2 || defined __UCLIBC__)
 
 #include <stdio.h>
 #include <assert.h>
@@ -45,16 +45,16 @@
 #endif
 
 #ifndef _LIBC
-/* We cannot generally use the name `basename' since XPG defines an unusable
+/* We cannot generally use the name 'basename' since XPG defines an unusable
    variant of the function but we cannot use it.  */
 # undef basename
 # define basename gnu_basename
 #endif
 
-/* In general, we can't use the builtin `basename' function if available,
+/* In general, we can't use the builtin 'basename' function if available,
    since it has different meanings in different environments.
-   In some environments the builtin `basename' modifies its argument.
-   If NAME is all slashes, be sure to return `/'.  */
+   In some environments the builtin 'basename' modifies its argument.
+   If NAME is all slashes, be sure to return '/'.  */
 
 char *
 basename (char const *name)
@@ -71,7 +71,7 @@ basename (char const *name)
         all_slashes = 0;
     }
 
-  /* If NAME is all slashes, arrange to return `/'.  */
+  /* If NAME is all slashes, arrange to return '/'.  */
   if (*base == '\0' && ISSLASH (*name) && all_slashes)
     --base;
 

@@ -1,13 +1,24 @@
-<!-- Creator     : groff version 1.18.1 -->
+<!-- Creator     : groff version 1.22.1 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
 <title>XGETTEXT</title>
+
 </head>
 <body>
 
-<h1 align=center>XGETTEXT</h1>
+<h1 align="center">XGETTEXT</h1>
+
 <a href="#NAME">NAME</a><br>
 <a href="#SYNOPSIS">SYNOPSIS</a><br>
 <a href="#DESCRIPTION">DESCRIPTION</a><br>
@@ -17,1079 +28,415 @@
 <a href="#SEE ALSO">SEE ALSO</a><br>
 
 <hr>
+
+
+<h2>NAME
 <a name="NAME"></a>
-<h2>NAME</h2>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>xgettext &minus; extract gettext strings from source</p>
-</td>
-</table>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">xgettext
+&minus; extract gettext strings from source</p>
+
+<h2>SYNOPSIS
 <a name="SYNOPSIS"></a>
-<h2>SYNOPSIS</h2>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>xgettext</b> [<i>OPTION</i>] [<i>INPUTFILE</i>]...</p>
-</td>
-</table>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>xgettext</b>
+[<i>OPTION</i>] [<i>INPUTFILE</i>]...</p>
+
+<h2>DESCRIPTION
 <a name="DESCRIPTION"></a>
-<h2>DESCRIPTION</h2>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>Extract translatable strings from given input files.</p>
-<!-- INDENTATION -->
-<p>Mandatory arguments to long options are mandatory for
-short options too. Similarly for optional arguments.</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="4%"></td>
-<td width="95%">
-<p><b>Input file location:</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>INPUTFILE ...</p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>input files</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;f</b>,
-<b>&minus;&minus;files&minus;from</b>=<i>FILE</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>get list of input files from FILE</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;D</b>,
-<b>&minus;&minus;directory</b>=<i>DIRECTORY</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>add DIRECTORY to list for input files search</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>If input file is -, standard input is read.</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="4%"></td>
-<td width="95%">
-<p><b>Output file location:</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;d</b>,
-<b>&minus;&minus;default&minus;domain</b>=<i>NAME</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>use NAME.po for output (instead of messages.po)</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;o</b>,
-<b>&minus;&minus;output</b>=<i>FILE</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>write output to specified file</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;p</b>,
-<b>&minus;&minus;output&minus;dir</b>=<i>DIR</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>output files will be placed in directory DIR</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>If output file is -, output is written to standard
-output.</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="4%"></td>
-<td width="95%">
-<p><b>Choice of input file language:</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;L</b>,
-<b>&minus;&minus;language</b>=<i>NAME</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>recognise the specified language (C, C++, ObjectiveC, PO,
-Shell, Python, Lisp, EmacsLisp, librep, Scheme, Smalltalk,
-Java, JavaProperties, C#, awk, YCP, Tcl, Perl, PHP,
-GCC-source, NXStringTable, RST, Glade)</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;C</b>, <b>&minus;&minus;c</b>++</p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>shorthand for
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Extract
+translatable strings from given input files.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Mandatory
+arguments to long options are mandatory for short options
+too. Similarly for optional arguments.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Input file
+location:</b> <br>
+INPUTFILE ...</p>
+
+<p style="margin-left:22%;">input files</p>
+
+<p style="margin-left:11%;"><b>&minus;f</b>,
+<b>&minus;&minus;files&minus;from</b>=<i>FILE</i></p>
+
+<p style="margin-left:22%;">get list of input files from
+FILE</p>
+
+<p style="margin-left:11%;"><b>&minus;D</b>,
+<b>&minus;&minus;directory</b>=<i>DIRECTORY</i></p>
+
+<p style="margin-left:22%;">add DIRECTORY to list for input
+files search</p>
+
+<p style="margin-left:11%; margin-top: 1em">If input file
+is -, standard input is read.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Output file
+location: <br>
+&minus;d</b>,
+<b>&minus;&minus;default&minus;domain</b>=<i>NAME</i></p>
+
+<p style="margin-left:22%;">use NAME.po for output (instead
+of messages.po)</p>
+
+<p style="margin-left:11%;"><b>&minus;o</b>,
+<b>&minus;&minus;output</b>=<i>FILE</i></p>
+
+<p style="margin-left:22%;">write output to specified
+file</p>
+
+<p style="margin-left:11%;"><b>&minus;p</b>,
+<b>&minus;&minus;output&minus;dir</b>=<i>DIR</i></p>
+
+<p style="margin-left:22%;">output files will be placed in
+directory DIR</p>
+
+<p style="margin-left:11%; margin-top: 1em">If output file
+is -, output is written to standard output.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Choice of
+input file language: <br>
+&minus;L</b>, <b>&minus;&minus;language</b>=<i>NAME</i></p>
+
+<p style="margin-left:22%;">recognise the specified
+language (C, C++, ObjectiveC, PO, Shell, Python, Lisp,
+EmacsLisp, librep, Scheme, Smalltalk, Java, JavaProperties,
+C#, awk, YCP, Tcl, Perl, PHP, GCC-source, NXStringTable,
+RST, Glade)</p>
+
+<p style="margin-left:11%;"><b>&minus;C</b>,
+<b>&minus;&minus;c</b>++</p>
+
+<p style="margin-left:22%;">shorthand for
 <b>&minus;&minus;language</b>=<i>C</i>++</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>By default the language is guessed depending on the input
-file name extension.</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="4%"></td>
-<td width="95%">
-<p><b>Input file interpretation:</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
 
-<p><b>&minus;&minus;from&minus;code</b>=<i>NAME</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>encoding of input files (except for Python, Tcl,
-Glade)</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>By default the input files are assumed to be in
-ASCII.</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="4%"></td>
-<td width="95%">
-<p><b>Operation mode:</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;j</b>,
-<b>&minus;&minus;join&minus;existing</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>join messages with existing file</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;x</b>,
-<b>&minus;&minus;exclude&minus;file</b>=<i>FILE</i>.po</p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>entries from FILE.po are not extracted</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;cTAG</b>,
-<b>&minus;&minus;add&minus;comments</b>=<i>TAG</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>place comment blocks starting with TAG and preceding
-keyword lines in output file</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;c</b>,
-<b>&minus;&minus;add&minus;comments</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>place all comment blocks preceding keyword lines in
-output file</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="4%"></td>
-<td width="95%">
-<p><b>Language specific options:</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;a</b>,
-<b>&minus;&minus;extract&minus;all</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>extract all strings (only languages C, C++, ObjectiveC,
-Shell, Python, Lisp, EmacsLisp, librep, Scheme, Java, C#,
-awk, Tcl, Perl, PHP, GCC-source, Glade)</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;kWORD</b>,
-<b>&minus;&minus;keyword</b>=<i>WORD</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>look for WORD as an additional keyword</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;k</b>, <b>&minus;&minus;keyword</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>do not to use default keywords (only languages C, C++,
-ObjectiveC, Shell, Python, Lisp, EmacsLisp, librep, Scheme,
-Java, C#, awk, Tcl, Perl, PHP, GCC-source, Glade)</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;flag</b>=<i>WORD</i>:ARG:FLAG</p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>additional flag for strings inside the argument number
-ARG of keyword WORD</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="20%"></td>
-<td width="79%">
-<p>(only languages C, C++, ObjectiveC, Shell, Python, Lisp,
-EmacsLisp, librep, Scheme, Java, C#, awk, YCP, Tcl, Perl,
-PHP, GCC-source)</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;T</b>, <b>&minus;&minus;trigraphs</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>understand ANSI C trigraphs for input (only languages C,
-C++, ObjectiveC)</p>
-</td>
-</table>
-<!-- TABS -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="4" cellspacing="0" cellpadding="0">
+<p style="margin-left:11%; margin-top: 1em">By default the
+language is guessed depending on the input file name
+extension.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Input file
+interpretation: <br>
+&minus;&minus;from&minus;code</b>=<i>NAME</i></p>
+
+<p style="margin-left:22%;">encoding of input files (except
+for Python, Tcl, Glade)</p>
+
+<p style="margin-left:11%; margin-top: 1em">By default the
+input files are assumed to be in ASCII.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Operation
+mode: <br>
+&minus;j</b>, <b>&minus;&minus;join&minus;existing</b></p>
+
+<p style="margin-left:22%;">join messages with existing
+file</p>
+
+<p style="margin-left:11%;"><b>&minus;x</b>,
+<b>&minus;&minus;exclude&minus;file</b>=<i>FILE</i>.po</p>
+
+<p style="margin-left:22%;">entries from FILE.po are not
+extracted</p>
+
+<p style="margin-left:11%;"><b>&minus;cTAG</b>,
+<b>&minus;&minus;add&minus;comments</b>=<i>TAG</i></p>
+
+<p style="margin-left:22%;">place comment blocks starting
+with TAG and preceding keyword lines in output file</p>
+
+<p style="margin-left:11%;"><b>&minus;c</b>,
+<b>&minus;&minus;add&minus;comments</b></p>
+
+<p style="margin-left:22%;">place all comment blocks
+preceding keyword lines in output file</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Language
+specific options: <br>
+&minus;a</b>, <b>&minus;&minus;extract&minus;all</b></p>
+
+<p style="margin-left:22%;">extract all strings (only
+languages C, C++, ObjectiveC, Shell, Python, Lisp,
+EmacsLisp, librep, Scheme, Java, C#, awk, Tcl, Perl, PHP,
+GCC-source, Glade)</p>
+
+<p style="margin-left:11%;"><b>&minus;kWORD</b>,
+<b>&minus;&minus;keyword</b>=<i>WORD</i></p>
+
+<p style="margin-left:22%;">look for WORD as an additional
+keyword</p>
+
+<p style="margin-left:11%;"><b>&minus;k</b>,
+<b>&minus;&minus;keyword</b></p>
+
+<p style="margin-left:22%;">do not to use default keywords
+(only languages C, C++, ObjectiveC, Shell, Python, Lisp,
+EmacsLisp, librep, Scheme, Java, C#, awk, Tcl, Perl, PHP,
+GCC-source, Glade)</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;flag</b>=<i>WORD</i>:ARG:FLAG</p>
+
+<p style="margin-left:22%;">additional flag for strings
+inside the argument number ARG of keyword WORD</p>
+
+<p style="margin-left:22%; margin-top: 1em">(only languages
+C, C++, ObjectiveC, Shell, Python, Lisp, EmacsLisp, librep,
+Scheme, Java, C#, awk, YCP, Tcl, Perl, PHP, GCC-source)</p>
+
+<p style="margin-left:11%;"><b>&minus;T</b>,
+<b>&minus;&minus;trigraphs</b></p>
+
+<p style="margin-left:22%;">understand ANSI C trigraphs for
+input (only languages C, C++, ObjectiveC)</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="11%"></td>
 <td width="7%">
 
-<p><b>&minus;&minus;qt</b></p>
-</td>
-<td width="11%"></td>
-<td width="69%">
 
-<p>recognize Qt format strings (only language C++)</p>
-</td>
+<p><b>&minus;&minus;qt</b></p></td>
+<td width="4%"></td>
+<td width="76%">
+
+
+<p>recognize Qt format strings (only language C++)</p></td>
+<td width="2%">
+</td></tr>
 <tr valign="top" align="left">
 <td width="11%"></td>
 <td width="7%">
 
-<p><b>&minus;&minus;kde</b></p>
-</td>
-<td width="11%"></td>
-<td width="69%">
 
-<p>recognize KDE 4 format strings (only language C++)</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;boost</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>recognize Boost format strings (only language C++)</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;debug</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>more detailed formatstring recognition result</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
+<p><b>&minus;&minus;kde</b></p></td>
 <td width="4%"></td>
-<td width="95%">
-<p><b>Output details:</b></p></td>
+<td width="76%">
+
+
+<p>recognize KDE 4 format strings (only language C++)</p></td>
+<td width="2%">
+</td></tr>
 </table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;color</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>use colors and other text attributes always</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;color</b>=<i>WHEN</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>use colors and other text attributes if WHEN. WHEN may be
-&rsquo;always&rsquo;, &rsquo;never&rsquo;,
-&rsquo;auto&rsquo;, or &rsquo;html&rsquo;.</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;style</b>=<i>STYLEFILE</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>specify CSS style rule file for
+
+<p style="margin-left:11%;"><b>&minus;&minus;boost</b></p>
+
+<p style="margin-left:22%;">recognize Boost format strings
+(only language C++)</p>
+
+<p style="margin-left:11%;"><b>&minus;&minus;debug</b></p>
+
+<p style="margin-left:22%;">more detailed formatstring
+recognition result</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Output
+details: <br>
+&minus;&minus;color</b></p>
+
+<p style="margin-left:22%;">use colors and other text
+attributes always</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;color</b>=<i>WHEN</i></p>
+
+<p style="margin-left:22%;">use colors and other text
+attributes if WHEN. WHEN may be &rsquo;always&rsquo;,
+&rsquo;never&rsquo;, &rsquo;auto&rsquo;, or
+&rsquo;html&rsquo;.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;style</b>=<i>STYLEFILE</i></p>
+
+<p style="margin-left:22%;">specify CSS style rule file for
 <b>&minus;&minus;color</b></p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;e</b>,
-<b>&minus;&minus;no&minus;escape</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>do not use C escapes in output (default)</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;E</b>, <b>&minus;&minus;escape</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>use C escapes in output, no extended chars</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;force&minus;po</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>write PO file even if empty</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;i</b>, <b>&minus;&minus;indent</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>write the .po file using indented style</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;no&minus;location</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>do not write &rsquo;#: filename:line&rsquo; lines</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;n</b>,
-<b>&minus;&minus;add&minus;location</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>generate &rsquo;#: filename:line&rsquo; lines
+
+<p style="margin-left:11%;"><b>&minus;e</b>,
+<b>&minus;&minus;no&minus;escape</b></p>
+
+<p style="margin-left:22%;">do not use C escapes in output
 (default)</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;strict</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>write out strict Uniforum conforming .po file</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;properties&minus;output</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>write out a Java .properties file</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;stringtable&minus;output</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>write out a NeXTstep/GNUstep .strings file</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;w</b>,
-<b>&minus;&minus;width</b>=<i>NUMBER</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>set output page width</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;no&minus;wrap</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>do not break long message lines, longer than the output
-page width, into several lines</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;s</b>,
-<b>&minus;&minus;sort&minus;output</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>generate sorted output</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;F</b>,
-<b>&minus;&minus;sort&minus;by&minus;file</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>sort output by file location</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;omit&minus;header</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>don&rsquo;t write header with &lsquo;msgid
-&quot;&quot;&rsquo; entry</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
 
-<p><b>&minus;&minus;copyright&minus;holder</b>=<i>STRING</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>set copyright holder in output</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;&minus;foreign&minus;user</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>omit FSF copyright in output for foreign user</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
+<p style="margin-left:11%;"><b>&minus;E</b>,
+<b>&minus;&minus;escape</b></p>
 
-<p><b>&minus;&minus;package&minus;name</b>=<i>PACKAGE</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>set package name in output</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
+<p style="margin-left:22%;">use C escapes in output, no
+extended chars</p>
 
-<p><b>&minus;&minus;package&minus;version</b>=<i>VERSION</i></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>set package version in output</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
 
-<p><b>&minus;&minus;msgid&minus;bugs&minus;address</b>=<i>EMAIL</i>@ADDRESS</p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>set report address for msgid bugs</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;m[STRING]</b>,
-<b>&minus;&minus;msgstr&minus;prefix</b>[=<i>STRING</i>]</p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>use STRING or &quot;&quot; as prefix for msgstr
-values</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;M[STRING]</b>,
-<b>&minus;&minus;msgstr&minus;suffix</b>[=<i>STRING</i>]</p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>use STRING or &quot;&quot; as suffix for msgstr
-values</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="4%"></td>
-<td width="95%">
-<p><b>Informative output:</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;h</b>, <b>&minus;&minus;help</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>display this help and exit</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p><b>&minus;V</b>, <b>&minus;&minus;version</b></p></td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="21%"></td>
-<td width="77%">
-<p>output version information and exit</p>
-</td>
-</table>
+<p style="margin-left:11%;"><b>&minus;&minus;force&minus;po</b></p>
+
+<p style="margin-left:22%;">write PO file even if empty</p>
+
+<p style="margin-left:11%;"><b>&minus;i</b>,
+<b>&minus;&minus;indent</b></p>
+
+<p style="margin-left:22%;">write the .po file using
+indented style</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;no&minus;location</b></p>
+
+<p style="margin-left:22%;">do not write &rsquo;#:
+filename:line&rsquo; lines</p>
+
+<p style="margin-left:11%;"><b>&minus;n</b>,
+<b>&minus;&minus;add&minus;location</b></p>
+
+<p style="margin-left:22%;">generate &rsquo;#:
+filename:line&rsquo; lines (default)</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;strict</b></p>
+
+<p style="margin-left:22%;">write out strict Uniforum
+conforming .po file</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;properties&minus;output</b></p>
+
+<p style="margin-left:22%;">write out a Java .properties
+file</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;stringtable&minus;output</b></p>
+
+<p style="margin-left:22%;">write out a NeXTstep/GNUstep
+.strings file</p>
+
+<p style="margin-left:11%;"><b>&minus;w</b>,
+<b>&minus;&minus;width</b>=<i>NUMBER</i></p>
+
+<p style="margin-left:22%;">set output page width</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;no&minus;wrap</b></p>
+
+<p style="margin-left:22%;">do not break long message
+lines, longer than the output page width, into several
+lines</p>
+
+<p style="margin-left:11%;"><b>&minus;s</b>,
+<b>&minus;&minus;sort&minus;output</b></p>
+
+<p style="margin-left:22%;">generate sorted output</p>
+
+<p style="margin-left:11%;"><b>&minus;F</b>,
+<b>&minus;&minus;sort&minus;by&minus;file</b></p>
+
+<p style="margin-left:22%;">sort output by file
+location</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;omit&minus;header</b></p>
+
+<p style="margin-left:22%;">don&rsquo;t write header with
+&rsquo;msgid &quot;&quot;&rsquo; entry</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;copyright&minus;holder</b>=<i>STRING</i></p>
+
+<p style="margin-left:22%;">set copyright holder in
+output</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;foreign&minus;user</b></p>
+
+<p style="margin-left:22%;">omit FSF copyright in output
+for foreign user</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;package&minus;name</b>=<i>PACKAGE</i></p>
+
+<p style="margin-left:22%;">set package name in output</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;package&minus;version</b>=<i>VERSION</i></p>
+
+<p style="margin-left:22%;">set package version in
+output</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;msgid&minus;bugs&minus;address</b>=<i>EMAIL</i>@ADDRESS</p>
+
+<p style="margin-left:22%;">set report address for msgid
+bugs</p>
+
+<p style="margin-left:11%;"><b>&minus;m[STRING]</b>,
+<b>&minus;&minus;msgstr&minus;prefix</b>[=<i>STRING</i>]</p>
+
+<p style="margin-left:22%;">use STRING or &quot;&quot; as
+prefix for msgstr values</p>
+
+<p style="margin-left:11%;"><b>&minus;M[STRING]</b>,
+<b>&minus;&minus;msgstr&minus;suffix</b>[=<i>STRING</i>]</p>
+
+<p style="margin-left:22%;">use STRING or &quot;&quot; as
+suffix for msgstr values</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Informative
+output: <br>
+&minus;h</b>, <b>&minus;&minus;help</b></p>
+
+<p style="margin-left:22%;">display this help and exit</p>
+
+<p style="margin-left:11%;"><b>&minus;V</b>,
+<b>&minus;&minus;version</b></p>
+
+<p style="margin-left:22%;">output version information and
+exit</p>
+
+<h2>AUTHOR
 <a name="AUTHOR"></a>
-<h2>AUTHOR</h2>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>Written by Ulrich Drepper.</p>
-</td>
-</table>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Written by
+Ulrich Drepper.</p>
+
+<h2>REPORTING BUGS
 <a name="REPORTING BUGS"></a>
-<h2>REPORTING BUGS</h2>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>Report bugs to &lt;bug-gnu-gettext@gnu.org&gt;.</p>
-</td>
-</table>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Report bugs to
+&lt;bug-gnu-gettext@gnu.org&gt;.</p>
+
+<h2>COPYRIGHT
 <a name="COPYRIGHT"></a>
-<h2>COPYRIGHT</h2>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>Copyright &copy; 1995-1998, 2000-2010 Free Software
-Foundation, Inc. License GPLv3+: GNU GPL version 3 or later
-&lt;http://gnu.org/licenses/gpl.html&gt;<br>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Copyright
+&copy; 1995-1998, 2000-2010 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later
+&lt;http://gnu.org/licenses/gpl.html&gt; <br>
 This is free software: you are free to change and
 redistribute it. There is NO WARRANTY, to the extent
 permitted by law.</p>
-</td>
-</table>
+
+<h2>SEE ALSO
 <a name="SEE ALSO"></a>
-<h2>SEE ALSO</h2>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>The full documentation for <b>xgettext</b> is maintained
-as a Texinfo manual. If the <b>info</b> and <b>xgettext</b>
-programs are properly installed at your site, the
-command</p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="20%"></td>
-<td width="79%">
-<p><b>info xgettext</b></p>
-</td>
-</table>
-<!-- INDENTATION -->
-<table width="100%" border=0 rules="none" frame="void"
-       cols="2" cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="10%"></td>
-<td width="89%">
-<p>should give you access to the complete manual.</p>
-</td>
-</table>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The full
+documentation for <b>xgettext</b> is maintained as a Texinfo
+manual. If the <b>info</b> and <b>xgettext</b> programs are
+properly installed at your site, the command</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>info
+xgettext</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">should give you
+access to the complete manual.</p>
 <hr>
 </body>
 </html>

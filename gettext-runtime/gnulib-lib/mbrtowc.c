@@ -1,5 +1,5 @@
 /* Convert multibyte character to wide character.
-   Copyright (C) 1999-2002, 2005-2010 Free Software Foundation, Inc.
+   Copyright (C) 1999-2002, 2005-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2008.
 
    This program is free software: you can redistribute it and/or modify
@@ -40,9 +40,6 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 {
   char *pstate = (char *)ps;
 
-  if (pstate == NULL)
-    pstate = internal_state;
-
   if (s == NULL)
     {
       pwc = NULL;
@@ -54,6 +51,10 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
     return (size_t)(-2);
 
   /* Here n > 0.  */
+
+  if (pstate == NULL)
+    pstate = internal_state;
+
   {
     size_t nstate = pstate[0];
     char buf[4];
@@ -91,7 +92,7 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 
     /* Here m > 0.  */
 
-# if __GLIBC__
+# if __GLIBC__ || defined __UCLIBC__
     /* Work around bug <http://sourceware.org/bugzilla/show_bug.cgi?id=9674> */
     mbtowc (NULL, NULL, 0);
 # endif
@@ -127,7 +128,7 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
       {
         const char *encoding = locale_charset ();
 
-        if (STREQ (encoding, "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0, 0))
+        if (STREQ_OPT (encoding, "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0, 0))
           {
             /* Cf. unistr/u8-mblen.c.  */
             unsigned char c = (unsigned char) p[0];
@@ -184,7 +185,8 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
         /* As a reference for this code, you can use the GNU libiconv
            implementation.  Look for uses of the RET_TOOFEW macro.  */
 
-        if (STREQ (encoding, "EUC-JP", 'E', 'U', 'C', '-', 'J', 'P', 0, 0, 0))
+        if (STREQ_OPT (encoding,
+                       "EUC-JP", 'E', 'U', 'C', '-', 'J', 'P', 0, 0, 0))
           {
             if (m == 1)
               {
@@ -207,9 +209,12 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
               }
             goto invalid;
           }
-        if (STREQ (encoding, "EUC-KR", 'E', 'U', 'C', '-', 'K', 'R', 0, 0, 0)
-            || STREQ (encoding, "GB2312", 'G', 'B', '2', '3', '1', '2', 0, 0, 0)
-            || STREQ (encoding, "BIG5", 'B', 'I', 'G', '5', 0, 0, 0, 0, 0))
+        if (STREQ_OPT (encoding,
+                       "EUC-KR", 'E', 'U', 'C', '-', 'K', 'R', 0, 0, 0)
+            || STREQ_OPT (encoding,
+                          "GB2312", 'G', 'B', '2', '3', '1', '2', 0, 0, 0)
+            || STREQ_OPT (encoding,
+                          "BIG5", 'B', 'I', 'G', '5', 0, 0, 0, 0, 0))
           {
             if (m == 1)
               {
@@ -220,7 +225,8 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
               }
             goto invalid;
           }
-        if (STREQ (encoding, "EUC-TW", 'E', 'U', 'C', '-', 'T', 'W', 0, 0, 0))
+        if (STREQ_OPT (encoding,
+                       "EUC-TW", 'E', 'U', 'C', '-', 'T', 'W', 0, 0, 0))
           {
             if (m == 1)
               {
@@ -238,7 +244,8 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
               }
             goto invalid;
           }
-        if (STREQ (encoding, "GB18030", 'G', 'B', '1', '8', '0', '3', '0', 0, 0))
+        if (STREQ_OPT (encoding,
+                       "GB18030", 'G', 'B', '1', '8', '0', '3', '0', 0, 0))
           {
             if (m == 1)
               {
@@ -271,7 +278,7 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
               }
             goto invalid;
           }
-        if (STREQ (encoding, "SJIS", 'S', 'J', 'I', 'S', 0, 0, 0, 0, 0))
+        if (STREQ_OPT (encoding, "SJIS", 'S', 'J', 'I', 'S', 0, 0, 0, 0, 0))
           {
             if (m == 1)
               {
@@ -321,7 +328,7 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 size_t
 rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 {
-# if MBRTOWC_NULL_ARG_BUG || MBRTOWC_RETVAL_BUG
+# if MBRTOWC_NULL_ARG2_BUG || MBRTOWC_RETVAL_BUG
   if (s == NULL)
     {
       pwc = NULL;
@@ -334,7 +341,7 @@ rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
   {
     static mbstate_t internal_state;
 
-    /* Override mbrtowc's internal state.  We can not call mbsinit() on the
+    /* Override mbrtowc's internal state.  We cannot call mbsinit() on the
        hidden internal state, but we can call it on our variable.  */
     if (ps == NULL)
       ps = &internal_state;
@@ -379,7 +386,16 @@ rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
     return ret;
   }
 # else
-  return mbrtowc (pwc, s, n, ps);
+  {
+#   if MBRTOWC_NULL_ARG1_BUG
+    wchar_t dummy;
+
+    if (pwc == NULL)
+      pwc = &dummy;
+#   endif
+
+    return mbrtowc (pwc, s, n, ps);
+  }
 # endif
 }
 

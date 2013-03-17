@@ -1,5 +1,5 @@
 ## Makefile for the gettext-tools/src subdirectory of GNU gettext
-## Copyright (C) 1995-1998, 2000-2010 Free Software Foundation, Inc.
+## Copyright (C) 1995-1998, 2000-2011 Free Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -112,12 +112,30 @@ FORMAT_SOURCE = format.c
 else
 FORMAT_SOURCE = ../woe32dll/c++format.cc
 endif
-FORMAT_SOURCE += format-invalid.h \
-format-c.c format-sh.c format-python.c format-lisp.c format-elisp.c \
-format-librep.c format-scheme.c format-java.c format-csharp.c format-awk.c \
-format-pascal.c format-ycp.c format-tcl.c format-perl.c format-perl-brace.c \
-format-php.c format-gcc-internal.c format-gfc-internal.c \
-format-qt.c format-qt-plural.c format-kde.c format-boost.c
+FORMAT_SOURCE += \
+  format-invalid.h \
+  format-c.c format-c-parse.h \
+  format-sh.c \
+  format-python.c \
+  format-lisp.c \
+  format-elisp.c \
+  format-librep.c \
+  format-scheme.c \
+  format-java.c \
+  format-csharp.c \
+  format-awk.c \
+  format-pascal.c \
+  format-ycp.c \
+  format-tcl.c \
+  format-perl.c \
+  format-perl-brace.c \
+  format-php.c \
+  format-gcc-internal.c \
+  format-gfc-internal.c \
+  format-qt.c \
+  format-qt-plural.c \
+  format-kde.c \
+  format-boost.c
 
 # libgettextsrc contains all code that is needed by at least two programs.
 libgettextsrc_la_SOURCES = \
@@ -220,12 +238,15 @@ urlget_SOURCES = urlget.c
 # use iconv().
 libgettextsrc_la_LDFLAGS = \
   -release @VERSION@ \
-  ../gnulib-lib/libgettextlib.la $(LTLIBUNISTRING) @LTLIBINTL@ @LTLIBICONV@ -lc @LTNOUNDEF@
+  ../gnulib-lib/libgettextlib.la $(LTLIBUNISTRING) @LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined
+
+libgettextsrc_la_CPPFLAGS = $(AM_CPPFLAGS)
 
 # Tell the mingw or Cygwin linker which symbols to export.
 if WOE32DLL
 libgettextsrc_la_SOURCES += ../woe32dll/gettextsrc-exports.c
 libgettextsrc_la_LDFLAGS += -Wl,--export-all-symbols
+libgettextsrc_la_CPPFLAGS += $(GETTEXTLIB_EXPORTS_FLAGS)
 endif
 
 # No need to install libgettextsrc.a, except on AIX.
@@ -248,7 +269,7 @@ msgcmp_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@ @MSGMERGE_LIBM@ $(WOE32_LDADD
 msgfmt_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@ $(WOE32_LDADD)
 msgmerge_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@ @MSGMERGE_LIBM@ $(WOE32_LDADD) $(OPENMP_CFLAGS)
 msgunfmt_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@ $(WOE32_LDADD)
-xgettext_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@ @LTLIBEXPAT@ $(WOE32_LDADD)
+xgettext_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@ @LTLIBEXPAT@ @LTLIBICONV@ $(WOE32_LDADD)
 msgattrib_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@ $(WOE32_LDADD)
 msgcat_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@ $(WOE32_LDADD)
 msgcomm_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@ $(WOE32_LDADD)

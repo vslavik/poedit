@@ -1,5 +1,5 @@
 /* ngettext - retrieve plural form strings from message catalog and print them.
-   Copyright (C) 1995-1997, 2000-2007 Free Software Foundation, Inc.
+   Copyright (C) 1995-1997, 2000-2007, 2012 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -200,7 +200,7 @@ static void
 usage (int status)
 {
   if (status != EXIT_SUCCESS)
-    fprintf (stderr, _("Try `%s --help' for more information.\n"),
+    fprintf (stderr, _("Try '%s --help' for more information.\n"),
              program_name);
   else
     {

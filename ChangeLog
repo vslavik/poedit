@@ -1,3 +1,194 @@
+2013-01-17  Daiki Ueno  <ueno@gnu.org>
+
+	Fix link errors related to C99-style extern inline.
+	Reported by Sam Thursfield <sam.thursfield@codethink.co.uk>.
+	* autogen.sh (GNULIB_MODULES_LIBASPRINTF): Add xsize.
+
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-0.18.2 released.
+
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* version.sh: Bump to 0.18.2.
+	* autogen.sh: Record the gnulib version that is being used.
+	* NEWS: Update the release date of 0.18.2.  Reformat "Autoconf
+	macros" change.
+
+2012-12-21  Daiki Ueno  <ueno@gnu.org>
+
+	Fix W64 build errors.
+	* autogen.sh (GNULIB_MODULES_LIBASPRINTF): Add extern-inline, for
+	the last xsize.h update.
+	(GNULIB_MODULES_TOOLS_FOR_SRC_COMMON_DEPENDENCIES): Add locale,
+	not to have copies of locale.h in both libgrep and gnulib-lib.
+	(GNULIB_MODULES_LIBGETTEXTPO): Add close.
+
+2012-12-08  Daiki Ueno  <ueno@unixuser.org>
+
+	* autogen.sh: Ignore libunistring tests which are known to fail.
+	(GNULIB_MODULES_TOOLS_LIBUNISTRING_TESTS): New variable.
+
+2012-12-08  Daiki Ueno  <ueno@unixuser.org>
+
+	* NEWS: Mention that autoconf 2.60 is required.
+	Suggested by Bruno Haible <bruno@clisp.org>.
+
+2012-04-29  Bruno Haible  <bruno@clisp.org>
+
+	Allow use of autoconf-2.69 and automake-1.12.
+	* autogen.sh: Update comments.
+
+2012-02-18  Bruno Haible  <bruno@clisp.org>
+
+	Improve ensurance that intmax_t gets defined in libasprintf.
+	* autogen.sh: Create gettext-runtime/libasprintf/gnulib-m4/intmax_t.m4,
+	not gettext-runtime/m4/intmax_t.m4.
+	* Makefile.am (distcheck-hook): Update.
+
+2012-02-18  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (distcheck-hook): Update after gnulib changed.
+
+2012-01-26  Bruno Haible  <bruno@clisp.org>
+
+	Modernize quoting.
+	* NEWS: Quote 'like this', not `like this', as per the recent change
+	to the GNU coding standards.
+	* INSTALL: Process through sed -e "s/\`\([^']*\)'/‘\1’/g"
+
+2011-10-18  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4: Update from libtool-2.4.2, with modifications.
+	2009-04-23  Bruno Haible  <bruno@clisp.org>
+		Fix recognition of "nm" command.
+		* m4/libtool.m4 (LT_PATH_NM): Try "nm" program also when
+		compiling for mingw in a cygwin environment.
+	2008-04-06  Bruno Haible  <bruno@clisp.org>
+		* m4/libtool.m4 (LT_INIT): When setting LIBTOOL, use
+		CONFIG_SHELL; don't assume that the Makefile.in will set SHELL
+		to ${CONFIG_SHELL}.
+	* m4/ltoptions.m4: Likewise.
+	* m4/ltversion.m4: Likewise.
+	* build-aux/ltmain.sh: Likewise.
+
+2011-09-12  Bruno Haible  <bruno@clisp.org>
+
+	Update after gnulib changed.
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add opendir, readdir,
+	closedir.
+
+2011-07-12  Bruno Haible  <bruno@clisp.org>
+
+	Update after gnulib changed.
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC_COMMON_DEPENDENCIES): Update
+	module names.
+
+2011-06-08  Bruno Haible  <bruno@clisp.org>
+
+	Fix a link error due to rpl_wcrtomb on Solaris 9.
+	* autogen.sh: Pass the option --witness-c-macro to the gnulib-tool
+	invocation for libgrep.
+
+2011-06-05  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_LIBGREP): Add mbrlen.
+
+2011-06-04  Bruno Haible  <bruno@clisp.org>
+
+	Ensure intmax_t gets defined in libasprintf.
+	* autogen.sh: Create gettext-runtime/m4/intmax_t.m4, copied from
+	gnulib.
+	* Makefile.am (distcheck-hook): Check also intmax_t.m4.
+
+2011-06-03  Bruno Haible  <bruno@clisp.org>
+
+	* autogen.sh (GNULIB_MODULES_LIBASPRINTF): Add verify.
+	* Makefile.am (distcheck-hook): Check also verify.h.
+
+2011-06-03  Bruno Haible  <bruno@clisp.org>
+
+	Copyright: Use LGPL 2.1 instead of LGPL 2.0.
+	* os2/iconv/iconv.*: Update copyright header.
+	* Makefile.am (distcheck-hook): Update.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
+	Use gnulib's setlocale in all the programs.
+	* autogen.sh (GNULIB_MODULES_RUNTIME_FOR_SRC,
+	GNULIB_MODULES_TOOLS_FOR_SRC): Add setlocale.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
+	Update after gnulib changed.
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add wctype-h, remove
+	wctype.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
+	Use u8_mbtoucr instead of u8_mbtouc in some places.
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC,
+	GNULIB_MODULES_LIBGETTEXTPO): Add unistr/u8-mbtoucr.
+
+2011-01-28  Bruno Haible  <bruno@clisp.org>
+
+	Add a comment.
+	* m4/woe32-dll.m4: Add a reference to the woe32dll writeup.
+
+2010-12-10  Bruno Haible  <bruno@clisp.org>
+
+	Update after gnulib changed.
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add spawn-pipe, remove
+	pipe.
+
+2010-09-24  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4: Update from libtool-2.4, with modifications.
+	2009-04-23  Bruno Haible  <bruno@clisp.org>
+		Fix recognition of "nm" command.
+		* m4/libtool.m4 (LT_PATH_NM): Try "nm" program also when
+		compiling for mingw in a cygwin environment.
+	2008-04-06  Bruno Haible  <bruno@clisp.org>
+		* m4/libtool.m4 (LT_INIT): When setting LIBTOOL, use
+		CONFIG_SHELL; don't assume that the Makefile.in will set SHELL
+		to ${CONFIG_SHELL}.
+	* m4/ltversion.m4: Update from libtool-2.4.
+	* build-aux/ltmain.sh: Likewise.
+
+2010-09-04  Bruno Haible  <bruno@clisp.org>
+
+	Simplify use of gnulib-tool now that gnulib-tool --import works better.
+	* autogen.sh: Don't remove gnulib-cache.m4 before running gnulib-tool.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
+	Use new ansi-c++.m4 from gnulib.
+	* autogen.sh (GNULIB_MODULES_RUNTIME_OTHER, GNULIB_MODULES_TOOLS_OTHER):
+	Add ansi-c++-opt.
+	Reported at <https://savannah.gnu.org/bugs/?30607>.
+
+2010-06-06  Bruno Haible  <bruno@clisp.org>
+
+	New options --with-xz and --with-bzip2 for compressing the archive.
+	* DEPENDENCIES: Correct placement of entries for 'tar' and 'gzip'. Add
+	entries for 'bzip2' and 'xz'.
+
+2010-06-04  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4: Update from libtool-2.2.8, with modifications.
+	2009-04-23  Bruno Haible  <bruno@clisp.org>
+		Fix recognition of "nm" command.
+		* m4/libtool.m4 (LT_PATH_NM): Try "nm" program also when
+		compiling for mingw in a cygwin environment.
+	2008-04-06  Bruno Haible  <bruno@clisp.org>
+		* m4/libtool.m4 (LT_INIT): When setting LIBTOOL, use
+		CONFIG_SHELL; don't assume that the Makefile.in will set SHELL
+		to ${CONFIG_SHELL}.
+	* m4/ltoptions.m4: Update from libtool-2.2.8.
+	* m4/ltversion.m4: Likewise.
+	* m4/lt~obsolete.m4: Likewise.
+	* build-aux/ltmain.sh: Likewise.
+
 2010-06-04  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.18.1 released.

@@ -1,5 +1,5 @@
 /* xgettext C# backend.
-   Copyright (C) 2003, 2005-2009 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2005-2009, 2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -330,7 +330,7 @@ Please specify the correct source encoding through --from-code.\n"),
               while (insize > 0)
                 phase1_ungetc (buf[--insize]);
               /* Convert the character from UTF-8 to UCS-4.  */
-              if (u8_mbtouc (&uc, scratchbuf, outbytes) < outbytes)
+              if (u8_mbtoucr (&uc, scratchbuf, outbytes) < (int) outbytes)
                 {
                   /* scratchbuf contains an out-of-range Unicode character
                      (> 0x10ffff).  */

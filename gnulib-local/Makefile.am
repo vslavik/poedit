@@ -1,5 +1,5 @@
 ## Makefile for the gnulib-local directory of GNU gettext
-## Copyright (C) 2006-2008, 2010 Free Software Foundation, Inc.
+## Copyright (C) 2006-2008, 2010-2011 Free Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@ lib/gl_array_list.h.diff \
 lib/gl_linkedhash_list.h.diff \
 lib/glib.in.h \
 lib/glibconfig.in.h \
+lib/glib/README \
 lib/glib/ghash.c \
 lib/glib/ghash.in.h \
 lib/glib/glist.c \
@@ -68,6 +69,7 @@ lib/html-styled-ostream.oo.c \
 lib/html-styled-ostream.oo.h \
 lib/iconv-ostream.oo.c \
 lib/iconv-ostream.oo.h \
+lib/libcroco/README \
 lib/libcroco/cr-additional-sel.c \
 lib/libcroco/cr-additional-sel.h \
 lib/libcroco/cr-attr-sel.c \
@@ -129,6 +131,7 @@ lib/libxml/HTMLparser.c \
 lib/libxml/HTMLparser.in.h \
 lib/libxml/HTMLtree.c \
 lib/libxml/HTMLtree.in.h \
+lib/libxml/README \
 lib/libxml/SAX.c \
 lib/libxml/SAX2.c \
 lib/libxml/SAX2.in.h \
@@ -254,8 +257,6 @@ m4/libglib.m4 \
 m4/libxml.m4 \
 m4/java.m4 \
 m4/moo.m4 \
-m4/quotearg.m4.diff \
-m4/quote.m4.diff \
 m4/termcap.m4 \
 m4/terminfo.m4 \
 m4/term-ostream.m4 \
@@ -282,8 +283,6 @@ modules/memory-ostream \
 modules/moo \
 modules/moo-tests \
 modules/ostream \
-modules/quotearg.diff \
-modules/quote.diff \
 modules/regex.diff \
 modules/styled-ostream \
 modules/termcap \

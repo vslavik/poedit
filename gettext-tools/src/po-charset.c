@@ -1,5 +1,5 @@
 /* Charset handling while reading PO files.
-   Copyright (C) 2001-2007 Free Software Foundation, Inc.
+   Copyright (C) 2001-2007, 2010 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -527,7 +527,8 @@ Message conversion to user's charset might not work.\n"),
               /* Use iconv() to parse multibyte characters.  */
 #if HAVE_ICONV
               /* Avoid glibc-2.1 bug with EUC-KR.  */
-# if (__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) && !defined _LIBICONV_VERSION
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ <= 1) && !defined __UCLIBC__) \
+     && !defined _LIBICONV_VERSION
               if (strcmp (po_lex_charset, "EUC-KR") == 0)
                 po_lex_iconv = (iconv_t)(-1);
               else

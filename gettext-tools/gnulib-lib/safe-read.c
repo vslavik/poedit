@@ -1,6 +1,6 @@
 /* An interface to read and write that retries after interrupts.
 
-   Copyright (C) 1993-1994, 1998, 2002-2006, 2009-2010 Free Software
+   Copyright (C) 1993-1994, 1998, 2002-2006, 2009-2013 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

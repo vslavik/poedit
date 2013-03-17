@@ -1,6 +1,6 @@
 /* copy-acl.c - copy access control list from one file to another file
 
-   Copyright (C) 2002-2003, 2005-2010 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,14 +38,14 @@
    Return -2 and set errno for an error relating to the source file.
    Return -1 and set errno for an error relating to the destination file.  */
 
-static int
+int
 qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
            int dest_desc, mode_t mode)
 {
 #if USE_ACL && HAVE_ACL_GET_FILE
   /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
-  /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
-# if MODE_INSIDE_ACL
+  /* Linux, FreeBSD, Mac OS X, IRIX, Tru64 */
+# if !HAVE_ACL_TYPE_EXTENDED
   /* Linux, FreeBSD, IRIX, Tru64 */
 
   acl_t acl;
@@ -87,7 +87,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
   else
     acl_free (acl);
 
-  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
+  if (!MODE_INSIDE_ACL || (mode & (S_ISUID | S_ISGID | S_ISVTX)))
     {
       /* We did not call chmod so far, and either the mode and the ACL are
          separate or special bits are to be set which don't fit into ACLs.  */
@@ -115,24 +115,20 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     }
   return 0;
 
-# else /* !MODE_INSIDE_ACL */
-  /* MacOS X */
+# else /* HAVE_ACL_TYPE_EXTENDED */
+  /* Mac OS X */
 
-#  if !HAVE_ACL_TYPE_EXTENDED
-#   error Must have ACL_TYPE_EXTENDED
-#  endif
-
-  /* On MacOS X,  acl_get_file (name, ACL_TYPE_ACCESS)
-     and          acl_get_file (name, ACL_TYPE_DEFAULT)
+  /* On Mac OS X,  acl_get_file (name, ACL_TYPE_ACCESS)
+     and           acl_get_file (name, ACL_TYPE_DEFAULT)
      always return NULL / EINVAL.  You have to use
-                  acl_get_file (name, ACL_TYPE_EXTENDED)
-     or           acl_get_fd (open (name, ...))
+                   acl_get_file (name, ACL_TYPE_EXTENDED)
+     or            acl_get_fd (open (name, ...))
      to retrieve an ACL.
      On the other hand,
-                  acl_set_file (name, ACL_TYPE_ACCESS, acl)
-     and          acl_set_file (name, ACL_TYPE_DEFAULT, acl)
+                   acl_set_file (name, ACL_TYPE_ACCESS, acl)
+     and           acl_set_file (name, ACL_TYPE_DEFAULT, acl)
      have the same effect as
-                  acl_set_file (name, ACL_TYPE_EXTENDED, acl):
+                   acl_set_file (name, ACL_TYPE_EXTENDED, acl):
      Each of these calls sets the file's ACL.  */
 
   acl_t acl;
@@ -181,57 +177,20 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
 #elif USE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
 
-# if defined ACL_NO_TRIVIAL
-  /* Solaris 10 (newer version), which has additional API declared in
-     <sys/acl.h> (acl_t) and implemented in libsec (acl_set, acl_trivial,
-     acl_fromtext, ...).  */
-
-  int ret;
-  acl_t *aclp = NULL;
-  ret = (source_desc < 0
-         ? acl_get (src_name, ACL_NO_TRIVIAL, &aclp)
-         : facl_get (source_desc, ACL_NO_TRIVIAL, &aclp));
-  if (ret != 0 && errno != ENOSYS)
-    return -2;
-
-  ret = qset_acl (dst_name, dest_desc, mode);
-  if (ret != 0)
-    return -1;
-
-  if (aclp)
-    {
-      ret = (dest_desc < 0
-             ? acl_set (dst_name, aclp)
-             : facl_set (dest_desc, aclp));
-      if (ret != 0)
-        {
-          int saved_errno = errno;
-
-          acl_free (aclp);
-          errno = saved_errno;
-          return -1;
-        }
-      acl_free (aclp);
-    }
-
-  return 0;
-
-# else /* Solaris, Cygwin, general case */
-
   /* Solaris 2.5 through Solaris 10, Cygwin, and contemporaneous versions
      of Unixware.  The acl() call returns the access and default ACL both
      at once.  */
-#  ifdef ACE_GETACL
+# ifdef ACE_GETACL
   int ace_count;
   ace_t *ace_entries;
-#  endif
+# endif
   int count;
   aclent_t *entries;
   int did_chmod;
   int saved_errno;
   int ret;
 
-#  ifdef ACE_GETACL
+# ifdef ACE_GETACL
   /* Solaris also has a different variant of ACLs, used in ZFS and NFSv4
      file systems (whereas the other ones are used in UFS file systems).
      There is an API
@@ -276,15 +235,27 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
           return -2;
         }
 
-      if ((source_desc != -1
-           ? facl (source_desc, ACE_GETACL, ace_count, ace_entries)
-           : acl (src_name, ACE_GETACL, ace_count, ace_entries))
-          == ace_count)
+      ret = (source_desc != -1
+             ? facl (source_desc, ACE_GETACL, ace_count, ace_entries)
+             : acl (src_name, ACE_GETACL, ace_count, ace_entries));
+      if (ret < 0)
+        {
+          free (ace_entries);
+          if (errno == ENOSYS || errno == EINVAL)
+            {
+              ace_count = 0;
+              ace_entries = NULL;
+              break;
+            }
+          else
+            return -2;
+        }
+      if (ret == ace_count)
         break;
       /* Huh? The number of ACL entries changed since the last call.
          Repeat.  */
     }
-#  endif
+# endif
 
   for (;;)
     {
@@ -327,9 +298,9 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     }
 
   /* Is there an ACL of either kind?  */
-#  ifdef ACE_GETACL
+# ifdef ACE_GETACL
   if (ace_count == 0)
-#  endif
+# endif
     if (count == 0)
       return qset_acl (dst_name, dest_desc, mode);
 
@@ -358,7 +329,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
       if (ret < 0 && saved_errno == 0)
         {
           saved_errno = errno;
-          if ((errno == ENOSYS || errno == EOPNOTSUPP)
+          if ((errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
               && !acl_nontrivial (count, entries))
             saved_errno = 0;
         }
@@ -367,7 +338,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     }
   free (entries);
 
-#  ifdef ACE_GETACL
+# ifdef ACE_GETACL
   if (ace_count > 0)
     {
       ret = (dest_desc != -1
@@ -382,7 +353,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
         }
     }
   free (ace_entries);
-#  endif
+# endif
 
   if (MODE_INSIDE_ACL
       && did_chmod <= ((mode & (S_ISUID | S_ISGID | S_ISVTX)) ? 1 : 0))
@@ -404,83 +375,124 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     }
   return 0;
 
-# endif
-
 #elif USE_ACL && HAVE_GETACL /* HP-UX */
 
-  int count;
   struct acl_entry entries[NACLENTRIES];
+  int count;
+# if HAVE_ACLV_H
+  struct acl aclv_entries[NACLVENTRIES];
+  int aclv_count;
+# endif
+  int did_chmod;
+  int saved_errno;
   int ret;
 
-  for (;;)
+  count = (source_desc != -1
+           ? fgetacl (source_desc, NACLENTRIES, entries)
+           : getacl (src_name, NACLENTRIES, entries));
+
+  if (count < 0)
     {
-      count = (source_desc != -1
-               ? fgetacl (source_desc, 0, NULL)
-               : getacl (src_name, 0, NULL));
-
-      if (count < 0)
-        {
-          if (errno == ENOSYS || errno == EOPNOTSUPP)
-            {
-              count = 0;
-              break;
-            }
-          else
-            return -2;
-        }
-
-      if (count == 0)
-        break;
-
+      if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
+        count = 0;
+      else
+        return -2;
+    }
+  else if (count > 0)
+    {
       if (count > NACLENTRIES)
         /* If NACLENTRIES cannot be trusted, use dynamic memory allocation.  */
         abort ();
-
-      if ((source_desc != -1
-           ? fgetacl (source_desc, count, entries)
-           : getacl (src_name, count, entries))
-          == count)
-        break;
-      /* Huh? The number of ACL entries changed since the last call.
-         Repeat.  */
     }
+
+# if HAVE_ACLV_H
+  aclv_count = acl ((char *) src_name, ACL_GET, NACLVENTRIES, aclv_entries);
+
+  if (aclv_count < 0)
+    {
+      if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
+        count = 0;
+      else
+        return -2;
+    }
+  else if (aclv_count > 0)
+    {
+      if (aclv_count > NACLVENTRIES)
+        /* If NACLVENTRIES cannot be trusted, use dynamic memory allocation.  */
+        abort ();
+    }
+# endif
 
   if (count == 0)
-    return qset_acl (dst_name, dest_desc, mode);
+# if HAVE_ACLV_H
+    if (aclv_count == 0)
+# endif
+      return qset_acl (dst_name, dest_desc, mode);
 
-  ret = (dest_desc != -1
-         ? fsetacl (dest_desc, count, entries)
-         : setacl (dst_name, count, entries));
-  if (ret < 0)
+  did_chmod = 0; /* set to 1 once the mode bits in 0777 have been set */
+  saved_errno = 0; /* the first non-ignorable error code */
+
+  if (count > 0)
     {
-      int saved_errno = errno;
-
-      if (errno == ENOSYS || errno == EOPNOTSUPP)
+      ret = (dest_desc != -1
+             ? fsetacl (dest_desc, count, entries)
+             : setacl (dst_name, count, entries));
+      if (ret < 0 && saved_errno == 0)
         {
-          struct stat source_statbuf;
-
-          if ((source_desc != -1
-               ? fstat (source_desc, &source_statbuf)
-               : stat (src_name, &source_statbuf)) == 0)
+          saved_errno = errno;
+          if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
             {
-              if (!acl_nontrivial (count, entries, &source_statbuf))
-                return chmod_or_fchmod (dst_name, dest_desc, mode);
-            }
-          else
-            saved_errno = errno;
-        }
+              struct stat source_statbuf;
 
-      chmod_or_fchmod (dst_name, dest_desc, mode);
-      errno = saved_errno;
-      return -1;
+              if ((source_desc != -1
+                   ? fstat (source_desc, &source_statbuf)
+                   : stat (src_name, &source_statbuf)) == 0)
+                {
+                  if (!acl_nontrivial (count, entries, &source_statbuf))
+                    saved_errno = 0;
+                }
+              else
+                saved_errno = errno;
+            }
+        }
+      else
+        did_chmod = 1;
     }
 
-  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
+# if HAVE_ACLV_H
+  if (aclv_count > 0)
     {
-      /* We did not call chmod so far, and either the mode and the ACL are
-         separate or special bits are to be set which don't fit into ACLs.  */
+      ret = acl ((char *) dst_name, ACL_SET, aclv_count, aclv_entries);
+      if (ret < 0 && saved_errno == 0)
+        {
+          saved_errno = errno;
+          if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
+            {
+              if (!aclv_nontrivial (aclv_count, aclv_entries))
+                saved_errno = 0;
+            }
+        }
+      else
+        did_chmod = 1;
+    }
+# endif
 
-      return chmod_or_fchmod (dst_name, dest_desc, mode);
+  if (did_chmod <= ((mode & (S_ISUID | S_ISGID | S_ISVTX)) ? 1 : 0))
+    {
+      /* We did not call chmod so far, and special bits are to be set which
+         don't fit into ACLs.  */
+
+      if (chmod_or_fchmod (dst_name, dest_desc, mode) != 0)
+        {
+          if (saved_errno == 0)
+            saved_errno = errno;
+        }
+    }
+
+  if (saved_errno)
+    {
+      errno = saved_errno;
+      return -1;
     }
   return 0;
 
@@ -516,6 +528,56 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
   return 0;
 
+#elif USE_ACL && HAVE_ACLSORT /* NonStop Kernel */
+
+  struct acl entries[NACLENTRIES];
+  int count;
+  int ret;
+
+  count = acl ((char *) src_name, ACL_GET, NACLENTRIES, entries);
+
+  if (count < 0)
+    {
+      if (0)
+        count = 0;
+      else
+        return -2;
+    }
+  else if (count > 0)
+    {
+      if (count > NACLENTRIES)
+        /* If NACLENTRIES cannot be trusted, use dynamic memory allocation.  */
+        abort ();
+    }
+
+  if (count == 0)
+    return qset_acl (dst_name, dest_desc, mode);
+
+  ret = acl ((char *) dst_name, ACL_SET, count, entries);
+  if (ret < 0)
+    {
+      int saved_errno = errno;
+
+      if (0)
+        {
+          if (!acl_nontrivial (count, entries))
+            return chmod_or_fchmod (dst_name, dest_desc, mode);
+        }
+
+      chmod_or_fchmod (dst_name, dest_desc, mode);
+      errno = saved_errno;
+      return -1;
+    }
+
+  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
+    {
+      /* We did not call chmod so far, and either the mode and the ACL are
+         separate or special bits are to be set which don't fit into ACLs.  */
+
+      return chmod_or_fchmod (dst_name, dest_desc, mode);
+    }
+  return 0;
+
 #else
 
   return qset_acl (dst_name, dest_desc, mode);
@@ -531,7 +593,8 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
    If access control lists are not available, fchmod the target file to
    MODE.  Also sets the non-permission bits of the destination file
    (S_ISUID, S_ISGID, S_ISVTX) to those from MODE if any are set.
-   Return 0 if successful, otherwise output a diagnostic and return -1.  */
+   Return 0 if successful, otherwise output a diagnostic and return a
+   negative error code.  */
 
 int
 copy_acl (const char *src_name, int source_desc, const char *dst_name,
@@ -542,13 +605,14 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
     {
     case -2:
       error (0, errno, "%s", quote (src_name));
-      return -1;
+      break;
 
     case -1:
       error (0, errno, _("preserving permissions for %s"), quote (dst_name));
-      return -1;
+      break;
 
     default:
-      return 0;
+      break;
     }
+  return ret;
 }

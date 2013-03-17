@@ -1,5 +1,5 @@
 /* Copying of files.
-   Copyright (C) 2001-2003, 2006-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2007, 2009-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -41,6 +41,7 @@
 #include "full-write.h"
 #include "acl.h"
 #include "binary-io.h"
+#include "quote.h"
 #include "gettext.h"
 #include "xalloc.h"
 
@@ -53,9 +54,10 @@
 
 enum { IO_SIZE = 32 * 1024 };
 
-void
-copy_file_preserving (const char *src_filename, const char *dest_filename)
+int
+qcopy_file_preserving (const char *src_filename, const char *dest_filename)
 {
+  int err = 0;
   int src_fd;
   struct stat statbuf;
   int mode;
@@ -63,37 +65,58 @@ copy_file_preserving (const char *src_filename, const char *dest_filename)
   char *buf = xmalloc (IO_SIZE);
 
   src_fd = open (src_filename, O_RDONLY | O_BINARY);
-  if (src_fd < 0 || fstat (src_fd, &statbuf) < 0)
-    error (EXIT_FAILURE, errno, _("error while opening \"%s\" for reading"),
-           src_filename);
+  if (src_fd < 0)
+    {
+      err = GL_COPY_ERR_OPEN_READ;
+      goto error;
+    }
+  if (fstat (src_fd, &statbuf) < 0)
+    {
+      err = GL_COPY_ERR_OPEN_READ;
+      goto error_src;
+    }
 
   mode = statbuf.st_mode & 07777;
 
   dest_fd = open (dest_filename, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0600);
   if (dest_fd < 0)
-    error (EXIT_FAILURE, errno, _("cannot open backup file \"%s\" for writing"),
-           dest_filename);
+    {
+      err = GL_COPY_ERR_OPEN_BACKUP_WRITE;
+      goto error_src;
+    }
 
   /* Copy the file contents.  */
   for (;;)
     {
       size_t n_read = safe_read (src_fd, buf, IO_SIZE);
       if (n_read == SAFE_READ_ERROR)
-        error (EXIT_FAILURE, errno, _("error reading \"%s\""), src_filename);
+        {
+          err = GL_COPY_ERR_READ;
+          goto error_src_dest;
+        }
       if (n_read == 0)
         break;
 
       if (full_write (dest_fd, buf, n_read) < n_read)
-        error (EXIT_FAILURE, errno, _("error writing \"%s\""), dest_filename);
+        {
+          err = GL_COPY_ERR_WRITE;
+          goto error_src_dest;
+        }
     }
 
   free (buf);
 
 #if !USE_ACL
   if (close (dest_fd) < 0)
-    error (EXIT_FAILURE, errno, _("error writing \"%s\""), dest_filename);
+    {
+      err = GL_COPY_ERR_WRITE;
+      goto error_src;
+    }
   if (close (src_fd) < 0)
-    error (EXIT_FAILURE, errno, _("error after reading \"%s\""), src_filename);
+    {
+      err = GL_COPY_ERR_AFTER_READ;
+      goto error;
+    }
 #endif
 
   /* Preserve the access and modification times.  */
@@ -122,16 +145,78 @@ copy_file_preserving (const char *src_filename, const char *dest_filename)
 
   /* Preserve the access permissions.  */
 #if USE_ACL
-  if (copy_acl (src_filename, src_fd, dest_filename, dest_fd, mode))
-    exit (EXIT_FAILURE);
+  switch (qcopy_acl (src_filename, src_fd, dest_filename, dest_fd, mode))
+    {
+    case -2:
+      err = GL_COPY_ERR_GET_ACL;
+      goto error_src_dest;
+    case -1:
+      err = GL_COPY_ERR_SET_ACL;
+      goto error_src_dest;
+    }
 #else
   chmod (dest_filename, mode);
 #endif
 
 #if USE_ACL
   if (close (dest_fd) < 0)
-    error (EXIT_FAILURE, errno, _("error writing \"%s\""), dest_filename);
+    {
+      err = GL_COPY_ERR_WRITE;
+      goto error_src;
+    }
   if (close (src_fd) < 0)
-    error (EXIT_FAILURE, errno, _("error after reading \"%s\""), src_filename);
+    {
+      err = GL_COPY_ERR_AFTER_READ;
+      goto error;
+    }
 #endif
+
+  return 0;
+
+ error_src_dest:
+  close (dest_fd);
+ error_src:
+  close (src_fd);
+ error:
+  return err;
+}
+
+void
+copy_file_preserving (const char *src_filename, const char *dest_filename)
+{
+  switch (qcopy_file_preserving (src_filename, dest_filename))
+    {
+    case 0:
+      return;
+
+    case GL_COPY_ERR_OPEN_READ:
+      error (EXIT_FAILURE, errno, _("error while opening %s for reading"),
+             quote (src_filename));
+
+    case GL_COPY_ERR_OPEN_BACKUP_WRITE:
+      error (EXIT_FAILURE, errno, _("cannot open backup file %s for writing"),
+             quote (dest_filename));
+
+    case GL_COPY_ERR_READ:
+      error (EXIT_FAILURE, errno, _("error reading %s"),
+             quote (src_filename));
+
+    case GL_COPY_ERR_WRITE:
+      error (EXIT_FAILURE, errno, _("error writing %s"),
+             quote (dest_filename));
+
+    case GL_COPY_ERR_AFTER_READ:
+      error (EXIT_FAILURE, errno, _("error after reading %s"),
+             quote (src_filename));
+
+    case GL_COPY_ERR_GET_ACL:
+      error (EXIT_FAILURE, errno, "%s", quote (src_filename));
+
+    case GL_COPY_ERR_SET_ACL:
+      error (EXIT_FAILURE, errno, _("preserving permissions for %s"),
+             quote (dest_filename));
+
+    default:
+      abort ();
+    }
 }

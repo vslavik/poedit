@@ -1,8 +1,8 @@
 # Configure a more-standard replacement for <time.h>.
 
-# Copyright (C) 2000-2001, 2003-2007, 2009-2010 Free Software Foundation, Inc.
+# Copyright (C) 2000-2001, 2003-2007, 2009-2013 Free Software Foundation, Inc.
 
-# serial 2
+# serial 7
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -21,11 +21,11 @@ AC_DEFUN([gl_HEADER_TIME_H_BODY],
 [
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([gl_HEADER_TIME_H_DEFAULTS])
-  gl_CHECK_NEXT_HEADERS([time.h])
+  gl_NEXT_HEADERS([time.h])
   AC_REQUIRE([gl_CHECK_TYPE_STRUCT_TIMESPEC])
 ])
 
-dnl Define HAVE_STRUCT_TIMESPEC if `struct timespec' is declared
+dnl Check whether 'struct timespec' is declared
 dnl in time.h, sys/time.h, or pthread.h.
 
 AC_DEFUN([gl_CHECK_TYPE_STRUCT_TIMESPEC],
@@ -95,7 +95,7 @@ AC_DEFUN([gl_HEADER_TIME_H_DEFAULTS],
   GNULIB_TIMEGM=0;                       AC_SUBST([GNULIB_TIMEGM])
   GNULIB_TIME_R=0;                       AC_SUBST([GNULIB_TIME_R])
   dnl Assume proper GNU behavior unless another module says otherwise.
-  HAVE_LOCALTIME_R=1;                    AC_SUBST([HAVE_LOCALTIME_R])
+  HAVE_DECL_LOCALTIME_R=1;               AC_SUBST([HAVE_DECL_LOCALTIME_R])
   HAVE_NANOSLEEP=1;                      AC_SUBST([HAVE_NANOSLEEP])
   HAVE_STRPTIME=1;                       AC_SUBST([HAVE_STRPTIME])
   HAVE_TIMEGM=1;                         AC_SUBST([HAVE_TIMEGM])

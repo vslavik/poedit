@@ -1,21 +1,19 @@
 /* Provide relocatable packages.
-   Copyright (C) 2003-2006, 2008-2009 Free Software Foundation, Inc.
+   Copyright (C) 2003-2006, 2008-2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
-   This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU Library General Public License as published
-   by the Free Software Foundation; either version 2, or (at your option)
-   any later version.
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-   You should have received a copy of the GNU Library General Public
-   License along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
-   USA.  */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 
 /* Tell glibc's <stdio.h> to provide a prototype for getline().
@@ -25,6 +23,7 @@
 # define _GNU_SOURCE 1
 #endif
 
+#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
 /* Specification.  */
@@ -43,7 +42,7 @@
 # include "xalloc.h"
 #endif
 
-#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 #endif
@@ -70,8 +69,8 @@
    ISSLASH(C)           tests whether C is a directory separator character.
    IS_PATH_WITH_DIR(P)  tests whether P contains a directory specification.
  */
-#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
-  /* Win32, Cygwin, OS/2, DOS */
+#if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
+  /* Native Windows, OS/2, DOS */
 # define ISSLASH(C) ((C) == '/' || (C) == '\\')
 # define HAS_DEVICE(P) \
     ((((P)[0] >= 'A' && (P)[0] <= 'Z') || ((P)[0] >= 'a' && (P)[0] <= 'z')) \
@@ -84,6 +83,19 @@
 # define ISSLASH(C) ((C) == '/')
 # define IS_PATH_WITH_DIR(P) (strchr (P, '/') != NULL)
 # define FILE_SYSTEM_PREFIX_LEN(P) 0
+#endif
+
+/* Whether to enable the more costly support for relocatable libraries.
+   It allows libraries to be have been installed with a different original
+   prefix than the program.  But it is quite costly, especially on Cygwin
+   platforms, see below.  Therefore we enable it by default only on native
+   Windows platforms.  */
+#ifndef ENABLE_COSTLY_RELOCATABLE
+# if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+#  define ENABLE_COSTLY_RELOCATABLE 1
+# else
+#  define ENABLE_COSTLY_RELOCATABLE 0
+# endif
 #endif
 
 /* Original installation prefix.  */
@@ -155,7 +167,7 @@ set_relocation_prefix (const char *orig_prefix_arg, const char *curr_prefix_arg)
 #endif
 }
 
-#if !defined IN_LIBRARY || (defined PIC && defined INSTALLDIR)
+#if !defined IN_LIBRARY || (defined PIC && defined INSTALLDIR && ENABLE_COSTLY_RELOCATABLE)
 
 /* Convenience function:
    Computes the current installation prefix, based on the original
@@ -237,7 +249,7 @@ compute_curr_prefix (const char *orig_installprefix,
                often case-insensitive.  It's better to accept the comparison
                if the difference is only in case, rather than to fail.  */
 #if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
-            /* Win32, Cygwin, OS/2, DOS - case insignificant file system */
+            /* Native Windows, Cygwin, OS/2, DOS - case insignificant file system */
             if ((*rpi >= 'a' && *rpi <= 'z' ? *rpi - 'a' + 'A' : *rpi)
                 != (*cpi >= 'a' && *cpi <= 'z' ? *cpi - 'a' + 'A' : *cpi))
               break;
@@ -285,12 +297,17 @@ compute_curr_prefix (const char *orig_installprefix,
 
 #endif /* !IN_LIBRARY || PIC */
 
-#if defined PIC && defined INSTALLDIR
+#if defined PIC && defined INSTALLDIR && ENABLE_COSTLY_RELOCATABLE
 
 /* Full pathname of shared library, or NULL.  */
 static char *shared_library_fullname;
 
-#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+/* Native Windows only.
+   On Cygwin, it is better to use the Cygwin provided /proc interface, than
+   to use native Windows API and cygwin_conv_to_posix_path, because it
+   supports longer file names
+   (see <http://cygwin.com/ml/cygwin/2011-01/msg00410.html>).  */
 
 /* Determine the full pathname of the shared library when it is loaded.  */
 
@@ -312,37 +329,23 @@ DllMain (HINSTANCE module_handle, DWORD event, LPVOID reserved)
         /* Shouldn't happen.  */
         return FALSE;
 
-      {
-#if defined __CYGWIN__
-        /* On Cygwin, we need to convert paths coming from Win32 system calls
-           to the Unix-like slashified notation.  */
-        static char location_as_posix_path[2 * MAX_PATH];
-        /* There's no error return defined for cygwin_conv_to_posix_path.
-           See cygwin-api/func-cygwin-conv-to-posix-path.html.
-           Does it overflow the buffer of expected size MAX_PATH or does it
-           truncate the path?  I don't know.  Let's catch both.  */
-        cygwin_conv_to_posix_path (location, location_as_posix_path);
-        location_as_posix_path[MAX_PATH - 1] = '\0';
-        if (strlen (location_as_posix_path) >= MAX_PATH - 1)
-          /* A sign of buffer overflow or path truncation.  */
-          return FALSE;
-        shared_library_fullname = strdup (location_as_posix_path);
-#else
-        shared_library_fullname = strdup (location);
-#endif
-      }
+      shared_library_fullname = strdup (location);
     }
 
   return TRUE;
 }
 
-#else /* Unix except Cygwin */
+#else /* Unix */
 
 static void
 find_shared_library_fullname ()
 {
-#if defined __linux__ && __GLIBC__ >= 2
-  /* Linux has /proc/self/maps. glibc 2 has the getline() function.  */
+#if (defined __linux__ && (__GLIBC__ >= 2 || defined __UCLIBC__)) || defined __CYGWIN__
+  /* Linux has /proc/self/maps. glibc 2 and uClibc have the getline()
+     function.
+     Cygwin >= 1.5 has /proc/self/maps and the getline() function too.
+     But it is costly: ca. 0.3 ms on Linux, 3 ms on Cygwin 1.5, and 5 ms on
+     Cygwin 1.7.  */
   FILE *fp;
 
   /* Open the current process' maps file.  It describes one VMA per line.  */
@@ -387,15 +390,15 @@ find_shared_library_fullname ()
 #endif
 }
 
-#endif /* (WIN32 or Cygwin) / (Unix except Cygwin) */
+#endif /* Native Windows / Unix */
 
 /* Return the full pathname of the current shared library.
    Return NULL if unknown.
-   Guaranteed to work only on Linux, Cygwin and Woe32.  */
+   Guaranteed to work only on Linux, Cygwin, and native Windows.  */
 static char *
 get_shared_library_fullname ()
 {
-#if !(defined _WIN32 || defined __WIN32__ || defined __CYGWIN__)
+#if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
   static bool tried_find_shared_library_fullname;
   if (!tried_find_shared_library_fullname)
     {
@@ -415,7 +418,7 @@ get_shared_library_fullname ()
 const char *
 relocate (const char *pathname)
 {
-#if defined PIC && defined INSTALLDIR
+#if defined PIC && defined INSTALLDIR && ENABLE_COSTLY_RELOCATABLE
   static int initialized;
 
   /* Initialization code for a shared library.  */

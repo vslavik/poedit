@@ -1,5 +1,5 @@
 /* obstack.h - object stack macros
-   Copyright (C) 1988-1994, 1996-1999, 2003-2006, 2009-2010 Free Software
+   Copyright (C) 1988-1994, 1996-1999, 2003-2006, 2009-2013 Free Software
    Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -32,11 +32,11 @@ stack" is typically an immature growing object, while the rest of the
 stack is of mature, fixed size and fixed address objects.
 
 These routines grab large chunks of memory, using a function you
-supply, called `obstack_chunk_alloc'.  On occasion, they free chunks,
-by calling `obstack_chunk_free'.  You must define them and declare
+supply, called 'obstack_chunk_alloc'.  On occasion, they free chunks,
+by calling 'obstack_chunk_free'.  You must define them and declare
 them before using any obstack macros.
 
-Each independent stack is represented by a `struct obstack'.
+Each independent stack is represented by a 'struct obstack'.
 Each of the obstack macros expects a pointer to such a structure
 as the first argument.
 
@@ -93,7 +93,7 @@ Summary:
         Exactly one object is growing in an obstack at any one time.
         You can run one obstack per control block.
         You may have as many control blocks as you dare.
-        Because of the way we do it, you can `unwind' an obstack
+        Because of the way we do it, you can "unwind" an obstack
           back to a previous state. (You may remove objects much
           as you would with a stack.)
 */
@@ -122,7 +122,7 @@ Summary:
 
 #define __BPTR_ALIGN(B, P, A) ((B) + (((P) - (B) + (A)) & ~(A)))
 
-/* Similiar to _BPTR_ALIGN (B, P, A), except optimize the common case
+/* Similar to _BPTR_ALIGN (B, P, A), except optimize the common case
    where pointers can be converted to integers, aligned as integers,
    and converted back again.  If PTR_INT_TYPE is narrower than a
    pointer (e.g., the AS/400), play it safe and compute the alignment
@@ -159,7 +159,7 @@ struct obstack          /* control current object in current chunk */
     void *tempptr;
   } temp;                       /* Temporary for some macros.  */
   int   alignment_mask;         /* Mask of alignment for each object. */
-  /* These prototypes vary based on `use_extra_arg', and we use
+  /* These prototypes vary based on 'use_extra_arg', and we use
      casts to the prototypeless function type in all assignments,
      but having prototypes here quiets -Wstrict-prototypes.  */
   struct _obstack_chunk *(*chunkfun) (void *, long);
@@ -193,13 +193,13 @@ extern int _obstack_memory_used (struct obstack *);
 extern void __obstack_free (struct obstack *obstack, void *block);
 
 
-/* Error handler called when `obstack_chunk_alloc' failed to allocate
+/* Error handler called when 'obstack_chunk_alloc' failed to allocate
    more memory.  This can be set to a user defined function which
    should either abort gracefully or use longjump - but shouldn't
    return.  The default action is to print a message and abort.  */
 extern DLL_VARIABLE void (*obstack_alloc_failed_handler) (void);
 
-/* Exit value used when `print_and_abort' is used.  */
+/* Exit value used when 'print_and_abort' is used.  */
 extern DLL_VARIABLE int obstack_exit_failure;
 
 /* Pointer to beginning of object being allocated or to be allocated next.
@@ -253,7 +253,7 @@ extern DLL_VARIABLE int obstack_exit_failure;
 
 #define obstack_memory_used(h) _obstack_memory_used (h)
 
-#if defined __GNUC__ && defined __STDC__ && __STDC__
+#if defined __GNUC__
 /* NextStep 2.0 cc is really gcc 1.93 but it defines __GNUC__ = 2 and
    does not implement __extension__.  But that compiler doesn't define
    __GNUC_MINOR__.  */
@@ -264,7 +264,7 @@ extern DLL_VARIABLE int obstack_exit_failure;
 /* For GNU C, if not -traditional,
    we can define these macros to compute all args only once
    without using a global variable.
-   Also, we can avoid using the `temp' slot, to make faster code.  */
+   Also, we can avoid using the 'temp' slot, to make faster code.  */
 
 # define obstack_object_size(OBSTACK)                                   \
   __extension__                                                         \
@@ -405,7 +405,7 @@ __extension__                                                           \
      __o->next_free = __o->object_base = (char *)__obj;                 \
    else (__obstack_free) (__o, __obj); })
 
-#else /* not __GNUC__ or not __STDC__ */
+#else /* not __GNUC__ */
 
 # define obstack_object_size(h) \
  (unsigned) ((h)->next_free - (h)->object_base)
@@ -503,7 +503,7 @@ __extension__                                                           \
             = (h)->temp.tempint + (char *) (h)->chunk)                  \
    : (((__obstack_free) ((h), (h)->temp.tempint + (char *) (h)->chunk), 0), 0)))
 
-#endif /* not __GNUC__ or not __STDC__ */
+#endif /* not __GNUC__ */
 
 #ifdef __cplusplus
 }       /* C++ */

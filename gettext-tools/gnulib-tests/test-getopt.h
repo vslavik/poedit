@@ -1,5 +1,5 @@
 /* Test of command line argument processing.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 /* The glibc/gnulib implementation of getopt supports setting optind =
    0, but not all other implementations do.  This matters for getopt.
    But for getopt_long, we require GNU compatibility.  */
-#if defined __GETOPT_PREFIX || (__GLIBC__ >= 2)
+#if defined __GETOPT_PREFIX || (__GLIBC__ >= 2 && !defined __UCLIBC__)
 # define OPTIND_MIN 0
 #elif HAVE_DECL_OPTRESET
 # define OPTIND_MIN (optreset = 1)
@@ -1187,7 +1187,7 @@ test_getopt (void)
       ASSERT (q_value == NULL);
       ASSERT (non_options_count == 0);
       ASSERT (unrecognized == 0);
-      ASSERT (optind = 1);
+      ASSERT (optind == 1);
       ASSERT (!output);
     }
 #endif /* GNULIB_TEST_GETOPT_GNU */
@@ -1364,6 +1364,28 @@ test_getopt (void)
       ASSERT (unrecognized == 'p');
       ASSERT (optind == 3);
       ASSERT (!output);
+    }
+
+  /* Check that 'W' does not dump core:
+     http://sourceware.org/bugzilla/show_bug.cgi?id=12922
+     Technically, POSIX says the presence of ';' in the opt-string
+     gives unspecified behavior, so we only test this when GNU compliance
+     is desired.  */
+  for (start = OPTIND_MIN; start <= 1; start++)
+    {
+      int argc = 0;
+      const char *argv[10];
+      int pos = ftell (stderr);
+
+      argv[argc++] = "program";
+      argv[argc++] = "-W";
+      argv[argc++] = "dummy";
+      argv[argc] = NULL;
+      optind = start;
+      opterr = 1;
+      ASSERT (getopt (argc, (char **) argv, "W;") == 'W');
+      ASSERT (ftell (stderr) == pos);
+      ASSERT (optind == 2);
     }
 #endif /* GNULIB_TEST_GETOPT_GNU */
 }

@@ -1,5 +1,5 @@
 /* Copying of files.
-   Copyright (C) 2001-2003, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2009-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,26 @@
 extern "C" {
 #endif
 
+
+/* Error codes returned by qcopy_file_preserving.  */
+enum
+{
+  GL_COPY_ERR_OPEN_READ = -1,
+  GL_COPY_ERR_OPEN_BACKUP_WRITE = -2,
+  GL_COPY_ERR_READ = -3,
+  GL_COPY_ERR_WRITE = -4,
+  GL_COPY_ERR_AFTER_READ = -5,
+  GL_COPY_ERR_GET_ACL = -6,
+  GL_COPY_ERR_SET_ACL = -7
+};
+
+/* Copy a regular file: from src_filename to dest_filename.
+   The destination file is assumed to be a backup file.
+   Modification times, owner, group and access permissions are preserved as
+   far as possible.
+   Return 0 if successful, otherwise set errno and return one of the error
+   codes above.  */
+extern int qcopy_file_preserving (const char *src_filename, const char *dest_filename);
 
 /* Copy a regular file: from src_filename to dest_filename.
    The destination file is assumed to be a backup file.

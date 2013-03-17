@@ -19,10 +19,10 @@ lib_LTLIBRARIES = libgettextlib.la
 # Need @LTLIBINTL@ because many source files use gettext().
 # Need @LTLIBICONV@ because linebreak.c and striconv.c use iconv().
 # Need @LIB_ACL@ because copy-file.c uses acl.h.
-# Need @LTLIBC@ for -no-undefined to work on many platforms.
-lib_LDFLAGS += \
-  -release @VERSION@ \
-  $(LTLIBUNISTRING) @LTLIBINTL@ @LTLIBICONV@ @LIB_ACL@ @LTLIBC@ @LTNOUNDEF@
+# As of 2010-10-04, these are all added by gnulib-tool automatically.
+#lib_LDFLAGS += $(LTLIBUNISTRING) @LTLIBINTL@ @LTLIBICONV@ @LIB_ACL@
+
+lib_LDFLAGS += -release @VERSION@
 
 # Tell the mingw or Cygwin linker which symbols to export.
 if WOE32DLL

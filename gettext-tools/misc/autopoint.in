@@ -297,7 +297,7 @@ case "$ver" in
   0.15 | \
   0.16 | 0.16.1 | \
   0.17 | \
-  0.18 | 0.18.1 )
+  0.18 | 0.18.1 | 0.18.2 )
     ;;
   *)
     func_fatal_error "The AM_GNU_GETTEXT_VERSION declaration in your $configure_in
@@ -387,10 +387,15 @@ mkdir "$work_dir" || {
 # -------+-----------------------------+--------------------+
 
 case "@ARCHIVE_FORMAT@" in
-  dir)
-    # The archive of different versions is very large, but using it does not
-    # require special tools.
-    gzip -d -c < "$gettext_dir/archive.dir.tar.gz" | (cd "$work_dir" && tar xf - "gettext-$ver")
+  dir*)
+    # The archive of different versions is very large (unless xz compression is
+    # used), but using it does not require special tools.
+    case "@ARCHIVE_FORMAT@" in
+      dirgz) gzip -d -c < "$gettext_dir/archive.dir.tar.gz" ;;
+      dirbz2) bzip2 -d -c < "$gettext_dir/archive.dir.tar.bz2" ;;
+      dirxz) xz -d -c < "$gettext_dir/archive.dir.tar.xz" ;;
+    esac \
+      | (cd "$work_dir" && tar xf - "gettext-$ver")
     if test `find "$work_dir" -type f -print | wc -l` = 0; then
       rm -rf "$work_dir"
       func_fatal_error "infrastructure files for version $ver not found; this is autopoint from GNU $package $version"

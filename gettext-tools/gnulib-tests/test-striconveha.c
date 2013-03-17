@@ -1,5 +1,5 @@
 /* Test of character set conversion with error handling and autodetection.
-   Copyright (C) 2007-2010 Free Software Foundation, Inc.
+   Copyright (C) 2007-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -401,7 +401,7 @@ main ()
     }
 # endif
 
-# if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
+# if (((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2) && !defined __UCLIBC__) || _LIBICONV_VERSION >= 0x0105
   /* Test conversion from UTF-8 to ISO-8859-1 with transliteration.  */
   for (h = 0; h < SIZEOF (handlers); h++)
     {
@@ -577,7 +577,7 @@ main ()
     }
 # endif
 
-# if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
+# if (((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2) && !defined __UCLIBC__) || _LIBICONV_VERSION >= 0x0105
   /* Test conversion from UTF-8 to ISO-8859-1 with transliteration.  */
   for (h = 0; h < SIZEOF (handlers); h++)
     {

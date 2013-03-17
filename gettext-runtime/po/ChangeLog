@@ -1,3 +1,69 @@
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-0.18.2 released.
+
+2012-12-07  Bruno Haible  <bruno@clisp.org>
+
+	* cs.po: Update from Marek Černocký <marek@manet.cz>.
+	* gl.po: Update from Leandro Regueiro <leandro.regueiro@gmail.com>.
+	* hr.po: Update from Tomislav Krznar <tomislav.krznar@gmail.com>.
+	* sr.po: Update from Мирослав Николић <miroslavnikolic@rocketmail.com>.
+	* uk.po: Update from Yuri Chornoivan <yurchor@ukr.net>.
+	* vi.po: Update from Trần Ngọc Quân <vnwildman@gmail.com>.
+	* LINGUAS: Add hr.
+
+2012-07-08  Bruno Haible  <bruno@clisp.org>
+
+	* hr.po: New file, from Tomislav Krznar <tomislav.krznar@gmail.com>.
+
+2012-02-19  Bruno Haible  <bruno@clisp.org>
+
+	Rules.quot: Reenable use of build gettext tools in gettext package.
+	* Rules-quot (.insert-header.po-update-en): Augment PATH in the
+	gettext-tools package.
+
+2011-08-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Makefile.in.in: fix make -q problem
+	* build-aux/po/Makefile.in.in (check-macro-version): Remove this
+	rule, since there's no file named 'check-macro-version' and its
+	use as a file breaks make -q.
+	(all): Don't depend on check-macro-version.
+	(CHECK_MACRO_VERSION): New macro.
+	(stamp-po): Use it.
+
+2011-01-18  Bruno Haible  <bruno@clisp.org>
+
+	* da.po: Update from Keld Simonsen <keld@keldix.com>.
+	* it.po: Update from Marco Colombo <m.colombo@ed.ac.uk>.
+	* sl.po: Update from Primoz Peterlin <primozz.peterlin@gmail.com>.
+
+2010-10-10  Bruno Haible  <bruno@clisp.org>
+
+	* bg.po: Update from Roumen Petrov <transl@roumenpetrov.info>.
+
+2010-08-15  Bruno Haible  <bruno@clisp.org>
+
+	* fi.po: Update from Jorma Karvonen <karvonen.jorma@gmail.com>.
+
+2010-07-27  Bruno Haible  <bruno@clisp.org>
+
+	* fr.po: Update from Christophe Combelles <ccomb@free.fr>.
+
+2010-07-11  Bruno Haible  <bruno@clisp.org>
+
+	* zh_CN.po: Update from Aron Xu <happyaron.xu@gmail.com>.
+
+2010-07-02  Bruno Haible  <bruno@clisp.org>
+
+	* nl.po: Update from Benno Schulenberg <benno@vertaalt.nl>.
+
+2010-06-12  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.in.in ($(DOMAIN).pot-update): When GNU find is available,
+	avoid grepping through monster files.
+	Reported by Jim Meyering <jim@meyering.net>.
+
 2010-06-04  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.18.1 released.

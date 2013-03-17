@@ -1,7 +1,7 @@
 # acl.m4 - check for access control list (ACL) primitives
-# serial 9
+# serial 15
 
-# Copyright (C) 2002, 2004-2010 Free Software Foundation, Inc.
+# Copyright (C) 2002, 2004-2013 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -16,14 +16,13 @@ AC_DEFUN([gl_FUNC_ACL],
 
   LIB_ACL=
   use_acl=0
-  AC_REQUIRE([AC_C_INLINE])
   if test "x$enable_acl" != "xno"; then
     dnl On all platforms, the ACL related API is declared in <sys/acl.h>.
     AC_CHECK_HEADERS([sys/acl.h])
     if test $ac_cv_header_sys_acl_h = yes; then
       ac_save_LIBS=$LIBS
 
-      dnl Test for POSIX-draft-like API (Linux, FreeBSD, MacOS X, IRIX, Tru64).
+      dnl Test for POSIX-draft-like API (Linux, FreeBSD, Mac OS X, IRIX, Tru64).
       dnl -lacl is needed on Linux, -lpacl is needed on OSF/1.
       if test $use_acl = 0; then
         AC_SEARCH_LIBS([acl_get_file], [acl pacl],
@@ -45,23 +44,23 @@ AC_DEFUN([gl_FUNC_ACL],
              AC_REPLACE_FUNCS([acl_entries])
              AC_CACHE_CHECK([for ACL_FIRST_ENTRY],
                [gl_cv_acl_ACL_FIRST_ENTRY],
-               [AC_COMPILE_IFELSE(
+               [AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
 [[#include <sys/types.h>
 #include <sys/acl.h>
-int type = ACL_FIRST_ENTRY;]],
+int type = ACL_FIRST_ENTRY;]])],
                   [gl_cv_acl_ACL_FIRST_ENTRY=yes],
                   [gl_cv_acl_ACL_FIRST_ENTRY=no])])
              if test $gl_cv_acl_ACL_FIRST_ENTRY = yes; then
                AC_DEFINE([HAVE_ACL_FIRST_ENTRY], [1],
                  [Define to 1 if the constant ACL_FIRST_ENTRY exists.])
              fi
-             dnl On MacOS X, other types of ACLs are supported.
+             dnl On Mac OS X, other types of ACLs are supported.
              AC_CACHE_CHECK([for ACL_TYPE_EXTENDED],
                [gl_cv_acl_ACL_TYPE_EXTENDED],
-               [AC_COMPILE_IFELSE(
+               [AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
 [[#include <sys/types.h>
 #include <sys/acl.h>
-int type = ACL_TYPE_EXTENDED;]],
+int type = ACL_TYPE_EXTENDED;]])],
                   [gl_cv_acl_ACL_TYPE_EXTENDED=yes],
                   [gl_cv_acl_ACL_TYPE_EXTENDED=no])])
              if test $gl_cv_acl_ACL_TYPE_EXTENDED = yes; then
@@ -76,8 +75,8 @@ int type = ACL_TYPE_EXTENDED;]],
 
       dnl Test for Solaris API (Solaris, Cygwin).
       if test $use_acl = 0; then
-        AC_CHECK_FUNCS([acl])
-        if test $ac_cv_func_acl = yes; then
+        AC_CHECK_FUNCS([facl])
+        if test $ac_cv_func_facl = yes; then
           AC_SEARCH_LIBS([acl_trivial], [sec],
             [if test "$ac_cv_search_acl_trivial" != "none required"; then
                LIB_ACL=$ac_cv_search_acl_trivial
@@ -89,11 +88,13 @@ int type = ACL_TYPE_EXTENDED;]],
       fi
 
       dnl Test for HP-UX API.
-      if test $use_acl = 0 || test "$ac_cv_func_acl" = yes; then
+      if test $use_acl = 0; then
         AC_CHECK_FUNCS([getacl])
         if test $ac_cv_func_getacl = yes; then
           use_acl=1
         fi
+        dnl Test for HP-UX 11.11 API.
+        AC_CHECK_HEADERS([aclv.h], [], [], [#include <sys/types.h>])
       fi
 
       dnl Test for AIX API (AIX 5.3 or newer).
@@ -108,6 +109,14 @@ int type = ACL_TYPE_EXTENDED;]],
       if test $use_acl = 0 || test "$ac_cv_func_aclx_get" = yes; then
         AC_CHECK_FUNCS([statacl])
         if test $ac_cv_func_statacl = yes; then
+          use_acl=1
+        fi
+      fi
+
+      dnl Test for NonStop Kernel API.
+      if test $use_acl = 0; then
+        AC_CHECK_FUNCS([aclsort])
+        if test $ac_cv_func_aclsort = yes; then
           use_acl=1
         fi
       fi
@@ -130,7 +139,7 @@ int type = ACL_TYPE_EXTENDED;]],
 
 # gl_ACL_GET_FILE(IF-WORKS, IF-NOT)
 # -------------------------------------
-# If `acl_get_file' works (does not have a particular bug),
+# If 'acl_get_file' works (does not have a particular bug),
 # run IF-WORKS, otherwise, IF-NOT.
 # This tests for a Darwin 8.7.0 bug, whereby acl_get_file returns NULL,
 # but sets errno = ENOENT for an existing file or directory.
@@ -143,8 +152,10 @@ AC_DEFUN([gl_ACL_GET_FILE],
            #include <sys/acl.h>
            #include <errno.h>
           ]],
-          [[return !! (!acl_get_file (".", ACL_TYPE_ACCESS)
-                       && errno == ENOENT);]])],
+          [[if (!acl_get_file (".", ACL_TYPE_ACCESS) && errno == ENOENT)
+              return 1;
+            return 0;
+          ]])],
        [gl_cv_func_working_acl_get_file=yes],
        [gl_cv_func_working_acl_get_file=no],
        [gl_cv_func_working_acl_get_file=cross-compiling])])

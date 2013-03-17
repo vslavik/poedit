@@ -1,5 +1,5 @@
 /* Test of filtering of data through a subprocess.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2009.
 
    This program is free software: you can redistribute it and/or modify
@@ -26,8 +26,9 @@
 #include "macros.h"
 
 
-/* Pipe a text file through 'tr a-z A-Z', which converts ASCII characters from
-   lower case to upper case.  */
+/* Pipe a text file through 'LC_ALL=C tr "[a-z]" "[A-Z]"', or equivalently,
+   'tr "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ"', which
+   converts ASCII characters from lower case to upper case.  */
 
 struct locals
 {
@@ -119,8 +120,8 @@ main (int argc, char *argv[])
     l.nread = 0;
 
     argv[0] = tr_program;
-    argv[1] = "a-z";
-    argv[2] = "A-Z";
+    argv[1] = "abcdefghijklmnopqrstuvwxyz";
+    argv[2] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     argv[3] = NULL;
 
     result = pipe_filter_ii_execute ("tr", tr_program, argv, false, true,

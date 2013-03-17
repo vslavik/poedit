@@ -1,6 +1,6 @@
 /* Provide gettimeofday for systems that don't have it or for which it's broken.
 
-   Copyright (C) 2001-2003, 2005-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2007, 2009-2013 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -13,8 +13,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 /* written by Jim Meyering */
 
@@ -40,10 +39,10 @@
 static struct tm tm_zero_buffer;
 static struct tm *localtime_buffer_addr = &tm_zero_buffer;
 
-#undef localtime
+# undef localtime
 extern struct tm *localtime (time_t const *);
 
-#undef gmtime
+# undef gmtime
 extern struct tm *gmtime (time_t const *);
 
 /* This is a wrapper for localtime.  It is used only on systems for which
@@ -79,7 +78,7 @@ rpl_gmtime (time_t const *timep)
 
 #if TZSET_CLOBBERS_LOCALTIME
 
-#undef tzset
+# undef tzset
 extern void tzset (void);
 
 /* This is a wrapper for tzset, for systems on which tzset may clobber
@@ -110,7 +109,18 @@ gettimeofday (struct timeval *restrict tv, void *restrict tz)
   struct tm save = *localtime_buffer_addr;
 # endif
 
+# if defined timeval /* 'struct timeval' overridden by gnulib?  */
+#  undef timeval
+  struct timeval otv;
+  int result = gettimeofday (&otv, (struct timezone *) tz);
+  if (result == 0)
+    {
+      tv->tv_sec = otv.tv_sec;
+      tv->tv_usec = otv.tv_usec;
+    }
+# else
   int result = gettimeofday (tv, (struct timezone *) tz);
+# endif
 
 # if GETTIMEOFDAY_CLOBBERS_LOCALTIME
   *localtime_buffer_addr = save;

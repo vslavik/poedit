@@ -1,5 +1,5 @@
 /* Reading PO files, abstract class.
-   Copyright (C) 1995-1996, 1998, 2000-2003, 2005-2006, 2008-2009 Free Software Foundation, Inc.
+   Copyright (C) 1995-1996, 1998, 2000-2003, 2005-2006, 2008-2009, 2012 Free Software Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
@@ -112,7 +112,7 @@ struct abstract_catalog_reader_class_ty
 
 /* This next structure defines the base class passed to the methods.
    Derived methods will often need to cast their first argument before
-   using it (this corresponds to the implicit ``this'' argument in C++).
+   using it (this corresponds to the implicit 'this' argument in C++).
 
    When declaring derived classes, use the ABSTRACT_CATALOG_READER_TY define
    at the start of the structure, to declare inherited instance variables,

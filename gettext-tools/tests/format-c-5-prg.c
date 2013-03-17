@@ -1,5 +1,5 @@
 /* Test program, used by the format-c-5 test.
-   Copyright (C) 2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006, 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #include "xsetenv.h"
 
 /* For %Id to work, we need the real setlocale(), not the fake one. */
-#if !(__GLIBC__ >= 2)
+#if !(__GLIBC__ >= 2 && !defined __UCLIBC__)
 # include "setlocale.c"
 #endif
 
@@ -55,7 +55,7 @@ main (int argc, char *argv[])
 
   s = gettext ("father of %d children");
   en = "father of %d children";
-#if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)
+#if (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) && !defined __UCLIBC__
   expected_translation = "Vater von %Id Kindern";
   expected_result = "Vater von \xdb\xb5 Kindern";
 #else

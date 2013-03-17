@@ -1,6 +1,6 @@
 /* Like <fcntl.h>, but with non-working flags defined to 0.
 
-   Copyright (C) 2006-2010 Free Software Foundation, Inc.
+   Copyright (C) 2006-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,12 +20,21 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 #if defined __need_system_fcntl_h
 /* Special invocation convention.  */
 
+/* Needed before <sys/stat.h>.
+   May also define off_t to a 64-bit type on native Windows.  */
 #include <sys/types.h>
-#ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
+/* On some systems other than glibc, <sys/stat.h> is a prerequisite of
+   <fcntl.h>.  On glibc systems, we would like to avoid namespace pollution.
+   But on glibc systems, <fcntl.h> includes <sys/stat.h> inside an
+   extern "C" { ... } block, which leads to errors in C++ mode with the
+   overridden <sys/stat.h> from gnulib.  These errors are known to be gone
+   with g++ version >= 4.3.  */
+#if !(defined __GLIBC__ || defined __UCLIBC__) || (defined __cplusplus && defined GNULIB_NAMESPACE && !(__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)))
 # include <sys/stat.h>
 #endif
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@
@@ -33,20 +42,34 @@
 #else
 /* Normal invocation convention.  */
 
-#ifndef _GL_FCNTL_H
+#ifndef _@GUARD_PREFIX@_FCNTL_H
 
+/* Needed before <sys/stat.h>.
+   May also define off_t to a 64-bit type on native Windows.  */
 #include <sys/types.h>
-#ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
+/* On some systems other than glibc, <sys/stat.h> is a prerequisite of
+   <fcntl.h>.  On glibc systems, we would like to avoid namespace pollution.
+   But on glibc systems, <fcntl.h> includes <sys/stat.h> inside an
+   extern "C" { ... } block, which leads to errors in C++ mode with the
+   overridden <sys/stat.h> from gnulib.  These errors are known to be gone
+   with g++ version >= 4.3.  */
+#if !(defined __GLIBC__ || defined __UCLIBC__) || (defined __cplusplus && defined GNULIB_NAMESPACE && !(__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)))
 # include <sys/stat.h>
 #endif
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@
 
-#ifndef _GL_FCNTL_H
-#define _GL_FCNTL_H
+#ifndef _@GUARD_PREFIX@_FCNTL_H
+#define _@GUARD_PREFIX@_FCNTL_H
 
 #ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
 # include <unistd.h>
+#endif
+
+/* Native Windows platforms declare open(), creat() in <io.h>.  */
+#if (@GNULIB_OPEN@ || defined GNULIB_POSIXCHECK) \
+    && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+# include <io.h>
 #endif
 
 
@@ -94,7 +117,11 @@ _GL_CXXALIAS_RPL (open, int, (const char *filename, int flags, ...));
 # else
 _GL_CXXALIAS_SYS (open, int, (const char *filename, int flags, ...));
 # endif
+/* On HP-UX 11, in C++ mode, open() is defined as an inline function with a
+   default argument.  _GL_CXXALIASWARN does not work in this case.  */
+# if !defined __hpux
 _GL_CXXALIASWARN (open);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef open
 /* Assume open is always declared.  */
@@ -160,14 +187,17 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 /* Fix up the O_* macros.  */
 
 #if !defined O_DIRECT && defined O_DIRECTIO
-/* Tru64 spells it `O_DIRECTIO'.  */
+/* Tru64 spells it 'O_DIRECTIO'.  */
 # define O_DIRECT O_DIRECTIO
 #endif
 
 #if !defined O_CLOEXEC && defined O_NOINHERIT
-/* Mingw spells it `O_NOINHERIT'.  Intentionally leave it
-   undefined if not available.  */
+/* Mingw spells it 'O_NOINHERIT'.  */
 # define O_CLOEXEC O_NOINHERIT
+#endif
+
+#ifndef O_CLOEXEC
+# define O_CLOEXEC 0
 #endif
 
 #ifndef O_DIRECT
@@ -182,6 +212,14 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 # define O_DSYNC 0
 #endif
 
+#ifndef O_EXEC
+# define O_EXEC O_RDONLY /* This is often close enough in older systems.  */
+#endif
+
+#ifndef O_IGNORE_CTTY
+# define O_IGNORE_CTTY 0
+#endif
+
 #ifndef O_NDELAY
 # define O_NDELAY 0
 #endif
@@ -194,6 +232,19 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 # define O_NONBLOCK O_NDELAY
 #endif
 
+/* If the gnulib module 'nonblocking' is in use, guarantee a working non-zero
+   value of O_NONBLOCK.  Otherwise, O_NONBLOCK is defined (above) to O_NDELAY
+   or to 0 as fallback.  */
+#if @GNULIB_NONBLOCKING@
+# if O_NONBLOCK
+#  define GNULIB_defined_O_NONBLOCK 0
+# else
+#  define GNULIB_defined_O_NONBLOCK 1
+#  undef O_NONBLOCK
+#  define O_NONBLOCK 0x40000000
+# endif
+#endif
+
 #ifndef O_NOCTTY
 # define O_NOCTTY 0
 #endif
@@ -202,12 +253,24 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 # define O_NOFOLLOW 0
 #endif
 
+#ifndef O_NOLINK
+# define O_NOLINK 0
+#endif
+
 #ifndef O_NOLINKS
 # define O_NOLINKS 0
 #endif
 
+#ifndef O_NOTRANS
+# define O_NOTRANS 0
+#endif
+
 #ifndef O_RSYNC
 # define O_RSYNC 0
+#endif
+
+#ifndef O_SEARCH
+# define O_SEARCH O_RDONLY /* This is often close enough in older systems.  */
 #endif
 
 #ifndef O_SYNC
@@ -216,6 +279,11 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 
 #ifndef O_TTY_INIT
 # define O_TTY_INIT 0
+#endif
+
+#if ~O_ACCMODE & (O_RDONLY | O_WRONLY | O_RDWR | O_EXEC | O_SEARCH)
+# undef O_ACCMODE
+# define O_ACCMODE (O_RDONLY | O_WRONLY | O_RDWR | O_EXEC | O_SEARCH)
 #endif
 
 /* For systems that distinguish between text and binary I/O.
@@ -274,6 +342,6 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 #endif
 
 
-#endif /* _GL_FCNTL_H */
-#endif /* _GL_FCNTL_H */
+#endif /* _@GUARD_PREFIX@_FCNTL_H */
+#endif /* _@GUARD_PREFIX@_FCNTL_H */
 #endif

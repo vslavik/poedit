@@ -1,5 +1,5 @@
 /* xgettext C/C++/ObjectiveC backend.
-   Copyright (C) 1995-1998, 2000-2009 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2009, 2012 Free Software Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
@@ -880,16 +880,16 @@ phase7_getc ()
      between the user requesting a newline in the string (e.g. using
      "\n" or "\012") from the user failing to terminate the string or
      character constant.  The ANSI C standard says: 3.1.3.4 Character
-     Constants contain ``any character except single quote, backslash or
-     newline; or an escape sequence'' and 3.1.4 String Literals contain
-     ``any character except double quote, backslash or newline; or an
-     escape sequence''.
+     Constants contain "any character except single quote, backslash or
+     newline; or an escape sequence" and 3.1.4 String Literals contain
+     "any character except double quote, backslash or newline; or an
+     escape sequence".
 
      Most compilers give a fatal error in this case, however gcc is
      stupidly silent, even though this is a very common typo.  OK, so
-     gcc --pedantic will tell me, but that gripes about too much other
-     stuff.  Could I have a ``gcc -Wnewline-in-string'' option, or
-     better yet a ``gcc -fno-newline-in-string'' option, please?  Gcc is
+     "gcc --pedantic" will tell me, but that gripes about too much other
+     stuff.  Could I have a "gcc -Wnewline-in-string" option, or
+     better yet a "gcc -fno-newline-in-string" option, please?  Gcc is
      also inconsistent between string literals and character constants:
      you may not embed newlines in character constants; try it, you get
      a useful diagnostic.  --PMiller  */

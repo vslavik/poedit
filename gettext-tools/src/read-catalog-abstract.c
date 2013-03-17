@@ -31,6 +31,7 @@
 #include "xalloc.h"
 #include "xvasprintf.h"
 #include "po-xerror.h"
+#include "error.h"
 #include "gettext.h"
 
 /* Local variables.  */

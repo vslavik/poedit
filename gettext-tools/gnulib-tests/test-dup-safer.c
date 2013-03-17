@@ -1,5 +1,5 @@
 /* Test that dup_safer leaves standard fds alone.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,17 +29,16 @@
 #include "cloexec.h"
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Get declarations of the Win32 API functions.  */
+/* Get declarations of the native Windows API functions.  */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
+/* Get _get_osfhandle.  */
+# include "msvc-nothrow.h"
 #endif
 
 #if !O_BINARY
 # define setmode(f,m) zero ()
 static int zero (void) { return 0; }
-#endif
-#ifndef O_CLOEXEC
-# define O_CLOEXEC 0
 #endif
 
 /* This test intentionally closes stderr.  So, we arrange to have fd 10
@@ -57,7 +56,7 @@ static bool
 is_open (int fd)
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  /* On Win32, the initial state of unassigned standard file
+  /* On native Windows, the initial state of unassigned standard file
      descriptors is that they are open but point to an
      INVALID_HANDLE_VALUE, and there is no fcntl.  */
   return (HANDLE) _get_osfhandle (fd) != INVALID_HANDLE_VALUE;
@@ -74,7 +73,7 @@ static bool
 is_inheritable (int fd)
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  /* On Win32, the initial state of unassigned standard file
+  /* On native Windows, the initial state of unassigned standard file
      descriptors is that they are open but point to an
      INVALID_HANDLE_VALUE, and there is no fcntl.  */
   HANDLE h = (HANDLE) _get_osfhandle (fd);

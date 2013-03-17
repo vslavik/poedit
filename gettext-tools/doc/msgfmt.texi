@@ -265,6 +265,19 @@ Align strings to @var{number} bytes (default: 1).
 @c Currently the README mentions that this constant could be changed by
 @c the installer by changing the value in config.h.  Should this go away?
 
+@item --endianness=@var{byteorder}
+@opindex --endianness@r{, @code{msgfmt} option}
+Write out 32-bit numbers in the given byte order.  The possible values are
+@code{big} and @code{little}.  The default depends on the platform, namely
+on the endianness of the CPU.
+
+MO files of any endianness can be used on any platform.  When a MO file has
+an endianness other than the platform's one, the 32-bit numbers from the MO
+file are swapped at runtime.  The performance impact is negligible.
+
+This option can be useful to produce MO files that are independent of the
+platform.
+
 @item --no-hash
 @opindex --no-hash@r{, @code{msgfmt} option}
 Don't include a hash table in the binary file.  Lookup will be more expensive

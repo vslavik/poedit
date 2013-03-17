@@ -1,5 +1,5 @@
 /* Error handler for noninteractive utilities
-   Copyright (C) 1990-1998, 2000-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 1990-1998, 2000-2007, 2009-2013 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@
    function without parameters instead.  */
 void (*error_print_progname) (void);
 
-/* This variable is incremented each time `error' is called.  */
+/* This variable is incremented each time 'error' is called.  */
 unsigned int error_message_count;
 
 #ifdef _LIBC
@@ -65,7 +65,7 @@ unsigned int error_message_count;
 # include <limits.h>
 # include <libio/libioP.h>
 
-/* In GNU libc we want do not want to use the common name `error' directly.
+/* In GNU libc we want do not want to use the common name 'error' directly.
    Instead make it a weak alias.  */
 extern void __error (int status, int errnum, const char *message, ...)
      __attribute__ ((__format__ (__printf__, 3, 4)));
@@ -89,19 +89,25 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 # include <unistd.h>
 
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Get declarations of the Win32 API functions.  */
+/* Get declarations of the native Windows API functions.  */
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
+/* Get _get_osfhandle.  */
+#  include "msvc-nothrow.h"
 # endif
 
 /* The gnulib override of fcntl is not needed in this file.  */
 # undef fcntl
 
-# if !HAVE_DECL_STRERROR_R && STRERROR_R_CHAR_P
+# if !HAVE_DECL_STRERROR_R
 #  ifndef HAVE_DECL_STRERROR_R
 "this configure-time declaration test was not run"
 #  endif
+#  if STRERROR_R_CHAR_P
 char *strerror_r ();
+#  else
+int strerror_r ();
+#  endif
 # endif
 
 /* The calling program should define program_name and set it to the
@@ -115,13 +121,14 @@ extern char *program_name;
 
 #if !_LIBC
 /* Return non-zero if FD is open.  */
-static inline int
+static int
 is_open (int fd)
 {
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  /* On Win32: The initial state of unassigned standard file descriptors is
-     that they are open but point to an INVALID_HANDLE_VALUE.  There is no
-     fcntl, and the gnulib replacement fcntl does not support F_GETFL.  */
+  /* On native Windows: The initial state of unassigned standard file
+     descriptors is that they are open but point to an INVALID_HANDLE_VALUE.
+     There is no fcntl, and the gnulib replacement fcntl does not support
+     F_GETFL.  */
   return (HANDLE) _get_osfhandle (fd) != INVALID_HANDLE_VALUE;
 # else
 #  ifndef F_GETFL
@@ -132,7 +139,7 @@ is_open (int fd)
 }
 #endif
 
-static inline void
+static void
 flush_stdout (void)
 {
 #if !_LIBC

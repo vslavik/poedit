@@ -1,5 +1,5 @@
-# relocatable.m4 serial 15
-dnl Copyright (C) 2003, 2005-2007, 2009-2010 Free Software Foundation, Inc.
+# relocatable.m4 serial 18
+dnl Copyright (C) 2003, 2005-2007, 2009-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -14,9 +14,6 @@ AC_DEFUN([gl_RELOCATABLE],
 [
   AC_REQUIRE([gl_RELOCATABLE_BODY])
   gl_RELOCATABLE_LIBRARY
-  if test $RELOCATABLE = yes; then
-    AC_LIBOBJ([progreloc])
-  fi
   : ${RELOCATABLE_CONFIG_H_DIR='$(top_builddir)'}
   RELOCATABLE_SRC_DIR="\$(top_srcdir)/$gl_source_base"
   RELOCATABLE_BUILD_DIR="\$(top_builddir)/$gl_source_base"
@@ -36,6 +33,7 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
   AC_REQUIRE([gl_RELOCATABLE_LIBRARY_BODY])
   is_noop=no
   use_elf_origin_trick=no
+  use_wrapper=no
   if test $RELOCATABLE = yes; then
     # --enable-relocatable implies --disable-rpath
     enable_rpath=no
@@ -43,7 +41,7 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
     AC_CHECK_FUNCS([_NSGetExecutablePath])
     case "$host_os" in
       mingw*) is_noop=yes ;;
-      linux*) use_elf_origin_trick=yes ;;
+      linux* | kfreebsd*) use_elf_origin_trick=yes ;;
     esac
     if test $is_noop = yes; then
       RELOCATABLE_LDFLAGS=:
@@ -58,6 +56,7 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
         RELOCATABLE_LDFLAGS="\"$reloc_ldflags\" \"\$(host)\" \"\$(RELOCATABLE_LIBRARY_PATH)\""
         AC_SUBST([RELOCATABLE_LDFLAGS])
       else
+        use_wrapper=yes
         dnl Unfortunately we cannot define INSTALL_PROGRAM to a command
         dnl consisting of more than one word - libtool doesn't support this.
         dnl So we abuse the INSTALL_PROGRAM_ENV hook, originally meant for the
@@ -73,6 +72,7 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
   fi
   AM_CONDITIONAL([RELOCATABLE_VIA_LD],
     [test $is_noop = yes || test $use_elf_origin_trick = yes])
+  AM_CONDITIONAL([RELOCATABLE_VIA_WRAPPER], [test $use_wrapper = yes])
 
   dnl RELOCATABLE_LIBRARY_PATH can be set in configure.ac. Default is empty.
   AC_SUBST([RELOCATABLE_LIBRARY_PATH])

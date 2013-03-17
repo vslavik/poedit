@@ -1,5 +1,5 @@
 /* Provide relocatable programs.
-   Copyright (C) 2003-2010 Free Software Foundation, Inc.
+   Copyright (C) 2003-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,6 +16,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 
+#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
 /* Specification.  */
@@ -29,16 +30,16 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-/* Get declaration of _NSGetExecutablePath on MacOS X 10.2 or newer.  */
+/* Get declaration of _NSGetExecutablePath on Mac OS X 10.2 or newer.  */
 #if HAVE_MACH_O_DYLD_H
 # include <mach-o/dyld.h>
 #endif
 
-#if defined _WIN32 || defined __WIN32__
-# define WIN32_NATIVE
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+# define WINDOWS_NATIVE
 #endif
 
-#if defined WIN32_NATIVE || defined __CYGWIN__
+#ifdef WINDOWS_NATIVE
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 #endif
@@ -59,6 +60,10 @@
 # include "xalloc.h"
 #endif
 
+#ifndef O_EXEC
+# define O_EXEC O_RDONLY /* This is often close enough in older systems.  */
+#endif
+
 /* Declare canonicalize_file_name.
    The <stdlib.h> included above may be the system's one, not the gnulib
    one.  */
@@ -68,8 +73,8 @@ extern char * canonicalize_file_name (const char *name);
    ISSLASH(C)           tests whether C is a directory separator character.
    IS_PATH_WITH_DIR(P)  tests whether P contains a directory specification.
  */
-#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
-  /* Win32, Cygwin, OS/2, DOS */
+#if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
+  /* Native Windows, OS/2, DOS */
 # define ISSLASH(C) ((C) == '/' || (C) == '\\')
 # define HAS_DEVICE(P) \
     ((((P)[0] >= 'A' && (P)[0] <= 'Z') || ((P)[0] >= 'a' && (P)[0] <= 'z')) \
@@ -89,12 +94,15 @@ extern char * canonicalize_file_name (const char *name);
 #undef open
 #undef close
 
+/* Use the system functions, not the gnulib overrides in this file.  */
+#undef sprintf
+
 #undef set_program_name
 
 
 #if ENABLE_RELOCATABLE
 
-#ifdef __linux__
+#if defined __linux__ || defined __CYGWIN__
 /* File descriptor of the executable.
    (Only used to verify that we find the correct executable.)  */
 static int executable_fd = -1;
@@ -104,12 +112,13 @@ static int executable_fd = -1;
 static bool
 maybe_executable (const char *filename)
 {
-  /* Woe32 lacks the access() function, but Cygwin doesn't.  */
-#if !(defined WIN32_NATIVE && !defined __CYGWIN__)
+  /* The native Windows API lacks the access() function.  */
+#if !defined WINDOWS_NATIVE
   if (access (filename, X_OK) < 0)
     return false;
+#endif
 
-#ifdef __linux__
+#if defined __linux__ || defined __CYGWIN__
   if (executable_fd >= 0)
     {
       /* If we already have an executable_fd, check that filename points to
@@ -128,19 +137,23 @@ maybe_executable (const char *filename)
         }
     }
 #endif
-#endif
 
   return true;
 }
 
 /* Determine the full pathname of the current executable, freshly allocated.
    Return NULL if unknown.
-   Guaranteed to work on Linux and Woe32.  Likely to work on the other
-   Unixes (maybe except BeOS), under most conditions.  */
+   Guaranteed to work on Linux and native Windows.  Likely to work on the
+   other Unixes (maybe except BeOS), under most conditions.  */
 static char *
 find_executable (const char *argv0)
 {
-#if defined WIN32_NATIVE || defined __CYGWIN__
+#if defined WINDOWS_NATIVE
+  /* Native Windows only.
+     On Cygwin, it is better to use the Cygwin provided /proc interface, than
+     to use native Windows API and cygwin_conv_to_posix_path, because it
+     supports longer file names
+     (see <http://cygwin.com/ml/cygwin/2011-01/msg00410.html>).  */
   char location[MAX_PATH];
   int length = GetModuleFileName (NULL, location, sizeof (location));
   if (length < 0)
@@ -148,32 +161,9 @@ find_executable (const char *argv0)
   if (!IS_PATH_WITH_DIR (location))
     /* Shouldn't happen.  */
     return NULL;
-  {
-#if defined __CYGWIN__
-    /* cygwin-1.5.13 (2005-03-01) or newer would also allow a Linux-like
-       implementation: readlink of "/proc/self/exe".  But using the
-       result of the Win32 system call is simpler and is consistent with the
-       code in relocatable.c.  */
-    /* On Cygwin, we need to convert paths coming from Win32 system calls
-       to the Unix-like slashified notation.  */
-    static char location_as_posix_path[2 * MAX_PATH];
-    /* There's no error return defined for cygwin_conv_to_posix_path.
-       See cygwin-api/func-cygwin-conv-to-posix-path.html.
-       Does it overflow the buffer of expected size MAX_PATH or does it
-       truncate the path?  I don't know.  Let's catch both.  */
-    cygwin_conv_to_posix_path (location, location_as_posix_path);
-    location_as_posix_path[MAX_PATH - 1] = '\0';
-    if (strlen (location_as_posix_path) >= MAX_PATH - 1)
-      /* A sign of buffer overflow or path truncation.  */
-      return NULL;
-    /* Call canonicalize_file_name, because Cygwin supports symbolic links.  */
-    return canonicalize_file_name (location_as_posix_path);
-#else
-    return xstrdup (location);
-#endif
-  }
-#else /* Unix && !Cygwin */
-#ifdef __linux__
+  return xstrdup (location);
+#else /* Unix */
+# ifdef __linux__
   /* The executable is accessible as /proc/<pid>/exe.  In newer Linux
      versions, also as /proc/self/exe.  Linux >= 2.1 provides a symlink
      to the true pathname; older Linux versions give only device and ino,
@@ -185,7 +175,7 @@ find_executable (const char *argv0)
     if (link != NULL && link[0] != '[')
       return link;
     if (executable_fd < 0)
-      executable_fd = open ("/proc/self/exe", O_RDONLY, 0);
+      executable_fd = open ("/proc/self/exe", O_EXEC, 0);
 
     {
       char buf[6+10+5];
@@ -194,12 +184,25 @@ find_executable (const char *argv0)
       if (link != NULL && link[0] != '[')
         return link;
       if (executable_fd < 0)
-        executable_fd = open (buf, O_RDONLY, 0);
+        executable_fd = open (buf, O_EXEC, 0);
     }
   }
-#endif
-#if HAVE_MACH_O_DYLD_H && HAVE__NSGETEXECUTABLEPATH
-  /* On MacOS X 10.2 or newer, the function
+# endif
+# ifdef __CYGWIN__
+  /* The executable is accessible as /proc/<pid>/exe, at least in
+     Cygwin >= 1.5.  */
+  {
+    char *link;
+
+    link = xreadlink ("/proc/self/exe");
+    if (link != NULL)
+      return link;
+    if (executable_fd < 0)
+      executable_fd = open ("/proc/self/exe", O_EXEC, 0);
+  }
+# endif
+# if HAVE_MACH_O_DYLD_H && HAVE__NSGETEXECUTABLEPATH
+  /* On Mac OS X 10.2 or newer, the function
        int _NSGetExecutablePath (char *buf, uint32_t *bufsize);
      can be used to retrieve the executable's full path.  */
   char location[4096];
@@ -207,7 +210,7 @@ find_executable (const char *argv0)
   if (_NSGetExecutablePath (location, &length) == 0
       && location[0] == '/')
     return canonicalize_file_name (location);
-#endif
+# endif
   /* Guess the executable's full path.  We assume the executable has been
      called via execlp() or execvp() with properly set up argv[0].  The
      login(1) convention to add a '-' prefix to argv[0] is not supported.  */
@@ -248,10 +251,10 @@ find_executable (const char *argv0)
                 /* We have a path item at p, of length p_len.
                    Now concatenate the path item and argv0.  */
                 concat_name = (char *) xmalloc (p_len + strlen (argv0) + 2);
-#ifdef NO_XMALLOC
+# ifdef NO_XMALLOC
                 if (concat_name == NULL)
                   return NULL;
-#endif
+# endif
                 if (p_len == 0)
                   /* An empty PATH element designates the current directory.  */
                   strcpy (concat_name, argv0);

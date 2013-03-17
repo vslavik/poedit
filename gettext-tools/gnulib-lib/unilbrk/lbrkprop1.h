@@ -1,8 +1,8 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Line breaking properties of Unicode characters.  */
-/* Generated automatically by gen-lbrk for Unicode 5.1.0.  */
+/* Generated automatically by gen-lbrk for Unicode 6.0.0.  */
 
-/* Copyright (C) 2000-2002, 2004, 2008-2010 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2002, 2004, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ typedef struct
   {
     int level1[15];
     int level2[4 << 9];
-    unsigned char level3[142 << 7];
+    unsigned char level3[166 << 7];
   }
 lbrkprop_t;
 extern const lbrkprop_t unilbrkprop;

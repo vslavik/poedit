@@ -1,6 +1,6 @@
 ;;; po-compat.el --- basic support of PO translation files -*- coding: latin-1; -*-
 
-;; Copyright (C) 1995-1999, 2000-2002 Free Software Foundation, Inc.
+;; Copyright (C) 1995-1999, 2000-2002, 2010 Free Software Foundation, Inc.
 
 ;; Authors: François Pinard <pinard@iro.umontreal.ca>,
 ;;          Greg McGary <gkm@magilla.cichlid.com>,
@@ -20,9 +20,8 @@
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to the
-;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-;; Boston, MA 02110-1301, USA.
+;; along with GNU Emacs; see the file COPYING.  If not, see
+;; <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -201,6 +200,7 @@ Called through file-coding-system-alist, before the file is visited for real."
                 (list (cond ((and try-symbol (coding-system-p try-symbol))
                              try-symbol)
                             ((and po-EMACS20
+                                  (not (string-lessp "23" emacs-version))
                                   (string-match "\\`cp[1-9][0-9][0-9]?\\'"
                                                 try-string)
                                   (assoc (substring try-string 2)

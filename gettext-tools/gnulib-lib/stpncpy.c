@@ -1,4 +1,4 @@
-/* Copyright (C) 1993, 1995-1997, 2002-2003, 2005-2007, 2009-2010 Free Software
+/* Copyright (C) 1993, 1995-1997, 2002-2003, 2005-2007, 2009-2013 Free Software
  * Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C Library.
@@ -31,7 +31,7 @@
 /* Copy no more than N bytes of SRC to DST, returning a pointer past the
    last non-NUL byte written into DST.  */
 char *
-__stpncpy (char *dest, const char *src, size_t n)
+(__stpncpy) (char *dest, const char *src, size_t n)
 {
   char c;
   char *s = dest;

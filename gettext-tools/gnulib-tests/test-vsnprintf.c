@@ -1,5 +1,5 @@
 /* Test of vsnprintf() function.
-   Copyright (C) 2007-2010 Free Software Foundation, Inc.
+   Copyright (C) 2007-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -47,15 +47,16 @@ main (int argc, char *argv[])
   int size;
   int retval;
 
+  retval = my_snprintf (NULL, 0, "%d", 12345);
+  ASSERT (retval == 5);
+
   for (size = 0; size <= 8; size++)
     {
       memcpy (buf, "DEADBEEF", 8);
       retval = my_snprintf (buf, size, "%d", 12345);
+      ASSERT (retval == 5);
       if (size < 6)
         {
-#if CHECK_VSNPRINTF_POSIX
-          ASSERT (retval < 0 || retval >= size);
-#endif
           if (size > 0)
             {
               ASSERT (memcmp (buf, "12345", size - 1) == 0);
@@ -68,10 +69,17 @@ main (int argc, char *argv[])
         }
       else
         {
-          ASSERT (retval == 5);
           ASSERT (memcmp (buf, "12345\0EF", 8) == 0);
         }
     }
+
+  /* Test the support of the POSIX/XSI format strings with positions.  */
+  {
+    char result[100];
+    retval = my_snprintf (result, sizeof (result), "%2$d %1$d", 33, 55);
+    ASSERT (strcmp (result, "55 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
 
   return 0;
 }
