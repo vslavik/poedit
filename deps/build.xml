@@ -40,7 +40,7 @@
 
     <target name="compile"
             description="compile all dependencies for building on this platform"
-            depends="compile-gettext,compile-db,compile-wx,compile-sparkle">
+            depends="compile-gettext,compile-db,compile-wx,compile-win-sparkle">
     </target>
 
     <target name="compile-gettext" depends="win-gettext,osx-gettext"
@@ -49,8 +49,8 @@
             description="compile Berkeley DB"/>
     <target name="compile-wx" depends="win-wx,osx-wx"
             description="compile wxWidgets"/>
-    <target name="compile-sparkle" depends="win-sparkle,osx-sparkle"
-            description="compile (Win)Sparkle"/>
+    <target name="compile-win-sparkle" depends="win-sparkle"
+            description="compile WinSparkle"/>
 
 
 <!-- ==============================================================
@@ -519,27 +519,6 @@
         </antcall>
         <touch file="${osx.destdir}/built.wx"/>
     </target>
-    
-    
-<!-- ==============================================================
-     OS X dependencies - Sparkle
-     ============================================================== -->
-
-    <target name="osx-sparkle" if="is_osx">
-        <echo level="info" message="Building Sparkle.framework..."/>
-        <exec dir="sparkle" executable="${osx.xcodebuild}" failonerror="true">
-            <arg value="-project"/>
-            <arg value="Sparkle.xcodeproj"/>
-            <arg value="-target"/>
-            <arg value="Sparkle"/>
-            <arg value="-configuration"/>
-            <arg value="Release"/>
-            <arg value="DEPLOYMENT_POSTPROCESSING=YES"/>
-            <arg value="GCC_TREAT_WARNINGS_AS_ERRORS=NO"/>
-            <arg value="GCC_GENERATE_DEBUGGING_SYMBOLS=YES"/>
-            <arg value="DEBUG_INFORMATION_FORMAT=dwarf-with-dsym"/>
-            <arg value="STRIP_INSTALLED_PRODUCT=YES"/>
-        </exec>
     </target>
 
 </project>
