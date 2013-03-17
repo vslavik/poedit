@@ -5,36 +5,47 @@
     Usage: just run `ant`.
     </description>
 
-    <property environment="env"/>
-    <property file="build.local.properties"/>
-    <property file="build.properties"/>
-
     <condition property="is_osx">
+        <os family="mac"/>
+    </condition>
+    <condition property="os.nickname" value="osx">
         <os family="mac"/>
     </condition>
     <condition property="is_windows">
         <os family="windows"/>
     </condition>
+    <condition property="os.nickname" value="win">
+        <os family="windows"/>
+    </condition>
+
+    <condition property="cflags.optimize" value="-O2" else="-O0">
+        <equals arg1="${config}" arg2="Release"/>
+    </condition>
+    <condition property="cflags.debug" value="" else="-ggdb3">
+        <equals arg1="${config}" arg2="Release"/>
+    </condition>
+
+    <property environment="env"/>
+    <property file="build.local.properties"/>
+    <property file="build.properties"/>
 
     <pathconvert property="basedir.unix" targetos="unix">
         <path location="${basedir}"/>
     </pathconvert>
+    <pathconvert property="builddir.unix" targetos="unix">
+        <path location="${builddir}"/>
+    </pathconvert>
 
-    <property name="gettextdir" value="${basedir.unix}/bin-gettext"/>
-    <property name="osx.destdir" value="${basedir.unix}/bin-osx"/>
+    <property name="gettextdir" value="${builddir.unix}/gettext"/>
 
+    <target name="info">
+        <echo message="Platform:   ${os.name} (${os.nickname})"/>
+        <echo message="Builddir:   ${builddir}"/>
+    </target>
 
     <target name="clean"
             description="clean compiled binary files">
-        <delete dir="${gettextdir}"/>
-        <delete dir="${osx.destdir}"/>
-        <delete dir="libiconv/builddir"/>
-        <delete dir="gettext/builddir"/>
-        <delete dir="wx/builddir"/>
-        <delete dir="sparkle/build"/>
-        <delete dir="db/build_windows/Win32"/>
-        <delete dir="db/build_unix/i386"/>
-        <delete dir="db/build_unix/ppc"/>
+        <delete dir="${builddir}"/>
     </target>
 
 
@@ -320,21 +331,19 @@
         <echo level="info" message="Checking if Berkeley DB needs building..."/>
         <dependset>
             <srcfileset dir="db" excludes="build_unix/**"/>
-            <targetfileset dir="db/build_unix/i386"/>
-            <targetfileset dir="db/build_unix/ppc"/>
-            <targetfileset dir="${osx.destdir}" includes="*/lib/libdb*"/>
-            <targetfilelist files="${osx.destdir}/built.db"/>
+            <targetfileset dir="${builddir}/db"/>
+            <targetfilelist files="${intdir}/db.buildtag"/>
         </dependset>
-        <available property="built.osx-db" file="${osx.destdir}/built.db"/>
+        <available property="built.osx-db" file="${intdir}/db.buildtag"/>
     </target>
 
     <target name="osx-db-arch">
         <echo level="info" message="Building Berkeley DB for ${osx.arch}..."/>
         <property file="macosx.properties"/>
-        <mkdir dir="db/build_unix/${osx.arch}"/>
-        <exec dir="db/build_unix/${osx.arch}" executable="/bin/sh" failonerror="true">
-            <arg value="../../dist/configure"/>
-            <arg value="--prefix=${osx.destdir}/${osx.arch}"/>
+        <mkdir dir="${intdir}/db/${osx.arch}"/>
+        <exec dir="${intdir}/db/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="${basedir}/db/dist/configure"/>
+            <arg value="--prefix=${builddir}/db/${osx.arch}"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
             <arg value="CFLAGS=${osx.cflags}"/>
@@ -346,15 +355,15 @@
             <arg value="--disable-replication"/>
             <arg value="--disable-statistics"/>
         </exec>
-        <exec dir="db/build_unix/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <exec dir="${intdir}/db/${osx.arch}" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
             <arg value="make"/>
         </exec>
-        <exec dir="db/build_unix/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <exec dir="${intdir}/db/${osx.arch}" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
             <arg value="make install -j1"/>
         </exec>
-        <touch file="${osx.destdir}/built.db"/>
+        <delete dir="${builddir}/db/${osx.arch}/docs"/>
     </target>
 
     <target name="osx-db" depends="osx-db-check" unless="built.osx-db" if="is_osx">
@@ -363,6 +372,8 @@
             <param name="osx.sdk" value="${osx.deploy.sdk}"/>
             <param name="osx.deploy" value="${osx.deploy.sdk}"/>
         </antcall>
+        <touch file="${intdir}/db.buildtag"/>
+        <delete dir="${intdir}/db"/>
     </target>
 
 
@@ -375,19 +386,19 @@
         <dependset>
             <!-- NB: gnulib-lib is excluded, because some sources
                      are regenerated and I can't figure out how to fix it -->
-            <srcfileset dir="gettext" excludes="builddir/**,gettext-tools/gnulib-lib/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure,gettext-tools/doc/stamp-vti"/>
+            <srcfileset dir="gettext" excludes="gettext-tools/gnulib-lib/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure,gettext-tools/doc/stamp-vti"/>
             <targetfileset dir="${gettextdir}" includes="bin/*"/>
-            <targetfilelist files="${gettextdir}/built.gettext"/>
+            <targetfilelist files="${intdir}/gettext.buildtag"/>
         </dependset>
-        <available property="built.gettext" file="${gettextdir}/built.gettext"/>
+        <available property="built.gettext" file="${intdir}/gettext.buildtag"/>
     </target>
 
     <target name="osx-gettext-arch">
         <echo level="info" message="Building GNU gettext for ${osx.arch}..."/>
         <property file="macosx.properties"/>
-        <mkdir dir="gettext/builddir/${osx.arch}"/>
-        <exec dir="gettext/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
-            <arg value="../../configure"/>
+        <mkdir dir="${intdir}/gettext/${osx.arch}"/>
+        <exec dir="${intdir}/gettext/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="${basedir.unix}/gettext/configure"/>
             <arg value="--prefix=${gettextdir}/${osx.arch}"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
@@ -406,14 +417,14 @@
             <arg value="--disable-java"/>
             <arg value="--disable-rpath"/>
         </exec>
-        <touch file="gettext/builddir/${osx.arch}/gettext-tools/misc/archive.dir.tar.gz"/>
-        <touch file="gettext/builddir/${osx.arch}/gettext-tools/misc/archive.git.tar.gz"/>
-        <touch file="gettext/builddir/${osx.arch}/gettext-tools/misc/archive.cvs.tar.gz"/>
-        <exec dir="gettext/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <touch file="${intdir}/gettext/${osx.arch}/gettext-tools/misc/archive.dir.tar.gz"/>
+        <touch file="${intdir}/gettext/${osx.arch}/gettext-tools/misc/archive.git.tar.gz"/>
+        <touch file="${intdir}/gettext/${osx.arch}/gettext-tools/misc/archive.cvs.tar.gz"/>
+        <exec dir="${intdir}/gettext/${osx.arch}" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
             <arg value="make"/>
         </exec>
-        <exec dir="gettext/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <exec dir="${intdir}/gettext/${osx.arch}" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
             <arg value="make install -j1"/>
         </exec>
@@ -453,10 +464,11 @@
         <strip-exe file="${gettextdir}/bin/msgcat"/>
         <strip-exe file="${gettextdir}/bin/xgettext"/>
 
-        <touch file="${gettextdir}/built.gettext"/>
+        <touch file="${intdir}/gettext.buildtag"/>
+        <delete dir="${intdir}/gettext"/>
     </target>
-    
-    
+
+
 <!-- ==============================================================
      OS X dependencies - wxWidgets
      ============================================================== -->
@@ -465,23 +477,25 @@
         <echo level="info" message="Checking if wxWidgets needs building..."/>
         <dependset>
             <srcfileset dir="wx"
-                        excludes="builddir/**,locale/**,include/wx/stc/stc.h,src/stc/stc.cpp"/>
+                        excludes="locale/**,include/wx/stc/stc.h,src/stc/stc.cpp"/>
             <targetfileset dir="wx/locale/*.mo"/>
-            <targetfileset dir="${osx.destdir}" includes="*/lib/libwx*"/>
-            <targetfileset dir="${osx.destdir}" includes="*/include/wx/**"/>
-            <targetfilelist files="${osx.destdir}/built.wx"/>
+            <targetfileset dir="${builddir}/wx"/>
+            <targetfilelist files="${intdir}/wx.buildtag"/>
         </dependset>
-        <available property="built.osx-wx" file="${osx.destdir}/built.wx"/>
+        <available property="built.osx-wx" file="${intdir}/wx.buildtag"/>
     </target>
 
     <target name="osx-wx-arch">
         <echo level="info" message="Building wxWidgets for ${osx.arch}..."/>
         <property file="macosx.properties"/>
-        <mkdir dir="wx/builddir/${osx.arch}"/>
-        <exec dir="wx/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
-            <arg value="../../configure"/>
-            <arg value="--prefix=${osx.destdir}/${osx.arch}"/>
+        <mkdir dir="${intdir}/wx/${osx.arch}"/>
+        <exec dir="${intdir}/wx/${osx.arch}" executable="/bin/sh" failonerror="true">
+            <arg value="${basedir}/wx/configure"/>
+            <arg value="--prefix=${builddir}/wx/${osx.arch}"/>
             <arg value="--with-cocoa"/>
+            <arg value="--with-macosx-version-min=${osx.deploy}"/>
+            <arg value="--enable-debug_flag"/>
+            <arg value="--enable-debug_info"/>
             <arg value="--disable-shared"/>
             <arg value="--enable-unicode"/>
             <!-- The streams add dependency on std::ostream& std::ostream::_M_insert<double>(double),
@@ -501,7 +515,7 @@
             <arg value="OBJCXXFLAGS=${osx.cxxflags}"/>
             <arg value="LDFLAGS=${osx.ldflags}"/>
         </exec>
-        <exec dir="wx/builddir/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <exec dir="${intdir}/wx/${osx.arch}" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
             <arg value="make install"/>
         </exec>
@@ -517,8 +531,8 @@
             <param name="osx.sdk" value="${osx.best.sdk}"/>
             <param name="osx.deploy" value="${osx.deploy.sdk}"/>
         </antcall>
-        <touch file="${osx.destdir}/built.wx"/>
-    </target>
+        <touch file="${intdir}/wx.buildtag"/>
+        <delete dir="${intdir}/wx"/>
     </target>
 
 </project>
