@@ -124,7 +124,7 @@
         <dependset>
             <!-- NB: gnulib-lib is excluded, because some sources
                      are regenerated and I can't figure out how to fix it -->
-            <srcfileset dir="gettext" excludes="builddir/**,gettext-tools/gnulib-lib/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure,gettext-tools/doc/stamp-vti"/>
+            <srcfileset dir="gettext" excludes="builddir/**,gettext-tools/gnulib-lib/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure,gettext-tools/doc/stamp-vti,gettext-tools/examples/**"/>
             <targetfileset dir="${gettextdir}" includes="bin/*gettext*"/>
             <targetfileset dir="${gettextdir}" includes="bin/msg*.exe"/>
             <targetfilelist files="${gettextdir}/built.gettext"/>
@@ -186,7 +186,7 @@
      <target name="win-db-check" if="is_windows">
         <echo level="info" message="Checking if Berkeley DB needs building..."/>
         <dependset>
-            <srcfileset dir="db" excludes="build_windows/Win32/**,build_unix/**"/>
+            <srcfileset dir="db" excludes="build_windows/Win32/**,build_unix/**,csharp/**,docs/**,examples*/**,java/**,perl/**,tcl/**,test*/**"/>
             <targetfileset dir="db/build_windows/Win32"/>
         </dependset>
         <available property="built.win-db" file="db/build_windows/Win32/Release/libdb48.dll"/>
@@ -330,7 +330,7 @@
      <target name="osx-db-check" if="is_osx">
         <echo level="info" message="Checking if Berkeley DB needs building..."/>
         <dependset>
-            <srcfileset dir="db" excludes="build_unix/**"/>
+            <srcfileset dir="db" excludes="build_unix/**,csharp/**,docs/**,examples*/**,java/**,perl/**,tcl/**,test*/**"/>
             <targetfileset dir="${builddir}/db"/>
             <targetfilelist files="${intdir}/db.buildtag"/>
         </dependset>
@@ -396,7 +396,7 @@
         <dependset>
             <!-- NB: gnulib-lib is excluded, because some sources
                      are regenerated and I can't figure out how to fix it -->
-            <srcfileset dir="gettext" excludes="gettext-tools/gnulib-lib/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure,gettext-tools/doc/stamp-vti"/>
+            <srcfileset dir="gettext" excludes="gettext-tools/gnulib-lib/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure,gettext-tools/doc/stamp-vti,gettext-tools/examples/**"/>
             <targetfileset dir="${gettextdir}" includes="bin/*"/>
             <targetfilelist files="${intdir}/gettext.buildtag"/>
         </dependset>
