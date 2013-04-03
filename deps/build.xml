@@ -372,6 +372,16 @@
             <param name="osx.sdk" value="${osx.deploy.sdk}"/>
             <param name="osx.deploy" value="${osx.deploy.sdk}"/>
         </antcall>
+        <antcall target="osx-db-arch">
+            <param name="osx.arch" value="x86_64"/>
+            <param name="osx.cc" value="gcc"/>
+            <param name="osx.cxx" value="g++"/>
+        </antcall>
+
+        <merge-archs-2 prefix="${builddir}/db" dir="lib" file="libdb_cxx.a"/>
+        <copy file="${builddir}/db/i386/include/db.h" todir="${builddir}/db/include"/>
+        <copy file="${builddir}/db/i386/include/db_cxx.h" todir="${builddir}/db/include"/>
+
         <touch file="${intdir}/db.buildtag"/>
         <delete dir="${intdir}/db"/>
     </target>
