@@ -619,11 +619,11 @@ void PoeditApp::AskForDonations(wxWindow *parent)
     sizer->Add(big);
 
     wxStaticText *desc = new wxStaticText(&dlg, wxID_ANY,
-            _T("A lot of time and effort have gone into development\n")
-            _T("of Poedit. If it's useful to you, please consider showing\n")
+            _T("A lot of time and effort has gone into the development\n")
+            _T("of Poedit. If you find it useful, please consider showing\n")
             _T("your appreciation with a donation.\n")
             _T("\n")
-            _T("Donate or not, there will be no difference in Poedit's\n")
+            _T("Donation or not, there will be no difference in Poedit's\n")
             _T("features and functionality.")
             );
 #ifdef __WXMAC__
