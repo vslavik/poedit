@@ -65,6 +65,7 @@
 #include "transmem.h"
 #include "utility.h"
 #include "prefsdlg.h"
+#include "errors.h"
 
 IMPLEMENT_APP(PoeditApp);
 
@@ -426,6 +427,30 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
         gs_filesToOpen.Add(parser.GetParam(i));
 
     return true;
+}
+
+
+// ---------------------------------------------------------------------------
+// exceptions handling
+// ---------------------------------------------------------------------------
+
+bool PoeditApp::OnExceptionInMainLoop()
+{
+    try
+    {
+        throw;
+    }
+    catch ( Exception& e )
+    {
+        wxLogError("%s", e.what());
+    }
+    catch ( ... )
+    {
+        throw;
+    }
+
+    return true;
+
 }
 
 

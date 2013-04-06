@@ -34,6 +34,7 @@
 #include <wx/filename.h>
 
 #include "gexecute.h"
+#include "errors.h"
 
 #if defined(__WXMAC__) || defined(__WXMSW__)
 static wxString GetAuxBinariesDir()
@@ -90,9 +91,7 @@ int DoExecuteGettext(const wxString& cmdline_,
 #endif
 
     if ( retcode == -1 )
-    {
-        wxLogError(_("Cannot execute program: %s"), cmdline.c_str());
-    }
+        throw Exception(wxString::Format(_("Cannot execute program: %s"), cmdline.c_str()));
 
     return retcode;
 }

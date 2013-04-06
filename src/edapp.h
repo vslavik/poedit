@@ -74,6 +74,8 @@ class PoeditApp : public wxApp
 
         void EditPreferences();
 
+        virtual bool OnExceptionInMainLoop();
+
     protected:
         /** Sets default values to configuration items that don't
             have anything set. (This may happen after fresh installation or

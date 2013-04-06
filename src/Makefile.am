@@ -27,7 +27,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  edlistctrl.cpp edlistctrl.h digits.h \
                  cat_sorting.cpp cat_sorting.h \
                  utility.cpp utility.h \
-                 version.h \
+                 version.h errors.h \
                  compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS)
