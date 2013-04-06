@@ -1422,7 +1422,7 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
             dummy = FormatStringForFile(data.GetPluralString());
             SaveMultiLines(f, _T("msgid_plural \"") + dummy + _T("\""));
 
-            for (size_t i = 0; i < data.GetNumberOfTranslations(); i++)
+            for (unsigned i = 0; i < data.GetNumberOfTranslations(); i++)
             {
                 dummy = FormatStringForFile(data.GetTranslation(i));
                 wxString hdr = wxString::Format(_T("msgstr[%u] \""), i);
