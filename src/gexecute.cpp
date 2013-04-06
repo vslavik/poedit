@@ -36,9 +36,20 @@
 #include "gexecute.h"
 
 #if defined(__WXMAC__) || defined(__WXMSW__)
+static wxString GetAuxBinariesDir()
+{
+#ifdef __WXMAC__
+    wxString dir = wxStandardPaths::Get().GetPluginsDir();
+    return dir + "/GettextTools.bundle/Contents/MacOS";
+#else
+    return wxStandardPaths::Get().GetExecutablePath();
+#endif
+}
+
 static wxString GetPathToAuxBinary(const wxString& program)
 {
-    wxFileName path(wxStandardPaths::Get().GetExecutablePath());
+    wxFileName path;
+    path.SetPath(GetAuxBinariesDir());
     path.SetName(program);
 #ifdef __WXMSW__
     path.SetExt(_T("exe"));

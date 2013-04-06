@@ -52,6 +52,7 @@
 		B29AE89817103992008D1F8A /* tm_update.gif in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0651709DA4A009C1328 /* tm_update.gif */; };
 		B29AE89917103992008D1F8A /* tm_update.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0661709DA4A009C1328 /* tm_update.xrc */; };
 		B29AE89A17103992008D1F8A /* toolbar.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0671709DA4A009C1328 /* toolbar.xrc */; };
+		B2B7D472170DD93E00ED0AFE /* GettextTools.bundle in Copy Gettext bundle */ = {isa = PBXBuildFile; fileRef = B248B2DE170D765100EBA58E /* GettextTools.bundle */; };
 		B2BF84BA170846290030AA22 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84B9170846290030AA22 /* OpenGL.framework */; };
 		B2BF84BE170847220030AA22 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84BD170847220030AA22 /* libz.dylib */; };
 		B2BF84C1170847E60030AA22 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84C0170847E60030AA22 /* IOKit.framework */; };
@@ -76,11 +77,27 @@
 		B2E837011709ED6300F31559 /* poedit-fuzzy.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F81709ED6300F31559 /* poedit-fuzzy.png */; };
 		B2E837021709ED6300F31559 /* poedit-update.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F91709ED6300F31559 /* poedit-update.png */; };
 		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
-		B2E83709170C97ED00F31559 /* copy-translations.sh in Resources */ = {isa = PBXBuildFile; fileRef = B2E83708170C97ED00F31559 /* copy-translations.sh */; };
+		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
+		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
+		B2F287C5170DCC92004C1F41 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C3170DCC92004C1F41 /* COPYING */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B2BF72EF170831830030AA22 /* PBXContainerItemProxy */ = {
+		B248B2EB170D772800EBA58E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B27115F8170830A800B936D5;
+			remoteInfo = ant_external_deps;
+		};
+		B248B2ED170D773000EBA58E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B248B2DD170D765100EBA58E;
+			remoteInfo = GettextTools;
+		};
+		B2B7D473170DDAAB00ED0AFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
 			proxyType = 1;
@@ -90,6 +107,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B2B7D472170DD93E00ED0AFE /* GettextTools.bundle in Copy Gettext bundle */,
+			);
+			name = "Copy Gettext bundle";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2E836D81709EB0700F31559 /* Copy Private Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -104,6 +132,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B248B2DE170D765100EBA58E /* GettextTools.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GettextTools.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		B248B2DF170D765100EBA58E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		B248B2E3170D765100EBA58E /* GettextTools-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GettextTools-Info.plist"; path = "macosx/GettextTools-Info.plist"; sourceTree = "<group>"; };
 		B24ACD5B16F6201F00399242 /* Poedit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poedit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24ACD5E16F6201F00399242 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		B24ACD6116F6201F00399242 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -185,6 +216,7 @@
 		B28F1CE316F629D30018AF7E /* pl_evaluate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pl_evaluate.cpp; path = pluralforms/pl_evaluate.cpp; sourceTree = "<group>"; };
 		B28F1CE416F629D30018AF7E /* pl_evaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pl_evaluate.h; path = pluralforms/pl_evaluate.h; sourceTree = "<group>"; };
 		B28F1CE516F629D30018AF7E /* digits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = digits.h; sourceTree = "<group>"; };
+		B29AE89B17105306008D1F8A /* errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errors.h; sourceTree = "<group>"; };
 		B2BF84B9170846290030AA22 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B2BF84BB170846940030AA22 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		B2BF84BD170847220030AA22 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -210,9 +242,19 @@
 		B2E836F91709ED6300F31559 /* poedit-update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-update.png"; path = "toolbar-32/poedit-update.png"; sourceTree = "<group>"; };
 		B2E836FA1709ED6300F31559 /* poedit-validate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-validate.png"; path = "toolbar-32/poedit-validate.png"; sourceTree = "<group>"; };
 		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macosx/copy-translations.sh"; sourceTree = "<group>"; };
+		B2F287C2170DCC92004C1F41 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = deps/gettext/AUTHORS; sourceTree = SOURCE_ROOT; };
+		B2F287C3170DCC92004C1F41 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = COPYING; path = deps/gettext/COPYING; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B248B2DB170D765100EBA58E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B24ACD5816F6201F00399242 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -230,10 +272,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B248B2E1170D765100EBA58E /* GettextTools */ = {
+			isa = PBXGroup;
+			children = (
+				B248B2E3170D765100EBA58E /* GettextTools-Info.plist */,
+				B2F287C2170DCC92004C1F41 /* AUTHORS */,
+				B2F287C3170DCC92004C1F41 /* COPYING */,
+			);
+			path = GettextTools;
+			sourceTree = "<group>";
+		};
 		B24ACD5216F6201F00399242 = {
 			isa = PBXGroup;
 			children = (
 				B24ACD6416F6201F00399242 /* Poedit */,
+				B248B2E1170D765100EBA58E /* GettextTools */,
 				B24ACD5D16F6201F00399242 /* Frameworks */,
 				B24ACD5C16F6201F00399242 /* Products */,
 			);
@@ -243,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				B24ACD5B16F6201F00399242 /* Poedit.app */,
+				B248B2DE170D765100EBA58E /* GettextTools.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -258,6 +312,7 @@
 				B24ACD5E16F6201F00399242 /* Cocoa.framework */,
 				B2BF84BB170846940030AA22 /* Carbon.framework */,
 				B2BF84B9170846290030AA22 /* OpenGL.framework */,
+				B248B2DF170D765100EBA58E /* CoreFoundation.framework */,
 				B24ACD6016F6201F00399242 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -402,6 +457,7 @@
 				B28F1CBB16F629D30018AF7E /* edframe.h */,
 				B28F1CBD16F629D30018AF7E /* edlistctrl.h */,
 				B28F1CBF16F629D30018AF7E /* errorbar.h */,
+				B29AE89B17105306008D1F8A /* errors.h */,
 				B28F1CC116F629D30018AF7E /* fileviewer.h */,
 				B28F1CC316F629D30018AF7E /* findframe.h */,
 				B28F1CC516F629D30018AF7E /* gexecute.h */,
@@ -446,6 +502,25 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
+		B248B2DD170D765100EBA58E /* GettextTools */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B248B2EA170D765100EBA58E /* Build configuration list for PBXNativeTarget "GettextTools" */;
+			buildPhases = (
+				B248B2DA170D765100EBA58E /* Sources */,
+				B248B2DB170D765100EBA58E /* Frameworks */,
+				B248B2DC170D765100EBA58E /* Resources */,
+				B2F287C6170DCF06004C1F41 /* Copy Gettext binaries & translations */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B248B2EC170D772800EBA58E /* PBXTargetDependency */,
+			);
+			name = GettextTools;
+			productName = GettextTools;
+			productReference = B248B2DE170D765100EBA58E /* GettextTools.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 		B24ACD5A16F6201F00399242 /* Poedit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B24ACD7B16F6201F00399242 /* Build configuration list for PBXNativeTarget "Poedit" */;
@@ -454,13 +529,14 @@
 				B24ACD5816F6201F00399242 /* Frameworks */,
 				B24ACD5916F6201F00399242 /* Resources */,
 				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
-				B2E836DB1709EBBC00F31559 /* Copy GNU gettext binaries */,
+				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */,
 				B2E83707170C96DB00F31559 /* Install translations */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B2BF72F0170831830030AA22 /* PBXTargetDependency */,
+				B2B7D474170DDAAB00ED0AFE /* PBXTargetDependency */,
+				B248B2EE170D773000EBA58E /* PBXTargetDependency */,
 			);
 			name = Poedit;
 			productName = Poedit;
@@ -491,11 +567,21 @@
 			targets = (
 				B24ACD5A16F6201F00399242 /* Poedit */,
 				B27115F8170830A800B936D5 /* ant_external_deps */,
+				B248B2DD170D765100EBA58E /* GettextTools */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B248B2DC170D765100EBA58E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */,
+				B2F287C5170DCC92004C1F41 /* COPYING in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B24ACD5916F6201F00399242 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -539,20 +625,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B2E836DB1709EBBC00F31559 /* Copy GNU gettext binaries */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy GNU gettext binaries";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cp -a deps/bin-osx/${CONFIGURATION}/gettext/bin/* \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"";
-		};
 		B2E83707170C96DB00F31559 /* Install translations */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -565,11 +637,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export MSGFMT=\"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/msgfmt\"\nmacosx/copy-translations.sh \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"";
+			shellScript = "export MSGFMT=\"${DEPS_BUILD_DIR}/gettext/bin/msgfmt\"\nmacosx/copy-translations.sh \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"";
+		};
+		B2F287C6170DCF06004C1F41 /* Copy Gettext binaries & translations */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Gettext binaries & translations";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"\ncp -a ${DEPS_BUILD_DIR}/gettext/bin/* \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"\n#cp -a ${DEPS_BUILD_DIR}/gettext/x86_64/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B248B2DA170D765100EBA58E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B24ACD5716F6201F00399242 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -608,10 +701,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B2BF72F0170831830030AA22 /* PBXTargetDependency */ = {
+		B248B2EC170D772800EBA58E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B27115F8170830A800B936D5 /* ant_external_deps */;
-			targetProxy = B2BF72EF170831830030AA22 /* PBXContainerItemProxy */;
+			targetProxy = B248B2EB170D772800EBA58E /* PBXContainerItemProxy */;
+		};
+		B248B2EE170D773000EBA58E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B248B2DD170D765100EBA58E /* GettextTools */;
+			targetProxy = B248B2ED170D773000EBA58E /* PBXContainerItemProxy */;
+		};
+		B2B7D474170DDAAB00ED0AFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B27115F8170830A800B936D5 /* ant_external_deps */;
+			targetProxy = B2B7D473170DDAAB00ED0AFE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -628,6 +731,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B248B2E8170D765100EBA58E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GettextTools/GettextTools-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "macosx/GettextTools-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		B248B2E9170D765100EBA58E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GettextTools/GettextTools-Prefix.pch";
+				INFOPLIST_FILE = "macosx/GettextTools-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 		B24ACD7916F6201F00399242 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -762,6 +903,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B248B2EA170D765100EBA58E /* Build configuration list for PBXNativeTarget "GettextTools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B248B2E8170D765100EBA58E /* Debug */,
+				B248B2E9170D765100EBA58E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B24ACD5616F6201F00399242 /* Build configuration list for PBXProject "Poedit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
