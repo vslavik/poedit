@@ -1,5 +1,5 @@
 /* Character set conversion with error handling and autodetection.
-   Copyright (C) 2002, 2005, 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2005, 2007, 2009-2013 Free Software Foundation, Inc.
    Written by Bruno Haible.
 
    This program is free software: you can redistribute it and/or modify
@@ -226,7 +226,9 @@ mem_iconveha (const char *src, size_t srclen,
 
   /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5,
      we want to use transliteration.  */
-#if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
+#if (((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2) \
+     && !defined __UCLIBC__) \
+    || _LIBICONV_VERSION >= 0x0105
   if (transliterate)
     {
       int retval;
@@ -326,7 +328,9 @@ str_iconveha (const char *src,
 
   /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5,
      we want to use transliteration.  */
-#if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
+#if (((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2) \
+     && !defined __UCLIBC__) \
+    || _LIBICONV_VERSION >= 0x0105
   if (transliterate)
     {
       char *result;

@@ -1,5 +1,5 @@
 /* xgettext common functions.
-   Copyright (C) 2001-2003, 2005-2006, 2008-2009 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2006, 2008-2009, 2011 Free Software Foundation, Inc.
    Written by Peter Miller <millerp@canb.auug.org.au>
    and Bruno Haible <haible@clisp.cons.org>, 2001.
 
@@ -247,7 +247,8 @@ extern void savable_comment_reset (void);
    or NULL.
    COMMENT may be savable_comment, or it may be a saved copy of savable_comment
    (then add_reference must be used when saving it, and drop_reference while
-   dropping it).  Clear savable_comment.  */
+   dropping it).  Clear savable_comment.
+   Return the new or found message, or NULL if the message is excluded.  */
 extern message_ty *remember_a_message (message_list_ty *mlp,
                                        char *msgctxt,
                                        char *msgid,

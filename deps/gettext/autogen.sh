@@ -4,7 +4,8 @@
 # also regenerates all aclocal.m4, config.h.in, Makefile.in, configure files
 # with new versions of autoconf or automake.
 #
-# This script requires autoconf-2.60..2.65 and automake-1.11.1 in the PATH.
+# This script requires autoconf-2.60..2.69 and automake-1.11.1..1.12 in the
+# PATH.
 # It also requires either
 #   - the GNULIB_TOOL environment variable pointing to the gnulib-tool script
 #     in a gnulib checkout, or
@@ -16,7 +17,7 @@
 #   - the makeinfo program from the texinfo package,
 #   - perl.
 
-# Copyright (C) 2003-2010 Free Software Foundation, Inc.
+# Copyright (C) 2003-2012 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,8 +37,8 @@
 # Usage after a first-time git clone / cvs checkout:   ./autogen.sh
 # Usage after a git clone / cvs update:                ./autogen.sh --quick
 # This uses an up-to-date gnulib checkout.
-# (The gettext-0.18.1 release was prepared using gnulib commit
-# 74d509383fe30bb5511a978b52e4f8ecae37826b from 2010-06-03.)
+# (The gettext-0.18.2 release was prepared using gnulib commit
+# f022473fdaf724d84817c4003120b9a38fbf884b from 2012-12-19.)
 #
 # Usage from a released tarball:             ./autogen.sh --quick --skip-gnulib
 # This does not use a gnulib checkout.
@@ -73,9 +74,6 @@ if ! $skip_gnulib; then
   # Skip the gnulib-tool step if gnulib-tool was not found.
   if test -n "$GNULIB_TOOL"; then
     # In gettext-runtime:
-    if test -f gettext-runtime/gnulib-m4/gnulib-cache.m4; then
-      mv -f gettext-runtime/gnulib-m4/gnulib-cache.m4 gettext-runtime/gnulib-m4/gnulib-cache.m4~
-    fi
     GNULIB_MODULES_RUNTIME_FOR_SRC='
       atexit
       basename
@@ -88,6 +86,7 @@ if ! $skip_gnulib; then
       progname
       propername
       relocatable-prog
+      setlocale
       sigpipe
       stdbool
       stdio
@@ -98,6 +97,7 @@ if ! $skip_gnulib; then
     '
     GNULIB_MODULES_RUNTIME_OTHER='
       gettext-runtime-misc
+      ansi-c++-opt
       csharpcomp-script
       java
       javacomp-script
@@ -105,21 +105,18 @@ if ! $skip_gnulib; then
     $GNULIB_TOOL --dir=gettext-runtime --lib=libgrt --source-base=gnulib-lib --m4-base=gnulib-m4 --no-libtool --local-dir=gnulib-local --local-symlink \
       --import $GNULIB_MODULES_RUNTIME_FOR_SRC $GNULIB_MODULES_RUNTIME_OTHER
     # In gettext-runtime/libasprintf:
-    if test -f gettext-runtime/libasprintf/gnulib-m4/gnulib-cache.m4; then
-      mv -f gettext-runtime/libasprintf/gnulib-m4/gnulib-cache.m4 gettext-runtime/libasprintf/gnulib-m4/gnulib-cache.m4~
-    fi
     GNULIB_MODULES_LIBASPRINTF='
       alloca
       errno
+      verify
+      xsize
     '
     GNULIB_MODULES_LIBASPRINTF_OTHER='
     '
     $GNULIB_TOOL --dir=gettext-runtime/libasprintf --source-base=. --m4-base=gnulib-m4 --lgpl=2 --makefile-name=Makefile.gnulib --libtool --local-dir=gnulib-local --local-symlink \
       --import $GNULIB_MODULES_LIBASPRINTF $GNULIB_MODULES_LIBASPRINTF_OTHER
+    $GNULIB_TOOL --copy-file m4/intmax_t.m4 gettext-runtime/libasprintf/gnulib-m4/intmax_t.m4
     # In gettext-tools:
-    if test -f gettext-tools/gnulib-m4/gnulib-cache.m4; then
-      mv -f gettext-tools/gnulib-m4/gnulib-cache.m4 gettext-tools/gnulib-m4/gnulib-cache.m4~
-    fi
     GNULIB_MODULES_TOOLS_FOR_SRC='
       alloca-opt
       atexit
@@ -133,6 +130,7 @@ if ! $skip_gnulib; then
       c-strcasestr
       c-strstr
       clean-temp
+      closedir
       closeout
       copy-file
       csharpcomp
@@ -168,17 +166,20 @@ if ! $skip_gnulib; then
       minmax
       obstack
       open
+      opendir
       openmp
       ostream
-      pipe
       pipe-filter-ii
       progname
       propername
+      readdir
       relocatable-prog
       relocatable-script
+      setlocale
       sh-quote
       sigpipe
       sigprocmask
+      spawn-pipe
       stdbool
       stdio
       stdlib
@@ -198,6 +199,7 @@ if ! $skip_gnulib; then
       uniname/uniname
       unistd
       unistr/u8-mbtouc
+      unistr/u8-mbtoucr
       unistr/u8-uctomb
       unistr/u16-mbtouc
       uniwidth/width
@@ -217,16 +219,18 @@ if ! $skip_gnulib; then
     # Common dependencies of GNULIB_MODULES_TOOLS_FOR_SRC and GNULIB_MODULES_TOOLS_FOR_LIBGREP.
     GNULIB_MODULES_TOOLS_FOR_SRC_COMMON_DEPENDENCIES='
       alloca-opt
-      arg-nonnull
-      c++defs
       extensions
       gettext-h
       include_next
+      locale
       localcharset
       malloc-posix
       mbrtowc
       mbsinit
       multiarch
+      snippet/arg-nonnull
+      snippet/c++defs
+      snippet/warn-on-use
       ssize_t
       stdbool
       stddef
@@ -235,12 +239,12 @@ if ! $skip_gnulib; then
       streq
       unistd
       verify
-      warn-on-use
       wchar
-      wctype
+      wctype-h
     '
     GNULIB_MODULES_TOOLS_OTHER='
       gettext-tools-misc
+      ansi-c++-opt
       csharpcomp-script
       csharpexec-script
       gcj
@@ -249,24 +253,27 @@ if ! $skip_gnulib; then
       javaexec-script
       stdint
     '
+    GNULIB_MODULES_TOOLS_LIBUNISTRING_TESTS='
+      unilbrk/u8-possible-linebreaks-tests
+      unilbrk/ulc-width-linebreaks-tests
+      unistr/u8-mbtouc-tests
+      unistr/u8-mbtouc-unsafe-tests
+      uniwidth/width-tests
+    '
     $GNULIB_TOOL --dir=gettext-tools --lib=libgettextlib --source-base=gnulib-lib --m4-base=gnulib-m4 --tests-base=gnulib-tests --makefile-name=Makefile.gnulib --libtool --with-tests --local-dir=gnulib-local --local-symlink \
-      --import --avoid=hash-tests $GNULIB_MODULES_TOOLS_FOR_SRC $GNULIB_MODULES_TOOLS_FOR_SRC_COMMON_DEPENDENCIES $GNULIB_MODULES_TOOLS_OTHER
+      --import --avoid=hash-tests `for m in $GNULIB_MODULES_TOOLS_LIBUNISTRING_TESTS; do echo --avoid=$m; done` $GNULIB_MODULES_TOOLS_FOR_SRC $GNULIB_MODULES_TOOLS_FOR_SRC_COMMON_DEPENDENCIES $GNULIB_MODULES_TOOLS_OTHER
     # In gettext-tools/libgrep:
-    if test -f gettext-tools/libgrep/gnulib-m4/gnulib-cache.m4; then
-      mv -f gettext-tools/libgrep/gnulib-m4/gnulib-cache.m4 gettext-tools/libgrep/gnulib-m4/gnulib-cache.m4~
-    fi
     GNULIB_MODULES_TOOLS_FOR_LIBGREP='
+      mbrlen
       regex
     '
-    $GNULIB_TOOL --dir=gettext-tools --macro-prefix=grgl --lib=libgrep --source-base=libgrep --m4-base=libgrep/gnulib-m4 --makefile-name=Makefile.gnulib --local-dir=gnulib-local --local-symlink \
+    $GNULIB_TOOL --dir=gettext-tools --macro-prefix=grgl --lib=libgrep --source-base=libgrep --m4-base=libgrep/gnulib-m4 --witness-c-macro=IN_GETTEXT_TOOLS_LIBGREP --makefile-name=Makefile.gnulib --local-dir=gnulib-local --local-symlink \
       --import `for m in $GNULIB_MODULES_TOOLS_FOR_SRC_COMMON_DEPENDENCIES; do if test \`$GNULIB_TOOL --extract-applicability $m\` != all; then echo --avoid=$m; fi; done` $GNULIB_MODULES_TOOLS_FOR_LIBGREP
     # In gettext-tools/libgettextpo:
-    if test -f gettext-tools/libgettextpo/gnulib-m4/gnulib-cache.m4; then
-      mv -f gettext-tools/libgettextpo/gnulib-m4/gnulib-cache.m4 gettext-tools/libgettextpo/gnulib-m4/gnulib-cache.m4~
-    fi
     # This is a subset of the GNULIB_MODULES_FOR_SRC.
     GNULIB_MODULES_LIBGETTEXTPO='
       basename
+      close
       c-ctype
       c-strcase
       c-strstr
@@ -295,6 +302,7 @@ if ! $skip_gnulib; then
       strerror
       unilbrk/ulc-width-linebreaks
       unistr/u8-mbtouc
+      unistr/u8-mbtoucr
       unistr/u8-uctomb
       unistr/u16-mbtouc
       uniwidth/width

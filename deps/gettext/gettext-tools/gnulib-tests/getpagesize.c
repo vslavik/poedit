@@ -1,6 +1,6 @@
 /* getpagesize emulation for systems where it cannot be done in a C macro.
 
-   Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 /* Specification. */
 #include <unistd.h>
 
-/* This implementation is only for native Win32 systems.  */
+/* This implementation is only for native Windows systems.  */
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 # define WIN32_LEAN_AND_MEAN

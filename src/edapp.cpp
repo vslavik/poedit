@@ -68,6 +68,7 @@
 
 IMPLEMENT_APP(PoeditApp);
 
+#ifndef __WXMAC__
 wxString PoeditApp::GetAppPath() const
 {
 #if defined(__UNIX__)
@@ -86,6 +87,7 @@ wxString PoeditApp::GetAppPath() const
 #error "Unsupported platform!"
 #endif
 }
+#endif // !__WXMAC__
 
 wxString PoeditApp::GetAppVersion() const
 {
@@ -153,7 +155,12 @@ bool PoeditApp::OnInit()
     wxImage::AddHandler(new wxGIFHandler);
     wxImage::AddHandler(new wxPNGHandler);
     wxXmlResource::Get()->InitAllHandlers();
+
+#ifdef __WXMAC__
+    wxXmlResource::Get()->Load(wxStandardPaths::Get().GetResourcesDir() + "/*.xrc");
+#else
     InitXmlResource();
+#endif
 
     SetDefaultCfg(wxConfig::Get());
 
@@ -232,10 +239,7 @@ int PoeditApp::OnExit()
 
 void PoeditApp::SetupLanguage()
 {
-#ifdef __WXMAC__
-    wxLocale::AddCatalogLookupPathPrefix(
-        wxStandardPaths::Get().GetResourcesDir() + _T("/locale"));
-#else
+#ifndef __WXMAC__
     wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
 #endif
 

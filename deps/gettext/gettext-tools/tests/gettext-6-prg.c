@@ -1,5 +1,5 @@
 /* Test program, used by the gettext-6 test.
-   Copyright (C) 2005-2007, 2009 Free Software Foundation, Inc.
+   Copyright (C) 2005-2007, 2009-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#if USE_POSIX_THREADS && (__GLIBC__ >= 2 || (defined __APPLE__ && defined __MACH__)) && HAVE_USELOCALE
+#if USE_POSIX_THREADS && ((__GLIBC__ >= 2 && !defined __UCLIBC__) || (defined __APPLE__ && defined __MACH__)) && HAVE_USELOCALE
 
 #include <pthread.h>
 

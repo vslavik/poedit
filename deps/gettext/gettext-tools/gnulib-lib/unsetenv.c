@@ -1,4 +1,4 @@
-/* Copyright (C) 1992, 1995-2002, 2005-2010 Free Software Foundation, Inc.
+/* Copyright (C) 1992, 1995-2002, 2005-2013 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -14,11 +14,11 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#include <config.h>
-
 /* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
    optimizes away the name == NULL test below.  */
 #define _GL_ARG_NONNULL(params)
+
+#include <config.h>
 
 /* Specification.  */
 #include <stdlib.h>
@@ -36,7 +36,7 @@
 #endif
 
 #if _LIBC
-/* This lock protects against simultaneous modifications of `environ'.  */
+/* This lock protects against simultaneous modifications of 'environ'.  */
 # include <bits/libc-lock.h>
 __libc_lock_define_initialized (static, envlock)
 # define LOCK   __libc_lock_lock (envlock)
@@ -97,6 +97,13 @@ weak_alias (__unsetenv, unsetenv)
 #else /* HAVE_UNSETENV */
 
 # undef unsetenv
+# if !HAVE_DECL_UNSETENV
+#  if VOID_UNSETENV
+extern void unsetenv (const char *);
+#  else
+extern int unsetenv (const char *);
+#  endif
+# endif
 
 /* Call the underlying unsetenv, in case there is hidden bookkeeping
    that needs updating beyond just modifying environ.  */

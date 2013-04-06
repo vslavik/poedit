@@ -1,5 +1,5 @@
 /* Creating and controlling threads.
-   Copyright (C) 2005-2010 Free Software Foundation, Inc.
+   Copyright (C) 2005-2013 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -12,8 +12,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2005.
    Based on GCC's gthr-posix.h, gthr-posix95.h, gthr-solaris.h,
@@ -22,6 +21,7 @@
 #include <config.h>
 
 /* Specification.  */
+# define _GLTHREAD_THREAD_INLINE _GL_EXTERN_INLINE
 #include "glthread/thread.h"
 
 #include <stdlib.h>
@@ -29,7 +29,21 @@
 
 /* ========================================================================= */
 
-#if USE_WIN32_THREADS
+#if USE_POSIX_THREADS
+
+#include <pthread.h>
+
+#ifdef PTW32_VERSION
+
+const gl_thread_t gl_null_thread /* = { .p = NULL } */;
+
+#endif
+
+#endif
+
+/* ========================================================================= */
+
+#if USE_WINDOWS_THREADS
 
 #include <process.h>
 
@@ -72,7 +86,7 @@ struct gl_thread_struct
 };
 
 /* Return a real HANDLE object for the current thread.  */
-static inline HANDLE
+static HANDLE
 get_current_thread_handle (void)
 {
   HANDLE this_handle;

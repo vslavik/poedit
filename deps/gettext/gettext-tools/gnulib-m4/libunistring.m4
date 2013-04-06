@@ -1,5 +1,5 @@
-# libunistring.m4 serial 9
-dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
+# libunistring.m4 serial 11
+dnl Copyright (C) 2009-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -25,8 +25,11 @@ m4_define([gl_libunistring_AC_DEFUN],
   m4_version_prereq([2.64],
     [[AC_DEFUN_ONCE(
         [$1], [$2])]],
-    [[AC_DEFUN(
-        [$1], [$2])]]))
+    [m4_ifdef([gl_00GNULIB],
+       [[AC_DEFUN_ONCE(
+           [$1], [$2])]],
+       [[AC_DEFUN(
+           [$1], [$2])]])]))
 gl_libunistring_AC_DEFUN([gl_LIBUNISTRING],
 [
   AC_BEFORE([$0], [gl_LIBUNISTRING_MODULE])
@@ -103,9 +106,10 @@ AC_DEFUN([gl_LIBUNISTRING_CORE],
        dnl Use other tests to distinguish them.
        if test $gl_libunistring_hexversion = 9; then
          dnl Version 0.9.2 introduced the header <unistring/cdefs.h>.
-         AC_TRY_COMPILE([#include <unistring/cdefs.h>], ,
+         AC_COMPILE_IFELSE(
+           [AC_LANG_PROGRAM([[#include <unistring/cdefs.h>]], [[]])],
            [gl_cv_libunistring_version092=true],
-           [gl_cv_libunistring_version092=false]);
+           [gl_cv_libunistring_version092=false])
          if $gl_cv_libunistring_version092; then
            dnl Version 0.9.3 changed a comment in <unistr.h>.
            gl_ABSOLUTE_HEADER_ONE([unistr.h])
@@ -119,8 +123,11 @@ AC_DEFUN([gl_LIBUNISTRING_CORE],
            fi
          else
            dnl Version 0.9.1 introduced the type casing_suffix_context_t.
-           AC_TRY_COMPILE([#include <unicase.h>
-                           casing_suffix_context_t ct;], ,
+           AC_COMPILE_IFELSE(
+             [AC_LANG_PROGRAM(
+                [[#include <unicase.h>
+                  casing_suffix_context_t ct;]],
+                [[]])],
              [gl_cv_libunistring_version091=true],
              [gl_cv_libunistring_version091=false])
            if $gl_cv_libunistring_version091; then

@@ -1,5 +1,5 @@
-# vasnprintf.m4 serial 31
-dnl Copyright (C) 2002-2004, 2006-2010 Free Software Foundation, Inc.
+# vasnprintf.m4 serial 36
+dnl Copyright (C) 2002-2004, 2006-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -29,7 +29,7 @@ AC_DEFUN([gl_REPLACE_VASNPRINTF],
   gl_PREREQ_ASNPRINTF
 ])
 
-# Prequisites of lib/printf-args.h, lib/printf-args.c.
+# Prerequisites of lib/printf-args.h, lib/printf-args.c.
 AC_DEFUN([gl_PREREQ_PRINTF_ARGS],
 [
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
@@ -37,9 +37,10 @@ AC_DEFUN([gl_PREREQ_PRINTF_ARGS],
   AC_REQUIRE([gt_TYPE_WINT_T])
 ])
 
-# Prequisites of lib/printf-parse.h, lib/printf-parse.c.
+# Prerequisites of lib/printf-parse.h, lib/printf-parse.c.
 AC_DEFUN([gl_PREREQ_PRINTF_PARSE],
 [
+  AC_REQUIRE([gl_FEATURES_H])
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
@@ -54,7 +55,6 @@ AC_DEFUN([gl_PREREQ_PRINTF_PARSE],
 # Prerequisites of lib/vasnprintf.c.
 AC_DEFUN_ONCE([gl_PREREQ_VASNPRINTF],
 [
-  AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([AC_FUNC_ALLOCA])
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
   AC_REQUIRE([gt_TYPE_WCHAR_T])
@@ -62,7 +62,10 @@ AC_DEFUN_ONCE([gl_PREREQ_VASNPRINTF],
   AC_CHECK_FUNCS([snprintf strnlen wcslen wcsnlen mbrtowc wcrtomb])
   dnl Use the _snprintf function only if it is declared (because on NetBSD it
   dnl is defined as a weak alias of snprintf; we prefer to use the latter).
-  AC_CHECK_DECLS([_snprintf], , , [#include <stdio.h>])
+  AC_CHECK_DECLS([_snprintf], , , [[#include <stdio.h>]])
+  dnl Knowing DBL_EXPBIT0_WORD and DBL_EXPBIT0_BIT enables an optimization
+  dnl in the code for NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE.
+  AC_REQUIRE([gl_DOUBLE_EXPONENT_LOCATION])
   dnl We can avoid a lot of code by assuming that snprintf's return value
   dnl conforms to ISO C99. So check that.
   AC_REQUIRE([gl_SNPRINTF_RETVAL_C99])

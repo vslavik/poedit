@@ -1,5 +1,5 @@
 /* Checking of messages in PO files.
-   Copyright (C) 2005, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2008, 2010 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2005.
 
    This program is free software: you can redistribute it and/or modify
@@ -52,6 +52,8 @@ extern int check_message (const message_ty *mp,
 /* Perform all checks on a message list.
    Return the number of errors that were seen.  */
 extern int check_message_list (message_list_ty *mlp,
+                               int ignore_untranslated_messages,
+                               int ignore_fuzzy_messages,
                                int check_newlines,
                                int check_format_strings,
                                int check_header,

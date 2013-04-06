@@ -1,5 +1,5 @@
 /* Reading C# satellite assemblies.
-   Copyright (C) 2003-2004, 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2003-2004, 2006-2008, 2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@
 #include "msgunfmt.h"
 #include "relocatable.h"
 #include "csharpexec.h"
-#include "pipe.h"
+#include "spawn-pipe.h"
 #include "wait-process.h"
 #include "read-catalog.h"
 #include "read-po.h"

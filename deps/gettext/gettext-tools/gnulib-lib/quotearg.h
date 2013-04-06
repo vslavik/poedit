@@ -1,7 +1,7 @@
 /* quotearg.h - quote arguments for output
 
-   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2006, 2008, 2009, 2010
-   Free Software Foundation, Inc.
+   Copyright (C) 1998-2002, 2004, 2006, 2008-2013 Free Software Foundation,
+   Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -112,8 +112,10 @@ enum quoting_style
     */
     escape_quoting_style,
 
-    /* Like clocale_quoting_style, but quote `like this' instead of
-       "like this" in the default C locale (ls --quoting-style=locale).
+    /* Like clocale_quoting_style, but use single quotes in the
+       default C locale or if the program does not use gettext
+       (ls --quoting-style=locale).  For UTF-8 locales, quote
+       characters will use Unicode.
 
        LC_MESSAGES=C
        quotearg_buffer:

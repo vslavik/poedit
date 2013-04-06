@@ -1,5 +1,5 @@
 /* Filtering of data through a subprocess.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2009,
    and Paolo Bonzini <bonzini@gnu.org>, 2009.
 
@@ -119,7 +119,7 @@ typedef void (*done_read_fn) (void *data_read, size_t num_bytes_read,
    true, otherwise return 127.
    Callback arguments are as described above.
 
-   Data is alternatingly written to the subprocess, through the functions
+   Data is alternately written to the subprocess, through the functions
    prepare_write and done_write, and read from the subprocess, through the
    functions prepare_read and done_read.
 
@@ -167,7 +167,7 @@ struct pipe_filter_gi;
    true, otherwise return NULL and set errno.
 
    The caller will write to the subprocess through pipe_filter_gi_write
-   and finally call pipe_filter_gi_write.  During such calls, the
+   and finally call pipe_filter_gi_close.  During such calls, the
    prepare_read and done_read function may be called to process any data
    that the subprocess has written.
 

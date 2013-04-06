@@ -1,5 +1,5 @@
 /* Determine the number of screen columns needed for a string.
-   Copyright (C) 2000-2010 Free Software Foundation, Inc.
+   Copyright (C) 2000-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,12 +35,14 @@
 /* Get iswcntrl().  */
 #include <wctype.h>
 
+/* Get INT_MAX.  */
+#include <limits.h>
+
 /* Returns the number of columns needed to represent the multibyte
    character string pointed to by STRING.  If a non-printable character
    occurs, and MBSW_REJECT_UNPRINTABLE is specified, -1 is returned.
    With flags = MBSW_REJECT_INVALID | MBSW_REJECT_UNPRINTABLE, this is
-   the multibyte analogue of the wcswidth function.
-   If STRING is not of length < INT_MAX / 2, integer overflow can occur.  */
+   the multibyte analogue of the wcswidth function.  */
 int
 mbswidth (const char *string, int flags)
 {
@@ -50,8 +52,7 @@ mbswidth (const char *string, int flags)
 /* Returns the number of columns needed to represent the multibyte
    character string pointed to by STRING of length NBYTES.  If a
    non-printable character occurs, and MBSW_REJECT_UNPRINTABLE is
-   specified, -1 is returned.
-   If NBYTES is not < INT_MAX / 2, integer overflow can occur.  */
+   specified, -1 is returned.  */
 int
 mbsnwidth (const char *string, size_t nbytes, int flags)
 {
@@ -135,11 +136,22 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
                     w = wcwidth (wc);
                     if (w >= 0)
                       /* A printable multibyte character.  */
-                      width += w;
+                      {
+                        if (w > INT_MAX - width)
+                          goto overflow;
+                        width += w;
+                      }
                     else
                       /* An unprintable multibyte character.  */
                       if (!(flags & MBSW_REJECT_UNPRINTABLE))
-                        width += (iswcntrl (wc) ? 0 : 1);
+                        {
+                          if (!iswcntrl (wc))
+                            {
+                              if (width == INT_MAX)
+                                goto overflow;
+                              width++;
+                            }
+                        }
                       else
                         return -1;
 
@@ -157,11 +169,25 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
       unsigned char c = (unsigned char) *p++;
 
       if (isprint (c))
-        width++;
+        {
+          if (width == INT_MAX)
+            goto overflow;
+          width++;
+        }
       else if (!(flags & MBSW_REJECT_UNPRINTABLE))
-        width += (iscntrl (c) ? 0 : 1);
+        {
+          if (!iscntrl (c))
+            {
+              if (width == INT_MAX)
+                goto overflow;
+              width++;
+            }
+        }
       else
         return -1;
     }
   return width;
+
+ overflow:
+  return INT_MAX;
 }

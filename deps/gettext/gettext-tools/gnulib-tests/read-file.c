@@ -1,5 +1,5 @@
 /* read-file.c -- read file contents into a string
-   Copyright (C) 2006, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009-2013 Free Software Foundation, Inc.
    Written by Simon Josefsson and Bruno Haible.
 
    This program is free software; you can redistribute it and/or modify
@@ -13,14 +13,22 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
 
 #include "read-file.h"
 
-/* Get realloc, free. */
+/* Get fstat.  */
+#include <sys/stat.h>
+
+/* Get ftello.  */
+#include <stdio.h>
+
+/* Get SIZE_MAX.  */
+#include <stdint.h>
+
+/* Get malloc, realloc, free. */
 #include <stdlib.h>
 
 /* Get errno. */
@@ -30,30 +38,87 @@
    and set *LENGTH to the length of the string.  The string is
    zero-terminated, but the terminating zero byte is not counted in
    *LENGTH.  On errors, *LENGTH is undefined, errno preserves the
-   values set by system functions (if any), and NULL is returned. */
+   values set by system functions (if any), and NULL is returned.  */
 char *
-fread_file (FILE * stream, size_t * length)
+fread_file (FILE *stream, size_t *length)
 {
   char *buf = NULL;
-  size_t alloc = 0;
-  size_t size = 0;
-  int save_errno;
+  size_t alloc = BUFSIZ;
 
-  for (;;)
-    {
-      size_t count;
-      size_t requested;
+  /* For a regular file, allocate a buffer that has exactly the right
+     size.  This avoids the need to do dynamic reallocations later.  */
+  {
+    struct stat st;
 
-      if (size + BUFSIZ + 1 > alloc)
+    if (fstat (fileno (stream), &st) >= 0 && S_ISREG (st.st_mode))
+      {
+        off_t pos = ftello (stream);
+
+        if (pos >= 0 && pos < st.st_size)
+          {
+            off_t alloc_off = st.st_size - pos;
+
+            /* '1' below, accounts for the trailing NUL.  */
+            if (SIZE_MAX - 1 < alloc_off)
+              {
+                errno = ENOMEM;
+                return NULL;
+              }
+
+            alloc = alloc_off + 1;
+          }
+      }
+  }
+
+  if (!(buf = malloc (alloc)))
+    return NULL; /* errno is ENOMEM.  */
+
+  {
+    size_t size = 0; /* number of bytes read so far */
+    int save_errno;
+
+    for (;;)
+      {
+        /* This reads 1 more than the size of a regular file
+           so that we get eof immediately.  */
+        size_t requested = alloc - size;
+        size_t count = fread (buf + size, 1, requested, stream);
+        size += count;
+
+        if (count != requested)
+          {
+            save_errno = errno;
+            if (ferror (stream))
+              break;
+
+            /* Shrink the allocated memory if possible.  */
+            if (size < alloc - 1)
+              {
+                char *smaller_buf = realloc (buf, size + 1);
+                if (smaller_buf != NULL)
+                  buf = smaller_buf;
+              }
+
+            buf[size] = '\0';
+            *length = size;
+            return buf;
+          }
+
         {
           char *new_buf;
 
-          alloc += alloc / 2;
-          if (alloc < size + BUFSIZ + 1)
-            alloc = size + BUFSIZ + 1;
+          if (alloc == SIZE_MAX)
+            {
+              save_errno = ENOMEM;
+              break;
+            }
 
-          new_buf = realloc (buf, alloc);
-          if (!new_buf)
+          if (alloc < SIZE_MAX - alloc / 2)
+            alloc = alloc + alloc / 2;
+          else
+            alloc = SIZE_MAX;
+
+          if (!(new_buf = realloc (buf, alloc)))
             {
               save_errno = errno;
               break;
@@ -61,29 +126,16 @@ fread_file (FILE * stream, size_t * length)
 
           buf = new_buf;
         }
+      }
 
-      requested = alloc - size - 1;
-      count = fread (buf + size, 1, requested, stream);
-      size += count;
-
-      if (count != requested)
-        {
-          save_errno = errno;
-          if (ferror (stream))
-            break;
-          buf[size] = '\0';
-          *length = size;
-          return buf;
-        }
-    }
-
-  free (buf);
-  errno = save_errno;
-  return NULL;
+    free (buf);
+    errno = save_errno;
+    return NULL;
+  }
 }
 
 static char *
-internal_read_file (const char *filename, size_t * length, const char *mode)
+internal_read_file (const char *filename, size_t *length, const char *mode)
 {
   FILE *stream = fopen (filename, mode);
   char *out;
@@ -117,7 +169,7 @@ internal_read_file (const char *filename, size_t * length, const char *mode)
    undefined, errno preserves the values set by system functions (if
    any), and NULL is returned.  */
 char *
-read_file (const char *filename, size_t * length)
+read_file (const char *filename, size_t *length)
 {
   return internal_read_file (filename, length, "r");
 }
@@ -130,7 +182,7 @@ read_file (const char *filename, size_t * length)
    preserves the values set by system functions (if any), and NULL is
    returned.  */
 char *
-read_binary_file (const char *filename, size_t * length)
+read_binary_file (const char *filename, size_t *length)
 {
   return internal_read_file (filename, length, "rb");
 }

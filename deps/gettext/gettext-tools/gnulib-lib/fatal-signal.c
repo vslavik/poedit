@@ -1,5 +1,5 @@
 /* Emergency actions in case of a fatal signal.
-   Copyright (C) 2003-2004, 2006-2010 Free Software Foundation, Inc.
+   Copyright (C) 2003-2004, 2006-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -71,7 +71,7 @@ static int fatal_signals[] =
 #ifdef SIGXFSZ
     SIGXFSZ,
 #endif
-    /* Woe32 signals.  */
+    /* Native Windows signals.  */
 #ifdef SIGBREAK
     SIGBREAK,
 #endif
@@ -131,8 +131,8 @@ static struct sigaction saved_sigactions[64];
 
 
 /* Uninstall the handlers.  */
-static inline void
-uninstall_handlers ()
+static void
+uninstall_handlers (void)
 {
   size_t i;
 
@@ -176,8 +176,8 @@ fatal_signal_handler (int sig)
 
 
 /* Install the handlers.  */
-static inline void
-install_handlers ()
+static void
+install_handlers (void)
 {
   size_t i;
   struct sigaction action;
@@ -251,7 +251,7 @@ at_fatal_signal (action_t action)
 static sigset_t fatal_signal_set;
 
 static void
-init_fatal_signal_set ()
+init_fatal_signal_set (void)
 {
   static bool fatal_signal_set_initialized = false;
   if (!fatal_signal_set_initialized)
@@ -271,7 +271,7 @@ init_fatal_signal_set ()
 
 /* Temporarily delay the catchable fatal signals.  */
 void
-block_fatal_signals ()
+block_fatal_signals (void)
 {
   init_fatal_signal_set ();
   sigprocmask (SIG_BLOCK, &fatal_signal_set, NULL);
@@ -279,7 +279,7 @@ block_fatal_signals ()
 
 /* Stop delaying the catchable fatal signals.  */
 void
-unblock_fatal_signals ()
+unblock_fatal_signals (void)
 {
   init_fatal_signal_set ();
   sigprocmask (SIG_UNBLOCK, &fatal_signal_set, NULL);

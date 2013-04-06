@@ -62,7 +62,7 @@
 
 ;;; Code:
 
-(defconst po-mode-version-string "2.2" "\
+(defconst po-mode-version-string "2.21" "\
 Version number of this version of po-mode.el.")
 
 ;;; Emacs portability matters - part I.
@@ -2275,7 +2275,7 @@ For more info cf. `po-subedit-ediff'."
   (recursive-edit)
   (pop-to-buffer oldbuf)
   (delete-region (point-min) end)
-  (insert-buffer b2)
+  (insert-buffer-substring b2)
   (mapc 'kill-buffer `(,b1 ,b2))
   (display-buffer entry-buffer t))
 
@@ -3494,7 +3494,7 @@ Write to your team?  ('n' if writing to the Translation Project robot) ")))
             (re-search-forward
              (concat "^" (regexp-quote mail-header-separator) "\n"))
             (save-excursion
-              (insert-buffer buffer)
+              (insert-buffer-substring buffer)
               (shell-command-on-region
                (region-beginning) (region-end)
                (concat po-gzip-uuencode-command " " name ".gz") t))))))

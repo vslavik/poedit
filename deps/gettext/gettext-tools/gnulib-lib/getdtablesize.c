@@ -1,5 +1,5 @@
 /* getdtablesize() function for platforms that don't have it.
-   Copyright (C) 2008-2010 Free Software Foundation, Inc.
+   Copyright (C) 2008-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2008.
 
    This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,29 @@
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 #include <stdio.h>
+
+#include "msvc-inval.h"
+
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+static int
+_setmaxstdio_nothrow (int newmax)
+{
+  int result;
+
+  TRY_MSVC_INVAL
+    {
+      result = _setmaxstdio (newmax);
+    }
+  CATCH_MSVC_INVAL
+    {
+      result = -1;
+    }
+  DONE_MSVC_INVAL;
+
+  return result;
+}
+# define _setmaxstdio _setmaxstdio_nothrow
+#endif
 
 /* Cache for the previous getdtablesize () result.  */
 static int dtablesize;

@@ -1,7 +1,7 @@
 /* Convert string representation of a number into an integer value.
 
-   Copyright (C) 1991, 1992, 1994, 1995, 1996, 1997, 1998, 1999, 2003, 2005,
-   2006, 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 1991-1992, 1994-1999, 2003, 2005-2007, 2009-2013 Free Software
+   Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C
    Library.  Bugs can be reported to bug-glibc@gnu.org.
@@ -40,7 +40,7 @@
 # include "../locale/localeinfo.h"
 #endif
 
-/* Nonzero if we are defining `strtoul' or `strtoull', operating on
+/* Nonzero if we are defining 'strtoul' or 'strtoull', operating on
    unsigned integers.  */
 #ifndef UNSIGNED
 # define UNSIGNED 0
@@ -110,8 +110,8 @@
 # endif
 #endif
 
-/* If QUAD is defined, we are defining `strtoll' or `strtoull',
-   operating on `long long int's.  */
+/* If QUAD is defined, we are defining 'strtoll' or 'strtoull',
+   operating on 'long long int's.  */
 #ifdef QUAD
 # define LONG long long
 # define STRTOL_LONG_MIN LLONG_MIN
@@ -141,11 +141,11 @@
          ? (t) 0 \
          : TYPE_SIGNED_MAGNITUDE (t) \
          ? ~ (t) 0 \
-         : ~ (t) 0 << (sizeof (t) * CHAR_BIT - 1)))
+         : ~ TYPE_MAXIMUM (t)))
 # define TYPE_MAXIMUM(t) \
    ((t) (! TYPE_SIGNED (t) \
          ? (t) -1 \
-         : ~ (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))))
+         : ((((t) 1 << (sizeof (t) * CHAR_BIT - 2)) - 1) * 2 + 1)))
 
 # ifndef ULLONG_MAX
 #  define ULLONG_MAX TYPE_MAXIMUM (unsigned long long)
@@ -186,9 +186,8 @@
 # define LOCALE_PARAM_PROTO
 #endif
 
-#include <wchar.h>
-
 #ifdef USE_WIDE_CHAR
+# include <wchar.h>
 # include <wctype.h>
 # define L_(Ch) L##Ch
 # define UCHAR_TYPE wint_t
@@ -228,7 +227,7 @@
 
 
 
-/* Convert NPTR to an `unsigned long int' or `long int' in base BASE.
+/* Convert NPTR to an 'unsigned long int' or 'long int' in base BASE.
    If BASE is 0 the base is determined by the presence of a leading
    zero, indicating octal or a leading "0x" or "0X", indicating hexadecimal.
    If BASE is < 2 or > 36, it is reset to 10.
@@ -381,7 +380,7 @@ INTERNAL (strtol) (const STRING_TYPE *nptr, STRING_TYPE **endptr,
 
 #if !UNSIGNED
   /* Check for a value that is within the range of
-     `unsigned LONG int', but outside the range of `LONG int'.  */
+     'unsigned LONG int', but outside the range of 'LONG int'.  */
   if (overflow == 0
       && i > (negative
               ? -((unsigned LONG int) (STRTOL_LONG_MIN + 1)) + 1
@@ -406,7 +405,7 @@ noconv:
   /* We must handle a special case here: the base is 0 or 16 and the
      first two characters are '0' and 'x', but the rest are no
      hexadecimal digits.  This is no error case.  We return 0 and
-     ENDPTR points to the `x`.  */
+     ENDPTR points to the 'x'.  */
   if (endptr != NULL)
     {
       if (save - nptr >= 2 && TOUPPER (save[-1]) == L_('X')

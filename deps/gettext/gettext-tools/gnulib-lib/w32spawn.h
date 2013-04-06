@@ -1,5 +1,5 @@
-/* Auxiliary functions for the creation of subprocesses.  Native Woe32 API.
-   Copyright (C) 2001, 2003-2010 Free Software Foundation, Inc.
+/* Auxiliary functions for the creation of subprocesses.  Native Windows API.
+   Copyright (C) 2001, 2003-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -15,17 +15,20 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Get declarations of the Win32 API functions.  */
+/* Get declarations of the native Windows API functions.  */
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-/* Get _get_osfhandle() and _open_osfhandle().  */
+/* Get _open_osfhandle().  */
 #include <io.h>
 
 #include <stdbool.h>
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+
+/* Get _get_osfhandle().  */
+#include "msvc-nothrow.h"
 
 #include "cloexec.h"
 #include "xalloc.h"
@@ -98,7 +101,7 @@ undup_safer_noinherit (int tempfd, int origfd)
          v.dwPlatformId == VER_PLATFORM_WIN32_NT;
       }) ? "cmd.exe" : "command.com").
    Instead it simply concatenates the arguments, separated by ' ', and calls
-   CreateProcess().  We must quote the arguments since Win32 CreateProcess()
+   CreateProcess().  We must quote the arguments since Windows CreateProcess()
    interprets characters like ' ', '\t', '\\', '"' (but not '<' and '>') in a
    special way:
    - Space and tab are interpreted as delimiters. They are not treated as
@@ -112,8 +115,15 @@ undup_safer_noinherit (int tempfd, int origfd)
        \" -> "
        \\\" -> \"
        \\\\\" -> \\"
+   - '*', '?' characters may get expanded through wildcard expansion in the
+     callee: By default, in the callee, the initialization code before main()
+     takes the result of GetCommandLine(), wildcard-expands it, and passes it
+     to main(). The exceptions to this rule are:
+       - programs that inspect GetCommandLine() and ignore argv,
+       - mingw programs that have a global variable 'int _CRT_glob = 0;',
+       - Cygwin programs, when invoked from a Cygwin program.
  */
-#define SHELL_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037"
+#define SHELL_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037*?"
 #define SHELL_SPACE_CHARS " \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037"
 static char **
 prepare_spawn (char **argv)
@@ -133,7 +143,7 @@ prepare_spawn (char **argv)
      script, not a program.
      On Unix, this would be "/bin/sh". On native Windows, "sh" is actually
      "sh.exe".  We have to omit the directory part and rely on the search in
-     PATH, because the mingw "mount points" are not visible inside Win32
+     PATH, because the mingw "mount points" are not visible inside Windows
      CreateProcess().  */
   *new_argv++ = "sh.exe";
 

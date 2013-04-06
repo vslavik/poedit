@@ -1,5 +1,5 @@
 /* Return the canonical absolute name of a given file.
-   Copyright (C) 1996-2010 Free Software Foundation, Inc.
+   Copyright (C) 1996-2013 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,14 +16,15 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #ifndef _LIBC
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   optimizes away the name == NULL test below.  */
+# define _GL_ARG_NONNULL(params)
+
+# define _GL_USE_STDLIB_ALLOC 1
 # include <config.h>
 #endif
 
 #if !HAVE_CANONICALIZE_FILE_NAME || !FUNC_REALPATH_WORKS || defined _LIBC
-
-/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
-   optimizes away the name == NULL test below.  */
-#define _GL_ARG_NONNULL(params)
 
 /* Specification.  */
 #include <stdlib.h>
@@ -50,7 +51,14 @@
 # define __realpath realpath
 # include "pathmax.h"
 # include "malloca.h"
+# include "dosname.h"
 # if HAVE_GETCWD
+#  if IN_RELOCWRAPPER
+    /* When building the relocatable program wrapper, use the system's getcwd
+       function, not the gnulib override, otherwise we would get a link error.
+     */
+#   undef getcwd
+#  endif
 #  ifdef VMS
     /* We want the directory in Unix syntax, not in VMS syntax.  */
 #   define __getcwd(buf, max) getcwd (buf, max, 0)
@@ -77,10 +85,10 @@
 
 #if !FUNC_REALPATH_WORKS || defined _LIBC
 /* Return the canonical absolute name of file NAME.  A canonical name
-   does not contain any `.', `..' components nor any repeated path
+   does not contain any ".", ".." components nor any repeated path
    separators ('/') or symlinks.  All path components must exist.  If
    RESOLVED is null, the result is malloc'd; otherwise, if the
-   canonical name is PATH_MAX chars or more, returns null with `errno'
+   canonical name is PATH_MAX chars or more, returns null with 'errno'
    set to ENAMETOOLONG; if the name fits in fewer than PATH_MAX chars,
    returns the name in RESOLVED.  If the name cannot be resolved and
    RESOLVED is non-NULL, it contains the path of the first component
@@ -94,6 +102,7 @@ __realpath (const char *name, char *resolved)
   const char *start, *end, *rpath_limit;
   long int path_max;
   int num_links = 0;
+  size_t prefix_len;
 
   if (name == NULL)
     {
@@ -118,7 +127,7 @@ __realpath (const char *name, char *resolved)
 #else
   path_max = pathconf (name, _PC_PATH_MAX);
   if (path_max <= 0)
-    path_max = 1024;
+    path_max = 8192;
 #endif
 
   if (resolved == NULL)
@@ -136,7 +145,11 @@ __realpath (const char *name, char *resolved)
     rpath = resolved;
   rpath_limit = rpath + path_max;
 
-  if (name[0] != '/')
+  /* This is always zero for Posix hosts, but can be 2 for MS-Windows
+     and MS-DOS X:/foo/bar file names.  */
+  prefix_len = FILE_SYSTEM_PREFIX_LEN (name);
+
+  if (!IS_ABSOLUTE_FILE_NAME (name))
     {
       if (!__getcwd (rpath, path_max))
         {
@@ -144,16 +157,28 @@ __realpath (const char *name, char *resolved)
           goto error;
         }
       dest = strchr (rpath, '\0');
+      start = name;
+      prefix_len = FILE_SYSTEM_PREFIX_LEN (rpath);
     }
   else
     {
-      rpath[0] = '/';
-      dest = rpath + 1;
-      if (DOUBLE_SLASH_IS_DISTINCT_ROOT && name[1] == '/')
-        *dest++ = '/';
+      dest = rpath;
+      if (prefix_len)
+        {
+          memcpy (rpath, name, prefix_len);
+          dest += prefix_len;
+        }
+      *dest++ = '/';
+      if (DOUBLE_SLASH_IS_DISTINCT_ROOT)
+        {
+          if (ISSLASH (name[1]) && !ISSLASH (name[2]) && !prefix_len)
+            *dest++ = '/';
+          *dest = '\0';
+        }
+      start = name + prefix_len;
     }
 
-  for (start = end = name; *start; start = end)
+  for (end = start; *start; start = end)
     {
 #ifdef _LIBC
       struct stat64 st;
@@ -163,11 +188,11 @@ __realpath (const char *name, char *resolved)
       int n;
 
       /* Skip sequence of multiple path-separators.  */
-      while (*start == '/')
+      while (ISSLASH (*start))
         ++start;
 
       /* Find end of path component.  */
-      for (end = start; *end && *end != '/'; ++end)
+      for (end = start; *end && !ISSLASH (*end); ++end)
         /* Nothing.  */;
 
       if (end - start == 0)
@@ -177,17 +202,19 @@ __realpath (const char *name, char *resolved)
       else if (end - start == 2 && start[0] == '.' && start[1] == '.')
         {
           /* Back up to previous component, ignore if at root already.  */
-          if (dest > rpath + 1)
-            while ((--dest)[-1] != '/');
-          if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rpath + 1
-              && *dest == '/')
+          if (dest > rpath + prefix_len + 1)
+            for (--dest; dest > rpath && !ISSLASH (dest[-1]); --dest)
+              continue;
+          if (DOUBLE_SLASH_IS_DISTINCT_ROOT
+              && dest == rpath + 1 && !prefix_len
+              && ISSLASH (*dest) && !ISSLASH (dest[1]))
             dest++;
         }
       else
         {
           size_t new_size;
 
-          if (dest[-1] != '/')
+          if (!ISSLASH (dest[-1]))
             *dest++ = '/';
 
           if (dest + (end - start) >= rpath_limit)
@@ -198,7 +225,7 @@ __realpath (const char *name, char *resolved)
               if (resolved)
                 {
                   __set_errno (ENAMETOOLONG);
-                  if (dest > rpath + 1)
+                  if (dest > rpath + prefix_len + 1)
                     dest--;
                   *dest = '\0';
                   goto error;
@@ -288,20 +315,32 @@ __realpath (const char *name, char *resolved)
               memmove (&extra_buf[n], end, len + 1);
               name = end = memcpy (extra_buf, buf, n);
 
-              if (buf[0] == '/')
+              if (IS_ABSOLUTE_FILE_NAME (buf))
                 {
-                  dest = rpath + 1;     /* It's an absolute symlink */
-                  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && buf[1] == '/')
-                    *dest++ = '/';
+                  size_t pfxlen = FILE_SYSTEM_PREFIX_LEN (buf);
+
+                  if (pfxlen)
+                    memcpy (rpath, buf, pfxlen);
+                  dest = rpath + pfxlen;
+                  *dest++ = '/'; /* It's an absolute symlink */
+                  if (DOUBLE_SLASH_IS_DISTINCT_ROOT)
+                    {
+                      if (ISSLASH (buf[1]) && !ISSLASH (buf[2]) && !pfxlen)
+                        *dest++ = '/';
+                      *dest = '\0';
+                    }
+                  /* Install the new prefix to be in effect hereafter.  */
+                  prefix_len = pfxlen;
                 }
               else
                 {
                   /* Back up to previous component, ignore if at root
                      already: */
-                  if (dest > rpath + 1)
-                    while ((--dest)[-1] != '/');
+                  if (dest > rpath + prefix_len + 1)
+                    for (--dest; dest > rpath && !ISSLASH (dest[-1]); --dest)
+                      continue;
                   if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rpath + 1
-                      && *dest == '/')
+                      && ISSLASH (*dest) && !ISSLASH (dest[1]) && !prefix_len)
                     dest++;
                 }
             }
@@ -312,9 +351,10 @@ __realpath (const char *name, char *resolved)
             }
         }
     }
-  if (dest > rpath + 1 && dest[-1] == '/')
+  if (dest > rpath + prefix_len + 1 && ISSLASH (dest[-1]))
     --dest;
-  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rpath + 1 && *dest == '/')
+  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rpath + 1 && !prefix_len
+      && ISSLASH (*dest) && !ISSLASH (dest[1]))
     dest++;
   *dest = '\0';
 

@@ -1,6 +1,6 @@
 /* closexec.c - set or clear the close-on-exec descriptor flag
 
-   Copyright (C) 2004, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@
 
 #include <stdbool.h>
 
-/* Set the `FD_CLOEXEC' flag of DESC if VALUE is true,
+/* Set the 'FD_CLOEXEC' flag of DESC if VALUE is true,
    or clear the flag if VALUE is false.
-   Return 0 on success, or -1 on error with `errno' set.
+   Return 0 on success, or -1 on error with 'errno' set.
 
    Note that on MingW, this function does NOT protect DESC from being
    inherited into spawned children.  Instead, either use dup_cloexec

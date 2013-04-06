@@ -1,5 +1,5 @@
 /* backupfile.c -- make Emacs style backup file names
-   Copyright (C) 1990-1999, 2000-2003, 2005-2006 Free Software Foundation, Inc.
+   Copyright (C) 1990-1999, 2000-2003, 2005-2006, 2012 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@
    - It's typically faster.
    Posix 1003.2-1992 section 2.5.2.1 page 50 lines 1556-1558 says that
    only '0' through '9' are digits.  Prefer ISDIGIT to isdigit unless
-   it's important to use the locale's definition of `digit' even when the
+   it's important to use the locale's definition of 'digit' even when the
    host does not conform to Posix.  */
 #define ISDIGIT(c) ((unsigned) (c) - '0' <= 9)
 
@@ -90,7 +90,7 @@ find_backup_file_name (const char *file, enum backup_type backup_type)
   char *s;
   const char *suffix = simple_backup_suffix;
 
-  /* Allow room for simple or `.~N~' backups.  */
+  /* Allow room for simple or '.~N~' backups.  */
   backup_suffix_size_max = strlen (simple_backup_suffix) + 1;
   if (HAVE_DIR && backup_suffix_size_max < numbered_suffix_size_max)
     backup_suffix_size_max = numbered_suffix_size_max;

@@ -1,5 +1,5 @@
-# include_next.m4 serial 14
-dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
+# include_next.m4 serial 23
+dnl Copyright (C) 2006-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -24,6 +24,13 @@ dnl does not warn about some things, and on some systems (Solaris and Interix)
 dnl __STDC__ evaluates to 0 instead of to 1. The latter is an undesired side
 dnl effect; we are therefore careful to use 'defined __STDC__' or '1' instead
 dnl of plain '__STDC__'.
+dnl
+dnl PRAGMA_COLUMNS can be used in files that override system header files, so
+dnl as to avoid compilation errors on HP NonStop systems when the gnulib file
+dnl is included by a system header file that does a "#pragma COLUMNS 80" (which
+dnl has the effect of truncating the lines of that file and all files that it
+dnl includes to 80 columns) and the gnulib file has lines longer than 80
+dnl columns.
 
 AC_DEFUN([gl_INCLUDE_NEXT],
 [
@@ -68,10 +75,11 @@ EOF
 EOF
      gl_save_CPPFLAGS="$CPPFLAGS"
      CPPFLAGS="$gl_save_CPPFLAGS -Iconftestd1b -Iconftestd2"
-     AC_COMPILE_IFELSE([#include <conftest.h>],
+dnl We intentionally avoid using AC_LANG_SOURCE here.
+     AC_COMPILE_IFELSE([AC_LANG_DEFINES_PROVIDED[#include <conftest.h>]],
        [gl_cv_have_include_next=yes],
        [CPPFLAGS="$gl_save_CPPFLAGS -Iconftestd1a -Iconftestd2"
-        AC_COMPILE_IFELSE([#include <conftest.h>],
+        AC_COMPILE_IFELSE([AC_LANG_DEFINES_PROVIDED[#include <conftest.h>]],
           [gl_cv_have_include_next=buggy],
           [gl_cv_have_include_next=no])
        ])
@@ -97,6 +105,24 @@ EOF
   AC_SUBST([INCLUDE_NEXT])
   AC_SUBST([INCLUDE_NEXT_AS_FIRST_DIRECTIVE])
   AC_SUBST([PRAGMA_SYSTEM_HEADER])
+  AC_CACHE_CHECK([whether system header files limit the line length],
+    [gl_cv_pragma_columns],
+    [dnl HP NonStop systems, which define __TANDEM, have this misfeature.
+     AC_EGREP_CPP([choke me],
+       [
+#ifdef __TANDEM
+choke me
+#endif
+       ],
+       [gl_cv_pragma_columns=yes],
+       [gl_cv_pragma_columns=no])
+    ])
+  if test $gl_cv_pragma_columns = yes; then
+    PRAGMA_COLUMNS="#pragma COLUMNS 10000"
+  else
+    PRAGMA_COLUMNS=
+  fi
+  AC_SUBST([PRAGMA_COLUMNS])
 ])
 
 # gl_CHECK_NEXT_HEADERS(HEADER1 HEADER2 ...)
@@ -117,71 +143,128 @@ EOF
 # even if the compiler does not support include_next.
 # The three "///" are to pacify Sun C 5.8, which otherwise would say
 # "warning: #include of /usr/include/... may be non-portable".
-# Use `""', not `<>', so that the /// cannot be confused with a C99 comment.
+# Use '""', not '<>', so that the /// cannot be confused with a C99 comment.
 # Note: This macro assumes that the header file is not empty after
 # preprocessing, i.e. it does not only define preprocessor macros but also
 # provides some type/enum definitions or function/variable declarations.
+#
+# This macro also checks whether each header exists, by invoking
+# AC_CHECK_HEADERS_ONCE or AC_CHECK_HEADERS on each argument.
 AC_DEFUN([gl_CHECK_NEXT_HEADERS],
+[
+  gl_NEXT_HEADERS_INTERNAL([$1], [check])
+])
+
+# gl_NEXT_HEADERS(HEADER1 HEADER2 ...)
+# ------------------------------------
+# Like gl_CHECK_NEXT_HEADERS, except do not check whether the headers exist.
+# This is suitable for headers like <stddef.h> that are standardized by C89
+# and therefore can be assumed to exist.
+AC_DEFUN([gl_NEXT_HEADERS],
+[
+  gl_NEXT_HEADERS_INTERNAL([$1], [assume])
+])
+
+# The guts of gl_CHECK_NEXT_HEADERS and gl_NEXT_HEADERS.
+AC_DEFUN([gl_NEXT_HEADERS_INTERNAL],
 [
   AC_REQUIRE([gl_INCLUDE_NEXT])
   AC_REQUIRE([AC_CANONICAL_HOST])
-  AC_CHECK_HEADERS_ONCE([$1])
 
+  m4_if([$2], [check],
+    [AC_CHECK_HEADERS_ONCE([$1])
+    ])
+
+dnl FIXME: gl_next_header and gl_header_exists must be used unquoted
+dnl until we can assume autoconf 2.64 or newer.
   m4_foreach_w([gl_HEADER_NAME], [$1],
     [AS_VAR_PUSHDEF([gl_next_header],
                     [gl_cv_next_]m4_defn([gl_HEADER_NAME]))
      if test $gl_cv_have_include_next = yes; then
-       AS_VAR_SET([gl_next_header], ['<'gl_HEADER_NAME'>'])
+       AS_VAR_SET(gl_next_header, ['<'gl_HEADER_NAME'>'])
      else
        AC_CACHE_CHECK(
          [absolute name of <]m4_defn([gl_HEADER_NAME])[>],
          m4_defn([gl_next_header]),
-         [AS_VAR_PUSHDEF([gl_header_exists],
-                         [ac_cv_header_]m4_defn([gl_HEADER_NAME]))
-          if test AS_VAR_GET(gl_header_exists) = yes; then
-            AC_LANG_CONFTEST(
-              [AC_LANG_SOURCE(
-                 [[#include <]]m4_dquote(m4_defn([gl_HEADER_NAME]))[[>]]
-               )])
-            dnl AIX "xlc -E" and "cc -E" omit #line directives for header files
-            dnl that contain only a #include of other header files and no
-            dnl non-comment tokens of their own. This leads to a failure to
-            dnl detect the absolute name of <dirent.h>, <signal.h>, <poll.h>
-            dnl and others. The workaround is to force preservation of comments
-            dnl through option -C. This ensures all necessary #line directives
-            dnl are present. GCC supports option -C as well.
-            case "$host_os" in
-              aix*) gl_absname_cpp="$ac_cpp -C" ;;
-              *)    gl_absname_cpp="$ac_cpp" ;;
-            esac
-            dnl eval is necessary to expand gl_absname_cpp.
-            dnl Ultrix and Pyramid sh refuse to redirect output of eval,
-            dnl so use subshell.
-            AS_VAR_SET([gl_next_header],
-              ['"'`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&AS_MESSAGE_LOG_FD |
-               sed -n '\#/]m4_defn([gl_HEADER_NAME])[#{
-                 s#.*"\(.*/]m4_defn([gl_HEADER_NAME])[\)".*#\1#
-                 s#^/[^/]#//&#
-                 p
-                 q
-               }'`'"'])
-          else
-            AS_VAR_SET([gl_next_header], ['<'gl_HEADER_NAME'>'])
-          fi
-          AS_VAR_POPDEF([gl_header_exists])])
+         [m4_if([$2], [check],
+            [AS_VAR_PUSHDEF([gl_header_exists],
+                            [ac_cv_header_]m4_defn([gl_HEADER_NAME]))
+             if test AS_VAR_GET(gl_header_exists) = yes; then
+             AS_VAR_POPDEF([gl_header_exists])
+            ])
+               AC_LANG_CONFTEST(
+                 [AC_LANG_SOURCE(
+                    [[#include <]]m4_dquote(m4_defn([gl_HEADER_NAME]))[[>]]
+                  )])
+               dnl AIX "xlc -E" and "cc -E" omit #line directives for header
+               dnl files that contain only a #include of other header files and
+               dnl no non-comment tokens of their own. This leads to a failure
+               dnl to detect the absolute name of <dirent.h>, <signal.h>,
+               dnl <poll.h> and others. The workaround is to force preservation
+               dnl of comments through option -C. This ensures all necessary
+               dnl #line directives are present. GCC supports option -C as well.
+               case "$host_os" in
+                 aix*) gl_absname_cpp="$ac_cpp -C" ;;
+                 *)    gl_absname_cpp="$ac_cpp" ;;
+               esac
+changequote(,)
+               case "$host_os" in
+                 mingw*)
+                   dnl For the sake of native Windows compilers (excluding gcc),
+                   dnl treat backslash as a directory separator, like /.
+                   dnl Actually, these compilers use a double-backslash as
+                   dnl directory separator, inside the
+                   dnl   # line "filename"
+                   dnl directives.
+                   gl_dirsep_regex='[/\\]'
+                   ;;
+                 *)
+                   gl_dirsep_regex='\/'
+                   ;;
+               esac
+               dnl A sed expression that turns a string into a basic regular
+               dnl expression, for use within "/.../".
+               gl_make_literal_regex_sed='s,[]$^\\.*/[],\\&,g'
+changequote([,])
+               gl_header_literal_regex=`echo ']m4_defn([gl_HEADER_NAME])[' \
+                                        | sed -e "$gl_make_literal_regex_sed"`
+               gl_absolute_header_sed="/${gl_dirsep_regex}${gl_header_literal_regex}/"'{
+                   s/.*"\(.*'"${gl_dirsep_regex}${gl_header_literal_regex}"'\)".*/\1/
+changequote(,)dnl
+                   s|^/[^/]|//&|
+changequote([,])dnl
+                   p
+                   q
+                 }'
+               dnl eval is necessary to expand gl_absname_cpp.
+               dnl Ultrix and Pyramid sh refuse to redirect output of eval,
+               dnl so use subshell.
+               AS_VAR_SET(gl_next_header,
+                 ['"'`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&AS_MESSAGE_LOG_FD |
+                      sed -n "$gl_absolute_header_sed"`'"'])
+          m4_if([$2], [check],
+            [else
+               AS_VAR_SET(gl_next_header, ['<'gl_HEADER_NAME'>'])
+             fi
+            ])
+         ])
      fi
      AC_SUBST(
        AS_TR_CPP([NEXT_]m4_defn([gl_HEADER_NAME])),
-       [AS_VAR_GET([gl_next_header])])
+       [AS_VAR_GET(gl_next_header)])
      if test $gl_cv_have_include_next = yes || test $gl_cv_have_include_next = buggy; then
        # INCLUDE_NEXT_AS_FIRST_DIRECTIVE='include_next'
        gl_next_as_first_directive='<'gl_HEADER_NAME'>'
      else
        # INCLUDE_NEXT_AS_FIRST_DIRECTIVE='include'
-       gl_next_as_first_directive=AS_VAR_GET([gl_next_header])
+       gl_next_as_first_directive=AS_VAR_GET(gl_next_header)
      fi
      AC_SUBST(
        AS_TR_CPP([NEXT_AS_FIRST_DIRECTIVE_]m4_defn([gl_HEADER_NAME])),
        [$gl_next_as_first_directive])
      AS_VAR_POPDEF([gl_next_header])])
 ])
+
+# Autoconf 2.68 added warnings for our use of AC_COMPILE_IFELSE;
+# this fallback is safe for all earlier autoconf versions.
+m4_define_default([AC_LANG_DEFINES_PROVIDED])

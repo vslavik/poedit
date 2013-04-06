@@ -1,5 +1,5 @@
 /* POSIX compatible signal blocking.
-   Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2008-2013 Free Software Foundation, Inc.
    Written by Eric Blake <ebb9@byu.net>, 2008.
 
    This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-/* This implementation of sigaction is tailored to Woe32 behavior:
+/* This implementation of sigaction is tailored to native Windows behavior:
    signal() has SysV semantics (ie. the handler is uninstalled before
    it is invoked).  This is an inherent data race if an asynchronous
    signal is sent twice in a row before we can reinstall our handler,
@@ -39,9 +39,9 @@
      - We don't implement SA_NOCLDSTOP or SA_NOCLDWAIT, because SIGCHLD
        is not defined.
      - We don't implement SA_ONSTACK, because sigaltstack() is not present.
-     - We ignore SA_RESTART, because blocking Win32 calls are not interrupted
-       anyway when an asynchronous signal occurs, and the MSVCRT runtime
-       never sets errno to EINTR.
+     - We ignore SA_RESTART, because blocking native Windows API calls are
+       not interrupted anyway when an asynchronous signal occurs, and the
+       MSVCRT runtime never sets errno to EINTR.
      - We don't implement SA_SIGINFO because it is impossible to do so
        portably.
 
@@ -142,10 +142,10 @@ sigaction (int sig, const struct sigaction *restrict act,
       return -1;
     }
 
-  #ifdef SIGABRT_COMPAT
+#ifdef SIGABRT_COMPAT
   if (sig == SIGABRT_COMPAT)
     sig = SIGABRT;
-  #endif
+#endif
 
   /* POSIX requires sigaction() to be async-signal-safe.  In other
      words, if an asynchronous signal can occur while we are anywhere

@@ -1,5 +1,5 @@
 /* Tests of readlink.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ test_readlink (ssize_t (*func) (char const *, char *, size_t), bool print)
   ASSERT (errno == ENOENT);
   errno = 0;
   ASSERT (func ("", buf, sizeof buf) == -1);
-  ASSERT (errno == ENOENT);
+  ASSERT (errno == ENOENT || errno == EINVAL);
   errno = 0;
   ASSERT (func (".", buf, sizeof buf) == -1);
   ASSERT (errno == EINVAL);
@@ -51,7 +51,7 @@ test_readlink (ssize_t (*func) (char const *, char *, size_t), bool print)
   ASSERT (errno == EINVAL);
   errno = 0;
   ASSERT (func (BASE "file/", buf, sizeof buf) == -1);
-  ASSERT (errno == ENOTDIR);
+  ASSERT (errno == ENOTDIR || errno == EINVAL); /* AIX yields EINVAL */
 
   /* Now test actual symlinks.  */
   if (symlink (BASE "dir", BASE "link"))
@@ -74,7 +74,7 @@ test_readlink (ssize_t (*func) (char const *, char *, size_t), bool print)
   ASSERT (symlink (BASE "file", BASE "link2") == 0);
   errno = 0;
   ASSERT (func (BASE "link2/", buf, sizeof buf) == -1);
-  ASSERT (errno == ENOTDIR);
+  ASSERT (errno == ENOTDIR || errno == EINVAL); /* AIX yields EINVAL */
   ASSERT (unlink (BASE "file") == 0);
   ASSERT (unlink (BASE "link2") == 0);
   {

@@ -1,5 +1,5 @@
 /* Auxiliary code for filtering of data through a subprocess.
-   Copyright (C) 2001-2003, 2008-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2008-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2009.
 
    This program is free software: you can redistribute it and/or modify
@@ -15,6 +15,10 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef PIPE_FILTER_AUX_INLINE
+# define PIPE_FILTER_AUX_INLINE _GL_INLINE
+#endif
 
 #ifndef SSIZE_MAX
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
@@ -39,7 +43,7 @@
    These functions can return -1/EINTR even though we don't have any
    signal handlers set up, namely when we get interrupted via SIGSTOP.  */
 
-static inline int
+PIPE_FILTER_AUX_INLINE int
 nonintr_close (int fd)
 {
   int retval;
@@ -53,7 +57,7 @@ nonintr_close (int fd)
 #undef close /* avoid warning related to gnulib module unistd */
 #define close nonintr_close
 
-static inline ssize_t
+PIPE_FILTER_AUX_INLINE ssize_t
 nonintr_read (int fd, void *buf, size_t count)
 {
   ssize_t retval;
@@ -66,7 +70,7 @@ nonintr_read (int fd, void *buf, size_t count)
 }
 #define read nonintr_read
 
-static inline ssize_t
+PIPE_FILTER_AUX_INLINE ssize_t
 nonintr_write (int fd, const void *buf, size_t count)
 {
   ssize_t retval;
@@ -82,7 +86,7 @@ nonintr_write (int fd, const void *buf, size_t count)
 
 # if HAVE_SELECT
 
-static inline int
+PIPE_FILTER_AUX_INLINE int
 nonintr_select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
                 struct timeval *timeout)
 {
@@ -102,9 +106,6 @@ nonintr_select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
 #endif
 
 /* Non-blocking I/O.  */
-#ifndef O_NONBLOCK
-# define O_NONBLOCK O_NDELAY
-#endif
 #if HAVE_SELECT
 # define IS_EAGAIN(errcode) 0
 #else
@@ -114,3 +115,5 @@ nonintr_select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
 #  define IS_EAGAIN(errcode) ((errcode) == EAGAIN)
 # endif
 #endif
+
+_GL_INLINE_HEADER_END

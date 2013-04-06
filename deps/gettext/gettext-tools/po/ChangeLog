@@ -1,3 +1,86 @@
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-0.18.2 released.
+
+2012-12-07  Bruno Haible  <bruno@clisp.org>
+
+	* de.po: Update from Karl Eichwalder <ke@suse.de>.
+	* gl.po: Update from Leandro Regueiro <leandro.regueiro@gmail.com>.
+	* ja.po: Update from Masahito Yamaga <ma@yama-ga.com>.
+	* pa.po: New file, from A S Alam <aalam@users.sf.net>.
+	* sk.po: Update from Marcel Telka <marcel@telka.sk>.
+	* uk.po: Update from Yuri Chornoivan <yurchor@ukr.net>.
+	* vi.po: Update from Trần Ngọc Quân <vnwildman@gmail.com>.
+	* LINGUAS: Add pa.
+
+2012-02-19  Bruno Haible  <bruno@clisp.org>
+
+	Rules.quot: Reenable use of build gettext tools in gettext package.
+	* Rules-quot (.insert-header.po-update-en): Augment PATH in the
+	gettext-tools package.
+
+2011-08-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Makefile.in.in: fix make -q problem
+	* build-aux/po/Makefile.in.in (check-macro-version): Remove this
+	rule, since there's no file named 'check-macro-version' and its
+	use as a file breaks make -q.
+	(all): Don't depend on check-macro-version.
+	(CHECK_MACRO_VERSION): New macro.
+	(stamp-po): Use it.
+
+2011-08-28  Bruno Haible  <bruno@clisp.org>
+
+	* ja.po: Update from Masahito Yamaga <ma@yama-ga.com>.
+
+2011-06-02  Bruno Haible  <bruno@clisp.org>
+
+	* POTFILES.in: Add src/format-gfc-internal.c, src/format-qt-plural.c.
+
+2011-01-18  Bruno Haible  <bruno@clisp.org>
+
+	* da.po: Update from Keld Simonsen <keld@keldix.com>.
+	* sl.po: Update from Primoz Peterlin <primozz.peterlin@gmail.com>.
+
+2011-06-02  Bruno Haible  <bruno@clisp.org>
+
+	Update after gnulib changed.
+	* POTFILES.in: Add gnulib-lib/copy-acl.c, gnulib-lib/pipe-filter-ii.c,
+	gnulib-lib/set-mode-acl.c, gnulib-lib/spawn-pipe.c. Remove
+	gnulib-lib/pipe.c.
+
+2011-06-02  Bruno Haible  <bruno@clisp.org>
+
+	* POTFILES.in: Add src/format-c-parse.h.
+
+2010-10-10  Bruno Haible  <bruno@clisp.org>
+
+	* bg.po: Update from Roumen Petrov <transl@roumenpetrov.info>.
+
+2010-08-23  Bruno Haible  <bruno@clisp.org>
+
+	* fi.po: Update from Jorma Karvonen <karvonen.jorma@gmail.com>.
+	* it.po: Update from Marco Colombo <m.colombo@ed.ac.uk>.
+
+2010-07-27  Bruno Haible  <bruno@clisp.org>
+
+	* fr.po: Update from Christophe Combelles <ccomb@free.fr>.
+
+2010-07-02  Bruno Haible  <bruno@clisp.org>
+
+	* zh_CN.po: Update from Ji ZhengYu <zhengyuji@gmail.com>.
+
+2010-06-12  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.in.in ($(DOMAIN).pot-update): When GNU find is available,
+	avoid grepping through monster files.
+	Reported by Jim Meyering <jim@meyering.net>.
+
+2010-06-04  Bruno Haible  <bruno@clisp.org>
+
+	Offer more choices in the Makevars template.
+	* Makevars.template (USE_MSGCTXT, MSGMERGE_OPTIONS): New variables.
+
 2010-06-04  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.18.1 released.

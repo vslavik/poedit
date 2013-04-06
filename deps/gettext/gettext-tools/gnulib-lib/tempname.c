@@ -1,6 +1,6 @@
 /* tempname.c - generate the name of a temporary file.
 
-   Copyright (C) 1991-2003, 2005-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 1991-2003, 2005-2007, 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -67,13 +67,8 @@
 # define __gettimeofday gettimeofday
 # define __mkdir mkdir
 # define __open open
-# define __open64 open
 # define __lxstat64(version, file, buf) lstat (file, buf)
-# define __xstat64(version, file, buf) stat (file, buf)
-#endif
-
-#if ! (HAVE___SECURE_GETENV || _LIBC)
-# define __secure_getenv getenv
+# define __secure_getenv secure_getenv
 #endif
 
 #ifdef _LIBC
@@ -209,7 +204,7 @@ __gen_tempname (char *tmpl, int suffixlen, int flags, int kind)
   /* A lower bound on the number of temporary files to attempt to
      generate.  The maximum total number of temporary file names that
      can exist for a given template is 62**6.  It should never be
-     necessary to try all these combinations.  Instead if a reasonable
+     necessary to try all of these combinations.  Instead if a reasonable
      number of names is tried (we define reasonable as 62**3) fail to
      give the system administrator the chance to remove the problems.  */
 #define ATTEMPTS_MIN (62 * 62 * 62)

@@ -1,21 +1,19 @@
 /* Formatted output to strings, using POSIX/XSI format strings with positions.
-   Copyright (C) 2003, 2006-2007, 2009 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2006-2007, 2009-2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
-   This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU Library General Public License as published
-   by the Free Software Foundation; either version 2, or (at your option)
-   any later version.
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-   You should have received a copy of the GNU Library General Public
-   License along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
-   USA.  */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -70,7 +68,7 @@ char *alloca ();
 
 #define STATIC static
 
-/* This needs to be consistent with libgnuintl.h.in.  */
+/* This needs to be consistent with libgnuintl.in.h.  */
 #if defined __NetBSD__ || defined __BEOS__ || defined __CYGWIN__ || defined __MINGW32__
 /* Don't break __attribute__((format(printf,M,N))).
    This redefinition is only possible because the libc in NetBSD, Cygwin,
@@ -193,8 +191,13 @@ libintl_sprintf (char *resultbuf, const char *format, ...)
 #if HAVE_SNPRINTF
 
 # if HAVE_DECL__SNPRINTF
-   /* Windows.  */
-#  define system_vsnprintf _vsnprintf
+   /* Windows.  The mingw function vsnprintf() has fewer bugs than the MSVCRT
+      function _vsnprintf(), so prefer that.  */
+#  if defined __MINGW32__
+#   define system_vsnprintf vsnprintf
+#  else
+#   define system_vsnprintf _vsnprintf
+#  endif
 # else
    /* Unix.  */
 #  define system_vsnprintf vsnprintf
@@ -210,6 +213,8 @@ libintl_vsnprintf (char *resultbuf, size_t length, const char *format, va_list a
     {
       size_t maxlength = length;
       char *result = libintl_vasnprintf (resultbuf, &length, format, args);
+      if (result == NULL)
+        return -1;
       if (result != resultbuf)
         {
           if (maxlength > 0)
@@ -304,7 +309,8 @@ libintl_asprintf (char **resultp, const char *format, ...)
 #endif
 
 # if HAVE_DECL__SNWPRINTF
-   /* Windows.  */
+   /* Windows.  The function vswprintf() has a different signature than
+      on Unix; we use the function _vsnwprintf() instead.  */
 #  define system_vswprintf _vsnwprintf
 # else
    /* Unix.  */
@@ -384,6 +390,8 @@ libintl_vswprintf (wchar_t *resultbuf, size_t length, const wchar_t *format, va_
     {
       size_t maxlength = length;
       wchar_t *result = libintl_vasnwprintf (resultbuf, &length, format, args);
+      if (result == NULL)
+        return -1;
       if (result != resultbuf)
         {
           if (maxlength > 0)

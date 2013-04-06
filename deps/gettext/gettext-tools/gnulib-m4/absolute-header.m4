@@ -1,5 +1,5 @@
-# absolute-header.m4 serial 12
-dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
+# absolute-header.m4 serial 16
+dnl Copyright (C) 2006-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -10,18 +10,20 @@ dnl From Derek Price.
 # ---------------------------------------
 # Find the absolute name of a header file, testing first if the header exists.
 # If the header were sys/inttypes.h, this macro would define
-# ABSOLUTE_SYS_INTTYPES_H to the `""' quoted absolute name of sys/inttypes.h
+# ABSOLUTE_SYS_INTTYPES_H to the '""' quoted absolute name of sys/inttypes.h
 # in config.h
-# (e.g. `#define ABSOLUTE_SYS_INTTYPES_H "///usr/include/sys/inttypes.h"').
+# (e.g. '#define ABSOLUTE_SYS_INTTYPES_H "///usr/include/sys/inttypes.h"').
 # The three "///" are to pacify Sun C 5.8, which otherwise would say
 # "warning: #include of /usr/include/... may be non-portable".
-# Use `""', not `<>', so that the /// cannot be confused with a C99 comment.
+# Use '""', not '<>', so that the /// cannot be confused with a C99 comment.
 # Note: This macro assumes that the header file is not empty after
 # preprocessing, i.e. it does not only define preprocessor macros but also
 # provides some type/enum definitions or function/variable declarations.
 AC_DEFUN([gl_ABSOLUTE_HEADER],
 [AC_REQUIRE([AC_CANONICAL_HOST])
 AC_LANG_PREPROC_REQUIRE()dnl
+dnl FIXME: gl_absolute_header and ac_header_exists must be used unquoted
+dnl until we can assume autoconf 2.64 or newer.
 m4_foreach_w([gl_HEADER_NAME], [$1],
   [AS_VAR_PUSHDEF([gl_absolute_header],
                   [gl_cv_absolute_]m4_defn([gl_HEADER_NAME]))dnl
@@ -51,6 +53,7 @@ m4_foreach_w([gl_HEADER_NAME], [$1],
 #   - it is silent.
 AC_DEFUN([gl_ABSOLUTE_HEADER_ONE],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_LANG_CONFTEST([AC_LANG_SOURCE([[#include <]]m4_dquote([$1])[[>]])])
   dnl AIX "xlc -E" and "cc -E" omit #line directives for header files
   dnl that contain only a #include of other header files and no
@@ -63,15 +66,37 @@ AC_DEFUN([gl_ABSOLUTE_HEADER_ONE],
     aix*) gl_absname_cpp="$ac_cpp -C" ;;
     *)    gl_absname_cpp="$ac_cpp" ;;
   esac
+changequote(,)
+  case "$host_os" in
+    mingw*)
+      dnl For the sake of native Windows compilers (excluding gcc),
+      dnl treat backslash as a directory separator, like /.
+      dnl Actually, these compilers use a double-backslash as
+      dnl directory separator, inside the
+      dnl   # line "filename"
+      dnl directives.
+      gl_dirsep_regex='[/\\]'
+      ;;
+    *)
+      gl_dirsep_regex='\/'
+      ;;
+  esac
+  dnl A sed expression that turns a string into a basic regular
+  dnl expression, for use within "/.../".
+  gl_make_literal_regex_sed='s,[]$^\\.*/[],\\&,g'
+  gl_header_literal_regex=`echo '$1' \
+                           | sed -e "$gl_make_literal_regex_sed"`
+  gl_absolute_header_sed="/${gl_dirsep_regex}${gl_header_literal_regex}/"'{
+      s/.*"\(.*'"${gl_dirsep_regex}${gl_header_literal_regex}"'\)".*/\1/
+      s|^/[^/]|//&|
+      p
+      q
+    }'
+changequote([,])
   dnl eval is necessary to expand gl_absname_cpp.
   dnl Ultrix and Pyramid sh refuse to redirect output of eval,
   dnl so use subshell.
   AS_VAR_SET([gl_cv_absolute_]AS_TR_SH([[$1]]),
 [`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&AS_MESSAGE_LOG_FD |
-sed -n '\#/$1#{
-        s#.*"\(.*/$1\)".*#\1#
-        s#^/[^/]#//&#
-        p
-        q
-}'`])
+  sed -n "$gl_absolute_header_sed"`])
 ])

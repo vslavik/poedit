@@ -1,5 +1,5 @@
 /* A POSIX-like <sys/wait.h>.
-   Copyright (C) 2001-2003, 2005-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2013 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -12,23 +12,32 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 
-#ifndef _GL_SYS_WAIT_H
+#ifndef _@GUARD_PREFIX@_SYS_WAIT_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
 # @INCLUDE_NEXT@ @NEXT_SYS_WAIT_H@
 #endif
 
-#ifndef _GL_SYS_WAIT_H
-#define _GL_SYS_WAIT_H
+#ifndef _@GUARD_PREFIX@_SYS_WAIT_H
+#define _@GUARD_PREFIX@_SYS_WAIT_H
+
+/* Get pid_t.  */
+#include <sys/types.h>
+
+
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
+
 
 #if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
 /* Unix API.  */
@@ -61,27 +70,20 @@
 #  define WEXITSTATUS(x) (((x) >> 8) & 0xff)
 # endif
 
+/* The stopping signal. Only to be accessed if WIFSTOPPED(x) is true.  */
+# ifndef WSTOPSIG
+#  define WSTOPSIG(x) (((x) >> 8) & 0x7f)
+# endif
+
 /* True if the process dumped core.  Not standardized by POSIX.  */
 # ifndef WCOREDUMP
 #  define WCOREDUMP(x) ((x) & 0x80)
 # endif
 
-# ifdef __cplusplus
-extern "C" {
-# endif
-
-/* Declarations of functions.  */
-
-# ifdef __cplusplus
-}
-# endif
-
 #else
 /* Native Windows API.  */
 
-# include <process.h>
-
-# define waitpid(pid,statusp,options) _cwait (statusp, pid, WAIT_CHILD)
+# include <signal.h> /* for SIGTERM */
 
 /* The following macros apply to an argument x, that is a status of a process,
    as returned by waitpid() or, equivalently, _cwait() or GetExitCodeProcess().
@@ -97,10 +99,31 @@ extern "C" {
 
 # define WEXITSTATUS(x) (x)
 
+/* There are no stopping signals.  */
+# define WSTOPSIG(x) 0
+
 /* There are no core dumps.  */
 # define WCOREDUMP(x) 0
 
 #endif
 
-#endif /* _GL_SYS_WAIT_H */
-#endif /* _GL_SYS_WAIT_H */
+
+/* Declarations of functions.  */
+
+#if @GNULIB_WAITPID@
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+_GL_FUNCDECL_SYS (waitpid, pid_t, (pid_t pid, int *statusp, int options));
+# endif
+_GL_CXXALIAS_SYS (waitpid, pid_t, (pid_t pid, int *statusp, int options));
+_GL_CXXALIASWARN (waitpid);
+#elif defined GNULIB_POSIXCHECK
+# undef waitpid
+# if HAVE_RAW_DECL_WAITPID
+_GL_WARN_ON_USE (waitpid, "waitpid is unportable - "
+                 "use gnulib module sys_wait for portability");
+# endif
+#endif
+
+
+#endif /* _@GUARD_PREFIX@_SYS_WAIT_H */
+#endif /* _@GUARD_PREFIX@_SYS_WAIT_H */

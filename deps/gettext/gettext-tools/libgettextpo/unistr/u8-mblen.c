@@ -1,5 +1,5 @@
 /* Look at first character in UTF-8 string.
-   Copyright (C) 1999-2000, 2002, 2006-2007, 2009-2010 Free Software
+   Copyright (C) 1999-2000, 2002, 2006-2007, 2009-2013 Free Software
    Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
@@ -11,7 +11,7 @@
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
+   General Public License for more details.
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
@@ -26,7 +26,7 @@ u8_mblen (const uint8_t *s, size_t n)
 {
   if (n > 0)
     {
-      /* Keep in sync with unistr.h and utf8-ucs4.c.  */
+      /* Keep in sync with unistr.h and u8-mbtouc-aux.c.  */
       uint8_t c = *s;
 
       if (c < 0x80)

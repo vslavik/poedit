@@ -1,5 +1,5 @@
 /* Thread-local storage in multithreaded situations.
-   Copyright (C) 2005, 2007-2010 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2007-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -220,8 +220,9 @@ extern void *glthread_tls_get_multithreaded (thread_key_t key);
 
 /* ========================================================================= */
 
-#if USE_WIN32_THREADS
+#if USE_WINDOWS_THREADS
 
+# define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 
 /* ------------------------- gl_tls_key_t datatype ------------------------- */
@@ -241,7 +242,7 @@ typedef DWORD gl_tls_key_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WIN32_THREADS)
+#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

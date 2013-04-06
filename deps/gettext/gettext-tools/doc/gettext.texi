@@ -79,7 +79,7 @@ This file provides documentation for GNU @code{gettext} utilities.
 It also serves as a reference for the free Translation Project.
 
 @copying
-Copyright (C) 1995-1998, 2001-2007 Free Software Foundation, Inc.
+Copyright (C) 1995-1998, 2001-2012 Free Software Foundation, Inc.
 
 This manual is free documentation.  It is dually licensed under the
 GNU FDL and the GNU GPL.  This means that you can redistribute this
@@ -114,7 +114,7 @@ A copy of the license is included in @ref{GNU GPL}.
 @page
 @vskip 0pt plus 1filll
 @c @insertcopying
-Copyright (C) 1995-1998, 2001-2007 Free Software Foundation, Inc.
+Copyright (C) 1995-1998, 2001-2012 Free Software Foundation, Inc.
 
 This manual is free documentation.  It is dually licensed under the
 GNU FDL and the GNU GPL.  This means that you can redistribute this
@@ -1216,7 +1216,7 @@ encoding.  These are in use because between 2000 and 2005, most users have
 switched to locales in UTF-8 encoding.  For example, the German locale on
 glibc systems is nowadays @samp{de_DE.UTF-8}.  The older name @samp{de_DE}
 still refers to the German locale as of 2000 that stores characters in
-ISO-8859-1 encoding -- a text encoding that cannot even accomodate the Euro
+ISO-8859-1 encoding -- a text encoding that cannot even accommodate the Euro
 currency sign.
 
 Some locale names use @samp{@var{ll}_@var{CC}.@@@var{variant}} instead of
@@ -4593,7 +4593,7 @@ msgmerge --compendium compendium.po -o file.po /dev/null file.pot
 
 Concatenate the compendium file(s) and the existing PO, merge the
 result with the POT file and remove the obsolete entries (optional,
-here done using @samp{sed}):
+here done using @samp{msgattrib}):
 
 @example
 msgcat --use-first -o update.po compendium1.po compendium2.po file.po
@@ -6368,6 +6368,7 @@ Languages with this property include:
 @item Slavic family
 Russian, @c    143.6 million speakers
 Ukrainian, @c   37.0 million speakers
+Belarusian, @c   8.6 million speakers
 Serbian, @c      7.0 million speakers
 Croatian @c      5.5 million speakers
 @end table
@@ -7015,12 +7016,12 @@ ready to work together at improving the results they obtain.
 
 Some people wonder if using GNU @code{gettext} necessarily brings their
 package under the protective wing of the GNU General Public License or
-the GNU Library General Public License, when they do not want to make
+the GNU Lesser General Public License, when they do not want to make
 their program free, or want other kinds of freedom.  The simplest
 answer is ``normally not''.
 
 The @code{gettext-runtime} part of GNU @code{gettext}, i.e.@: the
-contents of @code{libintl}, is covered by the GNU Library General Public
+contents of @code{libintl}, is covered by the GNU Lesser General Public
 License.  The @code{gettext-tools} part of GNU @code{gettext}, i.e.@: the
 rest of the GNU @code{gettext} package, is covered by the GNU General
 Public License.
@@ -7265,7 +7266,7 @@ all of GNU, giving myself the duty of one small GNU package per week
 or so, taking many weeks or months for bigger packages.  But it does
 not work this way.  I first did all the things I'm responsible for.
 I've nothing against some missionary work on other maintainers, but
-I'm also loosing a lot of energy over it---same debates over again.
+I'm also losing a lot of energy over it---same debates over again.
 
 And when the first localized packages are released we'll get a lot of
 responses about ugly translations :-).  Surely, and we need to have
@@ -7916,11 +7917,11 @@ has platform dependent support for determining the locale's character
 encoding and therefore needs to identify the platform.
 
 You can obtain the newest version of @file{config.guess} and
-@file{config.sub} from the CVS of the @samp{config} project at
+@file{config.sub} from the @samp{config} project at
 @file{http://savannah.gnu.org/}. The commands to fetch them are
 @smallexample
-$ wget 'http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/config/config/config.guess'
-$ wget 'http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/config/config/config.sub'
+$ wget -O config.guess 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
+$ wget -O config.sub 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
 @end smallexample
 @noindent
 Less recent versions are also contained in the GNU @code{automake} and
@@ -7988,6 +7989,18 @@ ACLOCAL_AMFLAGS = -I m4
 
 @noindent
 to your top level @file{Makefile.am}.
+
+If you are using GNU @code{automake} 1.10 or newer, it is even easier:
+Add the line
+
+@example
+ACLOCAL_AMFLAGS = --install -I m4
+@end example
+
+@noindent
+to your top level @file{Makefile.am}, and run @samp{aclocal --install -I m4}.
+This will copy the needed files to the @file{m4/} subdirectory automatically,
+before updating @file{aclocal.m4}.
 
 These macros check for the internationalization support functions
 and related informations.  Hopefully, once stabilized, these macros
@@ -10796,7 +10809,7 @@ argument is given.
 perl
 
 @item File extension
-@code{pl}, @code{PL}, @code{pm}, @code{cgi}
+@code{pl}, @code{PL}, @code{pm}, @code{perl}, @code{cgi}
 
 @item String syntax
 @itemize @bullet
@@ -12074,7 +12087,7 @@ particular file or directory.  Here is a summary:
 @itemize @bullet
 @item
 The @code{libintl} and @code{libasprintf} libraries are covered by the
-GNU Library General Public License (LGPL).  
+GNU Lesser General Public License (LGPL).  
 A copy of the license is included in @ref{GNU LGPL}.
 
 @item

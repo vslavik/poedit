@@ -126,7 +126,7 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   rm -fr $tmpfiles; exit 77
 fi
 
-tmpfiles="$tmpfiles prog.ok prog.oku prog.out"
+tmpfiles="$tmpfiles prog.ok prog.oku prog.out prog.err"
 : ${DIFF=diff}
 cat <<\EOF > prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -142,11 +142,13 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR guile -s prog.scm 2 > prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR guile -s prog.scm 2 > prog.out 2>prog.err || { cat prog.err 1>&2; exit 1; }
+  grep -v '^;;;' prog.err 1>&2
   ${DIFF} prog.ok prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 guile -s prog.scm 2 > prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 guile -s prog.scm 2 > prog.out 2>prog.err || { cat prog.err 1>&2; exit 1; }
+  grep -v '^;;;' prog.err 1>&2
   ${DIFF} prog.oku prog.out || exit 1
 fi
 

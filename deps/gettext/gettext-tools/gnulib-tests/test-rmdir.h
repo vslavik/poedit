@@ -1,5 +1,5 @@
 /* Tests of rmdir.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -66,7 +66,8 @@ test_rmdir_func (int (*func) (char const *name), bool print)
   ASSERT (unlink (BASE "dir/file") == 0);
   errno = 0;
   ASSERT (func (BASE "dir/.//") == -1);
-  ASSERT (errno == EINVAL || errno == EBUSY);
+  ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST
+          || errno == ENOTEMPTY);
   ASSERT (func (BASE "dir") == 0);
 
   /* Test symlink behavior.  Specifying trailing slash should remove

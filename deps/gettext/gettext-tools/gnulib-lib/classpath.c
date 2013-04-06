@@ -1,5 +1,5 @@
 /* Java CLASSPATH handling.
-   Copyright (C) 2001-2003, 2006, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006, 2009-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@
 
 /* Separator in PATH like lists of pathnames.  */
 #if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
-  /* Win32, OS/2, DOS */
+  /* Native Windows, OS/2, DOS */
 # define PATH_SEPARATOR ';'
 #else
   /* Unix */

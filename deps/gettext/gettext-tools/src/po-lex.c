@@ -1,5 +1,5 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1999, 2000-2009 Free Software Foundation, Inc.
+   Copyright (C) 1995-1999, 2000-2009, 2011 Free Software Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>.
    Multibyte character handling by Bruno Haible <haible@clisp.cons.org>.
@@ -499,7 +499,7 @@ incomplete multibyte sequence at end of line"));
               if (outbytes == 0)
                 abort ();
               /* Convert it from UTF-8 to UCS-4.  */
-              if (u8_mbtouc (&mbc->uc, scratchbuf, outbytes) < outbytes)
+              if (u8_mbtoucr (&mbc->uc, scratchbuf, outbytes) < (int) outbytes)
                 {
                   /* scratchbuf contains an out-of-range Unicode character
                      (> 0x10ffff).  */

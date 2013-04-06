@@ -1,5 +1,5 @@
 /* Iterating through multibyte strings: macros for multi-byte encodings.
-   Copyright (C) 2001, 2005, 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2005, 2007, 2009-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -47,9 +47,9 @@
      initializes the iterator, starting at startptr and crossing length bytes.
 
    mbi_avail (iter)
-     returns true if there are more multibyte chracters available before
+     returns true if there are more multibyte characters available before
      the end of string is reached. In this case, mbi_cur (iter) is
-     initialized to the next multibyte chracter.
+     initialized to the next multibyte character.
 
    mbi_advance (iter)
      advances the iterator by one multibyte character.
@@ -97,6 +97,11 @@
 
 #include "mbchar.h"
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef MBITER_INLINE
+# define MBITER_INLINE _GL_INLINE
+#endif
+
 struct mbiter_multi
 {
   const char *limit;    /* pointer to end of string */
@@ -112,7 +117,7 @@ struct mbiter_multi
         */
 };
 
-static inline void
+MBITER_INLINE void
 mbiter_multi_next (struct mbiter_multi *iter)
 {
   if (iter->next_done)
@@ -172,14 +177,14 @@ mbiter_multi_next (struct mbiter_multi *iter)
   iter->next_done = true;
 }
 
-static inline void
+MBITER_INLINE void
 mbiter_multi_reloc (struct mbiter_multi *iter, ptrdiff_t ptrdiff)
 {
   iter->cur.ptr += ptrdiff;
   iter->limit += ptrdiff;
 }
 
-static inline void
+MBITER_INLINE void
 mbiter_multi_copy (struct mbiter_multi *new_iter, const struct mbiter_multi *old_iter)
 {
   new_iter->limit = old_iter->limit;
@@ -211,5 +216,7 @@ typedef struct mbiter_multi mbi_iterator_t;
 
 /* Copying an iterator.  */
 #define mbi_copy mbiter_multi_copy
+
+_GL_INLINE_HEADER_END
 
 #endif /* _MBITER_H */

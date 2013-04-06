@@ -1,5 +1,5 @@
-# strnlen.m4 serial 12
-dnl Copyright (C) 2002-2003, 2005-2007, 2009-2010 Free Software Foundation,
+# strnlen.m4 serial 13
+dnl Copyright (C) 2002-2003, 2005-2007, 2009-2013 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,15 +16,13 @@ AC_DEFUN([gl_FUNC_STRNLEN],
   if test $ac_cv_have_decl_strnlen = no; then
     HAVE_DECL_STRNLEN=0
   else
-    AC_FUNC_STRNLEN
+    m4_pushdef([AC_LIBOBJ], [:])
     dnl Note: AC_FUNC_STRNLEN does AC_LIBOBJ([strnlen]).
+    AC_FUNC_STRNLEN
+    m4_popdef([AC_LIBOBJ])
     if test $ac_cv_func_strnlen_working = no; then
       REPLACE_STRNLEN=1
     fi
-  fi
-  if test $HAVE_DECL_STRNLEN = 0 || test $REPLACE_STRNLEN = 1; then
-    AC_LIBOBJ([strnlen])
-    gl_PREREQ_STRNLEN
   fi
 ])
 

@@ -1,5 +1,5 @@
 /* Locking in multithreaded situations.
-   Copyright (C) 2005-2010 Free Software Foundation, Inc.
+   Copyright (C) 2005-2013 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -12,8 +12,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2005.
    Based on GCC's gthr-posix.h, gthr-posix95.h, gthr-solaris.h,
@@ -630,7 +629,7 @@ glthread_once_singlethreaded (gl_once_t *once_control)
 
 /* ========================================================================= */
 
-#if USE_WIN32_THREADS
+#if USE_WINDOWS_THREADS
 
 /* -------------------------- gl_lock_t datatype -------------------------- */
 
@@ -683,7 +682,7 @@ glthread_lock_destroy_func (gl_lock_t *lock)
 /* In this file, the waitqueues are implemented as circular arrays.  */
 #define gl_waitqueue_t gl_carray_waitqueue_t
 
-static inline void
+static void
 gl_waitqueue_init (gl_waitqueue_t *wq)
 {
   wq->array = NULL;
@@ -744,7 +743,7 @@ gl_waitqueue_add (gl_waitqueue_t *wq)
 }
 
 /* Notifies the first thread from a wait queue and dequeues it.  */
-static inline void
+static void
 gl_waitqueue_notify_first (gl_waitqueue_t *wq)
 {
   SetEvent (wq->array[wq->offset + 0]);
@@ -755,7 +754,7 @@ gl_waitqueue_notify_first (gl_waitqueue_t *wq)
 }
 
 /* Notifies all threads from a wait queue and dequeues them all.  */
-static inline void
+static void
 gl_waitqueue_notify_all (gl_waitqueue_t *wq)
 {
   unsigned int i;

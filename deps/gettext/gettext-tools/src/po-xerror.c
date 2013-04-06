@@ -32,6 +32,7 @@
 #include "error-progname.h"
 #include "xalloc.h"
 #include "xerror.h"
+#include "error.h"
 #include "xvasprintf.h"
 #include "po-error.h"
 #include "gettext.h"

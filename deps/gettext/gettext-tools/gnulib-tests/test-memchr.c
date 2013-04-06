@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 Free Software Foundation, Inc.
+ * Copyright (C) 2008-2013 Free Software Foundation, Inc.
  * Written by Eric Blake and Bruno Haible
  *
  * This program is free software: you can redistribute it and/or modify
@@ -57,6 +57,7 @@ main (void)
 
   ASSERT (MEMCHR (input + 1, 'a', n - 1) == input + n - 1);
   ASSERT (MEMCHR (input + 1, 'e', n - 1) == input + n - 2);
+  ASSERT (MEMCHR (input + 1, 0x789abc00 | 'e', n - 1) == input + n - 2);
 
   ASSERT (MEMCHR (input, 'f', n) == NULL);
   ASSERT (MEMCHR (input, '\0', n) == NULL);
@@ -87,25 +88,37 @@ main (void)
 
   /* Check that memchr() does not read past the first occurrence of the
      byte being searched.  See the Austin Group's clarification
-     <http://www.opengroup.org/austin/docs/austin_454.txt>.  */
+     <http://www.opengroup.org/austin/docs/austin_454.txt>.
+     Test both '\0' and something else, since some implementations
+     special-case searching for NUL.
+  */
   {
     char *page_boundary = (char *) zerosize_ptr ();
+    /* Too small, and we miss cache line boundary tests; too large,
+       and the test takes cubically longer to complete.  */
+    int limit = 257;
 
     if (page_boundary != NULL)
       {
-        for (n = 1; n <= 500; n++)
+        for (n = 1; n <= limit; n++)
           {
             char *mem = page_boundary - n;
             memset (mem, 'X', n);
             ASSERT (MEMCHR (mem, 'U', n) == NULL);
+            ASSERT (MEMCHR (mem, 0, n) == NULL);
 
             {
               size_t i;
+              size_t k;
 
               for (i = 0; i < n; i++)
                 {
                   mem[i] = 'U';
-                  ASSERT (MEMCHR (mem, 'U', 4000) == mem + i);
+                  for (k = i + 1; k < n + limit; k++)
+                    ASSERT (MEMCHR (mem, 'U', k) == mem + i);
+                  mem[i] = 0;
+                  for (k = i + 1; k < n + limit; k++)
+                    ASSERT (MEMCHR (mem, 0, k) == mem + i);
                   mem[i] = 'X';
                 }
             }

@@ -1,5 +1,5 @@
 /* Creation of autonomous subprocesses.
-   Copyright (C) 2001-2004, 2006-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-/* Native Woe32 API.  */
+/* Native Windows API.  */
 # include <process.h>
 # include "w32spawn.h"
 
@@ -60,7 +60,7 @@
    These functions can return -1/EINTR even though we don't have any
    signal handlers set up, namely when we get interrupted via SIGSTOP.  */
 
-static inline int
+static int
 nonintr_close (int fd)
 {
   int retval;
@@ -73,7 +73,7 @@ nonintr_close (int fd)
 }
 #define close nonintr_close
 
-static inline int
+static int
 nonintr_open (const char *pathname, int oflag, mode_t mode)
 {
   int retval;
@@ -106,7 +106,7 @@ execute (const char *progname,
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-  /* Native Woe32 API.  */
+  /* Native Windows API.  */
   int orig_stdin;
   int orig_stdout;
   int orig_stderr;
@@ -158,7 +158,7 @@ execute (const char *progname,
                            (const char **) environ);
       if (exitcode < 0 && errno == ENOEXEC)
         {
-          /* prog is not an native executable.  Try to execute it as a
+          /* prog is not a native executable.  Try to execute it as a
              shell script.  Note that prepare_spawn() has already prepended
              a hidden element "sh.exe" to prog_argv.  */
           --prog_argv;

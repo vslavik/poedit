@@ -1,6 +1,6 @@
 /* nl_langinfo() replacement: query locale dependent information.
 
-   Copyright (C) 2007-2010 Free Software Foundation, Inc.
+   Copyright (C) 2007-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -67,6 +67,10 @@ rpl_nl_langinfo (nl_item item)
         return "";
       }
 # endif
+# if GNULIB_defined_T_FMT_AMPM
+    case T_FMT_AMPM:
+      return "%I:%M:%S %p";
+# endif
 # if GNULIB_defined_ERA
     case ERA:
       /* The format is not standardized.  In glibc it is a sequence of strings
@@ -92,6 +96,12 @@ rpl_nl_langinfo (nl_item item)
       /* The format is not standardized.  In glibc it is a sequence of 10
          strings, appended in memory.  */
       return "\0\0\0\0\0\0\0\0\0\0";
+# endif
+# if GNULIB_defined_YESEXPR || !FUNC_NL_LANGINFO_YESEXPR_WORKS
+    case YESEXPR:
+      return "^[yY]";
+    case NOEXPR:
+      return "^[nN]";
 # endif
     default:
       break;
@@ -131,7 +141,8 @@ nl_langinfo (nl_item item)
       {
         static char buf[2 + 10 + 1];
 
-        /* Woe32 has a function returning the locale's codepage as a number.  */
+        /* The Windows API has a function returning the locale's codepage as
+           a number.  */
         sprintf (buf, "CP%u", GetACP ());
         return buf;
       }

@@ -1,3 +1,345 @@
+2013-03-05  Daiki Ueno  <ueno@gnu.org>
+
+	* verify.h: Update copyright year.
+	* xsize.h: Likewise.
+
+2013-02-25  Daiki Ueno  <ueno@gnu.org>
+
+	Determine imported C symbol prefix at configure time.
+	Suggested by Evgeny Grin in <http://savannah.gnu.org/bugs/?29946>.
+	* intl-exports.c (IMP): Define depending on the result of the
+	configure run.
+
+2013-01-21  Daiki Ueno  <ueno@gnu.org>
+
+	Remove references to non-existing COPYING.LIB-2.*.
+	Reported by Christian Weisgerber <naddy@mips.inka.de>.
+	* Makefile.in (DISTFILES.obsolete): Add COPYING.LIB-2.*.
+	(install-data): Install COPYING.LIB instead of no longer existing
+	COPYING.LIB-2.*.
+	(uninstall): Remove COPYING.LIB instead of no longer existing
+	COPYING.LIB-2.*.
+
+2013-01-17  Daiki Ueno  <ueno@gnu.org>
+
+	Fix link errors related to C99-style extern inline.
+	Reported by Sam Thursfield <sam.thursfield@codethink.co.uk>.
+	* Makefile.in (SOURCES): Add xsize.c.
+	(OBJECTS): Add xsize.$lo.
+	(xsize.lo): New rule.
+	(printf.$lo): Add xsize.c to dependencies.
+	* xsize.c: New file, imported from gnulib.
+
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-0.18.2 released.
+
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* libgnuintl.in.h (LIBINTL_VERSION): Bump to 0.18.2.
+	* Makefile.in (LTV_CURRENT, LTV_REVISION, LTV_AGE): Bump to 9:2:1.
+
+2012-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* intl-exports.c (IMP): Check __MINGW32__ as well as _WIN64.
+
+2012-12-20  Daiki Ueno  <ueno@gnu.org>
+
+	localecharset: respect the thread-specific locale on Mac OS X
+	* lib/localcharset.c (locale_charset) [DARWIN7]: Use MB_CUR_MAX_L
+	instead of MB_CUR_MAX.
+
+2012-12-21  Daiki Ueno  <ueno@gnu.org>
+
+	Fix W64 build errors.
+	* intl-exports.c (IMP) [_WIN64]: Prefix "__imp_" instead of
+	"_imp__".
+	* osdep.c: Include intl-exports.c on mingw as well as Cygwin.
+
+2012-12-10  Daiki Ueno  <ueno@unixuser.org>
+
+	* intl-compat.c: Fix typo in the copyright header.
+
+2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* vasnprintf.c (MAX_ROOM_NEEDED): Now static, not static
+	inline.
+
+2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lock.c (gl_waitqueue_init)
+	(gl_waitqueue_notify_first, gl_waitqueue_notify_all):
+	Change 'static inline' to 'inline'.
+
+2012-09-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	localename: port gl_locale_name_thread_unsafe to FreeBSD
+	* localename.c (gl_locale_name_thread_unsafe): Port to FreeBSD,
+	and use the simpler FreeBSD implementation on Mac OS X as well.
+	Original idea suggested by Ed Maste in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-09/msg00094.html>.
+
+2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* xsize.h (XSIZE_INLINE): New macro.  Replace all uses of
+	'static inline' with them.  Use _GL_INLINE_HEADER_BEGIN,
+	_GL_INLINE_HEADER_END.
+
+2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	misc: don't limit commentary to inline functions
+	* xsize.h: Contrast macros to functions in general, not just
+	to inline functions, when the commentary does not apply only to
+	inline functions.
+
+2012-09-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	localcharset: work around Mac OS X bug with UTF-8 and MB_CUR_MAX
+	* localcharset.c (locale_charset) [DARWIN7]:
+	Return "ASCII" if the system reports "UTF-8" and MB_CUR_MAX <= 1,
+	as these two values are incompatible.  Problem reported by Max Horn.
+	For more discussion, please see
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-09/msg00061.html>.
+
+2012-07-20  Eric Blake  <eblake@redhat.com>
+
+	verify: document conflict with -Wnested-externs
+	* verify.h: Give hint about usage when gcc warnings are enabled.
+
+2012-06-22  Bruno Haible  <bruno@clisp.org>
+
+	Write "Mac OS X" instead of "MacOS X".
+	* config.charset: Write "Mac OS X" instead of "MacOS X".
+	* localcharset.c: Likewise.
+	* localename.c: Likewise.
+	* vasnprintf.c: Likewise.
+
+2012-06-03  Jim Meyering  <jim@meyering.net>
+
+	* dcigettext.c: Spelling fixes.
+
+2012-02-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* vasnprintf.c: Spelling fixes.
+
+2012-01-26  Bruno Haible  <bruno@clisp.org>
+
+	Modernize quoting.
+	* Makefile.in: Quote 'like this', not `like this', as per the recent
+	change to the GNU coding standards.
+	* libgnuintl.in.h: Likewise.
+	* vasnprintf.h: Likewise.
+
+2012-01-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: C11 and C++11 are now official
+	* verify.h: Replace references to draft C1X to C11, and to draft C++0X
+	to C++11.
+
+2012-01-06  Bruno Haible  <bruno@clisp.org>
+
+	Talk about "native Windows API", not "Woe32".
+	* localcharset.c: Update comments to mention native Windows.
+	* relocatable.c: Likewise.
+	* config.charset: More comments.
+
+2012-01-04  Bruno Haible  <bruno@clisp.org>
+
+	Talk about "native Windows API", not "Win32".
+	* vasnprintf.c: Update comments to mention native Windows.
+	* localcharset.c: Update comments to mention native Windows.
+	(WINDOWS_NATIVE): Renamed from WIN32_NATIVE.
+	* localename.c: Likewise.
+	* relocatable.c: Likewise.
+	* lock.h: Update comments to mention native Windows.
+	(USE_WINDOWS_THREADS): Renamed from USE_WIN32_THREADS.
+	* lock.c (USE_WINDOWS_THREADS): Renamed from USE_WIN32_THREADS.
+
+2011-10-15  Bruno Haible  <bruno@clisp.org>
+
+	Avoid crash in *printf functions for invalid format string with dollar.
+	* printf.c (libintl_vsnprintf, libintl_vswprintf): Don't crash in
+	mempy if libintl_vasnprintf returned NULL.
+	Reported by Jeong, Heon <bimarket@gmail.com>
+	in <https://savannah.gnu.org/bugs/?34555>.
+
+2011-10-15  Bruno Haible  <bruno@clisp.org>
+
+	vasnprintf: Optimize bit search operation.
+	* vasnprintf.c (divide): Use optimizations from gnulib's
+	integer_length.c.
+
+2011-10-15  Bruno Haible  <bruno@clisp.org>
+
+	vasnprintf: Fix comments.
+	* vasnprintf.c (decode_long_double, decode_double): Fix comments.
+
+2011-10-03  Bruno Haible  <bruno@clisp.org>
+
+	* relocatable.c (ENABLE_COSTLY_RELOCATABLE): New macro.
+	(compute_curr_prefix, shared_library_fullname,
+	find_shared_library_fullname, get_shared_library_fullname, relocate):
+	Use it together with PIC && INSTALLDIR.
+	Reported by <jojelino@gmail.com>
+	via Charles Wilson <cygwin@cwilson.fastmail.fm>.
+
+2011-07-07  Bruno Haible  <bruno@clisp.org>
+
+	Complete the change in vasnprintf.c from 2010-04-10.
+	* printf.c (system_vsnprintf) [mingw]: Prefer vsnprintf over
+	_vsnprintf.
+
+2011-06-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* verify.h (verify_true): Deprecate.
+	(verify_expr): New macro.
+
+2011-06-03  Bruno Haible  <bruno@clisp.org>
+
+	* verify.h: New file, from gnulib.
+	* Makefile.in (HEADERS): Add it.
+
+2010-10-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	rewrite int foo[2*X-1] to verify(X) or to int foo[X?1:-1]
+	* vasnprintf.c: Include "verify.h".
+	(mp_limb_verify, mp_twolimb_verify, TCHAR_T_verify): Remove, replacing
+	with a verify call.
+
+2011-06-03  Bruno Haible  <bruno@clisp.org>
+
+	Copyright: Use LGPL 2.1 instead of LGPL 2.0.
+	* COPYING.LIB: Renamed from COPYING.LIB-2.1.
+	* COPYING.LIB-2.0: Remove file.
+	* *.h, *.c, *.y, *.sin, config.charset, locale.alias, Makefile.in:
+	Update copyright header.
+	* libintl.rc: Update comments field.
+
+2011-04-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* relocatable.c (_GL_USE_STDLIB_ALLOC): Define.
+	(malloc): Don't #undef; no longer needed.
+
+2011-02-28  Bruno Haible  <bruno@clisp.org>
+
+	Assume ANSI C behaviour of free().
+	* localcharset.c (get_charset_aliases): Remove NULL test before calling
+	free().
+	Suggested by Simon Josefsson <simon@josefsson.org>.
+
+2011-02-28  Corinna Vinschen  <vinschen@redhat.com>  (tiny change)
+            Charles Wilson  <cygwin@cwilson.fastmail.fm>  (tiny change)
+            Bruno Haible  <bruno@clisp.org>  (tiny change)
+
+	On Cygwin, use /proc file system instead of win32 API.
+	* relocatable.c: On Cygwin, use file names from /proc, rather than
+	Win32 file names.
+	(DllMain): Simplify by removing Cygwin specific code.
+	(find_shared_library_fullname): Use Linux specific implementation also
+	for Cygwin.
+	(get_shared_library_fullname): Update accordingly.
+
+2011-02-23  Bruno Haible  <bruno@clisp.org>
+
+	Fix misindentation of preprocessor directives.
+	* vasnprintf.c (decode_long_double): Reindent preprocessor directives.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
+	Workaround native Windows bug.
+	* setlocale.c (rpl_setlocale): On native Windows, when setlocale
+	succeeds but sets LC_CTYPE to "C", report a failure.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
+	Avoid clashing overrides for setlocale.
+	* libgnuintl.in.h (setlocale): Don't override if the gnulib override is
+	already enabled.
+
+2011-06-03  Bruno Haible  <bruno@clisp.org>
+
+	* wprintf-parse.h: Apply same changes as to printf-parse.h.
+
+2011-02-04  Bruno Haible  <bruno@clisp.org>
+
+	vasnprintf: Reduce use of malloc for small format strings.
+	* printf-args.h (N_DIRECT_ALLOC_ARGUMENTS): New macro.
+	(arguments): Add room for the first 7 arguments.
+	* printf-parse.h (N_DIRECT_ALLOC_DIRECTIVES): New macro.
+	(char_directives, u8_directives, u16_directives, u32_directives): Add
+	room for the first 7 directives.
+	* printf-parse.c: Include <string.h>.
+	(PRINTF_PARSE): Change memory handling code so that it uses the first
+	7 preallocated elements in an 'arguments' or 'DIRECTIVES' struct.
+	* vasnprintf.c (VASNPRINTF): Update memory handling code.
+	Reported by Pádraig Brady <P@draigbrady.com>.
+
+2011-01-01  Jim Meyering  <meyering@redhat.com>
+
+	maint: update almost all copyright ranges to include 2011
+	Run the new "make update-copyright" rule.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	Port to uClibc.
+	* dcigettext.c (_nl_find_msg): Treat uClibc like a non-glibc platform.
+	* loadmsgcat.c (get_sysdep_segment_value): Likewise.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* printf-parse.h: Include <features.h>.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	Port to uClibc.
+	* localename.c (gl_locale_name_thread_unsafe, HAVE_LOCALE_NULL): Treat
+	uClibc like a non-glibc platform.
+	* printf-parse.h (FLAG_LOCALIZED): Likewise.
+	* printf-parse.c (PRINTF_PARSE): Likewise.
+	* relocatable.c (find_shared_library_fullname): Treat uClibc like
+	glibc.
+	* vasnprintf.c (decimal_point_char): Treat uClibc like glibc.
+	(VASNPRINTF): Treat uClibc like a non-glibc platform.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	Fix a comment.
+	* vasnprintf.c (VASNPRINTF): Fix comment.
+
+2010-11-07  Bruno Haible  <bruno@clisp.org>
+
+	* loadmsgcat.c (get_sysdep_segment_value): Update comment.
+
+2010-11-07  Bruno Haible  <bruno@clisp.org>
+
+	vasnprintf: Support I flag on glibc systems.
+	* printf-parse.h (FLAG_LOCALIZED): New macro.
+	* printf-parse.c (PRINTF_PARSE): Handle the 'I' flag.
+	* vasnprintf.c (VASNPRINTF): Pass the 'I' flag on to the system's
+	snprintf function.
+
+2010-11-07  Bruno Haible  <bruno@clisp.org>
+
+	Rename libgnuintl.h.in to libgnuintl.in.h.
+	* libgnuintl.in.h: New file, renamed from libgnuintl.h.in.
+	* Makefile.in (HEADERS, libgnuintl.h, libintl.h): Update.
+	* printf.c: Update.
+
+2010-10-14  Bruno Haible  <bruno@clisp.org>
+
+	vasnprintf: Don't set errno to 0.
+	* vasnprintf.c (VASNPRINTF): Save and restore errno around the block
+	that sets it to 0.
+	Reported by Gianluigi Tiesi <sherpya@netfarm.it>.
+
+2010-06-09  Bruno Haible  <bruno@clisp.org>
+
+	Avoid relocwrapper link errors due to gnulib replacement functions.
+	* lib/relocatable.c: Use the system's malloc function.
+
 2010-06-04  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.18.1 released.
@@ -1155,7 +1497,7 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
 	* vasnprintf.c: Include float+.h.
-	(VASNPRINTF): When comparing agains +0.0L or +0.0, compare only
+	(VASNPRINTF): When comparing against +0.0L or +0.0, compare only
 	SIZEOF_LDBL or SIZEOF_DBL bytes.
 
 2007-03-24  Bruno Haible  <bruno@clisp.org>
@@ -3961,7 +4303,7 @@
 	* intl/localealias.c (read_alias_file): Use unsigned char for
 	local variables.  Remove unused variable tp.
 	* intl/l10nflist.c (_nl_normalize_codeset): Use unsigned char *
-	for type of codeset.  For loosing Solaris systems.
+	for type of codeset.  For losing Solaris systems.
 	* intl/loadinfo.h: Adapt prototype of _nl_normalize_codeset.
 	* intl/bindtextdom.c (BINDTEXTDOMAIN): Don't define local variable
 	len if not needed.

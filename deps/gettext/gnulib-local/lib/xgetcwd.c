@@ -1,5 +1,5 @@
 /* xgetcwd.c -- return current directory with unlimited length
-   Copyright (C) 1992, 1996, 2000, 2003, 2005-2006 Free Software Foundation, Inc.
+   Copyright (C) 1992, 1996, 2000, 2003, 2005-2006, 2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,6 +25,11 @@
 #include <unistd.h>
 
 #include "pathmax.h"
+
+/* In this file, PATH_MAX is the size of an initial memory allocation.  */
+#ifndef PATH_MAX
+# define PATH_MAX 8192
+#endif
 
 #if HAVE_GETCWD
 # ifdef VMS

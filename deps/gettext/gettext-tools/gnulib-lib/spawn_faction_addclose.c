@@ -1,4 +1,4 @@
-/* Copyright (C) 2000, 2009, 2010 Free Software Foundation, Inc.
+/* Copyright (C) 2000, 2009-2013 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -26,34 +26,44 @@
 # define __sysconf(open_max) getdtablesize ()
 #endif
 
-#include "spawn_int.h"
+#if !HAVE_WORKING_POSIX_SPAWN
+# include "spawn_int.h"
+#endif
 
 /* Add an action to FILE-ACTIONS which tells the implementation to call
-   `close' for the given file descriptor during the `spawn' call.  */
+   'close' for the given file descriptor during the 'spawn' call.  */
 int
 posix_spawn_file_actions_addclose (posix_spawn_file_actions_t *file_actions,
                                    int fd)
+#undef posix_spawn_file_actions_addclose
 {
   int maxfd = __sysconf (_SC_OPEN_MAX);
-  struct __spawn_action *rec;
 
   /* Test for the validity of the file descriptor.  */
   if (fd < 0 || fd >= maxfd)
     return EBADF;
 
+#if HAVE_WORKING_POSIX_SPAWN
+  return posix_spawn_file_actions_addclose (file_actions, fd);
+#else
   /* Allocate more memory if needed.  */
   if (file_actions->_used == file_actions->_allocated
       && __posix_spawn_file_actions_realloc (file_actions) != 0)
     /* This can only mean we ran out of memory.  */
     return ENOMEM;
 
-  /* Add the new value.  */
-  rec = &file_actions->_actions[file_actions->_used];
-  rec->tag = spawn_do_close;
-  rec->action.open_action.fd = fd;
+  {
+    struct __spawn_action *rec;
 
-  /* Account for the new entry.  */
-  ++file_actions->_used;
+    /* Add the new value.  */
+    rec = &file_actions->_actions[file_actions->_used];
+    rec->tag = spawn_do_close;
+    rec->action.open_action.fd = fd;
 
-  return 0;
+    /* Account for the new entry.  */
+    ++file_actions->_used;
+
+    return 0;
+  }
+#endif
 }

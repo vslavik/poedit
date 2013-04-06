@@ -1,20 +1,18 @@
 ## Makefile for the gettext-runtime/libasprintf subdirectory of GNU gettext
-## Copyright (C) 2002-2007, 2009 Free Software Foundation, Inc.
+## Copyright (C) 2002-2007, 2009-2010 Free Software Foundation, Inc.
 ##
-## This program is free software; you can redistribute it and/or modify it
-## under the terms of the GNU Library General Public License as published
-## by the Free Software Foundation; either version 2, or (at your option)
-## any later version.
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Lesser General Public License as published by
+## the Free Software Foundation; either version 2.1 of the License, or
+## (at your option) any later version.
 ##
 ## This program is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## Library General Public License for more details.
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Lesser General Public License for more details.
 ##
-## You should have received a copy of the GNU Library General Public
-## License along with this program; if not, write to the Free Software
-## Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
-## USA.
+## You should have received a copy of the GNU Lesser General Public License
+## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## Process this file with automake to produce Makefile.in.
 
@@ -35,10 +33,10 @@ DEFS = -DIN_LIBASPRINTF @DEFS@
 include_HEADERS = autosprintf.h
 
 all-local $(libasprintf_la_OBJECTS): autosprintf.h
-autosprintf.h: autosprintf.h.in
-	cp $(srcdir)/autosprintf.h.in autosprintf.h
+autosprintf.h: autosprintf.in.h
+	cp $(srcdir)/autosprintf.in.h autosprintf.h
 MOSTLYCLEANFILES += autosprintf.h
-EXTRA_DIST += autosprintf.h.in
+EXTRA_DIST += autosprintf.in.h
 
 dist-hook:
 	rm -f $(distdir)/autosprintf.h
@@ -51,12 +49,13 @@ lib_LTLIBRARIES = libasprintf.la
 noinst_LTLIBRARIES =
 
 libasprintf_la_SOURCES = \
+  xsize.h xsize.c \
   lib-asprintf.h lib-asprintf.c \
   autosprintf.h autosprintf.cc
 
 # Sources used only on platforms lacking vasprintf().
 lib_asprintf_EXTRASOURCES = \
-  xsize.h \
+  verify.h \
   printf-args.h printf-args.c \
   printf-parse.h printf-parse.c \
   vasnprintf.h vasnprintf.c asnprintf.c \
