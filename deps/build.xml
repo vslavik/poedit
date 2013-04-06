@@ -412,7 +412,11 @@
             <arg value="--prefix=${gettextdir}/${osx.arch}"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
-            <arg value="CFLAGS=${osx.cflags}"/>
+            <!-- When running configure under Xcode, SIGALRM is ignored and this doesn't play
+                 nice with some of the (useless - gnulib) checks, resulting in hanging builds.
+                 See http://comments.gmane.org/gmane.comp.lib.gnulib.bugs/13841
+                 Let's sabotage the tests by stealing alarm() from them. -->
+            <arg value="CFLAGS=${osx.cflags} -Dalarm=alarm_disabled"/>
             <arg value="CXXFLAGS=${osx.cxxflags}"/>
             <arg value="LDFLAGS=${osx.ldflags}"/>
             <arg value="GSED=${osx.gnu.sed}"/>
