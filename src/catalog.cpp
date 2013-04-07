@@ -734,15 +734,15 @@ bool CatalogParser::Parse()
         }
 
         // deleted lines:
-        else if (ReadParam(line, _T("#~ "), dummy))
+        else if (ReadParam(line, _T("#~"), dummy))
         {
             wxArrayString deletedLines;
             deletedLines.Add(line);
             mlinenum = m_textFile->GetCurrentLine() + 1;
             while (!(line = ReadTextLine(m_textFile)).empty())
             {
-                // if line does not start with "#~ " anymore, stop reading
-                if (!ReadParam(line, _T("#~ "), dummy))
+                // if line does not start with "#~" anymore, stop reading
+                if (!ReadParam(line, _T("#~"), dummy))
                     break;
                 // if the line starts with "#~ msgid", we skipped an empty line
                 // and it's a new entry, so stop reading too (see bug #329)
