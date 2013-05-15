@@ -115,6 +115,8 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 (bool)cfg->Read(_T("focus_to_text"), (long)false));
     XRCCTRL(*this, "comment_window_editable", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("comment_window_editable"), (long)false));
+    XRCCTRL(*this, "enable_update_header", wxCheckBox)->SetValue(
+                (bool)cfg->Read(_T("enable_update_header"), (long)true));
     XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
                 (bool)cfg->Read(_T("keep_crlf"), true));
 #ifdef USE_SPELLCHECKING
@@ -193,6 +195,8 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XRCCTRL(*this, "focus_to_text", wxCheckBox)->GetValue());
     cfg->Write(_T("comment_window_editable"), 
                 XRCCTRL(*this, "comment_window_editable", wxCheckBox)->GetValue());
+    cfg->Write(_T("enable_update_header"), 
+                XRCCTRL(*this, "enable_update_header", wxCheckBox)->GetValue());
     cfg->Write(_T("keep_crlf"), 
                 XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
 #ifdef USE_SPELLCHECKING

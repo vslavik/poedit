@@ -479,17 +479,21 @@ bool Catalog::HeaderData::HasHeader(const wxString& key) const
 
 void Catalog::HeaderData::SetHeader(const wxString& key, const wxString& value)
 {
-    Entry *e = (Entry*) Find(key);
-    if (e)
-    {
-        e->Value = value;
-    }
-    else
-    {
-        Entry en;
-        en.Key = key;
-        en.Value = value;
-        m_entries.push_back(en);
+    
+    if ( wxConfig::Get()->Read(_T("enable_update_header"), (long)true) ){
+
+        Entry *e = (Entry*) Find(key);
+        if (e)
+        {
+            e->Value = value;
+        }
+        else
+    	{
+            Entry en;
+            en.Key = key;
+            en.Value = value;
+            m_entries.push_back(en);
+        }
     }
 }
 
@@ -1286,7 +1290,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
     // set, so don't mess with it. See https://sourceforge.net/tracker/?func=detail&atid=389156&aid=1900298&group_id=27043
     // for motivation:
     if ( !m_header.RevisionDate.empty() )
-        m_header.RevisionDate = GetCurrentTimeRFC822();
+	if ( wxConfig::Get()->Read(_T("enable_update_header"), (long)true) )
+          m_header.RevisionDate = GetCurrentTimeRFC822();
 
     const wxString po_file_temp = po_file + _T(".temp.po");
     if ( wxFileExists(po_file_temp) )
