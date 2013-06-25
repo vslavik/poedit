@@ -4,7 +4,7 @@
 ;   Copyright (C) 1999-2013 Vaclav Slavik
 ;
 ;   Permission is hereby granted, free of charge, to any person obtaining a
-;   copy of this software and associated documentation files (the "Software"),
+;   copy of this software and associated Docsumentation files (the "Software"),
 ;   to deal in the Software without restriction, including without limitation
 ;   the rights to use, copy, modify, merge, publish, distribute, sublicense,
 ;   and/or sell copies of the Software, and to permit persons to whom the
@@ -27,14 +27,16 @@
 #define VERSION          "1.5.5"
 #define VERSION_FULL     "1.5.5"
 
-#ifndef CRT_REDIST
-#define CRT_REDIST       "C:\Program Files\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT"
+#ifndef CONFIG
+#define Config           "Release"
 #endif
 
-#include "poedit-locale-files.iss"
+#ifndef CRT_REDIST
+#define CRT_REDIST       GetEnv("PROGRAMFILES") + "\Microsoft Visual Studio 11.0\VC\redist\x86\Microsoft.VC110.CRT"
+#endif
 
 [Setup]
-OutputBaseFilename=poedit-{#VERSION_FULL}-setup
+OutputBaseFilename=Poedit-{#VERSION_FULL}-setup
 AppName=Poedit
 AppVerName=Poedit {#VERSION_FULL}
 
@@ -46,7 +48,7 @@ DefaultDirName={pf}\Poedit
 DefaultGroupName=Poedit
 AllowNoIcons=true
 LicenseFile=COPYING
-OutputDir=distrib
+OutputDir={#CONFIG}
 InfoAfterFile=
 Compression=lzma2
 WindowShowCaption=true
@@ -70,7 +72,7 @@ AppContact=poedit@googlegroups.com
 UninstallDisplayIcon={app}\bin\poedit.exe
 UninstallDisplayName=Poedit
 MinVersion=0,5.0.2195
-WizardSmallImageFile=icons\win32\installer_wizard_image.bmp
+WizardSmallImageFile=icons\installer_wizard_image.bmp
 AppPublisherURL=http://www.poedit.net/
 DisableProgramGroupPage=true
 
@@ -79,65 +81,47 @@ SignTool={#SIGNTOOL}
 #endif
 
 [Files]
-Source: win32\Release\poedit.exe; DestDir: {app}\bin; DestName: poedit.exe; Flags: ignoreversion
-Source: deps\gettext\COPYING; DestDir: {app}\doc; DestName: GNU_Gettext_COPYING.txt
-Source: deps\bin-gettext\bin\xgettext.exe; DestDir: {app}\bin; Flags: ignoreversion
-Source: deps\bin-gettext\bin\msgmerge.exe; DestDir: {app}\bin; Flags: ignoreversion
-Source: deps\bin-gettext\bin\msgunfmt.exe; DestDir: {app}\bin; Flags: ignoreversion
-Source: deps\bin-gettext\bin\msgfmt.exe; DestDir: {app}\bin; Flags: ignoreversion
-Source: deps\bin-gettext\bin\msgcat.exe; DestDir: {app}\bin; Flags: ignoreversion
-Source: deps\bin-gettext\bin\*.dll; DestDir: {app}\bin; Flags: ignoreversion
-Source: deps\db\build_windows\Win32\Release\libdb*.dll; DestDir: {app}\bin; Flags: ignoreversion
-Source: deps\winsparkle\Release\WinSparkle.dll; DestDir: {app}\bin; Flags: ignoreversion
-Source: COPYING; DestDir: {app}\doc; DestName: copying.txt
-Source: NEWS; DestDir: {app}\doc; DestName: news.txt
-Source: icons\appicon\128x128\apps\poedit.png; DestDir: {app}\share\poedit\icons
-Source: icons\ui\*.png; DestDir: {app}\share\poedit\icons
-Source: icons\ui\toolbar-32\*.png; DestDir: {app}\share\poedit\icons
-Source: icons\win32\xp\*.ico; DestDir: {app}\share\poedit\icons; OnlyBelowVersion: 0,6.0.6000
-Source: icons\win32\vista\*.ico; DestDir: {app}\share\poedit\icons; MinVersion: 0,6.0.6000
-Source: {#CRT_REDIST}\Microsoft.*.CRT.manifest; DestDir: {app}\bin
-Source: {#CRT_REDIST}\*.dll; DestDir: {app}\bin
-#emit LocaleFiles
+Source: {#CONFIG}\*.exe; DestDir: {app}; Flags: ignoreversion
+Source: {#CONFIG}\*.dll; DestDir: {app}; Flags: ignoreversion
+Source: deps\gettext\COPYING; DestDir: {app}\Docs; DestName: GNU_Gettext_COPYING.txt
+Source: COPYING; DestDir: {app}\Docs; DestName: Copying.txt
+Source: NEWS; DestDir: {app}\Docs; DestName: News.txt
+Source: {#CONFIG}\Resources\*; DestDir: {app}\Resources
+Source: icons\mime-win32\xp\*.ico; DestDir: {app}\Resources; OnlyBelowVersion: 0,6.0.6000
+Source: icons\mime-win32\vista\*.ico; DestDir: {app}\Resources; MinVersion: 0,6.0.6000
+Source: {#CRT_REDIST}\*.dll; DestDir: {app}
 
 [InstallDelete]
 ; delete files from previous versions that are no longer needed (and in case of
 ; poedit.exe.manifest, actually harmful):
-Name: {app}\bin\poedit.exe.manifest; Type: files
-Name: {app}\bin\gettextlib.dll; Type: files
-Name: {app}\bin\gettextsrc.dll; Type: files
-Name: {app}\bin\iconv.dll; Type: files
-Name: {app}\bin\intl.dll; Type: files
-Name: {app}\bin\mingwm10.dll; Type: files
+Type: filesandordirs; Name: "{app}\bin"
+Type: filesandordirs; Name: "{app}\doc"
+Type: filesandordirs; Name: "{app}\share"
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
 Root: HKCR; SubKey: GettextFile; ValueType: string; ValueData: Gettext message catalog; Flags: uninsdeletekey noerror
-Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData: """{app}\bin\poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
-Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\share\poedit\icons\poedit-translation-generic.ico; Flags: uninsdeletekey noerror
+Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
+Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\Resources\poedit-translation-generic.ico; Flags: uninsdeletekey noerror
 Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty dontcreatekey
 Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcreatekey
 
 [Icons]
-Name: {commonprograms}\Poedit; Filename: {app}\bin\poedit.exe; WorkingDir: {app}; IconIndex: 0; Comment: Translate applications and other message catalogs.
+Name: {commonprograms}\Poedit; Filename: {app}\Poedit.exe; WorkingDir: {app}; IconIndex: 0; Comment: Translate applications and other message catalogs.
 
 [Run]
-Filename: {app}\bin\poedit.exe; WorkingDir: {app}; Description: Open Poedit after installation; Flags: postinstall nowait skipifsilent runasoriginaluser
+Filename: {app}\Poedit.exe; WorkingDir: {app}; Description: Open Poedit after installation; Flags: postinstall nowait skipifsilent runasoriginaluser
 
 [_ISTool]
 UseAbsolutePaths=false
 
 [Dirs]
-Name: {app}\bin
-Name: {app}\doc
-Name: {app}\share
-Name: {app}\share\locale
-Name: {app}\share\poedit
-Name: {app}\share\poedit\icons
-Name: {app}\share\poedit\help
-Name: {app}\share\poedit\help\en
-Name: {app}\share\poedit\help\en\gettext
-Name: {app}\share\poedit\help\hr
+Name: {app}\Docs
+Name: {app}\Resources
 
 [Messages]
 BeveledLabel=http://www.poedit.net
+
+
+[ThirdPartySettings]
+CompileLogMethod=append

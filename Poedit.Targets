@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <ResourcesOutDir>$(OutDir)\Resources\</ResourcesOutDir>
+    <GettextDir>deps\bin-win\$(Configuration)\gettext\bin\</GettextDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <DataFiles Include="src\resources\*.xrc;src\resources\*.gif" />
+    <DataFiles Include="icons\appicon\256x256\apps\poedit.png" />
+    <DataFiles Include="icons\ui\*.png" />
+    <DataFiles Include="icons\ui\toolbar-32\*.png" />
+    <DataFiles Include="icons\win32\vista\*.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <GettextFiles Include="$(GettextDir)\msgcat.exe" />
+    <GettextFiles Include="$(GettextDir)\msgfmt.exe" />
+    <GettextFiles Include="$(GettextDir)\msgunfmt.exe" />
+    <GettextFiles Include="$(GettextDir)\msgmerge.exe" />
+    <GettextFiles Include="$(GettextDir)\xgettext.exe" />
+    <GettextFiles Include="$(GettextDir)\*.dll" />
+  </ItemGroup>
+
+  <Target Name="CopyDataFiles" AfterTargets="Link">
+    <Message Importance="High" Text="Copying resources to $(ResourcesOutDir)" />
+    <MakeDir Directories="$(ResourcesOutDir)" />
+    <Copy
+      SourceFiles="@(DataFiles)"
+      DestinationFolder="$(ResourcesOutDir)"
+    />
+  </Target>
+
+  <Target Name="CleanDataFiles" AfterTargets="Clean">
+    <Message Importance="High" Text="Cleaning resources directory" />
+    <RemoveDir Directories="$(ResourcesOutDir)" />
+  </Target>
+
+  
+  <Target Name="CopyAuxBinaries" AfterTargets="Link">
+    <Message Importance="High" Text="Copying auxiliary binaries to $(OutDir)" />
+    <Copy
+      SourceFiles="@(GettextFiles)"
+      DestinationFolder="$(OutDir)"
+    />
+  </Target>
+
+  <Target Name="CleanAuxBinaries" AfterTargets="Clean">
+    <Message Importance="High" Text="Cleaning auxiliary binaries" />
+    <Delete Files="@(GettextFiles -> '$(OutDir)\%(Filename)%(Extension)')" />
+  </Target>
+
+</Project>

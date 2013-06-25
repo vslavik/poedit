@@ -157,8 +157,11 @@ bool PoeditApp::OnInit()
     wxImage::AddHandler(new wxPNGHandler);
     wxXmlResource::Get()->InitAllHandlers();
 
-#ifdef __WXMAC__
+#if defined(__WXMAC__)
     wxXmlResource::Get()->Load(wxStandardPaths::Get().GetResourcesDir() + "/*.xrc");
+#elif defined(__WXMSW__)
+	wxStandardPaths::Get().DontIgnoreAppSubDir();
+    wxXmlResource::Get()->Load(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\*.xrc");
 #else
     InitXmlResource();
 #endif

@@ -74,8 +74,10 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
 #endif // __WXGTK20__
 
     wxString iconsdir =
-#ifdef __WXMAC__
+#if defined(__WXMAC__)
         wxStandardPaths::Get().GetResourcesDir() + _T("/icons");
+#elif defined(__WXMSW__)
+        wxStandardPaths::Get().GetResourcesDir() + _T("\\Resources");
 #else
         wxGetApp().GetAppPath() + _T("/share/poedit/icons");
 #endif
