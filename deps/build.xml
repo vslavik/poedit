@@ -51,17 +51,13 @@
 
     <target name="compile"
             description="compile all dependencies for building on this platform"
-            depends="compile-gettext,compile-db,compile-wx,compile-win-sparkle">
+            depends="compile-gettext">
     </target>
 
     <target name="compile-gettext" depends="win-gettext,osx-gettext"
             description="compile GNU gettext"/>
-    <target name="compile-db" depends="win-db,osx-db"
+    <target name="compile-db" depends="osx-db"
             description="compile Berkeley DB"/>
-    <target name="compile-wx" depends="win-wx"
-            description="compile wxWidgets"/>
-    <target name="compile-win-sparkle" depends="win-sparkle"
-            description="compile WinSparkle"/>
 
 
 <!-- ==============================================================
@@ -79,12 +75,12 @@
         <echo level="info" message="Checking if libiconv needs building..."/>
         <dependset>
             <srcfileset dir="libiconv"
-                excludes="builddir/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure"/>
+                excludes="**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure"/>
             <targetfileset dir="${gettextdir}" includes="bin/*iconv*,bin/*charset*"/>
             <targetfileset dir="${gettextdir}" includes="lib/*iconv*,lib/*charset*"/>
-            <targetfilelist files="${gettextdir}/built.libiconv"/>
+            <targetfilelist files="${intdir}/libiconv.buildtag"/>
         </dependset>
-        <available property="built.libiconv" file="${gettextdir}/built.libiconv"/>
+        <available property="built.libiconv" file="${intdir}/libiconv.buildtag"/>
     </target>
 
     <target name="win-libiconv" depends="win-libiconv-check" unless="built.libiconv" if="is_windows">
@@ -97,16 +93,16 @@
             <fileset dir="libiconv" includes="**/configure"/>
         </touch>
         <mkdir dir="${gettextdir}"/>
-        <mkdir dir="libiconv/builddir"/>
-        <exec dir="libiconv/builddir" executable="${msys.sh}" failonerror="true">
+        <mkdir dir="${intdir}/libiconv"/>
+        <exec dir="${intdir}/libiconv" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
-            <arg value="../configure"/>
+            <arg value="../../../../libiconv/configure"/>
             <arg value="--prefix=${gettextdir}"/>
             <arg value="--disable-static"/>
             <arg value="CFLAGS=${msys.env.CFLAGS}"/>
             <arg value="CXXFLAGS=${msys.env.CFLAGS}"/>
         </exec>
-        <exec dir="libiconv/builddir" executable="${msys.sh}" failonerror="true">
+        <exec dir="${intdir}/libiconv" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
             <arg value="-c"/>
             <arg value="make install -j1"/>
@@ -116,7 +112,8 @@
             <arg value="-c"/>
             <arg value="strip *.dll"/>
         </exec>
-        <touch file="${gettextdir}/built.libiconv"/>
+        <touch file="${intdir}/libiconv.buildtag"/>
+        <delete dir="${intdir}/libiconv"/>
     </target>
 
     <target name="win-gettext-check" if="is_windows">
@@ -124,12 +121,12 @@
         <dependset>
             <!-- NB: gnulib-lib is excluded, because some sources
                      are regenerated and I can't figure out how to fix it -->
-            <srcfileset dir="gettext" excludes="builddir/**,gettext-tools/gnulib-lib/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure,gettext-tools/doc/stamp-vti,gettext-tools/examples/**"/>
+            <srcfileset dir="gettext" excludes="gettext-tools/gnulib-lib/**,**/aclocal.m4,**/config.h.in,**/Makefile.in,**/configure,gettext-tools/doc/stamp-vti,gettext-tools/examples/**"/>
             <targetfileset dir="${gettextdir}" includes="bin/*gettext*"/>
             <targetfileset dir="${gettextdir}" includes="bin/msg*.exe"/>
-            <targetfilelist files="${gettextdir}/built.gettext"/>
+            <targetfilelist files="${intdir}/gettext.buildtag"/>
         </dependset>
-        <available property="built.gettext" file="${gettextdir}/built.gettext"/>
+        <available property="built.gettext" file="${intdir}/gettext.buildtag"/>
     </target>
 
     <target name="win-gettext" depends="win-libiconv,mingw-dlls,win-gettext-check" unless="built.gettext" if="is_windows">
@@ -140,13 +137,16 @@
             <fileset dir="gettext" includes="**/config.h.in"/>
             <fileset dir="gettext" includes="**/Makefile.in"/>
             <fileset dir="gettext" includes="**/configure"/>
+            <fileset dir="gettext" includes="**/man/*.1"/>
+            <fileset dir="gettext" includes="**/man/*.3"/>
+            <fileset dir="gettext" includes="**/man/*.html"/>
         </touch>
         <touch file="gettext/gettext-tools/doc/stamp-vti"/>
         <mkdir dir="${gettextdir}"/>
-        <mkdir dir="gettext/builddir"/>
-        <exec dir="gettext/builddir" executable="${msys.sh}" failonerror="true">
-            <env key="PATH" path="${msys.env.PATH}"/>
-            <arg value="../configure"/>
+        <mkdir dir="${intdir}/gettext"/>
+        <exec dir="${intdir}/gettext" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${gettextdir}/bin:${msys.env.PATH}"/>
+            <arg value="../../../../gettext/configure"/>
             <arg value="--prefix=${gettextdir}"/>
             <arg value="--with-libiconv-prefix=${gettextdir}"/>
             <arg value="--enable-threads=win32"/>
@@ -156,16 +156,16 @@
             <arg value="CFLAGS=${msys.env.CFLAGS}"/>
             <arg value="CXXFLAGS=${msys.env.CFLAGS}"/>
         </exec>
-        <touch file="gettext/builddir/gettext-tools/misc/archive.dir.tar.gz"/>
-        <touch file="gettext/builddir/gettext-tools/misc/archive.git.tar.gz"/>
-        <touch file="gettext/builddir/gettext-tools/misc/archive.cvs.tar.gz"/>
-        <exec dir="gettext/builddir" executable="${msys.sh}" failonerror="true">
-            <env key="PATH" path="${msys.env.PATH}"/>
+        <touch file="${intdir}/gettext/gettext-tools/misc/archive.dir.tar.gz"/>
+        <touch file="${intdir}/gettext/gettext-tools/misc/archive.git.tar.gz"/>
+        <touch file="${intdir}/gettext/gettext-tools/misc/archive.cvs.tar.gz"/>
+        <exec dir="${intdir}/gettext" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${gettextdir}/bin:${msys.env.PATH}"/>
             <arg value="-c"/>
             <arg value="make"/>
         </exec>
-        <exec dir="gettext/builddir" executable="${msys.sh}" failonerror="true">
-            <env key="PATH" path="${msys.env.PATH}"/>
+        <exec dir="${intdir}/gettext" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${gettextdir}/bin:${msys.env.PATH}"/>
             <arg value="-c"/>
             <arg value="make install -j1"/>
         </exec>
@@ -174,97 +174,8 @@
             <arg value="-c"/>
             <arg value="strip *.dll *.exe"/>
         </exec>
-        <touch file="${gettextdir}/built.gettext"/>
-    </target>
-
-
-
-<!-- ==============================================================
-     Windows dependencies - Berkeley DB
-     ============================================================== -->
-
-     <target name="win-db-check" if="is_windows">
-        <echo level="info" message="Checking if Berkeley DB needs building..."/>
-        <dependset>
-            <srcfileset dir="db" excludes="build_windows/Win32/**,build_unix/**,csharp/**,docs/**,examples*/**,java/**,perl/**,tcl/**,test*/**"/>
-            <targetfileset dir="db/build_windows/Win32"/>
-        </dependset>
-        <available property="built.win-db" file="db/build_windows/Win32/Release/libdb48.dll"/>
-    </target>
-
-    <target name="win-db" depends="win-db-check" unless="built.win-db" if="is_windows">
-        <echo level="info" message="Building Berkeley DB..."/>
-        <copy file="db/build_windows/db.vcproj" tofile="db/build_windows/db_my.vcproj"/>
-        <exec dir="db/build_windows" executable="${msvs.vcbuild}" failonerror="true">
-            <arg value="/upgrade"/>
-            <arg value="db_my.vcproj"/>
-        </exec>
-        <exec dir="db/build_windows" executable="${msvs.vcbuild}" failonerror="true">
-            <arg value="/platform:Win32"/>
-            <arg value="db_my.vcproj"/>
-            <arg value="Release"/>
-        </exec>
-        <delete>
-            <fileset dir="db/build_windows" includes="db_my.*"/>
-        </delete>
-    </target>
-
-
-<!-- ==============================================================
-     Windows dependencies - WinSparkle
-     ============================================================== -->
-
-     <target name="win-sparkle-check" if="is_windows">
-        <echo level="info" message="Checking if WinSparkle needs building..."/>
-        <dependset>
-            <srcfileset dir="winsparkle" excludes="**/Release*/**"/>
-            <targetfileset dir="winsparkle" includes="Release/*"/>
-        </dependset>
-        <available property="built.win-sparkle" file="winsparkle/Release/WinSparkle.dll"/>
-    </target>
-
-    <target name="win-sparkle" depends="win-sparkle-check" unless="built.win-sparkle" if="is_windows">
-        <echo level="info" message="Building WinSparkle..."/>
-        <exec dir="winsparkle/3rdparty" executable="${msvs.vcbuild}" failonerror="true">
-            <arg value="/platform:Win32"/>
-            <arg value="WinSparkleDeps.sln"/>
-            <arg value="Release|Win32"/>
-        </exec>
-        <exec dir="winsparkle" executable="${msvs.vcbuild}" failonerror="true">
-            <arg value="/platform:Win32"/>
-            <arg value="WinSparkle.sln"/>
-            <arg value="Release|Win32"/>
-        </exec>
-    </target>
-
-
-
-<!-- ==============================================================
-     Windows dependencies - wxWidgets
-     ============================================================== -->
-
-     <target name="win-wx-check" if="is_windows">
-        <echo level="info" message="Checking if wxWidgets needs building..."/>
-        <dependset>
-            <srcfileset dir="wx" includes="include/**,src/**" excludes="include/wx/msw/setup.h"/>
-            <targetfileset dir="wx" includes="lib/vc_lib/*"/>
-            <targetfileset dir="wx/locale/*.mo"/>
-        </dependset>
-        <available property="built.win-wx" file="wx/lib/vc_lib/wxmsw29u_core.lib"/>
-    </target>
-
-    <target name="win-wx" depends="win-gettext,win-wx-check" unless="built.win-wx" if="is_windows">
-        <echo level="info" message="Building wxWidgets..."/>
-        <exec dir="." executable="${msvs.vcbuild}" failonerror="true">
-            <arg value="/platform:Win32"/>
-            <arg value="wxWidgetsForPoedit.vcproj"/>
-            <arg value="Release"/>
-        </exec>
-        <exec dir="wx/locale" executable="${msys.sh}" failonerror="true">
-            <env key="PATH" path="${msys.env.PATH}"/>
-            <arg value="-c"/>
-            <arg value="make allmo MSGFMT=${gettextdir}/bin/msgfmt.exe"/>
-        </exec>
+        <touch file="${intdir}/gettext.buildtag"/>
+        <delete dir="${intdir}/gettext"/>
     </target>
 
 
