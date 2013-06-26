@@ -29,6 +29,7 @@
     <Copy
       SourceFiles="@(DataFiles)"
       DestinationFolder="$(ResourcesOutDir)"
+      SkipUnchangedFiles="true"
     />
   </Target>
 
@@ -43,6 +44,7 @@
     <Copy
       SourceFiles="@(GettextFiles)"
       DestinationFolder="$(OutDir)"
+      SkipUnchangedFiles="true"
     />
   </Target>
 
