@@ -2,8 +2,14 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <ResourcesOutDir>$(OutDir)\Resources\</ResourcesOutDir>
+    <ResourcesOutDir>$(OutDir)Resources\</ResourcesOutDir>
+    <TranslationsOutDir>$(OutDir)Translations\</TranslationsOutDir>
     <GettextDir>deps\bin-win\$(Configuration)\gettext\bin\</GettextDir>
+    <Msgfmt>$(GettextDir)msgfmt.exe -c</Msgfmt>
+
+    <PoDirPoedit>locales</PoDirPoedit>
+    <PoDirWX>deps\wx\locale</PoDirWX>
+    <PoDirWXMSW>deps\wx\locale\msw</PoDirWXMSW>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +18,12 @@
     <DataFiles Include="icons\ui\*.png" />
     <DataFiles Include="icons\ui\toolbar-32\*.png" />
     <DataFiles Include="icons\win32\vista\*.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TranslationFiles Include="$(PoDirPoedit)\*.po" />
+    <TranslationFilesWX Include="$(PoDirWX)\*.po" />
+    <TranslationFilesWXMSW Include="$(PoDirWXMSW)\*.po" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,9 +45,33 @@
     />
   </Target>
 
+
+  <Target Name="CopyTranslations_Poedit" AfterTargets="Link"
+          Inputs="@(TranslationFiles)"
+          Outputs="@(TranslationFiles->'$(TranslationsOutDir)%(Filename)\poedit.mo')">
+    <MakeDir Directories="@(TranslationFiles->'$(TranslationsOutDir)\%(Filename)')" />
+    <Exec Command="$(Msgfmt) -o $(TranslationsOutDir)%(TranslationFiles.Filename)\poedit.mo @(TranslationFiles)" />
+  </Target>
+
+  <Target Name="CopyTranslations_WX" AfterTargets="Link"
+        Inputs="@(TranslationFilesWX)"
+        Outputs="@(TranslationFilesWX->'$(TranslationsOutDir)%(Filename)\wxstd.mo')">
+    <MakeDir Directories="@(TranslationFilesWX->'$(TranslationsOutDir)\%(Filename)')" />
+    <Exec Command="$(Msgfmt) -o $(TranslationsOutDir)%(TranslationFilesWX.Filename)\wxstd.mo @(TranslationFilesWX)" />
+  </Target>
+
+  <Target Name="CopyTranslations_WXMSW" AfterTargets="Link"
+        Inputs="@(TranslationFilesWXMSW)"
+        Outputs="@(TranslationFilesWXMSW->'$(TranslationsOutDir)%(Filename)\wxmsw.mo')">
+    <MakeDir Directories="@(TranslationFilesWXMSW->'$(TranslationsOutDir)\%(Filename)')" />
+    <Exec Command="$(Msgfmt) -o $(TranslationsOutDir)%(TranslationFilesWXMSW.Filename)\wxmsw.mo @(TranslationFilesWXMSW)" />
+  </Target>
+
+  
   <Target Name="CleanDataFiles" AfterTargets="Clean">
-    <Message Importance="High" Text="Cleaning resources directory" />
+    <Message Importance="High" Text="Cleaning resources and translations" />
     <RemoveDir Directories="$(ResourcesOutDir)" />
+    <RemoveDir Directories="$(TranslationsOutDir)" />
   </Target>
 
   

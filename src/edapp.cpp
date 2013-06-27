@@ -34,6 +34,7 @@
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 #include <wx/sysopt.h>
+#include <wx/stdpaths.h>
 #include <wx/aboutdlg.h>
 #include <wx/artprov.h>
 #include <wx/datetime.h>
@@ -68,27 +69,6 @@
 #include "errors.h"
 
 IMPLEMENT_APP(PoeditApp);
-
-#ifndef __WXMAC__
-wxString PoeditApp::GetAppPath() const
-{
-#if defined(__UNIX__)
-    wxString home;
-    if (!wxGetEnv(_T("POEDIT_PREFIX"), &home))
-        home = wxString::FromAscii(POEDIT_PREFIX);
-    return home;
-#elif defined(__WXMSW__)
-    wxString exedir;
-    wxFileName::SplitPath(wxStandardPaths::Get().GetExecutablePath(),
-                          &exedir, NULL, NULL);
-    wxFileName fn = wxFileName::DirName(exedir);
-    fn.RemoveLastDir();
-    return fn.GetFullPath();
-#else
-#error "Unsupported platform!"
-#endif
-}
-#endif // !__WXMAC__
 
 wxString PoeditApp::GetAppVersion() const
 {
@@ -243,8 +223,10 @@ int PoeditApp::OnExit()
 
 void PoeditApp::SetupLanguage()
 {
-#ifndef __WXMAC__
-    wxLocale::AddCatalogLookupPathPrefix(GetAppPath() + _T("/share/locale"));
+#if defined(__WXMSW__)
+	wxLocale::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetResourcesDir() + _T("\\Translations"));
+#elif !defined(__WXMAC__)
+    wxLocale::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetInstallPrefix() + _T("/share/locale"));
 #endif
 
 #if wxCHECK_VERSION(2,9,1)

@@ -86,10 +86,11 @@ Source: {#CONFIG}\*.dll; DestDir: {app}; Flags: ignoreversion
 Source: deps\gettext\COPYING; DestDir: {app}\Docs; DestName: GNU_Gettext_COPYING.txt
 Source: COPYING; DestDir: {app}\Docs; DestName: Copying.txt
 Source: NEWS; DestDir: {app}\Docs; DestName: News.txt
-Source: {#CONFIG}\Resources\*; DestDir: {app}\Resources
 Source: icons\mime-win32\xp\*.ico; DestDir: {app}\Resources; OnlyBelowVersion: 0,6.0.6000
 Source: icons\mime-win32\vista\*.ico; DestDir: {app}\Resources; MinVersion: 0,6.0.6000
 Source: {#CRT_REDIST}\*.dll; DestDir: {app}
+Source: "{#CONFIG}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdirs
+Source: "{#CONFIG}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
 
 [InstallDelete]
 ; delete files from previous versions that are no longer needed (and in case of
@@ -118,10 +119,11 @@ UseAbsolutePaths=false
 [Dirs]
 Name: {app}\Docs
 Name: {app}\Resources
+Name: {app}\Translations
 
 [Messages]
 BeveledLabel=http://www.poedit.net
 
 
-[ThirdPartySettings]
+[ThirdParty]
 CompileLogMethod=append

@@ -79,7 +79,7 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
 #elif defined(__WXMSW__)
         wxStandardPaths::Get().GetResourcesDir() + _T("\\Resources");
 #else
-        wxGetApp().GetAppPath() + _T("/share/poedit/icons");
+        wxStandardPaths::Get().GetInstallPrefix() + _T("/share/poedit/icons");
 #endif
     if ( !wxDirExists(iconsdir) )
     {
