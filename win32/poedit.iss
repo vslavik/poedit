@@ -69,7 +69,7 @@ AppSupportURL=http://www.poedit.net/support.php
 AppUpdatesURL=http://www.poedit.net/download.php
 AppVersion={#VERSION_FULL}
 AppContact=support@poedit.net
-UninstallDisplayIcon={app}\bin\poedit.exe
+UninstallDisplayIcon={app}\Poedit.exe
 UninstallDisplayName=Poedit
 MinVersion=0,5.01.2600sp3
 WizardSmallImageFile=icons\installer_wizard_image.bmp
@@ -81,7 +81,9 @@ SignTool={#SIGNTOOL}
 #endif
 
 [Files]
-Source: {#CONFIG}\*.exe; DestDir: {app}; Flags: ignoreversion
+Source: {#CONFIG}\Poedit.exe; DestDir: {app}; Flags: ignoreversion
+Source: {#CONFIG}\msg*.exe; DestDir: {app}; Flags: ignoreversion
+Source: {#CONFIG}\xgettext.exe; DestDir: {app}; Flags: ignoreversion
 Source: {#CONFIG}\*.dll; DestDir: {app}; Flags: ignoreversion
 Source: deps\gettext\COPYING; DestDir: {app}\Docs; DestName: GNU_Gettext_COPYING.txt
 Source: COPYING; DestDir: {app}\Docs; DestName: Copying.txt
@@ -123,7 +125,6 @@ Name: {app}\Translations
 
 [Messages]
 BeveledLabel=http://www.poedit.net
-
 
 [ThirdParty]
 CompileLogMethod=append
