@@ -79,6 +79,12 @@ DisableProgramGroupPage=true
 #ifdef SIGNTOOL
 SignTool={#SIGNTOOL}
 #endif
+VersionInfoCompany=Vaclav Slavik
+VersionInfoDescription=Poedit Installer
+VersionInfoCopyright=Copyright (C) 1999-2013 Vaclav Slavik
+VersionInfoProductName=Poedit
+VersionInfoProductVersion={#VERSION}
+VersionInfoProductTextVersion={#VERSION_FULL}
 
 [Files]
 Source: {#CONFIG}\Poedit.exe; DestDir: {app}; Flags: ignoreversion
