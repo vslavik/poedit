@@ -37,6 +37,8 @@
 
 [Setup]
 OutputBaseFilename=Poedit-{#VERSION_FULL}-setup
+OutputDir=win32\distrib-{#CONFIG}
+
 AppName=Poedit
 AppVerName=Poedit {#VERSION_FULL}
 
@@ -48,7 +50,6 @@ DefaultDirName={pf}\Poedit
 DefaultGroupName=Poedit
 AllowNoIcons=true
 LicenseFile=COPYING
-OutputDir={#CONFIG}
 InfoAfterFile=
 Compression=lzma2
 WindowShowCaption=true
