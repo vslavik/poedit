@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>wxWidgets_xrc</ProjectName>
+    <ProjectGuid>{09F2F96A-1CC6-5E43-AF1D-956EC2A4888D}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110_xp</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110_xp</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.60315.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\wx\lib\vc_lib\</OutDir>
+    <IntDir>vc_mswud\xrc\</IntDir>
+    <TargetName>wxmsw29ud_xrc</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\wx\lib\vc_lib\</OutDir>
+    <IntDir>vc_mswu\xrc\</IntDir>
+    <TargetName>wxmsw29u_xrc</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;_UNICODE;WXBUILDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;_UNICODE;WXBUILDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>wx/wxprec.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>vc_mswud\wxprec_xrclib.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>vc_mswud\xrc\</ObjectFileName>
+      <ProgramDataBaseFileName>..\wx\lib\vc_lib\wxmsw29ud_xrc.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;_UNICODE;WXBUILDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\wx\lib\vc_lib\wxmsw29ud_xrc.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <OutputFile>..\wx\lib\vc_lib\wx_vc11_xrc.bsc</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;WXBUILDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;WXBUILDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>wx/wxprec.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>vc_mswu\wxprec_xrclib.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>vc_mswu\xrc\</ObjectFileName>
+      <ProgramDataBaseFileName>..\wx\lib\vc_lib\wxmsw29u_xrc.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;WXBUILDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\wx\lib\vc_lib\wxmsw29u_xrc.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <OutputFile>..\wx\lib\vc_lib\wx_vc11_xrc.bsc</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\wx\src\common\dummy.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\wx\src\xrc\xh_animatctrl.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_bannerwindow.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_bmp.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_bmpbt.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_bmpcbox.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_bttn.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_cald.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_chckb.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_chckl.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_choic.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_choicbk.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_clrpicker.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_cmdlinkbn.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_collpane.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_combo.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_comboctrl.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_datectrl.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_dirpicker.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_dlg.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_editlbox.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_filectrl.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_filepicker.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_fontpicker.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_frame.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_gauge.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_gdctl.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_grid.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_html.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_htmllbox.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_hyperlink.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_listb.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_listbk.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_listc.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_mdi.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_menu.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_notbk.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_odcombo.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_panel.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_propdlg.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_radbt.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_radbx.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_scrol.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_scwin.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_sizer.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_slidr.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_spin.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_split.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_srchctrl.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_statbar.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_stbmp.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_stbox.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_stlin.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_sttxt.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_text.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_tglbtn.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_timectrl.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_toolb.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_toolbk.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_tree.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_treebk.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_unkwn.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xh_wizrd.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xmladv.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xmlres.cpp" />
+    <ClCompile Include="..\wx\src\xrc\xmlrsall.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\wx\src\msw\version.rc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\wx\include\wx\msw\genrcdefs.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Creating ..\wx\lib\vc_lib\mswud\wx\msw\rcdefs.h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl /EP /nologo "%(FullPath)" &gt; "..\wx\lib\vc_lib\mswud\wx\msw\rcdefs.h"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\wx\lib\vc_lib\mswud\wx\msw\rcdefs.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\wx\lib\vc_lib\mswud\wx\msw;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Creating ..\wx\lib\vc_lib\mswu\wx\msw\rcdefs.h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl /EP /nologo "%(FullPath)" &gt; "..\wx\lib\vc_lib\mswu\wx\msw\rcdefs.h"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\wx\lib\vc_lib\mswu\wx\msw\rcdefs.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\wx\lib\vc_lib\mswu\wx\msw;%(AdditionalInputs)</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="..\wx\include\wx\xrc\xh_all.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_animatctrl.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_bannerwindow.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_bmp.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_bmpbt.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_bmpcbox.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_bttn.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_cald.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_chckb.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_chckl.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_choic.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_choicbk.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_clrpicker.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_cmdlinkbn.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_collpane.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_combo.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_comboctrl.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_datectrl.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_dirpicker.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_dlg.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_editlbox.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_filectrl.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_filepicker.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_fontpicker.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_frame.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_gauge.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_gdctl.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_grid.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_html.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_htmllbox.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_hyperlink.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_listb.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_listbk.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_listc.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_mdi.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_menu.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_notbk.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_odcombo.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_panel.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_propdlg.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_radbt.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_radbx.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_scrol.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_scwin.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_sizer.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_slidr.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_spin.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_split.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_srchctrl.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_statbar.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_stbmp.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_stbox.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_stlin.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_sttxt.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_text.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_tglbtn.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_timectrl.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_toolb.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_toolbk.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_tree.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_treebk.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_unkwn.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xh_wizrd.h" />
+    <ClInclude Include="..\wx\include\wx\xrc\xmlres.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

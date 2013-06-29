@@ -45,18 +45,6 @@ class PoeditApp : public wxApp
         virtual bool OnInit();
         virtual int OnExit();
 
-#ifndef __WXMAC__
-        /** Gets application's path. This path is used when looking for
-            resources.zip and help files, both of them can be found
-            in {appPath}/share/poedit. Looks in registry under Windows
-            and returns value of POEDIT_PREFIX which is supplied at
-            compilation time and equals configure's --prefix argument
-            (unless $POEDIT_PREFIX environment variable exists, in which
-            case its content is returned).
-         */
-        wxString GetAppPath() const;
-#endif
-
         /// Returns Poedit version string.
         wxString GetAppVersion() const;
 

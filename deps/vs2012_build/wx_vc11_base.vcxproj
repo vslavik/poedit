@@ -1,0 +1,454 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>wxWidgets_base</ProjectName>
+    <ProjectGuid>{3FCC50C2-81E9-5DB2-B8D8-2129427568B1}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110_xp</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110_xp</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.60315.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\wx\lib\vc_lib\</OutDir>
+    <IntDir>vc_mswud\base\</IntDir>
+    <TargetName>wxbase29ud</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\wx\lib\vc_lib\</OutDir>
+    <IntDir>vc_mswu\base\</IntDir>
+    <TargetName>wxbase29u</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;_UNICODE;WXBUILDING;wxUSE_GUI=0;wxUSE_BASE=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;_UNICODE;WXBUILDING;wxUSE_GUI=0;wxUSE_BASE=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>wx/wxprec.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>vc_mswud\wxprec_baselib.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>vc_mswud\base\</ObjectFileName>
+      <ProgramDataBaseFileName>..\wx\lib\vc_lib\wxbase29ud.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;_UNICODE;WXBUILDING;wxUSE_GUI=0;wxUSE_BASE=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\wx\lib\vc_lib\wxbase29ud.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <OutputFile>..\wx\lib\vc_lib\wx_vc11_base.bsc</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;WXBUILDING;wxUSE_GUI=0;wxUSE_BASE=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;WXBUILDING;wxUSE_GUI=0;wxUSE_BASE=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>wx/wxprec.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>vc_mswu\wxprec_baselib.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>vc_mswu\base\</ObjectFileName>
+      <ProgramDataBaseFileName>..\wx\lib\vc_lib\wxbase29u.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;WXBUILDING;wxUSE_GUI=0;wxUSE_BASE=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\wx\lib\vc_lib\wxbase29u.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <OutputFile>..\wx\lib\vc_lib\wx_vc11_base.bsc</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\wx\src\common\any.cpp" />
+    <ClCompile Include="..\wx\src\common\appbase.cpp" />
+    <ClCompile Include="..\wx\src\common\arcall.cpp" />
+    <ClCompile Include="..\wx\src\common\arcfind.cpp" />
+    <ClCompile Include="..\wx\src\common\archive.cpp" />
+    <ClCompile Include="..\wx\src\common\arrstr.cpp" />
+    <ClCompile Include="..\wx\src\common\base64.cpp" />
+    <ClCompile Include="..\wx\src\common\clntdata.cpp" />
+    <ClCompile Include="..\wx\src\common\cmdline.cpp" />
+    <ClCompile Include="..\wx\src\common\config.cpp" />
+    <ClCompile Include="..\wx\src\common\convauto.cpp" />
+    <ClCompile Include="..\wx\src\common\datetime.cpp" />
+    <ClCompile Include="..\wx\src\common\datetimefmt.cpp" />
+    <ClCompile Include="..\wx\src\common\datstrm.cpp" />
+    <ClCompile Include="..\wx\src\common\dircmn.cpp" />
+    <ClCompile Include="..\wx\src\common\dummy.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\wx\src\common\dynarray.cpp" />
+    <ClCompile Include="..\wx\src\common\dynlib.cpp" />
+    <ClCompile Include="..\wx\src\common\dynload.cpp" />
+    <ClCompile Include="..\wx\src\common\encconv.cpp" />
+    <ClCompile Include="..\wx\src\common\event.cpp" />
+    <ClCompile Include="..\wx\src\common\evtloopcmn.cpp" />
+    <ClCompile Include="..\wx\src\common\extended.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\wx\src\common\ffile.cpp" />
+    <ClCompile Include="..\wx\src\common\file.cpp" />
+    <ClCompile Include="..\wx\src\common\fileback.cpp" />
+    <ClCompile Include="..\wx\src\common\fileconf.cpp" />
+    <ClCompile Include="..\wx\src\common\filefn.cpp" />
+    <ClCompile Include="..\wx\src\common\filename.cpp" />
+    <ClCompile Include="..\wx\src\common\filesys.cpp" />
+    <ClCompile Include="..\wx\src\common\filtall.cpp" />
+    <ClCompile Include="..\wx\src\common\filtfind.cpp" />
+    <ClCompile Include="..\wx\src\common\fmapbase.cpp" />
+    <ClCompile Include="..\wx\src\common\fs_arc.cpp" />
+    <ClCompile Include="..\wx\src\common\fs_filter.cpp" />
+    <ClCompile Include="..\wx\src\common\fs_mem.cpp" />
+    <ClCompile Include="..\wx\src\common\fswatchercmn.cpp" />
+    <ClCompile Include="..\wx\src\common\hash.cpp" />
+    <ClCompile Include="..\wx\src\common\hashmap.cpp" />
+    <ClCompile Include="..\wx\src\common\init.cpp" />
+    <ClCompile Include="..\wx\src\common\intl.cpp" />
+    <ClCompile Include="..\wx\src\common\ipcbase.cpp" />
+    <ClCompile Include="..\wx\src\common\languageinfo.cpp" />
+    <ClCompile Include="..\wx\src\common\list.cpp" />
+    <ClCompile Include="..\wx\src\common\log.cpp" />
+    <ClCompile Include="..\wx\src\common\longlong.cpp" />
+    <ClCompile Include="..\wx\src\common\memory.cpp" />
+    <ClCompile Include="..\wx\src\common\mimecmn.cpp" />
+    <ClCompile Include="..\wx\src\common\module.cpp" />
+    <ClCompile Include="..\wx\src\common\msgout.cpp" />
+    <ClCompile Include="..\wx\src\common\mstream.cpp" />
+    <ClCompile Include="..\wx\src\common\numformatter.cpp" />
+    <ClCompile Include="..\wx\src\common\object.cpp" />
+    <ClCompile Include="..\wx\src\common\platinfo.cpp" />
+    <ClCompile Include="..\wx\src\common\powercmn.cpp" />
+    <ClCompile Include="..\wx\src\common\process.cpp" />
+    <ClCompile Include="..\wx\src\common\regex.cpp" />
+    <ClCompile Include="..\wx\src\common\sstream.cpp" />
+    <ClCompile Include="..\wx\src\common\stdpbase.cpp" />
+    <ClCompile Include="..\wx\src\common\stdstream.cpp" />
+    <ClCompile Include="..\wx\src\common\stopwatch.cpp" />
+    <ClCompile Include="..\wx\src\common\strconv.cpp" />
+    <ClCompile Include="..\wx\src\common\stream.cpp" />
+    <ClCompile Include="..\wx\src\common\string.cpp" />
+    <ClCompile Include="..\wx\src\common\stringimpl.cpp" />
+    <ClCompile Include="..\wx\src\common\stringops.cpp" />
+    <ClCompile Include="..\wx\src\common\strvararg.cpp" />
+    <ClCompile Include="..\wx\src\common\sysopt.cpp" />
+    <ClCompile Include="..\wx\src\common\tarstrm.cpp" />
+    <ClCompile Include="..\wx\src\common\textbuf.cpp" />
+    <ClCompile Include="..\wx\src\common\textfile.cpp" />
+    <ClCompile Include="..\wx\src\common\time.cpp" />
+    <ClCompile Include="..\wx\src\common\timercmn.cpp" />
+    <ClCompile Include="..\wx\src\common\timerimpl.cpp" />
+    <ClCompile Include="..\wx\src\common\tokenzr.cpp" />
+    <ClCompile Include="..\wx\src\common\translation.cpp" />
+    <ClCompile Include="..\wx\src\common\txtstrm.cpp" />
+    <ClCompile Include="..\wx\src\common\unichar.cpp" />
+    <ClCompile Include="..\wx\src\common\uri.cpp" />
+    <ClCompile Include="..\wx\src\common\ustring.cpp" />
+    <ClCompile Include="..\wx\src\common\utilscmn.cpp" />
+    <ClCompile Include="..\wx\src\common\variant.cpp" />
+    <ClCompile Include="..\wx\src\common\wfstream.cpp" />
+    <ClCompile Include="..\wx\src\common\wxcrt.cpp" />
+    <ClCompile Include="..\wx\src\common\wxprintf.cpp" />
+    <ClCompile Include="..\wx\src\common\xlocale.cpp" />
+    <ClCompile Include="..\wx\src\common\xti.cpp" />
+    <ClCompile Include="..\wx\src\common\xtistrm.cpp" />
+    <ClCompile Include="..\wx\src\common\zipstrm.cpp" />
+    <ClCompile Include="..\wx\src\common\zstream.cpp" />
+    <ClCompile Include="..\wx\src\msw\basemsw.cpp" />
+    <ClCompile Include="..\wx\src\msw\crashrpt.cpp" />
+    <ClCompile Include="..\wx\src\msw\dde.cpp" />
+    <ClCompile Include="..\wx\src\msw\debughlp.cpp" />
+    <ClCompile Include="..\wx\src\msw\dir.cpp" />
+    <ClCompile Include="..\wx\src\msw\dlmsw.cpp" />
+    <ClCompile Include="..\wx\src\msw\evtloopconsole.cpp" />
+    <ClCompile Include="..\wx\src\msw\fswatcher.cpp" />
+    <ClCompile Include="..\wx\src\msw\main.cpp" />
+    <ClCompile Include="..\wx\src\msw\mimetype.cpp" />
+    <ClCompile Include="..\wx\src\msw\mslu.cpp" />
+    <ClCompile Include="..\wx\src\msw\power.cpp" />
+    <ClCompile Include="..\wx\src\msw\regconf.cpp" />
+    <ClCompile Include="..\wx\src\msw\registry.cpp" />
+    <ClCompile Include="..\wx\src\msw\snglinst.cpp" />
+    <ClCompile Include="..\wx\src\msw\stackwalk.cpp" />
+    <ClCompile Include="..\wx\src\msw\stdpaths.cpp" />
+    <ClCompile Include="..\wx\src\msw\thread.cpp" />
+    <ClCompile Include="..\wx\src\msw\timer.cpp" />
+    <ClCompile Include="..\wx\src\msw\utils.cpp" />
+    <ClCompile Include="..\wx\src\msw\utilsexc.cpp" />
+    <ClCompile Include="..\wx\src\msw\volume.cpp" />
+    <ClCompile Include="..\wx\src\generic\fswatcherg.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\wx\src\msw\version.rc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\wx\include\wx\msw\apptbase.h" />
+    <ClInclude Include="..\wx\include\wx\msw\apptrait.h" />
+    <ClInclude Include="..\wx\include\wx\msw\chkconf.h" />
+    <ClInclude Include="..\wx\include\wx\msw\crashrpt.h" />
+    <ClInclude Include="..\wx\include\wx\msw\dde.h" />
+    <ClInclude Include="..\wx\include\wx\msw\debughlp.h" />
+    <ClInclude Include="..\wx\include\wx\msw\evtloopconsole.h" />
+    <ClInclude Include="..\wx\include\wx\msw\fswatcher.h" />
+    <ClInclude Include="..\wx\include\wx\msw\gccpriv.h" />
+    <ClInclude Include="config\wx\setup.h" />
+    <CustomBuild Include="..\wx\include\wx\msw\genrcdefs.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Creating ..\wx\lib\vc_lib\mswud\wx\msw\rcdefs.h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl /EP /nologo "%(FullPath)" &gt; "..\wx\lib\vc_lib\mswud\wx\msw\rcdefs.h"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\wx\lib\vc_lib\mswud\wx\msw\rcdefs.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\wx\lib\vc_lib\mswud\wx\msw;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Creating ..\wx\lib\vc_lib\mswu\wx\msw\rcdefs.h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl /EP /nologo "%(FullPath)" &gt; "..\wx\lib\vc_lib\mswu\wx\msw\rcdefs.h"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\wx\lib\vc_lib\mswu\wx\msw\rcdefs.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\wx\lib\vc_lib\mswu\wx\msw;%(AdditionalInputs)</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="..\wx\include\wx\msw\libraries.h" />
+    <ClInclude Include="..\wx\include\wx\msw\mimetype.h" />
+    <ClInclude Include="..\wx\include\wx\msw\mslu.h" />
+    <ClInclude Include="..\wx\include\wx\msw\private.h" />
+    <ClInclude Include="..\wx\include\wx\msw\regconf.h" />
+    <ClInclude Include="..\wx\include\wx\msw\registry.h" />
+    <ClInclude Include="..\wx\include\wx\msw\seh.h" />
+    <ClInclude Include="..\wx\include\wx\msw\stackwalk.h" />
+    <ClInclude Include="..\wx\include\wx\msw\stdpaths.h" />
+    <ClInclude Include="..\wx\include\wx\msw\winundef.h" />
+    <ClInclude Include="..\wx\include\wx\msw\wrapcctl.h" />
+    <ClInclude Include="..\wx\include\wx\msw\wrapcdlg.h" />
+    <ClInclude Include="..\wx\include\wx\msw\wrapwin.h" />
+    <ClInclude Include="..\wx\include\wx\generic\fswatcher.h" />
+    <ClInclude Include="..\wx\include\wx\html\forcelnk.h" />
+    <ClInclude Include="..\wx\include\wx\afterstd.h" />
+    <ClInclude Include="..\wx\include\wx\any.h" />
+    <ClInclude Include="..\wx\include\wx\anystr.h" />
+    <ClInclude Include="..\wx\include\wx\app.h" />
+    <ClInclude Include="..\wx\include\wx\apptrait.h" />
+    <ClInclude Include="..\wx\include\wx\archive.h" />
+    <ClInclude Include="..\wx\include\wx\arrstr.h" />
+    <ClInclude Include="..\wx\include\wx\atomic.h" />
+    <ClInclude Include="..\wx\include\wx\base64.h" />
+    <ClInclude Include="..\wx\include\wx\beforestd.h" />
+    <ClInclude Include="..\wx\include\wx\buffer.h" />
+    <ClInclude Include="..\wx\include\wx\build.h" />
+    <ClInclude Include="..\wx\include\wx\chartype.h" />
+    <ClInclude Include="..\wx\include\wx\checkeddelete.h" />
+    <ClInclude Include="..\wx\include\wx\chkconf.h" />
+    <ClInclude Include="..\wx\include\wx\clntdata.h" />
+    <ClInclude Include="..\wx\include\wx\cmdargs.h" />
+    <ClInclude Include="..\wx\include\wx\cmdline.h" />
+    <ClInclude Include="..\wx\include\wx\confbase.h" />
+    <ClInclude Include="..\wx\include\wx\config.h" />
+    <ClInclude Include="..\wx\include\wx\containr.h" />
+    <ClInclude Include="..\wx\include\wx\convauto.h" />
+    <ClInclude Include="..\wx\include\wx\meta\convertible.h" />
+    <ClInclude Include="..\wx\include\wx\cpp.h" />
+    <ClInclude Include="..\wx\include\wx\crt.h" />
+    <ClInclude Include="..\wx\include\wx\datetime.h" />
+    <ClInclude Include="..\wx\include\wx\datstrm.h" />
+    <ClInclude Include="..\wx\include\wx\dde.h" />
+    <ClInclude Include="..\wx\include\wx\debug.h" />
+    <ClInclude Include="..\wx\include\wx\defs.h" />
+    <ClInclude Include="..\wx\include\wx\dir.h" />
+    <ClInclude Include="..\wx\include\wx\dlimpexp.h" />
+    <ClInclude Include="..\wx\include\wx\dlist.h" />
+    <ClInclude Include="..\wx\include\wx\dynarray.h" />
+    <ClInclude Include="..\wx\include\wx\dynlib.h" />
+    <ClInclude Include="..\wx\include\wx\dynload.h" />
+    <ClInclude Include="..\wx\include\wx\encconv.h" />
+    <ClInclude Include="..\wx\include\wx\event.h" />
+    <ClInclude Include="..\wx\include\wx\eventfilter.h" />
+    <ClInclude Include="..\wx\include\wx\evtloop.h" />
+    <ClInclude Include="..\wx\include\wx\except.h" />
+    <ClInclude Include="..\wx\include\wx\features.h" />
+    <ClInclude Include="..\wx\include\wx\ffile.h" />
+    <ClInclude Include="..\wx\include\wx\file.h" />
+    <ClInclude Include="..\wx\include\wx\fileconf.h" />
+    <ClInclude Include="..\wx\include\wx\filefn.h" />
+    <ClInclude Include="..\wx\include\wx\filename.h" />
+    <ClInclude Include="..\wx\include\wx\filesys.h" />
+    <ClInclude Include="..\wx\include\wx\flags.h" />
+    <ClInclude Include="..\wx\include\wx\fontenc.h" />
+    <ClInclude Include="..\wx\include\wx\fontmap.h" />
+    <ClInclude Include="..\wx\include\wx\fs_arc.h" />
+    <ClInclude Include="..\wx\include\wx\fs_filter.h" />
+    <ClInclude Include="..\wx\include\wx\fs_mem.h" />
+    <ClInclude Include="..\wx\include\wx\fs_zip.h" />
+    <ClInclude Include="..\wx\include\wx\fswatcher.h" />
+    <ClInclude Include="..\wx\include\wx\hash.h" />
+    <ClInclude Include="..\wx\include\wx\hashmap.h" />
+    <ClInclude Include="..\wx\include\wx\hashset.h" />
+    <ClInclude Include="..\wx\include\wx\iconloc.h" />
+    <ClInclude Include="..\wx\include\wx\meta\if.h" />
+    <ClInclude Include="..\wx\include\wx\meta\implicitconversion.h" />
+    <ClInclude Include="..\wx\include\wx\init.h" />
+    <ClInclude Include="..\wx\include\wx\meta\int2type.h" />
+    <ClInclude Include="..\wx\include\wx\intl.h" />
+    <ClInclude Include="..\wx\include\wx\iosfwrap.h" />
+    <ClInclude Include="..\wx\include\wx\ioswrap.h" />
+    <ClInclude Include="..\wx\include\wx\ipc.h" />
+    <ClInclude Include="..\wx\include\wx\ipcbase.h" />
+    <ClInclude Include="..\wx\include\wx\kbdstate.h" />
+    <ClInclude Include="..\wx\include\wx\language.h" />
+    <ClInclude Include="..\wx\include\wx\link.h" />
+    <ClInclude Include="..\wx\include\wx\list.h" />
+    <ClInclude Include="..\wx\include\wx\log.h" />
+    <ClInclude Include="..\wx\include\wx\longlong.h" />
+    <ClInclude Include="..\wx\include\wx\math.h" />
+    <ClInclude Include="..\wx\include\wx\memconf.h" />
+    <ClInclude Include="..\wx\include\wx\memory.h" />
+    <ClInclude Include="..\wx\include\wx\memtext.h" />
+    <ClInclude Include="..\wx\include\wx\mimetype.h" />
+    <ClInclude Include="..\wx\include\wx\module.h" />
+    <ClInclude Include="..\wx\include\wx\mousestate.h" />
+    <ClInclude Include="..\wx\include\wx\meta\movable.h" />
+    <ClInclude Include="..\wx\include\wx\msgout.h" />
+    <ClInclude Include="..\wx\include\wx\msgqueue.h" />
+    <ClInclude Include="..\wx\include\wx\mstream.h" />
+    <ClInclude Include="..\wx\include\wx\numformatter.h" />
+    <ClInclude Include="..\wx\include\wx\object.h" />
+    <ClInclude Include="..\wx\include\wx\platform.h" />
+    <ClInclude Include="..\wx\include\wx\platinfo.h" />
+    <ClInclude Include="..\wx\include\wx\meta\pod.h" />
+    <ClInclude Include="..\wx\include\wx\power.h" />
+    <ClInclude Include="..\wx\include\wx\process.h" />
+    <ClInclude Include="..\wx\include\wx\ptr_scpd.h" />
+    <ClInclude Include="..\wx\include\wx\ptr_shrd.h" />
+    <ClInclude Include="..\wx\include\wx\recguard.h" />
+    <ClInclude Include="..\wx\include\wx\regex.h" />
+    <ClInclude Include="..\wx\include\wx\meta\removeref.h" />
+    <ClInclude Include="..\wx\include\wx\rtti.h" />
+    <ClInclude Include="..\wx\include\wx\scopedarray.h" />
+    <ClInclude Include="..\wx\include\wx\scopedptr.h" />
+    <ClInclude Include="..\wx\include\wx\scopeguard.h" />
+    <ClInclude Include="..\wx\include\wx\sharedptr.h" />
+    <ClInclude Include="..\wx\include\wx\snglinst.h" />
+    <ClInclude Include="..\wx\include\wx\sstream.h" />
+    <ClInclude Include="..\wx\include\wx\stack.h" />
+    <ClInclude Include="..\wx\include\wx\stackwalk.h" />
+    <ClInclude Include="..\wx\include\wx\stdpaths.h" />
+    <ClInclude Include="..\wx\include\wx\stdstream.h" />
+    <ClInclude Include="..\wx\include\wx\stockitem.h" />
+    <ClInclude Include="..\wx\include\wx\stopwatch.h" />
+    <ClInclude Include="..\wx\include\wx\strconv.h" />
+    <ClInclude Include="..\wx\include\wx\stream.h" />
+    <ClInclude Include="..\wx\include\wx\string.h" />
+    <ClInclude Include="..\wx\include\wx\stringimpl.h" />
+    <ClInclude Include="..\wx\include\wx\stringops.h" />
+    <ClInclude Include="..\wx\include\wx\strvararg.h" />
+    <ClInclude Include="..\wx\include\wx\sysopt.h" />
+    <ClInclude Include="..\wx\include\wx\tarstrm.h" />
+    <ClInclude Include="..\wx\include\wx\textbuf.h" />
+    <ClInclude Include="..\wx\include\wx\textfile.h" />
+    <ClInclude Include="..\wx\include\wx\thread.h" />
+    <ClInclude Include="..\wx\include\wx\time.h" />
+    <ClInclude Include="..\wx\include\wx\timer.h" />
+    <ClInclude Include="..\wx\include\wx\tls.h" />
+    <ClInclude Include="..\wx\include\wx\tokenzr.h" />
+    <ClInclude Include="..\wx\include\wx\tracker.h" />
+    <ClInclude Include="..\wx\include\wx\translation.h" />
+    <ClInclude Include="..\wx\include\wx\txtstrm.h" />
+    <ClInclude Include="..\wx\include\wx\typeinfo.h" />
+    <ClInclude Include="..\wx\include\wx\types.h" />
+    <ClInclude Include="..\wx\include\wx\unichar.h" />
+    <ClInclude Include="..\wx\include\wx\uri.h" />
+    <ClInclude Include="..\wx\include\wx\ustring.h" />
+    <ClInclude Include="..\wx\include\wx\utils.h" />
+    <ClInclude Include="..\wx\include\wx\variant.h" />
+    <ClInclude Include="..\wx\include\wx\vector.h" />
+    <ClInclude Include="..\wx\include\wx\version.h" />
+    <ClInclude Include="..\wx\include\wx\versioninfo.h" />
+    <ClInclude Include="..\wx\include\wx\volume.h" />
+    <ClInclude Include="..\wx\include\wx\weakref.h" />
+    <ClInclude Include="..\wx\include\wx\wfstream.h" />
+    <ClInclude Include="..\wx\include\wx\wx.h" />
+    <ClInclude Include="..\wx\include\wx\wxchar.h" />
+    <ClInclude Include="..\wx\include\wx\wxcrt.h" />
+    <ClInclude Include="..\wx\include\wx\wxcrtbase.h" />
+    <ClInclude Include="..\wx\include\wx\wxcrtvararg.h" />
+    <ClInclude Include="..\wx\include\wx\wxprec.h" />
+    <ClInclude Include="..\wx\include\wx\xlocale.h" />
+    <ClInclude Include="..\wx\include\wx\xti.h" />
+    <ClInclude Include="..\wx\include\wx\xti2.h" />
+    <ClInclude Include="..\wx\include\wx\xtictor.h" />
+    <ClInclude Include="..\wx\include\wx\xtihandler.h" />
+    <ClInclude Include="..\wx\include\wx\xtiprop.h" />
+    <ClInclude Include="..\wx\include\wx\xtistrm.h" />
+    <ClInclude Include="..\wx\include\wx\xtitypes.h" />
+    <ClInclude Include="..\wx\include\wx\zipstrm.h" />
+    <ClInclude Include="..\wx\include\wx\zstream.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

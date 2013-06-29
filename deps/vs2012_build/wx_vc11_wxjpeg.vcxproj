@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>wxWidgets_wxjpeg</ProjectName>
+    <ProjectGuid>{6053CC38-CDEE-584C-8BC8-4B000D800FC7}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110_xp</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110_xp</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.60315.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\wx\lib\vc_lib\</OutDir>
+    <IntDir>vc_mswud\wxjpeg\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\wx\lib\vc_lib\</OutDir>
+    <IntDir>vc_mswu\wxjpeg\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>config;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>config;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <ObjectFileName>vc_mswud\wxjpeg\</ObjectFileName>
+      <ProgramDataBaseFileName>..\wx\lib\vc_lib\wxjpegd.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>config;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\wx\lib\vc_lib\wxjpegd.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <OutputFile>..\wx\lib\vc_lib\wx_vc11_wxjpeg.bsc</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>config;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>config;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <ObjectFileName>vc_mswu\wxjpeg\</ObjectFileName>
+      <ProgramDataBaseFileName>..\wx\lib\vc_lib\wxjpeg.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>config;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\wx\lib\vc_lib\wxjpeg.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <OutputFile>..\wx\lib\vc_lib\wx_vc11_wxjpeg.bsc</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\wx\src\jpeg\jcapimin.c" />
+    <ClCompile Include="..\wx\src\jpeg\jcapistd.c" />
+    <ClCompile Include="..\wx\src\jpeg\jccoefct.c" />
+    <ClCompile Include="..\wx\src\jpeg\jccolor.c" />
+    <ClCompile Include="..\wx\src\jpeg\jcdctmgr.c" />
+    <ClCompile Include="..\wx\src\jpeg\jchuff.c" />
+    <ClCompile Include="..\wx\src\jpeg\jcinit.c" />
+    <ClCompile Include="..\wx\src\jpeg\jcmainct.c" />
+    <ClCompile Include="..\wx\src\jpeg\jcmarker.c" />
+    <ClCompile Include="..\wx\src\jpeg\jcmaster.c" />
+    <ClCompile Include="..\wx\src\jpeg\jcomapi.c" />
+    <ClCompile Include="..\wx\src\jpeg\jcparam.c" />
+    <ClCompile Include="..\wx\src\jpeg\jcphuff.c" />
+    <ClCompile Include="..\wx\src\jpeg\jcprepct.c" />
+    <ClCompile Include="..\wx\src\jpeg\jcsample.c" />
+    <ClCompile Include="..\wx\src\jpeg\jctrans.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdapimin.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdapistd.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdatadst.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdatasrc.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdcoefct.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdcolor.c" />
+    <ClCompile Include="..\wx\src\jpeg\jddctmgr.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdhuff.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdinput.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdmainct.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdmarker.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdmaster.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdmerge.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdphuff.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdpostct.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdsample.c" />
+    <ClCompile Include="..\wx\src\jpeg\jdtrans.c" />
+    <ClCompile Include="..\wx\src\jpeg\jerror.c" />
+    <ClCompile Include="..\wx\src\jpeg\jfdctflt.c" />
+    <ClCompile Include="..\wx\src\jpeg\jfdctfst.c" />
+    <ClCompile Include="..\wx\src\jpeg\jfdctint.c" />
+    <ClCompile Include="..\wx\src\jpeg\jidctflt.c" />
+    <ClCompile Include="..\wx\src\jpeg\jidctfst.c" />
+    <ClCompile Include="..\wx\src\jpeg\jidctint.c" />
+    <ClCompile Include="..\wx\src\jpeg\jidctred.c" />
+    <ClCompile Include="..\wx\src\jpeg\jmemmgr.c" />
+    <ClCompile Include="..\wx\src\jpeg\jmemnobs.c" />
+    <ClCompile Include="..\wx\src\jpeg\jquant1.c" />
+    <ClCompile Include="..\wx\src\jpeg\jquant2.c" />
+    <ClCompile Include="..\wx\src\jpeg\jutils.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

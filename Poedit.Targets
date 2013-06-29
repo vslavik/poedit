@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         ToolsVersion="4.0">
+
+  <PropertyGroup>
+    <ResourcesOutDir>$(OutDir)Resources\</ResourcesOutDir>
+    <TranslationsOutDir>$(OutDir)Translations\</TranslationsOutDir>
+    <GettextDir>deps\bin-win\$(Configuration)\gettext\bin\</GettextDir>
+    <Msgfmt>$(GettextDir)msgfmt.exe -c</Msgfmt>
+
+    <PoDirPoedit>locales</PoDirPoedit>
+    <PoDirWX>deps\wx\locale</PoDirWX>
+    <PoDirWXMSW>deps\wx\locale\msw</PoDirWXMSW>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <DataFiles Include="src\resources\*.xrc;src\resources\*.gif" />
+    <DataFiles Include="icons\appicon\256x256\apps\poedit.png" />
+    <DataFiles Include="icons\ui\*.png" />
+    <DataFiles Include="icons\ui\toolbar-32\*.png" />
+    <DataFiles Include="icons\win32\vista\*.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TranslationFiles Include="$(PoDirPoedit)\*.po" />
+    <TranslationFilesWX Include="$(PoDirWX)\*.po" />
+    <TranslationFilesWXMSW Include="$(PoDirWXMSW)\*.po" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <GettextFiles Include="$(GettextDir)\msgcat.exe" />
+    <GettextFiles Include="$(GettextDir)\msgfmt.exe" />
+    <GettextFiles Include="$(GettextDir)\msgunfmt.exe" />
+    <GettextFiles Include="$(GettextDir)\msgmerge.exe" />
+    <GettextFiles Include="$(GettextDir)\xgettext.exe" />
+    <GettextFiles Include="$(GettextDir)\*.dll" />
+  </ItemGroup>
+
+  <Target Name="CopyDataFiles" AfterTargets="Link">
+    <Message Importance="High" Text="Copying resources to $(ResourcesOutDir)" />
+    <MakeDir Directories="$(ResourcesOutDir)" />
+    <Copy
+      SourceFiles="@(DataFiles)"
+      DestinationFolder="$(ResourcesOutDir)"
+      SkipUnchangedFiles="true"
+    />
+  </Target>
+
+
+  <Target Name="CopyTranslations_Poedit" AfterTargets="Link"
+          Inputs="@(TranslationFiles)"
+          Outputs="@(TranslationFiles->'$(TranslationsOutDir)%(Filename)\poedit.mo')">
+    <MakeDir Directories="@(TranslationFiles->'$(TranslationsOutDir)\%(Filename)')" />
+    <Exec Command="$(Msgfmt) -o $(TranslationsOutDir)%(TranslationFiles.Filename)\poedit.mo @(TranslationFiles)" />
+  </Target>
+
+  <Target Name="CopyTranslations_WX" AfterTargets="Link"
+        Inputs="@(TranslationFilesWX)"
+        Outputs="@(TranslationFilesWX->'$(TranslationsOutDir)%(Filename)\wxstd.mo')">
+    <MakeDir Directories="@(TranslationFilesWX->'$(TranslationsOutDir)\%(Filename)')" />
+    <Exec Command="$(Msgfmt) -o $(TranslationsOutDir)%(TranslationFilesWX.Filename)\wxstd.mo @(TranslationFilesWX)" />
+  </Target>
+
+  <Target Name="CopyTranslations_WXMSW" AfterTargets="Link"
+        Inputs="@(TranslationFilesWXMSW)"
+        Outputs="@(TranslationFilesWXMSW->'$(TranslationsOutDir)%(Filename)\wxmsw.mo')">
+    <MakeDir Directories="@(TranslationFilesWXMSW->'$(TranslationsOutDir)\%(Filename)')" />
+    <Exec Command="$(Msgfmt) -o $(TranslationsOutDir)%(TranslationFilesWXMSW.Filename)\wxmsw.mo @(TranslationFilesWXMSW)" />
+  </Target>
+
+  
+  <Target Name="CleanDataFiles" AfterTargets="Clean">
+    <Message Importance="High" Text="Cleaning resources and translations" />
+    <RemoveDir Directories="$(ResourcesOutDir)" />
+    <RemoveDir Directories="$(TranslationsOutDir)" />
+  </Target>
+
+  
+  <Target Name="CopyAuxBinaries" AfterTargets="Link">
+    <Message Importance="High" Text="Copying auxiliary binaries to $(OutDir)" />
+    <Copy
+      SourceFiles="@(GettextFiles)"
+      DestinationFolder="$(OutDir)"
+      SkipUnchangedFiles="true"
+    />
+  </Target>
+
+  <Target Name="CleanAuxBinaries" AfterTargets="Clean">
+    <Message Importance="High" Text="Cleaning auxiliary binaries" />
+    <Delete Files="@(GettextFiles -> '$(OutDir)\%(Filename)%(Extension)')" />
+  </Target>
+
+</Project>

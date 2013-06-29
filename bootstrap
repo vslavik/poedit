@@ -22,7 +22,6 @@ echo " - autoconf" && autoconf && \
 echo " - bakefile_gen" && (cd win32 ; bakefile_gen) && \
 \
 echo " - generate-docs.make" && make -C docs  -f generate-docs.make && \
-echo " - generate-icons" &&     make -C icons -f generate-icons.make && \
 \
 echo " - msgfmt (wx)" && make_msgfmt_wx && \
 echo " - msgfmt" && make_msgfmt && \
