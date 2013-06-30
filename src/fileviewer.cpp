@@ -33,6 +33,7 @@
 #include <wx/settings.h>
 #include <wx/listctrl.h>
 #include <wx/fontenum.h>
+#include <wx/ffile.h>
 #include <wx/stc/stc.h>
 
 #include "fileviewer.h"
@@ -230,7 +231,12 @@ void FileViewer::ShowReference(wxString ref)
     wxFileName filename(ref.BeforeLast(_T(':')), pathfmt);
     filename.MakeAbsolute(m_basePath);
 
-    if ( !filename.IsFileReadable() )
+    wxFFile file;
+    wxString data;
+
+    if ( !filename.IsFileReadable() ||
+         !file.Open(filename.GetFullPath()) ||
+         !file.ReadAll(&data, wxConvAuto()) )
     {
         wxLogError(_("Error opening file %s!"), filename.GetFullPath().c_str());
         return;
@@ -247,7 +253,7 @@ void FileViewer::ShowReference(wxString ref)
         linenum = 0;
 
     m_text->SetReadOnly(false);
-    m_text->LoadFile(filename.GetFullPath());
+    m_text->SetValue(data);
     m_text->SetReadOnly(true);
 
     m_text->MarkerDeleteAll(1);
