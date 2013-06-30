@@ -215,8 +215,17 @@ int FileViewer::GetLexer(const wxString& ext)
 }
 
 
-void FileViewer::ShowReference(const wxString& ref)
+void FileViewer::ShowReference(wxString ref)
 {
+    if ( ref.length() >= 3 &&
+         ref[1] == _T(':') &&
+         (ref[2] == _T('\\') || ref[2] == _T('/')) )
+    {
+        // This is an absolute Windows path (c:\foo... or c:/foo...); fix
+        // the latter case.
+        ref.Replace(_T("/"), _T("\\"));
+    }
+
     wxPathFormat pathfmt = ref.Contains(_T('\\')) ? wxPATH_WIN : wxPATH_UNIX;
     wxFileName filename(ref.BeforeLast(_T(':')), pathfmt);
     filename.MakeAbsolute(m_basePath);
