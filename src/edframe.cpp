@@ -1587,10 +1587,9 @@ void PoeditFrame::OnFind(wxCommandEvent&)
 
     if (!f)
         f = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans, m_textComment, m_textAutoComments);
-    else
-        f->FocusSearchField();
     f->Show(true);
     f->Raise();
+    f->FocusSearchField();
 }
 
 void PoeditFrame::OnFindNext(wxCommandEvent&)

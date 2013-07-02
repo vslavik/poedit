@@ -51,7 +51,7 @@ public:
     ~FileViewer();
 
     /// Shows given reference, i.e. loads the file
-    void ShowReference(const wxString& ref);
+    void ShowReference(wxString ref);
 
     bool FileOk() { return !m_current.empty(); }
 

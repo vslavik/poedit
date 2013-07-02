@@ -33,6 +33,7 @@
 #include <wx/settings.h>
 #include <wx/listctrl.h>
 #include <wx/fontenum.h>
+#include <wx/ffile.h>
 #include <wx/stc/stc.h>
 
 #include "fileviewer.h"
@@ -215,13 +216,60 @@ int FileViewer::GetLexer(const wxString& ext)
 }
 
 
-void FileViewer::ShowReference(const wxString& ref)
+void FileViewer::ShowReference(wxString ref)
 {
+    if ( ref.length() >= 3 &&
+         ref[1] == _T(':') &&
+         (ref[2] == _T('\\') || ref[2] == _T('/')) )
+    {
+        // This is an absolute Windows path (c:\foo... or c:/foo...); fix
+        // the latter case.
+        ref.Replace(_T("/"), _T("\\"));
+    }
+
     wxPathFormat pathfmt = ref.Contains(_T('\\')) ? wxPATH_WIN : wxPATH_UNIX;
     wxFileName filename(ref.BeforeLast(_T(':')), pathfmt);
-    filename.MakeAbsolute(m_basePath);
 
-    if ( !filename.IsFileReadable() )
+    if ( filename.IsRelative() )
+    {
+        wxFileName relative(filename);
+        wxString basePath(m_basePath);
+
+        // Sometimes, the path in source reference is not relative to the PO
+        // file's location, but is relative to e.g. the root directory. See
+        // https://code.djangoproject.com/ticket/13936 for exhaustive
+        // discussion with plenty of examples.
+        //
+        // Deal with this by trying parent directories of m_basePath too. So if
+        // a file named project/locales/cs/foo.po has a reference to src/main.c,
+        // try not only project/locales/cs/src/main.c, but also
+        // project/locales/src/main.c and project/src/main.c etc.
+        while ( !basePath.empty() )
+        {
+            filename = relative;
+            filename.MakeAbsolute(basePath);
+            if ( filename.FileExists() )
+            {
+                break; // good, found the file
+            }
+            else
+            {
+                // remove the last path component
+                size_t last = basePath.find_last_of(_T("\\/"));
+                if ( last == wxString::npos )
+                    break;
+                else
+                    basePath.erase(last);
+            }
+        }
+    }
+
+    wxFFile file;
+    wxString data;
+
+    if ( !filename.IsFileReadable() ||
+         !file.Open(filename.GetFullPath()) ||
+         !file.ReadAll(&data, wxConvAuto()) )
     {
         wxLogError(_("Error opening file %s!"), filename.GetFullPath().c_str());
         return;
@@ -238,7 +286,7 @@ void FileViewer::ShowReference(const wxString& ref)
         linenum = 0;
 
     m_text->SetReadOnly(false);
-    m_text->LoadFile(filename.GetFullPath());
+    m_text->SetValue(data);
     m_text->SetReadOnly(true);
 
     m_text->MarkerDeleteAll(1);
