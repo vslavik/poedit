@@ -24,8 +24,8 @@
 ;   Inno Setup installer script
 ;
 
-#define VERSION          "1.5.6"
-#define VERSION_FULL     "1.5.6"
+#define VERSION          "1.5.7"
+#define VERSION_FULL     "1.5.7"
 
 #ifndef CRT_REDIST
 #define CRT_REDIST       "C:\Program Files\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT"
