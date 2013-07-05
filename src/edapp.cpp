@@ -328,7 +328,7 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
         Parser p;
         p.Name = s_gettextLangs[i].name;
         p.Extensions = s_gettextLangs[i].exts;
-        p.Command = wxString(_T("xgettext")) + langflag + _T("--add-comments=TRANSLATORS --force-po -o %o %C %K %F");
+        p.Command = wxString(_T("xgettext")) + langflag + _T(" --add-comments=TRANSLATORS --force-po -o %o %C %K %F");
         p.KeywordItem = _T("-k%k");
         p.FileItem = _T("%f");
         p.CharsetItem = _T("--from-code=%c");
@@ -363,6 +363,18 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
                 pdb[cpp].CharsetItem = _T("--from-code=%c");
                 changed = true;
             }
+        }
+    }
+
+    // Poedit 1.5.6 had a breakage, it add --add-comments without space in front of it.
+    // Repair this automatically:
+    for (size_t i = 0; i < pdb.GetCount(); i++)
+    {
+        wxString& cmd = pdb[i].Command;
+        if (cmd.Contains(_T("--add-comments=")) && !cmd.Contains(_T(" --add-comments=")))
+        {
+            cmd.Replace(_T("--add-comments="), _T(" --add-comments="));
+            changed = true;
         }
     }
 
