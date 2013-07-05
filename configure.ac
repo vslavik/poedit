@@ -2,8 +2,8 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
 
-AC_INIT([poedit], [1.5.6], [poedit@googlegroups.com])
-PACKAGE_SHORT_VERSION=1.5.6
+AC_INIT([poedit], [1.5.7], [poedit@googlegroups.com])
+PACKAGE_SHORT_VERSION=1.5.7
 AC_SUBST(PACKAGE_SHORT_VERSION)
 
 AC_CONFIG_AUX_DIR([admin])
