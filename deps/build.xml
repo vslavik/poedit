@@ -51,7 +51,7 @@
 
     <target name="compile"
             description="compile all dependencies for building on this platform"
-            depends="compile-gettext">
+            depends="compile-gettext,compile-db">
     </target>
 
     <target name="compile-gettext" depends="win-gettext,osx-gettext"
