@@ -39,7 +39,7 @@
 
 PropertiesDialog::PropertiesDialog(wxWindow *parent)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("properties"));
+    wxXmlResource::Get()->LoadDialog(this, parent, "properties");
 
 #ifdef __WXMAC__
     XRCCTRL(*this, "plural_forms_help", wxControl)->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -56,9 +56,9 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
 
     // my custom controls:
     m_keywords = new wxEditableListBox(this, -1, _("Keywords"));
-    wxXmlResource::Get()->AttachUnknownControl(_T("keywords"), m_keywords);
+    wxXmlResource::Get()->AttachUnknownControl("keywords", m_keywords);
     m_paths = new wxEditableListBox(this, -1, _("Paths"));
-    wxXmlResource::Get()->AttachUnknownControl(_T("paths"), m_paths);
+    wxXmlResource::Get()->AttachUnknownControl("paths", m_paths);
 
 #if defined(__WXMSW__) || defined(__WXMAC__)
     // FIXME
@@ -78,30 +78,30 @@ void SetCharsetToCombobox(wxComboBox *ctrl, const wxString& value)
         {
         UTF_8_CHARSET,
         // and legacy ones
-        _T("iso-8859-1"),
-        _T("iso-8859-2"),
-        _T("iso-8859-3"),
-        _T("iso-8859-4"),
-        _T("iso-8859-5"),
-        _T("iso-8859-6"),
-        _T("iso-8859-7"),
-        _T("iso-8859-8"),
-        _T("iso-8859-9"),
-        _T("iso-8859-10"),
-        _T("iso-8859-11"),
-        _T("iso-8859-12"),
-        _T("iso-8859-13"),
-        _T("iso-8859-14"),
-        _T("iso-8859-15"),
-        _T("koi8-r"),
-        _T("windows-1250"),
-        _T("windows-1251"),
-        _T("windows-1252"),
-        _T("windows-1253"),
-        _T("windows-1254"),
-        _T("windows-1255"),
-        _T("windows-1256"),
-        _T("windows-1257")
+        "iso-8859-1",
+        "iso-8859-2",
+        "iso-8859-3",
+        "iso-8859-4",
+        "iso-8859-5",
+        "iso-8859-6",
+        "iso-8859-7",
+        "iso-8859-8",
+        "iso-8859-9",
+        "iso-8859-10",
+        "iso-8859-11",
+        "iso-8859-12",
+        "iso-8859-13",
+        "iso-8859-14",
+        "iso-8859-15",
+        "koi8-r",
+        "windows-1250",
+        "windows-1251",
+        "windows-1252",
+        "windows-1253",
+        "windows-1254",
+        "windows-1255",
+        "windows-1256",
+        "windows-1257"
         };
 
     ctrl->Clear();
@@ -109,7 +109,7 @@ void SetCharsetToCombobox(wxComboBox *ctrl, const wxString& value)
         ctrl->Append(all_charsets[i]);
 
     const wxString low = value.Lower();
-    if ( low == _T("utf-8") || low == _T("utf8") )
+    if ( low == "utf-8" || low == "utf8" )
         ctrl->SetValue(UTF_8_CHARSET);
     else
         ctrl->SetValue(value);
@@ -119,7 +119,7 @@ wxString GetCharsetFromCombobox(wxComboBox *ctrl)
 {
     wxString c = ctrl->GetValue();
     if ( c == UTF_8_CHARSET )
-        c = _T("UTF-8");
+        c = "UTF-8";
     return c;
 }
 
@@ -139,8 +139,8 @@ void PropertiesDialog::TransferTo(Catalog *cat)
     SET_VAL(LanguageCode, language);
     #undef SET_VAL
 
-    if (cat->Header().HasHeader(_T("Plural-Forms")))
-        m_pluralForms->SetValue(cat->Header().GetHeader(_T("Plural-Forms")));
+    if (cat->Header().HasHeader("Plural-Forms"))
+        m_pluralForms->SetValue(cat->Header().GetHeader("Plural-Forms"));
 
     m_paths->SetStrings(cat->Header().SearchPaths);
     m_keywords->SetStrings(cat->Header().Keywords);
@@ -176,13 +176,13 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
         cat->Header().SearchPaths.Add(dummy);
     }
     if (arr.GetCount() > 0 && cat->Header().BasePath.empty()) 
-        cat->Header().BasePath = _T(".");
+        cat->Header().BasePath = ".";
 
     m_keywords->GetStrings(arr);
     cat->Header().Keywords = arr;
 
     wxString pluralForms = m_pluralForms->GetValue().Strip(wxString::both);
-    if ( !pluralForms.empty() && !pluralForms.EndsWith(_T(";")) )
-        pluralForms += _T(";");
-    cat->Header().SetHeaderNotEmpty(_T("Plural-Forms"), pluralForms);
+    if ( !pluralForms.empty() && !pluralForms.EndsWith(";") )
+        pluralForms += ";";
+    cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
 }

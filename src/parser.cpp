@@ -42,18 +42,18 @@ void ParsersDB::Read(wxConfigBase *cfg)
 
     Parser info;
     wxString key, oldpath = cfg->GetPath();
-    wxStringTokenizer tkn(cfg->Read(_T("Parsers/List"), wxEmptyString), _T(";"));
+    wxStringTokenizer tkn(cfg->Read("Parsers/List", wxEmptyString), ";");
 
     while (tkn.HasMoreTokens())
     {
         info.Name = tkn.GetNextToken();
-        key = info.Name; key.Replace(_T("/"), _T("_"));
-        cfg->SetPath(_T("Parsers/") + key);
-        info.Extensions = cfg->Read(_T("Extensions"), wxEmptyString);
-        info.Command = cfg->Read(_T("Command"), wxEmptyString);
-        info.KeywordItem = cfg->Read(_T("KeywordItem"), wxEmptyString);
-        info.FileItem = cfg->Read(_T("FileItem"), wxEmptyString);
-        info.CharsetItem = cfg->Read(_T("CharsetItem"), wxEmptyString);
+        key = info.Name; key.Replace("/", "_");
+        cfg->SetPath("Parsers/" + key);
+        info.Extensions = cfg->Read("Extensions", wxEmptyString);
+        info.Command = cfg->Read("Command", wxEmptyString);
+        info.KeywordItem = cfg->Read("KeywordItem", wxEmptyString);
+        info.FileItem = cfg->Read("FileItem", wxEmptyString);
+        info.CharsetItem = cfg->Read("CharsetItem", wxEmptyString);
         Add(info);
         cfg->SetPath(oldpath);
     }
@@ -64,8 +64,8 @@ void ParsersDB::Read(wxConfigBase *cfg)
 void ParsersDB::Write(wxConfigBase *cfg)
 {
 #if 0 // asserts on wxGTK, some bug in wx
-    if (cfg->HasGroup(_T("Parsers")))
-        cfg->DeleteGroup(_T("Parsers"));
+    if (cfg->HasGroup("Parsers"))
+        cfg->DeleteGroup("Parsers");
 #endif
 
     cfg->SetExpandEnvVars(false);
@@ -76,20 +76,20 @@ void ParsersDB::Write(wxConfigBase *cfg)
     wxString list;
     list << Item(0).Name;
     for (i = 1; i < GetCount(); i++)
-        list << _T(";") << Item(i).Name;
-    cfg->Write(_T("Parsers/List"), list);
+        list << ";" << Item(i).Name;
+    cfg->Write("Parsers/List", list);
     
     wxString oldpath = cfg->GetPath();
     wxString key;
     for (i = 0; i < GetCount(); i++)
     {
-        key = Item(i).Name; key.Replace(_T("/"), _T("_"));
-        cfg->SetPath(_T("Parsers/") + key);
-        cfg->Write(_T("Extensions"), Item(i).Extensions);
-        cfg->Write(_T("Command"), Item(i).Command);
-        cfg->Write(_T("KeywordItem"), Item(i).KeywordItem);
-        cfg->Write(_T("FileItem"), Item(i).FileItem);
-        cfg->Write(_T("CharsetItem"), Item(i).CharsetItem);
+        key = Item(i).Name; key.Replace("/", "_");
+        cfg->SetPath("Parsers/" + key);
+        cfg->Write("Extensions", Item(i).Extensions);
+        cfg->Write("Command", Item(i).Command);
+        cfg->Write("KeywordItem", Item(i).KeywordItem);
+        cfg->Write("FileItem", Item(i).FileItem);
+        cfg->Write("CharsetItem", Item(i).CharsetItem);
         cfg->SetPath(oldpath);
     }
 }
@@ -107,7 +107,7 @@ int ParsersDB::FindParser(const wxString& name)
 
 wxArrayString Parser::SelectParsable(const wxArrayString& files)
 {
-    wxStringTokenizer tkn(Extensions, _T(";, \t"), wxTOKEN_STRTOK);
+    wxStringTokenizer tkn(Extensions, ";, \t", wxTOKEN_STRTOK);
     wxString wildcard;
     wxArrayString result;
     size_t i;
@@ -142,7 +142,7 @@ wxString Parser::GetCommand(const wxArrayString& files,
     wxString cmdline, kline, fline;
     
     cmdline = Command;
-    cmdline.Replace(_T("%o"), _T("\"") + output + _T("\""));
+    cmdline.Replace("%o", _T("\"") + output + _T("\""));
     
     wxString dummy;
     size_t i;
@@ -150,27 +150,27 @@ wxString Parser::GetCommand(const wxArrayString& files,
     for (i = 0; i < keywords.GetCount(); i++)
     {
         dummy = KeywordItem;
-        dummy.Replace(_T("%k"), keywords[i]);
-        kline << _T(" ") << dummy;
+        dummy.Replace("%k", keywords[i]);
+        kline << " " << dummy;
     }
 
     for (i = 0; i < files.GetCount(); i++)
     {
         dummy = FileItem;
-        dummy.Replace(_T("%f"), _T("\"") + files[i] + _T("\""));
-        fline << _T(" ") << dummy;
+        dummy.Replace("%f", _T("\"") + files[i] + _T("\""));
+        fline << " " << dummy;
     }
 
     wxString charsetline;
     if (!charset.empty())
     {
         charsetline = CharsetItem;
-        charsetline.Replace(_T("%c"), charset);
+        charsetline.Replace("%c", charset);
     }
 
-    cmdline.Replace(_T("%C"), charsetline);
-    cmdline.Replace(_T("%K"), kline);
-    cmdline.Replace(_T("%F"), fline);
+    cmdline.Replace("%C", charsetline);
+    cmdline.Replace("%K", kline);
+    cmdline.Replace("%F", fline);
 
     return cmdline;
 }

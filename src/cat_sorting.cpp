@@ -32,12 +32,12 @@
 {
     SortOrder order;
 
-    wxString by = wxConfig::Get()->Read(_T("/sort_by"), _T("file-order"));
-    long untrans = wxConfig::Get()->Read(_T("/sort_untrans_first"), 1L);
+    wxString by = wxConfig::Get()->Read("/sort_by", "file-order");
+    long untrans = wxConfig::Get()->Read("/sort_untrans_first", 1L);
 
-    if ( by == _T("source") )
+    if ( by == "source" )
         order.by = By_Source;
-    else if ( by == _T("translation") )
+    else if ( by == "translation" )
         order.by = By_Translation;
     else
         order.by = By_FileOrder;
@@ -54,18 +54,18 @@ void SortOrder::Save()
     switch ( by )
     {
         case By_FileOrder:
-            bystr = _T("file-order");
+            bystr = "file-order";
             break;
         case By_Source:
-            bystr = _T("source");
+            bystr = "source";
             break;
         case By_Translation:
-            bystr = _T("translation");
+            bystr = "translation";
             break;
     }
 
-    wxConfig::Get()->Write(_T("/sort_by"), bystr);
-    wxConfig::Get()->Write(_T("/sort_untrans_first"), untransFirst);
+    wxConfig::Get()->Write("/sort_by", bystr);
+    wxConfig::Get()->Write("/sort_untrans_first", untransFirst);
 }
 
 
@@ -129,11 +129,11 @@ int CatalogItemsComparator::CompareStrings(wxString a, wxString b) const
     //       * use natural sort (for numbers)
     //       * use ICU for correct case insensitivity
 
-    a.Replace(_T("&"), _T(""));
-    a.Replace(_T("_"), _T(""));
+    a.Replace("&", "");
+    a.Replace("_", "");
 
-    b.Replace(_T("&"), _T(""));
-    b.Replace(_T("_"), _T(""));
+    b.Replace("&", "");
+    b.Replace("_", "");
 
     return a.CmpNoCase(b);
 }

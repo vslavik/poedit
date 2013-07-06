@@ -48,7 +48,7 @@ FileViewer::FileViewer(wxWindow *parent,
 {
     m_basePath = basePath;
 
-    SetName(_T("fileviewer"));
+    SetName("fileviewer");
 
     wxPanel *panel = new wxPanel(this, -1);
     wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
@@ -98,21 +98,21 @@ void FileViewer::SetupTextCtrl()
     wxFont font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
 
 #ifdef __WXGTK__
-    font.SetFaceName(_T("monospace"));
+    font.SetFaceName("monospace");
 #else
-    static const wxChar *s_monospaced_fonts[] = {
+    static const char *s_monospaced_fonts[] = {
 #ifdef __WXMSW__
-        _T("Consolas"),
-        _T("Lucida Console"),
+        "Consolas",
+        "Lucida Console",
 #endif
 #ifdef __WXOSX__
-        _T("Menlo"),
-        _T("Monaco"),
+        "Menlo",
+        "Monaco",
 #endif
         NULL
     };
 
-    for ( const wxChar **f = s_monospaced_fonts; *f; ++f )
+    for ( const char **f = s_monospaced_fonts; *f; ++f )
     {
         if ( wxFontEnumerator::IsValidFacename(*f) )
         {
@@ -123,14 +123,14 @@ void FileViewer::SetupTextCtrl()
 #endif
 
     // style used:
-    wxString fontspec = wxString::Format(_T("face:%s,size:%d"),
+    wxString fontspec = wxString::Format("face:%s,size:%d",
                                          font.GetFaceName().c_str(),
                                          font.GetPointSize());
-    const wxString DEFAULT     = fontspec + _T(",fore:black,back:white");
-    const wxString STRING      = fontspec + _T(",bold,fore:#882d21");
-    const wxString COMMENT     = fontspec + _T(",fore:#487e18");
-    const wxString KEYWORD     = fontspec + _T(",fore:#2f00f9");
-    const wxString LINENUMBERS = fontspec + _T(",fore:#5d8bab");
+    const wxString DEFAULT     = fontspec + ",fore:black,back:white";
+    const wxString STRING      = fontspec + ",bold,fore:#882d21";
+    const wxString COMMENT     = fontspec + ",fore:#487e18";
+    const wxString KEYWORD     = fontspec + ",fore:#2f00f9";
+    const wxString LINENUMBERS = fontspec + ",fore:#5d8bab";
 
 
     // current line marker
@@ -143,7 +143,7 @@ void FileViewer::SetupTextCtrl()
     // line numbers margin size:
     t.SetMarginType(0, wxSTC_MARGIN_NUMBER);
     t.SetMarginWidth(0,
-                     t.TextWidth(wxSTC_STYLE_LINENUMBER, _T("9999 ")));
+                     t.TextWidth(wxSTC_STYLE_LINENUMBER, "9999 "));
     t.SetMarginWidth(1, 0);
     t.SetMarginWidth(2, 3);
 
@@ -222,7 +222,7 @@ void FileViewer::ShowReference(wxString ref)
     {
         // This is an absolute Windows path (c:\foo... or c:/foo...); fix
         // the latter case.
-        ref.Replace(_T("/"), _T("\\"));
+        ref.Replace("/", "\\");
     }
 
     wxPathFormat pathfmt = ref.Contains(_T('\\')) ? wxPATH_WIN : wxPATH_UNIX;
@@ -253,7 +253,7 @@ void FileViewer::ShowReference(wxString ref)
             else
             {
                 // remove the last path component
-                size_t last = basePath.find_last_of(_T("\\/"));
+                size_t last = basePath.find_last_of("\\/");
                 if ( last == wxString::npos )
                     break;
                 else

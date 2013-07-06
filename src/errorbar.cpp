@@ -34,7 +34,7 @@
 namespace
 {
 
-const wxColour gs_ErrorColor(_T("#ff5050"));
+const wxColour gs_ErrorColor("#ff5050");
 
 } // anonymous namespace
 

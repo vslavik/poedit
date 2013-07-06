@@ -73,18 +73,18 @@ bool Catalog::ExportToHTML(const wxString& filename)
 
     // HTML HEADER
     f.AddLine(_T("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">"));
-    f.AddLine(_T("<html>"));
+    f.AddLine("<html>");
 
-    f.AddLine(_T("<head>"));
-    line.Printf(_T("<title> %s - %s - Poedit Export </title>"),
+    f.AddLine("<head>");
+    line.Printf("<title> %s - %s - Poedit Export </title>",
                 EscapeMarkup(m_header.Project).c_str(),
                 EscapeMarkup(m_header.LanguageCode).c_str());
     f.AddLine(line);
     f.AddLine(_T("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" ) );
-    f.AddLine(_T("</head>"));
-    f.AddLine(_T("<body bgcolor='#FFFFFF'>"));
+    f.AddLine("</head>");
+    f.AddLine("<body bgcolor='#FFFFFF'>");
 
-    line.Printf(_T("<h1> %s : %s</h1>"),
+    line.Printf("<h1> %s : %s</h1>",
                 EscapeMarkup(m_header.Project).c_str(),
                 EscapeMarkup(m_header.LanguageCode).c_str());
     f.AddLine(line);
@@ -95,12 +95,12 @@ bool Catalog::ExportToHTML(const wxString& filename)
     // String here are duplicates from the ones in setting.xrc
     // TODO find a way if possible to synchronize them
 
-    f.AddLine(_T("<table align=center border=1 cellspacing=2 cellpadding=4>"));
+    f.AddLine("<table align=center border=1 cellspacing=2 cellpadding=4>");
 
-    line.Printf(_T("<tr><th colspan=2>%s</th></tr>"),
+    line.Printf("<tr><th colspan=2>%s</th></tr>",
                 _("Project info"));
     f.AddLine(line);
-    wxString line_format = _T("<tr><td>%s</td><td>%s</td></tr>");
+    wxString line_format = "<tr><td>%s</td><td>%s</td></tr>";
     line.Printf(line_format,
                 _("Project name and version:"),
                 EscapeMarkup(m_header.Project).c_str());
@@ -120,7 +120,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
                 EscapeMarkup(m_header.Charset).c_str());
     f.AddLine(line);
 
-    f.AddLine( _T("</table>") );
+    f.AddLine( "</table>" );
     // statistics
 
     int all = 0;
@@ -138,19 +138,19 @@ bool Catalog::ExportToHTML(const wxString& filename)
 
 
     // data printed in a table :
-    f.AddLine(_T("<table border=1 cellspacing=2 cellpadding=4>"));
+    f.AddLine("<table border=1 cellspacing=2 cellpadding=4>");
 
-    f.AddLine(_T("<tr>"));
-    f.AddLine(_T("<th>"));
+    f.AddLine("<tr>");
+    f.AddLine("<th>");
     f.AddLine(_("Source"));
-    f.AddLine(_T("</th>"));
-    f.AddLine(_T("<th>"));
+    f.AddLine("</th>");
+    f.AddLine("<th>");
     f.AddLine(_("Translation"));
-    f.AddLine(_T("</th>"));
-    f.AddLine(_T("<th>"));
+    f.AddLine("</th>");
+    f.AddLine("<th>");
     f.AddLine(_("Notes"));
-    f.AddLine(_T("</th>"));
-    f.AddLine(_T("</tr>"));
+    f.AddLine("</th>");
+    f.AddLine("</tr>");
 
     for (i = 0; i < GetCount(); i++)
     {
@@ -162,7 +162,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
         wxString translation = data.GetTranslation();
         if (translation.empty())
         {
-            translation = _T(" ");
+            translation = " ";
             bgcolor = g_ItemColourUntranslated[i % 2];
         }
 
@@ -171,41 +171,41 @@ bool Catalog::ExportToHTML(const wxString& filename)
         if (data.IsAutomatic())
         {
             flags += EscapeMarkup(_("Automatic translation"));
-            flags += _T("<BR>");
+            flags += "<BR>";
         }
         if (data.IsFuzzy())
         {
             bgcolor = g_ItemColourFuzzy[i % 2];
             flags += EscapeMarkup(_("Fuzzy translation"));
-            flags += _T("<BR>");
+            flags += "<BR>";
         }
         if (flags.empty())
         {
-            flags = _T(" ");
+            flags = " ";
         }
 
         wxString tr;
-        tr.Printf(_T("<tr bgcolor='#%0X%0X%0X'>"),
+        tr.Printf("<tr bgcolor='#%0X%0X%0X'>",
                   bgcolor.Red(), bgcolor.Green(), bgcolor.Blue());
         f.AddLine(tr);
 
-        f.AddLine(_T("<td>"));
+        f.AddLine("<td>");
         f.AddLine(EscapeMarkup(source_string));
-        f.AddLine(_T("</td>"));
-        f.AddLine(_T("<td>"));
+        f.AddLine("</td>");
+        f.AddLine("<td>");
         f.AddLine(EscapeMarkup(translation));
-        f.AddLine(_T("</td>"));
-        f.AddLine(_T("<td>"));
+        f.AddLine("</td>");
+        f.AddLine("<td>");
         f.AddLine(_T("<font size=\"-1\">"));
         f.AddLine(flags);
-        f.AddLine(_T("</font>"));
-        f.AddLine(_T("</td>"));
-        f.AddLine(_T("</tr>"));
+        f.AddLine("</font>");
+        f.AddLine("</td>");
+        f.AddLine("</tr>");
     }
 
-    f.AddLine(_T("</table>"));
-    f.AddLine(_T("</body>"));
-    f.AddLine(_T("</html>"));
+    f.AddLine("</table>");
+    f.AddLine("</body>");
+    f.AddLine("</html>");
 
     bool written = f.Write(wxTextFileType_None, wxConvUTF8);
 

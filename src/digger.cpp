@@ -102,7 +102,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
     if ( partials.empty() )
         return NULL; // couldn't parse any source files
 
-    wxString mergedFile = tmpdir.CreateFileName(_T("merged.pot"));
+    wxString mergedFile = tmpdir.CreateFileName("merged.pot");
 
     if ( !ConcatCatalogs(partials, mergedFile) )
         return NULL;
@@ -142,7 +142,7 @@ bool SourceDigger::DigFiles(TempDirectory& tmpdir,
             batchfiles.Add(files[i]);
         last = i;
 
-        wxString tempfile = tmpdir.CreateFileName(_T("extracted.pot"));
+        wxString tempfile = tmpdir.CreateFileName("extracted.pot");
         if (!ExecuteGettext(
                     parser.GetCommand(batchfiles, keywords, tempfile, charset)))
         {
@@ -160,7 +160,7 @@ bool SourceDigger::DigFiles(TempDirectory& tmpdir,
     if ( tempfiles.empty() )
         return false; // failed to parse any source files
 
-    wxString outfile = tmpdir.CreateFileName(_T("merged_chunks.pot"));
+    wxString outfile = tmpdir.CreateFileName("merged_chunks.pot");
     if ( !ConcatCatalogs(tempfiles, outfile) )
         return false;
 
@@ -213,7 +213,7 @@ int SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
     cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_FILES);
     while (cont)
     {
-        files.Add(dirname + _T("/") + filename);
+        files.Add(dirname + "/" + filename);
         found++;
         cont = dir.GetNext(&filename);
     }    
@@ -221,7 +221,7 @@ int SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
     cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_DIRS);
     while (cont)
     {
-        found += FindInDir(dirname + _T("/") + filename, files);
+        found += FindInDir(dirname + "/" + filename, files);
         cont = dir.GetNext(&filename);
     }
 

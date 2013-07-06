@@ -52,9 +52,9 @@
 
 PreferencesDialog::PreferencesDialog(wxWindow *parent)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("preferences"));
+    wxXmlResource::Get()->LoadDialog(this, parent, "preferences");
 #ifdef USE_TRANSMEM
-    wxXmlResource::Get()->AttachUnknownControl(_T("tm_langs"), 
+    wxXmlResource::Get()->AttachUnknownControl("tm_langs", 
                 new wxEditableListBox(this, -1, _("My Languages")));
 #else
     // remove "Translation Memory" page if support not compiled-in
@@ -102,39 +102,39 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
 void PreferencesDialog::TransferTo(wxConfigBase *cfg)
 {
     XRCCTRL(*this, "user_name", wxTextCtrl)->SetValue(
-                cfg->Read(_T("translator_name"), wxEmptyString));
+                cfg->Read("translator_name", wxEmptyString));
     XRCCTRL(*this, "user_email", wxTextCtrl)->SetValue(
-                cfg->Read(_T("translator_email"), wxEmptyString));
+                cfg->Read("translator_email", wxEmptyString));
     XRCCTRL(*this, "compile_mo", wxCheckBox)->SetValue(
-                cfg->Read(_T("compile_mo"), (long)true));
+                cfg->Read("compile_mo", (long)true));
     XRCCTRL(*this, "show_summary", wxCheckBox)->SetValue(
-                cfg->Read(_T("show_summary"), true));
+                cfg->Read("show_summary", true));
     XRCCTRL(*this, "manager_startup", wxCheckBox)->SetValue(
-                (bool)cfg->Read(_T("manager_startup"), (long)false));
+                (bool)cfg->Read("manager_startup", (long)false));
     XRCCTRL(*this, "focus_to_text", wxCheckBox)->SetValue(
-                (bool)cfg->Read(_T("focus_to_text"), (long)false));
+                (bool)cfg->Read("focus_to_text", (long)false));
     XRCCTRL(*this, "comment_window_editable", wxCheckBox)->SetValue(
-                (bool)cfg->Read(_T("comment_window_editable"), (long)false));
+                (bool)cfg->Read("comment_window_editable", (long)false));
     XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
-                (bool)cfg->Read(_T("keep_crlf"), true));
+                (bool)cfg->Read("keep_crlf", true));
 #ifdef USE_SPELLCHECKING
     XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->SetValue(
-                (bool)cfg->Read(_T("enable_spellchecking"), true));
+                (bool)cfg->Read("enable_spellchecking", true));
 #endif
 
     XRCCTRL(*this, "use_font_list", wxCheckBox)->SetValue(
-                (bool)cfg->Read(_T("custom_font_list_use"), (long)false));
+                (bool)cfg->Read("custom_font_list_use", (long)false));
     XRCCTRL(*this, "use_font_text", wxCheckBox)->SetValue(
-                (bool)cfg->Read(_T("custom_font_text_use"), (long)false));
+                (bool)cfg->Read("custom_font_text_use", (long)false));
     XRCCTRL(*this, "font_list", wxFontPickerCtrl)->SetSelectedFont(
-            wxFont(cfg->Read(_T("custom_font_list_name"), wxEmptyString)));
+            wxFont(cfg->Read("custom_font_list_name", wxEmptyString)));
     XRCCTRL(*this, "font_text", wxFontPickerCtrl)->SetSelectedFont(
-            wxFont(cfg->Read(_T("custom_font_text_name"), wxEmptyString)));
+            wxFont(cfg->Read("custom_font_text_name", wxEmptyString)));
 
-    wxString format = cfg->Read(_T("crlf_format"), _T("unix"));
+    wxString format = cfg->Read("crlf_format", "unix");
     int sel;
-    if (format == _T("win")) sel = 1;
-    else /* _T("unix") or obsolete settings */ sel = 0;
+    if (format == "win") sel = 1;
+    else /* "unix" or obsolete settings */ sel = 0;
 
     XRCCTRL(*this, "crlf_format", wxChoice)->SetSelection(sel);
 
@@ -153,17 +153,17 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
         list->SetSelection(0);
 
 #ifdef USE_TRANSMEM        
-    wxStringTokenizer tkn(cfg->Read(_T("TM/languages"), wxEmptyString), _T(":"));
+    wxStringTokenizer tkn(cfg->Read("TM/languages", wxEmptyString), ":");
     wxArrayString langs;
     while (tkn.HasMoreTokens()) langs.Add(tkn.GetNextToken());
     XRCCTRL(*this, "tm_langs", wxEditableListBox)->SetStrings(langs);
 
     XRCCTRL(*this, "tm_omits", wxSpinCtrl)->SetValue(
-                cfg->Read(_T("TM/max_omitted"), 2));
+                cfg->Read("TM/max_omitted", 2));
     XRCCTRL(*this, "tm_delta", wxSpinCtrl)->SetValue(
-                cfg->Read(_T("TM/max_delta"), 2));
+                cfg->Read("TM/max_delta", 2));
     XRCCTRL(*this, "tm_automatic", wxCheckBox)->SetValue(
-                cfg->Read(_T("use_tm_when_updating"), true));
+                cfg->Read("use_tm_when_updating", true));
 #endif
 
 #ifdef USE_SPARKLE
@@ -179,41 +179,41 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
             
 void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
 {
-    cfg->Write(_T("translator_name"), 
+    cfg->Write("translator_name", 
                 XRCCTRL(*this, "user_name", wxTextCtrl)->GetValue());
-    cfg->Write(_T("translator_email"), 
+    cfg->Write("translator_email", 
                 XRCCTRL(*this, "user_email", wxTextCtrl)->GetValue());
-    cfg->Write(_T("compile_mo"), 
+    cfg->Write("compile_mo", 
                 XRCCTRL(*this, "compile_mo", wxCheckBox)->GetValue());
-    cfg->Write(_T("show_summary"), 
+    cfg->Write("show_summary", 
                 XRCCTRL(*this, "show_summary", wxCheckBox)->GetValue());
-    cfg->Write(_T("manager_startup"), 
+    cfg->Write("manager_startup", 
                 XRCCTRL(*this, "manager_startup", wxCheckBox)->GetValue());
-    cfg->Write(_T("focus_to_text"), 
+    cfg->Write("focus_to_text", 
                 XRCCTRL(*this, "focus_to_text", wxCheckBox)->GetValue());
-    cfg->Write(_T("comment_window_editable"), 
+    cfg->Write("comment_window_editable", 
                 XRCCTRL(*this, "comment_window_editable", wxCheckBox)->GetValue());
-    cfg->Write(_T("keep_crlf"), 
+    cfg->Write("keep_crlf", 
                 XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
 #ifdef USE_SPELLCHECKING
-    cfg->Write(_T("enable_spellchecking"), 
+    cfg->Write("enable_spellchecking", 
                 XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->GetValue());
 #endif
    
     wxFont listFont = XRCCTRL(*this, "font_list", wxFontPickerCtrl)->GetSelectedFont();
     wxFont textFont = XRCCTRL(*this, "font_text", wxFontPickerCtrl)->GetSelectedFont();
 
-    cfg->Write(_T("custom_font_list_use"),
+    cfg->Write("custom_font_list_use",
                listFont.IsOk() && XRCCTRL(*this, "use_font_list", wxCheckBox)->GetValue());
-    cfg->Write(_T("custom_font_text_use"),
+    cfg->Write("custom_font_text_use",
                textFont.IsOk() && XRCCTRL(*this, "use_font_text", wxCheckBox)->GetValue());
     if ( listFont.IsOk() )
-        cfg->Write(_T("custom_font_list_name"), listFont.GetNativeFontInfoDesc());
+        cfg->Write("custom_font_list_name", listFont.GetNativeFontInfoDesc());
     if ( textFont.IsOk() )
-        cfg->Write(_T("custom_font_text_name"), textFont.GetNativeFontInfoDesc());
+        cfg->Write("custom_font_text_name", textFont.GetNativeFontInfoDesc());
 
-    static const wxChar *formats[] = { _T("unix"), _T("win") };
-    cfg->Write(_T("crlf_format"), formats[
+    static const char *formats[] = { "unix", "win" };
+    cfg->Write("crlf_format", formats[
                 XRCCTRL(*this, "crlf_format", wxChoice)->GetSelection()]);
                
     m_parsers.Write(cfg);
@@ -227,12 +227,12 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
         if (i != 0) languages << _T(':');
         languages << langs[i];
     }
-    cfg->Write(_T("TM/languages"), languages);
-    cfg->Write(_T("TM/max_omitted"), 
+    cfg->Write("TM/languages", languages);
+    cfg->Write("TM/max_omitted", 
                 (long)XRCCTRL(*this, "tm_omits", wxSpinCtrl)->GetValue());
-    cfg->Write(_T("TM/max_delta"), 
+    cfg->Write("TM/max_delta", 
                 (long)XRCCTRL(*this, "tm_delta", wxSpinCtrl)->GetValue());
-    cfg->Write(_T("use_tm_when_updating"), 
+    cfg->Write("use_tm_when_updating", 
                 XRCCTRL(*this, "tm_automatic", wxCheckBox)->GetValue());
 #endif
 
@@ -286,7 +286,7 @@ bool PreferencesDialog::EditParser(int num)
 {
     wxDialog dlg;
     
-    wxXmlResource::Get()->LoadDialog(&dlg, this, _T("edit_parser"));
+    wxXmlResource::Get()->LoadDialog(&dlg, this, "edit_parser");
     dlg.Centre();
     
     Parser& nfo = m_parsers[num];
@@ -355,7 +355,7 @@ void PreferencesDialog::OnTMAddLang(wxCommandEvent&)
     int index;
     
     for (const LanguageStruct *i = isoLanguages; i->lang != NULL; i++)
-        lngs.Add(wxString(i->iso) + _T(" (") + i->lang + _T(")"));
+        lngs.Add(wxString(i->iso) + " (" + i->lang + ")");
     index = wxGetSingleChoiceIndex(_("Select language"), 
                                    _("Please select language ISO code:"),
                                    lngs, this);

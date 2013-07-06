@@ -55,20 +55,20 @@ static inline bool IsForLang(const wxString& filename, const wxString& lang,
                              bool variants = true)
 {
 #ifdef __WINDOWS__
-    #define LC_MESSAGES_STR _T("/lc_messages")
+    #define LC_MESSAGES_STR "/lc_messages"
 #else
-    #define LC_MESSAGES_STR _T("/LC_MESSAGES")
+    #define LC_MESSAGES_STR "/LC_MESSAGES"
 #endif
     wxString base, dir;
     wxSplitPath(filename, &dir, &base, NULL);
-    dir.Replace(wxString(wxFILE_SEP_PATH), _T("/"));
+    dir.Replace(wxString(wxFILE_SEP_PATH), "/");
     return base.Matches(lang) ||
-           dir.Matches(_T("*/") + lang) ||
-           dir.Matches(_T("*/") + lang + LC_MESSAGES_STR) ||
+           dir.Matches("*/" + lang) ||
+           dir.Matches("*/" + lang + LC_MESSAGES_STR) ||
            (variants && lang.Len() == 5 && lang[2] == _T('_') && 
                 IsForLang(filename, lang.Mid(0, 2), false)) ||
            (variants && lang.Len() == 2 && 
-                IsForLang(filename, lang + _T("_??"), false));
+                IsForLang(filename, lang + "_??", false));
     #undef LC_MESSAGES_STR
 }
 
@@ -86,10 +86,10 @@ class TMUDirTraverser : public wxDirTraverser
 #else
             wxString f = filename;
 #endif
-            if ((f.Matches(_T("*.mo")) && IsForLang(f, m_lang)) || 
-                (f.Matches(_T("*.po")) && IsForLang(f, m_lang)) 
+            if ((f.Matches("*.mo") && IsForLang(f, m_lang)) || 
+                (f.Matches("*.po") && IsForLang(f, m_lang)) 
 #if HAVE_RPM
-                || f.Matches(_T("*.rpm"))
+                || f.Matches("*.rpm")
 #endif
                 )
             {
@@ -147,12 +147,12 @@ bool TranslationMemoryUpdater::Update(const wxArrayString& files)
         m_progress->UpdateMessage(wxString(_("Scanning file: ")) + 
                                   wxFileNameFromPath(f));
         
-        if (f.Matches(_T("*.po")))
+        if (f.Matches("*.po"))
             res = UpdateFromPO(f);
-        else if (f.Matches(_T("*.mo")))
+        else if (f.Matches("*.mo"))
             res = UpdateFromMO(f);
 #if HAVE_RPM
-        else if (f.Matches(_T("*.rpm")))
+        else if (f.Matches("*.rpm"))
             res = UpdateFromRPM(f);
 #endif
 
@@ -170,7 +170,7 @@ bool TranslationMemoryUpdater::UpdateFromPO(const wxString& filename)
 
 bool TranslationMemoryUpdater::UpdateFromMO(const wxString& filename)
 {
-    wxString tmp = wxFileName::CreateTempFileName(_T("poedit"));
+    wxString tmp = wxFileName::CreateTempFileName("poedit");
     wxLogNull null;
 
     if ( tmp.empty() )
@@ -186,7 +186,7 @@ bool TranslationMemoryUpdater::UpdateFromMO(const wxString& filename)
 #if HAVE_RPM
 bool TranslationMemoryUpdater::UpdateFromRPM(const wxString& filename)
 {
-    #define TMP_DIR _T("/tmp/poedit-rpm-tpm")
+    #define TMP_DIR "/tmp/poedit-rpm-tpm"
     if (!wxMkdir(TMP_DIR)) return false;
     
     wxString cmd;
@@ -195,13 +195,13 @@ bool TranslationMemoryUpdater::UpdateFromRPM(const wxString& filename)
     if (wxExecute(cmd, true) != 0)
     {
         wxLogError(_("Cannot extract catalogs from RPM file."));
-        wxExecute(_T("rm -rf ") TMP_DIR, true);
+        wxExecute("rm -rf " TMP_DIR, true);
         return false;
     }
 
     bool res = true;
     wxArrayString files;
-    if (wxDir::GetAllFiles(TMP_DIR, &files, _T("*.mo")) != (size_t)-1)
+    if (wxDir::GetAllFiles(TMP_DIR, &files, "*.mo") != (size_t)-1)
     {
         size_t cnt = files.GetCount();
         for (size_t i = 0; res && i < cnt; i++)
@@ -213,7 +213,7 @@ bool TranslationMemoryUpdater::UpdateFromRPM(const wxString& filename)
     }
 
     wxLog::FlushActive();
-    wxExecute(_T("rm -rf ") TMP_DIR, true);
+    wxExecute("rm -rf " TMP_DIR, true);
     return res;
     #undef TMP_DIR
 }

@@ -78,7 +78,7 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize,
 
 inline wxString WindowStatePath(const wxWindow *win)
 {
-    return wxString::Format(_T("/windows/%s/"), win->GetName().c_str());
+    return wxString::Format("/windows/%s/", win->GetName().c_str());
 }
 
 #endif // _UTILITY_H_

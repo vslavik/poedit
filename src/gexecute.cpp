@@ -53,7 +53,7 @@ static wxString GetPathToAuxBinary(const wxString& program)
     path.SetPath(GetAuxBinariesDir());
     path.SetName(program);
 #ifdef __WXMSW__
-    path.SetExt(_T("exe"));
+    path.SetExt("exe");
 #endif
     if ( path.IsFileExecutable() )
     {
@@ -61,8 +61,8 @@ static wxString GetPathToAuxBinary(const wxString& program)
     }
     else
     {
-        wxLogTrace(_T("poedit.execute"),
-                   _T("%s doesn't exist, falling back to %s"),
+        wxLogTrace("poedit.execute",
+                   "%s doesn't exist, falling back to %s",
                    path.GetFullPath().c_str(),
                    program.c_str());
         return program;
@@ -82,7 +82,7 @@ int DoExecuteGettext(const wxString& cmdline_,
     cmdline = GetPathToAuxBinary(binary) + cmdline.Mid(binary.length());
 #endif
 
-    wxLogTrace(_T("poedit.execute"), _T("executing: %s"), cmdline.c_str());
+    wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
 
     int retcode = wxExecute(cmdline, gstdout, gstderr, wxEXEC_BLOCK);
 
@@ -103,7 +103,7 @@ bool ExecuteGettext(const wxString& cmdline)
     {
         if ( gstderr[i].empty() )
             continue;
-        wxLogError(_T("%s"), gstderr[i].c_str());
+        wxLogError("%s", gstderr[i].c_str());
     }
 
     return retcode == 0;
@@ -116,12 +116,12 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
     wxArrayString gstderr;
     int retcode = DoExecuteGettext(cmdline, gstdout, gstderr);
 
-    wxRegEx reError(_T(".*\\.po:([0-9]+)(:[0-9]+)?: (.*)"));
+    wxRegEx reError(".*\\.po:([0-9]+)(:[0-9]+)?: (.*)");
 
     for ( size_t i = 0; i < gstderr.size(); i++ )
     {
         const wxString e = gstderr[i];
-        wxLogTrace(_T("poedit.execute"), _T("  stderr: %s"), e.c_str());
+        wxLogTrace("poedit.execute", "  stderr: %s", e.c_str());
         if ( e.empty() )
             continue;
 
@@ -134,13 +134,13 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
             rec.line = (int)num;
             rec.text = reError.GetMatch(e, 3);
             errors.push_back(rec);
-            wxLogTrace(_T("poedit.execute"),
+            wxLogTrace("poedit.execute",
                        _T("        => parsed error = \"%s\" at %d"),
                        rec.text.c_str(), rec.line);
         }
         else
         {
-            wxLogTrace(_T("poedit.execute"), _T("        (unrecognized line!)"));
+            wxLogTrace("poedit.execute", "        (unrecognized line!)");
             // FIXME: handle the rest of output gracefully too
         }
     }

@@ -214,7 +214,7 @@ class DbTrans : public DbBase
 {
     public:
         DbTrans(DbEnv *env, const wxString& path)
-            : DbBase(env, path + _T("translations.db"), DB_RECNO) {}
+            : DbBase(env, path + "translations.db", DB_RECNO) {}
 
         /** Writes array of translations for entry \a index to DB.
             \param strs   array of UTF-8 encoded strings to save 
@@ -245,7 +245,7 @@ class DbOrig : public DbBase
 {
     public:
         DbOrig(DbEnv *env, const wxString& path)
-            : DbBase(env, path + _T("strings.db"), DB_HASH) {}
+            : DbBase(env, path + "strings.db", DB_HASH) {}
         
         /** Returns index of string \a str or \c DBKEY_ILLEGAL if not found.
             Returned index can be used with DbTrans::Write and DbTrans::Read
@@ -269,7 +269,7 @@ class DbWords : public DbBase
 {
     public:
         DbWords(DbEnv *env, const wxString& path)
-            : DbBase(env, path + _T("words.db"), DB_HASH) {}
+            : DbBase(env, path + "words.db", DB_HASH) {}
         
         /** Reads list of DbTrans indexes of translations of which
             original strings contained \a word and were \a sentenceSize
@@ -482,26 +482,26 @@ static void StringToWordsArray(const wxString& str, wxArrayString& array)
         // some words are so common in English we would be crazy to put
         // them into index. (The list was taken from ht://Dig.)
         BadWords = new wxSortedArrayString;
-        BadWords->Add(_T("a"));
-        //BadWords->Add(_T("all"));
-        BadWords->Add(_T("an"));
-        //BadWords->Add(_T("are"));
-        //BadWords->Add(_T("can"));
-        //BadWords->Add(_T("for"));
-        //BadWords->Add(_T("from"));
-        BadWords->Add(_T("have"));
-        //BadWords->Add(_T("it"));
-        //BadWords->Add(_T("may"));
-        //BadWords->Add(_T("not"));
-        BadWords->Add(_T("of"));
-        //BadWords->Add(_T("that"));
-        BadWords->Add(_T("the"));
-        //BadWords->Add(_T("this"));
-        //BadWords->Add(_T("was"));
-        BadWords->Add(_T("will"));
-        //BadWords->Add(_T("with"));
-        //BadWords->Add(_T("you"));
-        //BadWords->Add(_T("your"));
+        BadWords->Add("a");
+        //BadWords->Add("all");
+        BadWords->Add("an");
+        //BadWords->Add("are");
+        //BadWords->Add("can");
+        //BadWords->Add("for");
+        //BadWords->Add("from");
+        BadWords->Add("have");
+        //BadWords->Add("it");
+        //BadWords->Add("may");
+        //BadWords->Add("not");
+        BadWords->Add("of");
+        //BadWords->Add("that");
+        BadWords->Add("the");
+        //BadWords->Add("this");
+        //BadWords->Add("was");
+        BadWords->Add("will");
+        //BadWords->Add("with");
+        //BadWords->Add("you");
+        //BadWords->Add("your");
     }
 
     wxString s;
@@ -625,18 +625,18 @@ static inline wxString MakeLangDbPath(const wxString& p, const wxString& l)
     if (!wxDirExists(p))
         return wxEmptyString;
 
-    wxString db = p + _T("/") + l;
+    wxString db = p + "/" + l;
     if (wxDirExists(db)) 
         return db;
     if (l.Len() == 5)
     {
-        db = p + _T("/") + l.Mid(0,2);
+        db = p + "/" + l.Mid(0,2);
         if (wxDirExists(db))
             return db;
     }
     if (l.Len() == 2)
     {
-        wxString l2 = wxFindFirstFile(p + _T("/") + l + _T("_??"), wxDIR);
+        wxString l2 = wxFindFirstFile(p + "/" + l + "_??", wxDIR);
         if (!!l2)
             return l2;
     }
@@ -663,8 +663,8 @@ void ReportDbError(const DbException& e)
 
 DbEnv *CreateDbEnv(const wxString& path)
 {
-    wxLogTrace(_T("poedit.tm"),
-               _T("initializing BDB environment in %s"),
+    wxLogTrace("poedit.tm",
+               "initializing BDB environment in %s",
                path.c_str());
 
     const u_int32_t flags = DB_INIT_MPOOL |
@@ -696,8 +696,8 @@ void DestroyDbEnv(DbEnv *env)
         gs_dbEnv->get_home(&dbpath_c);
         std::string dbpath(dbpath_c);
 
-        wxLogTrace(_T("poedit.tm"),
-                   _T("closing and removing BDB environment in %s"),
+        wxLogTrace("poedit.tm",
+                   "closing and removing BDB environment in %s",
                    wxString(dbpath.c_str(), wxConvUTF8).c_str());
 
         gs_dbEnv->close(0);
@@ -706,8 +706,8 @@ void DestroyDbEnv(DbEnv *env)
         DbEnv env2(0);
         env2.remove(dbpath.c_str(), 0);
 
-        wxLogTrace(_T("poedit.tm"),
-                   _T("closed and removed BDB environment"));
+        wxLogTrace("poedit.tm",
+                   "closed and removed BDB environment");
     }
     catch ( const DbException& e)
     {
@@ -1054,15 +1054,15 @@ wxString TranslationMemory::GetDatabaseDir()
 {
     wxString data;
 #if defined(__UNIX__) && !defined(__WXMAC__)
-    if ( !wxGetEnv(_T("XDG_DATA_HOME"), &data) )
-        data = wxGetHomeDir() + _T("/.local/share");
-    data += _T("/poedit");
+    if ( !wxGetEnv("XDG_DATA_HOME", &data) )
+        data = wxGetHomeDir() + "/.local/share";
+    data += "/poedit";
 #else
     data = wxStandardPaths::Get().GetUserDataDir();
 #endif
 
     data += wxFILE_SEP_PATH;
-    data += _T("TM");
+    data += "TM";
     return data;
 }
 
@@ -1092,9 +1092,9 @@ bool MoveDBLang(const wxString& from, const wxString& to)
             return false;
     }
 
-    bool ok1 = MoveDBFile(from, to, _T("strings.db"));
-    bool ok2 = MoveDBFile(from, to, _T("translations.db"));
-    bool ok3 = MoveDBFile(from, to, _T("words.db"));
+    bool ok1 = MoveDBFile(from, to, "strings.db");
+    bool ok2 = MoveDBFile(from, to, "translations.db");
+    bool ok3 = MoveDBFile(from, to, "words.db");
 
     bool ok = ok1 && ok2 && ok3;
 
@@ -1110,11 +1110,11 @@ bool MoveDBLang(const wxString& from, const wxString& to)
 void TranslationMemory::MoveLegacyDbIfNeeded()
 {
     wxASSERT_MSG( ms_instances.empty(),
-                  _T("TM cannot be migrated if already in use") );
+                  "TM cannot be migrated if already in use" );
 
     wxConfigBase *cfg = wxConfig::Get();
 
-    const wxString oldPath = cfg->Read(_T("/TM/database_path"), _T(""));
+    const wxString oldPath = cfg->Read("/TM/database_path", "");
 
     if ( oldPath.empty() )
         return; // nothing to do, legacy setting not present
@@ -1131,7 +1131,7 @@ void TranslationMemory::MoveLegacyDbIfNeeded()
         // the path:
         // For now, keep the config setting, even though it's obsolete, just in
         // case some users downgrade. (FIXME)
-        cfg->Write(_T("/TM/database_path"), newPath);
+        cfg->Write("/TM/database_path", newPath);
         return;
     }
 #endif
@@ -1139,14 +1139,14 @@ void TranslationMemory::MoveLegacyDbIfNeeded()
     if ( !wxFileName::DirExists(oldPath) )
         return; // no TM data at all, don't bother
 
-    wxLogTrace(_T("poedit.tm"),
+    wxLogTrace("poedit.tm",
                _T("moving TM database from old location \"%s\" to \"%s\""),
                oldPath.c_str(), newPath.c_str());
 
-    const wxString tmLangsStr = cfg->Read(_T("/TM/languages"), _T(""));
-    wxStringTokenizer tmLangs(tmLangsStr, _T(":"));
-    wxLogTrace(_T("poedit.tm"),
-               _T("languages to move: %s"), tmLangsStr.c_str());
+    const wxString tmLangsStr = cfg->Read("/TM/languages", "");
+    wxStringTokenizer tmLangs(tmLangsStr, ":");
+    wxLogTrace("poedit.tm",
+               "languages to move: %s", tmLangsStr.c_str());
 
     bool ok = true;
     {
@@ -1185,7 +1185,7 @@ void TranslationMemory::MoveLegacyDbIfNeeded()
 
     // For now, keep the config setting, even though it's obsolete, just in
     // case some users downgrade. (FIXME)
-    cfg->Write(_T("/TM/database_path"), newPath);
+    cfg->Write("/TM/database_path", newPath);
 
     if ( !ok )
     {

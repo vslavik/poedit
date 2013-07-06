@@ -34,7 +34,7 @@
 
 CommentDialog::CommentDialog(wxWindow *parent, const wxString& comment) : wxDialog()
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("comment_dlg"));
+    wxXmlResource::Get()->LoadDialog(this, parent, "comment_dlg");
     m_text = XRCCTRL(*this, "comment", wxTextCtrl);
 
     m_text->SetValue(RemoveStartHash(comment));
@@ -59,17 +59,17 @@ void CommentDialog::OnClear(wxCommandEvent&)
 /*static*/ wxString CommentDialog::RemoveStartHash(const wxString& comment)
 {
     wxString tmpComment;
-    wxStringTokenizer tkn(comment, _T("\n\r"));
+    wxStringTokenizer tkn(comment, "\n\r");
     while (tkn.HasMoreTokens())
-        tmpComment << tkn.GetNextToken().Mid(2) << _T("\n");
+        tmpComment << tkn.GetNextToken().Mid(2) << "\n";
     return tmpComment;
 }
 
 /*static*/ wxString CommentDialog::AddStartHash(const wxString& comment)
 {
     wxString tmpComment;
-    wxStringTokenizer tkn(comment, _T("\n\r"));
+    wxStringTokenizer tkn(comment, "\n\r");
     while (tkn.HasMoreTokens())
-        tmpComment << _T("# ") << tkn.GetNextToken() << _T("\n");
+        tmpComment << "# " << tkn.GetNextToken() << "\n";
     return tmpComment;
 }

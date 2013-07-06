@@ -59,14 +59,14 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
     //       theme provider (that uses current icon theme and files from
     //       /usr/share/icons/<theme>) didn't find any matching icon.
 
-    wxLogTrace(_T("poedit.icons"), _T("getting icon '%s'"), id.c_str());
+    wxLogTrace("poedit.icons", "getting icon '%s'", id.c_str());
 
 #ifdef __WXGTK20__
     // try legacy GNOME icons from standard theme:
     wxString gnomeId = GetGnomeStockId(id);
     if ( !gnomeId.empty() )
     {
-        wxLogTrace(_T("poedit.icons"), _T("-> legacy '%s'"), gnomeId.c_str());
+        wxLogTrace("poedit.icons", "-> legacy '%s'", gnomeId.c_str());
         wxBitmap gbmp(wxArtProvider::GetBitmap(gnomeId, client, size));
         if ( gbmp.Ok() )
             return gbmp;
@@ -75,25 +75,25 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
 
     wxString iconsdir =
 #if defined(__WXMAC__)
-        wxStandardPaths::Get().GetResourcesDir() + _T("/icons");
+        wxStandardPaths::Get().GetResourcesDir() + "/icons";
 #elif defined(__WXMSW__)
-        wxStandardPaths::Get().GetResourcesDir() + _T("\\Resources");
+        wxStandardPaths::Get().GetResourcesDir() + "\\Resources";
 #else
-        wxStandardPaths::Get().GetInstallPrefix() + _T("/share/poedit/icons");
+        wxStandardPaths::Get().GetInstallPrefix() + "/share/poedit/icons";
 #endif
     if ( !wxDirExists(iconsdir) )
     {
-        wxLogTrace(_T("poedit.icons"),
-                   _T("icons dir %s not found"), iconsdir.c_str());
+        wxLogTrace("poedit.icons",
+                   "icons dir %s not found", iconsdir.c_str());
         return wxNullBitmap;
     }
 
     wxString icon;
-    icon.Printf(_T("%s/%s.png"), iconsdir.c_str(), id.c_str());
+    icon.Printf("%s/%s.png", iconsdir.c_str(), id.c_str());
     if ( !wxFileExists(icon) )
         return wxNullBitmap;
 
-    wxLogTrace(_T("poedit.icons"), _T("loading from %s"), icon.c_str());
+    wxLogTrace("poedit.icons", "loading from %s", icon.c_str());
     wxBitmap bmp(wxImage(icon, wxBITMAP_TYPE_ANY));
     return bmp;
 }

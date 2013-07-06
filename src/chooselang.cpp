@@ -35,15 +35,15 @@
 static void SaveUILanguage(const wxString& lang)
 {
     if (lang.empty())
-        wxConfig::Get()->Write(_T("ui_language"), _T("default"));
+        wxConfig::Get()->Write("ui_language", "default");
     else
-        wxConfig::Get()->Write(_T("ui_language"), lang);
+        wxConfig::Get()->Write("ui_language", lang);
 }
 
 wxString GetUILanguage()
 {
-    wxString lng = wxConfig::Get()->Read(_T("ui_language"));
-    if (!lng.empty() && lng != _T("default"))
+    wxString lng = wxConfig::Get()->Read("ui_language");
+    if (!lng.empty() && lng != "default")
         return lng;
     else
         return "";
@@ -56,7 +56,7 @@ static bool ChooseLanguage(wxString *value)
 
     {
         wxBusyCursor bcur;
-        langs = wxTranslations::Get()->GetAvailableTranslations(_T("poedit"));
+        langs = wxTranslations::Get()->GetAvailableTranslations("poedit");
 
         arr.push_back(_("(Use default language)"));
         for ( wxArrayString::const_iterator i = langs.begin(); i != langs.end(); ++i )
@@ -86,7 +86,7 @@ void ChangeUILanguage()
         return;
     SaveUILanguage(lang);
     wxMessageBox(_("You must restart Poedit for this change to take effect."),
-                 _T("Poedit"),
+                 "Poedit",
                  wxOK | wxCENTRE | wxICON_INFORMATION);
 }
 

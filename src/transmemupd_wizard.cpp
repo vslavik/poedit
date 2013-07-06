@@ -51,17 +51,17 @@ public:
         m_paths = new wxEditableListBox(
                 XRCCTRL(*this, "tm_update_1", wxWizardPage),
                 -1, _("Search Paths"));
-        wxXmlResource::Get()->AttachUnknownControl(_T("search_paths"), m_paths);
+        wxXmlResource::Get()->AttachUnknownControl("search_paths", m_paths);
         m_files = new wxEditableListBox(
                 XRCCTRL(*this, "tm_update_2", wxWizardPage),
                 -1, _("Files List"));
-        wxXmlResource::Get()->AttachUnknownControl(_T("files_list"), m_files);
+        wxXmlResource::Get()->AttachUnknownControl("files_list", m_files);
 
         FitToPage(XRCCTRL(*this, "tm_update_2", wxWizardPage));
     
         // Setup search paths:
         wxString dirsStr = 
-            wxConfig::Get()->Read(_T("TM/search_paths"), wxEmptyString);
+            wxConfig::Get()->Read("TM/search_paths", wxEmptyString);
         wxArrayString dirsArray;
         wxStringTokenizer tkn(dirsStr, wxPATH_SEP);
 
@@ -117,8 +117,8 @@ private:
     {
         wxArrayString a;
 #if defined(__UNIX__)
-        a.Add(_T("/usr/share/locale"));
-        a.Add(_T("/usr/local/share/locale"));
+        a.Add("/usr/share/locale");
+        a.Add("/usr/local/share/locale");
 #endif
         m_paths->SetStrings(a);
     }
@@ -172,8 +172,8 @@ void RunTMUpdateWizard(wxWindow *parent, const wxArrayString& langs)
         UpdateWizard wizard;
 
         wxXmlResource::Get()->LoadObject(&wizard, parent,
-                                         _T("tm_update_wizard"),
-                                         _T("wxWizard"));
+                                         "tm_update_wizard",
+                                         "wxWizard");
         wizard.Setup();
 
         wizard.SetLang(langs[i]);
@@ -209,7 +209,7 @@ void RunTMUpdateWizard(wxWindow *parent, const wxArrayString& langs)
             if (j != 0) dirsStr << wxPATH_SEP;
             dirsStr << dirsArray[j];
         }
-        wxConfig::Get()->Write(_T("TM/search_paths"), dirsStr);
+        wxConfig::Get()->Write("TM/search_paths", dirsStr);
         
         wizard.Destroy();
     }

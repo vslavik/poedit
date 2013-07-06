@@ -34,9 +34,9 @@
 wxString EscapeMarkup(const wxString& str)
 {
     wxString s(str);
-    s.Replace(_T("&"), _T("&amp;"));
-    s.Replace(_T("<"), _T("&lt;"));
-    s.Replace(_T(">"), _T("&gt;"));
+    s.Replace("&", "&amp;");
+    s.Replace("<", "&lt;");
+    s.Replace(">", "&gt;");
     return s;
 }
 
@@ -50,7 +50,7 @@ TempDirectory::TempDirectory() : m_counter(0)
 {
 #ifdef HAVE_MKDTEMP
     wxString path = wxFileName::GetTempDir();
-    path += _T("/poeditXXXXXX");
+    path += "/poeditXXXXXX";
     wxCharBuffer buf(path.fn_str());
     if ( mkdtemp(buf.data()) == NULL )
     {
@@ -61,7 +61,7 @@ TempDirectory::TempDirectory() : m_counter(0)
 #else
     for ( ;; )
     {
-        wxString name = wxFileName::CreateTempFileName(_T("poedit"));
+        wxString name = wxFileName::CreateTempFileName("poedit");
         if ( name.empty() )
         {
             wxLogError(_("Cannot create temporary directory."));
@@ -72,7 +72,7 @@ TempDirectory::TempDirectory() : m_counter(0)
         if ( wxRemoveFile(name) && wxMkdir(name, 0700) )
         {
             m_dir = name;
-            wxLogTrace(_T("poedit.tmp"), _T("created temp dir %s"), name.c_str());
+            wxLogTrace("poedit.tmp", "created temp dir %s", name.c_str());
             break;
         }
         // else: try again
@@ -88,7 +88,7 @@ TempDirectory::~TempDirectory()
 
     if ( ms_keepFiles )
     {
-        wxLogTrace(_T("poedit.tmp"), _T("keeping temp files in %s"), m_dir.c_str());
+        wxLogTrace("poedit.tmp", "keeping temp files in %s", m_dir.c_str());
         return;
     }
 
@@ -96,24 +96,24 @@ TempDirectory::~TempDirectory()
     {
         if ( wxFileName::FileExists(*i) )
         {
-            wxLogTrace(_T("poedit.tmp"), _T("removing temp file %s"), i->c_str());
+            wxLogTrace("poedit.tmp", "removing temp file %s", i->c_str());
             wxRemoveFile(*i);
         }
     }
 
-    wxLogTrace(_T("poedit.tmp"), _T("removing temp dir %s"), m_dir.c_str());
+    wxLogTrace("poedit.tmp", "removing temp dir %s", m_dir.c_str());
     wxFileName::Rmdir(m_dir);
 }
 
 
 wxString TempDirectory::CreateFileName(const wxString& suffix)
 {
-    wxString s = wxString::Format(_T("%s%c%d%s"),
+    wxString s = wxString::Format("%s%c%d%s",
                                   m_dir.c_str(), wxFILE_SEP_PATH,
                                   m_counter++,
                                   suffix.c_str());
     m_files.push_back(s);
-    wxLogTrace(_T("poedit.tmp"), _T("new temp file %s"), s.c_str());
+    wxLogTrace("poedit.tmp", "new temp file %s", s.c_str());
     return s;
 }
 
@@ -135,20 +135,20 @@ void SaveWindowState(const wxTopLevelWindow *win, int flags)
             if ( flags & WinState_Pos )
             {
                 const wxPoint pos = win->GetPosition();
-                cfg->Write(path + _T("x"), (long)pos.x);
-                cfg->Write(path + _T("y"), (long)pos.y);
+                cfg->Write(path + "x", (long)pos.x);
+                cfg->Write(path + "y", (long)pos.y);
             }
 #endif // __WXMSW__
             if ( flags &  WinState_Size )
             {
                 const wxSize sz = win->GetClientSize();
-                cfg->Write(path + _T("w"), (long)sz.x);
-                cfg->Write(path + _T("h"), (long)sz.y);
+                cfg->Write(path + "w", (long)sz.x);
+                cfg->Write(path + "h", (long)sz.y);
             }
         }
 
         if ( flags &  WinState_Size )
-            cfg->Write(path + _T("maximized"), (long)win->IsMaximized());
+            cfg->Write(path + "maximized", (long)win->IsMaximized());
     }
 }
 
@@ -160,8 +160,8 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
 
     if ( flags & WinState_Size )
     {
-        int width = cfg->Read(path + _T("w"), defaultSize.x);
-        int height = cfg->Read(path + _T("h"), defaultSize.y);
+        int width = cfg->Read(path + "w", defaultSize.x);
+        int height = cfg->Read(path + "h", defaultSize.y);
         if ( width != -1 || height != -1 )
             win->SetClientSize(width, height);
     }
@@ -169,8 +169,8 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
 #ifdef __WXMSW__
     if ( flags & WinState_Pos )
     {
-        int posx = cfg->Read(path + _T("x"), -1);
-        int posy = cfg->Read(path + _T("y"), -1);
+        int posx = cfg->Read(path + "x", -1);
+        int posy = cfg->Read(path + "y", -1);
         if ( posx != -1 || posy != -1 )
             win->Move(posx, posy);
     }
@@ -183,7 +183,7 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
 
     // If the window is larger than current screen, resize it to fit:
     int display = wxDisplay::GetFromWindow(win);
-    wxCHECK_RET( display != wxNOT_FOUND, _T("window not on screen") );
+    wxCHECK_RET( display != wxNOT_FOUND, "window not on screen" );
     wxRect screenRect = wxDisplay(display).GetClientArea();
 
     wxRect winRect = win->GetRect();
@@ -197,7 +197,7 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
     }
 
     // Maximize if it should be
-    if ( cfg->Read(path + _T("maximized"), long(0)) )
+    if ( cfg->Read(path + "maximized", long(0)) )
     {
         win->Maximize();
     }

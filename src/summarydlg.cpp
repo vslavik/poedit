@@ -35,7 +35,7 @@
 
 MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("summary"));
+    wxXmlResource::Get()->LoadDialog(this, parent, "summary");
 
     RestoreWindowState(this, wxDefaultSize, WinState_Size);
     CentreOnParent();

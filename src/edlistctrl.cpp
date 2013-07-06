@@ -67,15 +67,15 @@ inline bool IsAlmostWhite(const wxColour& clr)
 
 // colours used in the list:
 
-const wxColour gs_ErrorColor(_T("#ff5050"));
+const wxColour gs_ErrorColor("#ff5050");
 
 // colors for white list control background
-const wxColour gs_UntranslatedForWhite(_T("#103f67"));
-const wxColour gs_FuzzyForWhite(_T("#a9861b"));
+const wxColour gs_UntranslatedForWhite("#103f67");
+const wxColour gs_FuzzyForWhite("#a9861b");
 
 // ditto for black background
-const wxColour gs_UntranslatedForBlack(_T("#1962a0"));
-const wxColour gs_FuzzyForBlack(_T("#a9861b"));
+const wxColour gs_UntranslatedForBlack("#1962a0");
+const wxColour gs_FuzzyForBlack("#a9861b");
 
 
 const wxColour gs_TranspColor(254, 0, 253); // FIXME: get rid of this
@@ -190,24 +190,24 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     wxImageList *list = new wxImageList(16, 16);
 
     // IMG_NOTHING:
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-nothing")));
+    list->Add(wxArtProvider::GetBitmap("poedit-status-nothing"));
 
     // IMG_AUTOMATIC:
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-automatic")));
+    list->Add(wxArtProvider::GetBitmap("poedit-status-automatic"));
     // IMG_COMMENT:
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-comment")));
+    list->Add(wxArtProvider::GetBitmap("poedit-status-comment"));
     // IMG_AUTOMATIC | IMG_COMMENT:
-    list->Add(MergeBitmaps(wxArtProvider::GetBitmap(_T("poedit-status-automatic")),
-                           wxArtProvider::GetBitmap(_T("poedit-status-comment"))));
+    list->Add(MergeBitmaps(wxArtProvider::GetBitmap("poedit-status-automatic"),
+                           wxArtProvider::GetBitmap("poedit-status-comment")));
 
     // IMG_MODIFIED
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-modified")));
+    list->Add(wxArtProvider::GetBitmap("poedit-status-modified"));
 
     // IMG_MODIFIED variations:
     for (i = 1; i < IMG_MODIFIED; i++)
     {
         list->Add(MergeBitmaps(BitmapFromList(list, i),
-                               wxArtProvider::GetBitmap(_T("poedit-status-modified"))));
+                               wxArtProvider::GetBitmap("poedit-status-modified")));
     }
 
     // BK_XX variations:
@@ -244,7 +244,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     if ( shaded == *wxWHITE )
     {
         // use standard shaded color from finder/databrowser:
-        shaded.Set(_T("#f0f5fd"));
+        shaded.Set("#f0f5fd");
     }
     else
 #endif // __WXMAC__
@@ -452,7 +452,7 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
         {
             wxString orig;
             if ( d.HasContext() )
-                orig.Printf(_T("%s  [ %s ]"),
+                orig.Printf("%s  [ %s ]",
                             d.GetString().c_str(), d.GetContext().c_str());
             else
                 orig = d.GetString();

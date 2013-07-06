@@ -49,7 +49,7 @@ class PoeditListCtrl : public wxListView
                        long style = wxLC_ICON,
                        bool dispLines = false,
                        const wxValidator& validator = wxDefaultValidator,
-                       const wxString &name = _T("listctrl"));
+                       const wxString &name = "listctrl");
 
         virtual ~PoeditListCtrl();
 

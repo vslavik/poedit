@@ -92,34 +92,34 @@ bool PoeditApp::OnInit()
 #endif
 
 #if defined(__UNIX__) && !defined(__WXMAC__)
-    wxString home = wxGetHomeDir() + _T("/");
+    wxString home = wxGetHomeDir() + "/";
 
     // create Poedit cfg dir, move ~/.poedit to ~/.poedit/config
     // (upgrade from older versions of Poedit which used ~/.poedit file)
-    if (!wxDirExists(home + _T(".poedit")))
+    if (!wxDirExists(home + ".poedit"))
     {
-        if (wxFileExists(home + _T(".poedit")))
-            wxRenameFile(home + _T(".poedit"), home + _T(".poedit2"));
-        wxMkdir(home + _T(".poedit"));
-        if (wxFileExists(home + _T(".poedit2")))
-            wxRenameFile(home + _T(".poedit2"), home + _T(".poedit/config"));
+        if (wxFileExists(home + ".poedit"))
+            wxRenameFile(home + ".poedit", home + ".poedit2");
+        wxMkdir(home + ".poedit");
+        if (wxFileExists(home + ".poedit2"))
+            wxRenameFile(home + ".poedit2", home + ".poedit/config");
     }
 #endif
 
-    SetVendorName(_T("Vaclav Slavik"));
-    SetAppName(_T("Poedit"));
+    SetVendorName("Vaclav Slavik");
+    SetAppName("Poedit");
 
 #if defined(__WXMAC__)
-    #define CFG_FILE (wxStandardPaths::Get().GetUserConfigDir() + _T("/net.poedit.Poedit.cfg"))
+    #define CFG_FILE (wxStandardPaths::Get().GetUserConfigDir() + "/net.poedit.Poedit.cfg")
 #elif defined(__UNIX__)
-    #define CFG_FILE (home + _T(".poedit/config"))
+    #define CFG_FILE (home + ".poedit/config")
 #else
     #define CFG_FILE wxEmptyString
 #endif
 
 #ifdef __WXMAC__
     // upgrade from the old location of config file:
-    wxString oldcfgfile = wxStandardPaths::Get().GetUserConfigDir() + _T("/poedit.cfg");
+    wxString oldcfgfile = wxStandardPaths::Get().GetUserConfigDir() + "/poedit.cfg";
     if (wxFileExists(oldcfgfile) && !wxFileExists(CFG_FILE))
     {
         wxRenameFile(oldcfgfile, CFG_FILE);
@@ -151,7 +151,7 @@ bool PoeditApp::OnInit()
     SetupLanguage();
 
 #ifdef __WXMAC__
-    wxMenuBar::MacSetCommonMenuBar(wxXmlResource::Get()->LoadMenuBar(_T("mainmenu_mac_global")));
+    wxMenuBar::MacSetCommonMenuBar(wxXmlResource::Get()->LoadMenuBar("mainmenu_mac_global"));
     // so that help menu is correctly merged with system-provided menu
     // (see http://sourceforge.net/tracker/index.php?func=detail&aid=1600747&group_id=9863&atid=309863)
     s_macHelpMenuTitleName = _("&Help");
@@ -188,8 +188,8 @@ bool PoeditApp::OnInit()
 #ifdef __WXMSW__
     const char *appcast = "https://dl.updatica.com/poedit-win/appcast";
 
-    if ( GetAppVersion().Contains(_T("beta")) ||
-         GetAppVersion().Contains(_T("rc")) )
+    if ( GetAppVersion().Contains("beta") ||
+         GetAppVersion().Contains("rc") )
     {
         // Beta versions use unstable feed.
         appcast = "https://dl.updatica.com/poedit-win/appcast/beta";
@@ -218,9 +218,9 @@ int PoeditApp::OnExit()
 void PoeditApp::SetupLanguage()
 {
 #if defined(__WXMSW__)
-	wxLocale::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetResourcesDir() + _T("\\Translations"));
+	wxLocale::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetResourcesDir() + "\\Translations");
 #elif !defined(__WXMAC__)
-    wxLocale::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetInstallPrefix() + _T("/share/locale"));
+    wxLocale::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetInstallPrefix() + "/share/locale");
 #endif
 
     wxTranslations *trans = new wxTranslations();
@@ -236,7 +236,7 @@ void PoeditApp::SetupLanguage()
 void PoeditApp::OpenNewFile()
 {
     wxWindow *win;
-    if (wxConfig::Get()->Read(_T("manager_startup"), (long)false))
+    if (wxConfig::Get()->Read("manager_startup", (long)false))
     {
         win = ManagerFrame::Create();
         win->Show(true);
@@ -259,24 +259,24 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
 {
     ParsersDB pdb;
     bool changed = false;
-    wxString defaultsVersion = cfg->Read(_T("Parsers/DefaultsVersion"),
-                                         _T("1.2.x"));
+    wxString defaultsVersion = cfg->Read("Parsers/DefaultsVersion",
+                                         "1.2.x");
     pdb.Read(cfg);
 
     // Add parsers for languages supported by gettext itself (but only if the
     // user didn't already add language with this name himself):
     static struct
     {
-        const wxChar *name;
-        const wxChar *exts;
+        const char *name;
+        const char *exts;
     } s_gettextLangs[] = {
-        { _T("C/C++"),    _T("*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx") },
-        { _T("C#"),       _T("*.cs") },
-        { _T("Java"),     _T("*.java") },
-        { _T("Perl"),     _T("*.pl") },
-        { _T("PHP"),      _T("*.php") },
-        { _T("Python"),   _T("*.py") },
-        { _T("TCL"),      _T("*.tcl") },
+        { "C/C++",    "*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx" },
+        { "C#",       "*.cs" },
+        { "Java",     "*.java" },
+        { "Perl",     "*.pl" },
+        { "PHP",      "*.php" },
+        { "Python",   "*.py" },
+        { "TCL",      "*.tcl" },
         { NULL, NULL }
     };
 
@@ -287,48 +287,48 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
             continue;
 
         wxString langflag;
-        if ( wxStrcmp(s_gettextLangs[i].name, _T("C/C++")) == 0 )
-            langflag = _T(" --language=C++");
+        if ( wxStrcmp(s_gettextLangs[i].name, "C/C++") == 0 )
+            langflag = " --language=C++";
         else
-            langflag = wxString(_T(" --language=")) + s_gettextLangs[i].name;
+            langflag = wxString(" --language=") + s_gettextLangs[i].name;
 
         // otherwise add new parser:
         Parser p;
         p.Name = s_gettextLangs[i].name;
         p.Extensions = s_gettextLangs[i].exts;
-        p.Command = wxString(_T("xgettext")) + langflag + _T(" --add-comments=TRANSLATORS --force-po -o %o %C %K %F");
-        p.KeywordItem = _T("-k%k");
-        p.FileItem = _T("%f");
-        p.CharsetItem = _T("--from-code=%c");
+        p.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS --force-po -o %o %C %K %F";
+        p.KeywordItem = "-k%k";
+        p.FileItem = "%f";
+        p.CharsetItem = "--from-code=%c";
         pdb.Add(p);
         changed = true;
     }
 
     // If upgrading Poedit to 1.2.4, add dxgettext parser for Delphi:
 #ifdef __WINDOWS__
-    if (defaultsVersion == _T("1.2.x"))
+    if (defaultsVersion == "1.2.x")
     {
         Parser p;
-        p.Name = _T("Delphi (dxgettext)");
-        p.Extensions = _T("*.pas;*.dpr;*.xfm;*.dfm");
-        p.Command = _T("dxgettext --so %o %F");
+        p.Name = "Delphi (dxgettext)";
+        p.Extensions = "*.pas;*.dpr;*.xfm;*.dfm";
+        p.Command = "dxgettext --so %o %F";
         p.KeywordItem = wxEmptyString;
-        p.FileItem = _T("%f");
+        p.FileItem = "%f";
         pdb.Add(p);
         changed = true;
     }
 #endif
 
     // If upgrading Poedit to 1.2.5, update C++ parser to handle --from-code:
-    if (defaultsVersion == _T("1.2.x") || defaultsVersion == _T("1.2.4"))
+    if (defaultsVersion == "1.2.x" || defaultsVersion == "1.2.4")
     {
-        int cpp = pdb.FindParser(_T("C/C++"));
+        int cpp = pdb.FindParser("C/C++");
         if (cpp != -1)
         {
-            if (pdb[cpp].Command == _T("xgettext --force-po -o %o %K %F"))
+            if (pdb[cpp].Command == "xgettext --force-po -o %o %K %F")
             {
-                pdb[cpp].Command = _T("xgettext --force-po -o %o %C %K %F");
-                pdb[cpp].CharsetItem = _T("--from-code=%c");
+                pdb[cpp].Command = "xgettext --force-po -o %o %C %K %F";
+                pdb[cpp].CharsetItem = "--from-code=%c";
                 changed = true;
             }
         }
@@ -339,9 +339,9 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
     for (size_t i = 0; i < pdb.GetCount(); i++)
     {
         wxString& cmd = pdb[i].Command;
-        if (cmd.Contains(_T("--add-comments=")) && !cmd.Contains(_T(" --add-comments=")))
+        if (cmd.Contains("--add-comments=") && !cmd.Contains(" --add-comments="))
         {
-            cmd.Replace(_T("--add-comments="), _T(" --add-comments="));
+            cmd.Replace("--add-comments=", " --add-comments=");
             changed = true;
         }
     }
@@ -349,7 +349,7 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
     if (changed)
     {
         pdb.Write(cfg);
-        cfg->Write(_T("Parsers/DefaultsVersion"), GetAppVersion());
+        cfg->Write("Parsers/DefaultsVersion", GetAppVersion());
     }
 }
 
@@ -357,36 +357,36 @@ void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
 {
     SetDefaultParsers(cfg);
 
-    if (cfg->Read(_T("version"), wxEmptyString) == GetAppVersion()) return;
+    if (cfg->Read("version", wxEmptyString) == GetAppVersion()) return;
 
-    if (cfg->Read(_T("TM/search_paths"), wxEmptyString).empty())
+    if (cfg->Read("TM/search_paths", wxEmptyString).empty())
     {
         wxString paths;
 #if defined(__UNIX__)
-        paths = wxGetHomeDir() + _T(":/usr/share/locale:/usr/local/share/locale");
+        paths = wxGetHomeDir() + ":/usr/share/locale:/usr/local/share/locale";
 #elif defined(__WXMSW__)
-        paths = _T("C:");
+        paths = "C:";
 #endif
-        cfg->Write(_T("TM/search_paths"), paths);
+        cfg->Write("TM/search_paths", paths);
     }
 
-    cfg->Write(_T("version"), GetAppVersion());
+    cfg->Write("version", GetAppVersion());
 }
 
 
 namespace
 {
-const wxChar *CL_KEEP_TEMP_FILES = _T("keep-temp-files");
+const char *CL_KEEP_TEMP_FILES = "keep-temp-files";
 }
 
 void PoeditApp::OnInitCmdLine(wxCmdLineParser& parser)
 {
     wxApp::OnInitCmdLine(parser);
 
-    parser.AddSwitch(_T(""), CL_KEEP_TEMP_FILES,
+    parser.AddSwitch("", CL_KEEP_TEMP_FILES,
                      _("don't delete temporary files (for debugging)"));
 
-    parser.AddParam(_T("catalog.po"), wxCMD_LINE_VAL_STRING, 
+    parser.AddParam("catalog.po", wxCMD_LINE_VAL_STRING, 
                     wxCMD_LINE_PARAM_OPTIONAL | wxCMD_LINE_PARAM_MULTIPLE);
 }
 
@@ -479,7 +479,7 @@ void PoeditApp::OnOpen(wxCommandEvent& event)
 {
     TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpen(event) );
 
-    wxString path = wxConfig::Get()->Read(_T("last_file_path"), wxEmptyString);
+    wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
     wxString name = wxFileSelector(_("Open catalog"),
                     path, wxEmptyString, wxEmptyString,
                     _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
@@ -487,7 +487,7 @@ void PoeditApp::OnOpen(wxCommandEvent& event)
 
     if (!name.empty())
     {
-        wxConfig::Get()->Write(_T("last_file_path"), wxPathOnly(name));
+        wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
         OpenFile(name);
     }
 }
@@ -534,14 +534,14 @@ void PoeditApp::OnAbout(wxCommandEvent&)
 
     wxAboutDialogInfo about;
 
-    about.SetName(_T("Poedit"));
+    about.SetName("Poedit");
     about.SetVersion(wxGetApp().GetAppVersion());
 #ifndef __WXMAC__
     about.SetDescription(_("Poedit is an easy to use translations editor."));
 #endif
-    about.SetCopyright(_T("Copyright \u00a9 1999-2013 Vaclav Slavik"));
+    about.SetCopyright("Copyright \u00a9 1999-2013 Vaclav Slavik");
 #ifdef __WXGTK__ // other ports would show non-native about dlg
-    about.SetWebSite(_T("http://www.poedit.net"));
+    about.SetWebSite("http://www.poedit.net");
 #endif
 
     wxAboutBox(about);
@@ -587,7 +587,7 @@ void PoeditApp::OnPreferences(wxCommandEvent&)
 
 void PoeditApp::OnHelp(wxCommandEvent&)
 {
-    wxLaunchDefaultBrowser(_T("http://www.poedit.net/trac/wiki/Doc"));
+    wxLaunchDefaultBrowser("http://www.poedit.net/trac/wiki/Doc");
 }
 
 
@@ -603,28 +603,28 @@ void PoeditApp::AskForDonations(wxWindow *parent)
 {
     wxConfigBase *cfg = wxConfigBase::Get();
 
-    if ( (bool)cfg->Read(_T("donate/dont_bug"), (long)false) )
+    if ( (bool)cfg->Read("donate/dont_bug", (long)false) )
         return; // the user doesn't like us, don't be a bother
-    if ( (bool)cfg->Read(_T("donate/donated"), (long)false) )
+    if ( (bool)cfg->Read("donate/donated", (long)false) )
         return; // the user likes us a lot, don't be a bother
 
-    wxDateTime lastAsked((time_t)cfg->Read(_T("donate/last_asked"), (long)0));
+    wxDateTime lastAsked((time_t)cfg->Read("donate/last_asked", (long)0));
 
     wxDateTime now = wxDateTime::Now();
     if ( lastAsked.Add(wxDateSpan::Days(7)) >= now )
         return; // don't ask too frequently
 
     // let's ask nicely:
-    wxDialog dlg(parent, wxID_ANY, _T(""));
+    wxDialog dlg(parent, wxID_ANY, "");
     wxBoxSizer *topsizer = new wxBoxSizer(wxHORIZONTAL);
 
-    wxIcon icon(wxArtProvider::GetIcon(_T("poedit"), wxART_OTHER, wxSize(64,64)));
+    wxIcon icon(wxArtProvider::GetIcon("poedit", wxART_OTHER, wxSize(64,64)));
     topsizer->Add(new wxStaticBitmap(&dlg, wxID_ANY, icon), wxSizerFlags().DoubleBorder());
 
     wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
     topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
 
-    wxStaticText *big = new wxStaticText(&dlg, wxID_ANY, _T("Support Open Source software"));
+    wxStaticText *big = new wxStaticText(&dlg, wxID_ANY, "Support Open Source software");
     wxFont font = big->GetFont();
     font.SetWeight(wxFONTWEIGHT_BOLD);
 #if defined(__WXMSW__)
@@ -634,19 +634,19 @@ void PoeditApp::AskForDonations(wxWindow *parent)
     sizer->Add(big);
 
     wxStaticText *desc = new wxStaticText(&dlg, wxID_ANY,
-            _T("A lot of time and effort has gone into the development\n")
-            _T("of Poedit. If you find it useful, please consider showing\n")
-            _T("your appreciation with a donation.\n")
-            _T("\n")
-            _T("Donation or not, there will be no difference in Poedit's\n")
-            _T("features and functionality.")
+            "A lot of time and effort has gone into the development\n"
+            "of Poedit. If you find it useful, please consider showing\n"
+            "your appreciation with a donation.\n"
+            "\n"
+            "Donation or not, there will be no difference in Poedit's\n"
+            "features and functionality."
             );
 #ifdef __WXMAC__
     desc->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
     sizer->Add(desc, wxSizerFlags(1).Expand().DoubleBorder(wxTOP|wxBOTTOM|wxRIGHT));
 
-    wxCheckBox *checkbox = new wxCheckBox(&dlg, wxID_ANY, _T("Don't bug me about this again"));
+    wxCheckBox *checkbox = new wxCheckBox(&dlg, wxID_ANY, "Don't bug me about this again");
     sizer->Add(checkbox);
 
     wxStdDialogButtonSizer *buttons = new wxStdDialogButtonSizer();
@@ -662,15 +662,15 @@ void PoeditApp::AskForDonations(wxWindow *parent)
 
     if ( dlg.ShowModal() == wxID_OK )
     {
-        wxLaunchDefaultBrowser(_T("http://www.poedit.net/donate.php"));
-        cfg->Write(_T("donate/donated"), true);
+        wxLaunchDefaultBrowser("http://www.poedit.net/donate.php");
+        cfg->Write("donate/donated", true);
     }
     else
     {
-        cfg->Write(_T("donate/dont_bug"), checkbox->GetValue());
+        cfg->Write("donate/dont_bug", checkbox->GetValue());
     }
 
-    cfg->Write(_T("donate/last_asked"), (long)now.GetTicks());
+    cfg->Write("donate/last_asked", (long)now.GetTicks());
 
     // re-asking after a crash wouldn't be a good idea:
     cfg->Flush();

@@ -67,13 +67,13 @@ ManagerFrame::ManagerFrame() :
     wxFrame(NULL, -1, _("Poedit - Catalogs manager"),
             wxDefaultPosition, wxDefaultSize,
             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
-            _T("manager"))
+            "manager")
 {
 #if defined(__WXGTK__)
     wxIconBundle appicons;
-    appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(16,16)));
-    appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(32,32)));
-    appicons.AddIcon(wxArtProvider::GetIcon(_T("poedit"), wxART_FRAME_ICON, wxSize(48,48)));
+    appicons.AddIcon(wxArtProvider::GetIcon("poedit", wxART_FRAME_ICON, wxSize(16,16)));
+    appicons.AddIcon(wxArtProvider::GetIcon("poedit", wxART_FRAME_ICON, wxSize(32,32)));
+    appicons.AddIcon(wxArtProvider::GetIcon("poedit", wxART_FRAME_ICON, wxSize(48,48)));
     SetIcons(appicons);
 #elif defined(__WXMSW__)
     SetIcon(wxICON(appicon));
@@ -81,23 +81,23 @@ ManagerFrame::ManagerFrame() :
 
     ms_instance = this;
 
-    wxXmlResource::Get()->LoadToolBar(this, _T("manager_toolbar"));
-    wxXmlResource::Get()->LoadMenuBar(this, _T("manager_menu"));
+    wxXmlResource::Get()->LoadToolBar(this, "manager_toolbar");
+    wxXmlResource::Get()->LoadMenuBar(this, "manager_menu");
 
-    wxPanel *panel = wxXmlResource::Get()->LoadPanel(this, _T("manager_panel"));
+    wxPanel *panel = wxXmlResource::Get()->LoadPanel(this, "manager_panel");
 
     m_listPrj = XRCCTRL(*panel, "prj_list", wxListBox);
     m_listCat = XRCCTRL(*panel, "prj_files", wxListCtrl);
 
     wxImageList *list = new wxImageList(16, 16);
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-cat-no")));
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-cat-mid")));
-    list->Add(wxArtProvider::GetBitmap(_T("poedit-status-cat-ok")));
+    list->Add(wxArtProvider::GetBitmap("poedit-status-cat-no"));
+    list->Add(wxArtProvider::GetBitmap("poedit-status-cat-mid"));
+    list->Add(wxArtProvider::GetBitmap("poedit-status-cat-ok"));
     m_listCat->AssignImageList(list, wxIMAGE_LIST_SMALL);
 
     m_curPrj = -1;
 
-    int last = wxConfig::Get()->Read(_T("manager_last_selected"), (long)0);
+    int last = wxConfig::Get()->Read("manager_last_selected", (long)0);
 
     // FIXME: do this in background (here and elsewhere)
     UpdateListPrj(last);
@@ -118,7 +118,7 @@ ManagerFrame::~ManagerFrame()
     int sel = m_listPrj->GetSelection();
     if (sel != -1)
     {
-        cfg->Write(_T("manager_last_selected"),
+        cfg->Write("manager_last_selected",
                    (long)m_listPrj->GetClientData(sel));
     }
 
@@ -129,14 +129,14 @@ ManagerFrame::~ManagerFrame()
 void ManagerFrame::UpdateListPrj(int select)
 {
     wxConfigBase *cfg = wxConfig::Get();
-    int max = cfg->Read(_T("Manager/max_project_num"), (long)0) + 1;
+    int max = cfg->Read("Manager/max_project_num", (long)0) + 1;
     wxString key, name;
 
     m_listPrj->Clear();
     int item = 0;
     for (int i = 0; i <= max; i++)
     {
-        key.Printf(_T("Manager/project_%i/Name"), i);
+        key.Printf("Manager/project_%i/Name", i);
         name = cfg->Read(key, wxEmptyString);
         if (!name.empty())
         {
@@ -161,20 +161,20 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     time_t modtime;
     wxString key;
     wxString file2(file);
-    file2.Replace(_T("/"), _T("_"));
-    file2.Replace(_T("\\"), _T("_"));
+    file2.Replace("/", "_");
+    file2.Replace("\\", "_");
     // FIXME: move cache to cache file and out of *config* file!
-    key.Printf(_T("Manager/project_%i/FilesCache/%s/"), id, file2.c_str());
+    key.Printf("Manager/project_%i/FilesCache/%s/", id, file2.c_str());
 
-    modtime = cfg->Read(key + _T("timestamp"), (long)0);
+    modtime = cfg->Read(key + "timestamp", (long)0);
 
     if (modtime == wxFileModificationTime(file))
     {
-        all = cfg->Read(key + _T("all"), (long)0);
-        fuzzy = cfg->Read(key + _T("fuzzy"), (long)0);
-        badtokens = cfg->Read(key + _T("badtokens"), (long)0);
-        untranslated = cfg->Read(key + _T("untranslated"), (long)0);
-        lastmodified = cfg->Read(key + _T("lastmodified"), _T("?"));
+        all = cfg->Read(key + "all", (long)0);
+        fuzzy = cfg->Read(key + "fuzzy", (long)0);
+        badtokens = cfg->Read(key + "badtokens", (long)0);
+        untranslated = cfg->Read(key + "untranslated", (long)0);
+        lastmodified = cfg->Read(key + "lastmodified", "?");
     }
     else
     {
@@ -188,12 +188,12 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
         cat.GetStatistics(&all, &fuzzy, &badtokens, &untranslated, NULL);
         modtime = wxFileModificationTime(file);
         lastmodified = cat.Header().RevisionDate;
-        cfg->Write(key + _T("timestamp"), (long)modtime);
-        cfg->Write(key + _T("all"), (long)all);
-        cfg->Write(key + _T("fuzzy"), (long)fuzzy);
-        cfg->Write(key + _T("badtokens"), (long)badtokens);
-        cfg->Write(key + _T("untranslated"), (long)untranslated);
-        cfg->Write(key + _T("lastmodified"), lastmodified);
+        cfg->Write(key + "timestamp", (long)modtime);
+        cfg->Write(key + "all", (long)all);
+        cfg->Write(key + "fuzzy", (long)fuzzy);
+        cfg->Write(key + "badtokens", (long)badtokens);
+        cfg->Write(key + "untranslated", (long)untranslated);
+        cfg->Write(key + "lastmodified", lastmodified);
     }
 
     int icon;
@@ -205,13 +205,13 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     // FIXME: don't put full filename there, remove common prefix (of all
     //        directories in project's settings)
     list->InsertItem(i, file, icon);
-    tmp.Printf(_T("%i"), all);
+    tmp.Printf("%i", all);
     list->SetItem(i, 1, tmp);
-    tmp.Printf(_T("%i"), untranslated);
+    tmp.Printf("%i", untranslated);
     list->SetItem(i, 2, tmp);
-    tmp.Printf(_T("%i"), fuzzy);
+    tmp.Printf("%i", fuzzy);
     list->SetItem(i, 3, tmp);
-    tmp.Printf(_T("%i"), badtokens);
+    tmp.Printf("%i", badtokens);
     list->SetItem(i, 4, tmp);
     list->SetItem(i, 5, lastmodified);
 }
@@ -224,15 +224,15 @@ void ManagerFrame::UpdateListCat(int id)
 
     wxConfigBase *cfg = wxConfig::Get();
     wxString key;
-    key.Printf(_T("Manager/project_%i/"), id);
+    key.Printf("Manager/project_%i/", id);
 
-    wxString dirs = cfg->Read(key + _T("Dirs"), wxEmptyString);
+    wxString dirs = cfg->Read(key + "Dirs", wxEmptyString);
     wxStringTokenizer tkn(dirs, wxPATH_SEP);
 
     m_catalogs.Clear();
     while (tkn.HasMoreTokens())
         wxDir::GetAllFiles(tkn.GetNextToken(), &m_catalogs,
-                           _T("*.po"), wxDIR_FILES | wxDIR_DIRS);
+                           "*.po", wxDIR_FILES | wxDIR_DIRS);
 
     m_catalogs.Sort();
 
@@ -290,16 +290,16 @@ bool ManagerFrame::EditProject(int id)
 {
     wxConfigBase *cfg = wxConfig::Get();
     wxString key;
-    key.Printf(_T("Manager/project_%i/"), id);
+    key.Printf("Manager/project_%i/", id);
 
     ProjectDlg dlg;
-    wxXmlResource::Get()->LoadDialog(&dlg, this, _T("manager_prj_dlg"));
-    wxXmlResource::Get()->AttachUnknownControl(_T("prj_dirs"),
+    wxXmlResource::Get()->LoadDialog(&dlg, this, "manager_prj_dlg");
+    wxXmlResource::Get()->AttachUnknownControl("prj_dirs",
                 new wxEditableListBox(this, -1, _("Directories:")));
 
-    XRCCTRL(dlg, "prj_name", wxTextCtrl)->SetValue(cfg->Read(key + _T("Name")));
+    XRCCTRL(dlg, "prj_name", wxTextCtrl)->SetValue(cfg->Read(key + "Name"));
 
-    wxString dirs = cfg->Read(key + _T("Dirs"));
+    wxString dirs = cfg->Read(key + "Dirs");
     wxArrayString adirs;
     wxStringTokenizer tkn(dirs, wxPATH_SEP);
     while (tkn.HasMoreTokens()) adirs.Add(tkn.GetNextToken());
@@ -307,14 +307,14 @@ bool ManagerFrame::EditProject(int id)
 
     if (dlg.ShowModal() == wxID_OK)
     {
-        cfg->Write(key + _T("Name"),
+        cfg->Write(key + "Name",
                    XRCCTRL(dlg, "prj_name", wxTextCtrl)->GetValue());
         XRCCTRL(*this, "prj_dirs", wxEditableListBox)->GetStrings(adirs);
         if (adirs.GetCount() > 0)
             dirs = adirs[0];
         for (size_t i = 1; i < adirs.GetCount(); i++)
             dirs << wxPATH_SEP << adirs[i];
-        cfg->Write(key + _T("Dirs"), dirs);
+        cfg->Write(key + "Dirs", dirs);
 
         UpdateListPrj(id);
         UpdateListCat(id);
@@ -328,7 +328,7 @@ void ManagerFrame::DeleteProject(int id)
 {
     wxString key;
 
-    key.Printf(_T("Manager/project_%i"), id);
+    key.Printf("Manager/project_%i", id);
     wxConfig::Get()->DeleteGroup(key);
     UpdateListPrj();
 
@@ -363,11 +363,11 @@ END_EVENT_TABLE()
 void ManagerFrame::OnNewProject(wxCommandEvent&)
 {
     wxConfigBase *cfg = wxConfig::Get();
-    int max = cfg->Read(_T("Manager/max_project_num"), (long)0) + 1;
+    int max = cfg->Read("Manager/max_project_num", (long)0) + 1;
     wxString key;
     for (int i = 0; i <= max; i++)
     {
-        key.Printf(_T("Manager/project_%i/Name"), i);
+        key.Printf("Manager/project_%i/Name", i);
         if (cfg->Read(key, wxEmptyString).empty())
         {
             m_listPrj->Append(_("<unnamed>"), (void*)i);
@@ -375,7 +375,7 @@ void ManagerFrame::OnNewProject(wxCommandEvent&)
             if (EditProject(i))
             {
                 if (i == max)
-                    cfg->Write(_T("Manager/max_project_num"), (long)max);
+                    cfg->Write("Manager/max_project_num", (long)max);
             }
             else
             {

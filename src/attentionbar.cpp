@@ -72,7 +72,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
             new wxBitmapButton
                 (
                     this, wxID_CLOSE,
-                    wxArtProvider::GetBitmap(_T("window-close"), wxART_MENU),
+                    wxArtProvider::GetBitmap("window-close", wxART_MENU),
                     wxDefaultPosition, wxDefaultSize,
                     wxNO_BORDER
                 );
@@ -213,7 +213,7 @@ void AttentionMessage::AddToBlacklist(const wxString& id)
 {
     wxConfig::Get()->Write
         (
-            wxString::Format(_T("/messages/dont_show/%s"), id.c_str()),
+            wxString::Format("/messages/dont_show/%s", id.c_str()),
             (long)true
         );
 }
@@ -223,7 +223,7 @@ bool AttentionMessage::IsBlacklisted(const wxString& id)
 {
     return wxConfig::Get()->Read
         (
-            wxString::Format(_T("/messages/dont_show/%s"), id.c_str()),
+            wxString::Format("/messages/dont_show/%s", id.c_str()),
             (long)false
         );
 }
