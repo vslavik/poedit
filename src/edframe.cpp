@@ -992,7 +992,6 @@ bool PoeditFrame::CanDiscardCurrentDoc()
                             _("Save changes"),
                             wxYES_NO | wxCANCEL | wxICON_QUESTION
                         );
-#if wxCHECK_VERSION(2,9,0)
         dlg.SetExtendedMessage(_("Your changes will be lost if you don't save them."));
         dlg.SetYesNoLabels
             (
@@ -1003,7 +1002,6 @@ bool PoeditFrame::CanDiscardCurrentDoc()
                 _("Don't Save")
             #endif
             );
-#endif
 
         int r = dlg.ShowModal();
         if ( r == wxID_YES )
@@ -1369,7 +1367,6 @@ void PoeditFrame::ReportValidationErrors(int errors, bool from_save)
             _("Validation results"),
             wxOK | wxICON_ERROR
         );
-#if wxCHECK_VERSION(2,9,0)
         wxString details = _("Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry.");
         if ( from_save )
         {
@@ -1377,7 +1374,6 @@ void PoeditFrame::ReportValidationErrors(int errors, bool from_save)
             details += _("The file was saved safely, but it cannot be compiled into the MO format and used.");
         }
         dlg.SetExtendedMessage(details);
-#endif
         dlg.ShowModal();
     }
     else
@@ -1389,9 +1385,7 @@ void PoeditFrame::ReportValidationErrors(int errors, bool from_save)
             _("Validation results"),
             wxOK | wxICON_INFORMATION
         );
-#if wxCHECK_VERSION(2,9,0)
         dlg.SetExtendedMessage(_("The translation is ready for use."));
-#endif
         dlg.ShowModal();
     }
 }
@@ -1825,13 +1819,8 @@ void PoeditFrame::UpdateToTextCtrl()
     {
         const wxString prefix = _("Context:");
         const wxString ctxt = entry->GetContext();
-#if wxCHECK_VERSION(2,9,2)
         m_labelContext->SetLabelMarkup(
             wxString::Format("<b>%s</b> %s", prefix, EscapeMarkup(ctxt)));
-#else
-        m_labelContext->SetLabel(
-            wxString::Format(_T("%s %s"), prefix.c_str(), ctxt.c_str()));
-#endif
     }
     m_labelContext->GetContainingSizer()->Show(m_labelContext, entry->HasContext());
 
@@ -2067,9 +2056,7 @@ void PoeditFrame::UpdateTitle()
     wxString title;
     if ( !m_fileName.empty() )
     {
-#if wxCHECK_VERSION(2,9,4)
         SetRepresentedFilename(m_fileName);
-#endif
         wxFileName fn(m_fileName);
         title = wxString::Format(_T("%s.%s"), fn.GetName().c_str(), fn.GetExt().c_str());
 #ifndef __WXOSX__
@@ -2247,14 +2234,9 @@ void PoeditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
     const wxString details =
         _("If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future.");
 
-#if wxCHECK_VERSION(2,9,0)
     wxMessageDialog dlg(this, main, title, wxYES_NO | wxICON_QUESTION);
     dlg.SetExtendedMessage(details);
     dlg.SetYesNoLabels(_("Purge"), _("Keep"));
-#else // wx < 2.9.0
-    const wxString all = main + _T("\n\n") + details;
-    wxMessageDialog dlg(this, all, title, wxYES_NO | wxICON_QUESTION);
-#endif
 
     if (dlg.ShowModal() == wxID_YES)
     {

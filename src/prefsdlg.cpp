@@ -23,7 +23,7 @@
  *
  */
 
-#include "wxeditablelistbox.h"
+#include <wx/editlbox.h>
 #include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/tokenzr.h>

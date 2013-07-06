@@ -23,7 +23,6 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  manager.h manager.cpp chooselang.cpp chooselang.h \
                  export_html.cpp icons.h icons.cpp \
                  pluralforms/pl_evaluate.cpp \
-                 wxeditablelistbox.h editlbox/editlbox.cpp \
                  edlistctrl.cpp edlistctrl.h digits.h \
                  cat_sorting.cpp cat_sorting.h \
                  utility.cpp utility.h \

@@ -1198,14 +1198,9 @@ void TranslationMemory::MoveLegacyDbIfNeeded()
             _("Please verify that all files were moved to the new location or do it manually if they weren't.\n\nOld location: %s\nNew location: %s"),
             oldPath.c_str(), newPath.c_str());
 
-#if wxCHECK_VERSION(2,9,0)
         wxMessageDialog dlg(NULL, main, title, wxOK | wxICON_ERROR);
         dlg.SetExtendedMessage(details);
         dlg.SetYesNoLabels(_("Purge"), _("Keep"));
-#else // wx < 2.9.0
-        const wxString all = main + _T("\n\n") + details;
-        wxMessageDialog dlg(NULL, all, title, wxOK | wxICON_ERROR);
-#endif
         dlg.ShowModal();
     }
 }

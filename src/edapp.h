@@ -95,9 +95,6 @@ class PoeditApp : public wxApp
         DECLARE_EVENT_TABLE()
 
         wxFileHistory m_history;
-#if !wxCHECK_VERSION(2,9,1)
-        wxLocale m_locale;
-#endif
 };
 
 DECLARE_APP(PoeditApp);

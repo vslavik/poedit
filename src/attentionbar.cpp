@@ -38,7 +38,7 @@
 #include "osx_helpers.h"
 #endif
 
-#if defined(__WXMSW__) && wxCHECK_VERSION(2,9,0)
+#if defined(__WXMSW__)
     #define USE_SLIDE_EFFECT
 #endif
 
@@ -149,11 +149,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     }
 
     m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU));
-#if wxCHECK_VERSION(2,9,0)
     m_label->SetLabelText(msg.m_text);
-#else
-    m_label->SetLabel(msg.m_text);
-#endif
 
     m_buttons->Clear(true/*delete_windows*/);
     m_actions.clear();

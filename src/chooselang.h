@@ -30,16 +30,7 @@
 #include <wx/intl.h>
 
 #ifdef __WXMSW__
-    #if wxCHECK_VERSION(2,9,1)
-        #define NEED_CHOOSELANG_UI 1
-    #else
-        #ifdef __VISUALC__
-            #pragma message ("disabling language-choosing UI for wxWidgets < 2.9.1")
-        #else
-            #warning "disabling language-choosing UI for wxWidgets < 2.9.1"
-        #endif
-        #define NEED_CHOOSELANG_UI 0
-    #endif
+    #define NEED_CHOOSELANG_UI 1
 #else
     #define NEED_CHOOSELANG_UI 0
 #endif

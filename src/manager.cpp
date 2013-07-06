@@ -32,7 +32,7 @@
 #include <wx/intl.h>
 #include <wx/frame.h>
 #include <wx/listbox.h>
-#include "wxeditablelistbox.h"
+#include <wx/editlbox.h>
 #include <wx/tokenzr.h>
 #include <wx/msgdlg.h>
 #include <wx/button.h>

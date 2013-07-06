@@ -84,11 +84,7 @@ int DoExecuteGettext(const wxString& cmdline_,
 
     wxLogTrace(_T("poedit.execute"), _T("executing: %s"), cmdline.c_str());
 
-#if wxCHECK_VERSION(2,9,0)
     int retcode = wxExecute(cmdline, gstdout, gstderr, wxEXEC_BLOCK);
-#else
-    int retcode = wxExecute(cmdline, gstdout, gstderr);
-#endif
 
     if ( retcode == -1 )
         throw Exception(wxString::Format(_("Cannot execute program: %s"), cmdline.c_str()));

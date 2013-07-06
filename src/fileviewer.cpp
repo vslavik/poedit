@@ -170,12 +170,10 @@ void FileViewer::SetupTextCtrl()
     t.StyleSetSpec(wxSTC_TCL_COMMENTLINE, COMMENT);
     t.StyleSetSpec(wxSTC_TCL_BLOCK_COMMENT, COMMENT);
 
-#if wxCHECK_VERSION(2,9,0)
     t.StyleSetSpec(wxSTC_PAS_STRING, STRING);
     t.StyleSetSpec(wxSTC_PAS_COMMENT, COMMENT);
     t.StyleSetSpec(wxSTC_PAS_COMMENT2, COMMENT);
     t.StyleSetSpec(wxSTC_PAS_COMMENTLINE, COMMENT);
-#endif
 }
 
 

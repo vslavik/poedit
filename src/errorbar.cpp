@@ -43,11 +43,7 @@ ErrorBar::ErrorBar(wxWindow *parent)
     : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
               wxTAB_TRAVERSAL | wxBORDER_NONE | wxFULL_REPAINT_ON_RESIZE)
 {
-#if wxCHECK_VERSION(2,9,2)
     Bind(wxEVT_PAINT, &ErrorBar::OnPaint, this);
-#else
-    Connect(wxEVT_PAINT, wxPaintEventHandler(ErrorBar::OnPaint), NULL, this);
-#endif
 
 #ifdef __WXMAC__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -70,13 +66,8 @@ ErrorBar::ErrorBar(wxWindow *parent)
 void ErrorBar::ShowError(const wxString& error)
 {
     const wxString prefix = _("Error:");
-#if wxCHECK_VERSION(2,9,2)
     m_label->SetLabelMarkup(
         wxString::Format("<b>%s</b> %s", prefix, EscapeMarkup(error)));
-#else
-    m_label->SetLabel(
-        wxString::Format(_T("%s %s"), prefix.c_str(), error.c_str()));
-#endif
 
     GetContainingSizer()->Show(this);
 }

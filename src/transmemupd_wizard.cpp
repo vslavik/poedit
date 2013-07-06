@@ -34,7 +34,7 @@
 #include <wx/filedlg.h>
 #include <wx/stattext.h>
 
-#include "wxeditablelistbox.h"
+#include <wx/editlbox.h>
 #include <wx/xrc/xmlres.h>
 
 #include "transmem.h"

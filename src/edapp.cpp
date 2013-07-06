@@ -39,9 +39,7 @@
 #include <wx/artprov.h>
 #include <wx/datetime.h>
 #include <wx/intl.h>
-#if wxCHECK_VERSION(2,9,1)
 #include <wx/translation.h>
-#endif
 
 #ifdef USE_SPARKLE
 #include "osx_helpers.h"
@@ -85,7 +83,7 @@ bool PoeditApp::OnInit()
     if (!wxApp::OnInit())
         return false;
 
-#if defined(__WXMAC__) && wxCHECK_VERSION(2,8,5)
+#if defined(__WXMAC__)
     wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
 #endif
 
@@ -148,11 +146,7 @@ bool PoeditApp::OnInit()
 
     SetDefaultCfg(wxConfig::Get());
 
-#if wxCHECK_VERSION(2,9,0)
     wxArtProvider::PushBack(new PoeditArtProvider);
-#else    
-    wxArtProvider::Insert(new PoeditArtProvider);
-#endif
 
     SetupLanguage();
 
@@ -229,8 +223,6 @@ void PoeditApp::SetupLanguage()
     wxLocale::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetInstallPrefix() + _T("/share/locale"));
 #endif
 
-#if wxCHECK_VERSION(2,9,1)
-
     wxTranslations *trans = new wxTranslations();
     wxTranslations::Set(trans);
     #if NEED_CHOOSELANG_UI
@@ -238,20 +230,6 @@ void PoeditApp::SetupLanguage()
     #endif
     trans->AddCatalog("poedit");
     trans->AddStdCatalog();
-
-#else // wx < 2.9.1
-
-    m_locale.Init(wxLANGUAGE_DEFAULT);
-    m_locale.AddCatalog(_T("poedit"));
-    #ifdef __WXMSW__
-    // Italian version of Windows uses just "?" for "Help" menu. This is
-    // correctly handled by wxWidgets catalogs, but Poedit catalog has "Help"
-    // entry too, so we add wxmsw.mo catalog again so that it takes
-    // precedence over poedit.mo:
-    m_locale.AddCatalog(_T("wxmsw"));
-    #endif
-
-#endif // wx < 2.9.1
 }
 
 
@@ -649,7 +627,7 @@ void PoeditApp::AskForDonations(wxWindow *parent)
     wxStaticText *big = new wxStaticText(&dlg, wxID_ANY, _T("Support Open Source software"));
     wxFont font = big->GetFont();
     font.SetWeight(wxFONTWEIGHT_BOLD);
-#if defined(__WXMSW__) && wxCHECK_VERSION(2,9,1)
+#if defined(__WXMSW__)
     font.MakeLarger();
 #endif
     big->SetFont(font);
