@@ -761,26 +761,7 @@
 //
 // Recommended setting: 1 if supported by the compilation environment
 
-// notice that we can't use wxCHECK_VISUALC_VERSION() here as this file is
-// included from wx/platform.h before wxCHECK_VISUALC_VERSION() is defined
-#ifdef _MSC_VER
-#   if _MSC_VER >= 1310
-        // MSVC7.1+ comes with new enough Platform SDK, enable
-        // wxGraphicsContext support for it
-#       define wxUSE_GRAPHICS_CONTEXT 1
-#   else
-        // MSVC 6 didn't include GDI+ headers so disable by default, enable it
-        // here if you use MSVC 6 with a newer SDK
-#       define wxUSE_GRAPHICS_CONTEXT 0
-#   endif
-#else
-    // Disable support for other Windows compilers, enable it if your compiler
-    // comes with new enough SDK or you installed the headers manually.
-    //
-    // Notice that this will be set by configure under non-Windows platforms
-    // anyhow so the value there is not important.
-#   define wxUSE_GRAPHICS_CONTEXT 0
-#endif
+#define wxUSE_GRAPHICS_CONTEXT 1
 
 // Enable wxGraphicsContext implementation using Cairo library.
 //
@@ -1644,6 +1625,59 @@
 // Recommended setting: 1, set to 0 if your programs never crash
 #define wxUSE_CRASHREPORT 1
 /* --- end MSW options --- */
+
+
+// ----------------------------------------------------------------------------
+// Unix-specific options settings
+// ----------------------------------------------------------------------------
+
+// use wxSelectDispatcher class
+#define wxUSE_SELECT_DISPATCHER 1
+
+// use wxEpollDispatcher class (Linux only)
+#define wxUSE_EPOLL_DISPATCHER 0
+
+/*
+ Use GStreamer for Unix.
+
+ Default is 0 as this requires a lot of dependencies which might not be
+ available.
+
+ Recommended setting: 1 (wxMediaCtrl won't work by default without it).
+ */
+#define wxUSE_GSTREAMER 0
+
+// ----------------------------------------------------------------------------
+// Mac-specific settings
+// ----------------------------------------------------------------------------
+
+#undef wxUSE_GRAPHICS_CONTEXT
+#define wxUSE_GRAPHICS_CONTEXT 1
+
+
+#ifdef __WXOSX__
+
+// things not implemented under Mac
+#define wxUSE_STACKWALKER 0
+
+// wxWebKit is a wrapper for Apple's WebKit framework, use it if you want to
+// embed the Safari browser control
+// 0 by default because of Jaguar compatibility problems
+#define wxUSE_WEBKIT        1
+
+
+// Set to 0 for no libmspack
+#define wxUSE_LIBMSPACK     0
+
+// native toolbar does support embedding controls, but not complex panels, please test
+#define wxOSX_USE_NATIVE_TOOLBAR 1
+
+// make sure we have the proper dispatcher for the console event loop
+#define wxUSE_SELECT_DISPATCHER 1
+#define wxUSE_EPOLL_DISPATCHER 0
+
+#endif
+
 
 #endif // _WX_SETUP_H_
 
