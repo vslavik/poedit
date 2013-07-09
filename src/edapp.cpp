@@ -603,9 +603,9 @@ void PoeditApp::AskForDonations(wxWindow *parent)
 {
     wxConfigBase *cfg = wxConfigBase::Get();
 
-    if ( (bool)cfg->Read("donate/dont_bug", (long)false) )
+    if ( cfg->ReadBool("donate/dont_bug", false) )
         return; // the user doesn't like us, don't be a bother
-    if ( (bool)cfg->Read("donate/donated", (long)false) )
+    if ( cfg->ReadBool("donate/donated", false) )
         return; // the user likes us a lot, don't be a bother
 
     wxDateTime lastAsked((time_t)cfg->Read("donate/last_asked", (long)0));

@@ -65,7 +65,7 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
 	wxNotebook* nb = XRCCTRL(*this, "notebook", wxNotebook);
 	wxNotebookPage* tmPage = XRCCTRL(*this, "tm_page", wxWindow);
 	int tmIndex = -1;
-	int i = 0;
+	unsigned i = 0;
 	while (i < nb->GetPageCount() && tmIndex == -1)
 	{
 		if (nb->GetPage(i) == tmPage)
@@ -106,26 +106,26 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XRCCTRL(*this, "user_email", wxTextCtrl)->SetValue(
                 cfg->Read("translator_email", wxEmptyString));
     XRCCTRL(*this, "compile_mo", wxCheckBox)->SetValue(
-                cfg->Read("compile_mo", (long)true));
+                cfg->ReadBool("compile_mo", true));
     XRCCTRL(*this, "show_summary", wxCheckBox)->SetValue(
-                cfg->Read("show_summary", true));
+                cfg->ReadBool("show_summary", true));
     XRCCTRL(*this, "manager_startup", wxCheckBox)->SetValue(
-                (bool)cfg->Read("manager_startup", (long)false));
+                cfg->ReadBool("manager_startup", false));
     XRCCTRL(*this, "focus_to_text", wxCheckBox)->SetValue(
-                (bool)cfg->Read("focus_to_text", (long)false));
+                cfg->ReadBool("focus_to_text", false));
     XRCCTRL(*this, "comment_window_editable", wxCheckBox)->SetValue(
-                (bool)cfg->Read("comment_window_editable", (long)false));
+                cfg->ReadBool("comment_window_editable", false));
     XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
-                (bool)cfg->Read("keep_crlf", true));
+                cfg->ReadBool("keep_crlf", true));
 #ifdef USE_SPELLCHECKING
     XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->SetValue(
-                (bool)cfg->Read("enable_spellchecking", true));
+                cfg->ReadBool("enable_spellchecking", true));
 #endif
 
     XRCCTRL(*this, "use_font_list", wxCheckBox)->SetValue(
-                (bool)cfg->Read("custom_font_list_use", (long)false));
+                cfg->ReadBool("custom_font_list_use", false));
     XRCCTRL(*this, "use_font_text", wxCheckBox)->SetValue(
-                (bool)cfg->Read("custom_font_text_use", (long)false));
+                cfg->ReadBool("custom_font_text_use", false));
     XRCCTRL(*this, "font_list", wxFontPickerCtrl)->SetSelectedFont(
             wxFont(cfg->Read("custom_font_list_name", wxEmptyString)));
     XRCCTRL(*this, "font_text", wxFontPickerCtrl)->SetSelectedFont(
@@ -172,7 +172,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
 #endif // USE_SPARKLE
 #ifdef __WXMSW__
     XRCCTRL(*this, "auto_updates", wxCheckBox)->SetValue(
-                (bool)win_sparkle_get_automatic_check_for_updates());
+                win_sparkle_get_automatic_check_for_updates() != 0);
 #endif
 }
  

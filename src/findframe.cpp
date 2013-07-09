@@ -83,19 +83,19 @@ FindFrame::FindFrame(wxWindow *parent,
     Reset(c);
 
     XRCCTRL(*this, "in_orig", wxCheckBox)->SetValue(
-        wxConfig::Get()->Read("find_in_orig", (long)true));
+        wxConfig::Get()->ReadBool("find_in_orig", true));
     XRCCTRL(*this, "in_trans", wxCheckBox)->SetValue(
-        wxConfig::Get()->Read("find_in_trans", (long)true));
+        wxConfig::Get()->ReadBool("find_in_trans", true));
     XRCCTRL(*this, "in_comments", wxCheckBox)->SetValue(
-        wxConfig::Get()->Read("find_in_comments", (long)true));
+        wxConfig::Get()->ReadBool("find_in_comments", true));
     XRCCTRL(*this, "in_auto_comments", wxCheckBox)->SetValue(
-        wxConfig::Get()->Read("find_in_auto_comments", (long)true));
+        wxConfig::Get()->ReadBool("find_in_auto_comments", true));
     XRCCTRL(*this, "case_sensitive", wxCheckBox)->SetValue(
-        wxConfig::Get()->Read("find_case_sensitive", (long)false));
+        wxConfig::Get()->ReadBool("find_case_sensitive", false));
     XRCCTRL(*this, "from_first", wxCheckBox)->SetValue(
-        wxConfig::Get()->Read("find_from_first", (long)true));
+        wxConfig::Get()->ReadBool("find_from_first", true));
     XRCCTRL(*this, "whole_words", wxCheckBox)->SetValue(
-        wxConfig::Get()->Read("whole_words", (long)false));
+        wxConfig::Get()->ReadBool("whole_words", false));
 }
 
 

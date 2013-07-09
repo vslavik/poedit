@@ -1182,7 +1182,7 @@ void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
     if (format == "win") type = wxTextFileType_Dos;
     else /* "unix" or obsolete settings */ type = wxTextFileType_Unix;
 
-    preserve = (bool)(wxConfigBase::Get()->Read("keep_crlf", true));
+    preserve = wxConfigBase::Get()->ReadBool("keep_crlf", true);
 }
 
 
@@ -1689,8 +1689,6 @@ void Catalog::GetMergeSummary(Catalog *refcat,
         strsThis.insert(ItemMergeSummary((*this)[i]));
     for ( unsigned i = 0; i < refcat->GetCount(); i++ )
         strsRef.insert(ItemMergeSummary((*refcat)[i]));
-
-    unsigned i;
 
     for ( std::set<wxString>::const_iterator i = strsThis.begin(); i != strsThis.end(); ++i )
     {

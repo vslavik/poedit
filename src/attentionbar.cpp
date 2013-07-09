@@ -221,10 +221,10 @@ void AttentionMessage::AddToBlacklist(const wxString& id)
 /* static */
 bool AttentionMessage::IsBlacklisted(const wxString& id)
 {
-    return wxConfig::Get()->Read
+    return wxConfig::Get()->ReadBool
         (
             wxString::Format("/messages/dont_show/%s", id.c_str()),
-            (long)false
+            false
         );
 }
 
