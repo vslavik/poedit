@@ -184,33 +184,6 @@
      OS X dependencies - misc helpers
      ============================================================== -->
 
-     <!-- merge 2 arch binaries into one fat one -->
-     <macrodef name="merge-archs-2">
-         <attribute name="prefix"/>
-         <attribute name="dir"/>
-         <attribute name="file"/>
-         <sequential>
-             <echo level="info" message="merging archs into universal binary @{prefix}/@{dir}/@{file}"/>
-             <mkdir dir="@{prefix}/@{dir}"/>
-             <exec dir="@{prefix}" executable="lipo" failonerror="true">
-                 <arg value="-arch"/>
-                 <arg value="i386"/>
-                 <arg value="i386/@{dir}/@{file}"/>
-                 <arg value="-arch"/>
-                 <arg value="x86_64"/>
-                 <arg value="x86_64/@{dir}/@{file}"/>
-                 <arg value="-create"/>
-                 <arg value="-output"/>
-                 <arg value="@{dir}/@{file}"/>
-             </exec>
-             <exec dir="@{prefix}" executable="strip" failonerror="true">
-                 <arg value="-u"/>
-                 <arg value="-r"/>
-                 <arg value="@{dir}/@{file}"/>
-             </exec>
-         </sequential>
-     </macrodef>
-
      <macrodef name="strip-exe">
          <attribute name="file"/>
          <sequential>
@@ -249,13 +222,13 @@
         <available property="built.osx-db" file="${intdir}/db.buildtag"/>
     </target>
 
-    <target name="osx-db-arch">
-        <echo level="info" message="Building Berkeley DB for ${osx.arch}..."/>
+    <target name="osx-db" depends="osx-db-check" unless="built.osx-db" if="is_osx">
         <property file="macosx.properties"/>
-        <mkdir dir="${intdir}/db/${osx.arch}"/>
-        <exec dir="${intdir}/db/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <echo level="info" message="Building Berkeley DB for ${osx.arch}..."/>
+        <mkdir dir="${intdir}/db"/>
+        <exec dir="${intdir}/db" executable="/bin/sh" failonerror="true">
             <arg value="${basedir}/db/dist/configure"/>
-            <arg value="--prefix=${builddir}/db/${osx.arch}"/>
+            <arg value="--prefix=${builddir}/db"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
             <arg value="CFLAGS=${osx.cflags}"/>
@@ -267,32 +240,15 @@
             <arg value="--disable-replication"/>
             <arg value="--disable-statistics"/>
         </exec>
-        <exec dir="${intdir}/db/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <exec dir="${intdir}/db" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
             <arg value="make"/>
         </exec>
-        <exec dir="${intdir}/db/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <exec dir="${intdir}/db" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
             <arg value="make install -j1"/>
         </exec>
-        <delete dir="${builddir}/db/${osx.arch}/docs"/>
-    </target>
-
-    <target name="osx-db" depends="osx-db-check" unless="built.osx-db" if="is_osx">
-        <antcall target="osx-db-arch">
-            <param name="osx.arch" value="i386"/>
-            <param name="osx.cc" value="gcc"/>
-            <param name="osx.cxx" value="g++"/>
-        </antcall>
-        <antcall target="osx-db-arch">
-            <param name="osx.arch" value="x86_64"/>
-            <param name="osx.cc" value="gcc"/>
-            <param name="osx.cxx" value="g++"/>
-        </antcall>
-
-        <merge-archs-2 prefix="${builddir}/db" dir="lib" file="libdb_cxx.a"/>
-        <copy file="${builddir}/db/i386/include/db.h" todir="${builddir}/db/include"/>
-        <copy file="${builddir}/db/i386/include/db_cxx.h" todir="${builddir}/db/include"/>
+        <delete dir="${builddir}/db/docs"/>
 
         <touch file="${intdir}/db.buildtag"/>
         <delete dir="${intdir}/db"/>
@@ -315,13 +271,23 @@
         <available property="built.gettext" file="${intdir}/gettext.buildtag"/>
     </target>
 
-    <target name="osx-gettext-arch">
+
+    <target name="osx-gettext" depends="osx-gettext-check" unless="built.gettext" if="is_osx">
+        <!-- Prevent automake regeneration: -->
+        <touch>
+            <fileset dir="gettext" includes="**/aclocal.m4"/>
+            <fileset dir="gettext" includes="**/config.h.in"/>
+            <fileset dir="gettext" includes="**/Makefile.in"/>
+            <fileset dir="gettext" includes="**/configure"/>
+        </touch>
+        <touch file="gettext/gettext-tools/doc/stamp-vti"/>
+
         <echo level="info" message="Building GNU gettext for ${osx.arch}..."/>
         <property file="macosx.properties"/>
-        <mkdir dir="${intdir}/gettext/${osx.arch}"/>
-        <exec dir="${intdir}/gettext/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <mkdir dir="${intdir}/gettext"/>
+        <exec dir="${intdir}/gettext" executable="/bin/sh" failonerror="true">
             <arg value="${basedir.unix}/gettext/configure"/>
-            <arg value="--prefix=${gettextdir}/${osx.arch}"/>
+            <arg value="--prefix=${gettextdir}"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
             <!-- When running configure under Xcode, SIGALRM is ignored and this doesn't play
@@ -335,49 +301,23 @@
             <arg value="--with-libiconv-prefix=${osx.sdk.path}/usr"/>
             <!-- Make our life simpler by using static linking and not having to deal with dylibs
                  and install_name_tool. If re-enabling shared builds, don't forget to also add
-                 calls to install_name_tool *here*, in osx-gettext-arch, before lipo, because it
-                 has to be called on thin, single-arch binaries, it doesn't correctly handle fat
-                 ones (only updating the arch it runs on natively). Also consider using @rpath
+                 calls to install_name_tool here. Also consider using @rpath
                  (available since 10.5) instead of @executable_path. -->
             <arg value="--disable-shared"/>
             <arg value="--disable-java"/>
             <arg value="--disable-rpath"/>
         </exec>
-        <touch file="${intdir}/gettext/${osx.arch}/gettext-tools/misc/archive.dir.tar.gz"/>
-        <touch file="${intdir}/gettext/${osx.arch}/gettext-tools/misc/archive.git.tar.gz"/>
-        <touch file="${intdir}/gettext/${osx.arch}/gettext-tools/misc/archive.cvs.tar.gz"/>
-        <exec dir="${intdir}/gettext/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <touch file="${intdir}/gettext/gettext-tools/misc/archive.dir.tar.gz"/>
+        <touch file="${intdir}/gettext/gettext-tools/misc/archive.git.tar.gz"/>
+        <touch file="${intdir}/gettext/gettext-tools/misc/archive.cvs.tar.gz"/>
+        <exec dir="${intdir}/gettext" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
             <arg value="make"/>
         </exec>
-        <exec dir="${intdir}/gettext/${osx.arch}" executable="/bin/sh" failonerror="true">
+        <exec dir="${intdir}/gettext" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
             <arg value="make install -j1"/>
         </exec>
-    </target>
-
-    <target name="osx-gettext" depends="osx-gettext-check" unless="built.gettext" if="is_osx">
-        <!-- Prevent automake regeneration: -->
-        <touch>
-            <fileset dir="gettext" includes="**/aclocal.m4"/>
-            <fileset dir="gettext" includes="**/config.h.in"/>
-            <fileset dir="gettext" includes="**/Makefile.in"/>
-            <fileset dir="gettext" includes="**/configure"/>
-        </touch>
-        <touch file="gettext/gettext-tools/doc/stamp-vti"/>
-
-        <antcall target="osx-gettext-arch">
-            <param name="osx.arch" value="i386"/>
-        </antcall>
-        <antcall target="osx-gettext-arch">
-            <param name="osx.arch" value="x86_64"/>
-        </antcall>
-
-        <merge-archs-2 prefix="${gettextdir}" dir="bin" file="msgfmt"/>
-        <merge-archs-2 prefix="${gettextdir}" dir="bin" file="msgmerge"/>
-        <merge-archs-2 prefix="${gettextdir}" dir="bin" file="msgunfmt"/>
-        <merge-archs-2 prefix="${gettextdir}" dir="bin" file="msgcat"/>
-        <merge-archs-2 prefix="${gettextdir}" dir="bin" file="xgettext"/>
 
         <!-- TODO: keep dSYM files? -->
         <strip-exe file="${gettextdir}/bin/msgfmt"/>

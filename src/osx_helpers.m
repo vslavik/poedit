@@ -45,36 +45,34 @@ void Sparkle_Initialize()
     /* Remove config key for Sparkle < 1.5. */
     UserDefaults_RemoveValue("SUCheckAtStartup");
 
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    SUUpdater *updater = [SUUpdater sharedUpdater];
-    [pool release];
+    @autoreleasepool {
+        SUUpdater *updater = [SUUpdater sharedUpdater];
+    }
 }
 
 
 void Sparkle_AddMenuItem(const char *title)
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
-    NSString *nstitle = [NSString stringWithUTF8String: title];
-    NSMenu *appmenu = [[[[NSApplication sharedApplication] mainMenu] itemAtIndex:0] submenu];
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:nstitle
-                                           action:@selector(checkForUpdates:)
-                                           keyEquivalent:@""];
-    SUUpdater *updater = [SUUpdater sharedUpdater];
-    [item setEnabled:YES];
-    [item setTarget:updater];
-    [appmenu insertItem:item atIndex:1];
-
-    [pool release];
+    @autoreleasepool {
+        NSString *nstitle = [NSString stringWithUTF8String: title];
+        NSMenu *appmenu = [[[[NSApplication sharedApplication] mainMenu] itemAtIndex:0] submenu];
+        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:nstitle
+                                               action:@selector(checkForUpdates:)
+                                               keyEquivalent:@""];
+        SUUpdater *updater = [SUUpdater sharedUpdater];
+        [item setEnabled:YES];
+        [item setTarget:updater];
+        [appmenu insertItem:item atIndex:1];
+    }
 }
 
 
 void Sparkle_Cleanup()
 {
     /*  Make sure that Sparkle's updates to plist preferences are saved: */
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [pool release];
+    @autoreleasepool {
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 #endif // USE_SPARKLE
 
@@ -84,14 +82,10 @@ void Sparkle_Cleanup()
 
 int SpellChecker_SetLang(const char *lang)
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSString *nslang = [NSString stringWithUTF8String: lang];
-
-    BOOL ret = [[NSSpellChecker sharedSpellChecker] setLanguage: nslang];
-
-    [pool release];
-
-    return ret;
+    @autoreleasepool {
+        NSString *nslang = [NSString stringWithUTF8String: lang];
+        return [[NSSpellChecker sharedSpellChecker] setLanguage: nslang];
+    }
 }
 
 
@@ -101,38 +95,32 @@ int SpellChecker_SetLang(const char *lang)
 
 int UserDefaults_GetBoolValue(const char *key)
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSString *nskey = [NSString stringWithUTF8String: key];
-
-    int rv = [[NSUserDefaults standardUserDefaults] boolForKey:nskey];
-
-    [pool release];
-
-    return rv;
+    @autoreleasepool {
+        NSString *nskey = [NSString stringWithUTF8String: key];
+        return [[NSUserDefaults standardUserDefaults] boolForKey:nskey];
+    }
 }
 
 
 void UserDefaults_SetBoolValue(const char *key, int value)
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSString *nskey = [NSString stringWithUTF8String: key];
+    @autoreleasepool {
+        NSString *nskey = [NSString stringWithUTF8String: key];
 
-    [[NSUserDefaults standardUserDefaults] setBool:value forKey:nskey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
-    [pool release];
+        [[NSUserDefaults standardUserDefaults] setBool:value forKey:nskey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 
 void UserDefaults_RemoveValue(const char *key)
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSString *nskey = [NSString stringWithUTF8String: key];
+    @autoreleasepool {
+        NSString *nskey = [NSString stringWithUTF8String: key];
 
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:nskey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
-    [pool release];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:nskey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 
@@ -142,5 +130,5 @@ void UserDefaults_RemoveValue(const char *key)
 
 void MakeButtonRounded(void *button)
 {
-    [(NSButton*)button setBezelStyle:NSRoundRectBezelStyle];
+    [(__bridge NSButton*)button setBezelStyle:NSRoundRectBezelStyle];
 }
