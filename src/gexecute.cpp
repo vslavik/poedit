@@ -71,9 +71,9 @@ static wxString GetPathToAuxBinary(const wxString& program)
 #endif // __WXMAC__ || __WXMSW__
 
 
-int DoExecuteGettext(const wxString& cmdline_,
-                     wxArrayString& gstdout,
-                     wxArrayString& gstderr)
+long DoExecuteGettext(const wxString& cmdline_,
+                      wxArrayString& gstdout,
+                      wxArrayString& gstderr)
 {
     wxString cmdline(cmdline_);
 
@@ -84,7 +84,7 @@ int DoExecuteGettext(const wxString& cmdline_,
 
     wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
 
-    int retcode = wxExecute(cmdline, gstdout, gstderr, wxEXEC_BLOCK);
+    long retcode = wxExecute(cmdline, gstdout, gstderr, wxEXEC_BLOCK);
 
     if ( retcode == -1 )
         throw Exception(wxString::Format(_("Cannot execute program: %s"), cmdline.c_str()));
@@ -97,7 +97,7 @@ bool ExecuteGettext(const wxString& cmdline)
 {
     wxArrayString gstdout;
     wxArrayString gstderr;
-    int retcode = DoExecuteGettext(cmdline, gstdout, gstderr);
+    long retcode = DoExecuteGettext(cmdline, gstdout, gstderr);
 
     for ( size_t i = 0; i < gstderr.size(); i++ )
     {
@@ -114,7 +114,7 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
 {
     wxArrayString gstdout;
     wxArrayString gstderr;
-    int retcode = DoExecuteGettext(cmdline, gstdout, gstderr);
+    long retcode = DoExecuteGettext(cmdline, gstdout, gstderr);
 
     wxRegEx reError(".*\\.po:([0-9]+)(:[0-9]+)?: (.*)");
 

@@ -106,7 +106,7 @@ class TranslationMemory
             \param maxDelta look in sentences that are longer than the
                             sentense by at worst this number of words
          */
-        void SetParams(size_t maxDelta, size_t maxOmits)
+        void SetParams(int maxDelta, int maxOmits)
             { m_maxDelta = maxDelta, m_maxOmits = maxOmits; }
 
         // Return location of TM database files
@@ -159,7 +159,7 @@ class TranslationMemory
         DbWords *m_dbWords;
         wxString m_lang;
         wxString m_dbPath;
-        size_t   m_maxDelta, m_maxOmits;
+        int      m_maxDelta, m_maxOmits;
         
         int      m_refCnt;
 };

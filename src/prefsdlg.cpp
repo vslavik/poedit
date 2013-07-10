@@ -159,11 +159,11 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XRCCTRL(*this, "tm_langs", wxEditableListBox)->SetStrings(langs);
 
     XRCCTRL(*this, "tm_omits", wxSpinCtrl)->SetValue(
-                cfg->Read("TM/max_omitted", 2));
+                (int)cfg->Read("TM/max_omitted", 2));
     XRCCTRL(*this, "tm_delta", wxSpinCtrl)->SetValue(
-                cfg->Read("TM/max_delta", 2));
+                (int)cfg->Read("TM/max_delta", 2));
     XRCCTRL(*this, "tm_automatic", wxCheckBox)->SetValue(
-                cfg->Read("use_tm_when_updating", true));
+                (int)cfg->Read("use_tm_when_updating", true));
 #endif
 
 #ifdef USE_SPARKLE
@@ -317,7 +317,7 @@ void PreferencesDialog::OnNewParser(wxCommandEvent&)
     Parser info;
     m_parsers.Add(info);
     XRCCTRL(*this, "parsers_list", wxListBox)->Append(wxEmptyString);
-    size_t index = m_parsers.GetCount()-1;
+    int index = (int)m_parsers.GetCount()-1;
     if (!EditParser(index))
     {
         XRCCTRL(*this, "parsers_list", wxListBox)->Delete(index);
@@ -337,7 +337,7 @@ void PreferencesDialog::OnEditParser(wxCommandEvent&)
 
 void PreferencesDialog::OnDeleteParser(wxCommandEvent&)
 {
-    size_t index = XRCCTRL(*this, "parsers_list", wxListBox)->GetSelection();
+    int index = XRCCTRL(*this, "parsers_list", wxListBox)->GetSelection();
     m_parsers.RemoveAt(index);
     XRCCTRL(*this, "parsers_list", wxListBox)->Delete(index);
     if (m_parsers.GetCount() == 0)

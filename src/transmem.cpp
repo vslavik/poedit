@@ -337,7 +337,7 @@ DbKey DbTrans::Write(wxArrayString *strs, DbKey index)
         ptr += strlen(ptr) + 1;
     }
 
-    Dbt data(buf.data(), bufLen);
+    Dbt data(buf.data(), (u_int32_t)bufLen);
 
     if (index == DBKEY_ILLEGAL)
     {
@@ -379,7 +379,7 @@ DbKey DbOrig::Read(const wxString& str)
     const wxWX2MBbuf c_str_buf = str.mb_str(wxConvUTF8);
     const char *c_str = c_str_buf;
 
-    Dbt key((void*)c_str, strlen(c_str));
+    Dbt key((void*)c_str, (u_int32_t)strlen(c_str));
     Dbt data;
 
     if ( m_db.get(NULL, &key, &data, 0) == DB_NOTFOUND )
@@ -394,7 +394,7 @@ void DbOrig::Write(const wxString& str, DbKey value)
     const wxWX2MBbuf c_str_buf = str.mb_str(wxConvUTF8);
     const char *c_str = c_str_buf;
 
-    Dbt key((void*)c_str, strlen(c_str));
+    Dbt key((void*)c_str, (u_int32_t)strlen(c_str));
     Dbt data(&value, sizeof(value));
 
     m_db.put(NULL, &key, &data, 0);
@@ -409,7 +409,7 @@ DbKeys *DbWords::Read(const wxString& word, unsigned sentenceSize)
     strcpy(keyBuf.data() + sizeof(wxUint32), word_mb);
     *((wxUint32*)(keyBuf.data())) = sentenceSize;
 
-    Dbt key(keyBuf.data(), keyLen);
+    Dbt key(keyBuf.data(), (u_int32_t)keyLen);
     Dbt data;
 
     if ( m_db.get(NULL, &key, &data, 0) == DB_NOTFOUND )
@@ -435,7 +435,7 @@ void DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
     strcpy(keyBuf.data() + sizeof(wxUint32), word_mb);
     *((wxUint32*)(keyBuf.data())) = sentenceSize;
 
-    Dbt key(keyBuf.data(), keyLen);
+    Dbt key(keyBuf.data(), (u_int32_t)keyLen);
     Dbt data;
 
     std::auto_ptr<DbKeys> keys(Read(word, sentenceSize));
@@ -451,7 +451,7 @@ void DbWords::Append(const wxString& word, unsigned sentenceSize, DbKey value)
         memcpy(valueBuf, keys->List, keys->Count * sizeof(DbKey));
         valueBuf[keys->Count] = value;
         data.set_data(valueBuf);
-        data.set_size((keys->Count + 1) * sizeof(DbKey));
+        data.set_size(u_int32_t((keys->Count + 1) * sizeof(DbKey)));
     }
 
     try
@@ -849,7 +849,7 @@ bool TranslationMemory::Store(const wxString& string,
             StringToWordsArray(string, words);
             const size_t sz = words.GetCount();
             for (size_t i = 0; i < sz; i++)
-                m_dbWords->Append(words[i], sz, key);
+                m_dbWords->Append(words[i], (unsigned)sz, key);
 
             return true;
         }
@@ -902,7 +902,7 @@ int TranslationMemory::Lookup(const wxString& string, wxArrayString& results)
         StringToWordsArray(string, words);
         for (unsigned omits = 0; omits <= m_maxOmits; omits++)
         {
-            for (size_t delta = 0; delta <= m_maxDelta; delta++)
+            for (int delta = 0; delta <= m_maxDelta; delta++)
             {
                 if (LookupFuzzy(words, results, omits, delta))
                 {
@@ -976,7 +976,7 @@ bool TranslationMemory::LookupFuzzy(const wxArrayString& words,
         for (missing = 0, slot = 0, i = 0; i < cnt; i++)
         {
             keys[i] = NULL; // so that unused entries are NULL
-            keys[slot] = m_dbWords->Read(words[i], cnt + delta);
+            keys[slot] = m_dbWords->Read(words[i], unsigned(cnt + delta));
             if (keys[slot])
                 slot++;
             else

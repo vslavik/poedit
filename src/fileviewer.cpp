@@ -42,7 +42,7 @@
 FileViewer::FileViewer(wxWindow *parent,
                        const wxString& basePath,
                        const wxArrayString& references,
-                       size_t startAt)
+                       int startAt)
         : wxFrame(parent, -1, _("Source file")),
           m_references(references)
 {
@@ -288,12 +288,12 @@ void FileViewer::ShowReference(wxString ref)
     m_text->SetReadOnly(true);
 
     m_text->MarkerDeleteAll(1);
-    m_text->MarkerAdd(linenum - 1, 1);
+    m_text->MarkerAdd((int)linenum - 1, 1);
 
     // Center the highlighted line:
-    int lineHeight = m_text->TextHeight(linenum);
+    int lineHeight = m_text->TextHeight((int)linenum);
     int linesInWnd = m_text->GetSize().y / lineHeight;
-    m_text->ScrollToLine(wxMax(0, linenum - linesInWnd/2));
+    m_text->ScrollToLine(wxMax(0, (int)linenum - linesInWnd/2));
 
 }
 

@@ -127,9 +127,9 @@ void FindFrame::Reset(Catalog *c)
     m_catalog = c;
     m_position = -1;
     if (!fromFirst)
-        m_position = m_listCtrl->GetNextItem(-1,
-                                             wxLIST_NEXT_ALL,
-                                             wxLIST_STATE_SELECTED);
+        m_position = (int)m_listCtrl->GetNextItem(-1,
+                                                  wxLIST_NEXT_ALL,
+                                                  wxLIST_STATE_SELECTED);
 
     m_btnPrev->Enable(!ms_text.empty());
     m_btnNext->Enable(!ms_text.empty());
@@ -200,7 +200,7 @@ bool TextInString(const wxString& str, const wxString& text, bool wholeWords)
     {
         if (wholeWords)
         {
-            unsigned textLen = text.Length();
+            size_t textLen = text.Length();
 
             bool result = true;
             if (index >0)
@@ -269,9 +269,9 @@ bool FindFrame::DoFind(int dir)
         if (inTrans)
         {
             // concatenate all translations:
-            size_t cnt = dt.GetNumberOfTranslations();
+            unsigned cntTrans = dt.GetNumberOfTranslations();
             textc = wxEmptyString;
-            for (size_t i = 0; i < cnt; i++)
+            for (unsigned i = 0; i < cntTrans; i++)
             {
                 textc += dt.GetTranslation(i);
             }
@@ -321,7 +321,7 @@ bool FindFrame::DoFind(int dir)
 
         // find the text on the control and select it:
 
-        wxTextCtrl* txt;
+        wxTextCtrl* txt = NULL;
         switch (found)
         {
             case Found_InOrig:

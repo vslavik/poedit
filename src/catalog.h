@@ -119,7 +119,7 @@ class CatalogItem
 
         /// How many translations (plural forms) do we have?
         unsigned GetNumberOfTranslations() const
-            { return m_translations.size(); }
+            { return (unsigned)m_translations.size(); }
 
         /// Returns number of plural forms in this translation; note that this
         /// may be less than what the header says, because some may be
@@ -516,7 +516,7 @@ class Catalog
                            bool replace_header = false);
 
         /// Returns the number of strings/translations in the catalog.
-        size_t GetCount() const { return m_items.size(); }
+        unsigned GetCount() const { return (unsigned)m_items.size(); }
 
         /** Returns number of all, fuzzy, badtokens and untranslated items.
             Any argument may be NULL if the caller is not interested in

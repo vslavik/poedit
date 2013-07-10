@@ -151,7 +151,7 @@ bool SourceDigger::DigFiles(TempDirectory& tmpdir,
 
         tempfiles.push_back(tempfile);
 
-        m_progressInfo->UpdateGauge(batchfiles.GetCount());
+        m_progressInfo->UpdateGauge((int)batchfiles.GetCount());
 
         if (m_progressInfo->Cancelled())
             return false;
@@ -182,7 +182,9 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
     for (i = 0; i < paths.GetCount(); i++)
     {
         if ( !FindInDir(paths[i], files) )
+        {
             wxLogWarning(_("No files found in: ") + paths[i]);
+        }
     }
 
     size_t filescnt = 0;
@@ -191,10 +193,12 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
         p_files[i] = pdb[i].SelectParsable(files);
         filescnt += p_files[i].GetCount();
     }
-    m_progressInfo->SetGaugeMax(filescnt);
+    m_progressInfo->SetGaugeMax((int)filescnt);
     
     if (filescnt == 0)
+    {
         wxLogError(_("Poedit did not find any files in scanned directories."));
+    }
 
     return p_files;
 }

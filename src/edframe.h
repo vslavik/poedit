@@ -146,7 +146,7 @@ class PoeditFrame : public wxFrame
         void UpdateCommentWindowEditable();
 
         /// Returns popup menu for given catalog entry.
-        wxMenu *GetPopupMenu(size_t item);
+        wxMenu *GetPopupMenu(int item);
 
 #ifdef USE_TRANSMEM
         /// Initializes translation memory, if enabled

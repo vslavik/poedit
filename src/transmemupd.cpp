@@ -135,7 +135,7 @@ bool TranslationMemoryUpdater::FindFilesInPaths(const wxArrayString& paths,
 
 bool TranslationMemoryUpdater::Update(const wxArrayString& files)
 {
-    m_progress->SetGaugeMax(files.GetCount());
+    m_progress->SetGaugeMax((int)files.GetCount());
     m_progress->ResetGauge();
 
     bool res = true;
@@ -226,8 +226,8 @@ bool TranslationMemoryUpdater::UpdateFromCatalog(const wxString& filename)
     
     if (!cat.IsOk()) return true; // ignore
 
-    size_t cnt = cat.GetCount();
-    for (size_t i = 0; i < cnt; i++)
+    unsigned cnt = cat.GetCount();
+    for (unsigned i = 0; i < cnt; i++)
     {
         CatalogItem &dt = cat[i];
         if (!dt.IsTranslated() || dt.IsFuzzy()) continue;

@@ -160,8 +160,8 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
 
     if ( flags & WinState_Size )
     {
-        int width = cfg->Read(path + "w", defaultSize.x);
-        int height = cfg->Read(path + "h", defaultSize.y);
+        int width = (int)cfg->Read(path + "w", defaultSize.x);
+        int height = (int)cfg->Read(path + "h", defaultSize.y);
         if ( width != -1 || height != -1 )
             win->SetClientSize(width, height);
     }
@@ -169,8 +169,8 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
 #ifdef __WXMSW__
     if ( flags & WinState_Pos )
     {
-        int posx = cfg->Read(path + "x", -1);
-        int posy = cfg->Read(path + "y", -1);
+        int posx = (int)cfg->Read(path + "x", -1);
+        int posy = (int)cfg->Read(path + "y", -1);
         if ( posx != -1 || posy != -1 )
             win->Move(posx, posy);
     }

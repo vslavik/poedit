@@ -47,6 +47,8 @@ void Sparkle_Initialize()
 
     @autoreleasepool {
         SUUpdater *updater = [SUUpdater sharedUpdater];
+        // We don't use the updater here, this just triggered initialization
+        (void)updater;
     }
 }
 

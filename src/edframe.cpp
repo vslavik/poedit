@@ -653,7 +653,7 @@ PoeditFrame::PoeditFrame() :
     Layout();
 
     m_splitter->SetMinimumPaneSize(120);
-    m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, cfg->Read("splitter", 330L));
+    m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, (int)cfg->Read("splitter", 330L));
 
     m_list->PushEventHandler(new ListHandler(this));
     m_textTrans->PushEventHandler(new TransTextctrlHandler(this));
@@ -944,8 +944,8 @@ TranslationMemory *PoeditFrame::GetTransMem()
         {
             m_transMem = TranslationMemory::Create(lang);
             if (m_transMem)
-                m_transMem->SetParams(cfg->Read("TM/max_delta", 2),
-                                      cfg->Read("TM/max_omitted", 2));
+                m_transMem->SetParams((int)cfg->Read("TM/max_delta", 2),
+                                      (int)cfg->Read("TM/max_omitted", 2));
         }
         else
             m_transMem = NULL;
@@ -1430,7 +1430,7 @@ void PoeditFrame::OnReferencesMenu(wxCommandEvent&)
         for (unsigned i = 0; i < refs.GetCount(); i++)
             table[i] = refs[i];
         int result = wxGetSingleChoiceIndex(_("Please choose the reference you want to show:"), _("References"),
-                          refs.GetCount(), table);
+                          (int)refs.GetCount(), table);
         delete[] table;
         if (result != -1)
             ShowReference(result);
@@ -1792,7 +1792,7 @@ void PoeditFrame::UpdateToTextCtrl()
         t_op.Replace("\\n", "\\n\n");
         m_textOrigPlural->SetValue(t_op);
 
-        unsigned formsCnt = m_textTransPlural.size();
+        unsigned formsCnt = (unsigned)m_textTransPlural.size();
         for (unsigned j = 0; j < formsCnt; j++)
             SetTranslationValue(m_textTransPlural[j], wxEmptyString);
 
@@ -2160,24 +2160,24 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
     if (GetTransMem())
     {
         TranslationMemory *tm = GetTransMem();
-        size_t cnt = m_catalog->GetCount();
-        for (size_t i = 0; i < cnt; i++)
+        int cnt = m_catalog->GetCount();
+        for (int i = 0; i < cnt; i++)
         {
-            const CatalogItem& dt = (*m_catalog)[i];
+            const CatalogItem& item = (*m_catalog)[i];
 
             // ignore translations with errors in them
-            if (dt.GetValidity() == CatalogItem::Val_Invalid)
+            if (item.GetValidity() == CatalogItem::Val_Invalid)
                 continue;
 
             // ignore untranslated or unfinished translations
-            if (dt.IsFuzzy() || dt.GetTranslation().empty())
+            if (item.IsFuzzy() || item.GetTranslation().empty())
                 continue;
 
             // Note that dt.IsModified() is intentionally not checked - we
             // want to save old entries in the TM too, so that we harvest as
             // much useful translations as we can.
 
-            if ( !tm->Store(dt.GetString(), dt.GetTranslation()) )
+            if ( !tm->Store(item.GetString(), item.GetTranslation()) )
             {
                 // If the TM failed, it would almost certainly fail to store
                 // the next item as well. Don't bother, just stop updating
@@ -2280,13 +2280,13 @@ bool PoeditFrame::AutoTranslateCatalog()
     if (tm == NULL)
         return false;
 
-    size_t cnt = m_catalog->GetCount();
-    size_t matches = 0;
+    int cnt = m_catalog->GetCount();
+    int matches = 0;
     wxString msg;
 
     ProgressInfo pi(this, _("Automatically translating..."));
     pi.SetGaugeMax(cnt);
-    for (size_t i = 0; i < cnt; i++)
+    for (int i = 0; i < cnt; i++)
     {
         CatalogItem& dt = (*m_catalog)[i];
         if (dt.IsFuzzy() || !dt.IsTranslated())
@@ -2318,10 +2318,10 @@ bool PoeditFrame::AutoTranslateCatalog()
 }
 #endif
 
-wxMenu *PoeditFrame::GetPopupMenu(size_t item)
+wxMenu *PoeditFrame::GetPopupMenu(int item)
 {
     if (!m_catalog) return NULL;
-    if (item >= (size_t)m_list->GetItemCount()) return NULL;
+    if (item >= (int)m_list->GetItemCount()) return NULL;
 
     const wxArrayString& refs = (*m_catalog)[item].GetReferences();
     wxMenu *menu = new wxMenu;
@@ -2382,7 +2382,7 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
                   );
 #endif
 
-            for (size_t i = 0; i < m_autoTranslations.GetCount(); i++)
+            for (int i = 0; i < m_autoTranslations.GetCount(); i++)
             {
                 // Convert from UTF-8 to environment's default charset:
                 wxString s(m_autoTranslations[i].wc_str(wxConvUTF8), wxConvLocal);
@@ -2406,7 +2406,7 @@ wxMenu *PoeditFrame::GetPopupMenu(size_t item)
         menu->Append(ID_POPUP_DUMMY+0, _("References:"));
 #endif
 
-        for (size_t i = 0; i < refs.GetCount(); i++)
+        for (int i = 0; i < (int)refs.GetCount(); i++)
             menu->Append(ID_POPUP_REFS + i, "    " + refs[i]);
     }
 
@@ -2513,7 +2513,7 @@ void PoeditFrame::UpdateDisplayCommentWin()
     {
         m_bottomSplitter->SplitVertically(
                 m_bottomLeftPanel, m_bottomRightPanel,
-                wxConfig::Get()->Read("bottom_splitter", -200L));
+                (int)wxConfig::Get()->Read("bottom_splitter", -200L));
         m_bottomRightPanel->Show(true);
 
         // force recalculation of layout of panel so that text boxes take up
@@ -2604,11 +2604,11 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
         Layout();
 
         // then set sash positions
-        m_splitter->SetSashPosition(wxConfig::Get()->Read("splitter", 240L));
+        m_splitter->SetSashPosition((int)wxConfig::Get()->Read("splitter", 240L));
         if ( m_bottomSplitter->IsSplit() )
         {
             m_bottomSplitter->SetSashPosition(
-                wxConfig::Get()->Read("bottom_splitter", -200L));
+                (int)wxConfig::Get()->Read("bottom_splitter", -200L));
         }
     }
 }

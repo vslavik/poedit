@@ -1657,9 +1657,6 @@
 
 #ifdef __WXOSX__
 
-// things not implemented under Mac
-#define wxUSE_STACKWALKER 0
-
 // wxWebKit is a wrapper for Apple's WebKit framework, use it if you want to
 // embed the Safari browser control
 // 0 by default because of Jaguar compatibility problems

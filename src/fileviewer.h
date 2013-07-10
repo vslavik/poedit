@@ -47,7 +47,7 @@ public:
                           by default
      */
     FileViewer(wxWindow *parent, const wxString& basePath,
-               const wxArrayString& references, size_t openAt);
+               const wxArrayString& references, int openAt);
     ~FileViewer();
 
     /// Shows given reference, i.e. loads the file

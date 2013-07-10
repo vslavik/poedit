@@ -97,7 +97,7 @@ ManagerFrame::ManagerFrame() :
 
     m_curPrj = -1;
 
-    int last = wxConfig::Get()->Read("manager_last_selected", (long)0);
+    int last = (int)wxConfig::Get()->Read("manager_last_selected", (long)0);
 
     // FIXME: do this in background (here and elsewhere)
     UpdateListPrj(last);
@@ -129,7 +129,7 @@ ManagerFrame::~ManagerFrame()
 void ManagerFrame::UpdateListPrj(int select)
 {
     wxConfigBase *cfg = wxConfig::Get();
-    int max = cfg->Read("Manager/max_project_num", (long)0) + 1;
+    long max = cfg->Read("Manager/max_project_num", (long)0) + 1;
     wxString key, name;
 
     m_listPrj->Clear();
@@ -170,10 +170,10 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
 
     if (modtime == wxFileModificationTime(file))
     {
-        all = cfg->Read(key + "all", (long)0);
-        fuzzy = cfg->Read(key + "fuzzy", (long)0);
-        badtokens = cfg->Read(key + "badtokens", (long)0);
-        untranslated = cfg->Read(key + "untranslated", (long)0);
+        all = (int)cfg->Read(key + "all", (long)0);
+        fuzzy = (int)cfg->Read(key + "fuzzy", (long)0);
+        badtokens = (int)cfg->Read(key + "badtokens", (long)0);
+        untranslated = (int)cfg->Read(key + "untranslated", (long)0);
         lastmodified = cfg->Read(key + "lastmodified", "?");
     }
     else
@@ -248,7 +248,7 @@ void ManagerFrame::UpdateListCat(int id)
 
     // FIXME: this is time-consuming, it should be done in parallel on
     //        multi-core/SMP systems
-    for (size_t i = 0; i < m_catalogs.GetCount(); i++)
+    for (int i = 0; i < (int)m_catalogs.GetCount(); i++)
         AddCatalogToList(m_listCat, i, id, m_catalogs[i]);
 
     m_listCat->SetColumnWidth(0, wxLIST_AUTOSIZE);
@@ -363,7 +363,7 @@ END_EVENT_TABLE()
 void ManagerFrame::OnNewProject(wxCommandEvent&)
 {
     wxConfigBase *cfg = wxConfig::Get();
-    int max = cfg->Read("Manager/max_project_num", (long)0) + 1;
+    long max = cfg->Read("Manager/max_project_num", (long)0) + 1;
     wxString key;
     for (int i = 0; i <= max; i++)
     {
@@ -391,7 +391,7 @@ void ManagerFrame::OnEditProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
-    EditProject((long)m_listPrj->GetClientData(sel));
+    EditProject((int)(wxIntPtr)m_listPrj->GetClientData(sel));
 }
 
 
@@ -401,7 +401,7 @@ void ManagerFrame::OnDeleteProject(wxCommandEvent&)
     if (sel == -1) return;
     if (wxMessageBox(_("Do you want to delete the project?"),
                _("Confirmation"), wxYES_NO | wxICON_QUESTION, this) == wxYES)
-        DeleteProject((long)m_listPrj->GetClientData(sel));
+        DeleteProject((int)(wxIntPtr)m_listPrj->GetClientData(sel));
 }
 
 
@@ -409,7 +409,7 @@ void ManagerFrame::OnSelectProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
-    m_curPrj = (long)m_listPrj->GetClientData(sel);
+    m_curPrj = (int)(wxIntPtr)m_listPrj->GetClientData(sel);
     UpdateListCat(m_curPrj);
 }
 

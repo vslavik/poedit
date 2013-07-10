@@ -444,7 +444,7 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
     if (m_catalog == NULL)
         return wxEmptyString;
 
-    const CatalogItem& d = ListIndexToCatalogItem(item);
+    const CatalogItem& d = ListIndexToCatalogItem((int)item);
 
     switch (column)
     {
@@ -478,7 +478,7 @@ wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
     if (m_catalog == NULL)
         return (wxListItemAttr*)&m_attrNormal[idx];
 
-    const CatalogItem& d = ListIndexToCatalogItem(item);
+    const CatalogItem& d = ListIndexToCatalogItem((int)item);
 
     if (d.GetValidity() == CatalogItem::Val_Invalid)
         return (wxListItemAttr*)&m_attrInvalid[idx];
@@ -495,7 +495,7 @@ int PoeditListCtrl::OnGetItemImage(long item) const
     if (m_catalog == NULL)
         return IMG_NOTHING;
 
-    const CatalogItem& d = ListIndexToCatalogItem(item);
+    const CatalogItem& d = ListIndexToCatalogItem((int)item);
     int index = IMG_NOTHING;
 
     if (d.IsAutomatic())

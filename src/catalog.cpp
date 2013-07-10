@@ -406,10 +406,10 @@ void Catalog::HeaderData::ParseDict()
     BasePath = GetHeader("X-Poedit-Basepath");
 
     Keywords.Clear();
-    wxString kw = GetHeader("X-Poedit-KeywordsList");
-    if (!kw.empty())
+    wxString kwlist = GetHeader("X-Poedit-KeywordsList");
+    if (!kwlist.empty())
     {
-        wxStringTokenizer tkn(kw, ";");
+        wxStringTokenizer tkn(kwlist, ";");
         while (tkn.HasMoreTokens())
             Keywords.Add(tkn.GetNextToken());
     }
@@ -445,7 +445,7 @@ void Catalog::HeaderData::ParseDict()
         while (tkn.HasMoreTokens() && i<BOOKMARK_LAST)
         {
             tkn.GetNextToken().ToLong(&val);
-            Bookmarks[i] = val;
+            Bookmarks[i] = (int)val;
             i++;
         }
     }
@@ -611,7 +611,7 @@ bool CatalogParser::Parse()
         else if (ReadParam(line, _T("msgid \""), dummy))
         {
             mstr = dummy.RemoveLast();
-            mlinenum = m_textFile->GetCurrentLine() + 1;
+            mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
             while (!(line = ReadTextLine(m_textFile)).empty())
             {
                 if (line[0u] == _T('\t'))
@@ -628,7 +628,7 @@ bool CatalogParser::Parse()
         {
             msgid_plural = dummy.RemoveLast();
             has_plural = true;
-            mlinenum = m_textFile->GetCurrentLine() + 1;
+            mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
             while (!(line = ReadTextLine(m_textFile)).empty())
             {
                 if (line[0u] == _T('\t'))
@@ -738,7 +738,7 @@ bool CatalogParser::Parse()
         {
             wxArrayString deletedLines;
             deletedLines.Add(line);
-            mlinenum = m_textFile->GetCurrentLine() + 1;
+            mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
             while (!(line = ReadTextLine(m_textFile)).empty())
             {
                 // if line does not start with "#~" anymore, stop reading
@@ -956,7 +956,7 @@ Catalog::Catalog(const wxString& po_file, int flags)
 static wxString GetCurrentTimeRFC822()
 {
     wxDateTime timenow = wxDateTime::Now();
-    int offs = wxDateTime::TimeZone(wxDateTime::Local).GetOffset();
+    int offs = (int)wxDateTime::TimeZone(wxDateTime::Local).GetOffset();
     wxString s;
     s.Printf("%s%s%02i%02i",
              timenow.Format("%Y-%m-%d %H:%M").c_str(),
@@ -1233,7 +1233,7 @@ wxString FormatStringForFile(const wxString& text)
 {
     wxString s;
     unsigned n_cnt = 0;
-    int len = text.length();
+    size_t len = text.length();
 
     s.Alloc(len + 16);
     // Scan the string up to len-2 because we don't want to account for the
@@ -1242,7 +1242,7 @@ wxString FormatStringForFile(const wxString& text)
     //                      ^
     //                      |
     //                      \--- = len-2
-    int i;
+    size_t i;
     for (i = 0; i < len-2; i++)
     {
         if (text[i] == _T('\\') && text[i+1] == _T('n'))
@@ -1333,7 +1333,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
             // validation errors, because if we do, the cause is likely the
             // same.
             if ( !validation_errors )
+            {
                 wxLogWarning(_("There was a problem formatting the file nicely (but it was saved all right)."));
+            }
         }
     }
 
@@ -1387,10 +1389,10 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
     SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
 
-    for (unsigned i = 0; i < m_items.size(); i++)
+    for (unsigned itemIdx = 0; itemIdx < m_items.size(); itemIdx++)
     {
-        CatalogItem& data = m_items[i];
-        data.SetLineNumber(f.GetLineCount()+1);
+        CatalogItem& data = m_items[itemIdx];
+        data.SetLineNumber(int(f.GetLineCount()+1));
         SaveMultiLines(f, data.GetComment());
         for (unsigned i = 0; i < data.GetAutoComments().GetCount(); i++)
         {
@@ -1433,13 +1435,13 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
     }
 
     // Write back deleted items in the file so that they're not lost
-    for (unsigned i = 0; i < m_deletedItems.size(); i++)
+    for (unsigned itemIdx = 0; itemIdx < m_deletedItems.size(); itemIdx++)
     {
-        if ( i != 0 )
+        if ( itemIdx != 0 )
             f.AddLine(wxEmptyString);
 
-        CatalogDeletedData& deletedItem = m_deletedItems[i];
-        deletedItem.SetLineNumber(f.GetLineCount()+1);
+        CatalogDeletedData& deletedItem = m_deletedItems[itemIdx];
+        deletedItem.SetLineNumber(int(f.GetLineCount()+1));
         SaveMultiLines(f, deletedItem.GetComment());
         for (unsigned i = 0; i < deletedItem.GetAutoComments().GetCount(); i++)
             f.AddLine("#. " + deletedItem.GetAutoComments()[i]);
@@ -1516,7 +1518,7 @@ int Catalog::DoValidate(const wxString& po_file)
         wxLogError(i->text);
     }
 
-    return err.size();
+    return (int)err.size();
 }
 
 
@@ -1730,7 +1732,7 @@ static unsigned GetCountFromPluralFormsHeader(const Catalog::HeaderData& header)
         {
             long val;
             if (form.AfterFirst(_T('=')).ToLong(&val))
-                return val;
+                return (unsigned)val;
         }
     }
 
@@ -1793,7 +1795,8 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
     if (untranslated) *untranslated = 0;
     if (unfinished) *unfinished = 0;
 
-    for (size_t i = 0; i < GetCount(); i++)
+    int cnt = GetCount();
+    for (int i = 0; i < cnt; i++)
     {
         bool ok = true;
 
@@ -1931,12 +1934,12 @@ wxArrayString CatalogItem::GetReferences() const
         line = line.Strip(wxString::both);
         while (!line.empty())
         {
-            size_t i = 0;
-            while (i < line.length() && line[i] != _T(':')) { i++; }
-            while (i < line.length() && !wxIsspace(line[i])) { i++; }
+            size_t idx = 0;
+            while (idx < line.length() && line[idx] != _T(':')) { idx++; }
+            while (idx < line.length() && !wxIsspace(line[idx])) { idx++; }
 
-            refs.push_back(line.Left(i));
-            line = line.Mid(i).Strip(wxString::both);
+            refs.push_back(line.Left(idx));
+            line = line.Mid(idx).Strip(wxString::both);
         }
     }
 
