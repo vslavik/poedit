@@ -30,6 +30,7 @@ extern "C" {
 #define EXTENSIONS_GLADE \
   { "glade",     "glade"    },                                          \
   { "glade2",    "glade"    },                                          \
+  { "ui",        "glade"    },                                          \
 
 #define SCANNERS_GLADE \
   { "glade",            extract_glade, NULL, NULL, NULL },              \

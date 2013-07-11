@@ -31,15 +31,16 @@ if test -n "$missing_locale"; then
   exit 77
 fi
 
-tmpfiles="$tmpfiles de_DE fr_FR"
-test -d de_DE || mkdir de_DE
-test -d de_DE/LC_MESSAGES || mkdir de_DE/LC_MESSAGES
-test -d fr_FR || mkdir fr_FR
-test -d fr_FR/LC_MESSAGES || mkdir fr_FR/LC_MESSAGES
+tmpfiles="$tmpfiles gt-6"
+test -d gt-6 || mkdir gt-6
+test -d gt-6/de_DE || mkdir gt-6/de_DE
+test -d gt-6/de_DE/LC_MESSAGES || mkdir gt-6/de_DE/LC_MESSAGES
+test -d gt-6/fr_FR || mkdir gt-6/fr_FR
+test -d gt-6/fr_FR/LC_MESSAGES || mkdir gt-6/fr_FR/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o de_DE/LC_MESSAGES/tstthread.mo ${top_srcdir}/tests/gettext-6-1.po
-${MSGFMT} -o fr_FR/LC_MESSAGES/tstthread.mo ${top_srcdir}/tests/gettext-6-2.po
+${MSGFMT} -o gt-6/de_DE/LC_MESSAGES/tstthread.mo ${top_srcdir}/tests/gettext-6-1.po
+${MSGFMT} -o gt-6/fr_FR/LC_MESSAGES/tstthread.mo ${top_srcdir}/tests/gettext-6-2.po
 
 tmpfiles="$tmpfiles gt-6.ok"
 cat <<EOF > gt-6.ok

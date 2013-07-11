@@ -8,7 +8,7 @@ trap 'rm -fr $tmpfiles' 1 2 3 15
 tmpfiles="$tmpfiles prog.el"
 cat <<\EOF > prog.el
 (textdomain "prog")
-(bindtextdomain "prog" ".")
+(bindtextdomain "prog" "l-elisp")
 
 (format standard-output "%s\n" (_ "'Your command, please?', asked the waiter."))
 
@@ -16,15 +16,15 @@ cat <<\EOF > prog.el
         (format nil (_ "%s is replaced by %s.") "FF" "EUR"))
 EOF
 
-tmpfiles="$tmpfiles prog.tmp prog.pot"
+tmpfiles="$tmpfiles l-elisp-prog.tmp l-elisp-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location prog.el
+${XGETTEXT} -o l-elisp-prog.tmp --omit-header --no-location prog.el
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+LC_ALL=C tr -d '\r' < l-elisp-prog.tmp > l-elisp-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles prog.ok"
-cat <<EOF > prog.ok
+tmpfiles="$tmpfiles l-elisp-prog.ok"
+cat <<EOF > l-elisp-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -34,10 +34,10 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} l-elisp-prog.ok l-elisp-prog.pot || exit 1
 
-tmpfiles="$tmpfiles fr.po"
-cat <<\EOF > fr.po
+tmpfiles="$tmpfiles l-elisp-fr.po"
+cat <<\EOF > l-elisp-fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -52,22 +52,23 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+tmpfiles="$tmpfiles l-elisp-fr.po.tmp l-elisp-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+${MSGMERGE} -q -o l-elisp-fr.po.tmp l-elisp-fr.po l-elisp-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+LC_ALL=C tr -d '\r' < l-elisp-fr.po.tmp > l-elisp-fr.po.new
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} l-elisp-fr.po l-elisp-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles fr"
-test -d fr || mkdir fr
-test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+tmpfiles="$tmpfiles l-elisp"
+test -d l-elisp || mkdir l-elisp
+test -d l-elisp/fr || mkdir l-elisp/fr
+test -d l-elisp/fr/LC_MESSAGES || mkdir l-elisp/fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
+${MSGFMT} -o l-elisp/fr/LC_MESSAGES/prog.mo l-elisp-fr.po
 
 rm -fr $tmpfiles
 

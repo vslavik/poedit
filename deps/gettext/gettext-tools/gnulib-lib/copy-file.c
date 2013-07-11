@@ -37,6 +37,7 @@
 #endif
 
 #include "error.h"
+#include "ignore-value.h"
 #include "safe-read.h"
 #include "full-write.h"
 #include "acl.h"
@@ -140,7 +141,7 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
 
 #if HAVE_CHOWN
   /* Preserve the owner and group.  */
-  chown (dest_filename, statbuf.st_uid, statbuf.st_gid);
+  ignore_value (chown (dest_filename, statbuf.st_uid, statbuf.st_gid));
 #endif
 
   /* Preserve the access permissions.  */

@@ -14,18 +14,18 @@ trap 'rm -fr $tmpfiles' 1 2 3 15
 
 # Test whether we can execute Tcl programs and Tcl's fconfigure command
 # understands the -encoding option (it does since approximately Tcl 8.1).
-tmpfiles="$tmpfiles version.tcl"
-cat <<\EOF > version.tcl
+tmpfiles="$tmpfiles mu-tcl-1-version.tcl"
+cat <<\EOF > mu-tcl-1-version.tcl
 fconfigure stdout -encoding utf-8
 puts $tcl_version
 EOF
-(tclsh version.tcl) >/dev/null 2>/dev/null \
+(tclsh mu-tcl-1-version.tcl) >/dev/null 2>/dev/null \
   || { echo "Skipping test: tclsh not found or Tcl too old"
        rm -fr $tmpfiles; exit 77
      }
 
-tmpfiles="$tmpfiles fr.po"
-cat <<\EOF > fr.po
+tmpfiles="$tmpfiles mu-tcl-1-fr.po"
+cat <<\EOF > mu-tcl-1-fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
 
@@ -40,19 +40,19 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles msgs"
-test -d msgs || mkdir msgs
+tmpfiles="$tmpfiles mu-tcl-1-msgs"
+test -d mu-tcl-1-msgs || mkdir mu-tcl-1-msgs
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --tcl -d msgs -l fr fr.po || exit 1
+${MSGFMT} --tcl -d mu-tcl-1-msgs -l fr mu-tcl-1-fr.po || exit 1
 
-tmpfiles="$tmpfiles prog.out"
+tmpfiles="$tmpfiles mu-tcl-1-prog.out"
 : ${MSGUNFMT=msgunfmt}
 GETTEXTDATADIR=${top_srcdir}/src \
-${MSGUNFMT} --tcl -d msgs -l fr -o prog.out || exit 1
+${MSGUNFMT} --tcl -d mu-tcl-1-msgs -l fr -o mu-tcl-1-prog.out || exit 1
 
-tmpfiles="$tmpfiles prog.ok"
-cat <<\EOF > prog.ok
+tmpfiles="$tmpfiles mu-tcl-1-prog.ok"
+cat <<\EOF > mu-tcl-1-prog.ok
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
@@ -63,7 +63,7 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 : ${DIFF=diff}
-${DIFF} prog.ok prog.out || exit 1
+${DIFF} mu-tcl-1-prog.ok mu-tcl-1-prog.out || exit 1
 
 rm -fr $tmpfiles
 

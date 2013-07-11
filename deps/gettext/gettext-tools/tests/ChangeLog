@@ -1,3 +1,193 @@
+2013-07-07  Daiki Ueno  <ueno@gnu.org>
+
+	* lang-javascript: Fix gjs module checks.
+
+2013-06-27  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-python-1: Test non-literal string concatenation with
+	'+' to the test script.
+
+2013-06-25  Daiki Ueno  <ueno@gnu.org>
+
+	Fix handling of \u escape sequences in Tcl.
+	* Makefile.am (TESTS): Add xgettext-tcl-4.
+	* xgettext-tcl-4: New test for escape sequences.
+
+2013-06-17  Daiki Ueno  <ueno@gnu.org>
+
+	* format-python-brace-1: No need to pass
+	--flag=gettext:1:pass-python-brace-format to xgettext.
+
+2013-06-17  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am: Rename xgettext-gtkbuilder-* to
+	xgettext-glade-* as the current GtkBuilder support is implemented
+	as a variant of Glade.
+	(TESTS): Remove xgettext-gtkbuilder-[12] and add
+	xgettext-glade-[67].
+	(EXTRA_DIST): Remove xgettext-gtkbuilder-empty.ui.
+	* xgettext-glade-6: Rename from xgettext-gtkbuilder-1.
+	* xgettext-glade-7: Rename from xgettext-gtkbuilder-2.
+
+2013-06-13  Miguel Angel Arruga Vivas  <rosen644835@gmail.com>
+
+	Tests for GtkBuilder support.
+	* Makefile.am (TESTS): New tests xgettext-gtkbuilder{1,2}.
+	(EXTRA_DIST): Added file 'xgettext-gtkbuilder-empty.ui'.
+	* xgettext-gtkbuilder-empty.ui: New file for testing.
+	* xgettext-gtkbuilder-1: New test.
+	* xgettext-gtkbuilder-2: Likewise.
+
+2013-06-06  Daiki Ueno  <ueno@gnu.org>
+
+	* lang-javascript: Check if gjs gettext and format modules are
+	available.
+
+2013-06-04  Daiki Ueno  <ueno@gnu.org>
+
+	Support for Vala.
+	* xgettext-vala-1: New file.
+	* lang-vala: New file.
+	* Makefile.am (TESTS): Add them.
+
+2013-05-29  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
+
+	* Makefile.am (TESTS_ENVIRONMENT): Remove $(SHELL).
+	(LOG_COMPILER): Define to $(SHELL).
+
+2013-05-29  Daiki Ueno  <ueno@gnu.org>
+
+	Avoid temp file name collisions in test scripts.
+	* format-c-3: Use distinct temporary file names.
+	* format-c-4: Likewise.
+	* lang-c: Likewise.
+	* lang-c++: Likewise.
+	* gettext-1: Likewise.
+	* gettext-2: Likewise.
+	* gettext-3: Likewise.
+	* gettext-4: Likewise.
+	* gettext-5: Likewise.
+	* gettext-6: Likewise.
+	* gettext-7: Likewise.
+	* lang-bash: Likewise.
+	* lang-c: Likewise.
+	* lang-c++: Likewise.
+	* lang-clisp: Likewise.
+	* lang-csharp: Likewise.
+	* lang-elisp: Likewise.
+	* lang-gawk: Likewise.
+	* lang-guile: Likewise.
+	* lang-java: Likewise.
+	* lang-javascript: Likewise.
+	* lang-librep: Likewise.
+	* lang-lua: Likewise.
+	* lang-objc: Likewise.
+	* lang-pascal: Likewise.
+	* lang-perl-1: Likewise.
+	* lang-perl-2: Likewise.
+	* lang-php: Likewise.
+	* lang-po: Likewise.
+	* lang-python-1: Likewise.
+	* lang-python-2: Likewise.
+	* lang-rst: Likewise.
+	* lang-sh: Likewise.
+	* lang-smalltalk: Likewise.
+	* lang-tcl: Likewise.
+	* lang-ycp: Likewise.
+	* msgfmt-1: Likewise.
+	* msgfmt-17: Likewise.
+	* msgfmt-2: Likewise.
+	* msgfmt-properties-1: Likewise.
+	* msgunfmt-csharp-1: Likewise.
+	* msgunfmt-java-1: Likewise.
+	* msgunfmt-tcl-1: Likewise.
+	* plural-1: Likewise.
+	* plural-2: Likewise.
+	* xgettext-glade-1: Likewise.
+	* xgettext-glade-2: Likewise.
+	* xgettext-glade-3: Likewise.
+	* xgettext-glade-4: Likewise.
+	* xgettext-glade-5: Likewise.
+	* xgettext-python-4: Likewise.
+	* xgettext-stringtable-1: Likewise.
+	* format-c-3-prg.c: Use distinct message catalog directory.
+	* format-c-4-prg.c: Likewise.
+	* gettext-3-prg.c: Likewise.
+	* gettext-4-prg.c: Likewise.
+	* gettext-5-prg.c: Likewise.
+	* gettext-6-prg.c: Likewise.
+	* gettext-7-prg.c: Likewise.
+	* plural-1-prg.c: Likewise.
+
+2013-05-12  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-javascript-4: Add a test for normal escape sequences.
+
+2013-05-12  Andreas Stricker <astricker@futurelab.ch>
+
+	Improve JavaScript scanner tests.
+	* xgettext-javascript-2: Add tests for backslash escapes and
+	_(...) call in regular expressions.
+	* xgettext-javascript-3: Use distinct temporary file names.
+	* xgettext-javascript-4: Likewise.
+	* xgettext-javascript-5: Add tests for unbalanced double-quotes in
+	regular expressions and strings.
+	* Makefile.am (TESTS): Add xgettext-javascript-5.
+
+2013-05-02  Daiki Ueno  <ueno@gnu.org>
+
+	* format-python-brace-2: Fix test for added argument.
+
+2013-04-26  Daiki Ueno  <ueno@gnu.org>
+
+	Support for Python brace format.
+	* format-python-brace-1: New file.
+	* format-python-brace-2: New file.
+	* Makefile.am (TESTS): Add them.
+
+2013-04-22  Daiki Ueno  <ueno@gnu.org>
+
+	Support explicit string concatenation in Python.
+	* xgettext-python-1: Add test for explicit string concatenation.
+
+2013-04-17  Andreas Stricker  <astricker@futurelab.ch>
+
+	Support for JavaScript.
+	* format-javascript-1: New file.
+	* format-javascript-2: New file.
+	* xgettext-javascript-1: New file.
+	* xgettext-javascript-2: New file.
+	* xgettext-javascript-3: New file.
+	* xgettext-javascript-4: New file.
+	* lang-javascript: New file.
+	* Makefile.am (TESTS): Add them.
+
+2013-04-16  Ľubomír Remák  <lubomirr@lubomirr.eu>
+
+	Support for escape sequences added in Lua 5.2.
+	* xgettext-lua-1: New test cases for \x and \z escape sequences.
+
+2013-04-11  Ľubomír Remák  <lubomirr@lubomirr.eu>
+
+	Support for Lua.
+	* format-lua-1: New file.
+	* format-lua-2: New file.
+	* xgettext-lua-1: New file.
+	* xgettext-lua-2: New file.
+	* lang-lua: New file.
+	* Makefile.am (TESTS): Add them.
+
+2013-03-03  Miguel Angel Arruga Vivas  <rosen644835@gmail.com>
+
+	Add a test case for atkproperty tag in Glade2 files.
+	* xgettext-glade-4: New test case for atkproperty.
+
+2013-03-14  Miguel Angel Arruga Vivas  <rosen644835@gmail.com>
+
+	Test msgctxt extraction on glade files.
+	* Makefile.am (TESTS): Add xgettext-glade-5.
+	* xgettext-glade-5: New test for msgctxt Glade2 extraction.
+
 2012-12-25  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext-0.18.2 released.

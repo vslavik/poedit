@@ -1,3 +1,13 @@
+2013-03-07  Daiki Ueno  <ueno@gnu.org>
+
+	* setlocale.c (libintl_setlocale): Signal a change of the loaded
+	catalogs by incrementing _nl_msg_cat_cntr.
+	Reported by Guido Flohr at <https://savannah.gnu.org/bugs/?38162>.
+
+2013-05-30  Thomas Petazzoni <thomas.petazzoni@free-electrons.com>  (tiny change)
+
+	* Makefile.in (SHELL): Use @SHELL@ instead of /bin/sh.
+
 2013-03-05  Daiki Ueno  <ueno@gnu.org>
 
 	* verify.h: Update copyright year.

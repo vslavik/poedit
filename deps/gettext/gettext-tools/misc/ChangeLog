@@ -1,3 +1,59 @@
+2013-05-02  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in (func_trace): New function; use it all in places
+	where Autoconf macro trace is needed.
+	(func_version): Bump copyright year.
+	* gettextize.in (func_version): Bump copyright year.
+
+2013-03-05  Daiki Ueno  <ueno@gnu.org>
+
+	* po-mode.el (po-font-lock-keywords): Properly highlight C format
+	strings with parameter positions.
+	Reported at
+	<https://savannah.gnu.org/bugs/index.php?33552>.
+
+2013-03-05  Ævar Arnfjörð Bjarmason  <avarab@gmail.com>  (tiny change)
+
+	* po-mode.el (po-auto-update-file-header): New user option.
+	(po-check-file-header): Respect 'po-auto-update-file-header'.
+
+2013-03-04  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in: Handle macro directories specified in configure.ac.
+	Reported by Pavel Raiskup in
+	<http://lists.gnu.org/archive/html/bug-gettext/2013-02/msg00017.html>.
+
+2013-03-04  Daiki Ueno  <ueno@gnu.org>
+
+	* gettextize.in: Use autoconf trace to detect auxdir and m4dir.
+
+2013-03-04  Daiki Ueno  <ueno@gnu.org>
+
+	* gettextize.in: Don't add redundant "-I m4" if
+	AC_CONFIG_MACRO_DIR{,S} is not specified.
+
+2013-03-01  Daiki Ueno  <ueno@gnu.org>
+
+	* gettextize.in: Handle macro directories specified in configure.ac.
+	Reported by Pavel Raiskup in
+	<http://lists.gnu.org/archive/html/bug-gettext/2013-02/msg00017.html>.
+
+2013-02-28  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in (gettext_dir): Substitute PATH_SEPARATOR at
+	configure time.
+	* gettextize.in (gettext_dir): Substitute PATH_SEPARATOR at
+	configure time.
+	Suggested by Stefano Lattarini in
+	<http://lists.gnu.org/archive/html/bug-gettext/2012-12/msg00066.html>.
+
+2013-01-07  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in: Extract version number from configure.ac in a more
+	robust way.
+	Reported by Tom G. Christensen in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-01/msg00053.html>.
+
 2012-12-25  Daiki Ueno  <ueno@gnu.org>
 
 	* autopoint.in: Update for 0.18.2.

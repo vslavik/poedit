@@ -118,7 +118,7 @@ TEXI2DVI = texi2dvi $(TEXINCLUDES)
 # The install-dvi target is already defined by automake.
 
 installdirs-dvi:
-	$(mkdir_p) $(DESTDIR)$(dvidir)
+	$(MKDIR_P) $(DESTDIR)$(dvidir)
 
 uninstall-dvi:
 	$(RM) $(DESTDIR)$(dvidir)/gettext.dvi
@@ -149,7 +149,7 @@ gettext.ps: gettext.dvi
 # The install-ps target is already defined by automake.
 
 installdirs-ps:
-	$(mkdir_p) $(DESTDIR)$(psdir)
+	$(MKDIR_P) $(DESTDIR)$(psdir)
 
 uninstall-ps:
 	$(RM) $(DESTDIR)$(psdir)/gettext.ps
@@ -164,7 +164,7 @@ TEXI2PDF = @TEXI2PDF@ $(TEXINCLUDES)
 # The install-pdf target is already defined by automake.
 
 installdirs-pdf:
-	$(mkdir_p) $(DESTDIR)$(pdfdir)
+	$(MKDIR_P) $(DESTDIR)$(pdfdir)
 
 uninstall-pdf:
 	$(RM) $(DESTDIR)$(pdfdir)/gettext.pdf
@@ -192,17 +192,17 @@ gettext_toc.html: gettext.texi version.texi $(gettext_TEXINFOS)
 	esac
 
 install-html-monolithic: gettext.html
-	$(mkdir_p) $(DESTDIR)$(htmldir)
+	$(MKDIR_P) $(DESTDIR)$(htmldir)
 	$(INSTALL_DATA) `if test -f gettext.html; then echo .; else echo $(srcdir); fi`/gettext.html $(DESTDIR)$(htmldir)/gettext.html
 
 install-html-split: gettext_toc.html
-	$(mkdir_p) $(DESTDIR)$(htmldir)
+	$(MKDIR_P) $(DESTDIR)$(htmldir)
 	for file in `if test -f gettext_toc.html; then echo .; else echo $(srcdir); fi`/gettext_*.html; do \
 	  $(INSTALL_DATA) $$file $(DESTDIR)$(htmldir)/`basename $$file`; \
 	done
 
 installdirs-html:
-	$(mkdir_p) $(DESTDIR)$(htmldir)
+	$(MKDIR_P) $(DESTDIR)$(htmldir)
 
 uninstall-html-monolithic:
 	$(RM) $(DESTDIR)$(htmldir)/gettext.html
@@ -211,14 +211,14 @@ uninstall-html-split:
 	$(RM) $(DESTDIR)$(htmldir)/gettext_*.html
 
 dist-html-monolithic:
-	$(mkdir_p) $(distdir)/
+	$(MKDIR_P) $(distdir)/
 	file=gettext.html; \
 	if test -f $$file; then d=.; else d=$(srcdir); fi; \
 	cp -p $$d/$$file $(distdir)/$$file || exit 1
 
 # We would like to put gettext_*.html into EXTRA_DIST, but it doesn't work.
 dist-html-split: gettext_toc.html
-	$(mkdir_p) $(distdir)/
+	$(MKDIR_P) $(distdir)/
 	file=gettext_toc.html; \
 	if test -f $$file; then d=.; else d=$(srcdir); fi; \
 	for file in `cd $$d && echo gettext_*.html`; do \

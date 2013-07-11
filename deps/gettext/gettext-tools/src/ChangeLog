@@ -1,3 +1,206 @@
+2013-06-27  Daiki Ueno  <ueno@gnu.org>
+
+	* x-python.c (phase5_pushback): Increment size to 2.
+
+2013-06-25  Daiki Ueno  <ueno@gnu.org>
+
+	Fix handling of \u escape sequences in Tcl.
+	* x-tcl.c (do_getc_escaped): Fix handling of \u.
+	Reported by Guido Berhoerster in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-06/msg00022.html>.
+
+2013-06-17  Daiki Ueno  <ueno@gnu.org>
+
+	* x-python.c (init_flag_table_python): Enable python-brace-format
+	by default.
+
+2013-06-17  Daiki Ueno  <ueno@gnu.org>
+
+	* x-glade.c (start_element_null): New function.
+	(end_element_null): New function.
+	(element_parser_null): New variable.
+	(start_element_handler): Use element_parser_null if the top-level
+	element does not indicate a valid Glade file.
+	(do_extract_glade): Initialize element_parser to
+	element_parser_null rather than NULL.
+
+2013-06-13  Miguel Angel Arruga Vivas  <rosen644835@gmail.com>
+            Daiki Ueno  <ueno@gnu.org>
+
+	Support for GtkBuilder file format in the Glade scanner.
+	* x-glade.h (EXTENSIONS_GLADE): Recognize .ui.
+	* x-glade.c (element_parser): New struct.
+	(start_element_glade1): New function split from start_element_handler.
+	(end_element_glade1): New function split from end_element_handler.
+	(start_element_glade2): New function split from start_element_handler.
+	(end_element_glade2): New function split from end_element_handler.
+	(start_element_gtkbuilder): New function.
+	(end_element_gtkbuilder): New function.
+	(element_parser_glade1): New variable.
+	(element_parser_glade2): New variable.
+	(element_parser_gtkbuilder): New variable.
+	(start_element_handler): Delegate the actual parsing logic to
+	specific element_parser.
+	(end_element_handler): Likewise.
+	Thanks to Miguel Ángel Arruga Vivas for the initial implementation
+	and the discussion in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-03/msg00074.html>
+	footnote 2.
+
+2013-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am: Use $(MKDIR_P) instead of $(mkdir_p).
+	Suggested by Stefano Lattarini in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-04/msg00044.html>.
+
+2013-06-04  Daiki Ueno  <ueno@gnu.org>
+
+	Support for Vala.
+	* x-vala.h: New file.
+	* x-vala.c: New file.
+	* xgettext.c: Include x-vala.h.
+	(flag_table_vala): New variable.
+	(main): Invoke init_flag_table_vala, x_vala_extract_all,
+	x_vala_keyword.
+	(usage): Mention Vala source language.
+	(language_to_extractor): Add Vala rule.
+	(extension_to_language): Add Vala rule.
+	* Makefile.am (noinst_HEADERS): Add x-vala.h.
+	(xgettext_SOURCES): Add x-vala.c.
+	* FILES: Update.
+
+2013-05-21  Daiki Ueno  <ueno@gnu.org>
+
+	* x-javascript.c (phase7_getuc): Treat non-legitimate character
+	escape sequences more strictly.
+
+2013-05-20  Pavel Kharitonov  <ineiev@gnu.org>  (tiny change)
+
+	Add --previous option to msgattrib.
+	* msgattrib.c (long_options, main, process_message_list):
+	(usage): Add --previous option.
+
+2013-05-12  Daiki Ueno  <ueno@gnu.org>
+
+	Fix end-of-string handling in JavaScript scanner.
+	* x-javascript.c (phase7_getuc): Remove unused BACKSLASH_COUNTER
+	argument; all callers changed.
+	Reported by Andreas Stricker in
+	<http://lists.gnu.org/archive/html/bug-gettext/2013-04/msg00051.html>.
+
+2013-05-03  Daiki Ueno  <ueno@gnu.org>
+
+	* user-email.sh.in (lowercase_sed): Don't use non-portable
+	character escape in sed 's' command.
+	Reported by Ben Fox-Moore in
+	<http://lists.gnu.org/archive/html/bug-gettext/2013-05/msg00003.html>
+	and thanks to Ineiev for the suggestion.
+
+2013-04-26  Daiki Ueno  <ueno@gnu.org>
+
+	Support for Python brace format.
+	* message.h (format_type): New enum value 'format_python_brace.
+	(NFORMATS): Increment.
+	* message.c (format_language): Add format_python_brace entry.
+	(format_language_pretty): Likewise.
+	* format.h (formatstring_python_brace): New declaration.
+	* format-python-brace.c: New file.
+	* format.c (formatstring_parsers): Add formatstring_python_brace.
+	* x-python.h (SCANNERS_PYTHON): Refar to formatstring_python_brace.
+	* xgettext.c (xgettext_record_flag): Handle format_python_brace.
+	* FILES: Update.
+
+2013-04-22  Daiki Ueno  <ueno@gnu.org>
+
+	Make msgfmt --check-header more reliable.
+	* msgl-check.c (check_header_entry): Don't use c_strstr to parse
+	message header.
+
+2013-04-22  Daiki Ueno  <ueno@gnu.org>
+
+	Support CR/LF line terminators in Python sources even on Unix.
+	* x-python.c (phase0_getc, phase0_ungetc): New functions.
+	(phase1_getc): Use them instead of calling getc/ungetc directly.
+
+2013-04-22  Daiki Ueno  <ueno@gnu.org>
+
+	Support explicit string concatenation in Python.
+	* x-python.c (enum token_type_ty): New enumeration item
+	token_type_plus.
+	(free_token): New function.
+	(phase5_get): Recognize token_type_plus.
+	(x_python_lex): Handle string concatenation with '+'.
+	(extract_balanced): Handle token_type_plus.
+
+2013-04-18  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext.c (usage): Wrap long lines in --help output.
+
+2013-04-17  Andreas Stricker  <astricker@futurelab.ch>
+
+	Support for JavaScript.
+	* message.h (format_type): New enum value 'format_javascript'.
+	(NFORMATS): Increment.
+	* message.c (format_language): Add format_javascript entry.
+	(format_language_pretty): Likewise.
+	* format.h (formatstring_javascript): New declaration.
+	* format-javascript.c: New file.
+	* format.c (formatstring_parsers): Add formatstring_javascript.
+	* x-javascript.h: New file.
+	* x-javascript.c: New file.
+	* xgettext.c: Include x-javascript.h.
+	(flag_table_javascript): New variable.
+	(main): Invoke init_flag_table_javascript, x_javascript_extract_all,
+	x_javascript_keyword.
+	(usage): Mention JavaScript source language.
+	(xgettext_record_flag): Handle format_javascript.
+	(language_to_extractor): Add JavaScript rule.
+	(extension_to_language): Add JavaScript rule.
+	* Makefile.am (noinst_HEADERS): Add x-javascript.h.
+	(FORMAT_SOURCE): Add format-javascript.c.
+	(xgettext_SOURCES): Add x-javascript.c.
+	* FILES: Update.
+
+2013-04-16  Ľubomír Remák  <lubomirr@lubomirr.eu>
+
+	Support for escape sequences added in Lua 5.2.
+	* x-lua.c (phase3_get): Add \x and \z escape sequences.
+
+2013-04-11  Ľubomír Remák  <lubomirr@lubomirr.eu>
+
+	Support for Lua.
+	* message.h (format_type): New enum value 'format_lua'.
+	(NFORMATS): Increment.
+	* message.c (format_language): Add format_lua entry.
+	(format_language_pretty): Likewise.
+	* format.h (formatstring_lua): New declaration.
+	* format-lua.c: New file.
+	* format.c (formatstring_parsers): Add formatstring_lua.
+	* x-lua.h: New file.
+	* x-lua.c: New file.
+	* xgettext.c: Include x-lua.h.
+	(flag_table_lua): New variable.
+	(main): Invoke init_flag_table_lua, x_lua_extract_all,
+	x_lua_keyword.
+	(usage): Mention Lua source language.
+	(xgettext_record_flag): Handle format_lua.
+	(language_to_extractor): Add Lua rule.
+	(extension_to_language): Add Lua rule.
+	* Makefile.am (noinst_HEADERS): Add x-lua.h.
+	(FORMAT_SOURCE): Add format-lua.c.
+	(xgettext_SOURCES): Add x-lua.c.
+	* FILES: Update.
+
+2013-03-15  Miguel Ángel Arruga Vivas  <rosen644835@gmail.com>
+            Daiki Ueno  <ueno@gnu.org>
+
+	Extract msgctxt from Glade input files.
+	Reported at <https://savannah.gnu.org/bugs/?34506>
+	* x-glade.c (struct element_state): Add field 'extract_context'.
+	(start_element_handler): Check "context" attribute if the string
+	contains msgctxt.
+	(end_element_handler): Extract msgctxt if extract_context is set.
+
 2013-02-25  Daiki Ueno  <ueno@gnu.org>
 
 	* Makefile.am (libgettextsrc_la_CPPFLAGS): Define to specify Woe32
@@ -7,6 +210,18 @@
 
 	* po-xerror.c: Include error.h for error_message_count.
 	* read-catalog-abstract.c: Likewise.
+
+2013-01-06  Daiki Ueno  <ueno@gnu.org>
+
+	* msgl-fsearch.c (message_fuzzy_index_ty): Don't use float-derived
+	integer SHORT_MSG_MAX to define array.
+	(message_fuzzy_index_alloc): Allocate memory for 'short_messages'
+	field dynamically.
+	(message_fuzzy_index_free): Free it.
+
+2013-01-03  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext.c (construct_header): Fix memory leak.
 
 2012-12-25  Daiki Ueno  <ueno@gnu.org>
 

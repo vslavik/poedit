@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 2.6.1.  */
+/* A Bison parser, made by GNU Bison 2.7.12-4996.  */
 
 /* Bison interface for Yacc-like parsers in C
    
-      Copyright (C) 1984, 1989-1990, 2000-2012 Free Software Foundation, Inc.
+      Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_PO_GRAM_GEN_H
-# define YY_PO_GRAM_GEN_H
+#ifndef YY_YY_PO_GRAM_GEN_H_INCLUDED
+# define YY_YY_PO_GRAM_GEN_H_INCLUDED
 /* Enabling traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -83,7 +83,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
 {
-/* Line 2049 of yacc.c  */
+/* Line 2053 of yacc.c  */
 #line 143 "po-gram-gen.y"
 
   struct { char *string; lex_pos_ty pos; bool obsolete; } string;
@@ -95,7 +95,7 @@ typedef union YYSTYPE
   struct { struct msgstr_def rhs; lex_pos_ty pos; bool obsolete; } rhs;
 
 
-/* Line 2049 of yacc.c  */
+/* Line 2053 of yacc.c  */
 #line 100 "po-gram-gen.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
@@ -119,4 +119,4 @@ int yyparse ();
 #endif
 #endif /* ! YYPARSE_PARAM */
 
-#endif /* !YY_PO_GRAM_GEN_H  */
+#endif /* !YY_YY_PO_GRAM_GEN_H_INCLUDED  */

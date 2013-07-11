@@ -517,7 +517,10 @@ do_getc_escaped ()
           {
             c = phase1_getc ();
             if (c == EOF || !c_isxdigit ((unsigned char) c))
-              break;
+              {
+                phase1_ungetc (c);
+                break;
+              }
 
             if (c >= '0' && c <= '9')
               n = (n << 4) + (c - '0');
@@ -526,7 +529,6 @@ do_getc_escaped ()
             else if (c >= 'a' && c <= 'f')
               n = (n << 4) + (c - 'a' + 10);
           }
-        phase1_ungetc (c);
         return (i > 0 ? n : 'u');
       }
     case '0': case '1': case '2': case '3': case '4':

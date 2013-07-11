@@ -32,12 +32,13 @@ LC_ALL=de_DE.UTF-8 ./testlocale || {
   exit 77
 }
 
-tmpfiles="$tmpfiles de_DE"
-test -d de_DE || mkdir de_DE
-test -d de_DE/LC_MESSAGES || mkdir de_DE/LC_MESSAGES
+tmpfiles="$tmpfiles gt-5"
+test -d gt-5 || mkdir gt-5
+test -d gt-5/de_DE || mkdir gt-5/de_DE
+test -d gt-5/de_DE/LC_MESSAGES || mkdir gt-5/de_DE/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o de_DE/LC_MESSAGES/codeset.mo ${top_srcdir}/tests/gettext-5.po
+${MSGFMT} -o gt-5/de_DE/LC_MESSAGES/codeset.mo ${top_srcdir}/tests/gettext-5.po
 
 ./gettext-5-prg || exit 1
 

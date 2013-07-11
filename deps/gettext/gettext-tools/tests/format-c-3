@@ -22,29 +22,30 @@ EOF
 : ${DIFF=diff}
 ${DIFF} fc3.ok fc3.pot || exit 1
 
-tmpfiles="$tmpfiles de.po"
-cat <<EOF > de.po
+tmpfiles="$tmpfiles fc3-de.po"
+cat <<EOF > fc3-de.po
 #, c-format
 msgid "father of %<PRId8> children"
 msgstr "Vater von %<PRId8> Kindern"
 EOF
 
-tmpfiles="$tmpfiles de"
-test -d de || mkdir de
-test -d de/LC_MESSAGES || mkdir de/LC_MESSAGES
+tmpfiles="$tmpfiles fc3-dir"
+test -d fc3-dir || mkdir fc3-dir
+test -d fc3-dir/de || mkdir fc3-dir/de
+test -d fc3-dir/de/LC_MESSAGES || mkdir fc3-dir/de/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o de/LC_MESSAGES/fc3.mo de.po
+${MSGFMT} -o fc3-dir/de/LC_MESSAGES/fc3.mo fc3-de.po
 
-tmpfiles="$tmpfiles de.po.tmp de.po.un"
+tmpfiles="$tmpfiles fc3-de.po.tmp fc3-de.po.un"
 : ${MSGUNFMT=msgunfmt}
-${MSGUNFMT} -o de.po.tmp de/LC_MESSAGES/fc3.mo
+${MSGUNFMT} -o fc3-de.po.tmp fc3-dir/de/LC_MESSAGES/fc3.mo
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < de.po.tmp > de.po.un
+LC_ALL=C tr -d '\r' < fc3-de.po.tmp > fc3-de.po.un
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 : ${DIFF=diff}
-${DIFF} de.po de.po.un || exit 1
+${DIFF} fc3-de.po fc3-de.po.un || exit 1
 
 LANGUAGE= ./fc3 de_DE
 result=$?

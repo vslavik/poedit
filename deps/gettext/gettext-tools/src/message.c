@@ -38,6 +38,7 @@ const char *const format_language[NFORMATS] =
   /* format_objc */             "objc",
   /* format_sh */               "sh",
   /* format_python */           "python",
+  /* format_python_brace */     "python-brace",
   /* format_lisp */             "lisp",
   /* format_elisp */            "elisp",
   /* format_librep */           "librep",
@@ -57,7 +58,9 @@ const char *const format_language[NFORMATS] =
   /* format_qt */               "qt",
   /* format_qt_plursl */        "qt-plural",
   /* format_kde */              "kde",
-  /* format_boost */            "boost"
+  /* format_boost */            "boost",
+  /* format_lua */              "lua",
+  /* format_javascript */       "javascript"
 };
 
 const char *const format_language_pretty[NFORMATS] =
@@ -66,6 +69,7 @@ const char *const format_language_pretty[NFORMATS] =
   /* format_objc */             "Objective C",
   /* format_sh */               "Shell",
   /* format_python */           "Python",
+  /* format_python_brace */     "Python brace",
   /* format_lisp */             "Lisp",
   /* format_elisp */            "Emacs Lisp",
   /* format_librep */           "librep",
@@ -85,7 +89,9 @@ const char *const format_language_pretty[NFORMATS] =
   /* format_qt */               "Qt",
   /* format_qt_plural */        "Qt plural",
   /* format_kde */              "KDE",
-  /* format_boost */            "Boost"
+  /* format_boost */            "Boost",
+  /* format_lua */              "Lua",
+  /* format_javascript */       "JavaScript"
 };
 
 

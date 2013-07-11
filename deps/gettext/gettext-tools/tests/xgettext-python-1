@@ -25,6 +25,10 @@ _(ur"abc\
 
 # This will not be extracted.
 _(CATEGORIES["default"]["name"]);
+
+# string concatenation
+_("abc" "def" + "ghi"
+"jkl" + mno)
 EOF
 
 tmpfiles="$tmpfiles xg-py-1.err xg-py-1.tmp xg-py-1.pot"
@@ -79,6 +83,10 @@ msgid ""
 "abc\\\n"
 "\\\\def\\'ghi\\\"jkl\\a\\b\\f\\n\\r\\t\\v x\\040x\\x7eył\\U00010123\\N{LATIN "
 "SMALL LETTER Z}"
+msgstr ""
+
+#. string concatenation
+msgid "abcdefghijkl"
 msgstr ""
 EOF
 

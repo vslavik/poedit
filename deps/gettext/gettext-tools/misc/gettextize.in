@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 1995-1998, 2000-2010 Free Software Foundation, Inc.
+# Copyright (C) 1995-1998, 2000-2013 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ version=@VERSION@
 prefix="@prefix@"
 datarootdir="@datarootdir@"
 gettext_dir="@datadir@/gettext"
+
+autom4te="autom4te --no-cache --language=Autoconf-without-aclocal-m4"
 
 # func_tmpdir
 # creates a temporary directory.
@@ -69,18 +71,7 @@ func_find_curr_installdir ()
   case "$curr_executable" in
     */* | *\\*) ;;
     *) # Need to look in the PATH.
-      if test "${PATH_SEPARATOR+set}" != set; then
-        func_tmpdir
-        { echo "#! /bin/sh"; echo "exit 0"; } > "$tmp"/conf.sh
-        chmod +x "$tmp"/conf.sh
-        if (PATH="/nonexistent;$tmp"; conf.sh) >/dev/null 2>&1; then
-          PATH_SEPARATOR=';'
-        else
-          PATH_SEPARATOR=:
-        fi
-        rm -rf "$tmp"
-      fi
-      save_IFS="$IFS"; IFS="$PATH_SEPARATOR"
+      save_IFS="$IFS"; IFS="${PATH_SEPARATOR='@PATH_SEPARATOR@'}"
       for dir in $PATH; do
         IFS="$save_IFS"
         test -z "$dir" && dir=.
@@ -174,7 +165,7 @@ Report bugs to <bug-gnu-gettext@gnu.org>."
 func_version ()
 {
   echo "$progname (GNU $package) $version"
-  echo "Copyright (C) 1995-1998, 2000-2010 Free Software Foundation, Inc.
+  echo "Copyright (C) 1995-1998, 2000-2013 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law."
@@ -320,10 +311,20 @@ if test $force -eq 0; then
 fi
 
 # Check in which directory config.rpath etc. belong.
-auxdir=`cat "$configure_in" | grep '^AC_CONFIG_AUX_DIR' | sed -n -e 's/AC_CONFIG_AUX_DIR(\([^()]*\))/\1/p' | sed -e 's/^\[\(.*\)\]$/\1/' | sed -e 1q`
+auxdir=`$autom4te --trace=AC_CONFIG_AUX_DIR:\$% "$configure_in"`
 if test -n "$auxdir"; then
   auxdir="$auxdir/"
 fi
+
+# Check in which directory gettext.m4 etc. belong.
+macrodirs=`$autom4te --trace=AC_CONFIG_MACRO_DIR_TRACE:\$% "$configure_in"`
+if test -z "$macrodirs"; then
+  macrodirs=`$autom4te --trace=AC_CONFIG_MACRO_DIR:\$% "$configure_in"`
+fi
+for arg in $macrodirs; do
+  m4dir="$arg"
+  break
+done
 
 # For simplicity we change to the gettext source directory.
 cd "$gettext_dir" ||
@@ -796,31 +797,39 @@ if test -f "$srcdir/Makefile.am"; then
     esac
   fi
 
-  # Extract the macro directory name from Makefile.am.
-  aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[ 	]*=' "$srcdir/Makefile.am" | sed -e 's/^ACLOCAL_AMFLAGS[ 	]*=\(.*\)$/\1/'`
-  m4dir=m4
-  m4dir_defaulted=yes
-  m4dir_is_next=
-  for arg in $aclocal_amflags; do
-    if test -n "$m4dir_is_next"; then
-      # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
-      case "$arg" in
-        /*) ;;
-        *)
-          m4dir="$arg"
-          m4dir_defaulted=
-          break
-          ;;
-      esac
-      m4dir_is_next=
-    else
-      if test "X$arg" = "X-I"; then
-        m4dir_is_next=yes
-      else
+  if test -z "$m4dir"; then
+    # Extract the macro directory name from Makefile.am.
+    aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[ 	]*=' "$srcdir/Makefile.am" | sed -e 's/^ACLOCAL_AMFLAGS[ 	]*=\(.*\)$/\1/'`
+    m4dir_is_next=
+    for arg in $aclocal_amflags; do
+      if test -n "$m4dir_is_next"; then
+        # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
+        case "$arg" in
+          /*) ;;
+          *)
+            test -z "$m4dir" || m4dir="$arg"
+            macrodirs="$macrodirs $arg"
+            ;;
+        esac
         m4dir_is_next=
+      else
+        if test "X$arg" = "X-I"; then
+          m4dir_is_next=yes
+        else
+          m4dir_is_next=
+        fi
       fi
-    fi
-  done
+    done
+    for arg in $macrodirs; do
+      m4dir="$arg"
+      break
+    done
+  fi
+
+  if test -z "$m4dir"; then
+    m4dir=m4
+    m4dir_defaulted=yes
+  fi
 
   # Decide whether to use $m4dir/ChangeLog, or to use ChangeLog instead.
   if test -d "$srcdir/$m4dir" && test -f "$srcdir/ChangeLog" && test ! -f "$srcdir/$m4dir/ChangeLog"; then
@@ -1026,20 +1035,9 @@ if test -f "$srcdir/Makefile.am"; then
     fi
   fi
   # Extract the aclocal options name from Makefile.am.
-  aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[ 	]*=' "$srcdir/Makefile.am" | sed -e 's/^ACLOCAL_AMFLAGS[ 	]*=\(.*\)$/\1/'`
   aclocal_options=
-  m4dir_is_next=
-  for arg in $aclocal_amflags; do
-    if test -n "$m4dir_is_next"; then
-      aclocal_options="$aclocal_options -I $arg"
-      m4dir_is_next=
-    else
-      if test "X$arg" = "X-I"; then
-        m4dir_is_next=yes
-      else
-        m4dir_is_next=
-      fi
-    fi
+  for arg in $macrodirs; do
+    aclocal_options="$aclocal_options -I $arg"
   done
   please="$please
 Please run 'aclocal$aclocal_options' to regenerate the aclocal.m4 file.

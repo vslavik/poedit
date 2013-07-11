@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <!-- This HTML file has been created by texi2html 1.52b
-     from gettext.texi on 5 March 2013 -->
+     from gettext.texi on 7 July 2013 -->
 
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <TITLE>GNU gettext utilities - 4  Preparing Program Sources</TITLE>
@@ -13,7 +13,7 @@ Go to the <A HREF="gettext_1.html">first</A>, <A HREF="gettext_3.html">previous<
 
 <H1><A NAME="SEC16" HREF="gettext_toc.html#TOC16">4  Preparing Program Sources</A></H1>
 <P>
-<A NAME="IDX118"></A>
+<A NAME="IDX124"></A>
 
 </P>
 
@@ -40,7 +40,7 @@ having translated C strings should contain the line:
 
 </P>
 <P>
-<A NAME="IDX119"></A>
+<A NAME="IDX125"></A>
 
 <PRE>
 #include &#60;libintl.h&#62;
@@ -62,7 +62,7 @@ the C string comes from a different C module) should contain the line:
 <H2><A NAME="SEC18" HREF="gettext_toc.html#TOC18">4.2  Triggering <CODE>gettext</CODE> Operations</A></H2>
 
 <P>
-<A NAME="IDX120"></A>
+<A NAME="IDX126"></A>
 The initialization of locale data should be done with more or less
 the same code in every program, as demonstrated below:
 
@@ -87,8 +87,8 @@ or <CODE>hello</CODE> sources for more information.
 
 </P>
 <P>
-<A NAME="IDX121"></A>
-<A NAME="IDX122"></A>
+<A NAME="IDX127"></A>
+<A NAME="IDX128"></A>
 The use of <CODE>LC_ALL</CODE> might not be appropriate for you.
 <CODE>LC_ALL</CODE> includes all locale categories and especially
 <CODE>LC_CTYPE</CODE>.  This latter category is responsible for determining
@@ -129,13 +129,13 @@ code above by a sequence of <CODE>setlocale</CODE> lines
 </PRE>
 
 <P>
-<A NAME="IDX123"></A>
-<A NAME="IDX124"></A>
-<A NAME="IDX125"></A>
-<A NAME="IDX126"></A>
-<A NAME="IDX127"></A>
-<A NAME="IDX128"></A>
 <A NAME="IDX129"></A>
+<A NAME="IDX130"></A>
+<A NAME="IDX131"></A>
+<A NAME="IDX132"></A>
+<A NAME="IDX133"></A>
+<A NAME="IDX134"></A>
+<A NAME="IDX135"></A>
 On all POSIX conformant systems the locale categories <CODE>LC_CTYPE</CODE>,
 <CODE>LC_MESSAGES</CODE>, <CODE>LC_COLLATE</CODE>, <CODE>LC_MONETARY</CODE>,
 <CODE>LC_NUMERIC</CODE>, and <CODE>LC_TIME</CODE> are available.  On some systems
@@ -170,7 +170,7 @@ is not multithread-safe.
 <H2><A NAME="SEC19" HREF="gettext_toc.html#TOC19">4.3  Preparing Translatable Strings</A></H2>
 
 <P>
-<A NAME="IDX130"></A>
+<A NAME="IDX136"></A>
 Before strings can be marked for translations, they sometimes need to
 be adjusted.  Usually preparing a string for translation is done right
 before marking it, during the marking phase which is described in the
@@ -206,7 +206,7 @@ Let's look at some examples of these guidelines.
 
 </P>
 <P>
-<A NAME="IDX131"></A>
+<A NAME="IDX137"></A>
 Translatable strings should be in good English style.  If slang language
 with abbreviations and shortcuts is used, often translators will not
 understand the message and will produce very inappropriate translations.
@@ -235,13 +235,13 @@ of the objects"?
 
 </P>
 <P>
-<A NAME="IDX132"></A>
+<A NAME="IDX138"></A>
 In both cases, adding more words to the message will help both the
 translator and the English speaking user.
 
 </P>
 <P>
-<A NAME="IDX133"></A>
+<A NAME="IDX139"></A>
 Translatable strings should be entire sentences.  It is often not possible
 to translate single verbs or adjectives in a substitutable way.
 
@@ -327,7 +327,7 @@ combined by xgettext, so the translator has to handle them once only.)
 
 </P>
 <P>
-<A NAME="IDX134"></A>
+<A NAME="IDX140"></A>
 Translatable strings should be limited to one paragraph; don't let a
 single message be longer than ten lines.  The reason is that when the
 translatable string changes, the translator is faced with the task of
@@ -338,7 +338,7 @@ the entire message.
 
 </P>
 <P>
-<A NAME="IDX135"></A>
+<A NAME="IDX141"></A>
 Many GNU programs have a <SAMP>&lsquo;--help&rsquo;</SAMP> output that extends over several
 screen pages.  It is a courtesy towards the translators to split such a
 message into several ones of five to ten lines each.  While doing that,
@@ -349,8 +349,8 @@ looking for.
 
 </P>
 <P>
-<A NAME="IDX136"></A>
-<A NAME="IDX137"></A>
+<A NAME="IDX142"></A>
+<A NAME="IDX143"></A>
 Hardcoded string concatenation is sometimes used to construct English
 strings:
 
@@ -377,7 +377,7 @@ sprintf (s, "Replace %s with %s?", object1, object2);
 </PRE>
 
 <P>
-<A NAME="IDX138"></A>
+<A NAME="IDX144"></A>
 A similar case is compile time concatenation of strings.  The ISO C 99
 include file <CODE>&#60;inttypes.h&#62;</CODE> contains a macro <CODE>PRId64</CODE> that
 can be used as a formatting directive for outputting an <SAMP>&lsquo;int64_t&rsquo;</SAMP>
@@ -431,8 +431,8 @@ regardless whether in decimal, octal or hexadecimal.
 
 </P>
 <P>
-<A NAME="IDX139"></A>
-<A NAME="IDX140"></A>
+<A NAME="IDX145"></A>
+<A NAME="IDX146"></A>
 All this applies to other programming languages as well.  For example, in
 Java and C#, string concatenation is very frequently used, because it is a
 compiler built-in operator.  Like in C, in Java, you would change
@@ -474,8 +474,8 @@ Console.WriteLine(
 </PRE>
 
 <P>
-<A NAME="IDX141"></A>
-<A NAME="IDX142"></A>
+<A NAME="IDX147"></A>
+<A NAME="IDX148"></A>
 Unusual markup or control characters should not be used in translatable
 strings.  Translators will likely not understand the particular meaning
 of the markup or control characters.
@@ -511,7 +511,7 @@ don't verify that the translations are well-formed HTML.
 
 <H2><A NAME="SEC20" HREF="gettext_toc.html#TOC20">4.4  How Marks Appear in Sources</A></H2>
 <P>
-<A NAME="IDX143"></A>
+<A NAME="IDX149"></A>
 
 </P>
 <P>
@@ -562,7 +562,7 @@ sources for those trying to keep them within 79 or 80 columns.
 
 </P>
 <P>
-<A NAME="IDX144"></A>
+<A NAME="IDX150"></A>
 Many packages use <SAMP>&lsquo;_&rsquo;</SAMP> (a simple underline) as a keyword,
 and write <SAMP>&lsquo;_("Translatable string")&rsquo;</SAMP> instead of <SAMP>&lsquo;gettext
 ("Translatable string")&rsquo;</SAMP>.  Further, the coding rule, from GNU standards,
@@ -618,7 +618,7 @@ in English, it's customary to put a space before a colon.
 
 <H2><A NAME="SEC21" HREF="gettext_toc.html#TOC21">4.5  Marking Translatable Strings</A></H2>
 <P>
-<A NAME="IDX145"></A>
+<A NAME="IDX151"></A>
 
 </P>
 <P>
@@ -635,7 +635,7 @@ translation in some language, for the package being internationalized.
 
 </P>
 <P>
-<A NAME="IDX146"></A>
+<A NAME="IDX152"></A>
 The set of program sources, targeted by the PO mode commands describe
 here, should have an Emacs tags table constructed for your project,
 prior to using these PO file commands.  This is easy to do.  In any
@@ -657,7 +657,7 @@ format Emacs can understand.
 
 </P>
 <P>
-<A NAME="IDX147"></A>
+<A NAME="IDX153"></A>
 For packages following the GNU coding standards, there is
 a make goal <CODE>tags</CODE> or <CODE>TAGS</CODE> which constructs the tag files in
 all directories and for all files containing source code.
@@ -677,18 +677,18 @@ fill in while you mark strings as translatable in your program sources.
 
 <DT><KBD>,</KBD>
 <DD>
-<A NAME="IDX148"></A>
+<A NAME="IDX154"></A>
 Search through program sources for a string which looks like a
 candidate for translation (<CODE>po-tags-search</CODE>).
 
 <DT><KBD>M-,</KBD>
 <DD>
-<A NAME="IDX149"></A>
+<A NAME="IDX155"></A>
 Mark the last string found with <SAMP>&lsquo;_()&rsquo;</SAMP> (<CODE>po-mark-translatable</CODE>).
 
 <DT><KBD>M-.</KBD>
 <DD>
-<A NAME="IDX150"></A>
+<A NAME="IDX156"></A>
 Mark the last string found with a keyword taken from a set of possible
 keywords.  This command with a prefix allows some management of these
 keywords (<CODE>po-select-mark-and-mark</CODE>).
@@ -696,7 +696,7 @@ keywords (<CODE>po-select-mark-and-mark</CODE>).
 </DL>
 
 <P>
-<A NAME="IDX151"></A>
+<A NAME="IDX157"></A>
 The <KBD>,</KBD> (<CODE>po-tags-search</CODE>) command searches for the next
 occurrence of a string which looks like a possible candidate for
 translation, and displays the program source in another Emacs window,
@@ -748,8 +748,8 @@ first tags file, this reinitialization might be considered spurious.
 
 </P>
 <P>
-<A NAME="IDX152"></A>
-<A NAME="IDX153"></A>
+<A NAME="IDX158"></A>
+<A NAME="IDX159"></A>
 The <KBD>M-,</KBD> (<CODE>po-mark-translatable</CODE>) command will mark the
 recently found string with the <SAMP>&lsquo;_&rsquo;</SAMP> keyword.  The <KBD>M-.</KBD>
 (<CODE>po-select-mark-and-mark</CODE>) command will request that you type
@@ -810,7 +810,7 @@ prefer <SAMP>&lsquo;_&rsquo;</SAMP>, as this one is already built in the <KBD>M-
 <H2><A NAME="SEC22" HREF="gettext_toc.html#TOC22">4.6  Special Comments preceding Keywords</A></H2>
 
 <P>
-<A NAME="IDX154"></A>
+<A NAME="IDX160"></A>
 In C programs strings are often used within calls of functions from the
 <CODE>printf</CODE> family.  The special thing about these format strings is
 that they can contain format specifiers introduced with <KBD>%</KBD>.  Assume
@@ -878,8 +878,8 @@ only a heuristic.  In the <TT>&lsquo;.po&rsquo;</TT> file the entry is marked us
 
 </P>
 <P>
-<A NAME="IDX155"></A>
-<A NAME="IDX156"></A>
+<A NAME="IDX161"></A>
+<A NAME="IDX162"></A>
 The careful reader now might say that this again can cause problems.
 The heuristic might guess it wrong.  This is true and therefore
 <CODE>xgettext</CODE> knows about a special kind of comment which lets
@@ -925,7 +925,7 @@ used for solving this problem.
 <H2><A NAME="SEC23" HREF="gettext_toc.html#TOC23">4.7  Special Cases of Translatable Strings</A></H2>
 
 <P>
-<A NAME="IDX157"></A>
+<A NAME="IDX163"></A>
 The attentive reader might now point out that it is not always possible
 to mark translatable string with <CODE>gettext</CODE> or something like this.
 Consider the following case:

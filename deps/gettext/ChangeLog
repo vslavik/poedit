@@ -1,3 +1,93 @@
+2013-07-07  Daiki Ueno  <ueno@gnu.org>
+
+	* NEWS: Mention libasprintf change and Tcl bug fix.
+
+2013-06-26  Daiki Ueno  <ueno@gnu.org>
+
+	* autogen.sh: Mention GNULIB_TOOL again for off-line bootstrap.
+
+2013-06-17  Daiki Ueno  <ueno@gnu.org>
+
+	Embed Gnulib using git submodule.
+	* autogen.sh: Port git submodule update code from the 'bootstrap'
+	script in Gnulib and respect the GNULIB_SRCDIR envvar.
+	(cleanup_gnulib): New function borrowed from Gnulib.
+	(git_modules_config): Likewise.
+	(gnulib_path): New variable.
+
+2013-06-13  Daiki Ueno  <ueno@gnu.org>
+
+	* NEWS: Document more new features.  Mention Glade msgctxt support
+	and msginit portability fix, and note that JavaScript support is
+	only partial.
+
+2013-06-11  Daiki Ueno  <ueno@gnu.org>
+
+	* NEWS: Mention that future 'gettextize' will require Automake 1.10.
+	Suggested by Stefano Lattarini.
+
+2013-06-08  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
+
+	build: drop the 'fixacocal' auxiliary script
+	The comments in that script state that its use is only required to
+	work around issues in aclocal from Automake 1.10, while the rest
+	of the Gettext build infrastructure assumes Automake >= 1.11 anyway.
+	* autogen.sh: Drop invocations of 'fixaclocal', simply invoke the
+	'aclocal' program directly.
+	* build-aux/fixaclocal: Remove.
+	* Makefile.am (EXTRA_DIST): Stop distributing it.
+	(ACLOCAL): Drop redefinition in function of 'fixaclocal'.
+	* gettext-runtime/Makefile.am (ACLOCAL): Likewise.
+	* gettext-runtime/libasprintf/Makefile.am (ACLOCAL): Likewise.
+	* gettext-tools/Makefile.am (ACLOCAL): Likewise.
+	* gettext-tools/examples/Makefile.am (ACLOCAL): Likewise.
+
+2013-06-04  Daiki Ueno  <ueno@gnu.org>
+
+	Support for Vala.
+	* NEWS: Mention Vala support.
+
+2013-05-29  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
+
+	* configure.ac (AM_INIT_AUTOMAKE): Add 'parallel-tests' option.
+	Require Automake 1.11.1 or later, so that the 'parallel-tests'
+	will be certainly available.
+	(AC_INIT): Require Autoconf 2.62 or later; that is the minimal
+	version supported by Automake 1.11.1 or later.
+	* autogen.sh: Update version number requirement for Autoconf.
+
+2013-05-20  Pavel Kharitonov  <ineiev@gnu.org>  (tiny change)
+
+	Add --previous option to msgattrib.
+	* NEWS: Mention --previous msgattrib option.
+
+2013-05-13  Daiki Ueno  <ueno@gnu.org>
+
+	Fix bootstrap error on Mac OS X.
+	* autogen.sh (GNULIB_MODULES_LIBGETTEXTPO): Add strchrnul.
+
+2013-05-02  Daiki Ueno  <ueno@gnu.org>
+
+	* autogen.sh: Retrieve archive.dir.tar from FTP when bootstrapping.
+	Reported by Stefano Lattarini in
+	<https://lists.gnu.org/archive/html/bug-gettext/2012-12/msg00058.html>
+
+2013-04-26  Daiki Ueno  <ueno@gnu.org>
+
+	* NEWS: Mention Python brace format.
+
+2013-04-17  Daiki Ueno  <ueno@gnu.org>
+
+	* NEWS: Mention JavaScript support.
+
+2013-04-11  Daiki Ueno  <ueno@gnu.org>
+
+	* NEWS: Mention Lua support.
+
+2013-03-06  Daiki Ueno  <ueno@gnu.org>
+
+	* AUTHORS: Update from fencepost.gnu.org:/gd/gnuorg/copyright.list.
+
 2013-01-17  Daiki Ueno  <ueno@gnu.org>
 
 	Fix link errors related to C99-style extern inline.

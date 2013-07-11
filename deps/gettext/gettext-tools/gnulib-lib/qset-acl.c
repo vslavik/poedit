@@ -1,4 +1,4 @@
-/* set-mode-acl.c - set access control list equivalent to a mode
+/* qset-acl.c - set access control list equivalent to a mode
 
    Copyright (C) 2002-2003, 2005-2013 Free Software Foundation, Inc.
 
@@ -25,13 +25,10 @@
 
 #include "acl-internal.h"
 
-#include "gettext.h"
-#define _(msgid) gettext (msgid)
-
 
 /* If DESC is a valid file descriptor use fchmod to change the
-   file's mode to MODE on systems that have fchown. On systems
-   that don't have fchown and if DESC is invalid, use chown on
+   file's mode to MODE on systems that have fchmod. On systems
+   that don't have fchmod and if DESC is invalid, use chmod on
    NAME instead.
    Return 0 if successful.  Return -1 and set errno upon failure.  */
 
@@ -119,14 +116,10 @@ qset_acl (char const *name, int desc, mode_t mode)
     {
       int saved_errno = errno;
       acl_free (acl);
-
-      if (ACL_NOT_WELL_SUPPORTED (errno))
+      if (! acl_errno_valid (errno))
         return chmod_or_fchmod (name, desc, mode);
-      else
-        {
-          errno = saved_errno;
-          return -1;
-        }
+      errno = saved_errno;
+      return -1;
     }
   else
     acl_free (acl);
@@ -180,16 +173,11 @@ qset_acl (char const *name, int desc, mode_t mode)
           if (ret != 0)
             {
               int saved_errno = errno;
-
               acl_free (acl);
-
-              if (ACL_NOT_WELL_SUPPORTED (saved_errno))
+              if (! acl_errno_valid (saved_errno))
                 return chmod_or_fchmod (name, desc, mode);
-              else
-                {
-                  errno = saved_errno;
-                  return -1;
-                }
+              errno = saved_errno;
+              return -1;
             }
           acl_free (acl);
         }
@@ -685,15 +673,4 @@ qset_acl (char const *name, int desc, mode_t mode)
 #else /* !USE_ACL */
   return chmod_or_fchmod (name, desc, mode);
 #endif
-}
-
-/* As with qset_acl, but also output a diagnostic on failure.  */
-
-int
-set_acl (char const *name, int desc, mode_t mode)
-{
-  int ret = qset_acl (name, desc, mode);
-  if (ret != 0)
-    error (0, errno, _("setting permissions for %s"), quote (name));
-  return ret;
 }

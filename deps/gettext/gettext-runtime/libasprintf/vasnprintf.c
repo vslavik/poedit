@@ -5153,7 +5153,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                                 size_t tmp_length =
                                   MAX_ROOM_NEEDED (&a, dp->arg_index,
                                                    dp->conversion, type, flags,
-                                                   width, has_precision,
+                                                   has_width ? width : 0,
+                                                   has_precision,
                                                    precision, pad_ourselves);
 
                                 if (maxlen < tmp_length)

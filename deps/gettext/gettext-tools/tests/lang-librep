@@ -12,7 +12,7 @@ cat <<\EOF > prog.jl
 (require 'rep.i18n.gettext)
 
 (textdomain "prog")
-(bindtextdomain "prog" ".")
+(bindtextdomain "prog" "l-librep")
 
 (format standard-output "%s\n" (_ "'Your command, please?', asked the waiter."))
 
@@ -20,15 +20,15 @@ cat <<\EOF > prog.jl
         (format nil (_ "%s is replaced by %s.") "FF" "EUR"))
 EOF
 
-tmpfiles="$tmpfiles prog.tmp prog.pot"
+tmpfiles="$tmpfiles l-librep-prog.tmp l-librep-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location prog.jl
+${XGETTEXT} -o l-librep-prog.tmp --omit-header --no-location prog.jl
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+LC_ALL=C tr -d '\r' < l-librep-prog.tmp > l-librep-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles prog.ok"
-cat <<EOF > prog.ok
+tmpfiles="$tmpfiles l-librep-prog.ok"
+cat <<EOF > l-librep-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -38,10 +38,10 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} l-librep-prog.ok l-librep-prog.pot || exit 1
 
-tmpfiles="$tmpfiles fr.po"
-cat <<\EOF > fr.po
+tmpfiles="$tmpfiles l-librep-fr.po"
+cat <<\EOF > l-librep-fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -56,22 +56,23 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+tmpfiles="$tmpfiles l-librep-fr.po.tmp l-librep-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+${MSGMERGE} -q -o l-librep-fr.po.tmp l-librep-fr.po l-librep-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+LC_ALL=C tr -d '\r' < l-librep-fr.po.tmp > l-librep-fr.po.new
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} l-librep-fr.po l-librep-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles fr"
-test -d fr || mkdir fr
-test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+tmpfiles="$tmpfiles l-librep"
+test -d l-librep || mkdir l-librep
+test -d l-librep/fr || mkdir l-librep/fr
+test -d l-librep/fr/LC_MESSAGES || mkdir l-librep/fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
+${MSGFMT} -o l-librep/fr/LC_MESSAGES/prog.mo l-librep-fr.po
 
 # Test for presence of rep version 0.15.3 or newer.
 (rep --version) >/dev/null 2>/dev/null \
@@ -109,13 +110,13 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   rm -fr $tmpfiles; exit 77
 fi
 
-tmpfiles="$tmpfiles prog.ok prog.oku prog.out"
+tmpfiles="$tmpfiles l-librep-prog.ok l-librep-prog.oku l-librep-prog.out"
 : ${DIFF=diff}
-cat <<\EOF > prog.ok
+cat <<\EOF > l-librep-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 EUR remplace FF.
 EOF
-cat <<\EOF > prog.oku
+cat <<\EOF > l-librep-prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 EUR remplace FF.
 EOF
@@ -123,12 +124,12 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR rep --no-rc --batch prog.jl > prog.out || exit 1
-  ${DIFF} prog.ok prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR rep --no-rc --batch prog.jl > l-librep-prog.out || exit 1
+  ${DIFF} l-librep-prog.ok l-librep-prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 rep --no-rc --batch prog.jl > prog.out || exit 1
-  ${DIFF} prog.oku prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 rep --no-rc --batch prog.jl > l-librep-prog.out || exit 1
+  ${DIFF} l-librep-prog.oku l-librep-prog.out || exit 1
 fi
 
 rm -fr $tmpfiles

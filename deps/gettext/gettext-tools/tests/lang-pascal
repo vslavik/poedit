@@ -11,9 +11,9 @@ UTF8_LOCALE_UNSUPPORTED=yes
 tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
-tmpfiles="$tmpfiles prog.pp"
-cat <<\EOF > prog.pp
-program prog;
+tmpfiles="$tmpfiles pascalprog.pp"
+cat <<\EOF > pascalprog.pp
+program pascalprog;
 {$mode delphi}
 
 uses gettext, sysutils;
@@ -23,82 +23,83 @@ resourcestring
   currencies = '%s is replaced by %s.';
 
 begin
-  translateresourcestrings('%s/LC_MESSAGES/prog.mo');
+  translateresourcestrings('l-pascal/%s/LC_MESSAGES/pascalprog.mo');
   writeln(question);
   writeln(format(currencies, ['FF', 'EUR']));
 end.
 EOF
 
-tmpfiles="$tmpfiles prog.o prog.rst prog"
-(ppc386 prog.pp) >/dev/null 2>&1 ||
-(ppcx64 prog.pp) >/dev/null 2>&1 ||
+tmpfiles="$tmpfiles pascalprog.o pascalprog.rst pascalprog"
+(ppc386 pascalprog.pp) >/dev/null 2>&1 ||
+(ppcx64 pascalprog.pp) >/dev/null 2>&1 ||
 {
   echo "Skipping test: Pascal compiler ppc386 or ppcx64 not found"
   rm -fr $tmpfiles; exit 77
 }
 
-tmpfiles="$tmpfiles prog.tmp prog.pot"
+tmpfiles="$tmpfiles l-pascal-pascalprog.tmp l-pascal-pascalprog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --add-location prog.rst
+${XGETTEXT} -o l-pascal-pascalprog.tmp --omit-header --add-location pascalprog.rst
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+LC_ALL=C tr -d '\r' < l-pascal-pascalprog.tmp > l-pascal-pascalprog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles prog.ok"
-cat <<EOF > prog.ok
-#: prog.question
+tmpfiles="$tmpfiles l-pascal-pascalprog.ok"
+cat <<EOF > l-pascal-pascalprog.ok
+#: pascalprog.question
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
-#: prog.currencies
+#: pascalprog.currencies
 #, object-pascal-format
 msgid "%s is replaced by %s."
 msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} l-pascal-pascalprog.ok l-pascal-pascalprog.pot || exit 1
 
-tmpfiles="$tmpfiles fr.po"
-cat <<\EOF > fr.po
+tmpfiles="$tmpfiles l-pascal-fr.po"
+cat <<\EOF > l-pascal-fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
 
-#: prog.question
+#: pascalprog.question
 msgid "'Your command, please?', asked the waiter."
 msgstr "«Votre commande, s'il vous plait», dit le garçon."
 
 # Reverse the arguments.
-#: prog.currencies
+#: pascalprog.currencies
 #, object-pascal-format
 msgid "%s is replaced by %s."
 msgstr "%1:s remplace %0:s."
 EOF
 
-tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+tmpfiles="$tmpfiles l-pascal-fr.po.tmp l-pascal-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+${MSGMERGE} -q -o l-pascal-fr.po.tmp l-pascal-fr.po l-pascal-pascalprog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+LC_ALL=C tr -d '\r' < l-pascal-fr.po.tmp > l-pascal-fr.po.new
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} l-pascal-fr.po l-pascal-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles fr"
-test -d fr || mkdir fr
-test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+tmpfiles="$tmpfiles l-pascal"
+test -d l-pascal || mkdir l-pascal
+test -d l-pascal/fr || mkdir l-pascal/fr
+test -d l-pascal/fr/LC_MESSAGES || mkdir l-pascal/fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
+${MSGFMT} -o l-pascal/fr/LC_MESSAGES/pascalprog.mo l-pascal-fr.po
 
-tmpfiles="$tmpfiles prog.ok prog.oku prog.out"
+tmpfiles="$tmpfiles l-pascal-pascalprog.ok l-pascal-pascalprog.oku l-pascal-pascalprog.out"
 : ${DIFF=diff}
-cat <<\EOF > prog.ok
+cat <<\EOF > l-pascal-pascalprog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 EUR remplace FF.
 EOF
-cat <<\EOF > prog.oku
+cat <<\EOF > l-pascal-pascalprog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 EUR remplace FF.
 EOF
@@ -106,15 +107,15 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR ./prog > prog.out || exit 1
+  LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR ./pascalprog > l-pascal-pascalprog.out || exit 1
   : ${DIFF=diff}
-  ${DIFF} prog.ok prog.out || exit 1
+  ${DIFF} l-pascal-pascalprog.ok l-pascal-pascalprog.out || exit 1
 fi
 if test -z "$UTF8_LOCALE_UNSUPPORTED"; then
   if test $LOCALE_FR_UTF8 != none; then
-    LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR_UTF8 ./prog > prog.out || exit 1
+    LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR_UTF8 ./pascalprog > l-pascal-pascalprog.out || exit 1
     : ${DIFF=diff}
-    ${DIFF} prog.oku prog.out || exit 1
+    ${DIFF} l-pascal-pascalprog.oku l-pascal-pascalprog.out || exit 1
   fi
   if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
     if test -f /usr/bin/localedef; then

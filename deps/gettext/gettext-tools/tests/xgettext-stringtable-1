@@ -5,8 +5,8 @@
 tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
-tmpfiles="$tmpfiles xg-st-1.strings"
-cat <<\EOF > xg-st-1.strings
+tmpfiles="$tmpfiles xg-stbl-1.strings"
+cat <<\EOF > xg-stbl-1.strings
 /***
 German.lproj/Localizable.strings
 updated by make_strings 2003-10-12 15:31:50 +0200
@@ -23,16 +23,16 @@ add comments above this one
 = "Dieses Programm l‰uft mit der Prozess-Nummer %d.";
 EOF
 
-tmpfiles="$tmpfiles xg-st-1.tmp xg-st-1.po"
+tmpfiles="$tmpfiles xg-stbl-1.tmp xg-stbl-1.po"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o xg-st-1.tmp xg-st-1.strings
+${XGETTEXT} -o xg-stbl-1.tmp xg-stbl-1.strings
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-# Don't simplify this to "grep ... < xg-st-1.tmp", otherwise OpenBSD 4.0 grep
+# Don't simplify this to "grep ... < xg-stbl-1.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
-cat xg-st-1.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-st-1.po
+cat xg-stbl-1.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-stbl-1.po
 
-tmpfiles="$tmpfiles xg-st-1.ok"
-cat <<\EOF > xg-st-1.ok
+tmpfiles="$tmpfiles xg-stbl-1.ok"
+cat <<\EOF > xg-stbl-1.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -67,7 +67,7 @@ msgstr "Dieses Programm l√§uft mit der Prozess-Nummer %d."
 EOF
 
 : ${DIFF=diff}
-${DIFF} xg-st-1.ok xg-st-1.po
+${DIFF} xg-stbl-1.ok xg-stbl-1.po
 result=$?
 
 rm -fr $tmpfiles

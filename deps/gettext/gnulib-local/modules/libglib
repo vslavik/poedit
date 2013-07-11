@@ -59,42 +59,42 @@ glibconfig.h: glibconfig.in.h
 	mv -f $@-t $@
 
 glib/ghash.h: glib/ghash.in.h
-	test -d glib || $(mkdir_p) glib
+	test -d glib || $(MKDIR_P) glib
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/glib/ghash.in.h; \
 	} > $@-t
 	mv -f $@-t $@
 
 glib/glist.h: glib/glist.in.h
-	test -d glib || $(mkdir_p) glib
+	test -d glib || $(MKDIR_P) glib
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/glib/glist.in.h; \
 	} > $@-t
 	mv -f $@-t $@
 
 glib/gprimes.h: glib/gprimes.in.h
-	test -d glib || $(mkdir_p) glib
+	test -d glib || $(MKDIR_P) glib
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/glib/gprimes.in.h; \
 	} > $@-t
 	mv -f $@-t $@
 
 glib/gstrfuncs.h: glib/gstrfuncs.in.h
-	test -d glib || $(mkdir_p) glib
+	test -d glib || $(MKDIR_P) glib
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/glib/gstrfuncs.in.h; \
 	} > $@-t
 	mv -f $@-t $@
 
 glib/gstring.h: glib/gstring.in.h
-	test -d glib || $(mkdir_p) glib
+	test -d glib || $(MKDIR_P) glib
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/glib/gstring.in.h; \
 	} > $@-t
 	mv -f $@-t $@
 
 glib/gtypes.h: glib/gtypes.in.h
-	test -d glib || $(mkdir_p) glib
+	test -d glib || $(MKDIR_P) glib
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/glib/gtypes.in.h; \
 	} > $@-t

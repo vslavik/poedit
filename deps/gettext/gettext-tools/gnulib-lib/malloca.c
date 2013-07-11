@@ -49,12 +49,18 @@
 #define MAGIC_SIZE sizeof (int)
 /* This is how the header info would look like without any alignment
    considerations.  */
-struct preliminary_header { void *next; char room[MAGIC_SIZE]; };
+struct preliminary_header { void *next; int magic; };
 /* But the header's size must be a multiple of sa_alignment_max.  */
 #define HEADER_SIZE \
   (((sizeof (struct preliminary_header) + sa_alignment_max - 1) / sa_alignment_max) * sa_alignment_max)
-struct header { void *next; char room[HEADER_SIZE - sizeof (struct preliminary_header) + MAGIC_SIZE]; };
-verify (HEADER_SIZE == sizeof (struct header));
+union header {
+  void *next;
+  struct {
+    char room[HEADER_SIZE - MAGIC_SIZE];
+    int word;
+  } magic;
+};
+verify (HEADER_SIZE == sizeof (union header));
 /* We make the hash table quite big, so that during lookups the probability
    of empty hash buckets is quite high.  There is no need to make the hash
    table resizable, because when the hash table gets filled so much that the
@@ -74,20 +80,21 @@ mmalloca (size_t n)
 
   if (nplus >= n)
     {
-      char *p = (char *) malloc (nplus);
+      void *p = malloc (nplus);
 
       if (p != NULL)
         {
           size_t slot;
+          union header *h = p;
 
-          p += HEADER_SIZE;
+          p = h + 1;
 
           /* Put a magic number into the indicator word.  */
-          ((int *) p)[-1] = MAGIC_NUMBER;
+          h->magic.word = MAGIC_NUMBER;
 
           /* Enter p into the hash table.  */
           slot = (uintptr_t) p % HASH_TABLE_SIZE;
-          ((struct header *) (p - HEADER_SIZE))->next = mmalloca_results[slot];
+          h->next = mmalloca_results[slot];
           mmalloca_results[slot] = p;
 
           return p;
@@ -123,15 +130,17 @@ freea (void *p)
           void **chain = &mmalloca_results[slot];
           for (; *chain != NULL;)
             {
+              union header *h = p;
               if (*chain == p)
                 {
                   /* Found it.  Remove it from the hash table and free it.  */
-                  char *p_begin = (char *) p - HEADER_SIZE;
-                  *chain = ((struct header *) p_begin)->next;
+                  union header *p_begin = h - 1;
+                  *chain = p_begin->next;
                   free (p_begin);
                   return;
                 }
-              chain = &((struct header *) ((char *) *chain - HEADER_SIZE))->next;
+              h = *chain;
+              chain = &h[-1].next;
             }
         }
       /* At this point, we know it was not a mmalloca() result.  */

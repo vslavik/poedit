@@ -183,10 +183,10 @@ $(POFILES): $(srcdir)/$(DOMAIN).pot
 install-data-local: install-data-local-@USE_NLS@
 install-data-local-no: all-local
 install-data-local-yes: all-local
-	$(mkdir_p) $(DESTDIR)$(pkglibdir)
+	$(MKDIR_P) $(DESTDIR)$(pkglibdir)
 	@catalogs='$(CATALOGS)'; \
 	for cat in $$catalogs; do \
-	  $(mkdir_p) $(DESTDIR)$(pkglibdir)/`echo $$cat | sed -e 's,/[^/]*$$,,'`; \
+	  $(MKDIR_P) $(DESTDIR)$(pkglibdir)/`echo $$cat | sed -e 's,/[^/]*$$,,'`; \
 	  if test -r $$cat; then realcat=$$cat; else realcat=$(srcdir)/$$cat; fi; \
 	  $(INSTALL_DATA) $$realcat $(DESTDIR)$(pkglibdir)/$$cat; \
 	  echo "installing $$realcat as $(DESTDIR)$(pkglibdir)/$$cat"; \
@@ -195,10 +195,10 @@ install-data-local-yes: all-local
 installdirs-local: installdirs-local-@USE_NLS@
 installdirs-local-no:
 installdirs-local-yes:
-	$(mkdir_p) $(DESTDIR)$(pkglibdir)
+	$(MKDIR_P) $(DESTDIR)$(pkglibdir)
 	@catalogs='$(CATALOGS)'; \
 	for cat in $$catalogs; do \
-	  $(mkdir_p) $(DESTDIR)$(pkglibdir)/`echo $$cat | sed -e 's,/[^/]*$$,,'`; \
+	  $(MKDIR_P) $(DESTDIR)$(pkglibdir)/`echo $$cat | sed -e 's,/[^/]*$$,,'`; \
 	done
 
 uninstall-local: uninstall-local-@USE_NLS@

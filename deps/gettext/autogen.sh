@@ -4,12 +4,16 @@
 # also regenerates all aclocal.m4, config.h.in, Makefile.in, configure files
 # with new versions of autoconf or automake.
 #
-# This script requires autoconf-2.60..2.69 and automake-1.11.1..1.12 in the
+# This script requires autoconf-2.62..2.69 and automake-1.11.1..1.12 in the
 # PATH.
 # It also requires either
+#   - the git program in the PATH and an internet connection, or
 #   - the GNULIB_TOOL environment variable pointing to the gnulib-tool script
-#     in a gnulib checkout, or
-#   - the git program in the PATH and an internet connection.
+#     in a gnulib checkout
+# The former method is tried first and if it fails, fallback to the
+# latter.  When git is used, the GNULIB_SRCDIR environment variable is
+# also checked as a reference of gnulib checkout.
+
 # It also requires
 #   - the bison program,
 #   - the gperf program,
@@ -37,8 +41,8 @@
 # Usage after a first-time git clone / cvs checkout:   ./autogen.sh
 # Usage after a git clone / cvs update:                ./autogen.sh --quick
 # This uses an up-to-date gnulib checkout.
-# (The gettext-0.18.2 release was prepared using gnulib commit
-# f022473fdaf724d84817c4003120b9a38fbf884b from 2012-12-19.)
+# (The gettext-0.18.3 release was prepared using gnulib commit
+# c96bab3fee48a9df55e7366344f838e1fc785c28 from 2013-07-07.)
 #
 # Usage from a released tarball:             ./autogen.sh --quick --skip-gnulib
 # This does not use a gnulib checkout.
@@ -53,23 +57,77 @@ while :; do
   esac
 done
 
+cleanup_gnulib() {
+  status=$?
+  rm -fr "$gnulib_path"
+  exit $status
+}
+
+git_modules_config () {
+  test -f .gitmodules && git config --file .gitmodules "$@"
+}
+
+gnulib_path=$(git_modules_config submodule.gnulib.path)
+test -z "$gnulib_path" && gnulib_path=gnulib
+
 # The tests in gettext-tools/tests are not meant to be executable, because
 # they have a TESTS_ENVIRONMENT that specifies the shell explicitly.
 
 if ! $skip_gnulib; then
-  if test -z "$GNULIB_TOOL"; then
-    # Check out gnulib in a subdirectory 'gnulib'.
-    if test -d gnulib; then
-      (cd gnulib && git pull)
-    else
-      git clone git://git.savannah.gnu.org/gnulib.git
+  # Get gnulib files.
+  case ${GNULIB_SRCDIR--} in
+  -)
+    if git_modules_config submodule.gnulib.url >/dev/null; then
+      echo "$0: getting gnulib files..."
+      git submodule init || exit $?
+      git submodule update || exit $?
+
+    elif [ ! -d "$gnulib_path" ]; then
+      echo "$0: getting gnulib files..."
+
+      trap cleanup_gnulib 1 2 13 15
+
+      shallow=
+      git clone -h 2>&1 | grep -- --depth > /dev/null && shallow='--depth 2'
+      git clone $shallow git://git.sv.gnu.org/gnulib "$gnulib_path" ||
+        cleanup_gnulib
+
+      trap - 1 2 13 15
     fi
-    # Now it should contain a gnulib-tool.
-    if test -f gnulib/gnulib-tool; then
-      GNULIB_TOOL=`pwd`/gnulib/gnulib-tool
-    else
-      echo "** warning: gnulib-tool not found" 1>&2
+    GNULIB_SRCDIR=$gnulib_path
+    ;;
+  *)
+    # Use GNULIB_SRCDIR as a reference.
+    if test -d "$GNULIB_SRCDIR"/.git && \
+          git_modules_config submodule.gnulib.url >/dev/null; then
+      echo "$0: getting gnulib files..."
+      if git submodule -h|grep -- --reference > /dev/null; then
+        # Prefer the one-liner available in git 1.6.4 or newer.
+        git submodule update --init --reference "$GNULIB_SRCDIR" \
+          "$gnulib_path" || exit $?
+      else
+        # This fallback allows at least git 1.5.5.
+        if test -f "$gnulib_path"/gnulib-tool; then
+          # Since file already exists, assume submodule init already complete.
+          git submodule update || exit $?
+        else
+          # Older git can't clone into an empty directory.
+          rmdir "$gnulib_path" 2>/dev/null
+          git clone --reference "$GNULIB_SRCDIR" \
+            "$(git_modules_config submodule.gnulib.url)" "$gnulib_path" \
+            && git submodule init && git submodule update \
+            || exit $?
+        fi
+      fi
+      GNULIB_SRCDIR=$gnulib_path
     fi
+    ;;
+  esac
+  # Now it should contain a gnulib-tool.
+  if test -f "$GNULIB_SRCDIR"/gnulib-tool; then
+    GNULIB_TOOL="$GNULIB_SRCDIR"/gnulib-tool
+  else
+    echo "** warning: gnulib-tool not found" 1>&2
   fi
   # Skip the gnulib-tool step if gnulib-tool was not found.
   if test -n "$GNULIB_TOOL"; then
@@ -299,6 +357,7 @@ if ! $skip_gnulib; then
       stdbool
       stdio
       stdlib
+      strchrnul
       strerror
       unilbrk/ulc-width-linebreaks
       unistr/u8-mbtouc
@@ -336,14 +395,14 @@ else
 fi
 
 (cd gettext-runtime/libasprintf
- ../../build-aux/fixaclocal aclocal -I ../../m4 -I ../m4 -I gnulib-m4
+ aclocal -I ../../m4 -I ../m4 -I gnulib-m4
  autoconf
  autoheader && touch config.h.in
  automake --add-missing --copy
 )
 
 (cd gettext-runtime
- ../build-aux/fixaclocal aclocal -I m4 -I ../m4 -I gnulib-m4
+ aclocal -I m4 -I ../m4 -I gnulib-m4
  autoconf
  autoheader && touch config.h.in
  automake --add-missing --copy
@@ -360,7 +419,7 @@ fi
 cp -p gettext-runtime/ABOUT-NLS gettext-tools/ABOUT-NLS
 
 (cd gettext-tools/examples
- ../../build-aux/fixaclocal aclocal -I ../../gettext-runtime/m4 -I ../../m4
+ aclocal -I ../../gettext-runtime/m4 -I ../../m4
  autoconf
  automake --add-missing --copy
  # Rebuilding the examples PO files is only rarely needed.
@@ -370,7 +429,7 @@ cp -p gettext-runtime/ABOUT-NLS gettext-tools/ABOUT-NLS
 )
 
 (cd gettext-tools
- ../build-aux/fixaclocal aclocal -I m4 -I ../gettext-runtime/m4 -I ../m4 -I gnulib-m4 -I libgrep/gnulib-m4 -I libgettextpo/gnulib-m4
+ aclocal -I m4 -I ../gettext-runtime/m4 -I ../m4 -I gnulib-m4 -I libgrep/gnulib-m4 -I libgettextpo/gnulib-m4
  autoconf
  autoheader && touch config.h.in
  test -d intl || mkdir intl
@@ -385,8 +444,12 @@ cp -p gettext-runtime/ABOUT-NLS gettext-tools/ABOUT-NLS
      && (cd tests && make update-expected) \
      && make distclean
  fi
+ if ! test -f misc/archive.dir.tar; then
+   wget -q --timeout=5 -O - ftp://alpha.gnu.org/gnu/gettext/archive.dir-latest.tar.gz | gzip -d -c > misc/archive.dir.tar-t \
+     && mv misc/archive.dir.tar-t misc/archive.dir.tar
+ fi
 )
 
-build-aux/fixaclocal aclocal -I m4
+aclocal -I m4
 autoconf
 automake

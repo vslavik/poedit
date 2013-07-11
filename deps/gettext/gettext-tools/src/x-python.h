@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_PYTHON \
   { "Python",           extract_python,                                   \
-                        &flag_table_python, &formatstring_python, NULL }, \
+                        &flag_table_python, &formatstring_python, &formatstring_python_brace }, \
 
 /* Scan a Python file and add its translatable strings to mdlp.  */
 extern void extract_python (FILE *fp, const char *real_filename,

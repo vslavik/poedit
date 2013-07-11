@@ -32,12 +32,13 @@ if test -n "$missing_locale"; then
   exit 77
 fi
 
-tmpfiles="$tmpfiles de_DE"
-test -d de_DE || mkdir de_DE
-test -d de_DE/LC_MESSAGES || mkdir de_DE/LC_MESSAGES
+tmpfiles="$tmpfiles gt-7"
+test -d gt-7 || mkdir gt-7
+test -d gt-7/de_DE || mkdir gt-7/de_DE
+test -d gt-7/de_DE/LC_MESSAGES || mkdir gt-7/de_DE/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o de_DE/LC_MESSAGES/tstthread.mo ${top_srcdir}/tests/gettext-7.po
+${MSGFMT} -o gt-7/de_DE/LC_MESSAGES/tstthread.mo ${top_srcdir}/tests/gettext-7.po
 
 tmpfiles="$tmpfiles gt-7.out"
 ./gettext-7-prg > gt-7.out

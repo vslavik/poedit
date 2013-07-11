@@ -770,72 +770,54 @@ check_header_entry (const message_ty *mp, const char *msgstr_string)
   };
   const size_t nfields = SIZEOF (required_fields);
   const size_t nrequiredfields = nfields - 1;
-  int initial = -1;
   int cnt;
 
   for (cnt = 0; cnt < nfields; ++cnt)
     {
       int severity =
         (cnt < nrequiredfields ? PO_SEVERITY_ERROR : PO_SEVERITY_WARNING);
-      const char *endp = c_strstr (msgstr_string, required_fields[cnt]);
+      const char *field = required_fields[cnt];
+      size_t len = strlen (field);
+      const char *line;
 
-      if (endp == NULL)
+      for (line = msgstr_string; *line != '\0'; )
+        {
+          if (strncmp (line, field, len) == 0 && line[len] == ':')
+            {
+              const char *p = line + len + 1;
+
+              /* Test whether the field's value, starting at p, is the default
+                 value.  */
+              if (*p == ' ')
+                p++;
+              if (default_values[cnt] != NULL
+                  && strncmp (p, default_values[cnt],
+                              strlen (default_values[cnt])) == 0)
+                {
+                  p += strlen (default_values[cnt]);
+                  if (*p == '\0' || *p == '\n')
+                    {
+		      char *msg =
+			xasprintf (_("header field '%s' still has the initial default value\n"),
+				   field);
+		      po_xerror (severity, mp, NULL, 0, 0, true, msg);
+		      free (msg);
+                    }
+                }
+              break;
+            }
+          line = strchrnul (line, '\n');
+          if (*line == '\n')
+            line++;
+        }
+      if (*line == '\0')
         {
           char *msg =
             xasprintf (_("header field '%s' missing in header\n"),
-                       required_fields[cnt]);
+                       field);
           po_xerror (severity, mp, NULL, 0, 0, true, msg);
           free (msg);
         }
-      else if (endp != msgstr_string && endp[-1] != '\n')
-        {
-          char *msg =
-            xasprintf (_("\
-header field '%s' should start at beginning of line\n"),
-                       required_fields[cnt]);
-          po_xerror (severity, mp, NULL, 0, 0, true, msg);
-          free (msg);
-        }
-      else
-        {
-          const char *p = endp + strlen (required_fields[cnt]);
-          /* Test whether the field's value, starting at p, is the default
-             value.  */
-          if (*p == ':')
-            p++;
-          if (*p == ' ')
-            p++;
-          if (default_values[cnt] != NULL
-              && strncmp (p, default_values[cnt],
-                          strlen (default_values[cnt])) == 0)
-            {
-              p += strlen (default_values[cnt]);
-              if (*p == '\0' || *p == '\n')
-                {
-                  if (initial != -1)
-                    {
-                      po_xerror (severity,
-                                 mp, NULL, 0, 0, true, _("\
-some header fields still have the initial default value\n"));
-                      initial = -1;
-                      break;
-                    }
-                  else
-                    initial = cnt;
-                }
-            }
-        }
-    }
-
-  if (initial != -1)
-    {
-      int severity =
-        (initial < nrequiredfields ? PO_SEVERITY_ERROR : PO_SEVERITY_WARNING);
-      char *msg =
-        xasprintf (_("header field '%s' still has the initial default value\n"),
-                   required_fields[initial]);
-      po_xerror (severity, mp, NULL, 0, 0, true, msg);
-      free (msg);
     }
 }
 

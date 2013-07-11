@@ -38,7 +38,7 @@ main (void)
   unsetenv ("LANGUAGE");
   unsetenv ("OUTPUT_CHARSET");
   textdomain ("codeset");
-  bindtextdomain ("codeset", ".");
+  bindtextdomain ("codeset", "gt-5");
 
   setlocale (LC_ALL, "de_DE.ISO-8859-1");
 

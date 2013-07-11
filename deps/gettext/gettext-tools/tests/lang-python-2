@@ -10,15 +10,15 @@ UTF8_LOCALE_UNSUPPORTED=yes
 tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
-tmpfiles="$tmpfiles prog.py"
-cat <<\EOF > prog.py
+tmpfiles="$tmpfiles prog2.py"
+cat <<\EOF > prog2.py
 import sys
 import gettext
 
 n = int(sys.argv[1])
 
 gettext.textdomain('prog')
-gettext.bindtextdomain('prog', '.')
+gettext.bindtextdomain('prog', 'l-python-2')
 
 print gettext.gettext("'Your command, please?', asked the waiter.")
 print gettext.ngettext("a piece of cake","%(count)d pieces of cake",n) \
@@ -27,15 +27,15 @@ print gettext.gettext("%(oldCurrency)s is replaced by %(newCurrency)s.") \
       % { 'oldCurrency': "FF", 'newCurrency' : "EUR" }
 EOF
 
-tmpfiles="$tmpfiles prog.tmp prog.pot"
+tmpfiles="$tmpfiles l-python-2-prog.tmp l-python-2-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location prog.py
+${XGETTEXT} -o l-python-2-prog.tmp --omit-header --no-location prog2.py
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+LC_ALL=C tr -d '\r' < l-python-2-prog.tmp > l-python-2-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles prog.ok"
-cat <<EOF > prog.ok
+tmpfiles="$tmpfiles l-python-2-prog.ok"
+cat <<EOF > l-python-2-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -51,10 +51,10 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} l-python-2-prog.ok l-python-2-prog.pot || exit 1
 
-tmpfiles="$tmpfiles fr.po"
-cat <<\EOF > fr.po
+tmpfiles="$tmpfiles l-python-2-fr.po"
+cat <<\EOF > l-python-2-fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -76,22 +76,23 @@ msgid "%(oldCurrency)s is replaced by %(newCurrency)s."
 msgstr "%(newCurrency)s remplace %(oldCurrency)s."
 EOF
 
-tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+tmpfiles="$tmpfiles l-python-2-fr.po.tmp l-python-2-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+${MSGMERGE} -q -o l-python-2-fr.po.tmp l-python-2-fr.po l-python-2-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+LC_ALL=C tr -d '\r' < l-python-2-fr.po.tmp > l-python-2-fr.po.new
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} l-python-2-fr.po l-python-2-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles fr"
-test -d fr || mkdir fr
-test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+tmpfiles="$tmpfiles l-python-2"
+test -d l-python-2 || mkdir l-python-2
+test -d l-python-2/fr || mkdir l-python-2/fr
+test -d l-python-2/fr/LC_MESSAGES || mkdir l-python-2/fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
+${MSGFMT} -o l-python-2/fr/LC_MESSAGES/prog.mo l-python-2-fr.po
 
 # Test for presence of python version 2.3 or newer.
 (python -V) >/dev/null 2>/dev/null \
@@ -101,14 +102,14 @@ case `python -c 'import sys; print sys.hexversion >= 0x20300F0'` in
   *) echo "Skipping test: python version too old"; rm -fr $tmpfiles; exit 77;;
 esac
 
-tmpfiles="$tmpfiles prog.ok prog.oku prog.out"
+tmpfiles="$tmpfiles l-python-2-prog.ok l-python-2-prog.oku l-python-2-prog.out"
 : ${DIFF=diff}
-cat <<\EOF > prog.ok
+cat <<\EOF > l-python-2-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EUR remplace FF.
 EOF
-cat <<\EOF > prog.oku
+cat <<\EOF > l-python-2-prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EUR remplace FF.
@@ -117,13 +118,13 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR python prog.py 2 > prog.out || exit 1
-  ${DIFF} prog.ok prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR python prog2.py 2 > l-python-2-prog.out || exit 1
+  ${DIFF} l-python-2-prog.ok l-python-2-prog.out || exit 1
 fi
 if test -z "$UTF8_LOCALE_UNSUPPORTED"; then
   if test $LOCALE_FR_UTF8 != none; then
-    LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 python prog.py 2 > prog.out || exit 1
-    ${DIFF} prog.oku prog.out || exit 1
+    LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 python prog2.py 2 > l-python-2-prog.out || exit 1
+    ${DIFF} l-python-2-prog.oku l-python-2-prog.out || exit 1
   fi
   if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
     if test -f /usr/bin/localedef; then

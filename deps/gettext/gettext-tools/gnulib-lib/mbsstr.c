@@ -45,11 +45,12 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
   size_t *table;
 
   /* Allocate room for needle_mbchars and the table.  */
-  char *memory = (char *) nmalloca (m, sizeof (mbchar_t) + sizeof (size_t));
+  void *memory = nmalloca (m, sizeof (mbchar_t) + sizeof (size_t));
+  void *table_memory;
   if (memory == NULL)
     return false;
-  needle_mbchars = (mbchar_t *) memory;
-  table = (size_t *) (memory + m * sizeof (mbchar_t));
+  needle_mbchars = memory;
+  table = table_memory = needle_mbchars + m;
 
   /* Fill needle_mbchars.  */
   {

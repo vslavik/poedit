@@ -26,6 +26,10 @@
 
 # include "verify.h"
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 # define ARRAY_CARDINALITY(Array) (sizeof (Array) / sizeof *(Array))
 
 /* Assert there are as many real arguments as there are values
@@ -99,5 +103,9 @@ char const *argmatch_to_argument (char const *value,
 # define ARGMATCH_TO_ARGUMENT(Value, Arglist, Vallist)                  \
   argmatch_to_argument (Value, Arglist,                                 \
                         (char const *) (Vallist), sizeof *(Vallist))
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* ARGMATCH_H_ */

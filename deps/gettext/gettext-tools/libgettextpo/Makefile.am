@@ -65,11 +65,13 @@ libgettextpo_la_AUXSOURCES = \
   ../src/format-c.c \
   ../src/format-sh.c \
   ../src/format-python.c \
+  ../src/format-python-brace.c \
   ../src/format-lisp.c \
   ../src/format-elisp.c \
   ../src/format-librep.c \
   ../src/format-scheme.c \
   ../src/format-java.c \
+  ../src/format-javascript.c \
   ../src/format-csharp.c \
   ../src/format-awk.c \
   ../src/format-pascal.c \
@@ -84,6 +86,7 @@ libgettextpo_la_AUXSOURCES = \
   ../src/format-qt-plural.c \
   ../src/format-kde.c \
   ../src/format-boost.c \
+  ../src/format-lua.c \
   ../src/format.c \
   ../src/plural-exp.c \
   ../src/plural-eval.c \

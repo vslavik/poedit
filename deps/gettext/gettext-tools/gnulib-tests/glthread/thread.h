@@ -120,7 +120,13 @@ extern int glthread_in_use (void);
    address of a function in libpthread that we don't use.  */
 
 #  pragma weak pthread_create
+
+#  ifdef __clang__
+  /* Without this, clang complains that pthread_sigmask is never declared.  */
+#   include <signal.h>
+#  endif
 #  pragma weak pthread_sigmask
+
 #  pragma weak pthread_join
 #  ifndef pthread_self
 #   pragma weak pthread_self
