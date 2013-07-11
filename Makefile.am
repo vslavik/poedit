@@ -17,14 +17,13 @@
 ## Process this file with automake to produce Makefile.in.
 
 AUTOMAKE_OPTIONS = 1.5 gnu no-dependencies
-ACLOCAL = build-aux/fixaclocal @ACLOCAL@
 ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = gnulib-local gettext-runtime gettext-tools
 
 EXTRA_DIST = \
   version.sh DEPENDENCIES PACKAGING HACKING ChangeLog.0 autogen.sh \
-  build-aux/ac-help.sed build-aux/fixaclocal build-aux/moopp \
+  build-aux/ac-help.sed build-aux/moopp \
   m4/fixautomake.m4 m4/woe32-dll.m4 \
   m4/libtool.m4
 

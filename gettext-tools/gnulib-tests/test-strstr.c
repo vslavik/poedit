@@ -37,8 +37,9 @@ main (int argc, char *argv[])
      caused by SIGALRM.  All known platforms that lack alarm also have
      a quadratic strstr, and the replacement strstr is known to not
      take too long.  */
+  int alarm_value = 50;
   signal (SIGALRM, SIG_DFL);
-  alarm (50);
+  alarm (alarm_value);
 #endif
 
   {

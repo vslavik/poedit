@@ -62,20 +62,22 @@ cat <<\EOF >> Program.java
 }
 EOF
 
-tmpfiles="$tmpfiles Program.class prog.err"
+tmpfiles="$tmpfiles Program.class l-java l-java-prog.err"
+test -d l-java || mkdir l-java
+
 : ${JAVACOMP="/bin/sh ../javacomp.sh"}
-CLASSPATH=../../gettext-runtime/intl-java/libintl.jar ${JAVACOMP} -d . Program.java 2>prog.err \
-  || { cat prog.err 1>&2; exit 1; }
+CLASSPATH=../../gettext-runtime/intl-java/libintl.jar ${JAVACOMP} -d l-java Program.java 2>l-java-prog.err \
+  || { cat l-java-prog.err 1>&2; exit 1; }
 
-tmpfiles="$tmpfiles prog.tmp prog.pot"
+tmpfiles="$tmpfiles l-java-prog.tmp l-java-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location Program.java
+${XGETTEXT} -o l-java-prog.tmp --omit-header --no-location Program.java
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+LC_ALL=C tr -d '\r' < l-java-prog.tmp > l-java-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles prog.ok"
-cat <<EOF > prog.ok
+tmpfiles="$tmpfiles l-java-prog.ok"
+cat <<EOF > l-java-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -103,10 +105,10 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} l-java-prog.ok l-java-prog.pot || exit 1
 
-tmpfiles="$tmpfiles fr.po"
-cat <<\EOF > fr.po
+tmpfiles="$tmpfiles l-java-fr.po"
+cat <<\EOF > l-java-fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -142,19 +144,19 @@ msgid "{0} is replaced by {1}."
 msgstr "Le nouveau {1} remplace le vieux {0}."
 EOF
 
-tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+tmpfiles="$tmpfiles l-java-fr.po.tmp l-java-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+${MSGMERGE} -q -o l-java-fr.po.tmp l-java-fr.po l-java-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+LC_ALL=C tr -d '\r' < l-java-fr.po.tmp > l-java-fr.po.new
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} l-java-fr.po l-java-fr.po.new || exit 1
 
 tmpfiles="$tmpfiles prog_fr.class"
 : ${MSGFMT=msgfmt}
-${MSGFMT} -j -d . -r prog -l fr fr.po || exit 1
+${MSGFMT} -j -d l-java -r prog -l fr l-java-fr.po || exit 1
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
@@ -184,16 +186,16 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   rm -fr $tmpfiles; exit 77
 fi
 
-tmpfiles="$tmpfiles prog.ok prog.oku prog.out"
+tmpfiles="$tmpfiles l-java-prog.ok l-java-prog.oku l-java-prog.out"
 : ${DIFF=diff}
-cat <<\EOF > prog.ok
+cat <<\EOF > l-java-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EUR remplace FF.
 2 morceaux de gateau succulent
 Le nouveau EUR remplace le vieux FF.
 EOF
-cat <<\EOF > prog.oku
+cat <<\EOF > l-java-prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EUR remplace FF.
@@ -205,12 +207,12 @@ EOF
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 : ${JAVAEXEC="/bin/sh ../javaexec.sh"}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR CLASSPATH=.:../../gettext-runtime/intl-java/libintl.jar ${JAVAEXEC} Program 2 ISO-8859-1 > prog.out || exit 1
-  ${DIFF} prog.ok prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR CLASSPATH=l-java:../../gettext-runtime/intl-java/libintl.jar ${JAVAEXEC} Program 2 ISO-8859-1 > l-java-prog.out || exit 1
+  ${DIFF} l-java-prog.ok l-java-prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 CLASSPATH=.:../../gettext-runtime/intl-java/libintl.jar ${JAVAEXEC} Program 2 UTF-8 > prog.out || exit 1
-  ${DIFF} prog.oku prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 CLASSPATH=l-java:../../gettext-runtime/intl-java/libintl.jar ${JAVAEXEC} Program 2 UTF-8 > l-java-prog.out || exit 1
+  ${DIFF} l-java-prog.oku l-java-prog.out || exit 1
 fi
 
 rm -fr $tmpfiles

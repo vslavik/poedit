@@ -699,7 +699,6 @@ with_libintl_prefix
 enable_c__
 enable_relocatable
 enable_libasprintf
-enable_acl
 with_included_glib
 with_libglib_2_0_prefix
 with_included_libcroco
@@ -709,6 +708,7 @@ with_libunistring_prefix
 with_included_libxml
 with_libxml2_prefix
 enable_openmp
+enable_acl
 enable_curses
 with_libncurses_prefix
 with_libtermcap_prefix
@@ -1384,8 +1384,8 @@ Optional Features:
   --enable-relocatable    install a package that can be moved in the file
                           system
   --disable-libasprintf   do not build libasprintf
-  --disable-acl           do not support ACLs
   --disable-openmp        do not use OpenMP
+  --disable-acl           do not support ACLs
   --disable-curses        do not use libncurses, libtermcap even if they exist
 
 Optional Packages:
@@ -1930,7 +1930,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 
 
-am__api_version='1.12'
+am__api_version='1.14'
 
 # Find a good install program.  We prefer a C program (faster),
 # so one script is as good as another.  But avoid the broken or
@@ -2114,8 +2114,8 @@ if test x"${MISSING+set}" != xset; then
   esac
 fi
 # Use eval to expand $SHELL
-if eval "$MISSING --run true"; then
-  am_missing_run="$MISSING --run "
+if eval "$MISSING --is-lightweight"; then
+  am_missing_run="$MISSING "
 else
   am_missing_run=
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: 'missing' script is too old or missing" >&5
@@ -2449,12 +2449,58 @@ mkdir_p='$(MKDIR_P)'
 # in the wild :-(  We should find a proper way to deprecate it ...
 AMTAR='$${TAR-tar}'
 
+
+# We'll loop over all known methods to create a tar archive until one works.
+_am_tools='gnutar  pax cpio none'
+
 am__tar='$${TAR-tar} chof - "$$tardir"' am__untar='$${TAR-tar} xf -'
 
 
 
 
 
+
+# POSIX will say in a future version that running "rm -f" with no argument
+# is OK; and we want to be able to make that assumption in our Makefile
+# recipes.  So use an aggressive probe to check that the usage we want is
+# actually supported "in the wild" to an acceptable degree.
+# See automake bug#10828.
+# To make any issue more visible, cause the running configure to be aborted
+# by default if the 'rm' program in use doesn't match our expectations; the
+# user can still override this though.
+if rm -f && rm -fr && rm -rf; then : OK; else
+  cat >&2 <<'END'
+Oops!
+
+Your 'rm' program seems unable to run without file operands specified
+on the command line, even when the '-f' option is present.  This is contrary
+to the behaviour of most rm programs out there, and not conforming with
+the upcoming POSIX standard: <http://austingroupbugs.net/view.php?id=542>
+
+Please tell bug-automake@gnu.org about your system, including the value
+of your $PATH and any error possibly output before this message.  This
+can help us improve future automake versions.
+
+END
+  if test x"$ACCEPT_INFERIOR_RM_PROGRAM" = x"yes"; then
+    echo 'Configuration will proceed anyway, since you have set the' >&2
+    echo 'ACCEPT_INFERIOR_RM_PROGRAM variable to "yes"' >&2
+    echo >&2
+  else
+    cat >&2 <<'END'
+Aborting the configuration process, to ensure you take notice of the issue.
+
+You can download and install GNU coreutils to get an 'rm' implementation
+that behaves properly: <http://www.gnu.org/software/coreutils/>.
+
+If you want to complete the configuration process using your problematic
+'rm' anyway, export the environment variable ACCEPT_INFERIOR_RM_PROGRAM
+to "yes", and re-run configure.
+
+END
+    as_fn_error $? "Your 'rm' program is bad, sorry." "$LINENO" 5
+  fi
+fi
     PACKAGE=gettext
 
      VERSION=$VERSION_NUMBER
@@ -2831,11 +2877,6 @@ if test "${with_libintl_prefix+set}" = set; then :
   withval=$with_libintl_prefix;
 fi
 
-# Check whether --enable-acl was given.
-if test "${enable_acl+set}" = set; then :
-  enableval=$enable_acl;
-fi
-
 # Check whether --enable-c++ was given.
 if test "${enable_c__+set}" = set; then :
   enableval=$enable_c__;
@@ -2930,6 +2971,11 @@ fi
 # Check whether --enable-openmp was given.
 if test "${enable_openmp+set}" = set; then :
   enableval=$enable_openmp;
+fi
+
+# Check whether --enable-acl was given.
+if test "${enable_acl+set}" = set; then :
+  enableval=$enable_acl;
 fi
 
 # Check whether --enable-relocatable was given.

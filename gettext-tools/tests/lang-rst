@@ -22,15 +22,15 @@ rstconv.NoOutFilename='No output filename specified'
 rstconv.InvalidOutputFormat='Invalid output format -'
 EOF
 
-tmpfiles="$tmpfiles prog.tmp prog.pot"
+tmpfiles="$tmpfiles l-rst-prog.tmp l-rst-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --add-location prog.rst
+${XGETTEXT} -o l-rst-prog.tmp --omit-header --add-location prog.rst
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+LC_ALL=C tr -d '\r' < l-rst-prog.tmp > l-rst-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles prog.ok"
-cat <<EOF > prog.ok
+tmpfiles="$tmpfiles l-rst-prog.ok"
+cat <<EOF > l-rst-prog.ok
 #: rstconv.help
 msgid ""
 "rstconv [-h|--help]    Displays this help\n"
@@ -61,19 +61,19 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} l-rst-prog.ok l-rst-prog.pot || exit 1
 
 # The output of rstconv is slightly different:
 # - ModuleName:ConstName instead of ModuleName.ConstName
 # - no line wrapping in fpc versions < 2.6.0
 # - extra newline at the end
 
-tmpfiles="$tmpfiles prog.pot"
+tmpfiles="$tmpfiles l-rst-prog.pot"
 : ${RSTCONV=rstconv}
-if (${RSTCONV} -o prog.pot -i prog.rst) >/dev/null 2>&1; then
+if (${RSTCONV} -o l-rst-prog.pot -i prog.rst) >/dev/null 2>&1; then
 
-tmpfiles="$tmpfiles prog.ok1"
-cat <<EOF > prog.ok1
+tmpfiles="$tmpfiles l-rst-prog.ok1"
+cat <<EOF > l-rst-prog.ok1
 #: rstconv:help
 msgid "rstconv [-h|--help]    Displays this help\nrstconv options        Convert rst file\n\nOptions are:\n  -i file    Use specified file instead of stdin as input .rst (OPTIONAL)\n  -o file    Write output to specified file (REQUIRED)\n  -f format  Specifies the output format:\n             po    GNU gettext .po (portable) format (DEFAULT)\n"
 msgstr ""
@@ -96,8 +96,8 @@ msgstr ""
 
 EOF
 
-tmpfiles="$tmpfiles prog.ok2"
-cat <<EOF > prog.ok2
+tmpfiles="$tmpfiles l-rst-prog.ok2"
+cat <<EOF > l-rst-prog.ok2
 #: rstconv:help
 msgid ""
 "rstconv [-h|--help]    Displays this help\n"
@@ -129,7 +129,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok1 prog.pot >/dev/null || ${DIFF} prog.ok2 prog.pot || exit 1
+${DIFF} l-rst-prog.ok1 l-rst-prog.pot >/dev/null || ${DIFF} l-rst-prog.ok2 l-rst-prog.pot || exit 1
 
 fi
 

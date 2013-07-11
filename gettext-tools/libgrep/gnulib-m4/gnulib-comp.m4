@@ -281,7 +281,6 @@ AC_DEFUN([grgl_FILE_LIST], [
   m4/mbstate_t.m4
   m4/mbtowc.m4
   m4/nl_langinfo.m4
-  m4/onceonly.m4
   m4/regex.m4
   m4/warn-on-use.m4
   m4/wcrtomb.m4

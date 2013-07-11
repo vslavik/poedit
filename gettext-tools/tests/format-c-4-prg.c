@@ -61,7 +61,7 @@ main (int argc, char *argv[])
     }
 
   textdomain ("fc4");
-  bindtextdomain ("fc4", ".");
+  bindtextdomain ("fc4", "fc4-dir");
 
   s = ngettext ("father of %"PRId8" child", "father of %"PRId8" children", n);
   c1 = "Vater von %"; c2 = " Kindern";

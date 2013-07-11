@@ -15,12 +15,12 @@ Object subclass: #Main
   instanceVariableNames: ''
   classVariableNames: 'NLS' 
   poolDictionaries: ''
-  category: 'Program'
+  category: 'L-Smalltalk-Program'
 !
 !Main methodsFor: 'running'!
 run
   | n |
-  NLS := I18N Locale default messages domain: 'prog' localeDirectory: '.'.
+  NLS := I18N Locale default messages domain: 'prog' localeDirectory: 'l-smalltalk'.
   n := 2.
   Transcript showCr:
     (NLS ? '''Your command, please?'', asked the waiter.').
@@ -33,15 +33,15 @@ run
 Main new run!
 EOF
 
-tmpfiles="$tmpfiles prog.tmp prog.pot"
+tmpfiles="$tmpfiles l-smalltalk-prog.tmp l-smalltalk-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location prog.st
+${XGETTEXT} -o l-smalltalk-prog.tmp --omit-header --no-location prog.st
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+LC_ALL=C tr -d '\r' < l-smalltalk-prog.tmp > l-smalltalk-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles prog.ok"
-cat <<EOF > prog.ok
+tmpfiles="$tmpfiles l-smalltalk-prog.ok"
+cat <<EOF > l-smalltalk-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -57,10 +57,10 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} l-smalltalk-prog.ok l-smalltalk-prog.pot || exit 1
 
-tmpfiles="$tmpfiles fr.po"
-cat <<\EOF > fr.po
+tmpfiles="$tmpfiles l-smalltalk-fr.po"
+cat <<\EOF > l-smalltalk-fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -82,22 +82,23 @@ msgid "%1 is replaced by %2."
 msgstr "%2 remplace %1."
 EOF
 
-tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+tmpfiles="$tmpfiles l-smalltalk-fr.po.tmp l-smalltalk-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+${MSGMERGE} -q -o l-smalltalk-fr.po.tmp l-smalltalk-fr.po l-smalltalk-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+LC_ALL=C tr -d '\r' < l-smalltalk-fr.po.tmp > l-smalltalk-fr.po.new
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} l-smalltalk-fr.po l-smalltalk-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles fr"
-test -d fr || mkdir fr
-test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+tmpfiles="$tmpfiles l-smalltalk"
+test -d l-smalltalk || mkdir l-smalltalk
+test -d l-smalltalk/fr || mkdir l-smalltalk/fr
+test -d l-smalltalk/fr/LC_MESSAGES || mkdir l-smalltalk/fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
+${MSGFMT} -o l-smalltalk/fr/LC_MESSAGES/prog.mo l-smalltalk-fr.po
 
 # Test for presence of gst version 2.0.6 or newer.
 (gst --version) >/dev/null 2>/dev/null \
@@ -107,41 +108,41 @@ case `gst --version | sed -n -e 1p | sed -e 's/^[^0-9]*//'` in
     echo "Skipping test: gst version too old"; rm -fr $tmpfiles; exit 77;;
 esac
 
-tmpfiles="$tmpfiles prog.ok prog.oku prog.ok2 prog.oku2 prog.out"
+tmpfiles="$tmpfiles l-smalltalk-prog.ok l-smalltalk-prog.oku l-smalltalk-prog.ok2 l-smalltalk-prog.oku2 l-smalltalk-prog.ok3 l-smalltalk-prog.oku3 l-smalltalk-prog.out"
 : ${DIFF=diff}
-cat <<\EOF > prog.ok
+cat <<\EOF > l-smalltalk-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EUR remplace FF.
 EOF
-cat <<\EOF > prog.oku
+cat <<\EOF > l-smalltalk-prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EUR remplace FF.
 EOF
 # gst versions older than 2.3 also print "Loading package I18N".
-{ echo 'Loading package I18N'; cat prog.ok; } > prog.ok2
-{ echo 'Loading package I18N'; cat prog.oku; } > prog.oku2
+{ echo 'Loading package I18N'; cat l-smalltalk-prog.ok; } > l-smalltalk-prog.ok2
+{ echo 'Loading package I18N'; cat l-smalltalk-prog.oku; } > l-smalltalk-prog.oku2
 # gst version 3.0.3 also prints "Loading package Iconv" and
 # "Loading package I18N".
-{ echo 'Loading package Iconv'; echo 'Loading package I18N'; cat prog.ok; } > prog.ok3
-{ echo 'Loading package Iconv'; echo 'Loading package I18N'; cat prog.oku; } > prog.oku3
+{ echo 'Loading package Iconv'; echo 'Loading package I18N'; cat l-smalltalk-prog.ok; } > l-smalltalk-prog.ok3
+{ echo 'Loading package Iconv'; echo 'Loading package I18N'; cat l-smalltalk-prog.oku; } > l-smalltalk-prog.oku3
 
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR gst -Q prog.st > prog.out || exit 1
-  ${DIFF} prog.ok prog.out > /dev/null ||
-    ${DIFF} prog.ok2 prog.out > /dev/null ||
-      ${DIFF} prog.ok3 prog.out > /dev/null ||
-        { ${DIFF} prog.ok prog.out; exit 1; }
+  LANGUAGE= LC_ALL=$LOCALE_FR gst -Q prog.st > l-smalltalk-prog.out || exit 1
+  ${DIFF} l-smalltalk-prog.ok l-smalltalk-prog.out > /dev/null ||
+    ${DIFF} l-smalltalk-prog.ok2 l-smalltalk-prog.out > /dev/null ||
+      ${DIFF} l-smalltalk-prog.ok3 l-smalltalk-prog.out > /dev/null ||
+        { ${DIFF} l-smalltalk-prog.ok l-smalltalk-prog.out; exit 1; }
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 gst -Q prog.st > prog.out || exit 1
-  ${DIFF} prog.oku prog.out > /dev/null ||
-    ${DIFF} prog.oku2 prog.out > /dev/null ||
-      ${DIFF} prog.oku3 prog.out > /dev/null ||
-        { ${DIFF} prog.oku prog.out; exit 1; }
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 gst -Q prog.st > l-smalltalk-prog.out || exit 1
+  ${DIFF} l-smalltalk-prog.oku l-smalltalk-prog.out > /dev/null ||
+    ${DIFF} l-smalltalk-prog.oku2 l-smalltalk-prog.out > /dev/null ||
+      ${DIFF} l-smalltalk-prog.oku3 l-smalltalk-prog.out > /dev/null ||
+        { ${DIFF} l-smalltalk-prog.oku l-smalltalk-prog.out; exit 1; }
 fi
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   if test -f /usr/bin/localedef; then

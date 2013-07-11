@@ -1,3 +1,39 @@
+2013-07-07  Daiki Ueno  <ueno@gnu.org>
+
+	* cs.po: Update from Marek Černocký <marek@manet.cz>.
+	* de.po: Update from Jakob Kramer <jakob.kramer@gmx.de>.
+	* fi.po: Update from Jorma Karvonen <karvonen.jorma@gmail.com>.
+	* it.po: Update from Marco Colombo <m.colombo@ed.ac.uk>.
+	* ko.po: Update from Changwoo Ryu <cwryu@debian.org>.
+	* pl.po: Update from Rafał Maszkowski <rzm@icm.edu.pl>.
+	* pt_BR.po: Update from Rafael Ferreira <rafael.f.f1@gmail.com>.
+	* sl.po: Update from Primoz PETERLIN <primozz.peterlin@gmail.com>.
+	* sv.po: Update from Jan Djärv <jan.h.d@swipnet.se>.
+	* uk.po: Update from Yuri Chornoivan <yurchor@ukr.net>.
+	* vi.po: Update from Trần Ngọc Quân <vnwildman@gmail.com>.
+
+2013-06-25  Daiki Ueno  <ueno@gnu.org>
+
+	Allow user to supply custom sed command when generating en@quot.po.
+	This is necessary because BSD Sed is known not to work well with
+	an input not ending with a newline.
+	* Makefile.in.in (SED): Define using @SED@.
+	* Rules-quot: Use '$(SED)' instead of 'sed' as the FILTER argument
+	of msgfilter.
+	Reported by Mats Erik Andersson in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-04/msg00028.html>.
+
+2013-03-02  Bruno Haible  <bruno@clisp.org>
+
+	* bg.po: Update from Roumen Petrov <transl@roumenpetrov.info>.
+	* gl.po: Update from Leandro Regueiro <leandro.regueiro@gmail.com>.
+	* ja.po: Update from Masahito Yamaga <ma@yama-ga.com>.
+	* nl.po: Update from Benno Schulenberg <benno@vertaalt.nl>.
+	* pl.po: Update from Rafał Maszkowski <rzm@icm.edu.pl>.
+	* pt_BR.po: Update from Rafael Ferreira <rafael.f.f1@gmail.com>.
+	* uk.po: Update from Yuri Chornoivan <yurchor@ukr.net>.
+	* vi.po: Update from Trần Ngọc Quân <vnwildman@gmail.com>.
+
 2012-12-25  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext-0.18.2 released.

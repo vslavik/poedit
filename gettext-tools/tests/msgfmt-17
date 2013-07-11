@@ -11,8 +11,8 @@ trap 'rm -fr $tmpfiles' 1 2 3 15
 #       3 - lack %d for value 1 - error
 #       4 - lack %d for value 1 but limited range such that multiple n - error
 
-tmpfiles="$tmpfiles mf-15.po1"
-cat <<\EOF > mf-15.po1
+tmpfiles="$tmpfiles mf-17.po1"
+cat <<\EOF > mf-17.po1
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -23,6 +23,7 @@ msgstr ""
 "PO-Revision-Date: 2001-04-05 19:47+0200\n"
 "Last-Translator: ABC DEF <abc@gnu.uucp>\n"
 "Language-Team: test <test@li.org>\n"
+"Language: test\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -38,11 +39,11 @@ msgstr[2] "час и %(number)s четвертей"
 EOF
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o /dev/null mf-15.po1 2>/dev/null
+${MSGFMT} --check -o /dev/null mf-17.po1 2>/dev/null
 test $? = 1 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles mf-15.po2"
-cat <<\EOF > mf-15.po2
+tmpfiles="$tmpfiles mf-17.po2"
+cat <<\EOF > mf-17.po2
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -53,6 +54,7 @@ msgstr ""
 "PO-Revision-Date: 2001-04-05 19:47+0200\n"
 "Last-Translator: ABC DEF <abc@gnu.uucp>\n"
 "Language-Team: test <test@li.org>\n"
+"Language: test\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -68,11 +70,11 @@ msgstr[2] "час и %(number)s четвертей"
 EOF
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o /dev/null mf-15.po2
+${MSGFMT} --check -o /dev/null mf-17.po2
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles mf-15.po3"
-cat <<\EOF > mf-15.po3
+tmpfiles="$tmpfiles mf-17.po3"
+cat <<\EOF > mf-17.po3
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -83,6 +85,7 @@ msgstr ""
 "PO-Revision-Date: 2001-04-05 19:47+0200\n"
 "Last-Translator: ABC DEF <abc@gnu.uucp>\n"
 "Language-Team: test <test@li.org>\n"
+"Language: test\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -98,11 +101,11 @@ msgstr[2] "час и %(number)s четвертей"
 EOF
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o /dev/null mf-15.po3 2>/dev/null
+${MSGFMT} --check -o /dev/null mf-17.po3 2>/dev/null
 test $? = 1 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles mf-15.po4"
-cat <<\EOF > mf-15.po4
+tmpfiles="$tmpfiles mf-17.po4"
+cat <<\EOF > mf-17.po4
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -113,6 +116,7 @@ msgstr ""
 "PO-Revision-Date: 2001-04-05 19:47+0200\n"
 "Last-Translator: ABC DEF <abc@gnu.uucp>\n"
 "Language-Team: test <test@li.org>\n"
+"Language: test\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -128,7 +132,7 @@ msgstr[2] "час и %(number)s четвертей"
 EOF
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o /dev/null mf-15.po4 2>/dev/null
+${MSGFMT} --check -o /dev/null mf-17.po4 2>/dev/null
 test $? = 1 || { rm -fr $tmpfiles; exit 1; }
 
 rm -fr $tmpfiles

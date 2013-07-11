@@ -22,7 +22,10 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#include "binary-io.h"
+#if GNULIB_BINARY_IO
+# include "binary-io.h"
+#endif
+
 #include "verify.h"
 
 #if GNULIB_defined_O_NONBLOCK

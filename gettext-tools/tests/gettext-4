@@ -21,12 +21,13 @@ trap 'rm -fr $tmpfiles' 1 2 3 15
   exit 77
 }
 
-tmpfiles="$tmpfiles fr"
-test -d fr || mkdir fr
-test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+tmpfiles="$tmpfiles gt-4"
+test -d gt-4 || mkdir gt-4
+test -d gt-4/fr || mkdir gt-4/fr
+test -d gt-4/fr/LC_MESSAGES || mkdir gt-4/fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o fr/LC_MESSAGES/codeset.mo ${top_srcdir}/tests/gettext-4.po
+${MSGFMT} -o gt-4/fr/LC_MESSAGES/codeset.mo ${top_srcdir}/tests/gettext-4.po
 
 ./gettext-4-prg $LOCALE_FR || exit 1
 

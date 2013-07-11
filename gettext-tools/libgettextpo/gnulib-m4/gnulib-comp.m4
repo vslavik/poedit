@@ -101,6 +101,7 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module pathmax:
   # Code from module progname:
   # Code from module raise:
+  # Code from module rawmemchr:
   # Code from module realloc-posix:
   # Code from module relocatable-lib:
   # Code from module signal-h:
@@ -126,6 +127,7 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module stdio:
   # Code from module stdlib:
   # Code from module stpcpy:
+  # Code from module strchrnul:
   # Code from module streq:
   # Code from module strerror:
   # Code from module strerror-override:
@@ -264,6 +266,7 @@ AC_DEFUN([gtpo_INIT],
   LOCALCHARSET_TESTS_ENVIRONMENT="CHARSETALIASDIR=\"\$(abs_top_builddir)/$gl_source_base\""
   AC_SUBST([LOCALCHARSET_TESTS_ENVIRONMENT])
   gl_LOCK
+  gl_MODULE_INDICATOR([lock])
   gl_FUNC_MALLOC_POSIX
   if test $REPLACE_MALLOC = 1; then
     AC_LIBOBJ([malloc])
@@ -317,6 +320,12 @@ AC_DEFUN([gtpo_INIT],
     gl_PREREQ_RAISE
   fi
   gl_SIGNAL_MODULE_INDICATOR([raise])
+  gl_FUNC_RAWMEMCHR
+  if test $HAVE_RAWMEMCHR = 0; then
+    AC_LIBOBJ([rawmemchr])
+    gl_PREREQ_RAWMEMCHR
+  fi
+  gl_STRING_MODULE_INDICATOR([rawmemchr])
   gl_FUNC_REALLOC_POSIX
   if test $REPLACE_REALLOC = 1; then
     AC_LIBOBJ([realloc])
@@ -366,6 +375,12 @@ AC_DEFUN([gtpo_INIT],
     gl_PREREQ_STPCPY
   fi
   gl_STRING_MODULE_INDICATOR([stpcpy])
+  gl_FUNC_STRCHRNUL
+  if test $HAVE_STRCHRNUL = 0 || test $REPLACE_STRCHRNUL = 1; then
+    AC_LIBOBJ([strchrnul])
+    gl_PREREQ_STRCHRNUL
+  fi
+  gl_STRING_MODULE_INDICATOR([strchrnul])
   gl_FUNC_STRERROR
   if test $REPLACE_STRERROR = 1; then
     AC_LIBOBJ([strerror])
@@ -687,6 +702,8 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/progname.c
   lib/progname.h
   lib/raise.c
+  lib/rawmemchr.c
+  lib/rawmemchr.valgrind
   lib/realloc.c
   lib/ref-add.sin
   lib/ref-del.sin
@@ -705,6 +722,8 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/stdlib.in.h
   lib/stpcpy.c
   lib/str-two-way.h
+  lib/strchrnul.c
+  lib/strchrnul.valgrind
   lib/streq.h
   lib/strerror-override.c
   lib/strerror-override.h
@@ -833,11 +852,11 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/msvc-nothrow.m4
   m4/multiarch.m4
   m4/off_t.m4
-  m4/onceonly.m4
   m4/open.m4
   m4/pathmax.m4
   m4/printf.m4
   m4/raise.m4
+  m4/rawmemchr.m4
   m4/realloc.m4
   m4/relocatable-lib.m4
   m4/signal_h.m4
@@ -854,6 +873,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/stdio_h.m4
   m4/stdlib_h.m4
   m4/stpcpy.m4
+  m4/strchrnul.m4
   m4/strerror.m4
   m4/string_h.m4
   m4/strstr.m4

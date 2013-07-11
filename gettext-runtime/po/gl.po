@@ -1,19 +1,20 @@
 # Galician translation of gettext-runtime.
 # This file is distributed under the same license as the gettext package.
 # Copyright (C) 1999, 2000, 2001 Free Software Foundation, Inc.
-# Copyright (C) 2012 Leandro Regueiro.
+# Copyright (C) 2012, 2013 Leandro Regueiro.
 #
 # Jesús Bravo Álvarez <jba@pobox.com>, 1999-2001.
-# Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.
+# Leandro Regueiro <leandro.regueiro@gmail.com>, 2012, 2013.
 #
 # Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas
 # colaborar connosco, podes atopar máis información en http://www.trasno.net
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gettext-runtime 0.18\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2012-12-25 14:19+0900\n"
-"PO-Revision-Date: 2012-11-10 18:12+0200\n"
+"POT-Creation-Date: 2013-07-07 18:18+0900\n"
+"PO-Revision-Date: 2013-01-05 16:29+0200\n"
 "Last-Translator: Leandro Regueiro <leandro.regueiro@gmail.com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
 "Language: gl\n"
@@ -132,7 +133,7 @@ msgstr "Use «%s --help» para obter máis información.\n"
 #: src/envsubst.c:176
 #, c-format, no-wrap
 msgid "Usage: %s [OPTION] [SHELL-FORMAT]\n"
-msgstr ""
+msgstr "Modo de uso: %s [OPCIÓN] [FORMATO-SHELL]\n"
 
 #: src/envsubst.c:181
 #, c-format, no-wrap
@@ -147,7 +148,7 @@ msgstr "Modo de funcionamento:\n"
 #: src/envsubst.c:188
 #, c-format, no-wrap
 msgid "  -v, --variables             output the variables occurring in SHELL-FORMAT\n"
-msgstr ""
+msgstr "  -v, --variables             escribe na saída as variábeis atopadas en FORMATO-SHELL\n"
 
 #: src/envsubst.c:192
 #, c-format, no-wrap
@@ -174,6 +175,12 @@ msgid ""
 "substituted; otherwise all environment variables references occurring in\n"
 "standard input are substituted.\n"
 msgstr ""
+"No modo de operación normal, a entrada estándar cópiase á saída estándar,\n"
+"con referencias ás variábeis de ambiente da forma $VARIABLE ou ${VARIABLE}\n"
+"substituíndoas cos valores correspondentes. se se fornece un FORMATO-SHELL,\n"
+"só se substitúen aquelas variábeis referidas en FORMATO-SHELL; senón\n"
+"substitúense todas as referencias a variábeis que se atopen na entrada\n"
+"estándar.\n"
 
 #: src/envsubst.c:211
 #, c-format, no-wrap
@@ -181,6 +188,8 @@ msgid ""
 "When --variables is used, standard input is ignored, and the output consists\n"
 "of the environment variables that are referenced in SHELL-FORMAT, one per line.\n"
 msgstr ""
+"Cando se emprega --variables, ignórase a entrada estándar, e a saída consiste\n"
+"nas variábeis de ambiente que se referencian en FORMATO-SHELL, unha por liña.\n"
 
 #. TRANSLATORS: The placeholder indicates the bug-reporting address
 #. for this package.  Please add _another line_ saying

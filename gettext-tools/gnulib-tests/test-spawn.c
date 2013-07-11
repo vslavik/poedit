@@ -40,7 +40,7 @@ extern void f (struct sched_param *g);
 int
 main (void)
 {
-  switch (0)
+  switch (POSIX_SPAWN_RESETIDS)
     {
     case POSIX_SPAWN_RESETIDS:
     case POSIX_SPAWN_SETPGROUP:

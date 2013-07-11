@@ -27,7 +27,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=gettext-tools --local-dir=gnulib-local --lib=libgnu --source-base=libgettextpo --m4-base=libgettextpo/gnulib-m4 --doc-base=doc --tests-base=tests --aux-dir=../build-aux --makefile-name=Makefile.gnulib --no-conditional-dependencies --libtool --macro-prefix=gtpo basename c-ctype c-strcase c-strstr close error error-progname file-ostream filename fopen fstrcmp fwriteerror gcd getline gettext-h hash iconv libunistring-optional minmax open ostream progname relocatable-lib sigpipe stdbool stdio stdlib strerror unilbrk/ulc-width-linebreaks unistr/u16-mbtouc unistr/u8-mbtouc unistr/u8-mbtoucr unistr/u8-uctomb uniwidth/width unlocked-io vasprintf xalloc xconcat-filename xerror xmalloca xstriconv xvasprintf
+#   gnulib-tool --import --dir=gettext-tools --local-dir=gnulib-local --lib=libgnu --source-base=libgettextpo --m4-base=libgettextpo/gnulib-m4 --doc-base=doc --tests-base=tests --aux-dir=../build-aux --makefile-name=Makefile.gnulib --no-conditional-dependencies --libtool --macro-prefix=gtpo basename c-ctype c-strcase c-strstr close error error-progname file-ostream filename fopen fstrcmp fwriteerror gcd getline gettext-h hash iconv libunistring-optional minmax open ostream progname relocatable-lib sigpipe stdbool stdio stdlib strchrnul strerror unilbrk/ulc-width-linebreaks unistr/u16-mbtouc unistr/u8-mbtouc unistr/u8-mbtoucr unistr/u8-uctomb uniwidth/width unlocked-io vasprintf xalloc xconcat-filename xerror xmalloca xstriconv xvasprintf
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([../gnulib-local])
@@ -59,6 +59,7 @@ gl_MODULES([
   stdbool
   stdio
   stdlib
+  strchrnul
   strerror
   unilbrk/ulc-width-linebreaks
   unistr/u16-mbtouc

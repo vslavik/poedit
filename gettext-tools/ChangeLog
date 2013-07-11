@@ -1,3 +1,25 @@
+2013-05-29  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
+
+	* configure.ac (AM_INIT_AUTOMAKE): Add 'parallel-tests' option.
+	Require Automake 1.11.1 or later, so that the 'parallel-tests'
+	will be certainly available.
+	(AC_INIT): Require Autoconf 2.62 or later; that is the minimal
+	version supported by Automake 1.11.1 or later.
+
+2013-04-26  Daiki Ueno  <ueno@gnu.org>
+
+	Support for Python brace format.
+	* woe32dll/gettextsrc-exports.c: Export formatstring_python_brace.
+
+2013-04-17  Andreas Stricker  <astricker@futurelab.ch>
+
+	Support for JavaScript.
+	* woe32dll/gettextsrc-exports.c: Export formatstring_javascript.
+
+2013-04-15  Daiki Ueno  <ueno@gnu.org>
+
+	* woe32dll/gettextsrc-exports.c: Export formatstring_lua.
+
 2012-12-27  Daiki Ueno  <ueno@gnu.org>
 
 	Determine imported C symbol prefix at configure time.

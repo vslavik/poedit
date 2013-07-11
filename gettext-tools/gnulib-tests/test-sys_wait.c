@@ -31,17 +31,17 @@ main (void)
   if (test_sys_wait_macros ())
     return 1;
 
-  switch (0)
-    {
 #if 0
+  switch (WCONTINUED)
+    {
   /* Gnulib doesn't guarantee these, yet.  */
     case WCONTINUED:
     case WEXITED:
     case WNOWAIT:
     case WSTOPPED:
-#endif
       break;
     }
+#endif
 
   return a ? 1 : 0;
 }

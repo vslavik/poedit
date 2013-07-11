@@ -17,8 +17,8 @@ test "${TESTLIBASPRINTF}" = yes || {
   exit 77
 }
 
-tmpfiles="$tmpfiles prog.cc"
-cat <<\EOF > prog.cc
+tmpfiles="$tmpfiles l-c++-prog.cc"
+cat <<\EOF > l-c++-prog.cc
 #include "config.h"
 
 /* Avoid deprecation warnings from g++ 3.1 or newer.  */
@@ -48,7 +48,7 @@ int main (int argc, char *argv[])
     exit (77);
 
   textdomain ("prog");
-  bindtextdomain ("prog", ".");
+  bindtextdomain ("prog", "l-c++");
 
   cout << _("'Your command, please?', asked the waiter.") << endl;
 
@@ -62,29 +62,29 @@ EOF
 # Variable needed by LTLIBINTL.
 top_builddir=..
 
-tmpfiles="$tmpfiles prog.${OBJEXT} prog${EXEEXT}"
-# Compile in two steps from .cc to .o and from .o to 'prog'. This way,
+tmpfiles="$tmpfiles l-c++-prog.${OBJEXT} l-c++-prog${EXEEXT}"
+# Compile in two steps from .cc to .o and from .o to 'l-c++-prog'. This way,
 # relinking is faster because doesn't need to redo the first step.
 # Put the -I flags before ${CXXFLAGS} ${CPPFLAGS}, to make sure that libintl.h
 # is found in the build directory, regardless of -I options present in
 # ${CXXFLAGS} or ${CPPFLAGS}.
-${CXX} -I.. -I../../gettext-runtime/libasprintf -I$top_srcdir/gnulib-lib -I../intl ${CXXFLAGS} ${CPPFLAGS} -c prog.cc \
+${CXX} -I.. -I../../gettext-runtime/libasprintf -I$top_srcdir/gnulib-lib -I../intl ${CXXFLAGS} ${CPPFLAGS} -c l-c++-prog.cc \
   || exit 1
 # Remove the -Wl,--disable-auto-import option here that is added by
 # woe32-dll.m4. Cygwin 1.7.2 does not support it in C++ mode: It gives
 # a link error about 'std::cout'.
-${LIBTOOL} --quiet --mode=link --tag=CXX ${CXX} ${CXXFLAGS} `echo "X ${LDFLAGS} " | sed -e 's/^X//' -e 's/ -Wl,--disable-auto-import / /'` -o prog prog.${OBJEXT} ../../gettext-runtime/libasprintf/libasprintf.la ../gnulib-lib/libgettextlib.la ${LTLIBINTL} \
+${LIBTOOL} --quiet --mode=link --tag=CXX ${CXX} ${CXXFLAGS} `echo "X ${LDFLAGS} " | sed -e 's/^X//' -e 's/ -Wl,--disable-auto-import / /'` -o l-c++-prog l-c++-prog.${OBJEXT} ../../gettext-runtime/libasprintf/libasprintf.la ../gnulib-lib/libgettextlib.la ${LTLIBINTL} \
   || exit 1
 
-tmpfiles="$tmpfiles prog.tmp prog.pot"
+tmpfiles="$tmpfiles l-c++-prog.tmp l-c++-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location -k_ prog.cc
+${XGETTEXT} -o l-c++-prog.tmp --omit-header --no-location -k_ l-c++-prog.cc
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+LC_ALL=C tr -d '\r' < l-c++-prog.tmp > l-c++-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles prog.ok"
-cat <<EOF > prog.ok
+tmpfiles="$tmpfiles l-c++-prog.ok"
+cat <<EOF > l-c++-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -100,10 +100,10 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} l-c++-prog.ok l-c++-prog.pot || exit 1
 
-tmpfiles="$tmpfiles fr.po"
-cat <<\EOF > fr.po
+tmpfiles="$tmpfiles l-c++-fr.po"
+cat <<\EOF > l-c++-fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -125,31 +125,32 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+tmpfiles="$tmpfiles l-c++-fr.po.tmp l-c++-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+${MSGMERGE} -q -o l-c++-fr.po.tmp l-c++-fr.po l-c++-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+LC_ALL=C tr -d '\r' < l-c++-fr.po.tmp > l-c++-fr.po.new
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} l-c++-fr.po l-c++-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles fr"
-test -d fr || mkdir fr
-test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+tmpfiles="$tmpfiles l-c++"
+test -d l-c++ || mkdir l-c++
+test -d l-c++/fr || mkdir l-c++/fr
+test -d l-c++/fr/LC_MESSAGES || mkdir l-c++/fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
+${MSGFMT} -o l-c++/fr/LC_MESSAGES/prog.mo l-c++-fr.po
 
-tmpfiles="$tmpfiles prog.ok prog.oku prog.out"
+tmpfiles="$tmpfiles l-c++-prog.ok l-c++-prog.oku l-c++-prog.out"
 : ${DIFF=diff}
-cat <<\EOF > prog.ok
+cat <<\EOF > l-c++-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EUR remplace FF.
 EOF
-cat <<\EOF > prog.oku
+cat <<\EOF > l-c++-prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EUR remplace FF.
@@ -158,17 +159,17 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= ./prog $LOCALE_FR 2 > prog.out
+  LANGUAGE= ./l-c++-prog $LOCALE_FR 2 > l-c++-prog.out
   case $? in
-    0) ${DIFF} prog.ok prog.out || exit 1;;
+    0) ${DIFF} l-c++-prog.ok l-c++-prog.out || exit 1;;
     77) LOCALE_FR=none;;
     *) exit 1;;
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= ./prog $LOCALE_FR_UTF8 2 > prog.out
+  LANGUAGE= ./l-c++-prog $LOCALE_FR_UTF8 2 > l-c++-prog.out
   case $? in
-    0) ${DIFF} prog.oku prog.out || exit 1;;
+    0) ${DIFF} l-c++-prog.oku l-c++-prog.out || exit 1;;
     77) LOCALE_FR_UTF8=none;;
     *) exit 1;;
   esac

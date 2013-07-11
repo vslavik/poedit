@@ -6,13 +6,14 @@ tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
 # Create binary test file in correct position.
-tmpfiles="$tmpfiles LC_MESSAGES"
-test -d LC_MESSAGES || mkdir LC_MESSAGES
-cp $top_srcdir/tests/test.mo LC_MESSAGES
+tmpfiles="$tmpfiles gt-1"
+test -d gt-1 || mkdir gt-1
+test -d gt-1/LC_MESSAGES || mkdir gt-1/LC_MESSAGES
+cp $top_srcdir/tests/test.mo gt-1/LC_MESSAGES
 
 tmpfiles="$tmpfiles gt-test1.out"
 : ${GETTEXT=gettext}
-TEXTDOMAINDIR=.. LANGUAGE=tests \
+TEXTDOMAINDIR=. LANGUAGE=gt-1 \
 ${GETTEXT} --env LC_ALL=en -e test 'SYS_(C)\n' | LC_ALL=C tr -d '\r' > gt-test1.out
 
 # Create correct file.

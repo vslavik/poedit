@@ -78,6 +78,7 @@ main (void)
   const char *file = "test-cloexec.tmp";
   int fd = creat (file, 0600);
   int fd2;
+  int bad_fd = getdtablesize ();
 
   /* Assume std descriptors were provided by invoker.  */
   ASSERT (STDERR_FILENO < fd);
@@ -120,7 +121,7 @@ main (void)
   ASSERT (set_cloexec_flag (-1, false) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
-  ASSERT (set_cloexec_flag (10000000, false) == -1);
+  ASSERT (set_cloexec_flag (bad_fd, false) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
   ASSERT (set_cloexec_flag (fd2, false) == -1);
@@ -129,7 +130,7 @@ main (void)
   ASSERT (dup_cloexec (-1) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
-  ASSERT (dup_cloexec (10000000) == -1);
+  ASSERT (dup_cloexec (bad_fd) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
   ASSERT (dup_cloexec (fd2) == -1);

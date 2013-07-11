@@ -32,12 +32,49 @@
 #include <wctype.h>
 #include <stdbool.h>
 #include <stdint.h>
-#if defined _LIBC
+
+#ifdef _LIBC
 # include <bits/libc-lock.h>
+# define lock_define(name) __libc_lock_define (, name)
+# define lock_init(lock) (__libc_lock_init (lock), 0)
+# define lock_fini(lock) 0
+# define lock_lock(lock) __libc_lock_lock (lock)
+# define lock_unlock(lock) __libc_lock_unlock (lock)
+#elif defined GNULIB_LOCK
+# include "glthread/lock.h"
+  /* Use gl_lock_define if empty macro arguments are known to work.
+     Otherwise, fall back on less-portable substitutes.  */
+# if ((defined __GNUC__ && !defined __STRICT_ANSI__) \
+      || (defined __STDC_VERSION__ && 199901L <= __STDC_VERSION__))
+#  define lock_define(name) gl_lock_define (, name)
+# elif USE_POSIX_THREADS
+#  define lock_define(name) pthread_mutex_t name;
+# elif USE_PTH_THREADS
+#  define lock_define(name) pth_mutex_t name;
+# elif USE_SOLARIS_THREADS
+#  define lock_define(name) mutex_t name;
+# elif USE_WINDOWS_THREADS
+#  define lock_define(name) gl_lock_t name;
+# else
+#  define lock_define(name)
+# endif
+# define lock_init(lock) glthread_lock_init (&(lock))
+# define lock_fini(lock) glthread_lock_destroy (&(lock))
+# define lock_lock(lock) glthread_lock_lock (&(lock))
+# define lock_unlock(lock) glthread_lock_unlock (&(lock))
+#elif defined GNULIB_PTHREAD
+# include <pthread.h>
+# define lock_define(name) pthread_mutex_t name;
+# define lock_init(lock) pthread_mutex_init (&(lock), 0)
+# define lock_fini(lock) pthread_mutex_destroy (&(lock))
+# define lock_lock(lock) pthread_mutex_lock (&(lock))
+# define lock_unlock(lock) pthread_mutex_unlock (&(lock))
 #else
-# define __libc_lock_init(NAME) do { } while (0)
-# define __libc_lock_lock(NAME) do { } while (0)
-# define __libc_lock_unlock(NAME) do { } while (0)
+# define lock_define(name)
+# define lock_init(lock) 0
+# define lock_fini(lock) 0
+# define lock_lock(lock) ((void) 0)
+# define lock_unlock(lock) ((void) 0)
 #endif
 
 /* In case that the system doesn't have isblank().  */
@@ -698,9 +735,7 @@ struct re_dfa_t
 #ifdef DEBUG
   char* re_str;
 #endif
-#ifdef _LIBC
-  __libc_lock_define (, lock)
-#endif
+  lock_define (lock)
 };
 
 #define re_node_set_init_empty(set) memset (set, '\0', sizeof (re_node_set))

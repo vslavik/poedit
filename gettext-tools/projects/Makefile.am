@@ -36,10 +36,10 @@ DATAFILES = index \
 EXTRA_DIST += $(SCRIPTFILES) $(DATAFILES)
 
 install-data-local:
-	$(mkdir_p) $(DESTDIR)$(projectsdir)
+	$(MKDIR_P) $(DESTDIR)$(projectsdir)
 	@for p in $(PROJECTS); do \
-	  echo "$(mkdir_p) $(DESTDIR)$(projectsdir)/$$p"; \
-	  $(mkdir_p) $(DESTDIR)$(projectsdir)/$$p; \
+	  echo "$(MKDIR_P) $(DESTDIR)$(projectsdir)/$$p"; \
+	  $(MKDIR_P) $(DESTDIR)$(projectsdir)/$$p; \
 	done
 	@for f in $(SCRIPTFILES); do \
 	  echo "$(INSTALL_SCRIPT) $(srcdir)/$$f $(DESTDIR)$(projectsdir)/$$f"; \
@@ -51,10 +51,10 @@ install-data-local:
 	done
 
 installdirs-local:
-	$(mkdir_p) $(DESTDIR)$(projectsdir)
+	$(MKDIR_P) $(DESTDIR)$(projectsdir)
 	@for p in $(PROJECTS); do \
-	  echo "$(mkdir_p) $(DESTDIR)$(projectsdir)/$$p"; \
-	  $(mkdir_p) $(DESTDIR)$(projectsdir)/$$p; \
+	  echo "$(MKDIR_P) $(DESTDIR)$(projectsdir)/$$p"; \
+	  $(MKDIR_P) $(DESTDIR)$(projectsdir)/$$p; \
 	done
 
 uninstall-local:

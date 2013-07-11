@@ -553,7 +553,7 @@ file_has_acl (char const *name, struct stat const *sb)
 #  endif
         }
       if (ret < 0)
-        return ACL_NOT_WELL_SUPPORTED (errno) ? 0 : -1;
+        return - acl_errno_valid (errno);
       return ret;
 
 # elif HAVE_FACL && defined GETACL /* Solaris, Cygwin, not HP-UX */

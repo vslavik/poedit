@@ -1,3 +1,20 @@
+2013-06-25  Daiki Ueno  <ueno@gnu.org>
+
+	Work around localcharset issue under OS X multi-threaded scenario.
+	* lib/localcharset.c.diff: New patch originally posted to Gnulib
+	<https://lists.gnu.org/archive/html/bug-gnulib/2012-12/msg00091.html>.
+
+2013-06-16  Andreas Schwab  <schwab@linux-m68k.org>  (tiny change)
+
+	* m4/libxml.m4 (gl_LIBXML): Remove extra quotes.
+
+2013-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* modules/libxml: Use $(MKDIR_P) instead of $(mkdir_p).
+	* modules/libglib: Likewise.
+	Suggested by Stefano Lattarini in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-04/msg00044.html>.
+
 2013-02-25  Daiki Ueno  <ueno@gnu.org>
 
 	Update after gnulib changed.

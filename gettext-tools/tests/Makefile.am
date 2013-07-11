@@ -80,6 +80,7 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	xgettext-csharp-7 \
 	xgettext-elisp-1 xgettext-elisp-2 \
 	xgettext-glade-1 xgettext-glade-2 xgettext-glade-3 xgettext-glade-4 \
+	xgettext-glade-5 xgettext-glade-6 xgettext-glade-7 \
 	xgettext-java-1 xgettext-java-2 xgettext-java-3 xgettext-java-4 \
 	xgettext-java-5 xgettext-java-6 xgettext-java-7 \
 	xgettext-librep-1 xgettext-librep-2 \
@@ -97,8 +98,12 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	xgettext-sh-6 \
 	xgettext-smalltalk-1 xgettext-smalltalk-2 \
 	xgettext-stringtable-1 \
-	xgettext-tcl-1 xgettext-tcl-2 xgettext-tcl-3 \
+	xgettext-tcl-1 xgettext-tcl-2 xgettext-tcl-3 xgettext-tcl-4 \
 	xgettext-ycp-1 xgettext-ycp-2 xgettext-ycp-3 xgettext-ycp-4 \
+	xgettext-lua-1 xgettext-lua-2 \
+	xgettext-javascript-1 xgettext-javascript-2 xgettext-javascript-3 \
+	xgettext-javascript-4 xgettext-javascript-5 \
+	xgettext-vala-1 \
 	format-awk-1 format-awk-2 \
 	format-boost-1 format-boost-2 \
 	format-c-1 format-c-2 format-c-3 format-c-4 format-c-5 \
@@ -112,6 +117,7 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	format-lisp-1 format-lisp-2 \
 	format-php-1 format-php-2 \
 	format-python-1 format-python-2 \
+	format-python-brace-1 format-python-brace-2 \
 	format-pascal-1 format-pascal-2 \
 	format-perl-1 format-perl-2 \
 	format-perl-brace-1 format-perl-brace-2 \
@@ -122,12 +128,15 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	format-sh-1 format-sh-2 \
 	format-tcl-1 format-tcl-2 \
 	format-ycp-1 format-ycp-2 \
+	format-lua-1 format-lua-2 \
+	format-javascript-1 format-javascript-2 \
 	plural-1 plural-2 \
 	gettextpo-1 \
 	lang-c lang-c++ lang-objc lang-sh lang-bash lang-python-1 \
 	lang-python-2 lang-clisp lang-elisp lang-librep lang-guile \
 	lang-smalltalk lang-java lang-csharp lang-gawk lang-pascal \
-	lang-ycp lang-tcl lang-perl-1 lang-perl-2 lang-php lang-po lang-rst
+	lang-ycp lang-tcl lang-perl-1 lang-perl-2 lang-php lang-po lang-rst \
+	lang-lua lang-javascript lang-vala
 
 EXTRA_DIST += $(TESTS) \
 	test.mo xg-c-1.ok.po mex-test2.ok \
@@ -187,8 +196,9 @@ TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) \
 		    LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
 		    LOCALE_JA='@LOCALE_JA@' \
 		    host_os='@host_os@' \
-		    CONFIG_SHELL='$(SHELL)' \
-		    $(SHELL)
+		    CONFIG_SHELL='$(SHELL)'
+
+LOG_COMPILER = $(SHELL)
 
 # Update the expected test results.
 update-expected: xg-c-1.ok.po

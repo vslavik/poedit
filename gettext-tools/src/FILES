@@ -214,6 +214,7 @@ format-c.c             Format string handling for C.
 format-c-parse.h         Format string handling for C, parsing routine.
 format-sh.c            Format string handling for Shell.
 format-python.c        Format string handling for Python.
+format-python-brace.c  Format string handling for Python, braced syntax.
 format-lisp.c          Format string handling for Common Lisp.
 format-elisp.c         Format string handling for Emacs Lisp.
 format-librep.c        Format string handling for librep.
@@ -233,6 +234,8 @@ format-qt.c            Format string handling for Qt.
 format-qt-plural.c     Format string handling for Qt plural forms.
 format-kde.c           Format string handling for KDE.
 format-boost.c         Format string handling for Boost.
+format-lua.c           Format string handling for Lua.
+format-javascript.c    Format string handling for JavaScript.
 format.c        Table of the language dependent format string handlers.
 
 plural-exp.c
@@ -333,6 +336,15 @@ msgl-check.c
 | x-glade.h
 | x-glade.c
 |               String extractor from .glade files, GNOME GUI descriptions.
+| x-lua.h
+| x-lua.c
+|               String extractor for Lua.
+| x-javascript.h
+| x-javascript.c
+|               String extractor for JavaScript.
+| x-vala.h
+| x-vala.c
+|               String extractor for Vala.
 | xgettext.c
 |               Main source for the 'xgettext' program.
 |

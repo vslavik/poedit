@@ -49,8 +49,11 @@ main (int argc, char *argv[])
 #if HAVE_DECL_ALARM
   /* Declare failure if test takes too long, by using default abort
      caused by SIGALRM.  */
-  signal (SIGALRM, SIG_DFL);
-  alarm (5);
+  {
+    int alarm_value = 5;
+    signal (SIGALRM, SIG_DFL);
+    alarm (alarm_value);
+  }
 #endif
 
 #if USE_ACL
