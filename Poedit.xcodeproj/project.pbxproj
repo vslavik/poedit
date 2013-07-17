@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21FB780179D51BE003F45AC /* libexpat.dylib */; };
 		B24ACD5F16F6201F00399242 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B24ACD5E16F6201F00399242 /* Cocoa.framework */; };
 		B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD6716F6201F00399242 /* InfoPlist.strings */; };
 		B24ACD8416F6263900399242 /* Poedit.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD8316F6263900399242 /* Poedit.iconset */; };
@@ -132,6 +133,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B21FB780179D51BE003F45AC /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
 		B248B2DE170D765100EBA58E /* GettextTools.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GettextTools.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B248B2DF170D765100EBA58E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		B248B2E3170D765100EBA58E /* GettextTools-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GettextTools-Info.plist"; path = "macosx/GettextTools-Info.plist"; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				B2BF84BA170846290030AA22 /* OpenGL.framework in Frameworks */,
 				B2BF84C1170847E60030AA22 /* IOKit.framework in Frameworks */,
 				B2BF84BE170847220030AA22 /* libz.dylib in Frameworks */,
+				B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */,
 				B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,11 +306,12 @@
 		B24ACD5D16F6201F00399242 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B21FB780179D51BE003F45AC /* libexpat.dylib */,
+				B2BF84BD170847220030AA22 /* libz.dylib */,
 				B256797417075E6000C52BC5 /* Sparkle.framework */,
 				B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */,
 				B2BF84C21708498B0030AA22 /* HIToolbox.framework */,
 				B2BF84C0170847E60030AA22 /* IOKit.framework */,
-				B2BF84BD170847220030AA22 /* libz.dylib */,
 				B24ACD5E16F6201F00399242 /* Cocoa.framework */,
 				B2BF84BB170846940030AA22 /* Carbon.framework */,
 				B2BF84B9170846290030AA22 /* OpenGL.framework */,
