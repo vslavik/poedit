@@ -50,6 +50,10 @@
 # define _GNU_SOURCE    1
 #endif
 
+#if defined(_WIN32) && !defined(HAVE_DECL__SNWPRINTF)
+# define HAVE_DECL__SNWPRINTF 1
+#endif
+
 #ifndef VASNPRINTF
 # include <config.h>
 #endif
