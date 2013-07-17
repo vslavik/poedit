@@ -97,7 +97,7 @@
         <exec dir="${intdir}/libiconv" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
             <arg value="../../../../libiconv/configure"/>
-            <arg value="--prefix=${gettextdir}"/>
+            <arg value="--prefix=/"/>
             <arg value="--disable-static"/>
             <arg value="CFLAGS=${msys.env.CFLAGS}"/>
             <arg value="CXXFLAGS=${msys.env.CFLAGS}"/>
@@ -105,7 +105,12 @@
         <exec dir="${intdir}/libiconv" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
             <arg value="-c"/>
-            <arg value="make install -j1"/>
+            <arg value="make"/>
+        </exec>
+        <exec dir="${intdir}/libiconv" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="make install -j1 DESTDIR=${gettextdir}"/>
         </exec>
         <exec dir="${gettextdir}/bin" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
@@ -147,7 +152,7 @@
         <exec dir="${intdir}/gettext" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${gettextdir}/bin:${msys.env.PATH}"/>
             <arg value="../../../../gettext/configure"/>
-            <arg value="--prefix=${gettextdir}"/>
+            <arg value="--prefix=/"/>
             <arg value="--with-libiconv-prefix=${gettextdir}"/>
             <arg value="--enable-threads=win32"/>
             <arg value="--disable-static"/>
@@ -168,7 +173,7 @@
         <exec dir="${intdir}/gettext" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${gettextdir}/bin:${msys.env.PATH}"/>
             <arg value="-c"/>
-            <arg value="make install -j1"/>
+            <arg value="make install -j1 DESTDIR=${gettextdir}"/>
         </exec>
         <exec dir="${gettextdir}/bin" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
@@ -228,7 +233,7 @@
         <mkdir dir="${intdir}/db"/>
         <exec dir="${intdir}/db" executable="/bin/sh" failonerror="true">
             <arg value="${basedir}/db/dist/configure"/>
-            <arg value="--prefix=${builddir}/db"/>
+            <arg value="--prefix=/"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
             <arg value="CFLAGS=${osx.cflags}"/>
@@ -246,7 +251,7 @@
         </exec>
         <exec dir="${intdir}/db" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
-            <arg value="make install -j1"/>
+            <arg value="make install -j1 DESTDIR=${builddir}/db"/>
         </exec>
         <delete dir="${builddir}/db/docs"/>
 
@@ -290,7 +295,7 @@
         <mkdir dir="${intdir}/gettext"/>
         <exec dir="${intdir}/gettext" executable="/bin/sh" failonerror="true">
             <arg value="${basedir.unix}/gettext/configure"/>
-            <arg value="--prefix=${gettextdir}"/>
+            <arg value="--prefix=/"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
             <!-- When running configure under Xcode, SIGALRM is ignored and this doesn't play
@@ -319,7 +324,7 @@
         </exec>
         <exec dir="${intdir}/gettext" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
-            <arg value="make install -j1"/>
+            <arg value="make install -j1 DESTDIR=${gettextdir}"/>
         </exec>
 
         <!-- TODO: keep dSYM files? -->
