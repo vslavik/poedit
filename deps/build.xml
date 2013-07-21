@@ -97,6 +97,7 @@
         <exec dir="${intdir}/libiconv" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
             <arg value="../../../../libiconv/configure"/>
+            <arg value="--disable-dependency-tracking"/>
             <arg value="--prefix=/"/>
             <arg value="--disable-static"/>
             <arg value="CFLAGS=${msys.env.CFLAGS}"/>
@@ -152,6 +153,7 @@
         <exec dir="${intdir}/gettext" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${gettextdir}/bin:${msys.env.PATH}"/>
             <arg value="../../../../gettext/configure"/>
+            <arg value="--disable-dependency-tracking"/>
             <arg value="--prefix=/"/>
             <arg value="--with-libiconv-prefix=${gettextdir}"/>
             <arg value="--enable-threads=win32"/>
@@ -295,6 +297,7 @@
         <mkdir dir="${intdir}/gettext"/>
         <exec dir="${intdir}/gettext" executable="/bin/sh" failonerror="true">
             <arg value="${basedir.unix}/gettext/configure"/>
+            <arg value="--disable-dependency-tracking"/>
             <arg value="--prefix=/"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
