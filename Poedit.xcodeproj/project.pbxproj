@@ -649,7 +649,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"\ncp -a ${DEPS_BUILD_DIR}/gettext/bin/* \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"\n#cp -a ${DEPS_BUILD_DIR}/gettext/x86_64/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"";
+			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"\n\nfor i in ${GETTEXT_BINARIES}; do\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\ndone\ncp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -799,6 +799,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GETTEXT_BINARIES = "msgcat msgfmt msgunfmt msgmerge xgettext";
 				HEADER_SEARCH_PATHS = (
 					deps/custom_build/config,
 					deps/wx/include,
@@ -846,6 +847,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GETTEXT_BINARIES = "msgcat msgfmt msgunfmt msgmerge xgettext";
 				HEADER_SEARCH_PATHS = (
 					deps/custom_build/config,
 					deps/wx/include,

@@ -312,12 +312,9 @@
             <arg value="LDFLAGS=${osx.ldflags}"/>
             <arg value="GSED=${osx.gnu.sed}"/>
             <arg value="--with-libiconv-prefix=${osx.sdk.path}/usr"/>
-            <!-- Make our life simpler by using static linking and not having to deal with dylibs
-                 and install_name_tool. If re-enabling shared builds, don't forget to also add
-                 calls to install_name_tool here. Also consider using @rpath
-                 (available since 10.5) instead of @executable_path. -->
-            <arg value="--disable-shared"/>
+            <arg value="--disable-static"/>
             <arg value="--disable-java"/>
+            <arg value="--disable-csharp"/>
             <arg value="--disable-rpath"/>
         </exec>
         <touch file="${intdir}/gettext/gettext-tools/misc/archive.dir.tar.gz"/>
@@ -331,6 +328,23 @@
             <arg value="-c"/>
             <arg value="make install -j1 DESTDIR=${gettextdir}"/>
         </exec>
+
+        <!-- delete unwanted stuff -->
+        <delete>
+            <fileset dir="${gettextdir}/bin"
+                     includes="autopoint,envsubst,gettext*,ngettext,recode-sr-latin"/>
+            <fileset dir="${gettextdir}/lib" includes="*.la"/>
+        </delete>
+
+        <!-- fix dylib references to work -->
+        <exec executable="/bin/sh" failonerror="true">
+            <arg value="../macosx/fixup-dylib-deps.sh"/>
+            <arg value="//lib"/>
+            <arg value="@executable_path/../lib"/>
+            <arg value="${gettextdir}/lib"/>
+            <arg value="${gettextdir}/bin/*"/>
+        </exec>
+
 
         <!-- TODO: keep dSYM files? -->
         <strip-exe file="${gettextdir}/bin/msgfmt"/>
