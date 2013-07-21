@@ -154,6 +154,7 @@
             <env key="PATH" path="${gettextdir}/bin:${msys.env.PATH}"/>
             <arg value="../../../../gettext/configure"/>
             <arg value="--disable-dependency-tracking"/>
+            <arg value="--enable-silent-rules"/>
             <arg value="--prefix=/"/>
             <arg value="--with-libiconv-prefix=${gettextdir}"/>
             <arg value="--enable-threads=win32"/>
@@ -298,6 +299,7 @@
         <exec dir="${intdir}/gettext" executable="/bin/sh" failonerror="true">
             <arg value="${basedir.unix}/gettext/configure"/>
             <arg value="--disable-dependency-tracking"/>
+            <arg value="--enable-silent-rules"/>
             <arg value="--prefix=/"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
