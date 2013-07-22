@@ -87,7 +87,7 @@ DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(top_srcdir)/../build-aux/csharpexec.sh.in \
 	$(top_srcdir)/../build-aux/javacomp.sh.in \
 	$(top_srcdir)/../build-aux/javaexec.sh.in \
-	$(top_srcdir)/../gettext-runtime/intl/Makefile.in ABOUT-NLS \
+	$(top_srcdir)/../gettext-runtime/intl/Makefile.in \
 	COPYING ../build-aux/compile ../build-aux/config.guess \
 	../build-aux/config.rpath ../build-aux/config.sub \
 	../build-aux/install-sh ../build-aux/missing \
@@ -1551,7 +1551,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = 1.5 gnu no-dependencies
 ACLOCAL_AMFLAGS = -I m4 -I ../gettext-runtime/m4 -I ../m4 -I gnulib-m4 -I libgrep/gnulib-m4 -I libgettextpo/gnulib-m4
-SUBDIRS = doc intl gnulib-lib libgrep src libgettextpo po projects styles misc man m4
+SUBDIRS = doc intl gnulib-lib libgrep src libgettextpo po projects styles misc m4
 
 # Allow users to use "gnulib-tool --update".
 
@@ -2126,13 +2126,6 @@ uninstall-am: uninstall-examplesbuildauxDATA \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
 	uninstall-am uninstall-examplesbuildauxDATA \
 	uninstall-gettextsrcSCRIPTS
-
-
-# Files copied from other directories.
-
-all-local: $(srcdir)/ABOUT-NLS
-$(srcdir)/ABOUT-NLS: $(srcdir)/../gettext-runtime/ABOUT-NLS
-	cp $(srcdir)/../gettext-runtime/ABOUT-NLS $(srcdir)/ABOUT-NLS
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

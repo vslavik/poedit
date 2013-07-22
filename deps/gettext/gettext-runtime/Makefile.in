@@ -84,7 +84,7 @@ DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(srcdir)/config.h.in $(top_srcdir)/../build-aux/mkinstalldirs \
 	$(top_srcdir)/../build-aux/csharpcomp.sh.in \
 	$(top_srcdir)/../build-aux/javacomp.sh.in \
-	$(top_srcdir)/intl/Makefile.in ABOUT-NLS COPYING \
+	$(top_srcdir)/intl/Makefile.in COPYING \
 	../build-aux/compile ../build-aux/config.guess \
 	../build-aux/config.rpath ../build-aux/config.sub \
 	../build-aux/install-sh ../build-aux/missing \
@@ -299,7 +299,7 @@ ETAGS = etags
 CTAGS = ctags
 CSCOPE = cscope
 DIST_SUBDIRS = doc intl intl-java intl-csharp gnulib-lib libasprintf \
-	src po man m4
+	src po m4
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -1210,7 +1210,7 @@ ACLOCAL_AMFLAGS = -I m4 -I ../m4 -I gnulib-m4
 # The list of subdirectories depends on whether --disable-libasprintf was
 # specified.
 @ENABLE_LIBASPRINTF_TRUE@SUBDIR_libasprintf = libasprintf
-SUBDIRS = doc intl intl-java intl-csharp gnulib-lib $(SUBDIR_libasprintf) src po man m4 tests
+SUBDIRS = doc intl intl-java intl-csharp gnulib-lib $(SUBDIR_libasprintf) src po m4 tests
 
 # Allow users to use "gnulib-tool --update".
 
@@ -1219,7 +1219,7 @@ EXTRA_DIST = BUGS gnulib-m4/gnulib-cache.m4 README.woe32
 
 # Files installed for the user and for use by gettextize.
 gettextsrcdir = $(datadir)/gettext
-gettextsrc_DATA = ABOUT-NLS
+gettextsrc_DATA =
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -1730,14 +1730,6 @@ uninstall-am: uninstall-gettextsrcDATA
 	maintainer-clean maintainer-clean-generic mostlyclean \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags tags-am uninstall uninstall-am uninstall-gettextsrcDATA
-
-
-all-local: ABOUT-NLS
-
-ABOUT-NLS: $(srcdir)/doc/nls.texi $(srcdir)/doc/matrix.texi
-	rm -f $(srcdir)/ABOUT-NLS \
-	  && $(MAKEINFO) --plaintext --no-validate -I $(srcdir)/doc nls.texi \
-	     | sed -e "s/\`\([^']*\)'/‘\1’/g" > $(srcdir)/ABOUT-NLS
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
