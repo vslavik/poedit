@@ -87,8 +87,8 @@
         <echo level="info" message="Building libiconv DLL..."/>
         <!-- Prevent automake regeneration: -->
         <touch>
-            <fileset dir="gettext" includes="**/aclocal.m4"/>
-            <fileset dir="gettext" includes="**/config.h.in"/>
+            <fileset dir="libiconv" includes="**/aclocal.m4"/>
+            <fileset dir="libiconv" includes="**/config.h.in"/>
             <fileset dir="libiconv" includes="**/Makefile.in"/>
             <fileset dir="libiconv" includes="**/configure"/>
         </touch>
