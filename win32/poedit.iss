@@ -89,8 +89,6 @@ VersionInfoProductTextVersion={#VERSION_FULL}
 
 [Files]
 Source: {#CONFIG}\Poedit.exe; DestDir: {app}; Flags: ignoreversion
-Source: {#CONFIG}\msg*.exe; DestDir: {app}; Flags: ignoreversion
-Source: {#CONFIG}\xgettext.exe; DestDir: {app}; Flags: ignoreversion
 Source: {#CONFIG}\*.dll; DestDir: {app}; Flags: ignoreversion
 Source: deps\gettext\COPYING; DestDir: {app}\Docs; DestName: GNU_Gettext_COPYING.txt
 Source: COPYING; DestDir: {app}\Docs; DestName: Copying.txt
@@ -100,6 +98,7 @@ Source: icons\mime-win32\vista\*.ico; DestDir: {app}\Resources; MinVersion: 0,6.
 Source: {#CRT_REDIST}\*.dll; DestDir: {app}
 Source: "{#CONFIG}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdirs
 Source: "{#CONFIG}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
+Source: "{#CONFIG}\GettextTools\*"; DestDir: "{app}\GettextTools"; Flags: ignoreversion recursesubdirs
 
 [InstallDelete]
 ; delete files from previous versions that are no longer needed (and in case of

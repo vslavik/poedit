@@ -35,19 +35,29 @@
 
 #include "gexecute.h"
 #include "errors.h"
+#include "chooselang.h"
+
+namespace
+{
 
 #if defined(__WXMAC__) || defined(__WXMSW__)
-static wxString GetAuxBinariesDir()
+
+wxString GetGettextPackagePath()
 {
 #ifdef __WXMAC__
     wxString dir = wxStandardPaths::Get().GetPluginsDir();
     return dir + "/GettextTools.bundle/Contents/MacOS";
 #else
-    return wxStandardPaths::Get().GetExecutablePath();
+    return wxStandardPaths::Get().GetDataDir() + wxFILE_SEP_PATH + "GettextTools";
 #endif
 }
 
-static wxString GetPathToAuxBinary(const wxString& program)
+inline wxString GetAuxBinariesDir()
+{
+    return GetGettextPackagePath() + "/bin";
+}
+
+wxString GetPathToAuxBinary(const wxString& program)
 {
     wxFileName path;
     path.SetPath(GetAuxBinariesDir());
@@ -71,20 +81,53 @@ static wxString GetPathToAuxBinary(const wxString& program)
 #endif // __WXMAC__ || __WXMSW__
 
 
-long DoExecuteGettext(const wxString& cmdline_,
-                      wxArrayString& gstdout,
-                      wxArrayString& gstderr)
+bool ReadOutput(wxInputStream& s, wxArrayString& out)
 {
+    // the stream could be already at EOF or in wxSTREAM_BROKEN_PIPE state
+    s.Reset();
+    wxTextInputStream tis(s, " ", wxConvUTF8);
+
+    while (true)
+    {
+        wxString line = tis.ReadLine();
+        if ( !line.empty() )
+            out.push_back(line);
+        if (s.Eof())
+            break;
+        if ( !s )
+            return false;
+    }
+
+    return true;
+}
+
+long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
+{
+    wxExecuteEnv env;
     wxString cmdline(cmdline_);
 
 #if defined(__WXMAC__) || defined(__WXMSW__)
     wxString binary = cmdline.BeforeFirst(_T(' '));
     cmdline = GetPathToAuxBinary(binary) + cmdline.Mid(binary.length());
+    env.env["POEDIT_USE_UTF8"] = "1";
+    env.env["POEDIT_LOCALEDIR"] = GetGettextPackagePath() + "/share/locale";
+#endif
+#if NEED_CHOOSELANG_UI
+	wxString lang = GetUILanguage();
+	if ( !lang.empty() )
+		env.env["LANG"] = lang;
 #endif
 
     wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
 
-    long retcode = wxExecute(cmdline, gstdout, gstderr, wxEXEC_BLOCK);
+    wxScopedPtr<wxProcess> process(new wxProcess);
+    process->Redirect();
+
+    long retcode = wxExecute(cmdline, wxEXEC_BLOCK, process.get(), &env);
+
+	wxInputStream *std_err = process->GetErrorStream();
+    if ( std_err && !ReadOutput(*std_err, gstderr) )
+        retcode = -1;
 
     if ( retcode == -1 )
         throw Exception(wxString::Format(_("Cannot execute program: %s"), cmdline.c_str()));
@@ -92,12 +135,13 @@ long DoExecuteGettext(const wxString& cmdline_,
     return retcode;
 }
 
+} // anonymous namespace
+
 
 bool ExecuteGettext(const wxString& cmdline)
 {
-    wxArrayString gstdout;
     wxArrayString gstderr;
-    long retcode = DoExecuteGettext(cmdline, gstdout, gstderr);
+    long retcode = DoExecuteGettext(cmdline, gstderr);
 
     for ( size_t i = 0; i < gstderr.size(); i++ )
     {
@@ -112,9 +156,8 @@ bool ExecuteGettext(const wxString& cmdline)
 
 bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors)
 {
-    wxArrayString gstdout;
     wxArrayString gstderr;
-    long retcode = DoExecuteGettext(cmdline, gstdout, gstderr);
+    long retcode = DoExecuteGettext(cmdline, gstderr);
 
     wxRegEx reError(".*\\.po:([0-9]+)(:[0-9]+)?: (.*)");
 

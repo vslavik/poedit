@@ -5,8 +5,10 @@
   <PropertyGroup>
     <ResourcesOutDir>$(OutDir)Resources\</ResourcesOutDir>
     <TranslationsOutDir>$(OutDir)Translations\</TranslationsOutDir>
-    <GettextDir>deps\bin-win\$(Configuration)\gettext\bin\</GettextDir>
-    <Msgfmt>$(GettextDir)msgfmt.exe -c</Msgfmt>
+    <GettextOutDir>$(OutDir)GettextTools\</GettextOutDir>
+    <GettextDir>deps\bin-win\$(Configuration)\gettext\</GettextDir>
+    <GettextBinDir>$(GettextDir)bin\</GettextBinDir>
+    <Msgfmt>$(GettextBinDir)msgfmt.exe -c</Msgfmt>
 
     <PoDirPoedit>locales</PoDirPoedit>
     <PoDirWX>deps\wx\locale</PoDirWX>
@@ -25,15 +27,16 @@
     <TranslationFiles Include="$(PoDirPoedit)\*.po" />
     <TranslationFilesWX Include="$(PoDirWX)\*.po" />
     <TranslationFilesWXMSW Include="$(PoDirWXMSW)\*.po" />
+    <TranslationFilesGettext Include="$(GettextDir)share\**\*.mo" />
   </ItemGroup>
 
   <ItemGroup>
-    <GettextFiles Include="$(GettextDir)\msgcat.exe" />
-    <GettextFiles Include="$(GettextDir)\msgfmt.exe" />
-    <GettextFiles Include="$(GettextDir)\msgunfmt.exe" />
-    <GettextFiles Include="$(GettextDir)\msgmerge.exe" />
-    <GettextFiles Include="$(GettextDir)\xgettext.exe" />
-    <GettextFiles Include="$(GettextDir)\*.dll" />
+    <GettextFiles Include="$(GettextBinDir)\msgcat.exe" />
+    <GettextFiles Include="$(GettextBinDir)\msgfmt.exe" />
+    <GettextFiles Include="$(GettextBinDir)\msgunfmt.exe" />
+    <GettextFiles Include="$(GettextBinDir)\msgmerge.exe" />
+    <GettextFiles Include="$(GettextBinDir)\xgettext.exe" />
+    <GettextFiles Include="$(GettextBinDir)\*.dll" />
   </ItemGroup>
 
   <Target Name="CopyDataFiles" AfterTargets="Link">
@@ -68,26 +71,29 @@
     <Exec Command="$(Msgfmt) -o $(TranslationsOutDir)%(TranslationFilesWXMSW.Filename)\wxmsw.mo @(TranslationFilesWXMSW)" />
   </Target>
 
-  
+
   <Target Name="CleanDataFiles" AfterTargets="Clean">
-    <Message Importance="High" Text="Cleaning resources and translations" />
+    <Message Importance="High" Text="Cleaning resources, translations etc." />
     <RemoveDir Directories="$(ResourcesOutDir)" />
     <RemoveDir Directories="$(TranslationsOutDir)" />
+    <RemoveDir Directories="$(GettextOutDir)" />
   </Target>
 
-  
-  <Target Name="CopyAuxBinaries" AfterTargets="Link">
-    <Message Importance="High" Text="Copying auxiliary binaries to $(OutDir)" />
+
+  <Target Name="CopyGettextTools" AfterTargets="Link">
+    <Message Importance="High" Text="Copying gettext tools binaries to $(GettextOutDir) [@(TranslationFilesGettext)]" />
+    <MakeDir Directories="$(GettextOutDir)\bin" />
+    <MakeDir Directories="$(GettextOutDir)\share" />
     <Copy
       SourceFiles="@(GettextFiles)"
-      DestinationFolder="$(OutDir)"
+      DestinationFolder="$(GettextOutDir)\bin"
       SkipUnchangedFiles="true"
     />
-  </Target>
-
-  <Target Name="CleanAuxBinaries" AfterTargets="Clean">
-    <Message Importance="High" Text="Cleaning auxiliary binaries" />
-    <Delete Files="@(GettextFiles -> '$(OutDir)\%(Filename)%(Extension)')" />
+    <Copy
+      SourceFiles="@(TranslationFilesGettext)"
+      DestinationFolder="$(GettextOutDir)\share\%(RecursiveDir)"
+      SkipUnchangedFiles="true"
+    />
   </Target>
 
 </Project>
