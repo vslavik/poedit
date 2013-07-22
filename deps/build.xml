@@ -122,6 +122,56 @@
         <delete dir="${intdir}/libiconv"/>
     </target>
 
+
+    <target name="win-expat-check" if="is_windows">
+        <echo level="info" message="Checking if expat needs building..."/>
+        <dependset>
+            <srcfileset dir="expat/lib" includes="*.c,*.h" />
+            <targetfileset dir="${gettextdir}" includes="bin/*expat*"/>
+            <targetfileset dir="${gettextdir}" includes="lib/*expat*"/>
+            <targetfilelist files="${intdir}/expat.buildtag"/>
+        </dependset>
+        <available property="built.expat" file="${intdir}/expat.buildtag"/>
+    </target>
+
+    <target name="win-expat" depends="win-expat-check" unless="built.expat" if="is_windows">
+        <echo level="info" message="Building Expat DLL..."/>
+        <!-- Prevent automake regeneration: -->
+        <touch>
+            <fileset dir="expat" includes="aclocal.m4"/>
+            <fileset dir="expat" includes="Makefile.in"/>
+            <fileset dir="expat" includes="configure"/>
+        </touch>
+        <mkdir dir="${gettextdir}"/>
+        <mkdir dir="${intdir}/expat"/>
+        <exec dir="${intdir}/expat" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="../../../../expat/configure"/>
+            <arg value="--prefix=/"/>
+            <arg value="--disable-static"/>
+            <arg value="CFLAGS=${msys.env.CFLAGS}"/>
+            <arg value="CXXFLAGS=${msys.env.CFLAGS}"/>
+        </exec>
+        <exec dir="${intdir}/expat" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="make"/>
+        </exec>
+        <exec dir="${intdir}/expat" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="make install -j1 DESTDIR=${gettextdir}"/>
+        </exec>
+        <exec dir="${gettextdir}/bin" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="strip *.dll"/>
+        </exec>
+        <touch file="${intdir}/expat.buildtag"/>
+        <delete dir="${intdir}/expat"/>
+    </target>
+
+
     <target name="win-gettext-check" if="is_windows">
         <echo level="info" message="Checking if GNU gettext needs building..."/>
         <dependset>
@@ -135,7 +185,7 @@
         <available property="built.gettext" file="${intdir}/gettext.buildtag"/>
     </target>
 
-    <target name="win-gettext" depends="win-libiconv,mingw-dlls,win-gettext-check" unless="built.gettext" if="is_windows">
+    <target name="win-gettext" depends="win-libiconv,win-expat,mingw-dlls,win-gettext-check" unless="built.gettext" if="is_windows">
         <echo level="info" message="Building GNU gettext..."/>
         <!-- Prevent automake regeneration: -->
         <touch>
@@ -158,6 +208,7 @@
             <arg value="--enable-relocatable"/>
             <arg value="--prefix=/"/>
             <arg value="--with-libiconv-prefix=${gettextdir}"/>
+            <arg value="--with-libexpat-prefix=${gettextdir}"/>
             <arg value="--enable-threads=win32"/>
             <arg value="--disable-static"/>
             <arg value="--disable-java"/>
