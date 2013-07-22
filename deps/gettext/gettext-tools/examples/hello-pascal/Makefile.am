@@ -28,11 +28,11 @@ hello$(EXEEXT) hello.rst: $(hello_SOURCES)
 	LOCALEDIR='@localedir@' $(PPC) $(hello_SOURCES)
 
 install-exec-local: all-local
-	$(mkdir_p) $(DESTDIR)$(bindir)
+	$(MKDIR_P) $(DESTDIR)$(bindir)
 	$(INSTALL_PROGRAM) hello$(EXEEXT) $(DESTDIR)$(bindir)/hello$(EXEEXT)
 
 installdirs-local:
-	$(mkdir_p) $(DESTDIR)$(bindir)
+	$(MKDIR_P) $(DESTDIR)$(bindir)
 
 uninstall-local:
 	rm -f $(DESTDIR)$(bindir)/hello$(EXEEXT)

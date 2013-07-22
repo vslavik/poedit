@@ -1,3 +1,68 @@
+2013-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am: Use $(MKDIR_P) instead of $(mkdir_p).
+	Suggested by Stefano Lattarini in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-04/msg00044.html>.
+
+2013-06-04  Daiki Ueno  <ueno@gnu.org>
+
+	Support for Vala.
+	* xgettext.texi: Document Vala source language. Document
+	that it is applicable to --flag.
+
+2013-05-20  Pavel Kharitonov  <ineiev@gnu.org>  (tiny change)
+
+	Add --previous option to msgattrib.
+	* msgattrib.texi: Document --previous.
+
+2013-04-26  Daiki Ueno  <ueno@gnu.org>
+
+	Support for Python brace format.
+	* gettext.texi (PO Files): Mention python-brace-format.
+	(python-format): Mention brace format.
+
+2013-04-17  Andreas Stricker  <astricker@futurelab.ch>
+
+	Support for JavaScript.
+	* gettext.texi (PO Files): Mention javascript-format.
+	(javascript-format): New subsection.
+	(JavaScript): New subsection.
+	* xgettext.texi: Document JavaScript source language. Document
+	that it is applicable to --flag.
+
+2013-04-11  Ľubomír Remák  <lubomirr@lubomirr.eu>
+
+	Support for Lua.
+	* gettext.texi (PO Files): Mention lua-format.
+	(lua-format): New subsection.
+	(Lua): New subsection.
+	* xgettext.texi: Document Lua source language. Document that it is
+	applicable to --flag.
+
+2013-04-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext.texi (PO Files): Use '@pxref' instead of '@xref'.
+
+2013-03-12  Andreas Stricker  <astricker@futurelab.ch>  (tiny change)
+
+	* msgfmt.texi (PO Format): A note about the header entry
+
+2013-02-15  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfmt.texi (Input file location): Output file is not PO.
+
+2013-01-30  Miguel Angel Arruga Vivas  <rosen644835@gmail.com>  (tiny change)
+
+	* msgen.texi (Output details): Fix link in '@opindex' pointing to
+	msgcat.
+	Reported at <http://savannah.gnu.org/bugs/?36063>.
+	* msgmerge.texi (Output details): Likewise.
+
+2012-12-27  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext.texi (Plural forms): Fix ngettext arguments.
+	Reported by Reinhard Schaffner <rschaffner@zynga.com>.
+
 2012-12-25  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext-0.18.2 released.

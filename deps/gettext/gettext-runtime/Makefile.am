@@ -17,7 +17,6 @@
 ## Process this file with automake to produce Makefile.in.
 
 AUTOMAKE_OPTIONS = 1.5 gnu no-dependencies
-ACLOCAL = ../build-aux/fixaclocal @ACLOCAL@
 ACLOCAL_AMFLAGS = -I m4 -I ../m4 -I gnulib-m4
 
 MAKEINFO = env LANG= LC_MESSAGES= LC_ALL= LANGUAGE= @MAKEINFO@
@@ -29,23 +28,9 @@ SUBDIR_libasprintf = libasprintf
 else
 SUBDIR_libasprintf =
 endif
-SUBDIRS = doc intl intl-java intl-csharp gnulib-lib $(SUBDIR_libasprintf) src po man m4 tests
+SUBDIRS = doc intl intl-java intl-csharp gnulib-lib $(SUBDIR_libasprintf) src po m4
 
 EXTRA_DIST = BUGS
-
-
-# Files installed for the user and for use by gettextize.
-
-gettextsrcdir = $(datadir)/gettext
-gettextsrc_DATA = ABOUT-NLS
-
-
-all-local: ABOUT-NLS
-
-ABOUT-NLS: $(srcdir)/doc/nls.texi $(srcdir)/doc/matrix.texi
-	rm -f $(srcdir)/ABOUT-NLS \
-	  && $(MAKEINFO) --plaintext --no-validate -I $(srcdir)/doc nls.texi \
-	     | sed -e "s/\`\([^']*\)'/‘\1’/g" > $(srcdir)/ABOUT-NLS
 
 
 # Allow users to use "gnulib-tool --update".

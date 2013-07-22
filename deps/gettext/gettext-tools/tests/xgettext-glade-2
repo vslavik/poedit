@@ -6,22 +6,22 @@
 tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
-tmpfiles="$tmpfiles empty.glade"
-cat <<EOF > empty.glade
+tmpfiles="$tmpfiles xg-gl-2-empty.glade"
+cat <<EOF > xg-gl-2-empty.glade
 <?xml version="1.0"?>
 <GTK-Interface/>
 EOF
 
 tmpfiles="$tmpfiles xg-gl-2.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o xg-gl-2.pot empty.glade 2>/dev/null
+${XGETTEXT} -o xg-gl-2.pot xg-gl-2-empty.glade 2>/dev/null
 test $? = 0 || {
   echo "Skipping test: xgettext was built without Glade support"
   rm -fr $tmpfiles; exit 77
 }
 
-tmpfiles="$tmpfiles simple.glade"
-cat <<\EOF > simple.glade
+tmpfiles="$tmpfiles xg-gl-2-simple.glade"
+cat <<\EOF > xg-gl-2-simple.glade
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <GTK-Interface>
 
@@ -61,7 +61,7 @@ EOF
 
 tmpfiles="$tmpfiles xg-gl-2.tmp xg-gl-2.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --add-comments -o xg-gl-2.tmp simple.glade 
+${XGETTEXT} --add-comments -o xg-gl-2.tmp xg-gl-2-simple.glade 
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 # Don't simplify this to "grep ... < xg-gl-2.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
@@ -87,16 +87,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: simple.glade:13
+#: xg-gl-2-simple.glade:13
 msgid "Hello"
 msgstr ""
 
 #. Der übliche Programm-Gruß
-#: simple.glade:30
+#: xg-gl-2-simple.glade:30
 msgid "Hello World"
 msgstr ""
 
-#: simple.glade:31
+#: xg-gl-2-simple.glade:31
 msgid "This <button> displays \"Hello World\"."
 msgstr ""
 EOF

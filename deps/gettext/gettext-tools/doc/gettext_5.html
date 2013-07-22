@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <!-- This HTML file has been created by texi2html 1.52b
-     from gettext.texi on 5 March 2013 -->
+     from gettext.texi on 7 July 2013 -->
 
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <TITLE>GNU gettext utilities - 5  Making the PO Template File</TITLE>
@@ -13,7 +13,7 @@ Go to the <A HREF="gettext_1.html">first</A>, <A HREF="gettext_4.html">previous<
 
 <H1><A NAME="SEC27" HREF="gettext_toc.html#TOC27">5  Making the PO Template File</A></H1>
 <P>
-<A NAME="IDX158"></A>
+<A NAME="IDX164"></A>
 
 </P>
 <P>
@@ -36,8 +36,8 @@ was fuzzy, and the suffix <SAMP>&lsquo;.pot&rsquo;</SAMP> wasn't in use at that 
 <H2><A NAME="SEC28" HREF="gettext_toc.html#TOC28">5.1  Invoking the <CODE>xgettext</CODE> Program</A></H2>
 
 <P>
-<A NAME="IDX159"></A>
-<A NAME="IDX160"></A>
+<A NAME="IDX165"></A>
+<A NAME="IDX166"></A>
 
 <PRE>
 xgettext [<VAR>option</VAR>] [<VAR>inputfile</VAR>] ...
@@ -62,8 +62,8 @@ Input files.
 <DD>
 <DT><SAMP>&lsquo;--files-from=<VAR>file</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX161"></A>
-<A NAME="IDX162"></A>
+<A NAME="IDX167"></A>
+<A NAME="IDX168"></A>
 Read the names of the input files from <VAR>file</VAR> instead of getting
 them from the command line.
 
@@ -71,8 +71,8 @@ them from the command line.
 <DD>
 <DT><SAMP>&lsquo;--directory=<VAR>directory</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX163"></A>
-<A NAME="IDX164"></A>
+<A NAME="IDX169"></A>
+<A NAME="IDX170"></A>
 Add <VAR>directory</VAR> to the list of directories.  Source files are
 searched relative to this list of directories.  The resulting <TT>&lsquo;.po&rsquo;</TT>
 file will be written relative to the current directory, though.
@@ -93,16 +93,16 @@ If <VAR>inputfile</VAR> is <SAMP>&lsquo;-&rsquo;</SAMP>, standard input is read.
 <DD>
 <DT><SAMP>&lsquo;--default-domain=<VAR>name</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX165"></A>
-<A NAME="IDX166"></A>
+<A NAME="IDX171"></A>
+<A NAME="IDX172"></A>
 Use <TT>&lsquo;<VAR>name</VAR>.po&rsquo;</TT> for output (instead of <TT>&lsquo;messages.po&rsquo;</TT>).
 
 <DT><SAMP>&lsquo;-o <VAR>file</VAR>&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--output=<VAR>file</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX167"></A>
-<A NAME="IDX168"></A>
+<A NAME="IDX173"></A>
+<A NAME="IDX174"></A>
 Write output to specified file (instead of <TT>&lsquo;<VAR>name</VAR>.po&rsquo;</TT> or
 <TT>&lsquo;messages.po&rsquo;</TT>).
 
@@ -110,14 +110,14 @@ Write output to specified file (instead of <TT>&lsquo;<VAR>name</VAR>.po&rsquo;<
 <DD>
 <DT><SAMP>&lsquo;--output-dir=<VAR>dir</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX169"></A>
-<A NAME="IDX170"></A>
+<A NAME="IDX175"></A>
+<A NAME="IDX176"></A>
 Output files will be placed in directory <VAR>dir</VAR>.
 
 </DL>
 
 <P>
-<A NAME="IDX171"></A>
+<A NAME="IDX177"></A>
 If the output <VAR>file</VAR> is <SAMP>&lsquo;-&rsquo;</SAMP> or <SAMP>&lsquo;/dev/stdout&rsquo;</SAMP>, the output
 is written to standard output.
 
@@ -132,22 +132,23 @@ is written to standard output.
 <DD>
 <DT><SAMP>&lsquo;--language=<VAR>name</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX172"></A>
-<A NAME="IDX173"></A>
-<A NAME="IDX174"></A>
+<A NAME="IDX178"></A>
+<A NAME="IDX179"></A>
+<A NAME="IDX180"></A>
 Specifies the language of the input files.  The supported languages
 are <CODE>C</CODE>, <CODE>C++</CODE>, <CODE>ObjectiveC</CODE>, <CODE>PO</CODE>, <CODE>Shell</CODE>,
 <CODE>Python</CODE>, <CODE>Lisp</CODE>, <CODE>EmacsLisp</CODE>, <CODE>librep</CODE>, <CODE>Scheme</CODE>,
 <CODE>Smalltalk</CODE>, <CODE>Java</CODE>, <CODE>JavaProperties</CODE>, <CODE>C#</CODE>, <CODE>awk</CODE>,
 <CODE>YCP</CODE>, <CODE>Tcl</CODE>, <CODE>Perl</CODE>, <CODE>PHP</CODE>, <CODE>GCC-source</CODE>,
-<CODE>NXStringTable</CODE>, <CODE>RST</CODE>, <CODE>Glade</CODE>.
+<CODE>NXStringTable</CODE>, <CODE>RST</CODE>, <CODE>Glade</CODE>, <CODE>Lua</CODE>, <CODE>JavaScript</CODE>,
+<CODE>Vala</CODE>.
 
 <DT><SAMP>&lsquo;-C&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--c++&rsquo;</SAMP>
 <DD>
-<A NAME="IDX175"></A>
-<A NAME="IDX176"></A>
+<A NAME="IDX181"></A>
+<A NAME="IDX182"></A>
 This is a shorthand for <CODE>--language=C++</CODE>.
 
 </DL>
@@ -165,7 +166,7 @@ extension.
 
 <DT><SAMP>&lsquo;--from-code=<VAR>name</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX177"></A>
+<A NAME="IDX183"></A>
 Specifies the encoding of the input files.  This option is needed only
 if some untranslated message strings or their corresponding comments
 contain non-ASCII characters.  Note that Tcl and Glade input files are
@@ -187,16 +188,16 @@ By default the input files are assumed to be in ASCII.
 <DD>
 <DT><SAMP>&lsquo;--join-existing&rsquo;</SAMP>
 <DD>
-<A NAME="IDX178"></A>
-<A NAME="IDX179"></A>
+<A NAME="IDX184"></A>
+<A NAME="IDX185"></A>
 Join messages with existing file.
 
 <DT><SAMP>&lsquo;-x <VAR>file</VAR>&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--exclude-file=<VAR>file</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX180"></A>
-<A NAME="IDX181"></A>
+<A NAME="IDX186"></A>
+<A NAME="IDX187"></A>
 Entries from <VAR>file</VAR> are not extracted.  <VAR>file</VAR> should be a PO or
 POT file.
 
@@ -204,8 +205,8 @@ POT file.
 <DD>
 <DT><SAMP>&lsquo;--add-comments[=<VAR>tag</VAR>]&rsquo;</SAMP>
 <DD>
-<A NAME="IDX182"></A>
-<A NAME="IDX183"></A>
+<A NAME="IDX188"></A>
+<A NAME="IDX189"></A>
 Place comment blocks starting with <VAR>tag</VAR> and preceding keyword lines
 in the output file.  Without a <VAR>tag</VAR>, the option means to put <EM>all</EM>
 comment blocks preceding keyword lines in the output file.
@@ -222,25 +223,25 @@ comment blocks preceding keyword lines in the output file.
 <DD>
 <DT><SAMP>&lsquo;--extract-all&rsquo;</SAMP>
 <DD>
-<A NAME="IDX184"></A>
-<A NAME="IDX185"></A>
+<A NAME="IDX190"></A>
+<A NAME="IDX191"></A>
 Extract all strings.
 
 This option has an effect with most languages, namely C, C++, ObjectiveC,
 Shell, Python, Lisp, EmacsLisp, librep, Java, C#, awk, Tcl, Perl, PHP,
-GCC-source, Glade.
+GCC-source, Glade, Lua, JavaScript, Vala.
 
 <DT><SAMP>&lsquo;-k[<VAR>keywordspec</VAR>]&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--keyword[=<VAR>keywordspec</VAR>]&rsquo;</SAMP>
 <DD>
-<A NAME="IDX186"></A>
-<A NAME="IDX187"></A>
+<A NAME="IDX192"></A>
+<A NAME="IDX193"></A>
 Specify <VAR>keywordspec</VAR> as an additional keyword to be looked for.
 Without a <VAR>keywordspec</VAR>, the option means to not use default keywords.
 
-<A NAME="IDX188"></A>
-<A NAME="IDX189"></A>
+<A NAME="IDX194"></A>
+<A NAME="IDX195"></A>
 If <VAR>keywordspec</VAR> is a C identifier <VAR>id</VAR>, <CODE>xgettext</CODE> looks
 for strings in the first argument of each call to the function or macro
 <VAR>id</VAR>.  If <VAR>keywordspec</VAR> is of the form
@@ -273,7 +274,7 @@ escaped.
 
 This option has an effect with most languages, namely C, C++, ObjectiveC,
 Shell, Python, Lisp, EmacsLisp, librep, Java, C#, awk, Tcl, Perl, PHP,
-GCC-source, Glade.
+GCC-source, Glade, Lua, JavaScript, Vala.
 
 The default keyword specifications, which are always looked for if not
 explicitly disabled, are language dependent.  They are:
@@ -354,6 +355,24 @@ For PHP: <CODE>_</CODE>, <CODE>gettext</CODE>, <CODE>dgettext:2</CODE>, <CODE>dc
 
 For Glade 1: <CODE>label</CODE>, <CODE>title</CODE>, <CODE>text</CODE>, <CODE>format</CODE>,
 <CODE>copyright</CODE>, <CODE>comments</CODE>, <CODE>preview_text</CODE>, <CODE>tooltip</CODE>.
+
+<LI>
+
+For Lua: <CODE>_</CODE>, <CODE>gettext.gettext</CODE>, <CODE>gettext.dgettext:2</CODE>,
+<CODE>gettext.dcgettext:2</CODE>, <CODE>gettext.ngettext:1,2</CODE>,
+<CODE>gettext.dngettext:2,3</CODE>, <CODE>gettext.dcngettext:2,3</CODE>.
+
+<LI>
+
+For JavaScript: <CODE>_</CODE>, <CODE>gettext</CODE>, <CODE>dgettext:2</CODE>,
+<CODE>dcgettext:2</CODE>, <CODE>ngettext:1,2</CODE>, <CODE>dngettext:2,3</CODE>,
+<CODE>pgettext:1c,2</CODE>, <CODE>dpgettext:2c,3</CODE>.
+
+<LI>
+
+For Vala: <CODE>_</CODE>, <CODE>Q_</CODE>, <CODE>N_</CODE>, <CODE>NC_</CODE>, <CODE>dgettext:2</CODE>,
+<CODE>dcgettext:2</CODE>, <CODE>ngettext:1,2</CODE>, <CODE>dngettext:2,3</CODE>,
+<CODE>dpgettext:2c,3</CODE>, <CODE>dpgettext2:2c,3</CODE>.
 </UL>
 
 To disable the default keyword specifications, the option <SAMP>&lsquo;-k&rsquo;</SAMP> or
@@ -362,13 +381,13 @@ used.
 
 <DT><SAMP>&lsquo;--flag=<VAR>word</VAR>:<VAR>arg</VAR>:<VAR>flag</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX190"></A>
+<A NAME="IDX196"></A>
 Specifies additional flags for strings occurring as part of the <VAR>arg</VAR>th
 argument of the function <VAR>word</VAR>.  The possible flags are the possible
 format string indicators, such as <SAMP>&lsquo;c-format&rsquo;</SAMP>, and their negations,
 such as <SAMP>&lsquo;no-c-format&rsquo;</SAMP>, possibly prefixed with <SAMP>&lsquo;pass-&rsquo;</SAMP>.
 <BR>
-<A NAME="IDX191"></A>
+<A NAME="IDX197"></A>
 The meaning of <CODE>--flag=<VAR>function</VAR>:<VAR>arg</VAR>:<VAR>lang</VAR>-format</CODE>
 is that in language <VAR>lang</VAR>, the specified <VAR>function</VAR> expects as
 <VAR>arg</VAR>th argument a format string.  (For those of you familiar with
@@ -386,7 +405,7 @@ together with the checks done by <SAMP>&lsquo;msgfmt -c&rsquo;</SAMP> it will en
 translators cannot accidentally use format string directives that would
 lead to a crash at runtime.
 <BR>
-<A NAME="IDX192"></A>
+<A NAME="IDX198"></A>
 The meaning of <CODE>--flag=<VAR>function</VAR>:<VAR>arg</VAR>:pass-<VAR>lang</VAR>-format</CODE>
 is that in language <VAR>lang</VAR>, if the <VAR>function</VAR> call occurs in a
 position that must yield a format string, then its <VAR>arg</VAR>th argument
@@ -407,47 +426,47 @@ lead to a crash at runtime.
 <BR>
 This option has an effect with most languages, namely C, C++, ObjectiveC,
 Shell, Python, Lisp, EmacsLisp, librep, Scheme, Java, C#, awk, YCP, Tcl, Perl, PHP,
-GCC-source.
+GCC-source, Lua, JavaScript, Vala.
 
 <DT><SAMP>&lsquo;-T&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--trigraphs&rsquo;</SAMP>
 <DD>
-<A NAME="IDX193"></A>
-<A NAME="IDX194"></A>
-<A NAME="IDX195"></A>
+<A NAME="IDX199"></A>
+<A NAME="IDX200"></A>
+<A NAME="IDX201"></A>
 Understand ANSI C trigraphs for input.
 <BR>
 This option has an effect only with the languages C, C++, ObjectiveC.
 
 <DT><SAMP>&lsquo;--qt&rsquo;</SAMP>
 <DD>
-<A NAME="IDX196"></A>
-<A NAME="IDX197"></A>
+<A NAME="IDX202"></A>
+<A NAME="IDX203"></A>
 Recognize Qt format strings.
 <BR>
 This option has an effect only with the language C++.
 
 <DT><SAMP>&lsquo;--kde&rsquo;</SAMP>
 <DD>
-<A NAME="IDX198"></A>
-<A NAME="IDX199"></A>
+<A NAME="IDX204"></A>
+<A NAME="IDX205"></A>
 Recognize KDE 4 format strings.
 <BR>
 This option has an effect only with the language C++.
 
 <DT><SAMP>&lsquo;--boost&rsquo;</SAMP>
 <DD>
-<A NAME="IDX200"></A>
-<A NAME="IDX201"></A>
+<A NAME="IDX206"></A>
+<A NAME="IDX207"></A>
 Recognize Boost format strings.
 <BR>
 This option has an effect only with the language C++.
 
 <DT><SAMP>&lsquo;--debug&rsquo;</SAMP>
 <DD>
-<A NAME="IDX202"></A>
-<A NAME="IDX203"></A>
+<A NAME="IDX208"></A>
+<A NAME="IDX209"></A>
 Use the flags <CODE>c-format</CODE> and <CODE>possible-c-format</CODE> to show who was
 responsible for marking a message as a format string.  The latter form is
 used if the <CODE>xgettext</CODE> program decided, the format form is used if
@@ -474,32 +493,32 @@ adjacent strings, and escaped end of lines for continued strings.
 <DD>
 <DT><SAMP>&lsquo;--color=<VAR>when</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX204"></A>
+<A NAME="IDX210"></A>
 Specify whether or when to use colors and other text attributes.
 See section <A HREF="gettext_9.html#SEC150">9.11.1  The <CODE>--color</CODE> option</A> for details.
 
 <DT><SAMP>&lsquo;--style=<VAR>style_file</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX205"></A>
+<A NAME="IDX211"></A>
 Specify the CSS style rule file to use for <CODE>--color</CODE>.
 See section <A HREF="gettext_9.html#SEC152">9.11.3  The <CODE>--style</CODE> option</A> for details.
 
 <DT><SAMP>&lsquo;--force-po&rsquo;</SAMP>
 <DD>
-<A NAME="IDX206"></A>
+<A NAME="IDX212"></A>
 Always write an output file even if no message is defined.
 
 <DT><SAMP>&lsquo;-i&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--indent&rsquo;</SAMP>
 <DD>
-<A NAME="IDX207"></A>
-<A NAME="IDX208"></A>
+<A NAME="IDX213"></A>
+<A NAME="IDX214"></A>
 Write the .po file using indented style.
 
 <DT><SAMP>&lsquo;--no-location&rsquo;</SAMP>
 <DD>
-<A NAME="IDX209"></A>
+<A NAME="IDX215"></A>
 Do not write <SAMP>&lsquo;#: <VAR>filename</VAR>:<VAR>line</VAR>&rsquo;</SAMP> lines.  Note that using
 this option makes it harder for technically skilled translators to understand
 each message's context.
@@ -508,27 +527,27 @@ each message's context.
 <DD>
 <DT><SAMP>&lsquo;--add-location&rsquo;</SAMP>
 <DD>
-<A NAME="IDX210"></A>
-<A NAME="IDX211"></A>
+<A NAME="IDX216"></A>
+<A NAME="IDX217"></A>
 Generate <SAMP>&lsquo;#: <VAR>filename</VAR>:<VAR>line</VAR>&rsquo;</SAMP> lines (default).
 
 <DT><SAMP>&lsquo;--strict&rsquo;</SAMP>
 <DD>
-<A NAME="IDX212"></A>
+<A NAME="IDX218"></A>
 Write out a strict Uniforum conforming PO file.  Note that this
 Uniforum format should be avoided because it doesn't support the
 GNU extensions.
 
 <DT><SAMP>&lsquo;--properties-output&rsquo;</SAMP>
 <DD>
-<A NAME="IDX213"></A>
+<A NAME="IDX219"></A>
 Write out a Java ResourceBundle in Java <CODE>.properties</CODE> syntax.  Note
 that this file format doesn't support plural forms and silently drops
 obsolete messages.
 
 <DT><SAMP>&lsquo;--stringtable-output&rsquo;</SAMP>
 <DD>
-<A NAME="IDX214"></A>
+<A NAME="IDX220"></A>
 Write out a NeXTstep/GNUstep localized resource file in <CODE>.strings</CODE> syntax.
 Note that this file format doesn't support plural forms.
 
@@ -536,15 +555,15 @@ Note that this file format doesn't support plural forms.
 <DD>
 <DT><SAMP>&lsquo;--width=<VAR>number</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX215"></A>
-<A NAME="IDX216"></A>
+<A NAME="IDX221"></A>
+<A NAME="IDX222"></A>
 Set the output page width.  Long strings in the output files will be
 split across multiple lines in order to ensure that each line's width
 (= number of screen columns) is less or equal to the given <VAR>number</VAR>.
 
 <DT><SAMP>&lsquo;--no-wrap&rsquo;</SAMP>
 <DD>
-<A NAME="IDX217"></A>
+<A NAME="IDX223"></A>
 Do not break long message lines.  Message lines whose width exceeds the
 output page width will not be split into several lines.  Only file reference
 lines which are wider than the output page width will be split.
@@ -553,9 +572,9 @@ lines which are wider than the output page width will be split.
 <DD>
 <DT><SAMP>&lsquo;--sort-output&rsquo;</SAMP>
 <DD>
-<A NAME="IDX218"></A>
-<A NAME="IDX219"></A>
-<A NAME="IDX220"></A>
+<A NAME="IDX224"></A>
+<A NAME="IDX225"></A>
+<A NAME="IDX226"></A>
 Generate sorted output.  Note that using this option makes it much harder
 for the translator to understand each message's context.
 
@@ -563,16 +582,16 @@ for the translator to understand each message's context.
 <DD>
 <DT><SAMP>&lsquo;--sort-by-file&rsquo;</SAMP>
 <DD>
-<A NAME="IDX221"></A>
-<A NAME="IDX222"></A>
+<A NAME="IDX227"></A>
+<A NAME="IDX228"></A>
 Sort output by file location.
 
 <DT><SAMP>&lsquo;--omit-header&rsquo;</SAMP>
 <DD>
-<A NAME="IDX223"></A>
+<A NAME="IDX229"></A>
 Don't write header with <SAMP>&lsquo;msgid ""&rsquo;</SAMP> entry.
 
-<A NAME="IDX224"></A>
+<A NAME="IDX230"></A>
 This is useful for testing purposes because it eliminates a source
 of variance for generated <CODE>.gmo</CODE> files.  With <CODE>--omit-header</CODE>,
 two invocations of <CODE>xgettext</CODE> on the same files with the same
@@ -583,7 +602,7 @@ would not entirely be in ASCII.
 
 <DT><SAMP>&lsquo;--copyright-holder=<VAR>string</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX225"></A>
+<A NAME="IDX231"></A>
 Set the copyright holder in the output.  <VAR>string</VAR> should be the
 copyright holder of the surrounding package.  (Note that the msgstr
 strings, extracted from the package's sources, belong to the copyright
@@ -599,25 +618,25 @@ simply because <CODE>xgettext</CODE> was first used in the GNU project.
 
 <DT><SAMP>&lsquo;--foreign-user&rsquo;</SAMP>
 <DD>
-<A NAME="IDX226"></A>
+<A NAME="IDX232"></A>
 Omit FSF copyright in output.  This option is equivalent to
 <SAMP>&lsquo;--copyright-holder=”&rsquo;</SAMP>.  It can be useful for packages outside the GNU
 project that want their translations to be in the public domain.
 
 <DT><SAMP>&lsquo;--package-name=<VAR>package</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX227"></A>
+<A NAME="IDX233"></A>
 Set the package name in the header of the output.
 
 <DT><SAMP>&lsquo;--package-version=<VAR>version</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX228"></A>
+<A NAME="IDX234"></A>
 Set the package version in the header of the output.  This option has an
 effect only if the <SAMP>&lsquo;--package-name&rsquo;</SAMP> option is also used.
 
 <DT><SAMP>&lsquo;--msgid-bugs-address=<VAR>email@address</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX229"></A>
+<A NAME="IDX235"></A>
 Set the reporting address for msgid bugs.  This is the email address or URL
 to which the translators shall report bugs in the untranslated strings:
 
@@ -651,16 +670,16 @@ Don't forget to specify this option.
 <DD>
 <DT><SAMP>&lsquo;--msgstr-prefix[=<VAR>string</VAR>]&rsquo;</SAMP>
 <DD>
-<A NAME="IDX230"></A>
-<A NAME="IDX231"></A>
+<A NAME="IDX236"></A>
+<A NAME="IDX237"></A>
 Use <VAR>string</VAR> (or "" if not specified) as prefix for msgstr values.
 
 <DT><SAMP>&lsquo;-M[<VAR>string</VAR>]&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--msgstr-suffix[=<VAR>string</VAR>]&rsquo;</SAMP>
 <DD>
-<A NAME="IDX232"></A>
-<A NAME="IDX233"></A>
+<A NAME="IDX238"></A>
+<A NAME="IDX239"></A>
 Use <VAR>string</VAR> (or "" if not specified) as suffix for msgstr values.
 
 </DL>
@@ -675,16 +694,16 @@ Use <VAR>string</VAR> (or "" if not specified) as suffix for msgstr values.
 <DD>
 <DT><SAMP>&lsquo;--help&rsquo;</SAMP>
 <DD>
-<A NAME="IDX234"></A>
-<A NAME="IDX235"></A>
+<A NAME="IDX240"></A>
+<A NAME="IDX241"></A>
 Display this help and exit.
 
 <DT><SAMP>&lsquo;-V&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--version&rsquo;</SAMP>
 <DD>
-<A NAME="IDX236"></A>
-<A NAME="IDX237"></A>
+<A NAME="IDX242"></A>
+<A NAME="IDX243"></A>
 Output version information and exit.
 
 </DL>

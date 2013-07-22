@@ -17,11 +17,12 @@ fi
 tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
-tmpfiles="$tmpfiles LC_MESSAGES"
-test -d LC_MESSAGES || mkdir LC_MESSAGES
+tmpfiles="$tmpfiles mf-2"
+test -d mf-2 || mkdir mf-2
+test -d mf-2/LC_MESSAGES || mkdir mf-2/LC_MESSAGES
 
-tmpfiles="$tmpfiles module1.po module2.po"
-cat <<EOF > module1.po
+tmpfiles="$tmpfiles mf-2-module1.po mf-2-module2.po"
+cat <<EOF > mf-2-module1.po
 #default domain "messages.mo"
 msgid	"SYS_(C)\n"
 msgstr "MSGFMT(3) portable message object file compiler\n"
@@ -39,7 +40,7 @@ msgid	"error 3"
 msgstr	"error 3 translation"
 EOF
 
-cat <<EOF > module2.po
+cat <<EOF > mf-2-module2.po
 # ---
 #default domain "messages.mo"
 msgid	"mesg 4"
@@ -58,22 +59,22 @@ EOF
 
 # Without use of msgcat, expect a "duplicate message definition" error.
 : ${MSGFMT=msgfmt}
-if ${MSGFMT} -o LC_MESSAGES/gen.mo module1.po module2.po 2> /dev/null; then
+if ${MSGFMT} -o mf-2/LC_MESSAGES/gen.mo mf-2-module1.po mf-2-module2.po 2> /dev/null; then
   rm -fr $tmpfiles
   exit 1
 fi
 
 # With msgcat, it should work.
-tmpfiles="$tmpfiles modules.po"
+tmpfiles="$tmpfiles mf-2-modules.po"
 : ${MSGCAT=msgcat} ${MSGFMT=msgfmt}
-${MSGCAT} --use-first -o modules.po module1.po module2.po
+${MSGCAT} --use-first -o mf-2-modules.po mf-2-module1.po mf-2-module2.po
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-${MSGFMT} -o LC_MESSAGES/gen.mo modules.po
+${MSGFMT} -o mf-2/LC_MESSAGES/gen.mo mf-2-modules.po
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 tmpfiles="$tmpfiles mf-test2.out"
 : ${GETTEXT=gettext}
-TEXTDOMAINDIR=.. LANGUAGE=tests \
+TEXTDOMAINDIR=. LANGUAGE=mf-2 \
 ${GETTEXT} --env LC_ALL=en gen 'error 3' > mf-test2.out
 
 tmpfiles="$tmpfiles gtmf-test2.ok"

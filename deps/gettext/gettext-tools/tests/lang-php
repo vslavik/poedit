@@ -12,7 +12,7 @@ cat <<\EOF > prog.php
 <?php
   setlocale (LC_ALL, "");
   textdomain ("prog");
-  bindtextdomain ("prog", ".");
+  bindtextdomain ("prog", "l-php");
   echo _("'Your command, please?', asked the waiter.");
   echo "\n";
   printf(_("%s is replaced by %s."), "FF", "EUR");
@@ -20,15 +20,15 @@ cat <<\EOF > prog.php
 ?>
 EOF
 
-tmpfiles="$tmpfiles prog.tmp prog.pot"
+tmpfiles="$tmpfiles l-php-prog.tmp l-php-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location prog.php
+${XGETTEXT} -o l-php-prog.tmp --omit-header --no-location prog.php
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+LC_ALL=C tr -d '\r' < l-php-prog.tmp > l-php-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles prog.ok"
-cat <<EOF > prog.ok
+tmpfiles="$tmpfiles l-php-prog.ok"
+cat <<EOF > l-php-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -38,10 +38,10 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} l-php-prog.ok l-php-prog.pot || exit 1
 
-tmpfiles="$tmpfiles fr.po"
-cat <<\EOF > fr.po
+tmpfiles="$tmpfiles l-php-fr.po"
+cat <<\EOF > l-php-fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
 
@@ -54,22 +54,23 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+tmpfiles="$tmpfiles l-php-fr.po.tmp l-php-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+${MSGMERGE} -q -o l-php-fr.po.tmp l-php-fr.po l-php-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+LC_ALL=C tr -d '\r' < l-php-fr.po.tmp > l-php-fr.po.new
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} l-php-fr.po l-php-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles fr"
-test -d fr || mkdir fr
-test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
+tmpfiles="$tmpfiles l-php"
+test -d l-php || mkdir l-php
+test -d l-php/fr || mkdir l-php/fr
+test -d l-php/fr/LC_MESSAGES || mkdir l-php/fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
+${MSGFMT} -o l-php/fr/LC_MESSAGES/prog.mo l-php-fr.po
 
 # Test for presence of php version 4.0 or newer with gettext support.
 (php -v) >/dev/null 2>/dev/null
@@ -112,13 +113,13 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   rm -fr $tmpfiles; exit 77
 fi
 
-tmpfiles="$tmpfiles prog.ok prog.oku prog.out"
+tmpfiles="$tmpfiles l-php-prog.ok l-php-prog.oku l-php-prog.out"
 : ${DIFF=diff}
-cat <<\EOF > prog.ok
+cat <<\EOF > l-php-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 EUR remplace FF.
 EOF
-cat <<\EOF > prog.oku
+cat <<\EOF > l-php-prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 EUR remplace FF.
 EOF
@@ -126,12 +127,12 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR php -q prog.php > prog.out || exit 1
-  ${DIFF} prog.ok prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR php -q prog.php > l-php-prog.out || exit 1
+  ${DIFF} l-php-prog.ok l-php-prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 php -q prog.php > prog.out || exit 1
-  ${DIFF} prog.oku prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 php -q prog.php > l-php-prog.out || exit 1
+  ${DIFF} l-php-prog.oku l-php-prog.out || exit 1
 fi
 
 rm -fr $tmpfiles

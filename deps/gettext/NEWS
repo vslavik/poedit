@@ -1,3 +1,62 @@
+Version 0.18.3 - July 2013
+
+* Runtime behaviour:
+  On Mac OS X systems, the setlocale() function now properly
+  invalidates loaded message catalogs when a locale has been set.
+
+* Programming languages support:
+
+  - C++:
+    The gnu::autosprintf class now provides an assignment operator.
+
+  - Glade:
+    xgettext now supports GtkBuider file format used by Glade 3.
+    xgettext now also extracts contexts (msgctxt) from Glade 2 and
+    GtkBuider files.
+
+  - JavaScript:
+    xgettext now partially supports JavaScript.  Since the current
+    JavaScript specification (ECMA-262) does not define the standard
+    set of formatting methods nor translation functions, the
+    implementation supports only a limited set of formatting methods
+    and translation functions commonly used in Gjs and other popular
+    JavaScript implemenations and libraries.
+
+  - Lua:
+    xgettext now supports Lua, using Ľubomír Remák's lua-gettext.
+
+  - Python:
+    xgettext and msgfmt's format string checking now recognize Python
+    format string in braced syntax (PEP 3101).  xgettext now also
+    supports explicit string concatenation with '+' and handles
+    platform dependent line terminators (LF/CR/CRLF) transparently.
+
+  - Tcl:
+    Bug fix in xgettext Unicode escape handling.
+
+  - Vala:
+    xgettext now supports Vala.
+
+* msgattrib now has --previous option to keep previous msgid when
+  making messages fuzzy, similar to msgmerge --previous.
+
+* msgfmt now checks PO file headers more strictly with less
+  false-positives.
+
+* 'gettextize' now checks macro directories specified with
+  AC_CONFIGURE_MACRO_DIRS in configure.ac.
+
+* Portability:
+  - msginit now does not require GNU sed.
+  - The Makefile rule for generating en@quot and en@boldquot now uses
+    @SED@ variable instead of hard-coded 'sed' command to allow users
+    to supply GNU sed.
+
+* Future backward-incompatibilities:
+  - In future Gettext versions, the files installed by 'gettextize'
+    will require Automake 1.10 or later.  This will improve the
+    compatibility of user projects with newer Automake versions.
+
 Version 0.18.2 - December 2012
 
 * xgettext now understands the block comment syntax of Guile 2.0.

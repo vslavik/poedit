@@ -24,6 +24,7 @@
 #include <errno.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #include "binary-io.h"
 #include "cloexec.h"
@@ -107,6 +108,7 @@ main (void)
 {
   int i;
   int fd;
+  int bad_fd = getdtablesize ();
 
   /* We close fd 2 later, so save it in fd 10.  */
   if (dup2 (STDERR_FILENO, BACKUP_STDERR_FILENO) != BACKUP_STDERR_FILENO
@@ -129,7 +131,7 @@ main (void)
       ASSERT (dup (-1) == -1);
       ASSERT (errno == EBADF);
       errno = 0;
-      ASSERT (dup (10000000) == -1);
+      ASSERT (dup (bad_fd) == -1);
       ASSERT (errno == EBADF);
       close (fd + 1);
       errno = 0;

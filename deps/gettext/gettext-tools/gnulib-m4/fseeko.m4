@@ -1,4 +1,4 @@
-# fseeko.m4 serial 16
+# fseeko.m4 serial 17
 dnl Copyright (C) 2007-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,7 +37,7 @@ AC_DEFUN([gl_FUNC_FSEEKO],
     fi
     m4_ifdef([gl_FUNC_FFLUSH_STDIN], [
       gl_FUNC_FFLUSH_STDIN
-      if test $gl_cv_func_fflush_stdin = no; then
+      if test $gl_cv_func_fflush_stdin != yes; then
         REPLACE_FSEEKO=1
       fi
     ])

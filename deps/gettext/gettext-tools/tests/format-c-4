@@ -24,8 +24,8 @@ EOF
 : ${DIFF=diff}
 ${DIFF} fc4.ok fc4.pot || exit 1
 
-tmpfiles="$tmpfiles de.po"
-cat <<EOF > de.po
+tmpfiles="$tmpfiles fc4-de.po"
+cat <<EOF > fc4-de.po
 #, c-format
 msgid "father of %<PRId8> child"
 msgid_plural "father of %<PRId8> children"
@@ -33,22 +33,23 @@ msgstr[0] "Vater eines Kindes"
 msgstr[1] "Vater von %<PRId8> Kindern"
 EOF
 
-tmpfiles="$tmpfiles de"
-test -d de || mkdir de
-test -d de/LC_MESSAGES || mkdir de/LC_MESSAGES
+tmpfiles="$tmpfiles fc4-dir"
+test -d fc4-dir || mkdir fc4-dir
+test -d fc4-dir/de || mkdir fc4-dir/de
+test -d fc4-dir/de/LC_MESSAGES || mkdir fc4-dir/de/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o de/LC_MESSAGES/fc4.mo de.po
+${MSGFMT} -o fc4-dir/de/LC_MESSAGES/fc4.mo fc4-de.po
 
-tmpfiles="$tmpfiles de.po.tmp de.po.un"
+tmpfiles="$tmpfiles fc4-de.po.tmp fc4-de.po.un"
 : ${MSGUNFMT=msgunfmt}
-${MSGUNFMT} -o de.po.tmp de/LC_MESSAGES/fc4.mo
+${MSGUNFMT} -o fc4-de.po.tmp fc4-dir/de/LC_MESSAGES/fc4.mo
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < de.po.tmp > de.po.un
+LC_ALL=C tr -d '\r' < fc4-de.po.tmp > fc4-de.po.un
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 : ${DIFF=diff}
-${DIFF} de.po de.po.un || exit 1
+${DIFF} fc4-de.po fc4-de.po.un || exit 1
 
 LANGUAGE= ./fc4 de_DE
 result=$?

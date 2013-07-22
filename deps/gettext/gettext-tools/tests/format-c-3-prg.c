@@ -61,7 +61,7 @@ main (int argc, char *argv[])
     }
 
   textdomain ("fc3");
-  bindtextdomain ("fc3", ".");
+  bindtextdomain ("fc3", "fc3-dir");
 
   s = gettext ("father of %"PRId8" children");
   c1 = "Vater von %"; c2 = " Kindern";

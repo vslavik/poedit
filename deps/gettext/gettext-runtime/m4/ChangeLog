@@ -1,3 +1,17 @@
+2013-06-25  Daiki Ueno  <ueno@gnu.org>
+
+	Allow user to supply custom sed command when generating en@quot.po.
+	* po.m4 (AM_PO_SUBDIRS): Require AC_PROG_SED.
+
+2013-04-23  Daiki Ueno  <ueno@gnu.org>
+
+	Obsolete gt_CHECK_DECL in favor of AC_CHECK_DECLS.
+	Now that macros installed by 'gettextize' require Autoconf 2.60,
+	gt_CHECK_DECL can be safely replaced with AC_CHECK_DECLS.
+	* intl.m4 (gt_CHECK_DECL): Remove.
+	(AM_INTL_SUBDIR): Use AC_CHECK_DECLS instead of gt_CHECK_DECL.
+	(gt_INTL_SUBDIR_CORE): Likewise.
+
 2013-03-05  Daiki Ueno  <ueno@gnu.org>
 
 	* fcntl-o.m4: Update copyright year.

@@ -211,6 +211,7 @@ main (void)
 {
   const char *file = "test-fcntl.tmp";
   int fd;
+  int bad_fd = getdtablesize ();
 
   /* Sanity check that rpl_fcntl is likely to work.  */
   ASSERT (func2 (1, 2) == 2);
@@ -237,7 +238,7 @@ main (void)
   ASSERT (fcntl (fd + 1, F_DUPFD, 0) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
-  ASSERT (fcntl (10000000, F_DUPFD, 0) == -1);
+  ASSERT (fcntl (bad_fd, F_DUPFD, 0) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
   ASSERT (fcntl (-1, F_DUPFD_CLOEXEC, 0) == -1);
@@ -246,23 +247,21 @@ main (void)
   ASSERT (fcntl (fd + 1, F_DUPFD_CLOEXEC, 0) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
-  ASSERT (fcntl (10000000, F_DUPFD_CLOEXEC, 0) == -1);
+  ASSERT (fcntl (bad_fd, F_DUPFD_CLOEXEC, 0) == -1);
   ASSERT (errno == EBADF);
 
   /* For F_DUPFD*, the destination must be valid.  */
-  ASSERT (getdtablesize () < 10000000);
   errno = 0;
   ASSERT (fcntl (fd, F_DUPFD, -1) == -1);
   ASSERT (errno == EINVAL);
   errno = 0;
-  ASSERT (fcntl (fd, F_DUPFD, 10000000) == -1);
+  ASSERT (fcntl (fd, F_DUPFD, bad_fd) == -1);
   ASSERT (errno == EINVAL);
-  ASSERT (getdtablesize () < 10000000);
   errno = 0;
   ASSERT (fcntl (fd, F_DUPFD_CLOEXEC, -1) == -1);
   ASSERT (errno == EINVAL);
   errno = 0;
-  ASSERT (fcntl (fd, F_DUPFD_CLOEXEC, 10000000) == -1);
+  ASSERT (fcntl (fd, F_DUPFD_CLOEXEC, bad_fd) == -1);
   ASSERT (errno == EINVAL);
 
   /* For F_DUPFD*, check for correct inheritance, as well as
@@ -322,7 +321,7 @@ main (void)
   ASSERT (fcntl (fd + 1, F_GETFD) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
-  ASSERT (fcntl (10000000, F_GETFD) == -1);
+  ASSERT (fcntl (bad_fd, F_GETFD) == -1);
   ASSERT (errno == EBADF);
 
   /* Test F_GETFD, the FD_CLOEXEC bit.  */
@@ -346,7 +345,7 @@ main (void)
   ASSERT (fcntl (fd + 1, F_SETFD, 0) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
-  ASSERT (fcntl (10000000, F_SETFD, 0) == -1);
+  ASSERT (fcntl (bad_fd, F_SETFD, 0) == -1);
   ASSERT (errno == EBADF);
 #endif
 
@@ -359,7 +358,7 @@ main (void)
   ASSERT (fcntl (fd + 1, F_GETFL) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
-  ASSERT (fcntl (10000000, F_GETFL) == -1);
+  ASSERT (fcntl (bad_fd, F_GETFL) == -1);
   ASSERT (errno == EBADF);
 #endif
 
@@ -372,7 +371,7 @@ main (void)
   ASSERT (fcntl (fd + 1, F_SETFL, 0) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
-  ASSERT (fcntl (10000000, F_SETFL, 0) == -1);
+  ASSERT (fcntl (bad_fd, F_SETFL, 0) == -1);
   ASSERT (errno == EBADF);
 #endif
 
@@ -385,7 +384,7 @@ main (void)
   ASSERT (fcntl (fd + 1, F_GETOWN) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
-  ASSERT (fcntl (10000000, F_GETOWN) == -1);
+  ASSERT (fcntl (bad_fd, F_GETOWN) == -1);
   ASSERT (errno == EBADF);
 #endif
 
@@ -398,7 +397,7 @@ main (void)
   ASSERT (fcntl (fd + 1, F_SETOWN, 0) == -1);
   ASSERT (errno == EBADF);
   errno = 0;
-  ASSERT (fcntl (10000000, F_SETOWN, 0) == -1);
+  ASSERT (fcntl (bad_fd, F_SETOWN, 0) == -1);
   ASSERT (errno == EBADF);
 #endif
 

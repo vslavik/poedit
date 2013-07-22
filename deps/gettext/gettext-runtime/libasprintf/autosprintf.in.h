@@ -1,5 +1,5 @@
 /* Class autosprintf - formatted output to an ostream.
-   Copyright (C) 2002, 2012 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2012, 2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -17,16 +17,18 @@
 #ifndef _AUTOSPRINTF_H
 #define _AUTOSPRINTF_H
 
-#ifndef __attribute__
 /* This feature is available in gcc versions 2.5 and later.  */
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5) || __STRICT_ANSI__
-#  define __attribute__(Spec) /* empty */
-# endif
+#if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5) || __STRICT_ANSI__
+# define _AUTOSPRINTF_ATTRIBUTE_FORMAT() /* empty */
+#else
 /* The __-protected variants of 'format' and 'printf' attributes
    are accepted by gcc versions 2.6.4 (effectively 2.7) and later.  */
 # if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 7)
-#  define __format__ format
-#  define __printf__ printf
+#  define _AUTOSPRINTF_ATTRIBUTE_FORMAT() \
+  __attribute__ ((__format__ (__printf__, 2, 3)))
+# else
+#  define _AUTOSPRINTF_ATTRIBUTE_FORMAT() \
+  __attribute__ ((format (printf, 2, 3)))
 # endif
 #endif
 
@@ -42,9 +44,10 @@ namespace gnu
   public:
     /* Constructor: takes a format string and the printf arguments.  */
     autosprintf (const char *format, ...)
-                __attribute__ ((__format__ (__printf__, 2, 3)));
+                _AUTOSPRINTF_ATTRIBUTE_FORMAT();
     /* Copy constructor.  */
     autosprintf (const autosprintf& src);
+    autosprintf& operator = (autosprintf copy);
     /* Destructor: frees the temporarily allocated string.  */
     ~autosprintf ();
     /* Conversion to string.  */

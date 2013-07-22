@@ -52,19 +52,19 @@ hello.sh:
 	} > $@
 
 install-exec-local: all-local
-	$(mkdir_p) $(DESTDIR)$(bindir)
+	$(MKDIR_P) $(DESTDIR)$(bindir)
 	$(INSTALL_SCRIPT) hello.sh $(DESTDIR)$(bindir)/hello
-	$(mkdir_p) $(DESTDIR)$(pkglibdir)
+	$(MKDIR_P) $(DESTDIR)$(pkglibdir)
 	$(INSTALL_DATA) hello.net.exe $(DESTDIR)$(pkglibdir)/hello.net.exe
 
 install-data-local: all-local
-	$(mkdir_p) $(DESTDIR)$(pkgdatadir)
+	$(MKDIR_P) $(DESTDIR)$(pkgdatadir)
 	$(INSTALL_DATA) csharpexec.sh $(DESTDIR)$(pkgdatadir)/csharpexec.sh
 
 installdirs-local:
-	$(mkdir_p) $(DESTDIR)$(bindir)
-	$(mkdir_p) $(DESTDIR)$(pkglibdir)
-	$(mkdir_p) $(DESTDIR)$(pkgdatadir)
+	$(MKDIR_P) $(DESTDIR)$(bindir)
+	$(MKDIR_P) $(DESTDIR)$(pkglibdir)
+	$(MKDIR_P) $(DESTDIR)$(pkgdatadir)
 
 uninstall-local:
 	rm -f $(DESTDIR)$(bindir)/hello

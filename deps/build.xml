@@ -87,8 +87,8 @@
         <echo level="info" message="Building libiconv DLL..."/>
         <!-- Prevent automake regeneration: -->
         <touch>
-            <fileset dir="gettext" includes="**/aclocal.m4"/>
-            <fileset dir="gettext" includes="**/config.h.in"/>
+            <fileset dir="libiconv" includes="**/aclocal.m4"/>
+            <fileset dir="libiconv" includes="**/config.h.in"/>
             <fileset dir="libiconv" includes="**/Makefile.in"/>
             <fileset dir="libiconv" includes="**/configure"/>
         </touch>
@@ -97,7 +97,8 @@
         <exec dir="${intdir}/libiconv" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
             <arg value="../../../../libiconv/configure"/>
-            <arg value="--prefix=${gettextdir}"/>
+            <arg value="--disable-dependency-tracking"/>
+            <arg value="--prefix=/"/>
             <arg value="--disable-static"/>
             <arg value="CFLAGS=${msys.env.CFLAGS}"/>
             <arg value="CXXFLAGS=${msys.env.CFLAGS}"/>
@@ -105,7 +106,12 @@
         <exec dir="${intdir}/libiconv" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
             <arg value="-c"/>
-            <arg value="make install -j1"/>
+            <arg value="make"/>
+        </exec>
+        <exec dir="${intdir}/libiconv" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="make install -j1 DESTDIR=${gettextdir}"/>
         </exec>
         <exec dir="${gettextdir}/bin" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
@@ -115,6 +121,56 @@
         <touch file="${intdir}/libiconv.buildtag"/>
         <delete dir="${intdir}/libiconv"/>
     </target>
+
+
+    <target name="win-expat-check" if="is_windows">
+        <echo level="info" message="Checking if expat needs building..."/>
+        <dependset>
+            <srcfileset dir="expat/lib" includes="*.c,*.h" />
+            <targetfileset dir="${gettextdir}" includes="bin/*expat*"/>
+            <targetfileset dir="${gettextdir}" includes="lib/*expat*"/>
+            <targetfilelist files="${intdir}/expat.buildtag"/>
+        </dependset>
+        <available property="built.expat" file="${intdir}/expat.buildtag"/>
+    </target>
+
+    <target name="win-expat" depends="win-expat-check" unless="built.expat" if="is_windows">
+        <echo level="info" message="Building Expat DLL..."/>
+        <!-- Prevent automake regeneration: -->
+        <touch>
+            <fileset dir="expat" includes="aclocal.m4"/>
+            <fileset dir="expat" includes="Makefile.in"/>
+            <fileset dir="expat" includes="configure"/>
+        </touch>
+        <mkdir dir="${gettextdir}"/>
+        <mkdir dir="${intdir}/expat"/>
+        <exec dir="${intdir}/expat" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="../../../../expat/configure"/>
+            <arg value="--prefix=/"/>
+            <arg value="--disable-static"/>
+            <arg value="CFLAGS=${msys.env.CFLAGS}"/>
+            <arg value="CXXFLAGS=${msys.env.CFLAGS}"/>
+        </exec>
+        <exec dir="${intdir}/expat" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="make"/>
+        </exec>
+        <exec dir="${intdir}/expat" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="make install -j1 DESTDIR=${gettextdir}"/>
+        </exec>
+        <exec dir="${gettextdir}/bin" executable="${msys.sh}" failonerror="true">
+            <env key="PATH" path="${msys.env.PATH}"/>
+            <arg value="-c"/>
+            <arg value="strip *.dll"/>
+        </exec>
+        <touch file="${intdir}/expat.buildtag"/>
+        <delete dir="${intdir}/expat"/>
+    </target>
+
 
     <target name="win-gettext-check" if="is_windows">
         <echo level="info" message="Checking if GNU gettext needs building..."/>
@@ -129,7 +185,7 @@
         <available property="built.gettext" file="${intdir}/gettext.buildtag"/>
     </target>
 
-    <target name="win-gettext" depends="win-libiconv,mingw-dlls,win-gettext-check" unless="built.gettext" if="is_windows">
+    <target name="win-gettext" depends="win-libiconv,win-expat,mingw-dlls,win-gettext-check" unless="built.gettext" if="is_windows">
         <echo level="info" message="Building GNU gettext..."/>
         <!-- Prevent automake regeneration: -->
         <touch>
@@ -147,8 +203,12 @@
         <exec dir="${intdir}/gettext" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${gettextdir}/bin:${msys.env.PATH}"/>
             <arg value="../../../../gettext/configure"/>
-            <arg value="--prefix=${gettextdir}"/>
+            <arg value="--disable-dependency-tracking"/>
+            <arg value="--enable-silent-rules"/>
+            <arg value="--enable-relocatable"/>
+            <arg value="--prefix=/"/>
             <arg value="--with-libiconv-prefix=${gettextdir}"/>
+            <arg value="--with-libexpat-prefix=${gettextdir}"/>
             <arg value="--enable-threads=win32"/>
             <arg value="--disable-static"/>
             <arg value="--disable-java"/>
@@ -168,7 +228,7 @@
         <exec dir="${intdir}/gettext" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${gettextdir}/bin:${msys.env.PATH}"/>
             <arg value="-c"/>
-            <arg value="make install -j1"/>
+            <arg value="make install -j1 DESTDIR=${gettextdir}"/>
         </exec>
         <exec dir="${gettextdir}/bin" executable="${msys.sh}" failonerror="true">
             <env key="PATH" path="${msys.env.PATH}"/>
@@ -228,7 +288,7 @@
         <mkdir dir="${intdir}/db"/>
         <exec dir="${intdir}/db" executable="/bin/sh" failonerror="true">
             <arg value="${basedir}/db/dist/configure"/>
-            <arg value="--prefix=${builddir}/db"/>
+            <arg value="--prefix=/"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
             <arg value="CFLAGS=${osx.cflags}"/>
@@ -246,7 +306,7 @@
         </exec>
         <exec dir="${intdir}/db" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
-            <arg value="make install -j1"/>
+            <arg value="make install -j1 DESTDIR=${builddir}/db"/>
         </exec>
         <delete dir="${builddir}/db/docs"/>
 
@@ -279,6 +339,9 @@
             <fileset dir="gettext" includes="**/config.h.in"/>
             <fileset dir="gettext" includes="**/Makefile.in"/>
             <fileset dir="gettext" includes="**/configure"/>
+            <fileset dir="gettext" includes="**/man/*.1"/>
+            <fileset dir="gettext" includes="**/man/*.3"/>
+            <fileset dir="gettext" includes="**/man/*.html"/>
         </touch>
         <touch file="gettext/gettext-tools/doc/stamp-vti"/>
 
@@ -287,7 +350,9 @@
         <mkdir dir="${intdir}/gettext"/>
         <exec dir="${intdir}/gettext" executable="/bin/sh" failonerror="true">
             <arg value="${basedir.unix}/gettext/configure"/>
-            <arg value="--prefix=${gettextdir}"/>
+            <arg value="--disable-dependency-tracking"/>
+            <arg value="--enable-silent-rules"/>
+            <arg value="--prefix=/"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
             <!-- When running configure under Xcode, SIGALRM is ignored and this doesn't play
@@ -299,12 +364,9 @@
             <arg value="LDFLAGS=${osx.ldflags}"/>
             <arg value="GSED=${osx.gnu.sed}"/>
             <arg value="--with-libiconv-prefix=${osx.sdk.path}/usr"/>
-            <!-- Make our life simpler by using static linking and not having to deal with dylibs
-                 and install_name_tool. If re-enabling shared builds, don't forget to also add
-                 calls to install_name_tool here. Also consider using @rpath
-                 (available since 10.5) instead of @executable_path. -->
-            <arg value="--disable-shared"/>
+            <arg value="--disable-static"/>
             <arg value="--disable-java"/>
+            <arg value="--disable-csharp"/>
             <arg value="--disable-rpath"/>
         </exec>
         <touch file="${intdir}/gettext/gettext-tools/misc/archive.dir.tar.gz"/>
@@ -316,8 +378,25 @@
         </exec>
         <exec dir="${intdir}/gettext" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
-            <arg value="make install -j1"/>
+            <arg value="make install -j1 DESTDIR=${gettextdir}"/>
         </exec>
+
+        <!-- delete unwanted stuff -->
+        <delete>
+            <fileset dir="${gettextdir}/bin"
+                     includes="autopoint,envsubst,gettext*,ngettext,recode-sr-latin"/>
+            <fileset dir="${gettextdir}/lib" includes="*.la"/>
+        </delete>
+
+        <!-- fix dylib references to work -->
+        <exec executable="/bin/sh" failonerror="true">
+            <arg value="../macosx/fixup-dylib-deps.sh"/>
+            <arg value="//lib"/>
+            <arg value="@executable_path/../lib"/>
+            <arg value="${gettextdir}/lib"/>
+            <arg value="${gettextdir}/bin/*"/>
+        </exec>
+
 
         <!-- TODO: keep dSYM files? -->
         <strip-exe file="${gettextdir}/bin/msgfmt"/>

@@ -31,15 +31,16 @@ LC_ALL=fr_FR ./testlocale || {
   exit 77
 }
 
-tmpfiles="$tmpfiles de_DE fr_FR"
-test -d de_DE || mkdir de_DE
-test -d de_DE/LC_MESSAGES || mkdir de_DE/LC_MESSAGES
-test -d fr_FR || mkdir fr_FR
-test -d fr_FR/LC_MESSAGES || mkdir fr_FR/LC_MESSAGES
+tmpfiles="$tmpfiles gt-3"
+test -d gt-3 || mkdir gt-3
+test -d gt-3/de_DE || mkdir gt-3/de_DE
+test -d gt-3/de_DE/LC_MESSAGES || mkdir gt-3/de_DE/LC_MESSAGES
+test -d gt-3/fr_FR || mkdir gt-3/fr_FR
+test -d gt-3/fr_FR/LC_MESSAGES || mkdir gt-3/fr_FR/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o de_DE/LC_MESSAGES/tstlang.mo ${top_srcdir}/tests/gettext-3-1.po
-${MSGFMT} -o fr_FR/LC_MESSAGES/tstlang.mo ${top_srcdir}/tests/gettext-3-2.po
+${MSGFMT} -o gt-3/de_DE/LC_MESSAGES/tstlang.mo ${top_srcdir}/tests/gettext-3-1.po
+${MSGFMT} -o gt-3/fr_FR/LC_MESSAGES/tstlang.mo ${top_srcdir}/tests/gettext-3-2.po
 
 tmpfiles="$tmpfiles gt-3.ok"
 cat <<EOF > gt-3.ok

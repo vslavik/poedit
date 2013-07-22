@@ -318,6 +318,12 @@ set_binding_values (const char *domainname,
 char *
 BINDTEXTDOMAIN (const char *domainname, const char *dirname)
 {
+  /* HACK: Building relocatable binaries is rather broken on OS X,
+   *       so use this workaround instead: */
+  const char *poedit_localedir = getenv("POEDIT_LOCALEDIR");
+  if (poedit_localedir)
+    dirname = poedit_localedir;
+
   set_binding_values (domainname, &dirname, NULL);
   return (char *) dirname;
 }

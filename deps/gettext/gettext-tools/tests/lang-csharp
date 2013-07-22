@@ -49,19 +49,20 @@ class Program {
 }
 EOF
 
-tmpfiles="$tmpfiles program.exe"
+tmpfiles="$tmpfiles l-csharp"
+test -d l-csharp || mkdir l-csharp
 : ${CSHARPCOMP="/bin/sh ../csharpcomp.sh"}
-${CSHARPCOMP} -o program.exe -L ../../gettext-runtime/intl-csharp -l GNU.Gettext program.cs || exit 1
+${CSHARPCOMP} -o l-csharp/program.exe -L ../../gettext-runtime/intl-csharp -l GNU.Gettext program.cs || exit 1
 
-tmpfiles="$tmpfiles prog.tmp prog.pot"
+tmpfiles="$tmpfiles l-csharp-prog.tmp l-csharp-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location program.cs
+${XGETTEXT} -o l-csharp-prog.tmp --omit-header --no-location program.cs
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot
+LC_ALL=C tr -d '\r' < l-csharp-prog.tmp > l-csharp-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
-tmpfiles="$tmpfiles prog.ok"
-cat <<EOF > prog.ok
+tmpfiles="$tmpfiles l-csharp-prog.ok"
+cat <<EOF > l-csharp-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -89,10 +90,10 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} l-csharp-prog.ok l-csharp-prog.pot || exit 1
 
-tmpfiles="$tmpfiles fr.po"
-cat <<\EOF > fr.po
+tmpfiles="$tmpfiles l-csharp-fr.po"
+cat <<\EOF > l-csharp-fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -128,20 +129,20 @@ msgid "{0} is replaced by {1}."
 msgstr "Le nouveau {1} remplace le vieux {0}."
 EOF
 
-tmpfiles="$tmpfiles fr.po.tmp fr.po.new"
+tmpfiles="$tmpfiles l-csharp-fr.po.tmp l-csharp-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot
+${MSGMERGE} -q -o l-csharp-fr.po.tmp l-csharp-fr.po l-csharp-prog.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new
+LC_ALL=C tr -d '\r' < l-csharp-fr.po.tmp > l-csharp-fr.po.new
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} l-csharp-fr.po l-csharp-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles fr/prog.dll"
 : ${MSGFMT=msgfmt}
 GETTEXTCSHARPLIBDIR=../../gettext-runtime/intl-csharp \
-${MSGFMT} --csharp -d . -r prog -l fr fr.po || exit 1
+${MSGFMT} --csharp -d l-csharp -r prog -l fr l-csharp-fr.po || exit 1
+exit 0
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
@@ -171,16 +172,16 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   rm -fr $tmpfiles; exit 77
 fi
 
-tmpfiles="$tmpfiles prog.ok prog.oku prog.out"
+tmpfiles="$tmpfiles l-csharp-prog.ok l-csharp-prog.oku l-csharp-prog.out"
 : ${DIFF=diff}
-cat <<\EOF > prog.ok
+cat <<\EOF > l-csharp-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EUR remplace FF.
 2 morceaux de gateau succulent
 Le nouveau EUR remplace le vieux FF.
 EOF
-cat <<\EOF > prog.oku
+cat <<\EOF > l-csharp-prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EUR remplace FF.
@@ -192,12 +193,12 @@ EOF
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 : ${CSHARPEXEC="/bin/sh ../csharpexec.sh"}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR ${CSHARPEXEC} -L ../../gettext-runtime/intl-csharp program.exe 2 > prog.out || exit 1
-  ${DIFF} prog.ok prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR ${CSHARPEXEC} -L ../../gettext-runtime/intl-csharp l-csharp/program.exe 2 > l-csharp-prog.out || exit 1
+  ${DIFF} l-csharp-prog.ok l-csharp-prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 ${CSHARPEXEC} -L ../../gettext-runtime/intl-csharp program.exe 2 > prog.out || exit 1
-  ${DIFF} prog.oku prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 ${CSHARPEXEC} -L ../../gettext-runtime/intl-csharp l-csharp/program.exe 2 > l-csharp-prog.out || exit 1
+  ${DIFF} l-csharp-prog.oku l-csharp-prog.out || exit 1
 fi
 
 rm -fr $tmpfiles

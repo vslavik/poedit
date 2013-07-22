@@ -1,5 +1,5 @@
 /* xgettext Python backend.
-   Copyright (C) 2002-2003, 2005-2011 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2013 Free Software Foundation, Inc.
 
    This file was written by Bruno Haible <haible@clisp.cons.org>, 2002.
 
@@ -133,6 +133,18 @@ init_flag_table_python ()
   xgettext_record_flag ("dngettext:3:pass-python-format");
   xgettext_record_flag ("_:1:pass-python-format");
   /* xgettext_record_flag ("%:1:python-format"); // % is an infix operator! */
+
+  xgettext_record_flag ("gettext:1:pass-python-brace-format");
+  xgettext_record_flag ("ugettext:1:pass-python-brace-format");
+  xgettext_record_flag ("dgettext:2:pass-python-brace-format");
+  xgettext_record_flag ("ngettext:1:pass-python-brace-format");
+  xgettext_record_flag ("ngettext:2:pass-python-brace-format");
+  xgettext_record_flag ("ungettext:1:pass-python-brace-format");
+  xgettext_record_flag ("ungettext:2:pass-python-brace-format");
+  xgettext_record_flag ("dngettext:2:pass-python-brace-format");
+  xgettext_record_flag ("dngettext:3:pass-python-brace-format");
+  xgettext_record_flag ("_:1:pass-python-brace-format");
+  /* xgettext_record_flag ("format:1:python-brace-format"); */
 }
 
 
@@ -147,6 +159,46 @@ static int line_number;
 
 /* The input file stream.  */
 static FILE *fp;
+
+
+/* 0. Terminate line by \n, regardless whether the external
+   representation of a line terminator is CR (Mac), and CR/LF
+   (DOS/Windows), as Python treats them equally.  */
+static int
+phase0_getc ()
+{
+  int c;
+
+  c = getc (fp);
+  if (c == EOF)
+    {
+      if (ferror (fp))
+        error (EXIT_FAILURE, errno, _("error while reading \"%s\""),
+               real_file_name);
+      return EOF;
+    }
+
+  if (c == '\r')
+    {
+      int c1 = getc (fp);
+
+      if (c1 != EOF && c1 != '\n')
+        ungetc (c1, fp);
+
+      /* Seen line terminator CR or CR/LF.  */
+      return '\n';
+    }
+
+  return c;
+}
+
+/* Supports only one pushback character, and not '\n'.  */
+static inline void
+phase0_ungetc (int c)
+{
+  if (c != EOF)
+    ungetc (c, fp);
+}
 
 
 /* 1. line_number handling.  */
@@ -165,17 +217,7 @@ phase1_getc ()
   if (phase1_pushback_length)
     c = phase1_pushback[--phase1_pushback_length];
   else
-    {
-      c = getc (fp);
-
-      if (c == EOF)
-        {
-          if (ferror (fp))
-            error (EXIT_FAILURE, errno, _("error while reading \"%s\""),
-                   real_file_name);
-          return EOF;
-        }
-    }
+    c = phase0_getc ();
 
   if (c == '\n')
     ++line_number;
@@ -994,6 +1036,7 @@ enum token_type_ty
   token_type_rbracket,          /* ] */
   token_type_string,            /* "abc", 'abc', """abc""", '''abc''' */
   token_type_symbol,            /* symbol, number */
+  token_type_plus,              /* + */
   token_type_other              /* misc. operator */
 };
 typedef enum token_type_ty token_type_ty;
@@ -1006,6 +1049,16 @@ struct token_ty
   refcounted_string_list_ty *comment;   /* for token_type_string */
   int line_number;
 };
+
+/* Free the memory pointed to by a 'struct token_ty'.  */
+static inline void
+free_token (token_ty *tp)
+{
+  if (tp->type == token_type_string || tp->type == token_type_symbol)
+    free (tp->string);
+  if (tp->type == token_type_string)
+    drop_reference (tp->comment);
+}
 
 
 /* There are two different input syntaxes for strings, "abc" and r"abc",
@@ -1350,7 +1403,7 @@ phase7_getuc (int quote_char,
 /* Number of pending open parentheses/braces/brackets.  */
 static int open_pbb;
 
-static token_ty phase5_pushback[1];
+static token_ty phase5_pushback[2];
 static int phase5_pushback_length;
 
 static void
@@ -1594,6 +1647,10 @@ phase5_get (token_ty *tp)
           tp->type = (c == ']' ? token_type_rbracket : token_type_other);
           return;
 
+        case '+':
+          tp->type = token_type_plus;
+          return;
+
         default:
           /* We could carefully recognize each of the 2 and 3 character
              operators, but it is not necessary, as we only need to recognize
@@ -1625,23 +1682,55 @@ static void
 x_python_lex (token_ty *tp)
 {
   phase5_get (tp);
-  if (tp->type != token_type_string)
-    return;
-  for (;;)
+  if (tp->type == token_type_string)
     {
-      token_ty tmp;
-      size_t len;
+      char *sum = tp->string;
+      size_t sum_len = strlen (sum);
 
-      phase5_get (&tmp);
-      if (tmp.type != token_type_string)
+      for (;;)
         {
-          phase5_unget (&tmp);
-          return;
+          token_ty token2, *tp2 = NULL;
+
+          phase5_get (&token2);
+          switch (token2.type)
+            {
+            case token_type_plus:
+              {
+                token_ty token3;
+
+                phase5_get (&token3);
+                if (token3.type == token_type_string)
+                  {
+                    free_token (&token2);
+                    tp2 = &token3;
+                  }
+                else
+                  phase5_unget (&token3);
+              }
+              break;
+            case token_type_string:
+              tp2 = &token2;
+              break;
+            default:
+              break;
+            }
+
+          if (tp2)
+            {
+              char *addend = tp2->string;
+              size_t addend_len = strlen (addend);
+
+              sum = (char *) xrealloc (sum, sum_len + addend_len + 1);
+              memcpy (sum + sum_len, addend, addend_len + 1);
+              sum_len += addend_len;
+
+              free_token (tp2);
+              continue;
+            }
+          phase5_unget (&token2);
+          break;
         }
-      len = strlen (tp->string);
-      tp->string = xrealloc (tp->string, len + strlen (tmp.string) + 1);
-      strcpy (tp->string + len, tmp.string);
-      free (tmp.string);
+      tp->string = sum;
     }
 }
 
@@ -1817,6 +1906,7 @@ extract_balanced (message_list_ty *mlp,
           xgettext_current_source_encoding = xgettext_current_file_source_encoding;
           return true;
 
+        case token_type_plus:
         case token_type_other:
           next_context_iter = null_context_list_iterator;
           state = 0;

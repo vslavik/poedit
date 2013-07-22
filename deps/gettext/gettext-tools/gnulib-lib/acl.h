@@ -17,9 +17,11 @@
 
    Written by Paul Eggert.  */
 
+#include <stdbool.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
+bool acl_errno_valid (int) _GL_ATTRIBUTE_CONST;
 int file_has_acl (char const *, struct stat const *);
 int qset_acl (char const *, int, mode_t);
 int set_acl (char const *, int, mode_t);

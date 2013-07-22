@@ -179,7 +179,7 @@ main (int argc, char *argv[])
   unsetenv ("LANGUAGE");
   unsetenv ("OUTPUT_CHARSET");
   textdomain ("tstthread");
-  bindtextdomain ("tstthread", ".");
+  bindtextdomain ("tstthread", "gt-7");
   result = 0;
 
   flipflop = 1;

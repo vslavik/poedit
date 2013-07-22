@@ -5,22 +5,22 @@
 tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
-tmpfiles="$tmpfiles empty.glade"
-cat <<EOF > empty.glade
+tmpfiles="$tmpfiles xg-gl-3-empty.glade"
+cat <<EOF > xg-gl-3-empty.glade
 <?xml version="1.0"?>
 <GTK-Interface/>
 EOF
 
 tmpfiles="$tmpfiles xg-gl-3.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o xg-gl-3.pot empty.glade 2>/dev/null
+${XGETTEXT} -o xg-gl-3.pot xg-gl-3-empty.glade 2>/dev/null
 test $? = 0 || {
   echo "Skipping test: xgettext was built without Glade support"
   rm -fr $tmpfiles; exit 77
 }
 
-tmpfiles="$tmpfiles asciitable.glade2"
-cat <<EOF > asciitable.glade2
+tmpfiles="$tmpfiles xg-gl-3-asciitable.glade2"
+cat <<EOF > xg-gl-3-asciitable.glade2
 <?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd" >
 
@@ -168,7 +168,7 @@ EOF
 
 tmpfiles="$tmpfiles xg-gl-3.tmp xg-gl-3.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o xg-gl-3.tmp asciitable.glade2 
+${XGETTEXT} -o xg-gl-3.tmp xg-gl-3-asciitable.glade2 
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 # Don't simplify this to "grep ... < xg-gl-3.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
@@ -194,15 +194,15 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: asciitable.glade2:7
+#: xg-gl-3-asciitable.glade2:7
 msgid "gedit: ASCII table"
 msgstr ""
 
-#: asciitable.glade2:30
+#: xg-gl-3-asciitable.glade2:30
 msgid "Insert char"
 msgstr ""
 
-#: asciitable.glade2:74
+#: xg-gl-3-asciitable.glade2:74
 msgid ""
 "If you wish to insert any of the characters in to the active \n"
 "document, select the character and click the \"Insert Char\" \n"

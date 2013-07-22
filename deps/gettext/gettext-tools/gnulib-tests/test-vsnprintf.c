@@ -65,7 +65,7 @@ main (int argc, char *argv[])
 #if !CHECK_VSNPRINTF_POSIX
           if (size > 0)
 #endif
-            ASSERT (memcmp (buf + size, "DEADBEEF" + size, 8 - size) == 0);
+            ASSERT (memcmp (buf + size, &"DEADBEEF"[size], 8 - size) == 0);
         }
       else
         {

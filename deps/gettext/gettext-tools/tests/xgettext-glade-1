@@ -5,22 +5,22 @@
 tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
-tmpfiles="$tmpfiles empty.glade"
-cat <<EOF > empty.glade
+tmpfiles="$tmpfiles xg-gl-1-empty.glade"
+cat <<EOF > xg-gl-1-empty.glade
 <?xml version="1.0"?>
 <GTK-Interface/>
 EOF
 
 tmpfiles="$tmpfiles xg-gl-1.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o xg-gl-1.pot empty.glade 2>/dev/null
+${XGETTEXT} -o xg-gl-1.pot xg-gl-1-empty.glade 2>/dev/null
 test $? = 0 || {
   echo "Skipping test: xgettext was built without Glade support"
   rm -fr $tmpfiles; exit 77
 }
 
-tmpfiles="$tmpfiles widgets.glade"
-cat <<EOF > widgets.glade
+tmpfiles="$tmpfiles xg-gl-1-widgets.glade"
+cat <<EOF > xg-gl-1-widgets.glade
 <?xml version="1.0"?>
 <GTK-Interface>
 
@@ -1336,7 +1336,7 @@ EOF
 
 tmpfiles="$tmpfiles xg-gl-1.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --add-comments -o - widgets.glade | grep -v 'POT-Creation-Date' > xg-gl-1.pot
+${XGETTEXT} --add-comments -o - xg-gl-1-widgets.glade | grep -v 'POT-Creation-Date' > xg-gl-1.pot
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
 tmpfiles="$tmpfiles xg-gl-1.ok"
@@ -1359,208 +1359,208 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: widgets.glade:33
+#: xg-gl-1-widgets.glade:33
 msgid "Libglade-GNOME Test"
 msgstr ""
 
-#: widgets.glade:103
+#: xg-gl-1-widgets.glade:103
 msgid "Show _Tests"
 msgstr ""
 
-#: widgets.glade:116
+#: xg-gl-1-widgets.glade:116
 msgid "Druid Test"
 msgstr ""
 
-#: widgets.glade:295
+#: xg-gl-1-widgets.glade:295
 msgid "New"
 msgstr ""
 
-#: widgets.glade:303
+#: xg-gl-1-widgets.glade:303
 msgid "Open"
 msgstr ""
 
-#: widgets.glade:311
+#: xg-gl-1-widgets.glade:311
 msgid "Save"
 msgstr ""
 
-#: widgets.glade:325
+#: xg-gl-1-widgets.glade:325
 msgid "Cut"
 msgstr ""
 
-#: widgets.glade:342
+#: xg-gl-1-widgets.glade:342
 msgid "Copy"
 msgstr ""
 
-#: widgets.glade:356
+#: xg-gl-1-widgets.glade:356
 msgid "Paste"
 msgstr ""
 
-#: widgets.glade:370
+#: xg-gl-1-widgets.glade:370
 msgid "Clear"
 msgstr ""
 
-#: widgets.glade:378
+#: xg-gl-1-widgets.glade:378
 msgid "Tog"
 msgstr ""
 
-#: widgets.glade:395
+#: xg-gl-1-widgets.glade:395
 msgid "The cut copy paste and clear buttons should work correctly."
 msgstr ""
 
-#: widgets.glade:423
+#: xg-gl-1-widgets.glade:423
 msgid "Copyright (C) 1999"
 msgstr ""
 
-#: widgets.glade:426
+#: xg-gl-1-widgets.glade:426
 msgid ""
 "A simple program demonstrating what is possible with GNOME and\n"
 "libglade.  This interface has been coded entirely with GLADE, and\n"
 "no C code specific to this interface has been written."
 msgstr ""
 
-#: widgets.glade:508
+#: xg-gl-1-widgets.glade:508
 msgid "X"
 msgstr ""
 
-#: widgets.glade:529
+#: xg-gl-1-widgets.glade:529
 msgid "Widget Tests"
 msgstr ""
 
-#: widgets.glade:556 widgets.glade:557
+#: xg-gl-1-widgets.glade:556 xg-gl-1-widgets.glade:557
 msgid "Pick a colour"
 msgstr ""
 
-#: widgets.glade:564
+#: xg-gl-1-widgets.glade:564
 msgid "Colour Picker"
 msgstr ""
 
-#: widgets.glade:578
+#: xg-gl-1-widgets.glade:578
 msgid "Pick a Font"
 msgstr ""
 
-#: widgets.glade:579
+#: xg-gl-1-widgets.glade:579
 msgid "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
 msgstr ""
 
-#: widgets.glade:590
+#: xg-gl-1-widgets.glade:590
 msgid "Font Picker"
 msgstr ""
 
 #. The welcome greeting
-#: widgets.glade:603
+#: xg-gl-1-widgets.glade:603
 msgid "Hello"
 msgstr ""
 
-#: widgets.glade:612
+#: xg-gl-1-widgets.glade:612
 msgid "Icon Sel"
 msgstr ""
 
-#: widgets.glade:627
+#: xg-gl-1-widgets.glade:627
 msgid "My Gnome Site"
 msgstr ""
 
-#: widgets.glade:634
+#: xg-gl-1-widgets.glade:634
 msgid "HRef"
 msgstr ""
 
-#: widgets.glade:665
+#: xg-gl-1-widgets.glade:665
 msgid "Entry"
 msgstr ""
 
-#: widgets.glade:699
+#: xg-gl-1-widgets.glade:699
 msgid "File Entry"
 msgstr ""
 
-#: widgets.glade:725
+#: xg-gl-1-widgets.glade:725
 msgid "Dial"
 msgstr ""
 
 #. This is a comment for the translators.
 #. This should be an strftime format,
 #. as described in the strftime(3) manual page.
-#: widgets.glade:742
+#: xg-gl-1-widgets.glade:742
 msgid "%H:%M"
 msgstr ""
 
-#: widgets.glade:751
+#: xg-gl-1-widgets.glade:751
 msgid "Clock"
 msgstr ""
 
-#: widgets.glade:774
+#: xg-gl-1-widgets.glade:774
 msgid "Animator"
 msgstr ""
 
-#: widgets.glade:792
+#: xg-gl-1-widgets.glade:792
 msgid "Calculator"
 msgstr ""
 
-#: widgets.glade:811
+#: xg-gl-1-widgets.glade:811
 msgid "Less"
 msgstr ""
 
-#: widgets.glade:830
+#: xg-gl-1-widgets.glade:830
 msgid "PaperSel"
 msgstr ""
 
-#: widgets.glade:848
+#: xg-gl-1-widgets.glade:848
 msgid "GnomeSpell"
 msgstr ""
 
-#: widgets.glade:874
+#: xg-gl-1-widgets.glade:874
 msgid "Select File"
 msgstr ""
 
-#: widgets.glade:901
+#: xg-gl-1-widgets.glade:901
 msgid "OK"
 msgstr ""
 
-#: widgets.glade:917
+#: xg-gl-1-widgets.glade:917
 msgid "Cancel"
 msgstr ""
 
-#: widgets.glade:949
+#: xg-gl-1-widgets.glade:949
 msgid ""
 "If this was a real application, clicking on the\n"
 "OK button would probably have done something\n"
 "useful, rather than just displaying this dialog."
 msgstr ""
 
-#: widgets.glade:995
+#: xg-gl-1-widgets.glade:995
 msgid "Nothing"
 msgstr ""
 
-#: widgets.glade:1159
+#: xg-gl-1-widgets.glade:1159
 msgid "_Entry"
 msgstr ""
 
-#: widgets.glade:1193
+#: xg-gl-1-widgets.glade:1193
 msgid "_Dial"
 msgstr ""
 
-#: widgets.glade:1218
+#: xg-gl-1-widgets.glade:1218
 msgid "GnomeDruid"
 msgstr ""
 
-#: widgets.glade:1239
+#: xg-gl-1-widgets.glade:1239
 msgid "Test GnomeDruid"
 msgstr ""
 
-#: widgets.glade:1240
+#: xg-gl-1-widgets.glade:1240
 msgid ""
 "This is a simple test of the GnomeDruid\n"
 "code in gnome-libs and the wrapper\n"
 "for said code in libglade."
 msgstr ""
 
-#: widgets.glade:1253
+#: xg-gl-1-widgets.glade:1253
 msgid "A dial in a druid"
 msgstr ""
 
-#: widgets.glade:1300
+#: xg-gl-1-widgets.glade:1300
 msgid "Last Page"
 msgstr ""
 
-#: widgets.glade:1301
+#: xg-gl-1-widgets.glade:1301
 msgid "This is the end of the druid example"
 msgstr ""
 EOF

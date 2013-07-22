@@ -274,6 +274,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module progname:
   # Code from module propername:
   # Code from module putenv:
+  # Code from module qacl:
   # Code from module quote:
   # Code from module quotearg:
   # Code from module quotearg-simple:
@@ -502,7 +503,6 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='gnulib-lib'
-  gl_FUNC_ACL
   gl_FUNC_ALLOCA
   gl_PROG_ANSI_CXX([CXX], [ANSICXX])
   gl_FUNC_ATEXIT
@@ -511,6 +511,7 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_ATEXIT
   fi
   gt_PREREQ_BACKUPFILE
+  gl_MODULE_INDICATOR([binary-io])
   BISON_I18N
   gl_BYTESWAP
   gl_CANONICALIZE_LGPL
@@ -680,6 +681,7 @@ AC_DEFUN([gl_INIT],
   gl_LOCALE_H
   gl_LOCALENAME
   gl_LOCK
+  gl_MODULE_INDICATOR([lock])
   gl_FUNC_LSTAT
   if test $REPLACE_LSTAT = 1; then
     AC_LIBOBJ([lstat])
@@ -828,6 +830,7 @@ AC_DEFUN([gl_INIT],
   m4_ifdef([AM_XGETTEXT_OPTION],
     [AM_][XGETTEXT_OPTION([--keyword='proper_name:1,\"This is a proper name. See the gettext manual, section Names.\"'])
      AM_][XGETTEXT_OPTION([--keyword='proper_name_utf8:1,\"This is a proper name. See the gettext manual, section Names.\"'])])
+  gl_FUNC_ACL
   gl_QUOTE
   gl_QUOTEARG
   gl_FUNC_RAISE
@@ -1241,6 +1244,11 @@ changequote([, ])dnl
   fi
   gl_STDLIB_MODULE_INDICATOR([putenv])
   dnl Check for prerequisites for memory fence checks.
+  dnl FIXME: zerosize-ptr.h requires these: make a module for it
+  gl_FUNC_MMAP_ANON
+  AC_CHECK_HEADERS_ONCE([sys/mman.h])
+  AC_CHECK_FUNCS_ONCE([mprotect])
+  dnl Check for prerequisites for memory fence checks.
   gl_FUNC_MMAP_ANON
   AC_CHECK_HEADERS_ONCE([sys/mman.h])
   AC_CHECK_FUNCS_ONCE([mprotect])
@@ -1407,6 +1415,7 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/snippet/unused-parameter.h
   build-aux/snippet/warn-on-use.h
   doc/relocatable.texi
+  lib/acl-errno-valid.c
   lib/acl-internal.h
   lib/acl.h
   lib/acl_entries.c
@@ -1565,6 +1574,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/iconv_open-solaris.gperf
   lib/iconv_open.c
   lib/iconveh.h
+  lib/ignore-value.h
   lib/intprops.h
   lib/iswblank.c
   lib/itold.c
@@ -1783,6 +1793,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/progreloc.c
   lib/propername.c
   lib/propername.h
+  lib/qcopy-acl.c
+  lib/qset-acl.c
   lib/quote.h
   lib/quotearg.c
   lib/quotearg.h
@@ -1805,7 +1817,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/safe-write.h
   lib/sched.in.h
   lib/secure_getenv.c
-  lib/set-mode-acl.c
+  lib/set-acl.c
   lib/setenv.c
   lib/setlocale.c
   lib/sh-quote.c
@@ -2087,7 +2099,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/no-c++.m4
   m4/nocrash.m4
   m4/off_t.m4
-  m4/onceonly.m4
   m4/open.m4
   m4/opendir.m4
   m4/openmp.m4
@@ -2457,7 +2468,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/glthread/thread.c
   tests=lib/glthread/thread.h
   tests=lib/glthread/yield.h
-  tests=lib/ignore-value.h
   tests=lib/inttypes.in.h
   tests=lib/lseek.c
   tests=lib/mbtowc-impl.h

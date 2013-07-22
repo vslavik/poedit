@@ -69,7 +69,7 @@ main (void)
       if (setlocale (LC_ALL, lang[i]) == NULL)
         setlocale (LC_ALL, "C");
 
-      bindtextdomain ("tstlang", ".");
+      bindtextdomain ("tstlang", "gt-3");
 
       for (j = 0; j < data_cnt; ++j)
         printf ("%s - %s\n", strings[j].selection,

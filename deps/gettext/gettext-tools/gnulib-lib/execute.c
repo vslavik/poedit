@@ -54,7 +54,7 @@
 #undef close
 
 
-#ifdef EINTR
+#if defined EINTR && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
 
 /* EINTR handling for close(), open().
    These functions can return -1/EINTR even though we don't have any

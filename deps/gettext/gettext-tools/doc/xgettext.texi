@@ -73,7 +73,8 @@ are @code{C}, @code{C++}, @code{ObjectiveC}, @code{PO}, @code{Shell},
 @code{Python}, @code{Lisp}, @code{EmacsLisp}, @code{librep}, @code{Scheme},
 @code{Smalltalk}, @code{Java}, @code{JavaProperties}, @code{C#}, @code{awk},
 @code{YCP}, @code{Tcl}, @code{Perl}, @code{PHP}, @code{GCC-source},
-@code{NXStringTable}, @code{RST}, @code{Glade}.
+@code{NXStringTable}, @code{RST}, @code{Glade}, @code{Lua}, @code{JavaScript},
+@code{Vala}.
 
 @item -C
 @itemx --c++
@@ -137,7 +138,7 @@ Extract all strings.
 
 This option has an effect with most languages, namely C, C++, ObjectiveC,
 Shell, Python, Lisp, EmacsLisp, librep, Java, C#, awk, Tcl, Perl, PHP,
-GCC-source, Glade.
+GCC-source, Glade, Lua, JavaScript, Vala.
 
 @item -k[@var{keywordspec}]
 @itemx --keyword[=@var{keywordspec}]
@@ -180,7 +181,7 @@ escaped.
 
 This option has an effect with most languages, namely C, C++, ObjectiveC,
 Shell, Python, Lisp, EmacsLisp, librep, Java, C#, awk, Tcl, Perl, PHP,
-GCC-source, Glade.
+GCC-source, Glade, Lua, JavaScript, Vala.
 
 The default keyword specifications, which are always looked for if not
 explicitly disabled, are language dependent.  They are:
@@ -245,6 +246,21 @@ For PHP: @code{_}, @code{gettext}, @code{dgettext:2}, @code{dcgettext:2},
 @item
 For Glade 1: @code{label}, @code{title}, @code{text}, @code{format},
 @code{copyright}, @code{comments}, @code{preview_text}, @code{tooltip}.
+
+@item
+For Lua: @code{_}, @code{gettext.gettext}, @code{gettext.dgettext:2},
+@code{gettext.dcgettext:2}, @code{gettext.ngettext:1,2},
+@code{gettext.dngettext:2,3}, @code{gettext.dcngettext:2,3}.
+
+@item
+For JavaScript: @code{_}, @code{gettext}, @code{dgettext:2},
+@code{dcgettext:2}, @code{ngettext:1,2}, @code{dngettext:2,3},
+@code{pgettext:1c,2}, @code{dpgettext:2c,3}.
+
+@item
+For Vala: @code{_}, @code{Q_}, @code{N_}, @code{NC_}, @code{dgettext:2},
+@code{dcgettext:2}, @code{ngettext:1,2}, @code{dngettext:2,3},
+@code{dpgettext:2c,3}, @code{dpgettext2:2c,3}.
 @end itemize
 
 To disable the default keyword specifications, the option @samp{-k} or
@@ -297,7 +313,7 @@ lead to a crash at runtime.
 @*
 This option has an effect with most languages, namely C, C++, ObjectiveC,
 Shell, Python, Lisp, EmacsLisp, librep, Scheme, Java, C#, awk, YCP, Tcl, Perl, PHP,
-GCC-source.
+GCC-source, Lua, JavaScript, Vala.
 
 @item -T
 @itemx --trigraphs

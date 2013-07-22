@@ -884,6 +884,7 @@ libintl_setlocale (int category, const char *locale)
             }
 
           /* All steps were successful.  */
+          ++_nl_msg_cat_cntr;
           free (saved_locale);
           return setlocale (LC_ALL, NULL);
 
@@ -895,12 +896,16 @@ libintl_setlocale (int category, const char *locale)
         }
       else
         {
+          char *result;
           const char *name =
             gl_locale_name_environ (category, category_to_name (category));
           if (name == NULL)
             name = gl_locale_name_default ();
 
-          return setlocale_single (category, name);
+          result = setlocale_single (category, name);
+          if (result != NULL)
+            ++_nl_msg_cat_cntr;
+          return result;
         }
     }
   else
@@ -936,12 +941,18 @@ libintl_setlocale (int category, const char *locale)
             }
 
           /* It was really successful.  */
+          ++_nl_msg_cat_cntr;
           free (saved_locale);
           return setlocale (LC_ALL, NULL);
         }
       else
 # endif
-        return setlocale_single (category, locale);
+        {
+          char *result = setlocale_single (category, locale);
+          if (result != NULL)
+            ++_nl_msg_cat_cntr;
+          return result;
+        }
     }
 }
 

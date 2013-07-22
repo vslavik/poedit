@@ -342,14 +342,16 @@ __extension__                                                           \
 # define obstack_ptr_grow_fast(OBSTACK,aptr)                            \
 __extension__                                                           \
 ({ struct obstack *__o1 = (OBSTACK);                                    \
-   *(const void **) __o1->next_free = (aptr);                           \
+   void *__p1 = __o1->next_free;                                        \
+   *(const void **) __p1 = (aptr);                                      \
    __o1->next_free += sizeof (const void *);                            \
    (void) 0; })
 
 # define obstack_int_grow_fast(OBSTACK,aint)                            \
 __extension__                                                           \
 ({ struct obstack *__o1 = (OBSTACK);                                    \
-   *(int *) __o1->next_free = (aint);                                   \
+   void *__p1 = __o1->next_free;                                        \
+   *(int *) __p1 = (aint);                                              \
    __o1->next_free += sizeof (int);                                     \
    (void) 0; })
 

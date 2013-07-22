@@ -3,10 +3,11 @@
 tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
-tmpfiles="$tmpfiles ll ll.po dataout"
+tmpfiles="$tmpfiles plural-2-dir plural-2-ll.po dataout"
 : ${MSGFMT=msgfmt}
-test -d ll || mkdir ll
-test -d ll/LC_MESSAGES || mkdir ll/LC_MESSAGES
+test -d plural-2-dir || mkdir plural-2-dir
+test -d plural-2-dir/ll || mkdir plural-2-dir/ll
+test -d plural-2-dir/ll/LC_MESSAGES || mkdir plural-2-dir/ll/LC_MESSAGES
 
 tmpfiles="$tmpfiles plural-2.data"
 cat <<EOF > plural-2.data
@@ -47,7 +48,7 @@ EOF
 while read lang; do
   read formula
   read dataok
-  cat > ll.po <<EOF
+  cat > plural-2-ll.po <<EOF
 msgid ""
 msgstr ""
 "MIME-Version: 1.0\n"
@@ -68,9 +69,9 @@ msgstr[7] "7"
 msgstr[8] "8"
 msgstr[9] "9"
 EOF
-  ${MSGFMT} -o ll/LC_MESSAGES/plural.mo ll.po || exit 1
+  ${MSGFMT} -o plural-2-dir/ll/LC_MESSAGES/plural.mo plural-2-ll.po || exit 1
   (for i in '' 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19; do
-     LANGUAGE= TEXTDOMAIN=plural TEXTDOMAINDIR=. \
+     LANGUAGE= TEXTDOMAIN=plural TEXTDOMAINDIR=plural-2-dir \
        $NGETTEXT --env LC_ALL=ll X Y ${i}0 ${i}1 ${i}2 ${i}3 ${i}4 ${i}5 ${i}6 ${i}7 ${i}8 ${i}9
    done) > dataout
   test "$dataok" = `cat dataout` || {

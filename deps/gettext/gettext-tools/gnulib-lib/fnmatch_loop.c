@@ -227,6 +227,8 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
             c = *p++;
             for (;;)
               {
+		bool is_range = false;
+
                 if (!(flags & FNM_NOESCAPE) && c == L_('\\'))
                   {
                     if (*p == L_('\0'))
@@ -420,8 +422,6 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
                   }
                 else
                   {
-                    bool is_range = false;
-
 #ifdef _LIBC
                     bool is_seqval = false;
 

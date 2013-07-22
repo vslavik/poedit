@@ -252,6 +252,7 @@ AC_DEFUN([gl_INIT],
   gl_LOCALE_H
   gl_LOCALENAME
   gl_LOCK
+  gl_MODULE_INDICATOR([lock])
   gl_FUNC_LSTAT
   if test $REPLACE_LSTAT = 1; then
     AC_LIBOBJ([lstat])
@@ -760,7 +761,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/multiarch.m4
   m4/nocrash.m4
   m4/off_t.m4
-  m4/onceonly.m4
   m4/pathmax.m4
   m4/raise.m4
   m4/readlink.m4

@@ -409,6 +409,8 @@ The Translator's View
 * qt-plural-format::            Qt Plural Format Strings
 * kde-format::                  KDE Format Strings
 * boost-format::                Boost Format Strings
+* lua-format::                  Lua Format Strings
+* javascript-format::           JavaScript Format Strings
 
 Individual Programming Languages
 
@@ -433,6 +435,8 @@ Individual Programming Languages
 * PHP::                         PHP Hypertext Preprocessor
 * Pike::                        Pike
 * GCC-source::                  GNU Compiler Collection sources
+* Lua::                         Lua
+* JavaScript::                  JavaScript
 
 sh - Shell Script
 
@@ -1503,6 +1507,12 @@ Likewise for Shell, see @ref{sh-format}.
 @kwindex no-python-format@r{ flag}
 Likewise for Python, see @ref{python-format}.
 
+@item python-brace-format
+@kwindex python-brace-format@r{ flag}
+@itemx no-python-brace-format
+@kwindex no-python-brace-format@r{ flag}
+Likewise for Python brace, see @ref{python-format}.
+
 @item lisp-format
 @kwindex lisp-format@r{ flag}
 @itemx no-lisp-format
@@ -1623,6 +1633,18 @@ Likewise for KDE, see @ref{kde-format}.
 @kwindex no-boost-format@r{ flag}
 Likewise for Boost, see @ref{boost-format}.
 
+@item lua-format
+@kwindex lua-format@r{ flag}
+@itemx no-lua-format
+@kwindex no-lua-format@r{ flag}
+Likewise for Lua, see @ref{lua-format}.
+
+@item javascript-format
+@kwindex javascript-format@r{ flag}
+@itemx no-javascript-format
+@kwindex no-javascript-format@r{ flag}
+Likewise for JavaScript, see @ref{javascript-format}.
+
 @end table
 
 @kwindex msgctxt
@@ -1709,6 +1731,12 @@ The remainder of this section may be safely skipped by those using
 a PO file editor, yet it may be interesting for everybody to have a better
 idea of the precise format of a PO file.  On the other hand, those
 wishing to modify PO files by hand should carefully continue reading on.
+
+An empty @var{untranslated-string} is reserved to contain the header
+entry with the meta information (@pxref{Header Entry}).  This header
+entry should be the first entry of the file.  The empty
+@var{untranslated-string} is reserved for this purpose and must
+not be used anywhere else.
 
 Each of @var{untranslated-string} and @var{translated-string} respects
 the C syntax for a character string, including the surrounding quotes
@@ -6087,8 +6115,8 @@ arguments, you can not use it like this:
 @smallexample
 printf (ngettext ("%d file removed from directory %s",
                   "%d files removed from directory %s",
-                  n, dir),
-        n);
+                  n),
+        n, dir);
 @end smallexample
 
 @noindent
@@ -6101,8 +6129,8 @@ comes last:
 @smallexample
 printf (ngettext ("%$2d file removed from directory %$1s",
                   "%$2d files removed from directory %$1s",
-                  dir, n),
-        n);
+                  n),
+        dir, n);
 @end smallexample
 
 @noindent
@@ -8959,6 +8987,8 @@ strings.
 * qt-plural-format::            Qt Plural Format Strings
 * kde-format::                  KDE Format Strings
 * boost-format::                Boost Format Strings
+* lua-format::                  Lua Format Strings
+* javascript-format::           JavaScript Format Strings
 @end menu
 
 @node c-format, objc-format, Translators for other Languages, Translators for other Languages
@@ -9035,13 +9065,21 @@ a variable reference is ignored.
 @node python-format, lisp-format, sh-format, Translators for other Languages
 @subsection Python Format Strings
 
-Python format strings are described in
+There are two kinds of format strings in Python: those acceptable to
+the Python built-in format operator @code{%}, labelled as
+@samp{python-format}, and those acceptable to the @code{format} method
+of the @samp{str} object.
+
+Python @code{%} format strings are described in
 @w{Python Library reference} /
 @w{2. Built-in Types, Exceptions and Functions} /
 @w{2.2. Built-in Types} /
 @w{2.2.6. Sequence Types} /
 @w{2.2.6.2. String Formatting Operations}.
 @uref{http://www.python.org/doc/2.2.1/lib/typesseq-strings.html}.
+
+Python brace format strings are described in @w{PEP 3101 -- Advanced
+String Formatting}, @uref{http://www.python.org/dev/peps/pep-3101/}.
 
 @node lisp-format, elisp-format, python-format, Translators for other Languages
 @subsection Lisp Format Strings
@@ -9204,7 +9242,7 @@ A directive consists of a @samp{%} followed by a non-zero decimal number.
 If a @samp{%n} occurs in a format strings, all of @samp{%1}, ..., @samp{%(n-1)}
 must occur as well, except possibly one of them.
 
-@node boost-format,  , kde-format, Translators for other Languages
+@node boost-format, lua-format, kde-format, Translators for other Languages
 @subsection Boost Format Strings
 
 Boost format strings are described in the documentation of the
@@ -9214,6 +9252,27 @@ In summary, a directive has either the same syntax as in a C format string,
 such as @samp{%1$+5d}, or may be surrounded by vertical bars, such as
 @samp{%|1$+5d|} or @samp{%|1$+5|}, or consists of just an argument number
 between percent signs, such as @samp{%1%}.
+
+@node lua-format, javascript-format, boost-format, Translators for other Languages
+@subsection Lua Format Strings
+
+Lua format strings are described in the Lua reference manual, section @w{String Manipulation},
+@uref{http://www.lua.org/manual/5.1/manual.html#pdf-string.format}.
+
+@node javascript-format,  , lua-format, Translators for other Languages
+@subsection JavaScript Format Strings
+
+Although JavaScript specification itself does not define any format
+strings, many JavaScript implementations provide printf-like
+functions.  @code{xgettext} understands a set of common format strings
+used in popular JavaScript implementations including Gjs, Seed, and
+Node.JS.  In such a format string, a directive starts with @samp{%}
+and is finished by a specifier: @samp{%} denotes a literal percent
+sign, @samp{c} denotes a character, @samp{s} denotes a string,
+@samp{b}, @samp{d}, @samp{o}, @samp{x}, @samp{X} denote an integer,
+@samp{f} denotes floating-point number, @samp{j} denotes a JSON
+object.
+
 
 @node Maintainers for other Languages, List of Programming Languages, Translators for other Languages, Programming Languages
 @section The Maintainer's View
@@ -9318,6 +9377,8 @@ that language, and to combine the resulting files using @code{msgcat}.
 * PHP::                         PHP Hypertext Preprocessor
 * Pike::                        Pike
 * GCC-source::                  GNU Compiler Collection sources
+* Lua::                         Lua
+* JavaScript::                  JavaScript
 @end menu
 
 @node C, sh, List of Programming Languages, List of Programming Languages
@@ -11729,7 +11790,7 @@ On platforms without gettext, the functions are not available.
 ---
 @end table
 
-@node GCC-source,  , Pike, List of Programming Languages
+@node GCC-source, Lua, Pike, List of Programming Languages
 @subsection GNU Compiler Collection sources
 @cindex GCC-source
 
@@ -11776,6 +11837,122 @@ Uses autoconf macros
 
 @item po-mode marking
 yes
+@end table
+
+@node Lua, JavaScript, GCC-source, List of Programming Languages
+@subsection Lua
+
+@table @asis
+@item RPMs
+lua
+
+@item File extension
+@code{lua}
+
+@item String syntax
+@itemize @bullet
+
+@item @code{"abc"}
+
+@item @code{'abc'}
+
+@item @code{[[abc]]}
+
+@item @code{[=[abc]=]}
+
+@item @code{[==[abc]==]}
+
+@item ...
+
+@end itemize
+
+@item gettext shorthand
+@code{_("abc")}
+
+@item gettext/ngettext functions
+@code{gettext.gettext}, @code{gettext.dgettext}, @code{gettext.dcgettext},
+@code{gettext.ngettext}, @code{gettext.dngettext}, @code{gettext.dcngettext}
+
+@item textdomain
+@code{textdomain} function
+
+@item bindtextdomain
+@code{bindtextdomain} function
+
+@item setlocale
+automatic
+
+@item Prerequisite
+@code{require 'gettext'} or running lua interpreter with @code{-l gettext} option
+
+@item Use or emulate GNU gettext
+use
+
+@item Extractor
+@code{xgettext}
+
+@item Formatting with positions
+---
+
+@item Portability
+On platforms without gettext, the functions are not available.
+
+@item po-mode marking
+---
+@end table
+
+@node JavaScript
+@subsection JavaScript
+
+@table @asis
+@item RPMs
+js
+
+@item File extension
+@code{js}
+
+@item String syntax
+@itemize @bullet
+
+@item @code{"abc"}
+
+@item @code{'abc'}
+
+@end itemize
+
+@item gettext shorthand
+@code{_("abc")}
+
+@item gettext/ngettext functions
+@code{gettext}, @code{dgettext}, @code{dcgettext}, @code{ngettext},
+@code{dngettext}
+
+@item textdomain
+@code{textdomain} function
+
+@item bindtextdomain
+@code{bindtextdomain} function
+
+@item setlocale
+automatic
+
+@item Prerequisite
+---
+
+@item Use or emulate GNU gettext
+use, or emulate
+
+@item Extractor
+@code{xgettext}
+
+@item Formatting with positions
+---
+
+@item Portability
+On platforms without gettext, the functions are not available.
+
+@item po-mode marking
+---
 @end table
 
 @c This is the template for new languages.
@@ -11857,7 +12034,7 @@ fpk
 @code{xgettext}, @code{rstconv}
 @end table
 
-@node Glade,  , RST, List of Data Formats
+@node Glade,   , RST, List of Data Formats
 @subsection Glade - GNOME user interface description
 
 @table @asis
@@ -11865,7 +12042,7 @@ fpk
 glade, libglade, glade2, libglade2, intltool
 
 @item File extension
-@code{glade}, @code{glade2}
+@code{glade}, @code{glade2}, @code{ui}
 
 @item Extractor
 @code{xgettext}, @code{libglade-xgettext}, @code{xml-i18n-extract}, @code{intltool-extract}

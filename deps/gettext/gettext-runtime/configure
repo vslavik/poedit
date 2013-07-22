@@ -631,8 +631,8 @@ ac_includes_default="\
 
 gl_use_threads_default=
 gt_needs=
-gl_header_list=
-gl_func_list=
+ac_header_list=
+ac_func_list=
 gl_getopt_required=POSIX
 gl_getopt_required=POSIX
 enable_option_checking=no
@@ -2731,6 +2731,52 @@ $as_echo "$ac_res" >&6; }
 
 } # ac_fn_c_check_type
 
+# ac_fn_c_check_decl LINENO SYMBOL VAR INCLUDES
+# ---------------------------------------------
+# Tests whether SYMBOL is declared in INCLUDES, setting cache variable VAR
+# accordingly.
+ac_fn_c_check_decl ()
+{
+  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
+  as_decl_name=`echo $2|sed 's/ *(.*//'`
+  as_decl_use=`echo $2|sed -e 's/(/((/' -e 's/)/) 0&/' -e 's/,/) 0& (/g'`
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $as_decl_name is declared" >&5
+$as_echo_n "checking whether $as_decl_name is declared... " >&6; }
+if eval \${$3+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+$4
+int
+main ()
+{
+#ifndef $as_decl_name
+#ifdef __cplusplus
+  (void) $as_decl_use;
+#else
+  (void) $as_decl_name;
+#endif
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  eval "$3=yes"
+else
+  eval "$3=no"
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+eval ac_res=\$$3
+	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+$as_echo "$ac_res" >&6; }
+  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
+
+} # ac_fn_c_check_decl
+
 # ac_fn_c_compute_int LINENO EXPR VAR INCLUDES
 # --------------------------------------------
 # Tries to find the compile-time value of EXPR in a program that includes
@@ -2913,52 +2959,6 @@ rm -f conftest.val
   as_fn_set_status $ac_retval
 
 } # ac_fn_c_compute_int
-
-# ac_fn_c_check_decl LINENO SYMBOL VAR INCLUDES
-# ---------------------------------------------
-# Tests whether SYMBOL is declared in INCLUDES, setting cache variable VAR
-# accordingly.
-ac_fn_c_check_decl ()
-{
-  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
-  as_decl_name=`echo $2|sed 's/ *(.*//'`
-  as_decl_use=`echo $2|sed -e 's/(/((/' -e 's/)/) 0&/' -e 's/,/) 0& (/g'`
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $as_decl_name is declared" >&5
-$as_echo_n "checking whether $as_decl_name is declared... " >&6; }
-if eval \${$3+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-$4
-int
-main ()
-{
-#ifndef $as_decl_name
-#ifdef __cplusplus
-  (void) $as_decl_use;
-#else
-  (void) $as_decl_name;
-#endif
-#endif
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-  eval "$3=yes"
-else
-  eval "$3=no"
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-eval ac_res=\$$3
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
-
-} # ac_fn_c_check_decl
 cat >config.log <<_ACEOF
 This file contains any messages produced by compilers while
 running configure, to aid debugging if configure makes a mistake.
@@ -3244,38 +3244,38 @@ $as_echo "$as_me: creating cache $cache_file" >&6;}
 fi
 
 gt_needs="$gt_needs need-ngettext"
-gl_header_list="$gl_header_list stdlib.h"
-gl_header_list="$gl_header_list unistd.h"
-gl_header_list="$gl_header_list sys/param.h"
-gl_func_list="$gl_func_list symlink"
-gl_header_list="$gl_header_list string.h"
-gl_func_list="$gl_func_list canonicalize_file_name"
-gl_func_list="$gl_func_list getcwd"
-gl_func_list="$gl_func_list readlink"
-gl_func_list="$gl_func_list realpath"
-gl_func_list="$gl_func_list readlinkat"
+as_fn_append ac_header_list " stdlib.h"
+as_fn_append ac_header_list " unistd.h"
+as_fn_append ac_header_list " sys/param.h"
+as_fn_append ac_func_list " symlink"
+as_fn_append ac_header_list " string.h"
+as_fn_append ac_func_list " canonicalize_file_name"
+as_fn_append ac_func_list " getcwd"
+as_fn_append ac_func_list " readlink"
+as_fn_append ac_func_list " realpath"
+as_fn_append ac_func_list " readlinkat"
 gl_getopt_required=GNU
-gl_header_list="$gl_header_list getopt.h"
-gl_header_list="$gl_header_list iconv.h"
-gl_func_list="$gl_func_list iswcntrl"
-gl_header_list="$gl_header_list wctype.h"
-gl_func_list="$gl_func_list iswblank"
-gl_header_list="$gl_header_list xlocale.h"
-gl_func_list="$gl_func_list lstat"
-gl_func_list="$gl_func_list mbsinit"
-gl_func_list="$gl_func_list mbrtowc"
-gl_func_list="$gl_func_list mbslen"
-gl_header_list="$gl_header_list sys/mman.h"
-gl_func_list="$gl_func_list mprotect"
-gl_func_list="$gl_func_list _set_invalid_parameter_handler"
-gl_func_list="$gl_func_list setenv"
-gl_header_list="$gl_header_list wchar.h"
-gl_header_list="$gl_header_list stdint.h"
-gl_header_list="$gl_header_list sys/socket.h"
-gl_header_list="$gl_header_list sys/stat.h"
-gl_header_list="$gl_header_list sys/time.h"
-gl_header_list="$gl_header_list features.h"
-gl_func_list="$gl_func_list wcwidth"
+as_fn_append ac_header_list " getopt.h"
+as_fn_append ac_header_list " iconv.h"
+as_fn_append ac_func_list " iswcntrl"
+as_fn_append ac_header_list " wctype.h"
+as_fn_append ac_func_list " iswblank"
+as_fn_append ac_header_list " xlocale.h"
+as_fn_append ac_func_list " lstat"
+as_fn_append ac_func_list " mbsinit"
+as_fn_append ac_func_list " mbrtowc"
+as_fn_append ac_func_list " mbslen"
+as_fn_append ac_header_list " sys/mman.h"
+as_fn_append ac_func_list " mprotect"
+as_fn_append ac_func_list " _set_invalid_parameter_handler"
+as_fn_append ac_func_list " setenv"
+as_fn_append ac_header_list " wchar.h"
+as_fn_append ac_header_list " stdint.h"
+as_fn_append ac_header_list " sys/socket.h"
+as_fn_append ac_header_list " sys/stat.h"
+as_fn_append ac_header_list " sys/time.h"
+as_fn_append ac_header_list " features.h"
+as_fn_append ac_func_list " wcwidth"
 # Check that the precious variables saved in the cache have kept the same
 # value.
 ac_cache_corrupted=false
@@ -3381,7 +3381,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 
 
-am__api_version='1.12'
+am__api_version='1.14'
 
 # Find a good install program.  We prefer a C program (faster),
 # so one script is as good as another.  But avoid the broken or
@@ -3565,8 +3565,8 @@ if test x"${MISSING+set}" != xset; then
   esac
 fi
 # Use eval to expand $SHELL
-if eval "$MISSING --run true"; then
-  am_missing_run="$MISSING --run "
+if eval "$MISSING --is-lightweight"; then
+  am_missing_run="$MISSING "
 else
   am_missing_run=
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: 'missing' script is too old or missing" >&5
@@ -3900,12 +3900,58 @@ mkdir_p='$(MKDIR_P)'
 # in the wild :-(  We should find a proper way to deprecate it ...
 AMTAR='$${TAR-tar}'
 
+
+# We'll loop over all known methods to create a tar archive until one works.
+_am_tools='gnutar  pax cpio none'
+
 am__tar='$${TAR-tar} chof - "$$tardir"' am__untar='$${TAR-tar} xf -'
 
 
 
 
 
+
+# POSIX will say in a future version that running "rm -f" with no argument
+# is OK; and we want to be able to make that assumption in our Makefile
+# recipes.  So use an aggressive probe to check that the usage we want is
+# actually supported "in the wild" to an acceptable degree.
+# See automake bug#10828.
+# To make any issue more visible, cause the running configure to be aborted
+# by default if the 'rm' program in use doesn't match our expectations; the
+# user can still override this though.
+if rm -f && rm -fr && rm -rf; then : OK; else
+  cat >&2 <<'END'
+Oops!
+
+Your 'rm' program seems unable to run without file operands specified
+on the command line, even when the '-f' option is present.  This is contrary
+to the behaviour of most rm programs out there, and not conforming with
+the upcoming POSIX standard: <http://austingroupbugs.net/view.php?id=542>
+
+Please tell bug-automake@gnu.org about your system, including the value
+of your $PATH and any error possibly output before this message.  This
+can help us improve future automake versions.
+
+END
+  if test x"$ACCEPT_INFERIOR_RM_PROGRAM" = x"yes"; then
+    echo 'Configuration will proceed anyway, since you have set the' >&2
+    echo 'ACCEPT_INFERIOR_RM_PROGRAM variable to "yes"' >&2
+    echo >&2
+  else
+    cat >&2 <<'END'
+Aborting the configuration process, to ensure you take notice of the issue.
+
+You can download and install GNU coreutils to get an 'rm' implementation
+that behaves properly: <http://www.gnu.org/software/coreutils/>.
+
+If you want to complete the configuration process using your problematic
+'rm' anyway, export the environment variable ACCEPT_INFERIOR_RM_PROGRAM
+to "yes", and re-run configure.
+
+END
+    as_fn_error $? "Your 'rm' program is bad, sorry." "$LINENO" 5
+  fi
+fi
     PACKAGE=gettext-runtime
 
      VERSION=$VERSION_NUMBER
@@ -4716,6 +4762,65 @@ ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC understands -c and -o together" >&5
+$as_echo_n "checking whether $CC understands -c and -o together... " >&6; }
+if ${am_cv_prog_cc_c_o+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+  # Make sure it works both with $CC and with simple cc.
+  # Following AC_PROG_CC_C_O, we do the test twice because some
+  # compilers refuse to overwrite an existing .o file with -o,
+  # though they will create one.
+  am_cv_prog_cc_c_o=yes
+  for am_i in 1 2; do
+    if { echo "$as_me:$LINENO: $CC -c conftest.$ac_ext -o conftest2.$ac_objext" >&5
+   ($CC -c conftest.$ac_ext -o conftest2.$ac_objext) >&5 2>&5
+   ac_status=$?
+   echo "$as_me:$LINENO: \$? = $ac_status" >&5
+   (exit $ac_status); } \
+         && test -f conftest2.$ac_objext; then
+      : OK
+    else
+      am_cv_prog_cc_c_o=no
+      break
+    fi
+  done
+  rm -f core conftest*
+  unset am_i
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_prog_cc_c_o" >&5
+$as_echo "$am_cv_prog_cc_c_o" >&6; }
+if test "$am_cv_prog_cc_c_o" != yes; then
+   # Losing compiler, so override with the script.
+   # FIXME: It is wrong to rewrite CC.
+   # But if we don't then we get into trouble of one sort or another.
+   # A longer-term fix would be to have automake use am__CC in this case,
+   # and then we could set am__CC="\$(top_srcdir)/compile \$(CC)"
+   CC="$am_aux_dir/compile $CC"
+fi
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 DEPDIR="${am__leading_dot}deps"
 
 ac_config_commands="$ac_config_commands depfiles"
@@ -5320,23 +5425,23 @@ EOF
         if $JAVAC --version 2>/dev/null | sed -e 1q | grep gcj > /dev/null; then
             if $JAVAC --version 2>/dev/null | sed -e 's,^[^0-9]*,,' -e 1q | sed -e '/^4\.[012]/d' | grep '^[4-9]' >/dev/null; then
                         rm -f conftest.class
-        if { echo "$as_me:5323: $JAVAC -d . conftest.java" >&5
+        if { echo "$as_me:5428: $JAVAC -d . conftest.java" >&5
              $JAVAC -d . conftest.java >&5 2>&1
            } \
            && test -f conftest.class \
            && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5; then
                     rm -f conftest.class
           rm -f conftestfail.class
-          if { echo "$as_me:5330: $JAVAC -fsource=$source_version -d . conftest.java" >&5
+          if { echo "$as_me:5435: $JAVAC -fsource=$source_version -d . conftest.java" >&5
                $JAVAC -fsource="$source_version" -d . conftest.java >&5 2>&1
              } \
              && test -f conftest.class \
              && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5 \
-             && { echo "$as_me:5335: $JAVAC -d . conftestfail.java" >&5
+             && { echo "$as_me:5440: $JAVAC -d . conftestfail.java" >&5
                   $JAVAC -d . conftestfail.java >&5 2>&1
                 } \
              && test -f conftestfail.class \
-             && ! { echo "$as_me:5339: $JAVAC -fsource=$source_version -d . conftestfail.java" >&5
+             && ! { echo "$as_me:5444: $JAVAC -fsource=$source_version -d . conftestfail.java" >&5
                     $JAVAC -fsource="$source_version" -d . conftestfail.java >&5 2>&1
                   }; then
             CONF_JAVAC="$JAVAC -fsource=$source_version"
@@ -5350,7 +5455,7 @@ EOF
         else
                     rm -f conftest.class
           rm -f conftestfail.class
-          if { echo "$as_me:5353: $JAVAC -fsource=$source_version -ftarget=$target_version -d . conftest.java" >&5
+          if { echo "$as_me:5458: $JAVAC -fsource=$source_version -ftarget=$target_version -d . conftest.java" >&5
                $JAVAC -fsource="$source_version" -ftarget="$target_version" -d . conftest.java >&5 2>&1
              } \
              && test -f conftest.class \
@@ -5363,7 +5468,7 @@ EOF
       else
                 if test "$target_version" = 1.4 && test "$source_version" = 1.4; then
                     rm -f conftest.class
-          if { echo "$as_me:5366: $JAVAC -d . conftest.java" >&5
+          if { echo "$as_me:5471: $JAVAC -d . conftest.java" >&5
                $JAVAC -d . conftest.java >&5 2>&1
              } \
              && test -f conftest.class; then
@@ -5375,7 +5480,7 @@ EOF
           if test "$target_version" = 1.4 && test "$source_version" = 1.3; then
                                     javac_works=
             rm -f conftest.class
-            if { echo "$as_me:5378: $JAVAC -d . conftest.java" >&5
+            if { echo "$as_me:5483: $JAVAC -d . conftest.java" >&5
                  $JAVAC -d . conftest.java >&5 2>&1
                } \
                && test -f conftest.class; then
@@ -5383,7 +5488,7 @@ EOF
             fi
             javac_noassert_works=
             rm -f conftest.class
-            if { echo "$as_me:5386: $JAVAC -fno-assert -d . conftest.java" >&5
+            if { echo "$as_me:5491: $JAVAC -fno-assert -d . conftest.java" >&5
                  $JAVAC -fno-assert -d . conftest.java >&5 2>&1
                } \
                && test -f conftest.class; then
@@ -5391,11 +5496,11 @@ EOF
             fi
             if test -n "$javac_works" && test -n "$javac_noassert_works"; then
               rm -f conftestfail.class
-              if { echo "$as_me:5394: $JAVAC -d . conftestfail.java" >&5
+              if { echo "$as_me:5499: $JAVAC -d . conftestfail.java" >&5
                    $JAVAC -d . conftestfail.java >&5 2>&1
                  } \
                  && test -f conftestfail.class \
-                 && ! { echo "$as_me:5398: $JAVAC -fno-assert -d . conftestfail.java" >&5
+                 && ! { echo "$as_me:5503: $JAVAC -fno-assert -d . conftestfail.java" >&5
                         $JAVAC -fno-assert -d . conftestfail.java >&5 2>&1
                       }; then
                                 javac_works=
@@ -5417,23 +5522,23 @@ EOF
       fi
     else
                   rm -f conftest.class
-      if { echo "$as_me:5420: $JAVAC -d . conftest.java" >&5
+      if { echo "$as_me:5525: $JAVAC -d . conftest.java" >&5
            $JAVAC -d . conftest.java >&5 2>&1
          } \
          && test -f conftest.class \
          && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5; then
                 rm -f conftest.class
         rm -f conftestfail.class
-        if { echo "$as_me:5427: $JAVAC -source $source_version -d . conftest.java" >&5
+        if { echo "$as_me:5532: $JAVAC -source $source_version -d . conftest.java" >&5
              $JAVAC -source "$source_version" -d . conftest.java >&5 2>&1
            } \
            && test -f conftest.class \
            && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5 \
-           && { echo "$as_me:5432: $JAVAC -d . conftestfail.java" >&5
+           && { echo "$as_me:5537: $JAVAC -d . conftestfail.java" >&5
                 $JAVAC -d . conftestfail.java >&5 2>&1
               } \
            && test -f conftestfail.class \
-           && ! { echo "$as_me:5436: $JAVAC -source $source_version -d . conftestfail.java" >&5
+           && ! { echo "$as_me:5541: $JAVAC -source $source_version -d . conftestfail.java" >&5
                   $JAVAC -source "$source_version" -d . conftestfail.java >&5 2>&1
                 }; then
           CONF_JAVAC="$JAVAC -source $source_version"
@@ -5446,23 +5551,23 @@ EOF
         fi
       else
                         rm -f conftest.class
-        if { echo "$as_me:5449: $JAVAC -target $target_version -d . conftest.java" >&5
+        if { echo "$as_me:5554: $JAVAC -target $target_version -d . conftest.java" >&5
              $JAVAC -target "$target_version" -d . conftest.java >&5 2>&1
            } \
            && test -f conftest.class \
            && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5; then
                     rm -f conftest.class
           rm -f conftestfail.class
-          if { echo "$as_me:5456: $JAVAC -target $target_version -source $source_version -d . conftest.java" >&5
+          if { echo "$as_me:5561: $JAVAC -target $target_version -source $source_version -d . conftest.java" >&5
                $JAVAC -target "$target_version" -source "$source_version" -d . conftest.java >&5 2>&1
              } \
              && test -f conftest.class \
              && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5 \
-             && { echo "$as_me:5461: $JAVAC -target $target_version -d . conftestfail.java" >&5
+             && { echo "$as_me:5566: $JAVAC -target $target_version -d . conftestfail.java" >&5
                   $JAVAC -target "$target_version" -d . conftestfail.java >&5 2>&1
                 } \
              && test -f conftestfail.class \
-             && ! { echo "$as_me:5465: $JAVAC -target $target_version -source $source_version -d . conftestfail.java" >&5
+             && ! { echo "$as_me:5570: $JAVAC -target $target_version -source $source_version -d . conftestfail.java" >&5
                     $JAVAC -target "$target_version" -source "$source_version" -d . conftestfail.java >&5 2>&1
                   }; then
             CONF_JAVAC="$JAVAC -target $target_version -source $source_version"
@@ -5475,7 +5580,7 @@ EOF
           fi
         else
                                         rm -f conftest.class
-          if { echo "$as_me:5478: $JAVAC -target $target_version -source $source_version -d . conftest.java" >&5
+          if { echo "$as_me:5583: $JAVAC -target $target_version -source $source_version -d . conftest.java" >&5
                $JAVAC -target "$target_version" -source "$source_version" -d . conftest.java >&5 2>&1
              } \
              && test -f conftest.class \
@@ -5593,28 +5698,28 @@ fi
 
                 if test -z "$HAVE_JAVACOMP" && test -n "$HAVE_GCJ_IN_PATH"; then
             if gcj --version 2>/dev/null | sed -e 's,^[^0-9]*,,' -e 1q | sed -e '/^3\.[01]/d' | grep '^[3-9]' >/dev/null; then
-                if { echo "$as_me:5596: gcj -C -d . conftestlib.java" >&5
+                if { echo "$as_me:5701: gcj -C -d . conftestlib.java" >&5
              gcj -C -d . conftestlib.java >&5 2>&1
            }; then
                     if gcj --version 2>/dev/null | sed -e 's,^[^0-9]*,,' -e 1q | sed -e '/^4\.[012]/d' | grep '^[4-9]' >/dev/null; then
                                     rm -f conftest.class
-            if { echo "$as_me:5601: gcj -C -d . conftest.java" >&5
+            if { echo "$as_me:5706: gcj -C -d . conftest.java" >&5
                  gcj -C -d . conftest.java >&5 2>&1
                } \
                && test -f conftest.class \
                && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5; then
                             rm -f conftest.class
               rm -f conftestfail.class
-              if { echo "$as_me:5608: gcj -C -fsource=$source_version -d . conftest.java" >&5
+              if { echo "$as_me:5713: gcj -C -fsource=$source_version -d . conftest.java" >&5
                    gcj -C -fsource="$source_version" -d . conftest.java >&5 2>&1
                  } \
                  && test -f conftest.class \
                  && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5 \
-                 && { echo "$as_me:5613: gcj -C -d . conftestfail.java" >&5
+                 && { echo "$as_me:5718: gcj -C -d . conftestfail.java" >&5
                       gcj -C -d . conftestfail.java >&5 2>&1
                     } \
                  && test -f conftestfail.class \
-                 && ! { echo "$as_me:5617: gcj -C -fsource=$source_version -d . conftestfail.java" >&5
+                 && ! { echo "$as_me:5722: gcj -C -fsource=$source_version -d . conftestfail.java" >&5
                         gcj -C -fsource="$source_version" -d . conftestfail.java >&5 2>&1
                       }; then
                 CONF_JAVAC="gcj -C -fsource=$source_version"
@@ -5628,7 +5733,7 @@ fi
             else
                             rm -f conftest.class
               rm -f conftestfail.class
-              if { echo "$as_me:5631: gcj -C -fsource=$source_version -ftarget=$target_version -d . conftest.java" >&5
+              if { echo "$as_me:5736: gcj -C -fsource=$source_version -ftarget=$target_version -d . conftest.java" >&5
                    gcj -C -fsource="$source_version" -ftarget="$target_version" -d . conftest.java >&5 2>&1
                  } \
                  && test -f conftest.class \
@@ -5641,7 +5746,7 @@ fi
           else
                                                 if test "$target_version" = 1.4 && test "$source_version" = 1.4; then
               rm -f conftest.class
-              if { echo "$as_me:5644: gcj -C -d . conftest.java" >&5
+              if { echo "$as_me:5749: gcj -C -d . conftest.java" >&5
                    gcj -C -d . conftest.java >&5 2>&1
                  } \
                  && test -f conftest.class; then
@@ -5652,7 +5757,7 @@ fi
             else
               if test "$target_version" = 1.4 && test "$source_version" = 1.3; then
                                                 rm -f conftest.class
-                if { echo "$as_me:5655: gcj -C -fno-assert -d . conftest.java" >&5
+                if { echo "$as_me:5760: gcj -C -fno-assert -d . conftest.java" >&5
                      gcj -C -fno-assert -d . conftest.java >&5 2>&1
                    } \
                    && test -f conftest.class; then
@@ -5661,7 +5766,7 @@ fi
                   HAVE_JAVACOMP=1
                 else
                   rm -f conftest.class
-                  if { echo "$as_me:5664: gcj -C -d . conftest.java" >&5
+                  if { echo "$as_me:5769: gcj -C -d . conftest.java" >&5
                        gcj -C -d . conftest.java >&5 2>&1
                      } \
                      && test -f conftest.class; then
@@ -5680,23 +5785,23 @@ fi
             if { javac -version >/dev/null 2>/dev/null || test $? -le 2; } \
          && ( if javac -help 2>&1 >/dev/null | grep at.dms.kjc.Main >/dev/null && javac -help 2>/dev/null | grep 'released.*2000' >/dev/null ; then exit 1; else exit 0; fi ); then
                                 rm -f conftest.class
-        if { echo "$as_me:5683: javac -d . conftest.java" >&5
+        if { echo "$as_me:5788: javac -d . conftest.java" >&5
              javac -d . conftest.java >&5 2>&1
            } \
            && test -f conftest.class \
            && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5; then
                     rm -f conftest.class
           rm -f conftestfail.class
-          if { echo "$as_me:5690: javac -source $source_version -d . conftest.java" >&5
+          if { echo "$as_me:5795: javac -source $source_version -d . conftest.java" >&5
                javac -source "$source_version" -d . conftest.java >&5 2>&1
              } \
              && test -f conftest.class \
              && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5 \
-             && { echo "$as_me:5695: javac -d . conftestfail.java" >&5
+             && { echo "$as_me:5800: javac -d . conftestfail.java" >&5
                   javac -d . conftestfail.java >&5 2>&1
                 } \
              && test -f conftestfail.class \
-             && ! { echo "$as_me:5699: javac -source $source_version -d . conftestfail.java" >&5
+             && ! { echo "$as_me:5804: javac -source $source_version -d . conftestfail.java" >&5
                     javac -source "$source_version" -d . conftestfail.java >&5 2>&1
                   }; then
             CONF_JAVAC="javac -source $source_version"
@@ -5709,23 +5814,23 @@ fi
           fi
         else
                               rm -f conftest.class
-          if { echo "$as_me:5712: javac -target $target_version -d . conftest.java" >&5
+          if { echo "$as_me:5817: javac -target $target_version -d . conftest.java" >&5
                javac -target "$target_version" -d . conftest.java >&5 2>&1
              } \
              && test -f conftest.class \
              && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5; then
                         rm -f conftest.class
             rm -f conftestfail.class
-            if { echo "$as_me:5719: javac -target $target_version -source $source_version -d . conftest.java" >&5
+            if { echo "$as_me:5824: javac -target $target_version -source $source_version -d . conftest.java" >&5
                  javac -target "$target_version" -source "$source_version" -d . conftest.java >&5 2>&1
                } \
                && test -f conftest.class \
                && expr `func_classfile_version conftest.class` '<=' $cfversion >/dev/null 2>&5 \
-               && { echo "$as_me:5724: javac -target $target_version -d . conftestfail.java" >&5
+               && { echo "$as_me:5829: javac -target $target_version -d . conftestfail.java" >&5
                     javac -target "$target_version" -d . conftestfail.java >&5 2>&1
                   } \
                && test -f conftestfail.class \
-               && ! { echo "$as_me:5728: javac -target $target_version -source $source_version -d . conftestfail.java" >&5
+               && ! { echo "$as_me:5833: javac -target $target_version -source $source_version -d . conftestfail.java" >&5
                       javac -target "$target_version" -source "$source_version" -d . conftestfail.java >&5 2>&1
                     }; then
               CONF_JAVAC="javac -target $target_version -source $source_version"
@@ -5738,7 +5843,7 @@ fi
             fi
           else
                                                 rm -f conftest.class
-            if { echo "$as_me:5741: javac -target $target_version -source $source_version -d . conftest.java" >&5
+            if { echo "$as_me:5846: javac -target $target_version -source $source_version -d . conftest.java" >&5
                  javac -target "$target_version" -source "$source_version" -d . conftest.java >&5 2>&1
                } \
                && test -f conftest.class \
@@ -6334,131 +6439,6 @@ fi
     fi
   fi
 
-
-if test "x$CC" != xcc; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC and cc understand -c and -o together" >&5
-$as_echo_n "checking whether $CC and cc understand -c and -o together... " >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether cc understands -c and -o together" >&5
-$as_echo_n "checking whether cc understands -c and -o together... " >&6; }
-fi
-set dummy $CC; ac_cc=`$as_echo "$2" |
-		      sed 's/[^a-zA-Z0-9_]/_/g;s/^[0-9]/_/'`
-if eval \${ac_cv_prog_cc_${ac_cc}_c_o+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-int
-main ()
-{
-
-  ;
-  return 0;
-}
-_ACEOF
-# Make sure it works both with $CC and with simple cc.
-# We do the test twice because some compilers refuse to overwrite an
-# existing .o file with -o, though they will create one.
-ac_try='$CC -c conftest.$ac_ext -o conftest2.$ac_objext >&5'
-rm -f conftest2.*
-if { { case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
-$as_echo "$ac_try_echo"; } >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; } &&
-   test -f conftest2.$ac_objext && { { case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
-$as_echo "$ac_try_echo"; } >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; };
-then
-  eval ac_cv_prog_cc_${ac_cc}_c_o=yes
-  if test "x$CC" != xcc; then
-    # Test first that cc exists at all.
-    if { ac_try='cc -c conftest.$ac_ext >&5'
-  { { case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
-$as_echo "$ac_try_echo"; } >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; }; then
-      ac_try='cc -c conftest.$ac_ext -o conftest2.$ac_objext >&5'
-      rm -f conftest2.*
-      if { { case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
-$as_echo "$ac_try_echo"; } >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; } &&
-	 test -f conftest2.$ac_objext && { { case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
-$as_echo "$ac_try_echo"; } >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; };
-      then
-	# cc works too.
-	:
-      else
-	# cc exists but doesn't like -o.
-	eval ac_cv_prog_cc_${ac_cc}_c_o=no
-      fi
-    fi
-  fi
-else
-  eval ac_cv_prog_cc_${ac_cc}_c_o=no
-fi
-rm -f core conftest*
-
-fi
-if eval test \$ac_cv_prog_cc_${ac_cc}_c_o = yes; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-$as_echo "#define NO_MINUS_C_MINUS_O 1" >>confdefs.h
-
-fi
-
-# FIXME: we rely on the cache variable name because
-# there is no other way.
-set dummy $CC
-am_cc=`echo $2 | sed 's/[^a-zA-Z0-9_]/_/g;s/^[0-9]/_/'`
-eval am_t=\$ac_cv_prog_cc_${am_cc}_c_o
-if test "$am_t" != yes; then
-   # Losing compiler, so override with the script.
-   # FIXME: It is wrong to rewrite CC.
-   # But if we don't then we get into trouble of one sort or another.
-   # A longer-term fix would be to have automake use am__CC in this case,
-   # and then we could set am__CC="\$(top_srcdir)/compile \$(CC)"
-   CC="$am_aux_dir/compile $CC"
-fi
 
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ANSI C header files" >&5
@@ -15415,11 +15395,11 @@ fi
 
 
 
-
-  for ac_header in $gl_header_list
+  for ac_header in $ac_header_list
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
-ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
+ac_fn_c_check_header_compile "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default
+"
 if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
   cat >>confdefs.h <<_ACEOF
 #define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
@@ -15428,26 +15408,6 @@ _ACEOF
 fi
 
 done
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  :
-
-
-
 
 
 
@@ -17058,6 +17018,9 @@ main ()
 
 #if __FreeBSD__ == 4
 error "No, in FreeBSD 4.0 recursive mutexes actually don't work."
+#elif (defined __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ \
+       && __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ < 1070)
+error "No, in Mac OS X < 10.7 recursive mutexes actually don't work."
 #else
 int x = (int)PTHREAD_MUTEX_RECURSIVE;
 return !x;
@@ -17914,87 +17877,17 @@ fi
 done
 
 
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether feof_unlocked is declared" >&5
-$as_echo_n "checking whether feof_unlocked is declared... " >&6; }
-if ${ac_cv_have_decl_feof_unlocked+:} false; then :
-  $as_echo_n "(cached) " >&6
+          ac_fn_c_check_decl "$LINENO" "feof_unlocked fgets_unlocked" "ac_cv_have_decl_feof_unlocked_fgets_unlocked" "#include <stdio.h>
+"
+if test "x$ac_cv_have_decl_feof_unlocked_fgets_unlocked" = xyes; then :
+  ac_have_decl=1
 else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <stdio.h>
-int
-main ()
-{
-
-#ifndef feof_unlocked
-  char *p = (char *) feof_unlocked;
-#endif
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-  ac_cv_have_decl_feof_unlocked=yes
-else
-  ac_cv_have_decl_feof_unlocked=no
+  ac_have_decl=0
 fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_have_decl_feof_unlocked" >&5
-$as_echo "$ac_cv_have_decl_feof_unlocked" >&6; }
-  if test $ac_cv_have_decl_feof_unlocked = yes; then
-    gt_value=1
-  else
-    gt_value=0
-  fi
 
 cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_FEOF_UNLOCKED $gt_value
+#define HAVE_DECL_FEOF_UNLOCKED_FGETS_UNLOCKED $ac_have_decl
 _ACEOF
-
-
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether fgets_unlocked is declared" >&5
-$as_echo_n "checking whether fgets_unlocked is declared... " >&6; }
-if ${ac_cv_have_decl_fgets_unlocked+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <stdio.h>
-int
-main ()
-{
-
-#ifndef fgets_unlocked
-  char *p = (char *) fgets_unlocked;
-#endif
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-  ac_cv_have_decl_fgets_unlocked=yes
-else
-  ac_cv_have_decl_fgets_unlocked=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_have_decl_fgets_unlocked" >&5
-$as_echo "$ac_cv_have_decl_fgets_unlocked" >&6; }
-  if test $ac_cv_have_decl_fgets_unlocked = yes; then
-    gt_value=1
-  else
-    gt_value=0
-  fi
-
-cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_FGETS_UNLOCKED $gt_value
-_ACEOF
-
 
 
 
@@ -18452,8 +18345,7 @@ done
 
 
 
-
-  for ac_func in $gl_func_list
+  for ac_func in $ac_func_list
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
@@ -18467,20 +18359,6 @@ done
 
 
 
-
-
-
-
-
-
-  :
-
-
-
-
-
-
-  :
 
 
 
@@ -18751,129 +18629,30 @@ fi
 done
 
 
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether _snprintf is declared" >&5
-$as_echo_n "checking whether _snprintf is declared... " >&6; }
-if ${ac_cv_have_decl__snprintf+:} false; then :
-  $as_echo_n "(cached) " >&6
+      ac_fn_c_check_decl "$LINENO" "_snprintf _snwprintf" "ac_cv_have_decl__snprintf__snwprintf" "#include <stdio.h>
+"
+if test "x$ac_cv_have_decl__snprintf__snwprintf" = xyes; then :
+  ac_have_decl=1
 else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <stdio.h>
-int
-main ()
-{
-
-#ifndef _snprintf
-  char *p = (char *) _snprintf;
-#endif
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-  ac_cv_have_decl__snprintf=yes
-else
-  ac_cv_have_decl__snprintf=no
+  ac_have_decl=0
 fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_have_decl__snprintf" >&5
-$as_echo "$ac_cv_have_decl__snprintf" >&6; }
-  if test $ac_cv_have_decl__snprintf = yes; then
-    gt_value=1
-  else
-    gt_value=0
-  fi
 
 cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL__SNPRINTF $gt_value
+#define HAVE_DECL__SNPRINTF__SNWPRINTF $ac_have_decl
 _ACEOF
 
 
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether _snwprintf is declared" >&5
-$as_echo_n "checking whether _snwprintf is declared... " >&6; }
-if ${ac_cv_have_decl__snwprintf+:} false; then :
-  $as_echo_n "(cached) " >&6
+          ac_fn_c_check_decl "$LINENO" "getc_unlocked" "ac_cv_have_decl_getc_unlocked" "#include <stdio.h>
+"
+if test "x$ac_cv_have_decl_getc_unlocked" = xyes; then :
+  ac_have_decl=1
 else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <stdio.h>
-int
-main ()
-{
-
-#ifndef _snwprintf
-  char *p = (char *) _snwprintf;
-#endif
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-  ac_cv_have_decl__snwprintf=yes
-else
-  ac_cv_have_decl__snwprintf=no
+  ac_have_decl=0
 fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_have_decl__snwprintf" >&5
-$as_echo "$ac_cv_have_decl__snwprintf" >&6; }
-  if test $ac_cv_have_decl__snwprintf = yes; then
-    gt_value=1
-  else
-    gt_value=0
-  fi
 
 cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL__SNWPRINTF $gt_value
+#define HAVE_DECL_GETC_UNLOCKED $ac_have_decl
 _ACEOF
-
-
-
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether getc_unlocked is declared" >&5
-$as_echo_n "checking whether getc_unlocked is declared... " >&6; }
-if ${ac_cv_have_decl_getc_unlocked+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <stdio.h>
-int
-main ()
-{
-
-#ifndef getc_unlocked
-  char *p = (char *) getc_unlocked;
-#endif
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-  ac_cv_have_decl_getc_unlocked=yes
-else
-  ac_cv_have_decl_getc_unlocked=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_have_decl_getc_unlocked" >&5
-$as_echo "$ac_cv_have_decl_getc_unlocked" >&6; }
-  if test $ac_cv_have_decl_getc_unlocked = yes; then
-    gt_value=1
-  else
-    gt_value=0
-  fi
-
-cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_GETC_UNLOCKED $gt_value
-_ACEOF
-
 
 
   case $gt_cv_func_printf_posix in
@@ -19990,9 +19769,6 @@ $as_echo "#define HAVE_DCGETTEXT 1" >>confdefs.h
 
 
 
-
-
-
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to use C++" >&5
 $as_echo_n "checking whether to use C++... " >&6; }
     # Check whether --enable-c++ was given.
@@ -20092,15 +19868,6 @@ $as_echo "$CXX_CHOICE" >&6; }
 
 
 
-
-
-
-
-
-
-
-
-
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether // is distinct from /" >&5
 $as_echo_n "checking whether // is distinct from /... " >&6; }
 if ${gl_cv_double_slash_root+:} false; then :
@@ -20137,15 +19904,6 @@ $as_echo "$gl_cv_double_slash_root" >&6; }
 $as_echo "#define DOUBLE_SLASH_IS_DISTINCT_ROOT 1" >>confdefs.h
 
   fi
-
-
-
-
-
-
-
-
-  :
 
 
 
@@ -20346,27 +20104,6 @@ $as_echo "#define FUNC_REALPATH_WORKS 1" >>confdefs.h
 
 
 
-  :
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  :
-
-
-
-
-
 
 
 
@@ -20496,12 +20233,6 @@ $as_echo "#define FUNC_REALPATH_WORKS 1" >>confdefs.h
   UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS=0;
 
 
-
-
-
-
-
-  :
 
 
 
@@ -21152,15 +20883,6 @@ fi
 
 
 
-  :
-
-
-
-
-
-
-
-
      if test $gl_cv_have_include_next = yes; then
        gl_cv_next_getopt_h='<'getopt.h'>'
      else
@@ -21765,8 +21487,7 @@ $as_echo "#define __GETOPT_PREFIX rpl_" >>confdefs.h
 
   fi
 
-
-      ac_fn_c_check_decl "$LINENO" "getenv" "ac_cv_have_decl_getenv" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "getenv" "ac_cv_have_decl_getenv" "$ac_includes_default"
 if test "x$ac_cv_have_decl_getenv" = xyes; then :
   ac_have_decl=1
 else
@@ -21776,10 +21497,6 @@ fi
 cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_GETENV $ac_have_decl
 _ACEOF
-
-
-
-
 
 
 
@@ -21803,18 +21520,6 @@ _ACEOF
 
 
 
-
-
-
-
-
-
-  :
-
-
-
-
-
   if test $ac_cv_func_iswcntrl = yes; then
     HAVE_ISWCNTRL=1
   else
@@ -21831,12 +21536,6 @@ _ACEOF
 
 
 
-
-
-
-
-
-  :
 
 
 
@@ -22177,9 +21876,6 @@ fi
 
 
 
-
-
-
   case "$host_os" in
     mingw*)
                         { $as_echo "$as_me:${as_lineno-$LINENO}: checking for 64-bit off_t" >&5
@@ -22223,8 +21919,7 @@ $as_echo "$gl_cv_type_off_t_64" >&6; }
       ;;
   esac
 
-
-      ac_fn_c_check_decl "$LINENO" "getc_unlocked" "ac_cv_have_decl_getc_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "getc_unlocked" "ac_cv_have_decl_getc_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_getc_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -22234,7 +21929,6 @@ fi
 cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_GETC_UNLOCKED $ac_have_decl
 _ACEOF
-
 
 
   GNULIB_LOCALECONV=0;
@@ -22371,9 +22065,6 @@ $as_echo "$gl_cv_next_stddef_h" >&6; }
 
 
 
-
-
-
      GNULIB_FCHMODAT=0;
   GNULIB_FSTAT=0;
   GNULIB_FSTATAT=0;
@@ -22407,9 +22098,6 @@ $as_echo "$gl_cv_next_stddef_h" >&6; }
   REPLACE_MKNOD=0;
   REPLACE_STAT=0;
   REPLACE_UTIMENSAT=0;
-
-
-
 
 
 
@@ -22674,12 +22362,6 @@ $as_echo "#define mbstate_t int" >>confdefs.h
   REPLACE_WCSNRTOMBS=0;
   REPLACE_WCWIDTH=0;
   REPLACE_WCSWIDTH=0;
-
-
-
-
-
-
 
 
 
@@ -23170,15 +22852,6 @@ $as_echo "$gt_cv_locale_fr_utf8" >&6; }
 
 
 
-
-
-
-
-
-
-
-
-
   # Check for mmap(). Don't use AC_FUNC_MMAP, because it checks too much: it
   # fails on HP-UX 11, because MAP_FIXED mappings do not work. But this is
   # irrelevant for anonymous mappings.
@@ -23238,18 +22911,6 @@ $as_echo "#define HAVE_MAP_ANONYMOUS 1" >>confdefs.h
 
     fi
   fi
-
-
-  :
-
-
-
-
-
-
-  :
-
-
 
 
 
@@ -23343,9 +23004,6 @@ $as_echo "$gl_cv_func_memchr_works" >&6; }
       REPLACE_MEMCHR=1
     fi
   fi
-
-
-
 
 
 
@@ -23604,8 +23262,7 @@ fi
       RELOCATABLE_STRIP=':'
 
 
-
-      ac_fn_c_check_decl "$LINENO" "setenv" "ac_cv_have_decl_setenv" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "setenv" "ac_cv_have_decl_setenv" "$ac_includes_default"
 if test "x$ac_cv_have_decl_setenv" = xyes; then :
   ac_have_decl=1
 else
@@ -23615,10 +23272,6 @@ fi
 cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_SETENV $ac_have_decl
 _ACEOF
-
-
-
-
 
 
 
@@ -23925,12 +23578,6 @@ fi
 
 
 
-
-
-
-
-
-
   if test $ac_cv_type_long_long_int = yes; then
     HAVE_LONG_LONG_INT=1
   else
@@ -23943,12 +23590,6 @@ fi
   else
     HAVE_UNSIGNED_LONG_LONG_INT=0
   fi
-
-
-
-  :
-
-
 
 
 
@@ -23974,12 +23615,6 @@ fi
 
 
 
-
-
-
-
-
-  :
 
 
 
@@ -24727,9 +24362,6 @@ $as_echo "#define REPLACE_STRERROR_0 1" >>confdefs.h
 
 
 
-
-
-
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for C/C++ restrict keyword" >&5
 $as_echo_n "checking for C/C++ restrict keyword... " >&6; }
 if ${ac_cv_c_restrict+:} false; then :
@@ -24888,8 +24520,7 @@ fi
       done
 
 
-
-      ac_fn_c_check_decl "$LINENO" "strnlen" "ac_cv_have_decl_strnlen" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "strnlen" "ac_cv_have_decl_strnlen" "$ac_includes_default"
 if test "x$ac_cv_have_decl_strnlen" = xyes; then :
   ac_have_decl=1
 else
@@ -24899,7 +24530,6 @@ fi
 cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_STRNLEN $ac_have_decl
 _ACEOF
-
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether stat file-mode macros are broken" >&5
 $as_echo_n "checking whether stat file-mode macros are broken... " >&6; }
@@ -24942,9 +24572,6 @@ if test $ac_cv_header_stat_broken = yes; then
 $as_echo "#define STAT_MACROS_BROKEN 1" >>confdefs.h
 
 fi
-
-
-
 
 
 
@@ -25057,15 +24684,6 @@ $as_echo "$gl_cv_next_sys_types_h" >&6; }
   REPLACE_MKTIME=GNULIB_PORTCHECK;
   REPLACE_NANOSLEEP=GNULIB_PORTCHECK;
   REPLACE_TIMEGM=GNULIB_PORTCHECK;
-
-
-
-
-
-
-
-
-  :
 
 
 
@@ -25269,8 +24887,7 @@ q
     LIBUNISTRING_VERSION_SUBMINOR=`echo "$LIBUNISTRING_VERSION" | sed -n -e "$gl_libunistring_sed_extract_subminor"`
   fi
 
-
-      ac_fn_c_check_decl "$LINENO" "clearerr_unlocked" "ac_cv_have_decl_clearerr_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "clearerr_unlocked" "ac_cv_have_decl_clearerr_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_clearerr_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25281,9 +24898,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_CLEARERR_UNLOCKED $ac_have_decl
 _ACEOF
 
-
-
-      ac_fn_c_check_decl "$LINENO" "feof_unlocked" "ac_cv_have_decl_feof_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "feof_unlocked" "ac_cv_have_decl_feof_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_feof_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25294,9 +24909,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_FEOF_UNLOCKED $ac_have_decl
 _ACEOF
 
-
-
-      ac_fn_c_check_decl "$LINENO" "ferror_unlocked" "ac_cv_have_decl_ferror_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "ferror_unlocked" "ac_cv_have_decl_ferror_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_ferror_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25307,9 +24920,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_FERROR_UNLOCKED $ac_have_decl
 _ACEOF
 
-
-
-      ac_fn_c_check_decl "$LINENO" "fflush_unlocked" "ac_cv_have_decl_fflush_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "fflush_unlocked" "ac_cv_have_decl_fflush_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_fflush_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25320,9 +24931,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_FFLUSH_UNLOCKED $ac_have_decl
 _ACEOF
 
-
-
-      ac_fn_c_check_decl "$LINENO" "fgets_unlocked" "ac_cv_have_decl_fgets_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "fgets_unlocked" "ac_cv_have_decl_fgets_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_fgets_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25333,9 +24942,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_FGETS_UNLOCKED $ac_have_decl
 _ACEOF
 
-
-
-      ac_fn_c_check_decl "$LINENO" "fputc_unlocked" "ac_cv_have_decl_fputc_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "fputc_unlocked" "ac_cv_have_decl_fputc_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_fputc_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25346,9 +24953,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_FPUTC_UNLOCKED $ac_have_decl
 _ACEOF
 
-
-
-      ac_fn_c_check_decl "$LINENO" "fputs_unlocked" "ac_cv_have_decl_fputs_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "fputs_unlocked" "ac_cv_have_decl_fputs_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_fputs_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25359,9 +24964,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_FPUTS_UNLOCKED $ac_have_decl
 _ACEOF
 
-
-
-      ac_fn_c_check_decl "$LINENO" "fread_unlocked" "ac_cv_have_decl_fread_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "fread_unlocked" "ac_cv_have_decl_fread_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_fread_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25372,9 +24975,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_FREAD_UNLOCKED $ac_have_decl
 _ACEOF
 
-
-
-      ac_fn_c_check_decl "$LINENO" "fwrite_unlocked" "ac_cv_have_decl_fwrite_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "fwrite_unlocked" "ac_cv_have_decl_fwrite_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_fwrite_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25385,9 +24986,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_FWRITE_UNLOCKED $ac_have_decl
 _ACEOF
 
-
-
-      ac_fn_c_check_decl "$LINENO" "getchar_unlocked" "ac_cv_have_decl_getchar_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "getchar_unlocked" "ac_cv_have_decl_getchar_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_getchar_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25398,9 +24997,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_GETCHAR_UNLOCKED $ac_have_decl
 _ACEOF
 
-
-
-      ac_fn_c_check_decl "$LINENO" "putc_unlocked" "ac_cv_have_decl_putc_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "putc_unlocked" "ac_cv_have_decl_putc_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_putc_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25411,9 +25008,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_PUTC_UNLOCKED $ac_have_decl
 _ACEOF
 
-
-
-      ac_fn_c_check_decl "$LINENO" "putchar_unlocked" "ac_cv_have_decl_putchar_unlocked" "$ac_includes_default"
+ac_fn_c_check_decl "$LINENO" "putchar_unlocked" "ac_cv_have_decl_putchar_unlocked" "$ac_includes_default"
 if test "x$ac_cv_have_decl_putchar_unlocked" = xyes; then :
   ac_have_decl=1
 else
@@ -25423,7 +25018,6 @@ fi
 cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_PUTCHAR_UNLOCKED $ac_have_decl
 _ACEOF
-
 
 
             { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether <wchar.h> uses 'inline' correctly" >&5
@@ -25503,23 +25097,11 @@ Configuration aborted." "$LINENO" 5
 
 
 
-
-
-
-  :
-
-
-
-
-
   if test $ac_cv_header_features_h = yes; then
     HAVE_FEATURES_H=1
   else
     HAVE_FEATURES_H=0
   fi
-
-
-
 
 
 
@@ -25553,15 +25135,6 @@ fi
 
 
   if test $ac_cv_func_alloca_works = no; then
-
-
-  :
-
-
-
-
-
-
 
 
   :
@@ -26038,12 +25611,6 @@ $as_echo "#define GNULIB_TEST_REALPATH 1" >>confdefs.h
 
 
 
-  :
-
-
-
-
-
 
           if test "x$datarootdir" = x; then
     datarootdir='${datadir}'
@@ -26228,12 +25795,6 @@ _ACEOF
 
 
 
-  :
-
-
-
-
-
 
         GNULIB_GL_UNISTD_H_GETOPT=1
   fi
@@ -26286,12 +25847,6 @@ $as_echo "#define __GETOPT_PREFIX rpl_" >>confdefs.h
 
 
 
-  :
-
-
-
-
-
 
         GNULIB_GL_UNISTD_H_GETOPT=1
   fi
@@ -26313,12 +25868,6 @@ $as_echo "#define __GETOPT_PREFIX rpl_" >>confdefs.h
 
 
 
-
-
-
-
-
-  :
 
 
 
@@ -26541,12 +26090,6 @@ $as_echo "#define HAVE_INLINE 1" >>confdefs.h
 
 
 
-  :
-
-
-
-
-
   ac_fn_c_check_decl "$LINENO" "iswblank" "ac_cv_have_decl_iswblank" "
 /* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
    <wchar.h>.
@@ -26644,12 +26187,6 @@ fi
 
 
 
-  :
-
-
-
-
-
 
 
 
@@ -26699,12 +26236,6 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $gl_cv_header_locale_h_posix2001" >&5
 $as_echo "$gl_cv_header_locale_h_posix2001" >&6; }
-
-
-  :
-
-
-
 
 
   if test $ac_cv_header_xlocale_h = yes; then
@@ -26933,6 +26464,9 @@ main ()
 
 #if __FreeBSD__ == 4
 error "No, in FreeBSD 4.0 recursive mutexes actually don't work."
+#elif (defined __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ \
+       && __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ < 1070)
+error "No, in Mac OS X < 10.7 recursive mutexes actually don't work."
 #else
 int x = (int)PTHREAD_MUTEX_RECURSIVE;
 return !x;
@@ -26953,8 +26487,9 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
 
 
-
-  :
+cat >>confdefs.h <<_ACEOF
+#define GNULIB_LOCK 1
+_ACEOF
 
 
 
@@ -27015,18 +26550,6 @@ $as_echo "#define GNULIB_TEST_LSTAT 1" >>confdefs.h
 
 
 
-
-
-
-
-  :
-
-
-
-
-
-
-  :
 
 
 
@@ -27175,12 +26698,6 @@ $as_echo "$gl_cv_func_mbrtowc_sanitycheck" >&6; }
   else
     REPLACE_MBSTATE_T=1
   fi
-
-
-
-  :
-
-
 
 
 
@@ -27631,18 +27148,6 @@ $as_echo "#define GNULIB_TEST_MBRTOWC 1" >>confdefs.h
 
 
 
-  :
-
-
-
-
-
-
-  :
-
-
-
-
 
   if test $ac_cv_func_mbsinit = yes && test $ac_cv_func_mbrtowc = yes; then
 
@@ -27790,12 +27295,6 @@ $as_echo "$gl_cv_func_mbrtowc_sanitycheck" >&6; }
 
 
 
-  :
-
-
-
-
-
   if test $ac_cv_func_mbsinit = no; then
     HAVE_MBSINIT=0
     ac_fn_c_check_decl "$LINENO" "mbsinit" "ac_cv_have_decl_mbsinit" "
@@ -27860,12 +27359,6 @@ _ACEOF
 
 $as_echo "#define GNULIB_TEST_MBSINIT 1" >>confdefs.h
 
-
-
-
-
-
-  :
 
 
 
@@ -27983,12 +27476,6 @@ done
   fi
 
 
-  :
-
-
-
-
-
   if test $ac_cv_func__set_invalid_parameter_handler = yes; then
     HAVE_MSVC_INVALID_PARAMETER_HANDLER=1
 
@@ -28026,12 +27513,6 @@ $as_echo "#define HAVE_MSVC_INVALID_PARAMETER_HANDLER 1" >>confdefs.h
   gl_LIBOBJS="$gl_LIBOBJS msvc-nothrow.$ac_objext"
 
   fi
-
-
-
-  :
-
-
 
 
 
@@ -28143,12 +27624,6 @@ fi
 
 $as_echo "#define GNULIB_TEST_RAISE 1" >>confdefs.h
 
-
-
-
-
-
-  :
 
 
 
@@ -28305,18 +27780,6 @@ $as_echo "#define GNULIB_TEST_READLINK 1" >>confdefs.h
   fi
 
 
-  :
-
-
-
-
-
-
-  :
-
-
-
-
 
   :
 
@@ -28333,24 +27796,6 @@ $as_echo "#define GNULIB_TEST_READLINK 1" >>confdefs.h
 
 
 
-  :
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  :
 
 
 
@@ -28359,18 +27804,6 @@ $as_echo "#define GNULIB_TEST_READLINK 1" >>confdefs.h
   if test $ac_cv_have_decl_setenv = no; then
     HAVE_DECL_SETENV=0
   fi
-
-  :
-
-
-
-
-
-
-
-
-
-  :
 
 
 
@@ -28675,12 +28108,6 @@ $as_echo "$gt_cv_ssize_t" >&6; }
 $as_echo "#define ssize_t int" >>confdefs.h
 
   fi
-
-
-
-
-  :
-
 
 
 
@@ -29348,12 +28775,6 @@ $as_echo "#define GNULIB_TEST_STRERROR 1" >>confdefs.h
 
 
 
-  :
-
-
-
-
-
   if test $ac_cv_header_sys_socket_h != yes; then
                     for ac_header in winsock2.h
 do :
@@ -29386,12 +28807,6 @@ done
 
 
 
-
-
-
-
-
-  :
 
 
 
@@ -29518,12 +28933,6 @@ done
 
 
 
-
-
-
-
-
-  :
 
 
 
@@ -29677,12 +29086,6 @@ fi
 
 
 
-
-
-
-
-
-  :
 
 
 
@@ -30010,107 +29413,23 @@ $as_echo "#define USE_UNLOCKED_IO 1" >>confdefs.h
 
 
 
-  :
 
 
 
 
 
 
-  :
 
 
 
 
 
 
-  :
 
 
 
 
 
-
-  :
-
-
-
-
-
-
-  :
-
-
-
-
-
-
-  :
-
-
-
-
-
-
-  :
-
-
-
-
-
-
-  :
-
-
-
-
-
-
-  :
-
-
-
-
-
-
-  :
-
-
-
-
-
-
-  :
-
-
-
-
-
-
-  :
-
-
-
-
-
-
-  :
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  :
 
 
 
@@ -30257,12 +29576,6 @@ fi
 
 
 
-  :
-
-
-
-
-
   if test $ac_cv_func_iswcntrl = yes; then
     HAVE_ISWCNTRL=1
   else
@@ -30279,12 +29592,6 @@ fi
 
 
 
-
-
-
-
-
-  :
 
 
 
@@ -30626,18 +29933,6 @@ fi
 
 
 
-
-
-
-
-  :
-
-
-
-
-
-
-  :
 
 
 
@@ -33231,7 +32526,7 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
 
   case $ac_file$ac_mode in
     "depfiles":C) test x"$AMDEP_TRUE" != x"" || {
-  # Autoconf 2.62 quotes --file arguments for eval, but not when files
+  # Older Autoconf quotes --file arguments for eval, but not when files
   # are listed without --file.  Let's play safe and only enable the eval
   # if we detect the quoting.
   case $CONFIG_FILES in
@@ -33282,7 +32577,7 @@ $as_echo X"$mf" |
     DEPDIR=`sed -n 's/^DEPDIR = //p' < "$mf"`
     test -z "$DEPDIR" && continue
     am__include=`sed -n 's/^am__include = //p' < "$mf"`
-    test -z "am__include" && continue
+    test -z "$am__include" && continue
     am__quote=`sed -n 's/^am__quote = //p' < "$mf"`
     # Find all dependency output files, they are included files with
     # $(DEPDIR) in their names.  We invoke sed twice because it is the

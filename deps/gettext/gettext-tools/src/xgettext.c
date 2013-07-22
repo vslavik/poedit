@@ -92,6 +92,9 @@
 #include "x-stringtable.h"
 #include "x-rst.h"
 #include "x-glade.h"
+#include "x-lua.h"
+#include "x-javascript.h"
+#include "x-vala.h"
 
 
 /* If nonzero add all comments immediately preceding one of the keywords. */
@@ -160,6 +163,9 @@ static flag_context_list_table_ty flag_table_ycp;
 static flag_context_list_table_ty flag_table_tcl;
 static flag_context_list_table_ty flag_table_perl;
 static flag_context_list_table_ty flag_table_php;
+static flag_context_list_table_ty flag_table_lua;
+static flag_context_list_table_ty flag_table_javascript;
+static flag_context_list_table_ty flag_table_vala;
 
 /* If true, recognize Qt format strings.  */
 static bool recognize_format_qt;
@@ -331,6 +337,9 @@ main (int argc, char *argv[])
   init_flag_table_tcl ();
   init_flag_table_perl ();
   init_flag_table_php ();
+  init_flag_table_lua ();
+  init_flag_table_javascript ();
+  init_flag_table_vala ();
 
   while ((optchar = getopt_long (argc, argv,
                                  "ac::Cd:D:eEf:Fhijk::l:L:m::M::no:p:sTVw:x:",
@@ -355,6 +364,9 @@ main (int argc, char *argv[])
         x_perl_extract_all ();
         x_php_extract_all ();
         x_glade_extract_all ();
+        x_lua_extract_all ();
+        x_javascript_extract_all ();
+        x_vala_extract_all ();
         break;
 
       case 'c':
@@ -432,6 +444,9 @@ main (int argc, char *argv[])
         x_perl_keyword (optarg);
         x_php_keyword (optarg);
         x_glade_keyword (optarg);
+        x_lua_keyword (optarg);
+        x_javascript_keyword (optarg);
+        x_vala_keyword (optarg);
         if (optarg == NULL)
           no_default_keywords = true;
         else
@@ -857,7 +872,8 @@ Choice of input file language:\n"));
                                 (C, C++, ObjectiveC, PO, Shell, Python, Lisp,\n\
                                 EmacsLisp, librep, Scheme, Smalltalk, Java,\n\
                                 JavaProperties, C#, awk, YCP, Tcl, Perl, PHP,\n\
-                                GCC-source, NXStringTable, RST, Glade)\n"));
+                                GCC-source, NXStringTable, RST, Glade, Lua,\n\
+                                JavaScript, Vala)\n"));
       printf (_("\
   -C, --c++                   shorthand for --language=C++\n"));
       printf (_("\
@@ -890,21 +906,24 @@ Language specific options:\n"));
       printf (_("\
                                 (only languages C, C++, ObjectiveC, Shell,\n\
                                 Python, Lisp, EmacsLisp, librep, Scheme, Java,\n\
-                                C#, awk, Tcl, Perl, PHP, GCC-source, Glade)\n"));
+                                C#, awk, Tcl, Perl, PHP, GCC-source, Glade,\n\
+                                Lua, JavaScript, Vala)\n"));
       printf (_("\
   -kWORD, --keyword=WORD      look for WORD as an additional keyword\n\
   -k, --keyword               do not to use default keywords\n"));
       printf (_("\
                                 (only languages C, C++, ObjectiveC, Shell,\n\
                                 Python, Lisp, EmacsLisp, librep, Scheme, Java,\n\
-                                C#, awk, Tcl, Perl, PHP, GCC-source, Glade)\n"));
+                                C#, awk, Tcl, Perl, PHP, GCC-source, Glade,\n\
+                                Lua, JavaScript, Vala)\n"));
       printf (_("\
       --flag=WORD:ARG:FLAG    additional flag for strings inside the argument\n\
                               number ARG of keyword WORD\n"));
       printf (_("\
                                 (only languages C, C++, ObjectiveC, Shell,\n\
                                 Python, Lisp, EmacsLisp, librep, Scheme, Java,\n\
-                                C#, awk, YCP, Tcl, Perl, PHP, GCC-source)\n"));
+                                C#, awk, YCP, Tcl, Perl, PHP, GCC-source,\n\
+                                Lua, JavaScript, Vala)\n"));
       printf (_("\
   -T, --trigraphs             understand ANSI C trigraphs for input\n"));
       printf (_("\
@@ -1674,6 +1693,11 @@ xgettext_record_flag (const char *optionstring)
                                                     name_start, name_end,
                                                     argnum, value, pass);
                     break;
+                  case format_python_brace:
+                    flag_context_list_table_insert (&flag_table_python, 0,
+                                                    name_start, name_end,
+                                                    argnum, value, pass);
+                    break;
                   case format_lisp:
                     flag_context_list_table_insert (&flag_table_lisp, 0,
                                                     name_start, name_end,
@@ -1765,6 +1789,16 @@ xgettext_record_flag (const char *optionstring)
                     break;
                   case format_boost:
                     flag_context_list_table_insert (&flag_table_cxx_boost, 1,
+                                                    name_start, name_end,
+                                                    argnum, value, pass);
+                    break;
+                  case format_lua:
+                    flag_context_list_table_insert (&flag_table_lua, 0,
+                                                    name_start, name_end,
+                                                    argnum, value, pass);
+                    break;
+                  case format_javascript:
+                    flag_context_list_table_insert (&flag_table_javascript, 0,
                                                     name_start, name_end,
                                                     argnum, value, pass);
                     break;
@@ -3000,6 +3034,7 @@ construct_header ()
   char *timestring;
   message_ty *mp;
   char *msgstr;
+  char *comment;
   static lex_pos_ty pos = { __FILE__, __LINE__ };
 
   if (package_name != NULL)
@@ -3043,18 +3078,20 @@ Content-Transfer-Encoding: 8bit\n",
 
   mp = message_alloc (NULL, "", NULL, msgstr, strlen (msgstr) + 1, &pos);
 
-  message_comment_append (mp,
-                          copyright_holder[0] != '\0'
-                          ? xasprintf ("\
+  if (copyright_holder[0] != '\0')
+    comment = xasprintf ("\
 SOME DESCRIPTIVE TITLE.\n\
 Copyright (C) YEAR %s\n\
 This file is distributed under the same license as the PACKAGE package.\n\
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.\n",
-                                       copyright_holder)
-                          : "\
+			 copyright_holder);
+  else
+    comment = xstrdup ("\
 SOME DESCRIPTIVE TITLE.\n\
 This file is put in the public domain.\n\
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.\n");
+  message_comment_append (mp, comment);
+  free (comment);
 
   mp->is_fuzzy = true;
 
@@ -3182,6 +3219,9 @@ language_to_extractor (const char *name)
     SCANNERS_STRINGTABLE
     SCANNERS_RST
     SCANNERS_GLADE
+    SCANNERS_LUA
+    SCANNERS_JAVASCRIPT
+    SCANNERS_VALA
     /* Here may follow more languages and their scanners: pike, etc...
        Make sure new scanners honor the --exclude-file option.  */
   };
@@ -3265,6 +3305,9 @@ extension_to_language (const char *extension)
     EXTENSIONS_STRINGTABLE
     EXTENSIONS_RST
     EXTENSIONS_GLADE
+    EXTENSIONS_LUA
+    EXTENSIONS_JAVASCRIPT
+    EXTENSIONS_VALA
     /* Here may follow more file extensions... */
   };
 

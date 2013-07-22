@@ -1,5 +1,5 @@
 /* Class autosprintf - formatted output to an ostream.
-   Copyright (C) 2002 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,13 @@
 #include <string.h>
 #include "lib-asprintf.h"
 
+/* std::swap() is in <utility> since C++11.  */
+#if __cplusplus >= 201103L
+# include <utility>
+#else
+# include <algorithm>
+#endif
+
 namespace gnu
 {
 
@@ -47,6 +54,13 @@ namespace gnu
   autosprintf::autosprintf (const autosprintf& src)
   {
     str = (src.str != NULL ? strdup (src.str) : NULL);
+  }
+
+  /* Copy constructor.  Necessary because the destructor is nontrivial.  */
+  autosprintf& autosprintf::operator = (autosprintf copy)
+  {
+    std::swap (copy.str, this->str);
+    return *this;
   }
 
   /* Destructor: frees the temporarily allocated string.  */

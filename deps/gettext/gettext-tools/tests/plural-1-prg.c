@@ -42,7 +42,7 @@ main (int argc, char *argv[])
     return 1;
 
   textdomain ("cake");
-  bindtextdomain ("cake", ".");
+  bindtextdomain ("cake", "plural-1-dir");
   printf (ngettext ("a piece of cake", "%d pieces of cake", n), n);
   printf ("\n");
   return 0;

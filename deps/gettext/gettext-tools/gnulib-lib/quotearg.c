@@ -348,7 +348,12 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
       if (backslash_escapes
           && quote_string_len
-          && i + quote_string_len <= argsize
+          && (i + quote_string_len
+              <= (argsize == SIZE_MAX && 1 < quote_string_len
+                  /* Use strlen only if we must: when argsize is SIZE_MAX,
+                     and when the quote string is more than 1 byte long.
+                     If we do call strlen, save the result.  */
+                  ? (argsize = strlen (arg)) : argsize))
           && memcmp (arg + i, quote_string, quote_string_len) == 0)
         {
           if (elide_outer_quotes)

@@ -25,8 +25,24 @@ SIGNATURE_CHECK (posix_spawn_file_actions_addopen, int,
 
 #include <errno.h>
 #include <fcntl.h>
+#include <limits.h>
+#include <unistd.h>
 
 #include "macros.h"
+
+/* Return a file descriptor that is too big to use.
+   Prefer the smallest such fd, except use OPEN_MAX if it is defined
+   and is greater than getdtablesize (), as that's how OS X works.  */
+static int
+big_fd (void)
+{
+  int fd = getdtablesize ();
+#ifdef OPEN_MAX
+  if (fd < OPEN_MAX)
+    fd = OPEN_MAX;
+#endif
+  return fd;
+}
 
 int
 main (void)
@@ -43,8 +59,9 @@ main (void)
             == EBADF);
   }
   {
+    int bad_fd = big_fd ();
     errno = 0;
-    ASSERT (posix_spawn_file_actions_addopen (&actions, 10000000,
+    ASSERT (posix_spawn_file_actions_addopen (&actions, bad_fd,
                                               "foo", 0, O_RDONLY)
             == EBADF);
   }

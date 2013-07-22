@@ -1,3 +1,26 @@
+2013-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am: Use $(MKDIR_P) instead of $(mkdir_p).
+	Suggested by Stefano Lattarini in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-04/msg00044.html>.
+
+2013-03-07  Miguel Angel Arruga Vivas  <rosen644835@gmail.com>  (tiny change)
+
+	Fix '__attribute__' definition.
+	Reported at <https://savannah.gnu.org/bugs/?35313>
+	* autosprintf.in.h (_AUTOSPRINTF_ATTRIBUTE_FORMAT): New macro
+	instead of redefine __attribute__.
+
+2013-03-04  Miguel Angel Arruga Vivas  <rosen644835@gmail.com>  (tiny change)
+
+	Add 'autosprintf::operator='. Needed because destructor
+	is not trivial.
+	Reported at <https://savannah.gnu.org/bugs/?33102>
+	* autosprintf.in.h (autosprintf::operator=): New function.
+	Thanks to Daiki Ueno for pointing a better copy-and-swap
+	idiom use.
+	* autosprintf.cc (autosprintf::operator=): Likewise.
+
 2013-01-17  Daiki Ueno  <ueno@gnu.org>
 
 	Fix link errors related to C99-style extern inline.
