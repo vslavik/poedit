@@ -551,37 +551,23 @@ PoeditFrame::PoeditFrame() :
     m_labelContext->SetFont(m_normalGuiFont);
     m_labelContext->Hide();
 
-    wxStaticText *labelTrans =
-        new wxStaticText(m_bottomLeftPanel, -1, _("Translation:"));
-    labelTrans->SetFont(m_boldGuiFont);
-
-    m_labelComment = new wxStaticText(m_bottomRightPanel, -1, _("Comment:"));
-    m_labelComment->SetFont(m_boldGuiFont);
-
-    m_labelAutoComments = new wxStaticText(m_bottomRightPanel, -1, _("Notes for translators:"));
-    m_labelAutoComments->SetFont(m_boldGuiFont);
-
-    m_textComment = NULL;
-    m_textAutoComments = new UnfocusableTextCtrl(m_bottomRightPanel,
-                                ID_TEXTORIG, wxEmptyString,
-                                wxDefaultPosition, wxDefaultSize,
-                                wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
-    // This call will force the creation of the right kind of control
-    // for the m_textComment member
-    UpdateCommentWindowEditable();
-
     m_labelSingular = new wxStaticText(m_bottomLeftPanel, -1, _("Singular:"));
     m_labelSingular->SetFont(m_normalGuiFont);
-    m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
-    m_labelPlural->SetFont(m_normalGuiFont);
     m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
                                 ID_TEXTORIG, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
+
+    m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
+    m_labelPlural->SetFont(m_normalGuiFont);
     m_textOrigPlural = new UnfocusableTextCtrl(m_bottomLeftPanel,
                                 ID_TEXTORIGPLURAL, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
+
+    wxStaticText *labelTrans =
+        new wxStaticText(m_bottomLeftPanel, -1, _("Translation:"));
+    labelTrans->SetFont(m_boldGuiFont);
 
     m_textTrans = new wxTextCtrl(m_bottomLeftPanel,
                                 ID_TEXTTRANS, wxEmptyString,
@@ -592,6 +578,20 @@ PoeditFrame::PoeditFrame() :
     m_textTransSingularForm = NULL;
 
     m_pluralNotebook = new wxNotebook(m_bottomLeftPanel, -1);
+
+    m_labelAutoComments = new wxStaticText(m_bottomRightPanel, -1, _("Notes for translators:"));
+    m_labelAutoComments->SetFont(m_boldGuiFont);
+    m_textAutoComments = new UnfocusableTextCtrl(m_bottomRightPanel,
+                                ID_TEXTORIG, wxEmptyString,
+                                wxDefaultPosition, wxDefaultSize,
+                                wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
+
+    m_labelComment = new wxStaticText(m_bottomRightPanel, -1, _("Comment:"));
+    m_labelComment->SetFont(m_boldGuiFont);
+    m_textComment = NULL;
+    // This call will force the creation of the right kind of control
+    // for the m_textComment member
+    UpdateCommentWindowEditable();
 
     m_errorBar = new ErrorBar(m_bottomLeftPanel);
 
