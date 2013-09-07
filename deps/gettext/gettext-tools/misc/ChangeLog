@@ -1,3 +1,18 @@
+2013-08-12  Daiki Ueno  <ueno@gnu.org>
+
+	autopoint: make macro trace in autom4te robuster
+	* autopoint.in (func_trace): Ignore M4sugar macros which may abort
+	autom4te and read gettext.m4 to trace AM_GNU_GETTEXT_* macros.
+	* gettextize.in (func_trace): New function ported from autopoint.in.
+	Reported by Sami Kerola in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-07/msg00002.html>.
+
+2013-07-21  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in (omitintl): Don't set it 'no' when no
+	AM_GNU_GETTEXT call is found.
+	Reported by Sebastien Helleu in <http://savannah.gnu.org/bugs/?39536>.
+
 2013-05-02  Daiki Ueno  <ueno@gnu.org>
 
 	* autopoint.in (func_trace): New function; use it all in places

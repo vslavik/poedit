@@ -30,8 +30,6 @@ prefix="@prefix@"
 datarootdir="@datarootdir@"
 gettext_dir="@datadir@/gettext"
 
-autom4te="autom4te --no-cache --language=Autoconf-without-aclocal-m4"
-
 # func_tmpdir
 # creates a temporary directory.
 # Sets variable
@@ -137,6 +135,25 @@ if test "@RELOCATABLE@" = yes; then
   # Relocate the directory variables that we use.
   gettext_dir=`echo "$gettext_dir/" | sed -e "s%^${orig_installprefix}/%${curr_installprefix}/%" | sed -e 's,/$,,'`
 fi
+
+# func_trace macro
+# traces an Autoconf macro call and outputs the arguments to stdout.
+func_trace ()
+{
+  echo '\
+dnl ignore M4sugar macros which may abort autom4te
+m4_undefine([m4_assert])
+m4_undefine([m4_fatal])
+m4_undefine([m4_warn])
+m4_undefine([m4_errprintn])
+m4_undefine([m4_exit])
+dnl macros which needs to be traced without aclocal.m4
+m4_define([AM_GNU_GETTEXT], [])
+m4_define([AM_GNU_GETTEXT_VERSION], [])
+' \
+  | autom4te --no-cache --language=Autoconf-without-aclocal-m4 \
+    --trace="$1":\$% - "$2"
+}
 
 # func_usage
 # outputs to stdout the --help usage message.
@@ -311,15 +328,15 @@ if test $force -eq 0; then
 fi
 
 # Check in which directory config.rpath etc. belong.
-auxdir=`$autom4te --trace=AC_CONFIG_AUX_DIR:\$% "$configure_in"`
+auxdir=`func_trace AC_CONFIG_AUX_DIR "$configure_in"`
 if test -n "$auxdir"; then
   auxdir="$auxdir/"
 fi
 
 # Check in which directory gettext.m4 etc. belong.
-macrodirs=`$autom4te --trace=AC_CONFIG_MACRO_DIR_TRACE:\$% "$configure_in"`
+macrodirs=`func_trace AC_CONFIG_MACRO_DIR_TRACE "$configure_in"`
 if test -z "$macrodirs"; then
-  macrodirs=`$autom4te --trace=AC_CONFIG_MACRO_DIR:\$% "$configure_in"`
+  macrodirs=`func_trace AC_CONFIG_MACRO_DIR "$configure_in"`
 fi
 for arg in $macrodirs; do
   m4dir="$arg"
@@ -656,9 +673,15 @@ if test -n "$intldir"; then
 else
   echo "Not copying intl/ directory."
   # Tell the user what to put into configure.ac, if it is not already there.
-  if grep '^AM_GNU_GETTEXT([[]\?external[]]\?[ 	]*[,)]' "$srcdir/$configure_in" > /dev/null; then
-    :
-  else
+  external=
+  xargs=`func_trace AM_GNU_GETTEXT "$srcdir/$configure_in"`
+  for arg in $xargs; do
+    if test 'external' = "$arg"; then
+      external=yes
+      break
+    fi
+  done
+  if test -z "$external"; then
     please="$please
 Please use AM_GNU_GETTEXT([external]) in order to cause autoconfiguration
 to look for an external libintl.
