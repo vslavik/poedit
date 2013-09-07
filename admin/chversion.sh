@@ -30,12 +30,13 @@ replace_ver configure.ac \
             '\(PACKAGE_SHORT_VERSION=\).*' "\1$VER_SHORT"
 replace_ver make-distrib.sh \
             '\(VERSION=\).*' "\1$VER_FULL"
-replace_ver build.properties \
-            '\(poedit.version=\).*' "\1$VER_FULL"
 replace_ver src/version.h \
             '\(POEDIT_VERSION.*"\).*\("\)' "\1$VER_FULL\2"
 replace_ver src/version.h \
             '\(POEDIT_VERSION_WIN *\).*' "\1$VER_WIN"
+replace_ver Poedit.xcodeproj/project.pbxproj \
+            '\(POEDIT_VERSION = \).*\(;\)' "\1$VER_FULL\2"
+touch macosx/Poedit-Info.plist
 
 for i in locales/*.po locales/*.pot ; do
     replace_ver $i \
