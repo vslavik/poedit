@@ -534,9 +534,9 @@ void PoeditApp::OnAbout(wxCommandEvent&)
 
     wxAboutDialogInfo about;
 
+#ifndef __WXMAC__
     about.SetName("Poedit");
     about.SetVersion(wxGetApp().GetAppVersion());
-#ifndef __WXMAC__
     about.SetDescription(_("Poedit is an easy to use translations editor."));
 #endif
     about.SetCopyright("Copyright \u00a9 1999-2013 Vaclav Slavik");
