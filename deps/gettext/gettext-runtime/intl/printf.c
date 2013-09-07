@@ -41,10 +41,6 @@ char *alloca ();
 # endif
 #endif
 
-#if defined(_WIN32) && !defined(HAVE_DECL__SNWPRINTF)
-# define HAVE_DECL__SNWPRINTF 1
-#endif
-
 #include <stdio.h>
 
 #if !HAVE_POSIX_PRINTF

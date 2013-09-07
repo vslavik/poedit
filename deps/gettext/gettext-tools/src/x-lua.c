@@ -1166,6 +1166,7 @@ extract_balanced (message_list_ty *mlp, token_type_ty delim,
           continue;
 
         case token_type_dot:
+        case token_type_doubledot:
         case token_type_operator1:
         case token_type_operator2:
         case token_type_number:

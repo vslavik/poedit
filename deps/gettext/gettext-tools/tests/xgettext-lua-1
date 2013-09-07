@@ -21,6 +21,8 @@ print(_["nope"])
 print(_("\097"))
 print(_("\x3F\z  	
 \x2a"))
+print(_("abc" .. "def"))
+print(speed / 1000 .. 'Mbps')
 EOF
 
 tmpfiles="$tmpfiles xg-lu-1.tmp.po xg-lu-1.po"
@@ -64,6 +66,9 @@ msgid "a"
 msgstr ""
 
 msgid "?*"
+msgstr ""
+
+msgid "abcdef"
 msgstr ""
 EOF
 

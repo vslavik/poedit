@@ -1,3 +1,19 @@
+2013-08-12  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-glade-7: Add a test for multi-line extracted comments.
+
+2013-07-11  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-lua-1: Add test case for string concatenation.
+
+2013-07-10  Daiki Ueno  <ueno@gnu.org>
+
+	gettext-tools: convert tests to use init.sh from Gnulib
+	* Makefile.am (TESTS_ENVIRONMENT): Don't define LIBTOOL envvar
+	since it contains a relative path which cannot easily modified by
+	init.sh-using tests.  Set it in the tests instead.
+	* *: convert to use init.sh.
+
 2013-07-07  Daiki Ueno  <ueno@gnu.org>
 
 	* lang-javascript: Fix gjs module checks.

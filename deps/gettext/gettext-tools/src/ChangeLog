@@ -1,3 +1,21 @@
+2013-08-12  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext.c (remember_a_message): Handle multi-line extracted
+	comments.
+	Reported by Gabor Kelemen in
+	<http://lists.gnu.org/archive/html/bug-gettext/2013-08/msg00026.html>.
+
+2013-08-08  Miguel Angel Arruga Vivas  <rosen644835@gmail.com> (tiny change)
+
+	Fix copyright year in xgettext version string.
+	* xgettext.c (main): Update copyright year.
+
+2013-07-11  Daiki Ueno  <ueno@gnu.org>
+
+	Fix crash when parsing '..' with non-string argument.
+	Reported by Koen Dergent at <http://savannah.gnu.org/bugs/?39458>.
+	* x-lua.c (extract_balanced): Skip stray '..'.
+
 2013-06-27  Daiki Ueno  <ueno@gnu.org>
 
 	* x-python.c (phase5_pushback): Increment size to 2.

@@ -66,6 +66,11 @@ cat <<EOF > xg-gl-7.ui
         <col id="1" translatable="yes" context="This is not translatable">Please...</col>
         <col id="2">86855555</col>
       </row>
+      <row>
+        <col id="0" translatable="yes" context="First row">Hi</col>
+        <col id="1" translatable="yes" comments="A multiline&#10;comment.">Comment</col>
+        <col id="2">999</col>
+      </row>
     </data>
   </object>
   <object class="GtkWindow" id="window">
@@ -208,13 +213,15 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: xg-gl-7.ui:30
+#: xg-gl-7.ui:30 xg-gl-7.ui:45
 msgctxt "First row"
 msgid "Hi"
 msgstr ""
 
 #. A comment.
-#: xg-gl-7.ui:31
+#. A multiline
+#. comment.
+#: xg-gl-7.ui:31 xg-gl-7.ui:46
 msgid "Comment"
 msgstr ""
 
@@ -234,37 +241,37 @@ msgid "Please..."
 msgstr ""
 
 #. This thing is the menu label
-#: xg-gl-7.ui:62
+#: xg-gl-7.ui:67
 msgctxt "Menu"
 msgid "One thing"
 msgstr ""
 
 #. This thing is the label in the inner menu.
-#: xg-gl-7.ui:70
+#: xg-gl-7.ui:75
 msgctxt "One thing"
 msgid "One thing"
 msgstr ""
 
 #. This is easy.
-#: xg-gl-7.ui:87
+#: xg-gl-7.ui:92
 msgctxt "Menu"
 msgid "H_elp"
 msgstr ""
 
 #. This one thing is for the second menu.
-#: xg-gl-7.ui:95
+#: xg-gl-7.ui:100
 msgctxt "Second menu"
 msgid "One thing"
 msgstr ""
 
 #. To you too.
-#: xg-gl-7.ui:105
+#: xg-gl-7.ui:110
 msgctxt "Second menu"
 msgid "Greetings"
 msgstr ""
 
 #. This one thing is the button.
-#: xg-gl-7.ui:142
+#: xg-gl-7.ui:147
 msgctxt "Button"
 msgid "One thing"
 msgstr ""
