@@ -191,10 +191,6 @@
    don't. */
 #undef HAVE_DECL_FEOF_UNLOCKED
 
-/* Define to 1 if you have the declaration of `feof_unlocked fgets_unlocked',
-   and to 0 if you don't. */
-#undef HAVE_DECL_FEOF_UNLOCKED_FGETS_UNLOCKED
-
 /* Define to 1 if you have the declaration of `ferror_unlocked', and to 0 if
    you don't. */
 #undef HAVE_DECL_FERROR_UNLOCKED
@@ -283,9 +279,13 @@
    don't. */
 #undef HAVE_DECL_WCWIDTH
 
-/* Define to 1 if you have the declaration of `_snprintf _snwprintf', and to 0
-   if you don't. */
-#undef HAVE_DECL__SNPRINTF__SNWPRINTF
+/* Define to 1 if you have the declaration of `_snprintf', and to 0 if you
+   don't. */
+#undef HAVE_DECL__SNPRINTF
+
+/* Define to 1 if you have the declaration of `_snwprintf', and to 0 if you
+   don't. */
+#undef HAVE_DECL__SNWPRINTF
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
@@ -1164,6 +1164,9 @@
 
 /* Define if the mbrtowc function returns a wrong return value. */
 #undef MBRTOWC_RETVAL_BUG
+
+/* Define to 1 if your C compiler doesn't accept -c and -o together. */
+#undef NO_MINUS_C_MINUS_O
 
 /* Name of package */
 #undef PACKAGE
