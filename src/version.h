@@ -26,7 +26,7 @@
 #ifndef _VERSION_H_
 #define _VERSION_H_
 
-#define POEDIT_VERSION           "1.5.7"
-#define POEDIT_VERSION_WIN        1,5,7,0
+#define POEDIT_VERSION           "1.6beta1"
+#define POEDIT_VERSION_WIN        1,6,0
 
 #endif // _VERSION_H_
