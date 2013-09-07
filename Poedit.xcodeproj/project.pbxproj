@@ -512,6 +512,7 @@
 				B248B2DB170D765100EBA58E /* Frameworks */,
 				B248B2DC170D765100EBA58E /* Resources */,
 				B2F287C6170DCF06004C1F41 /* Copy Gettext binaries & translations */,
+				B2CC62E217DB7F670097461B /* Set bundle versions from deps/gettext */,
 			);
 			buildRules = (
 			);
@@ -641,6 +642,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "find \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\" -name Headers -exec rm -rf {} \\; || true";
+		};
+		B2CC62E217DB7F670097461B /* Set bundle versions from deps/gettext */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set bundle versions from deps/gettext";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "source deps/gettext/version.sh\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
 		};
 		B2E83707170C96DB00F31559 /* Install translations */ = {
 			isa = PBXShellScriptBuildPhase;
