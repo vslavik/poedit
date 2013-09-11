@@ -47,6 +47,8 @@ class PoeditApp : public wxApp
 
         /// Returns Poedit version string.
         wxString GetAppVersion() const;
+        bool IsBetaVersion() const;
+        bool CheckForBetaUpdates() const;
 
         // opens a file in new frame
         void OpenFile(const wxString& name);

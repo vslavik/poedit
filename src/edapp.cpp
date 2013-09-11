@@ -73,6 +73,18 @@ wxString PoeditApp::GetAppVersion() const
     return wxString::FromAscii(POEDIT_VERSION);
 }
 
+bool PoeditApp::IsBetaVersion() const
+{
+    wxString v = GetAppVersion();
+    return  v.Contains("beta") || v.Contains("rc");
+}
+
+bool PoeditApp::CheckForBetaUpdates() const
+{
+    return IsBetaVersion() ||
+           wxConfigBase::Get()->ReadBool("check_for_beta_updates", false);
+}
+
 
 static wxArrayString gs_filesToOpen;
 
@@ -182,14 +194,13 @@ bool PoeditApp::OnInit()
 #endif // !__WXMAC__
 
 #ifdef USE_SPARKLE
-    Sparkle_Initialize();
+    Sparkle_Initialize(CheckForBetaUpdates());
 #endif // USE_SPARKLE
 
 #ifdef __WXMSW__
     const char *appcast = "https://dl.updatica.com/poedit-win/appcast";
 
-    if ( GetAppVersion().Contains("beta") ||
-         GetAppVersion().Contains("rc") )
+    if ( CheckForBetaUpdates() )
     {
         // Beta versions use unstable feed.
         appcast = "https://dl.updatica.com/poedit-win/appcast/beta";

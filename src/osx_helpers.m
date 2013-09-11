@@ -40,15 +40,19 @@
 // Sparkle helpers
 // --------------------------------------------------------------------------------
 
-void Sparkle_Initialize()
+void Sparkle_Initialize(bool checkForBeta)
 {
     /* Remove config key for Sparkle < 1.5. */
     UserDefaults_RemoveValue("SUCheckAtStartup");
 
     @autoreleasepool {
         SUUpdater *updater = [SUUpdater sharedUpdater];
-        // We don't use the updater here, this just triggered initialization
-        (void)updater;
+
+        if (checkForBeta)
+        {
+            NSString *url = @"https://dl.updatica.com/poedit-osx/appcast/beta";
+            [updater setFeedURL:[NSURL URLWithString:url]];
+        }
     }
 }
 

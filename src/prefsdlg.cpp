@@ -36,6 +36,7 @@
 #include <wx/xrc/xmlres.h>
 
 #include "prefsdlg.h"
+#include "edapp.h"
 #include "isocodes.h"
 #include "transmem.h"
 #include "transmemupd.h"
@@ -174,6 +175,12 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XRCCTRL(*this, "auto_updates", wxCheckBox)->SetValue(
                 win_sparkle_get_automatic_check_for_updates() != 0);
 #endif
+#if defined(USE_SPARKLE) || defined(__WXMSW__)
+    wxCheckBox *betas = XRCCTRL(*this, "beta_versions", wxCheckBox);
+    betas->SetValue(wxGetApp().CheckForBetaUpdates());
+    if (wxGetApp().IsBetaVersion())
+        betas->Disable();
+#endif
 }
  
             
@@ -243,6 +250,13 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
 #ifdef __WXMSW__
     win_sparkle_set_automatic_check_for_updates(
                 XRCCTRL(*this, "auto_updates", wxCheckBox)->GetValue());
+#endif
+#if defined(USE_SPARKLE) || defined(__WXMSW__)
+    if (!wxGetApp().IsBetaVersion())
+    {
+        cfg->Write("check_for_beta_updates",
+                   XRCCTRL(*this, "beta_versions", wxCheckBox)->GetValue());
+    }
 #endif
 }
 
