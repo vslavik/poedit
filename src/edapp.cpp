@@ -198,12 +198,12 @@ bool PoeditApp::OnInit()
 #endif // USE_SPARKLE
 
 #ifdef __WXMSW__
-    const char *appcast = "https://dl.updatica.com/poedit-win/appcast";
+    const char *appcast = "http://releases.poedit.net/appcast-win";
 
     if ( CheckForBetaUpdates() )
     {
         // Beta versions use unstable feed.
-        appcast = "https://dl.updatica.com/poedit-win/appcast/beta";
+        appcast = "http://releases.poedit.net/appcast-win/beta";
     }
 
     win_sparkle_set_appcast_url(appcast);

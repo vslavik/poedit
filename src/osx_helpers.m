@@ -50,7 +50,7 @@ void Sparkle_Initialize(bool checkForBeta)
 
         if (checkForBeta)
         {
-            NSString *url = @"https://dl.updatica.com/poedit-osx/appcast/beta";
+            NSString *url = @"http://releases.poedit.net/appcast-osx/beta";
             [updater setFeedURL:[NSURL URLWithString:url]];
         }
     }
