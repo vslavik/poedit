@@ -46,6 +46,7 @@
 #include "isocodes.h"
 #include "utility.h"
 #include "version.h"
+#include "lang_info.h"
 
 
 // ----------------------------------------------------------------------
@@ -1080,6 +1081,16 @@ void Catalog::FixupCommonIssues()
         {
             pluralForms += ";";
             m_header.SetHeader("Plural-Forms", pluralForms);
+        }
+    }
+    else
+    {
+        // Auto-fill default plural form if it is missing:
+        if (!m_header.LanguageCode.empty() && HasPluralItems())
+        {
+            pluralForms = GetPluralFormForLanguage(m_header.LanguageCode);
+            if (!pluralForms.empty())
+                m_header.SetHeader("Plural-Forms", pluralForms);
         }
     }
 
