@@ -1233,7 +1233,7 @@ wxString FormatStringForFile(const wxString& text)
 {
     wxString s;
     unsigned n_cnt = 0;
-    size_t len = text.length();
+    int len = (int)text.length();
 
     s.Alloc(len + 16);
     // Scan the string up to len-2 because we don't want to account for the
@@ -1242,7 +1242,7 @@ wxString FormatStringForFile(const wxString& text)
     //                      ^
     //                      |
     //                      \--- = len-2
-    size_t i;
+    int i;
     for (i = 0; i < len-2; i++)
     {
         if (text[i] == _T('\\') && text[i+1] == _T('n'))
