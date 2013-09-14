@@ -33,6 +33,7 @@
 
 class WXDLLIMPEXP_FWD_ADV wxEditableListBox;
 class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
+class WXDLLIMPEXP_FWD_CORE wxRadioButton;
 class WXDLLIMPEXP_FWD_CORE wxComboBox;
 
 /// Dialog setting various catalog parameters.
@@ -48,10 +49,13 @@ class PropertiesDialog : public wxDialog
         void TransferFrom(Catalog *cat);
             
     private:
+        void OnLanguageChanged(wxCommandEvent& event);
+
         wxTextCtrl *m_team, *m_teamEmail, *m_project;
         wxTextCtrl *m_language;
         wxComboBox *m_charset, *m_sourceCodeCharset;
-        wxTextCtrl *m_pluralForms;
+        wxRadioButton *m_pluralFormsDefault, *m_pluralFormsCustom;
+        wxTextCtrl *m_pluralFormsExpr;
         wxTextCtrl *m_basePath;
         wxEditableListBox *m_paths, *m_keywords;
 };

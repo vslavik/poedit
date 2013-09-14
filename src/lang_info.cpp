@@ -32,6 +32,9 @@ static std::mutex gs_mutexGetPluralFormForLanguage;
 
 std::string GetPluralFormForLanguage(std::string lang)
 {
+    if ( lang.empty() )
+        return std::string();
+
     std::lock_guard<std::mutex> lock(gs_mutexGetPluralFormForLanguage);
 
     static const std::unordered_map<std::string, std::string> forms = {

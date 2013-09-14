@@ -48,9 +48,26 @@
                   <border>5d</border>
                 </object>
                 <object class="sizeritem">
-                  <object class="wxTextCtrl" name="plural_forms"/>
+                  <object class="wxRadioButton" name="plural_forms_default">
+                    <label>Use default rules for this language</label>
+                    <style>wxRB_GROUP</style>
+                  </object>
                   <border>5d</border>
-                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
+                  <flag>wxEXPAND|wxRIGHT</flag>
+                </object>
+                <object class="spacer"></object>
+                <object class="sizeritem">
+                  <object class="wxRadioButton" name="plural_forms_custom">
+                    <label>Use custom expression</label>
+                  </object>
+                  <border>5d</border>
+                  <flag>wxEXPAND|wxRIGHT</flag>
+                </object>
+                <object class="spacer"></object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="plural_forms_expr"/>
+                  <border>3d</border>
+                  <flag>wxEXPAND|wxRIGHT|wxTOP|wxBOTTOM</flag>
                 </object>
                 <object class="spacer"></object>
                 <object class="sizeritem">
