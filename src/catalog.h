@@ -592,6 +592,9 @@ class Catalog
         int Validate();
 
     protected:
+        /// Fix commonly encountered fixable problems with loaded files
+        void FixupCommonIssues();
+
         int DoValidate(const wxString& po_file);
         bool DoSaveOnly(const wxString& po_file);
         bool DoSaveOnly(wxTextFile& f, wxTextFileType crlf);

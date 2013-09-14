@@ -224,13 +224,6 @@ void Catalog::HeaderData::FromString(const wxString& str)
             en.Key = wxString(ln.substr(0, pos)).Strip(wxString::both);
             en.Value = wxString(ln.substr(pos + 1)).Strip(wxString::both);
 
-            // correct some common errors:
-            if ( en.Key == "Plural-Forms" )
-            {
-                if ( !en.Value.empty() && !en.Value.EndsWith(";") )
-                    en.Value += ";";
-            }
-
             m_entries.push_back(en);
             wxLogTrace("poedit.header",
                        "%s='%s'", en.Key.c_str(), en.Value.c_str());
@@ -1070,10 +1063,27 @@ bool Catalog::Load(const wxString& po_file, int flags)
 
     f.Close();
 
+    FixupCommonIssues();
+
     if ( flags & CreationFlag_IgnoreHeader )
         CreateNewHeader();
 
     return true;
+}
+
+void Catalog::FixupCommonIssues()
+{
+    wxString pluralForms = m_header.GetHeader("Plural-Forms");
+    if (!pluralForms.empty())
+    {
+        if ( !pluralForms.EndsWith(";") )
+        {
+            pluralForms += ";";
+            m_header.SetHeader("Plural-Forms", pluralForms);
+        }
+    }
+
+    // TODO: mark catalog as modified if any changes were made
 }
 
 void Catalog::AddItem(const CatalogItem& data)
