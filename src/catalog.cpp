@@ -1075,9 +1075,13 @@ bool Catalog::Load(const wxString& po_file, int flags)
 void Catalog::FixupCommonIssues()
 {
     wxString pluralForms = m_header.GetHeader("Plural-Forms");
+
+    if (pluralForms == "nplurals=INTEGER; plural=EXPRESSION;") // default invalid value
+        pluralForms = "";
+
     if (!pluralForms.empty())
     {
-        if ( !pluralForms.EndsWith(";") )
+        if (!pluralForms.EndsWith(";"))
         {
             pluralForms += ";";
             m_header.SetHeader("Plural-Forms", pluralForms);
