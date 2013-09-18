@@ -2284,7 +2284,7 @@ bool PoeditFrame::AutoTranslateCatalog()
     int matches = 0;
     wxString msg;
 
-    ProgressInfo pi(this, _("Automatically translating..."));
+    ProgressInfo pi(this, _("Translating using TM..."));
     pi.SetGaugeMax(cnt);
     for (int i = 0; i < cnt; i++)
     {
@@ -2299,7 +2299,7 @@ bool PoeditFrame::AutoTranslateCatalog()
                 dt.SetAutomatic(true);
                 dt.SetFuzzy(true);
                 matches++;
-                msg.Printf(_("Automatically translated %u strings"), matches);
+                msg.Printf(_("Translated %u strings"), matches);
                 pi.UpdateMessage(msg);
 
                 if (m_modified == false)
