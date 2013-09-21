@@ -58,6 +58,10 @@
 
 #endif // USE_SPELLCHECKING
 
+#ifdef __WXMAC__
+#import <AppKit/NSDocumentController.h>
+#endif
+
 #include <map>
 #include <algorithm>
 
@@ -498,6 +502,7 @@ PoeditFrame::PoeditFrame() :
     {
         wxLogError("Cannot load main menu from resource, something must have went terribly wrong.");
         wxLog::FlushActive();
+        return;
     }
 
     wxXmlResource::Get()->LoadToolBar(this, "toolbar");
@@ -1877,10 +1882,6 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     RefreshControls();
     UpdateTitle();
 
-    wxFileName fn(m_fileName);
-    fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
-    FileHistory().AddFileToHistory(fn.GetFullPath());
-
     InitSpellchecker();
 
 
@@ -1948,6 +1949,14 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
             m_attentionBar->ShowMessage(msg);
         }
     }
+
+
+    wxFileName fn(m_fileName);
+    fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+    FileHistory().AddFileToHistory(fn.GetFullPath());
+#ifdef __WXMAC__
+    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:[NSString stringWithUTF8String: fn.GetFullPath().utf8_str()]]];
+#endif
 }
 
 
