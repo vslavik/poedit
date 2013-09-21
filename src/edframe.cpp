@@ -2293,8 +2293,8 @@ bool PoeditFrame::AutoTranslateCatalog()
     int matches = 0;
     wxString msg;
 
-    ProgressInfo pi(this, _("Translating using TM..."));
-    pi.SetGaugeMax(cnt);
+    ProgressInfo progress(this, _("Translating using TM..."));
+    progress.SetGaugeMax(cnt);
     for (int i = 0; i < cnt; i++)
     {
         CatalogItem& dt = (*m_catalog)[i];
@@ -2309,7 +2309,7 @@ bool PoeditFrame::AutoTranslateCatalog()
                 dt.SetFuzzy(true);
                 matches++;
                 msg.Printf(_("Translated %u strings"), matches);
-                pi.UpdateMessage(msg);
+                progress.UpdateMessage(msg);
 
                 if (m_modified == false)
                 {
@@ -2318,7 +2318,7 @@ bool PoeditFrame::AutoTranslateCatalog()
                 }
             }
         }
-        pi.UpdateGauge();
+        progress.UpdateGauge();
     }
 
     RefreshControls();

@@ -140,7 +140,7 @@ void ManagerFrame::UpdateListPrj(int select)
         name = cfg->Read(key, wxEmptyString);
         if (!name.empty())
         {
-            m_listPrj->Append(name, (void*)i);
+            m_listPrj->Append(name, (void*)(wxIntPtr)i);
             if (i == select)
             {
                 m_listPrj->SetSelection(item);
@@ -370,7 +370,7 @@ void ManagerFrame::OnNewProject(wxCommandEvent&)
         key.Printf("Manager/project_%i/Name", i);
         if (cfg->Read(key, wxEmptyString).empty())
         {
-            m_listPrj->Append(_("<unnamed>"), (void*)i);
+            m_listPrj->Append(_("<unnamed>"), (void*)(wxIntPtr)i);
             m_curPrj = i;
             if (EditProject(i))
             {
