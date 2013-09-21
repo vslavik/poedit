@@ -1019,7 +1019,7 @@
 // the GTK+ stock icons replaces it so it is normally not necessary.
 //
 // Recommended setting: 1 but can be turned off to reduce the library size.
-#define wxUSE_ARTPROVIDER_TANGO 0
+#define wxUSE_ARTPROVIDER_TANGO 1
 
 // Hotkey support (currently Windows only)
 #define wxUSE_HOTKEY 1
