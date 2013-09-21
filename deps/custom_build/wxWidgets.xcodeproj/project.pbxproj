@@ -998,7 +998,7 @@
 		98F52D5224B438DFA8887E06 /* timectrlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 741578B590AF3F2CABE615EB /* timectrlg.cpp */; };
 		98F52D5224B438DFA8887E07 /* timectrlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 741578B590AF3F2CABE615EB /* timectrlg.cpp */; };
 		99E7A46106C03484BA70D29E /* tif_unix.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D2F8259CC99380CB8217DEF /* tif_unix.c */; };
-		99E7A46106C03484BA70D29F /* tif_unix.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D2F8259CC99380CB8217DEF /* tif_unix.c */; };
+		99E7A46106C03484BA70D29F /* tif_unix.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D2F8259CC99380CB8217DEF /* tif_unix.c */; settings = {COMPILER_FLAGS = "-Wno-int-to-pointer-cast"; }; };
 		99F7D7BFBB543A04AB728375 /* m_hline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECA4A44BEC2F3AED8CF0C911 /* m_hline.cpp */; };
 		99F7D7BFBB543A04AB728376 /* m_hline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECA4A44BEC2F3AED8CF0C911 /* m_hline.cpp */; };
 		9A178ED42D96329D8CBF9B89 /* tif_predict.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FA01C426EAF38D3B9ED35AC /* tif_predict.c */; };
@@ -1148,6 +1148,8 @@
 		B22D2AEA1789D4CB00729535 /* setup.h in Headers */ = {isa = PBXBuildFile; fileRef = B22D2AE91789D4CB00729535 /* setup.h */; };
 		B22D2AEC1789D64B00729535 /* wakeuppipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22D2AEB1789D64B00729535 /* wakeuppipe.cpp */; };
 		B22D2AED1789D64B00729535 /* wakeuppipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22D2AEB1789D64B00729535 /* wakeuppipe.cpp */; };
+		B2EEC1C317ED88E8001FB292 /* threadinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2EEC1C217ED88E8001FB292 /* threadinfo.cpp */; };
+		B2EEC1C417ED88E8001FB292 /* threadinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2EEC1C217ED88E8001FB292 /* threadinfo.cpp */; };
 		B30D10F6257631B0A1926F89 /* statbox.mm in Sources */ = {isa = PBXBuildFile; fileRef = 926BDF9C386C3A9A8C24D453 /* statbox.mm */; };
 		B30D10F6257631B0A1926F8A /* statbox.mm in Sources */ = {isa = PBXBuildFile; fileRef = 926BDF9C386C3A9A8C24D453 /* statbox.mm */; };
 		B37802B0A90133C68EF93DDA /* LexInno.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 15CBD0AAFEB435429EA96D41 /* LexInno.cxx */; };
@@ -2241,6 +2243,7 @@
 		B22D2AE91789D4CB00729535 /* setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = setup.h; path = config/wx/setup.h; sourceTree = "<group>"; };
 		B22D2AEB1789D64B00729535 /* wakeuppipe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wakeuppipe.cpp; path = ../wx/src/unix/wakeuppipe.cpp; sourceTree = "<group>"; };
 		B2D390E5D5BF32D4AAA1E15A /* jdmainct.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = jdmainct.c; path = ../wx/src/jpeg/jdmainct.c; sourceTree = "<group>"; };
+		B2EEC1C217ED88E8001FB292 /* threadinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threadinfo.cpp; path = ../wx/src/common/threadinfo.cpp; sourceTree = "<group>"; };
 		B303230368143F37B2409DE6 /* LexKix.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LexKix.cxx; path = ../wx/src/stc/scintilla/lexers/LexKix.cxx; sourceTree = "<group>"; };
 		B35DA585CFDD32468868E892 /* process.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = process.cpp; path = ../wx/src/common/process.cpp; sourceTree = "<group>"; };
 		B3645350F572364BABF50238 /* containr.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = containr.cpp; path = ../wx/src/common/containr.cpp; sourceTree = "<group>"; };
@@ -3509,6 +3512,7 @@
 				C0F7BBD216853E718C9F23D9 /* tarstrm.cpp */,
 				701B84EE7C043B539FF5195A /* textbuf.cpp */,
 				0903EE9B3793303285FF96E3 /* textfile.cpp */,
+				B2EEC1C217ED88E8001FB292 /* threadinfo.cpp */,
 				5B9586328A1F3C4BA0390AA5 /* time.cpp */,
 				7195E665E0F233839B967FC9 /* timercmn.cpp */,
 				0401B7302088357BB6B7F16F /* timerimpl.cpp */,
@@ -4708,6 +4712,7 @@
 				78E15D8200F635529F39609A /* LexBullant.cxx in Sources */,
 				268DDC88C99A3A64AB8B2FFB /* LexCaml.cxx in Sources */,
 				6F472413FFA03B53B395BB75 /* LexCLW.cxx in Sources */,
+				B2EEC1C417ED88E8001FB292 /* threadinfo.cpp in Sources */,
 				6F5A0D3C7763334396A3783E /* LexCmake.cxx in Sources */,
 				D8ADDD24BEAC3D94B3388D3F /* LexCOBOL.cxx in Sources */,
 				2020EE3C45743B53BE8C7F39 /* LexCoffeeScript.cxx in Sources */,
@@ -5540,6 +5545,7 @@
 				78E15D8200F635529F396099 /* LexBullant.cxx in Sources */,
 				268DDC88C99A3A64AB8B2FFA /* LexCaml.cxx in Sources */,
 				6F472413FFA03B53B395BB74 /* LexCLW.cxx in Sources */,
+				B2EEC1C317ED88E8001FB292 /* threadinfo.cpp in Sources */,
 				6F5A0D3C7763334396A3783D /* LexCmake.cxx in Sources */,
 				D8ADDD24BEAC3D94B3388D3E /* LexCOBOL.cxx in Sources */,
 				2020EE3C45743B53BE8C7F38 /* LexCoffeeScript.cxx in Sources */,
