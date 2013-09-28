@@ -749,9 +749,12 @@ void PoeditFrame::SetAccelerators()
         { wxACCEL_CTRL, WXK_PAGEDOWN,           XRCID("go_next_page") },
         { wxACCEL_CTRL, WXK_NUMPAD_PAGEDOWN,    XRCID("go_next_page") },
 
+        { wxACCEL_CTRL, WXK_UP,                 XRCID("go_prev") },
         { wxACCEL_CTRL, WXK_NUMPAD_UP,          XRCID("go_prev") },
+        { wxACCEL_CTRL, WXK_DOWN,               XRCID("go_next") },
         { wxACCEL_CTRL, WXK_NUMPAD_DOWN,        XRCID("go_next") },
 
+        { wxACCEL_CTRL, WXK_RETURN,             XRCID("go_done_and_next") },
         { wxACCEL_CTRL, WXK_NUMPAD_ENTER,       XRCID("go_done_and_next") }
     };
 
