@@ -738,26 +738,22 @@ PoeditFrame::~PoeditFrame()
 
 void PoeditFrame::SetAccelerators()
 {
+    wxAcceleratorEntry entries[] = {
 #ifdef __WXMSW__
-    wxAcceleratorEntry entries[9];
-#else
-    wxAcceleratorEntry entries[7];
+        { wxACCEL_CTRL, WXK_F3,                 XRCID("menu_find_next") },
+        { wxACCEL_CTRL | wxACCEL_SHIFT, WXK_F3, XRCID("menu_find_prev") },
 #endif
 
-    entries[0].Set(wxACCEL_CTRL, WXK_PAGEUP,          XRCID("go_prev_page"));
-    entries[1].Set(wxACCEL_CTRL, WXK_NUMPAD_PAGEUP,   XRCID("go_prev_page"));
-    entries[2].Set(wxACCEL_CTRL, WXK_PAGEDOWN,        XRCID("go_next_page"));
-    entries[3].Set(wxACCEL_CTRL, WXK_NUMPAD_PAGEDOWN, XRCID("go_next_page"));
+        { wxACCEL_CTRL, WXK_PAGEUP,             XRCID("go_prev_page") },
+        { wxACCEL_CTRL, WXK_NUMPAD_PAGEUP,      XRCID("go_prev_page") },
+        { wxACCEL_CTRL, WXK_PAGEDOWN,           XRCID("go_next_page") },
+        { wxACCEL_CTRL, WXK_NUMPAD_PAGEDOWN,    XRCID("go_next_page") },
 
-    entries[4].Set(wxACCEL_CTRL, WXK_NUMPAD_UP,       XRCID("go_prev"));
-    entries[5].Set(wxACCEL_CTRL, WXK_NUMPAD_DOWN,     XRCID("go_next"));
+        { wxACCEL_CTRL, WXK_NUMPAD_UP,          XRCID("go_prev") },
+        { wxACCEL_CTRL, WXK_NUMPAD_DOWN,        XRCID("go_next") },
 
-    entries[6].Set(wxACCEL_CTRL, WXK_NUMPAD_ENTER,    XRCID("go_done_and_next"));
-
-#ifdef __WXMSW__
-    entries[7].Set(wxACCEL_CTRL, WXK_F3,                 XRCID("menu_find_next"));
-    entries[8].Set(wxACCEL_CTRL | wxACCEL_SHIFT, WXK_F3, XRCID("menu_find_prev"));
-#endif
+        { wxACCEL_CTRL, WXK_NUMPAD_ENTER,       XRCID("go_done_and_next") }
+    };
 
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
     SetAcceleratorTable(accel);
