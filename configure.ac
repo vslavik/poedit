@@ -61,7 +61,7 @@ yes)	DEBUG_FLAGS="-g -Wall -O0"
     ;;    
 esac
 
-WX_CONFIG_CHECK([2.9.5],
+WX_CONFIG_CHECK([3.0.0],
                 [WXFOUND=1], [WXFOUND=0],
                 [xrc,stc,html,xml,adv,core], [--unicode])
 
