@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -155,40 +155,40 @@
     <ResourceCompile Include="src\poedit.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="deps\custom_build\wx_vc11_adv.vcxproj">
+    <ProjectReference Include="deps\custom_build\wx_adv.vcxproj">
       <Project>{24c45343-fd20-5c92-81c1-35a2ae841e79}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_vc11_base.vcxproj">
+    <ProjectReference Include="deps\custom_build\wx_base.vcxproj">
       <Project>{3fcc50c2-81e9-5db2-b8d8-2129427568b1}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_vc11_core.vcxproj">
+    <ProjectReference Include="deps\custom_build\wx_core.vcxproj">
       <Project>{6744dad8-9c70-574a-bff2-9f8dddb24a75}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_vc11_html.vcxproj">
+    <ProjectReference Include="deps\custom_build\wx_html.vcxproj">
       <Project>{33cc42f9-7756-5587-863c-8d4461b7c5dd}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_vc11_stc.vcxproj">
+    <ProjectReference Include="deps\custom_build\wx_stc.vcxproj">
       <Project>{23e1c437-a951-5943-8639-a17f3cf2e606}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_vc11_wxexpat.vcxproj">
+    <ProjectReference Include="deps\custom_build\wx_wxexpat.vcxproj">
       <Project>{a1a8355b-0988-528e-9cc2-b971d6266669}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_vc11_wxpng.vcxproj">
+    <ProjectReference Include="deps\custom_build\wx_wxpng.vcxproj">
       <Project>{8acc122a-ca6a-5aa6-9c97-9cdd2e533db0}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_vc11_wxregex.vcxproj">
+    <ProjectReference Include="deps\custom_build\wx_wxregex.vcxproj">
       <Project>{56a4b526-bb81-5d01-aaa9-16d23bbb169d}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_vc11_wxzlib.vcxproj">
+    <ProjectReference Include="deps\custom_build\wx_wxzlib.vcxproj">
       <Project>{8b867186-a0b5-5479-b824-e176edd27c40}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_vc11_xml.vcxproj">
+    <ProjectReference Include="deps\custom_build\wx_xml.vcxproj">
       <Project>{3e6dca27-5fa3-53ec-bbd6-2d42294b7ae6}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_vc11_xrc.vcxproj">
+    <ProjectReference Include="deps\custom_build\wx_xrc.vcxproj">
       <Project>{09f2f96a-1cc6-5e43-af1d-956ec2a4888d}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\winsparkle\WinSparkle-2012.vcxproj">
+    <ProjectReference Include="deps\winsparkle\WinSparkle-2013.vcxproj">
       <Project>{524cccf2-61ea-5b64-a1d9-ff5497027b5f}</Project>
     </ProjectReference>
   </ItemGroup>

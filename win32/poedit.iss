@@ -32,7 +32,7 @@
 #endif
 
 #ifndef CRT_REDIST
-#define CRT_REDIST       GetEnv("PROGRAMFILES") + "\Microsoft Visual Studio 11.0\VC\redist\x86\Microsoft.VC110.CRT"
+#define CRT_REDIST       GetEnv("PROGRAMFILES") + "\Microsoft Visual Studio 12.0\VC\redist\x86\Microsoft.VC120.CRT"
 #endif
 
 [Setup]

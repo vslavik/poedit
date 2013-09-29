@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -11,19 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>wxWidgets_html</ProjectName>
-    <ProjectGuid>{33CC42F9-7756-5587-863C-8D4461B7C5DD}</ProjectGuid>
+    <ProjectName>wxWidgets_webview</ProjectName>
+    <ProjectGuid>{A8E8442A-078A-5FC5-B495-8D71BA77EE6E}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -42,13 +42,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\wx\lib\vc_lib\</OutDir>
-    <IntDir>vc_mswud\html\</IntDir>
-    <TargetName>wxmsw29ud_html</TargetName>
+    <IntDir>vc_mswud\webview\</IntDir>
+    <TargetName>wxmsw29ud_webview</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\wx\lib\vc_lib\</OutDir>
-    <IntDir>vc_mswu\html\</IntDir>
-    <TargetName>wxmsw29u_html</TargetName>
+    <IntDir>vc_mswu\webview\</IntDir>
+    <TargetName>wxmsw29u_webview</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -67,9 +67,9 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>wx/wxprec.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>vc_mswud\wxprec_htmllib.pch</PrecompiledHeaderOutputFile>
-      <ObjectFileName>vc_mswud\html\</ObjectFileName>
-      <ProgramDataBaseFileName>..\wx\lib\vc_lib\wxmsw29ud_html.pdb</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>vc_mswud\wxprec_webviewlib.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>vc_mswud\webview\</ObjectFileName>
+      <ProgramDataBaseFileName>..\wx\lib\vc_lib\wxmsw29ud_webview.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -80,11 +80,11 @@
       <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Lib>
-      <OutputFile>..\wx\lib\vc_lib\wxmsw29ud_html.lib</OutputFile>
+      <OutputFile>..\wx\lib\vc_lib\wxmsw29ud_webview.lib</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Bscmake>
-      <OutputFile>..\wx\lib\vc_lib\wx_vc11_html.bsc</OutputFile>
+      <OutputFile>..\wx\lib\vc_lib\wx_webview.bsc</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
   </ItemDefinitionGroup>
@@ -103,9 +103,9 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>wx/wxprec.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>vc_mswu\wxprec_htmllib.pch</PrecompiledHeaderOutputFile>
-      <ObjectFileName>vc_mswu\html\</ObjectFileName>
-      <ProgramDataBaseFileName>..\wx\lib\vc_lib\wxmsw29u_html.pdb</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>vc_mswu\wxprec_webviewlib.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>vc_mswu\webview\</ObjectFileName>
+      <ProgramDataBaseFileName>..\wx\lib\vc_lib\wxmsw29u_webview.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -116,11 +116,11 @@
       <AdditionalIncludeDirectories>config;..\wx\include;..\wx\src\tiff\libtiff;..\wx\src\jpeg;..\wx\src\png;..\wx\src\zlib;..\wx\src\regex;..\wx\src\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Lib>
-      <OutputFile>..\wx\lib\vc_lib\wxmsw29u_html.lib</OutputFile>
+      <OutputFile>..\wx\lib\vc_lib\wxmsw29u_webview.lib</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Bscmake>
-      <OutputFile>..\wx\lib\vc_lib\wx_vc11_html.bsc</OutputFile>
+      <OutputFile>..\wx\lib\vc_lib\wx_webview.bsc</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
   </ItemDefinitionGroup>
@@ -129,32 +129,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\wx\src\msw\helpbest.cpp" />
-    <ClCompile Include="..\wx\src\generic\htmllbox.cpp" />
-    <ClCompile Include="..\wx\src\html\helpctrl.cpp" />
-    <ClCompile Include="..\wx\src\html\helpdata.cpp" />
-    <ClCompile Include="..\wx\src\html\helpdlg.cpp" />
-    <ClCompile Include="..\wx\src\html\helpfrm.cpp" />
-    <ClCompile Include="..\wx\src\html\helpwnd.cpp" />
-    <ClCompile Include="..\wx\src\html\htmlcell.cpp" />
-    <ClCompile Include="..\wx\src\html\htmlfilt.cpp" />
-    <ClCompile Include="..\wx\src\html\htmlpars.cpp" />
-    <ClCompile Include="..\wx\src\html\htmltag.cpp" />
-    <ClCompile Include="..\wx\src\html\htmlwin.cpp" />
-    <ClCompile Include="..\wx\src\html\htmprint.cpp" />
-    <ClCompile Include="..\wx\src\html\m_dflist.cpp" />
-    <ClCompile Include="..\wx\src\html\m_fonts.cpp" />
-    <ClCompile Include="..\wx\src\html\m_hline.cpp" />
-    <ClCompile Include="..\wx\src\html\m_image.cpp" />
-    <ClCompile Include="..\wx\src\html\m_layout.cpp" />
-    <ClCompile Include="..\wx\src\html\m_links.cpp" />
-    <ClCompile Include="..\wx\src\html\m_list.cpp" />
-    <ClCompile Include="..\wx\src\html\m_pre.cpp" />
-    <ClCompile Include="..\wx\src\html\m_span.cpp" />
-    <ClCompile Include="..\wx\src\html\m_style.cpp" />
-    <ClCompile Include="..\wx\src\html\m_tables.cpp" />
-    <ClCompile Include="..\wx\src\html\styleparams.cpp" />
-    <ClCompile Include="..\wx\src\html\winpars.cpp" />
+    <ClCompile Include="..\wx\src\common\webview.cpp" />
+    <ClCompile Include="..\wx\src\common\webviewarchivehandler.cpp" />
+    <ClCompile Include="..\wx\src\common\webviewfshandler.cpp" />
+    <ClCompile Include="..\wx\src\msw\webview_ie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\wx\src\msw\version.rc">
@@ -173,25 +151,12 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\wx\lib\vc_lib\mswu\wx\msw\rcdefs.h;%(Outputs)</Outputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\wx\lib\vc_lib\mswu\wx\msw;%(AdditionalInputs)</AdditionalInputs>
     </CustomBuild>
-    <ClInclude Include="..\wx\include\wx\msw\helpbest.h" />
-    <ClInclude Include="..\wx\include\wx\html\helpctrl.h" />
-    <ClInclude Include="..\wx\include\wx\html\helpdata.h" />
-    <ClInclude Include="..\wx\include\wx\html\helpdlg.h" />
-    <ClInclude Include="..\wx\include\wx\html\helpfrm.h" />
-    <ClInclude Include="..\wx\include\wx\html\helpwnd.h" />
-    <ClInclude Include="..\wx\include\wx\html\htmlcell.h" />
-    <ClInclude Include="..\wx\include\wx\html\htmldefs.h" />
-    <ClInclude Include="..\wx\include\wx\html\htmlfilt.h" />
-    <ClInclude Include="..\wx\include\wx\html\htmlpars.h" />
-    <ClInclude Include="..\wx\include\wx\html\htmlproc.h" />
-    <ClInclude Include="..\wx\include\wx\html\htmltag.h" />
-    <ClInclude Include="..\wx\include\wx\html\htmlwin.h" />
-    <ClInclude Include="..\wx\include\wx\html\htmprint.h" />
-    <ClInclude Include="..\wx\include\wx\html\m_templ.h" />
-    <ClInclude Include="..\wx\include\wx\html\styleparams.h" />
-    <ClInclude Include="..\wx\include\wx\html\winpars.h" />
-    <ClInclude Include="..\wx\include\wx\htmllbox.h" />
-    <ClInclude Include="..\wx\include\wx\wxhtml.h" />
+    <ClInclude Include="..\wx\include\wx\msw\webview_ie.h" />
+    <ClInclude Include="..\wx\include\wx\msw\webview_missing.h" />
+    <ClInclude Include="..\wx\include\wx\msw\webviewhistoryitem_ie.h" />
+    <ClInclude Include="..\wx\include\wx\webview.h" />
+    <ClInclude Include="..\wx\include\wx\webviewarchivehandler.h" />
+    <ClInclude Include="..\wx\include\wx\webviewfshandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

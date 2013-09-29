@@ -55,25 +55,10 @@ LDFLAGS appropriately.
 Use the Poedit.xcworkspace workspace and Xcode 5 to build Poedit.
 
 
- Windows using Visual Studio 2008 Express
-------------------------------------------
+ Windows using Visual Studio 2013
+----------------------------------
 
-Visual Studio makefile and project files are in win32/ directory; the project
-is the primary supported way, but the makefile allows you to customize location
-of 3rdparty software by setting variables documented near the top of the
-makefile.
-
-The simplest way of handling 3rd party dependencies is to get them from
-http://github.com/vslavik/poedit-deps. Put that sources into the "deps"
-directory. This is linked as submodule from the main Poedit repository;
-see "Installing from Git repository" below.
-
-Now go into the deps directory and run "ant" from command line. See deps/README
-for information on what you need to do that.
-
-You can also use Ant to build Poedit itself; run "ant -p" to see available
-targets. This is the most convenient way of building full Poedit distribution;
-it's how Poedit binaries are built.
+Use the Poedit.sln solution.
 
 
  Installing from Git repository
