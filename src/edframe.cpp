@@ -42,6 +42,7 @@
 #include <wx/iconbndl.h>
 #include <wx/clipbrd.h>
 #include <wx/dnd.h>
+#include <wx/windowptr.h>
 
 #ifdef USE_SPARKLE
 #include "osx_helpers.h"
@@ -1168,7 +1169,6 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
 
     bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
 
-    PropertiesDialog dlg(this);
     Catalog *catalog = new Catalog;
 
     if (isFromPOT)
@@ -1200,44 +1200,50 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
         catalog->CreateNewHeader();
     }
 
-    dlg.TransferTo(catalog);
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        wxString file = GetSaveAsFilename(catalog, wxEmptyString);
-        if (file.empty())
+    wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this));
+
+    dlg->TransferTo(catalog);
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode == wxID_OK)
+        {
+            wxString file = GetSaveAsFilename(catalog, wxEmptyString);
+            if (file.empty())
+            {
+                delete catalog;
+                return;
+            }
+
+            dlg->TransferFrom(catalog);
+            delete m_catalog;
+            m_catalog = catalog;
+            m_list->CatalogChanged(m_catalog);
+            m_modified = true;
+            DoSaveAs(file);
+            if (!isFromPOT)
+            {
+                wxCommandEvent dummyEvent;
+                OnUpdate(dummyEvent);
+            }
+        }
+        else
         {
             delete catalog;
-            return;
         }
 
-        dlg.TransferFrom(catalog);
-        delete m_catalog;
-        m_catalog = catalog;
-        m_list->CatalogChanged(m_catalog);
-        m_modified = true;
-        DoSaveAs(file);
-        if (!isFromPOT)
-        {
-            OnUpdate(event);
-        }
-    }
-    else
-    {
-        delete catalog;
-    }
-    UpdateTitle();
-    UpdateStatusBar();
+        UpdateTitle();
+        UpdateStatusBar();
 
 #ifdef USE_TRANSMEM
-    if (m_transMem)
-    {
-        m_transMem->Release();
-        m_transMem = NULL;
-    }
-    m_transMemLoaded = false;
+        if (m_transMem)
+        {
+            m_transMem->Release();
+            m_transMem = NULL;
+        }
+        m_transMemLoaded = false;
 #endif
 
-    InitSpellchecker();
+        InitSpellchecker();
+    });
 }
 
 
@@ -1249,18 +1255,20 @@ void PoeditFrame::OnProperties(wxCommandEvent&)
 
 void PoeditFrame::EditCatalogProperties()
 {
-    PropertiesDialog dlg(this);
+    wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this));
 
-    dlg.TransferTo(m_catalog);
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        dlg.TransferFrom(m_catalog);
-        m_modified = true;
-        RecreatePluralTextCtrls();
-        UpdateTitle();
-        UpdateMenu();
-        InitSpellchecker();
-    }
+    dlg->TransferTo(m_catalog);
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode == wxID_OK)
+        {
+            dlg->TransferFrom(m_catalog);
+            m_modified = true;
+            RecreatePluralTextCtrls();
+            UpdateTitle();
+            UpdateMenu();
+            InitSpellchecker();
+        }
+    });
 }
 
 
