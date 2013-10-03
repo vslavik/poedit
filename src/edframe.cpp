@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 1999-2013 Vaclav Slavik
@@ -2653,31 +2653,56 @@ void PoeditFrame::RecreatePluralTextCtrls()
     PluralFormsCalculator *calc = PluralFormsCalculator::make(
                 m_catalog->Header().GetHeader("Plural-Forms").ToAscii());
 
-    int cnt = m_catalog->GetPluralFormsCount();
-    for (int i = 0; i < cnt; i++)
+    int formsCount = m_catalog->GetPluralFormsCount();
+    for (int form = 0; form < formsCount; form++)
     {
         // find example number that would use this plural form:
-        unsigned example = 0;
-        if (calc)
+        static const int maxExamplesCnt = 5;
+        wxString examples;
+        int firstExample = -1;
+        int examplesCnt = 0;
+
+        if (calc && formsCount > 1)
         {
-            for (example = 1; example < 1000; example++)
+            for (int example = 0; example < 1000; example++)
             {
-                if (calc->evaluate(example) == i)
-                    break;
+                if (calc->evaluate(example) == form)
+                {
+                    if (++examplesCnt == 1)
+                        firstExample = example;
+                    if (examplesCnt == maxExamplesCnt)
+                    {
+                        examples += L'…';
+                        break;
+                    }
+                    else if (examplesCnt == 1)
+                        examples += wxString::Format("%d", example);
+                    else
+                        examples += wxString::Format(", %d", example);
+                }
             }
-            // we prefer non-zero values, but if this form is for zero only,
-            // use zero:
-            if (example == 1000 && calc->evaluate(0) == i)
-                example = 0;
         }
-        else
-            example = 1000;
 
         wxString desc;
-        if (example == 1000)
-            desc.Printf(_("Form %i"), i);
+        if (formsCount == 1)
+            desc = _("Everything");
+        else if (examplesCnt == 0)
+            desc.Printf(_("Form %i"), form);
+        else if (examplesCnt == 1)
+        {
+            if (firstExample == 0)
+                desc = _("Zero");
+            else if (firstExample == 1)
+                desc = _("One");
+            else if (firstExample == 2)
+                desc = _("Two");
+            else
+                desc.Printf(L"n = %s", examples);
+        }
+        else if (formsCount == 2 && firstExample != 1 && examplesCnt == maxExamplesCnt)
+            desc = _("Other");
         else
-            desc.Printf(_("Form %i (e.g. \"%u\")"), i, example);
+            desc.Printf(L"n → %s", examples);
 
         // create text control and notebook page for it:
         wxTextCtrl *txt = new wxTextCtrl(m_pluralNotebook, -1,
@@ -2688,7 +2713,7 @@ void PoeditFrame::RecreatePluralTextCtrls()
         m_textTransPlural.push_back(txt);
         m_pluralNotebook->AddPage(txt, desc);
 
-        if (example == 1)
+        if (examplesCnt == 1 && firstExample == 1) // == singular
             m_textTransSingularForm = txt;
     }
 
