@@ -60,6 +60,10 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
     m_paths = new wxEditableListBox(this, -1, _("Paths"));
     wxXmlResource::Get()->AttachUnknownControl("paths", m_paths);
 
+    // Controls setup:
+    m_language->SetHint(_("Language Code (e.g. en_GB)"));
+    m_pluralForms->SetHint(_("e.g. nplurals=2; plural=(n > 1);"));
+
 #if defined(__WXMSW__) || defined(__WXMAC__)
     // FIXME
     SetSize(GetSize().x+1,GetSize().y+1);
