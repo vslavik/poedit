@@ -74,6 +74,7 @@
 #include "findframe.h"
 #include "transmem.h"
 #include "isocodes.h"
+#include "lang_info.h"
 #include "progressinfo.h"
 #include "commentdlg.h"
 #include "manager.h"
@@ -1916,6 +1917,7 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
         }
 
         // FIXME: make this part of global error checking
+        wxString language = m_catalog->GetLocaleCode();
         wxString plForms = m_catalog->Header().GetHeader("Plural-Forms");
         PluralFormsCalculator *plCalc =
                 PluralFormsCalculator::make(plForms.ToAscii());
@@ -1946,6 +1948,41 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
                           boost::bind(&PoeditFrame::EditCatalogProperties, this));
 
             m_attentionBar->ShowMessage(msg);
+        }
+        else // no error, check for warning-worthy stuff
+        {
+            if ( !language.empty() )
+            {
+                // Check for unusual plural forms. Do some normalization to avoid unnecessary
+                // complains when the only differences are in whitespace for example.
+                wxString pl1 = plForms;
+                wxString pl2 = GetPluralFormForLanguage(language);
+                pl1.Replace(" ", "");
+                pl2.Replace(" ", "");
+                if ( pl1 != pl2 )
+                {
+                    if (pl1.Find(";plural=(") == wxNOT_FOUND && pl1.Last() == ';')
+                    {
+                        pl1.Replace(";plural=", ";plural=(");
+                        pl1.RemoveLast();
+                        pl1 += ");";
+                    }
+                }
+
+                if ( pl1 != pl2 )
+                {
+                    AttentionMessage msg
+                        (
+                            "unusual-plural-forms",
+                            AttentionMessage::Warning,
+                            _("Plural forms expression used by the catalog is unusual for this language.")
+                        );
+                    msg.AddAction(_("Review"),
+                                  boost::bind(&PoeditFrame::EditCatalogProperties, this));
+
+                    m_attentionBar->ShowMessage(msg);
+                }
+            }
         }
     }
 
