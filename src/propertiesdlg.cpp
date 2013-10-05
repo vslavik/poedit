@@ -72,6 +72,8 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
 #endif
 
     m_language->Bind(wxEVT_TEXT, &PropertiesDialog::OnLanguageChanged, this);
+    m_pluralFormsDefault->Bind(wxEVT_RADIOBUTTON, &PropertiesDialog::OnPluralFormsDefault, this);
+    m_pluralFormsCustom->Bind(wxEVT_RADIOBUTTON, &PropertiesDialog::OnPluralFormsCustom, this);
     m_pluralFormsExpr->Bind(
         wxEVT_UPDATE_UI,
         [=](wxUpdateUIEvent& e){ e.Enable(m_pluralFormsCustom->GetValue()); });
@@ -235,4 +237,19 @@ void PropertiesDialog::OnLanguageChanged(wxCommandEvent& event)
         }
     }
     event.Skip();
+}
+
+void PropertiesDialog::OnPluralFormsDefault(wxCommandEvent&)
+{
+    m_rememberedPluralForm = m_pluralFormsExpr->GetValue();
+
+    wxString defaultForm = GetPluralFormForLanguage(m_language->GetValue());
+    if (!defaultForm.empty())
+        m_pluralFormsExpr->SetValue(defaultForm);
+}
+
+void PropertiesDialog::OnPluralFormsCustom(wxCommandEvent&)
+{
+    if (!m_rememberedPluralForm.empty())
+        m_pluralFormsExpr->SetValue(m_rememberedPluralForm);
 }

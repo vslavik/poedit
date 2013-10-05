@@ -50,6 +50,8 @@ class PropertiesDialog : public wxDialog
             
     private:
         void OnLanguageChanged(wxCommandEvent& event);
+        void OnPluralFormsDefault(wxCommandEvent& event);
+        void OnPluralFormsCustom(wxCommandEvent& event);
 
         wxTextCtrl *m_team, *m_teamEmail, *m_project;
         wxTextCtrl *m_language;
@@ -58,6 +60,7 @@ class PropertiesDialog : public wxDialog
         wxTextCtrl *m_pluralFormsExpr;
         wxTextCtrl *m_basePath;
         wxEditableListBox *m_paths, *m_keywords;
+        wxString m_rememberedPluralForm;
 };
 
 
