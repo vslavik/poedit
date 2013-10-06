@@ -47,6 +47,8 @@ class PropertiesDialog : public wxDialog
 
         /// Saves data from the dialog to the catalog.
         void TransferFrom(Catalog *cat);
+
+        virtual bool Validate();
             
     private:
         void OnLanguageChanged(wxCommandEvent& event);

@@ -34,9 +34,12 @@
 #include <wx/config.h>
 #include <wx/tokenzr.h>
 
+#include <memory>
+
 #include "propertiesdlg.h"
 #include "isocodes.h"
 #include "lang_info.h"
+#include "pluralforms/pl_evaluate.h"
 
 
 PropertiesDialog::PropertiesDialog(wxWindow *parent)
@@ -252,4 +255,27 @@ void PropertiesDialog::OnPluralFormsCustom(wxCommandEvent&)
 {
     if (!m_rememberedPluralForm.empty())
         m_pluralFormsExpr->SetValue(m_rememberedPluralForm);
+}
+
+
+bool PropertiesDialog::Validate()
+{
+    bool status = true;
+
+    if (m_pluralFormsCustom->GetValue())
+    {
+        wxString form = m_pluralFormsExpr->GetValue();
+        if (!form.empty())
+        {
+            std::unique_ptr<PluralFormsCalculator> calc(PluralFormsCalculator::make(form.ToAscii()));
+            if (!calc)
+            {
+                m_pluralFormsExpr->SetBackgroundColour(wxColour(242,119,136));
+                Refresh();
+                status = false;
+            }
+        }
+    }
+
+    return status;
 }
