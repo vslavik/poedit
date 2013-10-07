@@ -87,7 +87,6 @@ bool PoeditApp::CheckForBetaUpdates() const
 
 
 static wxArrayString gs_filesToOpen;
-static bool gs_supressMacNewFile = false;
 
 extern void InitXmlResource();
 
@@ -186,9 +185,6 @@ bool PoeditApp::OnInit()
         for (size_t i = 0; i < gs_filesToOpen.GetCount(); i++)
             OpenFile(gs_filesToOpen[i]);
         gs_filesToOpen.clear();
-        // MacNewFile() will be called now and we don't want it to open a new
-        // window, because we just opened a bunch of files:
-        gs_supressMacNewFile = true;
     }
 #ifndef __WXMAC__
     else
@@ -247,17 +243,6 @@ void PoeditApp::SetupLanguage()
     trans->AddStdCatalog();
 }
 
-#ifdef __WXMAC__
-void PoeditApp::MacNewFile()
-{
-    if (gs_supressMacNewFile)
-    {
-        gs_supressMacNewFile = false;
-        return;
-    }
-    OpenNewFile();
-}
-#endif
 
 void PoeditApp::OpenNewFile()
 {

@@ -59,7 +59,7 @@ class PoeditApp : public wxApp
 
 #ifdef __WXMAC__
         virtual void MacOpenFile(const wxString& name) { OpenFile(name); }
-        virtual void MacNewFile();
+        virtual void MacNewFile() { OpenNewFile(); }
 #endif
 
         void EditPreferences();
