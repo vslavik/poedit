@@ -33,6 +33,7 @@
 #include <wx/xrc/xh_all.h>
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
+#include <wx/filedlg.h>
 #include <wx/sysopt.h>
 #include <wx/stdpaths.h>
 #include <wx/aboutdlg.h>
@@ -177,13 +178,12 @@ bool PoeditApp::OnInit()
 #endif
 
     // NB: opening files or creating empty window is handled differently on
-    //     Macs, using MacOpenFile() and MacNewFile(), so don't create empty
+    //     Macs, using MacOpenFiles() and MacNewFile(), so don't create empty
     //     window if no files are given on command line; but still support
     //     passing files on command line
     if (!gs_filesToOpen.empty())
     {
-        for (size_t i = 0; i < gs_filesToOpen.GetCount(); i++)
-            OpenFile(gs_filesToOpen[i]);
+        OpenFiles(gs_filesToOpen);
         gs_filesToOpen.clear();
     }
 #ifndef __WXMAC__
@@ -260,9 +260,12 @@ void PoeditApp::OpenNewFile()
     AskForDonations(win);
 }
 
-void PoeditApp::OpenFile(const wxString& name)
+void PoeditApp::OpenFiles(const wxArrayString& names)
 {
-    wxWindow *win = PoeditFrame::Create(name);
+    wxWindow *win = nullptr;
+    for ( auto name: names )
+        win = PoeditFrame::Create(name);
+
     AskForDonations(win);
 }
 
@@ -488,18 +491,27 @@ void PoeditApp::OnNew(wxCommandEvent& event)
 
 void PoeditApp::OnOpen(wxCommandEvent& event)
 {
-    TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpen(event) );
-
     wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-    wxString name = wxFileSelector(_("Open catalog"),
-                    path, wxEmptyString, wxEmptyString,
-                    _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
-                    wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
-    if (!name.empty())
+    wxFileDialog dlg(nullptr,
+                     _("Open catalog"),
+                     path,
+                     wxEmptyString,
+                     _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+                     wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
+
+    if (dlg.ShowModal() == wxID_OK)
     {
-        wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
-        OpenFile(name);
+        wxConfig::Get()->Write("last_file_path", dlg.GetDirectory());
+        wxArrayString paths;
+        dlg.GetPaths(paths);
+
+        if (paths.size() == 1)
+        {
+            TRY_FORWARD_TO_ACTIVE_WINDOW( OpenFile(paths[0]) );
+        }
+
+        OpenFiles(paths);
     }
 }
 
@@ -515,7 +527,7 @@ void PoeditApp::OnOpenHist(wxCommandEvent& event)
         return;
     }
 
-    OpenFile(f);
+    OpenFiles(wxArrayString(1, &f));
 }
 
 #endif // !__WXMSW__

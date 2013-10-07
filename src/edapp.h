@@ -50,15 +50,15 @@ class PoeditApp : public wxApp
         bool IsBetaVersion() const;
         bool CheckForBetaUpdates() const;
 
-        // opens a file in new frame
-        void OpenFile(const wxString& name);
+        // opens files in new frame
+        void OpenFiles(const wxArrayString& filenames);
         // opens empty frame or catalogs manager
         void OpenNewFile();
 
         wxFileHistory& FileHistory() { return m_history; }
 
 #ifdef __WXMAC__
-        virtual void MacOpenFile(const wxString& name) { OpenFile(name); }
+        virtual void MacOpenFiles(const wxArrayString& names) { OpenFiles(names); }
         virtual void MacNewFile() { OpenNewFile(); }
 #endif
 
