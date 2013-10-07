@@ -46,6 +46,7 @@
 #include "isocodes.h"
 #include "utility.h"
 #include "version.h"
+#include "lang_info.h"
 
 
 // ----------------------------------------------------------------------
@@ -223,13 +224,6 @@ void Catalog::HeaderData::FromString(const wxString& str)
             Entry en;
             en.Key = wxString(ln.substr(0, pos)).Strip(wxString::both);
             en.Value = wxString(ln.substr(pos + 1)).Strip(wxString::both);
-
-            // correct some common errors:
-            if ( en.Key == "Plural-Forms" )
-            {
-                if ( !en.Value.empty() && !en.Value.EndsWith(";") )
-                    en.Value += ";";
-            }
 
             m_entries.push_back(en);
             wxLogTrace("poedit.header",
@@ -1070,10 +1064,41 @@ bool Catalog::Load(const wxString& po_file, int flags)
 
     f.Close();
 
+    FixupCommonIssues();
+
     if ( flags & CreationFlag_IgnoreHeader )
         CreateNewHeader();
 
     return true;
+}
+
+void Catalog::FixupCommonIssues()
+{
+    wxString pluralForms = m_header.GetHeader("Plural-Forms");
+
+    if (pluralForms == "nplurals=INTEGER; plural=EXPRESSION;") // default invalid value
+        pluralForms = "";
+
+    if (!pluralForms.empty())
+    {
+        if (!pluralForms.EndsWith(";"))
+        {
+            pluralForms += ";";
+            m_header.SetHeader("Plural-Forms", pluralForms);
+        }
+    }
+    else
+    {
+        // Auto-fill default plural form if it is missing:
+        if (!m_header.LanguageCode.empty() && HasPluralItems())
+        {
+            pluralForms = GetPluralFormForLanguage(m_header.LanguageCode);
+            if (!pluralForms.empty())
+                m_header.SetHeader("Plural-Forms", pluralForms);
+        }
+    }
+
+    // TODO: mark catalog as modified if any changes were made
 }
 
 void Catalog::AddItem(const CatalogItem& data)

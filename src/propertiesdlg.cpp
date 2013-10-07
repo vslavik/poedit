@@ -26,6 +26,7 @@
 #include <wx/sizer.h>
 #include <wx/statline.h>
 #include <wx/combobox.h>
+#include <wx/radiobut.h>
 #include <wx/textctrl.h>
 #include <wx/editlbox.h>
 #include <wx/xrc/xmlres.h>
@@ -33,8 +34,12 @@
 #include <wx/config.h>
 #include <wx/tokenzr.h>
 
-#include "isocodes.h"
+#include <memory>
+
 #include "propertiesdlg.h"
+#include "isocodes.h"
+#include "lang_info.h"
+#include "pluralforms/pl_evaluate.h"
 
 
 PropertiesDialog::PropertiesDialog(wxWindow *parent)
@@ -52,7 +57,11 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
     m_charset = XRCCTRL(*this, "charset", wxComboBox);
     m_basePath = XRCCTRL(*this, "basepath", wxTextCtrl);
     m_sourceCodeCharset = XRCCTRL(*this, "source_code_charset", wxComboBox);
-    m_pluralForms = XRCCTRL(*this, "plural_forms", wxTextCtrl);
+
+    m_pluralFormsDefault = XRCCTRL(*this, "plural_forms_default", wxRadioButton);
+    m_pluralFormsCustom = XRCCTRL(*this, "plural_forms_custom", wxRadioButton);
+    m_pluralFormsExpr = XRCCTRL(*this, "plural_forms_expr", wxTextCtrl);
+    m_pluralFormsExpr->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 
     // my custom controls:
     m_keywords = new wxEditableListBox(this, -1, _("Keywords"));
@@ -62,12 +71,19 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
 
     // Controls setup:
     m_language->SetHint(_("Language Code (e.g. en_GB)"));
-    m_pluralForms->SetHint(_("e.g. nplurals=2; plural=(n > 1);"));
+    m_pluralFormsExpr->SetHint(_("e.g. nplurals=2; plural=(n > 1);"));
 
 #if defined(__WXMSW__) || defined(__WXMAC__)
     // FIXME
     SetSize(GetSize().x+1,GetSize().y+1);
 #endif
+
+    m_language->Bind(wxEVT_TEXT, &PropertiesDialog::OnLanguageChanged, this);
+    m_pluralFormsDefault->Bind(wxEVT_RADIOBUTTON, &PropertiesDialog::OnPluralFormsDefault, this);
+    m_pluralFormsCustom->Bind(wxEVT_RADIOBUTTON, &PropertiesDialog::OnPluralFormsCustom, this);
+    m_pluralFormsExpr->Bind(
+        wxEVT_UPDATE_UI,
+        [=](wxUpdateUIEvent& e){ e.Enable(m_pluralFormsCustom->GetValue()); });
 }
 
 
@@ -143,8 +159,16 @@ void PropertiesDialog::TransferTo(Catalog *cat)
     SET_VAL(LanguageCode, language);
     #undef SET_VAL
 
-    if (cat->Header().HasHeader("Plural-Forms"))
-        m_pluralForms->SetValue(cat->Header().GetHeader("Plural-Forms"));
+    wxString pf_def = GetPluralFormForLanguage(cat->Header().LanguageCode);
+    wxString pf_cat = cat->Header().GetHeader("Plural-Forms");
+    if (pf_cat == "nplurals=INTEGER; plural=EXPRESSION;")
+        pf_cat = pf_def;
+
+    m_pluralFormsExpr->SetValue(pf_cat);
+    if (!pf_cat.empty() && pf_cat == pf_def)
+        m_pluralFormsDefault->SetValue(true);
+    else
+        m_pluralFormsCustom->SetValue(true);
 
     m_paths->SetStrings(cat->Header().SearchPaths);
     m_keywords->SetStrings(cat->Header().Keywords);
@@ -185,8 +209,77 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
     m_keywords->GetStrings(arr);
     cat->Header().Keywords = arr;
 
-    wxString pluralForms = m_pluralForms->GetValue().Strip(wxString::both);
-    if ( !pluralForms.empty() && !pluralForms.EndsWith(";") )
-        pluralForms += ";";
+    wxString pluralForms;
+    if (m_pluralFormsDefault->GetValue() && !cat->Header().LanguageCode.empty())
+    {
+        pluralForms = GetPluralFormForLanguage(cat->Header().LanguageCode);
+    }
+
+    if (pluralForms.empty())
+    {
+        pluralForms = m_pluralFormsExpr->GetValue().Strip(wxString::both);
+        if ( !pluralForms.empty() && !pluralForms.EndsWith(";") )
+            pluralForms += ";";
+    }
     cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
+}
+
+
+void PropertiesDialog::OnLanguageChanged(wxCommandEvent& event)
+{
+    wxString lang = event.GetString();
+    wxString pluralForm = GetPluralFormForLanguage(lang);
+    if (pluralForm.empty())
+    {
+        m_pluralFormsDefault->Disable();
+        m_pluralFormsCustom->SetValue(true);
+    }
+    else
+    {
+        m_pluralFormsDefault->Enable();
+        if (m_pluralFormsExpr->GetValue().empty() ||
+            m_pluralFormsExpr->GetValue() == pluralForm)
+        {
+            m_pluralFormsDefault->SetValue(true);
+        }
+    }
+    event.Skip();
+}
+
+void PropertiesDialog::OnPluralFormsDefault(wxCommandEvent&)
+{
+    m_rememberedPluralForm = m_pluralFormsExpr->GetValue();
+
+    wxString defaultForm = GetPluralFormForLanguage(m_language->GetValue());
+    if (!defaultForm.empty())
+        m_pluralFormsExpr->SetValue(defaultForm);
+}
+
+void PropertiesDialog::OnPluralFormsCustom(wxCommandEvent&)
+{
+    if (!m_rememberedPluralForm.empty())
+        m_pluralFormsExpr->SetValue(m_rememberedPluralForm);
+}
+
+
+bool PropertiesDialog::Validate()
+{
+    bool status = true;
+
+    if (m_pluralFormsCustom->GetValue())
+    {
+        wxString form = m_pluralFormsExpr->GetValue();
+        if (!form.empty())
+        {
+            std::unique_ptr<PluralFormsCalculator> calc(PluralFormsCalculator::make(form.ToAscii()));
+            if (!calc)
+            {
+                m_pluralFormsExpr->SetBackgroundColour(wxColour(242,119,136));
+                Refresh();
+                status = false;
+            }
+        }
+    }
+
+    return status;
 }
