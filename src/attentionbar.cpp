@@ -59,7 +59,11 @@ AttentionBar::AttentionBar(wxWindow *parent)
     : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
               wxTAB_TRAVERSAL | wxBORDER_NONE)
 {
+#ifdef __WXMSW__
+    wxColour bg("#FFF499"); // match Visual Studio 2012+'s aesthetics
+#else
     wxColour bg = wxSystemSettings::GetColour(wxSYS_COLOUR_INFOBK);
+#endif
     SetBackgroundColour(bg);
     SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOTEXT));
 
