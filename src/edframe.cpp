@@ -1965,30 +1965,33 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
                 // complains when the only differences are in whitespace for example.
                 wxString pl1 = plForms;
                 wxString pl2 = GetPluralFormForLanguage(language);
-                pl1.Replace(" ", "");
-                pl2.Replace(" ", "");
-                if ( pl1 != pl2 )
+                if (!pl2.empty())
                 {
-                    if (pl1.Find(";plural=(") == wxNOT_FOUND && pl1.Last() == ';')
+                    pl1.Replace(" ", "");
+                    pl2.Replace(" ", "");
+                    if ( pl1 != pl2 )
                     {
-                        pl1.Replace(";plural=", ";plural=(");
-                        pl1.RemoveLast();
-                        pl1 += ");";
+                        if (pl1.Find(";plural=(") == wxNOT_FOUND && pl1.Last() == ';')
+                        {
+                            pl1.Replace(";plural=", ";plural=(");
+                            pl1.RemoveLast();
+                            pl1 += ");";
+                        }
                     }
-                }
 
-                if ( pl1 != pl2 )
-                {
-                    AttentionMessage msg
-                        (
-                            "unusual-plural-forms",
-                            AttentionMessage::Warning,
-                            _("Plural forms expression used by the catalog is unusual for this language.")
-                        );
-                    msg.AddAction(_("Review"),
-                                  boost::bind(&PoeditFrame::EditCatalogProperties, this));
+                    if ( pl1 != pl2 )
+                    {
+                        AttentionMessage msg
+                            (
+                                "unusual-plural-forms",
+                                AttentionMessage::Warning,
+                                _("Plural forms expression used by the catalog is unusual for this language.")
+                            );
+                        msg.AddAction(_("Review"),
+                                      boost::bind(&PoeditFrame::EditCatalogProperties, this));
 
-                    m_attentionBar->ShowMessage(msg);
+                        m_attentionBar->ShowMessage(msg);
+                    }
                 }
             }
         }
