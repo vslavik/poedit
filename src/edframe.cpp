@@ -1906,7 +1906,10 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
 
     Catalog *cat = new Catalog(catalog);
     if (!cat->IsOk())
+    {
+        delete cat;
         return;
+    }
 
     delete m_catalog;
     m_catalog = cat;
