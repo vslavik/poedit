@@ -294,22 +294,23 @@ bool ManagerFrame::EditProject(int id)
 
     ProjectDlg dlg;
     wxXmlResource::Get()->LoadDialog(&dlg, this, "manager_prj_dlg");
-    wxXmlResource::Get()->AttachUnknownControl("prj_dirs",
-                new wxEditableListBox(this, -1, _("Directories:")));
+    wxEditableListBox *prj_dirs = new wxEditableListBox(&dlg, XRCID("prj_dirs"), _("Directories:"));
+    wxXmlResource::Get()->AttachUnknownControl("prj_dirs", prj_dirs);
 
     XRCCTRL(dlg, "prj_name", wxTextCtrl)->SetValue(cfg->Read(key + "Name"));
 
     wxString dirs = cfg->Read(key + "Dirs");
     wxArrayString adirs;
     wxStringTokenizer tkn(dirs, wxPATH_SEP);
-    while (tkn.HasMoreTokens()) adirs.Add(tkn.GetNextToken());
-    XRCCTRL(*this, "prj_dirs", wxEditableListBox)->SetStrings(adirs);
+    while (tkn.HasMoreTokens())
+        adirs.Add(tkn.GetNextToken());
+    prj_dirs->SetStrings(adirs);
 
     if (dlg.ShowModal() == wxID_OK)
     {
         cfg->Write(key + "Name",
                    XRCCTRL(dlg, "prj_name", wxTextCtrl)->GetValue());
-        XRCCTRL(*this, "prj_dirs", wxEditableListBox)->GetStrings(adirs);
+        prj_dirs->GetStrings(adirs);
         if (adirs.GetCount() > 0)
             dirs = adirs[0];
         for (size_t i = 1; i < adirs.GetCount(); i++)
