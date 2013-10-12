@@ -34,6 +34,7 @@
 
 #include <wx/frame.h>
 #include <wx/process.h>
+#include <wx/windowptr.h>
 
 class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
 class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
@@ -92,7 +93,11 @@ class PoeditFrame : public wxFrame
         /// Reads catalog, refreshes controls.
         void ReadCatalog(const wxString& catalog);
         /// Writes catalog.
-        bool WriteCatalog(const wxString& catalog);
+        void WriteCatalog(const wxString& catalog);
+
+        template<typename TFunctor>
+        void WriteCatalog(const wxString& catalog, TFunctor completionHandler);
+
         /// Did the user modify the catalog?
         bool IsModified() const { return m_modified; }
         /** Updates catalog and sets m_modified flag. Updates from POT
@@ -126,7 +131,11 @@ class PoeditFrame : public wxFrame
 
         // if there's modified catalog, ask user to save it; return true
         // if it's save to discard m_catalog and load new data
-        bool CanDiscardCurrentDoc();
+        template<typename TFunctor>
+        void DoIfCanDiscardCurrentDoc(TFunctor completionHandler);
+        bool NeedsToAskIfCanDiscardCurrentDoc() const;
+        wxWindowPtr<wxMessageDialog> CreateAskAboutSavingDialog();
+
         // implements opening of files, without asking user
         void DoOpenFile(const wxString& filename);
 
@@ -234,7 +243,8 @@ private:
 
         void RefreshSelectedItem();
 
-        void ReportValidationErrors(int errors, bool from_save);
+        template<typename TFunctor>
+        void ReportValidationErrors(int errors, bool from_save, TFunctor completionHandler);
 
         wxFileHistory& FileHistory() { return wxGetApp().FileHistory(); }
 

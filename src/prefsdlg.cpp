@@ -33,6 +33,7 @@
 #include <wx/notebook.h>
 #include <wx/fontutil.h>
 #include <wx/fontpicker.h>
+#include <wx/windowptr.h>
 #include <wx/xrc/xmlres.h>
 
 #include "prefsdlg.h"
@@ -296,34 +297,34 @@ void PreferencesDialog::OnUpdateUIFontText(wxUpdateUIEvent& event)
 }
 
 
-bool PreferencesDialog::EditParser(int num)
+template<typename TFunctor>
+void PreferencesDialog::EditParser(int num, TFunctor completionHandler)
 {
-    wxDialog dlg;
+    wxWindowPtr<wxDialog> dlg(wxXmlResource::Get()->LoadDialog(this, "edit_parser"));
+    dlg->Centre();
     
-    wxXmlResource::Get()->LoadDialog(&dlg, this, "edit_parser");
-    dlg.Centre();
-    
-    Parser& nfo = m_parsers[num];
-    XRCCTRL(dlg, "parser_language", wxTextCtrl)->SetValue(nfo.Name);
-    XRCCTRL(dlg, "parser_extensions", wxTextCtrl)->SetValue(nfo.Extensions);
-    XRCCTRL(dlg, "parser_command", wxTextCtrl)->SetValue(nfo.Command);
-    XRCCTRL(dlg, "parser_keywords", wxTextCtrl)->SetValue(nfo.KeywordItem);
-    XRCCTRL(dlg, "parser_files", wxTextCtrl)->SetValue(nfo.FileItem);
-    XRCCTRL(dlg, "parser_charset", wxTextCtrl)->SetValue(nfo.CharsetItem);
-    
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        nfo.Name = XRCCTRL(dlg, "parser_language", wxTextCtrl)->GetValue();
-        nfo.Extensions = XRCCTRL(dlg, "parser_extensions", wxTextCtrl)->GetValue();
-        nfo.Command = XRCCTRL(dlg, "parser_command", wxTextCtrl)->GetValue();
-        nfo.KeywordItem = XRCCTRL(dlg, "parser_keywords", wxTextCtrl)->GetValue();
-        nfo.FileItem = XRCCTRL(dlg, "parser_files", wxTextCtrl)->GetValue();
-        nfo.CharsetItem = XRCCTRL(dlg, "parser_charset", wxTextCtrl)->GetValue();
-        XRCCTRL(*this, "parsers_list", wxListBox)->SetString(num, nfo.Name);
-        return true;
-    }
-    else
-        return false;
+    const Parser& nfo = m_parsers[num];
+    XRCCTRL(*dlg, "parser_language", wxTextCtrl)->SetValue(nfo.Name);
+    XRCCTRL(*dlg, "parser_extensions", wxTextCtrl)->SetValue(nfo.Extensions);
+    XRCCTRL(*dlg, "parser_command", wxTextCtrl)->SetValue(nfo.Command);
+    XRCCTRL(*dlg, "parser_keywords", wxTextCtrl)->SetValue(nfo.KeywordItem);
+    XRCCTRL(*dlg, "parser_files", wxTextCtrl)->SetValue(nfo.FileItem);
+    XRCCTRL(*dlg, "parser_charset", wxTextCtrl)->SetValue(nfo.CharsetItem);
+
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode == wxID_OK)
+        {
+            Parser& nfo2 = m_parsers[num];
+            nfo2.Name = XRCCTRL(*dlg, "parser_language", wxTextCtrl)->GetValue();
+            nfo2.Extensions = XRCCTRL(*dlg, "parser_extensions", wxTextCtrl)->GetValue();
+            nfo2.Command = XRCCTRL(*dlg, "parser_command", wxTextCtrl)->GetValue();
+            nfo2.KeywordItem = XRCCTRL(*dlg, "parser_keywords", wxTextCtrl)->GetValue();
+            nfo2.FileItem = XRCCTRL(*dlg, "parser_files", wxTextCtrl)->GetValue();
+            nfo2.CharsetItem = XRCCTRL(*dlg, "parser_charset", wxTextCtrl)->GetValue();
+            XRCCTRL(*this, "parsers_list", wxListBox)->SetString(num, nfo2.Name);
+        }
+        completionHandler(retcode == wxID_OK);
+    });
 }
 
 void PreferencesDialog::OnNewParser(wxCommandEvent&)
@@ -332,21 +333,23 @@ void PreferencesDialog::OnNewParser(wxCommandEvent&)
     m_parsers.Add(info);
     XRCCTRL(*this, "parsers_list", wxListBox)->Append(wxEmptyString);
     int index = (int)m_parsers.GetCount()-1;
-    if (!EditParser(index))
-    {
-        XRCCTRL(*this, "parsers_list", wxListBox)->Delete(index);
-        m_parsers.RemoveAt(index);
-    }
-    else
-    {
-        XRCCTRL(*this, "parser_edit", wxButton)->Enable(true);
-        XRCCTRL(*this, "parser_delete", wxButton)->Enable(true);
-    }
+    EditParser(index, [=](bool added){
+        if (added)
+        {
+            XRCCTRL(*this, "parser_edit", wxButton)->Enable(true);
+            XRCCTRL(*this, "parser_delete", wxButton)->Enable(true);
+        }
+        else
+        {
+            XRCCTRL(*this, "parsers_list", wxListBox)->Delete(index);
+            m_parsers.RemoveAt(index);
+        }
+    });
 }
 
 void PreferencesDialog::OnEditParser(wxCommandEvent&)
 {
-    EditParser(XRCCTRL(*this, "parsers_list", wxListBox)->GetSelection());
+    EditParser(XRCCTRL(*this, "parsers_list", wxListBox)->GetSelection(), [](bool){});
 }
 
 void PreferencesDialog::OnDeleteParser(wxCommandEvent&)

@@ -970,9 +970,9 @@ void PoeditFrame::OnCloseCmd(wxCommandEvent&)
 
 void PoeditFrame::OpenFile(const wxString& filename)
 {
-    if ( !CanDiscardCurrentDoc() )
-        return;
-    DoOpenFile(filename);
+    DoIfCanDiscardCurrentDoc([=]{
+        DoOpenFile(filename);
+    });
 }
 
 
@@ -987,76 +987,110 @@ void PoeditFrame::DoOpenFile(const wxString& filename)
 }
 
 
-bool PoeditFrame::CanDiscardCurrentDoc()
+bool PoeditFrame::NeedsToAskIfCanDiscardCurrentDoc() const
 {
-    if ( m_catalog && m_modified )
-    {
-        wxMessageDialog dlg
-                        (
-                            this,
-                            _("Catalog modified. Do you want to save changes?"),
-                            _("Save changes"),
-                            wxYES_NO | wxCANCEL | wxICON_QUESTION
-                        );
-        dlg.SetExtendedMessage(_("Your changes will be lost if you don't save them."));
-        dlg.SetYesNoLabels
-            (
-                _("Save"),
-            #ifdef __WXMSW__
-                _("Don't save")
-            #else
-                _("Don't Save")
-            #endif
-            );
+    return m_catalog && m_modified;
+}
 
-        int r = dlg.ShowModal();
-        if ( r == wxID_YES )
-        {
-            if ( !WriteCatalog(m_fileName) )
-                return false;
-        }
-        else if ( r == wxID_CANCEL )
-        {
-            return false;
-        }
+template<typename TFunctor>
+void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
+{
+    if ( !NeedsToAskIfCanDiscardCurrentDoc() )
+    {
+        completionHandler();
+        return;
     }
 
-    return true;
+    wxWindowPtr<wxMessageDialog> dlg = CreateAskAboutSavingDialog();
+
+    dlg->ShowWindowModalThenDo([this,dlg,completionHandler](int retval) {
+        // hide the dialog asap, WriteCatalog() may show another modal sheet
+        dlg->Hide();
+
+        if (retval == wxID_YES)
+        {
+            WriteCatalog(m_fileName, [=](bool saved){
+                if (saved)
+                    completionHandler();
+            });
+        }
+        else if (retval == wxID_NO)
+        {
+            // call completion without saving the document
+            completionHandler();
+        }
+        else if (retval == wxID_CANCEL)
+        {
+            // do not call -- not OK
+        }
+    });
 }
+
+wxWindowPtr<wxMessageDialog> PoeditFrame::CreateAskAboutSavingDialog()
+{
+    wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
+                    (
+                        this,
+                        _("Catalog modified. Do you want to save changes?"),
+                        _("Save changes"),
+                        wxYES_NO | wxCANCEL | wxICON_QUESTION
+                    ));
+    dlg->SetExtendedMessage(_("Your changes will be lost if you don't save them."));
+    dlg->SetYesNoLabels
+         (
+            _("Save"),
+        #ifdef __WXMSW__
+            _("Don't save")
+        #else
+            _("Don't Save")
+        #endif
+         );
+    return dlg;
+}
+
 
 
 void PoeditFrame::OnCloseWindow(wxCloseEvent& event)
 {
-    if ( event.CanVeto() && !CanDiscardCurrentDoc() )
+    if (event.CanVeto() && NeedsToAskIfCanDiscardCurrentDoc())
     {
+#ifdef __WXMAC__
+        // Veto the event by default, the window-modally ask for permission.
+        // If it turns out that the window can be closed, the completion handler
+        // will do it:
         event.Veto();
-        return;
+#endif
+        DoIfCanDiscardCurrentDoc([=]{
+            Destroy();
+        });
     }
-
-    Destroy();
+    else // can't veto
+    {
+        Destroy();
+    }
 }
 
 
 void PoeditFrame::OnOpen(wxCommandEvent&)
 {
-    if ( !CanDiscardCurrentDoc() )
-        return;
+    DoIfCanDiscardCurrentDoc([=]{
 
-    wxString path = wxPathOnly(m_fileName);
-    if (path.empty())
-        path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
+        wxString path = wxPathOnly(m_fileName);
+        if (path.empty())
+            path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
 
-    wxString name = wxFileSelector(_("Open catalog"),
-                    path, wxEmptyString, wxEmptyString,
-                    _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
-                    wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
+        wxString name = wxFileSelector(_("Open catalog"),
+                        path, wxEmptyString, wxEmptyString,
+                        _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+                        wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
 
-    if (!name.empty())
-    {
-        wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
+        if (!name.empty())
+        {
+            wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
 
-        DoOpenFile(name);
-    }
+            DoOpenFile(name);
+        }
+    });
 }
 
 
@@ -1165,85 +1199,85 @@ bool PoeditFrame::ExportCatalog(const wxString& filename)
 
 void PoeditFrame::OnNew(wxCommandEvent& event)
 {
-    if ( !CanDiscardCurrentDoc() )
-        return;
+    DoIfCanDiscardCurrentDoc([=]{
 
-    bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
+        bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
 
-    Catalog *catalog = new Catalog;
+        Catalog *catalog = new Catalog;
 
-    if (isFromPOT)
-    {
-        wxString path = wxPathOnly(m_fileName);
-        if (path.empty())
-            path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-        wxString pot_file =
-            wxFileSelector(_("Open catalog template"),
-                 path, wxEmptyString, wxEmptyString,
-                 _("GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
-                 wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
-        bool ok = false;
-        if (!pot_file.empty())
+        if (isFromPOT)
         {
-            wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
-            ok = catalog->UpdateFromPOT(pot_file,
-                                        /*summary=*/false,
-                                        /*replace_header=*/true);
-        }
-        if (!ok)
-        {
-            delete catalog;
-            return;
-        }
-    }
-    else
-    {
-        catalog->CreateNewHeader();
-    }
-
-    wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this));
-
-    dlg->TransferTo(catalog);
-    dlg->ShowWindowModalThenDo([=](int retcode){
-        if (retcode == wxID_OK)
-        {
-            wxString file = GetSaveAsFilename(catalog, wxEmptyString);
-            if (file.empty())
+            wxString path = wxPathOnly(m_fileName);
+            if (path.empty())
+                path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
+            wxString pot_file =
+                wxFileSelector(_("Open catalog template"),
+                     path, wxEmptyString, wxEmptyString,
+                     _("GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
+                     wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
+            bool ok = false;
+            if (!pot_file.empty())
+            {
+                wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
+                ok = catalog->UpdateFromPOT(pot_file,
+                                            /*summary=*/false,
+                                            /*replace_header=*/true);
+            }
+            if (!ok)
             {
                 delete catalog;
                 return;
             }
-
-            dlg->TransferFrom(catalog);
-            delete m_catalog;
-            m_catalog = catalog;
-            m_list->CatalogChanged(m_catalog);
-            m_modified = true;
-            DoSaveAs(file);
-            if (!isFromPOT)
-            {
-                wxCommandEvent dummyEvent;
-                OnUpdate(dummyEvent);
-            }
         }
         else
         {
-            delete catalog;
+            catalog->CreateNewHeader();
         }
 
-        UpdateTitle();
-        UpdateStatusBar();
+        wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this));
+
+        dlg->TransferTo(catalog);
+        dlg->ShowWindowModalThenDo([=](int retcode){
+            if (retcode == wxID_OK)
+            {
+                wxString file = GetSaveAsFilename(catalog, wxEmptyString);
+                if (file.empty())
+                {
+                    delete catalog;
+                    return;
+                }
+
+                dlg->TransferFrom(catalog);
+                delete m_catalog;
+                m_catalog = catalog;
+                m_list->CatalogChanged(m_catalog);
+                m_modified = true;
+                DoSaveAs(file);
+                if (!isFromPOT)
+                {
+                    wxCommandEvent dummyEvent;
+                    OnUpdate(dummyEvent);
+                }
+            }
+            else
+            {
+                delete catalog;
+            }
+
+            UpdateTitle();
+            UpdateStatusBar();
 
 #ifdef USE_TRANSMEM
-        if (m_transMem)
-        {
-            m_transMem->Release();
-            m_transMem = NULL;
-        }
-        m_transMemLoaded = false;
+            if (m_transMem)
+            {
+                m_transMem->Release();
+                m_transMem = NULL;
+            }
+            m_transMemLoaded = false;
 #endif
 
-        InitSpellchecker();
+            InitSpellchecker();
+        });
     });
 }
 
@@ -1356,18 +1390,21 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
 void PoeditFrame::OnValidate(wxCommandEvent&)
 {
     wxBusyCursor bcur;
-    ReportValidationErrors(m_catalog->Validate(), false);
+    ReportValidationErrors(m_catalog->Validate(), false, []{});
 }
 
 
-void PoeditFrame::ReportValidationErrors(int errors, bool from_save)
+template<typename TFunctor>
+void PoeditFrame::ReportValidationErrors(int errors, bool from_save, TFunctor completionHandler)
 {
+    wxWindowPtr<wxMessageDialog> dlg;
+
     if ( errors )
     {
         m_list->RefreshItem(0);
         RefreshControls();
 
-        wxMessageDialog dlg
+        dlg.reset(new wxMessageDialog
         (
             this,
             wxString::Format
@@ -1379,28 +1416,32 @@ void PoeditFrame::ReportValidationErrors(int errors, bool from_save)
             ),
             _("Validation results"),
             wxOK | wxICON_ERROR
-        );
+        ));
         wxString details = _("Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry.");
         if ( from_save )
         {
             details += "\n\n";
             details += _("The file was saved safely, but it cannot be compiled into the MO format and used.");
         }
-        dlg.SetExtendedMessage(details);
-        dlg.ShowModal();
+        dlg->SetExtendedMessage(details);
     }
     else
     {
-        wxMessageDialog dlg
+        wxASSERT( !from_save );
+
+        dlg.reset(new wxMessageDialog
         (
             this,
             _("No problems with the translation found."),
             _("Validation results"),
             wxOK | wxICON_INFORMATION
-        );
-        dlg.SetExtendedMessage(_("The translation is ready for use."));
-        dlg.ShowModal();
+        ));
+        dlg->SetExtendedMessage(_("The translation is ready for use."));
     }
+
+    dlg->ShowWindowModalThenDo([dlg,completionHandler](int){
+        completionHandler();
+    });
 }
 
 
@@ -2196,8 +2237,13 @@ void PoeditFrame::UpdateMenu()
 }
 
 
+void PoeditFrame::WriteCatalog(const wxString& catalog)
+{
+    WriteCatalog(catalog, [](bool){});
+}
 
-bool PoeditFrame::WriteCatalog(const wxString& catalog)
+template<typename TFunctor>
+void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandler)
 {
     wxBusyCursor bcur;
 
@@ -2207,7 +2253,10 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
 
     int validation_errors = 0;
     if ( !m_catalog->Save(catalog, true, validation_errors) )
-        return false;
+    {
+        completionHandler(false);
+        return;
+    }
 
     m_fileName = catalog;
     m_modified = false;
@@ -2254,9 +2303,20 @@ bool PoeditFrame::WriteCatalog(const wxString& catalog)
         ManagerFrame::Get()->NotifyFileChanged(m_fileName);
 
     if ( validation_errors )
-        ReportValidationErrors(validation_errors, true);
-
-    return true;
+    {
+        // Note: this may show window-modal window and because we may
+        //       be called from such window too, run this in the next
+        //       event loop iteration.
+        CallAfter([=]{
+            ReportValidationErrors(validation_errors, true, [=]{
+                completionHandler(true);
+            });
+        });
+    }
+    else
+    {
+        completionHandler(true);
+    }
 }
 
 
@@ -2265,20 +2325,22 @@ void PoeditFrame::OnEditComment(wxCommandEvent&)
     CatalogItem *entry = GetCurrentItem();
     wxCHECK_RET( entry, "no entry selected" );
 
-    wxString comment = entry->GetComment();
-    CommentDialog dlg(this, comment);
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        m_modified = true;
-        UpdateTitle();
-        comment = dlg.GetComment();
-        entry->SetComment(comment);
+    wxWindowPtr<CommentDialog> dlg(new CommentDialog(this, entry->GetComment()));
 
-        RefreshSelectedItem();
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode == wxID_OK)
+        {
+            m_modified = true;
+            UpdateTitle();
+            wxString comment = dlg->GetComment();
+            entry->SetComment(comment);
 
-        // update comment window
-        m_textComment->SetValue(CommentDialog::RemoveStartHash(comment));
-    }
+            RefreshSelectedItem();
+
+            // update comment window
+            m_textComment->SetValue(CommentDialog::RemoveStartHash(comment));
+        }
+    });
 }
 
 void PoeditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
@@ -2290,15 +2352,16 @@ void PoeditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
     const wxString details =
         _("If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future.");
 
-    wxMessageDialog dlg(this, main, title, wxYES_NO | wxICON_QUESTION);
-    dlg.SetExtendedMessage(details);
-    dlg.SetYesNoLabels(_("Purge"), _("Keep"));
+    wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(this, main, title, wxYES_NO | wxICON_QUESTION));
+    dlg->SetExtendedMessage(details);
+    dlg->SetYesNoLabels(_("Purge"), _("Keep"));
 
-    if (dlg.ShowModal() == wxID_YES)
-    {
-        m_catalog->RemoveDeletedItems();
-        UpdateMenu();
-    }
+    dlg->ShowWindowModalThenDo([this,dlg](int retcode){
+        if (retcode == wxID_YES) {
+            m_catalog->RemoveDeletedItems();
+            UpdateMenu();
+        }
+    });
 }
 
 

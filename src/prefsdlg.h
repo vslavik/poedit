@@ -69,7 +69,8 @@ class PreferencesDialog : public wxDialog
         void OnUpdateUIFontText(wxUpdateUIEvent& event);
 
         /// Called to launch dialog for editting parser properties.
-        bool EditParser(int num);
+        template<typename TFunctor>
+        void EditParser(int num, TFunctor completionHandler);
 };
 
 

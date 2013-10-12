@@ -42,6 +42,7 @@
 #include <wx/log.h>
 #include <wx/artprov.h>
 #include <wx/iconbndl.h>
+#include <wx/windowptr.h>
 
 #include "catalog.h"
 #include "edapp.h"
@@ -286,43 +287,49 @@ void ProjectDlg::OnBrowse(wxCommandEvent&)
     }
 }
 
-bool ManagerFrame::EditProject(int id)
+template<typename TFunctor>
+void ManagerFrame::EditProject(int id, TFunctor completionHandler)
 {
     wxConfigBase *cfg = wxConfig::Get();
     wxString key;
     key.Printf("Manager/project_%i/", id);
 
-    ProjectDlg dlg;
-    wxXmlResource::Get()->LoadDialog(&dlg, this, "manager_prj_dlg");
-    wxEditableListBox *prj_dirs = new wxEditableListBox(&dlg, XRCID("prj_dirs"), _("Directories:"));
+    wxWindowPtr<ProjectDlg> dlg(new ProjectDlg);
+    wxXmlResource::Get()->LoadDialog(dlg.get(), this, "manager_prj_dlg");
+    wxEditableListBox *prj_dirs = new wxEditableListBox(dlg.get(), XRCID("prj_dirs"), _("Directories:"));
     wxXmlResource::Get()->AttachUnknownControl("prj_dirs", prj_dirs);
 
-    XRCCTRL(dlg, "prj_name", wxTextCtrl)->SetValue(cfg->Read(key + "Name"));
+    XRCCTRL(*dlg, "prj_name", wxTextCtrl)->SetValue(cfg->Read(key + "Name"));
 
-    wxString dirs = cfg->Read(key + "Dirs");
-    wxArrayString adirs;
-    wxStringTokenizer tkn(dirs, wxPATH_SEP);
-    while (tkn.HasMoreTokens())
-        adirs.Add(tkn.GetNextToken());
-    prj_dirs->SetStrings(adirs);
-
-    if (dlg.ShowModal() == wxID_OK)
     {
-        cfg->Write(key + "Name",
-                   XRCCTRL(dlg, "prj_name", wxTextCtrl)->GetValue());
-        prj_dirs->GetStrings(adirs);
-        if (adirs.GetCount() > 0)
-            dirs = adirs[0];
-        for (size_t i = 1; i < adirs.GetCount(); i++)
-            dirs << wxPATH_SEP << adirs[i];
-        cfg->Write(key + "Dirs", dirs);
-
-        UpdateListPrj(id);
-        UpdateListCat(id);
-        return true;
+        wxString dirs = cfg->Read(key + "Dirs");
+        wxArrayString adirs;
+        wxStringTokenizer tkn(dirs, wxPATH_SEP);
+        while (tkn.HasMoreTokens())
+            adirs.Add(tkn.GetNextToken());
+        prj_dirs->SetStrings(adirs);
     }
-    else
-        return false;
+
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode == wxID_OK)
+        {
+            wxString dirs;
+            wxArrayString adirs;
+
+            cfg->Write(key + "Name",
+                       XRCCTRL(*dlg, "prj_name", wxTextCtrl)->GetValue());
+            prj_dirs->GetStrings(adirs);
+            if (adirs.GetCount() > 0)
+                dirs = adirs[0];
+            for (size_t i = 1; i < adirs.GetCount(); i++)
+                dirs << wxPATH_SEP << adirs[i];
+            cfg->Write(key + "Dirs", dirs);
+
+            UpdateListPrj(id);
+            UpdateListCat(id);
+        }
+        completionHandler(retcode == wxID_OK);
+    });
 }
 
 void ManagerFrame::DeleteProject(int id)
@@ -373,16 +380,18 @@ void ManagerFrame::OnNewProject(wxCommandEvent&)
         {
             m_listPrj->Append(_("<unnamed>"), (void*)(wxIntPtr)i);
             m_curPrj = i;
-            if (EditProject(i))
-            {
-                if (i == max)
-                    cfg->Write("Manager/max_project_num", (long)max);
-            }
-            else
-            {
-                DeleteProject(i);
-            }
-            break;
+            EditProject(i, [=](bool added){
+                if (added)
+                {
+                    if (i == max)
+                        cfg->Write("Manager/max_project_num", (long)max);
+                }
+                else
+                {
+                    DeleteProject(i);
+                }
+            });
+            return;
         }
     }
 }
@@ -392,7 +401,7 @@ void ManagerFrame::OnEditProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
-    EditProject((int)(wxIntPtr)m_listPrj->GetClientData(sel));
+    EditProject((int)(wxIntPtr)m_listPrj->GetClientData(sel), [](bool){});
 }
 
 

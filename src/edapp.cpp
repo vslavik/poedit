@@ -489,7 +489,7 @@ void PoeditApp::OnNew(wxCommandEvent& event)
 }
 
 
-void PoeditApp::OnOpen(wxCommandEvent& event)
+void PoeditApp::OnOpen(wxCommandEvent&)
 {
     wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
 

@@ -60,7 +60,8 @@ class ManagerFrame : public wxFrame
         /** Pops up project settings dialog for project #id.
             \return false if user pressed Cancel, true otherwise
          */
-        bool EditProject(int id);
+        template<typename TFunctor>
+        void EditProject(int id, TFunctor completionHandler);
         /// Deletes project
         void DeleteProject(int id);
         /** Updates projects list
