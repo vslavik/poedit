@@ -462,7 +462,9 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
 
 void ManagerFrame::OnOpenCatalog(wxListEvent& event)
 {
-    PoeditFrame::Create(m_catalogs[event.GetIndex()])->Raise();
+    PoeditFrame *f = PoeditFrame::Create(m_catalogs[event.GetIndex()]);
+    if (f)
+        f->Raise();
 }
 
 
