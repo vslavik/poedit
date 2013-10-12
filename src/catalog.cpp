@@ -1059,6 +1059,9 @@ bool Catalog::Load(const wxString& po_file, int flags)
         }
     }
 
+    // If we didn't find any entries, the file must be invalid:
+    if (m_items.size() == 0)
+        return false;
 
     m_isOk = true;
 
