@@ -90,8 +90,10 @@ class PoeditFrame : public wxFrame
 
         ~PoeditFrame();
 
-        /// Reads catalog, refreshes controls.
+        /// Reads catalog, refreshes controls, takes ownership of catalog.
         void ReadCatalog(const wxString& catalog);
+        /// Reads catalog, refreshes controls, takes ownership of catalog.
+        void ReadCatalog(Catalog *cat, const wxString& filename);
         /// Writes catalog.
         void WriteCatalog(const wxString& catalog);
 

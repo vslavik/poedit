@@ -156,9 +156,28 @@ bool g_focusToText = false;
         f = PoeditFrame::Find(filename);
         if (!f)
         {
+            // NB: duplicated in ReadCatalog()
+            Catalog *cat = new Catalog(filename);
+            if (!cat->IsOk())
+            {
+                wxMessageDialog dlg
+                (
+                    nullptr,
+                    _("The file cannot be opened."),
+                    _("Invalid file"),
+                    wxOK | wxICON_ERROR
+                );
+                dlg.SetExtendedMessage(
+                    _("The file may be either corrupted or in a format not recognized by Poedit.")
+                );
+                dlg.ShowModal();
+                delete cat;
+                return nullptr;
+            }
+
             f = new PoeditFrame();
             f->Show(true);
-            f->ReadCatalog(filename);
+            f->ReadCatalog(cat, filename);
         }
     }
     f->Show(true);
@@ -1904,12 +1923,33 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
 {
     wxBusyCursor bcur;
 
+    // NB: duplicated in PoeditFrame::Create()
     Catalog *cat = new Catalog(catalog);
-    if (!cat->IsOk())
+    if (cat->IsOk())
     {
-        delete cat;
-        return;
+        ReadCatalog(cat, catalog);
     }
+    else
+    {
+        wxMessageDialog dlg
+        (
+            this,
+            _("The file cannot be opened."),
+            _("Invalid file"),
+            wxOK | wxICON_ERROR
+        );
+        dlg.SetExtendedMessage(
+            _("The file may be either corrupted or in a format not recognized by Poedit.")
+        );
+        dlg.ShowModal();
+        delete cat;
+    }
+}
+
+
+void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
+{
+    wxASSERT( cat && cat->IsOk() );
 
     delete m_catalog;
     m_catalog = cat;
@@ -1927,7 +1967,7 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     m_transMemLoaded = false;
 #endif
 
-    m_fileName = catalog;
+    m_fileName = filename;
     m_modified = false;
 
     RecreatePluralTextCtrls();
