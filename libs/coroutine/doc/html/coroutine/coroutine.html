@@ -1,0 +1,757 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Coroutine</title>
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Coroutine">
+<link rel="up" href="../index.html" title="Coroutine">
+<link rel="prev" href="intro.html" title="Introduction">
+<link rel="next" href="coroutine/coroutine.html" title="Class coroutine">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="intro.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="coroutine/coroutine.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="coroutine.coroutine"></a><a class="link" href="coroutine.html" title="Coroutine">Coroutine</a>
+</h2></div></div></div>
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="coroutine/coroutine.html">Class <code class="computeroutput"><span class="identifier">coroutine</span></code></a></span></dt></dl></div>
+<p>
+      Each instance of <span class="emphasis"><em>coroutine</em></span> has its own context of execution
+      (CPU registers and stack space) or represents <span class="emphasis"><em>not-a-coroutine</em></span>
+      (similar to <span class="emphasis"><em>boost::thread</em></span>). Objects of type <span class="emphasis"><em>coroutine</em></span>
+      are moveable but not copyable and can be returned by a function.
+    </p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">void</span><span class="special">()</span> <span class="special">&gt;</span> <span class="identifier">f</span><span class="special">();</span>
+
+<span class="keyword">void</span> <span class="identifier">g</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">void</span><span class="special">()</span> <span class="special">&gt;</span> <span class="identifier">c</span><span class="special">(</span> <span class="identifier">f</span><span class="special">()</span> <span class="special">);</span>
+    <span class="identifier">c</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        <span class="bold"><strong>Boost.Move</strong></span> is used to emulate rvalue references.
+      </p></td></tr>
+</table></div>
+<h4>
+<a name="coroutine.coroutine.h0"></a>
+      <span class="phrase"><a name="coroutine.coroutine.creating_a_coroutine"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.creating_a_coroutine">Creating
+      a coroutine</a>
+    </h4>
+<p>
+      A new <span class="emphasis"><em>coroutine</em></span> is created from a <span class="emphasis"><em>coroutine-function</em></span>
+      (function or functor) which will be executed in a new <span class="emphasis"><em>context</em></span>
+      (CPU registers and stack space).
+    </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        <span class="emphasis"><em>coroutine-function</em></span> is required to return <span class="emphasis"><em>void</em></span>
+        and accept a reference of type <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::caller_type</em></span>.
+      </p></td></tr>
+</table></div>
+<p>
+      The template argument <span class="emphasis"><em>Signature</em></span> determines the data-types
+      transferred to <span class="emphasis"><em>coroutine-function</em></span> and from <span class="emphasis"><em>coroutine-function</em></span>
+      by calling <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span>
+      and <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::get()</em></span>.
+    </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;)</span> <span class="special">&gt;</span> <span class="identifier">coro_t</span><span class="special">;</span>
+
+<span class="comment">// void f( boost::coroutine&lt; std::string const&amp;( int) &gt; &amp; ca)</span>
+<span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="special">...</span>
+    <span class="comment">// access argument</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">(</span> <span class="identifier">ca</span><span class="special">.</span><span class="identifier">get</span><span class="special">()</span> <span class="special">);</span>
+    <span class="special">...</span>
+    <span class="identifier">ca</span><span class="special">(</span> <span class="number">7</span><span class="special">);</span>
+    <span class="special">...</span>
+<span class="special">}</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">;</span>
+<span class="special">...</span>
+<span class="identifier">coro_t</span> <span class="identifier">c</span><span class="special">(</span> <span class="identifier">f</span><span class="special">);</span>
+<span class="comment">// pass argument</span>
+<span class="identifier">c</span><span class="special">(</span> <span class="identifier">str</span><span class="special">);</span>
+<span class="comment">// returned value</span>
+<span class="keyword">int</span> <span class="identifier">res</span> <span class="special">=</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
+</pre>
+<p>
+      The <span class="emphasis"><em>coroutine-function</em></span> is started at <span class="emphasis"><em>coroutine</em></span>
+      construction (similar to <span class="emphasis"><em>boost::thread</em></span>) in a newly created
+      <span class="emphasis"><em>coroutine</em></span> complete with registers, flags, stack and instruction
+      pointer. If <span class="emphasis"><em>coroutine-function</em></span> requires some arguments
+      (types defined by <span class="emphasis"><em>Signature</em></span>) on start-up those parameters
+      must be applied to the <span class="emphasis"><em>coroutine</em></span> constructor. A single
+      arguments can be passed as it is:
+    </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;)</span> <span class="special">&gt;</span> <span class="identifier">coro_t</span><span class="special">;</span>
+
+<span class="comment">// void f( boost::coroutine&lt; std::string const&amp;( int) &gt; &amp; ca)</span>
+<span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">);</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">(</span><span class="string">"abc"</span><span class="special">);</span>
+<span class="identifier">coro_t</span> <span class="identifier">c</span><span class="special">(</span> <span class="identifier">f</span><span class="special">,</span> <span class="identifier">str</span><span class="special">);</span>
+</pre>
+<p>
+      For multiple arguments <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::arguments</em></span>
+      must be used (it is a typedef of <span class="emphasis"><em>boost::tuple&lt;&gt;</em></span>):
+    </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;)</span> <span class="special">&gt;</span> <span class="identifier">coro_t</span><span class="special">;</span>
+
+<span class="comment">// void f( boost::coroutine&lt; boost::tuple&lt; int, std::string const&amp; &gt;( int) &gt; &amp; ca)</span>
+<span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">);</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">(</span><span class="string">"abc"</span><span class="special">);</span>
+<span class="identifier">coro_t</span> <span class="identifier">c</span><span class="special">(</span> <span class="identifier">f</span><span class="special">,</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">arguments</span><span class="special">(</span> <span class="number">7</span><span class="special">,</span> <span class="identifier">str</span><span class="special">)</span> <span class="special">);</span>
+</pre>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        The maximum number of arguments is limited to 10 (limit defined by <span class="bold"><strong>Boost.Tuple</strong></span>).
+      </p></td></tr>
+</table></div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        Parameters bound with <span class="emphasis"><em>boost::bind()</em></span> to <span class="emphasis"><em>coroutine-function</em></span>
+        will not be part of the <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span>
+        signature.
+      </p></td></tr>
+</table></div>
+<p>
+      <span class="emphasis"><em>boost::coroutines::attributes</em></span>, an additional constructor
+      argument of <span class="emphasis"><em>coroutine</em></span>, defines the stack size, stack unwinding
+      and floating-point preserving behaviour used for <span class="emphasis"><em>context</em></span>
+      construction.
+    </p>
+<p>
+      The <span class="emphasis"><em>coroutine</em></span> constructor uses the <span class="emphasis"><em>stack-allocator
+      concept</em></span> to allocate an associated stack, and the destructor uses
+      the same <span class="emphasis"><em>stack-allocator concept</em></span> to deallocate the stack.
+      The default <span class="emphasis"><em>stack-allocator concept</em></span> is <span class="emphasis"><em>stack-allocator</em></span>,
+      but a custom stack-allocator can be passed to the constructor.
+    </p>
+<h4>
+<a name="coroutine.coroutine.h1"></a>
+      <span class="phrase"><a name="coroutine.coroutine.calling_a_coroutine"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.calling_a_coroutine">Calling
+      a coroutine</a>
+    </h4>
+<p>
+      The execution control is transferred to <span class="emphasis"><em>coroutine</em></span> at construction
+      (<span class="emphasis"><em>coroutine-function</em></span> entered) - when control should be
+      returned to the original calling routine, invoke <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span>
+      on the first argument of type <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::caller_type</em></span>
+      inside <span class="emphasis"><em>coroutine-function</em></span>. <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::caller_type</em></span>
+      is a typedef of <span class="emphasis"><em>coroutine</em></span> with an inverted <span class="emphasis"><em>Signature</em></span>.
+      Inverted <span class="emphasis"><em>Signature</em></span> means that the return type becomes
+      an argument and vice versa. Multiple arguments are wrapped into <span class="emphasis"><em>boost::tuple&lt;&gt;</em></span>.
+    </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;(</span> <span class="keyword">int</span><span class="special">)</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">);</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;)</span> <span class="special">&gt;</span> <span class="identifier">c1</span><span class="special">(</span> <span class="identifier">f</span><span class="special">);</span>
+
+<span class="keyword">void</span> <span class="identifier">g</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span> <span class="identifier">X</span><span class="special">,</span> <span class="identifier">Y</span> <span class="special">&gt;(</span> <span class="keyword">int</span><span class="special">)</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">);</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span> <span class="identifier">X</span><span class="special">,</span> <span class="identifier">X</span><span class="special">)</span> <span class="special">&gt;</span> <span class="identifier">c2</span><span class="special">(</span> <span class="identifier">g</span><span class="special">);</span>
+</pre>
+<p>
+      The current coroutine information (registers, flags, and stack and instruction
+      pointer) is saved and the original context information is restored. Calling
+      <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span> resumes
+      execution in the coroutine after saving the new state of the original routine.
+    </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">void</span><span class="special">()</span> <span class="special">&gt;</span> <span class="identifier">coro_t</span><span class="special">;</span>
+
+<span class="comment">// void fn( boost::coroutines::coroutine&lt; void() &gt; &amp; ca, int j)</span>
+<span class="keyword">void</span> <span class="identifier">fn</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">j</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">for</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">j</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fn(): local variable i == "</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+        <span class="comment">// save current coroutine</span>
+        <span class="comment">// value of local variable is preserved</span>
+        <span class="comment">// transfer execution control back to main()</span>
+        <span class="identifier">ca</span><span class="special">();</span>
+
+        <span class="comment">// coroutine&lt;&gt;::operator()() was called</span>
+        <span class="comment">// execution control transferred back from main()</span>
+    <span class="special">}</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span> <span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="special">{</span>
+    <span class="comment">// bind parameter '7' to coroutine-fn</span>
+    <span class="identifier">coro_t</span> <span class="identifier">c</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span> <span class="identifier">fn</span><span class="special">,</span> <span class="identifier">_1</span><span class="special">,</span> <span class="number">7</span><span class="special">)</span> <span class="special">);</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"main() starts coroutine c"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">while</span> <span class="special">(</span> <span class="identifier">c</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"main() calls coroutine c"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+        <span class="comment">// execution control is transferred to c</span>
+        <span class="identifier">c</span><span class="special">();</span>
+    <span class="special">}</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Done"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="identifier">EXIT_SUCCESS</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="identifier">output</span><span class="special">:</span>
+    <span class="identifier">main</span><span class="special">()</span> <span class="identifier">starts</span> <span class="identifier">coroutine</span> <span class="identifier">c</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="identifier">local</span> <span class="identifier">variable</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">0</span>
+    <span class="identifier">main</span><span class="special">()</span> <span class="identifier">calls</span> <span class="identifier">coroutine</span> <span class="identifier">c</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="identifier">local</span> <span class="identifier">variable</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">1</span>
+    <span class="identifier">main</span><span class="special">()</span> <span class="identifier">calls</span> <span class="identifier">coroutine</span> <span class="identifier">c</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="identifier">local</span> <span class="identifier">variable</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">2</span>
+    <span class="identifier">main</span><span class="special">()</span> <span class="identifier">calls</span> <span class="identifier">coroutine</span> <span class="identifier">c</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="identifier">local</span> <span class="identifier">variable</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">3</span>
+    <span class="identifier">main</span><span class="special">()</span> <span class="identifier">calls</span> <span class="identifier">coroutine</span> <span class="identifier">c</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="identifier">local</span> <span class="identifier">variable</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">4</span>
+    <span class="identifier">main</span><span class="special">()</span> <span class="identifier">calls</span> <span class="identifier">coroutine</span> <span class="identifier">c</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="identifier">local</span> <span class="identifier">variable</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">5</span>
+    <span class="identifier">main</span><span class="special">()</span> <span class="identifier">calls</span> <span class="identifier">coroutine</span> <span class="identifier">c</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="identifier">local</span> <span class="identifier">variable</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">6</span>
+    <span class="identifier">main</span><span class="special">()</span> <span class="identifier">calls</span> <span class="identifier">coroutine</span> <span class="identifier">c</span>
+    <span class="identifier">Done</span>
+</pre>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        Calling <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span>
+        from inside the <span class="underline">same</span> coroutine results
+        in undefined behaviour.
+      </p></td></tr>
+</table></div>
+<h4>
+<a name="coroutine.coroutine.h2"></a>
+      <span class="phrase"><a name="coroutine.coroutine.transfer_of_data"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.transfer_of_data">Transfer
+      of data</a>
+    </h4>
+<p>
+      <span class="emphasis"><em>Signature</em></span>, the template argument of <span class="emphasis"><em>coroutine</em></span>,
+      defines the types transferred to and returned from the <span class="emphasis"><em>coroutine-function</em></span>,
+      e.g. it determines the signature of <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span>
+      and the return-type of <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::get()</em></span>.
+    </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::caller_type</em></span> is
+        not part of <span class="emphasis"><em>Signature</em></span> and <span class="emphasis"><em>coroutine-function</em></span>
+        is required to return void and accept <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::caller_type</em></span>
+        as argument.
+      </p></td></tr>
+</table></div>
+<p>
+      <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span> accepts
+      arguments as defined in <span class="emphasis"><em>Signature</em></span> and returns a reference
+      to <span class="emphasis"><em>coroutine</em></span>. The arguments passed to <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span>,
+      in one coroutine, is returned (as a <span class="emphasis"><em>boost::tuple&lt;&gt;</em></span>)
+      by <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::get()</em></span> in the
+      other coroutine. If <span class="emphasis"><em>coroutine</em></span> is constructed and arguments
+      are passed to the constructor, the <span class="emphasis"><em>coroutine-function</em></span>
+      will be entered and the arguments are accessed thorough <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::get()</em></span>
+      in <span class="emphasis"><em>coroutine-function</em></span> on entry.
+    </p>
+<p>
+      The value given to <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span>
+      of <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::caller_type</em></span>,
+      in one coroutine, is returned by <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::get()</em></span>
+      in the other routine.
+    </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span> <span class="keyword">int</span><span class="special">)</span> <span class="special">&gt;</span>    <span class="identifier">coro_t</span><span class="special">;</span>
+
+<span class="comment">// void fn( boost::coroutines::coroutine&lt; int( int) &gt; &amp; ca)</span>
+<span class="keyword">void</span> <span class="identifier">fn</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="comment">// access the integer argument given to coroutine ctor</span>
+    <span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="identifier">ca</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fn(): local variable i == "</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="comment">// save current coroutine context and</span>
+    <span class="comment">// transfer execution control back to caller</span>
+    <span class="comment">// pass content of variable 'i' to caller</span>
+    <span class="comment">// after execution control is returned back coroutine&lt;&gt;::operator()</span>
+    <span class="comment">// returns and the transferred integer s accessed via coroutine&lt;&gt;::get()</span>
+    <span class="identifier">i</span> <span class="special">=</span> <span class="identifier">ca</span><span class="special">(</span> <span class="identifier">i</span><span class="special">).</span><span class="identifier">get</span><span class="special">();</span>
+
+    <span class="comment">// i == 10 because c( 10) in main()</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fn(): local variable i == "</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="identifier">ca</span><span class="special">(</span> <span class="identifier">i</span><span class="special">);</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span> <span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="special">{</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"main(): call coroutine c"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="identifier">coro_t</span> <span class="identifier">c</span><span class="special">(</span> <span class="identifier">fn</span><span class="special">,</span> <span class="number">7</span><span class="special">);</span>
+
+    <span class="keyword">int</span> <span class="identifier">x</span> <span class="special">=</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"main(): transferred value: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">x</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="identifier">x</span> <span class="special">=</span> <span class="identifier">c</span><span class="special">(</span> <span class="number">10</span><span class="special">).</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"main(): transferred value: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">x</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Done"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="identifier">EXIT_SUCCESS</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="identifier">output</span><span class="special">:</span>
+    <span class="identifier">main</span><span class="special">():</span> <span class="identifier">call</span> <span class="identifier">coroutine</span> <span class="identifier">c</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="identifier">local</span> <span class="identifier">variable</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">7</span>
+    <span class="identifier">main</span><span class="special">():</span> <span class="identifier">transferred</span> <span class="identifier">value</span><span class="special">:</span> <span class="number">7</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="identifier">local</span> <span class="identifier">variable</span> <span class="identifier">i</span> <span class="special">==</span> <span class="number">10</span>
+    <span class="identifier">main</span><span class="special">():</span> <span class="identifier">transferred</span> <span class="identifier">value</span><span class="special">:</span> <span class="number">10</span>
+    <span class="identifier">Done</span>
+</pre>
+<h4>
+<a name="coroutine.coroutine.h3"></a>
+      <span class="phrase"><a name="coroutine.coroutine._emphasis_coroutine_function__emphasis__with_multiple_arguments"></a></span><a class="link" href="coroutine.html#coroutine.coroutine._emphasis_coroutine_function__emphasis__with_multiple_arguments"><span class="emphasis"><em>coroutine-function</em></span>
+      with multiple arguments</a>
+    </h4>
+<p>
+      If <span class="emphasis"><em>coroutine-function</em></span> has more than one argument <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span>
+      has the same size of arguments and <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::get()</em></span>
+      from <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::caller_type</em></span>
+      returns a <span class="emphasis"><em>boost::tuple&lt;&gt;</em></span> corresponding to the arguments
+      of <span class="emphasis"><em>Signature</em></span>. <span class="emphasis"><em>boost::tie</em></span> helps to
+      access the values stored in the <span class="emphasis"><em>boost::tuple&lt;&gt;</em></span> returned
+      by <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::get()</em></span>.
+    </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">int</span><span class="special">)</span> <span class="special">&gt;</span> <span class="identifier">coro_t</span><span class="special">;</span>
+
+<span class="comment">// void fn( boost::coroutines::coroutine&lt; boost::tuple&lt; int, int &gt;( int) &gt; &amp; ca)</span>
+<span class="keyword">void</span> <span class="identifier">fn</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">int</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">tie</span><span class="special">(</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">ca</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">tie</span><span class="special">(</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">ca</span><span class="special">(</span> <span class="identifier">a</span> <span class="special">+</span> <span class="identifier">b</span><span class="special">).</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">ca</span><span class="special">(</span> <span class="identifier">a</span> <span class="special">+</span> <span class="identifier">b</span><span class="special">);</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span> <span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="special">{</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"main(): call coroutine c"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="identifier">coro_t</span> <span class="identifier">coro</span><span class="special">(</span> <span class="identifier">fn</span><span class="special">,</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">arguments</span><span class="special">(</span> <span class="number">3</span><span class="special">,</span> <span class="number">7</span><span class="special">)</span> <span class="special">);</span>
+
+    <span class="keyword">int</span> <span class="identifier">res</span> <span class="special">=</span> <span class="identifier">coro</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"main(): 3 + 7 == "</span> <span class="special">&lt;&lt;</span> <span class="identifier">res</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="identifier">res</span> <span class="special">=</span> <span class="identifier">coro</span><span class="special">(</span> <span class="number">5</span><span class="special">,</span> <span class="number">7</span><span class="special">).</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"main(): 5 + 7 == "</span> <span class="special">&lt;&lt;</span> <span class="identifier">res</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Done"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="identifier">EXIT_SUCCESS</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="identifier">output</span><span class="special">:</span>
+    <span class="identifier">main</span><span class="special">():</span> <span class="identifier">call</span> <span class="identifier">coroutine</span> <span class="identifier">c</span>
+    <span class="identifier">main</span><span class="special">():</span> <span class="number">3</span> <span class="special">+</span> <span class="number">7</span> <span class="special">==</span> <span class="number">10</span>
+    <span class="identifier">main</span><span class="special">():</span> <span class="number">5</span> <span class="special">+</span> <span class="number">7</span> <span class="special">==</span> <span class="number">12</span>
+    <span class="identifier">Done</span>
+</pre>
+<h4>
+<a name="coroutine.coroutine.h4"></a>
+      <span class="phrase"><a name="coroutine.coroutine.transfer_of_pointers_and_references"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.transfer_of_pointers_and_references">Transfer
+      of pointers and references</a>
+    </h4>
+<p>
+      You can transfer references and pointers from and to coroutines but as usual
+      you must take care (scope, no re-assignment of const references etc.). In the
+      following code <code class="computeroutput"><span class="identifier">x</span></code> points to
+      <code class="computeroutput"><span class="identifier">local</span></code> which is allocated on
+      stack of <code class="computeroutput"><span class="identifier">c</span></code>. When <code class="computeroutput"><span class="identifier">c</span></code> goes out of scope the stack becomes deallocated.
+      Using <code class="computeroutput"><span class="identifier">x</span></code> after <code class="computeroutput"><span class="identifier">c</span></code> is gone will fail!
+    </p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">X</span>
+<span class="special">{</span>
+    <span class="keyword">void</span> <span class="identifier">g</span><span class="special">();</span>
+<span class="special">};</span>
+
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="identifier">X</span><span class="special">*()</span> <span class="special">&gt;</span>    <span class="identifier">coro_t</span><span class="special">;</span>
+
+<span class="comment">// void fn( boost::coroutines::coroutine&lt; void( X*) &gt; &amp; ca)</span>
+<span class="keyword">void</span> <span class="identifier">fn</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_t</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">)</span> <span class="special">{</span>
+    <span class="identifier">X</span> <span class="identifier">local</span><span class="special">;</span>
+    <span class="identifier">ca</span><span class="special">(</span> <span class="special">&amp;</span> <span class="identifier">local</span><span class="special">);</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span> <span class="special">{</span>
+    <span class="identifier">X</span> <span class="special">*</span> <span class="identifier">x</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="special">{</span>
+        <span class="identifier">coro_t</span> <span class="identifier">c</span><span class="special">(</span> <span class="identifier">fn</span><span class="special">);</span>
+        <span class="identifier">x</span> <span class="special">=</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span> <span class="comment">// let x point to X on stack owned by c</span>
+        <span class="comment">// stack gets unwound -&gt; X will be destructed</span>
+    <span class="special">}</span>
+    <span class="identifier">x</span><span class="special">-&gt;</span><span class="identifier">g</span><span class="special">();</span> <span class="comment">// segmentation fault!</span>
+    <span class="keyword">return</span> <span class="identifier">EXIT_SUCCESS</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<h4>
+<a name="coroutine.coroutine.h5"></a>
+      <span class="phrase"><a name="coroutine.coroutine.range_iterators"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.range_iterators">Range
+      iterators</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Boost.Coroutine</strong></span> provides output- and input-iterators
+      using <span class="bold"><strong>Boost.Range</strong></span>. <code class="computeroutput"><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="identifier">T</span><span class="special">()</span>
+      <span class="special">&gt;</span></code> can be used via output-iterators
+      using <span class="emphasis"><em>boost::begin()</em></span> and <span class="emphasis"><em>boost::end()</em></span>.
+    </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">()</span> <span class="special">&gt;</span>       <span class="identifier">coro_t</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">range_iterator</span><span class="special">&lt;</span> <span class="identifier">coro_t</span> <span class="special">&gt;::</span><span class="identifier">type</span>       <span class="identifier">iterator_t</span><span class="special">;</span>
+
+<span class="comment">// void power( boost::coroutines::coroutine&lt; void( int) &gt; &amp; ca, int number, int exponent)</span>
+<span class="keyword">void</span> <span class="identifier">power</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">number</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">exponent</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">int</span> <span class="identifier">counter</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">int</span> <span class="identifier">result</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
+    <span class="keyword">while</span> <span class="special">(</span> <span class="identifier">counter</span><span class="special">++</span> <span class="special">&lt;</span> <span class="identifier">exponent</span><span class="special">)</span>
+    <span class="special">{</span>
+            <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">result</span> <span class="special">*</span> <span class="identifier">number</span><span class="special">;</span>
+            <span class="identifier">ca</span><span class="special">(</span> <span class="identifier">result</span><span class="special">);</span>
+    <span class="special">}</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="identifier">coro_t</span> <span class="identifier">c</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span> <span class="identifier">power</span><span class="special">,</span> <span class="identifier">_1</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">8</span><span class="special">)</span> <span class="special">);</span>
+    <span class="identifier">iterator_t</span> <span class="identifier">e</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">end</span><span class="special">(</span> <span class="identifier">c</span><span class="special">)</span> <span class="special">);</span>
+    <span class="keyword">for</span> <span class="special">(</span> <span class="identifier">iterator_t</span> <span class="identifier">i</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">begin</span><span class="special">(</span> <span class="identifier">c</span><span class="special">)</span> <span class="special">);</span> <span class="identifier">i</span> <span class="special">!=</span> <span class="identifier">e</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="special">*</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span>  <span class="string">" "</span><span class="special">;</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"\nDone"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="identifier">EXIT_SUCCESS</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="identifier">output</span><span class="special">:</span>
+    <span class="number">2</span> <span class="number">4</span> <span class="number">8</span> <span class="number">16</span> <span class="number">32</span> <span class="number">64</span> <span class="number">128</span> <span class="number">256</span>
+    <span class="identifier">Done</span>
+</pre>
+<p>
+      <code class="computeroutput"><span class="identifier">BOOST_FOREACH</span></code> can be used to
+      iterate over the coroutine range too.
+    </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">()</span> <span class="special">&gt;</span>       <span class="identifier">coro_t</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">range_iterator</span><span class="special">&lt;</span> <span class="identifier">coro_t</span> <span class="special">&gt;::</span><span class="identifier">type</span>       <span class="identifier">iterator_t</span><span class="special">;</span>
+
+<span class="comment">// void power( boost::coroutines::coroutine&lt; void( int) &gt; &amp; ca, int number, int exponent)</span>
+<span class="keyword">void</span> <span class="identifier">power</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">number</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">exponent</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">int</span> <span class="identifier">counter</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">int</span> <span class="identifier">result</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
+    <span class="keyword">while</span> <span class="special">(</span> <span class="identifier">counter</span><span class="special">++</span> <span class="special">&lt;</span> <span class="identifier">exponent</span><span class="special">)</span>
+    <span class="special">{</span>
+            <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">result</span> <span class="special">*</span> <span class="identifier">number</span><span class="special">;</span>
+            <span class="identifier">ca</span><span class="special">(</span> <span class="identifier">result</span><span class="special">);</span>
+    <span class="special">}</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="identifier">coro_t</span> <span class="identifier">c</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span> <span class="identifier">power</span><span class="special">,</span> <span class="identifier">_1</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">8</span><span class="special">)</span> <span class="special">);</span>
+    <span class="identifier">BOOST_FOREACH</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">i</span><span class="special">,</span> <span class="identifier">c</span><span class="special">)</span>
+    <span class="special">{</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span>  <span class="string">" "</span><span class="special">;</span> <span class="special">}</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"\nDone"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="identifier">EXIT_SUCCESS</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="identifier">output</span><span class="special">:</span>
+    <span class="number">2</span> <span class="number">4</span> <span class="number">8</span> <span class="number">16</span> <span class="number">32</span> <span class="number">64</span> <span class="number">128</span> <span class="number">256</span>
+    <span class="identifier">Done</span>
+</pre>
+<p>
+      Input iterators are created from coroutines of type <code class="computeroutput"><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">void</span><span class="special">(</span>
+      <span class="identifier">T</span><span class="special">)</span> <span class="special">&gt;</span></code>.
+    </p>
+<h4>
+<a name="coroutine.coroutine.h6"></a>
+      <span class="phrase"><a name="coroutine.coroutine.exit_a__emphasis_coroutine_function__emphasis_"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.exit_a__emphasis_coroutine_function__emphasis_">Exit
+      a <span class="emphasis"><em>coroutine-function</em></span></a>
+    </h4>
+<p>
+      <span class="emphasis"><em>coroutine-function</em></span> is exited with a simple return statement
+      jumping back to the calling routine. The <span class="emphasis"><em>coroutine</em></span> becomes
+      complete, e.g. <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator bool</em></span>
+      will return 'false'.
+    </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">int</span><span class="special">(</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">int</span><span class="special">)</span> <span class="special">&gt;</span> <span class="identifier">coro_t</span><span class="special">;</span>
+
+<span class="comment">// void power( boost::coroutines::coroutine&lt; boost::tuple&lt; int, int &gt;( int) &gt; &amp; ca, int number, int exponent)</span>
+<span class="keyword">void</span> <span class="identifier">fn</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">int</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">tie</span><span class="special">(</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">ca</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">tie</span><span class="special">(</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">ca</span><span class="special">(</span> <span class="identifier">a</span> <span class="special">+</span> <span class="identifier">b</span><span class="special">).</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">ca</span><span class="special">(</span> <span class="identifier">a</span> <span class="special">+</span> <span class="identifier">b</span><span class="special">);</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span> <span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="special">{</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"main(): call coroutine c"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="identifier">coro_t</span> <span class="identifier">coro</span><span class="special">(</span> <span class="identifier">fn</span><span class="special">,</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">arguments</span><span class="special">(</span> <span class="number">3</span><span class="special">,</span> <span class="number">7</span><span class="special">)</span> <span class="special">);</span>
+
+    <span class="identifier">BOOST_ASSERT</span><span class="special">(</span> <span class="identifier">coro</span><span class="special">);</span>
+    <span class="keyword">int</span> <span class="identifier">res</span> <span class="special">=</span> <span class="identifier">coro</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"main(): 3 + 7 == "</span> <span class="special">&lt;&lt;</span> <span class="identifier">res</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="identifier">res</span> <span class="special">=</span> <span class="identifier">coro</span><span class="special">(</span> <span class="number">5</span><span class="special">,</span> <span class="number">7</span><span class="special">).</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">BOOST_ASSERT</span><span class="special">(</span> <span class="special">!</span> <span class="identifier">coro</span><span class="special">);</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"main(): 5 + 7 == "</span> <span class="special">&lt;&lt;</span> <span class="identifier">res</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Done"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="identifier">EXIT_SUCCESS</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="identifier">output</span><span class="special">:</span>
+    <span class="identifier">main</span><span class="special">():</span> <span class="identifier">call</span> <span class="identifier">coroutine</span> <span class="identifier">c</span>
+    <span class="identifier">main</span><span class="special">():</span> <span class="number">3</span> <span class="special">+</span> <span class="number">7</span> <span class="special">==</span> <span class="number">10</span>
+    <span class="identifier">main</span><span class="special">():</span> <span class="number">5</span> <span class="special">+</span> <span class="number">7</span> <span class="special">==</span> <span class="number">12</span>
+    <span class="identifier">Done</span>
+</pre>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../doc/src/images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        After returning from <span class="emphasis"><em>coroutine-function</em></span> the <span class="emphasis"><em>coroutine</em></span>
+        is complete (can not resumed with <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span>).
+      </p></td></tr>
+</table></div>
+<h4>
+<a name="coroutine.coroutine.h7"></a>
+      <span class="phrase"><a name="coroutine.coroutine.exceptions_in__emphasis_coroutine_function__emphasis_"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.exceptions_in__emphasis_coroutine_function__emphasis_">Exceptions
+      in <span class="emphasis"><em>coroutine-function</em></span></a>
+    </h4>
+<p>
+      An exception thrown inside <span class="emphasis"><em>coroutine-function</em></span> will transferred
+      via exception-pointer (see <span class="bold"><strong>Boost.Exception</strong></span>
+      for details) and re-thrown by constructor or <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span>.
+    </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">void</span><span class="special">()</span> <span class="special">&gt;</span>    <span class="identifier">coro_t</span><span class="special">;</span>
+
+<span class="comment">// void fn( boost::coroutines::coroutine&lt; void() &gt; &amp; ca)</span>
+<span class="keyword">void</span> <span class="identifier">fn</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="identifier">ca</span><span class="special">();</span>
+    <span class="keyword">throw</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">runtime_error</span><span class="special">(</span><span class="string">"abc"</span><span class="special">);</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span> <span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="special">{</span>
+    <span class="identifier">coro_t</span> <span class="identifier">c</span><span class="special">(</span> <span class="identifier">f</span><span class="special">);</span>
+    <span class="keyword">try</span>
+    <span class="special">{</span>
+        <span class="identifier">c</span><span class="special">();</span>
+    <span class="special">}</span>
+    <span class="keyword">catch</span> <span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">exception</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">e</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"exception catched:"</span> <span class="special">&lt;&lt;</span> <span class="identifier">e</span><span class="special">.</span><span class="identifier">what</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+        <span class="keyword">return</span> <span class="identifier">EXIT_FAILURE</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Done"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="identifier">EXIT_SUCCESS</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="identifier">output</span><span class="special">:</span>
+    <span class="identifier">exception</span> <span class="identifier">catched</span><span class="special">:</span> <span class="identifier">abc</span>
+</pre>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../doc/src/images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        Code executed by coroutine must not prevent the propagation of the <span class="emphasis"><em>boost::coroutines::detail::forced_unwind</em></span>
+        exception. Absorbing that exception will cause stack unwinding to fail. Thus,
+        any code that catches all exceptions must re-throw the pending exception.
+      </p></td></tr>
+</table></div>
+<pre class="programlisting"><span class="keyword">try</span>
+<span class="special">{</span>
+    <span class="comment">// code that might throw</span>
+<span class="special">}</span>
+<span class="keyword">catch</span><span class="special">(</span> <span class="identifier">forced_unwind</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">throw</span><span class="special">;</span>
+<span class="special">}</span>
+<span class="keyword">catch</span><span class="special">(...)</span>
+<span class="special">{</span>
+    <span class="comment">// possibly not re-throw pending exception</span>
+<span class="special">}</span>
+</pre>
+<h4>
+<a name="coroutine.coroutine.h8"></a>
+      <span class="phrase"><a name="coroutine.coroutine.stack_unwinding"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.stack_unwinding">Stack
+      unwinding</a>
+    </h4>
+<p>
+      Sometimes it is necessary to unwind the stack of an unfinished coroutine to
+      destroy local stack variables so they can release allocated resources (RAII
+      pattern). The third argument of the coroutine constructor, <code class="computeroutput"><span class="identifier">do_unwind</span></code>,
+      indicates whether the destructor should unwind the stack (stack is unwound
+      by default).
+    </p>
+<p>
+      Stack unwinding assumes the following preconditions:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          The coroutine is not <span class="emphasis"><em>not-a-coroutine</em></span>
+        </li>
+<li class="listitem">
+          The coroutine is not complete
+        </li>
+<li class="listitem">
+          The coroutine is not running
+        </li>
+<li class="listitem">
+          The coroutine owns a stack
+        </li>
+</ul></div>
+<p>
+      After unwinding, a <span class="emphasis"><em>coroutine</em></span> is complete.
+    </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">coroutine</span><span class="special">&lt;</span> <span class="keyword">void</span><span class="special">()</span> <span class="special">&gt;</span>    <span class="identifier">coro_t</span><span class="special">;</span>
+
+<span class="keyword">struct</span> <span class="identifier">X</span>
+<span class="special">{</span>
+    <span class="identifier">X</span><span class="special">()</span>
+    <span class="special">{</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"X()"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="special">}</span>
+
+    <span class="special">~</span><span class="identifier">X</span><span class="special">()</span>
+    <span class="special">{</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"~X()"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="special">}</span>
+<span class="special">};</span>
+
+<span class="comment">// void fn( boost::coroutines::coroutine&lt; void() &gt; &amp; ca)</span>
+<span class="keyword">void</span> <span class="identifier">fn</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="identifier">X</span> <span class="identifier">x</span><span class="special">;</span>
+
+    <span class="keyword">for</span> <span class="special">(</span> <span class="keyword">int</span>  <span class="special">=</span> <span class="number">0</span><span class="special">;;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fn(): "</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+        <span class="comment">// transfer execution control back to main()</span>
+        <span class="identifier">ca</span><span class="special">();</span>
+    <span class="special">}</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span> <span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="special">{</span>
+    <span class="special">{</span>
+        <span class="identifier">coro_t</span> <span class="identifier">c</span><span class="special">(</span> <span class="identifier">fn</span><span class="special">,</span>
+                  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">attributes</span><span class="special">(</span>
+                    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">ctx</span><span class="special">::</span><span class="identifier">default_stacksize</span><span class="special">(),</span>
+                    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">stack_unwind</span><span class="special">)</span> <span class="special">);</span>
+
+        <span class="identifier">c</span><span class="special">();</span>
+        <span class="identifier">c</span><span class="special">();</span>
+        <span class="identifier">c</span><span class="special">();</span>
+        <span class="identifier">c</span><span class="special">();</span>
+        <span class="identifier">c</span><span class="special">();</span>
+
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"c is complete: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">boolalpha</span> <span class="special">&lt;&lt;</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">is_complete</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Done"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="identifier">EXIT_SUCCESS</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="identifier">output</span><span class="special">:</span>
+    <span class="identifier">X</span><span class="special">()</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="number">0</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="number">1</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="number">2</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="number">3</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="number">4</span>
+    <span class="identifier">fn</span><span class="special">():</span> <span class="number">5</span>
+    <span class="identifier">c</span> <span class="identifier">is</span> <span class="identifier">complete</span><span class="special">:</span> <span class="keyword">false</span>
+    <span class="special">~</span><span class="identifier">X</span><span class="special">()</span>
+    <span class="identifier">Done</span>
+</pre>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../doc/src/images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        You must not swallow <span class="emphasis"><em>boost::coroutines::detail::forced_unwind</em></span>
+        exceptions!
+      </p></td></tr>
+</table></div>
+<h4>
+<a name="coroutine.coroutine.h9"></a>
+      <span class="phrase"><a name="coroutine.coroutine.fpu_preserving"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.fpu_preserving">FPU
+      preserving</a>
+    </h4>
+<p>
+      Some applications do not use floating-point registers and can disable preserving
+      fpu registers for performance reasons.
+    </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        According to the calling convention the FPU registers are preserved by default.
+      </p></td></tr>
+</table></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009 Oliver Kowalke<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="intro.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="coroutine/coroutine.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

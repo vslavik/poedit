@@ -1,0 +1,381 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Introduction</title>
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Coroutine">
+<link rel="up" href="../index.html" title="Coroutine">
+<link rel="prev" href="overview.html" title="Overview">
+<link rel="next" href="coroutine.html" title="Coroutine">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="overview.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="coroutine.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="coroutine.intro"></a><a class="link" href="intro.html" title="Introduction">Introduction</a>
+</h2></div></div></div>
+<h4>
+<a name="coroutine.intro.h0"></a>
+      <span class="phrase"><a name="coroutine.intro.definition"></a></span><a class="link" href="intro.html#coroutine.intro.definition">Definition</a>
+    </h4>
+<p>
+      In computer science routines are defined as a sequence of operations. The execution
+      of routines form a parent-child relationship and the child terminates always
+      before the parent. Coroutines are a generalization of routines. The principal
+      difference between coroutines and routines is that a coroutine enables explicit
+      suspend and resume of their progress via additional operations by preserving
+      local state, e.g. a coroutine is a kind of continuation. A continuation is
+      a object representing a suspended execution (registers, stack). Each coroutine
+      has its own stack and local variables, sub-routine calls etc. In this sense
+      coroutines are (actually) a language concept.
+    </p>
+<h4>
+<a name="coroutine.intro.h1"></a>
+      <span class="phrase"><a name="coroutine.intro.how_it_works"></a></span><a class="link" href="intro.html#coroutine.intro.how_it_works">How
+      it works</a>
+    </h4>
+<p>
+      Functions foo() and bar() are supposed to alternate their execution (leave
+      and enter function body).
+    </p>
+<p>
+      <span class="inlinemediaobject"><img src="../../../../../libs/coroutine/doc/images/foo_bar.png" align="middle" alt="foo_bar"></span>
+    </p>
+<p>
+      If coroutines would be called such as routines, the stack would grow with every
+      call and will never be degraded. A jump into the middle of a coroutine would
+      not be possible, because the return address would have been on top of stack
+      entries.
+    </p>
+<p>
+      The solution is that each coroutine has its own stack and control-block (<span class="emphasis"><em>boost::contexts::fcontext_t</em></span>
+      from <span class="bold"><strong>Boost.Context</strong></span>). Before the coroutine
+      gets suspended, the non-volatile registers (including stack and instruction/program
+      pointer) of the currently active coroutine are stored in coroutine's control-block.
+      The registers of the newly activated coroutine must be restored from its associated
+      control-block before it can continue with their work.
+    </p>
+<p>
+      <span class="inlinemediaobject"><img src="../../../../../libs/coroutine/doc/images/foo_bar_seq.png" align="middle" alt="foo_bar_seq"></span>
+    </p>
+<p>
+      The context switch requires no system privileges and provides cooperative multitasking
+      on the level of language. Coroutines provide quasi parallelism. When a program
+      is supposed to do several things at the same time, coroutines help to do this
+      much simpler and more elegant than with only a single flow of control. Advantages
+      can be seen particularly clearly with the use of a recursive function, such
+      as traversal of binary trees (see example 'same fringe').
+    </p>
+<h4>
+<a name="coroutine.intro.h2"></a>
+      <span class="phrase"><a name="coroutine.intro.example__asio__io_stream_with_std__stream"></a></span><a class="link" href="intro.html#coroutine.intro.example__asio__io_stream_with_std__stream">Example:
+      asio::io_stream with std::stream</a>
+    </h4>
+<p>
+      This section demonstrates how stackfull coroutines help to use standard C++
+      IO-streams together with IO-demultiplexer like <span class="emphasis"><em>boost::asio::io_sevice</em></span>
+      (using non-blocking IO).
+    </p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span> <span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="special">{</span>
+    <span class="special">...</span>
+    <span class="special">{</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span> <span class="identifier">io_service</span><span class="special">;</span>
+        <span class="identifier">io_service</span><span class="special">.</span><span class="identifier">post</span><span class="special">(</span>
+            <span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span>
+                <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">::</span><span class="identifier">start</span><span class="special">,</span>
+                <span class="identifier">server</span><span class="special">::</span><span class="identifier">create</span><span class="special">(</span>
+                    <span class="identifier">io_service</span><span class="special">,</span> <span class="identifier">port</span><span class="special">)</span> <span class="special">)</span> <span class="special">);</span>
+        <span class="identifier">io_service</span><span class="special">.</span><span class="identifier">run</span><span class="special">();</span>
+    <span class="special">}</span>
+    <span class="special">...</span>
+<span class="special">}</span>
+</pre>
+<p>
+      <span class="emphasis"><em>server</em></span> accepts connection-requests made by clients, creates
+      for each new connection an instance of type <span class="emphasis"><em>session</em></span> and
+      invokes <span class="emphasis"><em>session::start()</em></span> on it.
+    </p>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">server</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_shared_from_this</span><span class="special">&lt;</span> <span class="identifier">server</span> <span class="special">&gt;</span>
+<span class="special">{</span>
+<span class="keyword">private</span><span class="special">:</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span>         <span class="special">&amp;</span>   <span class="identifier">io_service_</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">acceptor</span>      <span class="identifier">acceptor_</span><span class="special">;</span>
+
+    <span class="keyword">void</span> <span class="identifier">handle_accept_</span><span class="special">(</span> <span class="identifier">session</span> <span class="special">*</span> <span class="identifier">new_session</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">error</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="keyword">if</span> <span class="special">(</span> <span class="special">!</span> <span class="identifier">error</span><span class="special">)</span>
+        <span class="special">{</span>
+            <span class="comment">// start asynchronous read</span>
+            <span class="identifier">new_session</span><span class="special">-&gt;</span><span class="identifier">start</span><span class="special">();</span>
+
+            <span class="comment">// start asynchronous accept</span>
+            <span class="identifier">start</span><span class="special">();</span>
+        <span class="special">}</span>
+    <span class="special">}</span>
+
+    <span class="identifier">server</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span> <span class="special">&amp;</span> <span class="identifier">io_service</span><span class="special">,</span> <span class="keyword">short</span> <span class="identifier">port</span><span class="special">)</span> <span class="special">:</span>
+        <span class="identifier">io_service_</span><span class="special">(</span> <span class="identifier">io_service</span><span class="special">),</span>
+        <span class="identifier">acceptor_</span><span class="special">(</span>
+            <span class="identifier">io_service_</span><span class="special">,</span>
+            <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">endpoint</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">v4</span><span class="special">(),</span> <span class="identifier">port</span><span class="special">)</span> <span class="special">)</span>
+    <span class="special">{}</span>
+
+<span class="keyword">public</span><span class="special">:</span>
+    <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">server</span> <span class="special">&gt;</span> <span class="identifier">ptr_t</span><span class="special">;</span>
+
+    <span class="keyword">static</span> <span class="identifier">ptr_t</span> <span class="identifier">create</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span> <span class="special">&amp;</span> <span class="identifier">io_service</span><span class="special">,</span> <span class="keyword">short</span> <span class="identifier">port</span><span class="special">)</span>
+    <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">ptr_t</span><span class="special">(</span> <span class="keyword">new</span> <span class="identifier">server</span><span class="special">(</span> <span class="identifier">io_service</span><span class="special">,</span> <span class="identifier">port</span><span class="special">)</span> <span class="special">);</span> <span class="special">}</span>
+
+    <span class="keyword">void</span> <span class="identifier">start</span><span class="special">()</span>
+    <span class="special">{</span>
+        <span class="comment">// create new session which gets started if asynchronous</span>
+        <span class="comment">// accept completes</span>
+        <span class="identifier">session</span> <span class="special">*</span> <span class="identifier">new_session</span><span class="special">(</span> <span class="keyword">new</span> <span class="identifier">session</span><span class="special">(</span> <span class="identifier">io_service_</span><span class="special">)</span> <span class="special">);</span>
+        <span class="identifier">acceptor_</span><span class="special">.</span><span class="identifier">async_accept</span><span class="special">(</span>
+            <span class="identifier">new_session</span><span class="special">-&gt;</span><span class="identifier">socket</span><span class="special">(),</span>
+            <span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span> <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">::</span><span class="identifier">handle_accept_</span><span class="special">,</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">shared_from_this</span><span class="special">(),</span>
+                <span class="identifier">new_session</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">placeholders</span><span class="special">::</span><span class="identifier">error</span><span class="special">)</span> <span class="special">);</span>
+    <span class="special">}</span>
+<span class="special">};</span>
+</pre>
+<p>
+      Each <span class="emphasis"><em>session</em></span> communicates with the connected client and
+      handles the requests. The application protocol in this example uses TCP-sockets
+      as channel and 'newline' to separate the messages in the byte stream. An application
+      protocol is a set of rules for the order in which messages are exchanged.
+      <span class="emphasis"><em>std::istream</em></span> is used to extract the messages from the
+      character stream . Message 'exit' terminates the session.
+    </p>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">session</span> <span class="special">:</span> <span class="keyword">private</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">noncopyable</span>
+<span class="special">{</span>
+<span class="keyword">private</span><span class="special">:</span>
+    <span class="keyword">void</span> <span class="identifier">handle_read_</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">self</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="comment">// create stream-buffer reading from socket</span>
+        <span class="identifier">inbuf</span> <span class="identifier">buf</span><span class="special">(</span> <span class="identifier">socket_</span><span class="special">);</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">istream</span> <span class="identifier">s</span><span class="special">(</span> <span class="special">&amp;</span> <span class="identifier">buf</span><span class="special">);</span>
+
+        <span class="comment">// messages are separated by 'newline'</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">msg</span><span class="special">;</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">getline</span><span class="special">(</span> <span class="identifier">s</span><span class="special">,</span> <span class="identifier">msg</span><span class="special">);</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">msg</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+        <span class="comment">// terminate session for message 'exit'</span>
+        <span class="comment">// else do asynchronous read</span>
+        <span class="keyword">if</span> <span class="special">(</span> <span class="string">"exit"</span> <span class="special">==</span> <span class="identifier">msg</span><span class="special">)</span>
+            <span class="identifier">io_service_</span><span class="special">.</span><span class="identifier">post</span><span class="special">(</span>
+                <span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span>
+                    <span class="special">&amp;</span> <span class="identifier">session</span><span class="special">::</span><span class="identifier">destroy_</span><span class="special">,</span> <span class="keyword">this</span><span class="special">)</span> <span class="special">);</span>
+        <span class="keyword">else</span>
+            <span class="identifier">start</span><span class="special">();</span>
+    <span class="special">}</span>
+
+    <span class="keyword">void</span> <span class="identifier">destroy_</span><span class="special">()</span>
+    <span class="special">{</span> <span class="keyword">delete</span> <span class="keyword">this</span><span class="special">;</span> <span class="special">}</span>
+
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span>     <span class="special">&amp;</span>   <span class="identifier">io_service_</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">socket</span>    <span class="identifier">socket_</span><span class="special">;</span>
+
+<span class="keyword">public</span><span class="special">:</span>
+    <span class="identifier">session</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span> <span class="special">&amp;</span> <span class="identifier">io_service</span><span class="special">)</span> <span class="special">:</span>
+        <span class="identifier">io_service_</span><span class="special">(</span> <span class="identifier">io_service</span><span class="special">),</span>
+        <span class="identifier">socket_</span><span class="special">(</span> <span class="identifier">io_service_</span><span class="special">)</span>
+    <span class="special">{</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"service(): "</span> <span class="special">&lt;&lt;</span> <span class="identifier">socket_</span><span class="special">.</span><span class="identifier">remote_endpoint</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="special">}</span>
+
+    <span class="special">~</span><span class="identifier">session</span><span class="special">()</span>
+    <span class="special">{</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"~service(): "</span> <span class="special">&lt;&lt;</span> <span class="identifier">socket_</span><span class="special">.</span><span class="identifier">remote_endpoint</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="special">}</span>
+
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">socket</span> <span class="special">&amp;</span> <span class="identifier">socket</span><span class="special">()</span>
+    <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">socket_</span><span class="special">;</span> <span class="special">}</span>
+
+    <span class="keyword">void</span> <span class="identifier">start</span><span class="special">()</span>
+    <span class="special">{</span>
+        <span class="comment">// register on io_service for asynchronous read</span>
+        <span class="identifier">io_service_</span><span class="special">.</span><span class="identifier">async_read</span><span class="special">(</span>
+            <span class="identifier">socket_</span><span class="special">,</span>
+            <span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span>
+                <span class="special">&amp;</span> <span class="identifier">session</span><span class="special">::</span><span class="identifier">handle_read_</span><span class="special">,</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">shared_from_this</span><span class="special">(),</span> <span class="identifier">_1</span><span class="special">,</span> <span class="identifier">_2</span><span class="special">)</span> <span class="special">);</span>
+    <span class="special">}</span>
+<span class="special">};</span>
+</pre>
+<p>
+      Function <span class="emphasis"><em>std::getline()</em></span> returns only if a 'newline' was
+      read from the socket. Therefore the application will block until 'newline'
+      is received by the socket. The stream-buffer used by the stream maintains an
+      internal buffer which gets (re-)filled by its function <span class="emphasis"><em>stream_buf::underflow()</em></span>.
+      <span class="emphasis"><em>stream_buf::underflow()</em></span> does the read-operation on the
+      socket. The C++ IO-streams framework does not provide an easy way to create
+      an continuation which represents reading bytes from the socket.
+    </p>
+<p>
+      Coroutines help in this case to make the application non-blocking even if no
+      'newline' was received. Class <span class="emphasis"><em>session</em></span> creates a coroutine
+      which uses <span class="emphasis"><em>session::handle_read()</em></span> as <span class="emphasis"><em>coroutine-function</em></span>.
+      On a new created <span class="emphasis"><em>session</em></span> <span class="emphasis"><em>start()</em></span>
+      called starting the coroutine. In the <span class="emphasis"><em>coroutine-function</em></span>
+      <span class="emphasis"><em>session::handle_read()</em></span> the messages are received via
+      <span class="emphasis"><em>std::getline()</em></span> in a loop until 'exit' is delivered.
+    </p>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">session</span> <span class="special">:</span> <span class="keyword">private</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">noncopyable</span>
+<span class="special">{</span>
+<span class="keyword">private</span><span class="special">:</span>
+    <span class="keyword">void</span> <span class="identifier">handle_read_</span><span class="special">(</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="comment">// create stream-buffer with coroutine</span>
+        <span class="identifier">inbuf</span> <span class="identifier">buf</span><span class="special">(</span> <span class="identifier">socket_</span><span class="special">,</span> <span class="identifier">coro_</span><span class="special">,</span> <span class="identifier">ca</span><span class="special">);</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">istream</span> <span class="identifier">s</span><span class="special">(</span> <span class="special">&amp;</span> <span class="identifier">buf</span><span class="special">);</span>
+
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">msg</span><span class="special">;</span>
+        <span class="keyword">do</span>
+        <span class="special">{</span>
+            <span class="comment">// read message</span>
+            <span class="comment">// we not block if no newline was received yet</span>
+            <span class="identifier">std</span><span class="special">::</span><span class="identifier">getline</span><span class="special">(</span> <span class="identifier">s</span><span class="special">,</span> <span class="identifier">msg</span><span class="special">);</span>
+            <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">msg</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+        <span class="special">}</span> <span class="keyword">while</span> <span class="special">(</span> <span class="identifier">msg</span> <span class="special">!=</span> <span class="string">"exit"</span><span class="special">);</span>
+        <span class="identifier">io_service_</span><span class="special">.</span><span class="identifier">post</span><span class="special">(</span>
+                <span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span>
+                    <span class="special">&amp;</span> <span class="identifier">session</span><span class="special">::</span><span class="identifier">destroy_</span><span class="special">,</span> <span class="keyword">this</span><span class="special">)</span> <span class="special">);</span>
+    <span class="special">}</span>
+
+    <span class="keyword">void</span> <span class="identifier">destroy_</span><span class="special">()</span>
+    <span class="special">{</span> <span class="keyword">delete</span> <span class="keyword">this</span><span class="special">;</span> <span class="special">}</span>
+
+    <span class="identifier">coro_t</span>                          <span class="identifier">coro_</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span>     <span class="special">&amp;</span>   <span class="identifier">io_service_</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">socket</span>    <span class="identifier">socket_</span><span class="special">;</span>
+
+<span class="keyword">public</span><span class="special">:</span>
+    <span class="identifier">session</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span> <span class="special">&amp;</span> <span class="identifier">io_service</span><span class="special">)</span> <span class="special">:</span>
+        <span class="identifier">coro_</span><span class="special">(),</span>
+        <span class="identifier">io_service_</span><span class="special">(</span> <span class="identifier">io_service</span><span class="special">),</span>
+        <span class="identifier">socket_</span><span class="special">(</span> <span class="identifier">io_service_</span><span class="special">)</span>
+    <span class="special">{</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"service(): "</span> <span class="special">&lt;&lt;</span> <span class="identifier">socket_</span><span class="special">.</span><span class="identifier">remote_endpoint</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="special">}</span>
+
+    <span class="special">~</span><span class="identifier">session</span><span class="special">()</span>
+    <span class="special">{</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"~service(): "</span> <span class="special">&lt;&lt;</span> <span class="identifier">socket_</span><span class="special">.</span><span class="identifier">remote_endpoint</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="special">}</span>
+
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">socket</span> <span class="special">&amp;</span> <span class="identifier">socket</span><span class="special">()</span>
+    <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">socket_</span><span class="special">;</span> <span class="special">}</span>
+
+    <span class="keyword">void</span> <span class="identifier">start</span><span class="special">()</span>
+    <span class="special">{</span>
+        <span class="comment">// create and start a coroutine</span>
+        <span class="comment">// handle_read_() is used as coroutine-function</span>
+        <span class="identifier">coro_</span> <span class="special">=</span> <span class="identifier">coro_t</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span> <span class="special">&amp;</span> <span class="identifier">session</span><span class="special">::</span><span class="identifier">handle_read_</span><span class="special">,</span> <span class="keyword">this</span><span class="special">,</span> <span class="identifier">_1</span><span class="special">)</span> <span class="special">);</span>
+    <span class="special">}</span>
+<span class="special">};</span>
+</pre>
+<p>
+      The stream-buffer is created with <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::caller_type</em></span>
+      and handles suspend/resume of this code path depending on if bytes can be read
+      from the socket.
+    </p>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">inbuf</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">streambuf</span><span class="special">,</span>
+              <span class="keyword">private</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">noncopyable</span>
+<span class="special">{</span>
+<span class="keyword">private</span><span class="special">:</span>
+    <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">streamsize</span>        <span class="identifier">pb_size</span><span class="special">;</span>
+
+    <span class="keyword">enum</span>
+    <span class="special">{</span> <span class="identifier">bf_size</span> <span class="special">=</span> <span class="number">16</span> <span class="special">};</span>
+
+    <span class="keyword">int</span> <span class="identifier">fetch_</span><span class="special">()</span>
+    <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">streamsize</span> <span class="identifier">num</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">min</span><span class="special">(</span>
+            <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">streamsize</span> <span class="special">&gt;(</span> <span class="identifier">gptr</span><span class="special">()</span> <span class="special">-</span> <span class="identifier">eback</span><span class="special">()</span> <span class="special">),</span> <span class="identifier">pb_size</span><span class="special">);</span>
+
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">memmove</span><span class="special">(</span>
+            <span class="identifier">buffer_</span> <span class="special">+</span> <span class="special">(</span> <span class="identifier">pb_size</span> <span class="special">-</span> <span class="identifier">num</span><span class="special">),</span>
+            <span class="identifier">gptr</span><span class="special">()</span> <span class="special">-</span> <span class="identifier">num</span><span class="special">,</span> <span class="identifier">num</span><span class="special">);</span>
+
+        <span class="comment">// read bytes from the socket into internal buffer 'buffer_'</span>
+        <span class="comment">// make coro_t::operator() as callback, invoked if some</span>
+        <span class="comment">// bytes are read into 'buffer_'</span>
+        <span class="identifier">s_</span><span class="special">.</span><span class="identifier">async_read_some</span><span class="special">(</span>
+                <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">(</span> <span class="identifier">buffer_</span> <span class="special">+</span> <span class="identifier">pb_size</span><span class="special">,</span> <span class="identifier">bf_size</span> <span class="special">-</span> <span class="identifier">pb_size</span><span class="special">),</span>
+                <span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span> <span class="special">&amp;</span> <span class="identifier">coro_t</span><span class="special">::</span><span class="keyword">operator</span><span class="special">(),</span> <span class="special">&amp;</span> <span class="identifier">coro_</span><span class="special">,</span> <span class="identifier">_1</span><span class="special">,</span> <span class="identifier">_2</span><span class="special">)</span> <span class="special">);</span>
+        <span class="comment">// suspend this coroutine</span>
+        <span class="identifier">ca_</span><span class="special">();</span>
+
+        <span class="comment">// coroutine was resumed by boost::asio::io_sevice</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span> <span class="identifier">ec</span><span class="special">;</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">n</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+        <span class="comment">// check arguments</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">tie</span><span class="special">(</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">n</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">ca_</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
+
+        <span class="comment">// check if an error occurred</span>
+        <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">ec</span><span class="special">)</span>
+        <span class="special">{</span>
+            <span class="identifier">setg</span><span class="special">(</span> <span class="number">0</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <span class="number">0</span><span class="special">);</span>
+            <span class="keyword">return</span> <span class="special">-</span><span class="number">1</span><span class="special">;</span>
+        <span class="special">}</span>
+
+        <span class="identifier">setg</span><span class="special">(</span> <span class="identifier">buffer_</span> <span class="special">+</span> <span class="identifier">pb_size</span> <span class="special">-</span> <span class="identifier">num</span><span class="special">,</span> <span class="identifier">buffer_</span> <span class="special">+</span> <span class="identifier">pb_size</span><span class="special">,</span> <span class="identifier">buffer_</span> <span class="special">+</span> <span class="identifier">pb_size</span> <span class="special">+</span> <span class="identifier">n</span><span class="special">);</span>
+        <span class="keyword">return</span> <span class="identifier">n</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">socket</span>      <span class="special">&amp;</span>   <span class="identifier">s_</span><span class="special">;</span>
+    <span class="identifier">coro_t</span>                            <span class="special">&amp;</span>   <span class="identifier">coro_</span><span class="special">;</span>
+    <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span>               <span class="special">&amp;</span>   <span class="identifier">ca_</span><span class="special">;</span>
+    <span class="keyword">char</span>                                  <span class="identifier">buffer_</span><span class="special">[</span><span class="identifier">bf_size</span><span class="special">];</span>
+
+<span class="keyword">protected</span><span class="special">:</span>
+    <span class="keyword">virtual</span> <span class="keyword">int</span> <span class="identifier">underflow</span><span class="special">()</span>
+    <span class="special">{</span>
+        <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">gptr</span><span class="special">()</span> <span class="special">&lt;</span> <span class="identifier">egptr</span><span class="special">()</span> <span class="special">)</span>
+            <span class="keyword">return</span> <span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">to_int_type</span><span class="special">(</span> <span class="special">*</span> <span class="identifier">gptr</span><span class="special">()</span> <span class="special">);</span>
+
+        <span class="keyword">if</span> <span class="special">(</span> <span class="number">0</span> <span class="special">&gt;</span> <span class="identifier">fetch_</span><span class="special">()</span> <span class="special">)</span>
+            <span class="keyword">return</span> <span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">eof</span><span class="special">();</span>
+        <span class="keyword">else</span>
+            <span class="keyword">return</span> <span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">to_int_type</span><span class="special">(</span> <span class="special">*</span> <span class="identifier">gptr</span><span class="special">()</span> <span class="special">);</span>
+    <span class="special">}</span>
+
+<span class="keyword">public</span><span class="special">:</span>
+    <span class="identifier">inbuf</span><span class="special">(</span>
+            <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">socket</span> <span class="special">&amp;</span> <span class="identifier">s</span><span class="special">,</span>
+            <span class="identifier">coro_t</span> <span class="special">&amp;</span> <span class="identifier">coro</span><span class="special">,</span>
+            <span class="identifier">coro_t</span><span class="special">::</span><span class="identifier">caller_type</span> <span class="special">&amp;</span> <span class="identifier">ca</span><span class="special">)</span> <span class="special">:</span>
+        <span class="identifier">s_</span><span class="special">(</span> <span class="identifier">s</span><span class="special">),</span> <span class="identifier">coro_</span><span class="special">(</span> <span class="identifier">coro</span><span class="special">),</span> <span class="identifier">ca_</span><span class="special">(</span> <span class="identifier">ca</span><span class="special">),</span> <span class="identifier">buffer_</span><span class="special">()</span>
+    <span class="special">{</span> <span class="identifier">setg</span><span class="special">(</span> <span class="identifier">buffer_</span> <span class="special">+</span> <span class="number">4</span><span class="special">,</span> <span class="identifier">buffer_</span> <span class="special">+</span> <span class="number">4</span><span class="special">,</span> <span class="identifier">buffer_</span> <span class="special">+</span> <span class="number">4</span><span class="special">);</span> <span class="special">}</span>
+<span class="special">};</span>
+<span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">streamsize</span> <span class="identifier">inbuf</span><span class="special">::</span><span class="identifier">pb_size</span> <span class="special">=</span> <span class="number">4</span><span class="special">;</span>
+</pre>
+<p>
+      <span class="emphasis"><em>inbuf::fetch()</em></span> uses <span class="emphasis"><em>boost::coroutines::coroutine&lt;&gt;::operator()</em></span>
+      as callback for the asynchronous read-operation on the socket and suspends
+      itself (<span class="emphasis"><em>ca_()</em></span> jumps back to <span class="emphasis"><em>session::start()</em></span>).
+      If some bytes are available in the socket receive buffer <span class="emphasis"><em>boost::asio::io_sevice</em></span>
+      copies the bytes to the internal buffer <span class="emphasis"><em>buffer_</em></span> and invokes
+      the callback which resumes the coroutine (<span class="emphasis"><em>ca_()</em></span> returns).
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009 Oliver Kowalke<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="overview.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="coroutine.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
