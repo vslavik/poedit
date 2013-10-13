@@ -4,7 +4,7 @@
          DefaultTargets="Distrib">
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <Import Project=".nuget\nuget.targets" />
+  <Import Project="..\.nuget\nuget.targets" />
 
   <PropertyGroup>
     <OutputDir>distrib-$(Configuration)</OutputDir>
@@ -15,7 +15,7 @@
     <CodesignFlags>/n $(CodesignIdentity) /t $(CodesignTimestampServer) /d Poedit /du http://www.poedit.net</CodesignFlags>
     <CodesignCmd>signtool sign /a $(CodesignFlags)</CodesignCmd>
 
-    <InnoCC>packages\hexter.innosetup.commandline.5.5.3.1\tools\ISCC.exe</InnoCC>
+    <InnoCC>..\packages\hexter.innosetup.commandline.5.5.3.1\tools\ISCC.exe</InnoCC>
     <InnoFlags>/dCONFIG=$(Configuration) /dSIGNTOOL=default /Sdefault="$(CodesignCmd) $f"</InnoFlags>
   </PropertyGroup>
 
