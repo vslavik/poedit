@@ -6,8 +6,7 @@
     <ResourcesOutDir>$(OutDir)Resources\</ResourcesOutDir>
     <TranslationsOutDir>$(OutDir)Translations\</TranslationsOutDir>
     <GettextOutDir>$(OutDir)GettextTools\</GettextOutDir>
-    <GettextDir>deps\bin-win\$(Configuration)\gettext\</GettextDir>
-    <GettextBinDir>$(GettextDir)bin\</GettextBinDir>
+    <GettextBinDir>packages\Gettext.Tools.0.18.3\tools\</GettextBinDir>
     <Msgfmt>$(GettextBinDir)msgfmt.exe -c</Msgfmt>
 
     <PoDirPoedit>locales</PoDirPoedit>
@@ -27,7 +26,7 @@
     <TranslationFiles Include="$(PoDirPoedit)\*.po" />
     <TranslationFilesWX Include="$(PoDirWX)\*.po" />
     <TranslationFilesWXMSW Include="$(PoDirWXMSW)\*.po" />
-    <TranslationFilesGettext Include="$(GettextDir)share\**\*.mo" />
+    <!--<TranslationFilesGettext Include="$(GettextDir)share\**\*.mo" />-->
   </ItemGroup>
 
   <ItemGroup>
@@ -83,17 +82,19 @@
   <Target Name="CopyGettextTools" AfterTargets="Link">
     <Message Importance="High" Text="Copying gettext tools binaries to $(GettextOutDir) [@(TranslationFilesGettext)]" />
     <MakeDir Directories="$(GettextOutDir)\bin" />
-    <MakeDir Directories="$(GettextOutDir)\share" />
+    <!--<MakeDir Directories="$(GettextOutDir)\share" />-->
     <Copy
       SourceFiles="@(GettextFiles)"
       DestinationFolder="$(GettextOutDir)\bin"
       SkipUnchangedFiles="true"
     />
+    <!--
     <Copy
       SourceFiles="@(TranslationFilesGettext)"
       DestinationFolder="$(GettextOutDir)\share\%(RecursiveDir)"
       SkipUnchangedFiles="true"
     />
+    -->
   </Target>
 
 </Project>
