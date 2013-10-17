@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -27,21 +27,25 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -229,7 +233,7 @@
     <ClCompile Include="ucharstrietest.cpp" />
     <ClCompile Include="itrbbi.cpp" />
     <ClCompile Include="rbbiapts.cpp">
-        <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="rbbitst.cpp" />
     <ClCompile Include="itspoof.cpp" />
@@ -260,7 +264,7 @@
     <ClCompile Include="uvectest.cpp" />
     <ClCompile Include="v32test.cpp" />
     <ClCompile Include="simplethread.cpp">
-	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="strtest.cpp">
       <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableLanguageExtensions>
@@ -276,7 +280,7 @@
     </ClCompile>
     <ClCompile Include="tsputil.cpp" />
     <ClCompile Include="uobjtest.cpp">
-    	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="astrotst.cpp" />
     <ClCompile Include="calcasts.cpp" />
@@ -284,7 +288,7 @@
     <ClCompile Include="calregts.cpp" />
     <ClCompile Include="caltest.cpp" />
     <ClCompile Include="caltztst.cpp">
-	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="compactdecimalformattest.cpp" />
     <ClCompile Include="dadrcal.cpp" />
@@ -326,13 +330,13 @@
     <ClCompile Include="tufmtts.cpp" />
     <ClCompile Include="tzbdtest.cpp" />
     <ClCompile Include="tzfmttst.cpp">
-    	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="tzoffloc.cpp" />
     <ClCompile Include="tzregts.cpp" />
     <ClCompile Include="tzrulets.cpp" />
     <ClCompile Include="tztest.cpp">
-    	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="windttst.cpp">
       <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableLanguageExtensions>
@@ -351,7 +355,7 @@
     <ClCompile Include="nptrans.cpp" />
     <ClCompile Include="punyref.c" />
     <ClCompile Include="testidn.cpp">
-    	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="testidna.cpp" />
     <ClCompile Include="uts46test.cpp" />
@@ -360,35 +364,35 @@
     <ClCompile Include="restest.cpp" />
     <ClCompile Include="restsnew.cpp" />
     <ClCompile Include="intltest.cpp">
-    	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="itmajor.cpp">
-    	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="itutil.cpp">
-    	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="testutil.cpp" />
     <ClCompile Include="textfile.cpp" />
     <ClCompile Include="tokiter.cpp" />
     <ClCompile Include="winutil.cpp">
-	   <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="canittst.cpp" />
     <ClCompile Include="normconf.cpp" />
     <ClCompile Include="tstnorm.cpp">
-    	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="tstnrapi.cpp">
-    	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="ucdtest.cpp">
-    	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="usettest.cpp" />
     <ClCompile Include="regextst.cpp" />
     <ClCompile Include="icusvtst.cpp">
-	    <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="citrtest.cpp" />
     <ClCompile Include="reptest.cpp" />
