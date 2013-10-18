@@ -2198,7 +2198,20 @@ void PoeditFrame::UpdateTitle()
     {
         SetRepresentedFilename(m_fileName);
         wxFileName fn(m_fileName);
-        title = wxString::Format("%s.%s", fn.GetName().c_str(), fn.GetExt().c_str());
+        if ( !m_catalog->Header().Project.empty() )
+        {
+            title.Printf(
+#ifdef __WXOSX__
+                "%s — %s",
+#else
+                "%s • %s",
+#endif
+                fn.GetFullName(), m_catalog->Header().Project);
+        }
+        else
+        {
+            title = fn.GetFullName();
+        }
 #ifndef __WXOSX__
         if ( IsModified() )
             title += _(" (modified)");
