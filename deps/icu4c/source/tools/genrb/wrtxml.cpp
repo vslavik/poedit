@@ -1121,7 +1121,7 @@ bundle_write_xml(struct SRBRoot *bundle, const char *outputDir,const char* outpu
         *status = U_FILE_ACCESS_ERROR;
         goto cleanup_bundle_write_xml;
     }
-    write_utf8_file(out, xmlHeader);
+    write_utf8_file(out, UnicodeString(xmlHeader));
 
     if(outputEnc && *outputEnc!='\0'){
         /* store the output encoding */
@@ -1131,9 +1131,9 @@ bundle_write_xml(struct SRBRoot *bundle, const char *outputDir,const char* outpu
             goto cleanup_bundle_write_xml;
         }
     }
-    write_utf8_file(out, bundleStart);
+    write_utf8_file(out, UnicodeString(bundleStart));
     write_tabs(out);
-    write_utf8_file(out, fileStart);
+    write_utf8_file(out, UnicodeString(fileStart));
     /* check if lang and language are the same */
     if(language != NULL && uprv_strcmp(lang, srBundle->fLocale)!=0){
         fprintf(stderr,"Warning: The top level tag in the resource and language specified are not the same. Please check the input.\n");
@@ -1151,12 +1151,12 @@ bundle_write_xml(struct SRBRoot *bundle, const char *outputDir,const char* outpu
 
     tabCount += 1;
     write_tabs(out);
-    write_utf8_file(out, headerStart);
+    write_utf8_file(out, UnicodeString(headerStart));
 
     tabCount += 1;
     write_tabs(out);
 
-    write_utf8_file(out, tool_start);
+    write_utf8_file(out, UnicodeString(tool_start));
     printAttribute("tool-id", tool_id, (int32_t) uprv_strlen(tool_id));
     printAttribute("tool-name", tool_name, (int32_t) uprv_strlen(tool_name));
     write_utf8_file(out, UnicodeString("/>\n"));

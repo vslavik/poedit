@@ -22,6 +22,8 @@
 #include "uassert.h"
 #include "cmemory.h"
 
+#if !UCONFIG_NO_FORMATTING
+
 #   define WIN32_LEAN_AND_MEAN
 #   define VC_EXTRALEAN
 #   define NOUSER
@@ -153,5 +155,7 @@ uprv_getWindowsTimeZoneInfo(TIME_ZONE_INFORMATION *zoneInfo, const UChar *icuid,
         return FALSE;
     }
 }
+
+#endif /* #if !UCONFIG_NO_FORMATTING */
 
 #endif

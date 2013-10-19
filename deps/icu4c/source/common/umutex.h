@@ -320,7 +320,7 @@ U_NAMESPACE_END
 
 
 typedef struct UMutex {
-    UInitOnce         fInitOnce;
+    U_NAMESPACE_QUALIFIER UInitOnce fInitOnce;
     CRITICAL_SECTION  fCS;
 } UMutex;
 
