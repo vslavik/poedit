@@ -277,7 +277,7 @@
  * @stable ICU 2.4
  */
 #ifndef UCONFIG_NO_LEGACY_CONVERSION
-#   define UCONFIG_NO_LEGACY_CONVERSION 0
+#   define UCONFIG_NO_LEGACY_CONVERSION 1
 #endif
 
 /**
@@ -322,7 +322,7 @@
  * @stable ICU 2.6
  */
 #ifndef UCONFIG_NO_IDNA
-#   define UCONFIG_NO_IDNA 0
+#   define UCONFIG_NO_IDNA 1
 #endif
 
 /**
@@ -355,7 +355,7 @@
  * @stable ICU 2.4
  */
 #ifndef UCONFIG_NO_FORMATTING
-#   define UCONFIG_NO_FORMATTING 0
+#   define UCONFIG_NO_FORMATTING 1
 #endif
 
 /**
@@ -365,7 +365,7 @@
  * @stable ICU 2.4
  */
 #ifndef UCONFIG_NO_TRANSLITERATION
-#   define UCONFIG_NO_TRANSLITERATION 0
+#   define UCONFIG_NO_TRANSLITERATION 1
 #endif
 
 /**
@@ -375,7 +375,7 @@
  * @stable ICU 2.4
  */
 #ifndef UCONFIG_NO_REGULAR_EXPRESSIONS
-#   define UCONFIG_NO_REGULAR_EXPRESSIONS 0
+#   define UCONFIG_NO_REGULAR_EXPRESSIONS 1
 #endif
 
 /**
