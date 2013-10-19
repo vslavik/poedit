@@ -108,6 +108,16 @@ AC_CHECK_HEADER([boost/function.hpp],
 AC_CHECK_FUNCS([mkdtemp])
 
 
+PKG_CHECK_MODULES([ICU], [icu-uc],
+        [
+            CXXFLAGS="$CXXFLAGS $ICU_CFLAGS"
+            LIBS="$LIBS $ICU_LIBS"
+        ],
+        [
+            AC_MSG_ERROR([missing ICU library])
+        ])
+
+
 if test "$USE_SPELLCHECKING" != "no" ; then
     dnl we need GtkSpell and GTK+ 2.x for this, check if we're compatible
     PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0],

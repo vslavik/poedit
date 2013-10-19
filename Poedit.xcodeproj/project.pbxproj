@@ -79,6 +79,7 @@
 		B2E837011709ED6300F31559 /* poedit-fuzzy.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F81709ED6300F31559 /* poedit-fuzzy.png */; };
 		B2E837021709ED6300F31559 /* poedit-update.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F91709ED6300F31559 /* poedit-update.png */; };
 		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
+		B2EC60A41812D9D40059756A /* icudt52l.dat in Resources */ = {isa = PBXBuildFile; fileRef = B2EC60A31812D9D40059756A /* icudt52l.dat */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
 		B2F287C5170DCC92004C1F41 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C3170DCC92004C1F41 /* COPYING */; };
@@ -246,6 +247,7 @@
 		B2E836F91709ED6300F31559 /* poedit-update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-update.png"; path = "toolbar-32/poedit-update.png"; sourceTree = "<group>"; };
 		B2E836FA1709ED6300F31559 /* poedit-validate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-validate.png"; path = "toolbar-32/poedit-validate.png"; sourceTree = "<group>"; };
 		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macosx/copy-translations.sh"; sourceTree = "<group>"; };
+		B2EC60A31812D9D40059756A /* icudt52l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt52l.dat; path = deps/icu4c/source/data/in/icudt52l.dat; sourceTree = "<group>"; };
 		B2F287C2170DCC92004C1F41 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = deps/gettext/AUTHORS; sourceTree = SOURCE_ROOT; };
 		B2F287C3170DCC92004C1F41 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = COPYING; path = deps/gettext/COPYING; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -364,6 +366,7 @@
 				B2E836DD1709ECD600F31559 /* dsa_pub.pem */,
 				B24ACD8316F6263900399242 /* Poedit.iconset */,
 				B28F1CA916F627170018AF7E /* GenericTranslation.iconset */,
+				B2EC60A31812D9D40059756A /* icudt52l.dat */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 				B29AE89817103992008D1F8A /* tm_update.gif in Resources */,
 				B29AE89917103992008D1F8A /* tm_update.xrc in Resources */,
 				B29AE89A17103992008D1F8A /* toolbar.xrc in Resources */,
+				B2EC60A41812D9D40059756A /* icudt52l.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,6 +862,7 @@
 					deps/custom_build/config,
 					deps/wx/include,
 					deps/boost,
+					"$(DEPS_BUILD_DIR)/icu/include",
 					"$(DEPS_BUILD_DIR)/db/include",
 				);
 				LIBRARY_SEARCH_PATHS = "";
@@ -906,6 +911,7 @@
 					deps/custom_build/config,
 					deps/wx/include,
 					deps/boost,
+					"$(DEPS_BUILD_DIR)/icu/include",
 					"$(DEPS_BUILD_DIR)/db/include",
 				);
 				LIBRARY_SEARCH_PATHS = "";
@@ -924,8 +930,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
-				OTHER_LDFLAGS = "-ldb_cxx";
+				LIBRARY_SEARCH_PATHS = (
+					"$(DEPS_BUILD_DIR)/icu/lib",
+					"$(DEPS_BUILD_DIR)/db/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-licuuc",
+					"-licudata",
+					"-ldb_cxx",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -939,8 +952,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
-				OTHER_LDFLAGS = "-ldb_cxx";
+				LIBRARY_SEARCH_PATHS = (
+					"$(DEPS_BUILD_DIR)/icu/lib",
+					"$(DEPS_BUILD_DIR)/db/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-licuuc",
+					"-licudata",
+					"-ldb_cxx",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
