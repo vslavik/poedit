@@ -149,7 +149,7 @@ class UnicodeStringAppendable;  // unicode/appendable.h
 #   define UNISTR_FROM_CHAR_EXPLICIT explicit
 # else
     // Empty by default for source code compatibility.
-#   define UNISTR_FROM_CHAR_EXPLICIT
+#   define UNISTR_FROM_CHAR_EXPLICIT explicit
 # endif
 #endif
 
@@ -169,7 +169,7 @@ class UnicodeStringAppendable;  // unicode/appendable.h
 #   define UNISTR_FROM_STRING_EXPLICIT explicit
 # else
     // Empty by default for source code compatibility.
-#   define UNISTR_FROM_STRING_EXPLICIT
+#   define UNISTR_FROM_STRING_EXPLICIT explicit
 # endif
 #endif
 
