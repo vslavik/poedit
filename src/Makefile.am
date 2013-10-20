@@ -8,6 +8,7 @@ RESOURCE_FILES = poedit_resource.o
 endif
 
 bin_PROGRAMS = poedit
+libexec_PROGRAMS = dump-legacy-tm
 
 poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  errorbar.cpp errorbar.h \
@@ -31,6 +32,9 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS)
+
+dump_legacy_tm_SOURCES = tm/dump_legacy_tm.cpp
+
 
 poedit_resource.o: poedit.rc
 	$(WINDRES) -i$(srcdir)/poedit.rc -o poedit_resource.o \
