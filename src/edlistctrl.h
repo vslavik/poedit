@@ -47,7 +47,7 @@ class PoeditListCtrl : public wxListView
                        const wxPoint &pos = wxDefaultPosition,
                        const wxSize &size = wxDefaultSize,
                        long style = wxLC_ICON,
-                       bool dispLines = false,
+                       bool dispIDs = false,
                        const wxValidator& validator = wxDefaultValidator,
                        const wxString &name = "listctrl");
 
@@ -63,7 +63,8 @@ class PoeditListCtrl : public wxListView
         void CatalogChanged(Catalog* catalog);
 
         virtual wxString OnGetItemText(long item, long column) const;
-        virtual wxListItemAttr * OnGetItemAttr(long item) const;
+        virtual wxListItemAttr *OnGetItemAttr(long item) const;
+        virtual wxListItemAttr *OnGetItemColumnAttr(long item, long column) const;
         virtual int OnGetItemImage(long item) const;
 
         /// Returns the list item index for the given catalog index
@@ -132,7 +133,7 @@ class PoeditListCtrl : public wxListView
         void ReadCatalog();
         void OnSize(wxSizeEvent& event);
 
-        bool m_displayLines;
+        bool m_displayIDs;
         unsigned m_colWidth;
 
         Catalog* m_catalog;
@@ -140,6 +141,7 @@ class PoeditListCtrl : public wxListView
         std::vector<int> m_mapListToCatalog;
         std::vector<int> m_mapCatalogToList;
 
+        wxListItemAttr m_attrId;
         wxListItemAttr m_attrNormal[2];
         wxListItemAttr m_attrUntranslated[2];
         wxListItemAttr m_attrFuzzy[2];

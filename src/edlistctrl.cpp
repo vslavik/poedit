@@ -174,13 +174,13 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
                const wxPoint &pos,
                const wxSize &size,
                long style,
-               bool dispLines,
+               bool dispIDs,
                const wxValidator& validator,
                const wxString &name)
      : wxListView(parent, id, pos, size, style | wxLC_VIRTUAL, validator, name)
 {
     m_catalog = NULL;
-    m_displayLines = dispLines;
+    m_displayIDs = dispIDs;
 
     sortOrder = SortOrder::Default();
 
@@ -282,6 +282,10 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     m_attrInvalid[0].SetBackgroundColour(gs_ErrorColor);
     m_attrInvalid[1].SetBackgroundColour(gs_ErrorColor);
 
+    // Use gray for IDs
+    if ( IsAlmostBlack(visual.colFg) )
+        m_attrId.SetTextColour(wxColour("#A1A1A1"));
+
     SetCustomFont(wxNullFont);
 }
 
@@ -315,7 +319,7 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
 
 void PoeditListCtrl::SetDisplayLines(bool dl)
 {
-    m_displayLines = dl;
+    m_displayIDs = dl;
     CreateColumns();
 }
 
@@ -324,21 +328,21 @@ void PoeditListCtrl::CreateColumns()
     DeleteAllColumns();
     InsertColumn(0, _("Source text"));
     InsertColumn(1, _("Translation"));
-    if (m_displayLines)
-        InsertColumn(2, _("Line"), wxLIST_FORMAT_RIGHT);
+    if (m_displayIDs)
+        InsertColumn(2, _("ID"), wxLIST_FORMAT_RIGHT);
     SizeColumns();
 }
 
 void PoeditListCtrl::SizeColumns()
 {
-    const int LINE_COL_SIZE = m_displayLines ? 50 : 0;
+    const int LINE_COL_SIZE = m_displayIDs ? 50 : 0;
 
     int w = GetSize().x
             - wxSystemSettings::GetMetric(wxSYS_VSCROLL_X) - 10
             - LINE_COL_SIZE;
     SetColumnWidth(0, w / 2);
     SetColumnWidth(1, w - w / 2);
-    if (m_displayLines)
+    if (m_displayIDs)
         SetColumnWidth(2, LINE_COL_SIZE);
 
     m_colWidth = (w/2) / GetCharWidth();
@@ -464,7 +468,7 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
             return trans;
         }
         case 2:
-            return wxString() << d.GetLineNumber();
+            return wxString() << d.GetId();
 
         default:
             return wxEmptyString;
@@ -488,6 +492,18 @@ wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
         return (wxListItemAttr*)&m_attrFuzzy[idx];
     else
         return (wxListItemAttr*)&m_attrNormal[idx];
+}
+
+wxListItemAttr *PoeditListCtrl::OnGetItemColumnAttr(long item, long column) const
+{
+    if (column == 2)
+    {
+        return (wxListItemAttr*)&m_attrId;
+    }
+    else
+    {
+        return OnGetItemAttr(item);
+    }
 }
 
 int PoeditListCtrl::OnGetItemImage(long item) const
