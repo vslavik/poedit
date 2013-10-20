@@ -277,6 +277,90 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B23D1F5B1814279D00E6B212 /* TM */ = {
+			isa = PBXGroup;
+			children = (
+				B28F1CD916F629D30018AF7E /* transmem.h */,
+				B28F1CD816F629D30018AF7E /* transmem.cpp */,
+				B28F1CDD16F629D30018AF7E /* transmemupd.h */,
+				B28F1CDC16F629D30018AF7E /* transmemupd.cpp */,
+				B28F1CDB16F629D30018AF7E /* transmemupd_wizard.h */,
+				B28F1CDA16F629D30018AF7E /* transmemupd_wizard.cpp */,
+			);
+			name = TM;
+			path = src;
+			sourceTree = "<group>";
+		};
+		B23D1F5C1814283200E6B212 /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				B28F1CB116F629D30018AF7E /* attentionbar.cpp */,
+				B28F1CB216F629D30018AF7E /* attentionbar.h */,
+				B28F1CB316F629D30018AF7E /* cat_sorting.cpp */,
+				B28F1CB416F629D30018AF7E /* cat_sorting.h */,
+				B28F1CB616F629D30018AF7E /* chooselang.cpp */,
+				B28F1CAD16F629D30018AF7E /* chooselang.h */,
+				B28F1CB716F629D30018AF7E /* commentdlg.cpp */,
+				B28F1CB816F629D30018AF7E /* commentdlg.h */,
+				B28F1CB916F629D30018AF7E /* digger.cpp */,
+				B28F1CBA16F629D30018AF7E /* digger.h */,
+				B28F1CE516F629D30018AF7E /* digits.h */,
+				B28F1CAE16F629D30018AF7E /* edapp.cpp */,
+				B28F1CAF16F629D30018AF7E /* edapp.h */,
+				B28F1CB016F629D30018AF7E /* edframe.cpp */,
+				B28F1CBB16F629D30018AF7E /* edframe.h */,
+				B28F1CBC16F629D30018AF7E /* edlistctrl.cpp */,
+				B28F1CBD16F629D30018AF7E /* edlistctrl.h */,
+				B28F1CBE16F629D30018AF7E /* errorbar.cpp */,
+				B28F1CBF16F629D30018AF7E /* errorbar.h */,
+				B29AE89B17105306008D1F8A /* errors.h */,
+				B28F1CE216F629D30018AF7E /* export_html.cpp */,
+				B28F1CC016F629D30018AF7E /* fileviewer.cpp */,
+				B28F1CC116F629D30018AF7E /* fileviewer.h */,
+				B28F1CC216F629D30018AF7E /* findframe.cpp */,
+				B28F1CC316F629D30018AF7E /* findframe.h */,
+				B28F1CC416F629D30018AF7E /* gexecute.cpp */,
+				B28F1CC516F629D30018AF7E /* gexecute.h */,
+				B28F1CC616F629D30018AF7E /* icons.cpp */,
+				B28F1CC716F629D30018AF7E /* icons.h */,
+				B28F1CCA16F629D30018AF7E /* manager.cpp */,
+				B28F1CCB16F629D30018AF7E /* manager.h */,
+				B28F1CCC16F629D30018AF7E /* osx_helpers.h */,
+				B28F1CCD16F629D30018AF7E /* osx_helpers.m */,
+				B28F1CCE16F629D30018AF7E /* parser.cpp */,
+				B28F1CCF16F629D30018AF7E /* parser.h */,
+				B28F1CD016F629D30018AF7E /* prefsdlg.cpp */,
+				B28F1CD116F629D30018AF7E /* prefsdlg.h */,
+				B28F1CD216F629D30018AF7E /* progressinfo.cpp */,
+				B28F1CD316F629D30018AF7E /* progressinfo.h */,
+				B28F1CD416F629D30018AF7E /* propertiesdlg.cpp */,
+				B28F1CD516F629D30018AF7E /* propertiesdlg.h */,
+				B28F1CD616F629D30018AF7E /* summarydlg.cpp */,
+				B28F1CD716F629D30018AF7E /* summarydlg.h */,
+				B28F1CDE16F629D30018AF7E /* utility.cpp */,
+				B28F1CDF16F629D30018AF7E /* utility.h */,
+			);
+			name = GUI;
+			path = src;
+			sourceTree = "<group>";
+		};
+		B23D1F5D1814283B00E6B212 /* Non-GUI */ = {
+			isa = PBXGroup;
+			children = (
+				B28F1CB516F629D30018AF7E /* catalog.h */,
+				B28F1CAC16F629D30018AF7E /* catalog.cpp */,
+				B28F1CC916F629D30018AF7E /* isocodes.h */,
+				B28F1CC816F629D30018AF7E /* isocodes.cpp */,
+				B22C5F0917DDC67400ECAFD1 /* lang_info.h */,
+				B22C5F0817DDC67400ECAFD1 /* lang_info.cpp */,
+				B28F1CE416F629D30018AF7E /* pl_evaluate.h */,
+				B28F1CE316F629D30018AF7E /* pl_evaluate.cpp */,
+				B28F1CE016F629D30018AF7E /* version.h */,
+			);
+			name = "Non-GUI";
+			path = src;
+			sourceTree = "<group>";
+		};
 		B248B2E1170D765100EBA58E /* GettextTools */ = {
 			isa = PBXGroup;
 			children = (
@@ -337,8 +421,9 @@
 		B24ACD6416F6201F00399242 /* Poedit */ = {
 			isa = PBXGroup;
 			children = (
-				B2E837041709F8EC00F31559 /* Headers */,
-				B28F1CAB16F629890018AF7E /* Sources */,
+				B23D1F5D1814283B00E6B212 /* Non-GUI */,
+				B23D1F5B1814279D00E6B212 /* TM */,
+				B23D1F5C1814283200E6B212 /* GUI */,
 				B27EB05C1709DA2B009C1328 /* XRC Resources */,
 				B24ACD7E16F6252600399242 /* Resources */,
 				B24ACD6516F6201F00399242 /* Supporting Files */,
@@ -387,43 +472,6 @@
 			path = src/resources;
 			sourceTree = SOURCE_ROOT;
 		};
-		B28F1CAB16F629890018AF7E /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				B28F1CB116F629D30018AF7E /* attentionbar.cpp */,
-				B28F1CB316F629D30018AF7E /* cat_sorting.cpp */,
-				B28F1CAC16F629D30018AF7E /* catalog.cpp */,
-				B28F1CB616F629D30018AF7E /* chooselang.cpp */,
-				B28F1CB716F629D30018AF7E /* commentdlg.cpp */,
-				B28F1CB916F629D30018AF7E /* digger.cpp */,
-				B28F1CAE16F629D30018AF7E /* edapp.cpp */,
-				B28F1CB016F629D30018AF7E /* edframe.cpp */,
-				B28F1CBC16F629D30018AF7E /* edlistctrl.cpp */,
-				B28F1CBE16F629D30018AF7E /* errorbar.cpp */,
-				B28F1CE216F629D30018AF7E /* export_html.cpp */,
-				B28F1CC016F629D30018AF7E /* fileviewer.cpp */,
-				B28F1CC216F629D30018AF7E /* findframe.cpp */,
-				B28F1CC416F629D30018AF7E /* gexecute.cpp */,
-				B28F1CC616F629D30018AF7E /* icons.cpp */,
-				B28F1CC816F629D30018AF7E /* isocodes.cpp */,
-				B22C5F0817DDC67400ECAFD1 /* lang_info.cpp */,
-				B28F1CCA16F629D30018AF7E /* manager.cpp */,
-				B28F1CCD16F629D30018AF7E /* osx_helpers.m */,
-				B28F1CCE16F629D30018AF7E /* parser.cpp */,
-				B28F1CE316F629D30018AF7E /* pl_evaluate.cpp */,
-				B28F1CD016F629D30018AF7E /* prefsdlg.cpp */,
-				B28F1CD216F629D30018AF7E /* progressinfo.cpp */,
-				B28F1CD416F629D30018AF7E /* propertiesdlg.cpp */,
-				B28F1CD616F629D30018AF7E /* summarydlg.cpp */,
-				B28F1CD816F629D30018AF7E /* transmem.cpp */,
-				B28F1CDC16F629D30018AF7E /* transmemupd.cpp */,
-				B28F1CDA16F629D30018AF7E /* transmemupd_wizard.cpp */,
-				B28F1CDE16F629D30018AF7E /* utility.cpp */,
-			);
-			name = Sources;
-			path = src;
-			sourceTree = "<group>";
-		};
 		B2E836DF1709ECF100F31559 /* icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -449,45 +497,6 @@
 			name = icons;
 			path = icons/ui;
 			sourceTree = SOURCE_ROOT;
-		};
-		B2E837041709F8EC00F31559 /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				B28F1CB216F629D30018AF7E /* attentionbar.h */,
-				B28F1CB416F629D30018AF7E /* cat_sorting.h */,
-				B28F1CB516F629D30018AF7E /* catalog.h */,
-				B28F1CAD16F629D30018AF7E /* chooselang.h */,
-				B28F1CB816F629D30018AF7E /* commentdlg.h */,
-				B28F1CBA16F629D30018AF7E /* digger.h */,
-				B28F1CE516F629D30018AF7E /* digits.h */,
-				B28F1CAF16F629D30018AF7E /* edapp.h */,
-				B28F1CBB16F629D30018AF7E /* edframe.h */,
-				B28F1CBD16F629D30018AF7E /* edlistctrl.h */,
-				B28F1CBF16F629D30018AF7E /* errorbar.h */,
-				B29AE89B17105306008D1F8A /* errors.h */,
-				B28F1CC116F629D30018AF7E /* fileviewer.h */,
-				B28F1CC316F629D30018AF7E /* findframe.h */,
-				B28F1CC516F629D30018AF7E /* gexecute.h */,
-				B28F1CC716F629D30018AF7E /* icons.h */,
-				B28F1CC916F629D30018AF7E /* isocodes.h */,
-				B22C5F0917DDC67400ECAFD1 /* lang_info.h */,
-				B28F1CCB16F629D30018AF7E /* manager.h */,
-				B28F1CCC16F629D30018AF7E /* osx_helpers.h */,
-				B28F1CCF16F629D30018AF7E /* parser.h */,
-				B28F1CE416F629D30018AF7E /* pl_evaluate.h */,
-				B28F1CD116F629D30018AF7E /* prefsdlg.h */,
-				B28F1CD316F629D30018AF7E /* progressinfo.h */,
-				B28F1CD516F629D30018AF7E /* propertiesdlg.h */,
-				B28F1CD716F629D30018AF7E /* summarydlg.h */,
-				B28F1CD916F629D30018AF7E /* transmem.h */,
-				B28F1CDD16F629D30018AF7E /* transmemupd.h */,
-				B28F1CDB16F629D30018AF7E /* transmemupd_wizard.h */,
-				B28F1CDF16F629D30018AF7E /* utility.h */,
-				B28F1CE016F629D30018AF7E /* version.h */,
-			);
-			name = Headers;
-			path = src;
-			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
