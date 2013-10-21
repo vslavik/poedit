@@ -2,13 +2,6 @@
 
 set -e
 
-make_msgfmt_wx()
-{
-    if [ -d deps/wx/locale ] ; then
-        make -C deps/wx/locale allmo
-    fi
-}
-
 make_msgfmt()
 {
     for i in locales/*.po ; do
@@ -19,11 +12,9 @@ make_msgfmt()
 echo " - aclocal" && aclocal -I admin && \
 echo " - automake" && automake --foreign -a -c -f && \
 echo " - autoconf" && autoconf && \
-echo " - bakefile_gen" && (cd win32 ; bakefile_gen) && \
 \
 echo " - generate-docs.make" && make -C docs  -f generate-docs.make && \
 \
-echo " - msgfmt (wx)" && make_msgfmt_wx && \
 echo " - msgfmt" && make_msgfmt && \
 exit 0
 
