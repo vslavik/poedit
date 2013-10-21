@@ -26,8 +26,6 @@
 #ifndef _TRANSMEM_H_
 #define _TRANSMEM_H_
 
-#ifdef USE_TRANSMEM
-
 class WXDLLIMPEXP_FWD_BASE wxString;
 
 class DbTrans;
@@ -164,7 +162,5 @@ class TranslationMemory
         int      m_refCnt;
 };
 
-
-#endif // USE_TRANSMEM
 
 #endif // _TRANSMEM_H_

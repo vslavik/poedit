@@ -23,8 +23,6 @@
  *
  */
 
-#ifdef USE_TRANSMEM
-
 #include <wx/string.h>
 #include <wx/tokenzr.h>
 #include <wx/log.h>
@@ -237,4 +235,3 @@ bool TranslationMemoryUpdater::UpdateFromCatalog(const wxString& filename)
     return true;
 }
 
-#endif //USE_TRANSMEM

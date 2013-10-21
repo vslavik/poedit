@@ -55,31 +55,8 @@
 PreferencesDialog::PreferencesDialog(wxWindow *parent)
 {
     wxXmlResource::Get()->LoadDialog(this, parent, "preferences");
-#ifdef USE_TRANSMEM
-    wxXmlResource::Get()->AttachUnknownControl("tm_langs", 
+    wxXmlResource::Get()->AttachUnknownControl("tm_langs",
                 new wxEditableListBox(this, -1, _("My Languages")));
-#else
-    // remove "Translation Memory" page if support not compiled-in
-	// Must first look for the index of the TM page and then delete
-	// it from the notebook.
-	// We must rely on the fact that the TM page has a name from
-	// the XRC resources because it's text may have been localized.
-	wxNotebook* nb = XRCCTRL(*this, "notebook", wxNotebook);
-	wxNotebookPage* tmPage = XRCCTRL(*this, "tm_page", wxWindow);
-	int tmIndex = -1;
-	unsigned i = 0;
-	while (i < nb->GetPageCount() && tmIndex == -1)
-	{
-		if (nb->GetPage(i) == tmPage)
-			tmIndex = i;
-		i++;
-	}
-
-	// this test may be a bit superfluous, but is a safeguard in case 
-	// the page isn't even available from the resources
-	if (tmIndex != -1)	
-		XRCCTRL(*this, "notebook", wxNotebook)->DeletePage(tmIndex);
-#endif
 
 #if !USE_SPELLCHECKING
     // remove "Automatic spellchecking" checkbox:
@@ -154,7 +131,6 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     else
         list->SetSelection(0);
 
-#ifdef USE_TRANSMEM        
     wxStringTokenizer tkn(cfg->Read("TM/languages", wxEmptyString), ":");
     wxArrayString langs;
     while (tkn.HasMoreTokens()) langs.Add(tkn.GetNextToken());
@@ -166,7 +142,6 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 (int)cfg->Read("TM/max_delta", 2));
     XRCCTRL(*this, "tm_automatic", wxCheckBox)->SetValue(
                 (int)cfg->Read("use_tm_when_updating", true));
-#endif
 
 #ifdef USE_SPARKLE
     XRCCTRL(*this, "auto_updates", wxCheckBox)->SetValue(
@@ -226,7 +201,6 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                
     m_parsers.Write(cfg);
 
-#ifdef USE_TRANSMEM
     wxArrayString langs;
     XRCCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
     wxString languages;
@@ -242,7 +216,6 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 (long)XRCCTRL(*this, "tm_delta", wxSpinCtrl)->GetValue());
     cfg->Write("use_tm_when_updating", 
                 XRCCTRL(*this, "tm_automatic", wxCheckBox)->GetValue());
-#endif
 
 #ifdef USE_SPARKLE
     UserDefaults_SetBoolValue("SUEnableAutomaticChecks",
@@ -267,10 +240,8 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
    EVT_BUTTON(XRCID("parser_new"), PreferencesDialog::OnNewParser)
    EVT_BUTTON(XRCID("parser_edit"), PreferencesDialog::OnEditParser)
    EVT_BUTTON(XRCID("parser_delete"), PreferencesDialog::OnDeleteParser)
-#ifdef USE_TRANSMEM
    EVT_BUTTON(XRCID("tm_addlang"), PreferencesDialog::OnTMAddLang)
    EVT_BUTTON(XRCID("tm_generate"), PreferencesDialog::OnTMGenerate)
-#endif
 #if NEED_CHOOSELANG_UI
    EVT_BUTTON(XRCID("ui_language"), PreferencesDialog::OnUILanguage)
 #endif
@@ -364,8 +335,6 @@ void PreferencesDialog::OnDeleteParser(wxCommandEvent&)
     }
 }
 
-#ifdef USE_TRANSMEM
-
 void PreferencesDialog::OnTMAddLang(wxCommandEvent&)
 {
     wxArrayString lngs;
@@ -393,4 +362,3 @@ void PreferencesDialog::OnTMGenerate(wxCommandEvent&)
     RunTMUpdateWizard(this, langs);
 }
 
-#endif // USE_TRANSMEM

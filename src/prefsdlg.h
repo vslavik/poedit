@@ -54,10 +54,8 @@ class PreferencesDialog : public wxDialog
     private:
         DECLARE_EVENT_TABLE()
 
-#ifdef USE_TRANSMEM
         void OnTMAddLang(wxCommandEvent& event);
         void OnTMGenerate(wxCommandEvent& event);
-#endif
 
 #if NEED_CHOOSELANG_UI
         void OnUILanguage(wxCommandEvent& event);

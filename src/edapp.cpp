@@ -172,10 +172,8 @@ bool PoeditApp::OnInit()
 
     FileHistory().Load(*wxConfig::Get());
 
-#ifdef USE_TRANSMEM
     // NB: It's important to do this before TM is used for the first time.
     TranslationMemory::MoveLegacyDbIfNeeded();
-#endif
 
     // NB: opening files or creating empty window is handled differently on
     //     Macs, using MacOpenFiles() and MacNewFile(), so don't create empty

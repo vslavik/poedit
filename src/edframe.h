@@ -159,10 +159,8 @@ class PoeditFrame : public wxFrame
         /// Returns popup menu for given catalog entry.
         wxMenu *GetPopupMenu(int item);
 
-#ifdef USE_TRANSMEM
         /// Initializes translation memory, if enabled
         TranslationMemory *GetTransMem();
-#endif
 
         // (Re)initializes spellchecker, if needed
         void InitSpellchecker();
@@ -218,11 +216,11 @@ private:
         void OnSortBySource(wxCommandEvent&);
         void OnSortByTranslation(wxCommandEvent&);
         void OnSortUntranslatedFirst(wxCommandEvent&);
-#ifdef USE_TRANSMEM
+
         void OnAutoTranslate(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
         bool AutoTranslateCatalog();
-#endif
+
         void OnPurgeDeleted(wxCommandEvent& event);
 
         void OnGoToBookmark(wxCommandEvent& event);
@@ -259,11 +257,9 @@ private:
         Catalog *m_catalog;
         wxString m_fileName;
 
-#ifdef USE_TRANSMEM
         TranslationMemory *m_transMem;
         bool m_transMemLoaded;
         wxArrayString m_autoTranslations;
-#endif
 
         wxPanel *m_bottomLeftPanel;
         wxPanel *m_bottomRightPanel;

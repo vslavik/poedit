@@ -19,10 +19,6 @@ m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 WX_CONFIG_OPTIONS
 
-AC_ARG_ENABLE(transmem,
-              AS_HELP_STRING([--enable-transmem],
-                             [Enable translation memory (default: yes)]),
-              USE_TRANSMEM="$enableval", USE_TRANSMEM="yes")
 AC_ARG_ENABLE(spellchecking,
               AS_HELP_STRING([--enable-spellchecking],
                              [Enable spell checking (default: yes)]),
@@ -154,18 +150,14 @@ fi
 
 AM_CONDITIONAL(USE_WINDOWS, test $use_windows = yes)
 
-if test x$USE_TRANSMEM != xno ; then
-    AX_BERKELEY_DB_CXX(4.7,
-    [
-        AC_DEFINE(USE_TRANSMEM)
-        AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
-        LIBS="$LIBS $DB_LIBS"
-   ],
-   [
-      USE_TRANSMEM=no
-      AC_MSG_WARN([cannot find Berkeley DB >= 4.7, Poedit will build w/o translation memory feature])
-   ])
-fi
+AX_BERKELEY_DB_CXX(4.7,
+[
+    AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
+    LIBS="$LIBS $DB_LIBS"
+],
+[
+  AC_MSG_ERROR([cannot find required Berkeley DB >= 4.7])
+])
 
 
 APPCAST_SUFFIX=""
@@ -206,6 +198,5 @@ echo "
 Configured $PACKAGE-$VERSION for $host
 
     Debugging information:      $USE_DEBUG
-    Translation memory:         $USE_TRANSMEM
     Spellchecking:              $USE_SPELLCHECKING"
 echo ""

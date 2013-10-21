@@ -384,11 +384,9 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("go_prev_unfinished"), PoeditFrame::OnPrevUnfinished)
    EVT_MENU           (XRCID("go_next_unfinished"), PoeditFrame::OnNextUnfinished)
    EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
-#ifdef USE_TRANSMEM
    EVT_MENU_RANGE     (ID_POPUP_TRANS, ID_POPUP_TRANS + 999,
                        PoeditFrame::OnAutoTranslate)
    EVT_MENU           (XRCID("menu_auto_translate"), PoeditFrame::OnAutoTranslateAll)
-#endif
    EVT_MENU_RANGE     (ID_BOOKMARK_GO, ID_BOOKMARK_GO + 9,
                        PoeditFrame::OnGoToBookmark)
    EVT_MENU_RANGE     (ID_BOOKMARK_SET, ID_BOOKMARK_SET + 9,
@@ -448,10 +446,8 @@ PoeditFrame::PoeditFrame() :
             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
             "mainwin"),
     m_catalog(NULL),
-#ifdef USE_TRANSMEM
     m_transMem(NULL),
     m_transMemLoaded(false),
-#endif
     m_list(NULL),
     m_modified(false),
     m_hasObsoleteItems(false),
@@ -510,9 +506,6 @@ PoeditFrame::PoeditFrame() :
         FileHistory().UseMenu(m_menuForHistory);
         FileHistory().AddFilesToMenu(m_menuForHistory);
         SetMenuBar(MenuBar);
-#ifndef USE_TRANSMEM
-        MenuBar->Enable(XRCID("menu_auto_translate"), false);
-#endif
         AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
 
 #if USE_SPARKLE
@@ -743,10 +736,8 @@ PoeditFrame::~PoeditFrame()
     // write all changes:
     cfg->Flush();
 
-#ifdef USE_TRANSMEM
     if (m_transMem)
         m_transMem->Release();
-#endif
 
     delete m_catalog;
     m_catalog = NULL;
@@ -932,7 +923,6 @@ void PoeditFrame::InitSpellchecker()
 
 
 
-#ifdef USE_TRANSMEM
 TranslationMemory *PoeditFrame::GetTransMem()
 {
     wxConfigBase *cfg = wxConfig::Get();
@@ -978,7 +968,6 @@ TranslationMemory *PoeditFrame::GetTransMem()
         return m_transMem;
     }
 }
-#endif
 
 
 void PoeditFrame::OnCloseCmd(wxCommandEvent&)
@@ -1286,14 +1275,12 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
             UpdateTitle();
             UpdateStatusBar();
 
-#ifdef USE_TRANSMEM
             if (m_transMem)
             {
                 m_transMem->Release();
                 m_transMem = NULL;
             }
             m_transMemLoaded = false;
-#endif
 
             InitSpellchecker();
         });
@@ -1394,13 +1381,11 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
 
     UpdateCatalog(pot_file);
 
-#ifdef USE_TRANSMEM
     if (wxConfig::Get()->Read("use_tm_when_updating", true) &&
         GetTransMem() != NULL)
     {
         AutoTranslateCatalog();
     }
-#endif
 
     RefreshControls();
 }
@@ -1958,14 +1943,12 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
     // confused
     m_list->CatalogChanged(m_catalog);
 
-#ifdef USE_TRANSMEM
     if (m_transMem)
     {
         m_transMem->Release();
         m_transMem = NULL;
     }
     m_transMemLoaded = false;
-#endif
 
     m_fileName = filename;
     m_modified = false;
@@ -2317,7 +2300,6 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     m_fileName = catalog;
     m_modified = false;
 
-#ifdef USE_TRANSMEM
     if (GetTransMem())
     {
         TranslationMemory *tm = GetTransMem();
@@ -2348,7 +2330,6 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
             }
         }
     }
-#endif
 
     FileHistory().AddFileToHistory(m_fileName);
     UpdateTitle();
@@ -2421,7 +2402,6 @@ void PoeditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
 }
 
 
-#ifdef USE_TRANSMEM
 void PoeditFrame::OnAutoTranslate(wxCommandEvent& event)
 {
     CatalogItem *entry = GetCurrentItem();
@@ -2491,7 +2471,7 @@ bool PoeditFrame::AutoTranslateCatalog()
 
     return true;
 }
-#endif
+
 
 wxMenu *PoeditFrame::GetPopupMenu(int item)
 {
@@ -2523,7 +2503,6 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                  #endif
                    + "\tCtrl+M");
 
-#ifdef USE_TRANSMEM
     if (GetTransMem())
     {
         wxBusyCursor bcur;
@@ -2567,7 +2546,6 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
             }
         }
     }
-#endif
 
     if ( !refs.empty() )
     {

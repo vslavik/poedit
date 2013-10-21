@@ -26,15 +26,11 @@
 #ifndef _TRANSMEMUPD_WIZARD_H_
 #define _TRANSMEMUPD_WIZARD_H_
 
-#ifdef USE_TRANSMEM
-
 class WXDLLIMPEXP_FWD_BASE wxString;
 class WXDLLIMPEXP_FWD_BASE wxArrayString;
 class WXDLLIMPEXP_FWD_CORE wxWindow;
 
 /// Runs a wizard to setup update of TM  with languages \a langs.
 void RunTMUpdateWizard(wxWindow *parent, const wxArrayString& langs);
-
-#endif // USE_TRANSMEM
 
 #endif // _TRANSMEMUPD_WIZARD_H_

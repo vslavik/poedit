@@ -150,8 +150,6 @@
  */
 
 
-#ifdef USE_TRANSMEM
-
 #include <wx/string.h>
 #include <wx/tokenzr.h>
 #include <wx/log.h>
@@ -1204,6 +1202,4 @@ void TranslationMemory::MoveLegacyDbIfNeeded()
         dlg.ShowModal();
     }
 }
-
-#endif // USE_TRANSMEM
 

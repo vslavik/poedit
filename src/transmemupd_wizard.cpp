@@ -23,8 +23,6 @@
  *
  */
 
-#ifdef USE_TRANSMEM
-
 #include <wx/string.h>
 #include <wx/tokenzr.h>
 #include <wx/config.h>
@@ -214,5 +212,3 @@ void RunTMUpdateWizard(wxWindow *parent, const wxArrayString& langs)
         wizard.Destroy();
     }
 }
-
-#endif //USE_TRANSMEM
