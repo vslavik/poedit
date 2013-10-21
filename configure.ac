@@ -159,6 +159,15 @@ AX_BERKELEY_DB_CXX(4.7,
   AC_MSG_ERROR([cannot find required Berkeley DB >= 4.7])
 ])
 
+PKG_CHECK_MODULES([LUCENE], [liblucene++],
+        [
+            CXXFLAGS="$CXXFLAGS $LUCENE_CFLAGS"
+            LIBS="$LIBS $LUCENE_LIBS"
+        ],
+        [
+            AC_MSG_ERROR([missing Lucene++ library])
+        ])
+
 
 APPCAST_SUFFIX=""
 if echo "$VERSION" | grep -q '\(beta\|rc\)' ; then

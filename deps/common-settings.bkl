@@ -1,0 +1,10 @@
+
+toolsets = vs2013;
+
+if ( $toolset == vs2013 ) {
+    defines += _CRT_SECURE_NO_WARNINGS;
+}
+
+// Build binaries compatible with Windows XP (SP3)
+vs2013.option.Configuration.PlatformToolset = v120_xp;
+vs2013.generate-solution = false;
