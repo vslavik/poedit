@@ -162,9 +162,7 @@
 /* #undef HAVE_GETUID */
 
 /* Define to 1 if building Hash access method. */
-#ifndef HAVE_SMALLBUILD
 #define HAVE_HASH 1
-#endif
 
 /* Define to 1 if you have the `hstrerror' function. */
 /* #undef HAVE_HSTRERROR */
