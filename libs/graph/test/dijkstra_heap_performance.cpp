@@ -117,7 +117,9 @@ int main(int argc, char* argv[])
   dijkstra_relaxed_heap = false;
 #endif
   dijkstra_shortest_paths(g, vertex(0, g),
-                          distance_map(&binary_heap_distances[0]));
+                          distance_map(
+                            boost::make_iterator_property_map(
+                              binary_heap_distances.begin(), get(boost::vertex_index, g))));
   double binary_heap_time = t.elapsed();
   std::cout << binary_heap_time << " seconds.\n";
 
@@ -135,7 +137,9 @@ int main(int argc, char* argv[])
   dijkstra_relaxed_heap = true;
 #endif
   dijkstra_shortest_paths(g, vertex(0, g),
-                          distance_map(&relaxed_heap_distances[0]));
+                          distance_map(
+                            boost::make_iterator_property_map(
+                              relaxed_heap_distances.begin(), get(boost::vertex_index, g))));
   double relaxed_heap_time = t.elapsed();
   std::cout << relaxed_heap_time << " seconds.\n"
             << "Speedup = " << (binary_heap_time / relaxed_heap_time) << ".\n";
@@ -159,7 +163,7 @@ int main(int argc, char* argv[])
   dijkstra_shortest_paths_no_color_map
     (g, vertex(0, g),
      boost::dummy_property_map(),
-     boost::make_iterator_property_map(&no_color_map_distances[0],
+     boost::make_iterator_property_map(no_color_map_distances.begin(),
                                        get(boost::vertex_index, g),
                                        0.),
      get(boost::edge_weight, g),

@@ -6,7 +6,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/config for the most recent version.//
-//  Revision $Id: no_static_assert_pass.cpp 79537 2012-07-15 15:59:05Z marshall $
+//  Revision $Id: no_static_assert_pass.cpp 85088 2013-07-20 17:17:10Z andysem $
 //
 
 
@@ -27,11 +27,11 @@
 #ifndef BOOST_NO_CXX11_STATIC_ASSERT
 #include "boost_no_static_assert.ipp"
 #else
-namespace boost_no_static_assert = empty_boost;
+namespace boost_no_cxx11_static_assert = empty_boost;
 #endif
 
 int main( int, char *[] )
 {
-   return boost_no_static_assert::test();
+   return boost_no_cxx11_static_assert::test();
 }
 

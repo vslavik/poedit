@@ -45,8 +45,8 @@ local doxygen_params =
 #        <doxygen:param>EXCLUDE_SYMBOLS="aux aux::*"
         <doxygen:param>"PREDEFINED=BOOST_LOG_DOXYGEN_PASS \\
                         BOOST_LOG_NO_VTABLE= \\
-                        BOOST_LOG_VISIBLE= \\
-                        BOOST_LOG_FORCEINLINE=inline \\
+                        BOOST_SYMBOL_VISIBLE= \\
+                        BOOST_FORCEINLINE=inline \\
                         BOOST_STATIC_ASSERT(x)= \\
                         BOOST_STATIC_ASSERT_MSG(x,y)= \\
                         BOOST_RV_REF(x)=\"x&&\" \\
@@ -67,8 +67,9 @@ local doxygen_params =
                         BOOST_LOG_NAMESPACE=log \\
                         BOOST_LOG_OPEN_NAMESPACE=\"namespace log {\" \\
                         BOOST_LOG_CLOSE_NAMESPACE=\"}\" \\
-                        BOOST_LOG_DEFAULTED_FUNCTION(x,y)=\"x = default;\" \\
-                        BOOST_LOG_DELETED_FUNCTION(x)=\"x = delete;\" \\
+                        BOOST_DEFAULTED_FUNCTION(x,y)=\"x = default;\" \\
+                        BOOST_DELETED_FUNCTION(x)=\"x = delete;\" \\
+                        BOOST_EXPLICIT_OPERATOR_BOOL()=\"explicit operator bool() const;\" \\
                         BOOST_LOG_USE_CHAR \\
                         BOOST_LOG_USE_WCHAR_T \\
                         BOOST_LOG_API= \\

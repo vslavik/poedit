@@ -18,7 +18,7 @@
 
 namespace boost { namespace fusion
 {
-    struct nil;
+    struct nil_;
     struct void_;
 }}
 
@@ -61,7 +61,7 @@ namespace boost { namespace fusion { namespace detail
     template <>
     struct list_to_cons<BOOST_PP_ENUM(FUSION_MAX_LIST_SIZE, FUSION_VOID, _)>
     {
-        typedef nil type;
+        typedef nil_ type;
     };
 }}}
 

@@ -36,7 +36,6 @@ struct negative_tgamma_ratio
 template <class Real, class T>
 void do_test_tgamma_delta_ratio(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
@@ -69,7 +68,6 @@ void do_test_tgamma_delta_ratio(const T& data, const char* type_name, const char
 template <class Real, class T>
 void do_test_tgamma_ratio(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);

@@ -71,3 +71,6 @@ jump_fcontext:
                                     @ and as first arg in context function
     ldmia   a2, {v1-v8,sp-pc}       @ restore v1-V8,SP-PC
 .size jump_fcontext,.-jump_fcontext
+
+/* Mark that we don't need executable stack.  */
+.section .note.GNU-stack,"",%progbits

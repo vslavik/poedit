@@ -354,6 +354,35 @@ void test_spots(RealType)
          static_cast<RealType>(1.42262528146180931868169289781115099L),    // t.
          tolerance);
 
+      if(boost::is_floating_point<RealType>::value)
+      {
+         BOOST_CHECK_CLOSE(boost::math::cdf(
+            students_t_distribution<RealType>(1e30f), 
+               boost::math::quantile(
+                  students_t_distribution<RealType>(1e30f), static_cast<RealType>(0.25f))), 
+            static_cast<RealType>(0.25f), tolerance);
+         BOOST_CHECK_CLOSE(boost::math::cdf(
+            students_t_distribution<RealType>(1e20f), 
+               boost::math::quantile(
+                  students_t_distribution<RealType>(1e20f), static_cast<RealType>(0.25f))), 
+            static_cast<RealType>(0.25f), tolerance);
+         BOOST_CHECK_CLOSE(boost::math::cdf(
+            students_t_distribution<RealType>(static_cast<RealType>(0x7FFFFFFF)), 
+               boost::math::quantile(
+                  students_t_distribution<RealType>(static_cast<RealType>(0x7FFFFFFF)), static_cast<RealType>(0.25f))), 
+            static_cast<RealType>(0.25f), tolerance);
+         BOOST_CHECK_CLOSE(boost::math::cdf(
+            students_t_distribution<RealType>(static_cast<RealType>(0x10000000)), 
+               boost::math::quantile(
+                  students_t_distribution<RealType>(static_cast<RealType>(0x10000000)), static_cast<RealType>(0.25f))), 
+            static_cast<RealType>(0.25f), tolerance);
+         BOOST_CHECK_CLOSE(boost::math::cdf(
+            students_t_distribution<RealType>(static_cast<RealType>(0x0fffffff)), 
+               boost::math::quantile(
+                  students_t_distribution<RealType>(static_cast<RealType>(0x0fffffff)), static_cast<RealType>(0.25f))), 
+            static_cast<RealType>(0.25f), tolerance);
+      }
+
   // Student's t pdf tests.
   // for PDF checks, use 100 eps tolerance expressed as a percent:
    tolerance = boost::math::tools::epsilon<RealType>() * 10000;
@@ -634,45 +663,45 @@ void test_spots(RealType)
   if(std::numeric_limits<RealType>::has_quiet_NaN)
   {
   // Mean
-    BOOST_CHECK(boost::math::isnan(mean(ignore_error_students_t(-1))));
-    BOOST_CHECK(boost::math::isnan(mean(ignore_error_students_t(0))));
-    BOOST_CHECK(boost::math::isnan(mean(ignore_error_students_t(1))));
+    BOOST_CHECK((boost::math::isnan)(mean(ignore_error_students_t(-1))));
+    BOOST_CHECK((boost::math::isnan)(mean(ignore_error_students_t(0))));
+    BOOST_CHECK((boost::math::isnan)(mean(ignore_error_students_t(1))));
 
     // Variance
-    BOOST_CHECK(boost::math::isnan(variance(ignore_error_students_t(std::numeric_limits<RealType>::quiet_NaN()))));
-    BOOST_CHECK(boost::math::isnan(variance(ignore_error_students_t(-1))));
-    BOOST_CHECK(boost::math::isnan(variance(ignore_error_students_t(0))));
-    BOOST_CHECK(boost::math::isnan(variance(ignore_error_students_t(1))));
-    BOOST_CHECK(boost::math::isnan(variance(ignore_error_students_t(static_cast<RealType>(1.7L)))));
-    BOOST_CHECK(boost::math::isnan(variance(ignore_error_students_t(2))));
+    BOOST_CHECK((boost::math::isnan)(variance(ignore_error_students_t(std::numeric_limits<RealType>::quiet_NaN()))));
+    BOOST_CHECK((boost::math::isnan)(variance(ignore_error_students_t(-1))));
+    BOOST_CHECK((boost::math::isnan)(variance(ignore_error_students_t(0))));
+    BOOST_CHECK((boost::math::isnan)(variance(ignore_error_students_t(1))));
+    BOOST_CHECK((boost::math::isnan)(variance(ignore_error_students_t(static_cast<RealType>(1.7L)))));
+    BOOST_CHECK((boost::math::isnan)(variance(ignore_error_students_t(2))));
 
   // Skewness
-    BOOST_CHECK(boost::math::isnan(skewness(ignore_error_students_t(std::numeric_limits<RealType>::quiet_NaN()))));
-    BOOST_CHECK(boost::math::isnan(skewness(ignore_error_students_t(-1))));
-    BOOST_CHECK(boost::math::isnan(skewness(ignore_error_students_t(0))));
-    BOOST_CHECK(boost::math::isnan(skewness(ignore_error_students_t(1))));
-    BOOST_CHECK(boost::math::isnan(skewness(ignore_error_students_t(2))));
-    BOOST_CHECK(boost::math::isnan(skewness(ignore_error_students_t(3))));
+    BOOST_CHECK((boost::math::isnan)(skewness(ignore_error_students_t(std::numeric_limits<RealType>::quiet_NaN()))));
+    BOOST_CHECK((boost::math::isnan)(skewness(ignore_error_students_t(-1))));
+    BOOST_CHECK((boost::math::isnan)(skewness(ignore_error_students_t(0))));
+    BOOST_CHECK((boost::math::isnan)(skewness(ignore_error_students_t(1))));
+    BOOST_CHECK((boost::math::isnan)(skewness(ignore_error_students_t(2))));
+    BOOST_CHECK((boost::math::isnan)(skewness(ignore_error_students_t(3))));
 
   // Kurtosis 
-    BOOST_CHECK(boost::math::isnan(kurtosis(ignore_error_students_t(std::numeric_limits<RealType>::quiet_NaN()))));
-    BOOST_CHECK(boost::math::isnan(kurtosis(ignore_error_students_t(-1))));
-    BOOST_CHECK(boost::math::isnan(kurtosis(ignore_error_students_t(0))));
-    BOOST_CHECK(boost::math::isnan(kurtosis(ignore_error_students_t(1))));
-    BOOST_CHECK(boost::math::isnan(kurtosis(ignore_error_students_t(2))));
-    BOOST_CHECK(boost::math::isnan(kurtosis(ignore_error_students_t(static_cast<RealType>(2.0001L)))));
-    BOOST_CHECK(boost::math::isnan(kurtosis(ignore_error_students_t(3))));
-    BOOST_CHECK(boost::math::isnan(kurtosis(ignore_error_students_t(4))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis(ignore_error_students_t(std::numeric_limits<RealType>::quiet_NaN()))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis(ignore_error_students_t(-1))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis(ignore_error_students_t(0))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis(ignore_error_students_t(1))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis(ignore_error_students_t(2))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis(ignore_error_students_t(static_cast<RealType>(2.0001L)))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis(ignore_error_students_t(3))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis(ignore_error_students_t(4))));
  
     // Kurtosis excess
-    BOOST_CHECK(boost::math::isnan(kurtosis_excess(ignore_error_students_t(std::numeric_limits<RealType>::quiet_NaN()))));
-    BOOST_CHECK(boost::math::isnan(kurtosis_excess(ignore_error_students_t(-1))));
-    BOOST_CHECK(boost::math::isnan(kurtosis_excess(ignore_error_students_t(0))));
-    BOOST_CHECK(boost::math::isnan(kurtosis_excess(ignore_error_students_t(1))));
-    BOOST_CHECK(boost::math::isnan(kurtosis_excess(ignore_error_students_t(2))));
-    BOOST_CHECK(boost::math::isnan(kurtosis_excess(ignore_error_students_t(static_cast<RealType>(2.0001L)))));
-    BOOST_CHECK(boost::math::isnan(kurtosis_excess(ignore_error_students_t(3))));
-    BOOST_CHECK(boost::math::isnan(kurtosis_excess(ignore_error_students_t(4))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis_excess(ignore_error_students_t(std::numeric_limits<RealType>::quiet_NaN()))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis_excess(ignore_error_students_t(-1))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis_excess(ignore_error_students_t(0))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis_excess(ignore_error_students_t(1))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis_excess(ignore_error_students_t(2))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis_excess(ignore_error_students_t(static_cast<RealType>(2.0001L)))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis_excess(ignore_error_students_t(3))));
+    BOOST_CHECK((boost::math::isnan)(kurtosis_excess(ignore_error_students_t(4))));
   } // has_quiet_NaN
 
   BOOST_CHECK(boost::math::isfinite(mean(ignore_error_students_t(1 + std::numeric_limits<RealType>::epsilon()))));

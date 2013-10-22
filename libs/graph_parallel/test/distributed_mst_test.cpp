@@ -65,8 +65,6 @@ test_distributed_dense_boruvka()
                          // Edge properties
                          property<edge_weight_t, int> > Graph;
 
-  typedef graph_traits<Graph>::vertex_descriptor vertex_descriptor;
-  typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
   typedef graph_traits<Graph>::edge_descriptor edge_descriptor;
 
   typedef std::pair<int, int> E;

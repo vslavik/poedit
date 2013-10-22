@@ -118,7 +118,7 @@ namespace
     pair<status, request_list::iterator> result = 
       wait_any(requests.begin(), requests.end());
 
-    return make_tuple(
+    return boost::python::make_tuple(
         result.second->get_value_or_none(),
         result.first, 
         distance(requests.begin(), result.second));
@@ -134,7 +134,7 @@ namespace
       test_any(requests.begin(), requests.end());
 
     if (result)
-      return make_tuple(
+      return boost::python::make_tuple(
           result->second->get_value_or_none(),
           result->first, 
           distance(requests.begin(), result->second));

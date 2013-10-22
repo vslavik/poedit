@@ -17,7 +17,7 @@
 
 #include <boost/log/detail/config.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -35,7 +35,7 @@ BOOST_LOG_OPEN_NAMESPACE
 namespace aux {
 
 template< typename T >
-BOOST_LOG_FORCEINLINE void no_unused_warnings(T const&) {}
+BOOST_FORCEINLINE void no_unused_warnings(T const&) {}
 
 } // namespace aux
 

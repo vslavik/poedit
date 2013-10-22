@@ -63,6 +63,11 @@
 [def __gmp_rational [link boost_multiprecision.tut.rational.gmp_rational gmp_rational]]
 [def __cpp_rational [link boost_multiprecision.tut.rational.cpp_rational cpp_rational]]
 [def __tommath_rational [link boost_multiprecision.tut.rational.tommath_rational tommath_rational]]
+[def __number [link boost_multiprecision.ref.number number]]
+[def __float128 [link boost_multiprecision.tut.floats.float128 float128]]
+[def __debug_adaptor [link boost_multiprecision.tut.misc.debug_adaptor debug_adaptor]]
+[def __logged_adaptor [link boost_multiprecision.tut.misc.logged_adaptor logged_adaptor]]
+[def __rational_adaptor [link boost_multiprecision.tut.rational.rational_adaptor rational_adaptor]]
 
 [section:intro Introduction]
 
@@ -879,12 +884,15 @@ Things you should know when using this type:
 * Default constructed `float128`s have the value zero.
 * This backend supports rvalue-references and is move-aware, making instantiations of `number` on this backend move aware.
 * It is not possible to round-trip objects of this type to and from a string and get back
-exactly the same value when compiled with Intel's C++ compiler: this is a current limitation of our code.  Round tripping
-when using GCC is possible.
+exactly the same value when compiled with Intel's C++ compiler and using `_Quad` as the underlying type: this is a current limitation of 
+our code.  Round tripping when using `__float128` as the underlying type is possible (both for GCC and Intel).
 * Conversion from a string results in a `std::runtime_error` being thrown if the string can not be interpreted 
 as a valid floating point number.
 * Division by zero results in an infinity being produced.
 * Type `float128` can be used as a literal type (constexpr support).
+* When using the Intel compiler, the underlying type defaults to `__float128` if it's available and `_Quad` if not.  You can override
+the default by defining either `BOOST_MP_USE_FLOAT128` or `BOOST_MP_USE_QUAD`.
+* When the underlying type is Intel's `_Quad` type, the code must be compiled with the compiler option `-Qoption,cpp,--extended_float_type`.
 
 [h5 float128 example:]
 
@@ -1745,6 +1753,115 @@ __mpfr_float_backend, __mpf_float, __cpp_int.
 
 [endsect]
 
+[section:gen_int Generic Integer Operations]
+
+All of the [link boost_multiprecision.ref.number.integer_functions non-member integer operations] are overloaded for the 
+built in integer types in
+`<boost/multiprecision/integer.hpp>`.
+Where these operations require a temporary increase in precision (such as for powm), then
+if no built in type is available, a __cpp_int of appropriate precision will be used.
+
+Some of these functions are trivial, others use compiler intrinsics (where available) to ensure optimal
+evaluation.
+
+The overloaded functions are:
+
+   template <class Integer, class I2>
+   Integer& multiply(Integer& result, const I2& a, const I2& b);
+
+Multiplies two `I2` values, to produce a wider `Integer` result.
+
+Returns `result = a * b` without overflow or loss of precision in the multiplication.
+
+   template <class Integer, class I2>
+   Integer& add(Integer& result, const I2& a, const I2& b);
+
+Adds two `I2` values, to produce a wider `Integer` result.
+
+Returns `result = a + b` without overflow or loss of precision in the addition.
+
+   template <class Integer, class I2>
+   Integer& subtract(Integer& result, const I2& a, const I2& b);
+
+Subtracts two `I2` values, to produce a wider `Integer` result.
+
+Returns `result = a - b` without overflow or loss of precision in the subtraction.
+
+   template <class Integer>
+   Integer powm(const Integer& b, const Integer& p, const Integer& m);
+
+Returns b[super p] % m.
+
+   template <class Integer>
+   void divide_qr(const Integer& x, const Integer& y, Integer& q, Integer& r);
+
+Sets `q = x / y` and `r = x % y`.
+
+   template <class Integer1, class Integer2>
+   Integer2 integer_modulus(const Integer1& x, Integer2 val);
+
+Returns x % val;
+
+   template <class Integer>
+   unsigned lsb(const Integer& x);
+
+Returns the (zero-based) index of the least significant bit of `x`.
+
+Throws a `std::domain_error` if `x <= 0`.
+
+   template <class Integer>
+   unsigned msb(const Integer& x);
+
+Returns the (zero-based) index of the most significant bit of `x`.
+
+Throws a `std::domain_error` if `x <= 0`.
+
+   template <class Integer>
+   bool bit_test(const Integer& val, unsigned index);
+
+Returns `true` if bit `index` is set in `val`.
+
+   template <class Integer>
+   Integer& bit_set(Integer& val, unsigned index);
+
+Sets the `index` bit in `val`.
+
+   template <class Integer>
+   Integer& bit_unset(Integer& val, unsigned index);
+
+Unsets the `index` bit in `val`.
+
+   template <class Integer>
+   Integer& bit_flip(Integer& val, unsigned index);
+
+Flips the `index` bit in `val`.
+
+   template <class Integer>
+   Integer sqrt(const Integer& x);
+   template <class Integer>
+   Integer sqrt(const Integer& x, Integer& r);
+
+Returns the integer square root `s` of x and sets `r` to the remainder ['x - s[super 2]].
+
+   template <class Engine>
+   bool miller_rabin_test(const number-or-expression-template-type& n, unsigned trials, Engine& gen);
+   bool miller_rabin_test(const number-or-expression-template-type& n, unsigned trials);
+
+The regular Miller-Rabin functions in `<boost/multiprecision/miller_rabin.hpp>` are defined in terms of the above
+generic operations, and so function equally well for built in and multiprecision types.
+
+[endsect]
+
+[section:serial Boost.Serialization Support]
+
+Support for serialization comes in two forms:
+
+* Classes __number, __debug_adaptor, __logged_adaptor and __rational_adaptor have "pass through" serialization 
+support which requires the underlying backend to be serializable.
+* Backends __cpp_int, __cpp_dec_float and __float128 have full support for Boost.Serialization.
+
+[endsect]
+
 [endsect]
 
 [section:ref Reference]
@@ -1899,14 +2016,20 @@ __mpfr_float_backend, __mpf_float, __cpp_int.
    struct is_number_expression;
 
    // Integer specific functions:
+   ``['unmentionable-expression-template-type]``    gcd(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    lcm(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
    ``['unmentionable-expression-template-type]``    pow(const ``['number-or-expression-template-type]``&, unsigned);
    ``['unmentionable-expression-template-type]``    powm(const ``['number-or-expression-template-type]``& b, const ``['number-or-expression-template-type]``& p, const ``['number-or-expression-template-type]``& m);
+   ``['unmentionable-expression-template-type]``    sqrt(const ``['number-or-expression-template-type]``&);
+   template <class Backend, expression_template_option ExpressionTemplates>
+   number<Backend, EXpressionTemplates>      sqrt(const ``['number-or-expression-template-type]``&, number<Backend, EXpressionTemplates>&);
    template <class Backend, expression_template_option ExpressionTemplates>
    void divide_qr(const ``['number-or-expression-template-type]``& x, const ``['number-or-expression-template-type]``& y,
                   number<Backend, ExpressionTemplates>& q, number<Backend, ExpressionTemplates>& r);
    template <class Integer>
    Integer integer_modulus(const ``['number-or-expression-template-type]``& x, Integer val);
    unsigned lsb(const ``['number-or-expression-template-type]``& x);
+   unsigned msb(const ``['number-or-expression-template-type]``& x);
    template <class Backend, class ExpressionTemplates>
    bool bit_test(const number<Backend, ExpressionTemplates>& val, unsigned index);
    template <class Backend, class ExpressionTemplates>
@@ -2294,6 +2417,14 @@ built in integers or multiprecision ones), the functions will promote to a wider
 requires it.  Versions overloaded for built in integer types return that integer type rather than an expression 
 template.
 
+   ``['unmentionable-expression-template-type]``    gcd(const ``['number-or-expression-template-type]``& a, const ``['number-or-expression-template-type]``& b);
+
+Returns the largest integer `x` that divides both `a` and `b`.
+
+   ``['unmentionable-expression-template-type]``    lcm(const ``['number-or-expression-template-type]``& a, const ``['number-or-expression-template-type]``& b);
+
+Returns the smallest integer `x` that is divisible by both `a` and `b`.
+
    ``['unmentionable-expression-template-type]``    pow(const ``['number-or-expression-template-type]``& b, unsigned p);
 
 Returns ['b[super p]] as an expression template.  Note that this function should be used with extreme care as the result can grow so 
@@ -2304,6 +2435,15 @@ fixed precision `cpp_int`'s either.
    ``['unmentionable-expression-template-type]``    powm(const ``['number-or-expression-template-type]``& b, const ``['number-or-expression-template-type]``& p, const ``['number-or-expression-template-type]``& m);
 
 Returns ['b[super p] mod m] as an expression template.  Fixed precision types are promoted internally to ensure accuracy.
+
+   ``['unmentionable-expression-template-type]``    sqrt(const ``['number-or-expression-template-type]``& a);
+
+Returns the largest integer `x` such that `x * x < a`.
+
+   template <class Backend, expression_template_option ExpressionTemplates>
+   number<Backend, EXpressionTemplates>      sqrt(const ``['number-or-expression-template-type]``& a, number<Backend, EXpressionTemplates>& r);
+
+Returns the largest integer `x` such that `x * x < a`, and sets the remainder `r` such that `r = a - x * x`.
 
    template <class Backend, expression_template_option ExpressionTemplates>
    void divide_qr(const ``['number-or-expression-template-type]``& x, const ``['number-or-expression-template-type]``& y,
@@ -2318,7 +2458,13 @@ Returns the absolute value of `x % val`.
 
    unsigned lsb(const ``['number-or-expression-template-type]``& x);
 
-Returns the index of the least significant bit that is set to 1.
+Returns the (zero-based) index of the least significant bit that is set to 1.
+
+Throws a `std::range_error` if the argument is <= 0.
+
+   unsigned msb(const ``['number-or-expression-template-type]``& x);
+
+Returns the (zero-based) index of the most significant bit.
 
 Throws a `std::range_error` if the argument is <= 0.
 
@@ -2954,6 +3100,8 @@ and `ff` is a variable of type `std::ios_base::fmtflags`.
             [`std::overflow_error` if `a` has the value zero.]]
 [[`eval_lsb(cb)`][`unsigned`][Returns the index of the least significant bit that is set.  Only required when `B` is an integer type.
             The default version of this function is synthesised from other operations above.][[space]]]
+[[`eval_msb(cb)`][`unsigned`][Returns the index of the most significant bit that is set.  Only required when `B` is an integer type.
+            The default version of this function is synthesised from other operations above.][[space]]]
 [[`eval_bit_test(cb, ui)`][`bool`][Returns true if `cb` has bit `ui` set.  Only required when `B` is an integer type.
             The default version of this function is synthesised from other operations above.][[space]]]
 [[`eval_bit_set(b, ui)`][`void`][Sets the bit at index `ui` in `b`.  Only required when `B` is an integer type.
@@ -2995,6 +3143,9 @@ and `ff` is a variable of type `std::ios_base::fmtflags`.
 [[`eval_powm(b, cb, a, a2)`][`void`][Sets `b` to the result of ['(cb^a)%a2].
             The type of `a` shall be listed in one of the type lists
             `B::signed_types`, `B::unsigned_types`.
+            The default version of this function is synthesised from other operations above.][[space]]]
+[[`eval_integer_sqrt(b, cb, b2)`][`void`][Sets `b` to the largest integer which when squared is less than `cb`, also
+            sets `b2` to the remainder, ie to ['cb - b[super 2]].
             The default version of this function is synthesised from other operations above.][[space]]]
 
 [[['Sign manipulation:]]]
@@ -3727,6 +3878,23 @@ Windows Vista machine.
 [section:map Roadmap]
 
 [section:hist History]
+
+[h4 1.56]
+
+* Added support for Boost.Serialization.
+* Suppressed some GCC warnings.  See [@https://svn.boost.org/trac/boost/ticket/8872 8872].
+* Fixed bug in pow for large integer arguments.  See [@https://svn.boost.org/trac/boost/ticket/8809 8809].
+* Fixed bug in pow for calculation of 0[super N].  See [@https://svn.boost.org/trac/boost/ticket/8798 8798].
+
+[h4 1.55]
+
+* Fixed bug in fixed precision cpp_int IO code that causes conversion to string to fail when the
+bit count is very small (less than CHAR_BIT).  See [@https://svn.boost.org/trac/boost/ticket/8745 8745].
+* Fixed bug in cpp_int that causes left shift to fail when a fixed precision type would overflow.
+See [@https://svn.boost.org/trac/boost/ticket/8741 8741].
+* Fixed some cosmetic warnings from cpp_int.  See [@https://svn.boost.org/trac/boost/ticket/8748 8748].
+* Fixed calls to functions which are required to be macros in C99.  See [@https://svn.boost.org/trac/boost/ticket/8732 8732].
+* Fixed bug that causes construction from INT_MIN, LONG_MIN etc to fail in cpp_int.  See [@https://svn.boost.org/trac/boost/ticket/8711 8711].
 
 [h4 1.54]
 

@@ -27,7 +27,6 @@
 template <class Real, typename T>
 void do_test_ellint_f(T& data, const char* type_name, const char* test)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
@@ -53,8 +52,7 @@ void do_test_ellint_f(T& data, const char* type_name, const char* test)
 template <class Real, typename T>
 void do_test_ellint_k(T& data, const char* type_name, const char* test)
 {
-   typedef typename T::value_type row_type;
-   typedef Real                   value_type;
+    typedef Real                   value_type;
     boost::math::tools::test_result<value_type> result;
 
    std::cout << "Testing: " << test << std::endl;

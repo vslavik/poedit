@@ -265,8 +265,8 @@ void test_integral_api(void)
 
     test_additive_wrap<T>(0);
     test_additive_wrap<T>((T) -1);
-    test_additive_wrap<T>(-1LL << (sizeof(T) * 8 - 1));
-    test_additive_wrap<T>(~ (-1LL << (sizeof(T) * 8 - 1)));
+    test_additive_wrap<T>(((T)-1) << (sizeof(T) * 8 - 1));
+    test_additive_wrap<T>(~ (((T)-1) << (sizeof(T) * 8 - 1)));
 }
 
 template<typename T>

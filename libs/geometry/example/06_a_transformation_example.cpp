@@ -29,7 +29,7 @@ int main()
     point_2d p2;
 
     // Example: translate a point over (5,5)
-    strategy::transform::translate_transformer<point_2d, point_2d> translate(5, 5);
+    strategy::transform::translate_transformer<double, 2, 2> translate(5, 5);
 
     transform(p, p2, translate);
     std::cout << "transformed point " << boost::geometry::dsv(p2) << std::endl;

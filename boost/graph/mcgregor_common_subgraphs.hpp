@@ -121,7 +121,6 @@ namespace boost {
      VertexEquivalencePredicate vertices_equivalent,
      bool only_connected_subgraphs)
     {
-      typedef typename graph_traits<GraphFirst>::vertex_descriptor VertexFirst;
       typedef typename graph_traits<GraphSecond>::vertex_descriptor VertexSecond;
       
       typedef typename graph_traits<GraphFirst>::edge_descriptor EdgeFirst;

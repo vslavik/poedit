@@ -6,7 +6,7 @@
  */
 
 template< BOOST_PP_ENUM_PARAMS(BOOST_PP_ITERATION(), typename ArgT) >
-BOOST_LOG_FORCEINLINE format_named_scope_actor<
+BOOST_FORCEINLINE format_named_scope_actor<
     fallback_to_none,
     typename boost::log::aux::deduce_char_type<
         typename parameter::binding<
@@ -28,7 +28,7 @@ BOOST_LOG_FORCEINLINE format_named_scope_actor<
 }
 
 template< typename DescriptorT, template< typename > class ActorT, BOOST_PP_ENUM_PARAMS(BOOST_PP_ITERATION(), typename ArgT) >
-BOOST_LOG_FORCEINLINE format_named_scope_actor<
+BOOST_FORCEINLINE format_named_scope_actor<
     fallback_to_none,
     typename boost::log::aux::deduce_char_type<
         typename parameter::binding<
@@ -55,7 +55,7 @@ format_named_scope(attribute_keyword< DescriptorT, ActorT > const& keyword, BOOS
 }
 
 template< typename T, typename FallbackPolicyT, typename TagT, template< typename > class ActorT, BOOST_PP_ENUM_PARAMS(BOOST_PP_ITERATION(), typename ArgT) >
-BOOST_LOG_FORCEINLINE format_named_scope_actor<
+BOOST_FORCEINLINE format_named_scope_actor<
     FallbackPolicyT,
     typename boost::log::aux::deduce_char_type<
         typename parameter::binding<

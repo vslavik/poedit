@@ -30,7 +30,7 @@
 #include <boost/log/attributes/attribute_cast.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -368,8 +368,8 @@ public:
             named_scope::pop_scope();
         }
 
-        BOOST_LOG_DELETED_FUNCTION(sentry(sentry const&))
-        BOOST_LOG_DELETED_FUNCTION(sentry& operator= (sentry const&))
+        BOOST_DELETED_FUNCTION(sentry(sentry const&))
+        BOOST_DELETED_FUNCTION(sentry& operator= (sentry const&))
 
     private:
         scope_entry m_Entry;
@@ -377,7 +377,7 @@ public:
 
 private:
     //! Attribute implementation class
-    struct BOOST_LOG_VISIBLE impl;
+    struct BOOST_SYMBOL_VISIBLE impl;
 
 public:
     /*!

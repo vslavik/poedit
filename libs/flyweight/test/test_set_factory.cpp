@@ -1,6 +1,6 @@
 /* Boost.Flyweight test of set_factory.
  *
- * Copyright 2006-2008 Joaquin M Lopez Munoz.
+ * Copyright 2006-2013 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -16,6 +16,7 @@
 #include <boost/flyweight/set_factory.hpp> 
 #include <boost/flyweight/simple_locking.hpp>
 #include <boost/flyweight/static_holder.hpp>
+#include <functional>
 #include "test_basic_template.hpp"
 
 using namespace boost::flyweights;

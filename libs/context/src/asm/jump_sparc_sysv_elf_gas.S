@@ -130,3 +130,6 @@ Lno_fpu:
     mov %o2, %o0    // return arg as result
 
 .size jump_fcontext,.-jump_fcontext
+
+/* Mark that we don't need executable stack.  */
+.section .note.GNU-stack,"",%progbits

@@ -27,8 +27,8 @@
 <a name="geometry.reference.strategies.strategy_transform_rotate_transformer"></a><a class="link" href="strategy_transform_rotate_transformer.html" title="strategy::transform::rotate_transformer">strategy::transform::rotate_transformer</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp16754816"></a><a class="indexterm" name="idp16755152"></a><a class="indexterm" name="idp16755488"></a>
-Strategy of rotate transformation in Cartesian system.
+          <a class="indexterm" name="idp63617832"></a><a class="indexterm" name="idp63618168"></a><a class="indexterm" name="idp63618504"></a>
+Strategy for rotate transformation in Cartesian coordinate system.
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_transform_rotate_transformer.h0"></a>
@@ -44,9 +44,9 @@ Strategy of rotate transformation in Cartesian system.
         </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">P2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">DegreeOrRadian</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">DegreeOrRadian</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension2</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">transform</span><span class="special">::</span><span class="identifier">rotate_transformer</span>
-      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">detail</span><span class="special">::</span><span class="identifier">rad_rotate_transformer</span><span class="special">&lt;</span> <span class="identifier">P1</span><span class="special">,</span> <span class="identifier">P2</span> <span class="special">&gt;</span>
+      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">detail</span><span class="special">::</span><span class="identifier">rad_rotate_transformer</span><span class="special">&lt;</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">Dimension2</span> <span class="special">&gt;</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
 <span class="special">};</span>
@@ -79,30 +79,6 @@ Strategy of rotate transformation in Cartesian system.
 <tr>
 <td>
                   <p>
-                    typename P1
-                  </p>
-                </td>
-<td>
-                  <p>
-                    first point type
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    typename P2
-                  </p>
-                </td>
-<td>
-                  <p>
-                    second point type
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
                     typename DegreeOrRadian
                   </p>
                 </td>
@@ -110,6 +86,33 @@ Strategy of rotate transformation in Cartesian system.
                   <p>
                     degree/or/radian, type of rotation angle specification
                   </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    typename CalculationType
+                  </p>
+                </td>
+<td>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    std::size_t Dimension1
+                  </p>
+                </td>
+<td>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    std::size_t Dimension2
+                  </p>
+                </td>
+<td>
                 </td>
 </tr>
 </tbody>
@@ -145,7 +148,7 @@ Strategy of rotate transformation in Cartesian system.
 <td>
                   <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">rotate_transformer</span><span class="special">(</span><span class="identifier">angle_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">angle</span><span class="special">)</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">rotate_transformer</span><span class="special">(</span><span class="identifier">CalculationType</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">angle</span><span class="special">)</span></pre>
 <p>
                   </p>
                 </td>
@@ -153,7 +156,8 @@ Strategy of rotate transformation in Cartesian system.
                 </td>
 <td>
                   <p>
-                    <span class="bold"><strong>angle_type const &amp;</strong></span>: <span class="emphasis"><em>angle</em></span>:
+                    <span class="bold"><strong>CalculationType const &amp;</strong></span>:
+                    <span class="emphasis"><em>angle</em></span>:
                   </p>
                 </td>
 </tr></tbody>

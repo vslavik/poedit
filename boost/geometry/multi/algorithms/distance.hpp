@@ -45,7 +45,12 @@ struct distance_single_to_multi
           Strategy
       >
 {
-    typedef typename strategy::distance::services::return_type<Strategy>::type return_type;
+    typedef typename strategy::distance::services::return_type
+                     <
+                         Strategy,
+                         typename point_type<Geometry>::type,
+                         typename point_type<MultiGeometry>::type
+                     >::type return_type;
 
     static inline return_type apply(Geometry const& geometry,
                 MultiGeometry const& multi,
@@ -84,7 +89,12 @@ struct distance_multi_to_multi
           Strategy
       >
 {
-    typedef typename strategy::distance::services::return_type<Strategy>::type return_type;
+    typedef typename strategy::distance::services::return_type
+                     <
+                         Strategy,
+                         typename point_type<Multi1>::type,
+                         typename point_type<Multi2>::type
+                     >::type return_type;
 
     static inline return_type apply(Multi1 const& multi1,
                 Multi2 const& multi2, Strategy const& strategy)

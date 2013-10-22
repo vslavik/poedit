@@ -94,3 +94,6 @@ jump_fcontext:
     jr      $t9             # jump to context
 .end jump_fcontext
 .size jump_fcontext, .-jump_fcontext
+
+/* Mark that we don't need executable stack.  */
+.section .note.GNU-stack,"",%progbits

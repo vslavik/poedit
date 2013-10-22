@@ -78,6 +78,8 @@ void test_update()
     project<randomly>(es,get<age>(es).find(57));
 
   BOOST_TEST(es.replace(it,*it));
+  BOOST_TEST(i.replace(it1,*it1));
+  BOOST_TEST(r.replace(it2,*it2));
   BOOST_TEST(!es.replace(it,employee(3,"Joe",31,1123))&&it->id==0);
   BOOST_TEST(es.replace(it,employee(0,"Joe",32,1123))&&it->age==32);
   BOOST_TEST(i.replace(it1,employee(3,"Albert",20,9012))&&it1->name==

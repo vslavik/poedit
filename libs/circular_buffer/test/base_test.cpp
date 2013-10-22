@@ -1,6 +1,7 @@
 // Test of the base circular buffer container.
 
 // Copyright (c) 2003-2008 Jan Gaspar
+// Copyright (c) 2013 Antony Polukhin
 
 // Use, modification, and distribution is subject to the Boost Software
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -738,6 +739,107 @@ void exception_safety_test() {
 #endif // #if !defined(BOOST_NO_EXCEPTIONS)
 }
 
+
+void move_container_values_except() {
+    move_container_values_impl<noncopyable_movable_except_t>();
+}
+
+template <class T>
+void move_container_values_resetting_impl() {
+    typedef T noncopyable_movable_test_t;    
+    CB_CONTAINER<noncopyable_movable_test_t> cb1(1);
+    noncopyable_movable_test_t var;
+    cb1.push_back();
+
+    cb1.push_back(boost::move(var));
+    BOOST_CHECK(!cb1.back().is_moved());
+    BOOST_CHECK(var.is_moved());
+    BOOST_CHECK(cb1.size() == 1);
+    var = boost::move(cb1.back());
+    BOOST_CHECK(cb1.back().is_moved());
+
+    cb1.push_front(boost::move(var));
+    BOOST_CHECK(!cb1.front().is_moved());
+    BOOST_CHECK(var.is_moved());
+    BOOST_CHECK(cb1.size() == 1);
+    var = boost::move(cb1.back());
+    BOOST_CHECK(cb1.back().is_moved());
+
+    cb1.push_back();
+    BOOST_CHECK(!cb1.back().is_moved());
+    BOOST_CHECK(cb1.size() == 1);
+    var = boost::move(cb1.back());
+    BOOST_CHECK(cb1.back().is_moved());
+
+    cb1.push_front();
+    BOOST_CHECK(!cb1.front().is_moved());
+    BOOST_CHECK(cb1.size() == 1);
+    var = boost::move(cb1.back());
+    BOOST_CHECK(cb1.back().is_moved());
+
+
+    cb1.insert(cb1.begin());
+    // If the circular_buffer is full and the pos points to begin(), 
+    // then the item will not be inserted.
+    BOOST_CHECK(cb1.front().is_moved()); 
+    BOOST_CHECK(cb1.size() == 1);
+    var = boost::move(cb1.back());
+    BOOST_CHECK(cb1.back().is_moved());
+
+    cb1.insert(cb1.begin(), boost::move(var));
+    // If the circular_buffer is full and the pos points to begin(), 
+    // then the item will not be inserted.
+    BOOST_CHECK(cb1.front().is_moved());
+    BOOST_CHECK(cb1.size() == 1);
+    var = boost::move(cb1.back());
+    BOOST_CHECK(cb1.back().is_moved());
+
+    cb1.rinsert(cb1.begin());
+    BOOST_CHECK(!cb1.back().is_moved());
+    BOOST_CHECK(cb1.size() == 1);
+    var = boost::move(cb1.back());
+    BOOST_CHECK(cb1.back().is_moved());
+
+    var.reinit();
+    cb1.rinsert(cb1.begin(), boost::move(var));
+    BOOST_CHECK(!cb1.back().is_moved());
+    BOOST_CHECK(cb1.size() == 1);
+    var = boost::move(cb1.back());
+    BOOST_CHECK(cb1.back().is_moved());
+    
+    cb1.rinsert(cb1.end());
+    BOOST_CHECK(cb1.back().is_moved());
+    BOOST_CHECK(cb1.size() == 1);
+    var = boost::move(cb1.back());
+    BOOST_CHECK(cb1.back().is_moved());
+
+    var.reinit();
+    cb1.rinsert(cb1.end(), boost::move(var));
+    BOOST_CHECK(cb1.back().is_moved());
+    BOOST_CHECK(cb1.size() == 1);
+    var = boost::move(cb1.back());
+    BOOST_CHECK(cb1.back().is_moved());
+    cb1.push_back();
+    BOOST_CHECK(!cb1[0].is_moved());
+
+    const int val = cb1[0].value();
+    cb1.linearize();
+    BOOST_CHECK(!cb1[0].is_moved());
+    BOOST_CHECK(cb1[0].value() == val);
+
+    cb1.rotate(cb1.begin());
+    BOOST_CHECK(!cb1[0].is_moved());
+    BOOST_CHECK(cb1[0].value() == val);
+}
+
+void move_container_values_resetting_except() {
+    move_container_values_resetting_impl<noncopyable_movable_except_t>();
+}
+
+void move_container_values_resetting_noexcept() {
+    move_container_values_resetting_impl<noncopyable_movable_noexcept_t>();
+}
+
 // test main
 test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[]) {
 
@@ -755,6 +857,9 @@ test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[]) {
     tests->add(BOOST_TEST_CASE(&iterator_comparison_test));
     tests->add(BOOST_TEST_CASE(&iterator_invalidation_test));
     tests->add(BOOST_TEST_CASE(&exception_safety_test));
+    tests->add(BOOST_TEST_CASE(&move_container_values_except));
+    tests->add(BOOST_TEST_CASE(&move_container_values_resetting_except));
+    tests->add(BOOST_TEST_CASE(&move_container_values_resetting_noexcept));
 
     return tests;
 }

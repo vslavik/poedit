@@ -140,20 +140,38 @@ struct bfs_test
           parent[*ui] = *ui;
         std::vector<boost::default_color_type> color(i);
 
+        // Get vertex index map
+        typedef typename boost::property_map<Graph, boost::vertex_index_t>::const_type idx_type;
+        idx_type idx = get(boost::vertex_index, g);
+
+        // Make property maps from vectors
+        typedef
+          boost::iterator_property_map<std::vector<int>::iterator, idx_type>
+          distance_pm_type;
+        distance_pm_type distance_pm(distance.begin(), idx);
+        typedef
+          boost::iterator_property_map<typename std::vector<vertex_descriptor>::iterator, idx_type>
+          parent_pm_type;
+        parent_pm_type parent_pm(parent.begin(), idx);
+        typedef
+          boost::iterator_property_map<std::vector<boost::default_color_type>::iterator, idx_type>
+          color_pm_type;
+        color_pm_type color_pm(color.begin(), idx);
+
         // Create the testing visitor.
-        bfs_testing_visitor<int*,vertex_descriptor*,Graph,
-          boost::default_color_type*>
-          vis(start, &distance[0], &parent[0], &color[0]);
+        bfs_testing_visitor<distance_pm_type, parent_pm_type, Graph,
+          color_pm_type>
+          vis(start, distance_pm, parent_pm, color_pm);
 
         boost::breadth_first_search(g, start,
                                     visitor(vis).
-                                    color_map(&color[0]));
+                                    color_map(color_pm));
 
         // All white vertices should be unreachable from the source.
         for (boost::tie(ui, ui_end) = vertices(g); ui != ui_end; ++ui)
           if (color[*ui] == Color::white()) {
             std::vector<boost::default_color_type> color2(i, Color::white());
-            BOOST_CHECK(!boost::is_reachable(start, *ui, g, &color2[0]));
+            BOOST_CHECK(!boost::is_reachable(start, *ui, g, color_pm_type(color2.begin(), idx)));
           }
 
         // The shortest path to a child should be one longer than

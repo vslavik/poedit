@@ -6,6 +6,21 @@ Currently open bug reports can be viewed
 All bug reports including closed ones can be viewed
 [@https://svn.boost.org/trac/boost/query?status=assigned&status=closed&status=new&status=reopened&component=math&col=id&col=summary&col=status&col=type&col=milestone&col=component&order=priority here].
 
+[h4 Boost-1.55]
+
+* Suppress numerous warnings (mostly from GCC-4.8 and MSVC) [@https://svn.boost.org/trac/boost/ticket/8384 #8384], [@https://svn.boost.org/trac/boost/ticket/8855 #8855], 
+[@https://svn.boost.org/trac/boost/ticket/9107 #9107], [@https://svn.boost.org/trac/boost/ticket/9109 #9109]..
+* Fixed PGI compilation issue [@https://svn.boost.org/trac/boost/ticket/8333 #8333].
+* Fixed PGI constant value initialization issue that caused erf to generate incorrect results [@https://svn.boost.org/trac/boost/ticket/8621 #8621].
+* Prevent macro expansion of some C99 macros that are also C++ functions [@https://svn.boost.org/trac/boost/ticket/8732 #8732] and [@https://svn.boost.org/trac/boost/ticket/8733 #8733]..
+* Fixed Student's T distribution to behave correctly with huge degrees of freedom (larger than the largest representable integer) [@https://svn.boost.org/trac/boost/ticket/8837 #8837].
+* Make some core functions usable with `long double` even when the platform has no standard library `long double` support [@https://svn.boost.org/trac/boost/ticket/8940 #8940].
+* Fix error handling of distributions to catch invalid scale and location parameters when the random variable is infinite [@https://svn.boost.org/trac/boost/ticket/9042 #9042] and [@https://svn.boost.org/trac/boost/ticket/9126 #9126].
+* Add workaround for broken <tuple> in Intel C++ 14 [@https://svn.boost.org/trac/boost/ticket/9087 #9087].
+* Improve consistency of argument reduction in the elliptic integrals [@https://svn.boost.org/trac/boost/ticket/9104 #9104].
+* Fix bug in inverse incomplete beta that results in cancellation errors when the beta function is really an arcsine or Student's T distribution.
+* Fix issue in Bessel I and K function continued fractions that causes spurious over/underflow.
+
 [h4 Boost-1.54]
 
 * Major reorganization to incorporate other Boost.Math like Integer Utilities Integer Utilities (Greatest Common Divisor and Least Common Multiple), quaternions and octonions.

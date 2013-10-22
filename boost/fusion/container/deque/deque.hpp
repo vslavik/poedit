@@ -8,26 +8,23 @@
 #if !defined(BOOST_FUSION_DEQUE_26112006_1649)
 #define BOOST_FUSION_DEQUE_26112006_1649
 
-#include <boost/config.hpp>
+# include <boost/fusion/container/deque/deque_fwd.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-// With variadics, we will use the PP version version
+// Without variadics, we will use the PP version
 ///////////////////////////////////////////////////////////////////////////////
-#if defined(BOOST_NO_VARIADIC_TEMPLATES)
-# include <boost/fusion/container/deque/detail/pp_deque.hpp>
+#if !defined(BOOST_FUSION_HAS_VARIADIC_DEQUE)
+# include <boost/fusion/container/deque/detail/cpp03/deque.hpp>
 #else
-# if !defined(BOOST_FUSION_HAS_VARIADIC_DEQUE)
-#   define BOOST_FUSION_HAS_VARIADIC_DEQUE
-# endif
 
 ///////////////////////////////////////////////////////////////////////////////
-// C++11 variadic interface
+// C++11 interface
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/fusion/support/sequence_base.hpp>
 #include <boost/fusion/support/detail/access.hpp>
 #include <boost/fusion/support/is_sequence.hpp>
 #include <boost/fusion/container/deque/detail/keyed_element.hpp>
-#include <boost/fusion/container/deque/detail/variadic_deque_keyed_values.hpp>
+#include <boost/fusion/container/deque/detail/deque_keyed_values.hpp>
 #include <boost/fusion/container/deque/deque_fwd.hpp>
 #include <boost/fusion/container/deque/detail/value_at_impl.hpp>
 #include <boost/fusion/container/deque/detail/at_impl.hpp>
@@ -93,7 +90,7 @@ namespace boost { namespace fusion
           : base(seq)
         {}
 
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         template <typename ...Elements>
         deque(deque<Elements...>&& seq)
           : base(std::forward<deque<Elements...>>(seq))
@@ -104,7 +101,7 @@ namespace boost { namespace fusion
           : base(seq)
         {}
 
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         deque(deque&& seq)
           : base(std::forward<deque>(seq))
         {}
@@ -119,7 +116,7 @@ namespace boost { namespace fusion
           : base(detail::deque_keyed_values<Head_, Tail_...>::construct(head, tail...))
         {}
 
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         template <typename Head_, typename ...Tail_>
         explicit deque(Head_&& head, Tail_&&... tail)
           : base(detail::deque_keyed_values<Head, Tail...>
@@ -147,7 +144,7 @@ namespace boost { namespace fusion
             return *this;
         }
 
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         template <typename T>
         deque& operator=(T&& rhs)
         {

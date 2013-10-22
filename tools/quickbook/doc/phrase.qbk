@@ -165,6 +165,32 @@ And one for the little boy who lives down the lane.
 
 [endsect] [/simple_formatting]
 
+[#quickbook.ref.role]
+[section:role Role]
+
+Sometime the basic formatting options aren't enough, and you wish
+to use CSS to style the generated html. For these cases you can
+use the `role` phase element. For example:
+
+    [role red Text content]
+
+Will generate the docbook:
+
+    <phrase role="red">Text content</phrase>
+
+Which will generate html along the lines of:
+
+    <span class="red">Text content</span>
+
+And then you can use css to style this however you wish.
+
+[note When generating other formats such as pdfs, your css is not going to
+      apply, so this will appear as normal, unstyled text. The docbook
+      =role= attribute is meant to be used as a more general mechanism, so
+      you might be able to take advantage of it by some other means.]
+
+[endsect] [/role]
+
 [#quickbook.ref.inline_code]
 [section:inline_code Inline code]
 

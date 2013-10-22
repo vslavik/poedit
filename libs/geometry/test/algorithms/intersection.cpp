@@ -15,16 +15,7 @@
 #include <iostream>
 #include <string>
 
-#define BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE
 #define TEST_ISOVIST
-
-//#define BOOST_GEOMETRY_DEBUG_SEGMENT_IDENTIFIER
-//#define BOOST_GEOMETRY_DEBUG_INTERSECTION
-//#define BOOST_GEOMETRY_DEBUG_TRAVERSE
-//#define BOOST_GEOMETRY_DEBUG_FOLLOW
-//#define BOOST_GEOMETRY_DEBUG_ASSEMBLE
-//#define BOOST_GEOMETRY_DEBUG_IDENTIFIER
-
 
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/register/linestring.hpp>
@@ -166,6 +157,9 @@ void test_areal()
         3, 0, 1.5);
 
     typedef typename bg::coordinate_type<Polygon>::type ct;
+    bool const ccw = bg::point_order<Polygon>::value == bg::counterclockwise;
+    bool const open = bg::closure<Polygon>::value == bg::open;
+
 
 #ifdef TEST_ISOVIST
 #ifdef _MSC_VER
@@ -182,11 +176,18 @@ void test_areal()
 
     //std::cout << typeid(ct).name() << std::endl;
 
-    test_one<Polygon, Polygon, Polygon>("ggl_list_20110306_javier",
-        ggl_list_20110306_javier[0], ggl_list_20110306_javier[1],
-        1, if_typed_tt<ct>(5, 4), 
-        0.6649875, 
-        if_typed<ct, float>(1.0, 0.01)); 
+    if (! ccw && open)
+    {
+        // Pointcount for ttmath/double (both 5) or float (4)
+        // double returns 5 (since method append_no_dups_or_spikes)
+        // but not for ccw/open. Those cases has to be adapted once, anyway, 
+        // because for open always one point too much is generated...
+        test_one<Polygon, Polygon, Polygon>("ggl_list_20110306_javier",
+            ggl_list_20110306_javier[0], ggl_list_20110306_javier[1],
+            1, if_typed<ct, float>(4, 5), 
+            0.6649875, 
+            if_typed<ct, float>(1.0, 0.01)); 
+    }
         
     test_one<Polygon, Polygon, Polygon>("ggl_list_20110307_javier",
         ggl_list_20110307_javier[0], ggl_list_20110307_javier[1],
@@ -202,7 +203,7 @@ void test_areal()
         test_one<Polygon, Polygon, Polygon>("ggl_list_20110716_enrico",
             ggl_list_20110716_enrico[0], ggl_list_20110716_enrico[1],
             3, 
-            if_typed<ct, float>(19, if_typed<ct, double>(22, 21)),
+            if_typed<ct, float>(19, 21),
             35723.8506317139);
     }
 #endif
@@ -215,6 +216,12 @@ void test_areal()
 
     test_one<Polygon, Polygon, Polygon>("ticket_8254", ticket_8254[0], ticket_8254[1],
                 1, 4, 3.63593e-08, 0.01);
+
+    test_one<Polygon, Polygon, Polygon>("ticket_6958", ticket_6958[0], ticket_6958[1],
+                1, 4, 4.34355e-05, 0.01);
+
+    test_one<Polygon, Polygon, Polygon>("ticket_8652", ticket_8652[0], ticket_8652[1],
+                1, 4, 0.0003, 0.00001);
 
     test_one<Polygon, Polygon, Polygon>("buffer_mp1", buffer_mp1[0], buffer_mp1[1],
                 1, 31, 2.271707796);

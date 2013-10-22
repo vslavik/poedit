@@ -11,7 +11,7 @@
 
 #include <boost/config.hpp>
 
-#include <boost/context/detail/config.hpp>
+#include <boost/coroutine/detail/config.hpp>
 
 #ifdef BOOST_HAS_ABI_HEADERS
 #  include BOOST_ABI_PREFIX
@@ -24,7 +24,7 @@ struct stack_context;
 
 namespace detail {
 
-class standard_stack_allocator
+class BOOST_COROUTINES_DECL standard_stack_allocator
 {
 public:
     static bool is_stack_unbound();

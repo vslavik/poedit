@@ -57,7 +57,12 @@
 </ul></div>
 <p>
           This operation is implemented in terms of zero or more calls to the device's
-          async_write_some_at function.
+          async_write_some_at function, and is known as a <span class="emphasis"><em>composed operation</em></span>.
+          The program must ensure that the device performs no <span class="emphasis"><em>overlapping</em></span>
+          write operations (such as async_write_at, the device's async_write_some_at
+          function, or any other composed operations that perform writes) until this
+          operation completes. Operations are overlapping if the regions defined
+          by their offsets, and the numbers of bytes to write, intersect.
         </p>
 <h6>
 <a name="boost_asio.reference.async_write_at.overload3.h0"></a>

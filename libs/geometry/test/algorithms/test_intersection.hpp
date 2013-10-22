@@ -42,7 +42,7 @@ typename bg::default_area_result<G1>::type test_intersection(std::string const& 
         double percentage = 0.0001,
         bool debug = false)
 {
-    static const bool is_line = bg::geometry_id<OutputType>::type::value == 2;
+    bool const is_line = bg::geometry_id<OutputType>::type::value == 2;
 
     if (debug)
     {
@@ -102,7 +102,7 @@ typename bg::default_area_result<G1>::type test_intersection(std::string const& 
                 "intersection: " << caseid
                 << " #points expected: " << expected_point_count
                 << " detected: " << n
-                << " type: " << string_from_type<coordinate_type>::name()
+                << " type: " << (type_for_assert_message<G1, G2>())
                 );
     }
 
@@ -112,7 +112,7 @@ typename bg::default_area_result<G1>::type test_intersection(std::string const& 
                 "intersection: " << caseid
                 << " #outputs expected: " << expected_count
                 << " detected: " << clip.size()
-                << " type: " << string_from_type<coordinate_type>::name()
+                << " type: " << (type_for_assert_message<G1, G2>())
                 );
     }
 

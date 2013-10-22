@@ -28,7 +28,7 @@
           (with strategy)</a>
 </h5></div></div></div>
 <p>
-            <a class="indexterm" name="idp11452064"></a>
+            <a class="indexterm" name="idp55681848"></a>
 Calculates the length of a geometry using the specified strategy.
           </p>
 <h6>
@@ -256,7 +256,7 @@ Calculates the length of a geometry using the specified strategy.
     <span class="identifier">line</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">P</span><span class="special">(</span><span class="number">5</span><span class="special">,</span> <span class="number">52</span><span class="special">));</span>
     <span class="keyword">double</span> <span class="keyword">const</span> <span class="identifier">mean_radius</span> <span class="special">=</span> <span class="number">6371.0</span><span class="special">;</span> <a class="co" name="geometry.reference.algorithms.length.length_2_with_strategy.c0" href="length_2_with_strategy.html#geometry.reference.algorithms.length.length_2_with_strategy.c1"><img src="../../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"length is "</span>
-        <span class="special">&lt;&lt;</span> <span class="identifier">length</span><span class="special">(</span><span class="identifier">line</span><span class="special">,</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">distance</span><span class="special">::</span><span class="identifier">haversine</span><span class="special">&lt;</span><span class="identifier">P</span><span class="special">&gt;(</span><span class="identifier">mean_radius</span><span class="special">)</span> <span class="special">)</span>
+        <span class="special">&lt;&lt;</span> <span class="identifier">length</span><span class="special">(</span><span class="identifier">line</span><span class="special">,</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">distance</span><span class="special">::</span><span class="identifier">haversine</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;(</span><span class="identifier">mean_radius</span><span class="special">)</span> <span class="special">)</span>
         <span class="special">&lt;&lt;</span> <span class="string">" kilometers "</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>

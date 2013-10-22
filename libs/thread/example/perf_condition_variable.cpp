@@ -143,7 +143,7 @@ namespace
   {
     typedef SharedData<Types> S;
 
-    auto best_producer_time = std::numeric_limits<Stopwatch::rep>::max();
+    auto best_producer_time = std::numeric_limits<Stopwatch::rep>::max BOOST_PREVENT_MACRO_SUBSTITUTION ();
 
     std::vector<std::thread> consumers
     { consumer_count };
@@ -165,7 +165,7 @@ namespace
       for (unsigned i = 0; i < consumer_count; ++i)
         consumers[i].join();
 
-      best_producer_time = std::min(best_producer_time, shared_data.producer_time);
+      best_producer_time = std::min BOOST_PREVENT_MACRO_SUBSTITUTION (best_producer_time, shared_data.producer_time);
 
     }
 

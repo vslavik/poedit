@@ -10,7 +10,7 @@
 #ifndef BOOST_CONTAINER_STATIC_VECTOR_HPP
 #define BOOST_CONTAINER_STATIC_VECTOR_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #  pragma once
 #endif
 
@@ -81,8 +81,11 @@ class static_storage_allocator
  * possible.
  *
  * @par Error Handling
- *  Insertion beyond the capacity and out of bounds errors results in calling throw_bad_alloc().
- *  The reason for this is because unlike vectors, static_vector does not perform allocation.
+ *  Insertion beyond the capacity result in throwing std::bad_alloc() if exceptions are enabled or
+ *  calling throw_bad_alloc() if not enabled.
+ *
+ *  std::out_of_range is thrown if out of bound access is performed in `at()` if exceptions are
+ *  enabled, throw_out_of_range() if not enabled.
  *
  * @tparam Value    The type of element that will be stored.
  * @tparam Capacity The maximum number of elements static_vector can store, fixed at compile time.
@@ -135,7 +138,7 @@ public:
 
     //! @pre <tt>count <= capacity()</tt>
     //!
-    //! @brief Constructs a static_vector containing count default constructed Values.
+    //! @brief Constructs a static_vector containing count value initialized values.
     //!
     //! @param count    The number of values which will be contained in the container.
     //!
@@ -146,6 +149,24 @@ public:
     //!   Linear O(N).
     explicit static_vector(size_type count)
         : base_t(count)
+    {}
+
+    //! @pre <tt>count <= capacity()</tt>
+    //!
+    //! @brief Constructs a static_vector containing count value initialized values.
+    //!
+    //! @param count    The number of values which will be contained in the container.
+    //!
+    //! @par Throws
+    //!   If Value's default constructor throws.
+    //!
+    //! @par Complexity
+    //!   Linear O(N).
+    //!
+    //! @par Note
+    //!   Non-standard extension
+    static_vector(size_type count, default_init_t)
+        : base_t(count, default_init_t())
     {}
 
     //! @pre <tt>count <= capacity()</tt>
@@ -355,7 +376,7 @@ public:
     //! @pre <tt>count <= capacity()</tt>
     //!
     //! @brief Inserts or erases elements at the end such that
-    //!   the size becomes count. New elements are default constructed.
+    //!   the size becomes count. New elements are value initialized.
     //!
     //! @param count    The number of elements which will be stored in the container.
     //!
@@ -365,6 +386,23 @@ public:
     //! @par Complexity
     //!   Linear O(N).
     void resize(size_type count);
+
+    //! @pre <tt>count <= capacity()</tt>
+    //!
+    //! @brief Inserts or erases elements at the end such that
+    //!   the size becomes count. New elements are default initialized.
+    //!
+    //! @param count    The number of elements which will be stored in the container.
+    //!
+    //! @par Throws
+    //!   If Value's default constructor throws.
+    //!
+    //! @par Complexity
+    //!   Linear O(N).
+    //!
+    //! @par Note
+    //!   Non-standard extension
+    void resize(size_type count, default_init_t);
 
     //! @pre <tt>count <= capacity()</tt>
     //!

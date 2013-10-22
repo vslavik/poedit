@@ -32,6 +32,6 @@
 
 int main( int, char *[] )
 {
-   return boost_no_noexcept::test();
+   return boost_no_cxx11_noexcept::test();
 }
 

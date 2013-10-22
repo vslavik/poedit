@@ -35,6 +35,7 @@ namespace quickbook
         // list of dependencies. Returns true if file exists.
         bool add_dependency(fs::path const&);
 
+        void write_dependencies(fs::path const&, flags = default_);
         void write_dependencies(std::ostream&, flags = default_);
     };
 }

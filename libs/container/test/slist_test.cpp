@@ -31,15 +31,6 @@ template class boost::container::slist<test::movable_and_copyable_int,
 template class boost::container::slist<test::movable_and_copyable_int,
    std::allocator<test::movable_and_copyable_int> >;
 
-namespace container_detail {
-
-template class slist_const_iterator
-   <int, intrusive_slist_type< std::allocator<int> >::container_type::iterator >;
-template class slist_iterator
-   <int, intrusive_slist_type< std::allocator<int> >::container_type::iterator>;
-
-}
-
 }}
 
 typedef slist<int> MyList;

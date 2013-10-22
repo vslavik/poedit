@@ -32,9 +32,9 @@ template<> struct cs_tag<cart_shifted5> { typedef cartesian_tag type; };
 
 // 3: sample implementation of a shift 
 //    to convert coordinate system "cart" to "cart_shirted5"
-template <typename P1, typename P2>
 struct shift
 {
+    template <typename P1, typename P2>
     inline bool apply(P1 const& p1, P2& p2) const
     {
         namespace bg = boost::geometry;
@@ -52,16 +52,16 @@ namespace boost { namespace geometry  { namespace strategy { namespace transform
 template <typename P1, typename P2>
 struct default_strategy<cartesian_tag, cartesian_tag, cart, cart_shifted5, 2, 2, P1, P2>
 {
-    typedef shift<P1, P2> type;
+    typedef shift type;
 };
 
 }}}}} // namespaces
 
 
 // 5: implement a distance strategy between the two different ones
-template <typename P1, typename P2>
 struct shift_and_calc_distance
 {
+    template <typename P1, typename P2>
     inline double apply(P1 const& p1, P2 const& p2) const
     {
         P2 p1_shifted;
@@ -77,14 +77,14 @@ typedef boost::geometry::model::point<double, 2, cart_shifted5> point2;
 // 7: register the distance strategy
 namespace boost { namespace geometry { namespace strategy { namespace distance { namespace services 
 {
-    template <typename Point1, typename Point2>
-    struct tag<shift_and_calc_distance<Point1, Point2> >
+    template <>
+    struct tag<shift_and_calc_distance>
     {
         typedef strategy_tag_distance_point_point type;
     };
     
-    template <typename Point1, typename Point2>
-    struct return_type<shift_and_calc_distance<Point1, Point2> >
+    template <typename P1, typename P2>
+    struct return_type<shift_and_calc_distance, P1, P2>
     {
         typedef double type;
     };
@@ -92,7 +92,7 @@ namespace boost { namespace geometry { namespace strategy { namespace distance {
     template <>
     struct default_strategy<point_tag, point1, point2, cartesian_tag, cartesian_tag>
     {
-        typedef shift_and_calc_distance<point1, point2> type;
+        typedef shift_and_calc_distance type;
     };
 
 

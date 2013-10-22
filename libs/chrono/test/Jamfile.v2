@@ -13,17 +13,17 @@ import feature ;
 
 project
     : requirements
-        <target-os>freebsd:<linkflags>"-lrt" 
-        <target-os>linux:<linkflags>"-lrt -lpthread" 
-        <toolset>clang/<target-os>linux:<linkflags>"-lpthread" 
-        <toolset>pgi:<linkflags>"-lrt" 
+        <target-os>freebsd:<linkflags>"-lrt"
+        <target-os>linux:<linkflags>"-lrt -lpthread"
+        <toolset>clang/<target-os>linux:<linkflags>"-lpthread"
+        <toolset>pgi:<linkflags>"-lrt"
         #<threading>single:<define>BOOST_CHRONO_THREAD_DISABLED
         <toolset>msvc:<asynch-exceptions>on
         <define>BOOST_CHRONO_USES_MPL_ASSERT
         <define>BOOST_SYSTEM_NO_DEPRECATED
         #<toolset>sun:<define>BOOST_COMMON_TYPE_DONT_USE_TYPEOF
         #<toolset>sun:<define>BOOST_TYPEOF_EMULATION
-        <toolset>sun:<define>__typeof__=__typeof__ 
+        <toolset>sun:<define>__typeof__=__typeof__
         <warnings>all
         <toolset>gcc:<cxxflags>-Wextra
         <toolset>gcc:<cxxflags>-pedantic
@@ -57,7 +57,7 @@ project
         <toolset>intel:<cxxflags>-wd193,304,383,444
         <toolset>intel:<cxxflags>-wd593,981
         <toolset>intel:<cxxflags>-wd1418
-	  <toolset>intel:<cxxflags>-wd2415 
+	  <toolset>intel:<cxxflags>-wd2415
     ;
 
 rule chrono-run ( sources )
@@ -252,13 +252,13 @@ rule chrono-run2-mt ( sources * : name )
 rule chrono-run-check ( sources )
 {
     return
-    [ run $(sources) 
+    [ run $(sources)
         : :
         :
             <library>/boost/system//boost_system
             <define>BOOST_CHRONO_VERSION=2
         :   $(sources[1]:B)_d  ]
-    [ run $(sources) 
+    [ run $(sources)
         : :
         :
             <library>/boost/system//boost_system/<link>static
@@ -277,13 +277,13 @@ rule chrono-run-check ( sources )
 rule chrono-run-check2 ( sources : name )
 {
     return
-    [ run $(sources) 
+    [ run $(sources)
         : :
         :
             <library>/boost/system//boost_system
             <define>BOOST_CHRONO_VERSION=2
         :   $(name)_d  ]
-    [ run $(sources) 
+    [ run $(sources)
         : :
         :
             <library>/boost/system//boost_system/<link>static

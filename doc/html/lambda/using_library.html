@@ -52,7 +52,7 @@ list&lt;int&gt; v(10);
 for_each(v.begin(), v.end(), _1 = 1);</pre>
 <p>
 
-	The expression <code class="literal">_1 = 1</code> creates a lambda functor which assigns the value <code class="literal">1</code> to every element in <code class="literal">v</code>.<a href="#ftn.idp113762896" class="footnote" name="idp113762896"><sup class="footnote">[3]</sup></a>
+	The expression <code class="literal">_1 = 1</code> creates a lambda functor which assigns the value <code class="literal">1</code> to every element in <code class="literal">v</code>.<a href="#ftn.idp156826424" class="footnote" name="idp156826424"><sup class="footnote">[3]</sup></a>
       </p>
 <p>
 	Next, we create a container of pointers and make them point to the elements in the first container <code class="literal">v</code>:
@@ -309,7 +309,7 @@ This is to prevent pointer arithmetic making non-const arrays const.
 </div>
 <div class="footnotes">
 <br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.idp113762896" class="footnote"><p><a href="#idp113762896" class="para"><sup class="para">[3] </sup></a>
+<div id="ftn.idp156826424" class="footnote"><p><a href="#idp156826424" class="para"><sup class="para">[3] </sup></a>
 Strictly taken, the C++ standard defines <code class="literal">for_each</code> as a <span class="emphasis"><em>non-modifying sequence operation</em></span>, and the function object passed to <code class="literal">for_each</code> should not modify its argument. 
 The requirements for the arguments of <code class="literal">for_each</code> are unnecessary strict, since as long as the iterators are <span class="emphasis"><em>mutable</em></span>, <code class="literal">for_each</code> accepts a function object that can have side-effects on their argument.
 Nevertheless, it is straightforward to provide another function template with the functionality of<code class="literal">std::for_each</code> but more fine-grained requirements for its arguments.

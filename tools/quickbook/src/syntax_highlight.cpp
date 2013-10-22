@@ -13,7 +13,6 @@
 #include <boost/spirit/include/classic_symbols.hpp>
 #include <boost/spirit/include/classic_loops.hpp>
 #include "grammar.hpp"
-#include "grammar_impl.hpp" // Just for context stuff. Should move?
 #include "state.hpp"
 #include "actions.hpp"
 #include "utils.hpp"
@@ -87,7 +86,6 @@ namespace quickbook
 
     struct syntax_highlight_actions
     {
-        quickbook::collector out;
         quickbook::state& state;
         do_macro_action do_macro_impl;
 
@@ -96,8 +94,8 @@ namespace quickbook
         boost::string_ref marked_text;
 
         syntax_highlight_actions(quickbook::state& state, bool is_block) :
-            out(), state(state),
-            do_macro_impl(out, state),
+            state(state),
+            do_macro_impl(state),
             support_callouts(is_block && (qbk_version_n >= 107u ||
                 state.current_file->is_code_snippets)),
             marked_text()
@@ -119,26 +117,26 @@ namespace quickbook
     void syntax_highlight_actions::span(parse_iterator first,
             parse_iterator last, char const* name)
     {
-        out << "<phrase role=\"" << name << "\">";
+        state.phrase << "<phrase role=\"" << name << "\">";
         while (first != last)
-            detail::print_char(*first++, out.get());
-        out << "</phrase>";
+            detail::print_char(*first++, state.phrase.get());
+        state.phrase << "</phrase>";
     }
 
     void syntax_highlight_actions::span_start(parse_iterator first,
             parse_iterator last, char const* name)
     {
-        out << "<phrase role=\"" << name << "\">";
+        state.phrase << "<phrase role=\"" << name << "\">";
         while (first != last)
-            detail::print_char(*first++, out.get());
+            detail::print_char(*first++, state.phrase.get());
     }
 
     void syntax_highlight_actions::span_end(parse_iterator first,
             parse_iterator last)
     {
         while (first != last)
-            detail::print_char(*first++, out.get());
-        out << "</phrase>";
+            detail::print_char(*first++, state.phrase.get());
+        state.phrase << "</phrase>";
     }
 
     void syntax_highlight_actions::unexpected_char(parse_iterator first,
@@ -152,30 +150,32 @@ namespace quickbook
             << "\n";
 
         // print out an unexpected character
-        out << "<phrase role=\"error\">";
+        state.phrase << "<phrase role=\"error\">";
         while (first != last)
-            detail::print_char(*first++, out.get());
-        out << "</phrase>";
+            detail::print_char(*first++, state.phrase.get());
+        state.phrase << "</phrase>";
     }
 
     void syntax_highlight_actions::plain_char(parse_iterator first,
             parse_iterator last)
     {
         while (first != last)
-            detail::print_char(*first++, out.get());
+            detail::print_char(*first++, state.phrase.get());
     }
 
     void syntax_highlight_actions::pre_escape_back(parse_iterator,
             parse_iterator)
     {
-        state.phrase.push(); // save the stream
+        state.push_output(); // save the stream
     }
 
     void syntax_highlight_actions::post_escape_back(parse_iterator,
             parse_iterator)
     {
-        out << state.phrase.str();
-        state.phrase.pop(); // restore the stream
+        std::string tmp;
+        state.phrase.swap(tmp);
+        state.pop_output(); // restore the stream
+        state.phrase << tmp;
     }
 
     void syntax_highlight_actions::do_macro(std::string const& v)
@@ -191,7 +191,7 @@ namespace quickbook
 
     void syntax_highlight_actions::callout(parse_iterator, parse_iterator)
     {
-        out << state.add_callout(qbk_value(state.current_file,
+        state.phrase << state.add_callout(qbk_value(state.current_file,
             marked_text.begin(), marked_text.end()));
         marked_text.clear();
     }
@@ -318,7 +318,7 @@ namespace quickbook
                         (
                             (
                                 (+(cl::anychar_p - "``") >> cl::eps_p("``"))
-                                & g.phrase
+                                & g.phrase_start
                             )
                             >>  cl::str_p("``")
                         )
@@ -473,7 +473,7 @@ namespace quickbook
                         (
                             (
                                 (+(cl::anychar_p - "``") >> cl::eps_p("``"))
-                                & g.phrase
+                                & g.phrase_start
                             )
                             >>  cl::str_p("``")
                         )
@@ -595,7 +595,7 @@ namespace quickbook
                         (
                             (
                                 (+(cl::anychar_p - "``") >> cl::eps_p("``"))
-                                & g.phrase
+                                & g.phrase_start
                             )
                             >>  cl::str_p("``")
                         )
@@ -619,7 +619,7 @@ namespace quickbook
         syntax_highlight_actions& actions;
     };
 
-    std::string syntax_highlight(
+    void syntax_highlight(
         parse_iterator first,
         parse_iterator last,
         quickbook::state& state,
@@ -648,10 +648,5 @@ namespace quickbook
         {
             BOOST_ASSERT(0);
         }
-
-        std::string str;
-        syn_actions.out.swap(str);
-        
-        return str;
     }
 }

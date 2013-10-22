@@ -105,12 +105,13 @@ The last two primitives deserve some further explanation: in order to
 guarantee the invariants associated to each index (e.g. some definite
 ordering,) elements of a <code>multi_index_container</code> are not mutable.
 To overcome this restriction, indices expose member functions
-for updating and modifying, which allow for the mutation of elements
+for replacement and modification which allow for the mutation of elements
 in a controlled fashion. Immutability of elements does not significantly
-impact the interface of ordered indices, as it is based upon  that of
-<code>std::set</code> and <code>std:multiset</code>, and these containers
+impact the interfaces of ordered and hashed indices, as they are based upon
+those of associative and unordered associative containers, respectively,
+and these containers
 also have non-mutable elements; but it may come as a surprise when dealing
-with sequenced indices, which are designed upon the functionality provided
+with sequenced and random access indices, which are designed upon the functionality provided
 by <code>std::list</code>. 
 </p>
 
@@ -120,11 +121,9 @@ they are wrapped as appropriate by each index (for instance, ordered indices
 provide a set-like suite of insertion member functions, whereas sequenced
 and random access indices have <code>push_back</code> and <code>push_front</code>
 operations.) Boost.MultiIndex poses no particular conditions on
-the interface of indices, save that they must model
-<a href="http://www.sgi.com/tech/stl/Container.html">
-<code>Container</code></a> (without the requirement of being
-<a href="http://www.sgi.com/tech/stl/Assignable.html">
-<code>Assignable</code></a>.)
+the interface of indices, although each index provided satisfy the C++ requirements for
+standard containers to the maximum extent possible within the conceptual framework
+of the library.
 </p>
 
 <h2><a name="complexity_signature">Complexity signature</a></h2>
@@ -333,10 +332,7 @@ reference</a>.
 The following concept is used by the rearrange facilities of non key-based
 indices. Given an index <code>i</code> of type <code>Index</code>, a <i>view
 of <code>i</code></i> is any range [<code>first</code>,<code>last</code>)
-where <code>first</code> and <code>last</code> are objects of a type
-<code>Iterator</code> modelling
-<a href="http://www.sgi.com/tech/stl/InputIterator.html">
-<code>Input Iterator</code></a> such that
+where <code>first</code> and <code>last</code> are input iterators such that
 <ol>
   <li>the associated value type of <code>Iterator</code> is convertible
     to <code>const Index::value_type&amp;</code>
@@ -383,9 +379,9 @@ Ordered indices
 
 <br>
 
-<p>Revised July 21st 2009</p>
+<p>Revised July 7th 2013</p>
 
-<p>&copy; Copyright 2003-2009 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

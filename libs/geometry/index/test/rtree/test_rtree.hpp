@@ -16,9 +16,6 @@
 
 #include <geometry_index_test_common.hpp>
 
-// TEST
-//#define BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
-//#define BOOST_GEOMETRY_INDEX_DETAIL_ENABLE_TYPE_ERASED_ITERATORS
 #include <boost/geometry/index/rtree.hpp>
 
 #include <boost/geometry/index/detail/rtree/utilities/are_levels_ok.hpp>
@@ -645,6 +642,14 @@ void exactly_the_same_outputs(Rtree const& rtree, Range1 const& output, Range2 c
     }
 }
 
+// alternative version of std::copy taking iterators of differnet types
+template <typename First, typename Last, typename Out>
+void copy_alt(First first, Last last, Out out)
+{
+    for ( ; first != last ; ++first, ++out )
+        *out = *first;
+}
+
 // spatial query
 
 template <typename Rtree, typename Value, typename Predicates>
@@ -668,22 +673,25 @@ void spatial_query(Rtree & rtree, Predicates const& pred, std::vector<Value> con
 
     exactly_the_same_outputs(rtree, output, rtree | bgi::adaptors::queried(pred));
 
-#ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
     std::vector<Value> output3;
-    std::copy(rtree.qbegin(pred), rtree.qend(pred), std::back_inserter(output3));
+    std::copy(rtree.qbegin(pred), rtree.qend(), std::back_inserter(output3));
 
     compare_outputs(rtree, output3, expected_output);
 
-#ifdef BOOST_GEOMETRY_INDEX_DETAIL_ENABLE_TYPE_ERASED_ITERATORS
+    std::vector<Value> output4;
+    std::copy(qbegin(rtree, pred), qend(rtree), std::back_inserter(output4));
+
+    exactly_the_same_outputs(rtree, output3, output4);
+
+#ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
     {
-        typedef typename Rtree::const_query_iterator QI;
-        QI first = rtree.qbegin(pred);
-        QI last = rtree.qend(pred);
         std::vector<Value> output4;
-        std::copy(first, last, std::back_inserter(output4));
+        std::copy(rtree.qbegin_(pred), rtree.qend_(pred), std::back_inserter(output4));
+        compare_outputs(rtree, output4, expected_output);
+        output4.clear();
+        copy_alt(rtree.qbegin_(pred), rtree.qend_(), std::back_inserter(output4));
         compare_outputs(rtree, output4, expected_output);
     }
-#endif
 #endif
 }
 
@@ -734,8 +742,6 @@ void disjoint(Rtree const& tree, std::vector<Value> const& input, Box const& qbo
     spatial_query(tree, bgi::disjoint(qpoly), expected_output);*/
 }
 
-#ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
-
 template <typename Tag>
 struct contains_impl
 {
@@ -778,8 +784,6 @@ void contains(Rtree const& tree, std::vector<Value> const& input, Box const& qbo
     >::apply(tree, input, qbox);
 }
 
-#endif // BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
-
 template <typename Rtree, typename Value, typename Box>
 void covered_by(Rtree const& tree, std::vector<Value> const& input, Box const& qbox)
 {
@@ -799,8 +803,6 @@ void covered_by(Rtree const& tree, std::vector<Value> const& input, Box const& q
     bg::convert(qbox, qpoly);
     spatial_query(tree, bgi::covered_by(qpoly), expected_output);*/
 }
-
-#ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
 
 template <typename Tag>
 struct covers_impl
@@ -843,8 +845,6 @@ void covers(Rtree const& tree, std::vector<Value> const& input, Box const& qbox)
         >::type
     >::apply(tree, input, qbox);
 }
-
-#endif // BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
 
 template <typename Tag>
 struct overlaps_impl
@@ -1039,22 +1039,20 @@ void nearest_query_k(Rtree const& rtree, std::vector<Value> const& input, Point 
 
     exactly_the_same_outputs(rtree, output, output2);
 
-#ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
     std::vector<Value> output3;
-    std::copy(rtree.qbegin(bgi::nearest(pt, k)), rtree.qend(bgi::nearest(pt, k)), std::back_inserter(output3));
+    std::copy(rtree.qbegin(bgi::nearest(pt, k)), rtree.qend(), std::back_inserter(output3));
 
     compare_nearest_outputs(rtree, output3, expected_output, pt, greatest_distance);
 
-#ifdef BOOST_GEOMETRY_INDEX_DETAIL_ENABLE_TYPE_ERASED_ITERATORS
+#ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
     {
-        typedef typename Rtree::const_query_iterator QI;
-        QI first = rtree.qbegin(bgi::nearest(pt, k));
-        QI last = rtree.qend(bgi::nearest(pt, k));
         std::vector<Value> output4;
-        std::copy(first, last, std::back_inserter(output4));
+        std::copy(rtree.qbegin_(bgi::nearest(pt, k)), rtree.qend_(bgi::nearest(pt, k)), std::back_inserter(output4));
+        compare_nearest_outputs(rtree, output4, expected_output, pt, greatest_distance);
+        output4.clear();
+        copy_alt(rtree.qbegin_(bgi::nearest(pt, k)), rtree.qend_(), std::back_inserter(output4));
         compare_nearest_outputs(rtree, output4, expected_output, pt, greatest_distance);
     }
-#endif
 #endif
 }
 
@@ -1420,10 +1418,8 @@ void queries(Rtree const& tree, std::vector<Value> const& input, Box const& qbox
     basictest::overlaps(tree, input, qbox);
     //basictest::touches(tree, input, qbox);
     basictest::within(tree, input, qbox);
-#ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
     basictest::contains(tree, input, qbox);
     basictest::covers(tree, input, qbox);
-#endif
 
     typedef typename bg::point_type<Box>::type P;
     P pt;

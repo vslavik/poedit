@@ -14,6 +14,7 @@
 
 #include <boost/concept/assert.hpp>
 #include <boost/concept_archetype.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include <boost/heap/heap_concepts.hpp>
 
@@ -439,6 +440,14 @@ void run_reserve_heap_tests(void)
 
     check_q(q, data);
 }
+
+template <typename pri_queue>
+void run_leak_check_test(void)
+{
+    pri_queue q;
+    q.push(boost::shared_ptr<int>(new int(0)));
+}
+
 
 struct less_with_T
 {

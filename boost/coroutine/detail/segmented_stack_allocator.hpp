@@ -25,7 +25,7 @@ struct stack_context;
 namespace detail {
 
 #if defined(BOOST_USE_SEGMENTED_STACKS)
-class segmented_stack_allocator
+class BOOST_COROUTINES_DECL segmented_stack_allocator
 {
 public:
     static bool is_stack_unbound();

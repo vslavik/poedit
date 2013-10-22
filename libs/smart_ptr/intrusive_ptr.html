@@ -24,7 +24,9 @@
 			compilers that support argument-dependent lookup, <STRONG>intrusive_ptr_add_ref</STRONG>
 			and <STRONG>intrusive_ptr_release</STRONG> should be defined in the namespace 
 			that corresponds to their parameter; otherwise, the definitions need to go in 
-			namespace <STRONG>boost</STRONG>.</p>
+			namespace <STRONG>boost</STRONG>. The library provides a helper base class template
+			<STRONG><a href="intrusive_ref_counter.html">intrusive_ref_counter</a></STRONG> which may
+			help adding support for <STRONG>intrusive_ptr</STRONG> to user&apos;s types.</p>
 		<p>The class template is parameterized on <b>T</b>, the type of the object pointed 
 			to. <STRONG>intrusive_ptr&lt;T&gt;</STRONG> can be implicitly converted to <STRONG>intrusive_ptr&lt;U&gt;</STRONG>
 			whenever <STRONG>T*</STRONG> can be implicitly converted to <STRONG>U*</STRONG>.</p>
@@ -288,7 +290,7 @@ intrusive_ptr &amp; operator=(T * r);</pre>
 		</BLOCKQUOTE>
 		<hr>
 		<p>
-			$Date: 2008-07-12 04:37:16 -0700 (Sat, 12 Jul 2008) $</p>
+			$Date: 2013-09-08 10:17:18 -0700 (Sun, 08 Sep 2013) $</p>
 		<p>
 			<small>Copyright © 2003-2005 Peter Dimov. Distributed under the Boost Software License, Version 
 				1.0. See accompanying file <A href="../../LICENSE_1_0.txt">LICENSE_1_0.txt</A> or 

@@ -9,6 +9,23 @@
 
 [section:changelog Changelog]
 
+[heading 2.2, Boost 1.55]
+
+[*General changes:]
+
+* Added a new configuration macro `BOOST_LOG_WITHOUT_DEFAULT_FACTORIES`. By defining this macro the user can disable compilation of the default filter and formatter factories used by settings parsers. This can substantially reduce binary sizes while still retaining support for settings parsers. Note that when this macro is defined the user will have to register _all_ attributes in the library.
+* Rewritten some of the parsers to reduce the compiled binary size. The rewritten parsers are more robust in detecting ambiguous and incorrect input.
+* The header `boost/log/utility/intrusive_ref_counter.hpp` is deprecated and will be removed in future releases. Its contents have been reworked and moved to __boost_smart_ptr__, as `boost/smart_ptr/intrusive_ref_counter.hpp`.
+* The header `boost/log/utility/explicit_operator_bool.hpp` is deprecated and will be removed in future releases. Its contents have been moved to __boost_utility__, as `boost/utility/explicit_operator_bool.hpp`.
+* The header `boost/log/utility/empty_deleter.hpp` is deprecated and will be removed in future releases. Its contents have been moved to __boost_utility__, as `boost/utility/empty_deleter.hpp`.
+
+[*Bug fixes:]
+
+* Fixed [link log.detailed.attributes.timer `timer`] attribute generating incorrect time readings on Windows on heavy thread contention when `QueryPerformanceCounter` API was used.
+* Fixed a bug in the filter parser that prevented using parsed filters with some attributes. For example, parsed filters didn't work with a string-typed attribute value, if the value was compared to a numeric operand.
+* Fixed thread id formatting discrepancies between the default sink and formatters.
+* Closed tickets: [ticket 8815], [ticket 8819], [ticket 8915], [ticket 8917], [ticket 9139], [ticket 9140], [ticket 9153], [ticket 9155].
+
 [heading 2.1, Boost 1.54]
 
 [*Breaking changes:]

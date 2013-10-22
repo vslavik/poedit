@@ -59,9 +59,9 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="keyword">namespace</span> <span class="identifier">mpi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpi</span><span class="special">;</span>
 
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">(</span><span class="identifier">argc</span><span class="special">,</span> <span class="identifier">argv</span><span class="special">);</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">;</span>
   <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">;</span>
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"I am process "</span> <span class="special">&lt;&lt;</span> <span class="identifier">world</span><span class="special">.</span><span class="identifier">rank</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="string">" of "</span> <span class="special">&lt;&lt;</span> <span class="identifier">world</span><span class="special">.</span><span class="identifier">size</span><span class="special">()</span>
             <span class="special">&lt;&lt;</span> <span class="string">"."</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -86,6 +86,25 @@ I am process 3 of 7.
       come out completely garbled, because one process can start writing "I
       am a process" before another process has finished writing "of 7.".
     </p>
+<p>
+      If you should still have an MPI library supporting only MPI 1.1 you will need
+      to pass the command line arguments to the environment constructor as shown
+      in this example:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">mpi</span><span class="special">/</span><span class="identifier">environment</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">mpi</span><span class="special">/</span><span class="identifier">communicator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="keyword">namespace</span> <span class="identifier">mpi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpi</span><span class="special">;</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="special">{</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">(</span><span class="identifier">argc</span><span class="special">,</span> <span class="identifier">argv</span><span class="special">);</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">;</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"I am process "</span> <span class="special">&lt;&lt;</span> <span class="identifier">world</span><span class="special">.</span><span class="identifier">rank</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="string">" of "</span> <span class="special">&lt;&lt;</span> <span class="identifier">world</span><span class="special">.</span><span class="identifier">size</span><span class="special">()</span>
+            <span class="special">&lt;&lt;</span> <span class="string">"."</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+  <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="mpi.point_to_point"></a>Point-to-Point communication</h3></div></div></div>
@@ -113,9 +132,9 @@ I am process 3 of 7.
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">serialization</span><span class="special">/</span><span class="identifier">string</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="keyword">namespace</span> <span class="identifier">mpi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpi</span><span class="special">;</span>
 
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">(</span><span class="identifier">argc</span><span class="special">,</span> <span class="identifier">argv</span><span class="special">);</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">;</span>
   <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">;</span>
 
   <span class="keyword">if</span> <span class="special">(</span><span class="identifier">world</span><span class="special">.</span><span class="identifier">rank</span><span class="special">()</span> <span class="special">==</span> <span class="number">0</span><span class="special">)</span> <span class="special">{</span>
@@ -140,8 +159,8 @@ I am process 3 of 7.
         it receives, along with a comma, then passes the message "world"
         back to processor 0 with a different tag. The first processor then writes
         this message with the "!" and exits. All sends are accomplished
-        with the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88803520-bb">communicator::send</a></code>
-        method and all receives use a corresponding <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88832272-bb">communicator::recv</a></code>
+        with the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp99132360-bb">communicator::send</a></code>
+        method and all receives use a corresponding <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp99161112-bb">communicator::recv</a></code>
         call.
       </p>
 <div class="section">
@@ -187,9 +206,9 @@ I am process 3 of 7.
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">serialization</span><span class="special">/</span><span class="identifier">string</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="keyword">namespace</span> <span class="identifier">mpi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpi</span><span class="special">;</span>
 
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">(</span><span class="identifier">argc</span><span class="special">,</span> <span class="identifier">argv</span><span class="special">);</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">;</span>
   <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">;</span>
 
   <span class="keyword">if</span> <span class="special">(</span><span class="identifier">world</span><span class="special">.</span><span class="identifier">rank</span><span class="special">()</span> <span class="special">==</span> <span class="number">0</span><span class="special">)</span> <span class="special">{</span>
@@ -212,15 +231,15 @@ I am process 3 of 7.
 <span class="special">}</span>
 </pre>
 <p>
-          We have replaced calls to the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88803520-bb">communicator::send</a></code>
-          and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88832272-bb">communicator::recv</a></code>
-          members with similar calls to their non-blocking counterparts, <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88862224-bb">communicator::isend</a></code>
-          and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88348960-bb">communicator::irecv</a></code>.
+          We have replaced calls to the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp99132360-bb">communicator::send</a></code>
+          and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp99161112-bb">communicator::recv</a></code>
+          members with similar calls to their non-blocking counterparts, <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp98592840-bb">communicator::isend</a></code>
+          and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp98566920-bb">communicator::irecv</a></code>.
           The prefix <span class="bold"><strong>i</strong></span> indicates that the operations
           return immediately with a <code class="computeroutput"><a class="link" href="../boost/mpi/request.html" title="Class request">mpi::request</a></code>
           object, which allows one to query the status of a communication request
-          (see the <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp87984832-bb">test</a></code>
-          method) or wait until it has completed (see the <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp87983760-bb">wait</a></code>
+          (see the <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp98154744-bb">test</a></code>
+          method) or wait until it has completed (see the <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp98153672-bb">wait</a></code>
           method). Multiple requests can be completed at the same time with the
           <code class="computeroutput"><a class="link" href="../boost/mpi/wait_all.html" title="Function wait_all">wait_all</a></code> operation.
         </p>
@@ -384,9 +403,9 @@ I am process 3 of 7.
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">serialization</span><span class="special">/</span><span class="identifier">string</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="keyword">namespace</span> <span class="identifier">mpi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpi</span><span class="special">;</span>
 
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">(</span><span class="identifier">argc</span><span class="special">,</span> <span class="identifier">argv</span><span class="special">);</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">;</span>
   <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">;</span>
 
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">value</span><span class="special">;</span>
@@ -433,9 +452,9 @@ Process #6 says Hello, World!
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstdlib</span><span class="special">&gt;</span>
 <span class="keyword">namespace</span> <span class="identifier">mpi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpi</span><span class="special">;</span>
 
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">(</span><span class="identifier">argc</span><span class="special">,</span> <span class="identifier">argv</span><span class="special">);</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">;</span>
   <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">;</span>
 
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">srand</span><span class="special">(</span><span class="identifier">time</span><span class="special">(</span><span class="number">0</span><span class="special">)</span> <span class="special">+</span> <span class="identifier">world</span><span class="special">.</span><span class="identifier">rank</span><span class="special">());</span>
@@ -489,16 +508,16 @@ Process #6 thought of 650073868
           function object. For instance, we can randomly generate values in each
           process and the compute the minimum value over all processes via a call
           to <code class="computeroutput"><a class="link" href="../boost/mpi/reduce.html" title="Function reduce">reduce</a></code>
-          (<code class="computeroutput"><span class="identifier">random_min</span><span class="special">.</span><span class="identifier">cpp</span></code>)::
+          (<code class="computeroutput"><span class="identifier">random_min</span><span class="special">.</span><span class="identifier">cpp</span></code>):
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">mpi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstdlib</span><span class="special">&gt;</span>
 <span class="keyword">namespace</span> <span class="identifier">mpi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpi</span><span class="special">;</span>
 
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">(</span><span class="identifier">argc</span><span class="special">,</span> <span class="identifier">argv</span><span class="special">);</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">;</span>
   <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">;</span>
 
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">srand</span><span class="special">(</span><span class="identifier">time</span><span class="special">(</span><span class="number">0</span><span class="special">)</span> <span class="special">+</span> <span class="identifier">world</span><span class="special">.</span><span class="identifier">rank</span><span class="special">());</span>
@@ -531,9 +550,9 @@ Process #6 thought of 650073868
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">serialization</span><span class="special">/</span><span class="identifier">string</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="keyword">namespace</span> <span class="identifier">mpi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpi</span><span class="special">;</span>
 
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">(</span><span class="identifier">argc</span><span class="special">,</span> <span class="identifier">argv</span><span class="special">);</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">;</span>
   <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">;</span>
 
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">names</span><span class="special">[</span><span class="number">10</span><span class="special">]</span> <span class="special">=</span> <span class="special">{</span> <span class="string">"zero "</span><span class="special">,</span> <span class="string">"one "</span><span class="special">,</span> <span class="string">"two "</span><span class="special">,</span> <span class="string">"three "</span><span class="special">,</span>
@@ -616,6 +635,65 @@ Process #6 thought of 650073868
           variant is useful, for instance, in establishing global minimum or maximum
           values.
         </p>
+<p>
+          The following code (<code class="computeroutput"><span class="identifier">global_min</span><span class="special">.</span><span class="identifier">cpp</span></code>)
+          shows a broadcasting version of the <code class="computeroutput"><span class="identifier">random_min</span><span class="special">.</span><span class="identifier">cpp</span></code>
+          example:
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">mpi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstdlib</span><span class="special">&gt;</span>
+<span class="keyword">namespace</span> <span class="identifier">mpi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpi</span><span class="special">;</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="special">{</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">(</span><span class="identifier">argc</span><span class="special">,</span> <span class="identifier">argv</span><span class="special">);</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">;</span>
+
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">srand</span><span class="special">(</span><span class="identifier">world</span><span class="special">.</span><span class="identifier">rank</span><span class="special">());</span>
+  <span class="keyword">int</span> <span class="identifier">my_number</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">rand</span><span class="special">();</span>
+  <span class="keyword">int</span> <span class="identifier">minimum</span><span class="special">;</span>
+
+  <span class="identifier">all_reduce</span><span class="special">(</span><span class="identifier">world</span><span class="special">,</span> <span class="identifier">my_number</span><span class="special">,</span> <span class="identifier">minimum</span><span class="special">,</span> <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">minimum</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;());</span>
+
+  <span class="keyword">if</span> <span class="special">(</span><span class="identifier">world</span><span class="special">.</span><span class="identifier">rank</span><span class="special">()</span> <span class="special">==</span> <span class="number">0</span><span class="special">)</span> <span class="special">{</span>
+      <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"The minimum value is "</span> <span class="special">&lt;&lt;</span> <span class="identifier">minimum</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+  <span class="special">}</span>
+
+  <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+          In that example we provide both input and output values, requiring twice
+          as much space, which can be a problem depending on the size of the transmitted
+          data. If there is no need to preserve the input value, the ouput value
+          can be omitted. In that case the input value will be overriden with the
+          output value and Boost.MPI is able, in some situation, to implement the
+          operation with a more space efficient solution (using the <code class="computeroutput"><span class="identifier">MPI_IN_PLACE</span></code> flag of the MPI C mapping),
+          as in the following example (<code class="computeroutput"><span class="identifier">in_place_global_min</span><span class="special">.</span><span class="identifier">cpp</span></code>):
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">mpi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstdlib</span><span class="special">&gt;</span>
+<span class="keyword">namespace</span> <span class="identifier">mpi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpi</span><span class="special">;</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="special">{</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">(</span><span class="identifier">argc</span><span class="special">,</span> <span class="identifier">argv</span><span class="special">);</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">;</span>
+
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">srand</span><span class="special">(</span><span class="identifier">world</span><span class="special">.</span><span class="identifier">rank</span><span class="special">());</span>
+  <span class="keyword">int</span> <span class="identifier">my_number</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">rand</span><span class="special">();</span>
+
+  <span class="identifier">all_reduce</span><span class="special">(</span><span class="identifier">world</span><span class="special">,</span> <span class="identifier">my_number</span><span class="special">,</span> <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">minimum</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;());</span>
+
+  <span class="keyword">if</span> <span class="special">(</span><span class="identifier">world</span><span class="special">.</span><span class="identifier">rank</span><span class="special">()</span> <span class="special">==</span> <span class="number">0</span><span class="special">)</span> <span class="special">{</span>
+      <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"The minimum value is "</span> <span class="special">&lt;&lt;</span> <span class="identifier">my_number</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+  <span class="special">}</span>
+
+  <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
 </div>
 </div>
 <div class="section">
@@ -650,9 +728,9 @@ Process #6 thought of 650073868
 <span class="keyword">void</span> <span class="identifier">generate_data</span><span class="special">(</span><span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">local</span><span class="special">,</span> <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">);</span>
 <span class="keyword">void</span> <span class="identifier">collect_data</span><span class="special">(</span><span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">local</span><span class="special">,</span> <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">);</span>
 
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">(</span><span class="identifier">argc</span><span class="special">,</span> <span class="identifier">argv</span><span class="special">);</span>
+  <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">environment</span> <span class="identifier">env</span><span class="special">;</span>
   <span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="identifier">world</span><span class="special">;</span>
 
   <span class="keyword">bool</span> <span class="identifier">is_generator</span> <span class="special">=</span> <span class="identifier">world</span><span class="special">.</span><span class="identifier">rank</span><span class="special">()</span> <span class="special">&lt;</span> <span class="number">2</span> <span class="special">*</span> <span class="identifier">world</span><span class="special">.</span><span class="identifier">size</span><span class="special">()</span> <span class="special">/</span> <span class="number">3</span><span class="special">;</span>
@@ -794,7 +872,7 @@ Process #6 thought of 650073868
 </pre>
 <p>
         The skeletons and content of any Serializable data type can be transmitted
-        either via the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88803520-bb">send</a></code> and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88832272-bb">recv</a></code> members of the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html" title="Class communicator">communicator</a></code>
+        either via the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp99132360-bb">send</a></code> and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp99161112-bb">recv</a></code> members of the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html" title="Class communicator">communicator</a></code>
         class (for point-to-point communicators) or broadcast via the <code class="computeroutput"><a class="link" href="../boost/mpi/broadcast.html" title="Function broadcast">broadcast()</a></code> collective. When separating
         a data structure into a skeleton and content, be careful not to modify the
         data structure (either on the sender side or the receiver side) without transmitting
@@ -972,7 +1050,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp87987136-bb">request::cancel</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp98157048-bb">request::cancel</a></code>
                 </p>
               </td>
 </tr>
@@ -984,7 +1062,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/status.html#idp87923472-bb">status::count</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/status.html#idp98024760-bb">status::count</a></code>
                 </p>
               </td>
 </tr>
@@ -1008,7 +1086,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88371440-bb">communicator::iprobe</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp98546456-bb">communicator::iprobe</a></code>
                 </p>
               </td>
 </tr>
@@ -1032,7 +1110,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88862224-bb">communicator::isend</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp98592840-bb">communicator::isend</a></code>
                 </p>
               </td>
 </tr>
@@ -1056,7 +1134,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88862224-bb">communicator::irecv</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp98592840-bb">communicator::irecv</a></code>
                 </p>
               </td>
 </tr>
@@ -1068,7 +1146,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88366992-bb">communicator::probe</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp98542008-bb">communicator::probe</a></code>
                 </p>
               </td>
 </tr>
@@ -1092,7 +1170,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88832272-bb">communicator::recv</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp99161112-bb">communicator::recv</a></code>
                 </p>
               </td>
 </tr>
@@ -1152,7 +1230,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88803520-bb">communicator::send</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp99132360-bb">communicator::send</a></code>
                 </p>
               </td>
 </tr>
@@ -1248,7 +1326,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp87983760-bb">request::test</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp98153672-bb">request::test</a></code>
                 </p>
               </td>
 </tr>
@@ -1296,7 +1374,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/status.html#idp87922704-bb">status::cancelled</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/status.html#idp98096584-bb">status::cancelled</a></code>
                 </p>
               </td>
 </tr>
@@ -1308,7 +1386,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp87983760-bb">request::wait</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp98153672-bb">request::wait</a></code>
                 </p>
               </td>
 </tr>
@@ -1686,7 +1764,19 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  used automatically in Boost.MPI
+                  used automatically in Boost.MPI for MPI version 1.x
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="http://www.mpi-forum.org/docs/mpi-20-html/node76.htm#Node76" target="_top"><code class="computeroutput"><span class="identifier">MPI_Get_address</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  used automatically in Boost.MPI for MPI version 2.0 and higher
                 </p>
               </td>
 </tr>
@@ -1806,7 +1896,19 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  user-defined classes and structs
+                  user-defined classes and structs with MPI 1.x
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="http://www.mpi-forum.org/docs/mpi-20-html/node76.htm#Node76" target="_top"><code class="computeroutput"><span class="identifier">MPI_Type_create_struct</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  user-defined classes and structs with MPI 2.0 and higher
                 </p>
               </td>
 </tr>
@@ -1998,7 +2100,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88376352-bb">communicator::barrier</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp98535128-bb">communicator::barrier</a></code>
                 </p>
               </td>
 </tr>
@@ -2095,6 +2197,19 @@ Process #6 thought of 650073868
 <td>
                 <p>
                   most uses supported by <code class="computeroutput"><a class="link" href="../boost/mpi/scatter.html" title="Function scatter">scatter</a></code>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="http://www.mpi-forum.org/docs/mpi-20-html/node145.htm#Node145" target="_top"><code class="computeroutput"><span class="identifier">MPI_IN_PLACE</span></code></a>
+                </p>
+              </td>
+<td>
+                <p>
+                  supported implicitly by <code class="computeroutput"><a class="link" href="../boost/mpi/all_reduce.html" title="Function all_reduce">all_reduce by omiting the ouput
+                  value</a></code>
                 </p>
               </td>
 </tr>
@@ -2412,7 +2527,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idp88171488-bb">group::size</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idp98358888-bb">group::size</a></code>
                 </p>
               </td>
 </tr>
@@ -2500,7 +2615,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88802432-bb">communicator::group</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp99131272-bb">communicator::group</a></code>
                 </p>
               </td>
 </tr>
@@ -2549,7 +2664,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idp88163024-bb">group::include</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idp98345336-bb">group::include</a></code>
                 </p>
               </td>
 </tr>
@@ -2561,7 +2676,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idp88163024-bb">group::exclude</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idp98345336-bb">group::exclude</a></code>
                 </p>
               </td>
 </tr>
@@ -2635,7 +2750,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88800944-bb">communicator::size</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp99129784-bb">communicator::size</a></code>
                 </p>
               </td>
 </tr>
@@ -2647,7 +2762,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88799408-bb">communicator::rank</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp99128248-bb">communicator::rank</a></code>
                 </p>
               </td>
 </tr>
@@ -2698,7 +2813,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88334336-bb">communicator::split</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp98539224-bb">communicator::split</a></code>
                 </p>
               </td>
 </tr>
@@ -2749,7 +2864,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  use <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88326464-bb">communicator::as_intercommunicator</a></code>
+                  use <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp98530584-bb">communicator::as_intercommunicator</a></code>
                 </p>
               </td>
 </tr>
@@ -2761,7 +2876,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idp88127440-bb">boost::mpi::intercommunicator::remote_size</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idp98305240-bb">boost::mpi::intercommunicator::remote_size</a></code>
                   <code class="computeroutput"><span class="identifier">intercommunicator</span><span class="special">::</span><span class="identifier">remote_size</span></code>
                 </p>
               </td>
@@ -2774,7 +2889,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idp88128208-bb">intercommunicator::remote_group</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idp98301832-bb">intercommunicator::remote_group</a></code>
                 </p>
               </td>
 </tr>
@@ -2799,7 +2914,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idp88129040-bb">intercommunicator::merge</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idp98302616-bb">intercommunicator::merge</a></code>
                 </p>
               </td>
 </tr>
@@ -3000,7 +3115,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88321776-bb">communicator::has_cartesian_topology</a></code>
+                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp98519448-bb">communicator::has_cartesian_topology</a></code>
                 </p>
               </td>
 </tr>
@@ -3049,7 +3164,7 @@ Process #6 thought of 650073868
 <td>
                 <p>
                   <code class="computeroutput">communicator::has_graph_topology</code>,
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp88321776-bb">communicator::has_cartesian_topology</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp98519448-bb">communicator::has_cartesian_topology</a></code>
                 </p>
               </td>
 </tr>
@@ -3234,7 +3349,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp88239696-bb">environment::max_tag</a></code>
+                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp98432408-bb">environment::max_tag</a></code>
                 </p>
               </td>
 </tr>
@@ -3246,7 +3361,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp88233024-bb">environment::host_rank</a></code>
+                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp98427752-bb">environment::host_rank</a></code>
                 </p>
               </td>
 </tr>
@@ -3258,7 +3373,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp88235184-bb">environment::io_rank</a></code>
+                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp98429912-bb">environment::io_rank</a></code>
                 </p>
               </td>
 </tr>
@@ -3270,7 +3385,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp88230288-bb">environment::processor_name</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp98424664-bb">environment::processor_name</a></code>
                 </p>
               </td>
 </tr>
@@ -3393,7 +3508,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/exception.html#idp88229008-bb">exception::error_class</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/exception.html#idp98408056-bb">exception::error_class</a></code>
                 </p>
               </td>
 </tr>
@@ -3433,7 +3548,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idp87915696-bb">timer::time_is_global</a></code>
+                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idp98037224-bb">timer::time_is_global</a></code>
                 </p>
               </td>
 </tr>
@@ -3445,7 +3560,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  use <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idp87912176-bb">timer::elapsed</a></code> to determine
+                  use <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idp98033704-bb">timer::elapsed</a></code> to determine
                   the time elapsed from some specific starting point
                 </p>
               </td>
@@ -3458,7 +3573,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idp87913728-bb">timer::elapsed_min</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idp98035256-bb">timer::elapsed_min</a></code>
                 </p>
               </td>
 </tr>
@@ -3524,7 +3639,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp88248080-bb">environment::initialized</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp98436712-bb">environment::initialized</a></code>
                 </p>
               </td>
 </tr>
@@ -3536,7 +3651,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp88245696-bb">environment::abort</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp98434328-bb">environment::abort</a></code>
                 </p>
               </td>
 </tr>

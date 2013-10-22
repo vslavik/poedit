@@ -20,7 +20,7 @@
 #include <stdexcept>
 #include <string>
 #include <iostream>
-#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
 
 #include <boost/log/common.hpp>
 #include <boost/log/expressions.hpp>

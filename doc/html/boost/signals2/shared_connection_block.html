@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../signals2/reference.html#header.boost.signals2.shared_connection_block_hpp" title="Header &lt;boost/signals2/shared_connection_block.hpp&gt;">
-<link rel="prev" href="optional_last__idp57678352.html" title="Class optional_last_value&lt;void&gt;">
+<link rel="prev" href="optional_last__idp92491144.html" title="Class optional_last_value&lt;void&gt;">
 <link rel="next" href="signal.html" title="Class template signal">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="optional_last__idp57678352.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../signals2/reference.html#header.boost.signals2.shared_connection_block_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signal.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="optional_last__idp92491144.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../signals2/reference.html#header.boost.signals2.shared_connection_block_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signal.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.signals2.shared_connection_block"></a><div class="titlepage"></div>
@@ -35,23 +35,23 @@
 <span class="keyword">class</span> <a class="link" href="shared_connection_block.html" title="Class shared_connection_block">shared_connection_block</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="shared_connection_block.html#boost.signals2.shared_connection_blockconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="shared_connection_block.html#idp57737008-bb"><span class="identifier">shared_connection_block</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">boost::signals2::connection</a> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">connection</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> 
+  <a class="link" href="shared_connection_block.html#idp100859624-bb"><span class="identifier">shared_connection_block</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">boost::signals2::connection</a> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">connection</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> 
                           <span class="keyword">bool</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="shared_connection_block.html#idp19809088-bb"><span class="identifier">shared_connection_block</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">signals2</span><span class="special">::</span><span class="identifier">shared_connection_block</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="shared_connection_block.html#idp91519288-bb"><span class="identifier">shared_connection_block</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">signals2</span><span class="special">::</span><span class="identifier">shared_connection_block</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   shared_connection_block&amp; 
-  <a class="link" href="shared_connection_block.html#idp55016240-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">signals2</span><span class="special">::</span><span class="identifier">shared_connection_block</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="shared_connection_block.html#idp57652192-bb"><span class="special">~</span><span class="identifier">shared_connection_block</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="shared_connection_block.html#idp105717976-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">signals2</span><span class="special">::</span><span class="identifier">shared_connection_block</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="shared_connection_block.html#idp106129592-bb"><span class="special">~</span><span class="identifier">shared_connection_block</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="shared_connection_block.html#idp86814624-bb">connection blocking</a></span>
-  <span class="keyword">void</span> <a class="link" href="shared_connection_block.html#idp86814816-bb"><span class="identifier">unblock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="shared_connection_block.html#idp94167008-bb"><span class="identifier">block</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="shared_connection_block.html#idp94106272-bb"><span class="identifier">blocking</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="shared_connection_block.html#idp91739000-bb">connection blocking</a></span>
+  <span class="keyword">void</span> <a class="link" href="shared_connection_block.html#idp91739192-bb"><span class="identifier">unblock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="shared_connection_block.html#idp35910088-bb"><span class="identifier">block</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="shared_connection_block.html#idp106826408-bb"><span class="identifier">blocking</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="shared_connection_block.html#idp54553952-bb">miscellaneous methods</a></span>
-  <a class="link" href="connection.html" title="Class connection">boost::signals2::connection</a> <a class="link" href="shared_connection_block.html#idp54554192-bb"><span class="identifier">connection</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="shared_connection_block.html#idp96575512-bb">miscellaneous methods</a></span>
+  <a class="link" href="connection.html" title="Class connection">boost::signals2::connection</a> <a class="link" href="shared_connection_block.html#idp96575704-bb"><span class="identifier">connection</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp165524896"></a><h2>Description</h2>
+<a name="idp209029784"></a><h2>Description</h2>
 <p>A <code class="computeroutput">shared_connection_block</code> object blocks a
           connection, preventing the associated slot from executing when the
           associated signal is invoked. The connection will remain
@@ -59,7 +59,7 @@
           the connection
           releases its block.  A <code class="computeroutput">shared_connection_block</code> releases
           its block when it is destroyed or its
-          <a class="link" href="shared_connection_block.html#idp86814816-bb">unblock</a> method is called.</p>
+          <a class="link" href="shared_connection_block.html#idp91739192-bb">unblock</a> method is called.</p>
 <p>A <code class="computeroutput">shared_connection_block</code> is safe to use even
           after the <a class="link" href="connection.html" title="Class connection">signals2::connection</a> object it was constructed
           from has been destroyed, or the connection it references has been
@@ -76,13 +76,13 @@
             connection.
           </p>
 <div class="refsect2">
-<a name="idp165528560"></a><h3>
+<a name="idp209033448"></a><h3>
 <a name="boost.signals2.shared_connection_blockconstruct-copy-destruct"></a><code class="computeroutput">shared_connection_block</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp57737008-bb"></a><span class="identifier">shared_connection_block</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">boost::signals2::connection</a> <span class="special">&amp;</span> conn <span class="special">=</span> <span class="identifier">connection</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> 
+<pre class="literallayout"><a name="idp100859624-bb"></a><span class="identifier">shared_connection_block</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">boost::signals2::connection</a> <span class="special">&amp;</span> conn <span class="special">=</span> <span class="identifier">connection</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> 
                         <span class="keyword">bool</span> initially_blocking <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -98,7 +98,7 @@
             will initially block the connection if and only if the
             <code class="computeroutput">initially_blocking</code>
             parameter is <code class="computeroutput">true</code>.  The block on the connection may be released
-            by calling the <a class="link" href="shared_connection_block.html#idp86814816-bb">unblock</a> method,
+            by calling the <a class="link" href="shared_connection_block.html#idp91739192-bb">unblock</a> method,
             or destroying the <code class="computeroutput">shared_connection_block</code> object.</p>
 <p>Default construction of a <code class="computeroutput">shared_connection_block</code> results in a
               <code class="computeroutput">shared_connection_block</code> which references the NULL connection.
@@ -116,7 +116,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp19809088-bb"></a><span class="identifier">shared_connection_block</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">signals2</span><span class="special">::</span><span class="identifier">shared_connection_block</span> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp91519288-bb"></a><span class="identifier">shared_connection_block</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">signals2</span><span class="special">::</span><span class="identifier">shared_connection_block</span> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -142,7 +142,7 @@
 </li>
 <li class="listitem">
 <pre class="literallayout">shared_connection_block&amp; 
-<a name="idp55016240-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">signals2</span><span class="special">::</span><span class="identifier">shared_connection_block</span> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<a name="idp105717976-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">signals2</span><span class="special">::</span><span class="identifier">shared_connection_block</span> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -170,7 +170,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp57652192-bb"></a><span class="special">~</span><span class="identifier">shared_connection_block</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp106129592-bb"></a><span class="special">~</span><span class="identifier">shared_connection_block</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -178,18 +178,18 @@
 </colgroup>
 <tbody><tr>
 <td><p><span class="term">Effects:</span></p></td>
-<td><p>If <a class="link" href="shared_connection_block.html#idp94106272-bb">blocking</a>() is true, releases the connection block.</p></td>
+<td><p>If <a class="link" href="shared_connection_block.html#idp106826408-bb">blocking</a>() is true, releases the connection block.</p></td>
 </tr></tbody>
 </table></div>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp165558016"></a><h3>
-<a name="idp86814624-bb"></a><code class="computeroutput">shared_connection_block</code> connection blocking</h3>
+<a name="idp209062872"></a><h3>
+<a name="idp91739000-bb"></a><code class="computeroutput">shared_connection_block</code> connection blocking</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp86814816-bb"></a><span class="identifier">unblock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp91739192-bb"></a><span class="identifier">unblock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -198,7 +198,7 @@
 <tbody>
 <tr>
 <td><p><span class="term">Effects:</span></p></td>
-<td><p>If <a class="link" href="shared_connection_block.html#idp94106272-bb">blocking</a>() is true, releases the connection block.
+<td><p>If <a class="link" href="shared_connection_block.html#idp106826408-bb">blocking</a>() is true, releases the connection block.
               Note, the connection may remain blocked due to
               other <code class="computeroutput">shared_connection_block</code> objects.</p></td>
 </tr>
@@ -210,7 +210,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp94167008-bb"></a><span class="identifier">block</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp35910088-bb"></a><span class="identifier">block</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -219,7 +219,7 @@
 <tbody>
 <tr>
 <td><p><span class="term">Effects:</span></p></td>
-<td><p>If <a class="link" href="shared_connection_block.html#idp94106272-bb">blocking</a>() is false, reasserts a block on
+<td><p>If <a class="link" href="shared_connection_block.html#idp106826408-bb">blocking</a>() is false, reasserts a block on
               the connection.</p></td>
 </tr>
 <tr>
@@ -230,7 +230,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp94106272-bb"></a><span class="identifier">blocking</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp106826408-bb"></a><span class="identifier">blocking</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -243,7 +243,7 @@
 </tr>
 <tr>
 <td><p><span class="term">Notes:</span></p></td>
-<td><p><code class="computeroutput">this-&gt;blocking() == true</code> implies <code class="computeroutput"><a class="link" href="connection.html#idp93983200-bb">connection::blocked</a>() == true</code>
+<td><p><code class="computeroutput">this-&gt;blocking() == true</code> implies <code class="computeroutput"><a class="link" href="connection.html#idp96438040-bb">connection::blocked</a>() == true</code>
             for the connection.  However, <code class="computeroutput">this-&gt;blocking() == false</code> does not necessarily imply
             <code class="computeroutput">connection::blocked() == false</code>, since the connection may be
             blocked by another <code class="computeroutput">shared_connection_block</code> object.</p></td>
@@ -254,10 +254,10 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp165574016"></a><h3>
-<a name="idp54553952-bb"></a><code class="computeroutput">shared_connection_block</code> miscellaneous methods</h3>
+<a name="idp209078872"></a><h3>
+<a name="idp96575512-bb"></a><code class="computeroutput">shared_connection_block</code> miscellaneous methods</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a class="link" href="connection.html" title="Class connection">boost::signals2::connection</a> <a name="idp54554192-bb"></a><span class="identifier">connection</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="connection.html" title="Class connection">boost::signals2::connection</a> <a name="idp96575704-bb"></a><span class="identifier">connection</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -281,7 +281,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="optional_last__idp57678352.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../signals2/reference.html#header.boost.signals2.shared_connection_block_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signal.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="optional_last__idp92491144.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../signals2/reference.html#header.boost.signals2.shared_connection_block_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signal.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

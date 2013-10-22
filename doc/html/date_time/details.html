@@ -46,7 +46,7 @@
     <a class="link" href="details.html#special_value_handling">Special Value Handling</a>
   </p>
 <a name="timepoints"></a><h4>
-<a name="idp45684544"></a>Timepoints</h4>
+<a name="idp84842792"></a>Timepoints</h4>
 <p>
     This section describes some of basic arithmetic rules that can be performed with timepoints. In general, Timepoints support basic arithmetic in conjunction with Durations as follows:
     </p>
@@ -66,7 +66,7 @@
 <p>
   </p>
 <a name="durations"></a><h4>
-<a name="idp45686800"></a>Durations</h4>
+<a name="idp84845048"></a>Durations</h4>
 <p>
     Durations represent a length of time and can have positive and negative values. It is frequently useful to be able to perform calculations with other durations and with simple integral values. The following describes these calculations:
     </p>
@@ -81,7 +81,7 @@
 <p>
   </p>
 <a name="intervals"></a><h4>
-<a name="idp45687904"></a>Intervals (Periods)</h4>
+<a name="idp84846152"></a>Intervals (Periods)</h4>
 <p>
     Interval logic is extremely useful for simplifying many 'calculations' for dates and times. The following describes the operations provided by periods which are based on half-open range. The following operations calculate new time periods based on two input time periods: 
     </p>
@@ -114,7 +114,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="special_value_handling"></a><h4>
-<a name="idp45691728"></a>Special Value Handling</h4>
+<a name="idp84850008"></a>Special Value Handling</h4>
 <p>
     For many temporal problems it is useful for Duration and Timepoint types to support special values such as Not A Date Time (NADT) and infinity. In general special values such as Not A Date Time (NADT) and infinity should follow rules like floating point values. Note that it should be possible to configure NADT based systems to throw an exception instead of result in NADT. 
     </p>
@@ -240,7 +240,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <div class="titlepage"><div><div><h3 class="title">
 <a name="date_time.tradeoffs"></a>Tradeoffs: Stability, Predictability, and Approximations</h3></div></div></div>
 <h3>
-<a name="idp45714368"></a>
+<a name="idp84872584"></a>
     Unavoidable Trade-offs
   </h3>
 <p>
@@ -264,14 +264,14 @@ Timeperiod shift Duration          --&gt; Timeperiod
     If you want accurate calculations with future times, you will have to use TAI or an equivalent, but the mapping from TAI to UTC or local time depends on leap seconds, so you will not have exact agreement with wall-clock time. 
   </p>
 <h3>
-<a name="idp45718288"></a>
+<a name="idp84876504"></a>
     Stability, Predictability, and Approximations
   </h3>
 <p>
     Here is some underlying theory that helps to explain what's going on. Remember that a temporal type, like any abstract data type (ADT), is a set of values together with operations on those values. 
   </p>
 <h4>
-<a name="idp45719072"></a>
+<a name="idp84877288"></a>
     Stability
   </h4>
 <p>
@@ -281,7 +281,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
     An operation on a type is stable if the result of applying the operation to a particular operand(s) does not change over time. 
   </p>
 <h4>
-<a name="idp45720448"></a>
+<a name="idp84878664"></a>
     Predictability
   </h4>
 <p>
@@ -320,7 +320,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
     Ill-formed sets are not of much practical use, so we will not discuss them further. In plain english the above simply says that all the values of a predictable type are known ahead of time, but some values of an unpredictable type are not known until some particular time. 
   </p>
 <h4>
-<a name="idp45729968"></a>
+<a name="idp84888184"></a>
     Stability of Operations
   </h4>
 <p>
@@ -351,7 +351,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
     We can refine this a little by saying that a range within an unpredicatable type can be predictable, and operations performed entirely on values within that range will be stable. For example, the range of UTC timepoints from 1970-01-01 through the present is predictable, so calculations of durations within that range will be stable. 
   </p>
 <h4>
-<a name="idp45733824"></a>
+<a name="idp84892040"></a>
     Approximations
   </h4>
 <p>
@@ -444,7 +444,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="date_ref"></a><h4>
-<a name="idp45751904"></a>Date Calendar References</h4>
+<a name="idp84910216"></a>Date Calendar References</h4>
 <p>
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
@@ -463,7 +463,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="time_ref"></a><h4>
-<a name="idp45756896"></a>Time</h4>
+<a name="idp84915208"></a>Time</h4>
 <p>
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
@@ -487,7 +487,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="other_c_libs"></a><h4>
-<a name="idp45762640"></a>Other C/C++ Libraries</h4>
+<a name="idp84920952"></a>Other C/C++ Libraries</h4>
 <p>
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
@@ -514,7 +514,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="java_libs"></a><h4>
-<a name="idp45769456"></a>JAVA Date &amp; Time Library Quick Reference</h4>
+<a name="idp84927768"></a>JAVA Date &amp; Time Library Quick Reference</h4>
 <p>
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
@@ -530,7 +530,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="script_libs"></a><h4>
-<a name="idp45774464"></a>Scripting Language Libraries</h4>
+<a name="idp84932744"></a>Scripting Language Libraries</h4>
 <p>
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
@@ -549,7 +549,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="related"></a><h4>
-<a name="idp45778336"></a>Related Commercial and Fanciful Pages</h4>
+<a name="idp84936584"></a>Related Commercial and Fanciful Pages</h4>
 <p>
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
@@ -565,7 +565,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="resolution"></a><h4>
-<a name="idp45782000"></a>Resolution, Precision, and Accuracy</h4>
+<a name="idp84940248"></a>Resolution, Precision, and Accuracy</h4>
 <p>
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
@@ -588,12 +588,12 @@ Timeperiod shift Duration          --&gt; Timeperiod
     <a class="link" href="details.html#other_boost_libs">Required Boost Libraries</a>
   </p>
 <a name="overview"></a><h4>
-<a name="idp45787664"></a>Overview</h4>
+<a name="idp84945944"></a>Overview</h4>
 <p>
     The library has a few functions that require the creation of a library file (mostly to_string, from_string functions).  Most library users can make effective use of the library WITHOUT building the library, but simply including the required headers. If the library is needed, the Jamfile in the build directory will produce a "static" library (libboost_date_time) and a "dynamic/shared" library (boost_date_time) that contains these functions. Note that to use the library without the library (particularly on windows) may require using the BOOST_DATE_TIME_NO_LIB flag to the compilation options.
   </p>
 <a name="compile_options"></a><h4>
-<a name="idp45788528"></a>Compilation Options</h4>
+<a name="idp84946776"></a>Compilation Options</h4>
 <p>
     By default the posix_time system uses a single 64 bit integer internally to provide a microsecond level resolution. As an alternative, a combination of a 64 bit integer and a 32 bit integer (96 bit resolution) can be used to provide nano-second level resolutions. The default implementation may provide better performance and more compact memory usage for many applications that do not require nano-second resolutions. 
   </p>
@@ -604,7 +604,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>As a convenience, <code class="computeroutput">date_time</code> has provided some <a class="link" href="gregorian.html#additional_duration_types">additional duration types</a>. Use of these types may have unexpected results due to the snap-to-end-of-month behavior (see <a class="link" href="gregorian.html#snap_to_details">Reversibility of Operations Pitfall</a> for complete details and examples). These types are enabled by default. To disable these types, simply undefine <code class="computeroutput">BOOST_DATE_TIME_OPTIONAL_GREGORIAN_TYPES</code> in your project file.</p>
 <p>Another convenience is the default constructors for <code class="computeroutput"><a class="link" href="gregorian.html#date_time.gregorian.date_class" title="Date">date</a></code>, and <code class="computeroutput"><a class="link" href="posix_time.html#date_time.posix_time.ptime_class" title="Ptime">ptime</a></code>. These constructors are enabled by default. To disable them, simply define <code class="computeroutput">DATE_TIME_NO_DEFAULT_CONSTRUCTOR</code> in your project file.</p>
 <a name="portability"></a><h4>
-<a name="idp45795696"></a>Compiler/Portability Notes</h4>
+<a name="idp84953944"></a>Compiler/Portability Notes</h4>
 <p>
     The Boost Date-Time library has been built and tested with many compilers and platforms. However, some compilers and standard libraries have issues. While some of these issues can be worked around, others are difficult to work around. The following compilers are known to fully support all aspects of the library:
     </p>
@@ -665,7 +665,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <h6>
-<a name="idp45804352"></a>Visual Studio &amp; STLPort</h6>
+<a name="idp84962600"></a>Visual Studio &amp; STLPort</h6>
 <p>There is a known issue with Visual Studio (7.0 &amp; 7.1) and STLPort. The build errors typically make reference to a type issue or 'no acceptable conversion' and are attempting to instantiate a template with <code class="computeroutput">wchar_t</code>. The default build of STLPort does not support <code class="computeroutput">wchar_t</code>. There are two possible workarounds for this issue. The simplest is the user can build date_time with no wide stream/string etc. The other is to rebuild STLPort with wchar_t support.
   </p>
 <p>To build date_time with no wide stream/string etc, execute the following command from <code class="computeroutput">$BOOST_ROOT</code>:
@@ -685,7 +685,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
     (replace the ellipsis with the correct paths for the build system and adjust the <code class="computeroutput">TOOLS</code> to the proper toolset if necessary)
   </p>
 <a name="dir_structure"></a><h4>
-<a name="idp45806912"></a>Directory Structure</h4>
+<a name="idp84965160"></a>Directory Structure</h4>
 <p>
     The directory tree has the following structure:
     </p>
@@ -706,7 +706,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="other_boost_libs"></a><h4>
-<a name="idp45811952"></a>Required Boost Libraries</h4>
+<a name="idp84970232"></a>Required Boost Libraries</h4>
 <p>
     Various parts of date-time depend on other boost libraries.  These include:
     </p>
@@ -743,7 +743,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <div class="titlepage"><div><div><h3 class="title">
 <a name="date_time.changes"></a>Change History</h3></div></div></div>
 <h4>
-<a name="idp45818880"></a>Changes from Boost 1.41 to 1.44 (date_time 1.08 to 1.09)</h4>
+<a name="idp84977192"></a>Changes from Boost 1.41 to 1.44 (date_time 1.08 to 1.09)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -763,7 +763,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 </tr></tbody>
 </table></div>
 <h4>
-<a name="idp45822064"></a>Changes from Boost 1.40 to 1.41 (date_time 1.07 to 1.08)</h4>
+<a name="idp84980376"></a>Changes from Boost 1.40 to 1.41 (date_time 1.07 to 1.08)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -795,7 +795,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 </tbody>
 </table></div>
 <h4>
-<a name="idp45827440"></a>Changes from Boost 1.38 to 1.40 (date_time 1.06 to 1.07)</h4>
+<a name="idp84985752"></a>Changes from Boost 1.38 to 1.40 (date_time 1.06 to 1.07)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -816,7 +816,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 </tr></tbody>
 </table></div>
 <h4>
-<a name="idp45831600"></a>Changes from Boost 1.34 to 1.38 (date_time 1.05 to 1.06)</h4>
+<a name="idp84989912"></a>Changes from Boost 1.34 to 1.38 (date_time 1.05 to 1.06)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -930,7 +930,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 </tbody>
 </table></div>
 <h4>
-<a name="idp45850576"></a>Changes from Boost 1.33 to 1.34 (date_time 1.04 to 1.05)</h4>
+<a name="idp85008888"></a>Changes from Boost 1.33 to 1.34 (date_time 1.04 to 1.05)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -1018,7 +1018,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 </tbody>
 </table></div>
 <h4>
-<a name="idp45860720"></a>Changes from Boost 1.32 to 1.33 (date_time 1.03 to 1.04)</h4>
+<a name="idp85019032"></a>Changes from Boost 1.32 to 1.33 (date_time 1.03 to 1.04)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -1158,7 +1158,7 @@ void save_to(archive_type&amp; ar,
 </tbody>
 </table></div>
 <h4>
-<a name="idp45892016"></a>Changes from Boost 1.31 to 1.32 (date_time 1.02 to 1.03)</h4>
+<a name="idp85050328"></a>Changes from Boost 1.31 to 1.32 (date_time 1.02 to 1.03)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -1353,7 +1353,7 @@ ws &gt;&gt; d; //Feb 29th, 2000</pre>
 </tbody>
 </table></div>
 <h4>
-<a name="idp45915872"></a>Changes from Boost 1.30 to 1.31 (date_time 1.01 to 1.02)</h4>
+<a name="idp85074184"></a>Changes from Boost 1.30 to 1.31 (date_time 1.01 to 1.02)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -1442,7 +1442,7 @@ td = -td; //-5 hours</pre>
 </tbody>
 </table></div>
 <h4>
-<a name="idp45934416"></a>Changes from Boost 1.29 to 1.30 (date_time 1.00 to 1.01)</h4>
+<a name="idp85092728"></a>Changes from Boost 1.29 to 1.30 (date_time 1.00 to 1.01)</h4>
 <p>
     Notice: The interface to the partial_date class (see <a class="link" href="gregorian.html#date_time.gregorian.date_algorithms" title="Date Generators/Algorithms">date_algorithms</a>) was changed. The order of construction parameters was changed which will cause some code to fail execution. This change was made to facilitate more generic local time adjustment code. Thus instead of specifying partial_date pd(Dec,25) the code needs to be changed to partial_date pd(25, Dec);
   </p>

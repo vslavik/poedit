@@ -46,13 +46,13 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-            <a href="http://www.open-mpi.org" target="_top">Open MPI 1.0.x</a>
+            <a href="http://www.open-mpi.org" target="_top">Open MPI</a>
           </li>
 <li class="listitem">
-            <a href="http://www.lam-mpi.org" target="_top">LAM/MPI 7.x</a>
+            <a href="http://www.lam-mpi.org" target="_top">LAM/MPI </a>
           </li>
 <li class="listitem">
-            <a href="http://www-unix.mcs.anl.gov/mpi/mpich/" target="_top">MPICH 1.2.x</a>
+            <a href="http://www-unix.mcs.anl.gov/mpi/mpich/" target="_top">MPICH2</a>
           </li>
 </ul></div>
 <p>
@@ -63,7 +63,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">mpi</span><span class="special">.</span><span class="identifier">h</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
   <span class="identifier">MPI_Init</span><span class="special">(&amp;</span><span class="identifier">argc</span><span class="special">,</span> <span class="special">&amp;</span><span class="identifier">argv</span><span class="special">);</span>
 
@@ -134,7 +134,7 @@ lamhalt
       </p>
 <p>
         For many users using <a href="http://www.lam-mpi.org/" target="_top">LAM/MPI</a>,
-        <a href="http://www-unix.mcs.anl.gov/mpi/mpich/" target="_top">MPICH</a>, or <a href="http://www.open-mpi.org" target="_top">OpenMPI</a>, configuration is almost automatic.
+        <a href="http://www-unix.mcs.anl.gov/mpi/mpich/" target="_top">MPICH2</a>, or <a href="http://www.open-mpi.org" target="_top">OpenMPI</a>, configuration is almost automatic.
         If you don't already have a file <code class="computeroutput"><span class="identifier">user</span><span class="special">-</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">jam</span></code> in
         your home directory, copy <code class="computeroutput"><span class="identifier">tools</span><span class="special">/</span><span class="identifier">build</span><span class="special">/</span><span class="identifier">v2</span><span class="special">/</span><span class="identifier">user</span><span class="special">-</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">jam</span></code> there.
         For many users, MPI support can be enabled simply by adding the following
@@ -227,7 +227,7 @@ lamhalt
         (possibly with some extra options). For <a href="http://www.lam-mpi.org/" target="_top">LAM/MPI</a>,
         you will need to run <code class="computeroutput"><span class="identifier">lamboot</span></code>
         before running <code class="computeroutput"><span class="identifier">bjam</span></code>. For
-        <a href="http://www-unix.mcs.anl.gov/mpi/mpich/" target="_top">MPICH</a>, you may
+        <a href="http://www-unix.mcs.anl.gov/mpi/mpich/" target="_top">MPICH2</a>, you may
         need to create a machine file and pass <code class="computeroutput"><span class="special">-</span><span class="identifier">sMPIRUN_FLAGS</span><span class="special">=</span><span class="string">"-machinefile &lt;filename&gt;"</span></code> to
         Boost.Jam; see the section on <a class="link" href="getting_started.html#mpi.config" title="Configure and Build">configuration</a>
         for more information. If testing succeeds, <code class="computeroutput"><span class="identifier">bjam</span></code>

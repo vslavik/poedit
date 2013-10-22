@@ -10,7 +10,7 @@
  * \date   29.07.2007
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #ifndef BOOST_LOG_ATTACHABLE_SSTREAM_BUF_HPP_INCLUDED_
@@ -24,7 +24,7 @@
 #include <boost/log/detail/config.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -156,9 +156,9 @@ protected:
     }
 
     //! Copy constructor (closed)
-    BOOST_LOG_DELETED_FUNCTION(basic_ostringstreambuf(basic_ostringstreambuf const& that))
+    BOOST_DELETED_FUNCTION(basic_ostringstreambuf(basic_ostringstreambuf const& that))
     //! Assignment (closed)
-    BOOST_LOG_DELETED_FUNCTION(basic_ostringstreambuf& operator= (basic_ostringstreambuf const& that))
+    BOOST_DELETED_FUNCTION(basic_ostringstreambuf& operator= (basic_ostringstreambuf const& that))
 };
 
 } // namespace aux

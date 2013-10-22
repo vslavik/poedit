@@ -1,0 +1,31 @@
+#!/usr/bin/env b2 -a --verbose-test
+# Copyright Redshift Software, Inc. 2011-2013
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
+if $(BOOST_PREDEF_ROOT)
+{
+    path-constant BOOST_PREDEF_INCLUDE_ROOT : $(BOOST_PREDEF_ROOT)/include ;
+}
+else
+{
+    path-constant BOOST_PREDEF_INCLUDE_ROOT : $(BOOST_ROOT) ;
+}
+
+project test
+    :   requirements
+        <include>$(BOOST_PREDEF_INCLUDE_ROOT)
+        <dependency>$(BOOST_PREDEF_INCLUDE_ROOT)/boost/predef.h
+    ;
+
+using testing ;
+
+test-suite predef :
+    [ run info_as_cpp.cpp : : : <test-info>always_show_run_output ]
+    [ run info_as_c.c : : : <test-info>always_show_run_output ]
+    [ run info_as_objcpp.mm : : : <test-info>always_show_run_output ]
+    [ run info_as_objc.m : : : <test-info>always_show_run_output ]
+    [ run version.cpp ]
+    [ run make.cpp ]
+    ;

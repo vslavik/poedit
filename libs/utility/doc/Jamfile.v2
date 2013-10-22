@@ -6,7 +6,7 @@
 project : requirements
         # Path for links to Boost:
         <xsl:param>boost.root=../../../..
-        
+
         # Some general style settings:
         <xsl:param>table.footnote.number.format=1
         <xsl:param>footnote.number.format=1
@@ -59,7 +59,6 @@ boostbook standalone_declval
         <xsl:param>toc.max.depth=1
         # How far down we go with TOC's
         <xsl:param>generate.section.toc.level=1
-        
      ;
 
 xml string_ref : string_ref.qbk ;
@@ -79,5 +78,23 @@ boostbook standalone_string_ref
         <xsl:param>toc.max.depth=1
         # How far down we go with TOC's
         <xsl:param>generate.section.toc.level=1
+     ;
 
+xml explicit_operator_bool : explicit_operator_bool.qbk ;
+boostbook standalone_explicit_operator_bool
+    :
+        explicit_operator_bool
+    :
+        # File name of HTML output:
+        <xsl:param>root.filename=explicit_operator_bool
+        # How far down we chunk nested sections, basically all of them:
+        <xsl:param>chunk.section.depth=0
+        # Don't put the first section on the same page as the TOC:
+        <xsl:param>chunk.first.sections=0
+        # How far down sections get TOC's
+        <xsl:param>toc.section.depth=1
+        # Max depth in each TOC:
+        <xsl:param>toc.max.depth=1
+        # How far down we go with TOC's
+        <xsl:param>generate.section.toc.level=1
      ;

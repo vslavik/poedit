@@ -42,8 +42,6 @@ test_distributed_graph_coloring(int n, double p, int s,
                          distributedS<mpi_process_group, vecS>,
                          undirectedS> Graph;
 
-  typedef graph_traits<Graph>::vertex_descriptor vertex_descriptor;
-  typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
   typedef property_map<Graph, vertex_index_t>::type vertex_index_map;
 
   // Build a random number generator

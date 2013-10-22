@@ -952,7 +952,10 @@ inline void eval_subtract(mpfr_float_backend<D1, A1>& result, const mpfr_float_b
 template <unsigned D1, unsigned D2, mpfr_allocation_type A1, mpfr_allocation_type A2>
 inline void eval_multiply(mpfr_float_backend<D1, A1>& result, const mpfr_float_backend<D2, A2>& o)
 {
-   mpfr_mul(result.data(), result.data(), o.data(), GMP_RNDN);
+   if((void*)&o == (void*)&result)
+      mpfr_sqr(result.data(), o.data(), GMP_RNDN);
+   else
+      mpfr_mul(result.data(), result.data(), o.data(), GMP_RNDN);
 }
 template <unsigned D1, unsigned D2, mpfr_allocation_type A1, mpfr_allocation_type A2>
 inline void eval_divide(mpfr_float_backend<D1, A1>& result, const mpfr_float_backend<D2, A2>& o)
@@ -1084,7 +1087,10 @@ inline void eval_subtract(mpfr_float_backend<D1, A1>& a, long x, const mpfr_floa
 template <unsigned D1, unsigned D2, mpfr_allocation_type A1, mpfr_allocation_type A2, unsigned D3>
 inline void eval_multiply(mpfr_float_backend<D1, A1>& a, const mpfr_float_backend<D2, A2>& x, const mpfr_float_backend<D3>& y)
 {
-   mpfr_mul(a.data(), x.data(), y.data(), GMP_RNDN);
+   if((void*)&x == (void*)&y)
+      mpfr_sqr(a.data(), x.data(), GMP_RNDN);
+   else
+      mpfr_mul(a.data(), x.data(), y.data(), GMP_RNDN);
 }
 template <unsigned D1, unsigned D2, mpfr_allocation_type A1, mpfr_allocation_type A2>
 inline void eval_multiply(mpfr_float_backend<D1, A1>& a, const mpfr_float_backend<D2, A2>& x, unsigned long y)
@@ -1175,7 +1181,7 @@ inline void eval_convert_to(unsigned long* result, const mpfr_float_backend<digi
    {
       BOOST_THROW_EXCEPTION(std::runtime_error("Could not convert NaN to integer."));
    }
-   *result = mpfr_get_ui(val.data(), GMP_RNDN);
+   *result = mpfr_get_ui(val.data(), GMP_RNDZ);
 }
 template <unsigned digits10, mpfr_allocation_type AllocationType>
 inline void eval_convert_to(long* result, const mpfr_float_backend<digits10, AllocationType>& val)
@@ -1184,7 +1190,7 @@ inline void eval_convert_to(long* result, const mpfr_float_backend<digits10, All
    {
       BOOST_THROW_EXCEPTION(std::runtime_error("Could not convert NaN to integer."));
    }
-   *result = mpfr_get_si(val.data(), GMP_RNDN);
+   *result = mpfr_get_si(val.data(), GMP_RNDZ);
 }
 #ifdef _MPFR_H_HAVE_INTMAX_T
 template <unsigned digits10, mpfr_allocation_type AllocationType>
@@ -1194,7 +1200,7 @@ inline void eval_convert_to(unsigned long long* result, const mpfr_float_backend
    {
       BOOST_THROW_EXCEPTION(std::runtime_error("Could not convert NaN to integer."));
    }
-   *result = mpfr_get_uj(val.data(), GMP_RNDN);
+   *result = mpfr_get_uj(val.data(), GMP_RNDZ);
 }
 template <unsigned digits10, mpfr_allocation_type AllocationType>
 inline void eval_convert_to(long long* result, const mpfr_float_backend<digits10, AllocationType>& val)
@@ -1203,7 +1209,7 @@ inline void eval_convert_to(long long* result, const mpfr_float_backend<digits10
    {
       BOOST_THROW_EXCEPTION(std::runtime_error("Could not convert NaN to integer."));
    }
-   *result = mpfr_get_sj(val.data(), GMP_RNDN);
+   *result = mpfr_get_sj(val.data(), GMP_RNDZ);
 }
 #endif
 template <unsigned digits10, mpfr_allocation_type AllocationType>
@@ -1624,7 +1630,7 @@ public:
       {
          value.first = true;
          value.second = 1;
-         mpfr_div_2exp(value.second.backend().data(), value.second.backend().data(), digits, GMP_RNDN);
+         mpfr_div_2exp(value.second.backend().data(), value.second.backend().data(), 1, GMP_RNDN);
       }
       return value.second;
    }

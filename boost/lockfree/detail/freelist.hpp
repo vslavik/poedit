@@ -1,6 +1,6 @@
 //  lock-free freelist
 //
-//  Copyright (C) 2008, 2009, 2011 Tim Blechmann
+//  Copyright (C) 2008-2013 Tim Blechmann
 //
 //  Distributed under the Boost Software License, Version 1.0. (See
 //  accompanying file LICENSE_1_0.txt or copy at
@@ -110,7 +110,7 @@ public:
 
     ~freelist_stack(void)
     {
-        tagged_node_ptr current (pool_);
+        tagged_node_ptr current = pool_.load();
 
         while (current) {
             freelist_node * current_ptr = current.get_ptr();

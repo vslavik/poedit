@@ -4,7 +4,7 @@
 <title>Class template basic_channel_logger</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../logging_sources.html#header.boost.log.sources.channel_feature_hpp" title="Header &lt;boost/log/sources/channel_feature.hpp&gt;">
 <link rel="prev" href="../../../BOOST_LOG_DECLARE_WLOGGER_MT.html" title="Macro BOOST_LOG_DECLARE_WLOGGER_MT">
 <link rel="next" href="basic_channel_logger/make_default_channel_name.html" title="Struct make_default_channel_name">
@@ -44,53 +44,53 @@
     <span class="comment">// types</span>
     <span class="keyword">typedef</span> <span class="identifier">channel_type</span> <a class="link" href="basic_channel_logger/make_default_channel_name.html#boost.log.sources.basic_channel_logger.make_default_channel_name.result_type"><span class="identifier">result_type</span></a><span class="special">;</span>
 
-    <span class="comment">// <a class="link" href="basic_channel_logger/make_default_channel_name.html#idp18846048-bb">public member functions</a></span>
-    <span class="identifier">result_type</span> <a class="link" href="basic_channel_logger/make_default_channel_name.html#idp18846256-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="comment">// <a class="link" href="basic_channel_logger/make_default_channel_name.html#idp25670936-bb">public member functions</a></span>
+    <span class="identifier">result_type</span> <a class="link" href="basic_channel_logger/make_default_channel_name.html#idp25671144-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="basic_channel_logger.html#boost.log.sources.basic_channel_loggerconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="basic_channel_logger.html#idp18853584-bb"><span class="identifier">basic_channel_logger</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_channel_logger.html#idp18853936-bb"><span class="identifier">basic_channel_logger</span></a><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_channel_logger.html#idp18854720-bb"><span class="identifier">basic_channel_logger</span></a><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="basic_channel_logger.html#idp18855504-bb"><span class="identifier">basic_channel_logger</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_channel_logger.html#idp25565368-bb"><span class="identifier">basic_channel_logger</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_channel_logger.html#idp25565720-bb"><span class="identifier">basic_channel_logger</span></a><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_channel_logger.html#idp25566504-bb"><span class="identifier">basic_channel_logger</span></a><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="basic_channel_logger.html#idp25567288-bb"><span class="identifier">basic_channel_logger</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_channel_logger.html#idp18850864-bb">public member functions</a></span>
-  <span class="identifier">channel_type</span> <a class="link" href="basic_channel_logger.html#idp18851072-bb"><span class="identifier">channel</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="basic_channel_logger.html#idp18852160-bb"><span class="identifier">channel</span></a><span class="special">(</span><span class="identifier">channel_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_channel_logger.html#idp25643800-bb">public member functions</a></span>
+  <span class="identifier">channel_type</span> <a class="link" href="basic_channel_logger.html#idp25562856-bb"><span class="identifier">channel</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="basic_channel_logger.html#idp25563944-bb"><span class="identifier">channel</span></a><span class="special">(</span><span class="identifier">channel_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_channel_logger.html#idp18857840-bb">protected member functions</a></span>
-  <span class="identifier">channel_attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="basic_channel_logger.html#idp18858048-bb"><span class="identifier">get_channel_attribute</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="identifier">record</span> <a class="link" href="basic_channel_logger.html#idp18858768-bb"><span class="identifier">open_record_unlocked</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="basic_channel_logger.html#idp18860432-bb"><span class="identifier">swap_unlocked</span></a><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_channel_logger.html#idp25569624-bb">protected member functions</a></span>
+  <span class="identifier">channel_attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="basic_channel_logger.html#idp25569832-bb"><span class="identifier">get_channel_attribute</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="identifier">record</span> <a class="link" href="basic_channel_logger.html#idp25570552-bb"><span class="identifier">open_record_unlocked</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="basic_channel_logger.html#idp25572216-bb"><span class="identifier">swap_unlocked</span></a><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_channel_logger.html#idp18861600-bb">private member functions</a></span>
+  <span class="comment">// <a class="link" href="basic_channel_logger.html#idp25573384-bb">private member functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">&gt;</span> 
-    <span class="identifier">record</span> <a class="link" href="basic_channel_logger.html#idp18861808-bb"><span class="identifier">open_record_with_channel_unlocked</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <span class="identifier">record</span> <a class="link" href="basic_channel_logger.html#idp25573592-bb"><span class="identifier">open_record_with_channel_unlocked</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> 
-    <span class="identifier">record</span> <a class="link" href="basic_channel_logger.html#idp18864096-bb"><span class="identifier">open_record_with_channel_unlocked</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">parameter</span><span class="special">::</span><span class="identifier">void_</span><span class="special">)</span><span class="special">;</span>
+    <span class="identifier">record</span> <a class="link" href="basic_channel_logger.html#idp25575880-bb"><span class="identifier">open_record_with_channel_unlocked</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">parameter</span><span class="special">::</span><span class="identifier">void_</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp23405280"></a><h2>Description</h2>
+<a name="idp62421768"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp23405488"></a><h3>
+<a name="idp62421976"></a><h3>
 <a name="boost.log.sources.basic_channel_loggerconstruct-copy-destruct"></a><code class="computeroutput">basic_channel_logger</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp18853584-bb"></a><span class="identifier">basic_channel_logger</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp25565368-bb"></a><span class="identifier">basic_channel_logger</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Default constructor. The constructed logger has the default-constructed channel name. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp18853936-bb"></a><span class="identifier">basic_channel_logger</span><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp25565720-bb"></a><span class="identifier">basic_channel_logger</span><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Copy constructor </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp18854720-bb"></a><span class="identifier">basic_channel_logger</span><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="special">&amp;&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp25566504-bb"></a><span class="identifier">basic_channel_logger</span><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="special">&amp;&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Move constructor </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp18855504-bb"></a><span class="identifier">basic_channel_logger</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp25567288-bb"></a><span class="identifier">basic_channel_logger</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor with arguments. Allows to register a channel name attribute on construction.</p>
 <p>
 </p>
@@ -122,11 +122,11 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp23421712"></a><h3>
-<a name="idp18850864-bb"></a><code class="computeroutput">basic_channel_logger</code> public member functions</h3>
+<a name="idp62438104"></a><h3>
+<a name="idp25643800-bb"></a><code class="computeroutput">basic_channel_logger</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">channel_type</span> <a name="idp18851072-bb"></a><span class="identifier">channel</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">channel_type</span> <a name="idp25562856-bb"></a><span class="identifier">channel</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>The observer of the channel name</p>
 <p>
 </p>
@@ -142,7 +142,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp18852160-bb"></a><span class="identifier">channel</span><span class="special">(</span><span class="identifier">channel_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> ch<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp25563944-bb"></a><span class="identifier">channel</span><span class="special">(</span><span class="identifier">channel_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> ch<span class="special">)</span><span class="special">;</span></pre>
 <p>The setter of the channel name</p>
 <p>
 </p>
@@ -169,33 +169,33 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp23431264"></a><h3>
-<a name="idp18857840-bb"></a><code class="computeroutput">basic_channel_logger</code> protected member functions</h3>
+<a name="idp62447624"></a><h3>
+<a name="idp25569624-bb"></a><code class="computeroutput">basic_channel_logger</code> protected member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">channel_attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp18858048-bb"></a><span class="identifier">get_channel_attribute</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">channel_attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp25569832-bb"></a><span class="identifier">get_channel_attribute</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Channel attribute accessor </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="identifier">record</span> <a name="idp18858768-bb"></a><span class="identifier">open_record_unlocked</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="identifier">record</span> <a name="idp25570552-bb"></a><span class="identifier">open_record_unlocked</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
 <p>Unlocked <code class="computeroutput">open_record</code> </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp18860432-bb"></a><span class="identifier">swap_unlocked</span><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp25572216-bb"></a><span class="identifier">swap_unlocked</span><span class="special">(</span><a class="link" href="basic_channel_logger.html" title="Class template basic_channel_logger">basic_channel_logger</a> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Unlocked swap </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp23443376"></a><h3>
-<a name="idp18861600-bb"></a><code class="computeroutput">basic_channel_logger</code> private member functions</h3>
+<a name="idp62459768"></a><h3>
+<a name="idp25573384-bb"></a><code class="computeroutput">basic_channel_logger</code> private member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <span class="identifier">record</span> <a name="idp18861808-bb"></a><span class="identifier">open_record_with_channel_unlocked</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> ch<span class="special">)</span><span class="special">;</span></pre>The <code class="computeroutput">open_record</code> implementation for the case when the channel is specified in log statement. </li>
+  <span class="identifier">record</span> <a name="idp25573592-bb"></a><span class="identifier">open_record_with_channel_unlocked</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> ch<span class="special">)</span><span class="special">;</span></pre>The <code class="computeroutput">open_record</code> implementation for the case when the channel is specified in log statement. </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> 
-  <span class="identifier">record</span> <a name="idp18864096-bb"></a><span class="identifier">open_record_with_channel_unlocked</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">,</span> 
+  <span class="identifier">record</span> <a name="idp25575880-bb"></a><span class="identifier">open_record_with_channel_unlocked</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">,</span> 
                                            <span class="identifier">parameter</span><span class="special">::</span><span class="identifier">void_</span><span class="special">)</span><span class="special">;</span></pre>The <code class="computeroutput">open_record</code> implementation for the case when the channel is not specified in log statement. </li>
 </ol></div>
 </div>

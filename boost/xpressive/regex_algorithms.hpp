@@ -303,7 +303,6 @@ namespace detail
     )
     {
         typedef core_access<BidiIter> access;
-        typedef typename iterator_value<BidiIter>::type char_type;
         match_results<BidiIter> &what = *state.context_.results_ptr_;
         BOOST_ASSERT(0 != re.regex_id());
 

@@ -195,9 +195,7 @@ int test_graph(const std::string& dimacs_filename)
   typedef graph_traits<graph>::edge_iterator edge_iterator_t;
   typedef graph_traits<graph>::vertex_iterator vertex_iterator_t;
   typedef graph_traits<graph>::edges_size_type e_size_t;
-  typedef graph_traits<graph>::vertices_size_type v_size_t;
   typedef graph_traits<graph>::vertex_descriptor vertex_t;
-  typedef std::pair<vertex_t, vertex_t> vertex_pair_t;
   typedef edge_index_update_visitor<property_map<graph, edge_index_t>::type> 
     edge_visitor_t;
 

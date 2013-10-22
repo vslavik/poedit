@@ -38,6 +38,34 @@ Then, we name all our rules:
     start_tag.name("start_tag");
     end_tag.name("end_tag");
 
+[heading On Success]
+
+`on_success` declares a handler that is applied when a rule is
+succesfully matched.
+
+	on_success(rule, handler)
+
+This specifies that the handler will be called when a rule is
+matched successfully.  The handler has the following signature:
+
+	void handler(
+		fusion::vector<
+			Iterator& first,
+			Iterator const& last,
+			Iterator const& i> args,
+		Context& context)
+
+`first` points to the position in the input sequence before the rule
+is matched.  `last` points to the last position in the input sequence.
+`i` points to the position in the input sequence following the last
+character that was consumed by the rule.
+
+A success handler can be used to annotate each matched rule in the
+grammar with additional information about the portion of the input
+that matched the rule.  In a compiler application, this can be a
+combination of file, line number and column number from the input
+stream for reporting diagnostics or other messages.
+
 [heading On Error]
 
 `on_error` declares our error handler:

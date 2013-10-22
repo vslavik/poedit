@@ -18,7 +18,7 @@
 #include <boost/log/detail/config.hpp>
 #include <boost/log/attributes/fallback_policy_fwd.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 

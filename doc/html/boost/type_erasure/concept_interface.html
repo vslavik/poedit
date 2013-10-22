@@ -35,15 +35,15 @@
 <span class="keyword">struct</span> <a class="link" href="concept_interface.html" title="Struct template concept_interface">concept_interface</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">Base</span> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp188498976"></a><h2>Description</h2>
+<a name="idp232413368"></a><h2>Description</h2>
 <p>The <a class="link" href="concept_interface.html" title="Struct template concept_interface">concept_interface</a> class can be specialized to add behavior to an <a class="link" href="any.html" title="Class template any">any</a>. An <a class="link" href="any.html" title="Class template any">any</a> inherits from all the relevant specializations of <a class="link" href="concept_interface.html" title="Struct template concept_interface">concept_interface</a>.</p>
 <p><a class="link" href="concept_interface.html" title="Struct template concept_interface">concept_interface</a> can be specialized for either primitive or composite concepts. If a concept <code class="computeroutput">C1</code> contains another concept <code class="computeroutput">C2</code>, then the library guarantees that the specialization of <a class="link" href="concept_interface.html" title="Struct template concept_interface">concept_interface</a> for <code class="computeroutput">C2</code> is a base class of the specialization for <code class="computeroutput">C1</code>. This means that <code class="computeroutput">C1</code> can safely override members of <code class="computeroutput">C2</code>.</p>
 <p><a class="link" href="concept_interface.html" title="Struct template concept_interface">concept_interface</a> may only be specialized for user-defined concepts. The library owns the specializations of its own built in concepts.</p>
 <p>
 The metafunctions <a class="link" href="derived.html" title="Struct template derived">derived</a>, <a class="link" href="rebind_any.html" title="Struct template rebind_any">rebind_any</a>, and <a class="link" href="as_param.html" title="Struct template as_param">as_param</a> (which can be applied to <code class="computeroutput">Base</code>) are useful for determining the argument and return types of functions defined in <a class="link" href="concept_interface.html" title="Struct template concept_interface">concept_interface</a>.</p>
-<p>For dispatching the function use <a class="link" href="call_idp85625136.html" title="Function call">call</a>. </p>
+<p>For dispatching the function use <a class="link" href="call_idp100909224.html" title="Function call">call</a>. </p>
 <div class="refsect2">
-<a name="idp188508400"></a><h3>Template Parameters</h3>
+<a name="idp232422760"></a><h3>Template Parameters</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">typename</span> Concept</pre>

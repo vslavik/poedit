@@ -47,7 +47,8 @@ namespace quickbook
         // Actions
         error_action error(state);
         element_id_warning_action element_id_warning(state);
-        raw_char_action raw_char(state.phrase);
+        raw_char_action raw_char(state);
+        explicit_list_action explicit_list(state);
         scoped_parser<to_value_scoped_action> to_value(state);
 
         local.element_id =
@@ -66,8 +67,8 @@ namespace quickbook
                 !(qbk_ver(106u) >> local.element_id);
 
         elements.add
-            ("section", element_info(element_info::block, &local.begin_section, block_tags::begin_section))
-            ("endsect", element_info(element_info::block, &local.end_section, block_tags::end_section))
+            ("section", element_info(element_info::section_block, &local.begin_section, block_tags::begin_section))
+            ("endsect", element_info(element_info::section_block, &local.end_section, block_tags::end_section))
             ;
 
         local.begin_section =
@@ -261,7 +262,11 @@ namespace quickbook
             ("itemized_list", element_info(element_info::nested_block, &local.list, block_tags::itemized_list, 106))
             ;
 
-        local.list = *local.cell;
+        local.list =
+            *(  cl::eps_p                       [explicit_list]
+            >>  local.cell
+            )
+            ;
 
         local.cell =
                 space

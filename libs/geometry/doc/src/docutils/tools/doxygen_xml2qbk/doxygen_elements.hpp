@@ -164,7 +164,7 @@ struct class_or_struct : public element
     std::vector<function> functions;
 
     std::vector<base_element> typedefs;
-    std::vector<base_element> variables;
+    std::vector<parameter> variables;
 
     std::vector<base_class> base_classes;
 };

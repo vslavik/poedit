@@ -10,7 +10,7 @@
  * \date   09.06.2009
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #include <ctime>
@@ -31,7 +31,7 @@
 #include <stdexcept>
 #include <boost/ref.hpp>
 #include <boost/bind.hpp>
-#include <boost/make_shared.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/mpl/if.hpp>
@@ -571,7 +571,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
         //! Base type
         typedef log::aux::lazy_singleton< file_collector_repository, shared_ptr< file_collector_repository > > base_type;
 
-#if !defined(BOOST_LOG_BROKEN_FRIEND_TEMPLATE_INSTANTIATIONS)
+#if !defined(BOOST_LOG_BROKEN_FRIEND_TEMPLATE_SPECIALIZATIONS)
         friend class log::aux::lazy_singleton< file_collector_repository, shared_ptr< file_collector_repository > >;
 #else
         friend class base_type;

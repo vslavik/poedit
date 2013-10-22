@@ -9,7 +9,8 @@
 #include <fstream>
 #include <iostream>
 #include <functional>
-#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/utility/empty_deleter.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/expressions.hpp>
@@ -18,7 +19,6 @@
 #include <boost/log/sinks/text_ostream_backend.hpp>
 #include <boost/log/sources/severity_channel_logger.hpp>
 #include <boost/log/sources/record_ostream.hpp>
-#include <boost/log/utility/empty_deleter.hpp>
 #include <boost/log/utility/record_ordering.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>
 
@@ -55,7 +55,7 @@ boost::shared_ptr< sink_t > init_logging()
     boost::shared_ptr< sinks::text_ostream_backend > backend =
         boost::make_shared< sinks::text_ostream_backend >();
     backend->add_stream(
-        boost::shared_ptr< std::ostream >(&std::clog, logging::empty_deleter()));
+        boost::shared_ptr< std::ostream >(&std::clog, boost::empty_deleter()));
 
     // Wrap it into the frontend and register in the core
     boost::shared_ptr< sink_t > sink(new sink_t(

@@ -26,7 +26,6 @@ main(int, char *[])
   typedef adjacency_list < listS, vecS, directedS,
     no_property, property < edge_weight_t, int > > graph_t;
   typedef graph_traits < graph_t >::vertex_descriptor vertex_descriptor;
-  typedef graph_traits < graph_t >::edge_descriptor edge_descriptor;
   typedef std::pair<int, int> Edge;
 
   const int num_nodes = 5;

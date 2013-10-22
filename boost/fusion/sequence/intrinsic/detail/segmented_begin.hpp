@@ -19,10 +19,10 @@ namespace boost { namespace fusion { namespace detail
 {
     //auto segmented_begin( seq )
     //{
-    //    return make_segmented_iterator( segmented_begin_impl( seq, nil ) );
+    //    return make_segmented_iterator( segmented_begin_impl( seq, nil_ ) );
     //}
 
-    template <typename Sequence, typename Nil = fusion::nil>
+    template <typename Sequence, typename Nil = fusion::nil_>
     struct segmented_begin
     {
         typedef

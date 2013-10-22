@@ -78,9 +78,12 @@
 
    <span class="identifier">clone_ptr</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">clone_ptr</span><span class="special">&amp;&amp;</span> <span class="identifier">p</span><span class="special">)</span>
    <span class="special">{</span>
-      <span class="identifier">std</span><span class="special">::</span><span class="identifier">swap</span><span class="special">(</span><span class="identifier">ptr</span><span class="special">,</span> <span class="identifier">p</span><span class="special">.</span><span class="identifier">ptr</span><span class="special">);</span>
-      <span class="keyword">delete</span> <span class="identifier">p</span><span class="special">.</span><span class="identifier">ptr</span><span class="special">;</span>
-      <span class="identifier">p</span><span class="special">.</span><span class="identifier">ptr</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+      <span class="keyword">if</span><span class="special">(</span><span class="keyword">this</span> <span class="special">!=</span> <span class="special">&amp;</span><span class="identifier">p</span><span class="special">)</span>
+      <span class="special">{</span>
+         <span class="identifier">std</span><span class="special">::</span><span class="identifier">swap</span><span class="special">(</span><span class="identifier">ptr</span><span class="special">,</span> <span class="identifier">p</span><span class="special">.</span><span class="identifier">ptr</span><span class="special">);</span>
+         <span class="keyword">delete</span> <span class="identifier">p</span><span class="special">.</span><span class="identifier">ptr</span><span class="special">;</span>
+         <span class="identifier">p</span><span class="special">.</span><span class="identifier">ptr</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+      <span class="special">}</span>
       <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
    <span class="special">}</span>
 
@@ -161,7 +164,7 @@
             section: <code class="computeroutput"><a class="link" href="../BOOST_COPYABLE_AND_MOVABLE.html" title="Macro BOOST_COPYABLE_AND_MOVABLE">BOOST_COPYABLE_AND_MOVABLE(classname)</a></code>
           </li>
 <li class="listitem">
-            Left copy constructor as is.
+            Leave copy constructor as is.
           </li>
 <li class="listitem">
             Write a copy assignment taking the parameter as <code class="computeroutput"><a class="link" href="../BOOST_COPY_ASSIGN_REF.html" title="Macro BOOST_COPY_ASSIGN_REF">BOOST_COPY_ASSIGN_REF(classname)</a></code>

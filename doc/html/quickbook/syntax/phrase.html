@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../../quickbook.html" title="Chapter&#160;40.&#160;Quickbook 1.5">
+<link rel="up" href="../../quickbook.html" title="Chapter&#160;40.&#160;Quickbook 1.6">
 <link rel="prev" href="structure.html" title="Document Structure">
 <link rel="next" href="block.html" title="Block Level Elements">
 </head>
@@ -32,6 +32,7 @@
 <dt><span class="section"><a href="phrase.html#quickbook.syntax.phrase.quotations">Quotations</a></span></dt>
 <dt><span class="section"><a href="phrase.html#quickbook.syntax.phrase.simple_formatting">Simple
       formatting</a></span></dt>
+<dt><span class="section"><a href="phrase.html#quickbook.syntax.phrase.role">Role</a></span></dt>
 <dt><span class="section"><a href="phrase.html#quickbook.syntax.phrase.inline_code">Inline
       code</a></span></dt>
 <dt><span class="section"><a href="phrase.html#quickbook.syntax.phrase.code_blocks">Code
@@ -403,6 +404,43 @@ And one for the little boy who lives down the lane.
         One for the master, one for the dame, And one for the little boy who lives
         down the lane.
       </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="quickbook.syntax.phrase.role"></a><a name="quickbook.ref.role"></a><a class="link" href="phrase.html#quickbook.syntax.phrase.role" title="Role">Role</a>
+</h3></div></div></div>
+<p>
+        Sometime the basic formatting options aren't enough, and you wish to use
+        CSS to style the generated html. For these cases you can use the <code class="computeroutput">role</code>
+        phase element. For example:
+      </p>
+<pre class="programlisting">[role red Text content]
+</pre>
+<p>
+        Will generate the docbook:
+      </p>
+<pre class="programlisting">&lt;phrase role="red"&gt;Text content&lt;/phrase&gt;
+</pre>
+<p>
+        Which will generate html along the lines of:
+      </p>
+<pre class="programlisting">&lt;span class="red"&gt;Text content&lt;/span&gt;
+</pre>
+<p>
+        And then you can use css to style this however you wish.
+      </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          When generating other formats such as pdfs, your css is not going to apply,
+          so this will appear as normal, unstyled text. The docbook <code class="literal">role</code>
+          attribute is meant to be used as a more general mechanism, so you might
+          be able to take advantage of it by some other means.
+        </p></td></tr>
+</table></div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">

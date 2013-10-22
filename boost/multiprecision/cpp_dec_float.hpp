@@ -440,9 +440,9 @@ public:
    }
 
    // Comparison functions
-   bool isnan   (void) const  { return (fpclass == cpp_dec_float_NaN); }
-   bool isinf   (void) const  { return (fpclass == cpp_dec_float_inf); }
-   bool isfinite(void) const  { return (fpclass == cpp_dec_float_finite); }
+   bool isnan    BOOST_PREVENT_MACRO_SUBSTITUTION(void) const  { return (fpclass == cpp_dec_float_NaN); }
+   bool isinf    BOOST_PREVENT_MACRO_SUBSTITUTION(void) const  { return (fpclass == cpp_dec_float_inf); }
+   bool isfinite BOOST_PREVENT_MACRO_SUBSTITUTION(void) const  { return (fpclass == cpp_dec_float_finite); }
 
    bool iszero (void) const 
    {
@@ -505,7 +505,7 @@ public:
    static cpp_dec_float pow2(long long i);
    ExponentType order()const 
    {
-      const bool bo_order_is_zero = ((!isfinite()) || (data[0] == static_cast<boost::uint32_t>(0u)));
+      const bool bo_order_is_zero = ((!(isfinite)()) || (data[0] == static_cast<boost::uint32_t>(0u)));
       //
       // Binary search to find the order of the leading term:
       //
@@ -552,6 +552,17 @@ public:
       }
 
       return (bo_order_is_zero ? static_cast<ExponentType>(0) : static_cast<ExponentType>(exp + prefix));
+   }
+
+   template<class Archive>
+   void serialize(Archive & ar, const unsigned int /*version*/)
+   {
+      for(unsigned i = 0; i < data.size(); ++i)
+         ar & data[i];
+      ar & exp;
+      ar & neg;
+      ar & fpclass;
+      ar & prec_elem;
    }
 
 private:
@@ -609,14 +620,14 @@ const boost::int32_t cpp_dec_float<Digits10, ExponentType, Allocator>::cpp_dec_f
 template <unsigned Digits10, class ExponentType, class Allocator>
 cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, ExponentType, Allocator>::operator+=(const cpp_dec_float<Digits10, ExponentType, Allocator>& v)
 {
-   if(isnan())
+   if((isnan)())
    {
       return *this;
    }
 
-   if(isinf())
+   if((isinf)())
    {
-      if(v.isinf() && (isneg() != v.isneg()))
+      if((v.isinf)() && (isneg() != v.isneg()))
       {
          *this = nan();
       }
@@ -846,12 +857,12 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
    neg = false;
 
    // Handle special cases like zero, inf and NaN.
-   const bool b_u_is_inf  =   isinf();
-   const bool b_v_is_inf  = v.isinf();
+   const bool b_u_is_inf  =   (isinf)();
+   const bool b_v_is_inf  = (v.isinf)();
    const bool b_u_is_zero =   iszero();
    const bool b_v_is_zero = v.iszero();
 
-   if(   (isnan() || v.isnan())
+   if(   ((isnan)() || (v.isnan)())
       || (b_u_is_inf && b_v_is_zero)
       || (b_v_is_inf && b_u_is_zero)
       )
@@ -932,7 +943,7 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
 template <unsigned Digits10, class ExponentType, class Allocator>
 cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, ExponentType, Allocator>::operator/=(const cpp_dec_float<Digits10, ExponentType, Allocator>& v)  
 {
-   const bool u_and_v_are_finite_and_identical = (   isfinite()
+   const bool u_and_v_are_finite_and_identical = (   (isfinite)()
       && (fpclass == v.fpclass)
       && (exp     == v.exp)
       && (cmp_data(v.data) == static_cast<boost::int32_t>(0)));
@@ -952,7 +963,7 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
    {
       if(iszero())
       {
-         if(v.isnan() || v.iszero())
+         if((v.isnan)() || v.iszero())
          {
             return *this = v;
          }
@@ -976,10 +987,10 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
    neg = false;
 
    // Handle special cases like zero, inf and NaN.
-   const bool b_u_is_inf  = isinf();
+   const bool b_u_is_inf  = (isinf)();
    const bool b_n_is_zero = (n == static_cast<boost::int32_t>(0));
 
-   if(isnan() || (b_u_is_inf && b_n_is_zero))
+   if((isnan)() || (b_u_is_inf && b_n_is_zero))
    {
       return (*this = nan());
    }
@@ -1071,12 +1082,12 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
    neg = false;
 
    // Handle special cases like zero, inf and NaN.
-   if(isnan())
+   if((isnan)())
    {
       return *this;
    }
 
-   if(isinf())
+   if((isinf)())
    {
       *this = inf();
       if(b_neg)
@@ -1165,12 +1176,12 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
       return *this;
    }
 
-   if(isnan())
+   if((isnan)())
    {
       return *this;
    }
 
-   if(isinf())
+   if((isinf)())
    {
       return *this = zero();
    }
@@ -1227,7 +1238,7 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
 {
    // Compute the square root of *this.
 
-   if(isneg() || (!isfinite()))
+   if(isneg() || (!(isfinite)()))
    {
       *this = nan();
       return *this;
@@ -1336,21 +1347,21 @@ int cpp_dec_float<Digits10, ExponentType, Allocator>::compare(const cpp_dec_floa
    //                -1 for *this < v
 
    // Handle all non-finite cases.
-   if((!isfinite()) || (!v.isfinite()))
+   if((!(isfinite)()) || (!(v.isfinite)()))
    {
       // NaN can never equal NaN. Return an implementation-dependent
       // signed result. Also note that comparison of NaN with NaN
       // using operators greater-than or less-than is undefined.
-      if(isnan() || v.isnan()) { return (isnan() ? 1 : -1); }
+      if((isnan)() || (v.isnan)()) { return ((isnan)() ? 1 : -1); }
 
-      if(isinf() && v.isinf())
+      if((isinf)() && (v.isinf)())
       {
          // Both *this and v are infinite. They are equal if they have the same sign.
          // Otherwise, *this is less than v if and only if *this is negative.
          return ((neg == v.neg) ? 0 : (neg ? -1 : 1));
       }
 
-      if(isinf())
+      if((isinf)())
       {
          // *this is infinite, but v is finite.
          // So negative infinite *this is less than any finite v.
@@ -1410,7 +1421,7 @@ bool cpp_dec_float<Digits10, ExponentType, Allocator>::isone() const
 {
    // Check if the value of *this is identically 1 or very close to 1.
 
-   const bool not_negative_and_is_finite = ((!neg) && isfinite());
+   const bool not_negative_and_is_finite = ((!neg) && (isfinite)());
 
    if(not_negative_and_is_finite)
    {
@@ -1506,9 +1517,9 @@ double cpp_dec_float<Digits10, ExponentType, Allocator>::extract_double(void) co
    // Returns the double conversion of a cpp_dec_float<Digits10, ExponentType, Allocator>.
 
    // Check for non-normal cpp_dec_float<Digits10, ExponentType, Allocator>.
-   if(!isfinite())
+   if(!(isfinite)())
    {
-      if(isnan())
+      if((isnan)())
       {
          return std::numeric_limits<double>::quiet_NaN();
       }
@@ -1552,9 +1563,9 @@ long double cpp_dec_float<Digits10, ExponentType, Allocator>::extract_long_doubl
    // Returns the long double conversion of a cpp_dec_float<Digits10, ExponentType, Allocator>.
 
    // Check if *this cpp_dec_float<Digits10, ExponentType, Allocator> is subnormal.
-   if(!isfinite())
+   if(!(isfinite)())
    {
-      if(isnan())
+      if((isnan)())
       {
          return std::numeric_limits<long double>::quiet_NaN();
       }
@@ -1686,7 +1697,7 @@ cpp_dec_float<Digits10, ExponentType, Allocator> cpp_dec_float<Digits10, Exponen
 {
    // Compute the signed integer part of x.
 
-   if(!isfinite())
+   if(!(isfinite)())
    {
       return *this;
    }
@@ -1708,7 +1719,8 @@ cpp_dec_float<Digits10, ExponentType, Allocator> cpp_dec_float<Digits10, Exponen
    const size_t first_clear = (static_cast<size_t>(x.exp) / static_cast<size_t>(cpp_dec_float_elem_digits10)) + 1u;
    const size_t last_clear  =  static_cast<size_t>(cpp_dec_float_elem_number);
 
-   std::fill(x.data.begin() + first_clear, x.data.begin() + last_clear, static_cast<boost::uint32_t>(0u));
+   if(first_clear < last_clear)
+      std::fill(x.data.begin() + first_clear, x.data.begin() + last_clear, static_cast<boost::uint32_t>(0u));
 
    return x;
 }
@@ -1716,7 +1728,7 @@ cpp_dec_float<Digits10, ExponentType, Allocator> cpp_dec_float<Digits10, Exponen
 template <unsigned Digits10, class ExponentType, class Allocator>
 std::string cpp_dec_float<Digits10, ExponentType, Allocator>::str(boost::intmax_t number_of_digits, std::ios_base::fmtflags f) const
 {
-   if(this->isinf())
+   if((this->isinf)())
    {
       if(this->isneg())
          return "-inf";
@@ -1725,7 +1737,7 @@ std::string cpp_dec_float<Digits10, ExponentType, Allocator>::str(boost::intmax_
       else 
          return "inf";
    }
-   else if(this->isnan())
+   else if((this->isnan)())
    {
       return "nan";
    }
@@ -2722,9 +2734,9 @@ inline void eval_convert_to(long double* result, cpp_dec_float<Digits10, Exponen
 template <unsigned Digits10, class ExponentType, class Allocator>
 inline int eval_fpclassify(const cpp_dec_float<Digits10, ExponentType, Allocator>& x) 
 {
-   if(x.isinf())
+   if((x.isinf)())
       return FP_INFINITE;
-   if(x.isnan())
+   if((x.isnan)())
       return FP_NAN;
    if(x.iszero())
       return FP_ZERO;
@@ -2758,7 +2770,7 @@ template <unsigned Digits10, class ExponentType, class Allocator>
 inline void eval_floor(cpp_dec_float<Digits10, ExponentType, Allocator>& result, const cpp_dec_float<Digits10, ExponentType, Allocator>& x)  
 {
    result = x;
-   if(!x.isfinite() || x.isint()) 
+   if(!(x.isfinite)() || x.isint()) 
    { 
       return; 
    }
@@ -2772,7 +2784,7 @@ template <unsigned Digits10, class ExponentType, class Allocator>
 inline void eval_ceil(cpp_dec_float<Digits10, ExponentType, Allocator>& result, const cpp_dec_float<Digits10, ExponentType, Allocator>& x)  
 {
    result = x;
-   if(!x.isfinite() || x.isint()) 
+   if(!(x.isfinite)() || x.isint()) 
    { 
       return; 
    }
@@ -2785,7 +2797,7 @@ inline void eval_ceil(cpp_dec_float<Digits10, ExponentType, Allocator>& result, 
 template <unsigned Digits10, class ExponentType, class Allocator>
 inline void eval_trunc(cpp_dec_float<Digits10, ExponentType, Allocator>& result, const cpp_dec_float<Digits10, ExponentType, Allocator>& x)
 {
-   if(!x.isfinite()) 
+   if(!(x.isfinite)()) 
    { 
       result = boost::math::policies::raise_rounding_error("boost::multiprecision::trunc<%1%>(%1%)", 0, number<cpp_dec_float<Digits10, ExponentType, Allocator> >(x), number<cpp_dec_float<Digits10, ExponentType, Allocator> >(x), boost::math::policies::policy<>()).backend();
       return;
@@ -2844,7 +2856,7 @@ inline void eval_frexp(cpp_dec_float<Digits10, ExponentType, Allocator>& result,
 
    result *= cpp_dec_float<Digits10, ExponentType, Allocator>::pow2(-t);
 
-   if(result.iszero() || result.isinf() || result.isnan())
+   if(result.iszero() || (result.isinf)() || (result.isnan)())
    {
       // pow2 overflowed, slip the calculation up:
       result = x;
@@ -2948,7 +2960,7 @@ namespace std
       BOOST_STATIC_CONSTEXPR ExponentType          max_exponent      = boost::multiprecision::cpp_dec_float<Digits10, ExponentType, Allocator>::cpp_dec_float_max_exp;      // Type differs from int.
       BOOST_STATIC_CONSTEXPR ExponentType          max_exponent10    = boost::multiprecision::cpp_dec_float<Digits10, ExponentType, Allocator>::cpp_dec_float_max_exp10;    // Type differs from int.
       BOOST_STATIC_CONSTEXPR int                     radix             = boost::multiprecision::cpp_dec_float<Digits10, ExponentType, Allocator>::cpp_dec_float_radix;
-      BOOST_STATIC_CONSTEXPR std::float_round_style  round_style       = std::round_to_nearest;
+      BOOST_STATIC_CONSTEXPR std::float_round_style  round_style       = std::round_indeterminate;
       BOOST_STATIC_CONSTEXPR bool                    has_infinity      = true;
       BOOST_STATIC_CONSTEXPR bool                    has_quiet_NaN     = true;
       BOOST_STATIC_CONSTEXPR bool                    has_signaling_NaN = false;

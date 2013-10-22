@@ -11,11 +11,11 @@
 
 namespace boost { namespace fusion
 {
-    struct nil;
+    struct nil_;
 
     namespace result_of
     {
-        template <typename Car, typename Cdr = nil>
+        template <typename Car, typename Cdr = nil_>
         struct cons_tie
         {
             typedef cons<Car&, Cdr> type;

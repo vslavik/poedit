@@ -29,6 +29,16 @@
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           <span class="bold"><strong>boost 1.54.0 :</strong></span>
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+                Fix some issues with <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">int128_type</span></code>
+                and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint128_type</span></code> conversions. Notify
+                user at compile time if the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span></code>
+                are not specialized for 128bit types and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span></code>
+                can not make conversions.
+              </li></ul></div>
+        </li>
+<li class="listitem">
+          <span class="bold"><strong>boost 1.54.0 :</strong></span>
           <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                 Added code to convert <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">int128_type</span></code>

@@ -20,7 +20,7 @@ namespace boost { namespace fusion
 {
     //auto segmented_fold_until(seq, state, fun)
     //{
-    //  return first(segmented_fold_until_impl(seq, state, nil, fun));
+    //  return first(segmented_fold_until_impl(seq, state, nil_, fun));
     //}
 
     namespace result_of
@@ -32,7 +32,7 @@ namespace boost { namespace fusion
                 detail::segmented_fold_until_impl<
                     Sequence
                   , State
-                  , fusion::nil
+                  , fusion::nil_
                   , Fun
                 >
             filter;
@@ -55,7 +55,7 @@ namespace boost { namespace fusion
             typename result_of::segmented_fold_until<Sequence, State, Fun>::filter
         filter;
         
-        return filter::call(seq, state, fusion::nil(), fun);
+        return filter::call(seq, state, fusion::nil_(), fun);
     }
 
     template <typename Sequence, typename State, typename Fun>
@@ -66,7 +66,7 @@ namespace boost { namespace fusion
             typename result_of::segmented_fold_until<Sequence const, State, Fun>::filter
         filter;
         
-        return filter::call(seq, state, fusion::nil(), fun);
+        return filter::call(seq, state, fusion::nil_(), fun);
     }
 }}
 

@@ -4,7 +4,7 @@
 <title>Configuring and building the library</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../installation.html" title="Installation and compatibility">
 <link rel="prev" href="../installation.html" title="Installation and compatibility">
 <link rel="next" href="../defs.html" title="Definitions">
@@ -154,6 +154,22 @@
                   Affects only the compilation of the library. If for some reason
                   support for the native SysLog API is not detected automatically,
                   define this macro to forcibly enable it
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_LOG_WITHOUT_DEFAULT_FACTORIES</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Affects only the compilation of the library. If defined, the parsers
+                  for settings will be built without any default factories for filters
+                  and formatters. The user will have to register all attributes in
+                  the library before parsing any filters or formatters from strings.
+                  This can substantially reduce the binary size.
                 </p>
               </td>
 </tr>

@@ -27,7 +27,7 @@
 #include <boost/geometry/views/closeable_view.hpp>
 #include <boost/geometry/views/reversible_view.hpp>
 
-#include <boost/geometry/algorithms/detail/overlay/append_no_duplicates.hpp>
+#include <boost/geometry/algorithms/detail/overlay/append_no_dups_or_spikes.hpp>
 
 namespace boost { namespace geometry
 {
@@ -93,7 +93,7 @@ struct copy_segments_ring
 
         for (size_type i = 0; i < count; ++i, ++it)
         {
-            detail::overlay::append_no_duplicates(current_output, *it);
+            detail::overlay::append_no_dups_or_spikes(current_output, *it);
         }
     }
 };
@@ -129,7 +129,7 @@ struct copy_segments_linestring
 
         for (size_type i = 0; i < count; ++i, ++it)
         {
-            detail::overlay::append_no_duplicates(current_output, *it);
+            detail::overlay::append_no_dups_or_spikes(current_output, *it);
         }
     }
 };
@@ -195,7 +195,7 @@ struct copy_segments_box
         //    (see comments in ring-version)
         for (int i = 0; i < count; i++, index++)
         {
-            detail::overlay::append_no_duplicates(current_output, bp[index % 5]);
+            detail::overlay::append_no_dups_or_spikes(current_output, bp[index % 5]);
 
         }
     }

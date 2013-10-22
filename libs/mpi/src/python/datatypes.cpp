@@ -17,7 +17,9 @@ namespace boost { namespace mpi { namespace python {
 
 void export_datatypes()
 {
+#if PY_MAJOR_VERSION < 3 
   register_serialized(long(0), &PyInt_Type);
+#endif
   register_serialized(false, &PyBool_Type);
   register_serialized(double(0.0), &PyFloat_Type);
 }

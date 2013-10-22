@@ -56,8 +56,8 @@ int test_main(int, char*[])
   bool const r = bellman_ford_shortest_paths
     (g, int (numVertex),
      weight_pmap, 
-     &parent[0],
-     &distance[0],
+     boost::make_iterator_property_map(parent.begin(), get(boost::vertex_index, g)),
+     boost::make_iterator_property_map(distance.begin(), get(boost::vertex_index, g)),
      closed_plus<int>(),
      std::less<int>(),
      default_bellman_visitor());
@@ -81,8 +81,10 @@ int test_main(int, char*[])
   std::vector<int> distance2(numVertex, 17);
   bool const r2 = bellman_ford_shortest_paths
                     (g, 
-                     weight_map(weight_pmap).distance_map(&distance2[0]).
-                     predecessor_map(&parent2[0]).root_vertex(s));
+                     weight_map(weight_pmap).
+                     distance_map(boost::make_iterator_property_map(distance2.begin(), get(boost::vertex_index, g))).
+                     predecessor_map(boost::make_iterator_property_map(parent2.begin(), get(boost::vertex_index, g))).
+                     root_vertex(s));
   if (r2) {
     for(int i = 0; i < numVertex; ++i) {
       std::cout << name[i] << ": ";

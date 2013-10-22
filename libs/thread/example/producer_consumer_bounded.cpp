@@ -110,9 +110,9 @@ int main()
 
   {
     mcout << "begin of main" << std::endl;
-    scoped_thread<> t11(thread(producer, boost::ref(mcerr), boost::ref(sbq)));
-    scoped_thread<> t12(thread(producer, boost::ref(mcerr), boost::ref(sbq)));
-    scoped_thread<> t2(thread(consumer, boost::ref(mcout), boost::ref(sbq)));
+    scoped_thread<> t11(boost::thread(producer, boost::ref(mcerr), boost::ref(sbq)));
+    scoped_thread<> t12(boost::thread(producer, boost::ref(mcerr), boost::ref(sbq)));
+    scoped_thread<> t2(boost::thread(consumer, boost::ref(mcout), boost::ref(sbq)));
 
     this_thread::sleep_for(chrono::seconds(1));
 

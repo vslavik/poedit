@@ -111,4 +111,4 @@ int main()
   disconnect_by_slot_example();
 
   return 0;
-};
+}

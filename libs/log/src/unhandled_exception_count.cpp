@@ -10,7 +10,7 @@
  * \date   05.11.2012
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  *
  * The code in this file is based on the implementation by Evgeny Panasyuk:
  *
@@ -31,7 +31,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
 
 #if defined(BOOST_LOG_HAS_CXXABI_H)
 // MinGW GCC 4.4 seem to not work the same way the newer GCC versions do. As a result, __cxa_get_globals based implementation will always return 0.
-// Just disable it for now and fall back to std::unhandled_exception().
+// Just disable it for now and fall back to std::uncaught_exception().
 #if !defined(__MINGW32__) || (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)))
 // Only GCC 4.7 declares __cxa_get_globals() in cxxabi.h, older compilers do not expose this function but it's there
 #define BOOST_LOG_HAS_CXA_GET_GLOBALS
@@ -55,7 +55,7 @@ BOOST_LOG_API unsigned int unhandled_exception_count() BOOST_NOEXCEPT
     return *(reinterpret_cast< const unsigned int* >(static_cast< const char* >(_getptd()) + (sizeof(void*) == 8 ? 0x100 : 0x90))); // _tiddata::_ProcessingThrow, x32 offset - 0x90, x64 - 0x100
 #else
     // Portable implementation. Does not allow to detect multiple nested exceptions.
-    return static_cast< unsigned int >(std::unhandled_exception());
+    return static_cast< unsigned int >(std::uncaught_exception());
 #endif
 }
 

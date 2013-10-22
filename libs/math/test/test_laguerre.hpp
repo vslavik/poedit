@@ -24,7 +24,6 @@
 template <class Real, class T>
 void do_test_laguerre2(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(unsigned, value_type);
@@ -54,7 +53,6 @@ void do_test_laguerre2(const T& data, const char* type_name, const char* test_na
 template <class Real, class T>
 void do_test_laguerre3(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(unsigned, unsigned, value_type);

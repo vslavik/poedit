@@ -198,3 +198,19 @@ Paragraphs 2
 * [paragraphs]
 
 [endsect]
+
+[/----------------------------------- Escaped templates ]
+
+[section Escaped templates]
+
+[template raw_markup <thingbob>Not real boostbook</thingbob>]
+[template | <thingbob>Also not real boostbook</thingbob>]
+[template escaped1 [|] [`|]]
+[template escaped2 [x] [`x]]
+
+[`raw_markup]
+[`|]
+[escaped1 <thingbob>More fake boostbook</thingbob>]
+[escaped2 <thingbob>Final fake boostbook</thingbob>]
+
+[endsect]

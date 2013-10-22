@@ -27,8 +27,9 @@
 <a name="geometry.reference.strategies.strategy_transform_inverse_transformer"></a><a class="link" href="strategy_transform_inverse_transformer.html" title="strategy::transform::inverse_transformer">strategy::transform::inverse_transformer</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp16643312"></a><a class="indexterm" name="idp16643648"></a><a class="indexterm" name="idp16643984"></a>
-Transformation strategy to do an inverse ransformation in Cartesian system.
+          <a class="indexterm" name="idp63495320"></a><a class="indexterm" name="idp63495656"></a><a class="indexterm" name="idp63495992"></a>
+Transformation strategy to do an inverse transformation in a Cartesian
+          coordinate system.
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_transform_inverse_transformer.h0"></a>
@@ -36,9 +37,9 @@ Transformation strategy to do an inverse ransformation in Cartesian system.
         </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">P2</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension2</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">transform</span><span class="special">::</span><span class="identifier">inverse_transformer</span>
-      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">transform</span><span class="special">::</span><span class="identifier">ublas_transformer</span><span class="special">&lt;</span> <span class="identifier">P1</span><span class="special">,</span> <span class="identifier">P2</span><span class="special">,</span> <span class="identifier">dimension</span><span class="special">&lt;</span> <span class="identifier">P1</span> <span class="special">&gt;::</span><span class="identifier">type</span><span class="special">::</span><span class="identifier">value</span><span class="special">,</span> <span class="identifier">dimension</span><span class="special">&lt;</span> <span class="identifier">P2</span> <span class="special">&gt;::</span><span class="identifier">type</span><span class="special">::</span><span class="identifier">value</span> <span class="special">&gt;</span>
+      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">transform</span><span class="special">::</span><span class="identifier">ublas_transformer</span><span class="special">&lt;</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">Dimension2</span> <span class="special">&gt;</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
 <span class="special">};</span>
@@ -71,25 +72,28 @@ Transformation strategy to do an inverse ransformation in Cartesian system.
 <tr>
 <td>
                   <p>
-                    typename P1
+                    typename CalculationType
                   </p>
                 </td>
 <td>
-                  <p>
-                    first point type
-                  </p>
                 </td>
 </tr>
 <tr>
 <td>
                   <p>
-                    typename P2
+                    std::size_t Dimension1
                   </p>
                 </td>
 <td>
+                </td>
+</tr>
+<tr>
+<td>
                   <p>
-                    second point type
+                    std::size_t Dimension2
                   </p>
+                </td>
+<td>
                 </td>
 </tr>
 </tbody>

@@ -75,9 +75,6 @@ bool test_graph(std::istream& dotfile, graph_t& graph,
                 MassMap mass,
                 WeightMap weight) {
 
-  typedef typename graph_traits < graph_t >::edge_descriptor edge_t;
-  typedef typename graph_traits < graph_t >::vertex_descriptor vertex_t;
-
   // Construct a graph and set up the dynamic_property_maps.
   dynamic_properties dp(ignore_other_properties);
   dp.property(node_id,name);

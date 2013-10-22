@@ -17,7 +17,6 @@
 #include <boost/geometry/policies/relate/tupled.hpp>
 
 #include <boost/geometry/strategies/side.hpp>
-#include <boost/geometry/strategies/intersection.hpp>
 #include <boost/geometry/strategies/intersection_result.hpp>
 
 #include <boost/geometry/strategies/cartesian/cart_intersect.hpp>

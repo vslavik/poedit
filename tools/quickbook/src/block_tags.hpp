@@ -22,7 +22,7 @@ namespace quickbook
         (macro_definition)(template_definition)
         (variable_list)(table)
         (xinclude)(import)(include)
-        (paragraph)
+        (paragraph)(paragraph_in_list)
         (ordered_list)(itemized_list)
         (hr)
     )

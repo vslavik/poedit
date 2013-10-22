@@ -208,12 +208,21 @@ namespace quickbook
 
         unsigned new_version = get_version(state, use_doc_info, qbk_version);
 
-        if (new_version != qbk_version_n && new_version >= 106)
+        if (new_version != qbk_version_n)
         {
-            detail::outwarn(state.current_file->path)
-                << "Quickbook " << (new_version / 100) << "." << (new_version % 100)
-                << " is still under development and is "
-                "likely to change in the future." << std::endl;
+            if (new_version >= 107u)
+            {
+                detail::outwarn(state.current_file->path)
+                    << "Quickbook " << (new_version / 100) << "." << (new_version % 100)
+                    << " is still under development and is "
+                    "likely to change in the future." << std::endl;
+            }
+            else if (new_version >= 106u)
+            {
+                detail::outwarn(state.current_file->path)
+                    << "Quickbook " << (new_version / 100) << "." << (new_version % 100)
+                    << " is in alpha." << std::endl;
+            }
         }
 
         if (new_version) {

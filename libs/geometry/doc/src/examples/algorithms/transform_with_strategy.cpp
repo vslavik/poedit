@@ -25,17 +25,17 @@ int main()
 
     // Translate over (1.5, 1.5)
     point_type p2;
-    trans::translate_transformer<point_type, point_type> translate(1.5, 1.5);
+    trans::translate_transformer<double, 2, 2> translate(1.5, 1.5);
     boost::geometry::transform(p1, p2, translate);
 
     // Scale with factor 3.0
     point_type p3;
-    trans::scale_transformer<point_type, point_type> scale(3.0);
+    trans::scale_transformer<double, 2, 2> scale(3.0);
     boost::geometry::transform(p1, p3, scale);
 
     // Rotate with respect to the origin (0,0) over 90 degrees (clockwise)
     point_type p4;
-    trans::rotate_transformer<point_type, point_type, boost::geometry::degree> rotate(90.0);
+    trans::rotate_transformer<boost::geometry::degree, double, 2, 2> rotate(90.0);
     boost::geometry::transform(p1, p4, rotate);
     
     std::cout 

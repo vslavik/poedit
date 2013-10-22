@@ -10,7 +10,7 @@
  * \date   20.06.2010
  *
  * \brief  This header is the Boost.Log library impl, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  *
  * The file contains a lightweight alternative of Boost.Function. It does not provide all
  * features of Boost.Function but doesn't introduce dependency on Boost.Bind.
@@ -23,7 +23,7 @@
 #include <boost/move/core.hpp>
 #include <boost/move/utility.hpp>
 #include <boost/log/detail/config.hpp>
-#include <boost/log/utility/explicit_operator_bool.hpp>
+#include <boost/utility/explicit_operator_bool.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 #include <boost/preprocessor/iteration/iterate.hpp>
@@ -44,7 +44,7 @@
 #endif
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -244,7 +244,7 @@ public:
         return m_pImpl->invoke(m_pImpl, args...);
     }
 
-    BOOST_LOG_EXPLICIT_OPERATOR_BOOL()
+    BOOST_EXPLICIT_OPERATOR_BOOL()
     bool operator! () const BOOST_NOEXCEPT { return (m_pImpl == NULL); }
     bool empty() const BOOST_NOEXCEPT { return (m_pImpl == NULL); }
     void clear() BOOST_NOEXCEPT
@@ -444,7 +444,7 @@ public:
         m_pImpl->invoke(m_pImpl, args...);
     }
 
-    BOOST_LOG_EXPLICIT_OPERATOR_BOOL()
+    BOOST_EXPLICIT_OPERATOR_BOOL()
     bool operator! () const BOOST_NOEXCEPT { return (m_pImpl == NULL); }
     bool empty() const BOOST_NOEXCEPT { return (m_pImpl == NULL); }
     void clear() BOOST_NOEXCEPT

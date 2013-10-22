@@ -78,20 +78,28 @@ When `BOOST_THREAD_VERSION>3`  && defined BOOST_THREAD_PLATFORM_PTHREAD define `
 
 [endsect]
 
+[section:move  Boost.Atomic]
 
-[section:thread_eq `boost::thread::oprator==` deprecated]
+Boost.Thread uses by default an Boost.Atomic in POSIX platforms to implement call_once..
 
-The following nested typedefs are deprecated: 
+Define `BOOST_THREAD_USES_ATOMIC ` if you want to use Boost.Atomic.
+Define `BOOST_THREAD_DONT_USE_ATOMIC ` if you don't want to use Boost.Atomic or if it is not supported in your platform.
 
-* `boost::thread::oprator==`
-* `boost::thread::oprator!=`
+[endsect]
+ 
+[section:thread_eq `boost::thread::operator==` deprecated]
+
+The following operators are deprecated: 
+
+* `boost::thread::operator==`
+* `boost::thread::operator!=`
 
 When `BOOST_THREAD_PROVIDES_THREAD_EQ` is defined Boost.Thread provides these deprecated feature. 
 
 Use instead 
 
-* `boost::thread::id::oprator==`
-* `boost::thread::id::oprator!=`
+* `boost::thread::id::operator==`
+* `boost::thread::id::operator!=`
 
 [warning This is a breaking change respect to version 1.x.]
 

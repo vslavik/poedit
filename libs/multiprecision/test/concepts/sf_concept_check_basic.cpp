@@ -16,6 +16,8 @@
 #  pragma warning(disable:4503) // decorated name length exceeded, name was truncated
 #endif
 
+#include <libs/math/test/compile_test/poison.hpp>
+
 #if !defined(TEST_MPF_50) && !defined(TEST_BACKEND) && !defined(TEST_MPZ) \
    && !defined(TEST_CPP_DEC_FLOAT) && !defined(TEST_MPFR_50)\
    && !defined(TEST_MPFR_6) && !defined(TEST_MPFR_15) && !defined(TEST_MPFR_17) && !defined(TEST_MPFR_30) \

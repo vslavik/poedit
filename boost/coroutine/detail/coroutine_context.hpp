@@ -14,7 +14,12 @@
 #include <boost/context/fcontext.hpp>
 
 #include <boost/coroutine/detail/config.hpp>
-#include "boost/coroutine/stack_context.hpp"
+#include <boost/coroutine/stack_context.hpp>
+
+#if defined(BOOST_MSVC)
+#pragma warning(push)
+#pragma warning(disable:4275)
+#endif
 
 #ifdef BOOST_HAS_ABI_HEADERS
 #  include BOOST_ABI_PREFIX
@@ -56,6 +61,10 @@ public:
 
 #ifdef BOOST_HAS_ABI_HEADERS
 #  include BOOST_ABI_SUFFIX
+#endif
+
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
 #endif
 
 #endif // BOOST_COROUTINES_DETAIL_COROUTINE_CONTEXT_H

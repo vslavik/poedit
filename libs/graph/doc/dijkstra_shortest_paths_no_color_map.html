@@ -124,11 +124,12 @@ DIJKSTRA(<i>G</i>, <i>s</i>, <i>w</i>)
       <b>if</b> (<i>w(u,v) + d[u] < d[v]</i>)
         <i>d[v] := w(u,v) + d[u]</i>
         <i>p[v] := u</i> 
-        DECREASE-KEY(<i>Q</i>, <i>v</i>)
+        <b>if</b> (<i>d[v]</i> was originally infinity) 
+          INSERT(<i>Q</i>, <i>v</i>)   
+        <b>else</b>
+          DECREASE-KEY(<i>Q</i>, <i>v</i>)
       <b>else</b>
       	...
-      <b>if</b> (<i>d[v]</i> was originally infinity) 
-        INSERT(<i>Q</i>, <i>v</i>)   
     <b>end for</b>
   <b>end while</b>
   return (<i>d</i>, <i>p</i>)
@@ -146,10 +147,11 @@ examine edge <i>(u,v)</i>
 edge <i>(u,v)</i> relaxed
 
 
+discover vertex <i>v</i>
+
 
 edge <i>(u,v)</i> not relaxed
 
-discover vertex <i>v</i>
 finish vertex <i>u</i>
 </pre>
 </td>

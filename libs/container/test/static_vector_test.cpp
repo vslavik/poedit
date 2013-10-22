@@ -611,6 +611,53 @@ void test_sv_elem(T const& t)
    v.emplace_back(N/2, t);
 }
 
+bool default_init_test()//Test for default initialization
+{
+   typedef static_vector<int, 100> di_vector_t;
+
+   const std::size_t Capacity = 100;
+
+   {
+      di_vector_t v;
+      int *p = v.data();
+
+      for(std::size_t i = 0; i != Capacity; ++i, ++p){
+         *p = static_cast<int>(i);
+      }
+
+      //Destroy the vector, p stilll pointing to the storage
+      v.~di_vector_t();
+
+      di_vector_t &rv = *::new(&v)di_vector_t(Capacity, default_init);
+      di_vector_t::iterator it = rv.begin();
+
+      for(std::size_t i = 0; i != Capacity; ++i, ++it){
+         if(*it != static_cast<int>(i))
+            return false;
+      }
+
+      v.~di_vector_t();
+   }
+   {
+      di_vector_t v;
+
+      int *p = v.data();
+      for(std::size_t i = 0; i != Capacity; ++i, ++p){
+         *p = static_cast<int>(i+100);
+      }
+
+      v.resize(Capacity, default_init);
+
+      di_vector_t::iterator it = v.begin();
+      for(std::size_t i = 0; i != Capacity; ++i, ++it){
+         if(*it != static_cast<int>(i+100))
+            return false;
+      }
+   }
+
+   return true;
+}
+
 int main(int, char* [])
 {
    using boost::container::test::movable_and_copyable_int;
@@ -727,6 +774,9 @@ int main(int, char* [])
    BOOST_TEST(counting_value::count() == 0);
    test_sv_elem<shptr_value, 10>(shptr_value(50));
    test_sv_elem<movable_and_copyable_int, 10>(movable_and_copyable_int(50));
+
+   BOOST_TEST(default_init_test() == true);
+
    return boost::report_errors();
 }
 

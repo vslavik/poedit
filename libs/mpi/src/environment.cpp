@@ -9,10 +9,57 @@
 #include <boost/mpi/exception.hpp>
 #include <boost/mpi/detail/mpi_datatype_cache.hpp>
 #include <cassert>
+#include <string>
 #include <exception>
 #include <stdexcept>
+#include <ostream>
 
 namespace boost { namespace mpi {
+namespace threading {
+std::istream& operator>>(std::istream& in, level& l)
+{
+  std::string tk;
+  in >> tk;
+  if (!in.bad()) {
+    if (tk == "single") {
+      l = single;
+    } else if (tk == "funneled") {
+      l = funneled;
+    } else if (tk == "serialized") {
+      l = serialized;
+    } else if (tk == "multiple") {
+      l = multiple;
+    } else {
+      in.setstate(std::ios::badbit);
+    }
+  }
+  return in;
+}
+
+std::ostream& operator<<(std::ostream& out, level l)
+{
+  switch(l) {
+  case single:
+    out << "single";
+    break;
+  case funneled:
+    out << "funneled";
+    break;
+  case serialized:
+    out << "serialized";
+    break;
+  case multiple:
+    out << "multiple";
+    break;
+  default:
+    out << "<level error>[" << int(l) << ']';
+    out.setstate(std::ios::badbit);
+    break;
+  }
+  return out;
+}
+
+} // namespace threading
 
 #ifdef BOOST_MPI_HAS_NOARG_INITIALIZATION
 environment::environment(bool abort_on_exception)
@@ -26,6 +73,21 @@ environment::environment(bool abort_on_exception)
 
   MPI_Errhandler_set(MPI_COMM_WORLD, MPI_ERRORS_RETURN);
 }
+
+environment::environment(threading::level mt_level, bool abort_on_exception)
+  : i_initialized(false),
+    abort_on_exception(abort_on_exception)
+{
+  // It is not clear that we can pass null in MPI_Init_thread.
+  int dummy_thread_level = 0;
+  if (!initialized()) {
+    BOOST_MPI_CHECK_RESULT(MPI_Init_thread, 
+                           (0, 0, int(mt_level), &dummy_thread_level ));
+    i_initialized = true;
+  }
+
+  MPI_Errhandler_set(MPI_COMM_WORLD, MPI_ERRORS_RETURN);
+}
 #endif
 
 environment::environment(int& argc, char** &argv, bool abort_on_exception)
@@ -34,6 +96,22 @@ environment::environment(int& argc, char** &argv, bool abort_on_exception)
 {
   if (!initialized()) {
     BOOST_MPI_CHECK_RESULT(MPI_Init, (&argc, &argv));
+    i_initialized = true;
+  }
+
+  MPI_Errhandler_set(MPI_COMM_WORLD, MPI_ERRORS_RETURN);
+}
+
+environment::environment(int& argc, char** &argv, threading::level mt_level,
+                         bool abort_on_exception)
+  : i_initialized(false),
+    abort_on_exception(abort_on_exception)
+{
+  // It is not clear that we can pass null in MPI_Init_thread.
+  int dummy_thread_level = 0;
+  if (!initialized()) {
+    BOOST_MPI_CHECK_RESULT(MPI_Init_thread, 
+                           (&argc, &argv, int(mt_level), &dummy_thread_level));
     i_initialized = true;
   }
 
@@ -120,6 +198,22 @@ std::string environment::processor_name()
 
   BOOST_MPI_CHECK_RESULT(MPI_Get_processor_name, (name, &len));
   return std::string(name, len);
+}
+
+threading::level environment::thread_level()
+{
+  int level;
+
+  BOOST_MPI_CHECK_RESULT(MPI_Query_thread, (&level));
+  return static_cast<threading::level>(level);
+}
+
+bool environment::is_main_thread()
+{
+  int isit;
+
+  BOOST_MPI_CHECK_RESULT(MPI_Is_thread_main, (&isit));
+  return static_cast<bool>(isit);
 }
 
 } } // end namespace boost::mpi

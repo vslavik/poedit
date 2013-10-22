@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //
 // (C) Copyright Olaf Krzikalla 2004-2006.
-// (C) Copyright Ion Gaztanaga  2006-2012.
+// (C) Copyright Ion Gaztanaga  2006-2013.
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -730,3 +730,207 @@ int main(int, char* [])
    return boost::report_errors();
 }
 #include <boost/intrusive/detail/config_end.hpp>
+
+/*
+#include <iostream>
+#include <string>
+#include <boost/noncopyable.hpp>
+#include <boost/intrusive/list.hpp>
+#include <boost/intrusive/set.hpp>
+
+namespace intrusive = boost::intrusive;
+
+class object : public boost::noncopyable
+{
+public:
+   int o;
+    object()
+	{
+	}
+    virtual ~object()
+	{
+	}
+};
+
+
+class signal : virtual public object
+{
+public:
+	signal()
+	{
+	}
+	virtual ~signal()
+	{
+	}
+};
+
+
+class set_item : public signal
+{
+public:
+    set_item()
+	{
+	}
+    virtual ~set_item()
+	{
+	}
+
+public:
+	virtual const std::string& get_buffer() const
+	{
+		return m_buffer;
+	}
+
+	typedef intrusive::set_member_hook<
+		intrusive::link_mode<intrusive::auto_unlink>
+		> hook;
+	hook m_hook;
+
+	std::string m_buffer;
+};
+
+
+template <class T, class M, M (T::*V)>
+struct member_comparator
+{
+    bool operator()(const T& t1, const T& t2) const
+    {
+        return (t1.*V) < (t2.*V);
+    }
+    bool operator()(const M& m, const T& t) const
+    {
+        return m < (t.*V);
+    }
+    bool operator()(const T& t, const M& m) const
+    {
+        return (t.*V) < m;
+    }
+};
+
+class kk{ int a; float f; };
+
+class list_item : public kk, virtual public object
+{
+public:
+	list_item()
+	{
+	}
+	virtual ~list_item()
+	{
+	}
+
+	virtual void f()
+	{
+	}
+
+	typedef intrusive::list_member_hook<
+		intrusive::link_mode<intrusive::auto_unlink>
+		> hook;
+	hook m_hook;
+};
+
+set_item  srec;
+list_item lrec;
+
+const set_item::hook  set_item::*  sptr_to_member = &set_item::m_hook;
+const list_item::hook list_item::* lptr_to_member = &list_item::m_hook;
+
+int main(int argc, char** argv)
+{
+   int a = sizeof(sptr_to_member);
+   int b = sizeof(lptr_to_member);
+   const std::type_info &ta = typeid(set_item);
+   const std::type_info &tb = typeid(list_item);
+
+   const set_item::hook  &sh = srec.*sptr_to_member;
+   const list_item::hook &l2 = lrec.*lptr_to_member;
+   
+	{
+		typedef member_comparator<
+			set_item,
+			std::string,
+			&set_item::m_buffer
+			> set_item_comparator;
+
+		typedef intrusive::set<
+			set_item,
+			intrusive::compare<set_item_comparator>,
+			intrusive::member_hook<
+				set_item,
+				set_item::hook,
+				&set_item::m_hook
+				>,
+			intrusive::constant_time_size<false>
+			> set_items
+			;
+
+		union
+		{
+			int as_int[2];
+			const set_item::hook set_item::* ptr_to_member;
+		}
+		sss;
+		sss.ptr_to_member = &set_item::m_hook;
+
+		std::cout << "set offsets: " << sss.as_int[0] << ":" << sss.as_int[1] << " and " << offsetof(set_item,m_hook) << std::endl;
+
+		set_items rr;
+
+		std::string key = "123";
+		set_items::insert_commit_data icd;
+		std::pair<set_items::iterator,bool> ir = rr.insert_check(
+			key,
+			set_item_comparator(),
+			icd
+			);
+
+		if ( !ir.second )
+		{
+			throw std::exception();
+		}
+
+		set_item rec;
+		rec.m_buffer = key;
+		set_items::iterator i = rr.insert_commit( rec, icd );
+
+		set_item* rrr = &(*i);
+
+		std::cout << "set pointers: " << ((void*)rrr) << " and " << ((void*)&rec) << std::endl;
+	}
+
+	{
+		typedef intrusive::list<
+			list_item,
+			intrusive::member_hook<
+				list_item,
+				list_item::hook,
+				&list_item::m_hook
+				>,
+			intrusive::constant_time_size<false>
+			> list_items
+			;
+
+		union
+		{
+			int as_int[2];
+			const list_item::hook list_item::* ptr_to_member;
+		}
+		sss;
+		sss.ptr_to_member = &list_item::m_hook;
+
+		std::cout << "list offsets: " << sss.as_int[0] << ":" << sss.as_int[1] << " and " << offsetof(list_item,m_hook) << std::endl;
+
+		list_items rr;
+
+		list_item rec;
+      const list_item::hook &h = rec.*sss.ptr_to_member;
+		rr.push_back( rec );
+
+		list_item* rrr = &rr.front();
+
+		std::cout << "list pointers: " << ((void*)rrr) << " and " << ((void*)&rec) << std::endl;
+	}
+
+	return 0;
+}
+*/

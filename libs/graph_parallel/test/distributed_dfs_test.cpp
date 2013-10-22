@@ -118,7 +118,6 @@ test_distributed_dfs()
                          // Vertex properties
                          property<vertex_color_t, default_color_type> >
     Graph;
-  typedef graph_traits<Graph>::vertices_size_type size_type;
   typedef graph_traits<Graph>::vertex_descriptor vertex_descriptor;
 
   // Specify the edges in the graph

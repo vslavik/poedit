@@ -27,7 +27,7 @@
 #include <boost/log/expressions/predicates/is_debugger_present.hpp>
 #include <boost/log/expressions/predicates/channel_severity_filter.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 

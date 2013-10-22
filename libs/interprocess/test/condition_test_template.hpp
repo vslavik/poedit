@@ -22,13 +22,10 @@
 
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/detail/workaround.hpp>
+#include <boost/interprocess/detail/os_thread_functions.hpp>
 #include "boost_interprocess_check.hpp"
-#include <boost/thread/detail/config.hpp>
 #include <boost/interprocess/sync/scoped_lock.hpp>
-#include <boost/thread/thread.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
-#include <boost/thread/xtime.hpp>
-#include <boost/version.hpp>
 #include <iostream>
 
 namespace boost{
@@ -39,31 +36,6 @@ boost::posix_time::ptime ptime_delay(int secs)
 {
    return   microsec_clock::universal_time() +
             boost::posix_time::time_duration(0, 0, secs);
-}
-
-inline boost::xtime delay(int secs, int msecs=0, int nsecs=0)
-{
-    const int MILLISECONDS_PER_SECOND = 1000;
-    const int NANOSECONDS_PER_SECOND = 1000000000;
-    const int NANOSECONDS_PER_MILLISECOND = 1000000;
-
-    boost::xtime xt;
-
-    #if BOOST_VERSION >= 105100 //TIME_UTC is a macro in C11, breaking change in Boost.Thread
-    int ret = boost::xtime_get(&xt, boost::TIME_UTC_);
-    BOOST_INTERPROCES_CHECK(ret == static_cast<int>(boost::TIME_UTC_));(void)ret;
-    #else
-    int ret = boost::xtime_get(&xt, boost::TIME_UTC);
-    BOOST_INTERPROCES_CHECK(ret == static_cast<int>(boost::TIME_UTC));(void)ret;
-    #endif
-    nsecs += xt.nsec;
-    msecs += nsecs / NANOSECONDS_PER_MILLISECOND;
-    secs += msecs / MILLISECONDS_PER_SECOND;
-    nsecs += (msecs % MILLISECONDS_PER_SECOND) * NANOSECONDS_PER_MILLISECOND;
-    xt.nsec = nsecs % NANOSECONDS_PER_SECOND;
-    xt.sec += secs + (nsecs / NANOSECONDS_PER_SECOND);
-
-    return xt;
 }
 
 template <typename F, typename T>
@@ -104,10 +76,10 @@ void condition_test_thread(condition_test_data<Condition, Mutex>* data)
 {
     boost::interprocess::scoped_lock<Mutex>
       lock(data->mutex);
-    BOOST_INTERPROCES_CHECK(lock ? true : false);
+    BOOST_INTERPROCESS_CHECK(lock ? true : false);
     while (!(data->notified > 0))
         data->condition.wait(lock);
-    BOOST_INTERPROCES_CHECK(lock ? true : false);
+    BOOST_INTERPROCESS_CHECK(lock ? true : false);
     data->awoken++;
 }
 
@@ -126,38 +98,38 @@ void condition_test_waits(condition_test_data<Condition, Mutex>* data)
 {
     boost::interprocess::scoped_lock<Mutex>
       lock(data->mutex);
-    BOOST_INTERPROCES_CHECK(lock ? true : false);
+    BOOST_INTERPROCESS_CHECK(lock ? true : false);
 
     // Test wait.
     while (data->notified != 1)
         data->condition.wait(lock);
-    BOOST_INTERPROCES_CHECK(lock ? true : false);
-    BOOST_INTERPROCES_CHECK(data->notified == 1);
+    BOOST_INTERPROCESS_CHECK(lock ? true : false);
+    BOOST_INTERPROCESS_CHECK(data->notified == 1);
     data->awoken++;
     data->condition.notify_one();
 
     // Test predicate wait.
     data->condition.wait(lock, cond_predicate(data->notified, 2));
-    BOOST_INTERPROCES_CHECK(lock ? true : false);
-    BOOST_INTERPROCES_CHECK(data->notified == 2);
+    BOOST_INTERPROCESS_CHECK(lock ? true : false);
+    BOOST_INTERPROCESS_CHECK(data->notified == 2);
     data->awoken++;
     data->condition.notify_one();
 
     // Test timed_wait.
     while (data->notified != 3)
         data->condition.timed_wait(lock, ptime_delay(5));
-    BOOST_INTERPROCES_CHECK(lock ? true : false);
-    BOOST_INTERPROCES_CHECK(data->notified == 3);
+    BOOST_INTERPROCESS_CHECK(lock ? true : false);
+    BOOST_INTERPROCESS_CHECK(data->notified == 3);
     data->awoken++;
     data->condition.notify_one();
 
     // Test predicate timed_wait.
     cond_predicate pred(data->notified, 4);
     bool ret = data->condition.timed_wait(lock, ptime_delay(5), pred);
-    BOOST_INTERPROCES_CHECK(ret);(void)ret;
-    BOOST_INTERPROCES_CHECK(lock ? true : false);
-    BOOST_INTERPROCES_CHECK(pred());
-    BOOST_INTERPROCES_CHECK(data->notified == 4);
+    BOOST_INTERPROCESS_CHECK(ret);(void)ret;
+    BOOST_INTERPROCESS_CHECK(lock ? true : false);
+    BOOST_INTERPROCESS_CHECK(pred());
+    BOOST_INTERPROCESS_CHECK(data->notified == 4);
     data->awoken++;
     data->condition.notify_one();
 }
@@ -167,92 +139,97 @@ void do_test_condition_notify_one()
 {
    condition_test_data<Condition, Mutex> data;
 
-   boost::thread thread(bind_function(&condition_test_thread<Condition, Mutex>, &data));
+   boost::interprocess::ipcdetail::OS_thread_t thread;
+   boost::interprocess::ipcdetail::thread_launch(thread, bind_function(&condition_test_thread<Condition, Mutex>, &data));
    //Make sure thread is blocked
-   boost::thread::sleep(delay(1));
+   boost::interprocess::ipcdetail::thread_sleep(1000);
    {
       boost::interprocess::scoped_lock<Mutex>
          lock(data.mutex);
-      BOOST_INTERPROCES_CHECK(lock ? true : false);
+      BOOST_INTERPROCESS_CHECK(lock ? true : false);
       data.notified++;
       data.condition.notify_one();
    }
 
-   thread.join();
-   BOOST_INTERPROCES_CHECK(data.awoken == 1);
+   boost::interprocess::ipcdetail::thread_join(thread);
+   BOOST_INTERPROCESS_CHECK(data.awoken == 1);
 }
 
 template <class Condition, class Mutex>
 void do_test_condition_notify_all()
 {
    const int NUMTHREADS = 3;
-   boost::thread_group threads;
+
+   boost::interprocess::ipcdetail::OS_thread_t thgroup[NUMTHREADS];
    condition_test_data<Condition, Mutex> data;
 
-   for (int i = 0; i < NUMTHREADS; ++i){
-       threads.create_thread(bind_function(&condition_test_thread<Condition, Mutex>, &data));
+   for(int i = 0; i< NUMTHREADS; ++i){
+      boost::interprocess::ipcdetail::thread_launch(thgroup[i], bind_function(&condition_test_thread<Condition, Mutex>, &data));
    }
+
    //Make sure all threads are blocked
-   boost::thread::sleep(delay(1));
+   boost::interprocess::ipcdetail::thread_sleep(1000);
    {
       boost::interprocess::scoped_lock<Mutex>
          lock(data.mutex);
-      BOOST_INTERPROCES_CHECK(lock ? true : false);
+      BOOST_INTERPROCESS_CHECK(lock ? true : false);
       data.notified++;
    }
    data.condition.notify_all();
 
-   threads.join_all();
-   BOOST_INTERPROCES_CHECK(data.awoken == NUMTHREADS);
+   for(int i = 0; i< NUMTHREADS; ++i){
+      boost::interprocess::ipcdetail::thread_join(thgroup[i]);
+   }
+   BOOST_INTERPROCESS_CHECK(data.awoken == NUMTHREADS);
 }
 
 template <class Condition, class Mutex>
 void do_test_condition_waits()
 {
    condition_test_data<Condition, Mutex> data;
-
-   boost::thread thread(bind_function(&condition_test_waits<Condition, Mutex>, &data));
+   boost::interprocess::ipcdetail::OS_thread_t thread;
+   boost::interprocess::ipcdetail::thread_launch(thread, bind_function(&condition_test_waits<Condition, Mutex>, &data));
 
    {
       boost::interprocess::scoped_lock<Mutex>
          lock(data.mutex);
-      BOOST_INTERPROCES_CHECK(lock ? true : false);
+      BOOST_INTERPROCESS_CHECK(lock ? true : false);
 
-      boost::thread::sleep(delay(1));
+      boost::interprocess::ipcdetail::thread_sleep(1000);
       data.notified++;
       data.condition.notify_one();
       while (data.awoken != 1)
          data.condition.wait(lock);
-      BOOST_INTERPROCES_CHECK(lock ? true : false);
-      BOOST_INTERPROCES_CHECK(data.awoken == 1);
+      BOOST_INTERPROCESS_CHECK(lock ? true : false);
+      BOOST_INTERPROCESS_CHECK(data.awoken == 1);
 
-      boost::thread::sleep(delay(1));
+      boost::interprocess::ipcdetail::thread_sleep(1000);
       data.notified++;
       data.condition.notify_one();
       while (data.awoken != 2)
          data.condition.wait(lock);
-      BOOST_INTERPROCES_CHECK(lock ? true : false);
-      BOOST_INTERPROCES_CHECK(data.awoken == 2);
+      BOOST_INTERPROCESS_CHECK(lock ? true : false);
+      BOOST_INTERPROCESS_CHECK(data.awoken == 2);
 
-      boost::thread::sleep(delay(1));
+      boost::interprocess::ipcdetail::thread_sleep(1000);
       data.notified++;
       data.condition.notify_one();
       while (data.awoken != 3)
          data.condition.wait(lock);
-      BOOST_INTERPROCES_CHECK(lock ? true : false);
-      BOOST_INTERPROCES_CHECK(data.awoken == 3);
+      BOOST_INTERPROCESS_CHECK(lock ? true : false);
+      BOOST_INTERPROCESS_CHECK(data.awoken == 3);
 
-      boost::thread::sleep(delay(1));
+      boost::interprocess::ipcdetail::thread_sleep(1000);
       data.notified++;
       data.condition.notify_one();
       while (data.awoken != 4)
          data.condition.wait(lock);
-      BOOST_INTERPROCES_CHECK(lock ? true : false);
-      BOOST_INTERPROCES_CHECK(data.awoken == 4);
+      BOOST_INTERPROCESS_CHECK(lock ? true : false);
+      BOOST_INTERPROCESS_CHECK(data.awoken == 4);
    }
 
-   thread.join();
-   BOOST_INTERPROCES_CHECK(data.awoken == 4);
+   boost::interprocess::ipcdetail::thread_join(thread);
+   BOOST_INTERPROCESS_CHECK(data.awoken == 4);
 }
 /*
 //Message queue simulation test
@@ -326,16 +303,15 @@ void do_test_condition_queue_notify_one(void)
       waiting_readers = 0;
       waiting_writer  = 0;
 
-      boost::thread_group thgroup;
-      int i;
-      for(i = 0; i< NumThreads; ++i){
+      boost::interprocess::ipcdetail::OS_thread_t thgroup[NumThreads];
+      for(int i = 0; i< NumThreads; ++i){
          condition_func<Condition, Mutex> func(cond_full, cond_empty, mutex);
-         thgroup.create_thread(func);
+         boost::interprocess::ipcdetail::thread_launch(thgroup[i], func);
       }
 
       //Add 20 elements one by one in the queue simulation
       //The sender will block if it fills the queue
-      for(i = 0; i < NumThreads; ++i){
+      for(int i = 0; i < NumThreads; ++i){
          boost::interprocess::scoped_lock<Mutex> lock(mutex);
          while(count == queue_size){
             ++waiting_writer;
@@ -347,10 +323,12 @@ void do_test_condition_queue_notify_one(void)
          if(waiting_readers)
             cond_empty.notify_one();
       }
-      thgroup.join_all();
-      BOOST_INTERPROCES_CHECK(count == 0);
-      BOOST_INTERPROCES_CHECK(waiting_readers == 0);
-      BOOST_INTERPROCES_CHECK(waiting_writer  == 0);
+      for(int i = 0; i< NumThreads; ++i){
+         boost::interprocess::ipcdetail::thread_join(thgroup[i]);
+      }
+      BOOST_INTERPROCESS_CHECK(count == 0);
+      BOOST_INTERPROCESS_CHECK(waiting_readers == 0);
+      BOOST_INTERPROCESS_CHECK(waiting_writer  == 0);
    }
 }
 
@@ -370,15 +348,14 @@ void do_test_condition_queue_notify_all(void)
       waiting_readers = 0;
       waiting_writer  = 0;
 
-      boost::thread_group thgroup;
-      int i;
-      for(i = 0; i< NumThreads; ++i){
+      boost::interprocess::ipcdetail::OS_thread_t thgroup[NumThreads];
+      for(int i = 0; i< NumThreads; ++i){
          condition_func<Condition, Mutex> func(cond_full, cond_empty, mutex);
-         thgroup.create_thread(func);
+         boost::interprocess::ipcdetail::thread_launch(thgroup[i], func);
       }
 
       //Fill queue to the max size and notify all several times
-      for(i = 0; i < NumThreads; ++i){
+      for(int i = 0; i < NumThreads; ++i){
          boost::interprocess::scoped_lock<Mutex>lock(mutex);
          while(count == queue_size){
             ++waiting_writer;
@@ -390,10 +367,12 @@ void do_test_condition_queue_notify_all(void)
          if(waiting_readers)
             cond_empty.notify_all();
       }
-      thgroup.join_all();
-      BOOST_INTERPROCES_CHECK(count == 0);
-      BOOST_INTERPROCES_CHECK(waiting_readers == 0);
-      BOOST_INTERPROCES_CHECK(waiting_writer  == 0);
+      for(int i = 0; i< NumThreads; ++i){
+         boost::interprocess::ipcdetail::thread_join(thgroup[i]);
+      }
+      BOOST_INTERPROCESS_CHECK(count == 0);
+      BOOST_INTERPROCESS_CHECK(waiting_readers == 0);
+      BOOST_INTERPROCESS_CHECK(waiting_writer  == 0);
    }
 }
 

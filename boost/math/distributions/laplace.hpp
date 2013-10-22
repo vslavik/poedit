@@ -37,8 +37,8 @@ public:
    // ----------------------------------
    // Constructor(s)
    // ----------------------------------
-   laplace_distribution(RealType location = 0, RealType scale = 1)
-      : m_location(location), m_scale(scale)
+   laplace_distribution(RealType l_location = 0, RealType l_scale = 1)
+      : m_location(l_location), m_scale(l_scale)
    {
       RealType result;
       check_parameters("boost::math::laplace_distribution<%1%>::laplace_distribution()", &result);

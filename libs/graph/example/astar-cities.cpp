@@ -118,7 +118,6 @@ int main(int argc, char **argv)
   typedef property_map<mygraph_t, edge_weight_t>::type WeightMap;
   typedef mygraph_t::vertex_descriptor vertex;
   typedef mygraph_t::edge_descriptor edge_descriptor;
-  typedef mygraph_t::vertex_iterator vertex_iterator;
   typedef std::pair<int, int> edge;
   
   // specify data
@@ -196,7 +195,8 @@ int main(int argc, char **argv)
       (g, start,
        distance_heuristic<mygraph_t, cost, location*>
         (locations, goal),
-       predecessor_map(&p[0]).distance_map(&d[0]).
+       predecessor_map(make_iterator_property_map(p.begin(), get(vertex_index, g))).
+       distance_map(make_iterator_property_map(d.begin(), get(vertex_index, g))).
        visitor(astar_goal_visitor<vertex>(goal)));
   
   

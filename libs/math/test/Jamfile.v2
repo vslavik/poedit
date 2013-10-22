@@ -36,6 +36,7 @@ project
        <toolset>msvc:<cxxflags>/wd4189 # local variable is initialized but not referenced
 	   <toolset>msvc-7.1:<source>../vc71_fix//vc_fix
       <toolset>msvc-7.1:<pch>off
+      <toolset>gcc-mingw:<pch>off
       <toolset>borland:<runtime-link>static
       # <toolset>msvc:<cxxflags>/wd4506 has no effect?
       # suppress xstring(237) : warning C4506: no definition for inline function
@@ -452,6 +453,7 @@ run test_laplace.cpp ../../test/build//boost_unit_test_framework ;
 run test_inv_hyp.cpp pch ../../test/build//boost_unit_test_framework ;
 run test_laguerre.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_legendre.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
+run test_ldouble_simple.cpp ../../test/build//boost_unit_test_framework ;
 run test_logistic_dist.cpp ../../test/build//boost_unit_test_framework ;
 run test_lognormal.cpp ../../test/build//boost_unit_test_framework ;
 run test_minima.cpp pch ../../test/build//boost_unit_test_framework ;

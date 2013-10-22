@@ -10,7 +10,7 @@
  * \date   05.05.2013
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 // NOTE: You should generally avoid including headers as much as possible here, because this file
@@ -20,7 +20,6 @@
 #include <immintrin.h>
 #include <boost/cstdint.hpp>
 #include <boost/log/detail/config.hpp>
-#include <boost/log/detail/intptr_t.hpp>
 #include <boost/log/detail/header.hpp>
 
 namespace boost {
@@ -56,7 +55,7 @@ static const ymm_constant mm_shuffle_pattern3 = {{ 5, 0x80, 6, 7, 0x80, 8, 9, 0x
 static const ymm_constant mm_shuffle_pattern13 = {{ 0x80, 0, 1, 0x80, 2, 3, 0x80, 4, 5, 0x80, 6, 7, 0x80, 8, 9, 0x80,      5, 0x80, 6, 7, 0x80, 8, 9, 0x80, 10, 11, 0x80, 12, 13, 0x80, 14, 15 }};
 
 //! Dumps a pack of input data into a string of 8 bit ASCII characters
-static BOOST_LOG_FORCEINLINE void dump_pack(__m256i mm_char_a, __m256i mm_input, __m256i& mm_output1, __m256i& mm_output2, __m256i& mm_output3)
+static BOOST_FORCEINLINE void dump_pack(__m256i mm_char_a, __m256i mm_input, __m256i& mm_output1, __m256i& mm_output2, __m256i& mm_output3)
 {
     // Split half-bytes
     const __m256i mm_15 = _mm256_set1_epi8(0x0F);
@@ -98,7 +97,7 @@ static BOOST_LOG_FORCEINLINE void dump_pack(__m256i mm_char_a, __m256i mm_input,
 }
 
 //! Dumps a pack of input data into a string of 8 bit ASCII characters
-static BOOST_LOG_FORCEINLINE void dump_pack(__m256i mm_char_a, __m128i mm_input, __m128i& mm_output1, __m128i& mm_output2, __m128i& mm_output3)
+static BOOST_FORCEINLINE void dump_pack(__m256i mm_char_a, __m128i mm_input, __m128i& mm_output1, __m128i& mm_output2, __m128i& mm_output3)
 {
     // Split half-bytes
     __m128i mm_input_hi = _mm_srli_epi16(mm_input, 4);
@@ -123,7 +122,7 @@ static BOOST_LOG_FORCEINLINE void dump_pack(__m256i mm_char_a, __m128i mm_input,
 }
 
 template< typename CharT >
-BOOST_LOG_FORCEINLINE void store_characters(__m256i mm_chars, CharT* buf)
+BOOST_FORCEINLINE void store_characters(__m256i mm_chars, CharT* buf)
 {
     switch (sizeof(CharT))
     {
@@ -149,7 +148,7 @@ BOOST_LOG_FORCEINLINE void store_characters(__m256i mm_chars, CharT* buf)
 }
 
 template< typename CharT >
-BOOST_LOG_FORCEINLINE void store_characters(__m128i mm_chars, CharT* buf)
+BOOST_FORCEINLINE void store_characters(__m128i mm_chars, CharT* buf)
 {
     switch (sizeof(CharT))
     {
@@ -172,7 +171,7 @@ BOOST_LOG_FORCEINLINE void store_characters(__m128i mm_chars, CharT* buf)
 }
 
 template< typename CharT >
-BOOST_LOG_FORCEINLINE void dump_data_avx2(const void* data, std::size_t size, std::basic_ostream< CharT >& strm)
+BOOST_FORCEINLINE void dump_data_avx2(const void* data, std::size_t size, std::basic_ostream< CharT >& strm)
 {
     typedef CharT char_type;
 

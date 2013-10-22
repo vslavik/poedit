@@ -18,7 +18,7 @@ namespace boost { namespace fusion { namespace detail
     //    return make_segmented_iterator( segmented_end_impl( seq ) );
     //}
 
-    template <typename Sequence, typename Nil = fusion::nil>
+    template <typename Sequence, typename Nil = fusion::nil_>
     struct segmented_end
     {
         typedef

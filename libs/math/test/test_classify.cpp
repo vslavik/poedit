@@ -13,6 +13,8 @@
 #include <boost/math/special_functions/fpclassify.hpp>
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
+#include <iostream>
+#include <iomanip>
 
 #ifdef _MSC_VER
 #pragma warning(disable: 4127 4146) //  conditional expression is constant

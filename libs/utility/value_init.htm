@@ -295,7 +295,7 @@ so for those compilers that need to have such a workaround, based on the
 <br>    operator T&amp;() { return x ; }
 <br>    T const &amp;data() const { return x ; }
 <br>    T&amp; data() { return x ; }
-<br>    void swap( value_initialized&lt;T&gt;&amp; );
+<br>    void swap( value_initialized&amp; );
 <br>
 <br>  private :
 <br>    <i>unspecified</i> x ;
@@ -311,6 +311,12 @@ so for those compilers that need to have such a workaround, based on the
 <br>T&amp; get ( value_initialized&lt;T&gt;&amp; x )
 <br>{
 <br>  return x.data() ;
+<br>}
+<br>
+<br>template&lt;class T&gt;
+<br>void swap ( value_initialized&lt;T&gt;&amp; lhs, value_initialized&lt;T&gt;&amp; rhs )
+<br>{
+<br>  lhs.swap(rhs) ;
 <br>}
 <br>
 <br>} // namespace boost
@@ -385,7 +391,7 @@ the wrapped object is always performed with the <code>get()</code> idiom:</p>
 <br>    operator T&amp;();
 <br>    T const &amp;data() const;
 <br>    T&amp; data();
-<br>    void swap( value_initialized&lt;T&gt;&amp; );
+<br>    void swap( initialized&amp; );
 <br>
 <br>  private :
 <br>    <i>unspecified</i> x ;
@@ -396,6 +402,9 @@ the wrapped object is always performed with the <code>get()</code> idiom:</p>
 <br>
 <br>template&lt;class T&gt;
 <br>T&amp; get ( initialized&lt;T&gt;&amp; x );
+<br>
+<br>template&lt;class T&gt;
+<br>void swap ( initialized&lt;T&gt;&amp; lhs, initialized&lt;T&gt;&amp; rhs );
 <br>
 <br>} // namespace boost
 <br></pre>

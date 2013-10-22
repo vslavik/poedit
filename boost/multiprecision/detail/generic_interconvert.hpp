@@ -191,7 +191,6 @@ void generic_interconvert(To& to, const From& from, const mpl::int_<number_kind_
 template <class To, class From>
 void generic_interconvert(To& to, const From& from, const mpl::int_<number_kind_rational>& /*to_type*/, const mpl::int_<number_kind_rational>& /*from_type*/)
 {
-   typedef typename component_type<number<From> >::type   from_component_type;
    typedef typename component_type<number<To> >::type     to_component_type;
 
    number<From> t(from);

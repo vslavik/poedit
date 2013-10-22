@@ -26,6 +26,7 @@ namespace quickbook
         {
             markup init_markups[] = {
                 { block_tags::paragraph, "<para>\n", "</para>\n" },
+                { block_tags::paragraph_in_list, "<simpara>\n", "</simpara>\n" },
                 { block_tags::blurb, "<sidebar role=\"blurb\">\n", "</sidebar>\n" },
                 { block_tags::blockquote, "<blockquote>", "</blockquote>" },
                 { block_tags::preformatted, "<programlisting>", "</programlisting>" },

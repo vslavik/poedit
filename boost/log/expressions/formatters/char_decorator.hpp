@@ -45,7 +45,7 @@
 #include <boost/log/utility/formatting_ostream.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -342,7 +342,7 @@ public:
         return strm;
     }
 
-    BOOST_LOG_DELETED_FUNCTION(char_decorator_output_terminal())
+    BOOST_DELETED_FUNCTION(char_decorator_output_terminal())
 };
 
 } // namespace aux
@@ -483,7 +483,7 @@ public:
         return boost::move(str);
     }
 
-    BOOST_LOG_DELETED_FUNCTION(char_decorator_terminal())
+    BOOST_DELETED_FUNCTION(char_decorator_terminal())
 };
 
 /*!
@@ -519,7 +519,7 @@ public:
 
 #define BOOST_LOG_AUX_OVERLOAD(left_ref, right_ref)\
     template< typename LeftExprT, typename SubactorT, typename ImplT, template< typename > class ActorT >\
-    BOOST_LOG_FORCEINLINE phoenix::actor< aux::char_decorator_output_terminal< phoenix::actor< LeftExprT >, SubactorT, ImplT > >\
+    BOOST_FORCEINLINE phoenix::actor< aux::char_decorator_output_terminal< phoenix::actor< LeftExprT >, SubactorT, ImplT > >\
     operator<< (phoenix::actor< LeftExprT > left_ref left, char_decorator_actor< SubactorT, ImplT, ActorT > right_ref right)\
     {\
         typedef aux::char_decorator_output_terminal< phoenix::actor< LeftExprT >, SubactorT, ImplT > terminal_type;\
@@ -548,7 +548,7 @@ public:
     }
 
     template< typename SubactorT >
-    BOOST_LOG_FORCEINLINE char_decorator_actor< SubactorT, pattern_replacer< char_type > > operator[] (SubactorT const& subactor) const
+    BOOST_FORCEINLINE char_decorator_actor< SubactorT, pattern_replacer< char_type > > operator[] (SubactorT const& subactor) const
     {
         typedef pattern_replacer< char_type > replacer_type;
         typedef char_decorator_actor< SubactorT, replacer_type > result_type;
@@ -574,7 +574,7 @@ public:
     }
 
     template< typename SubactorT >
-    BOOST_LOG_FORCEINLINE char_decorator_actor< SubactorT, pattern_replacer< from_char_type > > operator[] (SubactorT const& subactor) const
+    BOOST_FORCEINLINE char_decorator_actor< SubactorT, pattern_replacer< from_char_type > > operator[] (SubactorT const& subactor) const
     {
         typedef pattern_replacer< from_char_type > replacer_type;
         typedef char_decorator_actor< SubactorT, replacer_type > result_type;
@@ -594,7 +594,7 @@ public:
  *                    substring occurrence in the output will be replaced with <tt>decorations[i].second</tt>.
  */
 template< typename RangeT >
-BOOST_LOG_FORCEINLINE aux::char_decorator_gen1< RangeT > char_decor(RangeT const& decorations)
+BOOST_FORCEINLINE aux::char_decorator_gen1< RangeT > char_decor(RangeT const& decorations)
 {
     return aux::char_decorator_gen1< RangeT >(decorations);
 }
@@ -610,7 +610,7 @@ BOOST_LOG_FORCEINLINE aux::char_decorator_gen1< RangeT > char_decor(RangeT const
  *       substring occurrence in the output will be replaced with <tt>to[i]</tt>.
  */
 template< typename FromRangeT, typename ToRangeT >
-BOOST_LOG_FORCEINLINE aux::char_decorator_gen2< FromRangeT, ToRangeT > char_decor(FromRangeT const& from, ToRangeT const& to)
+BOOST_FORCEINLINE aux::char_decorator_gen2< FromRangeT, ToRangeT > char_decor(FromRangeT const& from, ToRangeT const& to)
 {
     return aux::char_decorator_gen2< FromRangeT, ToRangeT >(from, to);
 }

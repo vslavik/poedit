@@ -80,3 +80,6 @@ jump_fcontext:
 
     jmp      *%rcx                  /* indirect jump to context */
 .size jump_fcontext,.-jump_fcontext
+
+/* Mark that we don't need executable stack.  */
+.section .note.GNU-stack,"",%progbits

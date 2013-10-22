@@ -10,7 +10,7 @@
  * \date   08.01.2008
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #ifndef BOOST_LOG_WITHOUT_SYSLOG
@@ -22,9 +22,9 @@
 #include <stdexcept>
 #include <boost/limits.hpp>
 #include <boost/assert.hpp>
-#include <boost/weak_ptr.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
+#include <boost/smart_ptr/weak_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/throw_exception.hpp>
 #if !defined(BOOST_LOG_NO_ASIO)
 #include <boost/asio/buffer.hpp>

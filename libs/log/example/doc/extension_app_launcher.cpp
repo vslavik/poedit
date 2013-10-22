@@ -9,7 +9,7 @@
 #include <string>
 #include <utility>
 #include <stdexcept>
-#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
 #include <boost/phoenix.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/log/core.hpp>

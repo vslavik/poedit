@@ -666,12 +666,76 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_FLAG_LOCK_FREE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic_flag</span></code>
+                  is lock-free
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_BOOL_LOCK_FREE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code> is lock-free
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_CHAR_LOCK_FREE</span></code>
                 </p>
               </td>
 <td>
                 <p>
                   Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code> (including signed/unsigned
+                  variants) is lock-free
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_CHAR16_T_LOCK_FREE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="keyword">char16_t</span><span class="special">&gt;</span></code> (including signed/unsigned
+                  variants) is lock-free
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_CHAR32_T_LOCK_FREE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="keyword">char32_t</span><span class="special">&gt;</span></code> (including signed/unsigned
+                  variants) is lock-free
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_WCHAR_T_LOCK_FREE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="keyword">wchar_t</span><span class="special">&gt;</span></code> (including signed/unsigned
                   variants) is lock-free
                 </p>
               </td>
@@ -732,13 +796,53 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_INT128_LOCK_FREE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="identifier">int128_type</span><span class="special">&gt;</span></code> (including signed/unsigned
+                  variants) is lock-free. This macro is a non-standard extension.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_ADDRESS_LOCK_FREE</span></code>
+                  or <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_POINTER_LOCK_FREE</span></code>
                 </p>
               </td>
 <td>
                 <p>
                   Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="identifier">T</span>
                   <span class="special">*&gt;</span></code> is lock-free
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_THREAD_FENCE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic_thread_fence</span></code>
+                  function is lock-free
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_SIGNAL_FENCE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic_signal_fence</span></code>
+                  function is lock-free
                 </p>
               </td>
 </tr>

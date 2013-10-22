@@ -339,7 +339,7 @@ void test_spots(RealType)
    else
    { // real_concept case, does has_infinfity == false, so can't check it throws.
      // cout << std::numeric_limits<RealType>::infinity() << ' '
-     // << boost::math::fpclassify(std::numeric_limits<RealType>::infinity()) << endl;
+     // << (boost::math::fpclassify)(std::numeric_limits<RealType>::infinity()) << endl;
      // value of std::numeric_limits<RealType>::infinity() is zero, so FPclassify is zero,
      // so (boost::math::isfinite)(std::numeric_limits<RealType>::infinity()) does not detect infinity.
      // so these tests would never throw.

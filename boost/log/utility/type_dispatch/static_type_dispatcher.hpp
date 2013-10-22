@@ -36,7 +36,7 @@
 #include <boost/log/utility/type_dispatch/type_dispatcher.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -62,12 +62,12 @@ template< typename VisitorT >
 struct dispatching_map_initializer
 {
     template< typename IteratorT >
-    static BOOST_LOG_FORCEINLINE void init(IteratorT*, IteratorT*, std::pair< type_info_wrapper, void* >*)
+    static BOOST_FORCEINLINE void init(IteratorT*, IteratorT*, std::pair< type_info_wrapper, void* >*)
     {
     }
 
     template< typename BeginIteratorT, typename EndIteratorT >
-    static BOOST_LOG_FORCEINLINE void init(BeginIteratorT*, EndIteratorT* end, std::pair< type_info_wrapper, void* >* p)
+    static BOOST_FORCEINLINE void init(BeginIteratorT*, EndIteratorT* end, std::pair< type_info_wrapper, void* >* p)
     {
         typedef typename mpl::deref< BeginIteratorT >::type type;
         do_init(static_cast< visible_type< type >* >(0), p);
@@ -78,7 +78,7 @@ struct dispatching_map_initializer
 
 private:
     template< typename T >
-    static BOOST_LOG_FORCEINLINE void do_init(visible_type< T >*, std::pair< type_info_wrapper, void* >* p)
+    static BOOST_FORCEINLINE void do_init(visible_type< T >*, std::pair< type_info_wrapper, void* >* p)
     {
         p->first = typeid(visible_type< T >);
 
@@ -176,8 +176,8 @@ private:
     }
 
     //  Copying and assignment closed
-    BOOST_LOG_DELETED_FUNCTION(type_sequence_dispatcher(type_sequence_dispatcher const&))
-    BOOST_LOG_DELETED_FUNCTION(type_sequence_dispatcher& operator= (type_sequence_dispatcher const&))
+    BOOST_DELETED_FUNCTION(type_sequence_dispatcher(type_sequence_dispatcher const&))
+    BOOST_DELETED_FUNCTION(type_sequence_dispatcher& operator= (type_sequence_dispatcher const&))
 };
 
 //! A simple dispatcher that only supports one type
@@ -213,8 +213,8 @@ public:
     }
 
     //  Copying and assignment closed
-    BOOST_LOG_DELETED_FUNCTION(single_type_dispatcher(single_type_dispatcher const&))
-    BOOST_LOG_DELETED_FUNCTION(single_type_dispatcher& operator= (single_type_dispatcher const&))
+    BOOST_DELETED_FUNCTION(single_type_dispatcher(single_type_dispatcher const&))
+    BOOST_DELETED_FUNCTION(single_type_dispatcher& operator= (single_type_dispatcher const&))
 };
 
 } // namespace aux
@@ -259,8 +259,8 @@ public:
     }
 
     //  Copying and assignment prohibited
-    BOOST_LOG_DELETED_FUNCTION(static_type_dispatcher(static_type_dispatcher const&))
-    BOOST_LOG_DELETED_FUNCTION(static_type_dispatcher& operator= (static_type_dispatcher const&))
+    BOOST_DELETED_FUNCTION(static_type_dispatcher(static_type_dispatcher const&))
+    BOOST_DELETED_FUNCTION(static_type_dispatcher& operator= (static_type_dispatcher const&))
 };
 
 BOOST_LOG_CLOSE_NAMESPACE // namespace log

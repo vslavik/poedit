@@ -44,9 +44,9 @@
   <span class="keyword">typedef</span> <span class="identifier">see_documentation</span>                     <a class="link" href="allocator_traits.html#allocator_traits.const_void_pointer"><span class="identifier">const_void_pointer</span></a><span class="special">;</span>                    
   <span class="keyword">typedef</span> <span class="identifier">see_documentation</span>                     <a class="link" href="allocator_traits.html#allocator_traits.difference_type"><span class="identifier">difference_type</span></a><span class="special">;</span>                       
   <span class="keyword">typedef</span> <span class="identifier">see_documentation</span>                     <a class="link" href="allocator_traits.html#allocator_traits.size_type"><span class="identifier">size_type</span></a><span class="special">;</span>                             
-  <span class="keyword">typedef</span> <span class="identifier">see_documentation</span>                     <a class="link" href="allocator_traits.html#allocator_traits.propagate_on_c_idp15380720"><span class="identifier">propagate_on_container_copy_assignment</span></a><span class="special">;</span>
-  <span class="keyword">typedef</span> <span class="identifier">see_documentation</span>                     <a class="link" href="allocator_traits.html#allocator_traits.propagate_on_c_idp15381664"><span class="identifier">propagate_on_container_move_assignment</span></a><span class="special">;</span>
-  <span class="keyword">typedef</span> <span class="identifier">see_documentation</span>                     <a class="link" href="allocator_traits.html#allocator_traits.propagate_on_c_idp15382608"><span class="identifier">propagate_on_container_swap</span></a><span class="special">;</span>           
+  <span class="keyword">typedef</span> <span class="identifier">see_documentation</span>                     <a class="link" href="allocator_traits.html#allocator_traits.propagate_on_c_idp21950648"><span class="identifier">propagate_on_container_copy_assignment</span></a><span class="special">;</span>
+  <span class="keyword">typedef</span> <span class="identifier">see_documentation</span>                     <a class="link" href="allocator_traits.html#allocator_traits.propagate_on_c_idp21951592"><span class="identifier">propagate_on_container_move_assignment</span></a><span class="special">;</span>
+  <span class="keyword">typedef</span> <span class="identifier">see_documentation</span>                     <a class="link" href="allocator_traits.html#allocator_traits.propagate_on_c_idp21952536"><span class="identifier">propagate_on_container_swap</span></a><span class="special">;</span>           
   <span class="keyword">typedef</span> <span class="identifier">see_documentation</span>                     <a class="link" href="allocator_traits.html#allocator_traits.rebind_alloc"><span class="identifier">rebind_alloc</span></a><span class="special">;</span>                          
   <span class="keyword">typedef</span> <a class="link" href="allocator_traits.html" title="Struct template allocator_traits">allocator_traits</a><span class="special">&lt;</span> <span class="identifier">rebind_alloc</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <a class="link" href="allocator_traits.html#allocator_traits.rebind_traits"><span class="identifier">rebind_traits</span></a><span class="special">;</span>                         
 
@@ -57,21 +57,21 @@
     <span class="keyword">typedef</span> <span class="identifier">see_documentation</span> <a class="link" href="allocator_traits/portable_rebind_alloc.html#allocator_traits.portable_rebind_alloc.type"><span class="identifier">type</span></a><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="allocator_traits.html#idp15386800-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">pointer</span> <a class="link" href="allocator_traits.html#idp15387008-bb"><span class="identifier">allocate</span></a><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="allocator_traits.html#idp15388848-bb"><span class="identifier">deallocate</span></a><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">pointer</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">pointer</span> <a class="link" href="allocator_traits.html#idp15391376-bb"><span class="identifier">allocate</span></a><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">,</span> <span class="identifier">const_void_pointer</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="allocator_traits.html#idp15393856-bb"><span class="identifier">destroy</span></a><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">size_type</span> <a class="link" href="allocator_traits.html#idp15396384-bb"><span class="identifier">max_size</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">Alloc</span> <a class="link" href="allocator_traits.html#idp15398192-bb"><span class="identifier">select_on_container_copy_construction</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="allocator_traits.html#idp21956728-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">pointer</span> <a class="link" href="allocator_traits.html#idp21956936-bb"><span class="identifier">allocate</span></a><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="allocator_traits.html#idp21958776-bb"><span class="identifier">deallocate</span></a><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">pointer</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">pointer</span> <a class="link" href="allocator_traits.html#idp21961304-bb"><span class="identifier">allocate</span></a><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">,</span> <span class="identifier">const_void_pointer</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="allocator_traits.html#idp21963784-bb"><span class="identifier">destroy</span></a><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">size_type</span> <a class="link" href="allocator_traits.html#idp21966312-bb"><span class="identifier">max_size</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">Alloc</span> <a class="link" href="allocator_traits.html#idp21968120-bb"><span class="identifier">select_on_container_copy_construction</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">,</span> <span class="keyword">class</span><span class="special">...</span> Args<span class="special">&gt;</span> 
-    <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="allocator_traits.html#idp15399808-bb"><span class="identifier">construct</span></a><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">Args</span> <span class="special">&amp;&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="allocator_traits.html#idp21969736-bb"><span class="identifier">construct</span></a><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">Args</span> <span class="special">&amp;&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp33795840"></a><h2>Description</h2>
+<a name="idp72812840"></a><h2>Description</h2>
 <p>The class template <a class="link" href="allocator_traits.html" title="Struct template allocator_traits">allocator_traits</a> supplies a uniform interface to all allocator types. This class is a C++03-compatible implementation of std::allocator_traits </p>
 <div class="refsect2">
-<a name="idp33796784"></a><h3>
+<a name="idp72813784"></a><h3>
 <a name="allocator_traitstypes"></a><code class="computeroutput">allocator_traits</code> 
         public
        types</h3>
@@ -118,17 +118,17 @@
 </li>
 <li class="listitem">
 <p>
-<span class="keyword">typedef</span> <span class="identifier">see_documentation</span> <a name="allocator_traits.propagate_on_c_idp15380720"></a><span class="identifier">propagate_on_container_copy_assignment</span><span class="special">;</span></p>
+<span class="keyword">typedef</span> <span class="identifier">see_documentation</span> <a name="allocator_traits.propagate_on_c_idp21950648"></a><span class="identifier">propagate_on_container_copy_assignment</span><span class="special">;</span></p>
 <p>Alloc::propagate_on_container_copy_assignment if such a type exists, otherwise an integral_constant type with internal constant static member <code class="computeroutput">value</code> == false. </p>
 </li>
 <li class="listitem">
 <p>
-<span class="keyword">typedef</span> <span class="identifier">see_documentation</span> <a name="allocator_traits.propagate_on_c_idp15381664"></a><span class="identifier">propagate_on_container_move_assignment</span><span class="special">;</span></p>
+<span class="keyword">typedef</span> <span class="identifier">see_documentation</span> <a name="allocator_traits.propagate_on_c_idp21951592"></a><span class="identifier">propagate_on_container_move_assignment</span><span class="special">;</span></p>
 <p>Alloc::propagate_on_container_move_assignment if such a type exists, otherwise an integral_constant type with internal constant static member <code class="computeroutput">value</code> == false. </p>
 </li>
 <li class="listitem">
 <p>
-<span class="keyword">typedef</span> <span class="identifier">see_documentation</span> <a name="allocator_traits.propagate_on_c_idp15382608"></a><span class="identifier">propagate_on_container_swap</span><span class="special">;</span></p>
+<span class="keyword">typedef</span> <span class="identifier">see_documentation</span> <a name="allocator_traits.propagate_on_c_idp21952536"></a><span class="identifier">propagate_on_container_swap</span><span class="special">;</span></p>
 <p>Alloc::propagate_on_container_swap if such a type exists, otherwise an integral_constant type with internal constant static member <code class="computeroutput">value</code> == false. </p>
 </li>
 <li class="listitem">
@@ -145,37 +145,37 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp33829136"></a><h3>
-<a name="idp15386800-bb"></a><code class="computeroutput">allocator_traits</code> public static functions</h3>
+<a name="idp72846072"></a><h3>
+<a name="idp21956728-bb"></a><code class="computeroutput">allocator_traits</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">pointer</span> <a name="idp15387008-bb"></a><span class="identifier">allocate</span><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">pointer</span> <a name="idp21956936-bb"></a><span class="identifier">allocate</span><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Returns</strong></span>: <code class="computeroutput">a.allocate(n)</code> </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp15388848-bb"></a><span class="identifier">deallocate</span><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="identifier">pointer</span> p<span class="special">,</span> <span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp21958776-bb"></a><span class="identifier">deallocate</span><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="identifier">pointer</span> p<span class="special">,</span> <span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Returns</strong></span>: <code class="computeroutput">a.deallocate(p, n)</code></p>
 <p><span class="bold"><strong>Throws</strong></span>: Nothing </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">pointer</span> <a name="idp15391376-bb"></a><span class="identifier">allocate</span><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="identifier">size_type</span> n<span class="special">,</span> <span class="identifier">const_void_pointer</span> p<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">pointer</span> <a name="idp21961304-bb"></a><span class="identifier">allocate</span><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="identifier">size_type</span> n<span class="special">,</span> <span class="identifier">const_void_pointer</span> p<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects</strong></span>: calls <code class="computeroutput">a.allocate(n, p)</code> if that call is well-formed; otherwise, invokes <code class="computeroutput">a.allocate(n)</code> </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">void</span> <a name="idp15393856-bb"></a><span class="identifier">destroy</span><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span> p<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">void</span> <a name="idp21963784-bb"></a><span class="identifier">destroy</span><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span> p<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects</strong></span>: calls <code class="computeroutput">a.destroy(p)</code> if that call is well-formed; otherwise, invokes <code class="computeroutput">p-&gt;~T()</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">size_type</span> <a name="idp15396384-bb"></a><span class="identifier">max_size</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">size_type</span> <a name="idp21966312-bb"></a><span class="identifier">max_size</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Returns</strong></span>: <code class="computeroutput">a.max_size()</code> if that expression is well-formed; otherwise, <code class="computeroutput">numeric_limits&lt;size_type&gt;::max()</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">Alloc</span> <a name="idp15398192-bb"></a><span class="identifier">select_on_container_copy_construction</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">Alloc</span> <a name="idp21968120-bb"></a><span class="identifier">select_on_container_copy_construction</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Returns</strong></span>: <code class="computeroutput">a.select_on_container_copy_construction()</code> if that expression is well-formed; otherwise, a. </p>
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">,</span> <span class="keyword">class</span><span class="special">...</span> Args<span class="special">&gt;</span> 
-  <span class="keyword">static</span> <span class="keyword">void</span> <a name="idp15399808-bb"></a><span class="identifier">construct</span><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span> p<span class="special">,</span> <span class="identifier">Args</span> <span class="special">&amp;&amp;</span><span class="special">...</span> args<span class="special">)</span><span class="special">;</span></pre>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a name="idp21969736-bb"></a><span class="identifier">construct</span><span class="special">(</span><span class="identifier">Alloc</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span> p<span class="special">,</span> <span class="identifier">Args</span> <span class="special">&amp;&amp;</span><span class="special">...</span> args<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects</strong></span>: calls <code class="computeroutput">a.construct(p, std::forward&lt;Args&gt;(args)...)</code> if that call is well-formed; otherwise, invokes <code class="computeroutput">::new (static_cast&lt;void*&gt;(p)) T(std::forward&lt;Args&gt;(args)...)</code> </p>
 </li>
 </ol></div>
@@ -184,8 +184,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2012 Ion
-      Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

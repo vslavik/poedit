@@ -26,18 +26,18 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="string_algo.usage"></a>Usage</h2></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="usage.html#idp166810496">First Example</a></span></dt>
-<dt><span class="section"><a href="usage.html#idp166822320">Case conversion</a></span></dt>
-<dt><span class="section"><a href="usage.html#idp166826240">Predicates and Classification</a></span></dt>
-<dt><span class="section"><a href="usage.html#idp166831648">Trimming</a></span></dt>
-<dt><span class="section"><a href="usage.html#idp166835792">Find algorithms</a></span></dt>
-<dt><span class="section"><a href="usage.html#idp166843056">Replace Algorithms</a></span></dt>
-<dt><span class="section"><a href="usage.html#idp166850688">Find Iterator</a></span></dt>
-<dt><span class="section"><a href="usage.html#idp166856528">Split</a></span></dt>
+<dt><span class="section"><a href="usage.html#idp210315864">First Example</a></span></dt>
+<dt><span class="section"><a href="usage.html#idp210343944">Case conversion</a></span></dt>
+<dt><span class="section"><a href="usage.html#idp210347896">Predicates and Classification</a></span></dt>
+<dt><span class="section"><a href="usage.html#idp210353336">Trimming</a></span></dt>
+<dt><span class="section"><a href="usage.html#idp210357480">Find algorithms</a></span></dt>
+<dt><span class="section"><a href="usage.html#idp210364744">Replace Algorithms</a></span></dt>
+<dt><span class="section"><a href="usage.html#idp210372408">Find Iterator</a></span></dt>
+<dt><span class="section"><a href="usage.html#idp210378312">Split</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp166810496"></a>First Example</h3></div></div></div>
+<a name="idp210315864"></a>First Example</h3></div></div></div>
 <p>
             Using the algorithms is straightforward. Let us have a look at the first example:
         </p>
@@ -109,7 +109,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp166822320"></a>Case conversion</h3></div></div></div>
+<a name="idp210343944"></a>Case conversion</h3></div></div></div>
 <p>
             STL has a nice way of converting character case. Unfortunately, it works only
             for a single character and we want to convert a string, 
@@ -128,7 +128,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp166826240"></a>Predicates and Classification</h3></div></div></div>
+<a name="idp210347896"></a>Predicates and Classification</h3></div></div></div>
 <p>
             A part of the library deals with string related predicates. Consider this example:
         </p>
@@ -180,7 +180,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp166831648"></a>Trimming</h3></div></div></div>
+<a name="idp210353336"></a>Trimming</h3></div></div></div>
 <p>
             When parsing the input from a user, strings often have unwanted leading or trailing 
             characters. To get rid of them, we need trim functions:
@@ -206,7 +206,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp166835792"></a>Find algorithms</h3></div></div></div>
+<a name="idp210357480"></a>Find algorithms</h3></div></div></div>
 <p>
             The library contains a set of find algorithms. Here is an example:
         </p>
@@ -246,7 +246,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp166843056"></a>Replace Algorithms</h3></div></div></div>
+<a name="idp210364744"></a>Replace Algorithms</h3></div></div></div>
 <p>
             Find algorithms can be used for searching for a specific part of string. Replace goes one step
             further. After a matching part is found, it is substituted with something else. The substitution is computed
@@ -278,7 +278,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp166850688"></a>Find Iterator</h3></div></div></div>
+<a name="idp210372408"></a>Find Iterator</h3></div></div></div>
 <p>
             An extension to find algorithms it the Find Iterator. Instead of searching for just a one part of a string, 
             the find iterator allows us to iterate over the substrings matching the specified criteria.
@@ -336,7 +336,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp166856528"></a>Split</h3></div></div></div>
+<a name="idp210378312"></a>Split</h3></div></div></div>
 <p>
             Split algorithms are an extension to the find iterator for one common usage scenario.
             These algorithms use a find iterator and store all matches into the provided
@@ -345,7 +345,7 @@
         </p>
 <p>
             Two algorithms are provided. <code class="computeroutput"><a class="link" href="../boost/algorithm/find_all.html" title="Function template find_all">find_all()</a></code> finds all copies
-            of a string in the input. <code class="computeroutput"><a class="link" href="../boost/algorithm/split_idp54600576.html" title="Function template split">split()</a></code> splits the input into parts.
+            of a string in the input. <code class="computeroutput"><a class="link" href="../boost/algorithm/split_idp61423960.html" title="Function template split">split()</a></code> splits the input into parts.
         </p>
 <pre class="programlisting">
     string str1("hello abc-*-ABC-*-aBc goodbye");
@@ -369,7 +369,7 @@
             to all substrings that are in case-insensitive manner equal to "abc".
         </p>
 <p>
-            Second example uses <code class="computeroutput"><a class="link" href="../boost/algorithm/split_idp54600576.html" title="Function template split">split()</a></code> to split string str1 into parts
+            Second example uses <code class="computeroutput"><a class="link" href="../boost/algorithm/split_idp61423960.html" title="Function template split">split()</a></code> to split string str1 into parts
             separated by characters '-' or '*'. These parts are then put into the SplitVec.
             It is possible to specify if adjacent separators are concatenated or not.
         </p>
@@ -379,7 +379,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 22, 2013 at 16:10:49 +0100</small></p></td>
+<td align="left"><p><small>Last revised: September 21, 2013 at 21:17:00 +0100</small></p></td>
 <td align="right"><div class="copyright-footer">Copyright &#169; 2002-2004 Pavol Droba<p>Use, modification and distribution is subject to the Boost
                 Software License, Version 1.0. (See accompanying file
                 <code class="filename">LICENSE_1_0.txt</code> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)

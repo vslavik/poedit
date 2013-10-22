@@ -74,7 +74,7 @@ bool check_transitive_closure(Graph& g, GraphTC& tc)
           typename graph_traits<Graph>::adjacency_iterator k, k_end;
           for (boost::tie(k, k_end) = adjacent_vertices(*i, g); k != k_end; ++k) {
             std::vector<default_color_type> color_map_vec(num_vertices(g));
-            if (is_reachable(*k, *i, g, &color_map_vec[0])) {
+            if (is_reachable(*k, *i, g, boost::make_iterator_property_map(color_map_vec.begin(), get(boost::vertex_index, g)))) {
               can_reach = true;
               break;
             }
@@ -93,7 +93,7 @@ bool check_transitive_closure(Graph& g, GraphTC& tc)
         }
       } else {
         std::vector<default_color_type> color_map_vec(num_vertices(g));
-        if (is_reachable(*i, *j, g, &color_map_vec[0])) {
+        if (is_reachable(*i, *j, g, boost::make_iterator_property_map(color_map_vec.begin(), get(boost::vertex_index, g)))) {
           if (num_tc != 1)
             return false;
         } else {
@@ -117,16 +117,16 @@ bool test(int n, double p)
   {
     progress_timer t;
     cout << "transitive_closure" << endl;
-    transitive_closure(g1, g1_tc, vertex_index_map(identity_property_map()));
+    transitive_closure(g1, g1_tc, vertex_index_map(get(boost::vertex_index, g1)));
   }
 
   if(check_transitive_closure(g1, g1_tc))
     return true;
   else {
     cout << "Original graph was ";
-    print_graph(g1, identity_property_map());
+    print_graph(g1, get(boost::vertex_index, g1));
     cout << "Result is ";
-    print_graph(g1_tc, identity_property_map());
+    print_graph(g1_tc, get(boost::vertex_index, g1_tc));
     return false;
   }
 }

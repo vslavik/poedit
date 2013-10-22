@@ -76,11 +76,7 @@ int main (int argc, char *argv[]) {
     property<vertex_index_t, unsigned int> >,
     property<edge_name_t, unsigned int> > Graph;
 
-  typedef graph_traits<Graph>::vertex_descriptor Vertex;
-  typedef graph_traits<Graph>::edge_descriptor Edge;
-
   typedef property_map<Graph, vertex_name_t>::type VertexNameMap;
-  typedef property_map<Graph, edge_name_t>::type EdgeNameMap;
 
   // Test maximum and unique variants on known graphs
   Graph graph_simple1, graph_simple2;

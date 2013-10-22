@@ -10,7 +10,7 @@
  * \date   31.10.2009
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #include <boost/throw_exception.hpp>

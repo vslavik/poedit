@@ -20,7 +20,7 @@
 #include <boost/log/utility/functional/bind.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -41,7 +41,7 @@ struct assign_fun
 };
 
 template< typename AssigneeT >
-BOOST_LOG_FORCEINLINE binder1st< assign_fun, AssigneeT& > bind_assign(AssigneeT& assignee)
+BOOST_FORCEINLINE binder1st< assign_fun, AssigneeT& > bind_assign(AssigneeT& assignee)
 {
     return binder1st< assign_fun, AssigneeT& >(assign_fun(), assignee);
 }

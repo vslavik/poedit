@@ -42,7 +42,7 @@
 #include <quickbook_output.hpp>
 #include <rapidxml_util.hpp>
 
-static const std::string version = "1.1.0";
+static const std::string version = "1.1.1";
 
 inline std::string program_description(bool decorated)
 {
@@ -95,6 +95,8 @@ int main(int argc, char** argv)
 
                 ("output_style", po::value<std::string>(&output_style),
                             "Docbook output style. Available values: 'alt'")
+                ("output_member_variables", po::value<bool>(&config.output_member_variables), 
+                            "Output member variables inside the class")
             ;
 
             po::variables_map varmap;

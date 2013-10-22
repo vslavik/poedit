@@ -234,6 +234,15 @@ public:
     return *this;
   }
 
+  template<typename PropertyMap>
+  dynamic_properties
+  property(const std::string& name, PropertyMap property_map_) const
+  {
+    dynamic_properties result = *this;
+    result.property(name, property_map_);
+    return result;
+  }
+
   iterator       begin()       { return property_maps.begin(); }
   const_iterator begin() const { return property_maps.begin(); }
   iterator       end()         { return property_maps.end(); }

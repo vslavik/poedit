@@ -13,6 +13,8 @@
 #include <boost/fusion/support/detail/access.hpp>
 #include <boost/fusion/support/detail/as_fusion_element.hpp>
 #include <boost/config.hpp>
+#include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/is_convertible.hpp>
 
 #if defined (BOOST_MSVC)
 #  pragma warning(push)
@@ -28,8 +30,25 @@ namespace boost { namespace fusion
         pair()
             : second() {}
 
+        pair(pair const& rhs)
+            : second(rhs.second) {}
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+        pair(pair&& rhs)
+            : second(std::forward<Second>(rhs.second)) {}
+#endif
+
         pair(typename detail::call_param<Second>::type val)
             : second(val) {}
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+
+        template <typename Second2>
+        pair(Second2&& val
+          , typename boost::enable_if<is_convertible<Second2, Second> >::type* /*dummy*/ = 0
+        ) : second(std::forward<Second2>(val)) {}
+
+#endif
 
         template <typename Second2>
         pair(pair<First, Second2> const& rhs)
@@ -41,6 +60,20 @@ namespace boost { namespace fusion
             second = rhs.second;
             return *this;
         }
+
+        pair& operator=(pair const& rhs)
+        {
+            second = rhs.second;
+            return *this;
+        }
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+        pair& operator=(pair&& rhs)
+        {
+            second = std::forward<Second>(rhs.second);
+            return *this;
+        }
+#endif
 
         typedef First first_type;
         typedef Second second_type;
@@ -104,6 +137,13 @@ namespace boost { namespace fusion
     operator!=(pair<First, SecondL> const& l, pair<First, SecondR> const& r)
     {
         return l.second != r.second;
+    }
+
+    template <typename First, typename SecondL, typename SecondR>
+    inline bool
+    operator<(pair<First, SecondL> const& l, pair<First, SecondR> const& r)
+    {
+        return l.second < r.second;
     }
 }}
 

@@ -4,7 +4,7 @@
 <title>Attributes</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../detailed.html" title="Detailed features description">
 <link rel="prev" href="expressions.html" title="Lambda expressions">
 <link rel="next" href="utilities.html" title="Utilities">
@@ -518,7 +518,7 @@
             attribute into the exception. Since scope stacks are maintained globally,
             throwing an exception will cause stack unwinding and, as a result, will
             truncate the global stack. Instead we create a copy of the scope stack
-            bu calling <code class="computeroutput"><a class="link" href="../../boost/log/current_scope.html" title="Function current_scope">current_scope</a></code> at the
+            by calling <code class="computeroutput"><a class="link" href="../../boost/log/current_scope.html" title="Function current_scope">current_scope</a></code> at the
             throw site. This copy will be kept intact even if the global stack instance
             changes during the stack unwinding.
           </p></td></tr>
@@ -817,7 +817,7 @@
               matches the expectation.
             </p>
 <p>
-              In order to apply the visitor, one should call the <code class="computeroutput"><a class="link" href="../../boost/log/visit_idp19539248.html" title="Function template visit">visit</a></code> function on
+              In order to apply the visitor, one should call the <code class="computeroutput"><a class="link" href="../../boost/log/visit_idp26286648.html" title="Function template visit">visit</a></code> function on
               the attribute value. Let's see an example:
             </p>
 <p>
@@ -965,7 +965,7 @@
 <p>
               As it has been mentioned, visitation can also be applied to log records
               and attribute value sets. The syntax is the same, except that the attribute
-              name also has to be specified. The <code class="computeroutput"><a class="link" href="../../boost/log/visit_idp19539248.html" title="Function template visit">visit</a></code> algorithm will
+              name also has to be specified. The <code class="computeroutput"><a class="link" href="../../boost/log/visit_idp26286648.html" title="Function template visit">visit</a></code> algorithm will
               try to find the attribute value by name and then apply the visitor
               to the found element.
             </p>
@@ -1032,7 +1032,7 @@
             </p>
 <p>
               In this example we expect the attribute value to have the stored type
-              <code class="computeroutput"><span class="keyword">int</span></code>. The <code class="computeroutput"><a class="link" href="../../boost/log/extract_idp19421680.html" title="Function template extract">extract</a></code>
+              <code class="computeroutput"><span class="keyword">int</span></code>. The <code class="computeroutput"><a class="link" href="../../boost/log/extract_idp26168264.html" title="Function template extract">extract</a></code>
               function attempts to extract a reference to the stored value and returns
               the filled <a class="link" href="utilities.html#log.detailed.utilities.value_ref" title="Value reference wrapper"><code class="computeroutput"><span class="identifier">value_ref</span></code></a> object if succeeded.
             </p>
@@ -1152,9 +1152,9 @@
 <p>
             </p>
 <p>
-              In addition the library provides two special variants of the <code class="computeroutput"><a class="link" href="../../boost/log/extract_idp19421680.html" title="Function template extract">extract</a></code>
-              function: <code class="computeroutput"><a class="link" href="../../boost/log/extract_or_thr_idp19435984.html" title="Function template extract_or_throw">extract_or_throw</a></code> and
-              <code class="computeroutput"><a class="link" href="../../boost/log/extract_or_def_idp19451952.html" title="Function template extract_or_default">extract_or_default</a></code>.
+              In addition the library provides two special variants of the <code class="computeroutput"><a class="link" href="../../boost/log/extract_idp26168264.html" title="Function template extract">extract</a></code>
+              function: <code class="computeroutput"><a class="link" href="../../boost/log/extract_or_thr_idp26182568.html" title="Function template extract_or_throw">extract_or_throw</a></code> and
+              <code class="computeroutput"><a class="link" href="../../boost/log/extract_or_def_idp26198536.html" title="Function template extract_or_default">extract_or_default</a></code>.
               As the naming implies, the functions provide different behavior in
               case if the attribute value cannot be extracted. The former one throws
               an exception if the value cannot be extracted and the latter one returns
@@ -1166,11 +1166,11 @@
 <th align="left">Warning</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-                Care must be taken with the <code class="computeroutput"><a class="link" href="../../boost/log/extract_or_def_idp19451952.html" title="Function template extract_or_default">extract_or_default</a></code>
+                Care must be taken with the <code class="computeroutput"><a class="link" href="../../boost/log/extract_or_def_idp26198536.html" title="Function template extract_or_default">extract_or_default</a></code>
                 function. The function accepts the default value is accepted by constant
-                reference, and this reference can eventually be returned from <code class="computeroutput"><a class="link" href="../../boost/log/extract_or_def_idp19451952.html" title="Function template extract_or_default">extract_or_default</a></code>.
+                reference, and this reference can eventually be returned from <code class="computeroutput"><a class="link" href="../../boost/log/extract_or_def_idp26198536.html" title="Function template extract_or_default">extract_or_default</a></code>.
                 If a temporary object as used for the default value, user must ensure
-                that the result of <code class="computeroutput"><a class="link" href="../../boost/log/extract_or_def_idp19451952.html" title="Function template extract_or_default">extract_or_default</a></code>
+                that the result of <code class="computeroutput"><a class="link" href="../../boost/log/extract_or_def_idp26198536.html" title="Function template extract_or_default">extract_or_default</a></code>
                 is saved by value and not by reference. Otherwise the saved reference
                 may become dangling when the temporary is destroyed.
               </p></td></tr>

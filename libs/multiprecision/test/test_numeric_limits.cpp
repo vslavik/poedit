@@ -72,12 +72,12 @@ void test_specific(const boost::mpl::int_<boost::multiprecision::number_kind_flo
    Number minv, maxv;
    minv = (std::numeric_limits<Number>::min)();
    maxv = (std::numeric_limits<Number>::max)();
-   BOOST_CHECK(boost::math::isnormal(minv));
-   BOOST_CHECK(boost::math::isnormal(maxv));
-   BOOST_CHECK(boost::math::isnormal(log(minv)));
-   BOOST_CHECK(boost::math::isnormal(log(maxv)));
-   BOOST_CHECK(boost::math::isnormal(sqrt(minv)));
-   BOOST_CHECK(boost::math::isnormal(sqrt(maxv)));
+   BOOST_CHECK((boost::math::isnormal)(minv));
+   BOOST_CHECK((boost::math::isnormal)(maxv));
+   BOOST_CHECK((boost::math::isnormal)(log(minv)));
+   BOOST_CHECK((boost::math::isnormal)(log(maxv)));
+   BOOST_CHECK((boost::math::isnormal)(sqrt(minv)));
+   BOOST_CHECK((boost::math::isnormal)(sqrt(maxv)));
 
    if(std::numeric_limits<Number>::is_specialized)
    {

@@ -48,7 +48,7 @@ int test_main( int , char * [] )
     long large_negative_value = LONG_MIN;
     signed char c = 0;
 
-    c = large_value;  // see if compiler generates warning
+    c = static_cast<signed char>(large_value);
 
     c = numeric_cast<signed char>( small_value );
     BOOST_CHECK( c == 1 );

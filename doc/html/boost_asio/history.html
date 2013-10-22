@@ -28,6 +28,121 @@
 </h2></div></div></div>
 <h4>
 <a name="boost_asio.history.h0"></a>
+      <span class="phrase"><a name="boost_asio.history.asio_1_10_1___boost_1_55"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_10_1___boost_1_55">Asio
+      1.10.1 / Boost 1.55</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Implemented a limited port to Windows Runtime. This support requires that
+          the language extensions be enabled. Due to the restricted facilities exposed
+          by the Windows Runtime API, the port also comes with the following caveats:
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                The core facilities such as the <code class="computeroutput"><span class="identifier">io_service</span></code>,
+                <code class="computeroutput"><span class="identifier">strand</span></code>, buffers,
+                composed operations, timers, etc., should all work as normal.
+              </li>
+<li class="listitem">
+                For sockets, only client-side TCP is supported.
+              </li>
+<li class="listitem">
+                Explicit binding of a client-side TCP socket is not supported.
+              </li>
+<li class="listitem">
+                The <code class="computeroutput"><span class="identifier">cancel</span><span class="special">()</span></code>
+                function is not supported for sockets. Asynchronous operations may
+                only be cancelled by closing the socket.
+              </li>
+<li class="listitem">
+                Operations that use <code class="computeroutput"><span class="identifier">null_buffers</span></code>
+                are not supported.
+              </li>
+<li class="listitem">
+                Only <code class="computeroutput"><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">no_delay</span></code> and <code class="computeroutput"><span class="identifier">socket_base</span><span class="special">::</span><span class="identifier">keep_alive</span></code>
+                options are supported.
+              </li>
+<li class="listitem">
+                Resolvers do not support service names, only numbers. I.e. you must
+                use "80" rather than "http".
+              </li>
+<li class="listitem">
+                Most resolver query flags have no effect.
+              </li>
+</ul></div>
+        </li>
+<li class="listitem">
+          Fixed a regression (introduced in Boost 1.54) where, on some platforms,
+          errors from <code class="computeroutput"><span class="identifier">async_connect</span></code>
+          were not correctly propagated through to the completion handler (<a href="https://svn.boost.org/trac/boost/ticket/8795" target="_top">#8795</a>).
+        </li>
+<li class="listitem">
+          Fixed a Windows-specific regression (introduced in Boost 1.54) that occurs
+          when multiple threads are running an <code class="computeroutput"><span class="identifier">io_service</span></code>.
+          When the bug occurs, the result of an asynchronous operation (error and
+          bytes tranferred) is incorrectly discarded and zero values used instead.
+          For TCP sockets this results in spurious end-of-file notifications (<a href="https://svn.boost.org/trac/boost/ticket/8933" target="_top">#8933</a>).
+        </li>
+<li class="listitem">
+          Fixed a bug in handler tracking, where it was not correctly printing out
+          some handler IDs (<a href="https://svn.boost.org/trac/boost/ticket/8808" target="_top">#8808</a>).
+        </li>
+<li class="listitem">
+          Fixed the comparison used to test for successful synchronous accept operations
+          so that it works correctly with unsigned socket descriptors (<a href="https://svn.boost.org/trac/boost/ticket/8752" target="_top">#8752</a>).
+        </li>
+<li class="listitem">
+          Ensured the signal number is correctly passed to the completion handler
+          when starting an <code class="computeroutput"><span class="identifier">async_wait</span></code>
+          on a signal that is already raised (<a href="https://svn.boost.org/trac/boost/ticket/8738" target="_top">#8738</a>).
+        </li>
+<li class="listitem">
+          Suppressed a g++ 4.8+ warning about unused typedefs (<a href="https://svn.boost.org/trac/boost/ticket/8980" target="_top">#8980</a>).
+        </li>
+<li class="listitem">
+          Enabled the move optimisation for handlers that use the default invocation
+          hook (<a href="https://svn.boost.org/trac/boost/ticket/8624" target="_top">#8624</a>).
+        </li>
+<li class="listitem">
+          Clarified that programs must not issue overlapping <code class="computeroutput"><span class="identifier">async_write_at</span></code>
+          operations (<a href="https://svn.boost.org/trac/boost/ticket/8669" target="_top">#8669</a>).
+        </li>
+<li class="listitem">
+          Changed the Windows <code class="computeroutput"><span class="identifier">HANDLE</span></code>
+          backend to treat <code class="computeroutput"><span class="identifier">ERROR_MORE_DATA</span></code>
+          as a non-fatal error when returned by <code class="computeroutput"><span class="identifier">GetOverlappedResult</span></code>
+          for a synchronous read (<a href="https://svn.boost.org/trac/boost/ticket/8722" target="_top">#8722</a>).
+        </li>
+<li class="listitem">
+          Visual C++ language extensions use <code class="computeroutput"><span class="identifier">generic</span></code>
+          as a keyword. Added a workaround that renames the namespace to <code class="computeroutput"><span class="identifier">cpp_generic</span></code> when those language extensions
+          are in effect.
+        </li>
+<li class="listitem">
+          Fixed some asynchronous operations that missed out on getting <code class="computeroutput"><span class="identifier">async_result</span></code> support in Boost 1.54. In
+          particular, the buffered stream templates have been updated so that they
+          adhere to current handler patterns (<a href="https://svn.boost.org/trac/boost/ticket/9000" target="_top">#9000</a>, <a href="https://svn.boost.org/trac/boost/ticket/9001" target="_top">#9001</a>).
+        </li>
+<li class="listitem">
+          Enabled move support for Microsoft Visual Studio 2012 (<a href="https://svn.boost.org/trac/boost/ticket/8959" target="_top">#8959</a>).
+        </li>
+<li class="listitem">
+          Added <code class="computeroutput"><span class="identifier">use_future</span></code> support
+          for Microsoft Visual Studio 2012.
+        </li>
+<li class="listitem">
+          Removed a use of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">min</span></code> in the Windows IOCP backend to avoid
+          a dependency on the <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">algorithm</span><span class="special">&gt;</span></code> header (<a href="https://svn.boost.org/trac/boost/ticket/8758" target="_top">#8758</a>).
+        </li>
+<li class="listitem">
+          Eliminated some unnecessary handler copies.
+        </li>
+<li class="listitem">
+          Fixed various minor and cosmetic issues in code and documentation (including
+          <a href="https://svn.boost.org/trac/boost/ticket/8347" target="_top">#8347</a>, <a href="https://svn.boost.org/trac/boost/ticket/8950" target="_top">#8950</a>, <a href="https://svn.boost.org/trac/boost/ticket/8953" target="_top">#8953</a>, <a href="https://svn.boost.org/trac/boost/ticket/8965" target="_top">#8965</a>, <a href="https://svn.boost.org/trac/boost/ticket/8997" target="_top">#8997</a>).
+        </li>
+</ul></div>
+<h4>
+<a name="boost_asio.history.h1"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_10_0___boost_1_54"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_10_0___boost_1_54">Asio
       1.10.0 / Boost 1.54</a>
     </h4>
@@ -180,7 +295,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h1"></a>
+<a name="boost_asio.history.h2"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_8_3___boost_1_53"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_8_3___boost_1_53">Asio
       1.8.3 / Boost 1.53</a>
     </h4>
@@ -224,7 +339,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h2"></a>
+<a name="boost_asio.history.h3"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_8_2___boost_1_51"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_8_2___boost_1_51">Asio
       1.8.2 / Boost 1.51</a>
     </h4>
@@ -268,7 +383,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h3"></a>
+<a name="boost_asio.history.h4"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_8_1___boost_1_50"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_8_1___boost_1_50">Asio
       1.8.1 / Boost 1.50</a>
     </h4>
@@ -307,7 +422,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h4"></a>
+<a name="boost_asio.history.h5"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_8_0___boost_1_49"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_8_0___boost_1_49">Asio
       1.8.0 / Boost 1.49</a>
     </h4>
@@ -356,7 +471,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h5"></a>
+<a name="boost_asio.history.h6"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_6_1___boost_1_48"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_6_1___boost_1_48">Asio
       1.6.1 / Boost 1.48</a>
     </h4>
@@ -450,7 +565,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h6"></a>
+<a name="boost_asio.history.h7"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_6_0___boost_1_47"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_6_0___boost_1_47">Asio
       1.6.0 / Boost 1.47</a>
     </h4>
@@ -681,7 +796,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h7"></a>
+<a name="boost_asio.history.h8"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_4_9___boost_1_46_1"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_4_9___boost_1_46_1">Asio
       1.4.9 / Boost 1.46.1</a>
     </h4>
@@ -713,7 +828,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h8"></a>
+<a name="boost_asio.history.h9"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_4_8___boost_1_46"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_4_8___boost_1_46">Asio
       1.4.8 / Boost 1.46</a>
     </h4>
@@ -728,7 +843,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h9"></a>
+<a name="boost_asio.history.h10"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_4_7___boost_1_45"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_4_7___boost_1_45">Asio
       1.4.7 / Boost 1.45</a>
     </h4>
@@ -810,7 +925,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h10"></a>
+<a name="boost_asio.history.h11"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_4_6___boost_1_44"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_4_6___boost_1_44">Asio
       1.4.6 / Boost 1.44</a>
     </h4>
@@ -886,7 +1001,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h11"></a>
+<a name="boost_asio.history.h12"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_4_5___boost_1_43"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_4_5___boost_1_43">Asio
       1.4.5 / Boost 1.43</a>
     </h4>
@@ -953,7 +1068,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h12"></a>
+<a name="boost_asio.history.h13"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_4_4___boost_1_42"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_4_4___boost_1_42">Asio
       1.4.4 / Boost 1.42</a>
     </h4>
@@ -1018,7 +1133,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h13"></a>
+<a name="boost_asio.history.h14"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_4_3___boost_1_40"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_4_3___boost_1_40">Asio
       1.4.3 / Boost 1.40</a>
     </h4>
@@ -1075,7 +1190,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h14"></a>
+<a name="boost_asio.history.h15"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_4_2___boost_1_39"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_4_2___boost_1_39">Asio
       1.4.2 / Boost 1.39</a>
     </h4>
@@ -1127,7 +1242,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h15"></a>
+<a name="boost_asio.history.h16"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_4_1___boost_1_38"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_4_1___boost_1_38">Asio
       1.4.1 / Boost 1.38</a>
     </h4>
@@ -1159,7 +1274,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h16"></a>
+<a name="boost_asio.history.h17"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_4_0___boost_1_37"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_4_0___boost_1_37">Asio
       1.4.0 / Boost 1.37</a>
     </h4>
@@ -1194,7 +1309,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h17"></a>
+<a name="boost_asio.history.h18"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_2_0___boost_1_36"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_2_0___boost_1_36">Asio
       1.2.0 / Boost 1.36</a>
     </h4>
@@ -1247,7 +1362,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_asio.history.h18"></a>
+<a name="boost_asio.history.h19"></a>
       <span class="phrase"><a name="boost_asio.history.asio_1_0_0___boost_1_35"></a></span><a class="link" href="history.html#boost_asio.history.asio_1_0_0___boost_1_35">Asio
       1.0.0 / Boost 1.35</a>
     </h4>

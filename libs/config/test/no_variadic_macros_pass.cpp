@@ -27,11 +27,11 @@
 #ifndef BOOST_NO_CXX11_VARIADIC_MACROS
 #include "boost_no_variadic_macros.ipp"
 #else
-namespace boost_no_variadic_macros = empty_boost;
+namespace boost_no_cxx11_variadic_macros = empty_boost;
 #endif
 
 int main( int, char *[] )
 {
-   return boost_no_variadic_macros::test();
+   return boost_no_cxx11_variadic_macros::test();
 }
 

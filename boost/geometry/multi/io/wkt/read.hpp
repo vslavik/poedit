@@ -49,7 +49,7 @@ struct multi_parser
                 Parser
                     <
                         typename boost::range_value<MultiGeometry>::type
-                    >::apply(it, tokens.end(), wkt, geometry.back());
+                    >::apply(it, tokens.end(), wkt, *(boost::end(geometry) - 1));
                 if (it != tokens.end() && *it == ",")
                 {
                     // Skip "," after multi-element is parsed
@@ -101,14 +101,14 @@ struct multi_point_parser
                     point_parser
                         <
                             typename boost::range_value<MultiGeometry>::type
-                        >::apply(it, tokens.end(), wkt, geometry.back());
+                        >::apply(it, tokens.end(), wkt, *(boost::end(geometry) - 1));
                 }
                 else
                 {
                     noparenthesis_point_parser
                         <
                             typename boost::range_value<MultiGeometry>::type
-                        >::apply(it, tokens.end(), wkt, geometry.back());
+                        >::apply(it, tokens.end(), wkt, *(boost::end(geometry) - 1));
                 }
                     
                 if (it != tokens.end() && *it == ",")

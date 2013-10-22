@@ -16,6 +16,7 @@
 
 [endsect] [/tutorial]
 
+[/////////////////////]
 [section:ref Reference]
 
   #include <boost/thread/externally_locked_stream.hpp>
@@ -48,7 +49,7 @@
     operator>>(externally_locked_stream<Stream, RecursiveMutex>& mtx, T& arg);
   }
 
-
+[/////////////////////////////////////////]
 [section:stream_guard Class `stream_guard`]
   
   #include <boost/thread/externally_locked_stream.hpp>
@@ -78,6 +79,7 @@
 
 `stream_guard` is a model of __StrictLock.
 
+[//////////////////////////////////////////////////]
 [section:constructor `stream_guard(mutex_type & m)`]
 
 [variablelist
@@ -89,7 +91,7 @@
 ]
 
 [endsect]
-
+[////////////////////////////////////////////////////////////////////////////]
 [section:constructor_adopt `stream_guard(mutex_type & m,boost::adopt_lock_t)`]
 
 [variablelist
@@ -105,8 +107,7 @@ obtained by a call to [lock_ref_link `m.lock()`].]]
 ]
 
 [endsect]
-
-
+[//////////////////////////////////////////////////////////]
 [section:move_constructor `stream_guard(stream_guard && m)`]
 
 
@@ -119,8 +120,7 @@ obtained by a call to [lock_ref_link `m.lock()`].]]
 ]
 
 [endsect]
-
-
+[////////////////////////////////////]
 [section:destructor `~stream_guard()`]
 
 [variablelist
@@ -134,8 +134,8 @@ object passed to the constructor.]]
 
 [endsect]
 
-
 [endsect]
+[//////////////////////////////////////////////////////////////////]
 [section:externally_locked_stream Class `externally_locked_stream `]
 
   #include <boost/thread/externally_locked_stream.hpp>
@@ -152,7 +152,6 @@ object passed to the constructor.]]
   
       // Modifiers  
       stream_guard<Stream, RecursiveMutex> hold();
-      Stream& bypass() const;
 
     };
   }
@@ -162,6 +161,7 @@ provides full access to that object through the `get` member functions, provided
 pass a reference to a strict lock object.
 
 
+[////////////////////////////////////////////////////////////////////////]
 [section:constructor `externally_locked_stream(Stream&, RecursiveMutex&)`]
 
 [variablelist
@@ -172,6 +172,7 @@ pass a reference to a strict lock object.
 
 [endsect]
 
+[/////////////////////]
 [section:hold `hold()`]
 
 [variablelist
@@ -181,6 +182,8 @@ pass a reference to a strict lock object.
 ]
 
 [endsect]
+
+
 
 [endsect]
 

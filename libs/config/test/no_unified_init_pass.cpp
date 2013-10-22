@@ -27,11 +27,11 @@
 #ifndef BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX
 #include "boost_no_unified_init.ipp"
 #else
-namespace boost_no_unified_initialization_syntax = empty_boost;
+namespace boost_no_cxx11_unified_initialization_syntax = empty_boost;
 #endif
 
 int main( int, char *[] )
 {
-   return boost_no_unified_initialization_syntax::test();
+   return boost_no_cxx11_unified_initialization_syntax::test();
 }
 

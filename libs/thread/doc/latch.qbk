@@ -7,13 +7,19 @@
 
 [section:latches Latches -- EXPERIMENTAL]
 
+[////////////////////]
 [section Introdcution]
 
-Latches are a thread co-ordination mechanism that allow one or more threads to block until one or more threads have reached a point. An individual latch is a reusable object; once the operation has been completed, the threads can re-use the same barrier. It is thus useful for managing repeated tasks handled by multiple threads.
+Latches are a thread co-ordination mechanism that allow one or more threads to block until one or more threads have reached a point. 
+
+[/
+An individual latch is a reusable object; once the operation has been completed, the threads can re-use the same barrier. It is thus useful for managing repeated tasks handled by multiple threads.
 
 A completion latch is like a latch that allows to associate a completion function which will be called once the internal counter reaches the value 0 and all the consumer threads have taken care of the notification. 
+]
 
 [endsect]
+[////////////////]
 [section Examples]
 
 Sample use cases for the latch include:
@@ -38,7 +44,6 @@ An example of the first use case would be as follows:
 
 An example of the second use case is shown below. We need to load data and then process it using a number of threads. Loading the data is I/O bound, whereas starting threads and creating data structures is CPU bound. By running these in parallel, throughput can be increased.
 
-
   void DoWork() {
     latch start_latch(1);
     vector<thread*> workers;
@@ -57,6 +62,7 @@ An example of the second use case is shown below. We need to load data and then 
     start_latch.count_down();
     }
 
+[/
 The completion latches can be used to co-ordinate also a set of threads carrying out a repeated task. The number of threads can be adjusted dynamically to respond to changing requirements.
 
 In the example below, a number of threads are performing a multi-stage task. Some tasks may require fewer steps than others, meaning that some threads may finish before others. We reduce the number of threads waiting on the latch when this happens.
@@ -96,8 +102,10 @@ In the example below, a number of threads are performing a multi-stage task. Som
       GetNextStage(tasks);
     }
   }
+]
 
 [endsect]
+[///////////////////////////]
 [section:latch Class `latch`]
 
     #include <boost/thread/latch.hpp>
@@ -119,16 +127,20 @@ In the example below, a number of threads are performing a multi-stage task. Som
         cv_status wait_until(const chrono::time_point<Clock, Duration>& abs_time);
         void count_down();
         void count_down_and_wait();
-        void reset(std::size_t count);
 
     };
 
+
+[/
+        void reset(std::size_t count);
+]
 
 A latch maintains an internal counter that is initialized when the latch is created. One or more threads may block waiting until the counter is decremented to 0. 
 
 Instances of __latch__ are not copyable or movable.
 
-[section Constructor]
+[///////////////////]
+[section Constructor `latch(std::size_t)`]
 
     latch(std::size_t count);
 
@@ -136,14 +148,15 @@ Instances of __latch__ are not copyable or movable.
 
 [[Effects:] [Construct a latch with is initial value for the internal counter.]]
 
-[[Note:] [The counter could be zero and reset later.]]
+[[Note:] [The counter could be zero.]]
 
 [[Throws:] [Nothing.]]
 
 ]
 
 [endsect]
-[section Destructor]
+[//////////////////]
+[section Destructor `~latch()`]
 
     ~latch();
 
@@ -158,7 +171,8 @@ Instances of __latch__ are not copyable or movable.
 ]
 
 [endsect]
-[section:wait Member function `wait()`]
+[/////////////////////////////////////]
+[section:wait Member Function `wait()`]
 
     void wait();
 
@@ -178,8 +192,8 @@ are unblocked. ]]
 ]
 
 [endsect]
-
-[section:try_wait Member function `try_wait()`]
+[/////////////////////////////////////////////]
+[section:try_wait Member Function `try_wait()`]
 
         bool try_wait();
 
@@ -194,8 +208,8 @@ are unblocked. ]]
 ]
 
 [endsect]
-
-[section:wait_for Member function `wait_for() `]
+[//////////////////////////////////////////////]
+[section:wait_for Member Function `wait_for() `]
 
         template <class Rep, class Period>
         cv_status wait_for(const chrono::duration<Rep, Period>& rel_time);
@@ -216,7 +230,8 @@ are unblocked. ]]
 ]
 
 [endsect]
-[section:wait_until Member function `wait_until()`]
+[/////////////////////////////////////////////////]
+[section:wait_until Member Function `wait_until()`]
 
         template <class lock_type, class Clock, class Duration>
         cv_status wait_until(const chrono::time_point<Clock, Duration>& abs_time);
@@ -237,7 +252,8 @@ are unblocked. ]]
 ]
 
 [endsect]
-[section:count_down Member function `count_down()`]
+[/////////////////////////////////////////////////]
+[section:count_down Member Function `count_down()`]
 
         void count_down();
 
@@ -256,7 +272,8 @@ are unblocked. ]]
 ]
 
 [endsect]
-[section:count_down_and_wait Member function `count_down_and_wait()`]
+[///////////////////////////////////////////////////////////////////]
+[section:count_down_and_wait Member Function `count_down_and_wait()`]
 
         void count_down_and_wait();
 
@@ -275,8 +292,9 @@ are unblocked. ]]
 ]
 
 [endsect]
-
-[section:reset Member function `reset()`]
+[///////////////////////////////////////]
+[
+[section:reset Member Function `reset()`]
 
     reset( size_t );
 
@@ -293,9 +311,11 @@ are unblocked. ]]
 ]
 
 [endsect]
-
+]
 [endsect] [/ latch]
 
+[/
+[//////////////////////////////////////////////////]
 [section:completion_latch Class `completion_latch `]
 
     #include <boost/thread/completion_latch.hpp>
@@ -333,6 +353,7 @@ Instances of completion_latch are not copyable or movable.
 
 Only the additional functions are documented.
 
+[/////////////////////]
 [section:c Constructor]
 
     completion_latch(std::size_t count);
@@ -348,6 +369,7 @@ Only the additional functions are documented.
 ]
 
 [endsect]
+[///////////////////////////////////////////////]
 [section:cf Constructor with completion function]
 
         template <typename F>
@@ -368,7 +390,8 @@ Only the additional functions are documented.
 ]
 
 [endsect]
-[section:then Member function `then`]
+[///////////////////////////////////]
+[section:then Member Function `then`]
 
         template <typename F>
         completion_function then(F&& funct);
@@ -391,6 +414,6 @@ Only the additional functions are documented.
 [endsect]
 
 [endsect] [/ completion_latch]
-
+]
 
 [endsect] [/ Latches]

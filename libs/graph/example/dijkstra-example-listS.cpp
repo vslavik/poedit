@@ -26,7 +26,6 @@ main(int, char *[])
     property<vertex_distance_t, int,
     property<vertex_predecessor_t, vertex_descriptor> > > >, 
     property<edge_weight_t, int> > graph_t;
-  typedef graph_traits<graph_t>::edge_descriptor edge_descriptor;
   typedef std::pair<int, int> Edge;
 
   const int num_nodes = 5;

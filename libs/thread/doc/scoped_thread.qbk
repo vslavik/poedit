@@ -190,7 +190,7 @@ This wrapper can be used to join the thread before destroying it seems a natural
 
         explicit scoped_thread(thread&& th) noexcept;
         template <typename F&&, typename ...Args>
-        explicit strict_scoped_thread(F&&, Args&&...);
+        explicit scoped_thread(F&&, Args&&...);
 
         ~scoped_thread();
 
@@ -323,7 +323,7 @@ any) to `*this`.
 [section:call_constructor Move Constructor from a Callable]
 
         template <typename F&&, typename ...Args>
-        explicit strict_scoped_thread(F&&, Args&&...);
+        explicit scoped_thread(F&&, Args&&...);
 
 [variablelist
 

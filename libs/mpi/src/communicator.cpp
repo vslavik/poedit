@@ -63,7 +63,8 @@ communicator::communicator(const communicator& comm,
   MPI_Comm newcomm;
   BOOST_MPI_CHECK_RESULT(MPI_Comm_create, 
                          ((MPI_Comm)comm, (MPI_Group)subgroup, &newcomm));
-  comm_ptr.reset(new MPI_Comm(newcomm), comm_free());
+  if(newcomm != MPI_COMM_NULL)
+    comm_ptr.reset(new MPI_Comm(newcomm), comm_free());
 }
 
 int communicator::size() const
@@ -118,8 +119,6 @@ optional<status> communicator::iprobe(int source, int tag) const
 
 status communicator::probe(int source, int tag) const
 {
-  typedef optional<status> result_type;
-
   status stat;
   BOOST_MPI_CHECK_RESULT(MPI_Probe,
                          (source, tag, MPI_Comm(*this), &stat.m_status));

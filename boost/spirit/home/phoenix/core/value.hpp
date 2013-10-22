@@ -88,8 +88,8 @@ namespace boost { namespace phoenix
             type;
         };
 
-        actor_value(Actor const& actor)
-            : actor(actor) {}
+        actor_value(Actor const& actor_)
+            : actor(actor_) {}
 
         template <typename Env>
         typename result<Env>::type

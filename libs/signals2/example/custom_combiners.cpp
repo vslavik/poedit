@@ -106,4 +106,4 @@ int main()
 {
   maximum_combiner_example();
   aggregate_values_example();
-};
+}

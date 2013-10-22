@@ -1,6 +1,6 @@
 /* Used in Boost.MultiIndex tests.
  *
- * Copyright 2003-2008 Joaquin M Lopez Munoz.
+ * Copyright 2003-2013 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -12,6 +12,8 @@
 #define BOOST_MULTI_INDEX_TEST_EMPLOYEE_HPP
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
+#include <boost/move/core.hpp>
+#include <boost/move/utility.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/hashed_index.hpp>
@@ -35,6 +37,32 @@ struct employee
   employee(int id_,std::string name_,int age_,int ssn_):
     id(id_),name(name_),age(age_),ssn(ssn_)
   {}
+
+  employee(const employee& x):
+    id(x.id),name(x.name),age(x.age),ssn(x.ssn)
+  {}
+
+  employee(BOOST_RV_REF(employee) x):
+    id(x.id),name(boost::move(x.name)),age(x.age),ssn(x.ssn)
+  {}
+
+  employee& operator=(BOOST_COPY_ASSIGN_REF(employee) x)
+  {
+    id=x.id;
+    name=x.name;
+    age=x.age;
+    ssn=x.ssn;
+    return *this;
+  };
+
+  employee& operator=(BOOST_RV_REF(employee) x)
+  {
+    id=x.id;
+    name=boost::move(x.name);
+    age=x.age;
+    ssn=x.ssn;
+    return *this;
+  }
 
   bool operator==(const employee& x)const
   {
@@ -62,6 +90,9 @@ struct employee
     os<<e.id<<" "<<e.name<<" "<<e.age<<std::endl;
     return os;
   }
+
+private:
+  BOOST_COPYABLE_AND_MOVABLE(employee)
 };
 
 struct name{};

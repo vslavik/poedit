@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga  2007-2012
+// (C) Copyright Ion Gaztanaga  2007-2013
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -68,9 +68,9 @@ struct hooks
 };
 
 template< class ValueType
-        , class Option1 = boost::intrusive::none
-        , class Option2 = boost::intrusive::none
-        , class Option3 = boost::intrusive::none
+        , class Option1 =void
+        , class Option2 =void
+        , class Option3 =void
         >
 struct GetContainer
 {
@@ -83,9 +83,9 @@ struct GetContainer
 };
 
 template< class ValueType
-        , class Option1 = boost::intrusive::none
-        , class Option2 = boost::intrusive::none
-        , class Option3 = boost::intrusive::none
+        , class Option1 =void
+        , class Option2 =void
+        , class Option3 =void
         >
 struct GetContainerFixedAlpha
 {

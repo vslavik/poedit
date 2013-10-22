@@ -21,7 +21,7 @@
 #include <boost/log/core/record.hpp>
 #include <boost/log/core/record_view.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 

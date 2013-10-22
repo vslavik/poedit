@@ -17,7 +17,7 @@
 
 #include <boost/log/detail/config.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -25,9 +25,9 @@
 #error Boost.Log: Synchronous sink frontend is only supported in multithreaded environment
 #endif
 
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/log/detail/locking_ptr.hpp>
 #include <boost/log/detail/parameter_tools.hpp>

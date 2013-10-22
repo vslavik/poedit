@@ -10,15 +10,12 @@
  * \date   24.06.2007
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #include <memory>
 #include <algorithm>
-#include <boost/optional.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/enable_shared_from_this.hpp>
+#include <boost/optional/optional.hpp>
 #include <boost/log/attributes/attribute.hpp>
 #include <boost/log/attributes/attribute_value.hpp>
 #include <boost/log/attributes/named_scope.hpp>
@@ -50,7 +47,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
 
     public:
         //! The method pushes the scope to the back of the list
-        BOOST_LOG_FORCEINLINE void push_back(const_reference entry) BOOST_NOEXCEPT
+        BOOST_FORCEINLINE void push_back(const_reference entry) BOOST_NOEXCEPT
         {
             register aux::named_scope_list_node* top = this->m_RootNode._m_pPrev;
             entry._m_pPrev = top;
@@ -64,7 +61,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
             ++this->m_Size;
         }
         //! The method removes the top scope entry from the list
-        BOOST_LOG_FORCEINLINE void pop_back() BOOST_NOEXCEPT
+        BOOST_FORCEINLINE void pop_back() BOOST_NOEXCEPT
         {
             register aux::named_scope_list_node* top = this->m_RootNode._m_pPrev;
             top->_m_pPrev->_m_pNext = top->_m_pNext;
@@ -126,7 +123,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
 } // namespace
 
 //! Named scope attribute implementation
-struct BOOST_LOG_VISIBLE named_scope::impl :
+struct BOOST_SYMBOL_VISIBLE named_scope::impl :
     public attribute::impl,
     public log::aux::singleton<
         impl,

@@ -33,7 +33,7 @@
 #include <boost/log/utility/functional/as_action.hpp>
 #include <boost/log/utility/functional/save_result.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 

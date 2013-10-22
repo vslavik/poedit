@@ -46,7 +46,6 @@ void do_test_expint(const T& data, const char* type_name, const char* test_name)
    // test En(T) against data:
    //
    using namespace std;
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    std::cout << test_name << " with type " << type_name << std::endl;
@@ -91,7 +90,6 @@ void do_test_expint_Ei(const T& data, const char* type_name, const char* test_na
    // test Ei(T) against data:
    //
    using namespace std;
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    std::cout << test_name << " with type " << type_name << std::endl;

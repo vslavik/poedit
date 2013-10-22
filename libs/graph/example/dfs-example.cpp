@@ -58,15 +58,17 @@ main()
   graph_t g(edge_array, edge_array + sizeof(edge_array) / sizeof(E), N);
 #endif
 
-  // Typedefs
-  typedef boost::graph_traits < graph_t >::vertex_descriptor Vertex;
-  typedef size_type* Iiter;
-
   // discover time and finish time properties
   std::vector < size_type > dtime(num_vertices(g));
   std::vector < size_type > ftime(num_vertices(g));
+  typedef
+    iterator_property_map<std::vector<size_type>::iterator,
+                          property_map<graph_t, vertex_index_t>::const_type>
+    time_pm_type;
+  time_pm_type dtime_pm(dtime.begin(), get(vertex_index, g));
+  time_pm_type ftime_pm(ftime.begin(), get(vertex_index, g));
   size_type t = 0;
-  dfs_time_visitor < size_type * >vis(&dtime[0], &ftime[0], t);
+  dfs_time_visitor < time_pm_type >vis(dtime_pm, ftime_pm, t);
 
   depth_first_search(g, visitor(vis));
 
@@ -75,7 +77,7 @@ main()
   integer_range < size_type > r(0, N);
   std::copy(r.begin(), r.end(), discover_order.begin());
   std::sort(discover_order.begin(), discover_order.end(),
-            indirect_cmp < Iiter, std::less < size_type > >(&dtime[0]));
+            indirect_cmp < time_pm_type, std::less < size_type > >(dtime_pm));
   std::cout << "order of discovery: ";
   int i;
   for (i = 0; i < N; ++i)
@@ -84,7 +86,7 @@ main()
   std::vector < size_type > finish_order(N);
   std::copy(r.begin(), r.end(), finish_order.begin());
   std::sort(finish_order.begin(), finish_order.end(),
-            indirect_cmp < Iiter, std::less < size_type > >(&ftime[0]));
+            indirect_cmp < time_pm_type, std::less < size_type > >(ftime_pm));
   std::cout << std::endl << "order of finish: ";
   for (i = 0; i < N; ++i)
     std::cout << name[finish_order[i]] << " ";

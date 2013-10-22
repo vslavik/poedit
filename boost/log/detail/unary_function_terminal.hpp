@@ -26,7 +26,7 @@
 #include <boost/log/detail/custom_terminal_spec.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -90,7 +90,7 @@ private:
 
 public:
     //! Default constructor
-    BOOST_LOG_DEFAULTED_FUNCTION(unary_function_terminal(), {})
+    BOOST_DEFAULTED_FUNCTION(unary_function_terminal(), {})
     //! Copy constructor
     unary_function_terminal(unary_function_terminal const& that) : m_fun(that.m_fun) {}
     //! Initializing constructor

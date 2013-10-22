@@ -51,7 +51,7 @@ namespace boost { namespace fusion { namespace detail
           : Rest(rhs.get_base()), value_(rhs.value_)
         {}
 
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         keyed_element(keyed_element&& rhs)
           : Rest(std::forward<Rest>(rhs.forward_base()))
           , value_(std::forward<Value>(rhs.value_))
@@ -63,7 +63,7 @@ namespace boost { namespace fusion { namespace detail
           : Rest(rhs.get_base()), value_(rhs.value_)
         {}
 
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 #endif
 
         Rest& get_base()
@@ -76,7 +76,7 @@ namespace boost { namespace fusion { namespace detail
             return *this;
         }
 
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         Rest&& forward_base()
         {
             return std::forward<Rest>(*static_cast<Rest*>(this));
@@ -99,7 +99,7 @@ namespace boost { namespace fusion { namespace detail
             : Rest(rest), value_(value)
         {}
 
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         keyed_element(Value&& value, Rest&& rest)
             : Rest(std::forward<Rest>(rest))
             , value_(std::forward<Value>(value))
@@ -125,7 +125,7 @@ namespace boost { namespace fusion { namespace detail
             return *this;
         }
 
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         keyed_element& operator=(keyed_element&& rhs)
         {
             base::operator=(std::forward<keyed_element>(rhs));

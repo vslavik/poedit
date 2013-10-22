@@ -34,32 +34,32 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sample<span class="special">,</span> <span class="keyword">typename</span> Weight<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="weighted_kurtosis_impl.html" title="Struct template weighted_kurtosis_impl">weighted_kurtosis_impl</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">accumulator_base</span> <span class="special">{</span>
   <span class="comment">// <a class="link" href="weighted_kurtosis_impl.html#boost.accumulators.impl.weighted_kurtosis_implconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="weighted_kurtosis_impl.html#idp27182976-bb"><span class="identifier">weighted_kurtosis_impl</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="weighted_kurtosis_impl.html#idp33766152-bb"><span class="identifier">weighted_kurtosis_impl</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="weighted_kurtosis_impl.html#idp27181552-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="weighted_kurtosis_impl.html#idp27181760-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="weighted_kurtosis_impl.html#idp33764728-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="weighted_kurtosis_impl.html#idp33764936-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp19152320"></a><h2>Description</h2>
+<a name="idp58116264"></a><h2>Description</h2>
 <p>The kurtosis of a sample distribution is defined as the ratio of the 4th central moment and the square of the 2nd central moment (the variance) of the samples, minus 3. The term <span class="inlinemediaobject"><img src="../../../images/accumulators//form_12.png"></span> is added in order to ensure that the normal distribution has zero kurtosis. The kurtosis can also be expressed by the simple moments:</p>
 <div class="equation">
-<a name="idp19154240"></a><p class="title"><b>Equation&#160;1.28.&#160;</b></p>
+<a name="idp58118184"></a><p class="title"><b>Equation&#160;1.28.&#160;</b></p>
 <div class="equation-contents"><div class="mediaobject" align="center"><img src="../../../images/accumulators//form_13.png" align="middle"></div></div>
 </div>
 <p><br class="equation-break"></p>
 <p>where <span class="inlinemediaobject"><img src="../../../images/accumulators//form_14.png"></span> are the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_15.png"></span>-th moment and <span class="inlinemediaobject"><img src="../../../images/accumulators//form_16.png"></span> the mean (first moment) of the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_17.png"></span> samples.</p>
 <p>The kurtosis estimator for weighted samples is formally identical to the estimator for unweighted samples, except that the weighted counterparts of all measures it depends on are to be taken. </p>
 <div class="refsect2">
-<a name="idp19161248"></a><h3>
+<a name="idp58125192"></a><h3>
 <a name="boost.accumulators.impl.weighted_kurtosis_implconstruct-copy-destruct"></a><code class="computeroutput">weighted_kurtosis_impl</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp27182976-bb"></a><span class="identifier">weighted_kurtosis_impl</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp33766152-bb"></a><span class="identifier">weighted_kurtosis_impl</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp19164544"></a><h3>
-<a name="idp27181552-bb"></a><code class="computeroutput">weighted_kurtosis_impl</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="idp27181760-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp58128488"></a><h3>
+<a name="idp33764728-bb"></a><code class="computeroutput">weighted_kurtosis_impl</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="idp33764936-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>

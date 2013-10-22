@@ -28,10 +28,20 @@ inline void check_result_imp(boost::long_long_type, boost::long_long_type){}
 #endif
 inline void check_result_imp(bool, bool){}
 
+//
+// If the compiler warns about unused typedefs then enable this:
+//
+#if defined(__GNUC__) && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)))
+#  define BOOST_MATH_ASSERT_UNUSED_ATTRIBUTE __attribute__((unused))
+#else
+#  define BOOST_MATH_ASSERT_UNUSED_ATTRIBUTE
+#endif
+
 template <class T1, class T2>
 inline void check_result_imp(T1, T2)
 {
-   typedef int static_assertion[sizeof(T1) == 0xFFFF];
+   // This is a static assertion that should always fail to compile...
+   typedef BOOST_MATH_ASSERT_UNUSED_ATTRIBUTE int static_assertion[sizeof(T1) == 0xFFFF];
 }
 
 template <class T1, class T2>

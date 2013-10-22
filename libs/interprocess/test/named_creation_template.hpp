@@ -32,7 +32,7 @@ inline void create_then_open_then_open_or_create()
    }
    catch(...){
       //This shouldn't throw so show the error
-      BOOST_INTERPROCES_CHECK( false );
+      BOOST_INTERPROCESS_CHECK( false );
    }
 }
 
@@ -45,7 +45,7 @@ inline void open_or_create_then_create()
       NamedResource nresource2(create_only);
    }
    catch(interprocess_exception &err){
-      BOOST_INTERPROCES_CHECK(err.get_error_code() == already_exists_error);
+      BOOST_INTERPROCESS_CHECK(err.get_error_code() == already_exists_error);
    }
 }
 
@@ -57,11 +57,11 @@ inline void dont_create_and_open()
       NamedResource nresource1(open_only);
    }
    catch(interprocess_exception &err){
-      BOOST_INTERPROCES_CHECK(err.get_error_code() == not_found_error);
+      BOOST_INTERPROCESS_CHECK(err.get_error_code() == not_found_error);
       return;
    }
    //The mutex should not exist
-   BOOST_INTERPROCES_CHECK(false);
+   BOOST_INTERPROCESS_CHECK(false);
 }
 
 template <class NamedResource>

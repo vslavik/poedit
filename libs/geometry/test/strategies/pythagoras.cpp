@@ -51,8 +51,8 @@ void test_null_distance_3d()
     P2 p2;
     bg::assign_values(p2, 1, 2, 3);
 
-    typedef bg::strategy::distance::pythagoras<P1, P2> pythagoras_type;
-    typedef typename bg::strategy::distance::services::return_type<pythagoras_type>::type return_type;
+    typedef bg::strategy::distance::pythagoras<> pythagoras_type;
+    typedef typename bg::strategy::distance::services::return_type<pythagoras_type, P1, P2>::type return_type;
 
     pythagoras_type pythagoras;
     return_type result = pythagoras.apply(p1, p2);
@@ -68,8 +68,8 @@ void test_axis_3d()
     P2 p2;
     bg::assign_values(p2, 1, 0, 0);
 
-    typedef bg::strategy::distance::pythagoras<P1, P2> pythagoras_type;
-    typedef typename bg::strategy::distance::services::return_type<pythagoras_type>::type return_type;
+    typedef bg::strategy::distance::pythagoras<> pythagoras_type;
+    typedef typename bg::strategy::distance::services::return_type<pythagoras_type, P1, P2>::type return_type;
 
     pythagoras_type pythagoras;
 
@@ -94,8 +94,8 @@ void test_arbitrary_3d()
     bg::assign_values(p2, 9, 8, 7);
 
     {
-        typedef bg::strategy::distance::pythagoras<P1, P2> strategy_type;
-        typedef typename bg::strategy::distance::services::return_type<strategy_type>::type return_type;
+        typedef bg::strategy::distance::pythagoras<> strategy_type;
+        typedef typename bg::strategy::distance::services::return_type<strategy_type, P1, P2>::type return_type;
 
         strategy_type strategy;
         return_type result = strategy.apply(p1, p2);
@@ -104,8 +104,8 @@ void test_arbitrary_3d()
 
     {
         // Check comparable distance
-        typedef bg::strategy::distance::comparable::pythagoras<P1, P2> strategy_type;
-        typedef typename bg::strategy::distance::services::return_type<strategy_type>::type return_type;
+        typedef bg::strategy::distance::comparable::pythagoras<> strategy_type;
+        typedef typename bg::strategy::distance::services::return_type<strategy_type, P1, P2>::type return_type;
 
         strategy_type strategy;
         return_type result = strategy.apply(p1, p2);
@@ -137,24 +137,18 @@ void test_services()
 
     // 1: normal, calculate distance:
 
-    typedef bgsd::pythagoras<P1, P2, CalculationType> strategy_type;
+    typedef bgsd::pythagoras<CalculationType> strategy_type;
 
-    BOOST_CONCEPT_ASSERT( (bg::concept::PointDistanceStrategy<strategy_type>) );
+    BOOST_CONCEPT_ASSERT( (bg::concept::PointDistanceStrategy<strategy_type, P1, P2>) );
 
-    typedef typename bgsd::services::return_type<strategy_type>::type return_type;
+    typedef typename bgsd::services::return_type<strategy_type, P1, P2>::type return_type;
 
     strategy_type strategy;
     return_type result = strategy.apply(p1, p2);
     BOOST_CHECK_CLOSE(result, return_type(expected), 0.001);
 
-    // 2: "similar" to construct a similar strategy (similar but with other template-parameters) for, e.g., the reverse P2/P1
-    // 2a: similar_type:
-    typedef typename services::similar_type<strategy_type, P2, P1>::type similar_type;
-    // 2b: get_similar
-    similar_type similar = services::get_similar<strategy_type, P2, P1>::apply(strategy);
-
-    //result = similar.apply(p1, p2); // should NOT compile because p1/p2 should also be reversed here
-    result = similar.apply(p2, p1);
+    // 2: the strategy should return the same result if we reverse parameters
+    result = strategy.apply(p2, p1);
     BOOST_CHECK_CLOSE(result, return_type(expected), 0.001);
 
 
@@ -173,15 +167,15 @@ void test_services()
 
     // 4: the comparable_type should have a distance_strategy_constructor as well,
     //    knowing how to compare something with a fixed distance
-    return_type c_dist5 = services::result_from_distance<comparable_type>::apply(comparable, 5.0);
-    return_type c_dist6 = services::result_from_distance<comparable_type>::apply(comparable, 6.0);
+    return_type c_dist5 = services::result_from_distance<comparable_type, P1, P2>::apply(comparable, 5.0);
+    return_type c_dist6 = services::result_from_distance<comparable_type, P1, P2>::apply(comparable, 6.0);
 
     // If this is the case:
     BOOST_CHECK(c_dist5 < c_result && c_result < c_dist6);
 
     // This should also be the case
-    return_type dist5 = services::result_from_distance<strategy_type>::apply(strategy, 5.0);
-    return_type dist6 = services::result_from_distance<strategy_type>::apply(strategy, 6.0);
+    return_type dist5 = services::result_from_distance<strategy_type, P1, P2>::apply(strategy, 5.0);
+    return_type dist6 = services::result_from_distance<strategy_type, P1, P2>::apply(strategy, 6.0);
     BOOST_CHECK(dist5 < result && result < dist6);
 }
 
@@ -191,15 +185,10 @@ void test_big_2d_with(AssignType const& x1, AssignType const& y1,
                  AssignType const& x2, AssignType const& y2)
 {
     typedef bg::model::point<CoordinateType, 2, bg::cs::cartesian> point_type;
-    typedef bg::strategy::distance::pythagoras
-        <
-            point_type,
-            point_type,
-            CalculationType
-        > pythagoras_type;
+    typedef bg::strategy::distance::pythagoras<CalculationType> pythagoras_type;
 
     pythagoras_type pythagoras;
-    typedef typename bg::strategy::distance::services::return_type<pythagoras_type>::type return_type;
+    typedef typename bg::strategy::distance::services::return_type<pythagoras_type, point_type, point_type>::type return_type;
 
 
     point_type p1, p2;
@@ -242,10 +231,7 @@ void test_integer(bool check_types)
     bg::assign_values(p1, 12345678, 23456789);
     bg::assign_values(p2, 98765432, 87654321);
 
-    typedef bg::strategy::distance::pythagoras
-        <
-            point_type
-        > pythagoras_type;
+    typedef bg::strategy::distance::pythagoras<> pythagoras_type;
     pythagoras_type pythagoras;
     BOOST_AUTO(distance, pythagoras.apply(p1, p2));
     BOOST_CHECK_CLOSE(distance, 107655455.02347542, 0.001);
@@ -300,7 +286,7 @@ void time_compare_s(int const n)
     bg::assign_values(p1, 1, 1);
     bg::assign_values(p2, 2, 2);
     Strategy strategy;
-    typename bg::strategy::distance::services::return_type<Strategy>::type s = 0;
+    typename bg::strategy::distance::services::return_type<Strategy, P, P>::type s = 0;
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
@@ -315,8 +301,8 @@ void time_compare_s(int const n)
 template <typename P>
 void time_compare(int const n)
 {
-    time_compare_s<P, bg::strategy::distance::pythagoras<P> >(n);
-    time_compare_s<P, bg::strategy::distance::comparable::pythagoras<P> >(n);
+    time_compare_s<P, bg::strategy::distance::pythagoras<> >(n);
+    time_compare_s<P, bg::strategy::distance::comparable::pythagoras<> >(n);
 }
 
 int test_main(int, char* [])

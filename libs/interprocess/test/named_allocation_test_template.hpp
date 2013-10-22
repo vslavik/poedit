@@ -100,7 +100,6 @@ template<class ManagedMemory>
 bool test_named_iterators(ManagedMemory &m)
 {
    typedef typename ManagedMemory::char_type char_type;
-   typedef std::char_traits<char_type> char_traits_type;
    std::vector<char*> buffers;
    const int BufferLen = 100;
    char_type name[BufferLen];
@@ -172,7 +171,6 @@ template<class ManagedMemory>
 bool test_shrink_to_fit(ManagedMemory &m)
 {
    typedef typename ManagedMemory::char_type char_type;
-   typedef std::char_traits<char_type> char_traits_type;
    std::vector<char*> buffers;
    const int BufferLen = 100;
    char_type name[BufferLen];
@@ -214,7 +212,6 @@ template<class ManagedMemory>
 bool test_direct_named_allocation_destruction(ManagedMemory &m)
 {
    typedef typename ManagedMemory::char_type char_type;
-   typedef std::char_traits<char_type> char_traits_type;
    std::vector<char*> buffers;
    const int BufferLen = 100;
    char_type name[BufferLen];
@@ -255,7 +252,6 @@ template<class ManagedMemory>
 bool test_named_allocation_inverse_destruction(ManagedMemory &m)
 {
    typedef typename ManagedMemory::char_type char_type;
-   typedef std::char_traits<char_type> char_traits_type;
 
    std::vector<char*> buffers;
    const int BufferLen = 100;
@@ -295,7 +291,6 @@ template<class ManagedMemory>
 bool test_named_allocation_mixed_destruction(ManagedMemory &m)
 {
    typedef typename ManagedMemory::char_type char_type;
-   typedef std::char_traits<char_type> char_traits_type;
 
    std::vector<char*> buffers;
    const int BufferLen = 100;
@@ -337,7 +332,6 @@ template<class ManagedMemory>
 bool test_inverse_named_allocation_destruction(ManagedMemory &m)
 {
    typedef typename ManagedMemory::char_type char_type;
-   typedef std::char_traits<char_type> char_traits_type;
 
    std::vector<char*> buffers;
    const int BufferLen = 100;

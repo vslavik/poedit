@@ -21,7 +21,7 @@
 #include <stdexcept>
 #include <string>
 #include <iostream>
-#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 
 #include <boost/log/common.hpp>

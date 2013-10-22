@@ -544,9 +544,38 @@ void quickbook_output(class_or_struct const& cos, configuration const& config, s
         out << std::endl;
     }
 
-    out << "{" << std::endl
-        << "  // ..." << std::endl
-        << "};" << std::endl
+    out << "{" << std::endl;
+    if (! cos.variables.empty() && config.output_member_variables)
+    {
+        size_t maxlength = 0;
+        BOOST_FOREACH(parameter const& p, cos.variables)
+        {
+            if (! p.skip)
+            {
+                size_t length = 6 + p.fulltype.size() + p.name.size();
+                if (length > maxlength) maxlength = length;
+            }
+        }
+        BOOST_FOREACH(parameter const& p, cos.variables)
+        {
+            if (! p.skip)
+            {
+                size_t length = 4 + p.fulltype.size() + p.name.size();
+                out << "  " << p.fulltype << " " << p.name << ";";
+                if (! p.brief_description.empty())
+                {
+                    while(length++ < maxlength) out << " ";
+                    out << "// " << p.brief_description;
+                }
+                out << std::endl;
+            }
+        }
+    }
+    else
+    {
+        out << "  // ..." << std::endl;
+    }
+    out << "};" << std::endl
         << "``" << std::endl << std::endl;
     quickbook_markup(cos.qbk_markup, markup_after, markup_synopsis, out);
 

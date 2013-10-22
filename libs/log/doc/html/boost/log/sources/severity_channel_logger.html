@@ -4,7 +4,7 @@
 <title>Class template severity_channel_logger</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../logging_sources.html#header.boost.log.sources.severity_channel_logger_hpp" title="Header &lt;boost/log/sources/severity_channel_logger.hpp&gt;">
 <link rel="prev" href="../../../BOOST_LOG_WITH_PARAMS.html" title="Macro BOOST_LOG_WITH_PARAMS">
 <link rel="next" href="severity_channel_logger_mt.html" title="Class template severity_channel_logger_mt">
@@ -29,36 +29,36 @@
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="severity_channel_logger.html#boost.log.sources.severity_channel_loggerconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="severity_channel_logger.html#idp20018336-bb"><span class="identifier">severity_channel_logger</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="severity_channel_logger.html#idp20018624-bb"><span class="identifier">severity_channel_logger</span></a><span class="special">(</span><a class="link" href="severity_channel_logger.html" title="Class template severity_channel_logger">severity_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="severity_channel_logger.html#idp26764296-bb"><span class="identifier">severity_channel_logger</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="severity_channel_logger.html#idp26764584-bb"><span class="identifier">severity_channel_logger</span></a><span class="special">(</span><a class="link" href="severity_channel_logger.html" title="Class template severity_channel_logger">severity_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
-    <span class="keyword">explicit</span> <a class="link" href="severity_channel_logger.html#idp20019408-bb"><span class="identifier">severity_channel_logger</span></a><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  severity_channel_logger&amp; <a class="link" href="severity_channel_logger.html#idp20020736-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="severity_channel_logger.html" title="Class template severity_channel_logger">severity_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">explicit</span> <a class="link" href="severity_channel_logger.html#idp26765368-bb"><span class="identifier">severity_channel_logger</span></a><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  severity_channel_logger&amp; <a class="link" href="severity_channel_logger.html#idp26766696-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="severity_channel_logger.html" title="Class template severity_channel_logger">severity_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp24058800"></a><h2>Description</h2>
+<a name="idp63080760"></a><h2>Description</h2>
 <p>See <code class="computeroutput">severity</code> and <code class="computeroutput">channel</code> class templates for a more detailed description </p>
 <div class="refsect2">
-<a name="idp24059904"></a><h3>
+<a name="idp63081864"></a><h3>
 <a name="boost.log.sources.severity_channel_loggerconstruct-copy-destruct"></a><code class="computeroutput">severity_channel_logger</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp20018336-bb"></a><span class="identifier">severity_channel_logger</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp26764296-bb"></a><span class="identifier">severity_channel_logger</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Default constructor </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp20018624-bb"></a><span class="identifier">severity_channel_logger</span><span class="special">(</span><a class="link" href="severity_channel_logger.html" title="Class template severity_channel_logger">severity_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp26764584-bb"></a><span class="identifier">severity_channel_logger</span><span class="special">(</span><a class="link" href="severity_channel_logger.html" title="Class template severity_channel_logger">severity_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Copy constructor </p>
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
-  <span class="keyword">explicit</span> <a name="idp20019408-bb"></a><span class="identifier">severity_channel_logger</span><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
+  <span class="keyword">explicit</span> <a name="idp26765368-bb"></a><span class="identifier">severity_channel_logger</span><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor with named arguments </p>
 </li>
 <li class="listitem">
-<pre class="literallayout">severity_channel_logger&amp; <a name="idp20020736-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="severity_channel_logger.html" title="Class template severity_channel_logger">severity_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout">severity_channel_logger&amp; <a name="idp26766696-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="severity_channel_logger.html" title="Class template severity_channel_logger">severity_channel_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Assignment operator</p>
 <p>Swaps two loggers </p>
 </li>

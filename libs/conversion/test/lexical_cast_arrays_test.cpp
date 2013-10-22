@@ -222,7 +222,8 @@ static void testing_template_array_output_on_char_value()
         BOOST_CHECK(&res3[0] == u16ethalon);
     }
     
-    BOOST_CHECK_THROW(lexical_cast<u16short_arr_type>(val), boost::bad_lexical_cast);
+    // Some compillers may throw std::bad_alloc here
+    BOOST_CHECK_THROW(lexical_cast<u16short_arr_type>(val), std::exception); 
 #endif
 
 #ifdef BOOST_LC_RUNU32
@@ -248,7 +249,8 @@ static void testing_template_array_output_on_char_value()
         BOOST_CHECK(&res3[0] == u32ethalon);
     }
     
-    BOOST_CHECK_THROW(lexical_cast<u32short_arr_type>(val), boost::bad_lexical_cast);
+    // Some compillers may throw std::bad_alloc here
+    BOOST_CHECK_THROW(lexical_cast<u32short_arr_type>(val), std::exception);
 #endif
 }
 

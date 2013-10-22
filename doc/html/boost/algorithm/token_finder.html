@@ -36,7 +36,7 @@
   <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">token_finder</span><span class="special">(</span><span class="identifier">PredicateT</span> Pred<span class="special">,</span> 
                            <span class="identifier">token_compress_mode_type</span> eCompress <span class="special">=</span> <span class="identifier">token_compress_off</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp169044496"></a><h2>Description</h2>
+<a name="idp212566360"></a><h2>Description</h2>
 <p>Construct the <code class="computeroutput">token_finder</code>. The finder searches for a token specified by a predicate. It is similar to std::find_if algorithm, with an exception that it return a range of instead of a single iterator.</p>
 <p>If "compress token mode" is enabled, adjacent matching tokens are concatenated into one match. Thus the finder can be used to search for continuous segments of characters satisfying the given predicate.</p>
 <p>The result is given as an <code class="computeroutput">iterator_range</code> delimiting the match.</p>

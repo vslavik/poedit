@@ -14,12 +14,15 @@
  */
 
 // Revision History
+// 23 Aug 13  Add bug-test of narrowing conversions during order comparison;
+//            spell logical-negation in it as "!" because MSVC won't accept
+//            "not" (Daryle Walker)
 // 05 Nov 06  Add testing of zero-valued denominators & divisors; casting with
 //            types that are not implicitly convertible (Daryle Walker)
 // 04 Nov 06  Resolve GCD issue with depreciation (Daryle Walker)
 // 02 Nov 06  Add testing for operator<(int_type) w/ unsigneds (Daryle Walker)
 // 31 Oct 06  Add testing for operator<(rational) overflow (Daryle Walker)
-// 18 Oct 06  Various fixes for old compilers (Joaquín M López Muñoz)
+// 18 Oct 06  Various fixes for old compilers (JoaquÃ­n M LÃ³pez MuÃ±oz)
 // 27 Dec 05  Add testing for Boolean conversion operator (Daryle Walker)
 // 24 Dec 05  Change code to use Boost.Test (Daryle Walker)
 // 04 Mar 01  Patches for Intel C++ and GCC (David Abrahams)
@@ -230,9 +233,12 @@ public:
 
     static MyInt min BOOST_PREVENT_MACRO_SUBSTITUTION () throw()  { return (limits_type::min)(); }
     static MyInt max BOOST_PREVENT_MACRO_SUBSTITUTION () throw()  { return (limits_type::max)(); }
+    static MyInt lowest() throw()  { return min BOOST_PREVENT_MACRO_SUBSTITUTION
+     (); }  // C++11
 
     static const int digits      = limits_type::digits;
     static const int digits10    = limits_type::digits10;
+    static const int max_digits10 = 0;  // C++11
     static const bool is_signed  = limits_type::is_signed;
     static const bool is_integer = limits_type::is_integer;
     static const bool is_exact   = limits_type::is_exact;
@@ -276,9 +282,12 @@ public:
 
     static MyOverflowingUnsigned min BOOST_PREVENT_MACRO_SUBSTITUTION () throw()  { return (limits_type::min)(); }
     static MyOverflowingUnsigned max BOOST_PREVENT_MACRO_SUBSTITUTION () throw()  { return (limits_type::max)(); }
+    static MyOverflowingUnsigned lowest() throw()
+      { return min BOOST_PREVENT_MACRO_SUBSTITUTION (); }  // C++11
 
     static const int digits      = limits_type::digits;
     static const int digits10    = limits_type::digits10;
+    static const int max_digits10 = 0;  // C++11
     static const bool is_signed  = limits_type::is_signed;
     static const bool is_integer = limits_type::is_integer;
     static const bool is_exact   = limits_type::is_exact;
@@ -348,7 +357,7 @@ public:
              << sizeof( rational_type ) << "\n\n";
 
         cout << "Implementation has "
-             << ( 
+             << (
                   (sizeof( rational_type ) > 2u * sizeof( int_type ))
                   ? "included padding bytes"
                   : "minimal size"
@@ -792,7 +801,7 @@ BOOST_AUTO_TEST_SUITE( rational_extras_suite )
 BOOST_AUTO_TEST_CASE_TEMPLATE( rational_output_test, T, all_signed_test_types )
 {
     std::ostringstream  oss;
-    
+
     oss << boost::rational<T>( 44, 14 );
     BOOST_CHECK_EQUAL( oss.str(), "22/7" );
 }
@@ -964,6 +973,39 @@ BOOST_AUTO_TEST_CASE( patch_1438626_test )
     BOOST_CHECK_EQUAL( r3.numerator(), INT_MIN / 2 );
     BOOST_CHECK_EQUAL( r3.denominator(), 3 );
 #endif
+}
+
+// The bug/patch numbers for the above 3 tests are from our SourceForge repo
+// before we moved to our own SVN & Trac server.  At the time this note is
+// written, it seems that SourceForge has reset their tracking numbers at least
+// once, so I don't know how to recover those old tickets.  The ticket numbers
+// for the following tests are from our SVN/Trac repo.
+
+//"narrowing conversion error with -std=c++0x in operator< with int_type != int"
+BOOST_AUTO_TEST_CASE( ticket_5855_test )
+{
+    // The internals of operator< currently store a structure of two int_type
+    // (where int_type is the component type of a boost::rational template
+    // class) and two computed types.  These computed types, results of
+    // arithmetic operations among int_type values, are either int_type
+    // themselves or a larger type that can implicitly convert to int_type.
+    // Those conversions aren't usually a problem.  But when an arithmetic
+    // operation involving two values of a built-in scalar type smaller than int
+    // are involved, the result is an int.  But the resulting int-to-shorter
+    // conversion is considered narrowing, resulting in a warning or error on
+    // some compilers.  Notably, C++11 compilers are supposed to consider it an
+    // error.
+    //
+    // The solution is to force an explicit conversion, although it's otherwise
+    // not needed.  (The compiler can rescind the narrowing warning if the
+    // results of the larger type still fit in the smaller one, and that proof
+    // can be generated at constexpr time.)
+    typedef short                           shorter_than_int_type;
+    typedef boost::rational<shorter_than_int_type>  rational_type;
+
+    bool const  dummy = rational_type() < rational_type();
+
+    BOOST_REQUIRE( !dummy );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

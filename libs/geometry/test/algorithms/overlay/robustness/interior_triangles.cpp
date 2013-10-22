@@ -40,7 +40,7 @@ inline void make_polygon(Polygon& polygon, int count_x, int count_y, int index, 
     {
         for(int k = 0; k < count_y; ++k)
         {
-            polygon.inners().push_back(Polygon::inner_container_type::value_type());
+            polygon.inners().push_back(typename Polygon::inner_container_type::value_type());
             polygon.inners().back().push_back(point_type(offset + j * 10 + 1, k * 10 + 1));
             polygon.inners().back().push_back(point_type(offset + j * 10 + 7, k * 10 + 5 + index));
             polygon.inners().back().push_back(point_type(offset + j * 10 + 5 + index, k * 10 + 7));
@@ -81,7 +81,6 @@ void test_all(int count, int count_x, int count_y, int offset, p_q_settings cons
         > polygon;
 
 
-    int index = 0;
     for(int i = 0; i < count; i++)
     {
         test_star_comb<polygon>(count_x, count_y, offset, settings);

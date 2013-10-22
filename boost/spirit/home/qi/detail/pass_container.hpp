@@ -247,8 +247,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         typedef typename F::context_type context_type;
         typedef typename F::iterator_type iterator_type;
 
-        pass_container(F const& f, Attr& attr)
-          : f(f), attr(attr) {}
+        pass_container(F const& f_, Attr& attr_)
+          : f(f_), attr(attr_) {}
 
         // this is for the case when the current element exposes an attribute
         // which is pushed back onto the container

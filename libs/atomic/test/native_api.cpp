@@ -4,6 +4,7 @@
 //  See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/config.hpp>
 #include <boost/atomic.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/test/minimal.hpp>
@@ -33,6 +34,10 @@ int test_main(int, char *[])
     test_integral_api<boost::int64_t>();
     test_integral_api<long long>();
     test_integral_api<unsigned long long>();
+#if defined(BOOST_HAS_INT128)
+    test_integral_api<boost::int128_type>();
+    test_integral_api<boost::uint128_type>();
+#endif
 
     test_constexpr_ctor<char>();
     test_constexpr_ctor<short>();
@@ -48,6 +53,9 @@ int test_main(int, char *[])
     test_struct_api<test_struct<boost::uint16_t> >();
     test_struct_api<test_struct<boost::uint32_t> >();
     test_struct_api<test_struct<boost::uint64_t> >();
+#if defined(BOOST_HAS_INT128)
+    test_struct_api<test_struct<boost::uint128_type> >();
+#endif
 
     test_large_struct_api();
 

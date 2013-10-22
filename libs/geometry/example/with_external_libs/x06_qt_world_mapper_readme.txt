@@ -12,14 +12,6 @@ It will show a basic Qt Widget, displaying world countries
 To compile this program:
 
 Install Qt (if not done before)
-Install Boost (if not done before)
-
-Using MSVC: 
-   - edit the file qt.vsprops 
-   - set the UserMacro QT to point to your Qt distribution
-   - edit the file boost.vsprops
-   - set the UserMacro BOOST_ROOT to point to your Boost distribution
-   - alternatively you can include Boost and/or Qt in your standard include path
    
 Using Linux/gcc
    - install Qt with sudo apt-get install libqt4-dev

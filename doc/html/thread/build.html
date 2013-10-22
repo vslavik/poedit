@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.1.0">
-<link rel="prev" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.1.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.2.0">
+<link rel="prev" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.2.0">
 <link rel="next" href="changes.html" title="History">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -98,7 +98,8 @@
 <dt><span class="section"><a href="build.html#thread.build.configuration.chrono">Boost.Chrono</a></span></dt>
 <dt><span class="section"><a href="build.html#thread.build.configuration.move">Boost.Move</a></span></dt>
 <dt><span class="section"><a href="build.html#thread.build.configuration.date_time">Boost.DateTime</a></span></dt>
-<dt><span class="section"><a href="build.html#thread.build.configuration.thread_eq"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">oprator</span><span class="special">==</span></code>
+<dt><span class="section"><a href="build.html#thread.build.configuration.move0">Boost.Atomic</a></span></dt>
+<dt><span class="section"><a href="build.html#thread.build.configuration.thread_eq"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="keyword">operator</span><span class="special">==</span></code>
         deprecated</a></span></dt>
 <dt><span class="section"><a href="build.html#thread.build.configuration.condition">boost::condition
         deprecated</a></span></dt>
@@ -818,18 +819,33 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.build.configuration.thread_eq"></a><a class="link" href="build.html#thread.build.configuration.thread_eq" title="boost::thread::oprator== deprecated"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">oprator</span><span class="special">==</span></code>
+<a name="thread.build.configuration.move0"></a><a class="link" href="build.html#thread.build.configuration.move0" title="Boost.Atomic">Boost.Atomic</a>
+</h4></div></div></div>
+<p>
+          Boost.Thread uses by default an Boost.Atomic in POSIX platforms to implement
+          call_once..
+        </p>
+<p>
+          Define <code class="computeroutput"><span class="identifier">BOOST_THREAD_USES_ATOMIC</span>
+          </code> if you want to use Boost.Atomic. Define <code class="computeroutput"><span class="identifier">BOOST_THREAD_DONT_USE_ATOMIC</span>
+          </code> if you don't want to use Boost.Atomic or if it is not supported
+          in your platform.
+        </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="thread.build.configuration.thread_eq"></a><a class="link" href="build.html#thread.build.configuration.thread_eq" title="boost::thread::operator== deprecated"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="keyword">operator</span><span class="special">==</span></code>
         deprecated</a>
 </h4></div></div></div>
 <p>
-          The following nested typedefs are deprecated:
+          The following operators are deprecated:
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">oprator</span><span class="special">==</span></code>
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="keyword">operator</span><span class="special">==</span></code>
             </li>
 <li class="listitem">
-              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">oprator</span><span class="special">!=</span></code>
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="keyword">operator</span><span class="special">!=</span></code>
             </li>
 </ul></div>
 <p>
@@ -841,10 +857,10 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span><span class="special">::</span><span class="identifier">oprator</span><span class="special">==</span></code>
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span><span class="special">::</span><span class="keyword">operator</span><span class="special">==</span></code>
             </li>
 <li class="listitem">
-              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span><span class="special">::</span><span class="identifier">oprator</span><span class="special">!=</span></code>
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span><span class="special">::</span><span class="keyword">operator</span><span class="special">!=</span></code>
             </li>
 </ul></div>
 <div class="warning"><table border="0" summary="Warning">

@@ -645,9 +645,11 @@ def configure_really(version=None, options=[]):
             # version from the path.
             # FIXME: We currently detect both Microsoft Visual Studio 9.0 and
             # 9.0express as 9.0 here.
-            if re.search("Microsoft Visual Studio 11", command):
+            if re.search("Microsoft Visual Studio 12", command):
+                version = '12.0'
+            elif re.search("Microsoft Visual Studio 11", command):
                 version = '11.0'
-            if re.search("Microsoft Visual Studio 10", command):
+            elif re.search("Microsoft Visual Studio 10", command):
                 version = '10.0'
             elif re.search("Microsoft Visual Studio 9", command):
                 version = '9.0'
@@ -1156,7 +1158,7 @@ __cpu_type_itanium2 = ['itanium2', 'mckinley']
 
 
 # Known toolset versions, in order of preference.
-_known_versions = ['11.0', '10.0', '10.0express', '9.0', '9.0express', '8.0', '8.0express', '7.1', '7.1toolkit', '7.0', '6.0']
+_known_versions = ['12.0', '11.0', '10.0', '10.0express', '9.0', '9.0express', '8.0', '8.0express', '7.1', '7.1toolkit', '7.0', '6.0']
 
 # Version aliases.
 __version_alias_6 = '6.0'
@@ -1166,6 +1168,7 @@ __version_alias_8 = '8.0'
 __version_alias_9 = '9.0'
 __version_alias_10 = '10.0'
 __version_alias_11 = '11.0'
+__version_alias_12 = '12.0'
 
 # Names of registry keys containing the Visual C++ installation path (relative
 # to "HKEY_LOCAL_MACHINE\SOFTWARE\\Microsoft").
@@ -1179,6 +1182,7 @@ __version_9_0express_reg = "VCExpress\\9.0\\Setup\\VC"
 __version_10_0_reg = "VisualStudio\\10.0\\Setup\\VC"
 __version_10_0express_reg = "VCExpress\\10.0\\Setup\\VC"
 __version_11_0_reg = "VisualStudio\\11.0\\Setup\\VC"
+__version_12_0_reg = "VisualStudio\\12.0\\Setup\\VC"
 
 # Visual C++ Toolkit 2003 does not store its installation path in the registry.
 # The environment variable 'VCToolkitInstallDir' and the default installation

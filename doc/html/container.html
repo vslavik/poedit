@@ -7,7 +7,7 @@
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="libraries.html" title="Part&#160;I.&#160;The Boost C++ Libraries (BoostBook Subset)">
 <link rel="prev" href="SignedInteger.html" title="Concept SignedInteger">
-<link rel="next" href="container/move_emplace.html" title="Efficient insertion">
+<link rel="next" href="container/main_features.html" title="Main features">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="SignedInteger.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="container/move_emplace.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="SignedInteger.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="container/main_features.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="chapter">
 <div class="titlepage"><div>
@@ -29,8 +29,7 @@
 <div><div class="author"><h3 class="author">
 <span class="firstname">Ion</span> <span class="surname">Gaztanaga</span>
 </h3></div></div>
-<div><p class="copyright">Copyright &#169; 2009-2012 Ion
-      Gaztanaga</p></div>
+<div><p class="copyright">Copyright &#169; 2009-2013 Ion Gaztanaga</p></div>
 <div><div class="legalnotice">
 <a name="container.legal"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -47,18 +46,13 @@
       Boost.Container</a></span></dt>
 <dt><span class="section"><a href="container.html#container.intro.tested_compilers">Tested compilers</a></span></dt>
 </dl></dd>
-<dt><span class="section"><a href="container/move_emplace.html">Efficient insertion</a></span></dt>
+<dt><span class="section"><a href="container/main_features.html">Main features</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="container/move_emplace.html#container.move_emplace.move_containers">Move-aware containers</a></span></dt>
-<dt><span class="section"><a href="container/move_emplace.html#container.move_emplace.emplace">Emplace: Placement insertion</a></span></dt>
-</dl></dd>
-<dt><span class="section"><a href="container/containers_of_incomplete_types.html">Containers of
-    Incomplete Types</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="container/containers_of_incomplete_types.html#container.containers_of_incomplete_types.recursive_containers">Recursive
-      containers</a></span></dt>
-<dt><span class="section"><a href="container/containers_of_incomplete_types.html#container.containers_of_incomplete_types.type_erasure">Type
-      Erasure</a></span></dt>
+<dt><span class="section"><a href="container/main_features.html#container.main_features.move_emplace">Efficient insertion</a></span></dt>
+<dt><span class="section"><a href="container/main_features.html#container.main_features.containers_of_incomplete_types">Containers
+      of Incomplete Types</a></span></dt>
+<dt><span class="section"><a href="container/main_features.html#container.main_features.scary_iterators">SCARY iterators</a></span></dt>
+<dt><span class="section"><a href="container/main_features.html#container.main_features.other_features">Other features</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="container/exception_handling.html">Boost.Container and C++ exceptions</a></span></dt>
 <dt><span class="section"><a href="container/non_standard_containers.html">Non-standard containers</a></span></dt>
@@ -69,6 +63,9 @@
 <dt><span class="section"><a href="container/non_standard_containers.html#container.non_standard_containers.slist"><span class="emphasis"><em>slist</em></span></a></span></dt>
 <dt><span class="section"><a href="container/non_standard_containers.html#container.non_standard_containers.static_vector"><span class="emphasis"><em>static_vector</em></span></a></span></dt>
 </dl></dd>
+<dt><span class="section"><a href="container/extended_functionality.html">Extended functionality</a></span></dt>
+<dd><dl><dt><span class="section"><a href="container/extended_functionality.html#container.extended_functionality.default_initialialization">Default
+      initialization for vector-like containers</a></span></dt></dl></dd>
 <dt><span class="section"><a href="container/Cpp11_conformance.html">C++11 Conformance</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="container/Cpp11_conformance.html#container.Cpp11_conformance.move_emplace">Move and Emplace</a></span></dt>
@@ -81,7 +78,6 @@
 <dt><span class="section"><a href="container/Cpp11_conformance.html#container.Cpp11_conformance.forward_list"><code class="computeroutput"><span class="identifier">forward_list</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code></a></span></dt>
 <dt><span class="section"><a href="container/Cpp11_conformance.html#container.Cpp11_conformance.Vector_bool"><code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code></a></span></dt>
 </dl></dd>
-<dt><span class="section"><a href="container/other_features.html">Other features</a></span></dt>
 <dt><span class="section"><a href="container/history_and_reasons.html">History and reasons to use
     Boost.Container</a></span></dt>
 <dd><dl>
@@ -92,9 +88,9 @@
 </dl></dd>
 <dt><span class="section"><a href="container/index.html">Indexes</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="container/index.html#idp33280224">Class Index</a></span></dt>
-<dt><span class="section"><a href="container/index.html#idp33341840">Typedef Index</a></span></dt>
-<dt><span class="section"><a href="container/index.html#idp33414992">Function Index</a></span></dt>
+<dt><span class="section"><a href="container/index.html#idp72295736">Class Index</a></span></dt>
+<dt><span class="section"><a href="container/index.html#idp72358680">Typedef Index</a></span></dt>
+<dt><span class="section"><a href="container/index.html#idp72431992">Function Index</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="boost_container_header_reference.html">Boost.Container Header Reference</a></span></dt>
 <dd><dl>
@@ -119,6 +115,8 @@
     and links</a></span></dt>
 <dt><span class="section"><a href="container/release_notes.html">Release Notes</a></span></dt>
 <dd><dl>
+<dt><span class="section"><a href="container/release_notes.html#container.release_notes.release_notes_boost_1_55_00">Boost
+      1.55 Release</a></span></dt>
 <dt><span class="section"><a href="container/release_notes.html#container.release_notes.release_notes_boost_1_54_00">Boost
       1.54 Release</a></span></dt>
 <dt><span class="section"><a href="container/release_notes.html#container.release_notes.release_notes_boost_1_53_00">Boost
@@ -227,12 +225,12 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: June 25, 2013 at 22:23:00 GMT</small></p></td>
+<td align="left"><p><small>Last revised: October 02, 2013 at 23:24:56 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="SignedInteger.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="container/move_emplace.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="SignedInteger.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="container/main_features.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

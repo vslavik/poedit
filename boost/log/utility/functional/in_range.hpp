@@ -20,7 +20,7 @@
 #include <boost/log/utility/functional/logical.hpp> // make_common_integral_type
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 

@@ -400,8 +400,8 @@
         <span class="identifier">type</span><span class="special">;</span>
     <span class="special">};</span>
 
-    <span class="identifier">kleene</span><span class="special">(</span><span class="identifier">Subject</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">subject</span><span class="special">)</span>
-      <span class="special">:</span> <span class="identifier">subject</span><span class="special">(</span><span class="identifier">subject</span><span class="special">)</span> <span class="special">{}</span>
+    <span class="identifier">kleene</span><span class="special">(</span><span class="identifier">Subject</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">subject_</span><span class="special">)</span>
+      <span class="special">:</span> <span class="identifier">subject</span><span class="special">(</span><span class="identifier">subject_</span><span class="special">)</span> <span class="special">{}</span>
 
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
     <span class="keyword">bool</span> <span class="identifier">parse_container</span><span class="special">(</span><span class="identifier">F</span> <span class="identifier">f</span><span class="special">)</span> <span class="keyword">const</span>
@@ -415,17 +415,17 @@
       <span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Skipper</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attribute</span><span class="special">&gt;</span>
     <span class="keyword">bool</span> <span class="identifier">parse</span><span class="special">(</span><span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">last</span>
       <span class="special">,</span> <span class="identifier">Context</span><span class="special">&amp;</span> <span class="identifier">context</span><span class="special">,</span> <span class="identifier">Skipper</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">skipper</span>
-      <span class="special">,</span> <span class="identifier">Attribute</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span> <span class="keyword">const</span>
+      <span class="special">,</span> <span class="identifier">Attribute</span><span class="special">&amp;</span> <span class="identifier">attr_</span><span class="special">)</span> <span class="keyword">const</span>
     <span class="special">{</span>
         <span class="comment">// ensure the attribute is actually a container type</span>
-        <span class="identifier">traits</span><span class="special">::</span><span class="identifier">make_container</span><span class="special">(</span><span class="identifier">attr</span><span class="special">);</span>
+        <span class="identifier">traits</span><span class="special">::</span><span class="identifier">make_container</span><span class="special">(</span><span class="identifier">attr_</span><span class="special">);</span>
 
         <span class="keyword">typedef</span> <span class="identifier">detail</span><span class="special">::</span><span class="identifier">fail_function</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">,</span> <span class="identifier">Skipper</span><span class="special">&gt;</span>
             <span class="identifier">fail_function</span><span class="special">;</span>
 
         <span class="identifier">Iterator</span> <span class="identifier">iter</span> <span class="special">=</span> <span class="identifier">first</span><span class="special">;</span>
         <span class="identifier">fail_function</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">iter</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">context</span><span class="special">,</span> <span class="identifier">skipper</span><span class="special">);</span>
-        <span class="identifier">parse_container</span><span class="special">(</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">make_pass_container</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">));</span>
+        <span class="identifier">parse_container</span><span class="special">(</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">make_pass_container</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">attr_</span><span class="special">));</span>
 
         <span class="identifier">first</span> <span class="special">=</span> <span class="identifier">f</span><span class="special">.</span><span class="identifier">first</span><span class="special">;</span>
         <span class="keyword">return</span> <span class="keyword">true</span><span class="special">;</span>

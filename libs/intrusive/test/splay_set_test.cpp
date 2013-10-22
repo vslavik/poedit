@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga  2007-2012
+// (C) Copyright Ion Gaztanaga  2007-2013
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -16,22 +16,6 @@
 #include "generic_set_test.hpp"
 
 namespace boost { namespace intrusive { namespace test {
-
-#if !defined (BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-template<class T, class O1, class O2, class O3, class O4>
-#else
-template<class T, class ...Options>
-#endif
-struct has_const_overloads<boost::intrusive::splay_set<T,
-   #if !defined (BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-   O1, O2, O3, O4
-   #else
-   Options...
-   #endif
-> >
-{
-   static const bool value = false;
-};
 
 #if !defined (BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
 template<class T, class O1, class O2, class O3, class O4>
@@ -102,9 +86,9 @@ struct hooks
 };
 
 template< class ValueType
-        , class Option1 = boost::intrusive::none
-        , class Option2 = boost::intrusive::none
-        , class Option3 = boost::intrusive::none
+        , class Option1 =void
+        , class Option2 =void
+        , class Option3 =void
         >
 struct GetContainer
 {

@@ -226,6 +226,12 @@ test-suite "BOOST_NO_CWCHAR" :
 test-suite "BOOST_NO_CWCTYPE" : 
 [ run ../no_cwctype_pass.cpp ]
 [ compile-fail ../no_cwctype_fail.cpp ] ;
+test-suite "BOOST_NO_CXX11_RAW_LITERALS" : 
+[ run ../no_raw_literals_pass.cpp ]
+[ compile-fail ../no_raw_literals_fail.cpp ] ;
+test-suite "BOOST_NO_CXX11_ALIGNAS" : 
+[ run ../no_cxx11_alignas_pass.cpp ]
+[ compile-fail ../no_cxx11_alignas_fail.cpp ] ;
 test-suite "BOOST_NO_CXX11_ALLOCATOR" : 
 [ run ../no_cxx11_allocator_pass.cpp ]
 [ compile-fail ../no_cxx11_allocator_fail.cpp ] ;
@@ -286,12 +292,18 @@ test-suite "BOOST_NO_CXX11_HDR_UNORDERED_MAP" :
 test-suite "BOOST_NO_CXX11_HDR_UNORDERED_SET" : 
 [ run ../no_cxx11_hdr_unordered_set_pass.cpp ]
 [ compile-fail ../no_cxx11_hdr_unordered_set_fail.cpp ] ;
+test-suite "BOOST_NO_CXX11_INLINE_NAMESPACES" :
+[ run ../no_cxx11_inline_namespaces_pass.cpp ]
+[ compile-fail ../no_cxx11_inline_namespaces_fail.cpp ] ;
 test-suite "BOOST_NO_CXX11_NUMERIC_LIMITS" : 
 [ run ../no_cxx11_numeric_limits_pass.cpp ]
 [ compile-fail ../no_cxx11_numeric_limits_fail.cpp ] ;
 test-suite "BOOST_NO_CXX11_SMART_PTR" : 
 [ run ../no_cxx11_smart_ptr_pass.cpp ]
 [ compile-fail ../no_cxx11_smart_ptr_fail.cpp ] ;
+test-suite "BOOST_NO_CXX11_TRAILING_RESULT_TYPES" :
+[ run ../no_cxx11_trailing_result_types_pass.cpp ]
+[ compile-fail ../no_cxx11_trailing_result_types_fail.cpp ] ;
 test-suite "BOOST_NO_CXX11_USER_DEFINED_LITERALS" : 
 [ run ../no_cxx11_user_lit_pass.cpp ]
 [ compile-fail ../no_cxx11_user_lit_fail.cpp ] ;
@@ -424,9 +436,6 @@ test-suite "BOOST_NO_POINTER_TO_MEMBER_CONST" :
 test-suite "BOOST_NO_CXX11_RANGE_BASED_FOR" : 
 [ run ../no_range_based_for_pass.cpp ]
 [ compile-fail ../no_range_based_for_fail.cpp ] ;
-test-suite "BOOST_NO_CXX11_RAW_LITERALS" : 
-[ run ../no_raw_literals_pass.cpp ]
-[ compile-fail ../no_raw_literals_fail.cpp ] ;
 test-suite "BOOST_NO_UNREACHABLE_RETURN_DETECTION" : 
 [ run ../no_ret_det_pass.cpp ]
 [ compile-fail ../no_ret_det_fail.cpp ] ;

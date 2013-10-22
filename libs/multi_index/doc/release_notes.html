@@ -27,10 +27,10 @@ Acknowledgements
 
 <hr>
 
-
 <h2>Contents</h2>
 
 <ul>
+  <li><a href="#boost_1_55">Boost 1.55 release</a></li>
   <li><a href="#boost_1_54">Boost 1.54 release</a></li>
   <li><a href="#boost_1_49">Boost 1.49 release</a></li>
   <li><a href="#boost_1_48">Boost 1.48 release</a></li>
@@ -48,6 +48,39 @@ Acknowledgements
   <li><a href="#boost_1_33">Boost 1.33 release</a></li>
 </ul>
 
+<h2><a name="boost_1_55">Boost 1.55 release</a></h2>
+
+<p>
+<ul>
+  <li>Boost.MultiIndex has been brought to a higher level of compliance
+  with C++11.
+  <ul>
+      <li><code>multi_index_container</code> is now efficiently movable.</li>
+      <li>Initializer lists supported.</li>
+      <li>Emplace functions provided.</li>
+      <li>Non-copyable elements (such as <code>std::unique_ptr&lt;T&gt;</code>) supported. This includes
+        insertion of a range [<code>first</code>,<code>last</code>) where the iterators point to a type that is
+        convertible to that of the element: no copy construction happens in the process.
+      </li>
+      <li>Random access indices provide <code>shrink_to_fit()</code>.</li>
+  </ul>
+  Refer to the <a href="compiler_specifics.html">compiler specifics</a> section for limitations
+  on pre-C++11 compilers.
+  </li>
+  <li>The following classes are deprecated:
+  <ul>
+    <li><a href="reference/key_extraction.html#member_offset"><code>member_offset</code></a>,</li>
+    <li><a href="reference/key_extraction.html#const_mem_fun_explicit"><code>const_mem_fun_explicit</code></a>,</li>
+    <li><a href="reference/key_extraction.html#const_mem_fun_explicit"><code>mem_fun_explicit</code></a>,</li>
+    <li><a href="reference/key_extraction.html#composite_key_result_equal_to"><code>composite_key_result_equal_to</code></a>,</li>
+    <li><a href="reference/key_extraction.html#composite_key_result_less"><code>composite_key_result_less</code></a>,</li>
+    <li><a href="reference/key_extraction.html#composite_key_result_greater"><code>composite_key_result_greater</code></a>,</li>
+    <li><a href="reference/key_extraction.html#composite_key_result_hash"><code>composite_key_result_hash</code></a>.</li>
+  </ul>
+  </li>
+  <li>Maintenance fixes.</li>
+</ul>
+</p>
 <h2><a name="boost_1_54">Boost 1.54 release</a></h2>
 
 <p>
@@ -371,7 +404,7 @@ Acknowledgements
 
 <br>
 
-<p>Revised February 21st 2013</p>
+<p>Revised July 9st 2013</p>
 
 <p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 

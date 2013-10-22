@@ -10,6 +10,7 @@
 #if !defined(BOOST_LOG_ENABLE_WARNINGS)
 
 #if defined(_MSC_VER)
+
 #pragma warning(push, 3)
 // 'm_A' : class 'A' needs to have dll-interface to be used by clients of class 'B'
 #pragma warning(disable: 4251)
@@ -35,6 +36,25 @@
 #pragma warning(disable: 4610)
 // function marked as __forceinline not inlined
 #pragma warning(disable: 4714)
+// decorated name length exceeded, name was truncated
+#pragma warning(disable: 4503)
+
+#elif defined(__GNUC__) && !(defined(__INTEL_COMPILER) || defined(__ICL) || defined(__ICC) || defined(__ECC)) \
+    && (__GNUC__ * 100 + __GNUC_MINOR__) >= 406
+
+#pragma GCC diagnostic push
+// 'var' defined but not used
+#pragma GCC diagnostic ignored "-Wunused-variable"
+// unused parameter 'arg'
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+// missing initializer for member var
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+
+#if (__GNUC__ * 100 + __GNUC_MINOR__) >= 407
+// typedef ‘foo’ locally defined but not used
+#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
+#endif
+
 #endif
 
 #endif // !defined(BOOST_LOG_ENABLE_WARNINGS)

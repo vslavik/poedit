@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga  2007-2012
+// (C) Copyright Ion Gaztanaga  2007-2013
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -130,6 +130,7 @@ typedef rbtree< MyClass
               , value_traits<rbtree_value_traits_proxy>
               , compare<std::greater<MyClass> > > Rbtree;
 //Define a hashtable that will store MyClass using the external hook
+
 typedef hashtable< MyClass
                  , value_traits<hash_value_traits_proxy>
                  , bucket_traits<bucket_traits_proxy>

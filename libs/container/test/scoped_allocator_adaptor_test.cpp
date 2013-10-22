@@ -36,16 +36,20 @@ class test_allocator
    typedef T value_type;
 
    test_allocator()
+      : m_move_contructed(false), m_move_assigned(false)
    {}
 
    test_allocator(const test_allocator&)
+      : m_move_contructed(false), m_move_assigned(false)
    {}
 
    test_allocator(BOOST_RV_REF(test_allocator) )
+      : m_move_contructed(true), m_move_assigned(false)
    {}
 
    template<class U>
    test_allocator(BOOST_RV_REF_BEG test_allocator<U, Id, Propagate> BOOST_RV_REF_END)
+      : m_move_contructed(true), m_move_assigned(false)
    {}
 
    template<class U>
@@ -53,10 +57,15 @@ class test_allocator
    {}
 
    test_allocator & operator=(BOOST_COPY_ASSIGN_REF(test_allocator))
-   {  return *this;  }
+   {
+      return *this;
+   }
 
    test_allocator & operator=(BOOST_RV_REF(test_allocator))
-   {  return *this;  }
+   {
+      m_move_assigned = true;
+      return *this;
+   }
 
    std::size_t max_size() const
    {  return std::size_t(Id);  }
@@ -66,6 +75,9 @@ class test_allocator
 
    void deallocate(T*p, std::size_t)
    {  delete []static_cast<char*>(static_cast<void*>(p));  }
+
+   bool m_move_contructed;
+   bool m_move_assigned;
 };
 
 template <class T1, class T2, unsigned int Id, bool Propagate>
@@ -252,7 +264,6 @@ int main()
    typedef test_allocator<tagged_integer<1>, 1>   InnerAlloc1;
    typedef test_allocator<tagged_integer<2>, 2>   InnerAlloc2;
    typedef test_allocator<tagged_integer<1>, 11>  Inner11IdAlloc1;
-   typedef test_allocator<tagged_integer<1>, 12>  Inner12IdAlloc2;
 
    typedef test_allocator<tagged_integer<0>, 0, false>      OuterAllocFalsePropagate;
    typedef test_allocator<tagged_integer<0>, 0, true>       OuterAllocTruePropagate;
@@ -277,11 +288,6 @@ int main()
          <Outer10IdAlloc, Inner11IdAlloc1>
       , InnerAlloc1
       >                                                     ScopedScoped1Inner;
-   typedef scoped_allocator_adaptor
-      < scoped_allocator_adaptor
-         <Outer10IdAlloc, Inner11IdAlloc1, Inner12IdAlloc2>
-      , InnerAlloc1, InnerAlloc2
-      >                                                     ScopedScoped2Inner;
    typedef scoped_allocator_adaptor< Rebound9OuterAlloc  >  Rebound9Scoped0Inner;
    typedef scoped_allocator_adaptor< Rebound9OuterAlloc
                                    , InnerAlloc1 >          Rebound9Scoped1Inner;
@@ -479,6 +485,64 @@ int main()
    {
       Scoped0Inner s0i;
       Scoped1Inner s1i;
+   }
+
+   //Copy constructor/assignment
+   {
+      Scoped0Inner s0i;
+      Scoped1Inner s1i;
+      Scoped2Inner s2i;
+
+      Scoped0Inner s0i_b(s0i);
+      Scoped1Inner s1i_b(s1i);
+      Scoped2Inner s2i_b(s2i);
+
+      if(!(s0i == s0i_b) ||
+         !(s1i == s1i_b) ||
+         !(s2i == s2i_b)
+         ){
+         return 1;
+      }
+
+      s0i_b = s0i;
+      s1i_b = s1i;
+      s2i_b = s2i;
+
+      if(!(s0i == s0i_b) ||
+         !(s1i == s1i_b) ||
+         !(s2i == s2i_b)
+         ){
+         return 1;
+      }
+   }
+
+   //Copy/move constructor/assignment
+   {
+      Scoped0Inner s0i;
+      Scoped1Inner s1i;
+      Scoped2Inner s2i;
+
+      Scoped0Inner s0i_b(::boost::move(s0i));
+      Scoped1Inner s1i_b(::boost::move(s1i));
+      Scoped2Inner s2i_b(::boost::move(s2i));
+
+      if(!(s0i_b.outer_allocator().m_move_contructed) ||
+         !(s1i_b.outer_allocator().m_move_contructed) ||
+         !(s2i_b.outer_allocator().m_move_contructed)
+         ){
+         return 1;
+      }
+
+      s0i_b = ::boost::move(s0i);
+      s1i_b = ::boost::move(s1i);
+      s2i_b = ::boost::move(s2i);
+
+      if(!(s0i_b.outer_allocator().m_move_assigned) ||
+         !(s1i_b.outer_allocator().m_move_assigned) ||
+         !(s2i_b.outer_allocator().m_move_assigned)
+         ){
+         return 1;
+      }
    }
 
    //inner_allocator()
@@ -880,7 +944,7 @@ int main()
       }
 
       //////////////////////////////////////////////////////////////////////////////////
-      //Now test recursive OuterAllocator types (OuterAllocator is an scoped_allocator)
+      //Now test recursive OuterAllocator types (OuterAllocator is a scoped_allocator)
       //////////////////////////////////////////////////////////////////////////////////
 
       ////////////////////////////////////////////////////////////
@@ -1102,17 +1166,8 @@ int main()
          using boost::container::container_detail::pair;
          typedef test_allocator< pair< tagged_integer<0>
                                , tagged_integer<0> >, 0> OuterPairAlloc;
-         typedef test_allocator< pair< tagged_integer<1>
-                               , tagged_integer<1> >, 1> InnerPairAlloc1;
-         typedef test_allocator< pair< tagged_integer<2>
-                               , tagged_integer<2> >, 2> InnerPairAlloc2;
          //
          typedef scoped_allocator_adaptor < OuterPairAlloc  >  ScopedPair0Inner;
-         typedef scoped_allocator_adaptor < OuterPairAlloc
-                                          , InnerPairAlloc1 >  ScopedPair1Inner;
-         typedef scoped_allocator_adaptor < OuterPairAlloc
-                                          , InnerPairAlloc1
-                                          , InnerPairAlloc2 >  ScopedPair2Inner;
 
          ScopedPair0Inner s0i;
          //Check construction with 0 user arguments

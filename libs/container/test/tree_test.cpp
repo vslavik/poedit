@@ -247,6 +247,13 @@ int main ()
       map<recursive_map, recursive_map> map_;
       multimap<recursive_multimap, recursive_multimap> multimap_;
    }
+   //Allocator argument container
+   {
+      set<int> set_((std::allocator<int>()));
+      multiset<int> multiset_((std::allocator<int>()));
+      map<int, int> map_((std::allocator<std::pair<const int, int> >()));
+      multimap<int, int> multimap_((std::allocator<std::pair<const int, int> >()));
+   }
    //Now test move semantics
    {
       test_move<set<recursive_set> >();
@@ -255,7 +262,6 @@ int main ()
       test_move<multimap<recursive_multimap, recursive_multimap> >();
    }
 
-   //using namespace boost::container::detail;
 
    if(0 != test::set_test<MyBoostSet
                         ,MyStdSet

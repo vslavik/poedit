@@ -88,6 +88,8 @@ synopsis</a>
 </h2>
 
 <blockquote><pre>
+<span class=preprocessor>#include</span> <span class=special>&lt;</span><span class=identifier>initializer_list</span><span class=special>&gt;</span>
+
 <span class=keyword>namespace</span> <span class=identifier>boost</span><span class=special>{</span>
 
 <span class=keyword>namespace</span> <span class=identifier>multi_index</span><span class=special>{</span>
@@ -269,7 +271,6 @@ operators and functions associated with the index (vg. comparison and
   <span class=keyword>struct</span> <span class=identifier>nth_index</span>                <span class=special>{</span><span class=keyword>typedef</span> <b>implementation defined</b> <span class=identifier>type</span><span class=special>;};</span>
   <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Tag</span><span class=special>&gt;</span>
   <span class=keyword>struct</span> <span class=identifier>index</span>                    <span class=special>{</span><span class=keyword>typedef</span> <b>implementation defined</b> <span class=identifier>type</span><span class=special>;};</span>
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>int</span> <span class=identifier>N</span><span class=special>&gt;</span>
 
   <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>int</span> <span class=identifier>N</span><span class=special>&gt;</span>
   <span class=keyword>struct</span> <span class=identifier>nth_index_iterator</span>        <span class=comment><b>// deprecated</b></span>
@@ -296,12 +297,22 @@ operators and functions associated with the index (vg. comparison and
     <span class=keyword>const</span> <span class=identifier>ctor_args_list</span><span class=special>&amp;</span> <span class=identifier>args_list</span><span class=special>=</span><span class=identifier>ctor_args_list</span><span class=special>(),
     </span><span class=keyword>const</span> <span class=identifier>allocator_type</span><span class=special>&amp;</span> <span class=identifier>al</span><span class=special>=</span><span class=identifier>allocator_type</span><span class=special>());</span>
   <span class=identifier>multi_index_container</span><span class=special>(</span>
+    <span class=identifier>std</span><span class=special>::</span><span class=identifier>initializer_list</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>&gt;</span> <span class=identifier>list</span><span class=special>,</span>
+    <span class=keyword>const</span> <span class=identifier>ctor_args_list</span><span class=special>&amp;</span> <span class=identifier>args_list</span><span class=special>=</span><span class=identifier>ctor_args_list</span><span class=special>(),</span>
+    <span class=keyword>const</span> <span class=identifier>allocator_type</span><span class=special>&amp;</span> <span class=identifier>al</span><span class=special>=</span><span class=identifier>allocator_type</span><span class=special>());</span>
+  <span class=identifier>multi_index_container</span><span class=special>(</span>
     <span class=keyword>const</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>);</span>
+  <span class=identifier>multi_index_container</span><span class=special>(</span>
+    <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;&amp;</span> <span class=identifier>x</span><span class=special>);</span>
 
   <span class=special>~</span><span class=identifier>multi_index_container</span><span class=special>();</span>
 
   <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=keyword>operator</span><span class=special>=(</span>
     <span class=keyword>const</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>);</span>
+  <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=keyword>operator</span><span class=special>=(</span>
+    <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;&amp;</span> <span class=identifier>x</span><span class=special>);</span>
+  <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=keyword>operator</span><span class=special>=(</span>
+    <span class=identifier>std</span><span class=special>::</span><span class=identifier>initializer_list</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>&gt;</span> <span class=identifier>list</span><span class=special>)</span>
 
   <span class=identifier>allocator_type</span> <span class=identifier>get_allocator</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
 
@@ -507,9 +518,8 @@ scheme outlined in the
 <p>
 <code>multi_index_container</code> is instantiated with the following types:
 <ol>
-  <li><code>Value</code> is the
-    <a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>
-    type of the elements contained.
+  <li><code>Value</code> is the type of the elements contained. <code>Value</code> must be
+      <code>Erasable</code> from <code>multi_index_container</code>.
   </li>
   <li><code>IndexSpecifierList</code> specifies the indices that the
     <code>multi_index_container</code> is composed of. It must be a non-empty
@@ -522,17 +532,15 @@ scheme outlined in the
     MPL sequence can be used.
   </li>
   <li><code>Allocator</code> must be an allocator of <code>Value</code> objects
-    satisfying the associated C++ requirements at <b>[lib.allocator.requirements]</b>.
+    satisfying the associated C++ requirements at <b>[allocator.requirements]</b>.
     The following relaxations to the standard requirements are allowed:
     <ul>
       <li>Non-equal allocator instances are supported: swapping two non-equal
         instances must not throw any exception.
-      </li>
+      </li>s
       <li>For every type <code>T</code>,
         the type <code>Allocator::rebind&lt;T&gt;::other::pointer</code> can be any
-        kind of
-        <a href="http://www.sgi.com/tech/stl/RandomAccessIterator.html"><code>Random
-        Access Iterator</code></a>, provided that it is explicitly constructible from
+        kind of random access iterator, provided that it is explicitly constructible from
         the literal <code>0</code> (standing here as the null pointer) or from any
         <code>p</code> of type <code>T*</code> pointing into an area allocated by
         some instance of <code>Allocator</code> or some other allocator type rebound
@@ -564,9 +572,8 @@ implicit conversion from
 to <code>const ctor_args_list&amp;</code>. This type is used for
 providing the construction arguments of the indices of the
 <code>multi_index_container</code>. <code>ctor_args_list</code> is 
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html"><code>Default 
-Constructible</code></a>, provided that all <code>ctor_args</code> types
-involved are default constructible.
+<code>DefaultConstructible</code>, provided that all <code>ctor_args</code> types
+involved are <code>DefaultConstructible</code>.
 </blockquote>
 
 <code>index_specifier_type_list</code>
@@ -685,14 +692,14 @@ specified allocator and the default value of <code>ctor_args_list</code>.<br>
 <code>template&lt;typename InputIterator><br>
 multi_index_container(<br>
 &nbsp;&nbsp;InputIterator first,InputIterator last,<br>
-&nbsp;&nbsp;const ctor_args_list&amp; comp=ctor_args_list(),<br>
+&nbsp;&nbsp;const ctor_args_list&amp; args_list=ctor_args_list(),<br>
 &nbsp;&nbsp;const allocator_type&amp; al=allocator_type());</code>
 
 <blockquote>
-<b>Requires:</b> <code>InputIterator</code> is a model of
-<a href="http://www.sgi.com/tech/stl/InputIterator.html">
-<code>Input Iterator</code></a> over elements of type
-<code>Value</code> or a type convertible to <code>Value</code>.
+<b>Requires:</b> <code>InputIterator</code> is an input iterator.
+<code>Value</code> is
+<code>EmplaceConstructible</code> into <code>multi_index_container</code>
+from <code>*first</code>.
 <code>last</code> is reachable from <code>first</code>.<br> 
 <b>Effects:</b> Constructs and empty <code>multi_index_container</code> using the
 specified argument list and allocator and fills it with
@@ -704,15 +711,40 @@ the number of elements in [<code>first</code>,<code>last</code>).<br>
 </blockquote>
 
 <code>multi_index_container(<br>
+&nbsp;&nbsp;std::initializer_list&lt;Value&gt; list,<br>
+&nbsp;&nbsp;const ctor_args_list&amp; args_list=ctor_args_list(),<br>
+&nbsp;&nbsp;const allocator_type&amp; al=allocator_type());</code>
+
+<blockquote>
+<b>Effects:</b> Equivalent to
+<code>multi_index_container(list.begin(),list.end(),args_list,al)</code>.
+</blockquote>
+
+<code>multi_index_container(<br>
 &nbsp;&nbsp;const multi_index_container&lt;Value,IndexSpecifierList,Allocator>&amp; x);</code>
 
 <blockquote>
+<b>Requires:</b> <code>Value</code> is <code>CopyInsertable</code> into
+<code>multi_index_container</code>.<br>
 <b>Effects:</b> Constructs a copy of <code>x</code>, copying its
-elements as well as its internal objects (key extractors, comparison objects,
-allocator.)<br>
+elements as well as its internal objects (those specified
+in <code>ctor_args_list</code> and the allocator.)<br>
 <b>Postconditions:</b> <code>*this==x</code>. The order on every index
 of the <code>multi_index_container</code> is preserved as well.<br>
 <b>Complexity:</b> <code>O(x.size()*log(x.size()) + C(x.size()))</code>.
+</blockquote>
+
+<code>multi_index_container(<br>
+&nbsp;&nbsp;multi_index_container&lt;Value,IndexSpecifierList,Allocator>&amp;&amp; x);</code>
+
+<blockquote>
+<b>Effects:</b> Constructs a <code>multi_index_container</code> by moving the
+elements of <code>x</code> and copying its internal objects (those specified
+in <code>ctor_args_list</code> and the allocator.)<br>
+<b>Postconditions:</b> If <code>x==y</code> just
+before the movement, <code>*this==y</code>. The order on every index
+of the <code>multi_index_container</code> is preserved as well.<br>
+<b>Complexity:</b> Constant.
 </blockquote>
 
 <code>~multi_index_container()</code>
@@ -726,13 +758,48 @@ contained. The order in which the elements are destroyed is not specified.<br>
 &nbsp;&nbsp;const multi_index_container&lt;Value,IndexSpecifierList,Allocator>&amp; x);</code>
 
 <blockquote>
-Replaces the elements and internal objects of the <code>multi_index_container</code>
+<b>Requires:</b> <code>Value</code> is <code>CopyInsertable</code> into
+<code>multi_index_container</code>.<br>
+<b>Effects:</b> Replaces the elements and internal objects of the <code>multi_index_container</code>
 with copies from <code>x</code>.<br>
 <b>Postconditions:</b> <code>*this==x</code>. The order on every index
 of the <code>multi_index_container</code> is preserved as well.<br>
 <b>Returns:</b> <code>*this</code>.<br>
 <b>Complexity:</b> <code>O(n + x.size()*log(x.size()) +
 C(x.size()))</code>.<br>
+<b>Exception safety:</b> Strong, provided the copy and assignment operations
+of the types of <code>ctor_args_list</code> do not throw.
+</blockquote>
+
+<code>multi_index_container&lt;Value,IndexSpecifierList,Allocator>&amp; operator=(<br>
+&nbsp;&nbsp;multi_index_container&lt;Value,IndexSpecifierList,Allocator>&amp;&amp; x);</code>
+
+<blockquote>
+<b>Effects:</b> Replaces the elements of <code>multi_index_container</code>
+with those of <code>x</code> and its internal objects with copies from the
+corresponding objects in <code>x</code>.<br>
+<b>Postconditions:</b> If <code>x==y</code> just
+before the movement, <code>*this==y</code>. The order on every index
+of the <code>multi_index_container</code> is preserved as well.<br>
+<b>Returns:</b> <code>*this</code>.<br>
+<b>Complexity:</b> <code>O(n)</code>.<br>
+<b>Exception safety:</b> Strong, provided the copy and assignment operations
+of the types of <code>ctor_args_list</code> do not throw.
+</blockquote>
+
+<code>multi_index_container&lt;Value,IndexSpecifierList,Allocator>&amp; operator=(<br>
+&nbsp;&nbsp;std::initializer_list&lt;Value&gt; list);</code>
+
+<blockquote>
+<b>Requires:</b> <code>Value</code> is <code>CopyInsertable</code> into
+<code>multi_index_container</code>.<br>
+<b>Effects:</b> Replaces the elements the <code>multi_index_container</code>
+with copies of the elements of <code>list</code>, inserted in the specified order.
+Insertion of each element may or may not succeed depending
+on the acceptance by all the indices of the <code>multi_index_container</code>.<br>
+<b>Returns:</b> <code>*this</code>.<br>
+<b>Complexity:</b> <code>O(n + I(m))</code>, where <code>m</code> is the
+number of elements of <code>list</code>.<br>
 <b>Exception safety:</b> Strong, provided the copy and assignment operations
 of the types of <code>ctor_args_list</code> do not throw.
 </blockquote>
@@ -883,8 +950,7 @@ these, the following concepts are used. A type <code>T</code> is <i>serializable
 archive (XML archive) and later retrieved from an input archive (XML archive) associated to
 the same storage. If <code>x'</code> of type <code>T</code> is loaded from the
 serialization information saved from another object <code>x</code>, we say that
-<code>x'</code> is a <i>restored copy</i> of <code>x</code>. Given a
-<a href="http://www.sgi.com/tech/stl/BinaryPredicate.html"><code>Binary Predicate</code></a>
+<code>x'</code> is a <i>restored copy</i> of <code>x</code>. Given a binary predicate
 <code>Pred</code> over (<code>T</code>, <code>T</code>), and objects <code>p</code>
 and <code>q</code> of type <code>Pred</code>, we say that <code>q</code>
 is <i>serialization-compatible</i> with <code>p</code> if
@@ -930,9 +996,9 @@ Index reference
 
 <br>
 
-<p>Revised November 6th 2008</p>
+<p>Revised July 3rd 2013</p>
 
-<p>&copy; Copyright 2003-2008 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

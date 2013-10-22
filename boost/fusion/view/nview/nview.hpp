@@ -37,7 +37,7 @@ namespace boost { namespace fusion
             template<typename U>
             struct result<addref(U)> : add_reference<U> {};
 
-#ifdef BOOST_NO_RVALUE_REFERENCES
+#ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
             template <typename T>
             typename add_reference<T>::type 
             operator()(T& x) const

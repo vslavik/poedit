@@ -7,7 +7,7 @@
 #ifndef BOOST_COROUTINES_COROUTINE_H
 #define BOOST_COROUTINES_COROUTINE_H
 
-#ifdef BOOST_COROUTINES_V2
+#ifdef BOOST_COROUTINES_UNIDIRECT
 #include <boost/coroutine/v2/coroutine.hpp>
 #else
 #include <boost/coroutine/v1/coroutine.hpp>

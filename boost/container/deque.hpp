@@ -7,33 +7,11 @@
 // See http://www.boost.org/libs/container for documentation.
 //
 //////////////////////////////////////////////////////////////////////////////
-// Copyright (c) 1996,1997
-// Silicon Graphics Computer Systems, Inc.
-//
-// Permission to use, copy, modify, distribute and sell this software
-// and its documentation for any purpose is hereby granted without fee,
-// provided that the above copyright notice appear in all copies and
-// that both that copyright notice and this permission notice appear
-// in supporting documentation.  Silicon Graphics makes no
-// representations about the suitability of this software for any
-// purpose.  It is provided "as is" without express or implied warranty.
-//
-//
-// Copyright (c) 1994
-// Hewlett-Packard Company
-//
-// Permission to use, copy, modify, distribute and sell this software
-// and its documentation for any purpose is hereby granted without fee,
-// provided that the above copyright notice appear in all copies and
-// that both that copyright notice and this permission notice appear
-// in supporting documentation.  Hewlett-Packard Company makes no
-// representations about the suitability of this software for any
-// purpose.  It is provided "as is" without express or implied warranty.
 
 #ifndef BOOST_CONTAINER_DEQUE_HPP
 #define BOOST_CONTAINER_DEQUE_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #  pragma once
 #endif
 
@@ -75,11 +53,10 @@ template <class T, class Allocator>
 #endif
 class deque;
 
-template <class T, class Allocator>
+template <class T>
 struct deque_value_traits
 {
    typedef T value_type;
-   typedef Allocator allocator_type;
    static const bool trivial_dctr = boost::has_trivial_destructor<value_type>::value;
    static const bool trivial_dctr_after_move = ::boost::has_trivial_destructor_after_move<value_type>::value;
    static const bool trivial_copy = has_trivial_copy<value_type>::value;
@@ -91,13 +68,211 @@ struct deque_value_traits
 
 // Note: this function is simply a kludge to work around several compilers'
 //  bugs in handling constant expressions.
-inline std::size_t deque_buf_size(std::size_t size)
-   {  return size < 512 ? std::size_t(512 / size) : std::size_t(1);  }
+template<class T>
+struct deque_buf_size
+{
+   static const std::size_t min_size = 512u;
+   static const std::size_t sizeof_t = sizeof(T);
+   static const std::size_t value    = sizeof_t < min_size ? (min_size/sizeof_t) : std::size_t(1);
+};
+
+namespace container_detail {
+
+// Class invariants:
+//  For any nonsingular iterator i:
+//    i.node is the address of an element in the map array.  The
+//      contents of i.node is a pointer to the beginning of a node.
+//    i.first == //(i.node)
+//    i.last  == i.first + node_size
+//    i.cur is a pointer in the range [i.first, i.last).  NOTE:
+//      the implication of this is that i.cur is always a dereferenceable
+//      pointer, even if i is a past-the-end iterator.
+//  Start and Finish are always nonsingular iterators.  NOTE: this means
+//    that an empty deque must have one node, and that a deque
+//    with N elements, where N is the buffer size, must have two nodes.
+//  For every node other than start.node and finish.node, every element
+//    in the node is an initialized object.  If start.node == finish.node,
+//    then [start.cur, finish.cur) are initialized objects, and
+//    the elements outside that range are uninitialized storage.  Otherwise,
+//    [start.cur, start.last) and [finish.first, finish.cur) are initialized
+//    objects, and [start.first, start.cur) and [finish.cur, finish.last)
+//    are uninitialized storage.
+//  [map, map + map_size) is a valid, non-empty range. 
+//  [start.node, finish.node] is a valid range contained within
+//    [map, map + map_size). 
+//  Allocator pointer in the range [map, map + map_size) points to an allocated node
+//    if and only if the pointer is in the range [start.node, finish.node].
+template<class Pointer, bool IsConst>
+class deque_iterator
+{
+   public:
+	typedef std::random_access_iterator_tag                                          iterator_category;
+   typedef typename boost::intrusive::pointer_traits<Pointer>::element_type         value_type;
+   typedef typename boost::intrusive::pointer_traits<Pointer>::difference_type      difference_type;
+   typedef typename if_c
+      < IsConst
+      , typename boost::intrusive::pointer_traits<Pointer>::template
+                                 rebind_pointer<const value_type>::type
+      , Pointer
+      >::type                                                                       pointer;
+   typedef typename if_c
+      < IsConst
+      , const value_type&
+      , value_type&
+      >::type                                                                       reference;
+
+   static std::size_t s_buffer_size()
+      { return deque_buf_size<value_type>::value; }
+
+   typedef Pointer                                                                  val_alloc_ptr;
+   typedef typename boost::intrusive::pointer_traits<Pointer>::
+      template rebind_pointer<Pointer>::type                                        index_pointer;                              
+
+   Pointer m_cur;
+   Pointer m_first;
+   Pointer m_last;
+   index_pointer  m_node;
+
+   public:
+
+   Pointer get_cur()          const  {  return m_cur;  }
+   Pointer get_first()        const  {  return m_first;  }
+   Pointer get_last()         const  {  return m_last;  }
+   index_pointer get_node()   const  {  return m_node;  }
+
+   deque_iterator(val_alloc_ptr x, index_pointer y) BOOST_CONTAINER_NOEXCEPT
+      : m_cur(x), m_first(*y), m_last(*y + s_buffer_size()), m_node(y)
+   {}
+
+   deque_iterator() BOOST_CONTAINER_NOEXCEPT
+      : m_cur(), m_first(), m_last(), m_node()
+   {}
+
+   deque_iterator(deque_iterator<Pointer, false> const& x) BOOST_CONTAINER_NOEXCEPT
+      : m_cur(x.get_cur()), m_first(x.get_first()), m_last(x.get_last()), m_node(x.get_node())
+   {}
+
+   deque_iterator(Pointer cur, Pointer first, Pointer last, index_pointer node) BOOST_CONTAINER_NOEXCEPT
+      : m_cur(cur), m_first(first), m_last(last), m_node(node)
+   {}
+
+   deque_iterator<Pointer, false> unconst() const BOOST_CONTAINER_NOEXCEPT
+   {
+      return deque_iterator<Pointer, false>(this->get_cur(), this->get_first(), this->get_last(), this->get_node());
+   }
+
+   reference operator*() const BOOST_CONTAINER_NOEXCEPT
+      { return *this->m_cur; }
+
+   pointer operator->() const BOOST_CONTAINER_NOEXCEPT
+      { return this->m_cur; }
+
+   difference_type operator-(const deque_iterator& x) const BOOST_CONTAINER_NOEXCEPT
+   {
+      if(!this->m_cur && !x.m_cur){
+         return 0;
+      }
+      return difference_type(this->s_buffer_size()) * (this->m_node - x.m_node - 1) +
+         (this->m_cur - this->m_first) + (x.m_last - x.m_cur);
+   }
+
+   deque_iterator& operator++() BOOST_CONTAINER_NOEXCEPT
+   {
+      ++this->m_cur;
+      if (this->m_cur == this->m_last) {
+         this->priv_set_node(this->m_node + 1);
+         this->m_cur = this->m_first;
+      }
+      return *this;
+   }
+
+   deque_iterator operator++(int) BOOST_CONTAINER_NOEXCEPT
+   {
+      deque_iterator tmp(*this);
+      ++*this;
+      return tmp;
+   }
+
+   deque_iterator& operator--() BOOST_CONTAINER_NOEXCEPT
+   {
+      if (this->m_cur == this->m_first) {
+         this->priv_set_node(this->m_node - 1);
+         this->m_cur = this->m_last;
+      }
+      --this->m_cur;
+      return *this;
+   }
+
+   deque_iterator operator--(int) BOOST_CONTAINER_NOEXCEPT
+   {
+      deque_iterator tmp(*this);
+      --*this;
+      return tmp;
+   }
+
+   deque_iterator& operator+=(difference_type n) BOOST_CONTAINER_NOEXCEPT
+   {
+      difference_type offset = n + (this->m_cur - this->m_first);
+      if (offset >= 0 && offset < difference_type(this->s_buffer_size()))
+         this->m_cur += n;
+      else {
+         difference_type node_offset =
+         offset > 0 ? offset / difference_type(this->s_buffer_size())
+                     : -difference_type((-offset - 1) / this->s_buffer_size()) - 1;
+         this->priv_set_node(this->m_node + node_offset);
+         this->m_cur = this->m_first +
+         (offset - node_offset * difference_type(this->s_buffer_size()));
+      }
+      return *this;
+   }
+
+   deque_iterator operator+(difference_type n) const BOOST_CONTAINER_NOEXCEPT
+      {  deque_iterator tmp(*this); return tmp += n;  }
+
+   deque_iterator& operator-=(difference_type n) BOOST_CONTAINER_NOEXCEPT
+      { return *this += -n; }
+   
+   deque_iterator operator-(difference_type n) const BOOST_CONTAINER_NOEXCEPT
+      {  deque_iterator tmp(*this); return tmp -= n;  }
+
+   reference operator[](difference_type n) const BOOST_CONTAINER_NOEXCEPT
+      { return *(*this + n); }
+
+   friend bool operator==(const deque_iterator& l, const deque_iterator& r) BOOST_CONTAINER_NOEXCEPT
+      { return l.m_cur == r.m_cur; }
+
+   friend bool operator!=(const deque_iterator& l, const deque_iterator& r) BOOST_CONTAINER_NOEXCEPT
+      { return l.m_cur != r.m_cur; }
+
+   friend bool operator<(const deque_iterator& l, const deque_iterator& r) BOOST_CONTAINER_NOEXCEPT
+      {  return (l.m_node == r.m_node) ? (l.m_cur < r.m_cur) : (l.m_node < r.m_node);  }
+
+   friend bool operator>(const deque_iterator& l, const deque_iterator& r) BOOST_CONTAINER_NOEXCEPT
+      { return r < l; }
+
+   friend bool operator<=(const deque_iterator& l, const deque_iterator& r) BOOST_CONTAINER_NOEXCEPT
+      { return !(r < l); }
+
+   friend bool operator>=(const deque_iterator& l, const deque_iterator& r) BOOST_CONTAINER_NOEXCEPT
+      { return !(l < r); }
+
+   void priv_set_node(index_pointer new_node) BOOST_CONTAINER_NOEXCEPT
+   {
+      this->m_node = new_node;
+      this->m_first = *new_node;
+      this->m_last = this->m_first + this->s_buffer_size();
+   }
+
+   friend deque_iterator operator+(difference_type n, deque_iterator x) BOOST_CONTAINER_NOEXCEPT
+      {  return x += n;  }
+};
+
+}  //namespace container_detail {
 
 // Deque base class.  It has two purposes.  First, its constructor
 //  and destructor allocate (but don't initialize) storage.  This makes
 //  exception safety easier.
-template <class T, class Allocator>
+template <class Allocator>
 class deque_base
 {
    BOOST_COPYABLE_AND_MOVABLE(deque_base)
@@ -124,257 +299,26 @@ class deque_base
 
    protected:
 
-   typedef deque_value_traits<T, Allocator>             traits_t;
-   typedef ptr_alloc_t                          map_allocator_type;
+   typedef deque_value_traits<val_alloc_val>             traits_t;
+   typedef ptr_alloc_t                                   map_allocator_type;
 
-   static size_type s_buffer_size() { return deque_buf_size(sizeof(T)); }
+   static size_type s_buffer_size() BOOST_CONTAINER_NOEXCEPT
+      { return deque_buf_size<val_alloc_val>::value; }
 
    val_alloc_ptr priv_allocate_node()
       {  return this->alloc().allocate(s_buffer_size());  }
 
-   void priv_deallocate_node(val_alloc_ptr p)
+   void priv_deallocate_node(val_alloc_ptr p) BOOST_CONTAINER_NOEXCEPT
       {  this->alloc().deallocate(p, s_buffer_size());  }
 
    ptr_alloc_ptr priv_allocate_map(size_type n)
       { return this->ptr_alloc().allocate(n); }
 
-   void priv_deallocate_map(ptr_alloc_ptr p, size_type n)
+   void priv_deallocate_map(ptr_alloc_ptr p, size_type n) BOOST_CONTAINER_NOEXCEPT
       { this->ptr_alloc().deallocate(p, n); }
 
- public:
-   // Class invariants:
-   //  For any nonsingular iterator i:
-   //    i.node is the address of an element in the map array.  The
-   //      contents of i.node is a pointer to the beginning of a node.
-   //    i.first == //(i.node)
-   //    i.last  == i.first + node_size
-   //    i.cur is a pointer in the range [i.first, i.last).  NOTE:
-   //      the implication of this is that i.cur is always a dereferenceable
-   //      pointer, even if i is a past-the-end iterator.
-   //  Start and Finish are always nonsingular iterators.  NOTE: this means
-   //    that an empty deque must have one node, and that a deque
-   //    with N elements, where N is the buffer size, must have two nodes.
-   //  For every node other than start.node and finish.node, every element
-   //    in the node is an initialized object.  If start.node == finish.node,
-   //    then [start.cur, finish.cur) are initialized objects, and
-   //    the elements outside that range are uninitialized storage.  Otherwise,
-   //    [start.cur, start.last) and [finish.first, finish.cur) are initialized
-   //    objects, and [start.first, start.cur) and [finish.cur, finish.last)
-   //    are uninitialized storage.
-   //  [map, map + map_size) is a valid, non-empty range. 
-   //  [start.node, finish.node] is a valid range contained within
-   //    [map, map + map_size). 
-   //  Allocator pointer in the range [map, map + map_size) points to an allocated node
-   //    if and only if the pointer is in the range [start.node, finish.node].
-   class const_iterator
-      : public std::iterator<std::random_access_iterator_tag,
-                              val_alloc_val,  val_alloc_diff,
-                              val_alloc_cptr, val_alloc_cref>
-   {
-      public:
-      static size_type s_buffer_size() { return deque_base<T, Allocator>::s_buffer_size(); }
-
-      typedef std::random_access_iterator_tag   iterator_category;
-      typedef val_alloc_val                     value_type;
-      typedef val_alloc_cptr                    pointer;
-      typedef val_alloc_cref                    reference;
-      typedef val_alloc_diff                    difference_type;
-
-      typedef ptr_alloc_ptr                     index_pointer;
-      typedef const_iterator                    self_t;
-
-      friend class deque<T, Allocator>;
-      friend class deque_base<T, Allocator>;
-
-      protected:
-      val_alloc_ptr  m_cur;
-      val_alloc_ptr  m_first;
-      val_alloc_ptr  m_last;
-      index_pointer  m_node;
-
-      public:
-      const_iterator(val_alloc_ptr x, index_pointer y)
-         : m_cur(x), m_first(*y),
-           m_last(*y + s_buffer_size()), m_node(y) {}
-
-      const_iterator() : m_cur(0), m_first(0), m_last(0), m_node(0) {}
-
-      const_iterator(const const_iterator& x)
-         : m_cur(x.m_cur),   m_first(x.m_first),
-           m_last(x.m_last), m_node(x.m_node) {}
-
-      reference operator*() const
-         { return *this->m_cur; }
-
-      pointer operator->() const
-         { return this->m_cur; }
-
-      difference_type operator-(const self_t& x) const
-      {
-         if(!this->m_cur && !x.m_cur){
-            return 0;
-         }
-         return difference_type(this->s_buffer_size()) * (this->m_node - x.m_node - 1) +
-            (this->m_cur - this->m_first) + (x.m_last - x.m_cur);
-      }
-
-      self_t& operator++()
-      {
-         ++this->m_cur;
-         if (this->m_cur == this->m_last) {
-            this->priv_set_node(this->m_node + 1);
-            this->m_cur = this->m_first;
-         }
-         return *this;
-      }
-
-      self_t operator++(int) 
-      {
-         self_t tmp = *this;
-         ++*this;
-         return tmp;
-      }
-
-      self_t& operator--()
-      {
-         if (this->m_cur == this->m_first) {
-            this->priv_set_node(this->m_node - 1);
-            this->m_cur = this->m_last;
-         }
-         --this->m_cur;
-         return *this;
-      }
-
-      self_t operator--(int)
-      {
-         self_t tmp = *this;
-         --*this;
-         return tmp;
-      }
-
-      self_t& operator+=(difference_type n)
-      {
-         difference_type offset = n + (this->m_cur - this->m_first);
-         if (offset >= 0 && offset < difference_type(this->s_buffer_size()))
-            this->m_cur += n;
-         else {
-            difference_type node_offset =
-            offset > 0 ? offset / difference_type(this->s_buffer_size())
-                        : -difference_type((-offset - 1) / this->s_buffer_size()) - 1;
-            this->priv_set_node(this->m_node + node_offset);
-            this->m_cur = this->m_first +
-            (offset - node_offset * difference_type(this->s_buffer_size()));
-         }
-         return *this;
-      }
-
-      self_t operator+(difference_type n) const
-         {  self_t tmp = *this; return tmp += n;  }
-
-      self_t& operator-=(difference_type n)
-         { return *this += -n; }
-      
-      self_t operator-(difference_type n) const
-         {  self_t tmp = *this; return tmp -= n;  }
-
-      reference operator[](difference_type n) const
-         { return *(*this + n); }
-
-      bool operator==(const self_t& x) const
-         { return this->m_cur == x.m_cur; }
-
-      bool operator!=(const self_t& x) const
-         { return !(*this == x); }
-
-      bool operator<(const self_t& x) const
-      {
-         return (this->m_node == x.m_node) ?
-            (this->m_cur < x.m_cur) : (this->m_node < x.m_node);
-      }
-
-      bool operator>(const self_t& x) const 
-         { return x < *this; }
-
-      bool operator<=(const self_t& x) const
-         { return !(x < *this); }
-
-      bool operator>=(const self_t& x) const
-         { return !(*this < x); }
-
-      void priv_set_node(index_pointer new_node)
-      {
-         this->m_node = new_node;
-         this->m_first = *new_node;
-         this->m_last = this->m_first + this->s_buffer_size();
-      }
-
-      friend const_iterator operator+(difference_type n, const const_iterator& x)
-         {  return x + n;  }
-   };
-
-   //Deque iterator
-   class iterator : public const_iterator
-   {
-      public:
-      typedef std::random_access_iterator_tag   iterator_category;
-      typedef val_alloc_val                     value_type;
-      typedef val_alloc_ptr                     pointer;
-      typedef val_alloc_ref                     reference;
-      typedef val_alloc_diff                    difference_type;
-      typedef ptr_alloc_ptr                     index_pointer;
-      typedef const_iterator                    self_t;
-
-      friend class deque<T, Allocator>;
-      friend class deque_base<T, Allocator>;
-
-      private:
-      explicit iterator(const const_iterator& x) : const_iterator(x){}
-
-      public:
-      //Constructors
-      iterator(val_alloc_ptr x, index_pointer y) : const_iterator(x, y){}
-      iterator() : const_iterator(){}
-      //iterator(const const_iterator &cit) : const_iterator(cit){}
-      iterator(const iterator& x) : const_iterator(x){}
-
-      //Pointer like operators
-      reference operator*() const { return *this->m_cur; }
-      pointer operator->() const { return this->m_cur; }
-
-      reference operator[](difference_type n) const { return *(*this + n); }
-
-      //Increment / Decrement
-      iterator& operator++() 
-         { this->const_iterator::operator++(); return *this;  }
-
-      iterator operator++(int)
-         { iterator tmp = *this; ++*this; return tmp; }
-     
-      iterator& operator--()
-         {  this->const_iterator::operator--(); return *this;  }
-
-      iterator operator--(int)
-         {  iterator tmp = *this; --*this; return tmp; }
-
-      // Arithmetic
-      iterator& operator+=(difference_type off)
-         {  this->const_iterator::operator+=(off); return *this;  }
-
-      iterator operator+(difference_type off) const
-         {  return iterator(this->const_iterator::operator+(off));  }
-
-      friend iterator operator+(difference_type off, const iterator& right)
-         {  return iterator(off+static_cast<const const_iterator &>(right)); }
-
-      iterator& operator-=(difference_type off)
-         {  this->const_iterator::operator-=(off); return *this;   }
-
-      iterator operator-(difference_type off) const
-         {  return iterator(this->const_iterator::operator-(off));  }
-
-      difference_type operator-(const const_iterator& right) const
-         {  return static_cast<const const_iterator&>(*this) - right;   }
-   };
+   typedef container_detail::deque_iterator<val_alloc_ptr, false> iterator;
+   typedef container_detail::deque_iterator<val_alloc_ptr, true > const_iterator;
 
    deque_base(size_type num_elements, const allocator_type& a)
       :  members_(a)
@@ -406,7 +350,7 @@ class deque_base
  
    protected:
 
-   void swap_members(deque_base &x)
+   void swap_members(deque_base &x) BOOST_CONTAINER_NOEXCEPT
    {
       std::swap(this->members_.m_start, x.members_.m_start);
       std::swap(this->members_.m_finish, x.members_.m_finish);
@@ -458,13 +402,13 @@ class deque_base
       BOOST_CATCH_END
    }
 
-   void priv_destroy_nodes(ptr_alloc_ptr nstart, ptr_alloc_ptr nfinish)
+   void priv_destroy_nodes(ptr_alloc_ptr nstart, ptr_alloc_ptr nfinish) BOOST_CONTAINER_NOEXCEPT
    {
       for (ptr_alloc_ptr n = nstart; n < nfinish; ++n)
          this->priv_deallocate_node(*n);
    }
 
-   void priv_clear_map()
+   void priv_clear_map() BOOST_CONTAINER_NOEXCEPT
    {
       if (this->members_.m_map) {
          this->priv_destroy_nodes(this->members_.m_start.m_node, this->members_.m_finish.m_node + 1);
@@ -509,16 +453,16 @@ class deque_base
       iterator        m_finish;
    } members_;
 
-   ptr_alloc_t &ptr_alloc()
+   ptr_alloc_t &ptr_alloc() BOOST_CONTAINER_NOEXCEPT
    {  return members_;  }
   
-   const ptr_alloc_t &ptr_alloc() const
+   const ptr_alloc_t &ptr_alloc() const BOOST_CONTAINER_NOEXCEPT
    {  return members_;  }
 
-   allocator_type &alloc()
+   allocator_type &alloc() BOOST_CONTAINER_NOEXCEPT
    {  return members_;  }
   
-   const allocator_type &alloc() const
+   const allocator_type &alloc() const BOOST_CONTAINER_NOEXCEPT
    {  return members_;  }
 };
 /// @endcond
@@ -530,11 +474,11 @@ template <class T, class Allocator = std::allocator<T> >
 #else
 template <class T, class Allocator>
 #endif
-class deque : protected deque_base<T, Allocator>
+class deque : protected deque_base<Allocator>
 {
    /// @cond
    private:
-   typedef deque_base<T, Allocator> Base;
+   typedef deque_base<Allocator> Base;
    /// @endcond
 
    public:
@@ -596,7 +540,7 @@ class deque : protected deque_base<T, Allocator>
    {}
 
    //! <b>Effects</b>: Constructs a deque that will use a copy of allocator a
-   //!   and inserts n default contructed values.
+   //!   and inserts n value initialized values.
    //!
    //! <b>Throws</b>: If allocator_type's default constructor or copy constructor
    //!   throws or T's default or copy constructor throws.
@@ -605,7 +549,24 @@ class deque : protected deque_base<T, Allocator>
    explicit deque(size_type n)
       : Base(n, allocator_type())
    {
-      container_detail::insert_default_constructed_n_proxy<Allocator, iterator> proxy(this->alloc());
+      container_detail::insert_value_initialized_n_proxy<Allocator, iterator> proxy(this->alloc());
+      proxy.uninitialized_copy_n_and_update(this->begin(), n);
+      //deque_base will deallocate in case of exception...
+   }
+
+   //! <b>Effects</b>: Constructs a deque that will use a copy of allocator a
+   //!   and inserts n default initialized values.
+   //!
+   //! <b>Throws</b>: If allocator_type's default constructor or copy constructor
+   //!   throws or T's default or copy constructor throws.
+   //!
+   //! <b>Complexity</b>: Linear to n.
+   //!
+   //! <b>Note</b>: Non-standard extension
+   deque(size_type n, default_init_t)
+      : Base(n, allocator_type())
+   {
+      container_detail::insert_default_initialized_n_proxy<Allocator, iterator> proxy(this->alloc());
       proxy.uninitialized_copy_n_and_update(this->begin(), n);
       //deque_base will deallocate in case of exception...
    }
@@ -770,7 +731,6 @@ class deque : protected deque_base<T, Allocator>
          }
          //If unequal allocators, then do a one by one move
          else{
-            typedef typename std::iterator_traits<iterator>::iterator_category ItCat;
             this->assign( boost::make_move_iterator(x.begin())
                         , boost::make_move_iterator(x.end()));
          }
@@ -1006,9 +966,9 @@ class deque : protected deque_base<T, Allocator>
       { return allocator_traits_type::max_size(this->alloc()); }
 
    //! <b>Effects</b>: Inserts or erases elements at the end such that
-   //!   the size becomes n. New elements are default constructed.
+   //!   the size becomes n. New elements are value initialized.
    //!
-   //! <b>Throws</b>: If memory allocation throws, or T's copy constructor throws.
+   //! <b>Throws</b>: If memory allocation throws, or T's constructor throws.
    //!
    //! <b>Complexity</b>: Linear to the difference between size() and new_size.
    void resize(size_type new_size)
@@ -1018,7 +978,27 @@ class deque : protected deque_base<T, Allocator>
          this->priv_erase_last_n(len - new_size);
       else{
          const size_type n = new_size - this->size();
-         container_detail::insert_default_constructed_n_proxy<Allocator, iterator> proxy(this->alloc());
+         container_detail::insert_value_initialized_n_proxy<Allocator, iterator> proxy(this->alloc());
+         priv_insert_back_aux_impl(n, proxy);
+      }
+   }
+
+   //! <b>Effects</b>: Inserts or erases elements at the end such that
+   //!   the size becomes n. New elements are default initialized.
+   //!
+   //! <b>Throws</b>: If memory allocation throws, or T's constructor throws.
+   //!
+   //! <b>Complexity</b>: Linear to the difference between size() and new_size.
+   //!
+   //! <b>Note</b>: Non-standard extension
+   void resize(size_type new_size, default_init_t)
+   {
+      const size_type len = size();
+      if (new_size < len)
+         this->priv_erase_last_n(len - new_size);
+      else{
+         const size_type n = new_size - this->size();
+         container_detail::insert_default_initialized_n_proxy<Allocator, iterator> proxy(this->alloc());
          priv_insert_back_aux_impl(n, proxy);
       }
    }
@@ -1358,7 +1338,7 @@ class deque : protected deque_base<T, Allocator>
    //!   Linear time otherwise.
    iterator insert(const_iterator position, T &&x);
    #else
-   BOOST_MOVE_CONVERSION_AWARE_CATCH_1ARG(insert, T, iterator, priv_insert, const_iterator)
+   BOOST_MOVE_CONVERSION_AWARE_CATCH_1ARG(insert, T, iterator, priv_insert, const_iterator, const_iterator)
    #endif
 
    //! <b>Requires</b>: pos must be a valid iterator of *this.
@@ -1397,7 +1377,7 @@ class deque : protected deque_base<T, Allocator>
       )
    {
       size_type n = 0;
-      iterator it(pos);
+      iterator it(pos.unconst());
       for(;first != last; ++first, ++n){
          it = this->emplace(it, *first);
          ++it;
@@ -1468,15 +1448,15 @@ class deque : protected deque_base<T, Allocator>
    //!   Constant if pos is the first or the last element.
    iterator erase(const_iterator pos) BOOST_CONTAINER_NOEXCEPT
    {
-      const_iterator next = pos;
+      iterator next = pos.unconst();
       ++next;
       size_type index = pos - this->members_.m_start;
       if (index < (this->size()/2)) {
-         boost::move_backward(begin(), iterator(pos), iterator(next));
+         boost::move_backward(this->begin(), pos.unconst(), next);
          pop_front();
       }
       else {
-         boost::move(iterator(next), end(), iterator(pos));
+         boost::move(next, this->end(), pos.unconst());
          pop_back();
       }
       return this->members_.m_start + index;
@@ -1500,7 +1480,7 @@ class deque : protected deque_base<T, Allocator>
          const size_type n = static_cast<size_type>(last - first);
          const size_type elems_before = static_cast<size_type>(first - this->members_.m_start);
          if (elems_before < (this->size() - n) - elems_before) {
-            boost::move_backward(begin(), iterator(first), iterator(last));
+            boost::move_backward(begin(), first.unconst(), last.unconst());
             iterator new_start = this->members_.m_start + n;
             if(!Base::traits_t::trivial_dctr_after_move)
                this->priv_destroy_range(this->members_.m_start, new_start);
@@ -1508,7 +1488,7 @@ class deque : protected deque_base<T, Allocator>
             this->members_.m_start = new_start;
          }
          else {
-            boost::move(iterator(last), end(), iterator(first));
+            boost::move(last.unconst(), end(), first.unconst());
             iterator new_finish = this->members_.m_finish - n;
             if(!Base::traits_t::trivial_dctr_after_move)
                this->priv_destroy_range(new_finish, this->members_.m_finish);
@@ -1674,7 +1654,7 @@ class deque : protected deque_base<T, Allocator>
    template<class InsertProxy>
    iterator priv_insert_aux_impl(const_iterator p, size_type n, InsertProxy interf)
    {
-      iterator pos(p);
+      iterator pos(p.unconst());
       const size_type pos_n = p - this->cbegin();
       if(!this->members_.m_map){
          this->priv_initialize_map(0);
@@ -1845,7 +1825,7 @@ class deque : protected deque_base<T, Allocator>
    }
 
    // Called only if this->members_.m_finish.m_cur == this->members_.m_finish.m_first.
-   void priv_pop_back_aux()
+   void priv_pop_back_aux() BOOST_CONTAINER_NOEXCEPT
    {
       this->priv_deallocate_node(this->members_.m_finish.m_first);
       this->members_.m_finish.priv_set_node(this->members_.m_finish.m_node - 1);
@@ -1860,7 +1840,7 @@ class deque : protected deque_base<T, Allocator>
    // if the deque has at least one element (a precondition for this member
    // function), and if this->members_.m_start.m_cur == this->members_.m_start.m_last, then the deque
    // must have at least two nodes.
-   void priv_pop_front_aux()
+   void priv_pop_front_aux() BOOST_CONTAINER_NOEXCEPT
    {
       allocator_traits_type::destroy
          ( this->alloc()
@@ -1959,31 +1939,31 @@ class deque : protected deque_base<T, Allocator>
 
 // Nonmember functions.
 template <class T, class Allocator>
-inline bool operator==(const deque<T, Allocator>& x, const deque<T, Allocator>& y)
+inline bool operator==(const deque<T, Allocator>& x, const deque<T, Allocator>& y) BOOST_CONTAINER_NOEXCEPT
 {
    return x.size() == y.size() && equal(x.begin(), x.end(), y.begin());
 }
 
 template <class T, class Allocator>
-inline bool operator<(const deque<T, Allocator>& x, const deque<T, Allocator>& y)
+inline bool operator<(const deque<T, Allocator>& x, const deque<T, Allocator>& y) BOOST_CONTAINER_NOEXCEPT
 {
    return lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
 }
 
 template <class T, class Allocator>
-inline bool operator!=(const deque<T, Allocator>& x, const deque<T, Allocator>& y)
+inline bool operator!=(const deque<T, Allocator>& x, const deque<T, Allocator>& y) BOOST_CONTAINER_NOEXCEPT
    {  return !(x == y);   }
 
 template <class T, class Allocator>
-inline bool operator>(const deque<T, Allocator>& x, const deque<T, Allocator>& y)
+inline bool operator>(const deque<T, Allocator>& x, const deque<T, Allocator>& y) BOOST_CONTAINER_NOEXCEPT
    {  return y < x; }
 
 template <class T, class Allocator>
-inline bool operator>=(const deque<T, Allocator>& x, const deque<T, Allocator>& y)
+inline bool operator>=(const deque<T, Allocator>& x, const deque<T, Allocator>& y) BOOST_CONTAINER_NOEXCEPT
    {  return !(x < y); }
 
 template <class T, class Allocator>
-inline bool operator<=(const deque<T, Allocator>& x, const deque<T, Allocator>& y)
+inline bool operator<=(const deque<T, Allocator>& x, const deque<T, Allocator>& y) BOOST_CONTAINER_NOEXCEPT
    {  return !(y < x); }
 
 template <class T, class Allocator>

@@ -13,6 +13,9 @@ void do_something(int& i)
 {
   ++i;
 }
+void f(int, int)
+{
+}
 
 struct func
 {
@@ -81,7 +84,10 @@ int main()
 
     do_something_in_current_thread();
   }
-
+  {
+    boost::scoped_thread<> g( &f, 1, 2 );
+    do_something_in_current_thread();
+  }
   return 0;
 }
 

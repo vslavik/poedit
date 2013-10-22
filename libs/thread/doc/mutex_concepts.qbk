@@ -1273,7 +1273,7 @@ The following classes are models of `StrictLock`:
         explicit operator bool() const noexcept;
         bool owns_lock() const noexcept;
 
-        Lockable* mutex() const noexcept;
+        mutex_type* mutex() const noexcept;
 
     #if defined BOOST_THREAD_USE_DATE_TIME || defined BOOST_THREAD_DONT_USE_CHRONO
         unique_lock(Lockable& m_,system_time const& target_time);
@@ -1535,7 +1535,7 @@ object associated with `*this`.]]
 
 [endsect]
 
-[section:mutex `Lockable* mutex() const`]
+[section:mutex `Lockable* mutex() const noexcept`]
 
 [variablelist
 
@@ -1907,7 +1907,7 @@ state (including the destructor) must be called by the same thread that acquired
 
 [endsect]
 
-[section:upgrade_to_unique_lock Class template `upgrade_to_unique_lock`]
+[section:upgrade_to_unique_lock Class template `upgrade_to_unique_lock` -- EXTENSION]
 
     // #include <boost/thread/locks.hpp>
     // #include <boost/thread/lock_types.hpp> 
@@ -1930,6 +1930,8 @@ state (including the destructor) must be called by the same thread that acquired
 
         explicit operator bool() const;
         bool owns_lock() const;
+        mutex_type* mutex() const;
+
     };
 
 __upgrade_to_unique_lock__ allows for a temporary upgrade of an __upgrade_lock__ to exclusive ownership. When constructed with a
@@ -1939,7 +1941,7 @@ __lockable_concept_type__ is downgraded back to ['upgrade ownership].
 
 [endsect]
 
-[section:scoped_try_lock Mutex-specific class `scoped_try_lock`]
+[section:scoped_try_lock Mutex-specific class `scoped_try_lock` -- DEPRECATED]
 
     class MutexType::scoped_try_lock
     {

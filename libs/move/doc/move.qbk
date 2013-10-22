@@ -129,9 +129,12 @@ Consider a simple handle class that owns a resource and also provides copy seman
 
       clone_ptr& operator=(clone_ptr&& p)
       {
-         std::swap(ptr, p.ptr);
-         delete p.ptr;
-         p.ptr = 0;
+         if(this != &p)
+         {
+            std::swap(ptr, p.ptr);
+            delete p.ptr;
+            p.ptr = 0;
+         }
          return *this;
       }
 
@@ -171,7 +174,7 @@ You just need to follow these simple steps:
 
 * Put the following macro in the [*private] section:
   [macroref BOOST_COPYABLE_AND_MOVABLE BOOST_COPYABLE_AND_MOVABLE(classname)]
-* Left copy constructor as is.
+* Leave copy constructor as is.
 * Write a copy assignment taking the parameter as
   [macroref BOOST_COPY_ASSIGN_REF BOOST_COPY_ASSIGN_REF(classname)]
 * Write a move constructor and a move assignment taking the parameter as
@@ -787,10 +790,22 @@ Many thanks to all boosters that have tested, reviewed and improved the library.
 
 [section:release_notes Release Notes]
 
+[section:release_notes_boost_1_55_00 Boost 1.55 Release]
+
+*  Fixed bugs  [@https://svn.boost.org/trac/boost/ticket/7952 #7952],
+               [@https://svn.boost.org/trac/boost/ticket/8764 #8764],
+               [@https://svn.boost.org/trac/boost/ticket/8765 #8765],
+               [@https://svn.boost.org/trac/boost/ticket/8842 #8842],
+               [@https://svn.boost.org/trac/boost/ticket/8979 #8979].
+[endsect]
+
+
 [section:release_notes_boost_1_54_00 Boost 1.54 Release]
 
-*  Fixed bugs [@https://svn.boost.org/trac/boost/ticket/7969 #7969]),
-   [@https://svn.boost.org/trac/boost/ticket/8231 #8231]).
+
+*  Fixed bugs [@https://svn.boost.org/trac/boost/ticket/7969 #7969],
+              [@https://svn.boost.org/trac/boost/ticket/8231 #8231],
+              [@https://svn.boost.org/trac/boost/ticket/8765 #8765].
 
 [endsect]
 

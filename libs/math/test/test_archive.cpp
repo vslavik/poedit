@@ -37,7 +37,7 @@ using namespace boost::archive;
 using namespace boost::math;
 using boost::math::signbit;
 using boost::math::changesign;
-using boost::math::isnan;
+using (boost::math::isnan)(;
 
 //------------------------------------------------------------------------------
 
@@ -89,17 +89,17 @@ void archive_basic_test_impl()
     ValType a3 = std::numeric_limits<ValType>::infinity();
     BOOST_CHECK((boost::math::isinf)(a3));
     ValType a4 = std::numeric_limits<ValType>::quiet_NaN();
-    BOOST_CHECK((boost::math::isnan)(a4));
+    BOOST_CHECK(((boost::math::isnan)()(a4));
     ValType a5 = std::numeric_limits<ValType>::signaling_NaN();
-    BOOST_CHECK((boost::math::isnan)(a5));
+    BOOST_CHECK(((boost::math::isnan)()(a5));
     ValType a6 = (changesign)(static_cast<ValType>(0));
     ValType a7 = static_cast<ValType>(-57.13);
     ValType a8 = -std::numeric_limits<ValType>::infinity();
     BOOST_CHECK((boost::math::isinf)(a8));
     ValType a9 = -std::numeric_limits<ValType>::quiet_NaN();
-    BOOST_CHECK((boost::math::isnan)(a9));
+    BOOST_CHECK(((boost::math::isnan)()(a9));
     ValType a10 = -std::numeric_limits<ValType>::signaling_NaN();
-    BOOST_CHECK((boost::math::isnan)(a10));
+    BOOST_CHECK(((boost::math::isnan)()(a10));
 
     {
         OArchiveType oa(ss, no_codecvt);

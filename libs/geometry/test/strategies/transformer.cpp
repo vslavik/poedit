@@ -34,7 +34,10 @@ BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS(cs::cartesian)
 template <typename P, typename T>
 void check_inverse(P const& p, T const& trans)
 {
-    bg::strategy::transform::inverse_transformer<P, P> inverse(trans);
+    typedef typename bg::coordinate_type<P>::type coordinate_type;
+    const std::size_t dim = bg::dimension<P>::value;
+
+    bg::strategy::transform::inverse_transformer<coordinate_type, dim, dim> inverse(trans);
 
     P i;
     bg::transform(p, i, inverse);
@@ -46,11 +49,14 @@ void check_inverse(P const& p, T const& trans)
 template <typename P>
 void test_all()
 {
+    typedef typename bg::coordinate_type<P>::type coordinate_type;
+    const std::size_t dim = bg::dimension<P>::value;
+
     P p;
     bg::assign_values(p, 1, 1);
 
     {
-        bg::strategy::transform::translate_transformer<P, P> trans(1, 1);
+        bg::strategy::transform::translate_transformer<coordinate_type, dim, dim> trans(1, 1);
         P tp;
         bg::transform(p, tp, trans);
 
@@ -61,7 +67,7 @@ void test_all()
     }
 
     {
-        bg::strategy::transform::scale_transformer<P, P> trans(10, 10);
+        bg::strategy::transform::scale_transformer<coordinate_type, dim, dim> trans(10, 10);
         P tp;
         bg::transform(p, tp, trans);
 
@@ -72,7 +78,7 @@ void test_all()
     }
 
     {
-        bg::strategy::transform::rotate_transformer<P, P, bg::degree> trans(90.0);
+        bg::strategy::transform::rotate_transformer<bg::degree, double, dim, dim> trans(90.0);
         P tp;
         bg::transform(p, tp, trans);
 
@@ -83,7 +89,7 @@ void test_all()
 
     {
         // Map from 0,0,2,2 to 0,0,500,500
-        bg::strategy::transform::map_transformer<P, P, false> trans
+        bg::strategy::transform::map_transformer<coordinate_type, dim, dim, false> trans
             (
                 0.0, 0.0, 2.0, 2.0, 500, 500
             );

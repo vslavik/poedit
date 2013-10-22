@@ -4,7 +4,7 @@
 <title>Class template synchronous_sink</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../sinks.html#header.boost.log.sinks.sync_frontend_hpp" title="Header &lt;boost/log/sinks/sync_frontend.hpp&gt;">
 <link rel="prev" href="sink.html" title="Class sink">
 <link rel="next" href="syslog/direct_severity_mapping.html" title="Class template direct_severity_mapping">
@@ -34,30 +34,30 @@
   <span class="keyword">typedef</span> <span class="identifier">implementation_defined</span> <a name="boost.log.sinks.synchronous_sink.locked_backend_ptr"></a><span class="identifier">locked_backend_ptr</span><span class="special">;</span>  <span class="comment">// A pointer type that locks the backend until it's destroyed. </span>
 
   <span class="comment">// <a class="link" href="synchronous_sink.html#boost.log.sinks.synchronous_sinkconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="synchronous_sink.html#idp20565376-bb"><span class="identifier">synchronous_sink</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="synchronous_sink.html#idp20565744-bb"><span class="identifier">synchronous_sink</span></a><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sink_backend_type</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="synchronous_sink.html#idp27310472-bb"><span class="identifier">synchronous_sink</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="synchronous_sink.html#idp27310840-bb"><span class="identifier">synchronous_sink</span></a><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sink_backend_type</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="synchronous_sink.html#idp20561392-bb">public member functions</a></span>
-  <span class="identifier">locked_backend_ptr</span> <a class="link" href="synchronous_sink.html#idp20561600-bb"><span class="identifier">locked_backend</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="synchronous_sink.html#idp20562320-bb"><span class="identifier">consume</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="synchronous_sink.html#idp20563376-bb"><span class="identifier">try_consume</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="synchronous_sink.html#idp20564448-bb"><span class="identifier">flush</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="synchronous_sink.html#idp27306488-bb">public member functions</a></span>
+  <span class="identifier">locked_backend_ptr</span> <a class="link" href="synchronous_sink.html#idp27306696-bb"><span class="identifier">locked_backend</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="synchronous_sink.html#idp27307416-bb"><span class="identifier">consume</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="synchronous_sink.html#idp27308472-bb"><span class="identifier">try_consume</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="synchronous_sink.html#idp27309544-bb"><span class="identifier">flush</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp26410048"></a><h2>Description</h2>
+<a name="idp65432152"></a><h2>Description</h2>
 <p>The sink frontend serializes threads before passing logging records to the backend </p>
 <div class="refsect2">
-<a name="idp26410480"></a><h3>
+<a name="idp65432584"></a><h3>
 <a name="boost.log.sinks.synchronous_sinkconstruct-copy-destruct"></a><code class="computeroutput">synchronous_sink</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp20565376-bb"></a><span class="identifier">synchronous_sink</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp27310472-bb"></a><span class="identifier">synchronous_sink</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Default constructor. Constructs the sink backend instance. Requires the backend to be default-constructible. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp20565744-bb"></a><span class="identifier">synchronous_sink</span><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sink_backend_type</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> backend<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp27310840-bb"></a><span class="identifier">synchronous_sink</span><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sink_backend_type</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> backend<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor attaches user-constructed backend instance</p>
 <p>
 
@@ -91,23 +91,23 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp26420576"></a><h3>
-<a name="idp20561392-bb"></a><code class="computeroutput">synchronous_sink</code> public member functions</h3>
+<a name="idp65442680"></a><h3>
+<a name="idp27306488-bb"></a><code class="computeroutput">synchronous_sink</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">locked_backend_ptr</span> <a name="idp20561600-bb"></a><span class="identifier">locked_backend</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">locked_backend_ptr</span> <a name="idp27306696-bb"></a><span class="identifier">locked_backend</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Locking accessor to the attached backend </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp20562320-bb"></a><span class="identifier">consume</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp27307416-bb"></a><span class="identifier">consume</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
 <p>Passes the log record to the backend </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp20563376-bb"></a><span class="identifier">try_consume</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp27308472-bb"></a><span class="identifier">try_consume</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
 <p>The method attempts to pass logging record to the backend </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp20564448-bb"></a><span class="identifier">flush</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp27309544-bb"></a><span class="identifier">flush</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method performs flushing of any internal buffers that may hold log records. The method may take considerable time to complete and may block both the calling thread and threads attempting to put new records into the sink while this call is in progress. </p>
 </li>
 </ol></div>

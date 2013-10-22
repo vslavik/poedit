@@ -31,10 +31,12 @@ cmd = cmd + " --convenience_header_path ../../../boost/geometry/"
 cmd = cmd + " --convenience_headers geometry.hpp,geometries/geometries.hpp,multi/multi.hpp"
 cmd = cmd + " --skip_namespace boost::geometry::"
 cmd = cmd + " --copyright src/copyright_block.qbk"
+cmd = cmd + " --output_member_variables false"
 cmd = cmd + " > generated/%s.qbk"
 
 def call_doxygen():
     os.chdir("doxy");
+    os.system("rm -f doxygen_output/xml/*.xml")
     os.system(doxygen_cmd)
     os.chdir("..")
 

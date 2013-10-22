@@ -22,8 +22,6 @@ template <typename Graph>
 void build_graph(Graph& g,
                  vector<typename graph_traits<Graph>::vertex_descriptor>& v)
 {
-    typedef typename graph_traits<Graph>::vertex_descriptor Vertex;
-
     // add vertices
     for(size_t i = 0; i < N; ++i) {
         v[i] = add_vertex(g);

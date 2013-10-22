@@ -10,7 +10,7 @@
  * \date   08.1.2012
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #include <boost/log/detail/config.hpp>
@@ -226,6 +226,27 @@ BOOST_LOG_API thread::id const& get_id()
 
 } // namespace this_thread
 
+// Used in default_sink.cpp
+void format_thread_id(char* buf, std::size_t size, thread::id tid)
+{
+    static const char char_table[] = "0123456789abcdef";
+
+    // Input buffer is assumed to be always larger than 2 chars
+    *buf++ = '0';
+    *buf++ = 'x';
+
+    size -= 3; // reserve space for the terminating 0
+    thread::id::native_type id = tid.native_id();
+    unsigned int i = 0;
+    const unsigned int n = (size > (tid_size * 2u)) ? static_cast< unsigned int >(tid_size * 2u) : static_cast< unsigned int >(size);
+    for (unsigned int shift = n * 4u; i < n; ++i, shift -= 4u)
+    {
+        buf[i] = char_table[(id >> shift) & 15u];
+    }
+
+    buf[i] = '\0';
+}
+
 template< typename CharT, typename TraitsT >
 std::basic_ostream< CharT, TraitsT >&
 operator<< (std::basic_ostream< CharT, TraitsT >& strm, thread::id const& tid)
@@ -233,8 +254,8 @@ operator<< (std::basic_ostream< CharT, TraitsT >& strm, thread::id const& tid)
     if (strm.good())
     {
         io::ios_flags_saver flags_saver(strm, (strm.flags() & std::ios_base::uppercase) | std::ios_base::hex | std::ios_base::internal | std::ios_base::showbase);
-        io::ios_width_saver width_saver(strm, static_cast< std::streamsize >(tid_size * 2 + 2)); // 2 chars per byte + 2 chars for the leading 0x
         io::basic_ios_fill_saver< CharT, TraitsT > fill_saver(strm, static_cast< CharT >('0'));
+        strm.width(static_cast< std::streamsize >(tid_size * 2 + 2)); // 2 chars per byte + 2 chars for the leading 0x
         strm << static_cast< uint_t< tid_size * 8 >::least >(tid.native_id());
     }
 

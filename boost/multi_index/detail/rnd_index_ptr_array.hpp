@@ -1,4 +1,4 @@
-/* Copyright 2003-2008 Joaquin M Lopez Munoz.
+/* Copyright 2003-2013 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -74,12 +74,12 @@ public:
 
   void reserve(std::size_t c)
   {
-    if(c>capacity_){
-      auto_space<value_type,Allocator> spc1(spc.get_allocator(),c+1);
-      node_impl_type::transfer(begin(),end()+1,spc1.data());
-      spc.swap(spc1);
-      capacity_=c;
-    }
+    if(c>capacity_)set_capacity(c);
+  }
+
+  void shrink_to_fit()
+  {
+    if(capacity_>size_)set_capacity(size_);
   }
 
   pointer begin()const{return ptrs();}
@@ -123,6 +123,14 @@ private:
   pointer ptrs()const
   {
     return spc.data();
+  }
+
+  void set_capacity(std::size_t c)
+  {
+    auto_space<value_type,Allocator> spc1(spc.get_allocator(),c+1);
+    node_impl_type::transfer(begin(),end()+1,spc1.data());
+    spc.swap(spc1);
+    capacity_=c;
   }
 };
 

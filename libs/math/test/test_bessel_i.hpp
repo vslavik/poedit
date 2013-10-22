@@ -32,7 +32,6 @@ T cyl_bessel_i_int_wrapper(T v, T x)
 template <class Real, class T>
 void do_test_cyl_bessel_i(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
@@ -80,7 +79,6 @@ void do_test_cyl_bessel_i(const T& data, const char* type_name, const char* test
 template <class Real, class T>
 void do_test_cyl_bessel_i_int(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);

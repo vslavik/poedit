@@ -32,7 +32,9 @@ class remove
 
     typedef rtree::node_auto_ptr<Value, Options, Translator, Box, Allocators> node_auto_ptr;
     typedef typename Allocators::node_pointer node_pointer;
-    typedef typename Allocators::internal_node_pointer internal_node_pointer;
+
+    //typedef typename Allocators::internal_node_pointer internal_node_pointer;
+    typedef internal_node * internal_node_pointer;
 
 public:
     inline remove(node_pointer & root,

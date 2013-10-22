@@ -75,11 +75,6 @@ test_distributed_strong_components(int n, double _p, bool verify, bool emit_dot_
                          bidirectionalS > Graph;
 #endif
 
-  typedef graph_traits<Graph>::vertex_descriptor vertex_descriptor;
-  typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
-  typedef iterator_property_map<std::vector<vertex_descriptor>::iterator, property_map<Graph, vertex_index_t>::type> ParentMap;
-  typedef std::pair<int, int> Edge;
-
   minstd_rand gen;
 
   gen.seed(seed);

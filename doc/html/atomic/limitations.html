@@ -55,12 +55,11 @@
           reordering of memory operations only in one direction. Since there is no
           way to express this constraint to the compiler, these act as "full
           compiler barriers" in this implementation. In corner cases this may
-          lead to worse code than a C++11 compiler could generate.
+          result in a less efficient code than a C++11 compiler could generate.
         </li>
 <li class="listitem">
           <span class="bold"><strong>No interprocess fallback</strong></span>: using <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
-          in shared memory only works correctly, if <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">is_lock_free</span>
-          <span class="special">==</span> <span class="keyword">true</span></code>
+          in shared memory only works correctly, if <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">is_lock_free</span><span class="special">()</span> <span class="special">==</span> <span class="keyword">true</span></code>
         </li>
 </ul></div>
 </div>

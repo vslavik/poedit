@@ -10,8 +10,8 @@
 #include <map>
 #include <iostream>
 #include <fstream>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/log/sinks.hpp>
 #include <boost/log/expressions.hpp>
 #include <boost/log/attributes/scoped_attribute.hpp>

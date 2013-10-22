@@ -63,6 +63,7 @@ void test_thread_callable_object_no_arguments()
 struct callable_noncopyable_no_args:
     boost::noncopyable
 {
+      callable_noncopyable_no_args() : boost::noncopyable() {}
     static bool called;
 
     void operator()() const
