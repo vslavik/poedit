@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Struct impl</title>
+<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="up" href="../attribute.html#idp15333936" title="Description">
+<link rel="prev" href="../attribute.html" title="Class attribute">
+<link rel="next" href="../swap_idp18984688.html" title="Function swap">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../attribute.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../attribute.html#idp15333936"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../swap_idp18984688.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="boost.log.attribute.impl"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Struct impl</span></h2>
+<p>boost::log::attribute::impl &#8212; A base class for an attribute value factory. </p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../attributes.html#header.boost.log.attributes.attribute_hpp" title="Header &lt;boost/log/attributes/attribute.hpp&gt;">boost/log/attributes/attribute.hpp</a>&gt;
+
+</span>
+
+<span class="comment">// A base class for an attribute value factory.</span>
+
+<span class="keyword">struct</span> <a class="link" href="impl.html" title="Struct impl">impl</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">intrusive_ref_counter</span> <span class="special">{</span>
+
+  <span class="comment">// <a class="link" href="impl.html#idp18967392-bb">public member functions</a></span>
+  <a class="link" href="../attribute_value.html" title="Class attribute_value">attribute_value</a> <a class="link" href="impl.html#idp18967600-bb"><span class="identifier">get_value</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+
+  <span class="comment">// <a class="link" href="impl.html#idp18968640-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a class="link" href="impl.html#idp18968848-bb"><span class="keyword">operator</span> <span class="keyword">new</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="impl.html#idp18969648-bb"><span class="keyword">operator</span> <span class="keyword">delete</span></a><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">)</span><span class="special">;</span>
+<span class="special">}</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idp15399600"></a><h2>Description</h2>
+<p>All attributes must derive their implementation from this class. </p>
+<div class="refsect2">
+<a name="idp15400016"></a><h3>
+<a name="idp18967392-bb"></a><code class="computeroutput">impl</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<pre class="literallayout"><a class="link" href="../attribute_value.html" title="Class attribute_value">attribute_value</a> <a name="idp18967600-bb"></a><span class="identifier">get_value</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>The actual attribute value. It shall not return empty values (exceptions shall be used to indicate errors). </p></td>
+</tr></tbody>
+</table></div>
+</li></ol></div>
+</div>
+<div class="refsect2">
+<a name="idp15404240"></a><h3>
+<a name="idp18968640-bb"></a><code class="computeroutput">impl</code> public static functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a name="idp18968848-bb"></a><span class="keyword">operator</span> <span class="keyword">new</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> size<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp18969648-bb"></a><span class="keyword">operator</span> <span class="keyword">delete</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span> p<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> size<span class="special">)</span><span class="special">;</span></pre></li>
+</ol></div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../attribute.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../attribute.html#idp15333936"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../swap_idp18984688.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
