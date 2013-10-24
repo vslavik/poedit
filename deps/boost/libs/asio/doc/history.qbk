@@ -7,6 +7,61 @@
 
 [section:history Revision History]
 
+[heading Asio 1.10.1 / Boost 1.55]
+
+* Implemented a limited port to Windows Runtime. This support requires that the
+  language extensions be enabled. Due to the restricted facilities exposed by
+  the Windows Runtime API, the port also comes with the following caveats:
+  * The core facilities such as the `io_service`, `strand`, buffers, composed
+    operations, timers, etc., should all work as normal.
+  * For sockets, only client-side TCP is supported.
+  * Explicit binding of a client-side TCP socket is not supported.
+  * The `cancel()` function is not supported for sockets. Asynchronous
+    operations may only be cancelled by closing the socket.
+  * Operations that use `null_buffers` are not supported.
+  * Only `tcp::no_delay` and `socket_base::keep_alive` options are supported.
+  * Resolvers do not support service names, only numbers. I.e. you must
+    use "80" rather than "http".
+  * Most resolver query flags have no effect.
+* Fixed a regression (introduced in Boost 1.54) where, on some platforms, errors
+  from `async_connect` were not correctly propagated through to the completion
+  handler ([ticket 8795]).
+* Fixed a Windows-specific regression (introduced in Boost 1.54) that occurs
+  when multiple threads are running an `io_service`. When the bug occurs, the
+  result of an asynchronous operation (error and bytes tranferred) is
+  incorrectly discarded and zero values used instead. For TCP sockets this
+  results in spurious end-of-file notifications ([ticket 8933]).
+* Fixed a bug in handler tracking, where it was not correctly printing out some
+  handler IDs ([ticket 8808]).
+* Fixed the comparison used to test for successful synchronous accept
+  operations so that it works correctly with unsigned socket descriptors
+  ([ticket 8752]).
+* Ensured the signal number is correctly passed to the completion handler when
+  starting an `async_wait` on a signal that is already raised ([ticket 8738]).
+* Suppressed a g++ 4.8+ warning about unused typedefs ([ticket 8980]).
+* Enabled the move optimisation for handlers that use the default invocation
+  hook ([ticket 8624]).
+* Clarified that programs must not issue overlapping `async_write_at`
+  operations ([ticket 8669]).
+* Changed the Windows `HANDLE` backend to treat `ERROR_MORE_DATA` as a
+  non-fatal error when returned by `GetOverlappedResult` for a synchronous
+  read ([ticket 8722]).
+* Visual C++ language extensions use `generic` as a keyword. Added a
+  workaround that renames the namespace to `cpp_generic` when those language
+  extensions are in effect.
+* Fixed some asynchronous operations that missed out on getting `async_result`
+  support in Boost 1.54. In particular, the buffered stream templates have been
+  updated so that they adhere to current handler patterns ([ticket 9000],
+  [ticket 9001]).
+* Enabled move support for Microsoft Visual Studio 2012 ([ticket 8959]).
+* Added `use_future` support for Microsoft Visual Studio 2012.
+* Removed a use of `std::min` in the Windows IOCP backend to avoid a
+  dependency on the `<algorithm>` header ([ticket 8758]).
+* Eliminated some unnecessary handler copies.
+* Fixed various minor and cosmetic issues in code and documentation
+  (including [ticket 8347], [ticket 8950], [ticket 8953], [ticket 8965],
+  [ticket 8997]).
+
 [heading Asio 1.10.0 / Boost 1.54]
 
 * Added new traits classes, `handler_type` and `async_result`, that allow the

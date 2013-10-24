@@ -2834,6 +2834,31 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">eval_msb</span><span class="special">(</span><span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">unsigned</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Returns the index of the most significant bit that is set. Only
+                  required when <code class="computeroutput"><span class="identifier">B</span></code>
+                  is an integer type. The default version of this function is synthesised
+                  from other operations above.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">eval_bit_test</span><span class="special">(</span><span class="identifier">cb</span><span class="special">,</span>
                   <span class="identifier">ui</span><span class="special">)</span></code>
                 </p>
@@ -3226,6 +3251,32 @@
                   shall be listed in one of the type lists <code class="computeroutput"><span class="identifier">B</span><span class="special">::</span><span class="identifier">signed_types</span></code>,
                   <code class="computeroutput"><span class="identifier">B</span><span class="special">::</span><span class="identifier">unsigned_types</span></code>. The default version
                   of this function is synthesised from other operations above.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_integer_sqrt</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span> <span class="identifier">cb</span><span class="special">,</span> <span class="identifier">b2</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the largest
+                  integer which when squared is less than <code class="computeroutput"><span class="identifier">cb</span></code>,
+                  also sets <code class="computeroutput"><span class="identifier">b2</span></code> to
+                  the remainder, ie to <span class="emphasis"><em>cb - b<sup>2</sup></em></span>. The default
+                  version of this function is synthesised from other operations above.
                 </p>
               </td>
 <td>

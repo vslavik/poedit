@@ -16,7 +16,7 @@ namespace boost { namespace phoenix
     struct function
     {
         function() : f() {}
-        function(F const& f) : f(f) {}
+        function(F const& f_) : f(f_) {}
 
         actor<typename as_composite<detail::function_eval<0>, F>::type>
         operator()() const

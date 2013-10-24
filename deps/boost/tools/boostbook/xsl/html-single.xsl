@@ -13,8 +13,20 @@
   <!-- Import the HTML stylesheet -->
   <xsl:import 
     href="http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl"/>
-  <xsl:import href="admon.xsl"/>
-  <xsl:import href="relative-href.xsl"/>
+  <xsl:import
+    href="http://docbook.sourceforge.net/release/xsl/current/html/math.xsl"/>
+
+  <xsl:output method="html" encoding="US-ASCII" indent="no"/>
+  
+  <!-- We have to make sure that our templates override all
+       docbook templates.  Therefore, we include our own templates
+       instead of importing them.  In order for this to work,
+       the stylesheets included here cannot also include each other -->
+  <xsl:include href="docbook-layout.xsl"/>
+  <xsl:include href="admon.xsl"/>
+  <xsl:include href="xref.xsl"/>
+  <xsl:include href="relative-href.xsl"/>
+  <xsl:include href="callout.xsl"/>
 
   <xsl:param name="admon.style"/>
   <xsl:param name="admon.graphics">1</xsl:param>

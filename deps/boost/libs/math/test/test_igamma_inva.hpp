@@ -46,7 +46,6 @@ void do_test_gamma_2(const T& data, const char* type_name, const char* test_name
    // test gamma_p_inva(T, T) against data:
    //
    using namespace std;
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    std::cout << test_name << " with type " << type_name << std::endl;
@@ -116,7 +115,6 @@ void do_test_gamma_2(const T& data, const char* type_name, const char* test_name
 template <class Real, class T>
 void do_test_gamma_inva(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);

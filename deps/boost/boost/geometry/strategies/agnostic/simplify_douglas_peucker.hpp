@@ -74,15 +74,18 @@ namespace detail
 \ingroup strategies
 \details The douglas_peucker strategy simplifies a linestring, ring or
     vector of points using the well-known Douglas-Peucker algorithm.
-    For the algorithm, see for example:
-\see http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm
-\see http://www2.dcs.hull.ac.uk/CISRG/projects/Royal-Inst/demos/dp.html
 \tparam Point the point type
 \tparam PointDistanceStrategy point-segment distance strategy to be used
 \note This strategy uses itself a point-segment-distance strategy which
     can be specified
 \author Barend and Maarten, 1995/1996
 \author Barend, revised for Generic Geometry Library, 2008
+*/
+
+/*
+For the algorithm, see for example:
+ - http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm
+ - http://www2.dcs.hull.ac.uk/CISRG/projects/Royal-Inst/demos/dp.html
 */
 template
 <
@@ -99,7 +102,11 @@ public :
     typedef PointDistanceStrategy distance_strategy_type;
     // typedef typename strategy::distance::services::comparable_type<PointDistanceStrategy>::type distance_strategy_type;
 
-    typedef typename strategy::distance::services::return_type<distance_strategy_type>::type return_type;
+    typedef typename strategy::distance::services::return_type
+                     <
+                         distance_strategy_type,
+                         Point, Point
+                     >::type return_type;
 
 private :
     typedef detail::douglas_peucker_point<Point> dp_point_type;
@@ -197,8 +204,6 @@ public :
 
         // Get points, recursively, including them if they are further away
         // than the specified distance
-        typedef typename strategy::distance::services::return_type<distance_strategy_type>::type return_type;
-
         consider(boost::begin(ref_candidates), boost::end(ref_candidates), max_distance, n, strategy);
 
         // Copy included elements to the output
@@ -222,6 +227,17 @@ public :
 };
 
 }} // namespace strategy::simplify
+
+
+namespace traits {
+
+template <typename P>
+struct point_type<strategy::simplify::detail::douglas_peucker_point<P> >
+{
+    typedef P type;
+};
+
+} // namespace traits
 
 
 }} // namespace boost::geometry

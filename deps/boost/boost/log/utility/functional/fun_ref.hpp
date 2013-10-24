@@ -19,7 +19,7 @@
 #include <boost/log/detail/config.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -65,7 +65,7 @@ private:
 };
 
 template< typename FunT >
-BOOST_LOG_FORCEINLINE function_reference_wrapper< FunT > fun_ref(FunT& fun)
+BOOST_FORCEINLINE function_reference_wrapper< FunT > fun_ref(FunT& fun)
 {
     return function_reference_wrapper< FunT >(fun);
 }

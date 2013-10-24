@@ -48,8 +48,6 @@ bool CheckEqualContainers(const MyBoostCont *boostcont, const MyStdCont *stdcont
    if(boostcont->size() != stdcont->size())
       return false;
 
-   typedef typename MyBoostCont::value_type value_type;
-
    typename MyBoostCont::const_iterator itboost(boostcont->begin()), itboostend(boostcont->end());
    typename MyStdCont::const_iterator itstd(stdcont->begin());
    typename MyStdCont::size_type dist = (typename MyStdCont::size_type)std::distance(itboost, itboostend);

@@ -32,7 +32,7 @@
 #include <boost/log/expressions/attr_fwd.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -149,7 +149,7 @@ public:
         return m_value_extractor(m_name, fusion::at_c< 0 >(phoenix::env(ctx).args()));
     }
 
-    BOOST_LOG_DELETED_FUNCTION(attribute_terminal())
+    BOOST_DELETED_FUNCTION(attribute_terminal())
 };
 
 /*!
@@ -232,7 +232,7 @@ public:
  * with the specified name and type.
  */
 template< typename AttributeValueT >
-BOOST_LOG_FORCEINLINE attribute_actor< AttributeValueT > attr(attribute_name const& name)
+BOOST_FORCEINLINE attribute_actor< AttributeValueT > attr(attribute_name const& name)
 {
     typedef attribute_actor< AttributeValueT > result_type;
     typedef typename result_type::terminal_type result_terminal;
@@ -245,7 +245,7 @@ BOOST_LOG_FORCEINLINE attribute_actor< AttributeValueT > attr(attribute_name con
  * with the specified name and type.
  */
 template< typename AttributeValueT, typename TagT >
-BOOST_LOG_FORCEINLINE attribute_actor< AttributeValueT, fallback_to_none, TagT > attr(attribute_name const& name)
+BOOST_FORCEINLINE attribute_actor< AttributeValueT, fallback_to_none, TagT > attr(attribute_name const& name)
 {
     typedef attribute_actor< AttributeValueT, fallback_to_none, TagT > result_type;
     typedef typename result_type::terminal_type result_terminal;

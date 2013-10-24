@@ -7,20 +7,6 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-// #define TEST_ISOVIST
-
-//#define HAVE_TTMATH
-
-//#define BOOST_GEOMETRY_CHECK_WITH_POSTGIS
-
-//#define BOOST_GEOMETRY_DEBUG_SEGMENT_IDENTIFIER
-//#define BOOST_GEOMETRY_DEBUG_INTERSECTION
-//#define BOOST_GEOMETRY_DEBUG_TRAVERSE
-//#define BOOST_GEOMETRY_DEBUG_FOLLOW
-//#define BOOST_GEOMETRY_DEBUG_ASSEMBLE
-//#define BOOST_GEOMETRY_DEBUG_IDENTIFIER
-
-
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -34,9 +20,6 @@
 #include <boost/geometry/multi/io/wkt/wkt.hpp>
 
 #include <boost/geometry/geometries/point_xy.hpp>
-
-//#include <boost/geometry/extensions/gis/io/wkb/read_wkb.hpp>
-//#include <boost/geometry/extensions/gis/io/wkb/utility.hpp>
 
 #include <algorithms/test_difference.hpp>
 #include <algorithms/test_overlay.hpp>
@@ -258,8 +241,8 @@ void test_all()
     {
         test_one<polygon, polygon, polygon>("buffer_mp2", 
             buffer_mp2[0], buffer_mp2[1],
-            1, 92, 12.09857,
-            1, 157, 24.19787);
+            1, 91, 12.09857,
+            1, 156, 24.19787);
     }
 
     /*** TODO: self-tangencies for difference
@@ -295,7 +278,7 @@ void test_all()
         
     test_one<polygon, polygon, polygon>("ggl_list_20110307_javier",
         ggl_list_20110307_javier[0], ggl_list_20110307_javier[1],
-        1, 13, 16815.6,
+        1, if_typed<ct, float>(14, 13), 16815.6,
         1, 4, 3200.4,
         0.01);
 
@@ -326,13 +309,20 @@ void test_all()
     // Boost.Geometry gives results depending on FP-type, and compiler, and operating system.
     // For double, it is zero (skipped). On gcc/Linux, for float either.
     // Because we cannot predict this, we only test for MSVC
-    test_one<polygon, polygon, polygon>("ggl_list_20110627_phillip",
-        ggl_list_20110627_phillip[0], ggl_list_20110627_phillip[1],
-            if_typed_tt<ct>(1, 0), -1, 
-            if_typed_tt<ct>(0.0000000000001105367, 0.0), 
-        1, -1, 3577.40960816756,
-        0.01
-        );
+    if (boost::is_same<ct, double>::value
+#if defined(HAVE_TTMATH)
+        || boost::is_same<ct, ttmath_big>::value
+#endif
+        )
+    {
+        test_one<polygon, polygon, polygon>("ggl_list_20110627_phillip",
+            ggl_list_20110627_phillip[0], ggl_list_20110627_phillip[1],
+                if_typed_tt<ct>(1, 0), -1, 
+                if_typed_tt<ct>(0.0000000000001105367, 0.0), 
+            1, -1, 3577.40960816756,
+            0.01
+            );
+    }
 #endif
 
     // Other combi's

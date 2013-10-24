@@ -107,7 +107,6 @@ double get_mst_weight (const Graph& g)
 template<typename Graph>
 void test_redistribution(int n, double p, int iterations, bool debug_output)
 {
-  typedef typename graph_traits<Graph>::edge_descriptor edge_descriptor;
   RandomGenerator gen;
   Graph g(erdos_renyi_iterator<RandomGenerator, Graph>(gen, n, p),
           erdos_renyi_iterator<RandomGenerator, Graph>(),

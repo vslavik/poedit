@@ -33,7 +33,7 @@ static int bufferstream_test()
       const int BufSize = 10001;
       //This will be zero-initialized
       static char buffer [BufSize];
-      bufferstream bufstream;;
+      bufferstream bufstream;
       std::stringstream std_stringstream;
       std::string str1, str2, str3("testline:");
       int number1, number2;

@@ -63,11 +63,11 @@ public:
    typedef RealType value_type;
    typedef Policy policy_type;
 
-   exponential_distribution(RealType lambda = 1)
-      : m_lambda(lambda)
+   exponential_distribution(RealType l_lambda = 1)
+      : m_lambda(l_lambda)
    {
       RealType err;
-      detail::verify_lambda("boost::math::exponential_distribution<%1%>::exponential_distribution", lambda, &err, Policy());
+      detail::verify_lambda("boost::math::exponential_distribution<%1%>::exponential_distribution", l_lambda, &err, Policy());
    } // exponential_distribution
 
    RealType lambda()const { return m_lambda; }

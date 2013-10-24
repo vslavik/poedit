@@ -29,10 +29,15 @@ struct configuration
     std::vector<std::string> convenience_headers;
 
     std::string skip_namespace;
+    bool output_member_variables;
 
     enum output_style_type {def, alt};
     output_style_type output_style;
-    configuration() : output_style(def) {}
+
+    configuration() 
+      : output_style(def) 
+      , output_member_variables(false) 
+    {}
 };
 
 

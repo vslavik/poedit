@@ -39,12 +39,13 @@
 template <typename Geometry>
 void test_transform(std::string const& wkt, std::string const& expected)
 {
-    typedef typename bg::point_type<Geometry>::type point_type;
+    typedef typename bg::coordinate_type<Geometry>::type coordinate_type;
+    const std::size_t dim = bg::dimension<Geometry>::value;
 
     Geometry geometry_in, geometry_out;
     bg::read_wkt(wkt, geometry_in);
     bg::transform(geometry_in, geometry_out,
-        bg::strategy::transform::scale_transformer<point_type>(2, 2));
+        bg::strategy::transform::scale_transformer<coordinate_type, dim, dim>(2, 2));
     std::ostringstream detected;
     detected << bg::wkt(geometry_out);
     BOOST_CHECK_EQUAL(detected.str(), expected);

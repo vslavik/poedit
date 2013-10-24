@@ -26,7 +26,7 @@
 #include <boost/log/utility/functional/matches.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -83,7 +83,7 @@ public:
  * which is assumed to be a string, matches the specified regular expression.
  */
 template< typename T, typename FallbackPolicyT, typename TagT, template< typename > class ActorT, typename RegexT >
-BOOST_LOG_FORCEINLINE ActorT< aux::unary_function_terminal< attribute_matches< T, RegexT, FallbackPolicyT > > >
+BOOST_FORCEINLINE ActorT< aux::unary_function_terminal< attribute_matches< T, RegexT, FallbackPolicyT > > >
 matches(attribute_actor< T, FallbackPolicyT, TagT, ActorT > const& attr, RegexT const& rex)
 {
     typedef aux::unary_function_terminal< attribute_matches< T, RegexT, FallbackPolicyT > > terminal_type;
@@ -96,7 +96,7 @@ matches(attribute_actor< T, FallbackPolicyT, TagT, ActorT > const& attr, RegexT 
  * which is assumed to be a string, matches the specified regular expression.
  */
 template< typename DescriptorT, template< typename > class ActorT, typename RegexT >
-BOOST_LOG_FORCEINLINE ActorT< aux::unary_function_terminal< attribute_matches< typename DescriptorT::value_type, RegexT > > >
+BOOST_FORCEINLINE ActorT< aux::unary_function_terminal< attribute_matches< typename DescriptorT::value_type, RegexT > > >
 matches(attribute_keyword< DescriptorT, ActorT > const&, RegexT const& rex)
 {
     typedef aux::unary_function_terminal< attribute_matches< typename DescriptorT::value_type, RegexT > > terminal_type;
@@ -109,7 +109,7 @@ matches(attribute_keyword< DescriptorT, ActorT > const&, RegexT const& rex)
  * which is assumed to be a string, matches the specified regular expression.
  */
 template< typename T, typename RegexT >
-BOOST_LOG_FORCEINLINE phoenix::actor< aux::unary_function_terminal< attribute_matches< T, RegexT > > >
+BOOST_FORCEINLINE phoenix::actor< aux::unary_function_terminal< attribute_matches< T, RegexT > > >
 matches(attribute_name const& name, RegexT const& rex)
 {
     typedef aux::unary_function_terminal< attribute_matches< T, RegexT > > terminal_type;

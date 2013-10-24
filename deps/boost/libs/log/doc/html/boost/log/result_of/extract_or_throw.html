@@ -4,7 +4,7 @@
 <title>Struct template extract_or_throw</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../attributes.html#header.boost.log.attributes.value_extraction_hpp" title="Header &lt;boost/log/attributes/value_extraction.hpp&gt;">
 <link rel="prev" href="extract_or_default.html" title="Struct template extract_or_default">
 <link rel="next" href="extract.html" title="Struct template extract">
@@ -30,7 +30,7 @@
   <span class="keyword">typedef</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">if_</span><span class="special">&lt;</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">is_sequence</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span><span class="special">,</span> <span class="identifier">value_ref</span><span class="special">&lt;</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">TagT</span> <span class="special">&gt;</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a name="boost.log.result_of.extract_or_throw.type"></a><span class="identifier">type</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp18083552"></a><h2>Description</h2>
+<a name="idp57079304"></a><h2>Description</h2>
 <p>The metafunction results in a type that is in form of <code class="computeroutput">T const&amp;</code>, if <code class="computeroutput">T</code> is not an MPL type sequence, or <code class="computeroutput">value_ref&lt; T, TagT &gt;</code> otherwise. In the latter case the value reference shall never be empty. </p>
 </div>
 </div>

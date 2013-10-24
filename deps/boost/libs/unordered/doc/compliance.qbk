@@ -8,11 +8,12 @@
 
 Support for move semantics is implemented using Boost.Move. If rvalue
 references are available it will use them, but if not it uses a close,
-but imperfect emulation. On such compilers you'll need to use Boost.Move
-to take advantage of using movable container elements, also note that:
+but imperfect emulation. On such compilers:
 
-* Non-copyable objects can be stored in the containers, but without support
-  for rvalue references the container will not be movable.
+* Non-copyable objects can be stored in the containers.
+  They can be constructed in place using `emplace`, or if they support
+  Boost.Move, moved into place.
+* The containers themselves are not movable.
 * Argument forwarding is not perfect.
 
 [endsect]

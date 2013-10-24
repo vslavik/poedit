@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../quickbook.html" title="Chapter&#160;40.&#160;Quickbook 1.5">
+<link rel="up" href="../quickbook.html" title="Chapter&#160;40.&#160;Quickbook 1.6">
 <link rel="prev" href="versions.html" title="Language Versions">
 <link rel="next" href="editors.html" title="Editor Support">
 </head>
@@ -99,15 +99,15 @@ using boostbook
               to a safe place. The traditional location is <code class="computeroutput">/usr/local/bin</code>.
             </li>
 <li class="listitem">
-              <p>
-                Add the following to your <code class="computeroutput">user-config.jam</code> file, using
-                the full path of the quickbook executable:
-              </p>
+<p class="simpara">
+              Add the following to your <code class="computeroutput">user-config.jam</code> file, using
+              the full path of the quickbook executable:
+            </p>
 <pre class="programlisting">using quickbook
     : /usr/local/bin/quickbook
     ;
 </pre>
-            </li>
+</li>
 </ol></div>
 <p>
           If you need to build documentation that uses Doxygen, you will need to
@@ -165,12 +165,12 @@ using boostbook
               removing the version number from the directory name (for simplicity).
             </li>
 <li class="listitem">
-              <p>
-                Add the following to your <code class="computeroutput">user-config.jam</code> file, which
-                should live in your home directory (<code class="computeroutput">/Users/&lt;your_username&gt;</code>).
-                You must already have it somewhere or otherwise you could not be
-                building Boost (i.e. missing tools configuration).
-              </p>
+<p class="simpara">
+              Add the following to your <code class="computeroutput">user-config.jam</code> file, which
+              should live in your home directory (<code class="computeroutput">/Users/&lt;your_username&gt;</code>).
+              You must already have it somewhere or otherwise you could not be building
+              Boost (i.e. missing tools configuration).
+            </p>
 <pre class="programlisting">using xsltproc ;
 
 using boostbook
@@ -178,7 +178,7 @@ using boostbook
     : "/usr/local/share/xml/docbook/4.2"
     ;
 </pre>
-            </li>
+</li>
 </ol></div>
 <p>
           The above steps are enough to get a functional BoostBook setup. Quickbook
@@ -198,14 +198,14 @@ using boostbook
               into: <code class="computeroutput">/usr/local/bin</code>.
             </li>
 <li class="listitem">
-              <p>
-                Add the following to your <code class="computeroutput">user-config.jam</code> file:
-              </p>
+<p class="simpara">
+              Add the following to your <code class="computeroutput">user-config.jam</code> file:
+            </p>
 <pre class="programlisting">using quickbook
     : "/usr/local/bin/quickbook" ;
     ;
 </pre>
-            </li>
+</li>
 </ol></div>
 <p>
           <a name="osx-prebuilt-doxygen"></a>Additionally, if you need to build documentation
@@ -223,14 +223,14 @@ using boostbook
               folder to install it.
             </li>
 <li class="listitem">
-              <p>
-                Add the following to your <code class="computeroutput">user-config.jam</code> file:
-              </p>
+<p class="simpara">
+              Add the following to your <code class="computeroutput">user-config.jam</code> file:
+            </p>
 <pre class="programlisting">using doxygen
     : /Applications/Doxygen.app/Contents/Resources/doxygen
     ;
 </pre>
-            </li>
+</li>
 </ol></div>
 </div>
 </div>
@@ -284,12 +284,12 @@ using boostbook
             the version name): <code class="computeroutput">C:\Users\example\Documents\boost\xml\docbook-xsl</code>.
           </li>
 <li class="listitem">
-            <p>
-              Add the following to your <code class="computeroutput">user-config.jam</code> file, which
-              should live in your home directory (<code class="computeroutput">%HOMEDRIVE%%HOMEPATH%</code>).
-              You must already have it somewhere or otherwise you could not be building
-              Boost (i.e. missing tools configuration).
-            </p>
+<p class="simpara">
+            Add the following to your <code class="computeroutput">user-config.jam</code> file, which should
+            live in your home directory (<code class="computeroutput">%HOMEDRIVE%%HOMEPATH%</code>). You
+            must already have it somewhere or otherwise you could not be building
+            Boost (i.e. missing tools configuration).
+          </p>
 <pre class="programlisting">using xsltproc
     : "C:/Users/example/Documents/boost/xml/bin/xsltproc.exe"
     ;
@@ -299,7 +299,7 @@ using boostbook
     : "C:/Users/example/Documents/boost/xml/docbook-xml"
     ;
 </pre>
-          </li>
+</li>
 </ol></div>
 <p>
         The above steps are enough to get a functional BoostBook setup. Quickbook
@@ -318,14 +318,14 @@ using boostbook
             <code class="computeroutput">C:\Users\example\Documents\boost\xml\bin</code>.
           </li>
 <li class="listitem">
-            <p>
-              Add the following to your <code class="computeroutput">user-config.jam</code> file:
-            </p>
+<p class="simpara">
+            Add the following to your <code class="computeroutput">user-config.jam</code> file:
+          </p>
 <pre class="programlisting">using quickbook
     : "C:/Users/example/Documents/boost/xml/bin/quickbook.exe"
     ;
 </pre>
-          </li>
+</li>
 </ol></div>
 </div>
 <div class="section">
@@ -382,15 +382,15 @@ using doxygen ;
             to a safe place. The traditional location is <code class="computeroutput">/usr/local/bin</code>.
           </li>
 <li class="listitem">
-            <p>
-              Add the following to your <code class="computeroutput">user-config.jam</code> file, using
-              the full path of the quickbook executable:
-            </p>
+<p class="simpara">
+            Add the following to your <code class="computeroutput">user-config.jam</code> file, using the
+            full path of the quickbook executable:
+          </p>
 <pre class="programlisting">using quickbook
     : /usr/local/bin/quickbook
     ;
 </pre>
-          </li>
+</li>
 </ol></div>
 </div>
 </div>

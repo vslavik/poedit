@@ -143,6 +143,8 @@ test_std_exception()
 #ifndef BOOST_NO_RTTI
             std::type_info const * const * t=boost::get_error_info<boost::original_exception_type>(x);
             BOOST_TEST(t!=0 && *t!=0 && **t==typeid(T));
+            std::string s=diagnostic_information(x);
+            BOOST_TEST(!s.empty());
 #endif
             }
         catch(

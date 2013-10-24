@@ -4,7 +4,7 @@
 <title>Utilities</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../detailed.html" title="Detailed features description">
 <link rel="prev" href="attributes.html" title="Attributes">
 <link rel="next" href="../extension.html" title="Extending the library">
@@ -982,7 +982,7 @@
           equivalent is used.
         </p>
 <p>
-          You can also use the <code class="computeroutput"><a class="link" href="../../boost/log/make_attr_orde_idp21533008.html" title="Function template make_attr_ordering">make_attr_ordering</a></code> generator
+          You can also use the <code class="computeroutput"><a class="link" href="../../boost/log/make_attr_orde_idp28271256.html" title="Function template make_attr_ordering">make_attr_ordering</a></code> generator
           function to automatically generate the <code class="computeroutput"><a class="link" href="../../boost/log/attribute_value_ordering.html" title="Class template attribute_value_ordering">attribute_value_ordering</a></code>
           instance based on the attribute value name and the ordering function. This
           might be useful if the ordering function has a non-trivial type, like the
@@ -1010,7 +1010,7 @@
           by the library, therefore in order to reacquire the exception object it
           has to rethrow it. The header defines an <code class="computeroutput"><a class="link" href="../../boost/log/exception_handler.html" title="Class template exception_handler">exception_handler</a></code>
           template functor that does just that and then forwards the exception object
-          to a unary user-defined functional object. The <code class="computeroutput"><a class="link" href="../../boost/log/make_exception_idp21134720.html" title="Function template make_exception_handler">make_exception_handler</a></code>
+          to a unary user-defined functional object. The <code class="computeroutput"><a class="link" href="../../boost/log/make_exception_idp27891112.html" title="Function template make_exception_handler">make_exception_handler</a></code>
           function can be used to simplify the handler construction. All expected
           exception types should be specified explicitly in the call, in the order
           they would appear in the <code class="computeroutput"><span class="keyword">catch</span></code>
@@ -1130,7 +1130,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.manipulators.to_log_hpp" title="Header &lt;boost/log/utility/manipulators/to_log.hpp&gt;">boost/log/utility/manipulators/to_log.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp21503248.html" title="Function template to_log">to_log</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp28241304.html" title="Function template to_log">to_log</a></code>
             function creates a stream manipulator that simply outputs the adopted
             value to the stream. By default its behavior is equivalent to simply
             putting the value to the stream. However, the user is able to overload
@@ -1171,7 +1171,7 @@
             value contexts as well. The library uses this feature to allow different
             formatting ruled for different attribute values, even if the stored value
             type is the same. To do so one has to specify an explicit template argument
-            for <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp21503248.html" title="Function template to_log">to_log</a></code>,
+            for <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp28241304.html" title="Function template to_log">to_log</a></code>,
             a tag type, which will be embedded into the manipulator type and thus
             will allow to define different insertion operators:
           </p>
@@ -1259,7 +1259,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.manipulators.dump_hpp" title="Header &lt;boost/log/utility/manipulators/dump.hpp&gt;">boost/log/utility/manipulators/dump.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp21480592.html" title="Function template dump">dump</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp28218648.html" title="Function template dump">dump</a></code>
             function creates a manipulator that outputs binary contents of a contiguous
             memory region. This can be useful for logging some low level binary data,
             such as encoded network packets or entries of a binary file. The use
@@ -1283,12 +1283,12 @@
 <span class="special">}</span>
 </pre>
 <p>
-            There is another manipulator called <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp21483232.html" title="Function template dump_elements">dump_elements</a></code> for printing
+            There is another manipulator called <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp28221288.html" title="Function template dump_elements">dump_elements</a></code> for printing
             binary representation of non-byte array elements. The special manipulator
             for this case is necessary because the units of the size argument of
-            <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp21480592.html" title="Function template dump">dump</a></code>
-            can be confusing (is it in bytes or in elements?). Therefore <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp21480592.html" title="Function template dump">dump</a></code>
-            will not compile when used for non-byte input data. <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp21483232.html" title="Function template dump_elements">dump_elements</a></code> accepts
+            <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp28218648.html" title="Function template dump">dump</a></code>
+            can be confusing (is it in bytes or in elements?). Therefore <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp28218648.html" title="Function template dump">dump</a></code>
+            will not compile when used for non-byte input data. <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp28221288.html" title="Function template dump_elements">dump_elements</a></code> accepts
             the same arguments, and its size-related arguments always designate the
             number of elements to process.
           </p>
@@ -1374,7 +1374,7 @@
 <p>
             Pretty easy, isn't it? There is also the <code class="computeroutput"><span class="identifier">wadd_console_log</span></code>
             function for wide-character console. If you want to put logs to some
-            other standard stream, you can pass the stream to the <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp21543664.html" title="Function template add_console_log">add_console_log</a></code> function
+            other standard stream, you can pass the stream to the <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp28281912.html" title="Function template add_console_log">add_console_log</a></code> function
             as an argument. E.g. enabling logging to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span></code>
             instead of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">clog</span></code> would look like this:
           </p>
@@ -1420,7 +1420,7 @@
 <span class="special">}</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp21543664.html" title="Function template add_console_log">add_console_log</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp28281912.html" title="Function template add_console_log">add_console_log</a></code>
             and <code class="computeroutput"><a class="link" href="../../boost/log/add_file_log.html" title="Function template add_file_log">add_file_log</a></code>
             functions do not conflict and may be combined freely, so it is possible
             to set up logging to the console and a couple of files, including filtering
@@ -2239,6 +2239,24 @@ relation:
 <tr>
 <td>
                     <p>
+                      Format
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Format string as described <a class="link" href="utilities.html#log.detailed.utilities.setup.filter_formatter" title="Filter and formatter parsers">here</a>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Log record formatter to be used by the sink. If not specified,
+                      the default formatter is used.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
                       LocalAddress
                     </p>
                   </td>
@@ -2301,6 +2319,24 @@ relation:
                   </th>
 </tr></thead>
 <tbody>
+<tr>
+<td>
+                    <p>
+                      Format
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Format string as described <a class="link" href="utilities.html#log.detailed.utilities.setup.filter_formatter" title="Filter and formatter parsers">here</a>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Log record formatter to be used by the sink. If not specified,
+                      the default formatter is used.
+                    </p>
+                  </td>
+</tr>
 <tr>
 <td>
                     <p>

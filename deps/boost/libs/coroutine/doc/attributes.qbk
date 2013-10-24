@@ -14,55 +14,21 @@ coroutines's context.
         {
             std::size_t     size;
             flag_unwind_t   do_unwind;
-            bool            preserve_fpu;
+            flag_fpu_t      preserve_fpu;
 
-            attributes() BOOST_NOEXCEPT :
-                size( ctx::default_stacksize() ),
-                do_unwind( stack_unwind),
-                preserve_fpu( true)
-            {}
+            attributes() BOOST_NOEXCEPT;
 
-            explicit attributes( std::size_t size_) BOOST_NOEXCEPT :
-                size( size_),
-                do_unwind( stack_unwind),
-                preserve_fpu( true)
-            {}
+            explicit attributes( std::size_t size_) BOOST_NOEXCEPT;
 
-            explicit attributes( flag_unwind_t do_unwind_) BOOST_NOEXCEPT :
-                size( ctx::default_stacksize() ),
-                do_unwind( do_unwind_),
-                preserve_fpu( true)
-            {}
+            explicit attributes( flag_unwind_t do_unwind_) BOOST_NOEXCEPT;
 
-            explicit attributes( bool preserve_fpu_) BOOST_NOEXCEPT :
-                size( ctx::default_stacksize() ),
-                do_unwind( stack_unwind),
-                preserve_fpu( preserve_fpu_)
-            {}
+            explicit attributes( flag_fpu_t preserve_fpu_) BOOST_NOEXCEPT;
 
-            explicit attributes(
-                    std::size_t size_,
-                    flag_unwind_t do_unwind_) BOOST_NOEXCEPT :
-                size( size_),
-                do_unwind( do_unwind_),
-                preserve_fpu( true)
-            {}
+            explicit attributes( std::size_t size_, flag_unwind_t do_unwind_) BOOST_NOEXCEPT;
 
-            explicit attributes(
-                    std::size_t size_,
-                    bool preserve_fpu_) BOOST_NOEXCEPT :
-                size( size_),
-                do_unwind( stack_unwind),
-                preserve_fpu( preserve_fpu_)
-            {}
+            explicit attributes( std::size_t size_, flag_fpu_t preserve_fpu_) BOOST_NOEXCEPT;
 
-            explicit attributes(
-                    flag_unwind_t do_unwind_,
-                    bool preserve_fpu_) BOOST_NOEXCEPT :
-                size( ctx::default_stacksize() ),
-                do_unwind( do_unwind_),
-                preserve_fpu( preserve_fpu_)
-            {}
+            explicit attributes( flag_unwind_t do_unwind_, flag_fpu_t preserve_fpu_) BOOST_NOEXCEPT;
         };
 
 [heading `attributes()`]
@@ -88,7 +54,7 @@ and FPU registers are preserved.]]
 [[Throws:] [Nothing.]]
 ]
 
-[heading `attributes( bool preserve_fpu)`]
+[heading `attributes( flag_fpu_t preserve_fpu)`]
 [variablelist
 [[Effects:] [Argument `preserve_fpu` determines if FPU register have to be
 preserved if a `context` switches. THe default stacksize is used for the
@@ -103,14 +69,14 @@ FPU registers preserved during each `context` switch.]]
 [[Throws:] [Nothing.]]
 ]
 
-[heading `attributes( std::size_t size, bool preserve_fpu)`]
+[heading `attributes( std::size_t size, flag_fpu_t preserve_fpu)`]
 [variablelist
 [[Effects:] [Arguments `size` and `preserve_fpu` are given by the user.
 The stack is automatically unwound after coroutine/generator terminates.]]
 [[Throws:] [Nothing.]]
 ]
 
-[heading `attributes( flag_unwind_t do_unwind, bool preserve_fpu)`]
+[heading `attributes( flag_unwind_t do_unwind, flag_fpu_t preserve_fpu)`]
 [variablelist
 [[Effects:] [Arguments `do_unwind` and `preserve_fpu` are given by the user.
 The stack gets a default value of `ctx::default_stacksize()`.]]

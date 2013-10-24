@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //
 // (C) Copyright Olaf Krzikalla 2004-2006.
-// (C) Copyright Ion Gaztanaga  2006-2012.
+// (C) Copyright Ion Gaztanaga  2006-2013.
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -29,7 +29,7 @@ struct is_treap
    static const bool value = false;
 };
 
-template<class ValueTraits, template <class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none> class ContainerDefiner>
+template<class ValueTraits, template <class = void, class = void, class = void, class = void> class ContainerDefiner>
 struct test_generic_set
 {
    typedef typename ValueTraits::value_type value_type;
@@ -45,7 +45,7 @@ struct test_generic_set
 };
 
 
-template<class ValueTraits, template <class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none> class ContainerDefiner>
+template<class ValueTraits, template <class = void, class = void, class = void, class = void> class ContainerDefiner>
 void test_generic_set<ValueTraits, ContainerDefiner>::test_all()
 {
    typedef typename ValueTraits::value_type value_type;
@@ -82,7 +82,7 @@ void test_generic_set<ValueTraits, ContainerDefiner>::test_all()
 }
 
 //test case due to an error in tree implementation:
-template<class ValueTraits, template <class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none> class ContainerDefiner>
+template<class ValueTraits, template <class = void, class = void, class = void, class = void> class ContainerDefiner>
 void test_generic_set<ValueTraits, ContainerDefiner>::test_impl()
 {
    typedef typename ValueTraits::value_type value_type;
@@ -109,7 +109,7 @@ void test_generic_set<ValueTraits, ContainerDefiner>::test_impl()
 }
 
 //test: constructor, iterator, clear, reverse_iterator, front, back, size:
-template<class ValueTraits, template <class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none> class ContainerDefiner>
+template<class ValueTraits, template <class = void, class = void, class = void, class = void> class ContainerDefiner>
 void test_generic_set<ValueTraits, ContainerDefiner>::test_sort(std::vector<typename ValueTraits::value_type>& values)
 {
    typedef typename ValueTraits::value_type value_type;
@@ -140,7 +140,7 @@ void test_generic_set<ValueTraits, ContainerDefiner>::test_sort(std::vector<type
 }
 
 //test: insert, const_iterator, const_reverse_iterator, erase, s_iterator_to:
-template<class ValueTraits, template <class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none> class ContainerDefiner>
+template<class ValueTraits, template <class = void, class = void, class = void, class = void> class ContainerDefiner>
 void test_generic_set<ValueTraits, ContainerDefiner>::test_insert(std::vector<typename ValueTraits::value_type>& values)
 {
    typedef typename ValueTraits::value_type value_type;
@@ -178,7 +178,7 @@ void test_generic_set<ValueTraits, ContainerDefiner>::test_insert(std::vector<ty
    }
 }
 
-template<class ValueTraits, template <class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none> class ContainerDefiner>
+template<class ValueTraits, template <class = void, class = void, class = void, class = void> class ContainerDefiner>
 void test_generic_set<ValueTraits, ContainerDefiner>::test_insert_advanced
 (std::vector<typename ValueTraits::value_type>& values, boost::intrusive::detail::true_type)
 {
@@ -199,7 +199,7 @@ void test_generic_set<ValueTraits, ContainerDefiner>::test_insert_advanced
 }
 
 
-template<class ValueTraits, template <class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none> class ContainerDefiner>
+template<class ValueTraits, template <class = void, class = void, class = void, class = void> class ContainerDefiner>
 void test_generic_set<ValueTraits, ContainerDefiner>::test_insert_advanced
 (std::vector<typename ValueTraits::value_type>& values)
 {
@@ -216,7 +216,7 @@ void test_generic_set<ValueTraits, ContainerDefiner>::test_insert_advanced
 
 
 //test: insert, const_iterator, const_reverse_iterator, erase, s_iterator_to:
-template<class ValueTraits, template <class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none> class ContainerDefiner>
+template<class ValueTraits, template <class = void, class = void, class = void, class = void> class ContainerDefiner>
 void test_generic_set<ValueTraits, ContainerDefiner>::test_insert_advanced
    ( std::vector<typename ValueTraits::value_type>& values
    , boost::intrusive::detail::false_type)
@@ -239,7 +239,7 @@ void test_generic_set<ValueTraits, ContainerDefiner>::test_insert_advanced
 
 
 //test: insert (seq-version), swap, erase (seq-version), size:
-template<class ValueTraits, template <class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none> class ContainerDefiner>
+template<class ValueTraits, template <class = void, class = void, class = void, class = void> class ContainerDefiner>
 void test_generic_set<ValueTraits, ContainerDefiner>::test_swap(std::vector<typename ValueTraits::value_type>& values)
 {
    typedef typename ValueTraits::value_type value_type;
@@ -266,7 +266,7 @@ void test_generic_set<ValueTraits, ContainerDefiner>::test_swap(std::vector<type
 }
 
 //test: find, equal_range (lower_bound, upper_bound), bounded_range:
-template<class ValueTraits, template <class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none, class = ::boost::intrusive::none> class ContainerDefiner>
+template<class ValueTraits, template <class = void, class = void, class = void, class = void> class ContainerDefiner>
 void test_generic_set<ValueTraits, ContainerDefiner>::test_find(std::vector<typename ValueTraits::value_type>& values)
 {
    typedef typename ValueTraits::value_type value_type;
@@ -277,7 +277,6 @@ void test_generic_set<ValueTraits, ContainerDefiner>::test_find(std::vector<type
       >::type set_type;
    set_type testset (values.begin(), values.end());
    typedef typename set_type::iterator       iterator;
-   typedef typename set_type::const_iterator const_iterator;
 
    {
       value_type cmp_val;

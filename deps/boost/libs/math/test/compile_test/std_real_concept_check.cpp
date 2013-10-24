@@ -5,6 +5,8 @@
 
 #define BOOST_MATH_ASSERT_UNDEFINED_POLICY false
 
+#include "poison.hpp"
+
 #include <boost/math/concepts/std_real_concept.hpp>
 #include <boost/math/concepts/distributions.hpp>
 

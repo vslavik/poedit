@@ -77,6 +77,14 @@ void expected_results()
       "real_concept",                     // test type(s)
       "[^|]*",               // test data group
       "boost::math::tgamma_ratio[^|]*", 300, 100);                 // test function
+
+   add_expected_result(
+      "GNU.*",                          // compiler
+      "[^|]*",                          // stdlib
+      "Win32.*",                          // platform
+      largest_type,                     // test type(s)
+      "[^|]*",               // test data group
+      "boost::math::tgamma_ratio[^|]*", 300, 100);                 // test function
    //
    // Catch all cases come last:
    //

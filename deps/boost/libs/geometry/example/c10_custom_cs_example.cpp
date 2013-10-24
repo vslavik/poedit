@@ -56,7 +56,7 @@ namespace boost { namespace geometry { namespace strategy { namespace distance {
 template <typename Point1, typename Point2>
 struct default_strategy<point_tag, Point1, Point2, martian_tag, martian_tag>
 {
-    typedef haversine<Point1, Point2> type;
+    typedef haversine<double> type;
 };
 
 }}}}} // namespaces

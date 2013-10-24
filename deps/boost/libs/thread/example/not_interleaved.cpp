@@ -44,8 +44,8 @@ int main()
   externally_locked_stream<std::ostream> mcout(std::cout, terminal_mutex);
   externally_locked_stream<std::istream> mcin(std::cin, terminal_mutex);
 
-  scoped_thread<> t1(thread(use_cerr, boost::ref(mcerr)));
-  scoped_thread<> t2(thread(use_cout, boost::ref(mcout)));
+  scoped_thread<> t1(boost::thread(use_cerr, boost::ref(mcerr)));
+  scoped_thread<> t2(boost::thread(use_cout, boost::ref(mcout)));
   this_thread::sleep_for(chrono::seconds(2));
   std::string nm;
   {

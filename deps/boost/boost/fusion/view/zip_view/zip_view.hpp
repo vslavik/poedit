@@ -68,7 +68,7 @@ namespace boost { namespace fusion {
             };
 
             // never called, but needed for decltype-based result_of (C++0x)
-#ifndef BOOST_NO_RVALUE_REFERENCES
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
             template<typename Seq>
             typename result<seq_ref_size(Seq)>::type
             operator()(Seq&&) const;
@@ -89,7 +89,7 @@ namespace boost { namespace fusion {
             };
 
             // never called, but needed for decltype-based result_of (C++0x)
-#ifndef BOOST_NO_RVALUE_REFERENCES
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
             template<typename Lhs, typename Rhs>
             typename result<poly_min(Lhs, Rhs)>::type
             operator()(Lhs&&, Rhs&&) const;

@@ -229,8 +229,6 @@ inline bool point_on_border(Point& point,
     concept::check<Point>();
     concept::check<Geometry const>();
 
-    typedef typename point_type<Geometry>::type point_type;
-
     return dispatch::point_on_border
             <
                 typename tag<Geometry>::type,

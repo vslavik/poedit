@@ -24,7 +24,7 @@
 #include <boost/log/utility/type_info_wrapper.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -45,7 +45,7 @@ class exception;
 #   endif
 #else
 
-class BOOST_LOG_VISIBLE exception;
+class BOOST_SYMBOL_VISIBLE exception;
 
 #endif
 

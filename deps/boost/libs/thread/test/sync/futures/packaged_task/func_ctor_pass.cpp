@@ -26,23 +26,32 @@
 
 #if BOOST_THREAD_VERSION == 4
 #define BOOST_THREAD_DETAIL_SIGNATURE double()
+#define BOOST_THREAD_DETAIL_VOID_SIGNATURE void()
 #else
 #define BOOST_THREAD_DETAIL_SIGNATURE double
+#define BOOST_THREAD_DETAIL_VOID_SIGNATURE void
 #endif
 
 #if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK
 #if defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
 #define BOOST_THREAD_DETAIL_SIGNATURE_2 double(int, char)
 #define BOOST_THREAD_DETAIL_SIGNATURE_2_RES 5 + 3 +'a'
+#define BOOST_THREAD_DETAIL_VOID_SIGNATURE_2 void(int)
 #else
 #define BOOST_THREAD_DETAIL_SIGNATURE_2 double()
 #define BOOST_THREAD_DETAIL_SIGNATURE_2_RES 5
+#define BOOST_THREAD_DETAIL_VOID_SIGNATURE_2 void()
 #endif
 #else
 #define BOOST_THREAD_DETAIL_SIGNATURE_2 double
 #define BOOST_THREAD_DETAIL_SIGNATURE_2_RES 5
+#define BOOST_THREAD_DETAIL_VOID_SIGNATURE_2 void
 #endif
 
+void void_fct()
+{
+  return;
+}
 double fct()
 {
   return 5.0;
@@ -95,6 +104,8 @@ public:
   {
   }
 
+  void operator()(int) const
+  { }
   long operator()() const
   { return data_;}
   long operator()(long i, long j) const
@@ -134,6 +145,8 @@ public:
   {
   }
 
+  void operator()(int) const
+  { }
   long operator()() const
   { return data_;}
   long operator()(long i, long j) const
@@ -170,6 +183,8 @@ public:
   {
   }
 
+  void operator()(int) const
+  { }
   long operator()() const
   { return data_;}
   long operator()(long i, long j) const
@@ -180,6 +195,7 @@ int C::n_copies = 0;
 int main()
 {
   {
+      A::reset();
       boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p(BOOST_THREAD_MAKE_RV_REF(A(5)));
       BOOST_TEST(p.valid());
       boost::future<double> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
@@ -204,7 +220,6 @@ int main()
       BOOST_TEST_EQ(A::n_copies, 1);
       BOOST_TEST_EQ(A::n_moves, 0);
   }
-
   {
     A::reset();
       const A a(5);
@@ -217,6 +232,37 @@ int main()
       BOOST_TEST_EQ(A::n_copies, 1);
       BOOST_TEST_EQ(A::n_moves, 0);
   }
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+  {
+    A::reset();
+      boost::packaged_task<BOOST_THREAD_DETAIL_VOID_SIGNATURE_2> p(BOOST_THREAD_MAKE_RV_REF(A(5)));
+      BOOST_TEST(p.valid());
+      boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+      p(1);
+      BOOST_TEST(A::n_copies == 0);
+      BOOST_TEST_EQ(A::n_moves, 1);
+  }
+  {
+    A::reset();
+      A a(5);
+      boost::packaged_task<BOOST_THREAD_DETAIL_VOID_SIGNATURE_2> p(a);
+      BOOST_TEST(p.valid());
+      boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+      p(1);
+      BOOST_TEST_EQ(A::n_copies, 1);
+      BOOST_TEST_EQ(A::n_moves, 0);
+  }
+  {
+    A::reset();
+      const A a(5);
+      boost::packaged_task<BOOST_THREAD_DETAIL_VOID_SIGNATURE_2> p(a);
+      BOOST_TEST(p.valid());
+      boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+      p(1);
+      BOOST_TEST_EQ(A::n_copies, 1);
+      BOOST_TEST_EQ(A::n_moves, 0);
+  }
+#endif
   {
     M::reset();
       boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p(BOOST_THREAD_MAKE_RV_REF(M(5)));
@@ -241,7 +287,25 @@ int main()
       BOOST_TEST(f.get() == 5.0);
       BOOST_TEST_EQ(M::n_moves, 1);
   }
-
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+  {
+    M::reset();
+      boost::packaged_task<BOOST_THREAD_DETAIL_VOID_SIGNATURE_2> p(BOOST_THREAD_MAKE_RV_REF(M(5)));
+      BOOST_TEST(p.valid());
+      boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+      p(1);
+      BOOST_TEST_EQ(M::n_moves, 1);
+  }
+  {
+    M::reset();
+      M a(5);
+      boost::packaged_task<BOOST_THREAD_DETAIL_VOID_SIGNATURE_2> p(boost::move(a));
+      BOOST_TEST(p.valid());
+      boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+      p(1);
+      BOOST_TEST_EQ(M::n_moves, 1);
+  }
+#endif
   {
     C::reset();
       C a(5);
@@ -264,6 +328,33 @@ int main()
       p();
       BOOST_TEST(f.get() == 5.0);
       BOOST_TEST_EQ(C::n_copies, 1);
+  }
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+  {
+    C::reset();
+      C a(5);
+      boost::packaged_task<BOOST_THREAD_DETAIL_VOID_SIGNATURE_2> p(a);
+      BOOST_TEST(p.valid());
+      boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+      p(1);
+      BOOST_TEST_EQ(C::n_copies, 1);
+  }
+
+  {
+    C::reset();
+      const C a(5);
+      boost::packaged_task<BOOST_THREAD_DETAIL_VOID_SIGNATURE_2> p(a);
+      BOOST_TEST(p.valid());
+      boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+      p(1);
+      BOOST_TEST_EQ(C::n_copies, 1);
+  }
+#endif
+  {
+      boost::packaged_task<BOOST_THREAD_DETAIL_VOID_SIGNATURE> p(void_fct);
+      BOOST_TEST(p.valid());
+      boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+      p();
   }
   {
       boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p(fct);

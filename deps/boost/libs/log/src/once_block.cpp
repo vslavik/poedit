@@ -10,7 +10,7 @@
  * \date   23.06.2010
  *
  * \brief  This file is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  *
  * The code in this file is based on the \c call_once function implementation in Boost.Thread.
  */
@@ -18,6 +18,7 @@
 #include <boost/log/utility/once_block.hpp>
 #ifndef BOOST_LOG_NO_THREADS
 
+#include <cstdlib>
 #include <boost/assert.hpp>
 
 #if defined(BOOST_THREAD_PLATFORM_WIN32)
@@ -42,11 +43,11 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
 
 } // namespace
 
-BOOST_LOG_API bool once_block_sentry::enter_once_block() const
+BOOST_LOG_API bool once_block_sentry::enter_once_block() const BOOST_NOEXCEPT
 {
     AcquireSRWLockExclusive(&g_OnceBlockMutex);
 
-    once_block_flag volatile& flag = m_Flag;
+    once_block_flag volatile& flag = m_flag;
     while (flag.status != once_block_flag::initialized)
     {
         if (flag.status == once_block_flag::uninitialized)
@@ -72,23 +73,23 @@ BOOST_LOG_API bool once_block_sentry::enter_once_block() const
     return true;
 }
 
-BOOST_LOG_API void once_block_sentry::commit()
+BOOST_LOG_API void once_block_sentry::commit() BOOST_NOEXCEPT
 {
     AcquireSRWLockExclusive(&g_OnceBlockMutex);
 
     // The initializer executed successfully
-    m_Flag.status = once_block_flag::initialized;
+    m_flag.status = once_block_flag::initialized;
 
     ReleaseSRWLockExclusive(&g_OnceBlockMutex);
     WakeAllConditionVariable(&g_OnceBlockCond);
 }
 
-BOOST_LOG_API void once_block_sentry::rollback()
+BOOST_LOG_API void once_block_sentry::rollback() BOOST_NOEXCEPT
 {
     AcquireSRWLockExclusive(&g_OnceBlockMutex);
 
     // The initializer failed, marking the flag as if it hasn't run at all
-    m_Flag.status = once_block_flag::uninitialized;
+    m_flag.status = once_block_flag::uninitialized;
 
     ReleaseSRWLockExclusive(&g_OnceBlockMutex);
     WakeAllConditionVariable(&g_OnceBlockCond);
@@ -328,10 +329,10 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
         delete impl;
     }
 
-    once_block_impl_base* get_once_block_impl()
+    once_block_impl_base* get_once_block_impl() BOOST_NOEXCEPT
     {
         once_block_impl_base* impl = g_pOnceBlockImpl;
-        if (!impl)
+        if (!impl) try
         {
             once_block_impl_base* new_impl = create_once_block_impl();
             impl = (once_block_impl_base*)
@@ -346,25 +347,30 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
                 return new_impl;
             }
         }
+        catch (...)
+        {
+            BOOST_ASSERT_MSG(false, "Boost.Log: Failed to initialize the once block thread synchronization structures");
+            std::abort();
+        }
 
         return impl;
     }
 
 } // namespace
 
-BOOST_LOG_API bool once_block_sentry::enter_once_block() const
+BOOST_LOG_API bool once_block_sentry::enter_once_block() const BOOST_NOEXCEPT
 {
-    return get_once_block_impl()->enter_once_block(m_Flag);
+    return get_once_block_impl()->enter_once_block(m_flag);
 }
 
-BOOST_LOG_API void once_block_sentry::commit()
+BOOST_LOG_API void once_block_sentry::commit() BOOST_NOEXCEPT
 {
-    get_once_block_impl()->commit(m_Flag);
+    get_once_block_impl()->commit(m_flag);
 }
 
-BOOST_LOG_API void once_block_sentry::rollback()
+BOOST_LOG_API void once_block_sentry::rollback() BOOST_NOEXCEPT
 {
-    get_once_block_impl()->rollback(m_Flag);
+    get_once_block_impl()->rollback(m_flag);
 }
 
 } // namespace aux
@@ -395,11 +401,11 @@ static pthread_cond_t g_OnceBlockCond = PTHREAD_COND_INITIALIZER;
 
 } // namespace
 
-BOOST_LOG_API bool once_block_sentry::enter_once_block() const
+BOOST_LOG_API bool once_block_sentry::enter_once_block() const BOOST_NOEXCEPT
 {
     BOOST_VERIFY(!pthread_mutex_lock(&g_OnceBlockMutex));
 
-    once_block_flag volatile& flag = m_Flag;
+    once_block_flag volatile& flag = m_flag;
     while (flag.status != once_block_flag::initialized)
     {
         if (flag.status == once_block_flag::uninitialized)
@@ -424,23 +430,23 @@ BOOST_LOG_API bool once_block_sentry::enter_once_block() const
     return true;
 }
 
-BOOST_LOG_API void once_block_sentry::commit()
+BOOST_LOG_API void once_block_sentry::commit() BOOST_NOEXCEPT
 {
     BOOST_VERIFY(!pthread_mutex_lock(&g_OnceBlockMutex));
 
     // The initializer executed successfully
-    m_Flag.status = once_block_flag::initialized;
+    m_flag.status = once_block_flag::initialized;
 
     BOOST_VERIFY(!pthread_mutex_unlock(&g_OnceBlockMutex));
     BOOST_VERIFY(!pthread_cond_broadcast(&g_OnceBlockCond));
 }
 
-BOOST_LOG_API void once_block_sentry::rollback()
+BOOST_LOG_API void once_block_sentry::rollback() BOOST_NOEXCEPT
 {
     BOOST_VERIFY(!pthread_mutex_lock(&g_OnceBlockMutex));
 
     // The initializer failed, marking the flag as if it hasn't run at all
-    m_Flag.status = once_block_flag::uninitialized;
+    m_flag.status = once_block_flag::uninitialized;
 
     BOOST_VERIFY(!pthread_mutex_unlock(&g_OnceBlockMutex));
     BOOST_VERIFY(!pthread_cond_broadcast(&g_OnceBlockCond));

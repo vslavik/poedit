@@ -185,7 +185,10 @@ void r_c_shortest_paths_dispatch
   pareto_optimal_resource_containers.clear();
   pareto_optimal_solutions.clear();
 
-  unsigned long i_label_num = 0;
+  typedef typename boost::graph_traits<Graph>::vertices_size_type
+    vertices_size_type;
+
+  size_t i_label_num = 0;
   typedef 
     typename 
       Label_Allocator::template rebind
@@ -217,9 +220,9 @@ void r_c_shortest_paths_dispatch
   vec_vertex_labels[vertex_index_map[s]].push_back( splabel_first_label );
   std::vector<typename std::list<Splabel>::iterator> 
     vec_last_valid_positions_for_dominance( num_vertices( g ) );
-  for( int i = 0; i < static_cast<int>( num_vertices( g ) ); ++i )
+  for( vertices_size_type i = 0; i < num_vertices( g ); ++i )
     vec_last_valid_positions_for_dominance[i] = vec_vertex_labels[i].begin();
-  std::vector<int> vec_last_valid_index_for_dominance( num_vertices( g ), 0 );
+  std::vector<size_t> vec_last_valid_index_for_dominance( num_vertices( g ), 0 );
   std::vector<bool> 
     b_vec_vertex_already_checked_for_dominance( num_vertices( g ), false );
   while( !unprocessed_labels.empty()  && vis.on_enter_loop(unprocessed_labels, g) )
@@ -241,12 +244,12 @@ void r_c_shortest_paths_dispatch
     // if the label to be extended is undominated
     if( !cur_label->b_is_dominated )
     {
-      int i_cur_resident_vertex_num = cur_label->resident_vertex;
+      vertices_size_type i_cur_resident_vertex_num = get(vertex_index_map, cur_label->resident_vertex);
       std::list<Splabel>& list_labels_cur_vertex = 
         vec_vertex_labels[i_cur_resident_vertex_num];
-      if( static_cast<int>( list_labels_cur_vertex.size() ) >= 2 
+      if( list_labels_cur_vertex.size() >= 2 
           && vec_last_valid_index_for_dominance[i_cur_resident_vertex_num] 
-               < static_cast<int>( list_labels_cur_vertex.size() ) )
+               < list_labels_cur_vertex.size() )
       {
         typename std::list<Splabel>::iterator outer_iter = 
           list_labels_cur_vertex.begin();
@@ -318,7 +321,7 @@ void r_c_shortest_paths_dispatch
           if( !b_outer_iter_erased )
             ++outer_iter;
         }
-        if( static_cast<int>( list_labels_cur_vertex.size() ) > 1 )
+        if( list_labels_cur_vertex.size() > 1 )
           vec_last_valid_positions_for_dominance[i_cur_resident_vertex_num] = 
             (--(list_labels_cur_vertex.end()));
         else
@@ -327,7 +330,7 @@ void r_c_shortest_paths_dispatch
         b_vec_vertex_already_checked_for_dominance
           [i_cur_resident_vertex_num] = true;
         vec_last_valid_index_for_dominance[i_cur_resident_vertex_num] = 
-          static_cast<int>( list_labels_cur_vertex.size() ) - 1;
+          list_labels_cur_vertex.size() - 1;
       }
     }
     if( !b_all_pareto_optimal_solutions && cur_label->resident_vertex == t )
@@ -430,8 +433,8 @@ void r_c_shortest_paths_dispatch
     }
   }
 
-  int i_size = static_cast<int>( vec_vertex_labels.size() );
-  for( int i = 0; i < i_size; ++i )
+  size_t i_size = vec_vertex_labels.size();
+  for( size_t i = 0; i < i_size; ++i )
   {
     const std::list<Splabel>& list_labels_cur_vertex = vec_vertex_labels[i];
     csi_end = list_labels_cur_vertex.end();
@@ -679,7 +682,7 @@ void check_r_c_path( const Graph& g,
                      typename graph_traits<Graph>::edge_descriptor& 
                        ed_last_extended_arc )
 {
-  int i_size_ed_vec_path = static_cast<int>( ed_vec_path.size() );
+  size_t i_size_ed_vec_path = ed_vec_path.size();
   std::vector<typename graph_traits<Graph>::edge_descriptor> buf_path;
   if( i_size_ed_vec_path == 0 )
     b_feasible = true;
@@ -689,9 +692,9 @@ void check_r_c_path( const Graph& g,
         || target( ed_vec_path[0], g ) == source( ed_vec_path[1], g ) )
       buf_path = ed_vec_path;
     else
-      for( int i = i_size_ed_vec_path - 1; i >= 0; --i )
-        buf_path.push_back( ed_vec_path[i] );
-    for( int i = 0; i < i_size_ed_vec_path - 1; ++i )
+      for( size_t i = i_size_ed_vec_path ; i > 0; --i )
+        buf_path.push_back( ed_vec_path[i - 1] );
+    for( size_t i = 0; i < i_size_ed_vec_path - 1; ++i )
     {
       if( target( buf_path[i], g ) != source( buf_path[i + 1], g ) )
       {
@@ -707,7 +710,7 @@ void check_r_c_path( const Graph& g,
   b_correctly_extended = false;
   Resource_Container current_resource_levels = initial_resource_levels;
   actual_final_resource_levels = current_resource_levels;
-  for( int i = 0; i < i_size_ed_vec_path; ++i )
+  for( size_t i = 0; i < i_size_ed_vec_path; ++i )
   {
     ed_last_extended_arc = buf_path[i];
     b_feasible = ref( g, 

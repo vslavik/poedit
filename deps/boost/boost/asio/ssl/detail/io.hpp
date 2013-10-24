@@ -97,6 +97,7 @@ public:
       core_(core),
       op_(op),
       start_(0),
+      want_(engine::want_nothing),
       bytes_transferred_(0),
       handler_(BOOST_ASIO_MOVE_CAST(Handler)(handler))
   {

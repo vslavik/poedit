@@ -782,7 +782,7 @@ lexer::lexertl<
 //
 //  This function is declared inside the xlex_interface.hpp file, which is 
 //  referenced by the source file calling the lexer and the source file, which
-//  instantiates the lex_functor. But is is defined here, so it will be 
+//  instantiates the lex_functor. But it is defined here, so it will be 
 //  instantiated only while compiling the source file, which instantiates the 
 //  lex_functor. While the xlex_interface.hpp file may be included everywhere,
 //  this file (xlex_lexer.hpp) should be included only once. This allows

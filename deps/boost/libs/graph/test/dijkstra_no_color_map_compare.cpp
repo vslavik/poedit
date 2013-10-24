@@ -94,9 +94,6 @@ int test_main(int argc, char* argv[])
     property<vertex_index_t, int >,
     property<edge_weight_t, double> > graph_t;
 
-  typedef graph_traits<graph_t>::vertex_descriptor vertex_t;
-  typedef graph_traits<graph_t>::edge_descriptor edge_t;
-
   graph_t graph;  
   generate_random_graph(graph, vertices_to_create, edges_to_create, generator);
 

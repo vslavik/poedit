@@ -10,13 +10,14 @@
  * \date   24.07.2011
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #include <boost/log/detail/config.hpp>
 
 #ifndef BOOST_LOG_NO_THREADS
 
+#include <boost/assert.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/system/error_code.hpp>
@@ -61,15 +62,16 @@ BOOST_LOG_API sem_based_event::sem_based_event() : m_state(0U)
 {
     if (sem_init(&m_semaphore, 0, 0) != 0)
     {
+        const int err = errno;
         BOOST_THROW_EXCEPTION(system::system_error(
-            errno, system::system_category(), "Failed to initialize semaphore"));
+            err, system::system_category(), "Failed to initialize semaphore"));
     }
 }
 
 //! Destructor
 BOOST_LOG_API sem_based_event::~sem_based_event()
 {
-    sem_destroy(&m_semaphore);
+    BOOST_VERIFY(sem_destroy(&m_semaphore) == 0);
 }
 
 //! Waits for the object to become signalled
@@ -79,10 +81,11 @@ BOOST_LOG_API void sem_based_event::wait()
     {
         if (sem_wait(&m_semaphore) != 0)
         {
-            if (errno != EINTR)
+            const int err = errno;
+            if (err != EINTR)
             {
                 BOOST_THROW_EXCEPTION(system::system_error(
-                    errno, system::system_category(), "Failed to block on the semaphore"));
+                    err, system::system_category(), "Failed to block on the semaphore"));
             }
         }
         else
@@ -98,9 +101,10 @@ BOOST_LOG_API void sem_based_event::set_signalled()
     {
         if (sem_post(&m_semaphore) != 0)
         {
+            const int err = errno;
             BOOST_LOG_EVENT_RESET(m_state);
             BOOST_THROW_EXCEPTION(system::system_error(
-                errno, system::system_category(), "Failed to wake the blocked thread"));
+                err, system::system_category(), "Failed to wake the blocked thread"));
         }
     }
 }
@@ -114,15 +118,16 @@ BOOST_LOG_API winapi_based_event::winapi_based_event() :
 {
     if (!m_event)
     {
+        const DWORD err = GetLastError();
         BOOST_THROW_EXCEPTION(system::system_error(
-            GetLastError(), system::system_category(), "Failed to create Windows event"));
+            err, system::system_category(), "Failed to create Windows event"));
     }
 }
 
 //! Destructor
 BOOST_LOG_API winapi_based_event::~winapi_based_event()
 {
-    CloseHandle(m_event);
+    BOOST_VERIFY(CloseHandle(m_event) != 0);
 }
 
 //! Waits for the object to become signalled
@@ -133,8 +138,9 @@ BOOST_LOG_API void winapi_based_event::wait()
     {
         if (WaitForSingleObject(m_event, INFINITE) != 0)
         {
+            const DWORD err = GetLastError();
             BOOST_THROW_EXCEPTION(system::system_error(
-                GetLastError(), system::system_category(), "Failed to block on Windows event"));
+                err, system::system_category(), "Failed to block on Windows event"));
         }
     }
     const_cast< volatile boost::uint32_t& >(m_state) = 0;
@@ -147,9 +153,10 @@ BOOST_LOG_API void winapi_based_event::set_signalled()
     {
         if (SetEvent(m_event) == 0)
         {
+            const DWORD err = GetLastError();
             const_cast< volatile boost::uint32_t& >(m_state) = 0;
             BOOST_THROW_EXCEPTION(system::system_error(
-                GetLastError(), system::system_category(), "Failed to wake the blocked thread"));
+                err, system::system_category(), "Failed to wake the blocked thread"));
         }
     }
 }

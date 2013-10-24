@@ -80,7 +80,7 @@ namespace boost { namespace fusion
 
 namespace boost 
 {
-#if !defined(BOOST_RESULT_OF_USE_DECLTYPE) || defined(BOOST_NO_DECLTYPE)
+#if !defined(BOOST_RESULT_OF_USE_DECLTYPE) || defined(BOOST_NO_CXX11_DECLTYPE)
     template<class F, class Seq>
     struct result_of< boost::fusion::unfused_typed<F,Seq> const () >
         : boost::fusion::unfused_typed<F,Seq>::template result< 

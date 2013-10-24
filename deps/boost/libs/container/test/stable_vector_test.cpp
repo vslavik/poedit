@@ -41,10 +41,10 @@ template class stable_vector<test::movable_and_copyable_int,
 
 namespace stable_vector_detail{
 
-template class iterator< int, int &, int *>;
-template class iterator< int, const int &, const int *>;
+template class iterator<int*, false>;
+template class iterator<int*, true >;
 
-}
+}  //namespace stable_vector_detail{
 
 }}
 
@@ -64,6 +64,36 @@ void recursive_vector_test()//Test for recursive types
    if(!copy.size()){
       copy = recursive;
    }
+}
+
+bool default_init_test()//Test for default initialization
+{
+   typedef stable_vector<int, test::default_init_allocator<int> > svector_t;
+
+   const std::size_t Capacity = 100;
+
+   {
+      test::default_init_allocator<int>::reset_pattern(0);
+      svector_t v(Capacity, default_init);
+      svector_t::iterator it = v.begin();
+      //Compare with the pattern
+      for(std::size_t i = 0; i != Capacity; ++i, ++it){
+         if(*it != static_cast<int>(i))
+            return false;
+      }
+   }
+   {
+      test::default_init_allocator<int>::reset_pattern(100);
+      svector_t v;
+      v.resize(Capacity, default_init);
+      svector_t::iterator it = v.begin();
+      //Compare with the pattern
+      for(std::size_t i = 0; i != Capacity; ++i, ++it){
+         if(*it != static_cast<int>(i+100))
+            return false;
+      }
+   }
+   return true;
 }
 
 int main()
@@ -101,6 +131,11 @@ int main()
 
    if(test::vector_test<MyCopyVector>())
       return 1;
+
+   if(!test::default_init_test< stable_vector<int, test::default_init_allocator<int> > >()){
+      std::cerr << "Default init test failed" << std::endl;
+      return 1;
+   }
 
    const test::EmplaceOptions Options = (test::EmplaceOptions)(test::EMPLACE_BACK | test::EMPLACE_BEFORE);
    if(!boost::container::test::test_emplace

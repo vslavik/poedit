@@ -59,11 +59,11 @@ public:
    typedef RealType value_type;
    typedef Policy policy_type;
 
-   rayleigh_distribution(RealType sigma = 1)
-      : m_sigma(sigma)
+   rayleigh_distribution(RealType l_sigma = 1)
+      : m_sigma(l_sigma)
    {
       RealType err;
-      detail::verify_sigma("boost::math::rayleigh_distribution<%1%>::rayleigh_distribution", sigma, &err, Policy());
+      detail::verify_sigma("boost::math::rayleigh_distribution<%1%>::rayleigh_distribution", l_sigma, &err, Policy());
    } // rayleigh_distribution
 
    RealType sigma()const

@@ -147,12 +147,12 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_integral<foo3_t>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_integral<foo4_t>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_integral<incomplete_type>::value, false);
 
+#ifndef BOOST_NO_CXX11_CHAR16_T
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_integral<char16_t>::value, true);
+#endif
+#ifndef BOOST_NO_CXX11_CHAR32_T
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_integral<char32_t>::value, true);
+#endif
+
 TT_TEST_END
-
-
-
-
-
-
-
 

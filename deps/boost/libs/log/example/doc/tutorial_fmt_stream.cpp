@@ -5,17 +5,21 @@
  *          http://www.boost.org/LICENSE_1_0.txt)
  */
 
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
 #include <boost/log/sources/severity_logger.hpp>
 #include <boost/log/sources/record_ostream.hpp>
 #include <boost/log/utility/setup/file.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/support/date_time.hpp>
 
 namespace logging = boost::log;
 namespace src = boost::log::sources;
 namespace expr = boost::log::expressions;
 namespace keywords = boost::log::keywords;
+
+#if 1
 
 //[ example_tutorial_formatters_stream
 void init()
@@ -37,7 +41,7 @@ void init()
 }
 //]
 
-#if 0
+#else
 
 //[ example_tutorial_formatters_stream_date_time
 void init()

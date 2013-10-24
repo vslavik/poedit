@@ -72,3 +72,5 @@ finish:
     hlt
 .size make_fcontext,.-make_fcontext
 
+/* Mark that we don't need executable stack.  */
+.section .note.GNU-stack,"",%progbits

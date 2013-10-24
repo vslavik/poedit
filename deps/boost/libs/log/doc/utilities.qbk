@@ -536,6 +536,9 @@ The RotationTimePoint parameter should have one of the following formats, accord
 
 [table "Syslog" sink settings
 [[Parameter]             [Format]                                                               [Description]]
+[[Format]                [Format string as described [link log.detailed.utilities.setup.filter_formatter here]]
+    [Log record formatter to be used by the sink. If not specified, the default formatter is used.]
+]
 [[LocalAddress]          [An IP address]
     [Local address to initiate connection to the syslog server. If not specified, the default local address will be used.]
 ]
@@ -546,6 +549,9 @@ The RotationTimePoint parameter should have one of the following formats, accord
 
 [table "SimpleEventLog" sink settings
 [[Parameter]             [Format]                                                               [Description]]
+[[Format]                [Format string as described [link log.detailed.utilities.setup.filter_formatter here]]
+    [Log record formatter to be used by the sink. If not specified, the default formatter is used.]
+]
 [[LogName]               [A string]
     [Log name to write events into. If not specified, the default log name will be used.]
 ]

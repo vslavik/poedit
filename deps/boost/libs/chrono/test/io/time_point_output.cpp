@@ -67,6 +67,20 @@ void test_good_symbol_system_clock(const char* str, D d)
   BOOST_TEST( (out.str() == std::string(str) ));
 }
 
+template <typename D>
+void test_good_utc_fmt_system_clock(const char* str, const char* fmt, D d)
+{
+  typedef boost::chrono::system_clock Clock;
+
+  std::ostringstream out;
+  boost::chrono::time_point<Clock, D> tp(d);
+  out << time_fmt(boost::chrono::timezone::utc, fmt)  << tp;
+  BOOST_TEST(out.good());
+  std::cout << "Expected= " << str << std::endl;
+  std::cout << "Obtained= " << out.str() << std::endl;
+  BOOST_TEST_EQ( out.str() , std::string(str) );
+}
+
 template<typename Clock, typename D>
 void test_good(const char* str, D d, boost::chrono::duration_style style)
 {
@@ -156,6 +170,15 @@ void check_all_system_clock()
   test_good_symbol_system_clock("1970-01-01 00:00:00.000000 +0000", nanoseconds(2));
   test_good_symbol_system_clock("1970-01-01 00:00:00.200000 +0000", duration<boost::int_least64_t, deci> (2));
   test_good_symbol_system_clock("1970-01-01 00:00:00.066667 +0000", duration<boost::int_least64_t, ratio<1, 30> > (2));
+
+  test_good_utc_fmt_system_clock("1970-01-01 02:00:00", "%Y-%m-%d %H:%M:%S", hours(2));
+  test_good_utc_fmt_system_clock("1970-01-01 02", "%Y-%m-%d %H", hours(2));
+
+  test_good_utc_fmt_system_clock ("1970-01-01 02:00:00", "%Y-%m-%d %T", hours(2));
+  test_good_utc_fmt_system_clock ("1970-01-01 02:00", "%Y-%m-%d %R", hours(2));
+  test_good_utc_fmt_system_clock ("% 1970-01-01 02:00", "%% %Y-%m-%d %R", hours(2));
+  test_good_utc_fmt_system_clock ("1970-01-01 02:00 Thursday January", "%Y-%m-%d %R %A %B", hours(2));
+
 }
 
 void test_gmtime(std::time_t t)

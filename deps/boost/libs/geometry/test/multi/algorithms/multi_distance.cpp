@@ -74,7 +74,7 @@ void test_2d()
     test_distance<ml, mp>("MULTILINESTRING((1 1,2 2),(1 0,2 0),(0 2,0 3))", "MULTIPOINT((0 0),(1 1))", 0.0);
 
     // Test with a strategy
-    bg::strategy::distance::pythagoras<P, P> pyth;
+    bg::strategy::distance::pythagoras<> pyth;
     test_distance<P, P>(pyth, "POINT(0 0)", "POINT(1 1)", sqrt(2.0));
     test_distance<P, mp>(pyth, "POINT(0 0)", "MULTIPOINT((1 1),(1 0),(0 2))", 1.0);
     test_distance<mp, P>(pyth, "MULTIPOINT((1 1),(1 0),(0 2))", "POINT(0 0)", 1.0);
@@ -116,18 +116,18 @@ void test_mixed()
     // Test with a strategy
     using namespace bg::strategy::distance;
 
-    test_distance<P1, P2>(pythagoras<P1, P2>(), "POINT(0 0)", "POINT(1 1)", sqrt(2.0));
+    test_distance<P1, P2>(pythagoras<>(), "POINT(0 0)", "POINT(1 1)", sqrt(2.0));
 
-    test_distance<P1, mp1>(pythagoras<P1, P1>(), "POINT(0 0)", "MULTIPOINT((1 1),(1 0),(0 2))", 1.0);
-    test_distance<P1, mp2>(pythagoras<P1, P2>(), "POINT(0 0)", "MULTIPOINT((1 1),(1 0),(0 2))", 1.0);
-    test_distance<P2, mp1>(pythagoras<P2, P1>(), "POINT(0 0)", "MULTIPOINT((1 1),(1 0),(0 2))", 1.0);
-    test_distance<P2, mp2>(pythagoras<P2, P2>(), "POINT(0 0)", "MULTIPOINT((1 1),(1 0),(0 2))", 1.0);
+    test_distance<P1, mp1>(pythagoras<>(), "POINT(0 0)", "MULTIPOINT((1 1),(1 0),(0 2))", 1.0);
+    test_distance<P1, mp2>(pythagoras<>(), "POINT(0 0)", "MULTIPOINT((1 1),(1 0),(0 2))", 1.0);
+    test_distance<P2, mp1>(pythagoras<>(), "POINT(0 0)", "MULTIPOINT((1 1),(1 0),(0 2))", 1.0);
+    test_distance<P2, mp2>(pythagoras<>(), "POINT(0 0)", "MULTIPOINT((1 1),(1 0),(0 2))", 1.0);
 
     // Most interesting: reversal AND a strategy (note that the stategy must be reversed automatically
-    test_distance<mp1, P1>(pythagoras<P1, P1>(), "MULTIPOINT((1 1),(1 0),(0 2))", "POINT(0 0)", 1.0);
-    test_distance<mp1, P2>(pythagoras<P1, P2>(), "MULTIPOINT((1 1),(1 0),(0 2))", "POINT(0 0)", 1.0);
-    test_distance<mp2, P1>(pythagoras<P2, P1>(), "MULTIPOINT((1 1),(1 0),(0 2))", "POINT(0 0)", 1.0);
-    test_distance<mp2, P2>(pythagoras<P2, P2>(), "MULTIPOINT((1 1),(1 0),(0 2))", "POINT(0 0)", 1.0);
+    test_distance<mp1, P1>(pythagoras<>(), "MULTIPOINT((1 1),(1 0),(0 2))", "POINT(0 0)", 1.0);
+    test_distance<mp1, P2>(pythagoras<>(), "MULTIPOINT((1 1),(1 0),(0 2))", "POINT(0 0)", 1.0);
+    test_distance<mp2, P1>(pythagoras<>(), "MULTIPOINT((1 1),(1 0),(0 2))", "POINT(0 0)", 1.0);
+    test_distance<mp2, P2>(pythagoras<>(), "MULTIPOINT((1 1),(1 0),(0 2))", "POINT(0 0)", 1.0);
 }
 
 template <typename P>

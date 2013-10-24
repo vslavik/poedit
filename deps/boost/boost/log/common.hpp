@@ -34,7 +34,7 @@
 #include <boost/log/attributes/named_scope.hpp>
 #include <boost/log/attributes/scoped_attribute.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 

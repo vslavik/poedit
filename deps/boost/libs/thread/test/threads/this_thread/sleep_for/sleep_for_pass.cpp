@@ -27,7 +27,6 @@ int main()
 {
   typedef boost::chrono::system_clock Clock;
   typedef Clock::time_point time_point;
-  typedef Clock::duration duration;
   boost::chrono::milliseconds ms(500);
   time_point t0 = Clock::now();
   boost::this_thread::sleep_for(ms);

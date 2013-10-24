@@ -13,6 +13,7 @@
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/move/core.hpp>
 #include <boost/next_prior.hpp>
 #include <boost/shared_ptr.hpp>
 #include <iterator>
@@ -21,6 +22,22 @@
 #include "employee.hpp"
 
 using namespace boost::multi_index;
+
+struct non_copyable_int
+{
+  explicit non_copyable_int(int n_):n(n_){}
+  non_copyable_int(BOOST_RV_REF(non_copyable_int) x):n(x.n){x.n=0;} 
+  non_copyable_int& operator=(BOOST_RV_REF(non_copyable_int) x)
+  {
+    n=x.n;
+    x.n=0;
+    return *this;
+  } 
+
+  int n;
+private:
+  BOOST_MOVABLE_BUT_NOT_COPYABLE(non_copyable_int)
+};
 
 class always_one
 {
@@ -115,13 +132,15 @@ void test_modifiers()
   employee_set_randomly&    i5=get<randomly>(es);
 
   es.insert(employee(0,"Joe",31,1123));
-  BOOST_TEST(es.insert(employee(0,"Joe",31,1123)).second==false);
+  BOOST_TEST(es.emplace(0,"Joe",31,1123).second==false);
   BOOST_TEST(i1.insert(employee(0,"Joe Jr.",5,2563)).second==false);
-  BOOST_TEST(i2.insert(employee(1,"Victor",5,1123)).second==false);
+  BOOST_TEST(i2.emplace_hint(i2.end(),1,"Victor",5,1123)->name!="Victor");
   BOOST_TEST(i3.insert(i3.begin(),employee(1,"Victor",5,1123)).second
                 ==false);
   BOOST_TEST(i3.push_front(employee(0,"Joe Jr.",5,2563)).second==false);
   BOOST_TEST(i3.push_back(employee(0,"Joe Jr.",5,2563)).second==false);
+  BOOST_TEST(i5.emplace_front(1,"Victor",5,1123).second==false);
+  BOOST_TEST(i5.emplace_back(1,"Victor",5,1123).second==false);
 
   employee_set_by_name::iterator it1=i1.find("Joe");
   i1.insert(it1,employee(1,"Joe Jr.",5,2563));
@@ -156,17 +175,18 @@ void test_modifiers()
   i5.erase(i5.begin(),i5.end());
   BOOST_TEST(es.size()==0&&i3.size()==0);
 
-  es.insert(employee(0,"Joe",31,1123));
+  i5.emplace(i5.end(),0,"Joe",31,1123);
   BOOST_TEST(i1.erase(i1.begin())==i1.end());
   BOOST_TEST(i1.size()==0);
 
-  es.insert(employee(0,"Joe",31,1123));
-  es.insert(employee(1,"Jack",31,5032));
-  BOOST_TEST(i2.erase(31)==2);
+  i1.emplace(0,"Joe",31,1123);
+  i3.emplace(i3.begin(),1,"Jack",31,5032);
+  i4.emplace_hint(i4.end(),2,"James",31,3847);
+  BOOST_TEST(i2.erase(31)==3);
   BOOST_TEST(i2.size()==0);
 
-  i3.push_front(employee(1,"Jack",31,5032));
-  i3.push_back(employee(0,"Joe",31,1123));
+  i3.emplace_front(1,"Jack",31,5032);
+  i3.emplace_back(0,"Joe",31,1123);
   BOOST_TEST(i3.front()==employee(1,"Jack",31,5032));
   BOOST_TEST(i3.back()==employee(0,"Joe",31,1123));
 
@@ -206,11 +226,21 @@ void test_modifiers()
   i1.insert(ve.begin(),ve.end());
   BOOST_TEST(i2.size()==3);
 
+#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
+  i1.insert({{4,"Vanessa",20,9236},{5,"Penelope",55,2358}});
+  BOOST_TEST(i2.size()==5);
+#endif
+
   BOOST_TEST(i2.erase(i2.begin(),i2.end())==i2.end());
   BOOST_TEST(es.size()==0);
 
   i2.insert(ve.begin(),ve.end());
   BOOST_TEST(i3.size()==3);
+
+#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
+  i2.insert({{4,"Vanessa",20,9236},{5,"Penelope",55,2358}});
+  BOOST_TEST(i3.size()==5);
+#endif
 
   BOOST_TEST(*(i3.erase(i3.begin()))==employee(1,"Rachel",27,9012));
   BOOST_TEST(i3.erase(i3.begin(),i3.end())==i3.end());
@@ -218,6 +248,12 @@ void test_modifiers()
 
   i3.insert(i3.end(),ve.begin(),ve.end());
   BOOST_TEST(es.size()==3);
+
+#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
+  i3.insert(i3.begin(),{{4,"Vanessa",20,9236},{5,"Penelope",55,2358}});
+  BOOST_TEST(i3.front().name=="Vanessa");
+  BOOST_TEST(i4.size()==5);
+#endif
 
   BOOST_TEST(i4.erase(9012)==1);
   i4.erase(i4.begin());
@@ -231,6 +267,12 @@ void test_modifiers()
 
   i5.insert(i5.begin(),ve.begin(),ve.end());
   BOOST_TEST(i1.size()==3);
+
+#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
+  i5.insert(i5.end(),{{4,"Vanessa",20,9236},{5,"Penelope",55,2358}});
+  BOOST_TEST(i5.back().name=="Penelope");
+  BOOST_TEST(i1.size()==5);
+#endif
 
   BOOST_TEST(es.erase(es.begin(),es.end())==es.end());
   BOOST_TEST(i2.size()==0);
@@ -323,6 +365,52 @@ void test_modifiers()
 
   es2.clear();
   BOOST_TEST(es2.size()==0);
+
+  /* non-copyable elements */
+
+  multi_index_container<
+    non_copyable_int,
+    indexed_by<
+      ordered_non_unique<member<non_copyable_int,int,&non_copyable_int::n> >,
+      hashed_non_unique<member<non_copyable_int,int,&non_copyable_int::n> >,
+      sequenced<>,
+      random_access<>
+    >
+  > ncic,ncic2;
+
+  ncic.emplace(1);
+  get<1>(ncic).emplace(1);
+  get<2>(ncic).emplace_back(1);
+  get<3>(ncic).emplace_back(1);
+
+  non_copyable_int nci(1);
+  ncic.insert(boost::move(nci));
+  BOOST_TEST(nci.n==0);
+
+  nci.n=1;
+  get<1>(ncic).insert(boost::move(nci));
+  BOOST_TEST(nci.n==0);
+
+  nci.n=1;
+  get<2>(ncic).push_back(boost::move(nci));
+  BOOST_TEST(nci.n==0);
+
+  nci.n=1;
+  get<3>(ncic).push_back(boost::move(nci));
+  BOOST_TEST(nci.n==0);
+
+  std::vector<int> vi(4,1);
+  const std::vector<int>& cvi=vi;
+  ncic.insert(vi.begin(),vi.end());
+  ncic.insert(cvi.begin(),cvi.end());
+  get<2>(ncic).insert(get<2>(ncic).begin(),vi.begin(),vi.end());
+  get<2>(ncic).insert(get<2>(ncic).begin(),cvi.begin(),cvi.end());
+
+  BOOST_TEST(ncic.count(1)==24);
+
+  ncic.swap(ncic2);
+  BOOST_TEST(ncic.empty());
+  BOOST_TEST(ncic2.count(1)==24);
 
   /* testcase for problem reported at
    * http://lists.boost.org/boost-users/2006/12/24215.php

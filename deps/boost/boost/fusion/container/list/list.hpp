@@ -32,7 +32,7 @@
 
 namespace boost { namespace fusion
 {
-    struct nil;
+    struct nil_;
     struct void_;
 
     template <BOOST_PP_ENUM_PARAMS(FUSION_MAX_LIST_SIZE, typename T)>

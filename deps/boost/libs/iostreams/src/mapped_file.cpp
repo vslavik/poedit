@@ -344,12 +344,12 @@ void mapped_file_impl::map_file(param_type& p)
 {
     try {
         try_map_file(p);
-    } catch (const std::exception& e) {
+    } catch (const std::exception&) {
         if (p.hint) {
             p.hint = 0;
             try_map_file(p);
         } else {
-            boost::throw_exception(e);
+            throw;
         }
     }
 }

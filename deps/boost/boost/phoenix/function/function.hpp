@@ -8,6 +8,7 @@
 #ifndef BOOST_PHOENIX_FUNCTION_FUNCTION_HPP
 #define BOOST_PHOENIX_FUNCTION_FUNCTION_HPP
 
+#include <boost/config.hpp>
 //#include <boost/phoenix/function/function_handling.hpp>
 #include <boost/phoenix/core/detail/function_eval.hpp>
 #include <boost/preprocessor/facilities/expand.hpp>
@@ -24,9 +25,11 @@ namespace boost { namespace phoenix
     template<typename F>
     struct function
     {
-        function() {}
+        BOOST_CONSTEXPR function()
+          : f()
+        {}
 
-        function(F f)
+        BOOST_CONSTEXPR function(F f)
           : f(f)
         {}
 

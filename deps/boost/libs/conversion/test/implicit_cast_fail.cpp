@@ -19,6 +19,8 @@ struct foo
 int test_main(int, char*[])
 {
     foo x = implicit_cast<foo>("foobar");
-    (void)x;  // warning suppression.
+    (void)x;            // warning suppression.
+    BOOST_CHECK(false); // suppressing warning about 'boost::unit_test::{anonymous}::unit_test_log' defined but not used
     return 0;
 }
+

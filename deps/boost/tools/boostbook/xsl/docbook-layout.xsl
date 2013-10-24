@@ -10,10 +10,15 @@
 <xsl:stylesheet version = "1.0"
    xmlns:xsl = "http://www.w3.org/1999/XSL/Transform"
 >
+
   <!-- needed for calsTable template -->
   
   <xsl:import
     href="http://docbook.sourceforge.net/release/xsl/current/html/formal.xsl"/>
+
+  <!-- Optionally add the section id to each section's class.
+       This is useful if you want to style individual sections differently. -->
+  <xsl:param name="boost.section.class.add.id" select="0"/>
 
   <!--
      Override the behaviour of some DocBook elements for better
@@ -208,4 +213,50 @@
       <xsl:with-param name="allow-anchors" select="$allow-anchors"/>
     </xsl:apply-templates>
   </xsl:template>
+  
+  
+  <!-- Adds role class for section element resulting div. So that
+       we can style them in the resulting HTML.
+       Also, add the section id, if boost.section.class.add.id = 1.
+       This can be used to style individual sections differently. -->
+  <xsl:template match="section" mode="class.value">
+    <xsl:param name="class" select="local-name(.)"/>
+    <xsl:param name="node" select="."/>
+    <xsl:variable name="id">
+      <xsl:if test="$boost.section.class.add.id">
+        <xsl:call-template name="object.id">
+          <xsl:with-param name="object" select="$node"/>
+        </xsl:call-template>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:value-of select="normalize-space(concat($class, ' ',
+        @role, ' ', translate($id, '.', '_')))"/>
+  </xsl:template>
+  
+  <!-- Adds role class for simplesect element resulting div. So that
+       we can style them in the resulting HTML. -->
+  <xsl:template match="simplesect" mode="class.value">
+    <xsl:param name="class" select="local-name(.)"/>
+    <xsl:param name="node" select="."/>
+    <xsl:value-of select="normalize-space(concat($class,' ',@role))"/>
+  </xsl:template>
+  
+  <!-- Allow for specifying that a section should not include the parents
+       labeling. This allows us to start clean numering of a sub-section. -->
+  <xsl:template match="section[@label-style='no-parent']" mode="label.markup">
+	  <xsl:choose>
+	    <xsl:when test="@label">
+	      <xsl:value-of select="@label"/>
+	    </xsl:when>
+	    <xsl:when test="$label != 0">
+	      <xsl:variable name="format">
+	        <xsl:call-template name="autolabel.format">
+	          <xsl:with-param name="format" select="$section.autolabel"/>
+	        </xsl:call-template>
+	      </xsl:variable>
+	      <xsl:number format="{$format}" count="section"/>
+	    </xsl:when>
+	  </xsl:choose>
+  </xsl:template>
+  
 </xsl:stylesheet>

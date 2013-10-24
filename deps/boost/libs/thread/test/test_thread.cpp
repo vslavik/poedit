@@ -129,7 +129,7 @@ struct non_copyable_functor:
 {
     unsigned value;
 
-    non_copyable_functor():
+    non_copyable_functor(): boost::noncopyable(),
         value(0)
     {}
 

@@ -13,8 +13,7 @@ int test_main(int, char* [])
 {
     typedef bg::model::point<float, 2, bg::cs::cartesian> P2f;
 
-    testset::interprocess::modifiers<P2f>(bgi::dynamic_rstar(32, 8));
-    testset::interprocess::additional<P2f>(bgi::dynamic_rstar(32, 8));
+    testset::interprocess::modifiers_and_additional<P2f>(bgi::dynamic_rstar(32, 8));
     
     return 0;
 }

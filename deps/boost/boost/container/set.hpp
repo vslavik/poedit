@@ -11,7 +11,7 @@
 #ifndef BOOST_CONTAINER_SET_HPP
 #define BOOST_CONTAINER_SET_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #  pragma once
 #endif
 
@@ -113,6 +113,13 @@ class set
       : m_tree(comp, a)
    {}
 
+   //! <b>Effects</b>: Constructs an empty set using the specified allocator object.
+   //!
+   //! <b>Complexity</b>: Constant.
+   explicit set(const allocator_type& a)
+      : m_tree(a)
+   {}
+
    //! <b>Effects</b>: Constructs an empty set using the specified comparison object and
    //! allocator, and inserts elements from the range [first ,last ).
    //!
@@ -132,6 +139,8 @@ class set
    //! unique values.
    //!
    //! <b>Complexity</b>: Linear in N.
+   //!
+   //! <b>Note</b>: Non-standard extension.
    template <class InputIterator>
    set( ordered_unique_range_t, InputIterator first, InputIterator last
       , const Compare& comp = Compare(), const allocator_type& a = allocator_type())
@@ -450,7 +459,7 @@ class set
    //! <b>Complexity</b>: Logarithmic.
    iterator insert(const_iterator position, value_type &&x);
    #else
-   BOOST_MOVE_CONVERSION_AWARE_CATCH_1ARG(insert, value_type, iterator, this->priv_insert, const_iterator)
+   BOOST_MOVE_CONVERSION_AWARE_CATCH_1ARG(insert, value_type, iterator, this->priv_insert, const_iterator, const_iterator)
    #endif
 
    //! <b>Requires</b>: first, last are not iterators into *this.
@@ -549,7 +558,7 @@ class set
    //!
    //! <b>Complexity</b>: log(size())+count(k)
    size_type count(const key_type& x) const
-   {  return m_tree.find(x) == m_tree.end() ? 0 : 1;  }
+   {  return static_cast<size_type>(m_tree.find(x) != m_tree.end());  }
 
    //! <b>Returns</b>: An iterator pointing to the first element with key not less
    //!   than k, or a.end() if such an element is not found.
@@ -737,6 +746,13 @@ class multiset
       : m_tree(comp, a)
    {}
 
+   //! <b>Effects</b>: Constructs an empty multiset using the specified allocator.
+   //!
+   //! <b>Complexity</b>: Constant.
+   explicit multiset(const allocator_type& a)
+      : m_tree(a)
+   {}
+
    //! <b>Effects</b>: Constructs an empty multiset using the specified comparison object
    //!   and allocator, and inserts elements from the range [first ,last ).
    //!
@@ -756,6 +772,8 @@ class multiset
    //! <b>Requires</b>: [first ,last) must be ordered according to the predicate.
    //!
    //! <b>Complexity</b>: Linear in N.
+   //!
+   //! <b>Note</b>: Non-standard extension.
    template <class InputIterator>
    multiset( ordered_range_t, InputIterator first, InputIterator last
            , const Compare& comp = Compare()
@@ -1063,7 +1081,7 @@ class multiset
    //!   is inserted right before p.
    iterator insert(const_iterator position, value_type &&x);
    #else
-   BOOST_MOVE_CONVERSION_AWARE_CATCH_1ARG(insert, value_type, iterator, this->priv_insert, const_iterator)
+   BOOST_MOVE_CONVERSION_AWARE_CATCH_1ARG(insert, value_type, iterator, this->priv_insert, const_iterator, const_iterator)
    #endif
 
    //! <b>Requires</b>: first, last are not iterators into *this.

@@ -27,8 +27,6 @@ struct vertex_vector
 template <typename Graph>
 void build_graph(Graph& g, typename vertex_vector<Graph>::type& v)
 {
-    typedef typename graph_traits<Graph>::vertex_descriptor Vertex;
-
     // add vertices
     for(size_t i = 0; i < N; ++i) {
         v[i] = add_vertex(g);
@@ -98,7 +96,7 @@ int
 main(int, char *[])
 {
     typedef undirected_graph<> Graph;
-    typedef directed_graph<> Digraph;
+    // typedef directed_graph<> Digraph;
 
     // TODO: write a test for directed clustering coefficient.
 

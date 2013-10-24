@@ -4,7 +4,7 @@
 <title>Struct template has_requirement</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../sinks.html#header.boost.log.sinks.frontend_requirements_hpp" title="Header &lt;boost/log/sinks/frontend_requirements.hpp&gt;">
 <link rel="prev" href="combine_requirements.html" title="Struct template combine_requirements">
 <link rel="next" href="../../../BOOST_LOG_COMBINE_REQUIREMENTS_LIMIT.html" title="Macro BOOST_LOG_COMBINE_REQUIREMENTS_LIMIT">
@@ -28,7 +28,7 @@
 <span class="keyword">struct</span> <a class="link" href="has_requirement.html" title="Struct template has_requirement">has_requirement</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">is_base_of</span><span class="special">&lt;</span> <span class="identifier">RequiredT</span><span class="special">,</span> <span class="identifier">TestedT</span> <span class="special">&gt;</span> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp26296496"></a><h2>Description</h2>
+<a name="idp65318568"></a><h2>Description</h2>
 <p>A helper metafunction to check if a requirement is satisfied. The <code class="computeroutput">TestedT</code> template argument should be the type combining one or several requirements and <code class="computeroutput">RequiredT</code> is the requirement to test against. The metafunction will yield a positive result if <code class="computeroutput">TestedT</code> supports <code class="computeroutput">RequiredT</code>. </p>
 </div>
 </div>

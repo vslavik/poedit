@@ -37,7 +37,7 @@ While severity levels can be used for informative purposes, you will normally wa
 
 [@boost:/libs/log/example/doc/tutorial_trivial_flt.cpp See the complete code].
 
-Now, if we run this code sample, the first two log records will be ignored, while the remaining four will pass on to the file.
+Now, if we run this code sample, the first two log records will be ignored, while the remaining four will pass on to the console.
 
 [important Remember that the streaming expression is only executed if the record passed filtering. Don't specify business-critical calls in the streaming expression, as these calls may not get invoked if the record is filtered away.]
 
@@ -350,7 +350,7 @@ You can try how this works by compiling and running the [@boost:/libs/log/exampl
 
 The library supports logging strings containing national characters. There are basically two ways of doing this. On UNIX-like systems typically some multibyte character encoding (e.g. UTF-8) is used to represent national characters. In this case the library can be used just the way it is used for plain ASCII logging, no additional setup is required.
 
-On Windows the common practice is to use wide strings to represent national characters. Also, most of the system API is wide character oriented, which requires Windows-specific sinks to also support wide strings. On the other hand, generic sinks, like [link log.detailed.sink_backends.text_file text file sink, are byte-oriented (because, well, you store bytes in files, not characters). This forces the library to perform character code conversion when needed by the sink. To set up the library for this one has to imbue the sink with a locale with the appropriate `codecvt` facet. __boost_locale__ can be used to generate such a locale. Let's see an example:
+On Windows the common practice is to use wide strings to represent national characters. Also, most of the system API is wide character oriented, which requires Windows-specific sinks to also support wide strings. On the other hand, generic sinks, like the [link log.detailed.sink_backends.text_file text file sink], are byte-oriented (because, well, you store bytes in files, not characters). This forces the library to perform character code conversion when needed by the sink. To set up the library for this one has to imbue the sink with a locale with the appropriate `codecvt` facet. __boost_locale__ can be used to generate such a locale. Let's see an example:
 
 [example_wide_char_logging_initialization]
 

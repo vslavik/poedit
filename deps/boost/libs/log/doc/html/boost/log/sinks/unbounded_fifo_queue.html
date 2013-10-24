@@ -4,7 +4,7 @@
 <title>Class unbounded_fifo_queue</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../sinks.html#header.boost.log.sinks.unbounded_fifo_queue_hpp" title="Header &lt;boost/log/sinks/unbounded_fifo_queue.hpp&gt;">
 <link rel="prev" href="basic_text_ostream_backend.html" title="Class template basic_text_ostream_backend">
 <link rel="next" href="unbounded_ordering_queue.html" title="Class template unbounded_ordering_queue">
@@ -28,49 +28,49 @@
 <span class="keyword">class</span> <a class="link" href="unbounded_fifo_queue.html" title="Class unbounded_fifo_queue">unbounded_fifo_queue</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="unbounded_fifo_queue.html#boost.log.sinks.unbounded_fifo_queueconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="unbounded_fifo_queue.html#idp20732128-bb"><span class="identifier">unbounded_fifo_queue</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="unbounded_fifo_queue.html#idp20732352-bb"><span class="identifier">unbounded_fifo_queue</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="unbounded_fifo_queue.html#idp27477224-bb"><span class="identifier">unbounded_fifo_queue</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="unbounded_fifo_queue.html#idp27477448-bb"><span class="identifier">unbounded_fifo_queue</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="unbounded_fifo_queue.html#idp20725968-bb">protected member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="unbounded_fifo_queue.html#idp20726176-bb"><span class="identifier">enqueue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="unbounded_fifo_queue.html#idp20727168-bb"><span class="identifier">try_enqueue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="unbounded_fifo_queue.html#idp20728160-bb"><span class="identifier">try_dequeue_ready</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="unbounded_fifo_queue.html#idp20729216-bb"><span class="identifier">try_dequeue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="unbounded_fifo_queue.html#idp20730240-bb"><span class="identifier">dequeue_ready</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="unbounded_fifo_queue.html#idp20731248-bb"><span class="identifier">interrupt_dequeue</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="unbounded_fifo_queue.html#idp27471064-bb">protected member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="unbounded_fifo_queue.html#idp27471272-bb"><span class="identifier">enqueue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="unbounded_fifo_queue.html#idp27472264-bb"><span class="identifier">try_enqueue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="unbounded_fifo_queue.html#idp27473256-bb"><span class="identifier">try_dequeue_ready</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="unbounded_fifo_queue.html#idp27474312-bb"><span class="identifier">try_dequeue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="unbounded_fifo_queue.html#idp27475336-bb"><span class="identifier">dequeue_ready</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="unbounded_fifo_queue.html#idp27476344-bb"><span class="identifier">interrupt_dequeue</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp27216624"></a><h2>Description</h2>
+<a name="idp66238504"></a><h2>Description</h2>
 <p>The <code class="computeroutput"><a class="link" href="unbounded_fifo_queue.html" title="Class unbounded_fifo_queue">unbounded_fifo_queue</a></code> class is intended to be used with the <code class="computeroutput"><a class="link" href="asynchronous_sink.html" title="Class template asynchronous_sink">asynchronous_sink</a></code> frontend as a log record queueing strategy.</p>
 <p>This strategy implements the simplest logic of log record buffering between threads: the queue has no limits and imposes no ordering over the queued elements aside from the order in which they are enqueued. Because of this the queue provides decent performance and scalability, however if sink backends can't consume log records fast enough the queue may grow uncontrollably. When this is an issue, it is recommended to use one of the bounded strategies. </p>
 <div class="refsect2">
-<a name="idp27219008"></a><h3>
+<a name="idp66240888"></a><h3>
 <a name="boost.log.sinks.unbounded_fifo_queueconstruct-copy-destruct"></a><code class="computeroutput">unbounded_fifo_queue</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp20732128-bb"></a><span class="identifier">unbounded_fifo_queue</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Default constructor. </li>
+<pre class="literallayout"><a name="idp27477224-bb"></a><span class="identifier">unbounded_fifo_queue</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Default constructor. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp20732352-bb"></a><span class="identifier">unbounded_fifo_queue</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>Initializing constructor. </li>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp27477448-bb"></a><span class="identifier">unbounded_fifo_queue</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>Initializing constructor. </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp27226480"></a><h3>
-<a name="idp20725968-bb"></a><code class="computeroutput">unbounded_fifo_queue</code> protected member functions</h3>
+<a name="idp66248328"></a><h3>
+<a name="idp27471064-bb"></a><code class="computeroutput">unbounded_fifo_queue</code> protected member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp20726176-bb"></a><span class="identifier">enqueue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Enqueues log record to the queue. </li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp27471272-bb"></a><span class="identifier">enqueue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Enqueues log record to the queue. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp20727168-bb"></a><span class="identifier">try_enqueue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to enqueue log record to the queue. </li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp27472264-bb"></a><span class="identifier">try_enqueue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to enqueue log record to the queue. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp20728160-bb"></a><span class="identifier">try_dequeue_ready</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to dequeue a log record ready for processing from the queue, does not block if the queue is empty. </li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp27473256-bb"></a><span class="identifier">try_dequeue_ready</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to dequeue a log record ready for processing from the queue, does not block if the queue is empty. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp20729216-bb"></a><span class="identifier">try_dequeue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to dequeue log record from the queue, does not block if the queue is empty. </li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp27474312-bb"></a><span class="identifier">try_dequeue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to dequeue log record from the queue, does not block if the queue is empty. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp20730240-bb"></a><span class="identifier">dequeue_ready</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Dequeues log record from the queue, blocks if the queue is empty. </li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp27475336-bb"></a><span class="identifier">dequeue_ready</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Dequeues log record from the queue, blocks if the queue is empty. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp20731248-bb"></a><span class="identifier">interrupt_dequeue</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Wakes a thread possibly blocked in the <code class="computeroutput">dequeue</code> method. </li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp27476344-bb"></a><span class="identifier">interrupt_dequeue</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Wakes a thread possibly blocked in the <code class="computeroutput">dequeue</code> method. </li>
 </ol></div>
 </div>
 </div>

@@ -388,7 +388,7 @@ Here are a few usage examples:
     sink->set_formatter
     (
         expr::stream
-            << expr::named_scope(
+            << expr::format_named_scope(
                 "Scopes",
                 keywords::format = "%n",
                 keywords::iteration = expr::reverse,
@@ -400,7 +400,7 @@ Here are a few usage examples:
     sink->set_formatter
     (
         expr::stream
-            << expr::named_scope(
+            << expr::format_named_scope(
                 "Scopes",
                 keywords::format = "%n",
                 keywords::iteration = expr::forward,
@@ -412,7 +412,7 @@ Here are a few usage examples:
     sink->set_formatter
     (
         expr::stream
-            << expr::named_scope(
+            << expr::format_named_scope(
                 "Scopes",
                 keywords::format = "%n",
                 keywords::iteration = expr::reverse,

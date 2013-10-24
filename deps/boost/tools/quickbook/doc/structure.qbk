@@ -82,13 +82,37 @@ They are all optional.
 [heading Quickbook specific meta data]
 
 ```
-    [quickbook 1.5]
+    [quickbook 1.6]
 ```
 
 The `quickbook` attribute declares the version of quickbook
 the document is written for.
 In its absence, version 1.1 is assumed. It's recommended that
-you use `[quickbook 1.5]` which is the version described here.
+you use `[quickbook 1.6]` which is the version described here.
+
+[note
+
+The quickbook version also makes some changes to the markup
+that's generated. Most notably, the ids that are automatically
+for headers and sections are different in later versions. To
+minimise disruption, you can use the =compatibility-mode=
+attribute to generate similar markup to the old version:
+
+```
+[article Article that was original
+         written in quickbook 1.3
+[quickbook 1.6]
+[compatibility-mode 1.3]
+]
+```
+
+This feature shouldn't be used for new documents, just for
+porting old documents to the new version.
+]
+
+Both the =quickbook= and =compatibility-mode= tags can be used
+at the start of the file, before the document info block, and
+also in files that don't have a document info block.
 
 ```
     [source-mode teletype]
@@ -143,6 +167,43 @@ quickbook will warn about them, but still use them, generating invalid markup,
 that's just ignored by the style sheets.
 
 [endsect] [/attributes]
+
+[section:nesting Nesting quickbook documents]
+
+Docinfo blocks can only appear at the beginning of a quickbook file, so to
+create a more complicated document you need to use several quickbook files and
+use the [link quickbook.ref.include include tag] to nest them. For example, say
+you wish to create a book with an introduction and a chapter, you first create
+a file for the book:
+
+    [book Simple example
+    [quickbook 1.6]
+    ]
+
+    [include introduction.qbk]
+    [include chapter.qbk]
+
+[note Structuring a document like this was introduced in quickbook 1.6, so the
+`[quickbook 1.6]` docinfo field is required.]
+
+The appropriate document type for an introduction is `preface`, so
+the contents of `introduction.qbk` should be something like:
+
+    [preface Introduction
+    [quickbook 1.6]
+    ]
+
+    Write the introduction to the book here....
+
+And `chapter.qbk`:
+
+    [chapter A chapter
+    [quickbook 1.6]
+    ]
+
+    Chapter contents....
+
+[endsect] [/nesting]
 
 [endsect] [/docinfo]
 

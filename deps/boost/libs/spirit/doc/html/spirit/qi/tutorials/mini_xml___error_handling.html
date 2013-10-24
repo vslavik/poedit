@@ -133,6 +133,41 @@
 </pre>
 <h6>
 <a name="spirit.qi.tutorials.mini_xml___error_handling.h1"></a>
+          <span class="phrase"><a name="spirit.qi.tutorials.mini_xml___error_handling.on_success"></a></span><a class="link" href="mini_xml___error_handling.html#spirit.qi.tutorials.mini_xml___error_handling.on_success">On Success</a>
+        </h6>
+<p>
+          <code class="computeroutput"><span class="identifier">on_success</span></code> declares a handler
+          that is applied when a rule is succesfully matched.
+        </p>
+<pre class="programlisting"><span class="identifier">on_success</span><span class="special">(</span><span class="identifier">rule</span><span class="special">,</span> <span class="identifier">handler</span><span class="special">)</span>
+</pre>
+<p>
+          This specifies that the handler will be called when a rule is matched successfully.
+          The handler has the following signature:
+        </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">handler</span><span class="special">(</span>
+	<span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span>
+		<span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">first</span><span class="special">,</span>
+		<span class="identifier">Iterator</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">last</span><span class="special">,</span>
+		<span class="identifier">Iterator</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">i</span><span class="special">&gt;</span> <span class="identifier">args</span><span class="special">,</span>
+	<span class="identifier">Context</span><span class="special">&amp;</span> <span class="identifier">context</span><span class="special">)</span>
+</pre>
+<p>
+          <code class="computeroutput"><span class="identifier">first</span></code> points to the position
+          in the input sequence before the rule is matched. <code class="computeroutput"><span class="identifier">last</span></code>
+          points to the last position in the input sequence. <code class="computeroutput"><span class="identifier">i</span></code>
+          points to the position in the input sequence following the last character
+          that was consumed by the rule.
+        </p>
+<p>
+          A success handler can be used to annotate each matched rule in the grammar
+          with additional information about the portion of the input that matched
+          the rule. In a compiler application, this can be a combination of file,
+          line number and column number from the input stream for reporting diagnostics
+          or other messages.
+        </p>
+<h6>
+<a name="spirit.qi.tutorials.mini_xml___error_handling.h2"></a>
           <span class="phrase"><a name="spirit.qi.tutorials.mini_xml___error_handling.on_error"></a></span><a class="link" href="mini_xml___error_handling.html#spirit.qi.tutorials.mini_xml___error_handling.on_error">On Error</a>
         </h6>
 <p>
@@ -308,7 +343,7 @@
 </tbody>
 </table></div>
 <h6>
-<a name="spirit.qi.tutorials.mini_xml___error_handling.h2"></a>
+<a name="spirit.qi.tutorials.mini_xml___error_handling.h3"></a>
           <span class="phrase"><a name="spirit.qi.tutorials.mini_xml___error_handling.expectation_points"></a></span><a class="link" href="mini_xml___error_handling.html#spirit.qi.tutorials.mini_xml___error_handling.expectation_points">Expectation
           Points</a>
         </h6>

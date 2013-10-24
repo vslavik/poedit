@@ -256,7 +256,6 @@ public :
                     advance_to_non_duplicate_next(nd_next2, it2, sec2);
 
                     typedef typename boost::range_value<Turns>::type turn_info;
-                    typedef typename turn_info::point_type ip;
 
                     turn_info ti;
                     ti.operations[0].seg_id = segment_identifier(source_id1,
@@ -838,13 +837,13 @@ inline void get_turns(Geometry1 const& geometry1,
 {
     concept::check_concepts_and_equal_dimensions<Geometry1 const, Geometry2 const>();
 
-    typedef typename strategy_intersection
-        <
-            typename cs_tag<Geometry1>::type,
-            Geometry1,
-            Geometry2,
-            typename boost::range_value<Turns>::type
-        >::segment_intersection_strategy_type segment_intersection_strategy_type;
+    //typedef typename strategy_intersection
+    //    <
+    //        typename cs_tag<Geometry1>::type,
+    //        Geometry1,
+    //        Geometry2,
+    //        typename boost::range_value<Turns>::type
+    //    >::segment_intersection_strategy_type segment_intersection_strategy_type;
 
     typedef detail::overlay::get_turn_info
         <

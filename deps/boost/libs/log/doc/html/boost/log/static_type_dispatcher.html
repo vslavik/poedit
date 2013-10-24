@@ -4,7 +4,7 @@
 <title>Class template static_type_dispatcher</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../utilities.html#header.boost.log.utility.type_dispatch.static_type_dispatcher_hpp" title="Header &lt;boost/log/utility/type_dispatch/static_type_dispatcher.hpp&gt;">
 <link rel="prev" href="default_attribute_types.html" title="Type definition default_attribute_types">
 <link rel="next" href="type_dispatcher.html" title="Class type_dispatcher">
@@ -28,27 +28,27 @@
 <span class="keyword">class</span> <a class="link" href="static_type_dispatcher.html" title="Class template static_type_dispatcher">static_type_dispatcher</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="static_type_dispatcher.html#boost.log.static_type_dispatcherconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ReceiverT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="static_type_dispatcher.html#idp21860176-bb"><span class="identifier">static_type_dispatcher</span></a><span class="special">(</span><span class="identifier">ReceiverT</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="static_type_dispatcher.html#idp21861376-bb"><span class="identifier">static_type_dispatcher</span></a><span class="special">(</span><a class="link" href="static_type_dispatcher.html" title="Class template static_type_dispatcher">static_type_dispatcher</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
-  static_type_dispatcher&amp; <a class="link" href="static_type_dispatcher.html#idp21862064-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="static_type_dispatcher.html" title="Class template static_type_dispatcher">static_type_dispatcher</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ReceiverT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="static_type_dispatcher.html#idp28599096-bb"><span class="identifier">static_type_dispatcher</span></a><span class="special">(</span><span class="identifier">ReceiverT</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="static_type_dispatcher.html#idp28600296-bb"><span class="identifier">static_type_dispatcher</span></a><span class="special">(</span><a class="link" href="static_type_dispatcher.html" title="Class template static_type_dispatcher">static_type_dispatcher</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+  static_type_dispatcher&amp; <a class="link" href="static_type_dispatcher.html#idp28600984-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="static_type_dispatcher.html" title="Class template static_type_dispatcher">static_type_dispatcher</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp32503168"></a><h2>Description</h2>
+<a name="idp71501368"></a><h2>Description</h2>
 <p>The type dispatcher can be used to pass objects of arbitrary types from one component to another. With regard to the library, the type dispatcher can be used to extract attribute values.</p>
 <p>Static type dispatchers allow to specify one or several supported types at compile time. </p>
 <div class="refsect2">
-<a name="idp32503920"></a><h3>
+<a name="idp71502120"></a><h3>
 <a name="boost.log.static_type_dispatcherconstruct-copy-destruct"></a><code class="computeroutput">static_type_dispatcher</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ReceiverT<span class="special">&gt;</span> 
-  <span class="keyword">explicit</span> <a name="idp21860176-bb"></a><span class="identifier">static_type_dispatcher</span><span class="special">(</span><span class="identifier">ReceiverT</span> <span class="special">&amp;</span> receiver<span class="special">)</span><span class="special">;</span></pre>
+  <span class="keyword">explicit</span> <a name="idp28599096-bb"></a><span class="identifier">static_type_dispatcher</span><span class="special">(</span><span class="identifier">ReceiverT</span> <span class="special">&amp;</span> receiver<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Initializes the dispatcher internals. </p>
 </li>
-<li class="listitem"><pre class="literallayout"><a name="idp21861376-bb"></a><span class="identifier">static_type_dispatcher</span><span class="special">(</span><a class="link" href="static_type_dispatcher.html" title="Class template static_type_dispatcher">static_type_dispatcher</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout">static_type_dispatcher&amp; <a name="idp21862064-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="static_type_dispatcher.html" title="Class template static_type_dispatcher">static_type_dispatcher</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp28600296-bb"></a><span class="identifier">static_type_dispatcher</span><span class="special">(</span><a class="link" href="static_type_dispatcher.html" title="Class template static_type_dispatcher">static_type_dispatcher</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout">static_type_dispatcher&amp; <a name="idp28600984-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="static_type_dispatcher.html" title="Class template static_type_dispatcher">static_type_dispatcher</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

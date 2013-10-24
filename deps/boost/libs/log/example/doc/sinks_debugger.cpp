@@ -5,7 +5,7 @@
  *          http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/expressions/predicates/is_debugger_present.hpp>
 #include <boost/log/sinks/sync_frontend.hpp>

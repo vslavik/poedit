@@ -21,8 +21,8 @@
 #include <iostream>
 #include <boost/ref.hpp>
 #include <boost/bind.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/date_time/microsec_time_clock.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/thread/thread.hpp>

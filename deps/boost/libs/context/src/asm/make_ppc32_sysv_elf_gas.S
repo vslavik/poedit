@@ -109,3 +109,6 @@ finish:
     li      %r3,  0             # exit code is zero
     bl      _exit@plt           # exit application
 .size make_fcontext, .-make_fcontext
+
+/* Mark that we don't need executable stack.  */
+.section .note.GNU-stack,"",%progbits

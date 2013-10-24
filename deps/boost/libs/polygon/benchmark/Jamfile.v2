@@ -5,21 +5,24 @@
 
 import testing ;
 
+# Path constants required by the benchmarks.
+path-constant GMP_ROOT : /home/slevin/Workspace/Libraries/gmp ;
+path-constant MPFR_ROOT : /home/slevin/Workspace/Libraries/mpfr ;
+path-constant CGAL_ROOT : /home/slevin/Workspace/Libraries/cgal ;
+path-constant SHULL_ROOT : /home/slevin/Workspace/Libraries/s_hull ;
+
 project voronoi-benchmark
     :
     requirements
         <include>$(CGAL_ROOT)/include
-        <include>$(SHULL_ROOT)
-        <toolset>msvc:<include>$(CGAL_ROOT)/auxiliary/gmp/include
-        <toolset>msvc:<library>$(CGAL_ROOT)/lib/libCGAL-vc90-mt-4.0.lib
-        <toolset>msvc:<library>$(CGAL_ROOT)/lib/libCGAL_Core-vc90-mt-4.0.lib
-        <toolset>msvc:<library>$(CGAL_ROOT)/auxiliary/gmp/lib/libgmp-10.lib
-        <toolset>msvc:<library>$(CGAL_ROOT)/auxiliary/gmp/lib/libmpfr-4.lib
-        <toolset>msvc:<library>$(BOOST_ROOT)/libs/thread/build//boost_thread
-        <toolset>msvc:<library>$(BOOST_ROOT)/libs/test/build//boost_unit_test_framework
+        <include>$(SHULL_ROOT)/include
+        <toolset>gcc:<library>$(GMP_ROOT)/lib/libgmp.so
+        <toolset>gcc:<library>$(MPFR_ROOT)/lib/libmpfr.so
         <toolset>gcc:<library>$(CGAL_ROOT)/lib/libCGAL.so
         <toolset>gcc:<library>$(CGAL_ROOT)/lib/libCGAL_Core.so
         <toolset>gcc:<library>$(SHULL_ROOT)/s_hull.so
+        <toolset>gcc:<library>$(BOOST_ROOT)/libs/timer/build//boost_timer
+        <toolset>gcc:<library>$(BOOST_ROOT)/libs/thread/build//boost_thread
         <toolset>gcc:<library>$(BOOST_ROOT)/libs/test/build//boost_unit_test_framework
     ;
 

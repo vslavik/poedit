@@ -1014,8 +1014,6 @@ namespace boost {
   bool vf2_subgraph_iso(const GraphSmall& graph_small, const GraphLarge& graph_large, 
                         SubGraphIsoMapCallback user_callback) {
 
-    typedef typename graph_traits<GraphSmall>::vertex_descriptor vertex_small_type;
-    
     return vf2_subgraph_iso(graph_small, graph_large, user_callback, 
                             get(vertex_index, graph_small), get(vertex_index, graph_large),
                             vertex_order_by_mult(graph_small),
@@ -1144,8 +1142,6 @@ namespace boost {
   bool vf2_graph_iso(const Graph1& graph1, const Graph2& graph2, 
                      GraphIsoMapCallback user_callback) {
     
-    typedef typename graph_traits<Graph1>::vertex_descriptor vertex1_type;
-
     return vf2_graph_iso(graph1, graph2, user_callback, 
                          get(vertex_index, graph1), get(vertex_index, graph2),
                          vertex_order_by_mult(graph1),

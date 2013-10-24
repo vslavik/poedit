@@ -10,22 +10,15 @@
  * \date   31.07.2011
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #include <boost/log/detail/timestamp.hpp>
 
 #if defined(BOOST_WINDOWS) && !defined(__CYGWIN__)
-#include <boost/log/detail/alignas.hpp>
 #include <boost/detail/interlocked.hpp>
 #include "windows_version.hpp"
 #include <windows.h>
-#if (defined(_MSC_VER) && defined(_M_IX86) && defined(_M_IX86_FP) && _M_IX86_FP >= 2) || (defined(__GNUC__) && defined(__i386__) && defined(__SSE2__))
-#include <emmintrin.h>
-#if defined(_MSC_VER)
-#include <intrin.h>
-#endif
-#endif
 #else
 #include <unistd.h> // for config macros
 #if defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)
@@ -63,13 +56,19 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
 #   if defined(_M_IX86)
 #       if defined(_M_IX86_FP) && _M_IX86_FP >= 2
 //! Atomically loads and stores the 64-bit value through SSE2 instructions
-BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
+BOOST_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 {
-    _mm_storel_epi64(reinterpret_cast< __m128i* >(to), _mm_loadl_epi64(reinterpret_cast< const __m128i* >(from)));
+    __asm
+    {
+        mov eax, from
+        mov edx, to
+        movq xmm4, qword ptr [eax]
+        movq qword ptr [edx], xmm4
+    };
 }
 #       else // defined(_M_IX86_FP) && _M_IX86_FP >= 2
 //! Atomically loads and stores the 64-bit value through FPU instructions
-BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
+BOOST_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 {
     __asm
     {
@@ -82,7 +81,7 @@ BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 #       endif // defined(_M_IX86_FP) && _M_IX86_FP >= 2
 #   elif defined(_M_AMD64) || defined(_M_IA64)
 //! Atomically loads and stores the 64-bit value
-BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
+BOOST_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 {
     *to = *from;
 }
@@ -95,13 +94,20 @@ BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 #   if defined(__i386__)
 #       if defined(__SSE2__)
 //! Atomically loads and stores the 64-bit value through SSE2 instructions
-BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
+BOOST_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 {
-    _mm_storel_epi64(reinterpret_cast< __m128i* >(to), _mm_loadl_epi64(reinterpret_cast< const __m128i* >(from)));
+    __asm__ __volatile__
+    (
+        "movq %1, %%xmm4\n\t"
+        "movq %%xmm4, %0\n\t"
+            : "=m" (*to)
+            : "m" (*from)
+            : "memory", "xmm4"
+    );
 }
 #       else // defined(__SSE2__)
 //! Atomically loads and stores the 64-bit value through FPU instructions
-BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
+BOOST_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 {
     __asm__ __volatile__
     (
@@ -115,7 +121,7 @@ BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 #       endif // defined(__SSE2__)
 #   elif defined(__x86_64__)
 //! Atomically loads and stores the 64-bit value
-BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
+BOOST_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 {
     *to = *from;
 }
@@ -131,10 +137,10 @@ BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 
 #if defined(BOOST_LOG_GENERIC_MOVE64)
 
-BOOST_LOG_ALIGNAS(16) long g_spin_lock = 0;
+BOOST_ALIGNMENT(16) long g_spin_lock = 0;
 
 //! Atomically loads and stores the 64-bit value
-BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
+BOOST_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 {
     while (BOOST_INTERLOCKED_COMPARE_EXCHANGE(&g_spin_lock, 1, 0) != 0);
     *to = *from;
@@ -143,7 +149,7 @@ BOOST_LOG_FORCEINLINE void move64(const uint64_t* from, uint64_t* to)
 
 #endif // defined(BOOST_LOG_GENERIC_MOVE64)
 
-BOOST_LOG_ALIGNAS(16) uint64_t g_ticks = 0;
+BOOST_ALIGNMENT(16) uint64_t g_ticks = 0;
 
 union ticks_caster
 {
@@ -216,8 +222,9 @@ timestamp get_timestamp_realtime_clock()
     timespec ts;
     if (clock_gettime(CLOCK_REALTIME, &ts) != 0)
     {
+        const int err = errno;
         BOOST_THROW_EXCEPTION(boost::system::system_error(
-            errno, boost::system::system_category(), "Failed to acquire current time"));
+            err, boost::system::system_category(), "Failed to acquire current time"));
     }
 
     return timestamp(static_cast< uint64_t >(ts.tv_sec) * 1000000000ULL + ts.tv_nsec);
@@ -231,7 +238,7 @@ timestamp get_timestamp_monotonic_clock()
     timespec ts;
     if (clock_gettime(CLOCK_MONOTONIC, &ts) != 0)
     {
-        int err = errno;
+        const int err = errno;
         if (err == EINVAL)
         {
             // The current platform does not support monotonic timer.

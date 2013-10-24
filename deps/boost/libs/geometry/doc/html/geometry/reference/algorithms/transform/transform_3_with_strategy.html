@@ -28,7 +28,7 @@
           (with strategy)</a>
 </h5></div></div></div>
 <p>
-            <a class="indexterm" name="idp12651200"></a>
+            <a class="indexterm" name="idp56847608"></a>
 Transforms from one geometry to another geometry using the specified
             strategy.
           </p>
@@ -198,17 +198,17 @@ Transforms from one geometry to another geometry using the specified
 
     <span class="comment">// Translate over (1.5, 1.5)</span>
     <span class="identifier">point_type</span> <span class="identifier">p2</span><span class="special">;</span>
-    <span class="identifier">trans</span><span class="special">::</span><span class="identifier">translate_transformer</span><span class="special">&lt;</span><span class="identifier">point_type</span><span class="special">,</span> <span class="identifier">point_type</span><span class="special">&gt;</span> <span class="identifier">translate</span><span class="special">(</span><span class="number">1.5</span><span class="special">,</span> <span class="number">1.5</span><span class="special">);</span>
+    <span class="identifier">trans</span><span class="special">::</span><span class="identifier">translate_transformer</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">2</span><span class="special">&gt;</span> <span class="identifier">translate</span><span class="special">(</span><span class="number">1.5</span><span class="special">,</span> <span class="number">1.5</span><span class="special">);</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">transform</span><span class="special">(</span><span class="identifier">p1</span><span class="special">,</span> <span class="identifier">p2</span><span class="special">,</span> <span class="identifier">translate</span><span class="special">);</span>
 
     <span class="comment">// Scale with factor 3.0</span>
     <span class="identifier">point_type</span> <span class="identifier">p3</span><span class="special">;</span>
-    <span class="identifier">trans</span><span class="special">::</span><span class="identifier">scale_transformer</span><span class="special">&lt;</span><span class="identifier">point_type</span><span class="special">,</span> <span class="identifier">point_type</span><span class="special">&gt;</span> <span class="identifier">scale</span><span class="special">(</span><span class="number">3.0</span><span class="special">);</span>
+    <span class="identifier">trans</span><span class="special">::</span><span class="identifier">scale_transformer</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">2</span><span class="special">&gt;</span> <span class="identifier">scale</span><span class="special">(</span><span class="number">3.0</span><span class="special">);</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">transform</span><span class="special">(</span><span class="identifier">p1</span><span class="special">,</span> <span class="identifier">p3</span><span class="special">,</span> <span class="identifier">scale</span><span class="special">);</span>
 
     <span class="comment">// Rotate with respect to the origin (0,0) over 90 degrees (clockwise)</span>
     <span class="identifier">point_type</span> <span class="identifier">p4</span><span class="special">;</span>
-    <span class="identifier">trans</span><span class="special">::</span><span class="identifier">rotate_transformer</span><span class="special">&lt;</span><span class="identifier">point_type</span><span class="special">,</span> <span class="identifier">point_type</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">degree</span><span class="special">&gt;</span> <span class="identifier">rotate</span><span class="special">(</span><span class="number">90.0</span><span class="special">);</span>
+    <span class="identifier">trans</span><span class="special">::</span><span class="identifier">rotate_transformer</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">degree</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">2</span><span class="special">&gt;</span> <span class="identifier">rotate</span><span class="special">(</span><span class="number">90.0</span><span class="special">);</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">transform</span><span class="special">(</span><span class="identifier">p1</span><span class="special">,</span> <span class="identifier">p4</span><span class="special">,</span> <span class="identifier">rotate</span><span class="special">);</span>
 
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span>

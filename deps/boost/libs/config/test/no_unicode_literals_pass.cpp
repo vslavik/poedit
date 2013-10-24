@@ -6,7 +6,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/config for the most recent version.//
-//  Revision $Id: no_unicode_literals_pass.cpp 79537 2012-07-15 15:59:05Z marshall $
+//  Revision $Id: no_unicode_literals_pass.cpp 85088 2013-07-20 17:17:10Z andysem $
 //
 
 
@@ -27,11 +27,11 @@
 #ifndef BOOST_NO_CXX11_UNICODE_LITERALS
 #include "boost_no_unicode_literals.ipp"
 #else
-namespace boost_no_unicode_literals = empty_boost;
+namespace boost_no_cxx11_unicode_literals = empty_boost;
 #endif
 
 int main( int, char *[] )
 {
-   return boost_no_unicode_literals::test();
+   return boost_no_cxx11_unicode_literals::test();
 }
 

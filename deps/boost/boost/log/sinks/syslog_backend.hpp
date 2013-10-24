@@ -17,14 +17,13 @@
 
 #include <boost/log/detail/config.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
 #ifndef BOOST_LOG_WITHOUT_SYSLOG
 
 #include <string>
-#include <boost/shared_ptr.hpp>
 #include <boost/log/detail/asio_fwd.hpp>
 #include <boost/log/detail/light_function.hpp>
 #include <boost/log/detail/parameter_tools.hpp>

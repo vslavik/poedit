@@ -15,6 +15,7 @@
 
 #include <string>
 #include <climits>
+#include <boost/config.hpp>
 #include <boost/assert.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/xpressive/regex_error.hpp>
@@ -394,9 +395,9 @@ private:
         case BOOST_XPR_CHAR_(char_type, 'm'): this->flag_(!set, single_line); break;
         case BOOST_XPR_CHAR_(char_type, 's'): this->flag_(!set, not_dot_newline); break;
         case BOOST_XPR_CHAR_(char_type, 'x'): this->flag_(set, ignore_white_space); break;
-        case BOOST_XPR_CHAR_(char_type, ':'): ++begin; // fall-through
+        case BOOST_XPR_CHAR_(char_type, ':'): ++begin; BOOST_FALLTHROUGH;
         case BOOST_XPR_CHAR_(char_type, ')'): return token_no_mark;
-        case BOOST_XPR_CHAR_(char_type, '-'): if(false == (set = !set)) break; // else fall-through
+        case BOOST_XPR_CHAR_(char_type, '-'): if(false == (set = !set)) break; BOOST_FALLTHROUGH;
         default: BOOST_THROW_EXCEPTION(regex_error(error_paren, "unknown pattern modifier"));
         }
         while(BOOST_XPR_ENSURE_(++begin != end, error_paren, "incomplete extension"));

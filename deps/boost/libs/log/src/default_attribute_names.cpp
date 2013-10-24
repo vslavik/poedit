@@ -10,10 +10,10 @@
  * \date   13.07.2012
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
-#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
 #include <boost/log/detail/default_attribute_names.hpp>
 #include <boost/log/detail/singleton.hpp>
 #include <boost/log/detail/header.hpp>
@@ -34,7 +34,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
     private:
         typedef lazy_singleton< names, shared_ptr< names > > base_type;
 
-#if !defined(BOOST_LOG_BROKEN_FRIEND_TEMPLATE_INSTANTIATIONS)
+#if !defined(BOOST_LOG_BROKEN_FRIEND_TEMPLATE_SPECIALIZATIONS)
         friend class lazy_singleton< names, shared_ptr< names > >;
 #else
         friend class base_type;

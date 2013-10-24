@@ -38,58 +38,58 @@
   <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint_least32_t</span> <a name="boost.random.seed_seq.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="seed_seq.html#boost.random.seed_seqconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="seed_seq.html#idp41730832-bb"><span class="identifier">seed_seq</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="seed_seq.html#idp41731488-bb"><span class="identifier">seed_seq</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">initializer_list</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <a class="link" href="seed_seq.html#idp41732592-bb"><span class="identifier">seed_seq</span></a><span class="special">(</span><span class="identifier">Iter</span><span class="special">,</span> <span class="identifier">Iter</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Range<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="seed_seq.html#idp41734000-bb"><span class="identifier">seed_seq</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Range</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="seed_seq.html#idp91890040-bb"><span class="identifier">seed_seq</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="seed_seq.html#idp91890696-bb"><span class="identifier">seed_seq</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">initializer_list</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <a class="link" href="seed_seq.html#idp91891800-bb"><span class="identifier">seed_seq</span></a><span class="special">(</span><span class="identifier">Iter</span><span class="special">,</span> <span class="identifier">Iter</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Range<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="seed_seq.html#idp91893240-bb"><span class="identifier">seed_seq</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Range</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="seed_seq.html#idp41898640-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="seed_seq.html#idp41898848-bb"><span class="identifier">generate</span></a><span class="special">(</span><span class="identifier">Iter</span><span class="special">,</span> <span class="identifier">Iter</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a class="link" href="seed_seq.html#idp41728672-bb"><span class="identifier">size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="seed_seq.html#idp41729376-bb"><span class="identifier">param</span></a><span class="special">(</span><span class="identifier">Iter</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="seed_seq.html#idp91885608-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="seed_seq.html#idp91885816-bb"><span class="identifier">generate</span></a><span class="special">(</span><span class="identifier">Iter</span><span class="special">,</span> <span class="identifier">Iter</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a class="link" href="seed_seq.html#idp91887880-bb"><span class="identifier">size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="seed_seq.html#idp91888584-bb"><span class="identifier">param</span></a><span class="special">(</span><span class="identifier">Iter</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp157493904"></a><h2>Description</h2>
+<a name="idp201015240"></a><h2>Description</h2>
 <p>The class <code class="computeroutput"><a class="link" href="seed_seq.html" title="Class seed_seq">seed_seq</a></code> stores a sequence of 32-bit words for seeding a <a class="link" href="../../boost_random/reference.html#boost_random.reference.concepts.pseudo_random_number_generator" title="Pseudo-Random Number Generator">pseudo-random number generator</a> . These words will be combined to fill the entire state of the generator. </p>
 <div class="refsect2">
-<a name="idp157495536"></a><h3>
+<a name="idp201016872"></a><h3>
 <a name="boost.random.seed_seqconstruct-copy-destruct"></a><code class="computeroutput">seed_seq</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp41730832-bb"></a><span class="identifier">seed_seq</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp91890040-bb"></a><span class="identifier">seed_seq</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Initializes a <code class="computeroutput"><a class="link" href="seed_seq.html" title="Class seed_seq">seed_seq</a></code> to hold an empty sequence. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a name="idp41731488-bb"></a><span class="identifier">seed_seq</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">initializer_list</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> il<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a name="idp91890696-bb"></a><span class="identifier">seed_seq</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">initializer_list</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> il<span class="special">)</span><span class="special">;</span></pre>
 <p>Initializes the sequence from an initializer_list. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <a name="idp41732592-bb"></a><span class="identifier">seed_seq</span><span class="special">(</span><span class="identifier">Iter</span> first<span class="special">,</span> <span class="identifier">Iter</span> last<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <a name="idp91891800-bb"></a><span class="identifier">seed_seq</span><span class="special">(</span><span class="identifier">Iter</span> first<span class="special">,</span> <span class="identifier">Iter</span> last<span class="special">)</span><span class="special">;</span></pre>
 <p>Initializes the sequence from an iterator range. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Range<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp41734000-bb"></a><span class="identifier">seed_seq</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Range</span> <span class="special">&amp;</span> range<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Range<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp91893240-bb"></a><span class="identifier">seed_seq</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Range</span> <span class="special">&amp;</span> range<span class="special">)</span><span class="special">;</span></pre>
 <p>Initializes the sequence from Boost.Range range. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp157513584"></a><h3>
-<a name="idp41898640-bb"></a><code class="computeroutput">seed_seq</code> public member functions</h3>
+<a name="idp201034920"></a><h3>
+<a name="idp91885608-bb"></a><code class="computeroutput">seed_seq</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp41898848-bb"></a><span class="identifier">generate</span><span class="special">(</span><span class="identifier">Iter</span> first<span class="special">,</span> <span class="identifier">Iter</span> last<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp91885816-bb"></a><span class="identifier">generate</span><span class="special">(</span><span class="identifier">Iter</span> first<span class="special">,</span> <span class="identifier">Iter</span> last<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Fills a range with 32-bit values based on the stored sequence.</p>
 <p>Requires: Iter must be a Random Access Iterator whose value type is an unsigned integral type at least 32 bits wide. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a name="idp41728672-bb"></a><span class="identifier">size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a name="idp91887880-bb"></a><span class="identifier">size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the size of the sequence. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp41729376-bb"></a><span class="identifier">param</span><span class="special">(</span><span class="identifier">Iter</span> out<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp91888584-bb"></a><span class="identifier">param</span><span class="special">(</span><span class="identifier">Iter</span> out<span class="special">)</span><span class="special">;</span></pre>
 <p>Writes the stored sequence to iter. </p>
 </li>
 </ol></div>

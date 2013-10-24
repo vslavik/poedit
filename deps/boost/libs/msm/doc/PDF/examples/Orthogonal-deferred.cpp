@@ -29,6 +29,7 @@ namespace
     struct PreviousSong {};
     struct error_found {};
     struct end_error {};
+    struct end_error2 {};
 
     // Flags. Allow information about a property of the current state
     struct PlayingPaused{};
@@ -170,7 +171,7 @@ namespace
         };
         // this state is also made terminal so that all the events are blocked
         struct ErrorMode :  //public msm::front::terminate_state<> // ErrorMode terminates the state machine
-            public msm::front::interrupt_state<end_error>   // ErroMode just interrupts. Will resume if
+            public msm::front::interrupt_state<end_error/*mpl::vector<end_error,end_error2>*/ >   // ErroMode just interrupts. Will resume if
                                                             // the event end_error is generated
         {
             template <class Event,class FSM>

@@ -53,7 +53,6 @@ int simple_test()
    typedef deleter<base_class, managed_shared_memory::segment_manager>
       base_deleter_t;
    typedef shared_ptr<base_class, base_class_allocator, base_deleter_t>    base_shared_ptr;
-   typedef weak_ptr<base_class, base_class_allocator, base_deleter_t>      base_weak_ptr;
 
    std::string process_name;
    test::get_process_id_name(process_name);
@@ -561,17 +560,11 @@ void test_alias()
    typedef allocator<void, managed_shared_memory::segment_manager>
       v_allocator_t;
 
-   typedef deleter<alias_tester, managed_shared_memory::segment_manager>
-      alias_tester_deleter_t;
-
    typedef deleter<int, managed_shared_memory::segment_manager>
       int_deleter_t;
 
-   typedef shared_ptr<alias_tester, v_allocator_t, alias_tester_deleter_t> alias_tester_shared_ptr;
-
    typedef shared_ptr<int, v_allocator_t, int_deleter_t> int_shared_ptr;
    typedef shared_ptr<const int, v_allocator_t, int_deleter_t> const_int_shared_ptr;
-   typedef shared_ptr<volatile int, v_allocator_t, int_deleter_t> volatile_int_shared_ptr;
 
    std::string process_name;
    test::get_process_id_name(process_name);

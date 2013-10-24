@@ -18,6 +18,7 @@
 
 #include <sstream>
 #include <boost/asio/io_service.hpp>
+#include <boost/asio/detail/thread.hpp>
 #include "unit_test.hpp"
 
 #if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
@@ -27,7 +28,6 @@
 #endif // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
 
 #if defined(BOOST_ASIO_HAS_BOOST_BIND)
-# include <boost/thread/thread.hpp>
 # include <boost/bind.hpp>
 #else // defined(BOOST_ASIO_HAS_BOOST_BIND)
 # include <functional>
@@ -144,8 +144,8 @@ void strand_test()
   count = 0;
   ios.reset();
   ios.post(bindns::bind(start_sleep_increments, &ios, &s, &count));
-  boost::thread thread1(bindns::bind(io_service_run, &ios));
-  boost::thread thread2(bindns::bind(io_service_run, &ios));
+  boost::asio::detail::thread thread1(bindns::bind(io_service_run, &ios));
+  boost::asio::detail::thread thread2(bindns::bind(io_service_run, &ios));
 
   // Check all events run one after another even though there are two threads.
   timer timer1(ios, chronons::seconds(3));

@@ -149,6 +149,13 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_scalar<int&&>::value, false);
 #endif
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_scalar<test_abc1>::value, false);
 
+#ifndef BOOST_NO_CXX11_CHAR16_T
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_scalar<char16_t>::value, true);
+#endif
+#ifndef BOOST_NO_CXX11_CHAR32_T
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_scalar<char32_t>::value, true);
+#endif
+
 TT_TEST_END
 
 

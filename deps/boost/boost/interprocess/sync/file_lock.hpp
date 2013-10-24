@@ -21,6 +21,7 @@
 #include <boost/interprocess/detail/os_file_functions.hpp>
 #include <boost/interprocess/detail/os_thread_functions.hpp>
 #include <boost/interprocess/detail/posix_time_types_wrk.hpp>
+#include <boost/interprocess/sync/spin/wait.hpp>
 #include <boost/move/move.hpp>
 
 //!\file
@@ -149,7 +150,7 @@ class file_lock
       using namespace boost::detail;
 
       if(now >= abs_time) return false;
-
+      spin_wait swait;
       do{
          if(!ipcdetail::try_acquire_file_lock(hnd, acquired))
             return false;
@@ -164,7 +165,7 @@ class file_lock
                return true;
             }
             // relinquish current time slice
-            ipcdetail::thread_yield();
+            swait.yield();
          }
       }while (true);
    }
@@ -178,6 +179,7 @@ class file_lock
 
       if(now >= abs_time) return false;
 
+      spin_wait swait;
       do{
          if(!ipcdetail::try_acquire_file_lock_sharable(hnd, acquired))
             return false;
@@ -192,7 +194,7 @@ class file_lock
                return true;
             }
             // relinquish current time slice
-            ipcdetail::thread_yield();
+            swait.yield();
          }
       }while (true);
    }

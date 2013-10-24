@@ -26,9 +26,9 @@
 #if defined(BOOST_ASIO_HAS_STD_CHRONO)
 
 #include <boost/asio/io_service.hpp>
+#include <boost/asio/detail/thread.hpp>
 
 #if defined(BOOST_ASIO_HAS_BOOST_BIND)
-# include <boost/thread/thread.hpp>
 # include <boost/bind.hpp>
 #else // defined(BOOST_ASIO_HAS_BOOST_BIND)
 # include <functional>
@@ -325,7 +325,7 @@ void system_timer_thread_test()
   boost::asio::system_timer t2(ios);
   int count = 0;
 
-  boost::thread th(bindns::bind(io_service_run, &ios));
+  boost::asio::detail::thread th(bindns::bind(io_service_run, &ios));
 
   t2.expires_from_now(chronons::seconds(2));
   t2.wait();

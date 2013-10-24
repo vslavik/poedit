@@ -10,15 +10,11 @@
  * \date   07.04.2008
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #ifndef BOOST_LOG_WITHOUT_SETTINGS_PARSERS
 
-#undef BOOST_MPL_LIMIT_VECTOR_SIZE
-#define BOOST_MPL_LIMIT_VECTOR_SIZE 50
-
-#include <ctime>
 #include <map>
 #include <string>
 #include <sstream>
@@ -27,49 +23,29 @@
 #include <boost/bind.hpp>
 #include <boost/move/core.hpp>
 #include <boost/move/utility.hpp>
-#include <boost/mpl/vector.hpp>
-#include <boost/mpl/copy.hpp>
-#include <boost/mpl/push_back.hpp>
-#include <boost/mpl/back_inserter.hpp>
 #include <boost/optional/optional.hpp>
 #include <boost/utility/in_place_factory.hpp>
-#include <boost/range/iterator_range_core.hpp>
-#include <boost/spirit/include/qi_core.hpp>
-#include <boost/spirit/include/qi_char.hpp>
-#include <boost/spirit/include/qi_lit.hpp>
-#include <boost/spirit/include/qi_raw.hpp>
-#include <boost/spirit/include/qi_lexeme.hpp>
-#include <boost/spirit/include/qi_as.hpp>
-#include <boost/spirit/include/qi_symbols.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
-#include <boost/date_time/gregorian/gregorian.hpp>
-#include <boost/date_time/local_time/local_time.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/log/expressions/attr.hpp>
 #include <boost/log/expressions/message.hpp>
 #include <boost/log/expressions/formatters/stream.hpp>
 #include <boost/log/attributes/attribute_name.hpp>
-#include <boost/log/attributes/named_scope.hpp>
 #include <boost/log/exceptions.hpp>
 #include <boost/log/detail/singleton.hpp>
-#include <boost/log/detail/process_id.hpp>
 #include <boost/log/detail/code_conversion.hpp>
 #include <boost/log/detail/default_attribute_names.hpp>
 #include <boost/log/utility/functional/nop.hpp>
 #include <boost/log/utility/setup/formatter_parser.hpp>
-#include <boost/log/utility/type_dispatch/standard_types.hpp>
-#include <boost/log/utility/type_dispatch/date_time_types.hpp>
 #if !defined(BOOST_LOG_NO_THREADS)
-#include <boost/log/detail/thread_id.hpp>
 #include <boost/log/detail/locks.hpp>
 #include <boost/log/detail/light_rw_mutex.hpp>
 #endif
 #include "parser_utils.hpp"
 #include "spirit_encoding.hpp"
+#if !defined(BOOST_LOG_WITHOUT_DEFAULT_FACTORIES)
+#include "default_formatter_factory.hpp"
+#endif
 #include <boost/log/detail/header.hpp>
-
-namespace qi = boost::spirit::qi;
 
 namespace boost {
 
@@ -85,13 +61,14 @@ struct formatters_repository :
     //! Base class type
     typedef log::aux::lazy_singleton< formatters_repository< CharT > > base_type;
 
-#if !defined(BOOST_LOG_BROKEN_FRIEND_TEMPLATE_INSTANTIATIONS)
+#if !defined(BOOST_LOG_BROKEN_FRIEND_TEMPLATE_SPECIALIZATIONS)
     friend class log::aux::lazy_singleton< formatters_repository< CharT > >;
 #else
     friend class base_type;
 #endif
 
-    typedef formatter_factory< CharT > formatter_factory_type;
+    typedef CharT char_type;
+    typedef formatter_factory< char_type > formatter_factory_type;
 
     //! Attribute name ordering predicate
     struct attribute_name_order
@@ -113,6 +90,28 @@ struct formatters_repository :
 #endif
     //! The map of formatter factories
     factories_map m_Map;
+#if !defined(BOOST_LOG_WITHOUT_DEFAULT_FACTORIES)
+    //! Default factory
+    mutable aux::default_formatter_factory< char_type > m_DefaultFactory;
+#endif
+
+    //! The method returns the filter factory for the specified attribute name
+    formatter_factory_type& get_factory(attribute_name const& name) const
+    {
+        typename factories_map::const_iterator it = m_Map.find(name);
+        if (it != m_Map.end())
+        {
+            return *it->second;
+        }
+        else
+        {
+#if !defined(BOOST_LOG_WITHOUT_DEFAULT_FACTORIES)
+            return m_DefaultFactory;
+#else
+            BOOST_LOG_THROW_DESCR(setup_error, "No formatter factory registered for attribute " + name.string());
+#endif
+        }
+    }
 
 private:
     formatters_repository()
@@ -151,18 +150,16 @@ private:
 
 //! Formatter parsing grammar
 template< typename CharT >
-class formatter_grammar :
-    public qi::grammar< const CharT* >
+class formatter_parser
 {
 private:
     typedef CharT char_type;
     typedef const char_type* iterator_type;
-    typedef qi::grammar< iterator_type > base_type;
-    typedef typename base_type::start_type rule_type;
     typedef std::basic_string< char_type > string_type;
     typedef basic_formatter< char_type > formatter_type;
     typedef boost::log::aux::char_constants< char_type > constants;
-    typedef log::aux::encoding_specific< typename log::aux::encoding< char_type >::type > encoding_specific;
+    typedef typename log::aux::encoding< char_type >::type encoding;
+    typedef log::aux::encoding_specific< encoding > encoding_specific;
     typedef formatter_factory< char_type > formatter_factory_type;
     typedef typename formatter_factory_type::args_map args_map;
 
@@ -180,88 +177,74 @@ private:
     //! Argument value
     mutable string_type m_ArgValue;
 
-    //! A parser for a quoted string argument value
-    rule_type quoted_string_arg_value;
-    //! A parser for an argument value
-    rule_type arg_value;
-    //! A parser for a named argument
-    rule_type arg;
-    //! A parser for an optional argument list for a formatter
-    rule_type arg_list;
-    //! A parser for an attribute placeholder
-    rule_type attr_name;
-    //! A parser for the complete formatter expression
-    rule_type expression;
-
 public:
     //! Constructor
-    formatter_grammar() :
-        base_type(expression)
+    formatter_parser()
     {
-        quoted_string_arg_value = qi::raw
-        [
-            // A quoted string with C-style escape sequences support
-            qi::lit(constants::char_quote) >>
-            *(
-                 (qi::lit(constants::char_backslash) >> qi::char_) |
-                 (qi::char_ - qi::lit(constants::char_quote))
-            ) >>
-            qi::lit(constants::char_quote)
-        ]
-            [boost::bind(&formatter_grammar::on_quoted_string_arg_value, this, _1)];
+    }
 
-        arg_value =
-        (
-            quoted_string_arg_value |
-            qi::raw[ *(encoding_specific::graph - constants::char_comma - constants::char_paren_bracket_left - constants::char_paren_bracket_right) ]
-                [boost::bind(&formatter_grammar::on_arg_value, this, _1)]
-        );
+    //! Parses formatter
+    void parse(iterator_type& begin, iterator_type end)
+    {
+        iterator_type p = begin;
 
-        arg =
-        (
-            *encoding_specific::space >>
-            qi::raw[ encoding_specific::alpha >> *encoding_specific::alnum ][boost::bind(&formatter_grammar::on_arg_name, this, _1)] >>
-            *encoding_specific::space >>
-            constants::char_equal >>
-            *encoding_specific::space >>
-            arg_value >>
-            *encoding_specific::space
-        );
+        while (p != end)
+        {
+            // Find the end of a string literal
+            iterator_type start = p;
+            for (; p != end; ++p)
+            {
+                char_type c = *p;
+                if (c == constants::char_backslash)
+                {
+                    // We found an escaped character
+                    ++p;
+                    if (p == end)
+                        BOOST_LOG_THROW_DESCR(parse_error, "Invalid escape sequence in the formatter string");
+                }
+                else if (c == constants::char_percent)
+                {
+                    // We found an attribute
+                    break;
+                }
+            }
 
-        arg_list =
-        (
-            qi::lit(constants::char_paren_bracket_left) >>
-            (arg[boost::bind(&formatter_grammar::push_arg, this)] % qi::lit(constants::char_comma)) >>
-            qi::lit(constants::char_paren_bracket_right)
-        );
+            if (start != p)
+                push_string(start, p);
 
-        attr_name =
-        (
-            qi::lit(constants::char_percent) >>
-            (
-                qi::raw[ qi::lit(constants::message_text_keyword()) ]
-                    [boost::bind(&formatter_grammar::on_attr_name, this, _1)] |
-                (
-                    qi::raw[ +(encoding_specific::print - constants::char_paren_bracket_left - constants::char_percent) ]
-                        [boost::bind(&formatter_grammar::on_attr_name, this, _1)] >>
-                    -arg_list
-                )
-            ) >>
-            qi::lit(constants::char_percent)
-        )
-            [boost::bind(&formatter_grammar::push_attr, this)];
+            if (p != end)
+            {
+                // We found an attribute placeholder
+                iterator_type start = constants::trim_spaces_left(++p, end);
+                p = constants::scan_attr_placeholder(start, end);
+                if (p == end)
+                    BOOST_LOG_THROW_DESCR(parse_error, "Invalid attribute placeholder in the formatter string");
 
-        expression =
-        (
-            qi::raw
-            [
-                *(
-                    (qi::lit(constants::char_backslash) >> qi::char_) |
-                    (qi::char_ - qi::lit(constants::char_quote) - qi::lit(constants::char_percent))
-                )
-            ][boost::bind(&formatter_grammar::push_string, this, _1)] %
-            attr_name
-        );
+                on_attribute_name(start, p);
+
+                p = constants::trim_spaces_left(p, end);
+                if (p == end)
+                    BOOST_LOG_THROW_DESCR(parse_error, "Invalid attribute placeholder in the formatter string");
+
+                if (*p == constants::char_paren_bracket_left)
+                {
+                    // We found formatter arguments
+                    p = parse_args(constants::trim_spaces_left(++p, end), end);
+                    p = constants::trim_spaces_left(p, end);
+                    if (p == end)
+                        BOOST_LOG_THROW_DESCR(parse_error, "Invalid attribute placeholder in the formatter string");
+                }
+
+                if (*p != constants::char_percent)
+                    BOOST_LOG_THROW_DESCR(parse_error, "Invalid attribute placeholder in the formatter string");
+
+                ++p;
+
+                push_attr();
+            }
+        }
+
+        begin = p;
     }
 
     //! Returns the parsed formatter
@@ -277,23 +260,79 @@ public:
     }
 
 private:
+    //! The method parses formatter arguments
+    iterator_type parse_args(iterator_type begin, iterator_type end)
+    {
+        iterator_type p = begin;
+        if (p == end)
+            BOOST_LOG_THROW_DESCR(parse_error, "Invalid attribute placeholder arguments description in the formatter string");
+        if (*p == constants::char_paren_bracket_right)
+            return ++p;
+
+        while (true)
+        {
+            char_type c = *p;
+
+            // Read argument name
+            iterator_type start = p;
+            if (!encoding::isalpha(*p))
+                BOOST_LOG_THROW_DESCR(parse_error, "Placeholder argument name is invalid");
+            for (++p; p != end; ++p)
+            {
+                c = *p;
+                if (encoding::isspace(c) || c == constants::char_equal)
+                    break;
+                if (!encoding::isalnum(c) && c != constants::char_underline)
+                    BOOST_LOG_THROW_DESCR(parse_error, "Placeholder argument name is invalid");
+            }
+
+            if (start == p)
+                BOOST_LOG_THROW_DESCR(parse_error, "Placeholder argument name is empty");
+
+            on_arg_name(start, p);
+
+            p = constants::trim_spaces_left(p, end);
+            if (p == end || *p != constants::char_equal)
+                BOOST_LOG_THROW_DESCR(parse_error, "Placeholder argument description is not valid");
+
+            // Read argument value
+            start = p = constants::trim_spaces_left(++p, end);
+            p = constants::parse_operand(p, end, m_ArgValue);
+            if (p == start)
+                BOOST_LOG_THROW_DESCR(parse_error, "Placeholder argument value is not specified");
+
+            push_arg();
+
+            p = constants::trim_spaces_left(p, end);
+            if (p == end)
+                BOOST_LOG_THROW_DESCR(parse_error, "Invalid attribute placeholder arguments description in the formatter string");
+
+            c = *p;
+            if (c == constants::char_paren_bracket_right)
+            {
+                break;
+            }
+            else if (c == constants::char_comma)
+            {
+                p = constants::trim_spaces_left(++p, end);
+                if (p == end)
+                    BOOST_LOG_THROW_DESCR(parse_error, "Placeholder argument name is invalid");
+            }
+            else
+            {
+                BOOST_LOG_THROW_DESCR(parse_error, "Invalid attribute placeholder arguments description in the formatter string");
+            }
+        }
+
+        return ++p;
+    }
+
     //! The method is called when an argument name is discovered
-    void on_arg_name(iterator_range< iterator_type > const& name)
+    void on_arg_name(iterator_type begin, iterator_type end)
     {
-        m_ArgName.assign(name.begin(), name.end());
+        m_ArgName.assign(begin, end);
     }
-    //! The method is called when an argument value is discovered
-    void on_quoted_string_arg_value(iterator_range< iterator_type > const& value)
-    {
-        // Cut off the quotes
-        m_ArgValue.assign(value.begin() + 1, value.end() - 1);
-        constants::translate_escape_sequences(m_ArgValue);
-    }
-    //! The method is called when an argument value is discovered
-    void on_arg_value(iterator_range< iterator_type > const& value)
-    {
-        m_ArgValue.assign(value.begin(), value.end());
-    }
+
     //! The method is called when an argument is filled
     void push_arg()
     {
@@ -303,16 +342,22 @@ private:
     }
 
     //! The method is called when an attribute name is discovered
-    void on_attr_name(iterator_range< iterator_type > const& name)
+    void on_attribute_name(iterator_type begin, iterator_type end)
     {
-        if (name.empty())
+        if (begin == end)
             BOOST_LOG_THROW_DESCR(parse_error, "Empty attribute name encountered");
 
         // For compatibility with Boost.Log v1 we recognize %_% as the message attribute name
-        if (std::char_traits< char_type >::compare(constants::message_text_keyword(), name.begin(), name.size()) == 0)
+        const std::size_t len = end - begin;
+        if (std::char_traits< char_type >::length(constants::message_text_keyword()) == len &&
+            std::char_traits< char_type >::compare(constants::message_text_keyword(), begin, len) == 0)
+        {
             m_AttrName = log::aux::default_attribute_names::message();
+        }
         else
-            m_AttrName = attribute_name(log::aux::to_narrow(string_type(name.begin(), name.end())));
+        {
+            m_AttrName = attribute_name(log::aux::to_narrow(string_type(begin, end)));
+        }
     }
     //! The method is called when an attribute is filled
     void push_attr()
@@ -326,43 +371,10 @@ private:
         }
         else
         {
+            // Use the factory to create the formatter
             formatters_repository< char_type > const& repo = formatters_repository< char_type >::get();
-            typename formatters_repository< char_type >::factories_map::const_iterator it = repo.m_Map.find(m_AttrName);
-            if (it != repo.m_Map.end())
-            {
-                // We've found a user-defined factory for this attribute
-                append_formatter(it->second->create_formatter(m_AttrName, m_FactoryArgs));
-            }
-            else
-            {
-                // No user-defined factory, shall use the most generic formatter we can ever imagine at this point
-                typedef mpl::copy<
-                    // We have to exclude std::time_t since it's an integral type and will conflict with one of the standard types
-                    boost_time_period_types,
-                    mpl::back_inserter<
-                        mpl::copy<
-                            boost_time_duration_types,
-                            mpl::back_inserter< boost_date_time_types >
-                        >::type
-                    >
-                >::type time_related_types;
-
-                typedef mpl::copy<
-                    mpl::copy<
-                        mpl::vector<
-                            attributes::named_scope_list,
-#if !defined(BOOST_LOG_NO_THREADS)
-                            log::aux::thread::id,
-#endif
-                            log::aux::process::id
-                        >,
-                        mpl::back_inserter< time_related_types >
-                    >::type,
-                    mpl::back_inserter< default_attribute_types >
-                >::type supported_types;
-
-                append_formatter(expressions::stream << expressions::attr< supported_types::type >(m_AttrName));
-            }
+            formatter_factory_type& factory = repo.get_factory(m_AttrName);
+            append_formatter(factory.create_formatter(m_AttrName, m_FactoryArgs));
         }
 
         // Eventually, clear all the auxiliary data
@@ -371,14 +383,11 @@ private:
     }
 
     //! The method is called when a string literal is discovered
-    void push_string(iterator_range< iterator_type > const& str)
+    void push_string(iterator_type begin, iterator_type end)
     {
-        if (!str.empty())
-        {
-            string_type s(str.begin(), str.end());
-            constants::translate_escape_sequences(s);
-            append_formatter(expressions::stream << s);
-        }
+        string_type s(begin, end);
+        constants::translate_escape_sequences(s);
+        append_formatter(expressions::stream << s);
     }
 
     //! The method appends a formatter part to the final formatter
@@ -392,8 +401,8 @@ private:
     }
 
     //  Assignment and copying are prohibited
-    BOOST_LOG_DELETED_FUNCTION(formatter_grammar(formatter_grammar const&))
-    BOOST_LOG_DELETED_FUNCTION(formatter_grammar& operator= (formatter_grammar const&))
+    BOOST_DELETED_FUNCTION(formatter_parser(formatter_parser const&))
+    BOOST_DELETED_FUNCTION(formatter_parser& operator= (formatter_parser const&))
 };
 
 } // namespace
@@ -406,7 +415,7 @@ void register_formatter_factory(attribute_name const& name, shared_ptr< formatte
     BOOST_ASSERT(!!factory);
 
     formatters_repository< CharT >& repo = formatters_repository< CharT >::get();
-    BOOST_LOG_EXPR_IF_MT(log::aux::exclusive_lock_guard< log::aux::light_rw_mutex > _(repo.m_Mutex);)
+    BOOST_LOG_EXPR_IF_MT(log::aux::exclusive_lock_guard< log::aux::light_rw_mutex > lock(repo.m_Mutex);)
     repo.m_Map[name] = factory;
 }
 
@@ -416,21 +425,15 @@ basic_formatter< CharT > parse_formatter(const CharT* begin, const CharT* end)
 {
     typedef CharT char_type;
 
-    formatter_grammar< char_type > gram;
+    formatter_parser< char_type > parser;
     const char_type* p = begin;
 
     BOOST_LOG_EXPR_IF_MT(formatters_repository< CharT >& repo = formatters_repository< CharT >::get();)
-    BOOST_LOG_EXPR_IF_MT(log::aux::shared_lock_guard< log::aux::light_rw_mutex > _(repo.m_Mutex);)
+    BOOST_LOG_EXPR_IF_MT(log::aux::shared_lock_guard< log::aux::light_rw_mutex > lock(repo.m_Mutex);)
 
-    bool result = qi::parse(p, end, gram);
-    if (!result || p != end)
-    {
-        std::ostringstream strm;
-        strm << "Could not parse the formatter, parsing stopped at position " << p - begin;
-        BOOST_LOG_THROW_DESCR(parse_error, strm.str());
-    }
+    parser.parse(p, end);
 
-    return gram.get_formatter();
+    return parser.get_formatter();
 }
 
 #ifdef BOOST_LOG_USE_CHAR

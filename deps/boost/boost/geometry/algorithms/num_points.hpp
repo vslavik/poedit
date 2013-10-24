@@ -22,7 +22,6 @@
 #include <boost/geometry/core/closure.hpp>
 #include <boost/geometry/core/exterior_ring.hpp>
 #include <boost/geometry/core/interior_rings.hpp>
-#include <boost/geometry/core/ring_type.hpp>
 #include <boost/geometry/core/tag_cast.hpp>
 #include <boost/geometry/algorithms/disjoint.hpp>
 #include <boost/geometry/algorithms/not_implemented.hpp>
@@ -82,8 +81,6 @@ struct polygon_count: private range_count
     template <typename Polygon>
     static inline std::size_t apply(Polygon const& poly, bool add_for_open)
     {
-        typedef typename geometry::ring_type<Polygon>::type ring_type;
-
         std::size_t n = range_count::apply(
                     exterior_ring(poly), add_for_open);
 

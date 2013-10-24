@@ -21,7 +21,7 @@ rule test_all
 
    for local fileb in [ glob *.cpp ]
    {
-      all_rules += [ run $(fileb) /boost/thread//boost_thread
+      all_rules += [ run $(fileb)
       :  # additional args
       :  # test-files
       :  # requirements

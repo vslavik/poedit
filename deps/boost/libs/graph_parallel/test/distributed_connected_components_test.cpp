@@ -72,11 +72,6 @@ test_distributed_connected_components(int n, double _p, bool verify, bool emit_d
   typedef compressed_sparse_row_graph<directedS, no_property, no_property, no_property,
                                       distributedS<mpi_process_group> > Graph;
 
-  typedef graph_traits<Graph>::vertex_descriptor vertex_descriptor;
-  typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
-  typedef iterator_property_map<std::vector<vertex_descriptor>::iterator, property_map<Graph, vertex_index_t>::type> ParentMap;
-  typedef std::pair<int, int> Edge;
-
   minstd_rand gen;
 
   gen.seed(seed);

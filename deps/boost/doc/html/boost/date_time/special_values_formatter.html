@@ -41,32 +41,32 @@
   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">string_type</span> <span class="special">&gt;</span> <a name="boost.date_time.special_values_formatter.collection_type"></a><span class="identifier">collection_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="special_values_formatter.html#boost.date_time.special_values_formatterconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="special_values_formatter.html#idp21117040-bb"><span class="identifier">special_values_formatter</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="special_values_formatter.html#idp21117552-bb"><span class="identifier">special_values_formatter</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">char_type</span> <span class="special">*</span><span class="keyword">const</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">char_type</span> <span class="special">*</span><span class="keyword">const</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="special_values_formatter.html#idp39297568-bb"><span class="identifier">special_values_formatter</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">collection_type</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">,</span> 
+  <a class="link" href="special_values_formatter.html#idp22685032-bb"><span class="identifier">special_values_formatter</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="special_values_formatter.html#idp22685544-bb"><span class="identifier">special_values_formatter</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">char_type</span> <span class="special">*</span><span class="keyword">const</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">char_type</span> <span class="special">*</span><span class="keyword">const</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="special_values_formatter.html#idp22687224-bb"><span class="identifier">special_values_formatter</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">collection_type</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">,</span> 
                            <span class="keyword">typename</span> <span class="identifier">collection_type</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="special_values_formatter.html#idp38905920-bb">public member functions</a></span>
-  <span class="identifier">OutItrT</span> <a class="link" href="special_values_formatter.html#idp38906128-bb"><span class="identifier">put_special</span></a><span class="special">(</span><span class="identifier">OutItrT</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">special_values</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="special_values_formatter.html#idp20277560-bb">public member functions</a></span>
+  <span class="identifier">OutItrT</span> <a class="link" href="special_values_formatter.html#idp20277768-bb"><span class="identifier">put_special</span></a><span class="special">(</span><span class="identifier">OutItrT</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">special_values</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
   <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">char_type</span> <span class="identifier">default_special_value_names</span><span class="special">;</span>  <span class="comment">// Storage for the strings used to indicate special values. </span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp52308224"></a><h2>Description</h2>
+<a name="idp91466520"></a><h2>Description</h2>
 <p>This class provides for the formmating of special values to an output stream. In particular, it produces strings for the values of negative and positive infinity as well as not_a_date_time.</p>
 <p>While not a facet, this class is used by the date and time facets for formatting special value types. </p>
 <div class="refsect2">
-<a name="idp52308992"></a><h3>
+<a name="idp91467288"></a><h3>
 <a name="boost.date_time.special_values_formatterconstruct-copy-destruct"></a><code class="computeroutput">special_values_formatter</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp21117040-bb"></a><span class="identifier">special_values_formatter</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Construct special values formatter using default strings. <p>Default strings are not-a-date-time -infinity +infinity </p>
+<pre class="literallayout"><a name="idp22685032-bb"></a><span class="identifier">special_values_formatter</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Construct special values formatter using default strings. <p>Default strings are not-a-date-time -infinity +infinity </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp21117552-bb"></a><span class="identifier">special_values_formatter</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">char_type</span> <span class="special">*</span><span class="keyword">const</span> <span class="special">*</span> begin<span class="special">,</span> 
+<pre class="literallayout"><a name="idp22685544-bb"></a><span class="identifier">special_values_formatter</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">char_type</span> <span class="special">*</span><span class="keyword">const</span> <span class="special">*</span> begin<span class="special">,</span> 
                          <span class="keyword">const</span> <span class="identifier">char_type</span> <span class="special">*</span><span class="keyword">const</span> <span class="special">*</span> end<span class="special">)</span><span class="special">;</span></pre>Construct special values formatter from array of strings. <p>This constructor will take pair of iterators from an array of strings that represent the special values and copy them for use in formatting special values. </p>
 <pre class="programlisting">   const char* const special_value_names[]={"nadt","-inf","+inf" };
  
@@ -75,14 +75,14 @@
 </pre>
 <p> </p>
 </li>
-<li class="listitem"><pre class="literallayout"><a name="idp39297568-bb"></a><span class="identifier">special_values_formatter</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">collection_type</span><span class="special">::</span><span class="identifier">iterator</span> beg<span class="special">,</span> 
+<li class="listitem"><pre class="literallayout"><a name="idp22687224-bb"></a><span class="identifier">special_values_formatter</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">collection_type</span><span class="special">::</span><span class="identifier">iterator</span> beg<span class="special">,</span> 
                          <span class="keyword">typename</span> <span class="identifier">collection_type</span><span class="special">::</span><span class="identifier">iterator</span> end<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp52323008"></a><h3>
-<a name="idp38905920-bb"></a><code class="computeroutput">special_values_formatter</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="identifier">OutItrT</span> <a name="idp38906128-bb"></a><span class="identifier">put_special</span><span class="special">(</span><span class="identifier">OutItrT</span> next<span class="special">,</span> 
+<a name="idp91481368"></a><h3>
+<a name="idp20277560-bb"></a><code class="computeroutput">special_values_formatter</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="identifier">OutItrT</span> <a name="idp20277768-bb"></a><span class="identifier">put_special</span><span class="special">(</span><span class="identifier">OutItrT</span> next<span class="special">,</span> 
                     <span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">special_values</span> <span class="special">&amp;</span> value<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>

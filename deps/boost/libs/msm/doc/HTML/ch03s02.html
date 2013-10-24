@@ -258,11 +258,12 @@ struct some_state : public msm::front::state&lt;&gt;
                         &#8220;terminates&#8221; (the state machine and all its states stay alive) and all
                         events are ignored. This is of course not mandatory, one can use orthogonal
                         regions without terminate states. MSM also provides a small extension to
-                        UML, interrupt states. If you declare ErrorMode as interrupt state instead
-                        of terminate state, the state machine will not handle any event other than
-                        the one which ends the interrupt. So it's like a terminate state, with the
-                        difference that you are allowed to resume the state machine when a condition
-                        (like handling of the original error) is met. </p><p><span class="command"><strong><a name="basic-defer"></a></strong></span>Last but not least, this example also shows
+                        UML, interrupt states. If you declare ErrorMode (or a Boost.MPL sequence of
+                        events, like boost::mpl::vector&lt;ErrorMode, AnotherEvent&gt;) as interrupt
+                        state instead of terminate state, the state machine will not handle any
+                        event other than the one which ends the interrupt. So it's like a terminate
+                        state, with the difference that you are allowed to resume the state machine
+                        when a condition (like handling of the original error) is met. </p><p><span class="command"><strong><a name="basic-defer"></a></strong></span>Last but not least, this example also shows
                         here the handling of event deferring. Let's say someone puts a disc and
                         immediately presses play. The event cannot be handled, yet you'd want it to
                         be handled at a later point and not force the user to press play again. The

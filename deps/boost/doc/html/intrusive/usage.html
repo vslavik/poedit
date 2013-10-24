@@ -256,6 +256,16 @@
 <span class="identifier">assert</span><span class="special">(&amp;</span><span class="identifier">list</span><span class="special">.</span><span class="identifier">front</span><span class="special">()</span> <span class="special">==</span> <span class="special">&amp;</span><span class="identifier">foo_object</span><span class="special">);</span>
 </pre>
 </div>
+<p>
+      However, member hooks have some implementation limitations: If there is a virtual
+      inheritance relationship between the parent and the member hook, then the distance
+      between the parent and the hook is not a compile-time fixed value so obtaining
+      the address of the parent from the member hook is not possible without reverse
+      engineering compiler produced RTTI. Apart from this, the non-standard pointer
+      to member implementation for classes with complex inheritance relationships
+      in MSVC ABI compatible-compilers is not supported by member hooks since it
+      also depends on compiler-produced RTTI information.
+    </p>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="intrusive.usage.usage_both_hooks"></a><a class="link" href="usage.html#intrusive.usage.usage_both_hooks" title="Using both hooks">Using both hooks</a>
@@ -359,7 +369,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2013 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

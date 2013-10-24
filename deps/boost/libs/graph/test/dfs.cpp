@@ -68,6 +68,12 @@ public:
     using namespace boost;
     BOOST_CHECK( get(m_color, target(e, g)) == Color::black() );
   }
+  template <class Edge, class Graph>
+  void finish_edge(Edge e, Graph& g) {
+    using namespace boost;
+    BOOST_CHECK( get(m_color, target(e, g)) == Color::gray() ||
+                 get(m_color, target(e, g)) == Color::black() );
+  }
   template <class Vertex, class Graph>
   void finish_vertex(Vertex u, Graph&) {
     using namespace boost;
@@ -116,9 +122,24 @@ struct dfs_test
         std::vector<int> discover_time(num_vertices(g)),
           finish_time(num_vertices(g));
 
-        dfs_test_visitor<ColorMap, vertex_descriptor*,
-          int*, int*> vis(color, &parent[0],
-                          &discover_time[0], &finish_time[0]);
+        // Get vertex index map
+        typedef typename boost::property_map<Graph, boost::vertex_index_t>::const_type idx_type;
+        idx_type idx = get(boost::vertex_index, g);
+        
+        typedef
+          boost::iterator_property_map<typename std::vector<vertex_descriptor>::iterator, idx_type>
+          parent_pm_type;
+        parent_pm_type parent_pm(parent.begin(), idx);
+        typedef
+          boost::iterator_property_map<std::vector<int>::iterator, idx_type>
+          time_pm_type;
+        time_pm_type discover_time_pm(discover_time.begin(), idx);
+        time_pm_type finish_time_pm(finish_time.begin(), idx);
+
+        dfs_test_visitor<ColorMap, parent_pm_type,
+          time_pm_type, time_pm_type>
+          vis(color, parent_pm,
+              discover_time_pm, finish_time_pm);
 
         boost::depth_first_search(g, visitor(vis).color_map(color));
 
@@ -136,10 +157,10 @@ struct dfs_test
                           || finish_time[v] < discover_time[u]
                           || (discover_time[v] < discover_time[u]
                                && finish_time[u] < finish_time[v]
-                               && boost::is_descendant(u, v, &parent[0]))
+                               && boost::is_descendant(u, v, parent_pm))
                           || (discover_time[u] < discover_time[v]
                                && finish_time[v] < finish_time[u]
-                               && boost::is_descendant(v, u, &parent[0]))
+                               && boost::is_descendant(v, u, parent_pm))
                         );
             }
           }

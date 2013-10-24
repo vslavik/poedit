@@ -27,8 +27,8 @@
 <a name="geometry.reference.strategies.strategy_centroid_bashein_detmer"></a><a class="link" href="strategy_centroid_bashein_detmer.html" title="strategy::centroid::bashein_detmer">strategy::centroid::bashein_detmer</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp16388928"></a><a class="indexterm" name="idp16389264"></a><a class="indexterm" name="idp16389600"></a>
-Centroid calculation using algorith Bashein / Detmer.
+          <a class="indexterm" name="idp63248680"></a><a class="indexterm" name="idp63249016"></a><a class="indexterm" name="idp63249352"></a>
+Centroid calculation using algorithm Bashein / Detmer.
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_centroid_bashein_detmer.h0"></a>
@@ -37,67 +37,6 @@ Centroid calculation using algorith Bashein / Detmer.
 <p>
           Calculates centroid using triangulation method published by Bashein / Detmer
         </p>
-<p>
-          Statements:
-        </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
-<li class="listitem">
-              <span class="bold"><strong>MySQL/PostGIS</strong></span>: select AsText(Centroid(GeomFromText(
-              'POLYGON((2 1.3,2.4 1.7,2.8 1.8,3.4 1.2,3.7 1.6,3.4 2,4.1 3,5.3 2.6
-              ,5.4 1.2,4.9 0.8,2.9 0.7,2 1.3))')))
-            </li>
-<li class="listitem">
-              <span class="bold"><strong>Oracle:</strong></span> select sdo_geom.sdo_centroid(sdo_geometry(2003,
-              null, null, sdo_elem_info_array(1, 1003, 1), sdo_ordinate_array( 2,1.3,2.4,1.7,2.8,1.8,3.4,1.2,3.7,1.6,3.4,2,4.1,3,5.3,2.6
-              ,5.4,1.2,4.9,0.8,2.9,0.7,2,1.3)) , mdsys.sdo_dim_array(mdsys.sdo_dim_element('x',0,10,.00000005)
-              ,mdsys.sdo_dim_element('y',0,10,.00000005))) from dual
-            </li>
-<li class="listitem">
-              <span class="bold"><strong>SQL</strong></span> Server 2008: select geometry::STGeomFromText(
-              'POLYGON((2 1.3,2.4 1.7,2.8 1.8,3.4 1.2,3.7 1.6,3.4 2,4.1 3,5.3 2.6
-              ,5.4 1.2,4.9 0.8,2.9 0.7,2 1.3))',0) .STCentroid() .STAsText()
-            </li>
-</ul></div>
-<p>
-          With holes:
-        </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
-<li class="listitem">
-              this: POINT(4.04663 1.6349)
-            </li>
-<li class="listitem">
-              geolib: POINT(4.04675 1.65735)
-            </li>
-<li class="listitem">
-              MySQL: POINT(3.6090580503834 1.607573932092)
-            </li>
-<li class="listitem">
-              PostGIS: POINT(4.0466265060241 1.63489959839357)
-            </li>
-<li class="listitem">
-              Oracle: 4.0466265060241 1.63489959839357
-            </li>
-<li class="listitem">
-              SQL Server: POINT(4.0466264962959677 1.6348996057331333)
-            </li>
-</ul></div>
-<p>
-          Statements:
-        </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
-<li class="listitem">
-              <span class="bold"><strong>MySQL/PostGIS</strong></span>: select AsText(Centroid(GeomFromText(
-              'POLYGON((2 1.3,2.4 1.7,2.8 1.8,3.4 1.2 ,3.7 1.6,3.4 2,4.1 3,5.3 2.6,5.4
-              1.2,4.9 0.8,2.9 0.7,2 1.3) ,(4 2,4.2 1.4,4.8 1.9,4.4 2.2,4 2))')));
-            </li>
-<li class="listitem">
-              <span class="bold"><strong>Oracle:</strong></span> select sdo_geom.sdo_centroid(sdo_geometry(2003,
-              null, null , sdo_elem_info_array(1, 1003, 1, 25, 2003, 1) , sdo_ordinate_array(2,1.3,2.4,1.7,2.8,1.8,3.4,1.2,3.7,1.6,3.4,
-              2,4.1,3,5.3,2.6,5.4,1.2,4.9,0.8,2.9,0.7,2,1.3,4,2, 4.2,1.4, 4.8,1.9,
-              4.4,2.2, 4,2)) , mdsys.sdo_dim_array(mdsys.sdo_dim_element('x',0,10,.00000005)
-              ,mdsys.sdo_dim_element('y',0,10,.00000005))) from dual
-            </li>
-</ul></div>
 <h6>
 <a name="geometry.reference.strategies.strategy_centroid_bashein_detmer.h1"></a>
           <span class="phrase"><a name="geometry.reference.strategies.strategy_centroid_bashein_detmer.synopsis"></a></span><a class="link" href="strategy_centroid_bashein_detmer.html#geometry.reference.strategies.strategy_centroid_bashein_detmer.synopsis">Synopsis</a>
@@ -184,6 +123,11 @@ Centroid calculation using algorith Bashein / Detmer.
                   </p>
                 </td>
 <td>
+                  <p>
+                    numeric type for calculation (e.g. high precision); if <span class="bold"><strong>void</strong></span> then it is extracted automatically
+                    from the coordinate type and (if necessary) promoted to floating
+                    point
+                  </p>
                 </td>
 </tr>
 </tbody>

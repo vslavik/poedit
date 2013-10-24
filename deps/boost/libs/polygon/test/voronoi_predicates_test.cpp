@@ -55,8 +55,8 @@ VP::circle_formation_predicate<site_type, circle_type, CEP_type, lazy_CFF_type> 
     BOOST_CHECK_EQUAL(event_comparison(A, B), R1); \
     BOOST_CHECK_EQUAL(event_comparison(B, A), R2)
 
-#define CHECK_DISTANCE_PREDICATE(S1, S2, S3, RES) \
-    BOOST_CHECK_EQUAL(distance_predicate(S1, S2, S3), RES)
+#define CHECK_DISTANCE_PREDICATE(S1, S2, P3, RES) \
+    BOOST_CHECK_EQUAL(distance_predicate(S1, S2, P3), RES)
 
 #define CHECK_NODE_COMPARISON(node, nodes, res, sz) \
     for (int i = 0; i < sz; ++i) { \
@@ -140,102 +140,119 @@ BOOST_AUTO_TEST_CASE(event_comparison_test5) {
 
 BOOST_AUTO_TEST_CASE(distance_predicate_test1) {
   site_type site1(-5, 0);
+  site1.sorted_index(1);
   site_type site2(-8, 9);
+  site2.sorted_index(0);
   site_type site3(-2, 1);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, 5), false);
-  CHECK_DISTANCE_PREDICATE(site3, site1, site_type(0, 5), false);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, 4), false);
-  CHECK_DISTANCE_PREDICATE(site3, site1, site_type(0, 4), false);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, 6), true);
-  CHECK_DISTANCE_PREDICATE(site3, site1, site_type(0, 6), true);
+  site3.sorted_index(2);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, 5), false);
+  CHECK_DISTANCE_PREDICATE(site3, site1, point_type(0, 5), false);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, 4), false);
+  CHECK_DISTANCE_PREDICATE(site3, site1, point_type(0, 4), false);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, 6), true);
+  CHECK_DISTANCE_PREDICATE(site3, site1, point_type(0, 6), true);
 }
 
 BOOST_AUTO_TEST_CASE(distance_predicate_test2) {
   site_type site1(-4, 0, -4, 20);
+  site1.sorted_index(0);
   site_type site2(-2, 10);
-  CHECK_DISTANCE_PREDICATE(site2, site1, site_type(0, 11), false);
-  CHECK_DISTANCE_PREDICATE(site2, site1, site_type(0, 9), false);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, 11), true);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, 9), true);
+  site2.sorted_index(1);
+  CHECK_DISTANCE_PREDICATE(site2, site1, point_type(0, 11), false);
+  CHECK_DISTANCE_PREDICATE(site2, site1, point_type(0, 9), false);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, 11), true);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, 9), true);
 }
 
 BOOST_AUTO_TEST_CASE(disntace_predicate_test3) {
   site_type site1(-5, 5, 2, -2);
+  site1.sorted_index(0);
   site1.inverse();
   site_type site2(-2, 4);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, -1), false);
-  CHECK_DISTANCE_PREDICATE(site2, site1, site_type(0, -1), false);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, 1), false);
-  CHECK_DISTANCE_PREDICATE(site2, site1, site_type(0, 1), false);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, 4), true);
-  CHECK_DISTANCE_PREDICATE(site2, site1, site_type(0, 4), false);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, 5), true);
-  CHECK_DISTANCE_PREDICATE(site2, site1, site_type(0, 5), false);
+  site2.sorted_index(1);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, -1), false);
+  CHECK_DISTANCE_PREDICATE(site2, site1, point_type(0, -1), false);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, 1), false);
+  CHECK_DISTANCE_PREDICATE(site2, site1, point_type(0, 1), false);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, 4), true);
+  CHECK_DISTANCE_PREDICATE(site2, site1, point_type(0, 4), false);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, 5), true);
+  CHECK_DISTANCE_PREDICATE(site2, site1, point_type(0, 5), false);
 }
 
 BOOST_AUTO_TEST_CASE(distance_predicate_test4) {
   site_type site1(-5, 5, 2, -2);
+  site1.sorted_index(0);
   site_type site2(-2, -4);
+  site2.sorted_index(2);
   site_type site3(-4, 1);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, 1), true);
-  CHECK_DISTANCE_PREDICATE(site2, site1, site_type(0, 1), true);
-  CHECK_DISTANCE_PREDICATE(site1, site3, site_type(0, 1), true);
-  CHECK_DISTANCE_PREDICATE(site3, site1, site_type(0, 1), true);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, -2), true);
-  CHECK_DISTANCE_PREDICATE(site2, site1, site_type(0, -2), false);
-  CHECK_DISTANCE_PREDICATE(site1, site3, site_type(0, -2), true);
-  CHECK_DISTANCE_PREDICATE(site3, site1, site_type(0, -2), false);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, -8), true);
-  CHECK_DISTANCE_PREDICATE(site2, site1, site_type(0, -8), false);
-  CHECK_DISTANCE_PREDICATE(site1, site3, site_type(0, -8), true);
-  CHECK_DISTANCE_PREDICATE(site3, site1, site_type(0, -8), false);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(0, -9), true);
-  CHECK_DISTANCE_PREDICATE(site2, site1, site_type(0, -9), false);
-  CHECK_DISTANCE_PREDICATE(site1, site3, site_type(0, -9), true);
-  CHECK_DISTANCE_PREDICATE(site3, site1, site_type(0, -9), false);
+  site3.sorted_index(1);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, 1), true);
+  CHECK_DISTANCE_PREDICATE(site2, site1, point_type(0, 1), true);
+  CHECK_DISTANCE_PREDICATE(site1, site3, point_type(0, 1), true);
+  CHECK_DISTANCE_PREDICATE(site3, site1, point_type(0, 1), true);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, -2), true);
+  CHECK_DISTANCE_PREDICATE(site2, site1, point_type(0, -2), false);
+  CHECK_DISTANCE_PREDICATE(site1, site3, point_type(0, -2), true);
+  CHECK_DISTANCE_PREDICATE(site3, site1, point_type(0, -2), false);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, -8), true);
+  CHECK_DISTANCE_PREDICATE(site2, site1, point_type(0, -8), false);
+  CHECK_DISTANCE_PREDICATE(site1, site3, point_type(0, -8), true);
+  CHECK_DISTANCE_PREDICATE(site3, site1, point_type(0, -8), false);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, -9), true);
+  CHECK_DISTANCE_PREDICATE(site2, site1, point_type(0, -9), false);
+  CHECK_DISTANCE_PREDICATE(site1, site3, point_type(0, -9), true);
+  CHECK_DISTANCE_PREDICATE(site3, site1, point_type(0, -9), false);
 }
 
 BOOST_AUTO_TEST_CASE(disntace_predicate_test5) {
   site_type site1(-5, 5, 2, -2);
+  site1.sorted_index(0);
   site_type site2 = site1;
   site2.inverse();
   site_type site3(-2, 4);
+  site3.sorted_index(3);
   site_type site4(-2, -4);
+  site4.sorted_index(2);
   site_type site5(-4, 1);
-  CHECK_DISTANCE_PREDICATE(site3, site2, site_type(0, 1), false);
-  CHECK_DISTANCE_PREDICATE(site3, site2, site_type(0, 4), false);
-  CHECK_DISTANCE_PREDICATE(site3, site2, site_type(0, 5), false);
-  CHECK_DISTANCE_PREDICATE(site3, site2, site_type(0, 7), true);
-  CHECK_DISTANCE_PREDICATE(site4, site1, site_type(0, -2), false);
-  CHECK_DISTANCE_PREDICATE(site5, site1, site_type(0, -2), false);
-  CHECK_DISTANCE_PREDICATE(site4, site1, site_type(0, -8), false);
-  CHECK_DISTANCE_PREDICATE(site5, site1, site_type(0, -8), false);
-  CHECK_DISTANCE_PREDICATE(site4, site1, site_type(0, -9), false);
-  CHECK_DISTANCE_PREDICATE(site5, site1, site_type(0, -9), false);
-  CHECK_DISTANCE_PREDICATE(site4, site1, site_type(0, -18), false);
-  CHECK_DISTANCE_PREDICATE(site5, site1, site_type(0, -18), false);
-  CHECK_DISTANCE_PREDICATE(site4, site1, site_type(0, -1), true);
-  CHECK_DISTANCE_PREDICATE(site5, site1, site_type(0, -1), true);
+  site5.sorted_index(1);
+  CHECK_DISTANCE_PREDICATE(site3, site2, point_type(0, 1), false);
+  CHECK_DISTANCE_PREDICATE(site3, site2, point_type(0, 4), false);
+  CHECK_DISTANCE_PREDICATE(site3, site2, point_type(0, 5), false);
+  CHECK_DISTANCE_PREDICATE(site3, site2, point_type(0, 7), true);
+  CHECK_DISTANCE_PREDICATE(site4, site1, point_type(0, -2), false);
+  CHECK_DISTANCE_PREDICATE(site5, site1, point_type(0, -2), false);
+  CHECK_DISTANCE_PREDICATE(site4, site1, point_type(0, -8), false);
+  CHECK_DISTANCE_PREDICATE(site5, site1, point_type(0, -8), false);
+  CHECK_DISTANCE_PREDICATE(site4, site1, point_type(0, -9), false);
+  CHECK_DISTANCE_PREDICATE(site5, site1, point_type(0, -9), false);
+  CHECK_DISTANCE_PREDICATE(site4, site1, point_type(0, -18), false);
+  CHECK_DISTANCE_PREDICATE(site5, site1, point_type(0, -18), false);
+  CHECK_DISTANCE_PREDICATE(site4, site1, point_type(0, -1), true);
+  CHECK_DISTANCE_PREDICATE(site5, site1, point_type(0, -1), true);
 }
 
 BOOST_AUTO_TEST_CASE(distance_predicate_test6) {
   site_type site1(-5, 0, 2, 7);
   site_type site2 = site1;
   site2.inverse();
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(2, 7), false);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(1, 5), false);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(-1, 5), true);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(2, 7), false);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(1, 5), false);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(-1, 5), true);
 }
 
 BOOST_AUTO_TEST_CASE(distance_predicate_test7) {
   site_type site1(-5, 5, 2, -2);
+  site1.sorted_index(1);
   site1.inverse();
   site_type site2(-5, 5, 0, 6);
+  site2.sorted_index(0);
   site_type site3(-2, 4, 0, 4);
-  site_type site4(0, 2);
-  site_type site5(0, 5);
-  site_type site6(0, 6);
-  site_type site7(0, 8);
+  site3.sorted_index(2);
+  point_type site4(0, 2);
+  point_type site5(0, 5);
+  point_type site6(0, 6);
+  point_type site7(0, 8);
   CHECK_DISTANCE_PREDICATE(site1, site2, site4, false);
   CHECK_DISTANCE_PREDICATE(site1, site2, site5, true);
   CHECK_DISTANCE_PREDICATE(site1, site2, site6, true);
@@ -251,11 +268,13 @@ BOOST_AUTO_TEST_CASE(distance_predicate_test7) {
   CHECK_DISTANCE_PREDICATE(site3, site1, site7, true);
 }
 
-BOOST_AUTO_TEST_CASE(distatnce_predicate_test8) {
+BOOST_AUTO_TEST_CASE(distance_predicate_test8) {
   site_type site1(-5, 3, -2, 2);
+  site1.sorted_index(0);
   site1.inverse();
   site_type site2(-5, 5, -2, 2);
-  CHECK_DISTANCE_PREDICATE(site1, site2, site_type(-4, 2), false);
+  site2.sorted_index(1);
+  CHECK_DISTANCE_PREDICATE(site1, site2, point_type(-4, 2), false);
 }
 
 BOOST_AUTO_TEST_CASE(node_comparison_test1) {
@@ -377,8 +396,11 @@ BOOST_AUTO_TEST_CASE(node_comparison_test8) {
 
 BOOST_AUTO_TEST_CASE(circle_formation_predicate_test1) {
   site_type site1(0, 0);
+  site1.sorted_index(1);
   site_type site2(-8, 0);
+  site2.sorted_index(0);
   site_type site3(0, 6);
+  site3.sorted_index(2);
   CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, -4.0, 3.0, 1.0);
 }
 
@@ -386,78 +408,109 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test2) {
   int min_int = (std::numeric_limits<int>::min)();
   int max_int = (std::numeric_limits<int>::max)();
   site_type site1(min_int, min_int);
+  site1.sorted_index(0);
   site_type site2(min_int, max_int);
+  site2.sorted_index(1);
   site_type site3(max_int-1, max_int-1);
+  site3.sorted_index(2);
   site_type site4(max_int, max_int);
+  site4.sorted_index(3);
   CHECK_CIRCLE_EXISTENCE(site1, site2, site4, true);
   CHECK_CIRCLE_EXISTENCE(site1, site3, site4, false);
 }
 
 BOOST_AUTO_TEST_CASE(circle_formation_predicate_test3) {
   site_type site1(-4, 0);
+  site1.sorted_index(0);
   site_type site2(0, 4);
+  site2.sorted_index(4);
   site_type site3(site1.point0(), site2.point0());
+  site3.sorted_index(1);
   CHECK_CIRCLE_EXISTENCE(site1, site3, site2, false);
   site_type site4(-2, 0);
+  site4.sorted_index(2);
   site_type site5(0, 2);
+  site5.sorted_index(3);
   CHECK_CIRCLE_EXISTENCE(site3, site4, site5, false);
   CHECK_CIRCLE_EXISTENCE(site4, site5, site3, false);
 }
 
 BOOST_AUTO_TEST_CASE(circle_formation_predicate_test4) {
   site_type site1(-4, 0, -4, 20);
+  site1.sorted_index(0);
   site_type site2(-2, 10);
+  site2.sorted_index(1);
   site_type site3(4, 10);
+  site3.sorted_index(2);
   CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, 1.0, 6.0, 6.0);
   CHECK_CIRCLE_FORMATION_PREDICATE(site3, site2, site1, 1.0, 14.0, 6.0);
 }
 
 BOOST_AUTO_TEST_CASE(circle_formation_predicate_test5) {
   site_type site1(1, 0, 7, 0);
+  site1.sorted_index(2);
   site1.inverse();
   site_type site2(-2, 4, 10, 4);
+  site2.sorted_index(0);
   site_type site3(6, 2);
+  site3.sorted_index(3);
   site_type site4(1, 0);
+  site4.sorted_index(1);
   CHECK_CIRCLE_FORMATION_PREDICATE(site3, site1, site2, 4.0, 2.0, 6.0);
   CHECK_CIRCLE_FORMATION_PREDICATE(site4, site2, site1, 1.0, 2.0, 3.0);
 }
 
 BOOST_AUTO_TEST_CASE(circle_formation_predicate_test6) {
   site_type site1(-1, 2, 8, -10);
+  site1.sorted_index(1);
   site1.inverse();
   site_type site2(-1, 0, 8, 12);
+  site2.sorted_index(0);
   site_type site3(1, 1);
+  site3.sorted_index(2);
   CHECK_CIRCLE_FORMATION_PREDICATE(site3, site2, site1, 6.0, 1.0, 11.0);
 }
 
 BOOST_AUTO_TEST_CASE(circle_formation_predicate_test7) {
   site_type site1(1, 0, 6, 0);
+  site1.sorted_index(2);
   site1.inverse();
   site_type site2(-6, 4, 0, 12);
+  site2.sorted_index(0);
   site_type site3(1, 0);
+  site3.sorted_index(1);
   CHECK_CIRCLE_FORMATION_PREDICATE(site3, site2, site1, 1.0, 5.0, 6.0);
 }
 
 BOOST_AUTO_TEST_CASE(circle_formation_predicate_test8) {
   site_type site1(1, 0, 5, 0);
+  site1.sorted_index(2);
   site1.inverse();
   site_type site2(0, 12, 8, 6);
+  site2.sorted_index(0);
   site_type site3(1, 0);
+  site3.sorted_index(1);
   CHECK_CIRCLE_FORMATION_PREDICATE(site3, site2, site1, 1.0, 5.0, 6.0);
 }
 
 BOOST_AUTO_TEST_CASE(circle_formation_predicate_test9) {
   site_type site1(0, 0, 4, 0);
+  site1.sorted_index(1);
   site_type site2(0, 0, 0, 4);
+  site2.sorted_index(0);
   site_type site3(0, 4, 4, 4);
+  site3.sorted_index(2);
   site1.inverse();
   CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, 2.0, 2.0, 4.0);
 }
 
 BOOST_AUTO_TEST_CASE(circle_formation_predicate_test10) {
   site_type site1(1, 0, 41, 30);
+  site1.sorted_index(1);
   site_type site2(-39, 30, 1, 60);
+  site2.sorted_index(0);
   site_type site3(1, 60, 41, 30);
+  site3.sorted_index(2);
   site1.inverse();
   CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, 1.0, 30.0, 25.0);
 }

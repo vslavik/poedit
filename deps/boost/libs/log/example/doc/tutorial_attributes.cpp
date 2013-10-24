@@ -10,8 +10,8 @@
 #include <ostream>
 #include <fstream>
 #include <iomanip>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/expressions.hpp>

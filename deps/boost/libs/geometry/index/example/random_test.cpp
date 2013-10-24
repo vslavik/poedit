@@ -100,8 +100,8 @@ int main()
                 float x = coords[i].first;
                 float y = coords[i].second;
                 result.clear();
-                std::copy(t.qbegin(bgi::intersects(B(P(x - 10, y - 10), P(x + 10, y + 10)))),
-                          t.qend(bgi::intersects(B(P(x - 10, y - 10), P(x + 10, y + 10)))),
+                std::copy(t.qbegin_(bgi::intersects(B(P(x - 10, y - 10), P(x + 10, y + 10)))),
+                          t.qend_(bgi::intersects(B(P(x - 10, y - 10), P(x + 10, y + 10)))),
                           std::back_inserter(result));
 
                 // test
@@ -152,8 +152,8 @@ int main()
                 float y = coords[i].second + 100;
                 result.clear();
 
-                std::copy(t.qbegin(bgi::nearest(P(x, y), neighbours_count)),
-                          t.qend(bgi::nearest(P(x, y), neighbours_count)),
+                std::copy(t.qbegin_(bgi::nearest(P(x, y), neighbours_count)),
+                          t.qend_(bgi::nearest(P(x, y), neighbours_count)),
                           std::back_inserter(result));
 
                 // test

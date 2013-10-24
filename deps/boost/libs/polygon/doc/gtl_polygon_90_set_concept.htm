@@ -1,28 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
- xmlns:v="urn:schemas-microsoft-com:vml"
- xmlns:o="urn:schemas-microsoft-com:office:office"
- xmlns:(null)1="http://www.w3.org/TR/REC-html40" lang="en">
-<head>
-<!--
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:(null)1="http://www.w3.org/TR/REC-html40" lang="en"><head><!--
     Copyright 2009-2010 Intel Corporation
     license banner
--->
-  <title>Boost Polygon Library: Polygon 90 Set Concept</title>
-  <meta http-equiv="content-type" content="text/html;charset=ISO-8859-1" />
-<!-- <link type="text/css" rel="stylesheet" href="adobe_source.css"> -->
-</head>
-<body>
-<table style="margin: 0pt; padding: 0pt; width: 100%;" border="0"
- cellpadding="0" cellspacing="0">
+--><title>Boost Polygon Library: Polygon 90 Set Concept</title>
+
+
+
+  
+  <meta http-equiv="content-type" content="text/html;charset=ISO-8859-1" /><!-- <link type="text/css" rel="stylesheet" href="adobe_source.css"> --></head><body>
+<table style="margin: 0pt; padding: 0pt; width: 100%;" border="0" cellpadding="0" cellspacing="0">
   <tbody>
     <tr>
-      <td style="background-color: rgb(238, 238, 238);" nowrap="1"
- valign="top">
-      <div style="padding: 5px;" align="center"> <img
- src="images/boost.png" border="0" height="86" width="277" /><a
- title="www.boost.org home page" href="http://www.boost.org/"
- tabindex="2" style="border: medium none ;"> </a> </div>
+      <td style="background-color: rgb(238, 238, 238);" nowrap="1" valign="top">
+      <div style="padding: 5px;" align="center"> <img src="images/boost.png" border="0" height="86" width="277" /><a title="www.boost.org home page" href="http://www.boost.org/" tabindex="2" style="border: medium none ;"> </a> </div>
       <div style="margin: 5px;">
       <h3 class="navbar">Contents</h3>
       <ul>
@@ -77,14 +67,9 @@ Tutorial</a></li>
       </ul>
       </div>
       <h3 class="navbar">Polygon Sponsor</h3>
-      <div style="padding: 5px;" align="center"> <img
- src="images/intlogo.gif" border="0" height="51" width="127" /><a
- title="www.adobe.com home page" href="http://www.adobe.com/"
- tabindex="2" style="border: medium none ;"> </a> </div>
+      <div style="padding: 5px;" align="center"> <img src="images/intlogo.gif" border="0" height="51" width="127" /><a title="www.adobe.com home page" href="http://www.adobe.com/" tabindex="2" style="border: medium none ;"> </a> </div>
       </td>
-      <td
- style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px;"
- valign="top" width="100%">
+      <td style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px;" valign="top" width="100%">
 <!-- End Header --><br />
       <p>
       </p>
@@ -110,16 +95,13 @@ vectors of models of polygon_90_concept or
 polygon_90_with_holes_concept or rectangle_concept are automatically
 models of polygon_90_set_concept.</p>
       <h2>Operators</h2>
-      <p>The return type of some operators is the <font
- face="Courier New">polygon_90_set_view</font> operator template
+      <p>The return type of some operators is the <font face="Courier New">polygon_90_set_view</font> operator template
 type.&nbsp; This type is itself a model of the polygon_90_set concept,
-but furthermore can be used as an argument to the <font
- face="Courier New">polygon_90_set_data</font> constructor and
+but furthermore can be used as an argument to the <font face="Courier New">polygon_90_set_data</font> constructor and
 assignment operator.&nbsp; The operator template exists to eliminate
 temp copies of intermediate results when Boolean operators are chained
 together.</p>
-      <p>Operators are declared inside the namespace <font
- face="Courier New">boost::polygon::operators</font>.</p>
+      <p>Operators are declared inside the namespace <font face="Courier New">boost::polygon::operators</font>.</p>
       <table id="table3" border="1" width="100%">
         <tbody>
           <tr>
@@ -773,6 +755,22 @@ points is equal to the number of edges.&nbsp; O( n log n) runtime
 complexity and O(n) memory wrt vertices + intersections.</td>
           </tr>
           <tr>
+            <td style="vertical-align: top;"><font face="Courier New">template
+&lt;typename output_container&gt;<br />
+void <b>get</b>(output_container&amp; output, size_t k) const</font></td>
+            <td style="vertical-align: top;">Expects a standard
+container of geometry objects.&nbsp; Will scan and eliminate
+overlaps.&nbsp; Converts polygon set geometry to objects of that type
+and appends them to the container.&nbsp; The resulting polygons will
+have at most k vertices. For Manhattan data k should be at least 4 .
+Polygons will be output with counterclockwise winding, hole polygons
+will be output with clockwise winding.&nbsp; The last vertex of an
+output polygon is not the duplicate of the first, and the number of
+points is equal to the number of edges.&nbsp; O( n log n) runtime
+complexity and O(n) memory wrt vertices + intersections.<br />
+            </td>
+          </tr>
+<tr>
             <td width="586"><font face="Courier New">template
 &lt;typename output_container&gt;<br />
 void <b>get_polygons</b>(output_container&amp; output) const</font></td>
@@ -915,8 +913,7 @@ runtime complexity and O(n) memory wrt vertices + intersections.</td>
           </tr>
           <tr>
             <td width="586"><font face="Courier New">polygon_90_set_data&amp;
-            <b>move</b>(coordinate_type x_delta, <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b>move</b>(coordinate_type x_delta, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 coordinate_type y_delta) </font> </td>
             <td>Add x_delta to x values and y_delta to y values of
 vertices stored within the polygon set.&nbsp; Linear wrt. vertices.</td>
@@ -985,14 +982,10 @@ vertices + intersections.</td>
       </td>
     </tr>
     <tr>
-      <td style="background-color: rgb(238, 238, 238);" nowrap="1"
- valign="top"> &nbsp;</td>
-      <td
- style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px;"
- valign="top" width="100%">
+      <td style="background-color: rgb(238, 238, 238);" nowrap="1" valign="top"> &nbsp;</td>
+      <td style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px;" valign="top" width="100%">
       <table class="docinfo" id="table4" frame="void" rules="none">
-        <colgroup> <col class="docinfo-name" /><col
- class="docinfo-content" /> </colgroup> <tbody valign="top">
+        <colgroup> <col class="docinfo-name" /><col class="docinfo-content" /> </colgroup> <tbody valign="top">
           <tr>
             <th class="docinfo-name">Copyright:</th>
             <td>Copyright © Intel Corporation 2008-2010.</td>
@@ -1000,10 +993,7 @@ vertices + intersections.</td>
           <tr class="field">
             <th class="docinfo-name">License:</th>
             <td class="field-body">Distributed under the Boost Software
-License, Version 1.0. (See accompanying file <tt class="literal"> <span
- class="pre">LICENSE_1_0.txt</span></tt> or copy at <a
- class="reference" target="_top"
- href="http://www.boost.org/LICENSE_1_0.txt">
+License, Version 1.0. (See accompanying file <tt class="literal"> <span class="pre">LICENSE_1_0.txt</span></tt> or copy at <a class="reference" target="_top" href="http://www.boost.org/LICENSE_1_0.txt">
 http://www.boost.org/LICENSE_1_0.txt</a>)</td>
           </tr>
         </tbody>
@@ -1012,5 +1002,5 @@ http://www.boost.org/LICENSE_1_0.txt</a>)</td>
     </tr>
   </tbody>
 </table>
-</body>
-</html>
+
+</body></html>

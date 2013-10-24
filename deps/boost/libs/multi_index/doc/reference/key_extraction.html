@@ -57,10 +57,8 @@ Compiler specifics
     <ul>
       <li><a href="#const_mem_fun">Class template <code>const_mem_fun</code></a></li>
       <li><a href="#mem_fun">Class template <code>mem_fun</code></a></li>
-      <li><a href="#const_mem_fun_explicit">Class template <code>const_mem_fun_explicit</code></a></li>
-      <li><a href="#mem_fun_explicit">Class template <code>mem_fun_explicit</code></a></li>
-      <li><a href="#boost_multi_index_const_mem_fun">Macro <code>BOOST_MULTI_INDEX_CONST_MEM_FUN</code></a></li>
-      <li><a href="#boost_multi_index_mem_fun">Macro <code>BOOST_MULTI_INDEX_MEM_FUN</code></a></li>
+      <li><a href="#const_mem_fun_explicit">Class templates <code>const_mem_fun_explicit</code> and <code>mem_fun_explicit</code></a></li>
+      <li><a href="#boost_multi_index_const_mem_fun">Macros <code>BOOST_MULTI_INDEX_CONST_MEM_FUN</code> and <code>BOOST_MULTI_INDEX_MEM_FUN</code></a></li>
     </ul>
   </li>
   <li><a href="#global_fun_synopsis">Header
@@ -108,7 +106,7 @@ Compiler specifics
 Key extraction classes are used by
 <a href="indices.html#key_based_indices">key-based indices</a> to
 obtain the indexing keys from the elements of a <code>multi_index_container</code>.
-An <a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>
+A <code>CopyConstructible</code> and <code>CopyAssignable</code>
 class <code>KeyFromValue</code> is said to be a key extractor from a
 type <code>Type</code> if
 <ol>
@@ -144,16 +142,8 @@ Boost.MultiIndex provides six general-purpose key extractors:
   <li><a href="#const_mem_fun"><code>const_mem_fun</code></a>,</li>
   <li><a href="#mem_fun"><code>mem_fun</code></a>,</li>
   <li><a href="#global_fun"><code>global_fun</code></a> and</li>
-  <li><a href="#composite_key"><code>composite_key</code></a>,</li>
+  <li><a href="#composite_key"><code>composite_key</code></a>.</li>
 </ul>
-plus replacements for some of them:
-<ul>
-  <li><a href="#member_offset"><code>member_offset</code></a>,</li>
-  <li><a href="#const_mem_fun_explicit"><code>const_mem_fun_explicit</code></a> and</li>
-  <li><a href="#mem_fun_explicit"><code>mem_fun_explicit</code></a>,</li>
-</ul>
-that workaround some deficiencies in the support for non-type template parameters
-by certain compilers.
 </p>
 
 <h3><a name="chained_pointers">Chained pointers</a></h3>
@@ -310,7 +300,7 @@ type to <code>Type</code>.<br>
 <span class=keyword>struct</span> <span class=identifier>member</span><span class=special>;</span>
 
 <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>class</span> <span class=identifier>Class</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Type</span><span class=special>,</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>size_t</span> <span class=identifier>OffsetOfMember</span><span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>member_offset</span><span class=special>;</span>
+<span class=keyword>struct</span> <span class=identifier>member_offset</span><span class=special>;</span> <span class=comment><b>// deprecated</b></span>
 
 <span class=preprocessor>#define</span> <span class=identifier>BOOST_MULTI_INDEX_MEMBER</span><span class=special>(</span><span class=identifier>Class</span><span class=special>,</span><span class=identifier>Type</span><span class=special>,</span><span class=identifier>MemberName</span><span class=special>)</span> <b>implementation defined</b>
 
@@ -399,53 +389,10 @@ type to <code>Type</code>.<br>
 <h3><a name="member_offset">Class template <code>member_offset</code></a></h3>
 
 <p>
-Some compilers do not properly support pointers to members as non-type
-template arguments. The following have been confirmed to have bugs in
-this respect:
-<ul>
-  <li>MSVC++ 6.0 (see 
-    <a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;249045">Microsoft
-    Knowledge Base article #249045</a>),</li>
-  <li>MSVC++ 7.0 (not officially confirmed by Microsoft),</li>
-  <li>Intel C++ 7.0/7.1 for Windows (support issue #207321),</li>
-  <li>VisualAge 6.0 for AIX (internal defect #288539.)</li>
-</ul>
-In this situation, <code>member_offset</code> provides an
-alternative to <a href="#member"><code>member</code></a> accepting offsets
-instead of pointers to members. Please note that the use of
-<code>offsetof</code> on non-POD types is forbidden by the standard;
-luckily enough, most compilers accept it nevertheless, so
-<code>member_offset</code> serves as a workaround for most practical purposes.
-</p>
-
-<blockquote><pre>
-<span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>class</span> <span class=identifier>Class</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Type</span><span class=special>,</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>size_t</span> <span class=identifier>OffsetOfMember</span><span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>member_offset</span>
-<span class=special>{</span>
-  <span class=keyword>typedef</span> <span class=identifier>Type</span> <span class=identifier>result_type</span><span class=special>;</span>
-
-  <span class=comment>// only provided if const ChainedPtr&amp; is not convertible to const Class&amp;</span>
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>ChainedPtr</span><span class=special>&gt;</span> <span class=identifier>Type</span><span class=special>&amp;</span> <span class=keyword>operator</span><span class=special>()(</span><span class=keyword>const</span> <span class=identifier>ChainedPtr</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-
-  <span class=keyword>const</span> <span class=identifier>Type</span><span class=special>&amp;</span> <span class=keyword>operator</span><span class=special>()(</span><span class=keyword>const</span> <span class=identifier>Class</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span> 
-  <span class=identifier>Type</span><span class=special>&amp;</span>       <span class=keyword>operator</span><span class=special>()(</span><span class=identifier>Class</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span> <span class=comment>// only provided if Type is non-const</span>
-  <span class=keyword>const</span> <span class=identifier>Type</span><span class=special>&amp;</span> <span class=keyword>operator</span><span class=special>()(</span><span class=keyword>const</span> <span class=identifier>reference_wrapper</span><span class=special>&lt;</span><span class=keyword>const</span> <span class=identifier>Class</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>Type</span><span class=special>&amp;</span>       <span class=keyword>operator</span><span class=special>()(</span><span class=keyword>const</span> <span class=identifier>reference_wrapper</span><span class=special>&lt;</span><span class=identifier>Class</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-<span class=special>};</span>
-</pre></blockquote>
-
-<p>As an example of use, given the class</p>
-
-<blockquote><pre>
-<span class=keyword>class</span> <span class=identifier>A</span>
-<span class=special>{</span>
-  <span class=keyword>int</span> <span class=identifier>x</span><span class=special>;</span>
-<span class=special>}</span>
-</pre></blockquote>
-
-<p>
-the instantiation <code>member&lt;A,int,&amp;A::x></code> can be simulated then
-as <code>member_offset&lt;A,int,offsetof(A,x)></code>.
+<code>member_offset</code> was designed to overcome limitations of some legacy
+compilers and its use is currently deprecated. Refer to a
+<a href="http://www.boost.org/doc/libs/1_54_0/libs/multi_index/doc/reference/key_extraction.html#member_offset">former version</a>
+of Boost.MultiIndex for further information.
 </p>
 
 <h3><a name="boost_multi_index_member">Macro <code>BOOST_MULTI_INDEX_MEMBER</code></a></h3>
@@ -455,27 +402,10 @@ as <code>member_offset&lt;A,int,offsetof(A,x)></code>.
 </pre></blockquote>
 
 <p>
-This macro is provided as an aid for using <code>member</code> and
-<code>member_offset</code> when writing cross-platform code. In the usual cases,
-it expands to
-</p>
-
-<blockquote><pre>
-<span class=special>::</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>multi_index</span><span class=special>::</span><span class=identifier>member</span><span class=special>&lt;</span><span class=identifier>Class</span><span class=special>,</span><span class=identifier>Type</span><span class=special>,&amp;</span><span class=identifier>Class</span><span class=special>::</span><span class=identifier>MemberName</span><span class=special>&gt;</span>
-</pre></blockquote>
-
-<p>
-but it resolves to
-</p>
-
-<blockquote><pre>
-<span class=special>::</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>multi_index</span><span class=special>::</span><span class=identifier>member_offset</span><span class=special>&lt;</span><span class=identifier>Class</span><span class=special>,</span><span class=identifier>Type</span><span class=special>,</span><span class=identifier>offsetof</span><span class=special>(</span><span class=identifier>Class</span><span class=special>,</span><span class=identifier>MemberName</span><span class=special>)&gt;</span>
-</pre></blockquote>
-
-<p>
-if the <a href="../../../../libs/config/config.htm">Boost Configuration Library</a>
-defect macro <code>BOOST_NO_POINTER_TO_MEMBER_TEMPLATE_PARAMETERS</code>
-is defined.
+This macro was designed as a portability mechanism for legacy compilers where <code>member</code>
+could not be supported.
+As such it is no longer needed in modern environments, though some users might still prefer it
+to plain <code>member</code> because it provides a slightly more concise syntax.
 </p>
 
 <h2>
@@ -498,13 +428,13 @@ is defined.
   <span class=keyword>class</span> <span class=identifier>Class</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Type</span><span class=special>,</span>
   <span class=keyword>typename</span> <span class=identifier>PtrToMemberFunctionType</span><span class=special>,</span><span class=identifier>PtrToMemberFunctionType</span> <span class=identifier>PtrToMemberFunction</span>
 <span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>const_mem_fun_explicit</span><span class=special>;</span>
+<span class=keyword>struct</span> <span class=identifier>const_mem_fun_explicit</span><span class=special>;</span> <span class=comment><b>// deprecated</b></span>
 
 <span class=keyword>template</span><span class=special>&lt;</span>
   <span class=keyword>class</span> <span class=identifier>Class</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Type</span><span class=special>,</span>
   <span class=keyword>typename</span> <span class=identifier>PtrToMemberFunctionType</span><span class=special>,</span><span class=identifier>PtrToMemberFunctionType</span> <span class=identifier>PtrToMemberFunction</span>
 <span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>mem_fun_explicit</span><span class=special>;</span>
+<span class=keyword>struct</span> <span class=identifier>mem_fun_explicit</span><span class=special>;</span>       <span class=comment><b>// deprecated</b></span>
 
 <span class=preprocessor>#define</span> <span class=identifier>BOOST_MULTI_INDEX_CONST_MEM_FUN</span><span class=special>(</span><span class=identifier>Class</span><span class=special>,</span><span class=identifier>Type</span><span class=special>,</span><span class=identifier>MemberFunName</span><span class=special>)</span> <span class=special>\</span>
 <b>implementation defined</b>
@@ -646,135 +576,28 @@ object chained-pointed to by <code>x</code>.
 <b>Returns:</b> <code>(x.get().*PtrToMemberFunction)()</code>.
 </blockquote>
 
-<h3><a name="const_mem_fun_explicit">Class template <code>const_mem_fun_explicit</code></a></h3>
+<h3><a name="const_mem_fun_explicit">Class templates <code>const_mem_fun_explicit</code> and <code>mem_fun_explicit</code></a></h3>
 
 <p>
-MSVC++ 6.0 do not properly support pointers to constant member functions as non-type
-template parameters, thus <a href="#const_mem_fun"><code>const_mem_fun</code></a> cannot be
-used in this compiler. A simple workaround consists in specifying the <i>type</i> of
-these pointers as an additional template parameter.
+These extractors were provided as a workaround for MSVC++ 6.0 and are now deprecated.
+Refer to a
+<a href="http://www.boost.org/doc/libs/1_54_0/libs/multi_index/doc/reference/key_extraction.html#const_mem_fun_explicit">former version</a>
+of Boost.MultiIndex for further information.
 </p>
 
-<blockquote><pre>
-<span class=keyword>template</span><span class=special>&lt;</span>
-  <span class=keyword>class</span> <span class=identifier>Class</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Type</span><span class=special>,</span>
-  <span class=keyword>typename</span> <span class=identifier>PtrToMemberFunctionType</span><span class=special>,</span><span class=identifier>PtrToMemberFunctionType</span> <span class=identifier>PtrToMemberFunction</span>
-<span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>const_mem_fun_explicit</span>
-<span class=special>{</span>
-  <span class=keyword>typedef</span> <span class=keyword>typename</span> <span class=identifier>remove_reference</span><span class=special>&lt;</span><span class=identifier>Type</span><span class=special>&gt;::</span><span class=identifier>type</span> <span class=identifier>result_type</span><span class=special>;</span>
-
-  <span class=comment>// only provided if const ChainedPtr&amp; is not convertible to const Class&amp;</span>
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>ChainedPtr</span><span class=special>&gt;</span> <span class=identifier>Type</span> <span class=keyword>operator</span><span class=special>()(</span><span class=keyword>const</span> <span class=identifier>ChainedPtr</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-
-  <span class=identifier>Type</span> <span class=keyword>operator</span><span class=special>()(</span><span class=keyword>const</span> <span class=identifier>Class</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>Type</span> <span class=keyword>operator</span><span class=special>()(</span><span class=keyword>const</span> <span class=identifier>reference_wrapper</span><span class=special>&lt;</span><span class=keyword>const</span> <span class=identifier>Class</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>Type</span> <span class=keyword>operator</span><span class=special>()(</span><span class=keyword>const</span> <span class=identifier>reference_wrapper</span><span class=special>&lt;</span><span class=identifier>Class</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-<span class=special>};</span>
-</pre></blockquote>
-
-<p>
-<code>const_mem_fun_explicit</code> provides the very same functionality as
-its <code>const_mem_fun</code> analogous instantiation. For example, given the type
-</p>
-
-<blockquote><pre>
-<span class=keyword>struct</span> <span class=identifier>A</span>
-<span class=special>{</span>
-  <span class=keyword>int</span> <span class=identifier>f</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
-<span class=special>};</span>
-</pre></blockquote>
-
-<p>
-the extractor <code>const_mem_fun&lt;A,int,&amp;A::f></code> can be replaced by
-<code>const_mem_fun_explicit&lt;A,int,int (A::*)()const,&amp;A::f></code>.
-</p>
-
-<h3><a name="mem_fun_explicit">Class template <code>mem_fun_explicit</code></a></h3>
-
-<p>
-For analogy with <a href="#const_mem_fun_explicit"><code>const_mem_fun_explicit</code></a>,
-a variation of <a href="#mem_fun"><code>mem_fun</code></a> is provided accepting
-an additional parameter with the type of the pointer to non-constant member function
-used for extraction.
-</p>
-
-<blockquote><pre>
-<span class=keyword>template</span><span class=special>&lt;</span>
-  <span class=keyword>class</span> <span class=identifier>Class</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Type</span><span class=special>,</span>
-  <span class=keyword>typename</span> <span class=identifier>PtrToMemberFunctionType</span><span class=special>,</span><span class=identifier>PtrToMemberFunctionType</span> <span class=identifier>PtrToMemberFunction</span>
-<span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>mem_fun_explicit</span>
-<span class=special>{</span>
-  <span class=keyword>typedef</span> <span class=keyword>typename</span> <span class=identifier>remove_reference</span><span class=special>&lt;</span><span class=identifier>Type</span><span class=special>&gt;::</span><span class=identifier>type</span> <span class=identifier>result_type</span><span class=special>;</span>
-
-  <span class=comment>// only provided if ChainedPtr&amp; is not convertible to Class&amp;</span>
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>ChainedPtr</span><span class=special>&gt;</span> <span class=identifier>Type</span> <span class=keyword>operator</span><span class=special>()(</span><span class=keyword>const</span> <span class=identifier>ChainedPtr</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-
-  <span class=identifier>Type</span> <span class=keyword>operator</span><span class=special>()(</span><span class=identifier>Class</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>Type</span> <span class=keyword>operator</span><span class=special>()(</span><span class=keyword>const</span> <span class=identifier>reference_wrapper</span><span class=special>&lt;</span><span class=identifier>Class</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-<span class=special>};</span>
-</pre></blockquote>
-
-<h3><a name="boost_multi_index_const_mem_fun">Macro
-<code>BOOST_MULTI_INDEX_CONST_MEM_FUN</code></a></h3>
+<h3><a name="boost_multi_index_const_mem_fun">Macros
+<code>BOOST_MULTI_INDEX_CONST_MEM_FUN</code>
+and <code>BOOST_MULTI_INDEX_MEM_FUN</code></a></h3>
 
 <blockquote><pre>
 <span class=identifier>BOOST_MULTI_INDEX_CONST_MEM_FUN</span><span class=special>(</span><span class=identifier>Class</span><span class=special>,</span><span class=identifier>Type</span><span class=special>,</span><span class=identifier>MemberFunName</span><span class=special>)</span>
-</pre></blockquote>
-
-<p>
-Use this macro when writing cross-platform code selectively using
-<code>const_mem_fun_explicit</code> in place of <code>const_mem_fun</code> for
-compilers not supporting the latter. In the usual cases, the macro expands to
-</p>
-
-<blockquote><pre>
-<span class=special>::</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>multi_index</span><span class=special>::</span><span class=identifier>const_mem_fun</span><span class=special>&lt;</span><span class=identifier>Class</span><span class=special>,</span><span class=identifier>Type</span><span class=special>,&amp;</span><span class=identifier>Class</span><span class=special>::</span><span class=identifier>MemberFunName</span><span class=special>&gt;</span>
-</pre></blockquote>
-
-<p>
-but it resolves to
-</p>
-
-<blockquote><pre>
-<span class=special>::</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>multi_index</span><span class=special>::</span><span class=identifier>const_mem_fun_explicit</span><span class=special>&lt;</span>
-  <span class=identifier>Class</span><span class=special>,</span><span class=identifier>Type</span><span class=special>,</span><span class=identifier>Type</span> <span class=special>(</span><span class=identifier>Class</span><span class=special>::*)()</span><span class=keyword>const</span><span class=special>,&amp;</span><span class=identifier>Class</span><span class=special>::</span><span class=identifier>MemberFunName</span>
-<span class=special>&gt;</span>
-</pre></blockquote>
-
-<p>
-for MSVC++ 6.0 or lower.
-</p>
-
-
-<h3><a name="boost_multi_index_mem_fun">Macro
-<code>BOOST_MULTI_INDEX_MEM_FUN</code></a></h3>
-
-<blockquote><pre>
 <span class=identifier>BOOST_MULTI_INDEX_MEM_FUN</span><span class=special>(</span><span class=identifier>Class</span><span class=special>,</span><span class=identifier>Type</span><span class=special>,</span><span class=identifier>MemberFunName</span><span class=special>)</span>
 </pre></blockquote>
 
 <p>
-By default, the macro expands to
-</p>
-
-<blockquote><pre>
-<span class=special>::</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>multi_index</span><span class=special>::</span><span class=identifier>mem_fun</span><span class=special>&lt;</span><span class=identifier>Class</span><span class=special>,</span><span class=identifier>Type</span><span class=special>,&amp;</span><span class=identifier>Class</span><span class=special>::</span><span class=identifier>MemberFunName</span><span class=special>&gt;</span>
-</pre></blockquote>
-
-<p>
-but it resolves to
-</p>
-
-<blockquote><pre>
-<span class=special>::</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>multi_index</span><span class=special>::</span><span class=identifier>mem_fun_explicit</span><span class=special>&lt;</span>
-  <span class=identifier>Class</span><span class=special>,</span><span class=identifier>Type</span><span class=special>,</span><span class=identifier>Type</span> <span class=special>(</span><span class=identifier>Class</span><span class=special>::*)()</span><span class=special>,&amp;</span><span class=identifier>Class</span><span class=special>::</span><span class=identifier>MemberFunName</span>
-<span class=special>&gt;</span>
-</pre></blockquote>
-
-<p>
-for MSVC++ 6.0 or lower.
+Portability macros for usage of <code>const_mem_fun</code> and <code>mem_fun</code>.
+Although no longer needed in modern compilers, some users might still decide to
+resort to them as they provide a slightly more concise syntax.
 </p>
 
 <h2>
@@ -959,7 +782,7 @@ Type operator()(<br>
 <span class=keyword>struct</span> <span class=identifier>composite_key_equal_to</span><span class=special>;</span>
   
 <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKeyResult</span><span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>composite_key_result_equal_to</span><span class=special>;</span>
+<span class=keyword>struct</span> <span class=identifier>composite_key_result_equal_to</span><span class=special>;</span> <span class=comment><b>// deprecated</b></span>
 
 <span class=comment>// comparison functors:</span>
 
@@ -967,10 +790,10 @@ Type operator()(<br>
 <span class=keyword>struct</span> <span class=identifier>composite_key_compare</span><span class=special>;</span>
   
 <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKeyResult</span><span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>composite_key_result_less</span><span class=special>;</span>
+<span class=keyword>struct</span> <span class=identifier>composite_key_result_less</span><span class=special>;</span>     <span class=comment><b>// deprecated</b></span>
 
 <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKeyResult</span><span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>composite_key_result_greater</span><span class=special>;</span>
+<span class=keyword>struct</span> <span class=identifier>composite_key_result_greater</span><span class=special>;</span>  <span class=comment><b>// deprecated</b></span>
 
 <span class=comment>// hash functors:</span>
 
@@ -978,7 +801,7 @@ Type operator()(<br>
 <span class=keyword>struct</span> <span class=identifier>composite_key_hash</span><span class=special>;</span>
   
 <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKeyResult</span><span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>composite_key_result_hash</span><span class=special>;</span>
+<span class=keyword>struct</span> <span class=identifier>composite_key_result_hash</span><span class=special>;</span>     <span class=comment><b>// deprecated</b></span>
 
 <span class=special>}</span> <span class=comment>// namespace boost::multi_index</span>
 
@@ -1176,10 +999,8 @@ instantiations as their extracted key.
 which the <code>composite_key_result</code> type is associated. Objects of type
 <code>composite_key_result</code> returned by a composite key must be always treated
 as <i>temporary</i>, i.e. they should not be stored or copied.
-<code>composite_key_result</code> is <i>not</i> guaranteed to be a model of
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a> or
-<a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>.
+<code>composite_key_result</code> is <i>not</i> guaranteed to be 
+<code>DefaultConstructible</code> or <code>CopyAssignable</code>.
 Every object of type <code>composite_key_result&lt;CompositeKey></code> is
 internally associated to the <code>CompositeKey</code> from which it is returned
 and the object of type <code>CompositeKey::value_type</code> to which the
@@ -1351,19 +1172,14 @@ collection of elementary equality predicates.
 
 <p>
 <code>Pred0</code>, ... , <code>Predn</code> are the types of the equality
-predicates stored by <code>composite_key_equal_to</code>. Each of these types
-must be a <a href="http://www.sgi.com/tech/stl/BinaryPredicate.html">
-<code>Binary Predicate</code></a>. At least an
+binary predicates stored by <code>composite_key_equal_to</code>. Each of these predicates
+must be <code>CopyConstructible</code> and <code>CopyAssignable</code>. At least an
 equality predicate must be provided. The maximum number of equality predicates of
 a <code>composite_key_equal_to</code> instantiation is implementation defined.
 <code>composite_key_equal_to</code> is
-<a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>.
-It is also 
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a>
-if each <code>Predi</code> is 
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a>.
+<code>CopyConstructible</code> and <code>CopyAssignable</code>.
+It is also <code>DefaultConstructible</code>
+if each <code>Predi</code> is <code>DefaultConstructible</code> in its turn.
 </p>
 
 <p>
@@ -1451,66 +1267,18 @@ the result is determined to be <code>false</code>.
 <code>composite_key_result_equal_to</code></a></h4>
 
 <p>
-<code>composite_key_result_equal_to</code> acts as a particularization of
-<code>composite_key_equal_to</code> where all the comparison predicates supplied
-are instantiations of <code>std::equal_to</code>.
-</p>
-
-<blockquote><pre>
-<span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKeyResult</span><span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>composite_key_result_equal_to</span>
-<span class=special>{</span>
-  <span class=keyword>typedef</span> <span class=identifier>CompositeKeyResult</span>  <span class=identifier>first_argument_type</span><span class=special>;</span>
-  <span class=keyword>typedef</span> <span class=identifier>first_argument_type</span> <span class=identifier>second_argument_type</span><span class=special>;</span>
-  <span class=keyword>typedef</span> <span class=keyword>bool</span>                <span class=identifier>result_type</span><span class=special>;</span>
-
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKey1</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>CompositeKey2</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey1</span><span class=special>&gt;</span> <span class=special>&amp;</span> <span class=identifier>x</span><span class=special>,</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey2</span><span class=special>&gt;</span> <span class=special>&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-  
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKey</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Value0</span><span class=special>,...,</span><span class=keyword>typename</span> <span class=identifier>Valuen</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>,</span>
-    <span class=keyword>const</span> <span class=identifier>tuple</span><span class=special>&lt;</span><span class=identifier>Value0</span><span class=special>,...,</span><span class=identifier>Valuen</span><span class=special>&gt;&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Value0</span><span class=special>,...,</span><span class=keyword>typename</span> <span class=identifier>Valuen</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>CompositeKey</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>tuple</span><span class=special>&lt;</span><span class=identifier>Value0</span><span class=special>,...,</span><span class=identifier>Valuen</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>,</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey</span><span class=special>&gt;&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-<span class=special>};</span>
-</pre></blockquote>
-
-<p>
-<code>CompositeKeyResult</code> must be an instantiation of
-<code>composite_key_result</code> for some type
-<code>composite_key&lt;KeyFromValue0,...,KeyFromValuen></code>.
-<code>composite_key_result_equal_to&lt;CompositeKeyResult>::operator()</code> is
-then equivalent to
-<code>composite_key_equal_to&lt;Pred0,...,Predn>::operator()</code>, taking
-<blockquote>
-<code>Predi = std::equal_to&lt;KeyFromValuei::result_type></code> for all
-<code>i = 0,...,n</code>.
-</blockquote>
-</p>
-
-<p>
-In addition to the requirements on <code>Predi</code> imposed by
-<code>composite_key_equal_to</code>, each of these types must be
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a>. <code>composite_key_result_equal_to</code>
-is <a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a> and
-<a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>.
+Deprecated. Use <code>std::equal_to&lt;CompositeKeyResult&gt;</code> instead.
 </p>
 
 <h4><a name="equal_to_composite_key_result">Specialization of
 <code>std::equal_to</code> for <code>composite_key</code> results</a></h4>
 
 <p>
-<code>std::equal_to&lt;CompositeKeyResult></code>, for <code>CompositeKeyResult</code>
-being an instantiation of <code>composite_key_result</code>, has the same interface
-and functionality as <code>composite_key_result_equal_to&lt;CompositeKeyResult></code>.
+<code>std::equal_to&lt;CompositeKeyResult></code>, with <code>CompositeKeyResult</code>
+an instantiation of <code>composite_key_result</code>,
+behaves as a particularization of
+<code>composite_key_equal_to</code> where all the comparison predicates supplied
+are instantiations of <code>std::equal_to</code>.
 </p>
 
 <blockquote><pre>
@@ -1543,6 +1311,27 @@ and functionality as <code>composite_key_result_equal_to&lt;CompositeKeyResult><
 
 <span class=special>}</span> <span class=comment>// namespace std</span>
 </pre></blockquote>
+
+<p>
+<code>CompositeKeyResult</code> must be an instantiation of
+<code>composite_key_result</code> for some type
+<code>composite_key&lt;KeyFromValue0,...,KeyFromValuen></code>.
+<code>std::equal:to&lt;CompositeKeyResult>::operator()</code> is
+then equivalent to
+<code>composite_key_equal_to&lt;Pred0,...,Predn>::operator()</code>, taking
+<blockquote>
+<code>Predi = std::equal_to&lt;KeyFromValuei::result_type></code> for all
+<code>i = 0,...,n</code>.
+</blockquote>
+</p>
+
+<p>
+In addition to the requirements on <code>Predi</code> imposed by
+<code>composite_key_equal_to</code>, each of these types must be
+<code>DefaultConstructible</code>. <code>std::equal_to&lt;CompositeKeyResult></code>
+is <code>DefaultConstructible</code>, <code>CopyConstructible</code> and
+<code>CopyAssignable</code>.
+</p>
 
 <h3><a name="ckey_result_comparison">Comparison</a></h3>
 
@@ -1598,19 +1387,15 @@ collection of elementary comparison predicates.
 
 <p>
 <code>Compare0</code>, ... , <code>Comparen</code> are the types of the comparison
-predicates stored by <code>composite_key_compare</code>. Each of these types
-must be a <a href="http://www.sgi.com/tech/stl/BinaryPredicate.html">
-<code>Binary Predicate</code></a>. At least a
+binary predicates stored by <code>composite_key_compare</code>. Each of these predicates must be
+<code>CopyConstructible</code> and <code>CopyAssignable</code>. At least a
 comparison predicate must be provided. The maximum number of comparison predicates of
 a <code>composite_key_compare</code> instantiation is implementation defined.
 <code>composite_key_compare</code> is
-<a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>.
+<code>CopyConstructible</code> and <code>CopyAssignable</code>.
 It is also 
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a>
-if each <code>Comparei</code> is 
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a>.
+<code>DefaultConstructible</code>
+if each <code>Comparei</code> is <code>DefaultConstructible</code> in its turn.
 </p>
 
 <p>
@@ -1728,139 +1513,24 @@ bool operator()(<br>
 <code>composite_key_result_less</code></a></h4>
 
 <p>
-<code>composite_key_result_less</code> acts as a particularization of
-<code>composite_key_compare</code> where all the comparison predicates supplied
-are instantiations of <code>std::less</code>.
-</p>
-
-<blockquote><pre>
-<span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKeyResult</span><span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>composite_key_result_less</span>
-<span class=special>{</span>
-  <span class=keyword>typedef</span> <span class=identifier>CompositeKeyResult</span>  <span class=identifier>first_argument_type</span><span class=special>;</span>
-  <span class=keyword>typedef</span> <span class=identifier>first_argument_type</span> <span class=identifier>second_argument_type</span><span class=special>;</span>
-  <span class=keyword>typedef</span> <span class=keyword>bool</span>                <span class=identifier>result_type</span><span class=special>;</span>
-
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKey1</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>CompositeKey2</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey1</span><span class=special>&gt;</span> <span class=special>&amp;</span> <span class=identifier>x</span><span class=special>,</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey2</span><span class=special>&gt;</span> <span class=special>&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-  
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKey</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Value0</span><span class=special>,...,</span><span class=keyword>typename</span> <span class=identifier>Valuen</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>,</span>
-    <span class=keyword>const</span> <span class=identifier>tuple</span><span class=special>&lt;</span><span class=identifier>Value0</span><span class=special>,...,</span><span class=identifier>Valuen</span><span class=special>&gt;&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Value0</span><span class=special>,...,</span><span class=keyword>typename</span> <span class=identifier>Valuen</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>CompositeKey</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>tuple</span><span class=special>&lt;</span><span class=identifier>Value0</span><span class=special>,...,</span><span class=identifier>Valuen</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>,</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey</span><span class=special>&gt;&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKey</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Value</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>,</span><span class=keyword>const</span> <span class=identifier>Value</span><span class=special>&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Value</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>CompositeKey</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>Value</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>,</span><span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey</span><span class=special>&gt;&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-<span class=special>};</span>
-</pre></blockquote>
-
-<p>
-<code>CompositeKeyResult</code> must be an instantiation of
-<code>composite_key_result</code> for some type
-<code>composite_key&lt;KeyFromValue0,...,KeyFromValuen></code>.
-<code>composite_key_result_less&lt;CompositeKeyResult>::operator()</code> is
-then equivalent to
-<code>composite_key_compare&lt;Compare0,...,Comparen>::operator()</code>, taking
-<blockquote>
-<code>Comparei = std::less&lt;KeyFromValuei::result_type></code> for all
-<code>i = 0,...,n</code>.
-</blockquote>
-</p>
-
-<p>
-In addition to the requirements on <code>Comparei</code> imposed by
-<code>composite_key_compare</code>, each of these types must be
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a>. <code>composite_key_result_less</code>
-is <a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a> and
-<a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>.
+Deprecated. Use <code>std::less&lt;CompositeKeyResult&gt;</code> instead.
 </p>
 
 <h4><a name="composite_key_result_greater">Class template
 <code>composite_key_result_greater</code></a></h4>
 
 <p>
-<code>composite_key_result</code> acts as a particularization of
-<code>composite_key_compare</code> where all the comparison predicates supplied
-are instantiations of <code>std::greater</code>.
-</p>
-
-<blockquote><pre>
-<span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKeyResult</span><span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>composite_key_result_greater</span>
-<span class=special>{</span>
-  <span class=keyword>typedef</span> <span class=identifier>CompositeKeyResult</span>  <span class=identifier>first_argument_type</span><span class=special>;</span>
-  <span class=keyword>typedef</span> <span class=identifier>first_argument_type</span> <span class=identifier>second_argument_type</span><span class=special>;</span>
-  <span class=keyword>typedef</span> <span class=keyword>bool</span>                <span class=identifier>result_type</span><span class=special>;</span>
-
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKey1</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>CompositeKey2</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey1</span><span class=special>&gt;</span> <span class=special>&amp;</span> <span class=identifier>x</span><span class=special>,</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey2</span><span class=special>&gt;</span> <span class=special>&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-  
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKey</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Value0</span><span class=special>,...,</span><span class=keyword>typename</span> <span class=identifier>Valuen</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>,</span>
-    <span class=keyword>const</span> <span class=identifier>tuple</span><span class=special>&lt;</span><span class=identifier>Value0</span><span class=special>,...,</span><span class=identifier>Valuen</span><span class=special>&gt;&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Value0</span><span class=special>,...,</span><span class=keyword>typename</span> <span class=identifier>Valuen</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>CompositeKey</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>tuple</span><span class=special>&lt;</span><span class=identifier>Value0</span><span class=special>,...,</span><span class=identifier>Valuen</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>,</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey</span><span class=special>&gt;&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKey</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Value</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>,</span><span class=keyword>const</span> <span class=identifier>Value</span><span class=special>&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Value</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>CompositeKey</span><span class=special>&gt;</span>
-  <span class=keyword>bool</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>Value</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>,</span><span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey</span><span class=special>&gt;&amp;</span> <span class=identifier>y</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-<span class=special>};</span>
-</pre></blockquote>
-
-<p>
-<code>CompositeKeyResult</code> must be an instantiation of
-<code>composite_key_result</code> for some type
-<code>composite_key&lt;KeyFromValue0,...,KeyFromValuen></code>.
-<code>composite_key_result_greater&lt;CompositeKeyResult>::operator()</code> is
-then equivalent to
-<code>composite_key_compare&lt;Compare0,...,Comparen>::operator()</code>, taking
-<blockquote>
-<code>Comparei = std::greater&lt;KeyFromValuei::result_type></code> for all
-<code>i = 0,...,n</code>.
-</blockquote>
-</p>
-
-<p>
-In addition to the requirements on <code>Comparei</code> imposed by
-<code>composite_key_compare</code>, each of these types must be
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a>. <code>composite_key_result_greater</code>
-is <a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a> and
-<a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>.
+Deprecated. Use <code>std::greater&lt;CompositeKeyResult&gt;</code> instead.
 </p>
 
 <h4><a name="less_composite_key_result">Specialization of <code>std::less</code> for
 <code>composite_key</code> results</a></h4>
 
 <p>
-<code>std::less&lt;CompositeKeyResult></code>, for <code>CompositeKeyResult</code>
-being an instantiation of <code>composite_key_result</code>, has the same interface
-and functionality as <code>composite_key_result_less&lt;CompositeKeyResult></code>.
+<code>std::less&lt;CompositeKeyResult></code>, with <code>CompositeKeyResult</code>
+an instantiation of <code>composite_key_result</code>, behaves as a particularization of
+<code>composite_key_compare</code> where all the comparison predicates supplied are
+instantiations of <code>std::less</code>.
 </p>
 
 <blockquote><pre>
@@ -1904,14 +1574,37 @@ and functionality as <code>composite_key_result_less&lt;CompositeKeyResult></cod
 <span class=special>}</span> <span class=comment>// namespace std</span>
 </pre></blockquote>
 
+<p>
+<code>CompositeKeyResult</code> must be an instantiation of
+<code>composite_key_result</code> for some type
+<code>composite_key&lt;KeyFromValue0,...,KeyFromValuen></code>.
+<code>std::less&lt;CompositeKeyResult>::operator()</code> is
+then equivalent to
+<code>composite_key_compare&lt;Compare0,...,Comparen>::operator()</code>, taking
+<blockquote>
+<code>Comparei = std::less&lt;KeyFromValuei::result_type></code> for all
+<code>i = 0,...,n</code>.
+</blockquote>
+</p>
+
+<p>
+In addition to the requirements on <code>Comparei</code> imposed by
+<code>composite_key_compare</code>, each of these types must be
+<code>DefaultConstructible</code>. <code>std::less&lt;CompositeKeyResult></code>
+is <code>CopyConstructible</code>, <code>CopyConstructible</code>
+and <code>CopyAssignable</code>.
+</p>
+
 <h4><a name="greater_composite_key_result">Specialization of <code>std::greater</code> for
 <code>composite_key</code> results</a></h4>
 
 <p>
-<code>std::greater&lt;CompositeKeyResult></code>, for <code>CompositeKeyResult</code>
-being an instantiation of <code>composite_key_result</code>, has the same interface
-and functionality as <code>composite_key_result_greater&lt;CompositeKeyResult></code>.
+<code>std::greater&lt;CompositeKeyResult></code>, with <code>CompositeKeyResult</code>
+an instantiation of <code>composite_key_result</code>, behaves as a particularization of
+<code>composite_key_compare</code> where all the comparison predicates supplied
+are instantiations of <code>std::greater</code>.
 </p>
+
 
 <blockquote><pre>
 <span class=keyword>namespace</span> <span class=identifier>std</span><span class=special>{</span>
@@ -1954,6 +1647,27 @@ and functionality as <code>composite_key_result_greater&lt;CompositeKeyResult></
 <span class=special>}</span> <span class=comment>// namespace std</span>
 </pre></blockquote>
 
+<p>
+<code>CompositeKeyResult</code> must be an instantiation of
+<code>composite_key_result</code> for some type
+<code>composite_key&lt;KeyFromValue0,...,KeyFromValuen></code>.
+<code>std::greater&lt;CompositeKeyResult>::operator()</code> is
+then equivalent to
+<code>composite_key_compare&lt;Compare0,...,Comparen>::operator()</code>, taking
+<blockquote>
+<code>Comparei = std::greater&lt;KeyFromValuei::result_type></code> for all
+<code>i = 0,...,n</code>.
+</blockquote>
+</p>
+
+<p>
+In addition to the requirements on <code>Comparei</code> imposed by
+<code>composite_key_compare</code>, each of these types must be
+<code>DefaultConstructible</code>. <code>std::greater&lt;CompositeKeyResult></code>
+is <code>CopyConstructible</code>, <code>CopyConstructible</code>
+and <code>CopyAssignable</code>.
+</p>
+
 <h3><a name="ckey_result_hashing">Hashing</a></h3>
 
 <h4><a name="composite_key_hash">Class template
@@ -1991,23 +1705,17 @@ instantiations based on a collection of elementary hash functors.
 </pre></blockquote>
 
 <p>
-<code>Hash0</code>, ... , <code>Hashn</code> are the types of the hash functors
-stored by <code>composite_key_hash</code>. Each of these types
-must be a
-<a href="http://www.sgi.com/tech/stl/UnaryFunction.html"><code>Unary Function</code></a>
-returning a value of type <code>std::size_t</code> in the range
-<code>[0, std::numeric_limits&lt;std::size_t&gt;::max())</code>.
-At least a
-hash functor must be provided. The maximum number of hash functors of
+<code>Hash0</code>, ... , <code>Hashn</code> are the types of the hash unary function objects
+stored by <code>composite_key_hash</code>. Each of these objects
+must be <code>CopyConstructible</code> and <code>CopyAssignable</code>
+and return a value of type <code>std::size_t</code> in the range
+[0, <code>std::numeric_limits&lt;std::size_t&gt;::max())</code>).
+At least a hash functor must be provided. The maximum number of hash functors of
 a <code>composite_key_hash</code> instantiation is implementation defined.
 <code>composite_key_hash</code> is
-<a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>.
-It is also 
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a>
-if each <code>Hashi</code> is 
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a>.
+<code>CopyConstructible</code> and <code>CopyAssignable</code>.
+It is also <code>DefaultConstructible</code>
+if each <code>Hashi</code> is <code>DefaultConstructible</code> in its turn.
 </p>
 
 <h4>Notation</h4>
@@ -2081,50 +1789,7 @@ with <code>N=length(x)-1</code>.
 <code>composite_key_result_hash</code></a></h4>
 
 <p>
-<code>composite_key_result_hash</code> acts as a particularization of
-<code>composite_key_hash</code> where all the hash functors supplied
-are instantiations of 
-<a href="../../../functional/hash/index.html"><code>boost::hash</code></a>.
-</p>
-
-<blockquote><pre>
-<span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKeyResult</span><span class=special>&gt;</span>
-<span class=keyword>struct</span> <span class=identifier>composite_key_result_hash</span>
-<span class=special>{</span>
-  <span class=keyword>typedef</span> <span class=identifier>CompositeKeyResult</span> <span class=identifier>argument_type</span><span class=special>;</span>
-  <span class=keyword>typedef</span> <span class=identifier>std</span><span class=special>::</span><span class=identifier>size_t</span>        <span class=identifier>result_type</span><span class=special>;</span>
-
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>CompositeKey</span><span class=special>&gt;</span>
-  <span class=identifier>std</span><span class=special>::</span><span class=identifier>size_t</span> <span class=keyword>operator</span><span class=special>()(</span>
-    <span class=keyword>const</span> <span class=identifier>composite_key_result</span><span class=special>&lt;</span><span class=identifier>CompositeKey</span><span class=special>&gt;</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-  
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Value0</span><span class=special>,...,</span><span class=keyword>typename</span> <span class=identifier>Valuen</span><span class=special>&gt;</span>
-  <span class=identifier>std</span><span class=special>::</span><span class=identifier>size_t</span> <span class=keyword>operator</span><span class=special>()(</span>
-     <span class=keyword>const</span> <span class=identifier>tuple</span><span class=special>&lt;</span><span class=identifier>Value0</span><span class=special>,...,</span><span class=identifier>Valuen</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
-<span class=special>};</span>
-</pre></blockquote>
-
-<p>
-<code>CompositeKeyResult</code> must be an instantiation of
-<code>composite_key_result</code> for some type
-<code>composite_key&lt;KeyFromValue0,...,KeyFromValuen></code>.
-<code>composite_key_result_hash&lt;CompositeKeyResult>::operator()</code> is
-then equivalent to
-<code>composite_key_hash&lt;Hash0,...,Hashn>::operator()</code>, taking
-<blockquote>
-<code>Hashi = boost::hash&lt;KeyFromValuei::result_type></code> for all
-<code>i = 0,...,n</code>.
-</blockquote>
-</p>
-
-<p>
-In addition to the requirements on <code>Hashi</code> imposed by
-<code>composite_key_hash</code>, each of these types must be
-<a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a>. <code>composite_key_result_hash</code>
-is <a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
-<code>Default Constructible</code></a> and
-<a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>.
+Deprecated. Use <code>boost::hash&lt;CompositeKeyResult&gt;</code> instead.
 </p>
 
 <h4><a name="hash_composite_key_result">Specialization of
@@ -2132,9 +1797,11 @@ is <a href="http://www.sgi.com/tech/stl/DefaultConstructible.html">
 for <code>composite_key</code> results</a></h4>
 
 <p>
-<code>boost::hash&lt;CompositeKeyResult></code>, for <code>CompositeKeyResult</code>
-being an instantiation of <code>composite_key_result</code>, has the same interface
-and functionality as <code>composite_key_result_hash&lt;CompositeKeyResult></code>.
+<code>boost::hash&lt;CompositeKeyResult></code>, with <code>CompositeKeyResult</code>
+an instantiation of <code>composite_key_result</code>, behaves as a particularization of
+<code>composite_key_hash</code> where all the hash functors supplied
+are instantiations of 
+<a href="../../../functional/hash/index.html"><code>boost::hash</code></a>.
 </p>
 
 <blockquote><pre>
@@ -2157,6 +1824,27 @@ and functionality as <code>composite_key_result_hash&lt;CompositeKeyResult></cod
 
 <span class=special>}</span> <span class=comment>// namespace boost</span>
 </pre></blockquote>
+
+<p>
+<code>CompositeKeyResult</code> must be an instantiation of
+<code>composite_key_result</code> for some type
+<code>composite_key&lt;KeyFromValue0,...,KeyFromValuen></code>.
+<code>boost::hash&lt;CompositeKeyResult>::operator()</code> is
+then equivalent to
+<code>composite_key_hash&lt;Hash0,...,Hashn>::operator()</code>, taking
+<blockquote>
+<code>Hashi = boost::hash&lt;KeyFromValuei::result_type></code> for all
+<code>i = 0,...,n</code>.
+</blockquote>
+</p>
+
+<p>
+In addition to the requirements on <code>Hashi</code> imposed by
+<code>composite_key_hash</code>, each of these types must be
+<code>DefaultConstructible</code>. <code>boost::hash&lt;CompositeKeyResult></code> is
+<code>DefaultConstructible</code>, <code>CopyConstructible</code>
+and <code>CopyAssignable</code>.
+</p>
 
 <h3><a name="ckey_result_semantics">Semantics of
 <code>composite_key_result</code></a></h3>
@@ -2204,13 +1892,10 @@ of (<code>Hashi</code>, <code>Predi</code>).</p>
 <p>
 As for comparison, consider an instantiation of <code>composite_key_compare</code>
 with types <code>Compare0</code>, ... , <code>Comparen</code> such that each
-<code>Comparei</code> is a
-<a href="http://www.sgi.com/tech/stl/StrictWeakOrdering.html"><code>Strict
-Weak Ordering</code></a> on the type <code>Ti</code>. Then, for a
+<code>Comparei</code> induces a strict weak ordering
+on the type <code>Ti</code>. Then, for a
 <code>CompositeKey</code> type defined in the same manner as above,
-<code>composite_key_compare</code> is a
-<a href="http://www.sgi.com/tech/stl/StrictWeakOrdering.html"><code>Strict
-Weak Ordering</code></a> on elements of type
+<code>composite_key_compare</code> induces a strict weak ordering on elements of type
 <code>composite_key_result&lt;CompositeKey></code>, and the order induced
 is lexicographical. Also, the following types are
 <a href="ord_indices.html#set_operations"><code>Compatible Keys</code></a> of
@@ -2263,9 +1948,9 @@ Compiler specifics
 
 <br>
 
-<p>Revised June 25th 2008</p>
+<p>Revised July 7th 2013</p>
 
-<p>&copy; Copyright 2003-2008 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

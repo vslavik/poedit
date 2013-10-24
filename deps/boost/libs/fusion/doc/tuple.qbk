@@ -91,7 +91,7 @@ Where `Vi` is `X&` if the cv-unqualified type `Ti` is `reference_wrapper<X>`, ot
     template<typename T1, typename T2, ..., typename TN>
     tuple<T1&, T2&, ..., TN&> tie(T1& t1, T2& t2, ..., TN& tn);
 
-[*Returns]: tuple<T1&, T2&, ..., TN&>(t1, t2, ..., tN). When argument `ti` is `ignore`, assigning any value to the corresponding tuple element has has no effect.
+[*Returns]: tuple<T1&, T2&, ..., TN&>(t1, t2, ..., tN). When argument `ti` is `ignore`, assigning any value to the corresponding tuple element has no effect.
 
 [endsect]
 
@@ -254,7 +254,7 @@ The __tr1__tuple__ interface is specified to provide uniform access to `std::pai
 
 [*Type]: `T2`
 
-[*Value]: Returns thetype of the second element of the pair
+[*Value]: Returns the type of the second element of the pair
 
     template<int I, typename T1, typename T2>
     P& get(std::pair<T1, T2>& pr);

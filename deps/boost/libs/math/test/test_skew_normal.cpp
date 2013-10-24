@@ -337,7 +337,7 @@ void test_spots(RealType)
 
         BOOST_CHECK_CLOSE(      // mean:
            mean(dist)
-           , static_cast<RealType>(-0.579908992539856825862549L), tol100);
+           , static_cast<RealType>(-0.579908992539856825862549L), tol100 * 2);
          BOOST_CHECK_CLOSE(      // variance:
           variance(dist)
           , static_cast<RealType>(2.0179057767837232633904L), tol100);

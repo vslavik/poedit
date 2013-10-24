@@ -30,7 +30,7 @@ namespace {
 using namespace boost::math;
 using boost::math::signbit;
 using boost::math::changesign;
-using boost::math::isnan;
+using (boost::math::isnan)(;
 
 //------------------------------------------------------------------------------
 // Test nonfinite_num_put and nonfinite_num_get facets by checking

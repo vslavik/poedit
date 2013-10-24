@@ -20,7 +20,7 @@
 #include <boost/log/utility/functional/bind.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -41,7 +41,7 @@ struct output_fun
 };
 
 template< typename StreamT >
-BOOST_LOG_FORCEINLINE binder1st< output_fun, StreamT& > bind_output(StreamT& strm)
+BOOST_FORCEINLINE binder1st< output_fun, StreamT& > bind_output(StreamT& strm)
 {
     return binder1st< output_fun, StreamT& >(output_fun(), strm);
 }

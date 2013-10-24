@@ -149,6 +149,7 @@ void test_beta(T, const char* name)
 template <class T>
 void test_spots(T)
 {
+   BOOST_MATH_STD_USING
    //
    // basic sanity checks, tolerance is 100 epsilon expressed as a percentage:
    //
@@ -177,5 +178,89 @@ void test_spots(T)
          static_cast<T>(80),
          static_cast<T>(0.5)),
       static_cast<T>(0.33240456430025026300937492802591128972548660643778L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibeta_inv(
+         static_cast<T>(40),
+         static_cast<T>(0.5),
+         ldexp(T(1), -30)),
+      static_cast<T>(0.624305407878048788716096298053941618358257550305573588792717L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibeta_inv(
+         static_cast<T>(40),
+         static_cast<T>(0.5),
+         static_cast<T>(1 - ldexp(T(1), -30))),
+      static_cast<T>(0.99999999999999999998286262026583217516676792408012252456039L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibeta_inv(
+         static_cast<T>(0.5),
+         static_cast<T>(40),
+         static_cast<T>(ldexp(T(1), -30))),
+      static_cast<T>(1.713737973416782483323207591987747543960774485649459249e-20L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibeta_inv(
+         static_cast<T>(0.5),
+         static_cast<T>(0.75),
+         static_cast<T>(ldexp(T(1), -30))),
+      static_cast<T>(1.245132488513853853809715434621955746959615015005382639e-18L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibeta_inv(
+         static_cast<T>(0.5),
+         static_cast<T>(0.5),
+         static_cast<T>(0.25)),
+      static_cast<T>(0.1464466094067262377995778189475754803575820311557629L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibeta_inv(
+         static_cast<T>(0.5),
+         static_cast<T>(0.5),
+         static_cast<T>(0.75)),
+      static_cast<T>(0.853553390593273762200422181052424519642417968844237018294169L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibeta_inv(
+         static_cast<T>(1),
+         static_cast<T>(5),
+         static_cast<T>(0.125)),
+      static_cast<T>(0.026352819384831863473794894078665766580641189002729204514544L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibeta_inv(
+         static_cast<T>(5),
+         static_cast<T>(1),
+         static_cast<T>(0.125)),
+      static_cast<T>(0.659753955386447129687000985614820066516734506596709340752903L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibeta_inv(
+         static_cast<T>(1),
+         static_cast<T>(0.125),
+         static_cast<T>(0.125)),
+      static_cast<T>(0.656391084194183349609374999999999999999999999999999999999999L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibeta_inv(
+         static_cast<T>(0.125),
+         static_cast<T>(1),
+         static_cast<T>(0.125)),
+      static_cast<T>(5.960464477539062500000e-8), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibetac_inv(
+         static_cast<T>(5),
+         static_cast<T>(1),
+         static_cast<T>(0.125)),
+      static_cast<T>(0.973647180615168136526205105921334233419358810997270795485455L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibetac_inv(
+         static_cast<T>(1),
+         static_cast<T>(5),
+         static_cast<T>(0.125)),
+      static_cast<T>(0.340246044613552870312999014385179933483265493403290659247096L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibetac_inv(
+         static_cast<T>(0.125),
+         static_cast<T>(1),
+         static_cast<T>(0.125)),
+      static_cast<T>(0.343608915805816650390625000000000000000000000000000000000000L), tolerance);
+   BOOST_CHECK_CLOSE(
+      ::boost::math::ibetac_inv(
+         static_cast<T>(1),
+         static_cast<T>(0.125),
+         static_cast<T>(0.125)),
+      static_cast<T>(0.99999994039535522460937500000000000000000000000L), tolerance);
 }
 

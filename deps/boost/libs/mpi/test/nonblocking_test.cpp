@@ -28,7 +28,7 @@ enum method_kind {
   mk_all_except_test_all // use for serialized types
 };
 
-static char* method_kind_names[mk_all] = {
+static const char* method_kind_names[mk_all] = {
   "wait_any",
   "test_any",
   "wait_all",

@@ -296,3 +296,24 @@ Boost 1.46.1:
   * Convert to use `boost::string_ref`.
   * Clean up the source map implementation (used to get the correct
     location for error messages in things like templates and snippets).
+
+[heading Version 1.6.0 beta 1 - Boost 1.55 beta]
+
+* Remove nested blocks in lists from 1.6, move to 1.7.
+  (Can still nest block elements in lists though).
+* Don't break out of lists after a nested block element.
+* Check for errors when writing dependency files.
+* Improved markup for lists.
+* Make escaping templates with a punctuation identifier illegal.
+  Escaping templates with an alphanumeric identifier is still fine.
+* Fix detection of code blocks at the start of a file.
+* XML encode the contents of the `__FILENAME__` macro.
+* 1.7 changes:
+  * Make it an error to use an element in the wrong context.
+  * Error if the body of a phrase element doesn't parse.
+  * List markup in nested blocks.
+  * Allow block elements in phrase templates.
+  * Make it an error to put a paragraph break (i.e. a blank line)
+    in a phrase template.
+* Internal changes:
+  * Clean up the id manager implementation.

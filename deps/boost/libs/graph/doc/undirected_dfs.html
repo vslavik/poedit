@@ -7,7 +7,7 @@
      http://www.boost.org/LICENSE_1_0.txt)
   -->
 <Head>
-<Title>Boost Graph Library: Depth-First Search</Title>
+<Title>Boost Graph Library: Undirected Depth-First Search</Title>
 <BODY BGCOLOR="#ffffff" LINK="#0000ee" TEXT="#000000" VLINK="#551a8b" 
         ALINK="#ff0000"> 
 <IMG SRC="../../../boost.png" 
@@ -116,6 +116,7 @@ DFS-VISIT(<i>G</i>, <i>u</i>)
       <b>call</b> DFS-VISIT(<i>G</i>, <i>v</i>)
     <b>else if</b> (<i>vcolor[v] =</i> GRAY and <i>ec =</i> WHITE)
       <i>...</i>
+    <i>...</i>
   <b>end for</b>
   <i>vcolor[u] :=</i> BLACK
   <i>f_time[u] := time := time + 1</i> 
@@ -151,6 +152,8 @@ examine edge <i>(u,v)</i>
 -
 <i>(u,v)</i> is a back edge
 -
+-
+finish edge <i>(u,v)</i>
 -
 finish vertex <i>u</i>
 -
@@ -290,6 +293,9 @@ The time complexity is <i>O(E + V)</i>.
   
 <li><b><tt>vis.back_edge(e, g)</tt></b> is invoked on the back edges in
   the graph. 
+
+<li><b><tt>vis.finish_edge(e, g)</tt></b> is invoked on the back edges in 
+  the graph as well as on each tree edge after its target vertex is finished. 
 
 <li><b><tt>vis.finish_vertex(u, g)</tt></b> is invoked on a vertex after
   all of its out edges have been added to the search tree and all of

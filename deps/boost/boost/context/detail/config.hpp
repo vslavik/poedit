@@ -14,16 +14,12 @@
 # undef BOOST_CONTEXT_DECL
 #endif
 
-#if defined(BOOST_HAS_DECLSPEC)
-# if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_CONTEXT_DYN_LINK)
-#  if ! defined(BOOST_DYN_LINK)
-#   define BOOST_DYN_LINK
-#  endif
-#  if defined(BOOST_CONTEXT_SOURCE)
-#   define BOOST_CONTEXT_DECL BOOST_SYMBOL_EXPORT
-#  else 
-#   define BOOST_CONTEXT_DECL BOOST_SYMBOL_IMPORT
-#  endif
+#if (defined(BOOST_ALL_DYN_LINK) || defined(BOOST_CONTEXT_DYN_LINK) ) && ! defined(BOOST_CONTEXT_STATIC_LINK)
+# if defined(BOOST_CONTEXT_SOURCE)
+#  define BOOST_CONTEXT_DECL BOOST_SYMBOL_EXPORT
+#  define BOOST_CONTEXT_BUILD_DLL
+# else
+#  define BOOST_CONTEXT_DECL BOOST_SYMBOL_IMPORT
 # endif
 #endif
 

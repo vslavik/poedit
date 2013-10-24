@@ -37,25 +37,17 @@ double const average_earth_radius = 6372795.0;
 template <typename Point, typename LatitudePolicy>
 struct test_distance
 {
-    typedef bg::strategy::distance::haversine
-        <
-            Point,
-            Point
-        > haversine_type;
-
-    BOOST_CONCEPT_ASSERT( (bg::concept::PointDistanceStrategy<haversine_type>) );
-
-
-    typedef typename bg::strategy::distance::services::return_type<haversine_type>::type return_type;
+    typedef bg::strategy::distance::haversine<double> haversine_type;
+    typedef typename bg::strategy::distance::services::return_type<haversine_type, Point, Point>::type return_type;
 
     BOOST_CONCEPT_ASSERT
         (
-            (bg::concept::PointDistanceStrategy<haversine_type>)
+            (bg::concept::PointDistanceStrategy<haversine_type, Point, Point>)
         );
 
 
     static void test(double lon1, double lat1, double lon2, double lat2,
-                       double radius, return_type expected, double tolerance)
+                       double radius, double expected, double tolerance)
     {
         haversine_type strategy(radius);
 
@@ -117,21 +109,15 @@ void test_services()
 
     // 1: normal, calculate distance:
 
-    typedef bgsd::haversine<P1, P2, CalculationType> strategy_type;
-    typedef typename bgsd::services::return_type<strategy_type>::type return_type;
+    typedef bgsd::haversine<double, CalculationType> strategy_type;
+    typedef typename bgsd::services::return_type<strategy_type, P1, P2>::type return_type;
 
     strategy_type strategy(average_earth_radius);
     return_type result = strategy.apply(p1, p2);
     BOOST_CHECK_CLOSE(result, return_type(expected), 0.001);
 
-    // 2: "similar" to construct a similar strategy (similar but with other template-parameters) for, e.g., the reverse P2/P1
-    // 2a: similar_type:
-    typedef typename services::similar_type<strategy_type, P2, P1>::type similar_type;
-    // 2b: get_similar
-    similar_type similar = services::get_similar<strategy_type, P2, P1>::apply(strategy);
-
-    //result = similar.apply(p1, p2); // should NOT compile because p1/p2 should also be reversed here
-    result = similar.apply(p2, p1);
+    // 2: the strategy should return the same result if we reverse parameters
+    result = strategy.apply(p2, p1);
     BOOST_CHECK_CLOSE(result, return_type(expected), 0.001);
 
 
@@ -149,14 +135,14 @@ void test_services()
     // First the result of the comparable strategy
     return_type c_result = comparable.apply(p1, p2);
     // Second the comparable result of the expected distance
-    return_type c_expected = services::result_from_distance<comparable_type>::apply(comparable, expected);
+    return_type c_expected = services::result_from_distance<comparable_type, P1, P2>::apply(comparable, expected);
     // And that one should be equa.
     BOOST_CHECK_CLOSE(c_result, return_type(c_expected), 0.001);
 
     // 4: the comparable_type should have a distance_strategy_constructor as well,
     //    knowing how to compare something with a fixed distance
-    return_type c_dist_lower = services::result_from_distance<comparable_type>::apply(comparable, expected_lower);
-    return_type c_dist_higher = services::result_from_distance<comparable_type>::apply(comparable, expected_higher);
+    return_type c_dist_lower = services::result_from_distance<comparable_type, P1, P2>::apply(comparable, expected_lower);
+    return_type c_dist_higher = services::result_from_distance<comparable_type, P1, P2>::apply(comparable, expected_higher);
 
     // If this is the case:
     BOOST_CHECK(c_dist_lower < c_result && c_result < c_dist_higher);
@@ -166,8 +152,8 @@ void test_services()
     BOOST_CHECK_CLOSE(c_check, expected, 0.001);
 
     // This should also be the case
-    return_type dist_lower = services::result_from_distance<strategy_type>::apply(strategy, expected_lower);
-    return_type dist_higher = services::result_from_distance<strategy_type>::apply(strategy, expected_higher);
+    return_type dist_lower = services::result_from_distance<strategy_type, P1, P2>::apply(strategy, expected_lower);
+    return_type dist_higher = services::result_from_distance<strategy_type, P1, P2>::apply(strategy, expected_higher);
     BOOST_CHECK(dist_lower < result && result < dist_higher);
 }
 
@@ -194,8 +180,8 @@ void time_compare_s(int const n)
 template <typename P>
 void time_compare(int const n)
 {
-    time_compare_s<P, bg::strategy::distance::haversine<P> >(n);
-    time_compare_s<P, bg::strategy::distance::comparable::haversine<P> >(n);
+    time_compare_s<P, bg::strategy::distance::haversine<double> >(n);
+    time_compare_s<P, bg::strategy::distance::comparable::haversine<double> >(n);
 }
 
 #include <time.h>

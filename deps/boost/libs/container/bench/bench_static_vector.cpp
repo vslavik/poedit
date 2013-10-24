@@ -20,7 +20,6 @@
 #include <vector>
 #include <iostream>
 #include <boost/timer/timer.hpp>
-#include <set>
 #include <algorithm>
 #include <exception>
 

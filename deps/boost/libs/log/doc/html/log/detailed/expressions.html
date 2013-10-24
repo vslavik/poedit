@@ -4,7 +4,7 @@
 <title>Lambda expressions</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../detailed.html" title="Detailed features description">
 <link rel="prev" href="sink_backends.html" title="Sink backends">
 <link rel="next" href="attributes.html" title="Attributes">
@@ -47,7 +47,7 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../expressions.html#header.boost.log.expressions.attr_hpp" title="Header &lt;boost/log/expressions/attr.hpp&gt;">boost/log/expressions/attr.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-          The <code class="computeroutput"><a class="link" href="../../boost/log/expressions/attr_idp18334304.html" title="Function template attr">attr</a></code>
+          The <code class="computeroutput"><a class="link" href="../../boost/log/expressions/attr_idp25007544.html" title="Function template attr">attr</a></code>
           placeholder represents an attribute value in template expressions. Given
           the record view or a set of attribute values, the placeholder will attempt
           to extract the specified attribute value from the argument upon invocation.
@@ -512,7 +512,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../expressions.html#header.boost.log.expressions.predicates.has_attr_hpp" title="Header &lt;boost/log/expressions/predicates/has_attr.hpp&gt;">boost/log/expressions/predicates/has_attr.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The filter <code class="computeroutput"><a class="link" href="../../boost/log/expressions/has_attr_idp19959632.html" title="Function template has_attr">has_attr</a></code> checks if an
+            The filter <code class="computeroutput"><a class="link" href="../../boost/log/expressions/has_attr_idp26704136.html" title="Function template has_attr">has_attr</a></code> checks if an
             attribute value with the specified name and, optionally, type is attached
             to a log record. If no type specified to the filter, the filter returns
             <code class="computeroutput"><span class="keyword">true</span></code> if any value with the
@@ -655,7 +655,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../expressions.html#header.boost.log.expressions.predicates.is_in_range_hpp" title="Header &lt;boost/log/expressions/predicates/is_in_range.hpp&gt;">boost/log/expressions/predicates/is_in_range.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/expressions/is_in_range_idp19967104.html" title="Function template is_in_range">is_in_range</a></code> predicate
+            The <code class="computeroutput"><a class="link" href="../../boost/log/expressions/is_in_range_idp26711608.html" title="Function template is_in_range">is_in_range</a></code> predicate
             checks that the attribute value fits in the half-open range (i.e. it
             returns <code class="computeroutput"><span class="keyword">true</span></code> if the attribute
             value <code class="computeroutput"><span class="identifier">x</span></code> satisfies the
@@ -693,8 +693,8 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../expressions.html#header.boost.log.expressions.predicates.contains_hpp" title="Header &lt;boost/log/expressions/predicates/contains.hpp&gt;">boost/log/expressions/predicates/contains.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            Predicates <code class="computeroutput"><a class="link" href="../../boost/log/expressions/begins_with_idp19806800.html" title="Function template begins_with">begins_with</a></code>, <code class="computeroutput"><a class="link" href="../../boost/log/expressions/ends_with_idp19937120.html" title="Function template ends_with">ends_with</a></code>
-            and <code class="computeroutput"><a class="link" href="../../boost/log/expressions/contains_idp19926512.html" title="Function template contains">contains</a></code> provide an
+            Predicates <code class="computeroutput"><a class="link" href="../../boost/log/expressions/begins_with_idp26551304.html" title="Function template begins_with">begins_with</a></code>, <code class="computeroutput"><a class="link" href="../../boost/log/expressions/ends_with_idp26681624.html" title="Function template ends_with">ends_with</a></code>
+            and <code class="computeroutput"><a class="link" href="../../boost/log/expressions/contains_idp26671016.html" title="Function template contains">contains</a></code> provide an
             easy way of matching string attribute values. As follows from their names,
             the functions construct filters that return <code class="computeroutput"><span class="keyword">true</span></code>
             if an attribute value begins with, ends with or contains the specified
@@ -725,7 +725,7 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../other_libraries_support_layer.html#header.boost.log.support.spirit_classic_hpp" title="Header &lt;boost/log/support/spirit_classic.hpp&gt;">boost/log/support/spirit_classic.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/expressions/matches_idp19979600.html" title="Function template matches">matches</a></code> function creates
+            The <code class="computeroutput"><a class="link" href="../../boost/log/expressions/matches_idp26724104.html" title="Function template matches">matches</a></code> function creates
             a filter that apples a regular expression or a parser to a string attribute
             value. The regular expression can be provided by <a href="http://www.boost.org/doc/libs/release/libs/regex/index.html" target="_top">Boost.Regex</a>
             or <a href="http://www.boost.org/doc/libs/release/doc/html/xpressive.html" target="_top">Boost.Xpressive</a>.
@@ -770,7 +770,7 @@
             for different channels. The mapping between channel names and severity
             thresholds can be filled in <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span></code>
             style by using the subscript operator or by calling <code class="computeroutput"><span class="identifier">add</span></code>
-            method on the filter itself (the <code class="computeroutput"><a class="link" href="../../boost/log/expressions/channel_severi_idp19839648.html" title="Class template channel_severity_filter_actor">channel_severity_filter_actor</a></code>
+            method on the filter itself (the <code class="computeroutput"><a class="link" href="../../boost/log/expressions/channel_severi_idp26584152.html" title="Class template channel_severity_filter_actor">channel_severity_filter_actor</a></code>
             instance). Let's see an example:
           </p>
 <p>
@@ -836,14 +836,14 @@
             the complete code</a>.
           </p>
 <p>
-            The filter for the console sink is composed from the <code class="computeroutput"><a class="link" href="../../boost/log/expressions/channel_severi_idp19839648.html" title="Class template channel_severity_filter_actor">channel_severity_filter_actor</a></code>
+            The filter for the console sink is composed from the <code class="computeroutput"><a class="link" href="../../boost/log/expressions/channel_severi_idp26584152.html" title="Class template channel_severity_filter_actor">channel_severity_filter_actor</a></code>
             filter and a general severity level check. This general check will be
             used when log records do not have a channel attribute or the channel
-            name is not one of those specified in <code class="computeroutput"><a class="link" href="../../boost/log/expressions/channel_severi_idp19839648.html" title="Class template channel_severity_filter_actor">channel_severity_filter_actor</a></code>
+            name is not one of those specified in <code class="computeroutput"><a class="link" href="../../boost/log/expressions/channel_severi_idp26584152.html" title="Class template channel_severity_filter_actor">channel_severity_filter_actor</a></code>
             initialization. It should be noted that it is possible to set the default
             result of the threshold filter that will be used in this case; the default
             result can be set by the <code class="computeroutput"><span class="identifier">set_default</span></code>
-            method. The <code class="computeroutput"><a class="link" href="../../boost/log/expressions/channel_severi_idp19839648.html" title="Class template channel_severity_filter_actor">channel_severity_filter_actor</a></code>
+            method. The <code class="computeroutput"><a class="link" href="../../boost/log/expressions/channel_severi_idp26584152.html" title="Class template channel_severity_filter_actor">channel_severity_filter_actor</a></code>
             filter is set up to limit record severity levels for channels "general",
             "network" and "gui" - all records in these channels
             with levels below the specified thresholds will not pass the filter and
@@ -856,7 +856,7 @@
             against thresholds. By default the predicate will use <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">less</span></code>
             equivalent for channel name ordering and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">greater_equal</span></code>
             equivalent to compare severity levels. It is possible to customize the
-            ordering predicates. Consult the reference of the <code class="computeroutput"><a class="link" href="../../boost/log/expressions/channel_severi_idp19839648.html" title="Class template channel_severity_filter_actor">channel_severity_filter_actor</a></code>
+            ordering predicates. Consult the reference of the <code class="computeroutput"><a class="link" href="../../boost/log/expressions/channel_severi_idp26584152.html" title="Class template channel_severity_filter_actor">channel_severity_filter_actor</a></code>
             class and <code class="computeroutput"><a class="link" href="../../boost/log/expressions/channel_severity_filter.html" title="Function channel_severity_filter">channel_severity_filter</a></code>
             generator to see the relevant template parameters.
           </p>
@@ -972,7 +972,7 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../other_libraries_support_layer.html#header.boost.log.support.date_time_hpp" title="Header &lt;boost/log/support/date_time.hpp&gt;">boost/log/support/date_time.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The library provides the <code class="computeroutput"><a class="link" href="../../boost/log/expressions/format_date_ti_idp19645328.html" title="Function template format_date_time">format_date_time</a></code> formatter
+            The library provides the <code class="computeroutput"><a class="link" href="../../boost/log/expressions/format_date_ti_idp26389832.html" title="Function template format_date_time">format_date_time</a></code> formatter
             dedicated to date and time-related attribute value types. The function
             accepts the attribute value name and the format string compatible with
             <a href="http://www.boost.org/doc/libs/release/doc/html/date_time.html" target="_top">Boost.DateTime</a>.
@@ -1546,7 +1546,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../expressions.html#header.boost.log.expressions.formatters.named_scope_hpp" title="Header &lt;boost/log/expressions/formatters/named_scope.hpp&gt;">boost/log/expressions/formatters/named_scope.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The formatter <code class="computeroutput"><a class="link" href="../../boost/log/expressions/format_named_s_idp19707536.html" title="Function template format_named_scope">format_named_scope</a></code> is
+            The formatter <code class="computeroutput"><a class="link" href="../../boost/log/expressions/format_named_s_idp26452040.html" title="Function template format_named_scope">format_named_scope</a></code> is
             intended to add support for flexible formatting of the <a class="link" href="attributes.html#log.detailed.attributes.named_scope" title="Named scopes">named
             scope</a> attribute values. The basic usage is quite straightforward
             and its result is similar to what <a class="link" href="expressions.html#log.detailed.expressions.attr" title="Generic attribute placeholder"><code class="computeroutput"><span class="identifier">attr</span></code></a> provides:
@@ -1692,7 +1692,7 @@
 <span class="identifier">sink</span><span class="special">-&gt;</span><span class="identifier">set_formatter</span>
 <span class="special">(</span>
     <span class="identifier">expr</span><span class="special">::</span><span class="identifier">stream</span>
-        <span class="special">&lt;&lt;</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">named_scope</span><span class="special">(</span>
+        <span class="special">&lt;&lt;</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">format_named_scope</span><span class="special">(</span>
             <span class="string">"Scopes"</span><span class="special">,</span>
             <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">format</span> <span class="special">=</span> <span class="string">"%n"</span><span class="special">,</span>
             <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">iteration</span> <span class="special">=</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">reverse</span><span class="special">,</span>
@@ -1704,7 +1704,7 @@
 <span class="identifier">sink</span><span class="special">-&gt;</span><span class="identifier">set_formatter</span>
 <span class="special">(</span>
     <span class="identifier">expr</span><span class="special">::</span><span class="identifier">stream</span>
-        <span class="special">&lt;&lt;</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">named_scope</span><span class="special">(</span>
+        <span class="special">&lt;&lt;</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">format_named_scope</span><span class="special">(</span>
             <span class="string">"Scopes"</span><span class="special">,</span>
             <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">format</span> <span class="special">=</span> <span class="string">"%n"</span><span class="special">,</span>
             <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">iteration</span> <span class="special">=</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">forward</span><span class="special">,</span>
@@ -1716,7 +1716,7 @@
 <span class="identifier">sink</span><span class="special">-&gt;</span><span class="identifier">set_formatter</span>
 <span class="special">(</span>
     <span class="identifier">expr</span><span class="special">::</span><span class="identifier">stream</span>
-        <span class="special">&lt;&lt;</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">named_scope</span><span class="special">(</span>
+        <span class="special">&lt;&lt;</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">format_named_scope</span><span class="special">(</span>
             <span class="string">"Scopes"</span><span class="special">,</span>
             <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">format</span> <span class="special">=</span> <span class="string">"%n"</span><span class="special">,</span>
             <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">iteration</span> <span class="special">=</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">reverse</span><span class="special">,</span>

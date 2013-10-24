@@ -123,7 +123,6 @@ boman_et_al_graph_coloring
     process_group_type;
   typedef typename process_group_type::process_id_type process_id_type;
   typedef typename graph_traits<DistributedGraph>::vertex_descriptor Vertex;
-  typedef typename graph_traits<DistributedGraph>::edge_descriptor Edge;
   typedef typename graph_traits<DistributedGraph>::vertices_size_type 
     vertices_size_type;
   typedef typename property_traits<ColorMap>::value_type color_type;

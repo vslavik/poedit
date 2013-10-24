@@ -20,10 +20,10 @@
 #include <boost/assert.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/log/detail/config.hpp>
-#include <boost/log/utility/explicit_operator_bool.hpp>
+#include <boost/utility/explicit_operator_bool.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -140,7 +140,7 @@ public:
      *
      * \return \c true if <tt>*this</tt> was constructed with an attribute name, \c false otherwise
      */
-    BOOST_LOG_EXPLICIT_OPERATOR_BOOL()
+    BOOST_EXPLICIT_OPERATOR_BOOL()
     /*!
      * Checks if the object was default-constructed
      *

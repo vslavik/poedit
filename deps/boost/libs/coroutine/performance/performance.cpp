@@ -27,25 +27,24 @@
 
 namespace coro = boost::coroutines;
 
-typedef coro::coroutine< void() >   coro_t;
+# define COUNTER BOOST_PP_LIMIT_MAG
 
-#define COUNTER BOOST_PP_LIMIT_MAG
-
-#define CALL_COROUTINE(z,n,unused) \
+# define CALL_COROUTINE(z,n,unused) \
     c();
 
-void fn( coro_t::caller_type & c)
+#ifdef BOOST_COROUTINES_UNIDIRECT
+void fn( boost::coroutines::coroutine< void >::push_type & c)
 { while ( true) c(); }
 
-#ifdef BOOST_CONTEXT_CYCLE
+# ifdef BOOST_CONTEXT_CYCLE
 cycle_t test_cycles( cycle_t ov, coro::flag_fpu_t preserve_fpu)
 {
-#if defined(BOOST_USE_SEGMENTED_STACKS)
-    coro_t c( fn, coro::attributes( preserve_fpu) );
-#else
+#  if defined(BOOST_USE_SEGMENTED_STACKS)
+    boost::coroutines::coroutine< void >::pull_type c( fn, coro::attributes( preserve_fpu) );
+#  else
     coro::simple_stack_allocator< 8 * 1024 * 1024, 64 * 1024, 8 * 1024 > alloc;
-    coro_t c( fn, coro::attributes( preserve_fpu), alloc);
-#endif
+    boost::coroutines::coroutine< void >::pull_type c( fn, coro::attributes( preserve_fpu), alloc);
+#  endif
 
     // cache warum-up
 BOOST_PP_REPEAT_FROM_TO( 0, COUNTER, CALL_COROUTINE, ~)
@@ -61,17 +60,17 @@ BOOST_PP_REPEAT_FROM_TO( 0, COUNTER, CALL_COROUTINE, ~)
 
     return total;
 }
-#endif
+# endif
 
-#if _POSIX_C_SOURCE >= 199309L
+# if _POSIX_C_SOURCE >= 199309L
 zeit_t test_zeit( zeit_t ov, coro::flag_fpu_t preserve_fpu)
 {
-#if defined(BOOST_USE_SEGMENTED_STACKS)
-    coro_t c( fn, coro::attributes( preserve_fpu) );
-#else
+#  if defined(BOOST_USE_SEGMENTED_STACKS)
+    boost::coroutines::coroutine< void >::pull_type c( fn, coro::attributes( preserve_fpu) );
+#  else
     coro::simple_stack_allocator< 8 * 1024 * 1024, 64 * 1024, 8 * 1024 > alloc;
-    coro_t c( fn, coro::attributes( preserve_fpu), alloc);
-#endif
+    boost::coroutines::coroutine< void >::pull_type c( fn, coro::attributes( preserve_fpu), alloc);
+#  endif
 
     // cache warum-up
 BOOST_PP_REPEAT_FROM_TO( 0, BOOST_PP_LIMIT_MAG, CALL_COROUTINE, ~)
@@ -87,6 +86,64 @@ BOOST_PP_REPEAT_FROM_TO( 0, BOOST_PP_LIMIT_MAG, CALL_COROUTINE, ~)
 
     return total;
 }
+# endif
+#else
+typedef coro::coroutine< void() >   coro_t;
+
+void fn( coro_t::caller_type & c)
+{ while ( true) c(); }
+
+# ifdef BOOST_CONTEXT_CYCLE
+cycle_t test_cycles( cycle_t ov, coro::flag_fpu_t preserve_fpu)
+{
+#  if defined(BOOST_USE_SEGMENTED_STACKS)
+    coro_t c( fn, coro::attributes( preserve_fpu) );
+#  else
+    coro::simple_stack_allocator< 8 * 1024 * 1024, 64 * 1024, 8 * 1024 > alloc;
+    coro_t c( fn, coro::attributes( preserve_fpu), alloc);
+#  endif
+
+    // cache warum-up
+BOOST_PP_REPEAT_FROM_TO( 0, COUNTER, CALL_COROUTINE, ~)
+
+    cycle_t start( cycles() );
+BOOST_PP_REPEAT_FROM_TO( 0, COUNTER, CALL_COROUTINE, ~)
+    cycle_t total( cycles() - start);
+
+    // we have two jumps and two measuremt-overheads
+    total -= ov; // overhead of measurement
+    total /= COUNTER; // per call
+    total /= 2; // 2x jump_to c1->c2 && c2->c1
+
+    return total;
+}
+# endif
+
+# if _POSIX_C_SOURCE >= 199309L
+zeit_t test_zeit( zeit_t ov, coro::flag_fpu_t preserve_fpu)
+{
+#  if defined(BOOST_USE_SEGMENTED_STACKS)
+    coro_t c( fn, coro::attributes( preserve_fpu) );
+#  else
+    coro::simple_stack_allocator< 8 * 1024 * 1024, 64 * 1024, 8 * 1024 > alloc;
+    coro_t c( fn, coro::attributes( preserve_fpu), alloc);
+#  endif
+
+    // cache warum-up
+BOOST_PP_REPEAT_FROM_TO( 0, BOOST_PP_LIMIT_MAG, CALL_COROUTINE, ~)
+
+    zeit_t start( zeit() );
+BOOST_PP_REPEAT_FROM_TO( 0, BOOST_PP_LIMIT_MAG, CALL_COROUTINE, ~)
+    zeit_t total( zeit() - start);
+
+    // we have two jumps and two measuremt-overheads
+    total -= ov; // overhead of measurement
+    total /= BOOST_PP_LIMIT_MAG; // per call
+    total /= 2; // 2x jump_to c1->c2 && c2->c1
+
+    return total;
+}
+# endif
 #endif
 
 int main( int argc, char * argv[])

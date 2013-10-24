@@ -93,10 +93,10 @@ inline RealType pdf(const students_t_distribution<RealType, Policy>& dist, const
       return error_result;
 
    RealType result;
-   if (boost::math::isinf(x))
+   if ((boost::math::isinf)(x))
    { // +infinity.
      normal_distribution<RealType, Policy> n(0, 1); 
-     RealType result = pdf(n, x);
+     result = pdf(n, x);
      return result;
    }
    RealType limit = policies::get_epsilon<RealType, Policy>();
@@ -144,7 +144,7 @@ inline RealType cdf(const students_t_distribution<RealType, Policy>& dist, const
    { // Special case with exact result.
      return static_cast<RealType>(0.5);
    }
-   if (boost::math::isinf(x))
+   if ((boost::math::isinf)(x))
    { // +infinity.
      normal_distribution<RealType, Policy> n(0, 1); 
      RealType result = cdf(n, x);
@@ -376,7 +376,7 @@ inline RealType variance(const students_t_distribution<RealType, Policy>& dist)
       df, Policy());
     return std::numeric_limits<RealType>::quiet_NaN(); // Undefined.
   }
-  if (boost::math::isinf(df))
+  if ((boost::math::isinf)(df))
   { // +infinity.
     return 1;
   }
@@ -422,7 +422,7 @@ inline RealType kurtosis(const students_t_distribution<RealType, Policy>& dist)
         df, Policy());
         return std::numeric_limits<RealType>::quiet_NaN(); // Undefined.
    }
-   if (boost::math::isinf(df))
+   if ((boost::math::isinf)(df))
    { // +infinity.
      return 3;
    }
@@ -456,7 +456,7 @@ inline RealType kurtosis_excess(const students_t_distribution<RealType, Policy>&
       df, Policy());
      return std::numeric_limits<RealType>::quiet_NaN(); // Undefined.
    }
-   if (boost::math::isinf(df))
+   if ((boost::math::isinf)(df))
    { // +infinity.
      return 0;
    }

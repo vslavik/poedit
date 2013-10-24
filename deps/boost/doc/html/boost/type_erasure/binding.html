@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.binding_hpp" title="Header &lt;boost/type_erasure/binding.hpp&gt;">
-<link rel="prev" href="any_cast_idp87475936.html" title="Function any_cast">
+<link rel="prev" href="any_cast_idp101098872.html" title="Function any_cast">
 <link rel="next" href="binding_of.html" title="Function template binding_of">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="any_cast_idp87475936.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.binding_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="binding_of.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="any_cast_idp101098872.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.binding_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="binding_of.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.type_erasure.binding"></a><div class="titlepage"></div>
@@ -35,29 +35,29 @@
 <span class="keyword">class</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="binding.html#boost.type_erasure.bindingconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="binding.html#idp95448000-bb"><span class="identifier">binding</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Map<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="binding.html#idp95449344-bb"><span class="identifier">binding</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Map</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Map<span class="special">&gt;</span> <a class="link" href="binding.html#idp57880736-bb"><span class="identifier">binding</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="static_binding.html" title="Struct template static_binding">static_binding</a><span class="special">&lt;</span> <span class="identifier">Map</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="binding.html#idp20259800-bb"><span class="identifier">binding</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Map<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="binding.html#idp20261176-bb"><span class="identifier">binding</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Map</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Map<span class="special">&gt;</span> <a class="link" href="binding.html#idp106801416-bb"><span class="identifier">binding</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="static_binding.html" title="Struct template static_binding">static_binding</a><span class="special">&lt;</span> <span class="identifier">Map</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Concept2<span class="special">,</span> <span class="keyword">typename</span> Map<span class="special">&gt;</span> 
-    <a class="link" href="binding.html#idp86256144-bb"><span class="identifier">binding</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a><span class="special">&lt;</span> <span class="identifier">Concept2</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Map</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="binding.html#idp36693192-bb"><span class="identifier">binding</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a><span class="special">&lt;</span> <span class="identifier">Concept2</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Map</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Concept2<span class="special">,</span> <span class="keyword">typename</span> Map<span class="special">&gt;</span> 
-    <a class="link" href="binding.html#idp54634608-bb"><span class="identifier">binding</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a><span class="special">&lt;</span> <span class="identifier">Concept2</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="static_binding.html" title="Struct template static_binding">static_binding</a><span class="special">&lt;</span> <span class="identifier">Map</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="binding.html#idp100019944-bb"><span class="identifier">binding</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a><span class="special">&lt;</span> <span class="identifier">Concept2</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="static_binding.html" title="Struct template static_binding">static_binding</a><span class="special">&lt;</span> <span class="identifier">Map</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="binding.html#idp85521904-bb">friend functions</a></span>
-  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="binding.html#idp85522112-bb"><span class="keyword">operator</span><span class="special">==</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="binding.html#idp95445392-bb"><span class="keyword">operator</span><span class="special">!=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="binding.html#idp97048200-bb">friend functions</a></span>
+  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="binding.html#idp97048408-bb"><span class="keyword">operator</span><span class="special">==</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="binding.html#idp20257224-bb"><span class="keyword">operator</span><span class="special">!=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp188262480"></a><h2>Description</h2>
+<a name="idp232160648"></a><h2>Description</h2>
 <p>Stores the binding of a <code class="computeroutput">Concept</code> to a set of actual types. <code class="computeroutput">Concept</code> is interpreted in the same way as with <a class="link" href="any.html" title="Class template any">any</a>. </p>
 <div class="refsect2">
-<a name="idp188264016"></a><h3>
+<a name="idp232162184"></a><h3>
 <a name="boost.type_erasure.bindingconstruct-copy-destruct"></a><code class="computeroutput">binding</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp95448000-bb"></a><span class="identifier">binding</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp20259800-bb"></a><span class="identifier">binding</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>
 
 </p>
@@ -79,7 +79,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Map<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp95449344-bb"></a><span class="identifier">binding</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Map</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Map<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp20261176-bb"></a><span class="identifier">binding</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Map</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
 <p>
 
 </p>
@@ -101,7 +101,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Map<span class="special">&gt;</span> <a name="idp57880736-bb"></a><span class="identifier">binding</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="static_binding.html" title="Struct template static_binding">static_binding</a><span class="special">&lt;</span> <span class="identifier">Map</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Map<span class="special">&gt;</span> <a name="idp106801416-bb"></a><span class="identifier">binding</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="static_binding.html" title="Struct template static_binding">static_binding</a><span class="special">&lt;</span> <span class="identifier">Map</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
 <p>
 
 </p>
@@ -124,7 +124,7 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Concept2<span class="special">,</span> <span class="keyword">typename</span> Map<span class="special">&gt;</span> 
-  <a name="idp86256144-bb"></a><span class="identifier">binding</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a><span class="special">&lt;</span> <span class="identifier">Concept2</span> <span class="special">&gt;</span> <span class="special">&amp;</span> other<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Map</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
+  <a name="idp36693192-bb"></a><span class="identifier">binding</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a><span class="special">&lt;</span> <span class="identifier">Concept2</span> <span class="special">&gt;</span> <span class="special">&amp;</span> other<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Map</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Converts from another set of bindings.</p>
 <p>
 
@@ -148,7 +148,7 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Concept2<span class="special">,</span> <span class="keyword">typename</span> Map<span class="special">&gt;</span> 
-  <a name="idp54634608-bb"></a><span class="identifier">binding</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a><span class="special">&lt;</span> <span class="identifier">Concept2</span> <span class="special">&gt;</span> <span class="special">&amp;</span> other<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="static_binding.html" title="Struct template static_binding">static_binding</a><span class="special">&lt;</span> <span class="identifier">Map</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
+  <a name="idp100019944-bb"></a><span class="identifier">binding</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a><span class="special">&lt;</span> <span class="identifier">Concept2</span> <span class="special">&gt;</span> <span class="special">&amp;</span> other<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="static_binding.html" title="Struct template static_binding">static_binding</a><span class="special">&lt;</span> <span class="identifier">Map</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Converts from another set of bindings.</p>
 <p>
 
@@ -173,11 +173,11 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp188300944"></a><h3>
-<a name="idp85521904-bb"></a><code class="computeroutput">binding</code> friend functions</h3>
+<a name="idp232199112"></a><h3>
+<a name="idp97048200-bb"></a><code class="computeroutput">binding</code> friend functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idp85522112-bb"></a><span class="keyword">operator</span><span class="special">==</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span> lhs<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idp97048408-bb"></a><span class="keyword">operator</span><span class="special">==</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span> lhs<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p>
 
 </p>
@@ -199,7 +199,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idp95445392-bb"></a><span class="keyword">operator</span><span class="special">!=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span> lhs<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idp20257224-bb"></a><span class="keyword">operator</span><span class="special">!=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span> lhs<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p>
 
 </p>
@@ -234,7 +234,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="any_cast_idp87475936.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.binding_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="binding_of.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="any_cast_idp101098872.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.binding_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="binding_of.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

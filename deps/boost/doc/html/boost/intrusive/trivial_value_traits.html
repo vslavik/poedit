@@ -41,33 +41,33 @@
   <span class="keyword">typedef</span> <span class="identifier">node_ptr</span>                    <a name="boost.intrusive.trivial_value_traits.pointer"></a><span class="identifier">pointer</span><span class="special">;</span>       
   <span class="keyword">typedef</span> <span class="identifier">const_node_ptr</span>              <a name="boost.intrusive.trivial_value_traits.const_pointer"></a><span class="identifier">const_pointer</span><span class="special">;</span> 
 
-  <span class="comment">// <a class="link" href="trivial_value_traits.html#idp30771936-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">node_ptr</span> <a class="link" href="trivial_value_traits.html#idp30772144-bb"><span class="identifier">to_node_ptr</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">const_node_ptr</span> <a class="link" href="trivial_value_traits.html#idp30772944-bb"><span class="identifier">to_node_ptr</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">pointer</span> <span class="special">&amp;</span> <a class="link" href="trivial_value_traits.html#idp30773776-bb"><span class="identifier">to_value_ptr</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">node_ptr</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">const_pointer</span> <span class="special">&amp;</span> <a class="link" href="trivial_value_traits.html#idp30774608-bb"><span class="identifier">to_value_ptr</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">const_node_ptr</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="trivial_value_traits.html#idp39286376-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">node_ptr</span> <a class="link" href="trivial_value_traits.html#idp39286584-bb"><span class="identifier">to_node_ptr</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">const_node_ptr</span> <a class="link" href="trivial_value_traits.html#idp39287384-bb"><span class="identifier">to_node_ptr</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">pointer</span> <span class="special">&amp;</span> <a class="link" href="trivial_value_traits.html#idp39288216-bb"><span class="identifier">to_value_ptr</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">node_ptr</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">const_pointer</span> <span class="special">&amp;</span> <a class="link" href="trivial_value_traits.html#idp39289048-bb"><span class="identifier">to_value_ptr</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">const_node_ptr</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
   <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">link_mode_type</span> <span class="identifier">link_mode</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp112057520"></a><h2>Description</h2>
+<a name="idp155139000"></a><h2>Description</h2>
 <p>This value traits template is used to create value traits from user defined node traits where value_traits::value_type and node_traits::node should be equal </p>
 <div class="refsect2">
-<a name="idp112058016"></a><h3>
-<a name="idp30771936-bb"></a><code class="computeroutput">trivial_value_traits</code> public static functions</h3>
+<a name="idp155139496"></a><h3>
+<a name="idp39286376-bb"></a><code class="computeroutput">trivial_value_traits</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">node_ptr</span> <a name="idp30772144-bb"></a><span class="identifier">to_node_ptr</span><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;</span> value<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">const_node_ptr</span> <a name="idp30772944-bb"></a><span class="identifier">to_node_ptr</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span> <span class="special">&amp;</span> value<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">pointer</span> <span class="special">&amp;</span> <a name="idp30773776-bb"></a><span class="identifier">to_value_ptr</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">node_ptr</span> <span class="special">&amp;</span> n<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">const_pointer</span> <span class="special">&amp;</span> <a name="idp30774608-bb"></a><span class="identifier">to_value_ptr</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">const_node_ptr</span> <span class="special">&amp;</span> n<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">node_ptr</span> <a name="idp39286584-bb"></a><span class="identifier">to_node_ptr</span><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;</span> value<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">const_node_ptr</span> <a name="idp39287384-bb"></a><span class="identifier">to_node_ptr</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span> <span class="special">&amp;</span> value<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">pointer</span> <span class="special">&amp;</span> <a name="idp39288216-bb"></a><span class="identifier">to_value_ptr</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">node_ptr</span> <span class="special">&amp;</span> n<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">const_pointer</span> <span class="special">&amp;</span> <a name="idp39289048-bb"></a><span class="identifier">to_value_ptr</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">const_node_ptr</span> <span class="special">&amp;</span> n<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2013 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

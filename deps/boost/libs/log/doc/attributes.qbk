@@ -296,7 +296,7 @@ Another good use case is attaching the scope stack information to an exception. 
 
 [note In order this code to compile, the __boost_exception__ support header has to be included.]
 
-[note We do not inject the [class_attributes_named_scope] attribute into the exception. Since scope stacks are maintained globally, throwing an exception will cause stack unwinding and, as a result, will truncate the global stack. Instead we create a copy of the scope stack bu calling [funcref boost::log::current_scope `current_scope`] at the throw site. This copy will be kept intact even if the global stack instance changes during the stack unwinding.]
+[note We do not inject the [class_attributes_named_scope] attribute into the exception. Since scope stacks are maintained globally, throwing an exception will cause stack unwinding and, as a result, will truncate the global stack. Instead we create a copy of the scope stack by calling [funcref boost::log::current_scope `current_scope`] at the throw site. This copy will be kept intact even if the global stack instance changes during the stack unwinding.]
 
 [endsect]
 

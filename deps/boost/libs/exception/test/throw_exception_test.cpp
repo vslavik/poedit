@@ -35,8 +35,8 @@ boost_throw_exception_test()
     catch(
     boost::exception & x )
         {
-        char const * const * file=boost::get_error_info<boost::throw_function>(x);
-        char const * const * function=boost::get_error_info<boost::throw_file>(x);
+        char const * const * function=boost::get_error_info<boost::throw_function>(x);
+        char const * const * file=boost::get_error_info<boost::throw_file>(x);
         int const * line=boost::get_error_info<boost::throw_line>(x);
         BOOST_TEST( file && *file );
         BOOST_TEST( function && *function );
@@ -55,8 +55,8 @@ boost_throw_exception_test()
     catch(
     boost::exception & x )
         {
-        char const * const * file=boost::get_error_info<boost::throw_function>(x);
-        char const * const * function=boost::get_error_info<boost::throw_file>(x);
+        char const * const * function=boost::get_error_info<boost::throw_function>(x);
+        char const * const * file=boost::get_error_info<boost::throw_file>(x);
         int const * line=boost::get_error_info<boost::throw_line>(x);
         int const * data=boost::get_error_info<test_data>(x);
         BOOST_TEST( file && *file );

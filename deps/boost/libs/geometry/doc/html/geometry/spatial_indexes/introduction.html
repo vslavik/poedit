@@ -105,7 +105,7 @@
               </th>
 <th>
                 <p>
-                  Packing algorithm (trunk)
+                  Packing algorithm
                 </p>
               </th>
 </tr></thead>
@@ -214,7 +214,7 @@
               </td>
 <td>
                 <p>
-                  0.52
+                  0.52s
                 </p>
               </td>
 </tr>
@@ -303,6 +303,9 @@
             three different balancing algorithms - linear, quadratic or rstar,
           </li>
 <li class="listitem">
+            creation using packing algorithm,
+          </li>
+<li class="listitem">
             parameters (including maximal and minimal number of elements) may be
             passed as compile- or run-time parameters, in compile-time version nodes
             elements are stored in static-size containers,
@@ -310,6 +313,9 @@
 <li class="listitem">
             advanced queries - e.g. search for 5 nearest Values to some point and
             intersecting some Geometry but not within the other one,
+          </li>
+<li class="listitem">
+            iterative queries - by use of iterators,
           </li>
 <li class="listitem">
             C++11 conformant: move semantics, stateful allocators,
@@ -323,8 +329,8 @@
 </ul></div>
 <h5>
 <a name="geometry.spatial_indexes.introduction.h2"></a>
-        <span class="phrase"><a name="geometry.spatial_indexes.introduction.planned_and_experimental_features"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.planned_and_experimental_features">Planned
-        and experimental features</a>
+        <span class="phrase"><a name="geometry.spatial_indexes.introduction.planned_features"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.planned_features">Planned
+        features</a>
       </h5>
 <p>
         Below you can find features that will (or probably will) be added in the
@@ -332,17 +338,14 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-            rstar optimization (planned for release in Boost 1.55),
-          </li>
-<li class="listitem">
-            bulk loading (planned for release in Boost 1.55),
-          </li>
-<li class="listitem">
-            iterative queries - query iterators / type-erased query iterators (experimental),
-          </li>
-<li class="listitem">
             path/ray query predicate - search for Values along Segment or LineString,
-            closest to the starting point (experimental),
+            closest to the starting point,
+          </li>
+<li class="listitem">
+            user-defined distance calculation in nearest() predicate,
+          </li>
+<li class="listitem">
+            serialization,
           </li>
 <li class="listitem">
             persistent storage.

@@ -31,7 +31,7 @@
 #include <boost/log/utility/functional/bind.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -139,7 +139,7 @@ public:
         return strm;
     }
 
-    BOOST_LOG_DELETED_FUNCTION(attribute_output_terminal())
+    BOOST_DELETED_FUNCTION(attribute_output_terminal())
 };
 
 } // namespace aux

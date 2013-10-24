@@ -48,10 +48,6 @@
 #define BOOST_LCAST_NO_WCHAR_T
 #endif
 
-#if (defined(BOOST_LCAST_HAS_INT128) && !defined(__GNUC__)) || GCC_VERSION > 40700
-#define BOOST_LCAST_HAS_INT128
-#endif
-
 // Test all 65536 values if true:
 bool const lcast_test_small_integral_types_completely = false;
 
@@ -75,7 +71,7 @@ void test_conversion_from_to_uintmax_t();
 void test_conversion_from_to_longlong();
 void test_conversion_from_to_ulonglong();
 #endif
-#ifdef BOOST_LCAST_HAS_INT128
+#ifdef BOOST_HAS_INT128
 void test_conversion_from_to_int128();
 void test_conversion_from_to_uint128();
 #endif
@@ -99,7 +95,7 @@ unit_test::test_suite *init_unit_test_suite(int, char *[])
     suite->add(BOOST_TEST_CASE(&test_conversion_from_to_longlong));
     suite->add(BOOST_TEST_CASE(&test_conversion_from_to_ulonglong));
 #endif
-#ifdef BOOST_LCAST_HAS_INT128
+#ifdef BOOST_HAS_INT128
     suite->add(BOOST_TEST_CASE(&test_conversion_from_to_int128));
     suite->add(BOOST_TEST_CASE(&test_conversion_from_to_uint128));
 #endif
@@ -444,8 +440,8 @@ void test_conversion_from_to_integral_minimal()
     // test_conversion_from_to_integral_for_locale
 
     // Overflow test case from David W. Birdsall
-    std::string must_owerflow_str = "160000000000000000000";
-    std::string must_owerflow_negative_str = "-160000000000000000000";
+    std::string must_owerflow_str =             (sizeof(T) < 16 ?  "160000000000000000000" :  "1600000000000000000000000000000000000000");
+    std::string must_owerflow_negative_str =    (sizeof(T) < 16 ? "-160000000000000000000" : "-1600000000000000000000000000000000000000");
     for (int i = 0; i < 15; ++i) {
         BOOST_CHECK_THROW(lexical_cast<T>(must_owerflow_str), bad_lexical_cast);
         BOOST_CHECK_THROW(lexical_cast<T>(must_owerflow_negative_str), bad_lexical_cast);
@@ -557,15 +553,34 @@ void test_conversion_from_to_ulonglong()
 #endif
 
 
-#ifdef BOOST_LCAST_HAS_INT128
+#ifdef BOOST_HAS_INT128
+
+template <bool Specialized, class T>
+struct test_if_specialized {
+    static void test() {}
+};
+
+template <class T>
+struct test_if_specialized<true, T> {
+    static void test() {
+        test_conversion_from_to_integral_minimal<T>();
+    }
+};
+
 void test_conversion_from_to_int128()
 {
-    test_conversion_from_to_integral_minimal<boost::int128_type>();
+    test_if_specialized<
+        std::numeric_limits<boost::int128_type>::is_specialized, 
+        boost::int128_type
+    >::test();
 }
 
 void test_conversion_from_to_uint128()
 {
-    test_conversion_from_to_integral_minimal<boost::uint128_type>();
+    test_if_specialized<
+        std::numeric_limits<boost::int128_type>::is_specialized, 
+        boost::uint128_type
+    >::test();
 }
 #endif
 
@@ -602,7 +617,7 @@ void test_integral_conversions_on_min_max()
     test_integral_conversions_on_min_max_impl<__int64>();
 #endif
 
-#ifdef BOOST_LCAST_HAS_INT128
+#ifdef BOOST_HAS_INT128
     test_integral_conversions_on_min_max_impl<boost::int128_type>();
 #endif
 #endif

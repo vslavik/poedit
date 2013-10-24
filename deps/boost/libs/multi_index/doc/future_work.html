@@ -42,7 +42,6 @@ principle driving the current internal design of <code>multi_index_container</co
   <li><a href="#constraints">Constraints</a></li>
   <li><a href="#user_defined_indices">User-defined indices</a></li>
   <li><a href="#indexed_maps">Indexed maps</a></li>
-  <li><a href="#move_semantics">Move semantics</a></li>
 </ul>
 
 <h2><a name="ranked_indices">Ranked indices</a></h2>
@@ -187,31 +186,6 @@ a careful study when designing the interface of a potential
 indexed map.
 </p>
 
-<h2><a name="move_semantics">Move semantics</a></h2>
-
-<p>
-Andrei Alexandrescu introduced a technique for simulating move
-constructors called Mojo (see his article in C/C++ User Journal
-<a href="http://www.cuj.com/documents/s=8246/cujcexp2102alexandr/">
-"Generic&lt;Programming>: Move Constructors"</a>.) Move semantics
-alleviates the computational load involved in the creation and copying
-of temporary objects, specially for heavy classes as
-<code>multi_index_container</code>s are. David Abrahams and Gary Powell provide
-an alternative implementation of move semantics in their paper
-<a href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/papers/2004/n1610.html">
-"Clarification of Initialization of Class Objects by rvalues"</a> for
-the C++ Evolution Working Group.
-</p>
-
-<p>
-Adding move semantics to <code>multi_index_container</code> is particularly
-beneficial when the container is used as an internal building block in other
-libraries (vg. relational database frameworks), enabling the efficient
-development of functions returning <code>multi_index_container</code>s. Without support
-for move semantics, this scheme is impractical and less elegant syntaxes
-should be resorted to.
-</p>
-
 <hr>
 
 <div class="prev_link"><a href="tests.html"><img src="prev.gif" alt="tests" border="0"><br>
@@ -226,9 +200,9 @@ Release notes
 
 <br>
 
-<p>Revised July 5th 2007</p>
+<p>Revised July 6th 2013</p>
 
-<p>&copy; Copyright 2003-2007 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

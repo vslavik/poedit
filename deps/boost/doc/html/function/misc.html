@@ -26,14 +26,14 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="function.misc"></a>Miscellaneous Notes</h2></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="misc.html#idp60512544">Boost.Function vs. Function Pointers</a></span></dt>
-<dt><span class="section"><a href="misc.html#idp60516496">Performance</a></span></dt>
-<dt><span class="section"><a href="misc.html#idp60520912">Combatting virtual function "bloat"</a></span></dt>
-<dt><span class="section"><a href="misc.html#idp60522432">Acknowledgements</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp99672040">Boost.Function vs. Function Pointers</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp99675992">Performance</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp99680408">Combatting virtual function "bloat"</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp99681928">Acknowledgements</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp60512544"></a>Boost.Function vs. Function Pointers</h3></div></div></div>
+<a name="idp99672040"></a>Boost.Function vs. Function Pointers</h3></div></div></div>
 <p>Boost.Function has several advantages over function pointers, namely:
 
 </p>
@@ -56,37 +56,37 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp60516496"></a>Performance</h3></div></div></div>
+<a name="idp99675992"></a>Performance</h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="misc.html#idp60516832">Function object wrapper size</a></span></dt>
-<dt><span class="section"><a href="misc.html#idp60518224">Copying efficiency</a></span></dt>
-<dt><span class="section"><a href="misc.html#idp60519952">Invocation efficiency</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp99676328">Function object wrapper size</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp99677720">Copying efficiency</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp99679448">Invocation efficiency</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp60516832"></a>Function object wrapper size</h4></div></div></div>
+<a name="idp99676328"></a>Function object wrapper size</h4></div></div></div>
 <p> Function object wrappers will be the size of a struct containing a member function pointer and two data pointers. The actual size can vary significantly depending on the underlying platform; on 32-bit Mac OS X with GCC, this amounts to 16 bytes, while it is 32 bytes Windows with Visual C++. Additionally, the function object target may be allocated on the heap, if it cannot be placed into the small-object buffer in the <code class="computeroutput">boost::function</code> object.</p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp60518224"></a>Copying efficiency</h4></div></div></div>
+<a name="idp99677720"></a>Copying efficiency</h4></div></div></div>
 <p> Copying function object wrappers may require allocating memory for a copy of the function object target. The default allocator may be replaced with a faster custom allocator or one may choose to allow the function object wrappers to only store function object targets by reference (using <code class="computeroutput">ref</code>) if the cost of this cloning becomes prohibitive. Small function objects can be stored within the <code class="computeroutput">boost::function</code> object itself, improving copying efficiency.</p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp60519952"></a>Invocation efficiency</h4></div></div></div>
+<a name="idp99679448"></a>Invocation efficiency</h4></div></div></div>
 <p> With a properly inlining compiler, an invocation of a function object requires one call through a function pointer. If the call is to a free function pointer, an additional call must be made to that function pointer (unless the compiler has very powerful interprocedural analysis).</p>
 </div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp60520912"></a>Combatting virtual function "bloat"</h3></div></div></div>
+<a name="idp99680408"></a>Combatting virtual function "bloat"</h3></div></div></div>
 <p> The use of virtual functions tends to cause 'code bloat' on many compilers. When a class contains a virtual function, it is necessary to emit an additional function that classifies the type of the object. It has been our experience that these auxiliary functions increase the size of the executable significantly when many <code class="computeroutput">boost::function</code> objects are used. </p>
 <p> In Boost.Function, an alternative but equivalent approach was taken using free functions instead of virtual functions. The Boost.Function object essentially holds two pointers to make a valid target call: a void pointer to the function object it contains and a void pointer to an "invoker" that can call the function object, given the function pointer. This invoker function performs the argument and return value conversions Boost.Function provides. A third pointer points to a free function called the "manager", which handles the cloning and destruction of function objects. The scheme is typesafe because the only functions that actually handle the function object, the invoker and the manager, are instantiated given the type of the function object, so they can safely cast the incoming void pointer (the function object pointer) to the appropriate type.</p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp60522432"></a>Acknowledgements</h3></div></div></div>
+<a name="idp99681928"></a>Acknowledgements</h3></div></div></div>
 <p> Many people were involved in the construction of this
     library. William Kempf, Jesse Jones and Karl Nelson were all
     extremely helpful in isolating an interface and scope for the

@@ -38,9 +38,7 @@ int main()
   }
   {
       boost::promise<void> p;
-      std::cout << __LINE__ << std::endl;
       boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      std::cout << __LINE__ << std::endl;
       BOOST_TEST(f.valid());
   }
 

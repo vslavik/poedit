@@ -34,11 +34,11 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> From<span class="special">,</span> <span class="keyword">typename</span> To<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="conversion_helper.html" title="Struct template conversion_helper">conversion_helper</a> <span class="special">{</span>
 
-  <span class="comment">// <a class="link" href="conversion_helper.html#idp148593296-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">To</span> <a class="link" href="conversion_helper.html#idp148593504-bb"><span class="identifier">convert</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">From</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="conversion_helper.html#idp161098808-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">To</span> <a class="link" href="conversion_helper.html#idp161099016-bb"><span class="identifier">convert</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">From</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp194255728"></a><h2>Description</h2>
+<a name="idp238170056"></a><h2>Description</h2>
 <p>Template for defining conversions between quantities. This template should be specialized for every quantity that allows conversions. For example, if you have a two units called pair and dozen you would write </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
 <span class="keyword">namespace</span> <span class="identifier">units</span> <span class="special">{</span>
@@ -55,9 +55,9 @@
 </pre>
 <p>In most cases, the predefined specializations for <code class="computeroutput">unit</code> and <code class="computeroutput">absolute</code> should be sufficient, so users should rarely need to use this. </p>
 <div class="refsect2">
-<a name="idp194280208"></a><h3>
-<a name="idp148593296-bb"></a><code class="computeroutput">conversion_helper</code> public static functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">To</span> <a name="idp148593504-bb"></a><span class="identifier">convert</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">From</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp238194536"></a><h3>
+<a name="idp161098808-bb"></a><code class="computeroutput">conversion_helper</code> public static functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">To</span> <a name="idp161099016-bb"></a><span class="identifier">convert</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">From</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>

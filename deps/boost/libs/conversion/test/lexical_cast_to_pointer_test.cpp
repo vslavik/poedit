@@ -17,5 +17,7 @@
 int test_main(int, char*[])
 {
     boost::lexical_cast<char*>("Hello");
+    BOOST_CHECK(false); // suppressing warning about 'boost::unit_test::{anonymous}::unit_test_log' defined but not used
     return 0;
 }
+

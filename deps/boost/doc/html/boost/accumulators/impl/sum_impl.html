@@ -34,27 +34,27 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sample<span class="special">,</span> <span class="keyword">typename</span> Tag <span class="special">=</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">sample</span><span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="sum_impl.html" title="Struct template sum_impl">sum_impl</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">accumulator_base</span> <span class="special">{</span>
   <span class="comment">// <a class="link" href="sum_impl.html#boost.accumulators.impl.sum_implconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a class="link" href="sum_impl.html#idp27043680-bb"><span class="identifier">sum_impl</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a class="link" href="sum_impl.html#idp33626856-bb"><span class="identifier">sum_impl</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="sum_impl.html#idp27041456-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="sum_impl.html#idp27041664-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">result_type</span> <a class="link" href="sum_impl.html#idp27042880-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="sum_impl.html#idp33624632-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="sum_impl.html#idp33624840-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">result_type</span> <a class="link" href="sum_impl.html#idp33626056-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp18675776"></a><h2>Description</h2>
+<a name="idp57639848"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp18675984"></a><h3>
+<a name="idp57640056"></a><h3>
 <a name="boost.accumulators.impl.sum_implconstruct-copy-destruct"></a><code class="computeroutput">sum_impl</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a name="idp27043680-bb"></a><span class="identifier">sum_impl</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a name="idp33626856-bb"></a><span class="identifier">sum_impl</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp18681200"></a><h3>
-<a name="idp27041456-bb"></a><code class="computeroutput">sum_impl</code> public member functions</h3>
+<a name="idp57645208"></a><h3>
+<a name="idp33624632-bb"></a><code class="computeroutput">sum_impl</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp27041664-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">result_type</span> <a name="idp27042880-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp33624840-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">result_type</span> <a name="idp33626056-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

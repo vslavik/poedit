@@ -24,8 +24,6 @@
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/sync/scoped_lock.hpp>
 #include <boost/interprocess/detail/os_thread_functions.hpp>
-#include <boost/thread/thread.hpp>
-#include <boost/thread/xtime.hpp>
 
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <algorithm>
@@ -61,30 +59,18 @@ inline bool in_range(const boost::posix_time::ptime& xt, int secs=1)
     return (xt > min) && (max > xt);
 }
 
-boost::xtime xsecs(int secs)
-{
-   boost::xtime ret;
-   #if BOOST_VERSION >= 105100 //TIME_UTC is a macro in C11, breaking change in Boost.Thread
-   boost::xtime_get(&ret, boost::TIME_UTC_);
-   #else
-   boost::xtime_get(&ret, boost::TIME_UTC);
-   #endif
-   ret.sec += secs;
-   return ret;
-}
-
 template <typename P>
 class thread_adapter
 {
    public:
    thread_adapter(void (*func)(void*, P &), void* param1, P &param2)
-      : _func(func), _param1(param1) ,_param2(param2){ }
-   void operator()() const { _func(_param1, _param2); }
+      : func_(func), param1_(param1) ,param2_(param2){ }
+   void operator()() const { func_(param1_, param2_); }
 
    private:
-   void (*_func)(void*, P &);
-   void* _param1;
-   P& _param2;
+   void (*func_)(void*, P &);
+   void* param1_;
+   P& param2_;
 };
 
 template <typename P>

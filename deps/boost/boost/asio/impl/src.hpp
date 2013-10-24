@@ -23,6 +23,7 @@
 #include <boost/asio/impl/handler_alloc_hook.ipp>
 #include <boost/asio/impl/io_service.ipp>
 #include <boost/asio/impl/serial_port_base.ipp>
+#include <boost/asio/detail/impl/buffer_sequence_adapter.ipp>
 #include <boost/asio/detail/impl/descriptor_ops.ipp>
 #include <boost/asio/detail/impl/dev_poll_reactor.ipp>
 #include <boost/asio/detail/impl/epoll_reactor.ipp>
@@ -58,6 +59,8 @@
 #include <boost/asio/detail/impl/win_static_mutex.ipp>
 #include <boost/asio/detail/impl/win_thread.ipp>
 #include <boost/asio/detail/impl/win_tss_ptr.ipp>
+#include <boost/asio/detail/impl/winrt_ssocket_service_base.ipp>
+#include <boost/asio/detail/impl/winrt_timer_scheduler.ipp>
 #include <boost/asio/detail/impl/winsock_init.ipp>
 #include <boost/asio/generic/detail/impl/endpoint.ipp>
 #include <boost/asio/ip/impl/address.ipp>

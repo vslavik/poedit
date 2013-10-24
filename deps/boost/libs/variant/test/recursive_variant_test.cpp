@@ -3,14 +3,43 @@
 // See http://www.boost.org for updates, documentation, and revision history.
 //-----------------------------------------------------------------------------
 //
-// Copyright (c) 2003
-// Eric Friedman, Itay Maman
+// Copyright (c) 2003 Eric Friedman, Itay Maman
+// Copyright (c) 2013 Antony Polukhin
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include "boost/test/minimal.hpp"
+
+// This file is used in two test cases:
+//
+// 1) recursive_variant_test.cpp that tests recursive usage of variant
+//
+// 2) variant_noexcept_test that tests Boost.Variant ability to compile 
+// and work with disabled exceptions
+
+#ifdef BOOST_NO_EXCEPTIONS
+// `boost/test/minimal.hpp` cannot work with exceptions disabled,
+// so we need the following workarounds for that case:
+namespace boost {
+    int exit_success = 0;
+}
+
+int test_main(int , char* []);
+
+int main( int argc, char* argv[] )
+{
+    return test_main(argc, argv);
+}
+
+#include <stdlib.h>
+#define BOOST_CHECK(exp) if (!(exp)) exit(EXIT_FAILURE)
+
+#else // BOOST_NO_EXCEPTIONS
+#   include "boost/test/minimal.hpp"
+#endif // BOOST_NO_EXCEPTIONS
+
+
 #include "boost/variant.hpp"
 #include "boost/mpl/vector.hpp"
 #include "boost/mpl/copy.hpp"

@@ -78,10 +78,8 @@ template<typename Graph>
 void 
 test_circle_layout(Graph*, typename graph_traits<Graph>::vertices_size_type n)
 {
-  typedef typename graph_traits<Graph>::vertex_descriptor vertex;
   typedef typename graph_traits<Graph>::vertex_iterator vertex_iterator;
   typedef typename graph_traits<Graph>::vertices_size_type vertices_size_type;
-  typedef typename graph_traits<Graph>::edges_size_type edges_size_type;
 
   Graph g(n);
 

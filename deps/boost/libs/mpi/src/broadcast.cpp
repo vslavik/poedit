@@ -10,6 +10,7 @@
 #include <boost/mpi/skeleton_and_content.hpp>
 #include <boost/mpi/detail/point_to_point.hpp>
 #include <boost/mpi/environment.hpp>
+#include <cassert>
 
 namespace boost { namespace mpi {
 

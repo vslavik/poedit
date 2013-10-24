@@ -51,6 +51,7 @@ namespace any_tests // test suite
     void test_move_assignment_from_value();
     void test_copy_construction_from_value();
     void test_copy_assignment_from_value();
+    void test_cast_to_rv();
     
 
     const test_case test_cases[] =
@@ -63,7 +64,8 @@ namespace any_tests // test suite
         { "move construction from value",         test_move_construction_from_value },
         { "move assignment from value",           test_move_assignment_from_value  },
         { "copy construction from value",         test_copy_construction_from_value },
-        { "copy assignment from value",           test_copy_assignment_from_value  }
+        { "copy assignment from value",           test_copy_assignment_from_value },
+        { "casting to rvalue reference",          test_cast_to_rv }
     };
 
     const test_case_iterator begin = test_cases;
@@ -272,6 +274,41 @@ namespace any_tests // test definitions
             move_copy_conting_class::moves_count, 0u, 
             "checking move counts");
     }
+
+    void test_cast_to_rv()
+    {
+        move_copy_conting_class value0;
+        any value;
+        value = value0;
+        move_copy_conting_class::copy_count = 0; 
+        move_copy_conting_class::moves_count = 0;
+
+        move_copy_conting_class value1 = any_cast<move_copy_conting_class&&>(value);
+
+        check_equal(
+            move_copy_conting_class::copy_count, 0u, 
+            "checking copy counts");
+        check_equal(
+            move_copy_conting_class::moves_count, 1u, 
+            "checking move counts");
+        (void)value1;
+/* Following code shall fail to compile
+        const any cvalue = value0;
+        move_copy_conting_class::copy_count = 0; 
+        move_copy_conting_class::moves_count = 0;
+
+        move_copy_conting_class value2 = any_cast<move_copy_conting_class&&>(cvalue);
+
+        check_equal(
+            move_copy_conting_class::copy_count, 1u, 
+            "checking copy counts");
+        check_equal(
+            move_copy_conting_class::moves_count, 0u, 
+            "checking move counts");
+        (void)value2;
+*/
+    }
+    
 }
 
 #endif

@@ -6,7 +6,7 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #
 
-project test
+project quickbook/test
     : requirements
         <toolset>msvc:<debug-symbols>off
     ;
@@ -68,19 +68,27 @@ test-suite quickbook.test :
     [ quickbook-test link-1_1 ]
     [ quickbook-test link-1_6 ]
     [ quickbook-test link-1_7 ]
+    [ quickbook-error-test link-1_7-fail ]
+    [ quickbook-error-test link-1_7-fail2 ]
     [ quickbook-test list_test-1_5 ]
     [ quickbook-test list_test-1_6 ]
+    [ quickbook-error-test list_test-1_6-fail ]
+    [ quickbook-test list_test-1_7 ]
+    [ quickbook-error-test list_test-1_7-fail1 ]
     [ quickbook-test macro-1_5 ]
     [ quickbook-test macro-1_6 ]
     [ quickbook-error-test mismatched_brackets-1_1-fail ]
     [ quickbook-test mismatched_brackets1-1_1 ]
     [ quickbook-test mismatched_brackets2-1_1 ]
+    [ quickbook-test mismatched_brackets3-1_1 ]
     [ quickbook-test newline-1_1 ]
     [ quickbook-test para_test-1_5 ]
     [ quickbook-error-test post_process-fail ]
     [ quickbook-test preformatted-1_1 ]
     [ quickbook-test preformatted-1_6 ]
     [ quickbook-test role-1_6 ]
+    [ quickbook-test role-1_7 ]
+    [ quickbook-error-test role-1_7-fail ]
     [ quickbook-test section-1_4 ]
     [ quickbook-test section-1_5-unclosed ]
     [ quickbook-test section-1_5 ]
@@ -90,6 +98,7 @@ test-suite quickbook.test :
     [ quickbook-test table-1_3 ]
     [ quickbook-test table-1_5 ]
     [ quickbook-test table-1_6 ]
+    [ quickbook-test table-1_7 ]
     [ quickbook-error-test template_arguments1-1_1-fail ]
     [ quickbook-error-test template_arguments2-1_1-fail ]
     [ quickbook-error-test template_arguments3-1_1-fail ]
@@ -100,6 +109,10 @@ test-suite quickbook.test :
     [ quickbook-test templates-1_3 ]
     [ quickbook-test templates-1_4 ]
     [ quickbook-test templates-1_5 ]
+    [ quickbook-test templates-1_6 ]
+    [ quickbook-error-test templates-1_6-fail1 ]
+    [ quickbook-test templates-1_7 ]
+    [ quickbook-error-test templates-1_7-fail1 ]
     [ quickbook-test unicode_escape-1_5 ]
     [ quickbook-test unmatched_element-1_5 ]
     [ quickbook-test unmatched_element-1_6 ]

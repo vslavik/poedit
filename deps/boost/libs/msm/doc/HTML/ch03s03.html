@@ -83,7 +83,8 @@ Row  &lt; Paused  , open_close ,  Open     , stop_and_open             , none   
         ... 
     } 
 }; // same for Empty_Exit
-struct Empty : public msm::front::euml::func_state&lt;Empty_Entry,Empty_Exit&gt;{};</pre><p>This also means that you can, like in the transition table, write entry /
+struct Empty_tag {};
+struct Empty : public msm::front::euml::func_state&lt;Empty_tag,Empty_Entry,Empty_Exit&gt;{};</pre><p>This also means that you can, like in the transition table, write entry /
                         exit actions made of more complicated action combinations. The previous
                         example can therefore <a class="link" href="examples/SimpleWithFunctors2.cpp" target="_top">be
                             rewritten</a>.</p><p>Usually, however, one will probably use the standard state definition as

@@ -171,6 +171,30 @@ struct rational_adaptor
    }
    rational_type& data() { return m_value; }
    const rational_type& data()const { return m_value; }
+
+   template <class Archive>
+   void serialize(Archive& ar, const mpl::true_&)
+   {
+      // Saving
+      integer_type n(m_value.numerator()), d(m_value.denominator());
+      ar & n;
+      ar & d;
+   }
+   template <class Archive>
+   void serialize(Archive& ar, const mpl::false_&)
+   {
+      // Loading
+      integer_type n, d;
+      ar & n;
+      ar & d;
+      m_value.assign(n, d);
+   }
+   template <class Archive>
+   void serialize(Archive& ar, const unsigned int /*version*/)
+   {
+      typedef typename Archive::is_saving tag;
+      serialize(ar, tag());
+   }
 private:
    rational_type m_value;
 };

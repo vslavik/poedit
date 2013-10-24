@@ -6,7 +6,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/config for the most recent version.//
-//  Revision $Id: config_test.cpp 84462 2013-05-24 17:07:06Z johnmaddock $
+//  Revision $Id: config_test.cpp 85088 2013-07-20 17:17:10Z andysem $
 //
 
 // Test file for config setup
@@ -101,6 +101,11 @@ namespace boost_no_cwchar = empty_boost;
 #include "boost_no_cwctype.ipp"
 #else
 namespace boost_no_cwctype = empty_boost;
+#endif
+#ifndef BOOST_NO_CXX11_ALIGNAS
+#include "boost_no_cxx11_alignas.ipp"
+#else
+namespace boost_no_cxx11_alignas = empty_boost;
 #endif
 #ifndef BOOST_NO_CXX11_ALLOCATOR
 #include "boost_no_cxx11_allocator.ipp"
@@ -201,6 +206,16 @@ namespace boost_no_cxx11_hdr_unordered_map = empty_boost;
 #include "boost_no_cxx11_hdr_unordered_set.ipp"
 #else
 namespace boost_no_cxx11_hdr_unordered_set = empty_boost;
+#endif
+#ifndef BOOST_NO_CXX11_INLINE_NAMESPACES
+#include "boost_no_cxx11_inline_namespaces.ipp"
+#else
+namespace boost_no_cxx11_inline_namespaces = empty_boost;
+#endif
+#ifndef BOOST_NO_CXX11_TRAILING_RESULT_TYPES
+#include "boost_no_cxx11_trailing_result_types.ipp"
+#else
+namespace boost_no_cxx11_trailing_result_types = empty_boost;
 #endif
 #ifndef BOOST_NO_CXX11_NUMERIC_LIMITS
 #include "boost_no_cxx11_numeric_limits.ipp"
@@ -1231,6 +1246,11 @@ int main( int, char *[] )
       std::cerr << "Failed test for BOOST_NO_CWCTYPE at: " << __FILE__ << ":" << __LINE__ << std::endl;
       ++error_count;
    }
+   if(0 != boost_no_cxx11_alignas::test())
+   {
+      std::cerr << "Failed test for BOOST_NO_CXX11_ALIGNAS at: " << __FILE__ << ":" << __LINE__ << std::endl;
+      ++error_count;
+   }
    if(0 != boost_no_cxx11_allocator::test())
    {
       std::cerr << "Failed test for BOOST_NO_CXX11_ALLOCATOR at: " << __FILE__ << ":" << __LINE__ << std::endl;
@@ -1331,6 +1351,11 @@ int main( int, char *[] )
       std::cerr << "Failed test for BOOST_NO_CXX11_HDR_UNORDERED_SET at: " << __FILE__ << ":" << __LINE__ << std::endl;
       ++error_count;
    }
+   if(0 != boost_no_cxx11_inline_namespaces::test())
+   {
+      std::cerr << "Failed test for BOOST_NO_CXX11_INLINE_NAMESPACES at: " << __FILE__ << ":" << __LINE__ << std::endl;
+      ++error_count;
+   }
    if(0 != boost_no_cxx11_numeric_limits::test())
    {
       std::cerr << "Failed test for BOOST_NO_CXX11_NUMERIC_LIMITS at: " << __FILE__ << ":" << __LINE__ << std::endl;
@@ -1339,6 +1364,11 @@ int main( int, char *[] )
    if(0 != boost_no_cxx11_smart_ptr::test())
    {
       std::cerr << "Failed test for BOOST_NO_CXX11_SMART_PTR at: " << __FILE__ << ":" << __LINE__ << std::endl;
+      ++error_count;
+   }
+   if(0 != boost_no_cxx11_trailing_result_types::test())
+   {
+      std::cerr << "Failed test for BOOST_NO_CXX11_TRAILING_RESULT_TYPES at: " << __FILE__ << ":" << __LINE__ << std::endl;
       ++error_count;
    }
    if(0 != boost_no_cxx11_user_defined_literals::test())

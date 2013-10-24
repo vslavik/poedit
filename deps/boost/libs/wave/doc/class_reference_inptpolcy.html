@@ -71,8 +71,8 @@
                 }
                 
                 iter_ctx.instring = <span class="keyword">std::string</span>(
-                    <span class="keyword">std::istreambuf_iterator</span><char>(instream.rdbuf()),
-                    <span class="keyword">std::istreambuf_iterator</span><char>());
+                    <span class="keyword">std::istreambuf_iterator</span><char>&lt;char&gt;(instream.rdbuf()),
+                    <span class="keyword">std::istreambuf_iterator</span><char>&lt;char&gt;());
 
                 iter_ctx.first = iterator_type(iter_ctx.instring.begin(), 
                     iter_ctx.instring.end(), 

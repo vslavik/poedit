@@ -1592,6 +1592,11 @@ inline typename enable_if_c<is_signed<I>::value && ((sizeof(I) <= sizeof(long)))
    mpz_lcm_ui(result.data(), a.data(), std::abs(b));
 }
 
+inline void eval_integer_sqrt(gmp_int& s, gmp_int& r, const gmp_int& x)
+{
+   mpz_sqrtrem(s.data(), r.data(), x.data());
+}
+
 inline unsigned eval_lsb(const gmp_int& val)
 {
    int c = eval_get_sign(val);
@@ -1604,6 +1609,20 @@ inline unsigned eval_lsb(const gmp_int& val)
       BOOST_THROW_EXCEPTION(std::range_error("Testing individual bits in negative values is not supported - results are undefined."));
    }
    return mpz_scan1(val.data(), 0);
+}
+
+inline unsigned eval_msb(const gmp_int& val)
+{
+   int c = eval_get_sign(val);
+   if(c == 0)
+   {
+      BOOST_THROW_EXCEPTION(std::range_error("No bits were set in the operand."));
+   }
+   if(c < 0)
+   {
+      BOOST_THROW_EXCEPTION(std::range_error("Testing individual bits in negative values is not supported - results are undefined."));
+   }
+   return mpz_sizeinbase(val.data(), 2) - 1;
 }
 
 inline bool eval_bit_test(const gmp_int& val, unsigned index)
@@ -2268,7 +2287,6 @@ public:
       {
          value.first = true;
          value.second = 1;
-         mpf_div_2exp(value.second.backend().data(), value.second.backend().data(), digits);
       }
       return value.second;
    }
@@ -2290,7 +2308,7 @@ public:
    BOOST_STATIC_CONSTEXPR bool is_modulo = false;
    BOOST_STATIC_CONSTEXPR bool traps = true;
    BOOST_STATIC_CONSTEXPR bool tinyness_before = false;
-   BOOST_STATIC_CONSTEXPR float_round_style round_style = round_to_nearest;
+   BOOST_STATIC_CONSTEXPR float_round_style round_style = round_indeterminate;
 
 private:
    struct data_initializer
@@ -2346,7 +2364,7 @@ public:
    BOOST_STATIC_CONSTEXPR bool is_modulo = false;
    BOOST_STATIC_CONSTEXPR bool traps = false;
    BOOST_STATIC_CONSTEXPR bool tinyness_before = false;
-   BOOST_STATIC_CONSTEXPR float_round_style round_style = round_toward_zero;
+   BOOST_STATIC_CONSTEXPR float_round_style round_style = round_indeterminate;
 };
 
 #ifndef BOOST_NO_INCLASS_MEMBER_INITIALIZATION

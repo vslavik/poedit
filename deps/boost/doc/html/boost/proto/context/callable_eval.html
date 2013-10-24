@@ -45,25 +45,25 @@
     <span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span>
    <a name="boost.proto.context.callable_eval.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="callable_eval.html#idp127300160-bb">public member functions</a></span>
-  <span class="identifier">result_type</span> <a class="link" href="callable_eval.html#idp127300448-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Expr</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Context</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="callable_eval.html#idp69371864-bb">public member functions</a></span>
+  <span class="identifier">result_type</span> <a class="link" href="callable_eval.html#idp69372152-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Expr</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Context</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp148461248"></a><h2>Description</h2>
+<a name="idp191966504"></a><h2>Description</h2>
 <p>
               <code class="computeroutput">proto::context::callable_eval&lt;&gt;</code> requires that
               <code class="computeroutput">Context</code> is a <a class="link" href="../../../PolymorphicFunctionObject.html" title="Concept PolymorphicFunctionObject">PolymorphicFunctionObject</a>
               that can be invoked with <code class="computeroutput">Expr</code>'s tag and children as
               expressions, as follows:
               </p>
-<pre class="programlisting"><span class="identifier">context</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">Expr</span><span class="special">::</span><span class="identifier">proto_tag</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <a class="link" href="../child_c_idp65227264.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">expr</span><span class="special">)</span><span class="special">,</span> <span class="special">...</span> <a class="link" href="../child_c_idp65227264.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">expr</span><span class="special">)</span><span class="special">)</span></pre>
+<pre class="programlisting"><span class="identifier">context</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">Expr</span><span class="special">::</span><span class="identifier">proto_tag</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <a class="link" href="../child_c_idp68619976.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">expr</span><span class="special">)</span><span class="special">,</span> <span class="special">...</span> <a class="link" href="../child_c_idp68619976.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">expr</span><span class="special">)</span><span class="special">)</span></pre>
 <p>
             </p>
 <div class="refsect2">
-<a name="idp148470976"></a><h3>
-<a name="idp127300160-bb"></a><code class="computeroutput">callable_eval</code> public member functions</h3>
+<a name="idp191976232"></a><h3>
+<a name="idp69371864-bb"></a><code class="computeroutput">callable_eval</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp127300448-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Expr</span> <span class="special">&amp;</span> expr<span class="special">,</span> <span class="identifier">Context</span> <span class="special">&amp;</span> context<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp69372152-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Expr</span> <span class="special">&amp;</span> expr<span class="special">,</span> <span class="identifier">Context</span> <span class="special">&amp;</span> context<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -94,8 +94,8 @@
 <td><p>
                   <code class="computeroutput">
                     context(typename Expr::proto_tag(),
-                    <a class="link" href="../child_c_idp65227264.html" title="Function child_c">proto::child_c</a>&lt;0&gt;(expr),...
-                    <a class="link" href="../child_c_idp65227264.html" title="Function child_c">proto::child_c</a>&lt;N&gt;(expr))
+                    <a class="link" href="../child_c_idp68619976.html" title="Function child_c">proto::child_c</a>&lt;0&gt;(expr),...
+                    <a class="link" href="../child_c_idp68619976.html" title="Function child_c">proto::child_c</a>&lt;N&gt;(expr))
                   </code>
                 </p></td>
 </tr>

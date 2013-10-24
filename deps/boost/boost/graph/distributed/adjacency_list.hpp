@@ -2501,9 +2501,6 @@ namespace boost {
     std::pair<edge_descriptor, bool> result
       = this->add_local_edge(property, directedS());
 
-    typedef detail::parallel::stored_in_edge<local_edge_descriptor>
-      stored_edge;
-
     if (result.second) {
       if (target.owner == self.processor()) {
         // Edge is local, so add the new edge to the list
@@ -3045,8 +3042,6 @@ namespace boost {
               typename PBGL_DISTRIB_ADJLIST_TYPE::vertex_descriptor v,
               PBGL_DISTRIB_ADJLIST_TYPE& g)
   {
-    typedef typename PBGL_DISTRIB_ADJLIST_TYPE
-                       ::vertex_descriptor vertex_descriptor;
     typedef typename PBGL_DISTRIB_ADJLIST_TYPE
                        ::edge_descriptor edge_descriptor;
     std::pair<edge_descriptor, bool> the_edge = edge(u, v, g);
@@ -3777,7 +3772,6 @@ namespace boost {
   template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
   void synchronize(const PBGL_DISTRIB_ADJLIST_TYPE& g)
   {
-    typedef PBGL_DISTRIB_ADJLIST_TYPE graph_type;
     synchronize(g.process_group());
   }
 

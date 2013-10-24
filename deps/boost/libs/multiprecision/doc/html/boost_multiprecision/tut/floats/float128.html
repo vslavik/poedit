@@ -39,7 +39,7 @@
 </pre>
 <p>
           The <code class="computeroutput"><span class="identifier">float128</span></code> number type
-          is a very thin wrapper around GCC's <code class="computeroutput"><span class="identifier">__float128</span></code>
+          is a very thin wrapper around GCC's <code class="computeroutput"><a class="link" href="float128.html" title="float128">float128</a></code>
           or Intel's <code class="computeroutput"><span class="identifier">_Quad</span></code> data types
           and provides an real-number type that is a drop-in replacement for the
           native C++ floating-point types, but with a 113 bit mantissa, and compatible
@@ -48,18 +48,18 @@
 <p>
           All the usual standard library and <code class="computeroutput"><span class="identifier">numeric_limits</span></code>
           support are available, performance should be equivalent to the underlying
-          native types: for example the LINPACK benchmarks for GCC's <code class="computeroutput"><span class="identifier">__float128</span></code> and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">::</span><span class="identifier">float128</span></code>
-          both achieved 5.6 MFLOPS<a href="#ftn.boost_multiprecision.tut.floats.float128.f0" class="footnote" name="boost_multiprecision.tut.floats.float128.f0"><sup class="footnote">[3]</sup></a>.
+          native types: for example the LINPACK benchmarks for GCC's <code class="computeroutput"><a class="link" href="float128.html" title="float128">float128</a></code>
+          and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">::</span><span class="identifier">float128</span></code> both achieved 5.6 MFLOPS<a href="#ftn.boost_multiprecision.tut.floats.float128.f0" class="footnote" name="boost_multiprecision.tut.floats.float128.f0"><sup class="footnote">[3]</sup></a>.
         </p>
 <p>
           As well as the usual conversions from arithmetic and string types, instances
           of <code class="computeroutput"><span class="identifier">float128</span></code> are copy constructible
-          and assignable from GCC's <code class="computeroutput"><span class="identifier">__float128</span></code>
+          and assignable from GCC's <code class="computeroutput"><a class="link" href="float128.html" title="float128">float128</a></code>
           and Intel's <code class="computeroutput"><span class="identifier">_Quad</span></code> data
           types.
         </p>
 <p>
-          It's also possible to access the underlying <code class="computeroutput"><span class="identifier">__float128</span></code>
+          It's also possible to access the underlying <code class="computeroutput"><a class="link" href="float128.html" title="float128">float128</a></code>
           or <code class="computeroutput"><span class="identifier">_Quad</span></code> type via the
           <code class="computeroutput"><span class="identifier">data</span><span class="special">()</span></code>
           member function of <code class="computeroutput"><span class="identifier">float128_backend</span></code>.
@@ -80,8 +80,10 @@
 <li class="listitem">
               It is not possible to round-trip objects of this type to and from a
               string and get back exactly the same value when compiled with Intel's
-              C++ compiler: this is a current limitation of our code. Round tripping
-              when using GCC is possible.
+              C++ compiler and using <code class="computeroutput"><span class="identifier">_Quad</span></code>
+              as the underlying type: this is a current limitation of our code. Round
+              tripping when using <code class="computeroutput"><a class="link" href="float128.html" title="float128">float128</a></code>
+              as the underlying type is possible (both for GCC and Intel).
             </li>
 <li class="listitem">
               Conversion from a string results in a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">runtime_error</span></code>
@@ -94,6 +96,15 @@
 <li class="listitem">
               Type <code class="computeroutput"><span class="identifier">float128</span></code> can be
               used as a literal type (constexpr support).
+            </li>
+<li class="listitem">
+              When using the Intel compiler, the underlying type defaults to <code class="computeroutput"><a class="link" href="float128.html" title="float128">float128</a></code>
+              if it's available and <code class="computeroutput"><span class="identifier">_Quad</span></code>
+              if not. You can override the default by defining either <code class="computeroutput"><span class="identifier">BOOST_MP_USE_FLOAT128</span></code> or <code class="computeroutput"><span class="identifier">BOOST_MP_USE_QUAD</span></code>.
+            </li>
+<li class="listitem">
+              When the underlying type is Intel's <code class="computeroutput"><span class="identifier">_Quad</span></code>
+              type, the code must be compiled with the compiler option <code class="computeroutput"><span class="special">-</span><span class="identifier">Qoption</span><span class="special">,</span><span class="identifier">cpp</span><span class="special">,--</span><span class="identifier">extended_float_type</span></code>.
             </li>
 </ul></div>
 <h6>

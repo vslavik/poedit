@@ -13,6 +13,8 @@ import doxygen ;
 import quickbook ;
 path-constant here : . ;
 
+
+
 doxygen autodoc
    :
       [ glob ../../../boost/intrusive/*.hpp ]
@@ -23,27 +25,33 @@ doxygen autodoc
    <doxygen:param>EXTRACT_PRIVATE=NO
    <doxygen:param>ENABLE_PREPROCESSING=YES
    <doxygen:param>MACRO_EXPANSION=YES
-   <doxygen:param>"PREDEFINED=BOOST_INTRUSIVE_DOXYGEN_INVOKED \\
-                  "list_impl=list" \\
-                  "slist_impl=slist" \\
-                  "set_impl=set" \\
-                  "multiset_impl=multiset" \\
-                  "rbtree_impl=rbtree" \\
-                  "unordered_set_impl=unordered_set" \\
-                  "unordered_multiset_impl=unordered_multiset" \\
-                  "hashtable_impl=hashtable" \\
-                  "splay_set_impl=splay_set" \\
-                  "splay_multiset_impl=splay_multiset" \\
-                  "splaytree_impl=splaytree" \\
-                  "sg_set_impl=sg_set" \\
-                  "sg_multiset_impl=sg_multiset" \\
-                  "sgtree_impl=sgtree" \\
-                  "avl_set_impl=avl_set" \\
-                  "avl_multiset_impl=avl_multiset" \\
-                  "avltree_impl=avltree" \\
-                  "treap_set_impl=treap_set" \\
-                  "treap_multiset_impl=treap_multiset" \\
-                  "treap_impl=treap""
+   <doxygen:param>"PREDEFINED=\"BOOST_INTRUSIVE_DOXYGEN_INVOKED\" \\
+                  \"BOOST_INTRUSIVE_IMPDEF(T)=implementation_defined\" \\
+                  \"BOOST_INTRUSIVE_SEEDOC(T)=see_documentation\" \\
+                  \"BOOST_RV_REF(T)=T &&\" \\
+                  \"BOOST_RV_REF_BEG=\" \\
+                  \"BOOST_RV_REF_END=&&\" \\
+                  \"list_impl=list\" \\
+                  \"slist_impl=slist\" \\
+                  \"set_impl=set\" \\
+                  \"multiset_impl=multiset\" \\
+                  \"bstree_impl=bstree\" \\
+                  \"rbtree_impl=rbtree\" \\
+                  \"unordered_set_impl=unordered_set\" \\
+                  \"unordered_multiset_impl=unordered_multiset\" \\
+                  \"hashtable_impl=hashtable\" \\
+                  \"splay_set_impl=splay_set\" \\
+                  \"splay_multiset_impl=splay_multiset\" \\
+                  \"splaytree_impl=splaytree\" \\
+                  \"sg_set_impl=sg_set\" \\
+                  \"sg_multiset_impl=sg_multiset\" \\
+                  \"sgtree_impl=sgtree\" \\
+                  \"avl_set_impl=avl_set\" \\
+                  \"avl_multiset_impl=avl_multiset\" \\
+                  \"avltree_impl=avltree\" \\
+                  \"treap_set_impl=treap_set\" \\
+                  \"treap_multiset_impl=treap_multiset\" \\
+                  \"treap_impl=treap\""
    ;
 
 xml intrusive : intrusive.qbk

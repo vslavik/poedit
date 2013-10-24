@@ -33,7 +33,7 @@ int main()
     }
     {
       boost::future<int> f1 = boost::async(boost::launch::async, []() {return 123;});
-      boost::future<int> f2 = f1.then([](boost::future<int>& f)  {return 2*f.get(); });
+      boost::future<int> f2 = f1.then([](boost::future<int> f)  {return 2*f.get(); });
       int result = f2.get();
       BOOST_THREAD_LOG << "f2 " << result << BOOST_THREAD_END_LOG;
     }

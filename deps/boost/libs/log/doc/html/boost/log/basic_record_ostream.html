@@ -4,7 +4,7 @@
 <title>Class template basic_record_ostream</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../logging_sources.html#header.boost.log.sources.record_ostream_hpp" title="Header &lt;boost/log/sources/record_ostream.hpp&gt;">
 <link rel="prev" href="sources/wlogger_mt.html" title="Class wlogger_mt">
 <link rel="next" href="../../BOOST_LOG_STREAM.html" title="Macro BOOST_LOG_STREAM">
@@ -33,33 +33,34 @@
   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">char_type</span> <span class="special">&gt;</span> <a name="boost.log.basic_record_ostream.stream_type"></a><span class="identifier">stream_type</span><span class="special">;</span>  <span class="comment">// Stream type. </span>
 
   <span class="comment">// <a class="link" href="basic_record_ostream.html#boost.log.basic_record_ostreamconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="basic_record_ostream.html#idp20003216-bb"><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="basic_record_ostream.html#idp20004128-bb"><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><span class="identifier">record</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_record_ostream.html#idp20007280-bb"><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><a class="link" href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
-  basic_record_ostream&amp; <a class="link" href="basic_record_ostream.html#idp20007968-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
-  <a class="link" href="basic_record_ostream.html#idp20006032-bb"><span class="special">~</span><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_record_ostream.html#idp26749176-bb"><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="basic_record_ostream.html#idp26750088-bb"><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><span class="identifier">record</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_record_ostream.html#idp26753240-bb"><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><a class="link" href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+  basic_record_ostream&amp; <a class="link" href="basic_record_ostream.html#idp26753928-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+  <a class="link" href="basic_record_ostream.html#idp26751992-bb"><span class="special">~</span><span class="identifier">basic_record_ostream</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_record_ostream.html#idp19996032-bb">public member functions</a></span>
-  <span class="keyword">bool</span> <a class="link" href="basic_record_ostream.html#idp19996240-bb"><span class="keyword">operator</span><span class="special">!</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">record</span> <span class="special">&amp;</span> <a class="link" href="basic_record_ostream.html#idp19998720-bb"><span class="identifier">get_record</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">record</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="basic_record_ostream.html#idp19999856-bb"><span class="identifier">get_record</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="basic_record_ostream.html#idp20000992-bb"><span class="identifier">attach_record</span></a><span class="special">(</span><span class="identifier">record</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="basic_record_ostream.html#idp20002528-bb"><span class="identifier">detach_from_record</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_record_ostream.html#idp26741176-bb">public member functions</a></span>
+  <span class="keyword">explicit</span> <a class="link" href="basic_record_ostream.html#idp26741384-bb"><span class="keyword">operator</span> <span class="keyword">bool</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="basic_record_ostream.html#idp26743096-bb"><span class="keyword">operator</span><span class="special">!</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">record</span> <span class="special">&amp;</span> <a class="link" href="basic_record_ostream.html#idp26744680-bb"><span class="identifier">get_record</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">record</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="basic_record_ostream.html#idp26745816-bb"><span class="identifier">get_record</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="basic_record_ostream.html#idp26746952-bb"><span class="identifier">attach_record</span></a><span class="special">(</span><span class="identifier">record</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="basic_record_ostream.html#idp26748488-bb"><span class="identifier">detach_from_record</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_record_ostream.html#idp20006416-bb">private member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="basic_record_ostream.html#idp20006624-bb"><span class="identifier">init_stream</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_record_ostream.html#idp26752376-bb">private member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="basic_record_ostream.html#idp26752584-bb"><span class="identifier">init_stream</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp23956032"></a><h2>Description</h2>
+<a name="idp62974760"></a><h2>Description</h2>
 <p>This class allows to compose the logging record message by streaming operations. It aggregates the log record and provides the standard output stream interface. </p>
 <div class="refsect2">
-<a name="idp23956544"></a><h3>
+<a name="idp62975272"></a><h3>
 <a name="boost.log.basic_record_ostreamconstruct-copy-destruct"></a><code class="computeroutput">basic_record_ostream</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp20003216-bb"></a><span class="identifier">basic_record_ostream</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp26749176-bb"></a><span class="identifier">basic_record_ostream</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Default constructor. Creates an empty record that is equivalent to the invalid record handle. The stream capability is not available after construction.</p>
 <p>
 </p>
@@ -75,7 +76,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp20004128-bb"></a><span class="identifier">basic_record_ostream</span><span class="special">(</span><span class="identifier">record</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp26750088-bb"></a><span class="identifier">basic_record_ostream</span><span class="special">(</span><span class="identifier">record</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor from a record object. Attaches to the provided record.</p>
 <p>
 
@@ -111,23 +112,37 @@
 </tbody>
 </table></div>
 </li>
-<li class="listitem"><pre class="literallayout"><a name="idp20007280-bb"></a><span class="identifier">basic_record_ostream</span><span class="special">(</span><a class="link" href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout">basic_record_ostream&amp; <a name="idp20007968-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp26753240-bb"></a><span class="identifier">basic_record_ostream</span><span class="special">(</span><a class="link" href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout">basic_record_ostream&amp; <a name="idp26753928-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp20006032-bb"></a><span class="special">~</span><span class="identifier">basic_record_ostream</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp26751992-bb"></a><span class="special">~</span><span class="identifier">basic_record_ostream</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Destructor. Destroys the record, releases any sinks and attribute values that were involved in processing this record. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp23976480"></a><h3>
-<a name="idp19996032-bb"></a><code class="computeroutput">basic_record_ostream</code> public member functions</h3>
+<a name="idp62995240"></a><h3>
+<a name="idp26741176-bb"></a><code class="computeroutput">basic_record_ostream</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp19996240-bb"></a><span class="keyword">operator</span><span class="special">!</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp26741384-bb"></a><span class="keyword">operator</span> <span class="keyword">bool</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Conversion to an unspecified boolean type</p>
 <p>
-Inverted conversion to an unspecified boolean type</p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p><code class="computeroutput">true</code>, if stream is valid and ready for formatting, <code class="computeroutput">false</code>, if the stream is not valid. The latter also applies to the case when the stream is not attached to a log record. </p></td>
+</tr></tbody>
+</table></div>
+</li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp26743096-bb"></a><span class="keyword">operator</span><span class="special">!</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>Inverted conversion to an unspecified boolean type</p>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -135,20 +150,14 @@ Inverted conversion to an unspecified boolean type</p>
 <col align="left" valign="top">
 <col>
 </colgroup>
-<tbody>
-<tr>
-<td><p><span class="term">Returns:</span></p></td>
-<td><p><code class="computeroutput">true</code>, if stream is valid and ready for formatting, <code class="computeroutput">false</code>, if the stream is not valid. The latter also applies to the case when the stream is not attached to a log record.</p></td>
-</tr>
-<tr>
+<tbody><tr>
 <td><p><span class="term">Returns:</span></p></td>
 <td><p><code class="computeroutput">false</code>, if stream is valid and ready for formatting, <code class="computeroutput">true</code>, if the stream is not valid. The latter also applies to the case when the stream is not attached to a log record. </p></td>
-</tr>
-</tbody>
+</tr></tbody>
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">record</span> <span class="special">&amp;</span> <a name="idp19998720-bb"></a><span class="identifier">get_record</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">record</span> <span class="special">&amp;</span> <a name="idp26744680-bb"></a><span class="identifier">get_record</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Flushes internal buffers to complete all pending formatting operations and returns the aggregated log record</p>
 <p>
 </p>
@@ -164,7 +173,7 @@ Inverted conversion to an unspecified boolean type</p>
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">record</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp19999856-bb"></a><span class="identifier">get_record</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">record</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp26745816-bb"></a><span class="identifier">get_record</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Flushes internal buffers to complete all pending formatting operations and returns the aggregated log record</p>
 <p>
 </p>
@@ -180,7 +189,7 @@ Inverted conversion to an unspecified boolean type</p>
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp20000992-bb"></a><span class="identifier">attach_record</span><span class="special">(</span><span class="identifier">record</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp26746952-bb"></a><span class="identifier">attach_record</span><span class="special">(</span><span class="identifier">record</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
 <p>If the stream is attached to a log record, flushes internal buffers to complete all pending formatting operations. Then reattaches the stream to another log record.</p>
 <p>
 </p>
@@ -205,14 +214,14 @@ Inverted conversion to an unspecified boolean type</p>
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp20002528-bb"></a><span class="identifier">detach_from_record</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>The function resets the stream into a detached (default initialized) state. </li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp26748488-bb"></a><span class="identifier">detach_from_record</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>The function resets the stream into a detached (default initialized) state. </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp23998080"></a><h3>
-<a name="idp20006416-bb"></a><code class="computeroutput">basic_record_ostream</code> private member functions</h3>
+<a name="idp63020040"></a><h3>
+<a name="idp26752376-bb"></a><code class="computeroutput">basic_record_ostream</code> private member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp20006624-bb"></a><span class="identifier">init_stream</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>The function initializes the stream and the stream buffer. </li></ol></div>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp26752584-bb"></a><span class="identifier">init_stream</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>The function initializes the stream and the stream buffer. </li></ol></div>
 </div>
 </div>
 </div>

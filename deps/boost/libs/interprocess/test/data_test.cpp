@@ -47,7 +47,6 @@ int main ()
    const char *allocName = "testAllocation";
 
    typedef boost::interprocess::vector<int, shmem_allocator_int_t > MyVect;
-   typedef boost::interprocess::list<int, shmem_allocator_int_t >   MyList;
 
    //----   ALLOC, NAMED_ALLOC, NAMED_NEW TEST   ----//
    {

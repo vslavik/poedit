@@ -9,6 +9,7 @@
 #include "dependency_tracker.hpp"
 #include "input_path.hpp"
 #include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/fstream.hpp>
 #include <boost/foreach.hpp>
 
 namespace quickbook
@@ -90,7 +91,7 @@ namespace quickbook
     static std::string get_path(fs::path const& path,
             dependency_tracker::flags f)
     {
-        std::string generic = detail::path_to_generic(path);
+        std::string generic = quickbook::detail::path_to_generic(path);
 
         if (f & dependency_tracker::escaped) {
             generic = escaped_path(generic);
@@ -103,6 +104,21 @@ namespace quickbook
         bool found = fs::exists(fs::status(f));
         dependencies[normalize_path(f)] |= found;
         return found;
+    }
+
+    void dependency_tracker::write_dependencies(fs::path const& file_out,
+            flags f)
+    {
+        fs::ofstream out(file_out);
+
+        if (out.fail()) {
+            throw std::runtime_error(
+                "Error opening dependency file " +
+                quickbook::detail::path_to_generic(file_out));
+        }
+
+        out.exceptions(std::ios::badbit);
+        write_dependencies(out, f);
     }
 
     void dependency_tracker::write_dependencies(std::ostream& out,

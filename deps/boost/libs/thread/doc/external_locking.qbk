@@ -217,7 +217,7 @@ Silence can be sometimes louder than words-what's forbidden to do with a `strict
 * You can create a `strict_lock<T>` only starting from a valid T object. Notice that there is no other way you can create a `strict_lock<T>`.
 
     BankAccount myAccount("John Doe", "123-45-6789");
-    strict_locerk<BankAccount> myLock(myAccount); // ok
+    strict_lock<BankAccount> myLock(myAccount); // ok
 
 * You cannot copy `strict_lock`s to one another. In particular, you cannot pass `strict_lock`s by value to functions or have them returned by functions:
 
@@ -468,7 +468,7 @@ Now imagine that the AccountManager function needs to take a `unique_lock` in or
 We need a way to transfer the ownership from the `unique_lock` to a `strict_lock` the time we are working with `savingsAcct_` and then restore the ownership on `unique_lock`.
 
   void AccountManager::AMoreComplicatedChecking2Savings(int amount) {
-      unique_lock<AccountManager> guard(*this, defer_lock);
+      unique_lock<AccountManager> guard1(*this, defer_lock);
       if (some_condition()) {
           guard1.lock();
       }
@@ -482,7 +482,7 @@ We need a way to transfer the ownership from the `unique_lock` to a `strict_lock
 
 In order to make this code compilable we need to store either a Lockable or a `unique_lock<Lockable>` reference depending on the constructor. Store which kind of reference we have stored,and in the destructor call either to the Lockable `unlock` or restore the ownership.
 
-This seams too complicated to me. Another possibility is to define a nested strict lock class. The drawback is that instead of having only one strict lock we have two and we need either to duplicate every function taking a `strict_lock` or make these function templates functions. The problem with template functions is that we don't profit anymore of the C++ type system. We must add some static metafunction that check that the Locker parameter is a strict lock. The problem is that we can not really check this or can we?. The `is_strict_lock` metafunction must be specialized by the strict lock developer. We need to belive it "sur parole". The advantage is that now we can manage with more than two strict locks without changing our code. Ths is really nice.
+This seams too complicated to me. Another possibility is to define a nested strict lock class. The drawback is that instead of having only one strict lock we have two and we need either to duplicate every function taking a `strict_lock` or make these function templates functions. The problem with template functions is that we don't profit anymore of the C++ type system. We must add some static metafunction that check that the Locker parameter is a strict lock. The problem is that we can not really check this or can we?. The `is_strict_lock` metafunction must be specialized by the strict lock developer. We need to belive it "sur parole". The advantage is that now we can manage with more than two strict locks without changing our code. This is really nice.
 
 Now we need to state that both classes are `strict_lock`s.
 

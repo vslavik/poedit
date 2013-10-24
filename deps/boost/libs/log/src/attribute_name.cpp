@@ -10,7 +10,7 @@
  * \date   28.06.2010
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #include <cstring>
@@ -18,9 +18,9 @@
 #include <ostream>
 #include <stdexcept>
 #include <boost/assert.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
 #include <boost/throw_exception.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/intrusive/set.hpp>
 #include <boost/intrusive/set_hook.hpp>
 #include <boost/intrusive/options.hpp>
@@ -49,7 +49,7 @@ class attribute_name::repository :
         shared_ptr< repository >
     > base_type;
 
-#if !defined(BOOST_LOG_BROKEN_FRIEND_TEMPLATE_INSTANTIATIONS)
+#if !defined(BOOST_LOG_BROKEN_FRIEND_TEMPLATE_SPECIALIZATIONS)
     friend class log::aux::lazy_singleton<
         repository,
         shared_ptr< repository >

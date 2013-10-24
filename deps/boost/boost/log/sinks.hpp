@@ -40,7 +40,7 @@
 #include <boost/log/sinks/event_log_backend.hpp>
 #endif // BOOST_WINDOWS
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 

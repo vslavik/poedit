@@ -31,22 +31,29 @@ struct fill_t {} const fill = {};
 template<typename T>
 struct sequence_stack
 {
+    struct allocate_guard_t;
+    friend struct allocate_guard_t;
+    struct allocate_guard_t
+    {
+        std::size_t i;
+        T *p;
+        bool dismissed;
+        ~allocate_guard_t()
+        {
+            if(!this->dismissed)
+                sequence_stack::deallocate(this->p, this->i);
+        }
+    };
 private:
     static T *allocate(std::size_t size, T const &t)
     {
-        std::size_t i = 0;
-        T *p = (T *)::operator new(size * sizeof(T));
-        try
-        {
-            for(; i < size; ++i)
-                ::new((void *)(p+i)) T(t);
-        }
-        catch(...)
-        {
-            deallocate(p, i);
-            throw;
-        }
-        return p;
+        allocate_guard_t guard = {0, (T *)::operator new(size * sizeof(T)), false};
+
+        for(; guard.i < size; ++guard.i)
+            ::new((void *)(guard.p + guard.i)) T(t);
+        guard.dismissed = true;
+
+        return guard.p;
     }
 
     static void deallocate(T *p, std::size_t i)

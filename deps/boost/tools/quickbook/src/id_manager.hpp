@@ -45,7 +45,6 @@ namespace quickbook
     };
 
     struct id_state;
-    struct section_manager;
 
     struct id_manager
     {

@@ -58,7 +58,7 @@ struct gl_draw_indexable
 template <typename Indexable>
 struct gl_draw_indexable<Indexable, box_tag>
 {
-    static const size_t dimension = dimension<Indexable>::value;
+    static const size_t dimension = geometry::dimension<Indexable>::value;
 
     static inline void apply(Indexable const& i, typename coordinate_type<Indexable>::type z)
     {
@@ -69,7 +69,7 @@ struct gl_draw_indexable<Indexable, box_tag>
 template <typename Indexable>
 struct gl_draw_indexable<Indexable, point_tag>
 {
-    static const size_t dimension = dimension<Indexable>::value;
+    static const size_t dimension = geometry::dimension<Indexable>::value;
 
     static inline void apply(Indexable const& i, typename coordinate_type<Indexable>::type z)
     {

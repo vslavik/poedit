@@ -10,7 +10,7 @@
  * \date   19.04.2007
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #include <cstdio>
@@ -30,6 +30,17 @@
 namespace boost {
 
 BOOST_LOG_OPEN_NAMESPACE
+
+#if !defined(BOOST_LOG_NO_THREADS)
+
+namespace aux {
+
+// Defined in thread_id.cpp
+void format_thread_id(char* buf, std::size_t size, thread::id tid);
+
+} // namespace aux
+
+#endif // !defined(BOOST_LOG_NO_THREADS)
 
 namespace sinks {
 
@@ -111,11 +122,16 @@ struct message_printer
 
     result_type operator() (std::string const& msg) const
     {
+#if !defined(BOOST_LOG_NO_THREADS)
+        char thread_id_buf[64];
+        boost::log::aux::format_thread_id(thread_id_buf, sizeof(thread_id_buf), boost::log::aux::this_thread::get_id());
+#endif
+
         const decomposed_time_point now = date_time::microsec_clock< decomposed_time_point >::local_time();
 
         std::printf("[%04u-%02u-%02u %02u:%02u:%02u.%06u] "
 #if !defined(BOOST_LOG_NO_THREADS)
-                    "[0x%08x] "
+                    "[%s] "
 #endif
                     "%s %s\n",
             static_cast< unsigned int >(now.date.year),
@@ -126,7 +142,7 @@ struct message_printer
             static_cast< unsigned int >(now.time.seconds),
             static_cast< unsigned int >(now.time.useconds),
 #if !defined(BOOST_LOG_NO_THREADS)
-            static_cast< unsigned int >(boost::log::aux::this_thread::get_id().native_id()),
+            thread_id_buf,
 #endif
             severity_level_to_string(m_level),
             msg.c_str());
@@ -138,11 +154,16 @@ struct message_printer
 
     result_type operator() (std::wstring const& msg) const
     {
+#if !defined(BOOST_LOG_NO_THREADS)
+        char thread_id_buf[64];
+        boost::log::aux::format_thread_id(thread_id_buf, sizeof(thread_id_buf), boost::log::aux::this_thread::get_id());
+#endif
+
         const decomposed_time_point now = date_time::microsec_clock< decomposed_time_point >::local_time();
 
         std::printf("[%04u-%02u-%02u %02u:%02u:%02u.%06u] "
 #if !defined(BOOST_LOG_NO_THREADS)
-                    "[0x%08x] "
+                    "[%s] "
 #endif
                     "%s %ls\n",
             static_cast< unsigned int >(now.date.year),
@@ -153,7 +174,7 @@ struct message_printer
             static_cast< unsigned int >(now.time.seconds),
             static_cast< unsigned int >(now.time.useconds),
 #if !defined(BOOST_LOG_NO_THREADS)
-            static_cast< unsigned int >(boost::log::aux::this_thread::get_id().native_id()),
+            thread_id_buf,
 #endif
             severity_level_to_string(m_level),
             msg.c_str());
@@ -193,7 +214,7 @@ void default_sink::consume(record_view const& rec)
 void default_sink::flush()
 {
     BOOST_LOG_EXPR_IF_MT(lock_guard< mutex_type > lock(m_mutex);)
-    fflush(stdout);
+    std::fflush(stdout);
 }
 
 } // namespace aux

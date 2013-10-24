@@ -27,12 +27,18 @@
   Tree edge: 0 --> 2
   Tree edge: 2 --> 1
   Back edge: 1 --> 1
+  Finish edge: 1 --> 1
   Tree edge: 1 --> 3
   Back edge: 3 --> 1
+  Finish edge: 3 --> 1
   Tree edge: 3 --> 4
   Back edge: 4 --> 0
+  Finish edge: 4 --> 0
   Back edge: 4 --> 1
+  Finish edge: 4 --> 1
   Forward or cross edge: 2 --> 3
+  Finish edge: 2 --> 3
+  Finish edge: 0 --> 2
   1 10
   3 8
   2 9
@@ -69,6 +75,12 @@ struct edge_categorizer : public dfs_visitor<VisitorList> {
          << " --> " <<  target(e, G) << endl;
     Base::forward_or_cross_edge(e, G);
   }
+  template <class Edge, class Graph> 
+  void finish_edge(Edge e, Graph& G) { 
+    cout << "Finish edge: " << source(e, G) << 
+      " --> " <<  target(e, G) << endl; 
+    Base::finish_edge(e, G); 
+  } 
 };
 template <class VisitorList>
 edge_categorizer<VisitorList>

@@ -21,7 +21,7 @@
 #include <boost/log/utility/manipulators/to_log.hpp>
 #include <boost/log/utility/manipulators/dump.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 

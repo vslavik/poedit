@@ -31,7 +31,6 @@
 template <class Real, class T>
 void do_test_hermite(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(unsigned, value_type);
@@ -40,8 +39,6 @@ void do_test_hermite(const T& data, const char* type_name, const char* test_name
 #else
    pg funcp = boost::math::hermite;
 #endif
-
-   typedef unsigned (*cast_t)(value_type);
 
    boost::math::tools::test_result<value_type> result;
 

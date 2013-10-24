@@ -32,6 +32,6 @@
 
 int main( int, char *[] )
 {
-   return boost_no_unified_initialization_syntax::test();
+   return boost_no_cxx11_unified_initialization_syntax::test();
 }
 

@@ -129,6 +129,8 @@ particular member type does not need to concern itself with the integer.</p>
 <h2><a name="synopsis">Synopsis</a></h2>
 
 <blockquote><pre>
+#include &lt;type_traits&gt;  <i>// exposition only</i>
+
 #ifndef BOOST_BASE_FROM_MEMBER_MAX_ARITY
 #define BOOST_BASE_FROM_MEMBER_MAX_ARITY  10
 #endif
@@ -139,6 +141,11 @@ class boost::base_from_member
 protected:
     MemberType  member;
 
+#if <i>C++2011 is in use</i>
+    template&lt; typename ...T &gt;
+    explicit constexpr   base_from_member( T&amp;&amp; ...x )
+     noexcept( std::is_nothrow_constructible&lt;MemberType, T...&gt;::value );
+#else
     base_from_member();
 
     template&lt; typename T1 &gt;
@@ -154,6 +161,7 @@ protected:
      typename T10 &gt;
     base_from_member( T1 x1, T2 x2, T3 x3, T4 x4, T5 x5, T6 x6, T7 x7,
      T8 x8, T9 x9, T10 x10 );
+#endif
 };
 </pre></blockquote>
 
@@ -166,13 +174,29 @@ value of zero if it is omitted.  The class template has a protected
 data member called <var>member</var> that the derived class can use
 for later base classes (or itself).</p>
 
-<p>There is a default constructor and several constructor member
-templates.  These constructor templates can take as many arguments
-(currently up to ten) as possible and pass them to a constructor of
-the data member.  Since C++ does not allow any way to explicitly state
+<p>If the appropriate features of C++2011 are present, there will be a single
+constructor template.  It implements &quot;perfect forwarding&quot; to the best
+constructor call of <code>member</code> (if any).  The constructor template is
+marked both <code>constexpr</code> and <code>explicit</code>.  The former will
+be ignored if the corresponding inner constructor call (of <code>member</code>)
+does not have the marker.  The latter binds the other way; always taking
+effect, even when the inner constructor call does not have the marker.  The
+constructor template propagates the <code>noexcept</code> status of the inner
+constructor call.  (The constructor template has a trailing parameter with a
+default value that disables the template when its signature is too close to the
+signatures of the automatically-defined non-template copy- and/or
+move-constructors of <code>base_from_member</code>.)</p>
+
+<p>On earlier-standard compilers, there is a default constructor and several
+constructor member templates.  These constructor templates can take as many
+arguments (currently up to ten) as possible and pass them to a constructor of
+the data member.</p>
+
+<p>Since C++ does not allow any way to explicitly state
 the template parameters of a templated constructor, make sure that
 the arguments are already close as possible to the actual type used in
-the data member's desired constructor.</p>
+the data member's desired constructor.  Explicit conversions may be
+necessary.</p>
 
 <p>The <var>BOOST_BASE_FROM_MEMBER_MAX_ARITY</var> macro constant specifies
 the maximum argument length for the constructor templates.  The constant
@@ -180,7 +204,7 @@ may be overridden if more (or less) argument configurations are needed.  The
 constant may be read for code that is expandable like the class template and
 needs to maintain the same maximum size.  (Example code would be a class that
 uses this class template as a base class for a member with a flexible set of
-constructors.)</p>
+constructors.)  This constant is ignored when C++2011 features are present.</p>
 
 <h2><a name="usage">Usage</a></h2>
 
@@ -323,11 +347,14 @@ constructor argument for <code>pbase0_type</code> is converted from
 argument for <code>pbase2_type</code> is converted from <code>int</code>
 to <code>double</code>.  The second constructor argument for
 <code>pbase3_type</code> is a special case of necessary conversion; all
-forms of the null-pointer literal in C++ also look like compile-time
-integral expressions, so C++ always interprets such code as an integer
-when it has overloads that can take either an integer or a pointer.  The
-last conversion is necessary for the compiler to call a constructor form
-with the exact pointer type used in <code>switcher</code>'s constructor.</p>
+forms of the null-pointer literal in C++ (except <code>nullptr</code> from
+C++2011) also look like compile-time integral expressions, so C++ always
+interprets such code as an integer when it has overloads that can take either
+an integer or a pointer.  The last conversion is necessary for the compiler to
+call a constructor form with the exact pointer type used in
+<code>switcher</code>'s constructor.  (If C++2011's <code>nullptr</code> is
+used, it still needs a conversion if multiple pointer types can be accepted in
+a constructor call but <code>std::nullptr_t</code> cannot.)</p>
 
 <h2><a name="credits">Credits</a></h2>
 
@@ -360,9 +387,9 @@ with the exact pointer type used in <code>switcher</code>'s constructor.</p>
 
 <hr>
 
-<p>Revised: 28 August 2004</p>
+<p>Revised: 16 February 2012</p>
 
-<p>Copyright 2001, 2003, 2004 Daryle Walker.  Use, modification, and distribution
+<p>Copyright 2001, 2003, 2004, 2012 Daryle Walker.  Use, modification, and distribution
 are subject to the Boost Software License, Version 1.0.  (See accompanying
 file <a href="../../LICENSE_1_0.txt">LICENSE_1_0.txt</a> or a copy at &lt;<a
 href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>&gt;.)</p>

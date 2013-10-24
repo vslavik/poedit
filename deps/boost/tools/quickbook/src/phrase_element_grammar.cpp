@@ -38,7 +38,7 @@ namespace quickbook
             new phrase_element_grammar_local);
 
         error_action error(state);
-        raw_char_action raw_char(state.phrase);
+        raw_char_action raw_char(state);
         scoped_parser<cond_phrase_push> scoped_cond_phrase(state);
         scoped_parser<to_value_scoped_action> to_value(state);
 

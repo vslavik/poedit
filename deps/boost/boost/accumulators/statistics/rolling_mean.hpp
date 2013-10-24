@@ -31,7 +31,7 @@ namespace impl
     struct rolling_mean_impl
       : accumulator_base
     {
-        typedef typename numeric::functional::average<Sample, std::size_t>::result_type result_type;
+        typedef typename numeric::functional::fdiv<Sample, std::size_t>::result_type result_type;
 
         rolling_mean_impl(dont_care)
         {}
@@ -39,7 +39,7 @@ namespace impl
         template<typename Args>
         result_type result(Args const &args) const
         {
-            return numeric::average(rolling_sum(args), rolling_count(args));
+            return numeric::fdiv(rolling_sum(args), rolling_count(args));
         }
     };
 
