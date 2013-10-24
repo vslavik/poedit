@@ -147,8 +147,8 @@
 
 
     <target name="osx-gettext" depends="osx-gettext-check" unless="built.gettext" if="is_osx">
-        <!-- Prevent automake regeneration: -->
         <touch>
+            <!-- Prevent automake regeneration: -->
             <fileset dir="gettext" includes="**/aclocal.m4"/>
             <fileset dir="gettext" includes="**/config.h.in"/>
             <fileset dir="gettext" includes="**/Makefile.in"/>
@@ -156,6 +156,10 @@
             <fileset dir="gettext" includes="**/man/*.1"/>
             <fileset dir="gettext" includes="**/man/*.3"/>
             <fileset dir="gettext" includes="**/man/*.html"/>
+            <!-- Prevent running moopp tool that requires GNU sed and refused to be configured to use gsed: -->
+            <fileset dir="gettext" includes="gettext-tools/gnulib-lib/*stream.c"/>
+            <fileset dir="gettext" includes="gettext-tools/gnulib-lib/*stream.h"/>
+            <fileset dir="gettext" includes="gettext-tools/gnulib-lib/*stream.*.h"/>
         </touch>
         <touch file="gettext/gettext-tools/doc/stamp-vti"/>
 
