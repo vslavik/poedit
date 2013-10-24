@@ -30,6 +30,7 @@
 
 class WXDLLIMPEXP_FWD_CORE wxListCtrl;
 class WXDLLIMPEXP_FWD_CORE wxStyledTextCtrl;
+class WXDLLIMPEXP_FWD_CORE wxFileName;
 
 
 /** This class implements frame that shows part of file
@@ -51,13 +52,14 @@ public:
     ~FileViewer();
 
     /// Shows given reference, i.e. loads the file
-    void ShowReference(wxString ref);
+    void ShowReference(const wxString& ref);
 
     bool FileOk() { return !m_current.empty(); }
 
 private:
     void SetupTextCtrl();
     int GetLexer(const wxString& extension);
+    wxFileName GetFilename(wxString ref) const;
 
 private:
     wxString m_basePath;
@@ -68,7 +70,6 @@ private:
 
     void OnChoice(wxCommandEvent &event);
     void OnEditFile(wxCommandEvent &event);
-    DECLARE_EVENT_TABLE();
 };
 
 #endif // _FILEVIEWER_H_

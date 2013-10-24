@@ -25,6 +25,7 @@
 
 #include <wx/filename.h>
 #include <wx/log.h>
+#include <wx/button.h>
 #include <wx/panel.h>
 #include <wx/stattext.h>
 #include <wx/choice.h>
@@ -34,6 +35,7 @@
 #include <wx/listctrl.h>
 #include <wx/fontenum.h>
 #include <wx/ffile.h>
+#include <wx/utils.h>
 #include <wx/stc/stc.h>
 
 #include "fileviewer.h"
@@ -68,6 +70,9 @@ FileViewer::FileViewer(wxWindow *parent,
         choice->Append(references[i]);
     choice->SetSelection(startAt);
 
+    wxButton *edit = new wxButton(panel, wxID_ANY, _("Open In Editor"));
+    barsizer->Add(edit, wxSizerFlags().Center().Border(wxLEFT, 10));
+
     m_text = new wxStyledTextCtrl(panel, wxID_ANY,
                                   wxDefaultPosition, wxDefaultSize,
                                   wxBORDER_THEME);
@@ -80,6 +85,9 @@ FileViewer::FileViewer(wxWindow *parent,
     topsizer->Add(panel, wxSizerFlags(1).Expand());
     SetSizer(topsizer);
     Layout();
+
+    choice->Bind(wxEVT_CHOICE, &FileViewer::OnChoice, this);
+    edit->Bind(wxEVT_BUTTON, &FileViewer::OnEditFile, this);
 
     ShowReference(m_references[startAt]);
 }
@@ -214,7 +222,7 @@ int FileViewer::GetLexer(const wxString& ext)
 }
 
 
-void FileViewer::ShowReference(wxString ref)
+wxFileName FileViewer::GetFilename(wxString ref) const
 {
     if ( ref.length() >= 3 &&
          ref[1] == _T(':') &&
@@ -262,6 +270,13 @@ void FileViewer::ShowReference(wxString ref)
         }
     }
 
+    return filename;
+}
+
+
+void FileViewer::ShowReference(const wxString& ref)
+{
+    const wxFileName filename = GetFilename(ref);
     wxFFile file;
     wxString data;
 
@@ -298,12 +313,12 @@ void FileViewer::ShowReference(wxString ref)
 }
 
 
-
-BEGIN_EVENT_TABLE(FileViewer, wxFrame)
-    EVT_CHOICE(wxID_ANY, FileViewer::OnChoice)
-END_EVENT_TABLE()
-
 void FileViewer::OnChoice(wxCommandEvent &event)
 {
     ShowReference(m_references[event.GetSelection()]);
+}
+
+void FileViewer::OnEditFile(wxCommandEvent&)
+{
+    wxLaunchDefaultApplication(GetFilename(m_current).GetFullPath());
 }
