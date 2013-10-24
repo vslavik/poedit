@@ -231,7 +231,7 @@ DbBase::DbBase(DbEnv *env, const std::string& filename, DBTYPE type)
               filename.c_str(),
               NULL,
               type,
-              DB_CREATE | DB_AUTO_COMMIT,
+              DB_RDONLY | DB_AUTO_COMMIT,
               0);
 }
 
