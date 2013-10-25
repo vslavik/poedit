@@ -144,7 +144,6 @@ bool PoeditApp::OnInit()
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
     wxConfigBase::Get()->SetExpandEnvVars(false);
 
-    wxImage::AddHandler(new wxGIFHandler);
     wxImage::AddHandler(new wxPNGHandler);
     wxXmlResource::Get()->InitAllHandlers();
 

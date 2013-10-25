@@ -40,8 +40,6 @@
 #include "edapp.h"
 #include "isocodes.h"
 #include "transmem.h"
-#include "transmemupd.h"
-#include "transmemupd_wizard.h"
 #include "chooselang.h"
 
 #ifdef __WXMSW__
@@ -241,7 +239,6 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
    EVT_BUTTON(XRCID("parser_edit"), PreferencesDialog::OnEditParser)
    EVT_BUTTON(XRCID("parser_delete"), PreferencesDialog::OnDeleteParser)
    EVT_BUTTON(XRCID("tm_addlang"), PreferencesDialog::OnTMAddLang)
-   EVT_BUTTON(XRCID("tm_generate"), PreferencesDialog::OnTMGenerate)
 #if NEED_CHOOSELANG_UI
    EVT_BUTTON(XRCID("ui_language"), PreferencesDialog::OnUILanguage)
 #endif
@@ -352,13 +349,5 @@ void PreferencesDialog::OnTMAddLang(wxCommandEvent&)
         a.Add(isoLanguages[index].iso);
         XRCCTRL(*this, "tm_langs", wxEditableListBox)->SetStrings(a);
     }
-}
-
-void PreferencesDialog::OnTMGenerate(wxCommandEvent&)
-{
-    wxArrayString langs;
-    XRCCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
-
-    RunTMUpdateWizard(this, langs);
 }
 

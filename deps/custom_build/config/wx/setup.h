@@ -1439,7 +1439,7 @@
 #define wxUSE_TGA           0
 
 // Set to 1 for GIF format support
-#define wxUSE_GIF           1
+#define wxUSE_GIF           0
 
 // Set to 1 for PNM format support
 #define wxUSE_PNM           0

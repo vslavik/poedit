@@ -264,15 +264,7 @@ to set the Last-Translator header of GNU gettext files.</label>
                         <label>Add</label>
                         <tooltip>Pick language from the list of known languages</tooltip>
                       </object>
-                      <flag>wxRIGHT|wxALIGN_RIGHT</flag>
-                      <border>5d</border>
-                    </object>
-                    <object class="sizeritem">
-                      <object class="wxButton" name="tm_generate">
-                        <label>Generate database</label>
-                        <tooltip>Regenerate translation memory from catalogs in paths listed above.</tooltip>
-                      </object>
-                      <flag>wxEXPAND|wxALL</flag>
+                      <flag>wxRIGHT|wxALIGN_RIGHT|wxBOTTOM</flag>
                       <border>5d</border>
                     </object>
                   </object>
@@ -566,52 +558,5 @@ to set the Last-Translator header of GNU gettext files.</label>
         <flag>wxALIGN_RIGHT</flag>
       </object>
     </object>
-  </object>
-  <object class="wxDialog" name="dlg_generate_tm">
-    <object class="wxBoxSizer">
-      <orient>wxVERTICAL</orient>
-      <object class="sizeritem">
-        <object class="unknown" name="tm_dirs"/>
-        <option>1</option>
-        <flag>wxEXPAND|wxALL</flag>
-        <border>5d</border>
-        <minsize>140,100d</minsize>
-      </object>
-      <object class="sizeritem">
-        <object class="wxButton" name="tm_adddir">
-          <label>Browse</label>
-          <tooltip>Add path to the list of directories where catalogs lie.</tooltip>
-        </object>
-        <flag>wxRIGHT|wxALIGN_RIGHT</flag>
-        <border>5d</border>
-      </object>
-      <object class="sizeritem">
-        <object class="wxStaticLine"/>
-        <flag>wxALL|wxEXPAND</flag>
-        <border>5d</border>
-      </object>
-      <object class="sizeritem">
-        <object class="wxBoxSizer">
-          <object class="sizeritem">
-            <object class="wxButton" name="wxID_OK">
-              <label>Proceed</label>
-              <default>1</default>
-            </object>
-            <border>5d</border>
-            <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
-          </object>
-          <object class="sizeritem">
-            <object class="wxButton" name="wxID_CANCEL">
-              <label>Cancel</label>
-            </object>
-            <flag>wxRIGHT|wxBOTTOM</flag>
-            <border>5d</border>
-          </object>
-        </object>
-        <flag>wxALIGN_RIGHT</flag>
-      </object>
-    </object>
-    <centered>1</centered>
-    <title>Generate TM database</title>
   </object>
 </resource>

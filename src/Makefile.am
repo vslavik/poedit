@@ -19,8 +19,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  progressinfo.cpp digger.h digger.cpp gexecute.h \
                  gexecute.cpp summarydlg.h summarydlg.cpp \
                  findframe.cpp findframe.h commentdlg.h commentdlg.cpp \
-                 transmem.cpp transmem.h transmemupd.cpp transmemupd.h \
-                 transmemupd_wizard.cpp transmemupd_wizard.h \
+                 transmem.cpp transmem.h \
                  manager.h manager.cpp chooselang.cpp chooselang.h \
                  export_html.cpp icons.h icons.cpp \
                  pluralforms/pl_evaluate.cpp \
@@ -50,11 +49,7 @@ XRC_RESOURCES = \
 		$(srcdir)/resources/toolbar.xrc \
 		$(srcdir)/resources/find.xrc \
 		$(srcdir)/resources/comment.xrc \
-        $(srcdir)/resources/manager.xrc \
-		$(srcdir)/resources/tm_update.xrc
+        $(srcdir)/resources/manager.xrc
 
-XRC_MORE_FILES = \
-        $(srcdir)/resources/tm_update.gif
-
-compiled_xrc.cpp: $(XRC_RESOURCES) $(XRC_MORE_FILES)
+compiled_xrc.cpp: $(XRC_RESOURCES)
 	$(WXRC) -v -c -o $@ $(XRC_RESOURCES)
