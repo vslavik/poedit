@@ -32,6 +32,7 @@
 #include "chooselang.h"
 
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
+class PreferencesPage;
 
 /** Preferences dialog for setting user's identity, parsers and other
     global, catalog-independent settings.
@@ -54,8 +55,6 @@ class PreferencesDialog : public wxDialog
     private:
         DECLARE_EVENT_TABLE()
 
-        void OnTMAddLang(wxCommandEvent& event);
-
 #if NEED_CHOOSELANG_UI
         void OnUILanguage(wxCommandEvent& event);
 #endif
@@ -68,6 +67,8 @@ class PreferencesDialog : public wxDialog
         /// Called to launch dialog for editting parser properties.
         template<typename TFunctor>
         void EditParser(int num, TFunctor completionHandler);
+
+        PreferencesPage *m_pageTM;
 };
 
 

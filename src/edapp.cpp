@@ -62,7 +62,7 @@
 #include "chooselang.h"
 #include "icons.h"
 #include "version.h"
-#include "transmem.h"
+#include "tm/transmem.h"
 #include "utility.h"
 #include "prefsdlg.h"
 #include "errors.h"
@@ -171,8 +171,10 @@ bool PoeditApp::OnInit()
 
     FileHistory().Load(*wxConfig::Get());
 
+#if 0
     // NB: It's important to do this before TM is used for the first time.
     TranslationMemory::MoveLegacyDbIfNeeded();
+#endif
 
     // NB: opening files or creating empty window is handled differently on
     //     Macs, using MacOpenFiles() and MacNewFile(), so don't create empty
@@ -212,6 +214,8 @@ bool PoeditApp::OnInit()
 
 int PoeditApp::OnExit()
 {
+    TranslationMemory::CleanUp();
+
 #ifdef USE_SPARKLE
     Sparkle_Cleanup();
 #endif // USE_SPARKLE

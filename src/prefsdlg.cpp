@@ -26,20 +26,22 @@
 #include <wx/editlbox.h>
 #include <wx/textctrl.h>
 #include <wx/button.h>
-#include <wx/tokenzr.h>
 #include <wx/config.h>
 #include <wx/choicdlg.h>
 #include <wx/spinctrl.h>
 #include <wx/notebook.h>
 #include <wx/fontutil.h>
 #include <wx/fontpicker.h>
+#include <wx/filename.h>
 #include <wx/windowptr.h>
+#include <wx/sizer.h>
+#include <wx/settings.h>
 #include <wx/xrc/xmlres.h>
+#include <wx/numformatter.h>
 
 #include "prefsdlg.h"
 #include "edapp.h"
-#include "isocodes.h"
-#include "transmem.h"
+#include "tm/transmem.h"
 #include "chooselang.h"
 
 #ifdef __WXMSW__
@@ -50,11 +52,118 @@
 #include "osx_helpers.h"
 #endif // USE_SPARKLE
 
+class PreferencesPage : public wxPanel
+{
+public:
+    virtual void LoadSettings() = 0;
+    virtual void WriteSettings() = 0;
+
+protected:
+    PreferencesPage(wxWindow *parent)
+        : wxPanel(parent, wxID_ANY),
+          m_cfg(wxConfig::Get())
+    {}
+
+    wxConfigBase *m_cfg;
+};
+
+
+namespace
+{
+
+class TMPage : public PreferencesPage
+{
+public:
+    TMPage(wxWindow *parent) : PreferencesPage(parent)
+    {
+        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+        SetSizer(sizer);
+
+        sizer->AddSpacer(10);
+        m_useTM = new wxCheckBox(this, wxID_ANY, _("Use translation memory"));
+        sizer->Add(m_useTM, wxSizerFlags().Expand().Border(wxALL));
+
+        m_stats = new wxStaticText(this, wxID_ANY, "--\n--", wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE);
+        sizer->AddSpacer(10);
+        sizer->Add(m_stats, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
+        sizer->AddSpacer(10);
+        UpdateStats();
+
+        m_useTMWhenUpdating = new wxCheckBox(this, wxID_ANY, _("Consult TM when updating from sources"));
+        sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().Border(wxALL));
+        auto explain = new wxStaticText(this, wxID_ANY, _("If enabled, Poedit will try to fill in missing translations."));
+        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT, 25));
+
+#ifdef __WXOSX__
+        m_stats->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        explain->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#else
+        explain->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT));
+#endif
+
+        m_useTMWhenUpdating->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
+        m_stats->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
+        explain->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
+    }
+
+    virtual void LoadSettings()
+    {
+        m_useTM->SetValue(m_cfg->ReadBool("use_tm", true));
+        m_useTMWhenUpdating->SetValue(m_cfg->ReadBool("use_tm_when_updating", false));
+    }
+
+    virtual void WriteSettings()
+    {
+        m_cfg->Write("use_tm", m_useTM->GetValue());
+        m_cfg->Write("use_tm_when_updating", m_useTMWhenUpdating->GetValue());
+    }
+
+private:
+    void UpdateStats()
+    {
+        wxString sDocs("--");
+        wxString sFileSize("--");
+        if (m_cfg->ReadBool("use_tm", true))
+        {
+            try
+            {
+                long docs, fileSize;
+                TranslationMemory::Get().GetStats(docs, fileSize);
+                sDocs.Printf("<b>%s</b>", wxNumberFormatter::ToString(docs));
+                sFileSize.Printf("<b>%s</b>", wxFileName::GetHumanReadableSize(fileSize, "--", 1, wxSIZE_CONV_SI));
+            }
+            catch (std::exception&)
+            {
+                // ignore Lucene errors -- if the index doesn't exist yet, just show --
+            }
+        }
+
+        m_stats->SetLabelMarkup(wxString::Format(
+            "%s %s\n%s %s",
+            _("Stored translations:"),      sDocs,
+            _("Database size on disk:"),    sFileSize
+        ));
+    }
+
+    void OnUpdateUI(wxUpdateUIEvent& e)
+    {
+        e.Enable(m_useTM->GetValue());
+    }
+
+    wxCheckBox *m_useTM, *m_useTMWhenUpdating;
+    wxStaticText *m_stats;
+};
+
+} // anonymous namespace
+
+
 PreferencesDialog::PreferencesDialog(wxWindow *parent)
 {
     wxXmlResource::Get()->LoadDialog(this, parent, "preferences");
-    wxXmlResource::Get()->AttachUnknownControl("tm_langs",
-                new wxEditableListBox(this, -1, _("My Languages")));
+
+    wxNotebook *nb = XRCCTRL(*this, "prefs_notebook", wxNotebook);
+    m_pageTM = new TMPage(nb);
+    nb->InsertPage(2, m_pageTM, _("Translation Memory"));
 
 #if !USE_SPELLCHECKING
     // remove "Automatic spellchecking" checkbox:
@@ -129,18 +238,6 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     else
         list->SetSelection(0);
 
-    wxStringTokenizer tkn(cfg->Read("TM/languages", wxEmptyString), ":");
-    wxArrayString langs;
-    while (tkn.HasMoreTokens()) langs.Add(tkn.GetNextToken());
-    XRCCTRL(*this, "tm_langs", wxEditableListBox)->SetStrings(langs);
-
-    XRCCTRL(*this, "tm_omits", wxSpinCtrl)->SetValue(
-                (int)cfg->Read("TM/max_omitted", 2));
-    XRCCTRL(*this, "tm_delta", wxSpinCtrl)->SetValue(
-                (int)cfg->Read("TM/max_delta", 2));
-    XRCCTRL(*this, "tm_automatic", wxCheckBox)->SetValue(
-                (int)cfg->Read("use_tm_when_updating", true));
-
 #ifdef USE_SPARKLE
     XRCCTRL(*this, "auto_updates", wxCheckBox)->SetValue(
                 (bool)UserDefaults_GetBoolValue("SUEnableAutomaticChecks"));
@@ -155,6 +252,8 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     if (wxGetApp().IsBetaVersion())
         betas->Disable();
 #endif
+
+    m_pageTM->LoadSettings();
 }
  
             
@@ -199,22 +298,6 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                
     m_parsers.Write(cfg);
 
-    wxArrayString langs;
-    XRCCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(langs);
-    wxString languages;
-    for (size_t i = 0; i < langs.GetCount(); i++)
-    {
-        if (i != 0) languages << _T(':');
-        languages << langs[i];
-    }
-    cfg->Write("TM/languages", languages);
-    cfg->Write("TM/max_omitted", 
-                (long)XRCCTRL(*this, "tm_omits", wxSpinCtrl)->GetValue());
-    cfg->Write("TM/max_delta", 
-                (long)XRCCTRL(*this, "tm_delta", wxSpinCtrl)->GetValue());
-    cfg->Write("use_tm_when_updating", 
-                XRCCTRL(*this, "tm_automatic", wxCheckBox)->GetValue());
-
 #ifdef USE_SPARKLE
     UserDefaults_SetBoolValue("SUEnableAutomaticChecks",
                 XRCCTRL(*this, "auto_updates", wxCheckBox)->GetValue());
@@ -230,6 +313,8 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                    XRCCTRL(*this, "beta_versions", wxCheckBox)->GetValue());
     }
 #endif
+
+    m_pageTM->WriteSettings();
 }
 
 
@@ -238,7 +323,6 @@ BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
    EVT_BUTTON(XRCID("parser_new"), PreferencesDialog::OnNewParser)
    EVT_BUTTON(XRCID("parser_edit"), PreferencesDialog::OnEditParser)
    EVT_BUTTON(XRCID("parser_delete"), PreferencesDialog::OnDeleteParser)
-   EVT_BUTTON(XRCID("tm_addlang"), PreferencesDialog::OnTMAddLang)
 #if NEED_CHOOSELANG_UI
    EVT_BUTTON(XRCID("ui_language"), PreferencesDialog::OnUILanguage)
 #endif
@@ -329,25 +413,6 @@ void PreferencesDialog::OnDeleteParser(wxCommandEvent&)
     {
         XRCCTRL(*this, "parser_edit", wxButton)->Enable(false);
         XRCCTRL(*this, "parser_delete", wxButton)->Enable(false);
-    }
-}
-
-void PreferencesDialog::OnTMAddLang(wxCommandEvent&)
-{
-    wxArrayString lngs;
-    int index;
-    
-    for (const LanguageStruct *i = isoLanguages; i->lang != NULL; i++)
-        lngs.Add(wxString(i->iso) + " (" + i->lang + ")");
-    index = wxGetSingleChoiceIndex(_("Select language"), 
-                                   _("Please select language ISO code:"),
-                                   lngs, this);
-    if (index != -1)
-    {
-        wxArrayString a;
-        XRCCTRL(*this, "tm_langs", wxEditableListBox)->GetStrings(a);
-        a.Add(isoLanguages[index].iso);
-        XRCCTRL(*this, "tm_langs", wxEditableListBox)->SetStrings(a);
     }
 }
 

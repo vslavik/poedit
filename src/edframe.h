@@ -46,12 +46,12 @@ class WXDLLIMPEXP_FWD_CORE wxStaticText;
 #include "gexecute.h"
 #include "edlistctrl.h"
 #include "edapp.h"
+#include "tm/transmem.h"
 
 class ListHandler;
 class TextctrlHandler;
 class TransTextctrlHandler;
 
-class TranslationMemory;
 class PoeditFrame;
 class AttentionBar;
 class ErrorBar;
@@ -159,9 +159,6 @@ class PoeditFrame : public wxFrame
         /// Returns popup menu for given catalog entry.
         wxMenu *GetPopupMenu(int item);
 
-        /// Initializes translation memory, if enabled
-        TranslationMemory *GetTransMem();
-
         // (Re)initializes spellchecker, if needed
         void InitSpellchecker();
 
@@ -257,9 +254,7 @@ private:
         Catalog *m_catalog;
         wxString m_fileName;
 
-        TranslationMemory *m_transMem;
-        bool m_transMemLoaded;
-        wxArrayString m_autoTranslations;
+        TranslationMemory::Results m_autoTranslations;
 
         wxPanel *m_bottomLeftPanel;
         wxPanel *m_bottomRightPanel;

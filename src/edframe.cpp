@@ -65,6 +65,7 @@
 
 #include <map>
 #include <algorithm>
+#include <thread>
 
 #include "catalog.h"
 #include "edapp.h"
@@ -73,7 +74,7 @@
 #include "prefsdlg.h"
 #include "fileviewer.h"
 #include "findframe.h"
-#include "transmem.h"
+#include "tm/transmem.h"
 #include "isocodes.h"
 #include "lang_info.h"
 #include "progressinfo.h"
@@ -446,8 +447,6 @@ PoeditFrame::PoeditFrame() :
             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
             "mainwin"),
     m_catalog(NULL),
-    m_transMem(NULL),
-    m_transMemLoaded(false),
     m_list(NULL),
     m_modified(false),
     m_hasObsoleteItems(false),
@@ -736,9 +735,6 @@ PoeditFrame::~PoeditFrame()
     // write all changes:
     cfg->Flush();
 
-    if (m_transMem)
-        m_transMem->Release();
-
     delete m_catalog;
     m_catalog = NULL;
     m_list->CatalogChanged(NULL);
@@ -919,54 +915,6 @@ void PoeditFrame::InitSpellchecker()
         m_attentionBar->ShowMessage(msg);
     }
 #endif // USE_SPELLCHECKING
-}
-
-
-
-TranslationMemory *PoeditFrame::GetTransMem()
-{
-    wxConfigBase *cfg = wxConfig::Get();
-
-    if (m_transMemLoaded)
-        return m_transMem;
-    else
-    {
-        wxString lang;
-
-        lang = m_catalog->GetLocaleCode();
-        if (!lang)
-        {
-            wxArrayString lngs;
-            int index;
-            wxStringTokenizer tkn(cfg->Read("TM/languages", wxEmptyString), ":");
-
-            lngs.Add(_("(none of these)"));
-            while (tkn.HasMoreTokens()) lngs.Add(tkn.GetNextToken());
-            if (lngs.GetCount() == 1)
-            {
-                m_transMemLoaded = true;
-                m_transMem = NULL;
-                return m_transMem;
-            }
-            index = wxGetSingleChoiceIndex(_("Select catalog's language"),
-                                           _("Please select language code:"),
-                                           lngs, this);
-            if (index > 0)
-                lang = lngs[index];
-        }
-
-        if (!lang.empty() && TranslationMemory::IsSupported(lang))
-        {
-            m_transMem = TranslationMemory::Create(lang);
-            if (m_transMem)
-                m_transMem->SetParams((int)cfg->Read("TM/max_delta", 2),
-                                      (int)cfg->Read("TM/max_omitted", 2));
-        }
-        else
-            m_transMem = NULL;
-        m_transMemLoaded = true;
-        return m_transMem;
-    }
 }
 
 
@@ -1275,13 +1223,6 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
             UpdateTitle();
             UpdateStatusBar();
 
-            if (m_transMem)
-            {
-                m_transMem->Release();
-                m_transMem = NULL;
-            }
-            m_transMemLoaded = false;
-
             InitSpellchecker();
         });
     });
@@ -1381,8 +1322,8 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
 
     UpdateCatalog(pot_file);
 
-    if (wxConfig::Get()->Read("use_tm_when_updating", true) &&
-        GetTransMem() != NULL)
+    if (wxConfig::Get()->ReadBool("use_tm", true) &&
+        wxConfig::Get()->ReadBool("use_tm_when_updating", false))
     {
         AutoTranslateCatalog();
     }
@@ -1943,13 +1884,6 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
     // confused
     m_list->CatalogChanged(m_catalog);
 
-    if (m_transMem)
-    {
-        m_transMem->Release();
-        m_transMem = NULL;
-    }
-    m_transMemLoaded = false;
-
     m_fileName = filename;
     m_modified = false;
 
@@ -2286,6 +2220,21 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
 {
     wxBusyCursor bcur;
 
+    std::unique_ptr<std::thread> tmUpdateThread;
+    if (wxConfig::Get()->ReadBool("use_tm", true))
+    {
+        tmUpdateThread.reset(new std::thread([=](){
+            try
+            {
+                TranslationMemory::Get().Insert(*m_catalog);
+            }
+            catch ( const std::exception& e )
+            {
+                wxLogWarning(_("Failed to update translation memory: %s"), e.what());
+            }
+        }));
+    }
+
     Catalog::HeaderData& dt = m_catalog->Header();
     dt.Translator = wxConfig::Get()->Read("translator_name", dt.Translator);
     dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", dt.TranslatorEmail);
@@ -2294,42 +2243,13 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     if ( !m_catalog->Save(catalog, true, validation_errors) )
     {
         completionHandler(false);
+        if (tmUpdateThread)
+            tmUpdateThread->join();
         return;
     }
 
     m_fileName = catalog;
     m_modified = false;
-
-    if (GetTransMem())
-    {
-        TranslationMemory *tm = GetTransMem();
-        int cnt = m_catalog->GetCount();
-        for (int i = 0; i < cnt; i++)
-        {
-            const CatalogItem& item = (*m_catalog)[i];
-
-            // ignore translations with errors in them
-            if (item.GetValidity() == CatalogItem::Val_Invalid)
-                continue;
-
-            // ignore untranslated or unfinished translations
-            if (item.IsFuzzy() || item.GetTranslation().empty())
-                continue;
-
-            // Note that dt.IsModified() is intentionally not checked - we
-            // want to save old entries in the TM too, so that we harvest as
-            // much useful translations as we can.
-
-            if ( !tm->Store(item.GetString(), item.GetTranslation()) )
-            {
-                // If the TM failed, it would almost certainly fail to store
-                // the next item as well. Don't bother, just stop updating
-                // it here, so that the user is given only one error message
-                // instead of an insane amount of them.
-                break;
-            }
-        }
-    }
 
     FileHistory().AddFileToHistory(m_fileName);
     UpdateTitle();
@@ -2354,6 +2274,9 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     {
         completionHandler(true);
     }
+
+    if (tmUpdateThread)
+        tmUpdateThread->join();
 }
 
 
@@ -2428,12 +2351,12 @@ void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
 
 bool PoeditFrame::AutoTranslateCatalog()
 {
+    if (!wxConfig::Get()->ReadBool("use_tm", true))
+        return false;
+
     wxBusyCursor bcur;
 
-    TranslationMemory *tm = GetTransMem();
-
-    if (tm == NULL)
-        return false;
+    TranslationMemory& tm = TranslationMemory::Get();
 
     int cnt = m_catalog->GetCount();
     int matches = 0;
@@ -2443,12 +2366,15 @@ bool PoeditFrame::AutoTranslateCatalog()
     progress.SetGaugeMax(cnt);
     for (int i = 0; i < cnt; i++)
     {
+        progress.UpdateGauge();
+
         CatalogItem& dt = (*m_catalog)[i];
+        if (dt.HasPlural())
+            continue; // can't handle yet (TODO?)
         if (dt.IsFuzzy() || !dt.IsTranslated())
         {
-            wxArrayString results;
-            int score = tm->Lookup(dt.GetString(), results);
-            if (score > 0 && !results.empty())
+            TranslationMemory::Results results;
+            if (tm.Search(m_catalog->GetLocaleCode(), dt.GetString(), results, 1))
             {
                 dt.SetTranslation(results[0]);
                 dt.SetAutomatic(true);
@@ -2464,7 +2390,6 @@ bool PoeditFrame::AutoTranslateCatalog()
                 }
             }
         }
-        progress.UpdateGauge();
     }
 
     RefreshControls();
@@ -2503,12 +2428,11 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                  #endif
                    + "\tCtrl+M");
 
-    if (GetTransMem())
+    if (wxConfig::Get()->ReadBool("use_tm", true))
     {
         wxBusyCursor bcur;
         CatalogItem& dt = (*m_catalog)[item];
-        m_autoTranslations.Clear();
-        if (GetTransMem()->Lookup(dt.GetString(), m_autoTranslations) > 0)
+        if (TranslationMemory::Get().Search(m_catalog->GetLocaleCode(), dt.GetString(), m_autoTranslations))
         {
             menu->AppendSeparator();
 #ifdef CAN_MODIFY_DEFAULT_FONT
@@ -2536,13 +2460,13 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                   );
 #endif
 
-            for (int i = 0; i < m_autoTranslations.GetCount(); i++)
+            for (int i = 0; i < m_autoTranslations.size(); i++)
             {
-                // Convert from UTF-8 to environment's default charset:
-                wxString s(m_autoTranslations[i].wc_str(wxConvUTF8), wxConvLocal);
-                if (!s)
-                    s = m_autoTranslations[i];
-                menu->Append(ID_POPUP_TRANS + i, "    " + s);
+                wxString s;
+                // TRANSLATORS: Quoted text with leading 4 spaces
+                s.Printf(_("    “%s”"), m_autoTranslations[i]);
+                s.Replace("&", "&&");
+                menu->Append(ID_POPUP_TRANS + i, s);
             }
         }
     }
