@@ -23,6 +23,8 @@
  *
  */
 
+#include <memory>
+
 #include <wx/editlbox.h>
 #include <wx/textctrl.h>
 #include <wx/button.h>
@@ -33,14 +35,17 @@
 #include <wx/fontutil.h>
 #include <wx/fontpicker.h>
 #include <wx/filename.h>
+#include <wx/filedlg.h>
 #include <wx/windowptr.h>
 #include <wx/sizer.h>
 #include <wx/settings.h>
+#include <wx/progdlg.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/numformatter.h>
 
 #include "prefsdlg.h"
 #include "edapp.h"
+#include "catalog.h"
 #include "tm/transmem.h"
 #include "chooselang.h"
 
@@ -89,6 +94,10 @@ public:
         sizer->AddSpacer(10);
         UpdateStats();
 
+        auto import = new wxButton(this, wxID_ANY, _("Learn From Files..."));
+        sizer->Add(import, wxSizerFlags().Border(wxLEFT|wxRIGHT, 25));
+        sizer->AddSpacer(10);
+
         m_useTMWhenUpdating = new wxCheckBox(this, wxID_ANY, _("Consult TM when updating from sources"));
         sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().Border(wxALL));
         auto explain = new wxStaticText(this, wxID_ANY, _("If enabled, Poedit will try to fill in missing translations."));
@@ -96,6 +105,7 @@ public:
 
 #ifdef __WXOSX__
         m_stats->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        import->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         explain->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #else
         explain->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT));
@@ -104,6 +114,9 @@ public:
         m_useTMWhenUpdating->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
         m_stats->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
         explain->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
+        import->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
+
+        import->Bind(wxEVT_BUTTON, &TMPage::OnImportIntoTM, this);
     }
 
     virtual void LoadSettings()
@@ -143,6 +156,43 @@ private:
             _("Stored translations:"),      sDocs,
             _("Database size on disk:"),    sFileSize
         ));
+    }
+
+    void OnImportIntoTM(wxCommandEvent&)
+    {
+        wxWindowPtr<wxFileDialog> dlg(new wxFileDialog(
+            this,
+            _("Select translation files to import"),
+            wxEmptyString,
+            wxEmptyString,
+            _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+            wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE));
+
+        dlg->ShowWindowModalThenDo([=](int retcode){
+            if (retcode != wxID_OK)
+                return;
+
+            wxArrayString paths;
+            dlg->GetPaths(paths);
+
+            wxProgressDialog progress(_("Translation Memory"),
+                                      _("Importing translations..."),
+                                      (int)paths.size() * 2,
+                                      this,
+                                      wxPD_APP_MODAL|wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
+            int step = 0;
+            for (size_t i = 0; i < paths.size(); i++)
+            {
+                std::unique_ptr<Catalog> cat(new Catalog(paths[i]));
+                if (!progress.Update(++step))
+                    break;
+                if (cat->IsOk())
+                    TranslationMemory::Get().Insert(*cat);
+                if (!progress.Update(++step))
+                    break;
+            }
+            UpdateStats();
+        });
     }
 
     void OnUpdateUI(wxUpdateUIEvent& e)
