@@ -435,6 +435,10 @@ bool PoeditApp::OnExceptionInMainLoop()
     {
         wxLogError("%s", e.what());
     }
+    catch ( std::exception& e )
+    {
+        wxLogError("%s", e.what());
+    }
     catch ( ... )
     {
         throw;
