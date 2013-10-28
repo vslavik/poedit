@@ -81,20 +81,11 @@ public:
                 Results& results,
                 int maxHits = -1);
 
-    void Insert(const std::wstring& lang,
-                const std::wstring& source,
-                const std::wstring& trans);
-
-    void Insert(const Catalog& cat);
+    std::shared_ptr<TranslationMemory::Writer> CreateWriter();
 
     void GetStats(long& numDocs, long& fileSize);
 
 private:
-    void Insert(const IndexWriterPtr& writer,
-                const std::wstring& lang,
-                const std::wstring& source,
-                const std::wstring& trans);
-
     static std::wstring GetDatabaseDir();
     IndexReaderPtr Reader();
     SearcherPtr Searcher();
@@ -202,95 +193,114 @@ bool TranslationMemoryImpl::Search(const std::wstring& lang,
 }
 
 
-void TranslationMemoryImpl::Insert(const IndexWriterPtr& writer,
-                                   const std::wstring& lang,
-                                   const std::wstring& source,
-                                   const std::wstring& trans)
-{
-    // Compute unique ID for the translation:
-
-    static const boost::uuids::uuid s_namespace =
-      boost::uuids::string_generator()("6e3f73c5-333f-4171-9d43-954c372a8a02");
-    boost::uuids::name_generator gen(s_namespace);
-
-    std::wstring itemId(L"en"); // TODO: srclang
-    itemId += lang;
-    itemId += source;
-    itemId += trans;
-
-    const std::wstring itemUUID = boost::uuids::to_wstring(gen(itemId));
-
-    // Then add a new document:
-    auto doc = newLucene<Document>();
-
-    doc->add(newLucene<Field>(L"uuid", itemUUID,
-                              Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
-    doc->add(newLucene<Field>(L"srclang", L"en",
-                              Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
-    doc->add(newLucene<Field>(L"lang", lang,
-                              Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
-    doc->add(newLucene<Field>(L"source", source,
-                              Field::STORE_YES, Field::INDEX_ANALYZED));
-    doc->add(newLucene<Field>(L"trans", trans,
-                              Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
-
-    writer->updateDocument(newLucene<Term>(L"uuid", itemUUID), doc);
-}
-
-void TranslationMemoryImpl::Insert(const std::wstring& lang,
-                                   const std::wstring& source,
-                                   const std::wstring& trans)
-{
-    if (lang.empty())
-        return;
-
-    auto writer = newLucene<IndexWriter>(m_dir, m_analyzer, IndexWriter::MaxFieldLengthLIMITED);
-    Insert(writer, lang, source, trans);
-    writer->close();
-}
-
-void TranslationMemoryImpl::Insert(const Catalog &cat)
-{
-    const std::wstring lang = cat.GetLocaleCode().ToStdWstring();
-    if (lang.empty())
-        return;
-
-    auto writer = newLucene<IndexWriter>(m_dir, m_analyzer, IndexWriter::MaxFieldLengthLIMITED);
-
-    int cnt = cat.GetCount();
-    for (int i = 0; i < cnt; i++)
-    {
-        const CatalogItem& item = cat[i];
-
-        // ignore translations with errors in them
-        if (item.GetValidity() == CatalogItem::Val_Invalid)
-            continue;
-
-        // can't handle plurals yet (TODO?)
-        if (item.HasPlural())
-            continue;
-
-        // ignore untranslated or unfinished translations
-        if (item.IsFuzzy() || !item.IsTranslated())
-            continue;
-
-        // Note that dt.IsModified() is intentionally not checked - we
-        // want to save old entries in the TM too, so that we harvest as
-        // much useful translations as we can.
-
-        Insert(writer, lang, item.GetString(), item.GetTranslation());
-    }
-
-    writer->close();
-}
-
-
 void TranslationMemoryImpl::GetStats(long& numDocs, long& fileSize)
 {
     auto reader = Reader();
     numDocs = reader->numDocs();
     fileSize = wxDir::GetTotalSize(GetDatabaseDir()).GetValue();
 }
+
+// ----------------------------------------------------------------
+// TranslationMemoryWriterImpl
+// ----------------------------------------------------------------
+
+class TranslationMemoryWriterImpl : public TranslationMemory::Writer
+{
+public:
+    TranslationMemoryWriterImpl(DirectoryPtr dir, AnalyzerPtr analyzer)
+    {
+        m_writer = newLucene<IndexWriter>(dir, analyzer, IndexWriter::MaxFieldLengthLIMITED);
+    }
+
+    ~TranslationMemoryWriterImpl()
+    {
+        if (m_writer)
+            m_writer->rollback();
+    }
+
+    virtual void Commit()
+    {
+        m_writer->close();
+        m_writer.reset();
+    }
+
+    virtual void Insert(const std::wstring& lang,
+                        const std::wstring& source,
+                        const std::wstring& trans)
+    {
+        if (lang.empty())
+            return;
+
+        // Compute unique ID for the translation:
+
+        static const boost::uuids::uuid s_namespace =
+          boost::uuids::string_generator()("6e3f73c5-333f-4171-9d43-954c372a8a02");
+        boost::uuids::name_generator gen(s_namespace);
+
+        std::wstring itemId(L"en"); // TODO: srclang
+        itemId += lang;
+        itemId += source;
+        itemId += trans;
+
+        const std::wstring itemUUID = boost::uuids::to_wstring(gen(itemId));
+
+        // Then add a new document:
+        auto doc = newLucene<Document>();
+
+        doc->add(newLucene<Field>(L"uuid", itemUUID,
+                                  Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
+        doc->add(newLucene<Field>(L"srclang", L"en",
+                                  Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
+        doc->add(newLucene<Field>(L"lang", lang,
+                                  Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
+        doc->add(newLucene<Field>(L"source", source,
+                                  Field::STORE_YES, Field::INDEX_ANALYZED));
+        doc->add(newLucene<Field>(L"trans", trans,
+                                  Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
+
+        m_writer->updateDocument(newLucene<Term>(L"uuid", itemUUID), doc);
+    }
+
+    virtual void Insert(const Catalog &cat)
+    {
+        const std::wstring lang = cat.GetLocaleCode().ToStdWstring();
+        if (lang.empty())
+            return;
+
+        int cnt = cat.GetCount();
+        for (int i = 0; i < cnt; i++)
+        {
+            const CatalogItem& item = cat[i];
+
+            // ignore translations with errors in them
+            if (item.GetValidity() == CatalogItem::Val_Invalid)
+                continue;
+
+            // can't handle plurals yet (TODO?)
+            if (item.HasPlural())
+                continue;
+
+            // ignore untranslated or unfinished translations
+            if (item.IsFuzzy() || !item.IsTranslated())
+                continue;
+
+            // Note that dt.IsModified() is intentionally not checked - we
+            // want to save old entries in the TM too, so that we harvest as
+            // much useful translations as we can.
+
+            Insert(lang, item.GetString(), item.GetTranslation());
+        }
+    }
+
+private:
+    IndexWriterPtr m_writer;
+};
+
+std::shared_ptr<TranslationMemory::Writer> TranslationMemoryImpl::CreateWriter()
+{
+    return std::make_shared<TranslationMemoryWriterImpl>(m_dir, m_analyzer);
+}
+
 
 
 // ----------------------------------------------------------------
@@ -333,16 +343,9 @@ bool TranslationMemory::Search(const std::wstring& lang,
     return m_impl->Search(lang, source, results, maxHits);
 }
 
-void TranslationMemory::Insert(const std::wstring& lang,
-                               const std::wstring& source,
-                               const std::wstring& trans)
+std::shared_ptr<TranslationMemory::Writer> TranslationMemory::CreateWriter()
 {
-    m_impl->Insert(lang, source, trans);
-}
-
-void TranslationMemory::Insert(const Catalog &cat)
-{
-    m_impl->Insert(cat);
+    return m_impl->CreateWriter();
 }
 
 void TranslationMemory::GetStats(long& numDocs, long& fileSize)

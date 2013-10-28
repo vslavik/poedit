@@ -177,9 +177,10 @@ private:
 
             wxProgressDialog progress(_("Translation Memory"),
                                       _("Importing translations..."),
-                                      (int)paths.size() * 2,
+                                      (int)paths.size() * 2 + 1,
                                       this,
                                       wxPD_APP_MODAL|wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
+            auto tm = TranslationMemory::Get().CreateWriter();
             int step = 0;
             for (size_t i = 0; i < paths.size(); i++)
             {
@@ -187,10 +188,12 @@ private:
                 if (!progress.Update(++step))
                     break;
                 if (cat->IsOk())
-                    TranslationMemory::Get().Insert(*cat);
+                    tm->Insert(*cat);
                 if (!progress.Update(++step))
                     break;
             }
+            progress.Pulse(_("Finalizing..."));
+            tm->Commit();
             UpdateStats();
         });
     }

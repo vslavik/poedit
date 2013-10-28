@@ -2226,7 +2226,9 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
         tmUpdateThread.reset(new std::thread([=](){
             try
             {
-                TranslationMemory::Get().Insert(*m_catalog);
+                auto tm = TranslationMemory::Get().CreateWriter();
+                tm->Insert(*m_catalog);
+                tm->Commit();
             }
             catch ( const std::exception& e )
             {

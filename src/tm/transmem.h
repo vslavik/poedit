@@ -28,6 +28,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 class Catalog;
 class TranslationMemoryImpl;
@@ -63,24 +64,41 @@ public:
                 int maxHits = -1);
 
     /**
-        Insert translation into the TM.
+        Performs updates to the translation memory.
         
-        @param lang    Language code (e.g. pt_BR or cs).
-        @param source  Source text.
-        @param trans   Translation text.
-     */
-    void Insert(const std::wstring& lang,
-                const std::wstring& source,
-                const std::wstring& trans);
+        You must call Commit() for them to be written.
+      */
+    class Writer
+    {
+    public:
+        virtual ~Writer() {}
 
-    /**
-        Inserts entire content of the catalog.
-        
-        @note
-        Not everything is included: fuzzy or untranslated entries are omitted.
-        If the catalog doesn't have language header, it is not included either.
-     */
-    void Insert(const Catalog& cat);
+        /**
+            Insert translation into the TM.
+            
+            @param lang    Language code (e.g. pt_BR or cs).
+            @param source  Source text.
+            @param trans   Translation text.
+         */
+        virtual void Insert(const std::wstring& lang,
+                            const std::wstring& source,
+                            const std::wstring& trans) = 0;
+
+        /**
+            Inserts entire content of the catalog.
+            
+            @note
+            Not everything is included: fuzzy or untranslated entries are omitted.
+            If the catalog doesn't have language header, it is not included either.
+         */
+        virtual void Insert(const Catalog& cat) = 0;
+
+        /// Commits changes written so far.
+        virtual void Commit() = 0;
+    };
+
+    /// Creates a writer for updating the TM
+    std::shared_ptr<Writer> CreateWriter();
 
     /// Returns statistics about the TM
     void GetStats(long& numDocs, long& fileSize);
