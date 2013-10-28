@@ -84,6 +84,7 @@
 		B2E837011709ED6300F31559 /* poedit-fuzzy.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F81709ED6300F31559 /* poedit-fuzzy.png */; };
 		B2E837021709ED6300F31559 /* poedit-update.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F91709ED6300F31559 /* poedit-update.png */; };
 		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
+		B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F14DD3181E510100E212B5 /* tm_migrate.cpp */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
 		B2F287C5170DCC92004C1F41 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C3170DCC92004C1F41 /* COPYING */; };
@@ -279,6 +280,7 @@
 		B2E836F91709ED6300F31559 /* poedit-update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-update.png"; path = "toolbar-32/poedit-update.png"; sourceTree = "<group>"; };
 		B2E836FA1709ED6300F31559 /* poedit-validate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-validate.png"; path = "toolbar-32/poedit-validate.png"; sourceTree = "<group>"; };
 		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macosx/copy-translations.sh"; sourceTree = "<group>"; };
+		B2F14DD3181E510100E212B5 /* tm_migrate.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = tm_migrate.cpp; path = tm/tm_migrate.cpp; sourceTree = "<group>"; };
 		B2F287C2170DCC92004C1F41 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = deps/gettext/AUTHORS; sourceTree = SOURCE_ROOT; };
 		B2F287C3170DCC92004C1F41 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = COPYING; path = deps/gettext/COPYING; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -329,6 +331,7 @@
 			children = (
 				B28F1CD916F629D30018AF7E /* transmem.h */,
 				B28F1CD816F629D30018AF7E /* transmem.cpp */,
+				B2F14DD3181E510100E212B5 /* tm_migrate.cpp */,
 				B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */,
 			);
 			name = TM;
@@ -804,6 +807,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */,
 				B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */,
 				B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */,
 				B28F1CE816F629D30018AF7E /* edframe.cpp in Sources */,

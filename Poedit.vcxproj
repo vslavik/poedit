@@ -51,8 +51,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>XML_STATIC;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
@@ -74,8 +74,8 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>XML_STATIC;WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -115,6 +115,7 @@
     <ClCompile Include="src\progressinfo.cpp" />
     <ClCompile Include="src\propertiesdlg.cpp" />
     <ClCompile Include="src\summarydlg.cpp" />
+    <ClCompile Include="src\tm\tm_migrate.cpp" />
     <ClCompile Include="src\tm\transmem.cpp" />
     <ClCompile Include="src\utility.cpp" />
   </ItemGroup>

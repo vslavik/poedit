@@ -374,9 +374,9 @@ void DumpLanguage(DbEnv *env, const char *envpath, const std::string& lang)
 
 int main(int argc, char *argv[])
 {
-    if (argc < 3)
+    if (argc != 3)
     {
-        fprintf(stderr, "Usage: %s <path to Poedit's legacy TM> languages...\n", argv[0]);
+        fprintf(stderr, "Usage: %s <path to Poedit's legacy TM> languages (e.g. 'cs:fr:en')...\n", argv[0]);
         return 2;
     }
 
@@ -387,8 +387,20 @@ int main(int argc, char *argv[])
         printf("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
         printf("<poedit-legacy-tm-export>\n");
 
-        for (int i = 2; i < argc; i++)
-            DumpLanguage(env.get(), argv[1], argv[i]);
+        std::string lang;
+        for (const char *ptr = argv[2];; ptr++)
+        {
+            if (*ptr == ':' || *ptr == '\0')
+            {
+                if (!lang.empty())
+                    DumpLanguage(env.get(), argv[1], lang);
+                lang.clear();
+                if (*ptr == '\0')
+                    break;
+            }
+            else
+                lang += *ptr;
+        }
 
         printf("</poedit-legacy-tm-export>\n");
 
