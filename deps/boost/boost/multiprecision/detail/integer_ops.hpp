@@ -195,6 +195,24 @@ inline typename enable_if_c<number_category<typename multiprecision::detail::exp
 }
 
 template <class Backend, expression_template_option ExpressionTemplates>
+inline typename enable_if_c<number_category<Backend>::value == number_kind_integer, unsigned>::type 
+   msb(const number<Backend, ExpressionTemplates>& x)
+{
+   using default_ops::eval_msb;
+   return eval_msb(x.backend());
+}
+
+template <class tag, class A1, class A2, class A3, class A4>
+inline typename enable_if_c<number_category<typename multiprecision::detail::expression<tag, A1, A2, A3, A4>::result_type>::value == number_kind_integer, unsigned>::type 
+   msb(const multiprecision::detail::expression<tag, A1, A2, A3, A4>& x)
+{
+   typedef typename multiprecision::detail::expression<tag, A1, A2, A3, A4>::result_type number_type;
+   number_type n(x);
+   using default_ops::eval_msb;
+   return eval_msb(n.backend());
+}
+
+template <class Backend, expression_template_option ExpressionTemplates>
 inline typename enable_if_c<number_category<Backend>::value == number_kind_integer, bool>::type 
    bit_test(const number<Backend, ExpressionTemplates>& x, unsigned index)
 {

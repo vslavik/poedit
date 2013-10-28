@@ -8,6 +8,16 @@
 #include <boost/thread/future.hpp>
 #include <iostream>
 
+namespace boost
+{
+
+  template <typename T>
+  exception_ptr make_exception_ptr(T v)
+  {
+    return copy_exception(v);
+  }
+}
+
 int p1() { return 5; }
 
 void p() { }
@@ -15,22 +25,23 @@ void p() { }
 #if defined BOOST_THREAD_USES_MOVE
 boost::future<void> void_compute()
 {
-  return BOOST_THREAD_MAKE_RV_REF(boost::make_future());
+  return BOOST_THREAD_MAKE_RV_REF(boost::make_ready_future());
 }
 #endif
 
 boost::future<int> compute(int x)
 {
-  if (x == 0) return boost::make_future(0);
-  if (x < 0) return boost::make_future(-1);
+  if (x == 0) return boost::make_ready_future(0);
+  //if (x < 0) return boost::make_ready_future<int>(boost::make_exception_ptr(std::logic_error("Error")));
+  if (x < 0) return boost::make_ready_future<int>(std::logic_error("Error"));
   //boost::future<int> f1 = boost::async([]() { return x+1; });
   boost::future<int> f1 = boost::async(boost::launch::async, p1);
   return boost::move(f1);
 }
 boost::shared_future<int> shared_compute(int x)
 {
-  if (x == 0) return boost::make_shared_future(0);
-  if (x < 0) return boost::make_shared_future(-1);
+  if (x == 0) return boost::make_ready_future(0).share();
+  if (x < 0) return boost::make_ready_future<int>(std::logic_error("Error")).share();
   //boost::future<int> f1 = boost::async([]() { return x+1; });
   boost::shared_future<int> f1 = boost::async(p1).share();
   return boost::move(f1);

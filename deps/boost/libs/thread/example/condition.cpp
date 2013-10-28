@@ -16,7 +16,7 @@ class bounded_buffer : private boost::noncopyable
 public:
     typedef boost::unique_lock<boost::mutex> lock;
 
-    bounded_buffer(int n) : begin(0), end(0), buffered(0), circular_buf(n) { }
+    bounded_buffer(int n) : boost::noncopyable(), begin(0), end(0), buffered(0), circular_buf(n) { }
 
     void send (int m) {
         lock lk(monitor);

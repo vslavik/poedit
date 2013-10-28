@@ -166,7 +166,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         {};
 
         // filter out the string kwd directives
-        typedef typename mpl::filter_view< Elements, is_kwd_parser<mpl_::_> >::type string_keywords;
+        typedef typename mpl::filter_view< Elements, is_kwd_parser<mpl::_> >::type string_keywords;
                         
         typedef typename mpl::filter_view< parser_index_vector ,
                                          is_kwd_parser_filter< mpl::_ >

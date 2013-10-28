@@ -195,10 +195,6 @@ struct simple_callback {
 
     typedef typename boost::graph_traits<Graph>::vertex_descriptor Vertex;
 
-    typedef typename boost::property_map<Graph, boost::vertex_index_t>::type VertexIndexMap;
-    typedef typename boost::property_map<Graph, boost::vertex_name_t>::type VertexNameMap;
-    typedef typename boost::property_map<Graph, boost::edge_name_t>::type EdgeNameMap;
-
     std::stringstream subgraph_string;
 
     BGL_FORALL_VERTICES_T(vertex1, m_graph1, Graph) {
@@ -307,9 +303,6 @@ int test_main (int argc, char *argv[]) {
     boost::property<boost::vertex_name_t, unsigned int,
     boost::property<boost::vertex_index_t, unsigned int> >,
     boost::property<boost::edge_name_t, unsigned int> > Graph;
-
-  typedef boost::graph_traits<Graph>::vertex_descriptor Vertex;
-  typedef boost::graph_traits<Graph>::edge_descriptor Edge;
 
   typedef boost::property_map<Graph, boost::vertex_name_t>::type VertexNameMap;
   typedef boost::property_map<Graph, boost::edge_name_t>::type EdgeNameMap;

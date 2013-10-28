@@ -158,8 +158,7 @@ namespace boost
                 err |= std::ios_base::failbit;
         }
 
-        void
-        get_second(int& s,
+        void  get_second(int& s,
                                                        iter_type& b, iter_type e,
                                                        std::ios_base::iostate& err,
                                                        const std::ctype<char_type>& ct) const
@@ -171,7 +170,89 @@ namespace boost
                 err |= std::ios_base::failbit;
         }
 
+        void get_white_space(iter_type& b, iter_type e,
+                                                            std::ios_base::iostate& err,
+                                                            const std::ctype<char_type>& ct) const
+        {
+            for (; b != e && ct.is(std::ctype_base::space, *b); ++b)
+                ;
+            if (b == e)
+                err |= std::ios_base::eofbit;
+        }
 
+        void get_12_hour(int& h,
+                                                        iter_type& b, iter_type e,
+                                                        std::ios_base::iostate& err,
+                                                        const std::ctype<char_type>& ct) const
+        {
+            int t = get_up_to_n_digits(b, e, err, ct, 2);
+            if (!(err & std::ios_base::failbit) && 1 <= t && t <= 12)
+                h = t;
+            else
+                err |= std::ios_base::failbit;
+        }
+
+        void get_percent(iter_type& b, iter_type e,
+                                                        std::ios_base::iostate& err,
+                                                        const std::ctype<char_type>& ct) const
+        {
+            if (b == e)
+            {
+                err |= std::ios_base::eofbit | std::ios_base::failbit;
+                return;
+            }
+            if (ct.narrow(*b, 0) != '%')
+                err |= std::ios_base::failbit;
+            else if(++b == e)
+                err |= std::ios_base::eofbit;
+        }
+
+        void get_day_year_num(int& d,
+                                                             iter_type& b, iter_type e,
+                                                             std::ios_base::iostate& err,
+                                                             const std::ctype<char_type>& ct) const
+        {
+            int t = get_up_to_n_digits(b, e, err, ct, 3);
+            if (!(err & std::ios_base::failbit) && t <= 365)
+                d = t;
+            else
+                err |= std::ios_base::failbit;
+        }
+
+        void
+        get_weekday(int& w,
+                                                        iter_type& b, iter_type e,
+                                                        std::ios_base::iostate& err,
+                                                        const std::ctype<char_type>& ct) const
+        {
+            int t = get_up_to_n_digits(b, e, err, ct, 1);
+            if (!(err & std::ios_base::failbit) && t <= 6)
+                w = t;
+            else
+                err |= std::ios_base::failbit;
+        }
+#if 0
+
+        void
+        get_am_pm(int& h,
+                                                      iter_type& b, iter_type e,
+                                                      std::ios_base::iostate& err,
+                                                      const std::ctype<char_type>& ct) const
+        {
+            const string_type* ap = am_pm();
+            if (ap[0].size() + ap[1].size() == 0)
+            {
+                err |= ios_base::failbit;
+                return;
+            }
+            ptrdiff_t i = detail::scan_keyword(b, e, ap, ap+2, ct, err, false) - ap;
+            if (i == 0 && h == 12)
+                h = 0;
+            else if (i == 1 && h < 12)
+                h += 12;
+        }
+
+#endif
 
         InputIterator get(
             iter_type b, iter_type e,
@@ -185,101 +266,113 @@ namespace boost
 
             switch (fmt)
             {
-//            case 'a':
-//            case 'A':
-//                that_.get_weekdayname(tm->tm_wday, b, e, err, ct);
-//                break;
-//            case 'b':
-//            case 'B':
-//            case 'h':
-//              that_.get_monthname(tm->tm_mon, b, e, err, ct);
-//                break;
+            case 'a':
+            case 'A':
+              {
+                std::tm tm2;
+                std::memset(&tm2, 0, sizeof(std::tm));
+                that_.get_weekday(b, e, iob, err, &tm2);
+                //tm->tm_wday = tm2.tm_wday;
+              }
+              break;
+            case 'b':
+            case 'B':
+            case 'h':
+              {
+                std::tm tm2;
+                std::memset(&tm2, 0, sizeof(std::tm));
+                that_.get_monthname(b, e, iob, err, &tm2);
+                //tm->tm_mon = tm2.tm_mon;
+              }
+              break;
 //            case 'c':
-//                {
-//                const string_type& fm = this->c();
-//                b = that_.get(b, e, iob, err, tm, fm.data(), fm.data() + fm.size());
-//                }
-//                break;
+//              {
+//                const string_type& fm = c();
+//                b = get(b, e, iob, err, tm, fm.data(), fm.data() + fm.size());
+//              }
+//              break;
             case 'd':
             case 'e':
               get_day(tm->tm_mday, b, e, err, ct);
-
-                break;
-//            case 'D':
-//                {
-//                const char_type fm[] = {'%', 'm', '/', '%', 'd', '/', '%', 'y'};
-//                b = that_.get(b, e, iob, err, tm, fm, fm + sizeof(fm)/sizeof(fm[0]));
-//                }
-//                break;
-//            case 'F':
-//                {
-//                const char_type fm[] = {'%', 'Y', '-', '%', 'm', '-', '%', 'd'};
-//                b = that_.get(b, e, iob, err, tm, fm, fm + sizeof(fm)/sizeof(fm[0]));
-//                }
-//                break;
+              break;
+            case 'D':
+              {
+                const char_type fm[] = {'%', 'm', '/', '%', 'd', '/', '%', 'y'};
+                b = get(b, e, iob, err, tm, fm, fm + sizeof(fm)/sizeof(fm[0]));
+              }
+              break;
+            case 'F':
+              {
+                const char_type fm[] = {'%', 'Y', '-', '%', 'm', '-', '%', 'd'};
+                b = get(b, e, iob, err, tm, fm, fm + sizeof(fm)/sizeof(fm[0]));
+              }
+              break;
             case 'H':
               get_hour(tm->tm_hour, b, e, err, ct);
-                break;
-//            case 'I':
-//              that_.get_12_hour(tm->tm_hour, b, e, err, ct);
-//                break;
-//            case 'j':
-//              that_.get_day_year_num(tm->tm_yday, b, e, err, ct);
-//                break;
+              break;
+            case 'I':
+              get_12_hour(tm->tm_hour, b, e, err, ct);
+              break;
+            case 'j':
+              get_day_year_num(tm->tm_yday, b, e, err, ct);
+              break;
             case 'm':
               get_month(tm->tm_mon, b, e, err, ct);
-                break;
+              break;
             case 'M':
               get_minute(tm->tm_min, b, e, err, ct);
-                break;
-//            case 'n':
-//            case 't':
-//              that_.get_white_space(b, e, err, ct);
-//                break;
+              break;
+            case 'n':
+            case 't':
+              get_white_space(b, e, err, ct);
+              break;
 //            case 'p':
-//              that_.get_am_pm(tm->tm_hour, b, e, err, ct);
-//                break;
-//            case 'r':
-//                {
-//                const char_type fm[] = {'%', 'I', ':', '%', 'M', ':', '%', 'S', ' ', '%', 'p'};
-//                b = that_.get(b, e, iob, err, tm, fm, fm + sizeof(fm)/sizeof(fm[0]));
-//                }
-//                break;
-//            case 'R':
-//                {
-//                const char_type fm[] = {'%', 'H', ':', '%', 'M'};
-//                b = that_.get(b, e, iob, err, tm, fm, fm + sizeof(fm)/sizeof(fm[0]));
-//                }
-//                break;
-//            case 'S':
-//              that_.get_second(tm->tm_sec, b, e, err, ct);
-//                break;
-//            case 'T':
-//                {
-//                const char_type fm[] = {'%', 'H', ':', '%', 'M', ':', '%', 'S'};
-//                b = that_.get(b, e, iob, err, tm, fm, fm + sizeof(fm)/sizeof(fm[0]));
-//                }
-//                break;
-//            case 'w':
-//              that_.get_weekday(tm->tm_wday, b, e, err, ct);
-//                break;
-//            case 'x':
-//                return that_.get_date(b, e, iob, err, tm);
+//              get_am_pm(tm->tm_hour, b, e, err, ct);
+//              break;
+            case 'r':
+              {
+                const char_type fm[] = {'%', 'I', ':', '%', 'M', ':', '%', 'S', ' ', '%', 'p'};
+                b = get(b, e, iob, err, tm, fm, fm + sizeof(fm)/sizeof(fm[0]));
+              }
+              break;
+            case 'R':
+              {
+                const char_type fm[] = {'%', 'H', ':', '%', 'M'};
+                b = get(b, e, iob, err, tm, fm, fm + sizeof(fm)/sizeof(fm[0]));
+              }
+              break;
+            case 'S':
+              get_second(tm->tm_sec, b, e, err, ct);
+              break;
+            case 'T':
+              {
+                const char_type fm[] = {'%', 'H', ':', '%', 'M', ':', '%', 'S'};
+                b = get(b, e, iob, err, tm, fm, fm + sizeof(fm)/sizeof(fm[0]));
+              }
+              break;
+            case 'w':
+              {
+                get_weekday(tm->tm_wday, b, e, err, ct);
+              }
+              break;
+            case 'x':
+              return that_.get_date(b, e, iob, err, tm);
 //            case 'X':
-//                {
-//                const string_type& fm = this->X();
+//              return that_.get_time(b, e, iob, err, tm);
+//              {
+//                const string_type& fm = X();
 //                b = that_.get(b, e, iob, err, tm, fm.data(), fm.data() + fm.size());
-//                }
-//                break;
+//              }
+//              break;
 //            case 'y':
-//              that_.get_year(tm->tm_year, b, e, err, ct);
+//              get_year(tm->tm_year, b, e, err, ct);
                 break;
             case 'Y':
               get_year4(tm->tm_year, b, e, err, ct);
-                break;
-//            case '%':
-//              that_.get_percent(b, e, err, ct);
-//                break;
+              break;
+            case '%':
+              get_percent(b, e, err, ct);
+              break;
             default:
                 err |= std::ios_base::failbit;
             }
@@ -788,6 +881,7 @@ namespace boost
           std::locale loc = os.getloc();
           time_t t = system_clock::to_time_t(time_point_cast<system_clock::duration>(tp));
           std::tm tm;
+          std::memset(&tm, 0, sizeof(std::tm));
           if (tz == timezone::local)
           {
 #if defined BOOST_WINDOWS && ! defined(__CYGWIN__)
@@ -964,6 +1058,12 @@ namespace boost
           const std::time_get<CharT>& tg = std::use_facet<std::time_get<CharT> >(loc);
           const std::ctype<CharT>& ct = std::use_facet<std::ctype<CharT> >(loc);
           tm tm; // {0}
+          tm.tm_year=0;
+          tm.tm_mon=0;
+          tm.tm_mday=0;
+          tm.tm_hour=0;
+          tm.tm_min=0;
+          tm.tm_sec=0;
           typedef std::istreambuf_iterator<CharT, Traits> It;
           if (pb == pe)
           {
@@ -971,7 +1071,7 @@ namespace boost
             { '%', 'Y', '-', '%', 'm', '-', '%', 'd', ' ', '%', 'H', ':', '%', 'M', ':' };
             pb = pattern;
             pe = pb + sizeof (pattern) / sizeof(CharT);
-            tm.tm_sec=0;
+
 #if defined BOOST_CHRONO_USES_INTERNAL_TIME_GET
             const detail::time_get<CharT>& dtg(tg);
             dtg.get(is, 0, is, err, &tm, pb, pe);

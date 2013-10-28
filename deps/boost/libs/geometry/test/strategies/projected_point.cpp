@@ -52,23 +52,18 @@ void test_services()
     namespace services = bg::strategy::distance::services;
     // 1: normal, calculate distance:
 
-    typedef bgsd::projected_point<P, PS, CalculationType> strategy_type;
+    typedef bgsd::projected_point<CalculationType> strategy_type;
 
-    BOOST_CONCEPT_ASSERT( (bg::concept::PointSegmentDistanceStrategy<strategy_type>) );
+    BOOST_CONCEPT_ASSERT( (bg::concept::PointSegmentDistanceStrategy<strategy_type, P, PS>) );
 
-    typedef typename services::return_type<strategy_type>::type return_type;
+    typedef typename services::return_type<strategy_type, P, PS>::type return_type;
 
     strategy_type strategy;
     return_type result = strategy.apply(p, p1, p2);
     BOOST_CHECK_CLOSE(result, return_type(expected), 0.001);
 
-    // 2: "similar" to construct a similar strategy (similar but with other template-parameters) for, e.g., the reverse P2/P1
-    // 2a: similar_type:
-    typedef typename services::similar_type<strategy_type, P, PS>::type similar_type;
-    // 2b: get_similar
-    similar_type similar = services::get_similar<strategy_type, P, PS>::apply(strategy);
-
-    result = similar.apply(p, p1, p2);
+    // 2: the strategy should return the same result if we reverse parameters
+    result = strategy.apply(p, p1, p2);
     BOOST_CHECK_CLOSE(result, return_type(expected), 0.001);
 
 
@@ -100,19 +95,15 @@ void test_all_2d(std::string const& wkt_p,
     bg::read_wkt(wkt_sp2, sp2);
 
     {
-        typedef bg::strategy::distance::projected_point
-            <
-                P1,
-                P2
-            > strategy_type;
+        typedef bg::strategy::distance::projected_point<> strategy_type;
 
         BOOST_CONCEPT_ASSERT
             (
-                (bg::concept::PointSegmentDistanceStrategy<strategy_type>)
+                (bg::concept::PointSegmentDistanceStrategy<strategy_type, P1, P2>)
             );
 
         strategy_type strategy;
-        typedef typename bg::strategy::distance::services::return_type<strategy_type>::type return_type;
+        typedef typename bg::strategy::distance::services::return_type<strategy_type, P1, P2>::type return_type;
         return_type d = strategy.apply(p, sp1, sp2);
         BOOST_CHECK_CLOSE(d, expected_distance, 0.001);
     }
@@ -121,13 +112,11 @@ void test_all_2d(std::string const& wkt_p,
     {
         typedef bg::strategy::distance::projected_point
             <
-                P1,
-                P2,
                 void,
-                bg::strategy::distance::comparable::pythagoras<P1, P2>
+                bg::strategy::distance::comparable::pythagoras<>
             > strategy_type;
         strategy_type strategy;
-        typedef typename bg::strategy::distance::services::return_type<strategy_type>::type return_type;
+        typedef typename bg::strategy::distance::services::return_type<strategy_type, P1, P2>::type return_type;
         return_type d = strategy.apply(p, sp1, sp2);
         T expected_squared_distance = expected_distance * expected_distance;
         BOOST_CHECK_CLOSE(d, expected_squared_distance, 0.01);

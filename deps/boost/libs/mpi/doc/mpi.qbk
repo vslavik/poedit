@@ -2,7 +2,7 @@
     [authors [Gregor, Douglas], [Troyer, Matthias] ]
     [copyright 2005 2006 2007 Douglas Gregor, Matthias Troyer, Trustees of Indiana University]
     [purpose
-        An generic, user-friendly interface to MPI, the Message
+        A generic, user-friendly interface to MPI, the Message
         Passing Interface.
     ]
     [id mpi]
@@ -27,7 +27,7 @@
                       Boost.Python]]
 [def _Python_      [@http://www.python.org Python]]
 [def _LAM_          [@http://www.lam-mpi.org/ LAM/MPI]]
-[def _MPICH_        [@http://www-unix.mcs.anl.gov/mpi/mpich/ MPICH]]
+[def _MPICH_        [@http://www-unix.mcs.anl.gov/mpi/mpich/ MPICH2]]
 [def _OpenMPI_      [@http://www.open-mpi.org OpenMPI]]
 [def _accumulate_   [@http://www.sgi.com/tech/stl/accumulate.html
                      `accumulate`]]
@@ -99,9 +99,9 @@ MPI implementation. There are many conforming _MPI_implementations_
 available. Boost.MPI should work with any of the
 implementations, although it has only been tested extensively with:
 
-* [@http://www.open-mpi.org Open MPI 1.0.x]
-* [@http://www.lam-mpi.org LAM/MPI 7.x]
-* [@http://www-unix.mcs.anl.gov/mpi/mpich/ MPICH 1.2.x]
+* [@http://www.open-mpi.org Open MPI]
+* [@http://www.lam-mpi.org LAM/MPI ]
+* [@http://www-unix.mcs.anl.gov/mpi/mpich/ MPICH2]
 
 You can test your implementation using the following simple program,
 which passes a message from one processor to another. Each processor
@@ -110,7 +110,7 @@ prints a message to standard output.
   #include <mpi.h>
   #include <iostream>
 
-  int main(int argc, char* argv[])
+  int main()
   {
     MPI_Init(&argc, &argv);
 
@@ -304,9 +304,9 @@ to each process, from zero to the size of the communicator (i.e., the
   #include <iostream>
   namespace mpi = boost::mpi;
 
-  int main(int argc, char* argv[]) 
+  int main() 
   {
-    mpi::environment env(argc, argv);
+    mpi::environment env;
     mpi::communicator world;
     std::cout << "I am process " << world.rank() << " of " << world.size()
               << "." << std::endl;
@@ -332,6 +332,24 @@ text could come out completely garbled, because one process can start
 writing "I am a process" before another process has finished writing
 "of 7.".
 
+If you should still have an MPI library supporting only MPI 1.1 you 
+will need to pass the command line arguments to the environment
+constructor as shown in this example:
+
+  #include <boost/mpi/environment.hpp>
+  #include <boost/mpi/communicator.hpp>
+  #include <iostream>
+  namespace mpi = boost::mpi;
+
+  int main(int argc, char* argv[]) 
+  {
+    mpi::environment env(argc, argv);
+    mpi::communicator world;
+    std::cout << "I am process " << world.rank() << " of " << world.size()
+              << "." << std::endl;
+    return 0;
+  }
+
 [section:point_to_point Point-to-Point communication]
 
 As a message passing library, MPI's primary purpose is to routine
@@ -353,9 +371,9 @@ to the screen (`hello_world.cpp`):
   #include <boost/serialization/string.hpp>
   namespace mpi = boost::mpi;
 
-  int main(int argc, char* argv[]) 
+  int main() 
   {
-    mpi::environment env(argc, argv);
+    mpi::environment env;
     mpi::communicator world;
 
     if (world.rank() == 0) {
@@ -425,9 +443,9 @@ two messages are transmitted simultaneously
   #include <boost/serialization/string.hpp>
   namespace mpi = boost::mpi;
 
-  int main(int argc, char* argv[]) 
+  int main() 
   {
-    mpi::environment env(argc, argv);
+    mpi::environment env;
     mpi::communicator world;
 
     if (world.rank() == 0) {
@@ -610,9 +628,9 @@ other process. (`hello_world_broadcast.cpp`)
   #include <boost/serialization/string.hpp>
   namespace mpi = boost::mpi;
 
-  int main(int argc, char* argv[])
+  int main()
   {
-    mpi::environment env(argc, argv);
+    mpi::environment env;
     mpi::communicator world;
 
     std::string value;
@@ -658,9 +676,9 @@ which prints out the values that correspond to each processor.
   #include <cstdlib>
   namespace mpi = boost::mpi;
 
-  int main(int argc, char* argv[])
+  int main()
   {
-    mpi::environment env(argc, argv);
+    mpi::environment env;
     mpi::communicator world;
 
     std::srand(time(0) + world.rank());
@@ -712,16 +730,16 @@ a sequence of values (one per process) and combines them via a
 function object. For instance, we can randomly generate values in each
 process and the compute the minimum value over all processes via a
 call to [funcref boost::mpi::reduce `reduce`]
-(`random_min.cpp`)::
+(`random_min.cpp`):
 
   #include <boost/mpi.hpp>
   #include <iostream>
   #include <cstdlib>
   namespace mpi = boost::mpi;
 
-  int main(int argc, char* argv[])
+  int main()
   {
-    mpi::environment env(argc, argv);
+    mpi::environment env;
     mpi::communicator world;
 
     std::srand(time(0) + world.rank());
@@ -752,9 +770,9 @@ the function object `std::plus<std::string>` (`string_cat.cpp`):
   #include <boost/serialization/string.hpp>
   namespace mpi = boost::mpi;
 
-  int main(int argc, char* argv[])
+  int main()
   {
-    mpi::environment env(argc, argv);
+    mpi::environment env;
     mpi::communicator world;
 
     std::string names[10] = { "zero ", "one ", "two ", "three ", 
@@ -831,6 +849,64 @@ that performs the reduction operation and broadcasts the result to all
 processes. This variant is useful, for instance, in establishing
 global minimum or maximum values.
 
+The following code (`global_min.cpp`) shows a broadcasting version of 
+the `random_min.cpp` example:
+
+  #include <boost/mpi.hpp>
+  #include <iostream>
+  #include <cstdlib>
+  namespace mpi = boost::mpi;
+  
+  int main(int argc, char* argv[])
+  {
+    mpi::environment env(argc, argv);
+    mpi::communicator world;
+  
+    std::srand(world.rank());
+    int my_number = std::rand();
+    int minimum;
+  
+    all_reduce(world, my_number, minimum, mpi::minimum<int>());
+    
+    if (world.rank() == 0) {
+        std::cout << "The minimum value is " << minimum << std::endl;
+    }
+  
+    return 0;
+  }
+
+In that example we provide both input and output values, requiring
+twice as much space, which can be a problem depending on the size 
+of the transmitted data. 
+If there  is no need to preserve the input value, the ouput value 
+can be omitted. In that case the input value will be overriden with 
+the output value and Boost.MPI is able, in some situation, to implement
+the operation with a more space efficient solution (using the `MPI_IN_PLACE`
+flag of the MPI C mapping), as in the following example (`in_place_global_min.cpp`):
+
+  #include <boost/mpi.hpp>
+  #include <iostream>
+  #include <cstdlib>
+  namespace mpi = boost::mpi;
+  
+  int main(int argc, char* argv[])
+  {
+    mpi::environment env(argc, argv);
+    mpi::communicator world;
+  
+    std::srand(world.rank());
+    int my_number = std::rand();
+  
+    all_reduce(world, my_number, mpi::minimum<int>());
+    
+    if (world.rank() == 0) {
+        std::cout << "The minimum value is " << my_number << std::endl;
+    }
+  
+    return 0;
+  }
+
+
 [endsect]
 
 [endsect]
@@ -866,9 +942,9 @@ that will collect the data. (`generate_collect.cpp`)
   void generate_data(mpi::communicator local, mpi::communicator world);
   void collect_data(mpi::communicator local, mpi::communicator world);
 
-  int main(int argc, char* argv[])
+  int main()
   {
-    mpi::environment env(argc, argv);
+    mpi::environment env;
     mpi::communicator world;
 
     bool is_generator = world.rank() < 2 * world.size() / 3;
@@ -1263,7 +1339,10 @@ operations are called internally by Boost.MPI.
   [[C Function/Constant] [Boost.MPI Equivalent]]
 
   [[[@http://www.mpi-forum.org/docs/mpi-11-html/node56.html#Node56
-`MPI_Address`]] [used automatically in Boost.MPI]]
+`MPI_Address`]] [used automatically in Boost.MPI for MPI version 1.x]]
+
+  [[[@http://www.mpi-forum.org/docs/mpi-20-html/node76.htm#Node76
+`MPI_Get_address`]] [used automatically in Boost.MPI for MPI version 2.0 and higher]]
 
   [[[@http://www.mpi-forum.org/docs/mpi-11-html/node58.html#Node58
 `MPI_Type_commit`]] [used automatically in Boost.MPI]]
@@ -1293,7 +1372,10 @@ operations are called internally by Boost.MPI.
 `MPI_Type_size`]] [used automatically in Boost.MPI]]
 
   [[[@http://www.mpi-forum.org/docs/mpi-11-html/node55.html#Node55
-`MPI_Type_struct`]] [user-defined classes and structs]]
+`MPI_Type_struct`]] [user-defined classes and structs with MPI 1.x]]
+
+  [[[@http://www.mpi-forum.org/docs/mpi-20-html/node76.htm#Node76
+`MPI_Type_create_struct`]] [user-defined classes and structs with MPI 2.0 and higher]]
 
   [[[@http://www.mpi-forum.org/docs/mpi-11-html/node57.html#Node57
 `MPI_Type_ub`]] [unsupported]]
@@ -1376,6 +1458,10 @@ boost::mpi::communicator::barrier `communicator::barrier`]]]
 
   [[[@http://www.mpi-forum.org/docs/mpi-11-html/node71.html#Node71
 `MPI_Scatterv`]] [most uses supported by [funcref boost::mpi::scatter `scatter`]]]
+
+  [[[@http://www.mpi-forum.org/docs/mpi-20-html/node145.htm#Node145
+`MPI_IN_PLACE`]] [supported implicitly by [funcref boost::mpi::all_reduce 
+`all_reduce` by omiting the ouput value]]]
 ]
 
 Boost.MPI uses function objects to specify how reductions should occur
@@ -1846,7 +1932,7 @@ routine, e.g.,
 
 `skeleton_proxy` objects can be received on the other end via `recv()`,
 which stores a newly-created instance of your data structure with the
-same "shape" as the sender in its `"object` attribute:
+same "shape" as the sender in its `"object"` attribute:
 
   shape = mpi.world.recv(0, 0)
   my_data_structure = shape.object
@@ -1867,7 +1953,6 @@ values in the data structure--but not its shape--changes.
 The skeleton/content mechanism is a structured way to exploit the
 interaction between custom-built MPI datatypes and `MPI_BOTTOM`, to
 eliminate extra buffer copies.
-[endsect]
 
 [section:python_compatbility C++/Python MPI Compatibility]
 Boost.MPI is a C++ library whose facilities have been exposed to Python
@@ -1948,6 +2033,42 @@ primitives. For this reason, it is always possible to extract enough
 information from the abstractions in Boost.MPI to minimize
 the amount of effort required to interface between Boost.MPI
 and the C MPI library.
+[endsect]
+
+[section:threading Threads]
+
+There are an increasing number of hybrid parrallel applications that mix
+distributed and shared memory parallelism. To know how to support that model,
+one need to know what level of threading support is guaranteed by the MPI 
+implementation. There are 4 ordered level of possible threading support described
+by [classref boost::mpi::threading::level mpi::threading::level].
+At the lowest level, you should not use threads at all, at the highest level, any 
+thread can perform MPI call.
+
+If you want to use multi-threading in your MPI application, you should indicate 
+in the environment constructor your preffered threading support. Then probe the
+one the librarie did provide, and decide what you can do with it (it could be 
+nothing, then aborting is a valid option):
+
+  #include <boost/mpi/environment.hpp>
+  #include <boost/mpi/communicator.hpp>
+  #include <iostream>
+  namespace mpi = boost::mpi;
+  namespace mt  = mpi::threading;
+
+  int main() 
+  {
+    mpi::environment env(mt::funneled);
+    if (env.thread_level() < mt::funneled) {
+       env.abort(-1);
+    }
+    mpi::communicator world;
+    std::cout << "I am process " << world.rank() << " of " << world.size()
+              << "." << std::endl;
+    return 0;
+  }
+
+
 [endsect]
 
 [section:performance Performance Evaluation]

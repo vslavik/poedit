@@ -28,6 +28,97 @@
 </h2></div></div></div>
 <h4>
 <a name="geometry.release_notes.h0"></a>
+      <span class="phrase"><a name="geometry.release_notes.boost_1_55"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_55">Boost
+      1.55</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Additional functionality</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Added centroid for segment type
+        </li>
+<li class="listitem">
+          Added intersects() and disjoints() for Segment-Box and Linestring-Box
+        </li>
+<li class="listitem">
+          Added rtree creation using packing algorithm
+        </li>
+<li class="listitem">
+          Added contains() and covers() spatial query predicates
+        </li>
+<li class="listitem">
+          Added iterative queries
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Documentation</strong></span>
+    </p>
+<p>
+      <span class="bold"><strong>Bugfixes</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          In some cases .back() or .clear() was called, violating the usage of Concepts.
+          Fixed for the reported cases
+        </li></ul></div>
+<p>
+      <span class="bold"><strong>Solved tickets</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/6958" target="_top">6958</a>
+          Intersection generates self-intersection. Caused by spike, fixed
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/8364" target="_top">8364</a>
+          Invalid input exception, caused by spikes in previous steps, fixed
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/8365" target="_top">8365</a>
+          Invalid input exception, caused by spikes in previous steps, fixed
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/8969" target="_top">8969</a>
+          boost::geometry::model::point single argument constructor should be explicit
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/8825" target="_top">8825</a>
+          Patch adding member variable documentation to doxygen_xml2qbk
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/8652" target="_top">8652</a>
+          Intersection fails for triangle-triangle intersection. Caused by spike,
+          fixed
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/9047" target="_top">9047</a>
+          Boost files that include themselves (strategies/intersection.hpp), fixed
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Internal changes</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Distance-strategy TODO
+        </li>
+<li class="listitem">
+          Transform-strategy TODO
+        </li>
+<li class="listitem">
+          Spikes (could be generated in difference) in integer-based overlays are
+          now avoided during generation
+        </li>
+<li class="listitem">
+          Cleanup, removed old MSVC2005 project files, let all tests pass green (also
+          in extensions)
+        </li>
+<li class="listitem">
+          R*-tree balancing algorithm optimized
+        </li>
+</ul></div>
+<h4>
+<a name="geometry.release_notes.h1"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_54"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_54">Boost
       1.54</a>
     </h4>
@@ -112,7 +203,7 @@
           length, num_points)
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h1"></a>
+<a name="geometry.release_notes.h2"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_53"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_53">Boost
       1.53</a>
     </h4>
@@ -167,7 +258,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h2"></a>
+<a name="geometry.release_notes.h3"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_51"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_51">Boost
       1.51</a>
     </h4>
@@ -200,7 +291,7 @@
           spherical distance, fixed (by patch of Karsten Ahnert)
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h3"></a>
+<a name="geometry.release_notes.h4"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_50"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_50">Boost
       1.50</a>
     </h4>
@@ -255,7 +346,7 @@
           added algorithm "touches" (OGC SF compliant) for *polygon/*polygon
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h4"></a>
+<a name="geometry.release_notes.h5"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_49"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_49">Boost
       1.49</a>
     </h4>
@@ -375,7 +466,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h5"></a>
+<a name="geometry.release_notes.h6"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_48"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_48">Boost
       1.48</a>
     </h4>
@@ -467,7 +558,7 @@
           Basic (limited) support for Boost.Rational
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h6"></a>
+<a name="geometry.release_notes.h7"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_47"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_47">Boost
       1.47</a>
     </h4>

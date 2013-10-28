@@ -32,6 +32,6 @@
 
 int main( int, char *[] )
 {
-   return boost_no_variadic_macros::test();
+   return boost_no_cxx11_variadic_macros::test();
 }
 

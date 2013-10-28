@@ -48,5 +48,10 @@ test-suite utility
         [ compile-fail ../initialized_test_fail1.cpp ]
         [ compile-fail ../initialized_test_fail2.cpp ]
         [ run ../verify_test.cpp ]
+        [ run explicit_operator_bool.cpp ]
+        [ compile-fail explicit_operator_bool_compile_fail_conv_int.cpp ]
+        [ compile-fail explicit_operator_bool_compile_fail_conv_pvoid.cpp ]
+        [ compile-fail explicit_operator_bool_compile_fail_delete.cpp ]
+        [ compile-fail explicit_operator_bool_compile_fail_shift.cpp ]
     ;
 

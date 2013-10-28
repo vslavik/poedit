@@ -2,7 +2,7 @@
     Boost.Wave: A Standard compliant C++ preprocessor library
 
     Copyright (c) 2001 Daniel C. Nuffer
-    Copyright (c) 2001-2011 Hartmut Kaiser. 
+    Copyright (c) 2001-2013 Hartmut Kaiser. 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
@@ -16,27 +16,28 @@
 =============================================================================*/
 
 /*!re2c
-re2c:indent:string = "    "; 
-any                = [\t\v\f\r\n\040-\377];
-anyctrl            = [\001-\037];
-OctalDigit         = [0-7];
-Digit              = [0-9];
-HexDigit           = [a-fA-F0-9];
-Integer            = (("0" [xX] HexDigit+) | ("0" OctalDigit*) | ([1-9] Digit*));
-ExponentStart      = [Ee] [+-];
-ExponentPart       = [Ee] [+-]? Digit+;
-FractionalConstant = (Digit* "." Digit+) | (Digit+ ".");
-FloatingSuffix     = [fF] [lL]? | [lL] [fF]?;
-IntegerSuffix      = [uU] [lL]? | [lL] [uU]?;
-LongIntegerSuffix  = [uU] ([lL] [lL]) | ([lL] [lL]) [uU]?;
-Backslash          = [\\] | "??/";
-EscapeSequence     = Backslash ([abfnrtv?'"] | Backslash | "x" HexDigit+ | OctalDigit OctalDigit? OctalDigit?);
-HexQuad            = HexDigit HexDigit HexDigit HexDigit;
-UniversalChar      = Backslash ("u" HexQuad | "U" HexQuad HexQuad);
-Newline            = "\r\n" | "\n" | "\r";
-PPSpace            = ([ \t\f\v]|("/*"(any\[*]|Newline|("*"+(any\[*/]|Newline)))*"*"+"/"))*;
-Pound              = "#" | "??=" | "%:";
-NonDigit           = [a-zA-Z_$] | UniversalChar;
+re2c:indent:string  = "    "; 
+any                 = [\t\v\f\r\n\040-\377];
+anyctrl             = [\001-\037];
+OctalDigit          = [0-7];
+Digit               = [0-9];
+HexDigit            = [a-fA-F0-9];
+Integer             = (("0" [xX] HexDigit+) | ("0" OctalDigit*) | ([1-9] Digit*));
+ExponentStart       = [Ee] [+-];
+ExponentPart        = [Ee] [+-]? Digit+;
+FractionalConstant  = (Digit* "." Digit+) | (Digit+ ".");
+FloatingSuffix      = [fF] [lL]? | [lL] [fF]?;
+IntegerSuffix       = [uU] [lL]? | [lL] [uU]?;
+LongIntegerSuffix   = [uU] ([lL] [lL]) | ([lL] [lL]) [uU]?;
+MSLongIntegerSuffix = "u"? "i64";
+Backslash           = [\\] | "??/";
+EscapeSequence      = Backslash ([abfnrtv?'"] | Backslash | "x" HexDigit+ | OctalDigit OctalDigit? OctalDigit?);
+HexQuad             = HexDigit HexDigit HexDigit HexDigit;
+UniversalChar       = Backslash ("u" HexQuad | "U" HexQuad HexQuad);
+Newline             = "\r\n" | "\n" | "\r";
+PPSpace             = ([ \t\f\v]|("/*"(any\[*]|Newline|("*"+(any\[*/]|Newline)))*"*"+"/"))*;
+Pound               = "#" | "??=" | "%:";
+NonDigit            = [a-zA-Z_$] | UniversalChar;
 */
 
 /*!re2c
@@ -458,7 +459,7 @@ integer_suffix:
 {
     if (s->enable_ms_extensions) {
     /*!re2c
-        LongIntegerSuffix | "i64"
+        LongIntegerSuffix | MSLongIntegerSuffix
             { BOOST_WAVE_RET(T_LONGINTLIT); }
 
         IntegerSuffix?

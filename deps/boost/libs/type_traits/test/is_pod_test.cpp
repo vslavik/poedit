@@ -170,6 +170,13 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_pod<wrap<trivial_except_assign> >::value,
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_pod<wrap<trivial_except_destroy> >::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_pod<wrap<trivial_except_construct> >::value, false);
 
+#ifndef BOOST_NO_CXX11_CHAR16_T
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_pod<char16_t>::value, true);
+#endif
+#ifndef BOOST_NO_CXX11_CHAR32_T
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_pod<char32_t>::value, true);
+#endif
+
 TT_TEST_END
 
 

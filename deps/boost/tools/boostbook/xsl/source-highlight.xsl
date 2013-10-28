@@ -29,7 +29,7 @@
   <xsl:variable name="digits" select="'1234567890'"/>
   <xsl:variable name="number-chars" select="'1234567890abcdefABCDEFxX.'"/>
   <xsl:variable name="keywords"
-    select="' asm auto bool break case catch char class const const_cast continue default delete do double dynamic_cast else enum explicit export extern false float for friend goto if inline int long mutable namespace new operator private protected public register reinterpret_cast return short signed sizeof static static_cast struct switch template this throw true try typedef typeid typename union unsigned using virtual void volatile wchar_t while '"/>
+    select="' alignas ailgnof asm auto bool break case catch char char16_t char32_t class const const_cast constexpr continue decltype default delete do double dynamic_cast else enum explicit export extern false float for friend goto if inline int long mutable namespace new noexcept nullptr operator private protected public register reinterpret_cast return short signed sizeof static static_cast struct switch template this thread_local throw true try typedef typeid typename union unsigned using virtual void volatile wchar_t while '"/>
   <xsl:variable name="operators4" select="'%:%:'"/>
   <xsl:variable name="operators3" select="'&gt;&gt;= &lt;&lt;= -&gt;* ...'"/>
   <xsl:variable name="operators2" select="'.* :: ## &lt;: :&gt; &lt;% %&gt; %: += -= *= /= %= ^= &amp;= |= &lt;&lt; &gt;&gt; == != &lt;= &gt;= &amp;&amp; || ++ -- -&gt;'"/>

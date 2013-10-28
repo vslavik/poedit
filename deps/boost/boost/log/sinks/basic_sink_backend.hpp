@@ -23,7 +23,7 @@
 #include <boost/log/attributes/attribute_value_set.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -45,10 +45,10 @@ struct basic_sink_backend
     //! Frontend requirements tag
     typedef FrontendRequirementsT frontend_requirements;
 
-    BOOST_LOG_DEFAULTED_FUNCTION(basic_sink_backend(), {})
+    BOOST_DEFAULTED_FUNCTION(basic_sink_backend(), {})
 
-    BOOST_LOG_DELETED_FUNCTION(basic_sink_backend(basic_sink_backend const&))
-    BOOST_LOG_DELETED_FUNCTION(basic_sink_backend& operator= (basic_sink_backend const&))
+    BOOST_DELETED_FUNCTION(basic_sink_backend(basic_sink_backend const&))
+    BOOST_DELETED_FUNCTION(basic_sink_backend& operator= (basic_sink_backend const&))
 };
 
 /*!

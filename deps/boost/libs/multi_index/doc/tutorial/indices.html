@@ -222,9 +222,8 @@ element.
 
 <p>
 The hash function is the very core of the fast lookup capabilities of this type of
-indices: a hasher
-is just a <a href="http://www.sgi.com/tech/stl/UnaryFunction.html"><code>Unary
-Function</code></a> returning an <code>std::size_t</code> value for any given
+indices: a hasher is just a unary function object
+returning an <code>std::size_t</code> value for any given
 key. In general, it is impossible that every key map to a different hash value, for
 the space of keys can be greater than the number of permissible hash codes: what
 makes for a good hasher is that the probability of a collision (two different
@@ -561,7 +560,7 @@ container:
 <span class=identifier>std</span><span class=special>::</span><span class=identifier>vector</span><span class=special>&lt;</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>reference_wrapper</span><span class=special>&lt;</span><span class=keyword>const</span> <span class=keyword>int</span><span class=special>&gt;</span> <span class=special>&gt;</span> <span class=identifier>v</span><span class=special>;</span>
 <span class=identifier>BOOST_FOREACH</span><span class=special>(</span><span class=keyword>const</span> <span class=keyword>int</span><span class=special>&amp;</span> <span class=identifier>i</span><span class=special>,</span><span class=identifier>c</span><span class=special>)</span><span class=identifier>v</span><span class=special>.</span><span class=identifier>push_back</span><span class=special>(</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>cref</span><span class=special>(</span><span class=identifier>i</span><span class=special>));</span>
 
-<span class=comment>// this compiles OK, as reference_wrappers are assignable</span>
+<span class=comment>// this compiles OK, as reference_wrappers are swappable</span>
 <span class=identifier>std</span><span class=special>::</span><span class=identifier>random_shuffle</span><span class=special>(</span><span class=identifier>v</span><span class=special>.</span><span class=identifier>begin</span><span class=special>(),</span><span class=identifier>v</span><span class=special>.</span><span class=identifier>end</span><span class=special>());</span>
 </pre></blockquote>
 
@@ -569,9 +568,8 @@ container:
 Elements of <code>v</code> are <code>reference_wrapper</code>s (from
 <a href="../../../../doc/html/ref.html">Boost.Ref</a>) to the actual elements
 in the multi-index container. These objects still do not allow modification
-of the referenced entities, but they are
-<a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>,
-which is the only requirement <code>std::random_suffle</code> imposes. Once
+of the referenced entities, but they are swappable,
+which is the only requirement <code>std::random_shuffle</code> imposes. Once
 we have our desired rearrange stored in the view, we can transfer it to
 the container with
 </p>
@@ -718,9 +716,9 @@ Key extraction
 
 <br>
 
-<p>Revised October 15th 2007</p>
+<p>Revised July 7th 2013</p>
 
-<p>&copy; Copyright 2003-2007 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

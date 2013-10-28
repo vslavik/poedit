@@ -127,25 +127,25 @@ int main()
         svg.put(g1, "g1");
 
         // G1 - Translate -> G2
-        translate_transformer<point_2d, point_2d> translate(0, 250);
+        translate_transformer<double, 2, 2> translate(0, 250);
         model::polygon<point_2d> g2;
         transform(g1, g2, translate);
         std::clog << "translated:\t" << boost::geometry::dsv(g2) << std::endl;
         svg.put(g2, "g2=g1.translate(0,250)");
 
         // G2 - Scale -> G3
-        scale_transformer<point_2d, point_2d> scale(0.5, 0.5);
+        scale_transformer<double, 2, 2> scale(0.5, 0.5);
         model::polygon<point_2d> g3;
         transform(g2, g3, scale);
         std::clog << "scaled:\t" << boost::geometry::dsv(g3) << std::endl;
         svg.put(g3, "g3=g2.scale(0.5,0.5)");
 
         // G3 - Combine rotate and translate -> G4
-        rotate_transformer<point_2d, point_2d, degree> rotate(45);
+        rotate_transformer<degree, double, 2, 2> rotate(45);
 
         // Compose matrix for the two transformation
         // Create transformer attached to the transformation matrix
-        ublas_transformer<point_2d, point_2d, 2, 2>
+        ublas_transformer<double, 2, 2>
                 combined(boost::numeric::ublas::prod(rotate.matrix(), translate.matrix()));
                 //combined(rotate.matrix());
 

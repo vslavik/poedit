@@ -77,15 +77,15 @@
   contained value. There are two ways to accomplish this:
   <code class="computeroutput"><a class="link" href="../boost/apply_visitor.html" title="Function apply_visitor">apply_visitor</a></code>, which is safest
   and very powerful, and
-  <code class="computeroutput"><a class="link" href="../boost/get_idp132758640.html" title="Function get">get</a>&lt;T&gt;</code>, which is
+  <code class="computeroutput"><a class="link" href="../boost/get_idp145526920.html" title="Function get">get</a>&lt;T&gt;</code>, which is
   sometimes more convenient to use.</p>
 <p>For instance, suppose we wanted to concatenate to the string contained
   in <code class="computeroutput">v</code>. With <span class="bold"><strong>value retrieval</strong></span>
-  by <code class="computeroutput"><a class="link" href="../boost/get_idp132758640.html" title="Function get">get</a></code>, this may be accomplished
+  by <code class="computeroutput"><a class="link" href="../boost/get_idp145526920.html" title="Function get">get</a></code>, this may be accomplished
   quite simply, as seen in the following:
 
 </p>
-<pre class="programlisting">std::string&amp; str = <code class="computeroutput"><a class="link" href="../boost/get_idp132758640.html" title="Function get">boost::get</a></code>&lt;std::string&gt;(v);
+<pre class="programlisting">std::string&amp; str = <code class="computeroutput"><a class="link" href="../boost/get_idp145526920.html" title="Function get">boost::get</a></code>&lt;std::string&gt;(v);
 str += " world! ";</pre>
 <p>
 
@@ -112,9 +112,9 @@ str += " world! ";</pre>
 </p>
 <pre class="programlisting">void times_two( boost::variant&lt; int, std::string &gt; &amp; operand )
 {
-    if ( int* pi = <code class="computeroutput"><a class="link" href="../boost/get_idp132758640.html" title="Function get">boost::get</a></code>&lt;int&gt;( &amp;operand ) )
+    if ( int* pi = <code class="computeroutput"><a class="link" href="../boost/get_idp145526920.html" title="Function get">boost::get</a></code>&lt;int&gt;( &amp;operand ) )
         *pi *= 2;
-    else if ( std::string* pstr = <code class="computeroutput"><a class="link" href="../boost/get_idp132758640.html" title="Function get">boost::get</a></code>&lt;std::string&gt;( &amp;operand ) )
+    else if ( std::string* pstr = <code class="computeroutput"><a class="link" href="../boost/get_idp145526920.html" title="Function get">boost::get</a></code>&lt;std::string&gt;( &amp;operand ) )
         *pstr += *pstr;
 }</pre>
 <p>
@@ -509,7 +509,7 @@ int_tree_t var(result);</pre>
     <code class="computeroutput">var</code> as <code class="computeroutput">( 1 ( 3 5 ) 7 )</code>.</p>
 <p>Finally, note that a type sequence can be used to specify the bounded
     types of a recursive <code class="computeroutput">variant</code> via the use of
-    <code class="computeroutput"><a class="link" href="../boost/make_recursiv_idp150385104.html" title="Class template make_recursive_variant_over">boost::make_recursive_variant_over</a></code>,
+    <code class="computeroutput"><a class="link" href="../boost/make_recursive_idp97827960.html" title="Class template make_recursive_variant_over">boost::make_recursive_variant_over</a></code>,
     whose semantics are the same as <code class="computeroutput">make_variant_over</code> (which is
     described in <a class="xref" href="tutorial.html#variant.tutorial.over-sequence" title="Using a type sequence to specify bounded types">the section called &#8220;Using a type sequence to specify bounded types&#8221;</a>).</p>
 <p><span class="bold"><strong>Portability</strong></span>: Unfortunately, due to

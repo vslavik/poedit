@@ -5,7 +5,7 @@
           http://www.boost.org/LICENSE_1_0.txt
 ]
 
-[article Coroutine
+[library Coroutine
     [quickbook 1.5]
     [authors [Kowalke, Oliver]]
     [copyright 2009 Oliver Kowalke]
@@ -19,6 +19,7 @@
 ]
 
 
+[def __boost_asio__ [*Boost.Asio]]
 [def __boost_build__ [*Boost.Build]]
 [def __boost_context__ [*Boost.Context]]
 [def __boost_coroutine__ [*Boost.Coroutine]]
@@ -39,6 +40,8 @@
 
 [def __ctx__ ['context]]
 [def __coro__ ['coroutine]]
+[def __push_coro__ ['coroutine<>::push_type]]
+[def __pull_coro__ ['coroutine<>::pull_type]]
 [def __coro_fn__ ['coroutine-function]]
 [def __coros__ ['coroutines]]
 [def __not_a_coro__ ['not-a-coroutine]]
@@ -66,6 +69,11 @@
 [def __getline__ ['std::getline()]]
 [def __handle_read__ ['session::handle_read()]]
 [def __io_service__ ['boost::asio::io_sevice]]
+[def __pull_coro_bool__ ['boost::coroutines::coroutine<>::pull_type::operator bool]]
+[def __pull_coro_get__ ['boost::coroutines::coroutine<>::pull_type::get()]]
+[def __pull_coro_it__ ['boost::coroutines::coroutine<>::pull_type::iterator]]
+[def __pull_coro_op__ ['boost::coroutines::coroutine<>::pull_type::operator()]]
+[def __push_coro_op__ ['boost::coroutines::coroutine<>::push_type::operator()]]
 [def __server__ ['server]]
 [def __session__ ['session]]
 [def __stack_context__ ['boost::coroutines::stack_context]]
@@ -74,9 +82,11 @@
 [def __tie__ ['boost::tie]]
 [def __tuple__ ['boost::tuple<>]]
 [def __underflow__ ['stream_buf::underflow()]]
+[def __yield_context__ ['boost::asio::yield_context]]
 
 [include overview.qbk]
 [include intro.qbk]
+[include motivation.qbk]
 [include coroutine.qbk]
 [include attributes.qbk]
 [include stack.qbk]

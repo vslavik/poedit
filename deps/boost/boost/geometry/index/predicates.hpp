@@ -24,8 +24,6 @@
 
 namespace boost { namespace geometry { namespace index {
 
-#ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
-
 /*!
 \brief Generate \c contains() predicate.
 
@@ -50,8 +48,6 @@ contains(Geometry const& g)
 {
     return detail::spatial_predicate<Geometry, detail::contains_tag, false>(g);
 }
-
-#endif // BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
 
 /*!
 \brief Generate \c covered_by() predicate.
@@ -78,8 +74,6 @@ covered_by(Geometry const& g)
     return detail::spatial_predicate<Geometry, detail::covered_by_tag, false>(g);
 }
 
-#ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
-
 /*!
 \brief Generate \c covers() predicate.
 
@@ -104,8 +98,6 @@ covers(Geometry const& g)
 {
     return detail::spatial_predicate<Geometry, detail::covers_tag, false>(g);
 }
-
-#endif // BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
 
 /*!
 \brief Generate \c disjoint() predicate.

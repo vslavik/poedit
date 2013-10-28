@@ -10,7 +10,7 @@
  * \date   31.03.2008
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #ifndef BOOST_LOG_PARSER_UTILS_HPP_INCLUDED_
@@ -22,7 +22,7 @@
 #include <boost/log/detail/config.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -40,8 +40,11 @@ template< >
 struct char_constants< char >
 {
     typedef char char_type;
+    typedef std::basic_string< char_type > string_type;
+
     static const char_type char_comment = '#';
     static const char_type char_comma = ',';
+    static const char_type char_dot = '.';
     static const char_type char_quote = '"';
     static const char_type char_percent = '%';
     static const char_type char_exclamation = '!';
@@ -147,7 +150,16 @@ struct char_constants< char >
         return n;
     }
 
-    static void translate_escape_sequences(std::basic_string< char_type >& str);
+    //! Skips spaces in the beginning of the input
+    static const char_type* trim_spaces_left(const char_type* begin, const char_type* end);
+    //! Skips spaces in the end of the input
+    static const char_type* trim_spaces_right(const char_type* begin, const char_type* end);
+    //! Scans for the attribute name placeholder in the input
+    static const char_type* scan_attr_placeholder(const char_type* begin, const char_type* end);
+    //! Parses an operand string (possibly quoted) from the input
+    static const char_type* parse_operand(const char_type* begin, const char_type* end, string_type& operand);
+    //! Converts escape sequences to the corresponding characters
+    static void translate_escape_sequences(string_type& str);
 };
 #endif
 
@@ -156,8 +168,11 @@ template< >
 struct char_constants< wchar_t >
 {
     typedef wchar_t char_type;
+    typedef std::basic_string< char_type > string_type;
+
     static const char_type char_comment = L'#';
     static const char_type char_comma = L',';
+    static const char_type char_dot = L'.';
     static const char_type char_quote = L'"';
     static const char_type char_percent = L'%';
     static const char_type char_exclamation = L'!';
@@ -267,7 +282,16 @@ struct char_constants< wchar_t >
         return (c >= L'0' && c <= L'9') || (c >= L'a' && c <= L'f') || (c >= L'A' && c <= L'F');
     }
 
-    static void translate_escape_sequences(std::basic_string< char_type >& str);
+    //! Skips spaces in the beginning of the input
+    static const char_type* trim_spaces_left(const char_type* begin, const char_type* end);
+    //! Skips spaces in the end of the input
+    static const char_type* trim_spaces_right(const char_type* begin, const char_type* end);
+    //! Scans for the attribute name placeholder in the input
+    static const char_type* scan_attr_placeholder(const char_type* begin, const char_type* end);
+    //! Parses an operand string (possibly quoted) from the input
+    static const char_type* parse_operand(const char_type* begin, const char_type* end, string_type& operand);
+    //! Converts escape sequences to the corresponding characters
+    static void translate_escape_sequences(string_type& str);
 };
 #endif
 

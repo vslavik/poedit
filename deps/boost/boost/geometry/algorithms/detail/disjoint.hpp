@@ -165,6 +165,128 @@ struct box_box<Box1, Box2, DimensionCount, DimensionCount>
     }
 };
 
+// Segment - Box intersection
+// Based on Ray-AABB intersection
+// http://www.siggraph.org/education/materials/HyperGraph/raytrace/rtinter3.htm
+
+// TODO - later maybe move to strategy::intersects and add a policy to conditionally extract intersection points
+
+template <typename Point, typename Box, size_t I>
+struct segment_box_intersection_dim
+{
+    //BOOST_STATIC_ASSERT(I < dimension<Box>::value);
+    //BOOST_STATIC_ASSERT(I < dimension<Point>::value);
+    //BOOST_STATIC_ASSERT(dimension<Point>::value == dimension<Box>::value);
+
+    typedef typename coordinate_type<Point>::type point_coordinate;
+
+    template <typename RelativeDistance> static inline
+    bool apply(Point const& p0, Point const& p1, Box const& b, RelativeDistance & t_near, RelativeDistance & t_far)
+    {
+        //// WARNING! - RelativeDistance must be IEEE float for this to work (division by 0)
+        //BOOST_STATIC_ASSERT(boost::is_float<RelativeDistance>::value);
+        //// Ray origin is in segment point 0
+        //RelativeDistance ray_d = geometry::get<I>(p1) - geometry::get<I>(p0);
+        //RelativeDistance tn = ( geometry::get<min_corner, I>(b) - geometry::get<I>(p0) ) / ray_d;
+        //RelativeDistance tf = ( geometry::get<max_corner, I>(b) - geometry::get<I>(p0) ) / ray_d;
+
+        // TODO - should we support also unsigned integers?
+        BOOST_STATIC_ASSERT(!boost::is_unsigned<point_coordinate>::value);
+        point_coordinate ray_d = geometry::get<I>(p1) - geometry::get<I>(p0);
+        RelativeDistance tn, tf;
+        if ( is_zero(ray_d) )
+        {
+            tn = dist_div_by_zero<RelativeDistance>(geometry::get<min_corner, I>(b) - geometry::get<I>(p0));
+            tf = dist_div_by_zero<RelativeDistance>(geometry::get<max_corner, I>(b) - geometry::get<I>(p0));
+        }
+        else
+        {
+            tn = static_cast<RelativeDistance>(geometry::get<min_corner, I>(b) - geometry::get<I>(p0)) / ray_d;
+            tf = static_cast<RelativeDistance>(geometry::get<max_corner, I>(b) - geometry::get<I>(p0)) / ray_d;
+        }
+
+        if ( tf < tn )
+            ::std::swap(tn, tf);
+
+        if ( t_near < tn )
+            t_near = tn;
+        if ( tf < t_far )
+            t_far = tf;
+
+        return 0 <= t_far && t_near <= t_far && t_near <= 1;
+    }
+
+    template <typename R, typename T> static inline
+    R dist_div_by_zero(T const& val)
+    {
+        if ( is_zero(val) )
+            return 0;
+        else if ( val < 0 )
+            return -(::std::numeric_limits<R>::max)();
+        else
+            return (::std::numeric_limits<R>::max)();
+    }
+
+    template <typename T> static inline
+    bool is_zero(T const& val)
+    {
+        // ray_d == 0 is here because eps of rational<int> is 0 which isn't < than 0
+        return val == 0 || math::abs(val) < ::std::numeric_limits<T>::epsilon();
+    }
+};
+
+template <typename Point, typename Box, size_t CurrentDimension>
+struct segment_box_intersection_impl
+{
+    BOOST_STATIC_ASSERT(0 < CurrentDimension);
+
+    typedef segment_box_intersection_dim<Point, Box, CurrentDimension - 1> for_dim;
+
+    template <typename RelativeDistance>
+    static inline bool apply(Point const& p0, Point const& p1, Box const& b,
+                             RelativeDistance & t_near, RelativeDistance & t_far)
+    {
+        return segment_box_intersection_impl<Point, Box, CurrentDimension - 1>::apply(p0, p1, b, t_near, t_far)
+            && for_dim::apply(p0, p1, b, t_near, t_far);
+    }
+};
+
+template <typename Point, typename Box>
+struct segment_box_intersection_impl<Point, Box, 1>
+{
+    typedef segment_box_intersection_dim<Point, Box, 0> for_dim;
+
+    template <typename RelativeDistance>
+    static inline bool apply(Point const& p0, Point const& p1, Box const& b,
+                             RelativeDistance & t_near, RelativeDistance & t_far)
+    {
+        return for_dim::apply(p0, p1, b, t_near, t_far);
+    }
+};
+
+template <typename Point, typename Box>
+struct segment_box_intersection
+{
+    typedef segment_box_intersection_impl<Point, Box, dimension<Box>::value> impl;
+
+    static inline bool apply(Point const& p0, Point const& p1, Box const& b)
+    {
+        typedef
+        typename geometry::promote_floating_point<
+            typename geometry::select_most_precise<
+                typename coordinate_type<Point>::type,
+                typename coordinate_type<Box>::type
+            >::type
+        >::type relative_distance_type;
+
+        relative_distance_type t_near = -(::std::numeric_limits<relative_distance_type>::max)();
+        relative_distance_type t_far = (::std::numeric_limits<relative_distance_type>::max)();
+
+        // relative_distance = 0 < t_near ? t_near : 0;
+
+        return impl::apply(p0, p1, b, t_near, t_far);
+    }
+};
 
 template
 <

@@ -201,7 +201,7 @@ void test()
       T val = std::numeric_limits<T>::quiet_NaN();
       BOOST_CHECK_EQUAL(val.str(), "nan");
       val = static_cast<T>("nan");
-      BOOST_CHECK(boost::math::isnan(val));
+      BOOST_CHECK((boost::math::isnan)(val));
    }
 }
 

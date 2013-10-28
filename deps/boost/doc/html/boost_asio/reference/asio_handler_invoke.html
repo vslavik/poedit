@@ -7,7 +7,7 @@
 <link rel="home" href="../../boost_asio.html" title="Boost.Asio">
 <link rel="up" href="../reference.html" title="Reference">
 <link rel="prev" href="asio_handler_deallocate.html" title="asio_handler_deallocate">
-<link rel="next" href="asio_handler_is_continuation.html" title="asio_handler_is_continuation">
+<link rel="next" href="asio_handler_invoke/overload1.html" title="asio_handler_invoke (1 of 2 overloads)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,21 +20,29 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="asio_handler_deallocate.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../boost_asio.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="asio_handler_is_continuation.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="asio_handler_deallocate.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../boost_asio.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="asio_handler_invoke/overload1.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_asio.reference.asio_handler_invoke"></a><a class="link" href="asio_handler_invoke.html" title="asio_handler_invoke">asio_handler_invoke</a>
 </h3></div></div></div>
 <p>
-        <a class="indexterm" name="idp30731648"></a> 
+        <a class="indexterm" name="idp54833544"></a> 
 Default invoke function for handlers.
       </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">Function</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">asio_handler_invoke</span><span class="special">(</span>
-    <span class="identifier">Function</span> <span class="identifier">function</span><span class="special">,</span>
+<span class="keyword">void</span> <a class="link" href="asio_handler_invoke/overload1.html" title="asio_handler_invoke (1 of 2 overloads)">asio_handler_invoke</a><span class="special">(</span>
+    <span class="identifier">Function</span> <span class="special">&amp;</span> <span class="identifier">function</span><span class="special">,</span>
     <span class="special">...</span> <span class="special">);</span>
+  <span class="emphasis"><em>&#187; <a class="link" href="asio_handler_invoke/overload1.html" title="asio_handler_invoke (1 of 2 overloads)">more...</a></em></span>
+
+<span class="keyword">template</span><span class="special">&lt;</span>
+    <span class="keyword">typename</span> <span class="identifier">Function</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <a class="link" href="asio_handler_invoke/overload2.html" title="asio_handler_invoke (2 of 2 overloads)">asio_handler_invoke</a><span class="special">(</span>
+    <span class="keyword">const</span> <span class="identifier">Function</span> <span class="special">&amp;</span> <span class="identifier">function</span><span class="special">,</span>
+    <span class="special">...</span> <span class="special">);</span>
+  <span class="emphasis"><em>&#187; <a class="link" href="asio_handler_invoke/overload2.html" title="asio_handler_invoke (2 of 2 overloads)">more...</a></em></span>
 </pre>
 <p>
         Completion handlers for asynchronous operations are invoked by the <a class="link" href="io_service.html" title="io_service"><code class="computeroutput"><span class="identifier">io_service</span></code></a>
@@ -59,10 +67,14 @@ Default invoke function for handlers.
         strategy.
       </p>
 <p>
-        This default implementation is simply:
+        This default implementation invokes the function object like so:
       </p>
 <pre class="programlisting"><span class="identifier">function</span><span class="special">();</span>
 </pre>
+<p>
+        If necessary, the default implementation makes a copy of the function object
+        so that the non-const operator() can be used.
+      </p>
 <h5>
 <a name="boost_asio.reference.asio_handler_invoke.h0"></a>
         <span class="phrase"><a name="boost_asio.reference.asio_handler_invoke.example"></a></span><a class="link" href="asio_handler_invoke.html#boost_asio.reference.asio_handler_invoke.example">Example</a>
@@ -96,7 +108,7 @@ Default invoke function for handlers.
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="asio_handler_deallocate.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../boost_asio.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="asio_handler_is_continuation.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="asio_handler_deallocate.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../boost_asio.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="asio_handler_invoke/overload1.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

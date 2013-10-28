@@ -15,11 +15,13 @@ import toolset ;
 import architecture ;
 
 project boost/context
-    : source-location ../src
     : requirements
       <os>SOLARIS:<define>_XOPEN_SOURCE=600
+      <link>shared:<define>BOOST_CONTEXT_DYN_LINK=1
+      <define>BOOST_CONTEXT_SOURCE
     : usage-requirements
       <link>shared:<define>BOOST_CONTEXT_DYN_LINK=1
+    : source-location ../src
     ;
 
 local rule default_binary_format ( )
@@ -459,7 +461,6 @@ alias select_asm_context_sources
 
 lib boost_context
    : select_asm_context_sources
-   : <link>shared:<define>BOOST_CONTEXT_DYN_LINK=1
    ;
 
 boost-install boost_context ;

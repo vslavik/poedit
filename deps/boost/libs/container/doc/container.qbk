@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2009-2012 Ion Gazta\u00F1aga
+ / Copyright (c) 2009-2013 Ion Gazta\u00F1aga
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -8,7 +8,7 @@
 [library Boost.Container
     [quickbook 1.5]
     [authors [Gaztanaga, Ion]]
-    [copyright 2009-2012 Ion Gaztanaga]
+    [copyright 2009-2013 Ion Gaztanaga]
     [id container]
     [dirname container]
     [purpose Containers library]
@@ -66,6 +66,8 @@ compiler include path.
 [endsect]
 
 [endsect]
+
+[section:main_features Main features]
 
 [section:move_emplace Efficient insertion]
 
@@ -184,6 +186,45 @@ And include it only in the implementation file of `MyClassHolder`
 Finally, we can just compile, link, and run!
 
 [doc_type_erasure_main_cpp]
+
+[endsect]
+
+[endsect]
+
+[section:scary_iterators SCARY iterators]
+
+The paper N2913, titled [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2913.pdf,
+SCARY Iterator Assignment and Initialization], proposed a requirement that a standard container's
+iterator types have no dependency on any type argument apart from the container's `value_type`,
+`difference_type`, `pointer type`, and `const_pointer` type. In particular, according to the proposal,
+the types of a standard container's iterators should not depend on the container's `key_compare`,
+`hasher`, `key_equal`, or `allocator` types.
+
+That paper demonstrated that SCARY operations were crucial to the performant implementation of common
+design patterns using STL components. It showed that implementations that support SCARY operations reduce
+object code bloat by eliminating redundant specializations of iterator and algorithm templates.
+
+[*Boost.Container] containers implement SCARY iterators so the iterator type of a container is only dependent
+on the `allocator_traits<allocator_type>::pointer` type (the pointer type of the `value_type` to be inserted
+in the container). Reference types and all other typedefs are deduced from the pointer type using the
+C++11 `pointer_traits` utility. This leads to lower code bloat in algorithms and classes templated on
+iterators.
+
+[endsect]
+
+[section:other_features Other features]
+
+* Default constructors don't allocate memory which improves performance and
+  usually implies a no-throw guarantee (if predicate's or allocator's default constructor doesn't throw).
+
+* Small string optimization for [classref boost::container::basic_string basic_string],
+  with an internal buffer of 11/23 bytes (32/64 bit systems)
+  [*without] increasing the usual `sizeof` of the string (3 words).
+
+* `[multi]set/map` containers are size optimized embedding the color bit of the red-black tree nodes
+   in the parent pointer.
+
+* `[multi]set/map` containers use no recursive functions so stack problems are avoided.
 
 [endsect]
 
@@ -375,7 +416,8 @@ and erasure times considerably. Flat associative containers have the following
 attributes:
 
 * Faster lookup than standard associative containers
-* Much faster iteration than standard associative containers
+* Much faster iteration than standard associative containers.
+   Random-access iterators instead of bidirectional iterators.
 * Less memory consumption for small objects (and for big objects if `shrink_to_fit` is used)
 * Improved cache performance (data is stored in contiguous memory)
 * Non-stable iterators (iterators are invalidated when inserting and erasing elements)
@@ -460,6 +502,52 @@ are a particular case where `static_vector` can be beneficial.
 
 [endsect]
 
+[section:extended_functionality Extended functionality]
+
+[section:default_initialialization Default initialization for vector-like containers]
+
+STL and most other containers value initialize new elements in common operations like
+`vector::resize(size_type n)` or `explicit vector::vector(size_type n)`.
+
+In some performance-sensitive environments, where vectors are used as a replacement for
+variable-size buffers for file or network operations,
+[@http://en.cppreference.com/w/cpp/language/value_initialization value initialization]
+is a cost that is not negligible as elements are going to be overwritten by an external source
+shortly after new elements are added to the container.
+
+[*Boost.Container] offers two new members for `vector`, `static_vector` and `stable_vector`:
+`explicit container::container(size_type n, default_init_t)` and
+`explicit container::resize(size_type n, default_init_t)`, where new elements are constructed
+using [@http://en.cppreference.com/w/cpp/language/default_initialization default initialization].
+
+[endsect]
+
+[/
+/a__section:get_stored_allocator Obtain stored allocator__a
+/
+/STL containers offer a `get_allocator()` member to obtain a copy of the allocator that
+/the container is using to allocate and construct elements. For performance reasons, some
+/applications need o
+/
+/http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2271.html
+/
+/a__endsect__a
+/
+/a__section:ordered_range_insertion Ordered range insertion (a__'ordered_unique_range__a, a__'ordered_range__a) __a
+/
+/a__endsect__a
+/
+/a__section:constant_time_range_splice Constant-time range splice__a
+/
+/a__endsect__a
+/
+/a__section:previous_element_slist Slist previous element__a
+/
+/a__endsect__a
+/]
+
+[endsect]
+
 [section:Cpp11_conformance C++11 Conformance]
 
 [*Boost.Container] aims for full C++11 conformance except reasoned deviations,
@@ -524,7 +612,7 @@ elements' elements, and so on.
 [*Boost.Container] implements its own `scoped_allocator_adaptor` class and [*backports this feature also
 to C++03 compilers]. Due to C++03 limitations, in those compilers
 the allocator propagation implemented by `scoped_allocator_adaptor::construct` functions
-will be based on traits([classref boost::container::constructible_with_allocator_suffix constructible_with_allocator_suffix]
+will be based on traits ([classref boost::container::constructible_with_allocator_suffix constructible_with_allocator_suffix]
 and [classref boost::container::constructible_with_allocator_prefix constructible_with_allocator_prefix])
 proposed in [@http://www.open-std.org/jtc1/sc22/WG21/docs/papers/2008/n2554.pdf
 N2554: The Scoped Allocator Model (Rev 2) proposal]. In conforming C++11 compilers or compilers supporting SFINAE
@@ -578,22 +666,6 @@ If you need a memory optimized version of `boost::container::vector<bool>` funct
 [@http://www.boost.org/libs/dynamic_bitset/ Boost.DynamicBitset].
 
 [endsect]
-
-[endsect]
-
-[section:other_features Other features]
-
-* Default constructors don't allocate memory which improves performance and
-  usually implies a no-throw guarantee (if predicate's or allocator's default constructor doesn't throw).
-
-* Small string optimization for [classref boost::container::basic_string basic_string],
-  with an internal buffer of 11/23 bytes (32/64 bit systems)
-  [*without] increasing the usual `sizeof` of the string (3 words).
-
-* `[multi]set/map` containers are size optimized embedding the color bit of the red-black tree nodes
-   in the parent pointer.
-
-* `[multi]set/map` containers use no recursive functions so stack problems are avoided.
 
 [endsect]
 
@@ -662,9 +734,8 @@ use [*Boost.Container]? There are several reasons for that:
 [section:acknowledgements_notes Acknowledgements, notes and links]
 
 *  Original standard container code comes from [@http://www.sgi.com/tech/stl/ SGI STL library],
-   which enhanced the original HP STL code. Most of this code was rewritten for
-   [*Boost.Interprocess] and moved to [*Boost.Intrusive]. `deque` and `string` containers still
-   have fragments of the original SGI code. Many thanks to Alexander Stepanov, Meng Lee, David Musser,
+   which enhanced the original HP STL code. Code was rewritten for
+   [*Boost.Interprocess] and moved to [*Boost.Intrusive]. Many thanks to Alexander Stepanov, Meng Lee, David Musser,
    Matt Austern... and all HP and SGI STL developers.
 
 *  `flat_[multi]_map/set` containers were originally based on [@http://en.wikipedia.org/wiki/Loki_%28C%2B%2B%29 Loki's]
@@ -687,6 +758,20 @@ use [*Boost.Container]? There are several reasons for that:
 [endsect]
 
 [section:release_notes Release Notes]
+
+[section:release_notes_boost_1_55_00 Boost 1.55 Release]
+
+*  Implemented [link container.main_features.scary_iterators SCARY iterators].
+
+*  Fixed bugs [@https://svn.boost.org/trac/boost/ticket/8269 #8269],
+              [@https://svn.boost.org/trac/boost/ticket/8473 #8473],
+              [@https://svn.boost.org/trac/boost/ticket/8892 #8892],
+              [@https://svn.boost.org/trac/boost/ticket/9009 #9009],
+              [@https://svn.boost.org/trac/boost/ticket/9064 #9064],
+              [@https://svn.boost.org/trac/boost/ticket/9092 #9092],
+              [@https://svn.boost.org/trac/boost/ticket/9108 #9108].
+
+[endsect]
 
 [section:release_notes_boost_1_54_00 Boost 1.54 Release]
 

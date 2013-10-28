@@ -557,6 +557,7 @@ void test_integer_ops(const boost::mpl::int_<boost::multiprecision::number_kind_
       if(std::numeric_limits<Real>::is_specialized && (!std::numeric_limits<Real>::is_bounded || ((int)i * 17 < std::numeric_limits<Real>::digits)))
       {
          BOOST_CHECK_EQUAL(lsb(Real(1) << (i * 17)) ,  i * 17);
+         BOOST_CHECK_EQUAL(msb(Real(1) << (i * 17)) ,  i * 17);
          BOOST_CHECK(bit_test(Real(1) << (i * 17), i * 17));
          BOOST_CHECK(!bit_test(Real(1) << (i * 17), i * 17 + 1));
          if(i)
@@ -813,7 +814,7 @@ void test_float_ops(const boost::mpl::int_<boost::multiprecision::number_kind_fl
    {
       if(std::numeric_limits<Real>::has_infinity)
       {
-         BOOST_CHECK(boost::math::isinf(Real(20) / 0u));
+         BOOST_CHECK((boost::math::isinf)(Real(20) / 0u));
       }
       else
       {
@@ -837,6 +838,38 @@ struct lexical_cast_target_type
       >::type
    >::type type;
 };
+
+template <class Real, class Num>
+void test_negative_mixed_minmax(boost::mpl::true_ const&)
+{
+   if(!std::numeric_limits<Real>::is_bounded || (std::numeric_limits<Real>::digits >= std::numeric_limits<Num>::digits))
+   {
+      Real mx1((std::numeric_limits<Num>::max)() - 1);
+      ++mx1;
+      Real mx2((std::numeric_limits<Num>::max)());
+      BOOST_CHECK_EQUAL(mx1, mx2);
+      mx1 = (std::numeric_limits<Num>::max)() - 1;
+      ++mx1;
+      mx2 = (std::numeric_limits<Num>::max)();
+      BOOST_CHECK_EQUAL(mx1, mx2);
+
+      if(!std::numeric_limits<Real>::is_bounded || (std::numeric_limits<Real>::digits > std::numeric_limits<Num>::digits))
+      {
+         Real mx3((std::numeric_limits<Num>::min)() + 1);
+         --mx3;
+         Real mx4((std::numeric_limits<Num>::min)());
+         BOOST_CHECK_EQUAL(mx3, mx4);
+         mx3 = (std::numeric_limits<Num>::min)() + 1;
+         --mx3;
+         mx4 = (std::numeric_limits<Num>::min)();
+         BOOST_CHECK_EQUAL(mx3, mx4);
+      }
+   }
+}
+template <class Real, class Num>
+void test_negative_mixed_minmax(boost::mpl::false_ const&)
+{
+}
 
 template <class Real, class Num>
 void test_negative_mixed(boost::mpl::true_ const&)
@@ -1111,6 +1144,10 @@ void test_negative_mixed(boost::mpl::true_ const&)
    BOOST_CHECK_EQUAL(d ,  -3 * -4 - -2);
    d = b * static_cast<cast_type>(n3) - static_cast<cast_type>(n1);
    BOOST_CHECK_EQUAL(d ,  -3 * -4 - -2);
+   //
+   // Conversion from min and max values:
+   //
+   test_negative_mixed_minmax<Real, Num>(boost::mpl::bool_<std::numeric_limits<Real>::is_integer && std::numeric_limits<Num>::is_integer>());
 }
 
 template <class Real, class Num>

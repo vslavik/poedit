@@ -212,7 +212,7 @@ void check_against_T7(RealType)
       const RealType exph = exp(h);
       const RealType t = boost::math::owens_t(exph, expa);
       RealType t7 = boost::math::owens_t_T7(exph,expa);
-      //if(!boost::math::isnormal(t) || !boost::math::isnormal(t7))
+      //if(!(boost::math::isnormal)(t) || !(boost::math::isnormal)(t7))
       //   std::cout << "a = " << expa << " h = " << exph << " t = " << t << " t7 = " << t7 << std::endl;
       BOOST_CHECK_CLOSE_FRACTION(t, t7, tolerance);
     }

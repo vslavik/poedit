@@ -173,6 +173,12 @@ struct tester
          {
             BOOST_CHECK_EQUAL(mpz_int(a << i).str(), test_type(a1 << i).str());
          }
+         else if(!is_checked_cpp_int<test_type>::value)
+         {
+            test_type t1(mpz_int(a << i).str());
+            test_type t2 = a1 << i;
+            BOOST_CHECK_EQUAL(t1, t2);
+         }
          BOOST_CHECK_EQUAL(mpz_int(a >> i).str(), test_type(a1 >> i).str());
       }
       // gcd/lcm
@@ -184,6 +190,11 @@ struct tester
       BOOST_CHECK_EQUAL(mpz_int(lcm(-c, -d)).str(), test_type(lcm(-c1, -d1)).str());
       BOOST_CHECK_EQUAL(mpz_int(gcd(a, -b)).str(), test_type(gcd(a1, -b1)).str());
       BOOST_CHECK_EQUAL(mpz_int(lcm(c, -d)).str(), test_type(lcm(c1, -d1)).str());
+      // Integer sqrt:
+      mpz_int r;
+      test_type r1;
+      BOOST_CHECK_EQUAL(sqrt(a, r).str(), sqrt(a1, r1).str());
+      BOOST_CHECK_EQUAL(r.str(), r1.str());
    }
 
    void t3()
@@ -335,6 +346,7 @@ struct tester
       BOOST_CHECK_EQUAL(z2.str(), t2.str());
       BOOST_CHECK_EQUAL(integer_modulus(a, si), integer_modulus(a1, si));
       BOOST_CHECK_EQUAL(lsb(a), lsb(a1));
+      BOOST_CHECK_EQUAL(msb(a), msb(a1));
 
       for(unsigned i = 0; i < 1000; i += 13)
       {
@@ -351,6 +363,7 @@ struct tester
          BOOST_CHECK_EQUAL(mpz_int(powm(a, ui, c)).str(), test_type(powm(a1, ui, c1)).str());
       }
       BOOST_CHECK_EQUAL(lsb(a), lsb(a1));
+      BOOST_CHECK_EQUAL(msb(a), msb(a1));
    }
 
    void test_bug_cases()

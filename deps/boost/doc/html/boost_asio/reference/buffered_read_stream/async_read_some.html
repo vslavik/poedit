@@ -27,7 +27,7 @@
 <a name="boost_asio.reference.buffered_read_stream.async_read_some"></a><a class="link" href="async_read_some.html" title="buffered_read_stream::async_read_some">buffered_read_stream::async_read_some</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp55579936"></a> 
+          <a class="indexterm" name="idp79706968"></a> 
 Start an asynchronous read. The buffer
           into which the data will be read must be valid for the lifetime of the
           asynchronous operation.
@@ -35,7 +35,7 @@ Start an asynchronous read. The buffer
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <a class="link" href="../MutableBufferSequence.html" title="Mutable buffer sequence requirements">MutableBufferSequence</a><span class="special">,</span>
     <span class="keyword">typename</span> <a class="link" href="../ReadHandler.html" title="Read handler requirements">ReadHandler</a><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">async_read_some</span><span class="special">(</span>
+<a class="link" href="../asynchronous_operations.html#boost_asio.reference.asynchronous_operations.return_type_of_an_initiating_function"><span class="emphasis"><em>void-or-deduced</em></span></a> <span class="identifier">async_read_some</span><span class="special">(</span>
     <span class="keyword">const</span> <span class="identifier">MutableBufferSequence</span> <span class="special">&amp;</span> <span class="identifier">buffers</span><span class="special">,</span>
     <span class="identifier">ReadHandler</span> <span class="identifier">handler</span><span class="special">);</span>
 </pre>

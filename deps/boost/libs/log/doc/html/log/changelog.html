@@ -4,8 +4,8 @@
 <title>Changelog</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
-<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="prev" href="../boost/log/current_scope.html" title="Function current_scope">
 <link rel="next" href="todo.html" title="TODO in future releases">
 </head>
@@ -21,6 +21,65 @@
 </h2></div></div></div>
 <h4>
 <a name="log.changelog.h0"></a>
+      <span class="phrase"><a name="log.changelog.2_2__boost_1_55"></a></span><a class="link" href="changelog.html#log.changelog.2_2__boost_1_55">2.2,
+      Boost 1.55</a>
+    </h4>
+<p>
+      <span class="bold"><strong>General changes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Added a new configuration macro <code class="computeroutput"><span class="identifier">BOOST_LOG_WITHOUT_DEFAULT_FACTORIES</span></code>.
+          By defining this macro the user can disable compilation of the default
+          filter and formatter factories used by settings parsers. This can substantially
+          reduce binary sizes while still retaining support for settings parsers.
+          Note that when this macro is defined the user will have to register <span class="underline">all</span> attributes in the library.
+        </li>
+<li class="listitem">
+          Rewritten some of the parsers to reduce the compiled binary size. The rewritten
+          parsers are more robust in detecting ambiguous and incorrect input.
+        </li>
+<li class="listitem">
+          The header <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">log</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">intrusive_ref_counter</span><span class="special">.</span><span class="identifier">hpp</span></code> is deprecated and will be removed
+          in future releases. Its contents have been reworked and moved to <a href="http://www.boost.org/doc/libs/release/libs/smart_ptr/smart_ptr.htm" target="_top">Boost.SmartPtr</a>,
+          as <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">smart_ptr</span><span class="special">/</span><span class="identifier">intrusive_ref_counter</span><span class="special">.</span><span class="identifier">hpp</span></code>.
+        </li>
+<li class="listitem">
+          The header <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">log</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">explicit_operator_bool</span><span class="special">.</span><span class="identifier">hpp</span></code> is deprecated and will be removed
+          in future releases. Its contents have been moved to <a href="http://www.boost.org/doc/libs/release/libs/utility/utility.htm" target="_top">Boost.Utility</a>,
+          as <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">explicit_operator_bool</span><span class="special">.</span><span class="identifier">hpp</span></code>.
+        </li>
+<li class="listitem">
+          The header <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">log</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">empty_deleter</span><span class="special">.</span><span class="identifier">hpp</span></code> is deprecated and will be removed
+          in future releases. Its contents have been moved to <a href="http://www.boost.org/doc/libs/release/libs/utility/utility.htm" target="_top">Boost.Utility</a>,
+          as <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">empty_deleter</span><span class="special">.</span><span class="identifier">hpp</span></code>.
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Fixed <a class="link" href="detailed/attributes.html#log.detailed.attributes.timer" title="Stop watch (timer)"><code class="computeroutput"><span class="identifier">timer</span></code></a>
+          attribute generating incorrect time readings on Windows on heavy thread
+          contention when <code class="computeroutput"><span class="identifier">QueryPerformanceCounter</span></code>
+          API was used.
+        </li>
+<li class="listitem">
+          Fixed a bug in the filter parser that prevented using parsed filters with
+          some attributes. For example, parsed filters didn't work with a string-typed
+          attribute value, if the value was compared to a numeric operand.
+        </li>
+<li class="listitem">
+          Fixed thread id formatting discrepancies between the default sink and formatters.
+        </li>
+<li class="listitem">
+          Closed tickets: <a href="https://svn.boost.org/trac/boost/ticket/8815" target="_top">#8815</a>, <a href="https://svn.boost.org/trac/boost/ticket/8819" target="_top">#8819</a>, <a href="https://svn.boost.org/trac/boost/ticket/8915" target="_top">#8915</a>, <a href="https://svn.boost.org/trac/boost/ticket/8917" target="_top">#8917</a>, <a href="https://svn.boost.org/trac/boost/ticket/9139" target="_top">#9139</a>, <a href="https://svn.boost.org/trac/boost/ticket/9140" target="_top">#9140</a>,
+          <a href="https://svn.boost.org/trac/boost/ticket/9153" target="_top">#9153</a>, <a href="https://svn.boost.org/trac/boost/ticket/9155" target="_top">#9155</a>.
+        </li>
+</ul></div>
+<h4>
+<a name="log.changelog.h1"></a>
       <span class="phrase"><a name="log.changelog.2_1__boost_1_54"></a></span><a class="link" href="changelog.html#log.changelog.2_1__boost_1_54">2.1,
       Boost 1.54</a>
     </h4>
@@ -67,7 +126,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h1"></a>
+<a name="log.changelog.h2"></a>
       <span class="phrase"><a name="log.changelog.2_0__13_april_2013"></a></span><a class="link" href="changelog.html#log.changelog.2_0__13_april_2013">2.0,
       13 April 2013</a>
     </h4>
@@ -442,7 +501,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h2"></a>
+<a name="log.changelog.h3"></a>
       <span class="phrase"><a name="log.changelog.1_1__02_december_2011"></a></span><a class="link" href="changelog.html#log.changelog.1_1__02_december_2011">1.1,
       02 December 2011</a>
     </h4>
@@ -462,7 +521,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h3"></a>
+<a name="log.changelog.h4"></a>
       <span class="phrase"><a name="log.changelog.1_0__09_may_2010"></a></span><a class="link" href="changelog.html#log.changelog.1_0__09_may_2010">1.0,
       09 May 2010</a>
     </h4>
@@ -502,7 +561,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h4"></a>
+<a name="log.changelog.h5"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_4__08_jan_2010"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_4__08_jan_2010">Release
       Candidate 4, 08 Jan 2010</a>
     </h4>
@@ -597,7 +656,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h5"></a>
+<a name="log.changelog.h6"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_3__08_feb_2009"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_3__08_feb_2009">Release
       Candidate 3, 08 Feb 2009</a>
     </h4>
@@ -631,7 +690,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h6"></a>
+<a name="log.changelog.h7"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_2"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_2">Release
       Candidate 2</a>
     </h4>

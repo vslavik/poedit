@@ -6,6 +6,8 @@
 #define BOOST_THREAD_VERSION 4
 
 #include <iostream>
+#include <functional>
+#include <future>
 
 #include <boost/thread.hpp>
 #include <boost/shared_ptr.hpp>
@@ -28,6 +30,11 @@ boost::packaged_task<int()>* schedule(boost::function<int ()> const& fn)
 
 struct MyFunc
 {
+  MyFunc(MyFunc const&) = delete;
+  MyFunc& operator=(MyFunc const&) = delete;
+  MyFunc() {};
+  MyFunc(MyFunc &&) {};
+  MyFunc& operator=(MyFunc &&) { return *this;};
   void operator()()const {}
 };
 
@@ -41,12 +48,14 @@ int main()
   std::cout << "The answer to the ultimate question: " << fut.get() << std::endl;
 
   {
-    //boost::function<void()> f;
+    boost::function<void()> f;
     MyFunc mf;
 
-    //boost::packaged_task<void()> t1(f); // error 1
-    boost::packaged_task<void()> t2(mf); // error 2
+    boost::packaged_task<void()> t1(f);
+    boost::packaged_task<void()> t2(boost::move(mf));
   }
 
   return 0;
 }
+
+

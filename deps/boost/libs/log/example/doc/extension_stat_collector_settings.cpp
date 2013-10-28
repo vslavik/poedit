@@ -10,8 +10,8 @@
 #include <sstream>
 #include <iostream>
 #include <stdexcept>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/optional/optional.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>

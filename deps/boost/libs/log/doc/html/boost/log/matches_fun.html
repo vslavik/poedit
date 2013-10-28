@@ -4,7 +4,7 @@
 <title>Struct matches_fun</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../utilities.html#header.boost.log.utility.functional.matches_hpp" title="Header &lt;boost/log/utility/functional/matches.hpp&gt;">
 <link rel="prev" href="greater_equal.html" title="Struct greater_equal">
 <link rel="next" href="matches_fun/match_traits.html" title="Struct template match_traits">
@@ -38,22 +38,22 @@
     <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="matches_fun/match_traits.html#boost.log.matches_fun.match_traits.tag_type"><span class="identifier">tag_type</span></a><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="matches_fun.html#idp21431600-bb">public member functions</a></span>
+  <span class="comment">// <a class="link" href="matches_fun.html#idp28176168-bb">public member functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StringT<span class="special">,</span> <span class="keyword">typename</span> ExpressionT<span class="special">&gt;</span> 
-    <span class="keyword">bool</span> <a class="link" href="matches_fun.html#idp21431808-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">StringT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ExpressionT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">bool</span> <a class="link" href="matches_fun.html#idp28176376-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">StringT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ExpressionT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StringT<span class="special">,</span> <span class="keyword">typename</span> ExpressionT<span class="special">,</span> <span class="keyword">typename</span> ArgT<span class="special">&gt;</span> 
-    <span class="keyword">bool</span> <a class="link" href="matches_fun.html#idp21433648-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">StringT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ExpressionT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">bool</span> <a class="link" href="matches_fun.html#idp28178216-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">StringT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ExpressionT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ArgT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp29623904"></a><h2>Description</h2>
+<a name="idp68655288"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp29624112"></a><h3>
-<a name="idp21431600-bb"></a><code class="computeroutput">matches_fun</code> public member functions</h3>
+<a name="idp68655496"></a><h3>
+<a name="idp28176168-bb"></a><code class="computeroutput">matches_fun</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StringT<span class="special">,</span> <span class="keyword">typename</span> ExpressionT<span class="special">&gt;</span> 
-  <span class="keyword">bool</span> <a name="idp21431808-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">StringT</span> <span class="keyword">const</span> <span class="special">&amp;</span> str<span class="special">,</span> <span class="identifier">ExpressionT</span> <span class="keyword">const</span> <span class="special">&amp;</span> expr<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+  <span class="keyword">bool</span> <a name="idp28176376-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">StringT</span> <span class="keyword">const</span> <span class="special">&amp;</span> str<span class="special">,</span> <span class="identifier">ExpressionT</span> <span class="keyword">const</span> <span class="special">&amp;</span> expr<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 <li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StringT<span class="special">,</span> <span class="keyword">typename</span> ExpressionT<span class="special">,</span> <span class="keyword">typename</span> ArgT<span class="special">&gt;</span> 
-  <span class="keyword">bool</span> <a name="idp21433648-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">StringT</span> <span class="keyword">const</span> <span class="special">&amp;</span> str<span class="special">,</span> <span class="identifier">ExpressionT</span> <span class="keyword">const</span> <span class="special">&amp;</span> expr<span class="special">,</span> 
+  <span class="keyword">bool</span> <a name="idp28178216-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">StringT</span> <span class="keyword">const</span> <span class="special">&amp;</span> str<span class="special">,</span> <span class="identifier">ExpressionT</span> <span class="keyword">const</span> <span class="special">&amp;</span> expr<span class="special">,</span> 
                   <span class="identifier">ArgT</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>

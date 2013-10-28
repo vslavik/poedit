@@ -10,7 +10,7 @@
  * \date   19.04.2007
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #include <cstddef>
@@ -20,9 +20,10 @@
 #include <algorithm>
 #include <boost/cstdint.hpp>
 #include <boost/assert.hpp>
-#include <boost/weak_ptr.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/smart_ptr/weak_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/range/iterator_range_core.hpp>
 #include <boost/move/core.hpp>
 #include <boost/move/utility.hpp>
@@ -134,8 +135,8 @@ public:
     //! Returns the flag indicating whether it is needed to detach the record from the current thread
     bool is_detach_from_thread_needed() const BOOST_NOEXCEPT { return m_detach_from_thread_needed; }
 
-    BOOST_LOG_DELETED_FUNCTION(private_data(private_data const&))
-    BOOST_LOG_DELETED_FUNCTION(private_data& operator= (private_data const&))
+    BOOST_DELETED_FUNCTION(private_data(private_data const&))
+    BOOST_DELETED_FUNCTION(private_data& operator= (private_data const&))
 
 private:
     //! Returns a pointer to the first accepting sink
@@ -251,6 +252,10 @@ public:
         m_default_sink(boost::make_shared< sinks::aux::default_sink >()),
         m_enabled(true)
     {
+        // Workaround for https://svn.boost.org/trac/boost/ticket/8642
+        // Initialize global locale in Boost.Filesystem early, so that it is still available while the logging core is destroyed.
+        // Note that this only helps in the simplest case, when the core is not kept alive by a shared_ptr saved by user.
+        filesystem::path::codecvt();
     }
 
     //! Invokes sink-specific filter and adds the sink to the record if the filter passes the log record
@@ -286,7 +291,7 @@ public:
 
     //! Opens a record
     template< typename SourceAttributesT >
-    BOOST_LOG_FORCEINLINE record open_record(BOOST_FWD_REF(SourceAttributesT) source_attributes)
+    BOOST_FORCEINLINE record open_record(BOOST_FWD_REF(SourceAttributesT) source_attributes)
     {
         // Try a quick win first
         if (m_enabled) try

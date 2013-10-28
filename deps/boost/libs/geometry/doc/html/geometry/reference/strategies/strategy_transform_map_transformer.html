@@ -27,8 +27,9 @@
 <a name="geometry.reference.strategies.strategy_transform_map_transformer"></a><a class="link" href="strategy_transform_map_transformer.html" title="strategy::transform::map_transformer">strategy::transform::map_transformer</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp16683280"></a><a class="indexterm" name="idp16683616"></a><a class="indexterm" name="idp16683952"></a>
-Transformation strategy to do map from one to another Cartesian system.
+          <a class="indexterm" name="idp63549928"></a><a class="indexterm" name="idp63550264"></a><a class="indexterm" name="idp63550600"></a>
+Transformation strategy to map from one to another Cartesian coordinate
+          system.
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_transform_map_transformer.h0"></a>
@@ -36,9 +37,9 @@ Transformation strategy to do map from one to another Cartesian system.
         </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">P2</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">Mirror</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">SameScale</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension2</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension2</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">Mirror</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">SameScale</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">transform</span><span class="special">::</span><span class="identifier">map_transformer</span>
-      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">transform</span><span class="special">::</span><span class="identifier">ublas_transformer</span><span class="special">&lt;</span> <span class="identifier">P1</span><span class="special">,</span> <span class="identifier">P2</span><span class="special">,</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">Dimension2</span> <span class="special">&gt;</span>
+      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">transform</span><span class="special">::</span><span class="identifier">ublas_transformer</span><span class="special">&lt;</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">Dimension2</span> <span class="special">&gt;</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
 <span class="special">};</span>
@@ -77,29 +78,34 @@ Transformation strategy to do map from one to another Cartesian system.
 <tr>
 <td>
                   <p>
-                    typename P1
+                    typename CalculationType
                   </p>
                 </td>
 <td>
                 </td>
 <td>
-                  <p>
-                    first point type
-                  </p>
                 </td>
 </tr>
 <tr>
 <td>
                   <p>
-                    typename P2
+                    std::size_t Dimension1
                   </p>
                 </td>
 <td>
                 </td>
+<td>
+                </td>
+</tr>
+<tr>
 <td>
                   <p>
-                    second point type
+                    std::size_t Dimension2
                   </p>
+                </td>
+<td>
+                </td>
+<td>
                 </td>
 </tr>
 <tr>
@@ -129,34 +135,6 @@ Transformation strategy to do map from one to another Cartesian system.
 <td>
                   <p>
                     true
-                  </p>
-                </td>
-<td>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    std::size_t Dimension1
-                  </p>
-                </td>
-<td>
-                  <p>
-                    dimension&lt;P1&gt;::type::value
-                  </p>
-                </td>
-<td>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    std::size_t Dimension2
-                  </p>
-                </td>
-<td>
-                  <p>
-                    dimension&lt;P2&gt;::type::value
                   </p>
                 </td>
 <td>

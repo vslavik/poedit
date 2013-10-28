@@ -34,8 +34,10 @@ namespace dispatch {
 template <typename Box, typename Point, size_t I>
 struct box_segment_intersection_dim
 {
-    BOOST_STATIC_ASSERT(I < dimension<Box>::value);
-    BOOST_STATIC_ASSERT(I < dimension<Point>::value);
+    BOOST_STATIC_ASSERT(0 <= dimension<Box>::value);
+    BOOST_STATIC_ASSERT(0 <= dimension<Point>::value);
+    BOOST_STATIC_ASSERT(I < size_t(dimension<Box>::value));
+    BOOST_STATIC_ASSERT(I < size_t(dimension<Point>::value));
     BOOST_STATIC_ASSERT(dimension<Point>::value == dimension<Box>::value);
 
     // WARNING! - RelativeDistance must be IEEE float for this to work

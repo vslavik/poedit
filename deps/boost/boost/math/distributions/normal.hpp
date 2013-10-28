@@ -31,14 +31,14 @@ public:
    typedef RealType value_type;
    typedef Policy policy_type;
 
-   normal_distribution(RealType mean = 0, RealType sd = 1)
-      : m_mean(mean), m_sd(sd)
+   normal_distribution(RealType l_mean = 0, RealType sd = 1)
+      : m_mean(l_mean), m_sd(sd)
    { // Default is a 'standard' normal distribution N01.
      static const char* function = "boost::math::normal_distribution<%1%>::normal_distribution";
 
      RealType result;
      detail::check_scale(function, sd, &result, Policy());
-     detail::check_location(function, mean, &result, Policy());
+     detail::check_location(function, l_mean, &result, Policy());
    }
 
    RealType mean()const
@@ -109,15 +109,6 @@ inline RealType pdf(const normal_distribution<RealType, Policy>& dist, const Rea
    RealType mean = dist.mean();
 
    static const char* function = "boost::math::pdf(const normal_distribution<%1%>&, %1%)";
-   if((boost::math::isinf)(x))
-   {
-     return 0; // pdf + and - infinity is zero.
-   }
-   // Below produces MSVC 4127 warnings, so the above used instead.
-   //if(std::numeric_limits<RealType>::has_infinity && abs(x) == std::numeric_limits<RealType>::infinity())
-   //{ // pdf + and - infinity is zero.
-   //  return 0;
-   //}
 
    RealType result = 0;
    if(false == detail::check_scale(function, sd, &result, Policy()))
@@ -128,6 +119,15 @@ inline RealType pdf(const normal_distribution<RealType, Policy>& dist, const Rea
    {
       return result;
    }
+   if((boost::math::isinf)(x))
+   {
+     return 0; // pdf + and - infinity is zero.
+   }
+   // Below produces MSVC 4127 warnings, so the above used instead.
+   //if(std::numeric_limits<RealType>::has_infinity && abs(x) == std::numeric_limits<RealType>::infinity())
+   //{ // pdf + and - infinity is zero.
+   //  return 0;
+   //}
    if(false == detail::check_x(function, x, &result, Policy()))
    {
       return result;
@@ -217,6 +217,11 @@ inline RealType cdf(const complemented2_type<normal_distribution<RealType, Polic
    RealType x = c.param;
    static const char* function = "boost::math::cdf(const complement(normal_distribution<%1%>&), %1%)";
 
+   RealType result = 0;
+   if(false == detail::check_scale(function, sd, &result, Policy()))
+      return result;
+   if(false == detail::check_location(function, mean, &result, Policy()))
+      return result;
    if((boost::math::isinf)(x))
    {
      if(x < 0) return 1; // cdf complement -infinity is unity.
@@ -231,11 +236,6 @@ inline RealType cdf(const complemented2_type<normal_distribution<RealType, Polic
    //{ // cdf complement -infinity is unity.
    //  return 1;
    //}
-   RealType result = 0;
-   if(false == detail::check_scale(function, sd, &result, Policy()))
-      return result;
-   if(false == detail::check_location(function, mean, &result, Policy()))
-      return result;
    if(false == detail::check_x(function, x, &result, Policy()))
       return result;
 

@@ -54,7 +54,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         // boost::iostreams::seekable_device. We need to have see support to
         // be able to figure out how many characters have been actually 
         // consumed by the stream.
-        std::streamsize write(const char*, std::streamsize) 
+        std::streamsize write(const char_type*, std::streamsize)
         {
             BOOST_ASSERT(false);    // not supported
             return -1;

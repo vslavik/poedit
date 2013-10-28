@@ -37,6 +37,7 @@
 #include <boost/geometry/index/detail/varray_detail.hpp>
 
 #include <boost/concept_check.hpp>
+#include <boost/throw_exception.hpp>
 
 /*!
 \defgroup varray_non_member varray non-member functions

@@ -28,7 +28,9 @@ public:
     typedef typename rtree::leaf<Value, typename Options::parameters_type, Box, Allocators, typename Options::node_tag>::type leaf;
 
     typedef typename Options::parameters_type parameters_type;
-    typedef typename Allocators::internal_node_pointer internal_node_pointer;
+
+    //typedef typename Allocators::internal_node_pointer internal_node_pointer;
+    typedef internal_node * internal_node_pointer;
 
     template <typename ResultElements, typename Node>
     static inline void apply(ResultElements & result_elements,

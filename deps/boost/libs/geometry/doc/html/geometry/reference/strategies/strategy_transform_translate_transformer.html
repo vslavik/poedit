@@ -27,7 +27,7 @@
 <a name="geometry.reference.strategies.strategy_transform_translate_transformer"></a><a class="link" href="strategy_transform_translate_transformer.html" title="strategy::transform::translate_transformer">strategy::transform::translate_transformer</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp16822704"></a><a class="indexterm" name="idp16823040"></a><a class="indexterm" name="idp16823376"></a>
+          <a class="indexterm" name="idp63684712"></a><a class="indexterm" name="idp63685048"></a><a class="indexterm" name="idp63685384"></a>
 Strategy of translate transformation in Cartesian system.
         </p>
 <h6>
@@ -43,7 +43,7 @@ Strategy of translate transformation in Cartesian system.
         </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">P2</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension2</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension2</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">transform</span><span class="special">::</span><span class="identifier">translate_transformer</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
@@ -60,17 +60,11 @@ Strategy of translate transformation in Cartesian system.
 <colgroup>
 <col>
 <col>
-<col>
 </colgroup>
 <thead><tr>
 <th>
                   <p>
                     Parameter
-                  </p>
-                </th>
-<th>
-                  <p>
-                    Default
                   </p>
                 </th>
 <th>
@@ -83,29 +77,10 @@ Strategy of translate transformation in Cartesian system.
 <tr>
 <td>
                   <p>
-                    typename P1
+                    typename CalculationType
                   </p>
                 </td>
 <td>
-                </td>
-<td>
-                  <p>
-                    first point type
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    typename P2
-                  </p>
-                </td>
-<td>
-                </td>
-<td>
-                  <p>
-                    second point type
-                  </p>
                 </td>
 </tr>
 <tr>
@@ -116,12 +91,7 @@ Strategy of translate transformation in Cartesian system.
                 </td>
 <td>
                   <p>
-                    geometry::dimension&lt;P1&gt;::type::value
-                  </p>
-                </td>
-<td>
-                  <p>
-                    number of dimensions to transform to second point
+                    number of dimensions to transform from
                   </p>
                 </td>
 </tr>
@@ -133,10 +103,8 @@ Strategy of translate transformation in Cartesian system.
                 </td>
 <td>
                   <p>
-                    geometry::dimension&lt;P2&gt;::type::value
+                    number of dimensions to transform to
                   </p>
-                </td>
-<td>
                 </td>
 </tr>
 </tbody>

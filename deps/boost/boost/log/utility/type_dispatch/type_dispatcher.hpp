@@ -19,10 +19,10 @@
 #include <boost/static_assert.hpp>
 #include <boost/log/detail/config.hpp>
 #include <boost/log/detail/visible_type.hpp>
-#include <boost/log/utility/explicit_operator_bool.hpp>
+#include <boost/utility/explicit_operator_bool.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -112,7 +112,7 @@ public:
             (caster.as_trampoline)(this->m_pVisitor, value);
         }
 
-        BOOST_LOG_EXPLICIT_OPERATOR_BOOL()
+        BOOST_EXPLICIT_OPERATOR_BOOL()
 
         bool operator! () const { return (this->m_pVisitor == 0); }
     };
@@ -136,7 +136,7 @@ public:
         /*!
          * The operator checks if the visitor is attached to a receiver
          */
-        BOOST_LOG_EXPLICIT_OPERATOR_BOOL()
+        BOOST_EXPLICIT_OPERATOR_BOOL()
 
         /*!
          * The operator checks if the visitor is not attached to a receiver
@@ -162,9 +162,9 @@ protected:
     {
     }
     // Destructor and copying can only be called from the derived classes
-    BOOST_LOG_DEFAULTED_FUNCTION(~type_dispatcher(), {})
-    BOOST_LOG_DEFAULTED_FUNCTION(type_dispatcher(type_dispatcher const& that), : m_get_callback_impl(that.m_get_callback_impl) {})
-    BOOST_LOG_DEFAULTED_FUNCTION(type_dispatcher& operator= (type_dispatcher const& that), { m_get_callback_impl = that.m_get_callback_impl; return *this; })
+    BOOST_DEFAULTED_FUNCTION(~type_dispatcher(), {})
+    BOOST_DEFAULTED_FUNCTION(type_dispatcher(type_dispatcher const& that), : m_get_callback_impl(that.m_get_callback_impl) {})
+    BOOST_DEFAULTED_FUNCTION(type_dispatcher& operator= (type_dispatcher const& that), { m_get_callback_impl = that.m_get_callback_impl; return *this; })
 
 public:
     /*!

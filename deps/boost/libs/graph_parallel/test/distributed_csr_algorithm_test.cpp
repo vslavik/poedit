@@ -224,7 +224,6 @@ int test_main(int argc, char* argv[])
   typedef small_world_iterator<minstd_rand, Digraph> SWIter;
   typedef sorted_rmat_iterator<minstd_rand, Digraph> RMATIter;
 
-  typedef graph_traits<Digraph>::vertex_descriptor vertex_descriptor;
   typedef graph_traits<Digraph>::edge_descriptor edge_descriptor;
 
   int n = 40;

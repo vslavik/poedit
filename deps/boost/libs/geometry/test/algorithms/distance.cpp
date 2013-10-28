@@ -71,12 +71,12 @@ void test_distance_point()
 
     {
         // Test custom strategy
-        BOOST_CONCEPT_ASSERT( (bg::concept::PointDistanceStrategy<taxicab_distance<P> >) );
+        BOOST_CONCEPT_ASSERT( (bg::concept::PointDistanceStrategy<taxicab_distance, P, P>) );
 
-        typedef typename services::return_type<taxicab_distance<P> >::type cab_return_type;
+        typedef typename services::return_type<taxicab_distance, P, P>::type cab_return_type;
         BOOST_MPL_ASSERT((boost::is_same<cab_return_type, typename bg::coordinate_type<P>::type>));
 
-        taxicab_distance<P> tcd;
+        taxicab_distance tcd;
         cab_return_type d = bg::distance(p1, p2, tcd);
 
         BOOST_CHECK( bg::math::abs(d - cab_return_type(2)) <= cab_return_type(0.01) );
@@ -90,7 +90,7 @@ void test_distance_point()
 
         strategy_type strategy;
         comparable_strategy_type comparable_strategy = services::get_comparable<strategy_type>::apply(strategy);
-        return_type comparable = services::result_from_distance<comparable_strategy_type>::apply(comparable_strategy, 3);
+        return_type comparable = services::result_from_distance<comparable_strategy_type, P, P>::apply(comparable_strategy, 3);
 
         BOOST_CHECK_CLOSE(comparable, return_type(9), 0.001);
     }
@@ -145,7 +145,7 @@ void test_distance_segment()
     BOOST_CHECK_CLOSE(d1, return_type(1), 0.001);
 
     // 3) custom point strategy
-    taxicab_distance<P> tcd;
+    taxicab_distance tcd;
     d1 = bg::distance(p1, seg, tcd);
     BOOST_CHECK_CLOSE(d1, return_type(1), 0.001);
 }

@@ -35,8 +35,8 @@
 <span class="keyword">class</span> <a class="link" href="basic_option.html" title="Class template basic_option">basic_option</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="basic_option.html#boost.program_options.basic_optionconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="basic_option.html#idp89601280-bb"><span class="identifier">basic_option</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_option.html#idp89601344-bb"><span class="identifier">basic_option</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_option.html#idp99895768-bb"><span class="identifier">basic_option</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_option.html#idp99895832-bb"><span class="identifier">basic_option</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="basic_option.html#boost.program_options.basic_optionpublic-data-members">public data members</a></span>
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="basic_option.html#boost.program_options.basic_option.string_key"><span class="identifier">string_key</span></a><span class="special">;</span>
@@ -47,21 +47,21 @@
   <span class="keyword">bool</span> <a class="link" href="basic_option.html#boost.program_options.basic_option.case_insensitive"><span class="identifier">case_insensitive</span></a><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp124197632"></a><h2>Description</h2>
+<a name="idp167719512"></a><h2>Description</h2>
 <p>Option found in input source. Contains a key and a value. The key, in turn, can be a string (name of an option), or an integer (position in input source) <span style="color: red">&lt;ndash&gt;&lt;/ndash&gt;</span> in case no name is specified. The latter is only possible for command line. The template parameter specifies the type of char used for storing the option's value. </p>
 <div class="refsect2">
-<a name="idp124198432"></a><h3>
+<a name="idp167720312"></a><h3>
 <a name="boost.program_options.basic_optionconstruct-copy-destruct"></a><code class="computeroutput">basic_option</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp89601280-bb"></a><span class="identifier">basic_option</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp89601344-bb"></a><span class="identifier">basic_option</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> xstring_key<span class="special">,</span> 
+<li class="listitem"><pre class="literallayout"><a name="idp99895768-bb"></a><span class="identifier">basic_option</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp99895832-bb"></a><span class="identifier">basic_option</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> xstring_key<span class="special">,</span> 
              <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&amp;</span> xvalue<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp124224192"></a><h3>
+<a name="idp167729784"></a><h3>
 <a name="boost.program_options.basic_optionpublic-data-members"></a><code class="computeroutput">basic_option</code> 
         public
        public data members</h3>

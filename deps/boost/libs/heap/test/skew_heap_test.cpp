@@ -116,3 +116,10 @@ BOOST_AUTO_TEST_CASE( skew_heap_compare_lookup_test )
                                    boost::heap::allocator<std::allocator<int> > > pri_queue;
     run_common_heap_tests<pri_queue>();
 }
+
+
+BOOST_AUTO_TEST_CASE( skew_heap_leak_test )
+{
+    typedef boost::heap::skew_heap<boost::shared_ptr<int> > pri_queue;
+    run_leak_check_test<pri_queue>();
+}

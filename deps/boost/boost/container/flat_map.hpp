@@ -11,7 +11,7 @@
 #ifndef BOOST_CONTAINER_FLAT_MAP_HPP
 #define BOOST_CONTAINER_FLAT_MAP_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #  pragma once
 #endif
 
@@ -84,8 +84,10 @@ static D force_copy(S s)
 //! This means that inserting a new element into a flat_map invalidates
 //! previous iterators and references
 //!
-//! Erasing an element of a flat_map invalidates iterators and references
+//! Erasing an element invalidates iterators and references
 //! pointing to elements that come after (their keys are bigger) the erased element.
+//!
+//! This container provides random-access iterators.
 #ifdef BOOST_CONTAINER_DOXYGEN_INVOKED
 template <class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator< std::pair< Key, T> > >
 #else
@@ -173,7 +175,15 @@ class flat_map
    //!
    //! <b>Complexity</b>: Constant.
    explicit flat_map(const Compare& comp, const allocator_type& a = allocator_type())
-      : m_flat_tree(comp, container_detail::force<impl_allocator_type>(a)) {}
+      : m_flat_tree(comp, container_detail::force<impl_allocator_type>(a))
+   {}
+
+   //! <b>Effects</b>: Constructs an empty flat_map using the specified allocator.
+   //!
+   //! <b>Complexity</b>: Constant.
+   explicit flat_map(const allocator_type& a)
+      : m_flat_tree(container_detail::force<impl_allocator_type>(a))
+   {}
 
    //! <b>Effects</b>: Constructs an empty flat_map using the specified comparison object and
    //! allocator, and inserts elements from the range [first ,last ).
@@ -684,6 +694,8 @@ class flat_map
    //!   search time plus N*size() insertion time.
    //!
    //! <b>Note</b>: If an element is inserted it might invalidate elements.
+   //!
+   //! <b>Note</b>: Non-standard extension.
    template <class InputIterator>
    void insert(ordered_unique_range_t, InputIterator first, InputIterator last)
       {  m_flat_tree.insert_unique(ordered_unique_range, first, last); }
@@ -788,7 +800,7 @@ class flat_map
    //!
    //! <b>Complexity</b>: log(size())+count(k)
    size_type count(const key_type& x) const
-      {  return m_flat_tree.find(x) == m_flat_tree.end() ? 0 : 1;  }
+      {  return static_cast<size_type>(m_flat_tree.find(x) != m_flat_tree.end());  }
 
    //! <b>Returns</b>: An iterator pointing to the first element with key not less
    //!   than k, or a.end() if such an element is not found.
@@ -939,6 +951,15 @@ inline bool operator<(const flat_multimap<Key,T,Compare,Allocator>& x,
 //!
 //! Allocator is the allocator to allocate the value_types
 //! (e.g. <i>allocator< std::pair<Key, T> ></i>).
+//!
+//! flat_multimap is similar to std::multimap but it's implemented like an ordered vector.
+//! This means that inserting a new element into a flat_map invalidates
+//! previous iterators and references
+//!
+//! Erasing an element invalidates iterators and references
+//! pointing to elements that come after (their keys are bigger) the erased element.
+//!
+//! This container provides random-access iterators.
 #ifdef BOOST_CONTAINER_DOXYGEN_INVOKED
 template <class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator< std::pair< Key, T> > >
 #else
@@ -1024,7 +1045,15 @@ class flat_multimap
    //! <b>Complexity</b>: Constant.
    explicit flat_multimap(const Compare& comp,
                           const allocator_type& a = allocator_type())
-      : m_flat_tree(comp, container_detail::force<impl_allocator_type>(a)) { }
+      : m_flat_tree(comp, container_detail::force<impl_allocator_type>(a))
+   {}
+
+   //! <b>Effects</b>: Constructs an empty flat_multimap using the specified allocator.
+   //!
+   //! <b>Complexity</b>: Constant.
+   explicit flat_multimap(const allocator_type& a)
+      : m_flat_tree(container_detail::force<impl_allocator_type>(a))
+   {}
 
    //! <b>Effects</b>: Constructs an empty flat_multimap using the specified comparison object
    //!   and allocator, and inserts elements from the range [first ,last ).
@@ -1460,6 +1489,8 @@ class flat_multimap
    //!   search time plus N*size() insertion time.
    //!
    //! <b>Note</b>: If an element is inserted it might invalidate elements.
+   //!
+   //! <b>Note</b>: Non-standard extension.
    template <class InputIterator>
    void insert(ordered_range_t, InputIterator first, InputIterator last)
       {  m_flat_tree.insert_equal(ordered_range, first, last); }

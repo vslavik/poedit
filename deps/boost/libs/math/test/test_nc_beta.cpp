@@ -295,7 +295,6 @@ T nc_beta_ccdf(T a, T b, T nc, T x)
 template <typename Real, typename T>
 void do_test_nc_chi_squared(T& data, const char* type_name, const char* test)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
@@ -334,7 +333,6 @@ void do_test_nc_chi_squared(T& data, const char* type_name, const char* test)
 template <typename Real, typename T>
 void quantile_sanity_check(T& data, const char* type_name, const char* test)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    //

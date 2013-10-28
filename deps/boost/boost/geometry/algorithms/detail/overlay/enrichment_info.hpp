@@ -40,7 +40,8 @@ struct enrichment_info
                             point_tag,
                             P
                         >::type
-                >::type
+                >::type,
+            P, P
         >::type distance_type;
 
     inline enrichment_info()

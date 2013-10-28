@@ -2,7 +2,7 @@
     Boost.Wave: A Standard compliant C++ preprocessor library
     http://www.boost.org/
 
-    Copyright (c) 2001-2012 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2013 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -1198,6 +1198,27 @@ testwave_app::add_strict_lexer_definition(Context& ctx)
     return true;
 }
 
+#if BOOST_WAVE_SUPPORT_MS_EXTENSIONS
+//  Predefine __TESTWAVE_SUPPORT_MS_EXTENSIONS__
+template <typename Context>
+inline bool
+testwave_app::add_support_ms_extensions_definition(Context& ctx)
+{
+    std::string macro("__TESTWAVE_SUPPORT_MS_EXTENSIONS__=1");
+    if (!ctx.add_macro_definition(macro, true)) {
+        std::cerr << "testwave: failed to predefine macro: " << macro
+                  << std::endl;
+        return false;
+    }
+    else if (9 == debuglevel) {
+        std::cerr << "add_support_ms_extensions_definition: predefined macro: " 
+                  << macro 
+                  << std::endl;
+    }
+    return true;
+}
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  Add special predefined macros to the context object.
@@ -1259,6 +1280,16 @@ testwave_app::add_predefined_macros(Context& ctx)
         std::cerr << "testwave: failed to add a predefined macro (MAX)."
                   << std::endl;
     }
+
+#if BOOST_WAVE_SUPPORT_MS_EXTENSIONS
+//  Predefine __TESTWAVE_SUPPORT_MS_EXTENSIONS__
+    if (!add_support_ms_extensions_definition(ctx))
+    {
+        std::cerr << "testwave: failed to add a predefined macro "
+                     "(__TESTWAVE_SUPPORT_MS_EXTENSIONS__)."
+                  << std::endl;
+    }
+#endif
 
 #if BOOST_WAVE_USE_STRICT_LEXER != 0
     return add_strict_lexer_definition(ctx);

@@ -34,7 +34,6 @@ void test_bidirectional_graph()
   typedef adjacency_list<listS, distributedS<mpi_process_group, vecS>,
                          bidirectionalS> Graph;
   typedef graph_traits<Graph>::vertex_descriptor Vertex;
-  typedef graph_traits<Graph>::edge_descriptor Edge;
 
   typedef std::pair<std::size_t, std::size_t> E;
   E edges[3] = { E(0,3), E(1,4), E(2,5) };

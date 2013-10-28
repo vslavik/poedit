@@ -25,6 +25,8 @@
 #include <boost/test/floating_point_comparison.hpp>
 
 #include <typeinfo>
+#include <iostream>
+#include <iomanip>
 
 // #include <boost/math/tools/
 //
@@ -386,7 +388,7 @@ Table[N[BesselJZero[7001/19, n], 50], {n, 19, 20, 1}]
   {
     BOOST_CHECK_THROW(cyl_bessel_j_zero(static_cast<RealType>(std::numeric_limits<RealType>::quiet_NaN()), 1), std::domain_error);
     // Check that bad m returns NaN if policy is no throws.
-    BOOST_CHECK(boost::math::isnan<RealType>(cyl_bessel_j_zero(std::numeric_limits<RealType>::quiet_NaN(), 1, ignore_all_policy())) );
+    BOOST_CHECK((boost::math::isnan<RealType>)(cyl_bessel_j_zero(std::numeric_limits<RealType>::quiet_NaN(), 1, ignore_all_policy())) );
     BOOST_CHECK_THROW(boost::math::cyl_bessel_j_zero(static_cast<RealType>(std::numeric_limits<RealType>::quiet_NaN()), -1), std::domain_error);
   }
   else
@@ -400,7 +402,7 @@ Table[N[BesselJZero[7001/19, n], 50], {n, 19, 20, 1}]
     BOOST_CHECK_THROW(cyl_bessel_j_zero(std::numeric_limits<RealType>::infinity(), 0), std::domain_error);
     BOOST_CHECK_THROW(cyl_bessel_j_zero(std::numeric_limits<RealType>::infinity(), 1), std::domain_error);
     // Check that NaN is returned if error ignored.
-    BOOST_CHECK(boost::math::isnan<RealType>(cyl_bessel_j_zero(std::numeric_limits<RealType>::infinity(), 1, ignore_all_policy())) );
+    BOOST_CHECK((boost::math::isnan<RealType>)(cyl_bessel_j_zero(std::numeric_limits<RealType>::infinity(), 1, ignore_all_policy())) );
   }
 
   // Tests of cyc_neumann zero function (BesselYZero in Wolfram) for spot values.
@@ -821,8 +823,8 @@ Calculated using cpp_dec_float_50
 
   if (std::numeric_limits<RealType>::has_quiet_NaN)
   { // If ignore errors, return NaN.
-    BOOST_CHECK(boost::math::isnan(airy_ai_zero<RealType>(0, ignore_all_policy())));
-    BOOST_CHECK(boost::math::isnan(airy_ai_zero<RealType>(std::numeric_limits<unsigned>::min() , ignore_all_policy())));
+    BOOST_CHECK((boost::math::isnan)(airy_ai_zero<RealType>(0, ignore_all_policy())));
+    BOOST_CHECK((boost::math::isnan)(airy_ai_zero<RealType>((std::numeric_limits<unsigned>::min)() , ignore_all_policy())));
     // Can't abuse with NaN as won't compile.
     //BOOST_CHECK_THROW(airy_ai_zero<RealType>(std::numeric_limits<RealType>::quiet_NaN()), std::domain_error);
   }
@@ -885,8 +887,8 @@ Calculated using cpp_dec_float_50
 
   if (std::numeric_limits<RealType>::has_quiet_NaN)
   { // return NaN.
-    BOOST_CHECK(boost::math::isnan(airy_bi_zero<RealType>(0, ignore_all_policy())));
-    BOOST_CHECK(boost::math::isnan(airy_bi_zero<RealType>(std::numeric_limits<unsigned>::min() , ignore_all_policy())));
+    BOOST_CHECK((boost::math::isnan)(airy_bi_zero<RealType>(0, ignore_all_policy())));
+    BOOST_CHECK((boost::math::isnan)(airy_bi_zero<RealType>((std::numeric_limits<unsigned>::min)() , ignore_all_policy())));
     // Can't abuse with NaN as won't compile.
     // BOOST_CHECK_THROW(airy_bi_zero<RealType>(std::numeric_limits<RealType>::quiet_NaN()), std::domain_error);
     // cannot convert parameter 1 from 'boost::math::concepts::real_concept' to 'unsigned int'.

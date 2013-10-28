@@ -8,7 +8,7 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
-project boost/quickbook/doc ;
+project quickbook/doc ;
 
 using boostbook ;
 using quickbook ;
@@ -21,7 +21,11 @@ boostbook standalone
     :
         quickbook
     :
-        <xsl:param>boost.root=../../../..
+        <format>html:<xsl:param>boost.root=../../../..
+        <format>html:<xsl:param>img.src.path=../../../../doc/html/
+        <format>xhtml:<xsl:param>boost.root=../../../..
+        <format>xhtml:<xsl:param>img.src.path=../../../../doc/html/
+
         #<xsl:param>callout.graphics.path=../../images/callouts//
         <format>pdf:<xsl:param>img.src.path=$(images)/
         <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/doc/html

@@ -144,7 +144,7 @@ void test_difference(std::string const& caseid, G1 const& g1, G2 const& g2,
                 "difference: " << caseid
                 << " #points expected: " << expected_point_count
                 << " detected: " << n
-                << " type: " << string_from_type<coordinate_type>::name()
+                << " type: " << (type_for_assert_message<G1, G2>())
                 );
     }
 
@@ -154,7 +154,7 @@ void test_difference(std::string const& caseid, G1 const& g1, G2 const& g2,
                 "difference: " << caseid
                 << " #outputs expected: " << expected_count
                 << " detected: " << clip.size()
-                << " type: " << string_from_type<coordinate_type>::name()
+                << " type: " << (type_for_assert_message<G1, G2>())
                 );
     }
 

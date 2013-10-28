@@ -34,10 +34,10 @@ template class boost::container::list<test::movable_and_copyable_int,
 
 namespace container_detail {
 
-template class list_const_iterator
-   <int, intrusive_list_type< std::allocator<int> >::container_type::iterator >;
-template class list_iterator
-   <int, intrusive_list_type< std::allocator<int> >::container_type::iterator>;
+template class iterator
+   <intrusive_list_type< std::allocator<int> >::container_type::iterator, true >;
+template class iterator
+   <intrusive_list_type< std::allocator<int> >::container_type::iterator, false>;
 
 }
 

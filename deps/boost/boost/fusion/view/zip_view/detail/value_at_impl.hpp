@@ -38,7 +38,7 @@ namespace boost { namespace fusion {
             {};
 
             // never called, but needed for decltype-based result_of (C++0x)
-#ifndef BOOST_NO_RVALUE_REFERENCES
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
             template<typename Seq>
             typename result<poly_value_at(Seq)>::type
             operator()(Seq&&) const;

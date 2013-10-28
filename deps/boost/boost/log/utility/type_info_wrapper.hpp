@@ -17,8 +17,8 @@
 
 #include <typeinfo>
 #include <string>
+#include <boost/utility/explicit_operator_bool.hpp>
 #include <boost/log/detail/config.hpp>
-#include <boost/log/utility/explicit_operator_bool.hpp>
 
 #ifdef BOOST_LOG_HAS_CXXABI_H
 #include <cxxabi.h>
@@ -27,7 +27,7 @@
 
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -48,7 +48,7 @@ private:
 #ifndef BOOST_LOG_DOXYGEN_PASS
 
     //! An inaccessible type to indicate an uninitialized state of the wrapper
-    struct BOOST_LOG_VISIBLE uninitialized {};
+    struct BOOST_SYMBOL_VISIBLE uninitialized {};
 
 #ifdef BOOST_LOG_HAS_CXXABI_H
     //! A simple scope guard for automatic memory free
@@ -93,7 +93,7 @@ public:
      * \return \c true if the type info wrapper was initialized with a particular type,
      *         \c false if the wrapper was default-constructed and not yet initialized
      */
-    BOOST_LOG_EXPLICIT_OPERATOR_BOOL()
+    BOOST_EXPLICIT_OPERATOR_BOOL()
 
     /*!
      * Stored type info getter

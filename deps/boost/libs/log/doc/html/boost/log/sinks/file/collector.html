@@ -4,7 +4,7 @@
 <title>Struct collector</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../../sinks.html#header.boost.log.sinks.text_file_backend_hpp" title="Header &lt;boost/log/sinks/text_file_backend.hpp&gt;">
 <link rel="prev" href="../syslog/make_facility.html" title="Function make_facility">
 <link rel="next" href="rotation_at_time_point.html" title="Class rotation_at_time_point">
@@ -27,44 +27,44 @@
 </span>
 <span class="keyword">struct</span> <a class="link" href="collector.html" title="Struct collector">collector</a> <span class="special">{</span>
   <span class="comment">// <a class="link" href="collector.html#boost.log.sinks.file.collectorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="collector.html#idp20667392-bb"><span class="identifier">collector</span></a><span class="special">(</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">default</span><span class="special">;</span>
-  <a class="link" href="collector.html#idp20668096-bb"><span class="identifier">collector</span></a><span class="special">(</span><a class="link" href="collector.html" title="Struct collector">collector</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
-  collector&amp; <a class="link" href="collector.html#idp20668768-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="collector.html" title="Struct collector">collector</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
-  <a class="link" href="collector.html#idp20667808-bb"><span class="special">~</span><span class="identifier">collector</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="collector.html#idp27412488-bb"><span class="identifier">collector</span></a><span class="special">(</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">default</span><span class="special">;</span>
+  <a class="link" href="collector.html#idp27413192-bb"><span class="identifier">collector</span></a><span class="special">(</span><a class="link" href="collector.html" title="Struct collector">collector</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+  collector&amp; <a class="link" href="collector.html#idp27413864-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="collector.html" title="Struct collector">collector</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+  <a class="link" href="collector.html#idp27412904-bb"><span class="special">~</span><span class="identifier">collector</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="collector.html#idp20657600-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="collector.html#idp20657808-bb"><span class="identifier">store_file</span></a><span class="special">(</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">uintmax_t</span> <a class="link" href="collector.html#idp20659328-bb"><span class="identifier">scan_for_files</span></a><span class="special">(</span><span class="identifier">scan_method</span><span class="special">,</span> 
+  <span class="comment">// <a class="link" href="collector.html#idp27402696-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="collector.html#idp27402904-bb"><span class="identifier">store_file</span></a><span class="special">(</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">uintmax_t</span> <a class="link" href="collector.html#idp27404424-bb"><span class="identifier">scan_for_files</span></a><span class="special">(</span><span class="identifier">scan_method</span><span class="special">,</span> 
                            <span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> 
                            <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp26672976"></a><h2>Description</h2>
+<a name="idp65711528"></a><h2>Description</h2>
 <p>All file collectors, supported by file sink backends, should inherit this class. </p>
 <div class="refsect2">
-<a name="idp26673408"></a><h3>
+<a name="idp65711960"></a><h3>
 <a name="boost.log.sinks.file.collectorconstruct-copy-destruct"></a><code class="computeroutput">collector</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp20667392-bb"></a><span class="identifier">collector</span><span class="special">(</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">default</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp27412488-bb"></a><span class="identifier">collector</span><span class="special">(</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">default</span><span class="special">;</span></pre>
 <p>Default constructor </p>
 </li>
-<li class="listitem"><pre class="literallayout"><a name="idp20668096-bb"></a><span class="identifier">collector</span><span class="special">(</span><a class="link" href="collector.html" title="Struct collector">collector</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout">collector&amp; <a name="idp20668768-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="collector.html" title="Struct collector">collector</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp27413192-bb"></a><span class="identifier">collector</span><span class="special">(</span><a class="link" href="collector.html" title="Struct collector">collector</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout">collector&amp; <a name="idp27413864-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="collector.html" title="Struct collector">collector</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp20667808-bb"></a><span class="special">~</span><span class="identifier">collector</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp27412904-bb"></a><span class="special">~</span><span class="identifier">collector</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Virtual destructor </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp26686624"></a><h3>
-<a name="idp20657600-bb"></a><code class="computeroutput">collector</code> public member functions</h3>
+<a name="idp65725112"></a><h3>
+<a name="idp27402696-bb"></a><code class="computeroutput">collector</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp20657808-bb"></a><span class="identifier">store_file</span><span class="special">(</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="keyword">const</span> <span class="special">&amp;</span> src_path<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp27402904-bb"></a><span class="identifier">store_file</span><span class="special">(</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="keyword">const</span> <span class="special">&amp;</span> src_path<span class="special">)</span><span class="special">;</span></pre>
 <p>The function stores the specified file in the storage. May lead to an older file deletion and a long file moving.</p>
 <p>
 </p>
@@ -89,7 +89,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">uintmax_t</span> <a name="idp20659328-bb"></a><span class="identifier">scan_for_files</span><span class="special">(</span><span class="identifier">scan_method</span> method<span class="special">,</span> 
+<pre class="literallayout"><span class="identifier">uintmax_t</span> <a name="idp27404424-bb"></a><span class="identifier">scan_for_files</span><span class="special">(</span><span class="identifier">scan_method</span> method<span class="special">,</span> 
                          <span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="keyword">const</span> <span class="special">&amp;</span> pattern <span class="special">=</span> <span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> 
                          <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="special">*</span> counter <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Scans the target directory for the files that have already been stored. The found files are added to the collector in order to be tracked and erased, if needed.</p>

@@ -109,19 +109,9 @@ int main(int, char* [])
       ++E;
     }
 
-  typedef boost::graph_property_iter_range< Graph, vertex_id_t>::const_iterator    TNodeConstIterator;
-  typedef boost::graph_property_iter_range< Graph, vertex_id_t>::const_type        TNodeConstIteratorType;
-
   typedef boost::graph_property_iter_range< Graph, vertex_id_t>::iterator    TNodeIterator;
-  typedef boost::graph_property_iter_range< Graph, vertex_id_t>::type        TNodeIteratorType;
-
-  typedef boost::graph_property_iter_range< Graph, edge_id_t>::const_iterator    TLinkConstIterator;
-  typedef boost::graph_property_iter_range< Graph, edge_id_t>::const_type        TLinkConstIteratorType;
 
   typedef boost::graph_property_iter_range< Graph, edge_id_t>::iterator    TLinkIterator;
-  typedef boost::graph_property_iter_range< Graph, edge_id_t>::type        TLinkIteratorType;
-
-  typedef std::pair<TLinkConstIterator, TLinkConstIterator> tLinkConstIteratorPair;
 
   TLinkIterator itEdgeBegin, itEdgeEnd;
 

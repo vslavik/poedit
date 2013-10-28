@@ -12,8 +12,8 @@ import testing ;
 project boost/atomic/test
     : requirements
       <threading>multi
-      <library>../../thread/build//boost_thread
-      <library>/boost/atomic//boost_atomic/<link>static
+      <library>/boost/thread//boost_thread
+      <library>/boost/atomic//boost_atomic
     ;
 
 test-suite atomic

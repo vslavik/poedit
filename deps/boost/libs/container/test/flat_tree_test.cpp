@@ -475,6 +475,13 @@ int main()
 {
    using namespace boost::container::test;
 
+   //Allocator argument container
+   {
+      flat_set<int> set_((std::allocator<int>()));
+      flat_multiset<int> multiset_((std::allocator<int>()));
+      flat_map<int, int> map_((std::allocator<std::pair<int, int> >()));
+      flat_multimap<int, int> multimap_((std::allocator<std::pair<int, int> >()));
+   }
    //Now test move semantics
    {
       test_move<flat_set<recursive_flat_set> >();
@@ -631,76 +638,3 @@ int main()
 
 #include <boost/container/detail/config_end.hpp>
 
-/*
-#include <boost/container/map.hpp>
-#include <boost/container/flat_map.hpp>
-#include <boost/container/vector.hpp>
-#include <boost/move/utility.hpp>
-#include <iostream>
-
-struct Request 
-{ 
-    Request() {};
-    
-    //Move semantics...
-    Request(BOOST_RV_REF(Request) r) : rvals()  //Move constructor
-    {
-        rvals.swap(r.rvals);
-    };
-
-    Request& operator=(BOOST_RV_REF(Request) r) //Move assignment
-    {
-        if (this != &r){
-            rvals.swap(r.rvals);
-        }
-        return *this;
-    };
-
-    // Values I want to be moved, not copied.
-    boost::container::vector<int> rvals;
-
-   private:
-    // Mark this class movable but not copyable
-    BOOST_MOVABLE_BUT_NOT_COPYABLE(Request)
-};
-
-typedef boost::container::flat_map<int, Request> Requests;
-//typedef boost::container::map<int, Request> Requests2;
-
-int
-main() {
-    Requests req;
-    std::pair<Requests::iterator, bool> ret = req.insert( Requests::value_type( 7, Request() ) );
-    std::cout << "Insert success for req: " << ret.second << std::endl;
-    
-    //Requests2 req2;
-    //std::pair<Requests::iterator, bool> ret2 = req2.insert( Requests2::value_type( 7, Request() ) );
-    //std::cout << "Insert success for req2: " << ret2.second << std::endl;
-
-    return 0;
-}
-*/
-/*
-#include <cstdlib>
-#include <iostream>
-#include <boost/container/flat_set.hpp>
-
-using namespace std;
-
-int main(int , char *[])
-{
-    double d[] = {0, 0.2, 0.8, 1, 2, 3, 4};
-    boost::container::flat_set<double> set;
-
-    set.insert(0);
-    set.insert(set.end(), 1);
-    set.insert(set.end(), 3);
-    set.insert(boost::container::ordered_unique_range_t(), d, d + sizeof(d)/sizeof(*d));
-    boost::container::flat_set<double>::iterator it(set.begin());
-    boost::container::flat_set<double>::iterator const itend(set.end());
-    while(it != itend)
-        cout << *it++ << endl;
-
-    return 0;
-}
-*/

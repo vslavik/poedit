@@ -131,9 +131,6 @@ int test_main(int argc, char* argv[])
 
   typedef sorted_erdos_renyi_iterator<minstd_rand, Graph> ERIter;
 
-  typedef graph_traits<Graph>::vertex_descriptor vertex_descriptor;
-  typedef graph_traits<Graph>::edge_descriptor edge_descriptor;
-
   int n = 100;
   double prob = 0.1;
   int C = 3;

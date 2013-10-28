@@ -275,14 +275,6 @@ inline void self_turns(Geometry const& geometry,
 {
     concept::check<Geometry const>();
 
-    typedef typename strategy_intersection
-        <
-            typename cs_tag<Geometry>::type,
-            Geometry,
-            Geometry,
-            typename boost::range_value<Turns>::type
-        >::segment_intersection_strategy_type strategy_type;
-
     typedef detail::overlay::get_turn_info
                         <
                             typename point_type<Geometry>::type,

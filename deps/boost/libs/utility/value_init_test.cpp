@@ -22,7 +22,7 @@
 #pragma hdrstop
 #endif
 
-#include "boost/test/minimal.hpp"
+#include <boost/detail/lightweight_test.hpp>
 
 //
 // Sample POD type
@@ -215,7 +215,7 @@ template<class T>
 void check_initialized_value ( T const& y )
 {
   T initializedValue = boost::initialized_value ;
-  BOOST_CHECK ( y == initializedValue ) ;
+  BOOST_TEST ( y == initializedValue ) ;
 }
 
 #ifdef  __BORLANDC__
@@ -245,128 +245,125 @@ void check_initialized_value( NonPOD const& )
 template<class T>
 bool test ( T const& y, T const& z )
 {
-  const boost::unit_test::counter_t counter_before_test = boost::minimal_test::errors_counter();
+  const int errors_before_test = boost::detail::test_errors();
 
   check_initialized_value(y);
 
   boost::value_initialized<T> x ;
-  BOOST_CHECK ( y == x ) ;
-  BOOST_CHECK ( y == boost::get(x) ) ;
+  BOOST_TEST ( y == x ) ;
+  BOOST_TEST ( y == boost::get(x) ) ;
 
   static_cast<T&>(x) = z ;
   boost::get(x) = z ;
-  BOOST_CHECK ( x == z ) ;
+  BOOST_TEST ( x == z ) ;
 
   boost::value_initialized<T> const x_c ;
-  BOOST_CHECK ( y == x_c ) ;
-  BOOST_CHECK ( y == boost::get(x_c) ) ;
+  BOOST_TEST ( y == x_c ) ;
+  BOOST_TEST ( y == boost::get(x_c) ) ;
   T& x_c_ref = const_cast<T&>( boost::get(x_c) ) ;
   x_c_ref = z ;
-  BOOST_CHECK ( x_c == z ) ;
+  BOOST_TEST ( x_c == z ) ;
 
   boost::value_initialized<T> const copy1 = x;
-  BOOST_CHECK ( boost::get(copy1) == boost::get(x) ) ;
+  BOOST_TEST ( boost::get(copy1) == boost::get(x) ) ;
 
   boost::value_initialized<T> copy2;
   copy2 = x;
-  BOOST_CHECK ( boost::get(copy2) == boost::get(x) ) ;
+  BOOST_TEST ( boost::get(copy2) == boost::get(x) ) ;
   
   boost::shared_ptr<boost::value_initialized<T> > ptr( new boost::value_initialized<T> );
-  BOOST_CHECK ( y == *ptr ) ;
+  BOOST_TEST ( y == *ptr ) ;
 
 #if !BOOST_WORKAROUND(BOOST_MSVC, < 1300)
   boost::value_initialized<T const> cx ;
-  BOOST_CHECK ( y == cx ) ;
-  BOOST_CHECK ( y == boost::get(cx) ) ;
+  BOOST_TEST ( y == cx ) ;
+  BOOST_TEST ( y == boost::get(cx) ) ;
 
   boost::value_initialized<T const> const cx_c ;
-  BOOST_CHECK ( y == cx_c ) ;
-  BOOST_CHECK ( y == boost::get(cx_c) ) ;
+  BOOST_TEST ( y == cx_c ) ;
+  BOOST_TEST ( y == boost::get(cx_c) ) ;
 #endif
 
-  return boost::minimal_test::errors_counter() == counter_before_test ;
+  return boost::detail::test_errors() == errors_before_test ;
 }
 
-int test_main(int, char **)
+int main(int, char **)
 {
-  BOOST_CHECK ( test( 0,1234 ) ) ;
-  BOOST_CHECK ( test( 0.0,12.34 ) ) ;
-  BOOST_CHECK ( test( POD(0,0,0.0), POD('a',1234,56.78f) ) ) ;
-  BOOST_CHECK ( test( NonPOD( std::string() ), NonPOD( std::string("something") ) ) ) ;
+  BOOST_TEST ( test( 0,1234 ) ) ;
+  BOOST_TEST ( test( 0.0,12.34 ) ) ;
+  BOOST_TEST ( test( POD(0,0,0.0), POD('a',1234,56.78f) ) ) ;
+  BOOST_TEST ( test( NonPOD( std::string() ), NonPOD( std::string("something") ) ) ) ;
 
   NonPOD NonPOD_object( std::string("NonPOD_object") );
-  BOOST_CHECK ( test<NonPOD *>( 0, &NonPOD_object ) ) ;
+  BOOST_TEST ( test<NonPOD *>( 0, &NonPOD_object ) ) ;
 
   AggregatePODStruct zeroInitializedAggregatePODStruct = { 0.0f, '\0', 0 };
   AggregatePODStruct nonZeroInitializedAggregatePODStruct = { 1.25f, 'a', -1 };
-  BOOST_CHECK ( test(zeroInitializedAggregatePODStruct, nonZeroInitializedAggregatePODStruct) );
+  BOOST_TEST ( test(zeroInitializedAggregatePODStruct, nonZeroInitializedAggregatePODStruct) );
 
   StringAndInt stringAndInt0;
   StringAndInt stringAndInt1;
   stringAndInt0.i = 0;
   stringAndInt1.i = 1;
   stringAndInt1.s = std::string("1");
-  BOOST_CHECK ( test(stringAndInt0, stringAndInt1) );
+  BOOST_TEST ( test(stringAndInt0, stringAndInt1) );
 
   StructWithDestructor structWithDestructor0;
   StructWithDestructor structWithDestructor1;
   structWithDestructor0.i = 0;
   structWithDestructor1.i = 1;
-  BOOST_CHECK ( test(structWithDestructor0, structWithDestructor1) );
+  BOOST_TEST ( test(structWithDestructor0, structWithDestructor1) );
 
   StructWithVirtualFunction structWithVirtualFunction0;
   StructWithVirtualFunction structWithVirtualFunction1;
   structWithVirtualFunction0.i = 0;
   structWithVirtualFunction1.i = 1;
-  BOOST_CHECK ( test(structWithVirtualFunction0, structWithVirtualFunction1) );
+  BOOST_TEST ( test(structWithVirtualFunction0, structWithVirtualFunction1) );
 
   DerivedFromAggregatePODStruct derivedFromAggregatePODStruct0;
   DerivedFromAggregatePODStruct derivedFromAggregatePODStruct1;
   static_cast<AggregatePODStruct &>(derivedFromAggregatePODStruct0) = zeroInitializedAggregatePODStruct;
   static_cast<AggregatePODStruct &>(derivedFromAggregatePODStruct1) = nonZeroInitializedAggregatePODStruct;
-  BOOST_CHECK ( test(derivedFromAggregatePODStruct0, derivedFromAggregatePODStruct1) );
+  BOOST_TEST ( test(derivedFromAggregatePODStruct0, derivedFromAggregatePODStruct1) );
 
   AggregatePODStructWrapper aggregatePODStructWrapper0;
   AggregatePODStructWrapper aggregatePODStructWrapper1;
   aggregatePODStructWrapper0.dataMember = zeroInitializedAggregatePODStruct;
   aggregatePODStructWrapper1.dataMember = nonZeroInitializedAggregatePODStruct;
-  BOOST_CHECK ( test(aggregatePODStructWrapper0, aggregatePODStructWrapper1) );
+  BOOST_TEST ( test(aggregatePODStructWrapper0, aggregatePODStructWrapper1) );
 
   ArrayOfBytes zeroInitializedArrayOfBytes = { 0 };
   boost::value_initialized<ArrayOfBytes> valueInitializedArrayOfBytes;
-  BOOST_CHECK (std::memcmp(get(valueInitializedArrayOfBytes), zeroInitializedArrayOfBytes, sizeof(ArrayOfBytes)) == 0);
+  BOOST_TEST (std::memcmp(get(valueInitializedArrayOfBytes), zeroInitializedArrayOfBytes, sizeof(ArrayOfBytes)) == 0);
 
   boost::value_initialized<ArrayOfBytes> valueInitializedArrayOfBytes2;
   valueInitializedArrayOfBytes2 = valueInitializedArrayOfBytes;
-  BOOST_CHECK (std::memcmp(get(valueInitializedArrayOfBytes), get(valueInitializedArrayOfBytes2), sizeof(ArrayOfBytes)) == 0);
+  BOOST_TEST (std::memcmp(get(valueInitializedArrayOfBytes), get(valueInitializedArrayOfBytes2), sizeof(ArrayOfBytes)) == 0);
 
   boost::value_initialized<CopyFunctionCallTester> copyFunctionCallTester1;
-  BOOST_CHECK ( ! get(copyFunctionCallTester1).is_copy_constructed);
-  BOOST_CHECK ( ! get(copyFunctionCallTester1).is_assignment_called);
+  BOOST_TEST ( ! get(copyFunctionCallTester1).is_copy_constructed);
+  BOOST_TEST ( ! get(copyFunctionCallTester1).is_assignment_called);
 
   boost::value_initialized<CopyFunctionCallTester> copyFunctionCallTester2 = boost::value_initialized<CopyFunctionCallTester>(copyFunctionCallTester1);
-  BOOST_CHECK ( get(copyFunctionCallTester2).is_copy_constructed);
-  BOOST_CHECK ( ! get(copyFunctionCallTester2).is_assignment_called);
+  BOOST_TEST ( get(copyFunctionCallTester2).is_copy_constructed);
+  BOOST_TEST ( ! get(copyFunctionCallTester2).is_assignment_called);
 
   boost::value_initialized<CopyFunctionCallTester> copyFunctionCallTester3;
   copyFunctionCallTester3 = boost::value_initialized<CopyFunctionCallTester>(copyFunctionCallTester1);
-  BOOST_CHECK ( ! get(copyFunctionCallTester3).is_copy_constructed);
-  BOOST_CHECK ( get(copyFunctionCallTester3).is_assignment_called);
+  BOOST_TEST ( ! get(copyFunctionCallTester3).is_copy_constructed);
+  BOOST_TEST ( get(copyFunctionCallTester3).is_assignment_called);
 
   boost::value_initialized<SwapFunctionCallTester> swapFunctionCallTester1;
   boost::value_initialized<SwapFunctionCallTester> swapFunctionCallTester2;
   get(swapFunctionCallTester1).data = 1;
   get(swapFunctionCallTester2).data = 2;
   boost::swap(swapFunctionCallTester1, swapFunctionCallTester2);
-  BOOST_CHECK( get(swapFunctionCallTester1).data == 2 );
-  BOOST_CHECK( get(swapFunctionCallTester2).data == 1 );
-  BOOST_CHECK( get(swapFunctionCallTester1).is_custom_swap_called );
-  BOOST_CHECK( get(swapFunctionCallTester2).is_custom_swap_called );
+  BOOST_TEST( get(swapFunctionCallTester1).data == 2 );
+  BOOST_TEST( get(swapFunctionCallTester2).data == 1 );
+  BOOST_TEST( get(swapFunctionCallTester1).is_custom_swap_called );
+  BOOST_TEST( get(swapFunctionCallTester2).is_custom_swap_called );
 
-  return 0;
+  return boost::report_errors();
 }
-
-
-unsigned int expected_failures = 0;
 
 

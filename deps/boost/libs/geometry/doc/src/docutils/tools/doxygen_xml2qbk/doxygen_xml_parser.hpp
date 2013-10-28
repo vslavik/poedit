@@ -691,13 +691,44 @@ static void parse(rapidxml::xml_node<>* node, configuration const& config, docum
             }
             else if (kind == "variable")
             {
-                if (boost::equals(get_attribute(node, "static"), "yes")
-                    && boost::equals(get_attribute(node, "mutable"), "no")
-                    && boost::equals(get_attribute(node, "prot"), "public"))
+                if (boost::equals(get_attribute(node, "prot"), "public"))
                 {
-                    std::string name = parse_named_node(node->first_node(), "name");
-                    doc.cos.variables.push_back(base_element(name));
-                    doc.cos.variables.back().id = id;
+                    parameter p;
+                    p.id = id;
+                    for(rapidxml::xml_node<>* var_node = node->first_node(); var_node; var_node=var_node->next_sibling())
+                    {
+                        if(boost::equals(var_node->name(), "name"))
+                        {
+                            p.name = var_node->value();
+                        }
+                        else if(boost::equals(var_node->name(), "type"))
+                        {
+                            get_contents(var_node->first_node(), p.fulltype);
+                            p.type = p.fulltype;
+                            //boost::replace_all(p.type, " const", "");
+                            //boost::trim(p.type);
+                            //boost::replace_all(p.type, "&", "");
+                            //boost::replace_all(p.type, "*", "");
+                            boost::trim(p.type);
+
+                            // If alt output is used retrieve type with QBK links
+                            if ( configuration::alt == config.output_style )
+                            {
+                                p.fulltype_without_links = p.fulltype;
+                                p.fulltype.clear();
+                                parse_para(var_node->first_node(), config, p.fulltype, p.skip);
+                            }
+                        }
+                        else if(boost::equals(var_node->name(), "briefdescription"))
+                        {
+                            parse_para(var_node->first_node(), config, p.brief_description, p.skip);
+                        }
+                        else if(p.brief_description.empty() && boost::equals(var_node->name(), "detaileddescription"))
+                        {
+                            parse_para(var_node->first_node(), config, p.brief_description, p.skip);
+                        }
+                    }
+                    doc.cos.variables.push_back(p);
                 }
             }
 

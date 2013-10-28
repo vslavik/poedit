@@ -227,10 +227,11 @@
 
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">intrusive</span><span class="special">;</span>
 
-<span class="keyword">class</span> <span class="identifier">MyClass</span>
-   <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">splay_set_base_hook</span><span class="special">&lt;&gt;</span>   <span class="comment">//This is an splay tree base hook</span>
-   <span class="special">,</span> <span class="keyword">public</span> <span class="identifier">bs_set_base_hook</span><span class="special">&lt;&gt;</span>      <span class="comment">//This is a binary search tree base hook</span>
+<span class="keyword">class</span> <span class="identifier">mytag</span><span class="special">;</span>
 
+<span class="keyword">class</span> <span class="identifier">MyClass</span>
+   <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">splay_set_base_hook</span><span class="special">&lt;&gt;</span>            <span class="comment">//This is an splay tree base hook</span>
+   <span class="special">,</span> <span class="keyword">public</span> <span class="identifier">bs_set_base_hook</span><span class="special">&lt;</span> <span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">mytag</span><span class="special">&gt;</span> <span class="special">&gt;</span>   <span class="comment">//This is a binary search tree base hook</span>
 <span class="special">{</span>
    <span class="keyword">int</span> <span class="identifier">int_</span><span class="special">;</span>
 
@@ -253,7 +254,7 @@
 <span class="keyword">typedef</span> <span class="identifier">splay_set</span><span class="special">&lt;</span> <span class="identifier">MyClass</span><span class="special">,</span> <span class="identifier">compare</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">greater</span><span class="special">&lt;</span><span class="identifier">MyClass</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&gt;</span>     <span class="identifier">BaseSplaySet</span><span class="special">;</span>
 
 <span class="comment">//Define a set using the binary search tree hook</span>
-<span class="keyword">typedef</span> <span class="identifier">splay_set</span><span class="special">&lt;</span> <span class="identifier">MyClass</span><span class="special">,</span> <span class="identifier">base_hook</span><span class="special">&lt;</span><span class="identifier">bs_set_base_hook</span><span class="special">&lt;&gt;</span> <span class="special">&gt;</span> <span class="special">&gt;</span>      <span class="identifier">BaseBsSplaySet</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">splay_set</span><span class="special">&lt;</span> <span class="identifier">MyClass</span><span class="special">,</span> <span class="identifier">base_hook</span><span class="special">&lt;</span><span class="identifier">bs_set_base_hook</span><span class="special">&lt;</span> <span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">mytag</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&gt;</span>      <span class="identifier">BaseBsSplaySet</span><span class="special">;</span>
 
 <span class="comment">//Define an multiset using the member hook</span>
 <span class="keyword">typedef</span> <span class="identifier">member_hook</span><span class="special">&lt;</span><span class="identifier">MyClass</span><span class="special">,</span> <span class="identifier">splay_set_member_hook</span><span class="special">&lt;&gt;,</span> <span class="special">&amp;</span><span class="identifier">MyClass</span><span class="special">::</span><span class="identifier">member_hook_</span><span class="special">&gt;</span> <span class="identifier">MemberOption</span><span class="special">;</span>
@@ -262,7 +263,6 @@
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">MyClass</span><span class="special">&gt;::</span><span class="identifier">iterator</span> <span class="identifier">VectIt</span><span class="special">;</span>
-   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">MyClass</span><span class="special">&gt;::</span><span class="identifier">reverse_iterator</span> <span class="identifier">VectRit</span><span class="special">;</span>
 
    <span class="comment">//Create several MyClass objects, each one with a different value</span>
    <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">MyClass</span><span class="special">&gt;</span> <span class="identifier">values</span><span class="special">;</span>
@@ -307,7 +307,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2013 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

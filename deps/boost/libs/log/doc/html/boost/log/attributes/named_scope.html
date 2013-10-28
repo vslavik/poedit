@@ -4,7 +4,7 @@
 <title>Class named_scope</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../attributes.html#header.boost.log.attributes.named_scope_hpp" title="Header &lt;boost/log/attributes/named_scope.hpp&gt;">
 <link rel="prev" href="named_scope_list.html" title="Class named_scope_list">
 <link rel="next" href="named_scope/sentry.html" title="Struct sentry">
@@ -37,57 +37,57 @@
 
   <span class="keyword">struct</span> <a class="link" href="named_scope/sentry.html" title="Struct sentry">sentry</a> <span class="special">{</span>
     <span class="comment">// <a class="link" href="named_scope/sentry.html#boost.log.attributes.named_scope.sentryconstruct-copy-destruct">construct/copy/destruct</a></span>
-    <a class="link" href="named_scope/sentry.html#idp19352624-bb"><span class="identifier">sentry</span></a><span class="special">(</span><span class="identifier">string_literal</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_literal</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
-    <a class="link" href="named_scope/sentry.html#idp19355184-bb"><span class="identifier">sentry</span></a><span class="special">(</span><a class="link" href="named_scope/sentry.html" title="Struct sentry">sentry</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
-    sentry&amp; <a class="link" href="named_scope/sentry.html#idp19355856-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="named_scope/sentry.html" title="Struct sentry">sentry</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
-    <a class="link" href="named_scope/sentry.html#idp19354832-bb"><span class="special">~</span><span class="identifier">sentry</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="named_scope/sentry.html#idp26099208-bb"><span class="identifier">sentry</span></a><span class="special">(</span><span class="identifier">string_literal</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_literal</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="named_scope/sentry.html#idp26101768-bb"><span class="identifier">sentry</span></a><span class="special">(</span><a class="link" href="named_scope/sentry.html" title="Struct sentry">sentry</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+    sentry&amp; <a class="link" href="named_scope/sentry.html#idp26102440-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="named_scope/sentry.html" title="Struct sentry">sentry</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+    <a class="link" href="named_scope/sentry.html#idp26101416-bb"><span class="special">~</span><span class="identifier">sentry</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="named_scope.html#boost.log.attributes.named_scopeconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="named_scope.html#idp19357824-bb"><span class="identifier">named_scope</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="named_scope.html#idp19358128-bb"><span class="identifier">named_scope</span></a><span class="special">(</span><a class="link" href="cast_source.html" title="Class cast_source">cast_source</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="named_scope.html#idp26104408-bb"><span class="identifier">named_scope</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="named_scope.html#idp26104712-bb"><span class="identifier">named_scope</span></a><span class="special">(</span><a class="link" href="cast_source.html" title="Class cast_source">cast_source</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="named_scope.html#idp19359040-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="named_scope.html#idp19359248-bb"><span class="identifier">push_scope</span></a><span class="special">(</span><span class="identifier">scope_entry</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="named_scope.html#idp19360752-bb"><span class="identifier">pop_scope</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="named_scope.html#idp19361904-bb"><span class="identifier">get_scopes</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="named_scope.html#idp26105624-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="named_scope.html#idp26105832-bb"><span class="identifier">push_scope</span></a><span class="special">(</span><span class="identifier">scope_entry</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="named_scope.html#idp26107336-bb"><span class="identifier">pop_scope</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="named_scope.html#idp26108488-bb"><span class="identifier">get_scopes</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp17576128"></a><h2>Description</h2>
+<a name="idp56572840"></a><h2>Description</h2>
 <p>The basic_named_scope attribute is essentially a hook to the thread-specific instance of scope list. This means that the attribute will generate different values if get_value is called in different threads. The attribute generates value with stored type <code class="computeroutput">basic_named_scope_list&lt; CharT &gt;</code>.</p>
 <p>The attribute class can also be used to gain access to the scope stack instance, e.g. to get its copy or to push or pop a scope entry. However, it is highly not recommended to maintain scope list manually. Use <code class="computeroutput">BOOST_LOG_NAMED_SCOPE</code> or <code class="computeroutput">BOOST_LOG_FUNCTION</code> macros instead. </p>
 <div class="refsect2">
-<a name="idp17578192"></a><h3>
+<a name="idp56574904"></a><h3>
 <a name="boost.log.attributes.named_scopeconstruct-copy-destruct"></a><code class="computeroutput">named_scope</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp19357824-bb"></a><span class="identifier">named_scope</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp26104408-bb"></a><span class="identifier">named_scope</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Creates an attribute. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp19358128-bb"></a><span class="identifier">named_scope</span><span class="special">(</span><a class="link" href="cast_source.html" title="Class cast_source">cast_source</a> <span class="keyword">const</span> <span class="special">&amp;</span> source<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp26104712-bb"></a><span class="identifier">named_scope</span><span class="special">(</span><a class="link" href="cast_source.html" title="Class cast_source">cast_source</a> <span class="keyword">const</span> <span class="special">&amp;</span> source<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor for casting support </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp17584752"></a><h3>
-<a name="idp19359040-bb"></a><code class="computeroutput">named_scope</code> public static functions</h3>
+<a name="idp56581368"></a><h3>
+<a name="idp26105624-bb"></a><code class="computeroutput">named_scope</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp19359248-bb"></a><span class="identifier">push_scope</span><span class="special">(</span><span class="identifier">scope_entry</span> <span class="keyword">const</span> <span class="special">&amp;</span> entry<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp26105832-bb"></a><span class="identifier">push_scope</span><span class="special">(</span><span class="identifier">scope_entry</span> <span class="keyword">const</span> <span class="special">&amp;</span> entry<span class="special">)</span><span class="special">;</span></pre>
 <p>The method pushes the scope to the back of the current thread's scope list</p>
 <p><span class="bold"><strong>Throws:</strong></span> Nothing. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp19360752-bb"></a><span class="identifier">pop_scope</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp26107336-bb"></a><span class="identifier">pop_scope</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method pops the last pushed scope from the current thread's scope list</p>
 <p><span class="bold"><strong>Throws:</strong></span> Nothing. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp19361904-bb"></a><span class="identifier">get_scopes</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp26108488-bb"></a><span class="identifier">get_scopes</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="note"><table border="0" summary="Note">

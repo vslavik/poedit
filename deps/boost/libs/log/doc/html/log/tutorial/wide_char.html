@@ -4,7 +4,7 @@
 <title>Wide character logging</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../tutorial.html" title="Tutorial">
 <link rel="prev" href="advanced_filtering.html" title="Filtering revisited">
 <link rel="next" href="../detailed.html" title="Detailed features description">
@@ -30,9 +30,9 @@
         On Windows the common practice is to use wide strings to represent national
         characters. Also, most of the system API is wide character oriented, which
         requires Windows-specific sinks to also support wide strings. On the other
-        hand, generic sinks, like [link log.detailed.sink_backends.text_file text
-        file sink, are byte-oriented (because, well, you store bytes in files, not
-        characters). This forces the library to perform character code conversion
+        hand, generic sinks, like the <a class="link" href="../detailed/sink_backends.html#log.detailed.sink_backends.text_file" title="Text file backend">text
+        file sink</a>, are byte-oriented (because, well, you store bytes in files,
+        not characters). This forces the library to perform character code conversion
         when needed by the sink. To set up the library for this one has to imbue
         the sink with a locale with the appropriate <code class="computeroutput"><span class="identifier">codecvt</span></code>
         facet. <a href="http://www.boost.org/doc/libs/release/libs/locale/doc/html/index.html" target="_top">Boost.Locale</a>
@@ -70,7 +70,7 @@
         parameter. We initialize the sink with a narrow-character formatter because
         the text file sink processes bytes. It is possible to use wide strings in
         the formatter, but not in format strings, like the one we used with the
-        <code class="computeroutput"><a class="link" href="../../boost/log/expressions/format_date_ti_idp19645328.html" title="Function template format_date_time">format_date_time</a></code> function.
+        <code class="computeroutput"><a class="link" href="../../boost/log/expressions/format_date_ti_idp26389832.html" title="Function template format_date_time">format_date_time</a></code> function.
         Also note that we used <code class="computeroutput"><span class="identifier">message</span></code>
         keyword to denote the log record messages. This <a class="link" href="../detailed/expressions.html#log.detailed.expressions.message" title="Message text placeholders">placeholder</a>
         supports both narrow and wide character messages, so the formatter will work

@@ -16,7 +16,6 @@ using namespace boost;
 int test_main(int, char*[])
 {
   typedef adjacency_list<listS, vecS, undirectedS> Graph;
-  typedef graph_traits<Graph>::vertex_descriptor vertex_descriptor;
   typedef graph_traits<Graph>::vertices_size_type vertices_size_type;
   typedef property_map<Graph, vertex_index_t>::const_type vertex_index_map;
 

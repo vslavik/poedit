@@ -16,8 +16,8 @@
 #define BOOST_LOG_SOURCES_SEVERITY_FEATURE_HPP_INCLUDED_
 
 #include <boost/cstdint.hpp>
-#include <boost/intrusive_ptr.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/smart_ptr/intrusive_ptr.hpp>
 #include <boost/move/core.hpp>
 #include <boost/move/utility.hpp>
 #include <boost/log/detail/config.hpp>
@@ -32,7 +32,7 @@
 #include <boost/log/core/record.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -62,7 +62,7 @@ namespace aux {
 
     protected:
         //! Factory implementation
-        class BOOST_LOG_VISIBLE impl :
+        class BOOST_SYMBOL_VISIBLE impl :
             public attribute_value::impl
         {
         public:

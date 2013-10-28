@@ -108,7 +108,7 @@ run test_arithmetic_dbg_adptr2.cpp ;
 run test_arithmetic_mpfi_50.cpp mpfi mpfr gmp : : : [ check-target-builds ../config//has_mpfi : : <build>no ] ;
 
 run test_arithmetic_float_128.cpp quadmath : : : [ check-target-builds ../config//has_float128 : : <build>no ] ;
-run test_arithmetic_float_128.cpp : : : [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ] : test_arithmetic_intel_quad ;
+run test_arithmetic_float_128.cpp : : : [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ] [ check-target-builds ../config//has_float128 : <source>quadmath ] : test_arithmetic_intel_quad ;
 
 run test_numeric_limits.cpp
         : # command line
@@ -208,7 +208,7 @@ run test_numeric_limits.cpp
         : # input files
         : # requirements
 	      <define>TEST_FLOAT128
-         [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ]
+         [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ] [ check-target-builds ../config//has_float128 : <source>quadmath ]
         : test_numeric_limits_intel_quad ;
 
 for local source in test_exp.cpp test_log.cpp test_pow.cpp test_sinh.cpp test_sqrt.cpp test_cosh.cpp test_tanh.cpp test_sin.cpp test_cos.cpp test_tan.cpp test_asin.cpp test_acos.cpp test_atan.cpp test_round.cpp test_fpclassify.cpp
@@ -251,7 +251,7 @@ for local source in test_exp.cpp test_log.cpp test_pow.cpp test_sinh.cpp test_sq
            : # command line
            : # input files
            : # requirements
-            [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ]
+            [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ] [ check-target-builds ../config//has_float128 : <source>quadmath ]
             <define>TEST_FLOAT128
            : $(source:B)_intel_quad ;
 }
@@ -376,7 +376,7 @@ run test_float_io.cpp
         : # requirements
 	      <define>TEST_FLOAT128
          release # Otherwise runtime is slow
-         [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ]
+         [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ] [ check-target-builds ../config//has_float128 : <source>quadmath ]
         : test_float_io_intel_quad ;
 
 run test_int_io.cpp $(TOMMATH)
@@ -510,7 +510,7 @@ run ../example/float128_snips.cpp
         : # command line
         : # input files
         : # requirements
-         [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ] 
+         [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ] [ check-target-builds ../config//has_float128 : <source>quadmath ]
         : float128_snips_intel_quad ;
 
 run ../example/logged_adaptor.cpp mpfi mpfr gmp
@@ -567,6 +567,22 @@ run ublas_interop/test4.cpp ublas_interop/test42.cpp ublas_interop/test43.cpp : 
 run ublas_interop/test5.cpp ublas_interop/test52.cpp ublas_interop/test53.cpp : : : <define>TEST_ET=1 : ublas4_et ;
 run ublas_interop/test6.cpp ublas_interop/test62.cpp ublas_interop/test63.cpp : : : <define>TEST_ET=1 : ublas5_et ;
 #run ublas_interop/test7.cpp ublas_interop/test71.cpp ublas_interop/test72.cpp ublas_interop/test73.cpp : : : <define>TEST_ET=1 : ublas6_et ;
+
+#
+# Serialization tests, run in release mode so we cycle through more values:
+#
+path-constant here : . ;
+run test_cpp_int_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST1 : test_cpp_int_serial_1 ;
+run test_cpp_int_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST2 : test_cpp_int_serial_2 ;
+run test_cpp_int_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST3 : test_cpp_int_serial_3 ;
+run test_cpp_int_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST4 : test_cpp_int_serial_4 ;
+run test_cpp_int_deserial.cpp ../../serialization/build//boost_serialization ../../filesystem/build//boost_filesystem : $(here) : : release ;
+run test_cpp_rat_serial.cpp ../../serialization/build//boost_serialization : : : release ;
+run test_adapt_serial.cpp ../../serialization/build//boost_serialization : : : release ;
+run test_cpp_dec_float_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST1 : test_cpp_dec_float_serial_1 ;
+run test_cpp_dec_float_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST2 : test_cpp_dec_float_serial_2 ;
+run test_float128_serial.cpp ../../serialization/build//boost_serialization quadmath : : : release [ check-target-builds ../config//has_float128 : : <build>no ]  ;
+
 
 if $(enable-specfun)
 {
@@ -634,7 +650,7 @@ if $(enable-specfun)
            : # command line
            : # input files
            : # requirements
-            [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ]
+            [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ] [ check-target-builds ../config//has_float128 : <source>quadmath ]
             <optimization>speed
             <define>TEST_FLOAT128
             <define>BOOST_ALL_NO_LIB

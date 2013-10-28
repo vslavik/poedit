@@ -11,7 +11,7 @@
 #ifndef BOOST_CONTAINER_EXPAND_BWD_TEST_ALLOCATOR_HPP
 #define BOOST_CONTAINER_EXPAND_BWD_TEST_ALLOCATOR_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#if (defined _MSC_VER)
 #  pragma once
 #endif
 

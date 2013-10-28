@@ -10,7 +10,7 @@
 #ifndef BOOST_CONTAINER_LIST_HPP
 #define BOOST_CONTAINER_LIST_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #  pragma once
 #endif
 
@@ -18,6 +18,8 @@
 #include <boost/container/detail/workaround.hpp>
 #include <boost/container/container_fwd.hpp>
 #include <boost/container/detail/version_type.hpp>
+#include <boost/container/detail/iterators.hpp>
+#include <boost/container/detail/mpl.hpp>
 #include <boost/container/throw_exception.hpp>
 #include <boost/move/utility.hpp>
 #include <boost/move/iterator.hpp>
@@ -26,7 +28,6 @@
 #include <boost/container/detail/utilities.hpp>
 #include <boost/container/detail/algorithms.hpp>
 #include <boost/type_traits/has_trivial_destructor.hpp>
-#include <boost/container/detail/mpl.hpp>
 #include <boost/intrusive/list.hpp>
 #include <boost/assert.hpp>
 #include <boost/container/detail/node_alloc_holder.hpp>
@@ -64,8 +65,16 @@ struct list_node
    list_node();
 
    public:
+   typedef T value_type;
    typedef typename list_hook<VoidPointer>::type hook_type;
+
    T m_data;
+
+   T &get_data()
+   {  return this->m_data;   }
+
+   const T &get_data() const
+   {  return this->m_data;   }
 };
 
 template<class Allocator>
@@ -87,105 +96,6 @@ struct intrusive_list_type
          <typename allocator_traits_type::size_type>
       >::type                                   container_type;
    typedef container_type                       type ;
-};
-
-template<class T, class IIterator>
-class list_const_iterator
-   : public std::iterator< std::bidirectional_iterator_tag, T
-                         , typename iiterator_types<T, IIterator>::difference_type
-                         , typename iiterator_types<T, IIterator>::const_pointer
-                         , typename iiterator_types<T, IIterator>::const_reference>
-{
-   protected:
-
-   IIterator m_it;
-
-   public:
-   typedef typename iiterator_types<T, IIterator>::const_pointer     const_pointer;
-   typedef typename iiterator_types<T, IIterator>::const_reference   const_reference;
-
-   //Constructors
-   list_const_iterator()
-      : m_it()
-   {}
-
-   explicit list_const_iterator(const IIterator &it) 
-      : m_it(it)
-   {}
-
-   //Pointer like operators
-   const_reference operator*() const
-   { return this->m_it->m_data;  }
-
-   const_pointer   operator->() const
-   { return ::boost::intrusive::pointer_traits<const_pointer>::pointer_to(this->m_it->m_data); }
-
-   //Increment / Decrement
-   list_const_iterator& operator++()      
-   { ++this->m_it;  return *this; }
-
-   list_const_iterator operator++(int)     
-   { IIterator tmp = this->m_it; ++*this; return list_const_iterator(tmp);  }
-
-   list_const_iterator& operator--()
-   { --this->m_it; return *this;   }
-
-   list_const_iterator operator--(int)
-   {  IIterator tmp = this->m_it; --*this; return list_const_iterator(tmp); }
-
-   //Comparison operators
-   friend bool operator== (const list_const_iterator& l, const list_const_iterator& r)
-   {  return l.m_it == r.m_it;  }
-
-   friend bool operator!= (const list_const_iterator& l, const list_const_iterator& r)
-   {  return l.m_it != r.m_it;  }
-
-   const IIterator &get() const
-   {  return this->m_it;   }
-};
-
-template<class T, class IIterator>
-class list_iterator
-   : public list_const_iterator<T, IIterator>
-{
-   private:
-   typedef list_const_iterator<T, IIterator> const_iterator;
-
-   public:
-   typedef typename iiterator_types<T, IIterator>::pointer           pointer;
-   typedef typename iiterator_types<T, IIterator>::reference         reference;
-
-   //Constructors
-   list_iterator()
-      : const_iterator()
-   {}
-
-   explicit list_iterator(const IIterator &it)
-      :  const_iterator(it)
-   {}
-
-   //Pointer like operators
-   reference operator*()  const
-   {  return  this->m_it->m_data;  }
-
-   pointer   operator->() const
-   { return ::boost::intrusive::pointer_traits<pointer>::pointer_to(this->m_it->m_data); }
-
-   //Increment / Decrement
-   list_iterator& operator++() 
-   { ++this->m_it; return *this;  }
-
-   list_iterator operator++(int)
-   { IIterator tmp = this->m_it; ++*this; return list_iterator(tmp); }
-
-   list_iterator& operator--()
-   { --this->m_it; return *this;   }
-
-   list_iterator operator--(int)
-   {  IIterator tmp = this->m_it; --*this; return list_iterator(tmp); }
-
-   const IIterator &get() const
-   {  return this->m_it;   }
 };
 
 }  //namespace container_detail {
@@ -255,8 +165,8 @@ class list
 
    BOOST_COPYABLE_AND_MOVABLE(list)
 
-   typedef container_detail::list_iterator<T, typename Icont::iterator>      iterator_impl;
-   typedef container_detail::list_const_iterator<T, typename Icont::iterator>const_iterator_impl;
+   typedef container_detail::iterator<typename Icont::iterator, false>  iterator_impl;
+   typedef container_detail::iterator<typename Icont::iterator, true>   const_iterator_impl;
    /// @endcond
 
    public:
@@ -442,7 +352,6 @@ class list
          }
          //If unequal allocators, then do a one by one move
          else{
-            typedef typename std::iterator_traits<iterator>::iterator_category ItCat;
             this->assign( boost::make_move_iterator(x.begin())
                         , boost::make_move_iterator(x.end()));
          }
@@ -654,7 +563,7 @@ class list
    {  return AllocHolder::max_size();  }
 
    //! <b>Effects</b>: Inserts or erases elements at the end such that
-   //!   the size becomes n. New elements are default constructed.
+   //!   the size becomes n. New elements are value initialized.
    //!
    //! <b>Throws</b>: If memory allocation throws, or T's copy constructor throws.
    //!
@@ -662,8 +571,8 @@ class list
    void resize(size_type new_size)
    {
       if(!priv_try_shrink(new_size)){
-         typedef default_construct_iterator<value_type, difference_type> default_iterator;
-         this->insert(this->cend(), default_iterator(new_size - this->size()), default_iterator());
+         typedef value_init_construct_iterator<value_type, difference_type> value_init_iterator;
+         this->insert(this->cend(), value_init_iterator(new_size - this->size()), value_init_iterator());
       }
    }
 
@@ -868,7 +777,7 @@ class list
    //! <b>Complexity</b>: Amortized constant time.
    iterator insert(const_iterator position, T &&x);
    #else
-   BOOST_MOVE_CONVERSION_AWARE_CATCH_1ARG(insert, T, iterator, priv_insert, const_iterator)
+   BOOST_MOVE_CONVERSION_AWARE_CATCH_1ARG(insert, T, iterator, priv_insert, const_iterator, const_iterator)
    #endif
 
    //! <b>Requires</b>: p must be a valid iterator of *this.

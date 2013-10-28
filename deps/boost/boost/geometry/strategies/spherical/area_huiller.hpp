@@ -82,8 +82,7 @@ protected :
         calculation_type sum;
 
         // Distances are calculated on unit sphere here
-        strategy::distance::haversine<PointOfSegment, PointOfSegment>
-                distance_over_unit_sphere;
+        strategy::distance::haversine<calculation_type> distance_over_unit_sphere;
 
 
         inline excess_sum()

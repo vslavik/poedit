@@ -11,6 +11,9 @@
  *  This file reflects the Boost.MPI "environment" class into Python
  *  methods at module level.
  */
+
+#include <locale>
+#include <string>
 #include <boost/python.hpp>
 #include <boost/mpi.hpp>
 
@@ -30,14 +33,22 @@ extern const char* environment_finalized_docstring;
  * zero-initialized before it is used. 
  */
 static environment* env; 
-
+  
 bool mpi_init(list python_argv, bool abort_on_exception)
 {
   // If MPI is already initialized, do nothing.
   if (environment::initialized())
     return false;
 
-  // Convert Python argv into C-style argc/argv. 
+#if PY_MAJOR_VERSION >= 3
+  #ifdef BOOST_MPI_HAS_NOARG_INITIALIZATION
+    env = new environment(abort_on_exception);
+  #else
+    #error No argument initialization, supported from MPI 1.2 and up, is needed when using Boost.MPI with Python 3.x
+  #endif
+#else
+  
+  // Convert Python argv into C-style argc/argv.
   int my_argc = extract<int>(python_argv.attr("__len__")());
   char** my_argv = new char*[my_argc];
   for (int arg = 0; arg < my_argc; ++arg)
@@ -52,9 +63,10 @@ bool mpi_init(list python_argv, bool abort_on_exception)
   if (mpi_argv != my_argv)
     PySys_SetArgv(mpi_argc, mpi_argv);
 
-  for (int arg = 0; arg < my_argc; ++arg)
-    free(my_argv[arg]);
-  delete [] my_argv;
+  for (int arg = 0; arg < mpi_argc; ++arg)
+    free(mpi_argv[arg]);
+  delete [] mpi_argv;
+#endif
 
   return true;
 }

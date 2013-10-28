@@ -6,7 +6,7 @@
   http://www.boost.org/LICENSE_1_0.txt).
 */
 #include <iostream>
-//#define BOOST_POLYGON_NO_DEPS
+#define BOOST_POLYGON_NO_DEPS
 #include <boost/polygon/polygon.hpp>
 
 namespace gtl = boost::polygon;
@@ -2221,6 +2221,239 @@ bool test_extents2() {
   return gtl::equivalence(rect, rect2);
 }
 
+/*************New Polygon Formation Tests********************/
+/*
+ *
+ * Test Input:
+ * +--------------------+
+ * |        +-------+   |
+ * |        |       |   |
+ * |        |       |   |
+ * +-----+  |       |   |
+ *       |  |       |   |
+ *       |  |       |   |
+ * +-----+  |       |   |
+ * |        |       |   |
+ * |        |       |   |
+ * |        +-------+   |
+ * +--------+           |
+ *          |           |
+ *          |           |
+ * +--------+           |
+ * |                    |
+ * |                    |
+ * +--------+           |
+ *          |           |
+ *          |           |
+ * +--------+           |
+ * |                    |
+ * |                    |
+ * +--------------------+
+ *
+ * Test Plan: 
+ * a. call 'get(out, param)' , param >=4 
+ * b. check if each polygon in the container is <= param
+ * c. check the area of all the pieces sum up to original piece
+ */
+typedef int intDC;
+typedef boost::polygon::polygon_90_with_holes_data<intDC> GTLPolygon;
+typedef boost::polygon::polygon_90_set_data<intDC> GTLPolygonSet;
+typedef boost::polygon::polygon_90_concept GTLPolygonConcept;
+typedef boost::polygon::point_data<intDC> GTLPoint;
+inline void PrintPolygon(const GTLPolygon&);
+inline GTLPolygon CreateGTLPolygon(const int*, size_t); 
+int test_new_polygon_formation(int argc, char** argv){
+   //                                               //
+   // Sub-Test-1: do a Boolean and call the new get //
+   //                                               //
+   int coordinates[] = {0,0, 10,0, 10,10, 0,10};
+   int coordinates1[] = {9,1, 20,1, 20,10, 9,10};
+   std::vector<GTLPoint> pts;
+   size_t count = sizeof(coordinates)/(2*sizeof(intDC)); 
+   size_t count1 = sizeof(coordinates1)/(2*sizeof(intDC));
+   GTLPolygon poly, poly1;
+   GTLPolygonSet polySet;
+   
+   poly = CreateGTLPolygon(coordinates, count);
+   poly1 = CreateGTLPolygon(coordinates1, count1);
+
+   polySet.insert(poly);
+   polySet.insert(poly1);
+
+   std::vector<GTLPolygon> result;
+   polySet.get(result, 100);
+
+   if(result.size() > 1){
+      std::cerr << "FAILED: expecting only one polygon because the"
+         " threshold is 100" << std::endl;
+      return 1;
+   }
+
+   if(result[0].size() != 6){
+      std::cerr << "FAILED: expecting only 6 vertices" << std::endl;
+      return 1;
+   }
+
+   if(area(result[0]) != 190){
+      std::cerr <<"FAILED: expecting only 6 vertices" << std::endl;
+      return 1;
+   }
+
+   //expect no more than 1 polygon
+   std::cout << "Found " << result.size() << "polygons after union" 
+      << std::endl;
+   for(size_t i=0; i<result.size(); i++){
+      PrintPolygon(result[i]);
+   }
+
+   intDC shell_coords[] = {0,0, 10,0, 10,21, 0,21, 0,15, 3,15, 3,13,
+      0,13, 0,10, 5,10, 5,8, 0,8, 0,5, 5,5, 5,3, 0,3};
+   intDC hole_coords[] = {4,11, 7,11, 7,19, 4,19};
+   GTLPolygon slice_polygon, slice_hole;
+   count = sizeof(shell_coords)/(2*sizeof(intDC));
+   count1 = sizeof(hole_coords)/(2*sizeof(intDC));
+
+   slice_polygon = CreateGTLPolygon(shell_coords, count);
+   slice_hole = CreateGTLPolygon(hole_coords, count1);
+
+   result.clear();
+   polySet.clear();
+   polySet.insert(slice_polygon);
+   polySet.insert(slice_hole, true);
+
+   polySet.get(result);
+   double gold_area = 0;
+   std::cout << "Found " << result.size() << " slices" << std::endl;
+   for(size_t i=0; i<result.size(); i++){
+      PrintPolygon(result[i]);
+      gold_area += area(result[i]); 
+   }
+
+   result.clear();
+   polySet.get(result, 6);
+   double platinum_area = 0;
+   std::cout << "Found " << result.size() << " slices" << std::endl;
+   for(size_t i=0; i<result.size(); i++){
+      PrintPolygon(result[i]);
+      platinum_area += area(result[i]); 
+      if(result[i].size() > 6){
+         std::cerr << "FAILED: expecting size to be less than 6" << std::endl;
+         return 1;
+      }
+   }
+
+   std::cout << "platinum_area = " << platinum_area << " , gold_area=" 
+      << gold_area << std::endl;
+   if( platinum_area != gold_area){
+      std::cerr << "FAILED: Area mismatch" << std::endl;
+      return 1;
+   }
+   std::cout << "[SUB-TEST-1] PASSED\n";
+
+   result.clear();
+   polySet.get(result, 4);
+   platinum_area = 0;
+   std::cout << "Found " << result.size() << " slices" << std::endl;
+   for(size_t i=0; i<result.size(); i++){
+      PrintPolygon(result[i]);
+      platinum_area += area(result[i]); 
+      if(result[i].size() > 4){ 
+         std::cerr << "FAILED: expecting size to be < 4" << std::endl;
+         return 1;
+      }
+   }
+
+   std::cout << "platinum_area=" << platinum_area << ", gold_area=" 
+      << gold_area << std::endl;
+
+   if( platinum_area != gold_area){
+      std::cerr << "FAILED: Area mismatch" << std::endl;
+      return 1;
+   }
+
+   std::cout << "[SUB-TEST-1] PASSED" << std::endl;
+   return 0;
+}
+
+/* 
+ * INPUT:
+ *   +--------+
+ *   |        |
+ *   |        |
+ *   |        +---+
+ *   |            |
+ *   |        +---+
+ *   |        |
+ *   +--------+
+ *            X 
+ *            
+ * TEST PLAN: as the sweepline moves and reaches
+ * X the number of vertices in the solid jumps by 4
+ * instead of 2. So make sure we don't get a 6 vertex
+ * polygon when the threshold is 4 and 6.
+ */
+int test_new_polygon_formation_marginal_threshold(int argc, char**){
+   std::vector<GTLPoint> pts;
+   GTLPolygon polygon;
+   GTLPolygonSet pset;
+   std::vector<GTLPolygon> result;
+   intDC coords[] = {0,0, 15,0, 15,10, 10,10, 10,15, 5,15, 5,10, 0,10};
+   size_t count = sizeof(coords)/(2*sizeof(intDC));
+
+   polygon = CreateGTLPolygon(coords, count);
+   pset.insert(polygon);
+
+   for(size_t i=0; i<1; i++){
+      pset.get(result, i ? 4 : 6);
+      double gold_area = 175, plat_area = 0;
+      for(size_t i=0; i<result.size(); i++){
+         if(result[i].size() > (i ? 4 : 6) ){
+            size_t expected = i ? 4 : 6;
+            std::cerr << "FAILED: Expecting no more than " <<
+               expected << " vertices" << std::endl;
+            return 1;
+         }
+         PrintPolygon(result[i]);
+         plat_area += area(result[i]); 
+      }
+
+      if(plat_area != gold_area){
+         std::cerr << "FAILED area mismatch gold=" << gold_area <<
+            " plat=" << plat_area << std::endl;
+         return 1;
+      }
+   }
+   std::cout << "Test Passed" << std::endl;
+   return 0;
+}
+
+inline void PrintPolygon(const GTLPolygon& p){
+   //get an iterator of the point_data<int>
+   boost::polygon::point_data<int> pt;
+   boost::polygon::polygon_90_data<int>::iterator_type itr;
+
+   size_t vertex_id = 0;
+   for(itr = p.begin(); itr != p.end(); ++itr){
+      pt = *itr;
+      std::cout << "Vertex-" << ++vertex_id << "(" << pt.x() <<
+         "," << pt.y() << ")" << std::endl;
+   }
+}
+
+// size: is the number of vertices //
+inline GTLPolygon CreateGTLPolygon(const int *coords, size_t size){
+   GTLPolygon r;
+   std::vector<GTLPoint> pts;
+
+   for(size_t i=0; i<size; i++){
+      pts.push_back( GTLPoint(coords[2*i], coords[2*i+1]) );
+   }
+   boost::polygon::set_points(r, pts.begin(), pts.end());
+   return r;
+}
+
+/************************************************************/
+
 int main() {
   test_view_as();
   //this test fails and I'd like to get it to pass
@@ -3613,6 +3846,19 @@ int main() {
     intersect_segments(segs, sarray, sarray+2);
     std::cout << segs.size() << std::endl;
     assert_s(segs.size() == 4, "intersection3");
+  }
+
+
+  /*New polygon_formation tests*/ 
+  if(test_new_polygon_formation(0,NULL)){
+     std::cerr << "[test_new_polygon_formation] failed" << std::endl;
+     return 1;
+  }
+
+  if(test_new_polygon_formation_marginal_threshold(0,NULL)){
+     std::cerr << "[test_new_polygon_formation_marginal_threshold] failed" 
+         << std::endl;
+     return 1;
   }
 
   std::cout << "ALL TESTS COMPLETE\n";

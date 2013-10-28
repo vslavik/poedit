@@ -16,9 +16,11 @@
 #include <utility>
 
 #include <boost/random/mersenne_twister.hpp>
-#include <boost/timer.hpp>
+#include <boost/timer/timer.hpp>
 
 typedef boost::int32_t int32;
+using boost::timer::cpu_times;
+using boost::timer::nanosecond_type;
 
 // Include for the Boost.Polygon Voronoi library.
 #include <boost/polygon/voronoi.hpp>
@@ -26,18 +28,11 @@ typedef boost::polygon::default_voronoi_builder VB_BOOST;
 typedef boost::polygon::voronoi_diagram<double> VD_BOOST;
 
 // Includes for the CGAL library.
-#include <CGAL/Quotient.h>
-#include <CGAL/MP_Float.h>
-#include <CGAL/Simple_cartesian.h>
-#include <CGAL/Segment_Delaunay_graph_filtered_traits_2.h>
-#include <CGAL/Segment_Delaunay_graph_2.h>
-typedef CGAL::Quotient<CGAL::MP_Float> ENT;
-typedef CGAL::Simple_cartesian<double> CK;
-typedef CGAL::Simple_cartesian<ENT> EK;
-typedef CGAL::Segment_Delaunay_graph_filtered_traits_2<
-    CK, CGAL::Field_with_sqrt_tag, EK, CGAL::Field_tag> Gt;
-typedef CGAL::Segment_Delaunay_graph_2<Gt> SDT_CGAL;
-typedef SDT_CGAL::Point_2 Point_CGAL;
+#include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
+#include <CGAL/Delaunay_triangulation_2.h>
+typedef CGAL::Exact_predicates_inexact_constructions_kernel CGAL_KERNEL;
+typedef CGAL::Delaunay_triangulation_2<CGAL_KERNEL> DT_CGAL;
+typedef CGAL_KERNEL::Point_2 POINT_CGAL;
 
 // Includes for the S-Hull library.
 #include <s_hull.h>
@@ -48,7 +43,7 @@ const int NUM_POINTS[] = {10, 100, 1000, 10000, 100000, 1000000};
 const int NUM_RUNS[] = {100000, 10000, 1000, 100, 10, 1};
 std::ofstream bf("benchmark_points.txt",
                  std::ios_base::out | std::ios_base::app);
-boost::timer timer;
+boost::timer::cpu_timer timer;
 
 void format_line(int num_points, int num_tests, double time_per_test) {
   bf << "| " << std::setw(16) << num_points << " ";
@@ -57,50 +52,65 @@ void format_line(int num_points, int num_tests, double time_per_test) {
   bf << "|" << std::endl;
 }
 
-void run_boost_test() {
+double get_elapsed_secs() {
+  cpu_times elapsed_times(timer.elapsed());
+  return 1E-9 * static_cast<double>(
+      elapsed_times.system + elapsed_times.user);
+}
+
+void run_boost_voronoi_test() {
   boost::mt19937 gen(RANDOM_SEED);
-  bf << "Boost.Polygon Voronoi of Points:\n";
+  bf << "Boost.Polygon Voronoi Diagram of Points:\n";
   for (int i = 0; i < NUM_TESTS; ++i) {
-    timer.restart();
+    timer.start();
     for (int j = 0; j < NUM_RUNS[i]; ++j) {
       VB_BOOST vb;
       VD_BOOST vd;
-      for (int k = 0; k < NUM_POINTS[i]; ++k)
-        vb.insert_point(static_cast<int32>(gen()), static_cast<int32>(gen()));
+      for (int k = 0; k < NUM_POINTS[i]; ++k) {
+        int32 x = static_cast<int32>(gen());
+        int32 y = static_cast<int32>(gen());
+        vb.insert_point(x, y);
+      }
       vb.construct(&vd);
     }
-    double time_per_test = timer.elapsed() / NUM_RUNS[i];
+    double time_per_test = get_elapsed_secs() / NUM_RUNS[i];
     format_line(NUM_POINTS[i], NUM_RUNS[i], time_per_test);
   }
   bf << "\n";
 }
 
-void run_cgal_test() {
+void run_cgal_delaunay_test() {
   boost::mt19937 gen(RANDOM_SEED);
-  bf << "CGAL Triangulation of Points:\n";
+  bf << "CGAL Delaunay Triangulation of Points:\n";
   for (int i = 0; i < NUM_TESTS; ++i) {
-    timer.restart();
+    timer.start();
     for (int j = 0; j < NUM_RUNS[i]; ++j) {
-      SDT_CGAL dt;
+      DT_CGAL dt;
+      std::vector<POINT_CGAL> points;
       for (int k = 0; k < NUM_POINTS[i]; ++k) {
-        dt.insert(Point_CGAL(
-            static_cast<int32>(gen()), static_cast<int32>(gen())));
+        int32 x = static_cast<int32>(gen());
+        int32 y = static_cast<int32>(gen());
+        points.push_back(POINT_CGAL(x, y));
       }
+      // CGAL's implementation sorts points along
+      // the Hilbert curve implicitly to improve
+      // spatial ordering of the input geometries.
+      dt.insert(points.begin(), points.end());
     }
-    double time_per_test = timer.elapsed() / NUM_RUNS[i];
+    double time_per_test = get_elapsed_secs() / NUM_RUNS[i];
     format_line(NUM_POINTS[i], NUM_RUNS[i], time_per_test);
   }
   bf << "\n";
 }
 
-void run_shull_test() {
+void run_shull_delaunay_test() {
   boost::mt19937 gen(RANDOM_SEED);
-  bf << "S-Hull Triangulation of Points:\n";
+  bf << "S-Hull Delaunay Triangulation of Points:\n";
   // This value is required by S-Hull as it doesn't seem to support properly
   // coordinates with the absolute value higher than 100.
   float koef = 100.0 / (1 << 16) / (1 << 15);
   for (int i = 0; i < NUM_TESTS; ++i) {
-    timer.restart();
+    timer.start();
     for (int j = 0; j < NUM_RUNS[i]; ++j) {
       // S-Hull doesn't deal properly with duplicates so we need
       // to eliminate them before running the algorithm.
@@ -124,7 +134,7 @@ void run_shull_test() {
       }
       s_hull_del_ray2(pts, triads);
     }
-    double time_per_test = timer.elapsed() / NUM_RUNS[i];
+    double time_per_test = get_elapsed_secs() / NUM_RUNS[i];
     format_line(NUM_POINTS[i], NUM_RUNS[i], time_per_test);
   }
   bf << "\n";
@@ -133,9 +143,9 @@ void run_shull_test() {
 int main() {
   bf << std::setiosflags(std::ios::right | std::ios::fixed)
      << std::setprecision(6);
-  run_boost_test();
-  run_cgal_test();
-  run_shull_test();
+  run_boost_voronoi_test();
+  run_cgal_delaunay_test();
+  run_shull_delaunay_test();
   bf.close();
   return 0;
 }

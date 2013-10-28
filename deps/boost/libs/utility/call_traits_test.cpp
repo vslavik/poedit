@@ -210,8 +210,10 @@ int main()
    comparible_UDT u;
    c1(u);
    call_traits_checker<int> c2;
+   call_traits_checker<enum_UDT> c2b;
    int i = 2;
    c2(i);
+   c2b(one);
    int* pi = &i;
    int a[2] = {1,2};
 #if defined(BOOST_MSVC6_MEMBER_TEMPLATES) && !defined(__ICL)
@@ -292,7 +294,11 @@ int main()
    BOOST_CHECK_TYPE(incomplete_type&, boost::call_traits<incomplete_type>::reference);
    BOOST_CHECK_TYPE(const incomplete_type&, boost::call_traits<incomplete_type>::const_reference);
    BOOST_CHECK_TYPE(const incomplete_type&, boost::call_traits<incomplete_type>::param_type);
-
+   // test enum:
+   BOOST_CHECK_TYPE(enum_UDT, boost::call_traits<enum_UDT>::value_type);
+   BOOST_CHECK_TYPE(enum_UDT&, boost::call_traits<enum_UDT>::reference);
+   BOOST_CHECK_TYPE(const enum_UDT&, boost::call_traits<enum_UDT>::const_reference);
+   BOOST_CHECK_TYPE(const enum_UDT, boost::call_traits<enum_UDT>::param_type);
    return 0;
 }
 

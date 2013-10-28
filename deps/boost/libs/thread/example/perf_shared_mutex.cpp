@@ -42,7 +42,7 @@ void unique()
 
 int main()
 {
-  boost::chrono::high_resolution_clock::duration best_time(std::numeric_limits<boost::chrono::high_resolution_clock::duration::rep>::max());
+  boost::chrono::high_resolution_clock::duration best_time(std::numeric_limits<boost::chrono::high_resolution_clock::duration::rep>::max BOOST_PREVENT_MACRO_SUBSTITUTION ());
   for (int i =100; i>0; --i) {
     boost::chrono::high_resolution_clock clock;
     boost::chrono::high_resolution_clock::time_point s1 = clock.now();
@@ -61,7 +61,7 @@ int main()
   //  t13.join();
     boost::chrono::high_resolution_clock::time_point f1 = clock.now();
     //std::cout << "     Time spent:" << (f1 - s1) << std::endl;
-    best_time = std::min(best_time, f1 - s1);
+    best_time = std::min BOOST_PREVENT_MACRO_SUBSTITUTION (best_time, f1 - s1);
 
   }
   std::cout << "Best Time spent:" << best_time << std::endl;

@@ -1,0 +1,24 @@
+
+srcdir ../zlib;
+
+import ../common-settings.bkl;
+
+includedirs += .;
+
+library zlib {
+    vs2013.projectfile = ../custom_build/zlib.vcxproj;
+
+    sources {
+        adler32.c
+        compress.c
+        crc32.c
+        deflate.c
+        infback.c
+        inffast.c
+        inflate.c
+        inftrees.c
+        trees.c
+        uncompr.c
+        zutil.c
+    }
+}

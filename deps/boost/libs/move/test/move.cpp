@@ -66,7 +66,6 @@ int main()
 {
    #if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
    BOOST_STATIC_ASSERT((boost::has_nothrow_move<movable>::value == true));
-   BOOST_STATIC_ASSERT((boost::has_nothrow_move<copyable>::value == false));
    BOOST_STATIC_ASSERT((boost::has_move_emulation_enabled<copyable>::value == false));
    BOOST_STATIC_ASSERT((boost::has_move_emulation_enabled<copyable*>::value == false));
    BOOST_STATIC_ASSERT((boost::has_move_emulation_enabled<int>::value == false));

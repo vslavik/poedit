@@ -27,8 +27,6 @@ struct cycle_validator
     void cycle(const Path& p, const Graph& g)
     {
         ++cycles;
-        typedef typename graph_traits<Graph>::vertex_descriptor Vertex;
-        typedef typename graph_traits<Graph>::edge_descriptor Edge;
         // Check to make sure that each of the vertices in the path
         // is truly connected and that the back is connected to the
         // front - it's not validating that we find all paths, just

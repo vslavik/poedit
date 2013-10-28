@@ -19,7 +19,7 @@
 #ifndef BOOST_CONTAINER_STABLE_VECTOR_HPP
 #define BOOST_CONTAINER_STABLE_VECTOR_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #  pragma once
 #endif
 
@@ -88,7 +88,7 @@ class clear_on_destroy
    bool do_clear_;
 };
 
-template<typename VoidPointer, typename T>
+template<typename Pointer>
 struct node;
 
 template<class VoidPtr>
@@ -116,167 +116,172 @@ struct node_base
    node_base_ptr_ptr up;
 };
 
-template<typename VoidPointer, typename T>
+template<typename Pointer>
 struct node
-   : public node_base<VoidPointer>
+   : public node_base
+      <typename ::boost::intrusive::pointer_traits<Pointer>::template
+         rebind_pointer<void>::type
+      >
 {
-   private:
-   node();
+//   private:
+//   node();
 
    public:
-   T value;
+   typename ::boost::intrusive::pointer_traits<Pointer>::element_type value;
 };
 
-template<typename T, typename Reference, typename Pointer>
+template<typename Pointer, bool IsConst>
 class iterator
-   : public std::iterator< std::random_access_iterator_tag
-                         , T
-                         , typename boost::intrusive::
-                              pointer_traits<Pointer>::difference_type
-                         , Pointer
-                         , Reference>
 {
-   typedef boost::intrusive::
-      pointer_traits<Pointer>                   ptr_traits;
-   typedef typename ptr_traits::template
+   typedef boost::intrusive::pointer_traits<Pointer>                                non_const_ptr_traits;
+   public:
+	typedef std::random_access_iterator_tag                                          iterator_category;
+   typedef typename non_const_ptr_traits::element_type                              value_type;
+   typedef typename non_const_ptr_traits::difference_type                           difference_type;
+   typedef typename ::boost::container::container_detail::if_c
+      < IsConst
+      , typename non_const_ptr_traits::template
+         rebind_pointer<const value_type>::type
+      , Pointer
+      >::type                                                                       pointer;
+   typedef typename ::boost::container::container_detail::if_c
+      < IsConst
+      , const value_type&
+      , value_type&
+      >::type                                                                       reference;
+
+   private:
+   typedef typename non_const_ptr_traits::template
          rebind_pointer<void>::type             void_ptr;
-   typedef node<void_ptr, T>                    node_type;
+   typedef node<Pointer>                        node_type;
    typedef node_base<void_ptr>                  node_base_type;
-   typedef typename ptr_traits::template
+   typedef typename non_const_ptr_traits::template
          rebind_pointer<node_type>::type        node_ptr;
    typedef boost::intrusive::
       pointer_traits<node_ptr>                  node_ptr_traits;
-   typedef typename ptr_traits::template
+   typedef typename non_const_ptr_traits::template
          rebind_pointer<node_base_type>::type   node_base_ptr;
-   typedef typename ptr_traits::template
+   typedef typename non_const_ptr_traits::template
          rebind_pointer<node_base_ptr>::type    node_base_ptr_ptr;
-   typedef typename ptr_traits::template
-      rebind_pointer<T>::type                   friend_iterator_pointer;
 
-   friend class iterator<T, const T, friend_iterator_pointer>;
+   node_ptr m_pn;
 
    public:
-   typedef std::random_access_iterator_tag      iterator_category;
-   typedef T                                    value_type;
-   typedef typename ptr_traits::difference_type difference_type;
-   typedef Pointer                              pointer;
-   typedef Reference                            reference;
 
-   iterator()
+   explicit iterator(node_ptr p) BOOST_CONTAINER_NOEXCEPT
+      : m_pn(p)
    {}
 
-   explicit iterator(node_ptr p)
-      : pn(p)
+   iterator() BOOST_CONTAINER_NOEXCEPT
    {}
 
-   iterator(const iterator<T, T&, friend_iterator_pointer>& x)
-      : pn(x.pn)
+   iterator(iterator<Pointer, false> const& other) BOOST_CONTAINER_NOEXCEPT
+      :  m_pn(other.node_pointer())
    {}
 
-   node_ptr &node_pointer()
-   {  return pn;  }
+   node_ptr &node_pointer() BOOST_CONTAINER_NOEXCEPT
+   {  return m_pn;  }
 
-   const node_ptr &node_pointer() const
-   {  return pn;  }
+   const node_ptr &node_pointer() const BOOST_CONTAINER_NOEXCEPT
+   {  return m_pn;  }
 
    public:
    //Pointer like operators
-   reference operator*()  const
-   {  return  pn->value;  }
+   reference operator*()  const BOOST_CONTAINER_NOEXCEPT
+   {  return  m_pn->value;  }
 
-   pointer   operator->() const
-   {  return  ptr_traits::pointer_to(this->operator*());  }
+   pointer   operator->() const BOOST_CONTAINER_NOEXCEPT
+   {
+      typedef boost::intrusive::pointer_traits<pointer> ptr_traits;
+      return  ptr_traits::pointer_to(this->operator*());
+   }
 
    //Increment / Decrement
-   iterator& operator++()
+   iterator& operator++() BOOST_CONTAINER_NOEXCEPT
    {
-      if(node_base_ptr_ptr p = this->pn->up){
+      if(node_base_ptr_ptr p = this->m_pn->up){
          ++p;
-         this->pn = node_ptr_traits::static_cast_from(*p);
+         this->m_pn = node_ptr_traits::static_cast_from(*p);
       }
       return *this;
    }
 
-   iterator operator++(int)
+   iterator operator++(int) BOOST_CONTAINER_NOEXCEPT
    {  iterator tmp(*this);  ++*this; return iterator(tmp); }
 
-   iterator& operator--()
+   iterator& operator--() BOOST_CONTAINER_NOEXCEPT
    {
-      if(node_base_ptr_ptr p = this->pn->up){
+      if(node_base_ptr_ptr p = this->m_pn->up){
          --p;
-         this->pn = node_ptr_traits::static_cast_from(*p);
+         this->m_pn = node_ptr_traits::static_cast_from(*p);
       }
       return *this;
    }
 
-   iterator operator--(int)
+   iterator operator--(int) BOOST_CONTAINER_NOEXCEPT
    {  iterator tmp(*this);  --*this; return iterator(tmp);  }
 
-   reference operator[](difference_type off) const
+   reference operator[](difference_type off) const BOOST_CONTAINER_NOEXCEPT
    {
       iterator tmp(*this);
       tmp += off;
       return *tmp;
    }
 
-   iterator& operator+=(difference_type off)
+   iterator& operator+=(difference_type off) BOOST_CONTAINER_NOEXCEPT
    {
-      if(node_base_ptr_ptr p = this->pn->up){
+      if(node_base_ptr_ptr p = this->m_pn->up){
          p += off;
-         this->pn = node_ptr_traits::static_cast_from(*p);
+         this->m_pn = node_ptr_traits::static_cast_from(*p);
       }
       return *this;
    }
 
-   friend iterator operator+(const iterator &left, difference_type off)
+   friend iterator operator+(const iterator &left, difference_type off) BOOST_CONTAINER_NOEXCEPT
    {
       iterator tmp(left);
       tmp += off;
       return tmp;
    }
 
-   friend iterator operator+(difference_type off, const iterator& right)
+   friend iterator operator+(difference_type off, const iterator& right) BOOST_CONTAINER_NOEXCEPT
    {
       iterator tmp(right);
       tmp += off;
       return tmp;
    }
 
-   iterator& operator-=(difference_type off)
+   iterator& operator-=(difference_type off) BOOST_CONTAINER_NOEXCEPT
    {  *this += -off; return *this;   }
 
-   friend iterator operator-(const iterator &left, difference_type off)
+   friend iterator operator-(const iterator &left, difference_type off) BOOST_CONTAINER_NOEXCEPT
    {
       iterator tmp(left);
       tmp -= off;
       return tmp;
    }
 
-   friend difference_type operator-(const iterator& left, const iterator& right)
-   {
-      return left.pn->up - right.pn->up;
-   }
+   friend difference_type operator-(const iterator& left, const iterator& right) BOOST_CONTAINER_NOEXCEPT
+   {  return left.m_pn->up - right.m_pn->up;  }
 
    //Comparison operators
-   friend bool operator==   (const iterator& l, const iterator& r)
-   {  return l.pn == r.pn;  }
+   friend bool operator==   (const iterator& l, const iterator& r) BOOST_CONTAINER_NOEXCEPT
+   {  return l.m_pn == r.m_pn;  }
 
-   friend bool operator!=   (const iterator& l, const iterator& r)
-   {  return l.pn != r.pn;  }
+   friend bool operator!=   (const iterator& l, const iterator& r) BOOST_CONTAINER_NOEXCEPT
+   {  return l.m_pn != r.m_pn;  }
 
-   friend bool operator<    (const iterator& l, const iterator& r)
-   {  return l.pn->up < r.pn->up;  }
+   friend bool operator<    (const iterator& l, const iterator& r) BOOST_CONTAINER_NOEXCEPT
+   {  return l.m_pn->up < r.m_pn->up;  }
 
-   friend bool operator<=   (const iterator& l, const iterator& r)
-   {  return l.pn->up <= r.pn->up;  }
+   friend bool operator<=   (const iterator& l, const iterator& r) BOOST_CONTAINER_NOEXCEPT
+   {  return l.m_pn->up <= r.m_pn->up;  }
 
-   friend bool operator>    (const iterator& l, const iterator& r)
-   {  return l.pn->up > r.pn->up;  }
+   friend bool operator>    (const iterator& l, const iterator& r) BOOST_CONTAINER_NOEXCEPT
+   {  return l.m_pn->up > r.m_pn->up;  }
 
-   friend bool operator>=   (const iterator& l, const iterator& r)
-   {  return l.pn->up >= r.pn->up;  }
-
-   node_ptr pn;
+   friend bool operator>=   (const iterator& l, const iterator& r) BOOST_CONTAINER_NOEXCEPT
+   {  return l.m_pn->up >= r.m_pn->up;  }
 };
 
 template<class VoidPtr, class VoidAllocator>
@@ -354,7 +359,6 @@ struct index_traits
       }
    }
 
-
    #ifdef STABLE_VECTOR_ENABLE_INVARIANT_CHECKING
    static bool invariants(index_type &index)
    {
@@ -431,8 +435,10 @@ class stable_vector
 {
    ///@cond
    typedef allocator_traits<Allocator>                allocator_traits_type;
-   typedef typename boost::intrusive::pointer_traits
-      <typename allocator_traits_type::pointer>::
+   typedef boost::intrusive::
+      pointer_traits
+         <typename allocator_traits_type::pointer>    ptr_traits;
+   typedef typename ptr_traits::
          template rebind_pointer<void>::type          void_ptr;
    typedef typename allocator_traits_type::
       template portable_rebind_alloc
@@ -451,10 +457,8 @@ class stable_vector
    typedef typename index_traits_type::index_iterator index_iterator;
    typedef typename index_traits_type::
       const_index_iterator                            const_index_iterator;
-   typedef boost::intrusive::
-      pointer_traits
-         <typename allocator_traits_type::pointer>    ptr_traits;
-   typedef stable_vector_detail::node<void_ptr, T>    node_type;
+   typedef stable_vector_detail::node
+      <typename ptr_traits::pointer>                  node_type;
    typedef typename ptr_traits::template
       rebind_pointer<node_type>::type                 node_ptr;
    typedef boost::intrusive::
@@ -495,13 +499,11 @@ class stable_vector
 
    friend class stable_vector_detail::clear_on_destroy<stable_vector>;
    typedef stable_vector_detail::iterator
-      < T
-      , typename allocator_traits<Allocator>::reference
-      , typename allocator_traits<Allocator>::pointer>              iterator_impl;
+      < typename allocator_traits<Allocator>::pointer
+      , false>                                           iterator_impl;
    typedef stable_vector_detail::iterator
-      < T
-      , typename allocator_traits<Allocator>::const_reference
-      , typename allocator_traits<Allocator>::const_pointer>        const_iterator_impl;
+      < typename allocator_traits<Allocator>::pointer
+      , false>                                           const_iterator_impl;
    ///@endcond
    public:
 
@@ -566,7 +568,7 @@ class stable_vector
    }
 
    //! <b>Effects</b>: Constructs a stable_vector that will use a copy of allocator a
-   //!   and inserts n default contructed values.
+   //!   and inserts n value initialized values.
    //!
    //! <b>Throws</b>: If allocator_type's default constructor or copy constructor
    //!   throws or T's default or copy constructor throws.
@@ -577,6 +579,24 @@ class stable_vector
    {
       stable_vector_detail::clear_on_destroy<stable_vector> cod(*this);
       this->resize(n);
+      STABLE_VECTOR_CHECK_INVARIANT;
+      cod.release();
+   }
+
+   //! <b>Effects</b>: Constructs a stable_vector that will use a copy of allocator a
+   //!   and inserts n default initialized values.
+   //!
+   //! <b>Throws</b>: If allocator_type's default constructor or copy constructor
+   //!   throws or T's default or copy constructor throws.
+   //!
+   //! <b>Complexity</b>: Linear to n.
+   //!
+   //! <b>Note</b>: Non-standard extension
+   stable_vector(size_type n, default_init_t)
+      : internal_data(), index()
+   {
+      stable_vector_detail::clear_on_destroy<stable_vector> cod(*this);
+      this->resize(n, default_init);
       STABLE_VECTOR_CHECK_INVARIANT;
       cod.release();
    }
@@ -958,17 +978,35 @@ class stable_vector
    {  return this->index.max_size() - ExtraPointers;  }
 
    //! <b>Effects</b>: Inserts or erases elements at the end such that
-   //!   the size becomes n. New elements are default constructed.
+   //!   the size becomes n. New elements are value initialized.
    //!
-   //! <b>Throws</b>: If memory allocation throws, or T's copy constructor throws.
+   //! <b>Throws</b>: If memory allocation throws, or T's default constructor throws.
    //!
    //! <b>Complexity</b>: Linear to the difference between size() and new_size.
    void resize(size_type n)
    {
-      typedef default_construct_iterator<value_type, difference_type> default_iterator;
+      typedef value_init_construct_iterator<value_type, difference_type> value_init_iterator;
       STABLE_VECTOR_CHECK_INVARIANT;
       if(n > this->size())
-         this->insert(this->cend(), default_iterator(n - this->size()), default_iterator());
+         this->insert(this->cend(), value_init_iterator(n - this->size()), value_init_iterator());
+      else if(n < this->size())
+         this->erase(this->cbegin() + n, this->cend());
+   }
+
+   //! <b>Effects</b>: Inserts or erases elements at the end such that
+   //!   the size becomes n. New elements are default initialized.
+   //!
+   //! <b>Throws</b>: If memory allocation throws, or T's default constructor throws.
+   //!
+   //! <b>Complexity</b>: Linear to the difference between size() and new_size.
+   //!
+   //! <b>Note</b>: Non-standard extension
+   void resize(size_type n, default_init_t)
+   {
+      typedef default_init_construct_iterator<value_type, difference_type> default_init_iterator;
+      STABLE_VECTOR_CHECK_INVARIANT;
+      if(n > this->size())
+         this->insert(this->cend(), default_init_iterator(n - this->size()), default_init_iterator());
       else if(n < this->size())
          this->erase(this->cbegin() + n, this->cend());
    }
@@ -1304,7 +1342,7 @@ class stable_vector
    //!   Linear time otherwise.
    iterator insert(const_iterator position, T &&x);
    #else
-   BOOST_MOVE_CONVERSION_AWARE_CATCH_1ARG(insert, T, iterator, priv_insert, const_iterator)
+   BOOST_MOVE_CONVERSION_AWARE_CATCH_1ARG(insert, T, iterator, priv_insert, const_iterator, const_iterator)
    #endif
 
    //! <b>Requires</b>: pos must be a valid iterator of *this.

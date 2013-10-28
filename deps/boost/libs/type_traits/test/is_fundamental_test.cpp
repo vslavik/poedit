@@ -148,6 +148,13 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_fundamental<float[2]>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_fundamental<incomplete_type>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_fundamental<foo0_t>::value, false);
 
+#ifndef BOOST_NO_CXX11_CHAR16_T
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_fundamental<char16_t>::value, true);
+#endif
+#ifndef BOOST_NO_CXX11_CHAR32_T
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_fundamental<char32_t>::value, true);
+#endif
+
 TT_TEST_END
 
 

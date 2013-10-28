@@ -35,7 +35,7 @@ using boost::graph::distributed::mpi_process_group;
 
 void concept_checks()
 {
-  typedef compressed_sparse_row_graph<directedS, void, void, no_property, 
+  typedef compressed_sparse_row_graph<directedS, no_property, no_property, no_property, 
                                       distributedS<mpi_process_group> >
     Digraph;
   typedef graph_traits<Digraph>::vertex_descriptor vertex_descriptor;
@@ -81,7 +81,7 @@ int test_main(int argc, char* argv[])
 
   concept_checks();
 
-  typedef compressed_sparse_row_graph<directedS, void, void, no_property, 
+  typedef compressed_sparse_row_graph<directedS, no_property, no_property, no_property, 
                                       distributedS<mpi_process_group> >
     Digraph;
 

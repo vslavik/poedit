@@ -107,7 +107,6 @@ main()
   {
     typedef sgi_assignable_archetype<> Key; // ?
     typedef sgi_assignable_archetype<> Value;
-    typedef random_access_iterator_archetype<Value> Iterator;
     typedef readable_property_map_archetype<Key, std::ptrdiff_t> IndexMap;
     typedef shared_array_property_map<Value, IndexMap> PMap;
     function_requires<Mutable_LvaluePropertyMapConcept<PMap, Key> >();

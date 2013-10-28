@@ -24,7 +24,7 @@ int main()
     line.push_back(P(5, 52));
     double const mean_radius = 6371.0; /*< [@http://en.wikipedia.org/wiki/Earth_radius Wiki]  >*/
     std::cout << "length is "
-        << length(line, strategy::distance::haversine<P>(mean_radius) )
+        << length(line, strategy::distance::haversine<float>(mean_radius) )
         << " kilometers " << std::endl;
 
     return 0;

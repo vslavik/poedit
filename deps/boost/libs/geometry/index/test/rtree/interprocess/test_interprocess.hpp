@@ -81,4 +81,21 @@ void additional(Parameters const& parameters = Parameters())
     testset::additional<Indexable>(parameters, shmem_alloc(segment.get_segment_manager()));
 }
 
+template <typename Indexable, typename Parameters>
+void modifiers_and_additional(Parameters const& parameters = Parameters())
+{
+    namespace bi = boost::interprocess;
+    struct shm_remove
+    {
+        shm_remove() { bi::shared_memory_object::remove("shmem"); }
+        ~shm_remove(){ bi::shared_memory_object::remove("shmem"); }
+    } remover;
+
+    bi::managed_shared_memory segment(bi::create_only, "shmem", 65535);
+    typedef bi::allocator<Indexable, bi::managed_shared_memory::segment_manager> shmem_alloc;
+
+    testset::modifiers<Indexable>(parameters, shmem_alloc(segment.get_segment_manager()));
+    testset::additional<Indexable>(parameters, shmem_alloc(segment.get_segment_manager()));
+}
+
 }}

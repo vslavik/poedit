@@ -38,6 +38,25 @@ void test_good_system_clock(std::string str, D res)
   std::cout << "Obtained= " << boost::chrono::duration_cast<boost::chrono::nanoseconds>(tp.time_since_epoch()).count() << std::endl;
   BOOST_TEST( (tp == boost::chrono::time_point<Clock, D>(res)));
 }
+
+template <typename D>
+void test_good_utc_fmt_system_clock(std::string str, std::string fmt, D res)
+{
+  typedef boost::chrono::system_clock Clock;
+
+  std::istringstream in(str);
+  boost::chrono::time_point<Clock, D> tp;
+  in >> time_fmt(boost::chrono::timezone::utc, fmt);
+  in >> tp;
+  BOOST_TEST(in.eof());
+  BOOST_TEST(!in.fail());
+  std::cout << "Input=    " << str << std::endl;
+  std::cout << "Expected= " << boost::chrono::time_point<Clock, D>(res) << std::endl;
+  std::cout << "Obtained= " << tp << std::endl;
+  std::cout << "Expected= " << boost::chrono::duration_cast<boost::chrono::nanoseconds>(boost::chrono::time_point<Clock, D>(res).time_since_epoch()).count() << std::endl;
+  std::cout << "Obtained= " << boost::chrono::duration_cast<boost::chrono::nanoseconds>(tp.time_since_epoch()).count() << std::endl;
+  BOOST_TEST_EQ( tp , (boost::chrono::time_point<Clock, D>(res)));
+}
 #endif
 template <typename Clock, typename D>
 void test_fail(const char* str, D)
@@ -130,6 +149,15 @@ void check_all_system_clock()
   test_good_system_clock ("1970-01-01 00:00:00.000005 +0000", nanoseconds(5000));
   test_good_system_clock ("1970-01-01 00:08:20.000000 +0000", duration<boost::int_least64_t, deci> (5000));
   test_good_system_clock ("1970-01-01 00:02:46.666667 +0000", duration<boost::int_least64_t, ratio<1, 30> > (5000));
+
+  test_good_utc_fmt_system_clock ("1970-01-01 02:00:00", "%Y-%m-%d %H:%M:%S", hours(2));
+  test_good_utc_fmt_system_clock ("1970-01-01 02:00:00", "%F %H:%M:%S", hours(2));
+  test_good_utc_fmt_system_clock ("1970-01-01 02", "%Y-%m-%d %H", hours(2));
+  test_good_utc_fmt_system_clock ("1970-01-01 02", "%F %H", hours(2));
+  test_good_utc_fmt_system_clock ("1970-01-01 02:00:00", "%Y-%m-%d %T", hours(2));
+  test_good_utc_fmt_system_clock ("1970-01-01 02:00", "%Y-%m-%d %R", hours(2));
+  test_good_utc_fmt_system_clock ("% 1970-01-01 02:00", "%% %Y-%m-%d %R", hours(2));
+  //test_good_utc_fmt_system_clock ("1970-01-01 02:00 Thursday January", "%Y-%m-%d %R %A %B", hours(2));
 
 
 //  test_fail<Clock> ("3001 ms", seconds(3));

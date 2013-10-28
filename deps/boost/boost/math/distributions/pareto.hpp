@@ -136,11 +136,11 @@ namespace boost
       typedef RealType value_type;
       typedef Policy policy_type;
 
-      pareto_distribution(RealType scale = 1, RealType shape = 1)
-        : m_scale(scale), m_shape(shape)
+      pareto_distribution(RealType l_scale = 1, RealType l_shape = 1)
+        : m_scale(l_scale), m_shape(l_shape)
       { // Constructor.
         RealType result = 0;
-        detail::check_pareto("boost::math::pareto_distribution<%1%>::pareto_distribution", scale, shape, &result, Policy());
+        detail::check_pareto("boost::math::pareto_distribution<%1%>::pareto_distribution", l_scale, l_shape, &result, Policy());
       }
 
       RealType scale()const

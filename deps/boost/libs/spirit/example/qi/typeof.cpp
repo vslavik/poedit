@@ -29,6 +29,10 @@ main()
     using boost::spirit::qi::parse;
     typedef std::string::const_iterator iterator_type;
     
+///////////////////////////////////////////////////////////////////////////////
+// this works for non-c++11 compilers
+#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
+
     BOOST_SPIRIT_AUTO(qi, comment, "/*" >> *(char_ - "*/") >> "*/");
 
     std::string str = "/*This is a comment*/";

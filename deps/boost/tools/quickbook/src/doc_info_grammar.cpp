@@ -118,16 +118,19 @@ namespace quickbook
 
         // Actions
         error_action error(state);
-        plain_char_action plain_char(state.phrase, state);
-        do_macro_action do_macro(state.phrase, state);
+        plain_char_action plain_char(state);
+        do_macro_action do_macro(state);
         scoped_parser<to_value_scoped_action> to_value(state);
         
         doc_info_details =
-                space                       [ph::var(local.source_mode_unset) = true]
-            >>  *(  local.doc_attribute
-                >>  space
+                cl::eps_p                   [ph::var(local.source_mode_unset) = true]
+            >>  *(  space
+                >>  local.doc_attribute
                 )
-            >>  !local.doc_info_block
+            >>  !(  space
+                >>  local.doc_info_block
+                )
+            >>  *eol
             ;
 
         local.doc_info_block =
@@ -155,7 +158,7 @@ namespace quickbook
                     )
                 )                           [state.values.sort()]
             >>  (   ']'
-                >>  (+eol | cl::end_p)
+                >>  (eol | cl::end_p)
                 |   cl::eps_p               [error]
                 )
             ;

@@ -53,8 +53,8 @@ using strategy::distance::services::return_type;
 template <typename P1, typename P2, typename Strategy>
 struct point_to_point
 {
-    static inline typename return_type<Strategy>::type apply(P1 const& p1,
-                P2 const& p2, Strategy const& strategy)
+    static inline typename return_type<Strategy, P1, P2>::type
+    apply(P1 const& p1, P2 const& p2, Strategy const& strategy)
     {
         boost::ignore_unused_variable_warning(strategy);
         return strategy.apply(p1, p2);
@@ -65,8 +65,8 @@ struct point_to_point
 template<typename Point, typename Segment, typename Strategy>
 struct point_to_segment
 {
-    static inline typename return_type<Strategy>::type apply(Point const& point,
-                Segment const& segment, Strategy const& )
+    static inline typename return_type<Strategy, Point, typename point_type<Segment>::type>::type
+    apply(Point const& point, Segment const& segment, Strategy const& )
     {
         typename strategy::distance::services::default_strategy
             <
@@ -96,7 +96,7 @@ template
 >
 struct point_to_range
 {
-    typedef typename return_type<PSStrategy>::type return_type;
+    typedef typename return_type<PSStrategy, Point, typename point_type<Range>::type>::type return_type;
 
     static inline return_type apply(Point const& point, Range const& range,
             PPStrategy const& pp_strategy, PSStrategy const& ps_strategy)
@@ -161,7 +161,7 @@ struct point_to_ring
 {
     typedef std::pair
         <
-            typename return_type<PPStrategy>::type, bool
+            typename return_type<PPStrategy, Point, typename point_type<Ring>::type>::type, bool
         > distance_containment;
 
     static inline distance_containment apply(Point const& point,
@@ -195,7 +195,7 @@ template
 >
 struct point_to_polygon
 {
-    typedef typename return_type<PPStrategy>::type return_type;
+    typedef typename return_type<PPStrategy, Point, typename point_type<Polygon>::type>::type return_type;
     typedef std::pair<return_type, bool> distance_containment;
 
     static inline distance_containment apply(Point const& point,
@@ -288,7 +288,14 @@ struct distance
 >
     : distance<Geometry2, Geometry1, Strategy, Tag2, Tag1, StrategyTag, false>
 {
-    static inline typename return_type<Strategy>::type apply(
+    typedef typename strategy::distance::services::return_type
+                     <
+                         Strategy,
+                         typename point_type<Geometry2>::type,
+                         typename point_type<Geometry1>::type
+                     >::type return_type;
+
+    static inline return_type apply(
         Geometry1 const& g1,
         Geometry2 const& g2,
         Strategy const& strategy)
@@ -299,44 +306,6 @@ struct distance
                 Tag2, Tag1, StrategyTag,
                 false
             >::apply(g2, g1, strategy);
-    }
-};
-
-// If reversal is needed and we got the strategy by default, invert it before
-// proceeding to the reversal.
-template
-<
-    typename Geometry1, typename Geometry2,
-    typename Tag1, typename Tag2, typename StrategyTag
->
-struct distance
-<
-    Geometry1, Geometry2,
-    typename detail::distance::default_strategy<Geometry1, Geometry2>::type,
-    Tag1, Tag2, StrategyTag,
-    true
->
-    : distance
-          <
-              Geometry2, Geometry1,
-              typename detail::distance::default_strategy<Geometry2, Geometry1>::type,
-              Tag2, Tag1, StrategyTag,
-              false
-          >
-{
-    typedef typename detail::distance::default_strategy<Geometry2, Geometry1>::type reversed_strategy;
-
-    static inline typename strategy::distance::services::return_type<reversed_strategy>::type apply(
-        Geometry1 const& g1,
-        Geometry2 const& g2,
-        typename detail::distance::default_strategy<Geometry1, Geometry2>::type const&)
-    {
-        return distance
-            <
-                Geometry2, Geometry1, reversed_strategy,
-                Tag2, Tag1, StrategyTag,
-                false
-            >::apply(g2, g1, reversed_strategy());
     }
 };
 
@@ -363,9 +332,10 @@ struct distance
 >
 {
 
-    static inline typename return_type<Strategy>::type apply(Point const& point,
-            Linestring const& linestring,
-            Strategy const& strategy)
+    static inline typename return_type<Strategy, Point, typename point_type<Linestring>::type>::type
+    apply(Point const& point,
+          Linestring const& linestring,
+          Strategy const& strategy)
     {
         typedef typename strategy::distance::services::default_strategy
                     <
@@ -394,9 +364,10 @@ struct distance
     false
 >
 {
-    static inline typename return_type<Strategy>::type apply(Point const& point,
-            Linestring const& linestring,
-            Strategy const& strategy)
+    static inline typename return_type<Strategy, Point, typename point_type<Linestring>::type>::type
+    apply(Point const& point,
+          Linestring const& linestring,
+          Strategy const& strategy)
     {
         typedef typename Strategy::point_strategy_type pp_strategy_type;
         return detail::distance::point_to_range
@@ -415,7 +386,7 @@ struct distance
     false
 >
 {
-    typedef typename return_type<Strategy>::type return_type;
+    typedef typename return_type<Strategy, Point, typename point_type<Ring>::type>::type return_type;
 
     static inline return_type apply(Point const& point,
             Ring const& ring,
@@ -450,7 +421,7 @@ struct distance
     false
 >
 {
-    typedef typename return_type<Strategy>::type return_type;
+    typedef typename return_type<Strategy, Point, typename point_type<Polygon>::type>::type return_type;
 
     static inline return_type apply(Point const& point,
             Polygon const& polygon,
@@ -496,8 +467,10 @@ struct distance
     false
 >
 {
-    static inline typename return_type<Strategy>::type apply(Point const& point,
-                Segment const& segment, Strategy const& strategy)
+    static inline typename return_type<Strategy, Point, typename point_type<Segment>::type>::type
+    apply(Point const& point,
+          Segment const& segment,
+          Strategy const& strategy)
     {
         
         typename point_type<Segment>::type p[2];
@@ -549,9 +522,15 @@ for distance, it is probably so that there is no specialization
 for return_type<...> for your strategy.
 */
 template <typename Geometry1, typename Geometry2, typename Strategy>
-inline typename strategy::distance::services::return_type<Strategy>::type distance(
-                Geometry1 const& geometry1, Geometry2 const& geometry2,
-                Strategy const& strategy)
+inline typename strategy::distance::services::return_type
+                <
+                    Strategy,
+                    typename point_type<Geometry1>::type,
+                    typename point_type<Geometry2>::type
+                >::type
+distance(Geometry1 const& geometry1,
+         Geometry2 const& geometry2,
+         Strategy const& strategy)
 {
     concept::check<Geometry1 const>();
     concept::check<Geometry2 const>();

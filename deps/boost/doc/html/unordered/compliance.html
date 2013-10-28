@@ -39,13 +39,16 @@
 <p>
         Support for move semantics is implemented using Boost.Move. If rvalue references
         are available it will use them, but if not it uses a close, but imperfect
-        emulation. On such compilers you'll need to use Boost.Move to take advantage
-        of using movable container elements, also note that:
+        emulation. On such compilers:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-            Non-copyable objects can be stored in the containers, but without support
-            for rvalue references the container will not be movable.
+            Non-copyable objects can be stored in the containers. They can be constructed
+            in place using <code class="computeroutput"><span class="identifier">emplace</span></code>,
+            or if they support Boost.Move, moved into place.
+          </li>
+<li class="listitem">
+            The containers themselves are not movable.
           </li>
 <li class="listitem">
             Argument forwarding is not perfect.

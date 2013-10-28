@@ -27,7 +27,7 @@
 <a name="geometry.reference.strategies.strategy_distance_cross_track"></a><a class="link" href="strategy_distance_cross_track.html" title="strategy::distance::cross_track">strategy::distance::cross_track</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp16114208"></a><a class="indexterm" name="idp16114544"></a><a class="indexterm" name="idp16114880"></a>
+          <a class="indexterm" name="idp62989032"></a><a class="indexterm" name="idp62989368"></a><a class="indexterm" name="idp62989704"></a>
 Strategy functor for distance point to segment calculation.
         </p>
 <h6>
@@ -35,8 +35,8 @@ Strategy functor for distance point to segment calculation.
           <span class="phrase"><a name="geometry.reference.strategies.strategy_distance_cross_track.description"></a></span><a class="link" href="strategy_distance_cross_track.html#geometry.reference.strategies.strategy_distance_cross_track.description">Description</a>
         </h6>
 <p>
-          Class which calculates the distance of a point to a segment, using latlong
-          points
+          Class which calculates the distance of a point to a segment, for points
+          on a sphere or globe
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_distance_cross_track.h1"></a>
@@ -44,7 +44,7 @@ Strategy functor for distance point to segment calculation.
         </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Point</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">PointOfSegment</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Strategy</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Strategy</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">distance</span><span class="special">::</span><span class="identifier">cross_track</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
@@ -84,37 +84,6 @@ Strategy functor for distance point to segment calculation.
 <tr>
 <td>
                   <p>
-                    typename Point
-                  </p>
-                </td>
-<td>
-                </td>
-<td>
-                  <p>
-                    point type
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    typename PointOfSegment
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Point
-                  </p>
-                </td>
-<td>
-                  <p>
-                    segment point type
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
                     typename CalculationType
                   </p>
                 </td>
@@ -139,7 +108,7 @@ Strategy functor for distance point to segment calculation.
                 </td>
 <td>
                   <p>
-                    typename services::default_strategy&lt;point_tag, Point&gt;::type
+                    haversine&lt;double, CalculationType&gt;
                   </p>
                 </td>
 <td>
@@ -195,7 +164,7 @@ Strategy functor for distance point to segment calculation.
 <td>
                   <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">cross_track</span><span class="special">(</span><span class="identifier">return_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">r</span><span class="special">)</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">cross_track</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">Strategy</span><span class="special">::</span><span class="identifier">radius_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">r</span><span class="special">)</span></pre>
 <p>
                   </p>
                 </td>
@@ -203,7 +172,8 @@ Strategy functor for distance point to segment calculation.
                 </td>
 <td>
                   <p>
-                    <span class="bold"><strong>return_type const &amp;</strong></span>: <span class="emphasis"><em>r</em></span>:
+                    <span class="bold"><strong>typename Strategy::radius_type const &amp;</strong></span>:
+                    <span class="emphasis"><em>r</em></span>:
                   </p>
                 </td>
 </tr>
@@ -263,7 +233,8 @@ Strategy functor for distance point to segment calculation.
 <td>
                   <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">return_type</span> <span class="identifier">apply</span><span class="special">(</span><span class="identifier">Point</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">PointOfSegment</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">sp1</span><span class="special">,</span> <span class="identifier">PointOfSegment</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">sp2</span><span class="special">)</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Point</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">PointOfSegment</span><span class="special">&gt;</span>
+<span class="identifier">return_type</span><span class="special">&lt;</span> <span class="identifier">Point</span><span class="special">,</span> <span class="identifier">PointOfSegment</span> <span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">apply</span><span class="special">(</span><span class="identifier">Point</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">PointOfSegment</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">sp1</span><span class="special">,</span> <span class="identifier">PointOfSegment</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">sp2</span><span class="special">)</span></pre>
 <p>
                   </p>
                 </td>
@@ -287,7 +258,7 @@ Strategy functor for distance point to segment calculation.
 <td>
                   <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">return_type</span> <span class="identifier">radius</span><span class="special">()</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">Strategy</span><span class="special">::</span><span class="identifier">radius_type</span> <span class="identifier">radius</span><span class="special">()</span></pre>
 <p>
                   </p>
                 </td>

@@ -29,7 +29,6 @@
 template <class Real, typename T>
 void do_test_sn(T& data, const char* type_name, const char* test)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;

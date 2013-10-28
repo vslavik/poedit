@@ -20,11 +20,11 @@
 
 #if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
 
-#include <boost/thread/thread.hpp>
 #include <boost/bind.hpp>
 #include "archetypes/async_result.hpp"
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/placeholders.hpp>
+#include <boost/asio/detail/thread.hpp>
 
 using namespace boost::posix_time;
 
@@ -309,7 +309,7 @@ void deadline_timer_thread_test()
   boost::asio::deadline_timer t2(ios);
   int count = 0;
 
-  boost::thread th(boost::bind(io_service_run, &ios));
+  boost::asio::detail::thread th(boost::bind(io_service_run, &ios));
 
   t2.expires_from_now(boost::posix_time::seconds(2));
   t2.wait();

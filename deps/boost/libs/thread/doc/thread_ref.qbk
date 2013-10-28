@@ -568,7 +568,7 @@ any) to `*this`.
 
 [variablelist
 
-[[Requires:] [`Callable` must by Copyable and `func()` must be a valid expression.]]
+[[Requires:] [`Callable` must be Copyable and `func()` must be a valid expression.]]
 
 [[Effects:] [`func` is copied into storage managed internally by the thread library, and that copy is invoked on a newly-created
 thread of execution. If this invocation results in an exception being propagated into the internals of the thread library that is
@@ -595,7 +595,7 @@ not of type __thread_interrupted__, then `std::terminate()` will be called. Any 
 
 [variablelist
 
-[[Preconditions:] [`Callable` must by copyable.]]
+[[Preconditions:] [`Callable` must be copyable.]]
 
 [[Effects:] [`func` is copied into storage managed internally by the thread library, and that copy is invoked on a newly-created
 thread of execution with the specified attributes. If this invocation results in an exception being propagated into the internals of the thread library that is
@@ -623,7 +623,7 @@ If the attributes declare the native thread as detached, the boost::thread will 
 
 [variablelist
 
-[[Preconditions:] [`Callable` must by Movable.]]
+[[Preconditions:] [`Callable` must be Movable.]]
 
 [[Effects:] [`func` is moved into storage managed internally by the thread library, and that copy is invoked on a newly-created
 thread of execution. If this invocation results in an exception being propagated into the internals of the thread library that is
@@ -650,7 +650,7 @@ not of type __thread_interrupted__, then `std::terminate()` will be called. Any 
 
 [variablelist
 
-[[Preconditions:] [`Callable` must by copyable.]]
+[[Preconditions:] [`Callable` must be copyable.]]
 
 [[Effects:] [`func` is copied into storage managed internally by the thread library, and that copy is invoked on a newly-created
 thread of execution with the specified attributes. If this invocation results in an exception being propagated into the internals of the thread library that is
@@ -679,7 +679,7 @@ If the attributes declare the native thread as detached, the boost::thread will 
 
 [variablelist
 
-[[Preconditions:] [`F` and each `A`n must by copyable or movable.]]
+[[Preconditions:] [`F` and each `A`n must be copyable or movable.]]
 
 [[Effects:] [As if [link
 thread.thread_management.thread.callable_constructor

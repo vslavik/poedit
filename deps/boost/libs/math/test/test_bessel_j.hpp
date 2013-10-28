@@ -25,7 +25,6 @@
 template <class Real, class T>
 void do_test_cyl_bessel_j(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
@@ -78,7 +77,6 @@ T cyl_bessel_j_int_wrapper(T v, T x)
 template <class Real, class T>
 void do_test_cyl_bessel_j_int(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
@@ -107,7 +105,6 @@ void do_test_cyl_bessel_j_int(const T& data, const char* type_name, const char* 
 template <class Real, class T>
 void do_test_sph_bessel_j(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(unsigned, value_type);
@@ -116,8 +113,6 @@ void do_test_sph_bessel_j(const T& data, const char* type_name, const char* test
 #else
    pg funcp = boost::math::sph_bessel;
 #endif
-
-   typedef int (*cast_t)(value_type);
 
    boost::math::tools::test_result<value_type> result;
 

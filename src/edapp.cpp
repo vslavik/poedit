@@ -62,10 +62,12 @@
 #include "chooselang.h"
 #include "icons.h"
 #include "version.h"
-#include "transmem.h"
+#include "tm/transmem.h"
 #include "utility.h"
 #include "prefsdlg.h"
 #include "errors.h"
+
+extern bool MigrateLegacyTranslationMemory();
 
 IMPLEMENT_APP(PoeditApp);
 
@@ -146,7 +148,6 @@ bool PoeditApp::OnInit()
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
     wxConfigBase::Get()->SetExpandEnvVars(false);
 
-    wxImage::AddHandler(new wxGIFHandler);
     wxImage::AddHandler(new wxPNGHandler);
     wxXmlResource::Get()->InitAllHandlers();
 
@@ -174,10 +175,9 @@ bool PoeditApp::OnInit()
 
     FileHistory().Load(*wxConfig::Get());
 
-#ifdef USE_TRANSMEM
     // NB: It's important to do this before TM is used for the first time.
-    TranslationMemory::MoveLegacyDbIfNeeded();
-#endif
+    if ( !MigrateLegacyTranslationMemory() )
+        return false;
 
     // NB: opening files or creating empty window is handled differently on
     //     Macs, using MacOpenFiles() and MacNewFile(), so don't create empty
@@ -217,6 +217,8 @@ bool PoeditApp::OnInit()
 
 int PoeditApp::OnExit()
 {
+    TranslationMemory::CleanUp();
+
 #ifdef USE_SPARKLE
     Sparkle_Cleanup();
 #endif // USE_SPARKLE

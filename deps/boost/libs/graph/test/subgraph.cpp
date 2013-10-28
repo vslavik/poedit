@@ -27,7 +27,6 @@ int test_main(int, char*[])
   > graph_t;
   typedef subgraph<graph_t> subgraph_t;
   typedef graph_traits<subgraph_t>::vertex_descriptor vertex_t;
-  typedef graph_traits<subgraph_t>::edge_descriptor edge_t;
 
   mt19937 gen;
   for (int t = 0; t < 100; t += 5) {

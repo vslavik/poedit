@@ -64,7 +64,6 @@ void test()
 template <typename Graph>
 void build()
 {
-    typedef typename graph_traits<Graph>::vertex_descriptor Vertex;
     typedef typename graph_traits<Graph>::vertex_iterator Iterator;
     typedef typename property_map<Graph, vertex_index_t>::type IndexMap;
 

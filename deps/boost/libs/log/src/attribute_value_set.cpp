@@ -10,7 +10,7 @@
  * \date   19.04.2007
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #include <new>
@@ -32,13 +32,13 @@ namespace boost {
 
 BOOST_LOG_OPEN_NAMESPACE
 
-BOOST_LOG_FORCEINLINE attribute_value_set::node_base::node_base() :
+BOOST_FORCEINLINE attribute_value_set::node_base::node_base() :
     m_pPrev(NULL),
     m_pNext(NULL)
 {
 }
 
-BOOST_LOG_FORCEINLINE attribute_value_set::node::node(key_type const& key, mapped_type& data, bool dynamic) :
+BOOST_FORCEINLINE attribute_value_set::node::node(key_type const& key, mapped_type& data, bool dynamic) :
     node_base(),
     m_Value(key, mapped_type()),
     m_DynamicallyAllocated(dynamic)

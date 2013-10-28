@@ -78,14 +78,14 @@
 
     <span class="comment">// Load the XML file into the property tree. If reading fails</span>
     <span class="comment">// (cannot open file, parse error), an exception is thrown.</span>
-    <code class="computeroutput"><a class="link" href="../boost/property_tree/xml_parser/read_xml_idp89482976.html" title="Function template read_xml">read_xml</a></code><span class="special">(</span><span class="identifier">filename</span><span class="special">,</span> <span class="identifier">pt</span><span class="special">);</span>
+    <code class="computeroutput"><a class="link" href="../boost/property_tree/xml_parser/read_xml_idp101046072.html" title="Function template read_xml">read_xml</a></code><span class="special">(</span><span class="identifier">filename</span><span class="special">,</span> <span class="identifier">pt</span><span class="special">);</span>
 
     <span class="comment">// Get the filename and store it in the m_file variable.</span>
     <span class="comment">// Note that we construct the path to the value by separating</span>
     <span class="comment">// the individual keys with dots. If dots appear in the keys,</span>
     <span class="comment">// a path type with a different separator can be used.</span>
     <span class="comment">// If the debug.filename key is not found, an exception is thrown.</span>
-    <span class="identifier">m_file</span> <span class="special">=</span> <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp87655488-bb">get</a></code><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;(</span><span class="string">"debug.filename"</span><span class="special">);</span>
+    <span class="identifier">m_file</span> <span class="special">=</span> <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp105415736-bb">get</a></code><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;(</span><span class="string">"debug.filename"</span><span class="special">);</span>
 
     <span class="comment">// Get the debug level and store it in the m_level variable.</span>
     <span class="comment">// This is another version of the get method: if the value is</span>
@@ -93,7 +93,7 @@
     <span class="comment">// parameter) is returned instead. The type of the value</span>
     <span class="comment">// extracted is determined by the type of the second parameter,</span>
     <span class="comment">// so we can simply write get(...) instead of get&lt;int&gt;(...).</span>
-    <span class="identifier">m_level</span> <span class="special">=</span> <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp87655488-bb">get</a></code><span class="special">(</span><span class="string">"debug.level"</span><span class="special">,</span> <span class="number">0</span><span class="special">);</span>
+    <span class="identifier">m_level</span> <span class="special">=</span> <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp105415736-bb">get</a></code><span class="special">(</span><span class="string">"debug.level"</span><span class="special">,</span> <span class="number">0</span><span class="special">);</span>
 
     <span class="comment">// Iterate over the debug.modules section and store all found</span>
     <span class="comment">// modules in the m_modules set. The get_child() function</span>
@@ -101,8 +101,8 @@
     <span class="comment">// there is no such child, it throws. Property tree iterators</span>
     <span class="comment">// are models of BidirectionalIterator.</span>
     <span class="identifier">BOOST_FOREACH</span><span class="special">(</span><code class="computeroutput"><a class="link" href="../boost/property_tree/ptree.html" title="Type definition ptree">ptree</a></code><span class="special">::</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#boost.property_tree.basic_ptree.value_type">value_type</a></code> <span class="special">&amp;</span><span class="identifier">v</span><span class="special">,</span>
-            <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp94289600-bb">get_child</a></code><span class="special">(</span><span class="string">"debug.modules"</span><span class="special">))</span>
-        <span class="identifier">m_modules</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp89923984-bb">insert</a></code><span class="special">(</span><span class="identifier">v</span><span class="special">.</span><span class="identifier">second</span><span class="special">.</span><span class="identifier">data</span><span class="special">());</span>
+            <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp104962360-bb">get_child</a></code><span class="special">(</span><span class="string">"debug.modules"</span><span class="special">))</span>
+        <span class="identifier">m_modules</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp105111560-bb">insert</a></code><span class="special">(</span><span class="identifier">v</span><span class="special">.</span><span class="identifier">second</span><span class="special">.</span><span class="identifier">data</span><span class="special">());</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -116,10 +116,10 @@
    <code class="computeroutput"><a class="link" href="../boost/property_tree/ptree.html" title="Type definition ptree">ptree</a></code> <span class="identifier">pt</span><span class="special">;</span>
 
    <span class="comment">// Put log filename in property tree</span>
-   <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp94051312-bb">put</a></code><span class="special">(</span><span class="string">"debug.filename"</span><span class="special">,</span> <span class="identifier">m_file</span><span class="special">);</span>
+   <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp100986376-bb">put</a></code><span class="special">(</span><span class="string">"debug.filename"</span><span class="special">,</span> <span class="identifier">m_file</span><span class="special">);</span>
 
    <span class="comment">// Put debug level in property tree</span>
-   <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp94051312-bb">put</a></code><span class="special">(</span><span class="string">"debug.level"</span><span class="special">,</span> <span class="identifier">m_level</span><span class="special">);</span>
+   <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp100986376-bb">put</a></code><span class="special">(</span><span class="string">"debug.level"</span><span class="special">,</span> <span class="identifier">m_level</span><span class="special">);</span>
 
    <span class="comment">// Iterate over the modules in the set and put them in the</span>
    <span class="comment">// property tree. Note that the put function places the new</span>
@@ -129,10 +129,10 @@
    <span class="comment">// be achieved using a combination of the insert and put_own</span>
    <span class="comment">// functions.</span>
    <span class="identifier">BOOST_FOREACH</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="identifier">name</span><span class="special">,</span> <span class="identifier">m_modules</span><span class="special">)</span>
-      <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp95403168-bb">add</a></code><span class="special">(</span><span class="string">"debug.modules.module"</span><span class="special">,</span> <span class="identifier">name</span><span class="special">);</span>
+      <span class="identifier">pt</span><span class="special">.</span><code class="computeroutput"><a class="link" href="../boost/property_tree/basic_ptree.html#idp100999016-bb">add</a></code><span class="special">(</span><span class="string">"debug.modules.module"</span><span class="special">,</span> <span class="identifier">name</span><span class="special">);</span>
 
    <span class="comment">// Write the property tree to the XML file.</span>
-   <code class="computeroutput"><a class="link" href="../boost/property_tree/xml_parser/write_xml_idp86933504.html" title="Function template write_xml">write_xml</a></code><span class="special">(</span><span class="identifier">filename</span><span class="special">,</span> <span class="identifier">pt</span><span class="special">);</span>
+   <code class="computeroutput"><a class="link" href="../boost/property_tree/xml_parser/write_xml_idp101012664.html" title="Function template write_xml">write_xml</a></code><span class="special">(</span><span class="identifier">filename</span><span class="special">,</span> <span class="identifier">pt</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>

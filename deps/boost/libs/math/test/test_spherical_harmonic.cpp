@@ -101,7 +101,6 @@ void expected_results()
 template <class Real, class T>
 void do_test_spherical_harmonic(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(unsigned, int, value_type, value_type);
@@ -145,7 +144,6 @@ void do_test_spherical_harmonic(const T& data, const char* type_name, const char
 template <class Real, class T>
 void test_complex_spherical_harmonic(const T& data, const char* /* name */, boost::mpl::true_ const &)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    for(unsigned i = 0; i < sizeof(data) / sizeof(data[0]); ++i)

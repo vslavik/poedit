@@ -71,7 +71,7 @@ struct print_indexable
 template <typename Indexable>
 struct print_indexable<Indexable, box_tag>
 {
-    static const size_t dimension = dimension<Indexable>::value;
+    static const size_t dimension = geometry::dimension<Indexable>::value;
 
     static inline void apply(std::ostream &os, Indexable const& i)
     {
@@ -86,7 +86,7 @@ struct print_indexable<Indexable, box_tag>
 template <typename Indexable>
 struct print_indexable<Indexable, point_tag>
 {
-    static const size_t dimension = dimension<Indexable>::value;
+    static const size_t dimension = geometry::dimension<Indexable>::value;
 
     static inline void apply(std::ostream &os, Indexable const& i)
     {

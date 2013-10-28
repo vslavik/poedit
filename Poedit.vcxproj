@@ -51,8 +51,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>USE_TRANSMEM;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>deps\db\build_windows;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>XML_STATIC;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
@@ -74,8 +74,8 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>USE_TRANSMEM;WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>deps\db\build_windows;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>XML_STATIC;WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -115,9 +115,8 @@
     <ClCompile Include="src\progressinfo.cpp" />
     <ClCompile Include="src\propertiesdlg.cpp" />
     <ClCompile Include="src\summarydlg.cpp" />
-    <ClCompile Include="src\transmem.cpp" />
-    <ClCompile Include="src\transmemupd.cpp" />
-    <ClCompile Include="src\transmemupd_wizard.cpp" />
+    <ClCompile Include="src\tm\tm_migrate.cpp" />
+    <ClCompile Include="src\tm\transmem.cpp" />
     <ClCompile Include="src\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,9 +146,7 @@
     <ClInclude Include="src\progressinfo.h" />
     <ClInclude Include="src\propertiesdlg.h" />
     <ClInclude Include="src\summarydlg.h" />
-    <ClInclude Include="src\transmem.h" />
-    <ClInclude Include="src\transmemupd.h" />
-    <ClInclude Include="src\transmemupd_wizard.h" />
+    <ClInclude Include="src\tm\transmem.h" />
     <ClInclude Include="src\utility.h" />
     <ClInclude Include="src\version.h" />
   </ItemGroup>
@@ -157,6 +154,27 @@
     <ResourceCompile Include="src\poedit.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="deps\boost\boost_date_time.vcxproj">
+      <Project>{adec2b7f-c526-599a-81df-f6e2e738b9d9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="deps\boost\boost_filesystem.vcxproj">
+      <Project>{8ff99368-32e4-513f-8e03-9040878da33c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="deps\boost\boost_iostreams.vcxproj">
+      <Project>{c38f119e-3bac-5521-a103-cb82b75af25f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="deps\boost\boost_regex.vcxproj">
+      <Project>{34dfd89b-d32c-5c5c-b0cf-6f47a13b8b7b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="deps\boost\boost_system.vcxproj">
+      <Project>{88a0ad6e-0e9b-5fcb-801a-6f6531c7577b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="deps\boost\boost_thread.vcxproj">
+      <Project>{d9c07f38-40e0-5091-8935-277a4f64f8e5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="deps\custom_build\expat.vcxproj">
+      <Project>{8d88ae38-ff38-5a85-83d1-bb6816ed2f58}</Project>
+    </ProjectReference>
     <ProjectReference Include="deps\custom_build\wx_adv.vcxproj">
       <Project>{24c45343-fd20-5c92-81c1-35a2ae841e79}</Project>
     </ProjectReference>
@@ -172,17 +190,11 @@
     <ProjectReference Include="deps\custom_build\wx_stc.vcxproj">
       <Project>{23e1c437-a951-5943-8639-a17f3cf2e606}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_wxexpat.vcxproj">
-      <Project>{a1a8355b-0988-528e-9cc2-b971d6266669}</Project>
-    </ProjectReference>
     <ProjectReference Include="deps\custom_build\wx_wxpng.vcxproj">
       <Project>{8acc122a-ca6a-5aa6-9c97-9cdd2e533db0}</Project>
     </ProjectReference>
     <ProjectReference Include="deps\custom_build\wx_wxregex.vcxproj">
       <Project>{56a4b526-bb81-5d01-aaa9-16d23bbb169d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="deps\custom_build\wx_wxzlib.vcxproj">
-      <Project>{8b867186-a0b5-5479-b824-e176edd27c40}</Project>
     </ProjectReference>
     <ProjectReference Include="deps\custom_build\wx_xml.vcxproj">
       <Project>{3e6dca27-5fa3-53ec-bbd6-2d42294b7ae6}</Project>
@@ -190,8 +202,11 @@
     <ProjectReference Include="deps\custom_build\wx_xrc.vcxproj">
       <Project>{09f2f96a-1cc6-5e43-af1d-956ec2a4888d}</Project>
     </ProjectReference>
-    <ProjectReference Include="deps\db\build_windows\db_static.vcxproj">
-      <Project>{671539aa-d9a6-4b7b-8044-61b511d6f432}</Project>
+    <ProjectReference Include="deps\custom_build\zlib.vcxproj">
+      <Project>{304a6fd9-7ff1-5faa-b095-48f553ddc6f5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="deps\lucene\LucenePlusPlus.vcxproj">
+      <Project>{34b37773-23ac-5286-86f7-60c7bf937abb}</Project>
     </ProjectReference>
     <ProjectReference Include="deps\winsparkle\WinSparkle-2013.vcxproj">
       <Project>{524cccf2-61ea-5b64-a1d9-ff5497027b5f}</Project>
@@ -209,11 +224,7 @@
     <None Include="src\resources\progress.xrc" />
     <None Include="src\resources\properties.xrc" />
     <None Include="src\resources\summary.xrc" />
-    <None Include="src\resources\tm_update.xrc" />
     <None Include="src\resources\toolbar.xrc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="src\resources\tm_update.gif" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

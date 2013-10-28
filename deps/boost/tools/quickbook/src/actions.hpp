@@ -46,7 +46,7 @@ namespace quickbook
     int load_snippets(fs::path const& file, std::vector<template_symbol>& storage,
         std::string const& extension, value::tag_type load_type);
 
-    std::string syntax_highlight(
+    void syntax_highlight(
         parse_iterator first, parse_iterator last,
         quickbook::state& state,
         std::string const& source_mode,
@@ -119,12 +119,12 @@ namespace quickbook
         quickbook::state& state;
     };
 
-    struct list_item_action
+    struct explicit_list_action
     {
         //  implicit paragraphs
         //  doesn't output the paragraph if it's only whitespace.
 
-        list_item_action(
+        explicit_list_action(
             quickbook::state& state)
         : state(state) {}
 
@@ -149,15 +149,11 @@ namespace quickbook
     {
         //  Handles simple text formats
 
-        simple_phrase_action(
-            collector& out
-          , quickbook::state& state)
-        : out(out)
-        , state(state) {}
+        simple_phrase_action(quickbook::state& state)
+        : state(state) {}
 
         void operator()(char) const;
 
-        collector& out;
         quickbook::state& state;
     };
 
@@ -178,12 +174,9 @@ namespace quickbook
     {
         // Handles macro substitutions
 
-        do_macro_action(collector& phrase, quickbook::state& state)
-            : phrase(phrase)
-            , state(state) {}
+        do_macro_action(quickbook::state& state) : state(state) {}
 
         void operator()(std::string const& str) const;
-        collector& phrase;
         quickbook::state& state;
     };
 
@@ -191,13 +184,12 @@ namespace quickbook
     {
         // Prints a space
 
-        raw_char_action(collector& out)
-            : out(out) {}
+        raw_char_action(quickbook::state& state) : state(state) {}
 
         void operator()(char ch) const;
         void operator()(parse_iterator first, parse_iterator last) const;
 
-        collector& out;
+        quickbook::state& state;
     };
 
     struct plain_char_action
@@ -205,36 +197,29 @@ namespace quickbook
         // Prints a single plain char.
         // Converts '<' to "&lt;"... etc See utils.hpp
 
-        plain_char_action(collector& phrase, quickbook::state& state)
-        : phrase(phrase)
-        , state(state) {}
+        plain_char_action(quickbook::state& state) : state(state) {}
 
         void operator()(char ch) const;
         void operator()(parse_iterator first, parse_iterator last) const;
 
-        collector& phrase;
         quickbook::state& state;
     };
     
     struct escape_unicode_action
     {
-        escape_unicode_action(collector& phrase, quickbook::state& state)
-        : phrase(phrase)
-        , state(state) {}
+        escape_unicode_action(quickbook::state& state) : state(state) {}
+
         void operator()(parse_iterator first, parse_iterator last) const;
 
-        collector& phrase;
         quickbook::state& state;
     };
 
     struct break_action
     {
-        break_action(collector& phrase, quickbook::state& state)
-        : phrase(phrase), state(state) {}
+        break_action(quickbook::state& state) : state(state) {}
 
         void operator()(parse_iterator f, parse_iterator) const;
 
-        collector& phrase;
         quickbook::state& state;
     };
 

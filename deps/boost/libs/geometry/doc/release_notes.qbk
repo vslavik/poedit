@@ -14,6 +14,42 @@
 [section:release_notes Release Notes]
 
 [/=================]
+[heading Boost 1.55]
+[/=================]
+
+[*Additional functionality]
+
+* Added centroid for segment type
+* Added intersects() and disjoints() for Segment-Box and Linestring-Box
+* Added rtree creation using packing algorithm
+* Added contains() and covers() spatial query predicates
+* Added iterative queries
+
+[*Documentation]
+
+[*Bugfixes]
+
+* In some cases .back() or .clear() was called, violating the usage of Concepts. Fixed for the reported cases
+
+[*Solved tickets]
+
+* [@https://svn.boost.org/trac/boost/ticket/6958 6958] Intersection generates self-intersection. Caused by spike, fixed
+* [@https://svn.boost.org/trac/boost/ticket/8364 8364] Invalid input exception, caused by spikes in previous steps, fixed
+* [@https://svn.boost.org/trac/boost/ticket/8365 8365] Invalid input exception, caused by spikes in previous steps, fixed
+* [@https://svn.boost.org/trac/boost/ticket/8969 8969] boost::geometry::model::point single argument constructor should be explicit
+* [@https://svn.boost.org/trac/boost/ticket/8825 8825] Patch adding member variable documentation to doxygen_xml2qbk
+* [@https://svn.boost.org/trac/boost/ticket/8652 8652] Intersection fails for triangle-triangle intersection. Caused by spike, fixed
+* [@https://svn.boost.org/trac/boost/ticket/9047 9047] Boost files that include themselves (strategies/intersection.hpp), fixed
+
+[*Internal changes]
+
+* Distance-strategy TODO
+* Transform-strategy TODO
+* Spikes (could be generated in difference) in integer-based overlays are now avoided during generation
+* Cleanup, removed old MSVC2005 project files, let all tests pass green (also in extensions)
+* R*-tree balancing algorithm optimized
+
+[/=================]
 [heading Boost 1.54]
 [/=================]
 

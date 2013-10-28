@@ -259,6 +259,46 @@ typedef boost::result_of&lt;
                 represent the return type of
                 <code>operator()</code> given a call expression.</p>
 
+                <p>Additionally, <code>boost::result_of</code>
+                provides a third mode of operation, which some users
+                may find convenient. When
+                <code>BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK</code>
+                is defined, <code>boost::result_of</code> behaves as
+                follows. If the function object has a member
+                type <code>result_type</code> or member
+                template <code>result&lt;&gt;</code>, then
+                <code>boost::result_of</code> will use the TR1
+                protocol. Otherwise,
+                <code>boost::result_of</code> will
+                use <code>decltype</code>. Using TR1 with
+                a <code>declytpe</code> fallback may workaround
+                certain problems at the cost of portability. For
+                example:
+                <ul>
+                    <li>Deficient compiler: If your code
+                    requires <code>boost::result_of</code> to work
+                    with incomplete return types but your
+                    compiler's <code>decltype</code> implementation
+                    does not support incomplete return types, then you
+                    can use the TR1 protocol as a workaround. Support
+                    for incomplete return types was added late in the
+                    C++11 standardization process
+                    (see <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3276.pdf">N3276</a>)
+                    and is not implemented by some compilers.</li>
+
+                    <li>Deficient legacy code: If your existing TR1
+                    function object advertises a different type than
+                    the actual result type deduced
+                    by <code>decltype</code>, then using TR1 with a
+                    <code>decltype</code> fallback will allow you to
+                    work with both your existing TR1 function objects
+                    and new C++11 function object. This situation
+                    could occur if your legacy function objects
+                    misused the TR1 protocol. See the documentation on
+                    known <a href="#result_of_tr1_diff">differences</a>
+                    between <code>boost::result_of</code> and TR1.</li>
+                </ul>
+
                 <a name="BOOST_NO_RESULT_OF"></a>
                 <p>This implementation of <code>result_of</code>
                 requires class template partial specialization, the

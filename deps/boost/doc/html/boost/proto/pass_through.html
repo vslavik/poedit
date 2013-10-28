@@ -52,14 +52,14 @@
     <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">if_</span><span class="special">&lt;</span><a class="link" href="wants_basic_expr.html" title="Struct template wants_basic_expr">proto::wants_basic_expr</a><span class="special">&lt;</span><span class="identifier">G</span><span class="special">&gt;</span><span class="special">,</span> <span class="identifier">BE</span><span class="special">,</span> <span class="identifier">E</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a class="link" href="pass_through/impl.html#boost.proto.pass_through.impl.expr_type"><span class="identifier">expr_type</span></a><span class="special">;</span>    <span class="comment">// For exposition only</span>
     <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">D</span><span class="special">(</span><span class="identifier">expr_type</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span>              <a class="link" href="pass_through/impl.html#boost.proto.pass_through.impl.result_type"><span class="identifier">result_type</span></a><span class="special">;</span>
 
-    <span class="comment">// <a class="link" href="pass_through/impl.html#idp127165920-bb">public member functions</a></span>
-    <span class="identifier">result_type</span> <a class="link" href="pass_through/impl.html#idp127166208-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">expr_param</span><span class="special">,</span> 
+    <span class="comment">// <a class="link" href="pass_through/impl.html#idp69273256-bb">public member functions</a></span>
+    <span class="identifier">result_type</span> <a class="link" href="pass_through/impl.html#idp69273544-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">expr_param</span><span class="special">,</span> 
                            <span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">state_param</span><span class="special">,</span> 
                            <span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">data_param</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp147765136"></a><h2>Description</h2>
+<a name="idp191270584"></a><h2>Description</h2>
 <p>
             Given a Grammar such as <code class="computeroutput"><a class="link" href="plus.html" title="Struct template plus">proto::plus</a>&lt;T0, T1&gt;</code>,
             an expression type that matches the grammar such as

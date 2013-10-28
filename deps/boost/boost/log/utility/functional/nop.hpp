@@ -18,7 +18,7 @@
 #include <boost/log/detail/config.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -31,18 +31,18 @@ struct nop
 {
     typedef void result_type;
 
-    void operator() () const {}
+    void operator() () const BOOST_NOEXCEPT {}
 
 #if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
     template< typename... ArgsT >
-    void operator() (ArgsT const&...) const {}
+    void operator() (ArgsT const&...) const BOOST_NOEXCEPT {}
 #else
     template< typename T >
-    void operator() (T const&) const {}
+    void operator() (T const&) const BOOST_NOEXCEPT {}
     template< typename T1, typename T2 >
-    void operator() (T1 const&, T2 const&) const {}
+    void operator() (T1 const&, T2 const&) const BOOST_NOEXCEPT {}
     template< typename T1, typename T2, typename T3 >
-    void operator() (T1 const&, T2 const&, T3 const&) const {}
+    void operator() (T1 const&, T2 const&, T3 const&) const BOOST_NOEXCEPT {}
 #endif
 };
 

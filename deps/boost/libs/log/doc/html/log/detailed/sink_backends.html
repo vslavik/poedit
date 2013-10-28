@@ -4,7 +4,7 @@
 <title>Sink backends</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log 2.0">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../detailed.html" title="Detailed features description">
 <link rel="prev" href="sink_frontends.html" title="Sink frontends">
 <link rel="next" href="expressions.html" title="Lambda expressions">
@@ -67,7 +67,7 @@
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">text_ostream_backend</span> <span class="special">&gt;</span> <span class="identifier">backend</span> <span class="special">=</span>
         <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">text_ostream_backend</span> <span class="special">&gt;();</span>
     <span class="identifier">backend</span><span class="special">-&gt;</span><span class="identifier">add_stream</span><span class="special">(</span>
-        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span> <span class="special">&gt;(&amp;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">clog</span><span class="special">,</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">empty_deleter</span><span class="special">()));</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span> <span class="special">&gt;(&amp;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">clog</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">empty_deleter</span><span class="special">()));</span>
     <span class="identifier">backend</span><span class="special">-&gt;</span><span class="identifier">add_stream</span><span class="special">(</span>
         <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span> <span class="special">&gt;(</span><span class="keyword">new</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ofstream</span><span class="special">(</span><span class="string">"sample.log"</span><span class="special">)));</span>
 
@@ -898,7 +898,7 @@
           event log backend</a>
         </h6>
 <p>
-          The <code class="computeroutput"><a class="link" href="../../boost/log/sinks/basic_simple_e_idp20447008.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a></code>
+          The <code class="computeroutput"><a class="link" href="../../boost/log/sinks/basic_simple_e_idp27192104.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a></code>
           backend is intended to encapsulate as much of the event log API as possible,
           leaving interface and usage model very similar to other sink backends.
           It contains all resources that are needed for the Event Viewer to function

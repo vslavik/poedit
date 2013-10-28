@@ -28,7 +28,7 @@ ECHO ### You can specify the toolset as the argument, i.e.:
 ECHO ###     .\build.bat msvc
 ECHO ###
 ECHO ### Toolsets supported by this script are: borland, como, gcc, gcc-nocygwin,
-ECHO ###     intel-win32, metrowerks, mingw, msvc, vc7, vc8, vc9, vc10, vc11
+ECHO ###     intel-win32, metrowerks, mingw, msvc, vc7, vc8, vc9, vc10, vc11, vc12
 ECHO ###
 call :Set_Error
 endlocal
@@ -100,6 +100,16 @@ call :Clear_Error
 call :Test_Empty %ProgramFiles%
 if not errorlevel 1 set ProgramFiles=C:\Program Files
 
+call :Clear_Error
+if NOT "_%VS120COMNTOOLS%_" == "__" (
+    set "BOOST_JAM_TOOLSET=vc12"
+    set "BOOST_JAM_TOOLSET_ROOT=%VS120COMNTOOLS%..\..\VC\"
+    goto :eof)
+call :Clear_Error
+if EXIST "%ProgramFiles%\Microsoft Visual Studio 12.0\VC\VCVARSALL.BAT" (
+    set "BOOST_JAM_TOOLSET=vc12"
+    set "BOOST_JAM_TOOLSET_ROOT=%ProgramFiles%\Microsoft Visual Studio 12.0\VC\"
+    goto :eof)
 call :Clear_Error
 if NOT "_%VS110COMNTOOLS%_" == "__" (
     set "BOOST_JAM_TOOLSET=vc11"
@@ -396,6 +406,21 @@ set "BOOST_JAM_OPT_MKJAMBASE=/Febootstrap\mkjambase0"
 set "BOOST_JAM_OPT_YYACC=/Febootstrap\yyacc0"
 set "_known_=1"
 :Skip_VC11
+if NOT "_%BOOST_JAM_TOOLSET%_" == "_vc12_" goto Skip_VC12
+if NOT "_%VS120COMNTOOLS%_" == "__" (
+    set "BOOST_JAM_TOOLSET_ROOT=%VS120COMNTOOLS%..\..\VC\"
+    )
+if "_%VCINSTALLDIR%_" == "__" call :Call_If_Exists "%BOOST_JAM_TOOLSET_ROOT%VCVARSALL.BAT" %BOOST_JAM_ARGS%
+if NOT "_%BOOST_JAM_TOOLSET_ROOT%_" == "__" (
+    if "_%VCINSTALLDIR%_" == "__" (
+        set "PATH=%BOOST_JAM_TOOLSET_ROOT%bin;%PATH%"
+        ) )
+set "BOOST_JAM_CC=cl /nologo /RTC1 /Zi /MTd /Fobootstrap/ /Fdbootstrap/ -DNT -DYYDEBUG -wd4996 kernel32.lib advapi32.lib user32.lib"
+set "BOOST_JAM_OPT_JAM=/Febootstrap\jam0"
+set "BOOST_JAM_OPT_MKJAMBASE=/Febootstrap\mkjambase0"
+set "BOOST_JAM_OPT_YYACC=/Febootstrap\yyacc0"
+set "_known_=1"
+:Skip_VC12
 if NOT "_%BOOST_JAM_TOOLSET%_" == "_borland_" goto Skip_BORLAND
 if "_%BOOST_JAM_TOOLSET_ROOT%_" == "__" (
     call :Test_Path bcc32.exe )

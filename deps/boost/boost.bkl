@@ -1,0 +1,90 @@
+
+import ../common-settings.bkl;
+
+includedirs += .;
+
+library boost_system {
+  sources {
+    libs/system/src/error_code.cpp
+  }
+}
+
+
+library boost_filesystem {
+  deps += boost_system;
+  defines += 'BOOST_FILESYSTEM_STATIC_LINK=1';
+  sources {
+    libs/filesystem/src/codecvt_error_category.cpp
+    libs/filesystem/src/operations.cpp
+    libs/filesystem/src/path_traits.cpp
+    libs/filesystem/src/path.cpp
+    libs/filesystem/src/portability.cpp
+    libs/filesystem/src/unique_path.cpp
+    libs/filesystem/src/utf8_codecvt_facet.cpp
+    libs/filesystem/src/windows_file_codecvt.cpp
+  }
+}
+
+
+library boost_thread {
+  defines += 'BOOST_THREAD_BUILD_LIB=1';
+  sources {
+    libs/thread/src/future.cpp
+  }
+  if ( $toolset == vs2013 ) {
+    sources {
+      libs/thread/src/win32/thread.cpp
+      libs/thread/src/win32/tss_pe.cpp
+    }
+  }
+  if ( $toolset != vs2013 ) {
+    sources {
+      libs/thread/src/pthread/thread.cpp
+      libs/thread/src/pthread/once.cpp
+    }
+  }
+}
+
+
+library boost_regex {
+  sources {
+    libs/regex/src/c_regex_traits.cpp
+    libs/regex/src/cpp_regex_traits.cpp
+    libs/regex/src/cregex.cpp
+    libs/regex/src/fileiter.cpp
+    libs/regex/src/instances.cpp
+    libs/regex/src/posix_api.cpp
+    libs/regex/src/regex.cpp
+    libs/regex/src/regex_raw_buffer.cpp
+    libs/regex/src/regex_traits_defaults.cpp
+    libs/regex/src/static_mutex.cpp
+    libs/regex/src/w32_regex_traits.cpp
+    libs/regex/src/wc_regex_traits.cpp
+    libs/regex/src/wide_posix_api.cpp
+    libs/regex/src/winstances.cpp
+    libs/regex/src/usinstances.cpp
+  }
+}
+
+
+library boost_iostreams {
+  sources {
+    libs/iostreams/src/file_descriptor.cpp
+    libs/iostreams/src/mapped_file.cpp
+    libs/iostreams/src/zlib.cpp
+    // NOTE: omitting gzip.cpp, bzip2.cpp, because we don't need them and they carry extra dependencies
+  }
+
+  if ( $toolset == vs2013 )
+    includedirs += ../zlib;
+}
+
+
+library boost_date_time {
+  defines += DATE_TIME_INLINE 'BOOST_DATE_TIME_STATIC_LINK=1';
+  sources {
+    libs/date_time/src/gregorian/date_generators.cpp
+    libs/date_time/src/gregorian/greg_month.cpp
+    libs/date_time/src/gregorian/greg_weekday.cpp
+  }
+}

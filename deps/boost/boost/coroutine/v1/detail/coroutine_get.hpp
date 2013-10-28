@@ -4,8 +4,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_COROUTINES_V1_DETAIL_COROUTINE_GET_H
-#define BOOST_COROUTINES_V1_DETAIL_COROUTINE_GET_H
+#ifndef BOOST_COROUTINES_OLD_DETAIL_COROUTINE_GET_H
+#define BOOST_COROUTINES_OLD_DETAIL_COROUTINE_GET_H
 
 #include <boost/assert.hpp>
 #include <boost/config.hpp>
@@ -51,4 +51,4 @@ struct coroutine_get
 #  include BOOST_ABI_SUFFIX
 #endif
 
-#endif // BOOST_COROUTINES_V1_DETAIL_COROUTINE_GET_H
+#endif // BOOST_COROUTINES_OLD_DETAIL_COROUTINE_GET_H

@@ -38,54 +38,22 @@ For a good discussion of the options and issues involved in string-based formatt
 [endsect]
 
 [section Examples]
-The following example treats command line arguments as a sequence of numeric data:
-``
-    int main(int argc, char * argv[])
-    {
-        using boost::lexical_cast;
-        using boost::bad_lexical_cast;
 
-        std::vector<short> args;
+[import ../example/args_to_numbers.cpp]
 
-        while(*++argv)
-        {
-            try
-            {
-                args.push_back(lexical_cast<short>(*argv));
-            }
-            catch(bad_lexical_cast &)
-            {
-                args.push_back(0);
-            }
-        }
-        ...
-    }
-``
-The following example uses numeric data in a string expression:
-``
-    void log_message(const std::string &);
+[section Strings to numbers conversion] [lexical_cast_args_example] [endsect]
 
-    void log_errno(int yoko)
-    {
-        log_message("Error " + boost::lexical_cast<std::string>(yoko) + ": " + strerror(yoko));
-    }
-``
-Following example converts some number and puts it to file:
-``
-    int i;
-    FILE* file;
-    ...
-    typedef boost::array<char, 50> buf_t; // You can use std::array if your compiler supports it
-    buf_t buffer = boost::lexical_cast<buf_t>(i); // No dynamic memory allocation
-    puts(buffer.begin(), file);
-``
-Following example takes part of the string and converts it to `int`:
-``
-int convert_strings_part(const std::string& s, std::size_t pos, std::size_t n) 
-{
-    return boost::lexical_cast<int>(s.data() + pos, n);
-}
-``
+[import ../example/small_examples.cpp]
+[section Numbers to strings conversion] [lexical_cast_log_errno] [endsect]
+[section Converting to string without dynamic memory allocation] [lexical_cast_fixed_buffer] [endsect]
+[section Converting part of the string] [lexical_cast_substring_conversion] [endsect]
+
+[import ../example/generic_stringize.cpp]
+[section Generic programming (Boost.Fusion)] [lexical_cast_stringize] [endsect]
+
+[import ../example/variant_to_long_double.cpp]
+[section Generic programming (Boost.Variant)] [lexical_cast_variant_to_long_double] [endsect]
+
 [endsect]
 
 [section Synopsis]
@@ -156,56 +124,6 @@ Exception used to indicate runtime lexical_cast failure.
 
 [endsect]
 
-[/ Commenting out bad advise (this will break the ability to get correct function pointers via &lexical_cast<Target, Source>)
-[section Tuning classes for fast lexical conversions]
-Because of `boost::lexical_cast` optimizations for `boost::iterator_range<character_type*>`, it is possibile to make very fast lexical conversions for non zero terminated strings, substrings and user-defined classes.
-
-Consider the following example:
-``
-    class example_class {
-        char non_zero_terminated_data[10];
-        std::size_t data_length;
-
-    public:
-        example_class();
-        void fill_data();
-
-        const char* data() const {
-            return non_zero_terminated_data;
-        }
-
-        std::size_t size() const {
-            return data_length;
-        }
-    };
-
-    inline std::ostream& operator << (std::ostream& ostr, const example_class& rhs) {
-        return ostr << boost::make_iterator_range(rhs.data(), rhs.data() + rhs.size());
-    }
-``
-
-This is a good generic solution for most use cases.
-But we can make it even faster for some performance critical applications. During conversion, we loose speed at:
-
- * `std::ostream` construction     (it makes some heap allocations)
- * `operator <<`                   (it copyies one by one all the symbols to an instance of `std::ostream`)
- * `std::ostream` destruction      (it makes some heap deallocations)
-
-We can avoid all of this, by specifieng an overload for `boost::lexical_cast`:
-``
-namespace boost {
-    template <class OutT>
-    OutT lexical_cast(const example_class& rhs) {
-        return boost::lexical_cast<OutT>(
-            boost::make_iterator_range(rhs.data(), rhs.data() + rhs.size())
-        );
-    }
-}
-``
-Now `boost::lexical_cast<some_type>(example_class_instance)` conversions won't copy data and construct heavy STL stream objects. See [link boost_lexical_cast.performance Performance] section for info on `boost::iterator_range` conversion performance.
-[endsect]
-]
-
 [section Frequently Asked Questions]
 
 * [*Question:]    Why does `lexical_cast<int8_t>("127")` throw `bad_lexical_cast`?
@@ -275,6 +193,11 @@ limitation of compiler options that you use.
 [endsect]
 
 [section Changes]
+
+* [*boost 1.54.0 :]
+
+    * Fix some issues with `boost::int128_type` and `boost::uint128_type` conversions. Notify user at compile time 
+      if the `std::numeric_limits` are not specialized for 128bit types and `boost::lexical_cast` can not make conversions.
 
 * [*boost 1.54.0 :]
 

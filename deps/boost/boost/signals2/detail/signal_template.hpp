@@ -737,7 +737,7 @@ namespace boost
         BOOST_SIGNALS2_SIGNAL_CLASS_NAME(BOOST_SIGNALS2_NUM_ARGS) <BOOST_SIGNALS2_SIGNAL_TEMPLATE_INSTANTIATION> &sig2 )
     {
       sig1.swap(sig2);
-    };
+    }
 #endif
 
     namespace detail

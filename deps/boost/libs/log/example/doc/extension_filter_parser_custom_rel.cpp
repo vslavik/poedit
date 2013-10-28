@@ -8,8 +8,8 @@
 #include <string>
 #include <iostream>
 #include <stdexcept>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/phoenix.hpp>
 #include <boost/log/core.hpp>

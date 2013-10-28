@@ -7,7 +7,7 @@
 <link rel="home" href="../../../boost_asio.html" title="Boost.Asio">
 <link rel="up" href="../ip__basic_resolver_iterator.html" title="ip::basic_resolver_iterator">
 <link rel="prev" href="basic_resolver_iterator.html" title="ip::basic_resolver_iterator::basic_resolver_iterator">
-<link rel="next" href="create/overload1.html" title="ip::basic_resolver_iterator::create (1 of 2 overloads)">
+<link rel="next" href="create/overload1.html" title="ip::basic_resolver_iterator::create (1 of 3 overloads)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -27,24 +27,36 @@
 <a name="boost_asio.reference.ip__basic_resolver_iterator.create"></a><a class="link" href="create.html" title="ip::basic_resolver_iterator::create">ip::basic_resolver_iterator::create</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp63104400"></a> 
+          <a class="indexterm" name="idp87167848"></a> 
 Create an iterator from an addrinfo list
           returned by getaddrinfo.
         </p>
-<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">basic_resolver_iterator</span> <a class="link" href="create/overload1.html" title="ip::basic_resolver_iterator::create (1 of 2 overloads)">create</a><span class="special">(</span>
+<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">basic_resolver_iterator</span> <a class="link" href="create/overload1.html" title="ip::basic_resolver_iterator::create (1 of 3 overloads)">create</a><span class="special">(</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">addrinfo_type</span> <span class="special">*</span> <span class="identifier">address_info</span><span class="special">,</span>
     <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="identifier">host_name</span><span class="special">,</span>
     <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="identifier">service_name</span><span class="special">);</span>
-  <span class="emphasis"><em>&#187; <a class="link" href="create/overload1.html" title="ip::basic_resolver_iterator::create (1 of 2 overloads)">more...</a></em></span>
+  <span class="emphasis"><em>&#187; <a class="link" href="create/overload1.html" title="ip::basic_resolver_iterator::create (1 of 3 overloads)">more...</a></em></span>
 </pre>
 <p>
           Create an iterator from an endpoint, host name and service name.
         </p>
-<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">basic_resolver_iterator</span> <a class="link" href="create/overload2.html" title="ip::basic_resolver_iterator::create (2 of 2 overloads)">create</a><span class="special">(</span>
+<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">basic_resolver_iterator</span> <a class="link" href="create/overload2.html" title="ip::basic_resolver_iterator::create (2 of 3 overloads)">create</a><span class="special">(</span>
     <span class="keyword">const</span> <span class="keyword">typename</span> <span class="identifier">InternetProtocol</span><span class="special">::</span><span class="identifier">endpoint</span> <span class="special">&amp;</span> <span class="identifier">endpoint</span><span class="special">,</span>
     <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="identifier">host_name</span><span class="special">,</span>
     <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="identifier">service_name</span><span class="special">);</span>
-  <span class="emphasis"><em>&#187; <a class="link" href="create/overload2.html" title="ip::basic_resolver_iterator::create (2 of 2 overloads)">more...</a></em></span>
+  <span class="emphasis"><em>&#187; <a class="link" href="create/overload2.html" title="ip::basic_resolver_iterator::create (2 of 3 overloads)">more...</a></em></span>
+</pre>
+<p>
+          Create an iterator from a sequence of endpoints, host and service name.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
+    <span class="keyword">typename</span> <a class="link" href="../../../">EndpointIterator</a><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="identifier">basic_resolver_iterator</span> <a class="link" href="create/overload3.html" title="ip::basic_resolver_iterator::create (3 of 3 overloads)">create</a><span class="special">(</span>
+    <span class="identifier">EndpointIterator</span> <span class="identifier">begin</span><span class="special">,</span>
+    <span class="identifier">EndpointIterator</span> <span class="identifier">end</span><span class="special">,</span>
+    <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="identifier">host_name</span><span class="special">,</span>
+    <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="identifier">service_name</span><span class="special">);</span>
+  <span class="emphasis"><em>&#187; <a class="link" href="create/overload3.html" title="ip::basic_resolver_iterator::create (3 of 3 overloads)">more...</a></em></span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

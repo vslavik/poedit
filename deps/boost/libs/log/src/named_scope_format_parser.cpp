@@ -10,7 +10,7 @@
  * \date   14.11.2012
  *
  * \brief  This header is the Boost.Log library implementation, see the library documentation
- *         at http://www.boost.org/libs/log/doc/log.html.
+ *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
 #include <string>
@@ -113,7 +113,7 @@ private:
     formatters m_formatters;
 
 public:
-    BOOST_LOG_DEFAULTED_FUNCTION(named_scope_formatter(), {})
+    BOOST_DEFAULTED_FUNCTION(named_scope_formatter(), {})
     named_scope_formatter(named_scope_formatter const& that) : m_formatters(that.m_formatters) {}
     named_scope_formatter(BOOST_RV_REF(named_scope_formatter) that) { m_formatters.swap(that.m_formatters); }
 
@@ -151,12 +151,10 @@ public:
     }
 };
 
-} // namespace
-
 //! Parses the named scope format string and constructs the formatter function
 template< typename CharT >
-boost::log::aux::light_function< void (basic_formatting_ostream< CharT >&, attributes::named_scope::value_type::value_type const&) >
-parse_named_scope_format(const CharT* begin, const CharT* end)
+BOOST_FORCEINLINE boost::log::aux::light_function< void (basic_formatting_ostream< CharT >&, attributes::named_scope::value_type::value_type const&) >
+do_parse_named_scope_format(const CharT* begin, const CharT* end)
 {
     typedef CharT char_type;
     typedef boost::log::aux::light_function< void (basic_formatting_ostream< char_type >&, attributes::named_scope::value_type::value_type const&) > result_type;
@@ -217,20 +215,28 @@ parse_named_scope_format(const CharT* begin, const CharT* end)
     return result_type(boost::move(fmt));
 }
 
+} // namespace
+
 
 #ifdef BOOST_LOG_USE_CHAR
 
-template BOOST_LOG_API
-boost::log::aux::light_function< void (basic_formatting_ostream< char >&, attributes::named_scope::value_type::value_type const&) >
-parse_named_scope_format(const char* begin, const char* end);
+//! Parses the named scope format string and constructs the formatter function
+BOOST_LOG_API boost::log::aux::light_function< void (basic_formatting_ostream< char >&, attributes::named_scope::value_type::value_type const&) >
+parse_named_scope_format(const char* begin, const char* end)
+{
+    return do_parse_named_scope_format(begin, end);
+}
 
 #endif // BOOST_LOG_USE_CHAR
 
 #ifdef BOOST_LOG_USE_WCHAR_T
 
-template BOOST_LOG_API
-boost::log::aux::light_function< void (basic_formatting_ostream< wchar_t >&, attributes::named_scope::value_type::value_type const&) >
-parse_named_scope_format(const wchar_t* begin, const wchar_t* end);
+//! Parses the named scope format string and constructs the formatter function
+BOOST_LOG_API boost::log::aux::light_function< void (basic_formatting_ostream< wchar_t >&, attributes::named_scope::value_type::value_type const&) >
+parse_named_scope_format(const wchar_t* begin, const wchar_t* end)
+{
+    return do_parse_named_scope_format(begin, end);
+}
 
 #endif // BOOST_LOG_USE_WCHAR_T
 

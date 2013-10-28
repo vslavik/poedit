@@ -46,18 +46,20 @@ void test_distance(
 {
     typedef bg::strategy::distance::cross_track
         <
-            Point,
-            Point
+            typename bg::coordinate_type<Point>::type
         > strategy_type;
+
     typedef typename bg::strategy::distance::services::return_type
         <
-            strategy_type
+            strategy_type,
+            Point,
+            Point
         >::type return_type;
 
 
     BOOST_CONCEPT_ASSERT
         (
-            (bg::concept::PointSegmentDistanceStrategy<strategy_type>)
+            (bg::concept::PointSegmentDistanceStrategy<strategy_type, Point, Point>)
         );
 
 
@@ -70,6 +72,10 @@ void test_distance(
     strategy_type strategy;
     return_type d = strategy.apply(p1, p2, p3);
 
+    BOOST_CHECK_CLOSE(radius * d, expected, tolerance);
+
+    // The strategy should return the same result if we reverse the parameters
+    d = strategy.apply(p1, p3, p2);
     BOOST_CHECK_CLOSE(radius * d, expected, tolerance);
 
     // Test specifying radius explicitly

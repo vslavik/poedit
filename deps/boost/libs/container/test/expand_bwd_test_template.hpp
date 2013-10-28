@@ -183,7 +183,6 @@ bool test_assign_with_expand_bwd()
 {
    typedef typename VectorWithExpandBwdAllocator::value_type value_type;
    typedef typename boost::remove_volatile<value_type>::type non_volatile_value_type;
-   typedef std::vector<non_volatile_value_type> Vect;
    const int MemorySize = 200;
 
    const int Offset[]      = { 50, 50, 50};

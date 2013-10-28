@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../quickbook.html" title="Chapter&#160;40.&#160;Quickbook 1.5">
+<link rel="up" href="../quickbook.html" title="Chapter&#160;40.&#160;Quickbook 1.6">
 <link rel="prev" href="syntax/block.html" title="Block Level Elements">
 <link rel="next" href="install.html" title="Installation and configuration">
 </head>
@@ -27,8 +27,8 @@
 <a name="quickbook.versions"></a>Language Versions</h2></div></div></div>
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="versions.html#quickbook.versions.stable">Stable Versions</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6">Quickbook 1.6</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_7">Quickbook 1.7</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_6">Quickbook 1.6</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_7">Quickbook 1.7</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -86,36 +86,80 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="quickbook.versions.1_6"></a><a class="link" href="versions.html#quickbook.versions.1_6" title="Quickbook 1.6">Quickbook 1.6</a>
+<a name="language_versions.1_6"></a><a class="link" href="versions.html#language_versions.1_6" title="Quickbook 1.6">Quickbook 1.6</a>
 </h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.docinfo">Includes with docinfo</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.doc_info_macros">Macros in docinfo
+<dt><span class="section"><a href="versions.html#language_versions.1_6.docinfo">Includes with docinfo</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_6.doc_info_macros">Macros in docinfo
         block</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.scope">Scoping templates and
+<dt><span class="section"><a href="versions.html#language_versions.1_6.scope">Scoping templates and
         macros</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.include">Including C++ and python
+<dt><span class="section"><a href="versions.html#language_versions.1_6.include">Including C++ and python
         files</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.ids">Id Generation</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.compatibility">Compatibility
+<dt><span class="section"><a href="versions.html#language_versions.1_6.ids">Id Generation</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_6.compatibility">Compatibility
         Mode</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.version">Version info outside
+<dt><span class="section"><a href="versions.html#language_versions.1_6.version">Version info outside
         of document info block</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.heading_ids">Explicit Heading
+<dt><span class="section"><a href="versions.html#language_versions.1_6.heading_ids">Explicit Heading
         Ids</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.escapes">Punctuation changes</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.table">Table Titles</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.xmlbase">XML base</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.elements">New Elements</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.listparagraphs">Pargraphs in
-        lists</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_6.escapes">Punctuation changes</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_6.table">Table Titles</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_6.xmlbase">XML base</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_6.template_parser">Improved template
+        parser</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_6.elements">New Elements</a></span></dt>
 </dl></div>
 <p>
-        Everything described in here may change depending on the feedback received.
+        Upgrading a document from an earlier version of quickbook shouldn't be too
+        hard. The first thing to do is update the version in the docinfo block. For
+        example, if you were updating the Xpressive documentation, the existing docinfo
+        block looks like:
+      </p>
+<pre class="programlisting">[library Boost.Xpressive
+    [quickbook 1.3]
+    ...
+]
+</pre>
+<p>
+        Change this to:
+      </p>
+<pre class="programlisting">[library Boost.Xpressive
+    [quickbook 1.6]
+    [compatibility-mode 1.3]
+    ...
+]
+</pre>
+<p>
+        The <code class="literal">compatibility-mode</code> tag ensures that automatically
+        generated links won't change. It might turn out that it isn't required, but
+        in Xpressive's case if it isn't included it will break a lot of links.
+      </p>
+<p>
+        Then try building it. You might need to fix some stray square brackets. The
+        new version has a stricter parser which will have an error for brackets which
+        don't pair up. They might be there by mistake, in which case they should
+        probably be deleted, or if they're intentional escaped. For example, to write
+        out the half-open range [a,b), use: <code class="computeroutput">\[a,b)</code>.
+      </p>
+<p>
+        Next, you might need to reconsider how templates and macros are defined.
+        If you <code class="computeroutput">include</code> a file to use its templates, you'll now need
+        to <code class="computeroutput">import</code> it instead as templates are now scoped by included
+        files. Also, if you define templates and macros in your main quickbook file,
+        you might want to put them into a separate file and <code class="computeroutput">import</code> that,
+        which allows the main documentation files to concentrate on the structure
+        and contents of the document, making them easier to read.
+      </p>
+<p>
+        Now that headings can have ids, it can be a good idea to add ids to existing
+        headings. This means that the headings will have more predictable ids which
+        don't change when the text of the heading changes. In order to preserve links
+        you can use the existing generated id as the heading.
       </p>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.docinfo"></a><a class="link" href="versions.html#quickbook.versions.1_6.docinfo" title="Includes with docinfo">Includes with docinfo</a>
+<a name="language_versions.1_6.docinfo"></a><a class="link" href="versions.html#language_versions.1_6.docinfo" title="Includes with docinfo">Includes with docinfo</a>
 </h4></div></div></div>
 <p>
           In quickbook 1.5 if you include a file which starts with a docinfo block,
@@ -144,7 +188,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.doc_info_macros"></a><a class="link" href="versions.html#quickbook.versions.1_6.doc_info_macros" title="Macros in docinfo block">Macros in docinfo
+<a name="language_versions.1_6.doc_info_macros"></a><a class="link" href="versions.html#language_versions.1_6.doc_info_macros" title="Macros in docinfo block">Macros in docinfo
         block</a>
 </h4></div></div></div>
 <p>
@@ -161,7 +205,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.scope"></a><a class="link" href="versions.html#quickbook.versions.1_6.scope" title="Scoping templates and macros">Scoping templates and
+<a name="language_versions.1_6.scope"></a><a class="link" href="versions.html#language_versions.1_6.scope" title="Scoping templates and macros">Scoping templates and
         macros</a>
 </h4></div></div></div>
 <p>
@@ -189,7 +233,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.include"></a><a class="link" href="versions.html#quickbook.versions.1_6.include" title="Including C++ and python files">Including C++ and python
+<a name="language_versions.1_6.include"></a><a class="link" href="versions.html#language_versions.1_6.include" title="Including C++ and python files">Including C++ and python
         files</a>
 </h4></div></div></div>
 <p>
@@ -203,7 +247,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.ids"></a><a class="link" href="versions.html#quickbook.versions.1_6.ids" title="Id Generation">Id Generation</a>
+<a name="language_versions.1_6.ids"></a><a class="link" href="versions.html#language_versions.1_6.ids" title="Id Generation">Id Generation</a>
 </h4></div></div></div>
 <p>
           Id generation in quickbook 1.5 is a bit buggy, but that can't be fixed
@@ -240,7 +284,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.compatibility"></a><a name="compatibility"></a><a class="link" href="versions.html#quickbook.versions.1_6.compatibility" title="Compatibility Mode">Compatibility
+<a name="language_versions.1_6.compatibility"></a><a name="compatibility"></a><a class="link" href="versions.html#language_versions.1_6.compatibility" title="Compatibility Mode">Compatibility
         Mode</a>
 </h4></div></div></div>
 <p>
@@ -268,7 +312,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.version"></a><a class="link" href="versions.html#quickbook.versions.1_6.version" title="Version info outside of document info block">Version info outside
+<a name="language_versions.1_6.version"></a><a class="link" href="versions.html#language_versions.1_6.version" title="Version info outside of document info block">Version info outside
         of document info block</a>
 </h4></div></div></div>
 <p>
@@ -293,7 +337,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.heading_ids"></a><a class="link" href="versions.html#quickbook.versions.1_6.heading_ids" title="Explicit Heading Ids">Explicit Heading
+<a name="language_versions.1_6.heading_ids"></a><a class="link" href="versions.html#language_versions.1_6.heading_ids" title="Explicit Heading Ids">Explicit Heading
         Ids</a>
 </h4></div></div></div>
 <p>
@@ -304,7 +348,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.escapes"></a><a class="link" href="versions.html#quickbook.versions.1_6.escapes" title="Punctuation changes">Punctuation changes</a>
+<a name="language_versions.1_6.escapes"></a><a class="link" href="versions.html#language_versions.1_6.escapes" title="Punctuation changes">Punctuation changes</a>
 </h4></div></div></div>
 <p>
           In 1.6, quickbook is more consistent about how it parses punctuation. Escapes
@@ -322,7 +366,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.table"></a><a class="link" href="versions.html#quickbook.versions.1_6.table" title="Table Titles">Table Titles</a>
+<a name="language_versions.1_6.table"></a><a class="link" href="versions.html#language_versions.1_6.table" title="Table Titles">Table Titles</a>
 </h4></div></div></div>
 <p>
           Table titles are now parsed as phrases, so some markup is allowd:
@@ -339,7 +383,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.xmlbase"></a><a class="link" href="versions.html#quickbook.versions.1_6.xmlbase" title="XML base">XML base</a>
+<a name="language_versions.1_6.xmlbase"></a><a class="link" href="versions.html#language_versions.1_6.xmlbase" title="XML base">XML base</a>
 </h4></div></div></div>
 <p>
           A problem when using <code class="computeroutput">xi:include</code> tags in escaped boostbook
@@ -363,157 +407,101 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.elements"></a><a class="link" href="versions.html#quickbook.versions.1_6.elements" title="New Elements">New Elements</a>
+<a name="language_versions.1_6.template_parser"></a><a class="link" href="versions.html#language_versions.1_6.template_parser" title="Improved template parser">Improved template
+        parser</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.elements.block"><code class="computeroutput">block</code></a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.elements.lists"><code class="computeroutput">ordered_list</code>
-          and <code class="computeroutput">itemized_list</code></a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_6.elements.role"><code class="computeroutput">role</code></a></span></dt>
-</dl></div>
-<div class="section">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="quickbook.versions.1_6.elements.block"></a><a class="link" href="versions.html#quickbook.versions.1_6.elements.block" title="block"><code class="computeroutput">block</code></a>
-</h5></div></div></div>
 <p>
-            <code class="computeroutput">block</code> is a block element that just marks its contents as
-            a block, so that they aren't wrapped in paragraph tags. The main use
-            is for escaped docbook block tags, such as:
-          </p>
-<pre class="programlisting">[template chapter[title]
-[block'''&lt;chapter&gt;&lt;title&gt;'''[title]'''&lt;/title&gt;''']
+          There's a new parser for template declarations and parameters which does
+          a better job of understanding escaped and bracketed text. Unfortunately
+          it does not understand element names so there are some cases where it could
+          go wrong. For example:
+        </p>
+<pre class="programlisting">[template doesnt_work[]
+[ordered_list
+    [`code phrase`]
 ]
-
-[template chapterend
-[block'''&lt;/chapter&gt;''']
 ]
-
-[chapter An example chapter]
-
-Content
-
-[chapterend]
 </pre>
 <p>
-            Without the <code class="computeroutput">block</code> element, the <code class="computeroutput">chapter</code> and
-            <code class="computeroutput">chapterend</code> templates would be wrapped in paragraph tags.
-          </p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-              In this example, the template body has to start with a newline so that
-              the template will be interpreted in block mode.
-            </p></td></tr>
-</table></div>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="quickbook.versions.1_6.elements.lists"></a><a class="link" href="versions.html#quickbook.versions.1_6.elements.lists" title="ordered_list and itemized_list"><code class="computeroutput">ordered_list</code>
-          and <code class="computeroutput">itemized_list</code></a>
-</h5></div></div></div>
-<p>
-            These are used as an alternative to the normal wiki-style markup for
-            lists. They make it easier to nest lists inside other elements, and nest
-            elements inside lists. The markup is similar to a single level table:
-          </p>
-<pre class="programlisting">[ordered_list [item1][item2]]
+          In this case it will think the <code class="computeroutput">[\</code>` is a template call and
+          give a parse error. To work around this put an escaped space before the
+          code phrase:
+        </p>
+<pre class="programlisting">[template works[]
+[ordered_list
+    [\ `code phrase`]
+]
+]
 </pre>
-<p>
-            is equivalent to:
-          </p>
-<pre class="programlisting"># item1
-# item2
-</pre>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="quickbook.versions.1_6.elements.role"></a><a class="link" href="versions.html#quickbook.versions.1_6.elements.role" title="role"><code class="computeroutput">role</code></a>
-</h5></div></div></div>
-<p>
-            <code class="computeroutput">role</code> is a phrase element used to mark up the text in the
-            eventual html with an a class. For example:
-          </p>
-<pre class="programlisting">[role red Text content]
-</pre>
-<p>
-            Will generate the docbook:
-          </p>
-<pre class="programlisting">&lt;phrase role="red"&gt;Text content&lt;/phrase&gt;
-</pre>
-<p>
-            Which will generate html along the lines of:
-          </p>
-<pre class="programlisting">&lt;span class="red"&gt;Text content&lt;/span&gt;
-</pre>
-<p>
-            And then you can use css to style this however you wish.
-          </p>
-</div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_6.listparagraphs"></a><a class="link" href="versions.html#quickbook.versions.1_6.listparagraphs" title="Pargraphs in lists">Pargraphs in
-        lists</a>
+<a name="language_versions.1_6.elements"></a><a class="link" href="versions.html#language_versions.1_6.elements" title="New Elements">New Elements</a>
 </h4></div></div></div>
 <p>
-          I'm still refining this, but paragraphs and block elements can now be used
-          in lists:
+          New elements added in quickbook 1.6:
         </p>
-<pre class="programlisting">* Para 1
-
-  Para 2
-  * Nested Para 1
-
-    Nested Para 2
-
-        Code block
-  Para 3
-</pre>
-<p>
-          generates:
-        </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-              Para 1
-              <p>
-                Para 2
-              </p>
-              <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
-                    Nested Para 1
-                    <p>
-                      Nested Para 2
-                    </p>
-<pre class="programlisting">Code block
-</pre>
-                  </li></ul></div>
-              <p>
-                Para 3
-              </p>
-            </li></ul></div>
-<p>
-          The docbook markup that this generates is pretty bad, but seems to create
-          okay html.
-        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              <a class="link" href="syntax/block.html#quickbook.ref.block"><code class="computeroutput">block</code></a>
+            </li>
+<li class="listitem">
+              <a class="link" href="syntax/block.html#quickbook.ref.list_tags"><code class="computeroutput">ordered_list</code> and
+              <code class="computeroutput">itemized_list</code></a>
+            </li>
+<li class="listitem">
+              <a class="link" href="syntax/phrase.html#quickbook.ref.role"><code class="computeroutput">role</code></a>
+            </li>
+</ul></div>
 </div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="quickbook.versions.1_7"></a><a class="link" href="versions.html#quickbook.versions.1_7" title="Quickbook 1.7">Quickbook 1.7</a>
+<a name="language_versions.1_7"></a><a class="link" href="versions.html#language_versions.1_7" title="Quickbook 1.7">Quickbook 1.7</a>
 </h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_7.source_mode">Source mode for
+<dt><span class="section"><a href="versions.html#language_versions.1_7.context_error">Error for elements
+        used in incorrect context</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_7.phrase_parse_error">Error for
+        invalid phrase elements</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_7.source_mode">Source mode for
         single entities</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_7.callouts">Callouts in code block</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_7.escaped_docinfo_attributes">Escaped
+<dt><span class="section"><a href="versions.html#language_versions.1_7.callouts">Callouts in code blocks</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_7.escaped_docinfo_attributes">Escaped
         docbook in docinfo blocks</a></span></dt>
-<dt><span class="section"><a href="versions.html#quickbook.versions.1_7.templates_in_link_values">Templates
+<dt><span class="section"><a href="versions.html#language_versions.1_7.listparagraphs">Pargraphs in
+        lists</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_7.templates_in_link_values">Templates
         in link values</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_7.list_markup_in_tables">List Markup
+        in Nested Blocks</a></span></dt>
+<dt><span class="section"><a href="versions.html#language_versions.1_7.phrase_block_templates">Allow
+        block elements in phrase templates</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_7.source_mode"></a><a class="link" href="versions.html#quickbook.versions.1_7.source_mode" title="Source mode for single entities">Source mode for
+<a name="language_versions.1_7.context_error"></a><a class="link" href="versions.html#language_versions.1_7.context_error" title="Error for elements used in incorrect context">Error for elements
+        used in incorrect context</a>
+</h4></div></div></div>
+<p>
+          Previously if you used an element in the wrong context it would just be
+          unprocessed, which was surprising. People often didn't realise that their
+          element hadn't been processed. So now it's an error.
+        </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="language_versions.1_7.phrase_parse_error"></a><a class="link" href="versions.html#language_versions.1_7.phrase_parse_error" title="Error for invalid phrase elements">Error for
+        invalid phrase elements</a>
+</h4></div></div></div>
+<p>
+          If the body of a phrase element didn't parse, it would be just used unprocessed.
+          Now change it to be a hard error.
+        </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="language_versions.1_7.source_mode"></a><a class="link" href="versions.html#language_versions.1_7.source_mode" title="Source mode for single entities">Source mode for
         single entities</a>
 </h4></div></div></div>
 <p>
@@ -535,32 +523,33 @@ Content
 ]
 </pre>
 <p>
-          When used a section, it's only set for the section element, not the whole
-          section.
+          When used before a section, it sets the source mode for the section element,
+          not the whole section.
         </p>
 <p>
-          Currently it does support other syntactic entities such as paragraphs and
-          lists. I'm not sure if it would be a good idea.
+          Currently it does not support other syntactic entities such as paragraphs
+          and lists. It will currently be used to the next code block or element.
+          This is a bit messy, but I'm not sure what would be a good idea.
         </p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_7.callouts"></a><a class="link" href="versions.html#quickbook.versions.1_7.callouts" title="Callouts in code block">Callouts in code block</a>
+<a name="language_versions.1_7.callouts"></a><a class="link" href="versions.html#language_versions.1_7.callouts" title="Callouts in code blocks">Callouts in code blocks</a>
 </h4></div></div></div>
 <p>
-          Currently callouts can only be used in code snippets. 1.7 add support in
-          normal code blocks. The same syntax is used as in code snippets, the callout
-          descriptions appear immediately after the code block.
+          Currently callouts can only be used in code snippets. 1.7 adds support
+          in normal code blocks. The same syntax is used as in code snippets, the
+          callout descriptions appear immediately after the code block.
         </p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_7.escaped_docinfo_attributes"></a><a class="link" href="versions.html#quickbook.versions.1_7.escaped_docinfo_attributes" title="Escaped docbook in docinfo blocks">Escaped
+<a name="language_versions.1_7.escaped_docinfo_attributes"></a><a class="link" href="versions.html#language_versions.1_7.escaped_docinfo_attributes" title="Escaped docbook in docinfo blocks">Escaped
         docbook in docinfo blocks</a>
 </h4></div></div></div>
 <p>
           Quickbook docinfo attributes will probably never be as rich as docbook
-          attributes so to allow more flexible markup, not supported by quickbook
+          attributes. To allow more flexible markup that is not supported by quickbook,
           escaped docbook can be included in the docinfo block:
         </p>
 <pre class="programlisting">[article Some article
@@ -574,14 +563,59 @@ Content
 </pre>
 <p>
           The escaped docbook is always placed at the end of the docinfo block, so
-          it shouldn't be assumed that it will interleave the markup. A mixture of
-          quickbook and docbook attributes for the same information will not work
-          well.
+          it shouldn't be assumed that it will interleave with markup generated from
+          quickbook. A mixture of quickbook and docbook attributes for the same information
+          will not work well.
         </p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="quickbook.versions.1_7.templates_in_link_values"></a><a class="link" href="versions.html#quickbook.versions.1_7.templates_in_link_values" title="Templates in link values">Templates
+<a name="language_versions.1_7.listparagraphs"></a><a class="link" href="versions.html#language_versions.1_7.listparagraphs" title="Pargraphs in lists">Pargraphs in
+        lists</a>
+</h4></div></div></div>
+<p>
+          Paragraphs and block elements can now be used in lists:
+        </p>
+<pre class="programlisting">* Para 1
+
+  Para 2
+  * Nested Para 1
+
+    Nested Para 2
+
+        Code block
+  Para 3
+</pre>
+<p>
+          generates:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<p class="simpara">
+              Para 1
+            </p>
+<p class="simpara">
+              Para 2
+            </p>
+<p class="simpara">
+              <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+<p class="simpara">
+                    Nested Para 1
+                  </p>
+<p class="simpara">
+                    Nested Para 2
+                  </p>
+<pre class="programlisting">Code block
+</pre>
+</li></ul></div>
+            </p>
+<p class="simpara">
+              Para 3
+            </p>
+</li></ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="language_versions.1_7.templates_in_link_values"></a><a class="link" href="versions.html#language_versions.1_7.templates_in_link_values" title="Templates in link values">Templates
         in link values</a>
 </h4></div></div></div>
 <p>
@@ -603,6 +637,52 @@ Content
               context. Possibly even using a different grammar.
             </li>
 </ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="language_versions.1_7.list_markup_in_tables"></a><a class="link" href="versions.html#language_versions.1_7.list_markup_in_tables" title="List Markup in Nested Blocks">List Markup
+        in Nested Blocks</a>
+</h4></div></div></div>
+<p>
+          Can now place list markup in nested blocks, e.g in tables, variables lists
+          etc. Unfortunately indented code blocks are more tricky, because the contents
+          of these blocks are often indented already. It seemed easier to just not
+          support indented code blocks in this context than to try to work out sensible
+          actions for the edges cases. If you want to use code blocks in this context,
+          you should still be able to use explicit markup.
+        </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="language_versions.1_7.phrase_block_templates"></a><a class="link" href="versions.html#language_versions.1_7.phrase_block_templates" title="Allow block elements in phrase templates">Allow
+        block elements in phrase templates</a>
+</h4></div></div></div>
+<p>
+          Block elements can now be used in phrase templates, but paragraphs breaks
+          aren't allowed, so this is an error:
+        </p>
+<pre class="programlisting">[template paras[] Something or other.
+
+Second paragraph.]
+</pre>
+<p>
+          If a phrase template only contains block elements, then it's practically
+          indistinguishable from a block template. So you'll get the same output
+          from:
+        </p>
+<pre class="programlisting">[template foo[] [blurb Blah, blah, blah]]
+</pre>
+<p>
+          as:
+        </p>
+<pre class="programlisting">[template foo[]
+[blurb Blah, blah, blah]
+]
+</pre>
+<p>
+          If a phrase template has phrase content mixed with block elements, it'll
+          generate output as if it was expanded inline.
+        </p>
 </div>
 </div>
 </div>

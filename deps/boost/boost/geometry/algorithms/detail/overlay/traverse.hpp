@@ -13,7 +13,7 @@
 
 #include <boost/range.hpp>
 
-#include <boost/geometry/algorithms/detail/overlay/append_no_duplicates.hpp>
+#include <boost/geometry/algorithms/detail/overlay/append_no_dups_or_spikes.hpp>
 #include <boost/geometry/algorithms/detail/overlay/backtrack_check_si.hpp>
 #include <boost/geometry/algorithms/detail/overlay/copy_segments.hpp>
 #include <boost/geometry/algorithms/detail/overlay/turn_info.hpp>
@@ -139,7 +139,8 @@ inline bool assign_next_ip(G1 const& g1, G2 const& g2,
         seg_id = info.seg_id;
     }
 
-    detail::overlay::append_no_duplicates(current_output, ip->point);
+    detail::overlay::append_no_dups_or_spikes(current_output, ip->point);
+
     return true;
 }
 
@@ -277,8 +278,7 @@ public :
                             set_visited_for_continue(*it, *iit);
 
                             ring_type current_output;
-                            detail::overlay::append_no_duplicates(current_output, 
-                                        it->point, true);
+                            geometry::append(current_output, it->point);
 
                             turn_iterator current = it;
                             turn_operation_iterator_type current_iit = iit;

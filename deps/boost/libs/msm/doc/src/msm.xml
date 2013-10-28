@@ -903,11 +903,12 @@ struct some_state : public msm::front::state&lt;>
                         “terminates” (the state machine and all its states stay alive) and all
                         events are ignored. This is of course not mandatory, one can use orthogonal
                         regions without terminate states. MSM also provides a small extension to
-                        UML, interrupt states. If you declare ErrorMode as interrupt state instead
-                        of terminate state, the state machine will not handle any event other than
-                        the one which ends the interrupt. So it's like a terminate state, with the
-                        difference that you are allowed to resume the state machine when a condition
-                        (like handling of the original error) is met. </para>
+                        UML, interrupt states. If you declare ErrorMode (or a Boost.MPL sequence of
+                        events, like boost::mpl::vector&lt;ErrorMode, AnotherEvent>) as interrupt
+                        state instead of terminate state, the state machine will not handle any
+                        event other than the one which ends the interrupt. So it's like a terminate
+                        state, with the difference that you are allowed to resume the state machine
+                        when a condition (like handling of the original error) is met. </para>
                     <para><command xml:id="basic-defer"/>Last but not least, this example also shows
                         here the handling of event deferring. Let's say someone puts a disc and
                         immediately presses play. The event cannot be handled, yet you'd want it to
@@ -1753,7 +1754,8 @@ Row  &lt; Paused  , open_close ,  Open     , stop_and_open             , none   
         ... 
     } 
 }; // same for Empty_Exit
-struct Empty : public msm::front::euml::func_state&lt;Empty_Entry,Empty_Exit>{};</programlisting>
+struct Empty_tag {};
+struct Empty : public msm::front::euml::func_state&lt;Empty_tag,Empty_Entry,Empty_Exit>{};</programlisting>
                     <para>This also means that you can, like in the transition table, write entry /
                         exit actions made of more complicated action combinations. The previous
                         example can therefore <link xlink:href="examples/SimpleWithFunctors2.cpp">be
@@ -4031,6 +4033,20 @@ typename ::boost::enable_if&lt;
         </chapter>
         <chapter>
             <title>Version history</title>
+            <sect1>
+                <title>From V2.25 to V2.26 (Boost 1.55)</title>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>New feature: interrupt states now support a sequence of events to
+                                end the interruption</para>
+                        </listitem>
+                        <listitem>
+                            <para>Bugfix: Trac 8686.</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect1>
             <sect1>
                 <title>From V2.24 to V2.25 (Boost 1.54)</title>
                 <para>
@@ -7155,6 +7171,8 @@ std::cout &lt;&lt; "typeid-generated name Open is: " &lt;&lt;  name_of_open &lt;
                             ending the interrupt. The second argument is needed if you want your
                             state (and all others used in a concrete state machine) to inherit a
                             basic type for logging or providing a common behavior.</para>
+                        <para>The EndInterruptEvent can also be a sequence of events:
+                            mpl::vector&lt;EndInterruptEvent,EndInterruptEvent2>.</para>
                         <classsynopsis>
                             <ooclass>
                                 <classname>template&lt;class EndInterruptEvent,class Base =

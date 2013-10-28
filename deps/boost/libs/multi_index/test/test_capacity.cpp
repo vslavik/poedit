@@ -47,10 +47,11 @@ void test_capacity()
   BOOST_TEST(ss.size()==10);
   BOOST_TEST(ss.size()<=ss.max_size());
 
-  ss.resize(20);
+  ss.resize(20,666);
   BOOST_TEST(ss.size()==20);
+  BOOST_TEST(ss.back()==666);
 
-  ss.resize(5);
+  ss.resize(5,10);
   BOOST_TEST(ss.size()==5);
 
   ss.resize(4);
@@ -63,11 +64,16 @@ void test_capacity()
   BOOST_TEST(rs.size()<=rs.max_size());
   BOOST_TEST(rs.size()<=rs.capacity());
 
-  rs.resize(20);
+  rs.resize(20,666);
   BOOST_TEST(rs.size()==20);
+  BOOST_TEST(rs.back()==666);
   BOOST_TEST(rs.size()<=rs.capacity());
 
   unsigned int c=rs.capacity();
+  rs.resize(10,20);
+  BOOST_TEST(rs.size()==10);
+  BOOST_TEST(rs.capacity()==c);
+
   rs.resize(5);
   BOOST_TEST(rs.size()==5);
   BOOST_TEST(rs.capacity()==c);
@@ -80,4 +86,12 @@ void test_capacity()
   rs.reserve(99);
   BOOST_TEST(rs.size()==5);
   BOOST_TEST(rs.capacity()==c);
+
+  rs.shrink_to_fit();
+  BOOST_TEST(rs.size()==5);
+  BOOST_TEST(rs.capacity()==rs.size());
+
+  rs.clear();
+  rs.shrink_to_fit();
+  BOOST_TEST(rs.capacity()==0);
 }

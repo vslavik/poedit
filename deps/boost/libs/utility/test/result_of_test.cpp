@@ -5,6 +5,12 @@
 //  1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
+// Examples:
+//   To run the default test:
+//   $ cd libs/utility/test && bjam
+//   To test decltype on g++ 2.7:
+//   $ cd libs/utility/test && bjam cxxflags="-std=c++11 -D BOOST_RESULT_OF_USE_DECLTYPE"
+
 #include <boost/config.hpp>
 
 // For more information, see http://www.boost.org/libs/utility
@@ -190,7 +196,7 @@ int main()
   BOOST_STATIC_ASSERT((is_same<tr1_result_of<volatile int_result_of_template<void>(void)>::type, void>::value));
 
   // Prior to decltype, result_of could not deduce the return type
-  // nullary function objects unless they exposed a result_type.
+  // of nullary function objects unless they exposed a result_type.
 #if defined(BOOST_RESULT_OF_USE_DECLTYPE)
   BOOST_STATIC_ASSERT((is_same<result_of<int_result_of(void)>::type, int>::value));
   BOOST_STATIC_ASSERT((is_same<result_of<volatile int_result_of(void)>::type, int>::value));
@@ -273,7 +279,7 @@ int main()
   BOOST_STATIC_ASSERT((is_same<tr1_result_of<pf_t(int)>::type, int>::value));
   BOOST_STATIC_ASSERT((is_same<tr1_result_of<pf_t const(int)>::type,int>::value));
 
-#if defined(BOOST_RESULT_OF_USE_DECLTYPE)
+#if defined(BOOST_RESULT_OF_USE_DECLTYPE) || defined(BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK)
   BOOST_STATIC_ASSERT((is_same<result_of<no_result_type_or_result(double)>::type, short>::value));
   BOOST_STATIC_ASSERT((is_same<result_of<const no_result_type_or_result(double)>::type, cv_overload_check<const short> >::value));
   BOOST_STATIC_ASSERT((is_same<result_of<volatile no_result_type_or_result(double)>::type, cv_overload_check<volatile short> >::value));
@@ -301,10 +307,10 @@ int main()
 #endif
 #endif
 
-#if defined(BOOST_RESULT_OF_USE_DECLTYPE)
+#if defined(BOOST_RESULT_OF_USE_DECLTYPE) || defined(BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK)
   int i = 123;
   sfinae_test(sfinae_test_f, i);
-#endif // defined(BOOST_RESULT_OF_USE_DECLTYPE)
+#endif // defined(BOOST_RESULT_OF_USE_DECLTYPE) || defined(BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK)
 
   return 0;
 }

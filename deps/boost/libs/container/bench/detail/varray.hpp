@@ -10,7 +10,7 @@
 #ifndef BOOST_CONTAINER_DETAIL_VARRAY_HPP
 #define BOOST_CONTAINER_DETAIL_VARRAY_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#if (defined _MSC_VER)
 #  pragma once
 #endif
 
@@ -293,7 +293,7 @@ public:
 
     //! @pre <tt>count <= capacity()</tt>
     //!
-    //! @brief Constructs a varray containing count default constructed Values.
+    //! @brief Constructs a varray containing count value initialized Values.
     //!
     //! @param count    The number of values which will be contained in the container.
     //!
@@ -616,7 +616,7 @@ public:
     //! @pre <tt>count <= capacity()</tt>
     //!
     //! @brief Inserts or erases elements at the end such that
-    //!   the size becomes count. New elements are default constructed.
+    //!   the size becomes count. New elements are value initialized.
     //!
     //! @param count    The number of elements which will be stored in the container.
     //!

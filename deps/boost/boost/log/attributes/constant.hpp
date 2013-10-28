@@ -25,7 +25,7 @@
 #include <boost/log/attributes/attribute_value_impl.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -52,7 +52,7 @@ public:
 
 protected:
     //! Factory implementation
-    class BOOST_LOG_VISIBLE impl :
+    class BOOST_SYMBOL_VISIBLE impl :
         public attribute_value_impl< value_type >
     {
         //! Base type

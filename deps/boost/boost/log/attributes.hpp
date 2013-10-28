@@ -31,7 +31,7 @@
 #include <boost/log/attributes/current_thread_id.hpp>
 #endif
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 

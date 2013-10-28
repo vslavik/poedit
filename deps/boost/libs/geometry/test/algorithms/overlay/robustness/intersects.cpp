@@ -36,7 +36,7 @@ inline void make_polygon(MultiPolygon& mp, int count_x, int count_y, int index, 
     {
         for(int k = 0; k < count_y; ++k)
         {
-            mp.push_back(MultiPolygon::value_type());
+            mp.push_back(typename MultiPolygon::value_type());
             mp.back().outer().push_back(point_type(width_x + j * 10 + 1, k * 10 + 1));
             mp.back().outer().push_back(point_type(width_x + j * 10 + width_x, k * 10 + 5 + index));
             mp.back().outer().push_back(point_type(width_x + j * 10 + 5 + index, k * 10 + 7));
@@ -93,7 +93,6 @@ void test_all(int count, int count_x, int count_y, int width_x, p_q_settings con
         > multi_polygon;
 
 
-    int index = 0;
     for(int i = 0; i < count; i++)
     {
         test_intersects<multi_polygon>(count_x, count_y, width_x, settings);

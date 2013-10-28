@@ -27,11 +27,11 @@
 #ifndef BOOST_NO_CXX11_NOEXCEPT
 #include "boost_no_noexcept.ipp"
 #else
-namespace boost_no_noexcept = empty_boost;
+namespace boost_no_cxx11_noexcept = empty_boost;
 #endif
 
 int main( int, char *[] )
 {
-   return boost_no_noexcept::test();
+   return boost_no_cxx11_noexcept::test();
 }
 

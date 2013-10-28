@@ -57,8 +57,6 @@ struct polygon_unique
     template <typename Polygon, typename ComparePolicy>
     static inline void apply(Polygon& polygon, ComparePolicy const& policy)
     {
-        typedef typename geometry::ring_type<Polygon>::type ring_type;
-
         range_unique::apply(exterior_ring(polygon), policy);
 
         typename interior_return_type<Polygon>::type rings

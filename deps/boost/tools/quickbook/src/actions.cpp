@@ -198,7 +198,7 @@ namespace quickbook
 
     void break_action::operator()(parse_iterator first, parse_iterator) const
     {
-        write_anchors(state, phrase);
+        write_anchors(state, state.phrase);
 
         if(*first == '\\')
         {
@@ -216,7 +216,7 @@ namespace quickbook
             state.warned_about_breaks = true;
         }
             
-        phrase << detail::get_markup(phrase_tags::break_mark).pre;
+        state.phrase << detail::get_markup(phrase_tags::break_mark).pre;
     }
 
     void error_message_action::operator()(parse_iterator first, parse_iterator last) const
@@ -322,27 +322,18 @@ namespace quickbook
         while(pos != end && cl::space_p.test(*pos)) ++pos;
 
         if(pos != end) {
-            detail::markup markup = detail::get_markup(block_tags::paragraph);
+            detail::markup markup = state.in_list ?
+                detail::get_markup(block_tags::paragraph_in_list) :
+                detail::get_markup(block_tags::paragraph);
             state.out << markup.pre << str;
             write_anchors(state, state.out);
             state.out << markup.post;
         }
     }
 
-    void list_item_action::operator()() const
+    void explicit_list_action::operator()() const
     {
-        // Be careful as this is sometimes called in the wrong place
-        // for markup such as:
-        //
-        // * A
-        // [endsect]
-        //
-        // This action is called before [endsect] (to end the list item)
-        // and then also after it due to the way the parser works.
-        std::string str;
-        state.phrase.swap(str);
-        state.out << str;
-        write_anchors(state, state.out);
+        state.explicit_list = true;
     }
 
     void phrase_end_action::operator()() const
@@ -405,6 +396,8 @@ namespace quickbook
 
         if (!element_id.empty())
         {
+            // Use an explicit id.
+
             std::string anchor = state.ids.add_id(
                 element_id.get_quickbook(),
                 id_category::explicit_id);
@@ -412,40 +405,54 @@ namespace quickbook
             write_bridgehead(state, level,
                 content.get_encoded(), anchor, self_linked_headers);
         }
-        else if (!generic && state.ids.compatibility_version() < 103) // version 1.2 and below
+        else if (state.ids.compatibility_version() >= 106u)
         {
-            // This generates the old id style if both the interpreting
-            // version and the generation version are less then 103u.
+            // Generate ids for 1.6+
 
-            std::string anchor = state.ids.old_style_id(
-                detail::make_identifier(
-                    state.ids.replace_placeholders_with_unresolved_ids(
-                        content.get_encoded())),
-                id_category::generated_heading);
-
-            write_bridgehead(state, level,
-                content.get_encoded(), anchor, false);
-
-        }
-        else
-        {
             std::string anchor = state.ids.add_id(
-                detail::make_identifier(
-                    state.ids.compatibility_version() >= 106 ?
-                        content.get_quickbook() :
-                        state.ids.replace_placeholders_with_unresolved_ids(
-                            content.get_encoded())
-                ),
+                detail::make_identifier(content.get_quickbook()),
                 id_category::generated_heading);
 
             write_bridgehead(state, level,
                 content.get_encoded(), anchor, self_linked_headers);
         }
+        else
+        {
+            // Generate ids that are compatible with older versions of quickbook.
+
+            // Older versions of quickbook used the generated boostbook, but
+            // we only have an intermediate version which can contain id
+            // placeholders. So to generate the ids they must be replaced
+            // by the ids that the older versions would have used - i.e. the
+            // unresolved ids.
+            //
+            // Note that this doesn't affect the actual boostbook generated for
+            // the content, it's just used to generate this id.
+
+            std::string id = detail::make_identifier(
+                    state.ids.replace_placeholders_with_unresolved_ids(
+                        content.get_encoded()));
+
+            if (generic || state.ids.compatibility_version() >= 103) {
+                std::string anchor =
+                    state.ids.add_id(id, id_category::generated_heading);
+
+                write_bridgehead(state, level,
+                    content.get_encoded(), anchor, self_linked_headers);
+            }
+            else {
+                std::string anchor =
+                    state.ids.old_style_id(id, id_category::generated_heading);
+
+                write_bridgehead(state, level,
+                    content.get_encoded(), anchor, false);
+            }
+        }
     }
 
     void simple_phrase_action::operator()(char mark) const
     {
-        write_anchors(state, out);
+        write_anchors(state, state.phrase);
 
         int tag =
             mark == '*' ? phrase_tags::bold :
@@ -461,9 +468,9 @@ namespace quickbook
         value content = values.consume();
         values.finish();
 
-        out << markup.pre;
-        out << content.get_encoded();
-        out << markup.post;
+        state.phrase << markup.pre;
+        state.phrase << content.get_encoded();
+        state.phrase << markup.post;
     }
 
     bool cond_phrase_push::start()
@@ -480,8 +487,7 @@ namespace quickbook
             state.conditional = find(state.macro, macro.c_str());
 
             if (!state.conditional) {
-                state.phrase.push();
-                state.out.push();
+                state.push_output();
                 state.anchors.swap(anchors);
             }
         }
@@ -493,8 +499,7 @@ namespace quickbook
     {
         if (saved_conditional && !state.conditional)
         {
-            state.phrase.pop();
-            state.out.pop();
+            state.pop_output();
             state.anchors.swap(anchors);
         }
 
@@ -522,9 +527,11 @@ namespace quickbook
 
     void state::start_list(char mark)
     {
-        write_anchors(*this, out);
+        write_anchors(*this, (in_list ? phrase : out));
         assert(mark == '*' || mark == '#');
+        push_output();
         out << ((mark == '#') ? "<orderedlist>\n" : "<itemizedlist>\n");
+        in_list = true;
     }
 
     void state::end_list(char mark)
@@ -532,18 +539,27 @@ namespace quickbook
         write_anchors(*this, out);
         assert(mark == '*' || mark == '#');
         out << ((mark == '#') ? "\n</orderedlist>" : "\n</itemizedlist>");
+
+        std::string list_output;
+        out.swap(list_output);
+
+        pop_output();
+
+        (in_list ? phrase : out) << list_output;
     }
 
     void state::start_list_item()
     {
-        out << "<listitem><simpara>";
-        write_anchors(*this, out);
+        out << "<listitem>";
+        write_anchors(*this, phrase);
     }
 
     void state::end_list_item()
     {
-        write_anchors(*this, out);
-        out << "</simpara></listitem>";
+        write_anchors(*this, phrase);
+        paragraph_action para(*this);
+        para();
+        out << "</listitem>";
     }
 
     namespace
@@ -593,7 +609,7 @@ namespace quickbook
             std::string callout_value;
 
             {
-                template_state state(*this);
+                state_save save(*this, state_save::scope_all);
                 ++template_depth;
 
                 bool r = parse_template(callout_body, *this);
@@ -654,35 +670,35 @@ namespace quickbook
 
     void do_macro_action::operator()(std::string const& str) const
     {
-        write_anchors(state, phrase);
+        write_anchors(state, state.phrase);
 
         if (str == quickbook_get_date)
         {
             char strdate[64];
             strftime(strdate, sizeof(strdate), "%Y-%b-%d", current_time);
-            phrase << strdate;
+            state.phrase << strdate;
         }
         else if (str == quickbook_get_time)
         {
             char strdate[64];
             strftime(strdate, sizeof(strdate), "%I:%M:%S %p", current_time);
-            phrase << strdate;
+            state.phrase << strdate;
         }
         else
         {
-            phrase << str;
+            state.phrase << str;
         }
     }
 
     void raw_char_action::operator()(char ch) const
     {
-        out << ch;
+        state.phrase << ch;
     }
 
     void raw_char_action::operator()(parse_iterator first, parse_iterator last) const
     {
         while (first != last)
-            out << *first++;
+            state.phrase << *first++;
     }
 
     void source_mode_action(quickbook::state& state, value source_mode)
@@ -742,52 +758,50 @@ namespace quickbook
             boost::swap(state.current_file, saved_file);
 
             // print the code with syntax coloring
-            std::string str = syntax_highlight(first_, last_, state,
-                source_mode, block);
+            //
+            // We must not place a \n after the <programlisting> tag
+            // otherwise PDF output starts code blocks with a blank line:
+            state.phrase << "<programlisting>";
+            syntax_highlight(first_, last_, state, source_mode, block);
+            state.phrase << "</programlisting>\n";
 
             boost::swap(state.current_file, saved_file);
 
-            collector& output = inline_code ? state.phrase : state.out;
+            if (qbk_version_n >= 107u) state.phrase << state.end_callouts();
 
-            // We must not place a \n after the <programlisting> tag
-            // otherwise PDF output starts code blocks with a blank line:
-            //
-            output << "<programlisting>";
-            output << str;
-            output << "</programlisting>\n";
-
-            if (qbk_version_n >= 107u) output << state.end_callouts();
+            if (!inline_code) {
+                state.out << state.phrase.str();
+                state.phrase.clear();
+            }
         }
         else {
             parse_iterator first_(code_value.begin());
             parse_iterator last_(code_value.end());
-            std::string str = syntax_highlight(first_, last_, state,
-                source_mode, block);
 
             state.phrase << "<code>";
-            state.phrase << str;
+            syntax_highlight(first_, last_, state, source_mode, block);
             state.phrase << "</code>";
         }
     }
 
     void plain_char_action::operator()(char ch) const
     {
-        write_anchors(state, phrase);
+        write_anchors(state, state.phrase);
 
-        detail::print_char(ch, phrase.get());
+        detail::print_char(ch, state.phrase.get());
     }
 
     void plain_char_action::operator()(parse_iterator first, parse_iterator last) const
     {
-        write_anchors(state, phrase);
+        write_anchors(state, state.phrase);
 
         while (first != last)
-            detail::print_char(*first++, phrase.get());
+            detail::print_char(*first++, state.phrase.get());
     }
 
     void escape_unicode_action::operator()(parse_iterator first, parse_iterator last) const
     {
-        write_anchors(state, phrase);
+        write_anchors(state, state.phrase);
 
         while(first != last && *first == '0') ++first;
 
@@ -799,10 +813,11 @@ namespace quickbook
         
         if(hex_digits.size() == 2 && *first > '0' && *first <= '7') {
             using namespace std;
-            detail::print_char(strtol(hex_digits.c_str(), 0, 16), phrase.get());
+            detail::print_char(strtol(hex_digits.c_str(), 0, 16),
+                    state.phrase.get());
         }
         else {
-            phrase << "&#x" << hex_digits << ";";
+            state.phrase << "&#x" << hex_digits << ";";
         }
     }
 
@@ -1217,7 +1232,7 @@ namespace quickbook
             bool r = cl::parse(first, last,
                     content.get_tag() == template_tags::phrase ?
                         state.grammar().inline_phrase :
-                        state.grammar().block
+                        state.grammar().block_start
                 ).full;
 
             boost::swap(state.current_file, saved_current_file);
@@ -1232,23 +1247,17 @@ namespace quickbook
             string_iterator first)
     {
         bool is_block = symbol->content.get_tag() != template_tags::phrase;
+        quickbook::paragraph_action paragraph_action(state);
+
+        // Finish off any existing paragraphs.
+        if (is_block) paragraph_action();
 
         // If this template contains already encoded text, then just
         // write it out, without going through any of the rigamarole.
 
         if (symbol->content.is_encoded())
         {
-            if (is_block)
-            {
-                paragraph_action para(state);
-                para();
-                state.out << symbol->content.get_encoded();
-            }
-            else
-            {
-                state.phrase << symbol->content.get_encoded();
-            }
-
+            (is_block ? state.out : state.phrase) << symbol->content.get_encoded();
             return;
         }
 
@@ -1259,11 +1268,11 @@ namespace quickbook
         // arguments are expanded.
         template_scope const& call_scope = state.templates.top_scope();
 
-        std::string block;
-        std::string phrase;
-
         {
-            template_state save(state);
+            state_save save(state, state_save::scope_callables);
+            std::string save_block;
+            std::string save_phrase;
+
             state.templates.start_template(symbol);
 
             qbk_version_n = symbol->content.get_file()->version();
@@ -1296,6 +1305,11 @@ namespace quickbook
             ///////////////////////////////////
             // parse the template body:
 
+            if (symbol->content.get_file()->version() < 107u) {
+                state.out.swap(save_block);
+                state.phrase.swap(save_phrase);
+            }
+
             if (!parse_template(symbol->content, state))
             {
                 detail::outerr(state.current_file, first)
@@ -1321,19 +1335,24 @@ namespace quickbook
                 return;
             }
 
-            state.out.swap(block);
-            state.phrase.swap(phrase);
-        }
+            if (symbol->content.get_file()->version() < 107u) {
+                state.out.swap(save_block);
+                state.phrase.swap(save_phrase);
 
-        if(is_block || !block.empty()) {
-            paragraph_action para(state);
-            para(); // For paragraphs before the template call.
-            state.out << block;
-            state.phrase << phrase;
-            para();
-        }
-        else {
-            state.phrase << phrase;
+                if(is_block || !save_block.empty()) {
+                    paragraph_action();
+                    state.out << save_block;
+                    state.phrase << save_phrase;
+                    paragraph_action();
+                }
+                else {
+                    state.phrase << save_phrase;
+                }
+            }
+            else
+            {
+                if (is_block) paragraph_action();
+            }
         }
     }
 
@@ -1933,18 +1952,17 @@ namespace quickbook
             //
             // For old versions of quickbook, templates aren't scoped by the
             // file.
-            file_state save(state,
-                load_type == block_tags::import ? file_state::scope_output :
-                qbk_version_n >= 106u ? file_state::scope_callables :
-                file_state::scope_macros);
+            state_save save(state,
+                load_type == block_tags::import ? state_save::scope_output :
+                qbk_version_n >= 106u ? state_save::scope_callables :
+                state_save::scope_macros);
 
             state.current_file = load(paths.filename); // Throws load_error
             state.filename_relative = paths.filename_relative;
             state.imported = (load_type == block_tags::import);
 
             // update the __FILENAME__ macro
-            *boost::spirit::classic::find(state.macro, "__FILENAME__")
-                = detail::path_to_generic(state.filename_relative);
+            state.update_filename_macro();
         
             // parse the file
             quickbook::parse_file(state, include_doc_id, true);
@@ -1954,8 +1972,7 @@ namespace quickbook
         }
 
         // restore the __FILENAME__ macro
-        *boost::spirit::classic::find(state.macro, "__FILENAME__")
-            = detail::path_to_generic(state.filename_relative);
+        state.update_filename_macro();
     }
 
     void load_source_file(quickbook::state& state,
@@ -2069,8 +2086,7 @@ namespace quickbook
 
     bool to_value_scoped_action::start(value::tag_type t)
     {
-        state.out.push();
-        state.phrase.push();
+        state.push_output();
         state.anchors.swap(saved_anchors);
         tag = t;
 
@@ -2101,8 +2117,7 @@ namespace quickbook
     
     void to_value_scoped_action::cleanup()
     {
-        state.phrase.pop();
-        state.out.pop();
+        state.pop_output();
         state.anchors.swap(saved_anchors);
     }
 }

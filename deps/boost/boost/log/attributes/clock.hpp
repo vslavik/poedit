@@ -23,7 +23,7 @@
 #include <boost/log/attributes/time_traits.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -54,7 +54,7 @@ public:
 
 protected:
     //! Attribute factory implementation
-    struct BOOST_LOG_VISIBLE impl :
+    struct BOOST_SYMBOL_VISIBLE impl :
         public attribute::impl
     {
         attribute_value get_value()

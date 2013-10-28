@@ -66,6 +66,14 @@ project
         #<toolset>darwin-4.6.2:<cxxflags>-Wno-delete-non-virtual-dtor # doesn't work
         <toolset>darwin-4.7.0:<cxxflags>-ansi
         <toolset>darwin-4.7.0:<cxxflags>-Wno-delete-non-virtual-dtor
+        #<toolset>darwin-4.6.2:<cxxflags>-Wno-unused-local-typedefs
+        #<toolset>darwin-4.7.1:<cxxflags>-Wno-unused-local-typedefs
+        #<toolset>darwin-4.7.2:<cxxflags>-Wno-unused-local-typedefs
+        #<toolset>darwin-4.8.0:<cxxflags>-Wno-unused-local-typedefs
+        #<toolset>darwin-4.6.2x:<cxxflags>-Wno-unused-local-typedefs
+        #<toolset>darwin-4.7.1x:<cxxflags>-Wno-unused-local-typedefs
+        #<toolset>darwin-4.7.2x:<cxxflags>-Wno-unused-local-typedefs
+        #<toolset>darwin-4.8.0x:<cxxflags>-Wno-unused-local-typedefs
 
         #<toolset>clang-2.8:<cxxflags>-Wno-delete-non-virtual-dtor
         #<toolset>clang-2.8:<cxxflags>-Wno-unused-function
@@ -74,6 +82,8 @@ project
         <toolset>clang-3.0:<cxxflags>-Wno-delete-non-virtual-dtor
         #<toolset>clang-3.0:<cxxflags>-Wno-unused-function
         #<toolset>clang-3.0:<cxxflags>-Wno-unused-variable
+        #<toolset>clang-3.1:<cxxflags>-Wno-bind-to-temporary-copy
+        #<toolset>clang-3.2:<cxxflags>-Wno-bind-to-temporary-copy
 
 # Note: Some of the remarks from the Intel compiler are disabled
 # remark #193: zero used for undefined preprocessing identifier "XXX"
@@ -221,6 +231,8 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-test test_condition.cpp ]
           [ thread-test test_once.cpp ]
           [ thread-run test_barrier.cpp ]
+          [ thread-run test_barrier_void_fct.cpp ]
+          [ thread-run test_barrier_size_fct.cpp ]
           [ thread-test test_lock_concept.cpp ]
           [ thread-test test_generic_locks.cpp ]
           [ thread-run  test_latch.cpp ]
@@ -342,6 +354,7 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ./sync/futures/future/default_pass.cpp : future__default_p ]
           [ thread-run2-noit ./sync/futures/future/dtor_pass.cpp : future__dtor_p ]
           [ thread-run2-noit ./sync/futures/future/get_pass.cpp : future__get_p ]
+          [ thread-run2-noit ./sync/futures/future/get_or_pass.cpp : future__get_or_p ]
           [ thread-run2-noit ./sync/futures/future/move_ctor_pass.cpp : future__move_ctor_p ]
           [ thread-run2-noit ./sync/futures/future/move_assign_pass.cpp : future__move_asign_p ]
           [ thread-run2-noit ./sync/futures/future/share_pass.cpp : future__share_p ]
@@ -364,6 +377,7 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ./sync/futures/shared_future/wait_pass.cpp : shared_future__wait_p ]
           [ thread-run2-noit ./sync/futures/shared_future/wait_for_pass.cpp : shared_future__wait_for_p ]
           [ thread-run2-noit ./sync/futures/shared_future/wait_until_pass.cpp : shared_future__wait_until_p ]
+          [ thread-run2-noit ./sync/futures/shared_future/then_pass.cpp : shared_future__then_p ]
     ;
 
     #explicit ts_packaged_task ;
@@ -616,6 +630,17 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ./sync/mutual_exclusion/null_mutex/try_lock_until_pass.cpp : null_mutex__try_lock_until_p ]
     ;
 
+    test-suite ts_sync_queue
+    :
+          [ thread-run2-noit ./sync/mutual_exclusion/sync_queue/single_thread_pass.cpp : sync_queue__single_thread_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/sync_queue/multi_thread_pass.cpp : sync_queue__multi_thread_p ]
+    ;
+
+    test-suite ts_sync_bounded_queue
+    :
+          [ thread-run2-noit ./sync/mutual_exclusion/sync_bounded_queue/single_thread_pass.cpp : sync_bounded_queue__single_thread_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/sync_bounded_queue/multi_thread_pass.cpp : sync_bounded_queue__multi_thread_p ]
+    ;
 
     #explicit ts_this_thread ;
     test-suite ts_this_thread
@@ -679,8 +704,10 @@ rule thread-compile ( sources : reqs * : name )
           #[ thread-run ../example/vhh_shared_mutex.cpp ]
           [ thread-run2 ../example/make_future.cpp : ex_make_future ]
           [ thread-run2 ../example/future_then.cpp : ex_future_then ]
-          #[ thread-run2-noit ../example/synchronized_value.cpp : ex_synchronized_value ]
-          #[ thread-run2-noit ../example/synchronized_person.cpp : ex_synchronized_person ]
+          [ thread-run2 ../example/future_fallback_to.cpp : ex_future_fallback_to ]
+          [ thread-run2 ../example/future_unwrap.cpp : ex_future_unwrap ]
+          [ thread-run2-noit ../example/synchronized_value.cpp : ex_synchronized_value ]
+          [ thread-run2-noit ../example/synchronized_person.cpp : ex_synchronized_person ]
           [ thread-run2-noit ../example/thread_guard.cpp : ex_thread_guard ]
           [ thread-run2-noit ../example/scoped_thread.cpp : ex_scoped_thread ]
           [ thread-run2-noit ../example/strict_lock.cpp : ex_strict_lock ]
@@ -741,6 +768,7 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ./sync/mutual_exclusion/synchronized_value/swap_pass.cpp : synchronized_value__swap_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/synchronized_value/swap_T_pass.cpp : synchronized_value__swap_T_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/synchronized_value/synchronize_pass.cpp : synchronized_value__synchronize_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/synchronized_value/call_pass.cpp : synchronized_value__call_p ]
 
     ;
 
@@ -755,11 +783,18 @@ rule thread-compile ( sources : reqs * : name )
           #[ thread-run test_7720.cpp ]
           #[ thread-run test_7666.cpp ]
           #[ thread-run test_7755.cpp ]
-          #[ thread-run ../example/unwrap.cpp ]
           #[ thread-run ../example/perf_condition_variable.cpp ]
           #[ thread-run ../example/perf_shared_mutex.cpp ]
           #[ thread-run ../example/std_async_test.cpp ]
-          [ thread-run test_8596.cpp ]
+          #[ thread-run test_8508.cpp ]
+          #[ thread-run test_8586.cpp ]
+          #[ thread-run test_8596.cpp ]
+          #[ thread-run test_8600.cpp ]
+          #[ thread-run test_8943.cpp ]
+          #[ thread-run test_8960.cpp ]
+          [ thread-run test_9079_a.cpp ]
+          [ thread-run test_9079_b.cpp ]
+
     ;
 
 }

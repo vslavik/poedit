@@ -1,4 +1,6 @@
 
+DB_LIBS = @DB_LIBS@
+LUCENE_LIBS = @LUCENE_LIBS@
 WINDRES = @WINDRES@
 WX_LIBS = @WX_LIBS@
 RC_WX_INCLUDES = @RC_WX_INCLUDES@
@@ -8,6 +10,7 @@ RESOURCE_FILES = poedit_resource.o
 endif
 
 bin_PROGRAMS = poedit
+libexec_PROGRAMS = dump-legacy-tm
 
 poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  errorbar.cpp errorbar.h \
@@ -18,8 +21,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  progressinfo.cpp digger.h digger.cpp gexecute.h \
                  gexecute.cpp summarydlg.h summarydlg.cpp \
                  findframe.cpp findframe.h commentdlg.h commentdlg.cpp \
-                 transmem.cpp transmem.h transmemupd.cpp transmemupd.h \
-                 transmemupd_wizard.cpp transmemupd_wizard.h \
+                 tm/transmem.cpp tm/transmem.h tm/tm_migrate.cpp \
                  manager.h manager.cpp chooselang.cpp chooselang.h \
                  export_html.cpp icons.h icons.cpp \
                  pluralforms/pl_evaluate.cpp \
@@ -30,7 +32,11 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  lang_info.cpp lang_info.h \
                  compiled_xrc.cpp
 
-poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS)
+poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS) $(LUCENE_LIBS)
+
+dump_legacy_tm_SOURCES = tm/dump_legacy_tm.cpp
+dump_legacy_tm_LDADD = $(DB_LIBS)
+
 
 poedit_resource.o: poedit.rc
 	$(WINDRES) -i$(srcdir)/poedit.rc -o poedit_resource.o \
@@ -46,11 +52,7 @@ XRC_RESOURCES = \
 		$(srcdir)/resources/toolbar.xrc \
 		$(srcdir)/resources/find.xrc \
 		$(srcdir)/resources/comment.xrc \
-        $(srcdir)/resources/manager.xrc \
-		$(srcdir)/resources/tm_update.xrc
+        $(srcdir)/resources/manager.xrc
 
-XRC_MORE_FILES = \
-        $(srcdir)/resources/tm_update.gif
-
-compiled_xrc.cpp: $(XRC_RESOURCES) $(XRC_MORE_FILES)
+compiled_xrc.cpp: $(XRC_RESOURCES)
 	$(WXRC) -v -c -o $@ $(XRC_RESOURCES)

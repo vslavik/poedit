@@ -556,9 +556,7 @@ The simple way is to decompress (or checkout from SVN) the files in your BOOST_R
 __Boost_Chrono__ can be configured as a header-only library defining __BOOST_CHRONO_HEADER_ONLY. 
 However Boost.Chrono depends on the non header-only library Boost.System, so that you will need to link with boost_system.
 
-Boost.System has un undocumented feature (use of macro BOOST_ERROR_CODE_HEADER_ONLY) to make it header only, but it is buggy 
-(see [@http://svn.boost.org/trac/boost/ticket/7347 #7347] duplicate symbol while BOOST_ERROR_CODE_HEADER_ONLY is defined)
-
+Boost.System has un undocumented feature (use of macro BOOST_ERROR_CODE_HEADER_ONLY) to make it header only.
  
 If __BOOST_CHRONO_HEADER_ONLY is not defined you need to compile it and build the library before use, for example using:
 

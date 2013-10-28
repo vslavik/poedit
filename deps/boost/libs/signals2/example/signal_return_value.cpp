@@ -34,4 +34,5 @@ int main()
   // difference function.
   std::cout << *sig(5, 3) << std::endl;
 //]
-};
+}
+

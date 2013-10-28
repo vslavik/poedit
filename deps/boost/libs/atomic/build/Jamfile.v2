@@ -11,9 +11,11 @@ project boost/atomic
     : requirements
       <threading>multi
       <link>shared:<define>BOOST_ATOMIC_DYN_LINK=1
+      <link>static:<define>BOOST_ATOMIC_STATIC_LINK=1
       <define>BOOST_ATOMIC_SOURCE
     : usage-requirements
       <link>shared:<define>BOOST_ATOMIC_DYN_LINK=1
+      <link>static:<define>BOOST_ATOMIC_STATIC_LINK=1
     : source-location ../src
     ;
 

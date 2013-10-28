@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21FB780179D51BE003F45AC /* libexpat.dylib */; };
 		B22C5F0A17DDC67400ECAFD1 /* lang_info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* lang_info.cpp */; };
+		B23D1F7118142D1900E6B212 /* dump_legacy_tm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */; };
+		B23D1F731814470200E6B212 /* dump-legacy-tm in Copy Auxiliary Binaries */ = {isa = PBXBuildFile; fileRef = B23D1F6418142CF400E6B212 /* dump-legacy-tm */; };
 		B24ACD5F16F6201F00399242 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B24ACD5E16F6201F00399242 /* Cocoa.framework */; };
 		B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD6716F6201F00399242 /* InfoPlist.strings */; };
 		B24ACD8416F6263900399242 /* Poedit.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD8316F6263900399242 /* Poedit.iconset */; };
@@ -38,8 +40,6 @@
 		B28F1CFA16F629D30018AF7E /* propertiesdlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CD416F629D30018AF7E /* propertiesdlg.cpp */; };
 		B28F1CFB16F629D30018AF7E /* summarydlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CD616F629D30018AF7E /* summarydlg.cpp */; };
 		B28F1CFC16F629D30018AF7E /* transmem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CD816F629D30018AF7E /* transmem.cpp */; };
-		B28F1CFD16F629D30018AF7E /* transmemupd_wizard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CDA16F629D30018AF7E /* transmemupd_wizard.cpp */; };
-		B28F1CFE16F629D30018AF7E /* transmemupd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CDC16F629D30018AF7E /* transmemupd.cpp */; };
 		B28F1CFF16F629D30018AF7E /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CDE16F629D30018AF7E /* utility.cpp */; };
 		B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CE216F629D30018AF7E /* export_html.cpp */; };
 		B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CE316F629D30018AF7E /* pl_evaluate.cpp */; };
@@ -51,14 +51,19 @@
 		B29AE89517103992008D1F8A /* progress.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0621709DA4A009C1328 /* progress.xrc */; };
 		B29AE89617103992008D1F8A /* properties.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0631709DA4A009C1328 /* properties.xrc */; };
 		B29AE89717103992008D1F8A /* summary.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0641709DA4A009C1328 /* summary.xrc */; };
-		B29AE89817103992008D1F8A /* tm_update.gif in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0651709DA4A009C1328 /* tm_update.gif */; };
-		B29AE89917103992008D1F8A /* tm_update.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0661709DA4A009C1328 /* tm_update.xrc */; };
 		B29AE89A17103992008D1F8A /* toolbar.xrc in Resources */ = {isa = PBXBuildFile; fileRef = B27EB0671709DA4A009C1328 /* toolbar.xrc */; };
 		B2B7D472170DD93E00ED0AFE /* GettextTools.bundle in Copy Gettext bundle */ = {isa = PBXBuildFile; fileRef = B248B2DE170D765100EBA58E /* GettextTools.bundle */; };
 		B2BF84BA170846290030AA22 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84B9170846290030AA22 /* OpenGL.framework */; };
 		B2BF84BE170847220030AA22 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84BD170847220030AA22 /* libz.dylib */; };
 		B2BF84C1170847E60030AA22 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84C0170847E60030AA22 /* IOKit.framework */; };
 		B2BF84C4170849D00030AA22 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84BB170846940030AA22 /* Carbon.framework */; };
+		B2D76A45181D027F0083C9D9 /* libLucenePlusPlus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */; };
+		B2D76A4C181D028B0083C9D9 /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A46181D028B0083C9D9 /* libboost_date_time.a */; };
+		B2D76A4D181D028B0083C9D9 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */; };
+		B2D76A4E181D028B0083C9D9 /* libboost_iostreams.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A48181D028B0083C9D9 /* libboost_iostreams.a */; };
+		B2D76A4F181D028B0083C9D9 /* libboost_regex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A49181D028B0083C9D9 /* libboost_regex.a */; };
+		B2D76A50181D028B0083C9D9 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A4A181D028B0083C9D9 /* libboost_system.a */; };
+		B2D76A51181D028B0083C9D9 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A4B181D028B0083C9D9 /* libboost_thread.a */; };
 		B2E836D91709EB0D00F31559 /* Sparkle.framework in Copy Private Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; };
 		B2E836DE1709ECD600F31559 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = B2E836DD1709ECD600F31559 /* dsa_pub.pem */; };
 		B2E836E91709ED2A00F31559 /* window-close.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E01709ED2A00F31559 /* window-close.png */; };
@@ -79,12 +84,27 @@
 		B2E837011709ED6300F31559 /* poedit-fuzzy.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F81709ED6300F31559 /* poedit-fuzzy.png */; };
 		B2E837021709ED6300F31559 /* poedit-update.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F91709ED6300F31559 /* poedit-update.png */; };
 		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
+		B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F14DD3181E510100E212B5 /* tm_migrate.cpp */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
 		B2F287C5170DCC92004C1F41 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C3170DCC92004C1F41 /* COPYING */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B23D1F6D18142D0100E6B212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B23D1F6318142CF400E6B212;
+			remoteInfo = "dump-legacy-tm";
+		};
+		B23D1F6F18142D0C00E6B212 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B27115F8170830A800B936D5;
+			remoteInfo = ant_external_deps;
+		};
 		B248B2EB170D772800EBA58E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
@@ -109,6 +129,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				B23D1F731814470200E6B212 /* dump-legacy-tm in Copy Auxiliary Binaries */,
+			);
+			name = "Copy Auxiliary Binaries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,6 +168,8 @@
 		B21FB780179D51BE003F45AC /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
 		B22C5F0817DDC67400ECAFD1 /* lang_info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lang_info.cpp; sourceTree = "<group>"; };
 		B22C5F0917DDC67400ECAFD1 /* lang_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lang_info.h; sourceTree = "<group>"; };
+		B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dump_legacy_tm.cpp; path = tm/dump_legacy_tm.cpp; sourceTree = "<group>"; };
+		B23D1F6418142CF400E6B212 /* dump-legacy-tm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "dump-legacy-tm"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B248B2DE170D765100EBA58E /* GettextTools.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GettextTools.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B248B2DF170D765100EBA58E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		B248B2E3170D765100EBA58E /* GettextTools-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GettextTools-Info.plist"; path = "macosx/GettextTools-Info.plist"; sourceTree = "<group>"; };
@@ -159,8 +192,6 @@
 		B27EB0621709DA4A009C1328 /* progress.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = progress.xrc; sourceTree = "<group>"; };
 		B27EB0631709DA4A009C1328 /* properties.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = properties.xrc; sourceTree = "<group>"; };
 		B27EB0641709DA4A009C1328 /* summary.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = summary.xrc; sourceTree = "<group>"; };
-		B27EB0651709DA4A009C1328 /* tm_update.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = tm_update.gif; sourceTree = "<group>"; };
-		B27EB0661709DA4A009C1328 /* tm_update.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tm_update.xrc; sourceTree = "<group>"; };
 		B27EB0671709DA4A009C1328 /* toolbar.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = toolbar.xrc; sourceTree = "<group>"; };
 		B28F1CA916F627170018AF7E /* GenericTranslation.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = GenericTranslation.iconset; path = "icons/mime-osx/GenericTranslation.iconset"; sourceTree = SOURCE_ROOT; };
 		B28F1CAC16F629D30018AF7E /* catalog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = catalog.cpp; sourceTree = "<group>"; };
@@ -207,12 +238,8 @@
 		B28F1CD516F629D30018AF7E /* propertiesdlg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = propertiesdlg.h; sourceTree = "<group>"; };
 		B28F1CD616F629D30018AF7E /* summarydlg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = summarydlg.cpp; sourceTree = "<group>"; };
 		B28F1CD716F629D30018AF7E /* summarydlg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = summarydlg.h; sourceTree = "<group>"; };
-		B28F1CD816F629D30018AF7E /* transmem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transmem.cpp; sourceTree = "<group>"; };
-		B28F1CD916F629D30018AF7E /* transmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transmem.h; sourceTree = "<group>"; };
-		B28F1CDA16F629D30018AF7E /* transmemupd_wizard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transmemupd_wizard.cpp; sourceTree = "<group>"; };
-		B28F1CDB16F629D30018AF7E /* transmemupd_wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transmemupd_wizard.h; sourceTree = "<group>"; };
-		B28F1CDC16F629D30018AF7E /* transmemupd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transmemupd.cpp; sourceTree = "<group>"; };
-		B28F1CDD16F629D30018AF7E /* transmemupd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transmemupd.h; sourceTree = "<group>"; };
+		B28F1CD816F629D30018AF7E /* transmem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = transmem.cpp; path = tm/transmem.cpp; sourceTree = "<group>"; };
+		B28F1CD916F629D30018AF7E /* transmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = transmem.h; path = tm/transmem.h; sourceTree = "<group>"; };
 		B28F1CDE16F629D30018AF7E /* utility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utility.cpp; sourceTree = "<group>"; };
 		B28F1CDF16F629D30018AF7E /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
 		B28F1CE016F629D30018AF7E /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
@@ -226,6 +253,13 @@
 		B2BF84BD170847220030AA22 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		B2BF84C0170847E60030AA22 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B2BF84C21708498B0030AA22 /* HIToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HIToolbox.framework; path = System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework; sourceTree = SDKROOT; };
+		B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLucenePlusPlus.a; path = "../../Library/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug/libLucenePlusPlus.a"; sourceTree = "<group>"; };
+		B2D76A46181D028B0083C9D9 /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_date_time.a; path = "../../Library/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug/libboost_date_time.a"; sourceTree = "<group>"; };
+		B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = "../../Library/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug/libboost_filesystem.a"; sourceTree = "<group>"; };
+		B2D76A48181D028B0083C9D9 /* libboost_iostreams.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_iostreams.a; path = "../../Library/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug/libboost_iostreams.a"; sourceTree = "<group>"; };
+		B2D76A49181D028B0083C9D9 /* libboost_regex.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_regex.a; path = "../../Library/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug/libboost_regex.a"; sourceTree = "<group>"; };
+		B2D76A4A181D028B0083C9D9 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = "../../Library/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug/libboost_system.a"; sourceTree = "<group>"; };
+		B2D76A4B181D028B0083C9D9 /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_thread.a; path = "../../Library/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug/libboost_thread.a"; sourceTree = "<group>"; };
 		B2E836DD1709ECD600F31559 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = macosx/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		B2E836E01709ED2A00F31559 /* window-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "window-close.png"; path = "macosx/window-close.png"; sourceTree = "<group>"; };
 		B2E836E11709ED2A00F31559 /* poedit-status-automatic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-automatic.png"; sourceTree = "<group>"; };
@@ -246,11 +280,19 @@
 		B2E836F91709ED6300F31559 /* poedit-update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-update.png"; path = "toolbar-32/poedit-update.png"; sourceTree = "<group>"; };
 		B2E836FA1709ED6300F31559 /* poedit-validate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-validate.png"; path = "toolbar-32/poedit-validate.png"; sourceTree = "<group>"; };
 		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macosx/copy-translations.sh"; sourceTree = "<group>"; };
+		B2F14DD3181E510100E212B5 /* tm_migrate.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = tm_migrate.cpp; path = tm/tm_migrate.cpp; sourceTree = "<group>"; };
 		B2F287C2170DCC92004C1F41 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = deps/gettext/AUTHORS; sourceTree = SOURCE_ROOT; };
 		B2F287C3170DCC92004C1F41 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = COPYING; path = deps/gettext/COPYING; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B23D1F6118142CF400E6B212 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B248B2DB170D765100EBA58E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -271,6 +313,13 @@
 				B2BF84BE170847220030AA22 /* libz.dylib in Frameworks */,
 				B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */,
 				B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */,
+				B2D76A45181D027F0083C9D9 /* libLucenePlusPlus.a in Frameworks */,
+				B2D76A4C181D028B0083C9D9 /* libboost_date_time.a in Frameworks */,
+				B2D76A4D181D028B0083C9D9 /* libboost_filesystem.a in Frameworks */,
+				B2D76A4E181D028B0083C9D9 /* libboost_iostreams.a in Frameworks */,
+				B2D76A4F181D028B0083C9D9 /* libboost_regex.a in Frameworks */,
+				B2D76A50181D028B0083C9D9 /* libboost_system.a in Frameworks */,
+				B2D76A51181D028B0083C9D9 /* libboost_thread.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,10 +331,8 @@
 			children = (
 				B28F1CD916F629D30018AF7E /* transmem.h */,
 				B28F1CD816F629D30018AF7E /* transmem.cpp */,
-				B28F1CDD16F629D30018AF7E /* transmemupd.h */,
-				B28F1CDC16F629D30018AF7E /* transmemupd.cpp */,
-				B28F1CDB16F629D30018AF7E /* transmemupd_wizard.h */,
-				B28F1CDA16F629D30018AF7E /* transmemupd_wizard.cpp */,
+				B2F14DD3181E510100E212B5 /* tm_migrate.cpp */,
+				B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */,
 			);
 			name = TM;
 			path = src;
@@ -386,6 +433,7 @@
 			children = (
 				B24ACD5B16F6201F00399242 /* Poedit.app */,
 				B248B2DE170D765100EBA58E /* GettextTools.bundle */,
+				B23D1F6418142CF400E6B212 /* dump-legacy-tm */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -393,6 +441,13 @@
 		B24ACD5D16F6201F00399242 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2D76A46181D028B0083C9D9 /* libboost_date_time.a */,
+				B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */,
+				B2D76A48181D028B0083C9D9 /* libboost_iostreams.a */,
+				B2D76A49181D028B0083C9D9 /* libboost_regex.a */,
+				B2D76A4A181D028B0083C9D9 /* libboost_system.a */,
+				B2D76A4B181D028B0083C9D9 /* libboost_thread.a */,
+				B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */,
 				B21FB780179D51BE003F45AC /* libexpat.dylib */,
 				B2BF84BD170847220030AA22 /* libz.dylib */,
 				B256797417075E6000C52BC5 /* Sparkle.framework */,
@@ -464,8 +519,6 @@
 				B27EB0621709DA4A009C1328 /* progress.xrc */,
 				B27EB0631709DA4A009C1328 /* properties.xrc */,
 				B27EB0641709DA4A009C1328 /* summary.xrc */,
-				B27EB0651709DA4A009C1328 /* tm_update.gif */,
-				B27EB0661709DA4A009C1328 /* tm_update.xrc */,
 				B27EB0671709DA4A009C1328 /* toolbar.xrc */,
 			);
 			name = "XRC Resources";
@@ -518,6 +571,23 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
+		B23D1F6318142CF400E6B212 /* dump-legacy-tm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B23D1F6A18142CF400E6B212 /* Build configuration list for PBXNativeTarget "dump-legacy-tm" */;
+			buildPhases = (
+				B23D1F6018142CF400E6B212 /* Sources */,
+				B23D1F6118142CF400E6B212 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B23D1F7018142D0C00E6B212 /* PBXTargetDependency */,
+			);
+			name = "dump-legacy-tm";
+			productName = "dump-legacy-tm";
+			productReference = B23D1F6418142CF400E6B212 /* dump-legacy-tm */;
+			productType = "com.apple.product-type.tool";
+		};
 		B248B2DD170D765100EBA58E /* GettextTools */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B248B2EA170D765100EBA58E /* Build configuration list for PBXNativeTarget "GettextTools" */;
@@ -547,6 +617,7 @@
 				B24ACD5916F6201F00399242 /* Resources */,
 				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
 				B2846D0B17BCF65D00DDC6F8 /* Remove Headers From Private Frameworks */,
+				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
 				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */,
 				B2E83707170C96DB00F31559 /* Install translations */,
 				B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */,
@@ -556,6 +627,7 @@
 			dependencies = (
 				B2B7D474170DDAAB00ED0AFE /* PBXTargetDependency */,
 				B248B2EE170D773000EBA58E /* PBXTargetDependency */,
+				B23D1F6E18142D0100E6B212 /* PBXTargetDependency */,
 			);
 			name = Poedit;
 			productName = Poedit;
@@ -587,6 +659,7 @@
 				B24ACD5A16F6201F00399242 /* Poedit */,
 				B27115F8170830A800B936D5 /* ant_external_deps */,
 				B248B2DD170D765100EBA58E /* GettextTools */,
+				B23D1F6318142CF400E6B212 /* dump-legacy-tm */,
 			);
 		};
 /* End PBXProject section */
@@ -635,8 +708,6 @@
 				B29AE89517103992008D1F8A /* progress.xrc in Resources */,
 				B29AE89617103992008D1F8A /* properties.xrc in Resources */,
 				B29AE89717103992008D1F8A /* summary.xrc in Resources */,
-				B29AE89817103992008D1F8A /* tm_update.gif in Resources */,
-				B29AE89917103992008D1F8A /* tm_update.xrc in Resources */,
 				B29AE89A17103992008D1F8A /* toolbar.xrc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -717,6 +788,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B23D1F6018142CF400E6B212 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B23D1F7118142D1900E6B212 /* dump_legacy_tm.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B248B2DA170D765100EBA58E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -728,6 +807,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */,
 				B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */,
 				B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */,
 				B28F1CE816F629D30018AF7E /* edframe.cpp in Sources */,
@@ -751,8 +831,6 @@
 				B28F1CFA16F629D30018AF7E /* propertiesdlg.cpp in Sources */,
 				B28F1CFB16F629D30018AF7E /* summarydlg.cpp in Sources */,
 				B28F1CFC16F629D30018AF7E /* transmem.cpp in Sources */,
-				B28F1CFD16F629D30018AF7E /* transmemupd_wizard.cpp in Sources */,
-				B28F1CFE16F629D30018AF7E /* transmemupd.cpp in Sources */,
 				B28F1CFF16F629D30018AF7E /* utility.cpp in Sources */,
 				B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */,
 				B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */,
@@ -763,6 +841,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B23D1F6E18142D0100E6B212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B23D1F6318142CF400E6B212 /* dump-legacy-tm */;
+			targetProxy = B23D1F6D18142D0100E6B212 /* PBXContainerItemProxy */;
+		};
+		B23D1F7018142D0C00E6B212 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B27115F8170830A800B936D5 /* ant_external_deps */;
+			targetProxy = B23D1F6F18142D0C00E6B212 /* PBXContainerItemProxy */;
+		};
 		B248B2EC170D772800EBA58E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B27115F8170830A800B936D5 /* ant_external_deps */;
@@ -793,6 +881,52 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B23D1F6B18142CF400E6B212 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEPS_BUILD_DIR)/db/include",
+				);
+				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
+				OTHER_LDFLAGS = "-ldb_cxx";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B23D1F6C18142CF400E6B212 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEPS_BUILD_DIR)/db/include",
+				);
+				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
+				OTHER_LDFLAGS = "-ldb_cxx";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		B248B2E8170D765100EBA58E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -867,12 +1001,13 @@
 					deps/custom_build/config,
 					deps/wx/include,
 					deps/boost,
-					"$(DEPS_BUILD_DIR)/db/include",
+					deps/lucene,
+					deps/lucene/LucenePlusPlus/include,
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				POEDIT_FEATURES = "USE_SPARKLE USE_TRANSMEM USE_SPELLCHECKING";
+				POEDIT_FEATURES = "USE_SPARKLE USE_SPELLCHECKING";
 				POEDIT_VERSION = 1.6beta1;
 				SDKROOT = macosx;
 				WX_DEFINES = "__WXOSX_COCOA__ __WX__ __WXMAC_XCODE__=1 wxUSE_UNICODE_UTF8=0 wxUSE_UNICODE_WCHAR=1";
@@ -915,11 +1050,12 @@
 					deps/custom_build/config,
 					deps/wx/include,
 					deps/boost,
-					"$(DEPS_BUILD_DIR)/db/include",
+					deps/lucene,
+					deps/lucene/LucenePlusPlus/include,
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				POEDIT_FEATURES = "USE_SPARKLE USE_TRANSMEM USE_SPELLCHECKING";
+				POEDIT_FEATURES = "USE_SPARKLE USE_SPELLCHECKING";
 				SDKROOT = macosx;
 				WX_DEFINES = "__WXOSX_COCOA__ __WX__ __WXMAC_XCODE__=1 wxUSE_UNICODE_UTF8=0 wxUSE_UNICODE_WCHAR=1";
 			};
@@ -933,8 +1069,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
-				OTHER_LDFLAGS = "-ldb_cxx";
+				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -948,8 +1084,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
-				OTHER_LDFLAGS = "-ldb_cxx";
+				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -983,6 +1119,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B23D1F6A18142CF400E6B212 /* Build configuration list for PBXNativeTarget "dump-legacy-tm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B23D1F6B18142CF400E6B212 /* Debug */,
+				B23D1F6C18142CF400E6B212 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B248B2EA170D765100EBA58E /* Build configuration list for PBXNativeTarget "GettextTools" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

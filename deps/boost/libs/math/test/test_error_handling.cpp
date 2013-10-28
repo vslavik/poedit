@@ -67,6 +67,8 @@ T user_indeterminate_result_error(const char* , const char* , const T& )
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp> // for test_main
 #include <cerrno> // for errno
+#include <iostream>
+#include <iomanip>
 //
 // Define some policies:
 //

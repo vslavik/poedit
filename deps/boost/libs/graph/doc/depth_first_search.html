@@ -107,6 +107,7 @@ DFS-VISIT(<i>G</i>, <i>u</i>)
       <i>...</i>
     <b>else if</b> (<i>color[v] =</i> BLACK) 
       <i>...</i>
+    <i>...</i>
   <b>end for</b>
   <i>color[u] :=</i> BLACK
   <i>f_time[u] := time := time + 1</i> 
@@ -139,6 +140,8 @@ examine edge <i>(u,v)</i>
 <i>(u,v)</i> is a back edge
 -
 <i>(u,v)</i> is a cross or forward edge
+-
+finish edge <i>(u,v)</i>
 -
 finish vertex <i>u</i>
 -
@@ -266,6 +269,9 @@ The time complexity is <i>O(E + V)</i>.
 <li><b><tt>vis.forward_or_cross_edge(e, g)</tt></b> is invoked on
   forward or cross edges in the graph. In an undirected graph this
   method is never called.
+
+<li><b><tt>vis.finish_edge(e, g)</tt></b> is invoked on the non-tree edges in 
+  the graph as well as on each tree edge after its target vertex is finished. 
   
 <li><b><tt>vis.finish_vertex(u, g)</tt></b> is invoked on a vertex after
   all of its out edges have been added to the search tree and all of

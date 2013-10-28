@@ -64,7 +64,8 @@ int main(int argc, char** argv)
   std::vector<vec_t> embedding(num_vertices(g));
   if (boyer_myrvold_planarity_test(boyer_myrvold_params::graph = g,
                                    boyer_myrvold_params::embedding = 
-                                       &embedding[0]
+                                       make_iterator_property_map(
+                                         embedding.begin(), get(vertex_index, g))
                                    )
       )
     std::cout << "Input graph is planar" << std::endl;
@@ -75,7 +76,10 @@ int main(int argc, char** argv)
     ordering_storage_t;
   
   ordering_storage_t ordering;
-  planar_canonical_ordering(g, &embedding[0], std::back_inserter(ordering));
+  planar_canonical_ordering(g,
+                            make_iterator_property_map(
+                              embedding.begin(), get(vertex_index, g)),
+                            std::back_inserter(ordering));
 
   ordering_storage_t::iterator oi, oi_end;
   oi_end = ordering.end();

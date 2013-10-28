@@ -14,6 +14,7 @@
 #include <boost/geometry/index/rtree.hpp>
 
 #include <boost/geometry/geometries/linestring.hpp>
+#include <boost/geometry/geometries/segment.hpp>
 #include <boost/geometry/geometries/ring.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
 #include <boost/geometry/multi/geometries/multi_polygon.hpp>
@@ -31,6 +32,7 @@ typedef bg::model::point<float, 2, boost::geometry::cs::cartesian> P;
 typedef bg::model::box<P> B;
 //bgi::rtree<B> t(2, 1);
 typedef bg::model::linestring<P> LS;
+typedef bg::model::segment<P> S;
 typedef bg::model::ring<P> R;
 typedef bg::model::polygon<P> Poly;
 typedef bg::model::multi_polygon<Poly> MPoly;
@@ -50,10 +52,12 @@ B search_box;
 R search_ring;
 Poly search_poly;
 MPoly search_multi_poly;
+S search_segment;
+LS search_linestring;
 LS search_path;
 
 enum query_mode_type {
-    qm_knn, qm_c, qm_d, qm_i, qm_o, qm_w, qm_nc, qm_nd, qm_ni, qm_no, qm_nw, qm_all, qm_ri, qm_pi, qm_mpi, qm_path
+    qm_knn, qm_c, qm_d, qm_i, qm_o, qm_w, qm_nc, qm_nd, qm_ni, qm_no, qm_nw, qm_all, qm_ri, qm_pi, qm_mpi, qm_si, qm_lsi, qm_path
 } query_mode = qm_knn;
 
 bool search_valid = false;
@@ -335,6 +339,81 @@ void query_multi_poly()
         std::cout << "boxes not found\n";
 }
 
+template <typename Predicate>
+void query_segment()
+{
+    float x = ( rand() % 1000 ) / 10.0f;
+    float y = ( rand() % 1000 ) / 10.0f;
+    float w = 10.0f - ( rand() % 1000 ) / 50.0f;
+    float h = 10.0f - ( rand() % 1000 ) / 50.0f;
+    w += 0 <= w ? 10 : -10;
+    h += 0 <= h ? 10 : -10;
+
+    boost::geometry::set<0, 0>(search_segment, x - w);
+    boost::geometry::set<0, 1>(search_segment, y - h);
+    boost::geometry::set<1, 0>(search_segment, x + w);
+    boost::geometry::set<1, 1>(search_segment, y + h);
+
+    nearest_boxes.clear();
+    found_count = t.query(Predicate(search_segment), std::back_inserter(nearest_boxes) );
+
+    if ( found_count > 0 )
+    {
+        std::cout << "search segment: ";
+        bgi::detail::utilities::print_indexable(std::cout, P(x-w, y-h));
+        bgi::detail::utilities::print_indexable(std::cout, P(x+w, y+h));
+
+        std::cout << "\nfound: ";
+        for ( size_t i = 0 ; i < nearest_boxes.size() ; ++i )
+        {
+            bgi::detail::utilities::print_indexable(std::cout, nearest_boxes[i]);
+            std::cout << '\n';
+        }
+    }
+    else
+        std::cout << "boxes not found\n";
+}
+
+template <typename Predicate>
+void query_linestring()
+{
+    float x = ( rand() % 1000 ) / 10.0f;
+    float y = ( rand() % 1000 ) / 10.0f;
+    float w = 10 + ( rand() % 1000 ) / 100.0f;
+    float h = 10 + ( rand() % 1000 ) / 100.0f;
+
+    search_linestring.clear();
+    float a = 0;
+    float d = 0;
+    for ( size_t i = 0 ; i < 300 ; ++i, a += 0.05, d += 0.005 )
+    {
+        float xx = x + w * d * ::cos(a);
+        float yy = y + h * d * ::sin(a);
+        search_linestring.push_back(P(xx, yy));
+    }
+
+    nearest_boxes.clear();
+    found_count = t.query(Predicate(search_linestring), std::back_inserter(nearest_boxes) );
+
+    if ( found_count > 0 )
+    {
+        std::cout << "search linestring: ";
+        BOOST_FOREACH(P const& p, search_linestring)
+        {
+            bgi::detail::utilities::print_indexable(std::cout, p);
+            std::cout << ' ';
+        }
+        std::cout << "\nfound: ";
+        for ( size_t i = 0 ; i < nearest_boxes.size() ; ++i )
+        {
+            bgi::detail::utilities::print_indexable(std::cout, nearest_boxes[i]);
+            std::cout << '\n';
+        }
+    }
+    else
+        std::cout << "boxes not found\n";
+}
+
 void search()
 {
     namespace d = bgi::detail;
@@ -369,6 +448,10 @@ void search()
         query_poly< d::spatial_predicate<Poly, d::intersects_tag, false> >();
     else if ( query_mode == qm_mpi )
         query_multi_poly< d::spatial_predicate<MPoly, d::intersects_tag, false> >();
+    else if ( query_mode == qm_si )
+        query_segment< d::spatial_predicate<S, d::intersects_tag, false> >();
+    else if ( query_mode == qm_lsi )
+        query_linestring< d::spatial_predicate<LS, d::intersects_tag, false> >();
     else if ( query_mode == qm_path )
         query_path();
 
@@ -403,7 +486,7 @@ void draw_knn_area(float min_distance, float max_distance)
     glEnd();
 }
 
-void draw_path(LS const& ls)
+void draw_linestring(LS const& ls)
 {
     glBegin(GL_LINE_STRIP);
 
@@ -415,6 +498,20 @@ void draw_path(LS const& ls)
         glVertex3f(x, y, z);
     }
 
+    glEnd();
+}
+
+void draw_segment(S const& s)
+{
+    float x1 = boost::geometry::get<0, 0>(s);
+    float y1 = boost::geometry::get<0, 1>(s);
+    float x2 = boost::geometry::get<1, 0>(s);
+    float y2 = boost::geometry::get<1, 1>(s);
+    float z = bgi::detail::rtree::utilities::view<RTree>(t).depth();
+
+    glBegin(GL_LINES);
+    glVertex3f(x1, y1, z);
+    glVertex3f(x2, y2, z);
     glEnd();
 }
 
@@ -487,8 +584,12 @@ void render_scene(void)
             draw_polygon(search_poly);
         else if ( query_mode == qm_mpi )
             draw_multi_polygon(search_multi_poly);
+        else if ( query_mode == qm_si )
+            draw_segment(search_segment);
+        else if ( query_mode == qm_lsi )
+            draw_linestring(search_linestring);
         else if ( query_mode == qm_path )
-            draw_path(search_path);
+            draw_linestring(search_path);
         else
             draw_box(search_box);
 
@@ -686,6 +787,10 @@ void keyboard(unsigned char key, int /*x*/, int /*y*/)
                 query_mode = qm_pi;
             else if ( current_line == "mpi" )
                 query_mode = qm_mpi;
+            else if ( current_line == "si" )
+                query_mode = qm_si;
+            else if ( current_line == "lsi" )
+                query_mode = qm_lsi;
             else if ( current_line == "path" )
                 query_mode = qm_path;
             

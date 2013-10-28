@@ -17,9 +17,6 @@ void test_graph_bundle(Graph& g, boost::mpl::true_) {
   using namespace boost;
   std::cout << "...test_graph_bundle\n";
 
-  typedef typename graph_property_type<Graph>::type Property;
-  typedef typename graph_bundle_type<Graph>::type Bundle;
-
   GraphBundle& b1 = g[graph_bundle];
   GraphBundle& b2 = get_property(g);
   ignore(b1); ignore(b2);

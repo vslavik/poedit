@@ -577,8 +577,28 @@ sometimes require a lock, and to `2` if they are always lock-free:
 [table
     [[Macro] [Description]]
     [
+      [`BOOST_ATOMIC_FLAG_LOCK_FREE`]
+      [Indicate whether `atomic_flag` is lock-free]
+    ]
+    [
+      [`BOOST_ATOMIC_BOOL_LOCK_FREE`]
+      [Indicate whether `atomic<bool>` is lock-free]
+    ]
+    [
       [`BOOST_ATOMIC_CHAR_LOCK_FREE`]
       [Indicate whether `atomic<char>` (including signed/unsigned variants) is lock-free]
+    ]
+    [
+      [`BOOST_ATOMIC_CHAR16_T_LOCK_FREE`]
+      [Indicate whether `atomic<char16_t>` (including signed/unsigned variants) is lock-free]
+    ]
+    [
+      [`BOOST_ATOMIC_CHAR32_T_LOCK_FREE`]
+      [Indicate whether `atomic<char32_t>` (including signed/unsigned variants) is lock-free]
+    ]
+    [
+      [`BOOST_ATOMIC_WCHAR_T_LOCK_FREE`]
+      [Indicate whether `atomic<wchar_t>` (including signed/unsigned variants) is lock-free]
     ]
     [
       [`BOOST_ATOMIC_SHORT_LOCK_FREE`]
@@ -597,8 +617,20 @@ sometimes require a lock, and to `2` if they are always lock-free:
       [Indicate whether `atomic<long long>` (including signed/unsigned variants) is lock-free]
     ]
     [
-      [`BOOST_ATOMIC_ADDRESS_LOCK_FREE`]
+      [`BOOST_ATOMIC_INT128_LOCK_FREE`]
+      [Indicate whether `atomic<int128_type>` (including signed/unsigned variants) is lock-free. This macro is a non-standard extension.]
+    ]
+    [
+      [`BOOST_ATOMIC_ADDRESS_LOCK_FREE` or `BOOST_ATOMIC_POINTER_LOCK_FREE`]
       [Indicate whether `atomic<T *>` is lock-free]
+    ]
+    [
+      [`BOOST_ATOMIC_THREAD_FENCE`]
+      [Indicate whether `atomic_thread_fence` function is lock-free]
+    ]
+    [
+      [`BOOST_ATOMIC_SIGNAL_FENCE`]
+      [Indicate whether `atomic_signal_fence` function is lock-free]
     ]
 ]
 
@@ -648,10 +680,10 @@ limitations that cannot be lifted without compiler support:
   memory operations only in one direction. Since there is no
   way to express this constraint to the compiler, these act
   as "full compiler barriers" in this implementation. In corner
-  cases this may lead to worse code than a C++11 compiler
+  cases this may result in a less efficient code than a C++11 compiler
   could generate.
 * [*No interprocess fallback]: using `atomic<T>` in shared memory only works
-  correctly, if `atomic<T>::is_lock_free == true`
+  correctly, if `atomic<T>::is_lock_free() == true`
 
 [endsect]
 
@@ -667,7 +699,7 @@ implementation behaves as expected:
 * [*native_api.cpp] verifies that all atomic operations have correct
   value semantics (e.g. "fetch_add" really adds the desired value,
   returning the previous). It is a rough "smoke-test" to help weed
-  out the most obvious mistakes (for example with overflow,
+  out the most obvious mistakes (for example width overflow,
   signed/unsigned extension, ...).
 * [*lockfree.cpp] verifies that the [*BOOST_ATOMIC_*_LOCKFREE] macros
   are set properly according to the expectations for a given

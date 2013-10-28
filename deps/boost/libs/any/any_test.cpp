@@ -1,6 +1,6 @@
 // what:  unit tests for variant type boost::any
 // who:   contributed by Kevlin Henney
-// when:  July 2001
+// when:  July 2001, 2013
 // where: tested with BCC 5.5, MSVC 6.0, and g++ 2.95
 
 #include <cstdlib>
@@ -36,6 +36,9 @@ namespace any_tests // test suite
     void test_swap();
     void test_null_copying();
     void test_cast_to_reference();
+    void test_with_array();
+    void test_with_func();
+    void test_clear();
 
     const test_case test_cases[] =
     {
@@ -47,7 +50,10 @@ namespace any_tests // test suite
         { "failed custom keyword cast",     test_bad_cast          },
         { "swap member function",           test_swap              },
         { "copying operations on a null",   test_null_copying      },
-        { "cast to reference types",        test_cast_to_reference }
+        { "cast to reference types",        test_cast_to_reference },
+        { "storing an array inside",        test_with_array        },
+        { "implicit cast of returned value",test_with_func         },
+        { "clear() methods",                test_clear             }
     };
 
     const test_case_iterator begin = test_cases;
@@ -249,9 +255,79 @@ namespace any_tests // test definitions
             "any_cast to incorrect const reference type");
     }
 
+    void test_with_array()
+    {
+        any value1("Char array");
+        any value2;
+        value2 = "Char array";
+
+        check_false(value1.empty(), "type");
+        check_false(value2.empty(), "type");
+
+        check_equal(value1.type(), typeid(const char*), "type");
+        check_equal(value2.type(), typeid(const char*), "type");
+        
+        check_non_null(any_cast<const char*>(&value1), "any_cast<const char*>");
+        check_non_null(any_cast<const char*>(&value2), "any_cast<const char*>");
+    }
+
+    const std::string& returning_string1() 
+    {
+        static const std::string ret("foo"); 
+        return ret;
+    }
+
+    std::string returning_string2() 
+    {
+        static const std::string ret("foo"); 
+        return ret;
+    }
+
+    void test_with_func()
+    {
+        std::string s;
+        s = any_cast<std::string>(returning_string1());
+        s = any_cast<const std::string&>(returning_string1());
+
+        s = any_cast<std::string>(returning_string2());
+        s = any_cast<const std::string&>(returning_string2());
+
+#if (!defined(_MSC_VER) || _MSC_VER != 1600) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) 
+#if !defined(__INTEL_COMPILER) && !defined(__ICL)
+        // Intel compiler thinks that it must choose the `any_cast(const any&)` function 
+        // instead of the `any_cast(const any&&)`.
+        // Bug was not reported because of missing premier support account + annoying 
+        // registrations requirements.
+        s = any_cast<std::string&&>(returning_string1());
+#endif
+        s = any_cast<std::string&&>(returning_string2());
+#endif
+    }
+
+    
+    void test_clear()
+    {
+        std::string text = "test message";
+        any value = text;
+
+        check_false(value.empty(), "empty");
+        
+        value.clear();
+        check_true(value.empty(), "non-empty after clear");
+
+        value.clear();
+        check_true(value.empty(), "non-empty after second clear");
+
+        value = text;
+        check_false(value.empty(), "empty");
+        
+        value.clear();
+        check_true(value.empty(), "non-empty after clear");
+    }
 }
 
 // Copyright Kevlin Henney, 2000, 2001. All rights reserved.
+// Copyright Antony Polukhin, 2013.
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at

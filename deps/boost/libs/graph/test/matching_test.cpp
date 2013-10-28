@@ -131,7 +131,6 @@ void matching_test(std::size_t num_v, const std::string& graph_name)
   typedef vector_property_map< typename graph_traits<Graph>::vertex_descriptor, vertex_index_map_t > mate_t;
   typedef typename graph_traits<Graph>::vertex_iterator vertex_iterator_t;
   typedef typename graph_traits<Graph>::vertex_descriptor vertex_descriptor_t;
-  typedef typename graph_traits<Graph>::vertices_size_type v_size_t;
 
   const std::size_t double_num_v = num_v * 2;
 

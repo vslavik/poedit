@@ -27,7 +27,6 @@ int main()
   
   typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS,
     boost::no_property, boost::property<boost::edge_weight_t, int> > undirected_graph;
-  typedef boost::graph_traits<undirected_graph>::vertex_descriptor vertex_descriptor;
   typedef boost::property_map<undirected_graph, boost::edge_weight_t>::type weight_map_type;
   typedef boost::property_traits<weight_map_type>::value_type weight_type;
   

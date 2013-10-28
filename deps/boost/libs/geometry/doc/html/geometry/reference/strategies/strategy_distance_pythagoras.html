@@ -27,7 +27,7 @@
 <a name="geometry.reference.strategies.strategy_distance_pythagoras"></a><a class="link" href="strategy_distance_pythagoras.html" title="strategy::distance::pythagoras">strategy::distance::pythagoras</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp15973024"></a><a class="indexterm" name="idp15973360"></a><a class="indexterm" name="idp15973696"></a>
+          <a class="indexterm" name="idp62846424"></a><a class="indexterm" name="idp62846760"></a><a class="indexterm" name="idp62847096"></a>
 Strategy to calculate the distance between two points.
         </p>
 <h6>
@@ -36,7 +36,7 @@ Strategy to calculate the distance between two points.
         </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Point1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Point2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">distance</span><span class="special">::</span><span class="identifier">pythagoras</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
@@ -72,39 +72,7 @@ Strategy to calculate the distance between two points.
                   </p>
                 </th>
 </tr></thead>
-<tbody>
-<tr>
-<td>
-                  <p>
-                    typename Point1
-                  </p>
-                </td>
-<td>
-                </td>
-<td>
-                  <p>
-                    point type
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    typename Point2
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Point1
-                  </p>
-                </td>
-<td>
-                  <p>
-                    second point type
-                  </p>
-                </td>
-</tr>
-<tr>
+<tbody><tr>
 <td>
                   <p>
                     typename CalculationType
@@ -122,8 +90,7 @@ Strategy to calculate the distance between two points.
                     point
                   </p>
                 </td>
-</tr>
-</tbody>
+</tr></tbody>
 </table></div>
 <h6>
 <a name="geometry.reference.strategies.strategy_distance_pythagoras.h2"></a>
@@ -163,7 +130,8 @@ Strategy to calculate the distance between two points.
 <td>
                   <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">calculation_type</span> <span class="identifier">apply</span><span class="special">(</span><span class="identifier">Point1</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p1</span><span class="special">,</span> <span class="identifier">Point2</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p2</span><span class="special">)</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">P2</span><span class="special">&gt;</span>
+<span class="identifier">calculation_type</span><span class="special">&lt;</span> <span class="identifier">P1</span><span class="special">,</span> <span class="identifier">P2</span> <span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">apply</span><span class="special">(</span><span class="identifier">P1</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p1</span><span class="special">,</span> <span class="identifier">P2</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p2</span><span class="special">)</span></pre>
 <p>
                   </p>
                 </td>
@@ -174,11 +142,11 @@ Strategy to calculate the distance between two points.
                 </td>
 <td>
                   <p>
-                    <span class="bold"><strong>Point1 const &amp;</strong></span>: <span class="emphasis"><em>p1</em></span>:
+                    <span class="bold"><strong>P1 const &amp;</strong></span>: <span class="emphasis"><em>p1</em></span>:
                     first point
                   </p>
                   <p>
-                    <span class="bold"><strong>Point2 const &amp;</strong></span>: <span class="emphasis"><em>p2</em></span>:
+                    <span class="bold"><strong>P2 const &amp;</strong></span>: <span class="emphasis"><em>p2</em></span>:
                     second point
                   </p>
                 </td>

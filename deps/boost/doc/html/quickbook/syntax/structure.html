@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../../quickbook.html" title="Chapter&#160;40.&#160;Quickbook 1.5">
+<link rel="up" href="../../quickbook.html" title="Chapter&#160;40.&#160;Quickbook 1.6">
 <link rel="prev" href="../syntax.html" title="Syntax Summary">
 <link rel="next" href="phrase.html" title="Phrase Level Elements">
 </head>
@@ -35,8 +35,12 @@
 <a name="quickbook.syntax.structure.docinfo"></a><a name="quickbook.ref.docinfo"></a><a class="link" href="structure.html#quickbook.syntax.structure.docinfo" title="Document Info">Document
       Info</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="structure.html#quickbook.syntax.structure.docinfo.attributes">Document
-        Info Attributes</a></span></dt></dl></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="structure.html#quickbook.syntax.structure.docinfo.attributes">Document
+        Info Attributes</a></span></dt>
+<dt><span class="section"><a href="structure.html#quickbook.syntax.structure.docinfo.nesting">Nesting
+        quickbook documents</a></span></dt>
+</dl></div>
 <p>
         Every document must begin with a Document Info section, which looks something
         like this:
@@ -116,13 +120,43 @@
           <span class="phrase"><a name="quickbook.syntax.structure.docinfo.attributes.quickbook_specific_meta_data"></a></span><a class="link" href="structure.html#quickbook.syntax.structure.docinfo.attributes.quickbook_specific_meta_data">Quickbook
           specific meta data</a>
         </h5>
-<pre class="programlisting">[quickbook 1.5]
+<pre class="programlisting">[quickbook 1.6]
 </pre>
 <p>
           The <code class="computeroutput">quickbook</code> attribute declares the version of quickbook
           the document is written for. In its absence, version 1.1 is assumed. It's
-          recommended that you use <code class="computeroutput">[quickbook 1.5]</code> which is the version
+          recommended that you use <code class="computeroutput">[quickbook 1.6]</code> which is the version
           described here.
+        </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            The quickbook version also makes some changes to the markup that's generated.
+            Most notably, the ids that are automatically for headers and sections
+            are different in later versions. To minimise disruption, you can use
+            the <code class="literal">compatibility-mode</code> attribute to generate similar
+            markup to the old version:
+          </p>
+<pre class="programlisting">[article Article that was original
+         written in quickbook 1.3
+[quickbook 1.6]
+[compatibility-mode 1.3]
+]
+</pre>
+<p>
+            This feature shouldn't be used for new documents, just for porting old
+            documents to the new version.
+          </p>
+</td></tr>
+</table></div>
+<p>
+          Both the <code class="literal">quickbook</code> and <code class="literal">compatibility-mode</code>
+          tags can be used at the start of the file, before the document info block,
+          and also in files that don't have a document info block.
         </p>
 <pre class="programlisting">[source-mode teletype]
 </pre>
@@ -185,6 +219,55 @@
           but still use them, generating invalid markup, that's just ignored by the
           style sheets.
         </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="quickbook.syntax.structure.docinfo.nesting"></a><a class="link" href="structure.html#quickbook.syntax.structure.docinfo.nesting" title="Nesting quickbook documents">Nesting
+        quickbook documents</a>
+</h4></div></div></div>
+<p>
+          Docinfo blocks can only appear at the beginning of a quickbook file, so
+          to create a more complicated document you need to use several quickbook
+          files and use the <a class="link" href="block.html#quickbook.ref.include">include tag</a>
+          to nest them. For example, say you wish to create a book with an introduction
+          and a chapter, you first create a file for the book:
+        </p>
+<pre class="programlisting">[book Simple example
+[quickbook 1.6]
+]
+
+[include introduction.qbk]
+[include chapter.qbk]
+</pre>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            Structuring a document like this was introduced in quickbook 1.6, so
+            the <code class="computeroutput">[quickbook 1.6]</code> docinfo field is required.
+          </p></td></tr>
+</table></div>
+<p>
+          The appropriate document type for an introduction is <code class="computeroutput">preface</code>,
+          so the contents of <code class="computeroutput">introduction.qbk</code> should be something like:
+        </p>
+<pre class="programlisting">[preface Introduction
+[quickbook 1.6]
+]
+
+Write the introduction to the book here....
+</pre>
+<p>
+          And <code class="computeroutput">chapter.qbk</code>:
+        </p>
+<pre class="programlisting">[chapter A chapter
+[quickbook 1.6]
+]
+
+Chapter contents....
+</pre>
 </div>
 </div>
 <div class="section">

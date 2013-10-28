@@ -88,7 +88,6 @@ template <class T>
 void test()
 {
    typedef typename boost::math::detail::fp_traits<T>::type traits;
-   typedef typename traits::method method;
 
    T t = 2;
    T u = 2;

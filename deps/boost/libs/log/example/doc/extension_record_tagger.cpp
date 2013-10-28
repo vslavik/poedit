@@ -8,8 +8,8 @@
 #include <string>
 #include <ostream>
 #include <fstream>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/scope_exit.hpp>
 #include <boost/mpl/quote.hpp>
 #include <boost/parameter/keyword.hpp>

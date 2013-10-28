@@ -134,7 +134,7 @@ template< assert_::relations r, long x, long y > struct assert_relation {};
 
 #endif 
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1700)
+#if BOOST_WORKAROUND(BOOST_MSVC, == 1700)
 
 template<class Pred>
 struct extract_assert_pred;

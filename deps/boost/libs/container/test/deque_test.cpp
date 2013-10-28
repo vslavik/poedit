@@ -332,6 +332,10 @@ int main ()
          return 1;
       if(test::vector_test<MyCopyDeque>())
          return 1;
+      if(!test::default_init_test< deque<int, test::default_init_allocator<int> > >()){
+         std::cerr << "Default init test failed" << std::endl;
+         return 1;
+      }
    }
 
    const test::EmplaceOptions Options = (test::EmplaceOptions)(test::EMPLACE_BACK | test::EMPLACE_FRONT | test::EMPLACE_BEFORE);

@@ -27,7 +27,7 @@
 <a name="geometry.reference.strategies.strategy_distance_haversine"></a><a class="link" href="strategy_distance_haversine.html" title="strategy::distance::haversine">strategy::distance::haversine</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp16015312"></a><a class="indexterm" name="idp16015648"></a><a class="indexterm" name="idp16015984"></a>
+          <a class="indexterm" name="idp62888312"></a><a class="indexterm" name="idp62888648"></a><a class="indexterm" name="idp62888984"></a>
 Distance calculation for spherical coordinates on a perfect sphere using
           haversine.
         </p>
@@ -37,7 +37,7 @@ Distance calculation for spherical coordinates on a perfect sphere using
         </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Point1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Point2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">RadiusType</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">distance</span><span class="special">::</span><span class="identifier">haversine</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
@@ -77,31 +77,14 @@ Distance calculation for spherical coordinates on a perfect sphere using
 <tr>
 <td>
                   <p>
-                    typename Point1
+                    typename RadiusType
                   </p>
                 </td>
 <td>
                 </td>
 <td>
                   <p>
-                    point type
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    typename Point2
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Point1
-                  </p>
-                </td>
-<td>
-                  <p>
-                    second point type
+                    numeric type for radius (of sphere, earth)
                   </p>
                 </td>
 </tr>
@@ -157,7 +140,7 @@ Distance calculation for spherical coordinates on a perfect sphere using
 <td>
                   <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">haversine</span><span class="special">(</span><span class="identifier">calculation_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">radius</span> <span class="special">=</span> <span class="number">1.0</span><span class="special">)</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">haversine</span><span class="special">(</span><span class="identifier">RadiusType</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">radius</span> <span class="special">=</span> <span class="number">1.0</span><span class="special">)</span></pre>
 <p>
                   </p>
                 </td>
@@ -168,9 +151,8 @@ Distance calculation for spherical coordinates on a perfect sphere using
                 </td>
 <td>
                   <p>
-                    <span class="bold"><strong>calculation_type const &amp;</strong></span>:
-                    <span class="emphasis"><em>radius</em></span>: radius of the sphere, defaults to
-                    1.0 for the unit sphere
+                    <span class="bold"><strong>RadiusType const &amp;</strong></span>: <span class="emphasis"><em>radius</em></span>:
+                    radius of the sphere, defaults to 1.0 for the unit sphere
                   </p>
                 </td>
 </tr></tbody>
@@ -214,7 +196,8 @@ Distance calculation for spherical coordinates on a perfect sphere using
 <td>
                   <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">calculation_type</span> <span class="identifier">apply</span><span class="special">(</span><span class="identifier">Point1</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p1</span><span class="special">,</span> <span class="identifier">Point2</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p2</span><span class="special">)</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Point1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Point2</span><span class="special">&gt;</span>
+<span class="identifier">calculation_type</span><span class="special">&lt;</span> <span class="identifier">Point1</span><span class="special">,</span> <span class="identifier">Point2</span> <span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">apply</span><span class="special">(</span><span class="identifier">Point1</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p1</span><span class="special">,</span> <span class="identifier">Point2</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p2</span><span class="special">)</span></pre>
 <p>
                   </p>
                 </td>
@@ -243,7 +226,7 @@ Distance calculation for spherical coordinates on a perfect sphere using
 <td>
                   <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">calculation_type</span> <span class="identifier">radius</span><span class="special">()</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">RadiusType</span> <span class="identifier">radius</span><span class="special">()</span></pre>
 <p>
                   </p>
                 </td>

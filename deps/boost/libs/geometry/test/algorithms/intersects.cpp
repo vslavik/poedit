@@ -1,6 +1,8 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 //
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2013 Adam Wulkiewicz, Lodz, Poland.
+//
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -150,16 +152,48 @@ void test_all()
         true);
 }
 
-
+// Those tests won't pass for rational<> because numeric_limits<> isn't specialized for this type
+template <typename P>
+void test_additional()
+{
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(0 0,3 3)",
+        "BOX(1 2,3 5)", 
+        true);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(1 1,2 3)",
+        "BOX(0 0,4 4)",
+        true);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(1 1,1 1)",
+        "BOX(1 0,3 5)", 
+        true);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(0 1,0 1)",
+        "BOX(1 0,3 5)", 
+        false);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(2 1,2 1)",
+        "BOX(1 0,3 5)", 
+        true);
+    test_geometry<bg::model::linestring<P>, bg::model::box<P> >(
+        "LINESTRING(0 0,1 0,10 10)",
+        "BOX(1 2,3 5)", 
+        true);
+    test_geometry<bg::model::linestring<P>, bg::model::box<P> >(
+        "LINESTRING(1 2)",
+        "BOX(0 0,3 5)", 
+        true);
+}
 
 
 int test_main( int , char* [] )
 {
     test_all<bg::model::d2::point_xy<double> >();
+    test_additional<bg::model::d2::point_xy<double> >();
 
     test_all<bg::model::d2::point_xy<boost::rational<int> > >();
     
-
 #if defined(HAVE_TTMATH)
     test_all<bg::model::d2::point_xy<ttmath_big> >();
 #endif

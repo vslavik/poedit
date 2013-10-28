@@ -1,50 +1,54 @@
 [/
     Copyright 2002,2004,2006 Joel de Guzman, Eric Niebler
-    Copyright 2010-2011 Daniel James
+    Copyright 2010-2013 Daniel James
 
     Distributed under the Boost Software License, Version 1.0.
     (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 ]
 
-[chapter Language Versions
-    [quickbook 1.6]
-    [compatibility-mode 1.5]
-    [id quickbook.versions]
-    [source-mode teletype]
-]
-
-[section:stable Stable Versions]
-
-Since quickbook 1.3 the `quickbook` attribute in the document block selects
-which version of the language to use. Not all changes to quickbook are
-implemented using a version switch, it's mainly just the changes that change
-the way a document is interpreted or would break existing documentation.
-
-[heading Quickbook 1.3 and later]
-
-* Introduced quickbook language versioning.
-* In the documentation info, allow phrase markup in license and purpose
-  attributes.
-* Fully qualified section and headers. Subsection names are concatenated to the
-  ID to avoid clashing. Example: `doc_name.sect_name.sub_sect_name.sub_sub_sect_name`.
-
-[heading Quickbook 1.5 and later]
-
-* Ignore template argument separators inside square brackets.
-* Don't separate the final template argument if the `..` separator was
-  used. i.e. never mix `..` and whitespace separators.
-* Statically scope templates and their arguments rather than dynamically
-  scope them.
-* Give table ids, and let you set them.
-* Allow spaces between the `:` character and ids in elements which can
-  have ids.
-
-[endsect]
-
 [section:1_6 Quickbook 1.6]
 
-Everything described in here may change depending on the feedback received.
+Upgrading a document from an earlier version of quickbook shouldn't be too
+hard. The first thing to do is update the version in the docinfo block.
+For example, if you were updating the Xpressive documentation, the existing
+docinfo block looks like:
+
+    [library Boost.Xpressive
+        [quickbook 1.3]
+        ...
+    ]
+
+Change this to:
+
+    [library Boost.Xpressive
+        [quickbook 1.6]
+        [compatibility-mode 1.3]
+        ...
+    ]
+
+The =compatibility-mode= tag ensures that automatically generated links
+won't change. It might turn out that it isn't required, but in Xpressive's
+case if it isn't included it will break a lot of links.
+
+Then try building it. You might need to fix some stray square brackets. The
+new version has a stricter parser which will have an error for brackets
+which don't pair up. They might be there by mistake, in which case they
+should probably be deleted, or if they're intentional escaped. For example,
+to write out the half-open range \[a,b), use: `\[a,b)`.
+
+Next, you might need to reconsider how templates and macros are defined.
+If you `include` a file to use its templates, you'll now need to `import` it
+instead as templates are now scoped by included files. Also, if you define
+templates and macros in your main quickbook file, you might want to put them
+into a separate file and `import` that, which allows the main documentation
+files to concentrate on the structure and contents of the document, making them
+easier to read.
+
+Now that headings can have ids, it can be a good idea to add ids to existing
+headings. This means that the headings will have more predictable ids which
+don't change when the text of the heading changes. In order to preserve
+links you can use the existing generated id as the heading.
 
 [section:docinfo Includes with docinfo]
 
@@ -246,187 +250,38 @@ if you're totally sure that you will need it.
 
 [endsect] [/xmlbase]
 
+[section:template_parser Improved template parser]
+
+There's a new parser for template declarations and parameters which does
+a better job of understanding escaped and bracketed text. Unfortunately
+it does not understand element names so there are some cases where it
+could go wrong. For example:
+
+    [template doesnt_work[]
+    [ordered_list
+        [`code phrase`]
+    ]
+    ]
+
+In this case it will think the `[\`` is a template call and give a parse
+error. To work around this put an escaped space before the code phrase:
+
+    [template works[]
+    [ordered_list
+        [\ `code phrase`]
+    ]
+    ]
+
+[endsect]
+
 [section:elements New Elements]
 
-[section:block `block`]
+New elements added in quickbook 1.6:
 
-`block` is a block element that just marks its contents as a block,
-so that they aren't wrapped in paragraph tags. The main use is
-for escaped docbook block tags, such as:
+* [link quickbook.ref.block `block`]
+* [link quickbook.ref.list_tags `ordered_list` and `itemized_list`]
+* [link quickbook.ref.role `role`]
 
-    [template chapter[title]
-    [block'''<chapter><title>'''[title]'''</title>''']
-    ]
-
-    [template chapterend
-    [block'''</chapter>''']
-    ]
-
-    [chapter An example chapter]
-
-    Content
-
-    [chapterend]
-
-Without the `block` element, the `chapter` and `chapterend` templates
-would be wrapped in paragraph tags.
-
-[note In this example, the template body has to start with a newline so that
-the template will be interpreted in block mode.]
-
-[endsect]
-
-[section:lists `ordered_list` and `itemized_list`]
-
-These are used as an alternative to the normal wiki-style markup for
-lists. They make it easier to nest lists inside other elements, and
-nest elements inside lists. The markup is similar to a single level
-table:
-
-    [ordered_list [item1][item2]]
-
-is equivalent to:
-
-    # item1
-    # item2
-
-[endsect]
-
-[section:role `role`]
-
-`role` is a phrase element used to mark up the text in the eventual html
-with an a class. For example:
-
-    [role red Text content]
-
-Will generate the docbook:
-
-    <phrase role="red">Text content</phrase>
-
-Which will generate html along the lines of:
-
-    <span class="red">Text content</span>
-
-And then you can use css to style this however you wish.
-
-[endsect]
-
-[endsect]
-
-[section:listparagraphs Pargraphs in lists]
-
-I'm still refining this, but paragraphs and block elements can now be used
-in lists:
-
-[pre
-* Para 1
-
-  Para 2
-  * Nested Para 1
-
-    Nested Para 2
-
-        Code block
-  Para 3
-]
-
-generates:
-
-* Para 1
-
-  Para 2
-  * Nested Para 1
-
-    Nested Para 2
-
-        Code block
-  Para 3
-
-The docbook markup that this generates is pretty bad, but seems to create okay
-html.
-
-[endsect]
+[endsect] [/ elements]
 
 [endsect] [/ Quickbok 1.6]
-
-[section:1_7 Quickbook 1.7]
-
-[section:source_mode Source mode for single entities]
-
-1.7 introduces a new `!` element type for setting the source mode of a single
-entity without changing the source mode otherwise. This can be used for
-code blocks and other elements. For example:
-
-```
-[!c++]
-    void foo() {};
-
-[!python]``\`\`\`\ ``def foo():``\`\`\`\ ``
-```
-
-It can also be used to set the source mode for elements:
-
-```
-[!teletype][table
-    [[code][meaning]]
-    [[`+`][addition]]
-]
-```
-
-When used a section, it's only set for the section element, not the
-whole section.
-
-Currently it does support other syntactic entities such as paragraphs
-and lists. I'm not sure if it would be a good idea.
-
-[endsect]
-
-[section:callouts Callouts in code block]
-
-Currently callouts can only be used in code snippets. 1.7 add
-support in normal code blocks. The same syntax is used as in
-code snippets, the callout descriptions appear immediately
-after the code block.
-
-[endsect]
-
-[section:escaped_docinfo_attributes Escaped docbook in docinfo blocks]
-
-Quickbook docinfo attributes will probably never be as rich as docbook
-attributes so to allow more flexible markup, not supported by quickbook
-escaped docbook can be included in the docinfo block:
-
-```
-[article Some article
-[quickbook 1.7]
-'''<author>
-    <firstname>John</firstname>
-    <surname>Doe</surname>
-    <email>john.doe@example.com</email>
-</author>'''
-]
-```
-
-The escaped docbook is always placed at the end of the docinfo block,
-so it shouldn't be assumed that it will interleave the markup. A mixture
-of quickbook and docbook attributes for the same information will not work
-well.
-
-[endsect] [/escaped_docinfo_attributes]
-
-[section:templates_in_link_values Templates in link values]
-
-There's very premilinary support for calling templates in link values. A lot
-more work needs to be done, including:
-
-* Considering other places where templates could be called (e.g. images are
-  quite tricky, as templates could get confused with attributes, should
-  templates be callable from something like an element's id?).
-* Trimming spaces from the body of the template (which can cause surprising
-  results).
-* Checking that the contents of the template are appropriate for the context.
-  Possibly even using a different grammar.
-
-[endsect] [/templates_in_link_values]
-
-[endsect] [/ Quickbok 1.7]

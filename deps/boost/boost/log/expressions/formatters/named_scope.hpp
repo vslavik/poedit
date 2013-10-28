@@ -52,7 +52,7 @@
 #include <boost/log/keywords/iteration.hpp>
 #include <boost/log/detail/header.hpp>
 
-#ifdef BOOST_LOG_HAS_PRAGMA_ONCE
+#ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
@@ -71,10 +71,17 @@ enum scope_iteration_direction
 
 namespace aux {
 
+#ifdef BOOST_LOG_USE_CHAR
 //! Parses the named scope format string and constructs the formatter function
-template< typename CharT >
-BOOST_LOG_API boost::log::aux::light_function< void (basic_formatting_ostream< CharT >&, attributes::named_scope::value_type::value_type const&) >
-parse_named_scope_format(const CharT* begin, const CharT* end);
+BOOST_LOG_API boost::log::aux::light_function< void (basic_formatting_ostream< char >&, attributes::named_scope::value_type::value_type const&) >
+parse_named_scope_format(const char* begin, const char* end);
+#endif
+
+#ifdef BOOST_LOG_USE_WCHAR_T
+//! Parses the named scope format string and constructs the formatter function
+BOOST_LOG_API boost::log::aux::light_function< void (basic_formatting_ostream< wchar_t >&, attributes::named_scope::value_type::value_type const&) >
+parse_named_scope_format(const wchar_t* begin, const wchar_t* end);
+#endif
 
 //! Parses the named scope format string and constructs the formatter function
 template< typename CharT >
@@ -309,7 +316,7 @@ public:
         return boost::move(str);
     }
 
-    BOOST_LOG_DELETED_FUNCTION(format_named_scope_terminal())
+    BOOST_DELETED_FUNCTION(format_named_scope_terminal())
 };
 
 /*!
@@ -369,7 +376,7 @@ public:
 
 #define BOOST_LOG_AUX_OVERLOAD(left_ref, right_ref)\
     template< typename LeftExprT, typename FallbackPolicyT, typename CharT >\
-    BOOST_LOG_FORCEINLINE phoenix::actor< aux::attribute_output_terminal< phoenix::actor< LeftExprT >, attributes::named_scope::value_type, FallbackPolicyT, typename format_named_scope_actor< FallbackPolicyT, CharT >::formatter_function_type > >\
+    BOOST_FORCEINLINE phoenix::actor< aux::attribute_output_terminal< phoenix::actor< LeftExprT >, attributes::named_scope::value_type, FallbackPolicyT, typename format_named_scope_actor< FallbackPolicyT, CharT >::formatter_function_type > >\
     operator<< (phoenix::actor< LeftExprT > left_ref left, format_named_scope_actor< FallbackPolicyT, CharT > right_ref right)\
     {\
         typedef aux::attribute_output_terminal< phoenix::actor< LeftExprT >, attributes::named_scope::value_type, FallbackPolicyT, typename format_named_scope_actor< FallbackPolicyT, CharT >::formatter_function_type > terminal_type;\
@@ -407,7 +414,7 @@ struct default_scope_delimiter< wchar_t >
 #endif
 
 template< typename CharT, template< typename > class ActorT, typename FallbackPolicyT, typename ArgsT >
-BOOST_LOG_FORCEINLINE format_named_scope_actor< FallbackPolicyT, CharT, ActorT > format_named_scope(attribute_name const& name, FallbackPolicyT const& fallback, ArgsT const& args)
+BOOST_FORCEINLINE format_named_scope_actor< FallbackPolicyT, CharT, ActorT > format_named_scope(attribute_name const& name, FallbackPolicyT const& fallback, ArgsT const& args)
 {
     typedef format_named_scope_actor< FallbackPolicyT, CharT, ActorT > actor_type;
     typedef typename actor_type::terminal_type terminal_type;
@@ -438,7 +445,7 @@ BOOST_LOG_FORCEINLINE format_named_scope_actor< FallbackPolicyT, CharT, ActorT >
  * \param element_format Format string for a single named scope
  */
 template< typename CharT >
-BOOST_LOG_FORCEINLINE format_named_scope_actor< fallback_to_none, CharT > format_named_scope(attribute_name const& name, const CharT* element_format)
+BOOST_FORCEINLINE format_named_scope_actor< fallback_to_none, CharT > format_named_scope(attribute_name const& name, const CharT* element_format)
 {
     typedef format_named_scope_actor< fallback_to_none, CharT > actor_type;
     typedef typename actor_type::terminal_type terminal_type;
@@ -454,7 +461,7 @@ BOOST_LOG_FORCEINLINE format_named_scope_actor< fallback_to_none, CharT > format
  * \param element_format Format string for a single named scope
  */
 template< typename CharT >
-BOOST_LOG_FORCEINLINE format_named_scope_actor< fallback_to_none, CharT > format_named_scope(attribute_name const& name, std::basic_string< CharT > const& element_format)
+BOOST_FORCEINLINE format_named_scope_actor< fallback_to_none, CharT > format_named_scope(attribute_name const& name, std::basic_string< CharT > const& element_format)
 {
     typedef format_named_scope_actor< fallback_to_none, CharT > actor_type;
     typedef typename actor_type::terminal_type terminal_type;
@@ -470,7 +477,7 @@ BOOST_LOG_FORCEINLINE format_named_scope_actor< fallback_to_none, CharT > format
  * \param element_format Format string for a single named scope
  */
 template< typename DescriptorT, template< typename > class ActorT, typename CharT >
-BOOST_LOG_FORCEINLINE format_named_scope_actor< fallback_to_none, CharT, ActorT >
+BOOST_FORCEINLINE format_named_scope_actor< fallback_to_none, CharT, ActorT >
 format_named_scope(attribute_keyword< DescriptorT, ActorT > const& keyword, const CharT* element_format)
 {
     BOOST_STATIC_ASSERT_MSG((is_same< typename DescriptorT::value_type, attributes::named_scope::value_type >::value),\
@@ -490,7 +497,7 @@ format_named_scope(attribute_keyword< DescriptorT, ActorT > const& keyword, cons
  * \param element_format Format string for a single named scope
  */
 template< typename DescriptorT, template< typename > class ActorT, typename CharT >
-BOOST_LOG_FORCEINLINE format_named_scope_actor< fallback_to_none, CharT, ActorT >
+BOOST_FORCEINLINE format_named_scope_actor< fallback_to_none, CharT, ActorT >
 format_named_scope(attribute_keyword< DescriptorT, ActorT > const& keyword, std::basic_string< CharT > const& element_format)
 {
     BOOST_STATIC_ASSERT_MSG((is_same< typename DescriptorT::value_type, attributes::named_scope::value_type >::value),\
@@ -510,7 +517,7 @@ format_named_scope(attribute_keyword< DescriptorT, ActorT > const& keyword, std:
  * \param element_format Format string for a single named scope
  */
 template< typename T, typename FallbackPolicyT, typename TagT, template< typename > class ActorT, typename CharT >
-BOOST_LOG_FORCEINLINE format_named_scope_actor< FallbackPolicyT, CharT, ActorT >
+BOOST_FORCEINLINE format_named_scope_actor< FallbackPolicyT, CharT, ActorT >
 format_named_scope(attribute_actor< T, FallbackPolicyT, TagT, ActorT > const& placeholder, const CharT* element_format)
 {
     BOOST_STATIC_ASSERT_MSG((is_same< T, attributes::named_scope::value_type >::value),\
@@ -530,7 +537,7 @@ format_named_scope(attribute_actor< T, FallbackPolicyT, TagT, ActorT > const& pl
  * \param element_format Format string for a single named scope
  */
 template< typename T, typename FallbackPolicyT, typename TagT, template< typename > class ActorT, typename CharT >
-BOOST_LOG_FORCEINLINE format_named_scope_actor< FallbackPolicyT, CharT, ActorT >
+BOOST_FORCEINLINE format_named_scope_actor< FallbackPolicyT, CharT, ActorT >
 format_named_scope(attribute_actor< T, FallbackPolicyT, TagT, ActorT > const& placeholder, std::basic_string< CharT > const& element_format)
 {
     BOOST_STATIC_ASSERT_MSG((is_same< T, attributes::named_scope::value_type >::value),\

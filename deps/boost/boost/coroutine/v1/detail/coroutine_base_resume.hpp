@@ -4,8 +4,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_COROUTINES_V1_DETAIL_COROUTINE_BASE_RESUME_H
-#define BOOST_COROUTINES_V1_DETAIL_COROUTINE_BASE_RESUME_H
+#ifndef BOOST_COROUTINES_OLD_DETAIL_COROUTINE_BASE_RESUME_H
+#define BOOST_COROUTINES_OLD_DETAIL_COROUTINE_BASE_RESUME_H
 
 #include <iterator>
 
@@ -22,7 +22,7 @@
 
 #include <boost/coroutine/detail/config.hpp>
 #include <boost/coroutine/detail/coroutine_context.hpp>
-#include <boost/coroutine/detail/exceptions.hpp>
+#include <boost/coroutine/exceptions.hpp>
 #include <boost/coroutine/detail/holder.hpp>
 #include <boost/coroutine/v1/detail/arg.hpp>
 
@@ -234,4 +234,4 @@ BOOST_PP_REPEAT_FROM_TO(2,11,BOOST_COROUTINE_BASE_RESUME,~)
 #  include BOOST_ABI_SUFFIX
 #endif
 
-#endif // BOOST_COROUTINES_V1_DETAIL_coroutine_base_resume_H
+#endif // BOOST_COROUTINES_OLD_DETAIL_coroutine_base_resume_H

@@ -70,17 +70,17 @@ namespace boost { namespace spirit { namespace qi
             type;
         };
 
-        reskip_parser(Subject const& subject)
-          : subject(subject) {}
+        reskip_parser(Subject const& subject_)
+          : subject(subject_) {}
 
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Skipper const& u // --> The skipper is reintroduced
-          , Attribute& attr) const
+          , Attribute& attr_) const
         {
             return subject.parse(first, last, context
-              , detail::get_skipper(u), attr);
+              , detail::get_skipper(u), attr_);
         }
 
         template <typename Context>
@@ -106,16 +106,16 @@ namespace boost { namespace spirit { namespace qi
             type;
         };
 
-        skip_parser(Subject const& subject, Skipper const& skipper)
-          : subject(subject), skipper(skipper) {}
+        skip_parser(Subject const& subject_, Skipper const& skipper_)
+          : subject(subject_), skipper(skipper_) {}
 
         template <typename Iterator, typename Context
           , typename Skipper_, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Skipper_ const& //skipper --> bypass the supplied skipper
-          , Attribute& attr) const
+          , Attribute& attr_) const
         {
-            return subject.parse(first, last, context, skipper, attr);
+            return subject.parse(first, last, context, skipper, attr_);
         }
 
         template <typename Context>
