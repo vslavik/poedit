@@ -105,6 +105,8 @@ bool PoeditApp::OnInit()
 #endif
 
 #if defined(__UNIX__) && !defined(__WXMAC__)
+    wxStandardPaths::Get().SetInstallPrefix(POEDIT_PREFIX);
+
     wxString home = wxGetHomeDir() + "/";
 
     // create Poedit cfg dir, move ~/.poedit to ~/.poedit/config
