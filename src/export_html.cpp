@@ -2,6 +2,7 @@
  *  This file is part of Poedit (http://www.poedit.net)
  *
  *  Copyright (C) 2003 Christophe Hermier
+ *  Copyright (C) 2013 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -49,6 +50,12 @@ wxColour
     g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
     g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1); // yellow
 
+wxString FormatTransString(const wxString& s)
+{
+    wxString out = EscapeMarkup(s);
+    out.Replace("\\n", "\\n<br>");
+    return out;
+}
 
 } // anonymous namespace
 
@@ -157,32 +164,61 @@ bool Catalog::ExportToHTML(const wxString& filename)
         const CatalogItem& data = m_items[i];
 
         wxColour bgcolor = g_ItemColourNormal[i % 2];
-        wxString source_string = data.GetString();
 
-        wxString translation = data.GetTranslation();
+        wxString source_string = FormatTransString(data.GetString());
+        if (data.HasContext())
+            source_string += FormatTransString(wxString::Format("  [ %s ]", data.GetContext()));
+        if (data.HasPlural())
+            source_string += "<br>~~~<br>\n" + FormatTransString(data.GetPluralString());
+
+        wxString translation = FormatTransString(data.GetTranslation());
+        if (data.HasPlural())
+        {
+            for (int t = 1; t < data.GetNumberOfTranslations(); t++)
+                translation += "<br>~~~<br>\n" + FormatTransString(data.GetTranslation(t));
+        }
+
         if (translation.empty())
         {
             translation = " ";
             bgcolor = g_ItemColourUntranslated[i % 2];
         }
 
-        wxString flags;
+        wxString notes;
 
         if (data.IsAutomatic())
         {
-            flags += EscapeMarkup(_("Automatic translation"));
-            flags += "<BR>";
+            notes += EscapeMarkup(_("Automatic translation"));
+            notes += "<BR>";
         }
         if (data.IsFuzzy())
         {
             bgcolor = g_ItemColourFuzzy[i % 2];
-            flags += EscapeMarkup(_("Fuzzy translation"));
-            flags += "<BR>";
+            notes += EscapeMarkup(_("Fuzzy translation"));
+            notes += "<BR>";
         }
-        if (flags.empty())
+
+        if (data.HasAutoComments())
         {
-            flags = " ";
+            notes += "<font color='#888'>";
+            notes += _("Notes for translators:");
+            notes += "</font>";
+            notes += "<br>";
+            for (auto n: data.GetAutoComments())
+                notes += EscapeMarkup(n) + "<br>";
         }
+        if (data.HasComment())
+        {
+            notes += "<font color='#888'>";
+            notes += _("Comment:");
+            notes += "</font>";
+            notes += "<br>";
+            notes += EscapeMarkup(data.GetComment());
+            notes += "<br>";
+        }
+
+        if (notes.empty())
+            notes = " ";
 
         wxString tr;
         tr.Printf("<tr bgcolor='#%0X%0X%0X'>",
@@ -190,14 +226,14 @@ bool Catalog::ExportToHTML(const wxString& filename)
         f.AddLine(tr);
 
         f.AddLine("<td>");
-        f.AddLine(EscapeMarkup(source_string));
+        f.AddLine(source_string);
         f.AddLine("</td>");
         f.AddLine("<td>");
-        f.AddLine(EscapeMarkup(translation));
+        f.AddLine(translation);
         f.AddLine("</td>");
         f.AddLine("<td>");
         f.AddLine(_T("<font size=\"-1\">"));
-        f.AddLine(flags);
+        f.AddLine(notes);
         f.AddLine("</font>");
         f.AddLine("</td>");
         f.AddLine("</tr>");

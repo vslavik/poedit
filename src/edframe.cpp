@@ -1124,7 +1124,8 @@ void PoeditFrame::OnSaveAs(wxCommandEvent&)
 
 void PoeditFrame::OnExport(wxCommandEvent&)
 {
-    wxString name(wxFileNameFromPath(m_fileName));
+    wxString name;
+    wxFileName::SplitPath(m_fileName, nullptr, &name, nullptr);
 
     if (name.empty())
     {

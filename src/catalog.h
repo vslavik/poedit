@@ -151,6 +151,9 @@ class CatalogItem
         /// Convenience function: does this entry has a comment?
         bool HasComment() const { return !m_comment.empty(); }
 
+        /// Convenience function: does this entry has auto comments?
+        bool HasAutoComments() const { return !m_autocomments.empty(); }
+
         /// Adds new reference to the entry (used by SourceDigger).
         void AddReference(const wxString& ref)
         {
