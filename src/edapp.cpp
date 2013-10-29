@@ -50,6 +50,9 @@
 #include <winsparkle.h>
 #endif
 
+#include <unicode/uclean.h>
+#include <unicode/putil.h>
+
 #if !wxUSE_UNICODE
     #error "Unicode build of wxWidgets is required by Poedit"
 #endif
@@ -162,6 +165,10 @@ bool PoeditApp::OnInit()
 
     SetDefaultCfg(wxConfig::Get());
 
+#if defined(__WXMAC__) || defined(__WXMSW__)
+    u_setDataDirectory(wxStandardPaths::Get().GetResourcesDir().mb_str());
+#endif
+
     wxArtProvider::PushBack(new PoeditArtProvider);
 
     SetupLanguage();
@@ -225,6 +232,8 @@ int PoeditApp::OnExit()
 #ifdef __WXMSW__
     win_sparkle_cleanup();
 #endif
+
+    u_cleanup();
 
     return wxApp::OnExit();
 }

@@ -85,6 +85,7 @@
 		B2E837021709ED6300F31559 /* poedit-update.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F91709ED6300F31559 /* poedit-update.png */; };
 		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
 		B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F14DD3181E510100E212B5 /* tm_migrate.cpp */; };
+		B2EC60A41812D9D40059756A /* icudt52l.dat in Resources */ = {isa = PBXBuildFile; fileRef = B2EC60A31812D9D40059756A /* icudt52l.dat */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
 		B2F287C5170DCC92004C1F41 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C3170DCC92004C1F41 /* COPYING */; };
@@ -169,6 +170,7 @@
 		B22C5F0817DDC67400ECAFD1 /* lang_info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lang_info.cpp; sourceTree = "<group>"; };
 		B22C5F0917DDC67400ECAFD1 /* lang_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lang_info.h; sourceTree = "<group>"; };
 		B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dump_legacy_tm.cpp; path = tm/dump_legacy_tm.cpp; sourceTree = "<group>"; };
+		B23E49851813C42C0046CD8B /* icuhelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icuhelpers.h; sourceTree = "<group>"; };
 		B23D1F6418142CF400E6B212 /* dump-legacy-tm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "dump-legacy-tm"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B248B2DE170D765100EBA58E /* GettextTools.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GettextTools.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B248B2DF170D765100EBA58E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -281,6 +283,7 @@
 		B2E836FA1709ED6300F31559 /* poedit-validate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-validate.png"; path = "toolbar-32/poedit-validate.png"; sourceTree = "<group>"; };
 		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macosx/copy-translations.sh"; sourceTree = "<group>"; };
 		B2F14DD3181E510100E212B5 /* tm_migrate.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = tm_migrate.cpp; path = tm/tm_migrate.cpp; sourceTree = "<group>"; };
+		B2EC60A31812D9D40059756A /* icudt52l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt52l.dat; path = deps/icu4c/source/data/in/icudt52l.dat; sourceTree = "<group>"; };
 		B2F287C2170DCC92004C1F41 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = deps/gettext/AUTHORS; sourceTree = SOURCE_ROOT; };
 		B2F287C3170DCC92004C1F41 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = COPYING; path = deps/gettext/COPYING; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -504,6 +507,7 @@
 				B2E836DD1709ECD600F31559 /* dsa_pub.pem */,
 				B24ACD8316F6263900399242 /* Poedit.iconset */,
 				B28F1CA916F627170018AF7E /* GenericTranslation.iconset */,
+				B2EC60A31812D9D40059756A /* icudt52l.dat */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -709,6 +713,7 @@
 				B29AE89617103992008D1F8A /* properties.xrc in Resources */,
 				B29AE89717103992008D1F8A /* summary.xrc in Resources */,
 				B29AE89A17103992008D1F8A /* toolbar.xrc in Resources */,
+				B2EC60A41812D9D40059756A /* icudt52l.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1003,6 +1008,7 @@
 					deps/boost,
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
+					"$(DEPS_BUILD_DIR)/icu/include",
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -1052,6 +1058,7 @@
 					deps/boost,
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
+					"$(DEPS_BUILD_DIR)/icu/include",
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -1069,8 +1076,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug";
-				OTHER_LDFLAGS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(DEPS_BUILD_DIR)/icu/lib",
+					"$(DEPS_BUILD_DIR)/db/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-licuuc",
+					"-licudata",
+					"-ldb_cxx",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1084,8 +1098,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug";
-				OTHER_LDFLAGS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(DEPS_BUILD_DIR)/icu/lib",
+					"$(DEPS_BUILD_DIR)/db/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-licuuc",
+					"-licudata",
+					"-ldb_cxx",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
