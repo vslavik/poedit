@@ -26,16 +26,70 @@
 #ifndef Poedit_language_h
 #define Poedit_language_h
 
+#include <wx/string.h>
 #include <string>
+#include <unicode/locid.h>
 
-/**
-    Return appropriate plural form for given language.
-    
-    @param lang Language identifier (e.g. "cs" or "cs_CZ").
-    
-    @return Plural form expression suitable for directly using in the
-            gettext header or empty string if no record was found.
- */
-std::string GetPluralFormForLanguage(std::string lang);
+/// Representation of translation's language.
+class Language
+{
+public:
+    Language() {}
+
+    bool IsValid() const { return !m_code.empty(); }
+    const std::string& Code() const { return m_code; }
+
+    /// Returns language part (cs)
+    std::string Lang() const;
+    /// Returns country part (CZ, may be empty)
+    std::string Country() const;
+    /// Returns language+country parts, without the variant
+    std::string LangAndCountry() const;
+    /// Returns optional variant (after @, e.g. 'latin', typically empty)
+    std::string Variant() const;
+
+    /// Returns ICU equivalent of the language info
+    icu::Locale ToIcu() const;
+
+    /// Returns name of this language suitable for display to the user
+    wxString DisplayName() const;
+
+    /**
+        Return appropriate plural form for this language.
+
+        @return Plural form expression suitable for directly using in the
+                gettext header or empty string if no record was found.
+     */
+    std::string DefaultPluralFormsExpr() const;
+
+    /**
+        Tries to parse the string as language identification.
+        
+        Accepts various forms:
+         - standard code (cs, cs_CZ, cs_CZ@latin, ...)
+         - ditto with nonstandard capitalization
+         - language name in English or current UI language
+         - ditto for "language (country)"
+
+        Returned language instance is either invalid if the value couldn't
+        be parsed or a language with normalized language code.
+     */
+    static Language TryParse(const std::wstring& s);
+
+    /**
+        Checks if @a s has the form of language code.
+     */
+    static bool IsValidCode(const std::wstring& s);
+
+    bool operator==(const Language& other) const { return m_code == other.m_code; }
+    bool operator!=(const Language& other) const { return m_code != other.m_code; }
+
+protected:
+    Language(const std::string& code) : m_code(code) {}
+    Language(const std::wstring& code) : m_code(code.begin(), code.end()) {}
+
+private:
+    std::string m_code;
+};
 
 #endif // Poedit_language_h

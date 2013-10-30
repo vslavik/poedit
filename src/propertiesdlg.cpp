@@ -156,10 +156,11 @@ void PropertiesDialog::TransferTo(Catalog *cat)
     SET_VAL(TeamEmail, teamEmail);
     SET_VAL(Project, project);
     SET_VAL(BasePath, basePath);
-    SET_VAL(LanguageCode, language);
     #undef SET_VAL
 
-    wxString pf_def = GetPluralFormForLanguage(cat->Header().LanguageCode);
+    m_language->SetValue(cat->Header().Lang.Code());
+
+    wxString pf_def = cat->Header().Lang.DefaultPluralFormsExpr();
     wxString pf_cat = cat->Header().GetHeader("Plural-Forms");
     if (pf_cat == "nplurals=INTEGER; plural=EXPRESSION;")
         pf_cat = pf_def;
@@ -181,12 +182,15 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
     cat->Header().SourceCodeCharset = GetCharsetFromCombobox(m_sourceCodeCharset);
 
     #define GET_VAL(what,what2) cat->Header().what = m_##what2->GetValue()
-    GET_VAL(LanguageCode, language);
     GET_VAL(Team, team);
     GET_VAL(TeamEmail, teamEmail);
     GET_VAL(Project, project);
     GET_VAL(BasePath, basePath);
     #undef GET_VAL
+
+    Language lang = Language::TryParse(m_language->GetValue());
+    if (lang.IsValid())
+        cat->Header().Lang = lang;
 
     wxString dummy;
     wxArrayString arr;
@@ -210,9 +214,9 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
     cat->Header().Keywords = arr;
 
     wxString pluralForms;
-    if (m_pluralFormsDefault->GetValue() && !cat->Header().LanguageCode.empty())
+    if (m_pluralFormsDefault->GetValue() && cat->Header().Lang.IsValid())
     {
-        pluralForms = GetPluralFormForLanguage(cat->Header().LanguageCode);
+        pluralForms = cat->Header().Lang.DefaultPluralFormsExpr();
     }
 
     if (pluralForms.empty())
@@ -227,8 +231,8 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
 
 void PropertiesDialog::OnLanguageChanged(wxCommandEvent& event)
 {
-    wxString lang = event.GetString();
-    wxString pluralForm = GetPluralFormForLanguage(lang);
+    Language lang = Language::TryParse(event.GetString());
+    wxString pluralForm = lang.DefaultPluralFormsExpr();
     if (pluralForm.empty())
     {
         m_pluralFormsDefault->Disable();
@@ -250,7 +254,7 @@ void PropertiesDialog::OnPluralFormsDefault(wxCommandEvent&)
 {
     m_rememberedPluralForm = m_pluralFormsExpr->GetValue();
 
-    wxString defaultForm = GetPluralFormForLanguage(m_language->GetValue());
+    wxString defaultForm = Language::TryParse(m_language->GetValue()).DefaultPluralFormsExpr();
     if (!defaultForm.empty())
         m_pluralFormsExpr->SetValue(defaultForm);
 }
