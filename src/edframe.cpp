@@ -910,7 +910,7 @@ void PoeditFrame::InitSpellchecker()
                 langname.c_str()
             )
         );
-        msg.AddAction(_("Learn more"), boost::bind(ShowSpellcheckerHelp));
+        msg.AddAction(_("Learn more"), std::bind(ShowSpellcheckerHelp));
         msg.AddDontShowAgain();
         m_attentionBar->ShowMessage(msg);
     }
@@ -1904,7 +1904,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
                 _("Language of the translation isn't set.")
             );
         msg.AddAction(_("Set language"),
-                      boost::bind(&PoeditFrame::EditCatalogProperties, this));
+                      std::bind(&PoeditFrame::EditCatalogProperties, this));
 
         m_attentionBar->ShowMessage(msg);
     }
@@ -1920,7 +1920,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
                 _("You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files.")
             );
         msg.AddAction(_("Set email"),
-                      boost::bind(&PoeditApp::EditPreferences, &wxGetApp()));
+                      std::bind(&PoeditApp::EditPreferences, &wxGetApp()));
         msg.AddDontShowAgain();
 
         m_attentionBar->ShowMessage(msg);
@@ -1968,7 +1968,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
                     err
                 );
             msg.AddAction(_("Fix the header"),
-                          boost::bind(&PoeditFrame::EditCatalogProperties, this));
+                          std::bind(&PoeditFrame::EditCatalogProperties, this));
 
             m_attentionBar->ShowMessage(msg);
         }
@@ -2003,7 +2003,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
                                 _("Plural forms expression used by the catalog is unusual for this language.")
                             );
                         msg.AddAction(_("Review"),
-                                      boost::bind(&PoeditFrame::EditCatalogProperties, this));
+                                      std::bind(&PoeditFrame::EditCatalogProperties, this));
 
                         m_attentionBar->ShowMessage(msg);
                     }

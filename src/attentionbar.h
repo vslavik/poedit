@@ -27,10 +27,10 @@
 #define _ATTENTIONBAR_H_
 
 #include <wx/panel.h>
+
 #include <vector>
 #include <map>
-#include <boost/function.hpp>
-#include <boost/bind.hpp>
+#include <functional>
 
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
@@ -63,7 +63,7 @@ public:
     AttentionMessage(const wxString& id, Kind kind, const wxString& text)
         : m_id(id), m_kind(kind), m_text(text) {}
 
-    typedef boost::function<void()> Callback;
+    typedef std::function<void()> Callback;
 
     /**
         Adds an action button to the bar. By default, a close button is shown,
