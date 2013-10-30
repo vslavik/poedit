@@ -23,19 +23,45 @@
  *
  */
 
-#ifndef _LANG_INFO_H_
-#define _LANG_INFO_H_
+#include "language.h"
 
-#include <string>
+#include <mutex>
+#include <unordered_map>
 
-/**
-    Return appropriate plural form for given language.
-    
-    @param lang Language identifier (e.g. "cs" or "cs_CZ").
-    
-    @return Plural form expression suitable for directly using in the
-            gettext header or empty string if no record was found.
- */
-std::string GetPluralFormForLanguage(std::string lang);
+static std::mutex gs_mutexGetPluralFormForLanguage;
 
-#endif // _LANG_INFO_H_
+std::string GetPluralFormForLanguage(std::string lang)
+{
+    if ( lang.empty() )
+        return std::string();
+
+    std::lock_guard<std::mutex> lock(gs_mutexGetPluralFormForLanguage);
+
+    static const std::unordered_map<std::string, std::string> forms = {
+        #include "language_impl_plurals.h"
+    };
+
+    auto i = forms.find(lang);
+    if ( i != forms.end() )
+        return i->second;
+
+    size_t pos = lang.rfind('@');
+    if ( pos != std::string::npos )
+    {
+        lang = lang.substr(0, pos);
+        i = forms.find(lang);
+        if ( i != forms.end() )
+            return i->second;
+    }
+
+    pos = lang.rfind('_');
+    if ( pos != std::string::npos )
+    {
+        lang = lang.substr(0, pos);
+        i = forms.find(lang);
+        if ( i != forms.end() )
+            return i->second;
+    }
+
+    return std::string();
+}

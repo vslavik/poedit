@@ -76,7 +76,7 @@
 #include "findframe.h"
 #include "tm/transmem.h"
 #include "isocodes.h"
-#include "lang_info.h"
+#include "language.h"
 #include "progressinfo.h"
 #include "commentdlg.h"
 #include "manager.h"

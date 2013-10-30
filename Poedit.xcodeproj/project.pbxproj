@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21FB780179D51BE003F45AC /* libexpat.dylib */; };
-		B22C5F0A17DDC67400ECAFD1 /* lang_info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* lang_info.cpp */; };
+		B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* language.cpp */; };
 		B23D1F7118142D1900E6B212 /* dump_legacy_tm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */; };
 		B23D1F731814470200E6B212 /* dump-legacy-tm in Copy Auxiliary Binaries */ = {isa = PBXBuildFile; fileRef = B23D1F6418142CF400E6B212 /* dump-legacy-tm */; };
 		B24ACD5F16F6201F00399242 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B24ACD5E16F6201F00399242 /* Cocoa.framework */; };
@@ -84,8 +84,8 @@
 		B2E837011709ED6300F31559 /* poedit-fuzzy.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F81709ED6300F31559 /* poedit-fuzzy.png */; };
 		B2E837021709ED6300F31559 /* poedit-update.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F91709ED6300F31559 /* poedit-update.png */; };
 		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
-		B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F14DD3181E510100E212B5 /* tm_migrate.cpp */; };
 		B2EC60A41812D9D40059756A /* icudt52l.dat in Resources */ = {isa = PBXBuildFile; fileRef = B2EC60A31812D9D40059756A /* icudt52l.dat */; };
+		B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F14DD3181E510100E212B5 /* tm_migrate.cpp */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
 		B2F287C5170DCC92004C1F41 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C3170DCC92004C1F41 /* COPYING */; };
@@ -167,10 +167,9 @@
 
 /* Begin PBXFileReference section */
 		B21FB780179D51BE003F45AC /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
-		B22C5F0817DDC67400ECAFD1 /* lang_info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lang_info.cpp; sourceTree = "<group>"; };
-		B22C5F0917DDC67400ECAFD1 /* lang_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lang_info.h; sourceTree = "<group>"; };
+		B22C5F0817DDC67400ECAFD1 /* language.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = language.cpp; sourceTree = "<group>"; };
+		B22C5F0917DDC67400ECAFD1 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
 		B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dump_legacy_tm.cpp; path = tm/dump_legacy_tm.cpp; sourceTree = "<group>"; };
-		B23E49851813C42C0046CD8B /* icuhelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icuhelpers.h; sourceTree = "<group>"; };
 		B23D1F6418142CF400E6B212 /* dump-legacy-tm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "dump-legacy-tm"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B248B2DE170D765100EBA58E /* GettextTools.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GettextTools.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B248B2DF170D765100EBA58E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -250,6 +249,8 @@
 		B28F1CE416F629D30018AF7E /* pl_evaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pl_evaluate.h; path = pluralforms/pl_evaluate.h; sourceTree = "<group>"; };
 		B28F1CE516F629D30018AF7E /* digits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = digits.h; sourceTree = "<group>"; };
 		B29AE89B17105306008D1F8A /* errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errors.h; sourceTree = "<group>"; };
+		B29FC688182157A700BFC15D /* language_impl_plurals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_impl_plurals.h; sourceTree = "<group>"; };
+		B29FC6891821616C00BFC15D /* icuhelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icuhelpers.h; sourceTree = "<group>"; };
 		B2BF84B9170846290030AA22 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B2BF84BB170846940030AA22 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		B2BF84BD170847220030AA22 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -282,8 +283,8 @@
 		B2E836F91709ED6300F31559 /* poedit-update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-update.png"; path = "toolbar-32/poedit-update.png"; sourceTree = "<group>"; };
 		B2E836FA1709ED6300F31559 /* poedit-validate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-validate.png"; path = "toolbar-32/poedit-validate.png"; sourceTree = "<group>"; };
 		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macosx/copy-translations.sh"; sourceTree = "<group>"; };
-		B2F14DD3181E510100E212B5 /* tm_migrate.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = tm_migrate.cpp; path = tm/tm_migrate.cpp; sourceTree = "<group>"; };
 		B2EC60A31812D9D40059756A /* icudt52l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt52l.dat; path = deps/icu4c/source/data/in/icudt52l.dat; sourceTree = "<group>"; };
+		B2F14DD3181E510100E212B5 /* tm_migrate.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = tm_migrate.cpp; path = tm/tm_migrate.cpp; sourceTree = "<group>"; };
 		B2F287C2170DCC92004C1F41 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = deps/gettext/AUTHORS; sourceTree = SOURCE_ROOT; };
 		B2F287C3170DCC92004C1F41 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = COPYING; path = deps/gettext/COPYING; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -401,11 +402,13 @@
 				B28F1CAC16F629D30018AF7E /* catalog.cpp */,
 				B28F1CC916F629D30018AF7E /* isocodes.h */,
 				B28F1CC816F629D30018AF7E /* isocodes.cpp */,
-				B22C5F0917DDC67400ECAFD1 /* lang_info.h */,
-				B22C5F0817DDC67400ECAFD1 /* lang_info.cpp */,
+				B22C5F0917DDC67400ECAFD1 /* language.h */,
+				B22C5F0817DDC67400ECAFD1 /* language.cpp */,
+				B29FC688182157A700BFC15D /* language_impl_plurals.h */,
 				B28F1CE416F629D30018AF7E /* pl_evaluate.h */,
 				B28F1CE316F629D30018AF7E /* pl_evaluate.cpp */,
 				B28F1CE016F629D30018AF7E /* version.h */,
+				B29FC6891821616C00BFC15D /* icuhelpers.h */,
 			);
 			name = "Non-GUI";
 			path = src;
@@ -839,7 +842,7 @@
 				B28F1CFF16F629D30018AF7E /* utility.cpp in Sources */,
 				B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */,
 				B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */,
-				B22C5F0A17DDC67400ECAFD1 /* lang_info.cpp in Sources */,
+				B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

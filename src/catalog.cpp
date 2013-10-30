@@ -46,7 +46,7 @@
 #include "isocodes.h"
 #include "utility.h"
 #include "version.h"
-#include "lang_info.h"
+#include "language.h"
 
 
 // ----------------------------------------------------------------------
