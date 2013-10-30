@@ -1894,6 +1894,20 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
 
     InitSpellchecker();
 
+    wxString language = m_catalog->GetLocaleCode();
+    if (language.empty())
+    {
+        AttentionMessage msg
+            (
+                "missing-language",
+                AttentionMessage::Error,
+                _("Language of the translation isn't set.")
+            );
+        msg.AddAction(_("Set language"),
+                      boost::bind(&PoeditFrame::EditCatalogProperties, this));
+
+        m_attentionBar->ShowMessage(msg);
+    }
 
     // FIXME: do this for Gettext PO files only
     if (wxConfig::Get()->Read("translator_name", "").empty() ||
@@ -1927,7 +1941,6 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
         }
 
         // FIXME: make this part of global error checking
-        wxString language = m_catalog->GetLocaleCode();
         wxString plForms = m_catalog->Header().GetHeader("Plural-Forms");
         PluralFormsCalculator *plCalc =
                 PluralFormsCalculator::make(plForms.ToAscii());
