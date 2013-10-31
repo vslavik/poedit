@@ -69,6 +69,7 @@
 #include "utility.h"
 #include "prefsdlg.h"
 #include "errors.h"
+#include "language.h"
 
 extern bool MigrateLegacyTranslationMemory();
 
@@ -254,6 +255,10 @@ void PoeditApp::SetupLanguage()
     #endif
     trans->AddCatalog("poedit");
     trans->AddStdCatalog();
+
+    Language uiLang = Language::TryParse(trans->GetBestTranslation("poedit"));
+    UErrorCode err = U_ZERO_ERROR;
+    icu::Locale::setDefault(uiLang.ToIcu(), err);
 }
 
 
