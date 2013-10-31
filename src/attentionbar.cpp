@@ -84,15 +84,15 @@ AttentionBar::AttentionBar(wxWindow *parent)
 #ifdef __WXMSW__
     btnClose->SetBackgroundColour(bg);
 #endif
-
 #ifdef __WXMAC__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+#if defined(__WXMAC__) || defined(__WXMSW__)
     Bind(wxEVT_PAINT, &AttentionBar::OnPaint, this);
-
     wxFont boldFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     boldFont.SetWeight(wxFONTWEIGHT_BOLD);
     m_label->SetFont(boldFont);
-#endif // __WXMAC__
+#endif //
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->AddSpacer(wxSizerFlags::GetDefaultBorder());
@@ -130,6 +130,18 @@ void AttentionBar::OnPaint(wxPaintEvent&)
        );
 }
 #endif // __WXMAC__
+
+#ifdef __WXMSW__
+void AttentionBar::OnPaint(wxPaintEvent&)
+{
+    wxPaintDC dc(this);
+
+    wxRect rect(dc.GetSize());
+    dc.SetBrush(*wxTRANSPARENT_BRUSH);
+    dc.SetPen(wxColour("#e5dd8c"));
+    dc.DrawRoundedRectangle(rect, 1);
+}
+#endif // __WXMSW__
 
 
 void AttentionBar::ShowMessage(const AttentionMessage& msg)

@@ -121,7 +121,7 @@ public:
 private:
     void OnClose(wxCommandEvent& event);
     void OnAction(wxCommandEvent& event);
-#ifdef __WXMAC__
+#if defined(__WXMAC__) || defined(__WXMSW__)
     void OnPaint(wxPaintEvent& event);
 #endif
 
