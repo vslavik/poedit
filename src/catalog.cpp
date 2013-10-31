@@ -375,24 +375,17 @@ void Catalog::HeaderData::ParseDict()
 
     // Parse language information, with backwards compatibility with X-Poedit-*:
     wxString languageCode = GetHeader("Language");
-    if ( languageCode.empty() )
+    if ( !languageCode.empty() )
+    {
+        Lang = Language::TryParse(languageCode);
+    }
+    else
     {
         wxString X_Language = GetHeader("X-Poedit-Language");
-        if ( !X_Language.empty() )
-            X_Language = LookupLanguageCode(X_Language);
-
         wxString X_Country = GetHeader("X-Poedit-Country");
-        if ( !X_Country.empty() )
-            X_Country = LookupCountryCode(X_Country);
-
         if ( !X_Language.empty() )
-        {
-            languageCode = X_Language;
-            if ( !X_Country.empty() )
-                languageCode += "_" + X_Country;
-        }
+            Lang = Language::FromLegacyNames(X_Language, X_Country);
     }
-    Lang = Language::TryParse(languageCode);
 
     DeleteHeader("X-Poedit-Language");
     DeleteHeader("X-Poedit-Country");

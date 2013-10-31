@@ -124,6 +124,31 @@ Language Language::TryParse(const std::wstring& s)
 }
 
 
+Language Language::FromLegacyNames(const std::string& lang, const std::string& country)
+{
+    if (lang.empty())
+        return Language(); // invalid
+
+    #include "language_impl_legacy.h"
+
+    std::string code;
+    auto i = isoLanguages.find(lang);
+    if ( i != isoLanguages.end() )
+        code = i->second;
+    else
+        return Language(); // invalid
+
+    if (!country.empty())
+    {
+        auto iC = isoCountries.find(country);
+        if ( iC != isoCountries.end() )
+            code += "_" + iC->second;
+    }
+
+    return Language(code);
+}
+
+
 std::string Language::DefaultPluralFormsExpr() const
 {
     if (!IsValid())

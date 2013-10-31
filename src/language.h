@@ -80,6 +80,13 @@ public:
     static Language TryParse(const std::wstring& s);
 
     /**
+        Tries to create the language from Poedit's legacy X-Poedit-Language and
+        X-Poedit-Country headers.
+     */
+    static Language FromLegacyNames(const std::string& lang, const std::string& country);
+
+
+    /**
         Checks if @a s has the form of language code.
      */
     static bool IsValidCode(const std::wstring& s);
