@@ -51,8 +51,11 @@ public:
     /// Returns ICU equivalent of the language info
     icu::Locale ToIcu() const;
 
-    /// Returns name of this language suitable for display to the user
+    /// Returns name of this language suitable for display to the user in current UI language
     wxString DisplayName() const;
+
+    /// Returns name of this language in itself
+    wxString DisplayNameInItself() const;
 
     /**
         Return appropriate plural form for this language.

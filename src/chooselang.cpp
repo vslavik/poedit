@@ -27,9 +27,10 @@
 
 #if NEED_CHOOSELANG_UI
 
+#include "language.h"
+
 #include <wx/wx.h>
 #include <wx/config.h>
-#include <wx/intl.h>
 #include <wx/translation.h>
 
 static void SaveUILanguage(const wxString& lang)
@@ -59,11 +60,8 @@ static bool ChooseLanguage(wxString *value)
         langs = wxTranslations::Get()->GetAvailableTranslations("poedit");
 
         arr.push_back(_("(Use default language)"));
-        for ( wxArrayString::const_iterator i = langs.begin(); i != langs.end(); ++i )
-        {
-            const wxLanguageInfo *langInfo = wxLocale::FindLanguageInfo(*i);
-            arr.push_back(langInfo ? langInfo->Description : *i);
-        }
+        for (auto i : langs)
+            arr.push_back(Language::TryParse(i).DisplayNameInItself());
     }
     int choice = wxGetSingleChoiceIndex(
             _("Select your prefered language"),
