@@ -1238,6 +1238,7 @@ void PoeditFrame::EditCatalogProperties()
 {
     wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this));
 
+    const Language prevLang = m_catalog->GetLanguage();
     dlg->TransferTo(m_catalog);
     dlg->ShowWindowModalThenDo([=](int retcode){
         if (retcode == wxID_OK)
@@ -1247,7 +1248,12 @@ void PoeditFrame::EditCatalogProperties()
             RecreatePluralTextCtrls();
             UpdateTitle();
             UpdateMenu();
-            InitSpellchecker();
+            if (prevLang != m_catalog->GetLanguage())
+            {
+                InitSpellchecker();
+                // trigger resorting and language header update:
+                m_list->CatalogChanged(m_catalog);
+            }
         }
     });
 }

@@ -104,7 +104,7 @@ AC_CHECK_HEADER([boost/function.hpp],
 AC_CHECK_FUNCS([mkdtemp])
 
 
-PKG_CHECK_MODULES([ICU], [icu-uc],
+PKG_CHECK_MODULES([ICU], [icu-uc icu-i18n],
         [
             CXXFLAGS="$CXXFLAGS $ICU_CFLAGS"
             LIBS="$LIBS $ICU_LIBS"

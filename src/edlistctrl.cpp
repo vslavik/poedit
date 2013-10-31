@@ -438,11 +438,12 @@ void PoeditListCtrl::CreateSortMap()
 
     // m_mapListToCatalog will hold our desired sort order. Sort it in place
     // now, using the desired sort criteria.
+    CatalogItemsComparator comparator(*m_catalog, sortOrder);
     std::sort
     (
         m_mapListToCatalog.begin(),
         m_mapListToCatalog.end(),
-        CatalogItemsComparator(*m_catalog, sortOrder)
+        std::ref(comparator)
     );
 
     // Finally, construct m_mapCatalogToList to be the inverse mapping to

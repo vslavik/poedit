@@ -26,7 +26,10 @@
 
 #include "cat_sorting.h"
 
+#include "icuhelpers.h"
+
 #include <wx/config.h>
+#include <wx/log.h>
 
 /*static*/ SortOrder SortOrder::Default()
 {
@@ -66,6 +69,39 @@ void SortOrder::Save()
 
     wxConfig::Get()->Write("/sort_by", bystr);
     wxConfig::Get()->Write("/sort_untrans_first", untransFirst);
+}
+
+
+CatalogItemsComparator::CatalogItemsComparator(const Catalog& catalog, const SortOrder& order)
+    : m_catalog(catalog), m_order(order)
+{
+    UErrorCode err = U_ZERO_ERROR;
+    switch (m_order.by)
+    {
+        case SortOrder::By_Source:
+            // TODO: allow non-English source languages too
+            m_collator.reset(icu::Collator::createInstance(icu::Locale::getEnglish(), err));
+            break;
+
+        case SortOrder::By_Translation:
+            m_collator.reset(icu::Collator::createInstance(catalog.GetLanguage().ToIcu(), err));
+            break;
+
+        case SortOrder::By_FileOrder:
+            break;
+    }
+
+    if (!U_SUCCESS(err) || err == U_USING_FALLBACK_WARNING)
+    {
+        wxLogTrace("poedit", "warning: not using collation for %s (%s)",
+                   catalog.GetLanguage().Code(), u_errorName(err));
+    }
+
+    if (m_collator)
+    {
+        // Case-insensitive comparison:
+        m_collator->setStrength(icu::Collator::SECONDARY);
+    }
 }
 
 
@@ -125,15 +161,18 @@ bool CatalogItemsComparator::operator()(int i, int j) const
 
 int CatalogItemsComparator::CompareStrings(wxString a, wxString b) const
 {
-    // TODO: * use ICU for correct ordering
-    //       * use natural sort (for numbers)
-    //       * use ICU for correct case insensitivity
-
     a.Replace("&", "");
     a.Replace("_", "");
 
     b.Replace("&", "");
     b.Replace("_", "");
 
-    return a.CmpNoCase(b);
+    UErrorCode err;
+#if wxUSE_UNICODE_UTF8
+    return m_collator->compareUTF8(a.wx_str(), b.wx_str(), err);
+#elif SIZEOF_WCHAR_T == 2
+    return m_collator->compare(a.wx_str(), a.length(), b.wx_str(), b.length(), err);
+#else
+    return m_collator->compare(ToIcuStr(a), ToIcuStr(b), err);
+#endif
 }

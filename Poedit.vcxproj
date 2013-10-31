@@ -52,7 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>XML_STATIC;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\expat\lib;deps\icu4c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\expat\lib;deps\icu4c\include;deps\icu4c\source\i18n;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
@@ -75,7 +75,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>XML_STATIC;WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\expat\lib;deps\icu4c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\expat\lib;deps\icu4c\include;deps\icu4c\source\i18n;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -206,6 +206,9 @@
     </ProjectReference>
     <ProjectReference Include="deps\custom_build\zlib.vcxproj">
       <Project>{304a6fd9-7ff1-5faa-b095-48f553ddc6f5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="deps\icu4c\source\i18n\i18n.vcxproj">
+      <Project>{0178b127-6269-407d-b112-93877bb62776}</Project>
     </ProjectReference>
     <ProjectReference Include="deps\lucene\LucenePlusPlus.vcxproj">
       <Project>{34b37773-23ac-5286-86f7-60c7bf937abb}</Project>
