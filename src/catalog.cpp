@@ -1076,25 +1076,6 @@ bool Catalog::Load(const wxString& po_file, int flags)
 }
 
 
-static wxString TryIfStringIsLangCode(const wxString& s)
-{
-    if (s.length() == 2)
-    {
-        if (IsKnownLanguageCode(s))
-            return s;
-    }
-    else if (s.length() == 5 && s[2u] == _T('_'))
-    {
-        if (IsKnownLanguageCode(s.Mid(0, 2)) &&
-            IsKnownCountryCode(s.Mid(3, 2)))
-        {
-            return s;
-        }
-    }
-
-    return wxEmptyString;
-}
-
 void Catalog::FixupCommonIssues()
 {
     if (!m_header.Lang.IsValid())
@@ -1104,15 +1085,13 @@ void Catalog::FixupCommonIssues()
             wxString name;
             wxFileName::SplitPath(m_fileName, NULL, &name, NULL);
 
-            wxString lang = TryIfStringIsLangCode(name);
-            if ( lang.empty() )
+            m_header.Lang = Language::TryParseWithValidation(name);
+            if ( !m_header.Lang.IsValid() )
             {
                 wxString afterDot = name.AfterLast('.');
                 if ( afterDot != name )
-                    lang = TryIfStringIsLangCode(afterDot);
+                    m_header.Lang = Language::TryParseWithValidation(afterDot);
             }
-            if ( !lang.empty() )
-                m_header.Lang = Language::TryParse(lang);
         }
     }
 

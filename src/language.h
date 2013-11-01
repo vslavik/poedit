@@ -67,7 +67,7 @@ public:
 
     /**
         Tries to parse the string as language identification.
-        
+
         Accepts various forms:
          - standard code (cs, cs_CZ, cs_CZ@latin, ...)
          - ditto with nonstandard capitalization
@@ -76,8 +76,19 @@ public:
 
         Returned language instance is either invalid if the value couldn't
         be parsed or a language with normalized language code.
+
+        @note
+        This function does *not* validate language codes: if @a s has standard
+        form, the codes are assumed to be valid.  Use TryParseWithValidation()
+        if you are not sure.
      */
     static Language TryParse(const std::wstring& s);
+
+    /**
+        Like TryParse(), but only accepts language codes if they are known
+        valid ISO 639/3166 codes.
+     */
+    static Language TryParseWithValidation(const std::wstring& s);
 
     /**
         Tries to create the language from Poedit's legacy X-Poedit-Language and

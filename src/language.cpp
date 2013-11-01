@@ -32,6 +32,8 @@
 #include <algorithm>
 #include <unordered_map>
 
+#include <unicode/locid.h>
+
 namespace
 {
 
@@ -68,6 +70,28 @@ void TryNormalize(std::wstring& s)
         else if (std::islower(*x) && upper)
             *x = std::toupper(*x);
     }
+}
+
+bool IsISOLanguage(const std::string& s)
+{
+    const char *test = s.c_str();
+    for (const char * const* i = icu::Locale::getISOLanguages(); *i != nullptr; ++i)
+    {
+        if (strcmp(test, *i) == 0)
+            return true;
+    }
+    return false;
+}
+
+bool IsISOCountry(const std::string& s)
+{
+    const char *test = s.c_str();
+    for (const char * const* i = icu::Locale::getISOCountries(); *i != nullptr; ++i)
+    {
+        if (strcmp(test, *i) == 0)
+            return true;
+    }
+    return false;
 }
 
 } // anonymous namespace
@@ -121,6 +145,23 @@ Language Language::TryParse(const std::wstring& s)
     }
 
     return Language(); // invalid
+}
+
+
+Language Language::TryParseWithValidation(const std::wstring& s)
+{
+    Language lang = Language::TryParse(s);
+    if (!lang.IsValid())
+        return Language(); // invalid
+
+    if (!IsISOLanguage(lang.Lang()))
+        return Language(); // invalid
+
+    auto country = lang.Country();
+    if (!country.empty() && !IsISOCountry(country))
+        return Language(); // invalid
+
+    return lang;
 }
 
 
