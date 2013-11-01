@@ -1081,16 +1081,8 @@ void Catalog::FixupCommonIssues()
     {
         if (!m_fileName.empty())
         {
-            wxString name;
-            wxFileName::SplitPath(m_fileName, NULL, &name, NULL);
-
-            m_header.Lang = Language::TryParseWithValidation(name);
-            if ( !m_header.Lang.IsValid() )
-            {
-                wxString afterDot = name.AfterLast('.');
-                if ( afterDot != name )
-                    m_header.Lang = Language::TryParseWithValidation(afterDot);
-            }
+            m_header.Lang = Language::TryGuessFromFilename(m_fileName);
+            wxLogTrace("poedit", "guessed language from filename '%s': %s", m_fileName, m_header.Lang.Code());
         }
     }
 

@@ -34,6 +34,8 @@
 
 #include <unicode/locid.h>
 
+#include <wx/filename.h>
+
 namespace
 {
 
@@ -237,4 +239,48 @@ wxString Language::DisplayNameInItself() const
     icu::UnicodeString s;
     loc.getDisplayName(loc, s);
     return FromIcuStr(s);
+}
+
+
+Language Language::TryGuessFromFilename(const wxString& filename)
+{
+    wxFileName fn(filename);
+    fn.MakeAbsolute();
+
+    // Try matching the filename first:
+    //  - entire name
+    //  - suffix (foo.cs_CZ.po, wordpressTheme-cs_CZ.po)
+    //  - directory name (cs_CZ, cs.lproj, cs/LC_MESSAGES)
+    wxString name = fn.GetName();
+    Language lang = Language::TryParseWithValidation(name);
+            if (lang.IsValid())
+                return lang;
+
+    size_t pos = name.find_first_of(".-_");
+    while (pos != wxString::npos)
+    {
+        auto part = name.substr(pos+1);
+        lang = Language::TryParseWithValidation(part);
+        if (lang.IsValid())
+            return lang;
+         pos = name.find_first_of(".-_",  pos+1);
+    }
+
+    auto dirs = fn.GetDirs();
+    if (!dirs.empty())
+    {
+        auto d = dirs.rbegin();
+        if (d->IsSameAs("LC_MESSAGES", /*caseSensitive=*/false))
+        {
+            if (++d == dirs.rend())
+                return Language(); // failed to match
+        }
+        wxString rest;
+        if (d->EndsWith(".lproj", &rest))
+            return Language::TryParseWithValidation(rest);
+        else
+            return Language::TryParseWithValidation(*d);
+    }
+
+    return Language(); // failed to match
 }

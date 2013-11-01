@@ -96,6 +96,12 @@ public:
      */
     static Language FromLegacyNames(const std::string& lang, const std::string& country);
 
+    /**
+        Try to guess the language from filename, if the filename follows some
+        commonly used naming pattern.
+     */
+    static Language TryGuessFromFilename(const wxString& filename);
+
 
     /**
         Checks if @a s has the form of language code.
