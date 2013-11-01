@@ -75,7 +75,6 @@
 #include "fileviewer.h"
 #include "findframe.h"
 #include "tm/transmem.h"
-#include "isocodes.h"
 #include "language.h"
 #include "progressinfo.h"
 #include "commentdlg.h"

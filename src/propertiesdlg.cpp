@@ -37,7 +37,6 @@
 #include <memory>
 
 #include "propertiesdlg.h"
-#include "isocodes.h"
 #include "language.h"
 #include "pluralforms/pl_evaluate.h"
 

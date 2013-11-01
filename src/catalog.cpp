@@ -43,7 +43,6 @@
 #include "gexecute.h"
 #include "progressinfo.h"
 #include "summarydlg.h"
-#include "isocodes.h"
 #include "utility.h"
 #include "version.h"
 #include "language.h"
