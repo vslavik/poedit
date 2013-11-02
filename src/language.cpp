@@ -31,8 +31,11 @@
 #include <regex>
 #include <algorithm>
 #include <unordered_map>
+#include <mutex>
+#include <memory>
 
 #include <unicode/locid.h>
+#include <unicode/coll.h>
 
 #include <wx/filename.h>
 
@@ -96,6 +99,67 @@ bool IsISOCountry(const std::string& s)
     return false;
 }
 
+// Mapping of names to their respective ISO codes.
+struct DisplayNamesData
+{
+    typedef std::unordered_map<std::wstring, std::string> Map;
+    Map names, namesEng;
+    std::vector<std::wstring> sortedNames;
+};
+
+std::once_flag of_namesList;
+
+const DisplayNamesData& GetDisplayNamesData()
+{
+    static DisplayNamesData data;
+
+    std::call_once(of_namesList, [=]{
+        auto locEng = icu::Locale::getEnglish();
+        std::vector<icu::UnicodeString> names;
+
+        int32_t count;
+        const icu::Locale *loc = icu::Locale::getAvailableLocales(count);
+        names.reserve(count);
+        for (int i = 0; i < count; i++, loc++)
+        {
+            // TODO: for now, ignore variants here and in FormatForRoundtrip(),
+            //       because translating them between gettext and ICU is nontrivial
+            auto variant = loc->getVariant();
+            if (variant != nullptr && *variant != '\0')
+                continue;
+
+            icu::UnicodeString s;
+            loc->getDisplayName(s);
+
+            names.push_back(s);
+
+            s.foldCase();
+            data.names[StdFromIcuStr(s)] = loc->getName();
+
+            loc->getDisplayName(locEng, s);
+            s.foldCase();
+            data.namesEng[StdFromIcuStr(s)] = loc->getName();
+        }
+
+        // sort the names alphabetically for data.sortedNames:
+        UErrorCode err = U_ZERO_ERROR;
+        std::unique_ptr<icu::Collator> coll(icu::Collator::createInstance(err));
+        coll->setStrength(icu::Collator::SECONDARY); // case insensitive
+
+        std::sort(names.begin(), names.end(),
+                  [&coll](const icu::UnicodeString& a, const icu::UnicodeString& b){
+                      UErrorCode e;
+                      return coll->compare(a, b, e) == UCOL_LESS;
+        });
+        // convert into std::wstring
+        data.sortedNames.reserve(names.size());
+        for (auto s: names)
+            data.sortedNames.push_back(StdFromIcuStr(s));
+    });
+
+    return data;
+}
+
 } // anonymous namespace
 
 
@@ -138,6 +202,7 @@ Language Language::TryParse(const std::wstring& s)
     if (IsValidCode(s))
         return Language(s);
 
+    // Is it a standard language code?
     if (std::regex_match(s, RE_LANG_CODE_PERMISSIVE))
     {
         std::wstring s2(s);
@@ -145,6 +210,20 @@ Language Language::TryParse(const std::wstring& s)
         if (IsValidCode(s2))
             return Language(s2);
     }
+
+    // If not, perhaps it's a human-readable name (perhaps coming from the language control)?
+    auto names = GetDisplayNamesData();
+    icu::UnicodeString s_icu = ToIcuStr(s);
+    s_icu.foldCase();
+    std::wstring folded = StdFromIcuStr(s_icu);
+    auto i = names.names.find(folded);
+    if (i != names.names.end())
+        return Language(i->second);
+
+    // Maybe it was in English?
+    i = names.namesEng.find(folded);
+    if (i != names.namesEng.end())
+        return Language(i->second);
 
     return Language(); // invalid
 }
@@ -239,6 +318,21 @@ wxString Language::DisplayNameInItself() const
     icu::UnicodeString s;
     loc.getDisplayName(loc, s);
     return FromIcuStr(s);
+}
+
+wxString Language::FormatForRoundtrip() const
+{
+    // TODO: Can't show variants nicely yet, not standardized
+    if (!Variant().empty())
+        return m_code;
+
+    return DisplayName();
+}
+
+
+const std::vector<std::wstring>& Language::AllFormattedNames()
+{
+    return GetDisplayNamesData().sortedNames;
 }
 
 

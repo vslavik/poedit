@@ -28,6 +28,7 @@
 
 #include <wx/string.h>
 #include <string>
+#include <vector>
 #include <unicode/locid.h>
 
 /// Representation of translation's language.
@@ -56,6 +57,21 @@ public:
 
     /// Returns name of this language in itself
     wxString DisplayNameInItself() const;
+
+    /**
+        Human-readable (if possible) form usable for round-tripping, i.e.
+        understood by TryParse(). Typically "language (country)" in UI language.
+        
+        @see AllFormattedNames()
+     */
+    wxString FormatForRoundtrip() const;
+
+    /**
+        Return all formatted language names known, in sorted order.
+        
+        @see FormatForRoundtrip()
+     */
+    static const std::vector<std::wstring>& AllFormattedNames();
 
     /**
         Return appropriate plural form for this language.

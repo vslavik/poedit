@@ -27,8 +27,8 @@
 #define Poedit_icuhelpers_h
 
 #include <unicode/unistr.h>
-
 #include <wx/string.h>
+#include <string>
 
 
 /**
@@ -77,6 +77,12 @@ inline wxString FromIcuStr(const icu::UnicodeString& str)
 #else
     return wxString((const char*)str.getBuffer(), wxMBConvUTF16(), str.length() * 2);
 #endif
+}
+
+/// Create std::wstring from icu::UnicodeString, making a copy.
+inline std::wstring StdFromIcuStr(const icu::UnicodeString& str)
+{
+    return FromIcuStr(str).ToStdWstring();
 }
 
 

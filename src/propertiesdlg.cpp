@@ -52,7 +52,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
     m_team = XRCCTRL(*this, "team_name", wxTextCtrl);
     m_teamEmail = XRCCTRL(*this, "team_email", wxTextCtrl);
     m_project = XRCCTRL(*this, "prj_name", wxTextCtrl);
-    m_language = XRCCTRL(*this, "language", wxTextCtrl);
+    m_language = XRCCTRL(*this, "language", LanguageCtrl);
     m_charset = XRCCTRL(*this, "charset", wxComboBox);
     m_basePath = XRCCTRL(*this, "basepath", wxTextCtrl);
     m_sourceCodeCharset = XRCCTRL(*this, "source_code_charset", wxComboBox);
@@ -69,7 +69,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
     wxXmlResource::Get()->AttachUnknownControl("paths", m_paths);
 
     // Controls setup:
-    m_language->SetHint(_("Language Code (e.g. en_GB)"));
+    m_project->SetHint(_("Name of the project the translation is for"));
     m_pluralFormsExpr->SetHint(_("e.g. nplurals=2; plural=(n > 1);"));
 
 #if defined(__WXMSW__) || defined(__WXMAC__)
@@ -78,6 +78,8 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
 #endif
 
     m_language->Bind(wxEVT_TEXT, &PropertiesDialog::OnLanguageChanged, this);
+    m_language->Bind(wxEVT_COMBOBOX, &PropertiesDialog::OnLanguageChanged, this);
+
     m_pluralFormsDefault->Bind(wxEVT_RADIOBUTTON, &PropertiesDialog::OnPluralFormsDefault, this);
     m_pluralFormsCustom->Bind(wxEVT_RADIOBUTTON, &PropertiesDialog::OnPluralFormsCustom, this);
     m_pluralFormsExpr->Bind(
@@ -157,7 +159,8 @@ void PropertiesDialog::TransferTo(Catalog *cat)
     SET_VAL(BasePath, basePath);
     #undef SET_VAL
 
-    m_language->SetValue(cat->Header().Lang.Code());
+    m_language->SetLang(cat->Header().Lang);
+    OnLanguageValueChanged(m_language->GetValue());
 
     wxString pf_def = cat->Header().Lang.DefaultPluralFormsExpr();
     wxString pf_cat = cat->Header().GetHeader("Plural-Forms");
@@ -187,7 +190,7 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
     GET_VAL(BasePath, basePath);
     #undef GET_VAL
 
-    Language lang = Language::TryParse(m_language->GetValue());
+    Language lang = m_language->GetLang();
     if (lang.IsValid())
         cat->Header().Lang = lang;
 
@@ -230,7 +233,13 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
 
 void PropertiesDialog::OnLanguageChanged(wxCommandEvent& event)
 {
-    Language lang = Language::TryParse(event.GetString());
+    OnLanguageValueChanged(event.GetString());
+    event.Skip();
+}
+
+void PropertiesDialog::OnLanguageValueChanged(const wxString& langstr)
+{
+    Language lang = Language::TryParse(langstr);
     wxString pluralForm = lang.DefaultPluralFormsExpr();
     if (pluralForm.empty())
     {
@@ -246,16 +255,19 @@ void PropertiesDialog::OnLanguageChanged(wxCommandEvent& event)
             m_pluralFormsDefault->SetValue(true);
         }
     }
-    event.Skip();
 }
 
 void PropertiesDialog::OnPluralFormsDefault(wxCommandEvent&)
 {
     m_rememberedPluralForm = m_pluralFormsExpr->GetValue();
 
-    wxString defaultForm = Language::TryParse(m_language->GetValue()).DefaultPluralFormsExpr();
-    if (!defaultForm.empty())
-        m_pluralFormsExpr->SetValue(defaultForm);
+    Language lang = m_language->GetLang();
+    if (lang.IsValid())
+    {
+        wxString defaultForm = lang.DefaultPluralFormsExpr();
+        if (!defaultForm.empty())
+            m_pluralFormsExpr->SetValue(defaultForm);
+    }
 }
 
 void PropertiesDialog::OnPluralFormsCustom(wxCommandEvent&)
@@ -282,6 +294,13 @@ bool PropertiesDialog::Validate()
                 status = false;
             }
         }
+    }
+
+    if (!m_language->IsValid())
+    {
+        m_language->SetBackgroundColour(wxColour(242,119,136));
+        Refresh();
+        status = false;
     }
 
     return status;

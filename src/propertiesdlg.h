@@ -30,6 +30,7 @@
 #include <wx/notebook.h>
 
 #include "catalog.h"
+#include "languagectrl.h"
 
 class WXDLLIMPEXP_FWD_ADV wxEditableListBox;
 class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
@@ -52,11 +53,12 @@ class PropertiesDialog : public wxDialog
             
     private:
         void OnLanguageChanged(wxCommandEvent& event);
+        void OnLanguageValueChanged(const wxString& langstr);
         void OnPluralFormsDefault(wxCommandEvent& event);
         void OnPluralFormsCustom(wxCommandEvent& event);
 
         wxTextCtrl *m_team, *m_teamEmail, *m_project;
-        wxTextCtrl *m_language;
+        LanguageCtrl *m_language;
         wxComboBox *m_charset, *m_sourceCodeCharset;
         wxRadioButton *m_pluralFormsDefault, *m_pluralFormsCustom;
         wxTextCtrl *m_pluralFormsExpr;
