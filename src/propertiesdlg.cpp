@@ -42,6 +42,7 @@
 
 
 PropertiesDialog::PropertiesDialog(wxWindow *parent)
+    : m_validatedPlural(-1), m_validatedLang(-1)
 {
     wxXmlResource::Get()->LoadDialog(this, parent, "properties");
 
@@ -85,6 +86,12 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
     m_pluralFormsExpr->Bind(
         wxEVT_UPDATE_UI,
         [=](wxUpdateUIEvent& e){ e.Enable(m_pluralFormsCustom->GetValue()); });
+    m_pluralFormsExpr->Bind(
+        wxEVT_TEXT,
+        [=](wxCommandEvent&){ m_validatedPlural = -1; });
+    Bind(wxEVT_UPDATE_UI,
+        [=](wxUpdateUIEvent& e){ e.Enable(Validate()); },
+        wxID_OK);
 }
 
 
@@ -233,6 +240,7 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
 
 void PropertiesDialog::OnLanguageChanged(wxCommandEvent& event)
 {
+    m_validatedLang = -1;
     OnLanguageValueChanged(event.GetString());
     event.Skip();
 }
@@ -279,29 +287,25 @@ void PropertiesDialog::OnPluralFormsCustom(wxCommandEvent&)
 
 bool PropertiesDialog::Validate()
 {
-    bool status = true;
-
-    if (m_pluralFormsCustom->GetValue())
+    if (m_validatedPlural == -1)
     {
-        wxString form = m_pluralFormsExpr->GetValue();
-        if (!form.empty())
+        m_validatedPlural = 1;
+        if (m_pluralFormsCustom->GetValue())
         {
-            std::unique_ptr<PluralFormsCalculator> calc(PluralFormsCalculator::make(form.ToAscii()));
-            if (!calc)
+            wxString form = m_pluralFormsExpr->GetValue();
+            if (!form.empty())
             {
-                m_pluralFormsExpr->SetBackgroundColour(wxColour(242,119,136));
-                Refresh();
-                status = false;
+                std::unique_ptr<PluralFormsCalculator> calc(PluralFormsCalculator::make(form.ToAscii()));
+                if (!calc)
+                    m_validatedPlural = 0;
             }
         }
     }
 
-    if (!m_language->IsValid())
+    if (m_validatedLang == -1)
     {
-        m_language->SetBackgroundColour(wxColour(242,119,136));
-        Refresh();
-        status = false;
+        m_validatedLang = m_language->IsValid() ? 1 : 0;
     }
 
-    return status;
+    return m_validatedLang == 1 && m_validatedPlural == 1;
 }

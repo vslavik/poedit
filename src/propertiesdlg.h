@@ -65,6 +65,8 @@ class PropertiesDialog : public wxDialog
         wxTextCtrl *m_basePath;
         wxEditableListBox *m_paths, *m_keywords;
         wxString m_rememberedPluralForm;
+
+        int m_validatedPlural, m_validatedLang;
 };
 
 
