@@ -84,6 +84,10 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
     m_pluralFormsExpr->Bind(
         wxEVT_UPDATE_UI,
         [=](wxUpdateUIEvent& e){ e.Enable(m_pluralFormsCustom->GetValue()); });
+
+    CallAfter([=]{
+        m_project->SetFocus();
+    });
 }
 
 
