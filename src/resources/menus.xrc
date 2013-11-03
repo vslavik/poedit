@@ -4,11 +4,6 @@
     <object class="wxMenu" name="menu_file">
       <label>_File</label>
       <style>wxMENU_TEAROFF</style>
-      <object class="wxMenuItem" name="menu_manager">
-        <label platform="win">Catalogs _manager</label>
-        <label platform="unix|mac">Catalogs _Manager</label>
-      </object>
-      <object class="separator"/>
       <object class="wxMenuItem" name="wxID_NEW">
         <label platform="win">_New catalog...</label>
         <label platform="unix|mac">_New Catalog...</label>
@@ -46,6 +41,11 @@
       <object class="wxMenuItem" name="wxID_PREFERENCES" platform="win|mac">
         <label>_Preferences...</label>
         <accel platform="mac">Ctrl+,</accel>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="menu_manager">
+        <label platform="win">Catalogs _manager</label>
+        <label platform="unix|mac">Catalogs _Manager</label>
       </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="wxID_CLOSE" platform="unix">
@@ -248,10 +248,6 @@
     <object class="wxMenu" name="menu_file">
       <label>_File</label>
       <style>wxMENU_TEAROFF</style>
-      <object class="wxMenuItem" name="menu_manager">
-        <label platform="unix|mac">Catalogs _Manager</label>
-      </object>
-      <object class="separator"/>
       <object class="wxMenuItem" name="wxID_NEW">
         <label platform="unix|mac">_New Catalog...</label>
       </object>
@@ -265,6 +261,9 @@
       <object class="wxMenuItem" name="wxID_PREFERENCES" platform="win|mac">
         <label>_Preferences...</label>
         <accel platform="mac">Ctrl+,</accel>
+      </object>
+      <object class="wxMenuItem" name="menu_manager">
+        <label platform="unix|mac">Catalogs _Manager</label>
       </object>
       <object class="wxMenuItem" name="wxID_EXIT">
         <label platform="mac">Quit</label>
