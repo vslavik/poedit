@@ -26,6 +26,8 @@
 #ifndef _CATALOG_H_
 #define _CATALOG_H_
 
+#include "language.h"
+
 #include <wx/encconv.h>
 #include <wx/regex.h>
 #include <wx/arrstr.h>
@@ -446,9 +448,10 @@ class Catalog
 
             // Parsed values:
 
-            wxString LanguageCode, Project, CreationDate,
+            wxString Project, CreationDate,
                      RevisionDate, Translator, TranslatorEmail,
                      Team, TeamEmail, Charset, SourceCodeCharset;
+            Language Lang;
 
             wxArrayString SearchPaths, Keywords;
             int Bookmarks[BOOKMARK_LAST];
@@ -563,10 +566,8 @@ class Catalog
          */
         bool IsOk() const { return m_isOk; }
 
-        /** Returns xx_YY ISO code of catalog's language if either the Poedit
-            extensions headers are present or if filename is known and is in
-            the xx[_YY] form, otherwise returns empty string. */
-        wxString GetLocaleCode() const;
+        /** Returns catalog's language (may be invalid). */
+        Language GetLanguage() const { return m_header.Lang; }
 
         /// Adds entry to the catalog (the catalog will take ownership of
         /// the object).

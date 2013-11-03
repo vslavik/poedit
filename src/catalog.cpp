@@ -43,10 +43,9 @@
 #include "gexecute.h"
 #include "progressinfo.h"
 #include "summarydlg.h"
-#include "isocodes.h"
 #include "utility.h"
 #include "version.h"
-#include "lang_info.h"
+#include "language.h"
 
 
 // ----------------------------------------------------------------------
@@ -271,7 +270,7 @@ void Catalog::HeaderData::UpdateDict()
     SetHeader("MIME-Version", "1.0");
     SetHeader("Content-Type", "text/plain; charset=" + Charset);
     SetHeader("Content-Transfer-Encoding", "8bit");
-    SetHeaderNotEmpty("Language", LanguageCode);
+    SetHeaderNotEmpty("Language", Lang.Code());
     SetHeader("X-Generator", wxString::FromAscii("Poedit " POEDIT_VERSION));
 
     // Set extended information:
@@ -374,24 +373,19 @@ void Catalog::HeaderData::ParseDict()
     }
 
     // Parse language information, with backwards compatibility with X-Poedit-*:
-    LanguageCode = GetHeader("Language");
-    if ( LanguageCode.empty() )
+    wxString languageCode = GetHeader("Language");
+    if ( !languageCode.empty() )
+    {
+        Lang = Language::TryParse(languageCode);
+    }
+    else
     {
         wxString X_Language = GetHeader("X-Poedit-Language");
-        if ( !X_Language.empty() )
-            X_Language = LookupLanguageCode(X_Language);
-
         wxString X_Country = GetHeader("X-Poedit-Country");
-        if ( !X_Country.empty() )
-            X_Country = LookupCountryCode(X_Country);
-
         if ( !X_Language.empty() )
-        {
-            LanguageCode = X_Language;
-            if ( !X_Country.empty() )
-                LanguageCode += "_" + X_Country;
-        }
+            Lang = Language::FromLegacyNames(X_Language, X_Country);
     }
+
     DeleteHeader("X-Poedit-Language");
     DeleteHeader("X-Poedit-Country");
 
@@ -971,7 +965,7 @@ void Catalog::CreateNewHeader()
     dt.CreationDate = GetCurrentTimeRFC822();
     dt.RevisionDate = dt.CreationDate;
 
-    dt.LanguageCode = wxEmptyString;
+    dt.Lang = Language();
     dt.Project = wxEmptyString;
     dt.Team = wxEmptyString;
     dt.TeamEmail = wxEmptyString;
@@ -999,7 +993,7 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
     dt.Charset = "UTF-8";
 
     // clear the fields that are translation-specific:
-    dt.LanguageCode.clear();
+    dt.Lang = Language();
     dt.Team.clear();
     dt.TeamEmail.clear();
 
@@ -1080,8 +1074,20 @@ bool Catalog::Load(const wxString& po_file, int flags)
     return true;
 }
 
+
 void Catalog::FixupCommonIssues()
 {
+    if (!m_header.Lang.IsValid())
+    {
+        if (!m_fileName.empty())
+        {
+            m_header.Lang = Language::TryGuessFromFilename(m_fileName);
+            wxLogTrace("poedit", "guessed language from filename '%s': %s", m_fileName, m_header.Lang.Code());
+        }
+    }
+
+    wxLogTrace("poedit", "catalog lang is '%s'", GetLanguage().Code());
+
     wxString pluralForms = m_header.GetHeader("Plural-Forms");
 
     if (pluralForms == "nplurals=INTEGER; plural=EXPRESSION;") // default invalid value
@@ -1098,9 +1104,9 @@ void Catalog::FixupCommonIssues()
     else
     {
         // Auto-fill default plural form if it is missing:
-        if (!m_header.LanguageCode.empty() && HasPluralItems())
+        if (m_header.Lang.IsValid() && HasPluralItems())
         {
-            pluralForms = GetPluralFormForLanguage(m_header.LanguageCode);
+            pluralForms = m_header.Lang.DefaultPluralFormsExpr();
             if (!pluralForms.empty())
                 m_header.SetHeader("Plural-Forms", pluralForms);
         }
@@ -1977,51 +1983,4 @@ wxArrayString CatalogItem::GetReferences() const
     }
 
     return refs;
-}
-
-static wxString TryIfStringIsLangCode(const wxString& s)
-{
-    if (s.length() == 2)
-    {
-        if (IsKnownLanguageCode(s))
-            return s;
-    }
-    else if (s.length() == 5 && s[2u] == _T('_'))
-    {
-        if (IsKnownLanguageCode(s.Mid(0, 2)) &&
-            IsKnownCountryCode(s.Mid(3, 2)))
-        {
-            return s;
-        }
-    }
-
-    return wxEmptyString;
-}
-
-wxString Catalog::GetLocaleCode() const
-{
-    wxString lang;
-
-    // was the language explicitly specified?
-    if ( !m_header.LanguageCode.empty() )
-        lang = m_header.LanguageCode;
-
-    // if not, can we deduce it from filename?
-    if (lang.empty() && !m_fileName.empty())
-    {
-        wxString name;
-        wxFileName::SplitPath(m_fileName, NULL, &name, NULL);
-
-        lang = TryIfStringIsLangCode(name);
-        if ( lang.empty() )
-        {
-            wxString afterDot = name.AfterLast('.');
-            if ( afterDot != name )
-                lang = TryIfStringIsLangCode(afterDot);
-        }
-    }
-
-    wxLogTrace("poedit", "catalog lang is '%s'", lang.c_str());
-
-    return lang;
 }

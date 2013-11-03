@@ -12,8 +12,8 @@ import json
 
 TABLE_URL = "https://github.com/transifex/transifex/raw/devel/transifex/languages/fixtures/all_languages.json"
 
-MARKER_BEGIN = "        // Code generated with scripts/extract-plural-forms.py begins here"
-MARKER_END   = "        // Code generated with scripts/extract-plural-forms.py ends here"
+MARKER_BEGIN = "// Code generated with scripts/extract-plural-forms.py begins here"
+MARKER_END   = "// Code generated with scripts/extract-plural-forms.py ends here"
 
 
 def validate_entry(e):
@@ -36,10 +36,10 @@ def validate_entry(e):
             raise ValueError("not all plural form values used (n=0..100)")
 
 
-if os.path.isfile("src/lang_info.cpp"):
-    outfname = "src/lang_info.cpp"
-elif os.path.isfile("../src/lang_info.cpp"):
-    outfname = "../src/lang_info.cpp"
+if os.path.isfile("src/language_impl_plurals.h"):
+    outfname = "src/language_impl_plurals.h"
+elif os.path.isfile("../src/language_impl_plurals.h"):
+    outfname = "../src/language_impl_plurals.h"
 else:
     raise RuntimeError("run this script from root or from scripts/ directory")
 
@@ -49,7 +49,7 @@ with file(outfname, "rt") as f:
 
 response = urllib2.urlopen(TABLE_URL)
 
-output = "        // Code generated with scripts/extract-plural-forms.py begins here\n\n"
+output = "// Code generated with scripts/extract-plural-forms.py begins here\n\n"
 
 langdata = {}
 shortlangdata = {}
@@ -79,12 +79,12 @@ for lang in sorted(langdata.keys()):
     definition = '{ %-7s, "%s" },' % ('"%s"' % lang, expr)
     try:
         validate_entry(expr)
-        output += '        %s\n' % definition
+        output += '%s\n' % definition
     except ValueError as e:
-        output += '        // %s // BROKEN\n' % definition
+        output += '// %s // BROKEN\n' % definition
         sys.stderr.write('skipping %s: %s\n\t"%s"\n' % (lang, e, expr))
 
-output += "\n        // Code generated with scripts/extract-plural-forms.py ends here\n"
+output += "\n// Code generated with scripts/extract-plural-forms.py ends here\n"
 
 content = re.sub('%s(.*?)%s' % (MARKER_BEGIN, MARKER_END),
                  output,

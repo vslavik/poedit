@@ -75,8 +75,7 @@
 #include "fileviewer.h"
 #include "findframe.h"
 #include "tm/transmem.h"
-#include "isocodes.h"
-#include "lang_info.h"
+#include "language.h"
 #include "progressinfo.h"
 #include "commentdlg.h"
 #include "manager.h"
@@ -795,7 +794,7 @@ static GtkTextView *GetTextView(wxTextCtrl *ctrl)
 
 #ifdef __WXGTK__
 static bool DoInitSpellchecker(wxTextCtrl *text,
-                               bool enable, const wxString& lang)
+                               bool enable, const Language& lang)
 {
     GtkTextView *textview = GetTextView(text);
     wxASSERT_MSG( textview, "wxTextCtrl is supposed to use GtkTextView" );
@@ -806,9 +805,9 @@ static bool DoInitSpellchecker(wxTextCtrl *text,
     if (enable)
     {
         if (spell)
-            gtkspell_set_language(spell, lang.ToAscii(), &err);
+            gtkspell_set_language(spell, lang.GetCode().c_str(), &err);
         else
-            gtkspell_new_attach(textview, lang.ToAscii(), &err);
+            gtkspell_new_attach(textview, lang.GetCode().c_str(), &err);
     }
     else // !enable
     {
@@ -838,7 +837,7 @@ static bool SetSpellcheckerLang(const wxString& lang)
 }
 
 static bool DoInitSpellchecker(wxTextCtrl *text,
-                               bool enable, const wxString& /*lang*/)
+                               bool enable, const Language& /*lang*/)
 {
     text->MacCheckSpelling(enable);
     return true;
@@ -864,18 +863,19 @@ static void ShowSpellcheckerHelp()
 void PoeditFrame::InitSpellchecker()
 {
 #ifdef USE_SPELLCHECKING
-    bool report_problem = false;
+    Language lang;
+    if (m_catalog)
+        lang = m_catalog->GetLanguage();
 
-    wxString lang;
-    if (m_catalog) lang = m_catalog->GetLocaleCode();
-    bool enabled = m_catalog && !lang.empty() &&
+    bool report_problem = false;
+    bool enabled = m_catalog && lang.IsValid() &&
                    wxConfig::Get()->Read("enable_spellchecking",
                                          (long)true);
 
 #ifdef __WXOSX__
     if (enabled)
     {
-        if ( !SetSpellcheckerLang(lang) )
+        if ( !SetSpellcheckerLang(lang.LangAndCountry()) )
         {
             enabled = false;
             report_problem = true;
@@ -894,10 +894,6 @@ void PoeditFrame::InitSpellchecker()
 
     if ( enabled && report_problem )
     {
-        wxString langname = LookupLanguageName(lang);
-        if ( !langname )
-            langname = lang;
-
         AttentionMessage msg
         (
             "missing-spell-dict",
@@ -905,12 +901,13 @@ void PoeditFrame::InitSpellchecker()
             wxString::Format
             (
                 // TRANSLATORS: %s is language name in its basic form (as you
-                // would see e.g. in a list of supported languages).
+                // would see e.g. in a list of supported languages). You may need
+                // to rephrase it, e.g. to an equivalent of "for language %s".
                 _("Spellchecker dictionary for %s isn't available, you need to install it."),
-                langname.c_str()
+                lang.DisplayName()
             )
         );
-        msg.AddAction(_("Learn more"), boost::bind(ShowSpellcheckerHelp));
+        msg.AddAction(_("Learn more"), std::bind(ShowSpellcheckerHelp));
         msg.AddDontShowAgain();
         m_attentionBar->ShowMessage(msg);
     }
@@ -1077,7 +1074,7 @@ static wxString SuggestFileName(const Catalog *catalog)
 {
     wxString name;
     if (catalog)
-        name = catalog->GetLocaleCode();
+        name = catalog->GetLanguage().Code();
 
     if (name.empty())
         return "default";
@@ -1240,6 +1237,7 @@ void PoeditFrame::EditCatalogProperties()
 {
     wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this));
 
+    const Language prevLang = m_catalog->GetLanguage();
     dlg->TransferTo(m_catalog);
     dlg->ShowWindowModalThenDo([=](int retcode){
         if (retcode == wxID_OK)
@@ -1249,7 +1247,12 @@ void PoeditFrame::EditCatalogProperties()
             RecreatePluralTextCtrls();
             UpdateTitle();
             UpdateMenu();
-            InitSpellchecker();
+            if (prevLang != m_catalog->GetLanguage())
+            {
+                InitSpellchecker();
+                // trigger resorting and language header update:
+                m_list->CatalogChanged(m_catalog);
+            }
         }
     });
 }
@@ -1894,6 +1897,20 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
 
     InitSpellchecker();
 
+    Language language = m_catalog->GetLanguage();
+    if (!language.IsValid())
+    {
+        AttentionMessage msg
+            (
+                "missing-language",
+                AttentionMessage::Error,
+                _("Language of the translation isn't set.")
+            );
+        msg.AddAction(_("Set language"),
+                      std::bind(&PoeditFrame::EditCatalogProperties, this));
+
+        m_attentionBar->ShowMessage(msg);
+    }
 
     // FIXME: do this for Gettext PO files only
     if (wxConfig::Get()->Read("translator_name", "").empty() ||
@@ -1906,7 +1923,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
                 _("You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files.")
             );
         msg.AddAction(_("Set email"),
-                      boost::bind(&PoeditApp::EditPreferences, &wxGetApp()));
+                      std::bind(&PoeditApp::EditPreferences, &wxGetApp()));
         msg.AddDontShowAgain();
 
         m_attentionBar->ShowMessage(msg);
@@ -1927,7 +1944,6 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
         }
 
         // FIXME: make this part of global error checking
-        wxString language = m_catalog->GetLocaleCode();
         wxString plForms = m_catalog->Header().GetHeader("Plural-Forms");
         PluralFormsCalculator *plCalc =
                 PluralFormsCalculator::make(plForms.ToAscii());
@@ -1955,18 +1971,18 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
                     err
                 );
             msg.AddAction(_("Fix the header"),
-                          boost::bind(&PoeditFrame::EditCatalogProperties, this));
+                          std::bind(&PoeditFrame::EditCatalogProperties, this));
 
             m_attentionBar->ShowMessage(msg);
         }
         else // no error, check for warning-worthy stuff
         {
-            if ( !language.empty() )
+            if ( language.IsValid() )
             {
                 // Check for unusual plural forms. Do some normalization to avoid unnecessary
                 // complains when the only differences are in whitespace for example.
                 wxString pl1 = plForms;
-                wxString pl2 = GetPluralFormForLanguage(language);
+                wxString pl2 = language.DefaultPluralFormsExpr();
                 if (!pl2.empty())
                 {
                     pl1.Replace(" ", "");
@@ -1987,10 +2003,17 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
                             (
                                 "unusual-plural-forms",
                                 AttentionMessage::Warning,
-                                _("Plural forms expression used by the catalog is unusual for this language.")
+                                wxString::Format
+                                (
+                                    // TRANSLATORS: %s is language name in its basic form (as you
+                                    // would see e.g. in a list of supported languages). You may need
+                                    // to rephrase it, e.g. to an equivalent of "for language %s".
+                                    _("Plural forms expression used by the catalog is unusual for %s."),
+                                    language.DisplayName()
+                                )
                             );
                         msg.AddAction(_("Review"),
-                                      boost::bind(&PoeditFrame::EditCatalogProperties, this));
+                                      std::bind(&PoeditFrame::EditCatalogProperties, this));
 
                         m_attentionBar->ShowMessage(msg);
                     }
@@ -2360,6 +2383,7 @@ bool PoeditFrame::AutoTranslateCatalog()
     wxBusyCursor bcur;
 
     TranslationMemory& tm = TranslationMemory::Get();
+    wxString langcode(m_catalog->GetLanguage().Code());
 
     int cnt = m_catalog->GetCount();
     int matches = 0;
@@ -2377,7 +2401,7 @@ bool PoeditFrame::AutoTranslateCatalog()
         if (dt.IsFuzzy() || !dt.IsTranslated())
         {
             TranslationMemory::Results results;
-            if (tm.Search(m_catalog->GetLocaleCode(), dt.GetString(), results, 1))
+            if (tm.Search(langcode, dt.GetString(), results, 1))
             {
                 dt.SetTranslation(results[0]);
                 dt.SetAutomatic(true);
@@ -2435,7 +2459,8 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
     {
         wxBusyCursor bcur;
         CatalogItem& dt = (*m_catalog)[item];
-        if (TranslationMemory::Get().Search(m_catalog->GetLocaleCode(), dt.GetString(), m_autoTranslations))
+        wxString langcode(m_catalog->GetLanguage().Code());
+        if (TranslationMemory::Get().Search(langcode, dt.GetString(), m_autoTranslations))
         {
             menu->AppendSeparator();
 #ifdef CAN_MODIFY_DEFAULT_FONT

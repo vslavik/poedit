@@ -16,7 +16,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  errorbar.cpp errorbar.h \
                  catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
                  edframe.h fileviewer.cpp fileviewer.h parser.cpp parser.h \
-                 isocodes.cpp isocodes.h prefsdlg.cpp prefsdlg.h \
+                 prefsdlg.cpp prefsdlg.h \
                  propertiesdlg.cpp propertiesdlg.h progressinfo.h \
                  progressinfo.cpp digger.h digger.cpp gexecute.h \
                  gexecute.cpp summarydlg.h summarydlg.cpp \
@@ -29,7 +29,8 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  cat_sorting.cpp cat_sorting.h \
                  utility.cpp utility.h \
                  version.h errors.h \
-                 lang_info.cpp lang_info.h \
+                 language.cpp language.h \
+                 languagectrl.cpp languagectrl.h \
                  compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS) $(LUCENE_LIBS)

@@ -28,6 +28,8 @@
 
 #include "catalog.h"
 
+#include <memory>
+#include <unicode/coll.h>
 
 /// Sort order information
 struct SortOrder
@@ -63,9 +65,10 @@ public:
     /**
         Initializes comparator instance for given catalog.
      */
-    CatalogItemsComparator(const Catalog& catalog, const SortOrder& order)
-        : m_catalog(catalog), m_order(order)
-    {}
+    CatalogItemsComparator(const Catalog& catalog, const SortOrder& order);
+
+    CatalogItemsComparator(const CatalogItemsComparator&) = delete;
+    CatalogItemsComparator& operator=(const CatalogItemsComparator&) = delete;
 
     bool operator()(int i, int j) const;
 
@@ -76,6 +79,7 @@ protected:
 private:
     const Catalog& m_catalog;
     SortOrder m_order;
+    std::unique_ptr<icu::Collator> m_collator;
 };
 
 

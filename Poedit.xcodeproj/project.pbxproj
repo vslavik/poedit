@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21FB780179D51BE003F45AC /* libexpat.dylib */; };
-		B22C5F0A17DDC67400ECAFD1 /* lang_info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* lang_info.cpp */; };
+		B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* language.cpp */; };
 		B23D1F7118142D1900E6B212 /* dump_legacy_tm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */; };
 		B23D1F731814470200E6B212 /* dump-legacy-tm in Copy Auxiliary Binaries */ = {isa = PBXBuildFile; fileRef = B23D1F6418142CF400E6B212 /* dump-legacy-tm */; };
 		B24ACD5F16F6201F00399242 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B24ACD5E16F6201F00399242 /* Cocoa.framework */; };
@@ -16,6 +16,7 @@
 		B24ACD8416F6263900399242 /* Poedit.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD8316F6263900399242 /* Poedit.iconset */; };
 		B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; };
 		B2567977170763B700C52BC5 /* libwx_osx_cocoa_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */; };
+		B26D064F182506E40069C378 /* languagectrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D064D182506E40069C378 /* languagectrl.cpp */; };
 		B28F1CAA16F627170018AF7E /* GenericTranslation.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B28F1CA916F627170018AF7E /* GenericTranslation.iconset */; };
 		B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAC16F629D30018AF7E /* catalog.cpp */; };
 		B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAE16F629D30018AF7E /* edapp.cpp */; };
@@ -31,7 +32,6 @@
 		B28F1CF116F629D30018AF7E /* findframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC216F629D30018AF7E /* findframe.cpp */; };
 		B28F1CF216F629D30018AF7E /* gexecute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC416F629D30018AF7E /* gexecute.cpp */; };
 		B28F1CF316F629D30018AF7E /* icons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC616F629D30018AF7E /* icons.cpp */; };
-		B28F1CF416F629D30018AF7E /* isocodes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC816F629D30018AF7E /* isocodes.cpp */; };
 		B28F1CF516F629D30018AF7E /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CCA16F629D30018AF7E /* manager.cpp */; };
 		B28F1CF616F629D30018AF7E /* osx_helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CCD16F629D30018AF7E /* osx_helpers.m */; };
 		B28F1CF716F629D30018AF7E /* parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CCE16F629D30018AF7E /* parser.cpp */; };
@@ -84,6 +84,7 @@
 		B2E837011709ED6300F31559 /* poedit-fuzzy.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F81709ED6300F31559 /* poedit-fuzzy.png */; };
 		B2E837021709ED6300F31559 /* poedit-update.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F91709ED6300F31559 /* poedit-update.png */; };
 		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
+		B2EC60A41812D9D40059756A /* icudt52l.dat in Resources */ = {isa = PBXBuildFile; fileRef = B2EC60A31812D9D40059756A /* icudt52l.dat */; };
 		B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F14DD3181E510100E212B5 /* tm_migrate.cpp */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
@@ -166,8 +167,8 @@
 
 /* Begin PBXFileReference section */
 		B21FB780179D51BE003F45AC /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
-		B22C5F0817DDC67400ECAFD1 /* lang_info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lang_info.cpp; sourceTree = "<group>"; };
-		B22C5F0917DDC67400ECAFD1 /* lang_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lang_info.h; sourceTree = "<group>"; };
+		B22C5F0817DDC67400ECAFD1 /* language.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = language.cpp; sourceTree = "<group>"; };
+		B22C5F0917DDC67400ECAFD1 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
 		B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dump_legacy_tm.cpp; path = tm/dump_legacy_tm.cpp; sourceTree = "<group>"; };
 		B23D1F6418142CF400E6B212 /* dump-legacy-tm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "dump-legacy-tm"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B248B2DE170D765100EBA58E /* GettextTools.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GettextTools.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +185,9 @@
 		B24ACD8316F6263900399242 /* Poedit.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = Poedit.iconset; path = icons/appicon/Poedit.iconset; sourceTree = SOURCE_ROOT; };
 		B256797417075E6000C52BC5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwx_osx_cocoa_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B26B74EF1822CA12006E2B76 /* language_impl_legacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_impl_legacy.h; sourceTree = "<group>"; };
+		B26D064D182506E40069C378 /* languagectrl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = languagectrl.cpp; sourceTree = "<group>"; };
+		B26D064E182506E40069C378 /* languagectrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = languagectrl.h; sourceTree = "<group>"; };
 		B27EB05D1709DA4A009C1328 /* comment.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = comment.xrc; sourceTree = "<group>"; };
 		B27EB05E1709DA4A009C1328 /* find.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = find.xrc; sourceTree = "<group>"; };
 		B27EB05F1709DA4A009C1328 /* manager.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = manager.xrc; sourceTree = "<group>"; };
@@ -222,8 +226,6 @@
 		B28F1CC516F629D30018AF7E /* gexecute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gexecute.h; sourceTree = "<group>"; };
 		B28F1CC616F629D30018AF7E /* icons.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = icons.cpp; sourceTree = "<group>"; };
 		B28F1CC716F629D30018AF7E /* icons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icons.h; sourceTree = "<group>"; };
-		B28F1CC816F629D30018AF7E /* isocodes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = isocodes.cpp; sourceTree = "<group>"; };
-		B28F1CC916F629D30018AF7E /* isocodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isocodes.h; sourceTree = "<group>"; };
 		B28F1CCA16F629D30018AF7E /* manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = manager.cpp; sourceTree = "<group>"; };
 		B28F1CCB16F629D30018AF7E /* manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = manager.h; sourceTree = "<group>"; };
 		B28F1CCC16F629D30018AF7E /* osx_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osx_helpers.h; sourceTree = "<group>"; };
@@ -248,6 +250,8 @@
 		B28F1CE416F629D30018AF7E /* pl_evaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pl_evaluate.h; path = pluralforms/pl_evaluate.h; sourceTree = "<group>"; };
 		B28F1CE516F629D30018AF7E /* digits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = digits.h; sourceTree = "<group>"; };
 		B29AE89B17105306008D1F8A /* errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errors.h; sourceTree = "<group>"; };
+		B29FC688182157A700BFC15D /* language_impl_plurals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_impl_plurals.h; sourceTree = "<group>"; };
+		B29FC6891821616C00BFC15D /* icuhelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icuhelpers.h; sourceTree = "<group>"; };
 		B2BF84B9170846290030AA22 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B2BF84BB170846940030AA22 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		B2BF84BD170847220030AA22 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -280,6 +284,7 @@
 		B2E836F91709ED6300F31559 /* poedit-update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-update.png"; path = "toolbar-32/poedit-update.png"; sourceTree = "<group>"; };
 		B2E836FA1709ED6300F31559 /* poedit-validate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "poedit-validate.png"; path = "toolbar-32/poedit-validate.png"; sourceTree = "<group>"; };
 		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macosx/copy-translations.sh"; sourceTree = "<group>"; };
+		B2EC60A31812D9D40059756A /* icudt52l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt52l.dat; path = deps/icu4c/source/data/in/icudt52l.dat; sourceTree = "<group>"; };
 		B2F14DD3181E510100E212B5 /* tm_migrate.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = tm_migrate.cpp; path = tm/tm_migrate.cpp; sourceTree = "<group>"; };
 		B2F287C2170DCC92004C1F41 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = deps/gettext/AUTHORS; sourceTree = SOURCE_ROOT; };
 		B2F287C3170DCC92004C1F41 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = COPYING; path = deps/gettext/COPYING; sourceTree = SOURCE_ROOT; };
@@ -386,6 +391,8 @@
 				B28F1CD716F629D30018AF7E /* summarydlg.h */,
 				B28F1CDE16F629D30018AF7E /* utility.cpp */,
 				B28F1CDF16F629D30018AF7E /* utility.h */,
+				B26D064D182506E40069C378 /* languagectrl.cpp */,
+				B26D064E182506E40069C378 /* languagectrl.h */,
 			);
 			name = GUI;
 			path = src;
@@ -396,13 +403,14 @@
 			children = (
 				B28F1CB516F629D30018AF7E /* catalog.h */,
 				B28F1CAC16F629D30018AF7E /* catalog.cpp */,
-				B28F1CC916F629D30018AF7E /* isocodes.h */,
-				B28F1CC816F629D30018AF7E /* isocodes.cpp */,
-				B22C5F0917DDC67400ECAFD1 /* lang_info.h */,
-				B22C5F0817DDC67400ECAFD1 /* lang_info.cpp */,
+				B22C5F0917DDC67400ECAFD1 /* language.h */,
+				B22C5F0817DDC67400ECAFD1 /* language.cpp */,
+				B26B74EF1822CA12006E2B76 /* language_impl_legacy.h */,
+				B29FC688182157A700BFC15D /* language_impl_plurals.h */,
 				B28F1CE416F629D30018AF7E /* pl_evaluate.h */,
 				B28F1CE316F629D30018AF7E /* pl_evaluate.cpp */,
 				B28F1CE016F629D30018AF7E /* version.h */,
+				B29FC6891821616C00BFC15D /* icuhelpers.h */,
 			);
 			name = "Non-GUI";
 			path = src;
@@ -504,6 +512,7 @@
 				B2E836DD1709ECD600F31559 /* dsa_pub.pem */,
 				B24ACD8316F6263900399242 /* Poedit.iconset */,
 				B28F1CA916F627170018AF7E /* GenericTranslation.iconset */,
+				B2EC60A31812D9D40059756A /* icudt52l.dat */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -709,6 +718,7 @@
 				B29AE89617103992008D1F8A /* properties.xrc in Resources */,
 				B29AE89717103992008D1F8A /* summary.xrc in Resources */,
 				B29AE89A17103992008D1F8A /* toolbar.xrc in Resources */,
+				B2EC60A41812D9D40059756A /* icudt52l.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,6 +823,7 @@
 				B28F1CE816F629D30018AF7E /* edframe.cpp in Sources */,
 				B28F1CE916F629D30018AF7E /* attentionbar.cpp in Sources */,
 				B28F1CEA16F629D30018AF7E /* cat_sorting.cpp in Sources */,
+				B26D064F182506E40069C378 /* languagectrl.cpp in Sources */,
 				B28F1CEB16F629D30018AF7E /* chooselang.cpp in Sources */,
 				B28F1CEC16F629D30018AF7E /* commentdlg.cpp in Sources */,
 				B28F1CED16F629D30018AF7E /* digger.cpp in Sources */,
@@ -822,7 +833,6 @@
 				B28F1CF116F629D30018AF7E /* findframe.cpp in Sources */,
 				B28F1CF216F629D30018AF7E /* gexecute.cpp in Sources */,
 				B28F1CF316F629D30018AF7E /* icons.cpp in Sources */,
-				B28F1CF416F629D30018AF7E /* isocodes.cpp in Sources */,
 				B28F1CF516F629D30018AF7E /* manager.cpp in Sources */,
 				B28F1CF616F629D30018AF7E /* osx_helpers.m in Sources */,
 				B28F1CF716F629D30018AF7E /* parser.cpp in Sources */,
@@ -834,7 +844,7 @@
 				B28F1CFF16F629D30018AF7E /* utility.cpp in Sources */,
 				B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */,
 				B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */,
-				B22C5F0A17DDC67400ECAFD1 /* lang_info.cpp in Sources */,
+				B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1003,6 +1013,7 @@
 					deps/boost,
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
+					"$(DEPS_BUILD_DIR)/icu/include",
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -1052,6 +1063,7 @@
 					deps/boost,
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
+					"$(DEPS_BUILD_DIR)/icu/include",
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -1069,8 +1081,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug";
-				OTHER_LDFLAGS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(DEPS_BUILD_DIR)/icu/lib",
+					"$(DEPS_BUILD_DIR)/db/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-licuuc",
+					"-licudata",
+					"-licui18n",
+					"-ldb_cxx",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1084,8 +1104,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Poedit-djwpweeujjwlwhetlkqyxevhuecg/Build/Products/Debug";
-				OTHER_LDFLAGS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(DEPS_BUILD_DIR)/icu/lib",
+					"$(DEPS_BUILD_DIR)/db/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-licuuc",
+					"-licudata",
+					"-licui18n",
+					"-ldb_cxx",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

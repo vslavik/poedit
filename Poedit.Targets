@@ -2,6 +2,13 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
          ToolsVersion="4.0">
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <DebugSuffix>d</DebugSuffix>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <DebugSuffix></DebugSuffix>
+  </PropertyGroup>
+  
   <PropertyGroup>
     <ResourcesOutDir>$(OutDir)Resources\</ResourcesOutDir>
     <TranslationsOutDir>$(OutDir)Translations\</TranslationsOutDir>
@@ -13,6 +20,13 @@
     <PoDirWX>deps\wx\locale</PoDirWX>
     <PoDirWXMSW>deps\wx\locale\msw</PoDirWXMSW>
   </PropertyGroup>
+
+  <ItemGroup>
+    <DLLs Include="deps\icu4c\bin\icudt??.dll" />
+    <DLLs Include="deps\icu4c\bin\icuuc??$(DebugSuffix).dll" />
+    <DLLs Include="deps\icu4c\bin\icuin??$(DebugSuffix).dll" />
+    <DLLs Include="deps\icu4c\source\data\in\icudt*.dat" />
+  </ItemGroup>
 
   <ItemGroup>
     <DataFiles Include="src\resources\*.xrc;src\resources\*.gif" />
@@ -38,6 +52,17 @@
     <GettextFiles Include="$(GettextBinDir)\*.dll" />
   </ItemGroup>
 
+
+  <Target Name="CopyDLLs" AfterTargets="Link">
+    <Message Importance="High" Text="Copying 3rd party DLLs to $(OutDir)" />
+    <Copy
+      SourceFiles="@(DLLs)"
+      DestinationFolder="$(OutDir)"
+      SkipUnchangedFiles="true"
+    />
+  </Target>
+
+ 
   <Target Name="CopyDataFiles" AfterTargets="Link">
     <Message Importance="High" Text="Copying resources to $(ResourcesOutDir)" />
     <MakeDir Directories="$(ResourcesOutDir)" />

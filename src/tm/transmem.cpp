@@ -263,9 +263,10 @@ public:
 
     virtual void Insert(const Catalog &cat)
     {
-        const std::wstring lang = cat.GetLocaleCode().ToStdWstring();
+        const std::string lang = cat.GetLanguage().Code();
         if (lang.empty())
             return;
+        const std::wstring wlang(lang.begin(), lang.end());
 
         int cnt = cat.GetCount();
         for (int i = 0; i < cnt; i++)
@@ -288,7 +289,7 @@ public:
             // want to save old entries in the TM too, so that we harvest as
             // much useful translations as we can.
 
-            Insert(lang, item.GetString(), item.GetTranslation());
+            Insert(wlang, item.GetString(), item.GetTranslation());
         }
     }
 

@@ -247,5 +247,5 @@ bool AttentionMessage::IsBlacklisted(const wxString& id)
 void AttentionMessage::AddDontShowAgain()
 {
     AddAction(_("Don't show again"),
-              boost::bind(&AttentionMessage::AddToBlacklist, m_id));
+              std::bind(&AttentionMessage::AddToBlacklist, m_id));
 }
