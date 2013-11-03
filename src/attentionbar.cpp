@@ -207,8 +207,11 @@ void AttentionBar::OnAction(wxCommandEvent& event)
         return;
     }
 
-    HideMessage();
+    // first perform the action...
     i->second();
+
+    // ...then hide the message
+    HideMessage();
 }
 
 
