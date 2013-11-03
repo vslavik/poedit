@@ -51,6 +51,24 @@ inline icu::UnicodeString ToIcuStr(const wxString& str)
 #endif
 }
 
+/**
+Create read-only icu::UnicodeString from std::wstring efficiently.
+
+Notice that the resulting string is only valid for the input std::wstring's
+lifetime duration, unless you make a copy.
+*/
+inline icu::UnicodeString ToIcuStr(const std::wstring& str)
+{
+#if SIZEOF_WCHAR_T == 4
+    return icu::UnicodeString::fromUTF32((const UChar32*) str.c_str(), (int32_t) str.length());
+#elif SIZEOF_WCHAR_T == 2
+    // read-only aliasing ctor, doesn't copy data
+    return icu::UnicodeString(true, str.c_str(), str.length());
+#else
+    #error "WTF?!"
+#endif
+}
+
 /// Create wxString from icu::UnicodeString, making a copy.
 inline wxString FromIcuStr(const icu::UnicodeString& str)
 {
