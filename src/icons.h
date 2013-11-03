@@ -32,6 +32,7 @@
     #define HAS_THEMES_SUPPORT
 #endif
 
+#ifndef __WXMAC__
 class PoeditArtProvider : public wxArtProvider
 {
 protected:
@@ -39,5 +40,6 @@ protected:
                                   const wxArtClient& client,
                                   const wxSize& size);
 };
+#endif
 
 #endif // _ICONS_H_

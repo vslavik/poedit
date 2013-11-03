@@ -170,7 +170,9 @@ bool PoeditApp::OnInit()
     u_setDataDirectory(wxStandardPaths::Get().GetResourcesDir().mb_str());
 #endif
 
+#ifndef __WXMAC__
     wxArtProvider::PushBack(new PoeditArtProvider);
+#endif
 
     SetupLanguage();
 
