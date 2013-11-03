@@ -264,17 +264,7 @@ void PoeditApp::SetupLanguage()
 
 void PoeditApp::OpenNewFile()
 {
-    wxWindow *win;
-    if (wxConfig::Get()->Read("manager_startup", (long)false))
-    {
-        win = ManagerFrame::Create();
-        win->Show(true);
-    }
-    else
-    {
-        win = PoeditFrame::Create();
-    }
-
+    wxWindow *win = PoeditFrame::Create();
     AskForDonations(win);
 }
 

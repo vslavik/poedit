@@ -248,8 +248,6 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 cfg->ReadBool("compile_mo", true));
     XRCCTRL(*this, "show_summary", wxCheckBox)->SetValue(
                 cfg->ReadBool("show_summary", true));
-    XRCCTRL(*this, "manager_startup", wxCheckBox)->SetValue(
-                cfg->ReadBool("manager_startup", false));
     XRCCTRL(*this, "focus_to_text", wxCheckBox)->SetValue(
                 cfg->ReadBool("focus_to_text", false));
     XRCCTRL(*this, "comment_window_editable", wxCheckBox)->SetValue(
@@ -320,8 +318,6 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XRCCTRL(*this, "compile_mo", wxCheckBox)->GetValue());
     cfg->Write("show_summary", 
                 XRCCTRL(*this, "show_summary", wxCheckBox)->GetValue());
-    cfg->Write("manager_startup", 
-                XRCCTRL(*this, "manager_startup", wxCheckBox)->GetValue());
     cfg->Write("focus_to_text", 
                 XRCCTRL(*this, "focus_to_text", wxCheckBox)->GetValue());
     cfg->Write("comment_window_editable", 
