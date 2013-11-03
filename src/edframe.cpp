@@ -853,9 +853,7 @@ static void ShowSpellcheckerHelp()
 #else
     #error "missing spellchecker instructions for platform"
 #endif
-    wxLaunchDefaultBrowser(
-        wxString::FromAscii("http://www.poedit.net/trac/wiki/Doc/"
-                            SPELL_HELP_PAGE));
+    wxGetApp().OpenPoeditWeb("/trac/wiki/Doc/" SPELL_HELP_PAGE);
 }
 
 #endif // USE_SPELLCHECKING

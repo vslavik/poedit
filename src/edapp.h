@@ -66,6 +66,9 @@ class PoeditApp : public wxApp
 
         virtual bool OnExceptionInMainLoop();
 
+        // Open page on poedit.net in the browser
+        void OpenPoeditWeb(const wxString& path);
+
     protected:
         /** Sets default values to configuration items that don't
             have anything set. (This may happen after fresh installation or

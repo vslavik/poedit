@@ -632,7 +632,18 @@ void PoeditApp::OnPreferences(wxCommandEvent&)
 
 void PoeditApp::OnHelp(wxCommandEvent&)
 {
-    wxLaunchDefaultBrowser("http://www.poedit.net/trac/wiki/Doc");
+    OpenPoeditWeb("/trac/wiki/Doc");
+}
+
+
+void PoeditApp::OpenPoeditWeb(const wxString& path)
+{
+    wxLaunchDefaultBrowser
+    (
+        wxString::Format("http://poedit.net%s?fromVersion=%s",
+                         path,
+                         GetAppVersion())
+    );
 }
 
 
@@ -707,7 +718,7 @@ void PoeditApp::AskForDonations(wxWindow *parent)
 
     if ( dlg.ShowModal() == wxID_OK )
     {
-        wxLaunchDefaultBrowser("http://www.poedit.net/donate.php");
+        OpenPoeditWeb("/donate.php");
         cfg->Write("donate/donated", true);
     }
     else
