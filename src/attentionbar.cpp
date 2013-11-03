@@ -38,10 +38,6 @@
 #include "osx_helpers.h"
 #endif
 
-#if defined(__WXMSW__)
-    #define USE_SLIDE_EFFECT
-#endif
-
 #ifdef __WXMAC__
     #define SMALL_BORDER   5
     #define BUTTONS_SPACE 10
@@ -187,21 +183,13 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
             GetBestSize().y);
     Layout();
 
-#ifdef USE_SLIDE_EFFECT
-    ShowWithEffect(wxSHOW_EFFECT_SLIDE_TO_BOTTOM);
-#else
     Show();
-#endif
     GetParent()->Layout();
 }
 
 void AttentionBar::HideMessage()
 {
-#ifdef USE_SLIDE_EFFECT
-    HideWithEffect(wxSHOW_EFFECT_SLIDE_TO_TOP);
-#else
     Hide();
-#endif
     GetParent()->Layout();
 }
 
