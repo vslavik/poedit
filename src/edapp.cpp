@@ -266,7 +266,7 @@ void PoeditApp::SetupLanguage()
 
 void PoeditApp::OpenNewFile()
 {
-    wxWindow *win = PoeditFrame::Create();
+    wxWindow *win = PoeditFrame::CreateEmpty();
     AskForDonations(win);
 }
 
@@ -498,7 +498,7 @@ void PoeditApp::OnNew(wxCommandEvent& event)
 {
     TRY_FORWARD_TO_ACTIVE_WINDOW( OnNew(event) );
 
-    PoeditFrame *f = PoeditFrame::Create();
+    PoeditFrame *f = PoeditFrame::CreateEmpty();
     f->OnNew(event);
 }
 

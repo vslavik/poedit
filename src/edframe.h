@@ -65,15 +65,18 @@ class PoeditFrame : public wxFrame
 {
     public:
         /** Public constructor functions. Creates and shows frame
-            (and optionally opens \a catalog). If \a catalog is not
-            empty and is already opened in another Poedit frame,
-            then this function won't create new frame but instead
-            return pointer to existing one.
+            and opens \a catalog. If \a catalog is already opened
+            in another Poedit frame, then this function won't create
+            new frame but instead return pointer to existing one.
 
-            \param catalog filename of catalog to open. If empty, starts
-                           w/o opened file.
+            \param catalog filename of catalog to open.
          */
-        static PoeditFrame *Create(const wxString& catalog = wxEmptyString);
+        static PoeditFrame *Create(const wxString& catalog);
+
+        /** Public constructor functions. Creates and shows frame
+            without catalog or other content.
+         */
+        static PoeditFrame *CreateEmpty();
 
         /// Opens given file in this frame. Asks user for permission first
         /// if there's unsaved document.
@@ -119,6 +122,23 @@ class PoeditFrame : public wxFrame
                            w/o opened file.
          */
         PoeditFrame();
+
+        /// Current kind of content view
+        enum class Content
+        {
+            Empty,
+            PO
+        };
+        Content m_contentType;
+        /// parent of all content controls etc.
+        wxWindow *m_contentView;
+        wxSizer *m_contentWrappingSizer;
+
+        /// Ensures creation of specified content view, destroying the
+        /// current content if necessary
+        void EnsureContentView(Content type);
+        wxWindow* CreateContentViewPO();
+        void DestroyContentView();
 
         static PoeditFramesList ms_instances;
 
