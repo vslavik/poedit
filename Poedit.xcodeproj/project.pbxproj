@@ -17,6 +17,9 @@
 		B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; };
 		B2567977170763B700C52BC5 /* libwx_osx_cocoa_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */; };
 		B26D064F182506E40069C378 /* languagectrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D064D182506E40069C378 /* languagectrl.cpp */; };
+		B26D0655182697200069C378 /* welcomescreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D0653182697200069C378 /* welcomescreen.cpp */; };
+		B26D06581826A22C0069C378 /* PoeditWelcome.png in Resources */ = {isa = PBXBuildFile; fileRef = B26D06561826A22C0069C378 /* PoeditWelcome.png */; };
+		B26D06591826A22C0069C378 /* PoeditWelcome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B26D06571826A22C0069C378 /* PoeditWelcome@2x.png */; };
 		B28F1CAA16F627170018AF7E /* GenericTranslation.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B28F1CA916F627170018AF7E /* GenericTranslation.iconset */; };
 		B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAC16F629D30018AF7E /* catalog.cpp */; };
 		B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAE16F629D30018AF7E /* edapp.cpp */; };
@@ -187,6 +190,10 @@
 		B26B74EF1822CA12006E2B76 /* language_impl_legacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_impl_legacy.h; sourceTree = "<group>"; };
 		B26D064D182506E40069C378 /* languagectrl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = languagectrl.cpp; sourceTree = "<group>"; };
 		B26D064E182506E40069C378 /* languagectrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = languagectrl.h; sourceTree = "<group>"; };
+		B26D0653182697200069C378 /* welcomescreen.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = welcomescreen.cpp; sourceTree = "<group>"; };
+		B26D0654182697200069C378 /* welcomescreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = welcomescreen.h; sourceTree = "<group>"; };
+		B26D06561826A22C0069C378 /* PoeditWelcome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PoeditWelcome.png; path = src/resources/PoeditWelcome.png; sourceTree = "<group>"; };
+		B26D06571826A22C0069C378 /* PoeditWelcome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PoeditWelcome@2x.png"; path = "src/resources/PoeditWelcome@2x.png"; sourceTree = "<group>"; };
 		B27EB05D1709DA4A009C1328 /* comment.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = comment.xrc; sourceTree = "<group>"; };
 		B27EB05E1709DA4A009C1328 /* find.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = find.xrc; sourceTree = "<group>"; };
 		B27EB05F1709DA4A009C1328 /* manager.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = manager.xrc; sourceTree = "<group>"; };
@@ -388,6 +395,8 @@
 				B28F1CDF16F629D30018AF7E /* utility.h */,
 				B26D064D182506E40069C378 /* languagectrl.cpp */,
 				B26D064E182506E40069C378 /* languagectrl.h */,
+				B26D0653182697200069C378 /* welcomescreen.cpp */,
+				B26D0654182697200069C378 /* welcomescreen.h */,
 			);
 			name = GUI;
 			path = src;
@@ -508,6 +517,8 @@
 				B24ACD8316F6263900399242 /* Poedit.iconset */,
 				B28F1CA916F627170018AF7E /* GenericTranslation.iconset */,
 				B2EC60A31812D9D40059756A /* icudt52l.dat */,
+				B26D06561826A22C0069C378 /* PoeditWelcome.png */,
+				B26D06571826A22C0069C378 /* PoeditWelcome@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -714,6 +725,8 @@
 				B29AE89717103992008D1F8A /* summary.xrc in Resources */,
 				B29AE89A17103992008D1F8A /* toolbar.xrc in Resources */,
 				B2EC60A41812D9D40059756A /* icudt52l.dat in Resources */,
+				B26D06581826A22C0069C378 /* PoeditWelcome.png in Resources */,
+				B26D06591826A22C0069C378 /* PoeditWelcome@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -833,6 +846,7 @@
 				B28F1CF816F629D30018AF7E /* prefsdlg.cpp in Sources */,
 				B28F1CF916F629D30018AF7E /* progressinfo.cpp in Sources */,
 				B28F1CFA16F629D30018AF7E /* propertiesdlg.cpp in Sources */,
+				B26D0655182697200069C378 /* welcomescreen.cpp in Sources */,
 				B28F1CFB16F629D30018AF7E /* summarydlg.cpp in Sources */,
 				B28F1CFC16F629D30018AF7E /* transmem.cpp in Sources */,
 				B28F1CFF16F629D30018AF7E /* utility.cpp in Sources */,

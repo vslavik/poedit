@@ -83,6 +83,7 @@
 #include "attentionbar.h"
 #include "errorbar.h"
 #include "utility.h"
+#include "welcomescreen.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(PoeditFramesList);
@@ -186,6 +187,15 @@ bool g_focusToText = false;
 /*static*/ PoeditFrame *PoeditFrame::CreateEmpty()
 {
     PoeditFrame *f = new PoeditFrame;
+    f->Show(true);
+
+    return f;
+}
+
+/*static*/ PoeditFrame *PoeditFrame::CreateWelcome()
+{
+    PoeditFrame *f = new PoeditFrame;
+    f->EnsureContentView(Content::Welcome);
     f->Show(true);
 
     return f;
@@ -568,6 +578,10 @@ void PoeditFrame::EnsureContentView(Content type)
             m_contentType = Content::Empty;
             return; // nothing to do
 
+        case Content::Welcome:
+            m_contentView = CreateContentViewWelcome();
+            break;
+
         case Content::PO:
             m_contentView = CreateContentViewPO();
             break;
@@ -752,6 +766,11 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     return m_splitter;
 }
 
+
+wxWindow* PoeditFrame::CreateContentViewWelcome()
+{
+    return new WelcomeScreenPanel(this);
+}
 
 void PoeditFrame::DestroyContentView()
 {

@@ -78,6 +78,11 @@ class PoeditFrame : public wxFrame
          */
         static PoeditFrame *CreateEmpty();
 
+        /** Public constructor functions. Creates and shows frame
+            without catalog, just a welcome screen.
+         */
+        static PoeditFrame *CreateWelcome();
+
         /// Opens given file in this frame. Asks user for permission first
         /// if there's unsaved document.
         void OpenFile(const wxString& filename);
@@ -127,6 +132,7 @@ class PoeditFrame : public wxFrame
         enum class Content
         {
             Empty,
+            Welcome,
             PO
         };
         Content m_contentType;
@@ -138,6 +144,7 @@ class PoeditFrame : public wxFrame
         /// current content if necessary
         void EnsureContentView(Content type);
         wxWindow* CreateContentViewPO();
+        wxWindow* CreateContentViewWelcome();
         void DestroyContentView();
 
         static PoeditFramesList ms_instances;

@@ -31,6 +31,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  version.h errors.h \
                  language.cpp language.h \
                  languagectrl.cpp languagectrl.h \
+                 welcomescreen.cpp welcomescreen.h \
                  compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS) $(LUCENE_LIBS)
