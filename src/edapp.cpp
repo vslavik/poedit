@@ -170,7 +170,9 @@ bool PoeditApp::OnInit()
     u_setDataDirectory(wxStandardPaths::Get().GetResourcesDir().mb_str());
 #endif
 
+#ifndef __WXMAC__
     wxArtProvider::PushBack(new PoeditArtProvider);
+#endif
 
     SetupLanguage();
 
@@ -264,17 +266,7 @@ void PoeditApp::SetupLanguage()
 
 void PoeditApp::OpenNewFile()
 {
-    wxWindow *win;
-    if (wxConfig::Get()->Read("manager_startup", (long)false))
-    {
-        win = ManagerFrame::Create();
-        win->Show(true);
-    }
-    else
-    {
-        win = PoeditFrame::Create();
-    }
-
+    wxWindow *win = PoeditFrame::CreateWelcome();
     AskForDonations(win);
 }
 
@@ -506,7 +498,7 @@ void PoeditApp::OnNew(wxCommandEvent& event)
 {
     TRY_FORWARD_TO_ACTIVE_WINDOW( OnNew(event) );
 
-    PoeditFrame *f = PoeditFrame::Create();
+    PoeditFrame *f = PoeditFrame::CreateEmpty();
     f->OnNew(event);
 }
 

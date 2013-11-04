@@ -83,6 +83,7 @@
 #include "attentionbar.h"
 #include "errorbar.h"
 #include "utility.h"
+#include "welcomescreen.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(PoeditFramesList);
@@ -146,46 +147,56 @@ bool g_focusToText = false;
 
 /*static*/ PoeditFrame *PoeditFrame::Create(const wxString& filename)
 {
-    PoeditFrame *f;
-    if (!filename)
+    PoeditFrame *f = PoeditFrame::Find(filename);
+    if (!f)
     {
-        f = new PoeditFrame;
-    }
-    else
-    {
-        f = PoeditFrame::Find(filename);
-        if (!f)
+        // NB: duplicated in ReadCatalog()
+        Catalog *cat = new Catalog(filename);
+        if (!cat->IsOk())
         {
-            // NB: duplicated in ReadCatalog()
-            Catalog *cat = new Catalog(filename);
-            if (!cat->IsOk())
-            {
-                wxMessageDialog dlg
-                (
-                    nullptr,
-                    _("The file cannot be opened."),
-                    _("Invalid file"),
-                    wxOK | wxICON_ERROR
-                );
-                dlg.SetExtendedMessage(
-                    _("The file may be either corrupted or in a format not recognized by Poedit.")
-                );
-                dlg.ShowModal();
-                delete cat;
-                return nullptr;
-            }
-
-            f = new PoeditFrame();
-            f->Show(true);
-            f->ReadCatalog(cat, filename);
+            wxMessageDialog dlg
+            (
+                nullptr,
+                _("The file cannot be opened."),
+                _("Invalid file"),
+                wxOK | wxICON_ERROR
+            );
+            dlg.SetExtendedMessage(
+                _("The file may be either corrupted or in a format not recognized by Poedit.")
+            );
+            dlg.ShowModal();
+            delete cat;
+            return nullptr;
         }
+
+        f = new PoeditFrame();
+        f->Show(true);
+        f->ReadCatalog(cat, filename);
     }
+
     f->Show(true);
 
     if (g_focusToText)
         f->m_textTrans->SetFocus();
     else
         f->m_list->SetFocus();
+
+    return f;
+}
+
+/*static*/ PoeditFrame *PoeditFrame::CreateEmpty()
+{
+    PoeditFrame *f = new PoeditFrame;
+    f->Show(true);
+
+    return f;
+}
+
+/*static*/ PoeditFrame *PoeditFrame::CreateWelcome()
+{
+    PoeditFrame *f = new PoeditFrame;
+    f->EnsureContentView(Content::Welcome);
+    f->Show(true);
 
     return f;
 }
@@ -445,28 +456,30 @@ PoeditFrame::PoeditFrame() :
             wxDefaultPosition, wxDefaultSize,
             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
             "mainwin"),
-    m_catalog(NULL),
-    m_list(NULL),
+    m_contentType(Content::Empty),
+    m_contentView(nullptr),
+    m_catalog(nullptr),
+    m_list(nullptr),
     m_modified(false),
     m_hasObsoleteItems(false),
     m_dontAutoclearFuzzyStatus(false),
     m_setSashPositionsWhenMaximized(false)
 {
+    m_list = nullptr;
+    m_textTrans = nullptr;
+    m_textOrig = nullptr;
+    m_textOrigPlural = nullptr;
+    m_textComment = nullptr;
+    m_textAutoComments = nullptr;
+    m_bottomSplitter = nullptr;
+    m_splitter = nullptr;
+
     // make sure that the [ID_POEDIT_FIRST,ID_POEDIT_LAST] range of IDs is not
     // used for anything else:
     wxASSERT_MSG( wxGetCurrentId() < ID_POEDIT_FIRST ||
                   wxGetCurrentId() > ID_POEDIT_LAST,
                   "detected ID values conflict!" );
     wxRegisterId(ID_POEDIT_LAST);
-
-#if defined(__WXMSW__)
-    const int SPLITTER_FLAGS = wxSP_NOBORDER;
-#elif defined(__WXMAC__)
-    // wxMac doesn't show XORed line:
-    const int SPLITTER_FLAGS = wxSP_LIVE_UPDATE;
-#else
-    const int SPLITTER_FLAGS = wxSP_3DBORDER;
-#endif
 
     wxConfigBase *cfg = wxConfig::Get();
 
@@ -526,19 +539,84 @@ PoeditFrame::PoeditFrame() :
 
     CreateStatusBar(1, wxST_SIZEGRIP);
 
+    m_contentWrappingSizer = new wxBoxSizer(wxVERTICAL);
+    SetSizer(m_contentWrappingSizer);
+
+    m_attentionBar = new AttentionBar(this);
+    m_contentWrappingSizer->Add(m_attentionBar, wxSizerFlags().Expand());
+
+    SetAccelerators();
+
+    int restore_flags = WinState_Size;
+    // NB: if this is the only Poedit frame opened, place it at remembered
+    //     position, but don't do that if there already are other frames,
+    //     because they would overlap and nobody could recognize that there are
+    //     many of them
+    if (ms_instances.GetCount() == 0)
+        restore_flags |= WinState_Pos;
+    RestoreWindowState(this, wxSize(780, 570), restore_flags);
+
+    UpdateMenu();
+
+    ms_instances.Append(this);
+
+    SetDropTarget(new PoeditDropTarget(this));
+}
+
+
+void PoeditFrame::EnsureContentView(Content type)
+{
+    if (m_contentType == type)
+        return;
+
+    if (m_contentView)
+        DestroyContentView();
+
+    switch (type)
+    {
+        case Content::Empty:
+            m_contentType = Content::Empty;
+            return; // nothing to do
+
+        case Content::Welcome:
+            m_contentView = CreateContentViewWelcome();
+            break;
+
+        case Content::PO:
+            m_contentView = CreateContentViewPO();
+            break;
+    }
+
+    m_contentType = type;
+    m_contentWrappingSizer->Add(m_contentView, wxSizerFlags(1).Expand());
+    Layout();
+    m_contentView->Show();
+}
+
+
+wxWindow* PoeditFrame::CreateContentViewPO()
+{
+#if defined(__WXMSW__)
+    const int SPLITTER_FLAGS = wxSP_NOBORDER;
+#elif defined(__WXMAC__)
+    // wxMac doesn't show XORed line:
+    const int SPLITTER_FLAGS = wxSP_LIVE_UPDATE;
+#else
+    const int SPLITTER_FLAGS = wxSP_3DBORDER;
+#endif
+
     m_splitter = new wxSplitterWindow(this, -1,
                                       wxDefaultPosition, wxDefaultSize,
                                       SPLITTER_FLAGS);
+#ifdef __WXMSW__
+    // don't create the window as shown, avoid flicker
+    m_splitter->Hide();
+#endif
+
     // make only the upper part grow when resizing
     m_splitter->SetSashGravity(1.0);
 
-    wxSizer *mainSizer = new wxBoxSizer(wxHORIZONTAL);
-    mainSizer->Add(m_splitter, wxSizerFlags(1).Expand());
-    SetSizer(mainSizer);
-
     wxPanel *topPanel = new wxPanel(m_splitter, wxID_ANY);
-
-    m_attentionBar = new AttentionBar(topPanel);
 
     m_list = new PoeditListCtrl(topPanel,
                                 ID_LIST,
@@ -547,7 +625,6 @@ PoeditFrame::PoeditFrame() :
                                 m_displayIDs);
 
     wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(m_attentionBar, wxSizerFlags().Expand());
     topSizer->Add(m_list, wxSizerFlags(1).Expand());
     topPanel->SetSizer(topSizer);
 
@@ -613,7 +690,6 @@ PoeditFrame::PoeditFrame() :
     m_errorBar = new ErrorBar(m_bottomLeftPanel);
 
     SetCustomFonts();
-    SetAccelerators();
 
     wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
     wxSizer *rightSizer = new wxBoxSizer(wxVERTICAL);
@@ -651,76 +727,103 @@ PoeditFrame::PoeditFrame() :
     m_bottomRightPanel->Show(false);
     m_bottomSplitter->Initialize(m_bottomLeftPanel);
 
-
-    int restore_flags = WinState_Size;
-    // NB: if this is the only Poedit frame opened, place it at remembered
-    //     position, but don't do that if there already are other frames,
-    //     because they would overlap and nobody could recognize that there are
-    //     many of them
-    if (ms_instances.GetCount() == 0)
-        restore_flags |= WinState_Pos;
-    RestoreWindowState(this, wxSize(780, 570), restore_flags);
-
-    // This is a hack -- windows are not maximized immediately and so we can't
-    // set correct sash position in ctor (unmaximized window may be too small
-    // for sash position when maximized -- see bug #2120600)
-    if ( cfg->Read(WindowStatePath(this) + "maximized", long(0)) )
-        m_setSashPositionsWhenMaximized = true;
-
-    Layout();
-
     m_splitter->SetMinimumPaneSize(120);
-    m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, (int)cfg->Read("splitter", 330L));
 
     m_list->PushEventHandler(new ListHandler(this));
     m_textTrans->PushEventHandler(new TransTextctrlHandler(this));
     m_textComment->PushEventHandler(new TextctrlHandler(this));
 
     ShowPluralFormUI(false);
-
     UpdateMenu();
     UpdateDisplayCommentWin();
 
     switch ( m_list->sortOrder.by )
     {
         case SortOrder::By_FileOrder:
-            MenuBar->Check(XRCID("sort_by_order"), true);
+            GetMenuBar()->Check(XRCID("sort_by_order"), true);
             break;
         case SortOrder::By_Source:
-            MenuBar->Check(XRCID("sort_by_source"), true);
+            GetMenuBar()->Check(XRCID("sort_by_source"), true);
             break;
         case SortOrder::By_Translation:
-            MenuBar->Check(XRCID("sort_by_translation"), true);
+            GetMenuBar()->Check(XRCID("sort_by_translation"), true);
             break;
     }
-    MenuBar->Check(XRCID("sort_untrans_first"), m_list->sortOrder.untransFirst);
+    GetMenuBar()->Check(XRCID("sort_untrans_first"), m_list->sortOrder.untransFirst);
 
-    ms_instances.Append(this);
+    // Call splitter splitting later, when the window is layed out, otherwise
+    // the sizes would get truncated immediately:
+    CallAfter([=]{
+        // This is a hack -- windows are not maximized immediately and so we can't
+        // set correct sash position in ctor (unmaximized window may be too small
+        // for sash position when maximized -- see bug #2120600)
+        if ( wxConfigBase::Get()->Read(WindowStatePath(this) + "maximized", long(0)) )
+            m_setSashPositionsWhenMaximized = true;
 
-    SetDropTarget(new PoeditDropTarget(this));
+        m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, (int)wxConfigBase::Get()->Read("splitter", 330L));
+    });
+
+    return m_splitter;
 }
 
+
+wxWindow* PoeditFrame::CreateContentViewWelcome()
+{
+    return new WelcomeScreenPanel(this);
+}
+
+void PoeditFrame::DestroyContentView()
+{
+    if (!m_contentView)
+        return;
+
+    if (m_list)
+        m_list->PopEventHandler(true/*delete*/);
+    if (m_textTrans)
+        m_textTrans->PopEventHandler(true/*delete*/);
+    for (size_t i = 0; i < m_textTransPlural.size(); i++)
+    {
+        if (m_textTransPlural[i])
+            m_textTransPlural[i]->PopEventHandler(true/*delete*/);
+    }
+    if (m_textComment)
+        m_textComment->PopEventHandler(true/*delete*/);
+
+    if (m_list)
+        m_list->CatalogChanged(NULL);
+
+    if (m_bottomSplitter && (m_displayCommentWin || m_displayAutoCommentsWin))
+    {
+        wxConfigBase::Get()->Write("/bottom_splitter",
+                                   (long)m_bottomSplitter->GetSashPosition());
+    }
+    if (m_splitter)
+        wxConfigBase::Get()->Write("/splitter", (long)m_splitter->GetSashPosition());
+
+    m_contentWrappingSizer->Detach(m_contentView);
+    m_contentView->Destroy();
+    m_contentView = nullptr;
+
+    m_list = nullptr;
+    m_textTrans = nullptr;
+    m_textOrig = nullptr;
+    m_textOrigPlural = nullptr;
+    m_textComment = nullptr;
+    m_textAutoComments = nullptr;
+    m_bottomSplitter = nullptr;
+    m_splitter = nullptr;
+}
 
 
 PoeditFrame::~PoeditFrame()
 {
     ms_instances.DeleteObject(this);
 
-    m_list->PopEventHandler(true/*delete*/);
-    m_textTrans->PopEventHandler(true/*delete*/);
-    for (size_t i = 0; i < m_textTransPlural.size(); i++)
-        m_textTransPlural[i]->PopEventHandler(true/*delete*/);
-    m_textComment->PopEventHandler(true/*delete*/);
+    DestroyContentView();
 
     wxConfigBase *cfg = wxConfig::Get();
     cfg->SetPath("/");
 
-    if (m_displayCommentWin || m_displayAutoCommentsWin)
-    {
-        cfg->Write("bottom_splitter",
-                   (long)m_bottomSplitter->GetSashPosition());
-    }
-    cfg->Write("splitter", (long)m_splitter->GetSashPosition());
     cfg->Write("display_quotes", m_displayQuotes);
     cfg->Write("display_lines", m_displayIDs);
     cfg->Write("display_comment_win", m_displayCommentWin);
@@ -736,7 +839,6 @@ PoeditFrame::~PoeditFrame()
 
     delete m_catalog;
     m_catalog = NULL;
-    m_list->CatalogChanged(NULL);
 
     // shutdown the spellchecker:
     InitSpellchecker();
@@ -860,10 +962,11 @@ static void ShowSpellcheckerHelp()
 
 void PoeditFrame::InitSpellchecker()
 {
+    if (!m_catalog)
+        return;
+
 #ifdef USE_SPELLCHECKING
-    Language lang;
-    if (m_catalog)
-        lang = m_catalog->GetLanguage();
+    Language lang = m_catalog->GetLanguage();
 
     bool report_problem = false;
     bool enabled = m_catalog && lang.IsValid() &&
@@ -1879,6 +1982,12 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
 {
     wxASSERT( cat && cat->IsOk() );
 
+#ifdef __WXMSW__
+    wxWindowUpdateLocker no_updates(this);
+#endif
+
+    EnsureContentView(Content::PO);
+
     delete m_catalog;
     m_catalog = cat;
 
@@ -2196,12 +2305,28 @@ void PoeditFrame::UpdateMenu()
 
     menubar->EnableTop(2, editable);
 
-    m_textTrans->Enable(editable);
-    m_textOrig->Enable(editable);
-    m_textOrigPlural->Enable(editable);
-    m_textComment->Enable(editable);
-    m_textAutoComments->Enable(editable);
-    m_list->Enable(editable);
+    menubar->Enable(XRCID("menu_quotes"), editable);
+    menubar->Enable(XRCID("menu_ids"), editable);
+    menubar->Enable(XRCID("menu_comment_win"), editable);
+    menubar->Enable(XRCID("menu_auto_comments_win"), editable);
+
+    menubar->Enable(XRCID("sort_by_order"), editable);
+    menubar->Enable(XRCID("sort_by_source"), editable);
+    menubar->Enable(XRCID("sort_by_translation"), editable);
+    menubar->Enable(XRCID("sort_untrans_first"), editable);
+
+    if (m_textTrans)
+        m_textTrans->Enable(editable);
+    if (m_textOrig)
+        m_textOrig->Enable(editable);
+    if (m_textOrigPlural)
+        m_textOrigPlural->Enable(editable);
+    if (m_textComment)
+        m_textComment->Enable(editable);
+    if (m_textAutoComments)
+        m_textAutoComments->Enable(editable);
+    if (m_list)
+        m_list->Enable(editable);
 
     menubar->Enable(XRCID("menu_purge_deleted"),
                     editable && m_catalog->HasDeletedItems());
@@ -2216,8 +2341,10 @@ void PoeditFrame::UpdateMenu()
     {
         // work around a wxGTK bug: enabling wxTextCtrl makes it editable too
         // in wxGTK <= 2.8:
-        m_textOrig->SetEditable(false);
-        m_textOrigPlural->SetEditable(false);
+        if (m_textOrig)
+            m_textOrig->SetEditable(false);
+        if (m_textOrigPlural)
+            m_textOrigPlural->SetEditable(false);
     }
 #endif
 
@@ -2987,7 +3114,7 @@ bool Pred_UnfinishedItem(const CatalogItem& item)
 
 void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
 {
-    const int count = m_list->GetItemCount();
+    const int count = m_list ? m_list->GetItemCount() : 0;
     if ( !count )
         return;
 
@@ -3054,12 +3181,16 @@ void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
 
 void PoeditFrame::OnPrevPage(wxCommandEvent&)
 {
+    if (!m_list)
+        return;
     int pos = std::max(m_list->GetSelection()-10, 0);
     m_list->Select(pos);
 }
 
 void PoeditFrame::OnNextPage(wxCommandEvent&)
 {
+    if (!m_list)
+        return;
     int pos = std::min(m_list->GetSelection()+10, m_list->GetItemCount()-1);
     m_list->Select(pos);
 }

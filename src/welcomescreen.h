@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://www.poedit.net)
  *
- *  Copyright (C) 2004-2013 Vaclav Slavik
+ *  Copyright (C) 2013 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,23 +23,19 @@
  *
  */
 
-#ifndef _ICONS_H_
-#define _ICONS_H_
+#ifndef Poedit_welcomescreen_h
+#define Poedit_welcomescreen_h
 
-#include <wx/artprov.h>
+#include <wx/panel.h>
 
-#if defined(__WXGTK20__)
-    #define HAS_THEMES_SUPPORT
-#endif
-
-#ifndef __WXMAC__
-class PoeditArtProvider : public wxArtProvider
+/// Control for editing languages nicely
+class WelcomeScreenPanel : public wxPanel
 {
-protected:
-    virtual wxBitmap CreateBitmap(const wxArtID& id,
-                                  const wxArtClient& client,
-                                  const wxSize& size);
-};
-#endif
+public:
+    WelcomeScreenPanel(wxWindow *parent);
 
-#endif // _ICONS_H_
+private:
+    void OnPaint(wxPaintEvent&);
+};
+
+#endif // Poedit_welcomescreen_h

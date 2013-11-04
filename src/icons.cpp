@@ -30,6 +30,8 @@
 #include "icons.h"
 #include "edapp.h"
 
+#ifndef __WXMAC__
+
 #ifdef __WXGTK20__
 // translates poedit item id or Tango stock item id to "legacy" GNOME id:
 static wxString GetGnomeStockId(const wxString& id)
@@ -78,9 +80,7 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
 #endif // __WXGTK20__
 
     wxString iconsdir =
-#if defined(__WXMAC__)
-        wxStandardPaths::Get().GetResourcesDir() + "/icons";
-#elif defined(__WXMSW__)
+#if defined(__WXMSW__)
         wxStandardPaths::Get().GetResourcesDir() + "\\Resources";
 #else
         wxStandardPaths::Get().GetInstallPrefix() + "/share/poedit/icons";
@@ -101,3 +101,5 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
     wxBitmap bmp(wxImage(icon, wxBITMAP_TYPE_ANY));
     return bmp;
 }
+
+#endif // !__WXMAC__
