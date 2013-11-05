@@ -27,6 +27,8 @@
 #define Poedit_languagectrl_h
 
 #include <wx/combobox.h>
+#include <wx/dialog.h>
+
 #include "language.h"
 
 /// Control for editing languages nicely
@@ -34,6 +36,7 @@ class LanguageCtrl : public wxComboBox
 {
 public:
     LanguageCtrl() : m_inited(false) {}
+    LanguageCtrl(wxWindow *parent, wxWindowID winid = wxID_ANY);
 
     void SetLang(const Language& lang);
     Language GetLang() const;
@@ -53,6 +56,25 @@ private:
     bool m_inited;
 
     DECLARE_DYNAMIC_CLASS(LanguageCtrl)
+};
+
+
+/// A dialog for choosing language for a (new) catalog.
+class LanguageDialog : public wxDialog
+{
+public:
+    LanguageDialog(wxWindow *parent);
+
+    void SetLang(const Language& lang);
+
+    Language GetLang() const { return m_language->GetLang(); }
+
+    virtual bool Validate();
+    virtual void EndModal(int retval);
+
+private:
+    LanguageCtrl *m_language;
+    int m_validatedLang;
 };
 
 #endif // Poedit_languagectrl_h
