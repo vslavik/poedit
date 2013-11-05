@@ -994,8 +994,8 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
 
     // clear the fields that are translation-specific:
     dt.Lang = Language();
-    dt.Team.clear();
-    dt.TeamEmail.clear();
+    //dt.Team.clear();
+    //dt.TeamEmail.clear();
 
     // translator should be pre-filled
     dt.Translator = wxConfig::Get()->Read("translator_name", wxEmptyString);
