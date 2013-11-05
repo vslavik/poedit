@@ -554,7 +554,7 @@ PoeditFrame::PoeditFrame() :
     //     many of them
     if (ms_instances.GetCount() == 0)
         restore_flags |= WinState_Pos;
-    RestoreWindowState(this, wxSize(780, 570), restore_flags);
+    RestoreWindowState(this, wxSize(980, 700), restore_flags);
 
     UpdateMenu();
 
@@ -727,7 +727,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     m_bottomRightPanel->Show(false);
     m_bottomSplitter->Initialize(m_bottomLeftPanel);
 
-    m_splitter->SetMinimumPaneSize(120);
+    m_splitter->SetMinimumPaneSize(150);
 
     m_list->PushEventHandler(new ListHandler(this));
     m_textTrans->PushEventHandler(new TransTextctrlHandler(this));
@@ -760,7 +760,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
         if ( wxConfigBase::Get()->Read(WindowStatePath(this) + "maximized", long(0)) )
             m_setSashPositionsWhenMaximized = true;
 
-        m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, (int)wxConfigBase::Get()->Read("splitter", 330L));
+        m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, (int)wxConfigBase::Get()->Read("splitter", -250L));
     });
 
     return m_splitter;
@@ -2743,7 +2743,7 @@ void PoeditFrame::UpdateDisplayCommentWin()
     {
         m_bottomSplitter->SplitVertically(
                 m_bottomLeftPanel, m_bottomRightPanel,
-                (int)wxConfig::Get()->Read("bottom_splitter", -200L));
+                (int)wxConfig::Get()->Read("bottom_splitter", -220L));
         m_bottomRightPanel->Show(true);
 
         // force recalculation of layout of panel so that text boxes take up
@@ -2838,7 +2838,7 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
         if ( m_bottomSplitter->IsSplit() )
         {
             m_bottomSplitter->SetSashPosition(
-                (int)wxConfig::Get()->Read("bottom_splitter", -200L));
+                (int)wxConfig::Get()->Read("bottom_splitter", -220L));
         }
     }
 }
