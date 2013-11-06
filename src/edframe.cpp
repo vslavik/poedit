@@ -1256,110 +1256,116 @@ bool PoeditFrame::ExportCatalog(const wxString& filename)
 void PoeditFrame::OnNew(wxCommandEvent& event)
 {
     DoIfCanDiscardCurrentDoc([=]{
-
         bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
-
-        Catalog *catalog = new Catalog;
-
         if (isFromPOT)
+            NewFromPOT();
+        else
+            NewFromScratch();
+    });
+}
+
+
+void PoeditFrame::NewFromPOT()
+{
+    Catalog *catalog = new Catalog;
+
+    wxString path = wxPathOnly(m_fileName);
+    if (path.empty())
+        path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
+    wxString pot_file =
+        wxFileSelector(_("Open catalog template"),
+             path, wxEmptyString, wxEmptyString,
+             _("GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
+             wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
+    bool ok = false;
+    if (!pot_file.empty())
+    {
+        wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
+        ok = catalog->UpdateFromPOT(pot_file,
+                                    /*summary=*/false,
+                                    /*replace_header=*/true);
+    }
+    if (!ok)
+    {
+        delete catalog;
+        return;
+    }
+
+    // Choose the language:
+    wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
+
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode == wxID_OK)
         {
-            wxString path = wxPathOnly(m_fileName);
-            if (path.empty())
-                path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-            wxString pot_file =
-                wxFileSelector(_("Open catalog template"),
-                     path, wxEmptyString, wxEmptyString,
-                     _("GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
-                     wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
-            bool ok = false;
-            if (!pot_file.empty())
-            {
-                wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
-                ok = catalog->UpdateFromPOT(pot_file,
-                                            /*summary=*/false,
-                                            /*replace_header=*/true);
-            }
-            if (!ok)
+            Language lang = dlg->GetLang();
+            catalog->Header().Lang = lang;
+            catalog->Header().SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr());
+
+            // TODO: derive from pot file location instead
+            wxString file = GetSaveAsFilename(catalog, wxEmptyString);
+            if (file.empty())
             {
                 delete catalog;
                 return;
             }
 
-            // Choose the language:
-            wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
-
-            dlg->ShowWindowModalThenDo([=](int retcode){
-                if (retcode == wxID_OK)
-                {
-                    Language lang = dlg->GetLang();
-                    catalog->Header().Lang = lang;
-                    catalog->Header().SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr());
-
-                    // TODO: derive from pot file location instead
-                    wxString file = GetSaveAsFilename(catalog, wxEmptyString);
-                    if (file.empty())
-                    {
-                        delete catalog;
-                        return;
-                    }
-
-                    delete m_catalog;
-                    m_catalog = catalog;
-                    m_list->CatalogChanged(m_catalog);
-                    m_modified = true;
-                    DoSaveAs(file);
-                }
-                else
-                {
-                    delete catalog;
-                }
-
-                UpdateTitle();
-                UpdateStatusBar();
-
-                InitSpellchecker();
-            });
+            delete m_catalog;
+            m_catalog = catalog;
+            m_list->CatalogChanged(m_catalog);
+            m_modified = true;
+            DoSaveAs(file);
         }
         else
         {
-            catalog->CreateNewHeader();
-
-            wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this));
-
-            dlg->TransferTo(catalog);
-            dlg->ShowWindowModalThenDo([=](int retcode){
-                if (retcode == wxID_OK)
-                {
-                    wxString file = GetSaveAsFilename(catalog, wxEmptyString);
-                    if (file.empty())
-                    {
-                        delete catalog;
-                        return;
-                    }
-
-                    dlg->TransferFrom(catalog);
-                    delete m_catalog;
-                    m_catalog = catalog;
-                    m_list->CatalogChanged(m_catalog);
-                    m_modified = true;
-                    DoSaveAs(file);
-                    if (!isFromPOT)
-                    {
-                        wxCommandEvent dummyEvent;
-                        OnUpdate(dummyEvent);
-                    }
-                }
-                else
-                {
-                    delete catalog;
-                }
-
-                UpdateTitle();
-                UpdateStatusBar();
-
-                InitSpellchecker();
-            });
+            delete catalog;
         }
+
+        UpdateTitle();
+        UpdateStatusBar();
+
+        InitSpellchecker();
+    });
+}
+
+
+void PoeditFrame::NewFromScratch()
+{
+    Catalog *catalog = new Catalog;
+
+    catalog->CreateNewHeader();
+
+    wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this));
+
+    dlg->TransferTo(catalog);
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode == wxID_OK)
+        {
+            wxString file = GetSaveAsFilename(catalog, wxEmptyString);
+            if (file.empty())
+            {
+                delete catalog;
+                return;
+            }
+
+            dlg->TransferFrom(catalog);
+            delete m_catalog;
+            m_catalog = catalog;
+            m_list->CatalogChanged(m_catalog);
+            m_modified = true;
+            DoSaveAs(file);
+
+            wxCommandEvent dummyEvent;
+            OnUpdate(dummyEvent);
+        }
+        else
+        {
+            delete catalog;
+        }
+
+        UpdateTitle();
+        UpdateStatusBar();
+
+        InitSpellchecker();
     });
 }
 

@@ -205,6 +205,9 @@ class PoeditFrame : public wxFrame
         // Message handlers:
 public: // for PoeditApp
         void OnNew(wxCommandEvent& event);
+        void NewFromScratch();
+        void NewFromPOT();
+
         void OnOpen(wxCommandEvent& event);
         void OnOpenHist(wxCommandEvent& event);
 private:
