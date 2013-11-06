@@ -26,6 +26,12 @@
 #ifndef _UTILITY_H_
 #define _UTILITY_H_
 
+#ifndef HAVE_MKDTEMP
+    #ifdef __WXOSX__
+        #define HAVE_MKDTEMP
+    #endif
+#endif
+
 #include <wx/string.h>
 #include <wx/arrstr.h>
 #include <wx/toplevel.h>
