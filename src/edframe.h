@@ -101,7 +101,7 @@ class PoeditFrame : public wxFrame
         /// Reads catalog, refreshes controls, takes ownership of catalog.
         void ReadCatalog(const wxString& catalog);
         /// Reads catalog, refreshes controls, takes ownership of catalog.
-        void ReadCatalog(Catalog *cat, const wxString& filename);
+        void ReadCatalog(Catalog *cat);
         /// Writes catalog.
         void WriteCatalog(const wxString& catalog);
 
@@ -283,6 +283,7 @@ private:
         bool m_commentWindowEditable;
         Catalog *m_catalog;
         wxString m_fileName;
+        bool m_fileExistsOnDisk;
 
         TranslationMemory::Results m_autoTranslations;
 

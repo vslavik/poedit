@@ -172,7 +172,7 @@ bool g_focusToText = false;
 
         f = new PoeditFrame();
         f->Show(true);
-        f->ReadCatalog(cat, filename);
+        f->ReadCatalog(cat);
     }
 
     f->Show(true);
@@ -460,6 +460,7 @@ PoeditFrame::PoeditFrame() :
     m_contentType(Content::Empty),
     m_contentView(nullptr),
     m_catalog(nullptr),
+    m_fileExistsOnDisk(false),
     m_list(nullptr),
     m_modified(false),
     m_hasObsoleteItems(false),
@@ -1064,6 +1065,9 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
 
         if (retval == wxID_YES)
         {
+            if (!m_fileExistsOnDisk || m_fileName.empty())
+                m_fileName = GetSaveAsFilename(m_catalog, m_fileName);
+
             WriteCatalog(m_fileName, [=](bool saved){
                 if (saved)
                     completionHandler();
@@ -1165,7 +1169,7 @@ void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 
 void PoeditFrame::OnSave(wxCommandEvent& event)
 {
-    if (m_fileName.empty())
+    if (!m_fileExistsOnDisk || m_fileName.empty())
         OnSaveAs(event);
     else
         WriteCatalog(m_fileName);
@@ -1291,6 +1295,20 @@ void PoeditFrame::NewFromPOT()
         return;
     }
 
+    delete m_catalog;
+    m_catalog = catalog;
+
+    m_fileName.clear();
+    m_fileExistsOnDisk = false;
+    m_modified = true;
+
+    EnsureContentView(Content::PO);
+    m_list->CatalogChanged(m_catalog);
+
+    UpdateTitle();
+    UpdateStatusBar();
+    InitSpellchecker();
+
     // Choose the language:
     wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
 
@@ -1301,31 +1319,21 @@ void PoeditFrame::NewFromPOT()
             catalog->Header().Lang = lang;
             catalog->Header().SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr());
 
-            // TODO: derive from pot file location instead
-            wxString file = GetSaveAsFilename(catalog, wxEmptyString);
-            if (file.empty())
-            {
-                delete catalog;
-                return;
-            }
+            // Derive save location for the file from the location of the POT
+            // file (same directory, language-based name). This doesn't always
+            // work, e.g. WordPress plugins use different naming, so don't actually
+            // save the file just yet and let the user confirm the location when saving.
+            wxFileName pot_fn(pot_file);
+            pot_fn.SetFullName(lang.Code() + ".po");
 
-            delete m_catalog;
-            m_catalog = catalog;
-
-            EnsureContentView(Content::PO);
-            m_list->CatalogChanged(m_catalog);
+            m_fileName = pot_fn.GetFullPath();
+            m_fileExistsOnDisk = false;
             m_modified = true;
-            DoSaveAs(file);
-        }
-        else
-        {
-            delete catalog;
-        }
 
-        UpdateTitle();
-        UpdateStatusBar();
-
-        InitSpellchecker();
+            UpdateTitle();
+            UpdateStatusBar();
+            InitSpellchecker();
+        }
     });
 }
 
@@ -2004,7 +2012,7 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     Catalog *cat = new Catalog(catalog);
     if (cat->IsOk())
     {
-        ReadCatalog(cat, catalog);
+        ReadCatalog(cat);
     }
     else
     {
@@ -2024,7 +2032,7 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
 }
 
 
-void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
+void PoeditFrame::ReadCatalog(Catalog *cat)
 {
     wxASSERT( cat && cat->IsOk() );
 
@@ -2041,7 +2049,8 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
     // confused
     m_list->CatalogChanged(m_catalog);
 
-    m_fileName = filename;
+    m_fileName = cat->GetFileName();
+    m_fileExistsOnDisk = true;
     m_modified = false;
 
     RecreatePluralTextCtrls();
@@ -2196,7 +2205,8 @@ void PoeditFrame::RefreshControls()
     if (!m_catalog->IsOk())
     {
         wxLogError(_("Error loading message catalog file '%s'."), m_fileName.c_str());
-        m_fileName = wxEmptyString;
+        m_fileName.clear();
+        m_fileExistsOnDisk = false;
         UpdateMenu();
         UpdateTitle();
         delete m_catalog;
@@ -2290,8 +2300,14 @@ void PoeditFrame::UpdateTitle()
     wxString title;
     if ( !m_fileName.empty() )
     {
-        SetRepresentedFilename(m_fileName);
         wxFileName fn(m_fileName);
+        wxString fpath = fn.GetFullName();
+
+        if (m_fileExistsOnDisk)
+            SetRepresentedFilename(m_fileName);
+        else
+            fpath += _(" (unsaved)");
+
         if ( !m_catalog->Header().Project.empty() )
         {
             title.Printf(
@@ -2300,7 +2316,7 @@ void PoeditFrame::UpdateTitle()
 #else
                 "%s • %s",
 #endif
-                fn.GetFullName(), m_catalog->Header().Project);
+                fpath, m_catalog->Header().Project);
         }
         else
         {
@@ -2447,6 +2463,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
 
     m_fileName = catalog;
     m_modified = false;
+    m_fileExistsOnDisk = true;
 
     FileHistory().AddFileToHistory(m_fileName);
     UpdateTitle();

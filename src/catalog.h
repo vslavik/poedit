@@ -475,7 +475,7 @@ class Catalog
 
         /// Ctor that loads the catalog from \a po_file with Load.
         /// \a flags is CreationFlags combination.
-        Catalog(const wxString& po_file, int flags = 0);
+        explicit Catalog(const wxString& po_file, int flags = 0);
 
         ~Catalog();
 
@@ -600,6 +600,8 @@ class Catalog
         /// Validates correctness of the translation by running msgfmt
         /// Returns number of errors (i.e. 0 if no errors).
         int Validate();
+
+        const wxString& GetFileName() const { return m_fileName; }
 
     protected:
         /// Fix commonly encountered fixable problems with loaded files
