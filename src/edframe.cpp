@@ -1311,6 +1311,8 @@ void PoeditFrame::NewFromPOT()
 
             delete m_catalog;
             m_catalog = catalog;
+
+            EnsureContentView(Content::PO);
             m_list->CatalogChanged(m_catalog);
             m_modified = true;
             DoSaveAs(file);
@@ -1350,6 +1352,8 @@ void PoeditFrame::NewFromScratch()
             dlg->TransferFrom(catalog);
             delete m_catalog;
             m_catalog = catalog;
+
+            EnsureContentView(Content::PO);
             m_list->CatalogChanged(m_catalog);
             m_modified = true;
             DoSaveAs(file);
