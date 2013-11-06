@@ -2184,7 +2184,12 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
         }
     }
 
+    NoteAsRecentFile();
+}
 
+
+void PoeditFrame::NoteAsRecentFile()
+{
     wxFileName fn(m_fileName);
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
     FileHistory().AddFileToHistory(fn.GetFullPath());
@@ -2469,6 +2474,8 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     UpdateTitle();
 
     RefreshControls();
+
+    NoteAsRecentFile();
 
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(m_fileName);

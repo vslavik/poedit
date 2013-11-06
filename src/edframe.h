@@ -274,6 +274,7 @@ private:
         void ReportValidationErrors(int errors, bool from_save, TFunctor completionHandler);
 
         wxFileHistory& FileHistory() { return wxGetApp().FileHistory(); }
+        void NoteAsRecentFile();
 
         DECLARE_EVENT_TABLE()
 
