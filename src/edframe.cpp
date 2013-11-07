@@ -1279,7 +1279,7 @@ void PoeditFrame::NewFromPOT()
     wxString pot_file =
         wxFileSelector(_("Open catalog template"),
              path, wxEmptyString, wxEmptyString,
-             _("GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
+             _("GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
              wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
     bool ok = false;
     if (!pot_file.empty())
