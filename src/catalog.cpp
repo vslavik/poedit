@@ -974,11 +974,6 @@ void Catalog::CreateNewHeader()
     dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", wxEmptyString);
     dt.SourceCodeCharset = wxEmptyString;
 
-    // NB: keep in sync with Catalog::Update!
-    dt.Keywords.Add("_");
-    dt.Keywords.Add("gettext");
-    dt.Keywords.Add("gettext_noop");
-
     dt.BasePath = ".";
 
     dt.UpdateDict();
@@ -1596,21 +1591,8 @@ bool Catalog::Update(ProgressInfo *progress, bool summary)
 
     SourceDigger dig(progress);
 
-    wxArrayString keywords;
-    if (m_header.Keywords.empty())
-    {
-        // NB: keep in sync with Catalog::CreateNewHeader!
-        keywords.Add("_");
-        keywords.Add("gettext");
-        keywords.Add("gettext_noop");
-    }
-    else
-    {
-        WX_APPEND_ARRAY(keywords, m_header.Keywords);
-    }
-
     Catalog *newcat = dig.Dig(m_header.SearchPaths,
-                              keywords,
+                              m_header.Keywords,
                               m_header.SourceCodeCharset);
 
     if (newcat != NULL)

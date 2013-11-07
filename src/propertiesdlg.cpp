@@ -64,7 +64,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
     m_pluralFormsExpr->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 
     // my custom controls:
-    m_keywords = new wxEditableListBox(this, -1, _("Keywords"));
+    m_keywords = new wxEditableListBox(this, -1, _("Additional keywords"));
     wxXmlResource::Get()->AttachUnknownControl("keywords", m_keywords);
     m_paths = new wxEditableListBox(this, -1, _("Paths"));
     wxXmlResource::Get()->AttachUnknownControl("paths", m_paths);
