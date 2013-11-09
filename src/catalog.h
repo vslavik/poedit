@@ -531,6 +531,9 @@ class Catalog
         /// Returns the number of strings/translations in the catalog.
         unsigned GetCount() const { return (unsigned)m_items.size(); }
 
+        /// Is the catalog empty?
+        bool empty() const { return m_items.empty(); }
+
         /** Returns number of all, fuzzy, badtokens and untranslated items.
             Any argument may be NULL if the caller is not interested in
             given statistic value.

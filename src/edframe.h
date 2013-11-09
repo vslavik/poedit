@@ -34,6 +34,7 @@
 
 #include <wx/frame.h>
 #include <wx/process.h>
+#include <wx/msgdlg.h>
 #include <wx/windowptr.h>
 
 class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
@@ -121,6 +122,9 @@ class PoeditFrame : public wxFrame
         void UpdateAfterPreferencesChange();
         static void UpdateAllAfterPreferencesChange();
 
+        void EditCatalogProperties();
+        void EditCatalogPropertiesAndUpdateFromSources();
+
     private:
         /** Ctor.
             \param catalog filename of catalog to open. If empty, starts
@@ -131,9 +135,10 @@ class PoeditFrame : public wxFrame
         /// Current kind of content view
         enum class Content
         {
-            Empty,
+            Invalid, // no content whatsoever
             Welcome,
-            PO
+            PO,
+            Empty_PO
         };
         Content m_contentType;
         /// parent of all content controls etc.
@@ -145,6 +150,7 @@ class PoeditFrame : public wxFrame
         void EnsureContentView(Content type);
         wxWindow* CreateContentViewPO();
         wxWindow* CreateContentViewWelcome();
+        wxWindow* CreateContentViewEmptyPO();
         void DestroyContentView();
 
         static PoeditFramesList ms_instances;
@@ -188,8 +194,6 @@ class PoeditFrame : public wxFrame
 
         // (Re)initializes spellchecker, if needed
         void InitSpellchecker();
-
-        void EditCatalogProperties();
 
         // navigation to another item in the list
         typedef bool (*NavigatePredicate)(const CatalogItem& item);

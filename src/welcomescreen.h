@@ -28,14 +28,34 @@
 
 #include <wx/panel.h>
 
-/// Control for editing languages nicely
-class WelcomeScreenPanel : public wxPanel
+class PoeditFrame;
+
+class WelcomeScreenBase : public wxPanel
 {
-public:
-    WelcomeScreenPanel(wxWindow *parent);
+protected:
+    WelcomeScreenBase(wxWindow *parent);
+
+    wxFont m_fntHeader, m_fntNorm, m_fntSub;
+    wxColour m_clrHeader, m_clrNorm, m_clrSub;
 
 private:
     void OnPaint(wxPaintEvent&);
 };
+
+/// Content view for initially opened Poedit, without a file
+class WelcomeScreenPanel : public WelcomeScreenBase
+{
+public:
+    WelcomeScreenPanel(wxWindow *parent);
+};
+
+
+/// Content view for an empty file (File->New)
+class EmptyPOScreenPanel : public WelcomeScreenBase
+{
+public:
+    EmptyPOScreenPanel(PoeditFrame *parent);
+};
+
 
 #endif // Poedit_welcomescreen_h
