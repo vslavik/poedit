@@ -467,7 +467,8 @@ class Catalog
 
         enum CreationFlags
         {
-            CreationFlag_IgnoreHeader = 1
+            CreationFlag_IgnoreHeader       = 1,
+            CreationFlag_IgnoreTranslations = 2
         };
 
         /// Default ctor. Creates empty catalog, you have to call Load.
@@ -475,7 +476,7 @@ class Catalog
 
         /// Ctor that loads the catalog from \a po_file with Load.
         /// \a flags is CreationFlags combination.
-        Catalog(const wxString& po_file, int flags = 0);
+        explicit Catalog(const wxString& po_file, int flags = 0);
 
         ~Catalog();
 
@@ -529,6 +530,9 @@ class Catalog
 
         /// Returns the number of strings/translations in the catalog.
         unsigned GetCount() const { return (unsigned)m_items.size(); }
+
+        /// Is the catalog empty?
+        bool empty() const { return m_items.empty(); }
 
         /** Returns number of all, fuzzy, badtokens and untranslated items.
             Any argument may be NULL if the caller is not interested in
@@ -601,6 +605,8 @@ class Catalog
         /// Returns number of errors (i.e. 0 if no errors).
         int Validate();
 
+        const wxString& GetFileName() const { return m_fileName; }
+
     protected:
         /// Fix commonly encountered fixable problems with loaded files
         void FixupCommonIssues();
@@ -653,13 +659,17 @@ class CatalogParser
     public:
         CatalogParser(wxTextFile *f)
             : m_textFile(f),
-              m_ignoreHeader(false)
+              m_ignoreHeader(false),
+              m_ignoreTranslations(false)
         {}
 
         virtual ~CatalogParser() {}
 
         /// Tell the parser to ignore header entries when processing
         void IgnoreHeader(bool ignore) { m_ignoreHeader = ignore; }
+
+        /// Tell the parser to treat input as POT and ignore translations
+        void IgnoreTranslations(bool ignore) { m_ignoreTranslations = ignore; }
 
         /** Parses the entire file, calls OnEntry each time
             new msgid/msgstr pair is found.
@@ -705,6 +715,9 @@ class CatalogParser
 
         /// Whether the header should be parsed or not
         bool m_ignoreHeader;
+
+        /// Whether the translations should be ignored (as if it was a POT)
+        bool m_ignoreTranslations;
 };
 
 #endif // _CATALOG_H_

@@ -83,6 +83,7 @@
 #include "attentionbar.h"
 #include "errorbar.h"
 #include "utility.h"
+#include "languagectrl.h"
 #include "welcomescreen.h"
 
 #include <wx/listimpl.cpp>
@@ -171,7 +172,7 @@ bool g_focusToText = false;
 
         f = new PoeditFrame();
         f->Show(true);
-        f->ReadCatalog(cat, filename);
+        f->ReadCatalog(cat);
     }
 
     f->Show(true);
@@ -456,9 +457,10 @@ PoeditFrame::PoeditFrame() :
             wxDefaultPosition, wxDefaultSize,
             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
             "mainwin"),
-    m_contentType(Content::Empty),
+    m_contentType(Content::Invalid),
     m_contentView(nullptr),
     m_catalog(nullptr),
+    m_fileExistsOnDisk(false),
     m_list(nullptr),
     m_modified(false),
     m_hasObsoleteItems(false),
@@ -569,17 +571,25 @@ void PoeditFrame::EnsureContentView(Content type)
     if (m_contentType == type)
         return;
 
+#ifdef __WXMSW__
+    wxWindowUpdateLocker no_updates(this);
+#endif
+
     if (m_contentView)
         DestroyContentView();
 
     switch (type)
     {
-        case Content::Empty:
-            m_contentType = Content::Empty;
+        case Content::Invalid:
+            m_contentType = Content::Invalid;
             return; // nothing to do
 
         case Content::Welcome:
             m_contentView = CreateContentViewWelcome();
+            break;
+
+        case Content::Empty_PO:
+            m_contentView = CreateContentViewEmptyPO();
             break;
 
         case Content::PO:
@@ -590,7 +600,10 @@ void PoeditFrame::EnsureContentView(Content type)
     m_contentType = type;
     m_contentWrappingSizer->Add(m_contentView, wxSizerFlags(1).Expand());
     Layout();
+#ifdef __WXMSW__
     m_contentView->Show();
+    Layout();
+#endif
 }
 
 
@@ -772,6 +785,13 @@ wxWindow* PoeditFrame::CreateContentViewWelcome()
     return new WelcomeScreenPanel(this);
 }
 
+
+wxWindow* PoeditFrame::CreateContentViewEmptyPO()
+{
+    return new EmptyPOScreenPanel(this);
+}
+
+
 void PoeditFrame::DestroyContentView()
 {
     if (!m_contentView)
@@ -784,7 +804,10 @@ void PoeditFrame::DestroyContentView()
     for (size_t i = 0; i < m_textTransPlural.size(); i++)
     {
         if (m_textTransPlural[i])
+        {
             m_textTransPlural[i]->PopEventHandler(true/*delete*/);
+            m_textTransPlural[i] = nullptr;
+        }
     }
     if (m_textComment)
         m_textComment->PopEventHandler(true/*delete*/);
@@ -1063,6 +1086,9 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
 
         if (retval == wxID_YES)
         {
+            if (!m_fileExistsOnDisk || m_fileName.empty())
+                m_fileName = GetSaveAsFilename(m_catalog, m_fileName);
+
             WriteCatalog(m_fileName, [=](bool saved){
                 if (saved)
                     completionHandler();
@@ -1164,7 +1190,7 @@ void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 
 void PoeditFrame::OnSave(wxCommandEvent& event)
 {
-    if (m_fileName.empty())
+    if (!m_fileExistsOnDisk || m_fileName.empty())
         OnSaveAs(event);
     else
         WriteCatalog(m_fileName);
@@ -1255,78 +1281,123 @@ bool PoeditFrame::ExportCatalog(const wxString& filename)
 void PoeditFrame::OnNew(wxCommandEvent& event)
 {
     DoIfCanDiscardCurrentDoc([=]{
-
         bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
-
-        Catalog *catalog = new Catalog;
-
         if (isFromPOT)
-        {
-            wxString path = wxPathOnly(m_fileName);
-            if (path.empty())
-                path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-            wxString pot_file =
-                wxFileSelector(_("Open catalog template"),
-                     path, wxEmptyString, wxEmptyString,
-                     _("GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
-                     wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
-            bool ok = false;
-            if (!pot_file.empty())
-            {
-                wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
-                ok = catalog->UpdateFromPOT(pot_file,
-                                            /*summary=*/false,
-                                            /*replace_header=*/true);
-            }
-            if (!ok)
-            {
-                delete catalog;
-                return;
-            }
-        }
+            NewFromPOT();
         else
-        {
-            catalog->CreateNewHeader();
-        }
-
-        wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this));
-
-        dlg->TransferTo(catalog);
-        dlg->ShowWindowModalThenDo([=](int retcode){
-            if (retcode == wxID_OK)
-            {
-                wxString file = GetSaveAsFilename(catalog, wxEmptyString);
-                if (file.empty())
-                {
-                    delete catalog;
-                    return;
-                }
-
-                dlg->TransferFrom(catalog);
-                delete m_catalog;
-                m_catalog = catalog;
-                m_list->CatalogChanged(m_catalog);
-                m_modified = true;
-                DoSaveAs(file);
-                if (!isFromPOT)
-                {
-                    wxCommandEvent dummyEvent;
-                    OnUpdate(dummyEvent);
-                }
-            }
-            else
-            {
-                delete catalog;
-            }
-
-            UpdateTitle();
-            UpdateStatusBar();
-
-            InitSpellchecker();
-        });
+            NewFromScratch();
     });
 }
 
+
+void PoeditFrame::NewFromPOT()
+{
+    Catalog *catalog = new Catalog;
+
+    wxString path = wxPathOnly(m_fileName);
+    if (path.empty())
+        path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
+    wxString pot_file =
+        wxFileSelector(_("Open catalog template"),
+             path, wxEmptyString, wxEmptyString,
+             _("GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+             wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
+    bool ok = false;
+    if (!pot_file.empty())
+    {
+        wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
+        ok = catalog->UpdateFromPOT(pot_file,
+                                    /*summary=*/false,
+                                    /*replace_header=*/true);
+    }
+    if (!ok)
+    {
+        delete catalog;
+        return;
+    }
+
+    delete m_catalog;
+    m_catalog = catalog;
+
+    m_fileName.clear();
+    m_fileExistsOnDisk = false;
+    m_modified = true;
+
+    if (m_catalog->empty())
+    {
+        EnsureContentView(Content::Empty_PO);
+    }
+    else
+    {
+        EnsureContentView(Content::PO);
+        m_list->CatalogChanged(m_catalog);
+    }
+
+    UpdateTitle();
+    UpdateMenu();
+    UpdateStatusBar();
+    InitSpellchecker();
+
+    // Choose the language:
+    wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
+
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode == wxID_OK)
+        {
+            Language lang = dlg->GetLang();
+            catalog->Header().Lang = lang;
+            catalog->Header().SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr());
+
+            // Derive save location for the file from the location of the POT
+            // file (same directory, language-based name). This doesn't always
+            // work, e.g. WordPress plugins use different naming, so don't actually
+            // save the file just yet and let the user confirm the location when saving.
+            wxFileName pot_fn(pot_file);
+            pot_fn.SetFullName(lang.Code() + ".po");
+
+            m_fileName = pot_fn.GetFullPath();
+            m_fileExistsOnDisk = false;
+            m_modified = true;
+
+            UpdateTitle();
+            UpdateMenu();
+            UpdateStatusBar();
+            InitSpellchecker();
+        }
+    });
+}
+
+
+void PoeditFrame::NewFromScratch()
+{
+    Catalog *catalog = new Catalog;
+    catalog->CreateNewHeader();
+
+    delete m_catalog;
+    m_catalog = catalog;
+
+    m_fileName.clear();
+    m_fileExistsOnDisk = false;
+    m_modified = true;
+
+    EnsureContentView(Content::Empty_PO);
+
+    UpdateTitle();
+    UpdateMenu();
+    UpdateStatusBar();
+
+    // Choose the language:
+    wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
+
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode == wxID_OK)
+        {
+            Language lang = dlg->GetLang();
+            catalog->Header().Lang = lang;
+            catalog->Header().SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr());
+        }
+    });
+}
 
 
 void PoeditFrame::OnProperties(wxCommandEvent&)
@@ -1336,7 +1407,7 @@ void PoeditFrame::OnProperties(wxCommandEvent&)
 
 void PoeditFrame::EditCatalogProperties()
 {
-    wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this));
+    wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this, m_fileExistsOnDisk));
 
     const Language prevLang = m_catalog->GetLanguage();
     dlg->TransferTo(m_catalog);
@@ -1352,7 +1423,42 @@ void PoeditFrame::EditCatalogProperties()
             {
                 InitSpellchecker();
                 // trigger resorting and language header update:
-                m_list->CatalogChanged(m_catalog);
+                if (m_list)
+                    m_list->CatalogChanged(m_catalog);
+            }
+        }
+    });
+}
+
+void PoeditFrame::EditCatalogPropertiesAndUpdateFromSources()
+{
+    // TODO: share code with EditCatalogProperties()
+
+    wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this, m_fileExistsOnDisk, 1));
+
+    const Language prevLang = m_catalog->GetLanguage();
+    dlg->TransferTo(m_catalog);
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode == wxID_OK)
+        {
+            dlg->TransferFrom(m_catalog);
+            m_modified = true;
+            if (m_list)
+                RecreatePluralTextCtrls();
+            UpdateTitle();
+            UpdateMenu();
+            if (prevLang != m_catalog->GetLanguage())
+            {
+                InitSpellchecker();
+                // trigger resorting and language header update:
+                if (m_list)
+                    m_list->CatalogChanged(m_catalog);
+            }
+
+            if (!m_catalog->Header().SearchPaths.empty())
+            {
+                EnsureContentView(Content::PO);
+                UpdateCatalog();
             }
         }
     });
@@ -1386,7 +1492,9 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
     // This ensures that the list control won't be redrawn during Update()
     // call when a dialog box is hidden; another alternative would be to call
     // m_list->CatalogChanged(NULL) here
-    wxWindowUpdateLocker locker(m_list);
+    std::unique_ptr<wxWindowUpdateLocker> locker;
+    if (m_list)
+        locker.reset(new wxWindowUpdateLocker(m_list));
 
     ProgressInfo progress(this, _("Updating catalog"));
 
@@ -1395,6 +1503,8 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
         succ = m_catalog->Update(&progress);
     else
         succ = m_catalog->UpdateFromPOT(pot_file);
+
+    EnsureContentView(Content::PO);
     m_list->CatalogChanged(m_catalog);
 
     m_modified = succ || m_modified;
@@ -1958,7 +2068,7 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     Catalog *cat = new Catalog(catalog);
     if (cat->IsOk())
     {
-        ReadCatalog(cat, catalog);
+        ReadCatalog(cat);
     }
     else
     {
@@ -1978,7 +2088,7 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
 }
 
 
-void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
+void PoeditFrame::ReadCatalog(Catalog *cat)
 {
     wxASSERT( cat && cat->IsOk() );
 
@@ -1995,7 +2105,8 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
     // confused
     m_list->CatalogChanged(m_catalog);
 
-    m_fileName = filename;
+    m_fileName = cat->GetFileName();
+    m_fileExistsOnDisk = true;
     m_modified = false;
 
     RecreatePluralTextCtrls();
@@ -2129,7 +2240,12 @@ void PoeditFrame::ReadCatalog(Catalog *cat, const wxString& filename)
         }
     }
 
+    NoteAsRecentFile();
+}
 
+
+void PoeditFrame::NoteAsRecentFile()
+{
     wxFileName fn(m_fileName);
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
     FileHistory().AddFileToHistory(fn.GetFullPath());
@@ -2150,27 +2266,32 @@ void PoeditFrame::RefreshControls()
     if (!m_catalog->IsOk())
     {
         wxLogError(_("Error loading message catalog file '%s'."), m_fileName.c_str());
-        m_fileName = wxEmptyString;
+        m_fileName.clear();
+        m_fileExistsOnDisk = false;
         UpdateMenu();
         UpdateTitle();
         delete m_catalog;
         m_catalog = NULL;
-        m_list->CatalogChanged(NULL);
+        if (m_list)
+            m_list->CatalogChanged(NULL);
         return;
     }
 
     wxBusyCursor bcur;
     UpdateMenu();
 
-    // remember currently selected item:
-    int selectedItem = m_list->GetSelectedCatalogItem();
+    if (m_list)
+    {
+        // remember currently selected item:
+        int selectedItem = m_list->GetSelectedCatalogItem();
 
-    // update catalog view, this may involve reordering the items...
-    m_list->CatalogChanged(m_catalog);
+        // update catalog view, this may involve reordering the items...
+        m_list->CatalogChanged(m_catalog);
 
-    // ...and so we need to restore selection now:
-    if ( selectedItem != -1 )
-        m_list->SelectCatalogItem(selectedItem);
+        // ...and so we need to restore selection now:
+        if (selectedItem != -1)
+            m_list->SelectCatalogItem(selectedItem);
+    }
 
     FindFrame *f = (FindFrame*)FindWindow("find_frame");
     if (f)
@@ -2244,8 +2365,14 @@ void PoeditFrame::UpdateTitle()
     wxString title;
     if ( !m_fileName.empty() )
     {
-        SetRepresentedFilename(m_fileName);
         wxFileName fn(m_fileName);
+        wxString fpath = fn.GetFullName();
+
+        if (m_fileExistsOnDisk)
+            SetRepresentedFilename(m_fileName);
+        else
+            fpath += _(" (unsaved)");
+
         if ( !m_catalog->Header().Project.empty() )
         {
             title.Printf(
@@ -2254,7 +2381,7 @@ void PoeditFrame::UpdateTitle()
 #else
                 "%s • %s",
 #endif
-                fn.GetFullName(), m_catalog->Header().Project);
+                fpath, m_catalog->Header().Project);
         }
         else
         {
@@ -2281,12 +2408,13 @@ void PoeditFrame::UpdateMenu()
     wxMenuBar *menubar = GetMenuBar();
     wxToolBar *toolbar = GetToolBar();
 
-    const bool editable = (m_catalog != NULL);
+    const bool hasCatalog = m_catalog != nullptr;
+    const bool editable = hasCatalog && !m_catalog->empty();
 
-    menubar->Enable(wxID_SAVE, editable);
-    menubar->Enable(wxID_SAVEAS, editable);
-    menubar->Enable(XRCID("menu_export"), editable);
-    toolbar->EnableTool(wxID_SAVE, editable);
+    menubar->Enable(wxID_SAVE, hasCatalog);
+    menubar->Enable(wxID_SAVEAS, hasCatalog);
+    menubar->Enable(XRCID("menu_export"), hasCatalog);
+    toolbar->EnableTool(wxID_SAVE, hasCatalog);
     toolbar->EnableTool(XRCID("menu_update"), editable);
     toolbar->EnableTool(XRCID("menu_validate"), editable);
     toolbar->EnableTool(XRCID("menu_fuzzy"), editable);
@@ -2303,7 +2431,12 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_find_next"), editable);
     menubar->Enable(XRCID("menu_find_prev"), editable);
 
-    menubar->EnableTop(2, editable);
+    menubar->Enable(XRCID("menu_update"), editable);
+    menubar->Enable(XRCID("menu_update_from_pot"), hasCatalog);
+    menubar->Enable(XRCID("menu_auto_translate"), editable);
+    menubar->Enable(XRCID("menu_purge_deleted"), editable);
+    menubar->Enable(XRCID("menu_validate"), editable);
+    menubar->Enable(XRCID("menu_catproperties"), hasCatalog);
 
     menubar->Enable(XRCID("menu_quotes"), editable);
     menubar->Enable(XRCID("menu_ids"), editable);
@@ -2331,8 +2464,8 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_purge_deleted"),
                     editable && m_catalog->HasDeletedItems());
 
-    const bool doupdate = editable &&
-                          m_catalog->Header().SearchPaths.GetCount() > 0;
+    const bool doupdate = hasCatalog &&
+                          !m_catalog->Header().SearchPaths.empty();
     toolbar->EnableTool(XRCID("menu_update"), doupdate);
     menubar->Enable(XRCID("menu_update"), doupdate);
 
@@ -2401,11 +2534,14 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
 
     m_fileName = catalog;
     m_modified = false;
+    m_fileExistsOnDisk = true;
 
     FileHistory().AddFileToHistory(m_fileName);
     UpdateTitle();
 
     RefreshControls();
+
+    NoteAsRecentFile();
 
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(m_fileName);

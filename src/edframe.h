@@ -34,6 +34,7 @@
 
 #include <wx/frame.h>
 #include <wx/process.h>
+#include <wx/msgdlg.h>
 #include <wx/windowptr.h>
 
 class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
@@ -101,7 +102,7 @@ class PoeditFrame : public wxFrame
         /// Reads catalog, refreshes controls, takes ownership of catalog.
         void ReadCatalog(const wxString& catalog);
         /// Reads catalog, refreshes controls, takes ownership of catalog.
-        void ReadCatalog(Catalog *cat, const wxString& filename);
+        void ReadCatalog(Catalog *cat);
         /// Writes catalog.
         void WriteCatalog(const wxString& catalog);
 
@@ -121,6 +122,9 @@ class PoeditFrame : public wxFrame
         void UpdateAfterPreferencesChange();
         static void UpdateAllAfterPreferencesChange();
 
+        void EditCatalogProperties();
+        void EditCatalogPropertiesAndUpdateFromSources();
+
     private:
         /** Ctor.
             \param catalog filename of catalog to open. If empty, starts
@@ -131,9 +135,10 @@ class PoeditFrame : public wxFrame
         /// Current kind of content view
         enum class Content
         {
-            Empty,
+            Invalid, // no content whatsoever
             Welcome,
-            PO
+            PO,
+            Empty_PO
         };
         Content m_contentType;
         /// parent of all content controls etc.
@@ -145,6 +150,7 @@ class PoeditFrame : public wxFrame
         void EnsureContentView(Content type);
         wxWindow* CreateContentViewPO();
         wxWindow* CreateContentViewWelcome();
+        wxWindow* CreateContentViewEmptyPO();
         void DestroyContentView();
 
         static PoeditFramesList ms_instances;
@@ -189,8 +195,6 @@ class PoeditFrame : public wxFrame
         // (Re)initializes spellchecker, if needed
         void InitSpellchecker();
 
-        void EditCatalogProperties();
-
         // navigation to another item in the list
         typedef bool (*NavigatePredicate)(const CatalogItem& item);
         void Navigate(int step, NavigatePredicate predicate, bool wrap);
@@ -205,6 +209,9 @@ class PoeditFrame : public wxFrame
         // Message handlers:
 public: // for PoeditApp
         void OnNew(wxCommandEvent& event);
+        void NewFromScratch();
+        void NewFromPOT();
+
         void OnOpen(wxCommandEvent& event);
         void OnOpenHist(wxCommandEvent& event);
 private:
@@ -271,6 +278,7 @@ private:
         void ReportValidationErrors(int errors, bool from_save, TFunctor completionHandler);
 
         wxFileHistory& FileHistory() { return wxGetApp().FileHistory(); }
+        void NoteAsRecentFile();
 
         DECLARE_EVENT_TABLE()
 
@@ -280,6 +288,7 @@ private:
         bool m_commentWindowEditable;
         Catalog *m_catalog;
         wxString m_fileName;
+        bool m_fileExistsOnDisk;
 
         TranslationMemory::Results m_autoTranslations;
 

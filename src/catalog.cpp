@@ -652,6 +652,9 @@ bool CatalogParser::Parse()
             bool shouldIgnore = m_ignoreHeader && mstr.empty();
             if ( !shouldIgnore )
             {
+                if (!mstr.empty() && m_ignoreTranslations)
+                    mtranslations.clear();
+
                 if (!OnEntry(mstr, wxEmptyString, false,
                              has_context, msgctxt,
                              mtranslations,
@@ -1033,6 +1036,7 @@ bool Catalog::Load(const wxString& po_file, int flags)
 
     LoadParser parser(this, &f);
     parser.IgnoreHeader(flags & CreationFlag_IgnoreHeader);
+    parser.IgnoreTranslations(flags & CreationFlag_IgnoreTranslations);
     if (!parser.Parse())
     {
         wxLogError(
@@ -1624,7 +1628,7 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary,
 {
     if (!m_isOk) return false;
 
-    Catalog newcat(pot_file);
+    Catalog newcat(pot_file, CreationFlag_IgnoreTranslations);
 
     if (!newcat.IsOk())
     {

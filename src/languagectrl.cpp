@@ -25,7 +25,27 @@
 
 #include "languagectrl.h"
 
+#include <wx/config.h>
+#include <wx/sizer.h>
+#include <wx/stattext.h>
+
 IMPLEMENT_DYNAMIC_CLASS(LanguageCtrl, wxComboBox)
+
+LanguageCtrl::LanguageCtrl(wxWindow *parent, wxWindowID winid)
+    : wxComboBox(parent, winid)
+{
+    Init();
+}
+
+void LanguageCtrl::Init()
+{
+    SetHint(_("Language Code or Name (e.g. en_GB)"));
+
+    for (auto x: Language::AllFormattedNames())
+        Append(x);
+
+    m_inited = true;
+}
 
 void LanguageCtrl::SetLang(const Language& lang)
 {
@@ -40,16 +60,6 @@ Language LanguageCtrl::GetLang() const
     return Language::TryParse(GetValue());
 }
 
-void LanguageCtrl::Init()
-{
-    SetHint(_("Language Code or Name (e.g. en_GB)"));
-
-    for (auto x: Language::AllFormattedNames())
-        Append(x);
-
-    m_inited = true;
-}
-
 #ifdef __WXMSW__
 wxSize LanguageCtrl::DoGetBestSize() const
 {
@@ -59,3 +69,69 @@ wxSize LanguageCtrl::DoGetBestSize() const
     return GetSizeFromTextSize(100);
 }
 #endif
+
+
+
+LanguageDialog::LanguageDialog(wxWindow *parent)
+    : wxDialog(parent, wxID_ANY, _("Translation Language")),
+      m_validatedLang(-1)
+{
+    auto sizer = new wxBoxSizer(wxVERTICAL);
+
+    auto label = new wxStaticText(this, wxID_ANY, _("Language of the translation:"));
+    m_language = new LanguageCtrl(this);
+    m_language->SetMinSize(wxSize(300,-1));
+    auto buttons = CreateButtonSizer(wxOK | wxCANCEL);
+
+#ifdef __WXOSX__
+    sizer->AddSpacer(10);
+    sizer->Add(label, wxSizerFlags().Border());
+    sizer->Add(m_language, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
+    sizer->Add(buttons, wxSizerFlags().Expand());
+#else
+    sizer->AddSpacer(10);
+    sizer->Add(label, wxSizerFlags().DoubleBorder(wxLEFT|wxRIGHT));
+    sizer->Add(m_language, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
+    sizer->Add(buttons, wxSizerFlags().Expand().Border());
+#endif
+
+    m_language->Bind(wxEVT_TEXT,     [=](wxCommandEvent&){ m_validatedLang = -1; });
+    m_language->Bind(wxEVT_COMBOBOX, [=](wxCommandEvent&){ m_validatedLang = -1; });
+
+    wxString lang = wxConfigBase::Get()->Read("/last_translation_lang", "");
+    if (!lang.empty())
+        SetLang(Language::TryParse(lang));
+
+    Bind(wxEVT_UPDATE_UI,
+        [=](wxUpdateUIEvent& e){ e.Enable(Validate()); },
+        wxID_OK);
+
+    SetSizerAndFit(sizer);
+    CenterOnParent();
+}
+
+bool LanguageDialog::Validate()
+{
+    if (m_validatedLang == -1)
+    {
+        m_validatedLang = m_language->IsValid() ? 1 : 0;
+    }
+
+    return m_validatedLang == 1;
+}
+
+void LanguageDialog::EndModal(int retval)
+{
+    if (retval == wxID_OK)
+    {
+        wxConfigBase::Get()->Write("/last_translation_lang", GetLang().Code().c_str());
+    }
+    wxDialog::EndModal(retval);
+}
+
+
+void LanguageDialog::SetLang(const Language& lang)
+{
+    m_validatedLang = -1;
+    m_language->SetLang(lang);
+}

@@ -33,6 +33,8 @@
 #include <wx/intl.h>
 #include <wx/config.h>
 #include <wx/tokenzr.h>
+#include <wx/stattext.h>
+#include <wx/notebook.h>
 
 #include <memory>
 
@@ -41,7 +43,7 @@
 #include "pluralforms/pl_evaluate.h"
 
 
-PropertiesDialog::PropertiesDialog(wxWindow *parent)
+PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int initialPage)
     : m_validatedPlural(-1), m_validatedLang(-1)
 {
     wxXmlResource::Get()->LoadDialog(this, parent, "properties");
@@ -77,6 +79,12 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent)
     // FIXME
     SetSize(GetSize().x+1,GetSize().y+1);
 #endif
+
+    if (!fileExistsOnDisk)
+        DisableSourcesControls();
+
+    auto nb = XRCCTRL(*this, "properties_notebook", wxNotebook);
+    nb->SetSelection(initialPage);
 
     m_language->Bind(wxEVT_TEXT, &PropertiesDialog::OnLanguageChanged, this);
     m_language->Bind(wxEVT_COMBOBOX, &PropertiesDialog::OnLanguageChanged, this);
@@ -238,6 +246,19 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
             pluralForms += ";";
     }
     cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
+}
+
+
+void PropertiesDialog::DisableSourcesControls()
+{
+    m_basePath->Disable();
+    m_paths->Disable();
+    for (auto c: m_paths->GetChildren())
+        c->Disable();
+
+    auto label = XRCCTRL(*this, "sources_path_label", wxStaticText);
+    label->SetLabel(_("Please save the file first. This section cannot be edited until then."));
+    label->SetForegroundColour(*wxRED);
 }
 
 
