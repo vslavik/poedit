@@ -45,14 +45,6 @@
 #include <wx/commandlinkbutton.h>
 #endif
 
-#ifdef __WXMSW__
-// wxStatic{Bitmap,Text} is not transparent on Windows, use generic variants
-#include <wx/generic/statbmpg.h>
-#include <wx/generic/stattextg.h>
-#define wxStaticText   wxGenericStaticText
-#define wxStaticBitmap wxGenericStaticBitmap
-#endif
-
 namespace
 {
 
@@ -94,12 +86,16 @@ typedef wxCommandLinkButton ActionButton;
 
 WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
     : wxPanel(parent, wxID_ANY),
-      m_clrHeader("#555555"),
-      m_clrNorm("#555555"),
+      m_clrHeader("#444444"),
+      m_clrNorm("#444444"),
       m_clrSub("#aaaaaa")
 {
+#ifdef  __WXMSW__
+    SetBackgroundColour(wxColour("#fffcf5"));
+#else
     SetBackgroundStyle(wxBG_STYLE_PAINT);
     Bind(wxEVT_PAINT, &WelcomeScreenPanel::OnPaint, this);
+#endif
 
 #if defined(__WXMAC__)
     #define HEADER_FACE "Helvetica Neue"
@@ -107,10 +103,10 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
     m_fntNorm = wxFont(wxFontInfo(13).FaceName(HEADER_FACE).Light());
     m_fntSub = wxFont(wxFontInfo(11).FaceName(HEADER_FACE).Light());
 #elif defined(__WXMSW__)
-    #define HEADER_FACE "Segoe UI Light"
-    m_fntHeader = wxFont(wxFontInfo(24).FaceName(HEADER_FACE).Light());
-    m_fntNorm = wxFont(wxFontInfo(12).FaceName(HEADER_FACE).Light());
-    m_fntSub = wxFont(wxFontInfo(10).FaceName(HEADER_FACE).Light());
+    #define HEADER_FACE "Segoe UI"
+    m_fntHeader = wxFont(wxFontInfo(24).FaceName("Segoe UI Light"));
+    m_fntNorm = wxFont(wxFontInfo(10).FaceName(HEADER_FACE));
+    m_fntSub = wxFont(wxFontInfo(9).FaceName(HEADER_FACE));
 #else
     #define HEADER_FACE "sans serif"
     m_fntHeader = wxFont(wxFontInfo(30).FaceName(HEADER_FACE).Light());
