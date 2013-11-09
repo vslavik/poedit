@@ -54,7 +54,7 @@ void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayStri
 {
     wxString sum;
     sum.Printf(_("(%i new, %i obsolete)"), 
-               snew.GetCount(), sobsolete.GetCount());
+               (int)snew.GetCount(), (int)sobsolete.GetCount());
     XRCCTRL(*this, "items_count", wxStaticText)->SetLabel(sum);
 
     wxListBox *listbox;
