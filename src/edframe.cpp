@@ -571,6 +571,10 @@ void PoeditFrame::EnsureContentView(Content type)
     if (m_contentType == type)
         return;
 
+#ifdef __WXMSW__
+    wxWindowUpdateLocker no_updates(this);
+#endif
+
     if (m_contentView)
         DestroyContentView();
 
@@ -596,7 +600,10 @@ void PoeditFrame::EnsureContentView(Content type)
     m_contentType = type;
     m_contentWrappingSizer->Add(m_contentView, wxSizerFlags(1).Expand());
     Layout();
+#ifdef __WXMSW__
     m_contentView->Show();
+    Layout();
+#endif
 }
 
 
@@ -797,7 +804,10 @@ void PoeditFrame::DestroyContentView()
     for (size_t i = 0; i < m_textTransPlural.size(); i++)
     {
         if (m_textTransPlural[i])
+        {
             m_textTransPlural[i]->PopEventHandler(true/*delete*/);
+            m_textTransPlural[i] = nullptr;
+        }
     }
     if (m_textComment)
         m_textComment->PopEventHandler(true/*delete*/);
@@ -2262,22 +2272,26 @@ void PoeditFrame::RefreshControls()
         UpdateTitle();
         delete m_catalog;
         m_catalog = NULL;
-        m_list->CatalogChanged(NULL);
+        if (m_list)
+            m_list->CatalogChanged(NULL);
         return;
     }
 
     wxBusyCursor bcur;
     UpdateMenu();
 
-    // remember currently selected item:
-    int selectedItem = m_list->GetSelectedCatalogItem();
+    if (m_list)
+    {
+        // remember currently selected item:
+        int selectedItem = m_list->GetSelectedCatalogItem();
 
-    // update catalog view, this may involve reordering the items...
-    m_list->CatalogChanged(m_catalog);
+        // update catalog view, this may involve reordering the items...
+        m_list->CatalogChanged(m_catalog);
 
-    // ...and so we need to restore selection now:
-    if ( selectedItem != -1 )
-        m_list->SelectCatalogItem(selectedItem);
+        // ...and so we need to restore selection now:
+        if (selectedItem != -1)
+            m_list->SelectCatalogItem(selectedItem);
+    }
 
     FindFrame *f = (FindFrame*)FindWindow("find_frame");
     if (f)
