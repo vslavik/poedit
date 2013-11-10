@@ -1363,6 +1363,8 @@ void PoeditFrame::NewFromPOT()
             UpdateMenu();
             UpdateStatusBar();
             InitSpellchecker();
+            if (m_list)
+                m_list->CatalogChanged(m_catalog); // refresh language column
         }
     });
 }
