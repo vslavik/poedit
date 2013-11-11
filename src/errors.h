@@ -33,7 +33,7 @@ class Exception
 public:
     Exception(const wxString& what) : m_what(what) {}
 
-    const wxString& what() { return m_what; }
+    const wxString& what() const { return m_what; }
 
 private:
     wxString m_what;
