@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2012-07-30 10:34+0200\n"
+"POT-Creation-Date: 2013-11-11 15:41+0100\n"
 "PO-Revision-Date: 2013-02-15 22:53+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean Translation <hojin.choi@gmail.com>\n"
@@ -19,80 +19,83 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 1.5.5\n"
 
-#: ../src/edframe.cpp:2060
+#. TRANSLATORS: Quoted text with leading 4 spaces
+#: ../src/edframe.cpp:2850
+#, c-format
+msgid "    “%s”"
+msgstr ""
+
+#: ../src/edframe.cpp:2485
 msgid " (modified)"
 msgstr " (수정함)"
 
+#: ../src/edframe.cpp:2467
+msgid " (unsaved)"
+msgstr ""
+
 #. TRANSLATORS: This is version information in about dialog, it is followed
 #. by version number when used (wxWidgets 2.8)
-#: ../src/edframe.cpp:2431
+#: ../src/edapp.cpp:575
 msgid " Version "
 msgstr " 버전 "
 
-#: ../src/edframe.cpp:1367
+#: ../src/edframe.cpp:1665
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "번역 내용에서 %d개의 문제를 찾았습니다."
 
-#: ../src/edframe.cpp:2024
+#: ../src/edframe.cpp:2430
 #, c-format
 msgid "%i %% translated, %i string"
 msgid_plural "%i %% translated, %i strings"
 msgstr[0] "%i %% 번역함, %i개의 문자열"
 
-#: ../src/edframe.cpp:2029
+#: ../src/edframe.cpp:2435
 #, c-format
 msgid "%i %% translated, %i string (%s)"
 msgid_plural "%i %% translated, %i strings (%s)"
 msgstr[0] "%i %% 번역함, %i개의 문자열(%s)"
 
-#: ../src/export_html.cpp:134
+#: ../src/export_html.cpp:141
 #, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i %% 번역함, %i개의 문자열(퍼지 %i, 오류 %i, 미번역 %i)"
 
-#: ../src/edframe.cpp:2014
+#: ../src/edframe.cpp:2420
 #, c-format
 msgid "%i bad token"
 msgid_plural "%i bad tokens"
 msgstr[0] "%i개의 잘못된 토큰"
 
-#: ../src/edframe.cpp:2008
+#: ../src/edframe.cpp:2414
 #, c-format
 msgid "%i fuzzy"
 msgid_plural "%i fuzzy"
 msgstr[0] "%i개 모호함"
 
-#: ../src/catalog.cpp:132
+#: ../src/catalog.cpp:131
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "'%2$s' 파일의 %1$i행을 정상적으로 불러오지 못했습니다."
 
-#: ../src/edframe.cpp:2020
+#: ../src/edframe.cpp:2426
 #, c-format
 msgid "%i not translated"
 msgid_plural "%i not translated"
 msgstr[0] "%i개 번역하지 않음"
 
-#: ../src/resources/menus.xrc:213 ../src/resources/menus.xrc:214
+#: ../src/resources/menus.xrc:248 ../src/resources/menus.xrc:249
+#: ../src/resources/menus.xrc:298 ../src/resources/menus.xrc:299
 msgid "&About"
 msgstr "정보(&A)"
 
-#: ../src/resources/menus.xrc:212
+#: ../src/resources/menus.xrc:247 ../src/resources/menus.xrc:297
 msgid "&About Poedit"
 msgstr "Poedit 정보(&A)"
 
-#: ../src/resources/menus.xrc:107
-msgid "&Automatically Translate Using TM"
-msgstr "번역 기억장소를 사용하여 자동 번역(&A)"
-
-#: ../src/resources/menus.xrc:106
-msgid "&Automatically translate using TM"
-msgstr "번역 기억장소를 사용하여 자동 번역(&A)"
-
-#: ../src/edframe.cpp:2786
+#: ../src/edframe.cpp:3224
 msgid "&Bookmarks"
 msgstr "책갈피(&B)"
 
@@ -100,99 +103,103 @@ msgstr "책갈피(&B)"
 msgid "&Close"
 msgstr "닫기(&C)"
 
-#: ../src/resources/menus.xrc:176
+#: ../src/resources/menus.xrc:211
 msgid "&Comment Window"
 msgstr "주석 창 보이기(&C)"
 
-#: ../src/resources/menus.xrc:175
+#: ../src/resources/menus.xrc:210
 msgid "&Comment window"
 msgstr "주석 창 보이기(&C)"
 
-#: ../src/resources/menus.xrc:130
+#: ../src/resources/menus.xrc:165
 msgid "&Done and Next"
 msgstr "끝내고 나가기(&D)"
 
-#: ../src/resources/menus.xrc:129
+#: ../src/resources/menus.xrc:164
 msgid "&Done and next"
 msgstr "끝내고 나가기(&D)"
 
-#: ../src/resources/menus.xrc:56
+#: ../src/resources/menus.xrc:64
 msgid "&Edit"
 msgstr "편집(&E)"
 
-#: ../src/edframe.cpp:471 ../src/resources/manager.xrc:125
-#: ../src/resources/menus.xrc:5
+#: ../src/edframe.cpp:521 ../src/resources/manager.xrc:125
+#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:258
 msgid "&File"
 msgstr "파일(&F)"
 
-#: ../src/resources/menus.xrc:73
+#: ../src/resources/menus.xrc:81 ../src/resources/menus.xrc:95
 msgid "&Find..."
 msgstr "찾기(&F)..."
 
-#: ../src/edframe.cpp:480 ../src/resources/menus.xrc:126
+#: ../src/edframe.cpp:527 ../src/resources/menus.xrc:161
 msgid "&Go"
 msgstr "이동(&G)"
 
-#: ../src/edapp.cpp:183 ../src/resources/menus.xrc:216
+#: ../src/edapp.cpp:183 ../src/resources/menus.xrc:251
+#: ../src/resources/menus.xrc:301
 msgid "&Help"
 msgstr "도움말(&H)"
 
-#: ../src/resources/menus.xrc:14
-msgid "&New Catalog..."
+#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:261
+#, fuzzy
+msgid "&New..."
 msgstr "새 카탈로그(&N)..."
 
-#: ../src/resources/menus.xrc:13
-msgid "&New catalog..."
-msgstr "새 카탈로그(&N)..."
+#: ../src/resources/find.xrc:102
+#, fuzzy
+msgid "&Next >"
+msgstr "다음 >"
 
-#: ../src/resources/menus.xrc:142
+#: ../src/resources/menus.xrc:177
 msgid "&Next Message"
 msgstr "다음 메시지(&N)"
 
-#: ../src/resources/menus.xrc:141
+#: ../src/resources/menus.xrc:176
 msgid "&Next message"
 msgstr "다음 메시지(&N)"
 
-#: ../src/resources/menus.xrc:206
+#: ../src/resources/menus.xrc:241 ../src/resources/menus.xrc:291
 msgid "&Online Help"
 msgstr "온라인 도움말(&O)"
 
-#: ../src/resources/menus.xrc:205
+#: ../src/resources/menus.xrc:240 ../src/resources/menus.xrc:290
 msgid "&Online help"
 msgstr "온라인 도움말(&O)"
 
-#: ../src/resources/menus.xrc:21
+#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:274
 msgid "&Open..."
 msgstr "열기(&O)..."
 
 # ko-po-check 참조
-#: ../src/resources/menus.xrc:90
+#: ../src/resources/menus.xrc:121
 msgid "&Preferences"
 msgstr "기본 설정(&P)"
 
 # ko-po-check 참조
-#: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:44
+#: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:47
+#: ../src/resources/menus.xrc:278
 msgid "&Preferences..."
 msgstr "기본 설정(&P)..."
 
-#: ../src/resources/menus.xrc:137
+#: ../src/resources/menus.xrc:172
 msgid "&Previous Message"
 msgstr "이전 메시지(&P)"
 
-#: ../src/resources/menus.xrc:136
+#: ../src/resources/menus.xrc:171
 msgid "&Previous message"
 msgstr "이전 메시지(&P)"
 
 # ko-po-check 참조
-#: ../src/resources/menus.xrc:119
+#: ../src/resources/menus.xrc:154
 msgid "&Properties..."
 msgstr "속성(&P)..."
 
-#: ../src/resources/menus.xrc:111
+#: ../src/resources/menus.xrc:142
 msgid "&Purge Deleted Translations"
 msgstr "삭제한 번역을 완전히 제거(&P)"
 
-#: ../src/resources/menus.xrc:110
+#: ../src/resources/menus.xrc:141
 msgid "&Purge deleted translations"
 msgstr "삭제한 번역을 완전히 제거(&P)"
 
@@ -200,183 +207,163 @@ msgstr "삭제한 번역을 완전히 제거(&P)"
 msgid "&Save"
 msgstr "저장(&S)"
 
-#: ../src/resources/menus.xrc:70
+#: ../src/resources/menus.xrc:78
 msgid "&Show References"
 msgstr "참조 보기(&S)"
 
-#: ../src/resources/menus.xrc:69
+#: ../src/resources/menus.xrc:77
 msgid "&Show references"
 msgstr "참조 보기(&S)"
 
-#: ../src/resources/menus.xrc:198
+#: ../src/resources/menus.xrc:150
+msgid "&Statistics"
+msgstr ""
+
+#: ../src/resources/menus.xrc:233
 msgid "&Untranslated Entries First"
 msgstr "번역하지 않은 항목 먼저(&U)"
 
-#: ../src/resources/menus.xrc:197
+#: ../src/resources/menus.xrc:232
 msgid "&Untranslated entries first"
 msgstr "번역하지 않은 항목 먼저(&U)"
 
-#: ../src/resources/menus.xrc:99
+#: ../src/resources/menus.xrc:130
 msgid "&Update from Sources"
 msgstr "소스로부터 업데이트(&U)"
 
-#: ../src/resources/menus.xrc:98
+#: ../src/resources/menus.xrc:129
 msgid "&Update from sources"
 msgstr "소스로부터 업데이트(&U)"
 
-#: ../src/resources/menus.xrc:115
+#: ../src/resources/menus.xrc:146
 msgid "&Validate Translations"
 msgstr "번역 검증(&V)"
 
-#: ../src/resources/menus.xrc:114
+#: ../src/resources/menus.xrc:145
 msgid "&Validate translations"
 msgstr "번역 검증(&V)"
 
-#: ../src/resources/menus.xrc:157
+#: ../src/resources/menus.xrc:192
 msgid "&View"
 msgstr "보기(&V)"
 
-#: ../src/catalog.cpp:1572
+#: ../src/catalog.cpp:1635
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s'은(는) 정상적인 POT 파일이 아닙니다."
 
-#: ../src/summarydlg.cpp:58
+#: ../src/summarydlg.cpp:56
 #, c-format
 msgid "(%i new, %i obsolete)"
 msgstr "(신규 개수 %i, 제거 개수 %i)"
 
-#: ../src/resources/summary.xrc:63
+#: ../src/resources/summary.xrc:62
 msgid "(0 new, 0 obsolete)"
 msgstr "(신규 개수 0, 제거 개수 0)"
 
-#: ../src/chooselang.cpp:79
+#: ../src/welcomescreen.cpp:206
+msgid "(Learn more about GNU gettext)"
+msgstr ""
+
+#: ../src/chooselang.cpp:62
 msgid "(Use default language)"
 msgstr "(기본 언어 사용)"
 
-#: ../src/edframe.cpp:916
-msgid "(none of these)"
-msgstr "(이들 중에 없음)"
-
 #: ../src/resources/find.xrc:94
-msgid "< Previous"
+#, fuzzy
+msgid "< &Previous"
 msgstr "< 이전"
 
-#: ../src/manager.cpp:377
+#: ../src/manager.cpp:381
 msgid "<unnamed>"
 msgstr "<이름없음>"
 
 #. TRANSLATORS: This is titlebar of about dialog, the string ends with space
 #. and is followed by application name when used ("Poedit",
 #. but don't add it to this translation yourself) (wxWidgets 2.8)
-#: ../src/edframe.cpp:2435
+#: ../src/edapp.cpp:579
 msgid "About "
 msgstr "정보"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
-#: ../src/edframe.cpp:2425
+#: ../src/edapp.cpp:569
 #, c-format
 msgid "About %s"
 msgstr "%s 정보"
-
-#: ../src/resources/prefs.xrc:270
-msgid "Add"
-msgstr "추가"
 
 # ko-po-check 참조
 #: ../src/resources/manager.xrc:91
 msgid "Add directory to the list"
 msgstr "디렉터리를 목록에 추가"
 
-#: ../src/transmemupd_wizard.cpp:134 ../src/resources/tm_update.xrc:85
-msgid "Add files"
-msgstr "파일 추가"
-
 # ko-po-check 참조
-#: ../src/resources/prefs.xrc:589
-msgid "Add path to the list of directories where catalogs lie."
-msgstr "카탈로그가 있는 디렉터리 목록에 경로를 추가합니다."
+#: ../src/propertiesdlg.cpp:69
+#, fuzzy
+msgid "Additional keywords"
+msgstr "키워드 목록의 항목:"
 
-#: ../src/resources/prefs.xrc:111
+#: ../src/resources/prefs.xrc:110
 msgid "Always change focus to text input field"
 msgstr "항상 포커스를 입력창으로 옮김"
 
 # ko-po-check 참조
-#: ../src/resources/prefs.xrc:514
+#: ../src/resources/prefs.xrc:393
 msgid "An item in input files list:"
 msgstr "입력 파일 목록의 항목:"
 
 # ko-po-check 참조
-#: ../src/resources/prefs.xrc:495
+#: ../src/resources/prefs.xrc:374
 msgid "An item in keywords list:"
 msgstr "키워드 목록의 항목:"
 
-#: ../src/edframe.cpp:2367 ../src/edframe.cpp:2379
+#: ../src/edframe.cpp:2829 ../src/edframe.cpp:2841
 msgid "Automatic Translations:"
 msgstr "자동 번역:"
 
-#: ../src/resources/prefs.xrc:128
-msgid "Automatic spellchecking"
-msgstr "자동 구문확인"
-
-#: ../src/export_html.cpp:173
+#: ../src/export_html.cpp:191
 msgid "Automatic translation"
 msgstr "자동 번역"
 
-#: ../src/edframe.cpp:2365 ../src/edframe.cpp:2377
+#: ../src/edframe.cpp:2827 ../src/edframe.cpp:2839
 msgid "Automatic translations:"
 msgstr "자동 번역:"
 
-#: ../src/resources/prefs.xrc:70
+#: ../src/resources/prefs.xrc:69
 msgid "Automatically check for new version of Poedit"
 msgstr "Poedit의 새 버전이 나왔는지 자동으로 확인"
 
-#: ../src/resources/prefs.xrc:88
+#: ../src/resources/prefs.xrc:94
 msgid "Automatically compile .mo file on save"
 msgstr "저장할 때, .mo 파일 자동 생성"
 
-#: ../src/resources/prefs.xrc:342
-msgid "Automatically translate when updating catalog"
-msgstr "카탈로그 업데이트할 때, 자동 번역"
-
-#: ../src/edframe.cpp:2301
-#, c-format
-msgid "Automatically translated %u strings"
-msgstr "%u개의 문자열을 자동으로 번역함"
-
-#: ../src/edframe.cpp:2286
-msgid "Automatically translating..."
-msgstr "자동 번역 중..."
-
-#: ../src/manager.cpp:248
+#: ../src/manager.cpp:247
 msgid "Bad Tokens"
 msgstr "잘못된 토큰"
 
-#: ../src/resources/properties.xrc:136
+#: ../src/resources/properties.xrc:152
 msgid "Base path:"
 msgstr "기본 경로:"
 
-#: ../src/resources/prefs.xrc:84
+#: ../src/resources/prefs.xrc:90
 msgid "Behavior"
 msgstr "동작"
 
-#: ../src/catalog.cpp:680
+#: ../src/catalog.cpp:681
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "카탈로그 파일 오류: msgid_plural없이 사용한 복수 형식의 msgstr"
 
-#: ../src/catalog.cpp:642
+#: ../src/catalog.cpp:636
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr "카탈로그 파일 오류: msgid_plural을 사용한 단수 형식의 msgstr"
 
 # ko-po-check 참조
-#: ../src/resources/manager.xrc:90 ../src/resources/prefs.xrc:588
-#: ../src/resources/tm_update.xrc:37
+#: ../src/resources/manager.xrc:90
 msgid "Browse"
 msgstr "찾아보기"
 
-#: ../src/resources/menus.xrc:95
+#: ../src/resources/menus.xrc:126
 msgid "C&atalog"
 msgstr "카탈로그(&A)"
 
@@ -384,43 +371,34 @@ msgstr "카탈로그(&A)"
 msgid "C&lear"
 msgstr "지우기(&L)"
 
-#: ../src/resources/prefs.xrc:141
+#: ../src/resources/prefs.xrc:140
 msgid "CR/LF conversion"
 msgstr "CR/LF 변환"
 
 #: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:113
-#: ../src/resources/prefs.xrc:424 ../src/resources/prefs.xrc:566
-#: ../src/resources/prefs.xrc:611 ../src/resources/progress.xrc:32
-#: ../src/resources/properties.xrc:198
+#: ../src/resources/prefs.xrc:303 ../src/resources/prefs.xrc:445
+#: ../src/resources/progress.xrc:32 ../src/resources/properties.xrc:214
 msgid "Cancel"
 msgstr "취소"
-
-#: ../src/transmem.cpp:732
-msgid "Cannot create TM database directory!"
-msgstr "번역 기억장소 데이터베이스 디렉터리를 만들 수 없습니다!"
 
 #: ../src/utility.cpp:57 ../src/utility.cpp:67
 msgid "Cannot create temporary directory."
 msgstr "임시 디렉터리를 만들 수 없습니다."
 
-#: ../src/gexecute.cpp:100
+#: ../src/gexecute.cpp:133
 #, c-format
 msgid "Cannot execute program: %s"
 msgstr "프로그램을 실행할 수 없습니다: %s"
-
-#: ../src/transmemupd.cpp:199
-msgid "Cannot extract catalogs from RPM file."
-msgstr "RPM 파일로부터 카탈로그를 추출할 수 없습니다."
 
 #: ../src/resources/find.xrc:36
 msgid "Case sensitive"
 msgstr "대소문자 구별"
 
-#: ../src/manager.cpp:244
+#: ../src/manager.cpp:243
 msgid "Catalog"
 msgstr "카탈로그"
 
-#: ../src/edframe.cpp:987
+#: ../src/edframe.cpp:1119
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "카탈로그를 수정했습니다. 바뀐 내용을 저장하시겠습니까?"
 
@@ -428,23 +406,23 @@ msgstr "카탈로그를 수정했습니다. 바뀐 내용을 저장하시겠습�
 msgid "Catalog properties"
 msgstr "카탈로그 속성"
 
-#: ../src/resources/menus.xrc:9
+#: ../src/resources/menus.xrc:53 ../src/resources/menus.xrc:282
 msgid "Catalogs &Manager"
 msgstr "카탈로그 관리자(&M)"
 
-#: ../src/resources/menus.xrc:8
+#: ../src/resources/menus.xrc:52
 msgid "Catalogs &manager"
 msgstr "카탈로그 관리자(&M)"
 
-#: ../src/resources/prefs.xrc:63
+#: ../src/resources/prefs.xrc:62
 msgid "Change UI language"
 msgstr "사용자 언어 바꾸기"
 
-#: ../src/export_html.cpp:119 ../src/resources/properties.xrc:74
+#: ../src/export_html.cpp:126 ../src/resources/properties.xrc:111
 msgid "Charset:"
 msgstr "문자코드:"
 
-#: ../src/edframe.cpp:483
+#: ../src/edframe.cpp:530
 msgid "Check for Updates..."
 msgstr "업데이트 확인..."
 
@@ -452,11 +430,16 @@ msgstr "업데이트 확인..."
 msgid "Check for errors in the translation"
 msgstr "번역 오류 검사"
 
-#: ../src/resources/prefs.xrc:204 ../src/resources/prefs.xrc:230
-msgid "Choose"
-msgstr "선택"
+#: ../src/resources/menus.xrc:44
+#, fuzzy
+msgid "Check for updates..."
+msgstr "업데이트 확인..."
 
-#: ../src/edframe.cpp:2339 ../src/resources/menus.xrc:64
+#: ../src/resources/prefs.xrc:127
+msgid "Check spelling"
+msgstr ""
+
+#: ../src/edframe.cpp:2802 ../src/resources/menus.xrc:72
 msgid "Clear Translation"
 msgstr "번역 지우기"
 
@@ -464,7 +447,7 @@ msgstr "번역 지우기"
 msgid "Clear the comment"
 msgstr "주석 지우기"
 
-#: ../src/edframe.cpp:2337 ../src/resources/menus.xrc:63
+#: ../src/edframe.cpp:2800 ../src/resources/menus.xrc:71
 msgid "Clear translation"
 msgstr "번역 지우기"
 
@@ -476,94 +459,119 @@ msgstr "닫기"
 msgid "Comment"
 msgstr "주석"
 
-#: ../src/resources/prefs.xrc:120
+#: ../src/resources/prefs.xrc:119
 msgid "Comment window is editable"
 msgstr "주석 창은 편집 가능합니다"
 
-#: ../src/edframe.cpp:547 ../src/resources/comment.xrc:10
+#: ../src/edframe.cpp:701 ../src/export_html.cpp:213
+#: ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "주석:"
 
-#: ../src/resources/prefs.xrc:292
-msgid "Configuration"
-msgstr "설정"
+#: ../src/welcomescreen.cpp:229
+msgid "Configure source code extraction in Properties."
+msgstr ""
 
-#: ../src/manager.cpp:407 ../src/manager.cpp:427
+#: ../src/manager.cpp:413 ../src/manager.cpp:433
 msgid "Confirmation"
 msgstr "확인"
 
-#: ../src/edframe.cpp:1812
+#: ../src/wordpress.cpp:113
+#, c-format
+msgid "Confused by ambiguous values of \"%s\" in %s."
+msgstr ""
+
+#: ../src/wordpress.cpp:208
+msgid "Confused: multiple main plugin files."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:101
+msgid "Consult TM when updating from sources"
+msgstr ""
+
+#: ../src/edframe.cpp:2127
 msgid "Context:"
 msgstr "문맥:"
 
-#: ../src/edframe.cpp:2332 ../src/resources/menus.xrc:59
+#: ../src/edframe.cpp:2795 ../src/resources/menus.xrc:67
 msgid "Copy from Source Text"
 msgstr "소스 텍스트에서 복사"
 
-#: ../src/edframe.cpp:2330 ../src/resources/menus.xrc:58
+#: ../src/edframe.cpp:2793 ../src/resources/menus.xrc:66
 msgid "Copy from source text"
 msgstr "소스 텍스트에서 복사"
 
-#: ../src/catalog.cpp:1038
+#: ../src/wordpress.cpp:236
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" plugin."
+msgstr ""
+
+#: ../src/catalog.cpp:1044
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "'%s' 파일을 읽을 수 없습니다. 파일이 손상된 것 같습니다."
 
-#: ../src/catalog.cpp:1307
+#: ../src/catalog.cpp:1330 ../src/catalog.cpp:1366
 #, c-format
 msgid "Couldn't save file %s."
 msgstr "%s 파일을 저장할 수 없습니다."
+
+#: ../src/welcomescreen.cpp:177
+msgid "Create a new translation. Poedit will set everything up automatically."
+msgstr ""
+
+#: ../src/welcomescreen.cpp:170
+#, fuzzy
+msgid "Create new translation"
+msgstr "새 번역 프로젝트 만들기"
 
 #: ../src/resources/manager.xrc:44
 msgid "Create new translations project"
 msgstr "새 번역 프로젝트 만들기"
 
-#: ../src/resources/prefs.xrc:252
-msgid "Database"
-msgstr "데이터베이스"
+#: ../src/prefsdlg.cpp:157
+msgid "Database size on disk:"
+msgstr ""
 
-#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:390
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:269
 msgid "Delete"
 msgstr "삭제"
-
-# ko-po-check 참조
-#: ../src/editlbox/editlbox.cpp:171
-msgid "Delete item"
-msgstr "항목 삭제"
 
 #: ../src/resources/manager.xrc:54
 msgid "Delete the project"
 msgstr "프로젝트 삭제"
 
-#: ../src/manager.cpp:300
+#: ../src/manager.cpp:299
 msgid "Directories:"
 msgstr "디렉터리:"
 
-#: ../src/resources/menus.xrc:165
-msgid "Display &Line Numbers"
-msgstr "줄 번호 표시(&L)"
-
-#: ../src/resources/menus.xrc:170
+#: ../src/resources/menus.xrc:205
 msgid "Display &Notes for Translators"
 msgstr "번역 참고 표시(&N)"
 
-#: ../src/resources/menus.xrc:160
+#: ../src/resources/menus.xrc:195
 msgid "Display &Quotes"
 msgstr "따옴표 표시(&Q)"
 
-#: ../src/resources/menus.xrc:164
-msgid "Display &line numbers"
-msgstr "줄 번호 보이기(&L)"
-
-#: ../src/resources/menus.xrc:169
+#: ../src/resources/menus.xrc:204
 msgid "Display &notes for translators"
 msgstr "번역 참고 표시(&N)"
 
-#: ../src/resources/menus.xrc:159
+#: ../src/resources/menus.xrc:194
 msgid "Display &quotes"
 msgstr "따옴표 보이기(&Q)"
 
-#: ../src/manager.cpp:426
+#: ../src/resources/menus.xrc:200
+#, fuzzy
+msgid "Display Entry &IDs"
+msgstr "따옴표 표시(&Q)"
+
+#: ../src/resources/menus.xrc:199
+#, fuzzy
+msgid "Display entry &IDs"
+msgstr "줄 번호 보이기(&L)"
+
+#: ../src/manager.cpp:432
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -571,64 +579,69 @@ msgstr ""
 "본 프로젝트의 모든 카탈로그를\n"
 "대량으로 업데이트 하시겠습니까?"
 
-#: ../src/manager.cpp:406
+#: ../src/manager.cpp:412
 msgid "Do you want to delete the project?"
 msgstr "정말 프로젝트를 삭제하시겠습니까?"
 
-#: ../src/edframe.cpp:2227
+#: ../src/edframe.cpp:2692
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "더 이상 사용하지 않는 모든 번역을 제거하시겠습니까?"
 
-#: ../src/edframe.cpp:999
+#: ../src/edframe.cpp:1130
 msgid "Don't Save"
 msgstr "저장하지 않음"
 
 # ko-po-check 참조
-#: ../src/resources/prefs.xrc:170
+#: ../src/resources/prefs.xrc:169
 msgid "Don't change format of existing catalogs"
 msgstr "존재하는 카탈로그의 형식을 바꾸지 않음"
 
-#: ../src/edframe.cpp:997
+#: ../src/edframe.cpp:1128
 msgid "Don't save"
 msgstr "저장하지 않음"
 
-#: ../src/attentionbar.cpp:195
+#: ../src/attentionbar.cpp:240
 msgid "Don't show again"
 msgstr "다시 보지 않음"
 
-#: ../src/resources/manager.xrc:136 ../src/resources/menus.xrc:51
+#: ../src/edapp.cpp:711
+msgid "Donate..."
+msgstr ""
+
+#: ../src/resources/manager.xrc:136 ../src/resources/menus.xrc:59
 msgid "E&xit"
 msgstr "나가기(&X)"
 
 #: ../src/resources/menus.xrc:39
-msgid "E&xport..."
-msgstr "내보내기(&X)..."
+#, fuzzy
+msgid "E&xport as HTML..."
+msgstr "다른 이름으로 내보내기..."
 
-#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:383
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:262
 msgid "Edit"
 msgstr "편집"
 
-#: ../src/resources/menus.xrc:85
+#: ../src/resources/menus.xrc:116
 msgid "Edit &Comment"
 msgstr "주석 편집(&C)"
 
-#: ../src/resources/menus.xrc:84
+#: ../src/resources/menus.xrc:115
 msgid "Edit &comment"
 msgstr "주석 편집(&C)"
 
-#: ../src/edframe.cpp:2346
+#: ../src/edframe.cpp:2809
 msgid "Edit Comment"
 msgstr "주석 편집"
 
-#: ../src/edframe.cpp:2344 ../src/resources/comment.xrc:4
+#: ../src/welcomescreen.cpp:164
+#, fuzzy
+msgid "Edit a translation"
+msgstr "번역 지우기"
+
+#: ../src/edframe.cpp:2807 ../src/resources/comment.xrc:4
 #: ../src/resources/toolbar.xrc:58
 msgid "Edit comment"
 msgstr "주석 편집"
-
-# ko-po-check 참조
-#: ../src/editlbox/editlbox.cpp:169
-msgid "Edit item"
-msgstr "항목 편집"
 
 #: ../src/resources/manager.xrc:64
 msgid "Edit project"
@@ -638,19 +651,27 @@ msgstr "프로젝트 편집"
 msgid "Edit the project"
 msgstr "프로젝트 편집"
 
-#: ../src/resources/prefs.xrc:78
+#: ../src/resources/prefs.xrc:84
 msgid "Editor"
 msgstr "편집기"
 
-#: ../src/resources/prefs.xrc:129
+#: ../src/wordpress.cpp:437
+msgid "Email Support"
+msgstr ""
+
+#: ../src/wordpress.cpp:434
+msgid "Email support"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:128
 msgid "Enables on-the-fly spellchecking"
 msgstr "저장하지 않고 맞춤법 검사"
 
-#: ../src/edframe.cpp:1309
+#: ../src/edframe.cpp:1599
 msgid "Entries in the catalog are probably incorrect."
 msgstr "카탈로그의 항목이 잘못된 것 같습니다."
 
-#: ../src/edframe.cpp:1911
+#: ../src/edframe.cpp:2254
 msgid ""
 "Entries in this catalog have different plural forms count from what "
 "catalog's Plural-Forms header says"
@@ -658,7 +679,7 @@ msgstr ""
 "이 카탈로그의 항목은 카탈로그의 Plural-Forms 헤더에 명시한 서수 형식 카운트"
 "와 다른 값을 가지고 있습니다. "
 
-#: ../src/edframe.cpp:1376
+#: ../src/edframe.cpp:1673
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
@@ -667,29 +688,38 @@ msgstr ""
 "분이 각각의 항목을 선택했을 때 나타납니다."
 
 # ko-po-check 참조
-#: ../src/edframe.cpp:1960
+#: ../src/edframe.cpp:2361
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "카탈로그 파일을 불러오는 중 오류: '%s'."
 
-#: ../src/fileviewer.cpp:226
+#: ../src/fileviewer.cpp:287
 #, c-format
 msgid "Error opening file %s!"
 msgstr "%s 파일을 여는 중 오류!"
 
-#: ../src/catalog.cpp:1354
+#: ../src/catalog.cpp:1501
 msgid "Error saving catalog"
 msgstr "카탈로그 저장 오류"
 
-#: ../src/errorbar.cpp:60
+#: ../src/errorbar.cpp:68
 msgid "Error:"
 msgstr "오류:"
 
-#: ../src/edframe.cpp:1138
+#: ../src/edframe.cpp:3142
+msgid "Everything"
+msgstr ""
+
+#: ../src/edframe.cpp:1266
 msgid "Export as..."
 msgstr "다른 이름으로 내보내기..."
 
-#: ../src/resources/properties.xrc:127
+#: ../src/welcomescreen.cpp:228
+#, fuzzy
+msgid "Extract from sources"
+msgstr "소스로부터 업데이트(&U)"
+
+#: ../src/resources/properties.xrc:143
 msgid "Extract text from source files in the following directories:"
 msgstr "다음 디렉터리의 소스 파일로부터 텍스트를 추출합니다:"
 
@@ -697,6 +727,11 @@ msgstr "다음 디렉터리의 소스 파일로부터 텍스트를 추출합니�
 #, c-format
 msgid "Failed command: %s"
 msgstr "오류 발생: %s"
+
+#: ../src/wordpress.cpp:419
+#, fuzzy
+msgid "Failed to extract WordPress information."
+msgstr "추출된 카탈로그를 불러오지 못했습니다."
 
 #: ../src/digger.cpp:114
 msgid "Failed to load extracted catalog."
@@ -706,20 +741,35 @@ msgstr "추출된 카탈로그를 불러오지 못했습니다."
 msgid "Failed to merge gettext catalogs."
 msgstr "gettext 카탈로그 병합에 실패했습니다."
 
+#: ../src/wordpress.cpp:69
+#, fuzzy, c-format
+msgid "Failed to read file '%s'."
+msgstr "오류 발생: %s"
+
+#: ../src/wordpress.cpp:133
+#, fuzzy, c-format
+msgid "Failed to read folder '%s'."
+msgstr "잘못된 헤더: '%s'"
+
+#: ../src/edframe.cpp:2611
+#, fuzzy, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "번역 기억장소 업데이트"
+
 # ko-po-check 참조
-#: ../src/edframe.cpp:393 ../src/edframe.cpp:1061
+#: ../src/edapp.cpp:550 ../src/edframe.cpp:444 ../src/edframe.cpp:1188
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "'%s' 파일이 존재하지 않습니다."
 
 # ko-po-check 참조
-#: ../src/edframe.cpp:386
+#: ../src/edframe.cpp:437
 #, c-format
 msgid "File '%s' is not a message catalog."
 msgstr "'%s' 파일은 메시지 카탈로그가 아닙니다."
 
 # ko-po-check 참조
-#: ../src/catalog.cpp:1268
+#: ../src/catalog.cpp:1312
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -728,9 +778,24 @@ msgstr ""
 "'%s' 파일이 읽기 전용이므로 저장할 수 없습니다.\n"
 "다른 이름으로 저장하십시오."
 
-#: ../src/transmemupd_wizard.cpp:59
-msgid "Files List"
-msgstr "파일 목록"
+#: ../src/prefsdlg.cpp:195 ../src/tm/tm_migrate.cpp:198
+msgid "Finalizing..."
+msgstr ""
+
+#: ../src/resources/menus.xrc:93
+#, fuzzy
+msgid "Find"
+msgstr "찾기..."
+
+#: ../src/resources/menus.xrc:99
+#, fuzzy
+msgid "Find Next"
+msgstr "끝내고 나가기(&D)"
+
+#: ../src/resources/menus.xrc:103
+#, fuzzy
+msgid "Find Previous"
+msgstr "< 이전"
 
 #: ../src/resources/find.xrc:78
 msgid "Find in automatic comments"
@@ -748,84 +813,105 @@ msgstr "원문에서 찾기"
 msgid "Find in translations"
 msgstr "번역문에서 찾기"
 
+#: ../src/resources/menus.xrc:85
+#, fuzzy
+msgid "Find next"
+msgstr "주석에서 찾기"
+
+#: ../src/resources/menus.xrc:89
+#, fuzzy
+msgid "Find previous"
+msgstr "< 이전"
+
 #: ../src/resources/find.xrc:4
 msgid "Find..."
 msgstr "찾기..."
 
-#: ../src/edframe.cpp:1941
+#: ../src/edframe.cpp:2284
 msgid "Fix the header"
 msgstr "헤더 수정"
 
-#: ../src/resources/prefs.xrc:181
+#: ../src/wordpress.cpp:292
+msgid "Folder looks like both a plugin and a theme."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:180
 msgid "Fonts"
 msgstr "글꼴"
 
-#: ../src/edframe.cpp:2719
+#: ../src/edframe.cpp:3144
 #, c-format
 msgid "Form %i"
 msgstr "%i번 양식"
 
-#: ../src/edframe.cpp:2721
-#, c-format
-msgid "Form %i (e.g. \"%u\")"
-msgstr "%i번 양식(예, \"%u\")"
+#: ../src/wordpress.cpp:294
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr ""
 
-#: ../src/manager.cpp:247 ../src/resources/toolbar.xrc:51
+#: ../src/manager.cpp:246 ../src/resources/toolbar.xrc:51
 msgid "Fuzzy"
 msgstr "모호함"
 
-#: ../src/export_html.cpp:179
+#: ../src/export_html.cpp:197
 msgid "Fuzzy translation"
 msgstr "모호한 번역"
 
-#: ../src/edframe.cpp:1043 ../src/edframe.cpp:1102
+#: ../src/edapp.cpp:524 ../src/edframe.cpp:1169 ../src/edframe.cpp:1229
+#: ../src/prefsdlg.cpp:168
 msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU gettext 카탈로그 (*.po)|*.po|모든 파일 (*.*)|*.*"
 
-#: ../src/edframe.cpp:1176 ../src/edframe.cpp:1327
+#: ../src/edframe.cpp:1617
 msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU gettext 양식 (*.pot)|*.pot|모든 파일 (*.*)|*.*"
 
-#: ../src/resources/prefs.xrc:621
-msgid "Generate TM database"
-msgstr "번역 기억장소 생성"
+#: ../src/edframe.cpp:1315
+#, fuzzy
+msgid ""
+"GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All "
+"files (*.*)|*.*"
+msgstr "GNU gettext 양식 (*.pot)|*.pot|모든 파일 (*.*)|*.*"
 
-#: ../src/resources/prefs.xrc:278
-msgid "Generate database"
-msgstr "데이터베이스 생성"
-
-#: ../src/edframe.cpp:2798
+#: ../src/edframe.cpp:3236
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "%i 책갈피로 이동\tCtrl+%i"
 
-#: ../src/edframe.cpp:2792
+#: ../src/edframe.cpp:3230
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+Alt+%i"
 msgstr "%i 책갈피로 이동\tCtrl+Alt+%i"
 
-#: ../src/edframe.cpp:2795
+#: ../src/edframe.cpp:3233
 #, c-format
 msgid "Go to bookmark %i\tCtrl+%i"
 msgstr "%i 책갈피로 이동\tCtrl+%i"
 
-#: ../src/edframe.cpp:1140
+#: ../src/edframe.cpp:1268
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML 파일 (*.html)|*.html"
 
-#: ../src/attentionbar.cpp:78
+#: ../src/attentionbar.cpp:79
 msgid "Hide this notification message"
 msgstr "이 알림 메시지 숨김"
 
-#: ../src/resources/prefs.xrc:18
+#: ../src/edlistctrl.cpp:333
+msgid "ID"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:17
 msgid "Identity"
 msgstr "신상 정보"
 
-#: ../src/resources/prefs.xrc:121
+#: ../src/resources/prefs.xrc:120
 msgid "If checked, the comment window will be editable."
 msgstr "주석 창에서 편집이 가능하도록 합니다."
 
-#: ../src/edframe.cpp:2229
+#: ../src/prefsdlg.cpp:103
+msgid "If enabled, Poedit will try to fill in missing translations."
+msgstr ""
+
+#: ../src/edframe.cpp:2694
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
@@ -834,95 +920,116 @@ msgstr ""
 "계속 제거를 진행하면 삭제한 것으로 표시한 모든 번역을 완전히 제거합니다. 다음"
 "에 다시 추가하면 다시 번역해야 합니다."
 
-#: ../src/resources/prefs.xrc:472
+#: ../src/prefsdlg.cpp:179
+#, fuzzy
+msgid "Importing translations..."
+msgstr "자동 번역:"
+
+#: ../src/tm/tm_migrate.cpp:141
+#, fuzzy, c-format
+msgid "Importing translations: %d"
+msgstr "자동 번역:"
+
+#: ../src/resources/prefs.xrc:76
+msgid "Include beta versions"
+msgstr ""
+
+#: ../src/edframe.cpp:165 ../src/edframe.cpp:2172
+msgid "Invalid file"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:351
 msgid "Invocation:"
 msgstr "실행:"
 
-#: ../src/edframe.cpp:2234 ../src/transmem.cpp:1202
+#: ../src/statistics.cpp:161
+msgid "Items"
+msgstr ""
+
+#: ../src/edframe.cpp:2698
 msgid "Keep"
 msgstr "그대로 유지"
 
-#: ../src/propertiesdlg.cpp:58
-msgid "Keywords"
-msgstr "키워드"
+#: ../src/languagectrl.cpp:42
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr ""
 
-#: ../src/chooselang.cpp:159
+#: ../src/edframe.cpp:2218
+msgid "Language of the translation isn't set."
+msgstr ""
+
+#: ../src/languagectrl.cpp:81
+#, fuzzy
+msgid "Language of the translation:"
+msgstr "삭제한 번역을 완전히 제거"
+
+#: ../src/chooselang.cpp:68
 msgid "Language selection"
 msgstr "언어 선택"
 
-#: ../src/export_html.cpp:108 ../src/resources/prefs.xrc:440
-#: ../src/resources/prefs.xrc:444 ../src/resources/properties.xrc:62
+#: ../src/export_html.cpp:115 ../src/resources/prefs.xrc:319
+#: ../src/resources/prefs.xrc:323 ../src/resources/properties.xrc:33
 msgid "Language:"
 msgstr "언어:"
 
-#: ../src/manager.cpp:249
+#: ../src/manager.cpp:248
 msgid "Last modified"
 msgstr "최종 편집"
 
-#: ../src/resources/properties.xrc:111
+#: ../src/prefsdlg.cpp:97
+#, fuzzy
+msgid "Learn From Files..."
+msgstr "%s 파일 분석중..."
+
+#: ../src/resources/properties.xrc:75
 msgid "Learn about plural forms"
 msgstr "서수 형식에 대해 알아보기"
 
-#: ../src/edframe.cpp:889
+#: ../src/edframe.cpp:1039
 msgid "Learn more"
 msgstr "더 알아보기"
 
-#: ../src/edlistctrl.cpp:328
-msgid "Line"
-msgstr "줄"
-
-#: ../src/catalog.cpp:145
+#: ../src/catalog.cpp:144
 #, c-format
 msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr ""
 "%2$s 파일의 %1$u 행이 잘못되었습니다. (정상적인 %3$s 데이터가 아닙니다.)"
 
-#: ../src/resources/prefs.xrc:149
+#: ../src/resources/prefs.xrc:148
 msgid "Line endings format:"
 msgstr "개행 서식:"
 
-#: ../src/resources/prefs.xrc:456
+#: ../src/resources/prefs.xrc:335
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "세미콜론(;)으로 분리한 확장자 목록(예 *.cpp;*.h):"
 
-#: ../src/catalog.cpp:220
+#: ../src/catalog.cpp:219
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "잘못된 헤더: '%s'"
 
-#: ../src/resources/prefs.xrc:300
-msgid "Max. # of missing words:"
-msgstr "누락된 최대 단어 수:"
-
-#: ../src/resources/prefs.xrc:322
-msgid "Max. difference in sentence length:"
-msgstr "문장 길이 최대 차이:"
-
-#: ../src/catalog.cpp:1543
+#: ../src/catalog.cpp:1606
 msgid "Merging differences..."
 msgstr "차이점 병합..."
 
-#: ../src/editlbox/editlbox.cpp:173
-msgid "Move down"
-msgstr "아래로 이동"
+#: ../src/propertiesdlg.cpp:75
+#, fuzzy
+msgid "Name of the project the translation is for"
+msgstr "번역에 문제가 없습니다."
 
-#: ../src/editlbox/editlbox.cpp:172
-msgid "Move up"
-msgstr "위로 이동"
-
-#: ../src/prefsdlg.cpp:55
-msgid "My Languages"
-msgstr "내 언어"
-
-#: ../src/resources/menus.xrc:152
+#: ../src/resources/menus.xrc:187
 msgid "Ne&xt Unfinished"
 msgstr "다음 미완료(&X)"
 
-#: ../src/resources/menus.xrc:151
+#: ../src/resources/menus.xrc:186
 msgid "Ne&xt unfinished"
 msgstr "다음 미완료(&X)"
 
-#: ../src/resources/prefs.xrc:113
+#: ../src/statistics.cpp:172
+msgid "Needs review (fuzzy)"
+msgstr ""
+
+#: ../src/resources/prefs.xrc:112
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -931,94 +1038,120 @@ msgstr ""
 "문자열 목록에 포커스가 가지 않게 합니다. 이 상태에서는 키보드 상의 Ctrl-화살"
 "표를 눌러 이동한 후, 문자열을 편집해야 합니다. 탭키를 누를 필요는 없습니다."
 
-#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:378
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:257
 msgid "New"
 msgstr "새 파일"
 
-#: ../src/resources/menus.xrc:18
-msgid "New Catalog from POT File..."
-msgstr "POT 파일로부터 새로운 카탈로그 작성..."
+#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:266
+#, fuzzy
+msgid "New From &POT/PO File..."
+msgstr "POT 파일로부터 업데이트(&P)..."
 
-#: ../src/resources/menus.xrc:17
-msgid "New catalog from POT file..."
-msgstr "POT 파일로부터 새로운 카탈로그 작성..."
+#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:270
+#, fuzzy
+msgid "New WordPress Translation..."
+msgstr "번역 지우기"
 
-#: ../src/editlbox/editlbox.cpp:170
-msgid "New item"
-msgstr "새 항목"
+#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:269
+#, fuzzy
+msgid "New WordPress translation..."
+msgstr "번역 지우기"
 
-#: ../src/resources/summary.xrc:30
+#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:265
+#, fuzzy
+msgid "New from &POT/PO file..."
+msgstr "POT 파일로부터 업데이트(&P)..."
+
+#: ../src/resources/summary.xrc:29
 msgid "New strings"
 msgstr "새로운 문자열"
 
-#: ../src/resources/find.xrc:102
-msgid "Next >"
-msgstr "다음 >"
-
-#: ../src/digger.cpp:201
+#: ../src/digger.cpp:186
 msgid "No files found in: "
 msgstr "파일이 없습니다. :"
 
-#: ../src/edframe.cpp:1391
+#: ../src/edframe.cpp:1688
 msgid "No problems with the translation found."
 msgstr "번역에 문제가 없습니다."
 
-#: ../src/edframe.cpp:1433
+#: ../src/edframe.cpp:1731
 msgid "No references to this string found."
 msgstr "이 문자열의 참조가 없습니다."
 
-#: ../src/export_html.cpp:151
+#: ../src/edapp.cpp:712
+msgid "No, thanks"
+msgstr ""
+
+#: ../src/statistics.cpp:176
+#, fuzzy
+msgid "Not translated"
+msgstr "%i개 번역하지 않음"
+
+#: ../src/export_html.cpp:158
 msgid "Notes"
 msgstr "노트"
 
-#: ../src/edframe.cpp:550
+#: ../src/edframe.cpp:694 ../src/export_html.cpp:204
 msgid "Notes for translators:"
 msgstr "번역 참고:"
 
 #: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
-#: ../src/resources/prefs.xrc:416 ../src/resources/prefs.xrc:558
-#: ../src/resources/properties.xrc:190 ../src/resources/summary.xrc:71
+#: ../src/resources/prefs.xrc:295 ../src/resources/prefs.xrc:437
+#: ../src/resources/properties.xrc:206 ../src/resources/summary.xrc:70
 msgid "OK"
 msgstr "확인"
 
-#: ../src/resources/summary.xrc:51
+#: ../src/resources/summary.xrc:50
 msgid "Obsolete strings"
 msgstr "제거된 문자열"
+
+#: ../src/edframe.cpp:3150
+msgid "One"
+msgstr ""
 
 #: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
 msgid "Open"
 msgstr "열기"
 
-#: ../src/edframe.cpp:1041 ../src/resources/toolbar.xrc:16
-#: ../src/resources/toolbar.xrc:21
+#: ../src/fileviewer.cpp:73
+#, fuzzy
+msgid "Open In Editor"
+msgstr "편집기"
+
+#: ../src/welcomescreen.cpp:165
+msgid "Open an existing PO file and edit the translation."
+msgstr ""
+
+#: ../src/edapp.cpp:521 ../src/edframe.cpp:1167
+#: ../src/resources/toolbar.xrc:16 ../src/resources/toolbar.xrc:21
 msgid "Open catalog"
 msgstr "카탈로그 열기"
 
-#: ../src/edframe.cpp:1174 ../src/edframe.cpp:1325
+#: ../src/edframe.cpp:1313 ../src/edframe.cpp:1615
 msgid "Open catalog template"
 msgstr "카탈로그 양식 열기"
 
-#: ../src/resources/prefs.xrc:104
-msgid "Open catalogs manager on Poedit startup"
-msgstr "Poedit 시작시 카탈로그 관리자 열기"
+#: ../src/edframe.cpp:3157
+msgid "Other"
+msgstr ""
 
-#: ../src/resources/menus.xrc:147
+#: ../src/resources/menus.xrc:182
 msgid "P&revious Unfinished"
 msgstr "이전 미완료(&R)"
 
-#: ../src/resources/menus.xrc:146
+#: ../src/resources/menus.xrc:181
 msgid "P&revious unfinished"
 msgstr "이전 미완료(&R)"
 
-#: ../src/resources/prefs.xrc:476
+#: ../src/resources/prefs.xrc:355
 msgid "Parser command:"
 msgstr "분석기 명령:"
 
-#: ../src/resources/prefs.xrc:435
+#: ../src/resources/prefs.xrc:314
 msgid "Parser setup"
 msgstr "분석기 설정"
 
-#: ../src/resources/prefs.xrc:353
+#: ../src/resources/prefs.xrc:232
 msgid "Parsers"
 msgstr "분석기"
 
@@ -1027,75 +1160,79 @@ msgstr "분석기"
 msgid "Parsing %s files..."
 msgstr "%s 파일 분석중..."
 
-#: ../src/propertiesdlg.cpp:60
+#: ../src/propertiesdlg.cpp:71
 msgid "Paths"
 msgstr "경로"
 
-#: ../src/resources/prefs.xrc:12
+#: ../src/resources/prefs.xrc:11
 msgid "Personalize"
 msgstr "개인화"
 
-#: ../src/resources/prefs.xrc:271
-msgid "Pick language from the list of known languages"
-msgstr "다음 언어 중 하나를 선택하십시오"
-
-#: ../src/resources/tm_update.xrc:21
-msgid "Please add directories where locale files are stored on your system:"
-msgstr "로캘 파일을 저장한 디렉터리를 추가하십시오:"
-
-#: ../src/edframe.cpp:1441
+#: ../src/edframe.cpp:1739
 msgid "Please choose the reference you want to show:"
 msgstr "보기 원하는 참조를 선택하십시오:"
 
-#: ../src/prefsdlg.cpp:334
-msgid "Please select language ISO code:"
-msgstr "언어의 ISO 코드를 선택하십시오:"
-
-#: ../src/edframe.cpp:925
-msgid "Please select language code:"
-msgstr "언어 코드를 선택하십시오:"
-
-#: ../src/transmem.cpp:1196
-#, c-format
-msgid ""
-"Please verify that all files were moved to the new location or do it "
-"manually if they weren't.\n"
-"\n"
-"Old location: %s\n"
-"New location: %s"
+#: ../src/wordpress.cpp:450
+msgid "Please email this log to help@poedit.net. Thank you!"
 msgstr ""
-"모든 파일이 새 위치로 옮겨졌는지 확인해보시고, 그렇지 않다면 다음의 지시사항"
-"을 따르십시오.\n"
-"\n"
-"이전 경로: %s\n"
-"새 경로: %s"
 
-#: ../src/resources/properties.xrc:98
+#: ../src/propertiesdlg.cpp:260
+msgid "Please save the file first. This section cannot be edited until then."
+msgstr ""
+
+#: ../src/resources/properties.xrc:45
 msgid "Plural Forms:"
 msgstr "문장내 복수 표시 형식:"
 
-#: ../src/edframe.cpp:564
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#: ../src/edframe.cpp:2322
+#, c-format
+msgid "Plural forms expression used by the catalog is unusual for %s."
+msgstr ""
+
+#: ../src/edframe.cpp:673
 msgid "Plural:"
 msgstr "복수 문장:"
 
-#: ../src/edframe.cpp:410
+#: ../src/edframe.cpp:461
 msgid "Poedit"
 msgstr "Poedit"
 
-#: ../src/manager.cpp:69
+#: ../src/manager.cpp:68
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - 카탈로그 관리자"
 
-#: ../src/digger.cpp:202
+#: ../src/tm/tm_migrate.cpp:157 ../src/tm/tm_migrate.cpp:233
+#: ../src/tm/tm_migrate.cpp:262
+#, fuzzy
+msgid "Poedit Update"
+msgstr "Poedit"
+
+#: ../src/wordpress.cpp:429
+#, c-format
+msgid ""
+"Poedit couldn’t understand the content of the folder you selected. This may "
+"be a problem with the plugin/theme or it may be Poedit being silly. The "
+"error is:\n"
+"\n"
+" • %s\n"
+"\n"
+"Please email help@poedit.net and we’ll sort it out."
+msgstr ""
+
+#: ../src/digger.cpp:200
 msgid "Poedit did not find any files in scanned directories."
 msgstr "검사한 디렉터리에 파일이 없습니다."
 
-#: ../src/edframe.cpp:2443
+#: ../src/edapp.cpp:587
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit는 사용하기 쉬운 번역 편집기입니다."
 
-#: ../src/transmem.cpp:1191
-msgid "Poedit translation memory error"
+#: ../src/tm/tm_migrate.cpp:232
+#, fuzzy
+msgid "Poedit needs to convert your translation memory to a new format."
 msgstr "Poedit 번역 기억장소 오류"
 
 # ko-po-check
@@ -1103,15 +1240,19 @@ msgstr "Poedit 번역 기억장소 오류"
 msgid "Preferences"
 msgstr "기본 설정"
 
-#: ../src/resources/prefs.xrc:603
+#: ../src/tm/tm_migrate.cpp:157
+msgid "Preparing migration..."
+msgstr ""
+
+#: ../src/tm/tm_migrate.cpp:237
 msgid "Proceed"
 msgstr "진행"
 
-#: ../src/export_html.cpp:101
+#: ../src/export_html.cpp:108
 msgid "Project info"
 msgstr "프로젝트 정보"
 
-#: ../src/export_html.cpp:105 ../src/resources/properties.xrc:19
+#: ../src/export_html.cpp:112 ../src/resources/properties.xrc:18
 msgid "Project name and version:"
 msgstr "프로젝트 이름과 버전:"
 
@@ -1119,39 +1260,36 @@ msgstr "프로젝트 이름과 버전:"
 msgid "Project name:"
 msgstr "프로젝트 이름:"
 
-#: ../src/edframe.cpp:2234 ../src/transmem.cpp:1202
+#: ../src/edframe.cpp:2698
 msgid "Purge"
 msgstr "퍼지"
 
-#: ../src/edframe.cpp:2225
+#: ../src/edframe.cpp:2690
 msgid "Purge deleted translations"
 msgstr "삭제한 번역을 완전히 제거"
 
-#: ../src/resources/manager.xrc:137 ../src/resources/menus.xrc:52
+#: ../src/tm/tm_migrate.cpp:237 ../src/resources/manager.xrc:137
+#: ../src/resources/menus.xrc:60 ../src/resources/menus.xrc:285
 msgid "Quit"
 msgstr "끝내기"
 
-#: ../src/edframe.cpp:1441
+#: ../src/edframe.cpp:1739
 msgid "References"
 msgstr "참조"
 
-#: ../src/edframe.cpp:2401 ../src/edframe.cpp:2405
+#: ../src/edframe.cpp:2862 ../src/edframe.cpp:2866
 msgid "References:"
 msgstr "참조:"
 
-#: ../src/resources/prefs.xrc:279
-msgid "Regenerate translation memory from catalogs in paths listed above."
-msgstr "위에 나열한 경로의 카탈로그로 번역 기억장소를 다시 만듭니다."
-
-#: ../src/edframe.cpp:1922
+#: ../src/edframe.cpp:2265
 msgid "Required header Plural-Forms is missing."
 msgstr "필요한 Plural-Forms 헤더가 빠졌습니다."
 
-#: ../src/resources/tm_update.xrc:42
-msgid "Reset to defaults"
-msgstr "기본값으로 초기화"
+#: ../src/edframe.cpp:2326
+msgid "Review"
+msgstr ""
 
-#: ../src/edframe.cpp:995 ../src/resources/toolbar.xrc:25
+#: ../src/edframe.cpp:1126 ../src/resources/toolbar.xrc:25
 #: ../src/resources/toolbar.xrc:30
 msgid "Save"
 msgstr "저장"
@@ -1164,7 +1302,7 @@ msgstr "다른 이름으로 저장(&A)..."
 msgid "Save &as..."
 msgstr "다른 이름으로 저장(&A)..."
 
-#: ../src/edframe.cpp:1101
+#: ../src/edframe.cpp:1228
 msgid "Save as..."
 msgstr "다른 이름으로 저장..."
 
@@ -1172,128 +1310,144 @@ msgstr "다른 이름으로 저장..."
 msgid "Save catalog"
 msgstr "카탈로그 저장"
 
-#: ../src/edframe.cpp:988
+#: ../src/edframe.cpp:1120
 msgid "Save changes"
 msgstr "바뀐 내용 저장"
-
-#: ../src/transmemupd.cpp:149
-msgid "Scanning file: "
-msgstr "검사중인 파일: "
 
 #: ../src/digger.cpp:77
 msgid "Scanning files..."
 msgstr "파일 검사중..."
 
-#: ../src/transmemupd_wizard.cpp:55
-msgid "Search Paths"
-msgstr "검색 경로"
-
-#: ../src/edframe.cpp:924
-msgid "Select catalog's language"
-msgstr "카탈로그의 언어 선택"
-
-#: ../src/manager.cpp:280 ../src/transmemupd_wizard.cpp:108
+#: ../src/manager.cpp:279
 msgid "Select directory"
 msgstr "디렉터리 선택"
 
-#: ../src/prefsdlg.cpp:333
-msgid "Select language"
-msgstr "언어 선택"
+#: ../src/edframe.cpp:1390
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr ""
 
-#: ../src/chooselang.cpp:158
+#: ../src/prefsdlg.cpp:165
+#, fuzzy
+msgid "Select translation files to import"
+msgstr "Poedit 번역 기억장소 오류"
+
+#: ../src/chooselang.cpp:67
 msgid "Select your prefered language"
 msgstr "선호하는 언어 선택"
 
-#: ../src/edframe.cpp:2797
+#: ../src/edframe.cpp:3235
 #, c-format
 msgid "Set Bookmark %i\tAlt+%i"
 msgstr "%i 책갈피 삽입\tAlt+%i"
 
-#: ../src/edframe.cpp:2791
+#: ../src/edframe.cpp:3229
 #, c-format
 msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "%i 책갈피 삽입\tCtrl+%i"
 
-#: ../src/edframe.cpp:2794
+#: ../src/edframe.cpp:3232
 #, c-format
 msgid "Set bookmark %i\tAlt+%i"
 msgstr "%i 책갈피 삽입\tAlt+%i"
 
-#: ../src/edframe.cpp:1893
+#: ../src/edframe.cpp:2236
 msgid "Set email"
 msgstr "이메일 설정"
 
-#: ../src/resources/prefs.xrc:97
+#: ../src/edframe.cpp:2220
+#, fuzzy
+msgid "Set language"
+msgstr "언어 선택"
+
+#: ../src/resources/prefs.xrc:103
 msgid "Show summary after catalog update"
 msgstr "카탈로그 업데이트 후 요약 정보 보기"
 
-#: ../src/edframe.cpp:562
+#: ../src/edframe.cpp:666
 msgid "Singular:"
 msgstr "단수:"
 
-#: ../src/resources/menus.xrc:182
+#: ../src/tm/tm_migrate.cpp:265
+msgid ""
+"Something went wrong and your translation memory data couldn't be migrated. "
+"Please email help@poedit.net and we’ll get it fixed."
+msgstr ""
+
+#: ../src/resources/menus.xrc:217
 msgid "Sort by &File Order"
 msgstr "파일순 정렬(&F)"
 
-#: ../src/resources/menus.xrc:187
+#: ../src/resources/menus.xrc:222
 msgid "Sort by &Source"
 msgstr "소스순 정렬(&S)"
 
-#: ../src/resources/menus.xrc:192
+#: ../src/resources/menus.xrc:227
 msgid "Sort by &Translation"
 msgstr "번역순 정렬(&T)"
 
-#: ../src/resources/menus.xrc:181
+#: ../src/resources/menus.xrc:216
 msgid "Sort by &file order"
 msgstr "파일순 정렬(&F)"
 
-#: ../src/resources/menus.xrc:186
+#: ../src/resources/menus.xrc:221
 msgid "Sort by &source"
 msgstr "소스순 정렬(&S)"
 
-#: ../src/resources/menus.xrc:191
+#: ../src/resources/menus.xrc:226
 msgid "Sort by &translation"
 msgstr "번역순 정렬(&T)"
 
-#: ../src/export_html.cpp:145
+#: ../src/export_html.cpp:152
 msgid "Source"
 msgstr "소스"
 
-#: ../src/resources/prefs.xrc:533 ../src/resources/properties.xrc:86
+#: ../src/statistics.cpp:188
+#, fuzzy
+msgid "Source Text"
+msgstr "소스 텍스트"
+
+#: ../src/resources/prefs.xrc:412 ../src/resources/properties.xrc:123
 msgid "Source code charset:"
 msgstr "소스 코드 문자코드:"
 
-#: ../src/resources/prefs.xrc:359
+# ko-po-check 참조
+#: ../src/catalog.cpp:1589
+#, fuzzy, c-format
+msgid "Source code directory '%s' doesn't exist."
+msgstr "'%s' 파일이 존재하지 않습니다."
+
+#: ../src/resources/prefs.xrc:238
 msgid "Source code parsers:"
 msgstr "소스 코드 분석기:"
 
-#: ../src/fileviewer.cpp:46
+#: ../src/fileviewer.cpp:48
 msgid "Source file"
 msgstr "소스 파일"
 
-#: ../src/fileviewer.cpp:61
+#: ../src/fileviewer.cpp:63
 msgid "Source file occurrence:"
 msgstr "소스 파일 발견 횟수:"
 
-#: ../src/edlistctrl.cpp:325
+#: ../src/edlistctrl.cpp:330
 msgid "Source text"
 msgstr "소스 텍스트"
 
-#: ../src/edframe.cpp:536
+#: ../src/edframe.cpp:659
 msgid "Source text:"
 msgstr "소스 텍스트:"
 
-#: ../src/resources/properties.xrc:179
+#: ../src/resources/properties.xrc:195
 msgid "Sources keywords"
 msgstr "소스 키워드"
 
-#: ../src/resources/properties.xrc:158
+#: ../src/resources/properties.xrc:174
 msgid "Sources paths"
 msgstr "소스 경로"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages).
-#: ../src/edframe.cpp:885
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#: ../src/edframe.cpp:1035
 #, c-format
 msgid "Spellchecker dictionary for %s isn't available, you need to install it."
 msgstr "%s에 대한 맞춤법 검사 사전을 사용할 수 없습니다. 설치해야 합니다."
@@ -1302,56 +1456,103 @@ msgstr "%s에 대한 맞춤법 검사 사전을 사용할 수 없습니다. 설�
 msgid "Start from the first item"
 msgstr "처음부터 찾기"
 
+#: ../src/statistics.cpp:145
+msgid "Statistics"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:156
+#, fuzzy
+msgid "Stored translations:"
+msgstr "번역순 정렬(&T)"
+
 #: ../src/resources/find.xrc:21
 msgid "String to find:"
 msgstr "찾을 문자열:"
 
-#: ../src/edframe.cpp:1927
+#: ../src/statistics.cpp:194
+msgid "Strings in source language"
+msgstr ""
+
+#: ../src/edframe.cpp:2270
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Plural-Forms 헤더(\"%s\")에서 문법 오류."
 
-#: ../src/export_html.cpp:115 ../src/resources/properties.xrc:48
+#: ../src/welcomescreen.cpp:171
+msgid ""
+"Take an existing PO file or POT template and create a new translation from "
+"it."
+msgstr ""
+
+#: ../src/welcomescreen.cpp:218
+msgid "Take translatable strings from an existing POT template."
+msgstr ""
+
+#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:97
 msgid "Team's email address:"
 msgstr "팀 이메일:"
 
-#: ../src/export_html.cpp:111 ../src/resources/properties.xrc:34
+#: ../src/export_html.cpp:118 ../src/resources/properties.xrc:83
 msgid "Team:"
 msgstr "팀:"
 
-#: ../src/catalog.cpp:1353
+#: ../src/wordpress.cpp:231
 #, c-format
+msgid "The \"%s\" plugin isn't localization-ready."
+msgstr ""
+
+#: ../src/wordpress.cpp:175
+#, c-format
+msgid "The \"%s\" theme isn't localization-ready."
+msgstr ""
+
+#: ../src/catalog.cpp:1499
+#, fuzzy, c-format
 msgid ""
-"The catalog couldn't be saved in '%s' charset as\n"
-"specified in catalog settings. It was saved in UTF-8 instead\n"
-"and the setting was modified accordingly."
+"The catalog couldn't be saved in '%s' charset as specified in catalog "
+"settings.\n"
+"\n"
+"It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
 "본 카탈로그는 카탈로그 설정에 있는 '%s' 문자코드로는\n"
 "저장할 수 없습니다. 대신 UTF-8로 저장되었으며\n"
 "설정 값도 그에 따라 수정했습니다."
 
-#: ../src/edframe.cpp:1380
+#: ../src/edframe.cpp:164 ../src/edframe.cpp:2171
+msgid "The file cannot be opened."
+msgstr ""
+
+#: ../src/edframe.cpp:169 ../src/edframe.cpp:2176
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr ""
+
+#: ../src/edframe.cpp:1677
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr "파일을 안전하게 저장했지만 MO 형식으로 컴파일하고 사용할 수 없습니다."
 
-#: ../src/edframe.cpp:1396
+#: ../src/welcomescreen.cpp:210
+msgid "The simplest way to fill this catalog is to update it from a POT:"
+msgstr ""
+
+#: ../src/edframe.cpp:1692
 msgid "The translation is ready for use."
 msgstr "번역을 사용할 준비가 되었습니다."
 
-#: ../src/catalog.cpp:1311
+#: ../src/welcomescreen.cpp:196
+msgid "There are no translations. That’s unusual."
+msgstr ""
+
+#: ../src/catalog.cpp:1375
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr ""
 "파일을 정상적으로 포매팅하는데 문제가 있습니다(하지만 문제 없이 저장했습니"
 "다)."
 
-#: ../src/transmem.cpp:1193
-msgid "There was a problem moving your translation memory."
-msgstr "번역 기억장소에 이동하는데 문제가 있습니다."
-
-#: ../src/catalog.cpp:1030
+#: ../src/catalog.cpp:1034
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -1359,7 +1560,7 @@ msgstr ""
 "카탈로그를 읽어들일 때 오류가 발생하였습니다. 그 결과 일부는 누락되거나 깨질 "
 "수 있습니다."
 
-#: ../src/resources/summary.xrc:38
+#: ../src/resources/summary.xrc:37
 msgid ""
 "These strings are no longer in the sources.\n"
 "Poedit will remove them from the catalog now."
@@ -1367,7 +1568,7 @@ msgstr ""
 "이 문자열은 더 이상 소스에 없습니다.\n"
 "따라서, 카탈로그에서 제거합니다."
 
-#: ../src/resources/summary.xrc:17
+#: ../src/resources/summary.xrc:16
 msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "Poedit will add them to the catalog now."
@@ -1375,7 +1576,7 @@ msgstr ""
 "이 문자열은 소스에 있지만, 카탈로그에 없습니다.\n"
 "Poedit가 아래 문자열을 카탈로그에 추가합니다."
 
-#: ../src/edframe.cpp:1907
+#: ../src/edframe.cpp:2250
 msgid ""
 "This catalog has entries with plural forms, but doesn't have Plural-Forms "
 "header configured."
@@ -1383,7 +1584,7 @@ msgstr ""
 "이 카탈로그는 서수 형식을 지닌 항목을 가지고 있지만, Plural-Forms 헤더를 설정"
 "하지 않았습니다."
 
-#: ../src/resources/prefs.xrc:488
+#: ../src/resources/prefs.xrc:367
 msgid ""
 "This is the command used to launch the parser.\n"
 "%o expands to the name of output file, %K to list\n"
@@ -1395,7 +1596,13 @@ msgstr ""
 "%F는 입력 파일 목록,\n"
 "%C는 문자셋 플래그입니다(아래 참조)."
 
-#: ../src/resources/prefs.xrc:545
+#: ../src/tm/tm_migrate.cpp:236
+msgid ""
+"This must be done before Poedit can start. It may take a few minutes if you "
+"have lots of translations stored, but should normally be much faster."
+msgstr ""
+
+#: ../src/resources/prefs.xrc:424
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1404,7 +1611,7 @@ msgstr ""
 "위 항목은 소스 문자코드가 지정되면 명령줄에 붙게 되며\n"
 "%c를 사용하여 문자코드를 치환할 수 있습니다."
 
-#: ../src/resources/prefs.xrc:526
+#: ../src/resources/prefs.xrc:405
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1413,7 +1620,7 @@ msgstr ""
 "위 항목은 소스의 각 파일마다 명령줄에 붙게 되며\n"
 "%f를 사용하여 파일 이름을 치환할 수 있습니다."
 
-#: ../src/resources/prefs.xrc:507
+#: ../src/resources/prefs.xrc:386
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
@@ -1425,73 +1632,115 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "선택한 문자열이 모호한 번역상태일 때, 전환됩니다."
 
-#: ../src/manager.cpp:245
+#: ../src/manager.cpp:244
 msgid "Total"
 msgstr "전체"
 
-#: ../src/edlistctrl.cpp:326 ../src/export_html.cpp:148
+#: ../src/welcomescreen.cpp:201
+msgid ""
+"Translatable entries aren't added manually in the Gettext system, but are "
+"automatically extracted\n"
+"from source code. This way, they stay up to date and accurate.\n"
+"Translators typically use PO template files (POTs) prepared for them by the "
+"developer."
+msgstr ""
+
+#: ../src/resources/menus.xrc:138
+#, fuzzy
+msgid "Translate Using &TM"
+msgstr "번역 기억장소를 사용하여 자동 번역(&A)"
+
+#: ../src/welcomescreen.cpp:176
+msgid "Translate WordPress theme or plugin"
+msgstr ""
+
+#: ../src/resources/menus.xrc:137
+#, fuzzy
+msgid "Translate using &TM"
+msgstr "번역"
+
+#: ../src/statistics.cpp:168
+#, fuzzy
+msgid "Translated"
+msgstr "번역"
+
+#: ../src/edframe.cpp:2765
+#, fuzzy, c-format
+msgid "Translated %u strings"
+msgstr "%i %% 번역함, %i개의 문자열"
+
+#: ../src/edframe.cpp:2747
+msgid "Translating using TM..."
+msgstr ""
+
+#: ../src/edlistctrl.cpp:331 ../src/export_html.cpp:155
+#: ../src/statistics.cpp:158
 msgid "Translation"
 msgstr "번역"
 
-#: ../src/resources/menus.xrc:79
+#: ../src/resources/menus.xrc:110
 msgid "Translation Is &Fuzzy"
 msgstr "모호한 번역(&F)"
 
-#: ../src/resources/prefs.xrc:245
+#: ../src/languagectrl.cpp:76
+#, fuzzy
+msgid "Translation Language"
+msgstr "번역"
+
+#: ../src/prefsdlg.cpp:178 ../src/prefsdlg.cpp:219
 msgid "Translation Memory"
 msgstr "번역 기억장소(TM)"
 
-#: ../src/transmemupd_wizard.cpp:140
-msgid "Translation files (*.po;*.mo)|*.po;*.mo"
-msgstr "번역 파일 (*.po;*.mo)|*.po;*.mo"
-
-#: ../src/transmemupd_wizard.cpp:138
-msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
-msgstr "번역 파일 (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
-
-#: ../src/resources/menus.xrc:78
+#: ../src/resources/menus.xrc:109
 msgid "Translation is &fuzzy"
 msgstr "모호한 번역(&F)"
 
-#: ../src/transmem.cpp:661
-#, c-format
-msgid "Translation memory database error: %s"
+#: ../src/tm/tm_migrate.cpp:261
+#, fuzzy
+msgid "Translation memory migration failed."
 msgstr "번역 기억장소 데이터베이스 오류: %s"
 
-#: ../src/resources/tm_update.xrc:68
-msgid ""
-"Translation memory will be built from the files listed below.\n"
-"You can add more files to the list now."
-msgstr ""
-"번역 기억장소(TM)를 다음 파일로 구성합니다.\n"
-"아래 목록에 파일을 추가할 수 있습니다."
-
-#: ../src/resources/properties.xrc:119
+#: ../src/resources/properties.xrc:135
 msgid "Translation properties"
 msgstr "번역 속성"
 
-#: ../src/edframe.cpp:544
+#: ../src/edlistctrl.cpp:387
+#, fuzzy, c-format
+msgid "Translation — %s"
+msgstr "번역"
+
+#: ../src/edframe.cpp:681
 msgid "Translation:"
 msgstr "번역:"
 
-#: ../src/propertiesdlg.cpp:73
+# ko-po-check 참조
+#: ../src/wordpress.cpp:310
+#, fuzzy, c-format
+msgid "Translations folder (%s) doesn't exist."
+msgstr "'%s' 파일이 존재하지 않습니다."
+
+#: ../src/statistics.cpp:180
+#, fuzzy
+msgid "Translations with errors"
+msgstr "번역 기억장소(TM)"
+
+#: ../src/edframe.cpp:3152
+msgid "Two"
+msgstr ""
+
+#: ../src/propertiesdlg.cpp:112
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8(추천)"
 
-#: ../src/resources/summary.xrc:79
+#: ../src/resources/summary.xrc:78
 msgid "Undo"
 msgstr "실행 취소"
 
-#: ../src/resources/prefs.xrc:157
+#: ../src/resources/prefs.xrc:156
 msgid "Unix (recommended)"
 msgstr "유닉스(추천)"
 
-#: ../src/chooselang.cpp:60
-#, c-format
-msgid "Unknown locale code '%s' in registry."
-msgstr "레지스트리에 알 수 없는 '%s' 로캘코드가 있습니다."
-
-#: ../src/manager.cpp:246
+#: ../src/manager.cpp:245
 msgid "Untrans"
 msgstr "미번역"
 
@@ -1511,44 +1760,50 @@ msgstr "프로젝트의 모든 카탈로그를 업데이트 합니다."
 msgid "Update catalog - synchronize it with sources"
 msgstr "카탈로그 업데이트 - 소스와 동기화합니다."
 
-#: ../src/resources/menus.xrc:103
+#: ../src/resources/menus.xrc:134
 msgid "Update from &POT File..."
 msgstr "POT 파일로부터 업데이트(&P)..."
 
-#: ../src/resources/menus.xrc:102
+#: ../src/resources/menus.xrc:133
 msgid "Update from &POT file..."
+msgstr "POT 파일로부터 업데이트(&P)..."
+
+#: ../src/welcomescreen.cpp:217
+#, fuzzy
+msgid "Update from POT"
 msgstr "POT 파일로부터 업데이트(&P)..."
 
 #: ../src/resources/summary.xrc:4
 msgid "Update summary"
 msgstr "업데이트 요약"
 
-#: ../src/resources/tm_update.xrc:4
-msgid "Update translation memory"
-msgstr "번역 기억장소 업데이트"
-
-#: ../src/edframe.cpp:1297 ../src/manager.cpp:435
+#: ../src/edframe.cpp:1585 ../src/manager.cpp:441
 msgid "Updating catalog"
 msgstr "카탈로그 업데이트 중"
 
-#: ../src/edframe.cpp:1311
+#: ../src/edframe.cpp:1601
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
 msgstr ""
 "카탈로그 업데이트에 실패했습니다. 자세히 보려면 \"자세히 >>\"를 누르십시오."
 
-#: ../src/transmemupd_wizard.cpp:194
-msgid "Updating translation memory"
-msgstr "번역 기억장소 업데이트 중"
+#: ../src/resources/properties.xrc:61
+msgid "Use custom expression"
+msgstr ""
 
-#: ../src/resources/prefs.xrc:213
+#: ../src/resources/prefs.xrc:206
 msgid "Use custom font for text fields"
 msgstr "본문 영역에 대한 사용자 글꼴"
 
-#: ../src/resources/prefs.xrc:187
+#: ../src/resources/prefs.xrc:186
 msgid "Use custom font for translations list"
 msgstr "번역 목록에 대한 사용자 글꼴"
 
-#: ../src/resources/properties.xrc:166
+#: ../src/resources/properties.xrc:52
+#, fuzzy
+msgid "Use default rules for this language"
+msgstr "(기본 언어 사용)"
+
+#: ../src/resources/properties.xrc:182
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
@@ -1556,24 +1811,40 @@ msgstr ""
 "다음 키워드(함수 이름)를 사용하여 소스파일에서\n"
 "번역할 문자열을 인식합니다:"
 
+#: ../src/prefsdlg.cpp:88
+#, fuzzy
+msgid "Use translation memory"
+msgstr "번역 기억장소 업데이트"
+
 #: ../src/resources/toolbar.xrc:38
 msgid "Validate"
 msgstr "검증하기"
 
-#: ../src/edframe.cpp:1372 ../src/edframe.cpp:1392
+#: ../src/edframe.cpp:1670 ../src/edframe.cpp:1689
 msgid "Validation results"
 msgstr "검증 결과"
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
-#: ../src/edframe.cpp:2428
+#: ../src/edapp.cpp:572 ../src/welcomescreen.cpp:155
 #, c-format
 msgid "Version %s"
 msgstr "버전 %s"
 
-#: ../src/resources/prefs.xrc:255
-msgid "What languages do you want to use the TM with?"
-msgstr "번역 기억장소에서 사용할 언어는 무엇입니까?"
+#: ../src/wordpress.cpp:438
+#, fuzzy
+msgid "View Log"
+msgstr "보기(&V)"
+
+#: ../src/wordpress.cpp:435
+#, fuzzy
+msgid "View log"
+msgstr "보기(&V)"
+
+#: ../src/welcomescreen.cpp:150
+#, fuzzy
+msgid "Welcome to Poedit"
+msgstr "Poedit 정보(&A)"
 
 #: ../src/resources/find.xrc:50
 msgid "Whole words only"
@@ -1581,20 +1852,38 @@ msgstr "단어 단위로 검색"
 
 # 주: 한국 MS가 과거 양지사와의 소송에 패소하여 윈도우즈 라는 표기를 사용하였으나 그 이전에 사용한 "윈도우"라는 명칭을 최근 다시 사용하기 시작하면서 "윈도우"로 사용합니다.
 # "윈도" "윈도우즈" 아니고 "윈도우"입니다. 참고.
-#: ../src/resources/prefs.xrc:158
+#: ../src/resources/prefs.xrc:157
 msgid "Windows"
 msgstr "윈도우"
 
-#: ../src/edframe.cpp:378
+#: ../src/wordpress.cpp:449
+msgid "WordPress Errors Log"
+msgstr ""
+
+#: ../src/wordpress.cpp:420
+msgid "WordPress error"
+msgstr ""
+
+#: ../src/statistics.cpp:162
+#, fuzzy
+msgid "Words"
+msgstr "키워드"
+
+#: ../src/welcomescreen.cpp:221
+msgid ""
+"You can also extract translatable strings directly from the source code:"
+msgstr ""
+
+#: ../src/edframe.cpp:429
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Poedit 창에는 둘 이상의 파일을 놓을 수 없습니다."
 
-#: ../src/chooselang.cpp:173
+#: ../src/chooselang.cpp:86
 msgid "You must restart Poedit for this change to take effect."
 msgstr "바뀐 내용을 반영하려면 Poedit를 다시 시작해야 합니다."
 
 # ko-po-check 참조
-#: ../src/edframe.cpp:1891
+#: ../src/edframe.cpp:2234
 msgid ""
 "You should set your email address in Preferences so that it can be used for "
 "Last-Translator header in GNU gettext files."
@@ -1602,15 +1891,15 @@ msgstr ""
 "기본 설정에서 이메일 주소를 설정하면 GNU gettext 파일의 Last-Translator 헤더"
 "에서 사용할 수 있습니다."
 
-#: ../src/edframe.cpp:992
+#: ../src/edframe.cpp:1123
 msgid "Your changes will be lost if you don't save them."
 msgstr "저장하지 않으면 바뀐 내용을 잃어버립니다."
 
-#: ../src/resources/prefs.xrc:44
+#: ../src/resources/prefs.xrc:43
 msgid "Your email address:"
 msgstr "이메일:"
 
-#: ../src/resources/prefs.xrc:22
+#: ../src/resources/prefs.xrc:21
 msgid ""
 "Your name and email set below are only used\n"
 "to set the Last-Translator header of GNU gettext files."
@@ -1618,10 +1907,189 @@ msgstr ""
 "아래의 이름과 주소는 GNU gettext 파일의 Last-Translator에만\n"
 "사용합니다."
 
-#: ../src/resources/prefs.xrc:30
+#: ../src/resources/prefs.xrc:29
 msgid "Your name:"
 msgstr "이름:"
 
-#: ../src/edapp.cpp:372
+#: ../src/edframe.cpp:3148
+msgid "Zero"
+msgstr ""
+
+#: ../src/edapp.cpp:411
 msgid "don't delete temporary files (for debugging)"
 msgstr "(디버깅을 위해) 임시 파일을 지우지 않음"
+
+#: ../src/propertiesdlg.cpp:76
+msgid "e.g. nplurals=2; plural=(n > 1);"
+msgstr ""
+
+#: ../src/edlistctrl.cpp:384
+msgid "unknown language"
+msgstr ""
+
+#~ msgid "&Automatically translate using TM"
+#~ msgstr "번역 기억장소를 사용하여 자동 번역(&A)"
+
+#~ msgid "&New catalog..."
+#~ msgstr "새 카탈로그(&N)..."
+
+#~ msgid "(none of these)"
+#~ msgstr "(이들 중에 없음)"
+
+#~ msgid "Add"
+#~ msgstr "추가"
+
+#~ msgid "Add files"
+#~ msgstr "파일 추가"
+
+# ko-po-check 참조
+#~ msgid "Add path to the list of directories where catalogs lie."
+#~ msgstr "카탈로그가 있는 디렉터리 목록에 경로를 추가합니다."
+
+#~ msgid "Automatic spellchecking"
+#~ msgstr "자동 구문확인"
+
+#~ msgid "Automatically translate when updating catalog"
+#~ msgstr "카탈로그 업데이트할 때, 자동 번역"
+
+#~ msgid "Automatically translated %u strings"
+#~ msgstr "%u개의 문자열을 자동으로 번역함"
+
+#~ msgid "Automatically translating..."
+#~ msgstr "자동 번역 중..."
+
+#~ msgid "Cannot create TM database directory!"
+#~ msgstr "번역 기억장소 데이터베이스 디렉터리를 만들 수 없습니다!"
+
+#~ msgid "Cannot extract catalogs from RPM file."
+#~ msgstr "RPM 파일로부터 카탈로그를 추출할 수 없습니다."
+
+#~ msgid "Choose"
+#~ msgstr "선택"
+
+#~ msgid "Configuration"
+#~ msgstr "설정"
+
+#~ msgid "Database"
+#~ msgstr "데이터베이스"
+
+# ko-po-check 참조
+#~ msgid "Delete item"
+#~ msgstr "항목 삭제"
+
+#~ msgid "Display &Line Numbers"
+#~ msgstr "줄 번호 표시(&L)"
+
+#~ msgid "E&xport..."
+#~ msgstr "내보내기(&X)..."
+
+# ko-po-check 참조
+#~ msgid "Edit item"
+#~ msgstr "항목 편집"
+
+#~ msgid "Files List"
+#~ msgstr "파일 목록"
+
+#~ msgid "Form %i (e.g. \"%u\")"
+#~ msgstr "%i번 양식(예, \"%u\")"
+
+#~ msgid "Generate TM database"
+#~ msgstr "번역 기억장소 생성"
+
+#~ msgid "Generate database"
+#~ msgstr "데이터베이스 생성"
+
+#~ msgid "Line"
+#~ msgstr "줄"
+
+#~ msgid "Max. # of missing words:"
+#~ msgstr "누락된 최대 단어 수:"
+
+#~ msgid "Max. difference in sentence length:"
+#~ msgstr "문장 길이 최대 차이:"
+
+#~ msgid "Move down"
+#~ msgstr "아래로 이동"
+
+#~ msgid "Move up"
+#~ msgstr "위로 이동"
+
+#~ msgid "My Languages"
+#~ msgstr "내 언어"
+
+#~ msgid "New Catalog from POT File..."
+#~ msgstr "POT 파일로부터 새로운 카탈로그 작성..."
+
+#~ msgid "New catalog from POT file..."
+#~ msgstr "POT 파일로부터 새로운 카탈로그 작성..."
+
+#~ msgid "New item"
+#~ msgstr "새 항목"
+
+#~ msgid "Open catalogs manager on Poedit startup"
+#~ msgstr "Poedit 시작시 카탈로그 관리자 열기"
+
+#~ msgid "Pick language from the list of known languages"
+#~ msgstr "다음 언어 중 하나를 선택하십시오"
+
+#~ msgid "Please add directories where locale files are stored on your system:"
+#~ msgstr "로캘 파일을 저장한 디렉터리를 추가하십시오:"
+
+#~ msgid "Please select language ISO code:"
+#~ msgstr "언어의 ISO 코드를 선택하십시오:"
+
+#~ msgid "Please select language code:"
+#~ msgstr "언어 코드를 선택하십시오:"
+
+#~ msgid ""
+#~ "Please verify that all files were moved to the new location or do it "
+#~ "manually if they weren't.\n"
+#~ "\n"
+#~ "Old location: %s\n"
+#~ "New location: %s"
+#~ msgstr ""
+#~ "모든 파일이 새 위치로 옮겨졌는지 확인해보시고, 그렇지 않다면 다음의 지시사"
+#~ "항을 따르십시오.\n"
+#~ "\n"
+#~ "이전 경로: %s\n"
+#~ "새 경로: %s"
+
+#~ msgid "Regenerate translation memory from catalogs in paths listed above."
+#~ msgstr "위에 나열한 경로의 카탈로그로 번역 기억장소를 다시 만듭니다."
+
+#~ msgid "Reset to defaults"
+#~ msgstr "기본값으로 초기화"
+
+#~ msgid "Scanning file: "
+#~ msgstr "검사중인 파일: "
+
+#~ msgid "Search Paths"
+#~ msgstr "검색 경로"
+
+#~ msgid "Select catalog's language"
+#~ msgstr "카탈로그의 언어 선택"
+
+#~ msgid "There was a problem moving your translation memory."
+#~ msgstr "번역 기억장소에 이동하는데 문제가 있습니다."
+
+#~ msgid "Translation files (*.po;*.mo)|*.po;*.mo"
+#~ msgstr "번역 파일 (*.po;*.mo)|*.po;*.mo"
+
+#~ msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
+#~ msgstr "번역 파일 (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
+
+#~ msgid ""
+#~ "Translation memory will be built from the files listed below.\n"
+#~ "You can add more files to the list now."
+#~ msgstr ""
+#~ "번역 기억장소(TM)를 다음 파일로 구성합니다.\n"
+#~ "아래 목록에 파일을 추가할 수 있습니다."
+
+#~ msgid "Unknown locale code '%s' in registry."
+#~ msgstr "레지스트리에 알 수 없는 '%s' 로캘코드가 있습니다."
+
+#~ msgid "Updating translation memory"
+#~ msgstr "번역 기억장소 업데이트 중"
+
+#~ msgid "What languages do you want to use the TM with?"
+#~ msgstr "번역 기억장소에서 사용할 언어는 무엇입니까?"
