@@ -54,7 +54,7 @@ class ActionButton : public wxButton
 {
 public:
     ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note)
-        : wxButton(parent, winid, "", wxDefaultPosition, wxSize(350, 50))
+        : wxButton(parent, winid, "", wxDefaultPosition, wxSize(450, 50))
     {
         NSButton *btn = (NSButton*)GetHandle();
 
