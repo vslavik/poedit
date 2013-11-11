@@ -1472,11 +1472,13 @@ void PoeditFrame::UpdateAfterPreferencesChange()
     g_focusToText = (bool)wxConfig::Get()->Read("focus_to_text",
                                                  (long)false);
 
-    SetCustomFonts();
-    m_list->Refresh(); // if font changed
-
-    UpdateCommentWindowEditable();
-    InitSpellchecker();
+    if (m_list)
+    {
+        SetCustomFonts();
+        m_list->Refresh(); // if font changed
+        UpdateCommentWindowEditable();
+        InitSpellchecker();
+    }
 }
 
 /*static*/ void PoeditFrame::UpdateAllAfterPreferencesChange()
@@ -2784,6 +2786,8 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
 
 void PoeditFrame::SetCustomFonts()
 {
+    if (!m_list)
+        return;
     wxConfigBase *cfg = wxConfig::Get();
 
     static bool prevUseFontText = false;
