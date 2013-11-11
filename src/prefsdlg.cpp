@@ -247,7 +247,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XRCCTRL(*this, "compile_mo", wxCheckBox)->SetValue(
                 cfg->ReadBool("compile_mo", true));
     XRCCTRL(*this, "show_summary", wxCheckBox)->SetValue(
-                cfg->ReadBool("show_summary", true));
+                cfg->ReadBool("show_summary", false));
     XRCCTRL(*this, "focus_to_text", wxCheckBox)->SetValue(
                 cfg->ReadBool("focus_to_text", false));
     XRCCTRL(*this, "comment_window_editable", wxCheckBox)->SetValue(

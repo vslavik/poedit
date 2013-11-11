@@ -1732,7 +1732,7 @@ void Catalog::GetMergeSummary(Catalog *refcat,
 
 bool Catalog::ShowMergeSummary(Catalog *refcat)
 {
-    if (wxConfig::Get()->Read("show_summary", true))
+    if (wxConfig::Get()->ReadBool("show_summary", false))
     {
         wxArrayString snew, sobsolete;
         GetMergeSummary(refcat, snew, sobsolete);
