@@ -606,6 +606,7 @@ class Catalog
         int Validate();
 
         const wxString& GetFileName() const { return m_fileName; }
+        void SetFileName(const wxString& fn) { m_fileName = fn; }
 
     protected:
         /// Fix commonly encountered fixable problems with loaded files
