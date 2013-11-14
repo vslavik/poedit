@@ -93,6 +93,7 @@ class PoeditApp : public wxApp
         void OnQuit(wxCommandEvent& event);
         void OnPreferences(wxCommandEvent& event);
         void OnHelp(wxCommandEvent& event);
+        void OnGettextManual(wxCommandEvent& event);
 #ifdef __WXMSW__
         void OnWinsparkleCheck(wxCommandEvent& event);
 #endif

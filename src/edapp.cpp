@@ -473,6 +473,7 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (wxID_EXIT,                 PoeditApp::OnQuit)
    EVT_MENU           (wxID_PREFERENCES,          PoeditApp::OnPreferences)
    EVT_MENU           (wxID_HELP,                 PoeditApp::OnHelp)
+   EVT_MENU           (XRCID("menu_gettext_manual"), PoeditApp::OnGettextManual)
 #ifdef __WXMSW__
    EVT_MENU           (XRCID("menu_check_for_updates"), PoeditApp::OnWinsparkleCheck)
 #endif
@@ -625,6 +626,11 @@ void PoeditApp::OnPreferences(wxCommandEvent&)
 void PoeditApp::OnHelp(wxCommandEvent&)
 {
     OpenPoeditWeb("/trac/wiki/Doc");
+}
+
+void PoeditApp::OnGettextManual(wxCommandEvent&)
+{
+    wxLaunchDefaultBrowser("http://www.gnu.org/software/gettext/manual/");
 }
 
 
