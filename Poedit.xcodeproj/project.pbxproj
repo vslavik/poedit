@@ -921,6 +921,7 @@
 				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
 				OTHER_LDFLAGS = "-ldb_cxx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -942,6 +943,7 @@
 				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
 				OTHER_LDFLAGS = "-ldb_cxx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -961,6 +963,7 @@
 				INFOPLIST_FILE = "macosx/GettextTools-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
@@ -977,6 +980,7 @@
 				INFOPLIST_FILE = "macosx/GettextTools-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
@@ -1076,6 +1080,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				POEDIT_FEATURES = "USE_SPARKLE USE_SPELLCHECKING";
+				POEDIT_VERSION = 1.6beta1;
 				SDKROOT = macosx;
 				WX_DEFINES = "__WXOSX_COCOA__ __WX__ __WXMAC_XCODE__=1 wxUSE_UNICODE_UTF8=0 wxUSE_UNICODE_WCHAR=1";
 			};
