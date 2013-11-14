@@ -15,7 +15,7 @@
     <CodesignFlags>/n $(CodesignIdentity) /t $(CodesignTimestampServer) /d Poedit /du http://www.poedit.net</CodesignFlags>
     <CodesignCmd>signtool sign /a $(CodesignFlags)</CodesignCmd>
 
-    <InnoCC>..\packages\hexter.innosetup.commandline.5.5.3.1\tools\ISCC.exe</InnoCC>
+    <InnoCC>..\packages\Tools.InnoSetup.5.5.4\tools\ISCC.exe</InnoCC>
     <InnoFlags>/dCONFIG=$(Configuration) /dSIGNTOOL=default /Sdefault="$(CodesignCmd) $f"</InnoFlags>
   </PropertyGroup>
 
