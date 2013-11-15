@@ -748,7 +748,6 @@ wxWindow* PoeditFrame::CreateContentViewPO()
 
     ShowPluralFormUI(false);
     UpdateMenu();
-    UpdateDisplayCommentWin();
 
     switch ( m_list->sortOrder.by )
     {
@@ -774,6 +773,8 @@ wxWindow* PoeditFrame::CreateContentViewPO()
             m_setSashPositionsWhenMaximized = true;
 
         m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, (int)wxConfigBase::Get()->Read("splitter", -250L));
+
+        UpdateDisplayCommentWin();
     });
 
     return m_splitter;
