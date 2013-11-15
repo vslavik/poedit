@@ -48,10 +48,6 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int 
 {
     wxXmlResource::Get()->LoadDialog(this, parent, "properties");
 
-#ifdef __WXMAC__
-    XRCCTRL(*this, "plural_forms_help", wxControl)->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#endif
-
     m_team = XRCCTRL(*this, "team_name", wxTextCtrl);
     m_teamEmail = XRCCTRL(*this, "team_email", wxTextCtrl);
     m_project = XRCCTRL(*this, "prj_name", wxTextCtrl);
