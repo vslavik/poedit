@@ -90,6 +90,16 @@ FileViewer::FileViewer(wxWindow *parent,
     edit->Bind(wxEVT_BUTTON, &FileViewer::OnEditFile, this);
 
     ShowReference(m_references[startAt]);
+
+#ifdef __WXOSX__
+    wxAcceleratorEntry entries[] = {
+        { wxACCEL_CMD,  'W', wxID_CLOSE }
+    };
+    wxAcceleratorTable accel(WXSIZEOF(entries), entries);
+    SetAcceleratorTable(accel);
+
+    Bind(wxEVT_MENU, [=](wxCommandEvent&){ Destroy(); }, wxID_CLOSE);
+#endif
 }
 
 

@@ -24,6 +24,7 @@
  */
 
 #include <wx/xrc/xmlres.h>
+#include <wx/accel.h>
 #include <wx/config.h>
 #include <wx/button.h>
 #include <wx/textctrl.h>
@@ -96,6 +97,14 @@ FindFrame::FindFrame(wxWindow *parent,
         wxConfig::Get()->ReadBool("find_from_first", true));
     XRCCTRL(*this, "whole_words", wxCheckBox)->SetValue(
         wxConfig::Get()->ReadBool("whole_words", false));
+
+#ifdef __WXOSX__
+    wxAcceleratorEntry entries[] = {
+        { wxACCEL_CMD,  'W', wxID_CLOSE }
+    };
+    wxAcceleratorTable accel(WXSIZEOF(entries), entries);
+    SetAcceleratorTable(accel);
+#endif
 }
 
 
