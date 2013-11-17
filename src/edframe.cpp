@@ -521,8 +521,8 @@ PoeditFrame::PoeditFrame() :
         SetMenuBar(MenuBar);
         AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
 
-#if USE_SPARKLE
-        Sparkle_AddMenuItem(_("Check for Updates...").utf8_str());
+#ifdef __WXOSX__
+        wxGetApp().TweakOSXMenuBar(MenuBar);
 #endif
     }
     else

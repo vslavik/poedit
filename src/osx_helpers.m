@@ -57,11 +57,10 @@ void Sparkle_Initialize(bool checkForBeta)
 }
 
 
-void Sparkle_AddMenuItem(const char *title)
+void Sparkle_AddMenuItem(NSMenu *appmenu, const char *title)
 {
     @autoreleasepool {
         NSString *nstitle = [NSString stringWithUTF8String: title];
-        NSMenu *appmenu = [[[[NSApplication sharedApplication] mainMenu] itemAtIndex:0] submenu];
         NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:nstitle
                                                action:@selector(checkForUpdates:)
                                                keyEquivalent:@""];

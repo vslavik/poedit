@@ -36,7 +36,7 @@ extern "C" {
 #ifdef USE_SPARKLE
 // Sparkle helpers
 void Sparkle_Initialize(bool checkForBeta);
-void Sparkle_AddMenuItem(const char *title);
+void Sparkle_AddMenuItem(NSMenu *appmenu, const char *title);
 void Sparkle_Cleanup();
 #endif // USE_SPARKLE
 

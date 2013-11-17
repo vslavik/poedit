@@ -33,6 +33,7 @@
 #include <wx/docview.h>
 
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
+class WXDLLIMPEXP_FWD_CORE wxMenuBar;
 
 
 /// wxApp for use with 
@@ -68,6 +69,12 @@ class PoeditApp : public wxApp
 
         // Open page on poedit.net in the browser
         void OpenPoeditWeb(const wxString& path);
+
+#ifdef __WXOSX__
+        // Make OSX-specific modifications to the menus, e.g. adding items into
+        // the apple menu etc. Call on every newly created menubar
+        void TweakOSXMenuBar(wxMenuBar *bar);
+#endif
 
     protected:
         /** Sets default values to configuration items that don't

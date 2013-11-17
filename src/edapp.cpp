@@ -177,7 +177,9 @@ bool PoeditApp::OnInit()
     SetupLanguage();
 
 #ifdef __WXMAC__
-    wxMenuBar::MacSetCommonMenuBar(wxXmlResource::Get()->LoadMenuBar("mainmenu_mac_global"));
+    wxMenuBar *bar = wxXmlResource::Get()->LoadMenuBar("mainmenu_mac_global");
+    TweakOSXMenuBar(bar);
+    wxMenuBar::MacSetCommonMenuBar(bar);
     // so that help menu is correctly merged with system-provided menu
     // (see http://sourceforge.net/tracker/index.php?func=detail&aid=1600747&group_id=9863&atid=309863)
     s_macHelpMenuTitleName = _("&Help");
@@ -648,6 +650,17 @@ void PoeditApp::OpenPoeditWeb(const wxString& path)
                          GetAppVersion())
     );
 }
+
+#ifdef __WXOSX__
+void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
+{
+    wxMenu *apple = bar->OSXGetAppleMenu();
+
+#if USE_SPARKLE
+    Sparkle_AddMenuItem(apple->GetHMenu(), _("Check for Updates...").utf8_str());
+#endif
+}
+#endif // __WXOSX__
 
 
 #ifdef __WXMSW__
