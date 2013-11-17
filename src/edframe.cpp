@@ -736,11 +736,11 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     m_bottomRightPanel->SetAutoLayout(true);
     m_bottomRightPanel->SetSizer(rightSizer);
 
-    m_bottomSplitter->SetMinimumPaneSize(150);
+    m_bottomSplitter->SetMinimumPaneSize(250);
     m_bottomRightPanel->Show(false);
     m_bottomSplitter->Initialize(m_bottomLeftPanel);
 
-    m_splitter->SetMinimumPaneSize(150);
+    m_splitter->SetMinimumPaneSize(200);
 
     m_list->PushEventHandler(new ListHandler(this));
     m_textTrans->PushEventHandler(new TransTextctrlHandler(this));
@@ -2886,7 +2886,7 @@ void PoeditFrame::UpdateDisplayCommentWin()
     {
         m_bottomSplitter->SplitVertically(
                 m_bottomLeftPanel, m_bottomRightPanel,
-                (int)wxConfig::Get()->Read("bottom_splitter", -220L));
+                (int)wxConfig::Get()->Read("bottom_splitter", -250L));
         m_bottomRightPanel->Show(true);
 
         // force recalculation of layout of panel so that text boxes take up
@@ -2981,7 +2981,7 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
         if ( m_bottomSplitter->IsSplit() )
         {
             m_bottomSplitter->SetSashPosition(
-                (int)wxConfig::Get()->Read("bottom_splitter", -220L));
+                (int)wxConfig::Get()->Read("bottom_splitter", -250L));
         }
     }
 }
