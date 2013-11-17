@@ -192,8 +192,8 @@
 		B26D064E182506E40069C378 /* languagectrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = languagectrl.h; sourceTree = "<group>"; };
 		B26D0653182697200069C378 /* welcomescreen.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = welcomescreen.cpp; sourceTree = "<group>"; };
 		B26D0654182697200069C378 /* welcomescreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = welcomescreen.h; sourceTree = "<group>"; };
-		B26D06561826A22C0069C378 /* PoeditWelcome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PoeditWelcome.png; path = src/resources/PoeditWelcome.png; sourceTree = "<group>"; };
-		B26D06571826A22C0069C378 /* PoeditWelcome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PoeditWelcome@2x.png"; path = "src/resources/PoeditWelcome@2x.png"; sourceTree = "<group>"; };
+		B26D06561826A22C0069C378 /* PoeditWelcome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PoeditWelcome.png; path = ../../src/resources/PoeditWelcome.png; sourceTree = "<group>"; };
+		B26D06571826A22C0069C378 /* PoeditWelcome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PoeditWelcome@2x.png"; path = "../../src/resources/PoeditWelcome@2x.png"; sourceTree = "<group>"; };
 		B27EB05D1709DA4A009C1328 /* comment.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = comment.xrc; sourceTree = "<group>"; };
 		B27EB05E1709DA4A009C1328 /* find.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = find.xrc; sourceTree = "<group>"; };
 		B27EB05F1709DA4A009C1328 /* manager.xrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = manager.xrc; sourceTree = "<group>"; };
@@ -512,13 +512,9 @@
 		B24ACD7E16F6252600399242 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B2E836DF1709ECF100F31559 /* icons */,
+				B2E836DF1709ECF100F31559 /* Artwork */,
 				B2E836DD1709ECD600F31559 /* dsa_pub.pem */,
-				B24ACD8316F6263900399242 /* Poedit.iconset */,
-				B28F1CA916F627170018AF7E /* GenericTranslation.iconset */,
 				B2EC60A31812D9D40059756A /* icudt52l.dat */,
-				B26D06561826A22C0069C378 /* PoeditWelcome.png */,
-				B26D06571826A22C0069C378 /* PoeditWelcome@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -540,9 +536,13 @@
 			path = src/resources;
 			sourceTree = SOURCE_ROOT;
 		};
-		B2E836DF1709ECF100F31559 /* icons */ = {
+		B2E836DF1709ECF100F31559 /* Artwork */ = {
 			isa = PBXGroup;
 			children = (
+				B26D06561826A22C0069C378 /* PoeditWelcome.png */,
+				B26D06571826A22C0069C378 /* PoeditWelcome@2x.png */,
+				B24ACD8316F6263900399242 /* Poedit.iconset */,
+				B28F1CA916F627170018AF7E /* GenericTranslation.iconset */,
 				B2E836F21709ED6300F31559 /* document-new.png */,
 				B2E836F31709ED6300F31559 /* document-open.png */,
 				B2E836F41709ED6300F31559 /* document-properties.png */,
@@ -562,7 +562,7 @@
 				B2E836E71709ED2A00F31559 /* poedit-status-modified.png */,
 				B2E836E81709ED2A00F31559 /* poedit-status-nothing.png */,
 			);
-			name = icons;
+			name = Artwork;
 			path = icons/ui;
 			sourceTree = SOURCE_ROOT;
 		};

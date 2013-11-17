@@ -50,7 +50,7 @@ uiicons_DATA = \
 		ui/poedit-status-modified.png \
 		ui/poedit-status-nothing.png \
 		ui/window-close.png \
-		../src/resources/PoeditWelcome.png
+		../artwork/PoeditWelcome.png
 
 
 MIMETYPES = \
