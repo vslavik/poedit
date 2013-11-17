@@ -41,8 +41,21 @@ void LanguageCtrl::Init()
 {
     SetHint(_("Language Code or Name (e.g. en_GB)"));
 
+#ifdef __WXOSX__
     for (auto x: Language::AllFormattedNames())
         Append(x);
+    NSComboBox *cb = (NSComboBox*) GetHandle();
+    [cb setCompletes:YES];
+#else
+    static wxArrayString choices;
+    if (choices.empty())
+    {
+        for (auto x: Language::AllFormattedNames())
+            choices.push_back(x);
+    }
+    Set(choices);
+    AutoComplete(choices);
+#endif
 
     m_inited = true;
 }
