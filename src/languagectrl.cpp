@@ -108,6 +108,12 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
 
     SetSizerAndFit(sizer);
     CenterOnParent();
+
+    m_language->SetFocus();
+#ifdef __WXOSX__
+    // Workaround wx bug: http://trac.wxwidgets.org/ticket/9521
+    m_language->SelectAll();
+#endif
 }
 
 bool LanguageDialog::Validate()
