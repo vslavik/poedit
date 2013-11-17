@@ -1087,6 +1087,9 @@ void Catalog::FixupCommonIssues()
 
     wxLogTrace("poedit", "catalog lang is '%s'", GetLanguage().Code());
 
+    if (m_header.Project == "PACKAGE VERSION")
+        m_header.Project = "";
+
     wxString pluralForms = m_header.GetHeader("Plural-Forms");
 
     if (pluralForms == "nplurals=INTEGER; plural=EXPRESSION;") // default invalid value
