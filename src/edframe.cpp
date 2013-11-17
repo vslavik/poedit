@@ -2120,21 +2120,6 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
 
     InitSpellchecker();
 
-    Language language = m_catalog->GetLanguage();
-    if (!language.IsValid())
-    {
-        AttentionMessage msg
-            (
-                "missing-language",
-                AttentionMessage::Error,
-                _("Language of the translation isn't set.")
-            );
-        msg.AddAction(_("Set language"),
-                      std::bind(&PoeditFrame::EditCatalogProperties, this));
-
-        m_attentionBar->ShowMessage(msg);
-    }
-
     // FIXME: do this for Gettext PO files only
     if (wxConfig::Get()->Read("translator_name", "").empty() ||
         wxConfig::Get()->Read("translator_email", "").empty())
@@ -2148,6 +2133,21 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
         msg.AddAction(_("Set email"),
                       std::bind(&PoeditApp::EditPreferences, &wxGetApp()));
         msg.AddDontShowAgain();
+
+        m_attentionBar->ShowMessage(msg);
+    }
+
+    Language language = m_catalog->GetLanguage();
+    if (!language.IsValid())
+    {
+        AttentionMessage msg
+            (
+                "missing-language",
+                AttentionMessage::Error,
+                _("Language of the translation isn't set.")
+            );
+        msg.AddAction(_("Set language"),
+                      std::bind(&PoeditFrame::EditCatalogProperties, this));
 
         m_attentionBar->ShowMessage(msg);
     }
