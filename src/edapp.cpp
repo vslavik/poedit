@@ -655,6 +655,8 @@ void PoeditApp::OpenPoeditWeb(const wxString& path)
 void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 {
     wxMenu *apple = bar->OSXGetAppleMenu();
+    apple->Insert(3, XRCID("menu_manager"), _("Catalogs Manager"));
+    apple->InsertSeparator(3);
 
 #if USE_SPARKLE
     Sparkle_AddMenuItem(apple->GetHMenu(), _("Check for Updates...").utf8_str());
