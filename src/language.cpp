@@ -326,7 +326,15 @@ wxString Language::FormatForRoundtrip() const
     if (!Variant().empty())
         return m_code;
 
-    return DisplayName();
+    wxString disp = DisplayName();
+    // ICU isn't 100% reliable, some of the display names it produces
+    // (e.g. "Chinese (China)" aren't in the list of known locale names
+    // (here because zh-Trans is preferred to zh_CN). So make sure it can
+    // be parsed back first.
+    if (TryParse(disp).IsValid())
+        return disp;
+    else
+        return m_code;
 }
 
 
