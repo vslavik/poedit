@@ -563,6 +563,11 @@ PoeditFrame::PoeditFrame() :
     ms_instances.Append(this);
 
     SetDropTarget(new PoeditDropTarget(this));
+
+#ifdef __WXOSX__
+    NSWindow *wnd = (NSWindow*)GetWXWindow();
+    [wnd setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+#endif
 }
 
 
