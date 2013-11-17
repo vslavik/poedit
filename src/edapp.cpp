@@ -595,13 +595,18 @@ void PoeditApp::OnManager(wxCommandEvent&)
 
 void PoeditApp::OnQuit(wxCommandEvent&)
 {
+    // The Close() calls below may not terminate immediately, they may ask for
+    // confirmation window-modally on OS X. So change the behavior to terminate
+    // the app when the last window is closed now, instead of calling
+    // ExitMainLoop(). This will terminate the app automagically when all the
+    // windows are closed.
+    SetExitOnFrameDelete(true);
+
     for ( wxWindowList::iterator i = wxTopLevelWindows.begin(); i != wxTopLevelWindows.end(); ++i )
     {
         if ( !(*i)->Close() )
             return;
     }
-
-    ExitMainLoop();
 }
 
 
