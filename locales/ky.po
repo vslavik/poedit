@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2013-11-11 15:41+0100\n"
+"POT-Creation-Date: 2013-11-18 18:12+0100\n"
 "PO-Revision-Date: 2013-05-15 11:07+0600\n"
 "Last-Translator: Chynggyz Jumaliev <translatorky@lavabit.com>\n"
 "Language-Team: Kirghiz <poedit@googlegroups.com>\n"
@@ -22,38 +22,43 @@ msgstr ""
 "X-Poedit-Bookmarks: -1,-1,-1,92,-1,-1,-1,-1,-1,-1\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
-#: ../src/edframe.cpp:2850
+#: ../src/edframe.cpp:2876
 #, c-format
 msgid "    “%s”"
 msgstr ""
 
-#: ../src/edframe.cpp:2485
+#: ../src/edframe.cpp:2516
+#, c-format
+msgid " (beta version expires %s)"
+msgstr ""
+
+#: ../src/edframe.cpp:2505
 msgid " (modified)"
 msgstr " (өзгөртүлдү)"
 
-#: ../src/edframe.cpp:2467
+#: ../src/edframe.cpp:2487
 msgid " (unsaved)"
 msgstr ""
 
 #. TRANSLATORS: This is version information in about dialog, it is followed
 #. by version number when used (wxWidgets 2.8)
-#: ../src/edapp.cpp:575
+#: ../src/edapp.cpp:599
 msgid " Version "
 msgstr " версия "
 
-#: ../src/edframe.cpp:1665
+#: ../src/edframe.cpp:1671
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "Котормодо %d маселе табылды."
 
-#: ../src/edframe.cpp:2430
+#: ../src/edframe.cpp:2450
 #, c-format
 msgid "%i %% translated, %i string"
 msgid_plural "%i %% translated, %i strings"
 msgstr[0] "%i %% которулду, %i сап"
 
-#: ../src/edframe.cpp:2435
+#: ../src/edframe.cpp:2455
 #, c-format
 msgid "%i %% translated, %i string (%s)"
 msgid_plural "%i %% translated, %i strings (%s)"
@@ -67,13 +72,13 @@ msgstr ""
 "%i %% которулду, %i сап (%i так эмес, %i туура эмес символ, %i которулган "
 "жок)"
 
-#: ../src/edframe.cpp:2420
+#: ../src/edframe.cpp:2440
 #, c-format
 msgid "%i bad token"
 msgid_plural "%i bad tokens"
 msgstr[0] "%i туура эмес жазуу"
 
-#: ../src/edframe.cpp:2414
+#: ../src/edframe.cpp:2434
 #, c-format
 msgid "%i fuzzy"
 msgid_plural "%i fuzzy"
@@ -84,22 +89,22 @@ msgstr[0] "%i так эмес"
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i сап '%s' файлынан туура эмес жүктөлдү."
 
-#: ../src/edframe.cpp:2426
+#: ../src/edframe.cpp:2446
 #, c-format
 msgid "%i not translated"
 msgid_plural "%i not translated"
 msgstr[0] "%i которулган жок"
 
-#: ../src/resources/menus.xrc:248 ../src/resources/menus.xrc:249
-#: ../src/resources/menus.xrc:298 ../src/resources/menus.xrc:299
+#: ../src/resources/menus.xrc:258 ../src/resources/menus.xrc:259
+#: ../src/resources/menus.xrc:315 ../src/resources/menus.xrc:316
 msgid "&About"
 msgstr "Программа &жөнүндө"
 
-#: ../src/resources/menus.xrc:247 ../src/resources/menus.xrc:297
+#: ../src/resources/menus.xrc:257 ../src/resources/menus.xrc:314
 msgid "&About Poedit"
 msgstr "Poedit &жөнүндө"
 
-#: ../src/edframe.cpp:3224
+#: ../src/edframe.cpp:3250
 msgid "&Bookmarks"
 msgstr "&Чөп каттар"
 
@@ -128,7 +133,7 @@ msgid "&Edit"
 msgstr "&Оңдоо"
 
 #: ../src/edframe.cpp:521 ../src/resources/manager.xrc:125
-#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:258
+#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:268
 msgid "&File"
 msgstr "&Файл"
 
@@ -136,16 +141,26 @@ msgstr "&Файл"
 msgid "&Find..."
 msgstr "&Табуу..."
 
+#: ../src/resources/menus.xrc:248 ../src/resources/menus.xrc:305
+#, fuzzy
+msgid "&GNU gettext Manual"
+msgstr "GNU gettext документациялары"
+
+#: ../src/resources/menus.xrc:247 ../src/resources/menus.xrc:304
+#, fuzzy
+msgid "&GNU gettext manual"
+msgstr "GNU gettext документациялары"
+
 #: ../src/edframe.cpp:527 ../src/resources/menus.xrc:161
 msgid "&Go"
 msgstr "Ө&түү"
 
-#: ../src/edapp.cpp:183 ../src/resources/menus.xrc:251
-#: ../src/resources/menus.xrc:301
+#: ../src/edapp.cpp:195 ../src/resources/menus.xrc:261
+#: ../src/resources/menus.xrc:318
 msgid "&Help"
 msgstr "&Жардам"
 
-#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:261
+#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:271
 #, fuzzy
 msgid "&New..."
 msgstr "&Жаңы каталог..."
@@ -163,15 +178,15 @@ msgstr "&Кийинки билдирүү"
 msgid "&Next message"
 msgstr "&Кийинки билдирүү"
 
-#: ../src/resources/menus.xrc:241 ../src/resources/menus.xrc:291
+#: ../src/resources/menus.xrc:241 ../src/resources/menus.xrc:298
 msgid "&Online Help"
 msgstr "&Онлайн жардам"
 
-#: ../src/resources/menus.xrc:240 ../src/resources/menus.xrc:290
+#: ../src/resources/menus.xrc:240 ../src/resources/menus.xrc:297
 msgid "&Online help"
 msgstr "&Онлайн жардам"
 
-#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:274
+#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:284
 msgid "&Open..."
 msgstr "&Ачуу..."
 
@@ -180,7 +195,7 @@ msgid "&Preferences"
 msgstr "&Ырастоолор"
 
 #: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:47
-#: ../src/resources/menus.xrc:278
+#: ../src/resources/menus.xrc:288
 msgid "&Preferences..."
 msgstr "&Ырастоолор..."
 
@@ -248,7 +263,7 @@ msgstr "Котормолорду &текшерүү"
 msgid "&View"
 msgstr "Кө&рүнүш"
 
-#: ../src/catalog.cpp:1635
+#: ../src/catalog.cpp:1638
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' жөнү жок POT файл."
@@ -282,13 +297,13 @@ msgstr "<аты жок>"
 #. TRANSLATORS: This is titlebar of about dialog, the string ends with space
 #. and is followed by application name when used ("Poedit",
 #. but don't add it to this translation yourself) (wxWidgets 2.8)
-#: ../src/edapp.cpp:579
+#: ../src/edapp.cpp:603
 msgid "About "
 msgstr "Программа жөнүндө "
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
-#: ../src/edapp.cpp:569
+#: ../src/edapp.cpp:593
 #, c-format
 msgid "About %s"
 msgstr "%s жөнүндө"
@@ -297,7 +312,7 @@ msgstr "%s жөнүндө"
 msgid "Add directory to the list"
 msgstr "Папканы тизмеге кошуу"
 
-#: ../src/propertiesdlg.cpp:69
+#: ../src/propertiesdlg.cpp:65
 #, fuzzy
 msgid "Additional keywords"
 msgstr "Ачкыч сөздөрдүн тизмесиндеги пункт:"
@@ -314,7 +329,7 @@ msgstr "Кириш файлдардын тизмесиндеги пункт:"
 msgid "An item in keywords list:"
 msgstr "Ачкыч сөздөрдүн тизмесиндеги пункт:"
 
-#: ../src/edframe.cpp:2829 ../src/edframe.cpp:2841
+#: ../src/edframe.cpp:2855 ../src/edframe.cpp:2867
 msgid "Automatic Translations:"
 msgstr "Автоматык котормолор:"
 
@@ -322,7 +337,7 @@ msgstr "Автоматык котормолор:"
 msgid "Automatic translation"
 msgstr "Автоматтык котормо"
 
-#: ../src/edframe.cpp:2827 ../src/edframe.cpp:2839
+#: ../src/edframe.cpp:2853 ../src/edframe.cpp:2865
 msgid "Automatic translations:"
 msgstr "Автоматтык котормолор:"
 
@@ -338,13 +353,17 @@ msgstr "Сактоо убагында автоматтуу түрдө .mo фай
 msgid "Bad Tokens"
 msgstr "Туура эмес жазуулар"
 
-#: ../src/resources/properties.xrc:152
+#: ../src/resources/properties.xrc:156
 msgid "Base path:"
 msgstr "База жолу:"
 
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
 msgstr "Аракет"
+
+#: ../src/edapp.cpp:202
+msgid "Beta expired"
+msgstr ""
 
 #: ../src/catalog.cpp:681
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
@@ -377,7 +396,7 @@ msgstr "CR/LF конверсиясы"
 
 #: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:113
 #: ../src/resources/prefs.xrc:303 ../src/resources/prefs.xrc:445
-#: ../src/resources/progress.xrc:32 ../src/resources/properties.xrc:214
+#: ../src/resources/progress.xrc:32 ../src/resources/properties.xrc:233
 msgid "Cancel"
 msgstr "Жокко чыгаруу"
 
@@ -398,7 +417,7 @@ msgstr "Регистрди эсепке алуу"
 msgid "Catalog"
 msgstr "Каталог"
 
-#: ../src/edframe.cpp:1119
+#: ../src/edframe.cpp:1125
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Каталог өзгөртүлдү. Өзгөрүүлөрдү сактаңыз келеби?"
 
@@ -406,7 +425,7 @@ msgstr "Каталог өзгөртүлдү. Өзгөрүүлөрдү сакта
 msgid "Catalog properties"
 msgstr "Каталогдун касиеттери"
 
-#: ../src/resources/menus.xrc:53 ../src/resources/menus.xrc:282
+#: ../src/resources/menus.xrc:53
 msgid "Catalogs &Manager"
 msgstr "Каталогдор &менеджери"
 
@@ -414,15 +433,20 @@ msgstr "Каталогдор &менеджери"
 msgid "Catalogs &manager"
 msgstr "Каталогдор &менеджери"
 
+#: ../src/edapp.cpp:762
+#, fuzzy
+msgid "Catalogs Manager"
+msgstr "Каталогдор &менеджери"
+
 #: ../src/resources/prefs.xrc:62
 msgid "Change UI language"
 msgstr "Интерфейс тилин өзгөртүү"
 
-#: ../src/export_html.cpp:126 ../src/resources/properties.xrc:111
+#: ../src/export_html.cpp:126 ../src/resources/properties.xrc:115
 msgid "Charset:"
 msgstr "Коддолуусу:"
 
-#: ../src/edframe.cpp:530
+#: ../src/edapp.cpp:766
 msgid "Check for Updates..."
 msgstr "Жаңылоолорго текшерүү..."
 
@@ -439,7 +463,7 @@ msgstr "Жаңылоолорго текшерүү..."
 msgid "Check spelling"
 msgstr ""
 
-#: ../src/edframe.cpp:2802 ../src/resources/menus.xrc:72
+#: ../src/edframe.cpp:2828 ../src/resources/menus.xrc:72
 msgid "Clear Translation"
 msgstr "Котормону тазалоо"
 
@@ -447,7 +471,7 @@ msgstr "Котормону тазалоо"
 msgid "Clear the comment"
 msgstr "Комментарийди тазалоо"
 
-#: ../src/edframe.cpp:2800 ../src/resources/menus.xrc:71
+#: ../src/edframe.cpp:2826 ../src/resources/menus.xrc:71
 msgid "Clear translation"
 msgstr "Котормону тазалоо"
 
@@ -463,7 +487,7 @@ msgstr "Комментарий"
 msgid "Comment window is editable"
 msgstr "Комментарийлерди редакторлоосо болот"
 
-#: ../src/edframe.cpp:701 ../src/export_html.cpp:213
+#: ../src/edframe.cpp:706 ../src/export_html.cpp:213
 #: ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Комментарийи:"
@@ -476,12 +500,12 @@ msgstr ""
 msgid "Confirmation"
 msgstr "Аныктоо"
 
-#: ../src/wordpress.cpp:113
+#: ../src/wordpress.cpp:115
 #, c-format
 msgid "Confused by ambiguous values of \"%s\" in %s."
 msgstr ""
 
-#: ../src/wordpress.cpp:208
+#: ../src/wordpress.cpp:210
 msgid "Confused: multiple main plugin files."
 msgstr ""
 
@@ -489,19 +513,19 @@ msgstr ""
 msgid "Consult TM when updating from sources"
 msgstr ""
 
-#: ../src/edframe.cpp:2127
+#: ../src/edframe.cpp:2133
 msgid "Context:"
 msgstr "Контексти:"
 
-#: ../src/edframe.cpp:2795 ../src/resources/menus.xrc:67
+#: ../src/edframe.cpp:2821 ../src/resources/menus.xrc:67
 msgid "Copy from Source Text"
 msgstr "Баштапкы текстинен көчүрүү"
 
-#: ../src/edframe.cpp:2793 ../src/resources/menus.xrc:66
+#: ../src/edframe.cpp:2819 ../src/resources/menus.xrc:66
 msgid "Copy from source text"
 msgstr "Баштапкы текстинен көчүрүү"
 
-#: ../src/wordpress.cpp:236
+#: ../src/wordpress.cpp:238
 #, c-format
 msgid "Couldn't detect translation domain of the \"%s\" plugin."
 msgstr ""
@@ -511,7 +535,7 @@ msgstr ""
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "%s файлын жүктөө оңунан чыккан жок. Балким, ал бузук."
 
-#: ../src/catalog.cpp:1330 ../src/catalog.cpp:1366
+#: ../src/catalog.cpp:1333 ../src/catalog.cpp:1369
 #, c-format
 msgid "Couldn't save file %s."
 msgstr "%s файлын сактоо оңунан чыккан жок."
@@ -583,11 +607,11 @@ msgstr ""
 msgid "Do you want to delete the project?"
 msgstr "Сиз чын эле долбоорду өчүргүңүз келеби?"
 
-#: ../src/edframe.cpp:2692
+#: ../src/edframe.cpp:2718
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Көптөн бери колдонулбаган котормолордун баарын өчүргүңүз келеби?"
 
-#: ../src/edframe.cpp:1130
+#: ../src/edframe.cpp:1136
 msgid "Don't Save"
 msgstr "Сактабоо"
 
@@ -595,7 +619,7 @@ msgstr "Сактабоо"
 msgid "Don't change format of existing catalogs"
 msgstr "Бар болгон каталогдордун форматын өзгөртпөө"
 
-#: ../src/edframe.cpp:1128
+#: ../src/edframe.cpp:1134
 msgid "Don't save"
 msgstr "Сактабоо"
 
@@ -603,8 +627,12 @@ msgstr "Сактабоо"
 msgid "Don't show again"
 msgstr "Кайтадан көрсөтпөө"
 
-#: ../src/edapp.cpp:711
+#: ../src/edapp.cpp:832
 msgid "Donate..."
+msgstr ""
+
+#: ../src/edapp.cpp:204
+msgid "Download"
 msgstr ""
 
 #: ../src/resources/manager.xrc:136 ../src/resources/menus.xrc:59
@@ -628,7 +656,7 @@ msgstr "Комментарийди &оңдоо"
 msgid "Edit &comment"
 msgstr "Комментарийди &оңдоо"
 
-#: ../src/edframe.cpp:2809
+#: ../src/edframe.cpp:2835
 msgid "Edit Comment"
 msgstr "Комментарийди оңдоо"
 
@@ -637,7 +665,7 @@ msgstr "Комментарийди оңдоо"
 msgid "Edit a translation"
 msgstr "Котормону тазалоо"
 
-#: ../src/edframe.cpp:2807 ../src/resources/comment.xrc:4
+#: ../src/edframe.cpp:2833 ../src/resources/comment.xrc:4
 #: ../src/resources/toolbar.xrc:58
 msgid "Edit comment"
 msgstr "Комментарийди оңдоо"
@@ -654,11 +682,21 @@ msgstr "Долбоорду оңдоо"
 msgid "Editor"
 msgstr "Редактор"
 
-#: ../src/wordpress.cpp:437
+#: ../src/resources/menus.xrc:253 ../src/resources/menus.xrc:310
+#, fuzzy
+msgid "Email &Support..."
+msgstr "&Экспорт..."
+
+#: ../src/resources/menus.xrc:252 ../src/resources/menus.xrc:309
+#, fuzzy
+msgid "Email &support..."
+msgstr "&Экспорт..."
+
+#: ../src/wordpress.cpp:394
 msgid "Email Support"
 msgstr ""
 
-#: ../src/wordpress.cpp:434
+#: ../src/wordpress.cpp:391
 msgid "Email support"
 msgstr ""
 
@@ -666,11 +704,11 @@ msgstr ""
 msgid "Enables on-the-fly spellchecking"
 msgstr "Туура жазуунун динамикалык текшерүүсүн жүргүзөт"
 
-#: ../src/edframe.cpp:1599
+#: ../src/edframe.cpp:1605
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Каталогдогу жазуулар балким туура эмес."
 
-#: ../src/edframe.cpp:2254
+#: ../src/edframe.cpp:2274
 msgid ""
 "Entries in this catalog have different plural forms count from what "
 "catalog's Plural-Forms header says"
@@ -678,7 +716,7 @@ msgstr ""
 "Бул каталогдогу жазуулардын көптүк сан формаларынын эсеби Plural-Forms баш "
 "сабынын эсебинен айырмаланат"
 
-#: ../src/edframe.cpp:1673
+#: ../src/edframe.cpp:1679
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
@@ -686,17 +724,17 @@ msgstr ""
 "Тизмедеги каталары бар жазуулар кызыл менен белгиленди. Ката жөнүндөгү "
 "маалымат тандалганда көрсөтүлөт."
 
-#: ../src/edframe.cpp:2361
+#: ../src/edframe.cpp:2381
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "'%s' билдирүү каталог файлын жүктөө учурунда ката чыкты."
 
-#: ../src/fileviewer.cpp:287
+#: ../src/fileviewer.cpp:297
 #, c-format
 msgid "Error opening file %s!"
 msgstr "%s файлын ачуу учурунда ката чыкты!"
 
-#: ../src/catalog.cpp:1501
+#: ../src/catalog.cpp:1504
 msgid "Error saving catalog"
 msgstr "Каталогду сактоо учурунда ката чыкты"
 
@@ -704,11 +742,11 @@ msgstr "Каталогду сактоо учурунда ката чыкты"
 msgid "Error:"
 msgstr "Катасы:"
 
-#: ../src/edframe.cpp:3142
+#: ../src/edframe.cpp:3168
 msgid "Everything"
 msgstr ""
 
-#: ../src/edframe.cpp:1266
+#: ../src/edframe.cpp:1272
 msgid "Export as..."
 msgstr "Ат коюп экспорттоо..."
 
@@ -717,7 +755,7 @@ msgstr "Ат коюп экспорттоо..."
 msgid "Extract from sources"
 msgstr "Баштапкы кодунан жаң&ылоо"
 
-#: ../src/resources/properties.xrc:143
+#: ../src/resources/properties.xrc:147
 msgid "Extract text from source files in the following directories:"
 msgstr "Төмөнкү папкаларга баштапкы файлдардан текстти чыгаруу:"
 
@@ -726,7 +764,7 @@ msgstr "Төмөнкү папкаларга баштапкы файлдарда�
 msgid "Failed command: %s"
 msgstr "Жаңылган команда: %s"
 
-#: ../src/wordpress.cpp:419
+#: ../src/wordpress.cpp:376
 #, fuzzy
 msgid "Failed to extract WordPress information."
 msgstr "Чыгарылган каталогду жүктөө оңунан чыккан жок."
@@ -739,22 +777,22 @@ msgstr "Чыгарылган каталогду жүктөө оңунан чык
 msgid "Failed to merge gettext catalogs."
 msgstr "gettext каталогдору менен бириктирүү оңунан чыккан жок."
 
-#: ../src/wordpress.cpp:69
+#: ../src/wordpress.cpp:71
 #, fuzzy, c-format
 msgid "Failed to read file '%s'."
 msgstr "Чыгарылган каталогдор окууалынган жок."
 
-#: ../src/wordpress.cpp:133
+#: ../src/wordpress.cpp:135
 #, fuzzy, c-format
 msgid "Failed to read folder '%s'."
 msgstr "Чыгарылган каталогдор окууалынган жок."
 
-#: ../src/edframe.cpp:2611
+#: ../src/edframe.cpp:2637
 #, fuzzy, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Котормо эсин жаңылоо"
 
-#: ../src/edapp.cpp:550 ../src/edframe.cpp:444 ../src/edframe.cpp:1188
+#: ../src/edapp.cpp:574 ../src/edframe.cpp:444 ../src/edframe.cpp:1194
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "'%s' файлы жок."
@@ -764,7 +802,7 @@ msgstr "'%s' файлы жок."
 msgid "File '%s' is not a message catalog."
 msgstr "'%s' файлы билдирүү каталогу эмес."
 
-#: ../src/catalog.cpp:1312
+#: ../src/catalog.cpp:1315
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -822,11 +860,11 @@ msgstr "< Артка"
 msgid "Find..."
 msgstr "Табуу..."
 
-#: ../src/edframe.cpp:2284
+#: ../src/edframe.cpp:2304
 msgid "Fix the header"
 msgstr "Баш сабын оңдоо"
 
-#: ../src/wordpress.cpp:292
+#: ../src/wordpress.cpp:294
 msgid "Folder looks like both a plugin and a theme."
 msgstr ""
 
@@ -834,12 +872,12 @@ msgstr ""
 msgid "Fonts"
 msgstr "Ариптер"
 
-#: ../src/edframe.cpp:3144
+#: ../src/edframe.cpp:3170
 #, c-format
 msgid "Form %i"
 msgstr "%i формасы"
 
-#: ../src/wordpress.cpp:294
+#: ../src/wordpress.cpp:296
 msgid "Found neither WordPress theme nor plugin in the folder."
 msgstr ""
 
@@ -851,38 +889,38 @@ msgstr "Так эмес"
 msgid "Fuzzy translation"
 msgstr "Так эмес котормо"
 
-#: ../src/edapp.cpp:524 ../src/edframe.cpp:1169 ../src/edframe.cpp:1229
+#: ../src/edapp.cpp:548 ../src/edframe.cpp:1175 ../src/edframe.cpp:1235
 #: ../src/prefsdlg.cpp:168
 msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU gettext каталогдору (*.po)|*.po|Бардык файлдар (*.*)|*.*"
 
-#: ../src/edframe.cpp:1617
+#: ../src/edframe.cpp:1623
 msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU gettext шаблондору (*.pot)|*.pot|Бардык файлдар (*.*)|*.*"
 
-#: ../src/edframe.cpp:1315
+#: ../src/edframe.cpp:1321
 #, fuzzy
 msgid ""
 "GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All "
 "files (*.*)|*.*"
 msgstr "GNU gettext шаблондору (*.pot)|*.pot|Бардык файлдар (*.*)|*.*"
 
-#: ../src/edframe.cpp:3236
+#: ../src/edframe.cpp:3262
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "Номер %i чөп катына өтүү\tCtrl+%i"
 
-#: ../src/edframe.cpp:3230
+#: ../src/edframe.cpp:3256
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+Alt+%i"
 msgstr "Номер %i чөп катына өтүү\tCtrl+Alt+%i"
 
-#: ../src/edframe.cpp:3233
+#: ../src/edframe.cpp:3259
 #, c-format
 msgid "Go to bookmark %i\tCtrl+%i"
 msgstr "Номер %i чөп катына өтүү\tCtrl+%i"
 
-#: ../src/edframe.cpp:1268
+#: ../src/edframe.cpp:1274
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML файлы (*.html)|*.html"
 
@@ -906,7 +944,7 @@ msgstr "Эгер белги салынса, комментарий терезе�
 msgid "If enabled, Poedit will try to fill in missing translations."
 msgstr ""
 
-#: ../src/edframe.cpp:2694
+#: ../src/edframe.cpp:2720
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
@@ -930,7 +968,7 @@ msgstr "Автоматтык котормолор:"
 msgid "Include beta versions"
 msgstr ""
 
-#: ../src/edframe.cpp:165 ../src/edframe.cpp:2172
+#: ../src/edframe.cpp:165 ../src/edframe.cpp:2178
 msgid "Invalid file"
 msgstr ""
 
@@ -942,7 +980,7 @@ msgstr "Чакыруу:"
 msgid "Items"
 msgstr ""
 
-#: ../src/edframe.cpp:2698
+#: ../src/edframe.cpp:2724
 msgid "Keep"
 msgstr "Калтыруу"
 
@@ -950,11 +988,11 @@ msgstr "Калтыруу"
 msgid "Language Code or Name (e.g. en_GB)"
 msgstr ""
 
-#: ../src/edframe.cpp:2218
+#: ../src/edframe.cpp:2255
 msgid "Language of the translation isn't set."
 msgstr ""
 
-#: ../src/languagectrl.cpp:81
+#: ../src/languagectrl.cpp:94
 #, fuzzy
 msgid "Language of the translation:"
 msgstr "Өчүрүлгөн котормолорду жок кылуу"
@@ -977,11 +1015,16 @@ msgstr "Акыркы өзгөртүү"
 msgid "Learn From Files..."
 msgstr "%s файл талдалууда..."
 
+#: ../src/resources/properties.xrc:202
+#, fuzzy
+msgid "Learn about gettext keywords"
+msgstr "Көптүк сандар жөнүндө билүү"
+
 #: ../src/resources/properties.xrc:75
 msgid "Learn about plural forms"
 msgstr "Көптүк сандар жөнүндө билүү"
 
-#: ../src/edframe.cpp:1039
+#: ../src/edframe.cpp:1045
 msgid "Learn more"
 msgstr "Көбүрөөк билүү"
 
@@ -1003,11 +1046,11 @@ msgstr "Үтүрдүү чекит менен бөлүнгөн кеңейтмел
 msgid "Malformed header: '%s'"
 msgstr "Туура эмес баш сап форматы: '%s'"
 
-#: ../src/catalog.cpp:1606
+#: ../src/catalog.cpp:1609
 msgid "Merging differences..."
 msgstr "Айырмалары бириктирилүүдө..."
 
-#: ../src/propertiesdlg.cpp:75
+#: ../src/propertiesdlg.cpp:71
 #, fuzzy
 msgid "Name of the project the translation is for"
 msgstr "Котормолордо көйгөйлөр табылган жок."
@@ -1039,22 +1082,22 @@ msgstr ""
 msgid "New"
 msgstr "Жаңы"
 
-#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:266
+#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:276
 #, fuzzy
 msgid "New From &POT/PO File..."
 msgstr "POT &файлынан жаңылоо..."
 
-#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:270
+#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:280
 #, fuzzy
 msgid "New WordPress Translation..."
 msgstr "Котормону тазалоо"
 
-#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:269
+#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:279
 #, fuzzy
 msgid "New WordPress translation..."
 msgstr "Котормону тазалоо"
 
-#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:265
+#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:275
 #, fuzzy
 msgid "New from &POT/PO file..."
 msgstr "POT &файлынан жаңылоо..."
@@ -1067,15 +1110,15 @@ msgstr "Жаңы саптар"
 msgid "No files found in: "
 msgstr "Бул жерден файлдар табылган жок: "
 
-#: ../src/edframe.cpp:1688
+#: ../src/edframe.cpp:1694
 msgid "No problems with the translation found."
 msgstr "Котормолордо көйгөйлөр табылган жок."
 
-#: ../src/edframe.cpp:1731
+#: ../src/edframe.cpp:1737
 msgid "No references to this string found."
 msgstr "Ушул сап үчүн байланыштар табылган жок."
 
-#: ../src/edapp.cpp:712
+#: ../src/edapp.cpp:833
 msgid "No, thanks"
 msgstr ""
 
@@ -1088,13 +1131,13 @@ msgstr "%i которулган жок"
 msgid "Notes"
 msgstr "Эскертүүлөр"
 
-#: ../src/edframe.cpp:694 ../src/export_html.cpp:204
+#: ../src/edframe.cpp:699 ../src/export_html.cpp:204
 msgid "Notes for translators:"
 msgstr "Котормочулар үчүн эскертүүлөрү:"
 
 #: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
 #: ../src/resources/prefs.xrc:295 ../src/resources/prefs.xrc:437
-#: ../src/resources/properties.xrc:206 ../src/resources/summary.xrc:70
+#: ../src/resources/properties.xrc:225 ../src/resources/summary.xrc:70
 msgid "OK"
 msgstr "OK"
 
@@ -1102,7 +1145,7 @@ msgstr "OK"
 msgid "Obsolete strings"
 msgstr "Эскирген саптар"
 
-#: ../src/edframe.cpp:3150
+#: ../src/edframe.cpp:3176
 msgid "One"
 msgstr ""
 
@@ -1119,16 +1162,16 @@ msgstr "Редактор"
 msgid "Open an existing PO file and edit the translation."
 msgstr ""
 
-#: ../src/edapp.cpp:521 ../src/edframe.cpp:1167
+#: ../src/edapp.cpp:545 ../src/edframe.cpp:1173
 #: ../src/resources/toolbar.xrc:16 ../src/resources/toolbar.xrc:21
 msgid "Open catalog"
 msgstr "Каталогду ачуу"
 
-#: ../src/edframe.cpp:1313 ../src/edframe.cpp:1615
+#: ../src/edframe.cpp:1319 ../src/edframe.cpp:1621
 msgid "Open catalog template"
 msgstr "Каталог шаблонун ачуу"
 
-#: ../src/edframe.cpp:3157
+#: ../src/edframe.cpp:3183
 msgid "Other"
 msgstr ""
 
@@ -1157,7 +1200,7 @@ msgstr "Парсерлер"
 msgid "Parsing %s files..."
 msgstr "%s файл талдалууда..."
 
-#: ../src/propertiesdlg.cpp:71
+#: ../src/propertiesdlg.cpp:67
 msgid "Paths"
 msgstr "Жолдор"
 
@@ -1165,15 +1208,21 @@ msgstr "Жолдор"
 msgid "Personalize"
 msgstr "Жеке ырастоолор"
 
-#: ../src/edframe.cpp:1739
+#: ../src/edframe.cpp:1745
 msgid "Please choose the reference you want to show:"
 msgstr "Көрсөтүүгө керек болгон байланышты тандаңыз:"
 
-#: ../src/wordpress.cpp:450
+#: ../src/edapp.cpp:203
+msgid ""
+"Please download a newer version from the Poedit website at http://poedit.net/"
+"beta/"
+msgstr ""
+
+#: ../src/wordpress.cpp:407
 msgid "Please email this log to help@poedit.net. Thank you!"
 msgstr ""
 
-#: ../src/propertiesdlg.cpp:260
+#: ../src/propertiesdlg.cpp:256
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
 
@@ -1184,12 +1233,12 @@ msgstr "Көптүк сандын формалары:"
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:2322
+#: ../src/edframe.cpp:2342
 #, c-format
 msgid "Plural forms expression used by the catalog is unusual for %s."
 msgstr ""
 
-#: ../src/edframe.cpp:673
+#: ../src/edframe.cpp:678
 msgid "Plural:"
 msgstr "Көптүгү:"
 
@@ -1207,7 +1256,7 @@ msgstr "Poedit - Каталогдор менеджери"
 msgid "Poedit Update"
 msgstr "Poedit"
 
-#: ../src/wordpress.cpp:429
+#: ../src/wordpress.cpp:386
 #, c-format
 msgid ""
 "Poedit couldn’t understand the content of the folder you selected. This may "
@@ -1223,7 +1272,7 @@ msgstr ""
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Скандалган папкалардан Poedit эч кандай файлдарды тапкан жок."
 
-#: ../src/edapp.cpp:587
+#: ../src/edapp.cpp:611
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit - колдонууга оңой болгон котормо редактору."
 
@@ -1256,36 +1305,37 @@ msgstr "Долбоор аты жана версиясы:"
 msgid "Project name:"
 msgstr "Долбоор аты:"
 
-#: ../src/edframe.cpp:2698
+#: ../src/edframe.cpp:2724
 msgid "Purge"
 msgstr "Тазалоо"
 
-#: ../src/edframe.cpp:2690
+#: ../src/edframe.cpp:2716
 msgid "Purge deleted translations"
 msgstr "Өчүрүлгөн котормолорду жок кылуу"
 
-#: ../src/tm/tm_migrate.cpp:237 ../src/resources/manager.xrc:137
-#: ../src/resources/menus.xrc:60 ../src/resources/menus.xrc:285
+#: ../src/edapp.cpp:204 ../src/tm/tm_migrate.cpp:237
+#: ../src/resources/manager.xrc:137 ../src/resources/menus.xrc:60
+#: ../src/resources/menus.xrc:292
 msgid "Quit"
 msgstr "Чыгуу"
 
-#: ../src/edframe.cpp:1739
+#: ../src/edframe.cpp:1745
 msgid "References"
 msgstr "Байланыштар"
 
-#: ../src/edframe.cpp:2862 ../src/edframe.cpp:2866
+#: ../src/edframe.cpp:2888 ../src/edframe.cpp:2892
 msgid "References:"
 msgstr "Байланыштары:"
 
-#: ../src/edframe.cpp:2265
+#: ../src/edframe.cpp:2285
 msgid "Required header Plural-Forms is missing."
 msgstr "Көптүк сан формаларынын милдеттүү баш сабы жок."
 
-#: ../src/edframe.cpp:2326
+#: ../src/edframe.cpp:2346
 msgid "Review"
 msgstr ""
 
-#: ../src/edframe.cpp:1126 ../src/resources/toolbar.xrc:25
+#: ../src/edframe.cpp:1132 ../src/resources/toolbar.xrc:25
 #: ../src/resources/toolbar.xrc:30
 msgid "Save"
 msgstr "Сактоо"
@@ -1298,7 +1348,7 @@ msgstr "А&т коюп сактоо..."
 msgid "Save &as..."
 msgstr "А&т коюп сактоо..."
 
-#: ../src/edframe.cpp:1228
+#: ../src/edframe.cpp:1234
 msgid "Save as..."
 msgstr "Ат коюп сактоо..."
 
@@ -1306,7 +1356,7 @@ msgstr "Ат коюп сактоо..."
 msgid "Save catalog"
 msgstr "Каталогду сактоо"
 
-#: ../src/edframe.cpp:1120
+#: ../src/edframe.cpp:1126
 msgid "Save changes"
 msgstr "Өзгөртүүлөрүн сактоо"
 
@@ -1318,7 +1368,7 @@ msgstr "Файлдар скандалууда..."
 msgid "Select directory"
 msgstr "Каталогду тандаңыз"
 
-#: ../src/edframe.cpp:1390
+#: ../src/edframe.cpp:1396
 msgid "Select the folder with the WordPress theme or plugin"
 msgstr ""
 
@@ -1331,35 +1381,40 @@ msgstr "Poedit котормо эсинин катасы"
 msgid "Select your prefered language"
 msgstr "Артык көргөн тилиңизди тандаңыз"
 
-#: ../src/edframe.cpp:3235
+#: ../src/edframe.cpp:3261
 #, c-format
 msgid "Set Bookmark %i\tAlt+%i"
 msgstr "Номер %i чөп катын орнотуу\tAlt+%i"
 
-#: ../src/edframe.cpp:3229
+#: ../src/edframe.cpp:3255
 #, c-format
 msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "Номер %i чөп катын орнотуу\tCtrl+%i"
 
-#: ../src/edframe.cpp:3232
+#: ../src/edframe.cpp:3258
 #, c-format
 msgid "Set bookmark %i\tAlt+%i"
 msgstr "Номер %i чөп катын орнотуу\tAlt+%i"
 
-#: ../src/edframe.cpp:2236
+#: ../src/edframe.cpp:2227
 msgid "Set email"
 msgstr "E-mail'ди орнотуу"
 
-#: ../src/edframe.cpp:2220
+#: ../src/edframe.cpp:2257
 #, fuzzy
 msgid "Set language"
+msgstr "Тилди тандаңыз"
+
+#: ../src/edframe.cpp:2242
+#, fuzzy
+msgid "Set name"
 msgstr "Тилди тандаңыз"
 
 #: ../src/resources/prefs.xrc:103
 msgid "Show summary after catalog update"
 msgstr "Каталог жаңылагандан кийин жыйынтык маалыматын көрсөтүү"
 
-#: ../src/edframe.cpp:666
+#: ../src/edframe.cpp:671
 msgid "Singular:"
 msgstr "Жекелиги:"
 
@@ -1402,11 +1457,11 @@ msgstr "Баштапкы текст"
 msgid "Source Text"
 msgstr "Баштапкы тексти"
 
-#: ../src/resources/prefs.xrc:412 ../src/resources/properties.xrc:123
+#: ../src/resources/prefs.xrc:412 ../src/resources/properties.xrc:127
 msgid "Source code charset:"
 msgstr "Баштапкы коддун коддолуусу:"
 
-#: ../src/catalog.cpp:1589
+#: ../src/catalog.cpp:1592
 #, fuzzy, c-format
 msgid "Source code directory '%s' doesn't exist."
 msgstr "'%s' файлы жок."
@@ -1427,22 +1482,22 @@ msgstr "Баштапкы файлдын кирүүсү:"
 msgid "Source text"
 msgstr "Баштапкы тексти"
 
-#: ../src/edframe.cpp:659
+#: ../src/edframe.cpp:664
 msgid "Source text:"
 msgstr "Баштапкы тексти:"
 
-#: ../src/resources/properties.xrc:195
+#: ../src/resources/properties.xrc:214
 msgid "Sources keywords"
 msgstr "Баштапкы файлдардын ачкыч сөздөрү"
 
-#: ../src/resources/properties.xrc:174
+#: ../src/resources/properties.xrc:178
 msgid "Sources paths"
 msgstr "Баштапкы файлдардын жолдору"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:1035
+#: ../src/edframe.cpp:1041
 #, c-format
 msgid "Spellchecker dictionary for %s isn't available, you need to install it."
 msgstr ""
@@ -1470,7 +1525,7 @@ msgstr "Табыла турган сабы:"
 msgid "Strings in source language"
 msgstr ""
 
-#: ../src/edframe.cpp:2270
+#: ../src/edframe.cpp:2290
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Plural-Forms баш сабындагы синтаксис катасы (\"%s\")."
@@ -1485,25 +1540,25 @@ msgstr ""
 msgid "Take translatable strings from an existing POT template."
 msgstr ""
 
-#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:97
+#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:101
 msgid "Team's email address:"
 msgstr "Команданын e-mail дареги:"
 
-#: ../src/export_html.cpp:118 ../src/resources/properties.xrc:83
+#: ../src/export_html.cpp:118 ../src/resources/properties.xrc:87
 msgid "Team:"
 msgstr "Командасы:"
 
-#: ../src/wordpress.cpp:231
+#: ../src/wordpress.cpp:233
 #, c-format
 msgid "The \"%s\" plugin isn't localization-ready."
 msgstr ""
 
-#: ../src/wordpress.cpp:175
+#: ../src/wordpress.cpp:177
 #, c-format
 msgid "The \"%s\" theme isn't localization-ready."
 msgstr ""
 
-#: ../src/catalog.cpp:1499
+#: ../src/catalog.cpp:1502
 #, fuzzy, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as specified in catalog "
@@ -1516,16 +1571,16 @@ msgstr ""
 "Анын ордуна ал UTF-8 кодировкасында сакталды\n"
 "жана тийиштүү параметр өзгөртүлдү."
 
-#: ../src/edframe.cpp:164 ../src/edframe.cpp:2171
+#: ../src/edframe.cpp:164 ../src/edframe.cpp:2177
 msgid "The file cannot be opened."
 msgstr ""
 
-#: ../src/edframe.cpp:169 ../src/edframe.cpp:2176
+#: ../src/edframe.cpp:169 ../src/edframe.cpp:2182
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr ""
 
-#: ../src/edframe.cpp:1677
+#: ../src/edframe.cpp:1683
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
@@ -1537,7 +1592,7 @@ msgstr ""
 msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr ""
 
-#: ../src/edframe.cpp:1692
+#: ../src/edframe.cpp:1698
 msgid "The translation is ready for use."
 msgstr "Котормо колдонууга даяр."
 
@@ -1545,7 +1600,7 @@ msgstr "Котормо колдонууга даяр."
 msgid "There are no translations. That’s unusual."
 msgstr ""
 
-#: ../src/catalog.cpp:1375
+#: ../src/catalog.cpp:1378
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr ""
@@ -1575,7 +1630,11 @@ msgstr ""
 "Бул саптар баштапкы файлдарынан табылды, бирок каталогдордон табылган жок.\n"
 "Аларды Poedit азыр каталогго кошот."
 
-#: ../src/edframe.cpp:2250
+#: ../src/edapp.cpp:202
+msgid "This beta version of Poedit expired."
+msgstr ""
+
+#: ../src/edframe.cpp:2270
 msgid ""
 "This catalog has entries with plural forms, but doesn't have Plural-Forms "
 "header configured."
@@ -1665,12 +1724,12 @@ msgstr "Котормосу"
 msgid "Translated"
 msgstr "Котормосу"
 
-#: ../src/edframe.cpp:2765
+#: ../src/edframe.cpp:2791
 #, fuzzy, c-format
 msgid "Translated %u strings"
 msgstr "%i %% которулду, %i сап"
 
-#: ../src/edframe.cpp:2747
+#: ../src/edframe.cpp:2773
 msgid "Translating using TM..."
 msgstr ""
 
@@ -1683,7 +1742,7 @@ msgstr "Котормосу"
 msgid "Translation Is &Fuzzy"
 msgstr "Котормо так э&мес"
 
-#: ../src/languagectrl.cpp:76
+#: ../src/languagectrl.cpp:89
 #, fuzzy
 msgid "Translation Language"
 msgstr "Котормосу"
@@ -1701,7 +1760,7 @@ msgstr "Котормо так э&мес"
 msgid "Translation memory migration failed."
 msgstr "Маалыматтар базасынын катасы: %s"
 
-#: ../src/resources/properties.xrc:135
+#: ../src/resources/properties.xrc:139
 msgid "Translation properties"
 msgstr "Котормонун касиеттери"
 
@@ -1710,11 +1769,16 @@ msgstr "Котормонун касиеттери"
 msgid "Translation — %s"
 msgstr "Котормосу"
 
-#: ../src/edframe.cpp:681
+#: ../src/edframe.cpp:2240
+#, fuzzy
+msgid "Translation's project name isn't set."
+msgstr "'%s' файлы жок."
+
+#: ../src/edframe.cpp:686
 msgid "Translation:"
 msgstr "Котормосу:"
 
-#: ../src/wordpress.cpp:310
+#: ../src/wordpress.cpp:312
 #, fuzzy, c-format
 msgid "Translations folder (%s) doesn't exist."
 msgstr "'%s' файлы жок."
@@ -1724,11 +1788,11 @@ msgstr "'%s' файлы жок."
 msgid "Translations with errors"
 msgstr "Котормо эси"
 
-#: ../src/edframe.cpp:3152
+#: ../src/edframe.cpp:3178
 msgid "Two"
 msgstr ""
 
-#: ../src/propertiesdlg.cpp:112
+#: ../src/propertiesdlg.cpp:108
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (сунушталат)"
 
@@ -1777,11 +1841,11 @@ msgstr "POT &файлынан жаңылоо..."
 msgid "Update summary"
 msgstr "Жаңылоо маалыматы"
 
-#: ../src/edframe.cpp:1585 ../src/manager.cpp:441
+#: ../src/edframe.cpp:1591 ../src/manager.cpp:441
 msgid "Updating catalog"
 msgstr "Каталог жаңыланууда"
 
-#: ../src/edframe.cpp:1601
+#: ../src/edframe.cpp:1607
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
 msgstr ""
 "Каталог жаңыланышы оңунан чыккан жок. Кошумча маалымат үчүн 'Деталдар >>' "
@@ -1804,7 +1868,7 @@ msgstr "Котормолор тизмеси үчүн башка арипти к�
 msgid "Use default rules for this language"
 msgstr "(Жарыяланбас тилын колдонуу)"
 
-#: ../src/resources/properties.xrc:182
+#: ../src/resources/properties.xrc:186
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
@@ -1821,23 +1885,23 @@ msgstr "Котормо эсин жаңылоо"
 msgid "Validate"
 msgstr "Текшерүү"
 
-#: ../src/edframe.cpp:1670 ../src/edframe.cpp:1689
+#: ../src/edframe.cpp:1676 ../src/edframe.cpp:1695
 msgid "Validation results"
 msgstr "Текшерүү натыйжалары"
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
-#: ../src/edapp.cpp:572 ../src/welcomescreen.cpp:155
+#: ../src/edapp.cpp:596 ../src/welcomescreen.cpp:155
 #, c-format
 msgid "Version %s"
 msgstr "Версия %s"
 
-#: ../src/wordpress.cpp:438
+#: ../src/wordpress.cpp:395
 #, fuzzy
 msgid "View Log"
 msgstr "Кө&рүнүш"
 
-#: ../src/wordpress.cpp:435
+#: ../src/wordpress.cpp:392
 #, fuzzy
 msgid "View log"
 msgstr "Кө&рүнүш"
@@ -1855,11 +1919,11 @@ msgstr "Бүтүн сөздөрдү гана"
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/wordpress.cpp:449
+#: ../src/wordpress.cpp:406
 msgid "WordPress Errors Log"
 msgstr ""
 
-#: ../src/wordpress.cpp:420
+#: ../src/wordpress.cpp:377
 msgid "WordPress error"
 msgstr ""
 
@@ -1882,7 +1946,7 @@ msgid "You must restart Poedit for this change to take effect."
 msgstr ""
 "Ушул өзгөртүү күчүнө кириш үчүн, сиз Poedit'ти кайта жүргүзүшүңүз керек."
 
-#: ../src/edframe.cpp:2234
+#: ../src/edframe.cpp:2225
 msgid ""
 "You should set your email address in Preferences so that it can be used for "
 "Last-Translator header in GNU gettext files."
@@ -1890,7 +1954,7 @@ msgstr ""
 "GNU gettext файлдарынын Last-Translator баш сабында сиздин e-mail дарегиңиз "
 "колдонулуш үчүн, аны Ырастоолордон орнотушуңуз керек."
 
-#: ../src/edframe.cpp:1123
+#: ../src/edframe.cpp:1129
 msgid "Your changes will be lost if you don't save them."
 msgstr "Эгер өзгөртүүлөрдү сактабасаңыз алар жоголот."
 
@@ -1910,15 +1974,15 @@ msgstr ""
 msgid "Your name:"
 msgstr "Атыңыз:"
 
-#: ../src/edframe.cpp:3148
+#: ../src/edframe.cpp:3174
 msgid "Zero"
 msgstr ""
 
-#: ../src/edapp.cpp:411
+#: ../src/edapp.cpp:433
 msgid "don't delete temporary files (for debugging)"
 msgstr "(оңдоо үчүн) убактылуу файлдарды өчүрбөө"
 
-#: ../src/propertiesdlg.cpp:76
+#: ../src/propertiesdlg.cpp:72
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr ""
 
@@ -1976,9 +2040,6 @@ msgstr ""
 
 #~ msgid "Display &Line Numbers"
 #~ msgstr "Саптардын &номерин көрсөтүү"
-
-#~ msgid "E&xport..."
-#~ msgstr "&Экспорт..."
 
 #~ msgid "Edit item"
 #~ msgstr "Пунктту оңдоо"
@@ -2144,9 +2205,6 @@ msgstr ""
 
 #~ msgid "Fullscreen view"
 #~ msgstr "Толук экранга"
-
-#~ msgid "GNU gettext documentation"
-#~ msgstr "GNU gettext документациялары"
 
 #~ msgid "Macintosh"
 #~ msgstr "Macintosh"

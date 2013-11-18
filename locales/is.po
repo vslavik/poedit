@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2012-07-30 10:34+0200\n"
+"POT-Creation-Date: 2013-11-18 18:12+0100\n"
 "PO-Revision-Date: 2013-11-14 13:58-0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: íslensku <translation-team-is@lists.sourceforge.net>\n"
@@ -19,40 +19,45 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
-#: ../src/edframe.cpp:2850
+#: ../src/edframe.cpp:2876
 #, c-format
 msgid "    “%s”"
 msgstr "    “%s”"
 
-#: ../src/edframe.cpp:2485
+#: ../src/edframe.cpp:2516
+#, c-format
+msgid " (beta version expires %s)"
+msgstr ""
+
+#: ../src/edframe.cpp:2505
 msgid " (modified)"
 msgstr " (breytt)"
 
-#: ../src/edframe.cpp:2467
+#: ../src/edframe.cpp:2487
 msgid " (unsaved)"
 msgstr " (óvistað)"
 
 #. TRANSLATORS: This is version information in about dialog, it is followed
 #. by version number when used (wxWidgets 2.8)
-#: ../src/edapp.cpp:575
+#: ../src/edapp.cpp:599
 msgid " Version "
 msgstr " Útgáfa"
 
-#: ../src/edframe.cpp:1665
+#: ../src/edframe.cpp:1671
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "%d galli fannst á þýðingunni."
 msgstr[1] "%d gallar fundust á þýðingunni."
 
-#: ../src/edframe.cpp:2430
+#: ../src/edframe.cpp:2450
 #, c-format
 msgid "%i %% translated, %i string"
 msgid_plural "%i %% translated, %i strings"
 msgstr[0] "%i %% þýtt, %i strengur"
 msgstr[1] "%i %% þýtt, %i strengir"
 
-#: ../src/edframe.cpp:2435
+#: ../src/edframe.cpp:2455
 #, c-format
 msgid "%i %% translated, %i string (%s)"
 msgid_plural "%i %% translated, %i strings (%s)"
@@ -61,17 +66,18 @@ msgstr[1] "%i %% þýtt, %i strengir (%s)"
 
 #: ../src/export_html.cpp:141
 #, c-format
-msgid "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
+msgid ""
+"%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
 msgstr "%i %% þýtt, %i strengir (%i óljósir, %i röng merki, %i óþýddir)"
 
-#: ../src/edframe.cpp:2420
+#: ../src/edframe.cpp:2440
 #, c-format
 msgid "%i bad token"
 msgid_plural "%i bad tokens"
 msgstr[0] "%i rangt merki"
 msgstr[1] "%i röng merki"
 
-#: ../src/edframe.cpp:2414
+#: ../src/edframe.cpp:2434
 #, c-format
 msgid "%i fuzzy"
 msgid_plural "%i fuzzy"
@@ -83,31 +89,27 @@ msgstr[1] "%i óskýrar"
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i línur úr skránni '%s' hlóðust ekki rétt inn."
 
-#: ../src/edframe.cpp:2426
+#: ../src/edframe.cpp:2446
 #, c-format
 msgid "%i not translated"
 msgid_plural "%i not translated"
 msgstr[0] "%i óþýtt"
 msgstr[1] "%i óþýtt"
 
-#: ../src/resources/menus.xrc:248
-#: ../src/resources/menus.xrc:249
-#: ../src/resources/menus.xrc:298
-#: ../src/resources/menus.xrc:299
+#: ../src/resources/menus.xrc:258 ../src/resources/menus.xrc:259
+#: ../src/resources/menus.xrc:315 ../src/resources/menus.xrc:316
 msgid "&About"
 msgstr "&Um forritið"
 
-#: ../src/resources/menus.xrc:247
-#: ../src/resources/menus.xrc:297
+#: ../src/resources/menus.xrc:257 ../src/resources/menus.xrc:314
 msgid "&About Poedit"
 msgstr "&Um Poedit"
 
-#: ../src/edframe.cpp:3224
+#: ../src/edframe.cpp:3250
 msgid "&Bookmarks"
 msgstr "&Bókamerki"
 
-#: ../src/resources/manager.xrc:132
-#: ../src/resources/menus.xrc:26
+#: ../src/resources/manager.xrc:132 ../src/resources/menus.xrc:26
 msgid "&Close"
 msgstr "&Loka"
 
@@ -131,31 +133,33 @@ msgstr "&Lokið og næsta"
 msgid "&Edit"
 msgstr "Br&eyta"
 
-#: ../src/edframe.cpp:521
-#: ../src/resources/manager.xrc:125
-#: ../src/resources/menus.xrc:5
-#: ../src/resources/menus.xrc:258
+#: ../src/edframe.cpp:521 ../src/resources/manager.xrc:125
+#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:268
 msgid "&File"
 msgstr "&Skrá"
 
-#: ../src/resources/menus.xrc:81
-#: ../src/resources/menus.xrc:95
+#: ../src/resources/menus.xrc:81 ../src/resources/menus.xrc:95
 msgid "&Find..."
 msgstr "&Leita..."
 
-#: ../src/edframe.cpp:527
-#: ../src/resources/menus.xrc:161
+#: ../src/resources/menus.xrc:248 ../src/resources/menus.xrc:305
+msgid "&GNU gettext Manual"
+msgstr ""
+
+#: ../src/resources/menus.xrc:247 ../src/resources/menus.xrc:304
+msgid "&GNU gettext manual"
+msgstr ""
+
+#: ../src/edframe.cpp:527 ../src/resources/menus.xrc:161
 msgid "&Go"
 msgstr "&Fara"
 
-#: ../src/edapp.cpp:183
-#: ../src/resources/menus.xrc:251
-#: ../src/resources/menus.xrc:301
+#: ../src/edapp.cpp:195 ../src/resources/menus.xrc:261
+#: ../src/resources/menus.xrc:318
 msgid "&Help"
 msgstr "&Hjálp"
 
-#: ../src/resources/menus.xrc:8
-#: ../src/resources/menus.xrc:261
+#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:271
 msgid "&New..."
 msgstr "&Nýtt..."
 
@@ -171,18 +175,15 @@ msgstr "&Næsti strengur"
 msgid "&Next message"
 msgstr "&Næsti strengur"
 
-#: ../src/resources/menus.xrc:241
-#: ../src/resources/menus.xrc:291
+#: ../src/resources/menus.xrc:241 ../src/resources/menus.xrc:298
 msgid "&Online Help"
 msgstr "&Hjálp á netinu"
 
-#: ../src/resources/menus.xrc:240
-#: ../src/resources/menus.xrc:290
+#: ../src/resources/menus.xrc:240 ../src/resources/menus.xrc:297
 msgid "&Online help"
 msgstr "&Hjálp á netinu"
 
-#: ../src/resources/menus.xrc:21
-#: ../src/resources/menus.xrc:274
+#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:284
 msgid "&Open..."
 msgstr "&Opna..."
 
@@ -190,9 +191,8 @@ msgstr "&Opna..."
 msgid "&Preferences"
 msgstr "S&tillingar"
 
-#: ../src/resources/manager.xrc:128
-#: ../src/resources/menus.xrc:47
-#: ../src/resources/menus.xrc:278
+#: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:47
+#: ../src/resources/menus.xrc:288
 msgid "&Preferences..."
 msgstr "S&tillingar..."
 
@@ -260,7 +260,7 @@ msgstr "&Sannreyna þýðingar"
 msgid "&View"
 msgstr "S&koða"
 
-#: ../src/catalog.cpp:1635
+#: ../src/catalog.cpp:1638
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' er ógild POT skrá."
@@ -293,13 +293,13 @@ msgstr "<ónefnt>"
 #. TRANSLATORS: This is titlebar of about dialog, the string ends with space
 #. and is followed by application name when used ("Poedit",
 #. but don't add it to this translation yourself) (wxWidgets 2.8)
-#: ../src/edapp.cpp:579
+#: ../src/edapp.cpp:603
 msgid "About "
 msgstr "Um forritið "
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
-#: ../src/edapp.cpp:569
+#: ../src/edapp.cpp:593
 #, c-format
 msgid "About %s"
 msgstr "Um %s"
@@ -308,7 +308,7 @@ msgstr "Um %s"
 msgid "Add directory to the list"
 msgstr "Bæta möppu við á lista"
 
-#: ../src/propertiesdlg.cpp:69
+#: ../src/propertiesdlg.cpp:65
 msgid "Additional keywords"
 msgstr "Aukaleg stikkorð:"
 
@@ -324,8 +324,7 @@ msgstr "Atriði í lista yfir inntaksskrár:"
 msgid "An item in keywords list:"
 msgstr "Atriði í lista yfir stikkorð:"
 
-#: ../src/edframe.cpp:2829
-#: ../src/edframe.cpp:2841
+#: ../src/edframe.cpp:2855 ../src/edframe.cpp:2867
 msgid "Automatic Translations:"
 msgstr "Sjálfvirkar þýðingar:"
 
@@ -333,8 +332,7 @@ msgstr "Sjálfvirkar þýðingar:"
 msgid "Automatic translation"
 msgstr "Sjálfvirk þýðing"
 
-#: ../src/edframe.cpp:2827
-#: ../src/edframe.cpp:2839
+#: ../src/edframe.cpp:2853 ../src/edframe.cpp:2865
 msgid "Automatic translations:"
 msgstr "Sjálfvirkar þýðingar:"
 
@@ -350,7 +348,7 @@ msgstr "Sjálfvirk vistþýðing á .mo skrám við vistun"
 msgid "Bad Tokens"
 msgstr "Óleyfilegar merkingar"
 
-#: ../src/resources/properties.xrc:152
+#: ../src/resources/properties.xrc:156
 msgid "Base path:"
 msgstr "Grunnslóð:"
 
@@ -358,12 +356,17 @@ msgstr "Grunnslóð:"
 msgid "Behavior"
 msgstr "Hegðun"
 
+#: ../src/edapp.cpp:202
+msgid "Beta expired"
+msgstr ""
+
 #: ../src/catalog.cpp:681
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "Skemmd þýðingaskrá: fleirtöluform msgstr notað án msgid_plural"
 
 #: ../src/catalog.cpp:636
-msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid ""
+"Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr "Skemmd þýðingaskrá: eintöluform msgstr notað með msgid_plural"
 
 #: ../src/resources/manager.xrc:90
@@ -382,17 +385,13 @@ msgstr "&Hreinsa"
 msgid "CR/LF conversion"
 msgstr "CR/LF umbreyting"
 
-#: ../src/resources/comment.xrc:38
-#: ../src/resources/manager.xrc:113
-#: ../src/resources/prefs.xrc:303
-#: ../src/resources/prefs.xrc:445
-#: ../src/resources/progress.xrc:32
-#: ../src/resources/properties.xrc:214
+#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:113
+#: ../src/resources/prefs.xrc:303 ../src/resources/prefs.xrc:445
+#: ../src/resources/progress.xrc:32 ../src/resources/properties.xrc:233
 msgid "Cancel"
 msgstr "Hætta við"
 
-#: ../src/utility.cpp:57
-#: ../src/utility.cpp:67
+#: ../src/utility.cpp:57 ../src/utility.cpp:67
 msgid "Cannot create temporary directory."
 msgstr "Ekki tókst að búa til bráðabirgðamöppu."
 
@@ -409,7 +408,7 @@ msgstr "Næmt fyrir há og lágstöfum"
 msgid "Catalog"
 msgstr "Þýðingaskrá"
 
-#: ../src/edframe.cpp:1119
+#: ../src/edframe.cpp:1125
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Þýðingaskrá hefur verið breytt. Viltu vista breytingar?"
 
@@ -418,7 +417,6 @@ msgid "Catalog properties"
 msgstr "Eiginleikar þýðingaskrár"
 
 #: ../src/resources/menus.xrc:53
-#: ../src/resources/menus.xrc:282
 msgid "Catalogs &Manager"
 msgstr "Þýðingas&kráastjórn"
 
@@ -426,16 +424,20 @@ msgstr "Þýðingas&kráastjórn"
 msgid "Catalogs &manager"
 msgstr "Þýðingas&kráastjórn"
 
+#: ../src/edapp.cpp:762
+#, fuzzy
+msgid "Catalogs Manager"
+msgstr "Þýðingas&kráastjórn"
+
 #: ../src/resources/prefs.xrc:62
 msgid "Change UI language"
 msgstr "Veldu tungumál fyrir notendaviðmót"
 
-#: ../src/export_html.cpp:126
-#: ../src/resources/properties.xrc:111
+#: ../src/export_html.cpp:126 ../src/resources/properties.xrc:115
 msgid "Charset:"
 msgstr "Stafasett:"
 
-#: ../src/edframe.cpp:530
+#: ../src/edapp.cpp:766
 msgid "Check for Updates..."
 msgstr "Athuga með uppfærslur..."
 
@@ -451,8 +453,7 @@ msgstr "Athuga með uppfærslur..."
 msgid "Check spelling"
 msgstr "Athuga stafsetningu"
 
-#: ../src/edframe.cpp:2802
-#: ../src/resources/menus.xrc:72
+#: ../src/edframe.cpp:2828 ../src/resources/menus.xrc:72
 msgid "Clear Translation"
 msgstr "Hreinsa þýðingu"
 
@@ -460,8 +461,7 @@ msgstr "Hreinsa þýðingu"
 msgid "Clear the comment"
 msgstr "Hreinsa athugasemd"
 
-#: ../src/edframe.cpp:2800
-#: ../src/resources/menus.xrc:71
+#: ../src/edframe.cpp:2826 ../src/resources/menus.xrc:71
 msgid "Clear translation"
 msgstr "Hreinsa þýðingu"
 
@@ -477,8 +477,7 @@ msgstr "Athugasemd"
 msgid "Comment window is editable"
 msgstr "Athugasemdagluggi er ritanlegur"
 
-#: ../src/edframe.cpp:701
-#: ../src/export_html.cpp:213
+#: ../src/edframe.cpp:706 ../src/export_html.cpp:213
 #: ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Athugasemd:"
@@ -487,17 +486,16 @@ msgstr "Athugasemd:"
 msgid "Configure source code extraction in Properties."
 msgstr "Stilla útdrátt upprunakóða í kjörstillingum."
 
-#: ../src/manager.cpp:413
-#: ../src/manager.cpp:433
+#: ../src/manager.cpp:413 ../src/manager.cpp:433
 msgid "Confirmation"
 msgstr "Staðfesting"
 
-#: ../src/wordpress.cpp:113
+#: ../src/wordpress.cpp:115
 #, c-format
 msgid "Confused by ambiguous values of \"%s\" in %s."
 msgstr "Tvístígandi yfir skrýtnum gildum fyrir \"%s\" í %s."
 
-#: ../src/wordpress.cpp:208
+#: ../src/wordpress.cpp:210
 msgid "Confused: multiple main plugin files."
 msgstr "Ruglingslegt: margar skrár með aðalviðbót."
 
@@ -505,21 +503,19 @@ msgstr "Ruglingslegt: margar skrár með aðalviðbót."
 msgid "Consult TM when updating from sources"
 msgstr "Fletta upp í þýpingaminni við uppfærslu ú frumskrám"
 
-#: ../src/edframe.cpp:2127
+#: ../src/edframe.cpp:2133
 msgid "Context:"
 msgstr "Samhengi:"
 
-#: ../src/edframe.cpp:2795
-#: ../src/resources/menus.xrc:67
+#: ../src/edframe.cpp:2821 ../src/resources/menus.xrc:67
 msgid "Copy from Source Text"
 msgstr "Afrita úr upprunatexta"
 
-#: ../src/edframe.cpp:2793
-#: ../src/resources/menus.xrc:66
+#: ../src/edframe.cpp:2819 ../src/resources/menus.xrc:66
 msgid "Copy from source text"
 msgstr "Afrita úr upprunatexta"
 
-#: ../src/wordpress.cpp:236
+#: ../src/wordpress.cpp:238
 #, c-format
 msgid "Couldn't detect translation domain of the \"%s\" plugin."
 msgstr "Gat ekki fundið þýðingasvið (translation domain) \"%s\" viðbótarinnar"
@@ -529,8 +525,7 @@ msgstr "Gat ekki fundið þýðingasvið (translation domain) \"%s\" viðbótari
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "Gat ekki hlaðið inn skránni %s, hún er líklega skemmd."
 
-#: ../src/catalog.cpp:1330
-#: ../src/catalog.cpp:1366
+#: ../src/catalog.cpp:1333 ../src/catalog.cpp:1369
 #, c-format
 msgid "Couldn't save file %s."
 msgstr "Gat ekki vistað skrána %s."
@@ -551,8 +546,7 @@ msgstr "Búa til nýtt þýðingarverkefni"
 msgid "Database size on disk:"
 msgstr "Stærð gagnagrunns á diski:"
 
-#: ../src/resources/manager.xrc:53
-#: ../src/resources/prefs.xrc:269
+#: ../src/resources/manager.xrc:53 ../src/resources/prefs.xrc:269
 msgid "Delete"
 msgstr "Eyða"
 
@@ -600,11 +594,11 @@ msgstr ""
 msgid "Do you want to delete the project?"
 msgstr "Viltu eyða verkefninu?"
 
-#: ../src/edframe.cpp:2692
+#: ../src/edframe.cpp:2718
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Viltu fjarlægja allar þýðingar sem ekki eru lengur notaðar?"
 
-#: ../src/edframe.cpp:1130
+#: ../src/edframe.cpp:1136
 msgid "Don't Save"
 msgstr "Ekki vista"
 
@@ -612,7 +606,7 @@ msgstr "Ekki vista"
 msgid "Don't change format of existing catalogs"
 msgstr "Ekki breyta vistunarformi núverandi þýðingaskráa"
 
-#: ../src/edframe.cpp:1128
+#: ../src/edframe.cpp:1134
 msgid "Don't save"
 msgstr "Ekki vista"
 
@@ -620,12 +614,15 @@ msgstr "Ekki vista"
 msgid "Don't show again"
 msgstr "Ekki sýna aftur"
 
-#: ../src/edapp.cpp:711
+#: ../src/edapp.cpp:832
 msgid "Donate..."
 msgstr "Styðja..."
 
-#: ../src/resources/manager.xrc:136
-#: ../src/resources/menus.xrc:59
+#: ../src/edapp.cpp:204
+msgid "Download"
+msgstr ""
+
+#: ../src/resources/manager.xrc:136 ../src/resources/menus.xrc:59
 msgid "E&xit"
 msgstr "&Hætta"
 
@@ -633,8 +630,7 @@ msgstr "&Hætta"
 msgid "E&xport as HTML..."
 msgstr "&Flytja út sem HTML..."
 
-#: ../src/resources/manager.xrc:48
-#: ../src/resources/prefs.xrc:262
+#: ../src/resources/manager.xrc:48 ../src/resources/prefs.xrc:262
 msgid "Edit"
 msgstr "Breyta"
 
@@ -646,7 +642,7 @@ msgstr "Breyta &athugasemd"
 msgid "Edit &comment"
 msgstr "Breyta &athugasemd"
 
-#: ../src/edframe.cpp:2809
+#: ../src/edframe.cpp:2835
 msgid "Edit Comment"
 msgstr "Breyta athugasemd"
 
@@ -654,8 +650,7 @@ msgstr "Breyta athugasemd"
 msgid "Edit a translation"
 msgstr "Breyta þýðingu"
 
-#: ../src/edframe.cpp:2807
-#: ../src/resources/comment.xrc:4
+#: ../src/edframe.cpp:2833 ../src/resources/comment.xrc:4
 #: ../src/resources/toolbar.xrc:58
 msgid "Edit comment"
 msgstr "Breyta athugasemd"
@@ -672,11 +667,21 @@ msgstr "Breyta þýðingarverkefni"
 msgid "Editor"
 msgstr "Ritill"
 
-#: ../src/wordpress.cpp:437
+#: ../src/resources/menus.xrc:253 ../src/resources/menus.xrc:310
+#, fuzzy
+msgid "Email &Support..."
+msgstr "Stuðningur í tölvupósti"
+
+#: ../src/resources/menus.xrc:252 ../src/resources/menus.xrc:309
+#, fuzzy
+msgid "Email &support..."
+msgstr "Stuðningur í tölvupósti"
+
+#: ../src/wordpress.cpp:394
 msgid "Email Support"
 msgstr "Stuðningur í tölvupósti"
 
-#: ../src/wordpress.cpp:434
+#: ../src/wordpress.cpp:391
 msgid "Email support"
 msgstr "Stuðningur í tölvupósti"
 
@@ -684,29 +689,37 @@ msgstr "Stuðningur í tölvupósti"
 msgid "Enables on-the-fly spellchecking"
 msgstr "Virkjar stafsetningayfirferð um leið og skrifað er"
 
-#: ../src/edframe.cpp:1599
+#: ../src/edframe.cpp:1605
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Færslur í þýðingaskránni eru líklega rangar."
 
-#: ../src/edframe.cpp:2254
-msgid "Entries in this catalog have different plural forms count from what catalog's Plural-Forms header says"
-msgstr "Færslur í þessari þýðingaskrá eru með annan fleirtölufjölda en þann sem titekinn er í Plural-Forms línu skráarhaussins"
+#: ../src/edframe.cpp:2274
+msgid ""
+"Entries in this catalog have different plural forms count from what "
+"catalog's Plural-Forms header says"
+msgstr ""
+"Færslur í þessari þýðingaskrá eru með annan fleirtölufjölda en þann sem "
+"titekinn er í Plural-Forms línu skráarhaussins"
 
-#: ../src/edframe.cpp:1673
-msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
-msgstr "Færslur með villum eru auðkenndar með rauðum lit í listanum. Nánari upplýsingar um villurnar birtast þegar slík færsla er valin."
+#: ../src/edframe.cpp:1679
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Færslur með villum eru auðkenndar með rauðum lit í listanum. Nánari "
+"upplýsingar um villurnar birtast þegar slík færsla er valin."
 
-#: ../src/edframe.cpp:2361
+#: ../src/edframe.cpp:2381
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "Villa við hleðslu á þýðingaskrá '%s'."
 
-#: ../src/fileviewer.cpp:287
+#: ../src/fileviewer.cpp:297
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Villa við opnun á skránni %s!"
 
-#: ../src/catalog.cpp:1501
+#: ../src/catalog.cpp:1504
 msgid "Error saving catalog"
 msgstr "Villa við vistun á þýðingaskrá"
 
@@ -714,11 +727,11 @@ msgstr "Villa við vistun á þýðingaskrá"
 msgid "Error:"
 msgstr "Villa:"
 
-#: ../src/edframe.cpp:3142
+#: ../src/edframe.cpp:3168
 msgid "Everything"
 msgstr "Allt"
 
-#: ../src/edframe.cpp:1266
+#: ../src/edframe.cpp:1272
 msgid "Export as..."
 msgstr "Flytja út sem..."
 
@@ -726,7 +739,7 @@ msgstr "Flytja út sem..."
 msgid "Extract from sources"
 msgstr "Ná í úr frumkóða"
 
-#: ../src/resources/properties.xrc:143
+#: ../src/resources/properties.xrc:147
 msgid "Extract text from source files in the following directories:"
 msgstr "Ná í texta úr upprunaskrám í eftirfarandi möppum:"
 
@@ -735,7 +748,7 @@ msgstr "Ná í texta úr upprunaskrám í eftirfarandi möppum:"
 msgid "Failed command: %s"
 msgstr "Mislukkuð skipun: %s"
 
-#: ../src/wordpress.cpp:419
+#: ../src/wordpress.cpp:376
 msgid "Failed to extract WordPress information."
 msgstr "Mistókst að hlaða inn upplýsingum frá WordPress."
 
@@ -747,24 +760,22 @@ msgstr "Mistókst að hlaða inn lesinni þýðingaskrá."
 msgid "Failed to merge gettext catalogs."
 msgstr "Mistókst að sameina gettext þýðingaskrár."
 
-#: ../src/wordpress.cpp:69
+#: ../src/wordpress.cpp:71
 #, c-format
 msgid "Failed to read file '%s'."
 msgstr "Mistókst að lesa skrána '%s'."
 
-#: ../src/wordpress.cpp:133
+#: ../src/wordpress.cpp:135
 #, c-format
 msgid "Failed to read folder '%s'."
 msgstr "Mistókst að lesa möppuna '%s'."
 
-#: ../src/edframe.cpp:2611
+#: ../src/edframe.cpp:2637
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Mistókst að uppfæra þýðingaminni: %s"
 
-#: ../src/edapp.cpp:550
-#: ../src/edframe.cpp:444
-#: ../src/edframe.cpp:1188
+#: ../src/edapp.cpp:574 ../src/edframe.cpp:444 ../src/edframe.cpp:1194
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Skráin '%s' fannst ekki."
@@ -774,7 +785,7 @@ msgstr "Skráin '%s' fannst ekki."
 msgid "File '%s' is not a message catalog."
 msgstr "Skráin '%s' er ekki þýðingaskrá."
 
-#: ../src/catalog.cpp:1312
+#: ../src/catalog.cpp:1315
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -783,8 +794,7 @@ msgstr ""
 "Skráin '%s' er aðeins lesanleg og er ekki hægt að vista.\n"
 "Vistaðu hana með öðru heiti."
 
-#: ../src/prefsdlg.cpp:195
-#: ../src/tm/tm_migrate.cpp:198
+#: ../src/prefsdlg.cpp:195 ../src/tm/tm_migrate.cpp:198
 msgid "Finalizing..."
 msgstr "Geng frá..."
 
@@ -828,11 +838,11 @@ msgstr "Finna fyrra"
 msgid "Find..."
 msgstr "Finna..."
 
-#: ../src/edframe.cpp:2284
+#: ../src/edframe.cpp:2304
 msgid "Fix the header"
 msgstr "Laga hausinn"
 
-#: ../src/wordpress.cpp:292
+#: ../src/wordpress.cpp:294
 msgid "Folder looks like both a plugin and a theme."
 msgstr "Mappan líkist bæði þema og viðbót."
 
@@ -840,17 +850,16 @@ msgstr "Mappan líkist bæði þema og viðbót."
 msgid "Fonts"
 msgstr "Leturgerðir"
 
-#: ../src/edframe.cpp:3144
+#: ../src/edframe.cpp:3170
 #, c-format
 msgid "Form %i"
 msgstr "Form %i"
 
-#: ../src/wordpress.cpp:294
+#: ../src/wordpress.cpp:296
 msgid "Found neither WordPress theme nor plugin in the folder."
 msgstr "Fann hvorki WordPress þema eða viðbót í möppunni."
 
-#: ../src/manager.cpp:246
-#: ../src/resources/toolbar.xrc:51
+#: ../src/manager.cpp:246 ../src/resources/toolbar.xrc:51
 msgid "Fuzzy"
 msgstr "Óskýrt"
 
@@ -858,37 +867,39 @@ msgstr "Óskýrt"
 msgid "Fuzzy translation"
 msgstr "Óskýr þýðing"
 
-#: ../src/edapp.cpp:524
-#: ../src/edframe.cpp:1169
-#: ../src/edframe.cpp:1229
+#: ../src/edapp.cpp:548 ../src/edframe.cpp:1175 ../src/edframe.cpp:1235
 #: ../src/prefsdlg.cpp:168
 msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU gettext þýðingaskrár (*.po)|*.po|Allar skrár (*.*)|*.*"
 
-#: ../src/edframe.cpp:1617
+#: ../src/edframe.cpp:1623
 msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU gettext sniðmát (*.pot)|*.pot|Allar skrár (*.*)|*.*"
 
-#: ../src/edframe.cpp:1315
-msgid "GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
-msgstr "GNU gettext sniðmát (*.pot)|*.pot|GNU gettext þýðingaskrár (*.po)|*.pot|Allar skrár (*.*)|*.*"
+#: ../src/edframe.cpp:1321
+msgid ""
+"GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All "
+"files (*.*)|*.*"
+msgstr ""
+"GNU gettext sniðmát (*.pot)|*.pot|GNU gettext þýðingaskrár (*.po)|*.pot|"
+"Allar skrár (*.*)|*.*"
 
-#: ../src/edframe.cpp:3236
+#: ../src/edframe.cpp:3262
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "Fara á bókmerki %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:3230
+#: ../src/edframe.cpp:3256
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+Alt+%i"
 msgstr "Fara á bókmerki %i\tCtrl+Alt+%i"
 
-#: ../src/edframe.cpp:3233
+#: ../src/edframe.cpp:3259
 #, c-format
 msgid "Go to bookmark %i\tCtrl+%i"
 msgstr "Fara á bókmerki %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:1268
+#: ../src/edframe.cpp:1274
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML skrá (*.html)|*.html"
 
@@ -910,11 +921,18 @@ msgstr "Ef hakað er við þetta verður athugasemdaglugginn ritanlegur."
 
 #: ../src/prefsdlg.cpp:103
 msgid "If enabled, Poedit will try to fill in missing translations."
-msgstr "Ef þetta er virkt mun Poedit reyna að fylla inn í þær þýðingar sem vantar."
+msgstr ""
+"Ef þetta er virkt mun Poedit reyna að fylla inn í þær þýðingar sem vantar."
 
-#: ../src/edframe.cpp:2694
-msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
-msgstr "Ef þú heldur áfram að henda, verður öllum þýðingum sem merktar eru til að eyða endanlega eytt. Þú munt þurfa að þýða þær alveg aftur ef þeim verður bætt inn aftur síðar."
+#: ../src/edframe.cpp:2720
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Ef þú heldur áfram að henda, verður öllum þýðingum sem merktar eru til að "
+"eyða endanlega eytt. Þú munt þurfa að þýða þær alveg aftur ef þeim verður "
+"bætt inn aftur síðar."
 
 #: ../src/prefsdlg.cpp:179
 msgid "Importing translations..."
@@ -929,8 +947,7 @@ msgstr "Flyt inn þýðingar: %d"
 msgid "Include beta versions"
 msgstr "Beta-útgáfur meðtaldar"
 
-#: ../src/edframe.cpp:165
-#: ../src/edframe.cpp:2172
+#: ../src/edframe.cpp:165 ../src/edframe.cpp:2178
 msgid "Invalid file"
 msgstr "Ógild skrá"
 
@@ -942,7 +959,7 @@ msgstr "Ræsing:"
 msgid "Items"
 msgstr "Atriði"
 
-#: ../src/edframe.cpp:2698
+#: ../src/edframe.cpp:2724
 msgid "Keep"
 msgstr "Halda"
 
@@ -950,11 +967,11 @@ msgstr "Halda"
 msgid "Language Code or Name (e.g. en_GB)"
 msgstr "Kóði eða heiti tungumáls (t.d. is_IS)"
 
-#: ../src/edframe.cpp:2218
+#: ../src/edframe.cpp:2255
 msgid "Language of the translation isn't set."
 msgstr "Tungumál þýðingar er ekki stillt."
 
-#: ../src/languagectrl.cpp:81
+#: ../src/languagectrl.cpp:94
 msgid "Language of the translation:"
 msgstr "Tungumál þýðingar:"
 
@@ -962,10 +979,8 @@ msgstr "Tungumál þýðingar:"
 msgid "Language selection"
 msgstr "Velja tungumál"
 
-#: ../src/export_html.cpp:115
-#: ../src/resources/prefs.xrc:319
-#: ../src/resources/prefs.xrc:323
-#: ../src/resources/properties.xrc:33
+#: ../src/export_html.cpp:115 ../src/resources/prefs.xrc:319
+#: ../src/resources/prefs.xrc:323 ../src/resources/properties.xrc:33
 msgid "Language:"
 msgstr "Tungumál:"
 
@@ -977,11 +992,16 @@ msgstr "Síðast breytt"
 msgid "Learn From Files..."
 msgstr "Læra út frá skrám..."
 
+#: ../src/resources/properties.xrc:202
+#, fuzzy
+msgid "Learn about gettext keywords"
+msgstr "(Læra meira um GNU gettext)"
+
 #: ../src/resources/properties.xrc:75
 msgid "Learn about plural forms"
 msgstr "Vita meira um fleirtöluform"
 
-#: ../src/edframe.cpp:1039
+#: ../src/edframe.cpp:1045
 msgid "Learn more"
 msgstr "Vita meira"
 
@@ -1003,11 +1023,11 @@ msgstr "Listi yfir skráaendingar aðskilið með semikommu (dæmi. *.cpp, *.h):
 msgid "Malformed header: '%s'"
 msgstr "Rangt formaður haus: '%s'"
 
-#: ../src/catalog.cpp:1606
+#: ../src/catalog.cpp:1609
 msgid "Merging differences..."
 msgstr "Samþætti mismun..."
 
-#: ../src/propertiesdlg.cpp:75
+#: ../src/propertiesdlg.cpp:71
 msgid "Name of the project the translation is for"
 msgstr "Heiti þýðingaverkefnis sem þýðingin er ætluð"
 
@@ -1024,31 +1044,33 @@ msgid "Needs review (fuzzy)"
 msgstr "Þarfnast endurskoðunar (óskýr)"
 
 #: ../src/resources/prefs.xrc:112
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Aldrei að leyfa lista yfir strengi að yfirtaka virkni. Ef þetta er virkjað, verður þú að nota CTRL-örvar til að flakka með lyklaborði, en þú getur líka slegið inn texta samstundis án þess að þurfa að þrýsta á TAB til að breyta hvar virknin er."
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Aldrei að leyfa lista yfir strengi að yfirtaka virkni. Ef þetta er virkjað, "
+"verður þú að nota CTRL-örvar til að flakka með lyklaborði, en þú getur líka "
+"slegið inn texta samstundis án þess að þurfa að þrýsta á TAB til að breyta "
+"hvar virknin er."
 
-#: ../src/resources/manager.xrc:43
-#: ../src/resources/prefs.xrc:257
+#: ../src/resources/manager.xrc:43 ../src/resources/prefs.xrc:257
 msgid "New"
 msgstr "Nýtt"
 
-#: ../src/resources/menus.xrc:13
-#: ../src/resources/menus.xrc:266
+#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:276
 msgid "New From &POT/PO File..."
 msgstr "Nýtt úr &POT/PO skrá..."
 
-#: ../src/resources/menus.xrc:17
-#: ../src/resources/menus.xrc:270
+#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:280
 msgid "New WordPress Translation..."
 msgstr "Ný WordPress þýðing..."
 
-#: ../src/resources/menus.xrc:16
-#: ../src/resources/menus.xrc:269
+#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:279
 msgid "New WordPress translation..."
 msgstr "Ný WordPress þýðing..."
 
-#: ../src/resources/menus.xrc:12
-#: ../src/resources/menus.xrc:265
+#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:275
 msgid "New from &POT/PO file..."
 msgstr "Nýtt úr &POT/PO skrá..."
 
@@ -1060,15 +1082,15 @@ msgstr "Nýir strengir"
 msgid "No files found in: "
 msgstr "Engar skrár fundust í:"
 
-#: ../src/edframe.cpp:1688
+#: ../src/edframe.cpp:1694
 msgid "No problems with the translation found."
 msgstr "Engin vandamál fundust í þýðingunni."
 
-#: ../src/edframe.cpp:1731
+#: ../src/edframe.cpp:1737
 msgid "No references to this string found."
 msgstr "Engar tilvísanir í þennan streng fundust."
 
-#: ../src/edapp.cpp:712
+#: ../src/edapp.cpp:833
 msgid "No, thanks"
 msgstr "Nei takk"
 
@@ -1080,17 +1102,13 @@ msgstr "Ekki þýtt"
 msgid "Notes"
 msgstr "Minnispunktar"
 
-#: ../src/edframe.cpp:694
-#: ../src/export_html.cpp:204
+#: ../src/edframe.cpp:699 ../src/export_html.cpp:204
 msgid "Notes for translators:"
 msgstr "Minnispunktar fyrir þýðendur:"
 
-#: ../src/resources/comment.xrc:30
-#: ../src/resources/manager.xrc:105
-#: ../src/resources/prefs.xrc:295
-#: ../src/resources/prefs.xrc:437
-#: ../src/resources/properties.xrc:206
-#: ../src/resources/summary.xrc:70
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
+#: ../src/resources/prefs.xrc:295 ../src/resources/prefs.xrc:437
+#: ../src/resources/properties.xrc:225 ../src/resources/summary.xrc:70
 msgid "OK"
 msgstr "OK"
 
@@ -1098,12 +1116,11 @@ msgstr "OK"
 msgid "Obsolete strings"
 msgstr "Úreltir strengir"
 
-#: ../src/edframe.cpp:3150
+#: ../src/edframe.cpp:3176
 msgid "One"
 msgstr "Einn"
 
-#: ../src/resources/toolbar.xrc:15
-#: ../src/resources/toolbar.xrc:20
+#: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
 msgid "Open"
 msgstr "Opna"
 
@@ -1115,19 +1132,16 @@ msgstr "Opna í ritli"
 msgid "Open an existing PO file and edit the translation."
 msgstr "Opna PO-skrá sem er til staðar og sýsla með þýðingar."
 
-#: ../src/edapp.cpp:521
-#: ../src/edframe.cpp:1167
-#: ../src/resources/toolbar.xrc:16
-#: ../src/resources/toolbar.xrc:21
+#: ../src/edapp.cpp:545 ../src/edframe.cpp:1173
+#: ../src/resources/toolbar.xrc:16 ../src/resources/toolbar.xrc:21
 msgid "Open catalog"
 msgstr "Opna þýðingaskrá"
 
-#: ../src/edframe.cpp:1313
-#: ../src/edframe.cpp:1615
+#: ../src/edframe.cpp:1319 ../src/edframe.cpp:1621
 msgid "Open catalog template"
 msgstr "Opna þýðingaskráarsniðmát"
 
-#: ../src/edframe.cpp:3157
+#: ../src/edframe.cpp:3183
 msgid "Other"
 msgstr "Annað"
 
@@ -1156,7 +1170,7 @@ msgstr "Þáttarar"
 msgid "Parsing %s files..."
 msgstr "Þátta %s skrár..."
 
-#: ../src/propertiesdlg.cpp:71
+#: ../src/propertiesdlg.cpp:67
 msgid "Paths"
 msgstr "Slóðir"
 
@@ -1164,17 +1178,25 @@ msgstr "Slóðir"
 msgid "Personalize"
 msgstr "Persónugera"
 
-#: ../src/edframe.cpp:1739
+#: ../src/edframe.cpp:1745
 msgid "Please choose the reference you want to show:"
 msgstr "Veldu þá tilvísun sem þú vilt sýna:"
 
-#: ../src/wordpress.cpp:450
+#: ../src/edapp.cpp:203
+msgid ""
+"Please download a newer version from the Poedit website at http://poedit.net/"
+"beta/"
+msgstr ""
+
+#: ../src/wordpress.cpp:407
 msgid "Please email this log to help@poedit.net. Thank you!"
 msgstr "Sendu tölvupóst með þessum annál á help@poedit.net. Takk fyrir það!"
 
-#: ../src/propertiesdlg.cpp:260
+#: ../src/propertiesdlg.cpp:256
 msgid "Please save the file first. This section cannot be edited until then."
-msgstr "Endilega vistaðu skrána fyrst. Ekki er hægt að sýsla með þennan hluta fyrr en það hefur verið gert."
+msgstr ""
+"Endilega vistaðu skrána fyrst. Ekki er hægt að sýsla með þennan hluta fyrr "
+"en það hefur verið gert."
 
 #: ../src/resources/properties.xrc:45
 msgid "Plural Forms:"
@@ -1183,12 +1205,12 @@ msgstr "Fleirtöluform:"
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:2322
+#: ../src/edframe.cpp:2342
 #, c-format
 msgid "Plural forms expression used by the catalog is unusual for %s."
 msgstr "Fleirtöluformssniðið sem notað er í þýðingaskránni er óvenjulegt í %s."
 
-#: ../src/edframe.cpp:673
+#: ../src/edframe.cpp:678
 msgid "Plural:"
 msgstr "Fleirtala:"
 
@@ -1200,22 +1222,25 @@ msgstr "Poedit"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Þýðingaskráastjórn"
 
-#: ../src/tm/tm_migrate.cpp:157
-#: ../src/tm/tm_migrate.cpp:233
+#: ../src/tm/tm_migrate.cpp:157 ../src/tm/tm_migrate.cpp:233
 #: ../src/tm/tm_migrate.cpp:262
 msgid "Poedit Update"
 msgstr "Poedit uppfærsla"
 
-#: ../src/wordpress.cpp:429
+#: ../src/wordpress.cpp:386
 #, c-format
 msgid ""
-"Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n"
+"Poedit couldn’t understand the content of the folder you selected. This may "
+"be a problem with the plugin/theme or it may be Poedit being silly. The "
+"error is:\n"
 "\n"
 " • %s\n"
 "\n"
 "Please email help@poedit.net and we’ll sort it out."
 msgstr ""
-"Poedit skildi ekki innihald möppunnar sem þú valdir. Þetta gæti verið vandamál sem snertir viðbótina/þemað eða hugsanlega er Poedit bara svona tregt. Villumeldingin er:\n"
+"Poedit skildi ekki innihald möppunnar sem þú valdir. Þetta gæti verið "
+"vandamál sem snertir viðbótina/þemað eða hugsanlega er Poedit bara svona "
+"tregt. Villumeldingin er:\n"
 "\n"
 " • %s\n"
 "\n"
@@ -1225,7 +1250,7 @@ msgstr ""
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Poedit tókst ekki að finna neinar skrár í yfirförnum möppum."
 
-#: ../src/edapp.cpp:587
+#: ../src/edapp.cpp:611
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit er auðveldur þýðingaritill."
 
@@ -1249,8 +1274,7 @@ msgstr "Halda áfram"
 msgid "Project info"
 msgstr "Upplýsingar um þýðingaverkefni"
 
-#: ../src/export_html.cpp:112
-#: ../src/resources/properties.xrc:18
+#: ../src/export_html.cpp:112 ../src/resources/properties.xrc:18
 msgid "Project name and version:"
 msgstr "Nafn þýðingaverkefnis og útgáfunúmer:"
 
@@ -1258,40 +1282,37 @@ msgstr "Nafn þýðingaverkefnis og útgáfunúmer:"
 msgid "Project name:"
 msgstr "Heiti verkefnis:"
 
-#: ../src/edframe.cpp:2698
+#: ../src/edframe.cpp:2724
 msgid "Purge"
 msgstr "Henda"
 
-#: ../src/edframe.cpp:2690
+#: ../src/edframe.cpp:2716
 msgid "Purge deleted translations"
 msgstr "Henda eyddum þýðingum"
 
-#: ../src/tm/tm_migrate.cpp:237
-#: ../src/resources/manager.xrc:137
-#: ../src/resources/menus.xrc:60
-#: ../src/resources/menus.xrc:285
+#: ../src/edapp.cpp:204 ../src/tm/tm_migrate.cpp:237
+#: ../src/resources/manager.xrc:137 ../src/resources/menus.xrc:60
+#: ../src/resources/menus.xrc:292
 msgid "Quit"
 msgstr "Hætta"
 
-#: ../src/edframe.cpp:1739
+#: ../src/edframe.cpp:1745
 msgid "References"
 msgstr "Tilvísanir"
 
-#: ../src/edframe.cpp:2862
-#: ../src/edframe.cpp:2866
+#: ../src/edframe.cpp:2888 ../src/edframe.cpp:2892
 msgid "References:"
 msgstr "Tilvísanir:"
 
-#: ../src/edframe.cpp:2265
+#: ../src/edframe.cpp:2285
 msgid "Required header Plural-Forms is missing."
 msgstr "Höfuðstrenginn Plural-Forms vantar."
 
-#: ../src/edframe.cpp:2326
+#: ../src/edframe.cpp:2346
 msgid "Review"
 msgstr "Yfirfara"
 
-#: ../src/edframe.cpp:1126
-#: ../src/resources/toolbar.xrc:25
+#: ../src/edframe.cpp:1132 ../src/resources/toolbar.xrc:25
 #: ../src/resources/toolbar.xrc:30
 msgid "Save"
 msgstr "Vista"
@@ -1304,16 +1325,15 @@ msgstr "Vist&a sem..."
 msgid "Save &as..."
 msgstr "Vist&a sem..."
 
-#: ../src/edframe.cpp:1228
+#: ../src/edframe.cpp:1234
 msgid "Save as..."
 msgstr "Vista sem..."
 
-#: ../src/resources/toolbar.xrc:26
-#: ../src/resources/toolbar.xrc:31
+#: ../src/resources/toolbar.xrc:26 ../src/resources/toolbar.xrc:31
 msgid "Save catalog"
 msgstr "Vista þýðingaskrá"
 
-#: ../src/edframe.cpp:1120
+#: ../src/edframe.cpp:1126
 msgid "Save changes"
 msgstr "Vista breytingar"
 
@@ -1325,7 +1345,7 @@ msgstr "Les skrár..."
 msgid "Select directory"
 msgstr "Veldu möppu"
 
-#: ../src/edframe.cpp:1390
+#: ../src/edframe.cpp:1396
 msgid "Select the folder with the WordPress theme or plugin"
 msgstr "Veldu möppuna sem inniheldur WordPress þemað eða viðbótina."
 
@@ -1337,40 +1357,49 @@ msgstr "Veldu þær þýðingaskrár sem á að flytja inn"
 msgid "Select your prefered language"
 msgstr "Veldu aðaltungumál þitt"
 
-#: ../src/edframe.cpp:3235
+#: ../src/edframe.cpp:3261
 #, c-format
 msgid "Set Bookmark %i\tAlt+%i"
 msgstr "Setja bókamerki %i\tAlt+%i"
 
-#: ../src/edframe.cpp:3229
+#: ../src/edframe.cpp:3255
 #, c-format
 msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "Setja bókamerki %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:3232
+#: ../src/edframe.cpp:3258
 #, c-format
 msgid "Set bookmark %i\tAlt+%i"
 msgstr "Setja bókamerki %i\tAlt+%i"
 
-#: ../src/edframe.cpp:2236
+#: ../src/edframe.cpp:2227
 msgid "Set email"
 msgstr "Settu inn netfang"
 
-#: ../src/edframe.cpp:2220
+#: ../src/edframe.cpp:2257
 msgid "Set language"
+msgstr "Veldu tungumál"
+
+#: ../src/edframe.cpp:2242
+#, fuzzy
+msgid "Set name"
 msgstr "Veldu tungumál"
 
 #: ../src/resources/prefs.xrc:103
 msgid "Show summary after catalog update"
 msgstr "Birta samantekt eftur uppfærslu þýðingaskráa"
 
-#: ../src/edframe.cpp:666
+#: ../src/edframe.cpp:671
 msgid "Singular:"
 msgstr "Eintala:"
 
 #: ../src/tm/tm_migrate.cpp:265
-msgid "Something went wrong and your translation memory data couldn't be migrated. Please email help@poedit.net and we’ll get it fixed."
-msgstr "Eitthvað fór úrskeiðis og ekki var hægt að yfirfæra þýðingaminnið þitt. Sendu tölvupóst á help@poedit.net og við reynum að laga þetta."
+msgid ""
+"Something went wrong and your translation memory data couldn't be migrated. "
+"Please email help@poedit.net and we’ll get it fixed."
+msgstr ""
+"Eitthvað fór úrskeiðis og ekki var hægt að yfirfæra þýðingaminnið þitt. "
+"Sendu tölvupóst á help@poedit.net og við reynum að laga þetta."
 
 #: ../src/resources/menus.xrc:217
 msgid "Sort by &File Order"
@@ -1404,12 +1433,11 @@ msgstr "Uppruni"
 msgid "Source Text"
 msgstr "Frumtexti"
 
-#: ../src/resources/prefs.xrc:412
-#: ../src/resources/properties.xrc:123
+#: ../src/resources/prefs.xrc:412 ../src/resources/properties.xrc:127
 msgid "Source code charset:"
 msgstr "Stafasett frumkóða:"
 
-#: ../src/catalog.cpp:1589
+#: ../src/catalog.cpp:1592
 #, c-format
 msgid "Source code directory '%s' doesn't exist."
 msgstr "Mappan með frumkóða '%s' fannst ekki."
@@ -1430,25 +1458,26 @@ msgstr "Tilvik í upprunaskrá:"
 msgid "Source text"
 msgstr "Frumtexti"
 
-#: ../src/edframe.cpp:659
+#: ../src/edframe.cpp:664
 msgid "Source text:"
 msgstr "Frumtexti:"
 
-#: ../src/resources/properties.xrc:195
+#: ../src/resources/properties.xrc:214
 msgid "Sources keywords"
 msgstr "Stikkorð upprunaskráa"
 
-#: ../src/resources/properties.xrc:174
+#: ../src/resources/properties.xrc:178
 msgid "Sources paths"
 msgstr "Slóðir upprunaskráa"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:1035
+#: ../src/edframe.cpp:1041
 #, c-format
 msgid "Spellchecker dictionary for %s isn't available, you need to install it."
-msgstr "Ekkert stafsetningarorðasafn er tiltækt fyrir %s, þú þarft að setja það inn."
+msgstr ""
+"Ekkert stafsetningarorðasafn er tiltækt fyrir %s, þú þarft að setja það inn."
 
 #: ../src/resources/find.xrc:43
 msgid "Start from the first item"
@@ -1470,69 +1499,78 @@ msgstr "Finna streng:"
 msgid "Strings in source language"
 msgstr "Strengir í frumtungumáli"
 
-#: ../src/edframe.cpp:2270
+#: ../src/edframe.cpp:2290
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Formvilla í Plural-Forms hauslínu (\"%s\")."
 
 #: ../src/welcomescreen.cpp:171
-msgid "Take an existing PO file or POT template and create a new translation from it."
-msgstr "Taka PO-skrá eða POT-sniðmát sem er til staðar og búa til nýjar þýðingar út frá því."
+msgid ""
+"Take an existing PO file or POT template and create a new translation from "
+"it."
+msgstr ""
+"Taka PO-skrá eða POT-sniðmát sem er til staðar og búa til nýjar þýðingar út "
+"frá því."
 
 #: ../src/welcomescreen.cpp:218
 msgid "Take translatable strings from an existing POT template."
 msgstr "Taka þýðanlega strengi úr POT sniðmáti sem til er fyrir."
 
-#: ../src/export_html.cpp:122
-#: ../src/resources/properties.xrc:97
+#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:101
 msgid "Team's email address:"
 msgstr "Netfang þýðingateymis:"
 
-#: ../src/export_html.cpp:118
-#: ../src/resources/properties.xrc:83
+#: ../src/export_html.cpp:118 ../src/resources/properties.xrc:87
 msgid "Team:"
 msgstr "Teymi:"
 
-#: ../src/wordpress.cpp:231
+#: ../src/wordpress.cpp:233
 #, c-format
 msgid "The \"%s\" plugin isn't localization-ready."
 msgstr "\"%s\" viðbótin er ekki tilbúin fyrir staðfærslu."
 
-#: ../src/wordpress.cpp:175
+#: ../src/wordpress.cpp:177
 #, c-format
 msgid "The \"%s\" theme isn't localization-ready."
 msgstr "\"%s\" þemað er ekki tilbúið fyrir staðfærslu."
 
-#: ../src/catalog.cpp:1499
+#: ../src/catalog.cpp:1502
 #, c-format
 msgid ""
-"The catalog couldn't be saved in '%s' charset as specified in catalog settings.\n"
+"The catalog couldn't be saved in '%s' charset as specified in catalog "
+"settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Ekki tókst að vista þýðingaskrá með '%s' stafatöflu eins og tiltekið er í kjörstillingum.\n"
+"Ekki tókst að vista þýðingaskrá með '%s' stafatöflu eins og tiltekið er í "
+"kjörstillingum.\n"
 "\n"
 "Skráin var þess vegna vistuð í UTF-8 og stillingum breytt í samræmi við það."
 
-#: ../src/edframe.cpp:164
-#: ../src/edframe.cpp:2171
+#: ../src/edframe.cpp:164 ../src/edframe.cpp:2177
 msgid "The file cannot be opened."
 msgstr "Ekki hægt að opna þessa skrá."
 
-#: ../src/edframe.cpp:169
-#: ../src/edframe.cpp:2176
-msgid "The file may be either corrupted or in a format not recognized by Poedit."
+#: ../src/edframe.cpp:169 ../src/edframe.cpp:2182
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
 msgstr "Skráin gæti verið skemmd eða á sniði sem Poedit þekkir ekki."
 
-#: ../src/edframe.cpp:1677
-msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
-msgstr "Skráin var sannlega vistuð, en ekki er hægt að vistþýða hana yfir á MO-form til notkunar"
+#: ../src/edframe.cpp:1683
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"Skráin var sannlega vistuð, en ekki er hægt að vistþýða hana yfir á MO-form "
+"til notkunar"
 
 #: ../src/welcomescreen.cpp:210
 msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr "Einfaldasta leiðin til að fylla þessa þýðingaskrá er að uppfæra hana frá a POT skrá:"
+msgstr ""
+"Einfaldasta leiðin til að fylla þessa þýðingaskrá er að uppfæra hana frá a "
+"POT skrá:"
 
-#: ../src/edframe.cpp:1692
+#: ../src/edframe.cpp:1698
 msgid "The translation is ready for use."
 msgstr "Þýðingaminnið er tilbúið til notkunar."
 
@@ -1540,13 +1578,19 @@ msgstr "Þýðingaminnið er tilbúið til notkunar."
 msgid "There are no translations. That’s unusual."
 msgstr "Það eru engar þýðingar. Mjög óvenjulegt."
 
-#: ../src/catalog.cpp:1375
-msgid "There was a problem formatting the file nicely (but it was saved all right)."
-msgstr "Það kom upp vandamál við að forma skrána rétt (en hún var samt vistuð rétt)."
+#: ../src/catalog.cpp:1378
+msgid ""
+"There was a problem formatting the file nicely (but it was saved all right)."
+msgstr ""
+"Það kom upp vandamál við að forma skrána rétt (en hún var samt vistuð rétt)."
 
 #: ../src/catalog.cpp:1034
-msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
-msgstr "Það komu upp villur við að hlaða inn þýðingaskránni. Einhver gögn gæti vantað eða hafa skemmst við þetta."
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
+"Það komu upp villur við að hlaða inn þýðingaskránni. Einhver gögn gæti "
+"vantað eða hafa skemmst við þetta."
 
 #: ../src/resources/summary.xrc:37
 msgid ""
@@ -1564,9 +1608,17 @@ msgstr ""
 "Þessir strengir fundust í kóða, en fundust ekki í þýðingaskrá.\n"
 "Poedit mun nú bæta við þessum strengjum."
 
-#: ../src/edframe.cpp:2250
-msgid "This catalog has entries with plural forms, but doesn't have Plural-Forms header configured."
-msgstr "Þessi þýðingaskrá er með færslum sem hafa fleirtöluform, en hún er ekki með skilgreiningu á Plural-Forms ú haus."
+#: ../src/edapp.cpp:202
+msgid "This beta version of Poedit expired."
+msgstr ""
+
+#: ../src/edframe.cpp:2270
+msgid ""
+"This catalog has entries with plural forms, but doesn't have Plural-Forms "
+"header configured."
+msgstr ""
+"Þessi þýðingaskrá er með færslum sem hafa fleirtöluform, en hún er ekki með "
+"skilgreiningu á Plural-Forms ú haus."
 
 #: ../src/resources/prefs.xrc:367
 msgid ""
@@ -1581,8 +1633,12 @@ msgstr ""
 "%C fyrir flagg stafasetts (sjá hér að neðan)."
 
 #: ../src/tm/tm_migrate.cpp:236
-msgid "This must be done before Poedit can start. It may take a few minutes if you have lots of translations stored, but should normally be much faster."
-msgstr "Þetta verður að gera áður en Poedit getur ræst. Þetta getur tekið nokkrar mínútur ef þú geymir margar þýðingaskrár, en er yfirleitt fljótlegra."
+msgid ""
+"This must be done before Poedit can start. It may take a few minutes if you "
+"have lots of translations stored, but should normally be much faster."
+msgstr ""
+"Þetta verður að gera áður en Poedit getur ræst. Þetta getur tekið nokkrar "
+"mínútur ef þú geymir margar þýðingaskrár, en er yfirleitt fljótlegra."
 
 #: ../src/resources/prefs.xrc:424
 #, c-format
@@ -1591,7 +1647,8 @@ msgid ""
 "only if source codecharset was given. %c expands to charset value."
 msgstr ""
 "Þetta mun verða viðhengt á skipanalínu, einungis\n"
-"ef upprunastafasett hefur verið gefið upp. %c kemur í stað gildis stafasettsins."
+"ef upprunastafasett hefur verið gefið upp. %c kemur í stað gildis "
+"stafasettsins."
 
 #: ../src/resources/prefs.xrc:405
 #, c-format
@@ -1620,11 +1677,14 @@ msgstr "Alls"
 
 #: ../src/welcomescreen.cpp:201
 msgid ""
-"Translatable entries aren't added manually in the Gettext system, but are automatically extracted\n"
+"Translatable entries aren't added manually in the Gettext system, but are "
+"automatically extracted\n"
 "from source code. This way, they stay up to date and accurate.\n"
-"Translators typically use PO template files (POTs) prepared for them by the developer."
+"Translators typically use PO template files (POTs) prepared for them by the "
+"developer."
 msgstr ""
-"Þýðanlegum færslum er ekki bætt handvirkt inn í Gettext kerfinu, heldur er náð í þær sjálfvirkt\n"
+"Þýðanlegum færslum er ekki bætt handvirkt inn í Gettext kerfinu, heldur er "
+"náð í þær sjálfvirkt\n"
 "úr grunnkóða. Þannig eykst nákvæmni og þær eru alltaf uppfærðar.\n"
 "Þýðendur nota venjulega PO-sniðmát (POT) sem forritarar hafa útbúið fyrir þá."
 
@@ -1644,17 +1704,16 @@ msgstr "Þýði með þýðin&gaminni"
 msgid "Translated"
 msgstr "Þýtt"
 
-#: ../src/edframe.cpp:2765
+#: ../src/edframe.cpp:2791
 #, c-format
 msgid "Translated %u strings"
 msgstr "Þýddi %u strengi"
 
-#: ../src/edframe.cpp:2747
+#: ../src/edframe.cpp:2773
 msgid "Translating using TM..."
 msgstr "Þýði með þýðingaminni..."
 
-#: ../src/edlistctrl.cpp:331
-#: ../src/export_html.cpp:155
+#: ../src/edlistctrl.cpp:331 ../src/export_html.cpp:155
 #: ../src/statistics.cpp:158
 msgid "Translation"
 msgstr "Þýðing"
@@ -1663,12 +1722,11 @@ msgstr "Þýðing"
 msgid "Translation Is &Fuzzy"
 msgstr "Þýðin&gin er óljós"
 
-#: ../src/languagectrl.cpp:76
+#: ../src/languagectrl.cpp:89
 msgid "Translation Language"
 msgstr "Tungumál þýðingar"
 
-#: ../src/prefsdlg.cpp:178
-#: ../src/prefsdlg.cpp:219
+#: ../src/prefsdlg.cpp:178 ../src/prefsdlg.cpp:219
 msgid "Translation Memory"
 msgstr "Þýðingaminni"
 
@@ -1680,7 +1738,7 @@ msgstr "Þýðin&gin er óljós"
 msgid "Translation memory migration failed."
 msgstr "Yfirfærsla þýðingaminnis mistókst."
 
-#: ../src/resources/properties.xrc:135
+#: ../src/resources/properties.xrc:139
 msgid "Translation properties"
 msgstr "Eiginleikar þýðingar"
 
@@ -1689,11 +1747,16 @@ msgstr "Eiginleikar þýðingar"
 msgid "Translation — %s"
 msgstr "Þýðing — %s"
 
-#: ../src/edframe.cpp:681
+#: ../src/edframe.cpp:2240
+#, fuzzy
+msgid "Translation's project name isn't set."
+msgstr "Þýðingamappan (%s) fannst ekki."
+
+#: ../src/edframe.cpp:686
 msgid "Translation:"
 msgstr "Þýðing:"
 
-#: ../src/wordpress.cpp:310
+#: ../src/wordpress.cpp:312
 #, c-format
 msgid "Translations folder (%s) doesn't exist."
 msgstr "Þýðingamappan (%s) fannst ekki."
@@ -1702,11 +1765,11 @@ msgstr "Þýðingamappan (%s) fannst ekki."
 msgid "Translations with errors"
 msgstr "Þýðingar með villum"
 
-#: ../src/edframe.cpp:3152
+#: ../src/edframe.cpp:3178
 msgid "Two"
 msgstr "Tveir"
 
-#: ../src/propertiesdlg.cpp:112
+#: ../src/propertiesdlg.cpp:108
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (mælt er með þessu)"
 
@@ -1754,14 +1817,14 @@ msgstr "Uppfæra frá POT skrá"
 msgid "Update summary"
 msgstr "Samantekt uppfærslu"
 
-#: ../src/edframe.cpp:1585
-#: ../src/manager.cpp:441
+#: ../src/edframe.cpp:1591 ../src/manager.cpp:441
 msgid "Updating catalog"
 msgstr "Uppfæri þýðingaskrá"
 
-#: ../src/edframe.cpp:1601
+#: ../src/edframe.cpp:1607
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr "Uppfærsla á þýðingaskrá mistókst. Ýttu á 'Meira>>' fyrir frekari upplýsingar."
+msgstr ""
+"Uppfærsla á þýðingaskrá mistókst. Ýttu á 'Meira>>' fyrir frekari upplýsingar."
 
 #: ../src/resources/properties.xrc:61
 msgid "Use custom expression"
@@ -1779,7 +1842,7 @@ msgstr "Nota sérvalið letur fyrir þýðingalista"
 msgid "Use default rules for this language"
 msgstr "Nota sjálfgefnar reglur fyrir þetta tungumál"
 
-#: ../src/resources/properties.xrc:182
+#: ../src/resources/properties.xrc:186
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
@@ -1795,24 +1858,22 @@ msgstr "Nota þýðingaminni"
 msgid "Validate"
 msgstr "Sannreyna"
 
-#: ../src/edframe.cpp:1670
-#: ../src/edframe.cpp:1689
+#: ../src/edframe.cpp:1676 ../src/edframe.cpp:1695
 msgid "Validation results"
 msgstr "Niðurstöður prófunar"
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
-#: ../src/edapp.cpp:572
-#: ../src/welcomescreen.cpp:155
+#: ../src/edapp.cpp:596 ../src/welcomescreen.cpp:155
 #, c-format
 msgid "Version %s"
 msgstr "Útgáfa %s"
 
-#: ../src/wordpress.cpp:438
+#: ../src/wordpress.cpp:395
 msgid "View Log"
 msgstr "Skoða annál"
 
-#: ../src/wordpress.cpp:435
+#: ../src/wordpress.cpp:392
 msgid "View log"
 msgstr "Skoða annál"
 
@@ -1828,11 +1889,11 @@ msgstr "Aðeins stök orð"
 msgid "Windows"
 msgstr "Gluggar"
 
-#: ../src/wordpress.cpp:449
+#: ../src/wordpress.cpp:406
 msgid "WordPress Errors Log"
 msgstr "WordPress villuannáll"
 
-#: ../src/wordpress.cpp:420
+#: ../src/wordpress.cpp:377
 msgid "WordPress error"
 msgstr "WordPress villa"
 
@@ -1841,7 +1902,8 @@ msgid "Words"
 msgstr "Orð"
 
 #: ../src/welcomescreen.cpp:221
-msgid "You can also extract translatable strings directly from the source code:"
+msgid ""
+"You can also extract translatable strings directly from the source code:"
 msgstr "Þú getur líka náð í þýðanlega strengi beint úr grunnkóðanum:"
 
 #: ../src/edframe.cpp:429
@@ -1852,13 +1914,15 @@ msgstr "Þú getur ekki sleppt fleiri en einni skrá í Poedit glugga."
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Þú þarft að endurræsa Poedit til að þessi breyting taki gildi."
 
-#: ../src/edframe.cpp:2234
-msgid "You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files."
+#: ../src/edframe.cpp:2225
+msgid ""
+"You should set your email address in Preferences so that it can be used for "
+"Last-Translator header in GNU gettext files."
 msgstr ""
 "Þú ættir að setja inn netfang í uppsetningunni svo hægt sé að fylla í\n"
 "höfuðstrenginn Last-Translator í skráarhaus GNU-gettext-skráa."
 
-#: ../src/edframe.cpp:1123
+#: ../src/edframe.cpp:1129
 msgid "Your changes will be lost if you don't save them."
 msgstr "Breytingar tapast ef þú vistar þær ekki."
 
@@ -1878,19 +1942,18 @@ msgstr ""
 msgid "Your name:"
 msgstr "Nafnið þitt:"
 
-#: ../src/edframe.cpp:3148
+#: ../src/edframe.cpp:3174
 msgid "Zero"
 msgstr "Núll"
 
-#: ../src/edapp.cpp:411
+#: ../src/edapp.cpp:433
 msgid "don't delete temporary files (for debugging)"
 msgstr "ekki eyða bráðabirgðaskrám (fyrir aflúsun)"
 
-#: ../src/propertiesdlg.cpp:76
+#: ../src/propertiesdlg.cpp:72
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "t.d. nplurals=2; plural=(n > 1);"
 
 #: ../src/edlistctrl.cpp:384
 msgid "unknown language"
 msgstr "óþekkt tungumál"
-

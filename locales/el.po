@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2013-11-11 15:41+0100\n"
+"POT-Creation-Date: 2013-11-18 18:12+0100\n"
 "PO-Revision-Date: 2012-08-17 01:02+0200\n"
 "Last-Translator: nikos papadopoulos <231036448@freemail.gr>\n"
 "Language-Team: Greek <poedit@googlegroups.com>\n"
@@ -22,40 +22,45 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
-#: ../src/edframe.cpp:2850
+#: ../src/edframe.cpp:2876
 #, c-format
 msgid "    “%s”"
 msgstr ""
 
-#: ../src/edframe.cpp:2485
+#: ../src/edframe.cpp:2516
+#, c-format
+msgid " (beta version expires %s)"
+msgstr ""
+
+#: ../src/edframe.cpp:2505
 msgid " (modified)"
 msgstr " (τροποποιήθηκε)"
 
-#: ../src/edframe.cpp:2467
+#: ../src/edframe.cpp:2487
 msgid " (unsaved)"
 msgstr ""
 
 #. TRANSLATORS: This is version information in about dialog, it is followed
 #. by version number when used (wxWidgets 2.8)
-#: ../src/edapp.cpp:575
+#: ../src/edapp.cpp:599
 msgid " Version "
 msgstr " Έκδοση"
 
-#: ../src/edframe.cpp:1665
+#: ../src/edframe.cpp:1671
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "Βρέθηκε %d ζήτημα στην μετάφραση."
 msgstr[1] "Βρέθηκαν %d ζητήματα στην μετάφραση."
 
-#: ../src/edframe.cpp:2430
+#: ../src/edframe.cpp:2450
 #, c-format
 msgid "%i %% translated, %i string"
 msgid_plural "%i %% translated, %i strings"
 msgstr[0] "%i %% μεταφρασμένα, %i στίχος"
 msgstr[1] "%i %% μεταφρασμένα, %i στίχοι"
 
-#: ../src/edframe.cpp:2435
+#: ../src/edframe.cpp:2455
 #, c-format
 msgid "%i %% translated, %i string (%s)"
 msgid_plural "%i %% translated, %i strings (%s)"
@@ -70,14 +75,14 @@ msgstr ""
 "%i %%μεταφρασμένα, %i στίχοι (%i ασαφή, %i άσχημα κουπόνια, %i μη "
 "μεταφρασμένα)"
 
-#: ../src/edframe.cpp:2420
+#: ../src/edframe.cpp:2440
 #, c-format
 msgid "%i bad token"
 msgid_plural "%i bad tokens"
 msgstr[0] "%i εσφαλμένο αναγνωριστικό"
 msgstr[1] "%i εσφαλμένα αναγνωριστικά"
 
-#: ../src/edframe.cpp:2414
+#: ../src/edframe.cpp:2434
 #, c-format
 msgid "%i fuzzy"
 msgid_plural "%i fuzzy"
@@ -89,23 +94,23 @@ msgstr[1] "%i ασαφή"
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i σειρές του αρχείου '%s' δεν φορτώθηκαν σωστά."
 
-#: ../src/edframe.cpp:2426
+#: ../src/edframe.cpp:2446
 #, c-format
 msgid "%i not translated"
 msgid_plural "%i not translated"
 msgstr[0] "%i δεν είναι μεταφρασμένο"
 msgstr[1] "%i δεν είναι μεταφρασμένα"
 
-#: ../src/resources/menus.xrc:248 ../src/resources/menus.xrc:249
-#: ../src/resources/menus.xrc:298 ../src/resources/menus.xrc:299
+#: ../src/resources/menus.xrc:258 ../src/resources/menus.xrc:259
+#: ../src/resources/menus.xrc:315 ../src/resources/menus.xrc:316
 msgid "&About"
 msgstr "&Περί"
 
-#: ../src/resources/menus.xrc:247 ../src/resources/menus.xrc:297
+#: ../src/resources/menus.xrc:257 ../src/resources/menus.xrc:314
 msgid "&About Poedit"
 msgstr "Σχετικά με το Ποέντιτ"
 
-#: ../src/edframe.cpp:3224
+#: ../src/edframe.cpp:3250
 msgid "&Bookmarks"
 msgstr "&Σελιδοδείκτες"
 
@@ -160,7 +165,7 @@ msgstr "&Επεξεργασία"
 # #-#-#-#-#  gimp-print-el.po (gimp-print 1.0)  #-#-#-#-##
 # #-#-#-#-#  screem-el.po (screem 1.0)  #-#-#-#-##
 #: ../src/edframe.cpp:521 ../src/resources/manager.xrc:125
-#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:258
+#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:268
 msgid "&File"
 msgstr "&Αρχείο"
 
@@ -171,6 +176,16 @@ msgstr "&Αρχείο"
 #: ../src/resources/menus.xrc:81 ../src/resources/menus.xrc:95
 msgid "&Find..."
 msgstr "&Εύρεση..."
+
+#: ../src/resources/menus.xrc:248 ../src/resources/menus.xrc:305
+#, fuzzy
+msgid "&GNU gettext Manual"
+msgstr "Τεκμηρίωση GNU gettext"
+
+#: ../src/resources/menus.xrc:247 ../src/resources/menus.xrc:304
+#, fuzzy
+msgid "&GNU gettext manual"
+msgstr "Τεκμηρίωση GNU gettext"
 
 #: ../src/edframe.cpp:527 ../src/resources/menus.xrc:161
 msgid "&Go"
@@ -186,12 +201,12 @@ msgstr "&Μετάβαση"
 # #-#-#-#-#  gnomemeeting-el.po (gnomemeeting 0.12.2)  #-#-#-#-##
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-##
 # #-#-#-#-#  yelp.HEAD.el.po (yelp 1.0.3)  #-#-#-#-##
-#: ../src/edapp.cpp:183 ../src/resources/menus.xrc:251
-#: ../src/resources/menus.xrc:301
+#: ../src/edapp.cpp:195 ../src/resources/menus.xrc:261
+#: ../src/resources/menus.xrc:318
 msgid "&Help"
 msgstr "&Βοήθεια"
 
-#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:261
+#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:271
 #, fuzzy
 msgid "&New..."
 msgstr "&Νέος Κατάλογος..."
@@ -210,17 +225,17 @@ msgstr "Επόμε&νο Μήνυμα"
 msgid "&Next message"
 msgstr "Επόμε&νο μήνυμα"
 
-#: ../src/resources/menus.xrc:241 ../src/resources/menus.xrc:291
+#: ../src/resources/menus.xrc:241 ../src/resources/menus.xrc:298
 msgid "&Online Help"
 msgstr "&Διαδικτυακή Βοήθεια"
 
-#: ../src/resources/menus.xrc:240 ../src/resources/menus.xrc:290
+#: ../src/resources/menus.xrc:240 ../src/resources/menus.xrc:297
 msgid "&Online help"
 msgstr "&Διαδικτυακή βοήθεια"
 
 # #-#-#-#-#  eog.HEAD.el.po (eog 0.2)  #-#-#-#-#
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-##
-#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:274
+#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:284
 msgid "&Open..."
 msgstr "&Άνοιγμα..."
 
@@ -230,7 +245,7 @@ msgid "&Preferences"
 msgstr "&Προτιμήσεις"
 
 #: ../src/resources/manager.xrc:128 ../src/resources/menus.xrc:47
-#: ../src/resources/menus.xrc:278
+#: ../src/resources/menus.xrc:288
 msgid "&Preferences..."
 msgstr "&Προτιμήσεις..."
 
@@ -307,7 +322,7 @@ msgstr "Επι&κύρωση των μεταφράσεων"
 msgid "&View"
 msgstr "&Προβολή"
 
-#: ../src/catalog.cpp:1635
+#: ../src/catalog.cpp:1638
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' δεν είναι έγκυρο αρχείο POT."
@@ -342,13 +357,13 @@ msgstr "<δίχως όνομα>"
 #. TRANSLATORS: This is titlebar of about dialog, the string ends with space
 #. and is followed by application name when used ("Poedit",
 #. but don't add it to this translation yourself) (wxWidgets 2.8)
-#: ../src/edapp.cpp:579
+#: ../src/edapp.cpp:603
 msgid "About "
 msgstr "Σχετικά με"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
-#: ../src/edapp.cpp:569
+#: ../src/edapp.cpp:593
 #, c-format
 msgid "About %s"
 msgstr "Περί του %s"
@@ -357,7 +372,7 @@ msgstr "Περί του %s"
 msgid "Add directory to the list"
 msgstr "Προσθήκη φακέλου στη λίστα"
 
-#: ../src/propertiesdlg.cpp:69
+#: ../src/propertiesdlg.cpp:65
 #, fuzzy
 msgid "Additional keywords"
 msgstr "Ένα αντικείμενο στη λίστα των λέξεων κλειδιών:"
@@ -374,7 +389,7 @@ msgstr "Ένα αντικείμενο στη λίστα των αρχείων ε
 msgid "An item in keywords list:"
 msgstr "Ένα αντικείμενο στη λίστα των λέξεων κλειδιών:"
 
-#: ../src/edframe.cpp:2829 ../src/edframe.cpp:2841
+#: ../src/edframe.cpp:2855 ../src/edframe.cpp:2867
 msgid "Automatic Translations:"
 msgstr "Αυτόματες Μεταφράσεις:"
 
@@ -382,7 +397,7 @@ msgstr "Αυτόματες Μεταφράσεις:"
 msgid "Automatic translation"
 msgstr "Αυτόματη μετάφραση"
 
-#: ../src/edframe.cpp:2827 ../src/edframe.cpp:2839
+#: ../src/edframe.cpp:2853 ../src/edframe.cpp:2865
 msgid "Automatic translations:"
 msgstr "Αυτόματες μεταφράσεις:"
 
@@ -398,13 +413,17 @@ msgstr "Αυτόματη σύνταξη αρχείου .mo κατά την απ�
 msgid "Bad Tokens"
 msgstr "Άσχημα Κουπόνια"
 
-#: ../src/resources/properties.xrc:152
+#: ../src/resources/properties.xrc:156
 msgid "Base path:"
 msgstr "Διαδρομή βάσης:"
 
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
 msgstr "Συμπεριφορά"
+
+#: ../src/edapp.cpp:202
+msgid "Beta expired"
+msgstr ""
 
 #: ../src/catalog.cpp:681
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
@@ -444,7 +463,7 @@ msgstr "μετατροπή CR/LF"
 
 #: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:113
 #: ../src/resources/prefs.xrc:303 ../src/resources/prefs.xrc:445
-#: ../src/resources/progress.xrc:32 ../src/resources/properties.xrc:214
+#: ../src/resources/progress.xrc:32 ../src/resources/properties.xrc:233
 msgid "Cancel"
 msgstr "Ακύρωση"
 
@@ -465,7 +484,7 @@ msgstr "Ταίριασμα πεζών-κεφαλαίων"
 msgid "Catalog"
 msgstr "Κατάλογος"
 
-#: ../src/edframe.cpp:1119
+#: ../src/edframe.cpp:1125
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Ο κατάλογος τροποποιήθηκε. Θέλετε να γίνει αποθήκευση των αλλαγών;"
 
@@ -473,12 +492,17 @@ msgstr "Ο κατάλογος τροποποιήθηκε. Θέλετε να γί
 msgid "Catalog properties"
 msgstr "Ιδιότητες καταλόγου"
 
-#: ../src/resources/menus.xrc:53 ../src/resources/menus.xrc:282
+#: ../src/resources/menus.xrc:53
 msgid "Catalogs &Manager"
 msgstr "&Διαχειριστής Καταλόγων"
 
 #: ../src/resources/menus.xrc:52
 msgid "Catalogs &manager"
+msgstr "&Διαχειριστής Καταλόγων"
+
+#: ../src/edapp.cpp:762
+#, fuzzy
+msgid "Catalogs Manager"
 msgstr "&Διαχειριστής Καταλόγων"
 
 #: ../src/resources/prefs.xrc:62
@@ -488,11 +512,11 @@ msgstr "Επιλογή γλώσσας UI"
 # #-#-#-#-#  memory.el.po (abiword 1.0)  #-#-#-#-#
 # #-#-#-#-#  gtk+-el.po (gtk+ 1.2.9)  #-#-#-#-#
 # #-#-#-#-#  screem-el.po (screem 1.0)  #-#-#-#-#
-#: ../src/export_html.cpp:126 ../src/resources/properties.xrc:111
+#: ../src/export_html.cpp:126 ../src/resources/properties.xrc:115
 msgid "Charset:"
 msgstr "Σύνολο Χαρακτήρων:"
 
-#: ../src/edframe.cpp:530
+#: ../src/edapp.cpp:766
 msgid "Check for Updates..."
 msgstr "Έλεγχος για Ενημερώσεις..."
 
@@ -509,7 +533,7 @@ msgstr "Έλεγχος για Ενημερώσεις..."
 msgid "Check spelling"
 msgstr ""
 
-#: ../src/edframe.cpp:2802 ../src/resources/menus.xrc:72
+#: ../src/edframe.cpp:2828 ../src/resources/menus.xrc:72
 msgid "Clear Translation"
 msgstr "Εκκαθάριση της Μετάφρασης"
 
@@ -517,7 +541,7 @@ msgstr "Εκκαθάριση της Μετάφρασης"
 msgid "Clear the comment"
 msgstr "Καθαρισμός σχολίου"
 
-#: ../src/edframe.cpp:2800 ../src/resources/menus.xrc:71
+#: ../src/edframe.cpp:2826 ../src/resources/menus.xrc:71
 msgid "Clear translation"
 msgstr "Εκκαθάριση της μετάφρασης"
 
@@ -537,7 +561,7 @@ msgid "Comment window is editable"
 msgstr "Το παράθυρο σχολίων επιδέχεται επεξεργασία"
 
 # #-#-#-#-#  libgnomeprintui.gnome-2-2.el.po (libgnomeprintui 1.116.0)  #-#-#-#-#
-#: ../src/edframe.cpp:701 ../src/export_html.cpp:213
+#: ../src/edframe.cpp:706 ../src/export_html.cpp:213
 #: ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Σχόλιο:"
@@ -550,12 +574,12 @@ msgstr ""
 msgid "Confirmation"
 msgstr "Επιβεβαίωση"
 
-#: ../src/wordpress.cpp:113
+#: ../src/wordpress.cpp:115
 #, c-format
 msgid "Confused by ambiguous values of \"%s\" in %s."
 msgstr ""
 
-#: ../src/wordpress.cpp:208
+#: ../src/wordpress.cpp:210
 msgid "Confused: multiple main plugin files."
 msgstr ""
 
@@ -563,19 +587,19 @@ msgstr ""
 msgid "Consult TM when updating from sources"
 msgstr ""
 
-#: ../src/edframe.cpp:2127
+#: ../src/edframe.cpp:2133
 msgid "Context:"
 msgstr "Περιεχόμενα:"
 
-#: ../src/edframe.cpp:2795 ../src/resources/menus.xrc:67
+#: ../src/edframe.cpp:2821 ../src/resources/menus.xrc:67
 msgid "Copy from Source Text"
 msgstr "Αντιγραφή από το Πηγαίο Κείμενο"
 
-#: ../src/edframe.cpp:2793 ../src/resources/menus.xrc:66
+#: ../src/edframe.cpp:2819 ../src/resources/menus.xrc:66
 msgid "Copy from source text"
 msgstr "Αντιγραφή από το πηγαίο κείμενο"
 
-#: ../src/wordpress.cpp:236
+#: ../src/wordpress.cpp:238
 #, c-format
 msgid "Couldn't detect translation domain of the \"%s\" plugin."
 msgstr ""
@@ -585,7 +609,7 @@ msgstr ""
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "Σφάλμα στη φόρτωση του φακέλου '%s'. Είναι, μάλλον, αλλοιωμένος."
 
-#: ../src/catalog.cpp:1330 ../src/catalog.cpp:1366
+#: ../src/catalog.cpp:1333 ../src/catalog.cpp:1369
 #, c-format
 msgid "Couldn't save file %s."
 msgstr "Αδυναμία αποθήκευσης του αρχείου %s."
@@ -658,13 +682,13 @@ msgstr ""
 msgid "Do you want to delete the project?"
 msgstr "Επιθυμείς να διαγράψεις την εργασία;"
 
-#: ../src/edframe.cpp:2692
+#: ../src/edframe.cpp:2718
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr ""
 "Θα ήθελες να αφαιρεθούν όλες οι μεταφράσεις, οι οποίες έπαψαν να "
 "χρησιμοποιούνται;"
 
-#: ../src/edframe.cpp:1130
+#: ../src/edframe.cpp:1136
 msgid "Don't Save"
 msgstr "Να μην Αποθηκευθεί"
 
@@ -672,7 +696,7 @@ msgstr "Να μην Αποθηκευθεί"
 msgid "Don't change format of existing catalogs"
 msgstr "Να μη γίνει αλλαγή της μορφής των υπαρχόντων καταλόγων"
 
-#: ../src/edframe.cpp:1128
+#: ../src/edframe.cpp:1134
 msgid "Don't save"
 msgstr "Να μην αποθηκευθεί"
 
@@ -680,8 +704,12 @@ msgstr "Να μην αποθηκευθεί"
 msgid "Don't show again"
 msgstr "Να μην εμφανιστεί ξανά"
 
-#: ../src/edapp.cpp:711
+#: ../src/edapp.cpp:832
 msgid "Donate..."
+msgstr ""
+
+#: ../src/edapp.cpp:204
+msgid "Download"
 msgstr ""
 
 # #-#-#-#-#  gnome-terminal.gnome-2-2.el.po (gnome-terminal 2.0.1)  #-#-#-#-#
@@ -735,7 +763,7 @@ msgstr "Επεξεργασία των Σ&χολίων"
 msgid "Edit &comment"
 msgstr "Επεξεργασία &σχολίου"
 
-#: ../src/edframe.cpp:2809
+#: ../src/edframe.cpp:2835
 msgid "Edit Comment"
 msgstr "Επεξεργασία των Σχολίων"
 
@@ -744,7 +772,7 @@ msgstr "Επεξεργασία των Σχολίων"
 msgid "Edit a translation"
 msgstr "Εκκαθάριση της μετάφρασης"
 
-#: ../src/edframe.cpp:2807 ../src/resources/comment.xrc:4
+#: ../src/edframe.cpp:2833 ../src/resources/comment.xrc:4
 #: ../src/resources/toolbar.xrc:58
 msgid "Edit comment"
 msgstr "Επεξεργασία σχολίου"
@@ -761,11 +789,21 @@ msgstr "Επεξεργασία εργασίας"
 msgid "Editor"
 msgstr "Επεξεργαστής κειμένου"
 
-#: ../src/wordpress.cpp:437
+#: ../src/resources/menus.xrc:253 ../src/resources/menus.xrc:310
+#, fuzzy
+msgid "Email &Support..."
+msgstr "Εξα&γωγή..."
+
+#: ../src/resources/menus.xrc:252 ../src/resources/menus.xrc:309
+#, fuzzy
+msgid "Email &support..."
+msgstr "Εξα&γωγή..."
+
+#: ../src/wordpress.cpp:394
 msgid "Email Support"
 msgstr ""
 
-#: ../src/wordpress.cpp:434
+#: ../src/wordpress.cpp:391
 msgid "Email support"
 msgstr ""
 
@@ -773,11 +811,11 @@ msgstr ""
 msgid "Enables on-the-fly spellchecking"
 msgstr "Ενεργοποιεί συνεχή ορθογραφικό έλεγχο"
 
-#: ../src/edframe.cpp:1599
+#: ../src/edframe.cpp:1605
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Οι καταχωρήσεις στον κατάλογο είναι μάλλον λανθασμένες."
 
-#: ../src/edframe.cpp:2254
+#: ../src/edframe.cpp:2274
 msgid ""
 "Entries in this catalog have different plural forms count from what "
 "catalog's Plural-Forms header says"
@@ -785,7 +823,7 @@ msgstr ""
 "Οι θέσεις, σε αυτό τον Κατάλογο Μετάφρασης, έχουν διαφορετικό πλήθος μορφών "
 "πληθυντικού, από όσες αναφέρει η κεφαλίδα «Plural-Forms» του καταλόγου."
 
-#: ../src/edframe.cpp:1673
+#: ../src/edframe.cpp:1679
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
@@ -794,17 +832,17 @@ msgstr ""
 "λεπτομέρειες του σφάλματος θα εμφανιστούν, όταν επιλέξεις τη συγκεκριμένη "
 "θέση."
 
-#: ../src/edframe.cpp:2361
+#: ../src/edframe.cpp:2381
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "Σφάλμα στη φόρτωση του αρχείου καταλόγου μηνυμάτων '%s'."
 
-#: ../src/fileviewer.cpp:287
+#: ../src/fileviewer.cpp:297
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Σφάλμα ανοίγματος αρχείου %s!"
 
-#: ../src/catalog.cpp:1501
+#: ../src/catalog.cpp:1504
 msgid "Error saving catalog"
 msgstr "Σφάλμα αποθήκευσης καταλόγου"
 
@@ -812,11 +850,11 @@ msgstr "Σφάλμα αποθήκευσης καταλόγου"
 msgid "Error:"
 msgstr "Σφάλμα:"
 
-#: ../src/edframe.cpp:3142
+#: ../src/edframe.cpp:3168
 msgid "Everything"
 msgstr ""
 
-#: ../src/edframe.cpp:1266
+#: ../src/edframe.cpp:1272
 msgid "Export as..."
 msgstr "Εξαγωγή ως..."
 
@@ -825,7 +863,7 @@ msgstr "Εξαγωγή ως..."
 msgid "Extract from sources"
 msgstr "&Ενημέρωση από τις πηγές"
 
-#: ../src/resources/properties.xrc:143
+#: ../src/resources/properties.xrc:147
 msgid "Extract text from source files in the following directories:"
 msgstr "Εξαγωγή του κειμένου από τα πηγαία αρχεία στους ακόλουθους φακέλους:"
 
@@ -834,7 +872,7 @@ msgstr "Εξαγωγή του κειμένου από τα πηγαία αρχε
 msgid "Failed command: %s"
 msgstr "Αποτυχία τη εντολής: %s"
 
-#: ../src/wordpress.cpp:419
+#: ../src/wordpress.cpp:376
 #, fuzzy
 msgid "Failed to extract WordPress information."
 msgstr "Αποτυχία στη φόρτωση του εξαγόμενου κατάλογου."
@@ -847,23 +885,23 @@ msgstr "Αποτυχία στη φόρτωση του εξαγόμενου κα�
 msgid "Failed to merge gettext catalogs."
 msgstr "Αποτυχία στη συγχώνευση των καταλόγων gettext."
 
-#: ../src/wordpress.cpp:69
+#: ../src/wordpress.cpp:71
 #, fuzzy, c-format
 msgid "Failed to read file '%s'."
 msgstr "Αποτυχία τη εντολής: %s"
 
-#: ../src/wordpress.cpp:133
+#: ../src/wordpress.cpp:135
 #, fuzzy, c-format
 msgid "Failed to read folder '%s'."
 msgstr "Παραμορφωμένη κεφαλίδα: '%s'"
 
-#: ../src/edframe.cpp:2611
+#: ../src/edframe.cpp:2637
 #, fuzzy, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Ενημέρωση της μεταφραστικής μνήμης"
 
 #
-#: ../src/edapp.cpp:550 ../src/edframe.cpp:444 ../src/edframe.cpp:1188
+#: ../src/edapp.cpp:574 ../src/edframe.cpp:444 ../src/edframe.cpp:1194
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Το αρχείο '%s' δεν υπάρχει."
@@ -873,7 +911,7 @@ msgstr "Το αρχείο '%s' δεν υπάρχει."
 msgid "File '%s' is not a message catalog."
 msgstr "Το αρχείο '%s' δεν είναι κατάλογος μηνυμάτων."
 
-#: ../src/catalog.cpp:1312
+#: ../src/catalog.cpp:1315
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -941,11 +979,11 @@ msgstr "< Προηγούμενο"
 msgid "Find..."
 msgstr "Εύρεση..."
 
-#: ../src/edframe.cpp:2284
+#: ../src/edframe.cpp:2304
 msgid "Fix the header"
 msgstr "Επιδιόρθωση της κεφαλίδας"
 
-#: ../src/wordpress.cpp:292
+#: ../src/wordpress.cpp:294
 msgid "Folder looks like both a plugin and a theme."
 msgstr ""
 
@@ -953,12 +991,12 @@ msgstr ""
 msgid "Fonts"
 msgstr "Γραμματοσειρές"
 
-#: ../src/edframe.cpp:3144
+#: ../src/edframe.cpp:3170
 #, c-format
 msgid "Form %i"
 msgstr "Μορφή %i"
 
-#: ../src/wordpress.cpp:294
+#: ../src/wordpress.cpp:296
 msgid "Found neither WordPress theme nor plugin in the folder."
 msgstr ""
 
@@ -970,38 +1008,38 @@ msgstr "Ασαφές"
 msgid "Fuzzy translation"
 msgstr "Ασαφής μετάφραση"
 
-#: ../src/edapp.cpp:524 ../src/edframe.cpp:1169 ../src/edframe.cpp:1229
+#: ../src/edapp.cpp:548 ../src/edframe.cpp:1175 ../src/edframe.cpp:1235
 #: ../src/prefsdlg.cpp:168
 msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "Κατάλογοι GNU gettext (*.po)|*.po|Όλα τα αρχεία (*.*)|*.*"
 
-#: ../src/edframe.cpp:1617
+#: ../src/edframe.cpp:1623
 msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "Πρότυπα GNU gettext (*.pot)|*.pot|Όλα τα αρχεία (*.*)|*.*"
 
-#: ../src/edframe.cpp:1315
+#: ../src/edframe.cpp:1321
 #, fuzzy
 msgid ""
 "GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All "
 "files (*.*)|*.*"
 msgstr "Πρότυπα GNU gettext (*.pot)|*.pot|Όλα τα αρχεία (*.*)|*.*"
 
-#: ../src/edframe.cpp:3236
+#: ../src/edframe.cpp:3262
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "Μετάβαση στο Σελιδοδείκτη %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:3230
+#: ../src/edframe.cpp:3256
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+Alt+%i"
 msgstr "Μετάβαση στο Σελιδοδείκτη %i\tCtrl+Alt+%i"
 
-#: ../src/edframe.cpp:3233
+#: ../src/edframe.cpp:3259
 #, c-format
 msgid "Go to bookmark %i\tCtrl+%i"
 msgstr "Μετάβαση στο Σελιδοδείκτη %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:1268
+#: ../src/edframe.cpp:1274
 msgid "HTML file (*.html)|*.html"
 msgstr "αρχείο HTML(*.html)|*.html"
 
@@ -1030,7 +1068,7 @@ msgstr "Αν τσεκαριστεί, το παράθυρο σχολίων θα �
 msgid "If enabled, Poedit will try to fill in missing translations."
 msgstr ""
 
-#: ../src/edframe.cpp:2694
+#: ../src/edframe.cpp:2720
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
@@ -1055,7 +1093,7 @@ msgstr "Αυτόματες μεταφράσεις:"
 msgid "Include beta versions"
 msgstr ""
 
-#: ../src/edframe.cpp:165 ../src/edframe.cpp:2172
+#: ../src/edframe.cpp:165 ../src/edframe.cpp:2178
 msgid "Invalid file"
 msgstr ""
 
@@ -1068,7 +1106,7 @@ msgstr "Κλήση:"
 msgid "Items"
 msgstr ""
 
-#: ../src/edframe.cpp:2698
+#: ../src/edframe.cpp:2724
 msgid "Keep"
 msgstr "Διατήρηση"
 
@@ -1076,11 +1114,11 @@ msgstr "Διατήρηση"
 msgid "Language Code or Name (e.g. en_GB)"
 msgstr ""
 
-#: ../src/edframe.cpp:2218
+#: ../src/edframe.cpp:2255
 msgid "Language of the translation isn't set."
 msgstr ""
 
-#: ../src/languagectrl.cpp:81
+#: ../src/languagectrl.cpp:94
 #, fuzzy
 msgid "Language of the translation:"
 msgstr "Ε&κκαθάριση διαγραμμένων μεταφράσεων"
@@ -1103,11 +1141,16 @@ msgstr "Τελευταία τροποποίηση"
 msgid "Learn From Files..."
 msgstr "Ανάλυση %s αρχείων..."
 
+#: ../src/resources/properties.xrc:202
+#, fuzzy
+msgid "Learn about gettext keywords"
+msgstr "Πληροφορίες για τις Μορφές Πληθυντικού"
+
 #: ../src/resources/properties.xrc:75
 msgid "Learn about plural forms"
 msgstr "Πληροφορίες για τις Μορφές Πληθυντικού"
 
-#: ../src/edframe.cpp:1039
+#: ../src/edframe.cpp:1045
 msgid "Learn more"
 msgstr "Περισσότερες πληροφορίες"
 
@@ -1129,11 +1172,11 @@ msgstr "Η λίστα των επεκτάσεων χωρίζεται από άν
 msgid "Malformed header: '%s'"
 msgstr "Παραμορφωμένη κεφαλίδα: '%s'"
 
-#: ../src/catalog.cpp:1606
+#: ../src/catalog.cpp:1609
 msgid "Merging differences..."
 msgstr "Συνένωση διαφορών..."
 
-#: ../src/propertiesdlg.cpp:75
+#: ../src/propertiesdlg.cpp:71
 #, fuzzy
 msgid "Name of the project the translation is for"
 msgstr "Δεν βρέθηκε κανένα πρόβλημα στην μετάφραση."
@@ -1167,22 +1210,22 @@ msgstr ""
 msgid "New"
 msgstr "Νέο"
 
-#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:266
+#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:276
 #, fuzzy
 msgid "New From &POT/PO File..."
 msgstr "Ενημέρωση από το Αρχείο &POT..."
 
-#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:270
+#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:280
 #, fuzzy
 msgid "New WordPress Translation..."
 msgstr "Εκκαθάριση της Μετάφρασης"
 
-#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:269
+#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:279
 #, fuzzy
 msgid "New WordPress translation..."
 msgstr "Εκκαθάριση της μετάφρασης"
 
-#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:265
+#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:275
 #, fuzzy
 msgid "New from &POT/PO file..."
 msgstr "Ενημέρωση από το αρχείο &POT..."
@@ -1195,15 +1238,15 @@ msgstr "Νέοι στίχοι"
 msgid "No files found in: "
 msgstr "Δε βρέθηκαν αρχεία στο: "
 
-#: ../src/edframe.cpp:1688
+#: ../src/edframe.cpp:1694
 msgid "No problems with the translation found."
 msgstr "Δεν βρέθηκε κανένα πρόβλημα στην μετάφραση."
 
-#: ../src/edframe.cpp:1731
+#: ../src/edframe.cpp:1737
 msgid "No references to this string found."
 msgstr "Καμία αναφορά στο στίχο που βρέθηκε."
 
-#: ../src/edapp.cpp:712
+#: ../src/edapp.cpp:833
 msgid "No, thanks"
 msgstr ""
 
@@ -1216,14 +1259,14 @@ msgstr "%i δεν είναι μεταφρασμένο"
 msgid "Notes"
 msgstr "Σημειώσεις"
 
-#: ../src/edframe.cpp:694 ../src/export_html.cpp:204
+#: ../src/edframe.cpp:699 ../src/export_html.cpp:204
 msgid "Notes for translators:"
 msgstr "Σημειώσεις για τους Μεταφραστές:"
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
 #: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:105
 #: ../src/resources/prefs.xrc:295 ../src/resources/prefs.xrc:437
-#: ../src/resources/properties.xrc:206 ../src/resources/summary.xrc:70
+#: ../src/resources/properties.xrc:225 ../src/resources/summary.xrc:70
 msgid "OK"
 msgstr "Εντάξει"
 
@@ -1231,7 +1274,7 @@ msgstr "Εντάξει"
 msgid "Obsolete strings"
 msgstr "Στίχοι εκτός χρήσης"
 
-#: ../src/edframe.cpp:3150
+#: ../src/edframe.cpp:3176
 msgid "One"
 msgstr ""
 
@@ -1250,16 +1293,16 @@ msgstr "Επεξεργαστής κειμένου"
 msgid "Open an existing PO file and edit the translation."
 msgstr ""
 
-#: ../src/edapp.cpp:521 ../src/edframe.cpp:1167
+#: ../src/edapp.cpp:545 ../src/edframe.cpp:1173
 #: ../src/resources/toolbar.xrc:16 ../src/resources/toolbar.xrc:21
 msgid "Open catalog"
 msgstr "Άνοιγμα καταλόγου"
 
-#: ../src/edframe.cpp:1313 ../src/edframe.cpp:1615
+#: ../src/edframe.cpp:1319 ../src/edframe.cpp:1621
 msgid "Open catalog template"
 msgstr "Άνοιγμα προτύπου καταλόγου"
 
-#: ../src/edframe.cpp:3157
+#: ../src/edframe.cpp:3183
 msgid "Other"
 msgstr ""
 
@@ -1288,7 +1331,7 @@ msgstr "Αναλυτές"
 msgid "Parsing %s files..."
 msgstr "Ανάλυση %s αρχείων..."
 
-#: ../src/propertiesdlg.cpp:71
+#: ../src/propertiesdlg.cpp:67
 msgid "Paths"
 msgstr "Διαδρομές"
 
@@ -1296,15 +1339,21 @@ msgstr "Διαδρομές"
 msgid "Personalize"
 msgstr "Προσωπικά στοιχεία"
 
-#: ../src/edframe.cpp:1739
+#: ../src/edframe.cpp:1745
 msgid "Please choose the reference you want to show:"
 msgstr "Παρακαλώ επιλέξτε την αναφορά που θέλετε να εμφανίσετε:"
 
-#: ../src/wordpress.cpp:450
+#: ../src/edapp.cpp:203
+msgid ""
+"Please download a newer version from the Poedit website at http://poedit.net/"
+"beta/"
+msgstr ""
+
+#: ../src/wordpress.cpp:407
 msgid "Please email this log to help@poedit.net. Thank you!"
 msgstr ""
 
-#: ../src/propertiesdlg.cpp:260
+#: ../src/propertiesdlg.cpp:256
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
 
@@ -1315,12 +1364,12 @@ msgstr "Μορφές Πληθυντικού:"
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:2322
+#: ../src/edframe.cpp:2342
 #, c-format
 msgid "Plural forms expression used by the catalog is unusual for %s."
 msgstr ""
 
-#: ../src/edframe.cpp:673
+#: ../src/edframe.cpp:678
 msgid "Plural:"
 msgstr "Πληθυντικός:"
 
@@ -1368,7 +1417,7 @@ msgstr "Poedit - Διαχειριστής καταλόγων"
 msgid "Poedit Update"
 msgstr "Poedit"
 
-#: ../src/wordpress.cpp:429
+#: ../src/wordpress.cpp:386
 #, c-format
 msgid ""
 "Poedit couldn’t understand the content of the folder you selected. This may "
@@ -1384,7 +1433,7 @@ msgstr ""
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Το Poedit δε βρήκε κανένα αρχείο στους ανιχνευμένους φακέλους."
 
-#: ../src/edapp.cpp:587
+#: ../src/edapp.cpp:611
 msgid "Poedit is an easy to use translations editor."
 msgstr "Το Poedit είναι ένας εύκολος στη χρήση επεξεργαστής μεταφράσεων."
 
@@ -1418,39 +1467,40 @@ msgstr "Όνομα εργασίας και έκδοση:"
 msgid "Project name:"
 msgstr "Όνομα εργασίας:"
 
-#: ../src/edframe.cpp:2698
+#: ../src/edframe.cpp:2724
 msgid "Purge"
 msgstr "Εκκαθάριση"
 
-#: ../src/edframe.cpp:2690
+#: ../src/edframe.cpp:2716
 msgid "Purge deleted translations"
 msgstr "Ε&κκαθάριση διαγραμμένων μεταφράσεων"
 
-#: ../src/tm/tm_migrate.cpp:237 ../src/resources/manager.xrc:137
-#: ../src/resources/menus.xrc:60 ../src/resources/menus.xrc:285
+#: ../src/edapp.cpp:204 ../src/tm/tm_migrate.cpp:237
+#: ../src/resources/manager.xrc:137 ../src/resources/menus.xrc:60
+#: ../src/resources/menus.xrc:292
 msgid "Quit"
 msgstr "Τερματισμός"
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
-#: ../src/edframe.cpp:1739
+#: ../src/edframe.cpp:1745
 msgid "References"
 msgstr "Αναφορές"
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
-#: ../src/edframe.cpp:2862 ../src/edframe.cpp:2866
+#: ../src/edframe.cpp:2888 ../src/edframe.cpp:2892
 msgid "References:"
 msgstr "Αναφορές:"
 
-#: ../src/edframe.cpp:2265
+#: ../src/edframe.cpp:2285
 msgid "Required header Plural-Forms is missing."
 msgstr "Λείπει η απαιτούμενη κεφαλίδα «Plural-Forms»."
 
-#: ../src/edframe.cpp:2326
+#: ../src/edframe.cpp:2346
 msgid "Review"
 msgstr ""
 
 # #-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#
-#: ../src/edframe.cpp:1126 ../src/resources/toolbar.xrc:25
+#: ../src/edframe.cpp:1132 ../src/resources/toolbar.xrc:25
 #: ../src/resources/toolbar.xrc:30
 msgid "Save"
 msgstr "Αποθήκευση"
@@ -1463,7 +1513,7 @@ msgstr "Αποθήκευση &Ως..."
 msgid "Save &as..."
 msgstr "Αποθήκευση &ως..."
 
-#: ../src/edframe.cpp:1228
+#: ../src/edframe.cpp:1234
 msgid "Save as..."
 msgstr "Αποθήκευση ως..."
 
@@ -1472,7 +1522,7 @@ msgstr "Αποθήκευση ως..."
 msgid "Save catalog"
 msgstr "Αποθήκευση καταλόγου"
 
-#: ../src/edframe.cpp:1120
+#: ../src/edframe.cpp:1126
 msgid "Save changes"
 msgstr "Αποθήκευση αλλαγών"
 
@@ -1484,7 +1534,7 @@ msgstr "Σάρωση αρχείων..."
 msgid "Select directory"
 msgstr "Επιλογή φακέλου"
 
-#: ../src/edframe.cpp:1390
+#: ../src/edframe.cpp:1396
 msgid "Select the folder with the WordPress theme or plugin"
 msgstr ""
 
@@ -1497,35 +1547,40 @@ msgstr "Δυσλειτουργία με την μεταφραστική μνήμ
 msgid "Select your prefered language"
 msgstr "Επιλογή της γλώσσας προτίμησης"
 
-#: ../src/edframe.cpp:3235
+#: ../src/edframe.cpp:3261
 #, c-format
 msgid "Set Bookmark %i\tAlt+%i"
 msgstr "Ορισμός Σελιδοδείκτη %i\tAlt+%i"
 
-#: ../src/edframe.cpp:3229
+#: ../src/edframe.cpp:3255
 #, c-format
 msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "Ορισμός Σελιδοδείκτη %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:3232
+#: ../src/edframe.cpp:3258
 #, c-format
 msgid "Set bookmark %i\tAlt+%i"
 msgstr "Ορισμός σελιδοδείκτη %i\tAlt+%i"
 
-#: ../src/edframe.cpp:2236
+#: ../src/edframe.cpp:2227
 msgid "Set email"
 msgstr "Ορισμός ηλεκτρονικού ταχυδρομείου"
 
-#: ../src/edframe.cpp:2220
+#: ../src/edframe.cpp:2257
 #, fuzzy
 msgid "Set language"
+msgstr "Επιλογή γλώσσας"
+
+#: ../src/edframe.cpp:2242
+#, fuzzy
+msgid "Set name"
 msgstr "Επιλογή γλώσσας"
 
 #: ../src/resources/prefs.xrc:103
 msgid "Show summary after catalog update"
 msgstr "Εμφάνιση περίληψης μετά την ενημέρωση του καταλόγου"
 
-#: ../src/edframe.cpp:666
+#: ../src/edframe.cpp:671
 msgid "Singular:"
 msgstr "Ενικός:"
 
@@ -1568,12 +1623,12 @@ msgstr "Πηγή"
 msgid "Source Text"
 msgstr "Πηγαίο κείμενο"
 
-#: ../src/resources/prefs.xrc:412 ../src/resources/properties.xrc:123
+#: ../src/resources/prefs.xrc:412 ../src/resources/properties.xrc:127
 msgid "Source code charset:"
 msgstr "Σύνολο χαρακτήρων πηγαίου κώδικα:"
 
 #
-#: ../src/catalog.cpp:1589
+#: ../src/catalog.cpp:1592
 #, fuzzy, c-format
 msgid "Source code directory '%s' doesn't exist."
 msgstr "Το αρχείο '%s' δεν υπάρχει."
@@ -1595,22 +1650,22 @@ msgstr "Συνύπαρξη πηγαίου αρχείου:"
 msgid "Source text"
 msgstr "Πηγαίο κείμενο"
 
-#: ../src/edframe.cpp:659
+#: ../src/edframe.cpp:664
 msgid "Source text:"
 msgstr "Πηγαίο κείμενο:"
 
-#: ../src/resources/properties.xrc:195
+#: ../src/resources/properties.xrc:214
 msgid "Sources keywords"
 msgstr "Λέξεις-κλειδιά των πηγών"
 
-#: ../src/resources/properties.xrc:174
+#: ../src/resources/properties.xrc:178
 msgid "Sources paths"
 msgstr "Διαδρομές των πηγών"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:1035
+#: ../src/edframe.cpp:1041
 #, c-format
 msgid "Spellchecker dictionary for %s isn't available, you need to install it."
 msgstr ""
@@ -1638,7 +1693,7 @@ msgstr "Στίχοι προς εύρεση:"
 msgid "Strings in source language"
 msgstr ""
 
-#: ../src/edframe.cpp:2270
+#: ../src/edframe.cpp:2290
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Σφάλμα σύνταξης στην κεφαλίδα «Plural-Forms» (\"%s\")."
@@ -1653,25 +1708,25 @@ msgstr ""
 msgid "Take translatable strings from an existing POT template."
 msgstr ""
 
-#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:97
+#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:101
 msgid "Team's email address:"
 msgstr "Ηλεκτρονική διεύθυνση ομάδας:"
 
-#: ../src/export_html.cpp:118 ../src/resources/properties.xrc:83
+#: ../src/export_html.cpp:118 ../src/resources/properties.xrc:87
 msgid "Team:"
 msgstr "Ομάδα:"
 
-#: ../src/wordpress.cpp:231
+#: ../src/wordpress.cpp:233
 #, c-format
 msgid "The \"%s\" plugin isn't localization-ready."
 msgstr ""
 
-#: ../src/wordpress.cpp:175
+#: ../src/wordpress.cpp:177
 #, c-format
 msgid "The \"%s\" theme isn't localization-ready."
 msgstr ""
 
-#: ../src/catalog.cpp:1499
+#: ../src/catalog.cpp:1502
 #, fuzzy, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as specified in catalog "
@@ -1683,16 +1738,16 @@ msgstr ""
 "όπως προσδιορίστηκε στις ρυθμίσεις καταλόγου. Αποθηκεύτηκε σε UTF-8\n"
 "και η ρύθμιση τροποποιήθηκε αναλόγως."
 
-#: ../src/edframe.cpp:164 ../src/edframe.cpp:2171
+#: ../src/edframe.cpp:164 ../src/edframe.cpp:2177
 msgid "The file cannot be opened."
 msgstr ""
 
-#: ../src/edframe.cpp:169 ../src/edframe.cpp:2176
+#: ../src/edframe.cpp:169 ../src/edframe.cpp:2182
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr ""
 
-#: ../src/edframe.cpp:1677
+#: ../src/edframe.cpp:1683
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
@@ -1704,7 +1759,7 @@ msgstr ""
 msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr ""
 
-#: ../src/edframe.cpp:1692
+#: ../src/edframe.cpp:1698
 msgid "The translation is ready for use."
 msgstr "Η μετάφραση είναι έτοιμη προς χρήση."
 
@@ -1712,7 +1767,7 @@ msgstr "Η μετάφραση είναι έτοιμη προς χρήση."
 msgid "There are no translations. That’s unusual."
 msgstr ""
 
-#: ../src/catalog.cpp:1375
+#: ../src/catalog.cpp:1378
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr ""
@@ -1743,7 +1798,11 @@ msgstr ""
 "Αυτοί οι στίχοι βρέθηκαν στα πηγαία αρχεία αλλά δεν ήταν στον κατάλογο.\n"
 "Το Poedit θα τους προσθέσει στον κατάλογο τώρα."
 
-#: ../src/edframe.cpp:2250
+#: ../src/edapp.cpp:202
+msgid "This beta version of Poedit expired."
+msgstr ""
+
+#: ../src/edframe.cpp:2270
 msgid ""
 "This catalog has entries with plural forms, but doesn't have Plural-Forms "
 "header configured."
@@ -1832,12 +1891,12 @@ msgstr "Μετάφραση"
 msgid "Translated"
 msgstr "Μετάφραση"
 
-#: ../src/edframe.cpp:2765
+#: ../src/edframe.cpp:2791
 #, fuzzy, c-format
 msgid "Translated %u strings"
 msgstr "%i %% μεταφρασμένα, %i στίχος"
 
-#: ../src/edframe.cpp:2747
+#: ../src/edframe.cpp:2773
 msgid "Translating using TM..."
 msgstr ""
 
@@ -1850,7 +1909,7 @@ msgstr "Μετάφραση"
 msgid "Translation Is &Fuzzy"
 msgstr "Η Μετάφραση είναι &Ασαφής"
 
-#: ../src/languagectrl.cpp:76
+#: ../src/languagectrl.cpp:89
 #, fuzzy
 msgid "Translation Language"
 msgstr "Μετάφραση"
@@ -1870,7 +1929,7 @@ msgid "Translation memory migration failed."
 msgstr "Δυσλειτουργία της βάσης δεδομένων της μεταφραστικής μνήμης: %s"
 
 # sysdeps/names/mem.c:43
-#: ../src/resources/properties.xrc:135
+#: ../src/resources/properties.xrc:139
 msgid "Translation properties"
 msgstr "Ιδιότητες της μετάφρασης"
 
@@ -1879,12 +1938,18 @@ msgstr "Ιδιότητες της μετάφρασης"
 msgid "Translation — %s"
 msgstr "Μετάφραση"
 
-#: ../src/edframe.cpp:681
+#
+#: ../src/edframe.cpp:2240
+#, fuzzy
+msgid "Translation's project name isn't set."
+msgstr "Το αρχείο '%s' δεν υπάρχει."
+
+#: ../src/edframe.cpp:686
 msgid "Translation:"
 msgstr "Μετάφραση:"
 
 #
-#: ../src/wordpress.cpp:310
+#: ../src/wordpress.cpp:312
 #, fuzzy, c-format
 msgid "Translations folder (%s) doesn't exist."
 msgstr "Το αρχείο '%s' δεν υπάρχει."
@@ -1895,11 +1960,11 @@ msgstr "Το αρχείο '%s' δεν υπάρχει."
 msgid "Translations with errors"
 msgstr "Μεταφραστική Μνήμη"
 
-#: ../src/edframe.cpp:3152
+#: ../src/edframe.cpp:3178
 msgid "Two"
 msgstr ""
 
-#: ../src/propertiesdlg.cpp:112
+#: ../src/propertiesdlg.cpp:108
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (προτείνεται)"
 
@@ -1948,11 +2013,11 @@ msgstr "Ενημέρωση από το Αρχείο &POT..."
 msgid "Update summary"
 msgstr "Περίληψη ενημέρωσης"
 
-#: ../src/edframe.cpp:1585 ../src/manager.cpp:441
+#: ../src/edframe.cpp:1591 ../src/manager.cpp:441
 msgid "Updating catalog"
 msgstr "Ενημερώνεται ο κατάλογος"
 
-#: ../src/edframe.cpp:1601
+#: ../src/edframe.cpp:1607
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
 msgstr ""
 "Η ενημέρωση του καταλόγου απέτυχε. \n"
@@ -1975,7 +2040,7 @@ msgstr "Χρήση της προσαρμοσμένης γραμματοσειρ�
 msgid "Use default rules for this language"
 msgstr "(Χρήση εξ ορισμού γλώσσας)"
 
-#: ../src/resources/properties.xrc:182
+#: ../src/resources/properties.xrc:186
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
@@ -1994,13 +2059,13 @@ msgid "Validate"
 msgstr "Επικύρωση"
 
 # sysdeps/names/mem.c:43
-#: ../src/edframe.cpp:1670 ../src/edframe.cpp:1689
+#: ../src/edframe.cpp:1676 ../src/edframe.cpp:1695
 msgid "Validation results"
 msgstr "Αποτέλεσμα επικύρωσης"
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
-#: ../src/edapp.cpp:572 ../src/welcomescreen.cpp:155
+#: ../src/edapp.cpp:596 ../src/welcomescreen.cpp:155
 #, c-format
 msgid "Version %s"
 msgstr "Έκδοση %s"
@@ -2013,7 +2078,7 @@ msgstr "Έκδοση %s"
 # #-#-#-#-#  libgda-el.po (gnome-db 0.0.91)  #-#-#-#-##
 # #-#-#-#-#  toutdoux-el.po (toutdoux 1.0)  #-#-#-#-##
 # #-#-#-#-#  screem-el.po (screem 1.0)  #-#-#-#-##
-#: ../src/wordpress.cpp:438
+#: ../src/wordpress.cpp:395
 #, fuzzy
 msgid "View Log"
 msgstr "&Προβολή"
@@ -2026,7 +2091,7 @@ msgstr "&Προβολή"
 # #-#-#-#-#  libgda-el.po (gnome-db 0.0.91)  #-#-#-#-##
 # #-#-#-#-#  toutdoux-el.po (toutdoux 1.0)  #-#-#-#-##
 # #-#-#-#-#  screem-el.po (screem 1.0)  #-#-#-#-##
-#: ../src/wordpress.cpp:435
+#: ../src/wordpress.cpp:392
 #, fuzzy
 msgid "View log"
 msgstr "&Προβολή"
@@ -2044,11 +2109,11 @@ msgstr "Πλήρης λέξεις μόνο"
 msgid "Windows"
 msgstr "Microsoft Windows"
 
-#: ../src/wordpress.cpp:449
+#: ../src/wordpress.cpp:406
 msgid "WordPress Errors Log"
 msgstr ""
 
-#: ../src/wordpress.cpp:420
+#: ../src/wordpress.cpp:377
 msgid "WordPress error"
 msgstr ""
 
@@ -2073,7 +2138,7 @@ msgid "You must restart Poedit for this change to take effect."
 msgstr ""
 "Πρέπει να γίνει επανεκκίνηση του Poedit, ώστε αυτή η αλλαγή να έχει επίδραση."
 
-#: ../src/edframe.cpp:2234
+#: ../src/edframe.cpp:2225
 msgid ""
 "You should set your email address in Preferences so that it can be used for "
 "Last-Translator header in GNU gettext files."
@@ -2082,7 +2147,7 @@ msgstr ""
 "ώστε να χρησιμοποιηθεί στην κεφαλίδα ,Last-Translator» των αρχείων Γκνου "
 "γκέτεξτ."
 
-#: ../src/edframe.cpp:1123
+#: ../src/edframe.cpp:1129
 msgid "Your changes will be lost if you don't save them."
 msgstr "Οι αλλαγές που έχεις κάνει θα χαθούν, εάν δεν τις αποθηκεύσεις."
 
@@ -2103,15 +2168,15 @@ msgstr ""
 msgid "Your name:"
 msgstr "Το όνομά σου:"
 
-#: ../src/edframe.cpp:3148
+#: ../src/edframe.cpp:3174
 msgid "Zero"
 msgstr ""
 
-#: ../src/edapp.cpp:411
+#: ../src/edapp.cpp:433
 msgid "don't delete temporary files (for debugging)"
 msgstr "χωρίς διαγραφή των προσωρινών αρχείων (για αποσφαλμάτωση)"
 
-#: ../src/propertiesdlg.cpp:76
+#: ../src/propertiesdlg.cpp:72
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr ""
 
@@ -2176,9 +2241,6 @@ msgstr ""
 
 #~ msgid "Display &Line Numbers"
 #~ msgstr "Προβολή του Αύξοντα Αριθμού της Κάθε &Γραμμής"
-
-#~ msgid "E&xport..."
-#~ msgstr "Εξα&γωγή..."
 
 # #-#-#-#-#  gnome-terminal.gnome-2-2.el.po (gnome-terminal 2.0.1)  #-#-#-#-#
 # #-#-#-#-#  memory.el.po (abiword 1.0)  #-#-#-#-#
@@ -2366,9 +2428,6 @@ msgstr ""
 
 #~ msgid "Fullscreen view"
 #~ msgstr "Προβολή πλήρους οθόνης"
-
-#~ msgid "GNU gettext documentation"
-#~ msgstr "Τεκμηρίωση GNU gettext"
 
 #~ msgid "Macintosh"
 #~ msgstr "Macintosh"
