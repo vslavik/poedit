@@ -33,6 +33,8 @@
 #import <AppKit/NSButton.h>
 #import <AppKit/NSSpellChecker.h>
 
+#import "PFMoveApplication.h"
+
 #ifdef USE_SPARKLE
 #import <Sparkle/Sparkle.h>
 
@@ -137,3 +139,9 @@ void MakeButtonRounded(void *button)
 {
     [(__bridge NSButton*)button setBezelStyle:NSRoundRectBezelStyle];
 }
+
+void MoveToApplicationsFolderIfNecessary()
+{
+    PFMoveToApplicationsFolderIfNecessary();
+}
+

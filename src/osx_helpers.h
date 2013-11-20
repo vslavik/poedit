@@ -51,6 +51,8 @@ void UserDefaults_RemoveValue(const char *key);
 // Misc UI helpers
 void MakeButtonRounded(void *button);
 
+void MoveToApplicationsFolderIfNecessary();
+
 #ifdef __cplusplus
 }
 #endif

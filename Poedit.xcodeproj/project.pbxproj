@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21FB780179D51BE003F45AC /* libexpat.dylib */; };
+		B2284A52183BE3B300E097C7 /* NSString+SymlinksAndAliases.m in Sources */ = {isa = PBXBuildFile; fileRef = B2284A4F183BE3B300E097C7 /* NSString+SymlinksAndAliases.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = B2284A51183BE3B300E097C7 /* PFMoveApplication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B2284A55183BE68200E097C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2284A54183BE68200E097C7 /* Security.framework */; };
 		B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* language.cpp */; };
 		B23D1F7118142D1900E6B212 /* dump_legacy_tm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */; };
 		B23D1F731814470200E6B212 /* dump-legacy-tm in Copy Auxiliary Binaries */ = {isa = PBXBuildFile; fileRef = B23D1F6418142CF400E6B212 /* dump-legacy-tm */; };
@@ -169,6 +172,11 @@
 
 /* Begin PBXFileReference section */
 		B21FB780179D51BE003F45AC /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
+		B2284A4E183BE3B300E097C7 /* NSString+SymlinksAndAliases.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+SymlinksAndAliases.h"; path = "deps/letsmove/NSString+SymlinksAndAliases.h"; sourceTree = "<group>"; };
+		B2284A4F183BE3B300E097C7 /* NSString+SymlinksAndAliases.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+SymlinksAndAliases.m"; path = "deps/letsmove/NSString+SymlinksAndAliases.m"; sourceTree = "<group>"; };
+		B2284A50183BE3B300E097C7 /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFMoveApplication.h; path = deps/letsmove/PFMoveApplication.h; sourceTree = "<group>"; };
+		B2284A51183BE3B300E097C7 /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFMoveApplication.m; path = deps/letsmove/PFMoveApplication.m; sourceTree = "<group>"; };
+		B2284A54183BE68200E097C7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B22C5F0817DDC67400ECAFD1 /* language.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = language.cpp; sourceTree = "<group>"; };
 		B22C5F0917DDC67400ECAFD1 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
 		B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dump_legacy_tm.cpp; path = tm/dump_legacy_tm.cpp; sourceTree = "<group>"; };
@@ -319,9 +327,10 @@
 				B2BF84C4170849D00030AA22 /* Carbon.framework in Frameworks */,
 				B2BF84BA170846290030AA22 /* OpenGL.framework in Frameworks */,
 				B2BF84C1170847E60030AA22 /* IOKit.framework in Frameworks */,
+				B2284A55183BE68200E097C7 /* Security.framework in Frameworks */,
+				B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */,
 				B2BF84BE170847220030AA22 /* libz.dylib in Frameworks */,
 				B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */,
-				B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */,
 				B2D76A45181D027F0083C9D9 /* libLucenePlusPlus.a in Frameworks */,
 				B2D76A4C181D028B0083C9D9 /* libboost_date_time.a in Frameworks */,
 				B2D76A4D181D028B0083C9D9 /* libboost_filesystem.a in Frameworks */,
@@ -335,6 +344,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B2284A4D183BE39900E097C7 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				B2284A4E183BE3B300E097C7 /* NSString+SymlinksAndAliases.h */,
+				B2284A4F183BE3B300E097C7 /* NSString+SymlinksAndAliases.m */,
+				B2284A50183BE3B300E097C7 /* PFMoveApplication.h */,
+				B2284A51183BE3B300E097C7 /* PFMoveApplication.m */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
 		B23D1F5B1814279D00E6B212 /* TM */ = {
 			isa = PBXGroup;
 			children = (
@@ -453,6 +473,7 @@
 		B24ACD5D16F6201F00399242 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2284A54183BE68200E097C7 /* Security.framework */,
 				B2D76A46181D028B0083C9D9 /* libboost_date_time.a */,
 				B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */,
 				B2D76A48181D028B0083C9D9 /* libboost_iostreams.a */,
@@ -494,6 +515,7 @@
 				B27EB05C1709DA2B009C1328 /* XRC Resources */,
 				B24ACD7E16F6252600399242 /* Resources */,
 				B24ACD6516F6201F00399242 /* Supporting Files */,
+				B2284A4D183BE39900E097C7 /* Third Party */,
 			);
 			name = Poedit;
 			sourceTree = SOURCE_ROOT;
@@ -853,6 +875,8 @@
 				B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */,
 				B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */,
 				B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */,
+				B2284A52183BE3B300E097C7 /* NSString+SymlinksAndAliases.m in Sources */,
+				B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
