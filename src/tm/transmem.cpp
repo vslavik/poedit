@@ -31,6 +31,7 @@
 #include <wx/stdpaths.h>
 #include <wx/utils.h>
 #include <wx/dir.h>
+#include <Wx/filename.h>
 
 #include <mutex>
 
@@ -122,6 +123,10 @@ std::wstring TranslationMemoryImpl::GetDatabaseDir()
 #endif
     data += wxFILE_SEP_PATH;
     data += "TranslationMemory";
+
+    // ensure the directory exists:
+    wxFileName::Mkdir(data, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
+
     return data.ToStdWstring();
 }
 
