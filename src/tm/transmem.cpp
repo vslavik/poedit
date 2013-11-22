@@ -121,11 +121,12 @@ std::wstring TranslationMemoryImpl::GetDatabaseDir()
 #else
     data = wxStandardPaths::Get().GetUserDataDir();
 #endif
+
+    // ensure the parent directory exists:
+    wxFileName::Mkdir(data, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
+
     data += wxFILE_SEP_PATH;
     data += "TranslationMemory";
-
-    // ensure the directory exists:
-    wxFileName::Mkdir(data, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
 
     return data.ToStdWstring();
 }
