@@ -40,6 +40,7 @@
 static const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
 
 wxString FindFrame::ms_text;
+FindFrame *FindFrame::ms_singleton = nullptr;
 
 BEGIN_EVENT_TABLE(FindFrame, wxDialog)
    EVT_BUTTON(XRCID("find_next"), FindFrame::OnNext)
@@ -105,11 +106,15 @@ FindFrame::FindFrame(wxWindow *parent,
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
     SetAcceleratorTable(accel);
 #endif
+
+    ms_singleton = this;
 }
 
 
 FindFrame::~FindFrame()
 {
+    ms_singleton = nullptr;
+
     SaveWindowState(this, WinState_Pos);
 
     wxConfig::Get()->Write("find_in_orig",

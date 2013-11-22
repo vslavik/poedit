@@ -1802,7 +1802,7 @@ void PoeditFrame::OnClearTranslation(wxCommandEvent&)
 
 void PoeditFrame::OnFind(wxCommandEvent&)
 {
-    FindFrame *f = (FindFrame*)FindWindow("find_frame");
+    FindFrame *f = FindFrame::Get();
 
     if (!f)
         f = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans, m_textComment, m_textAutoComments);
@@ -1813,14 +1813,14 @@ void PoeditFrame::OnFind(wxCommandEvent&)
 
 void PoeditFrame::OnFindNext(wxCommandEvent&)
 {
-    FindFrame *f = (FindFrame*)FindWindow("find_frame");
+    FindFrame *f = FindFrame::Get();
     if ( f )
         f->FindNext();
 }
 
 void PoeditFrame::OnFindPrev(wxCommandEvent&)
 {
-    FindFrame *f = (FindFrame*)FindWindow("find_frame");
+    FindFrame *f = FindFrame::Get();
     if ( f )
         f->FindPrev();
 }
@@ -2318,7 +2318,7 @@ void PoeditFrame::RefreshControls()
             m_list->SelectCatalogItem(selectedItem);
     }
 
-    FindFrame *f = (FindFrame*)FindWindow("find_frame");
+    FindFrame *f = FindFrame::Get();
     if (f)
         f->Reset(m_catalog);
 
