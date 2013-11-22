@@ -26,6 +26,7 @@
 #include "transmem.h"
 
 #include "catalog.h"
+#include "errors.h"
 
 #include <wx/stdpaths.h>
 #include <wx/utils.h>
@@ -59,6 +60,17 @@
 #include <TermAttribute.h>
 
 using namespace Lucene;
+
+#define CATCH_AND_RETHROW_EXCEPTION                                 \
+    catch (LuceneException& e)                                      \
+    {                                                               \
+        throw Exception(wxString::Format("%s (%d)",                 \
+                        e.getError(), (int)e.getType()));           \
+    }                                                               \
+    catch (std::exception& e)                                       \
+    {                                                               \
+        throw Exception(e.what());                                  \
+    }
 
 // ----------------------------------------------------------------
 // TranslationMemoryImpl
@@ -195,9 +207,13 @@ bool TranslationMemoryImpl::Search(const std::wstring& lang,
 
 void TranslationMemoryImpl::GetStats(long& numDocs, long& fileSize)
 {
-    auto reader = Reader();
-    numDocs = reader->numDocs();
-    fileSize = wxDir::GetTotalSize(GetDatabaseDir()).GetValue();
+    try
+    {
+        auto reader = Reader();
+        numDocs = reader->numDocs();
+        fileSize = wxDir::GetTotalSize(GetDatabaseDir()).GetValue();
+    }
+    CATCH_AND_RETHROW_EXCEPTION
 }
 
 // ----------------------------------------------------------------
@@ -220,8 +236,12 @@ public:
 
     virtual void Commit()
     {
-        m_writer->close();
-        m_writer.reset();
+        try
+        {
+            m_writer->close();
+            m_writer.reset();
+        }
+        CATCH_AND_RETHROW_EXCEPTION
     }
 
     virtual void Insert(const std::wstring& lang,
@@ -244,21 +264,25 @@ public:
 
         const std::wstring itemUUID = boost::uuids::to_wstring(gen(itemId));
 
-        // Then add a new document:
-        auto doc = newLucene<Document>();
+        try
+        {
+            // Then add a new document:
+            auto doc = newLucene<Document>();
 
-        doc->add(newLucene<Field>(L"uuid", itemUUID,
-                                  Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
-        doc->add(newLucene<Field>(L"srclang", L"en",
-                                  Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
-        doc->add(newLucene<Field>(L"lang", lang,
-                                  Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
-        doc->add(newLucene<Field>(L"source", source,
-                                  Field::STORE_YES, Field::INDEX_ANALYZED));
-        doc->add(newLucene<Field>(L"trans", trans,
-                                  Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
+            doc->add(newLucene<Field>(L"uuid", itemUUID,
+                                      Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
+            doc->add(newLucene<Field>(L"srclang", L"en",
+                                      Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
+            doc->add(newLucene<Field>(L"lang", lang,
+                                      Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
+            doc->add(newLucene<Field>(L"source", source,
+                                      Field::STORE_YES, Field::INDEX_ANALYZED));
+            doc->add(newLucene<Field>(L"trans", trans,
+                                      Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
 
-        m_writer->updateDocument(newLucene<Term>(L"uuid", itemUUID), doc);
+            m_writer->updateDocument(newLucene<Term>(L"uuid", itemUUID), doc);
+        }
+        CATCH_AND_RETHROW_EXCEPTION
     }
 
     virtual void Insert(const Catalog &cat)
@@ -299,7 +323,11 @@ private:
 
 std::shared_ptr<TranslationMemory::Writer> TranslationMemoryImpl::CreateWriter()
 {
-    return std::make_shared<TranslationMemoryWriterImpl>(m_dir, m_analyzer);
+    try
+    {
+        return std::make_shared<TranslationMemoryWriterImpl>(m_dir, m_analyzer);
+    }
+    CATCH_AND_RETHROW_EXCEPTION
 }
 
 
@@ -314,7 +342,11 @@ TranslationMemory& TranslationMemory::Get()
 {
     if (!ms_instance)
     {
-        ms_instance = new TranslationMemory;
+        try
+        {
+            ms_instance = new TranslationMemory;
+        }
+        CATCH_AND_RETHROW_EXCEPTION
     }
     return *ms_instance;
 }

@@ -85,6 +85,7 @@
 #include "utility.h"
 #include "languagectrl.h"
 #include "welcomescreen.h"
+#include "errors.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(PoeditFramesList);
@@ -2536,7 +2537,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
                 tm->Insert(*m_catalog);
                 tm->Commit();
             }
-            catch ( const std::exception& e )
+            catch ( const Exception& e )
             {
                 wxLogWarning(_("Failed to update translation memory: %s"), e.what());
             }
