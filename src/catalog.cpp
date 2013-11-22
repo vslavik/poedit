@@ -871,6 +871,8 @@ bool LoadParser::OnEntry(const wxString& msgid,
                          const wxArrayString& msgid_old,
                          unsigned lineNumber)
 {
+    static const wxString MSGCAT_CONFLICT_MARKER("#-#-#-#-#");
+
     if (msgid.empty())
     {
         // gettext header:
@@ -893,8 +895,17 @@ bool LoadParser::OnEntry(const wxString& msgid,
         d.SetLineNumber(lineNumber);
         for (size_t i = 0; i < references.GetCount(); i++)
             d.AddReference(references[i]);
-        for (size_t i = 0; i < autocomments.GetCount(); i++)
-            d.AddAutoComments(autocomments[i]);
+
+        for (auto i: autocomments)
+        {
+            // Sometimes, msgcat produces conflicts in automatic comments; see the gory details:
+            // https://groups.google.com/d/topic/poedit/j41KuvXtVUU/discussion
+            // As a workaround, just filter them out.
+            // FIXME: Fix this properly... but not using msgcat in the first place
+            if (i.StartsWith(MSGCAT_CONFLICT_MARKER) && i.EndsWith(MSGCAT_CONFLICT_MARKER))
+                continue;
+            d.AddAutoComments(i);
+        }
         d.SetOldMsgid(msgid_old);
         m_catalog->AddItem(d);
     }
