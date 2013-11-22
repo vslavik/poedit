@@ -102,13 +102,11 @@ bool PoeditApp::OnInit()
     if (!wxApp::OnInit())
         return false;
 
+#ifdef __WXOSX__
     MoveToApplicationsFolderIfNecessary();
 
-#if defined(__WXMAC__)
     wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
-#endif
 
-#ifdef __WXMAC__
     SetExitOnFrameDelete(false);
 #endif
 
