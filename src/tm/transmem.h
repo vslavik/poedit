@@ -35,6 +35,8 @@ class TranslationMemoryImpl;
 
 /** 
     Lucene-based translation memory.
+    
+    All methods may throw Exception.
  */
 class TranslationMemory
 {
@@ -67,6 +69,8 @@ public:
         Performs updates to the translation memory.
         
         You must call Commit() for them to be written.
+    
+        All methods may throw Exception.
       */
     class Writer
     {

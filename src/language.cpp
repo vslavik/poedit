@@ -148,7 +148,7 @@ const DisplayNamesData& GetDisplayNamesData()
 
         std::sort(names.begin(), names.end(),
                   [&coll](const icu::UnicodeString& a, const icu::UnicodeString& b){
-                      UErrorCode e;
+                      UErrorCode e = U_ZERO_ERROR;
                       return coll->compare(a, b, e) == UCOL_LESS;
         });
         // convert into std::wstring

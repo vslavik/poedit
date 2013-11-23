@@ -167,7 +167,7 @@ int CatalogItemsComparator::CompareStrings(wxString a, wxString b) const
     b.Replace("&", "");
     b.Replace("_", "");
 
-    UErrorCode err;
+    UErrorCode err = U_ZERO_ERROR;
 #if wxUSE_UNICODE_UTF8
     return m_collator->compareUTF8(a.wx_str(), b.wx_str(), err);
 #elif SIZEOF_WCHAR_T == 2

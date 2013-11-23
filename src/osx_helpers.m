@@ -33,6 +33,8 @@
 #import <AppKit/NSButton.h>
 #import <AppKit/NSSpellChecker.h>
 
+#import "PFMoveApplication.h"
+
 #ifdef USE_SPARKLE
 #import <Sparkle/Sparkle.h>
 
@@ -48,11 +50,11 @@ void Sparkle_Initialize(bool checkForBeta)
     @autoreleasepool {
         SUUpdater *updater = [SUUpdater sharedUpdater];
 
-        if (checkForBeta)
-        {
-            NSString *url = @"http://releases.poedit.net/appcast-osx/beta";
-            [updater setFeedURL:[NSURL URLWithString:url]];
-        }
+        /* TODO: Use feedParametersForUpdater delegate method and append ?beta=1 instead.
+                 This code puts SUFeedURL into user defaults! */
+        NSString *url = checkForBeta ? @"http://releases.poedit.net/appcast-osx/beta"
+                                     : @"http://releases.poedit.net/appcast-osx";
+        [updater setFeedURL:[NSURL URLWithString:url]];
     }
 }
 
@@ -137,3 +139,9 @@ void MakeButtonRounded(void *button)
 {
     [(__bridge NSButton*)button setBezelStyle:NSRoundRectBezelStyle];
 }
+
+void MoveToApplicationsFolderIfNecessary()
+{
+    PFMoveToApplicationsFolderIfNecessary();
+}
+

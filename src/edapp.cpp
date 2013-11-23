@@ -42,9 +42,9 @@
 #include <wx/intl.h>
 #include <wx/translation.h>
 
-#ifdef USE_SPARKLE
+#ifdef __WXOSX__
 #include "osx_helpers.h"
-#endif // USE_SPARKLE
+#endif
 
 #ifdef __WXMSW__
 #include <winsparkle.h>
@@ -102,11 +102,11 @@ bool PoeditApp::OnInit()
     if (!wxApp::OnInit())
         return false;
 
-#if defined(__WXMAC__)
-    wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
-#endif
+#ifdef __WXOSX__
+    MoveToApplicationsFolderIfNecessary();
 
-#ifdef __WXMAC__
+    wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
+
     SetExitOnFrameDelete(false);
 #endif
 
