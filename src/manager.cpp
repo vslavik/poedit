@@ -43,6 +43,7 @@
 #include <wx/artprov.h>
 #include <wx/iconbndl.h>
 #include <wx/windowptr.h>
+#include <wx/splitter.h>
 
 #include "catalog.h"
 #include "edapp.h"
@@ -89,6 +90,7 @@ ManagerFrame::ManagerFrame() :
 
     m_listPrj = XRCCTRL(*panel, "prj_list", wxListBox);
     m_listCat = XRCCTRL(*panel, "prj_files", wxListCtrl);
+    m_splitter = XRCCTRL(*panel, "manager_splitter", wxSplitterWindow);
 
     wxImageList *list = new wxImageList(16, 16);
     list->Add(wxArtProvider::GetBitmap("poedit-status-cat-no"));
@@ -106,6 +108,8 @@ ManagerFrame::ManagerFrame() :
         UpdateListCat(last);
 
     RestoreWindowState(this, wxSize(400, 300));
+
+    m_splitter->SetSashPosition(wxConfig::Get()->Read("manager_splitter", 200));
 }
 
 
@@ -122,6 +126,8 @@ ManagerFrame::~ManagerFrame()
         cfg->Write("manager_last_selected",
                    (long)m_listPrj->GetClientData(sel));
     }
+
+    wxConfig::Get()->Write("manager_splitter", (long)m_splitter->GetSashPosition());
 
     ms_instance = NULL;
 }
