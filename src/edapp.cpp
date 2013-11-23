@@ -44,6 +44,7 @@
 
 #ifdef __WXOSX__
 #include "osx_helpers.h"
+#include <wx/cocoa/string.h>
 #endif
 
 #ifdef __WXMSW__
@@ -652,6 +653,16 @@ void PoeditApp::OpenPoeditWeb(const wxString& path)
 }
 
 #ifdef __WXOSX__
+
+static NSMenuItem *AddNativeItem(NSMenu *menu, int pos, const wxString&text, SEL ac, NSString *key)
+{
+    NSString *str = wxNSStringWithWxString(text);
+    if (pos == -1)
+        return [menu addItemWithTitle:str action:ac keyEquivalent:key];
+    else
+        return [menu insertItemWithTitle:str action:ac keyEquivalent:key atIndex:pos];
+}
+
 void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 {
     wxMenu *apple = bar->OSXGetAppleMenu();
@@ -661,6 +672,70 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 #if USE_SPARKLE
     Sparkle_AddMenuItem(apple->GetHMenu(), _("Check for Updates...").utf8_str());
 #endif
+
+    wxMenu *edit = bar->GetMenu(bar->FindMenu(_("Edit")));
+    int pasteItem = -1;
+    int findItem = -1;
+    int pos = 0;
+    for (auto& i : edit->GetMenuItems())
+    {
+        if (i->GetId() == wxID_PASTE)
+            pasteItem = pos;
+        else if (i->GetId() == XRCID("menu_sub_find"))
+            findItem = pos;
+        pos++;
+    }
+
+    NSMenu *editNS = edit->GetHMenu();
+#if 0
+    // These don't work yet, not using NSUndoManager
+    AddNativeItem(editNS, 0, _("Undo"), @selector(undo:), @"z");
+    AddNativeItem(editNS, 1, _("Redo"), @selector(redo:), @"Z");
+    [editNS insertItem:[NSMenuItem separatorItem] atIndex:2];
+    if (pasteItem != -1) pasteItem += 3;
+    if (findItem != -1)  findItem += 3;
+#endif
+
+    NSMenuItem *item;
+    item = AddNativeItem(editNS, pasteItem+1, _("Paste and Match Style"),
+                         @selector(pasteAsPlainText:), @"V");
+    [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSAlternateKeyMask];
+    if (findItem != -1)  findItem++;
+
+    item = AddNativeItem(editNS, findItem+1, _("Spelling and Grammar"), NULL, @"");
+    NSMenu *spelling = [[NSMenu alloc] initWithTitle:@"Spelling and Grammar"];
+    AddNativeItem(spelling, -1, _("Show Spelling and Grammar"), @selector(showGuessPanel:), @":");
+    AddNativeItem(spelling, -1, _("Check Document Now"), @selector(checkSpelling:), @";");
+    [spelling addItem:[NSMenuItem separatorItem]];
+    AddNativeItem(spelling, -1, _("Check Spelling While Typing"), @selector(toggleContinuousSpellChecking:), @"");
+    AddNativeItem(spelling, -1, _("Check Grammar With Spelling"), @selector(toggleGrammarChecking:), @"");
+    AddNativeItem(spelling, -1, _("Correct Spelling Automatically"), @selector(toggleAutomaticSpellingCorrection:), @"");
+    [editNS setSubmenu:spelling forItem:item];
+
+    item = AddNativeItem(editNS, findItem+2, _("Substitutions"), NULL, @"");
+    NSMenu *subst = [[NSMenu alloc] initWithTitle:@"Substitutions"];
+    AddNativeItem(subst, -1, _("Show Substitutions"), @selector(orderFrontSubstitutionsPanel:), @"");
+    [subst addItem:[NSMenuItem separatorItem]];
+    AddNativeItem(subst, -1, _("Smart Copy/Paste"), @selector(toggleSmartInsertDelete:), @"");
+    AddNativeItem(subst, -1, _("Smart Quotes"), @selector(toggleAutomaticQuoteSubstitution:), @"");
+    AddNativeItem(subst, -1, _("Smart Dashes"), @selector(toggleAutomaticDashSubstitution:), @"");
+    AddNativeItem(subst, -1, _("Smart Links"), @selector(toggleAutomaticLinkDetection:), @"");
+    AddNativeItem(subst, -1, _("Text Replacement"), @selector(toggleAutomaticTextReplacement:), @"");
+    [editNS setSubmenu:subst forItem:item];
+
+    item = AddNativeItem(editNS, findItem+3, _("Transformations"), NULL, @"");
+    NSMenu *trans = [[NSMenu alloc] initWithTitle:@"Transformations"];
+    AddNativeItem(trans, -1, _("Make Upper Case"), @selector(uppercaseWord:), @"");
+    AddNativeItem(trans, -1, _("Make Lower Case"), @selector(lowercaseWord:), @"");
+    AddNativeItem(trans, -1, _("Capitalize"), @selector(capitalizeWord:), @"");
+    [editNS setSubmenu:trans forItem:item];
+
+    item = AddNativeItem(editNS, findItem+4, _("Speech"), NULL, @"");
+    NSMenu *speech = [[NSMenu alloc] initWithTitle:@"Speech"];
+    AddNativeItem(speech, -1, _("Start Speaking"), @selector(startSpeaking:), @"");
+    AddNativeItem(speech, -1, _("Stop Speaking"), @selector(stopSpeaking:), @"");
+    [editNS setSubmenu:speech forItem:item];
+
 }
 #endif // __WXOSX__
 

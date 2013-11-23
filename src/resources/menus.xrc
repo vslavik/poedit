@@ -58,15 +58,31 @@
     </object>
     <object class="wxMenu" name="menu_edit">
       <label>_Edit</label>
+      <object class="wxMenuItem" name="wxID_CUT" platform="mac"/>
+      <object class="wxMenuItem" name="wxID_COPY" platform="mac"/>
+      <object class="wxMenuItem" name="wxID_PASTE" platform="mac"/>
+      <object class="wxMenuItem" name="menu_clear" >
+        <label platform="win">Clear translation</label>
+        <label platform="unix|mac">Clear Translation</label>
+        <accel>Ctrl+K</accel>
+      </object>
+      <object class="wxMenuItem" name="wxID_SELECTALL" platform="mac"/>
+      <object class="separator" platform="mac"/>
       <object class="wxMenuItem" name="menu_copy_from_src">
         <label platform="win">Copy from source text</label>
         <label platform="unix|mac">Copy from Source Text</label>
         <accel>Ctrl+B</accel>
       </object>
-      <object class="wxMenuItem" name="menu_clear">
-        <label platform="win">Clear translation</label>
-        <label platform="unix|mac">Clear Translation</label>
-        <accel>Ctrl+K</accel>
+      <object class="wxMenuItem" name="menu_fuzzy">
+        <label platform="win">Translation is _fuzzy</label>
+        <label platform="unix|mac">Translation Is _Fuzzy</label>
+        <accel>Ctrl+U</accel>
+        <checkable>1</checkable>
+      </object>
+      <object class="wxMenuItem" name="menu_comment">
+        <label platform="win">Edit _comment</label>
+        <label platform="unix|mac">Edit _Comment</label>
+        <accel>Ctrl+M</accel>
       </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="menu_references">
@@ -99,18 +115,6 @@
           <label>Find Previous</label>
           <accel>Ctrl+Shift+G</accel>
         </object>
-      </object>
-      <object class="separator"/>
-      <object class="wxMenuItem" name="menu_fuzzy">
-        <label platform="win">Translation is _fuzzy</label>
-        <label platform="unix|mac">Translation Is _Fuzzy</label>
-        <accel>Ctrl+U</accel>
-        <checkable>1</checkable>
-      </object>
-      <object class="wxMenuItem" name="menu_comment">
-        <label platform="win">Edit _comment</label>
-	<label platform="unix|mac">Edit _Comment</label>
-	<accel>Ctrl+M</accel>
       </object>
       <object class="separator" platform="unix"/>
       <object class="wxMenuItem" name="wxID_PREFERENCES" platform="unix">
@@ -274,6 +278,14 @@
       <object class="wxMenuItem" name="wxID_EXIT">
         <label platform="mac">Quit</label>
       </object>
+    </object>
+    <object class="wxMenu" name="menu_edit" platform="mac">
+      <label>_Edit</label>
+      <object class="wxMenuItem" name="wxID_CUT" platform="mac"/>
+      <object class="wxMenuItem" name="wxID_COPY" platform="mac"/>
+      <object class="wxMenuItem" name="wxID_PASTE" platform="mac"/>
+      <object class="wxMenuItem" name="wxID_CLEAR" platform="mac"/>
+      <object class="wxMenuItem" name="wxID_SELECTALL" platform="mac"/>
     </object>
     <object class="wxMenu" name="menu_help">
       <object class="wxMenuItem" name="wxID_HELP">
