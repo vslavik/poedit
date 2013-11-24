@@ -1064,10 +1064,13 @@ void PoeditFrame::DoOpenFile(const wxString& filename)
 {
     ReadCatalog(filename);
 
-    if (g_focusToText)
-        m_textTrans->SetFocus();
-    else
-        m_list->SetFocus();
+    if (m_textTrans && m_list)
+    {
+        if (g_focusToText)
+            m_textTrans->SetFocus();
+        else
+            m_list->SetFocus();
+    }
 }
 
 
