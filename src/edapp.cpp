@@ -697,12 +697,18 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 #endif
 
     NSMenuItem *item;
-    item = AddNativeItem(editNS, pasteItem+1, _("Paste and Match Style"),
-                         @selector(pasteAsPlainText:), @"V");
-    [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSAlternateKeyMask];
-    if (findItem != -1)  findItem++;
+    if (pasteItem != -1)
+    {
+        item = AddNativeItem(editNS, pasteItem+1, _("Paste and Match Style"),
+                             @selector(pasteAsPlainText:), @"V");
+        [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSAlternateKeyMask];
+        if (findItem != -1)  findItem++;
+    }
 
-    item = AddNativeItem(editNS, findItem+1, _("Spelling and Grammar"), NULL, @"");
+    #define FIND_PLUS(ofset) ((findItem != -1) ? (findItem+ofset) : -1)
+    if (findItem == -1)
+        [editNS addItem:[NSMenuItem separatorItem]];
+    item = AddNativeItem(editNS, FIND_PLUS(1), _("Spelling and Grammar"), NULL, @"");
     NSMenu *spelling = [[NSMenu alloc] initWithTitle:@"Spelling and Grammar"];
     AddNativeItem(spelling, -1, _("Show Spelling and Grammar"), @selector(showGuessPanel:), @":");
     AddNativeItem(spelling, -1, _("Check Document Now"), @selector(checkSpelling:), @";");
@@ -712,7 +718,7 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     AddNativeItem(spelling, -1, _("Correct Spelling Automatically"), @selector(toggleAutomaticSpellingCorrection:), @"");
     [editNS setSubmenu:spelling forItem:item];
 
-    item = AddNativeItem(editNS, findItem+2, _("Substitutions"), NULL, @"");
+    item = AddNativeItem(editNS, FIND_PLUS(2), _("Substitutions"), NULL, @"");
     NSMenu *subst = [[NSMenu alloc] initWithTitle:@"Substitutions"];
     AddNativeItem(subst, -1, _("Show Substitutions"), @selector(orderFrontSubstitutionsPanel:), @"");
     [subst addItem:[NSMenuItem separatorItem]];
@@ -723,14 +729,14 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     AddNativeItem(subst, -1, _("Text Replacement"), @selector(toggleAutomaticTextReplacement:), @"");
     [editNS setSubmenu:subst forItem:item];
 
-    item = AddNativeItem(editNS, findItem+3, _("Transformations"), NULL, @"");
+    item = AddNativeItem(editNS, FIND_PLUS(3), _("Transformations"), NULL, @"");
     NSMenu *trans = [[NSMenu alloc] initWithTitle:@"Transformations"];
     AddNativeItem(trans, -1, _("Make Upper Case"), @selector(uppercaseWord:), @"");
     AddNativeItem(trans, -1, _("Make Lower Case"), @selector(lowercaseWord:), @"");
     AddNativeItem(trans, -1, _("Capitalize"), @selector(capitalizeWord:), @"");
     [editNS setSubmenu:trans forItem:item];
 
-    item = AddNativeItem(editNS, findItem+4, _("Speech"), NULL, @"");
+    item = AddNativeItem(editNS, FIND_PLUS(4), _("Speech"), NULL, @"");
     NSMenu *speech = [[NSMenu alloc] initWithTitle:@"Speech"];
     AddNativeItem(speech, -1, _("Start Speaking"), @selector(startSpeaking:), @"");
     AddNativeItem(speech, -1, _("Stop Speaking"), @selector(stopSpeaking:), @"");
