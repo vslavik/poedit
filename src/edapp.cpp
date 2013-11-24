@@ -603,13 +603,18 @@ void PoeditApp::OnQuit(wxCommandEvent&)
     // the app when the last window is closed now, instead of calling
     // ExitMainLoop(). This will terminate the app automagically when all the
     // windows are closed.
-    SetExitOnFrameDelete(true);
 
-    for ( wxWindowList::iterator i = wxTopLevelWindows.begin(); i != wxTopLevelWindows.end(); ++i )
+    bool delayed = false;
+    for ( auto& i : wxTopLevelWindows )
     {
-        if ( !(*i)->Close() )
-            return;
+        if (!i->Close())
+            delayed = true;
     }
+
+    if (delayed)
+        SetExitOnFrameDelete(true);
+    else
+        ExitMainLoop();
 }
 
 
