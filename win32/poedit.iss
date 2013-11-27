@@ -25,7 +25,7 @@
 ;
 
 #define VERSION          "1.6"
-#define VERSION_FULL     "1.6beta2"
+#define VERSION_FULL     "1.6beta3"
 
 #ifndef CONFIG
 #define Config           "Release"
