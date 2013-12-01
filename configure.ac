@@ -118,13 +118,13 @@ PKG_CHECK_MODULES([ICU], [icu-uc icu-i18n],
 
 if test "$USE_SPELLCHECKING" != "no" ; then
     dnl we need GtkSpell and GTK+ 2.x for this, check if we're compatible
-    PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0],
+    PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 gtk+-3.0],
         [
-            AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 2])
+            AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 3])
             AC_TRY_COMPILE([#include <wx/defs.h>],
                 [
-                    #ifndef __WXGTK20__
-                        #error "not GTK+ 2"
+                    #ifndef __WXGTK3__
+                        #error "not GTK+ 3"
                     #endif
                 ],
                 [
@@ -134,10 +134,9 @@ if test "$USE_SPELLCHECKING" != "no" ; then
                     AC_DEFINE(USE_SPELLCHECKING)
                 ],
                 [
-                
                     AC_MSG_RESULT([no])
                     USE_SPELLCHECKING="no"
-                    AC_MSG_WARN([disabling spellchecking because GTK+ 2 is required by it])
+                    AC_MSG_WARN([disabling spellchecking because GTK+ 3 is required by it])
                 ])
         ],
         [

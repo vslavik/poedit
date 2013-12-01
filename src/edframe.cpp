@@ -922,42 +922,31 @@ static GtkTextView *GetTextView(wxTextCtrl *ctrl)
     wxFAIL_MSG( "couldn't find GtkTextView for text control" );
     return NULL;
 }
-#endif // __WXGTK__
 
-#ifdef __WXGTK__
 static bool DoInitSpellchecker(wxTextCtrl *text,
                                bool enable, const Language& lang)
 {
     GtkTextView *textview = GetTextView(text);
     wxASSERT_MSG( textview, "wxTextCtrl is supposed to use GtkTextView" );
-    GtkSpell *spell = gtkspell_get_from_text_view(textview);
 
-    GError *err = NULL;
+    GtkSpellChecker *spell = gtk_spell_checker_get_from_text_view(textview);
 
     if (enable)
     {
-        if (spell)
-            gtkspell_set_language(spell, lang.GetCode().c_str(), &err);
-        else
-            gtkspell_new_attach(textview, lang.GetCode().c_str(), &err);
+        if (!spell)
+        {
+            spell = gtk_spell_checker_new();
+            gtk_spell_checker_attach(spell, textview);
+        }
+
+        return gtk_spell_checker_set_language(spell, lang.Code().c_str(), nullptr);
     }
-    else // !enable
+    else
     {
-        // GtkSpell when used with Zemberek Enchant module doesn't work
-        // correctly if you repeatedly attach and detach a speller to text
-        // view. See http://www.poedit.net/trac/ticket/276 for details.
-        //
-        // To work around this, we set the language to a non-existent one
-        // instead of detaching GtkSpell -- this has the same effect as
-        // detaching the speller as far as the UI is concerned.
         if (spell)
-            gtkspell_set_language(spell, "unknown_language", &err);
+            gtk_spell_checker_detach(spell);
+        return true;
     }
-
-    if (err)
-        g_error_free(err);
-
-    return err == NULL;
 }
 #endif // __WXGTK__
 
