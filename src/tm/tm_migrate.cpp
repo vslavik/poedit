@@ -81,7 +81,7 @@ wxString GetDumpToolPath()
 #endif
     return path.GetFullPath();
 #else
-    return wxStandardPaths::Get().GetInstallPrefix() + "/libexec/poedit/dump-legacy-tm";
+    return wxStandardPaths::Get().GetInstallPrefix() + "/libexec/poedit-dump-legacy-tm";
 #endif
 }
 

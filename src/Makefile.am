@@ -6,7 +6,7 @@ WX_LIBS = @WX_LIBS@
 RC_WX_INCLUDES = @RC_WX_INCLUDES@
 
 bin_PROGRAMS = poedit
-libexec_PROGRAMS = dump-legacy-tm
+libexec_PROGRAMS = poedit-dump-legacy-tm
 
 poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  errorbar.cpp errorbar.h \
@@ -32,8 +32,8 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS) $(LUCENE_LIBS)
 
-dump_legacy_tm_SOURCES = tm/dump_legacy_tm.cpp
-dump_legacy_tm_LDADD = $(DB_LIBS)
+poedit_dump_legacy_tm_SOURCES = tm/dump_legacy_tm.cpp
+poedit_dump_legacy_tm_LDADD = $(DB_LIBS)
 
 XRC_RESOURCES = \
 		$(srcdir)/resources/menus.xrc \
