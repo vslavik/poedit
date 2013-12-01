@@ -28,7 +28,6 @@
 #include "icuhelpers.h"
 
 #include <cctype>
-#include <regex>
 #include <algorithm>
 #include <unordered_map>
 #include <mutex>
@@ -39,15 +38,26 @@
 
 #include <wx/filename.h>
 
+// GCC's libstdc++ didn't have functional std::regex implementation until 4.9
+#if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
+    #include <boost/regex.hpp>
+    using boost::wregex;
+    using boost::regex_match;
+#else
+    #include <regex>
+    using std::wregex;
+    using std::regex_match;
+#endif
+
 namespace
 {
 
 // see http://www.gnu.org/software/gettext/manual/html_node/Header-Entry.html
 // for description of permitted formats
-const std::wregex RE_LANG_CODE(L"([a-z]){2,3}(_[A-Z]{2})?(@[a-z]+)?");
+const wregex RE_LANG_CODE(L"([a-z]){2,3}(_[A-Z]{2})?(@[a-z]+)?");
 
 // a more permissive variant of the same that TryNormalize() would fix
-const std::wregex RE_LANG_CODE_PERMISSIVE(L"([a-zA-Z]){2,3}([_-][a-zA-Z]{2})?(@[a-zA-Z]+)?");
+const wregex RE_LANG_CODE_PERMISSIVE(L"([a-zA-Z]){2,3}([_-][a-zA-Z]{2})?(@[a-zA-Z]+)?");
 
 // try some normalizations: s/-/_/, case adjustments
 void TryNormalize(std::wstring& s)
@@ -165,7 +175,7 @@ const DisplayNamesData& GetDisplayNamesData()
 
 bool Language::IsValidCode(const std::wstring& s)
 {
-    return std::regex_match(s, RE_LANG_CODE);
+    return regex_match(s, RE_LANG_CODE);
 }
 
 std::string Language::Lang() const
@@ -203,7 +213,7 @@ Language Language::TryParse(const std::wstring& s)
         return Language(s);
 
     // Is it a standard language code?
-    if (std::regex_match(s, RE_LANG_CODE_PERMISSIVE))
+    if (regex_match(s, RE_LANG_CODE_PERMISSIVE))
     {
         std::wstring s2(s);
         TryNormalize(s2);
