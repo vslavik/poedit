@@ -81,6 +81,29 @@ typedef wxCommandLinkButton ActionButton;
 
 #endif
 
+
+#ifdef __WXGTK__
+
+// Workaround sizing bug of wxStaticText with custom font by using markup instead.
+// See http://trac.wxwidgets.org/ticket/14374
+class HeaderStaticText : public wxStaticText
+{
+public:
+    HeaderStaticText(wxWindow *parent, wxWindowID id, const wxString& text)
+        : wxStaticText(parent, id, "")
+    {
+        SetLabelMarkup("<big><b>" + text + "</b></big>");
+    }
+
+    virtual bool SetFont(const wxFont&) { return true; }
+};
+
+#else
+
+typedef wxStaticText HeaderStaticText;
+
+#endif
+
 } // anonymous namespace
 
 
@@ -109,9 +132,9 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
     m_fntSub = wxFont(wxFontInfo(9).FaceName(HEADER_FACE));
 #else
     #define HEADER_FACE "sans serif"
-    m_fntHeader = wxFont(wxFontInfo(30).FaceName(HEADER_FACE).Light());
-    m_fntNorm = wxFont(wxFontInfo(12).FaceName(HEADER_FACE).Light());
-    m_fntSub = wxFont(wxFontInfo(11).FaceName(HEADER_FACE).Light());
+    m_fntHeader = wxFont(wxFontInfo(16).FaceName(HEADER_FACE).Light());
+    m_fntNorm = wxFont(wxFontInfo(10).FaceName(HEADER_FACE).Light());
+    m_fntSub = wxFont(wxFontInfo(9).FaceName(HEADER_FACE).Light());
 #endif
 
     // Translate all button events to wxEVT_MENU and send them to the frame.
@@ -144,15 +167,15 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
     uberSizer->AddStretchSpacer();
     SetSizer(uberSizer);
 
-    auto hdr = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("PoeditWelcome"), wxDefaultPosition, wxDefaultSize, wxTRANSPARENT_WINDOW);
+    auto hdr = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("PoeditWelcome"));
     sizer->Add(hdr, wxSizerFlags().Center());
 
-    auto header = new wxStaticText(this, wxID_ANY, _("Welcome to Poedit"), wxDefaultPosition, wxDefaultSize, wxTRANSPARENT_WINDOW);
+    auto header = new HeaderStaticText(this, wxID_ANY, _("Welcome to Poedit"));
     header->SetFont(m_fntHeader);
     header->SetForegroundColour(m_clrHeader);
     sizer->Add(header, wxSizerFlags().Center().Border(wxTOP, 10));
 
-    auto version = new wxStaticText(this, wxID_ANY, wxString::Format(_("Version %s"), wxGetApp().GetAppVersion()), wxDefaultPosition, wxDefaultSize, wxTRANSPARENT_WINDOW);
+    auto version = new wxStaticText(this, wxID_ANY, wxString::Format(_("Version %s"), wxGetApp().GetAppVersion()));
     version->SetFont(m_fntSub);
     version->SetForegroundColour(m_clrSub);
     sizer->Add(version, wxSizerFlags().Center());
@@ -187,7 +210,7 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
     uberSizer->AddStretchSpacer();
     SetSizer(uberSizer);
 
-    auto header = new wxStaticText(this, wxID_ANY, _(L"There are no translations. That’s unusual."));
+    auto header = new HeaderStaticText(this, wxID_ANY, _(L"There are no translations. That’s unusual."));
     header->SetFont(m_fntHeader);
     header->SetForegroundColour(m_clrHeader);
     sizer->Add(header, wxSizerFlags().Center().Border());
