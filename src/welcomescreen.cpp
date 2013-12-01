@@ -187,7 +187,7 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
     uberSizer->AddStretchSpacer();
     SetSizer(uberSizer);
 
-    auto header = new wxStaticText(this, wxID_ANY, _("There are no translations. That’s unusual."));
+    auto header = new wxStaticText(this, wxID_ANY, _(L"There are no translations. That’s unusual."));
     header->SetFont(m_fntHeader);
     header->SetForegroundColour(m_clrHeader);
     sizer->Add(header, wxSizerFlags().Center().Border());

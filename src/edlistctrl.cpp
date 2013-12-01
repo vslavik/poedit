@@ -384,7 +384,7 @@ void PoeditListCtrl::ReadCatalog()
                     : _("unknown language");
     wxListItem colInfo;
     colInfo.SetMask(wxLIST_MASK_TEXT);
-    colInfo.SetText(wxString::Format(_("Translation — %s"), lang));
+    colInfo.SetText(wxString::Format(_(L"Translation — %s"), lang));
     SetColumn(1, colInfo);
 
     // sort catalog items, create indexes mapping

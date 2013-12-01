@@ -2405,9 +2405,9 @@ void PoeditFrame::UpdateTitle()
         {
             title.Printf(
 #ifdef __WXOSX__
-                "%s — %s",
+                L"%s — %s",
 #else
-                "%s • %s",
+                L"%s • %s",
 #endif
                 fpath, m_catalog->Header().Project);
         }
@@ -2781,7 +2781,7 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
             {
                 wxString s;
                 // TRANSLATORS: Quoted text with leading 4 spaces
-                s.Printf(_("    “%s”"), m_autoTranslations[i]);
+                s.Printf(_(L"    “%s”"), m_autoTranslations[i]);
                 s.Replace("&", "&&");
                 menu->Append(ID_POPUP_TRANS + i, s);
             }
