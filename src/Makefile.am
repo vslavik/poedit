@@ -5,10 +5,6 @@ WINDRES = @WINDRES@
 WX_LIBS = @WX_LIBS@
 RC_WX_INCLUDES = @RC_WX_INCLUDES@
 
-if USE_WINDOWS
-RESOURCE_FILES = poedit_resource.o
-endif
-
 bin_PROGRAMS = poedit
 libexec_PROGRAMS = dump-legacy-tm
 
@@ -38,12 +34,6 @@ poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS) $(LUCENE_LIBS)
 
 dump_legacy_tm_SOURCES = tm/dump_legacy_tm.cpp
 dump_legacy_tm_LDADD = $(DB_LIBS)
-
-
-poedit_resource.o: poedit.rc
-	$(WINDRES) -i$(srcdir)/poedit.rc -o poedit_resource.o \
-        --include-dir $(srcdir) $(RC_WX_INCLUDES) \
-        --define __WIN32__ --define __WIN95__ --define __GNUWIN32__
 
 XRC_RESOURCES = \
 		$(srcdir)/resources/menus.xrc \

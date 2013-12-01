@@ -145,21 +145,6 @@ if test "$USE_SPELLCHECKING" != "no" ; then
 fi
 
 
-
-if $WX_CONFIG_WITH_ARGS --cxxflags | grep -q WXMSW; then
-    use_windows=yes
-    
-    changequote(<<,>>)
-    RC_WX_INCLUDES=`echo " $WX_CPPFLAGS" | sed -e 's/ -[^I][^ ]*//g' | sed -e 's/ -I\([^ ]*\)/ --include-dir \1/g'`
-    changequote([,])
-
-    AC_CHECK_TOOL(WINDRES, windres)
-else
-    use_windows=no
-fi
-
-AM_CONDITIONAL(USE_WINDOWS, test $use_windows = yes)
-
 AX_BERKELEY_DB_CXX(4.7,
 [
     AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
@@ -198,10 +183,8 @@ CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 AC_SUBST(LDFLAGS)
 AC_SUBST(CFLAGS)
 AC_SUBST(CXXFLAGS)
-AC_SUBST(WINDRES)
 AC_SUBST(WX_CONFIG_WITH_ARGS)
 AC_SUBST(WX_LIBS)
-AC_SUBST(RC_WX_INCLUDES)
 
 AC_CONFIG_FILES([
          Makefile
