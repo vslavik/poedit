@@ -269,14 +269,13 @@ void PoeditApp::SetupLanguage()
 
 void PoeditApp::OpenNewFile()
 {
-    wxWindow *win = PoeditFrame::CreateWelcome();
+    PoeditFrame::CreateWelcome();
 }
 
 void PoeditApp::OpenFiles(const wxArrayString& names)
 {
-    wxWindow *win = nullptr;
     for ( auto name: names )
-        win = PoeditFrame::Create(name);
+        PoeditFrame::Create(name);
 }
 
 void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
