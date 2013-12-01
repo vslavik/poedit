@@ -30,7 +30,8 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  welcomescreen.cpp welcomescreen.h \
                  compiled_xrc.cpp
 
-poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS) $(LUCENE_LIBS)
+poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS) $(LUCENE_LIBS) $(EXPAT_LIBS) \
+			   -lboost_regex -lboost_system
 
 poedit_dump_legacy_tm_SOURCES = tm/dump_legacy_tm.cpp
 poedit_dump_legacy_tm_LDADD = $(DB_LIBS)

@@ -31,7 +31,7 @@ pixmaps_DATA = appicon/48x48/apps/poedit.png
 
 
 uiicons_DATA = \
-		appicon/128x128/apps/poedit.png \
+		appicon/256x256/apps/poedit.png \
 		ui/toolbar-24/document-open.png \
 		ui/toolbar-24/document-save.png \
 		ui/toolbar-24/document-properties.png \

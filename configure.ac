@@ -164,6 +164,15 @@ PKG_CHECK_MODULES([LUCENE], [liblucene++],
             AC_MSG_ERROR([missing Lucene++ library])
         ])
 
+PKG_CHECK_MODULES([EXPAT], [expat],
+        [
+            CXXFLAGS="$CXXFLAGS $EXPAT_CFLAGS"
+            AC_SUBST(EXPAT_LIBS)
+        ],
+        [
+            AC_MSG_ERROR([missing Expat library])
+        ])
+
 
 APPCAST_SUFFIX=""
 if echo "$VERSION" | grep -q '\(beta\|rc\)' ; then
