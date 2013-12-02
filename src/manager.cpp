@@ -152,6 +152,7 @@ void ManagerFrame::UpdateListPrj(int select)
             {
                 m_listPrj->SetSelection(item);
                 m_curPrj = select;
+                UpdateListCat(m_curPrj);
                 select = -1;
             }
             item++;
