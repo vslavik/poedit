@@ -31,15 +31,18 @@
 
 IMPLEMENT_DYNAMIC_CLASS(LanguageCtrl, wxComboBox)
 
-LanguageCtrl::LanguageCtrl(wxWindow *parent, wxWindowID winid)
+LanguageCtrl::LanguageCtrl(wxWindow *parent, wxWindowID winid, Language lang)
     : wxComboBox(parent, winid)
 {
-    Init();
+    Init(lang);
 }
 
-void LanguageCtrl::Init()
+void LanguageCtrl::Init(Language lang)
 {
     SetHint(_("Language Code or Name (e.g. en_GB)"));
+
+    if (lang.IsValid())
+        SetValue(lang.FormatForRoundtrip());
 
 #ifdef __WXOSX__
     for (auto x: Language::AllFormattedNames())
@@ -63,9 +66,9 @@ void LanguageCtrl::Init()
 void LanguageCtrl::SetLang(const Language& lang)
 {
     if (!m_inited)
-        Init();
-
-    SetValue(lang.FormatForRoundtrip());
+        Init(lang);
+    else
+        SetValue(lang.FormatForRoundtrip());
 }
 
 Language LanguageCtrl::GetLang() const
@@ -89,10 +92,15 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
     : wxDialog(parent, wxID_ANY, _("Translation Language")),
       m_validatedLang(-1)
 {
+    wxString langcode = wxConfigBase::Get()->Read("/last_translation_lang", "");
+    Language lang;
+    if (!langcode.empty())
+        lang = Language::TryParse(langcode);
+
     auto sizer = new wxBoxSizer(wxVERTICAL);
 
     auto label = new wxStaticText(this, wxID_ANY, _("Language of the translation:"));
-    m_language = new LanguageCtrl(this);
+    m_language = new LanguageCtrl(this, wxID_ANY, lang);
     m_language->SetMinSize(wxSize(300,-1));
     auto buttons = CreateButtonSizer(wxOK | wxCANCEL);
 
@@ -100,6 +108,8 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
     sizer->AddSpacer(10);
     sizer->Add(label, wxSizerFlags().Border());
     sizer->Add(m_language, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
+    m_language->Bind(wxEVT_TEXT,     [=](wxCommandEvent&){ m_validatedLang = -1; });
+    m_language->Bind(wxEVT_COMBOBOX, [=](wxCommandEvent&){ m_validatedLang = -1; });
     sizer->Add(buttons, wxSizerFlags().Expand());
 #else
     sizer->AddSpacer(10);
@@ -108,12 +118,6 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
     sizer->Add(buttons, wxSizerFlags().Expand().Border());
 #endif
 
-    m_language->Bind(wxEVT_TEXT,     [=](wxCommandEvent&){ m_validatedLang = -1; });
-    m_language->Bind(wxEVT_COMBOBOX, [=](wxCommandEvent&){ m_validatedLang = -1; });
-
-    wxString lang = wxConfigBase::Get()->Read("/last_translation_lang", "");
-    if (!lang.empty())
-        SetLang(Language::TryParse(lang));
 
     Bind(wxEVT_UPDATE_UI,
         [=](wxUpdateUIEvent& e){ e.Enable(Validate()); },

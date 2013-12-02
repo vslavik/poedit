@@ -36,7 +36,7 @@ class LanguageCtrl : public wxComboBox
 {
 public:
     LanguageCtrl() : m_inited(false) {}
-    LanguageCtrl(wxWindow *parent, wxWindowID winid = wxID_ANY);
+    LanguageCtrl(wxWindow *parent, wxWindowID winid = wxID_ANY, Language lang = Language());
 
     void SetLang(const Language& lang);
     Language GetLang() const;
@@ -51,7 +51,7 @@ public:
 #endif
 
 private:
-    void Init();
+    void Init(Language lang);
 
     bool m_inited;
 
