@@ -92,7 +92,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int 
         [=](wxUpdateUIEvent& e){ e.Enable(m_pluralFormsCustom->GetValue()); });
     m_pluralFormsExpr->Bind(
         wxEVT_TEXT,
-        [=](wxCommandEvent&){ m_validatedPlural = -1; });
+        [=](wxCommandEvent& e){ m_validatedPlural = -1; e.Skip(); });
     Bind(wxEVT_UPDATE_UI,
         [=](wxUpdateUIEvent& e){ e.Enable(Validate()); },
         wxID_OK);
@@ -285,7 +285,7 @@ void PropertiesDialog::OnLanguageValueChanged(const wxString& langstr)
     }
 }
 
-void PropertiesDialog::OnPluralFormsDefault(wxCommandEvent&)
+void PropertiesDialog::OnPluralFormsDefault(wxCommandEvent& event)
 {
     m_rememberedPluralForm = m_pluralFormsExpr->GetValue();
 
@@ -296,12 +296,16 @@ void PropertiesDialog::OnPluralFormsDefault(wxCommandEvent&)
         if (!defaultForm.empty())
             m_pluralFormsExpr->SetValue(defaultForm);
     }
+
+    event.Skip();
 }
 
-void PropertiesDialog::OnPluralFormsCustom(wxCommandEvent&)
+void PropertiesDialog::OnPluralFormsCustom(wxCommandEvent& event)
 {
     if (!m_rememberedPluralForm.empty())
         m_pluralFormsExpr->SetValue(m_rememberedPluralForm);
+
+    event.Skip();
 }
 
 

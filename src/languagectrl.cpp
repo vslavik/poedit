@@ -108,8 +108,6 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
     sizer->AddSpacer(10);
     sizer->Add(label, wxSizerFlags().Border());
     sizer->Add(m_language, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
-    m_language->Bind(wxEVT_TEXT,     [=](wxCommandEvent&){ m_validatedLang = -1; });
-    m_language->Bind(wxEVT_COMBOBOX, [=](wxCommandEvent&){ m_validatedLang = -1; });
     sizer->Add(buttons, wxSizerFlags().Expand());
 #else
     sizer->AddSpacer(10);
@@ -118,6 +116,8 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
     sizer->Add(buttons, wxSizerFlags().Expand().Border());
 #endif
 
+    m_language->Bind(wxEVT_TEXT,     [=](wxCommandEvent& e){ m_validatedLang = -1; e.Skip(); });
+    m_language->Bind(wxEVT_COMBOBOX, [=](wxCommandEvent& e){ m_validatedLang = -1; e.Skip(); });
 
     Bind(wxEVT_UPDATE_UI,
         [=](wxUpdateUIEvent& e){ e.Enable(Validate()); },
