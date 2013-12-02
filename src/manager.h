@@ -31,6 +31,7 @@
 
 class WXDLLIMPEXP_FWD_CORE wxListCtrl;
 class WXDLLIMPEXP_FWD_CORE wxListBox;
+class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
 
 class Catalog;
 
@@ -81,7 +82,8 @@ class ManagerFrame : public wxFrame
         void OnCloseCmd(wxCommandEvent& event);
 
         wxListCtrl *m_listCat;
-        wxListBox  *m_listPrj;      
+        wxListBox  *m_listPrj;
+        wxSplitterWindow *m_splitter;
         wxArrayString m_catalogs;
         int m_curPrj;
 

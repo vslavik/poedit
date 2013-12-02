@@ -48,6 +48,7 @@
 #include "catalog.h"
 #include "tm/transmem.h"
 #include "chooselang.h"
+#include "errors.h"
 
 #ifdef __WXMSW__
 #include <winsparkle.h>
@@ -145,7 +146,7 @@ private:
                 sDocs.Printf("<b>%s</b>", wxNumberFormatter::ToString(docs));
                 sFileSize.Printf("<b>%s</b>", wxFileName::GetHumanReadableSize(fileSize, "--", 1, wxSIZE_CONV_SI));
             }
-            catch (std::exception&)
+            catch (Exception&)
             {
                 // ignore Lucene errors -- if the index doesn't exist yet, just show --
             }

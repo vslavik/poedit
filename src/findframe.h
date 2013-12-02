@@ -53,6 +53,9 @@ class FindFrame : public wxDialog
                   wxTextCtrl *textCtrlComments, wxTextCtrl *textCtrlAutoComments);
         ~FindFrame();
 
+        /// Returns singleton instance if it exists
+        static FindFrame *Get() { return ms_singleton; }
+
         /** Resets the search to starting position and changes
             the catalog in use. Called by EditorFrame when the user
             reloads catalog.
@@ -84,6 +87,8 @@ class FindFrame : public wxDialog
 
         // NB: this is static so that last search term is remembered
         static wxString ms_text;
+
+        static FindFrame *ms_singleton;
 };
 
 

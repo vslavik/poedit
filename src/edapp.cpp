@@ -44,6 +44,7 @@
 
 #ifdef __WXOSX__
 #include "osx_helpers.h"
+#include <wx/cocoa/string.h>
 #endif
 
 #ifdef __WXMSW__
@@ -269,7 +270,6 @@ void PoeditApp::SetupLanguage()
 void PoeditApp::OpenNewFile()
 {
     wxWindow *win = PoeditFrame::CreateWelcome();
-    AskForDonations(win);
 }
 
 void PoeditApp::OpenFiles(const wxArrayString& names)
@@ -277,8 +277,6 @@ void PoeditApp::OpenFiles(const wxArrayString& names)
     wxWindow *win = nullptr;
     for ( auto name: names )
         win = PoeditFrame::Create(name);
-
-    AskForDonations(win);
 }
 
 void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
@@ -602,13 +600,18 @@ void PoeditApp::OnQuit(wxCommandEvent&)
     // the app when the last window is closed now, instead of calling
     // ExitMainLoop(). This will terminate the app automagically when all the
     // windows are closed.
-    SetExitOnFrameDelete(true);
 
-    for ( wxWindowList::iterator i = wxTopLevelWindows.begin(); i != wxTopLevelWindows.end(); ++i )
+    bool delayed = false;
+    for ( auto& i : wxTopLevelWindows )
     {
-        if ( !(*i)->Close() )
-            return;
+        if (!i->Close())
+            delayed = true;
     }
+
+    if (delayed)
+        SetExitOnFrameDelete(true);
+    else
+        ExitMainLoop();
 }
 
 
@@ -652,6 +655,16 @@ void PoeditApp::OpenPoeditWeb(const wxString& path)
 }
 
 #ifdef __WXOSX__
+
+static NSMenuItem *AddNativeItem(NSMenu *menu, int pos, const wxString&text, SEL ac, NSString *key)
+{
+    NSString *str = wxNSStringWithWxString(text);
+    if (pos == -1)
+        return [menu addItemWithTitle:str action:ac keyEquivalent:key];
+    else
+        return [menu insertItemWithTitle:str action:ac keyEquivalent:key atIndex:pos];
+}
+
 void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 {
     wxMenu *apple = bar->OSXGetAppleMenu();
@@ -661,6 +674,76 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 #if USE_SPARKLE
     Sparkle_AddMenuItem(apple->GetHMenu(), _("Check for Updates...").utf8_str());
 #endif
+
+    wxMenu *edit = bar->GetMenu(bar->FindMenu(_("Edit")));
+    int pasteItem = -1;
+    int findItem = -1;
+    int pos = 0;
+    for (auto& i : edit->GetMenuItems())
+    {
+        if (i->GetId() == wxID_PASTE)
+            pasteItem = pos;
+        else if (i->GetId() == XRCID("menu_sub_find"))
+            findItem = pos;
+        pos++;
+    }
+
+    NSMenu *editNS = edit->GetHMenu();
+#if 0
+    // These don't work yet, not using NSUndoManager
+    AddNativeItem(editNS, 0, _("Undo"), @selector(undo:), @"z");
+    AddNativeItem(editNS, 1, _("Redo"), @selector(redo:), @"Z");
+    [editNS insertItem:[NSMenuItem separatorItem] atIndex:2];
+    if (pasteItem != -1) pasteItem += 3;
+    if (findItem != -1)  findItem += 3;
+#endif
+
+    NSMenuItem *item;
+    if (pasteItem != -1)
+    {
+        item = AddNativeItem(editNS, pasteItem+1, _("Paste and Match Style"),
+                             @selector(pasteAsPlainText:), @"V");
+        [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSAlternateKeyMask];
+        if (findItem != -1)  findItem++;
+    }
+
+    #define FIND_PLUS(ofset) ((findItem != -1) ? (findItem+ofset) : -1)
+    if (findItem == -1)
+        [editNS addItem:[NSMenuItem separatorItem]];
+    item = AddNativeItem(editNS, FIND_PLUS(1), _("Spelling and Grammar"), NULL, @"");
+    NSMenu *spelling = [[NSMenu alloc] initWithTitle:@"Spelling and Grammar"];
+    AddNativeItem(spelling, -1, _("Show Spelling and Grammar"), @selector(showGuessPanel:), @":");
+    AddNativeItem(spelling, -1, _("Check Document Now"), @selector(checkSpelling:), @";");
+    [spelling addItem:[NSMenuItem separatorItem]];
+    AddNativeItem(spelling, -1, _("Check Spelling While Typing"), @selector(toggleContinuousSpellChecking:), @"");
+    AddNativeItem(spelling, -1, _("Check Grammar With Spelling"), @selector(toggleGrammarChecking:), @"");
+    AddNativeItem(spelling, -1, _("Correct Spelling Automatically"), @selector(toggleAutomaticSpellingCorrection:), @"");
+    [editNS setSubmenu:spelling forItem:item];
+
+    item = AddNativeItem(editNS, FIND_PLUS(2), _("Substitutions"), NULL, @"");
+    NSMenu *subst = [[NSMenu alloc] initWithTitle:@"Substitutions"];
+    AddNativeItem(subst, -1, _("Show Substitutions"), @selector(orderFrontSubstitutionsPanel:), @"");
+    [subst addItem:[NSMenuItem separatorItem]];
+    AddNativeItem(subst, -1, _("Smart Copy/Paste"), @selector(toggleSmartInsertDelete:), @"");
+    AddNativeItem(subst, -1, _("Smart Quotes"), @selector(toggleAutomaticQuoteSubstitution:), @"");
+    AddNativeItem(subst, -1, _("Smart Dashes"), @selector(toggleAutomaticDashSubstitution:), @"");
+    AddNativeItem(subst, -1, _("Smart Links"), @selector(toggleAutomaticLinkDetection:), @"");
+    AddNativeItem(subst, -1, _("Text Replacement"), @selector(toggleAutomaticTextReplacement:), @"");
+    [editNS setSubmenu:subst forItem:item];
+
+    item = AddNativeItem(editNS, FIND_PLUS(3), _("Transformations"), NULL, @"");
+    NSMenu *trans = [[NSMenu alloc] initWithTitle:@"Transformations"];
+    AddNativeItem(trans, -1, _("Make Upper Case"), @selector(uppercaseWord:), @"");
+    AddNativeItem(trans, -1, _("Make Lower Case"), @selector(lowercaseWord:), @"");
+    AddNativeItem(trans, -1, _("Capitalize"), @selector(capitalizeWord:), @"");
+    [editNS setSubmenu:trans forItem:item];
+
+    item = AddNativeItem(editNS, FIND_PLUS(4), _("Speech"), NULL, @"");
+    NSMenu *speech = [[NSMenu alloc] initWithTitle:@"Speech"];
+    AddNativeItem(speech, -1, _("Start Speaking"), @selector(startSpeaking:), @"");
+    AddNativeItem(speech, -1, _("Stop Speaking"), @selector(stopSpeaking:), @"");
+    [editNS setSubmenu:speech forItem:item];
+
 }
 #endif // __WXOSX__
 
@@ -672,80 +755,3 @@ void PoeditApp::OnWinsparkleCheck(wxCommandEvent& event)
 }
 #endif // __WXMSW__
 
-
-void PoeditApp::AskForDonations(wxWindow *parent)
-{
-    wxConfigBase *cfg = wxConfigBase::Get();
-
-    if ( cfg->ReadBool("donate/dont_bug", false) )
-        return; // the user doesn't like us, don't be a bother
-    if ( cfg->ReadBool("donate/donated", false) )
-        return; // the user likes us a lot, don't be a bother
-
-    wxDateTime lastAsked((time_t)cfg->Read("donate/last_asked", (long)0));
-
-    wxDateTime now = wxDateTime::Now();
-    if ( lastAsked.Add(wxDateSpan::Days(7)) >= now )
-        return; // don't ask too frequently
-
-    // let's ask nicely:
-    wxDialog dlg(parent, wxID_ANY, "");
-    wxBoxSizer *topsizer = new wxBoxSizer(wxHORIZONTAL);
-
-    wxIcon icon(wxArtProvider::GetIcon("poedit", wxART_OTHER, wxSize(64,64)));
-    topsizer->Add(new wxStaticBitmap(&dlg, wxID_ANY, icon), wxSizerFlags().DoubleBorder());
-
-    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-    topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
-
-    wxStaticText *big = new wxStaticText(&dlg, wxID_ANY, "Support Open Source software");
-    wxFont font = big->GetFont();
-    font.SetWeight(wxFONTWEIGHT_BOLD);
-#if defined(__WXMSW__)
-    font.MakeLarger();
-#endif
-    big->SetFont(font);
-    sizer->Add(big);
-
-    wxStaticText *desc = new wxStaticText(&dlg, wxID_ANY,
-            "A lot of time and effort has gone into the development\n"
-            "of Poedit. If you find it useful, please consider showing\n"
-            "your appreciation with a donation.\n"
-            "\n"
-            "Donation or not, there will be no difference in Poedit's\n"
-            "features and functionality."
-            );
-#ifdef __WXMAC__
-    desc->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#endif
-    sizer->Add(desc, wxSizerFlags(1).Expand().DoubleBorder(wxTOP|wxBOTTOM|wxRIGHT));
-
-    wxCheckBox *checkbox = new wxCheckBox(&dlg, wxID_ANY, "Don't bug me about this again");
-    sizer->Add(checkbox);
-
-    wxStdDialogButtonSizer *buttons = new wxStdDialogButtonSizer();
-    wxButton *ok = new wxButton(&dlg, wxID_OK, _("Donate..."));
-    wxButton *cancel = new wxButton(&dlg, wxID_CANCEL, _("No, thanks"));
-    cancel->SetDefault();
-    buttons->AddButton(ok);
-    buttons->AddButton(cancel);
-    buttons->Realize();
-    sizer->Add(buttons, wxSizerFlags().Right().DoubleBorder(wxTOP));
-    dlg.SetSizerAndFit(topsizer);
-    dlg.Centre();
-
-    if ( dlg.ShowModal() == wxID_OK )
-    {
-        OpenPoeditWeb("/donate.php");
-        cfg->Write("donate/donated", true);
-    }
-    else
-    {
-        cfg->Write("donate/dont_bug", checkbox->GetValue());
-    }
-
-    cfg->Write("donate/last_asked", (long)now.GetTicks());
-
-    // re-asking after a crash wouldn't be a good idea:
-    cfg->Flush();
-}
