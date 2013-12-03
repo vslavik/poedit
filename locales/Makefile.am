@@ -73,4 +73,9 @@ stats:
 
 #echo "$$i.po `expr 100 "*" $$TR / $$TOTAL`% of $$TOTAL strings"; 
 
+dist-hook: allmo
+	cp -a $(srcdir)/*.pot $(srcdir)/*.po $(srcdir)/*.mo $(distdir)
+
+EXTRA_DIST = update-translation-lists.sh
+
 .PHONY: allpo allmo force-update stats FORCE

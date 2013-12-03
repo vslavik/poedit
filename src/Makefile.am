@@ -20,18 +20,19 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  tm/transmem.cpp tm/transmem.h tm/tm_migrate.cpp \
                  manager.h manager.cpp chooselang.cpp chooselang.h \
                  export_html.cpp icons.h icons.cpp \
-                 pluralforms/pl_evaluate.cpp \
+                 pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
                  edlistctrl.cpp edlistctrl.h digits.h \
                  cat_sorting.cpp cat_sorting.h \
                  utility.cpp utility.h \
                  version.h errors.h \
-                 language.cpp language.h \
+                 icuhelpers.h \
+                 language.cpp language.h language_impl_legacy.h language_impl_plurals.h \
                  languagectrl.cpp languagectrl.h \
-                 welcomescreen.cpp welcomescreen.h \
-                 compiled_xrc.cpp
+                 welcomescreen.cpp welcomescreen.h
+nodist_poedit_SOURCES = compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS) $(LUCENE_LIBS) $(EXPAT_LIBS) \
-			   -lboost_regex -lboost_system
+               -lboost_regex -lboost_system
 
 poedit_dump_legacy_tm_SOURCES = tm/dump_legacy_tm.cpp
 poedit_dump_legacy_tm_LDADD = $(DB_LIBS)
@@ -49,3 +50,5 @@ XRC_RESOURCES = \
 
 compiled_xrc.cpp: $(XRC_RESOURCES)
 	$(WXRC) -v -c -o $@ $(XRC_RESOURCES)
+
+EXTRA_DIST = $(XRC_RESOURCES) pluralforms/COPYING

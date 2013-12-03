@@ -12,7 +12,7 @@ AC_CONFIG_SRCDIR([README])
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
-AM_INIT_AUTOMAKE([subdir-objects])
+AM_INIT_AUTOMAKE([subdir-objects foreign])
 AM_MAINTAINER_MODE
 
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
@@ -200,6 +200,7 @@ AC_CONFIG_FILES([
          Makefile
          src/Makefile
          icons/Makefile
+         artwork/Makefile
          locales/Makefile
          docs/Makefile
          ])

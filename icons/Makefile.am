@@ -14,23 +14,23 @@ mimeiconsscalabledir=$(iconsdir)/scalable/mimetypes
 pixmapsdir=$(datadir)/pixmaps
 uiiconsdir=$(datadir)/poedit/icons
 
-appicons16_DATA = appicon/16x16/apps/poedit.png
-appicons22_DATA = appicon/22x22/apps/poedit.png
-appicons24_DATA = appicon/24x24/apps/poedit.png
-appicons32_DATA = appicon/32x32/apps/poedit.png
-appicons48_DATA = appicon/48x48/apps/poedit.png
-appiconsscalable_DATA = appicon/scalable/apps/poedit.svg
+dist_appicons16_DATA = appicon/16x16/apps/poedit.png
+dist_appicons22_DATA = appicon/22x22/apps/poedit.png
+dist_appicons24_DATA = appicon/24x24/apps/poedit.png
+dist_appicons32_DATA = appicon/32x32/apps/poedit.png
+dist_appicons48_DATA = appicon/48x48/apps/poedit.png
+dist_appiconsscalable_DATA = appicon/scalable/apps/poedit.svg
 
-mimeicons16_DATA = mime-gnome/16x16/mimetypes/poedit-translation-generic.png
-mimeicons22_DATA = mime-gnome/22x22/mimetypes/poedit-translation-generic.png
-mimeicons24_DATA = mime-gnome/24x24/mimetypes/poedit-translation-generic.png
-mimeicons32_DATA = mime-gnome/32x32/mimetypes/poedit-translation-generic.png
-mimeiconsscalable_DATA = mime-gnome/scalable/mimetypes/poedit-translation-generic.svg
+dist_mimeicons16_DATA = mime-gnome/16x16/mimetypes/poedit-translation-generic.png
+dist_mimeicons22_DATA = mime-gnome/22x22/mimetypes/poedit-translation-generic.png
+dist_mimeicons24_DATA = mime-gnome/24x24/mimetypes/poedit-translation-generic.png
+dist_mimeicons32_DATA = mime-gnome/32x32/mimetypes/poedit-translation-generic.png
+dist_mimeiconsscalable_DATA = mime-gnome/scalable/mimetypes/poedit-translation-generic.svg
 
-pixmaps_DATA = appicon/48x48/apps/poedit.png
+dist_pixmaps_DATA = appicon/48x48/apps/poedit.png
 
 
-uiicons_DATA = \
+dist_uiicons_DATA = \
 		appicon/256x256/apps/poedit.png \
 		ui/toolbar-24/document-open.png \
 		ui/toolbar-24/document-save.png \
