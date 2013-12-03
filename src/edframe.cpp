@@ -3018,14 +3018,14 @@ void PoeditFrame::ShowPluralFormUI(bool show)
 
 void PoeditFrame::RecreatePluralTextCtrls()
 {
+    if (!m_catalog || !m_list)
+        return;
+
     for (size_t i = 0; i < m_textTransPlural.size(); i++)
        m_textTransPlural[i]->PopEventHandler(true/*delete*/);
     m_textTransPlural.clear();
     m_pluralNotebook->DeleteAllPages();
     m_textTransSingularForm = NULL;
-
-    if (!m_catalog)
-        return;
 
     PluralFormsCalculator *calc = PluralFormsCalculator::make(
                 m_catalog->Header().GetHeader("Plural-Forms").ToAscii());
