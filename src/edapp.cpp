@@ -674,7 +674,10 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     Sparkle_AddMenuItem(apple->GetHMenu(), _("Check for Updates...").utf8_str());
 #endif
 
-    wxMenu *edit = bar->GetMenu(bar->FindMenu(_("Edit")));
+    int editMenuPos = bar->FindMenu(_("Edit"));
+    if (editMenuPos == wxNOT_FOUND)
+        editMenuPos = 1;
+    wxMenu *edit = bar->GetMenu(editMenuPos);
     int pasteItem = -1;
     int findItem = -1;
     int pos = 0;
