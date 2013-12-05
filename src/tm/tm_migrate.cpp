@@ -179,7 +179,10 @@ bool DoMigrate(const wxString& path, const wxString& languages)
     while (!callback.terminated)
     {
         wxMilliSleep(1);
-#ifdef __WXMSW__
+#if defined(__UNIX__)
+        if ( wxTheApp )
+            wxTheApp->CheckSignal();
+#elif defined(__WXMSW__)
         wxYield(); // so that OnTerminate() is called
 #endif
         if (callback.IsInputAvailable())
