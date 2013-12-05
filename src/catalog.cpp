@@ -828,7 +828,11 @@ class LoadParser : public CatalogParser
 {
     public:
         LoadParser(Catalog *c, wxTextFile *f)
-              : CatalogParser(f), m_catalog(c), m_nextId(1) {}
+              : CatalogParser(f),
+                FileIsValid(false), m_catalog(c), m_nextId(1) {}
+
+        // true if the file is valid, i.e. has at least some data
+        bool FileIsValid;
 
     protected:
         Catalog *m_catalog;
@@ -871,6 +875,8 @@ bool LoadParser::OnEntry(const wxString& msgid,
                          const wxArrayString& msgid_old,
                          unsigned lineNumber)
 {
+    FileIsValid = true;
+
     static const wxString MSGCAT_CONFLICT_MARKER("#-#-#-#-#");
 
     if (msgid.empty())
@@ -919,6 +925,8 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
                                 const wxArrayString& autocomments,
                                 unsigned lineNumber)
 {
+    FileIsValid = true;
+
     CatalogDeletedData d;
     if (!flags.empty()) d.SetFlags(flags);
     d.SetDeletedLines(deletedLines);
@@ -1069,7 +1077,7 @@ bool Catalog::Load(const wxString& po_file, int flags)
     }
 
     // If we didn't find any entries, the file must be invalid:
-    if (m_items.size() == 0)
+    if (!parser.FileIsValid)
         return false;
 
     m_isOk = true;
