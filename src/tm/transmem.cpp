@@ -43,6 +43,7 @@
 #include <Lucene.h>
 #include <LuceneException.h>
 #include <MMapDirectory.h>
+#include <SimpleFSDirectory.h>
 #include <StandardAnalyzer.h>
 #include <IndexWriter.h>
 #include <IndexSearcher.h>
@@ -84,8 +85,14 @@ public:
 
     typedef TranslationMemory::Results Results;
 
+#ifdef __WXMSW__
+    typedef SimpleFSDirectory DirectoryType;
+#else
+    typedef MMapDirectory DirectoryType;
+#endif
+
     TranslationMemoryImpl()
-        : m_dir(newLucene<MMapDirectory>(GetDatabaseDir())),
+        : m_dir(newLucene<DirectoryType>(GetDatabaseDir())),
           m_analyzer(newLucene<StandardAnalyzer>(LuceneVersion::LUCENE_CURRENT))
     {}
 
