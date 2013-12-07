@@ -319,7 +319,7 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
         Parser p;
         p.Name = s_gettextLangs[i].name;
         p.Extensions = s_gettextLangs[i].exts;
-        p.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS --force-po -o %o %C %K %F";
+        p.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS --add-comments=translators: --force-po -o %o %C %K %F";
         p.KeywordItem = "-k%k";
         p.FileItem = "%f";
         p.CharsetItem = "--from-code=%c";
