@@ -297,7 +297,7 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
         { "C#",       "*.cs" },
         { "Java",     "*.java" },
         { "Perl",     "*.pl" },
-        { "PHP",      "*.php" },
+        { "PHP",      "*.php;*.phtml" },
         { "Python",   "*.py" },
         { "TCL",      "*.tcl" },
         { NULL, NULL }
