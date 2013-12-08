@@ -111,6 +111,9 @@ bool PoeditApp::OnInit()
     SetExitOnFrameDelete(false);
 #endif
 
+    // timestamps on the logs are of not use for Poedit:
+    wxLog::DisableTimestamp();
+
 #if defined(__UNIX__) && !defined(__WXMAC__)
     wxStandardPaths::Get().SetInstallPrefix(POEDIT_PREFIX);
 
