@@ -1327,8 +1327,11 @@ wxString FormatStringForFile(const wxString& text)
 } // anonymous namespace
 
 
-bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors)
+bool Catalog::Save(const wxString& po_file, bool save_mo,
+                   int& validation_errors, CompilationStatus& mo_compilation_status)
 {
+    mo_compilation_status = CompilationStatus::NotDone;
+
     if ( wxFileExists(po_file) && !wxFile::Access(po_file, wxFile::write) )
     {
         wxLogError(_("File '%s' is read-only and cannot be saved.\nPlease save it under different name."),
@@ -1404,17 +1407,22 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
     if (save_mo && wxConfig::Get()->Read("compile_mo", (long)true))
     {
         const wxString mofile = po_file.BeforeLast(_T('.')) + ".mo";
-        if ( !ExecuteGettext
+        if ( ExecuteGettext
               (
                   wxString::Format(_T("msgfmt -o \"%s\" \"%s\""),
                                    mofile.c_str(),
                                    po_file.c_str())
               ) )
         {
+            mo_compilation_status = CompilationStatus::Success;
+        }
+        else
+        {
             // Don't report errors, they were reported as part of validation
             // step above.  Notice that we run msgfmt *without* the -c flag
             // here to create the MO file in as many cases as possible, even if
             // it has some errors.
+            mo_compilation_status = CompilationStatus::Error;
         }
     }
 

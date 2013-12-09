@@ -275,7 +275,8 @@ private:
         void RefreshSelectedItem();
 
         template<typename TFunctor>
-        void ReportValidationErrors(int errors, bool from_save, TFunctor completionHandler);
+        void ReportValidationErrors(int errors, Catalog::CompilationStatus mo_compilation_status,
+                                    bool from_save, TFunctor completionHandler);
 
         wxFileHistory& FileHistory() { return wxGetApp().FileHistory(); }
         void NoteAsRecentFile();

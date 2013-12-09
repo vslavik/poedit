@@ -458,7 +458,8 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
                 Catalog cat(f);
                 cat.Update(&pinfo);
                 int validation_errors = 0;
-                cat.Save(f, false, validation_errors);
+                Catalog::CompilationStatus mo_status;
+                cat.Save(f, false, validation_errors, mo_status);
             }
          }
 

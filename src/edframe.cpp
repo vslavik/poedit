@@ -1553,12 +1553,16 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
 void PoeditFrame::OnValidate(wxCommandEvent&)
 {
     wxBusyCursor bcur;
-    ReportValidationErrors(m_catalog->Validate(), false, []{});
+    ReportValidationErrors(m_catalog->Validate(),
+                           /*mo_compilation_failed=*/Catalog::CompilationStatus::NotDone,
+                           /*from_save=*/false, []{});
 }
 
 
 template<typename TFunctor>
-void PoeditFrame::ReportValidationErrors(int errors, bool from_save, TFunctor completionHandler)
+void PoeditFrame::ReportValidationErrors(int errors,
+                                         Catalog::CompilationStatus mo_compilation_status,
+                                         bool from_save, TFunctor completionHandler)
 {
     wxWindowPtr<wxMessageDialog> dlg;
 
@@ -1584,7 +1588,18 @@ void PoeditFrame::ReportValidationErrors(int errors, bool from_save, TFunctor co
         if ( from_save )
         {
             details += "\n\n";
-            details += _("The file was saved safely, but it cannot be compiled into the MO format and used.");
+            switch ( mo_compilation_status )
+            {
+                case Catalog::CompilationStatus::NotDone:
+                    details += _("The file was saved safely.");
+                    break;
+                case Catalog::CompilationStatus::Success:
+                    details += _("The file was saved safely and compiled into the MO format, but it will probably not work correctly.");
+                    break;
+                case Catalog::CompilationStatus::Error:
+                    details += _("The file was saved safely, but it cannot be compiled into the MO format and used.");
+                    break;
+            }
         }
         dlg->SetExtendedMessage(details);
     }
@@ -2541,7 +2556,8 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", dt.TranslatorEmail);
 
     int validation_errors = 0;
-    if ( !m_catalog->Save(catalog, true, validation_errors) )
+    Catalog::CompilationStatus mo_compilation_status = Catalog::CompilationStatus::NotDone;
+    if ( !m_catalog->Save(catalog, true, validation_errors, mo_compilation_status) )
     {
         completionHandler(false);
         if (tmUpdateThread)
@@ -2569,7 +2585,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
         //       be called from such window too, run this in the next
         //       event loop iteration.
         CallAfter([=]{
-            ReportValidationErrors(validation_errors, true, [=]{
+            ReportValidationErrors(validation_errors, mo_compilation_status, /*from_save=*/true, [=]{
                 completionHandler(true);
             });
         });

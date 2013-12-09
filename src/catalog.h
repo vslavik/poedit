@@ -471,6 +471,13 @@ class Catalog
             CreationFlag_IgnoreTranslations = 2
         };
 
+        enum class CompilationStatus
+        {
+            NotDone,
+            Success,
+            Error
+        };
+
         /// Default ctor. Creates empty catalog, you have to call Load.
         Catalog();
 
@@ -511,7 +518,9 @@ class Catalog
             Note that \a po_file refers to .po file, .mo file will have same
             name & location as .po file except for different extension.
          */
-        bool Save(const wxString& po_file, bool save_mo, int& validation_errors);
+        bool Save(const wxString& po_file, bool save_mo,
+                  int& validation_errors,
+                  CompilationStatus& mo_compilation_status);
 
         /// Exports the catalog to HTML format
         bool ExportToHTML(const wxString& filename);
