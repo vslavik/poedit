@@ -75,6 +75,18 @@ public:
     }
 };
 
+#elif defined(__WXGTK__)
+
+class ActionButton : public wxButton
+{
+public:
+    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note)
+        : wxButton(parent, winid, label, wxDefaultPosition, wxSize(450, 50), wxBU_LEFT)
+    {
+        SetLabelMarkup(wxString::Format("<b>%s</b>\n<small>%s</small>", label, note));
+    }
+};
+
 #else
 
 typedef wxCommandLinkButton ActionButton;
