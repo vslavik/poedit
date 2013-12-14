@@ -124,19 +124,34 @@ bool PoeditApp::OnInit()
 #endif
     wxStandardPaths::Get().SetInstallPrefix(installPrefix);
 
-    wxString home = wxGetHomeDir() + "/";
+    wxString xdgConfigHome;
+    if (!wxGetEnv("XDG_CONFIG_HOME", &xdgConfigHome))
+        xdgConfigHome = wxGetHomeDir() + "/.config";
+    wxString configDir = xdgConfigHome + "/poedit";
+    if (!wxFileName::DirExists(configDir))
+        wxFileName::Mkdir(configDir, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
+    wxString configFile = configDir + "/config";
 
-    // create Poedit cfg dir, move ~/.poedit to ~/.poedit/config
-    // (upgrade from older versions of Poedit which used ~/.poedit file)
-    if (!wxDirExists(home + ".poedit"))
+    // Move legacy config locations to XDG compatible ones:
+    if (!wxFileExists(configFile))
     {
-        if (wxFileExists(home + ".poedit"))
-            wxRenameFile(home + ".poedit", home + ".poedit2");
-        wxMkdir(home + ".poedit");
-        if (wxFileExists(home + ".poedit2"))
-            wxRenameFile(home + ".poedit2", home + ".poedit/config");
+        wxString oldconfig = wxGetHomeDir() + "/.poedit";
+        if (wxDirExists(oldconfig))
+        {
+            if (wxFileExists(oldconfig + "/config"))
+                wxRenameFile(oldconfig + "/config", configFile);
+            {
+                wxLogNull null;
+                wxRmdir(oldconfig);
+            }
+        }
+        else if (wxFileExists(oldconfig))
+        {
+            // even older dotfile
+            wxRenameFile(oldconfig, configDir + "/config");
+        }
     }
-#endif
+#endif // __UNIX__
 
     SetVendorName("Vaclav Slavik");
     SetAppName("Poedit");
@@ -144,7 +159,7 @@ bool PoeditApp::OnInit()
 #if defined(__WXMAC__)
     #define CFG_FILE (wxStandardPaths::Get().GetUserConfigDir() + "/net.poedit.Poedit.cfg")
 #elif defined(__UNIX__)
-    #define CFG_FILE (home + ".poedit/config")
+    #define CFG_FILE configFile
 #else
     #define CFG_FILE wxEmptyString
 #endif
