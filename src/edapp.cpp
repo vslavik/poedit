@@ -115,7 +115,14 @@ bool PoeditApp::OnInit()
     wxLog::DisableTimestamp();
 
 #if defined(__UNIX__) && !defined(__WXMAC__)
-    wxStandardPaths::Get().SetInstallPrefix(POEDIT_PREFIX);
+    wxString installPrefix = POEDIT_PREFIX;
+#ifdef __linux__
+    wxFileName::SplitPath(wxStandardPaths::Get().GetExecutablePath(), &installPrefix, nullptr, nullptr);
+    wxFileName fn = wxFileName::DirName(installPrefix);
+    fn.RemoveLastDir();
+    installPrefix = fn.GetFullPath();
+#endif
+    wxStandardPaths::Get().SetInstallPrefix(installPrefix);
 
     wxString home = wxGetHomeDir() + "/";
 
