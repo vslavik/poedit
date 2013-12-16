@@ -342,15 +342,33 @@ class UnfocusableTextCtrl : public wxTextCtrl
 {
     public:
         UnfocusableTextCtrl(wxWindow *parent,
-                            wxWindowID id,
+                            wxWindowID winid,
                             const wxString &value = wxEmptyString,
                             const wxPoint &pos = wxDefaultPosition,
                             const wxSize &size = wxDefaultSize,
                             long style = 0,
                             const wxValidator& validator = wxDefaultValidator,
                             const wxString &name = wxTextCtrlNameStr)
-           : wxTextCtrl(parent, id, value, pos, size, style, validator, name) {}
+           : wxTextCtrl(parent, winid, value, pos, size, style, validator, name) {}
         virtual bool AcceptsFocus() const { return false; }
+};
+
+
+class TranslationTextCtrl : public wxTextCtrl
+{
+    public:
+        TranslationTextCtrl(wxWindow *parent, wxWindowID winid)
+           : wxTextCtrl(parent, winid, wxEmptyString,
+                        wxDefaultPosition, wxDefaultSize,
+                        wxTE_MULTILINE | wxTE_RICH2)
+        {
+#ifdef __WXOSX__
+            NSScrollView *scroll = (NSScrollView*)GetHandle();
+            NSTextView *text = [scroll documentView];
+            [text setAutomaticQuoteSubstitutionEnabled:NO];
+            [text setAutomaticDashSubstitutionEnabled:NO];
+#endif
+        }
 };
 
 
@@ -682,10 +700,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
         new wxStaticText(m_bottomLeftPanel, -1, _("Translation:"));
     labelTrans->SetFont(m_boldGuiFont);
 
-    m_textTrans = new wxTextCtrl(m_bottomLeftPanel,
-                                ID_TEXTTRANS, wxEmptyString,
-                                wxDefaultPosition, wxDefaultSize,
-                                wxTE_MULTILINE | wxTE_RICH2);
+    m_textTrans = new TranslationTextCtrl(m_bottomLeftPanel, ID_TEXTTRANS);
 
     // in case of plurals form, this is the control for n=1:
     m_textTransSingularForm = NULL;
@@ -3103,10 +3118,7 @@ void PoeditFrame::RecreatePluralTextCtrls()
             desc.Printf(L"n → %s", examples);
 
         // create text control and notebook page for it:
-        wxTextCtrl *txt = new wxTextCtrl(m_pluralNotebook, -1,
-                                         wxEmptyString,
-                                         wxDefaultPosition, wxDefaultSize,
-                                         wxTE_MULTILINE | wxTE_RICH2);
+        wxTextCtrl *txt = new TranslationTextCtrl(m_pluralNotebook, wxID_ANY);
         txt->PushEventHandler(new TransTextctrlHandler(this));
         m_textTransPlural.push_back(txt);
         m_pluralNotebook->AddPage(txt, desc);
