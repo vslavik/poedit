@@ -960,7 +960,12 @@ static bool SetSpellcheckerLang(const wxString& lang)
 static bool DoInitSpellchecker(wxTextCtrl *text,
                                bool enable, const Language& /*lang*/)
 {
-    text->MacCheckSpelling(enable);
+    NSScrollView *scroll = (NSScrollView*)text->GetHandle();
+    NSTextView *view = [scroll documentView];
+
+    [view setContinuousSpellCheckingEnabled:enable];
+    [view setGrammarCheckingEnabled:enable];
+
     return true;
 }
 #endif // __WXOSX__
