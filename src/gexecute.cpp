@@ -109,14 +109,15 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
 #if defined(__WXMAC__) || defined(__WXMSW__)
     wxString binary = cmdline.BeforeFirst(_T(' '));
     cmdline = GetPathToAuxBinary(binary) + cmdline.Mid(binary.length());
+    wxGetEnvMap(&env.env);
     env.env["POEDIT_USE_UTF8"] = "1";
     env.env["POEDIT_LOCALEDIR"] = GetGettextPackagePath() + "/share/locale";
-#endif
-#if NEED_CHOOSELANG_UI
+    #if NEED_CHOOSELANG_UI
 	wxString lang = GetUILanguage();
 	if ( !lang.empty() )
 		env.env["LANG"] = lang;
-#endif
+    #endif
+#endif // __WXMAC__ || __WXMSW__
 
     wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
 
