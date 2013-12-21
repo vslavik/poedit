@@ -31,7 +31,7 @@
 #include <wx/stdpaths.h>
 #include <wx/utils.h>
 #include <wx/dir.h>
-#include <Wx/filename.h>
+#include <wx/filename.h>
 
 #include <mutex>
 
