@@ -58,6 +58,10 @@
     #error "Unicode build of wxWidgets is required by Poedit"
 #endif
 
+#if !wxUSE_STL
+    #error "STL-enabled build of wxWidgets is required by Poedit"
+#endif
+
 #include "edapp.h"
 #include "edframe.h"
 #include "manager.h"
