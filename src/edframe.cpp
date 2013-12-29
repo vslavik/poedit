@@ -2284,6 +2284,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
                             );
                         msg.AddAction(_("Review"),
                                       std::bind(&PoeditFrame::EditCatalogProperties, this));
+                        msg.AddDontShowAgain();
 
                         m_attentionBar->ShowMessage(msg);
                     }
