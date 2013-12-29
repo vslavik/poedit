@@ -349,7 +349,15 @@ class UnfocusableTextCtrl : public wxTextCtrl
                             long style = 0,
                             const wxValidator& validator = wxDefaultValidator,
                             const wxString &name = wxTextCtrlNameStr)
-           : wxTextCtrl(parent, winid, value, pos, size, style, validator, name) {}
+           : wxTextCtrl(parent, winid, value, pos, size, style, validator, name)
+        {
+#ifdef __WXOSX__
+            NSScrollView *scroll = (NSScrollView*)GetHandle();
+            NSTextView *text = [scroll documentView];
+            [text setAutomaticQuoteSubstitutionEnabled:NO];
+            [text setAutomaticDashSubstitutionEnabled:NO];
+#endif
+        }
         virtual bool AcceptsFocus() const { return false; }
 };
 
@@ -1868,16 +1876,49 @@ CatalogItem *PoeditFrame::GetCurrentItem() const
 }
 
 
+static inline bool IsAnyQuote(wchar_t c)
+{
+    switch (c)
+    {
+        case 0x00BB: // »
+        case 0x00AB: // «
+        case 0x201C: // “
+        case 0x201D: // ”
+        case 0x201E: // „
+        case 0x201F: // ‟
+        case '"':
+            return true;
+        default:
+            return false;
+    }
+}
+
 static wxString TransformNewval(const wxString& val, bool displayQuotes)
 {
     wxString newval(val);
 
+#ifdef __WXOSX__
+    // Fix occurrences of smart quotes after \, e.g. \“ -- they shouldn't happen
+    // because we disabled smart quotes, but apparently some people either
+    // enable them back or something else interfered. So play it safe and filter
+    // them out:
+    for (wxString::iterator i = newval.begin(); i != newval.end(); ++i)
+    {
+        if (*i == '\\')
+        {
+            ++i;
+            if (i != newval.end() && IsAnyQuote(*i))
+                *i = '"';
+        }
+    }
+#endif // __WXOSX__
+
     newval.Replace("\n", "");
     if (displayQuotes)
     {
-        if (newval.Len() > 0 && newval[0u] == _T('"'))
+        if (newval.Len() > 0 && IsAnyQuote(newval[0u]))
             newval.Remove(0, 1);
-        if (newval.Len() > 0 && newval[newval.Length()-1] == _T('"'))
+        if (newval.Len() > 0 && IsAnyQuote(newval[newval.Length()-1]))
             newval.RemoveLast();
     }
 
