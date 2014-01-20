@@ -2550,14 +2550,8 @@ void PoeditFrame::UpdateMenu()
 
     if (m_textTrans)
         m_textTrans->Enable(editable);
-    if (m_textOrig)
-        m_textOrig->Enable(editable);
-    if (m_textOrigPlural)
-        m_textOrigPlural->Enable(editable);
     if (m_textComment)
         m_textComment->Enable(editable);
-    if (m_textAutoComments)
-        m_textAutoComments->Enable(editable);
     if (m_list)
         m_list->Enable(editable);
 
