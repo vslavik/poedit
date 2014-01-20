@@ -93,7 +93,6 @@ public:
         sizer->AddSpacer(10);
         sizer->Add(m_stats, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
         sizer->AddSpacer(10);
-        UpdateStats();
 
         auto import = new wxButton(this, wxID_ANY, _("Learn From Files..."));
         sizer->Add(import, wxSizerFlags().Border(wxLEFT|wxRIGHT, 25));
@@ -118,6 +117,8 @@ public:
         import->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
 
         import->Bind(wxEVT_BUTTON, &TMPage::OnImportIntoTM, this);
+
+        UpdateStats();
     }
 
     virtual void LoadSettings()
