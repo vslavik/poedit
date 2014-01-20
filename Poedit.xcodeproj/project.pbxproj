@@ -623,7 +623,7 @@
 			buildConfigurationList = B27115F9170830A800B936D5 /* Build configuration list for PBXLegacyTarget "ant_external_deps" */;
 			buildPhases = (
 			);
-			buildToolPath = ant;
+			buildToolPath = /usr/local/bin/ant;
 			buildWorkingDirectory = deps;
 			dependencies = (
 			);
@@ -659,6 +659,7 @@
 				B248B2DB170D765100EBA58E /* Frameworks */,
 				B248B2DC170D765100EBA58E /* Resources */,
 				B2F287C6170DCF06004C1F41 /* Copy Gettext binaries & translations */,
+				B2A26E59188556C00000B8CE /* Codesign Gettext binaries */,
 				B2CC62E217DB7F670097461B /* Set bundle versions from deps/gettext */,
 			);
 			buildRules = (
@@ -680,6 +681,7 @@
 				B24ACD5916F6201F00399242 /* Resources */,
 				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
 				B2846D0B17BCF65D00DDC6F8 /* Remove Headers From Private Frameworks */,
+				B2A26E5A18856E610000B8CE /* Codesign Private Frameworks */,
 				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
 				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */,
 				B2E83707170C96DB00F31559 /* Install translations */,
@@ -803,6 +805,34 @@
 			shellPath = /bin/sh;
 			shellScript = "find \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\" -name Headers -exec rm -rf {} \\; 2>/dev/null || true";
 		};
+		B2A26E59188556C00000B8CE /* Codesign Gettext binaries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Codesign Gettext binaries";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -n \"${CODE_SIGN_IDENTITY}\" ]; then\n    codesign -s \"${CODE_SIGN_IDENTITY}\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"/{lib/*.dylib,bin/*}\nfi";
+		};
+		B2A26E5A18856E610000B8CE /* Codesign Private Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Codesign Private Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# The previous step modified bundled frameworks by removing headers, so this is the only place where they\n# can be signed (even if we wanted to modify their projects):\n\nif [ -n \"${CODE_SIGN_IDENTITY}\" ]; then\n    codesign -s \"${CODE_SIGN_IDENTITY}\" \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/Resources/finish_installation.app\n    codesign -s \"${CODE_SIGN_IDENTITY}\" \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/*.framework\nfi";
+		};
 		B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -857,7 +887,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"\n\nfor i in ${GETTEXT_BINARIES}; do\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\ndone\ncp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"";
+			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\nfor i in ${GETTEXT_BINARIES}; do\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\ndone\ncp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\n\ncp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f locale && ln -s ../../Resources/locale .)";
 		};
 /* End PBXShellScriptBuildPhase section */
 
