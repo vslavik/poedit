@@ -126,10 +126,12 @@ bool g_focusToText = false;
 
 /*static*/ PoeditFrame *PoeditFrame::Find(const wxString& filename)
 {
+    wxFileName fn(filename);
+
     for (PoeditFramesList::const_iterator n = ms_instances.begin();
          n != ms_instances.end(); ++n)
     {
-        if ((*n)->m_fileName == filename)
+        if (wxFileName((*n)->m_fileName) == fn)
             return *n;
     }
     return NULL;
