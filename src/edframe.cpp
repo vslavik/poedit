@@ -152,7 +152,11 @@ bool g_focusToText = false;
 /*static*/ PoeditFrame *PoeditFrame::Create(const wxString& filename)
 {
     PoeditFrame *f = PoeditFrame::Find(filename);
-    if (!f)
+    if (f)
+    {
+        f->Raise();
+    }
+    else
     {
         // NB: duplicated in ReadCatalog()
         Catalog *cat = new Catalog(filename);
