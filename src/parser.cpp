@@ -24,6 +24,7 @@
  */
 
 
+#include <wx/filename.h>
 #include <wx/wfstream.h>
 #include <wx/config.h>
 #include <wx/tokenzr.h>
@@ -156,8 +157,19 @@ wxString Parser::GetCommand(const wxArrayString& files,
 
     for (i = 0; i < files.GetCount(); i++)
     {
+        wxString fn = files[i];
+#ifdef __WXMSW__
+        // Gettext tools can't handle Unicode filenames well (due to using
+        // char* arguments), so work around this by using the short names.
+        if (!fn.IsAscii())
+        {
+            fn = wxFileName(fn).GetShortPath();
+            fn.Replace("\\", "/");
+        }
+#endif
+
         dummy = FileItem;
-        dummy.Replace("%f", _T("\"") + files[i] + _T("\""));
+        dummy.Replace("%f", _T("\"") + fn + _T("\""));
         fline << " " << dummy;
     }
 

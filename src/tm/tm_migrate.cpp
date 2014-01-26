@@ -70,9 +70,13 @@ wxString GetLegacyDatabaseDirInternal()
 wxString GetLegacyDatabaseDir()
 {
     wxString path = wxConfig::Get()->Read("/TM/database_path", "");
-    if (!path.empty() && wxFileName::DirExists(path))
-        return path;
-    return GetLegacyDatabaseDirInternal();
+    if (path.empty() || !wxFileName::DirExists(path))
+        path = GetLegacyDatabaseDirInternal();
+#ifdef __WXMSW__
+    return wxFileName(path).GetShortPath();
+#else
+    return path;
+#endif
 }
 
 
@@ -81,10 +85,12 @@ wxString GetDumpToolPath()
 #if defined(__WXOSX__) || defined(__WXMSW__)
     wxFileName path(wxStandardPaths::Get().GetExecutablePath());
     path.SetName("dump-legacy-tm");
-#ifdef __WXMSW__
+  #ifdef __WXMSW__
     path.SetExt("exe");
-#endif
+    return path.GetShortPath();
+  #else
     return path.GetFullPath();
+  #endif
 #else
     return wxStandardPaths::Get().GetInstallPrefix() + "/libexec/poedit-dump-legacy-tm";
 #endif

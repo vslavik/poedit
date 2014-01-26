@@ -71,7 +71,13 @@ TempDirectory::TempDirectory() : m_counter(0)
         wxLogNull null;
         if ( wxRemoveFile(name) && wxMkdir(name, 0700) )
         {
+#ifdef __WXMSW__
+            // prevent possible problems with Unicode filenames in launched
+            // third party tools (e.g. gettext):
+            m_dir = wxFileName(name).GetShortPath();
+#else
             m_dir = name;
+#endif
             wxLogTrace("poedit.tmp", "created temp dir %s", name.c_str());
             break;
         }
