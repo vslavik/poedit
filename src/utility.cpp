@@ -183,7 +183,9 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
 
     // If the window is larger than current screen, resize it to fit:
     int display = wxDisplay::GetFromWindow(win);
-    wxCHECK_RET( display != wxNOT_FOUND, "window not on screen" );
+    if ( display == wxNOT_FOUND )
+        return;
+
     wxRect screenRect = wxDisplay(display).GetClientArea();
 
     wxRect winRect = win->GetRect();
