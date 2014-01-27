@@ -135,14 +135,6 @@ std::wstring TranslationMemoryImpl::GetDatabaseDir()
     data += wxFILE_SEP_PATH;
     data += "TranslationMemory";
 
-#ifdef __WXMSW__
-    // At the moment, Lucene++ doesn't handle non-ASCII paths correctly,
-    // it tries to convert them to UTF-8, which of course has no chance
-    // of working on Windows. This workarounds the problem until a proper
-    // solution: using short filenames, eliminates non-ANSI chars. 
-    data = wxFileName(data).GetShortPath();
-#endif
-
     return data.ToStdWstring();
 }
 
