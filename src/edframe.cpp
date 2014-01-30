@@ -184,9 +184,9 @@ bool g_focusToText = false;
 
     f->Show(true);
 
-    if (g_focusToText)
+    if (g_focusToText && f->m_textTrans)
         f->m_textTrans->SetFocus();
-    else
+    else if (f->m_list)
         f->m_list->SetFocus();
 
     return f;
@@ -1015,7 +1015,7 @@ static void ShowSpellcheckerHelp()
 
 void PoeditFrame::InitSpellchecker()
 {
-    if (!m_catalog)
+    if (!m_catalog || !m_textTrans)
         return;
 
 #ifdef USE_SPELLCHECKING
@@ -2181,14 +2181,20 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
     wxWindowUpdateLocker no_updates(this);
 #endif
 
-    EnsureContentView(Content::PO);
-
     delete m_catalog;
     m_catalog = cat;
 
-    // this must be done as soon as possible, otherwise the list would be
-    // confused
-    m_list->CatalogChanged(m_catalog);
+    if (m_catalog->empty())
+    {
+        EnsureContentView(Content::Empty_PO);
+    }
+    else
+    {
+        EnsureContentView(Content::PO);
+        // this must be done as soon as possible, otherwise the list would be
+        // confused
+        m_list->CatalogChanged(m_catalog);
+    }
 
     m_fileName = cat->GetFileName();
     m_fileExistsOnDisk = true;
