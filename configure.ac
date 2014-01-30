@@ -155,7 +155,7 @@ AX_BERKELEY_DB_CXX(4.7,
   AC_MSG_ERROR([cannot find required Berkeley DB >= 4.7])
 ])
 
-PKG_CHECK_MODULES([LUCENE], [liblucene++],
+PKG_CHECK_MODULES([LUCENE], [liblucene++ >= 3.0.5],
         [
             CXXFLAGS="$CXXFLAGS $LUCENE_CFLAGS"
             AC_SUBST(LUCENE_LIBS)
