@@ -65,7 +65,7 @@
 
 #include <map>
 #include <algorithm>
-#include <thread>
+#include <future>
 
 #include "catalog.h"
 #include "edapp.h"
@@ -2602,21 +2602,27 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
 {
     wxBusyCursor bcur;
 
-    std::unique_ptr<std::thread> tmUpdateThread;
+    std::future<void> tmUpdateThread;
     if (wxConfig::Get()->ReadBool("use_tm", true))
     {
-        tmUpdateThread.reset(new std::thread([=](){
+        tmUpdateThread = std::async(std::launch::async, [=](){
             try
             {
                 auto tm = TranslationMemory::Get().CreateWriter();
                 tm->Insert(*m_catalog);
                 tm->Commit();
+
+                wxThread::Sleep(2000);
             }
             catch ( const Exception& e )
             {
                 wxLogWarning(_("Failed to update translation memory: %s"), e.what());
             }
-        }));
+            catch ( ... )
+            {
+                wxLogWarning(_("Failed to update translation memory: %s"), "unknown error");
+            }
+        });
     }
 
     Catalog::HeaderData& dt = m_catalog->Header();
@@ -2628,8 +2634,6 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     if ( !m_catalog->Save(catalog, true, validation_errors, mo_compilation_status) )
     {
         completionHandler(false);
-        if (tmUpdateThread)
-            tmUpdateThread->join();
         return;
     }
 
@@ -2662,9 +2666,6 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     {
         completionHandler(true);
     }
-
-    if (tmUpdateThread)
-        tmUpdateThread->join();
 }
 
 
