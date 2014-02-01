@@ -2748,11 +2748,44 @@ void PoeditFrame::OnAutoTranslate(wxCommandEvent& event)
 
 void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
 {
-    AutoTranslateCatalog();
+    int matches = 0;
+    if (!AutoTranslateCatalog(&matches))
+        return;
+
+    wxString msg, details;
+
+    if (matches)
+    {
+        msg = wxString::Format(wxPLURAL("%d entry was filled from the translation memory.",
+                                        "%d entries were filled from the translation memory.",
+                                        matches), matches);
+        details = _("The translations were marked as fuzzy, because they may be inaccurate. You should review them for correctness.");
+    }
+    else
+    {
+        msg = _("No entries could be filled from the translation memory.");
+        details = _("The TM doesn’t contain any strings similar to the content of this file. "
+                    "It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually.");
+    }
+
+    wxWindowPtr<wxMessageDialog> dlg(
+        new wxMessageDialog
+            (
+                this,
+                msg,
+                _("Filling missing translations from TM..."),
+                wxOK | wxICON_INFORMATION
+            )
+    );
+    dlg->SetExtendedMessage(details);
+    dlg->ShowWindowModalThenDo([dlg](int){});
 }
 
-bool PoeditFrame::AutoTranslateCatalog()
+bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
 {
+    if (matchesCount)
+        *matchesCount = 0;
+
     if (!wxConfig::Get()->ReadBool("use_tm", true))
         return false;
 
@@ -2765,7 +2798,9 @@ bool PoeditFrame::AutoTranslateCatalog()
     int matches = 0;
     wxString msg;
 
-    ProgressInfo progress(this, _("Translating using TM..."));
+    // TODO: make this window-modal
+    ProgressInfo progress(this, _("Translating"));
+    progress.UpdateMessage(_("Filling missing translations from TM..."));
     progress.SetGaugeMax(cnt);
     for (int i = 0; i < cnt; i++)
     {
@@ -2794,6 +2829,9 @@ bool PoeditFrame::AutoTranslateCatalog()
             }
         }
     }
+
+    if (matchesCount)
+        *matchesCount = matches;
 
     RefreshControls();
 
@@ -2845,9 +2883,9 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                                       menu,
                                       ID_POPUP_DUMMY+1,
                                       #ifdef __WXMSW__
-                                      _("Automatic translations:")
+                                      _("Translation suggestions:")
                                       #else
-                                      _("Automatic Translations:")
+                                      _("Translation Suggestions:")
                                       #endif
                                   );
             it2->SetFont(m_boldGuiFont);
@@ -2857,9 +2895,9 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                   (
                       ID_POPUP_DUMMY+1,
                       #ifdef __WXMSW__
-                      _("Automatic translations:")
+                      _("Translation suggestions:")
                       #else
-                      _("Automatic Translations:")
+                      _("Translation Suggestions:")
                       #endif
                   );
 #endif

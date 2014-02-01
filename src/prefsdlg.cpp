@@ -30,6 +30,7 @@
 #include <wx/button.h>
 #include <wx/config.h>
 #include <wx/choicdlg.h>
+#include <wx/hyperlink.h>
 #include <wx/spinctrl.h>
 #include <wx/notebook.h>
 #include <wx/fontutil.h>
@@ -100,13 +101,23 @@ public:
 
         m_useTMWhenUpdating = new wxCheckBox(this, wxID_ANY, _("Consult TM when updating from sources"));
         sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().Border(wxALL));
-        auto explain = new wxStaticText(this, wxID_ANY, _("If enabled, Poedit will try to fill in missing translations."));
-        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT, 25));
+
+        auto explainTxt = _("If enabled, Poedit will try to fill new entries in using your previous\n"
+                            "translations stored in the translation memory. If the TM is\n"
+                            "near-empty, it will not be very effective. The more translations\n"
+                            "you edit and the larger the TM grows, the better it gets.");
+        auto explain = new wxStaticText(this, wxID_ANY, explainTxt);
+        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
+
+        auto learnMore = new wxHyperlinkCtrl(this, wxID_ANY, _("Learn more"), "http://www.poedit.net/trac/wiki/Doc/TranslationMemory");
+        sizer->AddSpacer(5);
+        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, 25));
 
 #ifdef __WXOSX__
         m_stats->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         import->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         explain->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        learnMore->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #else
         explain->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT));
 #endif

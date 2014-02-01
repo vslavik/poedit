@@ -250,7 +250,7 @@ private:
 
         void OnAutoTranslate(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
-        bool AutoTranslateCatalog();
+        bool AutoTranslateCatalog(int *matchesCount = nullptr);
 
         void OnPurgeDeleted(wxCommandEvent& event);
 
