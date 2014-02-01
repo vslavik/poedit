@@ -62,7 +62,7 @@ class FindFrame : public wxDialog
          */
         void Reset(Catalog *c);
 
-        void FocusSearchField() { m_textField->SetFocus(); }
+        void FocusSearchField();
 
         void FindPrev();
         void FindNext();

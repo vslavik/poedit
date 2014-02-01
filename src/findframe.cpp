@@ -150,6 +150,13 @@ void FindFrame::Reset(Catalog *c)
 }
 
 
+void FindFrame::FocusSearchField()
+{
+    m_textField->SetFocus();
+    m_textField->SelectAll();
+}
+
+
 void FindFrame::OnClose(wxCommandEvent&)
 {
     Destroy();
