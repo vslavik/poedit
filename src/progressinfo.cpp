@@ -89,7 +89,9 @@ void ProgressInfo::ResetGauge(int value)
 
 void ProgressInfo::UpdateMessage(const wxString& text)
 {
-    XRCCTRL(*m_dlg, "info", wxStaticText)->SetLabel(text);
+    wxStaticText *txt = XRCCTRL(*m_dlg, "info", wxStaticText);
+    txt->SetLabel(text);
+    txt->Refresh();
     m_dlg->Refresh();
     wxYield();
 }
