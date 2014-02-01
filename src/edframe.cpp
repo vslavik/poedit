@@ -1648,7 +1648,20 @@ void PoeditFrame::ReportValidationErrors(int errors,
             _("Validation results"),
             wxOK | wxICON_INFORMATION
         ));
-        dlg->SetExtendedMessage(_("The translation is ready for use."));
+
+        wxString details;
+        int unfinished = 0;
+        m_catalog->GetStatistics(nullptr, nullptr, nullptr, nullptr, &unfinished);
+        if (unfinished)
+        {
+            details = wxString::Format(wxPLURAL("The translation is ready for use, but %d entry is not translated yet.",
+                                                "The translation is ready for use, but %d entries are not translated yet.", unfinished), unfinished);
+        }
+        else
+        {
+            details = _("The translation is ready for use.");
+        }
+        dlg->SetExtendedMessage(details);
     }
 
     dlg->ShowWindowModalThenDo([dlg,completionHandler](int){

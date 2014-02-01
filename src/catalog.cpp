@@ -1860,17 +1860,20 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
 
         if ((*this)[i].IsFuzzy())
         {
-            (*fuzzy)++;
+            if (fuzzy)
+                (*fuzzy)++;
             ok = false;
         }
         if ((*this)[i].GetValidity() == CatalogItem::Val_Invalid)
         {
-            (*badtokens)++;
+            if (badtokens)
+                (*badtokens)++;
             ok = false;
         }
         if (!(*this)[i].IsTranslated())
         {
-            (*untranslated)++;
+            if (untranslated)
+                (*untranslated)++;
             ok = false;
         }
 
