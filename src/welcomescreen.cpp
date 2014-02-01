@@ -54,7 +54,7 @@ class ActionButton : public wxButton
 {
 public:
     ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note)
-        : wxButton(parent, winid, "", wxDefaultPosition, wxSize(450, 50))
+        : wxButton(parent, winid, "", wxDefaultPosition, wxSize(500, 50))
     {
         NSButton *btn = (NSButton*)GetHandle();
 
@@ -81,7 +81,7 @@ class ActionButton : public wxButton
 {
 public:
     ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note)
-        : wxButton(parent, winid, label, wxDefaultPosition, wxSize(450, 50), wxBU_LEFT)
+        : wxButton(parent, winid, label, wxDefaultPosition, wxSize(500, 50), wxBU_LEFT)
     {
         SetLabelMarkup(wxString::Format("<b>%s</b>\n<small>%s</small>", label, note));
     }
