@@ -53,8 +53,9 @@ class FindFrame : public wxDialog
                   wxTextCtrl *textCtrlComments, wxTextCtrl *textCtrlAutoComments);
         ~FindFrame();
 
-        /// Returns singleton instance if it exists
-        static FindFrame *Get() { return ms_singleton; }
+        /// Returns singleton instance if it exists. Updates the catalog
+        /// if it differs from the current one.
+        static FindFrame *Get(PoeditListCtrl *list, Catalog *forCatalog);
 
         /** Resets the search to starting position and changes
             the catalog in use. Called by EditorFrame when the user

@@ -133,6 +133,18 @@ FindFrame::~FindFrame()
                 XRCCTRL(*this, "whole_words", wxCheckBox)->GetValue());
 }
 
+FindFrame *FindFrame::Get(PoeditListCtrl *list, Catalog *forCatalog)
+{
+    if (!ms_singleton)
+        return nullptr;
+    if (ms_singleton->m_catalog != forCatalog)
+    {
+        ms_singleton->m_listCtrl = list;
+        ms_singleton->Reset(forCatalog);
+    }
+    return ms_singleton;
+}
+
 
 void FindFrame::Reset(Catalog *c)
 {
