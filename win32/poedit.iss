@@ -111,14 +111,14 @@ Type: filesandordirs; Name: "{app}\share"
 
 [Registry]
 Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
-Root: HKCR; SubKey: GettextFile; ValueType: string; ValueData: Gettext message catalog; Flags: uninsdeletekey noerror
+Root: HKCR; SubKey: GettextFile; ValueType: string; ValueData: PO translation file; Flags: uninsdeletekey noerror
 Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
 Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\Resources\poedit-translation-generic.ico; Flags: uninsdeletekey noerror
 Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty dontcreatekey
 Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcreatekey
 
 [Icons]
-Name: {commonprograms}\Poedit; Filename: {app}\Poedit.exe; WorkingDir: {app}; IconIndex: 0; Comment: Translate applications and other message catalogs.
+Name: {commonprograms}\Poedit; Filename: {app}\Poedit.exe; WorkingDir: {app}; IconIndex: 0; Comment: Translations editor.
 
 [Run]
 Filename: {app}\Poedit.exe; WorkingDir: {app}; Description: Open Poedit after installation; Flags: postinstall nowait skipifsilent runasoriginaluser
