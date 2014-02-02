@@ -2624,8 +2624,6 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
                 auto tm = TranslationMemory::Get().CreateWriter();
                 tm->Insert(*m_catalog);
                 tm->Commit();
-
-                wxThread::Sleep(2000);
             }
             catch ( const Exception& e )
             {
