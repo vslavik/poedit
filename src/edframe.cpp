@@ -581,15 +581,7 @@ PoeditFrame::PoeditFrame() :
     m_contentWrappingSizer->Add(m_attentionBar, wxSizerFlags().Expand());
 
     SetAccelerators();
-
-    int restore_flags = WinState_Size;
-    // NB: if this is the only Poedit frame opened, place it at remembered
-    //     position, but don't do that if there already are other frames,
-    //     because they would overlap and nobody could recognize that there are
-    //     many of them
-    if (ms_instances.GetCount() == 0)
-        restore_flags |= WinState_Pos;
-    RestoreWindowState(this, wxSize(980, 700), restore_flags);
+    RestoreWindowState(this, wxSize(980, 700), WinState_Size | WinState_Pos);
 
     UpdateMenu();
 

@@ -176,10 +176,34 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
 #if defined(__WXMSW__) || defined(__WXOSX__)
     if ( flags & WinState_Pos )
     {
-        int posx = (int)cfg->Read(path + "x", -1);
-        int posy = (int)cfg->Read(path + "y", -1);
-        if ( posx != -1 || posy != -1 )
-            win->Move(posx, posy);
+        wxPoint pos;
+        pos.x = (int)cfg->Read(path + "x", -1);
+        pos.y = (int)cfg->Read(path + "y", -1);
+        if ( pos.x != -1 || pos.y != -1 )
+        {
+            // NB: if this is the only Poedit frame opened, place it at remembered
+            //     position, but don't do that if there already are other frames,
+            //     because they would overlap and nobody could recognize that there are
+            //     many of them
+            for (;;)
+            {
+                bool occupied = false;
+                for (auto& w : wxTopLevelWindows)
+                {
+                    wxPrintf("win(%p) @ %d,%d\n" ,w, w->GetPosition().x, w->GetPosition().y);
+                    if (w != win && w->GetPosition() == pos)
+                    {
+                        occupied = true;
+                        break;
+                    }
+                }
+                if (!occupied)
+                    break;
+                pos += wxPoint(20,20);
+            }
+
+            win->Move(pos);
+        }
     }
 
     // If the window is completely out of all screens (e.g. because
