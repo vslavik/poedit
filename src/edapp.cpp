@@ -259,6 +259,10 @@ bool PoeditApp::OnInit()
 
 int PoeditApp::OnExit()
 {
+    // Make sure PoeditFrame instances schedules for deletion are deleted
+    // early -- e.g. before wxConfig is destroyed, so they can save changes
+    DeletePendingObjects();
+
     TranslationMemory::CleanUp();
 
 #ifdef USE_SPARKLE
