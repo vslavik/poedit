@@ -676,6 +676,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B24ACD7B16F6201F00399242 /* Build configuration list for PBXNativeTarget "Poedit" */;
 			buildPhases = (
+				B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */,
 				B24ACD5716F6201F00399242 /* Sources */,
 				B24ACD5816F6201F00399242 /* Frameworks */,
 				B24ACD5916F6201F00399242 /* Resources */,
@@ -685,7 +686,6 @@
 				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
 				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */,
 				B2E83707170C96DB00F31559 /* Install translations */,
-				B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */,
 			);
 			buildRules = (
 			);
@@ -831,7 +831,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# The previous step modified bundled frameworks by removing headers, so this is the only place where they\n# can be signed (even if we wanted to modify their projects):\n\nif [ -n \"${CODE_SIGN_IDENTITY}\" ]; then\n    codesign -s \"${CODE_SIGN_IDENTITY}\" \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/Resources/finish_installation.app\n    codesign -s \"${CODE_SIGN_IDENTITY}\" \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/*.framework\nfi";
+			shellScript = "# The previous step modified bundled frameworks by removing headers, so this is the only place where they\n# can be signed (even if we wanted to modify their projects):\n\nif [ -n \"${CODE_SIGN_IDENTITY}\" ]; then\n    codesign -s \"${CODE_SIGN_IDENTITY}\" --force \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/Resources/finish_installation.app\n    codesign -s \"${CODE_SIGN_IDENTITY}\" --force \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/*.framework\nfi";
 		};
 		B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
