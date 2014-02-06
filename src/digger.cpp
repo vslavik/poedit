@@ -187,6 +187,12 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
         }
     }
 
+    // Sort the filenames in some well-defined order. This is because directory
+    // traversal has, generally speaking, undefined order, and the order differs
+    // between filesystems. Finally, the order is reflected in the created PO
+    // files and it is much better for diffs if it remains consistent.
+    files.Sort();
+
     size_t filescnt = 0;
     for (i = 0; i < pdb.GetCount(); i++)
     {
