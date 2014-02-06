@@ -473,15 +473,15 @@ bool PoeditApp::OnExceptionInMainLoop()
     }
     catch ( Exception& e )
     {
-        wxLogError("%s", e.what());
+        wxLogError(_("Unhandled exception occurred: %s"), e.what());
     }
     catch ( std::exception& e )
     {
-        wxLogError("%s", e.what());
+        wxLogError(_("Unhandled exception occurred: %s"), e.what());
     }
     catch ( ... )
     {
-        throw;
+        wxLogError(_("Unhandled exception occurred."));
     }
 
     return true;
