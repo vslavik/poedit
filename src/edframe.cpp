@@ -1918,7 +1918,9 @@ static wxString TransformNewval(const wxString& val, bool displayQuotes)
         if (*i == '\\')
         {
             ++i;
-            if (i != newval.end() && IsAnyQuote(*i))
+            if (i == newval.end())
+                break;
+            if (IsAnyQuote(*i))
                 *i = '"';
         }
     }
