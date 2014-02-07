@@ -153,10 +153,21 @@ IndexReaderPtr TranslationMemoryImpl::Reader()
 namespace
 {
 
-void PerformSearch(IndexSearcherPtr searcher,
-                   const std::wstring& lang,
-                   QueryPtr query,
-                   TranslationMemory::Results& results, int maxHits)
+// Normalized score that must be met for a suggestion to be shown. This is
+// an empirical guess of what constitues good matches.
+static const double QUALITY_THRESHOLD = 0.6;
+
+// Maximum allowed difference in phrase length, in #terms.
+static const int MAX_ALLOWED_LENGTH_DIFFERENCE = 2;
+
+
+template<typename T>
+void PerformSearchWithBlock(IndexSearcherPtr searcher,
+                            const std::wstring& lang,
+                            QueryPtr query,
+                            int maxHits,
+                            double threshold,
+                            T callback)
 {
     // TODO: use short form of the language too (cs vs cs_CZ), boost the
     //       full form in the query
@@ -166,13 +177,33 @@ void PerformSearch(IndexSearcherPtr searcher,
     fullQuery->add(query, BooleanClause::MUST);
 
     auto hits = searcher->search(fullQuery, maxHits);
+
     for (int i = 0; i < hits->scoreDocs.size(); i++)
     {
-        DocumentPtr doc = searcher->doc(hits->scoreDocs[i]->doc);
-        auto t = doc->get(L"trans");
-        if (std::find(results.begin(), results.end(), t) == results.end())
-            results.push_back(t);
+        const auto& scoreDoc = hits->scoreDocs[i];
+        auto score = scoreDoc->score / hits->maxScore;
+        if (score < threshold)
+            continue;
+        callback(searcher->doc(scoreDoc->doc));
     }
+}
+
+void PerformSearch(IndexSearcherPtr searcher,
+                   const std::wstring& lang,
+                   QueryPtr query,
+                   TranslationMemory::Results& results, int maxHits,
+                   double threshold = 1.0)
+{
+    PerformSearchWithBlock
+    (
+        searcher, lang, query, maxHits, threshold,
+        [&results](DocumentPtr doc)
+        {
+            auto t = doc->get(L"trans");
+            if (std::find(results.begin(), results.end(), t) == results.end())
+                results.push_back(t);
+        }
+    );
 }
 
 } // anonymous namespace
@@ -189,13 +220,15 @@ bool TranslationMemoryImpl::Search(const std::wstring& lang,
 
         results.clear();
 
-        Lucene::String fieldName(L"source");
+        const Lucene::String fieldName(L"source");
         auto boolQ = newLucene<BooleanQuery>();
         auto phraseQ = newLucene<PhraseQuery>();
 
         auto stream = m_analyzer->tokenStream(fieldName, newLucene<StringReader>(source));
+        int sourceTokensCount = 0;
         while (stream->incrementToken())
         {
+            sourceTokensCount++;
             auto word = stream->getAttribute<TermAttribute>()->term();
             auto term = newLucene<Term>(fieldName, word);
             boolQ->add(newLucene<TermQuery>(term), BooleanClause::SHOULD);
@@ -204,10 +237,39 @@ bool TranslationMemoryImpl::Search(const std::wstring& lang,
 
         auto searcher = newLucene<IndexSearcher>(Reader());
 
+        // Try exact phrase first:
         PerformSearch(searcher, lang, phraseQ, results, maxHits);
-        maxHits -= results.size();
-        if (maxHits > 0)
-            PerformSearch(searcher, lang, boolQ, results, maxHits);
+        if (!results.empty())
+            return true;
+
+        // Then, if no matches were found, permit being a bit sloppy:
+        phraseQ->setSlop(1);
+        PerformSearch(searcher, lang, phraseQ, results, maxHits);
+        if (!results.empty())
+            return true;
+
+        // As the last resort, try terms search. This will almost certainly
+        // produce low-quality results, but hopefully better than nothing.
+        boolQ->setMinimumNumberShouldMatch(std::max(1, boolQ->getClauses().size() - MAX_ALLOWED_LENGTH_DIFFERENCE));
+        PerformSearchWithBlock
+        (
+            searcher, lang, boolQ, maxHits, QUALITY_THRESHOLD,
+            [=,&results](DocumentPtr doc)
+            {
+                auto s = doc->get(fieldName);
+                auto t = doc->get(L"trans");
+                auto stream2 = m_analyzer->tokenStream(fieldName, newLucene<StringReader>(s));
+                int tokensCount2 = 0;
+                while (stream2->incrementToken())
+                    tokensCount2++;
+
+                if (std::abs(tokensCount2 - sourceTokensCount) <= MAX_ALLOWED_LENGTH_DIFFERENCE &&
+                    std::find(results.begin(), results.end(), t) == results.end())
+                {
+                    results.push_back(t);
+                }
+            }
+        );
 
         return !results.empty();
     }
