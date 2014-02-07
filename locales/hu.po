@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
 "POT-Creation-Date: 2014-02-02 15:06+0100\n"
-"PO-Revision-Date: 2013-12-06 18:53+0100\n"
+"PO-Revision-Date: 2014-02-03 19:25+0100\n"
 "Last-Translator: Petrovics Sándor <petrovics-sandor@freemail.hu>\n"
 "Language-Team: Hungarian <poedit@googlegroups.com>\n"
 "Language: hu\n"
@@ -15,13 +15,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.1\n"
+"X-Generator: Poedit 1.6.3\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
 #: ../src/edframe.cpp:3013
-#, fuzzy, c-format
+#, c-format
 msgid "    “%s”"
-msgstr " “%s”"
+msgstr "    “%s”"
 
 #: ../src/edframe.cpp:2619
 #, c-format
@@ -43,11 +43,11 @@ msgid " Version "
 msgstr " Verzió "
 
 #: ../src/edframe.cpp:2863
-#, fuzzy, c-format
+#, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "Nem sikerült frissíteni a fordítási memóriát: %s"
-msgstr[1] "Nem sikerült frissíteni a fordítási memóriát: %s"
+msgstr[0] "%d bejegyzés a fordítási memóriából lett lefordítva."
+msgstr[1] "%d bejegyzés a fordítási memóriából lett lefordítva."
 
 #: ../src/edframe.cpp:1710
 #, c-format
@@ -343,7 +343,7 @@ msgstr "Egy elem a kulcsszavak listájában:"
 
 #: ../src/edframe.cpp:1435
 msgid "Analyzing WordPress code..."
-msgstr ""
+msgstr "WordPress kód elemzése..."
 
 #: ../src/export_html.cpp:191
 msgid "Automatic translation"
@@ -367,7 +367,7 @@ msgstr "Alap útvonal:"
 
 #: ../src/aboutbox.cpp:119
 msgid "Based on the open source version →"
-msgstr ""
+msgstr "A nyílt forráskódú változatra támaszkodva →"
 
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
@@ -564,9 +564,9 @@ msgid "Correct Spelling Automatically"
 msgstr "Automatikus helyesírás-javítás"
 
 #: ../src/wordpress.cpp:226
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't detect POs location for \"%s\"."
-msgstr "A \"%s\" bővítmény fordítási tartománya nem észlelhető."
+msgstr "A \"%s\" bővítményhez tartozó PO tárhelye nem észlelhető."
 
 #: ../src/wordpress.cpp:374
 #, c-format
@@ -584,12 +584,12 @@ msgid "Couldn't save file %s."
 msgstr "A(z) %s fájl mentése nem sikerült."
 
 #: ../src/welcomescreen.cpp:233
-#, fuzzy
 msgid ""
 "Create a new translation. Poedit will set everything up; you can focus on "
 "translating."
 msgstr ""
-"Új fordítás készítése.  A Poedit automatikusan elvégez minden beállítást."
+"Új fordítás készítése.  A Poedit automatikusan elvégez minden beállítást; "
+"így Ön a fordításra összpontosíthat."
 
 #: ../src/welcomescreen.cpp:226
 msgid "Create new translation"
@@ -842,19 +842,16 @@ msgstr ""
 "Kérem mentse el a fájlt más néven."
 
 #: ../src/resources/menus.xrc:142
-#, fuzzy
 msgid "Fill Missing Translations from &TM"
-msgstr "Keresés a fordításokban"
+msgstr "Hiányzó fordítás lefordítása &TM-ből"
 
 #: ../src/resources/menus.xrc:141
-#, fuzzy
 msgid "Fill missing translations from &TM"
-msgstr "Keresés a fordításokban"
+msgstr "Hiányzó fordítás lefordítása &TM-ből"
 
 #: ../src/edframe.cpp:2880 ../src/edframe.cpp:2907
-#, fuzzy
 msgid "Filling missing translations from TM..."
-msgstr "Keresés a fordításokban"
+msgstr "Hiányzó fordítás lefordítása TM-ből..."
 
 #: ../src/prefsdlg.cpp:208 ../src/tm/tm_migrate.cpp:225
 msgid "Finalizing..."
@@ -885,9 +882,8 @@ msgid "Find in original strings"
 msgstr "Keresés az eredeti szövegekben"
 
 #: ../src/resources/find.xrc:64
-#, fuzzy
 msgid "Find in translations"
-msgstr "Fordítás szerkesztése"
+msgstr "Keresés a fordításban"
 
 #: ../src/resources/menus.xrc:101
 msgid "Find next"
@@ -993,6 +989,11 @@ msgid ""
 "near-empty, it will not be very effective. The more translations\n"
 "you edit and the larger the TM grows, the better it gets."
 msgstr ""
+"Engedélyezése esetén Poedit megpróbálja kitölteni az új bejegyzéseket a\n"
+"korábbi, a fordítási memóriában tárolt fordításokat felhasználva.  Ha a FM\n"
+"majdnem üres, akkor ez nem lesz túl hatékony. A fordítások számának "
+"növelésével,\n"
+"a FM is növeli és így egyre nagyobb segítség lesz az Ön számára."
 
 #: ../src/edframe.cpp:2819
 msgid ""
@@ -1022,9 +1023,8 @@ msgid "Invalid file"
 msgstr "Érvénytelen fájl"
 
 #: ../src/edapp.cpp:918
-#, fuzzy
 msgid "Invalid license data."
-msgstr "Érvénytelen fájl"
+msgstr "Érvénytelen licenc adatok"
 
 #: ../src/resources/prefs.xrc:351
 msgid "Invocation:"
@@ -1134,7 +1134,7 @@ msgstr "Eltérések összefésülése…"
 #: ../src/tm/tm_migrate.cpp:232
 #, c-format
 msgid "Migration exit status: %d"
-msgstr ""
+msgstr "Áttelepítés kimeneti állapota: %d"
 
 #: ../src/licensing.cpp:99
 msgid "Name"
@@ -1192,7 +1192,7 @@ msgstr "Új szövegek"
 
 #: ../src/edframe.cpp:2870
 msgid "No entries could be filled from the translation memory."
-msgstr ""
+msgstr "Nem található megfelelő bejegyzés a fordítási memóriában."
 
 #: ../src/digger.cpp:186
 msgid "No files found in: "
@@ -1726,6 +1726,9 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
+"A FM nem tartalmaz a fájl tartalmat hasonló karakterláncokat. A félautomata "
+"fordítás csak azután lesz hatékony miután Poedit eleget tanult a Ön által "
+"manuálisan lefordított fájlokból."
 
 #: ../src/catalog.cpp:1529
 #, c-format
@@ -1750,12 +1753,12 @@ msgstr ""
 "A fájl lehet hogy sérült vagy olyan formátumú melyet a Poedit nem ismer fel."
 
 #: ../src/edframe.cpp:1728
-#, fuzzy
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
-"A fájl mentése sikerült, de nem lehet MO formátumúra fordítani és használni."
+"A fájl biztonságosan el lett mentve, de lehetséges, hogy nem fog megfelelően "
+"működni."
 
 #: ../src/edframe.cpp:1731
 msgid ""
@@ -1766,7 +1769,7 @@ msgstr ""
 
 #: ../src/edframe.cpp:1725
 msgid "The file was saved safely."
-msgstr ""
+msgstr "A fájl biztonságosan el lett mentve"
 
 #: ../src/edapp.cpp:919
 #, c-format
@@ -1776,6 +1779,10 @@ msgid ""
 "\n"
 "(%s)"
 msgstr ""
+"A hivatkozás nem tartalmaz érvényes PoEdit licencet. Próbálja beírni kézzel, "
+"vagy lépjen kapcsolatba az ügyfélszolgálattal help@poedit.net címen.\n"
+"\n"
+"(%s)"
 
 #: ../src/licensing.cpp:109
 msgid ""
@@ -1793,12 +1800,12 @@ msgstr ""
 "A legegyszerűbb módja a katalógus kitöltésének, ha frissíti egy POT fájlból:"
 
 #: ../src/edframe.cpp:1754
-#, fuzzy, c-format
+#, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "A fordítás használatra kész."
-msgstr[1] "A fordítás használatra kész."
+msgstr[0] "A fordítás használatra kész, de %d bejegyzés még nincs lefordítva."
+msgstr[1] "A fordítás használatra kész, de %d bejegyzés még nincs lefordítva."
 
 #: ../src/edframe.cpp:1759
 msgid "The translation is ready for use."
@@ -1809,6 +1816,8 @@ msgid ""
 "The translations were marked as fuzzy, because they may be inaccurate. You "
 "should review them for correctness."
 msgstr ""
+"A fordítások bizonytalannak lettek jelölve, mert lehet, hogy pontatlanok. Át "
+"kellene nézni ezeket, a pontosításuk véget."
 
 #: ../src/welcomescreen.cpp:252
 msgid "There are no translations. That’s unusual."
@@ -1942,7 +1951,6 @@ msgid "Translated %u strings"
 msgstr "%u szöveg lefordítva"
 
 #: ../src/edframe.cpp:2906
-#, fuzzy
 msgid "Translating"
 msgstr "Fordítás"
 
@@ -1964,9 +1972,8 @@ msgid "Translation Memory"
 msgstr "Fordítási memória"
 
 #: ../src/edframe.cpp:2992 ../src/edframe.cpp:3004
-#, fuzzy
 msgid "Translation Suggestions:"
-msgstr "Fordítás tulajdonságai"
+msgstr "Fordítási javaslatok:"
 
 #: ../src/resources/menus.xrc:81
 msgid "Translation is &fuzzy"
@@ -1977,14 +1984,12 @@ msgid "Translation memory migration failed."
 msgstr "Fordítási memória áttelepítése sikertelen."
 
 #: ../src/resources/properties.xrc:139
-#, fuzzy
 msgid "Translation properties"
-msgstr "Fordítási memória"
+msgstr "Fordítás tulajdonságai"
 
 #: ../src/edframe.cpp:2990 ../src/edframe.cpp:3002
-#, fuzzy
 msgid "Translation suggestions:"
-msgstr "Fordítás tulajdonságai"
+msgstr "Fordítási javaslatok:"
 
 #: ../src/edlistctrl.cpp:389
 #, c-format
@@ -2150,9 +2155,8 @@ msgid "Windows"
 msgstr "Windows"
 
 #: ../src/edframe.cpp:1434
-#, fuzzy
 msgid "WordPress"
-msgstr "WordPress hiba"
+msgstr "WordPress"
 
 #: ../src/wordpress.cpp:522
 msgid "WordPress Errors Log"
@@ -2213,14 +2217,17 @@ msgid "Your name:"
 msgstr "Neve:"
 
 #: ../src/tm/tm_migrate.cpp:298
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your translation memory data couldn't be migrated. The error was:\n"
 "\n"
 "%s\n"
 "Please email help@poedit.net and we’ll get it fixed."
 msgstr ""
-"Valami hiba történt, és a fordítási memória adatai nem lettek áttelepítve. "
+"A Ön fordítási memóriájának adatai nem lettek áttelepítve. A hiba a "
+"következő:\n"
+"\n"
+"%s\n"
 "Kérjük, írjon help@poedit.net e-mail címre, és mi ki fogjuk javítani."
 
 #: ../src/licensing.cpp:187
