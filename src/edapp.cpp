@@ -251,6 +251,8 @@ bool PoeditApp::OnInit()
     }
 
     win_sparkle_set_appcast_url(appcast);
+    win_sparkle_set_can_shutdown_callback(&PoeditApp::WinSparkle_CanShutdown);
+    win_sparkle_set_shutdown_request_callback(&PoeditApp::WinSparkle_Shutdown);
     win_sparkle_init();
 #endif
 
@@ -790,6 +792,17 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 void PoeditApp::OnWinsparkleCheck(wxCommandEvent& event)
 {
     win_sparkle_check_update_with_ui();
+}
+
+// WinSparkle callbacks:
+int PoeditApp::WinSparkle_CanShutdown()
+{
+    return !PoeditFrame::AnyWindowIsModified();
+}
+
+void PoeditApp::WinSparkle_Shutdown()
+{
+    wxGetApp().OnQuit(wxCommandEvent());
 }
 #endif // __WXMSW__
 

@@ -97,6 +97,9 @@ class PoeditFrame : public wxFrame
         /// content, not having catalog loaded); NULL otherwise.
         static PoeditFrame *UnusedActiveWindow();
 
+        /// Returns true if at least one one window has unsaved changes
+        static bool AnyWindowIsModified();
+
         ~PoeditFrame();
 
         /// Reads catalog, refreshes controls, takes ownership of catalog.

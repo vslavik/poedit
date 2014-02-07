@@ -100,8 +100,11 @@ class PoeditApp : public wxApp
         void OnPreferences(wxCommandEvent& event);
         void OnHelp(wxCommandEvent& event);
         void OnGettextManual(wxCommandEvent& event);
+
 #ifdef __WXMSW__
         void OnWinsparkleCheck(wxCommandEvent& event);
+        static int WinSparkle_CanShutdown();
+        static void WinSparkle_Shutdown();
 #endif
 
         DECLARE_EVENT_TABLE()

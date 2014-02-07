@@ -149,6 +149,17 @@ bool g_focusToText = false;
     return NULL;
 }
 
+/*static*/ bool PoeditFrame::AnyWindowIsModified()
+{
+    for (PoeditFramesList::const_iterator n = ms_instances.begin();
+         n != ms_instances.end(); ++n)
+    {
+        if ((*n)->IsModified())
+            return true;
+    }
+    return false;
+}
+
 /*static*/ PoeditFrame *PoeditFrame::Create(const wxString& filename)
 {
     PoeditFrame *f = PoeditFrame::Find(filename);
