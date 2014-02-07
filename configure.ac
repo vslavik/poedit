@@ -117,32 +117,50 @@ PKG_CHECK_MODULES([ICU], [icu-uc icu-i18n],
 
 
 if test "$USE_SPELLCHECKING" != "no" ; then
-    dnl we need GtkSpell and GTK+ 2.x for this, check if we're compatible
-    PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 gtk+-3.0],
+    dnl we need GtkSpell and GTK+ >= 2 for this, check if we're compatible
+    AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 3])
+    AC_TRY_COMPILE([#include <wx/defs.h>],
         [
-            AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 3])
+            #ifndef __WXGTK3__
+                #error "not GTK+ 3"
+            #endif
+        ],
+        [
+            AC_MSG_RESULT([yes])
+            gtkspell_packages="gtkspell3-3.0 gtk+-3.0"
+        ],
+        [
+            AC_MSG_RESULT([no])
+            AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 2])
             AC_TRY_COMPILE([#include <wx/defs.h>],
                 [
-                    #ifndef __WXGTK3__
-                        #error "not GTK+ 3"
+                    #ifndef __WXGTK20__
+                        #error "not GTK+ 2"
                     #endif
                 ],
                 [
                     AC_MSG_RESULT([yes])
-                    CXXFLAGS="$CXXFLAGS $GTKSPELL_CFLAGS"
-                    LIBS="$LIBS $GTKSPELL_LIBS"
-                    AC_DEFINE(USE_SPELLCHECKING)
+                    gtkspell_packages="gtkspell-2.0 gtk+-2.0"
                 ],
                 [
                     AC_MSG_RESULT([no])
                     USE_SPELLCHECKING="no"
-                    AC_MSG_WARN([disabling spellchecking because GTK+ 3 is required by it])
+                    AC_MSG_WARN([disabling spellchecking because GTK+ is required by it])
                 ])
-        ],
-        [
-            USE_SPELLCHECKING="no"
-            AC_MSG_WARN([disabling spellchecking because GtkSpell is missing])
         ])
+
+    if test "$USE_SPELLCHECKING" != "no" ; then
+        PKG_CHECK_MODULES([GTKSPELL], [$gtkspell_packages],
+            [
+                CXXFLAGS="$CXXFLAGS $GTKSPELL_CFLAGS"
+                LIBS="$LIBS $GTKSPELL_LIBS"
+                AC_DEFINE(USE_SPELLCHECKING)
+            ],
+            [
+                USE_SPELLCHECKING="no"
+                AC_MSG_WARN([disabling spellchecking because GtkSpell is missing])
+            ])
+    fi
 fi
 
 
