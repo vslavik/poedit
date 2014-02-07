@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
 "POT-Creation-Date: 2014-02-02 15:06+0100\n"
-"PO-Revision-Date: 2014-01-29 10:32+0800\n"
-"Last-Translator: Christopher Meng <trans@cicku.me>\n"
+"PO-Revision-Date: 2014-02-03 15:33+0800\n"
+"Last-Translator: Alan Luo <alan@alanluo.net>\n"
 "Language-Team: \n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -25,9 +25,9 @@ msgid "    “%s”"
 msgstr "    “%s”"
 
 #: ../src/edframe.cpp:2619
-#, c-format
+#, fuzzy, c-format
 msgid " (beta version expires %s)"
-msgstr ""
+msgstr "（测试版本将于 %s 到期）"
 
 #: ../src/edframe.cpp:2608
 msgid " (modified)"
@@ -44,10 +44,10 @@ msgid " Version "
 msgstr " 版本 "
 
 #: ../src/edframe.cpp:2863
-#, fuzzy, c-format
+#, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "更新翻译记忆库 %s 失败"
+msgstr[0] "%d 个条目已通过翻译记忆库填充。"
 
 #: ../src/edframe.cpp:1710
 #, c-format
@@ -59,19 +59,19 @@ msgstr[0] "在翻译中发现了 %d 个问题。"
 #, c-format
 msgid "%i %% translated, %i string"
 msgid_plural "%i %% translated, %i strings"
-msgstr[0] "%i%% 已翻译，%i 个字串"
+msgstr[0] "%i %% 已翻译，%i 个字串"
 
 #: ../src/edframe.cpp:2558
 #, c-format
 msgid "%i %% translated, %i string (%s)"
 msgid_plural "%i %% translated, %i strings (%s)"
-msgstr[0] "%i%% 已翻译，%i 个字串 (%s)"
+msgstr[0] "%i %% 已翻译，%i 个字串 (%s)"
 
 #: ../src/export_html.cpp:141
 #, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i%% 已翻译，%i 个字串 (%i 个模糊翻译，%i 个错误的标记，%i 个未翻译)"
+msgstr "%i %% 已翻译，%i 个字串 (%i 个模糊翻译，%i 个错误的标记，%i 个未翻译)"
 
 #: ../src/edframe.cpp:2543
 #, c-format
@@ -88,7 +88,7 @@ msgstr[0] "%i 个模糊翻译"
 #: ../src/catalog.cpp:131
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
-msgstr "%i 行在文件 '%s' 中未正确加载。"
+msgstr "%i 行在文件 '%s' 中未被正确加载。"
 
 #: ../src/edframe.cpp:2549
 #, c-format
@@ -103,7 +103,7 @@ msgstr "关于(&A)"
 
 #: ../src/resources/menus.xrc:264 ../src/resources/menus.xrc:329
 msgid "&About Poedit"
-msgstr "关于 Poedit(&A)"
+msgstr "关于 Poedit (&A)"
 
 #: ../src/edframe.cpp:3384
 msgid "&Bookmarks"
@@ -280,7 +280,7 @@ msgstr "(0 个新建，0 个已废弃)"
 
 #: ../src/welcomescreen.cpp:262
 msgid "(Learn more about GNU gettext)"
-msgstr "(了解更多关于GNU gettext)"
+msgstr "(了解更多关于 GNU gettext 的内容)"
 
 #: ../src/chooselang.cpp:62
 msgid "(Use default language)"
@@ -314,7 +314,7 @@ msgstr "致谢"
 
 #: ../src/resources/manager.xrc:79
 msgid "Add directory to the list"
-msgstr "添加目录到列表"
+msgstr "将目录添加到列表"
 
 #: ../src/propertiesdlg.cpp:65
 msgid "Additional keywords"
@@ -322,19 +322,19 @@ msgstr "额外的关键字"
 
 #: ../src/resources/prefs.xrc:110
 msgid "Always change focus to text input field"
-msgstr "总是将焦点更改到文本输入字段"
+msgstr "总是将焦点移动到文本输入字段"
 
 #: ../src/resources/prefs.xrc:393
 msgid "An item in input files list:"
-msgstr "在输入文件列表中的项:"
+msgstr "在输入文件列表中的项："
 
 #: ../src/resources/prefs.xrc:374
 msgid "An item in keywords list:"
-msgstr "在关键字列表中的项:"
+msgstr "在关键字列表中的项："
 
 #: ../src/edframe.cpp:1435
 msgid "Analyzing WordPress code..."
-msgstr ""
+msgstr "正在分析 WordPress 代码..."
 
 #: ../src/export_html.cpp:191
 msgid "Automatic translation"
@@ -358,7 +358,7 @@ msgstr "基础路径:"
 
 #: ../src/aboutbox.cpp:119
 msgid "Based on the open source version →"
-msgstr ""
+msgstr "基于开源版本 →"
 
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
@@ -366,16 +366,16 @@ msgstr "行为"
 
 #: ../src/edapp.cpp:230
 msgid "Beta expired"
-msgstr "Beta版到期"
+msgstr "Beta版本到期"
 
 #: ../src/catalog.cpp:681
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "已损坏的编目文件: 在没有 msgid_plural 的情况下使用了复数形式的 msgstr"
+msgstr "已损坏的编目文件：在没有 msgid_plural 的情况下使用了复数形式的 msgstr"
 
 #: ../src/catalog.cpp:636
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr "已损坏的编目文件: 和 msgid_plural 一起使用了单数形式的 msgstr"
+msgstr "已损坏的编目文件：和 msgid_plural 一起使用了单数形式的 msgstr"
 
 #: ../src/resources/manager.xrc:78
 msgid "Browse"
@@ -415,7 +415,7 @@ msgstr "不能创建临时目录。"
 #: ../src/gexecute.cpp:134
 #, c-format
 msgid "Cannot execute program: %s"
-msgstr "不能执行程序: %s"
+msgstr "不能执行程序： %s"
 
 #: ../src/edapp.cpp:877
 msgid "Capitalize"
@@ -447,15 +447,15 @@ msgstr "编目管理器(&M)"
 
 #: ../src/edapp.cpp:806
 msgid "Catalogs Manager"
-msgstr "目录管理"
+msgstr "编目管理器"
 
 #: ../src/resources/prefs.xrc:62
 msgid "Change UI language"
-msgstr "更改 UI 语言"
+msgstr "更改用户界面语言"
 
 #: ../src/export_html.cpp:126 ../src/resources/properties.xrc:115
 msgid "Charset:"
-msgstr "字符集:"
+msgstr "字符集："
 
 #: ../src/edapp.cpp:855
 msgid "Check Document Now"
@@ -467,7 +467,7 @@ msgstr "检查拼写和语法"
 
 #: ../src/edapp.cpp:857
 msgid "Check Spelling While Typing"
-msgstr "在打字时检查拼写"
+msgstr "在输入时检查拼写"
 
 #: ../src/edapp.cpp:811
 msgid "Check for Updates..."
@@ -512,20 +512,21 @@ msgstr "注释窗口可编辑"
 #: ../src/edframe.cpp:736 ../src/export_html.cpp:213
 #: ../src/resources/comment.xrc:10
 msgid "Comment:"
-msgstr "注释:"
+msgstr "注释："
 
 #: ../src/welcomescreen.cpp:285
+#, fuzzy
 msgid "Configure source code extraction in Properties."
-msgstr ""
+msgstr "配置源代码属性。"
 
 #: ../src/manager.cpp:420 ../src/manager.cpp:440
 msgid "Confirmation"
 msgstr "确认"
 
 #: ../src/wordpress.cpp:134
-#, c-format
+#, fuzzy, c-format
 msgid "Confused by ambiguous values of \"%s\" in %s."
-msgstr ""
+msgstr "对于“%s”和 %s 感到困惑。"
 
 #: ../src/wordpress.cpp:336
 msgid "Confused: multiple main plugin files."
@@ -533,38 +534,39 @@ msgstr "困惑：找到了多个主插件文件。"
 
 #: ../src/prefsdlg.cpp:102
 msgid "Consult TM when updating from sources"
-msgstr ""
+msgstr "从源代码更新时查阅翻译记忆库"
 
 #: ../src/edframe.cpp:2229
 msgid "Context:"
-msgstr "上下文:"
+msgstr "上下文："
 
 #: ../src/edframe.cpp:2958 ../src/resources/menus.xrc:77
 msgid "Copy from Source Text"
-msgstr "从源文文本中复制"
+msgstr "从源文本中复制"
 
 #: ../src/edframe.cpp:2956 ../src/resources/menus.xrc:76
 msgid "Copy from source text"
-msgstr "从源文文本中复制"
+msgstr "从源文本中复制"
 
 #: ../src/edapp.cpp:859
+#, fuzzy
 msgid "Correct Spelling Automatically"
-msgstr ""
+msgstr "自动纠正拼写错误"
 
 #: ../src/wordpress.cpp:226
-#, c-format
+#, fuzzy, c-format
 msgid "Couldn't detect POs location for \"%s\"."
-msgstr ""
+msgstr "无法在“%s”检测到 PO 文件。"
 
 #: ../src/wordpress.cpp:374
-#, c-format
+#, fuzzy, c-format
 msgid "Couldn't detect translation domain of the \"%s\" plugin."
-msgstr ""
+msgstr "无法检测到插件“%s”需要翻译的范围。"
 
 #: ../src/catalog.cpp:1063
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
-msgstr "不能加载文件 %s，可能已损坏。"
+msgstr "不能加载文件 %s，它可能已损坏。"
 
 #: ../src/catalog.cpp:1355 ../src/catalog.cpp:1391
 #, c-format
@@ -572,11 +574,10 @@ msgid "Couldn't save file %s."
 msgstr "不能保存文件 %s。"
 
 #: ../src/welcomescreen.cpp:233
-#, fuzzy
 msgid ""
 "Create a new translation. Poedit will set everything up; you can focus on "
 "translating."
-msgstr "创建一个新的翻译。Poedit 会自动设置好一切。"
+msgstr "创建一个新的翻译。Poedit 会自动设置好一切，你可以专注翻译。"
 
 #: ../src/welcomescreen.cpp:226
 msgid "Create new translation"
@@ -600,11 +601,11 @@ msgstr "删除项目"
 
 #: ../src/manager.cpp:306
 msgid "Directories:"
-msgstr "目录:"
+msgstr "目录："
 
 #: ../src/resources/menus.xrc:209
 msgid "Display &Notes for Translators"
-msgstr "显示给译员的附注(&N)"
+msgstr "显示给译员的注释(&N)"
 
 #: ../src/resources/menus.xrc:199
 msgid "Display &Quotes"
@@ -612,7 +613,7 @@ msgstr "显示引号(&Q)"
 
 #: ../src/resources/menus.xrc:208
 msgid "Display &notes for translators"
-msgstr "显示给译员的附注(&N)"
+msgstr "显示给译员的注释(&N)"
 
 #: ../src/resources/menus.xrc:198
 msgid "Display &quotes"
@@ -631,16 +632,16 @@ msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
 msgstr ""
-"您确实想要执行这个项目中所有编目的\n"
-"大量更新吗?"
+"您确定想要执行这个项目中所有编目的\n"
+"大规模更新吗?"
 
 #: ../src/manager.cpp:419
 msgid "Do you want to delete the project?"
-msgstr "您想要删除项目吗?"
+msgstr "您确定要删除项目吗?"
 
 #: ../src/edframe.cpp:2817
 msgid "Do you want to remove all translations that are no longer used?"
-msgstr "您想要移除不再使用的所有翻译吗?"
+msgstr "您确定要移除不再使用的所有翻译吗?"
 
 #: ../src/edframe.cpp:1163
 msgid "Don't Save"
@@ -726,7 +727,7 @@ msgstr "邮件支持"
 
 #: ../src/resources/prefs.xrc:128
 msgid "Enables on-the-fly spellchecking"
-msgstr "启用运行中拼写检查"
+msgstr "启用即时拼写检查"
 
 #: ../src/edframe.cpp:1638
 msgid "Entries in the catalog are probably incorrect."
@@ -753,19 +754,20 @@ msgstr "加载消息编目文件 '%s' 时存在错误。"
 #: ../src/fileviewer.cpp:297
 #, c-format
 msgid "Error opening file %s!"
-msgstr "打开文件 %s 时存在错误!"
+msgstr "打开文件 %s 时出错！"
 
 #: ../src/catalog.cpp:1531
 msgid "Error saving catalog"
-msgstr "保存编目时存在错误"
+msgstr "保存编目时出错"
 
 #: ../src/errorbar.cpp:68
 msgid "Error:"
-msgstr "错误:"
+msgstr "错误："
 
 #: ../src/edframe.cpp:3305
+#, fuzzy
 msgid "Everything"
-msgstr ""
+msgstr "所有情况"
 
 #: ../src/edframe.cpp:1299
 msgid "Export as..."
@@ -786,25 +788,25 @@ msgstr "失败的命令: %s"
 
 #: ../src/wordpress.cpp:492
 msgid "Failed to extract WordPress information."
-msgstr "提取WordPress信息失败．"
+msgstr "提取 WordPress 信息失败．"
 
 #: ../src/digger.cpp:114
 msgid "Failed to load extracted catalog."
-msgstr "未能加载已提取的编目。"
+msgstr "加载已提取的编目失败。"
 
 #: ../src/digger.cpp:61
 msgid "Failed to merge gettext catalogs."
-msgstr "未能合并 gettext 编目。"
+msgstr "合并 gettext 编目失败。"
 
 #: ../src/wordpress.cpp:85 ../src/wordpress.cpp:92
 #, c-format
 msgid "Failed to read file '%s'."
-msgstr "读取文件 “%s” 失败"
+msgstr "读取文件 '%s' 失败"
 
 #: ../src/edframe.cpp:2736 ../src/edframe.cpp:2740
 #, c-format
 msgid "Failed to update translation memory: %s"
-msgstr "更新翻译记忆库 %s 失败"
+msgstr "更新翻译记忆库失败： %s "
 
 #: ../src/edapp.cpp:608 ../src/edframe.cpp:477 ../src/edframe.cpp:1221
 #, c-format
@@ -823,26 +825,24 @@ msgid ""
 "Please save it under different name."
 msgstr ""
 "文件 '%s' 为只读，不能保存。\n"
-"请用不同的名称保存。"
+"请使用不同的名称保存。"
 
 #: ../src/resources/menus.xrc:142
-#, fuzzy
 msgid "Fill Missing Translations from &TM"
-msgstr "在翻译中查找"
+msgstr "使用翻译记忆库填补缺少的翻译(&T)"
 
 #: ../src/resources/menus.xrc:141
-#, fuzzy
 msgid "Fill missing translations from &TM"
-msgstr "在翻译中查找"
+msgstr "使用翻译记忆库填补缺少的翻译(&T)"
 
 #: ../src/edframe.cpp:2880 ../src/edframe.cpp:2907
-#, fuzzy
 msgid "Filling missing translations from TM..."
-msgstr "在翻译中查找"
+msgstr "正在使用翻译记忆库填补缺少的翻译..."
 
 #: ../src/prefsdlg.cpp:208 ../src/tm/tm_migrate.cpp:225
+#, fuzzy
 msgid "Finalizing..."
-msgstr ""
+msgstr "完成..."
 
 #: ../src/resources/menus.xrc:109
 msgid "Find"
@@ -886,7 +886,7 @@ msgstr "查找..."
 
 #: ../src/edframe.cpp:2406
 msgid "Fix the header"
-msgstr "修补头"
+msgstr "修正头"
 
 #: ../src/wordpress.cpp:397
 msgid "Folder looks like both a plugin and a theme."
@@ -899,7 +899,7 @@ msgstr "字体"
 #: ../src/edframe.cpp:3307
 #, c-format
 msgid "Form %i"
-msgstr "形式 %i"
+msgstr "表格 %i"
 
 #: ../src/wordpress.cpp:399
 msgid "Found neither WordPress theme nor plugin in the folder."
@@ -954,11 +954,11 @@ msgstr "HTML 文件(*.html)|*.html"
 
 #: ../src/attentionbar.cpp:79
 msgid "Hide this notification message"
-msgstr "隐藏这个通知消息"
+msgstr "隐藏这条消息"
 
 #: ../src/edlistctrl.cpp:335
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../src/resources/prefs.xrc:17
 msgid "Identity"
@@ -975,6 +975,10 @@ msgid ""
 "near-empty, it will not be very effective. The more translations\n"
 "you edit and the larger the TM grows, the better it gets."
 msgstr ""
+"如果启用， Poedit 会尝试使用你以前存储在翻译\n"
+"记忆库中的翻译填补新的条目。如果翻译记忆库\n"
+"几乎是空的，这将不会非常有效。你翻译的越多，\n"
+"翻译记忆库就会成长得越大，自动填补的效果就会越好。"
 
 #: ../src/edframe.cpp:2819
 msgid ""
@@ -982,8 +986,8 @@ msgid ""
 "permanently removed. You will have to translate them again if they are added "
 "back in the future."
 msgstr ""
-"如果您继续清除，则所有被标记为已删除的翻译都将被永久移除。如果将来它们被添加"
-"回来，则您必须再翻译一遍。"
+"如果您继续清除，则所有被标记为已删除的翻译都将被永久移除。如果未来它们被添加"
+"回来，您必须再翻译一遍。"
 
 #: ../src/prefsdlg.cpp:192
 msgid "Importing translations..."
@@ -1003,17 +1007,17 @@ msgid "Invalid file"
 msgstr "无效文件"
 
 #: ../src/edapp.cpp:918
-#, fuzzy
 msgid "Invalid license data."
-msgstr "无效文件"
+msgstr "无效的许可证数据。"
 
 #: ../src/resources/prefs.xrc:351
 msgid "Invocation:"
-msgstr "调用:"
+msgstr "调用："
 
 #: ../src/statistics.cpp:161
+#, fuzzy
 msgid "Items"
-msgstr ""
+msgstr "项目"
 
 #: ../src/edframe.cpp:2823
 msgid "Keep"
@@ -1021,11 +1025,11 @@ msgstr "保持"
 
 #: ../src/languagectrl.cpp:42
 msgid "Language Code or Name (e.g. en_GB)"
-msgstr "语言的代码或名称（例如:en_GB）"
+msgstr "语言的代码或名称（例如：en_GB）"
 
 #: ../src/edframe.cpp:2357
 msgid "Language of the translation isn't set."
-msgstr "翻译的语言未设置。"
+msgstr "翻译语言未设置。"
 
 #: ../src/languagectrl.cpp:112
 msgid "Language of the translation:"
@@ -1089,11 +1093,11 @@ msgstr "行 %u 在文件 '%s' 中已损坏(不是有效的 %s 数据)。"
 
 #: ../src/resources/prefs.xrc:148
 msgid "Line endings format:"
-msgstr "行结束格式:"
+msgstr "行结束格式："
 
 #: ../src/resources/prefs.xrc:335
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "用分号分隔的扩展名列表(例如 *.cpp;*.h):"
+msgstr "用分号分隔的扩展名列表(例如 *.cpp;*.h)："
 
 #: ../src/edapp.cpp:876
 msgid "Make Lower Case"
@@ -1106,16 +1110,16 @@ msgstr "使大写"
 #: ../src/catalog.cpp:219
 #, c-format
 msgid "Malformed header: '%s'"
-msgstr "错误的头: '%s'"
+msgstr "错误的头： '%s'"
 
 #: ../src/catalog.cpp:1636
 msgid "Merging differences..."
 msgstr "合并差异..."
 
 #: ../src/tm/tm_migrate.cpp:232
-#, c-format
+#, fuzzy, c-format
 msgid "Migration exit status: %d"
-msgstr ""
+msgstr "迁移退出状态：%d"
 
 #: ../src/licensing.cpp:99
 msgid "Name"
@@ -1171,13 +1175,12 @@ msgid "New strings"
 msgstr "新建字串"
 
 #: ../src/edframe.cpp:2870
-#, fuzzy
 msgid "No entries could be filled from the translation memory."
-msgstr "在移动您的翻译记忆时有一个问题。"
+msgstr "没有条目可以通过翻译记忆库来填补。"
 
 #: ../src/digger.cpp:186
 msgid "No files found in: "
-msgstr "在此位置中未找到文件: "
+msgstr "在此位置中未找到文件："
 
 #: ../src/edframe.cpp:1744
 msgid "No problems with the translation found."
@@ -1197,11 +1200,11 @@ msgstr "未翻译"
 
 #: ../src/export_html.cpp:158
 msgid "Notes"
-msgstr "附注"
+msgstr "注释"
 
 #: ../src/edframe.cpp:729 ../src/export_html.cpp:204
 msgid "Notes for translators:"
-msgstr "给译员的附注:"
+msgstr "给译员的注释:"
 
 #: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:93
 #: ../src/resources/prefs.xrc:295 ../src/resources/prefs.xrc:437
@@ -1252,7 +1255,7 @@ msgstr "上一个未完成(&R)"
 
 #: ../src/resources/prefs.xrc:355
 msgid "Parser command:"
-msgstr "分析器命令:"
+msgstr "分析器命令："
 
 #: ../src/resources/prefs.xrc:314
 msgid "Parser setup"
@@ -1281,7 +1284,7 @@ msgstr "个人化"
 
 #: ../src/edframe.cpp:1808
 msgid "Please choose the reference you want to show:"
-msgstr "请选择您想要显示的引用:"
+msgstr "请选择您想要显示的引用："
 
 #: ../src/edapp.cpp:231
 msgid ""
@@ -1299,7 +1302,7 @@ msgstr "请先保存文件。 以下内容在此之前不能被编辑。"
 
 #: ../src/resources/properties.xrc:45
 msgid "Plural Forms:"
-msgstr "复数形式:"
+msgstr "复数形式："
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -1307,11 +1310,11 @@ msgstr "复数形式:"
 #: ../src/edframe.cpp:2444
 #, c-format
 msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr ""
+msgstr "该目录中所使用的复数形式对于 %s 是不同寻常的。"
 
 #: ../src/edframe.cpp:711
 msgid "Plural:"
-msgstr "复数:"
+msgstr "复数："
 
 #: ../src/edapp.cpp:918 ../src/edframe.cpp:494
 msgid "Poedit"
@@ -1418,7 +1421,7 @@ msgstr "引用"
 
 #: ../src/edframe.cpp:3025 ../src/edframe.cpp:3029
 msgid "References:"
-msgstr "引用:"
+msgstr "引用："
 
 #: ../src/licensing.cpp:131 ../src/licensing.cpp:135
 msgid "Register"
@@ -1430,7 +1433,7 @@ msgstr "缺少必需的头 Plural-Forms。"
 
 #: ../src/edframe.cpp:2448
 msgid "Review"
-msgstr ""
+msgstr "检查"
 
 #: ../src/edframe.cpp:1159 ../src/resources/toolbar.xrc:24
 #: ../src/resources/toolbar.xrc:29
@@ -1506,11 +1509,12 @@ msgstr "设置名称"
 
 #: ../src/edapp.cpp:854
 msgid "Show Spelling and Grammar"
-msgstr ""
+msgstr "显示拼写和语法"
 
 #: ../src/edapp.cpp:864
+#, fuzzy
 msgid "Show Substitutions"
-msgstr ""
+msgstr "显示替换"
 
 #: ../src/resources/prefs.xrc:103
 msgid "Show summary after catalog update"
@@ -1518,23 +1522,27 @@ msgstr "在编目更新之后显示摘要"
 
 #: ../src/edframe.cpp:704
 msgid "Singular:"
-msgstr "单数:"
+msgstr "单数："
 
 #: ../src/edapp.cpp:866
+#, fuzzy
 msgid "Smart Copy/Paste"
-msgstr ""
+msgstr "智能复制/粘帖"
 
 #: ../src/edapp.cpp:868
+#, fuzzy
 msgid "Smart Dashes"
-msgstr ""
+msgstr "智能破折号"
 
 #: ../src/edapp.cpp:869
+#, fuzzy
 msgid "Smart Links"
-msgstr ""
+msgstr "智能链接"
 
 #: ../src/edapp.cpp:867
+#, fuzzy
 msgid "Smart Quotes"
-msgstr ""
+msgstr "智能引号"
 
 #: ../src/resources/menus.xrc:221
 msgid "Sort by &File Order"
@@ -1566,7 +1574,7 @@ msgstr "源文"
 
 #: ../src/statistics.cpp:188
 msgid "Source Text"
-msgstr "源文文本"
+msgstr "源文本"
 
 #: ../src/resources/prefs.xrc:412 ../src/resources/properties.xrc:127
 msgid "Source code charset:"
@@ -1591,11 +1599,11 @@ msgstr "源文件出现:"
 
 #: ../src/edlistctrl.cpp:332
 msgid "Source text"
-msgstr "源文文本"
+msgstr "源文本"
 
 #: ../src/edframe.cpp:697
 msgid "Source text:"
-msgstr "源文文本:"
+msgstr "源文本："
 
 #: ../src/resources/properties.xrc:214
 msgid "Sources keywords"
@@ -1606,8 +1614,9 @@ msgid "Sources paths"
 msgstr "源路径"
 
 #: ../src/edapp.cpp:880
+#, fuzzy
 msgid "Speech"
-msgstr ""
+msgstr "朗读"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -1622,8 +1631,9 @@ msgid "Spelling and Grammar"
 msgstr "拼写和语法"
 
 #: ../src/edapp.cpp:882
+#, fuzzy
 msgid "Start Speaking"
-msgstr ""
+msgstr "开始朗读"
 
 #: ../src/resources/find.xrc:43
 msgid "Start from the first item"
@@ -1634,8 +1644,9 @@ msgid "Statistics"
 msgstr "统计"
 
 #: ../src/edapp.cpp:883
+#, fuzzy
 msgid "Stop Speaking"
-msgstr ""
+msgstr "停止朗读"
 
 #: ../src/prefsdlg.cpp:169
 msgid "Stored translations:"
@@ -1643,7 +1654,7 @@ msgstr "存储翻译："
 
 #: ../src/resources/find.xrc:21
 msgid "String to find:"
-msgstr "要查找的字串:"
+msgstr "要查找的字串："
 
 #: ../src/statistics.cpp:194
 msgid "Strings in source language"
@@ -1670,11 +1681,11 @@ msgstr "从现有的 POT 模版中提取需要翻译的字符串。"
 
 #: ../src/export_html.cpp:122 ../src/resources/properties.xrc:101
 msgid "Team's email address:"
-msgstr "团队的电子邮件地址:"
+msgstr "团队的电子邮件地址："
 
 #: ../src/export_html.cpp:118 ../src/resources/properties.xrc:87
 msgid "Team:"
-msgstr "团队:"
+msgstr "团队："
 
 #: ../src/edapp.cpp:870
 msgid "Text Replacement"
@@ -1696,6 +1707,8 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
+"翻译记忆库中没有包含任何与此文件内容相似的字符串。 Poedit 需要通过你手动翻译"
+"的文件来得到充分的学习，然后才能在半自动翻译中发挥作用。"
 
 #: ../src/catalog.cpp:1529
 #, c-format
@@ -1719,11 +1732,10 @@ msgid ""
 msgstr "该文件可能已损坏或不是 Poedit 所能识别的格式。"
 
 #: ../src/edframe.cpp:1728
-#, fuzzy
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
-msgstr "文件已安全地保存，但它不能被编译成 MO 格式并使用。"
+msgstr "文件已安全地保存，并编译成 MO 格式的文件，但它可能不能正常工作。"
 
 #: ../src/edframe.cpp:1731
 msgid ""
@@ -1733,7 +1745,7 @@ msgstr "文件已安全地保存，但它不能被编译成 MO 格式并使用�
 
 #: ../src/edframe.cpp:1725
 msgid "The file was saved safely."
-msgstr ""
+msgstr "文件已被安全地保存。"
 
 #: ../src/edapp.cpp:919
 #, c-format
@@ -1743,6 +1755,10 @@ msgid ""
 "\n"
 "(%s)"
 msgstr ""
+"该链接没有包含有效的 Poedit 许可证。 请尝试手动输入或者通过 help@poedit.net "
+"联系我们。\n"
+"\n"
+"(%s)"
 
 #: ../src/licensing.cpp:109
 msgid ""
@@ -1756,11 +1772,11 @@ msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr "填补这个条目的最简单的办法是从一个 POT 文件更新："
 
 #: ../src/edframe.cpp:1754
-#, fuzzy, c-format
+#, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "翻译为使用准备就绪。"
+msgstr[0] "翻译已经可以被使用了，但是还有 %d 个条目没有被翻译呢。"
 
 #: ../src/edframe.cpp:1759
 msgid "The translation is ready for use."
@@ -1770,7 +1786,7 @@ msgstr "翻译为使用准备就绪。"
 msgid ""
 "The translations were marked as fuzzy, because they may be inaccurate. You "
 "should review them for correctness."
-msgstr ""
+msgstr "这些翻译被标记为模糊的，因为他们可能是不准确。请检查它们的准确性。"
 
 #: ../src/welcomescreen.cpp:252
 msgid "There are no translations. That’s unusual."
@@ -1918,9 +1934,8 @@ msgid "Translation Memory"
 msgstr "翻译记忆"
 
 #: ../src/edframe.cpp:2992 ../src/edframe.cpp:3004
-#, fuzzy
 msgid "Translation Suggestions:"
-msgstr "翻译属性"
+msgstr "翻译建议："
 
 #: ../src/resources/menus.xrc:81
 msgid "Translation is &fuzzy"
@@ -1935,9 +1950,8 @@ msgid "Translation properties"
 msgstr "翻译属性"
 
 #: ../src/edframe.cpp:2990 ../src/edframe.cpp:3002
-#, fuzzy
 msgid "Translation suggestions:"
-msgstr "翻译属性"
+msgstr "翻译建议："
 
 #: ../src/edlistctrl.cpp:389
 #, fuzzy, c-format
@@ -1950,7 +1964,7 @@ msgstr "翻译的项目名称未设置。"
 
 #: ../src/edframe.cpp:719
 msgid "Translation:"
-msgstr "翻译:"
+msgstr "翻译："
 
 #: ../src/wordpress.cpp:417
 #, c-format
@@ -2099,9 +2113,8 @@ msgid "Windows"
 msgstr "Windows"
 
 #: ../src/edframe.cpp:1434
-#, fuzzy
 msgid "WordPress"
-msgstr "WordPress 出错"
+msgstr "WordPress"
 
 #: ../src/wordpress.cpp:522
 msgid "WordPress Errors Log"
@@ -2147,7 +2160,7 @@ msgstr "您的副本升级为 Poedit 专业版。"
 
 #: ../src/resources/prefs.xrc:43
 msgid "Your email address:"
-msgstr "您的电子邮件地址:"
+msgstr "您的电子邮件地址："
 
 #: ../src/resources/prefs.xrc:21
 msgid ""
@@ -2159,18 +2172,20 @@ msgstr ""
 
 #: ../src/resources/prefs.xrc:29
 msgid "Your name:"
-msgstr "您的名字:"
+msgstr "您的名字："
 
 #: ../src/tm/tm_migrate.cpp:298
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your translation memory data couldn't be migrated. The error was:\n"
 "\n"
 "%s\n"
 "Please email help@poedit.net and we’ll get it fixed."
 msgstr ""
-"由于一些原因，你的翻译记忆库数据无法迁移。请发送电子邮件到 help@poedit.net ，"
-"我们会尽快修复。"
+"你的翻译记忆库数据无法迁移。原因是：\n"
+"\n"
+"%s\n"
+"请发送电子邮件到 help@poedit.net ，我们会尽快修复。"
 
 #: ../src/licensing.cpp:187
 msgid ""
@@ -2190,7 +2205,7 @@ msgstr "不删除临时文件(供调试使用)"
 
 #: ../src/propertiesdlg.cpp:72
 msgid "e.g. nplurals=2; plural=(n > 1);"
-msgstr "例如: nplurals=2; plural=(n > 1);"
+msgstr "例如： nplurals=2; plural=(n > 1);"
 
 #: ../src/edlistctrl.cpp:386
 msgid "unknown language"
