@@ -538,6 +538,8 @@ void PoeditApp::OnNew(wxCommandEvent& event)
 
 void PoeditApp::OnOpen(wxCommandEvent&)
 {
+    PoeditFrame *active = PoeditFrame::UnusedActiveWindow();
+
     wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
 
     wxFileDialog dlg(nullptr,
@@ -553,9 +555,10 @@ void PoeditApp::OnOpen(wxCommandEvent&)
         wxArrayString paths;
         dlg.GetPaths(paths);
 
-        if (paths.size() == 1)
+        if (paths.size() == 1 && active)
         {
-            TRY_FORWARD_TO_ACTIVE_WINDOW( OpenFile(paths[0]) );
+            active->OpenFile(paths[0]);
+            return;
         }
 
         OpenFiles(paths);
