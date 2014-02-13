@@ -1647,7 +1647,8 @@ void PoeditFrame::ReportValidationErrors(int errors,
 
     if ( errors )
     {
-        m_list->RefreshItem(0);
+        if (m_list && m_catalog->GetCount())
+            m_list->RefreshItems(0, m_catalog->GetCount()-1);
         RefreshControls();
 
         dlg.reset(new wxMessageDialog
@@ -2887,7 +2888,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
 wxMenu *PoeditFrame::GetPopupMenu(int item)
 {
     if (!m_catalog) return NULL;
-    if (item >= (int)m_list->GetItemCount()) return NULL;
+    if (item < 0 || item >= (int)m_list->GetItemCount()) return NULL;
 
     const wxArrayString& refs = (*m_catalog)[item].GetReferences();
     wxMenu *menu = new wxMenu;
@@ -3375,6 +3376,8 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     // else unset it
     int bkIndex = -1;
     int selItemIndex = m_list->GetSelectedCatalogItem();
+    if (selItemIndex == -1)
+        return;
 
     Bookmark bk = static_cast<Bookmark>(event.GetId() - ID_BOOKMARK_SET);
     if (m_catalog->GetBookmarkIndex(bk) == selItemIndex)
