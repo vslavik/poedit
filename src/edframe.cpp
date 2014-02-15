@@ -225,7 +225,7 @@ class ListHandler;
 class TextctrlHandler : public wxEvtHandler
 {
     public:
-        TextctrlHandler(PoeditFrame* frame) : m_list(frame->m_list) {}
+        TextctrlHandler(PoeditFrame* frame) {}
 
     private:
 #ifdef __WXMSW__
@@ -293,8 +293,6 @@ class TextctrlHandler : public wxEvtHandler
 #endif // __WXMSW__
 
         DECLARE_EVENT_TABLE()
-
-        PoeditListCtrl *m_list;
 
         friend class ListHandler;
 };
