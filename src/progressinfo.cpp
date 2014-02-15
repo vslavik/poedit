@@ -62,12 +62,17 @@ ProgressInfo::ProgressInfo(wxWindow *parent, const wxString& title)
     wxXmlResource::Get()->LoadDialog(m_dlg, parent, "parser_progress");
     m_dlg->SetTitle(title);
     m_dlg->Show(true);
+#ifndef __WXOSX__
+    // Workaround another wx bug: http://trac.wxwidgets.org/ticket/15902
     m_disabler = new wxWindowDisabler(m_dlg);
+#endif
 }
 
 ProgressInfo::~ProgressInfo()
 {
+#ifndef __WXOSX__
     delete m_disabler;
+#endif
     m_dlg->Destroy();
 }
 
