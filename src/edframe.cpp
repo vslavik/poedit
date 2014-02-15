@@ -716,6 +716,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     labelTrans->SetFont(m_boldGuiFont);
 
     m_textTrans = new TranslationTextCtrl(m_bottomLeftPanel, ID_TEXTTRANS);
+    m_textTrans->PushEventHandler(new TransTextctrlHandler(this));
 
     // in case of plurals form, this is the control for n=1:
     m_textTransSingularForm = NULL;
@@ -779,8 +780,6 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     m_splitter->SetMinimumPaneSize(200);
 
     m_list->PushEventHandler(new ListHandler(this));
-    m_textTrans->PushEventHandler(new TransTextctrlHandler(this));
-    m_textComment->PushEventHandler(new TextctrlHandler(this));
 
     ShowPluralFormUI(false);
     UpdateMenu();
@@ -3048,7 +3047,13 @@ void PoeditFrame::UpdateCommentWindowEditable()
     {
         m_commentWindowEditable = commentWindowEditable;
         m_bottomSplitter->Unsplit();
-        delete m_textComment;
+
+        if (m_textComment)
+        {
+            m_textComment->PopEventHandler(true/*delete*/);
+            m_textComment->Destroy();
+        }
+
         if (m_commentWindowEditable)
         {
             m_textComment = new wxTextCtrl(m_bottomRightPanel,
@@ -3063,6 +3068,7 @@ void PoeditFrame::UpdateCommentWindowEditable()
                                         wxDefaultPosition, wxDefaultSize,
                                         wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
         }
+        m_textComment->PushEventHandler(new TextctrlHandler(this));
         UpdateDisplayCommentWin();
     }
 }
