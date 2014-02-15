@@ -206,12 +206,16 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
         }
     }
 
+#ifndef __WXOSX__
     // If the window is completely out of all screens (e.g. because
     // screens configuration changed), move it to primary screen:
     if ( wxDisplay::GetFromWindow(win) == wxNOT_FOUND )
         win->Move(0, 0);
+#endif
+
 #endif // __WXMSW__/__WXOSX__
 
+#ifndef __WXOSX__
     // If the window is larger than current screen, resize it to fit:
     int display = wxDisplay::GetFromWindow(win);
     if ( display == wxNOT_FOUND )
@@ -234,4 +238,5 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
     {
         win->Maximize();
     }
+#endif // !__WXOSX__
 }
