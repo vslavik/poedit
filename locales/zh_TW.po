@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
 "POT-Creation-Date: 2014-02-02 15:06+0100\n"
-"PO-Revision-Date: 2013-12-10 00:04+0800\n"
+"PO-Revision-Date: 2014-02-08 10:55+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
@@ -43,10 +43,10 @@ msgid " Version "
 msgstr " 版本"
 
 #: ../src/edframe.cpp:2863
-#, fuzzy, c-format
+#, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "無法更新翻譯記憶：%s"
+msgstr[0] "%d 項條目已從翻譯記憶填入。"
 
 #: ../src/edframe.cpp:1710
 #, c-format
@@ -333,7 +333,7 @@ msgstr "關鍵字清單中的一個項目："
 
 #: ../src/edframe.cpp:1435
 msgid "Analyzing WordPress code..."
-msgstr ""
+msgstr "正在分析 WordPress 代碼..."
 
 #: ../src/export_html.cpp:191
 msgid "Automatic translation"
@@ -357,7 +357,7 @@ msgstr "基礎路徑："
 
 #: ../src/aboutbox.cpp:119
 msgid "Based on the open source version →"
-msgstr ""
+msgstr "建基於開源碼的版本 →"
 
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
@@ -551,9 +551,9 @@ msgid "Correct Spelling Automatically"
 msgstr "自動校正拼字"
 
 #: ../src/wordpress.cpp:226
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't detect POs location for \"%s\"."
-msgstr "無法偵測「%s」外掛的譯文領域。"
+msgstr "無法偵測「%s」的 PO 位置。"
 
 #: ../src/wordpress.cpp:374
 #, c-format
@@ -571,11 +571,10 @@ msgid "Couldn't save file %s."
 msgstr "無法儲存 %s 檔。"
 
 #: ../src/welcomescreen.cpp:233
-#, fuzzy
 msgid ""
 "Create a new translation. Poedit will set everything up; you can focus on "
 "translating."
-msgstr "建立新翻譯。Poedit 會自動替您設好每個項目。"
+msgstr "建立新翻譯。Poedit 會設好每個項目；您可以專注於翻譯本身。"
 
 #: ../src/welcomescreen.cpp:226
 msgid "Create new translation"
@@ -824,19 +823,16 @@ msgstr ""
 "請以不同檔名儲存檔案。"
 
 #: ../src/resources/menus.xrc:142
-#, fuzzy
 msgid "Fill Missing Translations from &TM"
-msgstr "從譯文中尋找"
+msgstr "從翻譯記憶填入闕漏的翻譯(&T)"
 
 #: ../src/resources/menus.xrc:141
-#, fuzzy
 msgid "Fill missing translations from &TM"
-msgstr "從譯文中尋找"
+msgstr "從翻譯記憶填入闕漏的翻譯"
 
 #: ../src/edframe.cpp:2880 ../src/edframe.cpp:2907
-#, fuzzy
 msgid "Filling missing translations from TM..."
-msgstr "從譯文中尋找"
+msgstr "正從翻譯記憶填入闕漏的翻譯..."
 
 #: ../src/prefsdlg.cpp:208 ../src/tm/tm_migrate.cpp:225
 msgid "Finalizing..."
@@ -974,6 +970,10 @@ msgid ""
 "near-empty, it will not be very effective. The more translations\n"
 "you edit and the larger the TM grows, the better it gets."
 msgstr ""
+"若啟用，Poedit 會試著使用您存在翻譯記憶中的先前翻譯\n"
+"填入新條目。若翻譯記憶幾近空白，可能效用不大。\n"
+"隨著您編輯過的翻譯越來越多，翻譯記憶隨之增長，\n"
+"效用會越來越大。"
 
 #: ../src/edframe.cpp:2819
 msgid ""
@@ -1002,9 +1002,8 @@ msgid "Invalid file"
 msgstr "檔案無效"
 
 #: ../src/edapp.cpp:918
-#, fuzzy
 msgid "Invalid license data."
-msgstr "檔案無效"
+msgstr "無效的授權資料。"
 
 #: ../src/resources/prefs.xrc:351
 msgid "Invocation:"
@@ -1114,7 +1113,7 @@ msgstr "正合併差異..."
 #: ../src/tm/tm_migrate.cpp:232
 #, c-format
 msgid "Migration exit status: %d"
-msgstr ""
+msgstr "轉移離開狀態：%d"
 
 #: ../src/licensing.cpp:99
 msgid "Name"
@@ -1170,9 +1169,8 @@ msgid "New strings"
 msgstr "新增字串"
 
 #: ../src/edframe.cpp:2870
-#, fuzzy
 msgid "No entries could be filled from the translation memory."
-msgstr "搬移翻譯庫時遇到了問題."
+msgstr "沒有可從翻譯記憶填入的條目。"
 
 #: ../src/digger.cpp:186
 msgid "No files found in: "
@@ -1365,7 +1363,7 @@ msgstr "偏好設定"
 
 #: ../src/tm/tm_migrate.cpp:171
 msgid "Preparing migration..."
-msgstr "正準備遷移..."
+msgstr "正準備轉移..."
 
 #: ../src/tm/tm_migrate.cpp:268
 msgid "Proceed"
@@ -1425,7 +1423,7 @@ msgstr "註冊"
 
 #: ../src/edframe.cpp:2387
 msgid "Required header Plural-Forms is missing."
-msgstr "遺失必要的 Plural-Forms 檔頭。"
+msgstr "闕漏必要的 Plural-Forms 檔頭。"
 
 #: ../src/edframe.cpp:2448
 msgid "Review"
@@ -1695,6 +1693,8 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
+"翻譯記憶尚未包含任何類似此檔案內容的字串。這僅在 Poedit 學習夠多您手動翻譯的"
+"檔案後，才會對半自動翻譯有效用。"
 
 #: ../src/catalog.cpp:1529
 #, c-format
@@ -1718,11 +1718,10 @@ msgid ""
 msgstr "檔案可能損毀，或是採用 Poedit 無法辨認的格式。"
 
 #: ../src/edframe.cpp:1728
-#, fuzzy
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
-msgstr "檔案已順利儲存，但是無法編譯成 MO 格式所以也無法真的使用。"
+msgstr "檔案已順利儲存，且成功編譯為 MO 格式，但仍可能無法正常運作。"
 
 #: ../src/edframe.cpp:1731
 msgid ""
@@ -1732,7 +1731,7 @@ msgstr "檔案已順利儲存，但是無法編譯成 MO 格式所以也無法�
 
 #: ../src/edframe.cpp:1725
 msgid "The file was saved safely."
-msgstr ""
+msgstr "檔案已順利儲存。"
 
 #: ../src/edapp.cpp:919
 #, c-format
@@ -1742,6 +1741,10 @@ msgid ""
 "\n"
 "(%s)"
 msgstr ""
+"連結不含有效的 Poedit 授權。請嘗試手動輸入，或是聯絡 help@poedit.net 以取得支"
+"援。\n"
+"\n"
+"(%s)"
 
 #: ../src/licensing.cpp:109
 msgid ""
@@ -1755,11 +1758,11 @@ msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr "填充此編目檔的最簡單方式就是從 POT 檔更新："
 
 #: ../src/edframe.cpp:1754
-#, fuzzy, c-format
+#, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "譯文已準備好可供使用。"
+msgstr[0] "譯文已準備好可供使用，但還有 %d 條尚未翻譯。"
 
 #: ../src/edframe.cpp:1759
 msgid "The translation is ready for use."
@@ -1769,7 +1772,7 @@ msgstr "譯文已準備好可供使用。"
 msgid ""
 "The translations were marked as fuzzy, because they may be inaccurate. You "
 "should review them for correctness."
-msgstr ""
+msgstr "這些譯文被標記為模糊，可能翻譯尚未明確。您應該校閱它們是否正確。"
 
 #: ../src/welcomescreen.cpp:252
 msgid "There are no translations. That’s unusual."
@@ -1784,7 +1787,7 @@ msgstr "試圖讓檔案的排版格式變得整齊時遭遇問題 (但仍舊順�
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
-msgstr "載入編目檔時發生錯誤。結果可能某些資料遺失或損毀。"
+msgstr "載入編目檔時發生錯誤。結果可能某些資料闕漏或損毀。"
 
 #: ../src/resources/summary.xrc:37
 msgid ""
@@ -1896,9 +1899,8 @@ msgid "Translated %u strings"
 msgstr "已譯 %u 條字串"
 
 #: ../src/edframe.cpp:2906
-#, fuzzy
 msgid "Translating"
-msgstr "譯文"
+msgstr "翻譯中"
 
 #: ../src/edlistctrl.cpp:333 ../src/export_html.cpp:155
 #: ../src/statistics.cpp:158
@@ -1918,9 +1920,8 @@ msgid "Translation Memory"
 msgstr "翻譯記憶"
 
 #: ../src/edframe.cpp:2992 ../src/edframe.cpp:3004
-#, fuzzy
 msgid "Translation Suggestions:"
-msgstr "譯文屬性"
+msgstr "譯文建議："
 
 #: ../src/resources/menus.xrc:81
 msgid "Translation is &fuzzy"
@@ -1935,9 +1936,8 @@ msgid "Translation properties"
 msgstr "譯文屬性"
 
 #: ../src/edframe.cpp:2990 ../src/edframe.cpp:3002
-#, fuzzy
 msgid "Translation suggestions:"
-msgstr "譯文屬性"
+msgstr "譯文建議："
 
 #: ../src/edlistctrl.cpp:389
 #, c-format
@@ -2101,9 +2101,8 @@ msgid "Windows"
 msgstr "Windows"
 
 #: ../src/edframe.cpp:1434
-#, fuzzy
 msgid "WordPress"
-msgstr "WordPress 錯誤"
+msgstr "WordPress"
 
 #: ../src/wordpress.cpp:522
 msgid "WordPress Errors Log"
@@ -2163,15 +2162,17 @@ msgid "Your name:"
 msgstr "您的姓名："
 
 #: ../src/tm/tm_migrate.cpp:298
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your translation memory data couldn't be migrated. The error was:\n"
 "\n"
 "%s\n"
 "Please email help@poedit.net and we’ll get it fixed."
 msgstr ""
-"有事情出錯，所以您的翻譯記憶資料無法轉移。請寄封電子郵件到 help@poedit.net，"
-"我們會試著修好。"
+"您的翻譯記憶資料無法轉移。錯誤為：\n"
+"\n"
+"%s\n"
+"請寄封電子郵件到 help@poedit.net，我們會試著修好。"
 
 #: ../src/licensing.cpp:187
 msgid ""
