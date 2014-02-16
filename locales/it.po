@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
 "POT-Creation-Date: 2014-02-02 15:06+0100\n"
-"PO-Revision-Date: 2013-12-13 16:17+0100\n"
+"PO-Revision-Date: 2014-02-11 09:57+0100\n"
 "Last-Translator: bovirus <bovirus@libero.it>\n"
 "Language-Team: Italian <en@li.org>\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.2\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
 #: ../src/edframe.cpp:3013
@@ -44,11 +44,11 @@ msgid " Version "
 msgstr " Versione "
 
 #: ../src/edframe.cpp:2863
-#, fuzzy, c-format
+#, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "Impossibile aggiornare memoria traduzione: %s"
-msgstr[1] "Impossibile aggiornare memoria traduzione: %s"
+msgstr[0] "%d elemento completato dalla memoria di traduzione."
+msgstr[1] "%d elementi completati dalla memoria di traduzione."
 
 #: ../src/edframe.cpp:1710
 #, c-format
@@ -343,7 +343,7 @@ msgstr "Oggetto nell'elenco delle parole chiave:"
 
 #: ../src/edframe.cpp:1435
 msgid "Analyzing WordPress code..."
-msgstr ""
+msgstr "Analisi codice WordPress..."
 
 #: ../src/export_html.cpp:191
 msgid "Automatic translation"
@@ -367,7 +367,7 @@ msgstr "Percorso di base:"
 
 #: ../src/aboutbox.cpp:119
 msgid "Based on the open source version →"
-msgstr ""
+msgstr "Basato sulla versione open source →"
 
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
@@ -563,9 +563,9 @@ msgid "Correct Spelling Automatically"
 msgstr "Correggi automaticamente ortografia"
 
 #: ../src/wordpress.cpp:226
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't detect POs location for \"%s\"."
-msgstr "Imposssibile rilevare dominio traduzione del plugin \"%s\"."
+msgstr "Imposssibile rilevare percorso PO per \"%s\"."
 
 #: ../src/wordpress.cpp:374
 #, c-format
@@ -583,11 +583,12 @@ msgid "Couldn't save file %s."
 msgstr "Impossibile salvare il file %s."
 
 #: ../src/welcomescreen.cpp:233
-#, fuzzy
 msgid ""
 "Create a new translation. Poedit will set everything up; you can focus on "
 "translating."
-msgstr "Crea una nuova traduzione. Poedit imposterà ogni cosa automaticamente."
+msgstr ""
+"Crea una nuova traduzione. Poedit imposterà automaticamente ogni cosa, e "
+"potrai focalizzarti sulla traduzione."
 
 #: ../src/welcomescreen.cpp:226
 msgid "Create new translation"
@@ -840,19 +841,16 @@ msgstr ""
 "Salvalo con un nome differente."
 
 #: ../src/resources/menus.xrc:142
-#, fuzzy
 msgid "Fill Missing Translations from &TM"
-msgstr "Trova nelle traduzioni"
+msgstr "Completa traduzioni mancanti dalla M&T..."
 
 #: ../src/resources/menus.xrc:141
-#, fuzzy
 msgid "Fill missing translations from &TM"
-msgstr "Trova nelle traduzioni"
+msgstr "Completa traduzioni mancanti dalla M&T..."
 
 #: ../src/edframe.cpp:2880 ../src/edframe.cpp:2907
-#, fuzzy
 msgid "Filling missing translations from TM..."
-msgstr "Trova nelle traduzioni"
+msgstr "Completa traduzioni mancanti dalla MT..."
 
 #: ../src/prefsdlg.cpp:208 ../src/tm/tm_migrate.cpp:225
 msgid "Finalizing..."
@@ -883,9 +881,8 @@ msgid "Find in original strings"
 msgstr "Trova nelle stringhe originali"
 
 #: ../src/resources/find.xrc:64
-#, fuzzy
 msgid "Find in translations"
-msgstr "Modifica una traduzione"
+msgstr "Trova nella traduzione"
 
 #: ../src/resources/menus.xrc:101
 msgid "Find next"
@@ -991,6 +988,10 @@ msgid ""
 "near-empty, it will not be very effective. The more translations\n"
 "you edit and the larger the TM grows, the better it gets."
 msgstr ""
+"Se abilitato, Poedit proverà a completare le nuove stringhe usando\n"
+"le precedenti traduzione memorizzate nella memoria di traduzione. Se la\n"
+"MT è quasi vuota, non funzionerà molto bene. Più traduzioni modificherai\n"
+"e più crescera la MT, e meglio funzionerà."
 
 #: ../src/edframe.cpp:2819
 msgid ""
@@ -1020,9 +1021,8 @@ msgid "Invalid file"
 msgstr "File non valido"
 
 #: ../src/edapp.cpp:918
-#, fuzzy
 msgid "Invalid license data."
-msgstr "File non valido"
+msgstr "Dati licenza non validi."
 
 #: ../src/resources/prefs.xrc:351
 msgid "Invocation:"
@@ -1132,7 +1132,7 @@ msgstr "Unione delle differenze..."
 #: ../src/tm/tm_migrate.cpp:232
 #, c-format
 msgid "Migration exit status: %d"
-msgstr ""
+msgstr "Stato uscita migrazione: %d"
 
 #: ../src/licensing.cpp:99
 msgid "Name"
@@ -1190,10 +1190,8 @@ msgid "New strings"
 msgstr "Nuove stringhe"
 
 #: ../src/edframe.cpp:2870
-#, fuzzy
 msgid "No entries could be filled from the translation memory."
-msgstr ""
-"Si è verificato un problema nello spostamento della memoria di traduzione."
+msgstr "Nessun elemento potrebbe essere completatao dalla memoria traduzione.."
 
 #: ../src/digger.cpp:186
 msgid "No files found in: "
@@ -1722,6 +1720,9 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
+"LA MT non contiene nessuna stringa simile al contenuto di questo file. la MT "
+"diventa usabile per traduzioni semi-automatiche solo dopo che Poedit impara "
+"abbastanza dai file che hai tradotto manualmente."
 
 #: ../src/catalog.cpp:1529
 #, c-format
@@ -1748,13 +1749,12 @@ msgstr ""
 "Il file potrebbe essere corrotto o in un formato non riconosciuto da Poedit."
 
 #: ../src/edframe.cpp:1728
-#, fuzzy
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
-"Il file è stato salvato, ma non può essere compilato nel formato MO e "
-"utilizzato."
+"Il file è stato salvato  e compilato nel formato MO, ma potrebbe non "
+"funzionare correttamente."
 
 #: ../src/edframe.cpp:1731
 msgid ""
@@ -1766,7 +1766,7 @@ msgstr ""
 
 #: ../src/edframe.cpp:1725
 msgid "The file was saved safely."
-msgstr ""
+msgstr "Il file è stato correttamente salvato."
 
 #: ../src/edapp.cpp:919
 #, c-format
@@ -1776,6 +1776,10 @@ msgid ""
 "\n"
 "(%s)"
 msgstr ""
+"Il collegamento non contiene una licenza valida per Poedit. Prova "
+"inserendola manualmente o contatta il supporto (help@poedit.net).\n"
+"\n"
+"(%s)"
 
 #: ../src/licensing.cpp:109
 msgid ""
@@ -1794,12 +1798,16 @@ msgstr ""
 "POT."
 
 #: ../src/edframe.cpp:1754
-#, fuzzy, c-format
+#, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "La traduzione è pronta per l'uso."
-msgstr[1] "La traduzione è pronta per l'uso."
+msgstr[0] ""
+"La traduzione è pronta per l'uso, ma l'elemento %d non è ancora stato "
+"tradotto."
+msgstr[1] ""
+"La traduzione è pronta per l'uso, ma gli elementi %d non sono stati ancora "
+"tradotti."
 
 #: ../src/edframe.cpp:1759
 msgid "The translation is ready for use."
@@ -1810,6 +1818,8 @@ msgid ""
 "The translations were marked as fuzzy, because they may be inaccurate. You "
 "should review them for correctness."
 msgstr ""
+"La traduzione era stata segnata come non verificata, perchè non accurata. "
+"Puoi modificarla per corregerla. "
 
 #: ../src/welcomescreen.cpp:252
 msgid "There are no translations. That’s unusual."
@@ -1947,7 +1957,6 @@ msgid "Translated %u strings"
 msgstr "Tradotte %u stringhe"
 
 #: ../src/edframe.cpp:2906
-#, fuzzy
 msgid "Translating"
 msgstr "Traduzione"
 
@@ -1969,9 +1978,8 @@ msgid "Translation Memory"
 msgstr "Memoria di traduzione (TM)"
 
 #: ../src/edframe.cpp:2992 ../src/edframe.cpp:3004
-#, fuzzy
 msgid "Translation Suggestions:"
-msgstr "Proprietà della traduzione"
+msgstr "Suggerimenti per la traduzione:"
 
 #: ../src/resources/menus.xrc:81
 msgid "Translation is &fuzzy"
@@ -1982,14 +1990,12 @@ msgid "Translation memory migration failed."
 msgstr "Migrazione memoria traduzione fallita."
 
 #: ../src/resources/properties.xrc:139
-#, fuzzy
 msgid "Translation properties"
-msgstr "Memoria di traduzione (TM)"
+msgstr "Proprietà traduzione"
 
 #: ../src/edframe.cpp:2990 ../src/edframe.cpp:3002
-#, fuzzy
 msgid "Translation suggestions:"
-msgstr "Proprietà della traduzione"
+msgstr "Suggerimenti per la traduzione:"
 
 #: ../src/edlistctrl.cpp:389
 #, c-format
@@ -2156,9 +2162,8 @@ msgid "Windows"
 msgstr "Windows"
 
 #: ../src/edframe.cpp:1434
-#, fuzzy
 msgid "WordPress"
-msgstr "Errore WordPress"
+msgstr "WordPress"
 
 #: ../src/wordpress.cpp:522
 msgid "WordPress Errors Log"
@@ -2220,16 +2225,17 @@ msgid "Your name:"
 msgstr "Il tuo nome:"
 
 #: ../src/tm/tm_migrate.cpp:298
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your translation memory data couldn't be migrated. The error was:\n"
 "\n"
 "%s\n"
 "Please email help@poedit.net and we’ll get it fixed."
 msgstr ""
-"Qualcosa è andato storto e i dati della memoria di traduzione non possono "
-"essere migrati. Inviali via email a help@poedit.net e noi cercheremo di "
-"trovare una soluzione."
+"I dati della memoria traduzione non possono essere miigrati. L'errore è:\n"
+"\n"
+"%s\n"
+"Invialo a help@poedit.net e noi lo correggeremo."
 
 #: ../src/licensing.cpp:187
 msgid ""
