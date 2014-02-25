@@ -8,10 +8,10 @@
 # Dušan Kazik <prescott66@gmail.com>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.62\n"
+"Project-Id-Version: Poedit 1.64\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
 "POT-Creation-Date: 2014-02-02 15:06+0100\n"
-"PO-Revision-Date: 2013-12-13 18:07+0100\n"
+"PO-Revision-Date: 2014-02-14 11:42+0100\n"
 "Last-Translator: MARTINco. <martin.kubanik@gmail.com>\n"
 "Language-Team: martinco78\n"
 "Language: sk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 1.6.2\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
 #: ../src/edframe.cpp:3013
@@ -47,12 +47,12 @@ msgid " Version "
 msgstr " Verzia "
 
 #: ../src/edframe.cpp:2863
-#, fuzzy, c-format
+#, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "Nepodarilo sa aktualizovať pamäť prekladu: %s"
-msgstr[1] "Nepodarilo sa aktualizovať pamäť prekladu: %s"
-msgstr[2] "Nepodarilo sa aktualizovať pamäť prekladu: %s"
+msgstr[0] "%d záznam bol doplnený z pamäte prekladov."
+msgstr[1] "%d záznamy boli doplnené z pamäte prekladov."
+msgstr[2] "%d záznamov bolo doplnených z pamäte prekladov."
 
 #: ../src/edframe.cpp:1710
 #, c-format
@@ -66,9 +66,9 @@ msgstr[2] "Našlo sa %d problémov s prekladom."
 #, c-format
 msgid "%i %% translated, %i string"
 msgid_plural "%i %% translated, %i strings"
-msgstr[0] "%i %% preložených, %i reťazec"
-msgstr[1] "%i %% preložených, %i reťazce"
-msgstr[2] "%i %% preložených, %i reťazcov"
+msgstr[0] "%i %% preložených (%i reťazec)"
+msgstr[1] "%i %% preložených (%i reťazce)"
+msgstr[2] "%i %% preložených (%i reťazcov)"
 
 #: ../src/edframe.cpp:2558
 #, c-format
@@ -121,7 +121,7 @@ msgstr "&O programe..."
 
 #: ../src/resources/menus.xrc:264 ../src/resources/menus.xrc:329
 msgid "&About Poedit"
-msgstr "&O programe Poedit..."
+msgstr "&O programe Poedit"
 
 #: ../src/edframe.cpp:3384
 msgid "&Bookmarks"
@@ -145,7 +145,7 @@ msgstr "&Dokončiť a prejsť na ďalší"
 
 #: ../src/resources/menus.xrc:168
 msgid "&Done and next"
-msgstr "&Dokončiť a ísť na ďalší"
+msgstr "&Dokončiť a prejsť na ďalší"
 
 #: ../src/resources/menus.xrc:64 ../src/resources/menus.xrc:303
 msgid "&Edit"
@@ -170,7 +170,7 @@ msgstr "Dokumentácia &GNU gettext"
 
 #: ../src/edframe.cpp:560 ../src/resources/menus.xrc:165
 msgid "&Go"
-msgstr "&Prejsť"
+msgstr "P&rejsť"
 
 #: ../src/edapp.cpp:223 ../src/resources/menus.xrc:268
 #: ../src/resources/menus.xrc:333
@@ -191,19 +191,19 @@ msgstr "&Nasledujúci >"
 
 #: ../src/resources/menus.xrc:181
 msgid "&Next Message"
-msgstr "&Ďalšia správa"
+msgstr "&Nasledujúca správa"
 
 #: ../src/resources/menus.xrc:180
 msgid "&Next message"
-msgstr "&Ďalšia správa"
+msgstr "&Nasledujúca správa"
 
 #: ../src/resources/menus.xrc:245 ../src/resources/menus.xrc:313
 msgid "&Online Help"
-msgstr "&Pomocník Online"
+msgstr "&Pomocník online (EN)"
 
 #: ../src/resources/menus.xrc:244 ../src/resources/menus.xrc:312
 msgid "&Online help"
-msgstr "&Pomocník Online"
+msgstr "&Pomocník online (EN)"
 
 #: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:291
 msgid "&Open..."
@@ -211,12 +211,12 @@ msgstr "&Otvoriť..."
 
 #: ../src/resources/menus.xrc:125
 msgid "&Preferences"
-msgstr "&Nastavenia"
+msgstr "Nas&tavenia"
 
 #: ../src/resources/manager.xrc:116 ../src/resources/menus.xrc:47
 #: ../src/resources/menus.xrc:295
 msgid "&Preferences..."
-msgstr "&Nastavenia..."
+msgstr "Nas&tavenia"
 
 #: ../src/resources/menus.xrc:176
 msgid "&Previous Message"
@@ -232,11 +232,11 @@ msgstr "&Vlastnosti..."
 
 #: ../src/resources/menus.xrc:146
 msgid "&Purge Deleted Translations"
-msgstr "O&dstrániť nepoužívané preklady"
+msgstr "Odstrániť &nepoužívané preklady"
 
 #: ../src/resources/menus.xrc:145
 msgid "&Purge deleted translations"
-msgstr "O&dstrániť nepoužívané preklady"
+msgstr "Odstrániť &nepoužívané preklady"
 
 #: ../src/resources/menus.xrc:30
 msgid "&Save"
@@ -264,11 +264,11 @@ msgstr "&Najskôr nepreložené záznamy"
 
 #: ../src/resources/menus.xrc:134
 msgid "&Update from Sources"
-msgstr "Akt&ualizovať zo zdroja"
+msgstr "&Aktualizovať zo zdroja"
 
 #: ../src/resources/menus.xrc:133
 msgid "&Update from sources"
-msgstr "Akt&ualizovať zo zdroja"
+msgstr "&Aktualizovať zo zdroja"
 
 #: ../src/resources/menus.xrc:150
 msgid "&Validate Translations"
@@ -280,7 +280,7 @@ msgstr "&Overiť preklady"
 
 #: ../src/resources/menus.xrc:196
 msgid "&View"
-msgstr "Z&obraziť"
+msgstr "&Zobraziť"
 
 #: ../src/catalog.cpp:1665
 #, c-format
@@ -290,11 +290,11 @@ msgstr "„%s“ nie je platný POT súbor."
 #: ../src/summarydlg.cpp:56
 #, c-format
 msgid "(%i new, %i obsolete)"
-msgstr "(nových %i, vyradených %i)"
+msgstr "(%i nových, %i vyradených)"
 
 #: ../src/resources/summary.xrc:62
 msgid "(0 new, 0 obsolete)"
-msgstr "(nových 0, vyradených 0)"
+msgstr "(žiadne nové, žiadne vyradené)"
 
 #: ../src/welcomescreen.cpp:262
 msgid "(Learn more about GNU gettext)"
@@ -302,7 +302,7 @@ msgstr "(Dočítajte sa viac o GNU gettext)"
 
 #: ../src/chooselang.cpp:62
 msgid "(Use default language)"
-msgstr "(Použiť štandardný jazyk)"
+msgstr "(Použiť pôvodný jazyk)"
 
 #: ../src/resources/find.xrc:94
 msgid "< &Previous"
@@ -317,7 +317,7 @@ msgstr "<nepomenované>"
 #. but don't add it to this translation yourself) (wxWidgets 2.8)
 #: ../src/edapp.cpp:637
 msgid "About "
-msgstr "O programe"
+msgstr "O programe "
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
@@ -352,7 +352,7 @@ msgstr "Položka v zozname kľúčových slov:"
 
 #: ../src/edframe.cpp:1435
 msgid "Analyzing WordPress code..."
-msgstr ""
+msgstr "Analyzovanie WordPress kódu..."
 
 #: ../src/export_html.cpp:191
 msgid "Automatic translation"
@@ -360,11 +360,11 @@ msgstr "Automatický preklad"
 
 #: ../src/resources/prefs.xrc:69
 msgid "Automatically check for new version of Poedit"
-msgstr "Automaticky kontrolovať nové verzie Poedit"
+msgstr "Automaticky kontrolovať nové verzie programu"
 
 #: ../src/resources/prefs.xrc:94
 msgid "Automatically compile .mo file on save"
-msgstr "Automaticky vytvoriť .mo súbor pri ukladaní"
+msgstr "Automaticky vytvoriť .MO súbor pri ukladaní"
 
 #: ../src/manager.cpp:254
 msgid "Bad Tokens"
@@ -376,7 +376,7 @@ msgstr "Základná cesta:"
 
 #: ../src/aboutbox.cpp:119
 msgid "Based on the open source version →"
-msgstr ""
+msgstr "Založené na open sorce verzii →"
 
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
@@ -389,8 +389,7 @@ msgstr "Beta verzia programu expirovala"
 #: ../src/catalog.cpp:681
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
-"Chybný súbor katalógu: pred tvarom množného čísla nie je napísané "
-"msgid_plural"
+"Chybný súbor katalógu: tvar množného čísla msgstr použitý bez msgid_plural"
 
 #: ../src/catalog.cpp:636
 msgid ""
@@ -413,7 +412,7 @@ msgstr "Kúpiť online..."
 
 #: ../src/resources/menus.xrc:130
 msgid "C&atalog"
-msgstr "K&atalóg"
+msgstr "&Katalóg"
 
 #: ../src/resources/comment.xrc:45
 msgid "C&lear"
@@ -493,7 +492,7 @@ msgstr "Kontrolovať gramatiku počas písania"
 
 #: ../src/edapp.cpp:811
 msgid "Check for Updates..."
-msgstr "Skontrolovať aktualizácie..."
+msgstr "Skontrolovať aktualizácie programu..."
 
 #: ../src/resources/toolbar.xrc:38
 msgid "Check for errors in the translation"
@@ -521,7 +520,7 @@ msgstr "Zmazať preklad"
 
 #: ../src/licensing.cpp:203 ../src/resources/find.xrc:87
 msgid "Close"
-msgstr "&Zatvoriť"
+msgstr "Zatvoriť"
 
 #: ../src/resources/toolbar.xrc:56
 msgid "Comment"
@@ -555,7 +554,7 @@ msgstr "Neurčitá chyba: viacnásobné súbory hlavného pluginu."
 
 #: ../src/prefsdlg.cpp:102
 msgid "Consult TM when updating from sources"
-msgstr "Preveriť TM pri aktualizácii zo zdroja"
+msgstr "Preveriť PP pri aktualizácii zo zdroja"
 
 #: ../src/edframe.cpp:2229
 msgid "Context:"
@@ -574,9 +573,9 @@ msgid "Correct Spelling Automatically"
 msgstr "Automaticky opravovať gramatiku"
 
 #: ../src/wordpress.cpp:226
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't detect POs location for \"%s\"."
-msgstr "Nie je možné lokalizovať oblasť prekladu pluginu \"%s\"."
+msgstr "Nie je možné lokalizovať umiestnenie PO súboru z \"%s\"."
 
 #: ../src/wordpress.cpp:374
 #, c-format
@@ -594,11 +593,12 @@ msgid "Couldn't save file %s."
 msgstr "Nedá sa uložiť súbor %s."
 
 #: ../src/welcomescreen.cpp:233
-#, fuzzy
 msgid ""
 "Create a new translation. Poedit will set everything up; you can focus on "
 "translating."
-msgstr "Vytvoriť nový preklad. Poedit nastaví všetko automaticky."
+msgstr ""
+"Vytvoriť nový preklad. Poedit nastaví všetko automaticky; môžete sa "
+"sústrediť iba na prekladanie."
 
 #: ../src/welcomescreen.cpp:226
 msgid "Create new translation"
@@ -626,15 +626,15 @@ msgstr "Priečinky:"
 
 #: ../src/resources/menus.xrc:209
 msgid "Display &Notes for Translators"
-msgstr "Zobraziť poz&námky pre prekladateľov"
+msgstr "Zobraziť p&oznámky pre prekladateľov"
 
 #: ../src/resources/menus.xrc:199
 msgid "Display &Quotes"
-msgstr "Zobraziť ú&vodzovky"
+msgstr "Zobraziť &úvodzovky"
 
 #: ../src/resources/menus.xrc:208
 msgid "Display &notes for translators"
-msgstr "Zobraziť poz&námky pre prekladateľov"
+msgstr "Zobraziť p&oznámky pre prekladateľov"
 
 #: ../src/resources/menus.xrc:198
 msgid "Display &quotes"
@@ -686,11 +686,11 @@ msgstr "Stiahnuť"
 
 #: ../src/resources/manager.xrc:124 ../src/resources/menus.xrc:59
 msgid "E&xit"
-msgstr "&Skončiť"
+msgstr "U&končiť"
 
 #: ../src/resources/menus.xrc:39
 msgid "E&xport as HTML..."
-msgstr "E&xportovať ako HTML..."
+msgstr "&Exportovať ako HTML..."
 
 #: ../src/edapp.cpp:814 ../src/resources/manager.xrc:36
 #: ../src/resources/prefs.xrc:262
@@ -711,7 +711,7 @@ msgstr "Upraviť komentár"
 
 #: ../src/welcomescreen.cpp:220
 msgid "Edit a translation"
-msgstr "Upraviť existujúci preklad"
+msgstr "Upraviť preklad"
 
 #: ../src/edframe.cpp:2970 ../src/resources/comment.xrc:4
 #: ../src/resources/toolbar.xrc:57
@@ -732,11 +732,11 @@ msgstr "Editor"
 
 #: ../src/resources/menus.xrc:257 ../src/resources/menus.xrc:325
 msgid "Email &Support..."
-msgstr "&Podpora cez E-mail"
+msgstr "Podpora cez &E-mail"
 
 #: ../src/resources/menus.xrc:256 ../src/resources/menus.xrc:324
 msgid "Email &support..."
-msgstr "&Podpora cez E-mail"
+msgstr "Podpora cez &E-mail"
 
 #: ../src/wordpress.cpp:510
 msgid "Email Support"
@@ -752,7 +752,7 @@ msgstr "Umožní kontrolu pravopisu počas písania"
 
 #: ../src/edframe.cpp:1638
 msgid "Entries in the catalog are probably incorrect."
-msgstr "Položky v katalógu sú pravdepodobne nesprávne."
+msgstr "Záznamy v katalógu sú pravdepodobne nesprávne."
 
 #: ../src/edframe.cpp:2376
 msgid ""
@@ -767,7 +767,7 @@ msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
 msgstr ""
-"Záznamy s chybami boli v zozname vyznačené na červeno.Podrobnosti o chybe "
+"Záznamy s chybami boli v zozname vyznačené na červeno. Podrobnosti o chybe "
 "budú zobrazené, ak vyberiete nejaký záznam."
 
 #: ../src/edframe.cpp:2484
@@ -778,7 +778,7 @@ msgstr "Chyba pri spúšťaní katalógového súboru „%s“"
 #: ../src/fileviewer.cpp:297
 #, c-format
 msgid "Error opening file %s!"
-msgstr "Chyba pri otváraní súboru %s"
+msgstr "Chyba pri otváraní súboru „%s\""
 
 #: ../src/catalog.cpp:1531
 msgid "Error saving catalog"
@@ -802,12 +802,12 @@ msgstr "Aktualizovať zo zdrojov"
 
 #: ../src/resources/properties.xrc:147
 msgid "Extract text from source files in the following directories:"
-msgstr "Extrahovať text zo zdrojových súborov v nasledovných adresároch:"
+msgstr "Aktualizovať text zo zdrojových súborov v nasledovných adresároch:"
 
 #: ../src/digger.cpp:60
 #, c-format
 msgid "Failed command: %s"
-msgstr "Príkaz zlyhal: %s"
+msgstr "Neplatný príkaz: %s"
 
 #: ../src/wordpress.cpp:492
 msgid "Failed to extract WordPress information."
@@ -848,22 +848,19 @@ msgid ""
 "Please save it under different name."
 msgstr ""
 "Súbor „%s“ je možné iba čítať, takže nemôže byť uložený.\n"
-"Uložte ho prosím pod iným menom."
+"Skúste ho uložiť pod iným názvom."
 
 #: ../src/resources/menus.xrc:142
-#, fuzzy
 msgid "Fill Missing Translations from &TM"
-msgstr "Hľadať v prekladoch"
+msgstr "Vyplniť chýbajúce preklady z &PP"
 
 #: ../src/resources/menus.xrc:141
-#, fuzzy
 msgid "Fill missing translations from &TM"
-msgstr "Hľadať v prekladoch"
+msgstr "Vyplniť chýbajúce preklady z &PP"
 
 #: ../src/edframe.cpp:2880 ../src/edframe.cpp:2907
-#, fuzzy
 msgid "Filling missing translations from TM..."
-msgstr "Hľadať v prekladoch"
+msgstr "Vyplňovanie chýbajúcich prekladov z PP..."
 
 #: ../src/prefsdlg.cpp:208 ../src/tm/tm_migrate.cpp:225
 msgid "Finalizing..."
@@ -875,7 +872,7 @@ msgstr "Hľadať"
 
 #: ../src/resources/menus.xrc:115
 msgid "Find Next"
-msgstr "Nájsť ďalší"
+msgstr "Nájsť nasledujúci"
 
 #: ../src/resources/menus.xrc:119
 msgid "Find Previous"
@@ -894,13 +891,12 @@ msgid "Find in original strings"
 msgstr "Hľadať v pôvodných reťazcoch"
 
 #: ../src/resources/find.xrc:64
-#, fuzzy
 msgid "Find in translations"
-msgstr "Upraviť existujúci preklad"
+msgstr "Hľadať v prekladoch"
 
 #: ../src/resources/menus.xrc:101
 msgid "Find next"
-msgstr "Nájsť ďalší"
+msgstr "Nájsť nasledujúci"
 
 #: ../src/resources/menus.xrc:105
 msgid "Find previous"
@@ -1002,6 +998,11 @@ msgid ""
 "near-empty, it will not be very effective. The more translations\n"
 "you edit and the larger the TM grows, the better it gets."
 msgstr ""
+"Po povolení sa bude Poedit pokúšať vyplniť nové záznamy\n"
+"použitím predchádzajúcich prekladov uložených v pamäti\n"
+"prekladov (PP). Ak je PP skoro prázdna, táto voľba nebude\n"
+"veľmi účinná. Upravením viacerých prekladov a zväčšením\n"
+"PP bude táto funkcia efektívnejšia."
 
 #: ../src/edframe.cpp:2819
 msgid ""
@@ -1009,13 +1010,13 @@ msgid ""
 "permanently removed. You will have to translate them again if they are added "
 "back in the future."
 msgstr ""
-"Ak budete pokračovať s čistením, všetky preklady označene ako zmazané budú "
+"Ak budete pokračovať s čistením, všetky preklady označené ako zmazané budú "
 "natrvalo odstránené. V prípade, že budú v budúcnosti znovu pridané, budete "
 "ich musieť preložiť znovu."
 
 #: ../src/prefsdlg.cpp:192
 msgid "Importing translations..."
-msgstr "Importujú sa preklady..."
+msgstr "Import prekladov..."
 
 #: ../src/tm/tm_migrate.cpp:152
 #, c-format
@@ -1024,16 +1025,15 @@ msgstr "Import prekladov: %d"
 
 #: ../src/resources/prefs.xrc:76
 msgid "Include beta versions"
-msgstr "Zahrnúť beta verzie"
+msgstr "Zahrnúť beta verzie programu"
 
 #: ../src/edframe.cpp:172 ../src/edframe.cpp:2274
 msgid "Invalid file"
 msgstr "Neplatný súbor"
 
 #: ../src/edapp.cpp:918
-#, fuzzy
 msgid "Invalid license data."
-msgstr "Neplatný súbor"
+msgstr "Neplatné licenčné údaje."
 
 #: ../src/resources/prefs.xrc:351
 msgid "Invocation:"
@@ -1143,11 +1143,11 @@ msgstr "Zlučovanie rozdielov..."
 #: ../src/tm/tm_migrate.cpp:232
 #, c-format
 msgid "Migration exit status: %d"
-msgstr ""
+msgstr "Migrácia existujúceho stavu: %d"
 
 #: ../src/licensing.cpp:99
 msgid "Name"
-msgstr "Meno"
+msgstr "Názov"
 
 #: ../src/propertiesdlg.cpp:71
 msgid "Name of the project the translation is for"
@@ -1155,11 +1155,11 @@ msgstr "Názov projektu prekladu je pre"
 
 #: ../src/resources/menus.xrc:191
 msgid "Ne&xt Unfinished"
-msgstr "Ďalší &nedokončený"
+msgstr "Nasledujúci &nedokončený"
 
 #: ../src/resources/menus.xrc:190
 msgid "Ne&xt unfinished"
-msgstr "Ďalší &nedokončený"
+msgstr "Nasledujúci &nedokončený"
 
 #: ../src/statistics.cpp:172 ../src/statistics.cpp:198
 msgid "Needs review (fuzzy)"
@@ -1200,9 +1200,8 @@ msgid "New strings"
 msgstr "Nové reťazce"
 
 #: ../src/edframe.cpp:2870
-#, fuzzy
 msgid "No entries could be filled from the translation memory."
-msgstr "Vyskytol sa problém pri premiestňovaní Vašej pamäte prekladov."
+msgstr "Žiadne záznamy neboli vyplnené použitím pamäte prekladov."
 
 #: ../src/digger.cpp:186
 msgid "No files found in: "
@@ -1310,7 +1309,7 @@ msgstr "Osobné nastavenia"
 
 #: ../src/edframe.cpp:1808
 msgid "Please choose the reference you want to show:"
-msgstr "Prosím, vyberte si odkaz ktorý chcete zobraziť:"
+msgstr "Vyberte si odkaz ktorý chcete zobraziť:"
 
 #: ../src/edapp.cpp:231
 msgid ""
@@ -1322,11 +1321,11 @@ msgstr ""
 
 #: ../src/wordpress.cpp:523
 msgid "Please email this log to help@poedit.net. Thank you!"
-msgstr "Pošlite tento záznam na e-mail help@poedit.net. Ďakujeme!"
+msgstr "Pošlite tento záznam na e-mail: help@poedit.net. Ďakujeme!"
 
 #: ../src/propertiesdlg.cpp:256
 msgid "Please save the file first. This section cannot be edited until then."
-msgstr "Najprv uložte súbor. Táto sekcia nemôže byť bez toho upravovaná."
+msgstr "Najprv uložte súbor. Táto sekcia nemôže byť bez uloženia upravovaná."
 
 #: ../src/resources/properties.xrc:45
 msgid "Plural Forms:"
@@ -1361,7 +1360,7 @@ msgstr "Registrácia programu"
 #: ../src/tm/tm_migrate.cpp:171 ../src/tm/tm_migrate.cpp:264
 #: ../src/tm/tm_migrate.cpp:294
 msgid "Poedit Update"
-msgstr "Aktualizácia programu"
+msgstr "Aktualizácia programu Poedit"
 
 #: ../src/wordpress.cpp:502
 #, c-format
@@ -1374,9 +1373,9 @@ msgid ""
 "\n"
 "Please email help@poedit.net and we’ll sort it out."
 msgstr ""
-"Poedit nevie prečítať obsah priečinku, ktorý ste vybrali. Môže to byť "
-"problém pluginu alebo témy alebo Poedit sa začína správať nezmyselne. Chyby "
-"je::\n"
+"Poedit nevie prečítať obsah priečinku, ktorý ste vybrali. Môže to spôsobovať "
+"problém pluginu alebo témy alebo Poedit sa začína správať nezmyselne. "
+"Chyba:\n"
 "\n"
 " • %s\n"
 "\n"
@@ -1392,7 +1391,7 @@ msgstr "Poedit je jednoducho použiteľný editor prekladov."
 
 #: ../src/tm/tm_migrate.cpp:263
 msgid "Poedit needs to convert your translation memory to a new format."
-msgstr "Poediť potrebuje previesť vašu pamäť prekladov do nového formátu."
+msgstr "Poedit potrebuje previesť vašu pamäť prekladov do nového formátu."
 
 #: ../src/resources/prefs.xrc:4
 msgid "Preferences"
@@ -1400,7 +1399,7 @@ msgstr "Nastavenia"
 
 #: ../src/tm/tm_migrate.cpp:171
 msgid "Preparing migration..."
-msgstr "Príprava presunu..."
+msgstr "Príprava migrácie..."
 
 #: ../src/tm/tm_migrate.cpp:268
 msgid "Proceed"
@@ -1425,7 +1424,7 @@ msgid ""
 "\n"
 msgstr ""
 "Zakúpením plnej verzie odomknete viac vlastností\n"
-"v tejto a budúcej verzii programu Poedit, vrátane:\n"
+"v tejto a budúcich verziách programu Poedit, vrátane:\n"
 "\n"
 
 #: ../src/edframe.cpp:2823
@@ -1584,7 +1583,7 @@ msgstr "Usporiadať podľa &prekladu"
 
 #: ../src/resources/menus.xrc:220
 msgid "Sort by &file order"
-msgstr "Usporiadať podľa &poradia súborov"
+msgstr "Usporiadať podľa poradia &súborov"
 
 #: ../src/resources/menus.xrc:225
 msgid "Sort by &source"
@@ -1604,7 +1603,7 @@ msgstr "Zdrojový text"
 
 #: ../src/resources/prefs.xrc:412 ../src/resources/properties.xrc:127
 msgid "Source code charset:"
-msgstr "Kódová stránka zdrojových kódov:"
+msgstr "Zdrojový kód znakovej sady:"
 
 #: ../src/catalog.cpp:1619
 #, c-format
@@ -1613,7 +1612,7 @@ msgstr "Zdrojový kód priečinku „%s“ neexistuje."
 
 #: ../src/resources/prefs.xrc:238
 msgid "Source code parsers:"
-msgstr "Parsery zdrojových kódov:"
+msgstr "Zdrojový kód parserov:"
 
 #: ../src/fileviewer.cpp:48
 msgid "Source file"
@@ -1621,7 +1620,7 @@ msgstr "Zdrojový súbor"
 
 #: ../src/fileviewer.cpp:63
 msgid "Source file occurrence:"
-msgstr "Výskyt v zdrojovom súbori:"
+msgstr "Výskyt v zdrojovom súbore:"
 
 #: ../src/edlistctrl.cpp:332
 msgid "Source text"
@@ -1732,6 +1731,9 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
+"PP neobsahuje žiaden reťazec podobný obsahu tohto súboru. Tento spôsob je "
+"účinný iba pre poloautomatické preklady po tom ako sa Poedit naučí zo "
+"súborov, ktoré ste preložili manuálne."
 
 #: ../src/catalog.cpp:1529
 #, c-format
@@ -1753,16 +1755,15 @@ msgstr "Súbor nemohol byť otvorený."
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr ""
-"Súbor môže byť poškodený alebo formát nebol zozoznaný programom Poedit."
+"Súbor môže byť poškodený alebo formát nebol rozoznaný programom Poedit."
 
 #: ../src/edframe.cpp:1728
-#, fuzzy
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
-"Súbor bol bezpečne uložený, ale nemôže byť skompilovaný do formátu MO a "
-"následne použitý."
+"Súbor bol bezpečne uložený a skompilovaný do MO formátu, ale pravdepodobne "
+"nebude pracovať správne."
 
 #: ../src/edframe.cpp:1731
 msgid ""
@@ -1774,7 +1775,7 @@ msgstr ""
 
 #: ../src/edframe.cpp:1725
 msgid "The file was saved safely."
-msgstr ""
+msgstr "Súbor bol bezpečne uložený."
 
 #: ../src/edapp.cpp:919
 #, c-format
@@ -1784,6 +1785,10 @@ msgid ""
 "\n"
 "(%s)"
 msgstr ""
+"Odkaz neobsauje platnú licenciu programu Poedit. Vyskúšajte ju zadať "
+"manuálne alebo kontaktujte podporu e-mailom na help@poedit.net.\n"
+"\n"
+"(%s)"
 
 #: ../src/licensing.cpp:109
 msgid ""
@@ -1792,7 +1797,7 @@ msgid ""
 "accounts on a single computer."
 msgstr ""
 "Registračný kľúč môže byť použitý na viacerých počítačoch\n"
-"pre jeden alebo viac účtov na jednom počítači."
+"alebo pre jeden alebo viac účtov na jednom počítači."
 
 #: ../src/welcomescreen.cpp:266
 msgid "The simplest way to fill this catalog is to update it from a POT:"
@@ -1801,13 +1806,16 @@ msgstr ""
 "šablóny:"
 
 #: ../src/edframe.cpp:1754
-#, fuzzy, c-format
+#, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "Preklad je pripravený na používanie."
-msgstr[1] "Preklad je pripravený na používanie."
-msgstr[2] "Preklad je pripravený na používanie."
+msgstr[0] ""
+"Preklad je pripravený na používanie, ale %d záznam ešte nie je preložený."
+msgstr[1] ""
+"Preklad je pripravený na používanie, ale %d záznamy ešte nie sú preložené."
+msgstr[2] ""
+"Preklad je pripravený na používanie, ale %d záznamov ešte nie je preložených."
 
 #: ../src/edframe.cpp:1759
 msgid "The translation is ready for use."
@@ -1818,6 +1826,8 @@ msgid ""
 "The translations were marked as fuzzy, because they may be inaccurate. You "
 "should review them for correctness."
 msgstr ""
+"Preklady boli označené ako nepresné, pretože môžu byť nesprávne. "
+"Skontrolujte ich správnosť."
 
 #: ../src/welcomescreen.cpp:252
 msgid "There are no translations. That’s unusual."
@@ -1835,7 +1845,7 @@ msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Nastala chyba pri načítaní katalógu. Niektoré údaje môžu chýbať alebo byť "
+"Nastala chyba pri načítavaní katalógu. Niektoré údaje môžu chýbať alebo byť "
 "poškodené."
 
 #: ../src/resources/summary.xrc:37
@@ -1851,8 +1861,7 @@ msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "Poedit will add them to the catalog now."
 msgstr ""
-"Tieto reťazce boli nájdené v zdrojových kódoch avšak nenachádzajú sa v "
-"katalógu.\n"
+"Tieto reťazce boli nájdené v zdroji ale v katalógu sa nenachádzajú.\n"
 "Program Poedit ich teraz pridá do katalógu."
 
 #: ../src/edapp.cpp:230
@@ -1874,18 +1883,19 @@ msgid ""
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
 msgstr ""
-"Tento príkaz sa používa na spustenie syntaktického analyzátora.\n"
-"%o sa zamení za meno výstupného súboru, %K na\n"
-"zoznam kľúčových slov, %F na zoznam\n"
-"vstupných súborov, %C na znak kódovej stránky (pozri nižšie)."
+"Tento príkaz sa používa na spustenie parsera.\n"
+"„%o\" sa zamení za meno výstupného súboru,\n"
+"„%K\" na zoznam kľúčových slov, „%F\" na zoznam\n"
+"vstupných súborov, „%C\" na znak kódovej stránky\n"
+"(pozri nižšie)."
 
 #: ../src/tm/tm_migrate.cpp:267
 msgid ""
 "This must be done before Poedit can start. It may take a few minutes if you "
 "have lots of translations stored, but should normally be much faster."
 msgstr ""
-"Toto musí byť vykonané pred štartom programu. Môže to zabrať niekoľko minút "
-"ak máte uložené veľké množstvo prekladov, ale normálne to trvá kratšie."
+"Toto musí byť vykonané pred štartom programu. Normálne to trvá kratšie, ale "
+"ak máte uložené veľké množstvo prekladov, ta to môže trvať niekoľko minút."
 
 #: ../src/resources/prefs.xrc:424
 #, c-format
@@ -1893,8 +1903,8 @@ msgid ""
 "This will be attached to the command line\n"
 "only if source codecharset was given. %c expands to charset value."
 msgstr ""
-"Toto bude pripojené k príkazu len ak je zadaná\n"
-"kódová stránka zdrojových súborov. %c sa nahradí kódovou stránkou."
+"Toto bude pripojené do príkazového riadku iba ak je zadaný\n"
+"zdroj znakovej sady. „%c\" sa rozšíri o hodnotu znakovej sady."
 
 #: ../src/resources/prefs.xrc:405
 #, c-format
@@ -1902,16 +1912,16 @@ msgid ""
 "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
 msgstr ""
-"Toto bude pripojené k príkazu raz pre každý\n"
-"vstupný súbor. %f sa zamení názvom súboru."
+"Toto bude pripojené k príkazu raz pre každý vstupný\n"
+"súbor. „%f\" sa zamení názvom súboru."
 
 #: ../src/resources/prefs.xrc:386
 msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
 msgstr ""
-"Toto bude pripojené k príkazovému riadku raz\n"
-"pre každé kľúčové slovo. %k sa zamení sa kľúčové slovo."
+"Toto bude pripojené k príkazovému riadku raz pre každé\n"
+"kľúčové slovo. „%k\" sa zamení sa kľúčové slovo."
 
 #: ../src/resources/toolbar.xrc:51
 msgid "Toggled if selected string has fuzzy translation"
@@ -1933,11 +1943,11 @@ msgid ""
 "Translators typically use PO template files (POTs) prepared for them by the "
 "developer."
 msgstr ""
-"Prekladateľné údaje nie sú pridávané manuálne v systéme Gettext, ale sú "
-"automaticky rozbalené zo zdrojového kódu.\n"
-"Takto zostanú vaše preklady aktuálne a správne.\n"
-"Preklady zvyčajne používajú súbory PO šablón (s príponou .POT) pripravené "
-"vývojarom."
+"Prekladateľné reťazce nie sú pridávané manuálne v systéme Gettext, ale sú "
+"automaticky rozbalené\n"
+"zo zdrojového kódu. Takto zostanú vaše preklady aktuálne a správne.\n"
+"Prekladatelia zvyčajne používajú súbory PO šablón (s príponou .POT), ktoré "
+"sú pripravené vývojarom."
 
 #: ../src/welcomescreen.cpp:232
 msgid "Translate WordPress theme or plugin"
@@ -1953,9 +1963,8 @@ msgid "Translated %u strings"
 msgstr "Preložených %u reťazcov"
 
 #: ../src/edframe.cpp:2906
-#, fuzzy
 msgid "Translating"
-msgstr "Preklad"
+msgstr "Prekladanie"
 
 #: ../src/edlistctrl.cpp:333 ../src/export_html.cpp:155
 #: ../src/statistics.cpp:158
@@ -1975,9 +1984,8 @@ msgid "Translation Memory"
 msgstr "Pamäť prekladov"
 
 #: ../src/edframe.cpp:2992 ../src/edframe.cpp:3004
-#, fuzzy
 msgid "Translation Suggestions:"
-msgstr "Vlastnosti prekladu"
+msgstr "Návrhy prekladu:"
 
 #: ../src/resources/menus.xrc:81
 msgid "Translation is &fuzzy"
@@ -1988,14 +1996,12 @@ msgid "Translation memory migration failed."
 msgstr "Presun pamäte prekladov na nepodaril."
 
 #: ../src/resources/properties.xrc:139
-#, fuzzy
 msgid "Translation properties"
-msgstr "Pamäť prekladov"
+msgstr "Vlastnosti prekladov"
 
 #: ../src/edframe.cpp:2990 ../src/edframe.cpp:3002
-#, fuzzy
 msgid "Translation suggestions:"
-msgstr "Vlastnosti prekladu"
+msgstr "Návrhy prekladu:"
 
 #: ../src/edlistctrl.cpp:389
 #, c-format
@@ -2017,7 +2023,7 @@ msgstr "Priečinok prekladov (%s) neexistuje."
 
 #: ../src/statistics.cpp:180
 msgid "Translations with errors"
-msgstr "Preklad s chybami"
+msgstr "Preklady s chybami"
 
 #: ../src/edframe.cpp:3315
 msgid "Two"
@@ -2079,7 +2085,7 @@ msgstr "Aktualizuje sa katalóg"
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
 msgstr ""
 "Aktualizácia katalógu zlyhala. Kliknite na „Podrobnosti >>\" pre viac "
-"podrobností."
+"detailov."
 
 #: ../src/welcomescreen.cpp:204
 msgid "Upgrade to the Pro version of Poedit with more features."
@@ -2115,7 +2121,7 @@ msgstr ""
 
 #: ../src/prefsdlg.cpp:90
 msgid "Use translation memory"
-msgstr "Použiť pamäť prekladov"
+msgstr "Použiť pamäť prekladov (PP)"
 
 #: ../src/resources/toolbar.xrc:37
 msgid "Validate"
@@ -2161,9 +2167,8 @@ msgid "Windows"
 msgstr "Windows"
 
 #: ../src/edframe.cpp:1434
-#, fuzzy
 msgid "WordPress"
-msgstr "Chyby WordPress"
+msgstr "WordPress"
 
 #: ../src/wordpress.cpp:522
 msgid "WordPress Errors Log"
@@ -2184,18 +2189,18 @@ msgstr "Môžete vybrať prekladateľné reťazce priamo z zdrojového kódu:"
 
 #: ../src/edframe.cpp:462
 msgid "You can't drop more than one file on Poedit window."
-msgstr "Nemôžete zmazať viac ako jeden súbor naraz v okne aplikácie Poedit."
+msgstr "Nemôžete spustiť naraz viac ako jeden súbor v okne aplikácie Poedit."
 
 #: ../src/chooselang.cpp:86
 msgid "You must restart Poedit for this change to take effect."
-msgstr "Aby sa zmeny prejavili, treba Poedit reštartovať."
+msgstr "Musíte reštartovať program Poedit, aby sa prejavili zmeny."
 
 #: ../src/edframe.cpp:2327
 msgid ""
 "You should set your email address in Preferences so that it can be used for "
 "Last-Translator header in GNU gettext files."
 msgstr ""
-"Mali by ste nastaviť Vašu emailovú adresu vo Vlastnostiach, aby mohla byť "
+"Mali by ste nastaviť Vašu emailovú adresu v Nastaveniach, aby mohla byť "
 "použitá pre hlavičku Last-Translator v súboroch GNU gettext."
 
 #: ../src/edframe.cpp:1156
@@ -2215,23 +2220,25 @@ msgid ""
 "Your name and email set below are only used\n"
 "to set the Last-Translator header of GNU gettext files."
 msgstr ""
-"Vaše meno a email, ktoré uvediete nižšie, sa používajú iba na\n"
-"nastavenie hodnoty hlavičky Last-Translator súborov GNU gettext."
+"Vaše meno a email, ktoré uvediete nižšie, sa používajú iba na nastavenie\n"
+"hodnoty hlavičky Last-Translator súborov GNU gettext."
 
 #: ../src/resources/prefs.xrc:29
 msgid "Your name:"
 msgstr "Vaše meno:"
 
 #: ../src/tm/tm_migrate.cpp:298
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your translation memory data couldn't be migrated. The error was:\n"
 "\n"
 "%s\n"
 "Please email help@poedit.net and we’ll get it fixed."
 msgstr ""
-"Vyskytla sa chyba a vaša pamäť prekladov nemôže byť presunutá. Kontaktujte "
-"nás na e-mail help@poedit.net a my to opravíme."
+"Vaša pamäť prekladov nemôže byť premiestnená. Chyba:\n"
+"\n"
+"%s\n"
+"Kontaktujte nás na e-mail help@poedit.net a my to opravíme."
 
 #: ../src/licensing.cpp:187
 msgid ""
