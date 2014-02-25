@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
 "POT-Creation-Date: 2014-02-02 15:06+0100\n"
-"PO-Revision-Date: 2013-12-06 12:31+0100\n"
+"PO-Revision-Date: 2014-02-21 22:32+0100\n"
 "Last-Translator: Xabier Aramendi <azpidatziak@gmail.com>\n"
 "Language-Team: (EUS_Xabier Aramendi) <azpidatziak@gmail.com>\n"
 "Language: eu\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6\n"
+"X-Generator: Poedit 1.6.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
@@ -45,11 +45,11 @@ msgid " Version "
 msgstr " Bertsioa"
 
 #: ../src/edframe.cpp:2863
-#, fuzzy, c-format
+#, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "Hutsegitea itzulpen oroimena eguneratzerakoan: %s"
-msgstr[1] "Hutsegitea itzulpen oroimena eguneratzerakoan: %s"
+msgstr[0] "%d sarrera itzulpen oroimenetik bete da."
+msgstr[1] "%d sarrerak itzulpen oroimenetik bete dira."
 
 #: ../src/edframe.cpp:1710
 #, c-format
@@ -343,7 +343,7 @@ msgstr "Gai bat giltza-hitzen zerrendan:"
 
 #: ../src/edframe.cpp:1435
 msgid "Analyzing WordPress code..."
-msgstr ""
+msgstr "WordPress kodea aztertzen..."
 
 #: ../src/export_html.cpp:191
 msgid "Automatic translation"
@@ -367,7 +367,7 @@ msgstr "Ohinarri helburua:"
 
 #: ../src/aboutbox.cpp:119
 msgid "Based on the open source version →"
-msgstr ""
+msgstr "Iturburu irekiko bertsioan ohinarritua →"
 
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
@@ -564,9 +564,9 @@ msgid "Correct Spelling Automatically"
 msgstr "Zuzendu Idazketa Berezgaitasunez"
 
 #: ../src/wordpress.cpp:226
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't detect POs location for \"%s\"."
-msgstr "Ezin da \"%s\" pluginaren itzulpen domeinua atzeman."
+msgstr "Ezin da \"%s\"-rako PO kokapena atzeman."
 
 #: ../src/wordpress.cpp:374
 #, c-format
@@ -584,11 +584,12 @@ msgid "Couldn't save file %s."
 msgstr "Ezinezkoa %s agiria gordetzea."
 
 #: ../src/welcomescreen.cpp:233
-#, fuzzy
 msgid ""
 "Create a new translation. Poedit will set everything up; you can focus on "
 "translating."
-msgstr "Sortu itzulpen berri bat. Poedit-ek berezgaitasunez ezarriko du dena."
+msgstr ""
+"Sortu itzulpen berri bat. Poedit-ek ezarriko du dena; itzulpenean fokutu "
+"zaitezke."
 
 #: ../src/welcomescreen.cpp:226
 msgid "Create new translation"
@@ -841,19 +842,16 @@ msgstr ""
 "Mesedez, gorde izen ezberdin batekin."
 
 #: ../src/resources/menus.xrc:142
-#, fuzzy
 msgid "Fill Missing Translations from &TM"
-msgstr "Bilatu itzulpenetan"
+msgstr "Bete Ez Dauden Itzulpenak &IO-etik"
 
 #: ../src/resources/menus.xrc:141
-#, fuzzy
 msgid "Fill missing translations from &TM"
-msgstr "Bilatu itzulpenetan"
+msgstr "Bete Ez Dauden Itzulpenak IO-etik"
 
 #: ../src/edframe.cpp:2880 ../src/edframe.cpp:2907
-#, fuzzy
 msgid "Filling missing translations from TM..."
-msgstr "Bilatu itzulpenetan"
+msgstr "Ez Dauden Itzulpenak IO-etik betetzen"
 
 #: ../src/prefsdlg.cpp:208 ../src/tm/tm_migrate.cpp:225
 msgid "Finalizing..."
@@ -884,9 +882,8 @@ msgid "Find in original strings"
 msgstr "Bilatu jatorrizko kateetan"
 
 #: ../src/resources/find.xrc:64
-#, fuzzy
 msgid "Find in translations"
-msgstr "Editatu itzulpen bat"
+msgstr "Bilatu itzulpenetan"
 
 #: ../src/resources/menus.xrc:101
 msgid "Find next"
@@ -992,6 +989,10 @@ msgid ""
 "near-empty, it will not be very effective. The more translations\n"
 "you edit and the larger the TM grows, the better it gets."
 msgstr ""
+"Gaituta badago, Poedit saiatuko da sarrera berriak betetzen\n"
+"itzulpen oroimenean biltegiratutako zure aurreko itzulpenak erabiliz.\n"
+"IO erdi-hutsik badago, ez da oso eraginkorra izango. Zenbat eta\n"
+"itzulpen gehiago editatu eta IO handiagoa izan, lorpenak hobeak dira."
 
 #: ../src/edframe.cpp:2819
 msgid ""
@@ -1021,9 +1022,8 @@ msgid "Invalid file"
 msgstr "Agiri baliogabea"
 
 #: ../src/edapp.cpp:918
-#, fuzzy
 msgid "Invalid license data."
-msgstr "Agiri baliogabea"
+msgstr "Baimen datu baliogabea."
 
 #: ../src/resources/prefs.xrc:351
 msgid "Invocation:"
@@ -1133,7 +1133,7 @@ msgstr "Ezberdintasunak batzen..."
 #: ../src/tm/tm_migrate.cpp:232
 #, c-format
 msgid "Migration exit status: %d"
-msgstr ""
+msgstr "Migrazioa irteera egoera: %d"
 
 #: ../src/licensing.cpp:99
 msgid "Name"
@@ -1190,9 +1190,8 @@ msgid "New strings"
 msgstr "Kate berriak"
 
 #: ../src/edframe.cpp:2870
-#, fuzzy
 msgid "No entries could be filled from the translation memory."
-msgstr "Arazo bat gertatu da zure itzulpen oroimena mugitzean."
+msgstr "Ez dago itzulpen oroimenetik bete daitekeen sarrerarik."
 
 #: ../src/digger.cpp:186
 msgid "No files found in: "
@@ -1722,6 +1721,9 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
+"IO-k ez agiri honen edukiaren antzekoa den katerik. Eraginkorra da bakarrik "
+"erdi-berezgaitasunezko itzulpenetarako Poedit-ek eskuz itzuli dituzun "
+"agirietatik nahikoa ikasi ondoren."
 
 #: ../src/catalog.cpp:1529
 #, c-format
@@ -1748,12 +1750,12 @@ msgstr ""
 "dirudi."
 
 #: ../src/edframe.cpp:1728
-#, fuzzy
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
-"Agiria seguru gorde da, baina ezin da MO heuskarrian bildu eta erabili."
+"Agiria seguru gorde eta MO heuskarrian bildu da, baina zihurrenik ez du ongi "
+"lan egingo."
 
 #: ../src/edframe.cpp:1731
 msgid ""
@@ -1764,7 +1766,7 @@ msgstr ""
 
 #: ../src/edframe.cpp:1725
 msgid "The file was saved safely."
-msgstr ""
+msgstr "Agiria seguru gorde da."
 
 #: ../src/edapp.cpp:919
 #, c-format
@@ -1774,6 +1776,10 @@ msgid ""
 "\n"
 "(%s)"
 msgstr ""
+"Loturak ez du baliozko Poedit baimena. Saiatu hura eskuz sartzen edo jarri "
+"harremanetan sostenguarekin hemen, help@poedit.net.\n"
+"\n"
+"(%s)"
 
 #: ../src/licensing.cpp:109
 msgid ""
@@ -1790,12 +1796,15 @@ msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr "Katalogo hau betetzeko bide arruntena POT batetik eguneratzea da:"
 
 #: ../src/edframe.cpp:1754
-#, fuzzy, c-format
+#, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "Itzulpena erabiltzeko gertu dago."
-msgstr[1] "Itzulpena erabiltzeko gertu dago."
+msgstr[0] ""
+"Itzulpena erabiltzeko gertu dago, baina %d sarrera ez dago itzulita oraindik."
+msgstr[1] ""
+"Itzulpena erabiltzeko gertu dago, baina %d sarrerak ez daude itzulita "
+"oraindik."
 
 #: ../src/edframe.cpp:1759
 msgid "The translation is ready for use."
@@ -1806,6 +1815,8 @@ msgid ""
 "The translations were marked as fuzzy, because they may be inaccurate. You "
 "should review them for correctness."
 msgstr ""
+"Itzulpenak zalantzazkoak bezala markatu dira, ez zehatzak izan "
+"daitezkeelako. Berrikusi egin behar dituzu zuzentzeko."
 
 #: ../src/welcomescreen.cpp:252
 msgid "There are no translations. That’s unusual."
@@ -1939,9 +1950,8 @@ msgid "Translated %u strings"
 msgstr "%u kate itzulita"
 
 #: ../src/edframe.cpp:2906
-#, fuzzy
 msgid "Translating"
-msgstr "Itzulpena"
+msgstr "Itzultzen"
 
 #: ../src/edlistctrl.cpp:333 ../src/export_html.cpp:155
 #: ../src/statistics.cpp:158
@@ -1950,7 +1960,7 @@ msgstr "Itzulpena"
 
 #: ../src/resources/menus.xrc:82
 msgid "Translation Is &Fuzzy"
-msgstr "&Itzulpena Zalantzazkoa Da"
+msgstr "&Itzulpena Zalantzazkoa da"
 
 #: ../src/languagectrl.cpp:102
 msgid "Translation Language"
@@ -1961,9 +1971,8 @@ msgid "Translation Memory"
 msgstr "Itzulpen Oroimena"
 
 #: ../src/edframe.cpp:2992 ../src/edframe.cpp:3004
-#, fuzzy
 msgid "Translation Suggestions:"
-msgstr "Itzulpenaren ezaugarriak"
+msgstr "Itzulpen Iradokizunak:"
 
 #: ../src/resources/menus.xrc:81
 msgid "Translation is &fuzzy"
@@ -1974,14 +1983,12 @@ msgid "Translation memory migration failed."
 msgstr "Itzulpen oroimen migrazio hutsegitea."
 
 #: ../src/resources/properties.xrc:139
-#, fuzzy
 msgid "Translation properties"
-msgstr "Itzulpen Oroimena"
+msgstr "Itzulpenaren ezaugarriak"
 
 #: ../src/edframe.cpp:2990 ../src/edframe.cpp:3002
-#, fuzzy
 msgid "Translation suggestions:"
-msgstr "Itzulpenaren ezaugarriak"
+msgstr "Itzulpen iradokizunak:"
 
 #: ../src/edlistctrl.cpp:389
 #, c-format
@@ -2147,9 +2154,8 @@ msgid "Windows"
 msgstr "Windows"
 
 #: ../src/edframe.cpp:1434
-#, fuzzy
 msgid "WordPress"
-msgstr "WordPress akatsa"
+msgstr "WordPress"
 
 #: ../src/wordpress.cpp:522
 msgid "WordPress Errors Log"
@@ -2209,16 +2215,17 @@ msgid "Your name:"
 msgstr "Zure izena:"
 
 #: ../src/tm/tm_migrate.cpp:298
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your translation memory data couldn't be migrated. The error was:\n"
 "\n"
 "%s\n"
 "Please email help@poedit.net and we’ll get it fixed."
 msgstr ""
-"Okerren bat gertatu da eta zure itzulpen oroimeneko datuak ezin dira "
-"migratu. Mesedez bidali post@ bat hona: help@poedit.net eta zuzentzen "
-"saiatuko gara."
+"Zure itzulpen oroimen datuak ezin dira migratu. Akatsa izan da:\n"
+"\n"
+"%s\n"
+"Mesedez bidali post@ bat hona: help@poedit.net eta zuzentzen saiatuko gara."
 
 #: ../src/licensing.cpp:187
 msgid ""
