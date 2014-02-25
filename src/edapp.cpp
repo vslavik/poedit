@@ -186,10 +186,10 @@ bool PoeditApp::OnInit()
     wxXmlResource::Get()->InitAllHandlers();
 
 #if defined(__WXMAC__)
-    wxXmlResource::Get()->Load(wxStandardPaths::Get().GetResourcesDir() + "/*.xrc");
+    wxXmlResource::Get()->LoadAllFiles(wxStandardPaths::Get().GetResourcesDir());
 #elif defined(__WXMSW__)
 	wxStandardPaths::Get().DontIgnoreAppSubDir();
-    wxXmlResource::Get()->Load(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\*.xrc");
+    wxXmlResource::Get()->LoadAllFiles(wxStandardPaths::Get().GetResourcesDir() + "\\Resources");
 #else
     InitXmlResource();
 #endif
