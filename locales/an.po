@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
 "POT-Creation-Date: 2014-02-02 15:06+0100\n"
-"PO-Revision-Date: 2014-01-05 19:03+0100\n"
+"PO-Revision-Date: 2014-02-18 13:31+0100\n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: softaragonés\n"
 "Language: an\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
@@ -45,11 +45,12 @@ msgid " Version "
 msgstr " Versión "
 
 #: ../src/edframe.cpp:2863
-#, fuzzy, c-format
+#, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "S'ha produciu una error en esviellar as traduccions memorizadas: %s"
-msgstr[1] "S'ha produciu una error en esviellar as traduccions memorizadas: %s"
+msgstr[0] "%d dentrada ye estada replenada dende as traduccions memorizadas."
+msgstr[1] ""
+"%d dentradas son estadas replenadas dende as traduccions memorizadas."
 
 #: ../src/edframe.cpp:1710
 #, c-format
@@ -344,7 +345,7 @@ msgstr "Elemento d'a lista de parolas clau:"
 
 #: ../src/edframe.cpp:1435
 msgid "Analyzing WordPress code..."
-msgstr ""
+msgstr "Se ye analisando codigo WordPress ..."
 
 #: ../src/export_html.cpp:191
 msgid "Automatic translation"
@@ -368,7 +369,7 @@ msgstr "Directorio radiz:"
 
 #: ../src/aboutbox.cpp:119
 msgid "Based on the open source version →"
-msgstr ""
+msgstr "Basau en a versión de codigo ubierto →"
 
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
@@ -565,10 +566,9 @@ msgid "Correct Spelling Automatically"
 msgstr "Correchir automaticament a ortografía"
 
 #: ../src/wordpress.cpp:226
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't detect POs location for \"%s\"."
-msgstr ""
-"No s'ha puesto detectar o dominio de traducción d'o complemento \"%s\"."
+msgstr "No s'ha puesto detectar a ubicación de PO ta \"%s\"."
 
 #: ../src/wordpress.cpp:374
 #, c-format
@@ -588,12 +588,12 @@ msgid "Couldn't save file %s."
 msgstr "No s'ha puesto alzar o fichero %s."
 
 #: ../src/welcomescreen.cpp:233
-#, fuzzy
 msgid ""
 "Create a new translation. Poedit will set everything up; you can focus on "
 "translating."
 msgstr ""
-"Creyar una nueva traducción. O Poedit lo configurará tot automaticament."
+"Creyar una nueva traducción. O Poedit lo configurará tot. Puetz centrar-te "
+"en a traducción."
 
 #: ../src/welcomescreen.cpp:226
 msgid "Create new translation"
@@ -847,19 +847,16 @@ msgstr ""
 "Por favor, alza-lo con un nombre distinto."
 
 #: ../src/resources/menus.xrc:142
-#, fuzzy
 msgid "Fill Missing Translations from &TM"
-msgstr "Mirar en as traduccions"
+msgstr "Replenar as traduccions que mancan dende as &TM"
 
 #: ../src/resources/menus.xrc:141
-#, fuzzy
 msgid "Fill missing translations from &TM"
-msgstr "Mirar en as traduccions"
+msgstr "Replenar as traduccions que mancan dende as &TM"
 
 #: ../src/edframe.cpp:2880 ../src/edframe.cpp:2907
-#, fuzzy
 msgid "Filling missing translations from TM..."
-msgstr "Mirar en as traduccions"
+msgstr "Se son replenando as traduccions que mancaban dende as&TM"
 
 #: ../src/prefsdlg.cpp:208 ../src/tm/tm_migrate.cpp:225
 msgid "Finalizing..."
@@ -890,9 +887,8 @@ msgid "Find in original strings"
 msgstr "Mirar en o texto orichinal"
 
 #: ../src/resources/find.xrc:64
-#, fuzzy
 msgid "Find in translations"
-msgstr "Editar una traducción"
+msgstr "Mirar en as traduccions"
 
 #: ../src/resources/menus.xrc:101
 msgid "Find next"
@@ -998,6 +994,12 @@ msgid ""
 "near-empty, it will not be very effective. The more translations\n"
 "you edit and the larger the TM grows, the better it gets."
 msgstr ""
+"Si ye activau, o Poedit prebará a replenar as dentradas nuevas fendo servir "
+"as tuyas\n"
+"traduccions anteriors almagazenadas en as traduccions memorizadas. Si as TM "
+"son\n"
+"quasi vuedas , no será muit efectivo. A mas traduccions\n"
+"edites y mas creixcan as TM, millor en marchará."
 
 #: ../src/edframe.cpp:2819
 msgid ""
@@ -1027,9 +1029,8 @@ msgid "Invalid file"
 msgstr "Fichero invalido"
 
 #: ../src/edapp.cpp:918
-#, fuzzy
 msgid "Invalid license data."
-msgstr "Fichero invalido"
+msgstr "Datos de licencia invalidos."
 
 #: ../src/resources/prefs.xrc:351
 msgid "Invocation:"
@@ -1139,7 +1140,7 @@ msgstr "Mezclando as diferencias..."
 #: ../src/tm/tm_migrate.cpp:232
 #, c-format
 msgid "Migration exit status: %d"
-msgstr ""
+msgstr "Estau de salida d'a migración: %d"
 
 #: ../src/licensing.cpp:99
 msgid "Name"
@@ -1197,9 +1198,8 @@ msgid "New strings"
 msgstr "Textos nuevos"
 
 #: ../src/edframe.cpp:2870
-#, fuzzy
 msgid "No entries could be filled from the translation memory."
-msgstr "S'ha produciu un problema en mover as suyas traduccions memorizadas."
+msgstr "No s'han puesto replenar dentradas dende as traduccions memorizadas."
 
 #: ../src/digger.cpp:186
 msgid "No files found in: "
@@ -1735,6 +1735,9 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
+"As TM no contienen cadenas similars a lo conteniu d'iste fichero. Nomás ye "
+"efectivo ta las traduccions semiautomaticas dimpués de que  o Poedit aprenda "
+"prou de fichers que traduciés de traza manual."
 
 #: ../src/catalog.cpp:1529
 #, c-format
@@ -1760,12 +1763,12 @@ msgstr ""
 "O fichero puet estar danyau u en un formato no reconoixiu por o Poedit."
 
 #: ../src/edframe.cpp:1728
-#, fuzzy
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
-"O fichero s'ha alzau, pero no puet compilar-se ta lo formato MO ni usar-se."
+"O fichero s'ha alzau de traza segura y s'ha compilau ta lo formato MO, pero "
+"probablement no marche correctament."
 
 #: ../src/edframe.cpp:1731
 msgid ""
@@ -1776,7 +1779,7 @@ msgstr ""
 
 #: ../src/edframe.cpp:1725
 msgid "The file was saved safely."
-msgstr ""
+msgstr "O fichero s'ha alzau de traza segura."
 
 #: ../src/edapp.cpp:919
 #, c-format
@@ -1786,6 +1789,10 @@ msgid ""
 "\n"
 "(%s)"
 msgstr ""
+"O vinclo no contién una licencia valida d'o Poedit. Preba metendo-la "
+"manualment u contacta ta suporte en help@poedit.net.\n"
+"\n"
+"(%s)"
 
 #: ../src/licensing.cpp:109
 msgid ""
@@ -1803,12 +1810,14 @@ msgstr ""
 "A traza mas simpla ta emplir iste catalogo ye esviellar-lo dende un POT:"
 
 #: ../src/edframe.cpp:1754
-#, fuzzy, c-format
+#, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "A traducción ye presta pa usar-se."
-msgstr[1] "A traducción ye presta pa usar-se."
+msgstr[0] ""
+"A traducción ye presta pa usar-se, pero %d dentrada ye encara sin traducir."
+msgstr[1] ""
+"A traducción ye presta pa usar-se, pero %d dentradas son encara sin traducir."
 
 #: ../src/edframe.cpp:1759
 msgid "The translation is ready for use."
@@ -1819,6 +1828,8 @@ msgid ""
 "The translations were marked as fuzzy, because they may be inaccurate. You "
 "should review them for correctness."
 msgstr ""
+"As traduccions s'han marcau como provisionals, porque pueden estar "
+"imprecisas. Has a revisar-las ta la corrección d'ellas."
 
 #: ../src/welcomescreen.cpp:252
 msgid "There are no translations. That’s unusual."
@@ -1955,9 +1966,8 @@ msgid "Translated %u strings"
 msgstr "Traducidas %u cadenas"
 
 #: ../src/edframe.cpp:2906
-#, fuzzy
 msgid "Translating"
-msgstr "Traducción"
+msgstr "Traducindo"
 
 #: ../src/edlistctrl.cpp:333 ../src/export_html.cpp:155
 #: ../src/statistics.cpp:158
@@ -1977,9 +1987,8 @@ msgid "Translation Memory"
 msgstr "Traduccions memorizadas"
 
 #: ../src/edframe.cpp:2992 ../src/edframe.cpp:3004
-#, fuzzy
 msgid "Translation Suggestions:"
-msgstr "Propiedatz de traducción"
+msgstr "Sucherencias de traducción:"
 
 #: ../src/resources/menus.xrc:81
 msgid "Translation is &fuzzy"
@@ -1990,14 +1999,12 @@ msgid "Translation memory migration failed."
 msgstr "S'ha produciu una error en a migración d'as traduccions memorizadas."
 
 #: ../src/resources/properties.xrc:139
-#, fuzzy
 msgid "Translation properties"
-msgstr "Traduccions memorizadas"
+msgstr "Propiedatz de traducción"
 
 #: ../src/edframe.cpp:2990 ../src/edframe.cpp:3002
-#, fuzzy
 msgid "Translation suggestions:"
-msgstr "Propiedatz de traducción"
+msgstr "Sucherencias de traducción:"
 
 #: ../src/edlistctrl.cpp:389
 #, c-format
@@ -2164,9 +2171,8 @@ msgid "Windows"
 msgstr "Windows"
 
 #: ../src/edframe.cpp:1434
-#, fuzzy
 msgid "WordPress"
-msgstr "Error d'o WordPress"
+msgstr "WordPress"
 
 #: ../src/wordpress.cpp:522
 msgid "WordPress Errors Log"
@@ -2228,16 +2234,18 @@ msgid "Your name:"
 msgstr "O suyo nombre:"
 
 #: ../src/tm/tm_migrate.cpp:298
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your translation memory data couldn't be migrated. The error was:\n"
 "\n"
 "%s\n"
 "Please email help@poedit.net and we’ll get it fixed."
 msgstr ""
-"Bella cosa ha saliu malament y os datos d'as traduccions memorizadas no "
-"s'han puesto migrar. Ninvia un correu electronico a help@poedit.net y "
-"tractaremos d'apanyar o problema."
+"Os datos d'as tuyas traduccions memorizadas no s'han puesto migrar. A error "
+"ye estada:\n"
+"\n"
+"%s\n"
+" Ninvia un correu electronico a help@poedit.net y tractaremos d'apanyar-lo."
 
 #: ../src/licensing.cpp:187
 msgid ""
