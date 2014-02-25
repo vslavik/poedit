@@ -25,6 +25,7 @@
 
 #include "progressinfo.h"
 
+#include <wx/app.h>
 #include <wx/dialog.h>
 #include <wx/log.h>
 #include <wx/xrc/xmlres.h>
@@ -93,5 +94,5 @@ void ProgressInfo::UpdateMessage(const wxString& text)
     txt->SetLabel(text);
     txt->Refresh();
     m_dlg->Refresh();
-    wxYield();
+    wxTheApp->Yield(/*onlyIfNeeded=*/true);
 }
