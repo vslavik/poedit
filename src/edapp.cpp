@@ -705,6 +705,9 @@ static NSMenuItem *AddNativeItem(NSMenu *menu, int pos, const wxString&text, SEL
 void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 {
     wxMenu *apple = bar->OSXGetAppleMenu();
+    if (!apple)
+        return; // huh
+
     apple->Insert(3, XRCID("menu_manager"), _("Catalogs Manager"));
     apple->InsertSeparator(3);
 
