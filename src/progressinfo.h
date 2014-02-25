@@ -60,9 +60,7 @@ class ProgressInfo
     private:
             wxDialog *m_dlg;
             bool m_cancelled;
-#ifndef __WXOSX__
             wxWindowDisabler *m_disabler;
-#endif
 };
 
 

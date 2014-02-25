@@ -188,23 +188,11 @@ private:
             wxArrayString paths;
             dlg->GetPaths(paths);
 
-            int flags = wxPD_AUTO_HIDE|wxPD_CAN_ABORT;
-            // workaround bug in wx: http://trac.wxwidgets.org/ticket/15902
-#ifndef __WXOSX__
-            flags |= wxPD_APP_MODAL;
-#endif
             wxProgressDialog progress(_("Translation Memory"),
                                       _("Importing translations..."),
                                       (int)paths.size() * 2 + 1,
                                       this,
-                                      flags);
-#ifdef __WXOSX__
-            // Workaround a problem in wxOSX: non-modal window such as this
-            // is shown _behind_ modal PreferencesDialog and not visible. So
-            // move it to a visible position -- ugly, but better than nothing.
-            // FIXME: Use window-modal progress indicator instead.
-            progress.Move(progress.GetPosition().x + this->GetSize().x + 20, -1);
-#endif
+                                      wxPD_APP_MODAL|wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
             auto tm = TranslationMemory::Get().CreateWriter();
             int step = 0;
             for (size_t i = 0; i < paths.size(); i++)
