@@ -1618,12 +1618,13 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
         wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
     }
 
-    UpdateCatalog(pot_file);
-
-    if (wxConfig::Get()->ReadBool("use_tm", true) &&
-        wxConfig::Get()->ReadBool("use_tm_when_updating", false))
+    if (UpdateCatalog(pot_file))
     {
-        AutoTranslateCatalog();
+        if (wxConfig::Get()->ReadBool("use_tm", true) &&
+            wxConfig::Get()->ReadBool("use_tm_when_updating", false))
+        {
+            AutoTranslateCatalog();
+        }
     }
 
     RefreshControls();
