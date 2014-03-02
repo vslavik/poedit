@@ -27,6 +27,7 @@
 
 #include <wx/app.h>
 #include <wx/dialog.h>
+#include <wx/evtloop.h>
 #include <wx/log.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/gauge.h>
@@ -81,6 +82,13 @@ void ProgressInfo::UpdateGauge(int increment)
 {
     wxGauge *g = XRCCTRL(*m_dlg, "progress", wxGauge);
     g->SetValue(g->GetValue() + increment);
+
+#ifdef __WXOSX__
+    // Set again the message to workaround a wxOSX bug
+    wxStaticText *txt = XRCCTRL(*m_dlg, "info", wxStaticText);
+    txt->SetLabel(txt->GetLabel());
+    txt->Update();
+#endif
 }
 
 void ProgressInfo::ResetGauge(int value)
@@ -93,6 +101,7 @@ void ProgressInfo::UpdateMessage(const wxString& text)
     wxStaticText *txt = XRCCTRL(*m_dlg, "info", wxStaticText);
     txt->SetLabel(text);
     txt->Refresh();
+    txt->Update();
     m_dlg->Refresh();
-    wxTheApp->Yield(/*onlyIfNeeded=*/true);
+    wxEventLoop::GetActive()->Yield(/*onlyIfNeeded=*/true);
 }
