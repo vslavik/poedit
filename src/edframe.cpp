@@ -1601,33 +1601,37 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
 
 void PoeditFrame::OnUpdate(wxCommandEvent& event)
 {
-    wxString pot_file;
+    DoIfCanDiscardCurrentDoc([=]{
 
-    if (event.GetId() == XRCID("menu_update_from_pot"))
-    {
-        wxString path = wxPathOnly(m_fileName);
-        if (path.empty())
-            path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-        pot_file =
-            wxFileSelector(_("Open catalog template"),
-                 path, wxEmptyString, wxEmptyString,
-                 _("GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
-                 wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
-        if (pot_file.empty())
-            return;
-        wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
-    }
+        wxString pot_file;
 
-    if (UpdateCatalog(pot_file))
-    {
-        if (wxConfig::Get()->ReadBool("use_tm", true) &&
-            wxConfig::Get()->ReadBool("use_tm_when_updating", false))
+        if (event.GetId() == XRCID("menu_update_from_pot"))
         {
-            AutoTranslateCatalog();
+            wxString path = wxPathOnly(m_fileName);
+            if (path.empty())
+                path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
+            pot_file =
+                wxFileSelector(_("Open catalog template"),
+                     path, wxEmptyString, wxEmptyString,
+                     _("GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
+                     wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
+            if (pot_file.empty())
+                return;
+            wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
         }
-    }
 
-    RefreshControls();
+        if (UpdateCatalog(pot_file))
+        {
+            if (wxConfig::Get()->ReadBool("use_tm", true) &&
+                wxConfig::Get()->ReadBool("use_tm_when_updating", false))
+            {
+                AutoTranslateCatalog();
+            }
+        }
+
+        RefreshControls();
+
+    });
 }
 
 
