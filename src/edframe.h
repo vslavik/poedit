@@ -117,7 +117,7 @@ class PoeditFrame : public wxFrame
         /** Updates catalog and sets m_modified flag. Updates from POT
             if \a pot_file is not empty and from sources otherwise.
          */
-        void UpdateCatalog(const wxString& pot_file = wxEmptyString);
+        bool UpdateCatalog(const wxString& pot_file = wxEmptyString);
 
 
         virtual void DoGiveHelp(const wxString& text, bool show);

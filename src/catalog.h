@@ -528,13 +528,14 @@ class Catalog
         /** Updates the catalog from sources.
             \see SourceDigger, Parser, UpdateFromPOT.
          */
-        bool Update(ProgressInfo *progress, bool summary = true);
+        bool Update(ProgressInfo *progress, bool summary, bool *cancelledByUser);
 
         /** Updates the catalog from POT file.
             \see Update
          */
         bool UpdateFromPOT(const wxString& pot_file,
-                           bool summary = true,
+                           bool summary,
+                           bool *cancelledByUser,
                            bool replace_header = false);
 
         /// Returns the number of strings/translations in the catalog.
@@ -649,7 +650,7 @@ class Catalog
 
             \return true if the merge was OK'ed by the user, false otherwise
          */
-        bool ShowMergeSummary(Catalog *refcat);
+        bool ShowMergeSummary(Catalog *refcat, bool *cancelledByUser);
 
     private:
         CatalogItemArray m_items;

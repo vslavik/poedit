@@ -456,7 +456,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
             else
             {
                 Catalog cat(f);
-                cat.Update(&pinfo, /*summary=*/false);
+                cat.Update(&pinfo, /*summary=*/false, nullptr);
                 int validation_errors = 0;
                 Catalog::CompilationStatus mo_status;
                 cat.Save(f, false, validation_errors, mo_status);

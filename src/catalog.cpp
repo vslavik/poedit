@@ -1592,7 +1592,7 @@ int Catalog::DoValidate(const wxString& po_file)
 }
 
 
-bool Catalog::Update(ProgressInfo *progress, bool summary)
+bool Catalog::Update(ProgressInfo *progress, bool summary, bool *cancelledByUser)
 {
     if (!m_isOk) return false;
 
@@ -1637,7 +1637,7 @@ bool Catalog::Update(ProgressInfo *progress, bool summary)
         if ( progress )
             progress->UpdateMessage(_("Merging differences..."));
 
-        if (!summary || ShowMergeSummary(newcat))
+        if (!summary || ShowMergeSummary(newcat, cancelledByUser))
             succ = Merge(newcat);
         if (!succ)
         {
@@ -1655,7 +1655,8 @@ bool Catalog::Update(ProgressInfo *progress, bool summary)
 }
 
 
-bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary,
+bool Catalog::UpdateFromPOT(const wxString& pot_file,
+                            bool summary, bool *cancelledByUser,
                             bool replace_header)
 {
     if (!m_isOk) return false;
@@ -1668,7 +1669,7 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary,
         return false;
     }
 
-    if (!summary || ShowMergeSummary(&newcat))
+    if (!summary || ShowMergeSummary(&newcat, cancelledByUser))
     {
         if ( !Merge(&newcat) )
             return false;
@@ -1762,15 +1763,20 @@ void Catalog::GetMergeSummary(Catalog *refcat,
     }
 }
 
-bool Catalog::ShowMergeSummary(Catalog *refcat)
+bool Catalog::ShowMergeSummary(Catalog *refcat, bool *cancelledByUser)
 {
+    if (cancelledByUser)
+        *cancelledByUser = false;
     if (wxConfig::Get()->ReadBool("show_summary", false))
     {
         wxArrayString snew, sobsolete;
         GetMergeSummary(refcat, snew, sobsolete);
         MergeSummaryDialog sdlg;
         sdlg.TransferTo(snew, sobsolete);
-        return (sdlg.ShowModal() == wxID_OK);
+        bool ok = (sdlg.ShowModal() == wxID_OK);
+        if (cancelledByUser)
+            *cancelledByUser = !ok;
+        return ok;
     }
     else
         return true;

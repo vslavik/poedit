@@ -1383,6 +1383,7 @@ void PoeditFrame::NewFromPOT()
         wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
         ok = catalog->UpdateFromPOT(pot_file,
                                     /*summary=*/false,
+                                    /*cancelledByUser=*/nullptr,
                                     /*replace_header=*/true);
     }
     if (!ok)
@@ -1566,7 +1567,7 @@ void PoeditFrame::UpdateAfterPreferencesChange()
 }
 
 
-void PoeditFrame::UpdateCatalog(const wxString& pot_file)
+bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
 {
     // This ensures that the list control won't be redrawn during Update()
     // call when a dialog box is hidden; another alternative would be to call
@@ -1577,22 +1578,25 @@ void PoeditFrame::UpdateCatalog(const wxString& pot_file)
 
     ProgressInfo progress(this, _("Updating catalog"));
 
+    bool cancelledByUser;
     bool succ;
     if (pot_file.empty())
-        succ = m_catalog->Update(&progress);
+        succ = m_catalog->Update(&progress, true, &cancelledByUser);
     else
-        succ = m_catalog->UpdateFromPOT(pot_file);
+        succ = m_catalog->UpdateFromPOT(pot_file, true, &cancelledByUser);
 
     EnsureContentView(Content::PO);
     m_list->CatalogChanged(m_catalog);
 
     m_modified = succ || m_modified;
-    if (!succ)
+    if (!succ && !cancelledByUser)
     {
         wxLogWarning(_("Entries in the catalog are probably incorrect."));
         wxLogError(
            _("Updating the catalog failed. Click on 'Details >>' for details."));
     }
+
+    return succ;
 }
 
 void PoeditFrame::OnUpdate(wxCommandEvent& event)
