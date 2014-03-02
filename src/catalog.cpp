@@ -446,7 +446,9 @@ void Catalog::HeaderData::ParseDict()
         path.Printf("X-Poedit-SearchPath-%i", i);
         if (!HasHeader(path))
             break;
-        SearchPaths.Add(GetHeader(path));
+        wxString p = GetHeader(path);
+        if (!p.empty())
+            SearchPaths.Add(p);
         i++;
     }
 }

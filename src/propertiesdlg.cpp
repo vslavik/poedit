@@ -221,7 +221,8 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
         if (dummy[dummy.Length() - 1] == _T('/') || 
                 dummy[dummy.Length() - 1] == _T('\\')) 
             dummy.RemoveLast();
-        cat->Header().SearchPaths.Add(dummy);
+        if (!dummy.empty())
+            cat->Header().SearchPaths.Add(dummy);
     }
     if (arr.GetCount() > 0 && cat->Header().BasePath.empty()) 
         cat->Header().BasePath = ".";

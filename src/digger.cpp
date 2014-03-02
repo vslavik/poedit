@@ -213,6 +213,8 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
 
 int SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
 {
+    if (dirname.empty())
+        return 0;
     wxDir dir(dirname);
     if (!dir.IsOpened()) 
         return 0;
