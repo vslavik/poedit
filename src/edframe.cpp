@@ -2976,6 +2976,17 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
 }
 
 
+static inline void SetCtrlFont(wxWindow *win, const wxFont& font)
+{
+#ifdef __WXMSW__
+    // Native wxMSW text control sends EN_CHANGE when the font changes,
+    // producing a wxEVT_TEXT event as if the user changed the value. This is
+    // not the case, so supress the event.
+    wxEventBlocker block(win, wxEVT_TEXT);
+#endif
+    win->SetFont(font);
+}
+
 void PoeditFrame::SetCustomFonts()
 {
     if (!m_list)
@@ -3013,26 +3024,26 @@ void PoeditFrame::SetCustomFonts()
             fi.FromString(name);
             wxFont font;
             font.SetNativeFontInfo(fi);
-            m_textComment->SetFont(font);
-            m_textAutoComments->SetFont(font);
-            m_textOrig->SetFont(font);
-            m_textOrigPlural->SetFont(font);
-            m_textTrans->SetFont(font);
+            SetCtrlFont(m_textComment, font);
+            SetCtrlFont(m_textAutoComments, font);
+            SetCtrlFont(m_textOrig, font);
+            SetCtrlFont(m_textOrigPlural, font);
+            SetCtrlFont(m_textTrans, font);
             for (size_t i = 0; i < m_textTransPlural.size(); i++)
-                m_textTransPlural[i]->SetFont(font);
+                SetCtrlFont(m_textTransPlural[i], font);
             prevUseFontText = true;
         }
     }
     else if (prevUseFontText)
     {
         wxFont font(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT));
-        m_textComment->SetFont(font);
-        m_textAutoComments->SetFont(font);
-        m_textOrig->SetFont(font);
-        m_textOrigPlural->SetFont(font);
-        m_textTrans->SetFont(font);
+        SetCtrlFont(m_textComment, font);
+        SetCtrlFont(m_textAutoComments, font);
+        SetCtrlFont(m_textOrig, font);
+        SetCtrlFont(m_textOrigPlural, font);
+        SetCtrlFont(m_textTrans, font);
         for (size_t i = 0; i < m_textTransPlural.size(); i++)
-            m_textTransPlural[i]->SetFont(font);
+            SetCtrlFont(m_textTransPlural[i], font);
         prevUseFontText = false;
     }
 }
