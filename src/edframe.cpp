@@ -2587,7 +2587,10 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(wxID_SAVE, hasCatalog);
     menubar->Enable(wxID_SAVEAS, hasCatalog);
     menubar->Enable(XRCID("menu_export"), hasCatalog);
+
+#ifndef __WXOSX__
     toolbar->EnableTool(wxID_SAVE, hasCatalog);
+#endif
     toolbar->EnableTool(XRCID("menu_update"), editable);
     toolbar->EnableTool(XRCID("menu_validate"), editable);
     toolbar->EnableTool(XRCID("menu_fuzzy"), editable);
