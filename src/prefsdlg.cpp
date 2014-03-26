@@ -317,6 +317,11 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
         betas->Disable();
 #endif
 
+#if defined(__WXOSX__) && !defined(USE_SPARKLE)
+    XRCCTRL(*this, "auto_updates", wxCheckBox)->Hide();
+    XRCCTRL(*this, "beta_versions", wxCheckBox)->Hide();
+#endif
+
     m_pageTM->LoadSettings();
 }
  

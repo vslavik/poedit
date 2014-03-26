@@ -44,9 +44,9 @@
 #include <wx/dnd.h>
 #include <wx/windowptr.h>
 
-#ifdef USE_SPARKLE
+#ifdef __WXOSX__
 #include "osx_helpers.h"
-#endif // USE_SPARKLE
+#endif
 
 #ifdef USE_SPELLCHECKING
 
