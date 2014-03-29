@@ -67,6 +67,24 @@ private:
     static bool ms_keepFiles;
 };
 
+// Holder of temporary file for creating the output.
+class TempOutputFileFor
+{
+public:
+    explicit TempOutputFileFor(const wxString& filename);
+    ~TempOutputFileFor();
+
+    const wxString& FileName() const { return m_filenameTmp; }
+
+#ifdef __WXOSX__
+    wxString m_tempDir;
+#endif
+    wxString m_filenameTmp;
+};
+
+// Helper for writing files
+
+
 // ----------------------------------------------------------------------
 // Helpers for persisting windows' state
 // ----------------------------------------------------------------------

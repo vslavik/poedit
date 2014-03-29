@@ -1348,9 +1348,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
     if ( !m_header.RevisionDate.empty() )
         m_header.RevisionDate = GetCurrentTimeRFC822();
 
-    const wxString po_file_temp = po_file + ".temp.po";
-    if ( wxFileExists(po_file_temp) )
-        wxRemoveFile(po_file_temp);
+    TempOutputFileFor po_file_temp_obj(po_file);
+    const wxString po_file_temp = po_file_temp_obj.FileName();
 
     if ( !DoSaveOnly(po_file_temp) )
     {
