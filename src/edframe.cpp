@@ -1265,10 +1265,17 @@ void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 
 void PoeditFrame::OnSave(wxCommandEvent& event)
 {
-    if (!m_fileExistsOnDisk || m_fileName.empty())
-        OnSaveAs(event);
-    else
-        WriteCatalog(m_fileName);
+    try
+    {
+        if (!m_fileExistsOnDisk || m_fileName.empty())
+            OnSaveAs(event);
+        else
+            WriteCatalog(m_fileName);
+    }
+    catch (Exception& e)
+    {
+        wxLogError("%s", e.what());
+    }
 }
 
 
@@ -1620,13 +1627,20 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
             wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
         }
 
-        if (UpdateCatalog(pot_file))
+        try
         {
-            if (wxConfig::Get()->ReadBool("use_tm", true) &&
-                wxConfig::Get()->ReadBool("use_tm_when_updating", false))
+            if (UpdateCatalog(pot_file))
             {
-                AutoTranslateCatalog();
+                if (wxConfig::Get()->ReadBool("use_tm", true) &&
+                    wxConfig::Get()->ReadBool("use_tm_when_updating", false))
+                {
+                    AutoTranslateCatalog();
+                }
             }
+        }
+        catch (Exception& e)
+        {
+            wxLogError("%s", e.what());
         }
 
         RefreshControls();
@@ -1637,10 +1651,17 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
 
 void PoeditFrame::OnValidate(wxCommandEvent&)
 {
-    wxBusyCursor bcur;
-    ReportValidationErrors(m_catalog->Validate(),
-                           /*mo_compilation_failed=*/Catalog::CompilationStatus::NotDone,
-                           /*from_save=*/false, []{});
+    try
+    {
+        wxBusyCursor bcur;
+        ReportValidationErrors(m_catalog->Validate(),
+                               /*mo_compilation_failed=*/Catalog::CompilationStatus::NotDone,
+                               /*from_save=*/false, []{});
+    }
+    catch (Exception& e)
+    {
+        wxLogError("%s", e.what());
+    }
 }
 
 
