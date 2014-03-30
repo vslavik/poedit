@@ -35,6 +35,10 @@
 #include <wx/msgdlg.h>
 #include <wx/filename.h>
 
+#ifdef __WXOSX__
+#include <wx/cocoa/string.h>
+#endif
+
 #include <set>
 #include <algorithm>
 
@@ -1329,6 +1333,22 @@ wxString FormatStringForFile(const wxString& text)
 } // anonymous namespace
 
 
+#ifdef __WXOSX__
+
+@interface CompiledMOFilePresenter : NSObject<NSFilePresenter>
+@property (atomic, strong) NSURL *presentedItemURL;
+@property (atomic, strong) NSURL *primaryPresentedItemURL;
+@end
+
+@implementation CompiledMOFilePresenter
+- (NSOperationQueue *)presentedItemOperationQueue {
+     return [NSOperationQueue mainQueue];
+}
+@end
+
+#endif // __WXOSX__
+
+
 bool Catalog::Save(const wxString& po_file, bool save_mo,
                    int& validation_errors, CompilationStatus& mo_compilation_status)
 {
@@ -1407,15 +1427,50 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
 
     if (save_mo && wxConfig::Get()->Read("compile_mo", (long)true))
     {
-        const wxString mofile = po_file.BeforeLast(_T('.')) + ".mo";
+        const wxString mo_file = po_file.BeforeLast('.') + ".mo";
+        TempOutputFileFor mo_file_temp_obj(mo_file);
+        const wxString mo_file_temp = mo_file_temp_obj.FileName();
+
         if ( ExecuteGettext
               (
                   wxString::Format(_T("msgfmt -o \"%s\" \"%s\""),
-                                   mofile.c_str(),
+                                   mo_file_temp.c_str(),
                                    po_file.c_str())
               ) )
         {
             mo_compilation_status = CompilationStatus::Success;
+
+#ifdef __WXOSX__
+            CompiledMOFilePresenter *presenter = [CompiledMOFilePresenter new];
+            NSURL *mofileUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file.utf8_str()]];
+            NSURL *mofiletempUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file_temp.utf8_str()]];
+            presenter.presentedItemURL = mofileUrl;
+            presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String: po_file.utf8_str()]];
+            [NSFileCoordinator addFilePresenter:presenter];
+            [NSFileCoordinator filePresenters];
+            NSFileCoordinator *coo = [[NSFileCoordinator alloc] initWithFilePresenter:presenter];
+            [coo coordinateWritingItemAtURL:mofileUrl options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL *newURL) {
+                NSURL *resultingUrl;
+                BOOL ok = [[NSFileManager defaultManager] replaceItemAtURL:newURL
+                                                             withItemAtURL:mofiletempUrl
+                                                            backupItemName:nil
+                                                                   options:0
+                                                          resultingItemURL:&resultingUrl
+                                                                     error:nil];
+                if (!ok)
+                {
+                    wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+                    mo_compilation_status = CompilationStatus::Error;
+                }
+            }];
+            [NSFileCoordinator removeFilePresenter:presenter];
+#else // !__WXOSX__
+            if ( !wxRenameFile(mo_file_temp, mo_file, /*overwrite=*/true) )
+            {
+                wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+                mo_compilation_status = CompilationStatus::Error;
+            }
+#endif // __WXOSX__/!__WXOSX__
         }
         else
         {
