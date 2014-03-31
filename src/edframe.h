@@ -216,7 +216,9 @@ public: // for PoeditApp
         void NewFromPOT();
 
         void OnOpen(wxCommandEvent& event);
+#ifndef __WXOSX__
         void OnOpenHist(wxCommandEvent& event);
+#endif
 private:
         void OnCloseCmd(wxCommandEvent& event);
         void OnSave(wxCommandEvent& event);
@@ -281,7 +283,9 @@ private:
         void ReportValidationErrors(int errors, Catalog::CompilationStatus mo_compilation_status,
                                     bool from_save, TFunctor completionHandler);
 
+#ifndef __WXOSX__
         wxFileHistory& FileHistory() { return wxGetApp().FileHistory(); }
+#endif
         void NoteAsRecentFile();
 
         DECLARE_EVENT_TABLE()
@@ -308,7 +312,9 @@ private:
         wxTextCtrl *m_textTransSingularForm;
         wxNotebook *m_pluralNotebook;
         wxStaticText *m_labelSingular, *m_labelPlural;
+#ifndef __WXOSX__
         wxMenu *m_menuForHistory;
+#endif
 
         wxFont m_normalGuiFont, m_boldGuiFont;
 

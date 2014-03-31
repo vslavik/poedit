@@ -403,7 +403,9 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_NEW,                  PoeditFrame::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditFrame::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditFrame::OnOpen)
+ #ifndef __WXOSX__
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
+ #endif
 #endif // __WXMSW__
    EVT_MENU           (wxID_CLOSE,                PoeditFrame::OnCloseCmd)
    EVT_MENU           (wxID_SAVE,                 PoeditFrame::OnSave)
@@ -555,14 +557,15 @@ PoeditFrame::PoeditFrame() :
     wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar("mainmenu");
     if (MenuBar)
     {
+#ifndef __WXOSX__
         wxString menuName(_("&File"));
         menuName.Replace(wxT("&"), wxEmptyString);
         m_menuForHistory = MenuBar->GetMenu(MenuBar->FindMenu(menuName));
         FileHistory().UseMenu(m_menuForHistory);
         FileHistory().AddFilesToMenu(m_menuForHistory);
+#endif
         SetMenuBar(MenuBar);
         AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
-
 #ifdef __WXOSX__
         wxGetApp().TweakOSXMenuBar(MenuBar);
 #endif
@@ -890,8 +893,10 @@ PoeditFrame::~PoeditFrame()
 
     SaveWindowState(this);
 
+#ifndef __WXOSX__
     FileHistory().RemoveMenu(m_menuForHistory);
     FileHistory().Save(*cfg);
+#endif
 
     // write all changes:
     cfg->Flush();
@@ -1250,6 +1255,7 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
 
 
 
+#ifndef __WXOSX__
 void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 {
     wxString f(FileHistory().GetHistoryFile(event.GetId() - wxID_FILE1));
@@ -1261,6 +1267,7 @@ void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 
     OpenFile(f);
 }
+#endif // !__WXOSX__
 
 
 void PoeditFrame::OnSave(wxCommandEvent& event)
@@ -2442,9 +2449,10 @@ void PoeditFrame::NoteAsRecentFile()
 {
     wxFileName fn(m_fileName);
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
-    FileHistory().AddFileToHistory(fn.GetFullPath());
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:[NSString stringWithUTF8String: fn.GetFullPath().utf8_str()]]];
+#else
+    FileHistory().AddFileToHistory(fn.GetFullPath());
 #endif
 }
 
@@ -2730,7 +2738,10 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     m_modified = false;
     m_fileExistsOnDisk = true;
 
+#ifndef __WXOSX__
     FileHistory().AddFileToHistory(m_fileName);
+#endif
+
     UpdateTitle();
 
     RefreshControls();

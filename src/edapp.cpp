@@ -76,9 +76,29 @@
 #include "errors.h"
 #include "language.h"
 
+#ifdef __WXOSX__
+struct PoeditApp::RecentMenuData
+{
+    NSMenu *menu = nullptr;
+    NSMenuItem *menuItem = nullptr;
+    wxMenuBar *menuBar = nullptr;
+};
+#endif
+
 extern bool MigrateLegacyTranslationMemory();
 
 IMPLEMENT_APP(PoeditApp);
+
+PoeditApp::PoeditApp()
+{
+#ifdef __WXOSX__
+    m_recentMenuData.reset(new RecentMenuData);
+#endif
+}
+
+PoeditApp::~PoeditApp()
+{
+}
 
 wxString PoeditApp::GetAppVersion() const
 {
@@ -215,7 +235,9 @@ bool PoeditApp::OnInit()
     s_macHelpMenuTitleName = _("&Help");
 #endif
 
+#ifndef __WXOSX__
     FileHistory().Load(*wxConfig::Get());
+#endif
 
     // NB: It's important to do this before TM is used for the first time.
     if ( !MigrateLegacyTranslationMemory() )
@@ -309,6 +331,13 @@ void PoeditApp::OpenNewFile()
 
 void PoeditApp::OpenFiles(const wxArrayString& names)
 {
+    PoeditFrame *active = PoeditFrame::UnusedActiveWindow();
+    if (names.size() == 1 && active)
+    {
+        active->OpenFile(names[0]);
+        return;
+    }
+
     for ( auto name: names )
         PoeditFrame::Create(name);
 }
@@ -500,7 +529,9 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (wxID_NEW,                  PoeditApp::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditApp::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditApp::OnOpen)
+ #ifndef __WXOSX__
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditApp::OnOpenHist)
+ #endif
 #endif // !__WXMSW__
    EVT_MENU           (wxID_ABOUT,                PoeditApp::OnAbout)
    EVT_MENU           (XRCID("menu_manager"),     PoeditApp::OnManager)
@@ -510,6 +541,9 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (XRCID("menu_gettext_manual"), PoeditApp::OnGettextManual)
 #ifdef __WXMSW__
    EVT_MENU           (XRCID("menu_check_for_updates"), PoeditApp::OnWinsparkleCheck)
+#endif
+#ifdef __WXOSX__
+   EVT_IDLE           (PoeditApp::OnIdleInstallOpenRecentMenu)
 #endif
 END_EVENT_TABLE()
 
@@ -568,6 +602,7 @@ void PoeditApp::OnOpen(wxCommandEvent&)
 }
 
 
+#ifndef __WXOSX__
 void PoeditApp::OnOpenHist(wxCommandEvent& event)
 {
     TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpenHist(event) );
@@ -581,6 +616,7 @@ void PoeditApp::OnOpenHist(wxCommandEvent& event)
 
     OpenFiles(wxArrayString(1, &f));
 }
+#endif // !__WXOSX__
 
 #endif // !__WXMSW__
 
@@ -786,8 +822,69 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     AddNativeItem(speech, -1, _("Start Speaking"), @selector(startSpeaking:), @"");
     AddNativeItem(speech, -1, _("Stop Speaking"), @selector(stopSpeaking:), @"");
     [editNS setSubmenu:speech forItem:item];
-
 }
+
+void PoeditApp::CreateFakeOpenRecentMenu()
+{
+    // Populate the menu with a hack that will be replaced.
+    NSMenu *mainMenu = [NSApp mainMenu];
+ 
+    NSMenuItem *item = [mainMenu addItemWithTitle:@"File" action:NULL keyEquivalent:@""];
+	NSMenu *menu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"File", nil)];
+ 
+	item = [menu addItemWithTitle:NSLocalizedString(@"Open Recent", nil)
+						   action:NULL
+					keyEquivalent:@""];
+	NSMenu *openRecentMenu = [[NSMenu alloc] initWithTitle:@"Open Recent"];
+	[openRecentMenu performSelector:@selector(_setMenuName:) withObject:@"NSRecentDocumentsMenu"];
+	[menu setSubmenu:openRecentMenu forItem:item];
+    m_recentMenuData->menuItem = item;
+    m_recentMenuData->menu = openRecentMenu;
+ 
+	item = [openRecentMenu addItemWithTitle:NSLocalizedString(@"Clear Menu", nil)
+									 action:@selector(clearRecentDocuments:)
+							  keyEquivalent:@""];
+}
+
+void PoeditApp::InstallOpenRecentMenu(wxMenuBar *bar)
+{
+    if (m_recentMenuData->menuItem)
+        [m_recentMenuData->menuItem setSubmenu:nil];
+    m_recentMenuData->menuBar = nullptr;
+
+    if (!bar)
+        return;
+
+    wxMenu *fileMenu;
+    wxMenuItem *item = bar->FindItem(XRCID("open_recent"), &fileMenu);
+    if (!item)
+        return;
+
+    NSMenu *native = fileMenu->GetHMenu();
+    NSMenuItem *nativeItem = [native itemWithTitle:wxNSStringWithWxString(item->GetItemLabelText())];
+    if (!nativeItem)
+        return;
+
+    [nativeItem setSubmenu:m_recentMenuData->menu];
+    m_recentMenuData->menuItem = nativeItem;
+    m_recentMenuData->menuBar = bar;
+}
+
+void PoeditApp::OnIdleInstallOpenRecentMenu(wxIdleEvent& event)
+{
+    event.Skip();
+    auto installed = wxMenuBar::MacGetInstalledMenuBar();
+    if (m_recentMenuData->menuBar != installed)
+        InstallOpenRecentMenu(installed);
+}
+
+void PoeditApp::OSXOnWillFinishLaunching()
+{
+    wxApp::OSXOnWillFinishLaunching();
+    CreateFakeOpenRecentMenu();
+}
+
+
 #endif // __WXOSX__
 
 
