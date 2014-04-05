@@ -31,6 +31,10 @@
 #include <wx/config.h>
 #include <wx/display.h>
 
+#ifdef __WXOSX__
+#include <wx/cocoa/string.h>
+#endif
+
 wxString EscapeMarkup(const wxString& str)
 {
     wxString s(str);
@@ -121,6 +125,52 @@ wxString TempDirectory::CreateFileName(const wxString& suffix)
     m_files.push_back(s);
     wxLogTrace("poedit.tmp", "new temp file %s", s.c_str());
     return s;
+}
+
+
+// ----------------------------------------------------------------------
+// TempOutputFile
+// ----------------------------------------------------------------------
+
+TempOutputFileFor::TempOutputFileFor(const wxString& filename)
+{
+    wxString path, name, ext;
+    wxFileName::SplitPath(filename, &path, &name, &ext);
+
+#ifdef __WXOSX__
+    NSURL *fileUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: filename.utf8_str()]];
+    NSURL *tempdirUrl =
+        [[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory
+                                               inDomain:NSUserDomainMask
+                                      appropriateForURL:[fileUrl URLByDeletingLastPathComponent]
+                                                 create:YES
+                                                  error:nil];
+    if (tempdirUrl)
+    {
+        NSURL *newFileUrl = [tempdirUrl URLByAppendingPathComponent:[fileUrl lastPathComponent]];
+        NSString *newFilePath = [newFileUrl path];
+        m_filenameTmp = wxStringWithNSString(newFilePath);
+        m_tempDir = wxStringWithNSString([tempdirUrl path]);
+    }
+    // else: fall through to the generic code
+#endif // __WXOSX__
+
+    if (m_filenameTmp.empty())
+    {
+        m_filenameTmp = filename + ".temp." + ext;
+    }
+
+    if ( wxFileExists(m_filenameTmp) )
+        wxRemoveFile(m_filenameTmp);
+}
+
+
+TempOutputFileFor::~TempOutputFileFor()
+{
+#ifdef __WXOSX__
+    if (!m_tempDir.empty())
+        wxFileName::Rmdir(m_tempDir, wxPATH_RMDIR_RECURSIVE);
+#endif
 }
 
 

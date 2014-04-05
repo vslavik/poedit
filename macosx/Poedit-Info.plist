@@ -25,6 +25,22 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>mo</string>
+				<string>gmo</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Compiled Translation File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSIsRelatedItemType</key>
+			<true/>
+			<!-- Prevent open MO files in Finder, while still making them work in the sandbox as related file types -->
+			<key>LSHandlerRank</key>
+			<string>None</string>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
