@@ -28,6 +28,7 @@
 #include <wx/colour.h>
 #include <wx/utils.h>
 #include <wx/textfile.h>
+#include <wx/log.h>
 
 #include "catalog.h"
 #include "utility.h"
@@ -64,12 +65,10 @@ bool Catalog::ExportToHTML(const wxString& filename)
     size_t i;
     wxTextFile f;
 
-    if ( wxFileExists(filename) )
-    {
-        wxRemoveFile ( filename);
-    }
+    TempOutputFileFor tempfile_obj(filename);
+    const wxString tempfile = tempfile_obj.FileName();
 
-    if (!f.Create(filename))
+    if (!f.Create(tempfile))
     {
         return false;
     }
@@ -246,6 +245,12 @@ bool Catalog::ExportToHTML(const wxString& filename)
     bool written = f.Write(wxTextFileType_None, wxConvUTF8);
 
     f.Close();
+
+    if ( written && !wxRenameFile(tempfile, filename, /*overwrite=*/true) )
+    {
+        wxLogError(_("Couldn't save file %s."), filename.c_str());
+        written = false;
+    }
 
     return written;
 }
