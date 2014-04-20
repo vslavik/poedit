@@ -1,5 +1,5 @@
 ﻿/*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
  *  Copyright (C) 1999-2014 Vaclav Slavik
  *
@@ -652,7 +652,7 @@ void PoeditApp::OnAbout(wxCommandEvent&)
 #endif
     about.SetCopyright(L"Copyright \u00a9 1999-2014 Václav Slavík");
 #ifdef __WXGTK__ // other ports would show non-native about dlg
-    about.SetWebSite("http://www.poedit.net");
+    about.SetWebSite("http://poedit.net");
 #endif
 
     wxAboutBox(about);

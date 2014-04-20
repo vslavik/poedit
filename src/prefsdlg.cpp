@@ -1,5 +1,5 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
  *  Copyright (C) 2000-2014 Vaclav Slavik
  *
@@ -109,7 +109,7 @@ public:
         auto explain = new wxStaticText(this, wxID_ANY, explainTxt);
         sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
 
-        auto learnMore = new wxHyperlinkCtrl(this, wxID_ANY, _("Learn more"), "http://www.poedit.net/trac/wiki/Doc/TranslationMemory");
+        auto learnMore = new wxHyperlinkCtrl(this, wxID_ANY, _("Learn more"), "http://poedit.net/trac/wiki/Doc/TranslationMemory");
         sizer->AddSpacer(5);
         sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, 25));
 

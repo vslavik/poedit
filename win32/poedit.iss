@@ -1,5 +1,5 @@
 ;
-;   This file is part of Poedit (http://www.poedit.net)
+;   This file is part of Poedit (http://poedit.net)
 ;
 ;   Copyright (C) 1999-2014 Vaclav Slavik
 ;
@@ -66,15 +66,15 @@ VersionInfoVersion={#VERSION}
 VersionInfoTextVersion={#VERSION_FULL}
 AppCopyright=© 1999-2014 Vaclav Slavik
 AppPublisher=Vaclav Slavik
-AppSupportURL=http://www.poedit.net/support.php
-AppUpdatesURL=http://www.poedit.net/download.php
+AppSupportURL=http://poedit.net/support.php
+AppUpdatesURL=http://poedit.net/download.php
 AppVersion={#VERSION_FULL}
 AppContact=support@poedit.net
 UninstallDisplayIcon={app}\Poedit.exe
 UninstallDisplayName=Poedit
 MinVersion=0,5.01.2600sp3
 WizardSmallImageFile=icons\installer_wizard_image.bmp
-AppPublisherURL=http://www.poedit.net/
+AppPublisherURL=http://poedit.net/
 DisableProgramGroupPage=true
 
 #ifdef SIGNTOOL
@@ -132,7 +132,7 @@ Name: {app}\Resources
 Name: {app}\Translations
 
 [Messages]
-BeveledLabel=http://www.poedit.net
+BeveledLabel=http://poedit.net
 
 [ThirdParty]
 CompileLogMethod=append

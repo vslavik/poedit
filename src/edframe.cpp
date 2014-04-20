@@ -1,5 +1,5 @@
 ﻿/*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
  *  Copyright (C) 1999-2014 Vaclav Slavik
  *
@@ -1007,7 +1007,7 @@ static bool DoInitSpellchecker(wxTextCtrl *text,
     {
         // GtkSpell when used with Zemberek Enchant module doesn't work
         // correctly if you repeatedly attach and detach a speller to text
-        // view. See http://www.poedit.net/trac/ticket/276 for details.
+        // view. See http://poedit.net/trac/ticket/276 for details.
         //
         // To work around this, we set the language to a non-existent one
         // instead of detaching GtkSpell -- this has the same effect as
