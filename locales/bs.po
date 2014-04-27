@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
 #: ../src/edframe.cpp:3013
@@ -40,12 +40,12 @@ msgid " Version "
 msgstr " Verzija "
 
 #: ../src/edframe.cpp:2863
-#, fuzzy, c-format
+#, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "Nije moguće ažurirati memoriju prijevoda: %s"
-msgstr[1] "Nije moguće ažurirati memoriju prijevoda: %s"
-msgstr[2] "Nije moguće ažurirati memoriju prijevoda: %s"
+msgstr[0] "%d unos je popunjen pomoću memorije sa prijevodima."
+msgstr[1] "%d unosa su popunjena pomoću memorije sa prijevodima."
+msgstr[2] "%d unosa je popunjeno pomoću memorije sa prijevodima."
 
 #: ../src/edframe.cpp:1710
 #, c-format
@@ -346,7 +346,7 @@ msgstr "Stavka u listi ključnih riječi:"
 
 #: ../src/edframe.cpp:1435
 msgid "Analyzing WordPress code..."
-msgstr ""
+msgstr "Analiziram WordPress kod..."
 
 #: ../src/export_html.cpp:191
 msgid "Automatic translation"
@@ -370,7 +370,7 @@ msgstr "Bazna putanja:"
 
 #: ../src/aboutbox.cpp:119
 msgid "Based on the open source version →"
-msgstr ""
+msgstr "Zasnovano na open source verziji →"
 
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
@@ -568,9 +568,9 @@ msgid "Correct Spelling Automatically"
 msgstr "Automatski popravljaj greške u pravopisu"
 
 #: ../src/wordpress.cpp:226
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't detect POs location for \"%s\"."
-msgstr "Nije moguće otkriti domenu prijevoda za plugina \"%s\"."
+msgstr "Nije moguće detektovati lokaciju PO datoteka za \"%s\"."
 
 #: ../src/wordpress.cpp:374
 #, c-format
@@ -588,11 +588,12 @@ msgid "Couldn't save file %s."
 msgstr "Nije moguće sačuvati datoteku %s."
 
 #: ../src/welcomescreen.cpp:233
-#, fuzzy
 msgid ""
 "Create a new translation. Poedit will set everything up; you can focus on "
 "translating."
-msgstr "Kreiraj novi prijevod. Poedit će sve postaviti automatski."
+msgstr ""
+"Kreiraj novi prijevod. Poedit će za vas izvršiti potrebne postavke, a vi se "
+"možete fokusirati na prevođenje."
 
 #: ../src/welcomescreen.cpp:226
 msgid "Create new translation"
@@ -846,19 +847,16 @@ msgstr ""
 "Molimo vas da sačuvate pod drugim imenom."
 
 #: ../src/resources/menus.xrc:142
-#, fuzzy
 msgid "Fill Missing Translations from &TM"
-msgstr "Pronađi u prijevodima"
+msgstr "Popuni nedostajuće prijevode koristeći &TM"
 
 #: ../src/resources/menus.xrc:141
-#, fuzzy
 msgid "Fill missing translations from &TM"
-msgstr "Pronađi u prijevodima"
+msgstr "Popuni nedostajuće prijevode koristeći &TM"
 
 #: ../src/edframe.cpp:2880 ../src/edframe.cpp:2907
-#, fuzzy
 msgid "Filling missing translations from TM..."
-msgstr "Pronađi u prijevodima"
+msgstr "Popuni nedostajuće prijevode koristeći TM..."
 
 #: ../src/prefsdlg.cpp:208 ../src/tm/tm_migrate.cpp:225
 msgid "Finalizing..."
@@ -889,9 +887,8 @@ msgid "Find in original strings"
 msgstr "Pronađi u originalnim stringovima"
 
 #: ../src/resources/find.xrc:64
-#, fuzzy
 msgid "Find in translations"
-msgstr "Uredi prijevod"
+msgstr "Pronađi u prijevodima"
 
 #: ../src/resources/menus.xrc:101
 msgid "Find next"
@@ -928,7 +925,7 @@ msgstr "Folder nije WordPress tema niti se plugin nalazi u ovom folderu."
 
 #: ../src/aboutbox.cpp:191
 msgid "Free version (please upgrade!)"
-msgstr "Besplatna verzija (molimo vas da izvršite nadogradnju!)"
+msgstr "Besplatna verzija (molimo vas da kupite PRO verziju!)"
 
 #: ../src/manager.cpp:253 ../src/resources/toolbar.xrc:50
 msgid "Fuzzy"
@@ -997,6 +994,10 @@ msgid ""
 "near-empty, it will not be very effective. The more translations\n"
 "you edit and the larger the TM grows, the better it gets."
 msgstr ""
+"Ako je omogućeno, Poedit će pokušati da nove unose popuni koristeći vaše\n"
+"prijevode koje ste prethodno pohranili u memoriju. Ako TM ne sadrži\n"
+"puno prijevoda, ovo neće biti efikasno. Ako u TM pohranite\n"
+"više prijevoda on će postati efikasniji."
 
 #: ../src/edframe.cpp:2819
 msgid ""
@@ -1026,9 +1027,8 @@ msgid "Invalid file"
 msgstr "Neispravna datoteka"
 
 #: ../src/edapp.cpp:918
-#, fuzzy
 msgid "Invalid license data."
-msgstr "Neispravna datoteka"
+msgstr "Netačni podaci o licenci."
 
 #: ../src/resources/prefs.xrc:351
 msgid "Invocation:"
@@ -1138,7 +1138,7 @@ msgstr "Sastavljanje razlika..."
 #: ../src/tm/tm_migrate.cpp:232
 #, c-format
 msgid "Migration exit status: %d"
-msgstr ""
+msgstr "Izlazni status migracije: %d"
 
 #: ../src/licensing.cpp:99
 msgid "Name"
@@ -1195,9 +1195,8 @@ msgid "New strings"
 msgstr "Novi stringovi"
 
 #: ../src/edframe.cpp:2870
-#, fuzzy
 msgid "No entries could be filled from the translation memory."
-msgstr "Desio se problem prilikom premještanja vaše memorije prijevoda."
+msgstr "Nijedan unos nije mogao biti popunjen iz memorije sa prijevodima."
 
 #: ../src/digger.cpp:186
 msgid "No files found in: "
@@ -1728,6 +1727,9 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
+"TM ne sadrži nijedan string sličan sadržaju u ovoj datoteci. Ovo je moguće "
+"efikasno iskoristiti za poluautomatsko prevođenje nakon što Poedit nauči "
+"dovoljno fraza iz datoteka koje ste preveli ručno."
 
 #: ../src/catalog.cpp:1529
 #, c-format
@@ -1752,13 +1754,12 @@ msgid ""
 msgstr "Datoteka je oštećena ili nije u formatu koji Poedit prepoznaje."
 
 #: ../src/edframe.cpp:1728
-#, fuzzy
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
-"Datoteka je uspješno sačuvana ali je nije moguće kompajlirati u MO format i "
-"koristiti nakon toga."
+"Datoteka je uspješno sačuvana i kompajlirana u MO format, ali navjerovatnije "
+"neće ispravno funkcionisati."
 
 #: ../src/edframe.cpp:1731
 msgid ""
@@ -1770,7 +1771,7 @@ msgstr ""
 
 #: ../src/edframe.cpp:1725
 msgid "The file was saved safely."
-msgstr ""
+msgstr "Datoteka je uspješno sačuvana."
 
 #: ../src/edapp.cpp:919
 #, c-format
@@ -1780,6 +1781,10 @@ msgid ""
 "\n"
 "(%s)"
 msgstr ""
+"Link ne sadrži ispravnu Poedit licencu. Molimo vas da je upišete ručno ili "
+"da kontaktirate podršku na help@poedit.net.\n"
+"\n"
+"(%s)"
 
 #: ../src/licensing.cpp:109
 msgid ""
@@ -1798,13 +1803,13 @@ msgstr ""
 "datoteke:"
 
 #: ../src/edframe.cpp:1754
-#, fuzzy, c-format
+#, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "Prijevod je spreman za upotrebu."
-msgstr[1] "Prijevod je spreman za upotrebu."
-msgstr[2] "Prijevod je spreman za upotrebu."
+msgstr[0] "Prijevod je spreman za upotrebu, ali još %d unos nije preveden."
+msgstr[1] "Prijevod je spreman za upotrebu, ali još %d unosa nisu prevedena."
+msgstr[2] "Prijevod je spreman za upotrebu, ali još %d unosa nije prevedeno."
 
 #: ../src/edframe.cpp:1759
 msgid "The translation is ready for use."
@@ -1815,6 +1820,8 @@ msgid ""
 "The translations were marked as fuzzy, because they may be inaccurate. You "
 "should review them for correctness."
 msgstr ""
+"Prijevodi su označeni kao nejasni jer su možda neprecizni. Trebali biste ih "
+"pregledati da utvrdite njihovu tačnost."
 
 #: ../src/welcomescreen.cpp:252
 msgid "There are no translations. That’s unusual."
@@ -1952,9 +1959,8 @@ msgid "Translated %u strings"
 msgstr "Prevedeno %u stringova"
 
 #: ../src/edframe.cpp:2906
-#, fuzzy
 msgid "Translating"
-msgstr "Prijevod"
+msgstr "Prevodim"
 
 #: ../src/edlistctrl.cpp:333 ../src/export_html.cpp:155
 #: ../src/statistics.cpp:158
@@ -1974,9 +1980,8 @@ msgid "Translation Memory"
 msgstr "Memorija prijevoda"
 
 #: ../src/edframe.cpp:2992 ../src/edframe.cpp:3004
-#, fuzzy
 msgid "Translation Suggestions:"
-msgstr "Svojstva prijevoda"
+msgstr "Prijedlozi prijevoda:"
 
 #: ../src/resources/menus.xrc:81
 msgid "Translation is &fuzzy"
@@ -1987,14 +1992,12 @@ msgid "Translation memory migration failed."
 msgstr "Migracija memorije prijevoda nije uspjela."
 
 #: ../src/resources/properties.xrc:139
-#, fuzzy
 msgid "Translation properties"
-msgstr "Memorija prijevoda"
+msgstr "Svojstva prijevoda"
 
 #: ../src/edframe.cpp:2990 ../src/edframe.cpp:3002
-#, fuzzy
 msgid "Translation suggestions:"
-msgstr "Svojstva prijevoda"
+msgstr "Prijedlozi prijevoda:"
 
 #: ../src/edlistctrl.cpp:389
 #, c-format
@@ -2160,9 +2163,8 @@ msgid "Windows"
 msgstr "Prozori"
 
 #: ../src/edframe.cpp:1434
-#, fuzzy
 msgid "WordPress"
-msgstr "WordPress greška"
+msgstr "WordPress"
 
 #: ../src/wordpress.cpp:522
 msgid "WordPress Errors Log"
@@ -2224,15 +2226,17 @@ msgid "Your name:"
 msgstr "Vaše ime:"
 
 #: ../src/tm/tm_migrate.cpp:298
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your translation memory data couldn't be migrated. The error was:\n"
 "\n"
 "%s\n"
 "Please email help@poedit.net and we’ll get it fixed."
 msgstr ""
-"Desila se greška prilikom migracije podataka vaše memorije prijevoda. Molimo "
-"vas da pošaljete poruku na help@poedit.net i mi ćemo vam pomoći da ovo "
+"Migracija vaše memorije prijevoda nije mogla biti izvršena. Greška:\n"
+"\n"
+"%s\n"
+"Molimo vas da pošaljete email na help@poedit.net i mi ćemo vam pomoći da ovo "
 "popravite."
 
 #: ../src/licensing.cpp:187
