@@ -582,7 +582,8 @@ void PoeditApp::OnOpen(wxCommandEvent&)
                      _("Open catalog"),
                      path,
                      wxEmptyString,
-                     _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+                     wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
+                         _("GNU gettext catalogs"), _("All files")),
                      wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
 
     if (dlg.ShowModal() == wxID_OK)
