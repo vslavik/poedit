@@ -2989,7 +2989,7 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                   );
 #endif
 
-            for (int i = 0; i < m_autoTranslations.size(); i++)
+            for (size_t i = 0; i < m_autoTranslations.size(); i++)
             {
                 wxString s;
                 // TRANSLATORS: Quoted text with leading 4 spaces

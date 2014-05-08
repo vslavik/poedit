@@ -173,7 +173,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
         wxString translation = FormatTransString(data.GetTranslation());
         if (data.HasPlural())
         {
-            for (int t = 1; t < data.GetNumberOfTranslations(); t++)
+            for (unsigned int t = 1; t < data.GetNumberOfTranslations(); t++)
                 translation += "<br>~~~<br>\n" + FormatTransString(data.GetTranslation(t));
         }
 
