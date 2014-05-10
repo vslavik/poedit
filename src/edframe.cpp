@@ -1242,7 +1242,7 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
         wxString name = wxFileSelector(_("Open catalog"),
                         path, wxEmptyString, wxEmptyString,
                         wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
-                            _("GNU gettext catalogs"), _("All files")),
+                            _("PO Translation Files"), _("All Files")),
                         wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
 
         if (!name.empty())
@@ -1312,7 +1312,7 @@ wxString PoeditFrame::GetSaveAsFilename(Catalog *cat, const wxString& current)
 
     name = wxFileSelector(_("Save as..."), path, name, wxEmptyString,
 	                      wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
-                              _("GNU gettext catalogs"), _("All files")),
+                              _("PO Translation Files"), _("All Files")),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
     if (!name.empty())
     {
@@ -1351,7 +1351,7 @@ void PoeditFrame::OnExport(wxCommandEvent&)
 
     name = wxFileSelector(_("Export as..."),
                           wxPathOnly(m_fileName), name, wxEmptyString,
-                          wxString::Format("%s (*.html)|*.html", _("HTML files")),
+                          wxString::Format("%s (*.html)|*.html", _("HTML Files")),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
     if (!name.empty())
     {
@@ -1392,7 +1392,7 @@ void PoeditFrame::NewFromPOT()
         wxFileSelector(_("Open catalog template"),
              path, wxEmptyString, wxEmptyString,
 			 wxString::Format("%s (*.pot)|*.pot|%s (*.po)|*.po|%s (*.*)|*.*",
-                 _("GNU gettext templates"), _("GNU gettext catalogs"), _("All files")),
+                 _("POT Translation Templates"), _("PO Translation Files"), _("All Files")),
              wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
     bool ok = false;
     if (!pot_file.empty())
@@ -1631,7 +1631,7 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
                 wxFileSelector(_("Open catalog template"),
                      path, wxEmptyString, wxEmptyString,
                      wxString::Format("%s (*.pot)|*.pot|%s (*.*)|*.*",
-                         _("GNU gettext templates"), _("All files")),
+                         _("POT Translation Templates"), _("All Files")),
                      wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
             if (pot_file.empty())
                 return;

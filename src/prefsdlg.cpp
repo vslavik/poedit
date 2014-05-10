@@ -179,7 +179,7 @@ private:
             wxEmptyString,
             wxEmptyString,
 			wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
-                _("GNU gettext catalogs"), _("All files")),
+                _("PO Translation Files"), _("All Files")),
 			wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE));
 
         dlg->ShowWindowModalThenDo([=](int retcode){
