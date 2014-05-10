@@ -2905,7 +2905,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
                 dt.SetAutomatic(true);
                 dt.SetFuzzy(true);
                 matches++;
-                msg.Printf(_("Translated %u strings"), matches);
+                msg.Printf(wxPLURAL("Translated %u string", "Translated %u strings", matches), matches);
                 progress.UpdateMessage(msg);
 
                 if (m_modified == false)
