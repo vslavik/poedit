@@ -1,7 +1,7 @@
-/*
- *  This file is part of Poedit (http://www.poedit.net)
+﻿/*
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2013 Vaclav Slavik
+ *  Copyright (C) 2013-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -25,6 +25,10 @@
 
 #include "transmem.h"
 
+#include "logcapture.h"
+#include "errors.h"
+
+#include <wx/app.h>
 #include <wx/string.h>
 #include <wx/log.h>
 #include <wx/intl.h>
@@ -36,6 +40,7 @@
 #include <wx/msgdlg.h>
 #include <wx/progdlg.h>
 #include <wx/intl.h>
+#include <wx/sstream.h>
 
 #include <expat.h>
 
@@ -65,9 +70,13 @@ wxString GetLegacyDatabaseDirInternal()
 wxString GetLegacyDatabaseDir()
 {
     wxString path = wxConfig::Get()->Read("/TM/database_path", "");
-    if (!path.empty() && wxFileName::DirExists(path))
-        return path;
-    return GetLegacyDatabaseDirInternal();
+    if (path.empty() || !wxFileName::DirExists(path))
+        path = GetLegacyDatabaseDirInternal();
+#ifdef __WXMSW__
+    return wxFileName(path).GetShortPath();
+#else
+    return path;
+#endif
 }
 
 
@@ -76,10 +85,12 @@ wxString GetDumpToolPath()
 #if defined(__WXOSX__) || defined(__WXMSW__)
     wxFileName path(wxStandardPaths::Get().GetExecutablePath());
     path.SetName("dump-legacy-tm");
-#ifdef __WXMSW__
+  #ifdef __WXMSW__
     path.SetExt("exe");
-#endif
+    return path.GetShortPath();
+  #else
     return path.GetFullPath();
+  #endif
 #else
     return wxStandardPaths::Get().GetInstallPrefix() + "/libexec/poedit-dump-legacy-tm";
 #endif
@@ -149,10 +160,13 @@ void XMLCALL OnEndElement(void*, const char*)
     // nothing to do
 }
 
-bool DoMigrate(const wxString& path, const wxString& languages)
+void DoMigrate(const wxString& path, const wxString& languages)
 {
+    LogCapture log;
+
     const wxString tool = GetDumpToolPath();
     wxLogTrace("poedit.tm", "TM migration - tool: '%s'", tool);
+    wxLogVerbose("%s \"%s\" \"%s\"", tool, path, languages);
 
     wxProgressDialog progress(_("Poedit Update"), _("Preparing migration..."));
 
@@ -163,9 +177,12 @@ bool DoMigrate(const wxString& path, const wxString& languages)
 
     DumpProcess callback;
     callback.Redirect();
-    wxExecute(argv_utf8, wxEXEC_ASYNC, &callback);
+    long executeStatus = wxExecute(argv_utf8, wxEXEC_ASYNC, &callback);
+    if (executeStatus <= 0)
+        throw Exception(log.text);
 
     auto sout = callback.GetInputStream();
+    auto serr = callback.GetErrorStream();
 
     ExpatContext ctxt;
     ctxt.progress = &progress;
@@ -178,16 +195,26 @@ bool DoMigrate(const wxString& path, const wxString& languages)
 
     while (!callback.terminated)
     {
-        wxMilliSleep(1);
-#ifdef __WXMSW__
+#if defined(__UNIX__)
+        if ( wxTheApp )
+            wxTheApp->CheckSignal();
+#elif defined(__WXMSW__)
         wxYield(); // so that OnTerminate() is called
 #endif
-        if (callback.IsInputAvailable())
+
+        wxMilliSleep(1);
+
+        while (callback.IsInputAvailable())
         {
             char buf[4096];
             sout->Read(buf, 4096);
             size_t read = sout->LastRead();
             XML_Parse(parser, buf, (int)read, XML_FALSE);
+        }
+        while (callback.IsErrorAvailable())
+        {
+            wxStringOutputStream logstream(&log.text);
+            serr->Read(logstream);
         }
     }
     XML_Parse(parser, "", 0, XML_TRUE);
@@ -200,7 +227,11 @@ bool DoMigrate(const wxString& path, const wxString& languages)
         ctxt.tm->Commit();
     }
 
-    return callback.status == 0;
+    if (callback.status != 0)
+    {
+        log.Append(wxString::Format(_("Migration exit status: %d"), callback.status));
+        throw Exception(log.text);
+    }
 }
 
 } // anonymous namespace
@@ -239,10 +270,11 @@ bool MigrateLegacyTranslationMemory()
             return false;
     }
 
-    bool status = DoMigrate(path, languages);
-
-    if (status)
+    try
     {
+        DoMigrate(path, languages);
+
+        // migration successed, remove old TM:
         if (path == GetLegacyDatabaseDirInternal())
         {
             wxLogNull null;
@@ -252,7 +284,7 @@ bool MigrateLegacyTranslationMemory()
 
         wxConfigBase::Get()->DeleteGroup("/TM");
     }
-    else
+    catch (Exception& e)
     {
         wxConfig::Get()->Write("/TM/legacy_migration_failed", true);
         wxMessageDialog dlg
@@ -262,7 +294,9 @@ bool MigrateLegacyTranslationMemory()
             _("Poedit Update"),
             wxOK | wxICON_WARNING
         );
-        dlg.SetExtendedMessage(_("Something went wrong and your translation memory data couldn't be migrated. Please email help@poedit.net and we’ll get it fixed."));
+        dlg.SetExtendedMessage(wxString::Format(
+            _(L"Your translation memory data couldn't be migrated. The error was:\n\n%s\nPlease email help@poedit.net and we’ll get it fixed."),
+            e.what()));
         dlg.ShowModal();
     }
 

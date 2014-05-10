@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2010-2013 Vaclav Slavik
+ *  Copyright (C) 2010-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -30,6 +30,10 @@
 #include <wx/log.h>
 #include <wx/config.h>
 #include <wx/display.h>
+
+#ifdef __WXOSX__
+#include <wx/cocoa/string.h>
+#endif
 
 wxString EscapeMarkup(const wxString& str)
 {
@@ -71,7 +75,13 @@ TempDirectory::TempDirectory() : m_counter(0)
         wxLogNull null;
         if ( wxRemoveFile(name) && wxMkdir(name, 0700) )
         {
+#ifdef __WXMSW__
+            // prevent possible problems with Unicode filenames in launched
+            // third party tools (e.g. gettext):
+            m_dir = wxFileName(name).GetShortPath();
+#else
             m_dir = name;
+#endif
             wxLogTrace("poedit.tmp", "created temp dir %s", name.c_str());
             break;
         }
@@ -119,6 +129,52 @@ wxString TempDirectory::CreateFileName(const wxString& suffix)
 
 
 // ----------------------------------------------------------------------
+// TempOutputFile
+// ----------------------------------------------------------------------
+
+TempOutputFileFor::TempOutputFileFor(const wxString& filename)
+{
+    wxString path, name, ext;
+    wxFileName::SplitPath(filename, &path, &name, &ext);
+
+#ifdef __WXOSX__
+    NSURL *fileUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: filename.utf8_str()]];
+    NSURL *tempdirUrl =
+        [[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory
+                                               inDomain:NSUserDomainMask
+                                      appropriateForURL:[fileUrl URLByDeletingLastPathComponent]
+                                                 create:YES
+                                                  error:nil];
+    if (tempdirUrl)
+    {
+        NSURL *newFileUrl = [tempdirUrl URLByAppendingPathComponent:[fileUrl lastPathComponent]];
+        NSString *newFilePath = [newFileUrl path];
+        m_filenameTmp = wxStringWithNSString(newFilePath);
+        m_tempDir = wxStringWithNSString([tempdirUrl path]);
+    }
+    // else: fall through to the generic code
+#endif // __WXOSX__
+
+    if (m_filenameTmp.empty())
+    {
+        m_filenameTmp = filename + ".temp." + ext;
+    }
+
+    if ( wxFileExists(m_filenameTmp) )
+        wxRemoveFile(m_filenameTmp);
+}
+
+
+TempOutputFileFor::~TempOutputFileFor()
+{
+#ifdef __WXOSX__
+    if (!m_tempDir.empty())
+        wxFileName::Rmdir(m_tempDir, wxPATH_RMDIR_RECURSIVE);
+#endif
+}
+
+
+// ----------------------------------------------------------------------
 // Helpers for persisting windows' state
 // ----------------------------------------------------------------------
 
@@ -131,14 +187,15 @@ void SaveWindowState(const wxTopLevelWindow *win, int flags)
     {
         if ( !win->IsMaximized() )
         {
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(__WXOSX__)
+
             if ( flags & WinState_Pos )
             {
                 const wxPoint pos = win->GetPosition();
                 cfg->Write(path + "x", (long)pos.x);
                 cfg->Write(path + "y", (long)pos.y);
             }
-#endif // __WXMSW__
+#endif // __WXMSW__/__WXOSX__
             if ( flags &  WinState_Size )
             {
                 const wxSize sz = win->GetClientSize();
@@ -166,24 +223,57 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
             win->SetClientSize(width, height);
     }
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(__WXOSX__)
     if ( flags & WinState_Pos )
     {
-        int posx = (int)cfg->Read(path + "x", -1);
-        int posy = (int)cfg->Read(path + "y", -1);
-        if ( posx != -1 || posy != -1 )
-            win->Move(posx, posy);
+        wxPoint pos;
+        pos.x = (int)cfg->Read(path + "x", -1);
+        pos.y = (int)cfg->Read(path + "y", -1);
+        if ( pos.x != -1 || pos.y != -1 )
+        {
+            // NB: if this is the only Poedit frame opened, place it at remembered
+            //     position, but don't do that if there already are other frames,
+            //     because they would overlap and nobody could recognize that there are
+            //     many of them
+            for (;;)
+            {
+                bool occupied = false;
+                for (auto& w : wxTopLevelWindows)
+                {
+                    wxPrintf("win(%p) @ %d,%d\n" ,w, w->GetPosition().x, w->GetPosition().y);
+                    if (w != win && w->GetPosition() == pos)
+                    {
+                        occupied = true;
+                        break;
+                    }
+                }
+                if (!occupied)
+                    break;
+                pos += wxPoint(20,20);
+            }
+
+            win->Move(pos);
+        }
     }
 
     // If the window is completely out of all screens (e.g. because
     // screens configuration changed), move it to primary screen:
+#ifdef __WXOSX__
+    if ( win->GetPosition().x < 0 || win->GetPosition().y < 0 )
+        win->Move(20, 30);
+#else
     if ( wxDisplay::GetFromWindow(win) == wxNOT_FOUND )
         win->Move(0, 0);
-#endif // __WXMSW__
+#endif
 
+#endif // __WXMSW__/__WXOSX__
+
+#ifndef __WXOSX__
     // If the window is larger than current screen, resize it to fit:
     int display = wxDisplay::GetFromWindow(win);
-    wxCHECK_RET( display != wxNOT_FOUND, "window not on screen" );
+    if ( display == wxNOT_FOUND )
+        return;
+
     wxRect screenRect = wxDisplay(display).GetClientArea();
 
     wxRect winRect = win->GetRect();
@@ -201,4 +291,5 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
     {
         win->Maximize();
     }
+#endif // !__WXOSX__
 }

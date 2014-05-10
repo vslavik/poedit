@@ -21,9 +21,25 @@
 				<string>text/x-po</string>
 			</array>
 			<key>CFBundleTypeName</key>
-			<string>GNU gettext catalog</string>
+			<string>PO Translation File</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>mo</string>
+				<string>gmo</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Compiled Translation File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSIsRelatedItemType</key>
+			<true/>
+			<!-- Prevent open MO files in Finder, while still making them work in the sandbox as related file types -->
+			<key>LSHandlerRank</key>
+			<string>None</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
@@ -49,7 +65,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 1999-2013 Václav Slavík. All rights reserved.</string>
+	<string>Copyright © 1999-2014 Václav Slavík. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

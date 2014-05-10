@@ -1,8 +1,8 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
  *  Copyright (C) 2003 Christophe Hermier
- *  Copyright (C) 2013 Vaclav Slavik
+ *  Copyright (C) 2013-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -28,6 +28,7 @@
 #include <wx/colour.h>
 #include <wx/utils.h>
 #include <wx/textfile.h>
+#include <wx/log.h>
 
 #include "catalog.h"
 #include "utility.h"
@@ -64,12 +65,10 @@ bool Catalog::ExportToHTML(const wxString& filename)
     size_t i;
     wxTextFile f;
 
-    if ( wxFileExists(filename) )
-    {
-        wxRemoveFile ( filename);
-    }
+    TempOutputFileFor tempfile_obj(filename);
+    const wxString tempfile = tempfile_obj.FileName();
 
-    if (!f.Create(filename))
+    if (!f.Create(tempfile))
     {
         return false;
     }
@@ -174,7 +173,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
         wxString translation = FormatTransString(data.GetTranslation());
         if (data.HasPlural())
         {
-            for (int t = 1; t < data.GetNumberOfTranslations(); t++)
+            for (unsigned int t = 1; t < data.GetNumberOfTranslations(); t++)
                 translation += "<br>~~~<br>\n" + FormatTransString(data.GetTranslation(t));
         }
 
@@ -246,6 +245,12 @@ bool Catalog::ExportToHTML(const wxString& filename)
     bool written = f.Write(wxTextFileType_None, wxConvUTF8);
 
     f.Close();
+
+    if ( written && !wxRenameFile(tempfile, filename, /*overwrite=*/true) )
+    {
+        wxLogError(_("Couldn't save file %s."), filename.c_str());
+        written = false;
+    }
 
     return written;
 }

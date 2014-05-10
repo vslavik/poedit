@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -34,6 +34,10 @@
 #include <wx/strconv.h>
 #include <wx/msgdlg.h>
 #include <wx/filename.h>
+
+#ifdef __WXOSX__
+#include <wx/cocoa/string.h>
+#endif
 
 #include <set>
 #include <algorithm>
@@ -446,7 +450,9 @@ void Catalog::HeaderData::ParseDict()
         path.Printf("X-Poedit-SearchPath-%i", i);
         if (!HasHeader(path))
             break;
-        SearchPaths.Add(GetHeader(path));
+        wxString p = GetHeader(path);
+        if (!p.empty())
+            SearchPaths.Add(p);
         i++;
     }
 }
@@ -828,7 +834,11 @@ class LoadParser : public CatalogParser
 {
     public:
         LoadParser(Catalog *c, wxTextFile *f)
-              : CatalogParser(f), m_catalog(c), m_nextId(1) {}
+              : CatalogParser(f),
+                FileIsValid(false), m_catalog(c), m_nextId(1) {}
+
+        // true if the file is valid, i.e. has at least some data
+        bool FileIsValid;
 
     protected:
         Catalog *m_catalog;
@@ -871,6 +881,8 @@ bool LoadParser::OnEntry(const wxString& msgid,
                          const wxArrayString& msgid_old,
                          unsigned lineNumber)
 {
+    FileIsValid = true;
+
     static const wxString MSGCAT_CONFLICT_MARKER("#-#-#-#-#");
 
     if (msgid.empty())
@@ -919,6 +931,8 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
                                 const wxArrayString& autocomments,
                                 unsigned lineNumber)
 {
+    FileIsValid = true;
+
     CatalogDeletedData d;
     if (!flags.empty()) d.SetFlags(flags);
     d.SetDeletedLines(deletedLines);
@@ -1069,7 +1083,7 @@ bool Catalog::Load(const wxString& po_file, int flags)
     }
 
     // If we didn't find any entries, the file must be invalid:
-    if (m_items.size() == 0)
+    if (!parser.FileIsValid)
         return false;
 
     m_isOk = true;
@@ -1319,8 +1333,27 @@ wxString FormatStringForFile(const wxString& text)
 } // anonymous namespace
 
 
-bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors)
+#ifdef __WXOSX__
+
+@interface CompiledMOFilePresenter : NSObject<NSFilePresenter>
+@property (atomic, strong) NSURL *presentedItemURL;
+@property (atomic, strong) NSURL *primaryPresentedItemURL;
+@end
+
+@implementation CompiledMOFilePresenter
+- (NSOperationQueue *)presentedItemOperationQueue {
+     return [NSOperationQueue mainQueue];
+}
+@end
+
+#endif // __WXOSX__
+
+
+bool Catalog::Save(const wxString& po_file, bool save_mo,
+                   int& validation_errors, CompilationStatus& mo_compilation_status)
 {
+    mo_compilation_status = CompilationStatus::NotDone;
+
     if ( wxFileExists(po_file) && !wxFile::Access(po_file, wxFile::write) )
     {
         wxLogError(_("File '%s' is read-only and cannot be saved.\nPlease save it under different name."),
@@ -1335,9 +1368,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
     if ( !m_header.RevisionDate.empty() )
         m_header.RevisionDate = GetCurrentTimeRFC822();
 
-    const wxString po_file_temp = po_file + ".temp.po";
-    if ( wxFileExists(po_file_temp) )
-        wxRemoveFile(po_file_temp);
+    TempOutputFileFor po_file_temp_obj(po_file);
+    const wxString po_file_temp = po_file_temp_obj.FileName();
 
     if ( !DoSaveOnly(po_file_temp) )
     {
@@ -1395,18 +1427,58 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
 
     if (save_mo && wxConfig::Get()->Read("compile_mo", (long)true))
     {
-        const wxString mofile = po_file.BeforeLast(_T('.')) + ".mo";
-        if ( !ExecuteGettext
+        const wxString mo_file = po_file.BeforeLast('.') + ".mo";
+        TempOutputFileFor mo_file_temp_obj(mo_file);
+        const wxString mo_file_temp = mo_file_temp_obj.FileName();
+
+        if ( ExecuteGettext
               (
                   wxString::Format(_T("msgfmt -o \"%s\" \"%s\""),
-                                   mofile.c_str(),
+                                   mo_file_temp.c_str(),
                                    po_file.c_str())
               ) )
+        {
+            mo_compilation_status = CompilationStatus::Success;
+
+#ifdef __WXOSX__
+            CompiledMOFilePresenter *presenter = [CompiledMOFilePresenter new];
+            NSURL *mofileUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file.utf8_str()]];
+            NSURL *mofiletempUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file_temp.utf8_str()]];
+            presenter.presentedItemURL = mofileUrl;
+            presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String: po_file.utf8_str()]];
+            [NSFileCoordinator addFilePresenter:presenter];
+            [NSFileCoordinator filePresenters];
+            NSFileCoordinator *coo = [[NSFileCoordinator alloc] initWithFilePresenter:presenter];
+            [coo coordinateWritingItemAtURL:mofileUrl options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL *newURL) {
+                NSURL *resultingUrl;
+                BOOL ok = [[NSFileManager defaultManager] replaceItemAtURL:newURL
+                                                             withItemAtURL:mofiletempUrl
+                                                            backupItemName:nil
+                                                                   options:0
+                                                          resultingItemURL:&resultingUrl
+                                                                     error:nil];
+                if (!ok)
+                {
+                    wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+                    mo_compilation_status = CompilationStatus::Error;
+                }
+            }];
+            [NSFileCoordinator removeFilePresenter:presenter];
+#else // !__WXOSX__
+            if ( !wxRenameFile(mo_file_temp, mo_file, /*overwrite=*/true) )
+            {
+                wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+                mo_compilation_status = CompilationStatus::Error;
+            }
+#endif // __WXOSX__/!__WXOSX__
+        }
+        else
         {
             // Don't report errors, they were reported as part of validation
             // step above.  Notice that we run msgfmt *without* the -c flag
             // here to create the MO file in as many cases as possible, even if
             // it has some errors.
+            mo_compilation_status = CompilationStatus::Error;
         }
     }
 
@@ -1574,7 +1646,7 @@ int Catalog::DoValidate(const wxString& po_file)
 }
 
 
-bool Catalog::Update(ProgressInfo *progress, bool summary)
+bool Catalog::Update(ProgressInfo *progress, bool summary, bool *cancelledByUser)
 {
     if (!m_isOk) return false;
 
@@ -1619,7 +1691,7 @@ bool Catalog::Update(ProgressInfo *progress, bool summary)
         if ( progress )
             progress->UpdateMessage(_("Merging differences..."));
 
-        if (!summary || ShowMergeSummary(newcat))
+        if (!summary || ShowMergeSummary(newcat, cancelledByUser))
             succ = Merge(newcat);
         if (!succ)
         {
@@ -1637,7 +1709,8 @@ bool Catalog::Update(ProgressInfo *progress, bool summary)
 }
 
 
-bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary,
+bool Catalog::UpdateFromPOT(const wxString& pot_file,
+                            bool summary, bool *cancelledByUser,
                             bool replace_header)
 {
     if (!m_isOk) return false;
@@ -1650,7 +1723,7 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary,
         return false;
     }
 
-    if (!summary || ShowMergeSummary(&newcat))
+    if (!summary || ShowMergeSummary(&newcat, cancelledByUser))
     {
         if ( !Merge(&newcat) )
             return false;
@@ -1744,15 +1817,20 @@ void Catalog::GetMergeSummary(Catalog *refcat,
     }
 }
 
-bool Catalog::ShowMergeSummary(Catalog *refcat)
+bool Catalog::ShowMergeSummary(Catalog *refcat, bool *cancelledByUser)
 {
+    if (cancelledByUser)
+        *cancelledByUser = false;
     if (wxConfig::Get()->ReadBool("show_summary", false))
     {
         wxArrayString snew, sobsolete;
         GetMergeSummary(refcat, snew, sobsolete);
         MergeSummaryDialog sdlg;
         sdlg.TransferTo(snew, sobsolete);
-        return (sdlg.ShowModal() == wxID_OK);
+        bool ok = (sdlg.ShowModal() == wxID_OK);
+        if (cancelledByUser)
+            *cancelledByUser = !ok;
+        return ok;
     }
     else
         return true;
@@ -1844,17 +1922,20 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
 
         if ((*this)[i].IsFuzzy())
         {
-            (*fuzzy)++;
+            if (fuzzy)
+                (*fuzzy)++;
             ok = false;
         }
         if ((*this)[i].GetValidity() == CatalogItem::Val_Invalid)
         {
-            (*badtokens)++;
+            if (badtokens)
+                (*badtokens)++;
             ok = false;
         }
         if (!(*this)[i].IsTranslated())
         {
-            (*untranslated)++;
+            if (untranslated)
+                (*untranslated)++;
             ok = false;
         }
 

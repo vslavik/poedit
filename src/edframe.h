@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -97,6 +97,9 @@ class PoeditFrame : public wxFrame
         /// content, not having catalog loaded); NULL otherwise.
         static PoeditFrame *UnusedActiveWindow();
 
+        /// Returns true if at least one one window has unsaved changes
+        static bool AnyWindowIsModified();
+
         ~PoeditFrame();
 
         /// Reads catalog, refreshes controls, takes ownership of catalog.
@@ -114,7 +117,7 @@ class PoeditFrame : public wxFrame
         /** Updates catalog and sets m_modified flag. Updates from POT
             if \a pot_file is not empty and from sources otherwise.
          */
-        void UpdateCatalog(const wxString& pot_file = wxEmptyString);
+        bool UpdateCatalog(const wxString& pot_file = wxEmptyString);
 
 
         virtual void DoGiveHelp(const wxString& text, bool show);
@@ -213,7 +216,9 @@ public: // for PoeditApp
         void NewFromPOT();
 
         void OnOpen(wxCommandEvent& event);
+#ifndef __WXOSX__
         void OnOpenHist(wxCommandEvent& event);
+#endif
 private:
         void OnCloseCmd(wxCommandEvent& event);
         void OnSave(wxCommandEvent& event);
@@ -250,7 +255,7 @@ private:
 
         void OnAutoTranslate(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
-        bool AutoTranslateCatalog();
+        bool AutoTranslateCatalog(int *matchesCount = nullptr);
 
         void OnPurgeDeleted(wxCommandEvent& event);
 
@@ -275,9 +280,12 @@ private:
         void RefreshSelectedItem();
 
         template<typename TFunctor>
-        void ReportValidationErrors(int errors, bool from_save, TFunctor completionHandler);
+        void ReportValidationErrors(int errors, Catalog::CompilationStatus mo_compilation_status,
+                                    bool from_save, TFunctor completionHandler);
 
+#ifndef __WXOSX__
         wxFileHistory& FileHistory() { return wxGetApp().FileHistory(); }
+#endif
         void NoteAsRecentFile();
 
         DECLARE_EVENT_TABLE()
@@ -304,7 +312,9 @@ private:
         wxTextCtrl *m_textTransSingularForm;
         wxNotebook *m_pluralNotebook;
         wxStaticText *m_labelSingular, *m_labelPlural;
+#ifndef __WXOSX__
         wxMenu *m_menuForHistory;
+#endif
 
         wxFont m_normalGuiFont, m_boldGuiFont;
 

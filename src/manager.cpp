@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2001-2013 Vaclav Slavik
+ *  Copyright (C) 2001-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -456,9 +456,10 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
             else
             {
                 Catalog cat(f);
-                cat.Update(&pinfo);
+                cat.Update(&pinfo, /*summary=*/false, nullptr);
                 int validation_errors = 0;
-                cat.Save(f, false, validation_errors);
+                Catalog::CompilationStatus mo_status;
+                cat.Save(f, false, validation_errors, mo_status);
             }
          }
 
