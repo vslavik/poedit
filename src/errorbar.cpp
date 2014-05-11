@@ -35,6 +35,7 @@ namespace
 {
 
 const wxColour gs_ErrorColor("#ff5050");
+const wxColour gs_WarningColor("#ffff50");
 
 } // anonymous namespace
 
@@ -63,9 +64,10 @@ ErrorBar::ErrorBar(wxWindow *parent)
 }
 
 
-void ErrorBar::ShowError(const wxString& error)
+void ErrorBar::ShowError(const wxString& error, Severity severity)
 {
-    const wxString prefix = _("Error:");
+    const wxString prefix = severity == Sev_Error ? _("Error:") : _("Warning:");
+    m_label->SetBackgroundColour(severity == Sev_Error ? gs_ErrorColor : gs_WarningColor);
     m_label->SetLabelMarkup(
         wxString::Format("<b>%s</b> %s", prefix, EscapeMarkup(error)));
 
@@ -82,7 +84,7 @@ void ErrorBar::HideError()
 void ErrorBar::OnPaint(wxPaintEvent&)
 {
     wxPaintDC dc(this);
-    dc.SetBrush(gs_ErrorColor);
-    dc.SetPen(gs_ErrorColor);
+    dc.SetBrush(m_label->GetBackgroundColour());
+    dc.SetPen(m_label->GetBackgroundColour());
     dc.DrawRoundedRectangle(wxPoint(0,0), dc.GetSize(), 2.0);
 }
