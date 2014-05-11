@@ -254,7 +254,8 @@ class CatalogItem
         {
             Val_Unknown = -1,
             Val_Invalid = 0,
-            Val_Valid = 1
+            Val_Valid = 1,
+            Val_Inconsistent = 2
         };
 
         /** Checks if %i etc. are correct in the translation (true if yes).
