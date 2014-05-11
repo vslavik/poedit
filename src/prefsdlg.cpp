@@ -421,26 +421,49 @@ void PreferencesDialog::EditParser(int num, TFunctor completionHandler)
 {
     wxWindowPtr<wxDialog> dlg(wxXmlResource::Get()->LoadDialog(this, "edit_parser"));
     dlg->Centre();
-    
-    const Parser& nfo = m_parsers[num];
-    XRCCTRL(*dlg, "parser_language", wxTextCtrl)->SetValue(nfo.Name);
-    XRCCTRL(*dlg, "parser_extensions", wxTextCtrl)->SetValue(nfo.Extensions);
-    XRCCTRL(*dlg, "parser_command", wxTextCtrl)->SetValue(nfo.Command);
-    XRCCTRL(*dlg, "parser_keywords", wxTextCtrl)->SetValue(nfo.KeywordItem);
-    XRCCTRL(*dlg, "parser_files", wxTextCtrl)->SetValue(nfo.FileItem);
-    XRCCTRL(*dlg, "parser_charset", wxTextCtrl)->SetValue(nfo.CharsetItem);
+
+    auto parser_language = XRCCTRL(*dlg, "parser_language", wxTextCtrl);
+    auto parser_extensions = XRCCTRL(*dlg, "parser_extensions", wxTextCtrl);
+    auto parser_command = XRCCTRL(*dlg, "parser_command", wxTextCtrl);
+    auto parser_keywords = XRCCTRL(*dlg, "parser_keywords", wxTextCtrl);
+    auto parser_files = XRCCTRL(*dlg, "parser_files", wxTextCtrl);
+    auto parser_charset = XRCCTRL(*dlg, "parser_charset", wxTextCtrl);
+
+    {
+        const Parser& nfo = m_parsers[num];
+        parser_language->SetValue(nfo.Name);
+        parser_extensions->SetValue(nfo.Extensions);
+        parser_command->SetValue(nfo.Command);
+        parser_keywords->SetValue(nfo.KeywordItem);
+        parser_files->SetValue(nfo.FileItem);
+        parser_charset->SetValue(nfo.CharsetItem);
+    }
+
+    dlg->Bind
+    (
+        wxEVT_UPDATE_UI,
+        [=](wxUpdateUIEvent& e){
+            e.Enable(!parser_language->IsEmpty() &&
+                     !parser_extensions->IsEmpty() &&
+                     !parser_command->IsEmpty() &&
+                     !parser_files->IsEmpty());
+            // charset, keywords could in theory be empty if unsupported by the parser tool
+        },
+        wxID_OK
+    );
 
     dlg->ShowWindowModalThenDo([=](int retcode){
+        (void)dlg; // force use
         if (retcode == wxID_OK)
         {
-            Parser& nfo2 = m_parsers[num];
-            nfo2.Name = XRCCTRL(*dlg, "parser_language", wxTextCtrl)->GetValue();
-            nfo2.Extensions = XRCCTRL(*dlg, "parser_extensions", wxTextCtrl)->GetValue();
-            nfo2.Command = XRCCTRL(*dlg, "parser_command", wxTextCtrl)->GetValue();
-            nfo2.KeywordItem = XRCCTRL(*dlg, "parser_keywords", wxTextCtrl)->GetValue();
-            nfo2.FileItem = XRCCTRL(*dlg, "parser_files", wxTextCtrl)->GetValue();
-            nfo2.CharsetItem = XRCCTRL(*dlg, "parser_charset", wxTextCtrl)->GetValue();
-            XRCCTRL(*this, "parsers_list", wxListBox)->SetString(num, nfo2.Name);
+            Parser& nfo = m_parsers[num];
+            nfo.Name = parser_language->GetValue();
+            nfo.Extensions = parser_extensions->GetValue();
+            nfo.Command = parser_command->GetValue();
+            nfo.KeywordItem = parser_keywords->GetValue();
+            nfo.FileItem = parser_files->GetValue();
+            nfo.CharsetItem = parser_charset->GetValue();
+            XRCCTRL(*this, "parsers_list", wxListBox)->SetString(num, nfo.Name);
         }
         completionHandler(retcode == wxID_OK);
     });
