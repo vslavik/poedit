@@ -4,7 +4,7 @@ PACKAGE_SHORT_VERSION=1.6
 
 [ -n "${WXRC}" ] || WXRC=wxrc
 
-XGETTEXT_ARGS="-C -k_ -kwxGetTranslation -kwxTRANSLATE -kwxPLURAL:1,2 -s \
+XGETTEXT_ARGS="-C -k_ -kwxGetTranslation -kwxTRANSLATE -kwxPLURAL:1,2 -F \
               --add-comments=TRANSLATORS \
               --from-code=UTF-8 \
               --package-name=Poedit --package-version=${PACKAGE_SHORT_VERSION} \
