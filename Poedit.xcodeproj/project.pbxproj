@@ -26,6 +26,8 @@
 		B24ACD8416F6263900399242 /* Poedit.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD8316F6263900399242 /* Poedit.iconset */; };
 		B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; };
 		B2567977170763B700C52BC5 /* libwx_osx_cocoa_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */; };
+		B2579C7F1920BFA000BEBC31 /* NSObject+REResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = B2579C7E1920BFA000BEBC31 /* NSObject+REResponder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B2579C821920C02C00BEBC31 /* REUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B2579C811920C02C00BEBC31 /* REUtil.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B26D064F182506E40069C378 /* languagectrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D064D182506E40069C378 /* languagectrl.cpp */; };
 		B26D0655182697200069C378 /* welcomescreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D0653182697200069C378 /* welcomescreen.cpp */; };
 		B26D06581826A22C0069C378 /* PoeditWelcome.png in Resources */ = {isa = PBXBuildFile; fileRef = B26D06561826A22C0069C378 /* PoeditWelcome.png */; };
@@ -209,6 +211,10 @@
 		B24ACD8316F6263900399242 /* Poedit.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = Poedit.iconset; path = icons/appicon/Poedit.iconset; sourceTree = SOURCE_ROOT; };
 		B256797417075E6000C52BC5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwx_osx_cocoa_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2579C7D1920BFA000BEBC31 /* NSObject+REResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+REResponder.h"; path = "deps/rekit/REKit/NSObject+REResponder.h"; sourceTree = "<group>"; };
+		B2579C7E1920BFA000BEBC31 /* NSObject+REResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+REResponder.m"; path = "deps/rekit/REKit/NSObject+REResponder.m"; sourceTree = "<group>"; };
+		B2579C801920C02C00BEBC31 /* REKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REKit.h; path = deps/rekit/REKit/REKit.h; sourceTree = "<group>"; };
+		B2579C811920C02C00BEBC31 /* REUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REUtil.m; path = deps/rekit/REKit/REUtil.m; sourceTree = "<group>"; };
 		B26B74EF1822CA12006E2B76 /* language_impl_legacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_impl_legacy.h; sourceTree = "<group>"; };
 		B26D064D182506E40069C378 /* languagectrl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = languagectrl.cpp; sourceTree = "<group>"; };
 		B26D064E182506E40069C378 /* languagectrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = languagectrl.h; sourceTree = "<group>"; };
@@ -363,6 +369,10 @@
 			children = (
 				B2284A50183BE3B300E097C7 /* PFMoveApplication.h */,
 				B2284A51183BE3B300E097C7 /* PFMoveApplication.m */,
+				B2579C801920C02C00BEBC31 /* REKit.h */,
+				B2579C811920C02C00BEBC31 /* REUtil.m */,
+				B2579C7D1920BFA000BEBC31 /* NSObject+REResponder.h */,
+				B2579C7E1920BFA000BEBC31 /* NSObject+REResponder.m */,
 			);
 			name = "Third Party";
 			sourceTree = "<group>";
@@ -935,6 +945,8 @@
 				B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */,
 				B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */,
 				B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */,
+				B2579C821920C02C00BEBC31 /* REUtil.m in Sources */,
+				B2579C7F1920BFA000BEBC31 /* NSObject+REResponder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
