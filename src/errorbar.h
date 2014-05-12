@@ -38,7 +38,12 @@ class ErrorBar : public wxPanel
 public:
     ErrorBar(wxWindow *parent);
 
-    void ShowError(const wxString& error);
+    enum Severity {
+        Sev_Error,
+        Sev_Warning
+    };
+
+    void ShowError(const wxString& error, Severity = Sev_Error);
     void HideError();
 
 private:

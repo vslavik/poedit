@@ -1725,6 +1725,10 @@ void PoeditFrame::ReportValidationErrors(int errors,
     {
         wxASSERT( !from_save );
 
+        // Refresh controls also here, because inconsistencies do not count as errors, but
+        // require refreshing the list.
+        RefreshControls();
+
         dlg.reset(new wxMessageDialog
         (
             this,
@@ -2225,8 +2229,10 @@ void PoeditFrame::UpdateToTextCtrl()
     if (m_displayCommentWin)
         m_textComment->SetValue(t_c);
 
-    if( entry->GetValidity() == CatalogItem::Val_Invalid )
-        m_errorBar->ShowError(entry->GetErrorString());
+    const auto validity = entry->GetValidity();
+    if (validity == CatalogItem::Val_Invalid || validity == CatalogItem::Val_Inconsistent)
+        m_errorBar->ShowError(entry->GetErrorString(), 
+            validity == CatalogItem::Val_Invalid ? ErrorBar::Sev_Error : ErrorBar::Sev_Warning);
     else
         m_errorBar->HideError();
 

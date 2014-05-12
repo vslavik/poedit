@@ -146,6 +146,7 @@ class PoeditListCtrl : public wxListView
         wxListItemAttr m_attrUntranslated[2];
         wxListItemAttr m_attrFuzzy[2];
         wxListItemAttr m_attrInvalid[2];
+        wxListItemAttr m_attrInconsistent[2];
 
         DECLARE_EVENT_TABLE()
 };

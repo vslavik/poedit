@@ -1611,6 +1611,53 @@ int Catalog::Validate()
     return DoValidate(tmp_po);
 }
 
+static bool Anywhere(const wxString &text, const wxString &token) {
+    return text.Contains(token);
+}
+
+static bool AtTheEnd(const wxString &text, const wxString &token) {
+    return text.EndsWith(token);
+}
+
+static bool AtTheBegin(const wxString &text, const wxString &token) {
+    return text.StartsWith(token);
+}
+
+static void CheckTokenExistenceMismatch(decltype(Anywhere) func, const wxString &token, const CatalogItem &i, wxString &warnings) {
+    const auto originalHas = func(i.GetString(), token),
+        translationHas = func(i.GetTranslation(), token);
+
+    if (originalHas != translationHas) {
+        if (warnings.IsEmpty() == false)
+            warnings += ", ";
+        warnings += wxString::Format(originalHas ? _("Missing '%s'") : _("Extra '%s'"), token);
+    }
+}
+
+static bool DoCheckInconsistencies(const CatalogItem &i, wxString &warnings) {
+    wxASSERT(warnings.IsEmpty());
+
+    // FIXME: Many of these checks give too many false positives with e.g. Japanese.
+    // TODO: Plural forms are not checked.
+
+    if (i.GetTranslation().IsEmpty() || i.IsFuzzy()) {
+        return false;
+    }
+
+    CheckTokenExistenceMismatch(Anywhere, "&", i, warnings);
+    CheckTokenExistenceMismatch(Anywhere, "_", i, warnings);
+    CheckTokenExistenceMismatch(AtTheEnd, " ", i, warnings);
+    // FIXME: The Unicode ellipsis will be warned about.
+    CheckTokenExistenceMismatch(AtTheEnd, "...", i, warnings);
+    // TODO: This is unnecessary if "..." was already warned about.
+    CheckTokenExistenceMismatch(AtTheEnd, ".", i, warnings);
+    CheckTokenExistenceMismatch(AtTheEnd, ":", i, warnings);
+    CheckTokenExistenceMismatch(AtTheBegin, " ", i, warnings);
+
+    // If any warnings were generated, return true.
+    return warnings.IsEmpty() == false;
+}
+
 int Catalog::DoValidate(const wxString& po_file)
 {
     GettextErrors err;
@@ -1625,6 +1672,17 @@ int Catalog::DoValidate(const wxString& po_file)
     {
         i->SetValidity(CatalogItem::Val_Valid);
     }
+
+    if (wxConfig::Get()->Read("check_inconsistencies", (long) true))
+        for ( CatalogItemArray::iterator i = m_items.begin();
+              i != m_items.end(); ++i)
+        {
+            wxString warning;
+            if ( DoCheckInconsistencies(*i, warning) ) {
+                i->SetValidity(CatalogItem::Val_Inconsistent);
+                i->SetErrorString(warning);
+            }
+        }
 
     for ( GettextErrors::const_iterator i = err.begin(); i != err.end(); ++i )
     {

@@ -69,6 +69,7 @@ inline bool IsAlmostWhite(const wxColour& clr)
 // colours used in the list:
 
 const wxColour gs_ErrorColor("#ff5050");
+const wxColour gs_WarningColor("#ffff50");
 
 // colors for white list control background
 const wxColour gs_UntranslatedForWhite("#103f67");
@@ -285,6 +286,9 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     m_attrInvalid[0].SetBackgroundColour(gs_ErrorColor);
     m_attrInvalid[1].SetBackgroundColour(gs_ErrorColor);
 
+    m_attrInconsistent[0].SetBackgroundColour(gs_WarningColor);
+    m_attrInconsistent[1].SetBackgroundColour(gs_WarningColor);
+
     // Use gray for IDs
     if ( IsAlmostBlack(visual.colFg) )
         m_attrId.SetTextColour(wxColour("#A1A1A1"));
@@ -496,12 +500,15 @@ wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
 
     const CatalogItem& d = ListIndexToCatalogItem((int)item);
 
-    if (d.GetValidity() == CatalogItem::Val_Invalid)
+    const auto validity = d.GetValidity();
+    if (validity == CatalogItem::Val_Invalid)
         return (wxListItemAttr*)&m_attrInvalid[idx];
     else if (!d.IsTranslated())
         return (wxListItemAttr*)&m_attrUntranslated[idx];
     else if (d.IsFuzzy())
         return (wxListItemAttr*)&m_attrFuzzy[idx];
+    else if (validity == CatalogItem::Val_Inconsistent)
+        return (wxListItemAttr*)&m_attrInconsistent[idx];
     else
         return (wxListItemAttr*)&m_attrNormal[idx];
 }
