@@ -1673,15 +1673,16 @@ int Catalog::DoValidate(const wxString& po_file)
         i->SetValidity(CatalogItem::Val_Valid);
     }
 
-    for ( CatalogItemArray::iterator i = m_items.begin();
-          i != m_items.end(); ++i)
-    {
-        wxString warning;
-        if ( DoCheckInconsistencies(*i, warning) ) {
-            i->SetValidity(CatalogItem::Val_Inconsistent);
-            i->SetErrorString(warning);
+    if (wxConfig::Get()->Read("check_inconsistencies", (long) true))
+        for ( CatalogItemArray::iterator i = m_items.begin();
+              i != m_items.end(); ++i)
+        {
+            wxString warning;
+            if ( DoCheckInconsistencies(*i, warning) ) {
+                i->SetValidity(CatalogItem::Val_Inconsistent);
+                i->SetErrorString(warning);
+            }
         }
-    }
 
     for ( GettextErrors::const_iterator i = err.begin(); i != err.end(); ++i )
     {
