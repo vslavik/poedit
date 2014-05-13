@@ -1448,14 +1448,14 @@ void PoeditFrame::NewFromPOT()
             m_fileName = pot_fn.GetFullPath();
             m_fileExistsOnDisk = false;
             m_modified = true;
-
-            UpdateTitle();
-            UpdateMenu();
-            UpdateStatusBar();
-            InitSpellchecker();
-            if (m_list)
-                m_list->CatalogChanged(m_catalog); // refresh language column
         }
+
+        UpdateTitle();
+        UpdateMenu();
+        UpdateStatusBar();
+        InitSpellchecker();
+        if (m_list)
+            m_list->CatalogChanged(m_catalog); // refresh language column
     });
 }
 
