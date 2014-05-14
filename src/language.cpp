@@ -154,13 +154,21 @@ const DisplayNamesData& GetDisplayNamesData()
         // sort the names alphabetically for data.sortedNames:
         UErrorCode err = U_ZERO_ERROR;
         std::unique_ptr<icu::Collator> coll(icu::Collator::createInstance(err));
-        coll->setStrength(icu::Collator::SECONDARY); // case insensitive
+        if (coll)
+        {
+            coll->setStrength(icu::Collator::SECONDARY); // case insensitive
 
-        std::sort(names.begin(), names.end(),
-                  [&coll](const icu::UnicodeString& a, const icu::UnicodeString& b){
-                      UErrorCode e = U_ZERO_ERROR;
-                      return coll->compare(a, b, e) == UCOL_LESS;
-        });
+            std::sort(names.begin(), names.end(),
+                      [&coll](const icu::UnicodeString& a, const icu::UnicodeString& b){
+                          UErrorCode e = U_ZERO_ERROR;
+                          return coll->compare(a, b, e) == UCOL_LESS;
+                      });
+        }
+        else
+        {
+            std::sort(names.begin(), names.end());
+        }
+
         // convert into std::wstring
         data.sortedNames.reserve(names.size());
         for (auto s: names)
