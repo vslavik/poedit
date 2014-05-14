@@ -145,8 +145,8 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
         if (f[i].empty() && !f2[i].empty()) // wxMBConv conversion failed
         {
             wxLogError(
-                _("Line %u of file '%s' is corrupted (not valid %s data)."),
-                i, filename.c_str(), charset.c_str());
+                _("Line %d of file '%s' is corrupted (not valid %s data)."),
+                int(i), filename.c_str(), charset.c_str());
             ok = false;
         }
     }
