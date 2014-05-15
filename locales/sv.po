@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2013-11-27 11:14+0100\n"
+"POT-Creation-Date: 2014-02-02 15:06+0100\n"
 "PO-Revision-Date: 2012-09-12 19:19+0100\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Andreas Pettersson <az@kth.se>\n"
@@ -19,45 +19,52 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
-#: ../src/edframe.cpp:2884
+#: ../src/edframe.cpp:3013
 #, c-format
 msgid "    “%s”"
 msgstr ""
 
-#: ../src/edframe.cpp:2524
+#: ../src/edframe.cpp:2619
 #, c-format
 msgid " (beta version expires %s)"
 msgstr ""
 
-#: ../src/edframe.cpp:2513
+#: ../src/edframe.cpp:2608
 msgid " (modified)"
 msgstr " (ändrad)"
 
-#: ../src/edframe.cpp:2495
+#: ../src/edframe.cpp:2590
 msgid " (unsaved)"
 msgstr ""
 
 #. TRANSLATORS: This is version information in about dialog, it is followed
 #. by version number when used (wxWidgets 2.8)
-#: ../src/edapp.cpp:596
+#: ../src/edapp.cpp:633
 msgid " Version "
 msgstr " Version "
 
-#: ../src/edframe.cpp:1679
+#: ../src/edframe.cpp:2863
+#, fuzzy, c-format
+msgid "%d entry was filled from the translation memory."
+msgid_plural "%d entries were filled from the translation memory."
+msgstr[0] "Uppdatera översättningsminne"
+msgstr[1] "Uppdatera översättningsminne"
+
+#: ../src/edframe.cpp:1710
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "%d problem med översättningen hittades."
 msgstr[1] "%d problem med översättningen hittades."
 
-#: ../src/edframe.cpp:2458
+#: ../src/edframe.cpp:2553
 #, c-format
 msgid "%i %% translated, %i string"
 msgid_plural "%i %% translated, %i strings"
 msgstr[0] "%i %% översatt, %i sträng"
 msgstr[1] "%i %% översatt, %i strängar"
 
-#: ../src/edframe.cpp:2463
+#: ../src/edframe.cpp:2558
 #, c-format
 msgid "%i %% translated, %i string (%s)"
 msgid_plural "%i %% translated, %i strings (%s)"
@@ -71,14 +78,14 @@ msgid ""
 msgstr ""
 "%i %% översatt, %i strängar (%i oklara, %i dåliga tokens, %i inte översatta)"
 
-#: ../src/edframe.cpp:2448
+#: ../src/edframe.cpp:2543
 #, c-format
 msgid "%i bad token"
 msgid_plural "%i bad tokens"
 msgstr[0] "%i dålig token"
 msgstr[1] "%i dåliga tokens"
 
-#: ../src/edframe.cpp:2442
+#: ../src/edframe.cpp:2537
 #, c-format
 msgid "%i fuzzy"
 msgid_plural "%i fuzzy"
@@ -90,7 +97,7 @@ msgstr[1] "%i oklara"
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "%i rader i fil '%s' laddades inte korrekt."
 
-#: ../src/edframe.cpp:2454
+#: ../src/edframe.cpp:2549
 #, c-format
 msgid "%i not translated"
 msgid_plural "%i not translated"
@@ -106,11 +113,11 @@ msgstr "&Om"
 msgid "&About Poedit"
 msgstr "&Om Poedit"
 
-#: ../src/edframe.cpp:3258
+#: ../src/edframe.cpp:3384
 msgid "&Bookmarks"
 msgstr "&Bokmärken"
 
-#: ../src/resources/manager.xrc:121 ../src/resources/menus.xrc:26
+#: ../src/resources/manager.xrc:120 ../src/resources/menus.xrc:26
 msgid "&Close"
 msgstr "&Stäng"
 
@@ -134,7 +141,7 @@ msgstr "&Klar och nästa"
 msgid "&Edit"
 msgstr "&Redigera"
 
-#: ../src/edframe.cpp:522 ../src/resources/manager.xrc:114
+#: ../src/edframe.cpp:554 ../src/resources/manager.xrc:113
 #: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:275
 msgid "&File"
 msgstr "&Arkiv"
@@ -151,11 +158,11 @@ msgstr ""
 msgid "&GNU gettext manual"
 msgstr ""
 
-#: ../src/edframe.cpp:528 ../src/resources/menus.xrc:165
+#: ../src/edframe.cpp:560 ../src/resources/menus.xrc:165
 msgid "&Go"
 msgstr "&Gå"
 
-#: ../src/edapp.cpp:194 ../src/resources/menus.xrc:268
+#: ../src/edapp.cpp:223 ../src/resources/menus.xrc:268
 #: ../src/resources/menus.xrc:333
 msgid "&Help"
 msgstr "&Hjälp"
@@ -198,7 +205,7 @@ msgstr "&Öppna..."
 msgid "&Preferences"
 msgstr "&Inställningar"
 
-#: ../src/resources/manager.xrc:117 ../src/resources/menus.xrc:47
+#: ../src/resources/manager.xrc:116 ../src/resources/menus.xrc:47
 #: ../src/resources/menus.xrc:295
 msgid "&Preferences..."
 msgstr "&Inställningar..."
@@ -267,7 +274,7 @@ msgstr "&Validera översättningar"
 msgid "&View"
 msgstr "&Visa"
 
-#: ../src/catalog.cpp:1649
+#: ../src/catalog.cpp:1665
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' är inte en giltig POT-fil."
@@ -281,7 +288,7 @@ msgstr "(%i nya, %i föråldrade)"
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 nya, 0 föråldrade)"
 
-#: ../src/welcomescreen.cpp:227
+#: ../src/welcomescreen.cpp:262
 msgid "(Learn more about GNU gettext)"
 msgstr ""
 
@@ -294,29 +301,29 @@ msgstr "(Använd standardspråk)"
 msgid "< &Previous"
 msgstr "< Föregående"
 
-#: ../src/manager.cpp:387
+#: ../src/manager.cpp:388
 msgid "<unnamed>"
 msgstr "<namnlös>"
 
 #. TRANSLATORS: This is titlebar of about dialog, the string ends with space
 #. and is followed by application name when used ("Poedit",
 #. but don't add it to this translation yourself) (wxWidgets 2.8)
-#: ../src/edapp.cpp:600
+#: ../src/edapp.cpp:637
 msgid "About "
 msgstr "Om "
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
-#: ../src/aboutbox.cpp:77 ../src/edapp.cpp:590
+#: ../src/aboutbox.cpp:98 ../src/edapp.cpp:627
 #, c-format
 msgid "About %s"
 msgstr "Om %s"
 
-#: ../src/aboutbox.cpp:105 ../src/aboutbox.cpp:113
+#: ../src/aboutbox.cpp:131 ../src/aboutbox.cpp:139
 msgid "Acknowledgements"
 msgstr ""
 
-#: ../src/resources/manager.xrc:80
+#: ../src/resources/manager.xrc:79
 msgid "Add directory to the list"
 msgstr "Lägg till katalog till listan"
 
@@ -337,17 +344,13 @@ msgstr "Ett objekt i indatafilslistan:"
 msgid "An item in keywords list:"
 msgstr "Ett objekt i sökordslistan:"
 
-#: ../src/edframe.cpp:2863 ../src/edframe.cpp:2875
-msgid "Automatic Translations:"
-msgstr "Automatiska Översättningar:"
+#: ../src/edframe.cpp:1435
+msgid "Analyzing WordPress code..."
+msgstr ""
 
 #: ../src/export_html.cpp:191
 msgid "Automatic translation"
 msgstr "Automatisk översättning"
-
-#: ../src/edframe.cpp:2861 ../src/edframe.cpp:2873
-msgid "Automatic translations:"
-msgstr "Automatiska översättningar:"
 
 #: ../src/resources/prefs.xrc:69
 msgid "Automatically check for new version of Poedit"
@@ -357,7 +360,7 @@ msgstr "Sök automatiskt efter nya versioner av Poedit"
 msgid "Automatically compile .mo file on save"
 msgstr "Kompilera automatiskt .mo-filer vid sparande"
 
-#: ../src/manager.cpp:253
+#: ../src/manager.cpp:254
 msgid "Bad Tokens"
 msgstr "Dåliga tokens"
 
@@ -365,11 +368,15 @@ msgstr "Dåliga tokens"
 msgid "Base path:"
 msgstr "Rotsökväg:"
 
+#: ../src/aboutbox.cpp:119
+msgid "Based on the open source version →"
+msgstr ""
+
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
 msgstr "Beteende"
 
-#: ../src/edapp.cpp:201
+#: ../src/edapp.cpp:230
 msgid "Beta expired"
 msgstr ""
 
@@ -383,15 +390,15 @@ msgid ""
 msgstr ""
 "Trasig katalogfil: singularformen msgstr används tillsammans med msgid_plural"
 
-#: ../src/resources/manager.xrc:79
+#: ../src/resources/manager.xrc:78
 msgid "Browse"
 msgstr "Bläddra"
 
-#: ../src/licensing.cpp:117
+#: ../src/licensing.cpp:122
 msgid "Buy Online..."
 msgstr ""
 
-#: ../src/licensing.cpp:115
+#: ../src/licensing.cpp:120
 msgid "Buy online..."
 msgstr ""
 
@@ -407,9 +414,10 @@ msgstr "&Rensa"
 msgid "CR/LF conversion"
 msgstr "CR/LF konvertering"
 
-#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:102
-#: ../src/resources/prefs.xrc:303 ../src/resources/prefs.xrc:445
-#: ../src/resources/progress.xrc:32 ../src/resources/properties.xrc:233
+#: ../src/licensing.cpp:129 ../src/resources/comment.xrc:38
+#: ../src/resources/manager.xrc:101 ../src/resources/prefs.xrc:303
+#: ../src/resources/prefs.xrc:445 ../src/resources/progress.xrc:32
+#: ../src/resources/properties.xrc:233
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -417,12 +425,12 @@ msgstr "Avbryt"
 msgid "Cannot create temporary directory."
 msgstr "Kan inte skapa temporär katalog."
 
-#: ../src/gexecute.cpp:133
+#: ../src/gexecute.cpp:134
 #, c-format
 msgid "Cannot execute program: %s"
 msgstr "Kan inte köra program: %s"
 
-#: ../src/edapp.cpp:837
+#: ../src/edapp.cpp:877
 msgid "Capitalize"
 msgstr ""
 
@@ -430,11 +438,11 @@ msgstr ""
 msgid "Case sensitive"
 msgstr "Skiftlägeskänslig"
 
-#: ../src/manager.cpp:249
+#: ../src/manager.cpp:250
 msgid "Catalog"
 msgstr "Katalog"
 
-#: ../src/edframe.cpp:1129
+#: ../src/edframe.cpp:1152
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalog ändrad. Vill du spara ändringar?"
 
@@ -450,7 +458,7 @@ msgstr "&Kataloghanterare"
 msgid "Catalogs &manager"
 msgstr "&Kataloghanterare"
 
-#: ../src/edapp.cpp:769
+#: ../src/edapp.cpp:806
 #, fuzzy
 msgid "Catalogs Manager"
 msgstr "&Kataloghanterare"
@@ -463,23 +471,23 @@ msgstr "Ändra UI språk"
 msgid "Charset:"
 msgstr "Teckenuppsättning:"
 
-#: ../src/edapp.cpp:815
+#: ../src/edapp.cpp:855
 msgid "Check Document Now"
 msgstr ""
 
-#: ../src/edapp.cpp:818
+#: ../src/edapp.cpp:858
 msgid "Check Grammar With Spelling"
 msgstr ""
 
-#: ../src/edapp.cpp:817
+#: ../src/edapp.cpp:857
 msgid "Check Spelling While Typing"
 msgstr ""
 
-#: ../src/edapp.cpp:774
+#: ../src/edapp.cpp:811
 msgid "Check for Updates..."
 msgstr "Sök efter uppdateringar..."
 
-#: ../src/resources/toolbar.xrc:39
+#: ../src/resources/toolbar.xrc:38
 msgid "Check for errors in the translation"
 msgstr "Leta efter fel i översättning"
 
@@ -492,7 +500,7 @@ msgstr "Sök efter uppdateringar..."
 msgid "Check spelling"
 msgstr ""
 
-#: ../src/edframe.cpp:2836 ../src/resources/menus.xrc:70
+#: ../src/edframe.cpp:2965 ../src/resources/menus.xrc:70
 msgid "Clear Translation"
 msgstr "Rensa Översättning"
 
@@ -500,15 +508,15 @@ msgstr "Rensa Översättning"
 msgid "Clear the comment"
 msgstr "Rensa kommentaren"
 
-#: ../src/edframe.cpp:2834 ../src/resources/menus.xrc:69
+#: ../src/edframe.cpp:2963 ../src/resources/menus.xrc:69
 msgid "Clear translation"
 msgstr "Rensa översättning"
 
-#: ../src/licensing.cpp:196 ../src/resources/find.xrc:87
+#: ../src/licensing.cpp:203 ../src/resources/find.xrc:87
 msgid "Close"
 msgstr "Stäng"
 
-#: ../src/resources/toolbar.xrc:57
+#: ../src/resources/toolbar.xrc:56
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -516,25 +524,25 @@ msgstr "Kommentar"
 msgid "Comment window is editable"
 msgstr "Kommentarfönstret är redigerbart"
 
-#: ../src/edframe.cpp:707 ../src/export_html.cpp:213
+#: ../src/edframe.cpp:736 ../src/export_html.cpp:213
 #: ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Kommentar:"
 
-#: ../src/welcomescreen.cpp:250
+#: ../src/welcomescreen.cpp:285
 msgid "Configure source code extraction in Properties."
 msgstr ""
 
-#: ../src/manager.cpp:419 ../src/manager.cpp:439
+#: ../src/manager.cpp:420 ../src/manager.cpp:440
 msgid "Confirmation"
 msgstr "Bekräftelse"
 
-#: ../src/wordpress.cpp:115
+#: ../src/wordpress.cpp:134
 #, c-format
 msgid "Confused by ambiguous values of \"%s\" in %s."
 msgstr ""
 
-#: ../src/wordpress.cpp:210
+#: ../src/wordpress.cpp:336
 msgid "Confused: multiple main plugin files."
 msgstr ""
 
@@ -542,63 +550,70 @@ msgstr ""
 msgid "Consult TM when updating from sources"
 msgstr ""
 
-#: ../src/edframe.cpp:2141
+#: ../src/edframe.cpp:2229
 msgid "Context:"
 msgstr "Innehåll:"
 
-#: ../src/edframe.cpp:2829 ../src/resources/menus.xrc:77
+#: ../src/edframe.cpp:2958 ../src/resources/menus.xrc:77
 msgid "Copy from Source Text"
 msgstr "Kopiera från Källtext"
 
-#: ../src/edframe.cpp:2827 ../src/resources/menus.xrc:76
+#: ../src/edframe.cpp:2956 ../src/resources/menus.xrc:76
 msgid "Copy from source text"
 msgstr "Kopiera från källtext"
 
-#: ../src/edapp.cpp:819
+#: ../src/edapp.cpp:859
 msgid "Correct Spelling Automatically"
 msgstr ""
 
-#: ../src/wordpress.cpp:238
+#: ../src/wordpress.cpp:226
+#, c-format
+msgid "Couldn't detect POs location for \"%s\"."
+msgstr ""
+
+#: ../src/wordpress.cpp:374
 #, c-format
 msgid "Couldn't detect translation domain of the \"%s\" plugin."
 msgstr ""
 
-#: ../src/catalog.cpp:1055
+#: ../src/catalog.cpp:1063
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "Det gick inte att läsa filen %s, den är förmodligen skadad."
 
-#: ../src/catalog.cpp:1344 ../src/catalog.cpp:1380
+#: ../src/catalog.cpp:1355 ../src/catalog.cpp:1391
 #, c-format
 msgid "Couldn't save file %s."
 msgstr "Det gick inte att spara filen %s."
 
-#: ../src/welcomescreen.cpp:198
-msgid "Create a new translation. Poedit will set everything up automatically."
+#: ../src/welcomescreen.cpp:233
+msgid ""
+"Create a new translation. Poedit will set everything up; you can focus on "
+"translating."
 msgstr ""
 
-#: ../src/welcomescreen.cpp:191
+#: ../src/welcomescreen.cpp:226
 #, fuzzy
 msgid "Create new translation"
 msgstr "Skapa ett nytt översättningsprojekt"
 
-#: ../src/resources/manager.xrc:33
+#: ../src/resources/manager.xrc:32
 msgid "Create new translations project"
 msgstr "Skapa ett nytt översättningsprojekt"
 
-#: ../src/prefsdlg.cpp:158
+#: ../src/prefsdlg.cpp:170
 msgid "Database size on disk:"
 msgstr ""
 
-#: ../src/resources/manager.xrc:42 ../src/resources/prefs.xrc:269
+#: ../src/resources/manager.xrc:41 ../src/resources/prefs.xrc:269
 msgid "Delete"
 msgstr "Ta bort"
 
-#: ../src/resources/manager.xrc:43
+#: ../src/resources/manager.xrc:42
 msgid "Delete the project"
 msgstr "Ta bort projektet"
 
-#: ../src/manager.cpp:305
+#: ../src/manager.cpp:306
 msgid "Directories:"
 msgstr "Kataloger:"
 
@@ -628,7 +643,7 @@ msgstr "Visa &Citattecken"
 msgid "Display entry &IDs"
 msgstr "Visa &radnummer"
 
-#: ../src/manager.cpp:438
+#: ../src/manager.cpp:439
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -636,15 +651,15 @@ msgstr ""
 "Vill du verkligen göra en massuppdatering av\n"
 "alla kataloger i detta projekt?"
 
-#: ../src/manager.cpp:418
+#: ../src/manager.cpp:419
 msgid "Do you want to delete the project?"
 msgstr "Vill du ta bort projektet?"
 
-#: ../src/edframe.cpp:2726
+#: ../src/edframe.cpp:2817
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Vill du ta bort alla översättningar som inte längre används?"
 
-#: ../src/edframe.cpp:1140
+#: ../src/edframe.cpp:1163
 msgid "Don't Save"
 msgstr "Spara Inte"
 
@@ -652,7 +667,7 @@ msgstr "Spara Inte"
 msgid "Don't change format of existing catalogs"
 msgstr "Ändra inte formatet på befintliga kataloger"
 
-#: ../src/edframe.cpp:1138
+#: ../src/edframe.cpp:1161
 msgid "Don't save"
 msgstr "Spara inte"
 
@@ -660,11 +675,11 @@ msgstr "Spara inte"
 msgid "Don't show again"
 msgstr "Visa inte igen"
 
-#: ../src/edapp.cpp:203
+#: ../src/edapp.cpp:232
 msgid "Download"
 msgstr ""
 
-#: ../src/resources/manager.xrc:125 ../src/resources/menus.xrc:59
+#: ../src/resources/manager.xrc:124 ../src/resources/menus.xrc:59
 msgid "E&xit"
 msgstr "&Avsluta"
 
@@ -673,7 +688,7 @@ msgstr "&Avsluta"
 msgid "E&xport as HTML..."
 msgstr "Exportera som..."
 
-#: ../src/edapp.cpp:777 ../src/resources/manager.xrc:37
+#: ../src/edapp.cpp:814 ../src/resources/manager.xrc:36
 #: ../src/resources/prefs.xrc:262
 msgid "Edit"
 msgstr "Redigera"
@@ -686,25 +701,25 @@ msgstr "Redigera &Kommentar"
 msgid "Edit &comment"
 msgstr "Redigera &kommentar"
 
-#: ../src/edframe.cpp:2843
+#: ../src/edframe.cpp:2972
 msgid "Edit Comment"
 msgstr "Redigera Kommentar"
 
-#: ../src/welcomescreen.cpp:185
+#: ../src/welcomescreen.cpp:220
 #, fuzzy
 msgid "Edit a translation"
 msgstr "Rensa översättning"
 
-#: ../src/edframe.cpp:2841 ../src/resources/comment.xrc:4
-#: ../src/resources/toolbar.xrc:58
+#: ../src/edframe.cpp:2970 ../src/resources/comment.xrc:4
+#: ../src/resources/toolbar.xrc:57
 msgid "Edit comment"
 msgstr "Redigera kommentar"
 
-#: ../src/resources/manager.xrc:53
+#: ../src/resources/manager.xrc:52
 msgid "Edit project"
 msgstr "Redigera projekt"
 
-#: ../src/resources/manager.xrc:38
+#: ../src/resources/manager.xrc:37
 msgid "Edit the project"
 msgstr "Redigera projektet"
 
@@ -722,11 +737,11 @@ msgstr "E&xportera..."
 msgid "Email &support..."
 msgstr "E&xportera..."
 
-#: ../src/wordpress.cpp:394
+#: ../src/wordpress.cpp:510
 msgid "Email Support"
 msgstr ""
 
-#: ../src/wordpress.cpp:391
+#: ../src/wordpress.cpp:507
 msgid "Email support"
 msgstr ""
 
@@ -734,11 +749,11 @@ msgstr ""
 msgid "Enables on-the-fly spellchecking"
 msgstr "Aktiverar on-the-fly stavningskontroll"
 
-#: ../src/edframe.cpp:1611
+#: ../src/edframe.cpp:1638
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Poster i katalogen är troligen fel."
 
-#: ../src/edframe.cpp:2282
+#: ../src/edframe.cpp:2376
 msgid ""
 "Entries in this catalog have different plural forms count from what "
 "catalog's Plural-Forms header says"
@@ -746,7 +761,7 @@ msgstr ""
 "Poster i denna katalog har olika antal pluralformer än vad som anges i "
 "Plural-Former headern"
 
-#: ../src/edframe.cpp:1687
+#: ../src/edframe.cpp:1718
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
@@ -754,7 +769,7 @@ msgstr ""
 "Poster med fel har rödmarkerats i listan. Detaljer om felet visas då en "
 "sådan post väljs."
 
-#: ../src/edframe.cpp:2389
+#: ../src/edframe.cpp:2484
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "Fel vid laddning av meddelandekatalogfil '%s'."
@@ -764,7 +779,7 @@ msgstr "Fel vid laddning av meddelandekatalogfil '%s'."
 msgid "Error opening file %s!"
 msgstr "Fel vid öppning av fil %s!"
 
-#: ../src/catalog.cpp:1515
+#: ../src/catalog.cpp:1531
 msgid "Error saving catalog"
 msgstr "Fel vid sparning av katalog"
 
@@ -772,15 +787,15 @@ msgstr "Fel vid sparning av katalog"
 msgid "Error:"
 msgstr "Fel:"
 
-#: ../src/edframe.cpp:3176
+#: ../src/edframe.cpp:3305
 msgid "Everything"
 msgstr ""
 
-#: ../src/edframe.cpp:1276
+#: ../src/edframe.cpp:1299
 msgid "Export as..."
 msgstr "Exportera som..."
 
-#: ../src/welcomescreen.cpp:249
+#: ../src/welcomescreen.cpp:284
 #, fuzzy
 msgid "Extract from sources"
 msgstr "&Uppdatera från källor"
@@ -794,7 +809,7 @@ msgstr "Extrahera text från källfilen i följande kataloger:"
 msgid "Failed command: %s"
 msgstr "Kommando misslyckades: %s"
 
-#: ../src/wordpress.cpp:376
+#: ../src/wordpress.cpp:492
 #, fuzzy
 msgid "Failed to extract WordPress information."
 msgstr "Det gick inte att läsa extraherad katalog"
@@ -807,32 +822,27 @@ msgstr "Det gick inte att läsa extraherad katalog"
 msgid "Failed to merge gettext catalogs."
 msgstr "Det gick inte att sammanfoga gettext kataloger."
 
-#: ../src/wordpress.cpp:71
+#: ../src/wordpress.cpp:85 ../src/wordpress.cpp:92
 #, fuzzy, c-format
 msgid "Failed to read file '%s'."
 msgstr "Kommando misslyckades: %s"
 
-#: ../src/wordpress.cpp:135
-#, fuzzy, c-format
-msgid "Failed to read folder '%s'."
-msgstr "Felaktig header: '%s'"
-
-#: ../src/edframe.cpp:2645
+#: ../src/edframe.cpp:2736 ../src/edframe.cpp:2740
 #, fuzzy, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Uppdatera översättningsminne"
 
-#: ../src/edapp.cpp:571 ../src/edframe.cpp:445 ../src/edframe.cpp:1198
+#: ../src/edapp.cpp:608 ../src/edframe.cpp:477 ../src/edframe.cpp:1221
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Fil '%s' finns inte."
 
-#: ../src/edframe.cpp:438
+#: ../src/edframe.cpp:470
 #, c-format
 msgid "File '%s' is not a message catalog."
 msgstr "Fil '%s' är inte en meddelandekatalog."
 
-#: ../src/catalog.cpp:1326
+#: ../src/catalog.cpp:1337
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -841,7 +851,22 @@ msgstr ""
 "Filen '%s' är skrivskyddad och kan inte sparas.\n"
 "Spara den under ett annat namn."
 
-#: ../src/prefsdlg.cpp:196 ../src/tm/tm_migrate.cpp:198
+#: ../src/resources/menus.xrc:142
+#, fuzzy
+msgid "Fill Missing Translations from &TM"
+msgstr "Sök i översättningar"
+
+#: ../src/resources/menus.xrc:141
+#, fuzzy
+msgid "Fill missing translations from &TM"
+msgstr "Sök i översättningar"
+
+#: ../src/edframe.cpp:2880 ../src/edframe.cpp:2907
+#, fuzzy
+msgid "Filling missing translations from TM..."
+msgstr "Sök i översättningar"
+
+#: ../src/prefsdlg.cpp:208 ../src/tm/tm_migrate.cpp:225
 msgid "Finalizing..."
 msgstr ""
 
@@ -890,11 +915,11 @@ msgstr "< Föregående"
 msgid "Find..."
 msgstr "Sök..."
 
-#: ../src/edframe.cpp:2312
+#: ../src/edframe.cpp:2406
 msgid "Fix the header"
 msgstr "Fixa header"
 
-#: ../src/wordpress.cpp:294
+#: ../src/wordpress.cpp:397
 msgid "Folder looks like both a plugin and a theme."
 msgstr ""
 
@@ -902,20 +927,20 @@ msgstr ""
 msgid "Fonts"
 msgstr "Teckensnitt"
 
-#: ../src/edframe.cpp:3178
+#: ../src/edframe.cpp:3307
 #, c-format
 msgid "Form %i"
 msgstr "Form %i"
 
-#: ../src/wordpress.cpp:296
+#: ../src/wordpress.cpp:399
 msgid "Found neither WordPress theme nor plugin in the folder."
 msgstr ""
 
-#: ../src/aboutbox.cpp:165
+#: ../src/aboutbox.cpp:191
 msgid "Free version (please upgrade!)"
 msgstr ""
 
-#: ../src/manager.cpp:252 ../src/resources/toolbar.xrc:51
+#: ../src/manager.cpp:253 ../src/resources/toolbar.xrc:50
 msgid "Fuzzy"
 msgstr "Oklar"
 
@@ -923,38 +948,38 @@ msgstr "Oklar"
 msgid "Fuzzy translation"
 msgstr "Oklar översättning"
 
-#: ../src/edapp.cpp:545 ../src/edframe.cpp:1179 ../src/edframe.cpp:1239
-#: ../src/prefsdlg.cpp:169
+#: ../src/edapp.cpp:582 ../src/edframe.cpp:1202 ../src/edframe.cpp:1262
+#: ../src/prefsdlg.cpp:181
 msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU gettext kataloger (*.po)|*.po|Alla filer (*.*)|*.*"
 
-#: ../src/edframe.cpp:1629
+#: ../src/edframe.cpp:1656
 msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU gettext mallar (*.pot)|*.pot|Alla filer (*.*)|*.*"
 
-#: ../src/edframe.cpp:1327
+#: ../src/edframe.cpp:1350
 #, fuzzy
 msgid ""
 "GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All "
 "files (*.*)|*.*"
 msgstr "GNU gettext mallar (*.pot)|*.pot|Alla filer (*.*)|*.*"
 
-#: ../src/edframe.cpp:3270
+#: ../src/edframe.cpp:3396
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "Gå till bokmärke %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:3264
+#: ../src/edframe.cpp:3390
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+Alt+%i"
 msgstr "Gå till bokmärke %i\tCtrl+Alt+%i"
 
-#: ../src/edframe.cpp:3267
+#: ../src/edframe.cpp:3393
 #, c-format
 msgid "Go to bookmark %i\tCtrl+%i"
 msgstr "Gå till bokmärke %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:1278
+#: ../src/edframe.cpp:1301
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML-fil (*.html)|*.html"
 
@@ -962,7 +987,7 @@ msgstr "HTML-fil (*.html)|*.html"
 msgid "Hide this notification message"
 msgstr "Dölj det här meddelandet"
 
-#: ../src/edlistctrl.cpp:333
+#: ../src/edlistctrl.cpp:335
 msgid "ID"
 msgstr ""
 
@@ -974,11 +999,15 @@ msgstr "Identitet"
 msgid "If checked, the comment window will be editable."
 msgstr "Om markerad, kommer kommentarfönstret vara redigerbar."
 
-#: ../src/prefsdlg.cpp:104
-msgid "If enabled, Poedit will try to fill in missing translations."
+#: ../src/prefsdlg.cpp:105
+msgid ""
+"If enabled, Poedit will try to fill new entries in using your previous\n"
+"translations stored in the translation memory. If the TM is\n"
+"near-empty, it will not be very effective. The more translations\n"
+"you edit and the larger the TM grows, the better it gets."
 msgstr ""
 
-#: ../src/edframe.cpp:2728
+#: ../src/edframe.cpp:2819
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
@@ -988,12 +1017,12 @@ msgstr ""
 "borttagning att tas bort permanent. Du måste översätta dem igen om de läggs "
 "tillbaka i framtiden."
 
-#: ../src/prefsdlg.cpp:180
+#: ../src/prefsdlg.cpp:192
 #, fuzzy
 msgid "Importing translations..."
 msgstr "Automatiska översättningar:"
 
-#: ../src/tm/tm_migrate.cpp:141
+#: ../src/tm/tm_migrate.cpp:152
 #, fuzzy, c-format
 msgid "Importing translations: %d"
 msgstr "Automatiska översättningar:"
@@ -1002,8 +1031,12 @@ msgstr "Automatiska översättningar:"
 msgid "Include beta versions"
 msgstr ""
 
-#: ../src/edframe.cpp:166 ../src/edframe.cpp:2186
+#: ../src/edframe.cpp:172 ../src/edframe.cpp:2274
 msgid "Invalid file"
+msgstr ""
+
+#: ../src/edapp.cpp:918
+msgid "Invalid license data."
 msgstr ""
 
 #: ../src/resources/prefs.xrc:351
@@ -1014,7 +1047,7 @@ msgstr "Anrop:"
 msgid "Items"
 msgstr ""
 
-#: ../src/edframe.cpp:2732
+#: ../src/edframe.cpp:2823
 msgid "Keep"
 msgstr "Behåll"
 
@@ -1022,11 +1055,11 @@ msgstr "Behåll"
 msgid "Language Code or Name (e.g. en_GB)"
 msgstr ""
 
-#: ../src/edframe.cpp:2263
+#: ../src/edframe.cpp:2357
 msgid "Language of the translation isn't set."
 msgstr ""
 
-#: ../src/languagectrl.cpp:94
+#: ../src/languagectrl.cpp:112
 #, fuzzy
 msgid "Language of the translation:"
 msgstr "Rensa borttagna översättningar"
@@ -1040,7 +1073,7 @@ msgstr "Språkval"
 msgid "Language:"
 msgstr "Språk:"
 
-#: ../src/manager.cpp:254
+#: ../src/manager.cpp:255
 msgid "Last modified"
 msgstr "Senast ändrad"
 
@@ -1058,28 +1091,28 @@ msgstr "Lär dig mer om pluralformer"
 msgid "Learn about plural forms"
 msgstr "Lär dig mer om pluralformer"
 
-#: ../src/edframe.cpp:1046 ../src/licensing.cpp:354
+#: ../src/edframe.cpp:1069 ../src/licensing.cpp:434 ../src/prefsdlg.cpp:112
 msgid "Learn more"
 msgstr "Läs mer"
 
-#: ../src/aboutbox.cpp:106 ../src/aboutbox.cpp:114
+#: ../src/aboutbox.cpp:132 ../src/aboutbox.cpp:140
 msgid "License Agreement"
 msgstr ""
 
-#: ../src/licensing.cpp:99
+#: ../src/licensing.cpp:104
 msgid "License Key"
 msgstr ""
 
-#: ../src/edapp.cpp:771
+#: ../src/edapp.cpp:808
 msgid "License..."
 msgstr ""
 
-#: ../src/aboutbox.cpp:163
+#: ../src/aboutbox.cpp:189
 #, c-format
 msgid "Licensed to %s"
 msgstr ""
 
-#: ../src/licensing.cpp:229
+#: ../src/licensing.cpp:236
 #, c-format
 msgid "Licensed to: %s"
 msgstr ""
@@ -1097,11 +1130,11 @@ msgstr "Radslutsformat:"
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Lista över tillägg avgränsas med semikolon (t.ex. *.cpp;*.h):"
 
-#: ../src/edapp.cpp:836
+#: ../src/edapp.cpp:876
 msgid "Make Lower Case"
 msgstr ""
 
-#: ../src/edapp.cpp:835
+#: ../src/edapp.cpp:875
 msgid "Make Upper Case"
 msgstr ""
 
@@ -1110,11 +1143,16 @@ msgstr ""
 msgid "Malformed header: '%s'"
 msgstr "Felaktig header: '%s'"
 
-#: ../src/catalog.cpp:1620
+#: ../src/catalog.cpp:1636
 msgid "Merging differences..."
 msgstr "Sammanfogar skillnader..."
 
-#: ../src/licensing.cpp:94
+#: ../src/tm/tm_migrate.cpp:232
+#, c-format
+msgid "Migration exit status: %d"
+msgstr ""
+
+#: ../src/licensing.cpp:99
 msgid "Name"
 msgstr ""
 
@@ -1131,7 +1169,7 @@ msgstr "Nä&sta Ofärdig"
 msgid "Ne&xt unfinished"
 msgstr "Nä&sta ofärdig"
 
-#: ../src/statistics.cpp:172
+#: ../src/statistics.cpp:172 ../src/statistics.cpp:198
 msgid "Needs review (fuzzy)"
 msgstr ""
 
@@ -1145,7 +1183,7 @@ msgstr ""
 "använda Ctrl-pilar för tangentbordsnavigering men du kan också skriva text "
 "direkt, utan att behöva trycka Tabb för att byta fokus."
 
-#: ../src/resources/manager.xrc:32 ../src/resources/prefs.xrc:257
+#: ../src/resources/manager.xrc:31 ../src/resources/prefs.xrc:257
 msgid "New"
 msgstr "Ny"
 
@@ -1173,23 +1211,28 @@ msgstr "Uppdatera från &POT-fil..."
 msgid "New strings"
 msgstr "Nya strängar"
 
+#: ../src/edframe.cpp:2870
+#, fuzzy
+msgid "No entries could be filled from the translation memory."
+msgstr "Det uppstod ett problem med flyttning av ditt översättningsminne."
+
 #: ../src/digger.cpp:186
 msgid "No files found in: "
 msgstr "Inga filer hittades i:"
 
-#: ../src/edframe.cpp:1702
+#: ../src/edframe.cpp:1744
 msgid "No problems with the translation found."
 msgstr "Inga problem med översättningen hittades."
 
-#: ../src/edframe.cpp:1745
+#: ../src/edframe.cpp:1800
 msgid "No references to this string found."
 msgstr "Inga hänvisningar till denna sträng hittades."
 
-#: ../src/licensing.cpp:353
+#: ../src/licensing.cpp:433
 msgid "No, thanks"
 msgstr ""
 
-#: ../src/statistics.cpp:176
+#: ../src/statistics.cpp:176 ../src/statistics.cpp:202
 #, fuzzy
 msgid "Not translated"
 msgstr "%i inte översatt"
@@ -1198,11 +1241,11 @@ msgstr "%i inte översatt"
 msgid "Notes"
 msgstr "Anteckningar"
 
-#: ../src/edframe.cpp:700 ../src/export_html.cpp:204
+#: ../src/edframe.cpp:729 ../src/export_html.cpp:204
 msgid "Notes for translators:"
 msgstr "Anteckningar för översättare:"
 
-#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:94
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:93
 #: ../src/resources/prefs.xrc:295 ../src/resources/prefs.xrc:437
 #: ../src/resources/properties.xrc:225 ../src/resources/summary.xrc:70
 msgid "OK"
@@ -1212,11 +1255,11 @@ msgstr "OK"
 msgid "Obsolete strings"
 msgstr "Föråldrade strängar"
 
-#: ../src/edframe.cpp:3184
+#: ../src/edframe.cpp:3313
 msgid "One"
 msgstr ""
 
-#: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
+#: ../src/resources/toolbar.xrc:14 ../src/resources/toolbar.xrc:19
 msgid "Open"
 msgstr "Öppna"
 
@@ -1225,20 +1268,20 @@ msgstr "Öppna"
 msgid "Open In Editor"
 msgstr "Editor"
 
-#: ../src/welcomescreen.cpp:186
+#: ../src/welcomescreen.cpp:221
 msgid "Open an existing PO file and edit the translation."
 msgstr ""
 
-#: ../src/edapp.cpp:542 ../src/edframe.cpp:1177
-#: ../src/resources/toolbar.xrc:16 ../src/resources/toolbar.xrc:21
+#: ../src/edapp.cpp:579 ../src/edframe.cpp:1200
+#: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
 msgid "Open catalog"
 msgstr "Öppna katalog"
 
-#: ../src/edframe.cpp:1325 ../src/edframe.cpp:1627
+#: ../src/edframe.cpp:1348 ../src/edframe.cpp:1654
 msgid "Open catalog template"
 msgstr "Öppna mall för katalog"
 
-#: ../src/edframe.cpp:3191
+#: ../src/edframe.cpp:3320
 msgid "Other"
 msgstr ""
 
@@ -1267,7 +1310,7 @@ msgstr "Parsrar"
 msgid "Parsing %s files..."
 msgstr "Parsar %s filer..."
 
-#: ../src/edapp.cpp:803
+#: ../src/edapp.cpp:843
 msgid "Paste and Match Style"
 msgstr ""
 
@@ -1279,17 +1322,17 @@ msgstr "Sökväg"
 msgid "Personalize"
 msgstr "Anpassa"
 
-#: ../src/edframe.cpp:1753
+#: ../src/edframe.cpp:1808
 msgid "Please choose the reference you want to show:"
 msgstr "Välj hänvisningar som du vill visa:"
 
-#: ../src/edapp.cpp:202
+#: ../src/edapp.cpp:231
 msgid ""
 "Please download a newer version from the Poedit website at http://poedit.net/"
 "beta/"
 msgstr ""
 
-#: ../src/wordpress.cpp:407
+#: ../src/wordpress.cpp:523
 msgid "Please email this log to help@poedit.net. Thank you!"
 msgstr ""
 
@@ -1304,16 +1347,16 @@ msgstr "Pluralformer:"
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:2350
+#: ../src/edframe.cpp:2444
 #, c-format
 msgid "Plural forms expression used by the catalog is unusual for %s."
 msgstr ""
 
-#: ../src/edframe.cpp:679
+#: ../src/edframe.cpp:711
 msgid "Plural:"
 msgstr "Plural:"
 
-#: ../src/edframe.cpp:462
+#: ../src/edapp.cpp:918 ../src/edframe.cpp:494
 msgid "Poedit"
 msgstr "Poedit"
 
@@ -1321,17 +1364,17 @@ msgstr "Poedit"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Kataloghanterare"
 
-#: ../src/licensing.cpp:69
+#: ../src/licensing.cpp:74
 msgid "Poedit Registration"
 msgstr ""
 
-#: ../src/tm/tm_migrate.cpp:157 ../src/tm/tm_migrate.cpp:233
-#: ../src/tm/tm_migrate.cpp:262
+#: ../src/tm/tm_migrate.cpp:171 ../src/tm/tm_migrate.cpp:264
+#: ../src/tm/tm_migrate.cpp:294
 #, fuzzy
 msgid "Poedit Update"
 msgstr "Poedit"
 
-#: ../src/wordpress.cpp:386
+#: ../src/wordpress.cpp:502
 #, c-format
 msgid ""
 "Poedit couldn’t understand the content of the folder you selected. This may "
@@ -1347,11 +1390,11 @@ msgstr ""
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Poedit hittade inga filer i skannade kataloger."
 
-#: ../src/edapp.cpp:607
+#: ../src/edapp.cpp:644
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit är en lättanvänd översättningseditor."
 
-#: ../src/tm/tm_migrate.cpp:232
+#: ../src/tm/tm_migrate.cpp:263
 #, fuzzy
 msgid "Poedit needs to convert your translation memory to a new format."
 msgstr "Poedit översättningsminnesfel"
@@ -1360,11 +1403,11 @@ msgstr "Poedit översättningsminnesfel"
 msgid "Preferences"
 msgstr "Inställningar"
 
-#: ../src/tm/tm_migrate.cpp:157
+#: ../src/tm/tm_migrate.cpp:171
 msgid "Preparing migration..."
 msgstr ""
 
-#: ../src/tm/tm_migrate.cpp:237
+#: ../src/tm/tm_migrate.cpp:268
 msgid "Proceed"
 msgstr "Fortsätt"
 
@@ -1376,57 +1419,57 @@ msgstr "Projekt info"
 msgid "Project name and version:"
 msgstr "Projekt namn och version:"
 
-#: ../src/resources/manager.xrc:58
+#: ../src/resources/manager.xrc:57
 msgid "Project name:"
 msgstr "Projektnamn:"
 
-#: ../src/licensing.cpp:318
+#: ../src/licensing.cpp:398
 msgid ""
 "Purchasing the full version will unlock more features\n"
 "in this and future versions of Poedit, including:\n"
 "\n"
 msgstr ""
 
-#: ../src/edframe.cpp:2732
+#: ../src/edframe.cpp:2823
 msgid "Purge"
 msgstr "Rensa"
 
-#: ../src/edframe.cpp:2724
+#: ../src/edframe.cpp:2815
 msgid "Purge deleted translations"
 msgstr "Rensa borttagna översättningar"
 
-#: ../src/edapp.cpp:203 ../src/tm/tm_migrate.cpp:237
-#: ../src/resources/manager.xrc:126 ../src/resources/menus.xrc:60
+#: ../src/edapp.cpp:232 ../src/tm/tm_migrate.cpp:268
+#: ../src/resources/manager.xrc:125 ../src/resources/menus.xrc:60
 #: ../src/resources/menus.xrc:299
 msgid "Quit"
 msgstr "Avsluta"
 
-#: ../src/edapp.cpp:794
+#: ../src/edapp.cpp:834
 msgid "Redo"
 msgstr ""
 
-#: ../src/edframe.cpp:1753
+#: ../src/edframe.cpp:1808
 msgid "References"
 msgstr "Hänvisningar"
 
-#: ../src/edframe.cpp:2896 ../src/edframe.cpp:2900
+#: ../src/edframe.cpp:3025 ../src/edframe.cpp:3029
 msgid "References:"
 msgstr "Hänvisningar:"
 
-#: ../src/licensing.cpp:124 ../src/licensing.cpp:128
+#: ../src/licensing.cpp:131 ../src/licensing.cpp:135
 msgid "Register"
 msgstr ""
 
-#: ../src/edframe.cpp:2293
+#: ../src/edframe.cpp:2387
 msgid "Required header Plural-Forms is missing."
 msgstr "Nödvändig Plural-forms header saknas."
 
-#: ../src/edframe.cpp:2354
+#: ../src/edframe.cpp:2448
 msgid "Review"
 msgstr ""
 
-#: ../src/edframe.cpp:1136 ../src/resources/toolbar.xrc:25
-#: ../src/resources/toolbar.xrc:30
+#: ../src/edframe.cpp:1159 ../src/resources/toolbar.xrc:24
+#: ../src/resources/toolbar.xrc:29
 msgid "Save"
 msgstr "Spara"
 
@@ -1438,15 +1481,15 @@ msgstr "Spara S&om"
 msgid "Save &as..."
 msgstr "Spara s&om"
 
-#: ../src/edframe.cpp:1238
+#: ../src/edframe.cpp:1261
 msgid "Save as..."
 msgstr "Spara som..."
 
-#: ../src/resources/toolbar.xrc:26 ../src/resources/toolbar.xrc:31
+#: ../src/resources/toolbar.xrc:25 ../src/resources/toolbar.xrc:30
 msgid "Save catalog"
 msgstr "Spara katalog"
 
-#: ../src/edframe.cpp:1130
+#: ../src/edframe.cpp:1153
 msgid "Save changes"
 msgstr "Spara ändringar"
 
@@ -1454,15 +1497,15 @@ msgstr "Spara ändringar"
 msgid "Scanning files..."
 msgstr "Skannar filer..."
 
-#: ../src/manager.cpp:285
+#: ../src/manager.cpp:286
 msgid "Select directory"
 msgstr "Välj katalog"
 
-#: ../src/edframe.cpp:1402
+#: ../src/edframe.cpp:1426
 msgid "Select the folder with the WordPress theme or plugin"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:166
+#: ../src/prefsdlg.cpp:178
 #, fuzzy
 msgid "Select translation files to import"
 msgstr "Poedit översättningsminnesfel"
@@ -1471,40 +1514,40 @@ msgstr "Poedit översättningsminnesfel"
 msgid "Select your prefered language"
 msgstr "Välj önskat språk"
 
-#: ../src/edframe.cpp:3269
+#: ../src/edframe.cpp:3395
 #, c-format
 msgid "Set Bookmark %i\tAlt+%i"
 msgstr "Lägg till bokmärke %i\tAlt+%i"
 
-#: ../src/edframe.cpp:3263
+#: ../src/edframe.cpp:3389
 #, c-format
 msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "Lägg till bokmärke %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:3266
+#: ../src/edframe.cpp:3392
 #, c-format
 msgid "Set bookmark %i\tAlt+%i"
 msgstr "Lägg till bokmärke %i\tAlt+%i"
 
-#: ../src/edframe.cpp:2235
+#: ../src/edframe.cpp:2329
 msgid "Set email"
 msgstr "Ange e-post"
 
-#: ../src/edframe.cpp:2265
+#: ../src/edframe.cpp:2359
 #, fuzzy
 msgid "Set language"
 msgstr "Välj språk"
 
-#: ../src/edframe.cpp:2250
+#: ../src/edframe.cpp:2344
 #, fuzzy
 msgid "Set name"
 msgstr "Välj språk"
 
-#: ../src/edapp.cpp:814
+#: ../src/edapp.cpp:854
 msgid "Show Spelling and Grammar"
 msgstr ""
 
-#: ../src/edapp.cpp:824
+#: ../src/edapp.cpp:864
 msgid "Show Substitutions"
 msgstr ""
 
@@ -1512,30 +1555,24 @@ msgstr ""
 msgid "Show summary after catalog update"
 msgstr "Visa sammanfattning efter kataloguppdatering"
 
-#: ../src/edframe.cpp:672
+#: ../src/edframe.cpp:704
 msgid "Singular:"
 msgstr "Singular:"
 
-#: ../src/edapp.cpp:826
+#: ../src/edapp.cpp:866
 msgid "Smart Copy/Paste"
 msgstr ""
 
-#: ../src/edapp.cpp:828
+#: ../src/edapp.cpp:868
 msgid "Smart Dashes"
 msgstr ""
 
-#: ../src/edapp.cpp:829
+#: ../src/edapp.cpp:869
 msgid "Smart Links"
 msgstr ""
 
-#: ../src/edapp.cpp:827
+#: ../src/edapp.cpp:867
 msgid "Smart Quotes"
-msgstr ""
-
-#: ../src/tm/tm_migrate.cpp:265
-msgid ""
-"Something went wrong and your translation memory data couldn't be migrated. "
-"Please email help@poedit.net and we’ll get it fixed."
 msgstr ""
 
 #: ../src/resources/menus.xrc:221
@@ -1575,7 +1612,7 @@ msgstr "Källtext"
 msgid "Source code charset:"
 msgstr "Källkod teckenuppsättning:"
 
-#: ../src/catalog.cpp:1603
+#: ../src/catalog.cpp:1619
 #, fuzzy, c-format
 msgid "Source code directory '%s' doesn't exist."
 msgstr "Fil '%s' finns inte."
@@ -1592,11 +1629,11 @@ msgstr "Källfil"
 msgid "Source file occurrence:"
 msgstr "Förekomster källfil:"
 
-#: ../src/edlistctrl.cpp:330
+#: ../src/edlistctrl.cpp:332
 msgid "Source text"
 msgstr "Källtext"
 
-#: ../src/edframe.cpp:665
+#: ../src/edframe.cpp:697
 msgid "Source text:"
 msgstr "Källtext:"
 
@@ -1608,23 +1645,23 @@ msgstr "Källor sökord"
 msgid "Sources paths"
 msgstr "Källor sökvägar"
 
-#: ../src/edapp.cpp:840
+#: ../src/edapp.cpp:880
 msgid "Speech"
 msgstr ""
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:1042
+#: ../src/edframe.cpp:1065
 #, c-format
 msgid "Spellchecker dictionary for %s isn't available, you need to install it."
 msgstr "Ordboken för %s stavningskontroll saknas, du måste installera den."
 
-#: ../src/edapp.cpp:812
+#: ../src/edapp.cpp:852
 msgid "Spelling and Grammar"
 msgstr ""
 
-#: ../src/edapp.cpp:842
+#: ../src/edapp.cpp:882
 msgid "Start Speaking"
 msgstr ""
 
@@ -1636,11 +1673,11 @@ msgstr "Utgå från det första objektet"
 msgid "Statistics"
 msgstr ""
 
-#: ../src/edapp.cpp:843
+#: ../src/edapp.cpp:883
 msgid "Stop Speaking"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:157
+#: ../src/prefsdlg.cpp:169
 #, fuzzy
 msgid "Stored translations:"
 msgstr "Sortera efter ö&versättning"
@@ -1653,22 +1690,22 @@ msgstr "Sträng att hitta:"
 msgid "Strings in source language"
 msgstr ""
 
-#: ../src/edapp.cpp:822
+#: ../src/edapp.cpp:862
 msgid "Substitutions"
 msgstr ""
 
-#: ../src/edframe.cpp:2298
+#: ../src/edframe.cpp:2392
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Syntaxfel i Plural-Former headern (\"%s\")."
 
-#: ../src/welcomescreen.cpp:192
+#: ../src/welcomescreen.cpp:227
 msgid ""
 "Take an existing PO file or POT template and create a new translation from "
 "it."
 msgstr ""
 
-#: ../src/welcomescreen.cpp:239
+#: ../src/welcomescreen.cpp:274
 msgid "Take translatable strings from an existing POT template."
 msgstr ""
 
@@ -1680,21 +1717,28 @@ msgstr "Gruppens e-postadress:"
 msgid "Team:"
 msgstr "Grupp:"
 
-#: ../src/edapp.cpp:830
+#: ../src/edapp.cpp:870
 msgid "Text Replacement"
 msgstr ""
 
-#: ../src/wordpress.cpp:233
+#: ../src/wordpress.cpp:368
 #, c-format
 msgid "The \"%s\" plugin isn't localization-ready."
 msgstr ""
 
-#: ../src/wordpress.cpp:177
+#: ../src/wordpress.cpp:295
 #, c-format
 msgid "The \"%s\" theme isn't localization-ready."
 msgstr ""
 
-#: ../src/catalog.cpp:1513
+#: ../src/edframe.cpp:2871
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+
+#: ../src/catalog.cpp:1529
 #, fuzzy, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as specified in catalog "
@@ -1706,16 +1750,25 @@ msgstr ""
 "enligt katalogens inställningar. Det sparades i UTF-8 istället\n"
 "och inställningen ändrades följaktligen."
 
-#: ../src/edframe.cpp:165 ../src/edframe.cpp:2185
+#: ../src/edframe.cpp:171 ../src/edframe.cpp:2273
 msgid "The file cannot be opened."
 msgstr ""
 
-#: ../src/edframe.cpp:170 ../src/edframe.cpp:2190
+#: ../src/edframe.cpp:176 ../src/edframe.cpp:2278
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr ""
 
-#: ../src/edframe.cpp:1691
+#: ../src/edframe.cpp:1728
+#, fuzzy
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Filen sparades säkert, men den kan inte kompileras till MO-formatet och "
+"användas."
+
+#: ../src/edframe.cpp:1731
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
@@ -1723,33 +1776,60 @@ msgstr ""
 "Filen sparades säkert, men den kan inte kompileras till MO-formatet och "
 "användas."
 
-#: ../src/licensing.cpp:104
+#: ../src/edframe.cpp:1725
+msgid "The file was saved safely."
+msgstr ""
+
+#: ../src/edapp.cpp:919
+#, c-format
+msgid ""
+"The link doesn't contain valid Poedit license. Try entering it manually or "
+"contact support at help@poedit.net.\n"
+"\n"
+"(%s)"
+msgstr ""
+
+#: ../src/licensing.cpp:109
 msgid ""
 "The registration key can be used on multiple computers you use personally or "
 "for multiple\n"
 "accounts on a single computer."
 msgstr ""
 
-#: ../src/welcomescreen.cpp:231
+#: ../src/welcomescreen.cpp:266
 msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr ""
 
-#: ../src/edframe.cpp:1706
+#: ../src/edframe.cpp:1754
+#, fuzzy, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "Översättningen är klar för användning."
+msgstr[1] "Översättningen är klar för användning."
+
+#: ../src/edframe.cpp:1759
 msgid "The translation is ready for use."
 msgstr "Översättningen är klar för användning."
 
-#: ../src/welcomescreen.cpp:217
+#: ../src/edframe.cpp:2866
+msgid ""
+"The translations were marked as fuzzy, because they may be inaccurate. You "
+"should review them for correctness."
+msgstr ""
+
+#: ../src/welcomescreen.cpp:252
 msgid "There are no translations. That’s unusual."
 msgstr ""
 
-#: ../src/catalog.cpp:1389
+#: ../src/catalog.cpp:1400
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr ""
 "Det uppstod ett problem med att formatera filen snyggt (men den sparades "
 "okej)."
 
-#: ../src/catalog.cpp:1045
+#: ../src/catalog.cpp:1053
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -1773,11 +1853,11 @@ msgstr ""
 "Dessa strängar hittades i källorna, men var inte i katalogen.\n"
 "Poedit kommer att lägga till dem i katalogen nu."
 
-#: ../src/edapp.cpp:201
+#: ../src/edapp.cpp:230
 msgid "This beta version of Poedit expired."
 msgstr ""
 
-#: ../src/edframe.cpp:2278
+#: ../src/edframe.cpp:2372
 msgid ""
 "This catalog has entries with plural forms, but doesn't have Plural-Forms "
 "header configured."
@@ -1797,7 +1877,7 @@ msgstr ""
 "med sökord, %F till listan över indatafiler,\n"
 "%C till teckenuppsättningsflaggan (se nedan)."
 
-#: ../src/tm/tm_migrate.cpp:236
+#: ../src/tm/tm_migrate.cpp:267
 msgid ""
 "This must be done before Poedit can start. It may take a few minutes if you "
 "have lots of translations stored, but should normally be much faster."
@@ -1830,20 +1910,20 @@ msgstr ""
 "Detta kommer att bifogas till kommandoraden en\n"
 "gång för varje sökord. %k expanderar till sökordet."
 
-#: ../src/resources/toolbar.xrc:52
+#: ../src/resources/toolbar.xrc:51
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Växlar om vald sträng har oklar översättning"
 
-#: ../src/manager.cpp:250
+#: ../src/manager.cpp:251
 msgid "Total"
 msgstr "Totalt"
 
-#: ../src/edapp.cpp:833
+#: ../src/edapp.cpp:873
 #, fuzzy
 msgid "Transformations"
 msgstr "Översättning"
 
-#: ../src/welcomescreen.cpp:222
+#: ../src/welcomescreen.cpp:257
 msgid ""
 "Translatable entries aren't added manually in the Gettext system, but are "
 "automatically extracted\n"
@@ -1852,35 +1932,26 @@ msgid ""
 "developer."
 msgstr ""
 
-#: ../src/resources/menus.xrc:142
-#, fuzzy
-msgid "Translate Using &TM"
-msgstr "&Översätt Automatiskt med TM"
-
-#: ../src/welcomescreen.cpp:197
+#: ../src/welcomescreen.cpp:232
 msgid "Translate WordPress theme or plugin"
 msgstr ""
-
-#: ../src/resources/menus.xrc:141
-#, fuzzy
-msgid "Translate using &TM"
-msgstr "Översättning"
 
 #: ../src/statistics.cpp:168
 #, fuzzy
 msgid "Translated"
 msgstr "Översättning"
 
-#: ../src/edframe.cpp:2799
+#: ../src/edframe.cpp:2925
 #, fuzzy, c-format
 msgid "Translated %u strings"
 msgstr "%i %% översatt, %i sträng"
 
-#: ../src/edframe.cpp:2781
-msgid "Translating using TM..."
-msgstr ""
+#: ../src/edframe.cpp:2906
+#, fuzzy
+msgid "Translating"
+msgstr "Översättning"
 
-#: ../src/edlistctrl.cpp:331 ../src/export_html.cpp:155
+#: ../src/edlistctrl.cpp:333 ../src/export_html.cpp:155
 #: ../src/statistics.cpp:158
 msgid "Translation"
 msgstr "Översättning"
@@ -1889,20 +1960,25 @@ msgstr "Översättning"
 msgid "Translation Is &Fuzzy"
 msgstr "Översättning Är &Oklar"
 
-#: ../src/languagectrl.cpp:89
+#: ../src/languagectrl.cpp:102
 #, fuzzy
 msgid "Translation Language"
 msgstr "Översättning"
 
-#: ../src/prefsdlg.cpp:179 ../src/prefsdlg.cpp:220
+#: ../src/prefsdlg.cpp:191 ../src/prefsdlg.cpp:232
 msgid "Translation Memory"
 msgstr "Översättningsminne (TM)"
+
+#: ../src/edframe.cpp:2992 ../src/edframe.cpp:3004
+#, fuzzy
+msgid "Translation Suggestions:"
+msgstr "Översättningsegenskaper"
 
 #: ../src/resources/menus.xrc:81
 msgid "Translation is &fuzzy"
 msgstr "Översättning är &oklar"
 
-#: ../src/tm/tm_migrate.cpp:261
+#: ../src/tm/tm_migrate.cpp:293
 #, fuzzy
 msgid "Translation memory migration failed."
 msgstr "Databasfel översättningsminne: %s"
@@ -1911,21 +1987,26 @@ msgstr "Databasfel översättningsminne: %s"
 msgid "Translation properties"
 msgstr "Översättningsegenskaper"
 
-#: ../src/edlistctrl.cpp:387
+#: ../src/edframe.cpp:2990 ../src/edframe.cpp:3002
+#, fuzzy
+msgid "Translation suggestions:"
+msgstr "Översättningsegenskaper"
+
+#: ../src/edlistctrl.cpp:389
 #, fuzzy, c-format
 msgid "Translation — %s"
 msgstr "Översättning"
 
-#: ../src/edframe.cpp:2248
+#: ../src/edframe.cpp:2342
 #, fuzzy
 msgid "Translation's project name isn't set."
 msgstr "Fil '%s' finns inte."
 
-#: ../src/edframe.cpp:687
+#: ../src/edframe.cpp:719
 msgid "Translation:"
 msgstr "Översättning:"
 
-#: ../src/wordpress.cpp:312
+#: ../src/wordpress.cpp:417
 #, fuzzy, c-format
 msgid "Translations folder (%s) doesn't exist."
 msgstr "Fil '%s' finns inte."
@@ -1935,7 +2016,7 @@ msgstr "Fil '%s' finns inte."
 msgid "Translations with errors"
 msgstr "Översättningsminne (TM)"
 
-#: ../src/edframe.cpp:3186
+#: ../src/edframe.cpp:3315
 msgid "Two"
 msgstr ""
 
@@ -1943,7 +2024,7 @@ msgstr ""
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (rekommenderas)"
 
-#: ../src/edapp.cpp:793 ../src/resources/summary.xrc:78
+#: ../src/edapp.cpp:833 ../src/resources/summary.xrc:78
 msgid "Undo"
 msgstr "Ångra"
 
@@ -1951,23 +2032,23 @@ msgstr "Ångra"
 msgid "Unix (recommended)"
 msgstr "Unix (rekommenderas)"
 
-#: ../src/manager.cpp:251
+#: ../src/manager.cpp:252
 msgid "Untrans"
 msgstr "Oöversatt"
 
-#: ../src/resources/toolbar.xrc:44
+#: ../src/resources/toolbar.xrc:43
 msgid "Update"
 msgstr "Uppdatera"
 
-#: ../src/resources/manager.xrc:48
+#: ../src/resources/manager.xrc:47
 msgid "Update all"
 msgstr "Uppdatera alla"
 
-#: ../src/resources/manager.xrc:49
+#: ../src/resources/manager.xrc:48
 msgid "Update all catalogs in the project"
 msgstr "Uppdatera alla kataloger i projektet"
 
-#: ../src/resources/toolbar.xrc:45
+#: ../src/resources/toolbar.xrc:44
 msgid "Update catalog - synchronize it with sources"
 msgstr "Uppdatera katalog - synkronisera den med källor"
 
@@ -1979,7 +2060,7 @@ msgstr "Uppdatera från &POT-Fil..."
 msgid "Update from &POT file..."
 msgstr "Uppdatera från &POT-fil..."
 
-#: ../src/welcomescreen.cpp:238
+#: ../src/welcomescreen.cpp:273
 #, fuzzy
 msgid "Update from POT"
 msgstr "Uppdatera från &POT-Fil..."
@@ -1988,20 +2069,20 @@ msgstr "Uppdatera från &POT-Fil..."
 msgid "Update summary"
 msgstr "Uppdatera sammanfattning"
 
-#: ../src/edframe.cpp:1597 ../src/manager.cpp:447
+#: ../src/edframe.cpp:1624 ../src/manager.cpp:448
 msgid "Updating catalog"
 msgstr "Uppdatera katalog"
 
-#: ../src/edframe.cpp:1613
+#: ../src/edframe.cpp:1640
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
 msgstr ""
 "Uppdatering av katalogen misslyckades. Klicka på 'Detaljer >>' för detaljer."
 
-#: ../src/welcomescreen.cpp:169
+#: ../src/welcomescreen.cpp:204
 msgid "Upgrade to the Pro version of Poedit with more features."
 msgstr ""
 
-#: ../src/licensing.cpp:352
+#: ../src/licensing.cpp:432
 msgid "Upgrade..."
 msgstr ""
 
@@ -2031,45 +2112,45 @@ msgstr ""
 "strängar\n"
 "i källfiler:"
 
-#: ../src/prefsdlg.cpp:89
+#: ../src/prefsdlg.cpp:90
 #, fuzzy
 msgid "Use translation memory"
 msgstr "Uppdatera översättningsminne"
 
-#: ../src/resources/toolbar.xrc:38
+#: ../src/resources/toolbar.xrc:37
 msgid "Validate"
 msgstr "Validera"
 
-#: ../src/edframe.cpp:1684 ../src/edframe.cpp:1703
+#: ../src/edframe.cpp:1715 ../src/edframe.cpp:1745
 msgid "Validation results"
 msgstr "Valideringsresultat"
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
-#: ../src/aboutbox.cpp:97 ../src/edapp.cpp:593 ../src/welcomescreen.cpp:156
+#: ../src/aboutbox.cpp:118 ../src/edapp.cpp:630 ../src/welcomescreen.cpp:191
 #, c-format
 msgid "Version %s"
 msgstr "Version %s"
 
-#: ../src/licensing.cpp:193
+#: ../src/licensing.cpp:200
 msgid "View License Key"
 msgstr ""
 
-#: ../src/wordpress.cpp:395
+#: ../src/wordpress.cpp:511
 #, fuzzy
 msgid "View Log"
 msgstr "&Visa"
 
-#: ../src/licensing.cpp:191
+#: ../src/licensing.cpp:198
 msgid "View license key"
 msgstr ""
 
-#: ../src/wordpress.cpp:392
+#: ../src/wordpress.cpp:508
 #, fuzzy
 msgid "View log"
 msgstr "&Visa"
 
-#: ../src/welcomescreen.cpp:151
+#: ../src/welcomescreen.cpp:186
 #, fuzzy
 msgid "Welcome to Poedit"
 msgstr "&Om Poedit"
@@ -2082,11 +2163,16 @@ msgstr "Endast hela ord"
 msgid "Windows"
 msgstr "Windows"
 
-#: ../src/wordpress.cpp:406
+#: ../src/edframe.cpp:1434
+#, fuzzy
+msgid "WordPress"
+msgstr "Sökord"
+
+#: ../src/wordpress.cpp:522
 msgid "WordPress Errors Log"
 msgstr ""
 
-#: ../src/wordpress.cpp:377
+#: ../src/wordpress.cpp:493
 msgid "WordPress error"
 msgstr ""
 
@@ -2095,12 +2181,12 @@ msgstr ""
 msgid "Words"
 msgstr "Sökord"
 
-#: ../src/welcomescreen.cpp:242
+#: ../src/welcomescreen.cpp:277
 msgid ""
 "You can also extract translatable strings directly from the source code:"
 msgstr ""
 
-#: ../src/edframe.cpp:430
+#: ../src/edframe.cpp:462
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Du kan inte släppa mer än en fil på fönstret för Poedit."
 
@@ -2108,7 +2194,7 @@ msgstr "Du kan inte släppa mer än en fil på fönstret för Poedit."
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Du måste starta om Poedit för att denna ändring ska träda i kraft."
 
-#: ../src/edframe.cpp:2233
+#: ../src/edframe.cpp:2327
 msgid ""
 "You should set your email address in Preferences so that it can be used for "
 "Last-Translator header in GNU gettext files."
@@ -2116,11 +2202,11 @@ msgstr ""
 "Du bör ange din e-postadress i Inställningar, så att den kan användas till "
 "Senaste-Översättare headern i GNU gettext-filer."
 
-#: ../src/edframe.cpp:1133
+#: ../src/edframe.cpp:1156
 msgid "Your changes will be lost if you don't save them."
 msgstr "Dina ändringar kommer att gå förlorade om du inte sparar dem."
 
-#: ../src/licensing.cpp:166
+#: ../src/licensing.cpp:173
 msgid "Your copy is upgraded to Poedit Pro."
 msgstr ""
 
@@ -2140,17 +2226,26 @@ msgstr ""
 msgid "Your name:"
 msgstr "Ditt namn:"
 
-#: ../src/licensing.cpp:180
+#: ../src/tm/tm_migrate.cpp:298
+#, c-format
+msgid ""
+"Your translation memory data couldn't be migrated. The error was:\n"
+"\n"
+"%s\n"
+"Please email help@poedit.net and we’ll get it fixed."
+msgstr ""
+
+#: ../src/licensing.cpp:187
 msgid ""
 "You’re awesome! Thank you so much\n"
 "for purchasing Poedit Pro."
 msgstr ""
 
-#: ../src/edframe.cpp:3182
+#: ../src/edframe.cpp:3311
 msgid "Zero"
 msgstr ""
 
-#: ../src/edapp.cpp:429
+#: ../src/edapp.cpp:458
 msgid "don't delete temporary files (for debugging)"
 msgstr "Ta inte bort temporära filer (för felsökning)"
 
@@ -2158,9 +2253,27 @@ msgstr "Ta inte bort temporära filer (för felsökning)"
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr ""
 
-#: ../src/edlistctrl.cpp:384
+#: ../src/edlistctrl.cpp:386
 msgid "unknown language"
 msgstr ""
+
+#~ msgid "Automatic Translations:"
+#~ msgstr "Automatiska Översättningar:"
+
+#~ msgid "Automatic translations:"
+#~ msgstr "Automatiska översättningar:"
+
+#, fuzzy
+#~ msgid "Failed to read folder '%s'."
+#~ msgstr "Felaktig header: '%s'"
+
+#, fuzzy
+#~ msgid "Translate Using &TM"
+#~ msgstr "&Översätt Automatiskt med TM"
+
+#, fuzzy
+#~ msgid "Translate using &TM"
+#~ msgstr "Översättning"
 
 #~ msgid "&Automatically translate using TM"
 #~ msgstr "&Översätt automatiskt med TM"
@@ -2298,9 +2411,6 @@ msgstr ""
 
 #~ msgid "Select catalog's language"
 #~ msgstr "Välj katalogspråk"
-
-#~ msgid "There was a problem moving your translation memory."
-#~ msgstr "Det uppstod ett problem med flyttning av ditt översättningsminne."
 
 #~ msgid "Translation files (*.po;*.mo)|*.po;*.mo"
 #~ msgstr "Översättningsfiler (*.po;*.mo)|*.po;*.mo"

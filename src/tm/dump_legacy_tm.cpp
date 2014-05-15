@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2001-2013 Vaclav Slavik
+ *  Copyright (C) 2001-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -353,22 +353,33 @@ std::string escape(const std::string& data)
 
 void DumpLanguage(DbEnv *env, const char *envpath, const std::string& lang)
 {
-    printf("<language lang=\"%s\">\n", escape(lang).c_str());
+    try
+    {
+        std::string path(envpath);
+        path += "/" + lang + "/";
+        DbOrig orig(env, path);
+        DbTrans trans(env, path);
 
-    std::string path(envpath);
-    path += "/" + lang + "/";
-    DbOrig orig(env, path);
-    DbTrans trans(env, path);
+        printf("<language lang=\"%s\">\n", escape(lang).c_str());
 
-    orig.Enumerate([&trans](const std::string& str, DbKey key){
-        std::vector<std::string> tr(trans.Read(key));
-        for (auto t: tr)
-        {
-            printf("<i s=\"%s\"\n   t=\"%s\"/>\n", escape(str).c_str(), escape(t).c_str());
-        }
-    });
-
-    printf("</language>\n");
+        orig.Enumerate([&trans](const std::string& str, DbKey key){
+            std::vector<std::string> tr(trans.Read(key));
+            for (auto t: tr)
+            {
+                printf("<i s=\"%s\"\n   t=\"%s\"/>\n", escape(str).c_str(), escape(t).c_str());
+            }
+        });
+        
+        printf("</language>\n");
+    }
+    catch (DbException& e)
+    {
+        // per-language DB may be missing, this is OK
+        if (e.get_errno() == ENOENT)
+            return;
+        else
+            throw;
+    }
 }
 
 

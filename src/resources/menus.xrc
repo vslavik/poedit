@@ -17,6 +17,9 @@
         <label>_Open...</label>
         <accel>Ctrl+O</accel>
       </object>
+      <object class="wxMenuItem" name="open_recent" platform="mac">
+        <label>Open Recent</label>
+      </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="wxID_CLOSE" platform="mac">
         <label>_Close</label>
@@ -134,8 +137,8 @@
         <label platform="unix|mac">Update from _POT File...</label>
       </object>
       <object class="wxMenuItem" name="menu_auto_translate">
-        <label platform="win">Translate using _TM</label>
-        <label platform="unix|mac">Translate Using _TM</label>
+        <label platform="win">Fill missing translations from _TM</label>
+        <label platform="unix|mac">Fill Missing Translations from _TM</label>
       </object>
       <object class="wxMenuItem" name="menu_purge_deleted">
         <label platform="win">_Purge deleted translations</label>
@@ -164,13 +167,13 @@
       </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="go_prev">
-        <label platform="win">_Previous message</label>
-        <label platform="unix|mac">_Previous Message</label>
+        <label platform="win">_Previous translation</label>
+        <label platform="unix|mac">_Previous Translation</label>
         <accel>Ctrl+Up</accel>
       </object>
       <object class="wxMenuItem" name="go_next">
-        <label platform="win">_Next message</label>
-        <label platform="unix|mac">_Next Message</label>
+        <label platform="win">_Next translation</label>
+        <label platform="unix|mac">_Next Translation</label>
         <accel>Ctrl+Down</accel>
       </object>
       <object class="wxMenuItem" name="go_prev_unfinished">
@@ -270,6 +273,9 @@
       <object class="wxMenuItem" name="wxID_OPEN">
         <label>_Open...</label>
         <accel>Ctrl+O</accel>
+      </object>
+      <object class="wxMenuItem" name="open_recent" platform="mac">
+        <label>Open Recent</label>
       </object>
       <object class="wxMenuItem" name="wxID_PREFERENCES" platform="win|mac">
         <label>_Preferences...</label>

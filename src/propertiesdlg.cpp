@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -221,7 +221,8 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
         if (dummy[dummy.Length() - 1] == _T('/') || 
                 dummy[dummy.Length() - 1] == _T('\\')) 
             dummy.RemoveLast();
-        cat->Header().SearchPaths.Add(dummy);
+        if (!dummy.empty())
+            cat->Header().SearchPaths.Add(dummy);
     }
     if (arr.GetCount() > 0 && cat->Header().BasePath.empty()) 
         cat->Header().BasePath = ".";

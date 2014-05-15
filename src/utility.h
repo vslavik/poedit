@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2010-2013 Vaclav Slavik
+ *  Copyright (C) 2010-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -66,6 +66,24 @@ private:
 
     static bool ms_keepFiles;
 };
+
+// Holder of temporary file for creating the output.
+class TempOutputFileFor
+{
+public:
+    explicit TempOutputFileFor(const wxString& filename);
+    ~TempOutputFileFor();
+
+    const wxString& FileName() const { return m_filenameTmp; }
+
+#ifdef __WXOSX__
+    wxString m_tempDir;
+#endif
+    wxString m_filenameTmp;
+};
+
+// Helper for writing files
+
 
 // ----------------------------------------------------------------------
 // Helpers for persisting windows' state

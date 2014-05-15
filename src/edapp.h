@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -40,6 +40,9 @@ class WXDLLIMPEXP_FWD_CORE wxMenuBar;
 class PoeditApp : public wxApp
 {
     public:
+        PoeditApp();
+        ~PoeditApp();
+
         /** wxWin initalization hook. Shows PoeditFrame and initializes
             configuration entries to default values if they were missing.
          */
@@ -56,7 +59,9 @@ class PoeditApp : public wxApp
         // opens empty frame or catalogs manager
         void OpenNewFile();
 
+#ifndef __WXOSX__
         wxFileHistory& FileHistory() { return m_history; }
+#endif
 
 #ifdef __WXMAC__
         virtual void MacOpenFiles(const wxArrayString& names) { OpenFiles(names); }
@@ -74,6 +79,10 @@ class PoeditApp : public wxApp
         // Make OSX-specific modifications to the menus, e.g. adding items into
         // the apple menu etc. Call on every newly created menubar
         void TweakOSXMenuBar(wxMenuBar *bar);
+        void CreateFakeOpenRecentMenu();
+        void InstallOpenRecentMenu(wxMenuBar *bar);
+        void OnIdleInstallOpenRecentMenu(wxIdleEvent& event);
+        virtual void OSXOnWillFinishLaunching();
 #endif
 
     protected:
@@ -93,20 +102,30 @@ class PoeditApp : public wxApp
         // App-global menu commands:
         void OnNew(wxCommandEvent& event);
         void OnOpen(wxCommandEvent& event);
+#ifndef __WXOSX__
         void OnOpenHist(wxCommandEvent& event);
+#endif
         void OnAbout(wxCommandEvent& event);
         void OnManager(wxCommandEvent& event);
         void OnQuit(wxCommandEvent& event);
         void OnPreferences(wxCommandEvent& event);
         void OnHelp(wxCommandEvent& event);
         void OnGettextManual(wxCommandEvent& event);
+
 #ifdef __WXMSW__
         void OnWinsparkleCheck(wxCommandEvent& event);
+        static int WinSparkle_CanShutdown();
+        static void WinSparkle_Shutdown();
 #endif
 
         DECLARE_EVENT_TABLE()
 
+#ifdef __WXOSX__
+        class RecentMenuData;
+        std::unique_ptr<RecentMenuData> m_recentMenuData;
+#else
         wxFileHistory m_history;
+#endif
 };
 
 DECLARE_APP(PoeditApp);

@@ -1,7 +1,7 @@
 ﻿/*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2013 Vaclav Slavik
+ *  Copyright (C) 2013-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -54,7 +54,7 @@ class ActionButton : public wxButton
 {
 public:
     ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note)
-        : wxButton(parent, winid, "", wxDefaultPosition, wxSize(450, 50))
+        : wxButton(parent, winid, "", wxDefaultPosition, wxSize(500, 50))
     {
         NSButton *btn = (NSButton*)GetHandle();
 
@@ -72,6 +72,18 @@ public:
         [btn setButtonType:NSMomentaryPushInButton];
 
         SetBackgroundColour(wxColour("#e8fcdb"));
+    }
+};
+
+#elif defined(__WXGTK__)
+
+class ActionButton : public wxButton
+{
+public:
+    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note)
+        : wxButton(parent, winid, label, wxDefaultPosition, wxSize(500, 50), wxBU_LEFT)
+    {
+        SetLabelMarkup(wxString::Format("<b>%s</b>\n<small>%s</small>", label, note));
     }
 };
 

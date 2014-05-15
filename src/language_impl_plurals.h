@@ -46,7 +46,8 @@
 { "fur"  , "nplurals=2; plural=(n != 1);" },
 { "fy"   , "nplurals=2; plural=(n != 1);" },
 { "ga"   , "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);" },
-{ "gd"   , "nplurals=3; plural=(n < 2 ? 0 : n == 2 ? 1 : 2);" },
+// Don't change this blindly: this is verified correct form for Scottish Gaelic:
+{ "gd"   , "nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;" },
 { "gl"   , "nplurals=2; plural=(n != 1);" },
 { "gu"   , "nplurals=2; plural=(n != 1);" },
 { "gun"  , "nplurals=2; plural=(n > 1);" },

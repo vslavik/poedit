@@ -1,7 +1,7 @@
-/*
- *  This file is part of Poedit (http://www.poedit.net)
+﻿/*
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -58,6 +58,10 @@
     #error "Unicode build of wxWidgets is required by Poedit"
 #endif
 
+#if !wxUSE_STL
+    #error "STL-enabled build of wxWidgets is required by Poedit"
+#endif
+
 #include "edapp.h"
 #include "edframe.h"
 #include "manager.h"
@@ -72,9 +76,29 @@
 #include "errors.h"
 #include "language.h"
 
+#ifdef __WXOSX__
+struct PoeditApp::RecentMenuData
+{
+    NSMenu *menu = nullptr;
+    NSMenuItem *menuItem = nullptr;
+    wxMenuBar *menuBar = nullptr;
+};
+#endif
+
 extern bool MigrateLegacyTranslationMemory();
 
 IMPLEMENT_APP(PoeditApp);
+
+PoeditApp::PoeditApp()
+{
+#ifdef __WXOSX__
+    m_recentMenuData.reset(new RecentMenuData);
+#endif
+}
+
+PoeditApp::~PoeditApp()
+{
+}
 
 wxString PoeditApp::GetAppVersion() const
 {
@@ -111,22 +135,47 @@ bool PoeditApp::OnInit()
     SetExitOnFrameDelete(false);
 #endif
 
+    // timestamps on the logs are of not use for Poedit:
+    wxLog::DisableTimestamp();
+
 #if defined(__UNIX__) && !defined(__WXMAC__)
-    wxStandardPaths::Get().SetInstallPrefix(POEDIT_PREFIX);
-
-    wxString home = wxGetHomeDir() + "/";
-
-    // create Poedit cfg dir, move ~/.poedit to ~/.poedit/config
-    // (upgrade from older versions of Poedit which used ~/.poedit file)
-    if (!wxDirExists(home + ".poedit"))
-    {
-        if (wxFileExists(home + ".poedit"))
-            wxRenameFile(home + ".poedit", home + ".poedit2");
-        wxMkdir(home + ".poedit");
-        if (wxFileExists(home + ".poedit2"))
-            wxRenameFile(home + ".poedit2", home + ".poedit/config");
-    }
+    wxString installPrefix = POEDIT_PREFIX;
+#ifdef __linux__
+    wxFileName::SplitPath(wxStandardPaths::Get().GetExecutablePath(), &installPrefix, nullptr, nullptr);
+    wxFileName fn = wxFileName::DirName(installPrefix);
+    fn.RemoveLastDir();
+    installPrefix = fn.GetFullPath();
 #endif
+    wxStandardPaths::Get().SetInstallPrefix(installPrefix);
+
+    wxString xdgConfigHome;
+    if (!wxGetEnv("XDG_CONFIG_HOME", &xdgConfigHome))
+        xdgConfigHome = wxGetHomeDir() + "/.config";
+    wxString configDir = xdgConfigHome + "/poedit";
+    if (!wxFileName::DirExists(configDir))
+        wxFileName::Mkdir(configDir, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
+    wxString configFile = configDir + "/config";
+
+    // Move legacy config locations to XDG compatible ones:
+    if (!wxFileExists(configFile))
+    {
+        wxString oldconfig = wxGetHomeDir() + "/.poedit";
+        if (wxDirExists(oldconfig))
+        {
+            if (wxFileExists(oldconfig + "/config"))
+                wxRenameFile(oldconfig + "/config", configFile);
+            {
+                wxLogNull null;
+                wxRmdir(oldconfig);
+            }
+        }
+        else if (wxFileExists(oldconfig))
+        {
+            // even older dotfile
+            wxRenameFile(oldconfig, configDir + "/config");
+        }
+    }
+#endif // __UNIX__
 
     SetVendorName("Vaclav Slavik");
     SetAppName("Poedit");
@@ -134,7 +183,7 @@ bool PoeditApp::OnInit()
 #if defined(__WXMAC__)
     #define CFG_FILE (wxStandardPaths::Get().GetUserConfigDir() + "/net.poedit.Poedit.cfg")
 #elif defined(__UNIX__)
-    #define CFG_FILE (home + ".poedit/config")
+    #define CFG_FILE configFile
 #else
     #define CFG_FILE wxEmptyString
 #endif
@@ -157,10 +206,10 @@ bool PoeditApp::OnInit()
     wxXmlResource::Get()->InitAllHandlers();
 
 #if defined(__WXMAC__)
-    wxXmlResource::Get()->Load(wxStandardPaths::Get().GetResourcesDir() + "/*.xrc");
+    wxXmlResource::Get()->LoadAllFiles(wxStandardPaths::Get().GetResourcesDir());
 #elif defined(__WXMSW__)
 	wxStandardPaths::Get().DontIgnoreAppSubDir();
-    wxXmlResource::Get()->Load(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\*.xrc");
+    wxXmlResource::Get()->LoadAllFiles(wxStandardPaths::Get().GetResourcesDir() + "\\Resources");
 #else
     InitXmlResource();
 #endif
@@ -186,7 +235,9 @@ bool PoeditApp::OnInit()
     s_macHelpMenuTitleName = _("&Help");
 #endif
 
+#ifndef __WXOSX__
     FileHistory().Load(*wxConfig::Get());
+#endif
 
     // NB: It's important to do this before TM is used for the first time.
     if ( !MigrateLegacyTranslationMemory() )
@@ -222,6 +273,8 @@ bool PoeditApp::OnInit()
     }
 
     win_sparkle_set_appcast_url(appcast);
+    win_sparkle_set_can_shutdown_callback(&PoeditApp::WinSparkle_CanShutdown);
+    win_sparkle_set_shutdown_request_callback(&PoeditApp::WinSparkle_Shutdown);
     win_sparkle_init();
 #endif
 
@@ -230,6 +283,10 @@ bool PoeditApp::OnInit()
 
 int PoeditApp::OnExit()
 {
+    // Make sure PoeditFrame instances schedules for deletion are deleted
+    // early -- e.g. before wxConfig is destroyed, so they can save changes
+    DeletePendingObjects();
+
     TranslationMemory::CleanUp();
 
 #ifdef USE_SPARKLE
@@ -274,6 +331,13 @@ void PoeditApp::OpenNewFile()
 
 void PoeditApp::OpenFiles(const wxArrayString& names)
 {
+    PoeditFrame *active = PoeditFrame::UnusedActiveWindow();
+    if (names.size() == 1 && active)
+    {
+        active->OpenFile(names[0]);
+        return;
+    }
+
     for ( auto name: names )
         PoeditFrame::Create(name);
 }
@@ -297,7 +361,7 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
         { "C#",       "*.cs" },
         { "Java",     "*.java" },
         { "Perl",     "*.pl" },
-        { "PHP",      "*.php" },
+        { "PHP",      "*.php;*.phtml" },
         { "Python",   "*.py" },
         { "TCL",      "*.tcl" },
         { NULL, NULL }
@@ -319,7 +383,7 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
         Parser p;
         p.Name = s_gettextLangs[i].name;
         p.Extensions = s_gettextLangs[i].exts;
-        p.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS --force-po -o %o %C %K %F";
+        p.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS --add-comments=translators: --force-po -o %o %C %K %F";
         p.KeywordItem = "-k%k";
         p.FileItem = "%f";
         p.CharsetItem = "--from-code=%c";
@@ -440,15 +504,15 @@ bool PoeditApp::OnExceptionInMainLoop()
     }
     catch ( Exception& e )
     {
-        wxLogError("%s", e.what());
+        wxLogError(_("Unhandled exception occurred: %s"), e.what());
     }
     catch ( std::exception& e )
     {
-        wxLogError("%s", e.what());
+        wxLogError(_("Unhandled exception occurred: %s"), e.what());
     }
     catch ( ... )
     {
-        throw;
+        wxLogError(_("Unhandled exception occurred."));
     }
 
     return true;
@@ -465,7 +529,9 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (wxID_NEW,                  PoeditApp::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditApp::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditApp::OnOpen)
+ #ifndef __WXOSX__
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditApp::OnOpenHist)
+ #endif
 #endif // !__WXMSW__
    EVT_MENU           (wxID_ABOUT,                PoeditApp::OnAbout)
    EVT_MENU           (XRCID("menu_manager"),     PoeditApp::OnManager)
@@ -475,6 +541,9 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (XRCID("menu_gettext_manual"), PoeditApp::OnGettextManual)
 #ifdef __WXMSW__
    EVT_MENU           (XRCID("menu_check_for_updates"), PoeditApp::OnWinsparkleCheck)
+#endif
+#ifdef __WXOSX__
+   EVT_IDLE           (PoeditApp::OnIdleInstallOpenRecentMenu)
 #endif
 END_EVENT_TABLE()
 
@@ -505,13 +574,16 @@ void PoeditApp::OnNew(wxCommandEvent& event)
 
 void PoeditApp::OnOpen(wxCommandEvent&)
 {
+    PoeditFrame *active = PoeditFrame::UnusedActiveWindow();
+
     wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
 
     wxFileDialog dlg(nullptr,
                      _("Open catalog"),
                      path,
                      wxEmptyString,
-                     _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+                     wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
+                         _("PO Translation Files"), _("All Files")),
                      wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
 
     if (dlg.ShowModal() == wxID_OK)
@@ -520,9 +592,10 @@ void PoeditApp::OnOpen(wxCommandEvent&)
         wxArrayString paths;
         dlg.GetPaths(paths);
 
-        if (paths.size() == 1)
+        if (paths.size() == 1 && active)
         {
-            TRY_FORWARD_TO_ACTIVE_WINDOW( OpenFile(paths[0]) );
+            active->OpenFile(paths[0]);
+            return;
         }
 
         OpenFiles(paths);
@@ -530,6 +603,7 @@ void PoeditApp::OnOpen(wxCommandEvent&)
 }
 
 
+#ifndef __WXOSX__
 void PoeditApp::OnOpenHist(wxCommandEvent& event)
 {
     TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpenHist(event) );
@@ -543,6 +617,7 @@ void PoeditApp::OnOpenHist(wxCommandEvent& event)
 
     OpenFiles(wxArrayString(1, &f));
 }
+#endif // !__WXOSX__
 
 #endif // !__WXMSW__
 
@@ -576,9 +651,9 @@ void PoeditApp::OnAbout(wxCommandEvent&)
     about.SetVersion(wxGetApp().GetAppVersion());
     about.SetDescription(_("Poedit is an easy to use translations editor."));
 #endif
-    about.SetCopyright("Copyright \u00a9 1999-2013 Vaclav Slavik");
+    about.SetCopyright(L"Copyright \u00a9 1999-2014 Václav Slavík");
 #ifdef __WXGTK__ // other ports would show non-native about dlg
-    about.SetWebSite("http://www.poedit.net");
+    about.SetWebSite("http://poedit.net");
 #endif
 
     wxAboutBox(about);
@@ -667,6 +742,9 @@ static NSMenuItem *AddNativeItem(NSMenu *menu, int pos, const wxString&text, SEL
 void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 {
     wxMenu *apple = bar->OSXGetAppleMenu();
+    if (!apple)
+        return; // huh
+
     apple->Insert(3, XRCID("menu_manager"), _("Catalogs Manager"));
     apple->InsertSeparator(3);
 
@@ -674,7 +752,10 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     Sparkle_AddMenuItem(apple->GetHMenu(), _("Check for Updates...").utf8_str());
 #endif
 
-    wxMenu *edit = bar->GetMenu(bar->FindMenu(_("Edit")));
+    int editMenuPos = bar->FindMenu(_("Edit"));
+    if (editMenuPos == wxNOT_FOUND)
+        editMenuPos = 1;
+    wxMenu *edit = bar->GetMenu(editMenuPos);
     int pasteItem = -1;
     int findItem = -1;
     int pos = 0;
@@ -742,8 +823,69 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     AddNativeItem(speech, -1, _("Start Speaking"), @selector(startSpeaking:), @"");
     AddNativeItem(speech, -1, _("Stop Speaking"), @selector(stopSpeaking:), @"");
     [editNS setSubmenu:speech forItem:item];
-
 }
+
+void PoeditApp::CreateFakeOpenRecentMenu()
+{
+    // Populate the menu with a hack that will be replaced.
+    NSMenu *mainMenu = [NSApp mainMenu];
+ 
+    NSMenuItem *item = [mainMenu addItemWithTitle:@"File" action:NULL keyEquivalent:@""];
+	NSMenu *menu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"File", nil)];
+ 
+	item = [menu addItemWithTitle:NSLocalizedString(@"Open Recent", nil)
+						   action:NULL
+					keyEquivalent:@""];
+	NSMenu *openRecentMenu = [[NSMenu alloc] initWithTitle:@"Open Recent"];
+	[openRecentMenu performSelector:@selector(_setMenuName:) withObject:@"NSRecentDocumentsMenu"];
+	[menu setSubmenu:openRecentMenu forItem:item];
+    m_recentMenuData->menuItem = item;
+    m_recentMenuData->menu = openRecentMenu;
+ 
+	item = [openRecentMenu addItemWithTitle:NSLocalizedString(@"Clear Menu", nil)
+									 action:@selector(clearRecentDocuments:)
+							  keyEquivalent:@""];
+}
+
+void PoeditApp::InstallOpenRecentMenu(wxMenuBar *bar)
+{
+    if (m_recentMenuData->menuItem)
+        [m_recentMenuData->menuItem setSubmenu:nil];
+    m_recentMenuData->menuBar = nullptr;
+
+    if (!bar)
+        return;
+
+    wxMenu *fileMenu;
+    wxMenuItem *item = bar->FindItem(XRCID("open_recent"), &fileMenu);
+    if (!item)
+        return;
+
+    NSMenu *native = fileMenu->GetHMenu();
+    NSMenuItem *nativeItem = [native itemWithTitle:wxNSStringWithWxString(item->GetItemLabelText())];
+    if (!nativeItem)
+        return;
+
+    [nativeItem setSubmenu:m_recentMenuData->menu];
+    m_recentMenuData->menuItem = nativeItem;
+    m_recentMenuData->menuBar = bar;
+}
+
+void PoeditApp::OnIdleInstallOpenRecentMenu(wxIdleEvent& event)
+{
+    event.Skip();
+    auto installed = wxMenuBar::MacGetInstalledMenuBar();
+    if (m_recentMenuData->menuBar != installed)
+        InstallOpenRecentMenu(installed);
+}
+
+void PoeditApp::OSXOnWillFinishLaunching()
+{
+    wxApp::OSXOnWillFinishLaunching();
+    CreateFakeOpenRecentMenu();
+}
+
+
 #endif // __WXOSX__
 
 
@@ -751,6 +893,17 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 void PoeditApp::OnWinsparkleCheck(wxCommandEvent& event)
 {
     win_sparkle_check_update_with_ui();
+}
+
+// WinSparkle callbacks:
+int PoeditApp::WinSparkle_CanShutdown()
+{
+    return !PoeditFrame::AnyWindowIsModified();
+}
+
+void PoeditApp::WinSparkle_Shutdown()
+{
+    wxGetApp().OnQuit(wxCommandEvent());
 }
 #endif // __WXMSW__
 

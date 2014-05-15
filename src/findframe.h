@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2001-2013 Vaclav Slavik
+ *  Copyright (C) 2001-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -53,8 +53,9 @@ class FindFrame : public wxDialog
                   wxTextCtrl *textCtrlComments, wxTextCtrl *textCtrlAutoComments);
         ~FindFrame();
 
-        /// Returns singleton instance if it exists
-        static FindFrame *Get() { return ms_singleton; }
+        /// Returns singleton instance if it exists. Updates the catalog
+        /// if it differs from the current one.
+        static FindFrame *Get(PoeditListCtrl *list, Catalog *forCatalog);
 
         /** Resets the search to starting position and changes
             the catalog in use. Called by EditorFrame when the user
@@ -62,7 +63,7 @@ class FindFrame : public wxDialog
          */
         void Reset(Catalog *c);
 
-        void FocusSearchField() { m_textField->SetFocus(); }
+        void FocusSearchField();
 
         void FindPrev();
         void FindNext();

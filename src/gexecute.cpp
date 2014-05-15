@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -109,14 +109,15 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
 #if defined(__WXMAC__) || defined(__WXMSW__)
     wxString binary = cmdline.BeforeFirst(_T(' '));
     cmdline = GetPathToAuxBinary(binary) + cmdline.Mid(binary.length());
+    wxGetEnvMap(&env.env);
     env.env["POEDIT_USE_UTF8"] = "1";
     env.env["POEDIT_LOCALEDIR"] = GetGettextPackagePath() + "/share/locale";
-#endif
-#if NEED_CHOOSELANG_UI
+    #if NEED_CHOOSELANG_UI
 	wxString lang = GetUILanguage();
 	if ( !lang.empty() )
 		env.env["LANG"] = lang;
-#endif
+    #endif
+#endif // __WXMAC__ || __WXMSW__
 
     wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
 

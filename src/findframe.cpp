@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2001-2013 Vaclav Slavik
+ *  Copyright (C) 2001-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -133,6 +133,18 @@ FindFrame::~FindFrame()
                 XRCCTRL(*this, "whole_words", wxCheckBox)->GetValue());
 }
 
+FindFrame *FindFrame::Get(PoeditListCtrl *list, Catalog *forCatalog)
+{
+    if (!ms_singleton)
+        return nullptr;
+    if (ms_singleton->m_catalog != forCatalog)
+    {
+        ms_singleton->m_listCtrl = list;
+        ms_singleton->Reset(forCatalog);
+    }
+    return ms_singleton;
+}
+
 
 void FindFrame::Reset(Catalog *c)
 {
@@ -147,6 +159,13 @@ void FindFrame::Reset(Catalog *c)
 
     m_btnPrev->Enable(!ms_text.empty());
     m_btnNext->Enable(!ms_text.empty());
+}
+
+
+void FindFrame::FocusSearchField()
+{
+    m_textField->SetFocus();
+    m_textField->SelectAll();
 }
 
 

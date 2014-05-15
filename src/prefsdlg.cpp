@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -30,6 +30,7 @@
 #include <wx/button.h>
 #include <wx/config.h>
 #include <wx/choicdlg.h>
+#include <wx/hyperlink.h>
 #include <wx/spinctrl.h>
 #include <wx/notebook.h>
 #include <wx/fontutil.h>
@@ -93,7 +94,6 @@ public:
         sizer->AddSpacer(10);
         sizer->Add(m_stats, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
         sizer->AddSpacer(10);
-        UpdateStats();
 
         auto import = new wxButton(this, wxID_ANY, _("Learn From Files..."));
         sizer->Add(import, wxSizerFlags().Border(wxLEFT|wxRIGHT, 25));
@@ -101,13 +101,23 @@ public:
 
         m_useTMWhenUpdating = new wxCheckBox(this, wxID_ANY, _("Consult TM when updating from sources"));
         sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().Border(wxALL));
-        auto explain = new wxStaticText(this, wxID_ANY, _("If enabled, Poedit will try to fill in missing translations."));
-        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT, 25));
+
+        auto explainTxt = _("If enabled, Poedit will try to fill new entries in using your previous\n"
+                            "translations stored in the translation memory. If the TM is\n"
+                            "near-empty, it will not be very effective. The more translations\n"
+                            "you edit and the larger the TM grows, the better it gets.");
+        auto explain = new wxStaticText(this, wxID_ANY, explainTxt);
+        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
+
+        auto learnMore = new wxHyperlinkCtrl(this, wxID_ANY, _("Learn more"), "http://poedit.net/trac/wiki/Doc/TranslationMemory");
+        sizer->AddSpacer(5);
+        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, 25));
 
 #ifdef __WXOSX__
         m_stats->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         import->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         explain->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        learnMore->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #else
         explain->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT));
 #endif
@@ -118,6 +128,8 @@ public:
         import->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
 
         import->Bind(wxEVT_BUTTON, &TMPage::OnImportIntoTM, this);
+
+        UpdateStats();
     }
 
     virtual void LoadSettings()
@@ -166,8 +178,9 @@ private:
             _("Select translation files to import"),
             wxEmptyString,
             wxEmptyString,
-            _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
-            wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE));
+			wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
+                _("PO Translation Files"), _("All Files")),
+			wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE));
 
         dlg->ShowWindowModalThenDo([=](int retcode){
             if (retcode != wxID_OK)
@@ -303,6 +316,11 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     betas->SetValue(wxGetApp().CheckForBetaUpdates());
     if (wxGetApp().IsBetaVersion())
         betas->Disable();
+#endif
+
+#if defined(__WXOSX__) && !defined(USE_SPARKLE)
+    XRCCTRL(*this, "auto_updates", wxCheckBox)->Hide();
+    XRCCTRL(*this, "beta_versions", wxCheckBox)->Hide();
 #endif
 
     m_pageTM->LoadSettings();

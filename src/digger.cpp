@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2014 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -187,6 +187,12 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
         }
     }
 
+    // Sort the filenames in some well-defined order. This is because directory
+    // traversal has, generally speaking, undefined order, and the order differs
+    // between filesystems. Finally, the order is reflected in the created PO
+    // files and it is much better for diffs if it remains consistent.
+    files.Sort();
+
     size_t filescnt = 0;
     for (i = 0; i < pdb.GetCount(); i++)
     {
@@ -207,6 +213,8 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
 
 int SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
 {
+    if (dirname.empty())
+        return 0;
     wxDir dir(dirname);
     if (!dir.IsOpened()) 
         return 0;

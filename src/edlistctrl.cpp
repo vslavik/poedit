@@ -1,7 +1,7 @@
 ﻿/*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2014 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
@@ -105,7 +105,8 @@ wxBitmap AddDigit(int digit, int x, int y, const wxBitmap& bmp)
     wxMemoryDC dc;
     int width = bmp.GetWidth();
     int height = bmp.GetHeight();
-    wxBitmap tmpBmp(width, height);
+    wxBitmap tmpBmp;
+    tmpBmp.CreateScaled(bmp.GetScaledWidth(), bmp.GetScaledHeight(), -1, bmp.GetScaleFactor());
     dc.SelectObject(tmpBmp);
     dc.SetPen(*wxTRANSPARENT_PEN);
     dc.SetBrush(wxBrush(gs_TranspColor, wxSOLID));
@@ -131,7 +132,8 @@ wxBitmap AddDigit(int digit, int x, int y, const wxBitmap& bmp)
 wxBitmap MergeBitmaps(const wxBitmap& bmp1, const wxBitmap& bmp2)
 {
     wxMemoryDC dc;
-    wxBitmap tmpBmp(bmp1.GetWidth(), bmp1.GetHeight());
+    wxBitmap tmpBmp;
+    tmpBmp.CreateScaled(bmp1.GetScaledWidth(), bmp1.GetScaledHeight(), -1, bmp1.GetScaleFactor());
 
     dc.SelectObject(tmpBmp);
     dc.SetPen(*wxTRANSPARENT_PEN);
