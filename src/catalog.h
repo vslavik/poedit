@@ -456,6 +456,7 @@ class Catalog
             wxArrayString SearchPaths, Keywords;
             int Bookmarks[BOOKMARK_LAST];
             wxString BasePath;
+            wxString PotFile;
 
             wxString Comment;
 
