@@ -1241,7 +1241,8 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
 
         wxString name = wxFileSelector(_("Open catalog"),
                         path, wxEmptyString, wxEmptyString,
-                        _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+                        wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
+                            _("PO Translation Files"), _("All Files")),
                         wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
 
         if (!name.empty())
@@ -1310,7 +1311,8 @@ wxString PoeditFrame::GetSaveAsFilename(Catalog *cat, const wxString& current)
     }
 
     name = wxFileSelector(_("Save as..."), path, name, wxEmptyString,
-                          _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+	                      wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
+                              _("PO Translation Files"), _("All Files")),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
     if (!name.empty())
     {
@@ -1349,7 +1351,7 @@ void PoeditFrame::OnExport(wxCommandEvent&)
 
     name = wxFileSelector(_("Export as..."),
                           wxPathOnly(m_fileName), name, wxEmptyString,
-                          _("HTML file (*.html)|*.html"),
+                          wxString::Format("%s (*.html)|*.html", _("HTML Files")),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
     if (!name.empty())
     {
@@ -1389,7 +1391,8 @@ void PoeditFrame::NewFromPOT()
     wxString pot_file =
         wxFileSelector(_("Open catalog template"),
              path, wxEmptyString, wxEmptyString,
-             _("GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
+			 wxString::Format("%s (*.pot)|*.pot|%s (*.po)|*.po|%s (*.*)|*.*",
+                 _("POT Translation Templates"), _("PO Translation Files"), _("All Files")),
              wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
     bool ok = false;
     if (!pot_file.empty())
@@ -1627,7 +1630,8 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
             pot_file =
                 wxFileSelector(_("Open catalog template"),
                      path, wxEmptyString, wxEmptyString,
-                     _("GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"),
+                     wxString::Format("%s (*.pot)|*.pot|%s (*.*)|*.*",
+                         _("POT Translation Templates"), _("All Files")),
                      wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
             if (pot_file.empty())
                 return;
@@ -2664,7 +2668,7 @@ void PoeditFrame::UpdateMenu()
                     editable && m_catalog->HasDeletedItems());
 
     const bool doupdate = hasCatalog &&
-                          !m_catalog->Header().SearchPaths.empty();
+                          (!m_catalog->Header().SearchPaths.empty() || !m_catalog->Header().PotFile.empty());
     toolbar->EnableTool(XRCID("menu_update"), doupdate);
     menubar->Enable(XRCID("menu_update"), doupdate);
 
@@ -2905,7 +2909,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
                 dt.SetAutomatic(true);
                 dt.SetFuzzy(true);
                 matches++;
-                msg.Printf(_("Translated %u strings"), matches);
+                msg.Printf(wxPLURAL("Translated %u string", "Translated %u strings", matches), matches);
                 progress.UpdateMessage(msg);
 
                 if (m_modified == false)

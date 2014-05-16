@@ -178,8 +178,9 @@ private:
             _("Select translation files to import"),
             wxEmptyString,
             wxEmptyString,
-            _("GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"),
-            wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE));
+			wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
+                _("PO Translation Files"), _("All Files")),
+			wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE));
 
         dlg->ShowWindowModalThenDo([=](int retcode){
             if (retcode != wxID_OK)

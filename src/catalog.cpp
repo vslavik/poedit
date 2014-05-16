@@ -396,6 +396,7 @@ void Catalog::HeaderData::ParseDict()
     // Parse extended information:
     SourceCodeCharset = GetHeader("X-Poedit-SourceCharset");
     BasePath = GetHeader("X-Poedit-Basepath");
+    PotFile = GetHeader("X-Poedit-Potfile");
 
     Keywords.Clear();
     wxString kwlist = GetHeader("X-Poedit-KeywordsList");
@@ -955,6 +956,8 @@ Catalog::Catalog()
 {
     m_isOk = true;
     m_header.BasePath = wxEmptyString;
+    m_header.PotFile = wxEmptyString;
+
     for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
     {
         m_header.Bookmarks[i] = -1;
@@ -1675,6 +1678,16 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, bool *cancelledByUser
             wxLogError(_("Source code directory '%s' doesn't exist."), path.c_str());
             return false;
         }
+
+        wxString pot_file = m_header.PotFile;
+        if (!pot_file.empty())
+        {
+            if (!wxIsAbsolutePath(pot_file))
+                pot_file = path + "/" + pot_file;
+    
+            return UpdateFromPOT(pot_file, summary, cancelledByUser);
+        }
+
 
         wxSetWorkingDirectory(path);
     }
