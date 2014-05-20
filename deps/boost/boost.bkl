@@ -75,6 +75,7 @@ library boost_iostreams {
     // NOTE: omitting gzip.cpp, bzip2.cpp, because we don't need them and they carry extra dependencies
   }
 
+  vs2013.option.ClCompile.WarningLevel = Level2;
   if ( $toolset == vs2013 )
     includedirs += ../zlib;
 }

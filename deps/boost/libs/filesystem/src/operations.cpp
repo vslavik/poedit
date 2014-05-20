@@ -247,7 +247,9 @@ namespace
 
   boost::filesystem::directory_iterator end_dir_itr;
 
+#ifndef BOOST_POSIX_API
   const std::size_t buf_size(128);
+#endif
   const error_code ok;
 
   bool error(bool was_error, error_code* ec, const string& message)
