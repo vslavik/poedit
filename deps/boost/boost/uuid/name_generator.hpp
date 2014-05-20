@@ -30,8 +30,8 @@ class name_generator {
 public:
     typedef uuid result_type;
 
-    explicit name_generator(uuid const& namespace_uuid)
-        : namespace_uuid(namespace_uuid)
+    explicit name_generator(uuid const& namespace_uuid_)
+        : namespace_uuid(namespace_uuid_)
     {}
 
     uuid operator()(const char* name) {

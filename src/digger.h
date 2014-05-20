@@ -45,7 +45,7 @@ class SourceDigger
 {
     public:
         /// Ctor. \a pi is used to display the progress of parsing.
-        SourceDigger(ProgressInfo *pi) : m_progressInfo(pi) {}
+        SourceDigger(ProgressInfo *progress) : m_progressInfo(progress) {}
 
         /** Scans files for translatable strings and returns Catalog
             instance containing them. All files in input \a paths that 

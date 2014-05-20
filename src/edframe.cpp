@@ -225,7 +225,7 @@ class ListHandler;
 class TextctrlHandler : public wxEvtHandler
 {
     public:
-        TextctrlHandler(PoeditFrame* frame) {}
+        TextctrlHandler(PoeditFrame*) {}
 
     private:
 #ifdef __WXMSW__
@@ -2995,7 +2995,7 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                 // TRANSLATORS: Quoted text with leading 4 spaces
                 s.Printf(_(L"    “%s”"), m_autoTranslations[i]);
                 s.Replace("&", "&&");
-                menu->Append(ID_POPUP_TRANS + i, s);
+                menu->Append(ID_POPUP_TRANS + int(i), s);
             }
         }
     }

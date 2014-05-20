@@ -109,7 +109,7 @@ ManagerFrame::ManagerFrame() :
 
     RestoreWindowState(this, wxSize(400, 300));
 
-    m_splitter->SetSashPosition(wxConfig::Get()->Read("manager_splitter", 200));
+    m_splitter->SetSashPosition((int)wxConfig::Get()->Read("manager_splitter", 200));
 }
 
 
