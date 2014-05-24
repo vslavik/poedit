@@ -47,6 +47,7 @@
 
 #ifdef __WXOSX__
 #include "osx_helpers.h"
+#include <wx/cocoa/string.h>
 #endif
 
 #ifdef USE_SPELLCHECKING
@@ -353,8 +354,49 @@ BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
    EVT_SET_FOCUS           (          ListHandler::OnFocus)
 END_EVENT_TABLE()
 
+#ifdef __WXOSX__
+// wxTextCtrl implementation on OS X uses insertText:, which is intended for
+// user input and performs some user input processing, such as autocorrections.
+// We need to avoid this, because Poedit's text control is filled with data
+// when moving in the list control: https://github.com/vslavik/poedit/issues/81
+// Solve this by using a customized control with overriden DoSetValue().
+class CustomizedTextCtrl : public wxTextCtrl
+{
+public:
+    CustomizedTextCtrl(wxWindow *parent,
+                       wxWindowID winid,
+                       const wxString &value = wxEmptyString,
+                       const wxPoint &pos = wxDefaultPosition,
+                       const wxSize &size = wxDefaultSize,
+                       long style = 0,
+                       const wxValidator& validator = wxDefaultValidator,
+                       const wxString &name = wxTextCtrlNameStr)
+       : wxTextCtrl(parent, winid, value, pos, size, style, validator, name)
+    {
+        NSTextView *text = TextView();
+        [text setAutomaticQuoteSubstitutionEnabled:NO];
+        [text setAutomaticDashSubstitutionEnabled:NO];
+    }
 
-class UnfocusableTextCtrl : public wxTextCtrl
+protected:
+    virtual void DoSetValue(const wxString& value, int flags)
+    {
+        wxEventBlocker block(this, (flags & SetValue_SendEvent) ? 0 : wxEVT_ANY);
+        NSTextView *text = TextView();
+        [text setString:wxNSStringWithWxString(value)];
+    }
+
+    NSTextView *TextView()
+    {
+        NSScrollView *scroll = (NSScrollView*)GetHandle();
+        return [scroll documentView];
+    }
+};
+#else // !__WXOSX__
+typedef wxTextCtrl CustomizedTextCtrl;
+#endif
+
+class UnfocusableTextCtrl : public CustomizedTextCtrl
 {
     public:
         UnfocusableTextCtrl(wxWindow *parent,
@@ -365,33 +407,22 @@ class UnfocusableTextCtrl : public wxTextCtrl
                             long style = 0,
                             const wxValidator& validator = wxDefaultValidator,
                             const wxString &name = wxTextCtrlNameStr)
-           : wxTextCtrl(parent, winid, value, pos, size, style, validator, name)
+           : CustomizedTextCtrl(parent, winid, value, pos, size, style, validator, name)
         {
-#ifdef __WXOSX__
-            NSScrollView *scroll = (NSScrollView*)GetHandle();
-            NSTextView *text = [scroll documentView];
-            [text setAutomaticQuoteSubstitutionEnabled:NO];
-            [text setAutomaticDashSubstitutionEnabled:NO];
-#endif
         }
+
         virtual bool AcceptsFocus() const { return false; }
 };
 
 
-class TranslationTextCtrl : public wxTextCtrl
+class TranslationTextCtrl : public CustomizedTextCtrl
 {
     public:
         TranslationTextCtrl(wxWindow *parent, wxWindowID winid)
-           : wxTextCtrl(parent, winid, wxEmptyString,
-                        wxDefaultPosition, wxDefaultSize,
-                        wxTE_MULTILINE | wxTE_RICH2)
+           : CustomizedTextCtrl(parent, winid, wxEmptyString,
+                                wxDefaultPosition, wxDefaultSize,
+                                wxTE_MULTILINE | wxTE_RICH2)
         {
-#ifdef __WXOSX__
-            NSScrollView *scroll = (NSScrollView*)GetHandle();
-            NSTextView *text = [scroll documentView];
-            [text setAutomaticQuoteSubstitutionEnabled:NO];
-            [text setAutomaticDashSubstitutionEnabled:NO];
-#endif
         }
 };
 
@@ -3112,7 +3143,7 @@ void PoeditFrame::UpdateCommentWindowEditable()
 
         if (m_commentWindowEditable)
         {
-            m_textComment = new wxTextCtrl(m_bottomRightPanel,
+            m_textComment = new CustomizedTextCtrl(m_bottomRightPanel,
                                         ID_TEXTCOMMENT, wxEmptyString,
                                         wxDefaultPosition, wxDefaultSize,
                                         wxTE_MULTILINE | wxTE_RICH2);
