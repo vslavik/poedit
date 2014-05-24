@@ -203,6 +203,9 @@ bool PoeditApp::OnInit()
     wxConfigBase::Get()->SetExpandEnvVars(false);
 
     wxImage::AddHandler(new wxPNGHandler);
+#ifdef __WXMSW__
+    wxImage::AddHandler(new wxICOHandler);
+#endif
     wxXmlResource::Get()->InitAllHandlers();
 
 #if defined(__WXMAC__)

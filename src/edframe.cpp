@@ -35,6 +35,7 @@
 #include <wx/settings.h>
 #include <wx/button.h>
 #include <wx/statusbr.h>
+#include <wx/stdpaths.h>
 #include <wx/splitter.h>
 #include <wx/fontutil.h>
 #include <wx/textfile.h>
@@ -546,7 +547,7 @@ PoeditFrame::PoeditFrame() :
     appicons.AddIcon(wxArtProvider::GetIcon("poedit", wxART_FRAME_ICON, wxSize(48,48)));
     SetIcons(appicons);
 #elif defined(__WXMSW__)
-    SetIcon(wxICON(appicon));
+    SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
 
     // This is different from the default, because it's a bit smaller on OS X
