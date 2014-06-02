@@ -1,7 +1,7 @@
-*** obstack.h	2005-10-15 01:23:50.000000000 +0200
---- obstack.h	2006-07-22 17:48:51.000000000 +0200
+*** obstack.h.orig	2014-04-07 15:57:16.908837962 +0900
+--- obstack.h	2014-04-07 15:58:22.208411479 +0900
 ***************
-*** 193,202 ****
+*** 201,210 ****
      more memory.  This can be set to a user defined function which
      should either abort gracefully or use longjump - but shouldn't
      return.  The default action is to print a message and abort.  */
@@ -9,10 +9,10 @@
   
   /* Exit value used when 'print_and_abort' is used.  */
 ! extern int obstack_exit_failure;
-  
+  
   /* Pointer to beginning of object being allocated or to be allocated next.
      Note that this might not be the final address of the object
---- 192,201 ----
+--- 201,210 ----
      more memory.  This can be set to a user defined function which
      should either abort gracefully or use longjump - but shouldn't
      return.  The default action is to print a message and abort.  */
@@ -20,6 +20,6 @@
   
   /* Exit value used when 'print_and_abort' is used.  */
 ! extern DLL_VARIABLE int obstack_exit_failure;
-  
+  
   /* Pointer to beginning of object being allocated or to be allocated next.
      Note that this might not be the final address of the object

@@ -1,4 +1,5 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test compendium option.
 
@@ -6,10 +7,6 @@
 # the old translation file (mm-c-3.in1) contains the same msgid
 # Why not make use of the translation from the compendium?
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-c-3.in1 mm-c-3.com mm-c-3.pot"
 cat <<EOF > mm-c-3.in1
 #: file.c:123
 msgid "1"
@@ -36,14 +33,10 @@ msgid "one, two, three"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-c-3.tmp mm-c-3.out"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -C mm-c-3.com -o mm-c-3.tmp mm-c-3.in1 mm-c-3.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-c-3.tmp > mm-c-3.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -C mm-c-3.com -o mm-c-3.tmp mm-c-3.in1 mm-c-3.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-c-3.tmp > mm-c-3.out || exit 1
 
-tmpfiles="$tmpfiles mm-c-3.ok"
 cat << EOF > mm-c-3.ok
 #: file.c:123
 msgid "1"
@@ -57,7 +50,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mm-c-3.ok mm-c-3.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

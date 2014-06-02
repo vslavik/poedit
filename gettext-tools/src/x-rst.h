@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_RST \
   { "RST",              extract_rst,                                    \
-                        NULL, &formatstring_pascal, NULL },             \
+                        NULL, &formatstring_pascal, NULL, NULL },             \
 
 /* Scan an RST file and add its translatable strings to mdlp.  */
 extern void extract_rst (FILE *fp, const char *real_filename,

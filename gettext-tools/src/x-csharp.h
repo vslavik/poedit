@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_CSHARP \
   { "C#",               extract_csharp,                                   \
-                        &flag_table_csharp, &formatstring_csharp, NULL }, \
+                        &flag_table_csharp, &formatstring_csharp, NULL, NULL }, \
 
 extern void extract_csharp (FILE *fp, const char *real_filename,
                             const char *logical_filename,

@@ -1,3 +1,37 @@
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	build: Handle 'environ' global variable differently on cygwin x86_64
+	Problem reported by Vasyl Khalak in:
+	<https://cygwin.com/ml/cygwin/2013-06/msg00228.html>.
+	* lib/execute.c.diff: New file.
+	* lib/spawn-pipe.c.diff: Likewise.
+	* Makefile.am (EXTRA_DIST): Add new patches.
+
+2014-05-14  Daiki Ueno  <ueno@gnu.org>
+
+	Update after gnulib changed.
+	* modules/regex.diff: Remove.  modules/regex no longer depends on
+	malloc-gnu thus this patch is not needed anymore.
+
+2014-04-07  Daiki Ueno  <ueno@gnu.org>
+
+	Update after gnulib changed.
+	* lib/obstack.h.diff: Update.
+
+2013-08-07  Daiki Ueno  <ueno@gnu.org>
+
+	Update after gnulib changed.
+	* modules/regex.diff: Update.
+
+2013-07-21  Daiki Ueno  <ueno@gnu.org>
+
+	Update after gnulib changed.
+	* lib/localcharset.c.diff: Remove file.
+
 2013-06-25  Daiki Ueno  <ueno@gnu.org>
 
 	Work around localcharset issue under OS X multi-threaded scenario.

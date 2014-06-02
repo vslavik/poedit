@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test general operation.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles men-test1.po"
 cat <<EOF > men-test1.po
 # HEADER.
 #
@@ -29,14 +26,10 @@ msgstr[0] ""
 msgstr[1] ""
 EOF
 
-tmpfiles="$tmpfiles men-test1.tmp men-test1.out"
 : ${MSGEN=msgen}
-${MSGEN} -o men-test1.tmp men-test1.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < men-test1.tmp > men-test1.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGEN} -o men-test1.tmp men-test1.po || exit 1
+LC_ALL=C tr -d '\r' < men-test1.tmp > men-test1.out || exit 1
 
-tmpfiles="$tmpfiles men-test1.ok"
 cat <<EOF > men-test1.ok
 # HEADER.
 #
@@ -63,7 +56,13 @@ EOF
 : ${DIFF=diff}
 ${DIFF} men-test1.ok men-test1.out
 result=$?
+test $result = 0 || exit $result
 
-rm -fr $tmpfiles
+# Test --lang option.
+${MSGEN} --lang=fr -o men-test1.tmp men-test1.po || exit 1
+grep -q "Language: fr" men-test1.tmp || exit 1
+grep -v "Language: fr" men-test1.tmp | LC_ALL=C tr -d '\r' > men-test1.out || exit 1
 
-exit $result
+${DIFF} men-test1.ok men-test1.out
+result=$?
+test $result = 0 || exit $result

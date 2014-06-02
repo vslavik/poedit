@@ -1,6 +1,6 @@
 ## DO NOT EDIT! GENERATED AUTOMATICALLY!
 ## Process this file with automake to produce Makefile.in.
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2014 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,6 +47,15 @@ libgrt_a_SOURCES =
 libgrt_a_LIBADD = $(gl_LIBOBJS)
 libgrt_a_DEPENDENCIES = $(gl_LIBOBJS)
 EXTRA_libgrt_a_SOURCES =
+
+## begin gnulib module absolute-header
+
+# Use this preprocessor expression to decide whether #include_next works.
+# Do not rely on a 'configure'-time test for this, since the expression
+# might appear in an installed header, which is used by some other compiler.
+HAVE_INCLUDE_NEXT = (__GNUC__ || 60000000 <= __DECC_VER)
+
+## end   gnulib module absolute-header
 
 ## begin gnulib module alloca-opt
 
@@ -140,7 +149,7 @@ libgrt_a_SOURCES += closeout.h closeout.c
 ## begin gnulib module configmake
 
 # Listed in the same order as the GNU makefile conventions, and
-# provided by autoconf 2.59c+.
+# provided by autoconf 2.59c+ or 2.70.
 # The Automake-defined pkg* macros are appended, in the order
 # listed in the Automake 1.10a+ documentation.
 configmake.h: Makefile
@@ -156,6 +165,7 @@ configmake.h: Makefile
 	  echo '#define SYSCONFDIR "$(sysconfdir)"'; \
 	  echo '#define SHAREDSTATEDIR "$(sharedstatedir)"'; \
 	  echo '#define LOCALSTATEDIR "$(localstatedir)"'; \
+	  echo '#define RUNSTATEDIR "$(runstatedir)"'; \
 	  echo '#define INCLUDEDIR "$(includedir)"'; \
 	  echo '#define OLDINCLUDEDIR "$(oldincludedir)"'; \
 	  echo '#define DOCDIR "$(docdir)"'; \
@@ -293,6 +303,15 @@ AM_CPPFLAGS += @INTL_EXPORTS_FLAGS@
 endif
 
 ## end   gnulib module gettext-runtime-misc
+
+## begin gnulib module gettimeofday
+
+
+EXTRA_DIST += gettimeofday.c
+
+EXTRA_libgrt_a_SOURCES += gettimeofday.c
+
+## end   gnulib module gettimeofday
 
 ## begin gnulib module gperf
 
@@ -1431,6 +1450,40 @@ EXTRA_DIST += sys_stat.in.h
 
 ## end   gnulib module sys_stat
 
+## begin gnulib module sys_time
+
+BUILT_SOURCES += sys/time.h
+
+# We need the following in order to create <sys/time.h> when the system
+# doesn't have one that works with the given compiler.
+sys/time.h: sys_time.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+	$(AM_V_at)$(MKDIR_P) sys
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's/@''HAVE_SYS_TIME_H''@/$(HAVE_SYS_TIME_H)/g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_SYS_TIME_H''@|$(NEXT_SYS_TIME_H)|g' \
+	      -e 's/@''GNULIB_GETTIMEOFDAY''@/$(GNULIB_GETTIMEOFDAY)/g' \
+	      -e 's|@''HAVE_WINSOCK2_H''@|$(HAVE_WINSOCK2_H)|g' \
+	      -e 's/@''HAVE_GETTIMEOFDAY''@/$(HAVE_GETTIMEOFDAY)/g' \
+	      -e 's/@''HAVE_STRUCT_TIMEVAL''@/$(HAVE_STRUCT_TIMEVAL)/g' \
+	      -e 's/@''REPLACE_GETTIMEOFDAY''@/$(REPLACE_GETTIMEOFDAY)/g' \
+	      -e 's/@''REPLACE_STRUCT_TIMEVAL''@/$(REPLACE_STRUCT_TIMEVAL)/g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/sys_time.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += sys/time.h sys/time.h-t
+
+EXTRA_DIST += sys_time.in.h
+
+## end   gnulib module sys_time
+
 ## begin gnulib module sys_types
 
 BUILT_SOURCES += sys/types.h
@@ -1478,6 +1531,7 @@ time.h: time.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_TIME_H''@|$(NEXT_TIME_H)|g' \
+	      -e 's/@''GNULIB_GETTIMEOFDAY''@/$(GNULIB_GETTIMEOFDAY)/g' \
 	      -e 's/@''GNULIB_MKTIME''@/$(GNULIB_MKTIME)/g' \
 	      -e 's/@''GNULIB_NANOSLEEP''@/$(GNULIB_NANOSLEEP)/g' \
 	      -e 's/@''GNULIB_STRPTIME''@/$(GNULIB_STRPTIME)/g' \
@@ -1487,6 +1541,8 @@ time.h: time.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_NANOSLEEP''@|$(HAVE_NANOSLEEP)|g' \
 	      -e 's|@''HAVE_STRPTIME''@|$(HAVE_STRPTIME)|g' \
 	      -e 's|@''HAVE_TIMEGM''@|$(HAVE_TIMEGM)|g' \
+	      -e 's|@''REPLACE_GMTIME''@|$(REPLACE_GMTIME)|g' \
+	      -e 's|@''REPLACE_LOCALTIME''@|$(REPLACE_LOCALTIME)|g' \
 	      -e 's|@''REPLACE_LOCALTIME_R''@|$(REPLACE_LOCALTIME_R)|g' \
 	      -e 's|@''REPLACE_MKTIME''@|$(REPLACE_MKTIME)|g' \
 	      -e 's|@''REPLACE_NANOSLEEP''@|$(REPLACE_NANOSLEEP)|g' \
@@ -1632,6 +1688,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''REPLACE_FTRUNCATE''@|$(REPLACE_FTRUNCATE)|g' \
 	      -e 's|@''REPLACE_GETCWD''@|$(REPLACE_GETCWD)|g' \
 	      -e 's|@''REPLACE_GETDOMAINNAME''@|$(REPLACE_GETDOMAINNAME)|g' \
+	      -e 's|@''REPLACE_GETDTABLESIZE''@|$(REPLACE_GETDTABLESIZE)|g' \
 	      -e 's|@''REPLACE_GETLOGIN_R''@|$(REPLACE_GETLOGIN_R)|g' \
 	      -e 's|@''REPLACE_GETGROUPS''@|$(REPLACE_GETGROUPS)|g' \
 	      -e 's|@''REPLACE_GETPAGESIZE''@|$(REPLACE_GETPAGESIZE)|g' \

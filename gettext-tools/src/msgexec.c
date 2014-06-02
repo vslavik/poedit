@@ -355,7 +355,7 @@ process_string (const message_ty *mp, const char *str, size_t len)
 
       /* Set environment variables for the subprocess.
          Note: These environment variables, especially MSGEXEC_MSGCTXT and
-         MSGEXEC_MSGCTXT, may contain non-ASCII characters.  The subprocess
+         MSGEXEC_MSGID, may contain non-ASCII characters.  The subprocess
          may not interpret these values correctly if the locale encoding is
          different from the PO file's encoding.  We want about this situation,
          above.
@@ -370,10 +370,26 @@ process_string (const message_ty *mp, const char *str, size_t len)
       else
         unsetenv ("MSGEXEC_MSGCTXT");
       xsetenv ("MSGEXEC_MSGID", mp->msgid, 1);
+      if (mp->msgid_plural != NULL)
+        xsetenv ("MSGEXEC_MSGID_PLURAL", mp->msgid_plural, 1);
+      else
+        unsetenv ("MSGEXEC_MSGID_PLURAL");
       location = xasprintf ("%s:%ld", mp->pos.file_name,
                             (long) mp->pos.line_number);
       xsetenv ("MSGEXEC_LOCATION", location, 1);
       free (location);
+      if (mp->prev_msgctxt != NULL)
+        xsetenv ("MSGEXEC_PREV_MSGCTXT", mp->prev_msgctxt, 1);
+      else
+        unsetenv ("MSGEXEC_PREV_MSGCTXT");
+      if (mp->prev_msgid != NULL)
+        xsetenv ("MSGEXEC_PREV_MSGID", mp->prev_msgid, 1);
+      else
+        unsetenv ("MSGEXEC_PREV_MSGID");
+      if (mp->prev_msgid_plural != NULL)
+        xsetenv ("MSGEXEC_PREV_MSGID_PLURAL", mp->prev_msgid_plural, 1);
+      else
+        unsetenv ("MSGEXEC_PREV_MSGID_PLURAL");
 
       /* Open a pipe to a subprocess.  */
       child = create_pipe_out (sub_name, sub_path, sub_argv, NULL, false, true,
@@ -409,12 +425,22 @@ process_message (const message_ty *mp)
   const char *msgstr = mp->msgstr;
   size_t msgstr_len = mp->msgstr_len;
   const char *p;
+  size_t k;
 
   /* Process each NUL delimited substring separately.  */
-  for (p = msgstr; p < msgstr + msgstr_len; )
+  for (p = msgstr, k = 0; p < msgstr + msgstr_len; k++)
     {
       size_t length = strlen (p);
 
+      if (mp->msgid_plural != NULL)
+        {
+          char *plural_form_string = xasprintf ("%lu", k);
+
+          xsetenv ("MSGEXEC_PLURAL_FORM", plural_form_string, 1);
+          free (plural_form_string);
+        }
+      else
+        unsetenv ("MSGEXEC_PLURAL_FORM");
       process_string (mp, p, length);
 
       p += length + 1;

@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2014 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   AC_REQUIRE([AM_PROG_CC_C_O])
+  # Code from module absolute-header:
   # Code from module acl:
   # Code from module acl-tests:
   # Code from module alloca-opt:
@@ -511,7 +512,6 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_ATEXIT
   fi
   gt_PREREQ_BACKUPFILE
-  gl_MODULE_INDICATOR([binary-io])
   BISON_I18N
   gl_BYTESWAP
   gl_CANONICALIZE_LGPL
@@ -603,7 +603,7 @@ AC_DEFUN([gl_INIT],
   fi
   gl_STDIO_MODULE_INDICATOR([getdelim])
   gl_FUNC_GETDTABLESIZE
-  if test $HAVE_GETDTABLESIZE = 0; then
+  if test $HAVE_GETDTABLESIZE = 0 || test $REPLACE_GETDTABLESIZE = 1; then
     AC_LIBOBJ([getdtablesize])
     gl_PREREQ_GETDTABLESIZE
   fi

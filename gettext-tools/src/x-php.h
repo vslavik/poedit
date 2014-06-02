@@ -34,7 +34,7 @@ extern "C" {
 
 #define SCANNERS_PHP \
   { "PHP",              extract_php,                                    \
-                        &flag_table_php, &formatstring_php, NULL },     \
+                        &flag_table_php, &formatstring_php, NULL, NULL },     \
 
 /* Scan a PHP file and add its translatable strings to mdlp.  */
 extern void extract_php (FILE *fp, const char *real_filename,

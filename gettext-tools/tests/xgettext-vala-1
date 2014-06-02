@@ -1,14 +1,13 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of Vala support.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-vala-1.vala"
 cat <<\EOF > xg-vala-1.vala
 int main (string[] args) {
-    var s1 = "Simple string, no gettext needed";
+    var s1 = "Simple string, " + " no gettext needed";
+    var c1 = '\'';
+    // This is a C++ style comment
     var s2 = _("Extract this first string");
     var s3 = "Prefix _(" + _("Extract this second string") + ") Postfix";
 
@@ -17,21 +16,23 @@ int main (string[] args) {
     }
 
     var s4 = _("""Extract this
-    ""
+    ""\a
     fourth string""");
+
+    var s5 = _("Extract this \u2464th string");
+
+    var s6 = /_("This is a regex literal and must not be extracted!")/i;
     return 0;
 }
 EOF
 
-tmpfiles="$tmpfiles xg-vala-1.err xg-vala-1.tmp xg-vala-1.pot"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --no-location -o xg-vala-1.tmp xg-vala-1.vala 2>xg-vala-1.err
-test $? = 0 || { cat xg-vala-1.err; rm -fr $tmpfiles; exit 1; }
+test $? = 0 || { cat xg-vala-1.err; exit 1; }
 # Don't simplify this to "grep ... < xg-vala-1.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-vala-1.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-vala-1.pot
 
-tmpfiles="$tmpfiles xg-vala-1.ok"
 cat <<\EOF > xg-vala-1.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -48,9 +49,10 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#. This is a C++ style comment
 msgid "Extract this first string"
 msgstr ""
 
@@ -62,15 +64,74 @@ msgstr ""
 
 msgid ""
 "Extract this\n"
-"    \"\"\n"
+"    \"\"\\a\n"
 "    fourth string"
+msgstr ""
+
+msgid "Extract this ⑤th string"
 msgstr ""
 EOF
 
 : ${DIFF=diff}
 ${DIFF} xg-vala-1.ok xg-vala-1.pot
 result=$?
+test $result = 0 || exit $result
 
-rm -fr $tmpfiles
+# Test --extract-all option.
+${XGETTEXT} --extract-all --add-comments --no-location -o xg-vala-1.tmp xg-vala-1.vala 2>xg-vala-1.err
+test $? = 0 || { cat xg-vala-1.err; exit 1; }
+# Don't simplify this to "grep ... < xg-vala-1.tmp", otherwise OpenBSD 4.0 grep
+# only outputs "Binary file (standard input) matches".
+cat xg-vala-1.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-vala-1.pot
 
-exit $result
+cat <<\EOF > xg-vala-1.all.ok
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Simple string,  no gettext needed"
+msgstr ""
+
+#. This is a C++ style comment
+msgid "Extract this first string"
+msgstr ""
+
+msgid "Prefix _("
+msgstr ""
+
+msgid "Extract this second string"
+msgstr ""
+
+msgid ") Postfix"
+msgstr ""
+
+msgid "Extract this thirth string"
+msgstr ""
+
+msgid ""
+"Extract this\n"
+"    \"\"\\a\n"
+"    fourth string"
+msgstr ""
+
+msgid "Extract this ⑤th string"
+msgstr ""
+EOF
+
+${DIFF} xg-vala-1.all.ok xg-vala-1.pot
+result=$?
+test $result = 0 || exit $result

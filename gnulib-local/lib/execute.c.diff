@@ -1,0 +1,18 @@
+diff --git a/execute.c b/execute.c
+index e7b4496..1c342da 100644
+--- a/execute.c
++++ b/execute.c
+@@ -48,6 +48,13 @@
+ 
+ #endif
+ 
++/* environ is the exported symbol referencing the internal
++   __cygwin_environ variable on cygwin64:
++   <https://cygwin.com/ml/cygwin/2013-06/msg00228.html>.  */
++#if defined __CYGWIN__ && defined __x86_64__
++extern DLL_VARIABLE char **environ;
++#endif
++
+ /* The results of open() in this file are not used with fchdir,
+    therefore save some unnecessary work in fchdir.c.  */
+ #undef open

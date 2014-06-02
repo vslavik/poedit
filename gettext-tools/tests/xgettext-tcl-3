@@ -1,26 +1,19 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test Tcl support: --add-comments option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-t-3.tcl"
 cat <<\EOF > xg-t-3.tcl
 # a
 set string [_ "hello world" # b
 ] # c
 EOF
 
-tmpfiles="$tmpfiles xg-t-3.tmp.po xg-t-3.po"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --omit-header --no-location --keyword=_ \
-  -d xg-t-3.tmp xg-t-3.tcl
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-t-3.tmp.po > xg-t-3.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+  -d xg-t-3.tmp xg-t-3.tcl || exit 1
+LC_ALL=C tr -d '\r' < xg-t-3.tmp.po > xg-t-3.po || exit 1
 
-tmpfiles="$tmpfiles xg-t-3.ok"
 cat <<EOF > xg-t-3.ok
 #. a
 msgid "hello world"
@@ -30,7 +23,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-t-3.ok xg-t-3.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

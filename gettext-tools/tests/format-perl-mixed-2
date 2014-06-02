@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test checking of Perl format strings.
 # This test is for the combination of printf and brace format strings.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles f-pm-2.data"
 cat <<\EOF > f-pm-2.data
 # Valid: normal case.
 #, perl-format, perl-brace-format
@@ -45,7 +42,6 @@ while read comment; do
   read msgid_line
   read msgstr_line
   n=`expr $n + 1`
-  tmpfiles="$tmpfiles f-pm-2-$n.po f-pm-2-$n.mo"
   cat <<EOF > f-pm-2-$n.po
 ${formats}
 ${msgid_line}
@@ -72,7 +68,5 @@ EOF
     exit 1
   fi
 done < f-pm-2.data
-
-rm -fr $tmpfiles
 
 exit 0

@@ -33,7 +33,7 @@ extern "C" {
 
 #define SCANNERS_JAVASCRIPT \
   { "JavaScript",       extract_javascript,                               \
-                        &flag_table_javascript, &formatstring_javascript, NULL }, \
+                        &flag_table_javascript, &formatstring_javascript, NULL, NULL }, \
 
 /* Scan a Python file and add its translatable strings to mdlp.  */
 extern void extract_javascript (FILE *fp, const char *real_filename,

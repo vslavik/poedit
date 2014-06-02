@@ -33,6 +33,7 @@ extern int
                              const char *resource_name,
                              const char *locale_name,
                              const char *directory,
-                             bool assume_java2);
+                             bool assume_java2,
+                             bool output_source);
 
 #endif /* _WRITE_JAVA_H */

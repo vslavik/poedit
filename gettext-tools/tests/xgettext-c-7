@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test C support: comments.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-c-7.c"
 cat <<EOF > xg-c-7.c
 int
 main()
@@ -40,14 +37,10 @@ main()
 }
 EOF
 
-tmpfiles="$tmpfiles xg-c-7.tmp.po xg-c-7.po"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -c --c++ -d xg-c-7.tmp xg-c-7.c
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-c-7.tmp.po > xg-c-7.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} --omit-header --no-location -c --c++ -d xg-c-7.tmp xg-c-7.c || exit 1
+LC_ALL=C tr -d '\r' < xg-c-7.tmp.po > xg-c-7.po || exit 1
 
-tmpfiles="$tmpfiles xg-c-7.ok"
 cat <<EOF > xg-c-7.ok
 #. This is a comment which immediately before a keyword.
 msgid "1"
@@ -83,8 +76,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-c-7.ok xg-c-7.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result
 

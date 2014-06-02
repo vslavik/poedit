@@ -1,12 +1,9 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 #
 # Some tests for java support
 #
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-j-1.java"
 cat <<EOF > xg-j-1.java
 class TestCase {
     public TestCase() {
@@ -31,14 +28,10 @@ class TestCase {
 }
 EOF
 
-tmpfiles="$tmpfiles xg-j-1.tmp.po xg-j-1.po"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -c -d xg-j-1.tmp xg-j-1.java
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-j-1.tmp.po > xg-j-1.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} --omit-header --no-location -c -d xg-j-1.tmp xg-j-1.java || exit 1
+LC_ALL=C tr -d '\r' < xg-j-1.tmp.po > xg-j-1.po || exit 1
 
-tmpfiles="$tmpfiles xg-j-1.ok"
 cat <<EOF > xg-j-1.ok
 #. standard usage
 msgid "Test String 1"
@@ -64,7 +57,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-j-1.ok xg-j-1.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

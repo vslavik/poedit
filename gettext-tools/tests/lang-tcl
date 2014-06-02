@@ -1,4 +1,5 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the Tcl language.
 # Assumes an fr_FR locale is installed.
@@ -11,10 +12,6 @@
 # Note: This test fails on Cygwin 1.7.2 in the fr_FR.UTF-8 locale but not
 # in the fr_FR.ISO-8859-1 locale.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles program.tcl"
 cat <<\EOF > program.tcl
 #!/usr/bin/env tclsh
 package require msgcat
@@ -24,14 +21,10 @@ puts [_ "'Your command, please?', asked the waiter."]
 puts [format [::msgcat::mc "%s is replaced by %s."] "FF" "EUR"]
 EOF
 
-tmpfiles="$tmpfiles l-tcl-prog.tmp l-tcl-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-tcl-prog.tmp --omit-header -k_ program.tcl
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-tcl-prog.tmp > l-tcl-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-tcl-prog.tmp --omit-header -k_ program.tcl || exit 1
+LC_ALL=C tr -d '\r' < l-tcl-prog.tmp > l-tcl-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-tcl-prog.ok"
 cat <<EOF > l-tcl-prog.ok
 #: program.tcl:5
 msgid "'Your command, please?', asked the waiter."
@@ -46,7 +39,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-tcl-prog.ok l-tcl-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-tcl-fr.po"
 cat <<\EOF > l-tcl-fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -62,17 +54,13 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles l-tcl-fr.po.tmp l-tcl-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-tcl-fr.po.tmp l-tcl-fr.po l-tcl-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-tcl-fr.po.tmp > l-tcl-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-tcl-fr.po.tmp l-tcl-fr.po l-tcl-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-tcl-fr.po.tmp > l-tcl-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-tcl-fr.po l-tcl-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-tcl"
 test -d l-tcl || mkdir l-tcl
 test -d l-tcl/msgs || mkdir l-tcl/msgs
 
@@ -80,17 +68,15 @@ test -d l-tcl/msgs || mkdir l-tcl/msgs
 ${MSGFMT} --tcl -d l-tcl/msgs -l fr l-tcl-fr.po || exit 1
 
 # Test for presence of tclsh with msgcat extension.
-tmpfiles="$tmpfiles l-tcl-version.tcl"
 cat <<\EOF > l-tcl-version.tcl
 package require msgcat
 puts $tcl_version
 EOF
 (tclsh l-tcl-version.tcl) >/dev/null 2>/dev/null \
   || { echo "Skipping test: tclsh not found or msgcat extension not present"
-       rm -fr $tmpfiles; exit 77
+       exit 77
      }
 
-tmpfiles="$tmpfiles l-tcl-prog.ok l-tcl-prog.oku l-tcl-prog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-tcl-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -119,9 +105,7 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
-
-rm -fr $tmpfiles
 
 exit 0

@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the Vala language.
 # Assumes an fr_FR locale is installed.
 # Assumes the following packages are installed: vala.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles l-vala-prog.vala"
 cat <<\EOF > l-vala-prog.vala
 int main (string[] args) {
     Intl.setlocale (LocaleCategory.ALL, "");
@@ -22,21 +19,16 @@ EOF
 # Test for presence of valac.
 (valac --version) >/dev/null 2>/dev/null
 test $? -le 1 \
-  || { echo "Skipping test: valac not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: valac not found"; exit 77; }
 
-tmpfiles="$tmpfiles l-vala-prog.vala l-vala-prog.c l-vala-prog l-vala-prog.err"
 : ${VALAC=valac}
 ${VALAC} --Xcc=-DGETTEXT_PACKAGE=\"prog\" l-vala-prog.vala 2>l-vala-prog.err \
   || { cat l-vala-prog.err 1>&2; exit 1; }
 
-tmpfiles="$tmpfiles l-vala-prog.tmp l-vala-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-vala-prog.tmp --omit-header --no-location l-vala-prog.vala
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-vala-prog.tmp > l-vala-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-vala-prog.tmp --omit-header --no-location l-vala-prog.vala || exit 1
+LC_ALL=C tr -d '\r' < l-vala-prog.tmp > l-vala-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-vala-prog.ok"
 cat <<EOF > l-vala-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -49,7 +41,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-vala-prog.ok l-vala-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-vala-fr.po"
 cat <<\EOF > l-vala-fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -63,17 +54,13 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles l-vala-fr.po.tmp l-vala-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-vala-fr.po.tmp l-vala-fr.po l-vala-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-vala-fr.po.tmp > l-vala-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-vala-fr.po.tmp l-vala-fr.po l-vala-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-vala-fr.po.tmp > l-vala-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-vala-fr.po l-vala-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-vala"
 test -d l-vala || mkdir l-vala
 test -d l-vala/fr || mkdir l-vala/fr
 test -d l-vala/fr/LC_MESSAGES || mkdir l-vala/fr/LC_MESSAGES
@@ -81,7 +68,6 @@ test -d l-vala/fr/LC_MESSAGES || mkdir l-vala/fr/LC_MESSAGES
 : ${MSGFMT=msgfmt}
 ${MSGFMT} -o l-vala/fr/LC_MESSAGES/prog.mo l-vala-fr.po
 
-tmpfiles="$tmpfiles l-vala-prog.ok l-vala-prog.oku l-vala-prog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-vala-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -116,9 +102,7 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
-
-rm -fr $tmpfiles
 
 exit 0

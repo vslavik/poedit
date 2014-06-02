@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --comment option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mg-test5.po"
 cat <<\EOF > mg-test5.po
 # German translations for GNU gettext package.
 # Copyright (C) 1995, 1996, 1997, 2001 Free Software Foundation, Inc.
@@ -167,17 +164,14 @@ msgid "GSG-9"
 msgstr "Antiterror-Einheit"
 EOF
 
-tmpfiles="$tmpfiles mg-test5.tmp mg-test5.err mg-test5.out"
 : ${MSGGREP=msggrep}
 LC_MESSAGES=C LC_ALL= \
 ${MSGGREP} -C -e @proofread -o mg-test5.tmp mg-test5.po >mg-test5.err 2>&1
 result=$?
 cat mg-test5.err | grep -v 'warning: Locale charset' | grep -v '^ '
-test $result = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mg-test5.tmp > mg-test5.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+test $result = 0 || { exit 1; }
+LC_ALL=C tr -d '\r' < mg-test5.tmp > mg-test5.out || exit 1
 
-tmpfiles="$tmpfiles mg-test5.ok"
 cat <<\EOF > mg-test5.ok
 # German translations for GNU gettext package.
 # Copyright (C) 1995, 1996, 1997, 2001 Free Software Foundation, Inc.
@@ -230,7 +224,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mg-test5.ok mg-test5.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -1,27 +1,22 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of GtkBuilder support.
 # Checks the extraction of a medium size GtkBuilder file, with
 # comments, context and translatable and not translatable content.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-gl-7-empty.glade"
 cat <<EOF > xg-gl-7-empty.glade
 <?xml version="1.0"?>
 <GTK-Interface/>
 EOF
 
-tmpfiles="$tmpfiles xg-gl-7.pot"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} -o xg-gl-7.pot xg-gl-7-empty.glade 2>/dev/null
 test $? = 0 || {
   echo "Skipping test: xgettext was built without Glade support"
-  rm -fr $tmpfiles; exit 77
+  exit 77
 }
 
-tmpfiles="$tmpfiles xg-gl-7.ui"
 cat <<EOF > xg-gl-7.ui
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
@@ -188,12 +183,9 @@ cat <<EOF > xg-gl-7.ui
 </interface>
 EOF
 
-tmpfiles="$tmpfiles xg-gl-7.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o - xg-gl-7.ui | grep -v 'POT-Creation-Date' > xg-gl-7.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o - xg-gl-7.ui | grep -v 'POT-Creation-Date' > xg-gl-7.pot || exit 1
 
-tmpfiles="$tmpfiles xg-gl-7.ok"
 cat <<\EOF > xg-gl-7.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -280,7 +272,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-gl-7.ok xg-gl-7.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

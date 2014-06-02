@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_JAVA \
   { "Java",             extract_java,                                   \
-                        &flag_table_java, &formatstring_java, NULL },   \
+                        &flag_table_java, &formatstring_java, NULL, NULL },   \
 
 extern void extract_java (FILE *fp, const char *real_filename,
                           const char *logical_filename,

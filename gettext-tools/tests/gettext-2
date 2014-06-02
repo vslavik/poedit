@@ -1,4 +1,5 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test the gettext program without -e option.
 
@@ -14,28 +15,20 @@ else
   ac_n= ac_c='\c' ac_t=
 fi
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
 # Create binary test file in correct position.
-tmpfiles="$tmpfiles gt-2"
 test -d gt-2 || mkdir gt-2
 test -d gt-2/LC_MESSAGES || mkdir gt-2/LC_MESSAGES
-cp $top_srcdir/tests/test.mo gt-2/LC_MESSAGES
+cp "$abs_srcdir"/test.mo gt-2/LC_MESSAGES
 
-tmpfiles="$tmpfiles gt-test2.out"
 : ${GETTEXT=gettext}
 TEXTDOMAINDIR=. LANGUAGE=gt-2 \
 ${GETTEXT} --env LC_ALL=en test 'error 3' > gt-test2.out
 
 # Create correct file.
-tmpfile="$tmpfiles gtmf-test2.ok"
 echo $ac_n "error 3 translation$ac_c" > gtmf-test2.ok
 
 : ${DIFF=diff}
 ${DIFF} gtmf-test2.ok gt-test2.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

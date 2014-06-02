@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <!-- This HTML file has been created by texi2html 1.52b
-     from gettext.texi on 15 August 2013 -->
+     from gettext.texi on 2 June 2014 -->
 
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <TITLE>GNU gettext utilities - 5  Making the PO Template File</TITLE>
@@ -141,7 +141,7 @@ are <CODE>C</CODE>, <CODE>C++</CODE>, <CODE>ObjectiveC</CODE>, <CODE>PO</CODE>, 
 <CODE>Smalltalk</CODE>, <CODE>Java</CODE>, <CODE>JavaProperties</CODE>, <CODE>C#</CODE>, <CODE>awk</CODE>,
 <CODE>YCP</CODE>, <CODE>Tcl</CODE>, <CODE>Perl</CODE>, <CODE>PHP</CODE>, <CODE>GCC-source</CODE>,
 <CODE>NXStringTable</CODE>, <CODE>RST</CODE>, <CODE>Glade</CODE>, <CODE>Lua</CODE>, <CODE>JavaScript</CODE>,
-<CODE>Vala</CODE>.
+<CODE>Vala</CODE>, <CODE>GSettings</CODE>, <CODE>Desktop</CODE>.
 
 <DT><SAMP>&lsquo;-C&rsquo;</SAMP>
 <DD>
@@ -229,7 +229,7 @@ Extract all strings.
 
 This option has an effect with most languages, namely C, C++, ObjectiveC,
 Shell, Python, Lisp, EmacsLisp, librep, Java, C#, awk, Tcl, Perl, PHP,
-GCC-source, Glade, Lua, JavaScript, Vala.
+GCC-source, Glade, Lua, JavaScript, Vala, GSettings.
 
 <DT><SAMP>&lsquo;-k[<VAR>keywordspec</VAR>]&rsquo;</SAMP>
 <DD>
@@ -274,7 +274,7 @@ escaped.
 
 This option has an effect with most languages, namely C, C++, ObjectiveC,
 Shell, Python, Lisp, EmacsLisp, librep, Java, C#, awk, Tcl, Perl, PHP,
-GCC-source, Glade, Lua, JavaScript, Vala.
+GCC-source, Glade, Lua, JavaScript, Vala, GSettings, Desktop.
 
 The default keyword specifications, which are always looked for if not
 explicitly disabled, are language dependent.  They are:
@@ -373,6 +373,11 @@ For JavaScript: <CODE>_</CODE>, <CODE>gettext</CODE>, <CODE>dgettext:2</CODE>,
 For Vala: <CODE>_</CODE>, <CODE>Q_</CODE>, <CODE>N_</CODE>, <CODE>NC_</CODE>, <CODE>dgettext:2</CODE>,
 <CODE>dcgettext:2</CODE>, <CODE>ngettext:1,2</CODE>, <CODE>dngettext:2,3</CODE>,
 <CODE>dpgettext:2c,3</CODE>, <CODE>dpgettext2:2c,3</CODE>.
+
+<LI>
+
+For Desktop: <CODE>Name</CODE>, <CODE>GenericName</CODE>, <CODE>Comment</CODE>,
+<CODE>Icon</CODE>, <CODE>Keywords</CODE>.
 </UL>
 
 To disable the default keyword specifications, the option <SAMP>&lsquo;-k&rsquo;</SAMP> or
@@ -525,11 +530,17 @@ each message's context.
 
 <DT><SAMP>&lsquo;-n&rsquo;</SAMP>
 <DD>
-<DT><SAMP>&lsquo;--add-location&rsquo;</SAMP>
+<DT><SAMP>&lsquo;--add-location=<VAR>type</VAR>&rsquo;</SAMP>
 <DD>
 <A NAME="IDX216"></A>
 <A NAME="IDX217"></A>
 Generate <SAMP>&lsquo;#: <VAR>filename</VAR>:<VAR>line</VAR>&rsquo;</SAMP> lines (default).
+
+The optional <VAR>type</VAR> can be either <SAMP>&lsquo;full&rsquo;</SAMP>, <SAMP>&lsquo;file&rsquo;</SAMP>, or
+<SAMP>&lsquo;never&rsquo;</SAMP>.  If it is not given or <SAMP>&lsquo;full&rsquo;</SAMP>, it generates the
+lines with both file name and line number.  If it is <SAMP>&lsquo;file&rsquo;</SAMP>, the
+line number part is omitted.  If it is <SAMP>&lsquo;never&rsquo;</SAMP>, it completely
+suppresses the lines (same as <CODE>--no-location</CODE>).
 
 <DT><SAMP>&lsquo;--strict&rsquo;</SAMP>
 <DD>

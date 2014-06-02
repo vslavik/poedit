@@ -20,7 +20,7 @@ dnl   BUILDJAVAEXE=no
 dnl fi
 BUILDJAVAEXE=no
 AC_SUBST(BUILDJAVAEXE)
-AM_CONDITIONAL([USEJEXE], [test $BUILDJAVAEXE = yes])
+AM_CONDITIONAL([USEJEXE], [test "$BUILDJAVAEXE" = yes])
 AC_PROG_RANLIB
 
 dnl Check whether we can execute Java programs.
@@ -34,7 +34,7 @@ else
   BUILDJAVA=no
 fi
 AC_SUBST(BUILDJAVA)
-if test -n "$HAVE_JAVAEXEC" && test $BUILDJAVA = yes; then
+if test -n "$HAVE_JAVAEXEC" && test "$BUILDJAVA" = yes; then
   TESTJAVA=yes
 else
   TESTJAVA=no

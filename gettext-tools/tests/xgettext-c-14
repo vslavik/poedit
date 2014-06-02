@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test C++ support: test boost-format.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-c-14.cc"
 cat <<\EOF > xg-c-14.cc
 // These are recognized as boost-format because of the keyword 'format'.
 format(gettext("%s on, %s off"));
@@ -19,18 +16,14 @@ gettext("heuristic %|1$| on, %|2$| off");
 gettext("heuristic %1% on, %2% off");
 EOF
 
-tmpfiles="$tmpfiles xg-c-14.tmp.po xg-c-14.po"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -d xg-c-14.tmp --boost xg-c-14.cc
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-c-14.tmp.po > xg-c-14.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} --omit-header --no-location -d xg-c-14.tmp --boost xg-c-14.cc || exit 1
+LC_ALL=C tr -d '\r' < xg-c-14.tmp.po > xg-c-14.po || exit 1
 
 # The first 4 are not marked as c-format, because they are known as
 # boost-format. The last 4 are governed by the heuristic. The first two
 # among them are valid c-format strings. The last one is a valid but unlikely
 # c-format string, therefore the heuristic doesn't mark it.
-tmpfiles="$tmpfiles xg-c-14.ok"
 cat <<\EOF > xg-c-14.ok
 #, boost-format
 msgid "%s on, %s off"
@@ -68,7 +61,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-c-14.ok xg-c-14.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

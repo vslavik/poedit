@@ -1,4 +1,5 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the Python language.
 
@@ -6,10 +7,6 @@
 # It looks like a bug in Python's gettext.py. This here is a quick workaround:
 UTF8_LOCALE_UNSUPPORTED=yes
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles prog1.py"
 cat <<\EOF > prog1.py
 import gettext
 
@@ -21,14 +18,10 @@ print gettext.gettext("%(oldCurrency)s is replaced by %(newCurrency)s.") \
       % { 'oldCurrency': "FF", 'newCurrency' : "EUR" }
 EOF
 
-tmpfiles="$tmpfiles l-python-1-prog.tmp l-python-1-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-python-1-prog.tmp --omit-header --no-location prog1.py
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-python-1-prog.tmp > l-python-1-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-python-1-prog.tmp --omit-header --no-location prog1.py || exit 1
+LC_ALL=C tr -d '\r' < l-python-1-prog.tmp > l-python-1-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-python-1-prog.ok"
 cat <<EOF > l-python-1-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -41,7 +34,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-python-1-prog.ok l-python-1-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-python-1-fr.po"
 cat <<\EOF > l-python-1-fr.po
 msgid ""
 msgstr ""
@@ -57,17 +49,13 @@ msgid "%(oldCurrency)s is replaced by %(newCurrency)s."
 msgstr "%(newCurrency)s remplace %(oldCurrency)s."
 EOF
 
-tmpfiles="$tmpfiles l-python-1-fr.po.tmp l-python-1-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-python-1-fr.po.tmp l-python-1-fr.po l-python-1-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-python-1-fr.po.tmp > l-python-1-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-python-1-fr.po.tmp l-python-1-fr.po l-python-1-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-python-1-fr.po.tmp > l-python-1-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-python-1-fr.po l-python-1-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-python-1"
 test -d l-python-1 || mkdir l-python-1
 test -d l-python-1/fr || mkdir l-python-1/fr
 test -d l-python-1/fr/LC_MESSAGES || mkdir l-python-1/fr/LC_MESSAGES
@@ -77,13 +65,12 @@ ${MSGFMT} -o l-python-1/fr/LC_MESSAGES/prog.mo l-python-1-fr.po
 
 # Test for presence of python version 2.0 or newer.
 (python -V) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: python not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: python not found"; exit 77; }
 case `python -c 'import sys; print sys.hexversion >= 0x20000F0'` in
   1 | True) ;;
-  *) echo "Skipping test: python version too old"; rm -fr $tmpfiles; exit 77;;
+  *) echo "Skipping test: python version too old"; exit 77;;
 esac
 
-tmpfiles="$tmpfiles l-python-1-prog.ok l-python-1-prog.oku l-python-1-prog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-python-1-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -111,7 +98,7 @@ if test -z "$UTF8_LOCALE_UNSUPPORTED"; then
     else
       echo "Skipping test: no french locale is supported"
     fi
-    rm -fr $tmpfiles; exit 77
+    exit 77
   fi
 else
   if test $LOCALE_FR = none; then
@@ -120,10 +107,8 @@ else
     else
       echo "Skipping test: no traditional french locale is supported"
     fi
-    rm -fr $tmpfiles; exit 77
+    exit 77
   fi
 fi
-
-rm -fr $tmpfiles
 
 exit 0

@@ -1,12 +1,9 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 #
 # More tests for java support
 #
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-j-2.java"
 cat <<\EOF > xg-j-2.java
 class TestCase {
   public static void main (String[] args) {
@@ -58,15 +55,12 @@ comment! */ "this is a single " /* now comes the concatenation! */ + // after +
 }
 EOF
 
-tmpfiles="$tmpfiles xg-j-2.tmp xg-j-2.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --from-code=ISO-8859-1 -c -o xg-j-2.tmp xg-j-2.java 2>/dev/null
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} --from-code=ISO-8859-1 -c -o xg-j-2.tmp xg-j-2.java 2>/dev/null || exit 1
 # Don't simplify this to "grep ... < xg-j-2.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-j-2.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-j-2.pot
 
-tmpfiles="$tmpfiles xg-j-2.ok"
 cat <<\EOF > xg-j-2.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -174,7 +168,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-j-2.ok xg-j-2.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -1,5 +1,5 @@
 /* Functions to make fuzzy comparisons between strings
-   Copyright (C) 1988-1989, 1992-1993, 1995, 2001-2003, 2006, 2008-2013 Free
+   Copyright (C) 1988-1989, 1992-1993, 1995, 2001-2003, 2006, 2008-2014 Free
    Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -13,32 +13,8 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-
-   Derived from GNU diff 2.7, analyze.c et al.
-
-   The basic idea is to consider two vectors as similar if, when
-   transforming the first vector into the second vector through a
-   sequence of edits (inserts and deletes of one element each),
-   this sequence is short - or equivalently, if the ordered list
-   of elements that are untouched by these edits is long.  For a
-   good introduction to the subject, read about the "Levenshtein
-   distance" in Wikipedia.
-
-   The basic algorithm is described in:
-   "An O(ND) Difference Algorithm and its Variations", Eugene Myers,
-   Algorithmica Vol. 1 No. 2, 1986, pp. 251-266;
-   see especially section 4.2, which describes the variation used below.
-
-   The basic algorithm was independently discovered as described in:
-   "Algorithms for Approximate String Matching", E. Ukkonen,
-   Information and Control Vol. 64, 1985, pp. 100-118.
-
-   Unless the 'find_minimal' flag is set, this code uses the TOO_EXPENSIVE
-   heuristic, by Paul Eggert, to limit the cost to O(N**1.5 log N)
-   at the price of producing suboptimal output for large inputs with
-   many differences.  */
 
 #include <config.h>
 
@@ -203,16 +179,6 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
   ctxt.xvec = string1;
   ctxt.yvec = string2;
 
-  /* Set TOO_EXPENSIVE to be approximate square root of input size,
-     bounded below by 256.  */
-  ctxt.too_expensive = 1;
-  for (i = xvec_length + yvec_length;
-       i != 0;
-       i >>= 2)
-    ctxt.too_expensive <<= 1;
-  if (ctxt.too_expensive < 256)
-    ctxt.too_expensive = 256;
-
   /* Allocate memory for fdiag and bdiag from a thread-local pool.  */
   fdiag_len = xvec_length + yvec_length + 3;
   gl_once (keys_init_once, keys_init);
@@ -252,7 +218,7 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
 
   /* Now do the main comparison algorithm */
   ctxt.edit_count = - ctxt.edit_count_limit;
-  if (compareseq (0, xvec_length, 0, yvec_length, 0, &ctxt)) /* Prob: 98% */
+  if (compareseq (0, xvec_length, 0, yvec_length, &ctxt)) /* Prob: 98% */
     /* The edit_count passed the limit.  Hence the result would be
        < lower_bound.  We can return any value < lower_bound instead.  */
     return 0.0;

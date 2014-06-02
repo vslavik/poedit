@@ -1,5 +1,5 @@
 /* Temporary directories and temporary files with automatic cleanup.
-   Copyright (C) 2001, 2003, 2006-2007, 2009-2013 Free Software Foundation,
+   Copyright (C) 2001, 2003, 2006-2007, 2009-2014 Free Software Foundation,
    Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 

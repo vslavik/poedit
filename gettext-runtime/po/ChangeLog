@@ -1,3 +1,43 @@
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-05-02  Daiki Ueno  <ueno@gnu.org>
+
+	Makefile.in.in: Turn {POFILES,DISTFILES}DEPS into yes/no options
+	Preserve the previous behavior even if a user forgot to update
+	Makevars, after calling autopoint.
+	* Makevars (PO_DEPENDS_ON_POT): Rename from POFILESDEPS and turn
+	it into a yes/no option.
+	(DIST_DEPENDS_ON_UPDATE_PO): Rename from DISTFILESDEPS and turn it
+	into a yes/no option.
+
+2014-05-01  Daiki Ueno  <ueno@gnu.org>
+
+	Makefile.in.in: Add an option to claim the package as GNU/non-GNU
+	Reporeted by David Shea at:
+	<https://savannah.gnu.org/bugs/?40520>.
+	* Makevars (PACKAGE_GNU): New variable.
+	* Makefile.in.in ($(DOMAIN).pot-update): Don't search for "GNU
+	packagename" if $(PACKAGE_GNU) is set.
+
+2014-05-01  Daiki Ueno  <ueno@gnu.org>
+
+	Makefile.in.in: Make dependencies of a PO file and 'dist' customizable
+	* Makevars (POFILESDEPS): New variable.
+	(DISTFILESDEPS): New variable.
+	* Makefile.in.in ($(POFILES)): Depend on $(POFILESDEPS) instead of
+	$(srcdir)/$(DOMAIN).pot.
+	(dist distdir): Run $(DISTFILEDEPS) instead of 'update-po'.
+
+2014-04-21  Daiki Ueno  <ueno@gnu.org>
+
+	* Rules-quot: Use built-in filter if possible.
+
+2014-04-02  Daiki Ueno  <ueno@gnu.org>
+
+	* Rules-quot: Add a license notice.
+
 2013-07-07  Daiki Ueno  <ueno@gnu.org>
 
 	* cs.po: Update from Marek Černocký <marek@manet.cz>.

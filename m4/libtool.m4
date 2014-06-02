@@ -3404,10 +3404,7 @@ AC_CACHE_CHECK([for BSD- or MS-compatible name lister (nm)], lt_cv_path_NM,
   lt_cv_path_NM="$NM"
 else
   lt_nm_to_check="${ac_tool_prefix}nm"
-  if test -n "$ac_tool_prefix" \
-     && { test "$build" = "$host" \
-          || { test "$build_os" = cygwin && test "$host_os" = mingw32; }; \
-        }; then
+  if test -n "$ac_tool_prefix" && test "$build" = "$host"; then
     lt_nm_to_check="$lt_nm_to_check nm"
   fi
   for lt_tmp_nm in $lt_nm_to_check; do
@@ -3424,13 +3421,13 @@ else
 	case `"$tmp_nm" -B /dev/null 2>&1 | sed '1q'` in
 	*/dev/null* | *'Invalid file or object type'*)
 	  lt_cv_path_NM="$tmp_nm -B"
-	  break
+	  break 2
 	  ;;
 	*)
 	  case `"$tmp_nm" -p /dev/null 2>&1 | sed '1q'` in
 	  */dev/null*)
 	    lt_cv_path_NM="$tmp_nm -p"
-	    break
+	    break 2
 	    ;;
 	  *)
 	    lt_cv_path_NM=${lt_cv_path_NM="$tmp_nm"} # keep the first match, but

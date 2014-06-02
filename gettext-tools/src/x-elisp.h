@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_ELISP \
   { "EmacsLisp",        extract_elisp,                                  \
-                        &flag_table_elisp, &formatstring_elisp, NULL }, \
+                        &flag_table_elisp, &formatstring_elisp, NULL, NULL }, \
 
 /* Scan an Emacs Lisp file and add its translatable strings to mdlp.  */
 extern void extract_elisp (FILE *fp, const char *real_filename,

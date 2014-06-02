@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test PHP support: --add-comments option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-ph-3.php"
 cat <<\EOF > xg-ph-3.php
 <?
 /* a */
@@ -15,15 +12,11 @@ cat <<\EOF > xg-ph-3.php
 ?>
 EOF
 
-tmpfiles="$tmpfiles xg-ph-3.tmp.po xg-ph-3.po"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --omit-header --no-location --keyword=_ \
-  -d xg-ph-3.tmp xg-ph-3.php
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-ph-3.tmp.po > xg-ph-3.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+  -d xg-ph-3.tmp xg-ph-3.php || exit 1
+LC_ALL=C tr -d '\r' < xg-ph-3.tmp.po > xg-ph-3.po || exit 1
 
-tmpfiles="$tmpfiles xg-ph-3.ok"
 cat <<EOF > xg-ph-3.ok
 #. a
 #. b
@@ -38,7 +31,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-ph-3.ok xg-ph-3.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -36,7 +36,7 @@ extern "C" {
 
 #define SCANNERS_PERL \
   { "perl",             extract_perl,                                   \
-            &flag_table_perl, &formatstring_perl, &formatstring_perl_brace }, \
+            &flag_table_perl, &formatstring_perl, &formatstring_perl_brace, NULL }, \
 
 /* Scan a Perl file and add its translatable strings to mdlp.  */
 extern void extract_perl (FILE *fp, const char *real_filename,

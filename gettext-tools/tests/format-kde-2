@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test checking of KDE format strings.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles f-kd-2.data"
 cat <<\EOF > f-kd-2.data
 # Valid: %% doesn't count
 msgid  "abc%%def"
@@ -75,7 +72,6 @@ while read comment; do
   read msgid_line
   read msgstr_line
   n=`expr $n + 1`
-  tmpfiles="$tmpfiles f-kd-2-$n.po f-kd-2-$n.mo"
   cat <<EOF > f-kd-2-$n.po
 #, kde-format
 ${msgid_line}
@@ -103,7 +99,5 @@ EOF
   fi
   rm -f f-kd-2-$n.po f-kd-2-$n.mo
 done < f-kd-2.data
-
-rm -fr $tmpfiles
 
 exit 0

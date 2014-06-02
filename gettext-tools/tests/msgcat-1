@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Verify that msgcat doesn't introduce alternative syntax if all translations
 # have the same msgstr.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcat-test1.in1 mcat-test1.in2"
 cat <<EOF > mcat-test1.in1
 msgid ""
 msgstr ""
@@ -41,14 +38,10 @@ msgid "1"
 msgstr "eins"
 EOF
 
-tmpfiles="$tmpfiles mcat-test1.tmp mcat-test1.out"
 : ${MSGCAT=msgcat}
-${MSGCAT} -o mcat-test1.tmp mcat-test1.in1 mcat-test1.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcat-test1.tmp > mcat-test1.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGCAT} -o mcat-test1.tmp mcat-test1.in1 mcat-test1.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcat-test1.tmp > mcat-test1.out || exit 1
 
-tmpfiles="$tmpfiles mcat-test1.ok"
 cat << EOF > mcat-test1.ok
 msgid ""
 msgstr ""
@@ -69,7 +62,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcat-test1.ok mcat-test1.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

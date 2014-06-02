@@ -106,7 +106,7 @@ compile (const char *pattern, size_t pattern_size,
 
         if ((err = re_compile_pattern (motif, len,
                                        &cregex->patterns[cregex->pcount].regexbuf)) != NULL)
-          error (exit_failure, 0, err);
+          error (exit_failure, 0, "%s", err);
         cregex->pcount++;
 
         motif = sep;

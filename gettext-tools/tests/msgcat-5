@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test handling of input files with different translations:
 # try --use-first
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcat-test5.in1 mcat-test5.in2"
 cat <<\EOF > mcat-test5.in1
 # German message file for xyz.
 # Copyright (C) 1999, 2000, 2001 xyz.
@@ -55,17 +52,13 @@ msgstr ""
 "Herzlichen Glückwunsch!"
 EOF
 
-tmpfiles="$tmpfiles mcat-test5.tmp mcat-test5.out"
 rm -f mcat-test5.tmp
 
 : ${MSGCAT=msgcat}
 ${MSGCAT} --use-first --more-than=0 -o mcat-test5.tmp \
-    mcat-test5.in1 mcat-test5.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcat-test5.tmp > mcat-test5.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+    mcat-test5.in1 mcat-test5.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcat-test5.tmp > mcat-test5.out || exit 1
 
-tmpfiles="$tmpfiles mcat-test5.ok"
 cat << \EOF > mcat-test5.ok
 # German message file for xyz.
 # Copyright (C) 1999, 2000, 2001 xyz.
@@ -91,7 +84,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcat-test5.ok mcat-test5.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

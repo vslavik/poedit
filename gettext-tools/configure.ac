@@ -17,16 +17,16 @@ dnl along with this program.  If not, see <http://www.gnu.org/licenses/>.
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.62])
-AC_INIT
+AC_INIT([gettext-tools],
+	m4_esyscmd([../build-aux/git-version-gen ../.tarball-version]),
+	[bug-gnu-gettext@gnu.org])
 AC_CONFIG_SRCDIR([src/msgfmt.c])
 AC_CONFIG_AUX_DIR([../build-aux])
-. $srcdir/../version.sh
-gl_INIT_PACKAGE([gettext-tools], [$VERSION_NUMBER])
 AM_INIT_AUTOMAKE([1.11.1 silent-rules parallel-tests])
 AC_CONFIG_HEADERS([config.h])
 
 dnl Installation directories.
-test "$docdir" != '${datarootdir}/doc/${PACKAGE}' || docdir='${datarootdir}/doc/gettext'
+test "$docdir" != '${datarootdir}/doc/${PACKAGE_TARNAME}' || docdir='${datarootdir}/doc/gettext'
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -499,12 +499,6 @@ AC_SUBST([TESTLIBASPRINTF])
 dnl Generate the version information file in the intl/ directory.
 test -d intl || mkdir intl
 echo "GNU gettext library from gettext-$VERSION" > intl/VERSION
-cat > intl/ChangeLog.inst <<EOF
-$RELEASE_DATE  GNU  <bug-gnu-gettext@gnu.org>
-
-	* Version $VERSION released.
-
-EOF
 
 AC_CONFIG_SUBDIRS([examples])
 
@@ -548,6 +542,8 @@ AC_CONFIG_FILES([man/x-to-1])
 AC_CONFIG_FILES([m4/Makefile])
 
 AC_CONFIG_FILES([tests/Makefile])
+
+AC_CONFIG_FILES([tests/init-env])
 
 AC_CONFIG_FILES([gnulib-tests/Makefile])
 

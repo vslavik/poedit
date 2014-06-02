@@ -392,7 +392,6 @@ po_header_set_field (const char *header, const char *field, const char *value)
           {
             const char *oldvalue_start;
             const char *oldvalue_end;
-            size_t oldvalue_len;
             size_t header_part1_len;
             size_t header_part3_len;
             size_t result_len;
@@ -404,7 +403,6 @@ po_header_set_field (const char *header, const char *field, const char *value)
             oldvalue_end = strchr (oldvalue_start, '\n');
             if (oldvalue_end == NULL)
               oldvalue_end = oldvalue_start + strlen (oldvalue_start);
-            oldvalue_len = oldvalue_end - oldvalue_start;
 
             header_part1_len = oldvalue_start - header;
             header_part3_len = header + header_len - oldvalue_end;

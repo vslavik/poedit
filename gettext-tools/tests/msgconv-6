@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgconv on a PO file with previous msgids.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mco-test6.po"
 cat <<\EOF > mco-test6.po
 msgid ""
 msgstr ""
@@ -24,14 +21,10 @@ msgid "full turn"
 msgstr "Volle 360 Grad"
 EOF
 
-tmpfiles="$tmpfiles mco-test6.tmp mco-test6.out"
 : ${MSGCONV=msgconv}
-${MSGCONV} --to-code=ISO-8859-1 -o mco-test6.tmp mco-test6.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mco-test6.tmp > mco-test6.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGCONV} --to-code=ISO-8859-1 -o mco-test6.tmp mco-test6.po || exit 1
+LC_ALL=C tr -d '\r' < mco-test6.tmp > mco-test6.out || exit 1
 
-tmpfiles="$tmpfiles mco-test6.ok"
 cat <<\EOF > mco-test6.ok
 msgid ""
 msgstr ""
@@ -53,7 +46,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mco-test6.ok mco-test6.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

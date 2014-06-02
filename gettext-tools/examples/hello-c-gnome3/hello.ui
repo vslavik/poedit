@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.10 -->
+  <template class="HelloApplicationWindow" parent="GtkApplicationWindow">
+    <property name="title" translatable="yes">Example Application</property>
+    <property name="default-width">600</property>
+    <property name="default-height">400</property>
+    <child>
+      <object class="GtkBox" id="panel">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <child>
+	  <object class="GtkAlignment" id="label1aligned">
+            <property name="visible">True</property>
+            <property name="xalign">0.0</property>
+            <property name="yalign">0.5</property>
+            <property name="xscale">0</property>
+            <property name="yscale">0</property>
+            <child>
+	      <object class="GtkLabel" id="label1">
+		<property name="visible">True</property>
+                <property name="label" translatable="yes">Hello, world!</property>
+	      </object>
+	    </child>
+	  </object>
+        </child>
+        <child>
+	  <object class="GtkAlignment" id="label2aligned">
+            <property name="visible">True</property>
+            <property name="xalign">0.0</property>
+            <property name="yalign">0.5</property>
+            <property name="xscale">0</property>
+            <property name="yscale">0</property>
+            <child>
+	      <object class="GtkLabel" id="label2">
+		<property name="visible">True</property>
+	      </object>
+	    </child>
+	  </object>
+        </child>
+        <child>
+	  <object class="GtkHButtonBox" id="buttonbar">
+            <property name="visible">True</property>
+	    <child>
+	      <object class="GtkButton" id="button">
+		<property name="visible">True</property>
+                <property name="label">gtk-ok</property>
+                <property name="use_stock">True</property>
+	      </object>
+	    </child>
+	  </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

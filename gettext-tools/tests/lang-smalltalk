@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the GNU smalltalk language.
 # Assumes an fr_FR locale is installed.
 # Assumes the following packages are installed: smalltalk.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles prog.st"
 cat <<\EOF > prog.st
 PackageLoader fileInPackage: 'I18N' !
 
@@ -33,14 +30,10 @@ run
 Main new run!
 EOF
 
-tmpfiles="$tmpfiles l-smalltalk-prog.tmp l-smalltalk-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-smalltalk-prog.tmp --omit-header --no-location prog.st
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-smalltalk-prog.tmp > l-smalltalk-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-smalltalk-prog.tmp --omit-header --no-location prog.st || exit 1
+LC_ALL=C tr -d '\r' < l-smalltalk-prog.tmp > l-smalltalk-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-smalltalk-prog.ok"
 cat <<EOF > l-smalltalk-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -59,7 +52,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-smalltalk-prog.ok l-smalltalk-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-smalltalk-fr.po"
 cat <<\EOF > l-smalltalk-fr.po
 msgid ""
 msgstr ""
@@ -82,17 +74,13 @@ msgid "%1 is replaced by %2."
 msgstr "%2 remplace %1."
 EOF
 
-tmpfiles="$tmpfiles l-smalltalk-fr.po.tmp l-smalltalk-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-smalltalk-fr.po.tmp l-smalltalk-fr.po l-smalltalk-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-smalltalk-fr.po.tmp > l-smalltalk-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-smalltalk-fr.po.tmp l-smalltalk-fr.po l-smalltalk-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-smalltalk-fr.po.tmp > l-smalltalk-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-smalltalk-fr.po l-smalltalk-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-smalltalk"
 test -d l-smalltalk || mkdir l-smalltalk
 test -d l-smalltalk/fr || mkdir l-smalltalk/fr
 test -d l-smalltalk/fr/LC_MESSAGES || mkdir l-smalltalk/fr/LC_MESSAGES
@@ -102,13 +90,12 @@ ${MSGFMT} -o l-smalltalk/fr/LC_MESSAGES/prog.mo l-smalltalk-fr.po
 
 # Test for presence of gst version 2.0.6 or newer.
 (gst --version) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: gst not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: gst not found"; exit 77; }
 case `gst --version | sed -n -e 1p | sed -e 's/^[^0-9]*//'` in
   0.* | 1.* | 2.0 | 2.0.[0-5] | 2.1 | 2.1.[0-1])
-    echo "Skipping test: gst version too old"; rm -fr $tmpfiles; exit 77;;
+    echo "Skipping test: gst version too old"; exit 77;;
 esac
 
-tmpfiles="$tmpfiles l-smalltalk-prog.ok l-smalltalk-prog.oku l-smalltalk-prog.ok2 l-smalltalk-prog.oku2 l-smalltalk-prog.ok3 l-smalltalk-prog.oku3 l-smalltalk-prog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-smalltalk-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -150,9 +137,7 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
-
-rm -fr $tmpfiles
 
 exit 0

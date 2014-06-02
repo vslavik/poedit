@@ -1,31 +1,30 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of JavaScript support.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-js-1.js"
 cat <<\EOF > xg-js-1.js
 var s1 = "Simple string, no gettext needed",
     s2 = _("Extract this first string");
 function foo(a) {
     var s3 = "Prefix _(" + _("Extract this second string") + ") Postfix";
 }
-if (document.getElementsById("foo")[0].innerHTML == _("Extract this thirth string")) {
+if (document.getElementsById("foo")[0].innerHTML == _("Extract this third string")) {
     /* _("This is a comment and must not be extracted!") */
 }
+/* TRANSLATORS: This is a translator comment.  */
+gettext('Extract this fourth string');
+// TRANSLATORS: This is another translator comment.
+gettext('Extract this fifth string');
 EOF
 
-tmpfiles="$tmpfiles xg-js-1.err xg-js-1.tmp xg-js-1.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --add-comments --no-location -o xg-js-1.tmp xg-js-1.js 2>xg-js-1.err
-test $? = 0 || { cat xg-js-1.err; rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} --add-comments=TRANSLATORS: --no-location -o xg-js-1.tmp xg-js-1.js 2>xg-js-1.err
+test $? = 0 || { cat xg-js-1.err; exit 1; }
 # Don't simplify this to "grep ... < xg-js-1.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-js-1.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-js-1.pot
 
-tmpfiles="$tmpfiles xg-js-1.ok"
 cat <<\EOF > xg-js-1.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -51,14 +50,20 @@ msgstr ""
 msgid "Extract this second string"
 msgstr ""
 
-msgid "Extract this thirth string"
+msgid "Extract this third string"
+msgstr ""
+
+#. TRANSLATORS: This is a translator comment.
+msgid "Extract this fourth string"
+msgstr ""
+
+#. TRANSLATORS: This is another translator comment.
+msgid "Extract this fifth string"
 msgstr ""
 EOF
 
 : ${DIFF=diff}
 ${DIFF} xg-js-1.ok xg-js-1.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

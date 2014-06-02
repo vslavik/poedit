@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test Lisp support: --add-comments option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-ls-2.lisp"
 cat <<\EOF > xg-ls-2.lisp
 #| a |#
 #| b |# (setq string #| c |#
@@ -13,15 +10,11 @@ cat <<\EOF > xg-ls-2.lisp
 #| e |# (_ #| f |# "hello world" #| g |# ))
 EOF
 
-tmpfiles="$tmpfiles xg-ls-2.tmp.po xg-ls-2.po"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --omit-header --no-location --keyword=_ \
-  -d xg-ls-2.tmp xg-ls-2.lisp
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-ls-2.tmp.po > xg-ls-2.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+  -d xg-ls-2.tmp xg-ls-2.lisp || exit 1
+LC_ALL=C tr -d '\r' < xg-ls-2.tmp.po > xg-ls-2.po || exit 1
 
-tmpfiles="$tmpfiles xg-ls-2.ok"
 cat <<EOF > xg-ls-2.ok
 #. a
 #. b
@@ -36,7 +29,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-ls-2.ok xg-ls-2.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

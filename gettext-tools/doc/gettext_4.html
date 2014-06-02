@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <!-- This HTML file has been created by texi2html 1.52b
-     from gettext.texi on 15 August 2013 -->
+     from gettext.texi on 2 June 2014 -->
 
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <TITLE>GNU gettext utilities - 4  Preparing Program Sources</TITLE>
@@ -35,7 +35,7 @@ needing translation.
 <P>
 Presuming that your set of programs, or package, has been adjusted
 so all needed GNU <CODE>gettext</CODE> files are available, and your
-<TT>&lsquo;Makefile&rsquo;</TT> files are adjusted (see section <A HREF="gettext_13.html#SEC211">13  The Maintainer's View</A>), each C module
+<TT>&lsquo;Makefile&rsquo;</TT> files are adjusted (see section <A HREF="gettext_13.html#SEC212">13  The Maintainer's View</A>), each C module
 having translated C strings should contain the line:
 
 </P>
@@ -594,7 +594,7 @@ the marked argument position depend on the total number of arguments of
 the function call; this is useful in C++.  All this is achieved using
 <CODE>xgettext</CODE>'s <SAMP>&lsquo;--keyword&rsquo;</SAMP> option.  How to pass such an option
 to <CODE>xgettext</CODE>, assuming that <CODE>gettextize</CODE> is used, is described
-in section <A HREF="gettext_13.html#SEC218">13.4.3  <TT>&lsquo;Makevars&rsquo;</TT> in <TT>&lsquo;po/&rsquo;</TT></A> and section <A HREF="gettext_13.html#SEC235">13.5.6  AM_XGETTEXT_OPTION in <TT>&lsquo;po.m4&rsquo;</TT></A>.
+in section <A HREF="gettext_13.html#SEC219">13.4.3  <TT>&lsquo;Makevars&rsquo;</TT> in <TT>&lsquo;po/&rsquo;</TT></A> and section <A HREF="gettext_13.html#SEC236">13.5.6  AM_XGETTEXT_OPTION in <TT>&lsquo;po.m4&rsquo;</TT></A>.
 
 </P>
 <P>
@@ -840,13 +840,13 @@ string is regarded as the address.
 
 </P>
 <P>
-To prevent errors at runtime caused by translations the <CODE>msgfmt</CODE>
+To prevent errors at runtime caused by translations, the <CODE>msgfmt</CODE>
 tool can check statically whether the arguments in the original and the
 translation string match in type and number.  If this is not the case
 and the <SAMP>&lsquo;-c&rsquo;</SAMP> option has been passed to <CODE>msgfmt</CODE>, <CODE>msgfmt</CODE>
-will give an error and refuse to produce a MO file.  Thus consequent
+will give an error and refuse to produce a MO file.  Thus consistent
 use of <SAMP>&lsquo;msgfmt -c&rsquo;</SAMP> will catch the error, so that it cannot cause
-cause problems at runtime.
+problems at runtime.
 
 </P>
 <P>
@@ -864,14 +864,14 @@ The routines in <CODE>msgfmt</CODE> know about this special notation.
 
 </P>
 <P>
-Because not all strings in a program must be format strings it is not
+Because not all strings in a program will be format strings, it is not
 useful for <CODE>msgfmt</CODE> to test all the strings in the <TT>&lsquo;.po&rsquo;</TT> file.
 This might cause problems because the string might contain what looks
 like a format specifier, but the string is not used in <CODE>printf</CODE>.
 
 </P>
 <P>
-Therefore the <CODE>xgettext</CODE> adds a special tag to those messages it
+Therefore <CODE>xgettext</CODE> adds a special tag to those messages it
 thinks might be a format string.  There is no absolute rule for this,
 only a heuristic.  In the <TT>&lsquo;.po&rsquo;</TT> file the entry is marked using the
 <CODE>c-format</CODE> flag in the <CODE>#,</CODE> comment line (see section <A HREF="gettext_3.html#SEC15">3  The Format of PO Files</A>).

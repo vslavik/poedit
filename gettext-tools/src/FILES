@@ -59,6 +59,9 @@ po-xerror.c
 | write-stringtable.c
 |               Output of a list-of-messages to a NeXTstep/GNUstep .strings
 |               file.
+| write-desktop.h
+| write-desktop.c
+|               Output of a list-of-messages to a .desktop file.
 +-------------- Writing PO files
 
 +-------------- Reading PO files
@@ -107,6 +110,9 @@ po-xerror.c
 | read-catalog.c
 |               Reading of a PO file, returning a list-of-messages.
 |
+| read-desktop.h
+| read-desktop.c
+|               Reading of a .desktop file, returning a list-of-messages.
 +-------------- Reading PO files
 
 msgl-iconv.h
@@ -345,6 +351,12 @@ msgl-check.c
 | x-vala.h
 | x-vala.c
 |               String extractor for Vala.
+| x-gsettings.h
+| x-gsettings.c
+|               String extractor for GSettings schema file.
+| x-desktop.h
+| x-desktop.c
+|               String extractor from Desktop Entry file.
 | xgettext.c
 |               Main source for the 'xgettext' program.
 |

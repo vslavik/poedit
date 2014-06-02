@@ -31,7 +31,7 @@ extern "C" {
 
 #define SCANNERS_VALA \
   { "Vala",       extract_vala,                               \
-                        &flag_table_vala, &formatstring_c, NULL }, \
+                  &flag_table_vala, &formatstring_c, NULL, &literalstring_c }, \
 
 /* Scan a Vala file and add its translatable strings to mdlp.  */
 extern void extract_vala (FILE *fp, const char *real_filename,

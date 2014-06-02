@@ -1,6 +1,6 @@
 /* Test harness for pipe-filter-ii.
 
-   Copyright (C) 2009-2013 Free Software Foundation, Inc.
+   Copyright (C) 2009-2014 Free Software Foundation, Inc.
    Written by Paolo Bonzini <bonzini@gnu.org>, 2009.
 
    This program is free software: you can redistribute it and/or modify

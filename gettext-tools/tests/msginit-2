@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msginit on a POT file with contexts.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mi-test2.pot"
 cat <<\EOF > mi-test2.pot
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -64,14 +61,11 @@ msgstr ""
 #~ msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mi-test2.tmp mi-test2.out mi-test2.err"
 : ${MSGINIT=msginit}
 ${MSGINIT} -i mi-test2.pot -l ga_IE --no-translator -o mi-test2.tmp 2>mi-test2.err
-test $? = 0 || { cat mi-test2.err 1>&2; rm -fr $tmpfiles; exit 1; }
-sed -e '1,10d' < mi-test2.tmp | LC_ALL=C tr -d '\r' > mi-test2.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+test $? = 0 || { cat mi-test2.err 1>&2; exit 1; }
+sed -e '1,10d' < mi-test2.tmp | LC_ALL=C tr -d '\r' > mi-test2.out || exit 1
 
-tmpfiles="$tmpfiles mi-test2.ok"
 cat <<\EOF > mi-test2.ok
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -115,7 +109,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mi-test2.ok mi-test2.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

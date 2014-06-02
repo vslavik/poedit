@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test handling of input files with different charsets.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcomm-test16.in1 mcomm-test16.in2"
 cat <<\EOF > mcomm-test16.in1
 # German message file for xyz.
 # Copyright (C) 1999, 2000, 2001 xyz.
@@ -53,7 +50,6 @@ msgid "You can log in as \"%1\"."
 msgstr "Sie können sich als \"%1\" einloggen."
 EOF
 
-tmpfiles="$tmpfiles mcomm-test16.tmp mcomm-test16.err mcomm-test16.out"
 rm -f mcomm-test16.tmp
 
 : ${MSGCOMM=msgcomm}
@@ -62,11 +58,9 @@ ${MSGCOMM} --more-than=0 -o mcomm-test16.tmp \
     mcomm-test16.in1 mcomm-test16.in2 >mcomm-test16.err 2>&1
 result=$?
 cat mcomm-test16.err | grep -v 'warning: .* encodings' | grep -v '^ '
-test $result = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test16.tmp > mcomm-test16.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+test $result = 0 || { exit 1; }
+LC_ALL=C tr -d '\r' < mcomm-test16.tmp > mcomm-test16.out || exit 1
 
-tmpfiles="$tmpfiles mcomm-test16.ok"
 cat << \EOF > mcomm-test16.ok
 # German message file for xyz.
 # Copyright (C) 1999, 2000, 2001 xyz.
@@ -98,7 +92,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcomm-test16.ok mcomm-test16.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgmerge when the second argument is a PO file with obsolete messages
 # (e.g. the result of an earlier msgmerge operation).
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test20.po"
 cat <<\EOF > mm-test20.po
 msgid ""
 msgstr ""
@@ -35,7 +32,6 @@ msgid "This program is running as process number {pid}."
 msgstr "Dieses Programm läuft mit der Prozeß-Nummer {pid}."
 EOF
 
-tmpfiles="$tmpfiles mm-test20.pot"
 cat <<\EOF > mm-test20.pot
 #, fuzzy
 msgid ""
@@ -75,14 +71,10 @@ msgstr ""
 #~ msgstr "Dieses Programm läuft mit der Prozeß-Nummer {pid}."
 EOF
 
-tmpfiles="$tmpfiles mm-test20.tmp.po mm-test20.new.po"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test20.tmp.po mm-test20.po mm-test20.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test20.tmp.po > mm-test20.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o mm-test20.tmp.po mm-test20.po mm-test20.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test20.tmp.po > mm-test20.new.po || exit 1
 
-tmpfiles="$tmpfiles mm-test20.ok"
 cat <<\EOF > mm-test20.ok
 msgid ""
 msgstr ""
@@ -117,9 +109,6 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} mm-test20.ok mm-test20.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-
-rm -fr $tmpfiles
+${DIFF} mm-test20.ok mm-test20.new.po || exit 1
 
 exit 0

@@ -1,4 +1,5 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the C# language.
 # Assumes an fr_FR locale is installed.
@@ -7,9 +8,6 @@
 # Note: This test fails with mono-0.28 because the CultureInfo.Parent pointers
 # are wrong for locales containing a language and a territory. This is fixed
 # in mono-0.29.
-
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
 
 # Test whether we can build and test C# programs.
 test "${CSHARP_CHOICE}" != no || {
@@ -25,7 +23,6 @@ test "${TESTCSHARP}" = yes || {
   exit 77
 }
 
-tmpfiles="$tmpfiles program.cs"
 cat <<\EOF > program.cs
 using System;
 using GNU.Gettext;
@@ -49,19 +46,14 @@ class Program {
 }
 EOF
 
-tmpfiles="$tmpfiles l-csharp"
 test -d l-csharp || mkdir l-csharp
-: ${CSHARPCOMP="/bin/sh ../csharpcomp.sh"}
-${CSHARPCOMP} -o l-csharp/program.exe -L ../../gettext-runtime/intl-csharp -l GNU.Gettext program.cs || exit 1
+: ${CSHARPCOMP="/bin/sh ../../csharpcomp.sh"}
+${CSHARPCOMP} -o l-csharp/program.exe -L ../../../gettext-runtime/intl-csharp -l GNU.Gettext program.cs || exit 1
 
-tmpfiles="$tmpfiles l-csharp-prog.tmp l-csharp-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-csharp-prog.tmp --omit-header --no-location program.cs
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-csharp-prog.tmp > l-csharp-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-csharp-prog.tmp --omit-header --no-location program.cs || exit 1
+LC_ALL=C tr -d '\r' < l-csharp-prog.tmp > l-csharp-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-csharp-prog.ok"
 cat <<EOF > l-csharp-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -92,7 +84,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-csharp-prog.ok l-csharp-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-csharp-fr.po"
 cat <<\EOF > l-csharp-fr.po
 msgid ""
 msgstr ""
@@ -129,25 +120,22 @@ msgid "{0} is replaced by {1}."
 msgstr "Le nouveau {1} remplace le vieux {0}."
 EOF
 
-tmpfiles="$tmpfiles l-csharp-fr.po.tmp l-csharp-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-csharp-fr.po.tmp l-csharp-fr.po l-csharp-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-csharp-fr.po.tmp > l-csharp-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-csharp-fr.po.tmp l-csharp-fr.po l-csharp-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-csharp-fr.po.tmp > l-csharp-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-csharp-fr.po l-csharp-fr.po.new || exit 1
 
 : ${MSGFMT=msgfmt}
-GETTEXTCSHARPLIBDIR=../../gettext-runtime/intl-csharp \
+GETTEXTCSHARPLIBDIR=../../../gettext-runtime/intl-csharp \
 ${MSGFMT} --csharp -d l-csharp -r prog -l fr l-csharp-fr.po || exit 1
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LC_ALL=$LOCALE_FR ./testlocale
+  LC_ALL=$LOCALE_FR ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
@@ -155,7 +143,7 @@ if test $LOCALE_FR != none; then
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 ./testlocale
+  LC_ALL=$LOCALE_FR_UTF8 ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
@@ -168,10 +156,9 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
 
-tmpfiles="$tmpfiles l-csharp-prog.ok l-csharp-prog.oku l-csharp-prog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-csharp-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -190,16 +177,14 @@ EOF
 
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
-: ${CSHARPEXEC="/bin/sh ../csharpexec.sh"}
+: ${CSHARPEXEC="/bin/sh ../../csharpexec.sh"}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR ${CSHARPEXEC} -L ../../gettext-runtime/intl-csharp l-csharp/program.exe 2 > l-csharp-prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR ${CSHARPEXEC} -L ../../../gettext-runtime/intl-csharp l-csharp/program.exe 2 > l-csharp-prog.out || exit 1
   ${DIFF} l-csharp-prog.ok l-csharp-prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 ${CSHARPEXEC} -L ../../gettext-runtime/intl-csharp l-csharp/program.exe 2 > l-csharp-prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 ${CSHARPEXEC} -L ../../../gettext-runtime/intl-csharp l-csharp/program.exe 2 > l-csharp-prog.out || exit 1
   ${DIFF} l-csharp-prog.oku l-csharp-prog.out || exit 1
 fi
-
-rm -fr $tmpfiles
 
 exit 0

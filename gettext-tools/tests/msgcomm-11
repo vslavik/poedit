@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test that --more-than=1 drops entries which occur only once.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcomm-test11.in1 mcomm-test11.in2"
 cat <<EOF > mcomm-test11.in1
 msgid ""
 msgstr ""
@@ -44,15 +41,11 @@ msgid "1"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mcomm-test11.tmp mcomm-test11.out"
 : ${MSGCOMM=msgcomm}
 ${MSGCOMM} --more-than=1 --no-location --omit-header -o mcomm-test11.tmp \
-    mcomm-test11.in1 mcomm-test11.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test11.tmp > mcomm-test11.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+    mcomm-test11.in1 mcomm-test11.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcomm-test11.tmp > mcomm-test11.out || exit 1
 
-tmpfiles="$tmpfiles mcomm-test11.ok"
 cat << EOF > mcomm-test11.ok
 msgid "1"
 msgstr "1x"
@@ -61,7 +54,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcomm-test11.ok mcomm-test11.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

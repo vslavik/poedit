@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --msgid and --msgstr options with Java .properties syntax.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mg-test6.properties"
 cat <<\EOF > mg-test6.properties
 #: argmatch.c:141
 #, c-format
@@ -114,16 +111,13 @@ cannot\ create\ pipe=Es ist nicht m\u00f6glich, eine Pipe zu erzeugen
 GSG-9=Antiterror-Einheit
 EOF
 
-tmpfiles="$tmpfiles mg-test6.tmp mg-test6.out"
 : ${MSGGREP=msggrep}
 LC_MESSAGES=C LC_ALL= \
 ${MSGGREP} --properties-input --properties-output -K -e error -T -e Speicher -o mg-test6.tmp mg-test6.properties
 result=$?
-test $result = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mg-test6.tmp > mg-test6.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+test $result = 0 || { exit 1; }
+LC_ALL=C tr -d '\r' < mg-test6.tmp > mg-test6.out || exit 1
 
-tmpfiles="$tmpfiles mg-test6.ok"
 cat <<\EOF > mg-test6.ok
 #: copy-file.c:60
 #, c-format
@@ -151,7 +145,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mg-test6.ok mg-test6.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

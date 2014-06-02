@@ -1,4 +1,5 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the Object Pascal language.
 # Assumes the following packages are installed: fpk.
@@ -8,10 +9,6 @@
 # This here is a quick workaround:
 UTF8_LOCALE_UNSUPPORTED=yes
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles pascalprog.pp"
 cat <<\EOF > pascalprog.pp
 program pascalprog;
 {$mode delphi}
@@ -29,22 +26,17 @@ begin
 end.
 EOF
 
-tmpfiles="$tmpfiles pascalprog.o pascalprog.rst pascalprog"
 (ppc386 pascalprog.pp) >/dev/null 2>&1 ||
 (ppcx64 pascalprog.pp) >/dev/null 2>&1 ||
 {
   echo "Skipping test: Pascal compiler ppc386 or ppcx64 not found"
-  rm -fr $tmpfiles; exit 77
+  exit 77
 }
 
-tmpfiles="$tmpfiles l-pascal-pascalprog.tmp l-pascal-pascalprog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-pascal-pascalprog.tmp --omit-header --add-location pascalprog.rst
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-pascal-pascalprog.tmp > l-pascal-pascalprog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-pascal-pascalprog.tmp --omit-header --add-location pascalprog.rst || exit 1
+LC_ALL=C tr -d '\r' < l-pascal-pascalprog.tmp > l-pascal-pascalprog.pot || exit 1
 
-tmpfiles="$tmpfiles l-pascal-pascalprog.ok"
 cat <<EOF > l-pascal-pascalprog.ok
 #: pascalprog.question
 msgid "'Your command, please?', asked the waiter."
@@ -59,7 +51,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-pascal-pascalprog.ok l-pascal-pascalprog.pot || exit 1
 
-tmpfiles="$tmpfiles l-pascal-fr.po"
 cat <<\EOF > l-pascal-fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -75,17 +66,13 @@ msgid "%s is replaced by %s."
 msgstr "%1:s remplace %0:s."
 EOF
 
-tmpfiles="$tmpfiles l-pascal-fr.po.tmp l-pascal-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-pascal-fr.po.tmp l-pascal-fr.po l-pascal-pascalprog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-pascal-fr.po.tmp > l-pascal-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-pascal-fr.po.tmp l-pascal-fr.po l-pascal-pascalprog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-pascal-fr.po.tmp > l-pascal-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-pascal-fr.po l-pascal-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-pascal"
 test -d l-pascal || mkdir l-pascal
 test -d l-pascal/fr || mkdir l-pascal/fr
 test -d l-pascal/fr/LC_MESSAGES || mkdir l-pascal/fr/LC_MESSAGES
@@ -93,7 +80,6 @@ test -d l-pascal/fr/LC_MESSAGES || mkdir l-pascal/fr/LC_MESSAGES
 : ${MSGFMT=msgfmt}
 ${MSGFMT} -o l-pascal/fr/LC_MESSAGES/pascalprog.mo l-pascal-fr.po
 
-tmpfiles="$tmpfiles l-pascal-pascalprog.ok l-pascal-pascalprog.oku l-pascal-pascalprog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-pascal-pascalprog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -123,7 +109,7 @@ if test -z "$UTF8_LOCALE_UNSUPPORTED"; then
     else
       echo "Skipping test: no french locale is supported"
     fi
-    rm -fr $tmpfiles; exit 77
+    exit 77
   fi
 else
   if test $LOCALE_FR = none; then
@@ -132,10 +118,8 @@ else
     else
       echo "Skipping test: no traditional french locale is supported"
     fi
-    rm -fr $tmpfiles; exit 77
+    exit 77
   fi
 fi
-
-rm -fr $tmpfiles
 
 exit 0

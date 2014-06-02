@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgfilter with command recode-sr-latin1.
 # Verify that it converts to UTF-8.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mfi-srl-1.po"
 cat <<\EOF > mfi-srl-1.po
 # Serbian translation of gettext-runtime
 # Copyright (C) 2003 Free Software Foundation, Inc.
@@ -312,17 +309,13 @@ EOF
 # of here documents in /bin/sh is too buggy. Skip the test in this case.
 head -n 1 mfi-srl-1.po | grep Serbian > /dev/null || {
   echo "Skipping test: /bin/sh is too buggy"
-  rm -fr $tmpfiles; exit 77
+  exit 77
 }
 
-tmpfiles="$tmpfiles mfi-srl-1.tmp mfi-srl-1.out"
 : ${MSGFILTER=msgfilter}
-${MSGFILTER} -i mfi-srl-1.po -o mfi-srl-1.tmp recode-sr-latin
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mfi-srl-1.tmp > mfi-srl-1.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGFILTER} -i mfi-srl-1.po -o mfi-srl-1.tmp recode-sr-latin || exit 1
+LC_ALL=C tr -d '\r' < mfi-srl-1.tmp > mfi-srl-1.out || exit 1
 
-tmpfiles="$tmpfiles mfi-srl-1.ok"
 cat <<\EOF > mfi-srl-1.ok
 # Serbian translation of gettext-runtime
 # Copyright (C) 2003 Free Software Foundation, Inc.
@@ -627,7 +620,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mfi-srl-1.ok mfi-srl-1.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

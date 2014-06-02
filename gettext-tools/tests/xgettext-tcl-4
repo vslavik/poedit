@@ -1,26 +1,21 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of Tcl support: escape sequences.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-t-4.tcl"
 cat <<\EOF > xg-t-4.tcl
 puts [_ "Hello\u200e\u201cWorld\u201d"]
 puts [_ "x\u20y\x20z"]
 puts [_ "\xFF20"]
 EOF
 
-tmpfiles="$tmpfiles xg-t-4.err xg-t-4.tmp xg-t-4.pot"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --no-location -k_ -o xg-t-4.tmp xg-t-4.tcl 2>xg-t-4.err
-test $? = 0 || { cat xg-t-4.err; rm -fr $tmpfiles; exit 1; }
+test $? = 0 || { cat xg-t-4.err; exit 1; }
 # Don't simplify this to "grep ... < xg-t-4.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-t-4.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-t-4.pot
 
-tmpfiles="$tmpfiles xg-t-4.ok"
 cat <<\EOF > xg-t-4.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -53,7 +48,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-t-4.ok xg-t-4.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

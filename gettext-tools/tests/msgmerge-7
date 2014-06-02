@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test multi-domain handling.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test7.po"
 cat <<\EOF > mm-test7.po
 domain "foo-de"
 msgid ""
@@ -32,7 +29,6 @@ msgid "bye"
 msgstr "A bientôt"
 EOF
 
-tmpfiles="$tmpfiles mm-test7.pot"
 cat <<EOF > mm-test7.pot
 domain "foo-de"
 msgid "Hello"
@@ -42,14 +38,10 @@ msgid "Hello"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-test7.tmp mm-test7.out"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test7.tmp mm-test7.po mm-test7.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test7.tmp > mm-test7.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o mm-test7.tmp mm-test7.po mm-test7.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test7.tmp > mm-test7.out || exit 1
 
-tmpfiles="$tmpfiles mm-test7.ok"
 cat <<\EOF > mm-test7.ok
 domain "foo-de"
 
@@ -83,7 +75,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mm-test7.ok mm-test7.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -1,5 +1,5 @@
 /* Common macros used by gnulib tests.
-   Copyright (C) 2006-2013 Free Software Foundation, Inc.
+   Copyright (C) 2006-2014 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -48,8 +48,8 @@
     {                                                                        \
       if (!(expr))                                                           \
         {                                                                    \
-          fprintf (ASSERT_STREAM, "%s:%d: assertion failed\n",               \
-                   __FILE__, __LINE__);                                      \
+          fprintf (ASSERT_STREAM, "%s:%d: assertion '%s' failed\n",     \
+                   __FILE__, __LINE__, #expr);                          \
           fflush (ASSERT_STREAM);                                            \
           abort ();                                                          \
         }                                                                    \
