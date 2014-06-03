@@ -1,16 +1,11 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test the libgettextpo library.
-tmpfiles="gtpo-1-copied.po gtpo-1-created.po"
-./gettextpo-1-prg${EXEEXT} ${srcdir}/gettextpo-1.de.po > /dev/null
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+../gettextpo-1-prg${EXEEXT} "$abs_srcdir"/gettextpo-1.de.po > /dev/null || exit 1
 
 : ${DIFF=diff}
-${DIFF} ${srcdir}/gettextpo-1.de.po gtpo-1-copied.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-${DIFF} ${srcdir}/gettextpo-1.de.po gtpo-1-created.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-
-rm -f $tmpfiles
+${DIFF} "$abs_srcdir"/gettextpo-1.de.po gtpo-1-copied.po || exit 1
+${DIFF} "$abs_srcdir"/gettextpo-1.de.po gtpo-1-created.po || exit 1
 
 exit 0

@@ -1,14 +1,11 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test catching of division by zero in plural expression.
 
 # Note: On AIX 3 with xlc, this test fails. To make it work, add "-qcheck"
 # to the CFLAGS, or use gcc.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mf-6.po"
 cat <<EOF > mf-6.po
 msgid ""
 msgstr ""
@@ -22,7 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(1 + (1 / (n - 257)));\n"
 EOF
 
-tmpfiles="$tmpfiles mf-6.mo core *.core"
 : ${MSGFMT=msgfmt}
 ${MSGFMT} --check -o mf-6.mo mf-6.po 2>/dev/null
 # Exit code must be 1.
@@ -30,7 +26,5 @@ ${MSGFMT} --check -o mf-6.mo mf-6.po 2>/dev/null
 # If it produced a core dump, it would be 136 (= 128 + SIGFPE).
 test $? = 1
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

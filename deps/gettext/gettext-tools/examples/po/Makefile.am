@@ -22,6 +22,10 @@ AUTOMAKE_OPTIONS = 1.5 gnits
 POTFILES = \
   hello-c/hello.c \
   hello-c-gnome/hello.c \
+  hello-c-gnome3/hello.c \
+  hello-c-gnome3/hello.desktop.in.in \
+  hello-c-gnome3/hello.gschema.xml \
+  hello-c-gnome3/hello.ui \
   hello-c++/hello.cc \
   hello-c++-qt/hello.cc \
   hello-c++-kde/hello.cc \
@@ -61,6 +65,7 @@ POTFILES = \
 SMALLPOTS = \
   hello-c.pot \
   hello-c-gnome.pot \
+  hello-c-gnome3.pot \
   hello-c++.pot \
   hello-c++-qt.pot \
   hello-c++-kde.pot \
@@ -215,6 +220,9 @@ hello-c.pot : $(POTFILES_DEPS)
 
 hello-c-gnome.pot : $(POTFILES_DEPS)
 	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c-gnome
+
+hello-c-gnome3.pot : $(POTFILES_DEPS)
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c-gnome3
 
 hello-c++.pot : $(POTFILES_DEPS)
 	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c++
@@ -378,6 +386,7 @@ $(DUMMYPOFILES):
 SMALLPOFILES_FOR_lang = \
   ../hello-c/po/$$lang.po \
   ../hello-c-gnome/po/$$lang.po \
+  ../hello-c-gnome3/po/$$lang.po \
   ../hello-c++/po/$$lang.po \
   ../hello-c++-qt/po/$$lang.po \
   ../hello-c++-kde/po/$$lang.po \
@@ -411,6 +420,9 @@ SMALLPOFILES_FOR_lang = \
 
 ../hello-c-gnome/po/$(LL).po: hello-c-gnome.pot $(LL).po
 	$(SHELL) mmsmallpo.sh hello-c-gnome $(LL)
+
+../hello-c-gnome3/po/$(LL).po: hello-c-gnome3.pot $(LL).po
+	$(SHELL) mmsmallpo.sh hello-c-gnome3 $(LL)
 
 ../hello-c++/po/$(LL).po: hello-c++.pot $(LL).po
 	$(SHELL) mmsmallpo.sh hello-c++ $(LL)

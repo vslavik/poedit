@@ -1,11 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test that on glibc systems, gettext() in multithreaded applications works
 # correctly if different threads operate in different locales with the same
 # encoding.
-
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
 
 # This test works only on glibc and MacOS X systems.
 : ${host_os=unknown}
@@ -21,7 +19,7 @@ trap 'rm -fr $tmpfiles' 1 2 3 15
 }
 
 # This test works only on systems that have a de_DE and fr_FR locale installed.
-missing_locale=`./gettext-6-prg 1`
+missing_locale=`../gettext-6-prg 1`
 if test -n "$missing_locale"; then
   if test -f /usr/bin/localedef; then
     echo "Skipping test: locale ${missing_locale} not installed"
@@ -31,7 +29,6 @@ if test -n "$missing_locale"; then
   exit 77
 fi
 
-tmpfiles="$tmpfiles gt-6"
 test -d gt-6 || mkdir gt-6
 test -d gt-6/de_DE || mkdir gt-6/de_DE
 test -d gt-6/de_DE/LC_MESSAGES || mkdir gt-6/de_DE/LC_MESSAGES
@@ -39,10 +36,9 @@ test -d gt-6/fr_FR || mkdir gt-6/fr_FR
 test -d gt-6/fr_FR/LC_MESSAGES || mkdir gt-6/fr_FR/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o gt-6/de_DE/LC_MESSAGES/tstthread.mo ${top_srcdir}/tests/gettext-6-1.po
-${MSGFMT} -o gt-6/fr_FR/LC_MESSAGES/tstthread.mo ${top_srcdir}/tests/gettext-6-2.po
+${MSGFMT} -o gt-6/de_DE/LC_MESSAGES/tstthread.mo "$abs_srcdir"/gettext-6-1.po
+${MSGFMT} -o gt-6/fr_FR/LC_MESSAGES/tstthread.mo "$abs_srcdir"/gettext-6-2.po
 
-tmpfiles="$tmpfiles gt-6.ok"
 cat <<EOF > gt-6.ok
 Schönheit
 beauté
@@ -50,19 +46,16 @@ Schönheit
 beauté
 EOF
 
-tmpfiles="$tmpfiles gt-6.out"
-./gettext-6-prg > gt-6.out
+../gettext-6-prg > gt-6.out
 case $? in
   0) ;;
   77)
     echo "Skipping test: not a glibc >= 2.3 or MacOS X >= 10.5 system"
-    rm -fr $tmpfiles; exit 77
+    exit 77
     ;;
 esac
 
 : ${DIFF=diff}
 ${DIFF} gt-6.ok gt-6.out || exit 1
-
-rm -fr $tmpfiles
 
 exit 0

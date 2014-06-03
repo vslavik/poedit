@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --update: nothing changed; don't normalize second message
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-u-1.po"
 cat <<\EOF > mm-u-1.po
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -34,7 +31,6 @@ msgstr ""
 "schwarz"
 EOF
 
-tmpfiles="$tmpfiles mm-u-1.pot"
 cat <<EOF > mm-u-1.pot
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -60,18 +56,13 @@ msgid "black"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-u-1.bak"
 cp mm-u-1.po mm-u-1.bak
 
-tmpfiles="$tmpfiles mm-u-1.po~"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q --update mm-u-1.po mm-u-1.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q --update mm-u-1.po mm-u-1.pot || exit 1
 
 : ${DIFF=diff}
 ${DIFF} mm-u-1.bak mm-u-1.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

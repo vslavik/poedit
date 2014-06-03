@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgcat on a PO files with previous msgids.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcat-test16.in1"
 cat <<\EOF > mcat-test16.in1
 msgid ""
 msgstr ""
@@ -29,7 +26,6 @@ msgid "Missing arguments."
 msgstr "Argumente fehlen."
 EOF
 
-tmpfiles="$tmpfiles mcat-test16.in2"
 cat <<\EOF > mcat-test16.in2
 msgid ""
 msgstr ""
@@ -45,15 +41,11 @@ msgid "too large arguments"
 msgstr "zu wenige Argumente"
 EOF
 
-tmpfiles="$tmpfiles mcat-test16.tmp mcat-test16.out"
 rm -f mcat-test16.tmp
 : ${MSGCAT=msgcat}
-${MSGCAT} -o mcat-test16.tmp mcat-test16.in1 mcat-test16.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcat-test16.tmp > mcat-test16.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGCAT} -o mcat-test16.tmp mcat-test16.in1 mcat-test16.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcat-test16.tmp > mcat-test16.out || exit 1
 
-tmpfiles="$tmpfiles mcat-test16.ok"
 cat <<\EOF > mcat-test16.ok
 msgid ""
 msgstr ""
@@ -83,7 +75,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcat-test16.ok mcat-test16.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

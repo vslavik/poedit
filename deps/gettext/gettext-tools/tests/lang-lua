@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the Lua language.
 # Assumes an fr_FR locale is installed.
 # Assumes the following packages are installed: lua, lua-gettext.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles prog.lua"
 cat <<\EOF > prog.lua
 require("gettext")
 gettext.bindtextdomain("prog", "l-lua")
@@ -20,14 +17,10 @@ print(string.format(gettext.ngettext('a piece of cake', [[%d pieces of cake]], n
 print(string.format(_[==[%s is replaced by %s.]==], "FF", "EUR"))
 EOF
 
-tmpfiles="$tmpfiles l-lua-prog.tmp l-lua-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-lua-prog.tmp --omit-header --no-location prog.lua
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-lua-prog.tmp > l-lua-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-lua-prog.tmp --omit-header --no-location prog.lua || exit 1
+LC_ALL=C tr -d '\r' < l-lua-prog.tmp > l-lua-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-lua-prog.ok"
 cat <<\EOF > l-lua-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -46,7 +39,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-lua-prog.ok l-lua-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-lua-fr.po"
 cat <<\EOF > l-lua-fr.po
 msgid ""
 msgstr ""
@@ -67,17 +59,13 @@ msgid "%s is replaced by %s."
 msgstr "%s remplace %s."
 EOF
 
-tmpfiles="$tmpfiles l-lua-fr.po.tmp l-lua-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-lua-fr.po.tmp l-lua-fr.po l-lua-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-lua-fr.po.tmp > l-lua-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-lua-fr.po.tmp l-lua-fr.po l-lua-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-lua-fr.po.tmp > l-lua-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-lua-fr.po l-lua-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-lua"
 test -d l-lua || mkdir l-lua
 test -d l-lua/fr || mkdir l-lua/fr
 test -d l-lua/fr/LC_MESSAGES || mkdir l-lua/fr/LC_MESSAGES
@@ -88,21 +76,21 @@ ${MSGFMT} -o l-lua/fr/LC_MESSAGES/prog.mo l-lua-fr.po
 # Test for presence of lua version 5.0 or newer with gettext support.
 (lua -v) >/dev/null 2>/dev/null
 test $? -le 1 \
-  || { echo "Skipping test: lua not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: lua not found"; exit 77; }
 case `lua -v 2>&1 | sed -e 's/^[^0-9]*//'` in
   [5-9].*) ;;
-  *) echo "Skipping test: lua version too old"; rm -fr $tmpfiles; exit 77;;
+  *) echo "Skipping test: lua version too old"; exit 77;;
 esac
 { lua -v -l gettext > /dev/null 2>/dev/null; } \
   || { echo "Skipping test: lua gettext module not found"
-       rm -fr $tmpfiles; exit 77
+       exit 77
      }
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LC_ALL=$LOCALE_FR ./testlocale
+  LC_ALL=$LOCALE_FR ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
@@ -110,7 +98,7 @@ if test $LOCALE_FR != none; then
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 ./testlocale
+  LC_ALL=$LOCALE_FR_UTF8 ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
@@ -123,10 +111,9 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
 
-tmpfiles="$tmpfiles l-lua-prog.ok l-lua-prog.oku l-lua-prog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-lua-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -149,7 +136,5 @@ if test $LOCALE_FR_UTF8 != none; then
   LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 lua -l gettext prog.lua > l-lua-prog.out || exit 1
   ${DIFF} l-lua-prog.oku l-lua-prog.out || exit 1
 fi
-
-rm -fr $tmpfiles
 
 exit 0

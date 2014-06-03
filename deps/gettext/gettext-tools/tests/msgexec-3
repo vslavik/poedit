@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of an external command with Java .properties syntax.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mex-test3.properties"
 cat <<\EOF > mex-test3.properties
 # HEADER.
 #
@@ -32,7 +29,6 @@ with\ wives\ who\ never\ understand=und ihre Frauen verstehen sie nicht
 !They\ warn\ you\ and\ darn\ you=
 EOF
 
-tmpfiles="$tmpfiles mex-test3.sh"
 cat <<\EOF > mex-test3.sh
 #! /bin/sh
 echo "========================= $MSGEXEC_LOCATION =========================" | LC_ALL=C tr -d '\r'
@@ -46,12 +42,9 @@ exit 0
 EOF
 chmod a+x mex-test3.sh
 
-tmpfiles="$tmpfiles mex-test3.out"
 : ${MSGEXEC=msgexec}
-${MSGEXEC} --properties-input -i mex-test3.properties ./mex-test3.sh > mex-test3.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGEXEC} --properties-input -i mex-test3.properties ./mex-test3.sh > mex-test3.out || exit 1
 
-tmpfiles="$tmpfiles mex-test3.ok"
 cat <<\EOF > mex-test3.ok
 ========================= mex-test3.properties:3 =========================
 
@@ -87,7 +80,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mex-test3.ok mex-test3.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

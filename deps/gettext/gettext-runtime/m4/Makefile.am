@@ -4,6 +4,7 @@
 # find . -type f -name '*.m4' -printf '%f\n' | sort | tr '\012' @ | sed 's/@$/%/;s/@/ \\@/g' | tr @% '\012\012'
 EXTRA_DIST = README \
 codeset.m4 \
+extern-inline.m4 \
 fcntl-o.m4 \
 gettext.m4 \
 glibc2.m4 \

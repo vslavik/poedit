@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test checking of Qt plural format strings.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles f-qtp-2.data"
 cat <<\EOF > f-qtp-2.data
 # Valid: %1 doesn't count
 msgid  "abc%1def"
@@ -39,7 +36,6 @@ while read comment; do
   read msgid_line
   read msgstr_line
   n=`expr $n + 1`
-  tmpfiles="$tmpfiles f-qtp-2-$n.po f-qtp-2-$n.mo"
   cat <<EOF > f-qtp-2-$n.po
 #, qt-plural-format
 ${msgid_line}
@@ -67,7 +63,5 @@ EOF
   fi
   rm -f f-qtp-2-$n.po f-qtp-2-$n.mo
 done < f-qtp-2.data
-
-rm -fr $tmpfiles
 
 exit 0

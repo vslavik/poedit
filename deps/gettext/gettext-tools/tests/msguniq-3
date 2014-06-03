@@ -1,18 +1,12 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --repeated option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles msguniq-3.tmp msguniq-3.out"
 : ${MSGUNIQ-msguniq}
-${MSGUNIQ} -w 1000 -d -o msguniq-3.tmp ${top_srcdir}/tests/msguniq-a.in
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < msguniq-3.tmp > msguniq-3.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGUNIQ} -w 1000 -d -o msguniq-3.tmp "$abs_srcdir"/msguniq-a.in || exit 1
+LC_ALL=C tr -d '\r' < msguniq-3.tmp > msguniq-3.out || exit 1
 
-tmpfiles="$tmpfiles msguniq-3.ok"
 cat <<\EOF > msguniq-3.ok
 # Template messages for CLISP
 # Copyright (C) 1992-2001 Bruno Haible, Michael Stoll, Marcus Daniels
@@ -495,7 +489,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} msguniq-3.ok msguniq-3.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

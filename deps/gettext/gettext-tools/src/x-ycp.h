@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_YCP \
   { "YCP",              extract_ycp,                                    \
-                        &flag_table_ycp, &formatstring_ycp, NULL },     \
+                        &flag_table_ycp, &formatstring_ycp, NULL, NULL },     \
 
 /* Scan an YCP file and add its translatable strings to mdlp.  */
 extern void extract_ycp (FILE *fp, const char *real_filename,

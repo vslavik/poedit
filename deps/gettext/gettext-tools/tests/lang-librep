@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the librep language.
 # Assumes an fr_FR locale is installed.
 # Assumes the following packages are installed: librep.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles prog.jl"
 cat <<\EOF > prog.jl
 (require 'rep.i18n.gettext)
 
@@ -20,14 +17,10 @@ cat <<\EOF > prog.jl
         (format nil (_ "%s is replaced by %s.") "FF" "EUR"))
 EOF
 
-tmpfiles="$tmpfiles l-librep-prog.tmp l-librep-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-librep-prog.tmp --omit-header --no-location prog.jl
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-librep-prog.tmp > l-librep-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-librep-prog.tmp --omit-header --no-location prog.jl || exit 1
+LC_ALL=C tr -d '\r' < l-librep-prog.tmp > l-librep-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-librep-prog.ok"
 cat <<EOF > l-librep-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -40,7 +33,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-librep-prog.ok l-librep-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-librep-fr.po"
 cat <<\EOF > l-librep-fr.po
 msgid ""
 msgstr ""
@@ -56,17 +48,13 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles l-librep-fr.po.tmp l-librep-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-librep-fr.po.tmp l-librep-fr.po l-librep-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-librep-fr.po.tmp > l-librep-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-librep-fr.po.tmp l-librep-fr.po l-librep-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-librep-fr.po.tmp > l-librep-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-librep-fr.po l-librep-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-librep"
 test -d l-librep || mkdir l-librep
 test -d l-librep/fr || mkdir l-librep/fr
 test -d l-librep/fr/LC_MESSAGES || mkdir l-librep/fr/LC_MESSAGES
@@ -76,17 +64,17 @@ ${MSGFMT} -o l-librep/fr/LC_MESSAGES/prog.mo l-librep-fr.po
 
 # Test for presence of rep version 0.15.3 or newer.
 (rep --version) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: rep not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: rep not found"; exit 77; }
 case `rep --version | sed -e 's/^[^0-9]*//'` in
   0.[0-9] | 0.1[0-5] | 0.[0-9].* | 0.1[0-4].* | 0.15.[0-2] )
-    echo "Skipping test: rep version too old"; rm -fr $tmpfiles; exit 77;;
+    echo "Skipping test: rep version too old"; exit 77;;
 esac
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LC_ALL=$LOCALE_FR ./testlocale
+  LC_ALL=$LOCALE_FR ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
@@ -94,7 +82,7 @@ if test $LOCALE_FR != none; then
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 ./testlocale
+  LC_ALL=$LOCALE_FR_UTF8 ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
@@ -107,10 +95,9 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
 
-tmpfiles="$tmpfiles l-librep-prog.ok l-librep-prog.oku l-librep-prog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-librep-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -131,7 +118,5 @@ if test $LOCALE_FR_UTF8 != none; then
   LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 rep --no-rc --batch prog.jl > l-librep-prog.out || exit 1
   ${DIFF} l-librep-prog.oku l-librep-prog.out || exit 1
 fi
-
-rm -fr $tmpfiles
 
 exit 0

@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgmerge when a msgid_plural changed but msgid remained the same.
 # Reported by Chusslove Illich (Часлав Илић).
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test22.po"
 cat <<\EOF > mm-test22.po
 msgid ""
 msgstr ""
@@ -27,7 +24,6 @@ msgstr[0] "Engadir un recurso dende o libro de enderezos"
 msgstr[1] "Engadir %n recursos dende o libro de enderezos"
 EOF
 
-tmpfiles="$tmpfiles mm-test22.pot"
 cat <<\EOF > mm-test22.pot
 msgid ""
 msgstr ""
@@ -47,14 +43,10 @@ msgstr[0] ""
 msgstr[1] ""
 EOF
 
-tmpfiles="$tmpfiles mm-test22.tmp.po mm-test22.new.po"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test22.tmp.po mm-test22.po mm-test22.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test22.tmp.po > mm-test22.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o mm-test22.tmp.po mm-test22.po mm-test22.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test22.tmp.po > mm-test22.new.po || exit 1
 
-tmpfiles="$tmpfiles mm-test22.ok"
 cat <<\EOF > mm-test22.ok
 msgid ""
 msgstr ""
@@ -78,14 +70,9 @@ msgstr[1] "Engadir %n recursos dende o libro de enderezos"
 EOF
 
 : ${DIFF=diff}
-${DIFF} mm-test22.ok mm-test22.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${DIFF} mm-test22.ok mm-test22.new.po || exit 1
 
-tmpfiles="$tmpfiles mm-test22.mo"
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o mm-test22.mo mm-test22.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-
-rm -fr $tmpfiles
+${MSGFMT} --check -o mm-test22.mo mm-test22.new.po || exit 1
 
 exit 0

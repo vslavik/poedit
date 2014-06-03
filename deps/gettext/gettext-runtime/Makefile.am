@@ -40,3 +40,8 @@ EXTRA_DIST += gnulib-m4/gnulib-cache.m4
 # Woe32 support.
 
 EXTRA_DIST += README.woe32
+
+maintainer-update-po: $(top_builddir)/config.status
+	$(SHELL) ./config.status --recheck
+	$(SHELL) ./config.status po/Makefile.in po-directories
+	cd po && $(MAKE) update-po

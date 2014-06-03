@@ -1,6 +1,6 @@
 /* xsize.h -- Checked size_t computations.
 
-   Copyright (C) 2003, 2008-2013 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2008-2014 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,6 +27,9 @@
 # include <stdint.h>
 #endif
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef XSIZE_INLINE
 # define XSIZE_INLINE _GL_INLINE

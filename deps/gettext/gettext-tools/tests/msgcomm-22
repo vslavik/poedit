@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Verify that the header entry is kept, otherwise the encoding is unknown.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcomm-test22.in1 mcomm-test22.in2"
 cat <<\EOF > mcomm-test22.in1
 # German translations for GNU gettext package.
 # Copyright (C) 1995, 1996, 1997, 2001 Free Software Foundation, Inc.
@@ -62,18 +59,14 @@ msgid "memory exhausted"
 msgstr "virtueller Speicher erschöpft"
 EOF
 
-tmpfiles="$tmpfiles mcomm-test22.tmp mcomm-test22.out"
 rm -f mcomm-test22.tmp
 
 : ${MSGCOMM=msgcomm}
 
 ${MSGCOMM} --less-than=2 -o mcomm-test22.tmp \
-    mcomm-test22.in1 mcomm-test22.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test22.tmp > mcomm-test22.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+    mcomm-test22.in1 mcomm-test22.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcomm-test22.tmp > mcomm-test22.out || exit 1
 
-tmpfiles="$tmpfiles mcomm-test22.ok"
 cat << \EOF > mcomm-test22.ok
 # German translations for GNU gettext package.
 # Copyright (C) 1995, 1996, 1997, 2001 Free Software Foundation, Inc.
@@ -114,7 +107,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcomm-test22.ok mcomm-test22.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

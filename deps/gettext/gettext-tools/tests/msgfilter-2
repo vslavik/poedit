@@ -1,9 +1,7 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test sed execution.
-
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
 
 if (echo "testing\c"; echo 1,2,3) | grep c >/dev/null; then
   # Stardent Vistra SVR4 grep lacks -e, says ghazi@caip.rutgers.edu.
@@ -22,7 +20,7 @@ fi
 sedoutput=`echo $ac_n "abc$ac_c" | sed -e s/x/x/`
 test -n "$sedoutput" || {
   echo "Skipping test: sed program is broken"
-  rm -fr $tmpfiles; exit 77
+  exit 77
 }
 
 # Some sed programs (IRIX, OSF/1 etc.) add a newline to the last line if it
@@ -31,10 +29,9 @@ sedoutputcount=`echo $ac_n "abc$ac_c" | sed -e s/x/x/ | wc -c`
 sedoutputcount=`echo "$sedoutputcount" | sed -e 's/[ 	]//g'`
 test "$sedoutputcount" = 3 || {
   echo "Skipping test: sed program inserts extra newline"
-  rm -fr $tmpfiles; exit 77
+  exit 77
 }
 
-tmpfiles="$tmpfiles mfi-test2.po"
 cat <<\EOF > mfi-test2.po
 # HEADER.
 #
@@ -85,7 +82,6 @@ msgstr ""
 #~ msgstr "das einen verheirateten Mann liebt"
 EOF
 
-tmpfiles="$tmpfiles mfi-test2.out mfi-test2.err"
 : ${MSGFILTER=msgfilter}
 sedexpr1='1{
 s/^/\[\[/
@@ -97,9 +93,8 @@ LC_ALL=C \
 ${MSGFILTER} -i mfi-test2.po -o mfi-test2.out sed -e "$sedexpr1" -e "$sedexpr2" >mfi-test2.err 2>&1
 result=$?
 cat mfi-test2.err | grep -v 'warning: Locale charset' | grep -v '^ '
-test $result = 0 || { rm -fr $tmpfiles; exit 1; }
+test $result = 0 || { exit 1; }
 
-tmpfiles="$tmpfiles mfi-test2.ok"
 cat <<\EOF > mfi-test2.ok
 # HEADER.
 #
@@ -153,7 +148,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mfi-test2.ok mfi-test2.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

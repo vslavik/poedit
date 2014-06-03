@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Verify that msgcat complains when it would need to change msgctxts.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcat-test14.in1 mcat-test14.in2"
 cat <<\EOF > mcat-test14.in1
 msgid ""
 msgstr ""
@@ -68,12 +65,9 @@ msgstr "photocopieur"
 #~ msgstr "Enregistrer l'as"
 EOF
 
-tmpfiles="$tmpfiles mcat-test14.out"
 rm -f mcat-test14.out
 : ${MSGCAT=msgcat}
 ${MSGCAT} -o mcat-test14.out mcat-test14.in1 mcat-test14.in2 2>/dev/null
-test $? = 1 || { rm -fr $tmpfiles; exit 1; }
-
-rm -fr $tmpfiles
+test $? = 1 || { exit 1; }
 
 exit 0

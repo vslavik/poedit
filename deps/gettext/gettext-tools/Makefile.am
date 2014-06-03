@@ -52,3 +52,9 @@ EXTRA_DIST += README.woe32
 # Cygwin support.
 
 EXTRA_DIST += woe32dll/export.h
+
+maintainer-update-po: $(top_builddir)/config.status
+	$(SHELL) ./config.status --recheck
+	$(SHELL) ./config.status po/Makefile.in po-directories
+	cd po && $(MAKE) update-po
+	cd examples && $(MAKE) maintainer-update-po

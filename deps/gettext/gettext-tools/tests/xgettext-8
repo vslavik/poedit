@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test -j option with charset conversion from ISO-8859-1 to UTF-8.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-test8.po"
 cat <<\EOF > xg-test8.po
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -30,19 +27,15 @@ msgid "@(#)fifo.c\t1.56 04/10/10 Copyright 1989, 1994-2003 Jörg Schilling"
 msgstr "ö"
 EOF
 
-tmpfiles="$tmpfiles xg-test8.in.c"
 cat <<EOF > xg-test8.in.c
 _("extract me")
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -a -j -o xg-test8.po xg-test8.in.c
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -a -j -o xg-test8.po xg-test8.in.c || exit 1
 
-tmpfiles="$tmpfiles xg-test8.pot"
 sed -e '/POT-Creation-Date/d' < xg-test8.po | LC_ALL=C tr -d '\r' > xg-test8.pot
 
-tmpfiles="$tmpfiles xg-test8.ok"
 cat <<\EOF > xg-test8.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -74,7 +67,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-test8.ok xg-test8.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

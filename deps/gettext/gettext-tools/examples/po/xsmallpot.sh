@@ -20,12 +20,22 @@ chmod -R u+w tmp-$directory
 cd tmp-$directory
 case $directory in
   hello-c++-kde)
-    ./autogen.sh
-    sed -e 's,tmp-,,' < configure.in > configure.ac
-    rm -f configure.in
-    grep '^\(AC_INIT\|AC_CONFIG\|AC_PROG_\|AC_SUBST(.*OBJC\|AM_INIT\|AM_CONDITIONAL\|AM_GNU_GETTEXT\|AM_PO_SUBDIRS\|AC_OUTPUT\)' configure.ac > tmp-configure.ac
-    mv -f tmp-configure.ac configure.ac
-    autoconf -f
+    cat > configure.ac <<EOF
+AC_INIT
+AC_CONFIG_AUX_DIR(admin)
+AM_INIT_AUTOMAKE([$directory], 0)
+AC_PROG_CXX
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION(0.15)
+AC_CONFIG_FILES([po/Makefile.in])
+AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([m4/Makefile])
+AC_OUTPUT
+EOF
+    aclocal -I m4
+    autopoint -f
+    autoconf
+    automake -a -c
     ./configure
     ;;
   hello-objc-gnustep)

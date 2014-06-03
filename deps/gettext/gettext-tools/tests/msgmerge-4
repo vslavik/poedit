@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test handling of comments.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test4.in1.po mm-test4.in2.po"
 cat <<EOF > mm-test4.in1.po
 msgid "one"
 msgstr "eins"
@@ -27,14 +24,10 @@ msgid "three"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-test4.tmp mm-test4.out"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test4.tmp mm-test4.in1.po mm-test4.in2.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test4.tmp > mm-test4.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o mm-test4.tmp mm-test4.in1.po mm-test4.in2.po || exit 1
+LC_ALL=C tr -d '\r' < mm-test4.tmp > mm-test4.out || exit 1
 
-tmpfiles="$tmpfiles mm-test4.ok"
 cat <<EOF > mm-test4.ok
 msgid "one"
 msgstr "eins"
@@ -55,7 +48,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mm-test4.ok mm-test4.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

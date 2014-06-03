@@ -30,7 +30,7 @@ extern "C"
 
 #define SCANNERS_LUA \
   { "Lua",             extract_lua,                                     \
-                       &flag_table_lua, &formatstring_lua, NULL },      \
+                       &flag_table_lua, &formatstring_lua, NULL, NULL },      \
 
   /* Scan a Lua file and add its translatable strings to mdlp.  */
   extern void extract_lua (FILE * fp, const char *real_filename,

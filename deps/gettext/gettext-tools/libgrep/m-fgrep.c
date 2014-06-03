@@ -106,7 +106,7 @@ Fcompile (const char *pattern, size_t pattern_size,
       for (lim = beg; lim < pattern + pattern_size && *lim != '\n'; ++lim)
         ;
       if ((err = kwsincr (ckwset->kwset, beg, lim - beg)) != NULL)
-        error (exit_failure, 0, err);
+        error (exit_failure, 0, "%s", err);
       if (lim < pattern + pattern_size)
         ++lim;
       beg = lim;
@@ -114,7 +114,7 @@ Fcompile (const char *pattern, size_t pattern_size,
   while (beg < pattern + pattern_size);
 
   if ((err = kwsprep (ckwset->kwset)) != NULL)
-    error (exit_failure, 0, err);
+    error (exit_failure, 0, "%s", err);
   return ckwset;
 }
 

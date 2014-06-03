@@ -1,3 +1,73 @@
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-04-23  Daiki Ueno  <ueno@gnu.org>
+
+	autopoint: Unset variables known to interfere with common tools
+	Reported by Jan Cholasta at:
+	<https://bugzilla.redhat.com/show_bug.cgi?id=801374>.
+	* autopoint.in: Unset CDPATH, CLICOLOR_FORCE, and GREP_OPTIONS.
+	* gettextize.in: Unset CLICOLOR_FORCE and GREP_OPTIONS.
+
+2014-04-21  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in: Rename gettext_dir to gettext_datadir.
+	* gettextize.in: Likewise.
+
+2014-03-27  Daiki Ueno  <ueno@gnu.org>
+
+	autopoint: Use SED-based trace for non-standard Autoconf macros
+	Reported by Sean McGovern in <https://savannah.gnu.org/bugs/?41913>.
+	* autopoint.in (func_trace_sed): New function; use it to trace
+	AM_GNU_GETTEXT and AM_GNU_GETTEXT_VERSION.
+	* gettextize.in (func_trace_sed): New function; use it to trace
+	AM_GNU_GETTEXT.
+
+2014-03-26  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in: Allow user to specify the directory in which
+	archive belongs, through $gettext_dir envvar.
+	* gettextize.in: Likewise.
+
+2013-12-05  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in (func_trace): Allow user to specify autom4te
+	executable name through $AUTOM4TE envvar.
+	* gettextize.in (func_trace): Likewise.
+	Suggested by Eric Blake at
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-12/msg00006.html>.
+
+2013-11-19  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in (func_trace): Disable m4_include and m4_esyscmd.
+	* gettextize.in (func_trace): Likewise.
+	Reported by Bernhard Voelker
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-11/msg00011.html>
+	and suggested by Eric Blake at <https://savannah.gnu.org/bugs/?40083>.
+
+2013-10-16  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in: Use 'm4' as the default macro directory if it is
+	not specified in configure.ac nor Makefile.am.
+	Reported by Michał Górny in
+	<http://savannah.gnu.org/bugs/?40278>.
+
+2013-09-24  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in (func_trace): Discard stderr of autom4te.
+	* gettextize.in (func_trace): Likewise.
+	Reported by Gary V. Vaughan in
+	<http://savannah.gnu.org/bugs/?40083>.
+
+2013-09-24  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in: Recognize multiple arguments of AM_GNU_GETTEXT
+	when tracing.
+	* gettextize.in: Likewise.
+	Reported by Gary V. Vaughan in
+	<http://savannah.gnu.org/bugs/?40082>.
+
 2013-08-12  Daiki Ueno  <ueno@gnu.org>
 
 	autopoint: make macro trace in autom4te robuster
@@ -6,6 +76,11 @@
 	* gettextize.in (func_trace): New function ported from autopoint.in.
 	Reported by Sami Kerola in
 	<https://lists.gnu.org/archive/html/bug-gettext/2013-07/msg00002.html>.
+
+2013-07-29  Jan Djärv  <jan.h.d@swipnet.se>  (tiny change)
+
+	* po-mode.el (po-send-mail): Don't include original uncompressed
+	text in the mail.
 
 2013-07-21  Daiki Ueno  <ueno@gnu.org>
 

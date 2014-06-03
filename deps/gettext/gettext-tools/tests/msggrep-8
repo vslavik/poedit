@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --extracted-comment option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mg-test8.po"
 cat <<\EOF > mg-test8.po
 msgid ""
 msgstr ""
@@ -35,17 +32,14 @@ msgid "repeat %d times"
 msgstr "%d mal wiederholen"
 EOF
 
-tmpfiles="$tmpfiles mg-test8.tmp mg-test8.err mg-test8.out"
 : ${MSGGREP=msggrep}
 LC_MESSAGES=C LC_ALL= \
 ${MSGGREP} -X -e c-form -o mg-test8.tmp mg-test8.po >mg-test8.err 2>&1
 result=$?
 cat mg-test8.err | grep -v 'warning: Locale charset' | grep -v '^ '
-test $result = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mg-test8.tmp > mg-test8.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+test $result = 0 || { exit 1; }
+LC_ALL=C tr -d '\r' < mg-test8.tmp > mg-test8.out || exit 1
 
-tmpfiles="$tmpfiles mg-test8.ok"
 cat <<\EOF > mg-test8.ok
 msgid ""
 msgstr ""
@@ -68,7 +62,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mg-test8.ok mg-test8.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

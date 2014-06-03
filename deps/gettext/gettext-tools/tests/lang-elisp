@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the Emacs Lisp language.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles prog.el"
 cat <<\EOF > prog.el
 (textdomain "prog")
 (bindtextdomain "prog" "l-elisp")
@@ -16,14 +13,10 @@ cat <<\EOF > prog.el
         (format nil (_ "%s is replaced by %s.") "FF" "EUR"))
 EOF
 
-tmpfiles="$tmpfiles l-elisp-prog.tmp l-elisp-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-elisp-prog.tmp --omit-header --no-location prog.el
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-elisp-prog.tmp > l-elisp-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-elisp-prog.tmp --omit-header --no-location prog.el || exit 1
+LC_ALL=C tr -d '\r' < l-elisp-prog.tmp > l-elisp-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-elisp-prog.ok"
 cat <<EOF > l-elisp-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -36,7 +29,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-elisp-prog.ok l-elisp-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-elisp-fr.po"
 cat <<\EOF > l-elisp-fr.po
 msgid ""
 msgstr ""
@@ -52,24 +44,18 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles l-elisp-fr.po.tmp l-elisp-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-elisp-fr.po.tmp l-elisp-fr.po l-elisp-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-elisp-fr.po.tmp > l-elisp-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-elisp-fr.po.tmp l-elisp-fr.po l-elisp-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-elisp-fr.po.tmp > l-elisp-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-elisp-fr.po l-elisp-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-elisp"
 test -d l-elisp || mkdir l-elisp
 test -d l-elisp/fr || mkdir l-elisp/fr
 test -d l-elisp/fr/LC_MESSAGES || mkdir l-elisp/fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
 ${MSGFMT} -o l-elisp/fr/LC_MESSAGES/prog.mo l-elisp-fr.po
-
-rm -fr $tmpfiles
 
 exit 0

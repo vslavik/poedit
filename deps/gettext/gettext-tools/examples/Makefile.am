@@ -51,6 +51,20 @@ EXAMPLESFILES = \
   hello-c-gnome/po/Makevars \
   hello-c-gnome/po/POTFILES.in \
   \
+  hello-c-gnome3/INSTALL \
+  hello-c-gnome3/autogen.sh \
+  hello-c-gnome3/autoclean.sh \
+  hello-c-gnome3/hello.c \
+  hello-c-gnome3/hello.desktop.in.in \
+  hello-c-gnome3/hello.gschema.xml \
+  hello-c-gnome3/hello.gresource.xml \
+  hello-c-gnome3/hello.ui \
+  hello-c-gnome3/Makefile.am \
+  hello-c-gnome3/configure.ac \
+  hello-c-gnome3/m4/Makefile.am \
+  hello-c-gnome3/po/Makevars \
+  hello-c-gnome3/po/POTFILES.in \
+  \
   hello-c++/INSTALL \
   hello-c++/autogen.sh \
   hello-c++/autoclean.sh \
@@ -361,6 +375,7 @@ EXAMPLESFILES = \
 EXAMPLESDIRS = \
   hello-c \
   hello-c-gnome \
+  hello-c-gnome3 \
   hello-c++ \
   hello-c++-qt \
   hello-c++-kde \
@@ -449,6 +464,10 @@ install-data-local: $(EXAMPLESFILES)
 	for f1 in $(EXAMPLESDIRS); do \
 	  for f2 in $(EXAMPLESPOFILES); do \
 	    f=$$f1/po/$$f2; \
+	    test -f $(srcdir)/$$f || { \
+	      echo "WARNING: $(srcdir)/$$f doesn't exist; do \"make dist\" to prepare" >&2; \
+	      break; \
+	    }; \
 	    d=`echo /$$f | sed -e 's,/[^/]*$$,,'`; \
 	    test -z "$$d" || $(MKDIR_P) $(DESTDIR)$(examplesdir)$$d || exit 1; \
 	    b=`echo $$f | sed -e 's,^.*/,,'`; \
@@ -508,3 +527,8 @@ distdir1:
 # Temporary directories created by po/Makefile.
 clean-local:
 	-rm -rf tmp-hello-*
+
+maintainer-update-po: $(top_builddir)/config.status
+	$(SHELL) ./config.status --recheck
+	$(SHELL) ./config.status po/Makefile
+	cd po && $(MAKE) update-po

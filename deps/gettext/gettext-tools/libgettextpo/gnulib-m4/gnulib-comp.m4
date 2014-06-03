@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2014 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ AC_DEFUN([gtpo_EARLY],
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   AC_REQUIRE([AM_PROG_CC_C_O])
+  # Code from module absolute-header:
   # Code from module alloca-opt:
   # Code from module basename:
   # Code from module c-ctype:
@@ -70,6 +71,7 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module getdelim:
   # Code from module getline:
   # Code from module gettext-h:
+  # Code from module gettimeofday:
   # Code from module gperf:
   # Code from module hash:
   # Code from module havelib:
@@ -138,6 +140,7 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module strstr:
   # Code from module strstr-simple:
   # Code from module sys_stat:
+  # Code from module sys_time:
   # Code from module sys_types:
   # Code from module threadlib:
   gl_THREADLIB_EARLY
@@ -247,6 +250,12 @@ AC_DEFUN([gtpo_INIT],
   gl_STDIO_MODULE_INDICATOR([getline])
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
+  gl_FUNC_GETTIMEOFDAY
+  if test $HAVE_GETTIMEOFDAY = 0 || test $REPLACE_GETTIMEOFDAY = 1; then
+    AC_LIBOBJ([gettimeofday])
+    gl_PREREQ_GETTIMEOFDAY
+  fi
+  gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
   AM_ICONV
   m4_ifdef([gl_ICONV_MODULE_INDICATOR],
     [gl_ICONV_MODULE_INDICATOR([iconv])])
@@ -412,6 +421,8 @@ AC_DEFUN([gtpo_INIT],
   fi
   gl_STRING_MODULE_INDICATOR([strstr])
   gl_HEADER_SYS_STAT_H
+  AC_PROG_MKDIR_P
+  gl_HEADER_SYS_TIME_H
   AC_PROG_MKDIR_P
   gl_SYS_TYPES_H
   AC_PROG_MKDIR_P
@@ -651,6 +662,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/getdelim.c
   lib/getline.c
   lib/gettext.h
+  lib/gettimeofday.c
   lib/glthread/lock.c
   lib/glthread/lock.h
   lib/glthread/threadlib.c
@@ -737,6 +749,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/string.in.h
   lib/strstr.c
   lib/sys_stat.in.h
+  lib/sys_time.in.h
   lib/sys_types.in.h
   lib/time.in.h
   lib/uniconv.in.h
@@ -814,6 +827,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/fstat.m4
   m4/getdelim.m4
   m4/getline.m4
+  m4/gettimeofday.m4
   m4/glibc21.m4
   m4/gnulib-common.m4
   m4/iconv.m4
@@ -879,6 +893,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/strstr.m4
   m4/sys_socket_h.m4
   m4/sys_stat_h.m4
+  m4/sys_time_h.m4
   m4/sys_types_h.m4
   m4/threadlib.m4
   m4/time_h.m4

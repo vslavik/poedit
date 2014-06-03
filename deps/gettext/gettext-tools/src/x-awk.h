@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_AWK \
   { "awk",              extract_awk,                                    \
-                        &flag_table_awk, &formatstring_awk, NULL },     \
+                        &flag_table_awk, &formatstring_awk, NULL, NULL }, \
 
 /* Scan an awk file and add its translatable strings to mdlp.  */
 extern void extract_awk (FILE *fp, const char *real_filename,

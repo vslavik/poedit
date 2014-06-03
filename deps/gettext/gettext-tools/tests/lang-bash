@@ -1,4 +1,5 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src ${top_srcdir=..}/../gettext-runtime/src
 
 # Test of gettext facilities in the bash language.
 # Assumes an fr_FR locale is installed.
@@ -9,10 +10,6 @@
 # output when accessing any .mo file not generated from a .po file in UTF-8
 # encoding.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles prog.bash"
 cat <<\EOF > prog.bash
 #! /bin/bash
 
@@ -30,18 +27,15 @@ $echo $"'Your command, please?', asked the waiter."
 $echo "`eval_ngettext "a piece of cake" "\\$n pieces of cake" $n`"
 EOF
 
-tmpfiles="$tmpfiles l-bash-prog.tmp l-bash-prog.pot l-bash-prog.err"
 : ${XGETTEXT=xgettext}
 LC_MESSAGES=C LC_ALL= \
 ${XGETTEXT} -o l-bash-prog.tmp --omit-header --no-location prog.bash \
   >l-bash-prog.err 2>&1
 result=$?
 cat l-bash-prog.err | grep -v 'warning: the syntax \$"\.\.\." is deprecated due to security reasons'
-test $result = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-bash-prog.tmp > l-bash-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+test $result = 0 || { exit 1; }
+LC_ALL=C tr -d '\r' < l-bash-prog.tmp > l-bash-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-bash-prog.ok"
 cat <<\EOF > l-bash-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -56,7 +50,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-bash-prog.ok l-bash-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-bash-fr.po"
 cat <<\EOF > l-bash-fr.po
 msgid ""
 msgstr ""
@@ -74,17 +67,13 @@ msgstr[0] "un morceau de gateau"
 msgstr[1] "$n morceaux de gateau"
 EOF
 
-tmpfiles="$tmpfiles l-bash-fr.po.tmp l-bash-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-bash-fr.po.tmp l-bash-fr.po l-bash-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-bash-fr.po.tmp > l-bash-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-bash-fr.po.tmp l-bash-fr.po l-bash-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-bash-fr.po.tmp > l-bash-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-bash-fr.po l-bash-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-bash"
 test -d l-bash || mkdir l-bash
 test -d l-bash/fr || mkdir l-bash/fr
 test -d l-bash/fr/LC_MESSAGES || mkdir l-bash/fr/LC_MESSAGES
@@ -94,17 +83,17 @@ ${MSGFMT} -o l-bash/fr/LC_MESSAGES/prog.mo l-bash-fr.po
 
 # Test for presence of bash version 2.0 or newer.
 (bash -c :) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: bash not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: bash not found"; exit 77; }
 case `bash -c 'echo $BASH_VERSION'` in
   [2-9].*) ;;
-  *) echo "Skipping test: bash version too old"; rm -fr $tmpfiles; exit 77;;
+  *) echo "Skipping test: bash version too old"; exit 77;;
 esac
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LC_ALL=$LOCALE_FR ./testlocale
+  LC_ALL=$LOCALE_FR ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
@@ -112,7 +101,7 @@ if test $LOCALE_FR != none; then
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 ./testlocale
+  LC_ALL=$LOCALE_FR_UTF8 ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
@@ -125,10 +114,9 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
 
-tmpfiles="$tmpfiles l-bash-prog.nok l-bash-prog.ok l-bash-prog.oku l-bash-prog.out"
 # Expected result when bash is built without i18n support.
 cat <<\EOF > l-bash-prog.nok
 'Your command, please?', asked the waiter.
@@ -151,7 +139,7 @@ if test $LOCALE_FR != none; then
   : ${DIFF=diff}
   ${DIFF} l-bash-prog.nok l-bash-prog.out > /dev/null && {
     echo "Skipping test: bash is built without i18n support"
-    rm -fr $tmpfiles; exit 77
+    exit 77
   }
   ${DIFF} l-bash-prog.ok l-bash-prog.out || exit 1
 fi
@@ -160,11 +148,9 @@ if test $LOCALE_FR_UTF8 != none; then
   : ${DIFF=diff}
   ${DIFF} l-bash-prog.nok l-bash-prog.out > /dev/null && {
     echo "Skipping test: bash is built without i18n support"
-    rm -fr $tmpfiles; exit 77
+    exit 77
   }
   ${DIFF} l-bash-prog.oku l-bash-prog.out || exit 1
 fi
-
-rm -fr $tmpfiles
 
 exit 0

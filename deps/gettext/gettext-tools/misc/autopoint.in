@@ -25,10 +25,10 @@ package=@PACKAGE@
 version=@VERSION@
 
 # Set variables
-# - gettext_dir     directory where the sources are stored.
+# - gettext_datadir     directory where the data files are stored.
 prefix="@prefix@"
 datarootdir="@datarootdir@"
-gettext_dir="@datadir@/gettext"
+: ${gettext_datadir="@datadir@/gettext"}
 
 # func_tmpdir
 # creates a temporary directory.
@@ -133,26 +133,47 @@ if test "@RELOCATABLE@" = yes; then
   func_find_curr_installdir # determine curr_installdir
   func_find_prefixes
   # Relocate the directory variables that we use.
-  gettext_dir=`echo "$gettext_dir/" | sed -e "s%^${orig_installprefix}/%${curr_installprefix}/%" | sed -e 's,/$,,'`
+  gettext_datadir=`echo "$gettext_datadir/" | sed -e "s%^${orig_installprefix}/%${curr_installprefix}/%" | sed -e 's,/$,,'`
 fi
 
-# func_trace macro
-# traces an Autoconf macro call and outputs the arguments to stdout.
+# func_trace macro configure.ac
+# traces a standard Autoconf macro call and outputs the arguments to stdout.
 func_trace ()
 {
   echo '\
-dnl ignore M4sugar macros which may abort autom4te
+dnl disable macros which may abort autom4te
 m4_undefine([m4_assert])
 m4_undefine([m4_fatal])
 m4_undefine([m4_warn])
 m4_undefine([m4_errprintn])
 m4_undefine([m4_exit])
-dnl macros which needs to be traced without aclocal.m4
-m4_define([AM_GNU_GETTEXT], [])
-m4_define([AM_GNU_GETTEXT_VERSION], [])
+m4_undefine([m4_include])
+m4_undefine([m4_esyscmd])
 ' \
-  | autom4te --no-cache --language=Autoconf-without-aclocal-m4 \
-    --trace="$1":\$% - "$2"
+  | ${AUTOM4TE:-autom4te} --no-cache --language=Autoconf-without-aclocal-m4 \
+    --trace="$1":\$% - "$2" 2>/dev/null
+}
+
+# func_trace_sed macro configure.ac
+# traces a non-standard Autoconf macro call and outputs the first
+# argument to stdout.
+func_trace_sed ()
+{
+  sed_extract_arguments='
+s,#.*$,,; s,^dnl .*$,,; s, dnl .*$,,;
+/'"$1"'(/ {
+  ta
+  :a
+    s/)/)/
+    tb
+    s/\\$//
+    N
+    ba
+  :b
+  s,^.*'"$1"'([[ ]*\([^]"$`\\)]*\).*$,\1,p
+}
+d'
+  sed -e "$sed_extract_arguments" "$2"
 }
 
 # func_usage
@@ -197,6 +218,13 @@ func_fatal_error ()
   echo "autopoint: *** Stop." 1>&2
   exit 1
 }
+
+# Nuisances.
+(unset CDPATH) >/dev/null 2>&1 && unset CDPATH
+
+# Unset more variables known to interfere with behavior of common tools.
+CLICOLOR_FORCE= GREP_OPTIONS=
+unset CLICOLOR_FORCE GREP_OPTIONS
 
 # Command-line option processing.
 # Removes the OPTIONS from the arguments. Sets the variables:
@@ -275,7 +303,7 @@ fi
 
 # Check whether the -V option and the version number in configure.in match.
 # At least one of the two must be given. If both are given, they must agree.
-xver=`func_trace AM_GNU_GETTEXT_VERSION "$configure_in"`
+xver=`func_trace_sed AM_GNU_GETTEXT_VERSION "$configure_in"`
 if test -z "$xver" && test -f intl/VERSION; then
   xver=`cat intl/VERSION | LC_ALL=C sed -n -e 's/^.*gettext-\([-+_.0-9A-Za-z]*\).*$/\1/p'`
 fi
@@ -303,7 +331,8 @@ case "$ver" in
   0.15 | \
   0.16 | 0.16.1 | \
   0.17 | \
-  0.18 | 0.18.1 | 0.18.2 | 0.18.3 )
+  0.18 | 0.18.1 | 0.18.2 | 0.18.3 | \
+  0.19 )
     ;;
   *)
     func_fatal_error "The AM_GNU_GETTEXT_VERSION declaration in your $configure_in
@@ -347,15 +376,21 @@ if test -z "$m4dir" && test -f Makefile.am; then
   done
 fi
 
+if test -z "$m4dir"; then
+  m4dir=m4
+fi
+
 # Check whether to omit the intl/ directory.
 omitintl=
-xargs=`func_trace AM_GNU_GETTEXT "$configure_in"`
+xargs=`func_trace_sed AM_GNU_GETTEXT "$configure_in"`
+save_IFS="$IFS"; IFS=:
 for arg in $xargs; do
   if test 'external' = "$arg"; then
     omitintl=yes
     break
   fi
 done
+IFS="$save_IFS"
 
 # Check in which directory or directories the po/* infrastructure belongs.
 configfiles=`func_trace AC_CONFIG_FILES "$configure_in"`
@@ -397,9 +432,9 @@ case "@ARCHIVE_FORMAT@" in
     # The archive of different versions is very large (unless xz compression is
     # used), but using it does not require special tools.
     case "@ARCHIVE_FORMAT@" in
-      dirgz) gzip -d -c < "$gettext_dir/archive.dir.tar.gz" ;;
-      dirbz2) bzip2 -d -c < "$gettext_dir/archive.dir.tar.bz2" ;;
-      dirxz) xz -d -c < "$gettext_dir/archive.dir.tar.xz" ;;
+      dirgz) gzip -d -c < "$gettext_datadir/archive.dir.tar.gz" ;;
+      dirbz2) bzip2 -d -c < "$gettext_datadir/archive.dir.tar.bz2" ;;
+      dirxz) xz -d -c < "$gettext_datadir/archive.dir.tar.xz" ;;
     esac \
       | (cd "$work_dir" && tar xf - "gettext-$ver")
     if test `find "$work_dir" -type f -print | wc -l` = 0; then
@@ -460,7 +495,7 @@ case "@ARCHIVE_FORMAT@" in
 
     # Set up a temporary CVS repository.
     # We need the temporary CVS repository because any checkout needs write
-    # access to the CVSROOT/history file, so it cannot be under $gettext_dir.
+    # access to the CVSROOT/history file, so it cannot be under $gettext_datadir.
     # We need the temporary checkout directory because when --force was not
     # given, we need to compare the existing files with the checked out ones.
     # Set variables
@@ -502,7 +537,7 @@ case "@ARCHIVE_FORMAT@" in
     # Need to pass -d "$CVSROOT", because there may be a CVS directory in the
     # current directory.
     cvs -d "$CVSROOT" init
-    gzip -d -c < "$gettext_dir/archive.cvs.tar.gz" | (cd "$cvs_dir" && tar xf -)
+    gzip -d -c < "$gettext_datadir/archive.cvs.tar.gz" | (cd "$cvs_dir" && tar xf -)
 
     cd "$work_dir"
     cvsver=gettext-`echo "$ver" | sed -e 's/\./_/g'`
@@ -526,7 +561,7 @@ case "@ARCHIVE_FORMAT@" in
     # Check availability of the git program.
     (git --version) >/dev/null 2>/dev/null || func_fatal_error "git program not found"
     mkdir "$work_dir/archive"
-    gzip -d -c < "$gettext_dir/archive.git.tar.gz" | (cd "$work_dir/archive" && tar xf -)
+    gzip -d -c < "$gettext_datadir/archive.git.tar.gz" | (cd "$work_dir/archive" && tar xf -)
     (cd "$work_dir/archive" && git checkout -q "gettext-$ver") || {
       rm -rf "$work_dir"
       func_fatal_error "infrastructure files for version $ver not found; this is autopoint from GNU $package $version"

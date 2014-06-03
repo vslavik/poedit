@@ -1,57 +1,59 @@
 # Catalan messages for GNU gettext-runtime.
-# Copyright (C) 2001, 2002, 2003, 2007 Free Software Foundation, Inc.
-# Ivan Vilata i Balaguer <ivan@selidor.net>, 2001, 2002, 2003, 2004, 2005, 2006, 2007.
+# Copyright (C) 2001, 2002, 2003, 2007, 2014 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gettext package.
 #
-# Sóc Ivan, aquestes són les convencions que adopte per a la 0.15-pre5:
-#   * Sempre que es puga s’usaran els caràcters adequats per al text en català:
-#     l’apòstrof (’), ela geminada (ŀ, Ŀ), cometes («, », “, ”, ‘, ’, en aquest
-#     ordre de d’aparició), guionet (‐), guionet dur (‑), guió (—) i punts
-#     suspensius (…).  Compte, perquè *cap*, repetesc, *CAP* dels anteriors és
-#     el caràcter que s’obté teclejant directament; vegeu
-#     http://www.selidor.net/~ivan/blog/bits/20060304T0023-ortotipografia.html.
-#   * Use 2 espais després d’un punt.
-#   * Missatges d’ajuda:
-#       * Forma d’ús: …
-#               o bé: …
-#       * ARGUMENT_COMPOST, però ARGCOMP
-#       * FILE(s) -> cada FITXER (si és possible)
-#       * Cada línia de descripció d’una opció comença en la columna 24, i
-#         sempre es manté com a mínim a 4 espais del nom de l’opció.  Quan
-#         l’opció arriba a la columna 24, la descripció comença en la línia
-#         inferior.  Les descripcions que no caben en una línia es parteixen i
-#         continuen en la columna 24 de la línia següent.
-#       * Les descripcions d’ítems que no són opcions es mantenen alineades a
-#         4 espais de l’ítem més llarg del bloc.  Les que no caben en una línia
-#         es parteixen i continuen en la mateixa columna on comencen.
-#       o Excepció: ajudes de «pr», quin format vos agrada més?
-#   * Errors i avisos:
-#       * no és igual «no es pot obrir» que «no s’ha pogut obrir»
-#       * no és igual «s’està obrint X» que «en obrir X» (error)
-#       * «avís:» comença amb minúscula, la cadena següent també
-#       * sempre van en una sola línia, a no ser que els retorns importen; en
-#         aquest cas, les noves línies comencen amb un caràcter de tabulació
-#   * VARIABLE_ENTORN, però «valor de variable»
-#   * Noms de funció: printf()
-#   * Noms de fitxer: «fitxer»
-#   * Noms d’opcions: «--opció=ARGUMENT»
-#   * El text com a molt arriba a la columna 78, amb el caràcter de nova línia
-#     en la 79.  Les línies es parteixen de forma automàtica (no per a que quede
-#     bonic, excepte quan quede realment horrend o porte a confusió).
-#   * Els missatges marcats com a multilínia només arriben fins a la columna
-#     70.  A sovint contenen marques de format; en aquest cas s’hi inserta una
-#     nova línia perquè no hi ha forma de saber com serà de llarga la línia.
+# Ivan Vilata i Balaguer <ivan@selidor.net>, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2013, 2014.
 #
-# FIXME: Lots of strings should be marked «no-wrap», not only those which
-#   are split between lines in English, but also those which would need to
-#   be splitted in its translation into other languages (this includes lines
-#   describing single options).  Also strings used in multiline error and
-#   warning messages.  ivb
+# Sóc Ivan, aquestes són les convencions que adopte per a la 0.19-rc1:
+#
+# - Sempre que es puga s’usaran els caràcters adequats per al text en català:
+#   l’apòstrof (’), ela geminada (l·l, L·L), cometes («, », “, ”, ‘, ’, en
+#   aquest ordre de d’aparició), guionet (‐), guionet dur (‑), guió (—) i punts
+#   suspensius (…).  Compte, perquè alguns dels caràcters anteriors no són els
+#   que s’obtenen teclejant directament; vegeu
+#   https://elvil.net/blog/ca/ortotipografia
+# - Use 2 espais després d’un punt.
+# - Missatges d’ajuda:
+#   - Forma d’ús: …
+#           o bé: …
+#   - ARGUMENT_COMPOST, però ARGCOMP
+#   - FILE(s) -> cada FITXER (si és possible)
+#   - Cada línia de descripció d’una opció comença en la columna 24, i sempre es
+#     manté com a mínim a 4 espais del nom de l’opció.  Quan l’opció arriba a la
+#     columna 24, la descripció comença en la línia inferior.  Les descripcions
+#     que no caben en una línia es parteixen i continuen en la columna 24 de la
+#     línia següent.
+#   - Les descripcions d’ítems que no són opcions es mantenen alineades a 4
+#     espais de l’ítem més llarg del bloc.  Les que no caben en una línia es
+#     parteixen i continuen en la mateixa columna on comencen.
+#     - Excepció: ajudes de «pr», quin format vos agrada més?
+# - Errors i avisos:
+#   - no és igual «no es pot obrir» que «no s’ha pogut obrir»
+#   - no és igual «s’està obrint X» que «en obrir X» (error)
+#   - «avís:» comença amb minúscula, la cadena següent també
+#   - sempre van en una sola línia, a no ser que els retorns importen; en
+#     aquest cas, les noves línies comencen amb un caràcter de tabulació
+# - VARIABLE_ENTORN, però «valor de variable»
+# - Noms de funció: printf()
+# - Noms de fitxer: «fitxer»
+# - Noms d’opcions: «--opció=ARGUMENT»
+# - El text com a molt arriba a la columna 78, amb el caràcter de nova línia en
+#   la 79.  Les línies es parteixen de forma automàtica (no per a que quede
+#   bonic, excepte quan quede realment horrend o porte a confusió).
+# - Els missatges marcats com a multilínia només arriben fins a la columna 70.
+#   A sovint contenen marques de format; en aquest cas s’hi inserta una nova
+#   línia perquè no hi ha forma de saber com serà de llarga la línia.
+#
+# FIXME: Lots of strings should be marked «no-wrap», not only those which are
+# split between lines in English, but also those which would need to be splitted
+# in its translation into other languages (this includes lines describing single
+# options).  Also strings used in multiline error and warning messages.  ivb
 msgid ""
 msgstr ""
-"Project-Id-Version: gettext-runtime 0.16.2-pre5\n"
+"Project-Id-Version: gettext-runtime 0.19-rc1\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2013-07-07 18:18+0900\n"
-"PO-Revision-Date: 2007-10-28 18:06+0100\n"
+"POT-Creation-Date: 2014-06-01 11:19+0900\n"
+"PO-Revision-Date: 2014-05-11 20:59+0200\n"
 "Last-Translator: Ivan Vilata i Balaguer <ivan@selidor.net>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
 "Language: ca\n"
@@ -70,60 +72,60 @@ msgid "Unknown system error"
 msgstr "Error desconegut del sistema"
 
 #: gnulib-lib/getopt.c:547 gnulib-lib/getopt.c:576
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: l’opció «%s» és ambígua\n"
+msgstr "%s: l’opció «%s» és ambígua; possibilitats:"
 
 #: gnulib-lib/getopt.c:624 gnulib-lib/getopt.c:628
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
 msgstr "%s: l’opció «--%s» no admet arguments\n"
 
 #: gnulib-lib/getopt.c:637 gnulib-lib/getopt.c:642
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
 msgstr "%s: l’opció «%c%s» no admet arguments\n"
 
 #: gnulib-lib/getopt.c:685 gnulib-lib/getopt.c:704
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '--%s' requires an argument\n"
-msgstr "%s: l’opció «%s» necessita un argument\n"
+msgstr "%s: l’opció «--%s» necessita un argument\n"
 
 #: gnulib-lib/getopt.c:742 gnulib-lib/getopt.c:745
-#, fuzzy, c-format
+#, c-format
 msgid "%s: unrecognized option '--%s'\n"
 msgstr "%s: l’opció «--%s» no és reconeguda\n"
 
 #: gnulib-lib/getopt.c:753 gnulib-lib/getopt.c:756
-#, fuzzy, c-format
+#, c-format
 msgid "%s: unrecognized option '%c%s'\n"
 msgstr "%s: l’opció «%c%s» no és reconeguda\n"
 
 #: gnulib-lib/getopt.c:805 gnulib-lib/getopt.c:808
-#, fuzzy, c-format
+#, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: l’opció «%c» no és vàlida\n"
 
 #: gnulib-lib/getopt.c:861 gnulib-lib/getopt.c:878 gnulib-lib/getopt.c:1088
 #: gnulib-lib/getopt.c:1106
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: l’opció «%c» necessita un argument\n"
 
 #: gnulib-lib/getopt.c:934 gnulib-lib/getopt.c:950
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
 msgstr "%s: l’opció «-W %s» és ambígua\n"
 
 #: gnulib-lib/getopt.c:974 gnulib-lib/getopt.c:992
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
 msgstr "%s: l’opció «-W %s» no admet arguments\n"
 
 #: gnulib-lib/getopt.c:1013 gnulib-lib/getopt.c:1031
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '-W %s' requires an argument\n"
-msgstr "%s: l’opció «%s» necessita un argument\n"
+msgstr "%s: l’opció «-W %s» necessita un argument\n"
 
 #: gnulib-lib/xmalloc.c:37
 #, c-format
@@ -164,7 +166,7 @@ msgid "missing arguments"
 msgstr "manquen arguments"
 
 #: src/envsubst.c:171 src/gettext.c:238 src/ngettext.c:207
-#, fuzzy, c-format
+#, c-format
 msgid "Try '%s --help' for more information.\n"
 msgstr "Proveu «%s --help» per a obtenir més informació.\n"
 
@@ -292,7 +294,7 @@ msgstr ""
 "                       corresponent a l’IDMSG.\n"
 
 #: src/gettext.c:264
-#, fuzzy, c-format, no-wrap
+#, c-format, no-wrap
 msgid ""
 "If the TEXTDOMAIN parameter is not given, the domain is determined from the\n"
 "environment variable TEXTDOMAIN.  If the message catalog is not found in the\n"
@@ -363,6 +365,3 @@ msgstr ""
 "troba al directori habitual, es pot especificar una altra ubicació amb la\n"
 "variable d’entorn TEXTDOMAINDIR.\n"
 "Directori estàndard de cerca: %s\n"
-
-#~ msgid "%s: illegal option -- %c\n"
-#~ msgstr "%s: no es permet l’opció «%c»\n"

@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_LISP \
   { "Lisp",             extract_lisp,                                   \
-                        &flag_table_lisp, &formatstring_lisp, NULL },   \
+                        &flag_table_lisp, &formatstring_lisp, NULL, NULL },   \
 
 /* Scan a Lisp file and add its translatable strings to mdlp.  */
 extern void extract_lisp (FILE *fp, const char *real_filename,

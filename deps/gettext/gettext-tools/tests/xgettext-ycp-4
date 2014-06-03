@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test YCP support: --add-comments option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-y-4.ycp"
 cat <<\EOF > xg-y-4.ycp
 /* a */
 /* b */ string = /* c */
@@ -13,15 +10,11 @@ cat <<\EOF > xg-y-4.ycp
 /* e */ _( /* f */ "hello " /* g */ "world" /* h */ );
 EOF
 
-tmpfiles="$tmpfiles xg-y-4.tmp.po xg-y-4.po"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --omit-header --no-location --keyword=_ \
-  -d xg-y-4.tmp xg-y-4.ycp
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-y-4.tmp.po > xg-y-4.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+  -d xg-y-4.tmp xg-y-4.ycp || exit 1
+LC_ALL=C tr -d '\r' < xg-y-4.tmp.po > xg-y-4.po || exit 1
 
-tmpfiles="$tmpfiles xg-y-4.ok"
 cat <<EOF > xg-y-4.ok
 #. a
 #. b
@@ -36,7 +29,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-y-4.ok xg-y-4.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

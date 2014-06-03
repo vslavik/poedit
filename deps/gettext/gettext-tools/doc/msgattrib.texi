@@ -137,6 +137,17 @@ mark, keep ``previous msgid'' of translated messages.
 @opindex --clear-previous@r{, @code{msgattrib} option}
 Remove the ``previous msgid'' (@samp{#|}) comments from all messages.
 
+@item --empty
+@opindex --empty@r{, @code{msgattrib} option}
+When removing
+@ifhtml
+‘fuzzy’
+@end ifhtml
+@ifnothtml
+`fuzzy'
+@end ifnothtml
+mark, also set msgstr empty.
+
 @item --only-file=@var{file}
 @opindex --only-file@r{, @code{msgattrib} option}
 Limit the attribute changes to entries that are listed in @var{file}.
@@ -214,10 +225,16 @@ Write the .po file using indented style.
 Do not write @samp{#: @var{filename}:@var{line}} lines.
 
 @item -n
-@itemx --add-location
+@itemx --add-location=@var{type}
 @opindex -n@r{, @code{msgattrib} option}
 @opindex --add-location@r{, @code{msgattrib} option}
 Generate @samp{#: @var{filename}:@var{line}} lines (default).
+
+The optional @var{type} can be either @samp{full}, @samp{file}, or
+@samp{never}.  If it is not given or @samp{full}, it generates the
+lines with both file name and line number.  If it is @samp{file}, the
+line number part is omitted.  If it is @samp{never}, it completely
+suppresses the lines (same as @code{--no-location}).
 
 @item --strict
 @opindex --strict@r{, @code{msgattrib} option}

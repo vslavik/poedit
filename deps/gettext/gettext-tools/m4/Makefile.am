@@ -8,6 +8,7 @@ aclocal_DATA = \
   ../../gettext-runtime/gnulib-m4/lib-link.m4 \
   ../../gettext-runtime/gnulib-m4/lib-prefix.m4 \
   ../../gettext-runtime/m4/codeset.m4 \
+  ../../gettext-runtime/m4/extern-inline.m4 \
   ../../gettext-runtime/m4/fcntl-o.m4 \
   ../../gettext-runtime/m4/gettext.m4 \
   ../../gettext-runtime/m4/glibc2.m4 \

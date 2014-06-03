@@ -16,7 +16,7 @@
 
 ## Process this file with automake to produce Makefile.in.
 
-AUTOMAKE_OPTIONS = 1.11 gnits no-dependencies color-tests
+AUTOMAKE_OPTIONS = 1.11 gnits no-dependencies color-tests subdir-objects
 EXTRA_DIST =
 
 TESTS = test-lock

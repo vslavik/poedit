@@ -220,11 +220,14 @@ message
                   check_obsolete ($1, $3);
                   check_obsolete ($1, $4);
                   if (!$1.obsolete || pass_obsolete_entries)
-                    do_callback_message ($1.ctxt, string2, &$1.pos, $3.string,
-                                         $4.rhs.msgstr, $4.rhs.msgstr_len, &$4.pos,
-                                         $1.prev_ctxt,
-                                         $1.prev_id, $1.prev_id_plural,
-                                         $1.obsolete);
+                    {
+                      do_callback_message ($1.ctxt, string2, &$1.pos, $3.string,
+                                           $4.rhs.msgstr, $4.rhs.msgstr_len, &$4.pos,
+                                           $1.prev_ctxt,
+                                           $1.prev_id, $1.prev_id_plural,
+                                           $1.obsolete);
+                      free ($3.string);
+                    }
                   else
                     {
                       free_message_intro ($1);
@@ -411,6 +414,7 @@ string_list
                 {
                   string_list_init (&$$.stringlist);
                   string_list_append (&$$.stringlist, $1.string);
+                  free ($1.string);
                   $$.pos = $1.pos;
                   $$.obsolete = $1.obsolete;
                 }
@@ -419,6 +423,7 @@ string_list
                   check_obsolete ($1, $2);
                   $$.stringlist = $1.stringlist;
                   string_list_append (&$$.stringlist, $2.string);
+                  free ($2.string);
                   $$.pos = $1.pos;
                   $$.obsolete = $1.obsolete;
                 }
@@ -429,6 +434,7 @@ prev_string_list
                 {
                   string_list_init (&$$.stringlist);
                   string_list_append (&$$.stringlist, $1.string);
+                  free ($1.string);
                   $$.pos = $1.pos;
                   $$.obsolete = $1.obsolete;
                 }
@@ -437,6 +443,7 @@ prev_string_list
                   check_obsolete ($1, $2);
                   $$.stringlist = $1.stringlist;
                   string_list_append (&$$.stringlist, $2.string);
+                  free ($2.string);
                   $$.pos = $1.pos;
                   $$.obsolete = $1.obsolete;
                 }

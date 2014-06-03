@@ -1,4 +1,5 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of --tcl option.
 
@@ -9,22 +10,17 @@
 # reads empty output, and refrains from creating a PO file because
 # --force-po was not specified.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
 # Test whether we can execute Tcl programs and Tcl's fconfigure command
 # understands the -encoding option (it does since approximately Tcl 8.1).
-tmpfiles="$tmpfiles mu-tcl-1-version.tcl"
 cat <<\EOF > mu-tcl-1-version.tcl
 fconfigure stdout -encoding utf-8
 puts $tcl_version
 EOF
 (tclsh mu-tcl-1-version.tcl) >/dev/null 2>/dev/null \
   || { echo "Skipping test: tclsh not found or Tcl too old"
-       rm -fr $tmpfiles; exit 77
+       exit 77
      }
 
-tmpfiles="$tmpfiles mu-tcl-1-fr.po"
 cat <<\EOF > mu-tcl-1-fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -40,18 +36,15 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles mu-tcl-1-msgs"
 test -d mu-tcl-1-msgs || mkdir mu-tcl-1-msgs
 
 : ${MSGFMT=msgfmt}
 ${MSGFMT} --tcl -d mu-tcl-1-msgs -l fr mu-tcl-1-fr.po || exit 1
 
-tmpfiles="$tmpfiles mu-tcl-1-prog.out"
 : ${MSGUNFMT=msgunfmt}
-GETTEXTDATADIR=${top_srcdir}/src \
+GETTEXTDATADIR="$abs_top_srcdir"/src \
 ${MSGUNFMT} --tcl -d mu-tcl-1-msgs -l fr -o mu-tcl-1-prog.out || exit 1
 
-tmpfiles="$tmpfiles mu-tcl-1-prog.ok"
 cat <<\EOF > mu-tcl-1-prog.ok
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,7 +57,5 @@ msgstr "%2$s remplace %1$s."
 EOF
 : ${DIFF=diff}
 ${DIFF} mu-tcl-1-prog.ok mu-tcl-1-prog.out || exit 1
-
-rm -fr $tmpfiles
 
 exit 0

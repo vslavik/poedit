@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test handling of header entry.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test5.in1.po mm-test5.in2.po"
 cat <<EOF > mm-test5.in1.po
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -39,17 +36,14 @@ msgstr ""
 "blah blah blah blah blah blah blah blah blah blah blah blah blah bla bla bla\n"
 EOF
 
-tmpfiles="$tmpfiles mm-test5.tmp mm-test5.out mm-test5.err"
 : ${MSGMERGE=msgmerge}
 LC_MESSAGES=C LC_ALL= \
 ${MSGMERGE} -q -o mm-test5.tmp mm-test5.in1.po mm-test5.in2.po >mm-test5.err 2>&1
 result=$?
 cat mm-test5.err | grep -v 'warning: Charset' | grep -v '^ '
-test $result = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test5.tmp > mm-test5.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+test $result = 0 || { exit 1; }
+LC_ALL=C tr -d '\r' < mm-test5.tmp > mm-test5.out || exit 1
 
-tmpfiles="$tmpfiles mm-test5.ok"
 cat <<EOF > mm-test5.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -77,7 +71,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mm-test5.ok mm-test5.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

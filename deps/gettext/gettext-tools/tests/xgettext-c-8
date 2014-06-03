@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test recognition of ISO C 99 <inttypes.h> format string directives.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-c-8.c"
 cat <<EOF > xg-c-8.c
 void foo ()
 {
@@ -16,14 +13,10 @@ void foo ()
 }
 EOF
 
-tmpfiles="$tmpfiles xg-c-8.tmp xg-c-8.po"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -k_ -o xg-c-8.tmp xg-c-8.c
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-c-8.tmp > xg-c-8.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} --omit-header --no-location -k_ -o xg-c-8.tmp xg-c-8.c || exit 1
+LC_ALL=C tr -d '\r' < xg-c-8.tmp > xg-c-8.po || exit 1
 
-tmpfiles="$tmpfiles xg-c-8.ok"
 cat <<EOF > xg-c-8.ok
 #, c-format
 msgid "File size is: %<PRId64>"
@@ -45,7 +38,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-c-8.ok xg-c-8.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

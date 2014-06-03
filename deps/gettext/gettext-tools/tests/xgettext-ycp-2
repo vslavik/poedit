@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test YCP support: --add-comments option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-y-2.ycp"
 cat <<EOF > xg-y-2.ycp
 // This comment will not be extracted.
 print (_("help"));
@@ -21,15 +18,11 @@ print (_("Hey Jude"));
 print (_("The Fabulous Four"));
 EOF
 
-tmpfiles="$tmpfiles xg-y-2.tmp.po xg-y-2.po"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location --add-comments=TRANSLATORS: \
-  -d xg-y-2.tmp xg-y-2.ycp
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-y-2.tmp.po > xg-y-2.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+  -d xg-y-2.tmp xg-y-2.ycp || exit 1
+LC_ALL=C tr -d '\r' < xg-y-2.tmp.po > xg-y-2.po || exit 1
 
-tmpfiles="$tmpfiles xg-y-2.ok"
 cat <<EOF > xg-y-2.ok
 msgid "help"
 msgstr ""
@@ -55,7 +48,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-y-2.ok xg-y-2.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

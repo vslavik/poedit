@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of Python support.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-py-1.py"
 cat <<\EOF > xg-py-1.py
 # interpret_ansic = true, interpret_unicode = false
 _("abc\
@@ -31,15 +28,13 @@ _("abc" "def" + "ghi"
 "jkl" + mno)
 EOF
 
-tmpfiles="$tmpfiles xg-py-1.err xg-py-1.tmp xg-py-1.pot"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --no-location -o xg-py-1.tmp xg-py-1.py 2>xg-py-1.err
-test $? = 0 || { cat xg-py-1.err; rm -fr $tmpfiles; exit 1; }
+test $? = 0 || { cat xg-py-1.err; exit 1; }
 # Don't simplify this to "grep ... < xg-py-1.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-py-1.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-py-1.pot
 
-tmpfiles="$tmpfiles xg-py-1.ok"
 cat <<\EOF > xg-py-1.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -93,7 +88,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-py-1.ok xg-py-1.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

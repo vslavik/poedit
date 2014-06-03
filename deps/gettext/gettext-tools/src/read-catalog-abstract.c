@@ -171,6 +171,8 @@ catalog_reader_parse (abstract_catalog_reader_ty *pop, FILE *fp,
                       const char *real_filename, const char *logical_filename,
                       catalog_input_format_ty input_syntax)
 {
+  error_message_count = 0;
+
   /* Parse the stream's content.  */
   parse_start (pop);
   input_syntax->parse (pop, fp, real_filename, logical_filename);
@@ -183,7 +185,6 @@ catalog_reader_parse (abstract_catalog_reader_ty *pop, FILE *fp,
                                     "found %d fatal errors",
                                     error_message_count),
                           error_message_count));
-  error_message_count = 0;
 }
 
 

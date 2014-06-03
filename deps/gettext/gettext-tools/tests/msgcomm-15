@@ -1,15 +1,12 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test that without --force-po option, a PO file without translations is
 # not created.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
 # no unique msg in input files.
 # with --force-po create an empty PO file; cf. msgcomm-14
 
-tmpfiles="$tmpfiles mcomm-test15.in1 mcomm-test15.in2 mcomm-test15.in3"
 cat <<EOF > mcomm-test15.in1
 msgid ""
 msgstr ""
@@ -62,7 +59,6 @@ msgid "1"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mcomm-test15.out"
 rm -f mcomm-test15.out
 
 : ${MSGCOMM=msgcomm}
@@ -70,8 +66,7 @@ rm -f mcomm-test15.out
 # --unique is shorthand for --less-than=2; do we've to test both
 # switches?  Are 'for' loops allowed? -ke-
 ${MSGCOMM} --less-than=2 --no-location -o mcomm-test15.out \
-    mcomm-test15.in1 mcomm-test15.in2 mcomm-test15.in3
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+    mcomm-test15.in1 mcomm-test15.in2 mcomm-test15.in3 || exit 1
 
 # we've no unique msg; thus no PO should be created.
 if test -f mcomm-test15.out; then
@@ -80,7 +75,5 @@ if test -f mcomm-test15.out; then
 else
   result=0
 fi
-
-rm -fr $tmpfiles
 
 exit $result

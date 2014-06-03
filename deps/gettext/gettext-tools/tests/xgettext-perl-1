@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of Perl support.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-pl-1.pl"
 cat <<\EOF > xg-pl-1.pl
 use Locale::Messages qw (textdomain bindtextdomain gettext ngettext dngettext);
 
@@ -152,18 +149,14 @@ __END__
 gettext "Discarded!";
 EOF
 
-tmpfiles="$tmpfiles xg-pl-1.tmp.po xg-pl-1.po"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header -n \
   -k_ --flag=_:1:pass-perl-format --flag=_:1:pass-perl-brace-format \
   -k%__ --flag=%__:1:pass-perl-format --flag=%__:1:pass-perl-brace-format \
   -k\$__ --flag=\$__:1:pass-perl-format --flag=\$__:1:pass-perl-brace-format \
-  -d xg-pl-1.tmp xg-pl-1.pl
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-pl-1.tmp.po > xg-pl-1.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+  -d xg-pl-1.tmp xg-pl-1.pl || exit 1
+LC_ALL=C tr -d '\r' < xg-pl-1.tmp.po > xg-pl-1.po || exit 1
 
-tmpfiles="$tmpfiles xg-pl-1.ok"
 cat <<\EOF > xg-pl-1.ok
 #: xg-pl-1.pl:9
 msgid "'Your command, please?', asked the waiter."
@@ -336,7 +329,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-pl-1.ok xg-pl-1.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result
