@@ -31,7 +31,7 @@ extern "C" {
   { "strings", "NXStringTable" },                                       \
 
 #define SCANNERS_STRINGTABLE \
-  { "NXStringTable",    extract_stringtable, NULL, NULL, NULL },        \
+  { "NXStringTable",    extract_stringtable, NULL, NULL, NULL, NULL },        \
 
 /* Scan a JavaProperties file and add its translatable strings to mdlp.  */
 extern void extract_stringtable (FILE *fp, const char *real_filename,

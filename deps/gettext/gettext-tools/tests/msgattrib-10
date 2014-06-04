@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --set-obsolete option. Note that the output routines drop untranslated
 # obsolete messages.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles ma-test10.po"
 cat <<\EOF > ma-test10.po
 # HEADER.
 #
@@ -57,14 +54,10 @@ msgstr ""
 #~ msgstr "das einen verheirateten Mann liebt"
 EOF
 
-tmpfiles="$tmpfiles ma-test10.tmp ma-test10.out"
 : ${MSGATTRIB=msgattrib}
-${MSGATTRIB} --set-obsolete -o ma-test10.tmp ma-test10.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < ma-test10.tmp > ma-test10.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGATTRIB} --set-obsolete -o ma-test10.tmp ma-test10.po || exit 1
+LC_ALL=C tr -d '\r' < ma-test10.tmp > ma-test10.out || exit 1
 
-tmpfiles="$tmpfiles ma-test10.ok"
 cat <<\EOF > ma-test10.ok
 # HEADER.
 #
@@ -101,7 +94,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} ma-test10.ok ma-test10.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test merging of a message which has plural forms in ref.pot but not
 # in def.po.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test11.po"
 cat <<EOF > mm-test11.po
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -31,7 +28,6 @@ msgid "%d error"
 msgstr "%d erreur"
 EOF
 
-tmpfiles="$tmpfiles mm-test11.pot"
 cat <<EOF > mm-test11.pot
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -56,14 +52,10 @@ msgstr[0] ""
 msgstr[1] ""
 EOF
 
-tmpfiles="$tmpfiles mm-test11.tmp mm-test11.out"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test11.tmp mm-test11.po mm-test11.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test11.tmp > mm-test11.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o mm-test11.tmp mm-test11.po mm-test11.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test11.tmp > mm-test11.out || exit 1
 
-tmpfiles="$tmpfiles mm-test11.ok"
 cat <<EOF > mm-test11.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -96,7 +88,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mm-test11.ok mm-test11.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -1,14 +1,11 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test that --less-than=2 removes entries which occur twice and keeps entries
 # which occur only once.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
 # unique msg in in3
 
-tmpfiles="$tmpfiles mcomm-test12.in1 mcomm-test12.in2 mcomm-test12.in3"
 cat <<EOF > mcomm-test12.in1
 msgid ""
 msgstr ""
@@ -63,18 +60,14 @@ msgid "2"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mcomm-test12.tmp mcomm-test12.out"
 : ${MSGCOMM=msgcomm}
 
 # --unique is shorthand for --less-than=2; do we've to test both
 # switches?  Are 'for' loops allowed? -ke-
 ${MSGCOMM} --less-than=2 --no-location --force-po -o mcomm-test12.tmp \
-    mcomm-test12.in1 mcomm-test12.in2 mcomm-test12.in3
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test12.tmp > mcomm-test12.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+    mcomm-test12.in1 mcomm-test12.in2 mcomm-test12.in3 || exit 1
+LC_ALL=C tr -d '\r' < mcomm-test12.tmp > mcomm-test12.out || exit 1
 
-tmpfiles="$tmpfiles mcomm-test12.ok"
 cat << EOF > mcomm-test12.ok
 msgid ""
 msgstr ""
@@ -95,7 +88,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcomm-test12.ok mcomm-test12.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -864,7 +864,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "source deps/gettext/version.sh\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
+			shellScript = "VERSION_NUMBER=`cat deps/gettext/.version`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
 		};
 		B2E83707170C96DB00F31559 /* Install translations */ = {
 			isa = PBXShellScriptBuildPhase;

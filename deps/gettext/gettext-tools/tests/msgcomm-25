@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgcomm on PO files with contexts.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcomm-test25.in1 mcomm-test25.in2"
 cat <<\EOF > mcomm-test25.in1
 msgid ""
 msgstr ""
@@ -68,14 +65,10 @@ msgstr "photocopieur"
 #~ msgstr "Enregistrer l'as"
 EOF
 
-tmpfiles="$tmpfiles mcomm-test25.tmp mcomm-test25.out"
 : ${MSGCOMM=msgcomm}
-${MSGCOMM} --more-than=0 -o mcomm-test25.tmp mcomm-test25.in1 mcomm-test25.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test25.tmp > mcomm-test25.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGCOMM} --more-than=0 -o mcomm-test25.tmp mcomm-test25.in1 mcomm-test25.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcomm-test25.tmp > mcomm-test25.out || exit 1
 
-tmpfiles="$tmpfiles mcomm-test25.ok"
 cat <<\EOF > mcomm-test25.ok
 msgid ""
 msgstr ""
@@ -124,7 +117,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcomm-test25.ok mcomm-test25.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

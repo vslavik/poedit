@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the JavaScript language.
 # Assumes an fr_FR locale is installed.
 # Assumes the following packages are installed: gjs.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles prog.js"
 cat <<\EOF > prog.js
 const Format = imports.format;
 const Gettext = imports.gettext;
@@ -21,14 +18,10 @@ print(_("'Your command, please?', asked the waiter."));
 print(_("%s is replaced by %s.").format("FF", "EUR"));
 EOF
 
-tmpfiles="$tmpfiles l-javascript-prog.tmp l-javascript-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-javascript-prog.tmp --omit-header --no-location prog.js
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-javascript-prog.tmp > l-javascript-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-javascript-prog.tmp --omit-header --no-location prog.js || exit 1
+LC_ALL=C tr -d '\r' < l-javascript-prog.tmp > l-javascript-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-javascript-prog.ok"
 cat <<EOF > l-javascript-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -41,7 +34,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-javascript-prog.ok l-javascript-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-javascript-fr.po"
 cat <<\EOF > l-javascript-fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -55,17 +47,13 @@ msgid "%s is replaced by %s."
 msgstr "%s remplace %s."
 EOF
 
-tmpfiles="$tmpfiles l-javascript-fr.po.tmp l-javascript-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-javascript-fr.po.tmp l-javascript-fr.po l-javascript-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-javascript-fr.po.tmp > l-javascript-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-javascript-fr.po.tmp l-javascript-fr.po l-javascript-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-javascript-fr.po.tmp > l-javascript-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-javascript-fr.po l-javascript-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-javascript"
 test -d l-javascript || mkdir l-javascript
 test -d l-javascript/fr || mkdir l-javascript/fr
 test -d l-javascript/fr/LC_MESSAGES || mkdir l-javascript/fr/LC_MESSAGES
@@ -75,17 +63,17 @@ ${MSGFMT} -o l-javascript/fr/LC_MESSAGES/prog.mo l-javascript-fr.po
 
 # Test for presence of gjs.
 (gjs -h) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: gjs not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: gjs not found"; exit 77; }
 (gjs -c imports.gettext) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: gjs gettext module not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: gjs gettext module not found"; exit 77; }
 (gjs -c imports.format) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: gjs format module not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: gjs format module not found"; exit 77; }
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LC_ALL=$LOCALE_FR ./testlocale
+  LC_ALL=$LOCALE_FR ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
@@ -93,7 +81,7 @@ if test $LOCALE_FR != none; then
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 ./testlocale
+  LC_ALL=$LOCALE_FR_UTF8 ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
@@ -106,10 +94,9 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
 
-tmpfiles="$tmpfiles l-javascript-prog.ok l-javascript-prog.oku l-javascript-prog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-javascript-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -130,7 +117,5 @@ if test $LOCALE_FR_UTF8 != none; then
   LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 gjs prog.js > l-javascript-prog.out || exit 1
   ${DIFF} -u l-javascript-prog.oku l-javascript-prog.out || exit 1
 fi
-
-rm -fr $tmpfiles
 
 exit 0

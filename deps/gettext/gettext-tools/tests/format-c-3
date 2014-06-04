@@ -1,18 +1,12 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test ISO C 99 <inttypes.h> format string directives.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles fc3.tmp fc3.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o fc3.tmp --omit-header --no-location ${top_srcdir}/tests/format-c-3-prg.c
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < fc3.tmp > fc3.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o fc3.tmp --omit-header --no-location "$abs_srcdir"/format-c-3-prg.c || exit 1
+LC_ALL=C tr -d '\r' < fc3.tmp > fc3.pot || exit 1
 
-tmpfiles="$tmpfiles fc3.ok"
 cat <<EOF > fc3.ok
 #, c-format
 msgid "father of %<PRId8> children"
@@ -22,14 +16,12 @@ EOF
 : ${DIFF=diff}
 ${DIFF} fc3.ok fc3.pot || exit 1
 
-tmpfiles="$tmpfiles fc3-de.po"
 cat <<EOF > fc3-de.po
 #, c-format
 msgid "father of %<PRId8> children"
 msgstr "Vater von %<PRId8> Kindern"
 EOF
 
-tmpfiles="$tmpfiles fc3-dir"
 test -d fc3-dir || mkdir fc3-dir
 test -d fc3-dir/de || mkdir fc3-dir/de
 test -d fc3-dir/de/LC_MESSAGES || mkdir fc3-dir/de/LC_MESSAGES
@@ -37,19 +29,14 @@ test -d fc3-dir/de/LC_MESSAGES || mkdir fc3-dir/de/LC_MESSAGES
 : ${MSGFMT=msgfmt}
 ${MSGFMT} -o fc3-dir/de/LC_MESSAGES/fc3.mo fc3-de.po
 
-tmpfiles="$tmpfiles fc3-de.po.tmp fc3-de.po.un"
 : ${MSGUNFMT=msgunfmt}
-${MSGUNFMT} -o fc3-de.po.tmp fc3-dir/de/LC_MESSAGES/fc3.mo
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < fc3-de.po.tmp > fc3-de.po.un
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGUNFMT} -o fc3-de.po.tmp fc3-dir/de/LC_MESSAGES/fc3.mo || exit 1
+LC_ALL=C tr -d '\r' < fc3-de.po.tmp > fc3-de.po.un || exit 1
 
 : ${DIFF=diff}
 ${DIFF} fc3-de.po fc3-de.po.un || exit 1
 
-LANGUAGE= ./fc3 de_DE
+LANGUAGE= ../fc3 de_DE
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

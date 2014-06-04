@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test merge of common entries with --more-than=1 and --omit-header.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcomm-test10.in1 mcomm-test10.in2"
 cat <<EOF > mcomm-test10.in1
 msgid ""
 msgstr ""
@@ -40,15 +37,11 @@ msgid "1"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mcomm-test10.tmp mcomm-test10.out"
 : ${MSGCOMM=msgcomm}
 ${MSGCOMM} --more-than=1 --no-location --omit-header -o mcomm-test10.tmp \
-    mcomm-test10.in1 mcomm-test10.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test10.tmp > mcomm-test10.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+    mcomm-test10.in1 mcomm-test10.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcomm-test10.tmp > mcomm-test10.out || exit 1
 
-tmpfiles="$tmpfiles mcomm-test10.ok"
 cat << EOF > mcomm-test10.ok
 msgid "1"
 msgstr "1x"
@@ -57,7 +50,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcomm-test10.ok mcomm-test10.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

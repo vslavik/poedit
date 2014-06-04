@@ -32,7 +32,7 @@ extern "C" {
   { "pot",    "PO"    },                                                \
 
 #define SCANNERS_PO \
-  { "PO",               extract_po, NULL, NULL, NULL },                 \
+  { "PO",               extract_po, NULL, NULL, NULL, NULL },                 \
 
 /* Scan a PO file and add its translatable strings to mdlp.  */
 extern void extract_po (FILE *fp, const char *real_filename,

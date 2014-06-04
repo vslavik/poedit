@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test merging of a ref.pot in UTF-8 encoding against a def.po in legacy
 # encoding (that was produced from an older version of ref.pot, in ASCII
 # encoding).
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test14-ru.po"
 cat <<\EOF > mm-test14-ru.po
 # Russian messages for CLISP
 # Copyright (C) 1998 Free Software Foundation, Inc.
@@ -30,7 +27,6 @@ msgid "Division durch Null"
 msgstr "ƒ≈Ã≈Œ…≈ Œ¡ Œ’Ãÿ"
 EOF
 
-tmpfiles="$tmpfiles mm-test14.pot"
 cat <<\EOF > mm-test14.pot
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -58,14 +54,10 @@ msgid "√úberlauf"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-test14.tmp mm-test14.out"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test14.tmp mm-test14-ru.po mm-test14.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test14.tmp > mm-test14.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o mm-test14.tmp mm-test14-ru.po mm-test14.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test14.tmp > mm-test14.out || exit 1
 
-tmpfiles="$tmpfiles mm-test14.ok"
 cat <<\EOF > mm-test14.ok
 # Russian messages for CLISP
 # Copyright (C) 1998 Free Software Foundation, Inc.
@@ -96,7 +88,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mm-test14.ok mm-test14.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_TCL \
   { "Tcl",              extract_tcl,                                    \
-                        &flag_table_tcl, &formatstring_tcl, NULL },     \
+                        &flag_table_tcl, &formatstring_tcl, NULL, NULL },     \
 
 /* Scan a Tcl file and add its translatable strings to mdlp.  */
 extern void extract_tcl (FILE *fp, const char *real_filename,

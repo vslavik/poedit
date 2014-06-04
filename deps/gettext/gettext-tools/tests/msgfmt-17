@@ -1,9 +1,7 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test range dependent checking of format strings with plural forms.
-
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
 
 # Take as example a plural formula which takes all values infinitely often.
 # Test: 1 - lack %d for value 0 - error
@@ -11,7 +9,6 @@ trap 'rm -fr $tmpfiles' 1 2 3 15
 #       3 - lack %d for value 1 - error
 #       4 - lack %d for value 1 but limited range such that multiple n - error
 
-tmpfiles="$tmpfiles mf-17.po1"
 cat <<\EOF > mf-17.po1
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -40,9 +37,8 @@ EOF
 
 : ${MSGFMT=msgfmt}
 ${MSGFMT} --check -o /dev/null mf-17.po1 2>/dev/null
-test $? = 1 || { rm -fr $tmpfiles; exit 1; }
+test $? = 1 || { exit 1; }
 
-tmpfiles="$tmpfiles mf-17.po2"
 cat <<\EOF > mf-17.po2
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -70,10 +66,8 @@ msgstr[2] "час и %(number)s четвертей"
 EOF
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o /dev/null mf-17.po2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGFMT} --check -o /dev/null mf-17.po2 || exit 1
 
-tmpfiles="$tmpfiles mf-17.po3"
 cat <<\EOF > mf-17.po3
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -102,9 +96,8 @@ EOF
 
 : ${MSGFMT=msgfmt}
 ${MSGFMT} --check -o /dev/null mf-17.po3 2>/dev/null
-test $? = 1 || { rm -fr $tmpfiles; exit 1; }
+test $? = 1 || { exit 1; }
 
-tmpfiles="$tmpfiles mf-17.po4"
 cat <<\EOF > mf-17.po4
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -133,8 +126,6 @@ EOF
 
 : ${MSGFMT=msgfmt}
 ${MSGFMT} --check -o /dev/null mf-17.po4 2>/dev/null
-test $? = 1 || { rm -fr $tmpfiles; exit 1; }
-
-rm -fr $tmpfiles
+test $? = 1 || { exit 1; }
 
 exit $result

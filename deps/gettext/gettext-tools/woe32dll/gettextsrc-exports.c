@@ -15,6 +15,10 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include "woe32dll/export.h"
 
 VARIABLE(allow_duplicates)
@@ -56,7 +60,6 @@ VARIABLE(input_format_po)
 VARIABLE(input_format_properties)
 VARIABLE(input_format_stringtable)
 VARIABLE(less_than)
-VARIABLE(line_comment)
 VARIABLE(more_than)
 VARIABLE(msgcomm_mode)
 VARIABLE(omit_header)
@@ -72,7 +75,9 @@ VARIABLE(po_error)
 VARIABLE(po_error_at_line)
 VARIABLE(po_gram_lval)
 VARIABLE(po_lex_charset)
+#if HAVE_ICONV
 VARIABLE(po_lex_iconv)
+#endif
 VARIABLE(po_lex_weird_cjk)
 VARIABLE(po_multiline_error)
 VARIABLE(po_multiline_warning)

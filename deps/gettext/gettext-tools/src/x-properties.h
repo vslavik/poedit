@@ -31,7 +31,7 @@ extern "C" {
   { "properties", "JavaProperties" },                                   \
 
 #define SCANNERS_PROPERTIES \
-  { "JavaProperties",   extract_properties, NULL, NULL, NULL },         \
+  { "JavaProperties",   extract_properties, NULL, NULL, NULL, NULL },         \
 
 /* Scan a JavaProperties file and add its translatable strings to mdlp.  */
 extern void extract_properties (FILE *fp, const char *real_filename,

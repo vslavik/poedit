@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the guile implementation of Scheme.
 # Assumes an fr_FR locale is installed.
 # Assumes the following packages are installed: guile.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles prog.scm"
 cat <<\EOF > prog.scm
 (use-modules (ice-9 format))
 
@@ -24,14 +21,10 @@ cat <<\EOF > prog.scm
 (format #t "~A~%" (format #f (gettext "~A is replaced by ~A.") "FF" "EUR"))
 EOF
 
-tmpfiles="$tmpfiles l-guile-prog.tmp l-guile-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-guile-prog.tmp --omit-header --no-location prog.scm
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-guile-prog.tmp > l-guile-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-guile-prog.tmp --omit-header --no-location prog.scm || exit 1
+LC_ALL=C tr -d '\r' < l-guile-prog.tmp > l-guile-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-guile-prog.ok"
 cat <<EOF > l-guile-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -50,7 +43,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-guile-prog.ok l-guile-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-guile-fr.po"
 cat <<\EOF > l-guile-fr.po
 msgid ""
 msgstr ""
@@ -73,17 +65,13 @@ msgid "~A is replaced by ~A."
 msgstr "~1@*~A remplace ~0@*~A."
 EOF
 
-tmpfiles="$tmpfiles l-guile-fr.po.tmp l-guile-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-guile-fr.po.tmp l-guile-fr.po l-guile-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-guile-fr.po.tmp > l-guile-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-guile-fr.po.tmp l-guile-fr.po l-guile-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-guile-fr.po.tmp > l-guile-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-guile-fr.po l-guile-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-guile"
 test -d l-guile || mkdir l-guile
 test -d l-guile/fr || mkdir l-guile/fr
 test -d l-guile/fr/LC_MESSAGES || mkdir l-guile/fr/LC_MESSAGES
@@ -93,17 +81,17 @@ ${MSGFMT} -o l-guile/fr/LC_MESSAGES/prog.mo l-guile-fr.po
 
 # Test for presence of guile version 1.7 or newer.
 (guile --version) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: guile not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: guile not found"; exit 77; }
 case `guile --version | sed -e 1q | sed -e 's/^[^0-9]*//'` in
   0.* | 1.[0-6] | 1.[0-6].* )
-    echo "Skipping test: guile version too old"; rm -fr $tmpfiles; exit 77;;
+    echo "Skipping test: guile version too old"; exit 77;;
 esac
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LC_ALL=$LOCALE_FR ./testlocale
+  LC_ALL=$LOCALE_FR ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
@@ -111,7 +99,7 @@ if test $LOCALE_FR != none; then
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 ./testlocale
+  LC_ALL=$LOCALE_FR_UTF8 ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
@@ -124,10 +112,9 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
 
-tmpfiles="$tmpfiles l-guile-prog.ok l-guile-prog.oku l-guile-prog.out l-guile-prog.err"
 : ${DIFF=diff}
 cat <<\EOF > l-guile-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -152,7 +139,5 @@ if test $LOCALE_FR_UTF8 != none; then
   grep -v '^;;;' l-guile-prog.err 1>&2
   ${DIFF} l-guile-prog.oku l-guile-prog.out || exit 1
 fi
-
-rm -fr $tmpfiles
 
 exit 0

@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --location option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mg-test1.po"
 cat <<\EOF > mg-test1.po
 # German translations for GNU gettext package.
 # Copyright (C) 1995, 1996, 1997, 2001 Free Software Foundation, Inc.
@@ -155,14 +152,10 @@ msgid "%s subprocess got fatal signal"
 msgstr "Subprozess %s hat ein fatales Signal erhalten"
 EOF
 
-tmpfiles="$tmpfiles mg-test1.tmp mg-test1.out"
 : ${MSGGREP=msggrep}
-${MSGGREP} -N pipe-bidi.c -o mg-test1.tmp mg-test1.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mg-test1.tmp > mg-test1.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGGREP} -N pipe-bidi.c -o mg-test1.tmp mg-test1.po || exit 1
+LC_ALL=C tr -d '\r' < mg-test1.tmp > mg-test1.out || exit 1
 
-tmpfiles="$tmpfiles mg-test1.ok"
 cat <<\EOF > mg-test1.ok
 # German translations for GNU gettext package.
 # Copyright (C) 1995, 1996, 1997, 2001 Free Software Foundation, Inc.
@@ -192,7 +185,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mg-test1.ok mg-test1.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

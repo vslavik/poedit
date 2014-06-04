@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test failing conversion from ISO-8859-15 to ISO-8859-1.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mco-test3.po"
 cat <<\EOF > mco-test3.po
 msgid ""
 msgstr ""
@@ -23,12 +20,9 @@ msgid "Werk"
 msgstr "¼uvre"
 EOF
 
-tmpfiles="$tmpfiles mco-test3.out"
 : ${MSGCONV=msgconv}
 ${MSGCONV} -t ISO-8859-1 mco-test3.po -o mco-test3.out 2>/dev/null
 test $? = 1
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

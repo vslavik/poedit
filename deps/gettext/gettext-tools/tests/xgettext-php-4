@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test PHP support: string concatenation.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-ph-4.php"
 cat <<EOF > xg-ph-4.php
 <?
 echo _("foo"."bar");
@@ -17,15 +14,11 @@ echo _("7" . "8" . "9");
 ?>
 EOF
 
-tmpfiles="$tmpfiles xg-ph-4.tmp.po xg-ph-4.po"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location --extract-all \
-  -d xg-ph-4.tmp xg-ph-4.php
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-ph-4.tmp.po > xg-ph-4.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+  -d xg-ph-4.tmp xg-ph-4.php || exit 1
+LC_ALL=C tr -d '\r' < xg-ph-4.tmp.po > xg-ph-4.po || exit 1
 
-tmpfiles="$tmpfiles xg-ph-4.ok"
 cat <<EOF > xg-ph-4.ok
 msgid "foobar"
 msgstr ""
@@ -55,7 +48,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-ph-4.ok xg-ph-4.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

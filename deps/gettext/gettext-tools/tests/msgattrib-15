@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgattrib on a PO file with contexts.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles ma-test15.po"
 cat <<\EOF > ma-test15.po
 msgid ""
 msgstr ""
@@ -51,17 +48,12 @@ msgstr "photocopieur"
 #~ msgstr "Enregistrer sous"
 EOF
 
-tmpfiles="$tmpfiles ma-test15.tmp ma-test15.out"
 : ${MSGATTRIB=msgattrib}
-${MSGATTRIB} --clear-fuzzy -o ma-test15.tmp ma-test15.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < ma-test15.tmp > ma-test15.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGATTRIB} --clear-fuzzy -o ma-test15.tmp ma-test15.po || exit 1
+LC_ALL=C tr -d '\r' < ma-test15.tmp > ma-test15.out || exit 1
 
 : ${DIFF=diff}
 ${DIFF} ma-test15.po ma-test15.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

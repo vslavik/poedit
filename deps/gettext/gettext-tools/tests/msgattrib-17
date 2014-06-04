@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgattrib option --clear-previous.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles ma-test17.po"
 cat <<\EOF > ma-test17.po
 msgid ""
 msgstr ""
@@ -44,14 +41,10 @@ msgstr "Argumente fehlen."
 #~ msgstr "%s: ungültige Option -- %c\n"
 EOF
 
-tmpfiles="$tmpfiles ma-test17.tmp ma-test17.out"
 : ${MSGATTRIB=msgattrib}
-${MSGATTRIB} --clear-previous -o ma-test17.tmp ma-test17.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < ma-test17.tmp > ma-test17.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGATTRIB} --clear-previous -o ma-test17.tmp ma-test17.po || exit 1
+LC_ALL=C tr -d '\r' < ma-test17.tmp > ma-test17.out || exit 1
 
-tmpfiles="$tmpfiles ma-test17.ok"
 cat <<\EOF > ma-test17.ok
 msgid ""
 msgstr ""
@@ -89,7 +82,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} ma-test17.ok ma-test17.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

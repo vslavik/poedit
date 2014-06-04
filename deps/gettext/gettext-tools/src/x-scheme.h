@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_SCHEME \
   { "Scheme",           extract_scheme,                                   \
-                        &flag_table_scheme, &formatstring_scheme, NULL }, \
+                        &flag_table_scheme, &formatstring_scheme, NULL, NULL }, \
 
 /* Scan a Scheme file and add its translatable strings to mdlp.  */
 extern void extract_scheme (FILE *fp, const char *real_filename,

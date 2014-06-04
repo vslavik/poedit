@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgcat on PO files with contexts.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcat-test13.in1 mcat-test13.in2"
 cat <<\EOF > mcat-test13.in1
 msgid ""
 msgstr ""
@@ -68,15 +65,11 @@ msgstr "photocopieur"
 #~ msgstr "Enregistrer l'as"
 EOF
 
-tmpfiles="$tmpfiles mcat-test13.tmp mcat-test13.out"
 rm -f mcat-test13.tmp
 : ${MSGCAT=msgcat}
-${MSGCAT} -o mcat-test13.tmp mcat-test13.in1 mcat-test13.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcat-test13.tmp > mcat-test13.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGCAT} -o mcat-test13.tmp mcat-test13.in1 mcat-test13.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcat-test13.tmp > mcat-test13.out || exit 1
 
-tmpfiles="$tmpfiles mcat-test13.ok"
 cat <<\EOF > mcat-test13.ok
 msgid ""
 msgstr ""
@@ -135,7 +128,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcat-test13.ok mcat-test13.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

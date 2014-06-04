@@ -1085,7 +1085,7 @@ extract_quotelike_pass3 (token_ty *tp, int error_level)
               if (*crs)
                 {
                   int the_char = (unsigned char) *crs;
-                  if (the_char >= 'a' || the_char <= 'z')
+                  if (the_char >= 'a' && the_char <= 'z')
                     the_char = the_char - 'a' + 'A';
                   buffer[bufpos++] = the_char ^ 0x40;
                 }

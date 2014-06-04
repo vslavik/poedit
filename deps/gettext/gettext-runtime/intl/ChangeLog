@@ -1,3 +1,38 @@
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-05-11  Daiki Ueno  <ueno@gnu.org>
+
+	* xsize.c (_GL_UNUSED): Define, if undefined.
+
+2014-04-30  Steve Ellcey  <sellcey@mips.com>  (tiny change)
+
+	* loadmsgcat.c (PRI_MACROS_BROKEN) [_LIBC]: Define to 0, if
+	undefined.
+
+2014-04-23  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Port to Bison 3.0
+	* plural.y: Don't use removed YYLEX_PARAM and YYPARSE_PARAM
+	macros; replace deprecated %pure_parser with '%define api.pure
+	full'; adjust yylex/yyerror arglist.
+	* plural-exp.h (PLURAL_PARSE): Use explicit type 'struct
+	parse_args *arg' for ARG.
+
+2013-05-07  Carlos O'Donell  <carlos@redhat.com>
+            Jeff Law  <law@redhat.com>
+
+	* dcigettext.c (DCIGETTEXT): Skip translating if _nl_find_msg
+	returns -1.
+	(_nl_find_msg): Return -1 if recursive call returned -1. If
+	newmem is null return -1.
+	* loadmsgcat.c (_nl_load_domain): If _nl_find_msg returns -1
+	abort loading the domain.
+
+	* dcigettext.c (_nl_find_msg): Avoid use after potential
+	free.  Simplify list management for _LIBC case.
+
 2013-03-07  Daiki Ueno  <ueno@gnu.org>
 
 	* setlocale.c (libintl_setlocale): Signal a change of the loaded

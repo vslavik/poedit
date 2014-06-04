@@ -1,5 +1,5 @@
 /* Test opening a stream with a file descriptor.
-   Copyright (C) 2011-2013 Free Software Foundation, Inc.
+   Copyright (C) 2011-2014 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,28 +29,21 @@ SIGNATURE_CHECK (fdopen, FILE *, (int, const char *));
 int
 main (void)
 {
-  /* Test behaviour for invalid file descriptors.  */
-  {
-    FILE *fp;
+  /* Test behavior on failure.  POSIX makes it hard to check for
+     failure, since the behavior is not well-defined on invalid file
+     descriptors, so try fdopen 1000 times and if that's not enough to
+     fail due to EMFILE, so be it.  */
 
-    errno = 0;
-    fp = fdopen (-1, "r");
-    if (fp == NULL)
-      ASSERT (errno == EBADF);
-    else
-      fclose (fp);
-  }
-  {
-    FILE *fp;
-
-    close (99);
-    errno = 0;
-    fp = fdopen (99, "r");
-    if (fp == NULL)
-      ASSERT (errno == EBADF);
-    else
-      fclose (fp);
-  }
+  int i;
+  for (i = 0; i < 1000; i++)
+    {
+      errno = 0;
+      if (! fdopen (STDOUT_FILENO, "w"))
+        {
+          ASSERT (errno != 0);
+          break;
+        }
+    }
 
   return 0;
 }

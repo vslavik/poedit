@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_LIBREP \
   { "librep",           extract_librep,                                   \
-                        &flag_table_librep, &formatstring_librep, NULL }, \
+                        &flag_table_librep, &formatstring_librep, NULL, NULL }, \
 
 /* Scan a librep file and add its translatable strings to mdlp.  */
 extern void extract_librep (FILE *fp, const char *real_filename,

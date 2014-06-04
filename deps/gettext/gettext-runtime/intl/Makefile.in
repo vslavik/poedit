@@ -460,7 +460,7 @@ install-data: all
 	if test "$(PACKAGE)" = "gettext-tools"; then \
 	  $(mkdir_p) $(DESTDIR)$(gettextsrcdir); \
 	  $(INSTALL_DATA) VERSION $(DESTDIR)$(gettextsrcdir)/VERSION; \
-	  $(INSTALL_DATA) ChangeLog.inst $(DESTDIR)$(gettextsrcdir)/ChangeLog; \
+	  $(INSTALL_DATA) $(DESTDIR)$(gettextsrcdir)/ChangeLog; \
 	  dists="COPYING.LIB $(DISTFILES.common)"; \
 	  for file in $$dists; do \
 	    $(INSTALL_DATA) $(srcdir)/$$file \

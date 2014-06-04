@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test handling of input files with different charsets:
 # 1. UTF-8, 2. ISO-8859-1; plus --use-first
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcat-test4.in1 mcat-test4.in2"
 cat <<\EOF > mcat-test4.in1
 # German message file for xyz.
 # Copyright (C) 1999, 2000, 2001 xyz.
@@ -54,7 +51,6 @@ msgstr ""
 "Glückwunsch!"
 EOF
 
-tmpfiles="$tmpfiles mcat-test4.tmp mcat-test4.err mcat-test4.out"
 rm -f mcat-test4.tmp
 
 : ${MSGCAT=msgcat}
@@ -63,11 +59,9 @@ ${MSGCAT} --use-first --more-than=0 -o mcat-test4.tmp \
     mcat-test4.in1 mcat-test4.in2 >mcat-test4.err 2>&1
 result=$?
 cat mcat-test4.err | grep -v 'warning: .* encodings' | grep -v '^ '
-test $result = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcat-test4.tmp > mcat-test4.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+test $result = 0 || { exit 1; }
+LC_ALL=C tr -d '\r' < mcat-test4.tmp > mcat-test4.out || exit 1
 
-tmpfiles="$tmpfiles mcat-test4.ok"
 cat << \EOF > mcat-test4.ok
 # German message file for xyz.
 # Copyright (C) 1999, 2000, 2001 xyz.
@@ -99,7 +93,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcat-test4.ok mcat-test4.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

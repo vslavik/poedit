@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --no-location and --omit-header options together.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcomm-test7.in1 mcomm-test7.in2"
 cat <<EOF > mcomm-test7.in1
 msgid ""
 msgstr ""
@@ -29,15 +26,11 @@ msgid "2"
 msgstr "2x"
 EOF
 
-tmpfiles="$tmpfiles mcomm-test7.tmp mcomm-test7.out"
 : ${MSGCOMM=msgcomm}
 ${MSGCOMM} --more-than=0 --no-location --omit-header -o mcomm-test7.tmp \
-    mcomm-test7.in1 mcomm-test7.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test7.tmp > mcomm-test7.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+    mcomm-test7.in1 mcomm-test7.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcomm-test7.tmp > mcomm-test7.out || exit 1
 
-tmpfiles="$tmpfiles mcomm-test7.ok"
 cat << EOF > mcomm-test7.ok
 msgid "1"
 msgstr "1x"
@@ -49,7 +42,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcomm-test7.ok mcomm-test7.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

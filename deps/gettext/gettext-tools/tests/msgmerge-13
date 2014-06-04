@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test merging of a message which has c-format specified in ref.pot but not
 # in def.po.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test13.po"
 cat <<EOF > mm-test13.po
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -46,7 +43,6 @@ msgid "%age"
 msgstr "%-Satz"
 EOF
 
-tmpfiles="$tmpfiles mm-test13.pot"
 cat <<EOF > mm-test13.pot
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -87,14 +83,10 @@ msgid "%age"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-test13.tmp mm-test13.out"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test13.tmp mm-test13.po mm-test13.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test13.tmp > mm-test13.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o mm-test13.tmp mm-test13.po mm-test13.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test13.tmp > mm-test13.out || exit 1
 
-tmpfiles="$tmpfiles mm-test13.ok"
 cat <<EOF > mm-test13.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -139,7 +131,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mm-test13.ok mm-test13.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

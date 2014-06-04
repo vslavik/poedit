@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of Perl support with ISO-8859-1 encoded input.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-pl-2.pl"
 cat <<\EOF > xg-pl-2.pl
 use charnames ':full';
 printf "%s\n", gettext "Böse Bübchen - wo sind sie blo\N{LATIN SMALL LETTER SHARP S}?";
@@ -14,14 +11,11 @@ Die europäische Währung ist \N{EURO SIGN}.
 STR
 EOF
 
-tmpfiles="$tmpfiles xg-pl-2.po"
 : ${XGETTEXT=xgettext}
 # delete POT-Creation-Date: line because the date depends on local time.
 ${XGETTEXT} --output - --from-code=ISO-8859-1 xg-pl-2.pl \
-  | sed '/\"POT-Creation-Date:.*/d' | LC_ALL=C tr -d '\r' > xg-pl-2.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+  | sed '/\"POT-Creation-Date:.*/d' | LC_ALL=C tr -d '\r' > xg-pl-2.po || exit 1
 
-tmpfiles="$tmpfiles xg-pl-2.ok"
 cat <<\EOF > xg-pl-2.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -53,7 +47,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-pl-2.ok xg-pl-2.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

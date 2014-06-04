@@ -43,16 +43,20 @@ extern "C" {
 #define SCANNERS_C \
   { "C",                extract_c,                                      \
                         &flag_table_c,                                  \
-                        &formatstring_c, NULL },                        \
+                        &formatstring_c, NULL,                          \
+                        &literalstring_c },                             \
   { "C++",              extract_c,                                      \
                         &flag_table_c,                                  \
-                        &formatstring_c, NULL },                        \
+                        &formatstring_c, NULL,                          \
+                        &literalstring_c },                             \
   { "ObjectiveC",       extract_objc,                                   \
                         &flag_table_objc,                               \
-                        &formatstring_c, &formatstring_objc },          \
+                        &formatstring_c, &formatstring_objc,            \
+                        &literalstring_c },                             \
   { "GCC-source",       extract_c,                                      \
                         &flag_table_gcc_internal,                       \
-                        &formatstring_gcc_internal, &formatstring_gfc_internal }, \
+                        &formatstring_gcc_internal, &formatstring_gfc_internal, \
+                        &literalstring_c },                             \
 
 /* Scan a C/C++ file and add its translatable strings to mdlp.  */
 extern void extract_c (FILE *fp, const char *real_filename,
@@ -78,6 +82,9 @@ extern void x_c_trigraphs (void);
 extern void init_flag_table_c (void);
 extern void init_flag_table_objc (void);
 extern void init_flag_table_gcc_internal (void);
+
+
+extern struct literalstring_parser literalstring_c;
 
 
 #ifdef __cplusplus

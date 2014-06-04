@@ -66,6 +66,7 @@
 #include "color.h"
 #include "format.h"
 #include "propername.h"
+#include "unistr.h"
 #include "gettext.h"
 
 /* A convenience macro.  I don't like writing gettext() every time.  */
@@ -95,6 +96,8 @@
 #include "x-lua.h"
 #include "x-javascript.h"
 #include "x-vala.h"
+#include "x-gsettings.h"
+#include "x-desktop.h"
 
 
 /* If nonzero add all comments immediately preceding one of the keywords. */
@@ -198,7 +201,7 @@ iconv_t xgettext_current_source_iconv;
 static const struct option long_options[] =
 {
   { "add-comments", optional_argument, NULL, 'c' },
-  { "add-location", no_argument, &line_comment, 1 },
+  { "add-location", optional_argument, NULL, 'n' },
   { "boost", no_argument, NULL, CHAR_MAX + 11 },
   { "c++", no_argument, NULL, 'C' },
   { "color", optional_argument, NULL, CHAR_MAX + 14 },
@@ -224,7 +227,7 @@ static const struct option long_options[] =
   { "msgstr-prefix", optional_argument, NULL, 'm' },
   { "msgstr-suffix", optional_argument, NULL, 'M' },
   { "no-escape", no_argument, NULL, 'e' },
-  { "no-location", no_argument, &line_comment, 0 },
+  { "no-location", no_argument, NULL, CHAR_MAX + 16 },
   { "no-wrap", no_argument, NULL, CHAR_MAX + 4 },
   { "omit-header", no_argument, &xgettext_omit_header, 1 },
   { "output", required_argument, NULL, 'o' },
@@ -262,6 +265,7 @@ struct extractor_ty
   struct formatstring_parser *formatstring_parser1;
   struct formatstring_parser *formatstring_parser2;
   struct formatstring_parser *formatstring_parser3;
+  struct literalstring_parser *literalstring_parser;
 };
 
 
@@ -447,6 +451,7 @@ main (int argc, char *argv[])
         x_lua_keyword (optarg);
         x_javascript_keyword (optarg);
         x_vala_keyword (optarg);
+        x_desktop_keyword (optarg);
         if (optarg == NULL)
           no_default_keywords = true;
         else
@@ -472,7 +477,8 @@ main (int argc, char *argv[])
         break;
 
       case 'n':
-        line_comment = 1;
+        if (handle_filepos_comment_option (optarg))
+          usage (EXIT_FAILURE);
         break;
 
       case 'o':
@@ -534,7 +540,13 @@ main (int argc, char *argv[])
       case CHAR_MAX + 3:        /* --from-code */
         xgettext_global_source_encoding = po_charset_canonicalize (optarg);
         if (xgettext_global_source_encoding == NULL)
-          xgettext_global_source_encoding = po_charset_ascii;
+          {
+            multiline_warning (xasprintf (_("warning: ")),
+                               xasprintf (_("\
+'%s' is not a valid encoding name.  Using ASCII as fallback.\n"),
+                                          optarg));
+            xgettext_global_source_encoding = po_charset_ascii;
+          }
         break;
 
       case CHAR_MAX + 4:        /* --no-wrap */
@@ -586,6 +598,10 @@ main (int argc, char *argv[])
         handle_style_option (optarg);
         break;
 
+      case CHAR_MAX + 16: /* --no-location */
+        message_print_style_filepos (filepos_comment_none);
+        break;
+
       default:
         usage (EXIT_FAILURE);
         /* NOTREACHED */
@@ -611,10 +627,6 @@ There is NO WARRANTY, to the extent permitted by law.\n\
     usage (EXIT_SUCCESS);
 
   /* Verify selected options.  */
-  if (!line_comment && sort_by_filepos)
-    error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
-           "--no-location", "--sort-by-file");
-
   if (sort_by_msgid && sort_by_filepos)
     error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
            "--sort-output", "--sort-by-file");
@@ -759,6 +771,7 @@ This version was built without iconv()."),
           char *reduced;
           const char *extension;
           const char *language;
+          const char *p;
 
           base = strrchr (filename, '/');
           if (!base)
@@ -766,22 +779,32 @@ This version was built without iconv()."),
 
           reduced = xstrdup (base);
           /* Remove a trailing ".in" - it's a generic suffix.  */
-          if (strlen (reduced) >= 3
-              && memcmp (reduced + strlen (reduced) - 3, ".in", 3) == 0)
+          while (strlen (reduced) >= 3
+                 && memcmp (reduced + strlen (reduced) - 3, ".in", 3) == 0)
             reduced[strlen (reduced) - 3] = '\0';
 
           /* Work out what the file extension is.  */
-          extension = strrchr (reduced, '.');
-          if (extension)
-            ++extension;
-          else
-            extension = "";
+          language = NULL;
+          p = reduced + strlen (reduced);
+          for (; p > reduced && language == NULL; p--)
+            {
+              if (*p == '.')
+                {
+                  extension = p + 1;
 
-          /* Derive the language from the extension, and the extractor
-             function from the language.  */
-          language = extension_to_language (extension);
+                  /* Derive the language from the extension, and the extractor
+                     function from the language.  */
+                  language = extension_to_language (extension);
+                }
+            }
+
           if (language == NULL)
             {
+              extension = strrchr (reduced, '.');
+              if (extension == NULL)
+                extension = "";
+              else
+                extension++;
               error (0, 0, _("\
 warning: file '%s' extension '%s' is unknown; will try C"), filename, extension);
               language = "C";
@@ -873,7 +896,7 @@ Choice of input file language:\n"));
                                 EmacsLisp, librep, Scheme, Smalltalk, Java,\n\
                                 JavaProperties, C#, awk, YCP, Tcl, Perl, PHP,\n\
                                 GCC-source, NXStringTable, RST, Glade, Lua,\n\
-                                JavaScript, Vala)\n"));
+                                JavaScript, Vala, Desktop)\n"));
       printf (_("\
   -C, --c++                   shorthand for --language=C++\n"));
       printf (_("\
@@ -915,7 +938,7 @@ Language specific options:\n"));
                                 (only languages C, C++, ObjectiveC, Shell,\n\
                                 Python, Lisp, EmacsLisp, librep, Scheme, Java,\n\
                                 C#, awk, Tcl, Perl, PHP, GCC-source, Glade,\n\
-                                Lua, JavaScript, Vala)\n"));
+                                Lua, JavaScript, Vala, Desktop)\n"));
       printf (_("\
       --flag=WORD:ARG:FLAG    additional flag for strings inside the argument\n\
                               number ARG of keyword WORD\n"));
@@ -1901,6 +1924,32 @@ savable_comment_to_xgettext_comment (refcounted_string_list_ty *rslp)
     }
 }
 
+refcounted_string_list_ty *
+savable_comment_convert_encoding (refcounted_string_list_ty *comment,
+                                  lex_pos_ty *pos)
+{
+  refcounted_string_list_ty *result;
+  size_t i;
+
+  result = XMALLOC (refcounted_string_list_ty);
+  result->refcount = 1;
+  string_list_init (&result->contents);
+
+  for (i = 0; i < comment->contents.nitems; i++)
+    {
+      const char *old_string = comment->contents.item[i];
+      char *string = from_current_source_encoding (old_string,
+                                                   lc_comment,
+                                                   pos->file_name,
+                                                   pos->line_number);
+      string_list_append (&result->contents, string);
+      if (string != old_string)
+        free (string);
+    }
+
+  return result;
+}
+
 
 
 static FILE *
@@ -1970,6 +2019,7 @@ static struct formatstring_parser *current_formatstring_parser1;
 static struct formatstring_parser *current_formatstring_parser2;
 static struct formatstring_parser *current_formatstring_parser3;
 
+static struct literalstring_parser *current_literalstring_parser;
 
 static void
 extract_from_file (const char *file_name, extractor_ty extractor,
@@ -1989,6 +2039,7 @@ extract_from_file (const char *file_name, extractor_ty extractor,
   current_formatstring_parser1 = extractor.formatstring_parser1;
   current_formatstring_parser2 = extractor.formatstring_parser2;
   current_formatstring_parser3 = extractor.formatstring_parser3;
+  current_literalstring_parser = extractor.literalstring_parser;
   extractor.func (fp, real_file_name, logical_file_name, extractor.flag_table,
                   mdlp);
 
@@ -2273,6 +2324,11 @@ meta information, not the empty string.\n")));
     size_t nitems_after;
     int j;
     bool add_all_remaining_comments;
+    /* The string before the comment tag.  For example, If "** TRANSLATORS:"
+       is seen and the comment tag is "TRANSLATORS:",
+       then comment_tag_prefix is set to "** ".  */
+    const char *comment_tag_prefix = NULL;
+    size_t comment_tag_prefix_length = 0;
 
     nitems_before = (mp->comment_dot != NULL ? mp->comment_dot->nitems : 0);
 
@@ -2351,13 +2407,25 @@ meta information, not the empty string.\n")));
             if (interesting)
               continue;
           }
-        /* When the comment tag is seen, it drags in not only the line
-           which it starts, but all remaining comment lines.  */
-        if (add_all_remaining_comments
-            || (add_all_remaining_comments =
-                  (comment_tag != NULL
-                   && strncmp (s, comment_tag, strlen (comment_tag)) == 0)))
-          message_comment_dot_append (mp, s);
+
+        if (!add_all_remaining_comments && comment_tag != NULL)
+          {
+            /* When the comment tag is seen, it drags in not only the line
+               which it starts, but all remaining comment lines.  */
+            if ((t = c_strstr (s, comment_tag)) != NULL)
+              {
+                add_all_remaining_comments = true;
+                comment_tag_prefix = s;
+                comment_tag_prefix_length = t - s;
+              }
+          }
+
+        if (add_all_remaining_comments)
+          {
+            if (strncmp (s, comment_tag_prefix, comment_tag_prefix_length) == 0)
+              s += comment_tag_prefix_length;
+            message_comment_dot_append (mp, s);
+          }
       }
 
     nitems_after = (mp->comment_dot != NULL ? mp->comment_dot->nitems : 0);
@@ -2462,8 +2530,7 @@ meta information, not the empty string.\n")));
   warn_format_string (is_format, mp->msgid, pos, "msgid");
 
   /* Remember where we saw this msgid.  */
-  if (line_comment)
-    message_comment_filepos (mp, pos->file_name, pos->line_number);
+  message_comment_filepos (mp, pos->file_name, pos->line_number);
 
   /* Tell the lexer to reset its comment buffer, so that the next
      message gets the correct comments.  */
@@ -2617,14 +2684,17 @@ arglist_parser_alloc (message_list_ty *mlp, const struct callshapes *shapes)
           ap->alternative[i].argtotal = shapes->shapes[i].argtotal;
           ap->alternative[i].xcomments = shapes->shapes[i].xcomments;
           ap->alternative[i].msgctxt = NULL;
+          ap->alternative[i].msgctxt_escape = LET_NONE;
           ap->alternative[i].msgctxt_pos.file_name = NULL;
           ap->alternative[i].msgctxt_pos.line_number = (size_t)(-1);
           ap->alternative[i].msgid = NULL;
+          ap->alternative[i].msgid_escape = LET_NONE;
           ap->alternative[i].msgid_context = null_context;
           ap->alternative[i].msgid_pos.file_name = NULL;
           ap->alternative[i].msgid_pos.line_number = (size_t)(-1);
           ap->alternative[i].msgid_comment = NULL;
           ap->alternative[i].msgid_plural = NULL;
+          ap->alternative[i].msgid_plural_escape = LET_NONE;
           ap->alternative[i].msgid_plural_context = null_context;
           ap->alternative[i].msgid_plural_pos.file_name = NULL;
           ap->alternative[i].msgid_plural_pos.line_number = (size_t)(-1);
@@ -2661,13 +2731,16 @@ arglist_parser_clone (struct arglist_parser *ap)
       ccp->argtotal = cp->argtotal;
       ccp->xcomments = cp->xcomments;
       ccp->msgctxt = (cp->msgctxt != NULL ? xstrdup (cp->msgctxt) : NULL);
+      ccp->msgctxt_escape = cp->msgctxt_escape;
       ccp->msgctxt_pos = cp->msgctxt_pos;
       ccp->msgid = (cp->msgid != NULL ? xstrdup (cp->msgid) : NULL);
+      ccp->msgid_escape = cp->msgid_escape;
       ccp->msgid_context = cp->msgid_context;
       ccp->msgid_pos = cp->msgctxt_pos;
       ccp->msgid_comment = add_reference (cp->msgid_comment);
       ccp->msgid_plural =
         (cp->msgid_plural != NULL ? xstrdup (cp->msgid_plural) : NULL);
+      ccp->msgid_plural_escape = cp->msgid_plural_escape;
       ccp->msgid_plural_context = cp->msgid_plural_context;
       ccp->msgid_plural_pos = cp->msgid_plural_pos;
     }
@@ -2677,11 +2750,12 @@ arglist_parser_clone (struct arglist_parser *ap)
 
 
 void
-arglist_parser_remember (struct arglist_parser *ap,
-                         int argnum, char *string,
-                         flag_context_ty context,
-                         char *file_name, size_t line_number,
-                         refcounted_string_list_ty *comment)
+arglist_parser_remember_literal (struct arglist_parser *ap,
+                                 int argnum, char *string,
+                                 flag_context_ty context,
+                                 char *file_name, size_t line_number,
+                                 refcounted_string_list_ty *comment,
+                                 enum literalstring_escape_type type)
 {
   bool stored_string = false;
   size_t nalternatives = ap->nalternatives;
@@ -2696,6 +2770,7 @@ arglist_parser_remember (struct arglist_parser *ap,
       if (argnum == cp->argnumc)
         {
           cp->msgctxt = string;
+          cp->msgctxt_escape = type;
           cp->msgctxt_pos.file_name = file_name;
           cp->msgctxt_pos.line_number = line_number;
           stored_string = true;
@@ -2707,6 +2782,7 @@ arglist_parser_remember (struct arglist_parser *ap,
           if (argnum == cp->argnum1)
             {
               cp->msgid = string;
+              cp->msgid_escape = type;
               cp->msgid_context = context;
               cp->msgid_pos.file_name = file_name;
               cp->msgid_pos.line_number = line_number;
@@ -2718,6 +2794,7 @@ arglist_parser_remember (struct arglist_parser *ap,
           if (argnum == cp->argnum2)
             {
               cp->msgid_plural = string;
+              cp->msgid_plural_escape = type;
               cp->msgid_plural_context = context;
               cp->msgid_plural_pos.file_name = file_name;
               cp->msgid_plural_pos.line_number = line_number;
@@ -2733,6 +2810,17 @@ arglist_parser_remember (struct arglist_parser *ap,
     free (string);
 }
 
+void
+arglist_parser_remember (struct arglist_parser *ap,
+                         int argnum, char *string,
+                         flag_context_ty context,
+                         char *file_name, size_t line_number,
+                         refcounted_string_list_ty *comment)
+{
+  arglist_parser_remember_literal (ap, argnum, string, context,
+                                   file_name, line_number,
+                                   comment, LET_NONE);
+}
 
 bool
 arglist_parser_decidedp (struct arglist_parser *ap, int argnum)
@@ -2973,6 +3061,8 @@ arglist_parser_done (struct arglist_parser *ap, int argnum)
           {
             flag_context_ty msgid_context = best_cp->msgid_context;
             flag_context_ty msgid_plural_context = best_cp->msgid_plural_context;
+            struct literalstring_parser *parser = current_literalstring_parser;
+            const char *encoding;
 
             /* Special support for the 3-argument tr operator in Qt:
                When --qt and --keyword=tr:1,1,2c,3t are specified, add to the
@@ -2986,15 +3076,90 @@ arglist_parser_done (struct arglist_parser *ap, int argnum)
                 msgid_plural_context.is_format3 = yes_according_to_context;
               }
 
+            if (best_cp->msgctxt != NULL)
+              {
+                if (parser != NULL && best_cp->msgctxt_escape != 0)
+                  {
+                    char *msgctxt =
+                      parser->parse (best_cp->msgctxt,
+                                     &best_cp->msgctxt_pos,
+                                     best_cp->msgctxt_escape);
+                    free (best_cp->msgctxt);
+                    best_cp->msgctxt = msgctxt;
+                  }
+                else
+                  {
+                    lex_pos_ty *pos = &best_cp->msgctxt_pos;
+                    CONVERT_STRING (best_cp->msgctxt, lc_string);
+                  }
+              }
+
+            if (parser != NULL && best_cp->msgid_escape != 0)
+              {
+                char *msgid = parser->parse (best_cp->msgid,
+                                             &best_cp->msgid_pos,
+                                             best_cp->msgid_escape);
+                free (best_cp->msgid);
+                if (best_cp->msgid_plural == best_cp->msgid)
+                  best_cp->msgid_plural = msgid;
+                best_cp->msgid = msgid;
+              }
+            else
+              {
+                lex_pos_ty *pos = &best_cp->msgid_pos;
+                CONVERT_STRING (best_cp->msgid, lc_string);
+              }
+
+            if (best_cp->msgid_comment != NULL)
+              {
+                refcounted_string_list_ty *msgid_comment =
+                  savable_comment_convert_encoding (best_cp->msgid_comment,
+                                                    &best_cp->msgid_pos);
+                drop_reference (best_cp->msgid_comment);
+                best_cp->msgid_comment = msgid_comment;
+              }
+
+            /* best_cp->msgctxt and best_cp->msgid are already in
+               UTF-8.  Prevent further conversion in remember_a_message.  */
+            encoding = xgettext_current_source_encoding;
+            xgettext_current_source_encoding = po_charset_utf8;
             mp = remember_a_message (ap->mlp, best_cp->msgctxt, best_cp->msgid,
                                      msgid_context,
                                      &best_cp->msgid_pos,
                                      NULL, best_cp->msgid_comment);
+            xgettext_current_source_encoding = encoding;
+
             if (mp != NULL && best_cp->msgid_plural != NULL)
-              remember_a_message_plural (mp, best_cp->msgid_plural,
-                                         msgid_plural_context,
+              {
+                /* best_cp->msgid_plural may point to best_cp->msgid.
+                   In that case, it is already interpreted and converted.  */
+                if (best_cp->msgid_plural != best_cp->msgid)
+                  {
+                    if (parser != NULL
+                        && best_cp->msgid_plural_escape != 0)
+                      {
+                        char *msgid_plural =
+                          parser->parse (best_cp->msgid_plural,
                                          &best_cp->msgid_plural_pos,
-                                         NULL);
+                                         best_cp->msgid_plural_escape);
+                        free (best_cp->msgid_plural);
+                        best_cp->msgid_plural = msgid_plural;
+                      }
+                    else
+                      {
+                        lex_pos_ty *pos = &best_cp->msgid_plural_pos;
+                        CONVERT_STRING (best_cp->msgid_plural, lc_string);
+                      }
+                  }
+
+                encoding = xgettext_current_source_encoding;
+                xgettext_current_source_encoding = po_charset_utf8;
+                remember_a_message_plural (mp, best_cp->msgid_plural,
+                                           msgid_plural_context,
+                                           &best_cp->msgid_plural_pos,
+                                           NULL);
+                xgettext_current_source_encoding = encoding;
+              }
           }
 
           if (best_cp->xcomments.nitems > 0)
@@ -3045,6 +3210,186 @@ arglist_parser_done (struct arglist_parser *ap, int argnum)
   for (i = 0; i < ap->nalternatives; i++)
     drop_reference (ap->alternative[i].msgid_comment);
   free (ap);
+}
+
+
+struct mixed_string_buffer *
+mixed_string_buffer_alloc (lexical_context_ty lcontext,
+                           const char *logical_file_name,
+                           int line_number)
+{
+  struct mixed_string_buffer *bp = XMALLOC (struct mixed_string_buffer);
+  bp->utf8_buffer = NULL;
+  bp->utf8_buflen = 0;
+  bp->utf8_allocated = 0;
+  bp->utf16_surr = 0;
+  bp->curr_buffer = NULL;
+  bp->curr_buflen = 0;
+  bp->curr_allocated = 0;
+  bp->lcontext = lcontext;
+  bp->logical_file_name = logical_file_name;
+  bp->line_number = line_number;
+  return bp;
+}
+
+/* Auxiliary function: Append a byte to bp->curr.  */
+static inline void
+mixed_string_buffer_append_to_curr_buffer (struct mixed_string_buffer *bp,
+                                           unsigned char c)
+{
+  if (bp->curr_buflen == bp->curr_allocated)
+    {
+      bp->curr_allocated = 2 * bp->curr_allocated + 10;
+      bp->curr_buffer = xrealloc (bp->curr_buffer, bp->curr_allocated);
+    }
+  bp->curr_buffer[bp->curr_buflen++] = c;
+}
+
+/* Auxiliary function: Ensure count more bytes are available in bp->utf8.  */
+static inline void
+mixed_string_buffer_grow_utf8_buffer (struct mixed_string_buffer *bp,
+                                         size_t count)
+{
+  if (bp->utf8_buflen + count > bp->utf8_allocated)
+    {
+      size_t new_allocated = 2 * bp->utf8_allocated + 10;
+      if (new_allocated < bp->utf8_buflen + count)
+        new_allocated = bp->utf8_buflen + count;
+      bp->utf8_allocated = new_allocated;
+      bp->utf8_buffer = xrealloc (bp->utf8_buffer, new_allocated);
+    }
+}
+
+/* Auxiliary function: Append a Unicode character to bp->utf8.
+   uc must be < 0x110000.  */
+static inline void
+mixed_string_buffer_append_to_utf8_buffer (struct mixed_string_buffer *bp,
+                                           ucs4_t uc)
+{
+  unsigned char utf8buf[6];
+  int count = u8_uctomb (utf8buf, uc, 6);
+
+  if (count < 0)
+    /* The caller should have ensured that uc is not out-of-range.  */
+    abort ();
+
+  mixed_string_buffer_grow_utf8_buffer (bp, count);
+  memcpy (bp->utf8_buffer + bp->utf8_buflen, utf8buf, count);
+  bp->utf8_buflen += count;
+}
+
+/* Auxiliary function: Flush bp->utf16_surr into bp->utf8_buffer.  */
+static inline void
+mixed_string_buffer_flush_utf16_surr (struct mixed_string_buffer *bp)
+{
+  if (bp->utf16_surr != 0)
+    {
+      /* A half surrogate is invalid, therefore use U+FFFD instead.  */
+      mixed_string_buffer_append_to_utf8_buffer (bp, 0xfffd);
+      bp->utf16_surr = 0;
+    }
+}
+
+/* Auxiliary function: Flush bp->curr_buffer into bp->utf8_buffer.  */
+static inline void
+mixed_string_buffer_flush_curr_buffer (struct mixed_string_buffer *bp,
+                                       int line_number)
+{
+  if (bp->curr_buflen > 0)
+    {
+      char *curr;
+      size_t count;
+
+      mixed_string_buffer_append_to_curr_buffer (bp, '\0');
+
+      /* Convert from the source encoding to UTF-8.  */
+      curr = from_current_source_encoding (bp->curr_buffer, bp->lcontext,
+                                           bp->logical_file_name,
+                                           line_number);
+
+      /* Append it to bp->utf8_buffer.  */
+      count = strlen (curr);
+      mixed_string_buffer_grow_utf8_buffer (bp, count);
+      memcpy (bp->utf8_buffer + bp->utf8_buflen, curr, count);
+      bp->utf8_buflen += count;
+
+      if (curr != bp->curr_buffer)
+        free (curr);
+      bp->curr_buflen = 0;
+    }
+}
+
+void
+mixed_string_buffer_append_char (struct mixed_string_buffer *bp, int c)
+{
+  /* Switch from Unicode character mode to multibyte character mode.  */
+  mixed_string_buffer_flush_utf16_surr (bp);
+
+  /* When a newline is seen, convert the accumulated multibyte sequence.
+     This ensures a correct line number in the error message in case of
+     a conversion error.  The "- 1" is to account for the newline.  */
+  if (c == '\n')
+    mixed_string_buffer_flush_curr_buffer (bp, bp->line_number - 1);
+
+  mixed_string_buffer_append_to_curr_buffer (bp, (unsigned char) c);
+}
+
+void
+mixed_string_buffer_append_unicode (struct mixed_string_buffer *bp, int c)
+{
+  /* Switch from multibyte character mode to Unicode character mode.  */
+  mixed_string_buffer_flush_curr_buffer (bp, bp->line_number);
+
+  /* Test whether this character and the previous one form a Unicode
+     surrogate character pair.  */
+  if (bp->utf16_surr != 0 && (c >= 0xdc00 && c < 0xe000))
+    {
+      unsigned short utf16buf[2];
+      ucs4_t uc;
+
+      utf16buf[0] = bp->utf16_surr;
+      utf16buf[1] = c;
+      if (u16_mbtouc (&uc, utf16buf, 2) != 2)
+        abort ();
+
+      mixed_string_buffer_append_to_utf8_buffer (bp, uc);
+      bp->utf16_surr = 0;
+    }
+  else
+    {
+      mixed_string_buffer_flush_utf16_surr (bp);
+
+      if (c >= 0xd800 && c < 0xdc00)
+        bp->utf16_surr = c;
+      else if (c >= 0xdc00 && c < 0xe000)
+        {
+          /* A half surrogate is invalid, therefore use U+FFFD instead.  */
+          mixed_string_buffer_append_to_utf8_buffer (bp, 0xfffd);
+        }
+      else
+        mixed_string_buffer_append_to_utf8_buffer (bp, c);
+    }
+}
+
+char *
+mixed_string_buffer_done (struct mixed_string_buffer *bp)
+{
+  char *utf8_buffer;
+
+  /* Flush all into bp->utf8_buffer.  */
+  mixed_string_buffer_flush_utf16_surr (bp);
+  mixed_string_buffer_flush_curr_buffer (bp, bp->line_number);
+  /* NUL-terminate it.  */
+  mixed_string_buffer_grow_utf8_buffer (bp, 1);
+  bp->utf8_buffer[bp->utf8_buflen] = '\0';
+
+  /* Free curr_buffer and bp itself.  */
+  utf8_buffer = bp->utf8_buffer;
+  free (bp->curr_buffer);
+  free (bp);
+
+  /* Return it.  */
+  return utf8_buffer;
 }
 
 
@@ -3106,7 +3451,7 @@ SOME DESCRIPTIVE TITLE.\n\
 Copyright (C) YEAR %s\n\
 This file is distributed under the same license as the PACKAGE package.\n\
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.\n",
-			 copyright_holder);
+                         copyright_holder);
   else
     comment = xstrdup ("\
 SOME DESCRIPTIVE TITLE.\n\
@@ -3216,6 +3561,7 @@ language_to_extractor (const char *name)
     flag_context_list_table_ty *flag_table;
     struct formatstring_parser *formatstring_parser1;
     struct formatstring_parser *formatstring_parser2;
+    struct literalstring_parser *literalstring_parser;
   };
   typedef struct table_ty table_ty;
 
@@ -3244,6 +3590,8 @@ language_to_extractor (const char *name)
     SCANNERS_LUA
     SCANNERS_JAVASCRIPT
     SCANNERS_VALA
+    SCANNERS_GSETTINGS
+    SCANNERS_DESKTOP
     /* Here may follow more languages and their scanners: pike, etc...
        Make sure new scanners honor the --exclude-file option.  */
   };
@@ -3260,6 +3608,7 @@ language_to_extractor (const char *name)
         result.formatstring_parser1 = tp->formatstring_parser1;
         result.formatstring_parser2 = tp->formatstring_parser2;
         result.formatstring_parser3 = NULL;
+        result.literalstring_parser = tp->literalstring_parser;
 
         /* Handle --qt.  It's preferrable to handle this facility here rather
            than through an option --language=C++/Qt because the latter would
@@ -3330,6 +3679,8 @@ extension_to_language (const char *extension)
     EXTENSIONS_LUA
     EXTENSIONS_JAVASCRIPT
     EXTENSIONS_VALA
+    EXTENSIONS_GSETTINGS
+    EXTENSIONS_DESKTOP
     /* Here may follow more file extensions... */
   };
 
