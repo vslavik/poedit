@@ -1288,6 +1288,8 @@ phase5_get (token_ty *tp)
             {
             case '\\':
               last_was_backslash = true;
+              /* FALLTHROUGH */
+            default:
               continue;
             case '\n':
               error_with_progname = false;
@@ -1299,7 +1301,7 @@ phase5_get (token_ty *tp)
             case EOF: case '\'':
               break;
             }
-            break;
+          break;
         }
       tp->type = token_type_character_constant;
       return;

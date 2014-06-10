@@ -304,7 +304,7 @@ desktop_parse (desktop_reader_ty *reader, FILE *file,
 {
   fp = file;
   real_file_name = real_filename;
-  gram_pos.file_name = xstrdup (real_file_name);
+  gram_pos.file_name = xstrdup (logical_filename);
   gram_pos.line_number = 1;
 
   for (;;)

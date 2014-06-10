@@ -1,3 +1,55 @@
+2014-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.1 released.
+
+2014-06-09  Daiki Ueno  <ueno@gnu.org>
+
+	msgmerge: Disable --color option in --update mode
+	Suggested by 林Ｖ字龍 at:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-06/msg00017.html>.
+	* msgmerge.c (main): Error out when --color and --update are
+	specified at the same time.
+
+2014-06-07  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Fix misrecognition of character literals in C and Vala
+	Problem reported by Paul Eggert at
+	<http://lists.gnu.org/archive/html/bug-gettext/2014-06/msg00015.html>.
+	* x-c.c (phase5_get): Make sure to skip contents of character constant.
+	* x-vala.c (phase3_get): Likewise.
+
+2014-06-03  Daiki Ueno  <ueno@gnu.org>
+
+	desktop: Use logical filename as msgid location
+	* read-desktop.c (desktop_parse): Pass logical filename instead of
+	real filename to desktop_reader_handle_pair.
+
+2014-06-03  Daiki Ueno  <ueno@gnu.org>
+
+	desktop: Read LINGUAS file even if LINGUAS envvar is set
+	* msgfmt.c (get_languages): If the LINGUAS envvar is set, use it
+	to restrict the languages list read from the LINGUAS file, not to
+	extend the list.
+	(add_languages): Take an optional DESIRED_LANGUAGES argument.
+
+2014-06-03  Daiki Ueno  <ueno@gnu.org>
+
+	vala: Don't elide comments while parsing string literal
+	* x-vala.c (phase3_get): Use phase1_getc to read characters inside
+	a string literal.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	msgl-check: Treat missing header errors as warnings
+	Problem reported by Richard Hughes at
+	<https://lists.fedoraproject.org/pipermail/devel/2014-June/199539.html>.
+	After <https://savannah.gnu.org/bugs/?40262>, "msgfmt -c" reports
+	error on missing PO headers.  However, it turned out to be too strict
+	for the projects using Launchpad Translations.  Let's relax the check
+	for the moment and wait for one or two release cycles.
+	* msgl-check.c (check_header_entry): Report missing
+	required headers as warning, instead of error.
+
 2014-06-02  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19 released.

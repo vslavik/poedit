@@ -298,6 +298,7 @@ modules/xalloc \
 modules/xalloc-die \
 modules/xerror \
 modules/xgetcwd \
+tests/test-environ.c.diff \
 tests/test-moo-aroot.oo.c \
 tests/test-moo-aroot.oo.h \
 tests/test-moo-assign.c \

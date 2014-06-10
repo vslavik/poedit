@@ -111,6 +111,22 @@ Keywords[fr]=one;two;thr\;ee;
 Keywords=Keyword1;Keyword2;Key\;word3;
 EOF
 
+cat <<\EOF > mf.desktop.desired.ok
+[Desktop Entry]
+Type=Application
+Name[fr]=French\nfoo
+Name=Foo
+
+Comment[foo]=Already translated comment
+Comment[fr]=French \ncomment
+Comment=\sThis is a \nmultiline comment; for testing
+# This is a comment and must be preserved
+Keywords[fr]=one;two;thr\;ee;
+Keywords=Keyword1;Keyword2;Key\;word3;
+EOF
+
+unset LINGUAS
+
 # Sanity checks for contradicting options.
 
 ${MSGFMT} --desktop --template=mf.desktop -d po -o mf.desktop.out \
@@ -148,6 +164,12 @@ ${MSGFMT} --desktop --template=mf.desktop -d po -o mf.desktop.out || exit 1
 
 : ${DIFF=diff}
 ${DIFF} mf.desktop.ok mf.desktop.out
-result=$?
+test $? = 0 || exit 1
 
-exit $result
+# Restrict the desired languages with the LINGUAS envvar.
+
+LINGUAS="fr ja" ${MSGFMT} --desktop --template=mf.desktop -d po -o mf.desktop.desired.out || exit 1
+
+: ${DIFF=diff}
+${DIFF} mf.desktop.desired.ok mf.desktop.desired.out
+test $? = 0 || exit 1

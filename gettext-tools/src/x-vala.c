@@ -622,6 +622,8 @@ phase3_get (token_ty *tp)
                 {
                 case '\\':
                   last_was_backslash = true;
+                  /* FALLTHROUGH */
+                default:
                   continue;
                 case '\n':
                   error_with_progname = false;
@@ -690,21 +692,22 @@ phase3_get (token_ty *tp)
                 bufpos = 0;
                 for (;;)
                   {
-                    c = phase2_getc ();
+                    /* Use phase 1, because phase 2 elides comments.  */
+                    c = phase1_getc ();
                     if (c == EOF)
                       break;
 
                     if (c == '"')
                       {
-                        int c2 = phase2_getc ();
+                        int c2 = phase1_getc ();
                         if (c2 == '"')
                           {
-                            int c3 = phase2_getc ();
+                            int c3 = phase1_getc ();
                             if (c3 == '"')
                               break;
-                            phase2_ungetc (c3);
+                            phase1_ungetc (c3);
                           }
-                        phase2_ungetc (c2);
+                        phase1_ungetc (c2);
                       }
                     if (bufpos >= bufmax)
                       {
@@ -720,7 +723,7 @@ phase3_get (token_ty *tp)
                 bufpos = 0;
                 for (;;)
                   {
-                    c = phase2_getc ();
+                    c = phase1_getc ();
                     if (last_was_backslash)
                       {
                         last_was_backslash = false;
@@ -753,7 +756,7 @@ phase3_get (token_ty *tp)
 %s:%d: warning: unterminated string literal"),
                                logical_file_name, line_number - 1);
                         error_with_progname = true;
-                        phase2_ungetc ('\n');
+                        phase1_ungetc ('\n');
                         break;
                       case EOF: case '"':
                         break;

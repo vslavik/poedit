@@ -777,8 +777,18 @@ check_header_entry (const message_ty *mp, const char *msgstr_string)
 
   for (cnt = 0; cnt < nfields; ++cnt)
     {
+      /* 0.19 change: It would better report error if a required
+         header field is missing.  However, traditionally we didn't
+         treat it as error.  Let's wait for one or two cycles until we
+         can assume the required header fields are always
+         available in practical PO files.  */
+#if 0
       int severity =
         (cnt < nrequiredfields ? PO_SEVERITY_ERROR : PO_SEVERITY_WARNING);
+#else
+      int severity =
+        PO_SEVERITY_WARNING;
+#endif
       const char *field = required_fields[cnt];
       size_t len = strlen (field);
       const char *line;
@@ -805,7 +815,8 @@ check_header_entry (const message_ty *mp, const char *msgstr_string)
                                    field);
                       po_xerror (severity, mp, NULL, 0, 0, true, msg);
                       free (msg);
-                      seen_errors++;
+                      if (severity == PO_SEVERITY_ERROR)
+                        seen_errors++;
                     }
                 }
               break;
@@ -821,7 +832,8 @@ check_header_entry (const message_ty *mp, const char *msgstr_string)
                        field);
           po_xerror (severity, mp, NULL, 0, 0, true, msg);
           free (msg);
-          seen_errors++;
+          if (severity == PO_SEVERITY_ERROR)
+            seen_errors++;
         }
     }
   return seen_errors;

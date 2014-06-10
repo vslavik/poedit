@@ -172,6 +172,7 @@ main (int argc, char **argv)
   bool do_help;
   bool do_version;
   char *output_file;
+  char *color;
   msgdomain_list_ty *def;
   msgdomain_list_ty *result;
   catalog_input_format_ty input_syntax = &input_format_po;
@@ -203,6 +204,7 @@ main (int argc, char **argv)
   do_help = false;
   do_version = false;
   output_file = NULL;
+  color = NULL;
 
   while ((opt = getopt_long (argc, argv, "C:D:eEFhimn:No:pPqsUvVw:",
                              long_options, NULL))
@@ -330,6 +332,7 @@ main (int argc, char **argv)
       case CHAR_MAX + 9: /* --color */
         if (handle_color_option (optarg) || color_test_mode)
           usage (EXIT_FAILURE);
+        color = optarg;
         break;
 
       case CHAR_MAX + 10: /* --style */
@@ -383,6 +386,16 @@ There is NO WARRANTY, to the extent permitted by law.\n\
         {
           error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
                  "--update", "--output-file");
+        }
+      if (color != NULL)
+        {
+          error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
+                 "--update", "--color");
+        }
+      if (style_file_name != NULL)
+        {
+          error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
+                 "--update", "--style");
         }
     }
   else

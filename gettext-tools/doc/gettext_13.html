@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <!-- This HTML file has been created by texi2html 1.52b
-     from gettext.texi on 2 June 2014 -->
+     from gettext.texi on 10 June 2014 -->
 
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <TITLE>GNU gettext utilities - 13  The Maintainer's View</TITLE>
@@ -454,7 +454,7 @@ changes needed in each.
 <P>
 So, here comes a list of files, each one followed by a description of
 all alterations it needs.  Many examples are taken out from the GNU
-<CODE>gettext</CODE> 0.19 distribution itself, or from the GNU
+<CODE>gettext</CODE> 0.19.1 distribution itself, or from the GNU
 <CODE>hello</CODE> distribution (<A HREF="http://www.franken.de/users/gnu/ke/hello">http://www.franken.de/users/gnu/ke/hello</A>
 or <A HREF="http://www.gnu.franken.de/ke/hello/">http://www.gnu.franken.de/ke/hello/</A>)  You may indeed
 refer to the source code of the GNU <CODE>gettext</CODE> and GNU <CODE>hello</CODE>
@@ -646,7 +646,7 @@ This is done by a set of lines like these:
 
 <PRE>
 PACKAGE=gettext
-VERSION=0.19
+VERSION=0.19.1
 AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE")
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
 AC_SUBST(PACKAGE)
@@ -657,13 +657,13 @@ or, if you are using GNU <CODE>automake</CODE>, by a line like this:
 
 
 <PRE>
-AM_INIT_AUTOMAKE(gettext, 0.19)
+AM_INIT_AUTOMAKE(gettext, 0.19.1)
 </PRE>
 
 Of course, you replace <SAMP>&lsquo;gettext&rsquo;</SAMP> with the name of your package,
-and <SAMP>&lsquo;0.19&rsquo;</SAMP> by its version numbers, exactly as they
+and <SAMP>&lsquo;0.19.1&rsquo;</SAMP> by its version numbers, exactly as they
 should appear in the packaged <CODE>tar</CODE> file name of your distribution
-(<TT>&lsquo;gettext-0.19.tar.gz&rsquo;</TT>, here).
+(<TT>&lsquo;gettext-0.19.1.tar.gz&rsquo;</TT>, here).
 
 <LI>Check for internationalization support.
 
@@ -1752,7 +1752,7 @@ form
 </P>
 
 <PRE>
-AM_GNU_GETTEXT_VERSION(0.19)
+AM_GNU_GETTEXT_VERSION(0.19.1)
 </PRE>
 
 <P>
@@ -1904,8 +1904,8 @@ Output version information and exit.
 
 <P>
 <CODE>autopoint</CODE> supports the GNU <CODE>gettext</CODE> versions from 0.10.35 to
-the current one, 0.19.  In order to apply <CODE>autopoint</CODE> to
-a package using a <CODE>gettext</CODE> version newer than 0.19, you
+the current one, 0.19.1.  In order to apply <CODE>autopoint</CODE> to
+a package using a <CODE>gettext</CODE> version newer than 0.19.1, you
 need to install this same version of GNU <CODE>gettext</CODE> at least.
 
 </P>

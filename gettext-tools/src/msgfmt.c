@@ -1269,7 +1269,8 @@ read_catalog_file_msgfmt (char *filename, catalog_input_format_ty input_syntax)
 }
 
 static void
-add_languages (string_list_ty *languages, const char *line, size_t length)
+add_languages (string_list_ty *languages, string_list_ty *desired_languages,
+               const char *line, size_t length)
 {
   char *start;
 
@@ -1287,7 +1288,9 @@ add_languages (string_list_ty *languages, const char *line, size_t length)
         p++;
 
       *p = '\0';
-      string_list_append_unique (languages, start);
+      if (desired_languages == NULL
+          || string_list_member (desired_languages, start))
+        string_list_append_unique (languages, start);
       start = p + 1;
     }
 }
@@ -1299,68 +1302,74 @@ get_languages (const char *directory)
 {
   char *envval;
   string_list_ty *languages;
+  string_list_ty *desired_languages = NULL;
+  char *linguas_file_name;
+  struct stat statbuf;
+  FILE *fp;
+  size_t line_len = 0;
+  char *line_buf = NULL;
 
   languages = string_list_alloc ();
   envval = getenv ("LINGUAS");
   if (envval)
-    add_languages (languages, envval, strlen (envval));
-  else
     {
-      char *linguas_file_name;
-      struct stat statbuf;
-      FILE *fp;
-      size_t line_len = 0;
-      char *line_buf = NULL;
-
-      linguas_file_name = xconcatenated_filename (directory, "LINGUAS", NULL);
-      if (stat (linguas_file_name, &statbuf) < 0)
-        {
-          error (EXIT_SUCCESS, 0, _("%s does not exist"),
-                 linguas_file_name);
-          string_list_free (languages);
-          free (linguas_file_name);
-          return NULL;
-        }
-
-      fp = fopen (linguas_file_name, "r");
-      if (fp == NULL)
-        {
-          error (EXIT_SUCCESS, 0, _("%s exists but cannot read"),
-                 linguas_file_name);
-          string_list_free (languages);
-          free (linguas_file_name);
-          return NULL;
-        }
-
-      while (!feof (fp))
-        {
-          /* Read next line from file.  */
-          int len = getline (&line_buf, &line_len, fp);
-
-          /* In case of an error leave loop.  */
-          if (len < 0)
-            break;
-
-          /* Remove trailing '\n' and trailing whitespace.  */
-          if (len > 0 && line_buf[len - 1] == '\n')
-            line_buf[--len] = '\0';
-          while (len > 0
-                 && (line_buf[len - 1] == ' '
-                     || line_buf[len - 1] == '\t'
-                     || line_buf[len - 1] == '\r'))
-            line_buf[--len] = '\0';
-
-          /* Test if we have to ignore the line.  */
-          if (*line_buf == '\0' || *line_buf == '#')
-            continue;
-
-          add_languages (languages, line_buf, len);
-        }
-
-      free (line_buf);
-      fclose (fp);
-      free (linguas_file_name);
+      desired_languages = string_list_alloc ();
+      add_languages (desired_languages, NULL, envval, strlen (envval));
     }
+
+  linguas_file_name = xconcatenated_filename (directory, "LINGUAS", NULL);
+  if (stat (linguas_file_name, &statbuf) < 0)
+    {
+      error (EXIT_SUCCESS, 0, _("%s does not exist"), linguas_file_name);
+      string_list_free (languages);
+      if (desired_languages != NULL)
+        string_list_free (desired_languages);
+      free (linguas_file_name);
+      return NULL;
+    }
+
+  fp = fopen (linguas_file_name, "r");
+  if (fp == NULL)
+    {
+      error (EXIT_SUCCESS, 0, _("%s exists but cannot read"),
+             linguas_file_name);
+      string_list_free (languages);
+      if (desired_languages != NULL)
+        string_list_free (desired_languages);
+      free (linguas_file_name);
+      return NULL;
+    }
+
+  while (!feof (fp))
+    {
+      /* Read next line from file.  */
+      int len = getline (&line_buf, &line_len, fp);
+
+      /* In case of an error leave loop.  */
+      if (len < 0)
+        break;
+
+      /* Remove trailing '\n' and trailing whitespace.  */
+      if (len > 0 && line_buf[len - 1] == '\n')
+        line_buf[--len] = '\0';
+      while (len > 0
+             && (line_buf[len - 1] == ' '
+                 || line_buf[len - 1] == '\t'
+                 || line_buf[len - 1] == '\r'))
+        line_buf[--len] = '\0';
+
+      /* Test if we have to ignore the line.  */
+      if (*line_buf == '\0' || *line_buf == '#')
+        continue;
+
+      add_languages (languages, desired_languages, line_buf, len);
+    }
+
+  free (line_buf);
+  fclose (fp);
+  if (desired_languages != NULL)
+    string_list_free (desired_languages);
+  free (linguas_file_name);
 
   return languages;
 }
