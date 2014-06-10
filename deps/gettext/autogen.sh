@@ -22,6 +22,7 @@
 #   - Automake
 #   - Wget
 #   - Git
+#   - XZ Utils
 #
 # By default, it fetches Gnulib as a git submodule.  If you already
 # have a local copy of Gnulib, you can avoid extra network traffic by
@@ -394,15 +395,15 @@ fi
 
 # Fetch gettext-tools/misc/archive.dir.tar.
 if ! test -f gettext-tools/misc/archive.dir.tar; then
-  if ! test -f gettext-tools/misc/archive.dir.tar.gz; then
+  if ! test -f gettext-tools/misc/archive.dir.tar.xz; then
     echo "$0: getting gettext-tools/misc/archive.dir.tar..."
-    wget -q --timeout=5 -O gettext-tools/misc/archive.dir.tar.gz-t "ftp://alpha.gnu.org/gnu/gettext/archive.dir-latest.tar.gz" \
-      && mv gettext-tools/misc/archive.dir.tar.gz-t gettext-tools/misc/archive.dir.tar.gz
+    wget -q --timeout=5 -O gettext-tools/misc/archive.dir.tar.xz-t "ftp://alpha.gnu.org/gnu/gettext/archive.dir-latest.tar.xz" \
+      && mv gettext-tools/misc/archive.dir.tar.xz-t gettext-tools/misc/archive.dir.tar.xz
     retval=$?
-    rm -f gettext-tools/misc/archive.dir.tar.gz-t
+    rm -f gettext-tools/misc/archive.dir.tar.xz-t
     test $retval -eq 0 || exit $retval
   fi
-  gzip -d -c < gettext-tools/misc/archive.dir.tar.gz > gettext-tools/misc/archive.dir.tar-t \
+  xz -d -c < gettext-tools/misc/archive.dir.tar.xz > gettext-tools/misc/archive.dir.tar-t \
     && mv gettext-tools/misc/archive.dir.tar-t gettext-tools/misc/archive.dir.tar
   retval=$?
   rm -f gettext-tools/misc/archive.dir.tar-t

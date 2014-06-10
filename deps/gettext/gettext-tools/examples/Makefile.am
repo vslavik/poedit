@@ -434,6 +434,7 @@ EXAMPLESPOFILES = \
   nl.po \
   pl.po \
   pt.po \
+  pt_BR.po \
   ro.po \
   ru.po \
   sk.po \

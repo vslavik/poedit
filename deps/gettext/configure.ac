@@ -22,7 +22,7 @@ AC_INIT([gettext],
 	[bug-gnu-gettext@gnu.org])
 AC_CONFIG_SRCDIR([gettext-tools/src/msgfmt.c])
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE([1.13 silent-rules parallel-tests])
+AM_INIT_AUTOMAKE([1.13 silent-rules parallel-tests dist-xz])
 
 dnl Override automake's tar command used for creating distributions.
 am__tar='${AMTAR} chof - --owner=root --group=root "$$tardir"'

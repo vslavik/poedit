@@ -48,7 +48,6 @@ msgstr ""
 "Project-Id-Version: GNU bison\n"
 "PO-Revision-Date: 2001-04-05 19:47+0200\n"
 "Last-Translator: ABC DEF <abc@gnu.uucp>\n"
-"Language-Team: test <test@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-9\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -68,9 +67,10 @@ ${MSGFMT} --check -o /dev/null mf-test10.po2 \
     2>&1 | grep -v '^==' | sed -e 's|[^ ]*\\msgfmt\.exe|msgfmt|' -e 's|^msgfmt\.exe|msgfmt|' | LC_ALL=C tr -d '\r' > mf-test10.err
 
 cat << EOF > mf-test10.ok
+mf-test10.po2:6: warning: header field 'Language-Team' missing in header
 mf-test10.po2:6: warning: header field 'Language' missing in header
-mf-test10.po2:20: number of format specifications in 'msgid_plural' and 'msgstr[1]' does not match
-msgfmt: found 2 fatal errors
+mf-test10.po2:19: number of format specifications in 'msgid_plural' and 'msgstr[1]' does not match
+msgfmt: found 1 fatal error
 EOF
 
 : ${DIFF=diff}

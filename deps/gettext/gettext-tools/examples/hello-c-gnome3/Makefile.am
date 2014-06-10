@@ -41,16 +41,21 @@ desktopdir = $(datadir)/applications
 desktop_DATA = hello.desktop
 
 hello.desktop.in: hello.desktop.in.in
-	$(AM_V_GEN) sed -e "s|@bindir[@]|$(bindir)|" \
-		-e "s|@VERSION[@]|$(VERSION)|" \
-		$< > $@ || rm $@
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -o $@-t \
+	  -d $(top_srcdir)/po && mv $@-t $@
 
 hello.desktop: hello.desktop.in
-	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -o $@ -d $(top_srcdir)/po
+	@rm -f $@ $@-t
+	$(AM_V_GEN) srcdir=''; \
+	  test -f ./$< || srcdir=$(srcdir)/; \
+	  sed -e "s|@bindir[@]|$(bindir)|" $< > $@-t && mv $@-t $@
 
-CLEANFILES = $(BUILT_SOURCES) hello.desktop.in $(desktop_DATA)
+CLEANFILES = $(BUILT_SOURCES) hello.desktop $(desktop_DATA)
 
 # Additional files to be distributed.
-EXTRA_DIST = autogen.sh autoclean.sh hello.ui hello.desktop.in.in \
+EXTRA_DIST = autogen.sh autoclean.sh hello.ui \
+	hello.desktop.in.in hello.desktop.in \
 	hello.gschema.xml \
 	hello.gresource.xml
+
+MAINTAINERCLEANFILES = hello.desktop.in

@@ -1,3 +1,26 @@
+Version 0.19.1 - June 2014
+
+* Programming languages support:
+
+  - Desktop Entry:
+    msgfmt now always reads the po/LINGUAS file, regardless of whether
+    the LINGUAS environment variable is set.  The variable can now be
+    used to restrict the languages list read from the po/LINGUAS file.
+
+  - Vala:
+    Bug fix in xgettext handling of "//" in string literals.  This was
+    a regression after the C-99 Unicode escape support.
+
+* The po/Makevars.template file now contains the newly added variables.
+
+* msgfmt now treats errors in the PO file header as non-fatal.  Since
+  0.19 msgfmt started to abort on the fatal errors, but some
+  translation systems are still not ready to supply valid headers.
+
+* Future backward-incompatibilities:
+  - In future Gettext versions, msgfmt will treat header errors as
+    fatal and terminate the command execution.
+
 Version 0.19 - June 2014
 
 * Programming languages support:
@@ -18,7 +41,7 @@ Version 0.19 - June 2014
 
   - Python:
     The acceptable format specifiers in the braced-syntax format
-    strings is now limited to the Standard Format Specifiers, to
+    strings are now limited to the Standard Format Specifiers, to
     reasonably avoid false-positives.
 
   - Scheme:

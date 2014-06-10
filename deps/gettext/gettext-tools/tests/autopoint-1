@@ -79,12 +79,19 @@ AC_OUTPUT
 EOF
 
 test -d intl || mkdir intl
+
 echo gettext-0.15 > intl/VERSION
 
-$gettext_datadir/autopoint 2>&1 | grep -q 'locally modified' || exit 1
+# For further investigation, autopoint keeps autopoint.diff in $TMPDIR
+# if there is a mismatch.  Set TMPDIR not to pollute /tmp.
+TMPDIR="$PWD" $gettext_datadir/autopoint 2>&1 | grep -q 'locally modified' || exit 1
 
 test ! -d m4 || exit 1
 test ! -d po || exit 1
+
+echo 'GNU gettext library from gettext-0.15' > intl/VERSION
+
+TMPDIR="$PWD" $gettext_datadir/autopoint 2>&1 || exit 1
 
 rm -fr intl
 
