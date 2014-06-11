@@ -50,6 +50,14 @@
 #include <wx/cocoa/string.h>
 #endif
 
+#ifdef __WXMSW__
+  #include <wx/msw/wrapwin.h>
+  #include <Richedit.h>
+  #ifndef IMF_SPELLCHECKING
+    #define IMF_SPELLCHECKING 0x0800
+  #endif
+#endif
+
 #ifdef USE_SPELLCHECKING
 
 #ifdef __WXGTK__
@@ -425,6 +433,12 @@ class TranslationTextCtrl : public CustomizedTextCtrl
                                 wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE | wxTE_RICH2)
         {
+#ifdef __WXMSW__
+          HWND hwnd = (HWND)GetHWND();
+          auto editStyle = SES_USECTF | SES_CTFALLOWEMBED | SES_CTFALLOWSMARTTAG | SES_CTFALLOWPROOFING;
+          ::SendMessage(hwnd, EM_SETEDITSTYLE, editStyle, editStyle);
+          ::SendMessage(hwnd, EM_SETLANGOPTIONS, 0, IMF_SPELLCHECKING);
+#endif
         }
 };
 
