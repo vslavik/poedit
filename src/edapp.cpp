@@ -821,6 +821,17 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     AddNativeItem(speech, -1, _("Start Speaking"), @selector(startSpeaking:), @"");
     AddNativeItem(speech, -1, _("Stop Speaking"), @selector(stopSpeaking:), @"");
     [editNS setSubmenu:speech forItem:item];
+
+    int windowMenuPos = bar->FindMenu(_("Window"));
+    if (windowMenuPos != wxNOT_FOUND)
+    {
+        NSMenu *windowNS = bar->GetMenu(windowMenuPos)->GetHMenu();
+        AddNativeItem(windowNS, -1, _("Minimize"), @selector(performMiniaturize:), @"m");
+        AddNativeItem(windowNS, -1, _("Zoom"), @selector(performZoom:), @"");
+        [windowNS addItem:[NSMenuItem separatorItem]];
+        AddNativeItem(windowNS, -1, _("Bring All to Front"), @selector(arrangeInFront:), @"");
+        [NSApp setWindowsMenu:windowNS];
+    }
 }
 
 void PoeditApp::CreateFakeOpenRecentMenu()
