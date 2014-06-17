@@ -764,14 +764,12 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     }
 
     NSMenu *editNS = edit->GetHMenu();
-#if 0
-    // These don't work yet, not using NSUndoManager
+
     AddNativeItem(editNS, 0, _("Undo"), @selector(undo:), @"z");
     AddNativeItem(editNS, 1, _("Redo"), @selector(redo:), @"Z");
     [editNS insertItem:[NSMenuItem separatorItem] atIndex:2];
     if (pasteItem != -1) pasteItem += 3;
     if (findItem != -1)  findItem += 3;
-#endif
 
     NSMenuItem *item;
     if (pasteItem != -1)
@@ -779,7 +777,10 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
         item = AddNativeItem(editNS, pasteItem+1, _("Paste and Match Style"),
                              @selector(pasteAsPlainText:), @"V");
         [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSAlternateKeyMask];
-        if (findItem != -1)  findItem++;
+        item = AddNativeItem(editNS, pasteItem+2, _("Delete"),
+                             @selector(delete:), @"");
+        [item setKeyEquivalentModifierMask:NSCommandKeyMask];
+        if (findItem != -1) findItem += 2;
     }
 
     #define FIND_PLUS(ofset) ((findItem != -1) ? (findItem+ofset) : -1)
@@ -818,6 +819,17 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     AddNativeItem(speech, -1, _("Start Speaking"), @selector(startSpeaking:), @"");
     AddNativeItem(speech, -1, _("Stop Speaking"), @selector(stopSpeaking:), @"");
     [editNS setSubmenu:speech forItem:item];
+
+    int windowMenuPos = bar->FindMenu(_("Window"));
+    if (windowMenuPos != wxNOT_FOUND)
+    {
+        NSMenu *windowNS = bar->GetMenu(windowMenuPos)->GetHMenu();
+        AddNativeItem(windowNS, -1, _("Minimize"), @selector(performMiniaturize:), @"m");
+        AddNativeItem(windowNS, -1, _("Zoom"), @selector(performZoom:), @"");
+        [windowNS addItem:[NSMenuItem separatorItem]];
+        AddNativeItem(windowNS, -1, _("Bring All to Front"), @selector(arrangeInFront:), @"");
+        [NSApp setWindowsMenu:windowNS];
+    }
 }
 
 void PoeditApp::CreateFakeOpenRecentMenu()

@@ -253,6 +253,11 @@ private:
         void OnSortByTranslation(wxCommandEvent&);
         void OnSortUntranslatedFirst(wxCommandEvent&);
 
+#if defined(__WXMSW__) || defined(__WXGTK__)
+        void OnTextEditingCommand(wxCommandEvent& event);
+        void OnTextEditingCommandUpdate(wxUpdateUIEvent& event);
+#endif
+
         void OnAutoTranslate(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
         bool AutoTranslateCatalog(int *matchesCount = nullptr);
