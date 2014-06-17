@@ -764,14 +764,12 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     }
 
     NSMenu *editNS = edit->GetHMenu();
-#if 0
-    // These don't work yet, not using NSUndoManager
+
     AddNativeItem(editNS, 0, _("Undo"), @selector(undo:), @"z");
     AddNativeItem(editNS, 1, _("Redo"), @selector(redo:), @"Z");
     [editNS insertItem:[NSMenuItem separatorItem] atIndex:2];
     if (pasteItem != -1) pasteItem += 3;
     if (findItem != -1)  findItem += 3;
-#endif
 
     NSMenuItem *item;
     if (pasteItem != -1)

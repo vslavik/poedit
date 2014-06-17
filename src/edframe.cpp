@@ -376,6 +376,8 @@ public:
         NSTextView *text = TextView();
         [text setAutomaticQuoteSubstitutionEnabled:NO];
         [text setAutomaticDashSubstitutionEnabled:NO];
+
+        [text setAllowsUndo:YES];
     }
 
 protected:
@@ -483,6 +485,35 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_TEXT           (ID_TEXTCOMMENT,PoeditFrame::OnCommentWindowText)
    EVT_IDLE           (PoeditFrame::OnIdle)
    EVT_SIZE           (PoeditFrame::OnSize)
+
+#if defined(__WXMSW__) || defined(__WXGTK__)
+   EVT_MENU(wxID_UNDO,      PoeditFrame::OnTextEditingCommand)
+   EVT_MENU(wxID_REDO,      PoeditFrame::OnTextEditingCommand)
+   EVT_MENU(wxID_CUT,       PoeditFrame::OnTextEditingCommand)
+   EVT_MENU(wxID_COPY,      PoeditFrame::OnTextEditingCommand)
+   EVT_MENU(wxID_PASTE,     PoeditFrame::OnTextEditingCommand)
+   EVT_MENU(wxID_DELETE,    PoeditFrame::OnTextEditingCommand)
+   EVT_MENU(wxID_SELECTALL, PoeditFrame::OnTextEditingCommand)
+   EVT_UPDATE_UI(wxID_UNDO,      PoeditFrame::OnTextEditingCommandUpdate)
+   EVT_UPDATE_UI(wxID_REDO,      PoeditFrame::OnTextEditingCommandUpdate)
+   EVT_UPDATE_UI(wxID_CUT,       PoeditFrame::OnTextEditingCommandUpdate)
+   EVT_UPDATE_UI(wxID_COPY,      PoeditFrame::OnTextEditingCommandUpdate)
+   EVT_UPDATE_UI(wxID_PASTE,     PoeditFrame::OnTextEditingCommandUpdate)
+   EVT_UPDATE_UI(wxID_DELETE,    PoeditFrame::OnTextEditingCommandUpdate)
+   EVT_UPDATE_UI(wxID_SELECTALL, PoeditFrame::OnTextEditingCommandUpdate)
+  #if 0
+    // These translations are provided by wxWidgets. Force the strings here,
+    // even though unused, because Poedit is translated into many more languages
+    // than wx is.
+    _("&Undo"),               _("Undo")
+    _("&Redo"),               _("Redo")
+    _("Cu&t"),                _("Cut")
+    _("&Copy"),               _("Copy")
+    _("&Paste"),              _("Paste")
+    _("&Delete"),             _("Delete")
+    _("Select &All"),         _("Select All")
+  #endif
+#endif
 END_EVENT_TABLE()
 
 
@@ -3518,6 +3549,24 @@ void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
     m_list->sortOrder.untransFirst = event.IsChecked();
     m_list->Sort();
 }
+
+#if defined(__WXMSW__) || defined(__WXGTK__)
+// Emulate something like OS X's first responder: pass text editing commands to
+// the focused text control.
+void PoeditFrame::OnTextEditingCommand(wxCommandEvent& event)
+{
+    wxWindow *w = wxWindow::FindFocus();
+    if (!w || !w->ProcessWindowEventLocally(event))
+        event.Skip();
+}
+
+void PoeditFrame::OnTextEditingCommandUpdate(wxUpdateUIEvent& event)
+{
+    wxWindow *w = wxWindow::FindFocus();
+    if (!w || !w->ProcessWindowEventLocally(event))
+        event.Enable(false);
+}
+#endif // __WXMSW__ || __WXGTK__
 
 // ------------------------------------------------------------------
 //  catalog navigation

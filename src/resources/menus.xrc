@@ -61,11 +61,15 @@
     </object>
     <object class="wxMenu" name="menu_edit">
       <label>_Edit</label>
-      <object class="wxMenuItem" name="wxID_CUT" platform="mac"/>
-      <object class="wxMenuItem" name="wxID_COPY" platform="mac"/>
-      <object class="wxMenuItem" name="wxID_PASTE" platform="mac"/>
-      <object class="wxMenuItem" name="wxID_SELECTALL" platform="mac"/>
-      <object class="separator" platform="mac"/>
+      <object class="wxMenuItem" name="wxID_UNDO" platform="unix|win"/>
+      <object class="wxMenuItem" name="wxID_REDO" platform="unix|win"/>
+      <object class="separator" platform="unix|win"/>
+      <object class="wxMenuItem" name="wxID_CUT"/>
+      <object class="wxMenuItem" name="wxID_COPY"/>
+      <object class="wxMenuItem" name="wxID_PASTE"/>
+      <object class="wxMenuItem" name="wxID_DELETE" platform="unix|win"/>
+      <object class="wxMenuItem" name="wxID_SELECTALL"/>
+      <object class="separator"/>
       <object class="wxMenuItem" name="menu_clear" >
           <label platform="win">Clear translation</label>
           <label platform="unix|mac">Clear Translation</label>
