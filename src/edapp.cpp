@@ -779,7 +779,10 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
         item = AddNativeItem(editNS, pasteItem+1, _("Paste and Match Style"),
                              @selector(pasteAsPlainText:), @"V");
         [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSAlternateKeyMask];
-        if (findItem != -1)  findItem++;
+        item = AddNativeItem(editNS, pasteItem+2, _("Delete"),
+                             @selector(delete:), @"");
+        [item setKeyEquivalentModifierMask:NSCommandKeyMask];
+        if (findItem != -1) findItem += 2;
     }
 
     #define FIND_PLUS(ofset) ((findItem != -1) ? (findItem+ofset) : -1)
