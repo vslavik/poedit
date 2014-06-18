@@ -27,6 +27,7 @@
 #define _FINDFRAME_H_
 
 #include <wx/dialog.h>
+#include <wx/weakref.h>
 
 class WXDLLIMPEXP_FWD_CORE wxButton;
 
@@ -79,7 +80,7 @@ class FindFrame : public wxDialog
 
         wxTextCtrl *m_textField;
 
-        PoeditListCtrl *m_listCtrl;
+        wxWeakRef<PoeditListCtrl> m_listCtrl;
         Catalog *m_catalog;
         int m_position;
         wxButton *m_btnPrev, *m_btnNext;
