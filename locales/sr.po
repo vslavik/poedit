@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Poedit 1.6\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2014-06-17 19:30+0200\n"
+"POT-Creation-Date: 2014-02-02 15:06+0100\n"
 "PO-Revision-Date: 2014-03-02 19:28+0100\n"
 "Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
 "Language-Team: Serbian\n"
@@ -18,20 +18,31 @@ msgstr ""
 "X-Generator: Poedit 1.6.4\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
-#: ../src/edframe.cpp:3059
+#: ../src/edframe.cpp:3013
 #, c-format
 msgid "    “%s”"
 msgstr "    “%s”"
 
-#: ../src/edframe.cpp:2657
+#: ../src/edframe.cpp:2619
+#, c-format
+msgid " (beta version expires %s)"
+msgstr "(бета верзија истиче %s)"
+
+#: ../src/edframe.cpp:2608
 msgid " (modified)"
 msgstr " (измењено)"
 
-#: ../src/edframe.cpp:2639
+#: ../src/edframe.cpp:2590
 msgid " (unsaved)"
 msgstr " (није сачувано)"
 
-#: ../src/edframe.cpp:2909
+#. TRANSLATORS: This is version information in about dialog, it is followed
+#. by version number when used (wxWidgets 2.8)
+#: ../src/edapp.cpp:633
+msgid " Version "
+msgstr " Верзија "
+
+#: ../src/edframe.cpp:2863
 #, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
@@ -39,7 +50,7 @@ msgstr[0] "%d ставка је попуњена из преводилачке �
 msgstr[1] "%d entries were filled from the translation memory."
 msgstr[2] "%d entries were filled from the translation memory."
 
-#: ../src/edframe.cpp:1756
+#: ../src/edframe.cpp:1710
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
@@ -47,7 +58,7 @@ msgstr[0] "Пронађен је %d проблем са преводом."
 msgstr[1] "Пронађена су %d проблема са преводом."
 msgstr[2] "Пронађено је %d проблема са преводом."
 
-#: ../src/edframe.cpp:2602
+#: ../src/edframe.cpp:2553
 #, c-format
 msgid "%i %% translated, %i string"
 msgid_plural "%i %% translated, %i strings"
@@ -55,7 +66,7 @@ msgstr[0] "%i %% преведено, %i порука"
 msgstr[1] "%i %% преведено, %i поруке"
 msgstr[2] "%i %% преведено, %i порука"
 
-#: ../src/edframe.cpp:2607
+#: ../src/edframe.cpp:2558
 #, c-format
 msgid "%i %% translated, %i string (%s)"
 msgid_plural "%i %% translated, %i strings (%s)"
@@ -63,7 +74,7 @@ msgstr[0] "%i %% преведено, %i порука (%s)"
 msgstr[1] "%i %% преведено, %i поруке (%s)"
 msgstr[2] "%i %% преведено, %i порука (%s)"
 
-#: ../src/export_html.cpp:140
+#: ../src/export_html.cpp:141
 #, c-format
 msgid ""
 "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
@@ -71,7 +82,7 @@ msgstr ""
 "%i%% преведено, %i порука (%i нејасних превода, %i неисправних ознака, %i "
 "непреведених)"
 
-#: ../src/edframe.cpp:2592
+#: ../src/edframe.cpp:2543
 #, c-format
 msgid "%i bad token"
 msgid_plural "%i bad tokens"
@@ -79,7 +90,7 @@ msgstr[0] "%i неисправна ознака"
 msgstr[1] "%i неисправне ознаке"
 msgstr[2] "%i неисправних ознака"
 
-#: ../src/edframe.cpp:2586
+#: ../src/edframe.cpp:2537
 #, c-format
 msgid "%i fuzzy"
 msgid_plural "%i fuzzy"
@@ -87,12 +98,12 @@ msgstr[0] "%i нејасни превод"
 msgstr[1] "%i нејасна превода"
 msgstr[2] "%i нејасних превода"
 
-#: ../src/catalog.cpp:135
+#: ../src/catalog.cpp:131
 #, c-format
 msgid "%i lines of file '%s' were not loaded correctly."
 msgstr "Није учитано %i редова датотеке „%s“."
 
-#: ../src/edframe.cpp:2598
+#: ../src/edframe.cpp:2549
 #, c-format
 msgid "%i not translated"
 msgid_plural "%i not translated"
@@ -100,79 +111,74 @@ msgstr[0] "непреведена %i порука"
 msgstr[1] "Непреведене %i поруке"
 msgstr[2] "Непреведено %i порука"
 
-#: ../src/resources/menus.xrc:259 ../src/resources/menus.xrc:260
-#: ../src/resources/menus.xrc:318 ../src/resources/menus.xrc:319
+#: ../src/resources/menus.xrc:265 ../src/resources/menus.xrc:266
+#: ../src/resources/menus.xrc:330 ../src/resources/menus.xrc:331
 msgid "&About"
 msgstr "&О програму"
 
-#: ../src/resources/menus.xrc:258 ../src/resources/menus.xrc:317
+#: ../src/resources/menus.xrc:264 ../src/resources/menus.xrc:329
 msgid "&About Poedit"
 msgstr "&О „Poedit“"
 
-#: ../src/edframe.cpp:3448
+#: ../src/edframe.cpp:3384
 msgid "&Bookmarks"
 msgstr "&Обележивачи"
 
-#: ../src/resources/manager.xrc:120 ../src/resources/menus.xrc:25
+#: ../src/resources/manager.xrc:120 ../src/resources/menus.xrc:26
 msgid "&Close"
 msgstr "&Затвори"
 
-#: ../src/resources/menus.xrc:214
+#: ../src/resources/menus.xrc:215
 msgid "&Comment Window"
 msgstr "Прозор за &коментаре"
 
-#: ../src/resources/menus.xrc:213
+#: ../src/resources/menus.xrc:214
 msgid "&Comment window"
 msgstr "Прозор за &коментаре"
 
-#: ../src/edframe.cpp:511
-msgid "&Copy"
-msgstr ""
-
-#: ../src/edframe.cpp:513
-#, fuzzy
-msgid "&Delete"
-msgstr "&Обриши"
-
-#: ../src/resources/menus.xrc:168
+#: ../src/resources/menus.xrc:169
 msgid "&Done and Next"
 msgstr "Примени и &настави"
 
-#: ../src/resources/menus.xrc:167
+#: ../src/resources/menus.xrc:168
 msgid "&Done and next"
 msgstr "Примени и &настави"
 
-#: ../src/resources/menus.xrc:63 ../src/resources/menus.xrc:296
+#: ../src/resources/menus.xrc:64 ../src/resources/menus.xrc:303
 msgid "&Edit"
 msgstr "&Уређивање"
 
-#: ../src/edframe.cpp:624 ../src/resources/manager.xrc:113
-#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:269
+#: ../src/edframe.cpp:554 ../src/resources/manager.xrc:113
+#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:275
 msgid "&File"
 msgstr "&Датотека"
 
-#: ../src/resources/menus.xrc:100 ../src/resources/menus.xrc:114
+#: ../src/resources/menus.xrc:97 ../src/resources/menus.xrc:111
 msgid "&Find..."
 msgstr "&Пронађи…"
 
-#: ../src/resources/menus.xrc:254 ../src/resources/menus.xrc:313
+#: ../src/resources/menus.xrc:252 ../src/resources/menus.xrc:320
 msgid "&GNU gettext Manual"
 msgstr "&„GNU gettext“ Упутство"
 
-#: ../src/resources/menus.xrc:253 ../src/resources/menus.xrc:312
+#: ../src/resources/menus.xrc:251 ../src/resources/menus.xrc:319
 msgid "&GNU gettext manual"
 msgstr "&„GNU gettext“ упутство"
 
-#: ../src/edframe.cpp:631 ../src/resources/menus.xrc:164
+#: ../src/edframe.cpp:560 ../src/resources/menus.xrc:165
 msgid "&Go"
 msgstr "&Иди"
 
-#: ../src/edapp.cpp:238 ../src/resources/menus.xrc:262
-#: ../src/resources/menus.xrc:321
+#: ../src/edapp.cpp:223 ../src/resources/menus.xrc:268
+#: ../src/resources/menus.xrc:333
 msgid "&Help"
 msgstr "&Помоћ"
 
-#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:272
+#: ../src/resources/menus.xrc:261
+msgid "&License..."
+msgstr "&Лиценца..."
+
+#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:278
 msgid "&New..."
 msgstr "&Ново..."
 
@@ -180,110 +186,100 @@ msgstr "&Ново..."
 msgid "&Next >"
 msgstr "&Следеће >"
 
-#: ../src/resources/menus.xrc:180
+#: ../src/resources/menus.xrc:181
 msgid "&Next Message"
 msgstr "&Следећа порука"
 
-#: ../src/resources/menus.xrc:179
+#: ../src/resources/menus.xrc:180
 msgid "&Next message"
 msgstr "&Следећа порука"
 
-#: ../src/resources/menus.xrc:247 ../src/resources/menus.xrc:306
+#: ../src/resources/menus.xrc:245 ../src/resources/menus.xrc:313
 msgid "&Online Help"
 msgstr "&Помоћ на мрежи"
 
-#: ../src/resources/menus.xrc:246 ../src/resources/menus.xrc:305
+#: ../src/resources/menus.xrc:244 ../src/resources/menus.xrc:312
 msgid "&Online help"
 msgstr "&Помоћ на мрежи"
 
-#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:281
+#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:291
 msgid "&Open..."
 msgstr "&Отвори…"
 
-#: ../src/edframe.cpp:512
-msgid "&Paste"
-msgstr ""
-
-#: ../src/resources/menus.xrc:128
+#: ../src/resources/menus.xrc:125
 msgid "&Preferences"
 msgstr "&Подешавање поставки"
 
-#: ../src/resources/manager.xrc:116 ../src/resources/menus.xrc:46
-#: ../src/resources/menus.xrc:288
+#: ../src/resources/manager.xrc:116 ../src/resources/menus.xrc:47
+#: ../src/resources/menus.xrc:295
 msgid "&Preferences..."
 msgstr "&Подешавање поставки…"
 
-#: ../src/resources/menus.xrc:175
+#: ../src/resources/menus.xrc:176
 msgid "&Previous Message"
 msgstr "&Претходна порука"
 
-#: ../src/resources/menus.xrc:174
+#: ../src/resources/menus.xrc:175
 msgid "&Previous message"
 msgstr "&Претходна порука"
 
-#: ../src/resources/menus.xrc:157
+#: ../src/resources/menus.xrc:158
 msgid "&Properties..."
 msgstr "&Својства…"
 
-#: ../src/resources/menus.xrc:149
+#: ../src/resources/menus.xrc:146
 msgid "&Purge Deleted Translations"
 msgstr "&Очисти обрисане преводе"
 
-#: ../src/resources/menus.xrc:148
+#: ../src/resources/menus.xrc:145
 msgid "&Purge deleted translations"
 msgstr "&Очисти обрисане преводе"
 
-#: ../src/edframe.cpp:509
-#, fuzzy
-msgid "&Redo"
-msgstr "Понови радњу"
-
-#: ../src/resources/menus.xrc:29
+#: ../src/resources/menus.xrc:30
 msgid "&Save"
 msgstr "&Сачувај"
 
-#: ../src/resources/menus.xrc:97
+#: ../src/resources/menus.xrc:94
 msgid "&Show References"
 msgstr "Прикажи &референце"
 
-#: ../src/resources/menus.xrc:96
+#: ../src/resources/menus.xrc:93
 msgid "&Show references"
 msgstr "Прикажи &референце"
 
-#: ../src/edframe.cpp:508
-#, fuzzy
-msgid "&Undo"
-msgstr "&Откажи"
+#: ../src/resources/menus.xrc:154
+msgid "&Statistics"
+msgstr "&Статистика"
 
-#: ../src/resources/menus.xrc:236
+#: ../src/resources/menus.xrc:237
 msgid "&Untranslated Entries First"
 msgstr "Прво н&епреведене ставке"
 
-#: ../src/resources/menus.xrc:235
+#: ../src/resources/menus.xrc:236
 msgid "&Untranslated entries first"
 msgstr "Прво н&епреведене ставке"
 
-#: ../src/resources/menus.xrc:137
+#: ../src/resources/menus.xrc:134
 msgid "&Update from Sources"
 msgstr "Ажурирај из &извора"
 
-#: ../src/resources/menus.xrc:136
+#: ../src/resources/menus.xrc:133
 msgid "&Update from sources"
 msgstr "Ажурирај из &извора"
 
-#: ../src/resources/menus.xrc:153
+#: ../src/resources/menus.xrc:150
 msgid "&Validate Translations"
 msgstr "Провери &ваљаност превода"
 
-#: ../src/resources/menus.xrc:152
+#: ../src/resources/menus.xrc:149
 msgid "&Validate translations"
 msgstr "Провери &ваљаност превода"
 
-#: ../src/resources/menus.xrc:195
+#: ../src/resources/menus.xrc:196
 msgid "&View"
 msgstr "&Приказ"
 
-#: ../src/catalog.cpp:1722
+#: ../src/catalog.cpp:1665
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "„%s“ није исправна „POT“ датотека."
@@ -297,7 +293,7 @@ msgstr "(%i нових, %i застарелих)"
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 нових, 0 застарелих)"
 
-#: ../src/welcomescreen.cpp:235
+#: ../src/welcomescreen.cpp:262
 msgid "(Learn more about GNU gettext)"
 msgstr "(Сазнај више о „GNU gettext“)"
 
@@ -309,16 +305,27 @@ msgstr "(користи подразумевани језик)"
 msgid "< &Previous"
 msgstr "< &Претходно"
 
-#: ../src/manager.cpp:389
+#: ../src/manager.cpp:388
 msgid "<unnamed>"
 msgstr "<неименовано>"
 
+#. TRANSLATORS: This is titlebar of about dialog, the string ends with space
+#. and is followed by application name when used ("Poedit",
+#. but don't add it to this translation yourself) (wxWidgets 2.8)
+#: ../src/edapp.cpp:637
+msgid "About "
+msgstr "О програму"
+
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
-#: ../src/edapp.cpp:636
+#: ../src/aboutbox.cpp:98 ../src/edapp.cpp:627
 #, c-format
 msgid "About %s"
 msgstr "О %s-у"
+
+#: ../src/aboutbox.cpp:131 ../src/aboutbox.cpp:139
+msgid "Acknowledgements"
+msgstr "Изрази захвалности"
 
 #: ../src/resources/manager.xrc:79
 msgid "Add directory to the list"
@@ -340,7 +347,11 @@ msgstr "Ставка у списку улазних датотека:"
 msgid "An item in keywords list:"
 msgstr "Ставка у списку кључних речи:"
 
-#: ../src/export_html.cpp:190
+#: ../src/edframe.cpp:1435
+msgid "Analyzing WordPress code..."
+msgstr "Анализирање „WordPress“ кода..."
+
+#: ../src/export_html.cpp:191
 msgid "Automatic translation"
 msgstr "Аутоматски превод"
 
@@ -352,7 +363,7 @@ msgstr "Аутоматски провери да ли „Poedit“ има нов
 msgid "Automatically compile .mo file on save"
 msgstr "Аутоматски преведи у .mo датотеку при чувању"
 
-#: ../src/manager.cpp:255
+#: ../src/manager.cpp:254
 msgid "Bad Tokens"
 msgstr "Неисправне ознаке"
 
@@ -360,21 +371,25 @@ msgstr "Неисправне ознаке"
 msgid "Base path:"
 msgstr "Основна путања:"
 
+#: ../src/aboutbox.cpp:119
+msgid "Based on the open source version →"
+msgstr "Засновано на верзији отвореног кода →"
+
 #: ../src/resources/prefs.xrc:90
 msgid "Behavior"
 msgstr "Понашање"
 
-#: ../src/edapp.cpp:830
-msgid "Bring All to Front"
-msgstr ""
+#: ../src/edapp.cpp:230
+msgid "Beta expired"
+msgstr "Бета период је истекао"
 
-#: ../src/catalog.cpp:687
+#: ../src/catalog.cpp:681
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
 "Неисправна датотека каталога: коришћен је облик за множину „msgstr“ без "
 "вредности „msgid_plural“"
 
-#: ../src/catalog.cpp:642
+#: ../src/catalog.cpp:636
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
@@ -385,7 +400,15 @@ msgstr ""
 msgid "Browse"
 msgstr "&Прегледај…"
 
-#: ../src/resources/menus.xrc:133
+#: ../src/licensing.cpp:122
+msgid "Buy Online..."
+msgstr "Купи на мрежи..."
+
+#: ../src/licensing.cpp:120
+msgid "Buy online..."
+msgstr "Купи на мрежи..."
+
+#: ../src/resources/menus.xrc:130
 msgid "C&atalog"
 msgstr "&Каталог"
 
@@ -397,13 +420,14 @@ msgstr "О&чисти"
 msgid "CR/LF conversion"
 msgstr "CR/LF конверзија"
 
-#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:101
-#: ../src/resources/prefs.xrc:303 ../src/resources/prefs.xrc:445
-#: ../src/resources/progress.xrc:32 ../src/resources/properties.xrc:233
+#: ../src/licensing.cpp:129 ../src/resources/comment.xrc:38
+#: ../src/resources/manager.xrc:101 ../src/resources/prefs.xrc:303
+#: ../src/resources/prefs.xrc:445 ../src/resources/progress.xrc:32
+#: ../src/resources/properties.xrc:233
 msgid "Cancel"
 msgstr "&Откажи"
 
-#: ../src/utility.cpp:61 ../src/utility.cpp:71
+#: ../src/utility.cpp:57 ../src/utility.cpp:67
 msgid "Cannot create temporary directory."
 msgstr "Не могу да креирам привремену фасциклу."
 
@@ -412,7 +436,7 @@ msgstr "Не могу да креирам привремену фасциклу.
 msgid "Cannot execute program: %s"
 msgstr "Не могу да покренем програм: %s"
 
-#: ../src/edapp.cpp:814
+#: ../src/edapp.cpp:877
 msgid "Capitalize"
 msgstr "Великим словима"
 
@@ -420,11 +444,11 @@ msgstr "Великим словима"
 msgid "Case sensitive"
 msgstr "&Разликуј мала и велика слова"
 
-#: ../src/manager.cpp:251
+#: ../src/manager.cpp:250
 msgid "Catalog"
 msgstr "Каталог"
 
-#: ../src/edframe.cpp:1257
+#: ../src/edframe.cpp:1152
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Каталог је измењен. Сачувати измене?"
 
@@ -432,15 +456,15 @@ msgstr "Каталог је измењен. Сачувати измене?"
 msgid "Catalog properties"
 msgstr "Својства каталога"
 
-#: ../src/resources/menus.xrc:52
+#: ../src/resources/menus.xrc:53
 msgid "Catalogs &Manager"
 msgstr "&Управљач каталозима"
 
-#: ../src/resources/menus.xrc:51
+#: ../src/resources/menus.xrc:52
 msgid "Catalogs &manager"
 msgstr "&Управљач каталозима"
 
-#: ../src/edapp.cpp:743
+#: ../src/edapp.cpp:806
 msgid "Catalogs Manager"
 msgstr "Управљач каталозима"
 
@@ -448,23 +472,23 @@ msgstr "Управљач каталозима"
 msgid "Change UI language"
 msgstr "&Промени језик окружења"
 
-#: ../src/export_html.cpp:125 ../src/resources/properties.xrc:115
+#: ../src/export_html.cpp:126 ../src/resources/properties.xrc:115
 msgid "Charset:"
 msgstr "Кодирање:"
 
-#: ../src/edapp.cpp:792
+#: ../src/edapp.cpp:855
 msgid "Check Document Now"
 msgstr "Провери документ сада"
 
-#: ../src/edapp.cpp:795
+#: ../src/edapp.cpp:858
 msgid "Check Grammar With Spelling"
 msgstr "Провери граматику са правописом"
 
-#: ../src/edapp.cpp:794
+#: ../src/edapp.cpp:857
 msgid "Check Spelling While Typing"
 msgstr "Провери правопис током куцања"
 
-#: ../src/edapp.cpp:747
+#: ../src/edapp.cpp:811
 msgid "Check for Updates..."
 msgstr "Провери има ли ажурирања…"
 
@@ -472,7 +496,7 @@ msgstr "Провери има ли ажурирања…"
 msgid "Check for errors in the translation"
 msgstr "Проверите има ли грешака у преводу."
 
-#: ../src/resources/menus.xrc:43
+#: ../src/resources/menus.xrc:44
 msgid "Check for updates..."
 msgstr "Провери има ли ажурирања..."
 
@@ -480,7 +504,7 @@ msgstr "Провери има ли ажурирања..."
 msgid "Check spelling"
 msgstr "Провери правопис"
 
-#: ../src/edframe.cpp:3011 ../src/resources/menus.xrc:75
+#: ../src/edframe.cpp:2965 ../src/resources/menus.xrc:70
 msgid "Clear Translation"
 msgstr "&Очисти превод"
 
@@ -488,11 +512,11 @@ msgstr "&Очисти превод"
 msgid "Clear the comment"
 msgstr "Очистите коментар."
 
-#: ../src/edframe.cpp:3009 ../src/resources/menus.xrc:74
+#: ../src/edframe.cpp:2963 ../src/resources/menus.xrc:69
 msgid "Clear translation"
 msgstr "&Очисти превод"
 
-#: ../src/resources/find.xrc:87
+#: ../src/licensing.cpp:203 ../src/resources/find.xrc:87
 msgid "Close"
 msgstr "&Затвори"
 
@@ -504,55 +528,77 @@ msgstr "Коментар"
 msgid "Comment window is editable"
 msgstr "Прозор за к&оментаре може да се уређује"
 
-#: ../src/edframe.cpp:799 ../src/export_html.cpp:212
+#: ../src/edframe.cpp:736 ../src/export_html.cpp:213
 #: ../src/resources/comment.xrc:10
 msgid "Comment:"
 msgstr "Коментар:"
 
-#: ../src/welcomescreen.cpp:258
+#: ../src/welcomescreen.cpp:285
 msgid "Configure source code extraction in Properties."
 msgstr "Подешавање издвајања из изворног кода у Поставкама."
 
-#: ../src/manager.cpp:421 ../src/manager.cpp:441
+#: ../src/manager.cpp:420 ../src/manager.cpp:440
 msgid "Confirmation"
 msgstr "Потврда"
+
+#: ../src/wordpress.cpp:134
+#, c-format
+msgid "Confused by ambiguous values of \"%s\" in %s."
+msgstr "Забуна због двосмислених вредности  \"%s\" у %s."
+
+#: ../src/wordpress.cpp:336
+msgid "Confused: multiple main plugin files."
+msgstr "Забуна: вишестуке датотеке главног додатка."
 
 #: ../src/prefsdlg.cpp:102
 msgid "Consult TM when updating from sources"
 msgstr "Консултујте „ТМ“ кад ажурирате из извора"
 
-#: ../src/edframe.cpp:2277
+#: ../src/edframe.cpp:2229
 msgid "Context:"
 msgstr "Контекст:"
 
-#: ../src/edframe.cpp:511
-msgid "Copy"
-msgstr ""
-
-#: ../src/edframe.cpp:3004 ../src/resources/menus.xrc:80
+#: ../src/edframe.cpp:2958 ../src/resources/menus.xrc:77
 msgid "Copy from Source Text"
 msgstr "&Копирај из изворног текста"
 
-#: ../src/edframe.cpp:3002 ../src/resources/menus.xrc:79
+#: ../src/edframe.cpp:2956 ../src/resources/menus.xrc:76
 msgid "Copy from source text"
 msgstr "&Копирај из изворног текста"
 
-#: ../src/edapp.cpp:796
+#: ../src/edapp.cpp:859
 msgid "Correct Spelling Automatically"
 msgstr "Коригуј правопис аутоматски"
 
-#: ../src/catalog.cpp:1069
+#: ../src/wordpress.cpp:226
+#, c-format
+msgid "Couldn't detect POs location for \"%s\"."
+msgstr "Није могуће пронаћи „PO“ локацију за \"%s\"."
+
+#: ../src/wordpress.cpp:374
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" plugin."
+msgstr "Не може се пронаћи транслациони домен за \"%s\" додатак."
+
+#: ../src/catalog.cpp:1063
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "Не могу да учитам датотеку %s. Вероватно је оштећена."
 
-#: ../src/catalog.cpp:1376 ../src/catalog.cpp:1412 ../src/catalog.cpp:1462
-#: ../src/catalog.cpp:1470 ../src/export_html.cpp:251
+#: ../src/catalog.cpp:1355 ../src/catalog.cpp:1391
 #, c-format
 msgid "Couldn't save file %s."
 msgstr "Не могу да сачувам датотеку %s."
 
-#: ../src/welcomescreen.cpp:205
+#: ../src/welcomescreen.cpp:233
+msgid ""
+"Create a new translation. Poedit will set everything up; you can focus on "
+"translating."
+msgstr ""
+"Направите нов превод, „Poedit“ ће све подесити; ви се можете фокусирати на "
+"превођење."
+
+#: ../src/welcomescreen.cpp:226
 msgid "Create new translation"
 msgstr "Креирајте нови преводилачки пројекат"
 
@@ -560,20 +606,11 @@ msgstr "Креирајте нови преводилачки пројекат"
 msgid "Create new translations project"
 msgstr "Креирајте нови преводилачки пројекат."
 
-#: ../src/edframe.cpp:510
-msgid "Cu&t"
-msgstr ""
-
-#: ../src/edframe.cpp:510
-msgid "Cut"
-msgstr ""
-
 #: ../src/prefsdlg.cpp:170
 msgid "Database size on disk:"
 msgstr "Величина базе података на диску:"
 
-#: ../src/edapp.cpp:780 ../src/edframe.cpp:513 ../src/resources/manager.xrc:41
-#: ../src/resources/prefs.xrc:269
+#: ../src/resources/manager.xrc:41 ../src/resources/prefs.xrc:269
 msgid "Delete"
 msgstr "&Обриши"
 
@@ -581,35 +618,35 @@ msgstr "&Обриши"
 msgid "Delete the project"
 msgstr "Обришите пројекат."
 
-#: ../src/manager.cpp:307
+#: ../src/manager.cpp:306
 msgid "Directories:"
 msgstr "Фасцикле:"
 
-#: ../src/resources/menus.xrc:208
+#: ../src/resources/menus.xrc:209
 msgid "Display &Notes for Translators"
 msgstr "прикажи Н&апомене за преводиоце"
 
-#: ../src/resources/menus.xrc:198
+#: ../src/resources/menus.xrc:199
 msgid "Display &Quotes"
 msgstr "Прикажи &Наводнике"
 
-#: ../src/resources/menus.xrc:207
+#: ../src/resources/menus.xrc:208
 msgid "Display &notes for translators"
 msgstr "Прикажи Н&апомене за преводиоце"
 
-#: ../src/resources/menus.xrc:197
+#: ../src/resources/menus.xrc:198
 msgid "Display &quotes"
 msgstr "Прикажи &Наводнике"
 
-#: ../src/resources/menus.xrc:203
+#: ../src/resources/menus.xrc:204
 msgid "Display Entry &IDs"
 msgstr "Прикажи &ИД Ставки"
 
-#: ../src/resources/menus.xrc:202
+#: ../src/resources/menus.xrc:203
 msgid "Display entry &IDs"
 msgstr "Прикажи &ИД ставки"
 
-#: ../src/manager.cpp:440
+#: ../src/manager.cpp:439
 msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
@@ -617,15 +654,15 @@ msgstr ""
 "Желите ли заиста да ажурирате све\n"
 "каталоге у овом пројекту?"
 
-#: ../src/manager.cpp:420
+#: ../src/manager.cpp:419
 msgid "Do you want to delete the project?"
 msgstr "Желите ли да обришете пројекат?"
 
-#: ../src/edframe.cpp:2863
+#: ../src/edframe.cpp:2817
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Желите ли да уклоните све преводе који се више не користе?"
 
-#: ../src/edframe.cpp:1268
+#: ../src/edframe.cpp:1163
 msgid "Don't Save"
 msgstr "Не чувај"
 
@@ -633,7 +670,7 @@ msgstr "Не чувај"
 msgid "Don't change format of existing catalogs"
 msgstr "&Не мењај формат постојећих каталога"
 
-#: ../src/edframe.cpp:1266
+#: ../src/edframe.cpp:1161
 msgid "Don't save"
 msgstr "&Не чувај"
 
@@ -641,36 +678,40 @@ msgstr "&Не чувај"
 msgid "Don't show again"
 msgstr "Не приказуј поново"
 
-#: ../src/resources/manager.xrc:124 ../src/resources/menus.xrc:58
+#: ../src/edapp.cpp:232
+msgid "Download"
+msgstr "Преузми"
+
+#: ../src/resources/manager.xrc:124 ../src/resources/menus.xrc:59
 msgid "E&xit"
 msgstr "&Изађи"
 
-#: ../src/resources/menus.xrc:38
+#: ../src/resources/menus.xrc:39
 msgid "E&xport as HTML..."
 msgstr "И&звези као „HTML“..."
 
-#: ../src/edapp.cpp:750 ../src/resources/manager.xrc:36
+#: ../src/edapp.cpp:814 ../src/resources/manager.xrc:36
 #: ../src/resources/prefs.xrc:262
 msgid "Edit"
 msgstr "&Уреди"
 
-#: ../src/resources/menus.xrc:91
+#: ../src/resources/menus.xrc:88
 msgid "Edit &Comment"
 msgstr "Уреди &коментар"
 
-#: ../src/resources/menus.xrc:90
+#: ../src/resources/menus.xrc:87
 msgid "Edit &comment"
 msgstr "Уреди &коментар"
 
-#: ../src/edframe.cpp:3018
+#: ../src/edframe.cpp:2972
 msgid "Edit Comment"
 msgstr "Уреди коментар"
 
-#: ../src/welcomescreen.cpp:199
+#: ../src/welcomescreen.cpp:220
 msgid "Edit a translation"
 msgstr "Уреди превод"
 
-#: ../src/edframe.cpp:3016 ../src/resources/comment.xrc:4
+#: ../src/edframe.cpp:2970 ../src/resources/comment.xrc:4
 #: ../src/resources/toolbar.xrc:57
 msgid "Edit comment"
 msgstr "Уреди коментар"
@@ -687,15 +728,31 @@ msgstr "Уредите пројекат."
 msgid "Editor"
 msgstr "Уређивач"
 
+#: ../src/resources/menus.xrc:257 ../src/resources/menus.xrc:325
+msgid "Email &Support..."
+msgstr "Имејл &Подршка..."
+
+#: ../src/resources/menus.xrc:256 ../src/resources/menus.xrc:324
+msgid "Email &support..."
+msgstr "Имејл &подршка..."
+
+#: ../src/wordpress.cpp:510
+msgid "Email Support"
+msgstr "Имејл Подршка"
+
+#: ../src/wordpress.cpp:507
+msgid "Email support"
+msgstr "Имејл подршка"
+
 #: ../src/resources/prefs.xrc:128
 msgid "Enables on-the-fly spellchecking"
 msgstr "Омогућава динамичку проверу правописа"
 
-#: ../src/edframe.cpp:1671
+#: ../src/edframe.cpp:1638
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Ставке у каталогу су вероватно неисправне."
 
-#: ../src/edframe.cpp:2424
+#: ../src/edframe.cpp:2376
 msgid ""
 "Entries in this catalog have different plural forms count from what "
 "catalog's Plural-Forms header says"
@@ -703,7 +760,7 @@ msgstr ""
 "Ставке у каталогу имају другачији број облика за множину од онога што "
 "заглавље прописује."
 
-#: ../src/edframe.cpp:1764
+#: ../src/edframe.cpp:1718
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
@@ -711,7 +768,7 @@ msgstr ""
 "Ставке са грешкама су означене црвеном бојом.\n"
 "Више информација о грешци биће приказано када кликнете на такву ставку."
 
-#: ../src/edframe.cpp:2533
+#: ../src/edframe.cpp:2484
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "Грешка при учитавању датотеке каталога '%s'."
@@ -721,7 +778,7 @@ msgstr "Грешка при учитавању датотеке каталога
 msgid "Error opening file %s!"
 msgstr "Грешка при отварању датотеке %s!"
 
-#: ../src/catalog.cpp:1587
+#: ../src/catalog.cpp:1531
 msgid "Error saving catalog"
 msgstr "Грешка при чувању каталога"
 
@@ -729,15 +786,15 @@ msgstr "Грешка при чувању каталога"
 msgid "Error:"
 msgstr "Грешка:"
 
-#: ../src/edframe.cpp:3369
+#: ../src/edframe.cpp:3305
 msgid "Everything"
 msgstr "Све"
 
-#: ../src/edframe.cpp:1413
+#: ../src/edframe.cpp:1299
 msgid "Export as..."
 msgstr "Извези као..."
 
-#: ../src/welcomescreen.cpp:257
+#: ../src/welcomescreen.cpp:284
 msgid "Extract from sources"
 msgstr "Издвоји из извора"
 
@@ -750,6 +807,10 @@ msgstr "Издвојте текст из изворних датотека у с
 msgid "Failed command: %s"
 msgstr "Неуспела команда: %s"
 
+#: ../src/wordpress.cpp:492
+msgid "Failed to extract WordPress information."
+msgstr "Не могу да издвојим „WordPress“ информације."
+
 #: ../src/digger.cpp:114
 msgid "Failed to load extracted catalog."
 msgstr "Не могу да учитам издвојени каталог."
@@ -758,22 +819,27 @@ msgstr "Не могу да учитам издвојени каталог."
 msgid "Failed to merge gettext catalogs."
 msgstr "Не могу да објединим „gettext“ каталоге."
 
-#: ../src/edframe.cpp:2779 ../src/edframe.cpp:2783
+#: ../src/wordpress.cpp:85 ../src/wordpress.cpp:92
+#, c-format
+msgid "Failed to read file '%s'."
+msgstr "Неуспело читање датотеке '%s'."
+
+#: ../src/edframe.cpp:2736 ../src/edframe.cpp:2740
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Ажурирање преводилачке меморије није успело: %s"
 
-#: ../src/edapp.cpp:616 ../src/edframe.cpp:546 ../src/edframe.cpp:1327
+#: ../src/edapp.cpp:608 ../src/edframe.cpp:477 ../src/edframe.cpp:1221
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Датотека '%s' не постоји."
 
-#: ../src/edframe.cpp:539
+#: ../src/edframe.cpp:470
 #, c-format
 msgid "File '%s' is not a message catalog."
 msgstr "Датотека '%s' није каталог са порукама."
 
-#: ../src/catalog.cpp:1359
+#: ../src/catalog.cpp:1337
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -782,15 +848,15 @@ msgstr ""
 "Датотека  '%s' је само за читање и не може бити сачувана.\n"
 "Сачувајте је под другим именом."
 
-#: ../src/resources/menus.xrc:145
+#: ../src/resources/menus.xrc:142
 msgid "Fill Missing Translations from &TM"
 msgstr "Попуни недостајуће преводе из &ТМ"
 
-#: ../src/resources/menus.xrc:144
+#: ../src/resources/menus.xrc:141
 msgid "Fill missing translations from &TM"
 msgstr "Попуни недостајуће преводе из &ТМ"
 
-#: ../src/edframe.cpp:2926 ../src/edframe.cpp:2953
+#: ../src/edframe.cpp:2880 ../src/edframe.cpp:2907
 msgid "Filling missing translations from TM..."
 msgstr "Попуњавам недостајуће преводе из ТМ..."
 
@@ -798,15 +864,15 @@ msgstr "Попуњавам недостајуће преводе из ТМ..."
 msgid "Finalizing..."
 msgstr "Завршавам..."
 
-#: ../src/resources/menus.xrc:112
+#: ../src/resources/menus.xrc:109
 msgid "Find"
 msgstr "Пронађи"
 
-#: ../src/resources/menus.xrc:118
+#: ../src/resources/menus.xrc:115
 msgid "Find Next"
 msgstr "Пронађи Следеће"
 
-#: ../src/resources/menus.xrc:122
+#: ../src/resources/menus.xrc:119
 msgid "Find Previous"
 msgstr "Пронађи Претходно"
 
@@ -826,11 +892,11 @@ msgstr "Пронађи у изворним порукама"
 msgid "Find in translations"
 msgstr "Пронађи у преводима"
 
-#: ../src/resources/menus.xrc:104
+#: ../src/resources/menus.xrc:101
 msgid "Find next"
 msgstr "Пронађи следеће"
 
-#: ../src/resources/menus.xrc:108
+#: ../src/resources/menus.xrc:105
 msgid "Find previous"
 msgstr "Пронађи претходно"
 
@@ -838,37 +904,49 @@ msgstr "Пронађи претходно"
 msgid "Find..."
 msgstr "Проналажење..."
 
-#: ../src/edframe.cpp:2454
+#: ../src/edframe.cpp:2406
 msgid "Fix the header"
 msgstr "Поправи заглавље"
+
+#: ../src/wordpress.cpp:397
+msgid "Folder looks like both a plugin and a theme."
+msgstr "Фасцикла изгледа и као додатак и као тема."
 
 #: ../src/resources/prefs.xrc:180
 msgid "Fonts"
 msgstr "Фонтови"
 
-#: ../src/edframe.cpp:3371
+#: ../src/edframe.cpp:3307
 #, c-format
 msgid "Form %i"
 msgstr "Облик %i"
 
-#: ../src/manager.cpp:254 ../src/resources/toolbar.xrc:50
+#: ../src/wordpress.cpp:399
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr "У фасцикли није пронађена ни „WordPress“ тема нити додатак."
+
+#: ../src/aboutbox.cpp:191
+msgid "Free version (please upgrade!)"
+msgstr "Бесплатна верзија (молимо унапредите!)"
+
+#: ../src/manager.cpp:253 ../src/resources/toolbar.xrc:50
 msgid "Fuzzy"
 msgstr "Нејасно"
 
-#: ../src/export_html.cpp:196
+#: ../src/export_html.cpp:197
 msgid "Fuzzy translation"
 msgstr "Нејасан превод"
 
-#: ../src/edapp.cpp:588 ../src/edframe.cpp:1307 ../src/edframe.cpp:1376
+#: ../src/edapp.cpp:582 ../src/edframe.cpp:1202 ../src/edframe.cpp:1262
 #: ../src/prefsdlg.cpp:181
 msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
 msgstr "GNU gettext каталози (*.po)|*.po|Све датотеке (*.*)|*.*"
 
-#: ../src/edframe.cpp:1693
+#: ../src/edframe.cpp:1656
 msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "„GNU gettext„ шаблони (*.pot)|*.pot|Све датотеке (*.*)|*.*"
 
-#: ../src/edframe.cpp:1455
+#: ../src/edframe.cpp:1350
 msgid ""
 "GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All "
 "files (*.*)|*.*"
@@ -876,22 +954,22 @@ msgstr ""
 "„GNU gettext“ шаблони (*.pot)|*.pot|„GNU gettext“ каталози (*.po)|*.po|Све "
 "датотеке (*.*)|*.*"
 
-#: ../src/edframe.cpp:3460
+#: ../src/edframe.cpp:3396
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+%i"
 msgstr "Иди на обележивач %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:3454
+#: ../src/edframe.cpp:3390
 #, c-format
 msgid "Go to Bookmark %i\tCtrl+Alt+%i"
 msgstr "Иди на обележивач %i\tCtrl+Alt+%i"
 
-#: ../src/edframe.cpp:3457
+#: ../src/edframe.cpp:3393
 #, c-format
 msgid "Go to bookmark %i\tCtrl+%i"
 msgstr "Иди на обележивач %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:1415
+#: ../src/edframe.cpp:1301
 msgid "HTML file (*.html)|*.html"
 msgstr "HTML датотека (*.html)|*.html"
 
@@ -923,7 +1001,7 @@ msgstr ""
 " Ако је „ТМ“ скоро празна, онда нема много ефекта. Што више\n"
 "превода уређујете „ТМ“ нараста, и то даје боље резултате."
 
-#: ../src/edframe.cpp:2865
+#: ../src/edframe.cpp:2819
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
@@ -945,27 +1023,35 @@ msgstr "Увозе се преводи: %d"
 msgid "Include beta versions"
 msgstr "Укључи бета верзије"
 
-#: ../src/edframe.cpp:182 ../src/edframe.cpp:2322
+#: ../src/edframe.cpp:172 ../src/edframe.cpp:2274
 msgid "Invalid file"
 msgstr "Неисправна датотека"
+
+#: ../src/edapp.cpp:918
+msgid "Invalid license data."
+msgstr "Неисправни лиценцни подаци"
 
 #: ../src/resources/prefs.xrc:351
 msgid "Invocation:"
 msgstr "Позивање"
 
-#: ../src/edframe.cpp:2869
+#: ../src/statistics.cpp:161
+msgid "Items"
+msgstr "Ставке"
+
+#: ../src/edframe.cpp:2823
 msgid "Keep"
 msgstr "Задржи"
 
-#: ../src/languagectrl.cpp:48
+#: ../src/languagectrl.cpp:42
 msgid "Language Code or Name (e.g. en_GB)"
 msgstr "Код Језика или Назив (нпр „en_GB“) "
 
-#: ../src/edframe.cpp:2405
+#: ../src/edframe.cpp:2357
 msgid "Language of the translation isn't set."
 msgstr "Језик пројекта није подешен."
 
-#: ../src/languagectrl.cpp:130
+#: ../src/languagectrl.cpp:112
 msgid "Language of the translation:"
 msgstr "Језик превода:"
 
@@ -973,12 +1059,12 @@ msgstr "Језик превода:"
 msgid "Language selection"
 msgstr "Избор језика"
 
-#: ../src/export_html.cpp:114 ../src/resources/prefs.xrc:319
+#: ../src/export_html.cpp:115 ../src/resources/prefs.xrc:319
 #: ../src/resources/prefs.xrc:323 ../src/resources/properties.xrc:33
 msgid "Language:"
 msgstr "Језик:"
 
-#: ../src/manager.cpp:256
+#: ../src/manager.cpp:255
 msgid "Last modified"
 msgstr "Последња измена"
 
@@ -994,13 +1080,35 @@ msgstr "Више о „gettext“ кључним речима"
 msgid "Learn about plural forms"
 msgstr "Више о облицима за множину"
 
-#: ../src/edframe.cpp:1174 ../src/prefsdlg.cpp:112
+#: ../src/edframe.cpp:1069 ../src/licensing.cpp:434 ../src/prefsdlg.cpp:112
 msgid "Learn more"
 msgstr "Сазнајте више"
 
-#: ../src/catalog.cpp:148
-#, fuzzy, c-format
-msgid "Line %d of file '%s' is corrupted (not valid %s data)."
+#: ../src/aboutbox.cpp:132 ../src/aboutbox.cpp:140
+msgid "License Agreement"
+msgstr "Лиценцни споразум"
+
+#: ../src/licensing.cpp:104
+msgid "License Key"
+msgstr "Лиценцни кључ"
+
+#: ../src/edapp.cpp:808
+msgid "License..."
+msgstr "Лиценца..."
+
+#: ../src/aboutbox.cpp:189
+#, c-format
+msgid "Licensed to %s"
+msgstr "Лиценцирано за %s"
+
+#: ../src/licensing.cpp:236
+#, c-format
+msgid "Licensed to: %s"
+msgstr "Лиценцирано за: %s"
+
+#: ../src/catalog.cpp:144
+#, c-format
+msgid "Line %u of file '%s' is corrupted (not valid %s data)."
 msgstr "Ред %u датотеке '%s' је оштећен (неисправни подаци %s)."
 
 #: ../src/resources/prefs.xrc:148
@@ -1011,20 +1119,20 @@ msgstr "Формат завршетка реда:"
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Списак наставака одвојених тачка-зарезом (нпр. *.cpp;*.h):"
 
-#: ../src/edapp.cpp:813
+#: ../src/edapp.cpp:876
 msgid "Make Lower Case"
 msgstr "Претвори у мала слова"
 
-#: ../src/edapp.cpp:812
+#: ../src/edapp.cpp:875
 msgid "Make Upper Case"
 msgstr "Претвори у велика слова"
 
-#: ../src/catalog.cpp:223
+#: ../src/catalog.cpp:219
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Погрешно уобличено заглавље:  '%s'"
 
-#: ../src/catalog.cpp:1692
+#: ../src/catalog.cpp:1636
 msgid "Merging differences..."
 msgstr "Обједињујем разлике…"
 
@@ -1033,21 +1141,25 @@ msgstr "Обједињујем разлике…"
 msgid "Migration exit status: %d"
 msgstr "Излазни статус миграције: %d"
 
-#: ../src/edapp.cpp:827
-msgid "Minimize"
-msgstr ""
+#: ../src/licensing.cpp:99
+msgid "Name"
+msgstr "Име"
 
 #: ../src/propertiesdlg.cpp:71
 msgid "Name of the project the translation is for"
 msgstr "Назив пројекта за који је превод"
 
-#: ../src/resources/menus.xrc:190
+#: ../src/resources/menus.xrc:191
 msgid "Ne&xt Unfinished"
 msgstr "С&ледећа недовршена"
 
-#: ../src/resources/menus.xrc:189
+#: ../src/resources/menus.xrc:190
 msgid "Ne&xt unfinished"
 msgstr "С&ледећа недовршена"
+
+#: ../src/statistics.cpp:172 ../src/statistics.cpp:198
+msgid "Needs review (fuzzy)"
+msgstr "Потребна рецензија (нејасно)"
 
 #: ../src/resources/prefs.xrc:112
 msgid ""
@@ -1063,11 +1175,19 @@ msgstr ""
 msgid "New"
 msgstr "&Ново"
 
-#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:277
+#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:283
 msgid "New From &POT/PO File..."
 msgstr "Ново из &POT/PO датотеке…"
 
-#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:276
+#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:287
+msgid "New WordPress Translation..."
+msgstr "Нови „WordPress“ превод..."
+
+#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:286
+msgid "New WordPress translation..."
+msgstr "Нови „WordPress“ превод..."
+
+#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:282
 msgid "New from &POT/PO file..."
 msgstr "Ново из &POT/PO датотеке…"
 
@@ -1075,7 +1195,7 @@ msgstr "Ново из &POT/PO датотеке…"
 msgid "New strings"
 msgstr "Нове поруке"
 
-#: ../src/edframe.cpp:2916
+#: ../src/edframe.cpp:2870
 msgid "No entries could be filled from the translation memory."
 msgstr "Ставке не могу бити попуњене из преводилачке меморије."
 
@@ -1083,19 +1203,27 @@ msgstr "Ставке не могу бити попуњене из преводи
 msgid "No files found in: "
 msgstr "Нема датотека у:"
 
-#: ../src/edframe.cpp:1790
+#: ../src/edframe.cpp:1744
 msgid "No problems with the translation found."
 msgstr "Нема проблема са преводом."
 
-#: ../src/edframe.cpp:1846
+#: ../src/edframe.cpp:1800
 msgid "No references to this string found."
 msgstr "Нема референци за ову поруку."
 
-#: ../src/export_html.cpp:157
+#: ../src/licensing.cpp:433
+msgid "No, thanks"
+msgstr "Не, хвала"
+
+#: ../src/statistics.cpp:176 ../src/statistics.cpp:202
+msgid "Not translated"
+msgstr "Није преведено"
+
+#: ../src/export_html.cpp:158
 msgid "Notes"
 msgstr "Напомене"
 
-#: ../src/edframe.cpp:792 ../src/export_html.cpp:203
+#: ../src/edframe.cpp:729 ../src/export_html.cpp:204
 msgid "Notes for translators:"
 msgstr "Напомене за преводиоце:"
 
@@ -1109,7 +1237,7 @@ msgstr "&У реду"
 msgid "Obsolete strings"
 msgstr "Застареле поруке"
 
-#: ../src/edframe.cpp:3377
+#: ../src/edframe.cpp:3313
 msgid "One"
 msgstr "Један"
 
@@ -1121,33 +1249,28 @@ msgstr "Отвори"
 msgid "Open In Editor"
 msgstr "Отвори у уређивачу"
 
-#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:285
-#, fuzzy
-msgid "Open Recent"
-msgstr "Отварање каталога"
-
-#: ../src/welcomescreen.cpp:200
+#: ../src/welcomescreen.cpp:221
 msgid "Open an existing PO file and edit the translation."
 msgstr "Отворите постојећу „PO “ датотеку и уредите превод."
 
-#: ../src/edapp.cpp:585 ../src/edframe.cpp:1305
+#: ../src/edapp.cpp:579 ../src/edframe.cpp:1200
 #: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
 msgid "Open catalog"
 msgstr "Отварање каталога"
 
-#: ../src/edframe.cpp:1453 ../src/edframe.cpp:1691
+#: ../src/edframe.cpp:1348 ../src/edframe.cpp:1654
 msgid "Open catalog template"
 msgstr "Отварање шаблона каталога"
 
-#: ../src/edframe.cpp:3384
+#: ../src/edframe.cpp:3320
 msgid "Other"
 msgstr "Други"
 
-#: ../src/resources/menus.xrc:185
+#: ../src/resources/menus.xrc:186
 msgid "P&revious Unfinished"
 msgstr "П&ретходна недовршена"
 
-#: ../src/resources/menus.xrc:184
+#: ../src/resources/menus.xrc:185
 msgid "P&revious unfinished"
 msgstr "П&ретходна недовршена"
 
@@ -1168,11 +1291,7 @@ msgstr "Рашчлањивачи"
 msgid "Parsing %s files..."
 msgstr "Рашчлањујем %s датотека…"
 
-#: ../src/edframe.cpp:512
-msgid "Paste"
-msgstr ""
-
-#: ../src/edapp.cpp:777
+#: ../src/edapp.cpp:843
 msgid "Paste and Match Style"
 msgstr "Налепи и испоштуј стил"
 
@@ -1184,11 +1303,23 @@ msgstr "Путање"
 msgid "Personalize"
 msgstr "Персонализација"
 
-#: ../src/edframe.cpp:1854
+#: ../src/edframe.cpp:1808
 msgid "Please choose the reference you want to show:"
 msgstr "Изаберите референцу коју желите да прикажете:"
 
-#: ../src/propertiesdlg.cpp:257
+#: ../src/edapp.cpp:231
+msgid ""
+"Please download a newer version from the Poedit website at http://poedit.net/"
+"beta/"
+msgstr ""
+"Молимо да преузмете новију верзију са „Poedit“ странице на http://poedit.net/"
+"beta/"
+
+#: ../src/wordpress.cpp:523
+msgid "Please email this log to help@poedit.net. Thank you!"
+msgstr "Молимо пошаљите овај дневник на help@poedit.net. Хвала!"
+
+#: ../src/propertiesdlg.cpp:256
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
 "Молимо да прво снимите датотеку. Овај одељак се не може уређивати пре тога."
@@ -1200,33 +1331,55 @@ msgstr "Облици за множину:"
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:2492
+#: ../src/edframe.cpp:2444
 #, c-format
 msgid "Plural forms expression used by the catalog is unusual for %s."
 msgstr "Изрази за облике множине употребљени у каталогу су неуобичајени за %s."
 
-#: ../src/edframe.cpp:773
+#: ../src/edframe.cpp:711
 msgid "Plural:"
 msgstr "Множина:"
 
-#: ../src/edframe.cpp:563
+#: ../src/edapp.cpp:918 ../src/edframe.cpp:494
 msgid "Poedit"
 msgstr "Poedit"
 
-#: ../src/manager.cpp:70
+#: ../src/manager.cpp:69
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit – управљач каталозима"
+
+#: ../src/licensing.cpp:74
+msgid "Poedit Registration"
+msgstr "„Poedit“ Регистрација"
 
 #: ../src/tm/tm_migrate.cpp:171 ../src/tm/tm_migrate.cpp:264
 #: ../src/tm/tm_migrate.cpp:294
 msgid "Poedit Update"
 msgstr "„Poedit“ Ажурирање"
 
-#: ../src/digger.cpp:206
+#: ../src/wordpress.cpp:502
+#, c-format
+msgid ""
+"Poedit couldn’t understand the content of the folder you selected. This may "
+"be a problem with the plugin/theme or it may be Poedit being silly. The "
+"error is:\n"
+"\n"
+" • %s\n"
+"\n"
+"Please email help@poedit.net and we’ll sort it out."
+msgstr ""
+"„Poedit“ не разуме садржај фасцикле коју сте изабрали. Ово може бити проблем "
+"са додатком/темом или се „Poedit“ чудно понаша. Грешка је :\n"
+"\n"
+" • %s\n"
+"\n"
+"Молимо да пошаљете имејл на help@poedit.net и ми ћемо то решити."
+
+#: ../src/digger.cpp:200
 msgid "Poedit did not find any files in scanned directories."
 msgstr "Не могу да пронађем ниједну датотеку у скенираним фасциклама."
 
-#: ../src/edapp.cpp:647
+#: ../src/edapp.cpp:644
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit је једноставан уређивач превода."
 
@@ -1247,11 +1400,11 @@ msgstr "Припрема миграције..."
 msgid "Proceed"
 msgstr "Настави"
 
-#: ../src/export_html.cpp:107
+#: ../src/export_html.cpp:108
 msgid "Project info"
 msgstr "Подаци о пројекту"
 
-#: ../src/export_html.cpp:111 ../src/resources/properties.xrc:18
+#: ../src/export_html.cpp:112 ../src/resources/properties.xrc:18
 msgid "Project name and version:"
 msgstr "Име пројекта и верзија:"
 
@@ -1259,53 +1412,68 @@ msgstr "Име пројекта и верзија:"
 msgid "Project name:"
 msgstr "Име пројекта:"
 
-#: ../src/edframe.cpp:2869
+#: ../src/licensing.cpp:398
+msgid ""
+"Purchasing the full version will unlock more features\n"
+"in this and future versions of Poedit, including:\n"
+"\n"
+msgstr ""
+"Куповина пуне верзије ће откључати још функција\n"
+"у овој и наредним везијама „Poedit“ програма, укључујући:\n"
+"\n"
+
+#: ../src/edframe.cpp:2823
 msgid "Purge"
 msgstr "Очисти"
 
-#: ../src/edframe.cpp:2861
+#: ../src/edframe.cpp:2815
 msgid "Purge deleted translations"
 msgstr "Очисти обрисане преводе"
 
-#: ../src/tm/tm_migrate.cpp:268 ../src/resources/manager.xrc:125
-#: ../src/resources/menus.xrc:59 ../src/resources/menus.xrc:292
+#: ../src/edapp.cpp:232 ../src/tm/tm_migrate.cpp:268
+#: ../src/resources/manager.xrc:125 ../src/resources/menus.xrc:60
+#: ../src/resources/menus.xrc:299
 msgid "Quit"
 msgstr "Изађи"
 
-#: ../src/edapp.cpp:769 ../src/edframe.cpp:509
+#: ../src/edapp.cpp:834
 msgid "Redo"
 msgstr "Понови радњу"
 
-#: ../src/edframe.cpp:1854
+#: ../src/edframe.cpp:1808
 msgid "References"
 msgstr "Референце"
 
-#: ../src/edframe.cpp:3071 ../src/edframe.cpp:3075
+#: ../src/edframe.cpp:3025 ../src/edframe.cpp:3029
 msgid "References:"
 msgstr "Референце:"
 
-#: ../src/edframe.cpp:2435
+#: ../src/licensing.cpp:131 ../src/licensing.cpp:135
+msgid "Register"
+msgstr "Региструј"
+
+#: ../src/edframe.cpp:2387
 msgid "Required header Plural-Forms is missing."
 msgstr "Недостаје вредност Plural-Forms у заглављу."
 
-#: ../src/edframe.cpp:2496
+#: ../src/edframe.cpp:2448
 msgid "Review"
 msgstr "Рецензија"
 
-#: ../src/edframe.cpp:1264 ../src/resources/toolbar.xrc:24
+#: ../src/edframe.cpp:1159 ../src/resources/toolbar.xrc:24
 #: ../src/resources/toolbar.xrc:29
 msgid "Save"
 msgstr "Сачувај"
 
-#: ../src/resources/menus.xrc:34
+#: ../src/resources/menus.xrc:35
 msgid "Save &As..."
 msgstr "Сачувај &као…"
 
-#: ../src/resources/menus.xrc:33
+#: ../src/resources/menus.xrc:34
 msgid "Save &as..."
 msgstr "Сачувај &као…"
 
-#: ../src/edframe.cpp:1375
+#: ../src/edframe.cpp:1261
 msgid "Save as..."
 msgstr "Чување"
 
@@ -1313,7 +1481,7 @@ msgstr "Чување"
 msgid "Save catalog"
 msgstr "Сачувајте каталог."
 
-#: ../src/edframe.cpp:1258
+#: ../src/edframe.cpp:1153
 msgid "Save changes"
 msgstr "Чување измена"
 
@@ -1321,17 +1489,13 @@ msgstr "Чување измена"
 msgid "Scanning files..."
 msgstr "Скенирам датотеке…"
 
-#: ../src/edframe.cpp:514
-msgid "Select &All"
-msgstr ""
-
-#: ../src/edframe.cpp:514
-msgid "Select All"
-msgstr ""
-
-#: ../src/manager.cpp:287
+#: ../src/manager.cpp:286
 msgid "Select directory"
 msgstr "Избор фасцикле"
+
+#: ../src/edframe.cpp:1426
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr "Изаберите фасциклу са „WordPress“ темом или додатком"
 
 #: ../src/prefsdlg.cpp:178
 msgid "Select translation files to import"
@@ -1341,38 +1505,38 @@ msgstr "Одабери датотеке превода за увоз"
 msgid "Select your prefered language"
 msgstr "Изаберите жељени језик."
 
-#: ../src/edframe.cpp:3459
+#: ../src/edframe.cpp:3395
 #, c-format
 msgid "Set Bookmark %i\tAlt+%i"
 msgstr "Постави обележивач %i\tAlt+%i"
 
-#: ../src/edframe.cpp:3453
+#: ../src/edframe.cpp:3389
 #, c-format
 msgid "Set Bookmark %i\tCtrl+%i"
 msgstr "Постави обележивач %i\tCtrl+%i"
 
-#: ../src/edframe.cpp:3456
+#: ../src/edframe.cpp:3392
 #, c-format
 msgid "Set bookmark %i\tAlt+%i"
 msgstr "Постави обележивач %i\tAlt+%i"
 
-#: ../src/edframe.cpp:2377
+#: ../src/edframe.cpp:2329
 msgid "Set email"
 msgstr "Постави имејл"
 
-#: ../src/edframe.cpp:2407
+#: ../src/edframe.cpp:2359
 msgid "Set language"
 msgstr "Подеси језик"
 
-#: ../src/edframe.cpp:2392
+#: ../src/edframe.cpp:2344
 msgid "Set name"
 msgstr "Подеси име"
 
-#: ../src/edapp.cpp:791
+#: ../src/edapp.cpp:854
 msgid "Show Spelling and Grammar"
 msgstr "Прикажи Правопис и Граматику"
 
-#: ../src/edapp.cpp:801
+#: ../src/edapp.cpp:864
 msgid "Show Substitutions"
 msgstr "Прикажи замене"
 
@@ -1380,59 +1544,63 @@ msgstr "Прикажи замене"
 msgid "Show summary after catalog update"
 msgstr "Прикажи &резиме након ажурирања каталога"
 
-#: ../src/edframe.cpp:766
+#: ../src/edframe.cpp:704
 msgid "Singular:"
 msgstr "Једнина:"
 
-#: ../src/edapp.cpp:803
+#: ../src/edapp.cpp:866
 msgid "Smart Copy/Paste"
 msgstr "Паметно Копирање/Лепљење"
 
-#: ../src/edapp.cpp:805
+#: ../src/edapp.cpp:868
 msgid "Smart Dashes"
 msgstr "Паметне Цртице"
 
-#: ../src/edapp.cpp:806
+#: ../src/edapp.cpp:869
 msgid "Smart Links"
 msgstr "Паметне Везе"
 
-#: ../src/edapp.cpp:804
+#: ../src/edapp.cpp:867
 msgid "Smart Quotes"
 msgstr "Паметни наводници"
 
-#: ../src/resources/menus.xrc:220
+#: ../src/resources/menus.xrc:221
 msgid "Sort by &File Order"
 msgstr "Сортирај по &реду у датотеци"
 
-#: ../src/resources/menus.xrc:225
+#: ../src/resources/menus.xrc:226
 msgid "Sort by &Source"
 msgstr "Сортирај по &извору"
 
-#: ../src/resources/menus.xrc:230
+#: ../src/resources/menus.xrc:231
 msgid "Sort by &Translation"
 msgstr "Сортирај по &преводу"
 
-#: ../src/resources/menus.xrc:219
+#: ../src/resources/menus.xrc:220
 msgid "Sort by &file order"
 msgstr "Сортирај по &реду у датотеци"
 
-#: ../src/resources/menus.xrc:224
+#: ../src/resources/menus.xrc:225
 msgid "Sort by &source"
 msgstr "Сортирај по &извору"
 
-#: ../src/resources/menus.xrc:229
+#: ../src/resources/menus.xrc:230
 msgid "Sort by &translation"
 msgstr "Сортирај по &преводу"
 
-#: ../src/export_html.cpp:151
+#: ../src/export_html.cpp:152
 msgid "Source"
 msgstr "Извор"
+
+#: ../src/statistics.cpp:188
+msgid "Source Text"
+msgstr "Изворни текст"
 
 #: ../src/resources/prefs.xrc:412 ../src/resources/properties.xrc:127
 msgid "Source code charset:"
 msgstr "Кодирање изворног кода:"
 
-#: ../src/catalog.cpp:1675
+#: ../src/catalog.cpp:1619
 #, c-format
 msgid "Source code directory '%s' doesn't exist."
 msgstr "Фасцикла изворног кода  '%s' не постоји."
@@ -1453,7 +1621,7 @@ msgstr "Појављивање изворне датотеке:"
 msgid "Source text"
 msgstr "Изворни текст"
 
-#: ../src/edframe.cpp:759
+#: ../src/edframe.cpp:697
 msgid "Source text:"
 msgstr "Изворни текст:"
 
@@ -1465,24 +1633,24 @@ msgstr "Кључне речи извора"
 msgid "Sources paths"
 msgstr "Путање извора"
 
-#: ../src/edapp.cpp:817
+#: ../src/edapp.cpp:880
 msgid "Speech"
 msgstr "Говор"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:1170
+#: ../src/edframe.cpp:1065
 #, c-format
 msgid "Spellchecker dictionary for %s isn't available, you need to install it."
 msgstr ""
 "Речник за проверу правописа за %s није доступан. Морате да га инсталирате."
 
-#: ../src/edapp.cpp:789
+#: ../src/edapp.cpp:852
 msgid "Spelling and Grammar"
 msgstr "Правопис и Граматика"
 
-#: ../src/edapp.cpp:819
+#: ../src/edapp.cpp:882
 msgid "Start Speaking"
 msgstr "Почни говор"
 
@@ -1490,7 +1658,11 @@ msgstr "Почни говор"
 msgid "Start from the first item"
 msgstr "По&чни од прве ставке"
 
-#: ../src/edapp.cpp:820
+#: ../src/statistics.cpp:145
+msgid "Statistics"
+msgstr "Статистика"
+
+#: ../src/edapp.cpp:883
 msgid "Stop Speaking"
 msgstr "Заустави говор"
 
@@ -1502,39 +1674,53 @@ msgstr "Сачувани преводи:"
 msgid "String to find:"
 msgstr "Жељени упит:"
 
-#: ../src/edapp.cpp:799
+#: ../src/statistics.cpp:194
+msgid "Strings in source language"
+msgstr "Поруке на изворном језику"
+
+#: ../src/edapp.cpp:862
 msgid "Substitutions"
 msgstr "Замене"
 
-#: ../src/edframe.cpp:2440
+#: ../src/edframe.cpp:2392
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Синтактичка грешка у заглављу Plural-Forms („%s“)."
 
-#: ../src/welcomescreen.cpp:206
+#: ../src/welcomescreen.cpp:227
 msgid ""
 "Take an existing PO file or POT template and create a new translation from "
 "it."
 msgstr ""
 "Узми  постојећу „PO“ датотеку или „POT“ шаблон и направи нови превод од тога."
 
-#: ../src/welcomescreen.cpp:247
+#: ../src/welcomescreen.cpp:274
 msgid "Take translatable strings from an existing POT template."
 msgstr "Узми преводљиве поруке из постојећег „POT“ шаблона."
 
-#: ../src/export_html.cpp:121 ../src/resources/properties.xrc:101
+#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:101
 msgid "Team's email address:"
 msgstr "Е-адреса тима:"
 
-#: ../src/export_html.cpp:117 ../src/resources/properties.xrc:87
+#: ../src/export_html.cpp:118 ../src/resources/properties.xrc:87
 msgid "Team:"
 msgstr "Тим:"
 
-#: ../src/edapp.cpp:807
+#: ../src/edapp.cpp:870
 msgid "Text Replacement"
 msgstr "Замена текста"
 
-#: ../src/edframe.cpp:2917
+#: ../src/wordpress.cpp:368
+#, c-format
+msgid "The \"%s\" plugin isn't localization-ready."
+msgstr "Додатак \"%s\" није спреман за локализацију."
+
+#: ../src/wordpress.cpp:295
+#, c-format
+msgid "The \"%s\" theme isn't localization-ready."
+msgstr "Тема \"%s\" није спремна за локализацију."
+
+#: ../src/edframe.cpp:2871
 msgid ""
 "The TM doesn’t contain any strings similar to the content of this file. It "
 "is only effective for semi-automatic translations after Poedit learns enough "
@@ -1544,7 +1730,7 @@ msgstr ""
 "ће бити за полуаутоматско превођење тек кад „Poedit“ научи довољно из "
 "датотека "
 
-#: ../src/catalog.cpp:1585
+#: ../src/catalog.cpp:1529
 #, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as specified in catalog "
@@ -1557,16 +1743,16 @@ msgstr ""
 "\n"
 "Уместо тога, сачуван је у „UTF-8“ формату и поставке су усклађене са тиме."
 
-#: ../src/edframe.cpp:181 ../src/edframe.cpp:2321
+#: ../src/edframe.cpp:171 ../src/edframe.cpp:2273
 msgid "The file cannot be opened."
 msgstr "Датотека се не може отворити."
 
-#: ../src/edframe.cpp:186 ../src/edframe.cpp:2326
+#: ../src/edframe.cpp:176 ../src/edframe.cpp:2278
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr "Датотека је оштећена или у формату који „Poedit“ не препознаје."
 
-#: ../src/edframe.cpp:1774
+#: ../src/edframe.cpp:1728
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
@@ -1574,7 +1760,7 @@ msgstr ""
 "Датотека је безбедно сачувана и преведена у MO формат, али можда неће радити "
 "исправно."
 
-#: ../src/edframe.cpp:1777
+#: ../src/edframe.cpp:1731
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
@@ -1582,15 +1768,38 @@ msgstr ""
 "Датотека је безбедно сачувана, али се не може превести у MO формат и "
 "користити."
 
-#: ../src/edframe.cpp:1771
+#: ../src/edframe.cpp:1725
 msgid "The file was saved safely."
 msgstr "Датотека је безбедно сачувана."
 
-#: ../src/welcomescreen.cpp:239
+#: ../src/edapp.cpp:919
+#, c-format
+msgid ""
+"The link doesn't contain valid Poedit license. Try entering it manually or "
+"contact support at help@poedit.net.\n"
+"\n"
+"(%s)"
+msgstr ""
+"Веза не садржи ваљану „Poedit“ лиценцу. Покушајте унос директно или "
+"контактирајте подршку на help@poedit.net.\n"
+"\n"
+"(%s)"
+
+#: ../src/licensing.cpp:109
+msgid ""
+"The registration key can be used on multiple computers you use personally or "
+"for multiple\n"
+"accounts on a single computer."
+msgstr ""
+"Регистрациони кључ се може користити на више ваших личних рачунара или за "
+"више\n"
+"коеисничких налога на истом рачунару."
+
+#: ../src/welcomescreen.cpp:266
 msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr "Најпростији начин да се попуни каталог је ажурирање из „POT“ датотеке:"
 
-#: ../src/edframe.cpp:1800
+#: ../src/edframe.cpp:1754
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
@@ -1599,11 +1808,11 @@ msgstr[0] "Превод је спреман за коришћење, али %d �
 msgstr[1] "Превод је спреман за коришћење, али %d ставке нису још преведене."
 msgstr[2] "Превод је спреман за коришћење, али %d ставки није још преведено."
 
-#: ../src/edframe.cpp:1805
+#: ../src/edframe.cpp:1759
 msgid "The translation is ready for use."
 msgstr "Превод је спреман за коришћење."
 
-#: ../src/edframe.cpp:2912
+#: ../src/edframe.cpp:2866
 msgid ""
 "The translations were marked as fuzzy, because they may be inaccurate. You "
 "should review them for correctness."
@@ -1611,16 +1820,16 @@ msgstr ""
 "Преводи су означени као нејасни јер могу бити и нетачни. Требате их "
 "проверити и потврдити тачност. "
 
-#: ../src/welcomescreen.cpp:225
+#: ../src/welcomescreen.cpp:252
 msgid "There are no translations. That’s unusual."
 msgstr "Нема превода. То је неуобичајено."
 
-#: ../src/catalog.cpp:1421
+#: ../src/catalog.cpp:1400
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr "Дошло је до проблема при обликовању датотеке, али је успешно сачувана."
 
-#: ../src/catalog.cpp:1059
+#: ../src/catalog.cpp:1053
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
@@ -1644,7 +1853,11 @@ msgstr ""
 "Ове поруке су пронађене у изворној датотеци,\n"
 "али их нема у каталогу. Сада ће бити додате."
 
-#: ../src/edframe.cpp:2420
+#: ../src/edapp.cpp:230
+msgid "This beta version of Poedit expired."
+msgstr "Ова бета верзија „Poedit“-а је истекла."
+
+#: ../src/edframe.cpp:2372
 msgid ""
 "This catalog has entries with plural forms, but doesn't have Plural-Forms "
 "header configured."
@@ -1702,15 +1915,15 @@ msgstr ""
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Поставите ознаку нејасног превода или је уклоните."
 
-#: ../src/manager.cpp:252
+#: ../src/manager.cpp:251
 msgid "Total"
 msgstr "Укупно"
 
-#: ../src/edapp.cpp:810
+#: ../src/edapp.cpp:873
 msgid "Transformations"
 msgstr "Трансформације"
 
-#: ../src/welcomescreen.cpp:230
+#: ../src/welcomescreen.cpp:257
 msgid ""
 "Translatable entries aren't added manually in the Gettext system, but are "
 "automatically extracted\n"
@@ -1724,24 +1937,33 @@ msgstr ""
 "Преводиоци углавном користе „PO“ шаблонске датотеке (POT) које припремају "
 "програмери."
 
-#: ../src/edframe.cpp:2971
+#: ../src/welcomescreen.cpp:232
+msgid "Translate WordPress theme or plugin"
+msgstr "Превод „WordPress“ теме или додатка"
+
+#: ../src/statistics.cpp:168
+msgid "Translated"
+msgstr "Преведено"
+
+#: ../src/edframe.cpp:2925
 #, c-format
 msgid "Translated %u strings"
 msgstr "Преведено %u порука"
 
-#: ../src/edframe.cpp:2952
+#: ../src/edframe.cpp:2906
 msgid "Translating"
 msgstr "Преводи се"
 
-#: ../src/edlistctrl.cpp:333 ../src/export_html.cpp:154
+#: ../src/edlistctrl.cpp:333 ../src/export_html.cpp:155
+#: ../src/statistics.cpp:158
 msgid "Translation"
 msgstr "Превод"
 
-#: ../src/resources/menus.xrc:85
+#: ../src/resources/menus.xrc:82
 msgid "Translation Is &Fuzzy"
 msgstr "Пр&евод је Нејасан"
 
-#: ../src/languagectrl.cpp:120
+#: ../src/languagectrl.cpp:102
 msgid "Translation Language"
 msgstr "Језик превода"
 
@@ -1749,11 +1971,11 @@ msgstr "Језик превода"
 msgid "Translation Memory"
 msgstr "Преводилачка меморија"
 
-#: ../src/edframe.cpp:3038 ../src/edframe.cpp:3050
+#: ../src/edframe.cpp:2992 ../src/edframe.cpp:3004
 msgid "Translation Suggestions:"
 msgstr "Сугестије Преводa:"
 
-#: ../src/resources/menus.xrc:84
+#: ../src/resources/menus.xrc:81
 msgid "Translation is &fuzzy"
 msgstr "Пр&евод је нејасан"
 
@@ -1765,7 +1987,7 @@ msgstr "Миграција преводилачке меморије није у
 msgid "Translation properties"
 msgstr "Својства превода"
 
-#: ../src/edframe.cpp:3036 ../src/edframe.cpp:3048
+#: ../src/edframe.cpp:2990 ../src/edframe.cpp:3002
 msgid "Translation suggestions:"
 msgstr "Сугестије преводa:"
 
@@ -1774,15 +1996,24 @@ msgstr "Сугестије преводa:"
 msgid "Translation — %s"
 msgstr "Превод — %s"
 
-#: ../src/edframe.cpp:2390
+#: ../src/edframe.cpp:2342
 msgid "Translation's project name isn't set."
 msgstr "Назив пројекта није подешен."
 
-#: ../src/edframe.cpp:781
+#: ../src/edframe.cpp:719
 msgid "Translation:"
 msgstr "Превод:"
 
-#: ../src/edframe.cpp:3379
+#: ../src/wordpress.cpp:417
+#, c-format
+msgid "Translations folder (%s) doesn't exist."
+msgstr "Фасцикла превода (%s) не постоји."
+
+#: ../src/statistics.cpp:180
+msgid "Translations with errors"
+msgstr "Преводи са грешкама"
+
+#: ../src/edframe.cpp:3315
 msgid "Two"
 msgstr "Два"
 
@@ -1790,24 +2021,15 @@ msgstr "Два"
 msgid "UTF-8 (recommended)"
 msgstr "„UTF-8“ (препоручено)"
 
-#: ../src/edapp.cpp:768 ../src/edframe.cpp:508 ../src/resources/summary.xrc:78
+#: ../src/edapp.cpp:833 ../src/resources/summary.xrc:78
 msgid "Undo"
 msgstr "&Откажи"
-
-#: ../src/edapp.cpp:518
-msgid "Unhandled exception occurred."
-msgstr ""
-
-#: ../src/edapp.cpp:510 ../src/edapp.cpp:514
-#, c-format
-msgid "Unhandled exception occurred: %s"
-msgstr ""
 
 #: ../src/resources/prefs.xrc:156
 msgid "Unix (recommended)"
 msgstr "„Unix“ (препоручено)"
 
-#: ../src/manager.cpp:253
+#: ../src/manager.cpp:252
 msgid "Untrans"
 msgstr "Непреведено"
 
@@ -1827,15 +2049,15 @@ msgstr "Ажурирајте све каталоге у пројекту."
 msgid "Update catalog - synchronize it with sources"
 msgstr "Ажурирајте каталог и ускладите га са изворима."
 
-#: ../src/resources/menus.xrc:141
+#: ../src/resources/menus.xrc:138
 msgid "Update from &POT File..."
 msgstr "Ажурирај из &POT датотеке…"
 
-#: ../src/resources/menus.xrc:140
+#: ../src/resources/menus.xrc:137
 msgid "Update from &POT file..."
 msgstr "Ажурирај из &POT датотеке…"
 
-#: ../src/welcomescreen.cpp:246
+#: ../src/welcomescreen.cpp:273
 msgid "Update from POT"
 msgstr "Ажурирај из „POT“"
 
@@ -1843,14 +2065,22 @@ msgstr "Ажурирај из „POT“"
 msgid "Update summary"
 msgstr "Резиме ажурирања"
 
-#: ../src/edframe.cpp:1656 ../src/manager.cpp:449
+#: ../src/edframe.cpp:1624 ../src/manager.cpp:448
 msgid "Updating catalog"
 msgstr "Ажурирање каталога"
 
-#: ../src/edframe.cpp:1673
+#: ../src/edframe.cpp:1640
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
 msgstr ""
 "Не могу да ажурирам каталог. Кликните на „Детаљи >>“ за више информација."
+
+#: ../src/welcomescreen.cpp:204
+msgid "Upgrade to the Pro version of Poedit with more features."
+msgstr "Надоградите „Poedit “ на Про верзију са више функција."
+
+#: ../src/licensing.cpp:432
+msgid "Upgrade..."
+msgstr "Ажурирање..."
 
 #: ../src/resources/properties.xrc:61
 msgid "Use custom expression"
@@ -1884,18 +2114,34 @@ msgstr "Употреби преводилачку меморију"
 msgid "Validate"
 msgstr "Провери ваљаност"
 
-#: ../src/edframe.cpp:1761 ../src/edframe.cpp:1791
+#: ../src/edframe.cpp:1715 ../src/edframe.cpp:1745
 msgid "Validation results"
 msgstr "Резултати провере ваљаности"
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
-#: ../src/edapp.cpp:639 ../src/welcomescreen.cpp:190
+#: ../src/aboutbox.cpp:118 ../src/edapp.cpp:630 ../src/welcomescreen.cpp:191
 #, c-format
 msgid "Version %s"
 msgstr "Верзија %s"
 
-#: ../src/welcomescreen.cpp:185
+#: ../src/licensing.cpp:200
+msgid "View License Key"
+msgstr "Прегледај Лиценцни кључ"
+
+#: ../src/wordpress.cpp:511
+msgid "View Log"
+msgstr "Погледај дневник"
+
+#: ../src/licensing.cpp:198
+msgid "View license key"
+msgstr "Погледај лиценцни кључ"
+
+#: ../src/wordpress.cpp:508
+msgid "View log"
+msgstr "Погледај дневник"
+
+#: ../src/welcomescreen.cpp:186
 msgid "Welcome to Poedit"
 msgstr "Добродошли у „Poedit“"
 
@@ -1903,21 +2149,32 @@ msgstr "Добродошли у „Poedit“"
 msgid "Whole words only"
 msgstr "&Само целе речи"
 
-#: ../src/edapp.cpp:823 ../src/resources/menus.xrc:242
-#, fuzzy
-msgid "Window"
-msgstr "„Windows“"
-
 #: ../src/resources/prefs.xrc:157
 msgid "Windows"
 msgstr "„Windows“"
 
-#: ../src/welcomescreen.cpp:250
+#: ../src/edframe.cpp:1434
+msgid "WordPress"
+msgstr "„WordPress“"
+
+#: ../src/wordpress.cpp:522
+msgid "WordPress Errors Log"
+msgstr "„WordPress“ дневник грешака"
+
+#: ../src/wordpress.cpp:493
+msgid "WordPress error"
+msgstr "„WordPress“ грешка"
+
+#: ../src/statistics.cpp:162
+msgid "Words"
+msgstr "Речи"
+
+#: ../src/welcomescreen.cpp:277
 msgid ""
 "You can also extract translatable strings directly from the source code:"
 msgstr "Преводљиве поруке такође можете директно издвојити из изворног кода:"
 
-#: ../src/edframe.cpp:531
+#: ../src/edframe.cpp:462
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Не можете да превучете више од једне датотеке на прозор Poedit-а."
 
@@ -1925,7 +2182,7 @@ msgstr "Не можете да превучете више од једне да�
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Морате да поново покренете Poedit како би ова измена ступила на снагу."
 
-#: ../src/edframe.cpp:2375
+#: ../src/edframe.cpp:2327
 msgid ""
 "You should set your email address in Preferences so that it can be used for "
 "Last-Translator header in GNU gettext files."
@@ -1933,9 +2190,13 @@ msgstr ""
 "Унесите имејл у поставке како би могла да се користи за заглавље „Последњи "
 "преводилац“ у GNU gettext датотекама."
 
-#: ../src/edframe.cpp:1261
+#: ../src/edframe.cpp:1156
 msgid "Your changes will be lost if you don't save them."
 msgstr "Измене ће бити изгубљене ако их не сачувате."
+
+#: ../src/licensing.cpp:173
+msgid "Your copy is upgraded to Poedit Pro."
+msgstr "Ваша копија је унапређена на „Poedit Pro“."
 
 #: ../src/resources/prefs.xrc:43
 msgid "Your email address:"
@@ -1966,15 +2227,19 @@ msgstr ""
 "%s\n"
 "Пошаљите имејл на help@poedit.net како би смо то исправили."
 
-#: ../src/edframe.cpp:3375
+#: ../src/licensing.cpp:187
+msgid ""
+"You’re awesome! Thank you so much\n"
+"for purchasing Poedit Pro."
+msgstr ""
+"Ви сте феноменални! Веома смо вам захвални\n"
+"због куповине „Poedit Pro“ апликације."
+
+#: ../src/edframe.cpp:3311
 msgid "Zero"
 msgstr "Нула"
 
-#: ../src/edapp.cpp:828
-msgid "Zoom"
-msgstr ""
-
-#: ../src/edapp.cpp:477
+#: ../src/edapp.cpp:458
 msgid "don't delete temporary files (for debugging)"
 msgstr "не бриши привремене датотеке (ради отклањања грешака)"
 
@@ -1985,258 +2250,3 @@ msgstr "нпр nplurals=2; plural=(n > 1);"
 #: ../src/edlistctrl.cpp:386
 msgid "unknown language"
 msgstr "непознат језик"
-
-#~ msgid " (beta version expires %s)"
-#~ msgstr "(бета верзија истиче %s)"
-
-#~ msgid " Version "
-#~ msgstr " Верзија "
-
-#~ msgid "&License..."
-#~ msgstr "&Лиценца..."
-
-#~ msgid "&Statistics"
-#~ msgstr "&Статистика"
-
-#~ msgid "About "
-#~ msgstr "О програму"
-
-#~ msgid "Acknowledgements"
-#~ msgstr "Изрази захвалности"
-
-#~ msgid "Analyzing WordPress code..."
-#~ msgstr "Анализирање „WordPress“ кода..."
-
-#~ msgid "Based on the open source version →"
-#~ msgstr "Засновано на верзији отвореног кода →"
-
-#~ msgid "Beta expired"
-#~ msgstr "Бета период је истекао"
-
-#~ msgid "Buy Online..."
-#~ msgstr "Купи на мрежи..."
-
-#~ msgid "Buy online..."
-#~ msgstr "Купи на мрежи..."
-
-#~ msgid "Confused by ambiguous values of \"%s\" in %s."
-#~ msgstr "Забуна због двосмислених вредности  \"%s\" у %s."
-
-#~ msgid "Confused: multiple main plugin files."
-#~ msgstr "Забуна: вишестуке датотеке главног додатка."
-
-#~ msgid "Couldn't detect POs location for \"%s\"."
-#~ msgstr "Није могуће пронаћи „PO“ локацију за \"%s\"."
-
-#~ msgid "Couldn't detect translation domain of the \"%s\" plugin."
-#~ msgstr "Не може се пронаћи транслациони домен за \"%s\" додатак."
-
-#~ msgid ""
-#~ "Create a new translation. Poedit will set everything up; you can focus on "
-#~ "translating."
-#~ msgstr ""
-#~ "Направите нов превод, „Poedit“ ће све подесити; ви се можете фокусирати "
-#~ "на превођење."
-
-#~ msgid "Download"
-#~ msgstr "Преузми"
-
-#~ msgid "Email &Support..."
-#~ msgstr "Имејл &Подршка..."
-
-#~ msgid "Email &support..."
-#~ msgstr "Имејл &подршка..."
-
-#~ msgid "Email Support"
-#~ msgstr "Имејл Подршка"
-
-#~ msgid "Email support"
-#~ msgstr "Имејл подршка"
-
-#~ msgid "Failed to extract WordPress information."
-#~ msgstr "Не могу да издвојим „WordPress“ информације."
-
-#~ msgid "Failed to read file '%s'."
-#~ msgstr "Неуспело читање датотеке '%s'."
-
-#~ msgid "Folder looks like both a plugin and a theme."
-#~ msgstr "Фасцикла изгледа и као додатак и као тема."
-
-#~ msgid "Found neither WordPress theme nor plugin in the folder."
-#~ msgstr "У фасцикли није пронађена ни „WordPress“ тема нити додатак."
-
-#~ msgid "Free version (please upgrade!)"
-#~ msgstr "Бесплатна верзија (молимо унапредите!)"
-
-#~ msgid "Invalid license data."
-#~ msgstr "Неисправни лиценцни подаци"
-
-#~ msgid "Items"
-#~ msgstr "Ставке"
-
-#~ msgid "License Agreement"
-#~ msgstr "Лиценцни споразум"
-
-#~ msgid "License Key"
-#~ msgstr "Лиценцни кључ"
-
-#~ msgid "License..."
-#~ msgstr "Лиценца..."
-
-#~ msgid "Licensed to %s"
-#~ msgstr "Лиценцирано за %s"
-
-#~ msgid "Licensed to: %s"
-#~ msgstr "Лиценцирано за: %s"
-
-#~ msgid "Name"
-#~ msgstr "Име"
-
-#~ msgid "Needs review (fuzzy)"
-#~ msgstr "Потребна рецензија (нејасно)"
-
-#~ msgid "New WordPress Translation..."
-#~ msgstr "Нови „WordPress“ превод..."
-
-#~ msgid "New WordPress translation..."
-#~ msgstr "Нови „WordPress“ превод..."
-
-#~ msgid "No, thanks"
-#~ msgstr "Не, хвала"
-
-#~ msgid "Not translated"
-#~ msgstr "Није преведено"
-
-#~ msgid ""
-#~ "Please download a newer version from the Poedit website at http://poedit."
-#~ "net/beta/"
-#~ msgstr ""
-#~ "Молимо да преузмете новију верзију са „Poedit“ странице на http://poedit."
-#~ "net/beta/"
-
-#~ msgid "Please email this log to help@poedit.net. Thank you!"
-#~ msgstr "Молимо пошаљите овај дневник на help@poedit.net. Хвала!"
-
-#~ msgid "Poedit Registration"
-#~ msgstr "„Poedit“ Регистрација"
-
-#~ msgid ""
-#~ "Poedit couldn’t understand the content of the folder you selected. This "
-#~ "may be a problem with the plugin/theme or it may be Poedit being silly. "
-#~ "The error is:\n"
-#~ "\n"
-#~ " • %s\n"
-#~ "\n"
-#~ "Please email help@poedit.net and we’ll sort it out."
-#~ msgstr ""
-#~ "„Poedit“ не разуме садржај фасцикле коју сте изабрали. Ово може бити "
-#~ "проблем са додатком/темом или се „Poedit“ чудно понаша. Грешка је :\n"
-#~ "\n"
-#~ " • %s\n"
-#~ "\n"
-#~ "Молимо да пошаљете имејл на help@poedit.net и ми ћемо то решити."
-
-#~ msgid ""
-#~ "Purchasing the full version will unlock more features\n"
-#~ "in this and future versions of Poedit, including:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Куповина пуне верзије ће откључати још функција\n"
-#~ "у овој и наредним везијама „Poedit“ програма, укључујући:\n"
-#~ "\n"
-
-#~ msgid "Register"
-#~ msgstr "Региструј"
-
-#~ msgid "Select the folder with the WordPress theme or plugin"
-#~ msgstr "Изаберите фасциклу са „WordPress“ темом или додатком"
-
-#~ msgid "Source Text"
-#~ msgstr "Изворни текст"
-
-#~ msgid "Statistics"
-#~ msgstr "Статистика"
-
-#~ msgid "Strings in source language"
-#~ msgstr "Поруке на изворном језику"
-
-#~ msgid "The \"%s\" plugin isn't localization-ready."
-#~ msgstr "Додатак \"%s\" није спреман за локализацију."
-
-#~ msgid "The \"%s\" theme isn't localization-ready."
-#~ msgstr "Тема \"%s\" није спремна за локализацију."
-
-#~ msgid ""
-#~ "The link doesn't contain valid Poedit license. Try entering it manually "
-#~ "or contact support at help@poedit.net.\n"
-#~ "\n"
-#~ "(%s)"
-#~ msgstr ""
-#~ "Веза не садржи ваљану „Poedit“ лиценцу. Покушајте унос директно или "
-#~ "контактирајте подршку на help@poedit.net.\n"
-#~ "\n"
-#~ "(%s)"
-
-#~ msgid ""
-#~ "The registration key can be used on multiple computers you use personally "
-#~ "or for multiple\n"
-#~ "accounts on a single computer."
-#~ msgstr ""
-#~ "Регистрациони кључ се може користити на више ваших личних рачунара или за "
-#~ "више\n"
-#~ "коеисничких налога на истом рачунару."
-
-#~ msgid "This beta version of Poedit expired."
-#~ msgstr "Ова бета верзија „Poedit“-а је истекла."
-
-#~ msgid "Translate WordPress theme or plugin"
-#~ msgstr "Превод „WordPress“ теме или додатка"
-
-#~ msgid "Translated"
-#~ msgstr "Преведено"
-
-#~ msgid "Translations folder (%s) doesn't exist."
-#~ msgstr "Фасцикла превода (%s) не постоји."
-
-#~ msgid "Translations with errors"
-#~ msgstr "Преводи са грешкама"
-
-#~ msgid "Upgrade to the Pro version of Poedit with more features."
-#~ msgstr "Надоградите „Poedit “ на Про верзију са више функција."
-
-#~ msgid "Upgrade..."
-#~ msgstr "Ажурирање..."
-
-#~ msgid "View License Key"
-#~ msgstr "Прегледај Лиценцни кључ"
-
-#~ msgid "View Log"
-#~ msgstr "Погледај дневник"
-
-#~ msgid "View license key"
-#~ msgstr "Погледај лиценцни кључ"
-
-#~ msgid "View log"
-#~ msgstr "Погледај дневник"
-
-#~ msgid "WordPress"
-#~ msgstr "„WordPress“"
-
-#~ msgid "WordPress Errors Log"
-#~ msgstr "„WordPress“ дневник грешака"
-
-#~ msgid "WordPress error"
-#~ msgstr "„WordPress“ грешка"
-
-#~ msgid "Words"
-#~ msgstr "Речи"
-
-#~ msgid "Your copy is upgraded to Poedit Pro."
-#~ msgstr "Ваша копија је унапређена на „Poedit Pro“."
-
-#~ msgid ""
-#~ "You’re awesome! Thank you so much\n"
-#~ "for purchasing Poedit Pro."
-#~ msgstr ""
-#~ "Ви сте феноменални! Веома смо вам захвални\n"
-#~ "због куповине „Poedit Pro“ апликације."
