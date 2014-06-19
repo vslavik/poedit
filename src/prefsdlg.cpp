@@ -102,7 +102,7 @@ public:
         m_useTMWhenUpdating = new wxCheckBox(this, wxID_ANY, _("Consult TM when updating from sources"));
         sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().Border(wxALL));
 
-        auto explainTxt = _("If enabled, Poedit will try to fill new entries in using your previous\n"
+        auto explainTxt = _("If enabled, Poedit will try to fill in new entries using your previous\n"
                             "translations stored in the translation memory. If the TM is\n"
                             "near-empty, it will not be very effective. The more translations\n"
                             "you edit and the larger the TM grows, the better it gets.");
