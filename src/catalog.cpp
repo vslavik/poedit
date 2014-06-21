@@ -132,8 +132,11 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
 
     if (f.GetLineCount() != f2.GetLineCount())
     {
-        wxLogError(_("%i lines of file '%s' were not loaded correctly."),
-                   (int)f2.GetLineCount() - (int)f.GetLineCount(),
+        int linesCount = (int)f2.GetLineCount() - (int)f.GetLineCount();
+        wxLogError(wxPLURAL("%i line of file '%s' were not loaded correctly.",
+                            "%i lines of file '%s' were not loaded correctly.",
+                            linesCount),
+                   linesCount,
                    filename.c_str());
         return false;
     }
