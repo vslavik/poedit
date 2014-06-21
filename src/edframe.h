@@ -26,10 +26,6 @@
 #ifndef _EDFRAME_H_
 #define _EDFRAME_H_
 
-#if defined(__WXMSW__)
-  #define CAN_MODIFY_DEFAULT_FONT
-#endif
-
 #include <set>
 
 #include <wx/frame.h>

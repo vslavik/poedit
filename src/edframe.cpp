@@ -3027,7 +3027,6 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
         if (TranslationMemory::Get().Search(langcode, dt.GetString(), m_autoTranslations))
         {
             menu->AppendSeparator();
-#ifdef CAN_MODIFY_DEFAULT_FONT
             wxMenuItem *it2 = new wxMenuItem
                                   (
                                       menu,
@@ -3038,19 +3037,12 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                                       _("Translation Suggestions:")
                                       #endif
                                   );
+#ifdef __WXMSW__
             it2->SetFont(m_boldGuiFont);
-            menu->Append(it2);
 #else
-            menu->Append
-                  (
-                      ID_POPUP_DUMMY+1,
-                      #ifdef __WXMSW__
-                      _("Translation suggestions:")
-                      #else
-                      _("Translation Suggestions:")
-                      #endif
-                  );
+            it2->Enable(false);
 #endif
+            menu->Append(it2);
 
             for (size_t i = 0; i < m_autoTranslations.size(); i++)
             {
@@ -3067,13 +3059,13 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
     {
         menu->AppendSeparator();
 
-#ifdef CAN_MODIFY_DEFAULT_FONT
         wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
+#ifdef __WXMSW__
         it1->SetFont(m_boldGuiFont);
-        menu->Append(it1);
 #else
-        menu->Append(ID_POPUP_DUMMY+0, _("References:"));
+        it1->Enable(false);
 #endif
+        menu->Append(it1);
 
         for (int i = 0; i < (int)refs.GetCount(); i++)
             menu->Append(ID_POPUP_REFS + i, "    " + refs[i]);
