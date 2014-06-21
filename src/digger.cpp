@@ -89,6 +89,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
             continue; // no files of this kind
 
         m_progressInfo->UpdateMessage(
+            // TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
             wxString::Format(_("Parsing %s files..."), pdb[i].Name.c_str()));
         if (!DigFiles(tmpdir, partials, all_files[i], pdb[i], keywords, charset))
         {
