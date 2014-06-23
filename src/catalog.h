@@ -720,6 +720,8 @@ class CatalogParser
             return true;
         }
 
+        virtual void OnIgnoredEntry() {}
+
         /// Textfile being parsed.
         wxTextFile *m_textFile;
 

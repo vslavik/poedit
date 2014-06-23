@@ -656,7 +656,11 @@ bool CatalogParser::Parse()
             mtranslations.Add(str);
 
             bool shouldIgnore = m_ignoreHeader && mstr.empty();
-            if ( !shouldIgnore )
+            if ( shouldIgnore )
+            {
+                OnIgnoredEntry();
+            }
+            else
             {
                 if (!mstr.empty() && m_ignoreTranslations)
                     mtranslations.clear();
@@ -862,6 +866,8 @@ class LoadParser : public CatalogParser
                                     const wxString& comment,
                                     const wxArrayString& autocomments,
                                     unsigned lineNumber);
+
+        virtual void OnIgnoredEntry() { FileIsValid = true; }
 
     private:
         int m_nextId;
