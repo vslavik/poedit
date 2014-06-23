@@ -1226,6 +1226,14 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
     dlg->ShowWindowModalThenDo([this,dlg,completionHandler](int retval) {
         // hide the dialog asap, WriteCatalog() may show another modal sheet
         dlg->Hide();
+#ifdef __WXOSX__
+        // Hide() alone is not sufficient on OS X, we need to destroy dlg
+        // shared_ptr and only then continue. Because this code is called
+        // from event loop (and not this functions' caller) at an unspecified
+        // time anyway, we can just as well defer it into the next idle time
+        // iteration.
+        CallAfter([this,retval,completionHandler]() {
+#endif
 
         if (retval == wxID_YES)
         {
@@ -1246,6 +1254,10 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
         {
             // do not call -- not OK
         }
+
+#ifdef __WXOSX__
+        });
+#endif
     });
 }
 
