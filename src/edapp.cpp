@@ -305,6 +305,8 @@ int PoeditApp::OnExit()
 }
 
 
+static wxLayoutDirection g_layoutDirection = wxLayout_Default;
+
 void PoeditApp::SetupLanguage()
 {
 #if defined(__WXMSW__)
@@ -321,9 +323,18 @@ void PoeditApp::SetupLanguage()
     trans->AddCatalog("poedit");
     trans->AddStdCatalog();
 
-    Language uiLang = Language::TryParse(trans->GetBestTranslation("poedit"));
+    wxString bestTrans = trans->GetBestTranslation("poedit");
+    Language uiLang = Language::TryParse(bestTrans);
     UErrorCode err = U_ZERO_ERROR;
     icu::Locale::setDefault(uiLang.ToIcu(), err);
+
+    const wxLanguageInfo *info = wxLocale::FindLanguageInfo(bestTrans);
+    g_layoutDirection = info ? info->LayoutDirection : wxLayout_Default;
+}
+
+wxLayoutDirection PoeditApp::GetLayoutDirection() const
+{
+    return g_layoutDirection;
 }
 
 
