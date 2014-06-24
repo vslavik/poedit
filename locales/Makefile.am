@@ -11,7 +11,8 @@ install-poedit-catalogs:
 	    $(INSTALL_DATA) $(srcdir)/$$i.mo $(DESTDIR)$(localedir)/$$i/LC_MESSAGES/poedit.mo ; \
 	done
 
-
+uninstall-local:
+	rm -rf $(DESTDIR)$(localedir)/*/LC_MESSAGES/poedit.mo
 
 # ----------------------------------------------------------------------------
 # Logic for catalogs updating follows
