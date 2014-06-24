@@ -101,7 +101,7 @@ void LanguageCtrl::SetLang(const Language& lang)
 
 Language LanguageCtrl::GetLang() const
 {
-    return Language::TryParse(GetValue());
+    return Language::TryParse(GetValue().ToStdWstring());
 }
 
 #ifdef __WXMSW__
@@ -123,7 +123,7 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
     wxString langcode = wxConfigBase::Get()->Read("/last_translation_lang", "");
     Language lang;
     if (!langcode.empty())
-        lang = Language::TryParse(langcode);
+        lang = Language::TryParse(langcode.ToStdWstring());
 
     auto sizer = new wxBoxSizer(wxVERTICAL);
 

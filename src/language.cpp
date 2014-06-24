@@ -349,7 +349,7 @@ wxString Language::FormatForRoundtrip() const
     // (e.g. "Chinese (China)" aren't in the list of known locale names
     // (here because zh-Trans is preferred to zh_CN). So make sure it can
     // be parsed back first.
-    if (TryParse(disp).IsValid())
+    if (TryParse(disp.ToStdWstring()).IsValid())
         return disp;
     else
         return m_code;
@@ -371,19 +371,19 @@ Language Language::TryGuessFromFilename(const wxString& filename)
     //  - entire name
     //  - suffix (foo.cs_CZ.po, wordpressTheme-cs_CZ.po)
     //  - directory name (cs_CZ, cs.lproj, cs/LC_MESSAGES)
-    wxString name = fn.GetName();
+    std::wstring name = fn.GetName().ToStdWstring();
     Language lang = Language::TryParseWithValidation(name);
             if (lang.IsValid())
                 return lang;
 
-    size_t pos = name.find_first_of(".-_");
+    size_t pos = name.find_first_of(L".-_");
     while (pos != wxString::npos)
     {
         auto part = name.substr(pos+1);
         lang = Language::TryParseWithValidation(part);
         if (lang.IsValid())
             return lang;
-         pos = name.find_first_of(".-_",  pos+1);
+         pos = name.find_first_of(L".-_",  pos+1);
     }
 
     auto dirs = fn.GetDirs();
@@ -397,9 +397,9 @@ Language Language::TryGuessFromFilename(const wxString& filename)
         }
         wxString rest;
         if (d->EndsWith(".lproj", &rest))
-            return Language::TryParseWithValidation(rest);
+            return Language::TryParseWithValidation(rest.ToStdWstring());
         else
-            return Language::TryParseWithValidation(*d);
+            return Language::TryParseWithValidation(d->ToStdWstring());
     }
 
     return Language(); // failed to match

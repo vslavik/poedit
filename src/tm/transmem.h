@@ -60,7 +60,7 @@ public:
                        
         @return true if any hits were found, false otherwise.
      */
-    bool Search(const std::wstring& lang,
+    bool Search(const std::string& lang,
                 const std::wstring& source,
                 Results& results,
                 int maxHits = -1);

@@ -268,7 +268,7 @@ void PropertiesDialog::OnLanguageChanged(wxCommandEvent& event)
 
 void PropertiesDialog::OnLanguageValueChanged(const wxString& langstr)
 {
-    Language lang = Language::TryParse(langstr);
+    Language lang = Language::TryParse(langstr.ToStdWstring());
     wxString pluralForm = lang.DefaultPluralFormsExpr();
     if (pluralForm.empty())
     {

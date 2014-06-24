@@ -380,14 +380,14 @@ void Catalog::HeaderData::ParseDict()
     wxString languageCode = GetHeader("Language");
     if ( !languageCode.empty() )
     {
-        Lang = Language::TryParse(languageCode);
+        Lang = Language::TryParse(languageCode.ToStdWstring());
     }
     else
     {
         wxString X_Language = GetHeader("X-Poedit-Language");
         wxString X_Country = GetHeader("X-Poedit-Country");
         if ( !X_Language.empty() )
-            Lang = Language::FromLegacyNames(X_Language, X_Country);
+            Lang = Language::FromLegacyNames(X_Language.ToStdString(), X_Country.ToStdString());
     }
 
     DeleteHeader("X-Poedit-Language");
