@@ -7,7 +7,8 @@
   <Import Project="..\.nuget\nuget.targets" />
 
   <PropertyGroup>
-    <OutputDir>distrib-$(Configuration)</OutputDir>
+    <PoeditVersion>1.6.5</PoeditVersion>
+    <OutputDir>distrib-$(Configuration)-$(PoeditVersion)</OutputDir>
     
     <CodesignTimestampServer>http://timestamp.verisign.com/scripts/timstamp.dll</CodesignTimestampServer>
     <CodesignIdentity>YOUR_CERTIFICATE</CodesignIdentity>
