@@ -69,6 +69,18 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int 
     m_paths->SetMinSize(wxSize(-1, 90));
     m_excludedPaths->SetMinSize(wxSize(-1, 90));
 
+#ifdef __WXOSX__
+    for (auto l: {m_keywords, m_paths, m_excludedPaths})
+    {
+        for (auto c: l->GetChildren())
+        {
+            c->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+            for (auto c2: c->GetChildren())
+                c2->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        }
+    }
+#endif // __WXOSX__
+
     wxXmlResource::Get()->AttachUnknownControl("keywords", m_keywords);
     wxXmlResource::Get()->AttachUnknownControl("paths", m_paths);
     wxXmlResource::Get()->AttachUnknownControl("excluded_paths", m_excludedPaths);
