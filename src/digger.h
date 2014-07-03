@@ -54,11 +54,13 @@ class SourceDigger
             program (typically, gettext) according to parser definition.
 
             \param paths    list of directories to look in
+            \param excludePaths directories to skip
             \param keywords list of keywords that are recognized as 
                             prefixes for translatable strings in sources
             \param charset  source code charset (may be empty)
          */
-        Catalog *Dig(const wxArrayString& paths, 
+        Catalog *Dig(const wxArrayString& paths,
+                     const wxArrayString& excludePaths,
                      const wxArrayString& keywords,
                      const wxString& charset);
 
@@ -68,12 +70,16 @@ class SourceDigger
             array holds list of files that can be parsed by n-th parser
             in \a pdb database.
          */
-        wxArrayString *FindFiles(const wxArrayString& paths, ParsersDB& pdb);
+        wxArrayString *FindFiles(const wxArrayString& paths,
+                                 const wxArrayString& excludePaths,
+                                 ParsersDB& pdb);
 
         /** Finds all files in given directory.
             \return false if an error occured.
          */
-        int FindInDir(const wxString& dirname, wxArrayString& files);
+        int FindInDir(const wxString& dirname,
+                      const wxArrayString& excludePaths,
+                      wxArrayString& files);
 
         /** Digs translatable strings from given files.
             \param outfiles list to which (temporary) file name of extracted

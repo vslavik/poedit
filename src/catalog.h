@@ -452,7 +452,7 @@ class Catalog
                      Team, TeamEmail, Charset, SourceCodeCharset;
             Language Lang;
 
-            wxArrayString SearchPaths, Keywords;
+            wxArrayString SearchPaths, SearchPathsExcluded, Keywords;
             int Bookmarks[BOOKMARK_LAST];
             wxString BasePath;
 

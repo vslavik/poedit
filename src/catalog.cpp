@@ -307,9 +307,9 @@ void Catalog::HeaderData::UpdateDict()
     SetHeaderNotEmpty("X-Poedit-Basepath", BasePath);
 
     i = 0;
-    wxString path;
     while (true)
     {
+        wxString path;
         path.Printf("X-Poedit-SearchPath-%i", i);
         if (!HasHeader(path))
             break;
@@ -317,10 +317,29 @@ void Catalog::HeaderData::UpdateDict()
         i++;
     }
 
-    for (i = 0; i < SearchPaths.GetCount(); i++)
+    i = 0;
+    while (true)
     {
+        wxString path;
+        path.Printf("X-Poedit-SearchPathExcluded-%i", i);
+        if (!HasHeader(path))
+            break;
+        DeleteHeader(path);
+        i++;
+    }
+
+    for (i = 0; i < SearchPaths.size(); i++)
+    {
+        wxString path;
         path.Printf("X-Poedit-SearchPath-%i", i);
         SetHeader(path, SearchPaths[i]);
+    }
+
+    for (i = 0; i < SearchPathsExcluded.size(); i++)
+    {
+        wxString path;
+        path.Printf("X-Poedit-SearchPathExcluded-%i", i);
+        SetHeader(path, SearchPathsExcluded[i]);
     }
 }
 
@@ -442,17 +461,31 @@ void Catalog::HeaderData::ParseDict()
         }
     }
 
+    SearchPaths.clear();
     i = 0;
-    wxString path;
-    SearchPaths.Clear();
     while (true)
     {
+        wxString path;
         path.Printf("X-Poedit-SearchPath-%i", i);
         if (!HasHeader(path))
             break;
         wxString p = GetHeader(path);
         if (!p.empty())
-            SearchPaths.Add(p);
+            SearchPaths.push_back(p);
+        i++;
+    }
+
+    SearchPathsExcluded.clear();
+    i = 0;
+    while (true)
+    {
+        wxString path;
+        path.Printf("X-Poedit-SearchPathExcluded-%i", i);
+        if (!HasHeader(path))
+            break;
+        wxString p = GetHeader(path);
+        if (!p.empty())
+            SearchPathsExcluded.push_back(p);
         i++;
     }
 }
@@ -1688,6 +1721,7 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, bool *cancelledByUser
     SourceDigger dig(progress);
 
     Catalog *newcat = dig.Dig(m_header.SearchPaths,
+                              m_header.SearchPathsExcluded,
                               m_header.Keywords,
                               m_header.SourceCodeCharset);
 

@@ -63,18 +63,22 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int 
 
     // my custom controls:
     m_keywords = new wxEditableListBox(this, -1, _("Additional keywords"));
-    wxXmlResource::Get()->AttachUnknownControl("keywords", m_keywords);
     m_paths = new wxEditableListBox(this, -1, _("Paths"));
+    m_excludedPaths = new wxEditableListBox(this, -1, _("Excluded paths"));
+
+    m_paths->SetMinSize(wxSize(-1, 90));
+    m_excludedPaths->SetMinSize(wxSize(-1, 90));
+
+    wxXmlResource::Get()->AttachUnknownControl("keywords", m_keywords);
     wxXmlResource::Get()->AttachUnknownControl("paths", m_paths);
+    wxXmlResource::Get()->AttachUnknownControl("excluded_paths", m_excludedPaths);
 
     // Controls setup:
     m_project->SetHint(_("Name of the project the translation is for"));
     m_pluralFormsExpr->SetHint(_("e.g. nplurals=2; plural=(n > 1);"));
 
-#if defined(__WXMSW__) || defined(__WXMAC__)
-    // FIXME
-    SetSize(GetSize().x+1,GetSize().y+1);
-#endif
+    Layout();
+    GetSizer()->SetSizeHints(this);
 
     if (!fileExistsOnDisk)
         DisableSourcesControls();
@@ -158,6 +162,34 @@ wxString GetCharsetFromCombobox(wxComboBox *ctrl)
     return c;
 }
 
+void GetStringsFromControl(wxEditableListBox *box, wxArrayString& output)
+{
+    wxArrayString arr;
+    box->GetStrings(arr);
+
+    output.clear();
+    for (auto x: arr)
+    {
+        if (!x.empty())
+            output.push_back(x);
+    }
+}
+
+void GetPathsFromControl(wxEditableListBox *box, wxArrayString& output)
+{
+    wxArrayString arr;
+    box->GetStrings(arr);
+
+    output.clear();
+    for (auto x: arr)
+    {
+        if (!x.empty() && (x.Last() == '/' || x.Last() == '\\'))
+            x.RemoveLast();
+        if (!x.empty())
+            output.push_back(x);
+    }
+}
+
 } // anonymous namespace
 
 
@@ -188,6 +220,7 @@ void PropertiesDialog::TransferTo(Catalog *cat)
         m_pluralFormsCustom->SetValue(true);
 
     m_paths->SetStrings(cat->Header().SearchPaths);
+    m_excludedPaths->SetStrings(cat->Header().SearchPathsExcluded);
     m_keywords->SetStrings(cat->Header().Keywords);
 }
 
@@ -208,27 +241,14 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
     if (lang.IsValid())
         cat->Header().Lang = lang;
 
-    wxString dummy;
-    wxArrayString arr;
+    GetStringsFromControl(m_keywords, cat->Header().Keywords);
+    GetPathsFromControl(m_paths, cat->Header().SearchPaths);
+    GetPathsFromControl(m_excludedPaths, cat->Header().SearchPathsExcluded);
 
-    cat->Header().SearchPaths.Clear();
-    cat->Header().Keywords.Clear();
-
-    m_paths->GetStrings(arr);
-    for (size_t i = 0; i < arr.GetCount(); i++)
-    {
-        dummy = arr[i];
-        if (dummy[dummy.Length() - 1] == _T('/') || 
-                dummy[dummy.Length() - 1] == _T('\\')) 
-            dummy.RemoveLast();
-        if (!dummy.empty())
-            cat->Header().SearchPaths.Add(dummy);
-    }
-    if (arr.GetCount() > 0 && cat->Header().BasePath.empty()) 
+    if (!cat->Header().SearchPaths.empty() && cat->Header().BasePath.empty())
         cat->Header().BasePath = ".";
 
-    m_keywords->GetStrings(arr);
-    cat->Header().Keywords = arr;
+    m_keywords->GetStrings(cat->Header().Keywords);
 
     wxString pluralForms;
     if (m_pluralFormsDefault->GetValue() && cat->Header().Lang.IsValid())
@@ -249,9 +269,12 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
 void PropertiesDialog::DisableSourcesControls()
 {
     m_basePath->Disable();
-    m_paths->Disable();
-    for (auto c: m_paths->GetChildren())
-        c->Disable();
+    for (auto p: {m_paths, m_excludedPaths})
+    {
+        p->Disable();
+        for (auto c: p->GetChildren())
+            c->Disable();
+    }
 
     auto label = XRCCTRL(*this, "sources_path_label", wxStaticText);
     label->SetLabel(_("Please save the file first. This section cannot be edited until then."));
