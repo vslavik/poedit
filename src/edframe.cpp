@@ -958,6 +958,8 @@ PoeditFrame::~PoeditFrame()
 {
     ms_instances.DeleteObject(this);
 
+    FindFrame::NotifyParentDestroyed(m_list, m_catalog);
+
     DestroyContentView();
 
     wxConfigBase *cfg = wxConfig::Get();

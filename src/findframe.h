@@ -58,6 +58,8 @@ class FindFrame : public wxDialog
         /// if it differs from the current one.
         static FindFrame *Get(PoeditListCtrl *list, Catalog *forCatalog);
 
+        static void NotifyParentDestroyed(PoeditListCtrl *list, Catalog *forCatalog);
+
         /** Resets the search to starting position and changes
             the catalog in use. Called by EditorFrame when the user
             reloads catalog.

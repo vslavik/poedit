@@ -146,6 +146,16 @@ FindFrame *FindFrame::Get(PoeditListCtrl *list, Catalog *forCatalog)
 }
 
 
+void FindFrame::NotifyParentDestroyed(PoeditListCtrl *list, Catalog *forCatalog)
+{
+    if (!ms_singleton)
+        return;
+    if (ms_singleton->m_catalog == forCatalog || ms_singleton->m_listCtrl == list)
+        ms_singleton->Destroy();
+}
+
+
+
 void FindFrame::Reset(Catalog *c)
 {
     if (!m_listCtrl)
