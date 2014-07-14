@@ -37,7 +37,7 @@
 
 [Setup]
 OutputBaseFilename=Poedit-{#VERSION_FULL}-setup
-OutputDir=win32\distrib-{#CONFIG}
+OutputDir=win32\distrib-{#CONFIG}-{#VERSION_FULL}
 
 AppName=Poedit
 AppVerName=Poedit {#VERSION_FULL}
