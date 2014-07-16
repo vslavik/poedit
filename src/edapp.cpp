@@ -520,6 +520,10 @@ bool PoeditApp::OnExceptionInMainLoop()
     {
         wxLogError(_("Unhandled exception occurred: %s"), e.what());
     }
+    catch ( NSException *e )
+    {
+        wxLogError(_("Unhandled exception occurred: %s"), wxStringWithNSString([e reason]));
+    }
     catch ( ... )
     {
         wxLogError(_("Unhandled exception occurred."));
