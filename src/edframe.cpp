@@ -2975,43 +2975,46 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
     std::string langcode(m_catalog->GetLanguage().Code());
 
     int cnt = m_catalog->GetCount();
-    int matches = 0;
-    wxString msg;
-
-    // TODO: make this window-modal
-    ProgressInfo progress(this, _("Translating"));
-    progress.UpdateMessage(_("Filling missing translations from TM..."));
-    progress.SetGaugeMax(cnt);
-    for (int i = 0; i < cnt; i++)
+    if (cnt)
     {
-        progress.UpdateGauge();
+        int matches = 0;
+        wxString msg;
 
-        CatalogItem& dt = (*m_catalog)[i];
-        if (dt.HasPlural())
-            continue; // can't handle yet (TODO?)
-        if (dt.IsFuzzy() || !dt.IsTranslated())
+        // TODO: make this window-modal
+        ProgressInfo progress(this, _("Translating"));
+        progress.UpdateMessage(_("Filling missing translations from TM..."));
+        progress.SetGaugeMax(cnt);
+        for (int i = 0; i < cnt; i++)
         {
-            TranslationMemory::Results results;
-            if (tm.Search(langcode, dt.GetString().ToStdWstring(), results, 1))
-            {
-                dt.SetTranslation(results[0]);
-                dt.SetAutomatic(true);
-                dt.SetFuzzy(true);
-                matches++;
-                msg.Printf(_("Translated %u strings"), matches);
-                progress.UpdateMessage(msg);
+            progress.UpdateGauge();
 
-                if (m_modified == false)
+            CatalogItem& dt = (*m_catalog)[i];
+            if (dt.HasPlural())
+                continue; // can't handle yet (TODO?)
+            if (dt.IsFuzzy() || !dt.IsTranslated())
+            {
+                TranslationMemory::Results results;
+                if (tm.Search(langcode, dt.GetString().ToStdWstring(), results, 1))
                 {
-                    m_modified = true;
-                    UpdateTitle();
+                    dt.SetTranslation(results[0]);
+                    dt.SetAutomatic(true);
+                    dt.SetFuzzy(true);
+                    matches++;
+                    msg.Printf(_("Translated %u strings"), matches);
+                    progress.UpdateMessage(msg);
+
+                    if (m_modified == false)
+                    {
+                        m_modified = true;
+                        UpdateTitle();
+                    }
                 }
             }
         }
-    }
 
-    if (matchesCount)
-        *matchesCount = matches;
+        if (matchesCount)
+            *matchesCount = matches;
+    }
 
     RefreshControls();
 
