@@ -2586,11 +2586,11 @@ void PoeditFrame::RefreshControls()
         // ...and so we need to restore selection now:
         if (selectedItem != -1)
             m_list->SelectCatalogItem(selectedItem);
-    }
 
-    FindFrame *f = FindFrame::Get(m_list, m_catalog);
-    if (f)
-        f->Reset(m_catalog);
+        FindFrame *f = FindFrame::Get(m_list, m_catalog);
+        if (f)
+            f->Reset(m_catalog);
+    }
 
     UpdateTitle();
     UpdateStatusBar();
