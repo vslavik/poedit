@@ -1470,15 +1470,40 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         TempOutputFileFor mo_file_temp_obj(mo_file);
         const wxString mo_file_temp = mo_file_temp_obj.FileName();
 
-        if ( ExecuteGettext
-              (
-                  wxString::Format(_T("msgfmt -o \"%s\" \"%s\""),
-                                   mo_file_temp.c_str(),
-                                   po_file.c_str())
-              ) )
         {
-            mo_compilation_status = CompilationStatus::Success;
+            // Ignore msgfmt errors output (but not exit code), because it
+            // complains about things DoValidate() already complained above.
+            wxLogNull null;
 
+            if ( ExecuteGettext
+                  (
+                      wxString::Format(_T("msgfmt -o \"%s\" \"%s\""),
+                                       mo_file_temp.c_str(),
+                                       po_file.c_str())
+                  ) )
+            {
+                mo_compilation_status = CompilationStatus::Success;
+            }
+            else
+            {
+                // Don't report errors, they were reported as part of validation
+                // step above.  Notice that we run msgfmt *without* the -c flag
+                // here to create the MO file in as many cases as possible, even if
+                // it has some errors.
+                //
+                // Still, msgfmt has the ugly habit of sometimes returning non-zero
+                // exit code, reporting "fatal errors" and *still* producing a usable
+                // .mo file. If this happens, don't pretend the file wasn't created.
+                if (wxFileName::FileExists(mo_file_temp))
+                    mo_compilation_status = CompilationStatus::Success;
+                else
+                    mo_compilation_status = CompilationStatus::Error;
+            }
+        }
+
+        // Move the MO from temporary location to the final one, if it was created
+        if (mo_compilation_status == CompilationStatus::Success)
+        {
 #ifdef __WXOSX__
             CompiledMOFilePresenter *presenter = [CompiledMOFilePresenter new];
             NSURL *mofileUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file.utf8_str()]];
@@ -1510,14 +1535,6 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
                 mo_compilation_status = CompilationStatus::Error;
             }
 #endif // __WXOSX__/!__WXOSX__
-        }
-        else
-        {
-            // Don't report errors, they were reported as part of validation
-            // step above.  Notice that we run msgfmt *without* the -c flag
-            // here to create the MO file in as many cases as possible, even if
-            // it has some errors.
-            mo_compilation_status = CompilationStatus::Error;
         }
     }
 
