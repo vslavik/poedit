@@ -764,6 +764,11 @@ phase3_get (token_ty *tp)
                     break;
                   }
               }
+            if (bufpos >= bufmax)
+              {
+                bufmax = 2 * bufmax + 10;
+                buffer = xrealloc (buffer, bufmax);
+              }
             buffer[bufpos] = 0;
             tp->type = last_token_type = template
               ? token_type_string_template : token_type_string_literal;

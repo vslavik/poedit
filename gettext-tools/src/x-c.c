@@ -1354,6 +1354,11 @@ phase5_get (token_ty *tp)
               }
             break;
           }
+        if (bufpos >= bufmax)
+          {
+            bufmax = 2 * bufmax + 10;
+            buffer = xrealloc (buffer, bufmax);
+          }
         buffer[bufpos] = 0;
         tp->type = token_type_string_literal;
         tp->string = xstrdup (buffer);

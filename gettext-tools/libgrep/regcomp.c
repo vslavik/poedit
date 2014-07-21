@@ -2199,7 +2199,11 @@ parse_reg_exp (re_string_t *regexp, regex_t *preg, re_token_t *token,
 	{
 	  branch = parse_branch (regexp, preg, token, syntax, nest, err);
 	  if (BE (*err != REG_NOERROR && branch == NULL, 0))
-	    return NULL;
+	    {
+	      if (tree != NULL)
+		postorder (tree, free_tree, NULL);
+	      return NULL;
+	    }
 	}
       else
 	branch = NULL;
@@ -2460,14 +2464,22 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
   while (token->type == OP_DUP_ASTERISK || token->type == OP_DUP_PLUS
 	 || token->type == OP_DUP_QUESTION || token->type == OP_OPEN_DUP_NUM)
     {
-      tree = parse_dup_op (tree, regexp, dfa, token, syntax, err);
-      if (BE (*err != REG_NOERROR && tree == NULL, 0))
-	return NULL;
+      bin_tree_t *dup_tree = parse_dup_op (tree, regexp, dfa, token,
+					   syntax, err);
+      if (BE (*err != REG_NOERROR && dup_tree == NULL, 0))
+	{
+	  if (tree != NULL)
+	    postorder (tree, free_tree, NULL);
+	  return NULL;
+	}
+      tree = dup_tree;
       /* In BRE consecutive duplications are not allowed.  */
       if ((syntax & RE_CONTEXT_INVALID_DUP)
 	  && (token->type == OP_DUP_ASTERISK
 	      || token->type == OP_OPEN_DUP_NUM))
 	{
+	  if (tree != NULL)
+	    postorder (tree, free_tree, NULL);
 	  *err = REG_BADRPT;
 	  return NULL;
 	}
@@ -2623,6 +2635,8 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
 
       /* Duplicate ELEM before it is marked optional.  */
       elem = duplicate_tree (elem, dfa);
+      if (BE (elem == NULL, 0))
+        goto parse_dup_op_espace;
       old_tree = tree;
     }
   else

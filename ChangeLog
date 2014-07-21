@@ -1,3 +1,16 @@
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	build: Work around undefined _GL_ATTRIBUTE_PURE in libintl
+	* Makefile.am (distcheck-hook): Ignore the difference between our
+	localename.c and the latest Gnulib's, which utilizes
+	_GL_ATTRIBUTE_PURE not available from libintl.  This is a
+	temporary fix for the 0.19.2 release and should be reverted once
+	it is fixed either in gettext or Gnulib.
+
 2014-06-10  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.1 released.

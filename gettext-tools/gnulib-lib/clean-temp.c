@@ -69,13 +69,6 @@
 # define uintptr_t unsigned long
 #endif
 
-#if !GNULIB_FCNTL_SAFER
-/* The results of open() in this file are not used with fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
-# undef open
-# undef close
-#endif
-
 
 /* The use of 'volatile' in the types below (and ISO C 99 section 5.1.2.3.(5))
    ensure that while constructing or modifying the data structures, the field

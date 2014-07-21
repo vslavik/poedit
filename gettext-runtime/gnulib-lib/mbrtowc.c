@@ -328,13 +328,18 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 size_t
 rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 {
-# if MBRTOWC_NULL_ARG2_BUG || MBRTOWC_RETVAL_BUG
+# if MBRTOWC_NULL_ARG2_BUG || MBRTOWC_RETVAL_BUG || MBRTOWC_EMPTY_INPUT_BUG
   if (s == NULL)
     {
       pwc = NULL;
       s = "";
       n = 1;
     }
+# endif
+
+# if MBRTOWC_EMPTY_INPUT_BUG
+  if (n == 0)
+    return (size_t) -2;
 # endif
 
 # if MBRTOWC_RETVAL_BUG
