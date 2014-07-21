@@ -46,10 +46,7 @@ main (int argc, char *argv[])
     memset (&state, '\0', sizeof (mbstate_t));
     wc = (wchar_t) 0xBADFACE;
     ret = mbrtowc (&wc, "x", 0, &state);
-    /* gnulib's implementation returns (size_t)(-2).
-       The AIX 5.1 implementation returns (size_t)(-1).
-       glibc's implementation returns 0.  */
-    ASSERT (ret == (size_t)(-2) || ret == (size_t)(-1) || ret == 0);
+    ASSERT (ret == (size_t)(-2));
     ASSERT (mbsinit (&state));
   }
 

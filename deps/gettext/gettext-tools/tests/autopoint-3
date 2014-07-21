@@ -3,7 +3,7 @@
 
 # Test the autopoint program, with Automake.
 
-required_gettext_version=0.19.1
+required_gettext_version=0.19.2
 
 : ${AUTOCONF=autoconf}
 ${AUTOCONF} --version >/dev/null 2>/dev/null \
@@ -120,6 +120,14 @@ ${CONFIG_SHELL} ./configure --with-included-gettext >/dev/null 2>/dev/null \
 # intl/plural.c in that case.
 test -f intl/plural.c && touch intl/plural.c
 
+# Workaround for a bug in 0.19 and 0.19.1: ChangeLog is missing in the archive.
+case "$required_gettext_version" in
+  0.19 | 0.19.1)
+    test -f intl/ChangeLog || : > intl/ChangeLog
+    ;;
+esac
+
 ${MAKE} >/dev/null 2>/dev/null || exit 1
+${MAKE} dist >/dev/null 2>/dev/null || exit 1
 
 exit 0

@@ -1,5 +1,5 @@
 diff --git a/spawn-pipe.c b/spawn-pipe.c
-index b3f9e0c..965fb3a 100644
+index 656980d..b7fa95b 100644
 --- a/spawn-pipe.c
 +++ b/spawn-pipe.c
 @@ -48,6 +48,13 @@
@@ -13,6 +13,6 @@ index b3f9e0c..965fb3a 100644
 +extern DLL_VARIABLE char **environ;
 +#endif
 +
- /* The results of open() in this file are not used with fchdir,
-    therefore save some unnecessary work in fchdir.c.  */
- #undef open
+ 
+ #ifdef EINTR
+ 

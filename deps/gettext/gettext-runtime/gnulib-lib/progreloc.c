@@ -89,11 +89,6 @@ extern char * canonicalize_file_name (const char *name);
 # define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
 
-/* The results of open() in this file are not used with fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
-#undef open
-#undef close
-
 /* Use the system functions, not the gnulib overrides in this file.  */
 #undef sprintf
 

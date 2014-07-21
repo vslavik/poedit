@@ -608,7 +608,7 @@ extern void re_set_registers (struct re_pattern_buffer *__buffer,
 			      regoff_t *__starts, regoff_t *__ends);
 #endif	/* Use GNU */
 
-#if defined _REGEX_RE_COMP || (defined _LIBC && defined __USE_BSD)
+#if defined _REGEX_RE_COMP || (defined _LIBC && defined __USE_MISC)
 # ifndef _CRAY
 /* 4.2 bsd compatibility.  */
 extern char *re_comp (const char *);

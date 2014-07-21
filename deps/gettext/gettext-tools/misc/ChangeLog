@@ -1,3 +1,23 @@
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	autopoint: Fix the last change
+	* autopoint.in: Use func_trace_sed for AM_GNU_GETTEXT and
+	AM_GNU_GETTEXT_VERSION, as they are not an Autoconf trace.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	autopoint: Select macro tracing method by Autoconf version
+	Reported and analyzed by Pádraig Brady in:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2014-07/msg00071.html>.
+	* autopoint.in (func_trace_autoconf): Rename from func_trace.
+	($func_trace): Set to func_trace_autoconf if Autoconf >= 2.69 is
+	available, otherwise to func_trace_sed.
+	* gettextize.in: Likewise.
+
 2014-06-10  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.1 released.

@@ -25,6 +25,7 @@
 # include <config.h>
 #endif
 
+#include <assert.h>
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -100,9 +101,7 @@ char *alloca ();
 #endif
 
 #ifdef _LIBC
-# ifndef PRI_MACROS_BROKEN
-#  define PRI_MACROS_BROKEN 0
-# endif
+# define PRI_MACROS_BROKEN 0
 #endif
 
 /* Provide fallback values for macros that ought to be defined in <inttypes.h>.
@@ -786,7 +785,7 @@ internal_function
 _nl_load_domain (struct loaded_l10nfile *domain_file,
 		 struct binding *domainbinding)
 {
-  __libc_lock_define_initialized_recursive (static, lock)
+  __libc_lock_define_initialized_recursive (static, lock);
   int fd = -1;
   size_t size;
 #ifdef _LIBC
@@ -853,13 +852,15 @@ _nl_load_domain (struct loaded_l10nfile *domain_file,
   data = (struct mo_file_header *) mmap (NULL, size, PROT_READ,
 					 MAP_PRIVATE, fd, 0);
 
-  if (__builtin_expect (data != (struct mo_file_header *) -1, 1))
+  if (__builtin_expect (data != MAP_FAILED, 1))
     {
       /* mmap() call was successful.  */
       close (fd);
       fd = -1;
       use_mmap = 1;
     }
+
+  assert (MAP_FAILED == (void *) -1);
 #endif
 
   /* If the data is not yet available (i.e. mmap'ed) we try to load
@@ -1280,7 +1281,11 @@ _nl_load_domain (struct loaded_l10nfile *domain_file,
   /* No caches of converted translations so far.  */
   domain->conversions = NULL;
   domain->nconversions = 0;
+#ifdef _LIBC
+  __libc_rwlock_init (domain->conversions_lock);
+#else
   gl_rwlock_init (domain->conversions_lock);
+#endif
 
   /* Get the header entry and look for a plural specification.  */
 #ifdef IN_LIBGLOCALE
@@ -1323,7 +1328,7 @@ _nl_unload_domain (struct loaded_domain *domain)
     {
       struct converted_domain *convd = &domain->conversions[i];
 
-      free (convd->encoding);
+      free ((char *) convd->encoding);
       if (convd->conv_tab != NULL && convd->conv_tab != (char **) -1)
 	free (convd->conv_tab);
       if (convd->conv != (__gconv_t) -1)

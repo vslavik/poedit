@@ -1,3 +1,33 @@
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	vala: Fix empty string literal handling
+	Similar to the commit 7b2d8d61 on July 11.
+	* x-vala.c (phase3_get): Add missing memory allocation for empty
+	string literal.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	build: Fix race in post-install removal of *.a
+	There was an implicit dependency between the prerequisites of
+	install-exec-local, which may have caused error with make -jN.
+	Use install-exec-hook to remove the dependency.
+	Reported by Christian Weisgerber in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-07/msg00008.html>.
+	* Makefile.am (install-exec-local): Remove.
+	(install-exec-hook): New rule, depend on install-exec-clean.
+
+2014-07-11  Daiki Ueno  <ueno@gnu.org>
+
+	c: Fix empty string literal handling
+	Problem reported by Bernhard Voelker in:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2014-07/msg00059.html>.
+	* x-c.c (phase5_get): Add missing memory allocation for empty
+	string literal.
+
 2014-06-10  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.1 released.

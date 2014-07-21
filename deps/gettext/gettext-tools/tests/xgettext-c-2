@@ -1,7 +1,7 @@
 #! /bin/sh
 . "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
-# Test C support: comments meant for xgettext, and whitespace.
+# Test C support: comments meant for xgettext, whitespace, and literals.
 
 cat <<EOF > xg-c-2.in.c
 This is a test of the xgettext functionality.
@@ -15,6 +15,10 @@ _
 (
 "hello"
 )
+static int c = '';
+_("after character")
+static char *s = "";
+_("after string")
 EOF
 
 : ${XGETTEXT=xgettext}
@@ -30,6 +34,12 @@ msgid "what about me"
 msgstr ""
 
 msgid "hello"
+msgstr ""
+
+msgid "after character"
+msgstr ""
+
+msgid "after string"
 msgstr ""
 EOF
 
