@@ -3,7 +3,7 @@
 
 # Test the autopoint program, without Automake.
 
-required_gettext_version=0.19.1
+required_gettext_version=0.19.2
 
 : ${AUTOCONF=autoconf}
 ${AUTOCONF} --version >/dev/null 2>/dev/null \
@@ -25,6 +25,7 @@ export gettext_datadir
 cat <<EOF >configure.ac
 AC_INIT
 AC_CONFIG_SRCDIR(hello.c)
+AC_CONFIG_AUX_DIR([build-aux])
 
 AC_PROG_CC
 AM_GNU_GETTEXT([external])
@@ -40,9 +41,11 @@ $gettext_datadir/autopoint >/dev/null 2>/dev/null || exit 1
 test ! -d intl || exit 1
 test -d m4 || exit 1
 test -d po || exit 1
+test -d build-aux || exit 1
 
 test -f m4/po.m4 || exit 1
 test -f po/Makefile.in.in || exit 1
+test -f build-aux/config.rpath || exit 1
 
 rm -fr m4 po
 

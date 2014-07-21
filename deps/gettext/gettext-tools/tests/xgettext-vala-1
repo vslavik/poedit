@@ -7,10 +7,12 @@ cat <<\EOF > xg-vala-1.vala
 int main (string[] args) {
     var s1 = "Simple string, " + " no gettext needed";
     var c1 = '\'';
+    var empty = "";
     // This is a C++ style comment
     var s2 = _("Extract this first string");
     var s3 = "Prefix _(" + _("Extract this second string") + ") Postfix";
 
+    var empty_verbatim = """""";
     if (args[0] == _("Extract this thirth string")) {
       /* _("This is a comment and must not be extracted!") */
     }

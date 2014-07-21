@@ -55,7 +55,7 @@ GNU ‘gettext’ utilities
 ***********************
 
    This manual documents the GNU gettext tools and the GNU libintl
-library, version 0.19.1.
+library, version 0.19.2.
 
 * Menu:
 
@@ -9623,7 +9623,7 @@ each.
 
    So, here comes a list of files, each one followed by a description of
 all alterations it needs.  Many examples are taken out from the GNU
-‘gettext’ 0.19.1 distribution itself, or from the GNU ‘hello’
+‘gettext’ 0.19.2 distribution itself, or from the GNU ‘hello’
 distribution (<http://www.franken.de/users/gnu/ke/hello> or
 <http://www.gnu.franken.de/ke/hello/>) You may indeed refer to the
 source code of the GNU ‘gettext’ and GNU ‘hello’ packages, as they are
@@ -9780,7 +9780,7 @@ File: gettext.info,  Node: configure.ac,  Next: config.guess,  Prev: po/Rules-*,
      This is done by a set of lines like these:
 
           PACKAGE=gettext
-          VERSION=0.19.1
+          VERSION=0.19.2
           AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE")
           AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
           AC_SUBST(PACKAGE)
@@ -9788,12 +9788,12 @@ File: gettext.info,  Node: configure.ac,  Next: config.guess,  Prev: po/Rules-*,
 
      or, if you are using GNU ‘automake’, by a line like this:
 
-          AM_INIT_AUTOMAKE(gettext, 0.19.1)
+          AM_INIT_AUTOMAKE(gettext, 0.19.2)
 
      Of course, you replace ‘gettext’ with the name of your package, and
-     ‘0.19.1’ by its version numbers, exactly as they should appear in
+     ‘0.19.2’ by its version numbers, exactly as they should appear in
      the packaged ‘tar’ file name of your distribution
-     (‘gettext-0.19.1.tar.gz’, here).
+     (‘gettext-0.19.2.tar.gz’, here).
 
   2. Check for internationalization support.
 
@@ -10562,7 +10562,7 @@ into the repository.
 all the files that ‘gettextize’ mentions as "copy".  Instead, he adds to
 the ‘configure.ac’ or ‘configure.in’ a line of the form
 
-     AM_GNU_GETTEXT_VERSION(0.19.1)
+     AM_GNU_GETTEXT_VERSION(0.19.2)
 
 and adds to the package’s pre-build script an invocation of ‘autopoint’.
 For everyone who checks out the source, this ‘autopoint’ invocation will
@@ -10666,8 +10666,8 @@ package.
      Output version information and exit.
 
    ‘autopoint’ supports the GNU ‘gettext’ versions from 0.10.35 to the
-current one, 0.19.1.  In order to apply ‘autopoint’ to a package using a
-‘gettext’ version newer than 0.19.1, you need to install this same
+current one, 0.19.2.  In order to apply ‘autopoint’ to a package using a
+‘gettext’ version newer than 0.19.2, you need to install this same
 version of GNU ‘gettext’ at least.
 
    In packages using GNU ‘automake’, an invocation of ‘autopoint’ should
@@ -15082,7 +15082,7 @@ C.1 GNU GENERAL PUBLIC LICENSE
      of this license document, but changing it is not allowed.
 
 Preamble
---------
+========
 
    The licenses for most software are designed to take away your freedom
 to share and change it.  By contrast, the GNU General Public License is
@@ -15090,8 +15090,8 @@ intended to guarantee your freedom to share and change free software—to
 make sure the software is free for all its users.  This General Public
 License applies to most of the Free Software Foundation’s software and
 to any other program whose authors commit to using it.  (Some other Free
-Software Foundation software is covered by the GNU Library General
-Public License instead.)  You can apply it to your programs, too.
+Software Foundation software is covered by the GNU Lesser General Public
+License instead.)  You can apply it to your programs, too.
 
    When we speak of free software, we are referring to freedom, not
 price.  Our General Public Licenses are designed to make sure that you
@@ -15131,7 +15131,8 @@ patent must be licensed for everyone’s free use or not licensed at all.
    The precise terms and conditions for copying, distribution and
 modification follow.
 
-    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+===============================================================
 
   0. This License applies to any program or other work which contains a
      notice placed by the copyright holder saying it may be distributed
@@ -15365,7 +15366,7 @@ modification follow.
                       END OF TERMS AND CONDITIONS
 
 Appendix: How to Apply These Terms to Your New Programs
--------------------------------------------------------
+=======================================================
 
    If you develop a new program, and you want it to be of the greatest
 possible use to the public, the best way to achieve this is to make it
@@ -15400,7 +15401,7 @@ mail.
    If the program is interactive, make it output a short notice like
 this when it starts in an interactive mode:
 
-     Gnomovision version 69, Copyright (C) 19YY NAME OF AUTHOR
+     Gnomovision version 69, Copyright (C) YEAR NAME OF AUTHOR
      Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
      This is free software, and you are welcome to redistribute it
      under certain conditions; type `show c' for details.
@@ -15425,7 +15426,7 @@ if necessary.  Here is a sample; alter the names:
 program into proprietary programs.  If your program is a subroutine
 library, you may consider it more useful to permit linking proprietary
 applications with the library.  If this is what you want to do, use the
-GNU Library General Public License instead of this License.
+GNU Lesser General Public License instead of this License.
 
 
 File: gettext.info,  Node: GNU LGPL,  Next: GNU FDL,  Prev: GNU GPL,  Up: Licenses
@@ -15436,7 +15437,7 @@ C.2 GNU LESSER GENERAL PUBLIC LICENSE
                       Version 2.1, February 1999
 
      Copyright © 1991, 1999 Free Software Foundation, Inc.
-     51 Franklin St – Fifth Floor, Boston, MA 02110-1301, USA
+     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 
      Everyone is permitted to copy and distribute verbatim copies
      of this license document, but changing it is not allowed.
@@ -15547,9 +15548,8 @@ modification follow.  Pay close attention to the difference between a
 former contains code derived from the library, whereas the latter must
 be combined with the library in order to run.
 
-                   GNU LESSER GENERAL PUBLIC LICENSE
-
-    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+---------------------------------------------------------------
 
   0. This License Agreement applies to any software library or other
      program which contains a notice placed by the copyright holder or
@@ -15902,7 +15902,8 @@ be combined with the library in order to run.
      OTHER SOFTWARE), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN
      ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-                      END OF TERMS AND CONDITIONS
+END OF TERMS AND CONDITIONS
+---------------------------
 
 How to Apply These Terms to Your New Libraries
 ----------------------------------------------
@@ -15961,7 +15962,7 @@ C.3 GNU Free Documentation License
                       Version 1.2, November 2002
 
      Copyright © 2000,2001,2002 Free Software Foundation, Inc.
-     51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+     51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
 
      Everyone is permitted to copy and distribute verbatim copies
      of this license document, but changing it is not allowed.
@@ -16351,7 +16352,7 @@ C.3 GNU Free Documentation License
      Software Foundation.
 
 ADDENDUM: How to use this License for your documents
-----------------------------------------------------
+====================================================
 
    To use this License in a document you have written, include a copy of
 the License in the document and put the following copyright and license
@@ -16366,7 +16367,7 @@ notices just after the title page:
        Free Documentation License''.
 
    If you have Invariant Sections, Front-Cover Texts and Back-Cover
-Texts, replace the “with...Texts.” line with this:
+Texts, replace the “with…Texts.” line with this:
 
          with the Invariant Sections being LIST THEIR TITLES, with
          the Front-Cover Texts being LIST, and with the Back-Cover Texts
@@ -18209,14 +18210,14 @@ Node: Rare Language Codes573148
 Node: Country Codes574998
 Node: Licenses582151
 Node: GNU GPL584007
-Node: GNU LGPL603245
-Node: GNU FDL631464
-Node: Program Index653998
-Node: Option Index656408
-Node: Variable Index710562
-Node: PO Mode Index715233
-Node: Autoconf Macro Index731943
-Node: Index732750
+Node: GNU LGPL603304
+Node: GNU FDL631539
+Node: Program Index654069
+Node: Option Index656479
+Node: Variable Index710633
+Node: PO Mode Index715304
+Node: Autoconf Macro Index732014
+Node: Index732821
 
 End Tag Table
 

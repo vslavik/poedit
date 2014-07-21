@@ -1,5 +1,5 @@
 diff --git a/execute.c b/execute.c
-index e7b4496..1c342da 100644
+index 15a487b..489abf5 100644
 --- a/execute.c
 +++ b/execute.c
 @@ -48,6 +48,13 @@
@@ -13,6 +13,6 @@ index e7b4496..1c342da 100644
 +extern DLL_VARIABLE char **environ;
 +#endif
 +
- /* The results of open() in this file are not used with fchdir,
-    therefore save some unnecessary work in fchdir.c.  */
- #undef open
+ 
+ #if defined EINTR && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+ 
