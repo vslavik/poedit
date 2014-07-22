@@ -1,21 +1,18 @@
-# Serbian translation of Poedit.
-# This file is distributed under the same license as the Poedit package.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.6\n"
+"Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
 "POT-Creation-Date: 2014-07-04 22:18+0200\n"
-"PO-Revision-Date: 2014-07-04 20:38+0100\n"
-"Last-Translator: Ђорђе Васиљевић <djordje.vasiljevich@gmail.com>\n"
-"Language-Team: Serbian\n"
-"Language: sr\n"
+"PO-Revision-Date: 2014-07-22 07:15-0400\n"
+"Last-Translator: vslavik <vaclav@slavik.io>\n"
+"Language-Team: Serbian (Cyrillic)\n"
+"Language: sr_SP\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.6.5\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"\n"
+"X-Generator: crowdin.net\n"
 
 #. TRANSLATORS: Quoted text with leading 4 spaces
 #: ../src/edframe.cpp:3382
@@ -43,6 +40,7 @@ msgid_plural "%d entries were filled from the translation memory."
 msgstr[0] "%d ставка је попуњена из преводилачке меморије."
 msgstr[1] "%d ставке су попуњене из преводилачке меморије."
 msgstr[2] "%d ставки је попуњено из преводилачке меморије."
+msgstr[3] "%d ставки је попуњено из преводилачке меморије."
 
 #: ../src/edframe.cpp:2080
 #, c-format
@@ -51,6 +49,7 @@ msgid_plural "%d issues with the translation found."
 msgstr[0] "Пронађен је %d проблем са преводом."
 msgstr[1] "Пронађена су %d проблема са преводом."
 msgstr[2] "Пронађено је %d проблема са преводом."
+msgstr[3] "Пронађено је %d проблема са преводом."
 
 #: ../src/edframe.cpp:2926 ../src/export_html.cpp:160
 #, c-format
@@ -59,6 +58,7 @@ msgid_plural "%i %% translated, %i strings"
 msgstr[0] "%i %% преведено, %i порука"
 msgstr[1] "%i %% преведено, %i поруке"
 msgstr[2] "%i %% преведено, %i порука"
+msgstr[3] "%i %% преведено, %i порука"
 
 #: ../src/edframe.cpp:2931 ../src/export_html.cpp:165
 #, c-format
@@ -67,6 +67,7 @@ msgid_plural "%i %% translated, %i strings (%s)"
 msgstr[0] "%i %% преведено, %i порука (%s)"
 msgstr[1] "%i %% преведено, %i поруке (%s)"
 msgstr[2] "%i %% преведено, %i порука (%s)"
+msgstr[3] "%i %% преведено, %i порука (%s)"
 
 #: ../src/edframe.cpp:2916 ../src/export_html.cpp:150
 #, c-format
@@ -75,6 +76,7 @@ msgid_plural "%i bad tokens"
 msgstr[0] "%i неисправна ознака"
 msgstr[1] "%i неисправне ознаке"
 msgstr[2] "%i неисправних ознака"
+msgstr[3] "%i неисправних ознака"
 
 #: ../src/edframe.cpp:2910 ../src/export_html.cpp:144
 #, c-format
@@ -83,6 +85,7 @@ msgid_plural "%i fuzzy"
 msgstr[0] "%i приближан превод"
 msgstr[1] "%i приближна превода"
 msgstr[2] "%i приближних превода"
+msgstr[3] "%i приближних превода"
 
 #: ../src/catalog.cpp:135
 #, c-format
@@ -96,6 +99,7 @@ msgid_plural "%i not translated"
 msgstr[0] "%i непреведена порука"
 msgstr[1] "%i непреведене поруке"
 msgstr[2] "%i непреведених порука"
+msgstr[3] "%i непреведених порука"
 
 #: ../src/resources/menus.xrc:275 ../src/resources/menus.xrc:276
 #: ../src/resources/menus.xrc:343 ../src/resources/menus.xrc:344
@@ -388,16 +392,11 @@ msgstr "Пребаци све напред"
 
 #: ../src/catalog.cpp:724
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr ""
-"Неисправна датотека каталога: коришћен је облик за множину „msgstr“ без "
-"вредности „msgid_plural“"
+msgstr "Неисправна датотека каталога: коришћен је облик за множину „msgstr“ без вредности „msgid_plural“"
 
 #: ../src/catalog.cpp:675
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr ""
-"Неисправна датотека каталога: коришћен је облик за множину „msgstr“ заједно "
-"са вредношћу „msgid_plural“"
+msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr "Неисправна датотека каталога: коришћен је облик за множину „msgstr“ заједно са вредношћу „msgid_plural“"
 
 #: ../src/resources/manager.xrc:78
 msgid "Browse"
@@ -588,9 +587,9 @@ msgid "Couldn't detect translation domain of the \"%s\" plugin."
 msgstr "Не могу да пронађем домен превода за додатак „%s“."
 
 #: ../src/wordpress.cpp:324
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't detect translation setup of the \"%s\" theme."
-msgstr "Не могу да пронађем домен превода за додатак „%s“."
+msgstr ""
 
 #: ../src/catalog.cpp:1108
 #, c-format
@@ -605,12 +604,8 @@ msgstr "Не могу да сачувам датотеку „%s“."
 
 #. TRANSLATORS: Please don't use any form of "automatically" in the translation, it would mislead people.
 #: ../src/welcomescreen.cpp:246
-msgid ""
-"Create a new translation. Poedit will set everything up; you can focus on "
-"translating."
-msgstr ""
-"Креирајте нови превод. Poedit ће све подесити; ви се можете усредсредити на "
-"превођење."
+msgid "Create a new translation. Poedit will set everything up; you can focus on translating."
+msgstr "Креирајте нови превод. Poedit ће све подесити; ви се можете усредсредити на превођење."
 
 #: ../src/welcomescreen.cpp:238
 msgid "Create new translation"
@@ -670,12 +665,8 @@ msgid "Display entry &IDs"
 msgstr "&Идентификатори ставки"
 
 #: ../src/manager.cpp:443
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Заиста желите да ажурирате све\n"
-"каталоге у овом пројекту?"
+msgid "Do you really want to do mass update of\nall catalogs in this project?"
+msgstr "Заиста желите да ажурирате све\nкаталоге у овом пројекту?"
 
 #: ../src/manager.cpp:423
 msgid "Do you want to delete the project?"
@@ -776,20 +767,12 @@ msgid "Entries in the catalog are probably incorrect."
 msgstr "Ставке у каталогу су вероватно неисправне."
 
 #: ../src/edframe.cpp:2748
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog's Plural-Forms header says"
-msgstr ""
-"Ставке у каталогу имају другачији број облика за множину од онога што "
-"заглавље прописује."
+msgid "Entries in this catalog have different plural forms count from what catalog's Plural-Forms header says"
+msgstr "Ставке у каталогу имају другачији број облика за множину од онога што заглавље прописује."
 
 #: ../src/edframe.cpp:2088
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Ставке са грешкама су означене црвеном бојом.\n"
-"Више информација о грешци биће приказано када кликнете на такву ставку."
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
+msgstr "Ставке са грешкама су означене црвеном бојом.\nВише информација о грешци биће приказано када кликнете на такву ставку."
 
 #: ../src/edframe.cpp:2857
 #, c-format
@@ -815,7 +798,7 @@ msgstr "Све"
 
 #: ../src/propertiesdlg.cpp:67
 msgid "Excluded paths"
-msgstr ""
+msgstr "Изузете путање"
 
 #: ../src/edframe.cpp:1623
 msgid "Export as..."
@@ -868,12 +851,8 @@ msgstr "Датотека „%s“ није каталог са порукама.
 
 #: ../src/catalog.cpp:1398
 #, c-format
-msgid ""
-"File '%s' is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"Датотека „%s“ је само за читање и не може бити сачувана.\n"
-"Сачувајте је под другим именом."
+msgid "File '%s' is read-only and cannot be saved.\nPlease save it under different name."
+msgstr "Датотека „%s“ је само за читање и не може бити сачувана.\nСачувајте је под другим именом."
 
 #: ../src/resources/menus.xrc:149
 msgid "Fill Missing Translations from &TM"
@@ -974,12 +953,8 @@ msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
 msgstr "GNU gettext шаблони (*.pot)|*.pot|Све датотеке (*.*)|*.*"
 
 #: ../src/edframe.cpp:1679
-msgid ""
-"GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All "
-"files (*.*)|*.*"
-msgstr ""
-"GNU gettext шаблони (*.pot)|*.pot|GNU gettext каталози (*.po)|*.po|Све "
-"датотеке (*.*)|*.*"
+msgid "GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
+msgstr "GNU gettext шаблони (*.pot)|*.pot|GNU gettext каталози (*.po)|*.po|Све датотеке (*.*)|*.*"
 
 #: ../src/edframe.cpp:3783
 #, c-format
@@ -1017,25 +992,12 @@ msgid "If checked, the comment window will be editable."
 msgstr "Ако означите, прозор са коментаром моћи ће да се уређује."
 
 #: ../src/prefsdlg.cpp:105
-msgid ""
-"If enabled, Poedit will try to fill in new entries using your previous\n"
-"translations stored in the translation memory. If the TM is\n"
-"near-empty, it will not be very effective. The more translations\n"
-"you edit and the larger the TM grows, the better it gets."
-msgstr ""
-"Ако омогућите, Poedit ће покушати да попуни нове уносе\n"
-"претходним преводима из преводилачке меморије.\n"
-"Ако је меморија скоро па празна, онда и нема много ефекта. Што више\n"
-"превода уређујете и што је већа база са преводима, то су бољи резултати."
+msgid "If enabled, Poedit will try to fill in new entries using your previous\ntranslations stored in the translation memory. If the TM is\nnear-empty, it will not be very effective. The more translations\nyou edit and the larger the TM grows, the better it gets."
+msgstr "Ако омогућите, Poedit ће покушати да попуни нове уносе\nпретходним преводима из преводилачке меморије.\nАко је меморија скоро па празна, онда и нема много ефекта. Што више\nпревода уређујете и што је већа база са преводима, то су бољи резултати."
 
 #: ../src/edframe.cpp:3196
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Ако наставите са чишћењем, сви преводи означени као обрисани биће трајно "
-"уклоњени."
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
+msgstr "Ако наставите са чишћењем, сви преводи означени као обрисани биће трајно уклоњени."
 
 #: ../src/prefsdlg.cpp:192
 msgid "Importing translations..."
@@ -1193,14 +1155,8 @@ msgid "Needs review (fuzzy)"
 msgstr "Потребна рецензија (приближан превод)"
 
 #: ../src/resources/prefs.xrc:112
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Не дозволите да списак порука заузме фокус. Ако омогућите, морате да "
-"користите Ctrl и стрелице да бисте се кретали кроз поруке, и не морате да "
-"притискате Tab да бисте променили фокус."
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "Не дозволите да списак порука заузме фокус. Ако омогућите, морате да користите Ctrl и стрелице да бисте се кретали кроз поруке, и не морате да притискате Tab да бисте променили фокус."
 
 #: ../src/resources/manager.xrc:31 ../src/resources/prefs.xrc:257
 msgid "New"
@@ -1348,11 +1304,8 @@ msgid "Please choose the reference you want to show:"
 msgstr "Изаберите референцу коју желите да прикажете:"
 
 #: ../src/edapp.cpp:312
-msgid ""
-"Please download a newer version from the Poedit website at http://poedit.net/"
-"beta/"
-msgstr ""
-"Преузмите новију верзију Poedit-а са званичног сајта: http://poedit.net/beta"
+msgid "Please download a newer version from the Poedit website at http://poedit.net/beta/"
+msgstr "Преузмите новију верзију Poedit-а са званичног сајта: http://poedit.net/beta"
 
 #: ../src/wordpress.cpp:566
 msgid "Please email this log to help@poedit.net. Thank you!"
@@ -1360,8 +1313,7 @@ msgstr "Молимо вас да пошаљете овај извештај на
 
 #: ../src/propertiesdlg.cpp:292
 msgid "Please save the file first. This section cannot be edited until then."
-msgstr ""
-"Прво сачувајте датотеку. Овај одељак не може да се уређује док то не урадите."
+msgstr "Прво сачувајте датотеку. Овај одељак не може да се уређује док то не урадите."
 
 #: ../src/resources/properties.xrc:46
 msgid "Plural Forms:"
@@ -1398,21 +1350,8 @@ msgstr "Poedit – ажурирање"
 
 #: ../src/wordpress.cpp:545
 #, c-format
-msgid ""
-"Poedit couldn’t understand the content of the folder you selected. This may "
-"be a problem with the plugin/theme or it may be Poedit being silly. The "
-"error is:\n"
-"\n"
-" • %s\n"
-"\n"
-"Please email help@poedit.net and we’ll sort it out."
-msgstr ""
-"Не могу да препознам садржај фасцикле коју сте изабрали. Можда је проблем до "
-"додатка/теме или се Poedit чудно понаша. Грешка:\n"
-"\n"
-" • %s\n"
-"\n"
-"Пошаљите е-поруку на help@poedit.net а ми ћемо покушати да решимо проблем."
+msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n • %s\n\nPlease email help@poedit.net and we’ll sort it out."
+msgstr "Не могу да препознам садржај фасцикле коју сте изабрали. Можда је проблем до додатка/теме или се Poedit чудно понаша. Грешка:\n\n • %s\n\nПошаљите е-поруку на help@poedit.net а ми ћемо покушати да решимо проблем."
 
 #: ../src/digger.cpp:224
 msgid "Poedit did not find any files in scanned directories."
@@ -1455,14 +1394,8 @@ msgid "Purchased on the Mac App Store"
 msgstr "Купљено у Mac App Store-у"
 
 #: ../src/licensing.cpp:488
-msgid ""
-"Purchasing the full version will unlock more features\n"
-"in this and future versions of Poedit, including:\n"
-"\n"
-msgstr ""
-"Ако купите пуну верзију, откључаћете више функција\n"
-"у овој и наредним везијама Poedit-а, укључујући:\n"
-"\n"
+msgid "Purchasing the full version will unlock more features\nin this and future versions of Poedit, including:\n\n"
+msgstr "Ако купите пуну верзију, откључаћете више функција\nу овој и наредним везијама Poedit-а, укључујући:\n\n"
 
 #: ../src/edframe.cpp:3200
 msgid "Purge"
@@ -1697,8 +1630,7 @@ msgstr "Говор"
 #: ../src/edframe.cpp:1368
 #, c-format
 msgid "Spellchecker dictionary for %s isn't available, you need to install it."
-msgstr ""
-"Речник за проверу правописа за %s није доступан. Морате га инсталирати."
+msgstr "Речник за проверу правописа за %s није доступан. Морате га инсталирати."
 
 #: ../src/edapp.cpp:992
 msgid "Spelling and Grammar"
@@ -1742,9 +1674,7 @@ msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Синтактичка грешка у заглављу Plural-Forms („%s“)."
 
 #: ../src/welcomescreen.cpp:239
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
+msgid "Take an existing PO file or POT template and create a new translation from it."
 msgstr "Креирајте нови превод из постојеће PO или POT датотеке."
 
 #: ../src/welcomescreen.cpp:287
@@ -1774,48 +1704,28 @@ msgid "The \"%s\" theme isn't localization-ready."
 msgstr "Тема „%s“ није спремна за локализацију."
 
 #: ../src/edframe.cpp:3248
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-"Преводилачка меморија не садржи поруке које су сличне онима у тренутној "
-"датотеци. Ова опција је корисна за полуаутоматске преводе тек кад Poedit "
-"научи довољно из датотека које сте ручно превели."
+msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
+msgstr "Преводилачка меморија не садржи поруке које су сличне онима у тренутној датотеци. Ова опција је корисна за полуаутоматске преводе тек кад Poedit научи довољно из датотека које сте ручно превели."
 
 #: ../src/catalog.cpp:1624
 #, c-format
-msgid ""
-"The catalog couldn't be saved in '%s' charset as specified in catalog "
-"settings.\n"
-"\n"
-"It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
-"Не могу да сачувам каталог са кодирањем „%s“, као што је\n"
-"наведено у поставкама каталога. Уместо тога, сачуван је у\n"
-"UTF-8 формату и поставке су прилагођене према томе."
+msgid "The catalog couldn't be saved in '%s' charset as specified in catalog settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."
+msgstr "Не могу да сачувам каталог са кодирањем „%s“, као што је\nнаведено у поставкама каталога. Уместо тога, сачуван је у\nUTF-8 формату и поставке су прилагођене према томе."
 
 #: ../src/edframe.cpp:294 ../src/edframe.cpp:2645
 msgid "The file cannot be opened."
 msgstr "Не могу да отворим датотеку."
 
 #: ../src/edframe.cpp:299 ../src/edframe.cpp:2650
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
+msgid "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr "Датотека је оштећена или је у формату који Poedit не препознаје."
 
 #: ../src/edframe.cpp:2098
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Датотека је сачувана и компилирана у MO формат, али вероватно неће радити "
-"како треба."
+msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
+msgstr "Датотека је сачувана и компилирана у MO формат, али вероватно неће радити како треба."
 
 #: ../src/edframe.cpp:2101
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
 msgstr "Датотека је сачувана, али не може бити компилирана у MO формат."
 
 #: ../src/edframe.cpp:2095
@@ -1824,143 +1734,83 @@ msgstr "Датотека је сачувана."
 
 #: ../src/edapp.cpp:1146
 #, c-format
-msgid ""
-"The link doesn't contain valid Poedit license. Try entering it manually or "
-"contact support at help@poedit.net.\n"
-"\n"
-"(%s)"
-msgstr ""
-"Веза не садржи ваљану лиценцу за Poedit. Покушајте да је унесете ручно или "
-"контактирајте подршку на help@poedit.net.\n"
-"\n"
-"(%s)"
+msgid "The link doesn't contain valid Poedit license. Try entering it manually or contact support at help@poedit.net.\n\n(%s)"
+msgstr "Веза не садржи ваљану лиценцу за Poedit. Покушајте да је унесете ручно или контактирајте подршку на help@poedit.net.\n\n(%s)"
 
 #: ../src/licensing.cpp:123
-msgid ""
-"The registration key can be used on multiple computers you use personally or "
-"for multiple\n"
-"accounts on a single computer."
-msgstr ""
-"Лиценцни кључ се може користити на више личних рачунара\n"
-"или више корисничких налога на истом рачунару."
+msgid "The registration key can be used on multiple computers you use personally or for multiple\naccounts on a single computer."
+msgstr "Лиценцни кључ се може користити на више личних рачунара\nили више корисничких налога на истом рачунару."
 
 #: ../src/welcomescreen.cpp:279
 msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr ""
-"Најједноставнији начин да попуните овај каталог јесте да га ажурирате помоћу "
-"POT датотеке:"
+msgstr "Најједноставнији начин да попуните овај каталог јесте да га ажурирате помоћу POT датотеке:"
 
 #: ../src/edframe.cpp:2124
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
+msgid_plural "The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] "Превод је спреман за коришћење, али %d ставка још није преведена."
 msgstr[1] "Превод је спреман за коришћење, али %d ставке још нису преведене."
 msgstr[2] "Превод је спреман за коришћење, али %d ставки још није преведено."
+msgstr[3] ""
 
 #: ../src/edframe.cpp:2129
 msgid "The translation is ready for use."
 msgstr "Превод је спреман за коришћење."
 
 #: ../src/edframe.cpp:3243
-msgid ""
-"The translations were marked as fuzzy, because they may be inaccurate. You "
-"should review them for correctness."
-msgstr ""
-"Преводи су означени као приближни јер су можда непрецизни. Проверите њихову "
-"тачност."
+msgid "The translations were marked as fuzzy, because they may be inaccurate. You should review them for correctness."
+msgstr "Преводи су означени као приближни јер су можда непрецизни. Проверите њихову тачност."
 
 #: ../src/welcomescreen.cpp:265
 msgid "There are no translations. That’s unusual."
 msgstr "Нема превода. То је неуобичајено."
 
 #: ../src/catalog.cpp:1460
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
 msgstr "Дошло је до проблема при обликовању датотеке, али је успешно сачувана."
 
 #: ../src/catalog.cpp:1098
-msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"Дошло је до проблема при учитавању каталога. Неки подаци недостају или су "
-"оштећени."
+msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
+msgstr "Дошло је до проблема при учитавању каталога. Неки подаци недостају или су оштећени."
 
 #: ../src/resources/summary.xrc:37
-msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
-msgstr ""
-"Ове поруке више нису у изворној датотеци.\n"
-"Оне ће бити уклоњене из каталога."
+msgid "These strings are no longer in the sources.\nPoedit will remove them from the catalog now."
+msgstr "Ове поруке више нису у изворној датотеци.\nОне ће бити уклоњене из каталога."
 
 #: ../src/resources/summary.xrc:16
-msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
-msgstr ""
-"Ове поруке су пронађене у изворној датотеци,\n"
-"али их нема у каталогу. Сада ће бити додате."
+msgid "These strings were found in the sources but were not in the catalog.\nPoedit will add them to the catalog now."
+msgstr "Ове поруке су пронађене у изворној датотеци,\nали их нема у каталогу. Сада ће бити додате."
 
 #: ../src/edapp.cpp:311
 msgid "This beta version of Poedit expired."
 msgstr "Ова бета верзија Poedit-а је истекла."
 
 #: ../src/edframe.cpp:2744
-msgid ""
-"This catalog has entries with plural forms, but doesn't have Plural-Forms "
-"header configured."
-msgstr ""
-"Овај каталог има ставке са облицима за множину, али му није подешено "
-"заглавље „Plural-Forms“."
+msgid "This catalog has entries with plural forms, but doesn't have Plural-Forms header configured."
+msgstr "Овај каталог има ставке са облицима за множину, али му није подешено заглавље „Plural-Forms“."
 
 #: ../src/resources/prefs.xrc:367
-msgid ""
-"This is the command used to launch the parser.\n"
-"%o expands to the name of output file, %K to list\n"
-"of keywords, %F to list of input files,\n"
-"%C to charset flag (see below)."
-msgstr ""
-"Ова команда се користи за покретање рашчлањивача.\n"
-"Ознака %o представља име излазне датотеке, %K списак\n"
-"кључних речи, %F списак улазних датотека\n"
-"а %C ознаку за кодирање (погледајте испод)."
+msgid "This is the command used to launch the parser.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files,\n%C to charset flag (see below)."
+msgstr "Ова команда се користи за покретање рашчлањивача.\nОзнака %o представља име излазне датотеке, %K списак\nкључних речи, %F списак улазних датотека\nа %C ознаку за кодирање (погледајте испод)."
 
 #: ../src/tm/tm_migrate.cpp:269
-msgid ""
-"This must be done before Poedit can start. It may take a few minutes if you "
-"have lots of translations stored, but should normally be much faster."
-msgstr ""
-"Ово мора бити урађено пре покретања програма. Може потрајати и неколико "
-"минута ако имате сачувано доста превода, али је најчешће доста брже."
+msgid "This must be done before Poedit can start. It may take a few minutes if you have lots of translations stored, but should normally be much faster."
+msgstr "Ово мора бити урађено пре покретања програма. Може потрајати и неколико минута ако имате сачувано доста превода, али је најчешће доста брже."
 
 #: ../src/resources/prefs.xrc:424
 #, c-format
-msgid ""
-"This will be attached to the command line\n"
-"only if source codecharset was given. %c expands to charset value."
-msgstr ""
-"Ово ће бити прикључено на командну линију само ако је наведено\n"
-"кодирање извора. Ознака %c представља вредност скупа знакова."
+msgid "This will be attached to the command line\nonly if source codecharset was given. %c expands to charset value."
+msgstr "Ово ће бити прикључено на командну линију само ако је наведено\nкодирање извора. Ознака %c представља вредност скупа знакова."
 
 #: ../src/resources/prefs.xrc:405
 #, c-format
-msgid ""
-"This will be attached to the command line once\n"
-"for each input file. %f expands to the filename."
-msgstr ""
-"Ово ће бити прикључено на командну линију једном\n"
-"за сваку улазну датотеку. Ознака %f представља име датотеке."
+msgid "This will be attached to the command line once\nfor each input file. %f expands to the filename."
+msgstr "Ово ће бити прикључено на командну линију једном\nза сваку улазну датотеку. Ознака %f представља име датотеке."
 
 #: ../src/resources/prefs.xrc:386
-msgid ""
-"This will be attached to the command line once\n"
-"for each keyword. %k expands to the keyword."
-msgstr ""
-"Ово ће бити прикључено на командну линију једном\n"
-"за сваку кључну реч. Ознака %k представља кључну реч."
+msgid "This will be attached to the command line once\nfor each keyword. %k expands to the keyword."
+msgstr "Ово ће бити прикључено на командну линију једном\nза сваку кључну реч. Ознака %k представља кључну реч."
 
 #: ../src/resources/toolbar.xrc:51
 msgid "Toggled if selected string has fuzzy translation"
@@ -1975,18 +1825,8 @@ msgid "Transformations"
 msgstr "Трансформације"
 
 #: ../src/welcomescreen.cpp:270
-msgid ""
-"Translatable entries aren't added manually in the Gettext system, but are "
-"automatically extracted\n"
-"from source code. This way, they stay up to date and accurate.\n"
-"Translators typically use PO template files (POTs) prepared for them by the "
-"developer."
-msgstr ""
-"Преводљиве ставке се не додају ручно у „Gettext“ систем, већ се аутоматски "
-"издвајају\n"
-"из изворног кода. На овај начин оне остају ажурне и тачне.\n"
-"Преводиоци углавном користе „PO“ шаблонске датотеке (POT) које припремају "
-"програмери."
+msgid "Translatable entries aren't added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."
+msgstr "Преводљиве ставке се не додају ручно у „Gettext“ систем, већ се аутоматски издвајају\nиз изворног кода. На овај начин оне остају ажурне и тачне.\nПреводиоци углавном користе „PO“ шаблонске датотеке (POT) које припремају програмери."
 
 #: ../src/welcomescreen.cpp:244
 msgid "Translate WordPress theme or plugin"
@@ -2131,14 +1971,11 @@ msgstr "Ажурирање каталога"
 
 #: ../src/edframe.cpp:1988
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr ""
-"Не могу да ажурирам каталог. За више информација, кликните на „Детаљи >>“."
+msgstr "Не могу да ажурирам каталог. За више информација, кликните на „Детаљи >>“."
 
 #: ../src/edframe.cpp:858
-msgid ""
-"Upgrade to Poedit Pro to get additional features and support Poedit's "
-"development."
-msgstr ""
+msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
+msgstr "Надоградите на Poedit Pro да бисте добили додатне функције и подржали развој програма."
 
 #: ../src/welcomescreen.cpp:215
 msgid "Upgrade to the Pro version of Poedit with more features."
@@ -2165,12 +2002,8 @@ msgid "Use default rules for this language"
 msgstr "&Подразумевана правила за овај језик"
 
 #: ../src/resources/properties.xrc:194
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
-"in source files:"
-msgstr ""
-"Користите ове кључне речи (имена функција) за препознавање\n"
-"преводивих порука у изворним датотекама."
+msgid "Use these keywords (function names) to recognize translatable strings\nin source files:"
+msgstr "Користите ове кључне речи (имена функција) за препознавање\nпреводивих порука у изворним датотекама."
 
 #: ../src/prefsdlg.cpp:90
 msgid "Use translation memory"
@@ -2240,8 +2073,7 @@ msgid "Words"
 msgstr "Речи"
 
 #: ../src/welcomescreen.cpp:290
-msgid ""
-"You can also extract translatable strings directly from the source code:"
+msgid "You can also extract translatable strings directly from the source code:"
 msgstr "Поруке за превођење такође можете директно издвојити из изворног кода:"
 
 #: ../src/edframe.cpp:652
@@ -2253,12 +2085,8 @@ msgid "You must restart Poedit for this change to take effect."
 msgstr "Морате да поново покренете Poedit како би ова измена ступила на снагу."
 
 #: ../src/edframe.cpp:2699
-msgid ""
-"You should set your email address in Preferences so that it can be used for "
-"Last-Translator header in GNU gettext files."
-msgstr ""
-"Унесите е-адресу у поставкама како би могла да се користи за заглавље „Last-"
-"Translator“ у GNU gettext датотекама."
+msgid "You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files."
+msgstr "Унесите е-адресу у поставкама како би могла да се користи за заглавље „Last-Translator“ у GNU gettext датотекама."
 
 #: ../src/edframe.cpp:1471
 msgid "Your changes will be lost if you don't save them."
@@ -2273,12 +2101,8 @@ msgid "Your email address:"
 msgstr "Е-адреса:"
 
 #: ../src/resources/prefs.xrc:21
-msgid ""
-"Your name and email set below are only used\n"
-"to set the Last-Translator header of GNU gettext files."
-msgstr ""
-"Ваше име и е-адреса користе се само за заглавље\n"
-"„Last-Translator“ у GNU gettext датотекама."
+msgid "Your name and email set below are only used\nto set the Last-Translator header of GNU gettext files."
+msgstr "Ваше име и е-адреса користе се само за заглавље\n„Last-Translator“ у GNU gettext датотекама."
 
 #: ../src/resources/prefs.xrc:29
 msgid "Your name:"
@@ -2286,21 +2110,11 @@ msgstr "Ваше име:"
 
 #: ../src/tm/tm_migrate.cpp:300
 #, c-format
-msgid ""
-"Your translation memory data couldn't be migrated. The error was:\n"
-"\n"
-"%s\n"
-"Please email help@poedit.net and we’ll get it fixed."
-msgstr ""
-"Не могу да преместим податке преводилачке меморије. Грешка:\n"
-"\n"
-"%s\n"
-"Пошаљите е-поруку на help@poedit.net а ми ћемо покушати да решимо проблем."
+msgid "Your translation memory data couldn't be migrated. The error was:\n\n%s\nPlease email help@poedit.net and we’ll get it fixed."
+msgstr "Не могу да преместим податке преводилачке меморије. Грешка:\n\n%s\nПошаљите е-поруку на help@poedit.net а ми ћемо покушати да решимо проблем."
 
 #: ../src/licensing.cpp:201
-msgid ""
-"You’re awesome! Thank you so much\n"
-"for purchasing Poedit Pro."
+msgid "You’re awesome! Thank you so much\nfor purchasing Poedit Pro."
 msgstr "Много вам хвала на куповини професионалне верзије Poedit-а."
 
 #: ../src/edframe.cpp:3698
@@ -2323,14 +2137,3 @@ msgstr "нпр. nplurals=2; plural=(n > 1);"
 msgid "unknown language"
 msgstr "непознат језик"
 
-#~ msgid ""
-#~ "%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
-#~ msgstr ""
-#~ "%i%% преведено, %i порука (%i приближних превода, %i неисправних ознака, "
-#~ "%i непреведених)"
-
-#~ msgid " Version "
-#~ msgstr " Верзија "
-
-#~ msgid "About "
-#~ msgstr "О програму"
