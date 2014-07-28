@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test that an out-of-range Unicode character doesn't lead to a crash.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mf-test13.po"
 cat <<\EOF >mf-test13.po
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -28,7 +25,6 @@ msgstr " [Gehe zu]  [ZurÃ¼ck]  [Anzeigen]  [Markieren]  [Markierung lö³£¨en]  [O
 
 EOF
 
-tmpfiles="$tmpfiles mf-test13.mo"
 : ${MSGFMT=msgfmt}
 ${MSGFMT} mf-test13.po -o mf-test13.mo 2>/dev/null
 # Exit code must be 1.
@@ -36,7 +32,5 @@ ${MSGFMT} mf-test13.po -o mf-test13.mo 2>/dev/null
 # If it produced a core dump, it would be 134 (= 128 + SIGABRT).
 test $? = 1
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

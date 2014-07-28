@@ -1,3 +1,87 @@
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.in (distclean): Remove intl/VERSION for gettext-runtime
+	and gettext-tools packages.
+
+2014-07-03  Siddhesh Poyarekar  <siddhesh@redhat.com>
+
+	intl: Sync up loadmsgcat.c with glibc
+	* loadmsgcat.c [_LIBC]: Define PRI_MACROS_BROKEN unconditionally.
+
+2014-07-03  Siddhesh Poyarekar  <siddhesh@redhat.com>
+
+	intl: Sync up loadmsgcat.c with glibc
+	* loadmsgcat.c: Include assert.h.
+	(_nl_load_domain): Add semicolon to end of line.
+	(_nl_load_domain)[HAVE_MMAP]: Use MAP_FAILED and assert that
+	it is (void *) -1.
+	(_nl_load_domain)[_LIBC]: Call __libc_rwlock_init instead of
+	gl_rwlock_init.
+	(_nl_unload_domain): Cast convd->encoding to non-const.
+
+2014-06-17  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Add back ChangeLog to gettext-runtime distribution
+	* Makefile.in (DISTFILES.gettext): Add ChangeLog.
+
+2014-06-16  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Stop installing ChangeLog.inst
+	After the git-version-gen migration (commit fbf4e276), the
+	creation of gettext-tools/intl/ChangeLog.inst in configure.ac was
+	removed because we lost access to $RELEASE_DATE.  Given that
+	intl/VERSION provides enough information, simply drop the
+	ChangeLog file.
+	Problem reported by Bruce Korb in
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-06/msg00022.html>.
+	* Makefile.in (install-data): Don't install ChangeLog.inst.
+	(distclean): Don't remove ChangeLog.inst.
+	(uninstall): Don't remove ChangeLog under $(gettextsrcdir)/intl.
+	(dist): Don't include ChangeLog in the distribution.
+
+2014-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.1 released.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-05-11  Daiki Ueno  <ueno@gnu.org>
+
+	* xsize.c (_GL_UNUSED): Define, if undefined.
+
+2014-04-30  Steve Ellcey  <sellcey@mips.com>  (tiny change)
+
+	* loadmsgcat.c (PRI_MACROS_BROKEN) [_LIBC]: Define to 0, if
+	undefined.
+
+2014-04-23  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Port to Bison 3.0
+	* plural.y: Don't use removed YYLEX_PARAM and YYPARSE_PARAM
+	macros; replace deprecated %pure_parser with '%define api.pure
+	full'; adjust yylex/yyerror arglist.
+	* plural-exp.h (PLURAL_PARSE): Use explicit type 'struct
+	parse_args *arg' for ARG.
+
+2013-05-07  Carlos O'Donell  <carlos@redhat.com>
+            Jeff Law  <law@redhat.com>
+
+	* dcigettext.c (DCIGETTEXT): Skip translating if _nl_find_msg
+	returns -1.
+	(_nl_find_msg): Return -1 if recursive call returned -1. If
+	newmem is null return -1.
+	* loadmsgcat.c (_nl_load_domain): If _nl_find_msg returns -1
+	abort loading the domain.
+
+	* dcigettext.c (_nl_find_msg): Avoid use after potential
+	free.  Simplify list management for _LIBC case.
+
 2013-03-07  Daiki Ueno  <ueno@gnu.org>
 
 	* setlocale.c (libintl_setlocale): Signal a change of the loaded

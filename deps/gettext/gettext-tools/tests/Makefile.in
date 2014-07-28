@@ -85,7 +85,7 @@ noinst_PROGRAMS = tstgettext$(EXEEXT) tstngettext$(EXEEXT) \
 	fc5$(EXEEXT) gettextpo-1-prg$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
-	$(top_srcdir)/../build-aux/mkinstalldirs \
+	$(top_srcdir)/../build-aux/mkinstalldirs $(srcdir)/init-env.in \
 	$(top_srcdir)/../build-aux/test-driver ChangeLog
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps =  \
@@ -127,7 +127,6 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/execute.m4 \
 	$(top_srcdir)/gnulib-m4/exponentd.m4 \
 	$(top_srcdir)/gnulib-m4/extensions.m4 \
-	$(top_srcdir)/gnulib-m4/extern-inline.m4 \
 	$(top_srcdir)/gnulib-m4/fatal-signal.m4 \
 	$(top_srcdir)/gnulib-m4/fcntl.m4 \
 	$(top_srcdir)/gnulib-m4/fcntl_h.m4 \
@@ -293,7 +292,6 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/xvasprintf.m4 \
 	$(top_srcdir)/gnulib-m4/yield.m4 \
 	$(top_srcdir)/../m4/fixautomake.m4 \
-	$(top_srcdir)/../m4/init-package-version.m4 \
 	$(top_srcdir)/../m4/libtool.m4 \
 	$(top_srcdir)/../m4/ltoptions.m4 \
 	$(top_srcdir)/../m4/ltsugar.m4 \
@@ -301,6 +299,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/../m4/lt~obsolete.m4 \
 	$(top_srcdir)/../m4/woe32-dll.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/codeset.m4 \
+	$(top_srcdir)/../gettext-runtime/m4/extern-inline.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/fcntl-o.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/gettext.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/glibc2.m4 \
@@ -334,7 +333,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/../build-aux/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = init-env
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am_cake_OBJECTS = plural-1-prg.$(OBJEXT) setlocale.$(OBJEXT)
@@ -1381,6 +1380,7 @@ LIBUNISTRING_UNIWIDTH_H = @LIBUNISTRING_UNIWIDTH_H@
 LIBXML = @LIBXML@
 LIBXML_H = @LIBXML_H@
 LIB_ACL = @LIB_ACL@
+LIB_POSIX_SPAWN = @LIB_POSIX_SPAWN@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LOCALCHARSET_TESTS_ENVIRONMENT = @LOCALCHARSET_TESTS_ENVIRONMENT@
@@ -1530,11 +1530,13 @@ REPLACE_FUTIMENS = @REPLACE_FUTIMENS@
 REPLACE_GETCWD = @REPLACE_GETCWD@
 REPLACE_GETDELIM = @REPLACE_GETDELIM@
 REPLACE_GETDOMAINNAME = @REPLACE_GETDOMAINNAME@
+REPLACE_GETDTABLESIZE = @REPLACE_GETDTABLESIZE@
 REPLACE_GETGROUPS = @REPLACE_GETGROUPS@
 REPLACE_GETLINE = @REPLACE_GETLINE@
 REPLACE_GETLOGIN_R = @REPLACE_GETLOGIN_R@
 REPLACE_GETPAGESIZE = @REPLACE_GETPAGESIZE@
 REPLACE_GETTIMEOFDAY = @REPLACE_GETTIMEOFDAY@
+REPLACE_GMTIME = @REPLACE_GMTIME@
 REPLACE_ICONV = @REPLACE_ICONV@
 REPLACE_ICONV_OPEN = @REPLACE_ICONV_OPEN@
 REPLACE_ICONV_UTF = @REPLACE_ICONV_UTF@
@@ -1546,6 +1548,7 @@ REPLACE_LCHOWN = @REPLACE_LCHOWN@
 REPLACE_LINK = @REPLACE_LINK@
 REPLACE_LINKAT = @REPLACE_LINKAT@
 REPLACE_LOCALECONV = @REPLACE_LOCALECONV@
+REPLACE_LOCALTIME = @REPLACE_LOCALTIME@
 REPLACE_LOCALTIME_R = @REPLACE_LOCALTIME_R@
 REPLACE_LSEEK = @REPLACE_LSEEK@
 REPLACE_LSTAT = @REPLACE_LSTAT@
@@ -1618,6 +1621,7 @@ REPLACE_STRSTR = @REPLACE_STRSTR@
 REPLACE_STRTOD = @REPLACE_STRTOD@
 REPLACE_STRTOIMAX = @REPLACE_STRTOIMAX@
 REPLACE_STRTOK_R = @REPLACE_STRTOK_R@
+REPLACE_STRTOUMAX = @REPLACE_STRTOUMAX@
 REPLACE_STRUCT_LCONV = @REPLACE_STRUCT_LCONV@
 REPLACE_STRUCT_TIMEVAL = @REPLACE_STRUCT_TIMEVAL@
 REPLACE_SYMLINK = @REPLACE_SYMLINK@
@@ -1745,6 +1749,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -1755,24 +1760,25 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = 1.11 gnits no-dependencies color-tests
-EXTRA_DIST = $(TESTS) test.mo xg-c-1.ok.po mex-test2.ok \
-	mm-ko.ascii.pot mm-ko.euc-kr.po mm-ko-comp.euc-kr.po \
-	mm-viet.comp.po mm-viet.pot mm-viet.out msguniq-a.in \
-	msguniq-a.inp msguniq-a.out qttest_pl.po qttest_pl.qm \
-	qttest2_de.po qttest2_de.qm qttest2_de.ts ChangeLog.0 \
-	gettext-3-1.po gettext-3-2.po gettext-4.po gettext-5.po \
-	gettext-6-1.po gettext-6-2.po gettext-7.po gettextpo-1.de.po
+EXTRA_DIST = init.sh init.cfg $(TESTS) test.mo xg-c-1.ok.po \
+	mex-test2.ok mm-ko.ascii.pot mm-ko.euc-kr.po \
+	mm-ko-comp.euc-kr.po mm-viet.comp.po mm-viet.pot mm-viet.out \
+	msguniq-a.in msguniq-a.inp msguniq-a.out qttest_pl.po \
+	qttest_pl.qm qttest2_de.po qttest2_de.qm qttest2_de.ts \
+	ChangeLog.0 gettext-3-1.po gettext-3-2.po gettext-4.po \
+	gettext-5.po gettext-6-1.po gettext-6-2.po gettext-7.po \
+	gettextpo-1.de.po xgettext-1 xgettext-c-1
 MOSTLYCLEANFILES = core *.stackdump
 TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	gettext-8 \
 	msgattrib-1 msgattrib-2 msgattrib-3 msgattrib-4 msgattrib-5 \
 	msgattrib-6 msgattrib-7 msgattrib-8 msgattrib-9 msgattrib-10 \
 	msgattrib-11 msgattrib-12 msgattrib-13 msgattrib-14 msgattrib-15 \
-	msgattrib-16 msgattrib-17 \
+	msgattrib-16 msgattrib-17 msgattrib-18 msgattrib-19 \
 	msgattrib-properties-1 \
 	msgcat-1 msgcat-2 msgcat-3 msgcat-4 msgcat-5 msgcat-6 msgcat-7 \
 	msgcat-8 msgcat-9 msgcat-10 msgcat-11 msgcat-12 msgcat-13 msgcat-14 \
-	msgcat-15 msgcat-16 msgcat-17 msgcat-18 \
+	msgcat-15 msgcat-16 msgcat-17 msgcat-18 msgcat-19 \
 	msgcat-properties-1 msgcat-properties-2 \
 	msgcat-stringtable-1 \
 	msgcmp-1 msgcmp-2 msgcmp-3 msgcmp-4 \
@@ -1780,25 +1786,27 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	msgcomm-8 msgcomm-9 msgcomm-10 msgcomm-11 msgcomm-12 msgcomm-13 \
 	msgcomm-14 msgcomm-15 msgcomm-16 msgcomm-17 msgcomm-18 msgcomm-19 \
 	msgcomm-20 msgcomm-21 msgcomm-22 msgcomm-23 msgcomm-24 msgcomm-25 \
-	msgcomm-26 msgcomm-27 \
-	msgconv-1 msgconv-2 msgconv-3 msgconv-4 msgconv-5 msgconv-6 \
-	msgen-1 msgen-2 msgen-3 \
-	msgexec-1 msgexec-2 msgexec-3 msgexec-4 \
-	msgfilter-1 msgfilter-2 msgfilter-3 msgfilter-4 \
-	msgfilter-sr-latin-1 \
+	msgcomm-26 msgcomm-27 msgcomm-28 \
+	msgconv-1 msgconv-2 msgconv-3 msgconv-4 msgconv-5 msgconv-6 msgconv-7 \
+	msgen-1 msgen-2 msgen-3 msgen-4 \
+	msgexec-1 msgexec-2 msgexec-3 msgexec-4 msgexec-5 \
+	msgfilter-1 msgfilter-2 msgfilter-3 msgfilter-4 msgfilter-5 \
+	msgfilter-6 \
+	msgfilter-sr-latin-1 msgfilter-quote-1 \
 	msgfmt-1 msgfmt-2 msgfmt-3 msgfmt-4 msgfmt-5 msgfmt-6 msgfmt-7 \
 	msgfmt-8 msgfmt-9 msgfmt-10 msgfmt-11 msgfmt-12 msgfmt-13 msgfmt-14 \
-	msgfmt-15 msgfmt-16 msgfmt-17 \
+	msgfmt-15 msgfmt-16 msgfmt-17 msgfmt-18 \
 	msgfmt-properties-1 \
 	msgfmt-qt-1 msgfmt-qt-2 \
+	msgfmt-desktop-1 msgfmt-desktop-2 \
 	msggrep-1 msggrep-2 msggrep-3 msggrep-4 msggrep-5 msggrep-6 msggrep-7 \
-	msggrep-8 msggrep-9 msggrep-10 \
-	msginit-1 msginit-2 \
+	msggrep-8 msggrep-9 msggrep-10 msggrep-11 \
+	msginit-1 msginit-2 msginit-3 \
 	msgmerge-1 msgmerge-2 msgmerge-3 msgmerge-4 msgmerge-5 msgmerge-6 \
 	msgmerge-7 msgmerge-8 msgmerge-9 msgmerge-10 msgmerge-11 msgmerge-12 \
 	msgmerge-13 msgmerge-14 msgmerge-15 msgmerge-16 msgmerge-17 \
 	msgmerge-18 msgmerge-19 msgmerge-20 msgmerge-21 msgmerge-22 \
-	msgmerge-23 msgmerge-24 \
+	msgmerge-23 msgmerge-24 msgmerge-25 \
 	msgmerge-compendium-1 msgmerge-compendium-2 msgmerge-compendium-3 \
 	msgmerge-compendium-4 msgmerge-compendium-5 msgmerge-compendium-6 \
 	msgmerge-properties-1 msgmerge-properties-2 \
@@ -1809,15 +1817,15 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	msgunfmt-java-1 \
 	msgunfmt-properties-1 \
 	msgunfmt-tcl-1 \
-	msguniq-1 msguniq-2 msguniq-3 msguniq-4 msguniq-5 msguniq-6 \
+	msguniq-1 msguniq-2 msguniq-3 msguniq-4 msguniq-5 msguniq-6 msguniq-7 \
 	recode-sr-latin-1 recode-sr-latin-2 \
-	xgettext-1 xgettext-2 xgettext-3 xgettext-4 xgettext-5 xgettext-6 \
-	xgettext-7 xgettext-8 xgettext-9 \
+	xgettext-2 xgettext-3 xgettext-4 xgettext-5 xgettext-6 \
+	xgettext-7 xgettext-8 xgettext-9 xgettext-10 xgettext-11 \
 	xgettext-awk-1 xgettext-awk-2 \
-	xgettext-c-1 xgettext-c-2 xgettext-c-3 xgettext-c-4 xgettext-c-5 \
+	xgettext-c-2 xgettext-c-3 xgettext-c-4 xgettext-c-5 \
 	xgettext-c-6 xgettext-c-7 xgettext-c-8 xgettext-c-9 xgettext-c-10 \
 	xgettext-c-11 xgettext-c-12 xgettext-c-13 xgettext-c-14 xgettext-c-15 \
-	xgettext-c-16 xgettext-c-17 xgettext-c-18 \
+	xgettext-c-16 xgettext-c-17 xgettext-c-18 xgettext-c-19 \
 	xgettext-csharp-1 xgettext-csharp-2 xgettext-csharp-3 \
 	xgettext-csharp-4 xgettext-csharp-5 xgettext-csharp-6 \
 	xgettext-csharp-7 \
@@ -1837,6 +1845,7 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	xgettext-python-1 xgettext-python-2 xgettext-python-3 \
 	xgettext-python-4 \
 	xgettext-scheme-1 xgettext-scheme-2 xgettext-scheme-3 \
+	xgettext-scheme-4 \
 	xgettext-sh-1 xgettext-sh-2 xgettext-sh-3 xgettext-sh-4 xgettext-sh-5 \
 	xgettext-sh-6 \
 	xgettext-smalltalk-1 xgettext-smalltalk-2 \
@@ -1845,8 +1854,10 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	xgettext-ycp-1 xgettext-ycp-2 xgettext-ycp-3 xgettext-ycp-4 \
 	xgettext-lua-1 xgettext-lua-2 \
 	xgettext-javascript-1 xgettext-javascript-2 xgettext-javascript-3 \
-	xgettext-javascript-4 xgettext-javascript-5 \
+	xgettext-javascript-4 xgettext-javascript-5 xgettext-javascript-6 \
 	xgettext-vala-1 \
+	xgettext-gsettings-1 \
+	xgettext-desktop-1 \
 	format-awk-1 format-awk-2 \
 	format-boost-1 format-boost-2 \
 	format-c-1 format-c-2 format-c-3 format-c-4 format-c-5 \
@@ -1879,7 +1890,8 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	lang-python-2 lang-clisp lang-elisp lang-librep lang-guile \
 	lang-smalltalk lang-java lang-csharp lang-gawk lang-pascal \
 	lang-ycp lang-tcl lang-perl-1 lang-perl-2 lang-php lang-po lang-rst \
-	lang-lua lang-javascript lang-vala
+	lang-lua lang-javascript lang-vala \
+	autopoint-1 autopoint-2 autopoint-3
 
 
 # For debugging memory leaks and memory allocation bugs.
@@ -1888,7 +1900,8 @@ CHECKER =
 #CHECKER = valgrind --tool=memcheck --suppressions=$(srcdir)/../gnulib-lib/malloca.valgrind --suppressions=$(srcdir)/../gnulib-lib/libunistring.valgrind --num-callers=20 --leak-check=yes --leak-resolution=high --show-reachable=yes
 #CHECKER = valgrind --tool=massif --format=html --depth=10 --alloc-fn=xmalloc --alloc-fn=xrealloc --stacks=no
 TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) \
-		    PATH=.:../src:../../gettext-runtime/src:$(top_srcdir)/../gettext-runtime/src:$$PATH \
+		    abs_srcdir=$(abs_srcdir) \
+		    abs_top_srcdir=$(abs_top_srcdir) \
 		    GETTEXT="$(CHECKER) tstgettext" \
 		    NGETTEXT="$(CHECKER) tstngettext" \
 		    XGETTEXT="$(CHECKER) xgettext" \
@@ -1907,24 +1920,6 @@ TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) \
 		    MSGUNFMT="$(CHECKER) msgunfmt" \
 		    MSGUNIQ="$(CHECKER) msguniq" \
 		    RECODE="$(CHECKER) recode" \
-		    OBJEXT='@OBJEXT@' EXEEXT='@EXEEXT@' \
-		    LIBTOOL='@LIBTOOL@' \
-		    CC='@CC@' CFLAGS='@CFLAGS@' \
-		    CXX='@CXX@' CXXFLAGS='@CXXFLAGS@' \
-		    CPPFLAGS='@CPPFLAGS@' LDFLAGS='@LDFLAGS@' \
-		    LTLIBINTL='@LTLIBINTL@' \
-		    JAVA_CHOICE='@JAVA_CHOICE@' \
-		    BUILDJAVA='@BUILDJAVA@' \
-		    TESTJAVA='@TESTJAVA@' \
-		    CSHARP_CHOICE='@CSHARP_CHOICE@' \
-		    BUILDCSHARP='@BUILDCSHARP@' \
-		    TESTCSHARP='@TESTCSHARP@' \
-		    TESTLIBASPRINTF='@TESTLIBASPRINTF@' \
-		    GLIBC2='@GLIBC2@' \
-		    LOCALE_FR='@LOCALE_FR@' \
-		    LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
-		    LOCALE_JA='@LOCALE_JA@' \
-		    host_os='@host_os@' \
 		    CONFIG_SHELL='$(SHELL)'
 
 LOG_COMPILER = $(SHELL)
@@ -1974,7 +1969,13 @@ fc4_LDADD = ../gnulib-lib/libgettextlib.la $(LDADD)
 fc5_SOURCES = format-c-5-prg.c
 fc5_LDADD = ../gnulib-lib/libgettextlib.la $(LDADD)
 gettextpo_1_prg_SOURCES = gettextpo-1-prg.c
-gettextpo_1_prg_CPPFLAGS = -I../libgettextpo -I$(top_srcdir)/libgettextpo $(AM_CPPFLAGS)
+# Don't add 'gnulib-lib' to the include path here.  Some header files
+# there may interfere with the ones in 'libgettextpo'.
+gettextpo_1_prg_CPPFLAGS = \
+  -I.. \
+  -I../libgettextpo -I$(top_srcdir)/libgettextpo \
+  -I../intl
+
 # Don't add more libraries here. This test must check whether libgettextpo is
 # self contained.
 gettextpo_1_prg_LDADD = ../libgettextpo/libgettextpo.la $(LDADD)
@@ -2012,6 +2013,8 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+init-env: $(top_builddir)/config.status $(srcdir)/init-env.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 clean-noinstPROGRAMS:
 	@list='$(noinst_PROGRAMS)'; test -n "$$list" || exit 0; \
@@ -2509,6 +2512,20 @@ msgattrib-17.log: msgattrib-17
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgattrib-18.log: msgattrib-18
+	@p='msgattrib-18'; \
+	b='msgattrib-18'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgattrib-19.log: msgattrib-19
+	@p='msgattrib-19'; \
+	b='msgattrib-19'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 msgattrib-properties-1.log: msgattrib-properties-1
 	@p='msgattrib-properties-1'; \
 	b='msgattrib-properties-1'; \
@@ -2638,6 +2655,13 @@ msgcat-17.log: msgcat-17
 msgcat-18.log: msgcat-18
 	@p='msgcat-18'; \
 	b='msgcat-18'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgcat-19.log: msgcat-19
+	@p='msgcat-19'; \
+	b='msgcat-19'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -2880,6 +2904,13 @@ msgcomm-27.log: msgcomm-27
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgcomm-28.log: msgcomm-28
+	@p='msgcomm-28'; \
+	b='msgcomm-28'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 msgconv-1.log: msgconv-1
 	@p='msgconv-1'; \
 	b='msgconv-1'; \
@@ -2922,6 +2953,13 @@ msgconv-6.log: msgconv-6
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgconv-7.log: msgconv-7
+	@p='msgconv-7'; \
+	b='msgconv-7'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 msgen-1.log: msgen-1
 	@p='msgen-1'; \
 	b='msgen-1'; \
@@ -2939,6 +2977,13 @@ msgen-2.log: msgen-2
 msgen-3.log: msgen-3
 	@p='msgen-3'; \
 	b='msgen-3'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgen-4.log: msgen-4
+	@p='msgen-4'; \
+	b='msgen-4'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -2971,6 +3016,13 @@ msgexec-4.log: msgexec-4
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgexec-5.log: msgexec-5
+	@p='msgexec-5'; \
+	b='msgexec-5'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 msgfilter-1.log: msgfilter-1
 	@p='msgfilter-1'; \
 	b='msgfilter-1'; \
@@ -2999,9 +3051,30 @@ msgfilter-4.log: msgfilter-4
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgfilter-5.log: msgfilter-5
+	@p='msgfilter-5'; \
+	b='msgfilter-5'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgfilter-6.log: msgfilter-6
+	@p='msgfilter-6'; \
+	b='msgfilter-6'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 msgfilter-sr-latin-1.log: msgfilter-sr-latin-1
 	@p='msgfilter-sr-latin-1'; \
 	b='msgfilter-sr-latin-1'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgfilter-quote-1.log: msgfilter-quote-1
+	@p='msgfilter-quote-1'; \
+	b='msgfilter-quote-1'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -3125,6 +3198,13 @@ msgfmt-17.log: msgfmt-17
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgfmt-18.log: msgfmt-18
+	@p='msgfmt-18'; \
+	b='msgfmt-18'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 msgfmt-properties-1.log: msgfmt-properties-1
 	@p='msgfmt-properties-1'; \
 	b='msgfmt-properties-1'; \
@@ -3142,6 +3222,20 @@ msgfmt-qt-1.log: msgfmt-qt-1
 msgfmt-qt-2.log: msgfmt-qt-2
 	@p='msgfmt-qt-2'; \
 	b='msgfmt-qt-2'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgfmt-desktop-1.log: msgfmt-desktop-1
+	@p='msgfmt-desktop-1'; \
+	b='msgfmt-desktop-1'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgfmt-desktop-2.log: msgfmt-desktop-2
+	@p='msgfmt-desktop-2'; \
+	b='msgfmt-desktop-2'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -3216,6 +3310,13 @@ msggrep-10.log: msggrep-10
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msggrep-11.log: msggrep-11
+	@p='msggrep-11'; \
+	b='msggrep-11'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 msginit-1.log: msginit-1
 	@p='msginit-1'; \
 	b='msginit-1'; \
@@ -3226,6 +3327,13 @@ msginit-1.log: msginit-1
 msginit-2.log: msginit-2
 	@p='msginit-2'; \
 	b='msginit-2'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msginit-3.log: msginit-3
+	@p='msginit-3'; \
+	b='msginit-3'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -3398,6 +3506,13 @@ msgmerge-24.log: msgmerge-24
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgmerge-25.log: msgmerge-25
+	@p='msgmerge-25'; \
+	b='msgmerge-25'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 msgmerge-compendium-1.log: msgmerge-compendium-1
 	@p='msgmerge-compendium-1'; \
 	b='msgmerge-compendium-1'; \
@@ -3566,6 +3681,13 @@ msguniq-6.log: msguniq-6
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msguniq-7.log: msguniq-7
+	@p='msguniq-7'; \
+	b='msguniq-7'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 recode-sr-latin-1.log: recode-sr-latin-1
 	@p='recode-sr-latin-1'; \
 	b='recode-sr-latin-1'; \
@@ -3576,13 +3698,6 @@ recode-sr-latin-1.log: recode-sr-latin-1
 recode-sr-latin-2.log: recode-sr-latin-2
 	@p='recode-sr-latin-2'; \
 	b='recode-sr-latin-2'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-xgettext-1.log: xgettext-1
-	@p='xgettext-1'; \
-	b='xgettext-1'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -3643,6 +3758,20 @@ xgettext-9.log: xgettext-9
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+xgettext-10.log: xgettext-10
+	@p='xgettext-10'; \
+	b='xgettext-10'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+xgettext-11.log: xgettext-11
+	@p='xgettext-11'; \
+	b='xgettext-11'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 xgettext-awk-1.log: xgettext-awk-1
 	@p='xgettext-awk-1'; \
 	b='xgettext-awk-1'; \
@@ -3653,13 +3782,6 @@ xgettext-awk-1.log: xgettext-awk-1
 xgettext-awk-2.log: xgettext-awk-2
 	@p='xgettext-awk-2'; \
 	b='xgettext-awk-2'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-xgettext-c-1.log: xgettext-c-1
-	@p='xgettext-c-1'; \
-	b='xgettext-c-1'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -3779,6 +3901,13 @@ xgettext-c-17.log: xgettext-c-17
 xgettext-c-18.log: xgettext-c-18
 	@p='xgettext-c-18'; \
 	b='xgettext-c-18'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+xgettext-c-19.log: xgettext-c-19
+	@p='xgettext-c-19'; \
+	b='xgettext-c-19'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -4133,6 +4262,13 @@ xgettext-scheme-3.log: xgettext-scheme-3
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+xgettext-scheme-4.log: xgettext-scheme-4
+	@p='xgettext-scheme-4'; \
+	b='xgettext-scheme-4'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 xgettext-sh-1.log: xgettext-sh-1
 	@p='xgettext-sh-1'; \
 	b='xgettext-sh-1'; \
@@ -4301,9 +4437,30 @@ xgettext-javascript-5.log: xgettext-javascript-5
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+xgettext-javascript-6.log: xgettext-javascript-6
+	@p='xgettext-javascript-6'; \
+	b='xgettext-javascript-6'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 xgettext-vala-1.log: xgettext-vala-1
 	@p='xgettext-vala-1'; \
 	b='xgettext-vala-1'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+xgettext-gsettings-1.log: xgettext-gsettings-1
+	@p='xgettext-gsettings-1'; \
+	b='xgettext-gsettings-1'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+xgettext-desktop-1.log: xgettext-desktop-1
+	@p='xgettext-desktop-1'; \
+	b='xgettext-desktop-1'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -4892,6 +5049,27 @@ lang-javascript.log: lang-javascript
 lang-vala.log: lang-vala
 	@p='lang-vala'; \
 	b='lang-vala'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+autopoint-1.log: autopoint-1
+	@p='autopoint-1'; \
+	b='autopoint-1'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+autopoint-2.log: autopoint-2
+	@p='autopoint-2'; \
+	b='autopoint-2'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+autopoint-3.log: autopoint-3
+	@p='autopoint-3'; \
+	b='autopoint-3'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \

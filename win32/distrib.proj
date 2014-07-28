@@ -7,7 +7,8 @@
   <Import Project="..\.nuget\nuget.targets" />
 
   <PropertyGroup>
-    <OutputDir>distrib-$(Configuration)</OutputDir>
+    <PoeditVersion>1.6.7</PoeditVersion>
+    <OutputDir>distrib-$(Configuration)-$(PoeditVersion)</OutputDir>
     
     <CodesignTimestampServer>http://timestamp.verisign.com/scripts/timstamp.dll</CodesignTimestampServer>
     <CodesignIdentity>YOUR_CERTIFICATE</CodesignIdentity>
@@ -15,7 +16,7 @@
     <CodesignFlags>/a /n $(CodesignIdentity) /t $(CodesignTimestampServer) /d Poedit /du http://poedit.net</CodesignFlags>
     <CodesignCmd>signtool sign /a $(CodesignFlags)</CodesignCmd>
 
-    <InnoCC>..\packages\Tools.InnoSetup.5.5.4\tools\ISCC.exe</InnoCC>
+    <InnoCC>..\packages\Tools.InnoSetup.5.5.5\tools\ISCC.exe</InnoCC>
     <InnoFlags>/dCONFIG=$(Configuration) /dSIGNTOOL=default /Sdefault="$(CodesignCmd) $f"</InnoFlags>
   </PropertyGroup>
 

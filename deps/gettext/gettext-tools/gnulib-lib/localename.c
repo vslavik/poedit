@@ -1,5 +1,5 @@
 /* Determine name of the currently selected locale.
-   Copyright (C) 1995-2013 Free Software Foundation, Inc.
+   Copyright (C) 1995-2014 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -2515,7 +2515,7 @@ gl_locale_name_from_win32_LCID (LCID lcid)
 /* A hash function for NUL-terminated char* strings using
    the method described by Bruno Haible.
    See http://www.haible.de/bruno/hashfunc.html.  */
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 string_hash (const void *x)
 {
   const char *s = (const char *) x;

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21FB780179D51BE003F45AC /* libexpat.dylib */; };
-		B2284A52183BE3B300E097C7 /* NSString+SymlinksAndAliases.m in Sources */ = {isa = PBXBuildFile; fileRef = B2284A4F183BE3B300E097C7 /* NSString+SymlinksAndAliases.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = B2284A51183BE3B300E097C7 /* PFMoveApplication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B2284A55183BE68200E097C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2284A54183BE68200E097C7 /* Security.framework */; };
 		B22A5C7A184E4B6B0034BEFD /* window-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B22A5C79184E4B6B0034BEFD /* window-close@2x.png */; };
@@ -27,6 +26,9 @@
 		B24ACD8416F6263900399242 /* Poedit.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD8316F6263900399242 /* Poedit.iconset */; };
 		B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; };
 		B2567977170763B700C52BC5 /* libwx_osx_cocoa_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */; };
+		B2579C7F1920BFA000BEBC31 /* NSObject+REResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = B2579C7E1920BFA000BEBC31 /* NSObject+REResponder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B2579C821920C02C00BEBC31 /* REUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B2579C811920C02C00BEBC31 /* REUtil.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B26897B4197A830200B42764 /* MoveApplication.strings in Resources */ = {isa = PBXBuildFile; fileRef = B26897B2197A830200B42764 /* MoveApplication.strings */; };
 		B26D064F182506E40069C378 /* languagectrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D064D182506E40069C378 /* languagectrl.cpp */; };
 		B26D0655182697200069C378 /* welcomescreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D0653182697200069C378 /* welcomescreen.cpp */; };
 		B26D06581826A22C0069C378 /* PoeditWelcome.png in Resources */ = {isa = PBXBuildFile; fileRef = B26D06561826A22C0069C378 /* PoeditWelcome.png */; };
@@ -180,8 +182,6 @@
 
 /* Begin PBXFileReference section */
 		B21FB780179D51BE003F45AC /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
-		B2284A4E183BE3B300E097C7 /* NSString+SymlinksAndAliases.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+SymlinksAndAliases.h"; path = "deps/letsmove/NSString+SymlinksAndAliases.h"; sourceTree = "<group>"; };
-		B2284A4F183BE3B300E097C7 /* NSString+SymlinksAndAliases.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+SymlinksAndAliases.m"; path = "deps/letsmove/NSString+SymlinksAndAliases.m"; sourceTree = "<group>"; };
 		B2284A50183BE3B300E097C7 /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFMoveApplication.h; path = deps/letsmove/PFMoveApplication.h; sourceTree = "<group>"; };
 		B2284A51183BE3B300E097C7 /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFMoveApplication.m; path = deps/letsmove/PFMoveApplication.m; sourceTree = "<group>"; };
 		B2284A54183BE68200E097C7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -212,6 +212,12 @@
 		B24ACD8316F6263900399242 /* Poedit.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = Poedit.iconset; path = icons/appicon/Poedit.iconset; sourceTree = SOURCE_ROOT; };
 		B256797417075E6000C52BC5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwx_osx_cocoa_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2579C7D1920BFA000BEBC31 /* NSObject+REResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+REResponder.h"; path = "deps/rekit/REKit/NSObject+REResponder.h"; sourceTree = "<group>"; };
+		B2579C7E1920BFA000BEBC31 /* NSObject+REResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+REResponder.m"; path = "deps/rekit/REKit/NSObject+REResponder.m"; sourceTree = "<group>"; };
+		B2579C801920C02C00BEBC31 /* REKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REKit.h; path = deps/rekit/REKit/REKit.h; sourceTree = "<group>"; };
+		B2579C811920C02C00BEBC31 /* REUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REUtil.m; path = deps/rekit/REKit/REUtil.m; sourceTree = "<group>"; };
+		B26251EA197A83DB00278503 /* ru */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ru; path = deps/letsmove/ru.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B26897B3197A830200B42764 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = deps/letsmove/en.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B26B74EF1822CA12006E2B76 /* language_impl_legacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_impl_legacy.h; sourceTree = "<group>"; };
 		B26D064D182506E40069C378 /* languagectrl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = languagectrl.cpp; sourceTree = "<group>"; };
 		B26D064E182506E40069C378 /* languagectrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = languagectrl.h; sourceTree = "<group>"; };
@@ -281,11 +287,24 @@
 		B29AE89B17105306008D1F8A /* errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errors.h; sourceTree = "<group>"; };
 		B29FC688182157A700BFC15D /* language_impl_plurals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_impl_plurals.h; sourceTree = "<group>"; };
 		B29FC6891821616C00BFC15D /* icuhelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icuhelpers.h; sourceTree = "<group>"; };
+		B2A84663197EAEA4008A4ACA /* hu */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = hu; path = deps/letsmove/hu.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2A84664197EAEAD008A4ACA /* sr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = sr; path = deps/letsmove/sr.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2A84665197EAEB2008A4ACA /* tr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = tr; path = deps/letsmove/tr.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2A84666197EAF55008A4ACA /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2A84667197EAF6E008A4ACA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2A84668197EAFB0008A4ACA /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2A84669197EAFB2008A4ACA /* sr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sr; path = sr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2A8466B197EAFC3008A4ACA /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2A8466C197EAFDB008A4ACA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2A8466D197EB019008A4ACA /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2A8466E197EB024008A4ACA /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2A8466F197EB030008A4ACA /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B2BF84B9170846290030AA22 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B2BF84BB170846940030AA22 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		B2BF84BD170847220030AA22 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		B2BF84C0170847E60030AA22 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B2BF84C21708498B0030AA22 /* HIToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HIToolbox.framework; path = System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework; sourceTree = SDKROOT; };
+		B2D04DFB197A831D00D24B42 /* cs */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = cs; path = deps/letsmove/cs.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLucenePlusPlus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D76A46181D028B0083C9D9 /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_date_time.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_filesystem.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -317,6 +336,18 @@
 		B2F14DD3181E510100E212B5 /* tm_migrate.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = tm_migrate.cpp; path = tm/tm_migrate.cpp; sourceTree = "<group>"; };
 		B2F287C2170DCC92004C1F41 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = deps/gettext/AUTHORS; sourceTree = SOURCE_ROOT; };
 		B2F287C3170DCC92004C1F41 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = COPYING; path = deps/gettext/COPYING; sourceTree = SOURCE_ROOT; };
+		B2F672D6197A83F900DBFDB0 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = deps/letsmove/da.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2F672D7197A83FE00DBFDB0 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = deps/letsmove/de.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2F672D8197A840400DBFDB0 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = deps/letsmove/es.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2F672D9197A840800DBFDB0 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = deps/letsmove/fr.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2F672DA197A840D00DBFDB0 /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = it; path = deps/letsmove/it.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2F672DB197A841200DBFDB0 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = deps/letsmove/ja.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2F672DC197A841600DBFDB0 /* ko */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ko; path = deps/letsmove/ko.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2F672DD197A841C00DBFDB0 /* nb */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = nb; path = deps/letsmove/nb.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2F672DE197A842100DBFDB0 /* nl */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = nl; path = deps/letsmove/nl.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2F672DF197A842600DBFDB0 /* pt_BR */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = pt_BR; path = deps/letsmove/pt_BR.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2F672E0197A843400DBFDB0 /* pt */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = pt; path = deps/letsmove/pt.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2F672E1197A843F00DBFDB0 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = deps/letsmove/zh_CN.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,13 +392,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B22083AA197A82CD009355BB /* LetsMove */ = {
+			isa = PBXGroup;
+			children = (
+				B2284A50183BE3B300E097C7 /* PFMoveApplication.h */,
+				B2284A51183BE3B300E097C7 /* PFMoveApplication.m */,
+				B26897B2197A830200B42764 /* MoveApplication.strings */,
+			);
+			name = LetsMove;
+			sourceTree = "<group>";
+		};
 		B2284A4D183BE39900E097C7 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
-				B2284A4E183BE3B300E097C7 /* NSString+SymlinksAndAliases.h */,
-				B2284A4F183BE3B300E097C7 /* NSString+SymlinksAndAliases.m */,
-				B2284A50183BE3B300E097C7 /* PFMoveApplication.h */,
-				B2284A51183BE3B300E097C7 /* PFMoveApplication.m */,
+				B22083AA197A82CD009355BB /* LetsMove */,
+				B2579C801920C02C00BEBC31 /* REKit.h */,
+				B2579C811920C02C00BEBC31 /* REUtil.m */,
+				B2579C7D1920BFA000BEBC31 /* NSObject+REResponder.h */,
+				B2579C7E1920BFA000BEBC31 /* NSObject+REResponder.m */,
 			);
 			name = "Third Party";
 			sourceTree = "<group>";
@@ -715,6 +757,26 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				cs,
+				ru,
+				da,
+				de,
+				es,
+				fr,
+				it,
+				ja,
+				ko,
+				nb,
+				nl,
+				pt_BR,
+				pt,
+				zh_CN,
+				hu,
+				sr,
+				tr,
+				"pt-BR",
+				ca,
+				eu,
 			);
 			mainGroup = B24ACD5216F6201F00399242;
 			productRefGroup = B24ACD5C16F6201F00399242 /* Products */;
@@ -784,6 +846,7 @@
 				B2EC60A41812D9D40059756A /* icudt52l.dat in Resources */,
 				B26D06581826A22C0069C378 /* PoeditWelcome.png in Resources */,
 				B26D06591826A22C0069C378 /* PoeditWelcome@2x.png in Resources */,
+				B26897B4197A830200B42764 /* MoveApplication.strings in Resources */,
 				B22A5C82184E4B870034BEFD /* poedit-validate@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -859,7 +922,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "source deps/gettext/version.sh\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
+			shellScript = "VERSION_NUMBER=`cat deps/gettext/.version`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
 		};
 		B2E83707170C96DB00F31559 /* Install translations */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -939,8 +1002,9 @@
 				B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */,
 				B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */,
 				B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */,
-				B2284A52183BE3B300E097C7 /* NSString+SymlinksAndAliases.m in Sources */,
 				B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */,
+				B2579C821920C02C00BEBC31 /* REUtil.m in Sources */,
+				B2579C7F1920BFA000BEBC31 /* NSObject+REResponder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -979,9 +1043,43 @@
 			isa = PBXVariantGroup;
 			children = (
 				B24ACD6816F6201F00399242 /* en */,
+				B2A84666197EAF55008A4ACA /* cs */,
+				B2A84667197EAF6E008A4ACA /* fr */,
+				B2A84668197EAFB0008A4ACA /* tr */,
+				B2A84669197EAFB2008A4ACA /* sr */,
+				B2A8466B197EAFC3008A4ACA /* hu */,
+				B2A8466C197EAFDB008A4ACA /* es */,
+				B2A8466D197EB019008A4ACA /* pt_BR */,
+				B2A8466E197EB024008A4ACA /* ca */,
+				B2A8466F197EB030008A4ACA /* eu */,
 			);
 			name = InfoPlist.strings;
 			path = macosx;
+			sourceTree = "<group>";
+		};
+		B26897B2197A830200B42764 /* MoveApplication.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B26897B3197A830200B42764 /* en */,
+				B2D04DFB197A831D00D24B42 /* cs */,
+				B26251EA197A83DB00278503 /* ru */,
+				B2F672D6197A83F900DBFDB0 /* da */,
+				B2F672D7197A83FE00DBFDB0 /* de */,
+				B2F672D8197A840400DBFDB0 /* es */,
+				B2F672D9197A840800DBFDB0 /* fr */,
+				B2F672DA197A840D00DBFDB0 /* it */,
+				B2F672DB197A841200DBFDB0 /* ja */,
+				B2F672DC197A841600DBFDB0 /* ko */,
+				B2F672DD197A841C00DBFDB0 /* nb */,
+				B2F672DE197A842100DBFDB0 /* nl */,
+				B2F672DF197A842600DBFDB0 /* pt_BR */,
+				B2F672E0197A843400DBFDB0 /* pt */,
+				B2F672E1197A843F00DBFDB0 /* zh_CN */,
+				B2A84663197EAEA4008A4ACA /* hu */,
+				B2A84664197EAEAD008A4ACA /* sr */,
+				B2A84665197EAEB2008A4ACA /* tr */,
+			);
+			name = MoveApplication.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1089,6 +1187,7 @@
 				DEPS_BUILD_DIR = "$(OBJROOT)/Deps.build/$(CONFIGURATION)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(WX_DEFINES)",
@@ -1106,7 +1205,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GETTEXT_BINARIES = "msgcat msgfmt msgunfmt msgmerge xgettext";
+				GETTEXT_BINARIES = "msgcat msgfmt msgunfmt msguniq msgmerge xgettext";
 				HEADER_SEARCH_PATHS = (
 					deps/custom_build/config,
 					deps/wx/include,
@@ -1119,7 +1218,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				POEDIT_FEATURES = "";
-				POEDIT_VERSION = 1.6.5;
+				POEDIT_VERSION = 1.6.7;
 				SDKROOT = macosx;
 				WX_DEFINES = "__WXOSX_COCOA__ __WX__ __WXMAC_XCODE__=1 wxUSE_UNICODE_UTF8=0 wxUSE_UNICODE_WCHAR=1";
 			};
@@ -1141,6 +1240,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPS_BUILD_DIR = "$(OBJROOT)/Deps.build/$(CONFIGURATION)";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(WX_DEFINES)",
 					"$(POEDIT_FEATURES)",
@@ -1156,7 +1256,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GETTEXT_BINARIES = "msgcat msgfmt msgunfmt msgmerge xgettext";
+				GETTEXT_BINARIES = "msgcat msgfmt msgunfmt msguniq msgmerge xgettext";
 				HEADER_SEARCH_PATHS = (
 					deps/custom_build/config,
 					deps/wx/include,
@@ -1168,7 +1268,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				POEDIT_FEATURES = "";
-				POEDIT_VERSION = 1.6.5;
+				POEDIT_VERSION = 1.6.7;
 				SDKROOT = macosx;
 				WX_DEFINES = "__WXOSX_COCOA__ __WX__ __WXMAC_XCODE__=1 wxUSE_UNICODE_UTF8=0 wxUSE_UNICODE_WCHAR=1";
 			};

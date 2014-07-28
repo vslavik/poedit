@@ -193,10 +193,10 @@ The User's View
 * Setting the POSIX Locale::    How to Specify the Locale According to POSIX
 * Installing Localizations::    How to Install Additional Translations
 
-Setting the POSIX Locale
+Setting the Locale through Environment Variables
 
 * Locale Names::                How a Locale Specification Looks Like
-* Locale Environment Variables:: Which Environment Variable Specfies What
+* Locale Environment Variables::  Which Environment Variable Specfies What
 * The LANGUAGE variable::       How to Specify a Priority List of Languages
 
 Preparing Program Sources
@@ -341,7 +341,7 @@ The Maintainer's View
 * gettextize Invocation::       Invoking the @code{gettextize} Program
 * Adjusting Files::             Files You Must Create or Alter
 * autoconf macros::             Autoconf macros for use in @file{configure.ac}
-* CVS Issues::                  Integrating with CVS
+* Version Control Issues::      
 * Release Management::          Creating a Distribution Tarball
 
 Files You Must Create or Alter
@@ -367,12 +367,14 @@ Autoconf macros for use in @file{configure.ac}
 * AM_GNU_GETTEXT_NEED::         AM_GNU_GETTEXT_NEED in @file{gettext.m4}
 * AM_GNU_GETTEXT_INTL_SUBDIR::  AM_GNU_GETTEXT_INTL_SUBDIR in @file{intldir.m4}
 * AM_PO_SUBDIRS::               AM_PO_SUBDIRS in @file{po.m4}
+* AM_XGETTEXT_OPTION::          AM_XGETTEXT_OPTION in @file{po.m4}
 * AM_ICONV::                    AM_ICONV in @file{iconv.m4}
 
-Integrating with CVS
+Integrating with Version Control Systems
 
-* Distributed CVS::             Avoiding version mismatch in distributed development
-* Files under CVS::             Files to put under CVS version control
+* Distributed Development::     Avoiding version mismatch in distributed development
+* Files under Version Control::  Files to put under version control
+* Translations under Version Control::  Put PO Files under Version Control
 * autopoint Invocation::        Invoking the @code{autopoint} Program
 
 Other Programming Languages
@@ -465,6 +467,7 @@ Internationalizable Data
 * POT::                         POT - Portable Object Template
 * RST::                         Resource String Table
 * Glade::                       Glade - GNOME user interface description
+* GSettings::                   GSettings - GNOME user configuration schema
 
 Concluding Remarks
 
@@ -1195,7 +1198,7 @@ prompt, merely execute
 
 @menu
 * Locale Names::                How a Locale Specification Looks Like
-* Locale Environment Variables:: Which Environment Variable Specfies What
+* Locale Environment Variables::  Which Environment Variable Specfies What
 * The LANGUAGE variable::       How to Specify a Priority List of Languages
 @end menu
 
@@ -2468,13 +2471,13 @@ is changed but of course the arguments in the @code{printf} don't have.
 This will most probably lead to problems because now the length of the
 string is regarded as the address.
 
-To prevent errors at runtime caused by translations the @code{msgfmt}
+To prevent errors at runtime caused by translations, the @code{msgfmt}
 tool can check statically whether the arguments in the original and the
 translation string match in type and number.  If this is not the case
 and the @samp{-c} option has been passed to @code{msgfmt}, @code{msgfmt}
-will give an error and refuse to produce a MO file.  Thus consequent
+will give an error and refuse to produce a MO file.  Thus consistent
 use of @samp{msgfmt -c} will catch the error, so that it cannot cause
-cause problems at runtime.
+problems at runtime.
 
 @noindent
 If the word order in the above German translation would be correct one
@@ -2487,12 +2490,12 @@ would have to write
 @noindent
 The routines in @code{msgfmt} know about this special notation.
 
-Because not all strings in a program must be format strings it is not
+Because not all strings in a program will be format strings, it is not
 useful for @code{msgfmt} to test all the strings in the @file{.po} file.
 This might cause problems because the string might contain what looks
 like a format specifier, but the string is not used in @code{printf}.
 
-Therefore the @code{xgettext} adds a special tag to those messages it
+Therefore @code{xgettext} adds a special tag to those messages it
 thinks might be a format string.  There is no absolute rule for this,
 only a heuristic.  In the @file{.po} file the entry is marked using the
 @code{c-format} flag in the @code{#,} comment line (@pxref{PO Files}).
@@ -4784,7 +4787,7 @@ Such highlighting is possible through the @code{msgcat} options
 * Customizing less::            Customizing @code{less} for viewing PO files
 @end menu
 
-@node The --color option, The TERM variable,  , Colorizing
+@node The --color option, The TERM variable, Colorizing, Colorizing
 @subsection The @code{--color} option
 
 @opindex --color@r{, @code{msgcat} option}
@@ -7553,7 +7556,7 @@ for changes.
 * gettextize Invocation::       Invoking the @code{gettextize} Program
 * Adjusting Files::             Files You Must Create or Alter
 * autoconf macros::             Autoconf macros for use in @file{configure.ac}
-* CVS Issues::                  Integrating with CVS
+* Version Control Issues::      
 * Release Management::          Creating a Distribution Tarball
 @end menu
 
@@ -8389,7 +8392,7 @@ In other packages, it can go into the @file{src} directory.
 Do not install the @code{gettext.h} file in public locations.  Every
 package that needs it should contain a copy of it on its own.
 
-@node autoconf macros, CVS Issues, Adjusting Files, Maintainers
+@node autoconf macros, Version Control Issues, Adjusting Files, Maintainers
 @section Autoconf macros for use in @file{configure.ac}
 @cindex autoconf macros for @code{gettext}
 
@@ -8507,7 +8510,7 @@ The @code{AM_GNU_GETTEXT_VERSION} macro declares the version number of
 the GNU gettext infrastructure that is used by the package.
 
 The use of this macro is optional; only the @code{autopoint} program makes
-use of it (@pxref{CVS Issues}).
+use of it (@pxref{Version Control Issues}).
 
 @node AM_GNU_GETTEXT_NEED, AM_GNU_GETTEXT_INTL_SUBDIR, AM_GNU_GETTEXT_VERSION, autoconf macros
 @subsection AM_GNU_GETTEXT_NEED in @file{gettext.m4}
@@ -8638,32 +8641,34 @@ library support, like SCO.
 @file{iconv.m4} is distributed with the GNU gettext package because
 @file{gettext.m4} relies on it.
 
-@node CVS Issues, Release Management, autoconf macros, Maintainers
-@section Integrating with CVS
+@node Version Control Issues, Release Management, autoconf macros, Maintainers
+@section Integrating with Version Control Systems
 
-Many projects use CVS for distributed development, version control and
-source backup.  This section gives some advice how to manage the uses
-of @code{cvs}, @code{gettextize}, @code{autopoint} and @code{autoconf}.
+Many projects use version control systems for distributed development
+and source backup.  This section gives some advice how to manage the
+uses of @code{gettextize}, @code{autopoint} and @code{autoconf} on
+version controlled files.
 
 @menu
-* Distributed CVS::             Avoiding version mismatch in distributed development
-* Files under CVS::             Files to put under CVS version control
+* Distributed Development::     Avoiding version mismatch in distributed development
+* Files under Version Control::  Files to put under version control
+* Translations under Version Control::  Put PO Files under Version Control
 * autopoint Invocation::        Invoking the @code{autopoint} Program
 @end menu
 
-@node Distributed CVS, Files under CVS, CVS Issues, CVS Issues
+@node Distributed Development, Files under Version Control, Version Control Issues, Version Control Issues
 @subsection Avoiding version mismatch in distributed development
 
-In a project development with multiple developers, using CVS, there
-should be a single developer who occasionally - when there is desire to
-upgrade to a new @code{gettext} version - runs @code{gettextize} and
-performs the changes listed in @ref{Adjusting Files}, and then commits
-his changes to the CVS.
+In a project development with multiple developers, there should be a
+single developer who occasionally - when there is desire to upgrade to
+a new @code{gettext} version - runs @code{gettextize} and performs the
+changes listed in @ref{Adjusting Files}, and then commits his changes
+to the repository.
 
 It is highly recommended that all developers on a project use the same
 version of GNU @code{gettext} in the package.  In other words, if a
 developer runs @code{gettextize}, he should go the whole way, make the
-necessary remaining changes and commit his changes to the CVS.
+necessary remaining changes and commit his changes to the repository.
 Otherwise the following damages will likely occur:
 
 @itemize @bullet
@@ -8690,14 +8695,14 @@ version.  For example, it is possible that a platform specific bug goes
 undiscovered due to this constellation.
 @end itemize
 
-@node Files under CVS, autopoint Invocation, Distributed CVS, CVS Issues
-@subsection Files to put under CVS version control
+@node Files under Version Control, Translations under Version Control, Distributed Development, Version Control Issues
+@subsection Files to put under version control
 
 There are basically three ways to deal with generated files in the
-context of a CVS repository, such as @file{configure} generated from
-@file{configure.ac}, @code{@var{parser}.c} generated from
-@code{@var{parser}.y}, or @code{po/Makefile.in.in} autoinstalled by
-@code{gettextize} or @code{autopoint}.
+context of a version controlled repository, such as @file{configure}
+generated from @file{configure.ac}, @code{@var{parser}.c} generated
+from @code{@var{parser}.y}, or @code{po/Makefile.in.in} autoinstalled
+by @code{gettextize} or @code{autopoint}.
 
 @enumerate
 @item
@@ -8715,34 +8720,35 @@ Each of these three approaches has different advantages and drawbacks.
 
 @enumerate
 @item
-The advantage is that anyone can check out the CVS at any moment and
+The advantage is that anyone can check out the source at any moment and
 gets a working build.  The drawbacks are:  1a. It requires some frequent
-"cvs commit" actions by the maintainers.  1b. The repository grows in size
+"push" actions by the maintainers.  1b. The repository grows in size
 quite fast.
 
 @item
-The advantage is that anyone can check out the CVS, and the usual
-"./configure; make" will work.  The drawbacks are:  2a. The one who
-checks out the repository needs tools like GNU @code{automake},
-GNU @code{autoconf}, GNU @code{m4} installed in his PATH; sometimes
-he even needs particular versions of them.  2b. When a release is made
+The advantage is that anyone can check out the source, and the usual
+"./configure; make" will work.  The drawbacks are: 2a. The one who
+checks out the repository needs tools like GNU @code{automake}, GNU
+@code{autoconf}, GNU @code{m4} installed in his PATH; sometimes he
+even needs particular versions of them.  2b. When a release is made
 and a commit is made on the generated files, the other developers get
-conflicts on the generated files after doing "cvs update".  Although
-these conflicts are easy to resolve, they are annoying.
+conflicts on the generated files when merging the local work back to
+the repository.  Although these conflicts are easy to resolve, they
+are annoying.
 
 @item
 The advantage is less work for the maintainers.  The drawback is that
-anyone who checks out the CVS not only needs tools like GNU @code{automake},
-GNU @code{autoconf}, GNU @code{m4} installed in his PATH, but also that
-he needs to perform a package specific pre-build step before being able
-to "./configure; make".
+anyone who checks out the source not only needs tools like GNU
+@code{automake}, GNU @code{autoconf}, GNU @code{m4} installed in his
+PATH, but also that he needs to perform a package specific pre-build
+step before being able to "./configure; make".
 @end enumerate
 
 For the first and second approach, all files modified or brought in
 by the occasional @code{gettextize} invocation and update should be
-committed into the CVS.
+committed into the repository.
 
-For the third approach, the maintainer can omit from the CVS repository
+For the third approach, the maintainer can omit from the repository
 all the files that @code{gettextize} mentions as "copy".  Instead, he
 adds to the @file{configure.ac} or @file{configure.in} a line of the
 form
@@ -8753,9 +8759,9 @@ AM_GNU_GETTEXT_VERSION(@value{VERSION})
 
 @noindent
 and adds to the package's pre-build script an invocation of
-@samp{autopoint}.  For everyone who checks out the CVS, this
+@samp{autopoint}.  For everyone who checks out the source, this
 @code{autopoint} invocation will copy into the right place the
-@code{gettext} infrastructure files that have been omitted from the CVS.
+@code{gettext} infrastructure files that have been omitted from the repository.
 
 The version number used as argument to @code{AM_GNU_GETTEXT_VERSION} is
 the version of the @code{gettext} infrastructure that the package wants
@@ -8769,12 +8775,61 @@ into @code{AM_GNU_GETTEXT_VERSION(0.12.1)}, and all other developers that
 use the CVS will henceforth need to have GNU @code{gettext} 0.12.1 or newer
 installed.
 
-@node autopoint Invocation,  , Files under CVS, CVS Issues
+@node Translations under Version Control, autopoint Invocation, Files under Version Control, Version Control Issues
+@subsection Put PO Files under Version Control
+
+Since translations are valuable assets as well as the source code, it
+would make sense to put them under version control.  The GNU gettext
+infrastructure supports two ways to deal with translations in the
+context of a version controlled repository.
+
+@enumerate
+@item
+Both POT file and PO files are committed into the repository.
+
+@item
+Only PO files are committed into the repository.
+
+@end enumerate
+
+If a POT file is absent when building, it will be generated by
+scanning the source files with @code{xgettext}, and then the PO files
+are regenerated as a dependency.  On the other hand, some maintainers
+want to keep the POT file unchanged during the development phase.  So,
+even if a POT file is present and older than the source code, it won't
+be updated automatically.  You can manually update it with @code{make
+$(DOMAIN).pot-update}, and commit it at certain point.
+
+Special advices for particular version control systems:
+
+@itemize @bullet
+@item
+Recent version control systems, Git for instance, ignore file's
+timestamp.  In that case, PO files can be accidentally updated even if
+a POT file is not updated.  To prevent this, you can set
+@samp{PO_DEPENDS_ON_POT} variable to @code{no} in the @file{Makevars}
+file and do @code{make update-po} manually.
+
+@item
+Location comments such as @code{#: lib/error.c:116} are sometimes
+annoying, since these comments are volatile and may introduce unwanted
+change to the working copy when building.  To mitigate this, you can
+decide to omit those comments from the PO files in the repository.
+
+This is possible with the @code{--no-location} option of the
+@code{msgmerge} command @footnote{you can also use it through the
+@samp{MSGMERGE_OPTIONS} option from @file{Makevars}}.  The drawback is
+that, if the location information is needed, translators have to
+recover the location comments by running @code{msgmerge} again.
+
+@end itemize
+
+@node autopoint Invocation,  , Translations under Version Control, Version Control Issues
 @subsection Invoking the @code{autopoint} Program
 
 @include autopoint.texi
 
-@node Release Management,  , CVS Issues, Maintainers
+@node Release Management,  , Version Control Issues, Maintainers
 @section Creating a Distribution Tarball
 
 @cindex release
@@ -8800,7 +8855,7 @@ $ make distclean
 @cindex setting up @code{gettext} at build time
 
 By default, packages fully using GNU @code{gettext}, internally,
-are installed in such a way that they to allow translation of
+are installed in such a way as to allow translation of
 messages.  At @emph{configuration} time, those packages should
 automatically detect whether the underlying host system already provides
 the GNU @code{gettext} functions.  If not,
@@ -10033,7 +10088,7 @@ guile
 @code{"abc"}
 
 @item gettext shorthand
-@code{(_ "abc")}
+@code{(_ "abc")}, @code{_"abc"} (GIMP script-fu extension)
 
 @item gettext/ngettext functions
 @code{gettext}, @code{ngettext}
@@ -10975,7 +11030,7 @@ worst probably being its imperfectness.
 * Perl Pitfalls::               Bugs, Pitfalls, and Things That Do Not Work
 @end menu
 
-@node General Problems, Default Keywords,  , Perl
+@node General Problems, Default Keywords, Perl, Perl
 @subsubsection General Problems Parsing Perl Code
 
 It is often heard that only Perl can parse Perl.  This is not true.
@@ -11901,7 +11956,7 @@ On platforms without gettext, the functions are not available.
 ---
 @end table
 
-@node JavaScript
+@node JavaScript,  , Lua, List of Programming Languages
 @subsection JavaScript
 
 @table @asis
@@ -12003,6 +12058,7 @@ using GNU gettext.
 * POT::                         POT - Portable Object Template
 * RST::                         Resource String Table
 * Glade::                       Glade - GNOME user interface description
+* GSettings::                   GSettings - GNOME user configuration schema
 @end menu
 
 @node POT, RST, List of Data Formats, List of Data Formats
@@ -12034,7 +12090,7 @@ fpk
 @code{xgettext}, @code{rstconv}
 @end table
 
-@node Glade,   , RST, List of Data Formats
+@node Glade, GSettings, RST, List of Data Formats
 @subsection Glade - GNOME user interface description
 
 @table @asis
@@ -12046,6 +12102,20 @@ glade, libglade, glade2, libglade2, intltool
 
 @item Extractor
 @code{xgettext}, @code{libglade-xgettext}, @code{xml-i18n-extract}, @code{intltool-extract}
+@end table
+
+@node GSettings,  , Glade, List of Data Formats
+@subsection GSettings - GNOME user configuration schema
+
+@table @asis
+@item RPMs
+glib2
+
+@item File extension
+@code{gschema.xml}
+
+@item Extractor
+@code{xgettext}, @code{intltool-extract}
 @end table
 
 @c This is the template for new data formats.
@@ -12299,10 +12369,22 @@ A copy of the license is included in @ref{GNU GPL}.
 @end menu
 
 @page
+@node GNU GPL
+@appendixsec GNU GENERAL PUBLIC LICENSE
+@cindex GPL, GNU General Public License
+@cindex License, GNU GPL
 @include gpl.texi
 @page
+@node GNU LGPL
+@appendixsec GNU LESSER GENERAL PUBLIC LICENSE
+@cindex LGPL, GNU Lesser General Public License
+@cindex License, GNU LGPL
 @include lgpl.texi
 @page
+@node GNU FDL
+@appendixsec GNU Free Documentation License
+@cindex FDL, GNU Free Documentation License
+@cindex License, GNU FDL
 @include fdl.texi
 
 @node Program Index, Option Index, Licenses, Top

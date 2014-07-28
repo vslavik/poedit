@@ -65,9 +65,25 @@ bool ConcatCatalogs(const wxArrayString& files, const wxString& outfile)
     return true;
 }
 
+// Returns true if the filename is in 'paths' prefixes list
+bool FilenameMatchesPathsList(const wxString& fn, const wxArrayString& paths)
+{
+    for (auto p: paths)
+    {
+        if (fn == p)
+            return true;
+        if (fn.StartsWith(p + "/"))
+            return true;
+    }
+
+    return false;
+}
+
+
 } // anonymous namespace
 
 Catalog *SourceDigger::Dig(const wxArrayString& paths,
+                           const wxArrayString& excludePaths,
                            const wxArrayString& keywords,
                            const wxString& charset)
 {
@@ -76,7 +92,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
 
     m_progressInfo->UpdateMessage(_("Scanning files..."));
 
-    wxArrayString *all_files = FindFiles(paths, pdb);
+    wxArrayString *all_files = FindFiles(paths, excludePaths, pdb);
     if (all_files == NULL)
         return NULL;
 
@@ -89,6 +105,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
             continue; // no files of this kind
 
         m_progressInfo->UpdateMessage(
+            // TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
             wxString::Format(_("Parsing %s files..."), pdb[i].Name.c_str()));
         if (!DigFiles(tmpdir, partials, all_files[i], pdb[i], keywords, charset))
         {
@@ -170,7 +187,8 @@ bool SourceDigger::DigFiles(TempDirectory& tmpdir,
 
 
 
-wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths, 
+wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
+                                       const wxArrayString& excludePaths,
                                        ParsersDB& pdb)
 {
     if (pdb.GetCount() == 0)
@@ -181,7 +199,7 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
     
     for (i = 0; i < paths.GetCount(); i++)
     {
-        if ( !FindInDir(paths[i], files) )
+        if ( !FindInDir(paths[i], excludePaths, files) )
         {
             wxLogWarning(_("No files found in: ") + paths[i]);
         }
@@ -211,7 +229,9 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
 
 
 
-int SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
+int SourceDigger::FindInDir(const wxString& dirname,
+                            const wxArrayString& excludePaths,
+                            wxArrayString& files)
 {
     if (dirname.empty())
         return 0;
@@ -225,16 +245,26 @@ int SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
     cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_FILES);
     while (cont)
     {
-        files.Add(dirname + "/" + filename);
-        found++;
+        const wxString f = (dirname == ".") ? filename : dirname + "/" + filename;
         cont = dir.GetNext(&filename);
-    }    
+
+        if (FilenameMatchesPathsList(f, excludePaths))
+            continue;
+
+        files.Add(f);
+        found++;
+    }
 
     cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_DIRS);
     while (cont)
     {
-        found += FindInDir(dirname + "/" + filename, files);
+        const wxString f = (dirname == ".") ? filename : dirname + "/" + filename;
         cont = dir.GetNext(&filename);
+
+        if (FilenameMatchesPathsList(f, excludePaths))
+            continue;
+
+        found += FindInDir(f, excludePaths, files);
     }
 
     return found;

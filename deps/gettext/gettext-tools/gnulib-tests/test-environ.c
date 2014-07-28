@@ -1,5 +1,5 @@
 /* Test of environ variable.
-   Copyright (C) 2008-2013 Free Software Foundation, Inc.
+   Copyright (C) 2008-2014 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,6 +21,13 @@
 #include <unistd.h>
 
 #include <string.h>
+
+/* environ is the exported symbol referencing the internal
+   __cygwin_environ variable on cygwin64:
+   <https://cygwin.com/ml/cygwin/2013-06/msg00228.html>.  */
+#if defined __CYGWIN__ && defined __x86_64__
+extern DLL_VARIABLE char **environ;
+#endif
 
 int
 main ()

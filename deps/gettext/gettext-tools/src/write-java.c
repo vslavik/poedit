@@ -1044,7 +1044,8 @@ int
 msgdomain_write_java (message_list_ty *mlp, const char *canon_encoding,
                       const char *resource_name, const char *locale_name,
                       const char *directory,
-                      bool assume_java2)
+                      bool assume_java2,
+                      bool output_source)
 {
   int retval;
   struct temp_dir *tmpdir;
@@ -1054,6 +1055,7 @@ msgdomain_write_java (message_list_ty *mlp, const char *canon_encoding,
   char *java_file_name;
   FILE *java_file;
   const char *java_sources[1];
+  const char *source_dir_name;
 
   /* If no entry for this resource/domain, don't even create the file.  */
   if (mlp->nitems == 0)
@@ -1064,10 +1066,19 @@ msgdomain_write_java (message_list_ty *mlp, const char *canon_encoding,
   /* Convert the messages to Unicode.  */
   iconv_message_list (mlp, canon_encoding, po_charset_utf8, NULL);
 
-  /* Create a temporary directory where we can put the Java file.  */
-  tmpdir = create_temp_dir ("msg", NULL, false);
-  if (tmpdir == NULL)
-    goto quit1;
+  if (output_source)
+    {
+      tmpdir = NULL;
+      source_dir_name = directory;
+    }
+  else
+    {
+      /* Create a temporary directory where we can put the Java file.  */
+      tmpdir = create_temp_dir ("msg", NULL, false);
+      if (tmpdir == NULL)
+        goto quit1;
+      source_dir_name = tmpdir->dir_name;
+    }
 
   /* Assign a default value to the resource name.  */
   if (resource_name == NULL)
@@ -1092,7 +1103,7 @@ msgdomain_write_java (message_list_ty *mlp, const char *canon_encoding,
     const char *last_dir;
     int i;
 
-    last_dir = tmpdir->dir_name;
+    last_dir = source_dir_name;
     p = resource_name;
     for (i = 0; i < ndots; i++)
       {
@@ -1116,6 +1127,40 @@ msgdomain_write_java (message_list_ty *mlp, const char *canon_encoding,
     else
       java_file_name = xconcatenated_filename (last_dir, p, ".java");
   }
+
+  /* If OUTPUT_SOURCE, write the Java file in DIRECTORY and return.  */
+  if (output_source)
+    {
+      int i;
+
+      for (i = 0; i < ndots; i++)
+        {
+          if (mkdir (subdirs[i], S_IRUSR | S_IWUSR | S_IXUSR) < 0)
+            {
+              error (0, errno, _("failed to create \"%s\""), subdirs[i]);
+              goto quit3;
+            }
+        }
+
+      java_file = fopen (java_file_name, "w");
+      if (java_file == NULL)
+        {
+          error (0, errno, _("failed to create \"%s\""), java_file_name);
+          goto quit3;
+        }
+
+      write_java_code (java_file, class_name, mlp, assume_java2);
+
+      if (fwriteerror (java_file))
+        {
+          error (0, errno, _("error while writing \"%s\" file"),
+                 java_file_name);
+          goto quit3;
+        }
+
+      retval = 0;
+      goto quit3;
+    }
 
   /* Create the subdirectories.  This is needed because some older Java
      compilers verify that the source of class A.B.C really sits in a
@@ -1182,7 +1227,8 @@ compilation of Java class failed, please try to set $JAVAC"));
   freea (subdirs);
   free (class_name);
  quit2:
-  cleanup_temp_dir (tmpdir);
+  if (tmpdir != NULL)
+    cleanup_temp_dir (tmpdir);
  quit1:
   return retval;
 }

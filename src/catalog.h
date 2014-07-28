@@ -260,8 +260,7 @@ class CatalogItem
         /** Checks if %i etc. are correct in the translation (true if yes).
             Strings that are not c-format are always correct. */
         Validity GetValidity() const { return m_validity; }
-        void SetValidity(bool val)
-            { m_validity = val ? Val_Valid : Val_Invalid; }
+        void SetValidity(Validity val) { m_validity = val; }
 
         void SetErrorString(const wxString& str) { m_errorString = str; }
         wxString GetErrorString() const { return m_errorString; }
@@ -453,7 +452,7 @@ class Catalog
                      Team, TeamEmail, Charset, SourceCodeCharset;
             Language Lang;
 
-            wxArrayString SearchPaths, Keywords;
+            wxArrayString SearchPaths, SearchPathsExcluded, Keywords;
             int Bookmarks[BOOKMARK_LAST];
             wxString BasePath;
 
@@ -720,6 +719,8 @@ class CatalogParser
         {
             return true;
         }
+
+        virtual void OnIgnoredEntry() {}
 
         /// Textfile being parsed.
         wxTextFile *m_textFile;

@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_SMALLTALK \
   { "Smalltalk",        extract_smalltalk,                              \
-                        NULL, &formatstring_smalltalk, NULL },          \
+                        NULL, &formatstring_smalltalk, NULL, NULL },          \
 
 /* Scan a Smalltalk file and add its translatable strings to mdlp.  */
 extern void extract_smalltalk (FILE *fp, const char *real_filename,

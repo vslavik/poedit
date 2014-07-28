@@ -1,12 +1,9 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of JavaScript support.
 # Playing with regex and division operator
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-js-2.js"
 cat <<\EOF > xg-js-2.js
 // RegExp literals containing string quotes must not desync the parser
 var d = 1 / 2 / 4;
@@ -33,15 +30,13 @@ var s8 = /(?=(a+))a*b\1/.exec(_("RegExp test string #15"));
 var s9 = /_("a+")/.exec(_("RegExp test string #16"));
 EOF
 
-tmpfiles="$tmpfiles xg-js-2.err xg-js-2.tmp xg-js-2.pot"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --no-location -o xg-js-2.tmp xg-js-2.js 2>xg-js-2.err
-test $? = 0 || { cat xg-js-2.err; rm -fr $tmpfiles; exit 1; }
+test $? = 0 || { cat xg-js-2.err; exit 1; }
 # Don't simplify this to "grep ... < xg-js-2.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-js-2.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-js-2.pot
 
-tmpfiles="$tmpfiles xg-js-2.ok"
 cat <<\EOF > xg-js-2.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -113,7 +108,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-js-2.ok xg-js-2.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

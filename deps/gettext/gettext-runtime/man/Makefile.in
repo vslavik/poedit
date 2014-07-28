@@ -82,6 +82,7 @@ DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	ChangeLog
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/gnulib-m4/00gnulib.m4 \
+	$(top_srcdir)/gnulib-m4/absolute-header.m4 \
 	$(top_srcdir)/gnulib-m4/alloca.m4 \
 	$(top_srcdir)/gnulib-m4/ansi-c++.m4 \
 	$(top_srcdir)/gnulib-m4/asm-underscore.m4 \
@@ -96,8 +97,8 @@ am__aclocal_m4_deps = $(top_srcdir)/gnulib-m4/00gnulib.m4 \
 	$(top_srcdir)/gnulib-m4/errno_h.m4 \
 	$(top_srcdir)/gnulib-m4/error.m4 \
 	$(top_srcdir)/gnulib-m4/extensions.m4 \
-	$(top_srcdir)/gnulib-m4/extern-inline.m4 \
 	$(top_srcdir)/gnulib-m4/getopt.m4 \
+	$(top_srcdir)/gnulib-m4/gettimeofday.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-common.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-comp.m4 \
 	$(top_srcdir)/gnulib-m4/iconv_h.m4 \
@@ -157,6 +158,7 @@ am__aclocal_m4_deps = $(top_srcdir)/gnulib-m4/00gnulib.m4 \
 	$(top_srcdir)/gnulib-m4/strtoul.m4 \
 	$(top_srcdir)/gnulib-m4/sys_socket_h.m4 \
 	$(top_srcdir)/gnulib-m4/sys_stat_h.m4 \
+	$(top_srcdir)/gnulib-m4/sys_time_h.m4 \
 	$(top_srcdir)/gnulib-m4/sys_types_h.m4 \
 	$(top_srcdir)/gnulib-m4/time_h.m4 \
 	$(top_srcdir)/gnulib-m4/unistd_h.m4 \
@@ -166,18 +168,18 @@ am__aclocal_m4_deps = $(top_srcdir)/gnulib-m4/00gnulib.m4 \
 	$(top_srcdir)/gnulib-m4/wctype_h.m4 \
 	$(top_srcdir)/gnulib-m4/wcwidth.m4 \
 	$(top_srcdir)/../m4/fixautomake.m4 \
-	$(top_srcdir)/../m4/init-package-version.m4 \
 	$(top_srcdir)/../m4/libtool.m4 \
 	$(top_srcdir)/../m4/ltoptions.m4 \
 	$(top_srcdir)/../m4/ltsugar.m4 \
 	$(top_srcdir)/../m4/ltversion.m4 \
 	$(top_srcdir)/../m4/lt~obsolete.m4 \
 	$(top_srcdir)/../m4/woe32-dll.m4 $(top_srcdir)/m4/codeset.m4 \
-	$(top_srcdir)/m4/fcntl-o.m4 $(top_srcdir)/m4/gettext.m4 \
-	$(top_srcdir)/m4/glibc2.m4 $(top_srcdir)/m4/glibc21.m4 \
-	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/intdiv0.m4 \
-	$(top_srcdir)/m4/intl.m4 $(top_srcdir)/m4/intlmacosx.m4 \
-	$(top_srcdir)/m4/intmax.m4 $(top_srcdir)/m4/inttypes-pri.m4 \
+	$(top_srcdir)/m4/extern-inline.m4 $(top_srcdir)/m4/fcntl-o.m4 \
+	$(top_srcdir)/m4/gettext.m4 $(top_srcdir)/m4/glibc2.m4 \
+	$(top_srcdir)/m4/glibc21.m4 $(top_srcdir)/m4/iconv.m4 \
+	$(top_srcdir)/m4/intdiv0.m4 $(top_srcdir)/m4/intl.m4 \
+	$(top_srcdir)/m4/intlmacosx.m4 $(top_srcdir)/m4/intmax.m4 \
+	$(top_srcdir)/m4/inttypes-pri.m4 \
 	$(top_srcdir)/m4/inttypes_h.m4 $(top_srcdir)/m4/lcmessage.m4 \
 	$(top_srcdir)/m4/lock.m4 $(top_srcdir)/m4/longlong.m4 \
 	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/po.m4 \
@@ -372,6 +374,7 @@ GNULIB_GETLOGIN = @GNULIB_GETLOGIN@
 GNULIB_GETLOGIN_R = @GNULIB_GETLOGIN_R@
 GNULIB_GETPAGESIZE = @GNULIB_GETPAGESIZE@
 GNULIB_GETSUBOPT = @GNULIB_GETSUBOPT@
+GNULIB_GETTIMEOFDAY = @GNULIB_GETTIMEOFDAY@
 GNULIB_GETUSERSHELL = @GNULIB_GETUSERSHELL@
 GNULIB_GL_UNISTD_H_GETOPT = @GNULIB_GL_UNISTD_H_GETOPT@
 GNULIB_GRANTPT = @GNULIB_GRANTPT@
@@ -624,6 +627,7 @@ HAVE_GETLOGIN = @HAVE_GETLOGIN@
 HAVE_GETOPT_H = @HAVE_GETOPT_H@
 HAVE_GETPAGESIZE = @HAVE_GETPAGESIZE@
 HAVE_GETSUBOPT = @HAVE_GETSUBOPT@
+HAVE_GETTIMEOFDAY = @HAVE_GETTIMEOFDAY@
 HAVE_GRANTPT = @HAVE_GRANTPT@
 HAVE_GROUP_MEMBER = @HAVE_GROUP_MEMBER@
 HAVE_INTTYPES_H = @HAVE_INTTYPES_H@
@@ -711,6 +715,7 @@ HAVE_STRTOLL = @HAVE_STRTOLL@
 HAVE_STRTOULL = @HAVE_STRTOULL@
 HAVE_STRUCT_RANDOM_DATA = @HAVE_STRUCT_RANDOM_DATA@
 HAVE_STRUCT_SIGACTION_SA_SIGACTION = @HAVE_STRUCT_SIGACTION_SA_SIGACTION@
+HAVE_STRUCT_TIMEVAL = @HAVE_STRUCT_TIMEVAL@
 HAVE_STRVERSCMP = @HAVE_STRVERSCMP@
 HAVE_SYMLINK = @HAVE_SYMLINK@
 HAVE_SYMLINKAT = @HAVE_SYMLINKAT@
@@ -718,6 +723,7 @@ HAVE_SYS_BITYPES_H = @HAVE_SYS_BITYPES_H@
 HAVE_SYS_INTTYPES_H = @HAVE_SYS_INTTYPES_H@
 HAVE_SYS_LOADAVG_H = @HAVE_SYS_LOADAVG_H@
 HAVE_SYS_PARAM_H = @HAVE_SYS_PARAM_H@
+HAVE_SYS_TIME_H = @HAVE_SYS_TIME_H@
 HAVE_SYS_TYPES_H = @HAVE_SYS_TYPES_H@
 HAVE_TIMEGM = @HAVE_TIMEGM@
 HAVE_TYPE_VOLATILE_SIG_ATOMIC_T = @HAVE_TYPE_VOLATILE_SIG_ATOMIC_T@
@@ -839,6 +845,7 @@ NEXT_AS_FIRST_DIRECTIVE_STDIO_H = @NEXT_AS_FIRST_DIRECTIVE_STDIO_H@
 NEXT_AS_FIRST_DIRECTIVE_STDLIB_H = @NEXT_AS_FIRST_DIRECTIVE_STDLIB_H@
 NEXT_AS_FIRST_DIRECTIVE_STRING_H = @NEXT_AS_FIRST_DIRECTIVE_STRING_H@
 NEXT_AS_FIRST_DIRECTIVE_SYS_STAT_H = @NEXT_AS_FIRST_DIRECTIVE_SYS_STAT_H@
+NEXT_AS_FIRST_DIRECTIVE_SYS_TIME_H = @NEXT_AS_FIRST_DIRECTIVE_SYS_TIME_H@
 NEXT_AS_FIRST_DIRECTIVE_SYS_TYPES_H = @NEXT_AS_FIRST_DIRECTIVE_SYS_TYPES_H@
 NEXT_AS_FIRST_DIRECTIVE_TIME_H = @NEXT_AS_FIRST_DIRECTIVE_TIME_H@
 NEXT_AS_FIRST_DIRECTIVE_UNISTD_H = @NEXT_AS_FIRST_DIRECTIVE_UNISTD_H@
@@ -855,6 +862,7 @@ NEXT_STDIO_H = @NEXT_STDIO_H@
 NEXT_STDLIB_H = @NEXT_STDLIB_H@
 NEXT_STRING_H = @NEXT_STRING_H@
 NEXT_SYS_STAT_H = @NEXT_SYS_STAT_H@
+NEXT_SYS_TIME_H = @NEXT_SYS_TIME_H@
 NEXT_SYS_TYPES_H = @NEXT_SYS_TYPES_H@
 NEXT_TIME_H = @NEXT_TIME_H@
 NEXT_UNISTD_H = @NEXT_UNISTD_H@
@@ -918,10 +926,13 @@ REPLACE_FUTIMENS = @REPLACE_FUTIMENS@
 REPLACE_GETCWD = @REPLACE_GETCWD@
 REPLACE_GETDELIM = @REPLACE_GETDELIM@
 REPLACE_GETDOMAINNAME = @REPLACE_GETDOMAINNAME@
+REPLACE_GETDTABLESIZE = @REPLACE_GETDTABLESIZE@
 REPLACE_GETGROUPS = @REPLACE_GETGROUPS@
 REPLACE_GETLINE = @REPLACE_GETLINE@
 REPLACE_GETLOGIN_R = @REPLACE_GETLOGIN_R@
 REPLACE_GETPAGESIZE = @REPLACE_GETPAGESIZE@
+REPLACE_GETTIMEOFDAY = @REPLACE_GETTIMEOFDAY@
+REPLACE_GMTIME = @REPLACE_GMTIME@
 REPLACE_ICONV = @REPLACE_ICONV@
 REPLACE_ICONV_OPEN = @REPLACE_ICONV_OPEN@
 REPLACE_ICONV_UTF = @REPLACE_ICONV_UTF@
@@ -932,6 +943,7 @@ REPLACE_LCHOWN = @REPLACE_LCHOWN@
 REPLACE_LINK = @REPLACE_LINK@
 REPLACE_LINKAT = @REPLACE_LINKAT@
 REPLACE_LOCALECONV = @REPLACE_LOCALECONV@
+REPLACE_LOCALTIME = @REPLACE_LOCALTIME@
 REPLACE_LOCALTIME_R = @REPLACE_LOCALTIME_R@
 REPLACE_LSEEK = @REPLACE_LSEEK@
 REPLACE_LSTAT = @REPLACE_LSTAT@
@@ -994,6 +1006,7 @@ REPLACE_STRSTR = @REPLACE_STRSTR@
 REPLACE_STRTOD = @REPLACE_STRTOD@
 REPLACE_STRTOK_R = @REPLACE_STRTOK_R@
 REPLACE_STRUCT_LCONV = @REPLACE_STRUCT_LCONV@
+REPLACE_STRUCT_TIMEVAL = @REPLACE_STRUCT_TIMEVAL@
 REPLACE_SYMLINK = @REPLACE_SYMLINK@
 REPLACE_TIMEGM = @REPLACE_TIMEGM@
 REPLACE_TMPFILE = @REPLACE_TMPFILE@
@@ -1098,6 +1111,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -1109,8 +1123,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = 1.11 gnits
 EXTRA_DIST = help2man $(man_aux) $(man_MAN1IN) $(man_MAN1OTHER) \
-	$(man_MAN3) $(man_MAN3IN) $(man_MAN3LINK) $(man_HTMLIN) \
-	$(man_HTMLOTHER)
+	$(man_MAN3) $(man_MAN3IN) $(man_MAN3LINK) $(man_HTML1IN) \
+	$(man_HTML1OTHER) $(man_HTML3)
 
 # A manual page for each of the bin_PROGRAMS in src/Makefile.am.
 man_aux = gettext.x ngettext.x envsubst.x
@@ -1129,16 +1143,18 @@ textdomain.3.in bindtextdomain.3.in bind_textdomain_codeset.3.in
 man_MAN3LINK = dgettext.3 dcgettext.3 dngettext.3 dcngettext.3
 man_MANS = $(man_MAN1)
 notrans_man_MANS = $(man_MAN3) $(man_MAN3LINK)
-man_HTMLGEN = gettext.1.html ngettext.1.html
-man_HTMLIN = gettext.1.html.in ngettext.1.html.in
-man_HTMLOTHER = \
-envsubst.1.html \
-gettext.3.html ngettext.3.html \
+man_HTML1GEN = gettext.1.html ngettext.1.html
+man_HTML1IN = gettext.1.html.in ngettext.1.html.in
+man_HTML1OTHER = envsubst.1.html
+man_HTML1 = $(man_HTML1GEN) $(man_HTML1OTHER)
+man_HTML3 = gettext.3.html ngettext.3.html \
 textdomain.3.html bindtextdomain.3.html bind_textdomain_codeset.3.html
 
-man_HTML = $(man_HTMLGEN) $(man_HTMLOTHER)
-CLEANFILES = $(man_MAN1GEN) $(man_HTMLGEN)
-MAINTAINERCLEANFILES = $(man_MAN1IN) $(man_MAN1OTHER) $(man_MAN3) $(man_HTMLIN) $(man_HTMLOTHER)
+man_HTML = $(man_HTML1) $(man_HTML3)
+CLEANFILES = $(man_MAN1GEN) $(man_HTML1GEN)
+MAINTAINERCLEANFILES = $(man_MAN1IN) $(man_MAN1OTHER) $(man_MAN3) \
+$(man_HTML1IN) $(man_HTML1OTHER) $(man_HTML3)
+
 RM = rm -f
 
 # help2man 1.24 or newer.
@@ -1146,10 +1162,15 @@ HELP2MAN = $(PERL) -w -- $(srcdir)/help2man
 
 # groff 1.17 or newer.
 MAN2HTML = groff -mandoc -Thtml
-
-# Update them also during "make dist", in order to propagate added command
-# line options that were added, even if version.sh didn't change.
 UPDATEMODE = 
+gt_man2html = \
+	if test -f $${srcdir}$$m; then \
+	  $(MAN2HTML) $${srcdir}$$m > t-$@ && \
+	  sed -e '/CreationDate:/d' < t-$@ > t2-$@ && \
+	  mv t2-$@ $@; \
+	  rm -f t-$@ t2-$@; \
+	fi
+
 all: all-am
 
 .SUFFIXES:
@@ -1524,84 +1545,86 @@ uninstall-local: uninstall-html
 # Man pages.
 
 # The progname.x files contain some extra information not found in the
-# "progname --help" output.
+# "progname --help" output.  Each progname.1 depends on the source,
+# not the binary; we don't need to regenerate the binary when any
+# source file changes, only the main one.
 
-gettext.1: gettext.1.in Makefile
-	sed -e 's|@''localedir''@|$(localedir)|g' < `if test -f gettext.1.in; then echo .; else echo $(srcdir); fi`/gettext.1.in > t-$@
-	mv t-$@ $@
-ngettext.1: ngettext.1.in Makefile
-	sed -e 's|@''localedir''@|$(localedir)|g' < `if test -f ngettext.1.in; then echo .; else echo $(srcdir); fi`/ngettext.1.in > t-$@
+$(man_MAN1GEN): Makefile
+	srcdir=''; \
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	if test -f $${srcdir}$@.in; then \
+	  sed -e 's|@''localedir''@|$(localedir)|g' $${srcdir}$@.in > t-$@ && \
+	  mv t-$@ $@; \
+        fi
+
+gettext.1: gettext.1.in
+ngettext.1: ngettext.1.in
+
+$(man_MAN1IN) $(man_MAN1OTHER): help2man $(top_srcdir)/../.version
+	progname=`echo $@ | sed -e 's/\.in$$//' -e 's/\.1$$//'`; \
+	IN_HELP2MAN=1 $(SHELL) x-to-1 $(UPDATEMODE) "$(PERL)" "$(HELP2MAN)" \
+	  ../src/$${progname}$(EXEEXT) $(srcdir)/$${progname}.x $@
+
+gettext.1.in: gettext.x ../src/gettext.c
+ngettext.1.in: ngettext.x ../src/ngettext.c
+envsubst.1: envsubst.x ../src/envsubst.c
+
+$(man_MAN3): $(top_srcdir)/../.version
+	sed -e 's/@''VERSION''@/@VERSION@/g' < $(srcdir)/$@.in > t-$@ && \
 	mv t-$@ $@
 
-gettext.1.in: gettext.x
-	IN_HELP2MAN=1 $(SHELL) x-to-1 $(UPDATEMODE) "$(PERL)" "$(HELP2MAN)" ../src/gettext$(EXEEXT) $(srcdir)/gettext.x gettext.1.in
-ngettext.1.in: ngettext.x
-	IN_HELP2MAN=1 $(SHELL) x-to-1 $(UPDATEMODE) "$(PERL)" "$(HELP2MAN)" ../src/ngettext$(EXEEXT) $(srcdir)/ngettext.x ngettext.1.in
-
-envsubst.1: envsubst.x
-	$(SHELL) x-to-1 $(UPDATEMODE) "$(PERL)" "$(HELP2MAN)" ../src/envsubst$(EXEEXT) $(srcdir)/envsubst.x envsubst.1
-
-# Depend on version.sh to get version number changes.
-$(man_MAN1IN) $(man_MAN1OTHER): help2man $(top_srcdir)/../version.sh
-update-man1:
-	$(MAKE) $(man_MAN1IN) $(man_MAN1OTHER) UPDATEMODE=--update
-	$(MAKE)
-# Hidden from automake, but really activated. Works around an automake-1.5 bug.
-#distdir: update-man1
-
-gettext.3: gettext.3.in $(top_srcdir)/../version.sh
-	sed -e 's/@''VERSION''@/@VERSION@/g' < $(srcdir)/gettext.3.in > t-$@
-	mv t-$@ $@
-ngettext.3: ngettext.3.in $(top_srcdir)/../version.sh
-	sed -e 's/@''VERSION''@/@VERSION@/g' < $(srcdir)/ngettext.3.in > t-$@
-	mv t-$@ $@
-textdomain.3: textdomain.3.in $(top_srcdir)/../version.sh
-	sed -e 's/@''VERSION''@/@VERSION@/g' < $(srcdir)/textdomain.3.in > t-$@
-	mv t-$@ $@
-bindtextdomain.3: bindtextdomain.3.in $(top_srcdir)/../version.sh
-	sed -e 's/@''VERSION''@/@VERSION@/g' < $(srcdir)/bindtextdomain.3.in > t-$@
-	mv t-$@ $@
-bind_textdomain_codeset.3: bind_textdomain_codeset.3.in $(top_srcdir)/../version.sh
-	sed -e 's/@''VERSION''@/@VERSION@/g' < $(srcdir)/bind_textdomain_codeset.3.in > t-$@
-	mv t-$@ $@
+gettext.3: gettext.3.in
+ngettext.3: ngettext.3.in
+textdomain.3: textdomain.3.in
+bindtextdomain.3: bindtextdomain.3.in
+bind_textdomain_codeset.3: bind_textdomain_codeset.3.in
 
 # Man pages in HTML format.
 
 html-local: $(man_HTML)
 
-gettext.1.html: gettext.1.html.in Makefile
-	sed -e 's|@''localedir''@|$(localedir)|g' < `if test -f gettext.1.html.in; then echo .; else echo $(srcdir); fi`/gettext.1.html.in > t-$@
-	mv t-$@ $@
-ngettext.1.html: ngettext.1.html.in Makefile
-	sed -e 's|@''localedir''@|$(localedir)|g' < `if test -f ngettext.1.html.in; then echo .; else echo $(srcdir); fi`/ngettext.1.html.in > t-$@
-	mv t-$@ $@
+$(man_HTML1GEN): Makefile
+	srcdir=''; \
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	if test -f $${srcdir}$@.in; then \
+	  sed -e 's|@''localedir''@|$(localedir)|g' $${srcdir}$@.in > t-$@ && \
+	  mv t-$@ $@; \
+        fi
+
+gettext.1.html: gettext.1.html.in
+ngettext.1.html: ngettext.1.html.in
+
+$(man_HTML1IN):
+	srcdir=''; \
+	progname=`echo $@ | sed -e 's/\.1\.html\.in$$//'`; \
+	m=$${progname}.1.in; \
+	test -f ./$$m || srcdir=$(srcdir)/; \
+	$(gt_man2html)
 
 gettext.1.html.in: gettext.1.in
-	$(MAN2HTML) `if test -f gettext.1.in; then echo .; else echo $(srcdir); fi`/gettext.1.in | sed -e '/CreationDate:/d' > t-$@
-	mv t-$@ $@
 ngettext.1.html.in: ngettext.1.in
-	$(MAN2HTML) `if test -f ngettext.1.in; then echo .; else echo $(srcdir); fi`/ngettext.1.in | sed -e '/CreationDate:/d' > t-$@
-	mv t-$@ $@
+
+$(man_HTML1OTHER):
+	srcdir=''; \
+	progname=`echo $@ | sed -e 's/\.1\.html$$//'`; \
+	m=$${progname}.1; \
+	test -f ./$$m || srcdir=$(srcdir)/; \
+	$(gt_man2html)
 
 envsubst.1.html: envsubst.1
-	$(MAN2HTML) `if test -f envsubst.1; then echo .; else echo $(srcdir); fi`/envsubst.1 | sed -e '/CreationDate:/d' > t-$@
-	mv t-$@ $@
+
+$(man_HTML3):
+	srcdir=''; \
+	progname=`echo $@ | sed -e 's/\.3\.html$$//'`; \
+	m=$${progname}.3.in; \
+	test -f ./$$m || srcdir=$(srcdir)/; \
+	$(gt_man2html)
 
 gettext.3.html: gettext.3.in
-	$(MAN2HTML) $(srcdir)/gettext.3.in | sed -e '/CreationDate:/d' > t-$@
-	mv t-$@ $@
 ngettext.3.html: ngettext.3.in
-	$(MAN2HTML) $(srcdir)/ngettext.3.in | sed -e '/CreationDate:/d' > t-$@
-	mv t-$@ $@
 textdomain.3.html: textdomain.3.in
-	$(MAN2HTML) $(srcdir)/textdomain.3.in | sed -e '/CreationDate:/d' > t-$@
-	mv t-$@ $@
 bindtextdomain.3.html: bindtextdomain.3.in
-	$(MAN2HTML) $(srcdir)/bindtextdomain.3.in | sed -e '/CreationDate:/d' > t-$@
-	mv t-$@ $@
 bind_textdomain_codeset.3.html: bind_textdomain_codeset.3.in
-	$(MAN2HTML) $(srcdir)/bind_textdomain_codeset.3.in | sed -e '/CreationDate:/d' > t-$@
-	mv t-$@ $@
 
 install-html-local:
 	$(MKDIR_P) $(DESTDIR)$(htmldir)

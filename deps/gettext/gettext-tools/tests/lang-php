@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the PHP language.
 # Assumes an fr_FR locale is installed.
 # Assumes the following packages are installed: mod_php4-core.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles prog.php"
 cat <<\EOF > prog.php
 <?php
   setlocale (LC_ALL, "");
@@ -20,14 +17,10 @@ cat <<\EOF > prog.php
 ?>
 EOF
 
-tmpfiles="$tmpfiles l-php-prog.tmp l-php-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-php-prog.tmp --omit-header --no-location prog.php
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-php-prog.tmp > l-php-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-php-prog.tmp --omit-header --no-location prog.php || exit 1
+LC_ALL=C tr -d '\r' < l-php-prog.tmp > l-php-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-php-prog.ok"
 cat <<EOF > l-php-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -40,7 +33,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-php-prog.ok l-php-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-php-fr.po"
 cat <<\EOF > l-php-fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -54,17 +46,13 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles l-php-fr.po.tmp l-php-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-php-fr.po.tmp l-php-fr.po l-php-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-php-fr.po.tmp > l-php-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-php-fr.po.tmp l-php-fr.po l-php-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-php-fr.po.tmp > l-php-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-php-fr.po l-php-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-php"
 test -d l-php || mkdir l-php
 test -d l-php/fr || mkdir l-php/fr
 test -d l-php/fr/LC_MESSAGES || mkdir l-php/fr/LC_MESSAGES
@@ -75,21 +63,21 @@ ${MSGFMT} -o l-php/fr/LC_MESSAGES/prog.mo l-php-fr.po
 # Test for presence of php version 4.0 or newer with gettext support.
 (php -v) >/dev/null 2>/dev/null
 test $? -le 1 \
-  || { echo "Skipping test: php not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: php not found"; exit 77; }
 case `php -v | sed -n -e 1p | sed -e 's/^[^0-9]*//'` in
   [4-9].*) ;;
-  *) echo "Skipping test: php version too old"; rm -fr $tmpfiles; exit 77;;
+  *) echo "Skipping test: php version too old"; exit 77;;
 esac
 { php -m | grep '^gettext$' >/dev/null; } \
   || { echo "Skipping test: php was built without gettext support"
-       rm -fr $tmpfiles; exit 77
+       exit 77
      }
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LC_ALL=$LOCALE_FR ./testlocale
+  LC_ALL=$LOCALE_FR ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
@@ -97,7 +85,7 @@ if test $LOCALE_FR != none; then
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 ./testlocale
+  LC_ALL=$LOCALE_FR_UTF8 ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
@@ -110,10 +98,9 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
 
-tmpfiles="$tmpfiles l-php-prog.ok l-php-prog.oku l-php-prog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-php-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -134,7 +121,5 @@ if test $LOCALE_FR_UTF8 != none; then
   LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 php -q prog.php > l-php-prog.out || exit 1
   ${DIFF} l-php-prog.oku l-php-prog.out || exit 1
 fi
-
-rm -fr $tmpfiles
 
 exit 0

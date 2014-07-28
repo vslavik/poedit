@@ -96,7 +96,7 @@ public:
           m_analyzer(newLucene<StandardAnalyzer>(LuceneVersion::LUCENE_CURRENT))
     {}
 
-    bool Search(const std::wstring& lang,
+    bool Search(const std::string& lang,
                 const std::wstring& source,
                 Results& results,
                 int maxHits = -1);
@@ -163,7 +163,7 @@ static const int MAX_ALLOWED_LENGTH_DIFFERENCE = 2;
 
 template<typename T>
 void PerformSearchWithBlock(IndexSearcherPtr searcher,
-                            const std::wstring& lang,
+                            const Lucene::String& lang,
                             QueryPtr query,
                             int maxHits,
                             double threshold,
@@ -189,7 +189,7 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
 }
 
 void PerformSearch(IndexSearcherPtr searcher,
-                   const std::wstring& lang,
+                   const Lucene::String& lang,
                    QueryPtr query,
                    TranslationMemory::Results& results, int maxHits,
                    double threshold = 1.0)
@@ -208,13 +208,15 @@ void PerformSearch(IndexSearcherPtr searcher,
 
 } // anonymous namespace
 
-bool TranslationMemoryImpl::Search(const std::wstring& lang,
+bool TranslationMemoryImpl::Search(const std::string& lang,
                                    const std::wstring& source,
                                    Results& results,
                                    int maxHits)
 {
     try
     {
+        const Lucene::String llang = StringUtils::toUnicode(lang);
+
         if (maxHits <= 0)
             maxHits = DEFAULT_MAXHITS;
 
@@ -238,13 +240,13 @@ bool TranslationMemoryImpl::Search(const std::wstring& lang,
         auto searcher = newLucene<IndexSearcher>(Reader());
 
         // Try exact phrase first:
-        PerformSearch(searcher, lang, phraseQ, results, maxHits);
+        PerformSearch(searcher, llang, phraseQ, results, maxHits);
         if (!results.empty())
             return true;
 
         // Then, if no matches were found, permit being a bit sloppy:
         phraseQ->setSlop(1);
-        PerformSearch(searcher, lang, phraseQ, results, maxHits);
+        PerformSearch(searcher, llang, phraseQ, results, maxHits);
         if (!results.empty())
             return true;
 
@@ -253,7 +255,7 @@ bool TranslationMemoryImpl::Search(const std::wstring& lang,
         boolQ->setMinimumNumberShouldMatch(std::max(1, boolQ->getClauses().size() - MAX_ALLOWED_LENGTH_DIFFERENCE));
         PerformSearchWithBlock
         (
-            searcher, lang, boolQ, maxHits, QUALITY_THRESHOLD,
+            searcher, llang, boolQ, maxHits, QUALITY_THRESHOLD,
             [=,&results](DocumentPtr doc)
             {
                 auto s = doc->get(fieldName);
@@ -388,7 +390,7 @@ public:
             // want to save old entries in the TM too, so that we harvest as
             // much useful translations as we can.
 
-            Insert(wlang, item.GetString(), item.GetTranslation());
+            Insert(wlang, item.GetString().ToStdWstring(), item.GetTranslation().ToStdWstring());
         }
     }
 
@@ -443,7 +445,7 @@ TranslationMemory::~TranslationMemory() { delete m_impl; }
 // public API
 // ----------------------------------------------------------------
 
-bool TranslationMemory::Search(const std::wstring& lang,
+bool TranslationMemory::Search(const std::string& lang,
                                const std::wstring& source,
                                Results& results,
                                int maxHits)

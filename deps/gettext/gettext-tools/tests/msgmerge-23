@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgmerge when a msgid_plural changed but msgid remained the same,
 # and --previous was specified.
 # Reported by Chusslove Illich (Часлав Илић).
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test23.po"
 cat <<\EOF > mm-test23.po
 msgid ""
 msgstr ""
@@ -44,7 +41,6 @@ msgstr[0] "Ein Band"
 msgstr[1] "%n Bände"
 EOF
 
-tmpfiles="$tmpfiles mm-test23.pot"
 cat <<\EOF > mm-test23.pot
 msgid ""
 msgstr ""
@@ -80,14 +76,10 @@ msgstr[0] ""
 msgstr[1] ""
 EOF
 
-tmpfiles="$tmpfiles mm-test23.tmp.po mm-test23.new.po"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q --previous -o mm-test23.tmp.po mm-test23.po mm-test23.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test23.tmp.po > mm-test23.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q --previous -o mm-test23.tmp.po mm-test23.po mm-test23.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test23.tmp.po > mm-test23.new.po || exit 1
 
-tmpfiles="$tmpfiles mm-test23.ok"
 cat <<\EOF > mm-test23.ok
 msgid ""
 msgstr ""
@@ -128,14 +120,9 @@ msgstr[1] "%n Bände"
 EOF
 
 : ${DIFF=diff}
-${DIFF} mm-test23.ok mm-test23.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${DIFF} mm-test23.ok mm-test23.new.po || exit 1
 
-tmpfiles="$tmpfiles mm-test23.mo"
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o mm-test23.mo mm-test23.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-
-rm -fr $tmpfiles
+${MSGFMT} --check -o mm-test23.mo mm-test23.new.po || exit 1
 
 exit 0

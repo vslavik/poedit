@@ -49,6 +49,8 @@ class PoeditApp : public wxApp
         virtual bool OnInit();
         virtual int OnExit();
 
+        virtual wxLayoutDirection GetLayoutDirection() const;
+
         /// Returns Poedit version string.
         wxString GetAppVersion() const;
         bool IsBetaVersion() const;

@@ -24,8 +24,8 @@
 ;   Inno Setup installer script
 ;
 
-#define VERSION          "1.6.5"
-#define VERSION_FULL     "1.6.5"
+#define VERSION          "1.6.7"
+#define VERSION_FULL     "1.6.7"
 
 #ifndef CONFIG
 #define Config           "Release"
@@ -37,7 +37,7 @@
 
 [Setup]
 OutputBaseFilename=Poedit-{#VERSION_FULL}-setup
-OutputDir=win32\distrib-{#CONFIG}
+OutputDir=win32\distrib-{#CONFIG}-{#VERSION_FULL}
 
 AppName=Poedit
 AppVerName=Poedit {#VERSION_FULL}

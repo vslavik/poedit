@@ -1,3 +1,141 @@
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-06-12  Daiki Ueno  <ueno@gnu.org>
+
+	* gpl.texi, lgpl.texi, fdl.texi: Update from GNU.
+	* gettext.texi (GNU GPL, GNU LGPL, GNU LGPL): Define nodes here,
+	instead of in those license documents.
+
+2014-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.1 released.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-06-01  Daiki Ueno  <ueno@gnu.org>
+
+	* ISO_639: Remove Moldavian. Update Bihari, Bengali, Catalan,
+	Church Slavic, Divehi, Dzongkha, Ewe, Greek, Spanish, Fijian,
+	Gaelic, Hebrew, Interlingua, Indonesian, Inupiak, Central Khmer,
+	Kirghiz, Luxembourgish, Limburgan, Lao, Latvian, Norwegian Bokmal,
+	North Ndebele, Dutch, Norwegian Nynorsk, South Ndebele, Occitan,
+	Oromo, Pushto, Rundi, Romanian, Sango, Swati, South Sotho, Tswana,
+	Tonga, Uighur, Volapuk, Yiddish, and Zhuang.
+
+2014-05-31  Daiki Ueno  <ueno@gnu.org>
+
+	* msgexec.texi: Document the environment variable
+	MSGEXEC_PREV_MSGCTXT, MSGEXEC_PREV_MSGID, and
+	MSGEXEC_PREV_MSGID_PLURAL.
+
+2014-05-31  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfilter.texi: Document the environment variable
+	MSGFILTER_PREV_MSGCTXT, MSGFILTER_PREV_MSGID, and
+	MSGFILTER_PREV_MSGID_PLURAL.
+
+2014-05-15  Stanislav Brabec  <sbrabec@suse.cz>  (tiny change)
+
+	* msgfilter.texi: Document the environment variable
+	MSGFILTER_MSGID_PLURAL and MSGFILTER_PLURAL_FORM.
+
+2014-05-15  Stanislav Brabec  <sbrabec@suse.cz>  (tiny change)
+
+	* msgexec.texi: Document the environment variable
+	MSGEXEC_MSGID_PLURAL and MSGEXEC_PLURAL_FORM.
+
+2014-05-10  Guido Flohr  <guido@imperia.net>
+
+	msgattrib: Add --empty option to clear msgstr
+	* msgattrib.texi: Document --empty option.
+
+2014-05-05  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext.texi (Translations under Version Control): New section.
+
+2014-05-05  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext.texi (Version Control Issues): Rename from "CVS Issues";
+	talk about generic issues when using version control systems.
+
+2014-04-30  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext.texi (Scheme): Document gettext shorthand form _"abc".
+
+2014-04-22  Daiki Ueno  <ueno@gnu.org>
+
+	build: Use git-version-gen intead of version.sh
+	* Makefile.am: Refer to .version instead of version.sh.
+
+2014-04-15  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfilter.texi: Document 'quot' and 'boldquot' built-in filters.
+
+2014-04-04  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfmt.texi: Document --desktop mode.
+
+2014-04-04  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext.texi: Document Desktop Entry file.
+
+2014-03-26  Aurélien Gâteau <mail@agateau.com>  (tiny change)
+
+	* msgfmt.texi: Document --source option.
+
+2014-03-25  Daiki Ueno  <ueno@gnu.org>
+
+	* msgattrib.texi: Document the optional argument of
+	--add-location.
+	* msgcat.texi: Likewise.
+	* msgcomm.texi: Likewise.
+	* msgconv.texi: Likewise.
+	* msgen.texi: Likewise.
+	* msgfilter.texi: Likewise.
+	* msggrep.texi: Likewise.
+	* msgmerge.texi: Likewise.
+	* msguniq.texi: Likewise.
+	* xgettext.texi: Likewise.
+
+2014-03-15  Daiki Ueno  <ueno@gnu.org>
+
+	* FAQ.html: Point to bug-gettext@gnu.org rather than
+	bug-gnu-gettext@gnu.org, in the context of mailing list; add a
+	link to the mailing list information page.  Point to the latest
+	URL of the GNOME Translation Project.  Replace the reference of
+	"Free Translation Project" with "Translation Project".
+	Reported by Benno Schulenberg.
+
+2014-02-10  Daiki Ueno  <ueno@gnu.org>
+
+	* ISO_3166: Remove AN, add BL, BQ, CW, MF, SS, and SX.  Update
+	country code for AG, AS, BA, BN, BO, CD, CG, FK, FM, FO, GB, GS,
+	HM, IR, KN, KP, KR, LA, LC, MD, MK, MM, PM, PS, RU, SH, SJ, ST,
+	SY, TC, TF, TT, TW, TZ, UM, VA, VC, VE, VG, VI, VN, WF, and WS.
+	* iso-3166.texi: Regenerate.
+	Reported by Karl Berry in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-02/msg00006.html>.
+
+2014-01-12  Benno Schulenberg <bensberg@justemail.net>  (tiny change)
+
+	* gettext.texi (c-format Flag): Wording fixes.
+
+2013-12-17  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext.texi (Installers): Fix wording.
+	Reported by Reuben Thomas in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-12/msg00009.html>.
+
+2013-08-06  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: add support for GSettings schema file
+	* gettext.texi (GSettings): New subsection.
+	* xgettext.texi: Document GSettings source language.
+
 2013-06-10  Daiki Ueno  <ueno@gnu.org>
 
 	* Makefile.am: Use $(MKDIR_P) instead of $(mkdir_p).

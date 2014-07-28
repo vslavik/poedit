@@ -1,3 +1,33 @@
 language: cpp
 
-script: scripts/travis-build.sh
+compiler: gcc
+
+before_install:
+    - sudo add-apt-repository -y ppa:vslavik/poedit
+    - sudo apt-get update -qq
+
+install:
+    - sudo apt-get install -qq --no-install-recommends asciidoc xsltproc xmlto
+    - sudo apt-get install -qq libexpat1-dev libdb++-dev libboost-dev libboost-regex-dev libboost-system-dev liblucene++-dev libicu-dev libwxgtk3.0-dev libgtk2.0-dev libgtkspell-dev
+
+script:
+    - $CXX --version
+    - scripts/travis-check-translations.sh
+    # don't build directly, create a tarball first and try building from that
+    - ./bootstrap && ./configure && make dist && make distcheck
+
+git:
+    submodules: false
+
+cache: apt
+
+deploy:
+    provider: releases
+    api_key:
+        secure: fkelxNMcGoNY4MT30dEiEUE53cMkhtmr44Y7iSEkOGmfeG9ReUqVIk1nd7027iehzdhhcov57XwHg49KA+AWpQGvEbLkRNRazOxSGFL9o/P/Rzft/tvKP0sxcRF5RUVo0b5J5wlsIKSlbjDqGu9CM+G4eyK0D2jo/XPzsv9akKQ=
+    skip_cleanup: true
+    file: poedit-1.6.7.tar.gz
+    on:
+        repo: vslavik/poedit
+        tags: true
+        all_branches: true

@@ -77,10 +77,6 @@ struct default_catalog_reader_class_ty
   /* If true, pay attention to comments and filepos comments.  */       \
   bool handle_comments;                                                 \
                                                                         \
-  /* If true, remember comments for file name and line number for each  \
-     msgid, if present in the reference input.  */                      \
-  bool handle_filepos_comments;                                         \
-                                                                        \
   /* If false, domain directives lead to an error messsage.  */         \
   bool allow_domain_directives;                                         \
                                                                         \
@@ -166,10 +162,6 @@ extern void default_add_message (default_catalog_reader_ty *this,
 extern default_catalog_reader_ty *
        default_catalog_reader_alloc (default_catalog_reader_class_ty *method_table);
 
-
-/* If nonzero, remember comments for file name and line number for each
-   msgid, if present in the reference input.  Defaults to true.  */
-extern DLL_VARIABLE int line_comment;
 
 /* If false, duplicate msgids in the same domain and file generate an error.
    If true, such msgids are allowed; the caller should treat them

@@ -91,7 +91,9 @@ int SpellChecker_SetLang(const char *lang)
 {
     @autoreleasepool {
         NSString *nslang = [NSString stringWithUTF8String: lang];
-        return [[NSSpellChecker sharedSpellChecker] setLanguage: nslang];
+        NSSpellChecker *sc = [NSSpellChecker sharedSpellChecker];
+        [sc setAutomaticallyIdentifiesLanguages:NO];
+        return [sc setLanguage: nslang];
     }
 }
 

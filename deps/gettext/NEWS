@@ -1,3 +1,109 @@
+Version 0.19.2 - July 2014
+
+* Bug fixes:
+  - Fix xgettext crash in parsing empty string literals in C and Vala.
+  - ChangeLog file is added back to the gettext infrastructure.  It was
+    mistakenly removed in 0.19.
+  - Autoconf macro trace in autopoint now works again with Autoconf 2.68
+    or earlier.  It was a regression in 0.19.
+
+Version 0.19.1 - June 2014
+
+* Programming languages support:
+
+  - Desktop Entry:
+    msgfmt now always reads the po/LINGUAS file, regardless of whether
+    the LINGUAS environment variable is set.  The variable can now be
+    used to restrict the languages list read from the po/LINGUAS file.
+
+  - Vala:
+    Bug fix in xgettext handling of "//" in string literals.  This was
+    a regression after the C-99 Unicode escape support.
+
+* The po/Makevars.template file now contains the newly added variables.
+
+* msgfmt now treats errors in the PO file header as non-fatal.  Since
+  0.19 msgfmt started to abort on the fatal errors, but some
+  translation systems are still not ready to supply valid headers.
+
+* Future backward-incompatibilities:
+  - In future Gettext versions, msgfmt will treat header errors as
+    fatal and terminate the command execution.
+
+Version 0.19 - June 2014
+
+* Programming languages support:
+
+  - Desktop Entry:
+    xgettext and msgfmt now support .desktop files, used by desktop
+    applications, as input and output.
+
+  - GSettings:
+    xgettext now supports GSettings schema file format used by GNOME
+    applications.
+
+  - JavaScript:
+    xgettext now recognizes E4X (ECMA-357) constructs.
+
+  - PHP:
+    Single and double quotes around heredoc markers are now recognized.
+
+  - Python:
+    The acceptable format specifiers in the braced-syntax format
+    strings are now limited to the Standard Format Specifiers, to
+    reasonably avoid false-positives.
+
+  - Scheme:
+    The gettext shorthand form _"abc", used by GIMP script-fu, is now
+    recognized by xgettext.
+
+  - C and Vala:
+    xgettext now recognizes C99-style Unicode character escapes.
+
+* The --add-location option of msgattrib, msgcat, msgcomm, msgconv,
+  msgen, msgfilter, msggrep, msgmerge, msguniq, and xgettext commands
+  now takes an optional argument 'never', 'full', or 'file', to
+  control the format of "#: ..." comments.
+
+* msgfmt now has --source option to keep generated .java file when
+  running in Java mode.
+
+* msgattrib now has --empty option that sets msgstr to empty when
+  clearing fuzzy flag.
+
+* msgexec and msgfilter pass the plural information to subprocess
+  through the environment variable MSG{EXEC,FILTER}_MSGID_PLURAL and
+  MSG{EXEC,FILTER}_PLURAL_FORM.
+
+* New built-in filters 'quot' and 'boldquot' have been added to
+  msgfilter.  These filters convert Latin quotation marks ('...',
+  "...") into Unicode quotation marks (for example, U+2018) if
+  possible, similar to the sed commands used in po/Rules-quot and
+  po/Rules-boldquot.
+
+* The po/Makevars file has a couple of new options PO_DEPENDS_ON_POT
+  and DIST_DEPENDS_ON_UPDATE_PO, that can be used to adjust the
+  behavior of updating PO files on demand.
+
+* xgettext now strips prefixed string before the comment tag.  This is
+  useful to support C-style comment like this:
+
+  /*
+   * TRANSLATORS: first line
+   * second line
+   */
+
+  In this example, the extracted comment does not contain "* " at the
+  beginning of each line.
+
+* libgettextpo library:
+  - Memory leak fixes in the PO file parser.
+
+* Documentation:
+  - A complete example showing the use of GNU gettext in a GNOME 3
+    application has been added.
+
+
 Version 0.18.3 - July 2013
 
 * Runtime behaviour:
@@ -44,7 +150,7 @@ Version 0.18.3 - July 2013
   false-positives.
 
 * 'gettextize' now checks macro directories specified with
-  AC_CONFIGURE_MACRO_DIRS in configure.ac.
+  AC_CONFIG_MACRO_DIRS in configure.ac.
 
 * Portability:
   - msginit now does not require GNU sed.

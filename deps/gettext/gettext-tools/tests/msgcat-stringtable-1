@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test reading in NeXTstep/GNUstep .strings syntax.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcat-s-1.in"
 cat <<\EOF > mcat-s-1.in
 /* This is an example of a string table file. Everything inside a comment
 is completely ignored, even if in "quotes", or \escape characters, etc.
@@ -27,18 +24,15 @@ is completely ignored, even if in "quotes", or \escape characters, etc.
 "hoe322070.element";
 EOF
 
-tmpfiles="$tmpfiles mcat-s-1.tmp mcat-s-1.err mcat-s-1.out"
 rm -f mcat-s-1.tmp
 : ${MSGCAT=msgcat}
 LC_MESSAGES=C LC_ALL= \
 ${MSGCAT} --stringtable-input -o mcat-s-1.tmp mcat-s-1.in >mcat-s-1.err 2>&1
 result=$?
 cat mcat-s-1.err | grep -v ': internationalized messages'
-test $result = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcat-s-1.tmp > mcat-s-1.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+test $result = 0 || { exit 1; }
+LC_ALL=C tr -d '\r' < mcat-s-1.tmp > mcat-s-1.out || exit 1
 
-tmpfiles="$tmpfiles mcat-s-1.ok"
 cat << \EOF > mcat-s-1.ok
 # This is an example of a string table file. Everything inside a comment
 # is completely ignored, even if in "quotes", or \escape characters, etc.
@@ -68,7 +62,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcat-s-1.ok mcat-s-1.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

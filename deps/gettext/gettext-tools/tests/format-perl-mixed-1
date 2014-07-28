@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test recognition of Perl format strings of both kinds (printf and brace).
 # This test is for the combination of both kinds.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles f-pm-1.data"
 
 cat <<\EOF > f-pm-1.data
 # Both formats.
@@ -35,7 +32,6 @@ while read comment; do
   read formats
   read string
   n=`expr $n + 1`
-  tmpfiles="$tmpfiles f-pm-1-$n.in f-pm-1-$n.po"
   cat <<EOF > f-pm-1-$n.in
 gettext(${string});
 EOF
@@ -65,7 +61,5 @@ EOF
     exit 1
   fi
 done < f-pm-1.data
-
-rm -fr $tmpfiles
 
 exit 0

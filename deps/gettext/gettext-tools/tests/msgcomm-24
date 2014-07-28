@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --more-than=0 option with Java .properties syntax.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcomm-test24.in1 mcomm-test24.in2"
 cat <<EOF > mcomm-test24.in1
 #: first.c:123
 1=1x
@@ -16,14 +13,10 @@ cat <<EOF > mcomm-test24.in2
 2=2x
 EOF
 
-tmpfiles="$tmpfiles mcomm-test24.tmp mcomm-test24.out"
 : ${MSGCOMM=msgcomm}
-${MSGCOMM} --more-than=0 --properties-input --properties-output -o mcomm-test24.tmp mcomm-test24.in1 mcomm-test24.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test24.tmp > mcomm-test24.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGCOMM} --more-than=0 --properties-input --properties-output -o mcomm-test24.tmp mcomm-test24.in1 mcomm-test24.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcomm-test24.tmp > mcomm-test24.out || exit 1
 
-tmpfiles="$tmpfiles mcomm-test24.ok"
 cat << EOF > mcomm-test24.ok
 #: first.c:123
 1=1x
@@ -35,7 +28,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcomm-test24.ok mcomm-test24.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

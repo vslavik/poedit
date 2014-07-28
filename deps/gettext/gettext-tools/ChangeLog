@@ -1,3 +1,55 @@
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.1 released.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-05-14  Daiki Ueno  <ueno@gnu.org>
+
+	* configure.ac: Adjust $docdir assuming that AC_PACKAGE_TARNAME is
+	set.
+
+2014-05-12  Daiki Ueno  <ueno@gnu.org>
+
+	build: Fix Woe32 cross build
+	* woe32dll/gettextsrc-exports.c: Don't export line_comment and
+	po_lex_iconv if undefined.
+
+2014-04-22  Daiki Ueno  <ueno@gnu.org>
+
+	build: Use git-version-gen intead of version.sh
+	* configure.ac: Use git-version-gen in AC_INIT.
+
+2014-03-11  Daiki Ueno  <ueno@gnu.org>
+
+	* configure.ac: Remove unnecessary make-variable expansion,
+	previously needed for LIBTOOL.
+
+2014-01-28  Roumen Petrov <bugtrack@roumenpetrov.info>  (tiny change)
+
+	tests: fix "make check" under VPATH builds
+	Reported at:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-01/msg00012.html>.
+	* configure.ac: Output init-env instead of init.cfg.
+
+2013-07-25  Daiki Ueno  <ueno@gnu.org>
+
+	tests: allow each test to run individually without 'make'
+	* configure.ac: Replace occurrences of make variables in
+	tests/init.cfg with shell variables so they can be adjusted in
+	test scripts.
+
+2013-07-25  Daiki Ueno  <ueno@gnu.org>
+
+	tests: fix path adjustment for LTLIBINTL
+	* configure.ac: Output tests/init.cfg.
+
 2013-05-29  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
 
 	* configure.ac (AM_INIT_AUTOMAKE): Add 'parallel-tests' option.

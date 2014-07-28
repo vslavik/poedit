@@ -1,5 +1,5 @@
-# mbrtowc.m4 serial 25
-dnl Copyright (C) 2001-2002, 2004-2005, 2008-2013 Free Software Foundation,
+# mbrtowc.m4 serial 26
+dnl Copyright (C) 2001-2002, 2004-2005, 2008-2014 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,6 +39,7 @@ AC_DEFUN([gl_FUNC_MBRTOWC],
       gl_MBRTOWC_NULL_ARG2
       gl_MBRTOWC_RETVAL
       gl_MBRTOWC_NUL_RETVAL
+      gl_MBRTOWC_EMPTY_INPUT
       case "$gl_cv_func_mbrtowc_null_arg1" in
         *yes) ;;
         *) AC_DEFINE([MBRTOWC_NULL_ARG1_BUG], [1],
@@ -64,6 +65,14 @@ AC_DEFUN([gl_FUNC_MBRTOWC],
         *yes) ;;
         *) AC_DEFINE([MBRTOWC_NUL_RETVAL_BUG], [1],
              [Define if the mbrtowc function does not return 0 for a NUL character.])
+           REPLACE_MBRTOWC=1
+           ;;
+      esac
+      case "$gl_cv_func_mbrtowc_empty_input" in
+        *yes) ;;
+        *) AC_DEFINE([MBRTOWC_EMPTY_INPUT_BUG], [1],
+             [Define if the mbrtowc function does not return (size_t) -2
+              for empty input.])
            REPLACE_MBRTOWC=1
            ;;
       esac
@@ -530,6 +539,41 @@ int main ()
           [gl_cv_func_mbrtowc_nul_retval=no],
           [:])
       fi
+    ])
+])
+
+dnl Test whether mbrtowc returns the correct value on empty input.
+
+AC_DEFUN([gl_MBRTOWC_EMPTY_INPUT],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether mbrtowc works on empty input],
+    [gl_cv_func_mbrtowc_empty_input],
+    [
+      dnl Initial guess, used when cross-compiling or when no suitable locale
+      dnl is present.
+changequote(,)dnl
+      case "$host_os" in
+                     # Guess no on AIX and glibc systems.
+        aix* | *-gnu*)
+                    gl_cv_func_mbrtowc_empty_input="guessing no" ;;
+        *)          gl_cv_func_mbrtowc_empty_input="guessing yes" ;;
+      esac
+changequote([,])dnl
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
+           #include <wchar.h>
+           static wchar_t wc;
+           static mbstate_t mbs;
+           int
+           main (void)
+           {
+             return mbrtowc (&wc, "", 0, &mbs) == (size_t) -2;
+           }]])],
+        [gl_cv_func_mbrtowc_empty_input=no],
+        [gl_cv_func_mbrtowc_empty_input=yes],
+        [:])
     ])
 ])
 

@@ -1,11 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the C++ language.
 # Assumes an fr_FR locale is installed.
 # Assumes the following packages are installed: gcc g++.
-
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
 
 # Test whether a C++ compiler is found and libasprintf is built.
 test "${CXX}" != ":" || {
@@ -17,7 +15,6 @@ test "${TESTLIBASPRINTF}" = yes || {
   exit 77
 }
 
-tmpfiles="$tmpfiles l-c++-prog.cc"
 cat <<\EOF > l-c++-prog.cc
 #include "config.h"
 
@@ -59,31 +56,27 @@ int main (int argc, char *argv[])
 }
 EOF
 
-# Variable needed by LTLIBINTL.
-top_builddir=..
-
-tmpfiles="$tmpfiles l-c++-prog.${OBJEXT} l-c++-prog${EXEEXT}"
 # Compile in two steps from .cc to .o and from .o to 'l-c++-prog'. This way,
 # relinking is faster because doesn't need to redo the first step.
 # Put the -I flags before ${CXXFLAGS} ${CPPFLAGS}, to make sure that libintl.h
 # is found in the build directory, regardless of -I options present in
 # ${CXXFLAGS} or ${CPPFLAGS}.
-${CXX} -I.. -I../../gettext-runtime/libasprintf -I$top_srcdir/gnulib-lib -I../intl ${CXXFLAGS} ${CPPFLAGS} -c l-c++-prog.cc \
+${CXX} -I../.. -I../../../gettext-runtime/libasprintf -I"$abs_top_srcdir"/gnulib-lib -I../../intl ${CXXFLAGS} ${CPPFLAGS} -c l-c++-prog.cc \
   || exit 1
 # Remove the -Wl,--disable-auto-import option here that is added by
 # woe32-dll.m4. Cygwin 1.7.2 does not support it in C++ mode: It gives
 # a link error about 'std::cout'.
-${LIBTOOL} --quiet --mode=link --tag=CXX ${CXX} ${CXXFLAGS} `echo "X ${LDFLAGS} " | sed -e 's/^X//' -e 's/ -Wl,--disable-auto-import / /'` -o l-c++-prog l-c++-prog.${OBJEXT} ../../gettext-runtime/libasprintf/libasprintf.la ../gnulib-lib/libgettextlib.la ${LTLIBINTL} \
-  || exit 1
+: ${CONFIG_SHELL=${SHELL-/bin/sh}}
+${CONFIG_SHELL} "$top_builddir"/libtool --quiet --tag=CXX --mode=link \
+                ${CXX} ${CXXFLAGS} `echo "X ${LDFLAGS} " | sed -e 's/^X//' -e 's/ -Wl,--disable-auto-import / /'` -o l-c++-prog l-c++-prog.${OBJEXT} \
+                ../../../gettext-runtime/libasprintf/libasprintf.la \
+                ../../gnulib-lib/libgettextlib.la ${LTLIBINTL} \
+		|| exit 1
 
-tmpfiles="$tmpfiles l-c++-prog.tmp l-c++-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-c++-prog.tmp --omit-header --no-location -k_ l-c++-prog.cc
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-c++-prog.tmp > l-c++-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-c++-prog.tmp --omit-header --no-location -k_ l-c++-prog.cc || exit 1
+LC_ALL=C tr -d '\r' < l-c++-prog.tmp > l-c++-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-c++-prog.ok"
 cat <<EOF > l-c++-prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -102,7 +95,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-c++-prog.ok l-c++-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-c++-fr.po"
 cat <<\EOF > l-c++-fr.po
 msgid ""
 msgstr ""
@@ -125,17 +117,13 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles l-c++-fr.po.tmp l-c++-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-c++-fr.po.tmp l-c++-fr.po l-c++-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-c++-fr.po.tmp > l-c++-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-c++-fr.po.tmp l-c++-fr.po l-c++-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-c++-fr.po.tmp > l-c++-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-c++-fr.po l-c++-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-c++"
 test -d l-c++ || mkdir l-c++
 test -d l-c++/fr || mkdir l-c++/fr
 test -d l-c++/fr/LC_MESSAGES || mkdir l-c++/fr/LC_MESSAGES
@@ -143,7 +131,6 @@ test -d l-c++/fr/LC_MESSAGES || mkdir l-c++/fr/LC_MESSAGES
 : ${MSGFMT=msgfmt}
 ${MSGFMT} -o l-c++/fr/LC_MESSAGES/prog.mo l-c++-fr.po
 
-tmpfiles="$tmpfiles l-c++-prog.ok l-c++-prog.oku l-c++-prog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-c++-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -180,9 +167,7 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
-
-rm -fr $tmpfiles
 
 exit 0

@@ -1,5 +1,5 @@
 /* Provide relocatable programs.
-   Copyright (C) 2003-2013 Free Software Foundation, Inc.
+   Copyright (C) 2003-2014 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -88,11 +88,6 @@ extern char * canonicalize_file_name (const char *name);
 # define IS_PATH_WITH_DIR(P) (strchr (P, '/') != NULL)
 # define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
-
-/* The results of open() in this file are not used with fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
-#undef open
-#undef close
 
 /* Use the system functions, not the gnulib overrides in this file.  */
 #undef sprintf

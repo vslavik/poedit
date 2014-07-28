@@ -118,7 +118,6 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/execute.m4 \
 	$(top_srcdir)/gnulib-m4/exponentd.m4 \
 	$(top_srcdir)/gnulib-m4/extensions.m4 \
-	$(top_srcdir)/gnulib-m4/extern-inline.m4 \
 	$(top_srcdir)/gnulib-m4/fatal-signal.m4 \
 	$(top_srcdir)/gnulib-m4/fcntl.m4 \
 	$(top_srcdir)/gnulib-m4/fcntl_h.m4 \
@@ -284,7 +283,6 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/xvasprintf.m4 \
 	$(top_srcdir)/gnulib-m4/yield.m4 \
 	$(top_srcdir)/../m4/fixautomake.m4 \
-	$(top_srcdir)/../m4/init-package-version.m4 \
 	$(top_srcdir)/../m4/libtool.m4 \
 	$(top_srcdir)/../m4/ltoptions.m4 \
 	$(top_srcdir)/../m4/ltsugar.m4 \
@@ -292,6 +290,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/../m4/lt~obsolete.m4 \
 	$(top_srcdir)/../m4/woe32-dll.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/codeset.m4 \
+	$(top_srcdir)/../gettext-runtime/m4/extern-inline.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/fcntl-o.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/gettext.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/glibc2.m4 \
@@ -1042,6 +1041,7 @@ LIBUNISTRING_UNIWIDTH_H = @LIBUNISTRING_UNIWIDTH_H@
 LIBXML = @LIBXML@
 LIBXML_H = @LIBXML_H@
 LIB_ACL = @LIB_ACL@
+LIB_POSIX_SPAWN = @LIB_POSIX_SPAWN@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LOCALCHARSET_TESTS_ENVIRONMENT = @LOCALCHARSET_TESTS_ENVIRONMENT@
@@ -1191,11 +1191,13 @@ REPLACE_FUTIMENS = @REPLACE_FUTIMENS@
 REPLACE_GETCWD = @REPLACE_GETCWD@
 REPLACE_GETDELIM = @REPLACE_GETDELIM@
 REPLACE_GETDOMAINNAME = @REPLACE_GETDOMAINNAME@
+REPLACE_GETDTABLESIZE = @REPLACE_GETDTABLESIZE@
 REPLACE_GETGROUPS = @REPLACE_GETGROUPS@
 REPLACE_GETLINE = @REPLACE_GETLINE@
 REPLACE_GETLOGIN_R = @REPLACE_GETLOGIN_R@
 REPLACE_GETPAGESIZE = @REPLACE_GETPAGESIZE@
 REPLACE_GETTIMEOFDAY = @REPLACE_GETTIMEOFDAY@
+REPLACE_GMTIME = @REPLACE_GMTIME@
 REPLACE_ICONV = @REPLACE_ICONV@
 REPLACE_ICONV_OPEN = @REPLACE_ICONV_OPEN@
 REPLACE_ICONV_UTF = @REPLACE_ICONV_UTF@
@@ -1207,6 +1209,7 @@ REPLACE_LCHOWN = @REPLACE_LCHOWN@
 REPLACE_LINK = @REPLACE_LINK@
 REPLACE_LINKAT = @REPLACE_LINKAT@
 REPLACE_LOCALECONV = @REPLACE_LOCALECONV@
+REPLACE_LOCALTIME = @REPLACE_LOCALTIME@
 REPLACE_LOCALTIME_R = @REPLACE_LOCALTIME_R@
 REPLACE_LSEEK = @REPLACE_LSEEK@
 REPLACE_LSTAT = @REPLACE_LSTAT@
@@ -1279,6 +1282,7 @@ REPLACE_STRSTR = @REPLACE_STRSTR@
 REPLACE_STRTOD = @REPLACE_STRTOD@
 REPLACE_STRTOIMAX = @REPLACE_STRTOIMAX@
 REPLACE_STRTOK_R = @REPLACE_STRTOK_R@
+REPLACE_STRTOUMAX = @REPLACE_STRTOUMAX@
 REPLACE_STRUCT_LCONV = @REPLACE_STRUCT_LCONV@
 REPLACE_STRUCT_TIMEVAL = @REPLACE_STRUCT_TIMEVAL@
 REPLACE_SYMLINK = @REPLACE_SYMLINK@
@@ -1406,6 +1410,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@

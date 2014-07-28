@@ -3,6 +3,7 @@
   <object class="wxDialog" name="properties">
     <title>Catalog properties</title>
     <centered>1</centered>
+    <style>wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER</style>
     <object class="wxBoxSizer">
       <orient>wxVERTICAL</orient>
       <object class="sizeritem">
@@ -169,7 +170,14 @@
                 </object>
                 <object class="sizeritem">
                   <object class="unknown" name="paths"/>
-                  <option>1</option>
+                  <option>3</option>
+                  <flag>wxEXPAND|wxALL</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="unknown" name="excluded_paths">
+                  </object>
+                  <option>2</option>
                   <flag>wxEXPAND|wxALL</flag>
                   <border>5d</border>
                 </object>

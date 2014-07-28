@@ -14,7 +14,7 @@
 
 @SET_MAKE@
 
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2014 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -121,14 +121,15 @@ DIST_COMMON = $(srcdir)/Makefile.gnulib INSTALL NEWS README AUTHORS \
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/gnulib-m4/00gnulib.m4 \
+	$(top_srcdir)/gnulib-m4/absolute-header.m4 \
 	$(top_srcdir)/gnulib-m4/alloca.m4 \
 	$(top_srcdir)/gnulib-m4/errno_h.m4 \
-	$(top_srcdir)/gnulib-m4/extern-inline.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-common.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-comp.m4 \
 	$(top_srcdir)/gnulib-m4/include_next.m4 \
 	$(top_srcdir)/gnulib-m4/intmax_t.m4 \
 	$(top_srcdir)/gnulib-m4/onceonly.m4 \
+	$(top_srcdir)/../m4/extern-inline.m4 \
 	$(top_srcdir)/../m4/inttypes_h.m4 \
 	$(top_srcdir)/../m4/longlong.m4 \
 	$(top_srcdir)/../m4/printf-posix.m4 \
@@ -535,6 +536,11 @@ libgnu_la_LIBADD = $(gl_LTLIBOBJS) @LTALLOCA@
 libgnu_la_DEPENDENCIES = $(gl_LTLIBOBJS) @LTALLOCA@
 EXTRA_libgnu_la_SOURCES = alloca.c
 libgnu_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined
+
+# Use this preprocessor expression to decide whether #include_next works.
+# Do not rely on a 'configure'-time test for this, since the expression
+# might appear in an installed header, which is used by some other compiler.
+HAVE_INCLUDE_NEXT = (__GNUC__ || 60000000 <= __DECC_VER)
 MAKEINFOFLAGS = --no-split
 info_TEXINFOS = autosprintf.texi
 

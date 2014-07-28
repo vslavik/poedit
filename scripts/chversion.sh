@@ -24,6 +24,8 @@ replace_ver win32/poedit.iss \
             '\(#define VERSION_FULL *"\).*\("\)' "\1$VER_FULL\2"
 replace_ver win32/poedit.iss \
             '\(#define VERSION *"\).*\("\)' "\1$VER_SHORT\2"
+replace_ver win32/distrib.proj \
+            '\(<PoeditVersion>\).*\(</PoeditVersion>\)' "\1$VER_SHORT\2"
 replace_ver configure.ac \
             '\(AC_INIT(\[poedit\], \[\)[^]]*\(\],.*\)' "\1$VER_FULL\2"
 replace_ver configure.ac \
@@ -34,6 +36,8 @@ replace_ver src/version.h \
             '\(POEDIT_VERSION.*"\).*\("\)' "\1$VER_FULL\2"
 replace_ver src/version.h \
             '\(POEDIT_VERSION_WIN *\).*' "\1$VER_WIN"
+replace_ver .travis.yml \
+            '\(file: poedit-\).*\(.tar.gz\)' "\1$VER_FULL\2"
 replace_ver Poedit.xcodeproj/project.pbxproj \
             '\(POEDIT_VERSION = \).*\(;\)' "\1$VER_FULL\2"
 touch macosx/Poedit-Info.plist

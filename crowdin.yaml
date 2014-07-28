@@ -1,0 +1,30 @@
+project_identifier: poedit
+base_url: http://api.crowdin.net
+preserve_hierarchy: false
+
+files:
+  -
+    source: /locales/poedit.pot
+    translation: /locales/%two_letters_code%.po
+    languages_mapping:
+      two_letters_code:
+        ckb: ckb
+        en-GB: en_GB
+        pt-BR: pt_BR
+        val-ES: ca@valencia
+        zh-CN: zh_CN
+        zh-TW: zh_TW
+  -
+    source: /macosx/en.lproj/InfoPlist.strings
+    translation: /macosx/%osx_code%/InfoPlist.strings
+    languages_mapping:
+      osx_code:
+        es-ES: es.lproj
+  -
+    source: /deps/letsmove/en.lproj/MoveApplication.strings
+    translation: /deps/letsmove/%osx_code%/MoveApplication.strings
+    languages_mapping:
+      osx_code:
+        zh-CN: zh_CN.lproj
+        es-ES: es.lproj
+

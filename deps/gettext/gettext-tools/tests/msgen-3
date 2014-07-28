@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgen on a POT file with contexts.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles men-test3.pot"
 cat <<\EOF > men-test3.pot
 msgid ""
 msgstr ""
@@ -43,14 +40,10 @@ msgid "copier"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles men-test3.tmp men-test3.out"
 : ${MSGEN=msgen}
-${MSGEN} -o men-test3.tmp men-test3.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < men-test3.tmp > men-test3.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGEN} -o men-test3.tmp men-test3.pot || exit 1
+LC_ALL=C tr -d '\r' < men-test3.tmp > men-test3.out || exit 1
 
-tmpfiles="$tmpfiles men-test3.ok"
 cat <<\EOF > men-test3.ok
 msgid ""
 msgstr ""
@@ -91,7 +84,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} men-test3.ok men-test3.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

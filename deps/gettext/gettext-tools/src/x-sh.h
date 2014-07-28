@@ -33,7 +33,7 @@ extern "C" {
 
 #define SCANNERS_SH \
   { "Shell",            extract_sh,                                     \
-                        &flag_table_sh, &formatstring_sh, NULL },       \
+                        &flag_table_sh, &formatstring_sh, NULL, NULL },       \
 
 /* Scan a shell script file and add its translatable strings to mdlp.  */
 extern void extract_sh (FILE *fp, const char *real_filename,

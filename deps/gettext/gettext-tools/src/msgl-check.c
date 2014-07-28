@@ -732,6 +732,7 @@ plural handling is a GNU gettext extension"));
                          mp, msgid_pos->file_name, msgid_pos->line_number,
                          (size_t)(-1), false, msg);
               free (msg);
+              seen_errors++;
             }
           else if (count > 1)
             {
@@ -742,6 +743,7 @@ plural handling is a GNU gettext extension"));
                          mp, msgid_pos->file_name, msgid_pos->line_number,
                          (size_t)(-1), false, msg);
               free (msg);
+              seen_errors++;
             }
         }
     }
@@ -751,7 +753,7 @@ plural handling is a GNU gettext extension"));
 
 
 /* Perform miscellaneous checks on a header entry.  */
-static void
+static int
 check_header_entry (const message_ty *mp, const char *msgstr_string)
 {
   static const char *required_fields[] =
@@ -764,18 +766,29 @@ check_header_entry (const message_ty *mp, const char *msgstr_string)
   };
   static const char *default_values[] =
   {
-    "PACKAGE VERSION", "YEAR-MO-DA", "FULL NAME", "LANGUAGE", NULL,
+    "PACKAGE VERSION", "YEAR-MO-DA HO:MI+ZONE", "FULL NAME <EMAIL@ADDRESS>", "LANGUAGE <LL@li.org>", NULL,
     "text/plain; charset=CHARSET", "ENCODING",
     ""
   };
   const size_t nfields = SIZEOF (required_fields);
   const size_t nrequiredfields = nfields - 1;
+  int seen_errors = 0;
   int cnt;
 
   for (cnt = 0; cnt < nfields; ++cnt)
     {
+      /* 0.19 change: It would better report error if a required
+         header field is missing.  However, traditionally we didn't
+         treat it as error.  Let's wait for one or two cycles until we
+         can assume the required header fields are always
+         available in practical PO files.  */
+#if 0
       int severity =
         (cnt < nrequiredfields ? PO_SEVERITY_ERROR : PO_SEVERITY_WARNING);
+#else
+      int severity =
+        PO_SEVERITY_WARNING;
+#endif
       const char *field = required_fields[cnt];
       size_t len = strlen (field);
       const char *line;
@@ -797,11 +810,13 @@ check_header_entry (const message_ty *mp, const char *msgstr_string)
                   p += strlen (default_values[cnt]);
                   if (*p == '\0' || *p == '\n')
                     {
-		      char *msg =
-			xasprintf (_("header field '%s' still has the initial default value\n"),
-				   field);
-		      po_xerror (severity, mp, NULL, 0, 0, true, msg);
-		      free (msg);
+                      char *msg =
+                        xasprintf (_("header field '%s' still has the initial default value\n"),
+                                   field);
+                      po_xerror (severity, mp, NULL, 0, 0, true, msg);
+                      free (msg);
+                      if (severity == PO_SEVERITY_ERROR)
+                        seen_errors++;
                     }
                 }
               break;
@@ -817,8 +832,11 @@ check_header_entry (const message_ty *mp, const char *msgstr_string)
                        field);
           po_xerror (severity, mp, NULL, 0, 0, true, msg);
           free (msg);
+          if (severity == PO_SEVERITY_ERROR)
+            seen_errors++;
         }
     }
+  return seen_errors;
 }
 
 
@@ -834,18 +852,21 @@ check_message (const message_ty *mp,
                int check_compatibility,
                int check_accelerators, char accelerator_char)
 {
-  if (check_header && is_header (mp))
-    check_header_entry (mp, mp->msgstr);
+  int seen_errors = 0;
 
-  return check_pair (mp,
-                     mp->msgid, msgid_pos, mp->msgid_plural,
-                     mp->msgstr, mp->msgstr_len,
-                     mp->is_format,
-                     check_newlines,
-                     check_format_strings,
-                     distribution,
-                     check_compatibility,
-                     check_accelerators, accelerator_char);
+  if (check_header && is_header (mp))
+    seen_errors += check_header_entry (mp, mp->msgstr);
+
+  seen_errors += check_pair (mp,
+                             mp->msgid, msgid_pos, mp->msgid_plural,
+                             mp->msgstr, mp->msgstr_len,
+                             mp->is_format,
+                             check_newlines,
+                             check_format_strings,
+                             distribution,
+                             check_compatibility,
+                             check_accelerators, accelerator_char);
+  return seen_errors;
 }
 
 

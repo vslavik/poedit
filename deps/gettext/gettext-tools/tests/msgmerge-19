@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgmerge --previous option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test19.po"
 cat <<\EOF > mm-test19.po
 msgid ""
 msgstr ""
@@ -31,7 +28,6 @@ msgid "%s: invalid option -- %c\n"
 msgstr "%s: ungültige Option -- %c\n"
 EOF
 
-tmpfiles="$tmpfiles mm-test19.pot"
 cat <<\EOF > mm-test19.pot
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -80,14 +76,10 @@ msgid "%s: invalid option -- %c\n"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-test19.tmp.po mm-test19.new1.po"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q --previous -o mm-test19.tmp.po mm-test19.po mm-test19.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test19.tmp.po > mm-test19.new1.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q --previous -o mm-test19.tmp.po mm-test19.po mm-test19.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test19.tmp.po > mm-test19.new1.po || exit 1
 
-tmpfiles="$tmpfiles mm-test19.ok1"
 cat <<\EOF > mm-test19.ok1
 msgid ""
 msgstr ""
@@ -128,10 +120,8 @@ msgstr "%s: ungültige Option -- %c\n"
 EOF
 
 : ${DIFF=diff}
-${DIFF} mm-test19.ok1 mm-test19.new1.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${DIFF} mm-test19.ok1 mm-test19.new1.po || exit 1
 
-tmpfiles="$tmpfiles mm-test19.pot"
 cat <<\EOF > mm-test19.pot
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -170,14 +160,10 @@ msgid "Missing arguments."
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-test19.tmp.po mm-test19.new2.po"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q --previous -o mm-test19.tmp.po mm-test19.new1.po mm-test19.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test19.tmp.po > mm-test19.new2.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q --previous -o mm-test19.tmp.po mm-test19.new1.po mm-test19.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test19.tmp.po > mm-test19.new2.po || exit 1
 
-tmpfiles="$tmpfiles mm-test19.ok2"
 cat <<\EOF > mm-test19.ok2
 msgid ""
 msgstr ""
@@ -217,9 +203,6 @@ msgstr "Argumente fehlen"
 EOF
 
 : ${DIFF=diff}
-${DIFF} mm-test19.ok2 mm-test19.new2.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-
-rm -fr $tmpfiles
+${DIFF} mm-test19.ok2 mm-test19.new2.po || exit 1
 
 exit 0

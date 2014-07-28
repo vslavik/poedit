@@ -25,11 +25,11 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	msgattrib-1 msgattrib-2 msgattrib-3 msgattrib-4 msgattrib-5 \
 	msgattrib-6 msgattrib-7 msgattrib-8 msgattrib-9 msgattrib-10 \
 	msgattrib-11 msgattrib-12 msgattrib-13 msgattrib-14 msgattrib-15 \
-	msgattrib-16 msgattrib-17 \
+	msgattrib-16 msgattrib-17 msgattrib-18 msgattrib-19 \
 	msgattrib-properties-1 \
 	msgcat-1 msgcat-2 msgcat-3 msgcat-4 msgcat-5 msgcat-6 msgcat-7 \
 	msgcat-8 msgcat-9 msgcat-10 msgcat-11 msgcat-12 msgcat-13 msgcat-14 \
-	msgcat-15 msgcat-16 msgcat-17 msgcat-18 \
+	msgcat-15 msgcat-16 msgcat-17 msgcat-18 msgcat-19 \
 	msgcat-properties-1 msgcat-properties-2 \
 	msgcat-stringtable-1 \
 	msgcmp-1 msgcmp-2 msgcmp-3 msgcmp-4 \
@@ -37,25 +37,27 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	msgcomm-8 msgcomm-9 msgcomm-10 msgcomm-11 msgcomm-12 msgcomm-13 \
 	msgcomm-14 msgcomm-15 msgcomm-16 msgcomm-17 msgcomm-18 msgcomm-19 \
 	msgcomm-20 msgcomm-21 msgcomm-22 msgcomm-23 msgcomm-24 msgcomm-25 \
-	msgcomm-26 msgcomm-27 \
-	msgconv-1 msgconv-2 msgconv-3 msgconv-4 msgconv-5 msgconv-6 \
-	msgen-1 msgen-2 msgen-3 \
-	msgexec-1 msgexec-2 msgexec-3 msgexec-4 \
-	msgfilter-1 msgfilter-2 msgfilter-3 msgfilter-4 \
-	msgfilter-sr-latin-1 \
+	msgcomm-26 msgcomm-27 msgcomm-28 \
+	msgconv-1 msgconv-2 msgconv-3 msgconv-4 msgconv-5 msgconv-6 msgconv-7 \
+	msgen-1 msgen-2 msgen-3 msgen-4 \
+	msgexec-1 msgexec-2 msgexec-3 msgexec-4 msgexec-5 \
+	msgfilter-1 msgfilter-2 msgfilter-3 msgfilter-4 msgfilter-5 \
+	msgfilter-6 \
+	msgfilter-sr-latin-1 msgfilter-quote-1 \
 	msgfmt-1 msgfmt-2 msgfmt-3 msgfmt-4 msgfmt-5 msgfmt-6 msgfmt-7 \
 	msgfmt-8 msgfmt-9 msgfmt-10 msgfmt-11 msgfmt-12 msgfmt-13 msgfmt-14 \
-	msgfmt-15 msgfmt-16 msgfmt-17 \
+	msgfmt-15 msgfmt-16 msgfmt-17 msgfmt-18 \
 	msgfmt-properties-1 \
 	msgfmt-qt-1 msgfmt-qt-2 \
+	msgfmt-desktop-1 msgfmt-desktop-2 \
 	msggrep-1 msggrep-2 msggrep-3 msggrep-4 msggrep-5 msggrep-6 msggrep-7 \
-	msggrep-8 msggrep-9 msggrep-10 \
-	msginit-1 msginit-2 \
+	msggrep-8 msggrep-9 msggrep-10 msggrep-11 \
+	msginit-1 msginit-2 msginit-3 \
 	msgmerge-1 msgmerge-2 msgmerge-3 msgmerge-4 msgmerge-5 msgmerge-6 \
 	msgmerge-7 msgmerge-8 msgmerge-9 msgmerge-10 msgmerge-11 msgmerge-12 \
 	msgmerge-13 msgmerge-14 msgmerge-15 msgmerge-16 msgmerge-17 \
 	msgmerge-18 msgmerge-19 msgmerge-20 msgmerge-21 msgmerge-22 \
-	msgmerge-23 msgmerge-24 \
+	msgmerge-23 msgmerge-24 msgmerge-25 \
 	msgmerge-compendium-1 msgmerge-compendium-2 msgmerge-compendium-3 \
 	msgmerge-compendium-4 msgmerge-compendium-5 msgmerge-compendium-6 \
 	msgmerge-properties-1 msgmerge-properties-2 \
@@ -66,15 +68,15 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	msgunfmt-java-1 \
 	msgunfmt-properties-1 \
 	msgunfmt-tcl-1 \
-	msguniq-1 msguniq-2 msguniq-3 msguniq-4 msguniq-5 msguniq-6 \
+	msguniq-1 msguniq-2 msguniq-3 msguniq-4 msguniq-5 msguniq-6 msguniq-7 \
 	recode-sr-latin-1 recode-sr-latin-2 \
-	xgettext-1 xgettext-2 xgettext-3 xgettext-4 xgettext-5 xgettext-6 \
-	xgettext-7 xgettext-8 xgettext-9 \
+	xgettext-2 xgettext-3 xgettext-4 xgettext-5 xgettext-6 \
+	xgettext-7 xgettext-8 xgettext-9 xgettext-10 xgettext-11 \
 	xgettext-awk-1 xgettext-awk-2 \
-	xgettext-c-1 xgettext-c-2 xgettext-c-3 xgettext-c-4 xgettext-c-5 \
+	xgettext-c-2 xgettext-c-3 xgettext-c-4 xgettext-c-5 \
 	xgettext-c-6 xgettext-c-7 xgettext-c-8 xgettext-c-9 xgettext-c-10 \
 	xgettext-c-11 xgettext-c-12 xgettext-c-13 xgettext-c-14 xgettext-c-15 \
-	xgettext-c-16 xgettext-c-17 xgettext-c-18 \
+	xgettext-c-16 xgettext-c-17 xgettext-c-18 xgettext-c-19 \
 	xgettext-csharp-1 xgettext-csharp-2 xgettext-csharp-3 \
 	xgettext-csharp-4 xgettext-csharp-5 xgettext-csharp-6 \
 	xgettext-csharp-7 \
@@ -94,6 +96,7 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	xgettext-python-1 xgettext-python-2 xgettext-python-3 \
 	xgettext-python-4 \
 	xgettext-scheme-1 xgettext-scheme-2 xgettext-scheme-3 \
+	xgettext-scheme-4 \
 	xgettext-sh-1 xgettext-sh-2 xgettext-sh-3 xgettext-sh-4 xgettext-sh-5 \
 	xgettext-sh-6 \
 	xgettext-smalltalk-1 xgettext-smalltalk-2 \
@@ -102,8 +105,10 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	xgettext-ycp-1 xgettext-ycp-2 xgettext-ycp-3 xgettext-ycp-4 \
 	xgettext-lua-1 xgettext-lua-2 \
 	xgettext-javascript-1 xgettext-javascript-2 xgettext-javascript-3 \
-	xgettext-javascript-4 xgettext-javascript-5 \
+	xgettext-javascript-4 xgettext-javascript-5 xgettext-javascript-6 \
 	xgettext-vala-1 \
+	xgettext-gsettings-1 \
+	xgettext-desktop-1 \
 	format-awk-1 format-awk-2 \
 	format-boost-1 format-boost-2 \
 	format-c-1 format-c-2 format-c-3 format-c-4 format-c-5 \
@@ -136,9 +141,10 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	lang-python-2 lang-clisp lang-elisp lang-librep lang-guile \
 	lang-smalltalk lang-java lang-csharp lang-gawk lang-pascal \
 	lang-ycp lang-tcl lang-perl-1 lang-perl-2 lang-php lang-po lang-rst \
-	lang-lua lang-javascript lang-vala
+	lang-lua lang-javascript lang-vala \
+	autopoint-1 autopoint-2 autopoint-3
 
-EXTRA_DIST += $(TESTS) \
+EXTRA_DIST += init.sh init.cfg $(TESTS) \
 	test.mo xg-c-1.ok.po mex-test2.ok \
 	mm-ko.ascii.pot mm-ko.euc-kr.po mm-ko-comp.euc-kr.po \
 	mm-viet.comp.po mm-viet.pot mm-viet.out \
@@ -148,7 +154,9 @@ EXTRA_DIST += $(TESTS) \
 	ChangeLog.0 \
 	gettext-3-1.po gettext-3-2.po gettext-4.po gettext-5.po \
 	gettext-6-1.po gettext-6-2.po gettext-7.po \
-	gettextpo-1.de.po
+	gettextpo-1.de.po \
+	xgettext-1 \
+	xgettext-c-1
 
 XGETTEXT = ../src/xgettext
 
@@ -159,7 +167,8 @@ CHECKER =
 #CHECKER = valgrind --tool=massif --format=html --depth=10 --alloc-fn=xmalloc --alloc-fn=xrealloc --stacks=no
 
 TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) \
-		    PATH=.:../src:../../gettext-runtime/src:$(top_srcdir)/../gettext-runtime/src:$$PATH \
+		    abs_srcdir=$(abs_srcdir) \
+		    abs_top_srcdir=$(abs_top_srcdir) \
 		    GETTEXT="$(CHECKER) tstgettext" \
 		    NGETTEXT="$(CHECKER) tstngettext" \
 		    XGETTEXT="$(CHECKER) xgettext" \
@@ -178,24 +187,6 @@ TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) \
 		    MSGUNFMT="$(CHECKER) msgunfmt" \
 		    MSGUNIQ="$(CHECKER) msguniq" \
 		    RECODE="$(CHECKER) recode" \
-		    OBJEXT='@OBJEXT@' EXEEXT='@EXEEXT@' \
-		    LIBTOOL='@LIBTOOL@' \
-		    CC='@CC@' CFLAGS='@CFLAGS@' \
-		    CXX='@CXX@' CXXFLAGS='@CXXFLAGS@' \
-		    CPPFLAGS='@CPPFLAGS@' LDFLAGS='@LDFLAGS@' \
-		    LTLIBINTL='@LTLIBINTL@' \
-		    JAVA_CHOICE='@JAVA_CHOICE@' \
-		    BUILDJAVA='@BUILDJAVA@' \
-		    TESTJAVA='@TESTJAVA@' \
-		    CSHARP_CHOICE='@CSHARP_CHOICE@' \
-		    BUILDCSHARP='@BUILDCSHARP@' \
-		    TESTCSHARP='@TESTCSHARP@' \
-		    TESTLIBASPRINTF='@TESTLIBASPRINTF@' \
-		    GLIBC2='@GLIBC2@' \
-		    LOCALE_FR='@LOCALE_FR@' \
-		    LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
-		    LOCALE_JA='@LOCALE_JA@' \
-		    host_os='@host_os@' \
 		    CONFIG_SHELL='$(SHELL)'
 
 LOG_COMPILER = $(SHELL)
@@ -253,7 +244,12 @@ fc4_LDADD = ../gnulib-lib/libgettextlib.la $(LDADD)
 fc5_SOURCES = format-c-5-prg.c
 fc5_LDADD = ../gnulib-lib/libgettextlib.la $(LDADD)
 gettextpo_1_prg_SOURCES = gettextpo-1-prg.c
-gettextpo_1_prg_CPPFLAGS = -I../libgettextpo -I$(top_srcdir)/libgettextpo $(AM_CPPFLAGS)
+# Don't add 'gnulib-lib' to the include path here.  Some header files
+# there may interfere with the ones in 'libgettextpo'.
+gettextpo_1_prg_CPPFLAGS = \
+  -I.. \
+  -I../libgettextpo -I$(top_srcdir)/libgettextpo \
+  -I../intl
 # Don't add more libraries here. This test must check whether libgettextpo is
 # self contained.
 gettextpo_1_prg_LDADD = ../libgettextpo/libgettextpo.la $(LDADD)

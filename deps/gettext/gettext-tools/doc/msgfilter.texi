@@ -10,13 +10,26 @@ translation catalog.
 
 @vindex MSGFILTER_MSGCTXT@r{, environment variable}
 @vindex MSGFILTER_MSGID@r{, environment variable}
+@vindex MSGFILTER_MSGID_PLURAL@r{, environment variable}
 @vindex MSGFILTER_LOCATION@r{, environment variable}
+@vindex MSGFILTER_PLURAL_FORM@r{, environment variable}
+@vindex MSGFILTER_PREV_MSGCTXT@r{, environment variable}
+@vindex MSGFILTER_PREV_MSGID@r{, environment variable}
+@vindex MSGFILTER_PREV_MSGID_PLURAL@r{, environment variable}
 During each @var{filter} invocation, the environment variable
 @code{MSGFILTER_MSGID} is bound to the message's msgid, and the environment
 variable @code{MSGFILTER_LOCATION} is bound to the location in the PO file
 of the message.  If the message has a context, the environment variable
 @code{MSGFILTER_MSGCTXT} is bound to the message's msgctxt, otherwise it is
-unbound.
+unbound.  If the message has a plural form, environment variable
+@code{MSGFILTER_MSGID_PLURAL} is bound to the message's msgid_plural and
+@code{MSGFILTER_PLURAL_FORM} is bound to the order number of the plural
+actually processed (starting with 0), otherwise both are unbound.
+If the message has a previous msgid (added by @code{msgmerge}),
+environment variable @code{MSGFILTER_PREV_MSGCTXT} is bound to the
+message's previous msgctxt, @code{MSGFILTER_PREV_MSGID} is bound to
+the previous msgid, and @code{MSGFILTER_PREV_MSGID_PLURAL} is bound to
+the previous msgid_plural.
 
 @subsection Input file location
 
@@ -117,6 +130,17 @@ The command @samp{msgfilter recode-sr-latin} applies this conversion to the
 translations of a PO file.  Thus, it can be used to convert an @file{sr.po}
 file to an @file{sr@@latin.po} file.
 
+@pindex quot
+The filter @samp{quot} is recognized as a built-in filter.
+The command @samp{msgfilter quot} converts any quotations surrounded
+by a pair of @samp{"}, @samp{'}, and @samp{`}.
+
+@pindex boldquot
+The filter @samp{boldquot} is recognized as a built-in filter.
+The command @samp{msgfilter boldquot} converts any quotations
+surrounded by a pair of @samp{"}, @samp{'}, and @samp{`}, also adding the
+VT100 escape sequences to the text to decorate it as bold.
+
 The use of built-in filters is not sensitive to the current locale's encoding.
 Moreover, when used with a built-in filter, @samp{msgfilter} can automatically
 convert the message catalog to the UTF-8 encoding when needed.
@@ -172,9 +196,16 @@ filtering like any other message.
 @opindex --no-location@r{, @code{msgfilter} option}
 Do not write @samp{#: @var{filename}:@var{line}} lines.
 
-@item --add-location
+@item -n
+@itemx --add-location=@var{type}
 @opindex --add-location@r{, @code{msgfilter} option}
 Generate @samp{#: @var{filename}:@var{line}} lines (default).
+
+The optional @var{type} can be either @samp{full}, @samp{file}, or
+@samp{never}.  If it is not given or @samp{full}, it generates the
+lines with both file name and line number.  If it is @samp{file}, the
+line number part is omitted.  If it is @samp{never}, it completely
+suppresses the lines (same as @code{--no-location}).
 
 @item --strict
 @opindex --strict@r{, @code{msgfilter} option}

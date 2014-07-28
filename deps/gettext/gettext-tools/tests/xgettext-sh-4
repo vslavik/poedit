@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of Shell support: obsolete bash $"..." syntax.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-sh-4.sh"
 cat <<\EOF > xg-sh-4.sh
 # Test backslash before normal alphabetic character.
 
@@ -116,14 +113,11 @@ echo "`echo "\`echo $"depth_2_11_bashquote_7_\\\\\\\$var"\`"`"
 echo "`echo "\`echo $"depth_2_11_bashquote_8_\\\\\\\\$var"\`"`"
 EOF
 
-tmpfiles="$tmpfiles xg-sh-4.err xg-sh-4.tmp.po xg-sh-4.po"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location -d xg-sh-4.tmp xg-sh-4.sh 2>xg-sh-4.err
-test $? = 0 || { cat xg-sh-4.err; rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-sh-4.tmp.po > xg-sh-4.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+test $? = 0 || { cat xg-sh-4.err; exit 1; }
+LC_ALL=C tr -d '\r' < xg-sh-4.tmp.po > xg-sh-4.po || exit 1
 
-tmpfiles="$tmpfiles xg-sh-4.ok"
 cat <<\EOF > xg-sh-4.ok
 msgid "depth_0_bashquote_0_x"
 msgstr ""
@@ -472,7 +466,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-sh-4.ok xg-sh-4.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

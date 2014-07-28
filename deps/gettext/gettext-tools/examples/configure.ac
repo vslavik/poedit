@@ -17,15 +17,15 @@ dnl along with this program.  If not, see <http://www.gnu.org/licenses/>.
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.57])
-AC_INIT
+AC_INIT([gettext-examples],
+	m4_esyscmd([../../build-aux/git-version-gen ../../.tarball-version]),
+	[bug-gnu-gettext@gnu.org])
 AC_CONFIG_SRCDIR([installpaths.in])
 AC_CONFIG_AUX_DIR([../../build-aux])
-. $srcdir/../../version.sh
-gl_INIT_PACKAGE([gettext-examples], [$VERSION_NUMBER])
 AM_INIT_AUTOMAKE([silent-rules])
 
 dnl Installation directories.
-test "$docdir" != '${datarootdir}/doc/${PACKAGE}' || docdir='${datarootdir}/doc/gettext'
+test "$docdir" != '${datarootdir}/doc/${PACKAGE_TARNAME}' || docdir='${datarootdir}/doc/gettext'
 
 AM_PO_SUBDIRS
 

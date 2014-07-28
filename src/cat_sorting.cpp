@@ -167,12 +167,19 @@ int CatalogItemsComparator::CompareStrings(wxString a, wxString b) const
     b.Replace("&", "");
     b.Replace("_", "");
 
-    UErrorCode err = U_ZERO_ERROR;
+    if (m_collator)
+    {
+        UErrorCode err = U_ZERO_ERROR;
 #if wxUSE_UNICODE_UTF8
-    return m_collator->compareUTF8(a.wx_str(), b.wx_str(), err);
+        return m_collator->compareUTF8(a.wx_str(), b.wx_str(), err);
 #elif SIZEOF_WCHAR_T == 2
-    return m_collator->compare(a.wx_str(), a.length(), b.wx_str(), b.length(), err);
+        return m_collator->compare(a.wx_str(), a.length(), b.wx_str(), b.length(), err);
 #else
-    return m_collator->compare(ToIcuStr(a), ToIcuStr(b), err);
+        return m_collator->compare(ToIcuStr(a), ToIcuStr(b), err);
 #endif
+    }
+    else
+    {
+        return a.CmpNoCase(b);
+    }
 }

@@ -65,7 +65,7 @@ class PropertiesDialog : public wxDialog
         wxRadioButton *m_pluralFormsDefault, *m_pluralFormsCustom;
         wxTextCtrl *m_pluralFormsExpr;
         wxTextCtrl *m_basePath;
-        wxEditableListBox *m_paths, *m_keywords;
+        wxEditableListBox *m_paths, *m_excludedPaths, *m_keywords;
         wxString m_rememberedPluralForm;
 
         int m_validatedPlural, m_validatedLang;

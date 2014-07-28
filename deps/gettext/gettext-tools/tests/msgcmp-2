@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test a failing comparison.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mc-test2.in1 mc-test2.in2"
 cat <<EOF > mc-test2.in1
 msgid "one" msgstr "first"
 msgid "two" msgstr "second"
@@ -19,12 +16,10 @@ msgid "one" msgstr ""
 msgid "two" msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mc-test2.out"
 : ${MSGCMP=msgcmp}
 LC_MESSAGES=C LC_ALL= \
 ${MSGCMP} mc-test2.in1 mc-test2.in2 2>&1 | grep -v '^==' | sed -e 's|[^ ]*\\msgcmp\.exe|msgcmp|' -e 's|^msgcmp\.exe|msgcmp|' | LC_ALL=C tr -d '\r' > mc-test2.out
 
-tmpfiles="$tmpfiles mc-test2.ok"
 cat <<EOF > mc-test2.ok
 mc-test2.in2:1: this message is used but not defined...
 mc-test2.in1:3: ...but this definition is similar
@@ -35,7 +30,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mc-test2.ok mc-test2.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

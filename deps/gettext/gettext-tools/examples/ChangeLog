@@ -1,3 +1,63 @@
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.1 released.
+
+2014-06-03  Daiki Ueno  <ueno@gnu.org>
+
+	examples: Don't require msgfmt when compiling hello-c-gnome3
+	* hello-c-gnome3/Makefile.am (CLEANFILES): Clean hello.desktop.
+	(EXTRA_DIST): Add hello.desktop.in.
+	(MAINTAINERCLEANFILES): Add hello.desktop.in.
+	(hello.desktop): Move msgfmt invocation to...
+	(hello.desktop.in): ...here.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-05-14  Daiki Ueno  <ueno@gnu.org>
+
+	* configure.ac: Adjust $docdir assuming that AC_PACKAGE_TARNAME is
+	set.
+
+2014-05-06  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am (install-data-local): Don't fail if a PO file does
+	not exist, but warn user to do "make dist".
+
+2014-04-22  Daiki Ueno  <ueno@gnu.org>
+
+	build: Use git-version-gen intead of version.sh
+	* configure.ac: Use git-version-gen in AC_INIT.
+
+2014-04-21  Daiki Ueno  <ueno@gnu.org>
+
+	examples: Quote shell variables in hello-java*/configure
+	When running from xsmallpot.sh, embedded shell-script snippets are
+	stripped off from configure.ac and some variables are not set.
+	Make sure to quote them to avoid error.
+	* hello-java/configure.ac: Quote $BUILDJAVA.
+	* hello-java-awt/configure.ac: Quote $BUILDJAVAEXE and $BUILDJAVA.
+	* hello-java-qtjambi/configure.ac: Likewise.
+	* hello-java-swing/configure.ac: Likewise.
+
+2014-04-15  Daiki Ueno  <ueno@gnu.org>
+
+	examples: Add a new example 'hello-c-gnome3'
+	* hello-c-gnome3: New subdirectory.
+	* README: Mention it.
+	* Makefile.am (EXAMPLESFILES): Add the files in hello-c-gnome3.
+	(EXAMPLESDIRS): Add hello-c-gnome3.
+	* po/Makefile.am (POTFILES): Add hello-c-gnome3 source.
+	(SMALLPOTS): Add hello-c-gnome3.pot.
+	(hello-c-gnome3.pot): New rule.
+	(SMALLPOFILES_FOR_lang): Add hello-c-gnome3 elements.
+	(../hello-c-gnome3/po/$(LL).po): New rule.
+
 2013-06-10  Daiki Ueno  <ueno@gnu.org>
 
 	* Makefile.am: Use $(MKDIR_P) instead of $(mkdir_p).

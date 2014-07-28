@@ -146,8 +146,21 @@ FindFrame *FindFrame::Get(PoeditListCtrl *list, Catalog *forCatalog)
 }
 
 
+void FindFrame::NotifyParentDestroyed(PoeditListCtrl *list, Catalog *forCatalog)
+{
+    if (!ms_singleton)
+        return;
+    if (ms_singleton->m_catalog == forCatalog || ms_singleton->m_listCtrl == list)
+        ms_singleton->Destroy();
+}
+
+
+
 void FindFrame::Reset(Catalog *c)
 {
+    if (!m_listCtrl)
+        return;
+
     bool fromFirst = XRCCTRL(*this, "from_first", wxCheckBox)->GetValue();
 
     m_catalog = c;
@@ -256,6 +269,9 @@ bool TextInString(const wxString& str, const wxString& text, bool wholeWords)
 
 bool FindFrame::DoFind(int dir)
 {
+    if (!m_listCtrl)
+        return false;
+
     int cnt = m_listCtrl->GetItemCount();
     bool inStr = XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue();
     bool inTrans = XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue();

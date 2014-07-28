@@ -81,8 +81,7 @@ subdir = gnulib-local
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/build-aux/mkinstalldirs ChangeLog
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/init-package-version.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/build-aux/mkinstalldirs
@@ -107,6 +106,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
+am__extra_recursive_targets = maintainer-update-po-recursive
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
@@ -226,6 +226,7 @@ lib/error.h.diff \
 lib/error-progname.c \
 lib/error-progname.h \
 lib/exitfail.h.diff \
+lib/execute.c.diff \
 lib/fd-ostream.oo.c \
 lib/fd-ostream.oo.h \
 lib/file-ostream.oo.c \
@@ -417,6 +418,7 @@ lib/ostream.oo.h \
 lib/progname.h.diff \
 lib/regexec.c.diff \
 lib/regex_internal.h.diff \
+lib/spawn-pipe.c.diff \
 lib/styled-ostream.oo.c \
 lib/styled-ostream.oo.h \
 lib/term-ostream.oo.c \
@@ -473,7 +475,6 @@ modules/memory-ostream \
 modules/moo \
 modules/moo-tests \
 modules/ostream \
-modules/regex.diff \
 modules/styled-ostream \
 modules/termcap \
 modules/termcap-h \
@@ -487,6 +488,7 @@ modules/xalloc \
 modules/xalloc-die \
 modules/xerror \
 modules/xgetcwd \
+tests/test-environ.c.diff \
 tests/test-moo-aroot.oo.c \
 tests/test-moo-aroot.oo.h \
 tests/test-moo-assign.c \
@@ -549,6 +551,7 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+maintainer-update-po-local:
 tags TAGS:
 
 ctags CTAGS:
@@ -672,6 +675,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
+maintainer-update-po-am: maintainer-update-po-local
+
 mostlyclean: mostlyclean-am
 
 mostlyclean-am: mostlyclean-generic
@@ -696,9 +701,13 @@ uninstall-am:
 	install-info-am install-man install-pdf install-pdf-am \
 	install-ps install-ps-am install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
-	pdf-am ps ps-am tags-am uninstall uninstall-am
+	maintainer-clean-generic maintainer-update-po \
+	maintainer-update-po-am maintainer-update-po-local mostlyclean \
+	mostlyclean-generic pdf pdf-am ps ps-am tags-am uninstall \
+	uninstall-am
 
+
+maintainer-update-po:
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

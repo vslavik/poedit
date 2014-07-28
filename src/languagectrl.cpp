@@ -29,6 +29,12 @@
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 
+#ifdef __WXOSX__
+extern "C" {
+#import "NSObject+REResponder.h"
+}
+#endif
+
 IMPLEMENT_DYNAMIC_CLASS(LanguageCtrl, wxComboBox)
 
 LanguageCtrl::LanguageCtrl(wxWindow *parent, wxWindowID winid, Language lang)
@@ -53,6 +59,21 @@ void LanguageCtrl::Init(Language lang)
         Append(x);
     NSComboBox *cb = (NSComboBox*) GetHandle();
     [cb setCompletes:YES];
+    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7)
+    {
+        // default completion is case-sensitive, we'd rather be case-insensitive, so plug in
+        // customized completedString: implementation
+        RESetBlock(cb.cell, @selector(completedString:), NO, nil, ^(NSComboBox *receiver, NSString *string) {
+            for (NSString *item in receiver.objectValues) {
+                if ([item compare:string
+                          options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch
+                            range:NSMakeRange(0, std::min([item length], [string length]))
+                           locale:[NSLocale currentLocale]] == NSOrderedSame)
+                    return item;
+            }
+            return (NSString*)nil;
+        });
+    }
 #else
     static wxArrayString choices;
     if (choices.empty())
@@ -83,7 +104,7 @@ void LanguageCtrl::SetLang(const Language& lang)
 
 Language LanguageCtrl::GetLang() const
 {
-    return Language::TryParse(GetValue());
+    return Language::TryParse(GetValue().ToStdWstring());
 }
 
 #ifdef __WXMSW__
@@ -105,7 +126,7 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
     wxString langcode = wxConfigBase::Get()->Read("/last_translation_lang", "");
     Language lang;
     if (!langcode.empty())
-        lang = Language::TryParse(langcode);
+        lang = Language::TryParse(langcode.ToStdWstring());
 
     auto sizer = new wxBoxSizer(wxVERTICAL);
 

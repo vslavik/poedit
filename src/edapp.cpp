@@ -58,10 +58,6 @@
     #error "Unicode build of wxWidgets is required by Poedit"
 #endif
 
-#if !wxUSE_STL
-    #error "STL-enabled build of wxWidgets is required by Poedit"
-#endif
-
 #include "edapp.h"
 #include "edframe.h"
 #include "manager.h"
@@ -203,6 +199,9 @@ bool PoeditApp::OnInit()
     wxConfigBase::Get()->SetExpandEnvVars(false);
 
     wxImage::AddHandler(new wxPNGHandler);
+#ifdef __WXMSW__
+    wxImage::AddHandler(new wxICOHandler);
+#endif
     wxXmlResource::Get()->InitAllHandlers();
 
 #if defined(__WXMAC__)
@@ -302,6 +301,8 @@ int PoeditApp::OnExit()
 }
 
 
+static wxLayoutDirection g_layoutDirection = wxLayout_Default;
+
 void PoeditApp::SetupLanguage()
 {
 #if defined(__WXMSW__)
@@ -318,9 +319,18 @@ void PoeditApp::SetupLanguage()
     trans->AddCatalog("poedit");
     trans->AddStdCatalog();
 
-    Language uiLang = Language::TryParse(trans->GetBestTranslation("poedit"));
+    wxString bestTrans = trans->GetBestTranslation("poedit");
+    Language uiLang = Language::TryParse(bestTrans.ToStdWstring());
     UErrorCode err = U_ZERO_ERROR;
     icu::Locale::setDefault(uiLang.ToIcu(), err);
+
+    const wxLanguageInfo *info = wxLocale::FindLanguageInfo(bestTrans);
+    g_layoutDirection = info ? info->LayoutDirection : wxLayout_Default;
+}
+
+wxLayoutDirection PoeditApp::GetLayoutDirection() const
+{
+    return g_layoutDirection;
 }
 
 
@@ -510,6 +520,12 @@ bool PoeditApp::OnExceptionInMainLoop()
     {
         wxLogError(_("Unhandled exception occurred: %s"), e.what());
     }
+#ifdef __WXOSX__
+    catch ( NSException *e )
+    {
+        wxLogError(_("Unhandled exception occurred: %s"), wxStringWithNSString([e reason]));
+    }
+#endif
     catch ( ... )
     {
         wxLogError(_("Unhandled exception occurred."));
@@ -635,13 +651,6 @@ void PoeditApp::OnAbout(wxCommandEvent&)
     // TRANSLATORS: This is version information in about dialog, "%s" will be
     //              version number when used
     _("Version %s");
-    // TRANSLATORS: This is version information in about dialog, it is followed
-    //              by version number when used (wxWidgets 2.8)
-    _(" Version ");
-    // TRANSLATORS: This is titlebar of about dialog, the string ends with space
-    //              and is followed by application name when used ("Poedit",
-    //              but don't add it to this translation yourself) (wxWidgets 2.8)
-    _("About ");
 #endif
 
     wxAboutDialogInfo about;
@@ -769,14 +778,12 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     }
 
     NSMenu *editNS = edit->GetHMenu();
-#if 0
-    // These don't work yet, not using NSUndoManager
+
     AddNativeItem(editNS, 0, _("Undo"), @selector(undo:), @"z");
     AddNativeItem(editNS, 1, _("Redo"), @selector(redo:), @"Z");
     [editNS insertItem:[NSMenuItem separatorItem] atIndex:2];
     if (pasteItem != -1) pasteItem += 3;
     if (findItem != -1)  findItem += 3;
-#endif
 
     NSMenuItem *item;
     if (pasteItem != -1)
@@ -784,7 +791,10 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
         item = AddNativeItem(editNS, pasteItem+1, _("Paste and Match Style"),
                              @selector(pasteAsPlainText:), @"V");
         [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSAlternateKeyMask];
-        if (findItem != -1)  findItem++;
+        item = AddNativeItem(editNS, pasteItem+2, _("Delete"),
+                             @selector(delete:), @"");
+        [item setKeyEquivalentModifierMask:NSCommandKeyMask];
+        if (findItem != -1) findItem += 2;
     }
 
     #define FIND_PLUS(ofset) ((findItem != -1) ? (findItem+ofset) : -1)
@@ -823,6 +833,17 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     AddNativeItem(speech, -1, _("Start Speaking"), @selector(startSpeaking:), @"");
     AddNativeItem(speech, -1, _("Stop Speaking"), @selector(stopSpeaking:), @"");
     [editNS setSubmenu:speech forItem:item];
+
+    int windowMenuPos = bar->FindMenu(_("Window"));
+    if (windowMenuPos != wxNOT_FOUND)
+    {
+        NSMenu *windowNS = bar->GetMenu(windowMenuPos)->GetHMenu();
+        AddNativeItem(windowNS, -1, _("Minimize"), @selector(performMiniaturize:), @"m");
+        AddNativeItem(windowNS, -1, _("Zoom"), @selector(performZoom:), @"");
+        [windowNS addItem:[NSMenuItem separatorItem]];
+        AddNativeItem(windowNS, -1, _("Bring All to Front"), @selector(arrangeInFront:), @"");
+        [NSApp setWindowsMenu:windowNS];
+    }
 }
 
 void PoeditApp::CreateFakeOpenRecentMenu()

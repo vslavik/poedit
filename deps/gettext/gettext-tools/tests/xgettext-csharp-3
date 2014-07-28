@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # More tests for C# support: string syntax
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-cs-3.cs"
 LC_ALL=C tr '%' '\015' <<\EOF > xg-cs-3.cs
 class TestCase {
   public static void Main (String[] args) {
@@ -51,14 +48,11 @@ comment! */ "this is a single " /* now comes the concatenation! */ + // after +
 }
 EOF
 
-tmpfiles="$tmpfiles xg-cs-3.po"
 : ${XGETTEXT=xgettext}
 # delete POT-Creation-Date: line because the date depends on local time.
 ${XGETTEXT} --output - --add-location -c -kMyGetString:2 xg-cs-3.cs 2>/dev/null \
-  | sed '/\"POT-Creation-Date:.*/d' | LC_ALL=C tr -d '\r' > xg-cs-3.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+  | sed '/\"POT-Creation-Date:.*/d' | LC_ALL=C tr -d '\r' > xg-cs-3.po || exit 1
 
-tmpfiles="$tmpfiles xg-cs-3.ok"
 cat <<\EOF > xg-cs-3.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -173,7 +167,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-cs-3.ok xg-cs-3.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

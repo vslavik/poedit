@@ -14,7 +14,7 @@
 
 @SET_MAKE@
 
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2014 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -185,7 +185,6 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/execute.m4 \
 	$(top_srcdir)/gnulib-m4/exponentd.m4 \
 	$(top_srcdir)/gnulib-m4/extensions.m4 \
-	$(top_srcdir)/gnulib-m4/extern-inline.m4 \
 	$(top_srcdir)/gnulib-m4/fatal-signal.m4 \
 	$(top_srcdir)/gnulib-m4/fcntl.m4 \
 	$(top_srcdir)/gnulib-m4/fcntl_h.m4 \
@@ -351,7 +350,6 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/xvasprintf.m4 \
 	$(top_srcdir)/gnulib-m4/yield.m4 \
 	$(top_srcdir)/../m4/fixautomake.m4 \
-	$(top_srcdir)/../m4/init-package-version.m4 \
 	$(top_srcdir)/../m4/libtool.m4 \
 	$(top_srcdir)/../m4/ltoptions.m4 \
 	$(top_srcdir)/../m4/ltsugar.m4 \
@@ -359,6 +357,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/../m4/lt~obsolete.m4 \
 	$(top_srcdir)/../m4/woe32-dll.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/codeset.m4 \
+	$(top_srcdir)/../gettext-runtime/m4/extern-inline.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/fcntl-o.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/gettext.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/glibc2.m4 \
@@ -1393,6 +1392,7 @@ LIBUNISTRING_UNIWIDTH_H = @LIBUNISTRING_UNIWIDTH_H@
 LIBXML = @LIBXML@
 LIBXML_H = @LIBXML_H@
 LIB_ACL = @LIB_ACL@
+LIB_POSIX_SPAWN = @LIB_POSIX_SPAWN@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LOCALCHARSET_TESTS_ENVIRONMENT = @LOCALCHARSET_TESTS_ENVIRONMENT@
@@ -1542,11 +1542,13 @@ REPLACE_FUTIMENS = @REPLACE_FUTIMENS@
 REPLACE_GETCWD = @REPLACE_GETCWD@
 REPLACE_GETDELIM = @REPLACE_GETDELIM@
 REPLACE_GETDOMAINNAME = @REPLACE_GETDOMAINNAME@
+REPLACE_GETDTABLESIZE = @REPLACE_GETDTABLESIZE@
 REPLACE_GETGROUPS = @REPLACE_GETGROUPS@
 REPLACE_GETLINE = @REPLACE_GETLINE@
 REPLACE_GETLOGIN_R = @REPLACE_GETLOGIN_R@
 REPLACE_GETPAGESIZE = @REPLACE_GETPAGESIZE@
 REPLACE_GETTIMEOFDAY = @REPLACE_GETTIMEOFDAY@
+REPLACE_GMTIME = @REPLACE_GMTIME@
 REPLACE_ICONV = @REPLACE_ICONV@
 REPLACE_ICONV_OPEN = @REPLACE_ICONV_OPEN@
 REPLACE_ICONV_UTF = @REPLACE_ICONV_UTF@
@@ -1558,6 +1560,7 @@ REPLACE_LCHOWN = @REPLACE_LCHOWN@
 REPLACE_LINK = @REPLACE_LINK@
 REPLACE_LINKAT = @REPLACE_LINKAT@
 REPLACE_LOCALECONV = @REPLACE_LOCALECONV@
+REPLACE_LOCALTIME = @REPLACE_LOCALTIME@
 REPLACE_LOCALTIME_R = @REPLACE_LOCALTIME_R@
 REPLACE_LSEEK = @REPLACE_LSEEK@
 REPLACE_LSTAT = @REPLACE_LSTAT@
@@ -1630,6 +1633,7 @@ REPLACE_STRSTR = @REPLACE_STRSTR@
 REPLACE_STRTOD = @REPLACE_STRTOD@
 REPLACE_STRTOIMAX = @REPLACE_STRTOIMAX@
 REPLACE_STRTOK_R = @REPLACE_STRTOK_R@
+REPLACE_STRTOUMAX = @REPLACE_STRTOUMAX@
 REPLACE_STRUCT_LCONV = @REPLACE_STRUCT_LCONV@
 REPLACE_STRUCT_TIMEVAL = @REPLACE_STRUCT_TIMEVAL@
 REPLACE_SYMLINK = @REPLACE_SYMLINK@
@@ -1757,6 +1761,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -2142,6 +2147,11 @@ libgettextlib_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(LIB_ACL) \
 	$(LTLIBICONV) $(LTLIBINTL) $(LTLIBTHREAD) $(LTLIBUNISTRING) \
 	$(OPENMP_CFLAGS) @INTL_MACOSX_LIBS@ -release @VERSION@ \
 	$(am__append_3) $(am__append_12)
+
+# Use this preprocessor expression to decide whether #include_next works.
+# Do not rely on a 'configure'-time test for this, since the expression
+# might appear in an installed header, which is used by some other compiler.
+HAVE_INCLUDE_NEXT = (__GNUC__ || 60000000 <= __DECC_VER)
 
 # Specify that libgettextlib should installed in $(libdir).
 lib_LTLIBRARIES = libgettextlib.la
@@ -3140,7 +3150,7 @@ uninstall-am: uninstall-gettextsrcDATA uninstall-libLTLIBRARIES \
 @GL_GENERATE_BYTESWAP_H_FALSE@	rm -f $@
 
 # Listed in the same order as the GNU makefile conventions, and
-# provided by autoconf 2.59c+.
+# provided by autoconf 2.59c+ or 2.70.
 # The Automake-defined pkg* macros are appended, in the order
 # listed in the Automake 1.10a+ documentation.
 configmake.h: Makefile
@@ -3156,6 +3166,7 @@ configmake.h: Makefile
 	  echo '#define SYSCONFDIR "$(sysconfdir)"'; \
 	  echo '#define SHAREDSTATEDIR "$(sharedstatedir)"'; \
 	  echo '#define LOCALSTATEDIR "$(localstatedir)"'; \
+	  echo '#define RUNSTATEDIR "$(runstatedir)"'; \
 	  echo '#define INCLUDEDIR "$(includedir)"'; \
 	  echo '#define OLDINCLUDEDIR "$(oldincludedir)"'; \
 	  echo '#define DOCDIR "$(docdir)"'; \
@@ -4628,6 +4639,7 @@ time.h: time.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_TIME_H''@|$(NEXT_TIME_H)|g' \
+	      -e 's/@''GNULIB_GETTIMEOFDAY''@/$(GNULIB_GETTIMEOFDAY)/g' \
 	      -e 's/@''GNULIB_MKTIME''@/$(GNULIB_MKTIME)/g' \
 	      -e 's/@''GNULIB_NANOSLEEP''@/$(GNULIB_NANOSLEEP)/g' \
 	      -e 's/@''GNULIB_STRPTIME''@/$(GNULIB_STRPTIME)/g' \
@@ -4637,6 +4649,8 @@ time.h: time.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_NANOSLEEP''@|$(HAVE_NANOSLEEP)|g' \
 	      -e 's|@''HAVE_STRPTIME''@|$(HAVE_STRPTIME)|g' \
 	      -e 's|@''HAVE_TIMEGM''@|$(HAVE_TIMEGM)|g' \
+	      -e 's|@''REPLACE_GMTIME''@|$(REPLACE_GMTIME)|g' \
+	      -e 's|@''REPLACE_LOCALTIME''@|$(REPLACE_LOCALTIME)|g' \
 	      -e 's|@''REPLACE_LOCALTIME_R''@|$(REPLACE_LOCALTIME_R)|g' \
 	      -e 's|@''REPLACE_MKTIME''@|$(REPLACE_MKTIME)|g' \
 	      -e 's|@''REPLACE_NANOSLEEP''@|$(REPLACE_NANOSLEEP)|g' \
@@ -4785,6 +4799,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''REPLACE_FTRUNCATE''@|$(REPLACE_FTRUNCATE)|g' \
 	      -e 's|@''REPLACE_GETCWD''@|$(REPLACE_GETCWD)|g' \
 	      -e 's|@''REPLACE_GETDOMAINNAME''@|$(REPLACE_GETDOMAINNAME)|g' \
+	      -e 's|@''REPLACE_GETDTABLESIZE''@|$(REPLACE_GETDTABLESIZE)|g' \
 	      -e 's|@''REPLACE_GETLOGIN_R''@|$(REPLACE_GETLOGIN_R)|g' \
 	      -e 's|@''REPLACE_GETGROUPS''@|$(REPLACE_GETGROUPS)|g' \
 	      -e 's|@''REPLACE_GETPAGESIZE''@|$(REPLACE_GETPAGESIZE)|g' \

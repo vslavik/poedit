@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 2.6.4.  */
+/* A Bison parser, made by GNU Bison 2.7.  */
 
 /* Bison interface for Yacc-like parsers in C
    
@@ -83,7 +83,7 @@ extern DLL_VARIABLE int po_gram_debug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
 {
-/* Line 2077 of yacc.c  */
+/* Line 2058 of yacc.c  */
 #line 143 "po-gram-gen.y"
 
   struct { char *string; lex_pos_ty pos; bool obsolete; } string;
@@ -95,7 +95,7 @@ typedef union YYSTYPE
   struct { struct msgstr_def rhs; lex_pos_ty pos; bool obsolete; } rhs;
 
 
-/* Line 2077 of yacc.c  */
+/* Line 2058 of yacc.c  */
 #line 100 "po-gram-gen.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1

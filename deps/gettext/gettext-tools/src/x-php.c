@@ -1161,17 +1161,13 @@ phase4_get (token_ty *tp)
                 int c3 = phase1_getc ();
                 if (c3 == '<')
                   {
+                    int label_start = 0;
+
                     /* Start of here and now document.
                        Parse whitespace, then label, then newline.  */
                     do
                       c = phase3_getc ();
                     while (c == ' ' || c == '\t' || c == '\n' || c == '\r');
-
-                    /* a nowdoc encloses the label into single quotes */
-                    if (c == '\'')
-                      {
-                        c = phase3_getc ();
-                      }
 
                     bufpos = 0;
                     do
@@ -1184,12 +1180,14 @@ phase4_get (token_ty *tp)
                         buffer[bufpos++] = c;
                         c = phase3_getc ();
                       }
-                    while (c != EOF && c != '\n' && c != '\r' && c != '\'');
-                    /* buffer[0..bufpos-1] now contains the label.  */
+                    while (c != EOF && c != '\n' && c != '\r');
+                    /* buffer[0..bufpos-1] now contains the label
+                       (including single or double quotes).  */
 
-                    if (c == '\'') /* eat the nowdoc single quote */
+                    if (*buffer == '\'' || *buffer == '"')
                       {
-                        c = phase3_getc ();
+                        label_start++;
+                        bufpos--;
                       }
 
                     /* Now skip the here document.  */
@@ -1200,7 +1198,7 @@ phase4_get (token_ty *tp)
                           break;
                         if (c == '\n' || c == '\r')
                           {
-                            int bufidx = 0;
+                            int bufidx = label_start;
 
                             while (bufidx < bufpos)
                               {

@@ -690,7 +690,6 @@ AC_SUBST([am__untar])
 ]) # _AM_PROG_TAR
 
 m4_include([../../m4/fixautomake.m4])
-m4_include([../../m4/init-package-version.m4])
 m4_include([../../gettext-runtime/m4/nls.m4])
 m4_include([../../gettext-runtime/m4/po.m4])
 m4_include([../../gettext-runtime/m4/progtest.m4])

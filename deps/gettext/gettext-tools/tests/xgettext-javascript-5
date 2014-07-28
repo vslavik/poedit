@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of JavaScript Unicode support.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-js-5.js"
 cat <<\EOF > xg-js-5.js
 // the following except is stolen from json2.js
 var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
@@ -28,15 +25,13 @@ var matched = curnodepath.match('^\\'+path+'\\/([\\w\\s]+)') \
     + _("Expected translation string #4");
 EOF
 
-tmpfiles="$tmpfiles xg-js-5.err xg-js-5.tmp xg-js-5.pot"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --no-location -o xg-js-5.tmp xg-js-5.js 2>xg-js-5.err
-test $? = 0 || { cat xg-js-5.err; rm -fr $tmpfiles; exit 1; }
+test $? = 0 || { cat xg-js-5.err; exit 1; }
 # Don't simplify this to "grep ... < xg-js-5.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-js-5.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-js-5.pot
 
-tmpfiles="$tmpfiles xg-js-5.ok"
 cat <<\EOF > xg-js-5.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -72,7 +67,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-js-5.ok xg-js-5.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

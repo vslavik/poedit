@@ -26,10 +26,6 @@
 #ifndef _EDFRAME_H_
 #define _EDFRAME_H_
 
-#if defined(__WXMSW__)
-  #define CAN_MODIFY_DEFAULT_FONT
-#endif
-
 #include <set>
 
 #include <wx/frame.h>
@@ -252,6 +248,11 @@ private:
         void OnSortBySource(wxCommandEvent&);
         void OnSortByTranslation(wxCommandEvent&);
         void OnSortUntranslatedFirst(wxCommandEvent&);
+
+#if defined(__WXMSW__) || defined(__WXGTK__)
+        void OnTextEditingCommand(wxCommandEvent& event);
+        void OnTextEditingCommandUpdate(wxUpdateUIEvent& event);
+#endif
 
         void OnAutoTranslate(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);

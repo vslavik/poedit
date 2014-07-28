@@ -1,5 +1,5 @@
 /* Extended regular expression matching and search library.
-   Copyright (C) 2002-2013 Free Software Foundation, Inc.
+   Copyright (C) 2002-2014 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Isamu Hasegawa <isamu@yamato.ibm.com>.
 
@@ -40,7 +40,7 @@
 # define lock_fini(lock) 0
 # define lock_lock(lock) __libc_lock_lock (lock)
 # define lock_unlock(lock) __libc_lock_unlock (lock)
-#elif defined GNULIB_LOCK
+#elif defined GNULIB_LOCK && !defined USE_UNLOCKED_IO
 # include "glthread/lock.h"
   /* Use gl_lock_define if empty macro arguments are known to work.
      Otherwise, fall back on less-portable substitutes.  */
@@ -62,7 +62,7 @@
 # define lock_fini(lock) glthread_lock_destroy (&(lock))
 # define lock_lock(lock) glthread_lock_lock (&(lock))
 # define lock_unlock(lock) glthread_lock_unlock (&(lock))
-#elif defined GNULIB_PTHREAD
+#elif defined GNULIB_PTHREAD && !defined USE_UNLOCKED_IO
 # include <pthread.h>
 # define lock_define(name) pthread_mutex_t name;
 # define lock_init(lock) pthread_mutex_init (&(lock), 0)
@@ -72,8 +72,9 @@
 #else
 # define lock_define(name)
 # define lock_init(lock) 0
-# define lock_fini(lock) 0
-# define lock_lock(lock) ((void) 0)
+# define lock_fini(lock) ((void) 0)
+  /* The 'dfa' avoids an "unused variable 'dfa'" warning from GCC.  */
+# define lock_lock(lock) ((void) dfa)
 # define lock_unlock(lock) ((void) 0)
 #endif
 
@@ -109,7 +110,7 @@
 # define gettext_noop(String) String
 #endif
 
-#if (defined MB_CUR_MAX && HAVE_WCTYPE_H && HAVE_ISWCTYPE && HAVE_WCSCOLL) || _LIBC
+#if (defined MB_CUR_MAX && HAVE_WCTYPE_H && HAVE_ISWCTYPE) || _LIBC
 # define RE_ENABLE_I18N
 #endif
 

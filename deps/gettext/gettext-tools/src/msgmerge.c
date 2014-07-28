@@ -107,7 +107,7 @@ static const char *backup_suffix_string;
 /* Long options.  */
 static const struct option long_options[] =
 {
-  { "add-location", no_argument, &line_comment, 1 },
+  { "add-location", optional_argument, NULL, 'n' },
   { "backup", required_argument, NULL, CHAR_MAX + 1 },
   { "color", optional_argument, NULL, CHAR_MAX + 9 },
   { "compendium", required_argument, NULL, 'C', },
@@ -120,7 +120,7 @@ static const struct option long_options[] =
   { "multi-domain", no_argument, NULL, 'm' },
   { "no-escape", no_argument, NULL, 'e' },
   { "no-fuzzy-matching", no_argument, NULL, 'N' },
-  { "no-location", no_argument, &line_comment, 0 },
+  { "no-location", no_argument, NULL, CHAR_MAX + 11 },
   { "no-wrap", no_argument, NULL, CHAR_MAX + 4 },
   { "output-file", required_argument, NULL, 'o' },
   { "previous", no_argument, NULL, CHAR_MAX + 7 },
@@ -172,6 +172,7 @@ main (int argc, char **argv)
   bool do_help;
   bool do_version;
   char *output_file;
+  char *color;
   msgdomain_list_ty *def;
   msgdomain_list_ty *result;
   catalog_input_format_ty input_syntax = &input_format_po;
@@ -203,8 +204,9 @@ main (int argc, char **argv)
   do_help = false;
   do_version = false;
   output_file = NULL;
+  color = NULL;
 
-  while ((opt = getopt_long (argc, argv, "C:D:eEFhimNo:pPqsUvVw:",
+  while ((opt = getopt_long (argc, argv, "C:D:eEFhimn:No:pPqsUvVw:",
                              long_options, NULL))
          != EOF)
     switch (opt)
@@ -242,6 +244,11 @@ main (int argc, char **argv)
 
       case 'm':
         multi_domain_mode = true;
+        break;
+
+      case 'n':
+        if (handle_filepos_comment_option (optarg))
+          usage (EXIT_FAILURE);
         break;
 
       case 'N':
@@ -325,10 +332,15 @@ main (int argc, char **argv)
       case CHAR_MAX + 9: /* --color */
         if (handle_color_option (optarg) || color_test_mode)
           usage (EXIT_FAILURE);
+        color = optarg;
         break;
 
       case CHAR_MAX + 10: /* --style */
         handle_style_option (optarg);
+        break;
+
+      case CHAR_MAX + 11: /* --no-location */
+        message_print_style_filepos (filepos_comment_none);
         break;
 
       default:
@@ -375,6 +387,16 @@ There is NO WARRANTY, to the extent permitted by law.\n\
           error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
                  "--update", "--output-file");
         }
+      if (color != NULL)
+        {
+          error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
+                 "--update", "--color");
+        }
+      if (style_file_name != NULL)
+        {
+          error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
+                 "--update", "--style");
+        }
     }
   else
     {
@@ -391,10 +413,6 @@ There is NO WARRANTY, to the extent permitted by law.\n\
           usage (EXIT_FAILURE);
         }
     }
-
-  if (!line_comment && sort_by_filepos)
-    error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
-           "--no-location", "--sort-by-file");
 
   if (sort_by_msgid && sort_by_filepos)
     error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
@@ -581,7 +599,7 @@ Output details:\n"));
       printf (_("\
       --no-location           suppress '#: filename:line' lines\n"));
       printf (_("\
-      --add-location          preserve '#: filename:line' lines (default)\n"));
+  -n, --add-location          preserve '#: filename:line' lines (default)\n"));
       printf (_("\
       --strict                strict Uniforum output style\n"));
       printf (_("\

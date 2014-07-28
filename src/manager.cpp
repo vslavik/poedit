@@ -29,6 +29,7 @@
 #include <wx/listctrl.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/settings.h>
+#include <wx/stdpaths.h>
 #include <wx/intl.h>
 #include <wx/frame.h>
 #include <wx/listbox.h>
@@ -78,7 +79,7 @@ ManagerFrame::ManagerFrame() :
     appicons.AddIcon(wxArtProvider::GetIcon("poedit", wxART_FRAME_ICON, wxSize(48,48)));
     SetIcons(appicons);
 #elif defined(__WXMSW__)
-    SetIcon(wxICON(appicon));
+    SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
 
     ms_instance = this;
@@ -109,7 +110,7 @@ ManagerFrame::ManagerFrame() :
 
     RestoreWindowState(this, wxSize(400, 300));
 
-    m_splitter->SetSashPosition(wxConfig::Get()->Read("manager_splitter", 200));
+    m_splitter->SetSashPosition((int)wxConfig::Get()->Read("manager_splitter", 200));
 }
 
 

@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test recognition of Qt format strings.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles f-qt-1.data"
 cat <<\EOF > f-qt-1.data
 # Unrecognized: no argument
 "abc%%def"
@@ -42,7 +39,6 @@ n=0
 while read comment; do
   read string
   n=`expr $n + 1`
-  tmpfiles="$tmpfiles f-qt-1-$n.in f-qt-1-$n.po"
   cat <<EOF > f-qt-1-$n.in
 _(${string});
 EOF
@@ -71,7 +67,5 @@ EOF
   fi
   rm -f f-qt-1-$n.in f-qt-1-$n.po
 done < f-qt-1.data
-
-rm -fr $tmpfiles
 
 exit 0

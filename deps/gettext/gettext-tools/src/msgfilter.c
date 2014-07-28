@@ -87,7 +87,7 @@ static void (*filter) (const char *str, size_t len, char **resultp, size_t *leng
 /* Long options.  */
 static const struct option long_options[] =
 {
-  { "add-location", no_argument, &line_comment, 1 },
+  { "add-location", optional_argument, NULL, 'n' },
   { "color", optional_argument, NULL, CHAR_MAX + 6 },
   { "directory", required_argument, NULL, 'D' },
   { "escape", no_argument, NULL, 'E' },
@@ -97,7 +97,7 @@ static const struct option long_options[] =
   { "input", required_argument, NULL, 'i' },
   { "keep-header", no_argument, &keep_header, 1 },
   { "no-escape", no_argument, NULL, CHAR_MAX + 2 },
-  { "no-location", no_argument, &line_comment, 0 },
+  { "no-location", no_argument, NULL, CHAR_MAX + 8 },
   { "no-wrap", no_argument, NULL, CHAR_MAX + 3 },
   { "output-file", required_argument, NULL, 'o' },
   { "properties-input", no_argument, NULL, 'P' },
@@ -164,7 +164,7 @@ main (int argc, char **argv)
 
   /* The '+' in the options string causes option parsing to terminate when
      the first non-option, i.e. the subprogram name, is encountered.  */
-  while ((opt = getopt_long (argc, argv, "+D:EFhi:o:pPsVw:", long_options,
+  while ((opt = getopt_long (argc, argv, "+D:EFhi:n:o:pPsVw:", long_options,
                              NULL))
          != EOF)
     switch (opt)
@@ -195,6 +195,11 @@ main (int argc, char **argv)
             usage (EXIT_FAILURE);
           }
         input_file = optarg;
+        break;
+
+      case 'n':
+        if (handle_filepos_comment_option (optarg))
+          usage (EXIT_FAILURE);
         break;
 
       case 'o':
@@ -260,6 +265,10 @@ main (int argc, char **argv)
         handle_style_option (optarg);
         break;
 
+      case CHAR_MAX + 8: /* --no-location */
+        message_print_style_filepos (filepos_comment_none);
+        break;
+
       default:
         usage (EXIT_FAILURE);
         break;
@@ -290,10 +299,6 @@ There is NO WARRANTY, to the extent permitted by law.\n\
   sub_name = argv[optind];
 
   /* Verify selected options.  */
-  if (!line_comment && sort_by_filepos)
-    error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
-           "--no-location", "--sort-by-file");
-
   if (sort_by_msgid && sort_by_filepos)
     error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
            "--sort-output", "--sort-by-file");
@@ -340,6 +345,20 @@ There is NO WARRANTY, to the extent permitted by law.\n\
   if (strcmp (sub_name, "recode-sr-latin") == 0 && sub_argc == 1)
     {
       filter = serbian_to_latin;
+
+      /* Convert the input to UTF-8 first.  */
+      result = iconv_msgdomain_list (result, po_charset_utf8, true, input_file);
+    }
+  else if (strcmp (sub_name, "quot") == 0 && sub_argc == 1)
+    {
+      filter = ascii_quote_to_unicode;
+
+      /* Convert the input to UTF-8 first.  */
+      result = iconv_msgdomain_list (result, po_charset_utf8, true, input_file);
+    }
+  else if (strcmp (sub_name, "boldquot") == 0 && sub_argc == 1)
+    {
+      filter = ascii_quote_to_unicode_bold;
 
       /* Convert the input to UTF-8 first.  */
       result = iconv_msgdomain_list (result, po_charset_utf8, true, input_file);
@@ -456,7 +475,7 @@ Output details:\n"));
       printf (_("\
       --no-location           suppress '#: filename:line' lines\n"));
       printf (_("\
-      --add-location          preserve '#: filename:line' lines (default)\n"));
+  -n, --add-location          preserve '#: filename:line' lines (default)\n"));
       printf (_("\
       --strict                strict Uniforum output style\n"));
       printf (_("\
@@ -628,8 +647,8 @@ process_message (message_ty *mp)
     return;
 
   /* Set environment variables for the subprocess.
-     Note: These environment variables, especially MSGEXEC_MSGCTXT and
-     MSGEXEC_MSGCTXT, may contain non-ASCII characters.  The subprocess
+     Note: These environment variables, especially MSGFILTER_MSGCTXT and
+     MSGFILTER_MSGID, may contain non-ASCII characters.  The subprocess
      may not interpret these values correctly if the locale encoding is
      different from the PO file's encoding.  We want about this situation,
      above.
@@ -644,10 +663,26 @@ process_message (message_ty *mp)
   else
     unsetenv ("MSGFILTER_MSGCTXT");
   xsetenv ("MSGFILTER_MSGID", mp->msgid, 1);
+  if (mp->msgid_plural != NULL)
+    xsetenv ("MSGFILTER_MSGID_PLURAL", mp->msgid_plural, 1);
+  else
+    unsetenv ("MSGFILTER_MSGID_PLURAL");
   location = xasprintf ("%s:%ld", mp->pos.file_name,
                         (long) mp->pos.line_number);
   xsetenv ("MSGFILTER_LOCATION", location, 1);
   free (location);
+  if (mp->prev_msgctxt != NULL)
+    xsetenv ("MSGFILTER_PREV_MSGCTXT", mp->prev_msgctxt, 1);
+  else
+    unsetenv ("MSGFILTER_PREV_MSGCTXT");
+  if (mp->prev_msgid != NULL)
+    xsetenv ("MSGFILTER_PREV_MSGID", mp->prev_msgid, 1);
+  else
+    unsetenv ("MSGFILTER_PREV_MSGID");
+  if (mp->prev_msgid_plural != NULL)
+    xsetenv ("MSGFILTER_PREV_MSGID_PLURAL", mp->prev_msgid_plural, 1);
+  else
+    unsetenv ("MSGFILTER_PREV_MSGID_PLURAL");
 
   /* Count NUL delimited substrings.  */
   for (p = msgstr, nsubstrings = 0;
@@ -661,6 +696,15 @@ process_message (message_ty *mp)
       char *result;
       size_t length;
 
+      if (mp->msgid_plural != NULL)
+        {
+          char *plural_form_string = xasprintf ("%lu", k);
+
+          xsetenv ("MSGFILTER_PLURAL_FORM", plural_form_string, 1);
+          free (plural_form_string);
+        }
+      else
+        unsetenv ("MSGFILTER_PLURAL_FORM");
       process_string (p, strlen (p), &result, &length);
       result = (char *) xrealloc (result, length + 1);
       result[length] = '\0';

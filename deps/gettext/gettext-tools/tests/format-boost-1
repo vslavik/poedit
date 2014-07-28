@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test recognition of Boost format strings.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles f-bo-1.data"
 cat <<\EOF > f-bo-1.data
 # Valid: no argument
 "abc%%"
@@ -280,7 +277,6 @@ n=0
 while read comment; do
   read string
   n=`expr $n + 1`
-  tmpfiles="$tmpfiles f-bo-1-$n.in f-bo-1-$n.po"
   cat <<EOF > f-bo-1-$n.in
 gettext(${string});
 EOF
@@ -309,7 +305,5 @@ EOF
   fi
   rm -f f-bo-1-$n.in f-bo-1-$n.po
 done < f-bo-1.data
-
-rm -fr $tmpfiles
 
 exit 0

@@ -32,7 +32,7 @@ else
   BUILDJAVA=no
 fi
 AC_SUBST(BUILDJAVA)
-if test -n "$HAVE_JAVAEXEC" && test $BUILDJAVA = yes; then
+if test -n "$HAVE_JAVAEXEC" && test "$BUILDJAVA" = yes; then
   TESTJAVA=yes
 else
   TESTJAVA=no

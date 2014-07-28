@@ -1,6 +1,114 @@
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	build: Work around undefined _GL_ATTRIBUTE_PURE in libintl
+	* Makefile.am (distcheck-hook): Ignore the difference between our
+	localename.c and the latest Gnulib's, which utilizes
+	_GL_ATTRIBUTE_PURE not available from libintl.  This is a
+	temporary fix for the 0.19.2 release and should be reverted once
+	it is fixed either in gettext or Gnulib.
+
+2014-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.1 released.
+
+2014-06-06  Daiki Ueno  <ueno@gnu.org>
+
+	autogen.sh: Use xz-compressed archive tarball
+	* autogen.sh: Fetch archive.dir-latest.tar.xz instead of .tar.gz.
+
+2014-06-04  Jim Meyering  <meyering@fb.com>  (tiny change)
+
+	configure: also distribute xz-compressed tarballs
+	* configure.ac (AM_INIT_AUTOMAKE): Add dist-xz, so that xz-compressed
+	.tar.xz tarballs will be distributed alongside .tar.gz ones.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-05-04  Jehan  <jehan@girinstud.io>  (tiny change)
+
+	configure: require automake >= 1.13
+	Macro AM_EXTRA_RECURSIVE_TARGETS defined in Automake 1.13.
+	* configure.ac (AM_INIT_AUTOMAKE): Require Automake 1.13 or later.
+
+2014-04-22  Daiki Ueno  <ueno@gnu.org>
+
+	m4: Apply NM detection fix from Libtool
+	2013-04-28  Peter Rosin <peda@lysator.liu.se>
+		libtool: break all the way out when a good nm is found
+		* m4/libtool.m4 (LT_PATH_NM): Break all the way out on a good
+		match.
+
+2014-04-22  Daiki Ueno  <ueno@gnu.org>
+
+	m4: Revert commit d6690cc7 to libtool.m4
+	Reported by Benjamin Gilbert at:
+	<https://savannah.gnu.org/bugs/?41203>
+	With recent libtool, this patch did nothing but fix the output
+	message of configure.
+	* m4/libtool.m4: Remove the special handling of NM detection when
+	cross-compiling mingw32 on cygwin.
+
+2014-04-22  Daiki Ueno  <ueno@gnu.org>
+
+	build: Use git-version-gen intead of version.sh
+	* version.sh: Remove.
+	* autogen.sh: Import git-version-gen from Gnulib.
+	* Makefile.am (EXTRA_DIST): Remove version.sh and add
+	$(top_srcdir)/.version.
+	(BUILT_SOURCES): Add $(top_srcdir)/.version.
+	($(top_srcdir)/.version): New rule.
+	(dist-hook): New rule.
+	* configure.ac: Use git-version-gen in AC_INIT.
+
+2014-04-21  Daiki Ueno  <ueno@gnu.org>
+
+	autogen.sh: Split the regeneration of data files into update.sh
+	* autogen.sh: Separate out PO files update logic to...
+	* update-po.sh: ...here.
+	* Makefile.am (EXTRA_DIST): Add update-po.sh.
+
+2014-04-17  Daiki Ueno  <ueno@gnu.org>
+
+	* autogen.sh: Use included gettext-tools for bootstrap
+	To regenerate POT files, autogen.sh had an implicit dependency on
+	gettext-tools installed on system.  This prohibited to use any new
+	features in our examples.  Let autogen.sh use included version of
+	gettext-tools, by prepending $builddir to the PATH.
+
+2014-04-07  Daiki Ueno  <ueno@gnu.org>
+
+	* autogen.sh: Error out when gnulib-tool exit with non-zero.
+
+2013-12-17  Daiki Ueno  <ueno@gnu.org>
+
+	Add missing extern-inline.m4 into archive.
+	Problem reported by Reuben Thomas in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-12/msg00010.html>.
+	* Makefile.am (distcheck-hook): Check extern-inline.m4.
+
 2013-08-13  Michele Locati <michele@locati.it>  (tiny change)
 
 	* windows/gettext.rc: Update copyright year.
+
+2013-08-08  Daiki Ueno  <ueno@gnu.org>
+
+	* .dir-locals.el: New file to force spaces instead of tabs in C
+	and shell-script files.
+
+2013-08-07  Daiki Ueno  <ueno@gnu.org>
+
+	* NEWS: Add entry for 0.18.4.  Mention GSettings schema file support.
+
+2013-07-10  Daiki Ueno  <ueno@gnu.org>
+
+	gettext-tools: convert tests to use init.sh from Gnulib
+	* autogen.sh: Copy tests/init.sh from Gnulib into gettext-tools/tests.
 
 2013-07-07  Daiki Ueno  <ueno@gnu.org>
 

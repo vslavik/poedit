@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgmerge when a message's flags have been changed from c-format to
 # kde-format. Reported by Chusslove Illich (Часлав Илић).
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test21.po"
 cat <<\EOF > mm-test21.po
 msgid ""
 msgstr ""
@@ -28,7 +25,6 @@ msgstr[0] "Engadir un recurso dende o libro de enderezos"
 msgstr[1] "Engadir %n recursos dende o libro de enderezos"
 EOF
 
-tmpfiles="$tmpfiles mm-test21.pot"
 cat <<\EOF > mm-test21.pot
 msgid ""
 msgstr ""
@@ -49,14 +45,10 @@ msgstr[0] ""
 msgstr[1] ""
 EOF
 
-tmpfiles="$tmpfiles mm-test21.tmp.po mm-test21.new.po"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test21.tmp.po mm-test21.po mm-test21.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test21.tmp.po > mm-test21.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o mm-test21.tmp.po mm-test21.po mm-test21.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test21.tmp.po > mm-test21.new.po || exit 1
 
-tmpfiles="$tmpfiles mm-test21.ok"
 cat <<\EOF > mm-test21.ok
 msgid ""
 msgstr ""
@@ -80,14 +72,9 @@ msgstr[1] "Engadir %n recursos dende o libro de enderezos"
 EOF
 
 : ${DIFF=diff}
-${DIFF} mm-test21.ok mm-test21.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${DIFF} mm-test21.ok mm-test21.new.po || exit 1
 
-tmpfiles="$tmpfiles mm-test21.mo"
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o mm-test21.mo mm-test21.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-
-rm -fr $tmpfiles
+${MSGFMT} --check -o mm-test21.mo mm-test21.new.po || exit 1
 
 exit 0

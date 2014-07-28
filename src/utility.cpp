@@ -240,7 +240,6 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
                 bool occupied = false;
                 for (auto& w : wxTopLevelWindows)
                 {
-                    wxPrintf("win(%p) @ %d,%d\n" ,w, w->GetPosition().x, w->GetPosition().y);
                     if (w != win && w->GetPosition() == pos)
                     {
                         occupied = true;

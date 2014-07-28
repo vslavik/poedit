@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test general operation and line wrapping.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test1.in1 mm-test1.in2"
 cat <<EOF > mm-test1.in1
 # first
 #. this should be discarded
@@ -38,14 +35,10 @@ msgid "3"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-test1.tmp mm-test1.out"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test1.tmp mm-test1.in1 mm-test1.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test1.tmp > mm-test1.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o mm-test1.tmp mm-test1.in1 mm-test1.in2 || exit 1
+LC_ALL=C tr -d '\r' < mm-test1.tmp > mm-test1.out || exit 1
 
-tmpfiles="$tmpfiles mm-test1.ok"
 cat << EOF > mm-test1.ok
 # first
 #. this is the first
@@ -71,7 +64,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mm-test1.ok mm-test1.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -23,6 +23,7 @@
 /* Specification.  */
 #include "x-vala.h"
 
+#include <assert.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -36,6 +37,7 @@
 #include "xalloc.h"
 #include "xvasprintf.h"
 #include "hash.h"
+#include "po-charset.h"
 #include "gettext.h"
 
 #define _(s) gettext(s)
@@ -363,6 +365,7 @@ struct token_ty
   token_type_ty type;
   char *string;         /* for token_type_symbol, token_type_string_literal */
   refcounted_string_list_ty *comment;   /* for token_type_string_literal */
+  enum literalstring_escape_type escape;
   int line_number;
 };
 
@@ -374,154 +377,6 @@ free_token (token_ty *tp)
     free (tp->string);
   if (tp->type == token_type_string_literal)
     drop_reference (tp->comment);
-}
-
-
-/* Replace escape sequences within character strings with their single
-   character equivalents.  */
-
-#define P7_QUOTES (1000 + '"')
-#define P7_QUOTE (1000 + '\'')
-#define P7_NEWLINE (1000 + '\n')
-
-static int
-phase7_getc ()
-{
-  int c, n, j;
-
-  /* Use phase 1, because phase 2 elides comments.  */
-  c = phase1_getc ();
-
-  /* Return a magic newline indicator, so that we can distinguish
-     between the user requesting a newline in the string (e.g. using
-     "\n" or "\012") from the user failing to terminate the string or
-     character constant.  The ANSI C standard says: 3.1.3.4 Character
-     Constants contain "any character except single quote, backslash or
-     newline; or an escape sequence" and 3.1.4 String Literals contain
-     "any character except double quote, backslash or newline; or an
-     escape sequence".
-
-     Most compilers give a fatal error in this case, however gcc is
-     stupidly silent, even though this is a very common typo.  OK, so
-     "gcc --pedantic" will tell me, but that gripes about too much other
-     stuff.  Could I have a "gcc -Wnewline-in-string" option, or
-     better yet a "gcc -fno-newline-in-string" option, please?  Gcc is
-     also inconsistent between string literals and character constants:
-     you may not embed newlines in character constants; try it, you get
-     a useful diagnostic.  --PMiller  */
-  if (c == '\n')
-    return P7_NEWLINE;
-
-  if (c == '"')
-    return P7_QUOTES;
-  if (c == '\'')
-    return P7_QUOTE;
-  if (c != '\\')
-    return c;
-  c = phase1_getc ();
-  switch (c)
-    {
-    default:
-      /* Unknown escape sequences really should be an error, but just
-         ignore them, and let the real compiler complain.  */
-      phase1_ungetc (c);
-      return '\\';
-
-    case '"':
-    case '\'':
-    case '?':
-    case '\\':
-      return c;
-
-    case 'a':
-      return '\a';
-    case 'b':
-      return '\b';
-
-      /* The \e escape is preculiar to gcc, and assumes an ASCII
-         character set (or superset).  We don't provide support for it
-         here.  */
-
-    case 'f':
-      return '\f';
-    case 'n':
-      return '\n';
-    case 'r':
-      return '\r';
-    case 't':
-      return '\t';
-    case 'v':
-      return '\v';
-
-    case 'x':
-      c = phase1_getc ();
-      switch (c)
-        {
-        default:
-          phase1_ungetc (c);
-          phase1_ungetc ('x');
-          return '\\';
-
-        case '0': case '1': case '2': case '3': case '4':
-        case '5': case '6': case '7': case '8': case '9':
-        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
-        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
-          break;
-        }
-      n = 0;
-      for (;;)
-        {
-          switch (c)
-            {
-            default:
-              phase1_ungetc (c);
-              return n;
-
-            case '0': case '1': case '2': case '3': case '4':
-            case '5': case '6': case '7': case '8': case '9':
-              n = n * 16 + c - '0';
-              break;
-
-            case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
-              n = n * 16 + 10 + c - 'A';
-              break;
-
-            case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
-              n = n * 16 + 10 + c - 'a';
-              break;
-            }
-          c = phase1_getc ();
-        }
-      return n;
-
-    case '0': case '1': case '2': case '3':
-    case '4': case '5': case '6': case '7':
-      n = 0;
-      for (j = 0; j < 3; ++j)
-        {
-          n = n * 8 + c - '0';
-          c = phase1_getc ();
-          switch (c)
-            {
-            default:
-              break;
-
-            case '0': case '1': case '2': case '3':
-            case '4': case '5': case '6': case '7':
-              continue;
-            }
-          break;
-        }
-      phase1_ungetc (c);
-      return n;
-    }
-}
-
-
-static void
-phase7_ungetc (int c)
-{
-  phase1_ungetc (c);
 }
 
 
@@ -573,6 +428,7 @@ phase3_get (token_ty *tp)
   static char *buffer;
   static int bufmax;
   int bufpos;
+  int last_was_backslash;
 
   if (phase3_pushback_length)
     {
@@ -715,7 +571,7 @@ phase3_get (token_ty *tp)
                     }
                   buffer[bufpos++] = c;
                   c = phase2_getc ();
-                  if (c != '+' || c != '-')
+                  if (c != '+' && c != '-')
                     {
                       phase2_ungetc (c);
                       break;
@@ -753,20 +609,33 @@ phase3_get (token_ty *tp)
           return;
 
         case '\'':
+          last_was_backslash = false;
           for (;;)
             {
-              c = phase7_getc ();
-              if (c == P7_NEWLINE)
+              c = phase2_getc ();
+              if (last_was_backslash)
                 {
+                  last_was_backslash = false;
+                  continue;
+                }
+              switch (c)
+                {
+                case '\\':
+                  last_was_backslash = true;
+                  /* FALLTHROUGH */
+                default:
+                  continue;
+                case '\n':
                   error_with_progname = false;
                   error (0, 0, _("%s:%d: warning: unterminated character constant"),
                          logical_file_name, line_number - 1);
                   error_with_progname = true;
-                  phase7_ungetc ('\n');
+                  phase2_ungetc ('\n');
+                  break;
+                case EOF: case '\'':
                   break;
                 }
-              if (c == EOF || c == P7_QUOTE)
-                break;
+              break;
             }
           tp->type = last_token_type = token_type_character_constant;
           return;
@@ -803,6 +672,7 @@ phase3_get (token_ty *tp)
         case '"':
           {
             int c2 = phase2_getc ();
+
             if (c2 == '"')
               {
                 int c3 = phase2_getc ();
@@ -816,65 +686,97 @@ phase3_get (token_ty *tp)
               }
             else
               phase2_ungetc (c2);
-          }
 
-          bufpos = 0;
-          for (;;)
-            {
-              c = phase7_getc ();
-              if (c == P7_NEWLINE)
-                {
-                  if (verbatim)
-                    c = '\n';
-                  else
-                    {
-                      error_with_progname = false;
-                      error (0, 0, _("%s:%d: warning: unterminated string literal"),
-                             logical_file_name, line_number - 1);
-                      error_with_progname = true;
-                      phase7_ungetc ('\n');
+            if (verbatim)
+              {
+                bufpos = 0;
+                for (;;)
+                  {
+                    /* Use phase 1, because phase 2 elides comments.  */
+                    c = phase1_getc ();
+                    if (c == EOF)
                       break;
-                    }
-                }
-              if (c == P7_QUOTES)
-                {
-                  if (verbatim)
-                    {
-                      int c2 = phase2_getc ();
-                      if (c2 == '"')
-                        {
-                          int c3 = phase2_getc ();
-                          if (c3 == '"')
-                            break;
-                          phase2_ungetc (c3);
-                        }
-                      phase2_ungetc (c2);
-                      c = '"';
-                    }
-                  else
+
+                    if (c == '"')
+                      {
+                        int c2 = phase1_getc ();
+                        if (c2 == '"')
+                          {
+                            int c3 = phase1_getc ();
+                            if (c3 == '"')
+                              break;
+                            phase1_ungetc (c3);
+                          }
+                        phase1_ungetc (c2);
+                      }
+                    if (bufpos >= bufmax)
+                      {
+                        bufmax = 2 * bufmax + 10;
+                        buffer = xrealloc (buffer, bufmax);
+                      }
+                    buffer[bufpos++] = c;
+                  }
+              }
+            else
+              {
+                last_was_backslash = false;
+                bufpos = 0;
+                for (;;)
+                  {
+                    c = phase1_getc ();
+                    if (last_was_backslash)
+                      {
+                        last_was_backslash = false;
+                        if (bufpos >= bufmax)
+                          {
+                            bufmax = 2 * bufmax + 10;
+                            buffer = xrealloc (buffer, bufmax);
+                          }
+                        buffer[bufpos++] = c;
+                        continue;
+                      }
+
+                    switch (c)
+                      {
+                      case '\\':
+                        last_was_backslash = true;
+                        /* FALLTHROUGH */
+                      default:
+                        if (bufpos >= bufmax)
+                          {
+                            bufmax = 2 * bufmax + 10;
+                            buffer = xrealloc (buffer, bufmax);
+                          }
+                        buffer[bufpos++] = c;
+                        continue;
+
+                      case '\n':
+                        error_with_progname = false;
+                        error (0, 0, _("\
+%s:%d: warning: unterminated string literal"),
+                               logical_file_name, line_number - 1);
+                        error_with_progname = true;
+                        phase1_ungetc ('\n');
+                        break;
+                      case EOF: case '"':
+                        break;
+                      }
                     break;
-                }
-              if (c == EOF)
-                break;
-              if (c == P7_QUOTE)
-                c = '\'';
-              if (bufpos >= bufmax)
-                {
-                  bufmax = 2 * bufmax + 10;
-                  buffer = xrealloc (buffer, bufmax);
-                }
-              buffer[bufpos++] = c;
-            }
-          if (bufpos >= bufmax)
-            {
-              bufmax = 2 * bufmax + 10;
-              buffer = xrealloc (buffer, bufmax);
-            }
-          buffer[bufpos] = 0;
-          tp->type = last_token_type = template ? token_type_string_template : token_type_string_literal;
-          tp->string = xstrdup (buffer);
-          tp->comment = add_reference (savable_comment);
-          return;
+                  }
+              }
+            if (bufpos >= bufmax)
+              {
+                bufmax = 2 * bufmax + 10;
+                buffer = xrealloc (buffer, bufmax);
+              }
+            buffer[bufpos] = 0;
+            tp->type = last_token_type = template
+              ? token_type_string_template : token_type_string_literal;
+            tp->string = xstrdup (buffer);
+            tp->comment = add_reference (savable_comment);
+            tp->escape = verbatim ? 0 : LET_ANSI_C | LET_UNICODE;
+            return;
+          }
 
         case '/':
           switch (last_token_type)
@@ -1112,6 +1014,8 @@ x_vala_lex (token_ty *tp)
 /* Context lookup table.  */
 static flag_context_list_table_ty *flag_context_list_table;
 
+/* Use the same literalstring_parser provided by the C scanner.  */
+extern struct literalstring_parser literalstring_c;
 
 /* The file is broken into tokens.  Scan the token stream, looking for
    a keyword, followed by a left paren, followed by a string.  When we
@@ -1231,25 +1135,57 @@ extract_balanced (message_list_ty *mlp, token_type_ty delim,
             pos.line_number = token.line_number;
 
             if (extract_all)
-              remember_a_message (mlp, NULL, token.string, inner_context,
-                                  &pos, NULL, token.comment);
+              {
+                char *string;
+                refcounted_string_list_ty *comment;
+                const char *encoding;
+
+                string = literalstring_c.parse (token.string, &pos,
+                                                token.escape);
+                free (token.string);
+                token.string = string;
+
+                if (token.comment != NULL)
+                  {
+                    comment = savable_comment_convert_encoding (token.comment,
+                                                                &pos);
+                    drop_reference (token.comment);
+                    token.comment = comment;
+                  }
+
+                /* token.string and token.comment are already converted
+                   to UTF-8.  Prevent further conversion in
+                   remember_a_message.  */
+                encoding = xgettext_current_source_encoding;
+                xgettext_current_source_encoding = po_charset_utf8;
+                remember_a_message (mlp, NULL, token.string, inner_context,
+                                    &pos, NULL, token.comment);
+                xgettext_current_source_encoding = encoding;
+              }
             else
               {
-                /* A string immediately after a symbol means a function call.  */
+                /* A string immediately after a symbol means a
+                   function call.  */
                 if (state)
                   {
                     struct arglist_parser *tmp_argparser;
                     tmp_argparser = arglist_parser_alloc (mlp, next_shapes);
 
-                    arglist_parser_remember (tmp_argparser, 1, token.string,
-                                             inner_context, pos.file_name,
-                                             pos.line_number, token.comment);
+                    arglist_parser_remember_literal (tmp_argparser, 1,
+                                                     token.string,
+                                                     inner_context,
+                                                     pos.file_name,
+                                                     pos.line_number,
+                                                     token.comment,
+                                                     token.escape);
                     arglist_parser_done (tmp_argparser, 1);
                   }
                 else
-                  arglist_parser_remember (argparser, arg, token.string,
-                                           inner_context, pos.file_name,
-                                           pos.line_number, token.comment);
+                  arglist_parser_remember_literal (argparser, arg, token.string,
+                                                   inner_context, pos.file_name,
+                                                   pos.line_number,
+                                                   token.comment,
+                                                   token.escape);
               }
           }
           drop_reference (token.comment);

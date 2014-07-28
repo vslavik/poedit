@@ -51,4 +51,6 @@ XRC_RESOURCES = \
 compiled_xrc.cpp: $(XRC_RESOURCES)
 	$(WXRC) -v -c -o $@ $(XRC_RESOURCES)
 
+DISTCLEANFILES = $(nodist_poedit_SOURCES)
+
 EXTRA_DIST = $(XRC_RESOURCES) pluralforms/COPYING

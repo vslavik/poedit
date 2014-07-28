@@ -5170,6 +5170,7 @@ fi
 
 
 
+  # Code from module absolute-header:
   # Code from module alloca:
   # Code from module alloca-opt:
   # Code from module errno:
@@ -5605,10 +5606,7 @@ else
   lt_cv_path_NM="$NM"
 else
   lt_nm_to_check="${ac_tool_prefix}nm"
-  if test -n "$ac_tool_prefix" \
-     && { test "$build" = "$host" \
-          || { test "$build_os" = cygwin && test "$host_os" = mingw32; }; \
-        }; then
+  if test -n "$ac_tool_prefix" && test "$build" = "$host"; then
     lt_nm_to_check="$lt_nm_to_check nm"
   fi
   for lt_tmp_nm in $lt_nm_to_check; do
@@ -5625,13 +5623,13 @@ else
 	case `"$tmp_nm" -B /dev/null 2>&1 | sed '1q'` in
 	*/dev/null* | *'Invalid file or object type'*)
 	  lt_cv_path_NM="$tmp_nm -B"
-	  break
+	  break 2
 	  ;;
 	*)
 	  case `"$tmp_nm" -p /dev/null 2>&1 | sed '1q'` in
 	  */dev/null*)
 	    lt_cv_path_NM="$tmp_nm -p"
-	    break
+	    break 2
 	    ;;
 	  *)
 	    lt_cv_path_NM=${lt_cv_path_NM="$tmp_nm"} # keep the first match, but
@@ -16906,36 +16904,40 @@ if ${gl_cv_next_errno_h+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
-               cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+
+
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <errno.h>
-
 _ACEOF
-                                                                                                                        case "$host_os" in
-                 aix*) gl_absname_cpp="$ac_cpp -C" ;;
-                 *)    gl_absname_cpp="$ac_cpp" ;;
-               esac
+                case "$host_os" in
+    aix*) gl_absname_cpp="$ac_cpp -C" ;;
+    *)    gl_absname_cpp="$ac_cpp" ;;
+  esac
 
-               case "$host_os" in
-                 mingw*)
-                                                                                                                                     gl_dirsep_regex='[/\\]'
-                   ;;
-                 *)
-                   gl_dirsep_regex='\/'
-                   ;;
-               esac
-                                             gl_make_literal_regex_sed='s,[]$^\\.*/[],\\&,g'
+  case "$host_os" in
+    mingw*)
+                                          gl_dirsep_regex='[/\\]'
+      ;;
+    *)
+      gl_dirsep_regex='\/'
+      ;;
+  esac
+      gl_make_literal_regex_sed='s,[]$^\\.*/[],\\&,g'
+  gl_header_literal_regex=`echo 'errno.h' \
+                           | sed -e "$gl_make_literal_regex_sed"`
+  gl_absolute_header_sed="/${gl_dirsep_regex}${gl_header_literal_regex}/"'{
+      s/.*"\(.*'"${gl_dirsep_regex}${gl_header_literal_regex}"'\)".*/\1/
+      s|^/[^/]|//&|
+      p
+      q
+    }'
 
-               gl_header_literal_regex=`echo 'errno.h' \
-                                        | sed -e "$gl_make_literal_regex_sed"`
-               gl_absolute_header_sed="/${gl_dirsep_regex}${gl_header_literal_regex}/"'{
-                   s/.*"\(.*'"${gl_dirsep_regex}${gl_header_literal_regex}"'\)".*/\1/
-                   s|^/[^/]|//&|
-                   p
-                   q
-                 }'
-                                                            gl_cv_next_errno_h='"'`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&5 |
-                      sed -n "$gl_absolute_header_sed"`'"'
+        gl_cv_absolute_errno_h=`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&5 |
+  sed -n "$gl_absolute_header_sed"`
+
+           gl_header=$gl_cv_absolute_errno_h
+           gl_cv_next_errno_h='"'$gl_header'"'
 
 
 fi

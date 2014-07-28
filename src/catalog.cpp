@@ -148,8 +148,8 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
         if (f[i].empty() && !f2[i].empty()) // wxMBConv conversion failed
         {
             wxLogError(
-                _("Line %u of file '%s' is corrupted (not valid %s data)."),
-                i, filename.c_str(), charset.c_str());
+                _("Line %d of file '%s' is corrupted (not valid %s data)."),
+                int(i), filename.c_str(), charset.c_str());
             ok = false;
         }
     }
@@ -310,9 +310,9 @@ void Catalog::HeaderData::UpdateDict()
     SetHeaderNotEmpty("X-Poedit-Basepath", BasePath);
 
     i = 0;
-    wxString path;
     while (true)
     {
+        wxString path;
         path.Printf("X-Poedit-SearchPath-%i", i);
         if (!HasHeader(path))
             break;
@@ -320,10 +320,29 @@ void Catalog::HeaderData::UpdateDict()
         i++;
     }
 
-    for (i = 0; i < SearchPaths.GetCount(); i++)
+    i = 0;
+    while (true)
     {
+        wxString path;
+        path.Printf("X-Poedit-SearchPathExcluded-%i", i);
+        if (!HasHeader(path))
+            break;
+        DeleteHeader(path);
+        i++;
+    }
+
+    for (i = 0; i < SearchPaths.size(); i++)
+    {
+        wxString path;
         path.Printf("X-Poedit-SearchPath-%i", i);
         SetHeader(path, SearchPaths[i]);
+    }
+
+    for (i = 0; i < SearchPathsExcluded.size(); i++)
+    {
+        wxString path;
+        path.Printf("X-Poedit-SearchPathExcluded-%i", i);
+        SetHeader(path, SearchPathsExcluded[i]);
     }
 }
 
@@ -383,14 +402,14 @@ void Catalog::HeaderData::ParseDict()
     wxString languageCode = GetHeader("Language");
     if ( !languageCode.empty() )
     {
-        Lang = Language::TryParse(languageCode);
+        Lang = Language::TryParse(languageCode.ToStdWstring());
     }
     else
     {
         wxString X_Language = GetHeader("X-Poedit-Language");
         wxString X_Country = GetHeader("X-Poedit-Country");
         if ( !X_Language.empty() )
-            Lang = Language::FromLegacyNames(X_Language, X_Country);
+            Lang = Language::FromLegacyNames(X_Language.ToStdString(), X_Country.ToStdString());
     }
 
     DeleteHeader("X-Poedit-Language");
@@ -445,17 +464,31 @@ void Catalog::HeaderData::ParseDict()
         }
     }
 
+    SearchPaths.clear();
     i = 0;
-    wxString path;
-    SearchPaths.Clear();
     while (true)
     {
+        wxString path;
         path.Printf("X-Poedit-SearchPath-%i", i);
         if (!HasHeader(path))
             break;
         wxString p = GetHeader(path);
         if (!p.empty())
-            SearchPaths.Add(p);
+            SearchPaths.push_back(p);
+        i++;
+    }
+
+    SearchPathsExcluded.clear();
+    i = 0;
+    while (true)
+    {
+        wxString path;
+        path.Printf("X-Poedit-SearchPathExcluded-%i", i);
+        if (!HasHeader(path))
+            break;
+        wxString p = GetHeader(path);
+        if (!p.empty())
+            SearchPathsExcluded.push_back(p);
         i++;
     }
 }
@@ -659,7 +692,11 @@ bool CatalogParser::Parse()
             mtranslations.Add(str);
 
             bool shouldIgnore = m_ignoreHeader && mstr.empty();
-            if ( !shouldIgnore )
+            if ( shouldIgnore )
+            {
+                OnIgnoredEntry();
+            }
+            else
             {
                 if (!mstr.empty() && m_ignoreTranslations)
                     mtranslations.clear();
@@ -865,6 +902,8 @@ class LoadParser : public CatalogParser
                                     const wxString& comment,
                                     const wxArrayString& autocomments,
                                     unsigned lineNumber);
+
+        virtual void OnIgnoredEntry() { FileIsValid = true; }
 
     private:
         int m_nextId;
@@ -1434,15 +1473,40 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         TempOutputFileFor mo_file_temp_obj(mo_file);
         const wxString mo_file_temp = mo_file_temp_obj.FileName();
 
-        if ( ExecuteGettext
-              (
-                  wxString::Format(_T("msgfmt -o \"%s\" \"%s\""),
-                                   mo_file_temp.c_str(),
-                                   po_file.c_str())
-              ) )
         {
-            mo_compilation_status = CompilationStatus::Success;
+            // Ignore msgfmt errors output (but not exit code), because it
+            // complains about things DoValidate() already complained above.
+            wxLogNull null;
 
+            if ( ExecuteGettext
+                  (
+                      wxString::Format(_T("msgfmt -o \"%s\" \"%s\""),
+                                       mo_file_temp.c_str(),
+                                       po_file.c_str())
+                  ) )
+            {
+                mo_compilation_status = CompilationStatus::Success;
+            }
+            else
+            {
+                // Don't report errors, they were reported as part of validation
+                // step above.  Notice that we run msgfmt *without* the -c flag
+                // here to create the MO file in as many cases as possible, even if
+                // it has some errors.
+                //
+                // Still, msgfmt has the ugly habit of sometimes returning non-zero
+                // exit code, reporting "fatal errors" and *still* producing a usable
+                // .mo file. If this happens, don't pretend the file wasn't created.
+                if (wxFileName::FileExists(mo_file_temp))
+                    mo_compilation_status = CompilationStatus::Success;
+                else
+                    mo_compilation_status = CompilationStatus::Error;
+            }
+        }
+
+        // Move the MO from temporary location to the final one, if it was created
+        if (mo_compilation_status == CompilationStatus::Success)
+        {
 #ifdef __WXOSX__
             CompiledMOFilePresenter *presenter = [CompiledMOFilePresenter new];
             NSURL *mofileUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file.utf8_str()]];
@@ -1474,14 +1538,6 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
                 mo_compilation_status = CompilationStatus::Error;
             }
 #endif // __WXOSX__/!__WXOSX__
-        }
-        else
-        {
-            // Don't report errors, they were reported as part of validation
-            // step above.  Notice that we run msgfmt *without* the -c flag
-            // here to create the MO file in as many cases as possible, even if
-            // it has some errors.
-            mo_compilation_status = CompilationStatus::Error;
         }
     }
 
@@ -1685,6 +1741,7 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, bool *cancelledByUser
     SourceDigger dig(progress);
 
     Catalog *newcat = dig.Dig(m_header.SearchPaths,
+                              m_header.SearchPathsExcluded,
                               m_header.Keywords,
                               m_header.SourceCodeCharset);
 

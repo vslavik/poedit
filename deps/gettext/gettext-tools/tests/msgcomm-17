@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # -u, --unique (equivalent to --less-than=2): we are interested in unique
 # entries only (entries occurring less than 2 times).  But don't drop the
 # header entry; otherwise msgcomm will fail for multibyte strings.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcomm-test17.in1 mcomm-test17.in2 mcomm-test17.in3"
 cat <<EOF > mcomm-test17.in1
 msgid ""
 msgstr ""
@@ -65,17 +62,13 @@ msgid "5"
 msgstr "fünf"
 EOF
 
-tmpfiles="$tmpfiles mcomm-test17.tmp mcomm-test17.out"
 : ${MSGCOMM=msgcomm}
 
 ${MSGCOMM} -u \
            -o mcomm-test17.tmp \
-           mcomm-test17.in1 mcomm-test17.in2 mcomm-test17.in3
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test17.tmp > mcomm-test17.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+           mcomm-test17.in1 mcomm-test17.in2 mcomm-test17.in3 || exit 1
+LC_ALL=C tr -d '\r' < mcomm-test17.tmp > mcomm-test17.out || exit 1
 
-tmpfiles="$tmpfiles mcomm-test17.ok"
 cat << \EOF > mcomm-test17.ok
 msgid ""
 msgstr ""
@@ -97,7 +90,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcomm-test17.ok mcomm-test17.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -1,5 +1,5 @@
 /* Convert multibyte character to wide character.
-   Copyright (C) 1999-2002, 2005-2013 Free Software Foundation, Inc.
+   Copyright (C) 1999-2002, 2005-2014 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2008.
 
    This program is free software: you can redistribute it and/or modify
@@ -328,13 +328,18 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 size_t
 rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 {
-# if MBRTOWC_NULL_ARG2_BUG || MBRTOWC_RETVAL_BUG
+# if MBRTOWC_NULL_ARG2_BUG || MBRTOWC_RETVAL_BUG || MBRTOWC_EMPTY_INPUT_BUG
   if (s == NULL)
     {
       pwc = NULL;
       s = "";
       n = 1;
     }
+# endif
+
+# if MBRTOWC_EMPTY_INPUT_BUG
+  if (n == 0)
+    return (size_t) -2;
 # endif
 
 # if MBRTOWC_RETVAL_BUG

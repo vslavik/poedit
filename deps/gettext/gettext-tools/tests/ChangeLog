@@ -1,6 +1,719 @@
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Test empty literals in Vala test
+	* xgettext-vala-1: Test empty literals that do not affect the
+	following lines.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Test for AC_CONFIG_AUX_DIR usage in autopoint test
+	* autopoint-2: Check if build-aux/config.rpath is created if
+	AC_CONFIG_AUX_DIR([build-aux]) is called.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Test empty literals in C test
+	* xgettext-c-2: Test empty literals that do not affect the
+	following lines.
+
+2014-06-16  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Test "make dist" in autopoint test
+	* autopoint-3: Run "make dist" after "make"; add a workaround for
+	a bug in 0.19 and 0.19.1, where intl/ChangeLog is required but
+	missing in the archive.
+
+2014-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.1 released.
+
+2014-06-03  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfmt-desktop-2: Test the effect of the LINGUAS envvar.
+
+2014-06-03  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Ignore the LINGUAS envvar in msgfmt-desktop-2
+	Reported by Lars Wendler at:
+	<http://lists.gnu.org/archive/html/bug-gettext/2014-06/msg00002.html>.
+	* msgfmt-desktop-2: Unset the LINGUAS envvar.
+
+2014-06-03  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-vala-1: Test comment-like string inside a string literal.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfmt-10: Update after error checking behaviro change.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-05-31  Daiki Ueno  <ueno@gnu.org>
+
+	* msgexec-5: Test MSGEXEC_PREV_MSGID and MSGEXEC_PREV_MSGID_PLURAL.
+
+2014-05-31  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfilter-6: Test MSGFILTER_PREV_MSGID and
+	MSGFILTER_PREV_MSGID_PLURAL.
+
+2014-05-15  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add test for msgfilter plural handling
+	* msgfilter-6: New test.
+	* Makefile.am (TESTS): Add new test.
+
+2014-05-15  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add test for msgexec plural handling
+	* msgexec-5: New test.
+	* Makefile.am (TESTS): Add new test.
+
+2014-05-15  Daiki Ueno  <ueno@gnu.org>
+
+	* msginit-3: Fix charset value after msginit invocation.
+
+2014-05-14  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Fix errors when CFLAGS contains --coverage
+	* lang-c: Supply $CFLAGS to the libtool link command.
+	* lang-objc: Likewise.
+
+2014-05-14  Daiki Ueno  <ueno@gnu.org>
+
+	msgfmt: Report error on accelerator mismatch
+	* msgfmt-18: New test.
+	* Makefile.am (TESTS): Add new test.
+
+2014-05-13  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfmt-10: Increment expected error count.
+
+2014-05-12  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfilter-quote-1: Test doubled grave characters.
+
+2014-05-10  Guido Flohr  <guido@imperia.net>
+
+	msgattrib: Add --empty option to clear msgstr
+	* msgattrib-19: New test.
+	* Makefile.am (TESTS): Add new test.
+
+2014-05-09  Daiki Ueno  <ueno@gnu.org>
+
+	vala: Interpret string literals lazily
+	* xgettext-vala-1: Test escape sequence in verbatim string.
+
+2014-05-09  Daiki Ueno  <ueno@gnu.org>
+
+	c: Interpret string literals lazily
+	* xgettext-c-19: New file.
+	* Makefile.am (TESTS): Add new test.
+
+2014-05-03  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add test for prefixed comment tag
+	* xgettext-11: New file.
+	* Makefile.am (TESTS): Add new test.
+
+2014-05-02  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-vala-1: Test Unicode character escapes.
+
+2014-04-30  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-scheme-4: New file.
+	* Makefile.am (TESTS): Add new test.
+
+2014-04-30  Daiki Ueno  <ueno@gnu.org>
+
+	format-python-brace: Limit acceptable format specifiers
+	* format-python-brace-1: Add tests for standard format specifiers.
+
+2014-04-29  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Don't run a test only successful after "make dist" by default
+	* Makefile.am (TESTS): Move xgettext-1 to...
+	(EXTRA_DIST): ...here.
+
+2014-04-29  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint-3 (gettext_datadir): Don't regenerate intl/plural.c.
+
+2014-04-21  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Don't run system dependent test by default
+	* Makefile.am (TESTS): Move xgettext-c-1 to...
+	(EXTRA_DIST): ...here.
+
+2014-04-21  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint-1 (gettext_datadir): Rename from gettext_dir.
+	* autopoint-2 (gettext_datadir): Likewise.
+	* autopoint-3 (gettext_datadir): Likewise.
+
+2014-04-15  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add tests for 'msgfilter quot' and 'msgfilter boldquot'
+	* msgfilter-quote-1: New file.
+	* Makefile.am (TESTS): Add new tests.
+
+2014-04-04  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add tests for msgfmt --desktop
+	* msgfmt-desktop-1: New file.
+	* msgfmt-desktop-2: New file.
+	* Makefile.am (TESTS): Add new tests.
+
+2014-04-04  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add tests for xgettext Desktop Entry support
+	* xgettext-desktop-1: New file.
+	* Makefile.am (TESTS): Add new tests.
+
+2014-03-27  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint-2: Check for the case when multiple arguments are
+	supplied to AM_GNU_GETTEXT.
+
+2014-03-26  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add tests for autopoint
+	* autopoint-1: New file.
+	* autopoint-2: New file.
+	* autopoint-3: New file.
+	* Makefile.am (TESTS): Add new tests.
+
+2014-03-25  Daiki Ueno  <ueno@gnu.org>
+
+	Add tests for --add-location=file option.
+	* msgattrib-18: New file.
+	* msgcat-19: New file.
+	* msgcomm-28: New file.
+	* msgconv-7: New file.
+	* msgen-4: New file.
+	* msgfilter-5: New file.
+	* msggrep-11: New file.
+	* msgmerge-25: New file.
+	* msguniq-7: New file.
+	* xgettext-10: New file.
+	* Makefile.am (TESTS): Add new tests
+
+2014-03-11  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am (EXTRA_DIST): Add init.cfg, which is no longer
+	auto-generated by configure.
+
+2014-03-11  Daiki Ueno  <ueno@gnu.org>
+
+	* init-env.in (top_builddir): Don't set $LIBTOOL.
+	* lang-c: Explicitly call $top_builddir/libtool script with
+	$CONFIG_SHELL; also separate compilation/link into two phase as
+	lang-c++.
+	* lang-c++: Likewise.
+	* lang-objc: Likewise.
+
+2014-03-10  Daiki Ueno  <ueno@gnu.org>
+
+	php: Recognize single and double quotes around heredoc label
+	* xgettext-php-2: Add test cases to check quoted heredoc labels.
+
+2014-03-10  Daiki Ueno  <ueno@gnu.org>
+
+	Remove unnecessary temporary file cleanup code.
+	Cleanup code like "rm -fr $tmpfiles" are no longer needed, since
+	'init.sh' takes care of that.
+	* format-awk-1: Remove unnecessary temporary file cleanup code.
+	* format-awk-2: Likewise
+	* format-boost-1: Likewise
+	* format-boost-2: Likewise
+	* format-c-1: Likewise
+	* format-c-2: Likewise
+	* format-c-3: Likewise
+	* format-c-4: Likewise
+	* format-c-5: Likewise
+	* format-csharp-1: Likewise
+	* format-csharp-2: Likewise
+	* format-elisp-1: Likewise
+	* format-elisp-2: Likewise
+	* format-gcc-internal-1: Likewise
+	* format-gcc-internal-2: Likewise
+	* format-gfc-internal-1: Likewise
+	* format-gfc-internal-2: Likewise
+	* format-java-1: Likewise
+	* format-java-2: Likewise
+	* format-javascript-1: Likewise
+	* format-javascript-2: Likewise
+	* format-kde-1: Likewise
+	* format-kde-2: Likewise
+	* format-librep-1: Likewise
+	* format-librep-2: Likewise
+	* format-lisp-1: Likewise
+	* format-lisp-2: Likewise
+	* format-lua-1: Likewise
+	* format-lua-2: Likewise
+	* format-pascal-1: Likewise
+	* format-pascal-2: Likewise
+	* format-perl-1: Likewise
+	* format-perl-2: Likewise
+	* format-perl-brace-1: Likewise
+	* format-perl-brace-2: Likewise
+	* format-perl-mixed-1: Likewise
+	* format-perl-mixed-2: Likewise
+	* format-php-1: Likewise
+	* format-php-2: Likewise
+	* format-python-1: Likewise
+	* format-python-2: Likewise
+	* format-python-brace-1: Likewise
+	* format-python-brace-2: Likewise
+	* format-qt-1: Likewise
+	* format-qt-2: Likewise
+	* format-qt-plural-1: Likewise
+	* format-qt-plural-2: Likewise
+	* format-scheme-1: Likewise
+	* format-scheme-2: Likewise
+	* format-sh-1: Likewise
+	* format-sh-2: Likewise
+	* format-tcl-1: Likewise
+	* format-tcl-2: Likewise
+	* format-ycp-1: Likewise
+	* format-ycp-2: Likewise
+	* gettext-1: Likewise
+	* gettext-2: Likewise
+	* gettext-3: Likewise
+	* gettext-4: Likewise
+	* gettext-5: Likewise
+	* gettext-6: Likewise
+	* gettext-7: Likewise
+	* gettextpo-1: Likewise
+	* lang-bash: Likewise
+	* lang-c: Likewise
+	* lang-c++: Likewise
+	* lang-clisp: Likewise
+	* lang-csharp: Likewise
+	* lang-elisp: Likewise
+	* lang-gawk: Likewise
+	* lang-guile: Likewise
+	* lang-java: Likewise
+	* lang-javascript: Likewise
+	* lang-librep: Likewise
+	* lang-lua: Likewise
+	* lang-objc: Likewise
+	* lang-pascal: Likewise
+	* lang-perl-1: Likewise
+	* lang-perl-2: Likewise
+	* lang-php: Likewise
+	* lang-po: Likewise
+	* lang-python-1: Likewise
+	* lang-python-2: Likewise
+	* lang-rst: Likewise
+	* lang-sh: Likewise
+	* lang-smalltalk: Likewise
+	* lang-tcl: Likewise
+	* lang-vala: Likewise
+	* lang-ycp: Likewise
+	* msgattrib-1: Likewise
+	* msgattrib-10: Likewise
+	* msgattrib-11: Likewise
+	* msgattrib-12: Likewise
+	* msgattrib-13: Likewise
+	* msgattrib-14: Likewise
+	* msgattrib-15: Likewise
+	* msgattrib-16: Likewise
+	* msgattrib-17: Likewise
+	* msgattrib-2: Likewise
+	* msgattrib-3: Likewise
+	* msgattrib-4: Likewise
+	* msgattrib-5: Likewise
+	* msgattrib-6: Likewise
+	* msgattrib-7: Likewise
+	* msgattrib-8: Likewise
+	* msgattrib-9: Likewise
+	* msgattrib-properties-1: Likewise
+	* msgcat-1: Likewise
+	* msgcat-10: Likewise
+	* msgcat-11: Likewise
+	* msgcat-12: Likewise
+	* msgcat-13: Likewise
+	* msgcat-14: Likewise
+	* msgcat-15: Likewise
+	* msgcat-16: Likewise
+	* msgcat-17: Likewise
+	* msgcat-18: Likewise
+	* msgcat-2: Likewise
+	* msgcat-3: Likewise
+	* msgcat-4: Likewise
+	* msgcat-5: Likewise
+	* msgcat-6: Likewise
+	* msgcat-7: Likewise
+	* msgcat-8: Likewise
+	* msgcat-9: Likewise
+	* msgcat-properties-1: Likewise
+	* msgcat-properties-2: Likewise
+	* msgcat-stringtable-1: Likewise
+	* msgcmp-1: Likewise
+	* msgcmp-2: Likewise
+	* msgcmp-3: Likewise
+	* msgcmp-4: Likewise
+	* msgcomm-1: Likewise
+	* msgcomm-10: Likewise
+	* msgcomm-11: Likewise
+	* msgcomm-12: Likewise
+	* msgcomm-13: Likewise
+	* msgcomm-14: Likewise
+	* msgcomm-15: Likewise
+	* msgcomm-16: Likewise
+	* msgcomm-17: Likewise
+	* msgcomm-18: Likewise
+	* msgcomm-19: Likewise
+	* msgcomm-2: Likewise
+	* msgcomm-20: Likewise
+	* msgcomm-21: Likewise
+	* msgcomm-22: Likewise
+	* msgcomm-23: Likewise
+	* msgcomm-24: Likewise
+	* msgcomm-25: Likewise
+	* msgcomm-26: Likewise
+	* msgcomm-27: Likewise
+	* msgcomm-3: Likewise
+	* msgcomm-4: Likewise
+	* msgcomm-5: Likewise
+	* msgcomm-6: Likewise
+	* msgcomm-7: Likewise
+	* msgcomm-8: Likewise
+	* msgcomm-9: Likewise
+	* msgconv-1: Likewise
+	* msgconv-2: Likewise
+	* msgconv-3: Likewise
+	* msgconv-4: Likewise
+	* msgconv-5: Likewise
+	* msgconv-6: Likewise
+	* msgen-1: Likewise
+	* msgen-2: Likewise
+	* msgen-3: Likewise
+	* msgexec-1: Likewise
+	* msgexec-2: Likewise
+	* msgexec-3: Likewise
+	* msgexec-4: Likewise
+	* msgfilter-1: Likewise
+	* msgfilter-2: Likewise
+	* msgfilter-3: Likewise
+	* msgfilter-4: Likewise
+	* msgfilter-sr-latin-1: Likewise
+	* msgfmt-1: Likewise
+	* msgfmt-10: Likewise
+	* msgfmt-11: Likewise
+	* msgfmt-12: Likewise
+	* msgfmt-13: Likewise
+	* msgfmt-14: Likewise
+	* msgfmt-15: Likewise
+	* msgfmt-16: Likewise
+	* msgfmt-17: Likewise
+	* msgfmt-2: Likewise
+	* msgfmt-3: Likewise
+	* msgfmt-4: Likewise
+	* msgfmt-5: Likewise
+	* msgfmt-6: Likewise
+	* msgfmt-7: Likewise
+	* msgfmt-8: Likewise
+	* msgfmt-9: Likewise
+	* msgfmt-properties-1: Likewise
+	* msgfmt-qt-1: Likewise
+	* msgfmt-qt-2: Likewise
+	* msggrep-1: Likewise
+	* msggrep-10: Likewise
+	* msggrep-2: Likewise
+	* msggrep-3: Likewise
+	* msggrep-4: Likewise
+	* msggrep-5: Likewise
+	* msggrep-6: Likewise
+	* msggrep-7: Likewise
+	* msggrep-8: Likewise
+	* msggrep-9: Likewise
+	* msginit-1: Likewise
+	* msginit-2: Likewise
+	* msgmerge-1: Likewise
+	* msgmerge-10: Likewise
+	* msgmerge-11: Likewise
+	* msgmerge-12: Likewise
+	* msgmerge-13: Likewise
+	* msgmerge-14: Likewise
+	* msgmerge-15: Likewise
+	* msgmerge-16: Likewise
+	* msgmerge-17: Likewise
+	* msgmerge-18: Likewise
+	* msgmerge-19: Likewise
+	* msgmerge-2: Likewise
+	* msgmerge-20: Likewise
+	* msgmerge-21: Likewise
+	* msgmerge-22: Likewise
+	* msgmerge-23: Likewise
+	* msgmerge-24: Likewise
+	* msgmerge-3: Likewise
+	* msgmerge-4: Likewise
+	* msgmerge-5: Likewise
+	* msgmerge-6: Likewise
+	* msgmerge-7: Likewise
+	* msgmerge-8: Likewise
+	* msgmerge-9: Likewise
+	* msgmerge-compendium-1: Likewise
+	* msgmerge-compendium-2: Likewise
+	* msgmerge-compendium-3: Likewise
+	* msgmerge-compendium-4: Likewise
+	* msgmerge-compendium-5: Likewise
+	* msgmerge-compendium-6: Likewise
+	* msgmerge-properties-1: Likewise
+	* msgmerge-properties-2: Likewise
+	* msgmerge-update-1: Likewise
+	* msgmerge-update-2: Likewise
+	* msgmerge-update-3: Likewise
+	* msgmerge-update-4: Likewise
+	* msgunfmt-1: Likewise
+	* msgunfmt-2: Likewise
+	* msgunfmt-csharp-1: Likewise
+	* msgunfmt-java-1: Likewise
+	* msgunfmt-properties-1: Likewise
+	* msgunfmt-tcl-1: Likewise
+	* msguniq-1: Likewise
+	* msguniq-2: Likewise
+	* msguniq-3: Likewise
+	* msguniq-4: Likewise
+	* msguniq-5: Likewise
+	* msguniq-6: Likewise
+	* plural-1: Likewise
+	* plural-2: Likewise
+	* recode-sr-latin-1: Likewise
+	* recode-sr-latin-2: Likewise
+	* xgettext-1: Likewise
+	* xgettext-2: Likewise
+	* xgettext-3: Likewise
+	* xgettext-4: Likewise
+	* xgettext-5: Likewise
+	* xgettext-6: Likewise
+	* xgettext-7: Likewise
+	* xgettext-8: Likewise
+	* xgettext-9: Likewise
+	* xgettext-awk-1: Likewise
+	* xgettext-awk-2: Likewise
+	* xgettext-c-1: Likewise
+	* xgettext-c-10: Likewise
+	* xgettext-c-11: Likewise
+	* xgettext-c-12: Likewise
+	* xgettext-c-13: Likewise
+	* xgettext-c-14: Likewise
+	* xgettext-c-15: Likewise
+	* xgettext-c-16: Likewise
+	* xgettext-c-17: Likewise
+	* xgettext-c-18: Likewise
+	* xgettext-c-2: Likewise
+	* xgettext-c-3: Likewise
+	* xgettext-c-4: Likewise
+	* xgettext-c-5: Likewise
+	* xgettext-c-6: Likewise
+	* xgettext-c-7: Likewise
+	* xgettext-c-8: Likewise
+	* xgettext-c-9: Likewise
+	* xgettext-csharp-1: Likewise
+	* xgettext-csharp-2: Likewise
+	* xgettext-csharp-3: Likewise
+	* xgettext-csharp-4: Likewise
+	* xgettext-csharp-5: Likewise
+	* xgettext-csharp-6: Likewise
+	* xgettext-csharp-7: Likewise
+	* xgettext-elisp-1: Likewise
+	* xgettext-elisp-2: Likewise
+	* xgettext-glade-1: Likewise
+	* xgettext-glade-2: Likewise
+	* xgettext-glade-3: Likewise
+	* xgettext-glade-4: Likewise
+	* xgettext-glade-5: Likewise
+	* xgettext-glade-6: Likewise
+	* xgettext-glade-7: Likewise
+	* xgettext-gsettings-1: Likewise
+	* xgettext-java-1: Likewise
+	* xgettext-java-2: Likewise
+	* xgettext-java-3: Likewise
+	* xgettext-java-4: Likewise
+	* xgettext-java-5: Likewise
+	* xgettext-java-6: Likewise
+	* xgettext-java-7: Likewise
+	* xgettext-javascript-1: Likewise
+	* xgettext-javascript-2: Likewise
+	* xgettext-javascript-3: Likewise
+	* xgettext-javascript-4: Likewise
+	* xgettext-javascript-5: Likewise
+	* xgettext-javascript-6: Likewise
+	* xgettext-librep-1: Likewise
+	* xgettext-librep-2: Likewise
+	* xgettext-lisp-1: Likewise
+	* xgettext-lisp-2: Likewise
+	* xgettext-lua-1: Likewise
+	* xgettext-lua-2: Likewise
+	* xgettext-objc-1: Likewise
+	* xgettext-objc-2: Likewise
+	* xgettext-perl-1: Likewise
+	* xgettext-perl-2: Likewise
+	* xgettext-perl-3: Likewise
+	* xgettext-perl-4: Likewise
+	* xgettext-perl-5: Likewise
+	* xgettext-perl-6: Likewise
+	* xgettext-perl-7: Likewise
+	* xgettext-perl-8: Likewise
+	* xgettext-php-1: Likewise
+	* xgettext-php-2: Likewise
+	* xgettext-php-3: Likewise
+	* xgettext-php-4: Likewise
+	* xgettext-po-1: Likewise
+	* xgettext-properties-1: Likewise
+	* xgettext-python-1: Likewise
+	* xgettext-python-2: Likewise
+	* xgettext-python-3: Likewise
+	* xgettext-python-4: Likewise
+	* xgettext-scheme-1: Likewise
+	* xgettext-scheme-2: Likewise
+	* xgettext-scheme-3: Likewise
+	* xgettext-sh-1: Likewise
+	* xgettext-sh-2: Likewise
+	* xgettext-sh-3: Likewise
+	* xgettext-sh-4: Likewise
+	* xgettext-sh-5: Likewise
+	* xgettext-sh-6: Likewise
+	* xgettext-smalltalk-1: Likewise
+	* xgettext-smalltalk-2: Likewise
+	* xgettext-stringtable-1: Likewise
+	* xgettext-tcl-1: Likewise
+	* xgettext-tcl-2: Likewise
+	* xgettext-tcl-3: Likewise
+	* xgettext-tcl-4: Likewise
+	* xgettext-vala-1: Likewise
+	* xgettext-ycp-1: Likewise
+	* xgettext-ycp-2: Likewise
+	* xgettext-ycp-3: Likewise
+	* xgettext-ycp-4: Likewise
+
+2014-02-03  Roumen Petrov <bugtrack@roumenpetrov.info>  (tiny change)
+
+	tests: pass required --tag=XX to libtool
+	Reported at:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-02/msg00001.html>.
+	* lang-c: Pass --tag=CC to libtool.
+	* lang-objc: Likewise.
+	* lang-c++: Pass --tag=CXX to libtool.
+
+2014-01-28  Roumen Petrov <bugtrack@roumenpetrov.info>  (tiny change)
+
+	tests: fix "make check" under VPATH builds
+	Reported at:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-01/msg00012.html>.
+	* init-env: New file renamed from init.cfg.in.
+	* init.cfg.in: Remove.
+	* init.cfg: Read $builddir/init-env.
+
+2014-01-28  Roumen Petrov <bugtrack@roumenpetrov.info>  (tiny change)
+
+	Support configuration with absolute path.
+	Reported at:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-01/msg00011.html>.
+	* Makefile.am (TESTS_ENVIRONMENT): Define abs_srcdir and
+	abs_top_srcdir.
+	* format-c-3: Replace ../${top_,}srcdir with $abs_{top_,}srcdir.
+	* format-c-4: Likewise.
+	* format-c-5: Likewise.
+	* gettext-1: Likewise.
+	* gettext-2: Likewise.
+	* gettext-3: Likewise.
+	* gettext-4: Likewise.
+	* gettext-5: Likewise.
+	* gettext-6: Likewise.
+	* gettext-7: Likewise.
+	* gettextpo-1: Likewise.
+	* lang-c: Likewise.
+	* lang-c++: Likewise.
+	* lang-objc: Likewise.
+	* msgcomm-23: Likewise.
+	* msgexec-2: Likewise.
+	* msgfmt-qt-1: Likewise.
+	* msgfmt-qt-2: Likewise.
+	* msgmerge-compendium-5: Likewise.
+	* msgmerge-compendium-6: Likewise.
+	* msgunfmt-tcl-1: Likewise.
+	* msguniq-1: Likewise.
+	* msguniq-2: Likewise.
+	* msguniq-3: Likewise.
+	* msguniq-4: Likewise.
+	* plural-1: Likewise.
+	* xgettext-1: Likewise.
+	* xgettext-c-1: Likewise.
+
+2013-12-04  Andreas Stricker  <andy@knitter.ch>
+
+	* xgettext-javascript-6: Add more tests for E4X.
+
+2013-11-20  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Add E4X support to JavaScript scanner
+	* Makefile.am (TESTS): Add xgettext-javascript-6.
+	* xgettext-javascript-6: New file.
+
+2013-11-14  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-javascript-1: Add a test to extract translator comments.
+
+2013-08-30  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am (gettextpo_1_prg_CPPFLAGS): Don't add 'gnulib-lib'
+	to the include path.
+	Reported by Perry Smith in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-08/msg00053.html>.
+
+2013-08-13  Miguel Angel Arruga Vivas  <rosen644835@gmail.com>
+
+	* xgettext-glade-5: Add a test for --extract-all option behavior.
+	* xgettext-glade-6: Likewise.
+
 2013-08-12  Daiki Ueno  <ueno@gnu.org>
 
 	* xgettext-glade-7: Add a test for multi-line extracted comments.
+
+2013-08-06  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: add support for GSettings schema file
+	* Makefile.am (TESTS): Add xgettext-gsettings-1.
+	* xgettext-gsettings-1: New file.
+
+2013-07-25  Daiki Ueno  <ueno@gnu.org>
+
+	tests: allow each test to run individually without 'make'
+	* Makefile.am (TESTS_ENVIRONMENT): Move required envvar to...
+	* init.cfg.in: ...here, so each test can run individually.
+	* lang-c: Guard if top_srcdir is not set.
+	* lang-c++: Likewise.
+	* lang-objc: Likewise.
+	* msgunfmt-tcl-1: Likewise.
+	* xgettext-1: Likewise.
+	* xgettext-c-1: Likewise.
+
+2013-07-25  Daiki Ueno  <ueno@gnu.org>
+
+	tests: fix path adjustment for LTLIBINTL
+	* lang-bash: Add gettext-runtime/src to PATH for gettext.sh.
+	* lang-sh: Likewise.
+	* lang-c: Don't set top_builddir here.
+	* lang-c++: Likewise.
+	* lang-objc: Likewise.
+	* Makefile.am (TESTS_ENVIRONMENT): Don't set PATH here.
+	* init.cfg.in: New file to adjust relative path needed by
+	LTLIBINTL.
+
+2013-07-21  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am (EXTRA_DIST): Add init.sh.
 
 2013-07-11  Daiki Ueno  <ueno@gnu.org>
 

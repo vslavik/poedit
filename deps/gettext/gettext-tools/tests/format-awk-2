@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test checking of awk format strings.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles f-a-2.data"
 cat <<\EOF > f-a-2.data
 # Valid: %% doesn't count
 msgid  "abc%%def"
@@ -111,7 +108,6 @@ while read comment; do
   read msgid_line
   read msgstr_line
   n=`expr $n + 1`
-  tmpfiles="$tmpfiles f-a-2-$n.po f-a-2-$n.mo"
   cat <<EOF > f-a-2-$n.po
 #, awk-format
 ${msgid_line}
@@ -139,7 +135,5 @@ EOF
   fi
   rm -f f-a-2-$n.po f-a-2-$n.mo
 done < f-a-2.data
-
-rm -fr $tmpfiles
 
 exit 0

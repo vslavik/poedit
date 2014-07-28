@@ -1,14 +1,11 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the Objective C language.
 # Assumes an fr_FR locale is installed.
 # Assumes the following packages are installed: gcc.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
 # Test whether an ObjectiveC compiler is found.
-tmpfiles="$tmpfiles hello.m l-objc-hello.${OBJEXT} l-objc-hello${EXEEXT} l-objc-hello.dSYM"
 cat <<\EOF > hello.m
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,10 +17,9 @@ int main ()
 EOF
 ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o l-objc-hello hello.m 2>/dev/null \
   || { echo "Skipping test: Objective C compiler not found"
-       rm -fr $tmpfiles; exit 77
+       exit 77
      }
 
-tmpfiles="$tmpfiles prog.m"
 cat <<\EOF > prog.m
 #include "config.h"
 #include <libintl.h>
@@ -58,24 +54,22 @@ int main (int argc, char *argv[])
 }
 EOF
 
-# Variable needed by LTLIBINTL.
-top_builddir=..
-
-tmpfiles="$tmpfiles l-objc-prog.${OBJEXT} l-objc-prog${EXEEXT}"
 # Put the -I flags before ${CFLAGS} ${CPPFLAGS}, to make sure that libintl.h
 # is found in the build directory, regardless of -I options present in
 # ${CFLAGS} or ${CPPFLAGS}.
-${LIBTOOL} --quiet --mode=link ${CC} -I.. -I$top_srcdir/gnulib-lib ../gnulib-lib/libgettextlib.la -I../intl ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o l-objc-prog prog.m ${LTLIBINTL} \
-  || exit 1
+${CC} -I../.. -I"$abs_top_srcdir"/gnulib-lib -I../../intl ${CFLAGS} \
+      ${CPPFLAGS} -c prog.m || exit 1
 
-tmpfiles="$tmpfiles l-objc-prog.tmp l-objc-prog.pot"
+: ${CONFIG_SHELL=${SHELL-/bin/sh}}
+${CONFIG_SHELL} "$top_builddir"/libtool --quiet --tag=CC --mode=link \
+                ${CC} ${CFLAGS} -o l-objc-prog prog.${OBJEXT} \
+                ../../gnulib-lib/libgettextlib.la ${LDFLAGS} ${LTLIBINTL} \
+		|| exit 1
+
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-objc-prog.tmp --omit-header --no-location -k_ prog.m
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-objc-prog.tmp > l-objc-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o l-objc-prog.tmp --omit-header --no-location -k_ prog.m || exit 1
+LC_ALL=C tr -d '\r' < l-objc-prog.tmp > l-objc-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-objc-prog.ok"
 cat <<EOF > l-objc-prog.ok
 #, c-format
 msgid "'Your command, please?', asked the waiter."
@@ -95,7 +89,6 @@ EOF
 : ${DIFF=diff}
 ${DIFF} l-objc-prog.ok l-objc-prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-objc-fr.po"
 cat <<\EOF > l-objc-fr.po
 msgid ""
 msgstr ""
@@ -119,17 +112,13 @@ msgid "%s is replaced by %s."
 msgstr "%2$s remplace %1$s."
 EOF
 
-tmpfiles="$tmpfiles l-objc-fr.po.tmp l-objc-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-objc-fr.po.tmp l-objc-fr.po l-objc-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-objc-fr.po.tmp > l-objc-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o l-objc-fr.po.tmp l-objc-fr.po l-objc-prog.pot || exit 1
+LC_ALL=C tr -d '\r' < l-objc-fr.po.tmp > l-objc-fr.po.new || exit 1
 
 : ${DIFF=diff}
 ${DIFF} l-objc-fr.po l-objc-fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-objc"
 test -d l-objc || mkdir l-objc
 test -d l-objc/fr || mkdir l-objc/fr
 test -d l-objc/fr/LC_MESSAGES || mkdir l-objc/fr/LC_MESSAGES
@@ -137,7 +126,6 @@ test -d l-objc/fr/LC_MESSAGES || mkdir l-objc/fr/LC_MESSAGES
 : ${MSGFMT=msgfmt}
 ${MSGFMT} -o l-objc/fr/LC_MESSAGES/prog.mo l-objc-fr.po
 
-tmpfiles="$tmpfiles l-objc-prog.ok l-objc-prog.oku l-objc-prog.out"
 : ${DIFF=diff}
 cat <<\EOF > l-objc-prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
@@ -174,9 +162,7 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
-
-rm -fr $tmpfiles
 
 exit 0

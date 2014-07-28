@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test Lua support
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-lu-1.lua"
 cat <<\EOF > xg-lu-1.lua
 print(_("This is a test string."))
 print(_('And another one.'))
@@ -25,15 +22,11 @@ print(_("abc" .. "def"))
 print(speed / 1000 .. 'Mbps')
 EOF
 
-tmpfiles="$tmpfiles xg-lu-1.tmp.po xg-lu-1.po"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location --add-comments=TRANSLATORS: \
-  -d xg-lu-1.tmp xg-lu-1.lua
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-lu-1.tmp.po > xg-lu-1.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+  -d xg-lu-1.tmp xg-lu-1.lua || exit 1
+LC_ALL=C tr -d '\r' < xg-lu-1.tmp.po > xg-lu-1.po || exit 1
 
-tmpfiles="$tmpfiles xg-lu-1.ok"
 cat <<EOF > xg-lu-1.ok
 msgid "This is a test string."
 msgstr ""
@@ -75,7 +68,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-lu-1.ok xg-lu-1.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

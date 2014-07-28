@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test that untranslated messages that are brought over from the .pot file
 # get the right number of msgstrs.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test17.po"
 cat <<\EOF > mm-test17.po
 # Irish translations.
 msgid ""
@@ -20,7 +17,6 @@ msgid "'Your command, please?', asked the waiter."
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-test17.pot"
 cat <<\EOF > mm-test17.pot
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -54,14 +50,10 @@ msgid "%s is replaced by %s."
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-test17.tmp.po mm-test17.new.po"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test17.tmp.po mm-test17.po mm-test17.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test17.tmp.po > mm-test17.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o mm-test17.tmp.po mm-test17.po mm-test17.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test17.tmp.po > mm-test17.new.po || exit 1
 
-tmpfiles="$tmpfiles mm-test17.ok"
 cat <<\EOF > mm-test17.ok
 # Irish translations.
 msgid ""
@@ -90,7 +82,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mm-test17.ok mm-test17.new.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

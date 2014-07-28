@@ -1,4 +1,5 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Verify msgcat of two files, when the header entries have different comments
 # but the same contents. The resulting header entry is not marked fuzzy,
@@ -6,10 +7,6 @@
 # translator attention; in other words, an msgstr which is valid in both input
 # files is also valid in the result.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcat-test10.in1 mcat-test10.in2"
 cat <<\EOF > mcat-test10.in1
 # German message file for xyz.
 # Copyright (C) 1999, 2000, 2001 xyz.
@@ -59,17 +56,13 @@ msgstr ""
 "Glückwunsch!"
 EOF
 
-tmpfiles="$tmpfiles mcat-test10.tmp mcat-test10.out"
 rm -f mcat-test10.tmp
 
 : ${MSGCAT=msgcat}
 ${MSGCAT} --more-than=0 -o mcat-test10.tmp \
-    mcat-test10.in1 mcat-test10.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcat-test10.tmp > mcat-test10.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+    mcat-test10.in1 mcat-test10.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcat-test10.tmp > mcat-test10.out || exit 1
 
-tmpfiles="$tmpfiles mcat-test10.ok"
 cat <<\EOF > mcat-test10.ok
 # #-#-#-#-#  mcat-test10.in1 (xyz)  #-#-#-#-#
 # German message file for xyz.
@@ -102,7 +95,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcat-test10.ok mcat-test10.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

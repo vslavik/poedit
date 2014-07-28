@@ -825,203 +825,6 @@ phase3_ungetc (int c)
    IS_UNICODE.  */
 #define UNICODE_VALUE(p7_result) ((p7_result) - 0x100)
 
-/* A string buffer type that allows appending bytes (in the
-   xgettext_current_source_encoding) or Unicode characters.
-   Returns the entire string in UTF-8 encoding.  */
-
-struct mixed_string_buffer
-{
-  /* The part of the string that has already been converted to UTF-8.  */
-  char *utf8_buffer;
-  size_t utf8_buflen;
-  size_t utf8_allocated;
-  /* The first half of an UTF-16 surrogate character.  */
-  unsigned short utf16_surr;
-  /* The part of the string that is still in the source encoding.  */
-  char *curr_buffer;
-  size_t curr_buflen;
-  size_t curr_allocated;
-  /* The lexical context.  Used only for error message purposes.  */
-  lexical_context_ty lcontext;
-};
-
-/* Initialize a 'struct mixed_string_buffer' to empty.  */
-static inline void
-init_mixed_string_buffer (struct mixed_string_buffer *bp, lexical_context_ty lcontext)
-{
-  bp->utf8_buffer = NULL;
-  bp->utf8_buflen = 0;
-  bp->utf8_allocated = 0;
-  bp->utf16_surr = 0;
-  bp->curr_buffer = NULL;
-  bp->curr_buflen = 0;
-  bp->curr_allocated = 0;
-  bp->lcontext = lcontext;
-}
-
-/* Auxiliary function: Append a byte to bp->curr.  */
-static inline void
-mixed_string_buffer_append_byte (struct mixed_string_buffer *bp, unsigned char c)
-{
-  if (bp->curr_buflen == bp->curr_allocated)
-    {
-      bp->curr_allocated = 2 * bp->curr_allocated + 10;
-      bp->curr_buffer = xrealloc (bp->curr_buffer, bp->curr_allocated);
-    }
-  bp->curr_buffer[bp->curr_buflen++] = c;
-}
-
-/* Auxiliary function: Ensure count more bytes are available in bp->utf8.  */
-static inline void
-mixed_string_buffer_append_unicode_grow (struct mixed_string_buffer *bp, size_t count)
-{
-  if (bp->utf8_buflen + count > bp->utf8_allocated)
-    {
-      size_t new_allocated = 2 * bp->utf8_allocated + 10;
-      if (new_allocated < bp->utf8_buflen + count)
-        new_allocated = bp->utf8_buflen + count;
-      bp->utf8_allocated = new_allocated;
-      bp->utf8_buffer = xrealloc (bp->utf8_buffer, new_allocated);
-    }
-}
-
-/* Auxiliary function: Append a Unicode character to bp->utf8.
-   uc must be < 0x110000.  */
-static inline void
-mixed_string_buffer_append_unicode (struct mixed_string_buffer *bp, ucs4_t uc)
-{
-  unsigned char utf8buf[6];
-  int count = u8_uctomb (utf8buf, uc, 6);
-
-  if (count < 0)
-    /* The caller should have ensured that uc is not out-of-range.  */
-    abort ();
-
-  mixed_string_buffer_append_unicode_grow (bp, count);
-  memcpy (bp->utf8_buffer + bp->utf8_buflen, utf8buf, count);
-  bp->utf8_buflen += count;
-}
-
-/* Auxiliary function: Flush bp->utf16_surr into bp->utf8_buffer.  */
-static inline void
-mixed_string_buffer_flush_utf16_surr (struct mixed_string_buffer *bp)
-{
-  if (bp->utf16_surr != 0)
-    {
-      /* A half surrogate is invalid, therefore use U+FFFD instead.  */
-      mixed_string_buffer_append_unicode (bp, 0xfffd);
-      bp->utf16_surr = 0;
-    }
-}
-
-/* Auxiliary function: Flush bp->curr_buffer into bp->utf8_buffer.  */
-static inline void
-mixed_string_buffer_flush_curr_buffer (struct mixed_string_buffer *bp, int lineno)
-{
-  if (bp->curr_buflen > 0)
-    {
-      char *curr;
-      size_t count;
-
-      mixed_string_buffer_append_byte (bp, '\0');
-
-      /* Convert from the source encoding to UTF-8.  */
-      curr = from_current_source_encoding (bp->curr_buffer, bp->lcontext,
-                                           logical_file_name, lineno);
-
-      /* Append it to bp->utf8_buffer.  */
-      count = strlen (curr);
-      mixed_string_buffer_append_unicode_grow (bp, count);
-      memcpy (bp->utf8_buffer + bp->utf8_buflen, curr, count);
-      bp->utf8_buflen += count;
-
-      if (curr != bp->curr_buffer)
-        free (curr);
-      bp->curr_buflen = 0;
-    }
-}
-
-/* Append a character or Unicode character to a 'struct mixed_string_buffer'.  */
-static void
-mixed_string_buffer_append (struct mixed_string_buffer *bp, int c)
-{
-  if (IS_UNICODE (c))
-    {
-      /* Append a Unicode character.  */
-
-      /* Switch from multibyte character mode to Unicode character mode.  */
-      mixed_string_buffer_flush_curr_buffer (bp, line_number);
-
-      /* Test whether this character and the previous one form a Unicode
-         surrogate character pair.  */
-      if (bp->utf16_surr != 0
-          && (c >= UNICODE (0xdc00) && c < UNICODE (0xe000)))
-        {
-          unsigned short utf16buf[2];
-          ucs4_t uc;
-
-          utf16buf[0] = bp->utf16_surr;
-          utf16buf[1] = UNICODE_VALUE (c);
-          if (u16_mbtouc (&uc, utf16buf, 2) != 2)
-            abort ();
-
-          mixed_string_buffer_append_unicode (bp, uc);
-          bp->utf16_surr = 0;
-        }
-      else
-        {
-          mixed_string_buffer_flush_utf16_surr (bp);
-
-          if (c >= UNICODE (0xd800) && c < UNICODE (0xdc00))
-            bp->utf16_surr = UNICODE_VALUE (c);
-          else if (c >= UNICODE (0xdc00) && c < UNICODE (0xe000))
-            {
-              /* A half surrogate is invalid, therefore use U+FFFD instead.  */
-              mixed_string_buffer_append_unicode (bp, 0xfffd);
-            }
-          else
-            mixed_string_buffer_append_unicode (bp, UNICODE_VALUE (c));
-        }
-    }
-  else
-    {
-      /* Append a single byte.  */
-
-      /* Switch from Unicode character mode to multibyte character mode.  */
-      mixed_string_buffer_flush_utf16_surr (bp);
-
-      /* When a newline is seen, convert the accumulated multibyte sequence.
-         This ensures a correct line number in the error message in case of
-         a conversion error.  The "- 1" is to account for the newline.  */
-      if (c == '\n')
-        mixed_string_buffer_flush_curr_buffer (bp, line_number - 1);
-
-      mixed_string_buffer_append_byte (bp, (unsigned char) c);
-    }
-}
-
-/* Return the string buffer's contents.  */
-static char *
-mixed_string_buffer_result (struct mixed_string_buffer *bp)
-{
-  /* Flush all into bp->utf8_buffer.  */
-  mixed_string_buffer_flush_utf16_surr (bp);
-  mixed_string_buffer_flush_curr_buffer (bp, line_number);
-  /* NUL-terminate it.  */
-  mixed_string_buffer_append_unicode_grow (bp, 1);
-  bp->utf8_buffer[bp->utf8_buflen] = '\0';
-  /* Return it.  */
-  return bp->utf8_buffer;
-}
-
-/* Free the memory pointed to by a 'struct mixed_string_buffer'.  */
-static inline void
-free_mixed_string_buffer (struct mixed_string_buffer *bp)
-{
-  free (bp->utf8_buffer);
-  free (bp->curr_buffer);
-}
-
 
 /* ========================== Reading of tokens.  ========================== */
 
@@ -1526,7 +1329,7 @@ phase5_get (token_ty *tp)
 
         /* Strings.  */
           {
-            struct mixed_string_buffer literal;
+            struct mixed_string_buffer *bp;
             int quote_char;
             bool interpret_ansic;
             bool interpret_unicode;
@@ -1598,23 +1401,31 @@ phase5_get (token_ty *tp)
               }
               backslash_counter = 0;
               /* Start accumulating the string.  */
-              init_mixed_string_buffer (&literal, lc_string);
+              bp = mixed_string_buffer_alloc (lexical_context,
+                                              logical_file_name,
+                                              line_number);
               for (;;)
                 {
                   int uc = phase7_getuc (quote_char, triple, interpret_ansic,
                                          interpret_unicode, &backslash_counter);
 
+                  /* Keep line_number in sync.  */
+                  bp->line_number = line_number;
+
                   if (uc == P7_EOF || uc == P7_STRING_END)
                     break;
 
                   if (IS_UNICODE (uc))
-                    assert (UNICODE_VALUE (uc) >= 0
-                            && UNICODE_VALUE (uc) < 0x110000);
-
-                  mixed_string_buffer_append (&literal, uc);
+                    {
+                      assert (UNICODE_VALUE (uc) >= 0
+                              && UNICODE_VALUE (uc) < 0x110000);
+                      mixed_string_buffer_append_unicode (bp,
+                                                          UNICODE_VALUE (uc));
+                    }
+                  else
+                    mixed_string_buffer_append_char (bp, uc);
                 }
-              tp->string = xstrdup (mixed_string_buffer_result (&literal));
-              free_mixed_string_buffer (&literal);
+              tp->string = mixed_string_buffer_done (bp);
               tp->comment = add_reference (savable_comment);
               lexical_context = lc_outside;
               tp->type = token_type_string;

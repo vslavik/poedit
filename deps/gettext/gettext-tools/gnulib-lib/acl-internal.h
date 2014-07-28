@@ -1,6 +1,6 @@
 /* Internal implementation of access control lists.
 
-   Copyright (C) 2002-2003, 2005-2013 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2014 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -60,6 +60,9 @@ extern int aclsort (int, int, struct acl *);
 # define fchmod(fd, mode) (-1)
 #endif
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef ACL_INTERNAL_INLINE
 # define ACL_INTERNAL_INLINE _GL_INLINE
@@ -171,14 +174,14 @@ extern int acl_access_nontrivial (acl_t);
 
 /* Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
-extern int acl_nontrivial (int count, aclent_t *entries);
+extern int acl_nontrivial (int count, aclent_t *entries) _GL_ATTRIBUTE_PURE;
 
 #  ifdef ACE_GETACL /* Solaris 10 */
 
 /* Test an ACL retrieved with ACE_GETACL.
    Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
-extern int acl_ace_nontrivial (int count, ace_t *entries);
+extern int acl_ace_nontrivial (int count, ace_t *entries) _GL_ATTRIBUTE_PURE;
 
 /* Definitions for when the built executable is executed on Solaris 10
    (newer version) or Solaris 11.  */
