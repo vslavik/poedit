@@ -39,8 +39,3 @@ replace_ver .travis.yml \
 replace_ver Poedit.xcodeproj/project.pbxproj \
             '\(POEDIT_VERSION = \).*\(;\)' "\1$VER_FULL\2"
 touch macosx/Poedit-Info.plist
-
-for i in locales/*.po locales/*.pot ; do
-    replace_ver $i \
-                '\(Project-Id-Version:\)[^\\]*' "\1 Poedit $VER_SHORT"
-done
