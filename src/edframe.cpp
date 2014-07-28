@@ -474,6 +474,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("sort_by_order"),    PoeditFrame::OnSortByFileOrder)
    EVT_MENU           (XRCID("sort_by_source"),    PoeditFrame::OnSortBySource)
    EVT_MENU           (XRCID("sort_by_translation"), PoeditFrame::OnSortByTranslation)
+   EVT_MENU           (XRCID("sort_group_by_context"), PoeditFrame::OnSortGroupByContext)
    EVT_MENU           (XRCID("sort_untrans_first"), PoeditFrame::OnSortUntranslatedFirst)
    EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
@@ -878,6 +879,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
             GetMenuBar()->Check(XRCID("sort_by_translation"), true);
             break;
     }
+    GetMenuBar()->Check(XRCID("sort_group_by_context"), m_list->sortOrder.groupByContext);
     GetMenuBar()->Check(XRCID("sort_untrans_first"), m_list->sortOrder.untransFirst);
 
     // Call splitter splitting later, when the window is layed out, otherwise
@@ -2748,6 +2750,7 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("sort_by_order"), editable);
     menubar->Enable(XRCID("sort_by_source"), editable);
     menubar->Enable(XRCID("sort_by_translation"), editable);
+    menubar->Enable(XRCID("sort_group_by_context"), editable);
     menubar->Enable(XRCID("sort_untrans_first"), editable);
 
     if (m_textTrans)
@@ -3569,6 +3572,13 @@ void PoeditFrame::OnSortBySource(wxCommandEvent&)
 void PoeditFrame::OnSortByTranslation(wxCommandEvent&)
 {
     m_list->sortOrder.by = SortOrder::By_Translation;
+    m_list->Sort();
+}
+
+
+void PoeditFrame::OnSortGroupByContext(wxCommandEvent& event)
+{
+    m_list->sortOrder.groupByContext = event.IsChecked();
     m_list->Sort();
 }
 

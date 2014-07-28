@@ -36,6 +36,7 @@
     SortOrder order;
 
     wxString by = wxConfig::Get()->Read("/sort_by", "file-order");
+    long ctxt = wxConfig::Get()->Read("/sort_group_by_context", 0L);
     long untrans = wxConfig::Get()->Read("/sort_untrans_first", 1L);
 
     if ( by == "source" )
@@ -45,6 +46,7 @@
     else
         order.by = By_FileOrder;
 
+    order.groupByContext = (ctxt != 0);
     order.untransFirst = (untrans != 0);
 
     return order;
@@ -68,6 +70,7 @@ void SortOrder::Save()
     }
 
     wxConfig::Get()->Write("/sort_by", bystr);
+    wxConfig::Get()->Write("/sort_group_by_context", groupByContext);
     wxConfig::Get()->Write("/sort_untrans_first", untransFirst);
 }
 
@@ -114,18 +117,32 @@ bool CatalogItemsComparator::operator()(int i, int j) const
     {
         if ( a.GetValidity() == CatalogItem::Val_Invalid && b.GetValidity() != CatalogItem::Val_Invalid )
             return true;
-        if ( a.GetValidity() != CatalogItem::Val_Invalid && b.GetValidity() == CatalogItem::Val_Invalid )
+        else if ( a.GetValidity() != CatalogItem::Val_Invalid && b.GetValidity() == CatalogItem::Val_Invalid )
             return false;
 
         if ( !a.IsTranslated() && b.IsTranslated() )
             return true;
-        if ( a.IsTranslated() && !b.IsTranslated() )
+        else if ( a.IsTranslated() && !b.IsTranslated() )
             return false;
 
         if ( a.IsFuzzy() && !b.IsFuzzy() )
             return true;
-        if ( !a.IsFuzzy() && b.IsFuzzy() )
+        else if ( !a.IsFuzzy() && b.IsFuzzy() )
             return false;
+    }
+
+    if ( m_order.groupByContext )
+    {
+        if ( a.HasContext() && !b.HasContext() )
+            return true;
+        else if ( !a.HasContext() && b.HasContext() )
+            return false;
+        else if ( a.HasContext() && b.HasContext() )
+        {
+            int r = CompareStrings(a.GetContext(), b.GetContext());
+            if ( r != 0 )
+                return r < 0;
+        }
     }
 
     switch ( m_order.by )
