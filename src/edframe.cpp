@@ -3581,14 +3581,14 @@ void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
 void PoeditFrame::OnTextEditingCommand(wxCommandEvent& event)
 {
     wxWindow *w = wxWindow::FindFocus();
-    if (!w || !w->ProcessWindowEventLocally(event))
+    if (!w || w == this || !w->ProcessWindowEventLocally(event))
         event.Skip();
 }
 
 void PoeditFrame::OnTextEditingCommandUpdate(wxUpdateUIEvent& event)
 {
     wxWindow *w = wxWindow::FindFocus();
-    if (!w || !w->ProcessWindowEventLocally(event))
+    if (!w || w == this || !w->ProcessWindowEventLocally(event))
         event.Enable(false);
 }
 #endif // __WXMSW__ || __WXGTK__
