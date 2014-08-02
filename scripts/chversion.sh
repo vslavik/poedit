@@ -30,8 +30,6 @@ replace_ver configure.ac \
             '\(AC_INIT(\[poedit\], \[\)[^]]*\(\],.*\)' "\1$VER_FULL\2"
 replace_ver configure.ac \
             '\(PACKAGE_SHORT_VERSION=\).*' "\1$VER_SHORT"
-replace_ver make-distrib.sh \
-            '\(VERSION=\).*' "\1$VER_FULL"
 replace_ver src/version.h \
             '\(POEDIT_VERSION.*"\).*\("\)' "\1$VER_FULL\2"
 replace_ver src/version.h \
@@ -41,8 +39,3 @@ replace_ver .travis.yml \
 replace_ver Poedit.xcodeproj/project.pbxproj \
             '\(POEDIT_VERSION = \).*\(;\)' "\1$VER_FULL\2"
 touch macosx/Poedit-Info.plist
-
-for i in locales/*.po locales/*.pot ; do
-    replace_ver $i \
-                '\(Project-Id-Version:\)[^\\]*' "\1 Poedit $VER_SHORT"
-done

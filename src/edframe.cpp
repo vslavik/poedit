@@ -392,10 +392,13 @@ protected:
     virtual void DoSetValue(const wxString& value, int flags)
     {
         wxEventBlocker block(this, (flags & SetValue_SendEvent) ? 0 : wxEVT_ANY);
+
         NSTextView *text = TextView();
         [text setString:wxNSStringWithWxString(value)];
         NSUndoManager *undo = [text undoManager];
         [undo removeAllActions];
+
+        SendTextUpdatedEventIfAllowed();
     }
 
     NSTextView *TextView()
@@ -3595,14 +3598,14 @@ void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
 void PoeditFrame::OnTextEditingCommand(wxCommandEvent& event)
 {
     wxWindow *w = wxWindow::FindFocus();
-    if (!w || !w->ProcessWindowEventLocally(event))
+    if (!w || w == this || !w->ProcessWindowEventLocally(event))
         event.Skip();
 }
 
 void PoeditFrame::OnTextEditingCommandUpdate(wxUpdateUIEvent& event)
 {
     wxWindow *w = wxWindow::FindFocus();
-    if (!w || !w->ProcessWindowEventLocally(event))
+    if (!w || w == this || !w->ProcessWindowEventLocally(event))
         event.Enable(false);
 }
 #endif // __WXMSW__ || __WXGTK__
