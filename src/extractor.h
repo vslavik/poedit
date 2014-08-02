@@ -27,8 +27,9 @@
 #define Poedit_extractor_h
 
 #include <wx/wx.h>
-#include <wx/dynarray.h>
 #include <wx/string.h>
+
+#include <vector>
 
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 
@@ -82,13 +83,11 @@ class Extractor
                             const wxString& charset);
 };
 
-WX_DECLARE_OBJARRAY(Extractor, ExtractorArray);
-
 /** Database of all available extractors. This class is regular pseudo-template
     dynamic wxArray with additional methods for storing its content to
     wxConfig object and retrieving it.
  */
-class ExtractorsDB : public ExtractorArray
+class ExtractorsDB
 {
 public:
     /// Reads DB from registry/dotfile.
@@ -99,6 +98,8 @@ public:
 
     /// Returns index of extractor with given name or -1 if it can't be found:
     int FindExtractor(const wxString& name);
+
+    std::vector<Extractor> Data;
 };
 
 #endif // Poedit_extractor_h

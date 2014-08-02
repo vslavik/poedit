@@ -397,7 +397,7 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
         ex.KeywordItem = "-k%k";
         ex.FileItem = "%f";
         ex.CharsetItem = "--from-code=%c";
-        db.Add(ex);
+        db.Data.push_back(ex);
         changed = true;
     }
 
@@ -411,7 +411,7 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
         p.Command = "dxgettext --so %o %F";
         p.KeywordItem = wxEmptyString;
         p.FileItem = "%f";
-        db.Add(p);
+        db.Data.push_back(p);
         changed = true;
     }
 #endif
@@ -422,10 +422,10 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
         int cpp = db.FindExtractor("C/C++");
         if (cpp != -1)
         {
-            if (db[cpp].Command == "xgettext --force-po -o %o %K %F")
+            if (db.Data[cpp].Command == "xgettext --force-po -o %o %K %F")
             {
-                db[cpp].Command = "xgettext --force-po -o %o %C %K %F";
-                db[cpp].CharsetItem = "--from-code=%c";
+                db.Data[cpp].Command = "xgettext --force-po -o %o %C %K %F";
+                db.Data[cpp].CharsetItem = "--from-code=%c";
                 changed = true;
             }
         }
@@ -433,9 +433,9 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
 
     // Poedit 1.5.6 had a breakage, it add --add-comments without space in front of it.
     // Repair this automatically:
-    for (size_t i = 0; i < db.GetCount(); i++)
+    for (size_t i = 0; i < db.Data.size(); i++)
     {
-        wxString& cmd = db[i].Command;
+        wxString& cmd = db.Data[i].Command;
         if (cmd.Contains("--add-comments=") && !cmd.Contains(" --add-comments="))
         {
             cmd.Replace("--add-comments=", " --add-comments=");

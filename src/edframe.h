@@ -53,8 +53,6 @@ class PoeditFrame;
 class AttentionBar;
 class ErrorBar;
 
-WX_DECLARE_LIST(PoeditFrame, PoeditFramesList);
-
 /** This class provides main editing frame. It handles user's input
     and provides frontend to catalog editing engine. Nothing fancy.
  */
@@ -152,6 +150,7 @@ class PoeditFrame : public wxFrame
         wxWindow* CreateContentViewEmptyPO();
         void DestroyContentView();
 
+        typedef std::set<PoeditFrame*> PoeditFramesList;
         static PoeditFramesList ms_instances;
 
     private:

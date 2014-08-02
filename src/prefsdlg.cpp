@@ -292,10 +292,10 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     m_extractors.Read(cfg);
     
     wxListBox *list = XRCCTRL(*this, "extractors_list", wxListBox);
-    for (unsigned i = 0; i < m_extractors.GetCount(); i++)
-        list->Append(m_extractors[i].Name);
+    for (const auto& item: m_extractors.Data)
+        list->Append(item.Name);
     
-    if (m_extractors.GetCount() == 0)
+    if (m_extractors.Data.empty())
     {
         XRCCTRL(*this, "extractor_edit", wxButton)->Enable(false);
         XRCCTRL(*this, "extractor_delete", wxButton)->Enable(false);
@@ -431,7 +431,7 @@ void PreferencesDialog::EditExtractor(int num, TFunctor completionHandler)
     auto extractor_charset = XRCCTRL(*dlg, "extractor_charset", wxTextCtrl);
 
     {
-        const Extractor& nfo = m_extractors[num];
+        const Extractor& nfo = m_extractors.Data[num];
         extractor_language->SetValue(nfo.Name);
         extractor_extensions->SetValue(nfo.Extensions);
         extractor_command->SetValue(nfo.Command);
@@ -457,7 +457,7 @@ void PreferencesDialog::EditExtractor(int num, TFunctor completionHandler)
         (void)dlg; // force use
         if (retcode == wxID_OK)
         {
-            Extractor& nfo = m_extractors[num];
+            Extractor& nfo = m_extractors.Data[num];
             nfo.Name = extractor_language->GetValue();
             nfo.Extensions = extractor_extensions->GetValue();
             nfo.Command = extractor_command->GetValue();
@@ -473,9 +473,9 @@ void PreferencesDialog::EditExtractor(int num, TFunctor completionHandler)
 void PreferencesDialog::OnNewExtractor(wxCommandEvent&)
 {
     Extractor info;
-    m_extractors.Add(info);
+    m_extractors.Data.push_back(info);
     XRCCTRL(*this, "extractors_list", wxListBox)->Append(wxEmptyString);
-    int index = (int)m_extractors.GetCount()-1;
+    int index = (int)m_extractors.Data.size()-1;
     EditExtractor(index, [=](bool added){
         if (added)
         {
@@ -485,7 +485,7 @@ void PreferencesDialog::OnNewExtractor(wxCommandEvent&)
         else
         {
             XRCCTRL(*this, "extractors_list", wxListBox)->Delete(index);
-            m_extractors.RemoveAt(index);
+            m_extractors.Data.erase(m_extractors.Data.begin() + index);
         }
     });
 }
@@ -498,9 +498,9 @@ void PreferencesDialog::OnEditExtractor(wxCommandEvent&)
 void PreferencesDialog::OnDeleteExtractor(wxCommandEvent&)
 {
     int index = XRCCTRL(*this, "extractors_list", wxListBox)->GetSelection();
-    m_extractors.RemoveAt(index);
+    m_extractors.Data.erase(m_extractors.Data.begin() + index);
     XRCCTRL(*this, "extractors_list", wxListBox)->Delete(index);
-    if (m_extractors.GetCount() == 0)
+    if (m_extractors.Data.empty())
     {
         XRCCTRL(*this, "extractor_edit", wxButton)->Enable(false);
         XRCCTRL(*this, "extractor_delete", wxButton)->Enable(false);

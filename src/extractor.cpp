@@ -32,12 +32,9 @@
 #include "extractor.h"
 
 
-#include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY(ExtractorArray);
-
 void ExtractorsDB::Read(wxConfigBase *cfg)
 {
-    Clear();
+    Data.clear();
     
     cfg->SetExpandEnvVars(false);
 
@@ -55,7 +52,7 @@ void ExtractorsDB::Read(wxConfigBase *cfg)
         info.KeywordItem = cfg->Read("KeywordItem", wxEmptyString);
         info.FileItem = cfg->Read("FileItem", wxEmptyString);
         info.CharsetItem = cfg->Read("CharsetItem", wxEmptyString);
-        Add(info);
+        Data.push_back(info);
         cfg->SetPath(oldpath);
     }
 }
@@ -71,35 +68,36 @@ void ExtractorsDB::Write(wxConfigBase *cfg)
 
     cfg->SetExpandEnvVars(false);
     
-    if (GetCount() == 0) return;
+    if (Data.empty())
+        return;
     
     size_t i;
     wxString list;
-    list << Item(0).Name;
-    for (i = 1; i < GetCount(); i++)
-        list << ";" << Item(i).Name;
+    list << Data[0].Name;
+    for (i = 1; i < Data.size(); i++)
+        list << ";" << Data[i].Name;
     cfg->Write("Parsers/List", list);
     
     wxString oldpath = cfg->GetPath();
     wxString key;
-    for (i = 0; i < GetCount(); i++)
+    for (const auto& item: Data)
     {
-        key = Item(i).Name; key.Replace("/", "_");
+        key = item.Name; key.Replace("/", "_");
         cfg->SetPath("Parsers/" + key);
-        cfg->Write("Extensions", Item(i).Extensions);
-        cfg->Write("Command", Item(i).Command);
-        cfg->Write("KeywordItem", Item(i).KeywordItem);
-        cfg->Write("FileItem", Item(i).FileItem);
-        cfg->Write("CharsetItem", Item(i).CharsetItem);
+        cfg->Write("Extensions", item.Extensions);
+        cfg->Write("Command", item.Command);
+        cfg->Write("KeywordItem", item.KeywordItem);
+        cfg->Write("FileItem", item.FileItem);
+        cfg->Write("CharsetItem", item.CharsetItem);
         cfg->SetPath(oldpath);
     }
 }
     
 int ExtractorsDB::FindExtractor(const wxString& name)
 {
-    for (size_t i = 0; i < GetCount(); i++)
+    for (size_t i = 0; i < Data.size(); i++)
     {
-        if ((*this)[i].Name == name)
+        if (Data[i].Name == name)
             return int(i);
     }
     return -1;

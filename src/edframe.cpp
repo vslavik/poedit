@@ -97,12 +97,10 @@
 #include "welcomescreen.h"
 #include "errors.h"
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(PoeditFramesList);
-PoeditFramesList PoeditFrame::ms_instances;
-
 
 // this should be high enough to not conflict with any wxNewId-allocated value,
+PoeditFrame::PoeditFramesList PoeditFrame::ms_instances;
+
 // but there's a check for this in the PoeditFrame ctor, too
 const wxWindowID ID_POEDIT_FIRST = wxID_HIGHEST + 10000;
 const unsigned   ID_POEDIT_STEP  = 1000;
@@ -680,7 +678,7 @@ PoeditFrame::PoeditFrame() :
 
     UpdateMenu();
 
-    ms_instances.Append(this);
+    ms_instances.insert(this);
 
     SetDropTarget(new PoeditDropTarget(this));
 
@@ -963,7 +961,7 @@ void PoeditFrame::DestroyContentView()
 
 PoeditFrame::~PoeditFrame()
 {
-    ms_instances.DeleteObject(this);
+    ms_instances.erase(this);
 
     FindFrame::NotifyParentDestroyed(m_list, m_catalog);
 

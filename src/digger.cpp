@@ -99,15 +99,15 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
     TempDirectory tmpdir;
     wxArrayString partials;
 
-    for (size_t i = 0; i < db.GetCount(); i++)
+    for (size_t i = 0; i < db.Data.size(); i++)
     {
         if ( all_files[i].empty() )
             continue; // no files of this kind
 
         m_progressInfo->UpdateMessage(
             // TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
-            wxString::Format(_("Parsing %s files..."), db[i].Name.c_str()));
-        if (!DigFiles(tmpdir, partials, all_files[i], db[i], keywords, charset))
+            wxString::Format(_("Parsing %s files..."), db.Data[i].Name.c_str()));
+        if (!DigFiles(tmpdir, partials, all_files[i], db.Data[i], keywords, charset))
         {
             delete[] all_files;
             return NULL;
@@ -191,9 +191,10 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
                                        const wxArrayString& excludePaths,
                                        ExtractorsDB& db)
 {
-    if (db.GetCount() == 0)
+    if (db.Data.empty())
       return NULL;
-    wxArrayString *p_files = new wxArrayString[db.GetCount()];
+
+    wxArrayString *p_files = new wxArrayString[db.Data.size()];
     wxArrayString files;
     size_t i;
     
@@ -212,9 +213,9 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
     files.Sort();
 
     size_t filescnt = 0;
-    for (i = 0; i < db.GetCount(); i++)
+    for (i = 0; i < db.Data.size(); i++)
     {
-        p_files[i] = db[i].SelectParsable(files);
+        p_files[i] = db.Data[i].SelectParsable(files);
         filescnt += p_files[i].GetCount();
     }
     m_progressInfo->SetGaugeMax((int)filescnt);
