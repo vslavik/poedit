@@ -28,7 +28,7 @@
 
 #include <wx/dialog.h>
 
-#include "parser.h"
+#include "extractor.h"
 #include "chooselang.h"
 
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
@@ -50,7 +50,7 @@ class PreferencesDialog : public wxDialog
         void TransferFrom(wxConfigBase *cfg);
             
     private:
-        ParsersDB m_parsers;
+        ExtractorsDB m_extractors;
 
     private:
         DECLARE_EVENT_TABLE()
@@ -58,15 +58,15 @@ class PreferencesDialog : public wxDialog
 #if NEED_CHOOSELANG_UI
         void OnUILanguage(wxCommandEvent& event);
 #endif
-        void OnNewParser(wxCommandEvent& event);
-        void OnEditParser(wxCommandEvent& event);
-        void OnDeleteParser(wxCommandEvent& event);
+        void OnNewExtractor(wxCommandEvent& event);
+        void OnEditExtractor(wxCommandEvent& event);
+        void OnDeleteExtractor(wxCommandEvent& event);
         void OnUpdateUIFontList(wxUpdateUIEvent& event);
         void OnUpdateUIFontText(wxUpdateUIEvent& event);
 
         /// Called to launch dialog for editting parser properties.
         template<typename TFunctor>
-        void EditParser(int num, TFunctor completionHandler);
+        void EditExtractor(int num, TFunctor completionHandler);
 
         PreferencesPage *m_pageTM;
 };

@@ -61,7 +61,7 @@ ProgressInfo::ProgressInfo(wxWindow *parent, const wxString& title)
 {
     m_cancelled = false;
     m_dlg = new ProgressDlg(&m_cancelled);
-    wxXmlResource::Get()->LoadDialog(m_dlg, parent, "parser_progress");
+    wxXmlResource::Get()->LoadDialog(m_dlg, parent, "extractor_progress");
     m_dlg->SetTitle(title);
     m_dlg->Show(true);
     m_disabler = new wxWindowDisabler(m_dlg);

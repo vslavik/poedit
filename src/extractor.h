@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef _PARSER_H_
-#define _PARSER_H_
+#ifndef Poedit_extractor_h
+#define Poedit_extractor_h
 
 #include <wx/wx.h>
 #include <wx/dynarray.h>
@@ -33,19 +33,20 @@
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 
 
-/** This class holds information about an external parser. It does
-    \b not do any parsing. The only functionality it provides
+/** This class holds information about an external extractor. It does
+    \b not do any extraction. The only functionality it provides is
+    the metadata to invoke extractors.
  */
-class Parser
+class Extractor
 {
     public:
-        /// User-oriented name of the parser (e.g. "C/C++").
+        /// User-oriented name of the extractor (e.g. "C/C++").
         wxString Name;
-        /** Semicolon-separated list of wildcards. The parser is capable
+        /** Semicolon-separated list of wildcards. The extractor is capable
             of parsing files matching these wildcards. Example: "*.cpp;*.h"
          */
         wxString Extensions;
-        /** Command used to execute the parser. %o expands to output file,
+        /** Command used to execute the extractor. %o expands to output file,
             %K to list of keywords and %F to list of files.
          */
         wxString Command;
@@ -64,10 +65,10 @@ class Parser
             charset name. %C in command is replaced with this. */
         wxString CharsetItem;
 
-        /// Returns array of files from 'files' that this parser understands.
+        /// Returns array of files from 'files' that this extractor understands.
         wxArrayString SelectParsable(const wxArrayString& files);
       
-        /** Returns command line used to launch the parser with specified
+        /** Returns command line used to launch the extractor with specified
             input. This expands all veriables in Command property of the
             parser and returns string that be directly passed to wxExecute.
             \param files    list of files to parse
@@ -81,13 +82,13 @@ class Parser
                             const wxString& charset);
 };
 
-WX_DECLARE_OBJARRAY(Parser, ParserArray);
+WX_DECLARE_OBJARRAY(Extractor, ExtractorArray);
 
-/** Database of all available parsers. This class is regular pseudo-template
+/** Database of all available extractors. This class is regular pseudo-template
     dynamic wxArray with additional methods for storing its content to
     wxConfig object and retrieving it.
  */
-class ParsersDB : public ParserArray
+class ExtractorsDB : public ExtractorArray
 {
 public:
     /// Reads DB from registry/dotfile.
@@ -96,8 +97,8 @@ public:
     /// Write DB to registry/dotfile.
     void Write(wxConfigBase *cfg);
 
-    /// Returns index of parser with given name or -1 if it can't be found:
-    int FindParser(const wxString& name);
+    /// Returns index of extractor with given name or -1 if it can't be found:
+    int FindExtractor(const wxString& name);
 };
 
-#endif // _PARSER_H_
+#endif // Poedit_extractor_h

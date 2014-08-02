@@ -62,7 +62,7 @@
 #include "edframe.h"
 #include "manager.h"
 #include "prefsdlg.h"
-#include "parser.h"
+#include "extractor.h"
 #include "chooselang.h"
 #include "icons.h"
 #include "version.h"
@@ -352,15 +352,15 @@ void PoeditApp::OpenFiles(const wxArrayString& names)
         PoeditFrame::Create(name);
 }
 
-void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
+void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
 {
-    ParsersDB pdb;
+    ExtractorsDB db;
     bool changed = false;
     wxString defaultsVersion = cfg->Read("Parsers/DefaultsVersion",
                                          "1.2.x");
-    pdb.Read(cfg);
+    db.Read(cfg);
 
-    // Add parsers for languages supported by gettext itself (but only if the
+    // Add extractors for languages supported by gettext itself (but only if the
     // user didn't already add language with this name himself):
     static struct
     {
@@ -380,7 +380,7 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
     for (size_t i = 0; s_gettextLangs[i].name != NULL; i++)
     {
         // if this lang is already registered, don't overwrite it:
-        if (pdb.FindParser(s_gettextLangs[i].name) != -1)
+        if (db.FindExtractor(s_gettextLangs[i].name) != -1)
             continue;
 
         wxString langflag;
@@ -389,43 +389,43 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
         else
             langflag = wxString(" --language=") + s_gettextLangs[i].name;
 
-        // otherwise add new parser:
-        Parser p;
-        p.Name = s_gettextLangs[i].name;
-        p.Extensions = s_gettextLangs[i].exts;
-        p.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS --add-comments=translators: --force-po -o %o %C %K %F";
-        p.KeywordItem = "-k%k";
-        p.FileItem = "%f";
-        p.CharsetItem = "--from-code=%c";
-        pdb.Add(p);
+        // otherwise add new extractor:
+        Extractor ex;
+        ex.Name = s_gettextLangs[i].name;
+        ex.Extensions = s_gettextLangs[i].exts;
+        ex.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS --add-comments=translators: --force-po -o %o %C %K %F";
+        ex.KeywordItem = "-k%k";
+        ex.FileItem = "%f";
+        ex.CharsetItem = "--from-code=%c";
+        db.Add(ex);
         changed = true;
     }
 
-    // If upgrading Poedit to 1.2.4, add dxgettext parser for Delphi:
+    // If upgrading Poedit to 1.2.4, add dxgettext extractor for Delphi:
 #ifdef __WINDOWS__
     if (defaultsVersion == "1.2.x")
     {
-        Parser p;
+        Extractor p;
         p.Name = "Delphi (dxgettext)";
         p.Extensions = "*.pas;*.dpr;*.xfm;*.dfm";
         p.Command = "dxgettext --so %o %F";
         p.KeywordItem = wxEmptyString;
         p.FileItem = "%f";
-        pdb.Add(p);
+        db.Add(p);
         changed = true;
     }
 #endif
 
-    // If upgrading Poedit to 1.2.5, update C++ parser to handle --from-code:
+    // If upgrading Poedit to 1.2.5, update C++ extractor to handle --from-code:
     if (defaultsVersion == "1.2.x" || defaultsVersion == "1.2.4")
     {
-        int cpp = pdb.FindParser("C/C++");
+        int cpp = db.FindExtractor("C/C++");
         if (cpp != -1)
         {
-            if (pdb[cpp].Command == "xgettext --force-po -o %o %K %F")
+            if (db[cpp].Command == "xgettext --force-po -o %o %K %F")
             {
-                pdb[cpp].Command = "xgettext --force-po -o %o %C %K %F";
-                pdb[cpp].CharsetItem = "--from-code=%c";
+                db[cpp].Command = "xgettext --force-po -o %o %C %K %F";
+                db[cpp].CharsetItem = "--from-code=%c";
                 changed = true;
             }
         }
@@ -433,9 +433,9 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
 
     // Poedit 1.5.6 had a breakage, it add --add-comments without space in front of it.
     // Repair this automatically:
-    for (size_t i = 0; i < pdb.GetCount(); i++)
+    for (size_t i = 0; i < db.GetCount(); i++)
     {
-        wxString& cmd = pdb[i].Command;
+        wxString& cmd = db[i].Command;
         if (cmd.Contains("--add-comments=") && !cmd.Contains(" --add-comments="))
         {
             cmd.Replace("--add-comments=", " --add-comments=");
@@ -445,14 +445,14 @@ void PoeditApp::SetDefaultParsers(wxConfigBase *cfg)
 
     if (changed)
     {
-        pdb.Write(cfg);
+        db.Write(cfg);
         cfg->Write("Parsers/DefaultsVersion", GetAppVersion());
     }
 }
 
 void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
 {
-    SetDefaultParsers(cfg);
+    SetDefaultExtractors(cfg);
 
     if (cfg->Read("version", wxEmptyString) == GetAppVersion()) return;
 

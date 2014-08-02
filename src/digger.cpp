@@ -30,7 +30,7 @@
 #include <wx/filename.h>
 
 #include "digger.h"
-#include "parser.h"
+#include "extractor.h"
 #include "catalog.h"
 #include "progressinfo.h"
 #include "gexecute.h"
@@ -87,27 +87,27 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
                            const wxArrayString& keywords,
                            const wxString& charset)
 {
-    ParsersDB pdb;
-    pdb.Read(wxConfig::Get());
+    ExtractorsDB db;
+    db.Read(wxConfig::Get());
 
     m_progressInfo->UpdateMessage(_("Scanning files..."));
 
-    wxArrayString *all_files = FindFiles(paths, excludePaths, pdb);
+    wxArrayString *all_files = FindFiles(paths, excludePaths, db);
     if (all_files == NULL)
         return NULL;
 
     TempDirectory tmpdir;
     wxArrayString partials;
 
-    for (size_t i = 0; i < pdb.GetCount(); i++)
+    for (size_t i = 0; i < db.GetCount(); i++)
     {
         if ( all_files[i].empty() )
             continue; // no files of this kind
 
         m_progressInfo->UpdateMessage(
             // TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
-            wxString::Format(_("Parsing %s files..."), pdb[i].Name.c_str()));
-        if (!DigFiles(tmpdir, partials, all_files[i], pdb[i], keywords, charset))
+            wxString::Format(_("Parsing %s files..."), db[i].Name.c_str()));
+        if (!DigFiles(tmpdir, partials, all_files[i], db[i], keywords, charset))
         {
             delete[] all_files;
             return NULL;
@@ -145,7 +145,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
 bool SourceDigger::DigFiles(TempDirectory& tmpdir,
                             wxArrayString& outFiles,
                             const wxArrayString& files,
-                            Parser &parser, const wxArrayString& keywords,
+                            Extractor &extract, const wxArrayString& keywords,
                             const wxString& charset)
 {
     wxArrayString batchfiles;
@@ -161,7 +161,7 @@ bool SourceDigger::DigFiles(TempDirectory& tmpdir,
 
         wxString tempfile = tmpdir.CreateFileName("extracted.pot");
         if (!ExecuteGettext(
-                    parser.GetCommand(batchfiles, keywords, tempfile, charset)))
+                    extract.GetCommand(batchfiles, keywords, tempfile, charset)))
         {
             return false;
         }
@@ -189,11 +189,11 @@ bool SourceDigger::DigFiles(TempDirectory& tmpdir,
 
 wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
                                        const wxArrayString& excludePaths,
-                                       ParsersDB& pdb)
+                                       ExtractorsDB& db)
 {
-    if (pdb.GetCount() == 0)
+    if (db.GetCount() == 0)
       return NULL;
-    wxArrayString *p_files = new wxArrayString[pdb.GetCount()];
+    wxArrayString *p_files = new wxArrayString[db.GetCount()];
     wxArrayString files;
     size_t i;
     
@@ -212,9 +212,9 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
     files.Sort();
 
     size_t filescnt = 0;
-    for (i = 0; i < pdb.GetCount(); i++)
+    for (i = 0; i < db.GetCount(); i++)
     {
-        p_files[i] = pdb[i].SelectParsable(files);
+        p_files[i] = db[i].SelectParsable(files);
         filescnt += p_files[i].GetCount();
     }
     m_progressInfo->SetGaugeMax((int)filescnt);

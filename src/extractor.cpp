@@ -29,19 +29,19 @@
 #include <wx/config.h>
 #include <wx/tokenzr.h>
 
-#include "parser.h"
+#include "extractor.h"
 
 
 #include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY(ParserArray);
+WX_DEFINE_OBJARRAY(ExtractorArray);
 
-void ParsersDB::Read(wxConfigBase *cfg)
+void ExtractorsDB::Read(wxConfigBase *cfg)
 {
     Clear();
     
     cfg->SetExpandEnvVars(false);
 
-    Parser info;
+    Extractor info;
     wxString key, oldpath = cfg->GetPath();
     wxStringTokenizer tkn(cfg->Read("Parsers/List", wxEmptyString), ";");
 
@@ -62,7 +62,7 @@ void ParsersDB::Read(wxConfigBase *cfg)
 
 
 
-void ParsersDB::Write(wxConfigBase *cfg)
+void ExtractorsDB::Write(wxConfigBase *cfg)
 {
 #if 0 // asserts on wxGTK, some bug in wx
     if (cfg->HasGroup("Parsers"))
@@ -95,7 +95,7 @@ void ParsersDB::Write(wxConfigBase *cfg)
     }
 }
     
-int ParsersDB::FindParser(const wxString& name)
+int ExtractorsDB::FindExtractor(const wxString& name)
 {
     for (size_t i = 0; i < GetCount(); i++)
     {
@@ -106,7 +106,7 @@ int ParsersDB::FindParser(const wxString& name)
 }
 
 
-wxArrayString Parser::SelectParsable(const wxArrayString& files)
+wxArrayString Extractor::SelectParsable(const wxArrayString& files)
 {
     wxStringTokenizer tkn(Extensions, ";, \t", wxTOKEN_STRTOK);
     wxString wildcard;
@@ -135,10 +135,10 @@ wxArrayString Parser::SelectParsable(const wxArrayString& files)
 
 
 
-wxString Parser::GetCommand(const wxArrayString& files, 
-                            const wxArrayString& keywords, 
-                            const wxString& output,
-                            const wxString& charset)
+wxString Extractor::GetCommand(const wxArrayString& files,
+                               const wxArrayString& keywords,
+                               const wxString& output,
+                               const wxString& charset)
 {
     wxString cmdline, kline, fline;
     

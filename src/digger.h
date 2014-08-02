@@ -32,13 +32,13 @@
 
 class Catalog;
 class wxArrayString;
-class ParsersDB;
-class Parser;
+class ExtractorsDB;
+class Extractor;
 class ProgressInfo;
 class TempDirectory;
 
 /** This class extracts translatable strings from sources.
-    It uses ParsersDB to get information about external programs to
+    It uses ExtractorsDB to get information about external programs to
     call in order to dig information from single file.
  */
 class SourceDigger
@@ -49,9 +49,9 @@ class SourceDigger
 
         /** Scans files for translatable strings and returns Catalog
             instance containing them. All files in input \a paths that 
-            match file extensions in a definition of parser in ParsersDB
-            instance passed to the ctor are proceed by external parser 
-            program (typically, gettext) according to parser definition.
+            match file extensions in a definition of extractor in ExtractorsDB
+            instance passed to the ctor are proceed by external extractor
+            program (typically, gettext) according to extractor definition.
 
             \param paths    list of directories to look in
             \param excludePaths directories to skip
@@ -67,12 +67,12 @@ class SourceDigger
     private:
         /** Finds all parsable files. Returned value is a new[]-allocated
             array of wxArrayString objects. n-th string array in returned
-            array holds list of files that can be parsed by n-th parser
+            array holds list of files that can be parsed by n-th extractor
             in \a pdb database.
          */
         wxArrayString *FindFiles(const wxArrayString& paths,
                                  const wxArrayString& excludePaths,
-                                 ParsersDB& pdb);
+                                 ExtractorsDB& pdb);
 
         /** Finds all files in given directory.
             \return false if an error occured.
@@ -85,14 +85,14 @@ class SourceDigger
             \param outfiles list to which (temporary) file name of extracted
                             catalog will be appended
             \param files    list of files to parse
-            \param parser   parser definition
+            \param extractor   extractor definition
             \param keywords list of keywords that mark translatable strings
             \param charset  source code charset (may be empty)
          */
         bool DigFiles(TempDirectory& tmpdir,
                       wxArrayString& outFiles,
                       const wxArrayString& files,
-                      Parser &parser, const wxArrayString& keywords,
+                      Extractor &extract, const wxArrayString& keywords,
                       const wxString& charset);
 
         ProgressInfo *m_progressInfo;

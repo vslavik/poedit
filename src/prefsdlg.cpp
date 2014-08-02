@@ -289,16 +289,16 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
 
     XRCCTRL(*this, "crlf_format", wxChoice)->SetSelection(sel);
 
-    m_parsers.Read(cfg);               
+    m_extractors.Read(cfg);
     
-    wxListBox *list = XRCCTRL(*this, "parsers_list", wxListBox);
-    for (unsigned i = 0; i < m_parsers.GetCount(); i++)
-        list->Append(m_parsers[i].Name);
+    wxListBox *list = XRCCTRL(*this, "extractors_list", wxListBox);
+    for (unsigned i = 0; i < m_extractors.GetCount(); i++)
+        list->Append(m_extractors[i].Name);
     
-    if (m_parsers.GetCount() == 0)
+    if (m_extractors.GetCount() == 0)
     {
-        XRCCTRL(*this, "parser_edit", wxButton)->Enable(false);
-        XRCCTRL(*this, "parser_delete", wxButton)->Enable(false);
+        XRCCTRL(*this, "extractor_edit", wxButton)->Enable(false);
+        XRCCTRL(*this, "extractor_delete", wxButton)->Enable(false);
     }
     else
         list->SetSelection(0);
@@ -364,7 +364,7 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
     cfg->Write("crlf_format", formats[
                 XRCCTRL(*this, "crlf_format", wxChoice)->GetSelection()]);
                
-    m_parsers.Write(cfg);
+    m_extractors.Write(cfg);
 
 #ifdef USE_SPARKLE
     UserDefaults_SetBoolValue("SUEnableAutomaticChecks",
@@ -388,9 +388,9 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
 
 
 BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
-   EVT_BUTTON(XRCID("parser_new"), PreferencesDialog::OnNewParser)
-   EVT_BUTTON(XRCID("parser_edit"), PreferencesDialog::OnEditParser)
-   EVT_BUTTON(XRCID("parser_delete"), PreferencesDialog::OnDeleteParser)
+   EVT_BUTTON(XRCID("extractor_new"), PreferencesDialog::OnNewExtractor)
+   EVT_BUTTON(XRCID("extractor_edit"), PreferencesDialog::OnEditExtractor)
+   EVT_BUTTON(XRCID("extractor_delete"), PreferencesDialog::OnDeleteExtractor)
 #if NEED_CHOOSELANG_UI
    EVT_BUTTON(XRCID("ui_language"), PreferencesDialog::OnUILanguage)
 #endif
@@ -418,36 +418,36 @@ void PreferencesDialog::OnUpdateUIFontText(wxUpdateUIEvent& event)
 
 
 template<typename TFunctor>
-void PreferencesDialog::EditParser(int num, TFunctor completionHandler)
+void PreferencesDialog::EditExtractor(int num, TFunctor completionHandler)
 {
-    wxWindowPtr<wxDialog> dlg(wxXmlResource::Get()->LoadDialog(this, "edit_parser"));
+    wxWindowPtr<wxDialog> dlg(wxXmlResource::Get()->LoadDialog(this, "edit_extractor"));
     dlg->Centre();
 
-    auto parser_language = XRCCTRL(*dlg, "parser_language", wxTextCtrl);
-    auto parser_extensions = XRCCTRL(*dlg, "parser_extensions", wxTextCtrl);
-    auto parser_command = XRCCTRL(*dlg, "parser_command", wxTextCtrl);
-    auto parser_keywords = XRCCTRL(*dlg, "parser_keywords", wxTextCtrl);
-    auto parser_files = XRCCTRL(*dlg, "parser_files", wxTextCtrl);
-    auto parser_charset = XRCCTRL(*dlg, "parser_charset", wxTextCtrl);
+    auto extractor_language = XRCCTRL(*dlg, "extractor_language", wxTextCtrl);
+    auto extractor_extensions = XRCCTRL(*dlg, "extractor_extensions", wxTextCtrl);
+    auto extractor_command = XRCCTRL(*dlg, "extractor_command", wxTextCtrl);
+    auto extractor_keywords = XRCCTRL(*dlg, "extractor_keywords", wxTextCtrl);
+    auto extractor_files = XRCCTRL(*dlg, "extractor_files", wxTextCtrl);
+    auto extractor_charset = XRCCTRL(*dlg, "extractor_charset", wxTextCtrl);
 
     {
-        const Parser& nfo = m_parsers[num];
-        parser_language->SetValue(nfo.Name);
-        parser_extensions->SetValue(nfo.Extensions);
-        parser_command->SetValue(nfo.Command);
-        parser_keywords->SetValue(nfo.KeywordItem);
-        parser_files->SetValue(nfo.FileItem);
-        parser_charset->SetValue(nfo.CharsetItem);
+        const Extractor& nfo = m_extractors[num];
+        extractor_language->SetValue(nfo.Name);
+        extractor_extensions->SetValue(nfo.Extensions);
+        extractor_command->SetValue(nfo.Command);
+        extractor_keywords->SetValue(nfo.KeywordItem);
+        extractor_files->SetValue(nfo.FileItem);
+        extractor_charset->SetValue(nfo.CharsetItem);
     }
 
     dlg->Bind
     (
         wxEVT_UPDATE_UI,
         [=](wxUpdateUIEvent& e){
-            e.Enable(!parser_language->IsEmpty() &&
-                     !parser_extensions->IsEmpty() &&
-                     !parser_command->IsEmpty() &&
-                     !parser_files->IsEmpty());
+            e.Enable(!extractor_language->IsEmpty() &&
+                     !extractor_extensions->IsEmpty() &&
+                     !extractor_command->IsEmpty() &&
+                     !extractor_files->IsEmpty());
             // charset, keywords could in theory be empty if unsupported by the parser tool
         },
         wxID_OK
@@ -457,53 +457,53 @@ void PreferencesDialog::EditParser(int num, TFunctor completionHandler)
         (void)dlg; // force use
         if (retcode == wxID_OK)
         {
-            Parser& nfo = m_parsers[num];
-            nfo.Name = parser_language->GetValue();
-            nfo.Extensions = parser_extensions->GetValue();
-            nfo.Command = parser_command->GetValue();
-            nfo.KeywordItem = parser_keywords->GetValue();
-            nfo.FileItem = parser_files->GetValue();
-            nfo.CharsetItem = parser_charset->GetValue();
-            XRCCTRL(*this, "parsers_list", wxListBox)->SetString(num, nfo.Name);
+            Extractor& nfo = m_extractors[num];
+            nfo.Name = extractor_language->GetValue();
+            nfo.Extensions = extractor_extensions->GetValue();
+            nfo.Command = extractor_command->GetValue();
+            nfo.KeywordItem = extractor_keywords->GetValue();
+            nfo.FileItem = extractor_files->GetValue();
+            nfo.CharsetItem = extractor_charset->GetValue();
+            XRCCTRL(*this, "extractors_list", wxListBox)->SetString(num, nfo.Name);
         }
         completionHandler(retcode == wxID_OK);
     });
 }
 
-void PreferencesDialog::OnNewParser(wxCommandEvent&)
+void PreferencesDialog::OnNewExtractor(wxCommandEvent&)
 {
-    Parser info;
-    m_parsers.Add(info);
-    XRCCTRL(*this, "parsers_list", wxListBox)->Append(wxEmptyString);
-    int index = (int)m_parsers.GetCount()-1;
-    EditParser(index, [=](bool added){
+    Extractor info;
+    m_extractors.Add(info);
+    XRCCTRL(*this, "extractors_list", wxListBox)->Append(wxEmptyString);
+    int index = (int)m_extractors.GetCount()-1;
+    EditExtractor(index, [=](bool added){
         if (added)
         {
-            XRCCTRL(*this, "parser_edit", wxButton)->Enable(true);
-            XRCCTRL(*this, "parser_delete", wxButton)->Enable(true);
+            XRCCTRL(*this, "extractor_edit", wxButton)->Enable(true);
+            XRCCTRL(*this, "extractor_delete", wxButton)->Enable(true);
         }
         else
         {
-            XRCCTRL(*this, "parsers_list", wxListBox)->Delete(index);
-            m_parsers.RemoveAt(index);
+            XRCCTRL(*this, "extractors_list", wxListBox)->Delete(index);
+            m_extractors.RemoveAt(index);
         }
     });
 }
 
-void PreferencesDialog::OnEditParser(wxCommandEvent&)
+void PreferencesDialog::OnEditExtractor(wxCommandEvent&)
 {
-    EditParser(XRCCTRL(*this, "parsers_list", wxListBox)->GetSelection(), [](bool){});
+    EditExtractor(XRCCTRL(*this, "extractors_list", wxListBox)->GetSelection(), [](bool){});
 }
 
-void PreferencesDialog::OnDeleteParser(wxCommandEvent&)
+void PreferencesDialog::OnDeleteExtractor(wxCommandEvent&)
 {
-    int index = XRCCTRL(*this, "parsers_list", wxListBox)->GetSelection();
-    m_parsers.RemoveAt(index);
-    XRCCTRL(*this, "parsers_list", wxListBox)->Delete(index);
-    if (m_parsers.GetCount() == 0)
+    int index = XRCCTRL(*this, "extractors_list", wxListBox)->GetSelection();
+    m_extractors.RemoveAt(index);
+    XRCCTRL(*this, "extractors_list", wxListBox)->Delete(index);
+    if (m_extractors.GetCount() == 0)
     {
-        XRCCTRL(*this, "parser_edit", wxButton)->Enable(false);
-        XRCCTRL(*this, "parser_delete", wxButton)->Enable(false);
+        XRCCTRL(*this, "extractor_edit", wxButton)->Enable(false);
+        XRCCTRL(*this, "extractor_delete", wxButton)->Enable(false);
     }
 }
 

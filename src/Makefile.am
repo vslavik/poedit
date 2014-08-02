@@ -11,7 +11,7 @@ libexec_PROGRAMS = poedit-dump-legacy-tm
 poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  errorbar.cpp errorbar.h \
                  catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
-                 edframe.h fileviewer.cpp fileviewer.h parser.cpp parser.h \
+                 edframe.h fileviewer.cpp fileviewer.h extractor.cpp extractor.h \
                  prefsdlg.cpp prefsdlg.h \
                  propertiesdlg.cpp propertiesdlg.h progressinfo.h \
                  progressinfo.cpp digger.h digger.cpp gexecute.h \

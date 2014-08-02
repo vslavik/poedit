@@ -229,13 +229,13 @@ to set the Last-Translator header of GNU gettext files.</label>
             </object>
           </object>
           <object class="notebookpage">
-            <label>Parsers</label>
+            <label>Extractors</label>
             <object class="wxPanel">
               <object class="wxBoxSizer">
                 <orient>wxVERTICAL</orient>
                 <object class="sizeritem">
                   <object class="wxStaticText">
-                    <label>Source code parsers:</label>
+                    <label>Source code extractors:</label>
                   </object>
                   <flag>wxALL</flag>
                   <border>5d</border>
@@ -244,7 +244,7 @@ to set the Last-Translator header of GNU gettext files.</label>
                 <object class="sizeritem">
                   <object class="wxBoxSizer">
                     <object class="sizeritem">
-                      <object class="wxListBox" name="parsers_list"/>
+                      <object class="wxListBox" name="extractors_list"/>
                       <option>1</option>
                       <flag>wxEXPAND</flag>
                       <minsize>130,-1d</minsize>
@@ -253,19 +253,19 @@ to set the Last-Translator header of GNU gettext files.</label>
                       <object class="wxBoxSizer">
                         <orient>wxVERTICAL</orient>
                         <object class="sizeritem">
-                          <object class="wxButton" name="parser_new">
+                          <object class="wxButton" name="extractor_new">
                             <label>New</label>
                           </object>
                         </object>
                         <object class="sizeritem">
-                          <object class="wxButton" name="parser_edit">
+                          <object class="wxButton" name="extractor_edit">
                             <label>Edit</label>
                           </object>
                           <flag>wxTOP|wxBOTTOM</flag>
                           <border>2d</border>
                         </object>
                         <object class="sizeritem">
-                          <object class="wxButton" name="parser_delete">
+                          <object class="wxButton" name="extractor_delete">
                             <label>Delete</label>
                           </object>
                         </object>
@@ -310,8 +310,8 @@ to set the Last-Translator header of GNU gettext files.</label>
       </object>
     </object>
   </object>
-  <object class="wxDialog" name="edit_parser">
-    <title>Parser setup</title>
+  <object class="wxDialog" name="edit_extractor">
+    <title>Extractor setup</title>
     <object class="wxBoxSizer">
       <orient>wxVERTICAL</orient>
       <object class="sizeritem">
@@ -326,7 +326,7 @@ to set the Last-Translator header of GNU gettext files.</label>
             <border>5d</border>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_language"/>
+            <object class="wxTextCtrl" name="extractor_language"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
             <border>5d</border>
           </object>
@@ -338,7 +338,7 @@ to set the Last-Translator header of GNU gettext files.</label>
             <flag>wxLEFT|wxRIGHT|wxTOP</flag>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_extensions"/>
+            <object class="wxTextCtrl" name="extractor_extensions"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
@@ -352,19 +352,19 @@ to set the Last-Translator header of GNU gettext files.</label>
           <orient>wxVERTICAL</orient>
           <object class="sizeritem">
             <object class="wxStaticText">
-              <label>Parser command:</label>
+              <label>Command to extract translations:</label>
             </object>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
             <border>5d</border>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_command"/>
+            <object class="wxTextCtrl" name="extractor_command"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
           <object class="sizeritem">
             <object class="wxStaticText">
-              <label>This is the command used to launch the parser.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files,\n%C to charset flag (see below).</label>
+              <label>This is the command used to launch the extractor.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files,\n%C to charset flag (see below).</label>
             </object>
             <flag>wxLEFT|wxRIGHT</flag> 
             <border>5d</border>
@@ -377,7 +377,7 @@ to set the Last-Translator header of GNU gettext files.</label>
             <flag>wxLEFT|wxRIGHT|wxTOP</flag>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_keywords"/>
+            <object class="wxTextCtrl" name="extractor_keywords"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
@@ -396,7 +396,7 @@ to set the Last-Translator header of GNU gettext files.</label>
             <flag>wxLEFT|wxRIGHT|wxTOP</flag>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_files"/>
+            <object class="wxTextCtrl" name="extractor_files"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
@@ -415,7 +415,7 @@ to set the Last-Translator header of GNU gettext files.</label>
             <flag>wxLEFT|wxRIGHT|wxTOP</flag>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_charset"/>
+            <object class="wxTextCtrl" name="extractor_charset"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
