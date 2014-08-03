@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Poedit (http://poedit.net)
  *
  *  Copyright (C) 2000-2014 Vaclav Slavik
@@ -374,8 +374,15 @@ public:
         sizer->Add(m_stats, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 30));
         sizer->AddSpacer(10);
 
+        auto buttonsSizer = new wxBoxSizer(wxHORIZONTAL);
+
         auto import = new wxButton(this, wxID_ANY, _("Learn From Files..."));
-        sizer->Add(import, wxSizerFlags().Border(wxLEFT|wxRIGHT, 30));
+        buttonsSizer->Add(import, wxSizerFlags());
+        // TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+        auto clear = new wxButton(this, wxID_ANY, _("Reset"));
+        buttonsSizer->Add(clear, wxSizerFlags().Border(wxLEFT, 5));
+
+        sizer->Add(buttonsSizer, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 30));
         sizer->AddSpacer(10);
 
         m_useTMWhenUpdating = new wxCheckBox(this, wxID_ANY, _("Consult TM when updating from sources"));
@@ -396,13 +403,16 @@ public:
 #ifdef __WXOSX__
         m_stats->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         import->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        clear->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 
         m_useTMWhenUpdating->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
         m_stats->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
         import->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
+        clear->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
 
         import->Bind(wxEVT_BUTTON, &TMPageWindow::OnImportIntoTM, this);
+        clear->Bind(wxEVT_BUTTON, &TMPageWindow::OnResetTM, this);
 
         UpdateStats();
 
@@ -490,6 +500,27 @@ private:
             progress.Pulse(_("Finalizing..."));
             tm->Commit();
             UpdateStats();
+        });
+    }
+
+    void OnResetTM(wxCommandEvent&)
+    {
+        auto title = _("Reset translation memory");
+        auto main = _("Are you sure you want to reset the translation memory?");
+        auto details = _(L"Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation.");
+
+        wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(this, main, title, wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION));
+        dlg->SetExtendedMessage(details);
+        dlg->SetYesNoLabels(_("Reset"), _("Cancel"));
+
+        dlg->ShowWindowModalThenDo([this,dlg](int retcode){
+            if (retcode == wxID_YES) {
+                wxBusyCursor bcur;
+                auto tm = TranslationMemory::Get().CreateWriter();
+                tm->DeleteAll();
+                tm->Commit();
+                UpdateStats();
+            }
         });
     }
 

@@ -394,6 +394,15 @@ public:
         }
     }
 
+    virtual void DeleteAll()
+    {
+        try
+        {
+            m_writer->deleteAll();
+        }
+        CATCH_AND_RETHROW_EXCEPTION
+    }
+
 private:
     IndexWriterPtr m_writer;
 };

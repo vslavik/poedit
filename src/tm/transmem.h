@@ -97,6 +97,9 @@ public:
          */
         virtual void Insert(const Catalog& cat) = 0;
 
+        /// Deletes everything from the TM.
+        virtual void DeleteAll() = 0;
+
         /// Commits changes written so far.
         virtual void Commit() = 0;
     };
