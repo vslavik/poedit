@@ -235,8 +235,6 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
     // remove "Automatic spellchecking" checkbox:
     wxWindow *spellcheck = XRCCTRL(*this, "enable_spellchecking", wxCheckBox);
     spellcheck->GetContainingSizer()->Show(spellcheck, false);
-    // re-layout the dialog:
-    GetSizer()->Fit(this);
 #endif
 
 #if !NEED_CHOOSELANG_UI
@@ -244,10 +242,9 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
     XRCCTRL(*this, "ui_language", wxButton)->Show(false);
 #endif
 
-#if defined(__WXMSW__) || defined(__WXMAC__)
-    // FIXME
-    SetSize(GetSize().x+1,GetSize().y+1);
-#endif
+    // re-layout the dialog:
+    Layout();
+    GetSizer()->SetSizeHints(this);
 }
 
 

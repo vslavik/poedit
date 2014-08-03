@@ -18,18 +18,10 @@
                     <orient>wxVERTICAL</orient>
                     <object class="sizeritem">
                       <object class="wxStaticText">
-                          <label>Your name and email set below are only used
-to set the Last-Translator header of GNU gettext files.</label>
-                      </object>
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
-                    </object>
-                    <object class="sizeritem">
-                      <object class="wxStaticText">
                         <label>Your name:</label>
                       </object>
                       <border>5d</border>
-                      <flag>wxLEFT|wxTOP</flag>
+                      <flag>wxLEFT</flag>
                     </object>
                     <object class="sizeritem">
                       <object class="wxTextCtrl" name="user_name">
@@ -49,6 +41,16 @@ to set the Last-Translator header of GNU gettext files.</label>
                       <object class="wxTextCtrl" name="user_email"/>
                       <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
                       <border>5d</border>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxStaticText">
+                          <label>Your name and email set below are only used
+to set the Last-Translator header of GNU gettext files.</label>
+                          <variant platform="mac">small</variant>
+                          <fg platform="win">wxSYS_COLOUR_GRAYTEXT</fg>
+                      </object>
+                      <border>5d</border>
+                      <flag>wxLEFT|wxRIGHT</flag>
                     </object>
                   </object>
                   <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
@@ -365,6 +367,8 @@ to set the Last-Translator header of GNU gettext files.</label>
           <object class="sizeritem">
             <object class="wxStaticText">
               <label>This is the command used to launch the parser.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files,\n%C to charset flag (see below).</label>
+              <variant platform="mac">small</variant>
+              <fg platform="win">wxSYS_COLOUR_GRAYTEXT</fg>
             </object>
             <flag>wxLEFT|wxRIGHT</flag> 
             <border>5d</border>
@@ -384,6 +388,8 @@ to set the Last-Translator header of GNU gettext files.</label>
           <object class="sizeritem">
             <object class="wxStaticText">
               <label>This will be attached to the command line once\nfor each keyword. %k expands to the keyword.</label>
+              <variant platform="mac">small</variant>
+              <fg platform="win">wxSYS_COLOUR_GRAYTEXT</fg>
             </object>
             <flag>wxLEFT|wxRIGHT</flag> 
             <border>5d</border>
@@ -403,6 +409,8 @@ to set the Last-Translator header of GNU gettext files.</label>
           <object class="sizeritem">
             <object class="wxStaticText">
               <label>This will be attached to the command line once\nfor each input file. %f expands to the filename.</label>
+              <variant platform="mac">small</variant>
+              <fg platform="win">wxSYS_COLOUR_GRAYTEXT</fg>
             </object>
             <flag>wxLEFT|wxRIGHT</flag> 
             <border>5d</border>
@@ -422,6 +430,8 @@ to set the Last-Translator header of GNU gettext files.</label>
           <object class="sizeritem">
             <object class="wxStaticText">
               <label>This will be attached to the command line\nonly if source codecharset was given. %c expands to charset value.</label>
+              <variant platform="mac">small</variant>
+              <fg platform="win">wxSYS_COLOUR_GRAYTEXT</fg>
             </object>
             <flag>wxLEFT|wxRIGHT</flag> 
             <border>5d</border>
