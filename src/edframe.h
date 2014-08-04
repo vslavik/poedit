@@ -94,6 +94,9 @@ class PoeditFrame : public wxFrame
         /// Returns true if at least one one window has unsaved changes
         static bool AnyWindowIsModified();
 
+        /// Returns true if any windows (with documents) are open
+        static bool HasAnyWindow() { return !ms_instances.empty(); }
+
         ~PoeditFrame();
 
         /// Reads catalog, refreshes controls, takes ownership of catalog.

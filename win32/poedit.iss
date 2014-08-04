@@ -114,6 +114,13 @@ Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: unins
 Root: HKCR; SubKey: GettextFile; ValueType: string; ValueData: PO translation file; Flags: uninsdeletekey noerror
 Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
 Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\Resources\poedit-translation-generic.ico; Flags: uninsdeletekey noerror
+
+Root: HKCR; SubKey: .mo; ValueType: string; ValueData: CompiledGettextFile; Flags: uninsdeletekey noerror
+Root: HKCR; SubKey: .gmo; ValueType: string; ValueData: CompiledGettextFile; Flags: uninsdeletekey noerror
+Root: HKCR; SubKey: CompiledGettextFile; ValueType: string; ValueData: Compiled translation file; Flags: uninsdeletekey noerror
+Root: HKCR; SubKey: CompiledGettextFile\Shell\Open\Command; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
+Root: HKCR; Subkey: CompiledGettextFile\DefaultIcon; ValueType: string; ValueData: {app}\Resources\poedit-translation-generic.ico; Flags: uninsdeletekey noerror
+
 Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty dontcreatekey
 Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcreatekey
 

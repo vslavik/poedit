@@ -277,6 +277,15 @@ bool PoeditApp::OnInit()
     win_sparkle_init();
 #endif
 
+#ifndef __WXOSX__
+    // If we failed to open any window during startup (e.g. because the user
+    // attempted to open MO files), shut the app down. Don't do this on OS X
+    // where a) the initialization is finished after OnInit() and b) apps
+    // without windows are OK.
+    if (!PoeditFrame::HasAnyWindow())
+        return false;
+#endif
+
     return true;
 }
 
@@ -342,14 +351,34 @@ void PoeditApp::OpenNewFile()
 void PoeditApp::OpenFiles(const wxArrayString& names)
 {
     PoeditFrame *active = PoeditFrame::UnusedActiveWindow();
-    if (names.size() == 1 && active)
-    {
-        active->OpenFile(names[0]);
-        return;
-    }
 
     for ( auto name: names )
-        PoeditFrame::Create(name);
+    {
+        // MO files cannot be opened directly in Poedit (yet), but they are
+        // associated with it, so that the app can provide explanation to users
+        // not familiar with the MO/PO distinction.
+        auto n = name.Lower();
+        if (n.EndsWith(".mo") || n.EndsWith(".gmo"))
+        {
+            wxMessageDialog dlg(nullptr,
+                                _("MO files can’t be directly edited in Poedit."),
+                                _("Error opening file"),
+                                wxOK);
+            dlg.SetExtendedMessage(_("Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."));
+            dlg.ShowModal();
+            continue;
+        }
+
+        if (active)
+        {
+            active->OpenFile(name);
+            active = nullptr;
+        }
+        else
+        {
+            PoeditFrame::Create(name);
+        }
+    }
 }
 
 void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
