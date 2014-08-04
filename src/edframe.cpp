@@ -1156,6 +1156,7 @@ void PoeditFrame::InitSpellchecker()
     bool enabled = m_catalog && lang.IsValid() &&
                    wxConfig::Get()->Read("enable_spellchecking",
                                          (long)true);
+    const bool enabledInitially = enabled;
 
 #ifdef __WXOSX__
     if (enabled)
@@ -1177,7 +1178,7 @@ void PoeditFrame::InitSpellchecker()
             report_problem = true;
     }
 
-    if ( enabled && report_problem )
+    if ( enabledInitially && report_problem )
     {
         AttentionMessage msg
         (
