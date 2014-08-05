@@ -271,7 +271,6 @@ private:
         void OnExport(wxCommandEvent& event);
         bool ExportCatalog(const wxString& filename);
 
-        void OnIdle(wxIdleEvent& event);
         void OnSize(wxSizeEvent& event);
 
         // updates the status of both comment windows: Automatic and Translator's
@@ -295,8 +294,6 @@ private:
         DECLARE_EVENT_TABLE()
 
     private:
-        std::set<int> m_itemsRefreshQueue;
-
         bool m_commentWindowEditable;
         Catalog *m_catalog;
         wxString m_fileName;

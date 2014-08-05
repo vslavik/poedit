@@ -501,7 +501,6 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
                        PoeditFrame::OnSetBookmark)
    EVT_CLOSE          (                PoeditFrame::OnCloseWindow)
    EVT_TEXT           (ID_TEXTCOMMENT,PoeditFrame::OnCommentWindowText)
-   EVT_IDLE           (PoeditFrame::OnIdle)
    EVT_SIZE           (PoeditFrame::OnSize)
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
@@ -2559,8 +2558,6 @@ void PoeditFrame::NoteAsRecentFile()
 
 void PoeditFrame::RefreshControls()
 {
-    m_itemsRefreshQueue.clear();
-
     if (!m_catalog)
         return;
 
@@ -3298,19 +3295,7 @@ void PoeditFrame::OnCommentWindowText(wxCommandEvent&)
 
 void PoeditFrame::RefreshSelectedItem()
 {
-    m_itemsRefreshQueue.insert(m_list->GetSelection());
-}
-
-void PoeditFrame::OnIdle(wxIdleEvent& event)
-{
-    event.Skip();
-
-    for ( std::set<int>::const_iterator i = m_itemsRefreshQueue.begin();
-          i != m_itemsRefreshQueue.end(); ++i )
-    {
-        m_list->RefreshItem(*i);
-    }
-    m_itemsRefreshQueue.clear();
+    m_list->RefreshItem(m_list->GetSelection());
 }
 
 void PoeditFrame::OnSize(wxSizeEvent& event)
