@@ -194,6 +194,12 @@ class CatalogItem
         /// Sets all translations.
         void SetTranslations(const wxArrayString& t);
 
+        /// Set translations to equal source text.
+        void SetTranslationFromSource();
+
+        // Clears all translation content from the entry
+        void ClearTranslation();
+
         /// Sets the comment.
         void SetComment(const wxString& c)
         {
