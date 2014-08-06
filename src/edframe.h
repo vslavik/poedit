@@ -252,6 +252,9 @@ private:
         void OnSortGroupByContext(wxCommandEvent&);
         void OnSortUntranslatedFirst(wxCommandEvent&);
 
+        void OnSelectionUpdate(wxUpdateUIEvent& event);
+        void OnSingleSelectionUpdate(wxUpdateUIEvent& event);
+
 #if defined(__WXMSW__) || defined(__WXGTK__)
         void OnTextEditingCommand(wxCommandEvent& event);
         void OnTextEditingCommandUpdate(wxUpdateUIEvent& event);
@@ -279,8 +282,6 @@ private:
         void ShowPluralFormUI(bool show = true);
 
         void RecreatePluralTextCtrls();
-
-        void RefreshSelectedItem();
 
         template<typename TFunctor>
         void ReportValidationErrors(int errors, Catalog::CompilationStatus mo_compilation_status,

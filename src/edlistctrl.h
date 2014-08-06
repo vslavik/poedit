@@ -77,43 +77,87 @@ class PoeditListCtrl : public wxListView
         }
 
         /// Returns item's index in the catalog
-        int ListIndexToCatalog(int index) const
+        int ListIndexToCatalog(long index) const
         {
             if ( index < 0 || index >= (int)m_mapListToCatalog.size() )
-                return index;
+                return int(index);
             else
                 return m_mapListToCatalog[index];
         }
 
         /// Returns item from the catalog based on list index
-        const CatalogItem& ListIndexToCatalogItem(int index) const
+        const CatalogItem& ListIndexToCatalogItem(long index) const
+        {
+            return (*m_catalog)[ListIndexToCatalog(index)];
+        }
+        CatalogItem& ListIndexToCatalogItem(long index)
         {
             return (*m_catalog)[ListIndexToCatalog(index)];
         }
 
-
-        /// Returns current list selection (as list item index)
-        int GetSelection() const { return (int)GetFirstSelected(); }
-
         /// Returns index of selected catalog item
-        int GetSelectedCatalogItem() const
+        int GetFirstSelectedCatalogItem() const
         {
-            return ListIndexToCatalog(GetSelection());
+            return ListIndexToCatalog(GetFirstSelected());
         }
 
-        /// Selects given catalog item
-        void SelectCatalogItem(int catalogIndex)
+        std::vector<int> GetSelectedCatalogItems() const
         {
-            Select(CatalogIndexToList(catalogIndex));
+            std::vector<int> s;
+            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
+                s.push_back(ListIndexToCatalog(i));
+            return s;
         }
 
-        void Select(long n, bool on = true)
+        void SetSelectedCatalogItems(const std::vector<int>& selection)
         {
-#ifdef __WXMAC__
-            SetItemState(GetSelection(), 0, wxLIST_STATE_SELECTED);
-#endif
-            wxListView::Select(n, on);
+            ClearSelection();
+            for (auto i: selection)
+                Select(CatalogIndexToList(i));
+        }
+
+        // Perform given function for all selected items. The function takes
+        // reference to the item as its argument. Also refresh the items touched,
+        // on the assumption that the operation modifies them.
+        template<typename T>
+        void ForSelectedCatalogItemsDo(T func)
+        {
+            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
+            {
+                func(ListIndexToCatalogItem(i));
+                RefreshItem(i);
+            }
+        }
+
+        void SelectOnly(long n)
+        {
+            ClearSelection();
+            wxListView::Select(n);
             EnsureVisible(n);
+        }
+
+        void SelectAndFocus(long n)
+        {
+            SelectOnly(n);
+            Focus(n);
+        }
+
+        void ClearSelection()
+        {
+            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
+                wxListView::Select(i, false);
+        }
+
+        /// Returns true if at least one item is selected.
+        bool HasSelection() const { return GetSelectedItemCount() >= 1; }
+
+        /// Returns true if exactly one item is selected.
+        bool HasSingleSelection() const { return GetSelectedItemCount() == 1; }
+
+        void RefreshSelectedItems()
+        {
+            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
+                RefreshItem(i);
         }
 
         void SetCustomFont(wxFont font);

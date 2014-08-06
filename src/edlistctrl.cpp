@@ -356,14 +356,23 @@ void PoeditListCtrl::CatalogChanged(Catalog* catalog)
 {
     wxWindowUpdateLocker no_updates(this);
 
+    const bool isSameCatalog = (catalog == m_catalog);
+
     // this is to prevent crashes (wxMac at least) when shortening virtual
     // listctrl when its scrolled to the bottom:
-    m_catalog = NULL;
+    m_catalog = nullptr;
     SetItemCount(0);
+
+    std::vector<int> selection;
+    if (isSameCatalog)
+        selection = GetSelectedCatalogItems();
 
     // now read the new catalog:
     m_catalog = catalog;
     ReadCatalog();
+
+    if (isSameCatalog && !selection.empty())
+        SetSelectedCatalogItems(selection);
 }
 
 void PoeditListCtrl::ReadCatalog()
@@ -398,7 +407,7 @@ void PoeditListCtrl::ReadCatalog()
     // scroll to the top and refresh everything:
     if ( m_catalog->GetCount() )
     {
-        Select(0);
+        SelectOnly(0);
         RefreshItems(0, m_catalog->GetCount()-1);
     }
     else
@@ -412,13 +421,12 @@ void PoeditListCtrl::Sort()
 {
     if ( m_catalog && m_catalog->GetCount() )
     {
-        int sel = GetSelectedCatalogItem();
+        auto sel = GetSelectedCatalogItems();
 
         CreateSortMap();
         RefreshItems(0, m_catalog->GetCount()-1);
 
-        if ( sel != -1 )
-            SelectCatalogItem(sel);
+        SetSelectedCatalogItems(sel);
     }
     else
     {

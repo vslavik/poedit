@@ -503,6 +503,16 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_TEXT           (ID_TEXTCOMMENT,PoeditFrame::OnCommentWindowText)
    EVT_SIZE           (PoeditFrame::OnSize)
 
+   // handling of selection:
+   EVT_UPDATE_UI(XRCID("menu_references"), PoeditFrame::OnSingleSelectionUpdate)
+   EVT_UPDATE_UI_RANGE(ID_BOOKMARK_SET, ID_BOOKMARK_SET + 9, PoeditFrame::OnSingleSelectionUpdate)
+
+   EVT_UPDATE_UI(XRCID("menu_fuzzy"), PoeditFrame::OnSelectionUpdate)
+   EVT_UPDATE_UI(XRCID("menu_copy_from_src"), PoeditFrame::OnSelectionUpdate)
+   EVT_UPDATE_UI(XRCID("menu_clear"), PoeditFrame::OnSelectionUpdate)
+   EVT_UPDATE_UI(XRCID("menu_comment"), PoeditFrame::OnSelectionUpdate)
+
+
 #if defined(__WXMSW__) || defined(__WXGTK__)
    EVT_MENU(wxID_UNDO,      PoeditFrame::OnTextEditingCommand)
    EVT_MENU(wxID_REDO,      PoeditFrame::OnTextEditingCommand)
@@ -756,7 +766,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     m_list = new PoeditListCtrl(topPanel,
                                 ID_LIST,
                                 wxDefaultPosition, wxDefaultSize,
-                                wxLC_REPORT | wxLC_SINGLE_SEL,
+                                wxLC_REPORT,
                                 m_displayIDs);
 
     wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
@@ -768,6 +778,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
                                             SPLITTER_FLAGS);
     // left part (translation) should grow, not comments one:
     m_bottomSplitter->SetSashGravity(1.0);
+    m_bottomSplitter->Bind(wxEVT_UPDATE_UI, &PoeditFrame::OnSingleSelectionUpdate, this);
 
     m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
     m_bottomRightPanel = new wxPanel(m_bottomSplitter);
@@ -1955,14 +1966,37 @@ void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
                                  GetMenuBar()->IsChecked(XRCID("menu_fuzzy")));
     }
 
-    // The user explicitly changed fuzzy status (e.g. to on). Normally, if the
-    // user edits an entry, it's fuzzy flag is cleared, but if the user sets
-    // fuzzy on to indicate the translation is problematic and then continues
-    // editing the entry, we do not want to annoy him by changing fuzzy back on
-    // every keystroke.
-    m_dontAutoclearFuzzyStatus = true;
+    bool setFuzzy = !GetCurrentItem()->IsFuzzy();
 
-    UpdateFromTextCtrl();
+    bool modified = false;
+
+    m_list->ForSelectedCatalogItemsDo([=,&modified](CatalogItem& item){
+        if (item.IsFuzzy() != setFuzzy)
+        {
+            item.SetFuzzy(setFuzzy);
+            item.SetModified(true);
+            modified = true;
+        }
+    });
+
+    if (modified && !IsModified())
+    {
+        m_modified = true;
+        UpdateTitle();
+    }
+    UpdateStatusBar();
+
+    UpdateToTextCtrl();
+
+    if (m_list->HasSingleSelection())
+    {
+        // The user explicitly changed fuzzy status (e.g. to on). Normally, if the
+        // user edits an entry, it's fuzzy flag is cleared, but if the user sets
+        // fuzzy on to indicate the translation is problematic and then continues
+        // editing the entry, we do not want to annoy him by changing fuzzy back on
+        // every keystroke.
+        m_dontAutoclearFuzzyStatus = true;
+    }
 }
 
 
@@ -1997,39 +2031,42 @@ void PoeditFrame::OnAutoCommentsWinFlag(wxCommandEvent&)
 
 void PoeditFrame::OnCopyFromSource(wxCommandEvent&)
 {
-    if (!m_textTrans->IsShown())
-    {
-        // plural form entry:
-        wxString orig = m_textOrigPlural->GetValue();
-        for (size_t i = 0; i < m_textTransPlural.size(); i++)
-            m_textTransPlural[i]->SetValue(orig);
+    bool modified = false;
 
-        if (m_textTransSingularForm)
-            m_textTransSingularForm->SetValue(m_textOrig->GetValue());
-    }
-    else
+    m_list->ForSelectedCatalogItemsDo([&modified](CatalogItem& item){
+        item.SetTranslationFromSource();
+        if (item.IsModified())
+            modified = true;
+    });
+
+    if (modified && !IsModified())
     {
-        // singular form entry:
-        m_textTrans->SetValue(m_textOrig->GetValue());
+        m_modified = true;
+        UpdateTitle();
     }
+    UpdateStatusBar();
+
+    UpdateToTextCtrl();
 }
 
 void PoeditFrame::OnClearTranslation(wxCommandEvent&)
 {
-    if (!m_textTrans->IsShown())
-    {
-        // plural form entry:
-        for (size_t i=0; i < m_textTransPlural.size(); i++)
-            m_textTransPlural[i]->Clear();
+    bool modified = false;
 
-        if (m_textTransSingularForm)
-            m_textTransSingularForm->Clear();
-    }
-    else
+    m_list->ForSelectedCatalogItemsDo([&modified](CatalogItem& item){
+        item.ClearTranslation();
+        if (item.IsModified())
+            modified = true;
+    });
+
+    if (modified && !IsModified())
     {
-        // singular form entry:
-        m_textTrans->Clear();
+        m_modified = true;
+        UpdateTitle();
     }
+    UpdateStatusBar();
+
+    UpdateToTextCtrl();
 }
 
 
@@ -2064,7 +2101,7 @@ CatalogItem *PoeditFrame::GetCurrentItem() const
     if ( !m_catalog || !m_list )
         return NULL;
 
-    int item = m_list->GetSelectedCatalogItem();
+    int item = m_list->GetFirstSelectedCatalogItem();
     if ( item == -1 )
         return NULL;
 
@@ -2216,7 +2253,7 @@ void PoeditFrame::UpdateFromTextCtrl()
     entry->SetModified(true);
     entry->SetAutomatic(false);
 
-    RefreshSelectedItem();
+    m_list->RefreshSelectedItems();
 
     if ( statisticsChanged )
     {
@@ -2581,15 +2618,8 @@ void PoeditFrame::RefreshControls()
 
     if (m_list)
     {
-        // remember currently selected item:
-        int selectedItem = m_list->GetSelectedCatalogItem();
-
         // update catalog view, this may involve reordering the items...
         m_list->CatalogChanged(m_catalog);
-
-        // ...and so we need to restore selection now:
-        if (selectedItem != -1)
-            m_list->SelectCatalogItem(selectedItem);
 
         FindFrame *f = FindFrame::Get(m_list, m_catalog);
         if (f)
@@ -2869,10 +2899,10 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
 
 void PoeditFrame::OnEditComment(wxCommandEvent&)
 {
-    CatalogItem *entry = GetCurrentItem();
-    wxCHECK_RET( entry, "no entry selected" );
+    CatalogItem *firstItem = GetCurrentItem();
+    wxCHECK_RET( firstItem, "no entry selected" );
 
-    wxWindowPtr<CommentDialog> dlg(new CommentDialog(this, entry->GetComment()));
+    wxWindowPtr<CommentDialog> dlg(new CommentDialog(this, firstItem->GetComment()));
 
     dlg->ShowWindowModalThenDo([=](int retcode){
         if (retcode == wxID_OK)
@@ -2880,9 +2910,21 @@ void PoeditFrame::OnEditComment(wxCommandEvent&)
             m_modified = true;
             UpdateTitle();
             wxString comment = dlg->GetComment();
-            entry->SetComment(comment);
 
-            RefreshSelectedItem();
+            bool modified = false;
+            m_list->ForSelectedCatalogItemsDo([&modified,comment](CatalogItem& item){
+                if (item.GetComment() != comment)
+                {
+                    item.SetComment(comment);
+                    item.SetModified(true);
+                    modified = true;
+                }
+            });
+            if (modified && !IsModified())
+            {
+                m_modified = true;
+                UpdateTitle();
+            }
 
             // update comment window
             m_textComment->SetValue(CommentDialog::RemoveStartHash(comment));
@@ -2928,7 +2970,7 @@ void PoeditFrame::OnAutoTranslate(wxCommandEvent& event)
     UpdateTitle();
 
     UpdateToTextCtrl();
-    RefreshSelectedItem();
+    m_list->RefreshSelectedItems();
 }
 
 void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
@@ -3283,19 +3325,13 @@ void PoeditFrame::OnCommentWindowText(wxCommandEvent&)
         return;
 
     entry->SetComment(comment);
-    RefreshSelectedItem();
+    m_list->RefreshSelectedItems();
 
     if (m_modified == false)
     {
         m_modified = true;
         UpdateTitle();
     }
-}
-
-
-void PoeditFrame::RefreshSelectedItem()
-{
-    m_list->RefreshItem(m_list->GetSelection());
 }
 
 void PoeditFrame::OnSize(wxSizeEvent& event)
@@ -3429,14 +3465,15 @@ void PoeditFrame::OnListRightClick(wxMouseEvent& event)
 {
     long item;
     int flags = wxLIST_HITTEST_ONITEM;
-    wxListCtrl *list = (wxListCtrl*)event.GetEventObject();
+    auto list = static_cast<PoeditListCtrl*>(event.GetEventObject());
 
     item = list->HitTest(event.GetPosition(), flags);
     if (item != -1 && (flags & wxLIST_HITTEST_ONITEM))
-        list->SetItemState(item, wxLIST_STATE_SELECTED,
-                                 wxLIST_STATE_SELECTED);
+    {
+        list->SelectAndFocus(item);
+    }
 
-    wxMenu *menu = GetPopupMenu(m_list->GetSelectedCatalogItem());
+    wxMenu *menu = GetPopupMenu(m_list->ListIndexToCatalog(int(item)));
     if (menu)
     {
         list->PopupMenu(menu, event.GetPosition());
@@ -3504,8 +3541,7 @@ void PoeditFrame::OnGoToBookmark(wxCommandEvent& event)
         if (listIndex >= 0 && listIndex < m_list->GetItemCount())
         {
             m_list->EnsureVisible(listIndex);
-            m_list->SetItemState(listIndex,
-                                 wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+            m_list->SelectOnly(listIndex);
         }
     }
 }
@@ -3515,7 +3551,7 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     // Set bookmark if different from the current value for the item,
     // else unset it
     int bkIndex = -1;
-    int selItemIndex = m_list->GetSelectedCatalogItem();
+    int selItemIndex = m_list->GetFirstSelectedCatalogItem();
     if (selItemIndex == -1)
         return;
 
@@ -3530,7 +3566,7 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     }
 
     // Refresh items
-    RefreshSelectedItem();
+    m_list->RefreshSelectedItems();
     if (bkIndex != -1)
         m_list->RefreshItem(m_list->CatalogIndexToList(bkIndex));
 
@@ -3573,6 +3609,16 @@ void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
 {
     m_list->sortOrder.untransFirst = event.IsChecked();
     m_list->Sort();
+}
+
+void PoeditFrame::OnSelectionUpdate(wxUpdateUIEvent& event)
+{
+    event.Enable(m_list && m_list->HasSelection());
+}
+
+void PoeditFrame::OnSingleSelectionUpdate(wxUpdateUIEvent& event)
+{
+    event.Enable(m_list && m_list->HasSingleSelection());
 }
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
@@ -3619,9 +3665,9 @@ void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
     if ( !count )
         return;
 
-    const int start = m_list->GetSelection();
+    const long start = m_list->GetFirstSelected();
 
-    int i = start;
+    long i = start;
 
     for ( ;; )
     {
@@ -3648,7 +3694,7 @@ void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
         const CatalogItem& item = m_list->ListIndexToCatalogItem(i);
         if ( predicate(item) )
         {
-            m_list->Select(i);
+            m_list->SelectOnly(i);
             return;
         }
     }
@@ -3684,14 +3730,14 @@ void PoeditFrame::OnPrevPage(wxCommandEvent&)
 {
     if (!m_list)
         return;
-    int pos = std::max(m_list->GetSelection()-10, 0);
-    m_list->Select(pos);
+    auto pos = std::max(m_list->GetFirstSelected()-10, 0L);
+    m_list->SelectOnly(pos);
 }
 
 void PoeditFrame::OnNextPage(wxCommandEvent&)
 {
     if (!m_list)
         return;
-    int pos = std::min(m_list->GetSelection()+10, m_list->GetItemCount()-1);
-    m_list->Select(pos);
+    auto pos = std::min(m_list->GetFirstSelected()+10, long(m_list->GetItemCount())-1);
+    m_list->SelectOnly(pos);
 }
