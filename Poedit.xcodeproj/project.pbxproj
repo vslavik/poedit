@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B20960F319928C8500A2EB13 /* GettextToolsDummy.c in Sources */ = {isa = PBXBuildFile; fileRef = B20960F219928C8500A2EB13 /* GettextToolsDummy.c */; };
 		B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21FB780179D51BE003F45AC /* libexpat.dylib */; };
 		B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = B2284A51183BE3B300E097C7 /* PFMoveApplication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B2284A55183BE68200E097C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2284A54183BE68200E097C7 /* Security.framework */; };
@@ -181,6 +182,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B20960F219928C8500A2EB13 /* GettextToolsDummy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = GettextToolsDummy.c; path = macosx/GettextToolsDummy.c; sourceTree = SOURCE_ROOT; };
 		B21FB780179D51BE003F45AC /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
 		B2284A50183BE3B300E097C7 /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFMoveApplication.h; path = deps/letsmove/PFMoveApplication.h; sourceTree = "<group>"; };
 		B2284A51183BE3B300E097C7 /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFMoveApplication.m; path = deps/letsmove/PFMoveApplication.m; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 			isa = PBXGroup;
 			children = (
 				B248B2E3170D765100EBA58E /* GettextTools-Info.plist */,
+				B20960F219928C8500A2EB13 /* GettextToolsDummy.c */,
 				B2F287C2170DCC92004C1F41 /* AUTHORS */,
 				B2F287C3170DCC92004C1F41 /* COPYING */,
 			);
@@ -703,7 +706,6 @@
 				B248B2DB170D765100EBA58E /* Frameworks */,
 				B248B2DC170D765100EBA58E /* Resources */,
 				B2F287C6170DCF06004C1F41 /* Copy Gettext binaries & translations */,
-				B2A26E59188556C00000B8CE /* Codesign Gettext binaries */,
 				B2CC62E217DB7F670097461B /* Set bundle versions from deps/gettext */,
 			);
 			buildRules = (
@@ -726,7 +728,6 @@
 				B24ACD5916F6201F00399242 /* Resources */,
 				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
 				B2846D0B17BCF65D00DDC6F8 /* Remove Headers From Private Frameworks */,
-				B2A26E5A18856E610000B8CE /* Codesign Private Frameworks */,
 				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
 				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */,
 				B2E83707170C96DB00F31559 /* Install translations */,
@@ -873,34 +874,6 @@
 			shellPath = /bin/sh;
 			shellScript = "find \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\" -name Headers -exec rm -rf {} \\; 2>/dev/null || true";
 		};
-		B2A26E59188556C00000B8CE /* Codesign Gettext binaries */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Codesign Gettext binaries";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -n \"${CODE_SIGN_IDENTITY}\" ]; then\n    codesign -s \"${CODE_SIGN_IDENTITY}\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"/{lib/*.dylib,bin/*}\nfi";
-		};
-		B2A26E5A18856E610000B8CE /* Codesign Private Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Codesign Private Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# The previous step modified bundled frameworks by removing headers, so this is the only place where they\n# can be signed (even if we wanted to modify their projects):\n\nif [ -n \"${CODE_SIGN_IDENTITY}\" ]; then\n    codesign -s \"${CODE_SIGN_IDENTITY}\" --force \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/Resources/finish_installation.app\n    codesign -s \"${CODE_SIGN_IDENTITY}\" --force \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/*.framework\nfi";
-		};
 		B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -972,6 +945,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B20960F319928C8500A2EB13 /* GettextToolsDummy.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1147,8 +1121,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GettextTools/GettextTools-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1168,8 +1142,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GettextTools/GettextTools-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "macosx/GettextTools-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_NAME = "$(TARGET_NAME)";
