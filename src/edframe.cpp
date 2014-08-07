@@ -1547,6 +1547,7 @@ void PoeditFrame::NewFromPOT()
             m_modified = true;
         }
 
+        RecreatePluralTextCtrls();
         UpdateTitle();
         UpdateMenu();
         UpdateStatusBar();
