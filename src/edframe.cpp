@@ -1546,6 +1546,12 @@ void PoeditFrame::NewFromPOT()
             m_fileExistsOnDisk = false;
             m_modified = true;
         }
+        else
+        {
+            // default to English style plural
+            if (catalog->HasPluralItems())
+                catalog->Header().SetHeaderNotEmpty("Plural-Forms", "nplurals=2; plural=(n != 1);");
+        }
 
         RecreatePluralTextCtrls();
         UpdateTitle();
