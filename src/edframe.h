@@ -235,7 +235,6 @@ private:
         void ShowReference(int num);
         void OnRightClick(wxCommandEvent& event);
         void OnFuzzyFlag(wxCommandEvent& event);
-        void OnQuotesFlag(wxCommandEvent& event);
         void OnIDsFlag(wxCommandEvent& event);
         void OnCommentWinFlag(wxCommandEvent& event);
         void OnAutoCommentsWinFlag(wxCommandEvent& event);
@@ -326,7 +325,6 @@ private:
 
         bool m_modified;
         bool m_hasObsoleteItems;
-        bool m_displayQuotes;
         bool m_displayIDs;
         bool m_displayCommentWin;
         bool m_displayAutoCommentsWin;

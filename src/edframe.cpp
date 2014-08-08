@@ -468,7 +468,6 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_validate"),    PoeditFrame::OnValidate)
    EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
    EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
-   EVT_MENU           (XRCID("menu_quotes"),      PoeditFrame::OnQuotesFlag)
    EVT_MENU           (XRCID("menu_ids"),         PoeditFrame::OnIDsFlag)
    EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
    EVT_MENU           (XRCID("menu_auto_comments_win"), PoeditFrame::OnAutoCommentsWinFlag)
@@ -610,7 +609,6 @@ PoeditFrame::PoeditFrame() :
 
     wxConfigBase *cfg = wxConfig::Get();
 
-    m_displayQuotes = (bool)cfg->Read("display_quotes", (long)false);
     m_displayIDs = (bool)cfg->Read("display_lines", (long)false);
     m_displayCommentWin =
         (bool)cfg->Read("display_comment_win", (long)false);
@@ -660,7 +658,6 @@ PoeditFrame::PoeditFrame() :
 
     wxXmlResource::Get()->LoadToolBar(this, "toolbar");
 
-    GetMenuBar()->Check(XRCID("menu_quotes"), m_displayQuotes);
     GetMenuBar()->Check(XRCID("menu_ids"), m_displayIDs);
     GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
     GetMenuBar()->Check(XRCID("menu_auto_comments_win"), m_displayAutoCommentsWin);
@@ -970,7 +967,6 @@ PoeditFrame::~PoeditFrame()
     wxConfigBase *cfg = wxConfig::Get();
     cfg->SetPath("/");
 
-    cfg->Write("display_quotes", m_displayQuotes);
     cfg->Write("display_lines", m_displayIDs);
     cfg->Write("display_comment_win", m_displayCommentWin);
     cfg->Write("display_auto_comments_win", m_displayAutoCommentsWin);
@@ -1978,15 +1974,6 @@ void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
 
 
 
-void PoeditFrame::OnQuotesFlag(wxCommandEvent&)
-{
-    UpdateFromTextCtrl();
-    m_displayQuotes = GetMenuBar()->IsChecked(XRCID("menu_quotes"));
-    UpdateToTextCtrl();
-}
-
-
-
 void PoeditFrame::OnIDsFlag(wxCommandEvent&)
 {
     m_displayIDs = GetMenuBar()->IsChecked(XRCID("menu_ids"));
@@ -2102,7 +2089,7 @@ static inline bool IsAnyQuote(wchar_t c)
     }
 }
 
-static wxString TransformNewval(const wxString& val, bool displayQuotes)
+static wxString TransformNewval(const wxString& val)
 {
     wxString newval(val);
 
@@ -2125,13 +2112,6 @@ static wxString TransformNewval(const wxString& val, bool displayQuotes)
 #endif // __WXOSX__
 
     newval.Replace("\n", "");
-    if (displayQuotes)
-    {
-        if (newval.Len() > 0 && IsAnyQuote(newval[0u]))
-            newval.Remove(0, 1);
-        if (newval.Len() > 0 && IsAnyQuote(newval[newval.Length()-1]))
-            newval.RemoveLast();
-    }
 
     if (!newval.empty() && newval[0u] == _T('"'))
         newval.Prepend("\\");
@@ -2171,8 +2151,7 @@ void PoeditFrame::UpdateFromTextCtrl()
         wxArrayString str;
         for (unsigned i = 0; i < m_textTransPlural.size(); i++)
         {
-            wxString val = TransformNewval(m_textTransPlural[i]->GetValue(),
-                                           m_displayQuotes);
+            wxString val = TransformNewval(m_textTransPlural[i]->GetValue());
             str.Add(val);
             if ( val.empty() )
                 allTranslated = false;
@@ -2187,7 +2166,7 @@ void PoeditFrame::UpdateFromTextCtrl()
     else
     {
         wxString newval =
-            TransformNewval(m_textTrans->GetValue(), m_displayQuotes);
+            TransformNewval(m_textTrans->GetValue());
 
         if ( newval.empty() )
             allTranslated = false;
@@ -2272,11 +2251,8 @@ void PoeditFrame::UpdateToTextCtrl()
     if ( !entry )
         return;
 
-    wxString quote;
     wxString t_o, t_t, t_c, t_ac;
-    if (m_displayQuotes)
-        quote = _T("\"");
-    t_o = quote + entry->GetString() + quote;
+    t_o = entry->GetString();
     t_o.Replace("\\n", "\\n\n");
     t_c = entry->GetComment();
     t_c.Replace("\\n", "\\n\n");
@@ -2292,7 +2268,7 @@ void PoeditFrame::UpdateToTextCtrl()
 
     if (entry->HasPlural())
     {
-        wxString t_op = quote + entry->GetPluralString() + quote;
+        wxString t_op = entry->GetPluralString();
         t_op.Replace("\\n", "\\n\n");
         m_textOrigPlural->SetValue(t_op);
 
@@ -2303,20 +2279,16 @@ void PoeditFrame::UpdateToTextCtrl()
         unsigned i = 0;
         for (i = 0; i < std::min(formsCnt, entry->GetNumberOfTranslations()); i++)
         {
-            t_t = quote + entry->GetTranslation(i) + quote;
+            t_t = entry->GetTranslation(i);
             t_t.Replace("\\n", "\\n\n");
             SetTranslationValue(m_textTransPlural[i], t_t);
-            if (m_displayQuotes)
-                m_textTransPlural[i]->SetInsertionPoint(1);
         }
     }
     else
     {
-        t_t = quote + entry->GetTranslation() + quote;
+        t_t = entry->GetTranslation();
         t_t.Replace("\\n", "\\n\n");
         SetTranslationValue(m_textTrans, t_t);
-        if (m_displayQuotes)
-            m_textTrans->SetInsertionPoint(1);
     }
 
     if ( entry->HasContext() )
@@ -2753,7 +2725,6 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_validate"), editable);
     menubar->Enable(XRCID("menu_catproperties"), hasCatalog);
 
-    menubar->Enable(XRCID("menu_quotes"), editable);
     menubar->Enable(XRCID("menu_ids"), editable);
     menubar->Enable(XRCID("menu_comment_win"), editable);
     menubar->Enable(XRCID("menu_auto_comments_win"), editable);
