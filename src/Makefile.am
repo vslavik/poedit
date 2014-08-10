@@ -28,7 +28,8 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  icuhelpers.h logcapture.h \
                  language.cpp language.h language_impl_legacy.h language_impl_plurals.h \
                  languagectrl.cpp languagectrl.h \
-                 welcomescreen.cpp welcomescreen.h
+                 welcomescreen.cpp welcomescreen.h \
+                 syntaxhighlighter.cpp syntaxhighlighter.h
 nodist_poedit_SOURCES = compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS) $(LUCENE_LIBS) $(EXPAT_LIBS) \

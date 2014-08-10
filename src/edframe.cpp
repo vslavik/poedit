@@ -96,6 +96,7 @@
 #include "languagectrl.h"
 #include "welcomescreen.h"
 #include "errors.h"
+#include "syntaxhighlighter.h"
 
 
 // this should be high enough to not conflict with any wxNewId-allocated value,
@@ -428,13 +429,103 @@ class UnfocusableTextCtrl : public CustomizedTextCtrl
 };
 
 
-class TranslationTextCtrl : public CustomizedTextCtrl
+class AnyTranslatableTextCtrl : public CustomizedTextCtrl
+{
+    public:
+        AnyTranslatableTextCtrl(wxWindow *parent, wxWindowID winid, int style = 0)
+           : CustomizedTextCtrl(parent, winid, wxEmptyString,
+                                wxDefaultPosition, wxDefaultSize,
+                                wxTE_MULTILINE | wxTE_RICH2 | style)
+        {
+            InitColors();
+            Bind(wxEVT_TEXT, [=](wxCommandEvent& e){
+                e.Skip();
+                HighlightText();
+            });
+        }
+
+    private:
+#ifdef __WXOSX__
+        void InitColors()
+        {
+            m_attrSpace  = @{NSBackgroundColorAttributeName: [NSColor colorWithSRGBRed:0.89 green:0.96 blue:0.68 alpha:1]};
+            m_attrEscape = @{NSBackgroundColorAttributeName: [NSColor colorWithSRGBRed:1 green:0.95 blue:1 alpha:1],
+                             NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0.46 green:0 blue:0.01 alpha:1]};
+        }
+
+        void HighlightText()
+        {
+            auto text = GetValue().ToStdWstring();
+
+            NSRange fullRange = NSMakeRange(0, text.length());
+            NSLayoutManager *layout = [TextView() layoutManager];
+            [layout removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:fullRange];
+            [layout removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:fullRange];
+
+            m_syntax.Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
+                [layout addTemporaryAttributes:AttrFor(kind) forCharacterRange:NSMakeRange(a, b-a)];
+            });
+        }
+
+        typedef NSDictionary* AttrType;
+        NSDictionary *m_attrSpace, *m_attrEscape;
+
+#else // !__WXOSX__
+
+        void InitColors()
+        {
+            m_attrDefault.SetBackgroundColour(*wxWHITE);
+            m_attrDefault.SetTextColour(*wxBLACK);
+
+            m_attrSpace.SetBackgroundColour("#E4F6AE");
+
+            m_attrEscape.SetBackgroundColour("#FFF1FF");
+            m_attrEscape.SetTextColour("#760003");
+        }
+
+        void HighlightText()
+        {
+            auto text = GetValue();
+
+            wxWindowUpdateLocker noupd(this);
+            wxEventBlocker block(this, wxEVT_TEXT);
+            SetStyle(-1, -1, m_attrDefault);
+
+            m_syntax.Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
+                SetStyle(a, b, AttrFor(kind));
+            });
+        }
+
+        typedef wxTextAttr AttrType;
+        wxTextAttr m_attrDefault, m_attrSpace, m_attrEscape;
+#endif // __WXOSX__/!__WXOSX__
+
+        const AttrType& AttrFor(SyntaxHighlighter::TextKind kind) const
+        {
+            switch (kind)
+            {
+                case SyntaxHighlighter::LeadingWhitespace:  return m_attrSpace;
+                case SyntaxHighlighter::Escape:             return m_attrEscape;
+            }
+        }
+
+        SyntaxHighlighter m_syntax;
+};
+
+class SourceTextCtrl : public AnyTranslatableTextCtrl
+{
+    public:
+        SourceTextCtrl(wxWindow *parent, wxWindowID winid)
+            : AnyTranslatableTextCtrl(parent, winid, wxTE_READONLY)
+        {
+        }
+};
+
+class TranslationTextCtrl : public AnyTranslatableTextCtrl
 {
     public:
         TranslationTextCtrl(wxWindow *parent, wxWindowID winid)
-           : CustomizedTextCtrl(parent, winid, wxEmptyString,
-                                wxDefaultPosition, wxDefaultSize,
-                                wxTE_MULTILINE | wxTE_RICH2)
+            : AnyTranslatableTextCtrl(parent, winid)
         {
 #ifdef __WXMSW__
           HWND hwnd = (HWND)GetHWND();
@@ -780,17 +871,11 @@ wxWindow* PoeditFrame::CreateContentViewPO()
 
     m_labelSingular = new wxStaticText(m_bottomLeftPanel, -1, _("Singular:"));
     m_labelSingular->SetFont(m_normalGuiFont);
-    m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
-                                ID_TEXTORIG, wxEmptyString,
-                                wxDefaultPosition, wxDefaultSize,
-                                wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
+    m_textOrig = new SourceTextCtrl(m_bottomLeftPanel, ID_TEXTORIG);
 
     m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
     m_labelPlural->SetFont(m_normalGuiFont);
-    m_textOrigPlural = new UnfocusableTextCtrl(m_bottomLeftPanel,
-                                ID_TEXTORIGPLURAL, wxEmptyString,
-                                wxDefaultPosition, wxDefaultSize,
-                                wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
+    m_textOrigPlural = new SourceTextCtrl(m_bottomLeftPanel, ID_TEXTORIGPLURAL);
 
     wxStaticText *labelTrans =
         new wxStaticText(m_bottomLeftPanel, -1, _("Translation:"));
