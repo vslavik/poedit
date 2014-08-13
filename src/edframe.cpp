@@ -485,7 +485,7 @@ class AnyTranslatableTextCtrl : public CustomizedTextCtrl
 
         void HighlightText()
         {
-            auto text = GetValue();
+            auto text = GetValue().ToStdWstring();
 
             wxWindowUpdateLocker noupd(this);
             wxEventBlocker block(this, wxEVT_TEXT);
