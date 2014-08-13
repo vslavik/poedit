@@ -2090,6 +2090,43 @@ void CatalogItem::SetTranslations(const wxArrayString &t)
     }
 }
 
+void CatalogItem::SetTranslationFromSource()
+{
+    m_validity = Val_Unknown;
+    m_isTranslated = true;
+
+    auto iter = m_translations.begin();
+    if (*iter != m_string)
+    {
+        *iter = m_string;
+        m_isModified = true;
+    }
+
+    if (m_hasPlural)
+    {
+        ++iter;
+        for ( ; iter != m_translations.end(); ++iter )
+        {
+            if (*iter != m_plural)
+            {
+                *iter = m_plural;
+                m_isModified = true;
+            }
+        }
+    }
+}
+
+void CatalogItem::ClearTranslation()
+{
+    m_isTranslated = false;
+    for (auto& t: m_translations)
+    {
+        if (!t.empty())
+            m_isModified = true;
+        t.clear();
+    }
+}
+
 unsigned CatalogItem::GetPluralFormsCount() const
 {
     unsigned trans = GetNumberOfTranslations();

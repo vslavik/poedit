@@ -364,9 +364,7 @@ bool FindFrame::DoFind(int dir)
 #ifdef __WXMAC__
         m_listCtrl->Refresh();
 #endif
-        m_listCtrl->Select(m_position);
-        m_listCtrl->SetItemState(m_position,
-                    wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        m_listCtrl->SelectAndFocus(m_position);
 
         // find the text on the control and select it:
 
