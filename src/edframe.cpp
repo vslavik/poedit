@@ -442,7 +442,9 @@ class TranslationTextCtrl : public CustomizedTextCtrl
           HWND hwnd = (HWND)GetHWND();
           auto editStyle = SES_USECTF | SES_CTFALLOWEMBED | SES_CTFALLOWSMARTTAG | SES_CTFALLOWPROOFING;
           ::SendMessage(hwnd, EM_SETEDITSTYLE, editStyle, editStyle);
-          ::SendMessage(hwnd, EM_SETLANGOPTIONS, 0, IMF_SPELLCHECKING);
+
+          auto langOptions = ::SendMessage(hwnd, EM_GETLANGOPTIONS, 0, 0);
+          ::SendMessage(hwnd, EM_SETLANGOPTIONS, 0, langOptions | IMF_SPELLCHECKING);
 #endif
         }
 };
