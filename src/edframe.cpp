@@ -46,30 +46,7 @@
 #include <wx/windowptr.h>
 
 #ifdef __WXOSX__
-#include "osx_helpers.h"
 #include <wx/cocoa/string.h>
-#endif
-
-#ifdef __WXMSW__
-  #include <wx/msw/wrapwin.h>
-  #include <Richedit.h>
-  #ifndef IMF_SPELLCHECKING
-    #define IMF_SPELLCHECKING 0x0800
-  #endif
-#endif
-
-#ifdef USE_SPELLCHECKING
-
-#ifdef __WXGTK__
-    #include <gtk/gtk.h>
-    extern "C" {
-    #include <gtkspell/gtkspell.h>
-    }
-#endif // __WXGTK__
-
-#endif // USE_SPELLCHECKING
-
-#ifdef __WXMAC__
 #import <AppKit/NSDocumentController.h>
 #endif
 
@@ -96,6 +73,7 @@
 #include "languagectrl.h"
 #include "welcomescreen.h"
 #include "errors.h"
+#include "spellchecking.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(PoeditFramesList);
@@ -439,12 +417,7 @@ class TranslationTextCtrl : public CustomizedTextCtrl
                                 wxTE_MULTILINE | wxTE_RICH2)
         {
 #ifdef __WXMSW__
-          HWND hwnd = (HWND)GetHWND();
-          auto editStyle = SES_USECTF | SES_CTFALLOWEMBED | SES_CTFALLOWSMARTTAG | SES_CTFALLOWPROOFING;
-          ::SendMessage(hwnd, EM_SETEDITSTYLE, editStyle, editStyle);
-
-          auto langOptions = ::SendMessage(hwnd, EM_GETLANGOPTIONS, 0, 0);
-          ::SendMessage(hwnd, EM_SETLANGOPTIONS, 0, langOptions | IMF_SPELLCHECKING);
+            PrepareTextCtrlForSpellchecker(this);
 #endif
         }
 };
@@ -1022,132 +995,11 @@ void PoeditFrame::SetAccelerators()
 }
 
 
-#ifdef USE_SPELLCHECKING
-
-#ifdef __WXGTK__
-// helper functions that finds GtkTextView of wxTextCtrl:
-static GtkTextView *GetTextView(wxTextCtrl *ctrl)
-{
-    GtkWidget *parent = ctrl->m_widget;
-    GList *child = gtk_container_get_children(GTK_CONTAINER(parent));
-    while (child)
-    {
-        if (GTK_IS_TEXT_VIEW(child->data))
-        {
-            return GTK_TEXT_VIEW(child->data);
-        }
-        child = child->next;
-    }
-
-    wxFAIL_MSG( "couldn't find GtkTextView for text control" );
-    return NULL;
-}
-
-#if GTK_CHECK_VERSION(3,0,0)
-
-static bool DoInitSpellchecker(wxTextCtrl *text,
-                               bool enable, const Language& lang)
-{
-    GtkTextView *textview = GetTextView(text);
-    wxASSERT_MSG( textview, "wxTextCtrl is supposed to use GtkTextView" );
-
-    GtkSpellChecker *spell = gtk_spell_checker_get_from_text_view(textview);
-
-    if (enable)
-    {
-        if (!spell)
-        {
-            spell = gtk_spell_checker_new();
-            gtk_spell_checker_attach(spell, textview);
-        }
-
-        return gtk_spell_checker_set_language(spell, lang.Code().c_str(), nullptr);
-    }
-    else
-    {
-        if (spell)
-            gtk_spell_checker_detach(spell);
-        return true;
-    }
-}
-
-#else // GTK+ 2.x
-
-static bool DoInitSpellchecker(wxTextCtrl *text,
-                               bool enable, const Language& lang)
-{
-    GtkTextView *textview = GetTextView(text);
-    wxASSERT_MSG( textview, "wxTextCtrl is supposed to use GtkTextView" );
-    GtkSpell *spell = gtkspell_get_from_text_view(textview);
-
-    GError *err = NULL;
-
-    if (enable)
-    {
-        if (spell)
-            gtkspell_set_language(spell, lang.Code().c_str(), &err);
-        else
-            gtkspell_new_attach(textview, lang.Code().c_str(), &err);
-    }
-    else // !enable
-    {
-        // GtkSpell when used with Zemberek Enchant module doesn't work
-        // correctly if you repeatedly attach and detach a speller to text
-        // view. See http://poedit.net/trac/ticket/276 for details.
-        //
-        // To work around this, we set the language to a non-existent one
-        // instead of detaching GtkSpell -- this has the same effect as
-        // detaching the speller as far as the UI is concerned.
-        if (spell)
-            gtkspell_set_language(spell, "unknown_language", &err);
-    }
-
-    if (err)
-        g_error_free(err);
-
-    return err == NULL;
-}
-
-#endif // GTK+ 2.x
-
-#endif // __WXGTK__
-
-#ifdef __WXOSX__
-
-static bool SetSpellcheckerLang(const wxString& lang)
-{
-    return SpellChecker_SetLang(lang.mb_str(wxConvUTF8));
-}
-
-static bool DoInitSpellchecker(wxTextCtrl *text,
-                               bool enable, const Language& /*lang*/)
-{
-    NSScrollView *scroll = (NSScrollView*)text->GetHandle();
-    NSTextView *view = [scroll documentView];
-
-    [view setContinuousSpellCheckingEnabled:enable];
-    [view setGrammarCheckingEnabled:enable];
-
-    return true;
-}
-#endif // __WXOSX__
-
-static void ShowSpellcheckerHelp()
-{
-#if defined(__WXOSX__)
-    #define SPELL_HELP_PAGE   "SpellcheckerMac"
-#elif defined(__UNIX__)
-    #define SPELL_HELP_PAGE   "SpellcheckerLinux"
-#else
-    #error "missing spellchecker instructions for platform"
-#endif
-    wxGetApp().OpenPoeditWeb("/trac/wiki/Doc/" SPELL_HELP_PAGE);
-}
-
-#endif // USE_SPELLCHECKING
-
 void PoeditFrame::InitSpellchecker()
 {
+    if (!IsSpellcheckingAvailable())
+        return;
+
     if (!m_catalog || !m_textTrans)
         return;
 
@@ -1155,7 +1007,10 @@ void PoeditFrame::InitSpellchecker()
     Language lang = m_catalog->GetLanguage();
 
     bool report_problem = false;
-    bool enabled = m_catalog && lang.IsValid() &&
+    bool enabled = m_catalog &&
+                #ifndef __WXMSW__ // language choice is automatic, per-keyboard on Windows
+                   lang.IsValid() &&
+                #endif
                    wxConfig::Get()->Read("enable_spellchecking",
                                          (long)true);
     const bool enabledInitially = enabled;
@@ -1171,15 +1026,16 @@ void PoeditFrame::InitSpellchecker()
     }
 #endif
 
-    if ( !DoInitSpellchecker(m_textTrans, enabled, lang) )
+    if ( !InitTextCtrlSpellchecker(m_textTrans, enabled, lang) )
         report_problem = true;
 
     for (size_t i = 0; i < m_textTransPlural.size(); i++)
     {
-        if ( !DoInitSpellchecker(m_textTransPlural[i], enabled, lang) )
+        if ( !InitTextCtrlSpellchecker(m_textTransPlural[i], enabled, lang) )
             report_problem = true;
     }
 
+#ifndef __WXMSW__ // language choice is automatic, per-keyboard on Windows, can't fail
     if ( enabledInitially && report_problem )
     {
         AttentionMessage msg
@@ -1199,6 +1055,8 @@ void PoeditFrame::InitSpellchecker()
         msg.AddDontShowAgain();
         m_attentionBar->ShowMessage(msg);
     }
+#endif // !__WXMSW__
+
 #endif // USE_SPELLCHECKING
 }
 

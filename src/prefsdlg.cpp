@@ -50,6 +50,7 @@
 #include "tm/transmem.h"
 #include "chooselang.h"
 #include "errors.h"
+#include "spellchecking.h"
 
 #ifdef __WXMSW__
 #include <winsparkle.h>
@@ -236,6 +237,15 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
     wxWindow *spellcheck = XRCCTRL(*this, "enable_spellchecking", wxCheckBox);
     spellcheck->GetContainingSizer()->Show(spellcheck, false);
 #endif
+#ifdef __WXMSW__
+    if (!IsSpellcheckingAvailable())
+    {
+        auto spellcheck = XRCCTRL(*this, "enable_spellchecking", wxCheckBox);
+        spellcheck->Disable();
+        spellcheck->SetValue(false);
+        spellcheck->SetLabel(spellcheck->GetLabel() + " (Windows 8)");
+    }
+#endif
 
 #if !NEED_CHOOSELANG_UI
     // remove (defunct on Unix) "Change UI language" button:
@@ -265,8 +275,11 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
     XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
                 cfg->ReadBool("keep_crlf", true));
 #ifdef USE_SPELLCHECKING
-    XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->SetValue(
-                cfg->ReadBool("enable_spellchecking", true));
+    if (IsSpellcheckingAvailable())
+    {
+        XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->SetValue(
+                    cfg->ReadBool("enable_spellchecking", true));
+    }
 #endif
 
     XRCCTRL(*this, "use_font_list", wxCheckBox)->SetValue(
@@ -340,8 +353,11 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
     cfg->Write("keep_crlf", 
                 XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
 #ifdef USE_SPELLCHECKING
-    cfg->Write("enable_spellchecking", 
-                XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->GetValue());
+    if (IsSpellcheckingAvailable())
+    {
+        cfg->Write("enable_spellchecking",
+                    XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->GetValue());
+    }
 #endif
    
     wxFont listFont = XRCCTRL(*this, "font_list", wxFontPickerCtrl)->GetSelectedFont();

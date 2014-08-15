@@ -40,9 +40,6 @@ void Sparkle_AddMenuItem(NSMenu *appmenu, const char *title);
 void Sparkle_Cleanup();
 #endif // USE_SPARKLE
 
-// Spell checking
-int SpellChecker_SetLang(const char *lang);
-
 // Native preferences
 void UserDefaults_SetBoolValue(const char *key, int value);
 int  UserDefaults_GetBoolValue(const char *key);

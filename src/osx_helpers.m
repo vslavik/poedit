@@ -83,20 +83,6 @@ void Sparkle_Cleanup()
 }
 #endif // USE_SPARKLE
 
-// --------------------------------------------------------------------------------
-// Spell checking
-// --------------------------------------------------------------------------------
-
-int SpellChecker_SetLang(const char *lang)
-{
-    @autoreleasepool {
-        NSString *nslang = [NSString stringWithUTF8String: lang];
-        NSSpellChecker *sc = [NSSpellChecker sharedSpellChecker];
-        [sc setAutomaticallyIdentifiesLanguages:NO];
-        return [sc setLanguage: nslang];
-    }
-}
-
 
 // --------------------------------------------------------------------------------
 // Native preferences
