@@ -19,10 +19,6 @@ m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 WX_CONFIG_OPTIONS
 
-AC_ARG_ENABLE(spellchecking,
-              AS_HELP_STRING([--enable-spellchecking],
-                             [Enable spell checking (default: yes)]),
-              USE_SPELLCHECKING="$enableval", USE_SPELLCHECKING="yes")
 AC_ARG_ENABLE(debug,
               AS_HELP_STRING([--enable-debug],
                              [Enable debugging information]),
@@ -116,52 +112,45 @@ PKG_CHECK_MODULES([ICU], [icu-uc icu-i18n],
         ])
 
 
-if test "$USE_SPELLCHECKING" != "no" ; then
-    dnl we need GtkSpell and GTK+ >= 2 for this, check if we're compatible
-    AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 3])
-    AC_TRY_COMPILE([#include <wx/defs.h>],
-        [
-            #ifndef __WXGTK3__
-                #error "not GTK+ 3"
-            #endif
-        ],
-        [
-            AC_MSG_RESULT([yes])
-            gtkspell_packages="gtkspell3-3.0 gtk+-3.0"
-        ],
-        [
-            AC_MSG_RESULT([no])
-            AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 2])
-            AC_TRY_COMPILE([#include <wx/defs.h>],
-                [
-                    #ifndef __WXGTK20__
-                        #error "not GTK+ 2"
-                    #endif
-                ],
-                [
-                    AC_MSG_RESULT([yes])
-                    gtkspell_packages="gtkspell-2.0 gtk+-2.0"
-                ],
-                [
-                    AC_MSG_RESULT([no])
-                    USE_SPELLCHECKING="no"
-                    AC_MSG_WARN([disabling spellchecking because GTK+ is required by it])
-                ])
-        ])
-
-    if test "$USE_SPELLCHECKING" != "no" ; then
-        PKG_CHECK_MODULES([GTKSPELL], [$gtkspell_packages],
+dnl we need GtkSpell and GTK+ >= 2 for this, check if we're compatible
+AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 3])
+AC_TRY_COMPILE([#include <wx/defs.h>],
+    [
+        #ifndef __WXGTK3__
+            #error "not GTK+ 3"
+        #endif
+    ],
+    [
+        AC_MSG_RESULT([yes])
+        gtkspell_packages="gtkspell3-3.0 gtk+-3.0"
+    ],
+    [
+        AC_MSG_RESULT([no])
+        AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 2])
+        AC_TRY_COMPILE([#include <wx/defs.h>],
             [
-                CXXFLAGS="$CXXFLAGS $GTKSPELL_CFLAGS"
-                LIBS="$LIBS $GTKSPELL_LIBS"
-                AC_DEFINE(USE_SPELLCHECKING)
+                #ifndef __WXGTK20__
+                    #error "not GTK+ 2"
+                #endif
             ],
             [
-                USE_SPELLCHECKING="no"
-                AC_MSG_WARN([disabling spellchecking because GtkSpell is missing])
+                AC_MSG_RESULT([yes])
+                gtkspell_packages="gtkspell-2.0 gtk+-2.0"
+            ],
+            [
+                AC_MSG_RESULT([no])
+                AC_MSG_ERROR([GTK+ build of wxWidgets is required])
             ])
-    fi
-fi
+    ])
+
+PKG_CHECK_MODULES([GTKSPELL], [$gtkspell_packages],
+    [
+        CXXFLAGS="$CXXFLAGS $GTKSPELL_CFLAGS"
+        LIBS="$LIBS $GTKSPELL_LIBS"
+    ],
+    [
+        AC_MSG_ERROR([missing GtkSpell library])
+    ])
 
 
 AX_BERKELEY_DB_CXX(4.7,
@@ -229,5 +218,4 @@ echo "
 Configured $PACKAGE-$VERSION for $host
 
     Debugging information:      $USE_DEBUG
-    Spellchecking:              $USE_SPELLCHECKING"
 echo ""

@@ -25,8 +25,6 @@
 
 #include "spellchecking.h"
 
-#if USE_SPELLCHECKING
-
 #ifdef __WXGTK__
     #include <gtk/gtk.h>
     extern "C" {
@@ -193,5 +191,3 @@ void ShowSpellcheckerHelp()
     wxGetApp().OpenPoeditWeb("/trac/wiki/Doc/" SPELL_HELP_PAGE);
 }
 #endif // !__WXMSW__
-
-#endif // USE_SPELLCHECKING

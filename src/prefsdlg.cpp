@@ -233,11 +233,6 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
     m_pageTM = new TMPage(nb);
     nb->InsertPage(2, m_pageTM, _("Translation Memory"));
 
-#ifndef USE_SPELLCHECKING
-    // remove "Automatic spellchecking" checkbox:
-    wxWindow *spellcheck = XRCCTRL(*this, "enable_spellchecking", wxCheckBox);
-    spellcheck->GetContainingSizer()->Show(spellcheck, false);
-#endif
 #ifdef __WXMSW__
     if (!IsSpellcheckingAvailable())
     {
@@ -275,13 +270,11 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 cfg->ReadBool("comment_window_editable", false));
     XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
                 cfg->ReadBool("keep_crlf", true));
-#ifdef USE_SPELLCHECKING
     if (IsSpellcheckingAvailable())
     {
         XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->SetValue(
                     cfg->ReadBool("enable_spellchecking", true));
     }
-#endif
 
     XRCCTRL(*this, "use_font_list", wxCheckBox)->SetValue(
                 cfg->ReadBool("custom_font_list_use", false));
@@ -353,13 +346,11 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XRCCTRL(*this, "comment_window_editable", wxCheckBox)->GetValue());
     cfg->Write("keep_crlf", 
                 XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
-#ifdef USE_SPELLCHECKING
     if (IsSpellcheckingAvailable())
     {
         cfg->Write("enable_spellchecking",
                     XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->GetValue());
     }
-#endif
    
     wxFont listFont = XRCCTRL(*this, "font_list", wxFontPickerCtrl)->GetSelectedFont();
     wxFont textFont = XRCCTRL(*this, "font_text", wxFontPickerCtrl)->GetSelectedFont();

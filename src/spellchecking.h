@@ -28,16 +28,6 @@
 
 #include <wx/defs.h>
 
-#ifndef USE_SPELLCHECKING
-    #if defined(__WXOSX__) || defined(__WXMSW__)
-        #define USE_SPELLCHECKING 1
-    #else
-        #define USE_SPELLCHECKING 0
-    #endif
-#endif
-
-#if USE_SPELLCHECKING
-
 #ifdef __WXMSW__
     #include <wx/platinfo.h>
 #endif
@@ -71,12 +61,6 @@ bool InitTextCtrlSpellchecker(wxTextCtrl *text, bool enable, const Language& lan
 #ifndef __WXMSW__
 // Show help about how to add more dictionaries for spellchecking.
 void ShowSpellcheckerHelp();
-#endif
-
-#else // !USE_SPELLCHECKING
-
-inline bool IsSpellcheckingAvailable() { return false; }
-
 #endif
 
 #endif // Poedit_spellchecking_h

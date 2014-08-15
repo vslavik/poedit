@@ -1093,7 +1093,6 @@ void PoeditFrame::InitSpellchecker()
     if (!m_catalog || !m_textTrans)
         return;
 
-#ifdef USE_SPELLCHECKING
     Language lang = m_catalog->GetLanguage();
 
     bool report_problem = false;
@@ -1146,8 +1145,6 @@ void PoeditFrame::InitSpellchecker()
         m_attentionBar->ShowMessage(msg);
     }
 #endif // !__WXMSW__
-
-#endif // USE_SPELLCHECKING
 }
 
 
