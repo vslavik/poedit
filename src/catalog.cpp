@@ -809,7 +809,7 @@ bool CatalogParser::Parse()
 
             while (!line.empty() &&
                     line[0u] == _T('#') &&
-                   (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':') && line[1u] != _T('.') )))
+                   (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':') && line[1u] != _T('.') && line[1u] != _T('~') )))
             {
                 mcomment << line << _T('\n');
                 readNewLine = true;

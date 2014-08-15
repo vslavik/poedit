@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B20960F319928C8500A2EB13 /* GettextToolsDummy.c in Sources */ = {isa = PBXBuildFile; fileRef = B20960F219928C8500A2EB13 /* GettextToolsDummy.c */; };
 		B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21FB780179D51BE003F45AC /* libexpat.dylib */; };
 		B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = B2284A51183BE3B300E097C7 /* PFMoveApplication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B2284A55183BE68200E097C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2284A54183BE68200E097C7 /* Security.framework */; };
@@ -102,6 +103,7 @@
 		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
 		B2EC60A41812D9D40059756A /* icudt52l.dat in Resources */ = {isa = PBXBuildFile; fileRef = B2EC60A31812D9D40059756A /* icudt52l.dat */; };
 		B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F14DD3181E510100E212B5 /* tm_migrate.cpp */; };
+		B2F25F0D199E327C00127FF9 /* spellchecking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F25F0C199E327C00127FF9 /* spellchecking.cpp */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
 		B2F287C5170DCC92004C1F41 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C3170DCC92004C1F41 /* COPYING */; };
@@ -182,6 +184,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B20960F219928C8500A2EB13 /* GettextToolsDummy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = GettextToolsDummy.c; path = macosx/GettextToolsDummy.c; sourceTree = SOURCE_ROOT; };
 		B21FB780179D51BE003F45AC /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
 		B2284A50183BE3B300E097C7 /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFMoveApplication.h; path = deps/letsmove/PFMoveApplication.h; sourceTree = "<group>"; };
 		B2284A51183BE3B300E097C7 /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFMoveApplication.m; path = deps/letsmove/PFMoveApplication.m; sourceTree = "<group>"; };
@@ -340,6 +343,8 @@
 		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macosx/copy-translations.sh"; sourceTree = "<group>"; };
 		B2EC60A31812D9D40059756A /* icudt52l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt52l.dat; path = deps/icu4c/source/data/in/icudt52l.dat; sourceTree = "<group>"; };
 		B2F14DD3181E510100E212B5 /* tm_migrate.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = tm_migrate.cpp; path = tm/tm_migrate.cpp; sourceTree = "<group>"; };
+		B2F25F0B199E23B300127FF9 /* spellchecking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spellchecking.h; sourceTree = "<group>"; };
+		B2F25F0C199E327C00127FF9 /* spellchecking.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = spellchecking.cpp; sourceTree = "<group>"; };
 		B2F287C2170DCC92004C1F41 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = deps/gettext/AUTHORS; sourceTree = SOURCE_ROOT; };
 		B2F287C3170DCC92004C1F41 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = COPYING; path = deps/gettext/COPYING; sourceTree = SOURCE_ROOT; };
 		B2F672D6197A83F900DBFDB0 /* da */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = da; path = macosx/da.lproj/MoveApplication.strings; sourceTree = "<group>"; };
@@ -473,6 +478,8 @@
 				B28F1CD316F629D30018AF7E /* progressinfo.h */,
 				B28F1CD416F629D30018AF7E /* propertiesdlg.cpp */,
 				B28F1CD516F629D30018AF7E /* propertiesdlg.h */,
+				B2F25F0C199E327C00127FF9 /* spellchecking.cpp */,
+				B2F25F0B199E23B300127FF9 /* spellchecking.h */,
 				B28F1CD616F629D30018AF7E /* summarydlg.cpp */,
 				B28F1CD716F629D30018AF7E /* summarydlg.h */,
 				B2E2184A199A76B100EA2784 /* syntaxhighlighter.cpp */,
@@ -511,6 +518,7 @@
 			isa = PBXGroup;
 			children = (
 				B248B2E3170D765100EBA58E /* GettextTools-Info.plist */,
+				B20960F219928C8500A2EB13 /* GettextToolsDummy.c */,
 				B2F287C2170DCC92004C1F41 /* AUTHORS */,
 				B2F287C3170DCC92004C1F41 /* COPYING */,
 			);
@@ -708,7 +716,6 @@
 				B248B2DB170D765100EBA58E /* Frameworks */,
 				B248B2DC170D765100EBA58E /* Resources */,
 				B2F287C6170DCF06004C1F41 /* Copy Gettext binaries & translations */,
-				B2A26E59188556C00000B8CE /* Codesign Gettext binaries */,
 				B2CC62E217DB7F670097461B /* Set bundle versions from deps/gettext */,
 			);
 			buildRules = (
@@ -731,7 +738,6 @@
 				B24ACD5916F6201F00399242 /* Resources */,
 				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
 				B2846D0B17BCF65D00DDC6F8 /* Remove Headers From Private Frameworks */,
-				B2A26E5A18856E610000B8CE /* Codesign Private Frameworks */,
 				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
 				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */,
 				B2E83707170C96DB00F31559 /* Install translations */,
@@ -878,34 +884,6 @@
 			shellPath = /bin/sh;
 			shellScript = "find \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\" -name Headers -exec rm -rf {} \\; 2>/dev/null || true";
 		};
-		B2A26E59188556C00000B8CE /* Codesign Gettext binaries */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Codesign Gettext binaries";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -n \"${CODE_SIGN_IDENTITY}\" ]; then\n    codesign -s \"${CODE_SIGN_IDENTITY}\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"/{lib/*.dylib,bin/*}\nfi";
-		};
-		B2A26E5A18856E610000B8CE /* Codesign Private Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Codesign Private Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# The previous step modified bundled frameworks by removing headers, so this is the only place where they\n# can be signed (even if we wanted to modify their projects):\n\nif [ -n \"${CODE_SIGN_IDENTITY}\" ]; then\n    codesign -s \"${CODE_SIGN_IDENTITY}\" --force \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/Sparkle.framework/Resources/finish_installation.app\n    codesign -s \"${CODE_SIGN_IDENTITY}\" --force \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"/*.framework\nfi";
-		};
 		B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -977,6 +955,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B20960F319928C8500A2EB13 /* GettextToolsDummy.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1015,6 +994,7 @@
 				B2E2184C199A76B100EA2784 /* syntaxhighlighter.cpp in Sources */,
 				B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */,
 				B2579C821920C02C00BEBC31 /* REUtil.m in Sources */,
+				B2F25F0D199E327C00127FF9 /* spellchecking.cpp in Sources */,
 				B2579C7F1920BFA000BEBC31 /* NSObject+REResponder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1153,8 +1133,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GettextTools/GettextTools-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1174,8 +1154,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GettextTools/GettextTools-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "macosx/GettextTools-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1305,7 +1285,7 @@
 					"-licui18n",
 					"-ldb_cxx",
 				);
-				POEDIT_FEATURES = "USE_SPARKLE USE_SPELLCHECKING";
+				POEDIT_FEATURES = USE_SPARKLE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1329,7 +1309,7 @@
 					"-licui18n",
 					"-ldb_cxx",
 				);
-				POEDIT_FEATURES = "USE_SPARKLE USE_SPELLCHECKING";
+				POEDIT_FEATURES = USE_SPARKLE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -68,7 +68,7 @@ if test "$WXFOUND" != 1; then
         Please check that wx-config is in path, the directory
         where wxWidgets libraries are installed (returned by
         'wx-config --unicode --libs' command) is in LD_LIBRARY_PATH or
-        equivalent variable and wxWidgets is version 2.8.0 or above,
+        equivalent variable and wxWidgets is version 3.0.0 or above,
         with Unicode build available.
     ])
 fi

@@ -16,6 +16,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  propertiesdlg.cpp propertiesdlg.h progressinfo.h \
                  progressinfo.cpp digger.h digger.cpp gexecute.h \
                  gexecute.cpp summarydlg.h summarydlg.cpp \
+                 spellchecking.h spellchecking.cpp \
                  findframe.cpp findframe.h commentdlg.h commentdlg.cpp \
                  tm/transmem.cpp tm/transmem.h tm/tm_migrate.cpp \
                  manager.h manager.cpp chooselang.cpp chooselang.h \
