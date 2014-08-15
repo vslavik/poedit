@@ -231,7 +231,7 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
     m_pageTM = new TMPage(nb);
     nb->InsertPage(2, m_pageTM, _("Translation Memory"));
 
-#if !USE_SPELLCHECKING
+#ifndef USE_SPELLCHECKING
     // remove "Automatic spellchecking" checkbox:
     wxWindow *spellcheck = XRCCTRL(*this, "enable_spellchecking", wxCheckBox);
     spellcheck->GetContainingSizer()->Show(spellcheck, false);
