@@ -232,7 +232,7 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
     m_pageTM = new TMPage(nb);
     nb->InsertPage(2, m_pageTM, _("Translation Memory"));
 
-#ifndef USE_SPELLCHECKING
+#if !USE_SPELLCHECKING
     // remove "Automatic spellchecking" checkbox:
     wxWindow *spellcheck = XRCCTRL(*this, "enable_spellchecking", wxCheckBox);
     spellcheck->GetContainingSizer()->Show(spellcheck, false);
@@ -274,7 +274,7 @@ void PreferencesDialog::TransferTo(wxConfigBase *cfg)
                 cfg->ReadBool("comment_window_editable", false));
     XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
                 cfg->ReadBool("keep_crlf", true));
-#ifdef USE_SPELLCHECKING
+#if USE_SPELLCHECKING
     if (IsSpellcheckingAvailable())
     {
         XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->SetValue(
@@ -352,7 +352,7 @@ void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
                 XRCCTRL(*this, "comment_window_editable", wxCheckBox)->GetValue());
     cfg->Write("keep_crlf", 
                 XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
-#ifdef USE_SPELLCHECKING
+#if USE_SPELLCHECKING
     if (IsSpellcheckingAvailable())
     {
         cfg->Write("enable_spellchecking",

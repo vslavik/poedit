@@ -1003,7 +1003,7 @@ void PoeditFrame::InitSpellchecker()
     if (!m_catalog || !m_textTrans)
         return;
 
-#ifdef USE_SPELLCHECKING
+#if USE_SPELLCHECKING
     Language lang = m_catalog->GetLanguage();
 
     bool report_problem = false;
