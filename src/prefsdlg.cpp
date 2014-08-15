@@ -239,7 +239,8 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
         auto spellcheck = XRCCTRL(*this, "enable_spellchecking", wxCheckBox);
         spellcheck->Disable();
         spellcheck->SetValue(false);
-        spellcheck->SetLabel(spellcheck->GetLabel() + " (Windows 8)");
+        // TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+        spellcheck->SetLabel(spellcheck->GetLabel() + " " + _("(requires Windows 8 or newer)"));
     }
 #endif
 
