@@ -21,7 +21,7 @@ WX_CONFIG_OPTIONS
 
 AC_ARG_ENABLE(debug,
               AS_HELP_STRING([--enable-debug],
-                             [Enable debugging information]),
+                             [Enable debug build]),
               USE_DEBUG="$enableval", USE_DEBUG="no")
 
 AC_MSG_CHECKING(for install location)
@@ -217,5 +217,5 @@ AC_OUTPUT
 echo "
 Configured $PACKAGE-$VERSION for $host
 
-    Debugging information:      $USE_DEBUG
-echo ""
+    Debug build:      $USE_DEBUG
+"
