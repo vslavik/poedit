@@ -897,14 +897,12 @@ void PoeditFrame::DestroyContentView()
         m_list->PopEventHandler(true/*delete*/);
     if (m_textTrans)
         m_textTrans->PopEventHandler(true/*delete*/);
-    for (size_t i = 0; i < m_textTransPlural.size(); i++)
+    for (auto tp : m_textTransPlural)
     {
-        if (m_textTransPlural[i])
-        {
-            m_textTransPlural[i]->PopEventHandler(true/*delete*/);
-            m_textTransPlural[i] = nullptr;
-        }
+        tp->PopEventHandler(true/*delete*/);
     }
+    m_textTransPlural.clear();
+
     if (m_textComment)
         m_textComment->PopEventHandler(true/*delete*/);
 
