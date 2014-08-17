@@ -151,7 +151,10 @@ void FindFrame::NotifyParentDestroyed(PoeditListCtrl *list, Catalog *forCatalog)
     if (!ms_singleton)
         return;
     if (ms_singleton->m_catalog == forCatalog || ms_singleton->m_listCtrl == list)
+    {
         ms_singleton->Destroy();
+        ms_singleton = nullptr;
+    }
 }
 
 
@@ -185,6 +188,7 @@ void FindFrame::FocusSearchField()
 void FindFrame::OnClose(wxCommandEvent&)
 {
     Destroy();
+    ms_singleton = nullptr;
 }
 
 
