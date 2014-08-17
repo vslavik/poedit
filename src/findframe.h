@@ -26,12 +26,13 @@
 #ifndef _FINDFRAME_H_
 #define _FINDFRAME_H_
 
+#include "edlistctrl.h"
+
 #include <wx/dialog.h>
 #include <wx/weakref.h>
 
 class WXDLLIMPEXP_FWD_CORE wxButton;
 
-class PoeditListCtrl;
 class Catalog;
 
 /** FindFrame is small dialog frame that contains controls for searching
