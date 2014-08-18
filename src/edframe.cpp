@@ -2248,9 +2248,6 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
     else
     {
         EnsureContentView(Content::PO);
-        // this must be done as soon as possible, otherwise the list would be
-        // confused
-        m_list->CatalogChanged(m_catalog);
     }
 
     m_fileName = cat->GetFileName();
