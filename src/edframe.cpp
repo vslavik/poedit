@@ -360,6 +360,9 @@ public:
        : wxTextCtrl(parent, winid, value, pos, size, style, validator, name)
     {
         NSTextView *text = TextView();
+
+        [text setRichText:NO];
+
         [text setAutomaticQuoteSubstitutionEnabled:NO];
         [text setAutomaticDashSubstitutionEnabled:NO];
 
