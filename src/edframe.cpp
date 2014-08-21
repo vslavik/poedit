@@ -2941,10 +2941,11 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                                   );
 #ifdef __WXMSW__
             it2->SetFont(m_boldGuiFont);
+            menu->Append(it2);
 #else
+            menu->Append(it2);
             it2->Enable(false);
 #endif
-            menu->Append(it2);
 
             for (size_t i = 0; i < m_autoTranslations.size(); i++)
             {
@@ -2964,10 +2965,11 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
         wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
 #ifdef __WXMSW__
         it1->SetFont(m_boldGuiFont);
+        menu->Append(it1);
 #else
+        menu->Append(it1);
         it1->Enable(false);
 #endif
-        menu->Append(it1);
 
         for (int i = 0; i < (int)refs.GetCount(); i++)
             menu->Append(ID_POPUP_REFS + i, "    " + refs[i]);
