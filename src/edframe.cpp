@@ -3451,6 +3451,9 @@ void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
 // the focused text control.
 void PoeditFrame::OnTextEditingCommand(wxCommandEvent& event)
 {
+#ifdef __WXGTK__
+    wxEventBlocker block(this);
+#endif
     wxWindow *w = wxWindow::FindFocus();
     if (!w || w == this || !w->ProcessWindowEventLocally(event))
         event.Skip();
@@ -3458,6 +3461,9 @@ void PoeditFrame::OnTextEditingCommand(wxCommandEvent& event)
 
 void PoeditFrame::OnTextEditingCommandUpdate(wxUpdateUIEvent& event)
 {
+#ifdef __WXGTK__
+    wxEventBlocker block(this);
+#endif
     wxWindow *w = wxWindow::FindFocus();
     if (!w || w == this || !w->ProcessWindowEventLocally(event))
         event.Enable(false);
