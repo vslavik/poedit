@@ -50,6 +50,10 @@
 #import <AppKit/NSDocumentController.h>
 #endif
 
+#ifdef __WXMSW__
+#include <richedit.h>
+#endif
+
 #include <map>
 #include <algorithm>
 #include <future>
@@ -184,7 +188,7 @@ bool g_focusToText = false;
     f->Show(true);
 
     if (g_focusToText && f->m_textTrans)
-        f->m_textTrans->SetFocus();
+        ((wxTextCtrl*)f->m_textTrans)->SetFocus();
     else if (f->m_list)
         f->m_list->SetFocus();
 
@@ -420,9 +424,52 @@ class TranslationTextCtrl : public CustomizedTextCtrl
                                 wxTE_MULTILINE | wxTE_RICH2)
         {
 #ifdef __WXMSW__
+            m_isRTL = false;
             PrepareTextCtrlForSpellchecker(this);
 #endif
         }
+
+        void SetLanguageRTL(bool isRTL)
+        {
+        #ifdef __WXOSX__
+            NSTextView *text = TextView();
+            [text setBaseWritingDirection:isRTL ? NSWritingDirectionRightToLeft : NSWritingDirectionLeftToRight];
+        #endif
+        #ifdef __WXMSW__
+            m_isRTL = isRTL;
+            UpdateRTLStyle();
+        #endif
+        }
+
+#ifdef __WXMSW__
+    protected:
+        virtual void DoSetValue(const wxString& value, int flags) override
+        {
+            wxWindowUpdateLocker dis(this);
+            CustomizedTextCtrl::DoSetValue(value, flags);
+            UpdateRTLStyle();
+        }
+
+        void UpdateRTLStyle()
+        {
+            wxEventBlocker block(this, wxEVT_TEXT);
+
+            PARAFORMAT2 pf;
+            ::ZeroMemory(&pf, sizeof(pf));
+            pf.cbSize = sizeof(pf);
+            pf.dwMask |= PFM_RTLPARA;
+            if (m_isRTL)
+                pf.wEffects |= PFE_RTLPARA;
+
+            long start, end;
+            GetSelection(&start, &end);
+            SetSelection(-1, -1);
+            ::SendMessage((HWND) GetHWND(), EM_SETPARAFORMAT, 0, (LPARAM) &pf);
+            SetSelection(start, end);
+        }
+
+        bool m_isRTL;
+#endif // __WXMSW__
 };
 
 
@@ -1062,6 +1109,20 @@ void PoeditFrame::InitSpellchecker()
 }
 
 
+void PoeditFrame::UpdateTextLanguage()
+{
+    if (!m_catalog || !m_textTrans)
+        return;
+
+    InitSpellchecker();
+
+    auto isRTL = m_catalog->GetLanguage().IsRTL();
+    m_textTrans->SetLanguageRTL(isRTL);
+    for (auto tp : m_textTransPlural)
+        tp->SetLanguageRTL(isRTL);
+}
+
+
 void PoeditFrame::OnCloseCmd(wxCommandEvent&)
 {
     Close();
@@ -1384,7 +1445,7 @@ void PoeditFrame::NewFromPOT()
     UpdateTitle();
     UpdateMenu();
     UpdateStatusBar();
-    InitSpellchecker();
+    UpdateTextLanguage();
 
     // Choose the language:
     wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
@@ -1418,7 +1479,7 @@ void PoeditFrame::NewFromPOT()
         UpdateTitle();
         UpdateMenu();
         UpdateStatusBar();
-        InitSpellchecker();
+        UpdateTextLanguage();
         if (m_list)
             m_list->CatalogChanged(m_catalog); // refresh language column
     });
@@ -1478,7 +1539,7 @@ void PoeditFrame::EditCatalogProperties()
             UpdateMenu();
             if (prevLang != m_catalog->GetLanguage())
             {
-                InitSpellchecker();
+                UpdateTextLanguage();
                 // trigger resorting and language header update:
                 if (m_list)
                     m_list->CatalogChanged(m_catalog);
@@ -1506,7 +1567,7 @@ void PoeditFrame::EditCatalogPropertiesAndUpdateFromSources()
             UpdateMenu();
             if (prevLang != m_catalog->GetLanguage())
             {
-                InitSpellchecker();
+                UpdateTextLanguage();
                 // trigger resorting and language header update:
                 if (m_list)
                     m_list->CatalogChanged(m_catalog);
@@ -1532,7 +1593,7 @@ void PoeditFrame::UpdateAfterPreferencesChange()
         SetCustomFonts();
         m_list->Refresh(); // if font changed
         UpdateCommentWindowEditable();
-        InitSpellchecker();
+        UpdateTextLanguage();
     }
 }
 
@@ -2260,8 +2321,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
     RecreatePluralTextCtrls();
     RefreshControls();
     UpdateTitle();
-
-    InitSpellchecker();
+    UpdateTextLanguage();
 
     // FIXME: do this for Gettext PO files only
     if (wxConfig::Get()->Read("translator_name", "").empty() ||
@@ -3282,7 +3342,7 @@ void PoeditFrame::RecreatePluralTextCtrls()
             desc.Printf(L"n → %s", examples);
 
         // create text control and notebook page for it:
-        wxTextCtrl *txt = new TranslationTextCtrl(m_pluralNotebook, wxID_ANY);
+        auto txt = new TranslationTextCtrl(m_pluralNotebook, wxID_ANY);
         txt->PushEventHandler(new TransTextctrlHandler(this));
         m_textTransPlural.push_back(txt);
         m_pluralNotebook->AddPage(txt, desc);
@@ -3299,7 +3359,7 @@ void PoeditFrame::RecreatePluralTextCtrls()
     delete calc;
 
     SetCustomFonts();
-    InitSpellchecker();
+    UpdateTextLanguage();
     UpdateToTextCtrl();
 }
 

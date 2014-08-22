@@ -184,6 +184,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 {
     m_catalog = NULL;
     m_displayIDs = dispIDs;
+    m_isRTL = false;
 
     sortOrder = SortOrder::Default();
 
@@ -381,13 +382,31 @@ void PoeditListCtrl::ReadCatalog()
         return;
     }
 
-    wxString lang = m_catalog->GetLanguage().IsValid()
-                    ? m_catalog->GetLanguage().DisplayName()
-                    : _("unknown language");
+    auto lang = m_catalog->GetLanguage();
+    auto isRTL = lang.IsRTL();
+#ifndef __WXOSX__
+    // a quirk of wx API: if the current locale is RTL, the meaning of L and R is reversed
+    if (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft)
+        isRTL = !isRTL;
+#endif
+    m_isRTL = isRTL;
+
+    wxString langname = lang.IsValid() ? lang.DisplayName() : _("unknown language");
     wxListItem colInfo;
     colInfo.SetMask(wxLIST_MASK_TEXT);
-    colInfo.SetText(wxString::Format(_(L"Translation — %s"), lang));
+    colInfo.SetText(wxString::Format(_(L"Translation — %s"), langname));
+    colInfo.SetAlign(isRTL ? wxLIST_FORMAT_RIGHT : wxLIST_FORMAT_LEFT);
     SetColumn(1, colInfo);
+
+#ifndef __WXOSX__
+    // another wx quirk: if we truly need left alignment, we must lie under RTL locales
+    if (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft)
+    {
+        wxListItem colInfoOrig;
+        colInfoOrig.SetAlign(wxLIST_FORMAT_RIGHT);
+        SetColumn(0, colInfoOrig);
+    }
+#endif
 
     // sort catalog items, create indexes mapping
     CreateSortMap();
@@ -476,8 +495,12 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
         }
         case 1:
         {
-            wxString trans = d.GetTranslation();
-            return trans;
+            // Add RTL Unicode mark to render bidi texts correctly
+            // (TODO: use LTR mark too?)
+            if (m_isRTL)
+                return L"\u202b" + d.GetTranslation();
+            else
+                return d.GetTranslation();
         }
         case 2:
             return wxString() << d.GetId();

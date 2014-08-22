@@ -135,6 +135,7 @@ class PoeditListCtrl : public wxListView
 
         bool m_displayIDs;
         unsigned m_colWidth;
+        bool m_isRTL;
 
         Catalog* m_catalog;
 

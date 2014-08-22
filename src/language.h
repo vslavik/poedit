@@ -49,6 +49,8 @@ public:
     /// Returns optional variant (after @, e.g. 'latin', typically empty)
     std::string Variant() const;
 
+    /// Returns name of the locale suitable for ICU
+    std::string IcuLocaleName() const { return LangAndCountry(); }
     /// Returns ICU equivalent of the language info
     icu::Locale ToIcu() const;
 
@@ -80,6 +82,9 @@ public:
                 gettext header or empty string if no record was found.
      */
     std::string DefaultPluralFormsExpr() const;
+
+    /// Returns true if the language is written right-to-left.
+    bool IsRTL() const;
 
     /**
         Tries to parse the string as language identification.

@@ -33,8 +33,10 @@
 #include <mutex>
 #include <memory>
 
+#include <unicode/uvernum.h>
 #include <unicode/locid.h>
 #include <unicode/coll.h>
+#include <unicode/utypes.h>
 
 #include <wx/filename.h>
 
@@ -314,12 +316,31 @@ std::string Language::DefaultPluralFormsExpr() const
 }
 
 
+bool Language::IsRTL() const
+{
+    if (!IsValid())
+        return false; // fallback
+
+#if U_ICU_VERSION_MAJOR_NUM >= 51
+    auto locale = IcuLocaleName();
+
+    UErrorCode err = U_ZERO_ERROR;
+    UScriptCode codes[10]= {USCRIPT_INVALID_CODE};
+    if (uscript_getCode(locale.c_str(), codes, 10, &err) == 0 || err != U_ZERO_ERROR)
+        return false; // fallback
+    return uscript_isRightToLeft(codes[0]);
+#else
+    return false;
+#endif
+}
+
+
 icu::Locale Language::ToIcu() const
 {
-    if (IsValid())
-        return icu::Locale(LangAndCountry().c_str());
-    else
+    if (!IsValid())
         return icu::Locale::getEnglish();
+
+    return icu::Locale(IcuLocaleName().c_str());
 }
 
 
