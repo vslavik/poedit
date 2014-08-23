@@ -2032,6 +2032,13 @@ wxString CatalogItem::GetFlags() const
         return wxEmptyString;
 }
 
+void CatalogItem::SetFuzzy(bool fuzzy)
+{
+    if (!fuzzy && m_isFuzzy)
+        m_oldMsgid.clear();
+    m_isFuzzy = fuzzy;
+}
+
 bool CatalogItem::IsInFormat(const wxString& format)
 {
     wxString lookingFor;
