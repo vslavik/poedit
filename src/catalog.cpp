@@ -688,7 +688,7 @@ bool CatalogParser::Parse()
             }
             mtranslations.Add(str);
 
-            bool shouldIgnore = m_ignoreHeader && mstr.empty();
+            bool shouldIgnore = m_ignoreHeader && (mstr.empty() && !has_context);
             if ( shouldIgnore )
             {
                 OnIgnoredEntry();
@@ -841,7 +841,7 @@ class CharsetInfoFinder : public CatalogParser
         virtual bool OnEntry(const wxString& msgid,
                              const wxString& /*msgid_plural*/,
                              bool /*has_plural*/,
-                             bool /*has_context*/,
+                             bool has_context,
                              const wxString& /*context*/,
                              const wxArrayString& mtranslations,
                              const wxString& /*flags*/,
@@ -851,7 +851,7 @@ class CharsetInfoFinder : public CatalogParser
                              const wxArrayString& /*msgid_old*/,
                              unsigned /*lineNumber*/)
         {
-            if (msgid.empty())
+            if (msgid.empty() && !has_context)
             {
                 // gettext header:
                 Catalog::HeaderData hdr;
@@ -924,7 +924,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
 
     static const wxString MSGCAT_CONFLICT_MARKER("#-#-#-#-#");
 
-    if (msgid.empty())
+    if (msgid.empty() && !has_context)
     {
         // gettext header:
         m_catalog->m_header.FromString(mtranslations[0]);
