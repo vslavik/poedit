@@ -380,7 +380,7 @@ public:
     }
 
 protected:
-    virtual void DoSetValue(const wxString& value, int flags)
+    void DoSetValue(const wxString& value, int flags) override
     {
         wxEventBlocker block(this, (flags & SetValue_SendEvent) ? 0 : wxEVT_ANY);
 
@@ -392,7 +392,32 @@ protected:
         SendTextUpdatedEventIfAllowed();
     }
 
-    NSTextView *TextView()
+    wxString DoGetValue() const override
+    {
+        // wx's implementation is not sufficient and neither is [NSTextView string]
+        // (which wx uses): they ignore formatting, which would be desirable, but
+        // they also include embedded Unicode marks such as U+202A (Left-to-Right Embedding)
+        // or U+202C (Pop Directional Format) that are essential for correct
+        // handling of BiDi text.
+        //
+        // Instead, export the internal storage into plain-text, UTF-8 data and
+        // load that into wxString. That shouldn't be too inefficient (wx does
+        // UTF-8 roundtrip anyway) and preserves the marks; it is what TextEdit.app
+        // does when saving text files.
+        NSTextView *ctrl = TextView();
+        NSTextStorage *text = [ctrl textStorage];
+        NSDictionary *attrs = @{
+                                 NSDocumentTypeDocumentAttribute: NSPlainTextDocumentType,
+                                 NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)
+                               };
+        NSData *data = [text dataFromRange:NSMakeRange(0, [text length]) documentAttributes:attrs error:nil];
+        if (data)
+            return wxString::FromUTF8Unchecked((const char*)[data bytes], [data length]);
+        else
+            return wxTextCtrl::DoGetValue();
+    }
+
+    NSTextView *TextView() const
     {
         NSScrollView *scroll = (NSScrollView*)GetHandle();
         return [scroll documentView];
