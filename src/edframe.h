@@ -48,6 +48,7 @@ class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class ListHandler;
 class TextctrlHandler;
 class TransTextctrlHandler;
+class SourceTextCtrl;
 class TranslationTextCtrl;
 
 class PoeditFrame;
@@ -312,7 +313,8 @@ private:
         wxStaticText *m_labelComment, *m_labelAutoComments;
         wxStaticText *m_labelContext;
         ErrorBar *m_errorBar;
-        wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textComment, *m_textAutoComments;
+        SourceTextCtrl *m_textOrig, *m_textOrigPlural;
+        wxTextCtrl *m_textComment, *m_textAutoComments;
         TranslationTextCtrl *m_textTrans;
         std::vector<TranslationTextCtrl*> m_textTransPlural;
         TranslationTextCtrl *m_textTransSingularForm;

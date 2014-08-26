@@ -446,6 +446,56 @@ class UnfocusableTextCtrl : public CustomizedTextCtrl
 };
 
 
+class SourceTextCtrl : public UnfocusableTextCtrl
+{
+    public:
+        SourceTextCtrl(wxWindow *parent,
+                        wxWindowID winid,
+                        const wxString &value = wxEmptyString,
+                        const wxPoint &pos = wxDefaultPosition,
+                        const wxSize &size = wxDefaultSize,
+                        long style = 0,
+                        const wxValidator& validator = wxDefaultValidator,
+                        const wxString &name = wxTextCtrlNameStr)
+           : UnfocusableTextCtrl(parent, winid, value, pos, size, style, validator, name)
+        {
+        #ifdef __WXOSX__
+            NSTextView *text = TextView();
+            [text setBaseWritingDirection:NSWritingDirectionLeftToRight];
+        #endif
+        #ifdef __WXMSW__
+            UpdateRTLStyleToLTR();
+        #endif
+        }
+
+#ifdef __WXMSW__
+    protected:
+        virtual void DoSetValue(const wxString& value, int flags) override
+        {
+            wxWindowUpdateLocker dis(this);
+            UnfocusableTextCtrl::DoSetValue(value, flags);
+            UpdateRTLStyleToLTR();
+        }
+
+        void UpdateRTLStyleToLTR()
+        {
+            wxEventBlocker block(this, wxEVT_TEXT);
+
+            PARAFORMAT2 pf;
+            ::ZeroMemory(&pf, sizeof(pf));
+            pf.cbSize = sizeof(pf);
+            pf.dwMask |= PFM_RTLPARA;
+
+            long start, end;
+            GetSelection(&start, &end);
+            SetSelection(-1, -1);
+            ::SendMessage((HWND) GetHWND(), EM_SETPARAFORMAT, 0, (LPARAM) &pf);
+            SetSelection(start, end);
+        }
+#endif
+};
+
+
 class TranslationTextCtrl : public CustomizedTextCtrl
 {
     public:
@@ -850,14 +900,14 @@ wxWindow* PoeditFrame::CreateContentViewPO()
 
     m_labelSingular = new wxStaticText(m_bottomLeftPanel, -1, _("Singular:"));
     m_labelSingular->SetFont(m_normalGuiFont);
-    m_textOrig = new UnfocusableTextCtrl(m_bottomLeftPanel,
+    m_textOrig = new SourceTextCtrl(m_bottomLeftPanel,
                                 ID_TEXTORIG, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
 
     m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
     m_labelPlural->SetFont(m_normalGuiFont);
-    m_textOrigPlural = new UnfocusableTextCtrl(m_bottomLeftPanel,
+    m_textOrigPlural = new SourceTextCtrl(m_bottomLeftPanel,
                                 ID_TEXTORIGPLURAL, wxEmptyString,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);

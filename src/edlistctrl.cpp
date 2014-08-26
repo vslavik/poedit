@@ -184,7 +184,9 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 {
     m_catalog = NULL;
     m_displayIDs = dispIDs;
+
     m_isRTL = false;
+    m_appIsRTL = (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft);
 
     sortOrder = SortOrder::Default();
 
@@ -334,6 +336,17 @@ void PoeditListCtrl::CreateColumns()
     InsertColumn(1, _("Translation"));
     if (m_displayIDs)
         InsertColumn(2, _("ID"), wxLIST_FORMAT_RIGHT);
+
+#ifdef __WXMSW__
+    if (m_appIsRTL)
+    {
+        // another wx quirk: if we truly need left alignment, we must lie under RTL locales
+        wxListItem colInfoOrig;
+        colInfoOrig.SetAlign(wxLIST_FORMAT_RIGHT);
+        SetColumn(0, colInfoOrig);
+    }
+#endif
+
     SizeColumns();
 }
 
@@ -384,9 +397,9 @@ void PoeditListCtrl::ReadCatalog()
 
     auto lang = m_catalog->GetLanguage();
     auto isRTL = lang.IsRTL();
-#ifndef __WXOSX__
+#ifdef __WXMSW__
     // a quirk of wx API: if the current locale is RTL, the meaning of L and R is reversed
-    if (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft)
+    if (m_appIsRTL)
         isRTL = !isRTL;
 #endif
     m_isRTL = isRTL;
@@ -397,16 +410,6 @@ void PoeditListCtrl::ReadCatalog()
     colInfo.SetText(wxString::Format(_(L"Translation — %s"), langname));
     colInfo.SetAlign(isRTL ? wxLIST_FORMAT_RIGHT : wxLIST_FORMAT_LEFT);
     SetColumn(1, colInfo);
-
-#ifndef __WXOSX__
-    // another wx quirk: if we truly need left alignment, we must lie under RTL locales
-    if (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft)
-    {
-        wxListItem colInfoOrig;
-        colInfoOrig.SetAlign(wxLIST_FORMAT_RIGHT);
-        SetColumn(0, colInfoOrig);
-    }
-#endif
 
     // sort catalog items, create indexes mapping
     CreateSortMap();
@@ -491,13 +494,17 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
                             d.GetString().c_str(), d.GetContext().c_str());
             else
                 orig = d.GetString();
-            return orig.substr(0,GetMaxColChars());
+
+            // Add RTL Unicode mark to render bidi texts correctly
+            if (m_appIsRTL)
+                return L"\u202a" + orig.substr(0,GetMaxColChars());
+            else
+                return orig.substr(0,GetMaxColChars());
         }
         case 1:
         {
             // Add RTL Unicode mark to render bidi texts correctly
-            // (TODO: use LTR mark too?)
-            if (m_isRTL)
+            if (m_isRTL && !m_appIsRTL)
                 return L"\u202b" + d.GetTranslation();
             else
                 return d.GetTranslation();
