@@ -51,7 +51,13 @@
 #endif
 
 #ifdef __WXMSW__
-#include <richedit.h>
+  #include <richedit.h>
+  #ifndef BOE_UNICODEBIDI
+    #define BOE_UNICODEBIDI 0x0080
+  #endif
+  #ifndef BOM_UNICODEBIDI
+    #define BOM_UNICODEBIDI 0x0080
+  #endif
 #endif
 
 #include <map>
@@ -437,6 +443,16 @@ class TranslationTextCtrl : public CustomizedTextCtrl
         #endif
         #ifdef __WXMSW__
             m_isRTL = isRTL;
+
+            BIDIOPTIONS bidi;
+            ::ZeroMemory(&bidi, sizeof(bidi));
+            bidi.cbSize = sizeof(bidi);
+            bidi.wMask = BOM_UNICODEBIDI;
+            bidi.wEffects = isRTL ? BOE_UNICODEBIDI : 0;
+            ::SendMessage((HWND)GetHWND(), EM_SETBIDIOPTIONS, 0, (LPARAM) &bidi);
+
+            ::SendMessage((HWND)GetHWND(), EM_SETEDITSTYLE, isRTL ? SES_BIDI : 0, SES_BIDI);
+
             UpdateRTLStyle();
         #endif
         }
