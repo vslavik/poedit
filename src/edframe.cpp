@@ -2403,6 +2403,11 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
     else
     {
         EnsureContentView(Content::PO);
+        // This must be done as soon as possible, otherwise the list would be
+        // confused. GetCurrentItem() could return nullptr or something invalid,
+        // causing crash in UpdateToTextCtrl() called from
+        // RecreatePluralTextCtrls() just few lines below.
+        m_list->CatalogChanged(m_catalog);
     }
 
     m_fileName = cat->GetFileName();
