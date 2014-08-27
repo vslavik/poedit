@@ -231,7 +231,7 @@ PreferencesDialog::PreferencesDialog(wxWindow *parent)
 
     wxNotebook *nb = XRCCTRL(*this, "prefs_notebook", wxNotebook);
     m_pageTM = new TMPage(nb);
-    nb->InsertPage(2, m_pageTM, _("Translation Memory"));
+    nb->InsertPage(1, m_pageTM, _("Translation Memory"));
 
 #ifdef __WXMSW__
     if (!IsSpellcheckingAvailable())

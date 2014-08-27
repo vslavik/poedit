@@ -64,29 +64,6 @@ header of GNU gettext files.</label>
                     <label>Change UI language</label>
                   </object>
                 </object>
-                <object class="sizeritem" platform="mac|win">
-                    <flag>wxALL|wxALIGN_LEFT</flag>
-                    <border>5d</border>
-                    <object class="wxCheckBox" name="auto_updates">
-                    <label>Automatically check for new version of Poedit</label>
-                  </object>
-                </object>
-                <object class="sizeritem" platform="mac|win">
-                    <flag>wxLEFT|wxALIGN_LEFT</flag>
-                    <border>15d</border>
-                    <object class="wxCheckBox" name="beta_versions">
-                    <label>Include beta versions</label>
-                  </object>
-                </object>
-              </object>
-              <style>wxTAB_TRAVERSAL</style>
-            </object>
-          </object>
-          <object class="notebookpage">
-            <label>Editor</label>
-            <object class="wxPanel">
-              <object class="wxBoxSizer">
-                <orient>wxVERTICAL</orient>
                 <object class="sizeritem">
                   <object class="wxStaticBoxSizer">
                     <label>Behavior</label>
@@ -285,6 +262,29 @@ header of GNU gettext files.</label>
               <style>wxTAB_TRAVERSAL</style>
             </object>
           </object>
+          <object class="notebookpage">
+                <label>Updates</label>
+                <object class="wxPanel">
+                    <object class="wxBoxSizer">
+                        <orient>wxVERTICAL</orient>
+                        <object class="sizeritem" platform="mac|win">
+                            <flag>wxALL|wxALIGN_LEFT</flag>
+                            <border>5d</border>
+                            <object class="wxCheckBox" name="auto_updates">
+                                <label>Automatically check for new version of Poedit</label>
+                            </object>
+                        </object>
+                        <object class="sizeritem" platform="mac|win">
+                            <flag>wxLEFT|wxALIGN_LEFT</flag>
+                            <border>15d</border>
+                            <object class="wxCheckBox" name="beta_versions">
+                                <label>Include beta versions</label>
+                            </object>
+                        </object>
+                    </object>
+                    <style>wxTAB_TRAVERSAL</style>
+                </object>
+            </object>
         </object>
         <option>1</option>
         <flag>wxEXPAND|wxALL</flag>
