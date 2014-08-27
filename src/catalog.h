@@ -216,7 +216,7 @@ class CatalogItem
         wxString GetFlags() const;
 
         /// Sets fuzzy flag.
-        void SetFuzzy(bool fuzzy) { m_isFuzzy = fuzzy; }
+        void SetFuzzy(bool fuzzy);
         /// Gets value of fuzzy flag.
         bool IsFuzzy() const { return m_isFuzzy; }
         /// Sets translated flag.

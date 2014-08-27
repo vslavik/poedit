@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Poedit (http://poedit.net)
  *
  *  Copyright (C) 1999-2014 Vaclav Slavik
@@ -48,6 +48,16 @@
 #ifdef __WXOSX__
 #include <wx/cocoa/string.h>
 #import <AppKit/NSDocumentController.h>
+#endif
+
+#ifdef __WXMSW__
+  #include <richedit.h>
+  #ifndef BOE_UNICODEBIDI
+    #define BOE_UNICODEBIDI 0x0080
+  #endif
+  #ifndef BOM_UNICODEBIDI
+    #define BOM_UNICODEBIDI 0x0080
+  #endif
 #endif
 
 #include <map>
@@ -183,7 +193,7 @@ bool g_focusToText = false;
     f->Show(true);
 
     if (g_focusToText && f->m_textTrans)
-        f->m_textTrans->SetFocus();
+        ((wxTextCtrl*)f->m_textTrans)->SetFocus();
     else if (f->m_list)
         f->m_list->SetFocus();
 
@@ -359,6 +369,9 @@ public:
        : wxTextCtrl(parent, winid, value, pos, size, style, validator, name)
     {
         NSTextView *text = TextView();
+
+        [text setRichText:NO];
+
         [text setAutomaticQuoteSubstitutionEnabled:NO];
         [text setAutomaticDashSubstitutionEnabled:NO];
 
@@ -366,7 +379,7 @@ public:
     }
 
 protected:
-    virtual void DoSetValue(const wxString& value, int flags)
+    void DoSetValue(const wxString& value, int flags) override
     {
         wxEventBlocker block(this, (flags & SetValue_SendEvent) ? 0 : wxEVT_ANY);
 
@@ -378,7 +391,32 @@ protected:
         SendTextUpdatedEventIfAllowed();
     }
 
-    NSTextView *TextView()
+    wxString DoGetValue() const override
+    {
+        // wx's implementation is not sufficient and neither is [NSTextView string]
+        // (which wx uses): they ignore formatting, which would be desirable, but
+        // they also include embedded Unicode marks such as U+202A (Left-to-Right Embedding)
+        // or U+202C (Pop Directional Format) that are essential for correct
+        // handling of BiDi text.
+        //
+        // Instead, export the internal storage into plain-text, UTF-8 data and
+        // load that into wxString. That shouldn't be too inefficient (wx does
+        // UTF-8 roundtrip anyway) and preserves the marks; it is what TextEdit.app
+        // does when saving text files.
+        NSTextView *ctrl = TextView();
+        NSTextStorage *text = [ctrl textStorage];
+        NSDictionary *attrs = @{
+                                 NSDocumentTypeDocumentAttribute: NSPlainTextDocumentType,
+                                 NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)
+                               };
+        NSData *data = [text dataFromRange:NSMakeRange(0, [text length]) documentAttributes:attrs error:nil];
+        if (data)
+            return wxString::FromUTF8Unchecked((const char*)[data bytes], [data length]);
+        else
+            return wxTextCtrl::DoGetValue();
+    }
+
+    NSTextView *TextView() const
     {
         NSScrollView *scroll = (NSScrollView*)GetHandle();
         return [scroll documentView];
@@ -496,7 +534,40 @@ class SourceTextCtrl : public AnyTranslatableTextCtrl
         SourceTextCtrl(wxWindow *parent, wxWindowID winid)
             : AnyTranslatableTextCtrl(parent, winid, wxTE_READONLY)
         {
+        #ifdef __WXOSX__
+            NSTextView *text = TextView();
+            [text setBaseWritingDirection:NSWritingDirectionLeftToRight];
+        #endif
+        #ifdef __WXMSW__
+            UpdateRTLStyleToLTR();
+        #endif
         }
+
+#ifdef __WXMSW__
+    protected:
+        virtual void DoSetValue(const wxString& value, int flags) override
+        {
+            wxWindowUpdateLocker dis(this);
+            AnyTranslatableTextCtrl::DoSetValue(value, flags);
+            UpdateRTLStyleToLTR();
+        }
+
+        void UpdateRTLStyleToLTR()
+        {
+            wxEventBlocker block(this, wxEVT_TEXT);
+
+            PARAFORMAT2 pf;
+            ::ZeroMemory(&pf, sizeof(pf));
+            pf.cbSize = sizeof(pf);
+            pf.dwMask |= PFM_RTLPARA;
+
+            long start, end;
+            GetSelection(&start, &end);
+            SetSelection(-1, -1);
+            ::SendMessage((HWND) GetHWND(), EM_SETPARAFORMAT, 0, (LPARAM) &pf);
+            SetSelection(start, end);
+        }
+#endif
 };
 
 class TranslationTextCtrl : public AnyTranslatableTextCtrl
@@ -506,9 +577,62 @@ class TranslationTextCtrl : public AnyTranslatableTextCtrl
             : AnyTranslatableTextCtrl(parent, winid)
         {
 #ifdef __WXMSW__
+            m_isRTL = false;
             PrepareTextCtrlForSpellchecker(this);
 #endif
         }
+
+        void SetLanguageRTL(bool isRTL)
+        {
+        #ifdef __WXOSX__
+            NSTextView *text = TextView();
+            [text setBaseWritingDirection:isRTL ? NSWritingDirectionRightToLeft : NSWritingDirectionLeftToRight];
+        #endif
+        #ifdef __WXMSW__
+            m_isRTL = isRTL;
+
+            BIDIOPTIONS bidi;
+            ::ZeroMemory(&bidi, sizeof(bidi));
+            bidi.cbSize = sizeof(bidi);
+            bidi.wMask = BOM_UNICODEBIDI;
+            bidi.wEffects = isRTL ? BOE_UNICODEBIDI : 0;
+            ::SendMessage((HWND)GetHWND(), EM_SETBIDIOPTIONS, 0, (LPARAM) &bidi);
+
+            ::SendMessage((HWND)GetHWND(), EM_SETEDITSTYLE, isRTL ? SES_BIDI : 0, SES_BIDI);
+
+            UpdateRTLStyle();
+        #endif
+        }
+
+#ifdef __WXMSW__
+    protected:
+        virtual void DoSetValue(const wxString& value, int flags) override
+        {
+            wxWindowUpdateLocker dis(this);
+            CustomizedTextCtrl::DoSetValue(value, flags);
+            UpdateRTLStyle();
+        }
+
+        void UpdateRTLStyle()
+        {
+            wxEventBlocker block(this, wxEVT_TEXT);
+
+            PARAFORMAT2 pf;
+            ::ZeroMemory(&pf, sizeof(pf));
+            pf.cbSize = sizeof(pf);
+            pf.dwMask |= PFM_RTLPARA;
+            if (m_isRTL)
+                pf.wEffects |= PFE_RTLPARA;
+
+            long start, end;
+            GetSelection(&start, &end);
+            SetSelection(-1, -1);
+            ::SendMessage((HWND) GetHWND(), EM_SETPARAFORMAT, 0, (LPARAM) &pf);
+            SetSelection(start, end);
+        }
+
+        bool m_isRTL;
+#endif // __WXMSW__
 };
 
 
@@ -856,7 +980,6 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     m_labelSingular = new wxStaticText(m_bottomLeftPanel, -1, _("Singular:"));
     m_labelSingular->SetFont(m_normalGuiFont);
     m_textOrig = new SourceTextCtrl(m_bottomLeftPanel, ID_TEXTORIG);
-
     m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
     m_labelPlural->SetFont(m_normalGuiFont);
     m_textOrigPlural = new SourceTextCtrl(m_bottomLeftPanel, ID_TEXTORIGPLURAL);
@@ -988,14 +1111,12 @@ void PoeditFrame::DestroyContentView()
         m_list->PopEventHandler(true/*delete*/);
     if (m_textTrans)
         m_textTrans->PopEventHandler(true/*delete*/);
-    for (size_t i = 0; i < m_textTransPlural.size(); i++)
+    for (auto tp : m_textTransPlural)
     {
-        if (m_textTransPlural[i])
-        {
-            m_textTransPlural[i]->PopEventHandler(true/*delete*/);
-            m_textTransPlural[i] = nullptr;
-        }
+        tp->PopEventHandler(true/*delete*/);
     }
+    m_textTransPlural.clear();
+
     if (m_textComment)
         m_textComment->PopEventHandler(true/*delete*/);
 
@@ -1145,6 +1266,20 @@ void PoeditFrame::InitSpellchecker()
         m_attentionBar->ShowMessage(msg);
     }
 #endif // !__WXMSW__
+}
+
+
+void PoeditFrame::UpdateTextLanguage()
+{
+    if (!m_catalog || !m_textTrans)
+        return;
+
+    InitSpellchecker();
+
+    auto isRTL = m_catalog->GetLanguage().IsRTL();
+    m_textTrans->SetLanguageRTL(isRTL);
+    for (auto tp : m_textTransPlural)
+        tp->SetLanguageRTL(isRTL);
 }
 
 
@@ -1478,7 +1613,7 @@ void PoeditFrame::NewFromPOT()
     UpdateTitle();
     UpdateMenu();
     UpdateStatusBar();
-    InitSpellchecker();
+    UpdateTextLanguage();
 
     // Choose the language:
     wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
@@ -1512,7 +1647,7 @@ void PoeditFrame::NewFromPOT()
         UpdateTitle();
         UpdateMenu();
         UpdateStatusBar();
-        InitSpellchecker();
+        UpdateTextLanguage();
         if (m_list)
             m_list->CatalogChanged(m_catalog); // refresh language column
     });
@@ -1572,7 +1707,7 @@ void PoeditFrame::EditCatalogProperties()
             UpdateMenu();
             if (prevLang != m_catalog->GetLanguage())
             {
-                InitSpellchecker();
+                UpdateTextLanguage();
                 // trigger resorting and language header update:
                 if (m_list)
                     m_list->CatalogChanged(m_catalog);
@@ -1600,7 +1735,7 @@ void PoeditFrame::EditCatalogPropertiesAndUpdateFromSources()
             UpdateMenu();
             if (prevLang != m_catalog->GetLanguage())
             {
-                InitSpellchecker();
+                UpdateTextLanguage();
                 // trigger resorting and language header update:
                 if (m_list)
                     m_list->CatalogChanged(m_catalog);
@@ -1626,7 +1761,7 @@ void PoeditFrame::UpdateAfterPreferencesChange()
         SetCustomFonts();
         m_list->Refresh(); // if font changed
         UpdateCommentWindowEditable();
-        InitSpellchecker();
+        UpdateTextLanguage();
     }
 }
 
@@ -2353,8 +2488,10 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
     else
     {
         EnsureContentView(Content::PO);
-        // this must be done as soon as possible, otherwise the list would be
-        // confused
+        // This must be done as soon as possible, otherwise the list would be
+        // confused. GetCurrentItem() could return nullptr or something invalid,
+        // causing crash in UpdateToTextCtrl() called from
+        // RecreatePluralTextCtrls() just few lines below.
         m_list->CatalogChanged(m_catalog);
     }
 
@@ -2365,8 +2502,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
     RecreatePluralTextCtrls();
     RefreshControls();
     UpdateTitle();
-
-    InitSpellchecker();
+    UpdateTextLanguage();
 
     // FIXME: do this for Gettext PO files only
     if (wxConfig::Get()->Read("translator_name", "").empty() ||
@@ -3049,10 +3185,11 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                                   );
 #ifdef __WXMSW__
             it2->SetFont(m_boldGuiFont);
+            menu->Append(it2);
 #else
+            menu->Append(it2);
             it2->Enable(false);
 #endif
-            menu->Append(it2);
 
             for (size_t i = 0; i < m_autoTranslations.size(); i++)
             {
@@ -3072,10 +3209,11 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
         wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
 #ifdef __WXMSW__
         it1->SetFont(m_boldGuiFont);
+        menu->Append(it1);
 #else
+        menu->Append(it1);
         it1->Enable(false);
 #endif
-        menu->Append(it1);
 
         for (int i = 0; i < (int)refs.GetCount(); i++)
             menu->Append(ID_POPUP_REFS + i, "    " + refs[i]);
@@ -3370,7 +3508,7 @@ void PoeditFrame::RecreatePluralTextCtrls()
             desc.Printf(L"n → %s", examples);
 
         // create text control and notebook page for it:
-        wxTextCtrl *txt = new TranslationTextCtrl(m_pluralNotebook, wxID_ANY);
+        auto txt = new TranslationTextCtrl(m_pluralNotebook, wxID_ANY);
         txt->PushEventHandler(new TransTextctrlHandler(this));
         m_textTransPlural.push_back(txt);
         m_pluralNotebook->AddPage(txt, desc);
@@ -3387,7 +3525,7 @@ void PoeditFrame::RecreatePluralTextCtrls()
     delete calc;
 
     SetCustomFonts();
-    InitSpellchecker();
+    UpdateTextLanguage();
     UpdateToTextCtrl();
 }
 
@@ -3556,6 +3694,9 @@ void PoeditFrame::OnSingleSelectionUpdate(wxUpdateUIEvent& event)
 // the focused text control.
 void PoeditFrame::OnTextEditingCommand(wxCommandEvent& event)
 {
+#ifdef __WXGTK__
+    wxEventBlocker block(this);
+#endif
     wxWindow *w = wxWindow::FindFocus();
     if (!w || w == this || !w->ProcessWindowEventLocally(event))
         event.Skip();
@@ -3563,6 +3704,9 @@ void PoeditFrame::OnTextEditingCommand(wxCommandEvent& event)
 
 void PoeditFrame::OnTextEditingCommandUpdate(wxUpdateUIEvent& event)
 {
+#ifdef __WXGTK__
+    wxEventBlocker block(this);
+#endif
     wxWindow *w = wxWindow::FindFocus();
     if (!w || w == this || !w->ProcessWindowEventLocally(event))
         event.Enable(false);

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Poedit (http://poedit.net)
  *
  *  Copyright (C) 2003-2014 Vaclav Slavik
@@ -61,7 +61,10 @@ static bool ChooseLanguage(wxString *value)
 
         arr.push_back(_("(Use default language)"));
         for (auto i : langs)
-            arr.push_back(Language::TryParse(i).DisplayNameInItself());
+        {
+            auto lang = Language::TryParse(i);
+            arr.push_back(lang.DisplayNameInItself() + L"  —  " + lang.DisplayName());
+        }
     }
     int choice = wxGetSingleChoiceIndex(
             _("Select your prefered language"),

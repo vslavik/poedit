@@ -48,6 +48,8 @@ class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class ListHandler;
 class TextctrlHandler;
 class TransTextctrlHandler;
+class SourceTextCtrl;
+class TranslationTextCtrl;
 
 class PoeditFrame;
 class AttentionBar;
@@ -190,6 +192,9 @@ class PoeditFrame : public wxFrame
         /// Updates the editable nature of the comment window
         void UpdateCommentWindowEditable();
 
+        // Called when catalog's language possibly changed
+        void UpdateTextLanguage();
+
         /// Returns popup menu for given catalog entry.
         wxMenu *GetPopupMenu(int item);
 
@@ -308,9 +313,11 @@ private:
         wxStaticText *m_labelComment, *m_labelAutoComments;
         wxStaticText *m_labelContext;
         ErrorBar *m_errorBar;
-        wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textTrans, *m_textComment, *m_textAutoComments;
-        std::vector<wxTextCtrl*> m_textTransPlural;
-        wxTextCtrl *m_textTransSingularForm;
+        SourceTextCtrl *m_textOrig, *m_textOrigPlural;
+        wxTextCtrl *m_textComment, *m_textAutoComments;
+        TranslationTextCtrl *m_textTrans;
+        std::vector<TranslationTextCtrl*> m_textTransPlural;
+        TranslationTextCtrl *m_textTransSingularForm;
         wxNotebook *m_pluralNotebook;
         wxStaticText *m_labelSingular, *m_labelPlural;
 #ifndef __WXOSX__
