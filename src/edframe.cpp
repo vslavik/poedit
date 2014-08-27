@@ -523,6 +523,7 @@ class AnyTranslatableTextCtrl : public CustomizedTextCtrl
                 case SyntaxHighlighter::LeadingWhitespace:  return m_attrSpace;
                 case SyntaxHighlighter::Escape:             return m_attrEscape;
             }
+            return m_attrSpace; // silence bogus warning
         }
 
         SyntaxHighlighter m_syntax;
