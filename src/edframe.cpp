@@ -458,7 +458,63 @@ class AnyTranslatableTextCtrl : public CustomizedTextCtrl
                 e.Skip();
                 HighlightText();
             });
+
+        #ifdef __WXMSW__
+            m_isRTL = false;
+        #endif
         }
+
+        void SetLanguageRTL(bool isRTL)
+        {
+        #ifdef __WXOSX__
+            NSTextView *text = TextView();
+            [text setBaseWritingDirection:isRTL ? NSWritingDirectionRightToLeft : NSWritingDirectionLeftToRight];
+        #endif
+        #ifdef __WXMSW__
+            m_isRTL = isRTL;
+
+            BIDIOPTIONS bidi;
+            ::ZeroMemory(&bidi, sizeof(bidi));
+            bidi.cbSize = sizeof(bidi);
+            bidi.wMask = BOM_UNICODEBIDI;
+            bidi.wEffects = isRTL ? BOE_UNICODEBIDI : 0;
+            ::SendMessage((HWND)GetHWND(), EM_SETBIDIOPTIONS, 0, (LPARAM) &bidi);
+
+            ::SendMessage((HWND)GetHWND(), EM_SETEDITSTYLE, isRTL ? SES_BIDI : 0, SES_BIDI);
+
+            UpdateRTLStyle();
+        #endif
+        }
+
+#ifdef __WXMSW__
+    protected:
+        virtual void DoSetValue(const wxString& value, int flags) override
+        {
+            wxWindowUpdateLocker dis(this);
+            CustomizedTextCtrl::DoSetValue(value, flags);
+            UpdateRTLStyle();
+        }
+
+        void UpdateRTLStyle()
+        {
+            wxEventBlocker block(this, wxEVT_TEXT);
+
+            PARAFORMAT2 pf;
+            ::ZeroMemory(&pf, sizeof(pf));
+            pf.cbSize = sizeof(pf);
+            pf.dwMask |= PFM_RTLPARA;
+            if (m_isRTL)
+                pf.wEffects |= PFE_RTLPARA;
+
+            long start, end;
+            GetSelection(&start, &end);
+            SetSelection(-1, -1);
+            ::SendMessage((HWND) GetHWND(), EM_SETPARAFORMAT, 0, (LPARAM) &pf);
+            SetSelection(start, end);
+        }
+
+        bool m_isRTL;
+#endif // __WXMSW__
 
     private:
 #ifdef __WXOSX__
@@ -529,47 +585,17 @@ class AnyTranslatableTextCtrl : public CustomizedTextCtrl
         SyntaxHighlighter m_syntax;
 };
 
+
 class SourceTextCtrl : public AnyTranslatableTextCtrl
 {
     public:
         SourceTextCtrl(wxWindow *parent, wxWindowID winid)
             : AnyTranslatableTextCtrl(parent, winid, wxTE_READONLY)
         {
-        #ifdef __WXOSX__
-            NSTextView *text = TextView();
-            [text setBaseWritingDirection:NSWritingDirectionLeftToRight];
-        #endif
-        #ifdef __WXMSW__
-            UpdateRTLStyleToLTR();
-        #endif
+            SetLanguageRTL(false); // English is LTR
         }
-
-#ifdef __WXMSW__
-    protected:
-        virtual void DoSetValue(const wxString& value, int flags) override
-        {
-            wxWindowUpdateLocker dis(this);
-            AnyTranslatableTextCtrl::DoSetValue(value, flags);
-            UpdateRTLStyleToLTR();
-        }
-
-        void UpdateRTLStyleToLTR()
-        {
-            wxEventBlocker block(this, wxEVT_TEXT);
-
-            PARAFORMAT2 pf;
-            ::ZeroMemory(&pf, sizeof(pf));
-            pf.cbSize = sizeof(pf);
-            pf.dwMask |= PFM_RTLPARA;
-
-            long start, end;
-            GetSelection(&start, &end);
-            SetSelection(-1, -1);
-            ::SendMessage((HWND) GetHWND(), EM_SETPARAFORMAT, 0, (LPARAM) &pf);
-            SetSelection(start, end);
-        }
-#endif
 };
+
 
 class TranslationTextCtrl : public AnyTranslatableTextCtrl
 {
@@ -578,62 +604,9 @@ class TranslationTextCtrl : public AnyTranslatableTextCtrl
             : AnyTranslatableTextCtrl(parent, winid)
         {
 #ifdef __WXMSW__
-            m_isRTL = false;
             PrepareTextCtrlForSpellchecker(this);
 #endif
         }
-
-        void SetLanguageRTL(bool isRTL)
-        {
-        #ifdef __WXOSX__
-            NSTextView *text = TextView();
-            [text setBaseWritingDirection:isRTL ? NSWritingDirectionRightToLeft : NSWritingDirectionLeftToRight];
-        #endif
-        #ifdef __WXMSW__
-            m_isRTL = isRTL;
-
-            BIDIOPTIONS bidi;
-            ::ZeroMemory(&bidi, sizeof(bidi));
-            bidi.cbSize = sizeof(bidi);
-            bidi.wMask = BOM_UNICODEBIDI;
-            bidi.wEffects = isRTL ? BOE_UNICODEBIDI : 0;
-            ::SendMessage((HWND)GetHWND(), EM_SETBIDIOPTIONS, 0, (LPARAM) &bidi);
-
-            ::SendMessage((HWND)GetHWND(), EM_SETEDITSTYLE, isRTL ? SES_BIDI : 0, SES_BIDI);
-
-            UpdateRTLStyle();
-        #endif
-        }
-
-#ifdef __WXMSW__
-    protected:
-        virtual void DoSetValue(const wxString& value, int flags) override
-        {
-            wxWindowUpdateLocker dis(this);
-            CustomizedTextCtrl::DoSetValue(value, flags);
-            UpdateRTLStyle();
-        }
-
-        void UpdateRTLStyle()
-        {
-            wxEventBlocker block(this, wxEVT_TEXT);
-
-            PARAFORMAT2 pf;
-            ::ZeroMemory(&pf, sizeof(pf));
-            pf.cbSize = sizeof(pf);
-            pf.dwMask |= PFM_RTLPARA;
-            if (m_isRTL)
-                pf.wEffects |= PFE_RTLPARA;
-
-            long start, end;
-            GetSelection(&start, &end);
-            SetSelection(-1, -1);
-            ::SendMessage((HWND) GetHWND(), EM_SETPARAFORMAT, 0, (LPARAM) &pf);
-            SetSelection(start, end);
-        }
-
-        bool m_isRTL;
-#endif // __WXMSW__
 };
 
 
