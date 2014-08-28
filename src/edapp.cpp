@@ -729,14 +729,9 @@ void PoeditApp::OnQuit(wxCommandEvent&)
 
 void PoeditApp::EditPreferences()
 {
-    PreferencesDialog dlg(NULL);
-
-    dlg.TransferTo(wxConfig::Get());
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        dlg.TransferFrom(wxConfig::Get());
-        PoeditFrame::UpdateAllAfterPreferencesChange();
-    }
+    if (!m_preferences)
+        m_preferences = PoeditPreferencesEditor::Create();
+    m_preferences->Show(nullptr);
 }
 
 void PoeditApp::OnPreferences(wxCommandEvent&)
