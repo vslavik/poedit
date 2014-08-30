@@ -570,7 +570,7 @@ public:
     UpdatesPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->SetMinSize(300, -1); // for OS X look, wouldn't fit the toolbar otherwise
+        topsizer->SetMinSize(350, -1); // for OS X look, wouldn't fit the toolbar otherwise
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
         topsizer->Add(sizer, wxSizerFlags().Expand().DoubleBorder());
@@ -581,6 +581,10 @@ public:
 
         m_beta = new wxCheckBox(this, wxID_ANY, _("Include beta versions"));
         sizer->Add(m_beta, wxSizerFlags().Expand().Border(wxBOTTOM));
+        
+        sizer->Add(new ExplanationLabel(this, _("Beta versions contain the latest new features and improvements, but may be a bit less stable.")),
+                   wxSizerFlags().Expand().Border(wxLEFT, 20));
+        sizer->AddSpacer(5);
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
             Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
