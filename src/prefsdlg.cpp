@@ -43,6 +43,7 @@
 #include <wx/windowptr.h>
 #include <wx/sizer.h>
 #include <wx/settings.h>
+#include <wx/textwrapper.h>
 #include <wx/progdlg.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/numformatter.h>
@@ -56,6 +57,7 @@
 #include "errors.h"
 #include "extractor.h"
 #include "spellchecking.h"
+#include "customcontrols.h"
 
 #ifdef __WXMSW__
 #include <winsparkle.h>
