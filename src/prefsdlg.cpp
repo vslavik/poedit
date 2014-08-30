@@ -87,6 +87,13 @@ public:
         m_inTransfer = true;
         InitValues(*wxConfig::Get());
         m_inTransfer = false;
+
+        // This is a "bit" of a hack: we take advantage of being in the last point before
+        // showing the window and re-layout it on the off chance that some data transfered
+        // into the window affected its size. And, currently more importantly, to reflect
+        // ExplanationLabel instances' rewrapping.
+        Fit();
+
         return true;
     }
 
@@ -241,6 +248,10 @@ public:
     TMPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+#ifdef __WXOSX__
+        topsizer->SetMinSize(410, -1); // for OS X look
+#endif
+
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
         topsizer->Add(sizer, wxSizerFlags().Expand().Border());
         SetSizer(topsizer);
@@ -265,7 +276,7 @@ public:
                             "translations stored in the translation memory. If the TM is\n"
                             "near-empty, it will not be very effective. The more translations\n"
                             "you edit and the larger the TM grows, the better it gets.");
-        auto explain = new wxStaticText(this, wxID_ANY, explainTxt);
+        auto explain = new ExplanationLabel(this, explainTxt);
         sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
 
         auto learnMore = new wxHyperlinkCtrl(this, wxID_ANY, _("Learn more"), "http://poedit.net/trac/wiki/Doc/TranslationMemory");
@@ -276,15 +287,11 @@ public:
 #ifdef __WXOSX__
         m_stats->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         import->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-        explain->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         learnMore->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#else
-        explain->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT));
 #endif
 
         m_useTMWhenUpdating->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
         m_stats->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
-        explain->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
         import->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
 
         import->Bind(wxEVT_BUTTON, &TMPageWindow::OnImportIntoTM, this);
