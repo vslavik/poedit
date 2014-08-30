@@ -3201,9 +3201,11 @@ static inline void SetCtrlFont(wxWindow *win, const wxFont& font)
 {
 #ifdef __WXMSW__
     // Native wxMSW text control sends EN_CHANGE when the font changes,
-    // producing a wxEVT_TEXT event as if the user changed the value. This is
-    // not the case, so supress the event.
-    wxEventBlocker block(win, wxEVT_TEXT);
+    // producing a wxEVT_TEXT event as if the user changed the value.
+    // Unfortunately the event seems to be used internally for sizing,
+    // so we can't just filter it out completely. What we can do, however,
+    // is to disable *our* handling of the event.
+    EventHandlerDisabler disabler(win->GetEventHandler());
 #endif
     win->SetFont(font);
 }
