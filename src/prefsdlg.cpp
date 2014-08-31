@@ -32,7 +32,6 @@
 #include <wx/choicdlg.h>
 #include <wx/checkbox.h>
 #include <wx/choice.h>
-#include <wx/hyperlink.h>
 #include <wx/listbox.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
@@ -279,15 +278,14 @@ public:
         auto explain = new ExplanationLabel(this, explainTxt);
         sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
 
-        auto learnMore = new wxHyperlinkCtrl(this, wxID_ANY, _("Learn more"), "http://poedit.net/trac/wiki/Doc/TranslationMemory");
+        auto learnMore = new LearnMoreLink(this, "http://poedit.net/trac/wiki/Doc/TranslationMemory");
         sizer->AddSpacer(5);
-        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, 25));
+        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT|wxRIGHT, 25 + LearnMoreLink::EXTRA_INDENT));
         sizer->AddSpacer(10);
 
 #ifdef __WXOSX__
         m_stats->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         import->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-        learnMore->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 
         m_useTMWhenUpdating->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);

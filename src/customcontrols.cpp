@@ -84,3 +84,39 @@ void ExplanationLabel::OnSize(wxSizeEvent& e)
     SetMinSize(GetBestSize());
 }
 
+
+
+LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString label)
+{
+    if (label.empty())
+    {
+#ifdef __WXMSW__
+        label = _("Learn more");
+#else
+        label = _("Learn More");
+#endif
+    }
+
+    wxHyperlinkCtrl::Create(parent, wxID_ANY, label, url);
+    SetNormalColour("#2F79BE");
+    SetVisitedColour("#2F79BE");
+    SetHoverColour("#3D8DD5");
+
+#ifdef __WXOSX__
+    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    SetFont(GetFont().Underlined());
+#endif
+}
+
+
+wxObject *LearnMoreLinkXmlHandler::DoCreateResource()
+{
+    auto w = new LearnMoreLink(m_parentAsWindow, GetText("url"), GetText("label"));
+    SetupWindow(w);
+    return w;
+}
+
+bool LearnMoreLinkXmlHandler::CanHandle(wxXmlNode *node)
+{
+    return IsOfClass(node, "LearnMoreLink");
+}

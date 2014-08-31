@@ -27,7 +27,9 @@
 #define Poedit_customcontrols_h
 
 #include <wx/stattext.h>
+#include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
+
 
 // Longer, often multiline, explanation label used to provide more information
 // about the effects of some less obvious settings. Typeset using smaller font
@@ -43,6 +45,29 @@ private:
 
     wxString m_text;
     int m_wrapWidth;
+};
+
+
+// "Learn more" hyperlink for dialogs.
+class LearnMoreLink : public wxHyperlinkCtrl
+{
+public:
+    LearnMoreLink(wxWindow *parent, const wxString& url, wxString label = wxString());
+
+#ifdef __WXOSX__
+    static const int EXTRA_INDENT = 2;
+#else
+    static const int EXTRA_INDENT = 0;
+#endif
+};
+
+
+class LearnMoreLinkXmlHandler : public wxXmlResourceHandler
+{
+public:
+    LearnMoreLinkXmlHandler() {}
+    wxObject *DoCreateResource() override;
+    bool CanHandle(wxXmlNode *node) override;
 };
 
 #endif // Poedit_customcontrols_h

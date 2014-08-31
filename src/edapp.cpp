@@ -64,6 +64,7 @@
 #include "prefsdlg.h"
 #include "extractor.h"
 #include "chooselang.h"
+#include "customcontrols.h"
 #include "icons.h"
 #include "version.h"
 #include "tm/transmem.h"
@@ -203,6 +204,7 @@ bool PoeditApp::OnInit()
     wxImage::AddHandler(new wxICOHandler);
 #endif
     wxXmlResource::Get()->InitAllHandlers();
+    wxXmlResource::Get()->AddHandler(new LearnMoreLinkXmlHandler);
 
 #if defined(__WXMAC__)
     wxXmlResource::Get()->LoadAllFiles(wxStandardPaths::Get().GetResourcesDir());
