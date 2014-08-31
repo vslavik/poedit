@@ -423,6 +423,10 @@ public:
         topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
         SetSizer(topsizer);
 
+        sizer->Add(new ExplanationLabel(this, _("Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated.")),
+                   wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
+        sizer->AddSpacer(10);
+
         auto horizontal = new wxBoxSizer(wxHORIZONTAL);
         sizer->Add(horizontal, wxSizerFlags(1).Expand());
 
