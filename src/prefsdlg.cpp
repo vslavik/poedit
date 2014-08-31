@@ -415,30 +415,50 @@ public:
 class ExtractorsPageWindow : public PrefsPanel
 {
 public:
-    ExtractorsPageWindow(wxWindow *parent)
+    ExtractorsPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
-        wxXmlResource::Get()->LoadPanel(this, parent, "prefs_extractors");
+        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
-        Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnNewExtractor, this, XRCID("extractor_new"));
-        Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnEditExtractor, this, XRCID("extractor_edit"));
-        Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnDeleteExtractor, this, XRCID("extractor_delete"));
+        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        SetSizer(topsizer);
+
+        auto horizontal = new wxBoxSizer(wxHORIZONTAL);
+        sizer->Add(horizontal, wxSizerFlags(1).Expand());
+
+        m_list = new wxListBox(this, wxID_ANY);
+        m_list->SetMinSize(wxSize(250,300));
+        horizontal->Add(m_list, wxSizerFlags(1).Expand().Border(wxRIGHT));
+
+        auto buttons = new wxBoxSizer(wxVERTICAL);
+        horizontal->Add(buttons, wxSizerFlags().Expand());
+
+        m_new = new wxButton(this, wxID_ANY, _("New"));
+        m_edit = new wxButton(this, wxID_ANY, _("Edit"));
+        m_delete = new wxButton(this, wxID_ANY, _("Delete"));
+        buttons->Add(m_new, wxSizerFlags().Border(wxBOTTOM));
+        buttons->Add(m_edit, wxSizerFlags().Border(wxBOTTOM));
+        buttons->Add(m_delete, wxSizerFlags().Border(wxBOTTOM));
+
+        m_new->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnNewExtractor, this);
+        m_edit->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnEditExtractor, this);
+        m_delete->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnDeleteExtractor, this);
     }
 
     void InitValues(const wxConfigBase& cfg) override
     {
         m_extractors.Read(const_cast<wxConfigBase*>(&cfg));
         
-        wxListBox *list = XRCCTRL(*this, "extractors_list", wxListBox);
         for (const auto& item: m_extractors.Data)
-            list->Append(item.Name);
+            m_list->Append(item.Name);
         
         if (m_extractors.Data.empty())
         {
-            XRCCTRL(*this, "extractor_edit", wxButton)->Enable(false);
-            XRCCTRL(*this, "extractor_delete", wxButton)->Enable(false);
+            m_edit->Enable(false);
+            m_delete->Enable(false);
         }
         else
-            list->SetSelection(0);
+            m_list->SetSelection(0);
     }
 
     void SaveValues(wxConfigBase& cfg) override
@@ -495,7 +515,7 @@ private:
                 nfo.KeywordItem = extractor_keywords->GetValue();
                 nfo.FileItem = extractor_files->GetValue();
                 nfo.CharsetItem = extractor_charset->GetValue();
-                XRCCTRL(*this, "extractors_list", wxListBox)->SetString(num, nfo.Name);
+                m_list->SetString(num, nfo.Name);
             }
             completionHandler(retcode == wxID_OK);
         });
@@ -505,17 +525,17 @@ private:
     {
         Extractor info;
         m_extractors.Data.push_back(info);
-        XRCCTRL(*this, "extractors_list", wxListBox)->Append(wxEmptyString);
+        m_list->Append(wxEmptyString);
         int index = (int)m_extractors.Data.size()-1;
         EditExtractor(index, [=](bool added){
             if (added)
             {
-                XRCCTRL(*this, "extractor_edit", wxButton)->Enable(true);
-                XRCCTRL(*this, "extractor_delete", wxButton)->Enable(true);
+                m_edit->Enable(true);
+                m_delete->Enable(true);
             }
             else
             {
-                XRCCTRL(*this, "extractors_list", wxListBox)->Delete(index);
+                m_list->Delete(index);
                 m_extractors.Data.erase(m_extractors.Data.begin() + index);
             }
 
@@ -526,7 +546,7 @@ private:
 
     void OnEditExtractor(wxCommandEvent&)
     {
-        EditExtractor(XRCCTRL(*this, "extractors_list", wxListBox)->GetSelection(), [=](bool changed){
+        EditExtractor(m_list->GetSelection(), [=](bool changed){
             if (changed && wxPreferencesEditor::ShouldApplyChangesImmediately())
                 TransferDataFromWindow();
         });
@@ -534,13 +554,13 @@ private:
 
     void OnDeleteExtractor(wxCommandEvent&)
     {
-        int index = XRCCTRL(*this, "extractors_list", wxListBox)->GetSelection();
+        int index = m_list->GetSelection();
         m_extractors.Data.erase(m_extractors.Data.begin() + index);
-        XRCCTRL(*this, "extractors_list", wxListBox)->Delete(index);
+        m_list->Delete(index);
         if (m_extractors.Data.empty())
         {
-            XRCCTRL(*this, "extractor_edit", wxButton)->Enable(false);
-            XRCCTRL(*this, "extractor_delete", wxButton)->Enable(false);
+            m_list->Enable(false);
+            m_list->Enable(false);
         }
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
@@ -548,6 +568,9 @@ private:
     }
 
     ExtractorsDB m_extractors;
+
+    wxListBox *m_list;
+    wxButton *m_new, *m_edit, *m_delete;
 };
 
 class ExtractorsPage : public wxPreferencesPage
