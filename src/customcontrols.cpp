@@ -60,7 +60,7 @@ ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
 
 #ifdef __WXOSX__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-    SetForegroundColour(wxColour("#888888"));
+    SetForegroundColour(wxColour("#777777"));
 #else
     SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT));
 #endif
