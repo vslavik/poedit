@@ -30,7 +30,8 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  language.cpp language.h language_impl_legacy.h language_impl_plurals.h \
                  languagectrl.cpp languagectrl.h \
                  welcomescreen.cpp welcomescreen.h \
-                 syntaxhighlighter.cpp syntaxhighlighter.h
+                 syntaxhighlighter.cpp syntaxhighlighter.h \
+                 customcontrols.cpp customcontrols.h
 nodist_poedit_SOURCES = compiled_xrc.cpp
 
 poedit_LDADD = $(RESOURCE_FILES) $(WX_LIBS) $(LUCENE_LIBS) $(EXPAT_LIBS) \

@@ -30,9 +30,11 @@
 #include <wx/button.h>
 #include <wx/config.h>
 #include <wx/choicdlg.h>
-#include <wx/hyperlink.h>
-#include <wx/spinctrl.h>
-#include <wx/notebook.h>
+#include <wx/checkbox.h>
+#include <wx/choice.h>
+#include <wx/listbox.h>
+#include <wx/sizer.h>
+#include <wx/stattext.h>
 #include <wx/fontutil.h>
 #include <wx/fontpicker.h>
 #include <wx/filename.h>
@@ -40,17 +42,21 @@
 #include <wx/windowptr.h>
 #include <wx/sizer.h>
 #include <wx/settings.h>
+#include <wx/textwrapper.h>
 #include <wx/progdlg.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/numformatter.h>
 
 #include "prefsdlg.h"
 #include "edapp.h"
+#include "edframe.h"
 #include "catalog.h"
 #include "tm/transmem.h"
 #include "chooselang.h"
 #include "errors.h"
+#include "extractor.h"
 #include "spellchecking.h"
+#include "customcontrols.h"
 
 #ifdef __WXMSW__
 #include <winsparkle.h>
@@ -60,89 +66,363 @@
 #include "osx_helpers.h"
 #endif // USE_SPARKLE
 
-class PreferencesPage : public wxPanel
-{
-public:
-    virtual void LoadSettings() = 0;
-    virtual void WriteSettings() = 0;
-
-protected:
-    PreferencesPage(wxWindow *parent)
-        : wxPanel(parent, wxID_ANY),
-          m_cfg(wxConfig::Get())
-    {}
-
-    wxConfigBase *m_cfg;
-};
-
+#if defined(USE_SPARKLE) || defined(__WXMSW__)
+    #define HAS_UPDATES_CHECK
+#endif
 
 namespace
 {
 
-class TMPage : public PreferencesPage
+class PrefsPanel : public wxPanel
 {
 public:
-    TMPage(wxWindow *parent) : PreferencesPage(parent)
+    PrefsPanel(wxWindow *parent) : wxPanel(parent), m_inTransfer(false) {}
+    PrefsPanel() : wxPanel(), m_inTransfer(false) {}
+
+    bool TransferDataToWindow() override
     {
+        if (m_inTransfer)
+            return false;
+        m_inTransfer = true;
+        InitValues(*wxConfig::Get());
+        m_inTransfer = false;
+
+        // This is a "bit" of a hack: we take advantage of being in the last point before
+        // showing the window and re-layout it on the off chance that some data transfered
+        // into the window affected its size. And, currently more importantly, to reflect
+        // ExplanationLabel instances' rewrapping.
+        Fit();
+
+        return true;
+    }
+
+    bool TransferDataFromWindow() override
+    {
+        if (m_inTransfer)
+            return false;
+        m_inTransfer = true;
+        SaveValues(*wxConfig::Get());
+        m_inTransfer = false;
+        return true;
+    }
+
+protected:
+    virtual void InitValues(const wxConfigBase& cfg) = 0;
+    virtual void SaveValues(wxConfigBase& cfg) = 0;
+
+private:
+    bool m_inTransfer;
+};
+
+
+#ifdef __WXOSX__
+    #define BORDER_WIN(dir, n) Border(dir, 0)
+    #define BORDER_OSX(dir, n) Border(dir, n)
+#else
+    #define BORDER_WIN(dir, n) Border(dir, n)
+    #define BORDER_OSX(dir, n) Border(dir, 0)
+#endif
+
+
+class GeneralPageWindow : public PrefsPanel
+{
+public:
+    GeneralPageWindow(wxWindow *parent) : PrefsPanel(parent)
+    {
+        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        SetSizer(sizer);
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        SetSizer(topsizer);
+
+        sizer->Add(new HeadingLabel(this, _("Information about the translator")));
+        sizer->AddSpacer(10);
+
+        auto translator = new wxFlexGridSizer(2, wxSize(5,6));
+        translator->AddGrowableCol(1);
+        sizer->Add(translator, wxSizerFlags().Expand());
+
+        auto nameLabel = new wxStaticText(this, wxID_ANY, _("Name:"));
+        translator->Add(nameLabel, wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
+        m_userName = new wxTextCtrl(this, wxID_ANY);
+        m_userName->SetHint(_("Your Name"));
+        translator->Add(m_userName, wxSizerFlags(1).Expand().Center());
+        auto emailLabel = new wxStaticText(this, wxID_ANY, _("Email:"));
+        translator->Add(emailLabel, wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
+        m_userEmail = new wxTextCtrl(this, wxID_ANY);
+        m_userEmail->SetHint(_("your_email@example.com"));
+        translator->Add(m_userEmail, wxSizerFlags(1).Expand().Center());
+        translator->AddSpacer(1);
+        translator->Add(new ExplanationLabel(this, _("Your name and email address are only used to set the Last-Translator header of GNU gettext files.")), wxSizerFlags(1).Expand().Border(wxRIGHT));
+#ifdef __WXOSX__
+        nameLabel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        emailLabel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        m_userName->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        m_userEmail->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
 
         sizer->AddSpacer(10);
+        sizer->Add(new HeadingLabel(this, _("Editing")));
+        sizer->AddSpacer(10);
+
+        m_compileMo = new wxCheckBox(this, wxID_ANY, _("Automatically compile MO file when saving"));
+        sizer->Add(m_compileMo);
+        m_showSummary = new wxCheckBox(this, wxID_ANY, _("Show summary after catalog update"));
+        sizer->Add(m_showSummary, wxSizerFlags().Border(wxTOP));
+
+        sizer->AddSpacer(10);
+
+        m_spellchecking = new wxCheckBox(this, wxID_ANY, _("Check spelling"));
+        sizer->Add(m_spellchecking, wxSizerFlags().Border(wxTOP));
+        m_commentWinEditable = new wxCheckBox(this, wxID_ANY, _("Comment window is editable"));
+        sizer->Add(m_commentWinEditable, wxSizerFlags().Border(wxTOP));
+        m_focusToText = new wxCheckBox(this, wxID_ANY, _("Always change focus to text input field"));
+        sizer->Add(m_focusToText, wxSizerFlags().Border(wxTOP));
+        wxString explainFocus(_("Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."));
+#ifdef __WXOSX__
+        explainFocus.Replace("Ctrl", "Cmd");
+#endif
+        sizer->AddSpacer(5);
+        sizer->Add(new ExplanationLabel(this, explainFocus), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, ExplanationLabel::CHECKBOX_INDENT));
+
+        sizer->AddSpacer(10);
+
+        auto crlfbox = new wxFlexGridSizer(2, wxSize(5,5));
+        crlfbox->AddGrowableCol(1);
+        sizer->Add(crlfbox, wxSizerFlags().Expand().Border(wxTOP));
+        crlfbox->Add(new wxStaticText(this, wxID_ANY, _("Line endings:")), wxSizerFlags().Center().BORDER_WIN(wxTOP, 1));
+        m_crlf = new wxChoice(this, wxID_ANY);
+        m_crlf->Append(_("Unix (recommended)"));
+        m_crlf->Append(_("Windows"));
+        crlfbox->Add(m_crlf, wxSizerFlags(1).Center().Expand().BORDER_OSX(wxLEFT, 3));
+        m_keepCrlf = new wxCheckBox(this, wxID_ANY, _("Preserve line endings of existing files"));
+        crlfbox->AddSpacer(1);
+        crlfbox->Add(m_keepCrlf);
+
+        sizer->AddSpacer(10);
+        sizer->Add(new HeadingLabel(this, _("Appearance")));
+        sizer->AddSpacer(4);
+
+        auto appearance = new wxFlexGridSizer(2, wxSize(5,1));
+        appearance->AddGrowableCol(1);
+        sizer->Add(appearance, wxSizerFlags().Expand());
+
+        m_useFontList = new wxCheckBox(this, wxID_ANY, _("Use custom list font:"));
+        m_fontList = new wxFontPickerCtrl(this, wxID_ANY);
+        m_fontList->SetMinSize(wxSize(210, -1));
+        m_useFontText = new wxCheckBox(this, wxID_ANY, _("Use custom text fields font:"));
+        m_fontText = new wxFontPickerCtrl(this, wxID_ANY);
+        m_fontText->SetMinSize(wxSize(210, -1));
+
+        appearance->Add(m_useFontList, wxSizerFlags().Center().Left());
+        appearance->Add(m_fontList, wxSizerFlags().Center().Expand());
+        appearance->Add(m_useFontText, wxSizerFlags().Center().Left());
+        appearance->Add(m_fontText, wxSizerFlags().Center().Expand());
+
+#if NEED_CHOOSELANG_UI 
+        m_uiLanguage = new wxButton(this, wxID_ANY, _("Change UI language"));
+        sizer->Add(m_uiLanguage, wxSizerFlags().Border(wxTOP));
+#endif
+
+#ifdef __WXMSW__
+        if (!IsSpellcheckingAvailable())
+        {
+            m_spellchecking->Disable();
+            m_spellchecking->SetValue(false);
+            // TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+            m_spellchecking->SetLabel(m_spellchecking->GetLabel() + " " + _("(requires Windows 8 or newer)"));
+        }
+#endif
+
+        Fit();
+
+        if (wxPreferencesEditor::ShouldApplyChangesImmediately())
+        {
+            Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+            Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+            Bind(wxEVT_TEXT, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+
+            // Some settings directly affect the UI, so need a more expensive handler:
+            m_useFontList->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
+            m_useFontText->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
+            Bind(wxEVT_FONTPICKER_CHANGED, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
+            m_focusToText->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
+            m_commentWinEditable->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
+            m_spellchecking->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
+        }
+
+        // handle UI updates:
+        m_fontList->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_useFontList->GetValue()); });
+        m_fontText->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_useFontText->GetValue()); });
+
+#if NEED_CHOOSELANG_UI
+        m_uiLanguage->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ ChangeUILanguage(); });
+#endif
+    }
+
+    void InitValues(const wxConfigBase& cfg) override
+    {
+        m_userName->SetValue(cfg.Read("translator_name", wxEmptyString));
+        m_userEmail->SetValue(cfg.Read("translator_email", wxEmptyString));
+        m_compileMo->SetValue(cfg.ReadBool("compile_mo", true));
+        m_showSummary->SetValue(cfg.ReadBool("show_summary", false));
+        m_focusToText->SetValue(cfg.ReadBool("focus_to_text", false));
+        m_commentWinEditable->SetValue(cfg.ReadBool("comment_window_editable", false));
+        m_keepCrlf->SetValue(cfg.ReadBool("keep_crlf", true));
+
+        if (IsSpellcheckingAvailable())
+        {
+            m_spellchecking->SetValue(cfg.ReadBool("enable_spellchecking", true));
+        }
+
+        m_useFontList->SetValue(cfg.ReadBool("custom_font_list_use", false));
+        m_useFontText->SetValue(cfg.ReadBool("custom_font_text_use", false));
+        m_fontList->SetSelectedFont(wxFont(cfg.Read("custom_font_list_name", wxEmptyString)));
+        m_fontText->SetSelectedFont(wxFont(cfg.Read("custom_font_text_name", wxEmptyString)));
+
+        wxString format = cfg.Read("crlf_format", "unix");
+        int sel;
+        if (format == "win") sel = 1;
+        else /* "unix" or obsolete settings */ sel = 0;
+        m_crlf->SetSelection(sel);
+    }
+
+    void SaveValues(wxConfigBase& cfg) override
+    {
+        cfg.Write("translator_name", m_userName->GetValue());
+        cfg.Write("translator_email", m_userEmail->GetValue());
+        cfg.Write("compile_mo", m_compileMo->GetValue());
+        cfg.Write("show_summary", m_showSummary->GetValue());
+        cfg.Write("focus_to_text", m_focusToText->GetValue());
+        cfg.Write("comment_window_editable", m_commentWinEditable->GetValue());
+        cfg.Write("keep_crlf", m_keepCrlf->GetValue());
+
+        if (IsSpellcheckingAvailable())
+        {
+            cfg.Write("enable_spellchecking", m_spellchecking->GetValue());
+        }
+       
+        wxFont listFont = m_fontList->GetSelectedFont();
+        wxFont textFont = m_fontText->GetSelectedFont();
+
+        cfg.Write("custom_font_list_use", listFont.IsOk() && m_useFontList->GetValue());
+        cfg.Write("custom_font_text_use", textFont.IsOk() && m_useFontText->GetValue());
+        if ( listFont.IsOk() )
+            cfg.Write("custom_font_list_name", listFont.GetNativeFontInfoDesc());
+        if ( textFont.IsOk() )
+            cfg.Write("custom_font_text_name", textFont.GetNativeFontInfoDesc());
+
+        static const char *formats[] = { "unix", "win" };
+        cfg.Write("crlf_format", formats[m_crlf->GetSelection()]);
+
+        // On Windows, we must update the UI here; on other platforms, it was done
+        // via TransferDataFromWindowAndUpdateUI immediately:
+        if (!wxPreferencesEditor::ShouldApplyChangesImmediately())
+        {
+            PoeditFrame::UpdateAllAfterPreferencesChange();
+        }
+    }
+
+    void TransferDataFromWindowAndUpdateUI(wxCommandEvent&)
+    {
+        TransferDataFromWindow();
+        PoeditFrame::UpdateAllAfterPreferencesChange();
+    }
+
+private:
+    wxTextCtrl *m_userName, *m_userEmail;
+    wxCheckBox *m_compileMo, *m_showSummary, *m_focusToText, *m_commentWinEditable, *m_spellchecking;
+    wxChoice *m_crlf;
+    wxCheckBox *m_keepCrlf;
+    wxCheckBox *m_useFontList, *m_useFontText;
+    wxFontPickerCtrl *m_fontList, *m_fontText;
+#if NEED_CHOOSELANG_UI
+    wxButton *m_uiLanguage;
+#endif
+};
+
+class GeneralPage : public wxPreferencesPage
+{
+public:
+    wxString GetName() const override { return _("General"); }
+    wxBitmap GetLargeIcon() const override { return wxArtProvider::GetBitmap("Prefs-General"); }
+    wxWindow *CreateWindow(wxWindow *parent) override { return new GeneralPageWindow(parent); }
+};
+
+
+
+class TMPageWindow : public PrefsPanel
+{
+public:
+    TMPageWindow(wxWindow *parent) : PrefsPanel(parent)
+    {
+        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+#ifdef __WXOSX__
+        topsizer->SetMinSize(410, -1); // for OS X look
+#endif
+
+        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        SetSizer(topsizer);
+
+        sizer->AddSpacer(5);
         m_useTM = new wxCheckBox(this, wxID_ANY, _("Use translation memory"));
-        sizer->Add(m_useTM, wxSizerFlags().Expand().Border(wxALL));
+        sizer->Add(m_useTM, wxSizerFlags().Expand());
 
         m_stats = new wxStaticText(this, wxID_ANY, "--\n--", wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE);
         sizer->AddSpacer(10);
-        sizer->Add(m_stats, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
+        sizer->Add(m_stats, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 30));
         sizer->AddSpacer(10);
 
         auto import = new wxButton(this, wxID_ANY, _("Learn From Files..."));
-        sizer->Add(import, wxSizerFlags().Border(wxLEFT|wxRIGHT, 25));
+        sizer->Add(import, wxSizerFlags().Border(wxLEFT|wxRIGHT, 30));
         sizer->AddSpacer(10);
 
         m_useTMWhenUpdating = new wxCheckBox(this, wxID_ANY, _("Consult TM when updating from sources"));
-        sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().Border(wxALL));
+        sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
 
         auto explainTxt = _("If enabled, Poedit will try to fill in new entries using your previous\n"
                             "translations stored in the translation memory. If the TM is\n"
                             "near-empty, it will not be very effective. The more translations\n"
                             "you edit and the larger the TM grows, the better it gets.");
-        auto explain = new wxStaticText(this, wxID_ANY, explainTxt);
-        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
+        auto explain = new ExplanationLabel(this, explainTxt);
+        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, ExplanationLabel::CHECKBOX_INDENT));
 
-        auto learnMore = new wxHyperlinkCtrl(this, wxID_ANY, _("Learn more"), "http://poedit.net/trac/wiki/Doc/TranslationMemory");
+        auto learnMore = new LearnMoreLink(this, "http://poedit.net/trac/wiki/Doc/TranslationMemory");
         sizer->AddSpacer(5);
-        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, 25));
+        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT|wxRIGHT, ExplanationLabel::CHECKBOX_INDENT + LearnMoreLink::EXTRA_INDENT));
+        sizer->AddSpacer(10);
 
 #ifdef __WXOSX__
         m_stats->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         import->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-        explain->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-        learnMore->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#else
-        explain->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT));
 #endif
 
-        m_useTMWhenUpdating->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
-        m_stats->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
-        explain->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
-        import->Bind(wxEVT_UPDATE_UI, &TMPage::OnUpdateUI, this);
+        m_useTMWhenUpdating->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
+        m_stats->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
+        import->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
 
-        import->Bind(wxEVT_BUTTON, &TMPage::OnImportIntoTM, this);
+        import->Bind(wxEVT_BUTTON, &TMPageWindow::OnImportIntoTM, this);
 
         UpdateStats();
+
+        if (wxPreferencesEditor::ShouldApplyChangesImmediately())
+        {
+            m_useTM->Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+            m_useTMWhenUpdating->Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+        }
     }
 
-    virtual void LoadSettings()
+    void InitValues(const wxConfigBase& cfg) override
     {
-        m_useTM->SetValue(m_cfg->ReadBool("use_tm", true));
-        m_useTMWhenUpdating->SetValue(m_cfg->ReadBool("use_tm_when_updating", false));
+        m_useTM->SetValue(cfg.ReadBool("use_tm", true));
+        m_useTMWhenUpdating->SetValue(cfg.ReadBool("use_tm_when_updating", false));
     }
 
-    virtual void WriteSettings()
+    void SaveValues(wxConfigBase& cfg) override
     {
-        m_cfg->Write("use_tm", m_useTM->GetValue());
-        m_cfg->Write("use_tm_when_updating", m_useTMWhenUpdating->GetValue());
+        cfg.Write("use_tm", m_useTM->GetValue());
+        cfg.Write("use_tm_when_updating", m_useTMWhenUpdating->GetValue());
     }
 
 private:
@@ -150,7 +430,7 @@ private:
     {
         wxString sDocs("--");
         wxString sFileSize("--");
-        if (m_cfg->ReadBool("use_tm", true))
+        if (wxConfig::Get()->ReadBool("use_tm", true))
         {
             try
             {
@@ -222,293 +502,284 @@ private:
     wxStaticText *m_stats;
 };
 
+class TMPage : public wxPreferencesPage
+{
+public:
+    wxString GetName() const override
+    {
+#ifdef __WXOSX__
+        // TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on OS X.
+        // Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
+        // length there.
+        return _("TM");
+#else
+        return _("Translation Memory");
+#endif
+    }
+    wxBitmap GetLargeIcon() const override { return wxArtProvider::GetBitmap("Prefs-TM"); }
+    wxWindow *CreateWindow(wxWindow *parent) override { return new TMPageWindow(parent); }
+};
+
+
+
+class ExtractorsPageWindow : public PrefsPanel
+{
+public:
+    ExtractorsPageWindow(wxWindow *parent) : PrefsPanel(parent)
+    {
+        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+
+        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        SetSizer(topsizer);
+
+        sizer->Add(new ExplanationLabel(this, _("Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated.")),
+                   wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
+        sizer->AddSpacer(10);
+
+        auto horizontal = new wxBoxSizer(wxHORIZONTAL);
+        sizer->Add(horizontal, wxSizerFlags(1).Expand());
+
+        m_list = new wxListBox(this, wxID_ANY);
+        m_list->SetMinSize(wxSize(250,300));
+        horizontal->Add(m_list, wxSizerFlags(1).Expand().Border(wxRIGHT));
+
+        auto buttons = new wxBoxSizer(wxVERTICAL);
+        horizontal->Add(buttons, wxSizerFlags().Expand());
+
+        m_new = new wxButton(this, wxID_ANY, _("New"));
+        m_edit = new wxButton(this, wxID_ANY, _("Edit"));
+        m_delete = new wxButton(this, wxID_ANY, _("Delete"));
+        buttons->Add(m_new, wxSizerFlags().Border(wxBOTTOM));
+        buttons->Add(m_edit, wxSizerFlags().Border(wxBOTTOM));
+        buttons->Add(m_delete, wxSizerFlags().Border(wxBOTTOM));
+
+        m_new->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnNewExtractor, this);
+        m_edit->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnEditExtractor, this);
+        m_delete->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnDeleteExtractor, this);
+    }
+
+    void InitValues(const wxConfigBase& cfg) override
+    {
+        m_extractors.Read(const_cast<wxConfigBase*>(&cfg));
+        
+        for (const auto& item: m_extractors.Data)
+            m_list->Append(item.Name);
+        
+        if (m_extractors.Data.empty())
+        {
+            m_edit->Enable(false);
+            m_delete->Enable(false);
+        }
+        else
+            m_list->SetSelection(0);
+    }
+
+    void SaveValues(wxConfigBase& cfg) override
+    {
+        m_extractors.Write(&cfg);
+    }
+
+private:
+    /// Called to launch dialog for editting parser properties.
+    template<typename TFunctor>
+    void EditExtractor(int num, TFunctor completionHandler)
+    {
+        wxWindowPtr<wxDialog> dlg(wxXmlResource::Get()->LoadDialog(this, "edit_extractor"));
+        dlg->Centre();
+
+        auto extractor_language = XRCCTRL(*dlg, "extractor_language", wxTextCtrl);
+        auto extractor_extensions = XRCCTRL(*dlg, "extractor_extensions", wxTextCtrl);
+        auto extractor_command = XRCCTRL(*dlg, "extractor_command", wxTextCtrl);
+        auto extractor_keywords = XRCCTRL(*dlg, "extractor_keywords", wxTextCtrl);
+        auto extractor_files = XRCCTRL(*dlg, "extractor_files", wxTextCtrl);
+        auto extractor_charset = XRCCTRL(*dlg, "extractor_charset", wxTextCtrl);
+
+        {
+            const Extractor& nfo = m_extractors.Data[num];
+            extractor_language->SetValue(nfo.Name);
+            extractor_extensions->SetValue(nfo.Extensions);
+            extractor_command->SetValue(nfo.Command);
+            extractor_keywords->SetValue(nfo.KeywordItem);
+            extractor_files->SetValue(nfo.FileItem);
+            extractor_charset->SetValue(nfo.CharsetItem);
+        }
+
+        dlg->Bind
+        (
+            wxEVT_UPDATE_UI,
+            [=](wxUpdateUIEvent& e){
+                e.Enable(!extractor_language->IsEmpty() &&
+                         !extractor_extensions->IsEmpty() &&
+                         !extractor_command->IsEmpty() &&
+                         !extractor_files->IsEmpty());
+                // charset, keywords could in theory be empty if unsupported by the parser tool
+            },
+            wxID_OK
+        );
+
+        dlg->ShowWindowModalThenDo([=](int retcode){
+            (void)dlg; // force use
+            if (retcode == wxID_OK)
+            {
+                Extractor& nfo = m_extractors.Data[num];
+                nfo.Name = extractor_language->GetValue();
+                nfo.Extensions = extractor_extensions->GetValue();
+                nfo.Command = extractor_command->GetValue();
+                nfo.KeywordItem = extractor_keywords->GetValue();
+                nfo.FileItem = extractor_files->GetValue();
+                nfo.CharsetItem = extractor_charset->GetValue();
+                m_list->SetString(num, nfo.Name);
+            }
+            completionHandler(retcode == wxID_OK);
+        });
+    }
+
+    void OnNewExtractor(wxCommandEvent&)
+    {
+        Extractor info;
+        m_extractors.Data.push_back(info);
+        m_list->Append(wxEmptyString);
+        int index = (int)m_extractors.Data.size()-1;
+        EditExtractor(index, [=](bool added){
+            if (added)
+            {
+                m_edit->Enable(true);
+                m_delete->Enable(true);
+            }
+            else
+            {
+                m_list->Delete(index);
+                m_extractors.Data.erase(m_extractors.Data.begin() + index);
+            }
+
+            if (wxPreferencesEditor::ShouldApplyChangesImmediately())
+                TransferDataFromWindow();
+        });
+    }
+
+    void OnEditExtractor(wxCommandEvent&)
+    {
+        EditExtractor(m_list->GetSelection(), [=](bool changed){
+            if (changed && wxPreferencesEditor::ShouldApplyChangesImmediately())
+                TransferDataFromWindow();
+        });
+    }
+
+    void OnDeleteExtractor(wxCommandEvent&)
+    {
+        int index = m_list->GetSelection();
+        m_extractors.Data.erase(m_extractors.Data.begin() + index);
+        m_list->Delete(index);
+        if (m_extractors.Data.empty())
+        {
+            m_list->Enable(false);
+            m_list->Enable(false);
+        }
+
+        if (wxPreferencesEditor::ShouldApplyChangesImmediately())
+            TransferDataFromWindow();
+    }
+
+    ExtractorsDB m_extractors;
+
+    wxListBox *m_list;
+    wxButton *m_new, *m_edit, *m_delete;
+};
+
+class ExtractorsPage : public wxPreferencesPage
+{
+public:
+    wxString GetName() const override { return _("Extractors"); }
+    wxBitmap GetLargeIcon() const override { return wxArtProvider::GetBitmap("Prefs-Extractors"); }
+    wxWindow *CreateWindow(wxWindow *parent) override { return new ExtractorsPageWindow(parent); }
+};
+
+
+
+
+#ifdef HAS_UPDATES_CHECK
+class UpdatesPageWindow : public PrefsPanel
+{
+public:
+    UpdatesPageWindow(wxWindow *parent) : PrefsPanel(parent)
+    {
+        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+        topsizer->SetMinSize(350, -1); // for OS X look, wouldn't fit the toolbar otherwise
+
+        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+        topsizer->Add(sizer, wxSizerFlags().Expand().DoubleBorder());
+        SetSizer(topsizer);
+
+        m_updates = new wxCheckBox(this, wxID_ANY, _("Automatically check for updates"));
+        sizer->Add(m_updates, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
+
+        m_beta = new wxCheckBox(this, wxID_ANY, _("Include beta versions"));
+        sizer->Add(m_beta, wxSizerFlags().Expand().Border(wxBOTTOM));
+        
+        sizer->Add(new ExplanationLabel(this, _("Beta versions contain the latest new features and improvements, but may be a bit less stable.")),
+                   wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
+        sizer->AddSpacer(5);
+
+        if (wxPreferencesEditor::ShouldApplyChangesImmediately())
+            Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+    }
+
+    void InitValues(const wxConfigBase&) override
+    {
+#ifdef USE_SPARKLE
+        m_updates->SetValue((bool)UserDefaults_GetBoolValue("SUEnableAutomaticChecks"));
+#endif
+#ifdef __WXMSW__
+        m_updates->SetValue(win_sparkle_get_automatic_check_for_updates() != 0);
+#endif
+        m_beta->SetValue(wxGetApp().CheckForBetaUpdates());
+        if (wxGetApp().IsBetaVersion())
+            m_beta->Disable();
+    }
+
+    void SaveValues(wxConfigBase& cfg) override
+    {
+#ifdef __WXMSW__
+        win_sparkle_set_automatic_check_for_updates(m_updates->GetValue());
+#endif
+        if (!wxGetApp().IsBetaVersion())
+        {
+            cfg.Write("check_for_beta_updates", m_beta->GetValue());
+        }
+#ifdef USE_SPARKLE
+        UserDefaults_SetBoolValue("SUEnableAutomaticChecks", m_updates->GetValue());
+        Sparkle_Initialize(wxGetApp().CheckForBetaUpdates());
+#endif
+    }
+
+private:
+    wxCheckBox *m_updates, *m_beta;
+};
+
+class UpdatesPage : public wxPreferencesPage
+{
+public:
+    wxString GetName() const override { return _("Updates"); }
+    wxBitmap GetLargeIcon() const override { return wxArtProvider::GetBitmap("Prefs-Updates"); }
+    wxWindow *CreateWindow(wxWindow *parent) override { return new UpdatesPageWindow(parent); }
+};
+#endif // HAS_UPDATES_CHECK
+
+
 } // anonymous namespace
 
 
-PreferencesDialog::PreferencesDialog(wxWindow *parent)
+
+std::unique_ptr<PoeditPreferencesEditor> PoeditPreferencesEditor::Create()
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, "preferences");
-
-    wxNotebook *nb = XRCCTRL(*this, "prefs_notebook", wxNotebook);
-    m_pageTM = new TMPage(nb);
-    nb->InsertPage(2, m_pageTM, _("Translation Memory"));
-
-#ifdef __WXMSW__
-    if (!IsSpellcheckingAvailable())
-    {
-        auto spellcheck = XRCCTRL(*this, "enable_spellchecking", wxCheckBox);
-        spellcheck->Disable();
-        spellcheck->SetValue(false);
-        // TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
-        spellcheck->SetLabel(spellcheck->GetLabel() + " " + _("(requires Windows 8 or newer)"));
-    }
+    std::unique_ptr<PoeditPreferencesEditor> p(new PoeditPreferencesEditor);
+    p->AddPage(new GeneralPage);
+    p->AddPage(new TMPage);
+    p->AddPage(new ExtractorsPage);
+#ifdef HAS_UPDATES_CHECK
+    p->AddPage(new UpdatesPage);
 #endif
-
-#if !NEED_CHOOSELANG_UI
-    // remove (defunct on Unix) "Change UI language" button:
-    XRCCTRL(*this, "ui_language", wxButton)->Show(false);
-#endif
-
-    // re-layout the dialog:
-    Layout();
-    GetSizer()->SetSizeHints(this);
-}
-
-
-void PreferencesDialog::TransferTo(wxConfigBase *cfg)
-{
-    XRCCTRL(*this, "user_name", wxTextCtrl)->SetValue(
-                cfg->Read("translator_name", wxEmptyString));
-    XRCCTRL(*this, "user_email", wxTextCtrl)->SetValue(
-                cfg->Read("translator_email", wxEmptyString));
-    XRCCTRL(*this, "compile_mo", wxCheckBox)->SetValue(
-                cfg->ReadBool("compile_mo", true));
-    XRCCTRL(*this, "show_summary", wxCheckBox)->SetValue(
-                cfg->ReadBool("show_summary", false));
-    XRCCTRL(*this, "focus_to_text", wxCheckBox)->SetValue(
-                cfg->ReadBool("focus_to_text", false));
-    XRCCTRL(*this, "comment_window_editable", wxCheckBox)->SetValue(
-                cfg->ReadBool("comment_window_editable", false));
-    XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(
-                cfg->ReadBool("keep_crlf", true));
-    if (IsSpellcheckingAvailable())
-    {
-        XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->SetValue(
-                    cfg->ReadBool("enable_spellchecking", true));
-    }
-
-    XRCCTRL(*this, "use_font_list", wxCheckBox)->SetValue(
-                cfg->ReadBool("custom_font_list_use", false));
-    XRCCTRL(*this, "use_font_text", wxCheckBox)->SetValue(
-                cfg->ReadBool("custom_font_text_use", false));
-    XRCCTRL(*this, "font_list", wxFontPickerCtrl)->SetSelectedFont(
-            wxFont(cfg->Read("custom_font_list_name", wxEmptyString)));
-    XRCCTRL(*this, "font_text", wxFontPickerCtrl)->SetSelectedFont(
-            wxFont(cfg->Read("custom_font_text_name", wxEmptyString)));
-
-    wxString format = cfg->Read("crlf_format", "unix");
-    int sel;
-    if (format == "win") sel = 1;
-    else /* "unix" or obsolete settings */ sel = 0;
-
-    XRCCTRL(*this, "crlf_format", wxChoice)->SetSelection(sel);
-
-    m_extractors.Read(cfg);
-    
-    wxListBox *list = XRCCTRL(*this, "extractors_list", wxListBox);
-    for (const auto& item: m_extractors.Data)
-        list->Append(item.Name);
-    
-    if (m_extractors.Data.empty())
-    {
-        XRCCTRL(*this, "extractor_edit", wxButton)->Enable(false);
-        XRCCTRL(*this, "extractor_delete", wxButton)->Enable(false);
-    }
-    else
-        list->SetSelection(0);
-
-#ifdef USE_SPARKLE
-    XRCCTRL(*this, "auto_updates", wxCheckBox)->SetValue(
-                (bool)UserDefaults_GetBoolValue("SUEnableAutomaticChecks"));
-#endif // USE_SPARKLE
-#ifdef __WXMSW__
-    XRCCTRL(*this, "auto_updates", wxCheckBox)->SetValue(
-                win_sparkle_get_automatic_check_for_updates() != 0);
-#endif
-#if defined(USE_SPARKLE) || defined(__WXMSW__)
-    wxCheckBox *betas = XRCCTRL(*this, "beta_versions", wxCheckBox);
-    betas->SetValue(wxGetApp().CheckForBetaUpdates());
-    if (wxGetApp().IsBetaVersion())
-        betas->Disable();
-#endif
-
-#if defined(__WXOSX__) && !defined(USE_SPARKLE)
-    XRCCTRL(*this, "auto_updates", wxCheckBox)->Hide();
-    XRCCTRL(*this, "beta_versions", wxCheckBox)->Hide();
-#endif
-
-    m_pageTM->LoadSettings();
-}
- 
-            
-void PreferencesDialog::TransferFrom(wxConfigBase *cfg)
-{
-    cfg->Write("translator_name", 
-                XRCCTRL(*this, "user_name", wxTextCtrl)->GetValue());
-    cfg->Write("translator_email", 
-                XRCCTRL(*this, "user_email", wxTextCtrl)->GetValue());
-    cfg->Write("compile_mo", 
-                XRCCTRL(*this, "compile_mo", wxCheckBox)->GetValue());
-    cfg->Write("show_summary", 
-                XRCCTRL(*this, "show_summary", wxCheckBox)->GetValue());
-    cfg->Write("focus_to_text", 
-                XRCCTRL(*this, "focus_to_text", wxCheckBox)->GetValue());
-    cfg->Write("comment_window_editable", 
-                XRCCTRL(*this, "comment_window_editable", wxCheckBox)->GetValue());
-    cfg->Write("keep_crlf", 
-                XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
-    if (IsSpellcheckingAvailable())
-    {
-        cfg->Write("enable_spellchecking",
-                    XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->GetValue());
-    }
-   
-    wxFont listFont = XRCCTRL(*this, "font_list", wxFontPickerCtrl)->GetSelectedFont();
-    wxFont textFont = XRCCTRL(*this, "font_text", wxFontPickerCtrl)->GetSelectedFont();
-
-    cfg->Write("custom_font_list_use",
-               listFont.IsOk() && XRCCTRL(*this, "use_font_list", wxCheckBox)->GetValue());
-    cfg->Write("custom_font_text_use",
-               textFont.IsOk() && XRCCTRL(*this, "use_font_text", wxCheckBox)->GetValue());
-    if ( listFont.IsOk() )
-        cfg->Write("custom_font_list_name", listFont.GetNativeFontInfoDesc());
-    if ( textFont.IsOk() )
-        cfg->Write("custom_font_text_name", textFont.GetNativeFontInfoDesc());
-
-    static const char *formats[] = { "unix", "win" };
-    cfg->Write("crlf_format", formats[
-                XRCCTRL(*this, "crlf_format", wxChoice)->GetSelection()]);
-               
-    m_extractors.Write(cfg);
-
-#ifdef USE_SPARKLE
-    UserDefaults_SetBoolValue("SUEnableAutomaticChecks",
-                XRCCTRL(*this, "auto_updates", wxCheckBox)->GetValue());
-#endif // USE_SPARKLE
-#ifdef __WXMSW__
-    win_sparkle_set_automatic_check_for_updates(
-                XRCCTRL(*this, "auto_updates", wxCheckBox)->GetValue());
-#endif
-#if defined(USE_SPARKLE) || defined(__WXMSW__)
-    if (!wxGetApp().IsBetaVersion())
-    {
-        cfg->Write("check_for_beta_updates",
-                   XRCCTRL(*this, "beta_versions", wxCheckBox)->GetValue());
-    }
-#endif
-
-    m_pageTM->WriteSettings();
-}
-
-
-
-BEGIN_EVENT_TABLE(PreferencesDialog, wxDialog)
-   EVT_BUTTON(XRCID("extractor_new"), PreferencesDialog::OnNewExtractor)
-   EVT_BUTTON(XRCID("extractor_edit"), PreferencesDialog::OnEditExtractor)
-   EVT_BUTTON(XRCID("extractor_delete"), PreferencesDialog::OnDeleteExtractor)
-#if NEED_CHOOSELANG_UI
-   EVT_BUTTON(XRCID("ui_language"), PreferencesDialog::OnUILanguage)
-#endif
-   EVT_UPDATE_UI(XRCID("font_list"), PreferencesDialog::OnUpdateUIFontList)
-   EVT_UPDATE_UI(XRCID("font_text"), PreferencesDialog::OnUpdateUIFontText)
-END_EVENT_TABLE()
-
-#if NEED_CHOOSELANG_UI
-void PreferencesDialog::OnUILanguage(wxCommandEvent&)
-{
-    ChangeUILanguage();
-}
-#endif
-
-
-void PreferencesDialog::OnUpdateUIFontList(wxUpdateUIEvent& event)
-{
-    event.Enable(XRCCTRL(*this, "use_font_list", wxCheckBox)->GetValue());
-}
-
-void PreferencesDialog::OnUpdateUIFontText(wxUpdateUIEvent& event)
-{
-    event.Enable(XRCCTRL(*this, "use_font_text", wxCheckBox)->GetValue());
-}
-
-
-template<typename TFunctor>
-void PreferencesDialog::EditExtractor(int num, TFunctor completionHandler)
-{
-    wxWindowPtr<wxDialog> dlg(wxXmlResource::Get()->LoadDialog(this, "edit_extractor"));
-    dlg->Centre();
-
-    auto extractor_language = XRCCTRL(*dlg, "extractor_language", wxTextCtrl);
-    auto extractor_extensions = XRCCTRL(*dlg, "extractor_extensions", wxTextCtrl);
-    auto extractor_command = XRCCTRL(*dlg, "extractor_command", wxTextCtrl);
-    auto extractor_keywords = XRCCTRL(*dlg, "extractor_keywords", wxTextCtrl);
-    auto extractor_files = XRCCTRL(*dlg, "extractor_files", wxTextCtrl);
-    auto extractor_charset = XRCCTRL(*dlg, "extractor_charset", wxTextCtrl);
-
-    {
-        const Extractor& nfo = m_extractors.Data[num];
-        extractor_language->SetValue(nfo.Name);
-        extractor_extensions->SetValue(nfo.Extensions);
-        extractor_command->SetValue(nfo.Command);
-        extractor_keywords->SetValue(nfo.KeywordItem);
-        extractor_files->SetValue(nfo.FileItem);
-        extractor_charset->SetValue(nfo.CharsetItem);
-    }
-
-    dlg->Bind
-    (
-        wxEVT_UPDATE_UI,
-        [=](wxUpdateUIEvent& e){
-            e.Enable(!extractor_language->IsEmpty() &&
-                     !extractor_extensions->IsEmpty() &&
-                     !extractor_command->IsEmpty() &&
-                     !extractor_files->IsEmpty());
-            // charset, keywords could in theory be empty if unsupported by the parser tool
-        },
-        wxID_OK
-    );
-
-    dlg->ShowWindowModalThenDo([=](int retcode){
-        (void)dlg; // force use
-        if (retcode == wxID_OK)
-        {
-            Extractor& nfo = m_extractors.Data[num];
-            nfo.Name = extractor_language->GetValue();
-            nfo.Extensions = extractor_extensions->GetValue();
-            nfo.Command = extractor_command->GetValue();
-            nfo.KeywordItem = extractor_keywords->GetValue();
-            nfo.FileItem = extractor_files->GetValue();
-            nfo.CharsetItem = extractor_charset->GetValue();
-            XRCCTRL(*this, "extractors_list", wxListBox)->SetString(num, nfo.Name);
-        }
-        completionHandler(retcode == wxID_OK);
-    });
-}
-
-void PreferencesDialog::OnNewExtractor(wxCommandEvent&)
-{
-    Extractor info;
-    m_extractors.Data.push_back(info);
-    XRCCTRL(*this, "extractors_list", wxListBox)->Append(wxEmptyString);
-    int index = (int)m_extractors.Data.size()-1;
-    EditExtractor(index, [=](bool added){
-        if (added)
-        {
-            XRCCTRL(*this, "extractor_edit", wxButton)->Enable(true);
-            XRCCTRL(*this, "extractor_delete", wxButton)->Enable(true);
-        }
-        else
-        {
-            XRCCTRL(*this, "extractors_list", wxListBox)->Delete(index);
-            m_extractors.Data.erase(m_extractors.Data.begin() + index);
-        }
-    });
-}
-
-void PreferencesDialog::OnEditExtractor(wxCommandEvent&)
-{
-    EditExtractor(XRCCTRL(*this, "extractors_list", wxListBox)->GetSelection(), [](bool){});
-}
-
-void PreferencesDialog::OnDeleteExtractor(wxCommandEvent&)
-{
-    int index = XRCCTRL(*this, "extractors_list", wxListBox)->GetSelection();
-    m_extractors.Data.erase(m_extractors.Data.begin() + index);
-    XRCCTRL(*this, "extractors_list", wxListBox)->Delete(index);
-    if (m_extractors.Data.empty())
-    {
-        XRCCTRL(*this, "extractor_edit", wxButton)->Enable(false);
-        XRCCTRL(*this, "extractor_delete", wxButton)->Enable(false);
-    }
+    return p;
 }
 

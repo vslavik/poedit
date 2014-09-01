@@ -64,6 +64,7 @@
 #include "prefsdlg.h"
 #include "extractor.h"
 #include "chooselang.h"
+#include "customcontrols.h"
 #include "icons.h"
 #include "version.h"
 #include "tm/transmem.h"
@@ -203,6 +204,7 @@ bool PoeditApp::OnInit()
     wxImage::AddHandler(new wxICOHandler);
 #endif
     wxXmlResource::Get()->InitAllHandlers();
+    wxXmlResource::Get()->AddHandler(new LearnMoreLinkXmlHandler);
 
 #if defined(__WXMAC__)
     wxXmlResource::Get()->LoadAllFiles(wxStandardPaths::Get().GetResourcesDir());
@@ -729,14 +731,9 @@ void PoeditApp::OnQuit(wxCommandEvent&)
 
 void PoeditApp::EditPreferences()
 {
-    PreferencesDialog dlg(NULL);
-
-    dlg.TransferTo(wxConfig::Get());
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        dlg.TransferFrom(wxConfig::Get());
-        PoeditFrame::UpdateAllAfterPreferencesChange();
-    }
+    if (!m_preferences)
+        m_preferences = PoeditPreferencesEditor::Create();
+    m_preferences->Show(nullptr);
 }
 
 void PoeditApp::OnPreferences(wxCommandEvent&)

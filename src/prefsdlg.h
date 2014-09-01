@@ -23,53 +23,20 @@
  *
  */
 
-#ifndef _PREFSDLG_H_
-#define _PREFSDLG_H_
+#ifndef Poedit_prefsdlg_h
+#define Poedit_prefsdlg_h
 
-#include <wx/dialog.h>
+#include <memory>
+#include <wx/preferences.h>
 
-#include "extractor.h"
-#include "chooselang.h"
 
-class WXDLLIMPEXP_FWD_BASE wxConfigBase;
-class PreferencesPage;
-
-/** Preferences dialog for setting user's identity, parsers and other
-    global, catalog-independent settings.
- */
-class PreferencesDialog : public wxDialog
+class PoeditPreferencesEditor : public wxPreferencesEditor
 {
-    public:
-        /// Ctor.
-        PreferencesDialog(wxWindow *parent = NULL);
+public:
+    static std::unique_ptr<PoeditPreferencesEditor> Create();
 
-        /// Reads data from config/registry and fills dialog's controls.
-        void TransferTo(wxConfigBase *cfg);
-
-        /// Saves data from the dialog to config/registry.
-        void TransferFrom(wxConfigBase *cfg);
-            
-    private:
-        ExtractorsDB m_extractors;
-
-    private:
-        DECLARE_EVENT_TABLE()
-
-#if NEED_CHOOSELANG_UI
-        void OnUILanguage(wxCommandEvent& event);
-#endif
-        void OnNewExtractor(wxCommandEvent& event);
-        void OnEditExtractor(wxCommandEvent& event);
-        void OnDeleteExtractor(wxCommandEvent& event);
-        void OnUpdateUIFontList(wxUpdateUIEvent& event);
-        void OnUpdateUIFontText(wxUpdateUIEvent& event);
-
-        /// Called to launch dialog for editting parser properties.
-        template<typename TFunctor>
-        void EditExtractor(int num, TFunctor completionHandler);
-
-        PreferencesPage *m_pageTM;
+private:
+    PoeditPreferencesEditor() {}
 };
 
-
-#endif // _PREFSDLG_H_
+#endif // Poedit_prefsdlg_h

@@ -32,6 +32,8 @@
 #include <wx/intl.h>
 #include <wx/docview.h>
 
+#include "prefsdlg.h"
+
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 class WXDLLIMPEXP_FWD_CORE wxMenuBar;
 
@@ -128,6 +130,8 @@ class PoeditApp : public wxApp
 #else
         wxFileHistory m_history;
 #endif
+
+        std::unique_ptr<PoeditPreferencesEditor> m_preferences;
 };
 
 DECLARE_APP(PoeditApp);
