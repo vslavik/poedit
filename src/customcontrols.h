@@ -31,6 +31,19 @@
 #include <wx/xrc/xmlres.h>
 
 
+// Label marking a subsection of a dialog:
+class HeadingLabel : public wxStaticText
+{
+public:
+    HeadingLabel(wxWindow *parent, const wxString& label)
+        : wxStaticText(parent, wxID_ANY, label)
+    {
+        SetFont(GetFont().Bold());
+    }
+
+};
+
+
 // Longer, often multiline, explanation label used to provide more information
 // about the effects of some less obvious settings. Typeset using smaller font
 // on OS X and grey appearence. Auto-wraps itself to fit surrounding control's

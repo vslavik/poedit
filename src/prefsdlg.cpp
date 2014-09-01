@@ -114,23 +114,127 @@ private:
     bool m_inTransfer;
 };
 
+
+#ifdef __WXOSX__
+    #define BORDER_WIN(dir, n) Border(dir, 0)
+    #define BORDER_OSX(dir, n) Border(dir, n)
+#else
+    #define BORDER_WIN(dir, n) Border(dir, n)
+    #define BORDER_OSX(dir, n) Border(dir, 0)
+#endif
+
+
 class GeneralPageWindow : public PrefsPanel
 {
 public:
-    GeneralPageWindow(wxWindow *parent)
+    GeneralPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
-        wxXmlResource::Get()->LoadPanel(this, parent, "prefs_general");
+        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+
+        wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        SetSizer(topsizer);
+
+        sizer->Add(new HeadingLabel(this, _("Information about the translator")));
+        sizer->AddSpacer(10);
+
+        auto translator = new wxFlexGridSizer(2, wxSize(5,6));
+        translator->AddGrowableCol(1);
+        sizer->Add(translator, wxSizerFlags().Expand());
+
+        auto nameLabel = new wxStaticText(this, wxID_ANY, _("Name:"));
+        translator->Add(nameLabel, wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
+        m_userName = new wxTextCtrl(this, wxID_ANY);
+        m_userName->SetHint(_("Your Name"));
+        translator->Add(m_userName, wxSizerFlags(1).Expand().Center());
+        auto emailLabel = new wxStaticText(this, wxID_ANY, _("Email:"));
+        translator->Add(emailLabel, wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
+        m_userEmail = new wxTextCtrl(this, wxID_ANY);
+        m_userEmail->SetHint(_("your_email@example.com"));
+        translator->Add(m_userEmail, wxSizerFlags(1).Expand().Center());
+        translator->AddSpacer(1);
+        translator->Add(new ExplanationLabel(this, _("Your name and email address are only used to set the Last-Translator header of GNU gettext files.")), wxSizerFlags(1).Expand().Border(wxRIGHT));
+#ifdef __WXOSX__
+        nameLabel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        emailLabel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        m_userName->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        m_userEmail->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+
+        sizer->AddSpacer(10);
+        sizer->Add(new HeadingLabel(this, _("Editing")));
+        sizer->AddSpacer(10);
+
+        m_compileMo = new wxCheckBox(this, wxID_ANY, _("Automatically compile MO file when saving"));
+        sizer->Add(m_compileMo);
+        m_showSummary = new wxCheckBox(this, wxID_ANY, _("Show summary after catalog update"));
+        sizer->Add(m_showSummary, wxSizerFlags().Border(wxTOP));
+
+        sizer->AddSpacer(10);
+
+        m_spellchecking = new wxCheckBox(this, wxID_ANY, _("Check spelling"));
+        sizer->Add(m_spellchecking, wxSizerFlags().Border(wxTOP));
+        m_commentWinEditable = new wxCheckBox(this, wxID_ANY, _("Comment window is editable"));
+        sizer->Add(m_commentWinEditable, wxSizerFlags().Border(wxTOP));
+        m_focusToText = new wxCheckBox(this, wxID_ANY, _("Always change focus to text input field"));
+        sizer->Add(m_focusToText, wxSizerFlags().Border(wxTOP));
+        wxString explainFocus(_("Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."));
+#ifdef __WXOSX__
+        explainFocus.Replace("Ctrl", "Cmd");
+#endif
+        sizer->AddSpacer(5);
+        sizer->Add(new ExplanationLabel(this, explainFocus), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 20));
+
+        sizer->AddSpacer(10);
+
+        auto crlfbox = new wxFlexGridSizer(2, wxSize(5,5));
+        crlfbox->AddGrowableCol(1);
+        sizer->Add(crlfbox, wxSizerFlags().Expand().Border(wxTOP));
+        crlfbox->Add(new wxStaticText(this, wxID_ANY, _("Line endings:")), wxSizerFlags().Center().BORDER_WIN(wxTOP, 1));
+        m_crlf = new wxChoice(this, wxID_ANY);
+        m_crlf->Append(_("Unix (recommended)"));
+        m_crlf->Append(_("Windows"));
+        crlfbox->Add(m_crlf, wxSizerFlags(1).Center().Expand().BORDER_OSX(wxLEFT, 3));
+        m_keepCrlf = new wxCheckBox(this, wxID_ANY, _("Preserve line endings of existing files"));
+        crlfbox->AddSpacer(1);
+        crlfbox->Add(m_keepCrlf);
+
+        sizer->AddSpacer(10);
+        sizer->Add(new HeadingLabel(this, _("Appearance")));
+        sizer->AddSpacer(4);
+
+        auto appearance = new wxFlexGridSizer(2, wxSize(5,1));
+        appearance->AddGrowableCol(1);
+        sizer->Add(appearance, wxSizerFlags().Expand());
+
+        m_useFontList = new wxCheckBox(this, wxID_ANY, _("Use custom list font:"));
+        m_fontList = new wxFontPickerCtrl(this, wxID_ANY);
+        m_fontList->SetMinSize(wxSize(210, -1));
+        m_useFontText = new wxCheckBox(this, wxID_ANY, _("Use custom text fields font:"));
+        m_fontText = new wxFontPickerCtrl(this, wxID_ANY);
+        m_fontText->SetMinSize(wxSize(210, -1));
+
+        appearance->Add(m_useFontList, wxSizerFlags().Center().Left());
+        appearance->Add(m_fontList, wxSizerFlags().Center().Expand());
+        appearance->Add(m_useFontText, wxSizerFlags().Center().Left());
+        appearance->Add(m_fontText, wxSizerFlags().Center().Expand());
+
+#if NEED_CHOOSELANG_UI 
+        m_uiLanguage = new wxButton(this, wxID_ANY, _("Change UI language"));
+        sizer->Add(m_uiLanguage, wxSizerFlags().Border(wxTOP));
+#endif
 
 #ifdef __WXMSW__
         if (!IsSpellcheckingAvailable())
         {
-            auto spellcheck = XRCCTRL(*this, "enable_spellchecking", wxCheckBox);
-            spellcheck->Disable();
-            spellcheck->SetValue(false);
+            m_spellchecking->Disable();
+            m_spellchecking->SetValue(false);
             // TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
-            spellcheck->SetLabel(spellcheck->GetLabel() + " " + _("(requires Windows 8 or newer)"));
+            m_spellchecking->SetLabel(m_spellchecking->GetLabel() + " " + _("(requires Windows 8 or newer)"));
         }
 #endif
+
+        Fit();
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
         {
@@ -139,82 +243,77 @@ public:
             Bind(wxEVT_TEXT, [=](wxCommandEvent&){ TransferDataFromWindow(); });
 
             // Some settings directly affect the UI, so need a more expensive handler:
-            Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this, XRCID("use_font_list"));
-            Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this, XRCID("use_font_text"));
+            m_useFontList->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
+            m_useFontText->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
             Bind(wxEVT_FONTPICKER_CHANGED, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
-            Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this, XRCID("focus_to_text"));
-            Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this, XRCID("comment_window_editable"));
-            Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this, XRCID("enable_spellchecking"));
+            m_focusToText->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
+            m_commentWinEditable->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
+            m_spellchecking->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
         }
 
         // handle UI updates:
-        Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){
-            e.Enable(XRCCTRL(*this, "use_font_list", wxCheckBox)->GetValue());
-            }, XRCID("font_list"));
-        Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){
-            e.Enable(XRCCTRL(*this, "use_font_text", wxCheckBox)->GetValue());
-            }, XRCID("font_text"));
+        m_fontList->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_useFontList->GetValue()); });
+        m_fontText->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_useFontText->GetValue()); });
 
 #if NEED_CHOOSELANG_UI
-        Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ ChangeUILanguage(); }, XRCID("ui_language"));
+        m_uiLanguage->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ ChangeUILanguage(); });
 #endif
     }
 
     void InitValues(const wxConfigBase& cfg) override
     {
-        XRCCTRL(*this, "user_name", wxTextCtrl)->SetValue(cfg.Read("translator_name", wxEmptyString));
-        XRCCTRL(*this, "user_email", wxTextCtrl)->SetValue(cfg.Read("translator_email", wxEmptyString));
-        XRCCTRL(*this, "compile_mo", wxCheckBox)->SetValue(cfg.ReadBool("compile_mo", true));
-        XRCCTRL(*this, "show_summary", wxCheckBox)->SetValue(cfg.ReadBool("show_summary", false));
-        XRCCTRL(*this, "focus_to_text", wxCheckBox)->SetValue(cfg.ReadBool("focus_to_text", false));
-        XRCCTRL(*this, "comment_window_editable", wxCheckBox)->SetValue(cfg.ReadBool("comment_window_editable", false));
-        XRCCTRL(*this, "keep_crlf", wxCheckBox)->SetValue(cfg.ReadBool("keep_crlf", true));
+        m_userName->SetValue(cfg.Read("translator_name", wxEmptyString));
+        m_userEmail->SetValue(cfg.Read("translator_email", wxEmptyString));
+        m_compileMo->SetValue(cfg.ReadBool("compile_mo", true));
+        m_showSummary->SetValue(cfg.ReadBool("show_summary", false));
+        m_focusToText->SetValue(cfg.ReadBool("focus_to_text", false));
+        m_commentWinEditable->SetValue(cfg.ReadBool("comment_window_editable", false));
+        m_keepCrlf->SetValue(cfg.ReadBool("keep_crlf", true));
 
         if (IsSpellcheckingAvailable())
         {
-            XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->SetValue(cfg.ReadBool("enable_spellchecking", true));
+            m_spellchecking->SetValue(cfg.ReadBool("enable_spellchecking", true));
         }
 
-        XRCCTRL(*this, "use_font_list", wxCheckBox)->SetValue(cfg.ReadBool("custom_font_list_use", false));
-        XRCCTRL(*this, "use_font_text", wxCheckBox)->SetValue(cfg.ReadBool("custom_font_text_use", false));
-        XRCCTRL(*this, "font_list", wxFontPickerCtrl)->SetSelectedFont(wxFont(cfg.Read("custom_font_list_name", wxEmptyString)));
-        XRCCTRL(*this, "font_text", wxFontPickerCtrl)->SetSelectedFont(wxFont(cfg.Read("custom_font_text_name", wxEmptyString)));
+        m_useFontList->SetValue(cfg.ReadBool("custom_font_list_use", false));
+        m_useFontText->SetValue(cfg.ReadBool("custom_font_text_use", false));
+        m_fontList->SetSelectedFont(wxFont(cfg.Read("custom_font_list_name", wxEmptyString)));
+        m_fontText->SetSelectedFont(wxFont(cfg.Read("custom_font_text_name", wxEmptyString)));
 
         wxString format = cfg.Read("crlf_format", "unix");
         int sel;
         if (format == "win") sel = 1;
         else /* "unix" or obsolete settings */ sel = 0;
-
-        XRCCTRL(*this, "crlf_format", wxChoice)->SetSelection(sel);
+        m_crlf->SetSelection(sel);
     }
 
     void SaveValues(wxConfigBase& cfg) override
     {
-        cfg.Write("translator_name", XRCCTRL(*this, "user_name", wxTextCtrl)->GetValue());
-        cfg.Write("translator_email", XRCCTRL(*this, "user_email", wxTextCtrl)->GetValue());
-        cfg.Write("compile_mo", XRCCTRL(*this, "compile_mo", wxCheckBox)->GetValue());
-        cfg.Write("show_summary", XRCCTRL(*this, "show_summary", wxCheckBox)->GetValue());
-        cfg.Write("focus_to_text", XRCCTRL(*this, "focus_to_text", wxCheckBox)->GetValue());
-        cfg.Write("comment_window_editable", XRCCTRL(*this, "comment_window_editable", wxCheckBox)->GetValue());
-        cfg.Write("keep_crlf", XRCCTRL(*this, "keep_crlf", wxCheckBox)->GetValue());
+        cfg.Write("translator_name", m_userName->GetValue());
+        cfg.Write("translator_email", m_userEmail->GetValue());
+        cfg.Write("compile_mo", m_compileMo->GetValue());
+        cfg.Write("show_summary", m_showSummary->GetValue());
+        cfg.Write("focus_to_text", m_focusToText->GetValue());
+        cfg.Write("comment_window_editable", m_commentWinEditable->GetValue());
+        cfg.Write("keep_crlf", m_keepCrlf->GetValue());
 
         if (IsSpellcheckingAvailable())
         {
-            cfg.Write("enable_spellchecking", XRCCTRL(*this, "enable_spellchecking", wxCheckBox)->GetValue());
+            cfg.Write("enable_spellchecking", m_spellchecking->GetValue());
         }
        
-        wxFont listFont = XRCCTRL(*this, "font_list", wxFontPickerCtrl)->GetSelectedFont();
-        wxFont textFont = XRCCTRL(*this, "font_text", wxFontPickerCtrl)->GetSelectedFont();
+        wxFont listFont = m_fontList->GetSelectedFont();
+        wxFont textFont = m_fontText->GetSelectedFont();
 
-        cfg.Write("custom_font_list_use", listFont.IsOk() && XRCCTRL(*this, "use_font_list", wxCheckBox)->GetValue());
-        cfg.Write("custom_font_text_use", textFont.IsOk() && XRCCTRL(*this, "use_font_text", wxCheckBox)->GetValue());
+        cfg.Write("custom_font_list_use", listFont.IsOk() && m_useFontList->GetValue());
+        cfg.Write("custom_font_text_use", textFont.IsOk() && m_useFontText->GetValue());
         if ( listFont.IsOk() )
             cfg.Write("custom_font_list_name", listFont.GetNativeFontInfoDesc());
         if ( textFont.IsOk() )
             cfg.Write("custom_font_text_name", textFont.GetNativeFontInfoDesc());
 
         static const char *formats[] = { "unix", "win" };
-        cfg.Write("crlf_format", formats[XRCCTRL(*this, "crlf_format", wxChoice)->GetSelection()]);
+        cfg.Write("crlf_format", formats[m_crlf->GetSelection()]);
 
         // On Windows, we must update the UI here; on other platforms, it was done
         // via TransferDataFromWindowAndUpdateUI immediately:
@@ -229,6 +328,17 @@ public:
         TransferDataFromWindow();
         PoeditFrame::UpdateAllAfterPreferencesChange();
     }
+
+private:
+    wxTextCtrl *m_userName, *m_userEmail;
+    wxCheckBox *m_compileMo, *m_showSummary, *m_focusToText, *m_commentWinEditable, *m_spellchecking;
+    wxChoice *m_crlf;
+    wxCheckBox *m_keepCrlf;
+    wxCheckBox *m_useFontList, *m_useFontText;
+    wxFontPickerCtrl *m_fontList, *m_fontText;
+#if NEED_CHOOSELANG_UI
+    wxButton *m_uiLanguage;
+#endif
 };
 
 class GeneralPage : public wxPreferencesPage
