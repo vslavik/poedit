@@ -183,7 +183,7 @@ public:
         explainFocus.Replace("Ctrl", "Cmd");
 #endif
         sizer->AddSpacer(5);
-        sizer->Add(new ExplanationLabel(this, explainFocus), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 20));
+        sizer->Add(new ExplanationLabel(this, explainFocus), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, ExplanationLabel::CHECKBOX_INDENT));
 
         sizer->AddSpacer(10);
 
@@ -362,35 +362,35 @@ public:
 #endif
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags().Expand().Border());
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
         SetSizer(topsizer);
 
         sizer->AddSpacer(5);
         m_useTM = new wxCheckBox(this, wxID_ANY, _("Use translation memory"));
-        sizer->Add(m_useTM, wxSizerFlags().Expand().Border(wxALL));
+        sizer->Add(m_useTM, wxSizerFlags().Expand());
 
         m_stats = new wxStaticText(this, wxID_ANY, "--\n--", wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE);
         sizer->AddSpacer(10);
-        sizer->Add(m_stats, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
+        sizer->Add(m_stats, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 30));
         sizer->AddSpacer(10);
 
         auto import = new wxButton(this, wxID_ANY, _("Learn From Files..."));
-        sizer->Add(import, wxSizerFlags().Border(wxLEFT|wxRIGHT, 25));
+        sizer->Add(import, wxSizerFlags().Border(wxLEFT|wxRIGHT, 30));
         sizer->AddSpacer(10);
 
         m_useTMWhenUpdating = new wxCheckBox(this, wxID_ANY, _("Consult TM when updating from sources"));
-        sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().Border(wxALL));
+        sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
 
         auto explainTxt = _("If enabled, Poedit will try to fill in new entries using your previous\n"
                             "translations stored in the translation memory. If the TM is\n"
                             "near-empty, it will not be very effective. The more translations\n"
                             "you edit and the larger the TM grows, the better it gets.");
         auto explain = new ExplanationLabel(this, explainTxt);
-        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 25));
+        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, ExplanationLabel::CHECKBOX_INDENT));
 
         auto learnMore = new LearnMoreLink(this, "http://poedit.net/trac/wiki/Doc/TranslationMemory");
         sizer->AddSpacer(5);
-        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT|wxRIGHT, 25 + LearnMoreLink::EXTRA_INDENT));
+        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT|wxRIGHT, ExplanationLabel::CHECKBOX_INDENT + LearnMoreLink::EXTRA_INDENT));
         sizer->AddSpacer(10);
 
 #ifdef __WXOSX__
@@ -718,7 +718,7 @@ public:
         sizer->Add(m_beta, wxSizerFlags().Expand().Border(wxBOTTOM));
         
         sizer->Add(new ExplanationLabel(this, _("Beta versions contain the latest new features and improvements, but may be a bit less stable.")),
-                   wxSizerFlags().Expand().Border(wxLEFT, 20));
+                   wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
         sizer->AddSpacer(5);
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())

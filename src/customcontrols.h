@@ -53,6 +53,12 @@ class ExplanationLabel : public wxStaticText
 public:
     ExplanationLabel(wxWindow *parent, const wxString& label);
 
+#ifdef __WXMSW__
+    static const int CHECKBOX_INDENT = 17;
+#else
+    static const int CHECKBOX_INDENT = 19;
+#endif
+
 private:
     void OnSize(wxSizeEvent& e);
 
