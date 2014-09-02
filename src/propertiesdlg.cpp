@@ -59,7 +59,11 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int 
     m_pluralFormsDefault = XRCCTRL(*this, "plural_forms_default", wxRadioButton);
     m_pluralFormsCustom = XRCCTRL(*this, "plural_forms_custom", wxRadioButton);
     m_pluralFormsExpr = XRCCTRL(*this, "plural_forms_expr", wxTextCtrl);
+#if defined(__WXMSW__) && !wxCHECK_VERSION(3,1,0)
+    m_pluralFormsExpr->SetFont(m_pluralFormsExpr->GetFont().Smaller());
+#else
     m_pluralFormsExpr->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
 
     // my custom controls:
     m_keywords = new wxEditableListBox(this, -1, _("Additional keywords"));
