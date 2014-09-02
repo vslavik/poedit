@@ -26,6 +26,7 @@
 #include "customcontrols.h"
 
 #include <wx/textwrapper.h>
+#include <wx/settings.h>
 
 namespace
 {
