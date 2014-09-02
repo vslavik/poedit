@@ -53,10 +53,12 @@ class ExplanationLabel : public wxStaticText
 public:
     ExplanationLabel(wxWindow *parent, const wxString& label);
 
-#ifdef __WXMSW__
-    static const int CHECKBOX_INDENT = 17;
-#else
+#if defined(__WXOSX__)
     static const int CHECKBOX_INDENT = 19;
+#elif defined(__WXMSW__)
+    static const int CHECKBOX_INDENT = 17;
+#elif defined(__WXGTK__)
+    static const int CHECKBOX_INDENT = 25;
 #endif
 
 private:
@@ -73,9 +75,9 @@ class LearnMoreLink : public wxHyperlinkCtrl
 public:
     LearnMoreLink(wxWindow *parent, const wxString& url, wxString label = wxString());
 
-#ifdef __WXOSX__
+#if defined(__WXOSX__)
     static const int EXTRA_INDENT = 2;
-#else
+#elif defined(__WXMSW__) || defined(__WXGTK__)
     static const int EXTRA_INDENT = 0;
 #endif
 };

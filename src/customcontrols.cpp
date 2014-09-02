@@ -59,13 +59,15 @@ ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
     m_text.Replace("\n", " ");
     SetLabel(m_text);
 
-#ifdef __WXOSX__
+#if defined(__WXOSX__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
     SetForegroundColour(wxColour("#777777"));
+#elif defined(__WXGTK__)
+    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #else
     SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT));
 #endif
-    
+
     SetInitialSize(wxSize(10,10));
     Bind(wxEVT_SIZE, &ExplanationLabel::OnSize, this);
 }
@@ -79,7 +81,7 @@ void ExplanationLabel::OnSize(wxSizeEvent& e)
 
     m_wrapWidth = w;
     LabelWrapper().WrapLabel(this, m_text, w);
-    
+
     InvalidateBestSize();
     Fit();
     SetMinSize(GetBestSize());
