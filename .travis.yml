@@ -3,7 +3,10 @@ language: cpp
 compiler: gcc
 
 before_install:
+    # dependencies for building Poedit on old Ubuntu:
     - sudo add-apt-repository -y ppa:vslavik/poedit
+    # get a decent C++11 compiler too:
+    - if [ "$CXX" == "g++" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
     - sudo apt-get update -qq
 
 install:
