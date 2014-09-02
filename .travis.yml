@@ -12,6 +12,9 @@ before_install:
 install:
     - sudo apt-get install -qq --no-install-recommends asciidoc xsltproc xmlto
     - sudo apt-get install -qq libexpat1-dev libdb++-dev libboost-dev libboost-regex-dev libboost-system-dev liblucene++-dev libicu-dev libwxgtk3.0-dev libgtk2.0-dev libgtkspell-dev
+    # install g++ 4.8, if tests are run with g++
+    - if [ "$CXX" == "g++" ]; then sudo apt-get install -qq g++-4.8; fi
+    - if [ "$CXX" == "g++" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50; fi
 
 script:
     - $CXX --version
