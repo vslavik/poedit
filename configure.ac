@@ -99,10 +99,6 @@ CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS"
 WXRC_CHECK([], [AC_MSG_ERROR([wxrc is needed to compile Poedit.])])
 
 
-AC_CHECK_HEADER([boost/function.hpp],
-    [],
-    [AC_MSG_ERROR([Boost is required to compile Poedit.])])
-
 AC_CHECK_FUNCS([mkdtemp])
 
 
