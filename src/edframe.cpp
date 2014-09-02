@@ -921,17 +921,11 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     // make only the upper part grow when resizing
     m_splitter->SetSashGravity(1.0);
 
-    wxPanel *topPanel = new wxPanel(m_splitter, wxID_ANY);
-
-    m_list = new PoeditListCtrl(topPanel,
+    m_list = new PoeditListCtrl(m_splitter,
                                 ID_LIST,
                                 wxDefaultPosition, wxDefaultSize,
                                 wxLC_REPORT,
                                 m_displayIDs);
-
-    wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(m_list, wxSizerFlags(1).Expand());
-    topPanel->SetSizer(topSizer);
 
     m_bottomSplitter = new wxSplitterWindow(m_splitter, -1,
                                             wxDefaultPosition, wxDefaultSize,
@@ -1055,7 +1049,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
         if ( wxConfigBase::Get()->Read(WindowStatePath(this) + "maximized", long(0)) )
             m_setSashPositionsWhenMaximized = true;
 
-        m_splitter->SplitHorizontally(topPanel, m_bottomSplitter, (int)wxConfigBase::Get()->Read("splitter", -250L));
+        m_splitter->SplitHorizontally(m_list, m_bottomSplitter, (int)wxConfigBase::Get()->Read("splitter", -250L));
 
         UpdateDisplayCommentWin();
     });
