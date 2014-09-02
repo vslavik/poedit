@@ -561,7 +561,7 @@ class AnyTranslatableTextCtrl : public CustomizedTextCtrl
 
             wxWindowUpdateLocker noupd(this);
             wxEventBlocker block(this, wxEVT_TEXT);
-            SetStyle(-1, -1, m_attrDefault);
+            SetStyle(0, text.length(), m_attrDefault);
 
             m_syntax.Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
                 SetStyle(a, b, AttrFor(kind));
