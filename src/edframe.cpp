@@ -83,6 +83,7 @@
 #include "languagectrl.h"
 #include "welcomescreen.h"
 #include "errors.h"
+#include "sidebar.h"
 #include "spellchecking.h"
 #include "syntaxhighlighter.h"
 
@@ -771,6 +772,7 @@ PoeditFrame::PoeditFrame() :
     m_textAutoComments = nullptr;
     m_bottomSplitter = nullptr;
     m_splitter = nullptr;
+    m_sidebar = nullptr;
 
     // make sure that the [ID_POEDIT_FIRST,ID_POEDIT_LAST] range of IDs is not
     // used for anything else:
@@ -901,6 +903,15 @@ void PoeditFrame::EnsureContentView(Content type)
 
 wxWindow* PoeditFrame::CreateContentViewPO()
 {
+    auto main = new wxPanel(this, wxID_ANY);
+    auto mainSizer = new wxBoxSizer(wxHORIZONTAL);
+    main->SetSizer(mainSizer);
+
+#ifdef __WXMSW__
+    // don't create the window as shown, avoid flicker
+    main->Hide();
+#endif
+
 #if defined(__WXMSW__)
     const int SPLITTER_FLAGS = wxSP_NOBORDER;
 #elif defined(__WXMAC__)
@@ -910,13 +921,11 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     const int SPLITTER_FLAGS = wxSP_3DBORDER;
 #endif
 
-    m_splitter = new wxSplitterWindow(this, -1,
+    m_splitter = new wxSplitterWindow(main, -1,
                                       wxDefaultPosition, wxDefaultSize,
                                       SPLITTER_FLAGS);
-#ifdef __WXMSW__
-    // don't create the window as shown, avoid flicker
-    m_splitter->Hide();
-#endif
+
+    mainSizer->Add(m_splitter, wxSizerFlags(1).Expand());
 
     // make only the upper part grow when resizing
     m_splitter->SetSashGravity(1.0);
@@ -1022,6 +1031,11 @@ wxWindow* PoeditFrame::CreateContentViewPO()
 
     m_list->PushEventHandler(new ListHandler(this));
 
+
+    m_sidebar = new Sidebar(main);
+    mainSizer->Add(m_sidebar, wxSizerFlags().Expand().Border(wxLEFT, 1));
+
+
     ShowPluralFormUI(false);
     UpdateMenu();
 
@@ -1054,7 +1068,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
         UpdateDisplayCommentWin();
     });
 
-    return m_splitter;
+    return main;
 }
 
 
@@ -1927,6 +1941,14 @@ void PoeditFrame::OnListSel(wxListEvent& event)
     event.Skip();
 
     UpdateToTextCtrl();
+
+    if (m_sidebar && m_list)
+    {
+        if (m_list->HasMultipleSelection())
+            m_sidebar->SetMultipleSelection();
+        else
+            m_sidebar->SetSelectedItem(GetCurrentItem()); // may be nullptr
+    }
 
     if (hasFocus)
     {

@@ -54,6 +54,7 @@ class TranslationTextCtrl;
 class PoeditFrame;
 class AttentionBar;
 class ErrorBar;
+class Sidebar;
 
 /** This class provides main editing frame. It handles user's input
     and provides frontend to catalog editing engine. Nothing fancy.
@@ -327,6 +328,7 @@ private:
         wxFont m_normalGuiFont, m_boldGuiFont;
 
         AttentionBar *m_attentionBar;
+        Sidebar *m_sidebar;
 
         bool m_modified;
         bool m_hasObsoleteItems;
