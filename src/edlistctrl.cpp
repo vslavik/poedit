@@ -566,7 +566,7 @@ int PoeditListCtrl::OnGetItemImage(long item) const
 
     if (d.IsAutomatic())
         index |= IMG_AUTOMATIC;
-    if (d.HasComment())
+    if (d.HasComment() || d.HasAutoComments())
         index |= IMG_COMMENT;
     if (d.IsModified())
         index |= IMG_MODIFIED;
