@@ -92,6 +92,12 @@ public:
     void Update(CatalogItem *item) override
     {
         auto comment = wxJoin(item->GetAutoComments(), ' ', '\0');
+        if (comment.StartsWith("TRANSLATORS:") || comment.StartsWith("translators:"))
+        {
+            comment.Remove(0, 12);
+            if (!comment.empty() && comment[0] == ' ')
+                comment.Remove(0, 1);
+        }
         m_comment->SetAndWrapLabel(comment);
     }
 
