@@ -52,7 +52,7 @@ class FindFrame : public wxDialog
          */
         FindFrame(wxWindow *parent, PoeditListCtrl *list, Catalog *c,
                   wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans,
-                  wxTextCtrl *textCtrlComments, wxTextCtrl *textCtrlAutoComments);
+                  wxTextCtrl *textCtrlComments);
         ~FindFrame();
 
         /// Returns singleton instance if it exists. Updates the catalog
@@ -88,7 +88,7 @@ class FindFrame : public wxDialog
         int m_position;
         wxButton *m_btnPrev, *m_btnNext;
         wxTextCtrl *m_textCtrlOrig, *m_textCtrlTrans;
-        wxTextCtrl *m_textCtrlComments, *m_textCtrlAutoComments;
+        wxTextCtrl *m_textCtrlComments;
 
         // NB: this is static so that last search term is remembered
         static wxString ms_text;

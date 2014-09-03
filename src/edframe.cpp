@@ -635,7 +635,6 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
    EVT_MENU           (XRCID("menu_ids"),         PoeditFrame::OnIDsFlag)
    EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
-   EVT_MENU           (XRCID("menu_auto_comments_win"), PoeditFrame::OnAutoCommentsWinFlag)
    EVT_MENU           (XRCID("sort_by_order"),    PoeditFrame::OnSortByFileOrder)
    EVT_MENU           (XRCID("sort_by_source"),    PoeditFrame::OnSortBySource)
    EVT_MENU           (XRCID("sort_by_translation"), PoeditFrame::OnSortByTranslation)
@@ -769,7 +768,6 @@ PoeditFrame::PoeditFrame() :
     m_textOrig = nullptr;
     m_textOrigPlural = nullptr;
     m_textComment = nullptr;
-    m_textAutoComments = nullptr;
     m_bottomSplitter = nullptr;
     m_splitter = nullptr;
     m_sidebar = nullptr;
@@ -786,8 +784,6 @@ PoeditFrame::PoeditFrame() :
     m_displayIDs = (bool)cfg->Read("display_lines", (long)false);
     m_displayCommentWin =
         (bool)cfg->Read("display_comment_win", (long)false);
-    m_displayAutoCommentsWin =
-        (bool)cfg->Read("display_auto_comments_win", (long)true);
     m_commentWindowEditable =
         (bool)cfg->Read("comment_window_editable", (long)false);
     g_focusToText = (bool)cfg->Read("focus_to_text", (long)false);
@@ -834,7 +830,6 @@ PoeditFrame::PoeditFrame() :
 
     GetMenuBar()->Check(XRCID("menu_ids"), m_displayIDs);
     GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
-    GetMenuBar()->Check(XRCID("menu_auto_comments_win"), m_displayAutoCommentsWin);
 
     CreateStatusBar(1, wxST_SIZEGRIP);
 
@@ -973,13 +968,6 @@ wxWindow* PoeditFrame::CreateContentViewPO()
 
     m_pluralNotebook = new wxNotebook(m_bottomLeftPanel, -1);
 
-    m_labelAutoComments = new wxStaticText(m_bottomRightPanel, -1, _("Notes for translators:"));
-    m_labelAutoComments->SetFont(m_boldGuiFont);
-    m_textAutoComments = new UnfocusableTextCtrl(m_bottomRightPanel,
-                                ID_TEXTORIG, wxEmptyString,
-                                wxDefaultPosition, wxDefaultSize,
-                                wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
-
     m_labelComment = new wxStaticText(m_bottomRightPanel, -1, _("Comment:"));
     m_labelComment->SetFont(m_boldGuiFont);
     m_textComment = NULL;
@@ -1012,8 +1000,6 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     leftSizer->Add(m_textTrans, 1, wxEXPAND);
     leftSizer->Add(m_pluralNotebook, 1, wxEXPAND);
     leftSizer->Add(m_errorBar, 0, wxEXPAND | wxALL, 2);
-    rightSizer->Add(m_labelAutoComments, 0, wxEXPAND | wxALL, 3);
-    rightSizer->Add(m_textAutoComments, 1, wxEXPAND);
     rightSizer->Add(m_labelComment, 0, wxEXPAND | wxALL, 3);
     rightSizer->Add(m_textComment, 1, wxEXPAND);
 
@@ -1105,7 +1091,7 @@ void PoeditFrame::DestroyContentView()
     if (m_list)
         m_list->CatalogChanged(NULL);
 
-    if (m_bottomSplitter && (m_displayCommentWin || m_displayAutoCommentsWin))
+    if (m_bottomSplitter && m_displayCommentWin)
     {
         wxConfigBase::Get()->Write("/bottom_splitter",
                                    (long)m_bottomSplitter->GetSashPosition());
@@ -1122,7 +1108,7 @@ void PoeditFrame::DestroyContentView()
     m_textOrig = nullptr;
     m_textOrigPlural = nullptr;
     m_textComment = nullptr;
-    m_textAutoComments = nullptr;
+
     m_bottomSplitter = nullptr;
     m_splitter = nullptr;
 }
@@ -1141,7 +1127,6 @@ PoeditFrame::~PoeditFrame()
 
     cfg->Write("display_lines", m_displayIDs);
     cfg->Write("display_comment_win", m_displayCommentWin);
-    cfg->Write("display_auto_comments_win", m_displayAutoCommentsWin);
 
     SaveWindowState(this);
 
@@ -2094,11 +2079,6 @@ void PoeditFrame::OnCommentWinFlag(wxCommandEvent&)
     UpdateDisplayCommentWin();
 }
 
-void PoeditFrame::OnAutoCommentsWinFlag(wxCommandEvent&)
-{
-    UpdateDisplayCommentWin();
-}
-
 
 void PoeditFrame::OnCopyFromSource(wxCommandEvent&)
 {
@@ -2146,7 +2126,7 @@ void PoeditFrame::OnFind(wxCommandEvent&)
     FindFrame *f = FindFrame::Get(m_list, m_catalog);
 
     if (!f)
-        f = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans, m_textComment, m_textAutoComments);
+        f = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans, m_textComment);
     f->Show(true);
     f->Raise();
     f->FocusSearchField();
@@ -2417,9 +2397,6 @@ void PoeditFrame::UpdateToTextCtrl()
         m_errorBar->ShowError(entry->GetErrorString());
     else
         m_errorBar->HideError();
-
-    if (m_displayAutoCommentsWin)
-        m_textAutoComments->SetValue(t_ac);
 
     // by default, editing fuzzy item unfuzzies it
     m_dontAutoclearFuzzyStatus = false;
@@ -2829,7 +2806,6 @@ void PoeditFrame::UpdateMenu()
 
     menubar->Enable(XRCID("menu_ids"), editable);
     menubar->Enable(XRCID("menu_comment_win"), editable);
-    menubar->Enable(XRCID("menu_auto_comments_win"), editable);
 
     menubar->Enable(XRCID("sort_by_order"), editable);
     menubar->Enable(XRCID("sort_by_source"), editable);
@@ -3264,7 +3240,6 @@ void PoeditFrame::SetCustomFonts()
             wxFont font;
             font.SetNativeFontInfo(fi);
             SetCtrlFont(m_textComment, font);
-            SetCtrlFont(m_textAutoComments, font);
             SetCtrlFont(m_textOrig, font);
             SetCtrlFont(m_textOrigPlural, font);
             SetCtrlFont(m_textTrans, font);
@@ -3277,7 +3252,6 @@ void PoeditFrame::SetCustomFonts()
     {
         wxFont font(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT));
         SetCtrlFont(m_textComment, font);
-        SetCtrlFont(m_textAutoComments, font);
         SetCtrlFont(m_textOrig, font);
         SetCtrlFont(m_textOrigPlural, font);
         SetCtrlFont(m_textTrans, font);
@@ -3327,10 +3301,8 @@ void PoeditFrame::UpdateDisplayCommentWin()
 {
     m_displayCommentWin =
         GetMenuBar()->IsChecked(XRCID("menu_comment_win"));
-    m_displayAutoCommentsWin =
-        GetMenuBar()->IsChecked(XRCID("menu_auto_comments_win"));
 
-    if (m_displayCommentWin || m_displayAutoCommentsWin)
+    if (m_displayCommentWin)
     {
         m_bottomSplitter->SplitVertically(
                 m_bottomLeftPanel, m_bottomRightPanel,
@@ -3346,11 +3318,6 @@ void PoeditFrame::UpdateDisplayCommentWin()
                                                  m_displayCommentWin);
             m_bottomRightPanel->GetSizer()->Show(m_textComment,
                                                  m_displayCommentWin);
-
-            m_bottomRightPanel->GetSizer()->Show(m_labelAutoComments,
-                                                 m_displayAutoCommentsWin);
-            m_bottomRightPanel->GetSizer()->Show(m_textAutoComments,
-                                                 m_displayAutoCommentsWin);
 
             m_bottomRightPanel->GetSizer()->Layout();
             m_bottomRightPanel->Layout();

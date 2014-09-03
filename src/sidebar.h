@@ -26,9 +26,15 @@
 #ifndef Poedit_sidebar_h
 #define Poedit_sidebar_h
 
+#include <memory>
+
 #include <wx/panel.h>
 
+class WXDLLIMPEXP_CORE wxSizer;
+class WXDLLIMPEXP_CORE wxStaticText;
+
 class CatalogItem;
+class SidebarBlock;
 
 /**
     Control showing Poedit's assistance sidebar.
@@ -39,6 +45,7 @@ class Sidebar : public wxPanel
 {
 public:
     Sidebar(wxWindow *parent);
+    ~Sidebar();
 
     /// Update selected item, if there's a single one. May be nullptr.
     void SetSelectedItem(CatalogItem *item);
@@ -48,6 +55,10 @@ public:
 
 private:
     CatalogItem *m_selectedItem;
+
+    std::unique_ptr<SidebarBlock> m_autoComments;
+
+    wxSizer *m_blocksSizer;
 };
 
 #endif // Poedit_sidebar_h

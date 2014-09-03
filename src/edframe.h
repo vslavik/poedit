@@ -243,7 +243,6 @@ private:
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnIDsFlag(wxCommandEvent& event);
         void OnCommentWinFlag(wxCommandEvent& event);
-        void OnAutoCommentsWinFlag(wxCommandEvent& event);
         void OnCopyFromSource(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
@@ -311,11 +310,11 @@ private:
         wxPanel *m_bottomRightPanel;
         wxSplitterWindow *m_splitter, *m_bottomSplitter;
         PoeditListCtrl *m_list;
-        wxStaticText *m_labelComment, *m_labelAutoComments;
+        wxStaticText *m_labelComment;
         wxStaticText *m_labelContext;
         ErrorBar *m_errorBar;
         SourceTextCtrl *m_textOrig, *m_textOrigPlural;
-        wxTextCtrl *m_textComment, *m_textAutoComments;
+        wxTextCtrl *m_textComment;
         TranslationTextCtrl *m_textTrans;
         std::vector<TranslationTextCtrl*> m_textTransPlural;
         TranslationTextCtrl *m_textTransSingularForm;
@@ -334,7 +333,6 @@ private:
         bool m_hasObsoleteItems;
         bool m_displayIDs;
         bool m_displayCommentWin;
-        bool m_displayAutoCommentsWin;
         bool m_dontAutoclearFuzzyStatus;
         bool m_setSashPositionsWhenMaximized;
 
