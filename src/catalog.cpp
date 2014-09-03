@@ -872,7 +872,8 @@ class LoadParser : public CatalogParser
     public:
         LoadParser(Catalog *c, wxTextFile *f)
               : CatalogParser(f),
-                FileIsValid(false), m_catalog(c), m_nextId(1) {}
+                FileIsValid(false),
+                m_catalog(c), m_nextId(1), m_seenHeaderAlready(false) {}
 
         // true if the file is valid, i.e. has at least some data
         bool FileIsValid;
@@ -904,6 +905,7 @@ class LoadParser : public CatalogParser
 
     private:
         int m_nextId;
+        bool m_seenHeaderAlready;
 };
 
 
@@ -926,9 +928,14 @@ bool LoadParser::OnEntry(const wxString& msgid,
 
     if (msgid.empty() && !has_context)
     {
-        // gettext header:
-        m_catalog->m_header.FromString(mtranslations[0]);
-        m_catalog->m_header.Comment = comment;
+        if (!m_seenHeaderAlready)
+        {
+            // gettext header:
+            m_catalog->m_header.FromString(mtranslations[0]);
+            m_catalog->m_header.Comment = comment;
+            m_seenHeaderAlready = true;
+        }
+        // else: ignore duplicate header in malformed files
     }
     else
     {
