@@ -34,7 +34,7 @@ namespace
 class LabelWrapper : public wxTextWrapper
 {
 public:
-    void WrapLabel(wxWindow *window, const wxString& text, int widthMax)
+    void WrapAndSetLabel(wxWindow *window, const wxString& text, int widthMax)
     {
         m_text.clear();
         Wrap(window, text, widthMax);
@@ -49,16 +49,51 @@ public:
     wxString m_text;
 };
 
-}
+} // anonymous namespace
 
-ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
-    : wxStaticText(parent, wxID_ANY, ""),
+
+AutoWrappingText::AutoWrappingText(wxWindow *parent, const wxString& label)
+    : wxStaticText(parent, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE),
       m_text(label),
       m_wrapWidth(-1)
 {
     m_text.Replace("\n", " ");
     SetLabel(m_text);
 
+    SetInitialSize(wxSize(10,10));
+    Bind(wxEVT_SIZE, &ExplanationLabel::OnSize, this);
+}
+
+void AutoWrappingText::SetAndWrapLabel(const wxString& label)
+{
+    m_text = label;
+    m_wrapWidth = GetSize().x;
+    LabelWrapper().WrapAndSetLabel(this, label, m_wrapWidth);
+
+    InvalidateBestSize();
+    SetMinSize(wxDefaultSize);
+    SetMinSize(GetBestSize());
+}
+
+void AutoWrappingText::OnSize(wxSizeEvent& e)
+{
+    e.Skip();
+    int w = e.GetSize().x;
+    if (w == m_wrapWidth)
+        return;
+
+    m_wrapWidth = w;
+    LabelWrapper().WrapAndSetLabel(this, m_text, w);
+
+    InvalidateBestSize();
+    SetMinSize(wxDefaultSize);
+    SetMinSize(GetBestSize());
+}
+
+
+ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
+    : AutoWrappingText(parent, label)
+{
 #if defined(__WXOSX__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
     SetForegroundColour(wxColour("#777777"));
@@ -67,24 +102,6 @@ ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
 #else
     SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT));
 #endif
-
-    SetInitialSize(wxSize(10,10));
-    Bind(wxEVT_SIZE, &ExplanationLabel::OnSize, this);
-}
-
-void ExplanationLabel::OnSize(wxSizeEvent& e)
-{
-    e.Skip();
-    int w = e.GetSize().x;
-    if (w == m_wrapWidth)
-        return;
-
-    m_wrapWidth = w;
-    LabelWrapper().WrapLabel(this, m_text, w);
-
-    InvalidateBestSize();
-    Fit();
-    SetMinSize(GetBestSize());
 }
 
 
