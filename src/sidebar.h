@@ -56,6 +56,7 @@ public:
 private:
     CatalogItem *m_selectedItem;
 
+    std::unique_ptr<SidebarBlock> m_oldMsgid;
     std::unique_ptr<SidebarBlock> m_autoComments;
 
     wxSizer *m_blocksSizer;

@@ -39,8 +39,9 @@ public:
     SidebarBlock(wxWindow *parent, const wxString& label)
     {
         m_sizer = new wxBoxSizer(wxVERTICAL);
+        m_sizer->AddSpacer(15);
         m_sizer->Add(new HeadingLabel(parent, label),
-                     wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
+                     wxSizerFlags().Expand());
     }
     virtual ~SidebarBlock() {}
 
@@ -74,12 +75,44 @@ protected:
 };
 
 
+
+class OldMsgidSidebarBlock : public SidebarBlock
+{
+public:
+    OldMsgidSidebarBlock(wxWindow *parent, const wxString& label)
+        : SidebarBlock(parent, label)
+    {
+        m_sizer->AddSpacer(2);
+        m_sizer->Add(new ExplanationLabel(parent, _("The old source text (before it changed during an update) that the fuzzy translation corresponds to.")),
+                     wxSizerFlags().Expand());
+        m_sizer->AddSpacer(5);
+        m_text = new AutoWrappingText(parent, "");
+        m_sizer->Add(m_text, wxSizerFlags().Expand());
+    }
+
+    virtual bool ShouldShowForItem(CatalogItem *item) const
+    {
+        return item->HasOldMsgid();
+    }
+
+    void Update(CatalogItem *item) override
+    {
+        auto txt = wxJoin(item->GetOldMsgid(), ' ', '\0');
+        m_text->SetAndWrapLabel(txt);
+    }
+
+private:
+    AutoWrappingText *m_text;
+};
+
+
 class AutoCommentSidebarBlock : public SidebarBlock
 {
 public:
     AutoCommentSidebarBlock(wxWindow *parent, const wxString& label)
         : SidebarBlock(parent, label)
     {
+        m_sizer->AddSpacer(5);
         m_comment = new AutoWrappingText(parent, "");
         m_sizer->Add(m_comment, wxSizerFlags().Expand());
     }
@@ -119,6 +152,10 @@ Sidebar::Sidebar(wxWindow *parent)
 
     m_blocksSizer->AddStretchSpacer();
 
+    /// TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+    m_oldMsgid.reset(new OldMsgidSidebarBlock(this, _("Previous source text:")));
+    m_blocksSizer->Add(m_oldMsgid->GetSizer(), wxSizerFlags().Expand());
+
     m_autoComments.reset(new AutoCommentSidebarBlock(this, _("Notes for translators:")));
     m_blocksSizer->Add(m_autoComments->GetSizer(), wxSizerFlags().Expand());
 
@@ -136,6 +173,7 @@ void Sidebar::SetSelectedItem(CatalogItem *item)
 {
     m_selectedItem = item;
 
+    m_oldMsgid->SetItem(m_selectedItem);
     m_autoComments->SetItem(m_selectedItem);
 
     Layout();
