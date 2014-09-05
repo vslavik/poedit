@@ -30,8 +30,42 @@
 #include "commentdlg.h"
 
 #include <wx/button.h>
+#include <wx/dcclient.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
+
+#define SIDEBAR_BACKGROUND      wxColour("#EDF0F4")
+#define GRAY_LINES_COLOR        wxColour(220,220,220)
+#define GRAY_LINES_COLOR_DARK   wxColour(180,180,180)
+
+
+class SidebarSeparator : public wxWindow
+{
+public:
+    SidebarSeparator(wxWindow *parent)
+        : wxWindow(parent, wxID_ANY),
+          m_sides(SIDEBAR_BACKGROUND),
+          m_center(GRAY_LINES_COLOR_DARK)
+    {
+        Bind(wxEVT_PAINT, &SidebarSeparator::OnPaint, this);
+    }
+
+    virtual wxSize DoGetBestSize() const
+    {
+        return wxSize(-1, 1);
+    }
+
+private:
+    void OnPaint(wxPaintEvent&)
+    {
+        wxPaintDC dc(this);
+        auto w = dc.GetSize().x;
+        dc.GradientFillLinear(wxRect(0,0,15,1), m_sides, m_center);
+        dc.GradientFillLinear(wxRect(15,0,w,1), m_center, m_sides);
+    }
+
+    wxColour m_sides, m_center;
+};
 
 
 class SidebarBlock
@@ -41,8 +75,12 @@ public:
     {
         m_sizer = new wxBoxSizer(wxVERTICAL);
         m_sizer->AddSpacer(15);
+        m_sizer->Add(new SidebarSeparator(parent),
+                     wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT, 2));
         m_sizer->Add(new HeadingLabel(parent, label),
-                     wxSizerFlags().Expand());
+                     wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
+        m_innerSizer = new wxBoxSizer(wxVERTICAL);
+        m_sizer->Add(m_innerSizer, wxSizerFlags(1).Expand().DoubleBorder(wxLEFT|wxRIGHT));
     }
     virtual ~SidebarBlock() {}
 
@@ -72,6 +110,8 @@ public:
     virtual void Update(CatalogItem *item) = 0;
 
 protected:
+    wxSizer *m_innerSizer;
+private:
     wxSizer *m_sizer;
 };
 
@@ -83,12 +123,12 @@ public:
     OldMsgidSidebarBlock(wxWindow *parent, const wxString& label)
         : SidebarBlock(parent, label)
     {
-        m_sizer->AddSpacer(2);
-        m_sizer->Add(new ExplanationLabel(parent, _("The old source text (before it changed during an update) that the fuzzy translation corresponds to.")),
+        m_innerSizer->AddSpacer(2);
+        m_innerSizer->Add(new ExplanationLabel(parent, _("The old source text (before it changed during an update) that the fuzzy translation corresponds to.")),
                      wxSizerFlags().Expand());
-        m_sizer->AddSpacer(5);
+        m_innerSizer->AddSpacer(5);
         m_text = new AutoWrappingText(parent, "");
-        m_sizer->Add(m_text, wxSizerFlags().Expand());
+        m_innerSizer->Add(m_text, wxSizerFlags().Expand());
     }
 
     virtual bool ShouldShowForItem(CatalogItem *item) const
@@ -113,9 +153,9 @@ public:
     AutoCommentSidebarBlock(wxWindow *parent, const wxString& label)
         : SidebarBlock(parent, label)
     {
-        m_sizer->AddSpacer(5);
+        m_innerSizer->AddSpacer(5);
         m_comment = new AutoWrappingText(parent, "");
-        m_sizer->Add(m_comment, wxSizerFlags().Expand());
+        m_innerSizer->Add(m_comment, wxSizerFlags().Expand());
     }
 
     virtual bool ShouldShowForItem(CatalogItem *item) const
@@ -146,9 +186,9 @@ public:
     CommentSidebarBlock(wxWindow *parent, const wxString& label)
         : SidebarBlock(parent, label)
     {
-        m_sizer->AddSpacer(5);
+        m_innerSizer->AddSpacer(5);
         m_comment = new AutoWrappingText(parent, "");
-        m_sizer->Add(m_comment, wxSizerFlags().Expand());
+        m_innerSizer->Add(m_comment, wxSizerFlags().Expand());
     }
 
     virtual bool ShouldShowForItem(CatalogItem *item) const
@@ -173,11 +213,17 @@ Sidebar::Sidebar(wxWindow *parent)
     : wxPanel(parent, wxID_ANY),
       m_selectedItem(nullptr)
 {
+    SetBackgroundColour(SIDEBAR_BACKGROUND);
+    Bind(wxEVT_PAINT, &Sidebar::OnPaint, this);
+#ifdef __WXOSX__
+    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+
     auto *topSizer = new wxBoxSizer(wxVERTICAL);
     topSizer->SetMinSize(wxSize(300, -1));
 
     m_blocksSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().DoubleBorder());
+    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().DoubleBorder(wxTOP|wxBOTTOM));
 
     m_blocksSizer->AddStretchSpacer();
 
@@ -219,4 +265,18 @@ void Sidebar::RefreshContent()
     m_comment->SetItem(m_selectedItem);
 
     Layout();
+}
+
+
+void Sidebar::OnPaint(wxPaintEvent&)
+{
+    wxPaintDC dc(this);
+
+    dc.SetPen(wxPen(GRAY_LINES_COLOR));
+#ifndef __WXMSW__
+    dc.DrawLine(0, 0, 0, dc.GetSize().y-1);
+#endif
+#ifndef __WXOSX__
+    dc.DrawLine(0, 0, dc.GetSize().x - 1, 0);
+#endif
 }

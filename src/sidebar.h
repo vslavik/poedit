@@ -57,6 +57,9 @@ public:
     void RefreshContent();
 
 private:
+    void OnPaint(wxPaintEvent&);
+
+private:
     CatalogItem *m_selectedItem;
 
     std::unique_ptr<SidebarBlock> m_oldMsgid;
