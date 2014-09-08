@@ -46,12 +46,12 @@ bool ConcatCatalogs(const wxArrayString& files, const wxString& outfile)
     for ( wxArrayString::const_iterator i = files.begin();
           i != files.end(); ++i )
     {
-        list += wxString::Format(_T(" \"%s\""), i->c_str());
+        list += wxString::Format(" %s", QuoteCmdlineArg(*i));
     }
 
     wxString cmd =
-        wxString::Format(_T("msgcat --force-po -o \"%s\" %s"),
-                         outfile.c_str(),
+        wxString::Format("msgcat --force-po -o %s %s",
+                         QuoteCmdlineArg(outfile),
                          list.c_str());
     bool succ = ExecuteGettext(cmd);
 

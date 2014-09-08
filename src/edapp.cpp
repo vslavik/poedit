@@ -48,6 +48,9 @@
 #endif
 
 #ifdef __WXMSW__
+#include <wx/msw/registry.h>
+#include <wx/msw/wrapwin.h>
+#include <Shlwapi.h>
 #include <winsparkle.h>
 #endif
 
@@ -243,6 +246,10 @@ bool PoeditApp::OnInit()
     // NB: It's important to do this before TM is used for the first time.
     if ( !MigrateLegacyTranslationMemory() )
         return false;
+
+#ifdef __WXMSW__
+    AssociateFileTypeIfNeeded();
+#endif
 
     // NB: opening files or creating empty window is handled differently on
     //     Macs, using MacOpenFiles() and MacNewFile(), so don't create empty
@@ -947,6 +954,39 @@ void PoeditApp::OSXOnWillFinishLaunching()
 
 
 #ifdef __WXMSW__
+
+void PoeditApp::AssociateFileTypeIfNeeded()
+{
+    // If installed without admin privileges, the installer won't associate
+    // Poedit with .po extension. Self-associate with it here in per-user
+    // registry record in this case.
+
+    wchar_t buf[1000];
+    DWORD bufSize = sizeof(buf);
+    HRESULT hr = AssocQueryString(ASSOCF_INIT_IGNOREUNKNOWN,
+                                  ASSOCSTR_EXECUTABLE,
+                                  L".po", NULL,
+                                  buf, &bufSize);
+    if (SUCCEEDED(hr))
+        return; // already associated, nothing to do
+
+    auto poCmd = wxString::Format("\"%s\" \"%%1\"", wxStandardPaths::Get().GetExecutablePath());
+    auto poIcon = wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\poedit-translation-generic.ico";
+    wxRegKey key1(wxRegKey::HKCU, "Software\\Classes\\.po");
+    key1.Create();
+    key1.SetValue("", "GettextFile");
+    wxRegKey key2(wxRegKey::HKCU, "Software\\Classes\\GettextFile");
+    key2.Create();
+    key2.SetValue("", _("PO Translation File"));
+    wxRegKey key3(wxRegKey::HKCU, "Software\\Classes\\GettextFile\\Shell\\Open\\Command");
+    key3.Create();
+    key3.SetValue("", poCmd);
+    wxRegKey key4(wxRegKey::HKCU, "Software\\Classes\\GettextFile\\DefaultIcon");
+    key4.Create();
+    key4.SetValue("", poIcon);
+}
+
+
 void PoeditApp::OnWinsparkleCheck(wxCommandEvent& event)
 {
     win_sparkle_check_update_with_ui();
@@ -962,5 +1002,6 @@ void PoeditApp::WinSparkle_Shutdown()
 {
     wxGetApp().OnQuit(wxCommandEvent());
 }
+
 #endif // __WXMSW__
 

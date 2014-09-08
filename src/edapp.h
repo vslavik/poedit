@@ -117,6 +117,7 @@ class PoeditApp : public wxApp
         void OnGettextManual(wxCommandEvent& event);
 
 #ifdef __WXMSW__
+        void AssociateFileTypeIfNeeded();
         void OnWinsparkleCheck(wxCommandEvent& event);
         static int WinSparkle_CanShutdown();
         static void WinSparkle_Shutdown();

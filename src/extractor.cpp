@@ -30,6 +30,8 @@
 #include <wx/tokenzr.h>
 
 #include "extractor.h"
+#include "gexecute.h"
+
 
 
 void ExtractorsDB::Read(wxConfigBase *cfg)
@@ -141,7 +143,7 @@ wxString Extractor::GetCommand(const wxArrayString& files,
     wxString cmdline, kline, fline;
     
     cmdline = Command;
-    cmdline.Replace("%o", _T("\"") + output + _T("\""));
+    cmdline.Replace("%o", QuoteCmdlineArg(output));
     
     wxString dummy;
     size_t i;
@@ -167,7 +169,7 @@ wxString Extractor::GetCommand(const wxArrayString& files,
 #endif
 
         dummy = FileItem;
-        dummy.Replace("%f", _T("\"") + fn + _T("\""));
+        dummy.Replace("%f", QuoteCmdlineArg(fn));
         fline << " " << dummy;
     }
 

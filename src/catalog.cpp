@@ -875,7 +875,8 @@ class LoadParser : public CatalogParser
     public:
         LoadParser(Catalog *c, wxTextFile *f)
               : CatalogParser(f),
-                FileIsValid(false), m_catalog(c), m_nextId(1) {}
+                FileIsValid(false),
+                m_catalog(c), m_nextId(1), m_seenHeaderAlready(false) {}
 
         // true if the file is valid, i.e. has at least some data
         bool FileIsValid;
@@ -907,6 +908,7 @@ class LoadParser : public CatalogParser
 
     private:
         int m_nextId;
+        bool m_seenHeaderAlready;
 };
 
 
@@ -929,9 +931,14 @@ bool LoadParser::OnEntry(const wxString& msgid,
 
     if (msgid.empty() && !has_context)
     {
-        // gettext header:
-        m_catalog->m_header.FromString(mtranslations[0]);
-        m_catalog->m_header.Comment = comment;
+        if (!m_seenHeaderAlready)
+        {
+            // gettext header:
+            m_catalog->m_header.FromString(mtranslations[0]);
+            m_catalog->m_header.Comment = comment;
+            m_seenHeaderAlready = true;
+        }
+        // else: ignore duplicate header in malformed files
     }
     else
     {
@@ -1438,9 +1445,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         msgcat_ok =
               ExecuteGettext
               (
-                  wxString::Format(_T("msgcat --force-po -o \"%s\" \"%s\""),
-                                   po_file.c_str(),
-                                   po_file_temp.c_str())
+                  wxString::Format("msgcat --force-po -o %s %s",
+                                   QuoteCmdlineArg(po_file),
+                                   QuoteCmdlineArg(po_file_temp))
               )
               && wxFileExists(po_file);
     }
@@ -1482,9 +1489,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
 
             if ( ExecuteGettext
                   (
-                      wxString::Format(_T("msgfmt -o \"%s\" \"%s\""),
-                                       mo_file_temp.c_str(),
-                                       po_file.c_str())
+                      wxString::Format("msgfmt -o %s %s",
+                                       QuoteCmdlineArg(mo_file_temp),
+                                       QuoteCmdlineArg(po_file))
                   ) )
             {
                 mo_compilation_status = CompilationStatus::Success;
@@ -1677,7 +1684,7 @@ int Catalog::DoValidate(const wxString& po_file)
     GettextErrors err;
     ExecuteGettextAndParseOutput
     (
-        wxString::Format(_T("msgfmt -o /dev/null -c \"%s\""), po_file.c_str()),
+        wxString::Format("msgfmt -o /dev/null -c %s", QuoteCmdlineArg(po_file)),
         err
     );
 
@@ -1819,8 +1826,10 @@ bool Catalog::Merge(Catalog *refcat)
                 (
                     wxString::Format
                     (
-                        _T("msgmerge -q --force-po -o \"%s\" \"%s\" \"%s\""),
-                        tmp3.c_str(), tmp2.c_str(), tmp1.c_str()
+                        "msgmerge -q --force-po -o %s %s %s",
+                        QuoteCmdlineArg(tmp3),
+                        QuoteCmdlineArg(tmp2),
+                        QuoteCmdlineArg(tmp1)
                     )
                 );
 
