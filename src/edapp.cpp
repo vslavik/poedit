@@ -860,6 +860,16 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     AddNativeItem(speech, -1, _("Stop Speaking"), @selector(stopSpeaking:), @"");
     [editNS setSubmenu:speech forItem:item];
 
+    int viewMenuPos = bar->FindMenu(_("View"));
+    if (viewMenuPos != wxNOT_FOUND)
+    {
+        NSMenu *viewNS = bar->GetMenu(viewMenuPos)->GetHMenu();
+        [viewNS addItem:[NSMenuItem separatorItem]];
+        item = AddNativeItem(viewNS, -1, _("Enter Full Screen"), @selector(toggleFullScreen:), @"f");
+        [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSControlKeyMask];
+
+    }
+
     int windowMenuPos = bar->FindMenu(_("Window"));
     if (windowMenuPos != wxNOT_FOUND)
     {
