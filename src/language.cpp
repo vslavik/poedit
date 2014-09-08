@@ -134,23 +134,52 @@ const DisplayNamesData& GetDisplayNamesData()
         names.reserve(count);
         for (int i = 0; i < count; i++, loc++)
         {
+            auto language = loc->getLanguage();
+            auto script = loc->getScript();
+            auto country = loc->getCountry();
+            auto variant = loc->getVariant();
+
             // TODO: for now, ignore variants here and in FormatForRoundtrip(),
             //       because translating them between gettext and ICU is nontrivial
-            auto variant = loc->getVariant();
             if (variant != nullptr && *variant != '\0')
+                continue;
+            
+            // Discard locales for regions (e.g. "English (World)" or "Arabic (World)",
+            // because the base language (en, ar) is enough for our purposes. There are
+            // only a few such locales in ICU: ar_001, en_001, en_150, es_419.
+            if (country && *country >= '0' && *country <= '9')
                 continue;
 
             icu::UnicodeString s;
             loc->getDisplayName(s);
-
             names.push_back(s);
 
+            if (strcmp(language, "zh") == 0 && *country == '\0')
+            {
+                if (strcmp(script, "Hans") == 0)
+                    country = "CN";
+                else if (strcmp(script, "Hant") == 0)
+                    country = "TW";
+            }
+
+            std::string code(language);
+            if (*country != '\0')
+            {
+                code += '_';
+                code += country;
+            }
+            if (*script != '\0')
+            {
+                if (strcmp(script, "Latn") == 0)
+                    code += "@latin";
+            }
+            
             s.foldCase();
-            data.names[StdFromIcuStr(s)] = loc->getName();
+            data.names[StdFromIcuStr(s)] = code;
 
             loc->getDisplayName(locEng, s);
             s.foldCase();
-            data.namesEng[StdFromIcuStr(s)] = loc->getName();
+            data.namesEng[StdFromIcuStr(s)] = code;
         }
 
         // sort the names alphabetically for data.sortedNames:
