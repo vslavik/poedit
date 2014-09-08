@@ -30,6 +30,7 @@
 #include <wx/tokenzr.h>
 
 #include "parser.h"
+#include "gexecute.h"
 
 
 #include <wx/arrimpl.cpp>
@@ -143,7 +144,7 @@ wxString Parser::GetCommand(const wxArrayString& files,
     wxString cmdline, kline, fline;
     
     cmdline = Command;
-    cmdline.Replace("%o", _T("\"") + output + _T("\""));
+    cmdline.Replace("%o", QuoteCmdlineArg(output));
     
     wxString dummy;
     size_t i;
@@ -169,7 +170,7 @@ wxString Parser::GetCommand(const wxArrayString& files,
 #endif
 
         dummy = FileItem;
-        dummy.Replace("%f", _T("\"") + fn + _T("\""));
+        dummy.Replace("%f", QuoteCmdlineArg(fn));
         fline << " " << dummy;
     }
 

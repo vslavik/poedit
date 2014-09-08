@@ -191,3 +191,13 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
 
     return retcode == 0;
 }
+
+
+wxString QuoteCmdlineArg(const wxString& s)
+{
+    wxString s2(s);
+#ifdef __UNIX__
+    s2.Replace("\"", "\\\"");
+#endif
+    return "\"" + s2 + "\"";
+}

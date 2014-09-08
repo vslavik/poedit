@@ -49,5 +49,6 @@ extern bool ExecuteGettext(const wxString& cmdline);
 extern bool ExecuteGettextAndParseOutput(const wxString& cmdline,
                                          GettextErrors& errors);
 
+extern wxString QuoteCmdlineArg(const wxString& s);
 
 #endif // _GEXECUTE_H_
