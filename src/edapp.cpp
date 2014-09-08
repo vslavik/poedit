@@ -135,7 +135,7 @@ bool PoeditApp::OnInit()
     // timestamps on the logs are of not use for Poedit:
     wxLog::DisableTimestamp();
 
-#if defined(__UNIX__) && !defined(__WXMAC__)
+#if defined(__UNIX__) && !defined(__WXOSX__)
     wxString installPrefix = POEDIT_PREFIX;
 #ifdef __linux__
     wxFileName::SplitPath(wxStandardPaths::Get().GetExecutablePath(), &installPrefix, nullptr, nullptr);
@@ -177,7 +177,7 @@ bool PoeditApp::OnInit()
     SetVendorName("Vaclav Slavik");
     SetAppName("Poedit");
 
-#if defined(__WXMAC__)
+#if defined(__WXOSX__)
     #define CFG_FILE (wxStandardPaths::Get().GetUserConfigDir() + "/net.poedit.Poedit.cfg")
 #elif defined(__UNIX__)
     #define CFG_FILE configFile
@@ -185,7 +185,7 @@ bool PoeditApp::OnInit()
     #define CFG_FILE wxEmptyString
 #endif
 
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     // upgrade from the old location of config file:
     wxString oldcfgfile = wxStandardPaths::Get().GetUserConfigDir() + "/poedit.cfg";
     if (wxFileExists(oldcfgfile) && !wxFileExists(CFG_FILE))
@@ -206,7 +206,7 @@ bool PoeditApp::OnInit()
     wxXmlResource::Get()->InitAllHandlers();
     wxXmlResource::Get()->AddHandler(new LearnMoreLinkXmlHandler);
 
-#if defined(__WXMAC__)
+#if defined(__WXOSX__)
     wxXmlResource::Get()->LoadAllFiles(wxStandardPaths::Get().GetResourcesDir());
 #elif defined(__WXMSW__)
 	wxStandardPaths::Get().DontIgnoreAppSubDir();
@@ -217,17 +217,17 @@ bool PoeditApp::OnInit()
 
     SetDefaultCfg(wxConfig::Get());
 
-#if defined(__WXMAC__) || defined(__WXMSW__)
+#if defined(__WXOSX__) || defined(__WXMSW__)
     u_setDataDirectory(wxStandardPaths::Get().GetResourcesDir().mb_str());
 #endif
 
-#ifndef __WXMAC__
+#ifndef __WXOSX__
     wxArtProvider::PushBack(new PoeditArtProvider);
 #endif
 
     SetupLanguage();
 
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     wxMenuBar *bar = wxXmlResource::Get()->LoadMenuBar("mainmenu_mac_global");
     TweakOSXMenuBar(bar);
     wxMenuBar::MacSetCommonMenuBar(bar);
@@ -253,12 +253,12 @@ bool PoeditApp::OnInit()
         OpenFiles(gs_filesToOpen);
         gs_filesToOpen.clear();
     }
-#ifndef __WXMAC__
+#ifndef __WXOSX__
     else
     {
         OpenNewFile();
     }
-#endif // !__WXMAC__
+#endif // !__WXOSX__
 
 #ifdef USE_SPARKLE
     Sparkle_Initialize(CheckForBetaUpdates());
@@ -318,7 +318,7 @@ void PoeditApp::SetupLanguage()
 {
 #if defined(__WXMSW__)
 	wxLocale::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetResourcesDir() + "\\Translations");
-#elif !defined(__WXMAC__)
+#elif !defined(__WXOSX__)
     wxLocale::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetInstallPrefix() + "/share/locale");
 #endif
 
@@ -686,7 +686,7 @@ void PoeditApp::OnAbout(wxCommandEvent&)
 
     wxAboutDialogInfo about;
 
-#ifndef __WXMAC__
+#ifndef __WXOSX__
     about.SetName("Poedit");
     about.SetVersion(wxGetApp().GetAppVersion());
     about.SetDescription(_("Poedit is an easy to use translations editor."));

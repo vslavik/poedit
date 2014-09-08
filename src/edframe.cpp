@@ -903,7 +903,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
 {
 #if defined(__WXMSW__)
     const int SPLITTER_FLAGS = wxSP_NOBORDER;
-#elif defined(__WXMAC__)
+#elif defined(__WXOSX__)
     // wxMac doesn't show XORed line:
     const int SPLITTER_FLAGS = wxSP_LIVE_UPDATE;
 #else
@@ -1367,7 +1367,7 @@ void PoeditFrame::OnCloseWindow(wxCloseEvent& event)
 {
     if (event.CanVeto() && NeedsToAskIfCanDiscardCurrentDoc())
     {
-#ifdef __WXMAC__
+#ifdef __WXOSX__
         // Veto the event by default, the window-modally ask for permission.
         // If it turns out that the window can be closed, the completion handler
         // will do it:
@@ -2728,7 +2728,7 @@ void PoeditFrame::DoGiveHelp(const wxString& text, bool show)
 
 void PoeditFrame::UpdateTitle()
 {
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     OSXSetModified(IsModified());
 #endif
 
@@ -3548,7 +3548,7 @@ void PoeditFrame::AddBookmarksMenu(wxMenu *parent)
     parent->AppendSeparator();
     parent->AppendSubMenu(menu, _("&Bookmarks"));
 
-#if defined(__WXMAC__)
+#if defined(__WXOSX__)
     // on Mac, Alt+something is used during normal typing, so we shouldn't
     // use it as shortcuts:
     #define LABEL_BOOKMARK_SET   _("Set Bookmark %i\tCtrl+%i")

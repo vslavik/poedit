@@ -121,7 +121,7 @@ private:
 std::wstring TranslationMemoryImpl::GetDatabaseDir()
 {
     wxString data;
-#if defined(__UNIX__) && !defined(__WXMAC__)
+#if defined(__UNIX__) && !defined(__WXOSX__)
     if ( !wxGetEnv("XDG_DATA_HOME", &data) )
         data = wxGetHomeDir() + "/.local/share";
     data += "/poedit";

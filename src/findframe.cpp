@@ -365,7 +365,7 @@ bool FindFrame::DoFind(int dir)
     if (found != Found_Not)
     {
         m_listCtrl->EnsureVisible(m_position);
-#ifdef __WXMAC__
+#ifdef __WXOSX__
         m_listCtrl->Refresh();
 #endif
         m_listCtrl->SelectAndFocus(m_position);

@@ -32,7 +32,7 @@
     #define HAS_THEMES_SUPPORT
 #endif
 
-#ifndef __WXMAC__
+#ifndef __WXOSX__
 class PoeditArtProvider : public wxArtProvider
 {
 protected:

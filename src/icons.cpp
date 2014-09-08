@@ -30,7 +30,7 @@
 #include "icons.h"
 #include "edapp.h"
 
-#ifndef __WXMAC__
+#ifndef __WXOSX__
 
 #ifdef __WXGTK20__
 // translates poedit item id or Tango stock item id to "legacy" GNOME id:
@@ -102,4 +102,4 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
     return bmp;
 }
 
-#endif // !__WXMAC__
+#endif // !__WXOSX__

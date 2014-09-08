@@ -246,14 +246,14 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     }
     else
 #endif // __WXMSW__
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     if ( shaded == *wxWHITE )
     {
         // use standard shaded color from finder/databrowser:
         shaded.Set("#f0f5fd");
     }
     else
-#endif // __WXMAC__
+#endif // __WXOSX__
     {
         shaded.Set(int(DARKEN_FACTOR * shaded.Red()),
                    int(DARKEN_FACTOR * shaded.Green()),

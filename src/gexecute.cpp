@@ -40,11 +40,11 @@
 namespace
 {
 
-#if defined(__WXMAC__) || defined(__WXMSW__)
+#if defined(__WXOSX__) || defined(__WXMSW__)
 
 wxString GetGettextPackagePath()
 {
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     wxString dir = wxStandardPaths::Get().GetPluginsDir();
     return dir + "/GettextTools.bundle/Contents/MacOS";
 #else
@@ -78,7 +78,7 @@ wxString GetPathToAuxBinary(const wxString& program)
         return program;
     }
 }
-#endif // __WXMAC__ || __WXMSW__
+#endif // __WXOSX__ || __WXMSW__
 
 
 bool ReadOutput(wxInputStream& s, wxArrayString& out)
@@ -106,7 +106,7 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
     wxExecuteEnv env;
     wxString cmdline(cmdline_);
 
-#if defined(__WXMAC__) || defined(__WXMSW__)
+#if defined(__WXOSX__) || defined(__WXMSW__)
     wxString binary = cmdline.BeforeFirst(_T(' '));
     cmdline = GetPathToAuxBinary(binary) + cmdline.Mid(binary.length());
     wxGetEnvMap(&env.env);
@@ -117,7 +117,7 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
 	if ( !lang.empty() )
 		env.env["LANG"] = lang;
     #endif
-#endif // __WXMAC__ || __WXMSW__
+#endif // __WXOSX__ || __WXMSW__
 
     wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
 

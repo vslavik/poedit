@@ -132,7 +132,7 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
     Bind(wxEVT_PAINT, &WelcomeScreenPanel::OnPaint, this);
 #endif
 
-#if defined(__WXMAC__)
+#if defined(__WXOSX__)
     #define HEADER_FACE "Helvetica Neue"
     m_fntHeader = wxFont(wxFontInfo(30).FaceName(HEADER_FACE).Light());
     m_fntNorm = wxFont(wxFontInfo(13).FaceName(HEADER_FACE).Light());

@@ -34,11 +34,11 @@
 #include <wx/config.h>
 #include <wx/dcclient.h>
 
-#ifdef __WXMAC__
+#ifdef __WXOSX__
 #include "osx_helpers.h"
 #endif
 
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     #define SMALL_BORDER   5
     #define BUTTONS_SPACE 10
 #else
@@ -80,10 +80,10 @@ AttentionBar::AttentionBar(wxWindow *parent)
 #ifdef __WXMSW__
     btnClose->SetBackgroundColour(bg);
 #endif
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
-#if defined(__WXMAC__) || defined(__WXMSW__)
+#if defined(__WXOSX__) || defined(__WXMSW__)
     Bind(wxEVT_PAINT, &AttentionBar::OnPaint, this);
     wxFont boldFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     boldFont.SetWeight(wxFONTWEIGHT_BOLD);
@@ -104,7 +104,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
 }
 
 
-#ifdef __WXMAC__
+#ifdef __WXOSX__
 void AttentionBar::OnPaint(wxPaintEvent&)
 {
     wxPaintDC dc(this);
@@ -125,7 +125,7 @@ void AttentionBar::OnPaint(wxPaintEvent&)
          wxDOWN
        );
 }
-#endif // __WXMAC__
+#endif // __WXOSX__
 
 #ifdef __WXMSW__
 void AttentionBar::OnPaint(wxPaintEvent&)
@@ -170,7 +170,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
           i != msg.m_actions.end(); ++i )
     {
         wxButton *b = new wxButton(this, wxID_ANY, i->first);
-#ifdef __WXMAC__
+#ifdef __WXOSX__
         MakeButtonRounded(b->GetHandle());
 #endif
         m_buttons->Add(b, wxSizerFlags().Center().Border(wxRIGHT, BUTTONS_SPACE));

@@ -67,7 +67,7 @@ class PoeditApp : public wxApp
         wxFileHistory& FileHistory() { return m_history; }
 #endif
 
-#ifdef __WXMAC__
+#ifdef __WXOSX__
         virtual void MacOpenFiles(const wxArrayString& names) { OpenFiles(names); }
         virtual void MacNewFile() { OpenNewFile(); }
 #endif

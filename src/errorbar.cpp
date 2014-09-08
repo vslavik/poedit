@@ -45,7 +45,7 @@ ErrorBar::ErrorBar(wxWindow *parent)
 {
     Bind(wxEVT_PAINT, &ErrorBar::OnPaint, this);
 
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 
