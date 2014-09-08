@@ -2848,7 +2848,9 @@ void PoeditFrame::UpdateMenu()
     }
 #endif
 
-    menubar->EnableTop(3, editable);
+    auto goMenuPos = menubar->FindMenu(_("Go"));
+    if (goMenuPos != wxNOT_FOUND)
+        menubar->EnableTop(goMenuPos, editable);
     for (int i = 0; i < 10; i++)
     {
         menubar->Enable(ID_BOOKMARK_SET + i, editable);

@@ -129,6 +129,54 @@
       </object>
       <style>wxMENU_TEAROFF</style>
     </object>
+    <object class="wxMenu" name="menu_view">
+      <label>_View</label>
+      <object class="wxMenuItem" name="menu_ids">
+        <label platform="win">Display entry _IDs</label>
+        <label platform="unix|mac">Display Entry _IDs</label>
+        <checkable>1</checkable>
+      </object>
+      <object class="wxMenuItem" name="menu_auto_comments_win">
+        <label platform="win">Display _notes for translators</label>
+        <label platform="unix|mac">Display _Notes for Translators</label>
+        <checkable>1</checkable>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="menu_comment_win">
+        <label platform="win">_Comment window</label>
+        <label platform="unix|mac">_Comment Window</label>
+        <checkable>1</checkable>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="sort_by_order">
+        <label platform="win">Sort by _file order</label>
+        <label platform="unix|mac">Sort by _File Order</label>
+        <radio>1</radio>
+      </object>
+      <object class="wxMenuItem" name="sort_by_source">
+        <label platform="win">Sort by _source</label>
+        <label platform="unix|mac">Sort by _Source</label>
+        <radio>1</radio>
+      </object>
+      <object class="wxMenuItem" name="sort_by_translation">
+        <label platform="win">Sort by _translation</label>
+        <label platform="unix|mac">Sort by _Translation</label>
+        <radio>1</radio>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="sort_group_by_context">
+        <label platform="win">_Group by context</label>
+        <label platform="unix|mac">_Group By Context</label>
+        <checkable>1</checkable>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="sort_untrans_first">
+        <label platform="win">_Untranslated entries first</label>
+        <label platform="unix|mac">_Untranslated Entries First</label>
+        <checkable>1</checkable>
+      </object>
+      <style>wxMENU_TEAROFF</style>
+    </object>
     <object class="wxMenu" name="menu_catalog">
       <label>C_atalog</label>
       <style>wxMENU_TEAROFF</style>
@@ -190,54 +238,6 @@
         <label platform="unix|mac">Ne_xt Unfinished</label>
         <accel>Ctrl+Shift+Down</accel>
       </object>
-    </object>
-    <object class="wxMenu" name="menu_view">
-      <label>_View</label>
-      <object class="wxMenuItem" name="menu_ids">
-        <label platform="win">Display entry _IDs</label>
-        <label platform="unix|mac">Display Entry _IDs</label>
-        <checkable>1</checkable>
-      </object>
-      <object class="wxMenuItem" name="menu_auto_comments_win">
-        <label platform="win">Display _notes for translators</label>
-        <label platform="unix|mac">Display _Notes for Translators</label>
-        <checkable>1</checkable>
-      </object>
-      <object class="separator"/>
-      <object class="wxMenuItem" name="menu_comment_win">
-        <label platform="win">_Comment window</label>
-        <label platform="unix|mac">_Comment Window</label>
-        <checkable>1</checkable>
-      </object>
-      <object class="separator"/>
-      <object class="wxMenuItem" name="sort_by_order">
-        <label platform="win">Sort by _file order</label>
-        <label platform="unix|mac">Sort by _File Order</label>
-        <radio>1</radio>
-      </object>
-      <object class="wxMenuItem" name="sort_by_source">
-        <label platform="win">Sort by _source</label>
-        <label platform="unix|mac">Sort by _Source</label>
-        <radio>1</radio>
-      </object>
-      <object class="wxMenuItem" name="sort_by_translation">
-        <label platform="win">Sort by _translation</label>
-        <label platform="unix|mac">Sort by _Translation</label>
-        <radio>1</radio>
-      </object>
-      <object class="separator"/>
-      <object class="wxMenuItem" name="sort_group_by_context">
-        <label platform="win">_Group by context</label>
-        <label platform="unix|mac">_Group By Context</label>
-        <checkable>1</checkable>
-      </object>
-      <object class="separator"/>
-      <object class="wxMenuItem" name="sort_untrans_first">
-        <label platform="win">_Untranslated entries first</label>
-        <label platform="unix|mac">_Untranslated Entries First</label>
-        <checkable>1</checkable>
-      </object>
-      <style>wxMENU_TEAROFF</style>
     </object>
     <object class="wxMenu" name="menu_window" platform="mac">
       <label>Window</label>
