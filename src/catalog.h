@@ -527,6 +527,11 @@ class Catalog
                   int& validation_errors,
                   CompilationStatus& mo_compilation_status);
 
+        /// Compiles the catalog into binary MO file.
+        bool CompileToMO(const wxString& mo_file,
+                         int& validation_errors,
+                         CompilationStatus& mo_compilation_status);
+
         /// Exports the catalog to HTML format
         bool ExportToHTML(const wxString& filename);
 

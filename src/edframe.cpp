@@ -625,6 +625,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_CLOSE,                PoeditFrame::OnCloseCmd)
    EVT_MENU           (wxID_SAVE,                 PoeditFrame::OnSave)
    EVT_MENU           (wxID_SAVEAS,               PoeditFrame::OnSaveAs)
+   EVT_MENU           (XRCID("menu_compile_mo"),  PoeditFrame::OnCompileMO)
    EVT_MENU           (XRCID("menu_export"),      PoeditFrame::OnExport)
    EVT_MENU           (XRCID("menu_catproperties"), PoeditFrame::OnProperties)
    EVT_MENU           (XRCID("menu_update"),      PoeditFrame::OnUpdate)
@@ -1489,6 +1490,43 @@ void PoeditFrame::OnSaveAs(wxCommandEvent&)
     DoSaveAs(GetSaveAsFilename(m_catalog, m_fileName));
 }
 
+void PoeditFrame::OnCompileMO(wxCommandEvent&)
+{
+    wxString name;
+    wxFileName::SplitPath(m_fileName, nullptr, &name, nullptr);
+
+    if (name.empty())
+    {
+        name = SuggestFileName(m_catalog) + ".mo";
+    }
+    else
+        name += ".mo";
+
+    name = wxFileSelector(_("Compile to..."),
+                          wxPathOnly(m_fileName), name, wxEmptyString,
+                          wxString::Format("%s (*.mo)|*.mo", _("Compiled Translation Files")),
+                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
+    if (name.empty())
+        return; // user cancelled
+
+    wxBusyCursor bcur;
+    wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
+
+    int validation_errors = 0;
+    Catalog::CompilationStatus compilation_status = Catalog::CompilationStatus::NotDone;
+    if (!m_catalog->CompileToMO(name, validation_errors, compilation_status))
+        return;
+
+    if (validation_errors)
+    {
+        // Note: this may show window-modal window and because we may
+        //       be called from such window too, run this in the next
+        //       event loop iteration.
+        CallAfter([=]{
+            ReportValidationErrors(validation_errors, compilation_status, /*from_save=*/true, /*other_file_saved=*/false, []{});
+        });
+    }
+}
 
 void PoeditFrame::OnExport(wxCommandEvent&)
 {
@@ -1837,7 +1875,7 @@ void PoeditFrame::OnValidate(wxCommandEvent&)
         wxBusyCursor bcur;
         ReportValidationErrors(m_catalog->Validate(),
                                /*mo_compilation_failed=*/Catalog::CompilationStatus::NotDone,
-                               /*from_save=*/false, []{});
+                               /*from_save=*/false, /*other_file_saved=*/false, []{});
     }
     catch (Exception& e)
     {
@@ -1849,7 +1887,8 @@ void PoeditFrame::OnValidate(wxCommandEvent&)
 template<typename TFunctor>
 void PoeditFrame::ReportValidationErrors(int errors,
                                          Catalog::CompilationStatus mo_compilation_status,
-                                         bool from_save, TFunctor completionHandler)
+                                         bool from_save, bool other_file_saved,
+                                         TFunctor completionHandler)
 {
     wxWindowPtr<wxMessageDialog> dlg;
 
@@ -1876,17 +1915,33 @@ void PoeditFrame::ReportValidationErrors(int errors,
         if ( from_save )
         {
             details += "\n\n";
-            switch ( mo_compilation_status )
+            if (other_file_saved)
             {
-                case Catalog::CompilationStatus::NotDone:
-                    details += _("The file was saved safely.");
-                    break;
-                case Catalog::CompilationStatus::Success:
-                    details += _("The file was saved safely and compiled into the MO format, but it will probably not work correctly.");
-                    break;
-                case Catalog::CompilationStatus::Error:
-                    details += _("The file was saved safely, but it cannot be compiled into the MO format and used.");
-                    break;
+                switch ( mo_compilation_status )
+                {
+                    case Catalog::CompilationStatus::NotDone:
+                        details += _("The file was saved safely.");
+                        break;
+                    case Catalog::CompilationStatus::Success:
+                        details += _("The file was saved safely and compiled into the MO format, but it will probably not work correctly.");
+                        break;
+                    case Catalog::CompilationStatus::Error:
+                        details += _("The file was saved safely, but it cannot be compiled into the MO format and used.");
+                        break;
+                }
+            }
+            else // saving only the MO file
+            {
+                switch ( mo_compilation_status )
+                {
+                    case Catalog::CompilationStatus::Success:
+                        details += _("The file was compiled into the MO format, but it will probably not work correctly.");
+                        break;
+                    case Catalog::CompilationStatus::NotDone:
+                    case Catalog::CompilationStatus::Error:
+                        details += _("The file cannot be compiled into the MO format and used.");
+                        break;
+                }
             }
         }
         dlg->SetExtendedMessage(details);
@@ -2783,6 +2838,7 @@ void PoeditFrame::UpdateMenu()
 
     menubar->Enable(wxID_SAVE, hasCatalog);
     menubar->Enable(wxID_SAVEAS, hasCatalog);
+    menubar->Enable(XRCID("menu_compile_mo"), hasCatalog);
     menubar->Enable(XRCID("menu_export"), hasCatalog);
 
 #ifndef __WXOSX__
@@ -2927,7 +2983,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
         //       be called from such window too, run this in the next
         //       event loop iteration.
         CallAfter([=]{
-            ReportValidationErrors(validation_errors, mo_compilation_status, /*from_save=*/true, [=]{
+            ReportValidationErrors(validation_errors, mo_compilation_status, /*from_save=*/true, /*other_file_saved=*/true, [=]{
                 completionHandler(true);
             });
         });

@@ -1555,6 +1555,62 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
     return true;
 }
 
+bool Catalog::CompileToMO(const wxString& mo_file,
+                          int& validation_errors,
+                          CompilationStatus& mo_compilation_status)
+{
+    mo_compilation_status = CompilationStatus::NotDone;
+
+    TempDirectory tmpdir;
+    if ( !tmpdir.IsOk() )
+        return false;
+    wxString po_file_temp = tmpdir.CreateFileName("output.po");
+
+    if ( !DoSaveOnly(po_file_temp) )
+    {
+        wxLogError(_("Couldn't save file %s."), po_file_temp.c_str());
+        return false;
+    }
+
+    validation_errors = DoValidate(po_file_temp);
+
+    TempOutputFileFor mo_file_temp_obj(mo_file);
+    const wxString mo_file_temp = mo_file_temp_obj.FileName();
+
+    {
+        // Ignore msgfmt errors output (but not exit code), because it
+        // complains about things DoValidate() already complained above.
+        wxLogNull null;
+        ExecuteGettext(wxString::Format("msgfmt -o %s %s",
+                                        QuoteCmdlineArg(mo_file_temp),
+                                        QuoteCmdlineArg(po_file_temp)));
+    }
+
+    // Don't check return code:
+    // msgfmt has the ugly habit of sometimes returning non-zero
+    // exit code, reporting "fatal errors" and *still* producing a usable
+    // .mo file. If this happens, don't pretend the file wasn't created.
+    if (!wxFileName::FileExists(mo_file_temp))
+    {
+        mo_compilation_status = CompilationStatus::Error;
+        return false;
+    }
+    else
+    {
+        mo_compilation_status = CompilationStatus::Success;
+    }
+
+    if ( !wxRenameFile(mo_file_temp, mo_file, /*overwrite=*/true) )
+    {
+        wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+        return false;
+    }
+
+    return true;
+}
+
+
+
 
 bool Catalog::DoSaveOnly(const wxString& po_file)
 {

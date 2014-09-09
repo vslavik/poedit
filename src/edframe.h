@@ -275,6 +275,7 @@ private:
 
         void AddBookmarksMenu(wxMenu *menu);
 
+        void OnCompileMO(wxCommandEvent& event);
         void OnExport(wxCommandEvent& event);
         bool ExportCatalog(const wxString& filename);
 
@@ -289,7 +290,8 @@ private:
 
         template<typename TFunctor>
         void ReportValidationErrors(int errors, Catalog::CompilationStatus mo_compilation_status,
-                                    bool from_save, TFunctor completionHandler);
+                                    bool from_save, bool other_file_saved,
+                                    TFunctor completionHandler);
 
 #ifndef __WXOSX__
         wxFileHistory& FileHistory() { return wxGetApp().FileHistory(); }
