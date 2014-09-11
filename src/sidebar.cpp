@@ -25,8 +25,9 @@
 
 #include "sidebar.h"
 
-#include "customcontrols.h"
 #include "catalog.h"
+#include "customcontrols.h"
+#include "commentdlg.h"
 
 #include <wx/button.h>
 #include <wx/sizer.h>
@@ -139,6 +140,34 @@ private:
 };
 
 
+class CommentSidebarBlock : public SidebarBlock
+{
+public:
+    CommentSidebarBlock(wxWindow *parent, const wxString& label)
+        : SidebarBlock(parent, label)
+    {
+        m_sizer->AddSpacer(5);
+        m_comment = new AutoWrappingText(parent, "");
+        m_sizer->Add(m_comment, wxSizerFlags().Expand());
+    }
+
+    virtual bool ShouldShowForItem(CatalogItem *item) const
+    {
+        return item->HasComment();
+    }
+
+    void Update(CatalogItem *item) override
+    {
+        auto text = CommentDialog::RemoveStartHash(item->GetComment());
+        text.Trim();
+        m_comment->SetAndWrapLabel(text);
+    }
+
+private:
+    AutoWrappingText *m_comment;
+};
+
+
 
 Sidebar::Sidebar(wxWindow *parent)
     : wxPanel(parent, wxID_ANY),
@@ -159,6 +188,9 @@ Sidebar::Sidebar(wxWindow *parent)
     m_autoComments.reset(new AutoCommentSidebarBlock(this, _("Notes for translators:")));
     m_blocksSizer->Add(m_autoComments->GetSizer(), wxSizerFlags().Expand());
 
+    m_comment.reset(new CommentSidebarBlock(this, _("Comment:")));
+    m_blocksSizer->Add(m_comment->GetSizer(), wxSizerFlags().Expand());
+
     SetSizerAndFit(topSizer);
 
     SetSelectedItem(nullptr);
@@ -172,14 +204,19 @@ Sidebar::~Sidebar()
 void Sidebar::SetSelectedItem(CatalogItem *item)
 {
     m_selectedItem = item;
-
-    m_oldMsgid->SetItem(m_selectedItem);
-    m_autoComments->SetItem(m_selectedItem);
-
-    Layout();
+    RefreshContent();
 }
 
 void Sidebar::SetMultipleSelection()
 {
     SetSelectedItem(nullptr);
+}
+
+void Sidebar::RefreshContent()
+{
+    m_oldMsgid->SetItem(m_selectedItem);
+    m_autoComments->SetItem(m_selectedItem);
+    m_comment->SetItem(m_selectedItem);
+
+    Layout();
 }

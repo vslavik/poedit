@@ -107,7 +107,6 @@ const wxWindowID ID_LIST = wxNewId();
 const wxWindowID ID_TEXTORIG = wxNewId();
 const wxWindowID ID_TEXTORIGPLURAL = wxNewId();
 const wxWindowID ID_TEXTTRANS = wxNewId();
-const wxWindowID ID_TEXTCOMMENT = wxNewId();
 
 
 
@@ -634,7 +633,6 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
    EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
    EVT_MENU           (XRCID("menu_ids"),         PoeditFrame::OnIDsFlag)
-   EVT_MENU           (XRCID("menu_comment_win"), PoeditFrame::OnCommentWinFlag)
    EVT_MENU           (XRCID("sort_by_order"),    PoeditFrame::OnSortByFileOrder)
    EVT_MENU           (XRCID("sort_by_source"),    PoeditFrame::OnSortBySource)
    EVT_MENU           (XRCID("sort_by_translation"), PoeditFrame::OnSortByTranslation)
@@ -663,7 +661,6 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU_RANGE     (ID_BOOKMARK_SET, ID_BOOKMARK_SET + 9,
                        PoeditFrame::OnSetBookmark)
    EVT_CLOSE          (                PoeditFrame::OnCloseWindow)
-   EVT_TEXT           (ID_TEXTCOMMENT,PoeditFrame::OnCommentWindowText)
    EVT_SIZE           (PoeditFrame::OnSize)
 
    // handling of selection:
@@ -767,8 +764,6 @@ PoeditFrame::PoeditFrame() :
     m_textTrans = nullptr;
     m_textOrig = nullptr;
     m_textOrigPlural = nullptr;
-    m_textComment = nullptr;
-    m_bottomSplitter = nullptr;
     m_splitter = nullptr;
     m_sidebar = nullptr;
 
@@ -782,10 +777,6 @@ PoeditFrame::PoeditFrame() :
     wxConfigBase *cfg = wxConfig::Get();
 
     m_displayIDs = (bool)cfg->Read("display_lines", (long)false);
-    m_displayCommentWin =
-        (bool)cfg->Read("display_comment_win", (long)false);
-    m_commentWindowEditable =
-        (bool)cfg->Read("comment_window_editable", (long)false);
     g_focusToText = (bool)cfg->Read("focus_to_text", (long)false);
 
 #if defined(__WXGTK__)
@@ -829,7 +820,6 @@ PoeditFrame::PoeditFrame() :
     wxXmlResource::Get()->LoadToolBar(this, "toolbar");
 
     GetMenuBar()->Check(XRCID("menu_ids"), m_displayIDs);
-    GetMenuBar()->Check(XRCID("menu_comment_win"), m_displayCommentWin);
 
     CreateStatusBar(1, wxST_SIZEGRIP);
 
@@ -931,56 +921,40 @@ wxWindow* PoeditFrame::CreateContentViewPO()
                                 wxLC_REPORT,
                                 m_displayIDs);
 
-    m_bottomSplitter = new wxSplitterWindow(m_splitter, -1,
-                                            wxDefaultPosition, wxDefaultSize,
-                                            SPLITTER_FLAGS);
-    // left part (translation) should grow, not comments one:
-    m_bottomSplitter->SetSashGravity(1.0);
-    m_bottomSplitter->Bind(wxEVT_UPDATE_UI, &PoeditFrame::OnSingleSelectionUpdate, this);
-
-    m_bottomLeftPanel = new wxPanel(m_bottomSplitter);
-    m_bottomRightPanel = new wxPanel(m_bottomSplitter);
+    m_bottomPanel = new wxPanel(m_splitter);
+    m_bottomPanel->Bind(wxEVT_UPDATE_UI, &PoeditFrame::OnSingleSelectionUpdate, this);
 
     wxStaticText *labelSource =
-        new wxStaticText(m_bottomLeftPanel, -1, _("Source text:"));
+        new wxStaticText(m_bottomPanel, -1, _("Source text:"));
     labelSource->SetFont(m_boldGuiFont);
 
-    m_labelContext = new wxStaticText(m_bottomLeftPanel, -1, wxEmptyString);
+    m_labelContext = new wxStaticText(m_bottomPanel, -1, wxEmptyString);
     m_labelContext->SetFont(m_normalGuiFont);
     m_labelContext->Hide();
 
-    m_labelSingular = new wxStaticText(m_bottomLeftPanel, -1, _("Singular:"));
+    m_labelSingular = new wxStaticText(m_bottomPanel, -1, _("Singular:"));
     m_labelSingular->SetFont(m_normalGuiFont);
-    m_textOrig = new SourceTextCtrl(m_bottomLeftPanel, ID_TEXTORIG);
-    m_labelPlural = new wxStaticText(m_bottomLeftPanel, -1, _("Plural:"));
+    m_textOrig = new SourceTextCtrl(m_bottomPanel, ID_TEXTORIG);
+    m_labelPlural = new wxStaticText(m_bottomPanel, -1, _("Plural:"));
     m_labelPlural->SetFont(m_normalGuiFont);
-    m_textOrigPlural = new SourceTextCtrl(m_bottomLeftPanel, ID_TEXTORIGPLURAL);
+    m_textOrigPlural = new SourceTextCtrl(m_bottomPanel, ID_TEXTORIGPLURAL);
 
-    wxStaticText *labelTrans =
-        new wxStaticText(m_bottomLeftPanel, -1, _("Translation:"));
+    wxStaticText *labelTrans = new wxStaticText(m_bottomPanel, -1, _("Translation:"));
     labelTrans->SetFont(m_boldGuiFont);
 
-    m_textTrans = new TranslationTextCtrl(m_bottomLeftPanel, ID_TEXTTRANS);
+    m_textTrans = new TranslationTextCtrl(m_bottomPanel, ID_TEXTTRANS);
     m_textTrans->PushEventHandler(new TransTextctrlHandler(this));
 
     // in case of plurals form, this is the control for n=1:
     m_textTransSingularForm = NULL;
 
-    m_pluralNotebook = new wxNotebook(m_bottomLeftPanel, -1);
+    m_pluralNotebook = new wxNotebook(m_bottomPanel, -1);
 
-    m_labelComment = new wxStaticText(m_bottomRightPanel, -1, _("Comment:"));
-    m_labelComment->SetFont(m_boldGuiFont);
-    m_textComment = NULL;
-    // This call will force the creation of the right kind of control
-    // for the m_textComment member
-    UpdateCommentWindowEditable();
-
-    m_errorBar = new ErrorBar(m_bottomLeftPanel);
+    m_errorBar = new ErrorBar(m_bottomPanel);
 
     SetCustomFonts();
 
-    wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
-    wxSizer *rightSizer = new wxBoxSizer(wxVERTICAL);
+    wxSizer *panelSizer = new wxBoxSizer(wxVERTICAL);
 
     wxFlexGridSizer *gridSizer = new wxFlexGridSizer(2);
     gridSizer->AddGrowableCol(1);
@@ -993,25 +967,16 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     gridSizer->SetItemMinSize(m_textOrig, 1, 1);
     gridSizer->SetItemMinSize(m_textOrigPlural, 1, 1);
 
-    leftSizer->Add(m_labelContext, 0, wxEXPAND | wxALL, 3);
-    leftSizer->Add(labelSource, 0, wxEXPAND | wxALL, 3);
-    leftSizer->Add(gridSizer, 1, wxEXPAND);
-    leftSizer->Add(labelTrans, 0, wxEXPAND | wxALL, 3);
-    leftSizer->Add(m_textTrans, 1, wxEXPAND);
-    leftSizer->Add(m_pluralNotebook, 1, wxEXPAND);
-    leftSizer->Add(m_errorBar, 0, wxEXPAND | wxALL, 2);
-    rightSizer->Add(m_labelComment, 0, wxEXPAND | wxALL, 3);
-    rightSizer->Add(m_textComment, 1, wxEXPAND);
+    panelSizer->Add(m_labelContext, 0, wxEXPAND | wxALL, 3);
+    panelSizer->Add(labelSource, 0, wxEXPAND | wxALL, 3);
+    panelSizer->Add(gridSizer, 1, wxEXPAND);
+    panelSizer->Add(labelTrans, 0, wxEXPAND | wxALL, 3);
+    panelSizer->Add(m_textTrans, 1, wxEXPAND);
+    panelSizer->Add(m_pluralNotebook, 1, wxEXPAND);
+    panelSizer->Add(m_errorBar, 0, wxEXPAND | wxALL, 2);
 
-    m_bottomLeftPanel->SetAutoLayout(true);
-    m_bottomLeftPanel->SetSizer(leftSizer);
-
-    m_bottomRightPanel->SetAutoLayout(true);
-    m_bottomRightPanel->SetSizer(rightSizer);
-
-    m_bottomSplitter->SetMinimumPaneSize(250);
-    m_bottomRightPanel->Show(false);
-    m_bottomSplitter->Initialize(m_bottomLeftPanel);
+    m_bottomPanel->SetAutoLayout(true);
+    m_bottomPanel->SetSizer(panelSizer);
 
     m_splitter->SetMinimumPaneSize(200);
 
@@ -1049,9 +1014,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
         if ( wxConfigBase::Get()->Read(WindowStatePath(this) + "maximized", long(0)) )
             m_setSashPositionsWhenMaximized = true;
 
-        m_splitter->SplitHorizontally(m_list, m_bottomSplitter, (int)wxConfigBase::Get()->Read("splitter", -250L));
-
-        UpdateDisplayCommentWin();
+        m_splitter->SplitHorizontally(m_list, m_bottomPanel, (int)wxConfigBase::Get()->Read("splitter", -250L));
     });
 
     return main;
@@ -1085,17 +1048,9 @@ void PoeditFrame::DestroyContentView()
     }
     m_textTransPlural.clear();
 
-    if (m_textComment)
-        m_textComment->PopEventHandler(true/*delete*/);
-
     if (m_list)
         m_list->CatalogChanged(NULL);
 
-    if (m_bottomSplitter && m_displayCommentWin)
-    {
-        wxConfigBase::Get()->Write("/bottom_splitter",
-                                   (long)m_bottomSplitter->GetSashPosition());
-    }
     if (m_splitter)
         wxConfigBase::Get()->Write("/splitter", (long)m_splitter->GetSashPosition());
 
@@ -1107,9 +1062,6 @@ void PoeditFrame::DestroyContentView()
     m_textTrans = nullptr;
     m_textOrig = nullptr;
     m_textOrigPlural = nullptr;
-    m_textComment = nullptr;
-
-    m_bottomSplitter = nullptr;
     m_splitter = nullptr;
 }
 
@@ -1126,7 +1078,6 @@ PoeditFrame::~PoeditFrame()
     cfg->SetPath("/");
 
     cfg->Write("display_lines", m_displayIDs);
-    cfg->Write("display_comment_win", m_displayCommentWin);
 
     SaveWindowState(this);
 
@@ -1727,7 +1678,6 @@ void PoeditFrame::UpdateAfterPreferencesChange()
     {
         SetCustomFonts();
         m_list->Refresh(); // if font changed
-        UpdateCommentWindowEditable();
         UpdateTextLanguage();
     }
 }
@@ -2073,13 +2023,6 @@ void PoeditFrame::OnIDsFlag(wxCommandEvent&)
 }
 
 
-
-void PoeditFrame::OnCommentWinFlag(wxCommandEvent&)
-{
-    UpdateDisplayCommentWin();
-}
-
-
 void PoeditFrame::OnCopyFromSource(wxCommandEvent&)
 {
     bool modified = false;
@@ -2126,7 +2069,7 @@ void PoeditFrame::OnFind(wxCommandEvent&)
     FindFrame *f = FindFrame::Get(m_list, m_catalog);
 
     if (!f)
-        f = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans, m_textComment);
+        f = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans);
     f->Show(true);
     f->Raise();
     f->FocusSearchField();
@@ -2389,9 +2332,6 @@ void PoeditFrame::UpdateToTextCtrl()
             wxString::Format("<b>%s</b> %s", prefix, EscapeMarkup(ctxt)));
     }
     m_labelContext->GetContainingSizer()->Show(m_labelContext, entry->HasContext());
-
-    if (m_displayCommentWin)
-        m_textComment->SetValue(t_c);
 
     if( entry->GetValidity() == CatalogItem::Val_Invalid )
         m_errorBar->ShowError(entry->GetErrorString());
@@ -2805,7 +2745,6 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_catproperties"), hasCatalog);
 
     menubar->Enable(XRCID("menu_ids"), editable);
-    menubar->Enable(XRCID("menu_comment_win"), editable);
 
     menubar->Enable(XRCID("sort_by_order"), editable);
     menubar->Enable(XRCID("sort_by_source"), editable);
@@ -2815,8 +2754,6 @@ void PoeditFrame::UpdateMenu()
 
     if (m_textTrans)
         m_textTrans->Enable(editable);
-    if (m_textComment)
-        m_textComment->Enable(editable);
     if (m_list)
         m_list->Enable(editable);
 
@@ -2959,7 +2896,8 @@ void PoeditFrame::OnEditComment(wxCommandEvent&)
             }
 
             // update comment window
-            m_textComment->SetValue(CommentDialog::RemoveStartHash(comment));
+            if (m_sidebar)
+                m_sidebar->RefreshContent();
         }
     });
 }
@@ -3239,7 +3177,6 @@ void PoeditFrame::SetCustomFonts()
             fi.FromString(name);
             wxFont font;
             font.SetNativeFontInfo(fi);
-            SetCtrlFont(m_textComment, font);
             SetCtrlFont(m_textOrig, font);
             SetCtrlFont(m_textOrigPlural, font);
             SetCtrlFont(m_textTrans, font);
@@ -3251,113 +3188,12 @@ void PoeditFrame::SetCustomFonts()
     else if (prevUseFontText)
     {
         wxFont font(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT));
-        SetCtrlFont(m_textComment, font);
         SetCtrlFont(m_textOrig, font);
         SetCtrlFont(m_textOrigPlural, font);
         SetCtrlFont(m_textTrans, font);
         for (size_t i = 0; i < m_textTransPlural.size(); i++)
             SetCtrlFont(m_textTransPlural[i], font);
         prevUseFontText = false;
-    }
-}
-
-void PoeditFrame::UpdateCommentWindowEditable()
-{
-    wxConfigBase *cfg = wxConfig::Get();
-    bool commentWindowEditable =
-        (bool)cfg->Read("comment_window_editable", (long)false);
-    if (m_textComment == NULL ||
-        commentWindowEditable != m_commentWindowEditable)
-    {
-        m_commentWindowEditable = commentWindowEditable;
-        m_bottomSplitter->Unsplit();
-
-        if (m_textComment)
-        {
-            m_textComment->PopEventHandler(true/*delete*/);
-            m_textComment->Destroy();
-        }
-
-        if (m_commentWindowEditable)
-        {
-            m_textComment = new CustomizedTextCtrl(m_bottomRightPanel,
-                                        ID_TEXTCOMMENT, wxEmptyString,
-                                        wxDefaultPosition, wxDefaultSize,
-                                        wxTE_MULTILINE | wxTE_RICH2);
-        }
-        else
-        {
-            m_textComment = new UnfocusableTextCtrl(m_bottomRightPanel,
-                                        ID_TEXTCOMMENT, wxEmptyString,
-                                        wxDefaultPosition, wxDefaultSize,
-                                        wxTE_MULTILINE | wxTE_RICH2 | wxTE_READONLY);
-        }
-        m_textComment->PushEventHandler(new TextctrlHandler(this));
-        UpdateDisplayCommentWin();
-    }
-}
-
-void PoeditFrame::UpdateDisplayCommentWin()
-{
-    m_displayCommentWin =
-        GetMenuBar()->IsChecked(XRCID("menu_comment_win"));
-
-    if (m_displayCommentWin)
-    {
-        m_bottomSplitter->SplitVertically(
-                m_bottomLeftPanel, m_bottomRightPanel,
-                (int)wxConfig::Get()->Read("bottom_splitter", -250L));
-        m_bottomRightPanel->Show(true);
-
-        // force recalculation of layout of panel so that text boxes take up
-        // all the space they can
-        // (sizer may be NULL on first call)
-        if (m_bottomRightPanel->GetSizer() != NULL)
-        {
-            m_bottomRightPanel->GetSizer()->Show(m_labelComment,
-                                                 m_displayCommentWin);
-            m_bottomRightPanel->GetSizer()->Show(m_textComment,
-                                                 m_displayCommentWin);
-
-            m_bottomRightPanel->GetSizer()->Layout();
-            m_bottomRightPanel->Layout();
-        }
-    }
-    else
-    {
-        if ( m_bottomSplitter->IsSplit() )
-        {
-            wxConfig::Get()->Write("bottom_splitter",
-                                   (long)m_bottomSplitter->GetSashPosition());
-        }
-        m_bottomRightPanel->Show(false);
-        m_bottomSplitter->Unsplit();
-    }
-    m_list->SetDisplayLines(m_displayIDs);
-    RefreshControls();
-}
-
-void PoeditFrame::OnCommentWindowText(wxCommandEvent&)
-{
-    if (!m_commentWindowEditable)
-        return;
-
-    CatalogItem *entry = GetCurrentItem();
-    wxCHECK_RET( entry, "no entry selected" );
-
-    wxString comment;
-    comment = CommentDialog::AddStartHash(m_textComment->GetValue());
-
-    if (comment == entry->GetComment())
-        return;
-
-    entry->SetComment(comment);
-    m_list->RefreshSelectedItems();
-
-    if (m_modified == false)
-    {
-        m_modified = true;
-        UpdateTitle();
     }
 }
 
@@ -3375,11 +3211,6 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
 
         // then set sash positions
         m_splitter->SetSashPosition((int)wxConfig::Get()->Read("splitter", 240L));
-        if ( m_bottomSplitter->IsSplit() )
-        {
-            m_bottomSplitter->SetSashPosition(
-                (int)wxConfig::Get()->Read("bottom_splitter", -250L));
-        }
     }
 }
 

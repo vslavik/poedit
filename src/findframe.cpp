@@ -54,14 +54,12 @@ FindFrame::FindFrame(wxWindow *parent,
                      PoeditListCtrl *list,
                      Catalog *c,
                      wxTextCtrl *textCtrlOrig,
-                     wxTextCtrl *textCtrlTrans,
-                     wxTextCtrl *textCtrlComments)
+                     wxTextCtrl *textCtrlTrans)
         : m_listCtrl(list),
           m_catalog(c),
           m_position(-1),
           m_textCtrlOrig(textCtrlOrig),
-          m_textCtrlTrans(textCtrlTrans),
-          m_textCtrlComments(textCtrlComments)
+          m_textCtrlTrans(textCtrlTrans)
 {
     wxXmlResource::Get()->LoadDialog(this, parent, "find_frame");
 
@@ -380,8 +378,6 @@ bool FindFrame::DoFind(int dir)
               txt = m_textCtrlTrans;
               break;
             case Found_InComments:
-              txt = m_textCtrlComments;
-              break;
             case Found_InAutoComments:
             case Found_Not:
               break;

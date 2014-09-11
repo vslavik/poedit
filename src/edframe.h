@@ -190,9 +190,6 @@ class PoeditFrame : public wxFrame
         /// Updates menu -- disables and enables items.
         void UpdateMenu();
 
-        /// Updates the editable nature of the comment window
-        void UpdateCommentWindowEditable();
-
         // Called when catalog's language possibly changed
         void UpdateTextLanguage();
 
@@ -242,14 +239,12 @@ private:
         void OnRightClick(wxCommandEvent& event);
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnIDsFlag(wxCommandEvent& event);
-        void OnCommentWinFlag(wxCommandEvent& event);
         void OnCopyFromSource(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
         void OnFindNext(wxCommandEvent& event);
         void OnFindPrev(wxCommandEvent& event);
         void OnEditComment(wxCommandEvent& event);
-        void OnCommentWindowText(wxCommandEvent& event);
         void OnSortByFileOrder(wxCommandEvent&);
         void OnSortBySource(wxCommandEvent&);
         void OnSortByTranslation(wxCommandEvent&);
@@ -280,9 +275,6 @@ private:
 
         void OnSize(wxSizeEvent& event);
 
-        // updates the status of both comment windows: Automatic and Translator's
-        void UpdateDisplayCommentWin();
-
         void ShowPluralFormUI(bool show = true);
 
         void RecreatePluralTextCtrls();
@@ -299,22 +291,18 @@ private:
         DECLARE_EVENT_TABLE()
 
     private:
-        bool m_commentWindowEditable;
         Catalog *m_catalog;
         wxString m_fileName;
         bool m_fileExistsOnDisk;
 
         TranslationMemory::Results m_autoTranslations;
 
-        wxPanel *m_bottomLeftPanel;
-        wxPanel *m_bottomRightPanel;
-        wxSplitterWindow *m_splitter, *m_bottomSplitter;
+        wxPanel *m_bottomPanel;
+        wxSplitterWindow *m_splitter;
         PoeditListCtrl *m_list;
-        wxStaticText *m_labelComment;
         wxStaticText *m_labelContext;
         ErrorBar *m_errorBar;
         SourceTextCtrl *m_textOrig, *m_textOrigPlural;
-        wxTextCtrl *m_textComment;
         TranslationTextCtrl *m_textTrans;
         std::vector<TranslationTextCtrl*> m_textTransPlural;
         TranslationTextCtrl *m_textTransSingularForm;
@@ -332,7 +320,6 @@ private:
         bool m_modified;
         bool m_hasObsoleteItems;
         bool m_displayIDs;
-        bool m_displayCommentWin;
         bool m_dontAutoclearFuzzyStatus;
         bool m_setSashPositionsWhenMaximized;
 

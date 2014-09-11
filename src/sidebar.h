@@ -53,11 +53,15 @@ public:
     /// Tell the sidebar there's multiple selection.
     void SetMultipleSelection();
 
+    /// Refreshes displayed content
+    void RefreshContent();
+
 private:
     CatalogItem *m_selectedItem;
 
     std::unique_ptr<SidebarBlock> m_oldMsgid;
     std::unique_ptr<SidebarBlock> m_autoComments;
+    std::unique_ptr<SidebarBlock> m_comment;
 
     wxSizer *m_blocksSizer;
 };
