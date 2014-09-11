@@ -909,6 +909,11 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     m_splitter = new wxSplitterWindow(main, -1,
                                       wxDefaultPosition, wxDefaultSize,
                                       SPLITTER_FLAGS);
+#ifdef __WXMSW__
+    m_splitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGED, &PoeditFrame::OnSplitterSashMoving, this);
+#else
+    m_splitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING, &PoeditFrame::OnSplitterSashMoving, this);
+#endif
 
     mainSizer->Add(m_splitter, wxSizerFlags(1).Expand());
 
@@ -1015,6 +1020,8 @@ wxWindow* PoeditFrame::CreateContentViewPO()
             m_setSashPositionsWhenMaximized = true;
 
         m_splitter->SplitHorizontally(m_list, m_bottomPanel, (int)wxConfigBase::Get()->Read("splitter", -250L));
+        if (m_sidebar)
+            m_sidebar->SetUpperHeight(m_splitter->GetSashPosition());
     });
 
     return main;
@@ -3352,6 +3359,15 @@ void PoeditFrame::OnListFocus(wxFocusEvent& event)
     else
         event.Skip();
 }
+
+void PoeditFrame::OnSplitterSashMoving(wxSplitterEvent& event)
+{
+    auto pos = event.GetSashPosition();
+    wxConfigBase::Get()->Write("/splitter", (long)pos);
+    if (m_sidebar)
+        m_sidebar->SetUpperHeight(pos);
+}
+
 
 void PoeditFrame::AddBookmarksMenu(wxMenu *parent)
 {

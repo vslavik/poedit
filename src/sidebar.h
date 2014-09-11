@@ -56,6 +56,9 @@ public:
     /// Refreshes displayed content
     void RefreshContent();
 
+    /// Set max height of the upper (not input-aligned) part.
+    void SetUpperHeight(int size);
+
 private:
     void OnPaint(wxPaintEvent&);
 
@@ -67,6 +70,7 @@ private:
     std::unique_ptr<SidebarBlock> m_comment;
 
     wxSizer *m_blocksSizer;
+    wxSizer *m_bottomBlocksSizer;
 };
 
 #endif // Poedit_sidebar_h

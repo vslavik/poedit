@@ -34,6 +34,7 @@
 #include <wx/windowptr.h>
 
 class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
+class WXDLLIMPEXP_FWD_CORE wxSplitterEvent;
 class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
 class WXDLLIMPEXP_FWD_CORE wxGauge;
 class WXDLLIMPEXP_FWD_CORE wxNotebook;
@@ -232,6 +233,7 @@ private:
         void OnListSel(wxListEvent& event);
         void OnListRightClick(wxMouseEvent& event);
         void OnListFocus(wxFocusEvent& event);
+        void OnSplitterSashMoving(wxSplitterEvent& event);
         void OnCloseWindow(wxCloseEvent& event);
         void OnReference(wxCommandEvent& event);
         void OnReferencesMenu(wxCommandEvent& event);

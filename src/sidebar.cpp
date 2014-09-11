@@ -226,16 +226,18 @@ Sidebar::Sidebar(wxWindow *parent)
     topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().DoubleBorder(wxTOP|wxBOTTOM));
 
     m_blocksSizer->AddStretchSpacer();
+    m_bottomBlocksSizer = new wxBoxSizer(wxVERTICAL);
+    m_blocksSizer->Add(m_bottomBlocksSizer, wxSizerFlags().Expand());
 
     /// TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
     m_oldMsgid.reset(new OldMsgidSidebarBlock(this, _("Previous source text:")));
-    m_blocksSizer->Add(m_oldMsgid->GetSizer(), wxSizerFlags().Expand());
+    m_bottomBlocksSizer->Add(m_oldMsgid->GetSizer(), wxSizerFlags().Expand());
 
     m_autoComments.reset(new AutoCommentSidebarBlock(this, _("Notes for translators:")));
-    m_blocksSizer->Add(m_autoComments->GetSizer(), wxSizerFlags().Expand());
+    m_bottomBlocksSizer->Add(m_autoComments->GetSizer(), wxSizerFlags().Expand());
 
     m_comment.reset(new CommentSidebarBlock(this, _("Comment:")));
-    m_blocksSizer->Add(m_comment->GetSizer(), wxSizerFlags().Expand());
+    m_bottomBlocksSizer->Add(m_comment->GetSizer(), wxSizerFlags().Expand());
 
     SetSizerAndFit(topSizer);
 
@@ -264,6 +266,18 @@ void Sidebar::RefreshContent()
     m_autoComments->SetItem(m_selectedItem);
     m_comment->SetItem(m_selectedItem);
 
+    Layout();
+}
+
+void Sidebar::SetUpperHeight(int size)
+{
+    int pos = GetSize().y - size;
+#ifdef __WXOSX__
+    pos += 4;
+#else
+    pos += 6;
+#endif
+    m_bottomBlocksSizer->SetMinSize(wxSize(-1, pos));
     Layout();
 }
 
