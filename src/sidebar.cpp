@@ -120,8 +120,9 @@ private:
 class OldMsgidSidebarBlock : public SidebarBlock
 {
 public:
-    OldMsgidSidebarBlock(wxWindow *parent, const wxString& label)
-        : SidebarBlock(parent, label)
+    OldMsgidSidebarBlock(wxWindow *parent)
+          /// TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+        : SidebarBlock(parent, _("Previous source text:"))
     {
         m_innerSizer->AddSpacer(2);
         m_innerSizer->Add(new ExplanationLabel(parent, _("The old source text (before it changed during an update) that the fuzzy translation corresponds to.")),
@@ -150,8 +151,8 @@ private:
 class AutoCommentSidebarBlock : public SidebarBlock
 {
 public:
-    AutoCommentSidebarBlock(wxWindow *parent, const wxString& label)
-        : SidebarBlock(parent, label)
+    AutoCommentSidebarBlock(wxWindow *parent)
+        : SidebarBlock(parent, _("Notes for translators:"))
     {
         m_innerSizer->AddSpacer(5);
         m_comment = new AutoWrappingText(parent, "");
@@ -183,8 +184,8 @@ private:
 class CommentSidebarBlock : public SidebarBlock
 {
 public:
-    CommentSidebarBlock(wxWindow *parent, const wxString& label)
-        : SidebarBlock(parent, label)
+    CommentSidebarBlock(wxWindow *parent)
+        : SidebarBlock(parent, _("Comment:"))
     {
         m_innerSizer->AddSpacer(5);
         m_comment = new AutoWrappingText(parent, "");
@@ -225,24 +226,31 @@ Sidebar::Sidebar(wxWindow *parent)
     m_blocksSizer = new wxBoxSizer(wxVERTICAL);
     topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().DoubleBorder(wxTOP|wxBOTTOM));
 
-    m_blocksSizer->AddStretchSpacer();
+    m_topBlocksSizer = new wxBoxSizer(wxVERTICAL);
     m_bottomBlocksSizer = new wxBoxSizer(wxVERTICAL);
+
+    m_blocksSizer->Add(m_topBlocksSizer, wxSizerFlags().Expand());
+    m_blocksSizer->AddStretchSpacer();
     m_blocksSizer->Add(m_bottomBlocksSizer, wxSizerFlags().Expand());
 
-    /// TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-    m_oldMsgid.reset(new OldMsgidSidebarBlock(this, _("Previous source text:")));
-    m_bottomBlocksSizer->Add(m_oldMsgid->GetSizer(), wxSizerFlags().Expand());
-
-    m_autoComments.reset(new AutoCommentSidebarBlock(this, _("Notes for translators:")));
-    m_bottomBlocksSizer->Add(m_autoComments->GetSizer(), wxSizerFlags().Expand());
-
-    m_comment.reset(new CommentSidebarBlock(this, _("Comment:")));
-    m_bottomBlocksSizer->Add(m_comment->GetSizer(), wxSizerFlags().Expand());
+    AddBlock(new OldMsgidSidebarBlock(this), Bottom);
+    AddBlock(new AutoCommentSidebarBlock(this), Bottom);
+    AddBlock(new CommentSidebarBlock(this), Bottom);
 
     SetSizerAndFit(topSizer);
 
     SetSelectedItem(nullptr);
 }
+
+
+void Sidebar::AddBlock(SidebarBlock *block, BlockPos pos)
+{
+    m_blocks.emplace_back(block);
+
+    auto sizer = (pos == Top) ? m_topBlocksSizer : m_bottomBlocksSizer;
+    sizer->Add(block->GetSizer(), wxSizerFlags().Expand());
+}
+
 
 Sidebar::~Sidebar()
 {
@@ -262,9 +270,8 @@ void Sidebar::SetMultipleSelection()
 
 void Sidebar::RefreshContent()
 {
-    m_oldMsgid->SetItem(m_selectedItem);
-    m_autoComments->SetItem(m_selectedItem);
-    m_comment->SetItem(m_selectedItem);
+    for (auto& b: m_blocks)
+        b->SetItem(m_selectedItem);
 
     Layout();
 }

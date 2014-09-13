@@ -27,6 +27,7 @@
 #define Poedit_sidebar_h
 
 #include <memory>
+#include <vector>
 
 #include <wx/panel.h>
 
@@ -60,17 +61,18 @@ public:
     void SetUpperHeight(int size);
 
 private:
+    enum BlockPos { Top, Bottom };
+    void AddBlock(SidebarBlock *block, BlockPos pos);
+
     void OnPaint(wxPaintEvent&);
 
 private:
     CatalogItem *m_selectedItem;
 
-    std::unique_ptr<SidebarBlock> m_oldMsgid;
-    std::unique_ptr<SidebarBlock> m_autoComments;
-    std::unique_ptr<SidebarBlock> m_comment;
+    std::vector<std::unique_ptr<SidebarBlock>> m_blocks;
 
     wxSizer *m_blocksSizer;
-    wxSizer *m_bottomBlocksSizer;
+    wxSizer *m_topBlocksSizer, *m_bottomBlocksSizer;
 };
 
 #endif // Poedit_sidebar_h
