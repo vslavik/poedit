@@ -87,6 +87,7 @@ class PoeditApp : public wxApp
         void InstallOpenRecentMenu(wxMenuBar *bar);
         void OnIdleInstallOpenRecentMenu(wxIdleEvent& event);
         virtual void OSXOnWillFinishLaunching();
+        void OnCloseWindowCommand(wxCommandEvent& event);
 #endif
 
     protected:

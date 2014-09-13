@@ -621,8 +621,8 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
 #endif // __WXMSW__
 #ifndef __WXOSX__
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
-#endif
    EVT_MENU           (wxID_CLOSE,                PoeditFrame::OnCloseCmd)
+#endif
    EVT_MENU           (wxID_SAVE,                 PoeditFrame::OnSave)
    EVT_MENU           (wxID_SAVEAS,               PoeditFrame::OnSaveAs)
    EVT_MENU           (XRCID("menu_compile_mo"),  PoeditFrame::OnCompileMO)
@@ -1258,10 +1258,12 @@ void PoeditFrame::UpdateTextLanguage()
 }
 
 
+#ifndef __WXOSX__
 void PoeditFrame::OnCloseCmd(wxCommandEvent&)
 {
     Close();
 }
+#endif
 
 
 void PoeditFrame::OpenFile(const wxString& filename)

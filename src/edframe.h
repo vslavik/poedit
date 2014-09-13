@@ -221,9 +221,9 @@ public: // for PoeditApp
         void OnOpen(wxCommandEvent& event);
 #ifndef __WXOSX__
         void OnOpenHist(wxCommandEvent& event);
+        void OnCloseCmd(wxCommandEvent& event);
 #endif
 private:
-        void OnCloseCmd(wxCommandEvent& event);
         void OnSave(wxCommandEvent& event);
         void OnSaveAs(wxCommandEvent& event);
         wxString GetSaveAsFilename(Catalog *cat, const wxString& current);

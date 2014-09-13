@@ -597,6 +597,7 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (XRCID("menu_check_for_updates"), PoeditApp::OnWinsparkleCheck)
 #endif
 #ifdef __WXOSX__
+   EVT_MENU           (wxID_CLOSE, PoeditApp::OnCloseWindowCommand)
    EVT_IDLE           (PoeditApp::OnIdleInstallOpenRecentMenu)
 #endif
 END_EVENT_TABLE()
@@ -949,6 +950,19 @@ void PoeditApp::OSXOnWillFinishLaunching()
     CreateFakeOpenRecentMenu();
 }
 
+// Handle Cmd+W closure of windows globally here
+void PoeditApp::OnCloseWindowCommand(wxCommandEvent&)
+{
+    for (auto w: wxTopLevelWindows)
+    {
+        auto tlw = dynamic_cast<wxTopLevelWindow*>(w);
+        if (tlw && tlw->IsActive())
+        {
+            tlw->Close();
+            break;
+        }
+    }
+}
 
 #endif // __WXOSX__
 
