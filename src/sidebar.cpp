@@ -75,10 +75,13 @@ public:
     {
         m_sizer = new wxBoxSizer(wxVERTICAL);
         m_sizer->AddSpacer(15);
-        m_sizer->Add(new SidebarSeparator(parent),
-                     wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT, 2));
-        m_sizer->Add(new HeadingLabel(parent, label),
-                     wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
+        if (!label.empty())
+        {
+            m_sizer->Add(new SidebarSeparator(parent),
+                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT, 2));
+            m_sizer->Add(new HeadingLabel(parent, label),
+                         wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
+        }
         m_innerSizer = new wxBoxSizer(wxVERTICAL);
         m_sizer->Add(m_innerSizer, wxSizerFlags(1).Expand().DoubleBorder(wxLEFT|wxRIGHT));
     }
@@ -108,6 +111,8 @@ public:
     virtual bool ShouldShowForItem(CatalogItem *item) const = 0;
 
     virtual void Update(CatalogItem *item) = 0;
+
+    virtual bool IsGrowable() const { return false; }
 
 protected:
     wxSizer *m_innerSizer;
@@ -209,6 +214,42 @@ private:
 };
 
 
+class AddCommentSidebarBlock : public SidebarBlock
+{
+public:
+    AddCommentSidebarBlock(wxWindow *parent) : SidebarBlock(parent, "")
+    {
+    #ifdef __WXMSW__
+        auto label = _("Add comment");
+    #else
+        auto label = _("Add Comment");
+    #endif
+        m_btn = new wxButton(parent, XRCID("menu_comment"), _("Add Comment"));
+        m_innerSizer->AddStretchSpacer();
+        m_innerSizer->Add(m_btn, wxSizerFlags().Right());
+    }
+
+    virtual bool IsGrowable() const { return true; }
+
+    virtual bool ShouldShowForItem(CatalogItem*) const { return true; }
+
+    void Update(CatalogItem *item) override
+    {
+    #ifdef __WXMSW__
+        auto add = _("Add comment");
+        auto edit = _("Edit comment");
+    #else
+        auto add = _("Add Comment");
+        auto edit = _("Edit Comment");
+    #endif
+        m_btn->SetLabel(item->HasComment() ? edit : add);
+    }
+
+private:
+    wxButton *m_btn;
+};
+
+
 
 Sidebar::Sidebar(wxWindow *parent)
     : wxPanel(parent, wxID_ANY),
@@ -236,6 +277,7 @@ Sidebar::Sidebar(wxWindow *parent)
     AddBlock(new OldMsgidSidebarBlock(this), Bottom);
     AddBlock(new AutoCommentSidebarBlock(this), Bottom);
     AddBlock(new CommentSidebarBlock(this), Bottom);
+    AddBlock(new AddCommentSidebarBlock(this), Bottom);
 
     SetSizerAndFit(topSizer);
 
@@ -248,7 +290,8 @@ void Sidebar::AddBlock(SidebarBlock *block, BlockPos pos)
     m_blocks.emplace_back(block);
 
     auto sizer = (pos == Top) ? m_topBlocksSizer : m_bottomBlocksSizer;
-    sizer->Add(block->GetSizer(), wxSizerFlags().Expand());
+    auto grow = (block->IsGrowable()) ? 1 : 0;
+    sizer->Add(block->GetSizer(), wxSizerFlags(grow).Expand());
 }
 
 
