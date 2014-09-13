@@ -2969,7 +2969,7 @@ void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
     else
     {
         msg = _("No entries could be filled from the translation memory.");
-        details = _("The TM doesn’t contain any strings similar to the content of this file. "
+        details = _(L"The TM doesn’t contain any strings similar to the content of this file. "
                     "It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually.");
     }
 
