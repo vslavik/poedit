@@ -35,6 +35,9 @@
 CommentDialog::CommentDialog(wxWindow *parent, const wxString& comment) : wxDialog()
 {
     wxXmlResource::Get()->LoadDialog(this, parent, "comment_dlg");
+#ifndef __WXOSX__
+    CenterOnParent();
+#endif
     m_text = XRCCTRL(*this, "comment", wxTextCtrl);
 
     m_text->SetValue(RemoveStartHash(comment));

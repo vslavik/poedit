@@ -2874,12 +2874,23 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
 }
 
 
-void PoeditFrame::OnEditComment(wxCommandEvent&)
+void PoeditFrame::OnEditComment(wxCommandEvent& event)
 {
     CatalogItem *firstItem = GetCurrentItem();
     wxCHECK_RET( firstItem, "no entry selected" );
 
-    wxWindowPtr<CommentDialog> dlg(new CommentDialog(this, firstItem->GetComment()));
+    (void)event;
+    wxWindow *parent = this;
+#ifndef __WXOSX__
+    // Find suitable parent window for the comment dialog (e.g. the button):
+    parent = dynamic_cast<wxWindow*>(event.GetEventObject());
+    if (parent && dynamic_cast<wxToolBar*>(parent) != nullptr)
+        parent = nullptr;
+    if (!parent)
+        parent = this;
+#endif
+
+    wxWindowPtr<CommentDialog> dlg(new CommentDialog(parent, firstItem->GetComment()));
 
     dlg->ShowWindowModalThenDo([=](int retcode){
         if (retcode == wxID_OK)
