@@ -411,8 +411,8 @@ protected:
                                  NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)
                                };
         NSData *data = [text dataFromRange:NSMakeRange(0, [text length]) documentAttributes:attrs error:nil];
-        if (data)
-            return wxString::FromUTF8Unchecked((const char*)[data bytes], [data length]);
+        if (data && [data length] > 0)
+            return wxString::FromUTF8((const char*)[data bytes], [data length]);
         else
             return wxTextCtrl::DoGetValue();
     }
