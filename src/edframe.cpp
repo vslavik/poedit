@@ -355,7 +355,7 @@ END_EVENT_TABLE()
 // user input and performs some user input processing, such as autocorrections.
 // We need to avoid this, because Poedit's text control is filled with data
 // when moving in the list control: https://github.com/vslavik/poedit/issues/81
-// Solve this by using a customized control with overriden DoSetValue().
+// Solve this by using a customized control with overridden DoSetValue().
 class CustomizedTextCtrl : public wxTextCtrl
 {
 public:
