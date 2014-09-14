@@ -2415,7 +2415,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
     m_modified = false;
 
     RecreatePluralTextCtrls();
-    RefreshControls();
+    RefreshControls(Refresh_NoCatalogChanged /*done right above*/);
     UpdateTitle();
     UpdateTextLanguage();
 
@@ -2575,7 +2575,7 @@ void PoeditFrame::NoteAsRecentFile()
 }
 
 
-void PoeditFrame::RefreshControls()
+void PoeditFrame::RefreshControls(int flags)
 {
     if (!m_catalog)
         return;
@@ -2601,7 +2601,8 @@ void PoeditFrame::RefreshControls()
     if (m_list)
     {
         // update catalog view, this may involve reordering the items...
-        m_list->CatalogChanged(m_catalog);
+        if (!(flags & Refresh_NoCatalogChanged))
+            m_list->CatalogChanged(m_catalog);
 
         FindFrame *f = FindFrame::Get(m_list, m_catalog);
         if (f)
