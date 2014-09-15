@@ -299,7 +299,7 @@ private:
         wxString m_fileName;
         bool m_fileExistsOnDisk;
 
-        TranslationMemory::Results m_autoTranslations;
+        SuggestionsList m_autoTranslations;
 
         wxPanel *m_bottomPanel;
         wxSplitterWindow *m_splitter;

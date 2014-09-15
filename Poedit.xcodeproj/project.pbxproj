@@ -31,6 +31,7 @@
 		B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* language.cpp */; };
 		B23D1F7118142D1900E6B212 /* dump_legacy_tm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */; };
 		B23D1F731814470200E6B212 /* dump-legacy-tm in Copy Auxiliary Binaries */ = {isa = PBXBuildFile; fileRef = B23D1F6418142CF400E6B212 /* dump-legacy-tm */; };
+		B240FFC719C6F1A600777AFE /* suggestions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B240FFC619C6F1A600777AFE /* suggestions.cpp */; };
 		B24ACD5F16F6201F00399242 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B24ACD5E16F6201F00399242 /* Cocoa.framework */; };
 		B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD6716F6201F00399242 /* InfoPlist.strings */; };
 		B24ACD8416F6263900399242 /* Poedit.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD8316F6263900399242 /* Poedit.iconset */; };
@@ -234,8 +235,11 @@
 		B22A5C8918508F1F0034BEFD /* logcapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logcapture.h; sourceTree = "<group>"; };
 		B22C5F0817DDC67400ECAFD1 /* language.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = language.cpp; sourceTree = "<group>"; };
 		B22C5F0917DDC67400ECAFD1 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
+		B233D46A19C9C7FA0073A3EC /* ThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThreadPool.h; path = tm/ThreadPool.h; sourceTree = "<group>"; };
 		B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dump_legacy_tm.cpp; path = tm/dump_legacy_tm.cpp; sourceTree = "<group>"; };
 		B23D1F6418142CF400E6B212 /* dump-legacy-tm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "dump-legacy-tm"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B240FFC519C6E32900777AFE /* suggestions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = suggestions.h; path = tm/suggestions.h; sourceTree = "<group>"; };
+		B240FFC619C6F1A600777AFE /* suggestions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = suggestions.cpp; path = tm/suggestions.cpp; sourceTree = "<group>"; };
 		B248B2DE170D765100EBA58E /* GettextTools.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GettextTools.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B248B2DF170D765100EBA58E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		B248B2E3170D765100EBA58E /* GettextTools-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GettextTools-Info.plist"; path = "macosx/GettextTools-Info.plist"; sourceTree = "<group>"; };
@@ -482,8 +486,11 @@
 		B23D1F5B1814279D00E6B212 /* TM */ = {
 			isa = PBXGroup;
 			children = (
+				B240FFC519C6E32900777AFE /* suggestions.h */,
+				B240FFC619C6F1A600777AFE /* suggestions.cpp */,
 				B28F1CD916F629D30018AF7E /* transmem.h */,
 				B28F1CD816F629D30018AF7E /* transmem.cpp */,
+				B233D46A19C9C7FA0073A3EC /* ThreadPool.h */,
 				B2F14DD3181E510100E212B5 /* tm_migrate.cpp */,
 				B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */,
 			);
@@ -1054,6 +1061,7 @@
 				B28F1CF216F629D30018AF7E /* gexecute.cpp in Sources */,
 				B28F1CF516F629D30018AF7E /* manager.cpp in Sources */,
 				B28F1CF616F629D30018AF7E /* osx_helpers.m in Sources */,
+				B240FFC719C6F1A600777AFE /* suggestions.cpp in Sources */,
 				B28F1CF716F629D30018AF7E /* extractor.cpp in Sources */,
 				B28F1CF816F629D30018AF7E /* prefsdlg.cpp in Sources */,
 				B28F1CF916F629D30018AF7E /* progressinfo.cpp in Sources */,

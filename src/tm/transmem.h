@@ -30,6 +30,8 @@
 #include <vector>
 #include <memory>
 
+#include "suggestions.h"
+
 class Catalog;
 class TranslationMemoryImpl;
 
@@ -38,44 +40,35 @@ class TranslationMemoryImpl;
     
     All methods may throw Exception.
  */
-class TranslationMemory
+class TranslationMemory : public SuggestionsBackend
 {
 public:
     /// Return singleton instance of the TM.
     static TranslationMemory& Get();
 
-    /// Destroys the singleton, should be called on app shutdown.
+    /// Destroys the singleton, must be called (omly) on app shutdown.
     static void CleanUp();
-
-    /// Result of TM search
-    struct Result
-    {
-        /// Text of the suggested translation
-        std::wstring text;
-
-        /// Quality score (1.0 = exact match, 0 = no score assigned)
-        double score;
-
-        bool HasScore() const { return score != 0.0; }
-        bool IsExactMatch() const { return score == 1.0; }
-    };
-    typedef std::vector<Result> Results;
 
     /**
         Search translation memory for similar strings.
         
         @param lang    Language of the desired translation.
         @param source  Source text.
-        @param results Array to store any results into.
         @param maxHits Maximum number of requested hits; -1 leaves the
                        decision to the function.
                        
-        @return true if any hits were found, false otherwise.
+        @return List of hits that were found, possibly empty.
      */
-    bool Search(const std::string& lang,
-                const std::wstring& source,
-                Results& results,
-                int maxHits = -1);
+    SuggestionsList Search(const std::string& lang,
+                           const std::wstring& source,
+                           int maxHits = -1);
+
+    /// SuggestionsBackend API implementation:
+    void SuggestTranslation(const std::string& lang,
+                            const std::wstring& source,
+                            int maxHits,
+                            success_func_type onSuccess,
+                            error_func_type onError) override;
 
     /**
         Performs updates to the translation memory.

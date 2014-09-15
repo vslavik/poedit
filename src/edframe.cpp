@@ -3030,8 +3030,8 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
                 continue; // can't handle yet (TODO?)
             if (dt.IsFuzzy() || !dt.IsTranslated())
             {
-                TranslationMemory::Results results;
-                if (tm.Search(langcode, dt.GetString().ToStdWstring(), results, 1))
+                auto results = tm.Search(langcode, dt.GetString().ToStdWstring(), 1);
+                if (!results.empty())
                 {
                     dt.SetTranslation(results[0].text);
                     dt.SetAutomatic(true);
@@ -3094,7 +3094,8 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
         wxBusyCursor bcur;
         CatalogItem& dt = (*m_catalog)[item];
         std::string langcode(m_catalog->GetLanguage().Code());
-        if (TranslationMemory::Get().Search(langcode, dt.GetString().ToStdWstring(), m_autoTranslations))
+        m_autoTranslations = TranslationMemory::Get().Search(langcode, dt.GetString().ToStdWstring());
+        if (!m_autoTranslations.empty())
         {
             menu->AppendSeparator();
             wxMenuItem *it2 = new wxMenuItem

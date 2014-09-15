@@ -83,8 +83,6 @@ class TranslationMemoryImpl
 public:
     static const int DEFAULT_MAXHITS = 10;
 
-    typedef TranslationMemory::Results Results;
-
 #ifdef __WXMSW__
     typedef SimpleFSDirectory DirectoryType;
 #else
@@ -96,10 +94,9 @@ public:
           m_analyzer(newLucene<StandardAnalyzer>(LuceneVersion::LUCENE_CURRENT))
     {}
 
-    bool Search(const std::string& lang,
-                const std::wstring& source,
-                Results& results,
-                int maxHits = -1);
+    SuggestionsList Search(const std::string& lang,
+                           const std::wstring& source,
+                           int maxHits = -1);
 
     std::shared_ptr<TranslationMemory::Writer> CreateWriter();
 
@@ -161,10 +158,10 @@ static const double QUALITY_THRESHOLD = 0.6;
 static const int MAX_ALLOWED_LENGTH_DIFFERENCE = 2;
 
 
-bool ContainsResult(const TranslationMemory::Results& all, const std::wstring& r)
+bool ContainsResult(const SuggestionsList& all, const std::wstring& r)
 {
     auto found = std::find_if(all.begin(), all.end(),
-                              [&r](const TranslationMemory::Result& x){ return x.text == r; });
+                              [&r](const Suggestion& x){ return x.text == r; });
     return found != all.end();
 }
 
@@ -209,7 +206,7 @@ void PerformSearch(IndexSearcherPtr searcher,
                    const Lucene::String& lang,
                    const std::wstring& exactSourceText,
                    QueryPtr query,
-                   TranslationMemory::Results& results,
+                   SuggestionsList& results,
                    int maxHits,
                    double scoreThreshold,
                    double scoreScaling)
@@ -223,7 +220,7 @@ void PerformSearch(IndexSearcherPtr searcher,
             auto t = doc->get(L"trans");
             if (!ContainsResult(results, t))
             {
-                TranslationMemory::Result r {t, score};
+                Suggestion r {t, score};
                 results.push_back(r);
             }
         }
@@ -232,10 +229,9 @@ void PerformSearch(IndexSearcherPtr searcher,
 
 } // anonymous namespace
 
-bool TranslationMemoryImpl::Search(const std::string& lang,
-                                   const std::wstring& source,
-                                   Results& results,
-                                   int maxHits)
+SuggestionsList TranslationMemoryImpl::Search(const std::string& lang,
+                                              const std::wstring& source,
+                                              int maxHits)
 {
     try
     {
@@ -244,7 +240,7 @@ bool TranslationMemoryImpl::Search(const std::string& lang,
         if (maxHits <= 0)
             maxHits = DEFAULT_MAXHITS;
 
-        results.clear();
+        SuggestionsList results;
 
         const Lucene::String sourceField(L"source");
         auto boolQ = newLucene<BooleanQuery>();
@@ -267,7 +263,7 @@ bool TranslationMemoryImpl::Search(const std::string& lang,
         PerformSearch(searcher, llang, source, phraseQ, results, maxHits,
                       /*scoreThreshold=*/1.0, /*scoreScaling=*/1.0);
         if (!results.empty())
-            return true;
+            return results;
 
         // Then, if no matches were found, permit being a bit sloppy:
         phraseQ->setSlop(1);
@@ -275,7 +271,7 @@ bool TranslationMemoryImpl::Search(const std::string& lang,
                       /*scoreThreshold=*/1.0, /*scoreScaling=*/0.9);
 
         if (!results.empty())
-            return true;
+            return results;
 
         // As the last resort, try terms search. This will almost certainly
         // produce low-quality results, but hopefully better than nothing.
@@ -296,17 +292,17 @@ bool TranslationMemoryImpl::Search(const std::string& lang,
                 if (std::abs(tokensCount2 - sourceTokensCount) <= MAX_ALLOWED_LENGTH_DIFFERENCE &&
                     !ContainsResult(results, t))
                 {
-                    TranslationMemory::Result r {t, score};
+                    Suggestion r {t, score};
                     results.push_back(r);
                 }
             }
         );
 
-        return !results.empty();
+        return results;
     }
     catch (LuceneException&)
     {
-        return false;
+        return SuggestionsList();
     }
 }
 
@@ -474,12 +470,27 @@ TranslationMemory::~TranslationMemory() { delete m_impl; }
 // public API
 // ----------------------------------------------------------------
 
-bool TranslationMemory::Search(const std::string& lang,
-                               const std::wstring& source,
-                               Results& results,
-                               int maxHits)
+SuggestionsList TranslationMemory::Search(const std::string& lang,
+                                          const std::wstring& source,
+                                          int maxHits)
 {
-    return m_impl->Search(lang, source, results, maxHits);
+    return m_impl->Search(lang, source, maxHits);
+}
+
+void TranslationMemory::SuggestTranslation(const std::string& lang,
+                                           const std::wstring& source,
+                                           int maxHits,
+                                           success_func_type onSuccess,
+                                           error_func_type onError)
+{
+    try
+    {
+        onSuccess(Search(lang, source, maxHits));
+    }
+    catch (...)
+    {
+        onError(std::current_exception());
+    }
 }
 
 std::shared_ptr<TranslationMemory::Writer> TranslationMemory::CreateWriter()
