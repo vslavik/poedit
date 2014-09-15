@@ -47,7 +47,19 @@ public:
     /// Destroys the singleton, should be called on app shutdown.
     static void CleanUp();
 
-    typedef std::vector<std::wstring> Results;
+    /// Result of TM search
+    struct Result
+    {
+        /// Text of the suggested translation
+        std::wstring text;
+
+        /// Quality score (1.0 = exact match, 0 = no score assigned)
+        double score;
+
+        bool HasScore() const { return score != 0.0; }
+        bool IsExactMatch() const { return score == 1.0; }
+    };
+    typedef std::vector<Result> Results;
 
     /**
         Search translation memory for similar strings.

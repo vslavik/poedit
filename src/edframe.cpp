@@ -2951,7 +2951,7 @@ void PoeditFrame::OnAutoTranslate(wxCommandEvent& event)
 
     int ind = event.GetId() - ID_POPUP_TRANS;
 
-    entry->SetTranslation(m_autoTranslations[ind]);
+    entry->SetTranslation(m_autoTranslations[ind].text);
     entry->SetFuzzy(false);
     entry->SetModified(true);
 
@@ -3033,7 +3033,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
                 TranslationMemory::Results results;
                 if (tm.Search(langcode, dt.GetString().ToStdWstring(), results, 1))
                 {
-                    dt.SetTranslation(results[0]);
+                    dt.SetTranslation(results[0].text);
                     dt.SetAutomatic(true);
                     dt.SetFuzzy(true);
                     matches++;
@@ -3119,7 +3119,7 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
             {
                 wxString s;
                 // TRANSLATORS: Quoted text with leading 4 spaces
-                s.Printf(_(L"    “%s”"), m_autoTranslations[i]);
+                s.Printf(_(L"    “%s”"), m_autoTranslations[i].text);
                 s.Replace("&", "&&");
                 menu->Append(ID_POPUP_TRANS + int(i), s);
             }

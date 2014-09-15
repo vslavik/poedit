@@ -161,12 +161,21 @@ static const double QUALITY_THRESHOLD = 0.6;
 static const int MAX_ALLOWED_LENGTH_DIFFERENCE = 2;
 
 
+bool ContainsResult(const TranslationMemory::Results& all, const std::wstring& r)
+{
+    auto found = std::find_if(all.begin(), all.end(),
+                              [&r](const TranslationMemory::Result& x){ return x.text == r; });
+    return found != all.end();
+}
+
 template<typename T>
 void PerformSearchWithBlock(IndexSearcherPtr searcher,
                             const Lucene::String& lang,
+                            const std::wstring& exactSourceText,
                             QueryPtr query,
                             int maxHits,
-                            double threshold,
+                            double scoreThreshold,
+                            double scoreScaling,
                             T callback)
 {
     // TODO: use short form of the language too (cs vs cs_CZ), boost the
@@ -182,26 +191,41 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
     {
         const auto& scoreDoc = hits->scoreDocs[i];
         auto score = scoreDoc->score / hits->maxScore;
-        if (score < threshold)
+        if (score < scoreThreshold)
             continue;
-        callback(searcher->doc(scoreDoc->doc));
+
+        auto doc = searcher->doc(scoreDoc->doc);
+        auto src = doc->get(L"source");
+        if (src == exactSourceText)
+            score = 1.0;
+        else if (score == 1.0)
+            score = 0.95; // can't score non-exact thing as 100%
+
+        callback(doc, score * scoreScaling);
     }
 }
 
 void PerformSearch(IndexSearcherPtr searcher,
                    const Lucene::String& lang,
+                   const std::wstring& exactSourceText,
                    QueryPtr query,
-                   TranslationMemory::Results& results, int maxHits,
-                   double threshold = 1.0)
+                   TranslationMemory::Results& results,
+                   int maxHits,
+                   double scoreThreshold,
+                   double scoreScaling)
 {
     PerformSearchWithBlock
     (
-        searcher, lang, query, maxHits, threshold,
-        [&results](DocumentPtr doc)
+        searcher, lang, exactSourceText, query, maxHits,
+        scoreThreshold, scoreScaling,
+        [&results](DocumentPtr doc, double score)
         {
             auto t = doc->get(L"trans");
-            if (std::find(results.begin(), results.end(), t) == results.end())
-                results.push_back(t);
+            if (!ContainsResult(results, t))
+            {
+                TranslationMemory::Result r {t, score};
+                results.push_back(r);
+            }
         }
     );
 }
@@ -222,17 +246,17 @@ bool TranslationMemoryImpl::Search(const std::string& lang,
 
         results.clear();
 
-        const Lucene::String fieldName(L"source");
+        const Lucene::String sourceField(L"source");
         auto boolQ = newLucene<BooleanQuery>();
         auto phraseQ = newLucene<PhraseQuery>();
 
-        auto stream = m_analyzer->tokenStream(fieldName, newLucene<StringReader>(source));
+        auto stream = m_analyzer->tokenStream(sourceField, newLucene<StringReader>(source));
         int sourceTokensCount = 0;
         while (stream->incrementToken())
         {
             sourceTokensCount++;
             auto word = stream->getAttribute<TermAttribute>()->term();
-            auto term = newLucene<Term>(fieldName, word);
+            auto term = newLucene<Term>(sourceField, word);
             boolQ->add(newLucene<TermQuery>(term), BooleanClause::SHOULD);
             phraseQ->add(term);
         }
@@ -240,13 +264,16 @@ bool TranslationMemoryImpl::Search(const std::string& lang,
         auto searcher = newLucene<IndexSearcher>(Reader());
 
         // Try exact phrase first:
-        PerformSearch(searcher, llang, phraseQ, results, maxHits);
+        PerformSearch(searcher, llang, source, phraseQ, results, maxHits,
+                      /*scoreThreshold=*/1.0, /*scoreScaling=*/1.0);
         if (!results.empty())
             return true;
 
         // Then, if no matches were found, permit being a bit sloppy:
         phraseQ->setSlop(1);
-        PerformSearch(searcher, llang, phraseQ, results, maxHits);
+        PerformSearch(searcher, llang, source, phraseQ, results, maxHits,
+                      /*scoreThreshold=*/1.0, /*scoreScaling=*/0.9);
+
         if (!results.empty())
             return true;
 
@@ -255,20 +282,22 @@ bool TranslationMemoryImpl::Search(const std::string& lang,
         boolQ->setMinimumNumberShouldMatch(std::max(1, boolQ->getClauses().size() - MAX_ALLOWED_LENGTH_DIFFERENCE));
         PerformSearchWithBlock
         (
-            searcher, llang, boolQ, maxHits, QUALITY_THRESHOLD,
-            [=,&results](DocumentPtr doc)
+            searcher, llang, source, boolQ, maxHits,
+            QUALITY_THRESHOLD, /*scoreScaling=*/0.8,
+            [=,&results](DocumentPtr doc, double score)
             {
-                auto s = doc->get(fieldName);
+                auto s = doc->get(sourceField);
                 auto t = doc->get(L"trans");
-                auto stream2 = m_analyzer->tokenStream(fieldName, newLucene<StringReader>(s));
+                auto stream2 = m_analyzer->tokenStream(sourceField, newLucene<StringReader>(s));
                 int tokensCount2 = 0;
                 while (stream2->incrementToken())
                     tokensCount2++;
 
                 if (std::abs(tokensCount2 - sourceTokensCount) <= MAX_ALLOWED_LENGTH_DIFFERENCE &&
-                    std::find(results.begin(), results.end(), t) == results.end())
+                    !ContainsResult(results, t))
                 {
-                    results.push_back(t);
+                    TranslationMemory::Result r {t, score};
+                    results.push_back(r);
                 }
             }
         );
