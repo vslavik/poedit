@@ -442,18 +442,18 @@ std::shared_ptr<TranslationMemory::Writer> TranslationMemoryImpl::CreateWriter()
 // Singleton management
 // ----------------------------------------------------------------
 
+static std::once_flag initializationFlag;
 TranslationMemory *TranslationMemory::ms_instance = nullptr;
 
 TranslationMemory& TranslationMemory::Get()
 {
-    if (!ms_instance)
-    {
+    std::call_once(initializationFlag, []() {
         try
         {
             ms_instance = new TranslationMemory;
         }
         CATCH_AND_RETHROW_EXCEPTION
-    }
+    });
     return *ms_instance;
 }
 
