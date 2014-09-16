@@ -1854,7 +1854,7 @@ static inline wxString ItemMergeSummary(const CatalogItem& item)
     if ( item.HasPlural() )
         s += "|" + item.GetPluralString();
     if ( item.HasContext() )
-        s += wxString::Format("%s [%s]", s.c_str(), item.GetContext().c_str());
+        s += wxString::Format(" [%s]", item.GetContext());
 
     return s;
 }
