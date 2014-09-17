@@ -68,58 +68,39 @@ private:
 };
 
 
-class SidebarBlock
+SidebarBlock::SidebarBlock(wxWindow *parent, const wxString& label)
 {
-public:
-    SidebarBlock(wxWindow *parent, const wxString& label)
+    m_sizer = new wxBoxSizer(wxVERTICAL);
+    m_sizer->AddSpacer(15);
+    if (!label.empty())
     {
-        m_sizer = new wxBoxSizer(wxVERTICAL);
-        m_sizer->AddSpacer(15);
-        if (!label.empty())
-        {
-            m_sizer->Add(new SidebarSeparator(parent),
-                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT, 2));
-            m_sizer->Add(new HeadingLabel(parent, label),
-                         wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
-        }
-        m_innerSizer = new wxBoxSizer(wxVERTICAL);
-        m_sizer->Add(m_innerSizer, wxSizerFlags(1).Expand().DoubleBorder(wxLEFT|wxRIGHT));
+        m_sizer->Add(new SidebarSeparator(parent),
+                     wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT, 2));
+        m_sizer->Add(new HeadingLabel(parent, label),
+                     wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
     }
-    virtual ~SidebarBlock() {}
+    m_innerSizer = new wxBoxSizer(wxVERTICAL);
+    m_sizer->Add(m_innerSizer, wxSizerFlags(1).Expand().DoubleBorder(wxLEFT|wxRIGHT));
+}
 
-    wxSizer *GetSizer() const { return m_sizer; }
+void SidebarBlock::Show(bool show)
+{
+    m_sizer->ShowItems(show);
+}
 
-    void Show(bool show)
+void SidebarBlock::SetItem(CatalogItem *item)
+{
+    if (!item)
     {
-        m_sizer->ShowItems(show);
-    }
-
-    void SetItem(CatalogItem *item)
-    {
-        if (!item)
-        {
-            Show(false);
-            return;
-        }
-
-        bool use = ShouldShowForItem(item);
-        if (use)
-            Update(item);
-        Show(use);
+        Show(false);
+        return;
     }
 
-    virtual bool ShouldShowForItem(CatalogItem *item) const = 0;
-
-    virtual void Update(CatalogItem *item) = 0;
-
-    virtual bool IsGrowable() const { return false; }
-
-protected:
-    wxSizer *m_innerSizer;
-private:
-    wxSizer *m_sizer;
-};
-
+    bool use = ShouldShowForItem(item);
+    if (use)
+        Update(item);
+    Show(use);
+}
 
 
 class OldMsgidSidebarBlock : public SidebarBlock

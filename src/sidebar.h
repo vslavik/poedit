@@ -35,7 +35,33 @@ class WXDLLIMPEXP_CORE wxSizer;
 class WXDLLIMPEXP_CORE wxStaticText;
 
 class CatalogItem;
-class SidebarBlock;
+
+
+/// Implements part of the sidebar.
+class SidebarBlock
+{
+public:
+    SidebarBlock(wxWindow *parent, const wxString& label);
+    virtual ~SidebarBlock() {}
+
+    wxSizer *GetSizer() const { return m_sizer; }
+
+    void Show(bool show);
+
+    void SetItem(CatalogItem *item);
+
+    virtual bool ShouldShowForItem(CatalogItem *item) const = 0;
+
+    virtual void Update(CatalogItem *item) = 0;
+
+    virtual bool IsGrowable() const { return false; }
+
+protected:
+    wxSizer *m_innerSizer;
+
+private:
+    wxSizer *m_sizer;
+};
 
 /**
     Control showing Poedit's assistance sidebar.
