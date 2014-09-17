@@ -50,7 +50,7 @@ public:
         Bind(wxEVT_PAINT, &SidebarSeparator::OnPaint, this);
     }
 
-    virtual wxSize DoGetBestSize() const
+    wxSize DoGetBestSize() const override
     {
         return wxSize(-1, 1);
     }
@@ -118,7 +118,7 @@ public:
         m_innerSizer->Add(m_text, wxSizerFlags().Expand());
     }
 
-    virtual bool ShouldShowForItem(CatalogItem *item) const
+    bool ShouldShowForItem(CatalogItem *item) const override
     {
         return item->HasOldMsgid();
     }
@@ -145,7 +145,7 @@ public:
         m_innerSizer->Add(m_comment, wxSizerFlags().Expand());
     }
 
-    virtual bool ShouldShowForItem(CatalogItem *item) const
+    bool ShouldShowForItem(CatalogItem *item) const override
     {
         return item->HasAutoComments();
     }
@@ -178,7 +178,7 @@ public:
         m_innerSizer->Add(m_comment, wxSizerFlags().Expand());
     }
 
-    virtual bool ShouldShowForItem(CatalogItem *item) const
+    bool ShouldShowForItem(CatalogItem *item) const override
     {
         return item->HasComment();
     }
@@ -210,9 +210,9 @@ public:
         m_innerSizer->Add(m_btn, wxSizerFlags().Right());
     }
 
-    virtual bool IsGrowable() const { return true; }
+    bool IsGrowable() const override { return true; }
 
-    virtual bool ShouldShowForItem(CatalogItem*) const { return true; }
+    bool ShouldShowForItem(CatalogItem*) const override { return true; }
 
     void Update(CatalogItem *item) override
     {
