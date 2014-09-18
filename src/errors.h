@@ -26,6 +26,9 @@
 #ifndef _ERRORS_H_
 #define _ERRORS_H_
 
+#include <wx/string.h>
+#include <exception>
+
 /// Any exception error.
 /// Pretty much the same as std::runtime_error, except using Unicode strings.
 class Exception
@@ -38,5 +41,28 @@ public:
 private:
     wxString m_what;
 };
+
+
+/// Helper to convert an exception into a human-readable string
+inline wxString DescribeException(std::exception_ptr e)
+{
+    try
+    {
+        std::rethrow_exception(e);
+        return "no error"; // silence stupid VC++
+    }
+    catch (const Exception& e)
+    {
+        return e.what();
+    }
+    catch (const std::exception& e)
+    {
+        return e.what();
+    }
+    catch (...)
+    {
+        return "unknown error";
+    }
+}
 
 #endif // _ERRORS_H_
